@@ -1,69 +1,69 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597333B2FDE
-	for <git@vger.kernel.org>; Fri,  8 May 2026 12:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D323DCDBA
+	for <git@vger.kernel.org>; Fri,  8 May 2026 12:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778244673; cv=none; b=AMPiri2xk0grJYJ4YSPJ4PnZOyJ5Q6SmUIvMl1o2xygtSwgR0ny25WPBgcO3xsSVInKA6Whj1jQohPmt5/YctB8fucYb90vNDuMyxl0zfJaHfoksHWCyHPIJtBsHkHssIiWfUoIjk5HqDZLSZasem9XgqC+mBZ39GWOV/EX2JgU=
+	t=1778244677; cv=none; b=cndZDnZGDUT81VgKGKwDLNOhHYYBOv9wSUUDTy1lwLs5iE+NS2F7hO1RRjZL2jbWoi/6l6cKSJgO4GbQnVOYvJ66UM56qpGUVDJm4Bx7Ge0ibwC1amFapgmqWfAqzSbQlVxwFbzVyIrUWNBST7WNWeNbUlkjB1H1T/RlR4AQGkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778244673; c=relaxed/simple;
-	bh=wzNWB8zZ1Vibc2f0X/UbaxfFy6Jp6XtjZQ4Da38+ICw=;
+	s=arc-20240116; t=1778244677; c=relaxed/simple;
+	bh=6URlqFoURR9xKPG5RdexwDIjZhfeX1WXXjeU1cg8bz8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iQc/czpjYijWYioh2nxoajVuxJjUnapHJZh35QjZdUvNMwIg9Wjw0mHKKBshI+snHuKvZ/0sCDXoLYgDyN14RMbPnMeu+e9tC01QxCUi7N1XUQVG0tkrSWYpkrjJOcs0LmKCk6EzEiEP12XweXtM63+lpN2MSdPEzWEZ1clNvlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V56B7E2Y; arc=none smtp.client-ip=209.85.222.182
+	 MIME-Version:To:Cc; b=jMFB0eVc6Wf9aW7C81iC1col0HUlWf0H2KBRPeITftOHudKTZoCTbC6sE5NPCy1MCD1cxJr7eUPanJymsrkZi3+wKdCROwrvHE/HPb2OLfm5DbZFrbjkg2rqfs520ysdBlYjYhCwEbYy7VhfbgBBC020luqxDbFkDm3iCkb2FZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETJMEcz0; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V56B7E2Y"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8ee62a19730so226912285a.3
-        for <git@vger.kernel.org>; Fri, 08 May 2026 05:51:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETJMEcz0"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8d6d5e45c43so216889085a.3
+        for <git@vger.kernel.org>; Fri, 08 May 2026 05:51:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778244669; x=1778849469; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778244672; x=1778849472; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DQtpvpmfYuXMKooiLmq4MTo52DSZG2/d1XcxMW7WXuk=;
-        b=V56B7E2YweqVrM7ezYtPLfzzrnmdRc3ziD13N0lLD8pS8mJaCz2KWwUZeqbo3M319+
-         5nGxwMOQnFQX9f/At2W678i2TyZVOp4rUwXFdWLCaPtGQkq+VbQjZGskjH0u4z13HG9+
-         LGZ2DTma/IE1vddyui8COxilk6kewtLX2i8TVZkmQIWiZPyxBGsgw3eVtR4/q2Z4uOLd
-         gZbGS9CMfdjuSGjHNqEm0RhB7ai83fL9o5P7YvtDiethJI0FfPyhAswJRodB6Zrca1XE
-         QCk8uu47pIaN+mhn5xsHgKdYLaW8/v4Xwz2Ni/U5zO2vdGdG7OJyL+RTUI3bWDkJE4Lh
-         Xr2g==
+        bh=PmiEUMqpu8fLiflaK/R+pcAFvpmZtTGajlaKcF39yZA=;
+        b=ETJMEcz0HBszhpQCrJIv3WOAEG+DUJqvIUIpdTPCX+pp5CyquE3/f0Ol3QBC2JnlPU
+         9zSh0J0RpySPWnXGDme+XFd0qvpf2s97y5UW/ISfAs3COGYuTBtvw613SPyx2awxeWIW
+         sJVOHnb7ioPR30hgfUZo22AL+Kcdkda/BsA7L7DtruYecZ3yUO/0QVdvRELWuV7RvVFG
+         IrWtrDFoUDml8mnsW9FYjmcYU3cZWGialRAxPUKLeAtLGAymbrDEx83+7N8sBM2xGnJq
+         Ppv78JGVj2IBuYAMwkRotQfwyxUxxhi3rFS4I/zujJOGnuQZ0xGeCM4m3YFMdOYnBZl8
+         Oo7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778244669; x=1778849469;
+        d=1e100.net; s=20251104; t=1778244672; x=1778849472;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DQtpvpmfYuXMKooiLmq4MTo52DSZG2/d1XcxMW7WXuk=;
-        b=GLmOg4E73M+foxbfl8ZENt+tUntyaPixjnw/scC+qmLdzay73JmVlELIh+Q9mTfjaW
-         QHy0MN3ECW+v25i50qXM3NXcffHNGlkTN3hqcaPvOTCU96/c9mzfG0Iwrke76uPhzvXl
-         V5SV6rvvnuM2/BM+GbWePyR7PBaYy47gXzGssS6xILQYGhjxmpIoq6Fz7UtN6vYARsrv
-         bJ8OwoJ0xm9tUzH89N1vviEfRNtn2Qxk57LAJwcvlHQM+f0QFR5Eg5ecvEHNNk/IBlDH
-         hAqDVWFfcOPPvEGWBvpkYXwgB+03bq7Q+eupW5K/F6mbKUCr3RJZhrZvNGVG4jWZtD6k
-         dCyg==
-X-Gm-Message-State: AOJu0YyU1xo8mQZI+hCsvJscRjZz0yBZCNxh3so+vKWjXRKqDUdkTqjC
-	wxXE8CxP4VPxRlIjF14X1EWlXe5OeIGZ+hgE2MROXRCYBWZrV7YGUPvJhzSlVg==
-X-Gm-Gg: AeBDiesWlK6X0Vp756nvNBl2bvCPQaFRcwJKQmkeySWv+VBDvO608HVZfOjLDw4soxr
-	OgGqx8OTUbYJcozomL3nR9hSLM6+SVhcaG1p79vc32ZAzVLvR6PsNFUtNeCssvX1kvPhdjipLOd
-	chRHqmLg+9z9Ic1StZfiwSDO7jegkyu289cr+/WNBkqqvINR/Y9RTM4p/GzwkTOuzep8/hUzW8H
-	Moy5qLVook9nP7aGk2En5NX7P86T/+DgAMm8SeXtQTWayrTc3ZTAIXYp+7e5+G+oH2nggHZba7f
-	mOci0jzzabP592k+HvCgRL4gM7s5odzu1Jgjn5pX094XbYCr/IuaajOuqEZsUNOfBQSbKGyP9fF
-	XUawxIuN7w96si+EeEDPSJZBbypITDcWmIp6XKPSGTj55c4kMguNF3KdLKqFolIElIJKvJxnurD
-	6PsO7M5GurRre9cxikxAiPxSnerUW4
-X-Received: by 2002:a05:620a:280d:b0:8cf:d565:fca4 with SMTP id af79cd13be357-904d3fa3e02mr1774243985a.3.1778244668274;
-        Fri, 08 May 2026 05:51:08 -0700 (PDT)
+        bh=PmiEUMqpu8fLiflaK/R+pcAFvpmZtTGajlaKcF39yZA=;
+        b=bZCNAQTJFCSWtFlVUdv4b+JA/OSejoHBnNci8pdNkJyr77fC099yWIVG6GKhf9jRrm
+         1pCrQw1aTY5PPIqMQ/1nfaUaoWO04zY7+16UM4pRMn/iAZqO3Vkc8hMAf7xsMpPg55on
+         j0n0CS7O+WKmYW13oj/42X87puyWUR/BaZ2ah3vSFWJl+UnB5hy82nu2AY4RGwZZwzjO
+         4LY4xkEJ2FCQckaMWFqTi3wtIvaen6lcCiJlq7+RezTZHKuDxeRz2RQI3cXQ8Z+xpv58
+         aHjBRc363kYPjMv4QUUrcEUgbNbb2byIPzLb6rd9c8/ym4FasJGmqe2oDXPzFWukj/Dk
+         wsew==
+X-Gm-Message-State: AOJu0Ywbz0TaiT236EI/8+0kYDuCuYcyRpC/Ssm8TwrjOR2Vf6TV/fn5
+	P3pJy/LFy1cbwEQduV55WYaOxc1W14T9tKZrsC1ewh1TGE18p8vgHhb/qLT6JA==
+X-Gm-Gg: Acq92OHU6B6PhmRiS1xWVZ2DLh2QNyk4DQmQbeHQvc4gaBHDFo34kf6UOVXt8fi6kfV
+	NHWSP1VIIwxULbn+1gdcPGbSJ3mntz7HfeorBmC3xtb345Nea9QaSjK5ZoS49ZA3fB0VhejhDHe
+	Y8rzRZPjrjsA8UrpmwEfGviHiCuBV1akBaK+bk+yp8O8zVKaZMbxwG1NvhO8OFP83675Xjk25ge
+	+0LPiTKCyeSVNhDvjOW4lNDmsMOAT5yxapT4WooU6rB6H6A+gjP2+Vg7z451ZeEbpsFsubc0Rkh
+	bagZsrKT4i5Ru5H0SbCN0esCCGZOgGp/igGPQ22l7ycIIvrzkuAvcpHqPx/YRtdvvYUrOV4VrRi
+	jJULbEN2vYho6vOYHC07F75slXvrQPeB1qwIcSQO+yV4nCiwgLP6HiIYaLo+aYwSq16epyZlgg1
+	TkbZFZo9Zu53BNqu1dG2FdISwZg11WGM9meM209G8=
+X-Received: by 2002:a05:6214:1303:b0:8ac:aaac:4034 with SMTP id 6a1803df08f44-8bf4321bc16mr33629646d6.29.1778244671735;
+        Fri, 08 May 2026 05:51:11 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.176.163])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-907b9c524bbsm186800885a.1.2026.05.08.05.51.07
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8bf3aed2920sm17013916d6.7.2026.05.08.05.51.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 05:51:07 -0700 (PDT)
-Message-Id: <fc7f5cae10d7cb0835b4f69b6e0b084410aea973.1778244661.git.gitgitgadget@gmail.com>
+        Fri, 08 May 2026 05:51:11 -0700 (PDT)
+Message-Id: <fa28d50d18478a6339ad22107d50686066647337.1778244661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
 References: <pull.2104.v2.git.1778169613.gitgitgadget@gmail.com>
 	<pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 12:50:58 +0000
-Subject: [PATCH v3 3/6] mingw: remove the vendored compat/nedmalloc/ subtree
+Date: Fri, 08 May 2026 12:51:00 +0000
+Subject: [PATCH v3 5/6] to be squashed into 3/6 (chunk 2 of 3)
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,1356 +80,1719 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The previous two commits stopped opting into nedmalloc on Windows
-and stripped out the build-system plumbing that referenced it; the
-compat/nedmalloc/ subtree now has no callers and no consumers in
-the build, so retire it from the tree.
-
-Logically this is a single deletion of compat/nedmalloc/ in its
-entirety: License.txt, Readme.txt, nedmalloc.{c,h}, and the bulk of
-the subtree, malloc.c.h.  Unfortunately malloc.c.h alone is roughly
-196 KB while the Git mailing list rejects messages over 100 KB, so
-the deletion is artificially split across four commits cut at file
-or section-banner boundaries: this commit (the smaller auxiliary
-files) plus three chunks of malloc.c.h cut at its own top-level
-section banners ("Overlaid data structures" and "System
-allocation").  The split is purely a mailing-list accommodation,
-not a logical separation; the three follow-up patches in this
-series carry "to be squashed into 3/6" subjects so they can be
-folded back into this commit at integration time, per Junio's
-suggestion in
-<https://lore.kernel.org/git/xmqqfr42fw30.fsf@gitster.g/>.
-
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/nedmalloc/License.txt |  23 -
- compat/nedmalloc/Readme.txt  | 136 -----
- compat/nedmalloc/nedmalloc.c | 954 -----------------------------------
- compat/nedmalloc/nedmalloc.h | 180 -------
- 4 files changed, 1293 deletions(-)
- delete mode 100644 compat/nedmalloc/License.txt
- delete mode 100644 compat/nedmalloc/Readme.txt
- delete mode 100644 compat/nedmalloc/nedmalloc.c
- delete mode 100644 compat/nedmalloc/nedmalloc.h
+ compat/nedmalloc/malloc.c.h | 1699 -----------------------------------
+ 1 file changed, 1699 deletions(-)
 
-diff --git a/compat/nedmalloc/License.txt b/compat/nedmalloc/License.txt
-deleted file mode 100644
-index 36b7cd93cd..0000000000
---- a/compat/nedmalloc/License.txt
-+++ /dev/null
-@@ -1,23 +0,0 @@
--Boost Software License - Version 1.0 - August 17th, 2003
+diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
+index b4fb8c8846..0c663cf49c 100644
+--- a/compat/nedmalloc/malloc.c.h
++++ b/compat/nedmalloc/malloc.c.h
+@@ -1,1702 +1,3 @@
+-/* ---------------------- Overlaid data structures ----------------------- */
 -
--Permission is hereby granted, free of charge, to any person or organization
--obtaining a copy of the software and accompanying documentation covered by
--this license (the "Software") to use, reproduce, display, distribute,
--execute, and transmit the Software, and to prepare derivative works of the
--Software, and to permit third-parties to whom the Software is furnished to
--do so, all subject to the following:
+-/*
+-  When chunks are not in use, they are treated as nodes of either
+-  lists or trees.
 -
--The copyright notices in the Software and this entire statement, including
--the above license grant, this restriction and the following disclaimer,
--must be included in all copies of the Software, in whole or in part, and
--all derivative works of the Software, unless such copies or derivative
--works are solely in the form of machine-executable object code generated by
--a source language processor.
+-  "Small"  chunks are stored in circular doubly-linked lists, and look
+-  like this:
 -
--THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
--IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
--FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
--SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
--FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
--ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
--DEALINGS IN THE SOFTWARE.
-diff --git a/compat/nedmalloc/Readme.txt b/compat/nedmalloc/Readme.txt
-deleted file mode 100644
-index 07cbf50c0f..0000000000
---- a/compat/nedmalloc/Readme.txt
-+++ /dev/null
-@@ -1,136 +0,0 @@
--nedalloc v1.05 15th June 2008:
---=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-    chunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Size of previous chunk                            |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-    `head:' |             Size of chunk, in bytes                         |P|
+-      mem-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Forward pointer to next chunk in list             |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Back pointer to previous chunk in list            |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Unused space (may be 0 bytes long)                .
+-	    .                                                               .
+-	    .                                                               |
+-nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-    `foot:' |             Size of chunk, in bytes                           |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 -
--by Niall Douglas (http://www.nedprod.com/programs/portable/nedmalloc/)
+-  Larger chunks are kept in a form of bitwise digital trees (aka
+-  tries) keyed on chunksizes.  Because malloc_tree_chunks are only for
+-  free chunks greater than 256 bytes, their size doesn't impose any
+-  constraints on user chunk sizes.  Each node looks like:
 -
--Enclosed is nedalloc, an alternative malloc implementation for multiple
--threads without lock contention based on dlmalloc v2.8.4. It is more
--or less a newer implementation of ptmalloc2, the standard allocator in
--Linux (which is based on dlmalloc v2.7.0) but also contains a per-thread
--cache for maximum CPU scalability.
+-    chunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Size of previous chunk                            |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-    `head:' |             Size of chunk, in bytes                         |P|
+-      mem-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Forward pointer to next chunk of same size        |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Back pointer to previous chunk of same size       |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Pointer to left child (child[0])                  |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Pointer to right child (child[1])                 |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Pointer to parent                                 |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             bin index of this chunk                           |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-	    |             Unused space                                      .
+-	    .                                                               |
+-nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+-    `foot:' |             Size of chunk, in bytes                           |
+-	    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 -
--It is licensed under the Boost Software License which basically means
--you can do anything you like with it. This does not apply to the malloc.c.h
--file which remains copyright to others.
+-  Each tree holding treenodes is a tree of unique chunk sizes.  Chunks
+-  of the same size are arranged in a circularly-linked list, with only
+-  the oldest chunk (the next to be used, in our FIFO ordering)
+-  actually in the tree.  (Tree members are distinguished by a non-null
+-  parent pointer.)  If a chunk with the same size as an existing node
+-  is inserted, it is linked off the existing node using pointers that
+-  work in the same way as fd/bk pointers of small chunks.
 -
--It has been tested on win32 (x86), win64 (x64), Linux (x64), FreeBSD (x64)
--and Apple MacOS X (x86). It works very well on all of these and is very
--significantly faster than the system allocator on all of these platforms.
+-  Each tree contains a power of 2 sized range of chunk sizes (the
+-  smallest is 0x100 <= x < 0x180), which is divided in half at each
+-  tree level, with the chunks in the smaller half of the range (0x100
+-  <= x < 0x140 for the top nose) in the left subtree and the larger
+-  half (0x140 <= x < 0x180) in the right subtree.  This is, of course,
+-  done by inspecting individual bits.
 -
--By literally dropping in this allocator as a replacement for your system
--allocator, you can see real world improvements of up to three times in normal
--code!
+-  Using these rules, each node's left subtree contains all smaller
+-  sizes than its right subtree.  However, the node at the root of each
+-  subtree has no particular ordering relationship to either.  (The
+-  dividing line between the subtree sizes is based on trie relation.)
+-  If we remove the last chunk of a given size from the interior of the
+-  tree, we need to replace it with a leaf node.  The tree ordering
+-  rules permit a node to be replaced by any leaf below it.
 -
--To use:
---=-=-=-
--Drop in nedmalloc.h, nedmalloc.c and malloc.c.h into your project.
--Configure using the instructions in nedmalloc.h. Run and enjoy.
+-  The smallest chunk in a tree (a common operation in a best-fit
+-  allocator) can be found by walking a path to the leftmost leaf in
+-  the tree.  Unlike a usual binary tree, where we follow left child
+-  pointers until we reach a null, here we follow the right child
+-  pointer any time the left one is null, until we reach a leaf with
+-  both child pointers null. The smallest chunk in the tree will be
+-  somewhere along that path.
 -
--To test, compile test.c. It will run a comparison between your system
--allocator and nedalloc and tell you how much faster nedalloc is. It also
--serves as an example of usage.
--
--Notes:
---=-=-=
--If you want the very latest version of this allocator, get it from the
--TnFOX SVN repository at svn://svn.berlios.de/viewcvs/tnfox/trunk/src/nedmalloc
--
--Because of how nedalloc allocates an mspace per thread, it can cause
--severe bloating of memory usage under certain allocation patterns.
--You can substantially reduce this wastage by setting MAXTHREADSINPOOL
--or the threads parameter to nedcreatepool() to a fraction of the number of
--threads which would normally be in a pool at once. This will reduce
--bloating at the cost of an increase in lock contention. If allocated size
--is less than THREADCACHEMAX, locking is avoided 90-99% of the time and
--if most of your allocations are below this value, you can safely set
--MAXTHREADSINPOOL to one.
--
--You will suffer memory leakage unless you call neddisablethreadcache()
--per pool for every thread which exits. This is because nedalloc cannot
--portably know when a thread exits and thus when its thread cache can
--be returned for use by other code. Don't forget pool zero, the system pool.
--
--For C++ type allocation patterns (where the same sizes of memory are
--regularly allocated and deallocated as objects are created and destroyed),
--the threadcache always benefits performance. If however your allocation
--patterns are different, searching the threadcache may significantly slow
--down your code - as a rule of thumb, if cache utilisation is below 80%
--(see the source for neddisablethreadcache() for how to enable debug
--printing in release mode) then you should disable the thread cache for
--that thread. You can compile out the threadcache code by setting
--THREADCACHEMAX to zero.
--
--Speed comparisons:
---=-=-=-=-=-=-=-=-=
--See Benchmarks.xls for details.
--
--The enclosed test.c can do two things: it can be a torture test or a speed
--test. The speed test is designed to be a representative synthetic
--memory allocator test. It works by randomly mixing allocations with frees
--with half of the allocation sizes being a two power multiple less than
--512 bytes (to mimic C++ stack instantiated objects) and the other half
--being a simple random value less than 16Kb.
--
--The real world code results are from Tn's TestIO benchmark. This is a
--heavily multithreaded and memory intensive benchmark with a lot of branching
--and other stuff modern processors don't like so much. As you'll note, the
--test doesn't show the benefits of the threadcache mostly due to the saturation
--of the memory bus being the limiting factor.
--
--ChangeLog:
---=-=-=-=-=
--v1.05 15th June 2008:
-- * { 1042 } Added error check for TLSSET() and TLSFREE() macros. Thanks to
--Markus Elfring for reporting this.
-- * { 1043 } Fixed a segfault when freeing memory allocated using
--nedindependent_comalloc(). Thanks to Pavel Vozenilek for reporting this.
--
--v1.04 14th July 2007:
-- * Fixed a bug with the new optimised implementation that failed to lock
--on a realloc under certain conditions.
-- * Fixed lack of thread synchronisation in InitPool() causing pool corruption
-- * Fixed a memory leak of thread cache contents on disabling. Thanks to Earl
--Chew for reporting this.
-- * Added a sanity check for freed blocks being valid.
-- * Reworked test.c into being a torture test.
-- * Fixed GCC assembler optimisation misspecification
--
--v1.04alpha_svn915 7th October 2006:
-- * Fixed failure to unlock thread cache list if allocating a new list failed.
--Thanks to Dmitry Chichkov for reporting this. Further thanks to Aleksey Sanin.
-- * Fixed realloc(0, <size>) segfaulting. Thanks to Dmitry Chichkov for
--reporting this.
-- * Made config defines #ifndef so they can be overridden by the build system.
--Thanks to Aleksey Sanin for suggesting this.
-- * Fixed deadlock in nedprealloc() due to unnecessary locking of preferred
--thread mspace when mspace_realloc() always uses the original block's mspace
--anyway. Thanks to Aleksey Sanin for reporting this.
-- * Made some speed improvements by hacking mspace_malloc() to no longer lock
--its mspace, thus allowing the recursive mutex implementation to be removed
--with an associated speed increase. Thanks to Aleksey Sanin for suggesting this.
-- * Fixed a bug where allocating mspaces overran its max limit. Thanks to
--Aleksey Sanin for reporting this.
--
--v1.03 10th July 2006:
-- * Fixed memory corruption bug in threadcache code which only appeared with >4
--threads and in heavy use of the threadcache.
--
--v1.02 15th May 2006:
-- * Integrated dlmalloc v2.8.4, fixing the win32 memory release problem and
--improving performance still further. Speed is now up to twice the speed of v1.01
--(average is 67% faster).
-- * Fixed win32 critical section implementation. Thanks to Pavel Kuznetsov
--for reporting this.
-- * Wasn't locking mspace if all mspaces were locked. Thanks to Pavel Kuznetsov
--for reporting this.
-- * Added Apple Mac OS X support.
--
--v1.01 24th February 2006:
-- * Fixed multiprocessor scaling problems by removing sources of cache sloshing
-- * Earl Chew <earl_chew <at> agilent <dot> com> sent patches for the following:
--   1. size2binidx() wasn't working for default code path (non x86)
--   2. Fixed failure to release mspace lock under certain circumstances which
--      caused a deadlock
--
--v1.00 1st January 2006:
-- * First release
-diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
-deleted file mode 100644
-index 145255da43..0000000000
---- a/compat/nedmalloc/nedmalloc.c
-+++ /dev/null
-@@ -1,954 +0,0 @@
--/* Alternative malloc implementation for multiple threads without
--lock contention based on dlmalloc. (C) 2005-2006 Niall Douglas
--
--Boost Software License - Version 1.0 - August 17th, 2003
--
--Permission is hereby granted, free of charge, to any person or organization
--obtaining a copy of the software and accompanying documentation covered by
--this license (the "Software") to use, reproduce, display, distribute,
--execute, and transmit the Software, and to prepare derivative works of the
--Software, and to permit third-parties to whom the Software is furnished to
--do so, all subject to the following:
--
--The copyright notices in the Software and this entire statement, including
--the above license grant, this restriction and the following disclaimer,
--must be included in all copies of the Software, in whole or in part, and
--all derivative works of the Software, unless such copies or derivative
--works are solely in the form of machine-executable object code generated by
--a source language processor.
--
--THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
--IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
--FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
--SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
--FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
--ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
--DEALINGS IN THE SOFTWARE.
+-  The worst case number of steps to add, find, or remove a node is
+-  bounded by the number of bits differentiating chunks within
+-  bins. Under current bin calculations, this ranges from 6 up to 21
+-  (for 32 bit sizes) or up to 53 (for 64 bit sizes). The typical case
+-  is of course much better.
 -*/
 -
--#ifdef _MSC_VER
--/* Enable full aliasing on MSVC */
--/*#pragma optimize("a", on)*/
--#endif
+-struct malloc_tree_chunk {
+-  /* The first four fields must be compatible with malloc_chunk */
+-  size_t                    prev_foot;
+-  size_t                    head;
+-  struct malloc_tree_chunk* fd;
+-  struct malloc_tree_chunk* bk;
 -
--#pragma GCC diagnostic ignored "-Wunused-parameter"
+-  struct malloc_tree_chunk* child[2];
+-  struct malloc_tree_chunk* parent;
+-  bindex_t                  index;
+-};
 -
--/*#define FULLSANITYCHECKS*/
+-typedef struct malloc_tree_chunk  tchunk;
+-typedef struct malloc_tree_chunk* tchunkptr;
+-typedef struct malloc_tree_chunk* tbinptr; /* The type of bins of trees */
 -
--#include "nedmalloc.h"
--#if defined(WIN32)
-- #include <malloc.h>
--#endif
--#define MSPACES 1
--#define ONLY_MSPACES 1
--#ifndef USE_LOCKS
-- #define USE_LOCKS 1
--#endif
--#define FOOTERS 1           /* Need to enable footers so frees lock the right mspace */
--#undef DEBUG				/* dlmalloc wants DEBUG either 0 or 1 */
--#ifdef _DEBUG
-- #define DEBUG 1
--#else
-- #define DEBUG 0
--#endif
--#ifdef NDEBUG               /* Disable assert checking on release builds */
-- #undef DEBUG
--#endif
--/* The default of 64Kb means we spend too much time kernel-side */
--#ifndef DEFAULT_GRANULARITY
--#define DEFAULT_GRANULARITY (1*1024*1024)
--#endif
--/*#define USE_SPIN_LOCKS 0*/
+-/* A little helper macro for trees */
+-#define leftmost_child(t) ((t)->child[0] != 0? (t)->child[0] : (t)->child[1])
+-
+-/* ----------------------------- Segments -------------------------------- */
+-
+-/*
+-  Each malloc space may include non-contiguous segments, held in a
+-  list headed by an embedded malloc_segment record representing the
+-  top-most space. Segments also include flags holding properties of
+-  the space. Large chunks that are directly allocated by mmap are not
+-  included in this list. They are instead independently created and
+-  destroyed without otherwise keeping track of them.
+-
+-  Segment management mainly comes into play for spaces allocated by
+-  MMAP.  Any call to MMAP might or might not return memory that is
+-  adjacent to an existing segment.  MORECORE normally contiguously
+-  extends the current space, so this space is almost always adjacent,
+-  which is simpler and faster to deal with. (This is why MORECORE is
+-  used preferentially to MMAP when both are available -- see
+-  sys_alloc.)  When allocating using MMAP, we don't use any of the
+-  hinting mechanisms (inconsistently) supported in various
+-  implementations of unix mmap, or distinguish reserving from
+-  committing memory. Instead, we just ask for space, and exploit
+-  contiguity when we get it.  It is probably possible to do
+-  better than this on some systems, but no general scheme seems
+-  to be significantly better.
+-
+-  Management entails a simpler variant of the consolidation scheme
+-  used for chunks to reduce fragmentation -- new adjacent memory is
+-  normally prepended or appended to an existing segment. However,
+-  there are limitations compared to chunk consolidation that mostly
+-  reflect the fact that segment processing is relatively infrequent
+-  (occurring only when getting memory from system) and that we
+-  don't expect to have huge numbers of segments:
+-
+-  * Segments are not indexed, so traversal requires linear scans.  (It
+-    would be possible to index these, but is not worth the extra
+-    overhead and complexity for most programs on most platforms.)
+-  * New segments are only appended to old ones when holding top-most
+-    memory; if they cannot be prepended to others, they are held in
+-    different segments.
+-
+-  Except for the top-most segment of an mstate, each segment record
+-  is kept at the tail of its segment. Segments are added by pushing
+-  segment records onto the list headed by &mstate.seg for the
+-  containing mstate.
+-
+-  Segment flags control allocation/merge/deallocation policies:
+-  * If EXTERN_BIT set, then we did not allocate this segment,
+-    and so should not try to deallocate or merge with others.
+-    (This currently holds only for the initial segment passed
+-    into create_mspace_with_base.)
+-  * If IS_MMAPPED_BIT set, the segment may be merged with
+-    other surrounding mmapped segments and trimmed/de-allocated
+-    using munmap.
+-  * If neither bit is set, then the segment was obtained using
+-    MORECORE so can be merged with surrounding MORECORE'd segments
+-    and deallocated/trimmed using MORECORE with negative arguments.
+-*/
+-
+-struct malloc_segment {
+-  char*        base;             /* base address */
+-  size_t       size;             /* allocated size */
+-  struct malloc_segment* next;   /* ptr to next segment */
+-  flag_t       sflags;           /* mmap and extern flag */
+-};
+-
+-#define is_mmapped_segment(S)  ((S)->sflags & IS_MMAPPED_BIT)
+-#define is_extern_segment(S)   ((S)->sflags & EXTERN_BIT)
+-
+-typedef struct malloc_segment  msegment;
+-typedef struct malloc_segment* msegmentptr;
+-
+-/* ---------------------------- malloc_state ----------------------------- */
+-
+-/*
+-   A malloc_state holds all of the bookkeeping for a space.
+-   The main fields are:
+-
+-  Top
+-    The topmost chunk of the currently active segment. Its size is
+-    cached in topsize.  The actual size of topmost space is
+-    topsize+TOP_FOOT_SIZE, which includes space reserved for adding
+-    fenceposts and segment records if necessary when getting more
+-    space from the system.  The size at which to autotrim top is
+-    cached from mparams in trim_check, except that it is disabled if
+-    an autotrim fails.
+-
+-  Designated victim (dv)
+-    This is the preferred chunk for servicing small requests that
+-    don't have exact fits.  It is normally the chunk split off most
+-    recently to service another small request.  Its size is cached in
+-    dvsize. The link fields of this chunk are not maintained since it
+-    is not kept in a bin.
+-
+-  SmallBins
+-    An array of bin headers for free chunks.  These bins hold chunks
+-    with sizes less than MIN_LARGE_SIZE bytes. Each bin contains
+-    chunks of all the same size, spaced 8 bytes apart.  To simplify
+-    use in double-linked lists, each bin header acts as a malloc_chunk
+-    pointing to the real first node, if it exists (else pointing to
+-    itself).  This avoids special-casing for headers.  But to avoid
+-    waste, we allocate only the fd/bk pointers of bins, and then use
+-    repositioning tricks to treat these as the fields of a chunk.
+-
+-  TreeBins
+-    Treebins are pointers to the roots of trees holding a range of
+-    sizes. There are 2 equally spaced treebins for each power of two
+-    from TREE_SHIFT to TREE_SHIFT+16. The last bin holds anything
+-    larger.
+-
+-  Bin maps
+-    There is one bit map for small bins ("smallmap") and one for
+-    treebins ("treemap).  Each bin sets its bit when non-empty, and
+-    clears the bit when empty.  Bit operations are then used to avoid
+-    bin-by-bin searching -- nearly all "search" is done without ever
+-    looking at bins that won't be selected.  The bit maps
+-    conservatively use 32 bits per map word, even if on 64bit system.
+-    For a good description of some of the bit-based techniques used
+-    here, see Henry S. Warren Jr's book "Hacker's Delight" (and
+-    supplement at http://hackersdelight.org/). Many of these are
+-    intended to reduce the branchiness of paths through malloc etc, as
+-    well as to reduce the number of memory locations read or written.
+-
+-  Segments
+-    A list of segments headed by an embedded malloc_segment record
+-    representing the initial space.
+-
+-  Address check support
+-    The least_addr field is the least address ever obtained from
+-    MORECORE or MMAP. Attempted frees and reallocs of any address less
+-    than this are trapped (unless INSECURE is defined).
+-
+-  Magic tag
+-    A cross-check field that should always hold same value as mparams.magic.
+-
+-  Flags
+-    Bits recording whether to use MMAP, locks, or contiguous MORECORE
+-
+-  Statistics
+-    Each space keeps track of current and maximum system memory
+-    obtained via MORECORE or MMAP.
+-
+-  Trim support
+-    Fields holding the amount of unused topmost memory that should trigger
+-    timing, and a counter to force periodic scanning to release unused
+-    non-topmost segments.
+-
+-  Locking
+-    If USE_LOCKS is defined, the "mutex" lock is acquired and released
+-    around every public call using this mspace.
+-
+-  Extension support
+-    A void* pointer and a size_t field that can be used to help implement
+-    extensions to this malloc.
+-*/
+-
+-/* Bin types, widths and sizes */
+-#define NSMALLBINS        (32U)
+-#define NTREEBINS         (32U)
+-#define SMALLBIN_SHIFT    (3U)
+-#define SMALLBIN_WIDTH    (SIZE_T_ONE << SMALLBIN_SHIFT)
+-#define TREEBIN_SHIFT     (8U)
+-#define MIN_LARGE_SIZE    (SIZE_T_ONE << TREEBIN_SHIFT)
+-#define MAX_SMALL_SIZE    (MIN_LARGE_SIZE - SIZE_T_ONE)
+-#define MAX_SMALL_REQUEST (MAX_SMALL_SIZE - CHUNK_ALIGN_MASK - CHUNK_OVERHEAD)
+-
+-struct malloc_state {
+-  binmap_t   smallmap;
+-  binmap_t   treemap;
+-  size_t     dvsize;
+-  size_t     topsize;
+-  char*      least_addr;
+-  mchunkptr  dv;
+-  mchunkptr  top;
+-  size_t     trim_check;
+-  size_t     release_checks;
+-  size_t     magic;
+-  mchunkptr  smallbins[(NSMALLBINS+1)*2];
+-  tbinptr    treebins[NTREEBINS];
+-  size_t     footprint;
+-  size_t     max_footprint;
+-  flag_t     mflags;
+-#if USE_LOCKS
+-  MLOCK_T    mutex;     /* locate lock among fields that rarely change */
+-#endif /* USE_LOCKS */
+-  msegment   seg;
+-  void*      extp;      /* Unused but available for extensions */
+-  size_t     exts;
+-};
+-
+-typedef struct malloc_state*    mstate;
+-
+-/* ------------- Global malloc_state and malloc_params ------------------- */
+-
+-/*
+-  malloc_params holds global properties, including those that can be
+-  dynamically set using mallopt. There is a single instance, mparams,
+-  initialized in init_mparams. Note that the non-zeroness of "magic"
+-  also serves as an initialization flag.
+-*/
+-
+-struct malloc_params {
+-  volatile size_t magic;
+-  size_t page_size;
+-  size_t granularity;
+-  size_t mmap_threshold;
+-  size_t trim_threshold;
+-  flag_t default_mflags;
+-};
+-
+-static struct malloc_params mparams;
+-
+-/* Ensure mparams initialized */
+-#define ensure_initialization() ((void)(mparams.magic != 0 || init_mparams()))
+-
+-#if !ONLY_MSPACES
+-
+-/* The global malloc_state used for all non-"mspace" calls */
+-static struct malloc_state _gm_;
+-#define gm                 (&_gm_)
+-#define is_global(M)       ((M) == &_gm_)
+-
+-#endif /* !ONLY_MSPACES */
+-
+-#define is_initialized(M)  ((M)->top != 0)
+-
+-/* -------------------------- system alloc setup ------------------------- */
+-
+-/* Operations on mflags */
+-
+-#define use_lock(M)           ((M)->mflags &   USE_LOCK_BIT)
+-#define enable_lock(M)        ((M)->mflags |=  USE_LOCK_BIT)
+-#define disable_lock(M)       ((M)->mflags &= ~USE_LOCK_BIT)
+-
+-#define use_mmap(M)           ((M)->mflags &   USE_MMAP_BIT)
+-#define enable_mmap(M)        ((M)->mflags |=  USE_MMAP_BIT)
+-#define disable_mmap(M)       ((M)->mflags &= ~USE_MMAP_BIT)
+-
+-#define use_noncontiguous(M)  ((M)->mflags &   USE_NONCONTIGUOUS_BIT)
+-#define disable_contiguous(M) ((M)->mflags |=  USE_NONCONTIGUOUS_BIT)
+-
+-#define set_lock(M,L)\
+- ((M)->mflags = (L)?\
+-  ((M)->mflags | USE_LOCK_BIT) :\
+-  ((M)->mflags & ~USE_LOCK_BIT))
+-
+-/* page-align a size */
+-#define page_align(S)\
+- (((S) + (mparams.page_size - SIZE_T_ONE)) & ~(mparams.page_size - SIZE_T_ONE))
+-
+-/* granularity-align a size */
+-#define granularity_align(S)\
+-  (((S) + (mparams.granularity - SIZE_T_ONE))\
+-   & ~(mparams.granularity - SIZE_T_ONE))
 -
 -
--/*#define FORCEINLINE*/
--#include "malloc.c.h"
--#ifdef NDEBUG               /* Disable assert checking on release builds */
-- #undef DEBUG
--#endif
--
--/* The maximum concurrent threads in a pool possible */
--#ifndef MAXTHREADSINPOOL
--#define MAXTHREADSINPOOL 16
--#endif
--/* The maximum number of threadcaches which can be allocated */
--#ifndef THREADCACHEMAXCACHES
--#define THREADCACHEMAXCACHES 256
--#endif
--/* The maximum size to be allocated from the thread cache */
--#ifndef THREADCACHEMAX
--#define THREADCACHEMAX 8192
--#endif
--#if 0
--/* The number of cache entries for finer grained bins. This is (topbitpos(THREADCACHEMAX)-4)*2 */
--#define THREADCACHEMAXBINS ((13-4)*2)
--#else
--/* The number of cache entries. This is (topbitpos(THREADCACHEMAX)-4) */
--#define THREADCACHEMAXBINS (13-4)
--#endif
--/* Point at which the free space in a thread cache is garbage collected */
--#ifndef THREADCACHEMAXFREESPACE
--#define THREADCACHEMAXFREESPACE (512*1024)
--#endif
--
--
+-/* For mmap, use granularity alignment on windows, else page-align */
 -#ifdef WIN32
-- #define TLSVAR			DWORD
-- #define TLSALLOC(k)	(*(k)=TlsAlloc(), TLS_OUT_OF_INDEXES==*(k))
-- #define TLSFREE(k)		(!TlsFree(k))
-- #define TLSGET(k)		TlsGetValue(k)
-- #define TLSSET(k, a)	(!TlsSetValue(k, a))
-- #ifdef DEBUG
--static LPVOID ChkedTlsGetValue(DWORD idx)
--{
--	LPVOID ret=TlsGetValue(idx);
--	assert(S_OK==GetLastError());
--	return ret;
--}
--  #undef TLSGET
--  #define TLSGET(k) ChkedTlsGetValue(k)
-- #endif
+-#define mmap_align(S) granularity_align(S)
 -#else
-- #define TLSVAR			pthread_key_t
-- #define TLSALLOC(k)	pthread_key_create(k, 0)
-- #define TLSFREE(k)		pthread_key_delete(k)
-- #define TLSGET(k)		pthread_getspecific(k)
-- #define TLSSET(k, a)	pthread_setspecific(k, a)
+-#define mmap_align(S) page_align(S)
 -#endif
 -
--#if 0
--/* Only enable if testing with valgrind. Causes misoperation */
--#define mspace_malloc(p, s) malloc(s)
--#define mspace_realloc(p, m, s) realloc(m, s)
--#define mspace_calloc(p, n, s) calloc(n, s)
--#define mspace_free(p, m) free(m)
--#endif
+-/* For sys_alloc, enough padding to ensure can malloc request on success */
+-#define SYS_ALLOC_PADDING (TOP_FOOT_SIZE + MALLOC_ALIGNMENT)
 -
+-#define is_page_aligned(S)\
+-   (((size_t)(S) & (mparams.page_size - SIZE_T_ONE)) == 0)
+-#define is_granularity_aligned(S)\
+-   (((size_t)(S) & (mparams.granularity - SIZE_T_ONE)) == 0)
 -
--#if defined(__cplusplus)
--#if !defined(NO_NED_NAMESPACE)
--namespace nedalloc {
--#else
--extern "C" {
--#endif
--#endif
+-/*  True if segment S holds address A */
+-#define segment_holds(S, A)\
+-  ((char*)(A) >= S->base && (char*)(A) < S->base + S->size)
 -
--size_t nedblksize(void *mem) THROWSPEC
--{
--#if 0
--	/* Only enable if testing with valgrind. Causes misoperation */
--	return THREADCACHEMAX;
--#else
--	if(mem)
--	{
--		mchunkptr p=mem2chunk(mem);
--		assert(cinuse(p));	/* If this fails, someone tried to free a block twice */
--		if(cinuse(p))
--			return chunksize(p)-overhead_for(p);
--	}
--	return 0;
--#endif
+-/* Return segment holding given address */
+-static msegmentptr segment_holding(mstate m, char* addr) {
+-  msegmentptr sp = &m->seg;
+-  for (;;) {
+-    if (addr >= sp->base && addr < sp->base + sp->size)
+-      return sp;
+-    if ((sp = sp->next) == 0)
+-      return 0;
+-  }
 -}
 -
--void nedsetvalue(void *v) THROWSPEC					{ nedpsetvalue(0, v); }
--void * nedmalloc(size_t size) THROWSPEC				{ return nedpmalloc(0, size); }
--void * nedcalloc(size_t no, size_t size) THROWSPEC	{ return nedpcalloc(0, no, size); }
--void * nedrealloc(void *mem, size_t size) THROWSPEC	{ return nedprealloc(0, mem, size); }
--void   nedfree(void *mem) THROWSPEC					{ nedpfree(0, mem); }
--void * nedmemalign(size_t alignment, size_t bytes) THROWSPEC { return nedpmemalign(0, alignment, bytes); }
--#if !NO_MALLINFO
--struct mallinfo nedmallinfo(void) THROWSPEC			{ return nedpmallinfo(0); }
--#endif
--int    nedmallopt(int parno, int value) THROWSPEC	{ return nedpmallopt(0, parno, value); }
--int    nedmalloc_trim(size_t pad) THROWSPEC			{ return nedpmalloc_trim(0, pad); }
--void   nedmalloc_stats(void) THROWSPEC					{ nedpmalloc_stats(0); }
--size_t nedmalloc_footprint(void) THROWSPEC				{ return nedpmalloc_footprint(0); }
--void **nedindependent_calloc(size_t elemsno, size_t elemsize, void **chunks) THROWSPEC	{ return nedpindependent_calloc(0, elemsno, elemsize, chunks); }
--void **nedindependent_comalloc(size_t elems, size_t *sizes, void **chunks) THROWSPEC	{ return nedpindependent_comalloc(0, elems, sizes, chunks); }
+-/* Return true if segment contains a segment link */
+-static int has_segment_link(mstate m, msegmentptr ss) {
+-  msegmentptr sp = &m->seg;
+-  for (;;) {
+-    if ((char*)sp >= ss->base && (char*)sp < ss->base + ss->size)
+-      return 1;
+-    if ((sp = sp->next) == 0)
+-      return 0;
+-  }
+-}
 -
--struct threadcacheblk_t;
--typedef struct threadcacheblk_t threadcacheblk;
--struct threadcacheblk_t
--{	/* Keep less than 16 bytes on 32 bit systems and 32 bytes on 64 bit systems */
--#ifdef FULLSANITYCHECKS
--	unsigned int magic;
--#endif
--	unsigned int lastUsed, size;
--	threadcacheblk *next, *prev;
--};
--typedef struct threadcache_t
--{
--#ifdef FULLSANITYCHECKS
--	unsigned int magic1;
--#endif
--	int mymspace;						/* Last mspace entry this thread used */
--	long threadid;
--	unsigned int mallocs, frees, successes;
--	size_t freeInCache;					/* How much free space is stored in this cache */
--	threadcacheblk *bins[(THREADCACHEMAXBINS+1)*2];
--#ifdef FULLSANITYCHECKS
--	unsigned int magic2;
--#endif
--} threadcache;
--struct nedpool_t
--{
--	MLOCK_T mutex;
--	void *uservalue;
--	int threads;						/* Max entries in m to use */
--	threadcache *caches[THREADCACHEMAXCACHES];
--	TLSVAR mycache;						/* Thread cache for this thread. 0 for unset, negative for use mspace-1 directly, otherwise is cache-1 */
--	mstate m[MAXTHREADSINPOOL+1];		/* mspace entries for this pool */
--};
--static nedpool syspool;
+-#ifndef MORECORE_CANNOT_TRIM
+-#define should_trim(M,s)  ((s) > (M)->trim_check)
+-#else  /* MORECORE_CANNOT_TRIM */
+-#define should_trim(M,s)  (0)
+-#endif /* MORECORE_CANNOT_TRIM */
 -
--static FORCEINLINE unsigned int size2binidx(size_t _size) THROWSPEC
--{	/* 8=1000	16=10000	20=10100	24=11000	32=100000	48=110000	4096=1000000000000 */
--	unsigned int topbit, size=(unsigned int)(_size>>4);
--	/* 16=1		20=1	24=1	32=10	48=11	64=100	96=110	128=1000	4096=100000000 */
+-/*
+-  TOP_FOOT_SIZE is padding at the end of a segment, including space
+-  that may be needed to place segment records and fenceposts when new
+-  noncontiguous segments are added.
+-*/
+-#define TOP_FOOT_SIZE\
+-  (align_offset(chunk2mem(0))+pad_request(sizeof(struct malloc_segment))+MIN_CHUNK_SIZE)
 -
--#if defined(__GNUC__)
--	topbit = sizeof(size)*__CHAR_BIT__ - 1 - __builtin_clz(size);
+-
+-/* -------------------------------  Hooks -------------------------------- */
+-
+-/*
+-  PREACTION should be defined to return 0 on success, and nonzero on
+-  failure. If you are not using locking, you can redefine these to do
+-  anything you like.
+-*/
+-
+-#if USE_LOCKS
+-
+-#define PREACTION(M)  ((use_lock(M))? ACQUIRE_LOCK(&(M)->mutex) : 0)
+-#define POSTACTION(M) { if (use_lock(M)) RELEASE_LOCK(&(M)->mutex); }
+-#else /* USE_LOCKS */
+-
+-#ifndef PREACTION
+-#define PREACTION(M) (0)
+-#endif  /* PREACTION */
+-
+-#ifndef POSTACTION
+-#define POSTACTION(M)
+-#endif  /* POSTACTION */
+-
+-#endif /* USE_LOCKS */
+-
+-/*
+-  CORRUPTION_ERROR_ACTION is triggered upon detected bad addresses.
+-  USAGE_ERROR_ACTION is triggered on detected bad frees and
+-  reallocs. The argument p is an address that might have triggered the
+-  fault. It is ignored by the two predefined actions, but might be
+-  useful in custom actions that try to help diagnose errors.
+-*/
+-
+-#if PROCEED_ON_ERROR
+-
+-/* A count of the number of corruption errors causing resets */
+-int malloc_corruption_error_count;
+-
+-/* default corruption action */
+-static void reset_on_error(mstate m);
+-
+-#define CORRUPTION_ERROR_ACTION(m)  reset_on_error(m)
+-#define USAGE_ERROR_ACTION(m, p)
+-
+-#else /* PROCEED_ON_ERROR */
+-
+-#ifndef CORRUPTION_ERROR_ACTION
+-#define CORRUPTION_ERROR_ACTION(m) ABORT
+-#endif /* CORRUPTION_ERROR_ACTION */
+-
+-#ifndef USAGE_ERROR_ACTION
+-#define USAGE_ERROR_ACTION(m,p) ABORT
+-#endif /* USAGE_ERROR_ACTION */
+-
+-#endif /* PROCEED_ON_ERROR */
+-
+-/* -------------------------- Debugging setup ---------------------------- */
+-
+-#if ! DEBUG
+-
+-#define check_free_chunk(M,P)
+-#define check_inuse_chunk(M,P)
+-#define check_malloced_chunk(M,P,N)
+-#define check_mmapped_chunk(M,P)
+-#define check_malloc_state(M)
+-#define check_top_chunk(M,P)
+-
+-#else /* DEBUG */
+-#define check_free_chunk(M,P)       do_check_free_chunk(M,P)
+-#define check_inuse_chunk(M,P)      do_check_inuse_chunk(M,P)
+-#define check_top_chunk(M,P)        do_check_top_chunk(M,P)
+-#define check_malloced_chunk(M,P,N) do_check_malloced_chunk(M,P,N)
+-#define check_mmapped_chunk(M,P)    do_check_mmapped_chunk(M,P)
+-#define check_malloc_state(M)       do_check_malloc_state(M)
+-
+-static void   do_check_any_chunk(mstate m, mchunkptr p);
+-static void   do_check_top_chunk(mstate m, mchunkptr p);
+-static void   do_check_mmapped_chunk(mstate m, mchunkptr p);
+-static void   do_check_inuse_chunk(mstate m, mchunkptr p);
+-static void   do_check_free_chunk(mstate m, mchunkptr p);
+-static void   do_check_malloced_chunk(mstate m, void* mem, size_t s);
+-static void   do_check_tree(mstate m, tchunkptr t);
+-static void   do_check_treebin(mstate m, bindex_t i);
+-static void   do_check_smallbin(mstate m, bindex_t i);
+-static void   do_check_malloc_state(mstate m);
+-static int    bin_find(mstate m, mchunkptr x);
+-static size_t traverse_and_check(mstate m);
+-#endif /* DEBUG */
+-
+-/* ---------------------------- Indexing Bins ---------------------------- */
+-
+-#define is_small(s)         (((s) >> SMALLBIN_SHIFT) < NSMALLBINS)
+-#define small_index(s)      ((s)  >> SMALLBIN_SHIFT)
+-#define small_index2size(i) ((i)  << SMALLBIN_SHIFT)
+-#define MIN_SMALL_INDEX     (small_index(MIN_CHUNK_SIZE))
+-
+-/* addressing by index. See above about smallbin repositioning */
+-#define smallbin_at(M, i)   ((sbinptr)((char*)&((M)->smallbins[(i)<<1])))
+-#define treebin_at(M,i)     (&((M)->treebins[i]))
+-
+-/* assign tree index for size S to variable I. Use x86 asm if possible  */
+-#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+-#define compute_tree_index(S, I)\
+-{\
+-  unsigned int X = S >> TREEBIN_SHIFT;\
+-  if (X == 0)\
+-    I = 0;\
+-  else if (X > 0xFFFF)\
+-    I = NTREEBINS-1;\
+-  else {\
+-    unsigned int K;\
+-    __asm__("bsrl\t%1, %0\n\t" : "=r" (K) : "rm"  (X));\
+-    I =  (bindex_t)((K << 1) + ((S >> (K + (TREEBIN_SHIFT-1)) & 1)));\
+-  }\
+-}
+-
+-#elif defined (__INTEL_COMPILER)
+-#define compute_tree_index(S, I)\
+-{\
+-  size_t X = S >> TREEBIN_SHIFT;\
+-  if (X == 0)\
+-    I = 0;\
+-  else if (X > 0xFFFF)\
+-    I = NTREEBINS-1;\
+-  else {\
+-    unsigned int K = _bit_scan_reverse (X); \
+-    I =  (bindex_t)((K << 1) + ((S >> (K + (TREEBIN_SHIFT-1)) & 1)));\
+-  }\
+-}
+-
 -#elif defined(_MSC_VER) && _MSC_VER>=1300
--	{
--	    unsigned long bsrTopBit;
+-#define compute_tree_index(S, I)\
+-{\
+-  size_t X = S >> TREEBIN_SHIFT;\
+-  if (X == 0)\
+-    I = 0;\
+-  else if (X > 0xFFFF)\
+-    I = NTREEBINS-1;\
+-  else {\
+-    unsigned int K;\
+-    _BitScanReverse((DWORD *) &K, X);\
+-    I =  (bindex_t)((K << 1) + ((S >> (K + (TREEBIN_SHIFT-1)) & 1)));\
+-  }\
+-}
 -
--	    _BitScanReverse(&bsrTopBit, size);
+-#else /* GNUC */
+-#define compute_tree_index(S, I)\
+-{\
+-  size_t X = S >> TREEBIN_SHIFT;\
+-  if (X == 0)\
+-    I = 0;\
+-  else if (X > 0xFFFF)\
+-    I = NTREEBINS-1;\
+-  else {\
+-    unsigned int Y = (unsigned int)X;\
+-    unsigned int N = ((Y - 0x100) >> 16) & 8;\
+-    unsigned int K = (((Y <<= N) - 0x1000) >> 16) & 4;\
+-    N += K;\
+-    N += K = (((Y <<= K) - 0x4000) >> 16) & 2;\
+-    K = 14 - N + ((Y <<= K) >> 15);\
+-    I = (K << 1) + ((S >> (K + (TREEBIN_SHIFT-1)) & 1));\
+-  }\
+-}
+-#endif /* GNUC */
 -
--	    topbit = bsrTopBit;
--	}
+-/* Bit representing maximum resolved size in a treebin at i */
+-#define bit_for_tree_index(i) \
+-   (i == NTREEBINS-1)? (SIZE_T_BITSIZE-1) : (((i) >> 1) + TREEBIN_SHIFT - 2)
+-
+-/* Shift placing maximum resolved bit in a treebin at i as sign bit */
+-#define leftshift_for_tree_index(i) \
+-   ((i == NTREEBINS-1)? 0 : \
+-    ((SIZE_T_BITSIZE-SIZE_T_ONE) - (((i) >> 1) + TREEBIN_SHIFT - 2)))
+-
+-/* The size of the smallest chunk held in bin with index i */
+-#define minsize_for_tree_index(i) \
+-   ((SIZE_T_ONE << (((i) >> 1) + TREEBIN_SHIFT)) |  \
+-   (((size_t)((i) & SIZE_T_ONE)) << (((i) >> 1) + TREEBIN_SHIFT - 1)))
+-
+-
+-/* ------------------------ Operations on bin maps ----------------------- */
+-
+-/* bit corresponding to given index */
+-#define idx2bit(i)              ((binmap_t)(1) << (i))
+-
+-/* Mark/Clear bits with given index */
+-#define mark_smallmap(M,i)      ((M)->smallmap |=  idx2bit(i))
+-#define clear_smallmap(M,i)     ((M)->smallmap &= ~idx2bit(i))
+-#define smallmap_is_marked(M,i) ((M)->smallmap &   idx2bit(i))
+-
+-#define mark_treemap(M,i)       ((M)->treemap  |=  idx2bit(i))
+-#define clear_treemap(M,i)      ((M)->treemap  &= ~idx2bit(i))
+-#define treemap_is_marked(M,i)  ((M)->treemap  &   idx2bit(i))
+-
+-/* isolate the least set bit of a bitmap */
+-#define least_bit(x)         ((x) & -(x))
+-
+-/* mask with all bits to left of least bit of x on */
+-#define left_bits(x)         ((x<<1) | -(x<<1))
+-
+-/* mask with all bits to left of or equal to least bit of x on */
+-#define same_or_left_bits(x) ((x) | -(x))
+-
+-/* index corresponding to given bit. Use x86 asm if possible */
+-
+-#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+-#define compute_bit2idx(X, I)\
+-{\
+-  unsigned int J;\
+-  __asm__("bsfl\t%1, %0\n\t" : "=r" (J) : "rm" (X));\
+-  I = (bindex_t)J;\
+-}
+-
+-#elif defined (__INTEL_COMPILER)
+-#define compute_bit2idx(X, I)\
+-{\
+-  unsigned int J;\
+-  J = _bit_scan_forward (X); \
+-  I = (bindex_t)J;\
+-}
+-
+-#elif defined(_MSC_VER) && _MSC_VER>=1300
+-#define compute_bit2idx(X, I)\
+-{\
+-  unsigned int J;\
+-  _BitScanForward((DWORD *) &J, X);\
+-  I = (bindex_t)J;\
+-}
+-
+-#elif USE_BUILTIN_FFS
+-#define compute_bit2idx(X, I) I = ffs(X)-1
+-
 -#else
--#if 0
--	union {
--		unsigned asInt[2];
--		double asDouble;
--	};
--	int n;
--
--	asDouble = (double)size + 0.5;
--	topbit = (asInt[!FOX_BIGENDIAN] >> 20) - 1023;
--#else
--	{
--		unsigned int x=size;
--		x = x | (x >> 1);
--		x = x | (x >> 2);
--		x = x | (x >> 4);
--		x = x | (x >> 8);
--		x = x | (x >>16);
--		x = ~x;
--		x = x - ((x >> 1) & 0x55555555);
--		x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
--		x = (x + (x >> 4)) & 0x0F0F0F0F;
--		x = x + (x << 8);
--		x = x + (x << 16);
--		topbit=31 - (x >> 24);
--	}
--#endif
--#endif
--	return topbit;
+-#define compute_bit2idx(X, I)\
+-{\
+-  unsigned int Y = X - 1;\
+-  unsigned int K = Y >> (16-4) & 16;\
+-  unsigned int N = K;        Y >>= K;\
+-  N += K = Y >> (8-3) &  8;  Y >>= K;\
+-  N += K = Y >> (4-2) &  4;  Y >>= K;\
+-  N += K = Y >> (2-1) &  2;  Y >>= K;\
+-  N += K = Y >> (1-0) &  1;  Y >>= K;\
+-  I = (bindex_t)(N + Y);\
 -}
+-#endif /* GNUC */
 -
 -
--#ifdef FULLSANITYCHECKS
--static void tcsanitycheck(threadcacheblk **ptr) THROWSPEC
--{
--	assert((ptr[0] && ptr[1]) || (!ptr[0] && !ptr[1]));
--	if(ptr[0] && ptr[1])
--	{
--		assert(nedblksize(ptr[0])>=sizeof(threadcacheblk));
--		assert(nedblksize(ptr[1])>=sizeof(threadcacheblk));
--		assert(*(unsigned int *) "NEDN"==ptr[0]->magic);
--		assert(*(unsigned int *) "NEDN"==ptr[1]->magic);
--		assert(!ptr[0]->prev);
--		assert(!ptr[1]->next);
--		if(ptr[0]==ptr[1])
--		{
--			assert(!ptr[0]->next);
--			assert(!ptr[1]->prev);
--		}
--	}
--}
--static void tcfullsanitycheck(threadcache *tc) THROWSPEC
--{
--	threadcacheblk **tcbptr=tc->bins;
--	int n;
--	for(n=0; n<=THREADCACHEMAXBINS; n++, tcbptr+=2)
--	{
--		threadcacheblk *b, *ob=0;
--		tcsanitycheck(tcbptr);
--		for(b=tcbptr[0]; b; ob=b, b=b->next)
--		{
--			assert(*(unsigned int *) "NEDN"==b->magic);
--			assert(!ob || ob->next==b);
--			assert(!ob || b->prev==ob);
--		}
--	}
--}
--#endif
+-/* ----------------------- Runtime Check Support ------------------------- */
 -
--static NOINLINE void RemoveCacheEntries(nedpool *p, threadcache *tc, unsigned int age) THROWSPEC
--{
--#ifdef FULLSANITYCHECKS
--	tcfullsanitycheck(tc);
--#endif
--	if(tc->freeInCache)
--	{
--		threadcacheblk **tcbptr=tc->bins;
--		int n;
--		for(n=0; n<=THREADCACHEMAXBINS; n++, tcbptr+=2)
--		{
--			threadcacheblk **tcb=tcbptr+1;		/* come from oldest end of list */
--			/*tcsanitycheck(tcbptr);*/
--			for(; *tcb && tc->frees-(*tcb)->lastUsed>=age; )
--			{
--				threadcacheblk *f=*tcb;
--				size_t blksize=f->size; /*nedblksize(f);*/
--				assert(blksize<=nedblksize(f));
--				assert(blksize);
--#ifdef FULLSANITYCHECKS
--				assert(*(unsigned int *) "NEDN"==(*tcb)->magic);
--#endif
--				*tcb=(*tcb)->prev;
--				if(*tcb)
--					(*tcb)->next=0;
--				else
--					*tcbptr=0;
--				tc->freeInCache-=blksize;
--				assert((long) tc->freeInCache>=0);
--				mspace_free(0, f);
--				/*tcsanitycheck(tcbptr);*/
--			}
--		}
--	}
--#ifdef FULLSANITYCHECKS
--	tcfullsanitycheck(tc);
--#endif
--}
--static void DestroyCaches(nedpool *p) THROWSPEC
--{
--	{
--		threadcache *tc;
--		int n;
--		for(n=0; n<THREADCACHEMAXCACHES; n++)
--		{
--			if((tc=p->caches[n]))
--			{
--				tc->frees++;
--				RemoveCacheEntries(p, tc, 0);
--				assert(!tc->freeInCache);
--				tc->mymspace=-1;
--				tc->threadid=0;
--				mspace_free(0, tc);
--				p->caches[n]=0;
--			}
--		}
--	}
--}
+-/*
+-  For security, the main invariant is that malloc/free/etc never
+-  writes to a static address other than malloc_state, unless static
+-  malloc_state itself has been corrupted, which cannot occur via
+-  malloc (because of these checks). In essence this means that we
+-  believe all pointers, sizes, maps etc held in malloc_state, but
+-  check all of those linked or offsetted from other embedded data
+-  structures.  These checks are interspersed with main code in a way
+-  that tends to minimize their run-time cost.
 -
--static NOINLINE threadcache *AllocCache(nedpool *p) THROWSPEC
--{
--	threadcache *tc=0;
--	int n, end;
--	ACQUIRE_LOCK(&p->mutex);
--	for(n=0; n<THREADCACHEMAXCACHES && p->caches[n]; n++);
--	if(THREADCACHEMAXCACHES==n)
--	{	/* List exhausted, so disable for this thread */
--		RELEASE_LOCK(&p->mutex);
--		return 0;
--	}
--	tc=p->caches[n]=(threadcache *) mspace_calloc(p->m[0], 1, sizeof(threadcache));
--	if(!tc)
--	{
--		RELEASE_LOCK(&p->mutex);
--		return 0;
--	}
--#ifdef FULLSANITYCHECKS
--	tc->magic1=*(unsigned int *)"NEDMALC1";
--	tc->magic2=*(unsigned int *)"NEDMALC2";
--#endif
--	tc->threadid=(long)(size_t)CURRENT_THREAD;
--	for(end=0; p->m[end]; end++);
--	tc->mymspace=tc->threadid % end;
--	RELEASE_LOCK(&p->mutex);
--	if(TLSSET(p->mycache, (void *)(size_t)(n+1))) abort();
--	return tc;
--}
--
--static void *threadcache_malloc(nedpool *p, threadcache *tc, size_t *size) THROWSPEC
--{
--	void *ret=0;
--	unsigned int bestsize;
--	unsigned int idx=size2binidx(*size);
--	size_t blksize=0;
--	threadcacheblk *blk, **binsptr;
--#ifdef FULLSANITYCHECKS
--	tcfullsanitycheck(tc);
--#endif
--	/* Calculate best fit bin size */
--	bestsize=1<<(idx+4);
--#if 0
--	/* Finer grained bin fit */
--	idx<<=1;
--	if(*size>bestsize)
--	{
--		idx++;
--		bestsize+=bestsize>>1;
--	}
--	if(*size>bestsize)
--	{
--		idx++;
--		bestsize=1<<(4+(idx>>1));
--	}
--#else
--	if(*size>bestsize)
--	{
--		idx++;
--		bestsize<<=1;
--	}
--#endif
--	assert(bestsize>=*size);
--	if(*size<bestsize) *size=bestsize;
--	assert(*size<=THREADCACHEMAX);
--	assert(idx<=THREADCACHEMAXBINS);
--	binsptr=&tc->bins[idx*2];
--	/* Try to match close, but move up a bin if necessary */
--	blk=*binsptr;
--	if(!blk || blk->size<*size)
--	{	/* Bump it up a bin */
--		if(idx<THREADCACHEMAXBINS)
--		{
--			idx++;
--			binsptr+=2;
--			blk=*binsptr;
--		}
--	}
--	if(blk)
--	{
--		blksize=blk->size; /*nedblksize(blk);*/
--		assert(nedblksize(blk)>=blksize);
--		assert(blksize>=*size);
--		if(blk->next)
--			blk->next->prev=0;
--		*binsptr=blk->next;
--		if(!*binsptr)
--			binsptr[1]=0;
--#ifdef FULLSANITYCHECKS
--		blk->magic=0;
--#endif
--		assert(binsptr[0]!=blk && binsptr[1]!=blk);
--		assert(nedblksize(blk)>=sizeof(threadcacheblk) && nedblksize(blk)<=THREADCACHEMAX+CHUNK_OVERHEAD);
--		/*printf("malloc: %p, %p, %p, %lu\n", p, tc, blk, (long) size);*/
--		ret=(void *) blk;
--	}
--	++tc->mallocs;
--	if(ret)
--	{
--		assert(blksize>=*size);
--		++tc->successes;
--		tc->freeInCache-=blksize;
--		assert((long) tc->freeInCache>=0);
--	}
--#if defined(DEBUG) && 0
--	if(!(tc->mallocs & 0xfff))
--	{
--		printf("*** threadcache=%u, mallocs=%u (%f), free=%u (%f), freeInCache=%u\n", (unsigned int) tc->threadid, tc->mallocs,
--			(float) tc->successes/tc->mallocs, tc->frees, (float) tc->successes/tc->frees, (unsigned int) tc->freeInCache);
--	}
--#endif
--#ifdef FULLSANITYCHECKS
--	tcfullsanitycheck(tc);
--#endif
--	return ret;
--}
--static NOINLINE void ReleaseFreeInCache(nedpool *p, threadcache *tc, int mymspace) THROWSPEC
--{
--	unsigned int age=THREADCACHEMAXFREESPACE/8192;
--	/*ACQUIRE_LOCK(&p->m[mymspace]->mutex);*/
--	while(age && tc->freeInCache>=THREADCACHEMAXFREESPACE)
--	{
--		RemoveCacheEntries(p, tc, age);
--		/*printf("*** Removing cache entries older than %u (%u)\n", age, (unsigned int) tc->freeInCache);*/
--		age>>=1;
--	}
--	/*RELEASE_LOCK(&p->m[mymspace]->mutex);*/
--}
--static void threadcache_free(nedpool *p, threadcache *tc, int mymspace, void *mem, size_t size) THROWSPEC
--{
--	unsigned int bestsize;
--	unsigned int idx=size2binidx(size);
--	threadcacheblk **binsptr, *tck=(threadcacheblk *) mem;
--	assert(size>=sizeof(threadcacheblk) && size<=THREADCACHEMAX+CHUNK_OVERHEAD);
--#ifdef DEBUG
--	{	/* Make sure this is a valid memory block */
--	    mchunkptr p  = mem2chunk(mem);
--	    mstate fm = get_mstate_for(p);
--	    if (!ok_magic(fm)) {
--	      USAGE_ERROR_ACTION(fm, p);
--	      return;
--	    }
--	}
--#endif
--#ifdef FULLSANITYCHECKS
--	tcfullsanitycheck(tc);
--#endif
--	/* Calculate best fit bin size */
--	bestsize=1<<(idx+4);
--#if 0
--	/* Finer grained bin fit */
--	idx<<=1;
--	if(size>bestsize)
--	{
--		unsigned int biggerbestsize=bestsize+bestsize<<1;
--		if(size>=biggerbestsize)
--		{
--			idx++;
--			bestsize=biggerbestsize;
--		}
--	}
--#endif
--	if(bestsize!=size)	/* dlmalloc can round up, so we round down to preserve indexing */
--		size=bestsize;
--	binsptr=&tc->bins[idx*2];
--	assert(idx<=THREADCACHEMAXBINS);
--	if(tck==*binsptr)
--	{
--		fprintf(stderr, "Attempt to free already freed memory block %p - aborting!\n", (void *)tck);
--		abort();
--	}
--#ifdef FULLSANITYCHECKS
--	tck->magic=*(unsigned int *) "NEDN";
--#endif
--	tck->lastUsed=++tc->frees;
--	tck->size=(unsigned int) size;
--	tck->next=*binsptr;
--	tck->prev=0;
--	if(tck->next)
--		tck->next->prev=tck;
--	else
--		binsptr[1]=tck;
--	assert(!*binsptr || (*binsptr)->size==tck->size);
--	*binsptr=tck;
--	assert(tck==tc->bins[idx*2]);
--	assert(tc->bins[idx*2+1]==tck || binsptr[0]->next->prev==tck);
--	/*printf("free: %p, %p, %p, %lu\n", p, tc, mem, (long) size);*/
--	tc->freeInCache+=size;
--#ifdef FULLSANITYCHECKS
--	tcfullsanitycheck(tc);
--#endif
--#if 1
--	if(tc->freeInCache>=THREADCACHEMAXFREESPACE)
--		ReleaseFreeInCache(p, tc, mymspace);
--#endif
--}
--
--
--
--
--static NOINLINE int InitPool(nedpool *p, size_t capacity, int threads) THROWSPEC
--{	/* threads is -1 for system pool */
--	ensure_initialization();
--	ACQUIRE_MALLOC_GLOBAL_LOCK();
--	if(p->threads) goto done;
--	if(INITIAL_LOCK(&p->mutex)) goto err;
--	if(TLSALLOC(&p->mycache)) goto err;
--	if(!(p->m[0]=(mstate) create_mspace(capacity, 1))) goto err;
--	p->m[0]->extp=p;
--	p->threads=(threads<1 || threads>MAXTHREADSINPOOL) ? MAXTHREADSINPOOL : threads;
--done:
--	RELEASE_MALLOC_GLOBAL_LOCK();
--	return 1;
--err:
--	if(threads<0)
--		abort();			/* If you can't allocate for system pool, we're screwed */
--	DestroyCaches(p);
--	if(p->m[0])
--	{
--		destroy_mspace(p->m[0]);
--		p->m[0]=0;
--	}
--	if(p->mycache)
--	{
--		if(TLSFREE(p->mycache)) abort();
--		p->mycache=0;
--	}
--	RELEASE_MALLOC_GLOBAL_LOCK();
--	return 0;
--}
--static NOINLINE mstate FindMSpace(nedpool *p, threadcache *tc, int *lastUsed, size_t size) THROWSPEC
--{	/* Gets called when thread's last used mspace is in use. The strategy
--	is to run through the list of all available mspaces looking for an
--	unlocked one and if we fail, we create a new one so long as we don't
--	exceed p->threads */
--	int n, end;
--	for(n=end=*lastUsed+1; p->m[n]; end=++n)
--	{
--		if(TRY_LOCK(&p->m[n]->mutex)) goto found;
--	}
--	for(n=0; n<*lastUsed && p->m[n]; n++)
--	{
--		if(TRY_LOCK(&p->m[n]->mutex)) goto found;
--	}
--	if(end<p->threads)
--	{
--		mstate temp;
--		if(!(temp=(mstate) create_mspace(size, 1)))
--			goto badexit;
--		/* Now we're ready to modify the lists, we lock */
--		ACQUIRE_LOCK(&p->mutex);
--		while(p->m[end] && end<p->threads)
--			end++;
--		if(end>=p->threads)
--		{	/* Drat, must destroy it now */
--			RELEASE_LOCK(&p->mutex);
--			destroy_mspace((mspace) temp);
--			goto badexit;
--		}
--		/* We really want to make sure this goes into memory now but we
--		have to be careful of breaking aliasing rules, so write it twice */
--		{
--			volatile struct malloc_state **_m=(volatile struct malloc_state **) &p->m[end];
--			*_m=(p->m[end]=temp);
--		}
--		ACQUIRE_LOCK(&p->m[end]->mutex);
--		/*printf("Created mspace idx %d\n", end);*/
--		RELEASE_LOCK(&p->mutex);
--		n=end;
--		goto found;
--	}
--	/* Let it lock on the last one it used */
--badexit:
--	ACQUIRE_LOCK(&p->m[*lastUsed]->mutex);
--	return p->m[*lastUsed];
--found:
--	*lastUsed=n;
--	if(tc)
--		tc->mymspace=n;
--	else
--	{
--		if(TLSSET(p->mycache, (void *)(size_t)(-(n+1)))) abort();
--	}
--	return p->m[n];
--}
--
--nedpool *nedcreatepool(size_t capacity, int threads) THROWSPEC
--{
--	nedpool *ret;
--	if(!(ret=(nedpool *) nedpcalloc(0, 1, sizeof(nedpool)))) return 0;
--	if(!InitPool(ret, capacity, threads))
--	{
--		nedpfree(0, ret);
--		return 0;
--	}
--	return ret;
--}
--void neddestroypool(nedpool *p) THROWSPEC
--{
--	int n;
--	ACQUIRE_LOCK(&p->mutex);
--	DestroyCaches(p);
--	for(n=0; p->m[n]; n++)
--	{
--		destroy_mspace(p->m[n]);
--		p->m[n]=0;
--	}
--	RELEASE_LOCK(&p->mutex);
--	if(TLSFREE(p->mycache)) abort();
--	nedpfree(0, p);
--}
--
--void nedpsetvalue(nedpool *p, void *v) THROWSPEC
--{
--	if(!p) { p=&syspool; if(!syspool.threads) InitPool(&syspool, 0, -1); }
--	p->uservalue=v;
--}
--void *nedgetvalue(nedpool **p, void *mem) THROWSPEC
--{
--	nedpool *np=0;
--	mchunkptr mcp=mem2chunk(mem);
--	mstate fm;
--	if(!(is_aligned(chunk2mem(mcp))) && mcp->head != FENCEPOST_HEAD) return 0;
--	if(!cinuse(mcp)) return 0;
--	if(!next_pinuse(mcp)) return 0;
--	if(!is_mmapped(mcp) && !pinuse(mcp))
--	{
--		if(next_chunk(prev_chunk(mcp))!=mcp) return 0;
--	}
--	fm=get_mstate_for(mcp);
--	if(!ok_magic(fm)) return 0;
--	if(!ok_address(fm, mcp)) return 0;
--	if(!fm->extp) return 0;
--	np=(nedpool *) fm->extp;
--	if(p) *p=np;
--	return np->uservalue;
--}
--
--void neddisablethreadcache(nedpool *p) THROWSPEC
--{
--	int mycache;
--	if(!p)
--	{
--		p=&syspool;
--		if(!syspool.threads) InitPool(&syspool, 0, -1);
--	}
--	mycache=(int)(size_t) TLSGET(p->mycache);
--	if(!mycache)
--	{	/* Set to mspace 0 */
--		if(TLSSET(p->mycache, (void *)-1)) abort();
--	}
--	else if(mycache>0)
--	{	/* Set to last used mspace */
--		threadcache *tc=p->caches[mycache-1];
--#if defined(DEBUG)
--		printf("Threadcache utilisation: %lf%% in cache with %lf%% lost to other threads\n",
--			100.0*tc->successes/tc->mallocs, 100.0*((double) tc->mallocs-tc->frees)/tc->mallocs);
--#endif
--		if(TLSSET(p->mycache, (void *)(size_t)(-tc->mymspace))) abort();
--		tc->frees++;
--		RemoveCacheEntries(p, tc, 0);
--		assert(!tc->freeInCache);
--		tc->mymspace=-1;
--		tc->threadid=0;
--		mspace_free(0, p->caches[mycache-1]);
--		p->caches[mycache-1]=0;
--	}
--}
--
--#define GETMSPACE(m,p,tc,ms,s,action)           \
--  do                                            \
--  {                                             \
--    mstate m = GetMSpace((p),(tc),(ms),(s));    \
--    action;                                     \
--    RELEASE_LOCK(&m->mutex);                    \
--  } while (0)
--
--static FORCEINLINE mstate GetMSpace(nedpool *p, threadcache *tc, int mymspace, size_t size) THROWSPEC
--{	/* Returns a locked and ready for use mspace */
--	mstate m=p->m[mymspace];
--	assert(m);
--	if(!TRY_LOCK(&p->m[mymspace]->mutex)) m=FindMSpace(p, tc, &mymspace, size);\
--	/*assert(IS_LOCKED(&p->m[mymspace]->mutex));*/
--	return m;
--}
--static FORCEINLINE void GetThreadCache(nedpool **p, threadcache **tc, int *mymspace, size_t *size) THROWSPEC
--{
--	int mycache;
--	if(size && *size<sizeof(threadcacheblk)) *size=sizeof(threadcacheblk);
--	if(!*p)
--	{
--		*p=&syspool;
--		if(!syspool.threads) InitPool(&syspool, 0, -1);
--	}
--	mycache=(int)(size_t) TLSGET((*p)->mycache);
--	if(mycache>0)
--	{
--		*tc=(*p)->caches[mycache-1];
--		*mymspace=(*tc)->mymspace;
--	}
--	else if(!mycache)
--	{
--		*tc=AllocCache(*p);
--		if(!*tc)
--		{	/* Disable */
--			if(TLSSET((*p)->mycache, (void *)-1)) abort();
--			*mymspace=0;
--		}
--		else
--			*mymspace=(*tc)->mymspace;
--	}
--	else
--	{
--		*tc=0;
--		*mymspace=-mycache-1;
--	}
--	assert(*mymspace>=0);
--	assert((long)(size_t)CURRENT_THREAD==(*tc)->threadid);
--#ifdef FULLSANITYCHECKS
--	if(*tc)
--	{
--		if(*(unsigned int *)"NEDMALC1"!=(*tc)->magic1 || *(unsigned int *)"NEDMALC2"!=(*tc)->magic2)
--		{
--			abort();
--		}
--	}
--#endif
--}
--
--void * nedpmalloc(nedpool *p, size_t size) THROWSPEC
--{
--	void *ret=0;
--	threadcache *tc;
--	int mymspace;
--	GetThreadCache(&p, &tc, &mymspace, &size);
--#if THREADCACHEMAX
--	if(tc && size<=THREADCACHEMAX)
--	{	/* Use the thread cache */
--		ret=threadcache_malloc(p, tc, &size);
--	}
--#endif
--	if(!ret)
--	{	/* Use this thread's mspace */
--	GETMSPACE(m, p, tc, mymspace, size,
--		  ret=mspace_malloc(m, size));
--	}
--	return ret;
--}
--void * nedpcalloc(nedpool *p, size_t no, size_t size) THROWSPEC
--{
--	size_t rsize=size*no;
--	void *ret=0;
--	threadcache *tc;
--	int mymspace;
--	GetThreadCache(&p, &tc, &mymspace, &rsize);
--#if THREADCACHEMAX
--	if(tc && rsize<=THREADCACHEMAX)
--	{	/* Use the thread cache */
--		if((ret=threadcache_malloc(p, tc, &rsize)))
--			memset(ret, 0, rsize);
--	}
--#endif
--	if(!ret)
--	{	/* Use this thread's mspace */
--	GETMSPACE(m, p, tc, mymspace, rsize,
--		  ret=mspace_calloc(m, 1, rsize));
--	}
--	return ret;
--}
--void * nedprealloc(nedpool *p, void *mem, size_t size) THROWSPEC
--{
--	void *ret=0;
--	threadcache *tc;
--	int mymspace;
--	if(!mem) return nedpmalloc(p, size);
--	GetThreadCache(&p, &tc, &mymspace, &size);
--#if THREADCACHEMAX
--	if(tc && size && size<=THREADCACHEMAX)
--	{	/* Use the thread cache */
--		size_t memsize=nedblksize(mem);
--		assert(memsize);
--		if((ret=threadcache_malloc(p, tc, &size)))
--		{
--			memcpy(ret, mem, memsize<size ? memsize : size);
--			if(memsize<=THREADCACHEMAX)
--				threadcache_free(p, tc, mymspace, mem, memsize);
--			else
--				mspace_free(0, mem);
--		}
--	}
--#endif
--	if(!ret)
--	{	/* Reallocs always happen in the mspace they happened in, so skip
--		locking the preferred mspace for this thread */
--		ret=mspace_realloc(0, mem, size);
--	}
--	return ret;
--}
--void   nedpfree(nedpool *p, void *mem) THROWSPEC
--{	/* Frees always happen in the mspace they happened in, so skip
--	locking the preferred mspace for this thread */
--	threadcache *tc;
--	int mymspace;
--	size_t memsize;
--	assert(mem);
--	GetThreadCache(&p, &tc, &mymspace, 0);
--#if THREADCACHEMAX
--	memsize=nedblksize(mem);
--	assert(memsize);
--	if(mem && tc && memsize<=(THREADCACHEMAX+CHUNK_OVERHEAD))
--		threadcache_free(p, tc, mymspace, mem, memsize);
--	else
--#endif
--		mspace_free(0, mem);
--}
--void * nedpmemalign(nedpool *p, size_t alignment, size_t bytes) THROWSPEC
--{
--	void *ret;
--	threadcache *tc;
--	int mymspace;
--	GetThreadCache(&p, &tc, &mymspace, &bytes);
--	{	/* Use this thread's mspace */
--	GETMSPACE(m, p, tc, mymspace, bytes,
--		  ret=mspace_memalign(m, alignment, bytes));
--	}
--	return ret;
--}
--#if !NO_MALLINFO
--struct mallinfo nedpmallinfo(nedpool *p) THROWSPEC
--{
--	int n;
--	struct mallinfo ret={0};
--	if(!p) { p=&syspool; if(!syspool.threads) InitPool(&syspool, 0, -1); }
--	for(n=0; p->m[n]; n++)
--	{
--		struct mallinfo t=mspace_mallinfo(p->m[n]);
--		ret.arena+=t.arena;
--		ret.ordblks+=t.ordblks;
--		ret.hblkhd+=t.hblkhd;
--		ret.usmblks+=t.usmblks;
--		ret.uordblks+=t.uordblks;
--		ret.fordblks+=t.fordblks;
--		ret.keepcost+=t.keepcost;
--	}
--	return ret;
--}
--#endif
--int    nedpmallopt(nedpool *p, int parno, int value) THROWSPEC
--{
--	return mspace_mallopt(parno, value);
--}
--int    nedpmalloc_trim(nedpool *p, size_t pad) THROWSPEC
--{
--	int n, ret=0;
--	if(!p) { p=&syspool; if(!syspool.threads) InitPool(&syspool, 0, -1); }
--	for(n=0; p->m[n]; n++)
--	{
--		ret+=mspace_trim(p->m[n], pad);
--	}
--	return ret;
--}
--void   nedpmalloc_stats(nedpool *p) THROWSPEC
--{
--	int n;
--	if(!p) { p=&syspool; if(!syspool.threads) InitPool(&syspool, 0, -1); }
--	for(n=0; p->m[n]; n++)
--	{
--		mspace_malloc_stats(p->m[n]);
--	}
--}
--size_t nedpmalloc_footprint(nedpool *p) THROWSPEC
--{
--	size_t ret=0;
--	int n;
--	if(!p) { p=&syspool; if(!syspool.threads) InitPool(&syspool, 0, -1); }
--	for(n=0; p->m[n]; n++)
--	{
--		ret+=mspace_footprint(p->m[n]);
--	}
--	return ret;
--}
--void **nedpindependent_calloc(nedpool *p, size_t elemsno, size_t elemsize, void **chunks) THROWSPEC
--{
--	void **ret;
--	threadcache *tc;
--	int mymspace;
--	GetThreadCache(&p, &tc, &mymspace, &elemsize);
--    GETMSPACE(m, p, tc, mymspace, elemsno*elemsize,
--	      ret=mspace_independent_calloc(m, elemsno, elemsize, chunks));
--	return ret;
--}
--void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **chunks) THROWSPEC
--{
--	void **ret;
--	threadcache *tc;
--	int mymspace;
--	size_t i, *adjustedsizes=(size_t *) alloca(elems*sizeof(size_t));
--	if(!adjustedsizes) return 0;
--	for(i=0; i<elems; i++)
--		adjustedsizes[i]=sizes[i]<sizeof(threadcacheblk) ? sizeof(threadcacheblk) : sizes[i];
--	GetThreadCache(&p, &tc, &mymspace, 0);
--	GETMSPACE(m, p, tc, mymspace, 0,
--	      ret=mspace_independent_comalloc(m, elems, adjustedsizes, chunks));
--	return ret;
--}
--
--#if defined(__cplusplus)
--}
--#endif
-diff --git a/compat/nedmalloc/nedmalloc.h b/compat/nedmalloc/nedmalloc.h
-deleted file mode 100644
-index f960e66063..0000000000
---- a/compat/nedmalloc/nedmalloc.h
-+++ /dev/null
-@@ -1,180 +0,0 @@
--/* nedalloc, an alternative malloc implementation for multiple threads without
--lock contention based on dlmalloc v2.8.3. (C) 2005 Niall Douglas
--
--Boost Software License - Version 1.0 - August 17th, 2003
--
--Permission is hereby granted, free of charge, to any person or organization
--obtaining a copy of the software and accompanying documentation covered by
--this license (the "Software") to use, reproduce, display, distribute,
--execute, and transmit the Software, and to prepare derivative works of the
--Software, and to permit third-parties to whom the Software is furnished to
--do so, all subject to the following:
--
--The copyright notices in the Software and this entire statement, including
--the above license grant, this restriction and the following disclaimer,
--must be included in all copies of the Software, in whole or in part, and
--all derivative works of the Software, unless such copies or derivative
--works are solely in the form of machine-executable object code generated by
--a source language processor.
--
--THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
--IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
--FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
--SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
--FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
--ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
--DEALINGS IN THE SOFTWARE.
+-  When FOOTERS is defined, in addition to range checking, we also
+-  verify footer fields of inuse chunks, which can be used guarantee
+-  that the mstate controlling malloc/free is intact.  This is a
+-  streamlined version of the approach described by William Robertson
+-  et al in "Run-time Detection of Heap-based Overflows" LISA'03
+-  http://www.usenix.org/events/lisa03/tech/robertson.html The footer
+-  of an inuse chunk holds the xor of its mstate and a random seed,
+-  that is checked upon calls to free() and realloc().  This is
+-  (probablistically) unguessable from outside the program, but can be
+-  computed by any code successfully malloc'ing any chunk, so does not
+-  itself provide protection against code that has already broken
+-  security through some other means.  Unlike Robertson et al, we
+-  always dynamically check addresses of all offset chunks (previous,
+-  next, etc). This turns out to be cheaper than relying on hashes.
 -*/
 -
--#ifndef NEDMALLOC_H
--#define NEDMALLOC_H
+-#if !INSECURE
+-/* Check if address a is at least as high as any from MORECORE or MMAP */
+-#define ok_address(M, a) ((char*)(a) >= (M)->least_addr)
+-/* Check if address of next chunk n is higher than base chunk p */
+-#define ok_next(p, n)    ((char*)(p) < (char*)(n))
+-/* Check if p has its cinuse bit on */
+-#define ok_cinuse(p)     cinuse(p)
+-/* Check if p has its pinuse bit on */
+-#define ok_pinuse(p)     pinuse(p)
+-
+-#else /* !INSECURE */
+-#define ok_address(M, a) (1)
+-#define ok_next(b, n)    (1)
+-#define ok_cinuse(p)     (1)
+-#define ok_pinuse(p)     (1)
+-#endif /* !INSECURE */
+-
+-#if (FOOTERS && !INSECURE)
+-/* Check if (alleged) mstate m has expected magic field */
+-#define ok_magic(M)      ((M)->magic == mparams.magic)
+-#else  /* (FOOTERS && !INSECURE) */
+-#define ok_magic(M)      (1)
+-#endif /* (FOOTERS && !INSECURE) */
 -
 -
--/* See malloc.c.h for what each function does.
+-/* In gcc, use __builtin_expect to minimize impact of checks */
+-#if !INSECURE
+-#if defined(__GNUC__) && __GNUC__ >= 3
+-#define RTCHECK(e)  __builtin_expect(e, 1)
+-#else /* GNUC */
+-#define RTCHECK(e)  (e)
+-#endif /* GNUC */
+-#else /* !INSECURE */
+-#define RTCHECK(e)  (1)
+-#endif /* !INSECURE */
 -
--REPLACE_SYSTEM_ALLOCATOR causes nedalloc's functions to be called malloc,
--free etc. instead of nedmalloc, nedfree etc. You may or may not want this.
+-/* macros to set up inuse chunks with or without footers */
 -
--NO_NED_NAMESPACE prevents the functions from being defined in the nedalloc
--namespace when in C++ (uses the global namespace instead).
+-#if !FOOTERS
 -
--EXTSPEC can be defined to be __declspec(dllexport) or
--__attribute__ ((visibility("default"))) or whatever you like. It defaults
--to extern.
+-#define mark_inuse_foot(M,p,s)
 -
--USE_LOCKS can be 2 if you want to define your own MLOCK_T, INITIAL_LOCK,
--ACQUIRE_LOCK, RELEASE_LOCK, TRY_LOCK, IS_LOCKED and NULL_LOCK_INITIALIZER.
+-/* Set cinuse bit and pinuse bit of next chunk */
+-#define set_inuse(M,p,s)\
+-  ((p)->head = (((p)->head & PINUSE_BIT)|s|CINUSE_BIT),\
+-  ((mchunkptr)(((char*)(p)) + (s)))->head |= PINUSE_BIT)
 -
--*/
+-/* Set cinuse and pinuse of this chunk and pinuse of next chunk */
+-#define set_inuse_and_pinuse(M,p,s)\
+-  ((p)->head = (s|PINUSE_BIT|CINUSE_BIT),\
+-  ((mchunkptr)(((char*)(p)) + (s)))->head |= PINUSE_BIT)
 -
--#include <stddef.h>   /* for size_t */
+-/* Set size, cinuse and pinuse bit of this chunk */
+-#define set_size_and_pinuse_of_inuse_chunk(M, p, s)\
+-  ((p)->head = (s|PINUSE_BIT|CINUSE_BIT))
 -
--#ifndef EXTSPEC
-- #define EXTSPEC extern
+-#else /* FOOTERS */
+-
+-/* Set foot of inuse chunk to be xor of mstate and seed */
+-#define mark_inuse_foot(M,p,s)\
+-  (((mchunkptr)((char*)(p) + (s)))->prev_foot = ((size_t)(M) ^ mparams.magic))
+-
+-#define get_mstate_for(p)\
+-  ((mstate)(((mchunkptr)((char*)(p) +\
+-    (chunksize(p))))->prev_foot ^ mparams.magic))
+-
+-#define set_inuse(M,p,s)\
+-  ((p)->head = (((p)->head & PINUSE_BIT)|s|CINUSE_BIT),\
+-  (((mchunkptr)(((char*)(p)) + (s)))->head |= PINUSE_BIT), \
+-  mark_inuse_foot(M,p,s))
+-
+-#define set_inuse_and_pinuse(M,p,s)\
+-  ((p)->head = (s|PINUSE_BIT|CINUSE_BIT),\
+-  (((mchunkptr)(((char*)(p)) + (s)))->head |= PINUSE_BIT),\
+- mark_inuse_foot(M,p,s))
+-
+-#define set_size_and_pinuse_of_inuse_chunk(M, p, s)\
+-  ((p)->head = (s|PINUSE_BIT|CINUSE_BIT),\
+-  mark_inuse_foot(M, p, s))
+-
+-#endif /* !FOOTERS */
+-
+-/* ---------------------------- setting mparams -------------------------- */
+-
+-/* Initialize mparams */
+-static int init_mparams(void) {
+-#ifdef NEED_GLOBAL_LOCK_INIT
+-  if (malloc_global_mutex_status <= 0)
+-    init_malloc_global_mutex();
 -#endif
 -
--#if defined(_MSC_VER) && _MSC_VER>=1400
-- #define MALLOCATTR __declspec(restrict)
--#endif
--#ifdef __GNUC__
-- #define MALLOCATTR __attribute__ ((malloc))
--#endif
--#ifndef MALLOCATTR
-- #define MALLOCATTR
+-  ACQUIRE_MALLOC_GLOBAL_LOCK();
+-  if (mparams.magic == 0) {
+-    size_t magic;
+-    size_t psize;
+-    size_t gsize;
+-
+-#ifndef WIN32
+-    psize = malloc_getpagesize;
+-    gsize = ((DEFAULT_GRANULARITY != 0)? DEFAULT_GRANULARITY : psize);
+-#else /* WIN32 */
+-    {
+-      SYSTEM_INFO system_info;
+-      GetSystemInfo(&system_info);
+-      psize = system_info.dwPageSize;
+-      gsize = ((DEFAULT_GRANULARITY != 0)?
+-	       DEFAULT_GRANULARITY : system_info.dwAllocationGranularity);
+-    }
+-#endif /* WIN32 */
+-
+-    /* Sanity-check configuration:
+-       size_t must be unsigned and as wide as pointer type.
+-       ints must be at least 4 bytes.
+-       alignment must be at least 8.
+-       Alignment, min chunk size, and page size must all be powers of 2.
+-    */
+-    if ((sizeof(size_t) != sizeof(char*)) ||
+-	(MAX_SIZE_T < MIN_CHUNK_SIZE)  ||
+-	(sizeof(int) < 4)  ||
+-	(MALLOC_ALIGNMENT < (size_t)8U) ||
+-	((MALLOC_ALIGNMENT & (MALLOC_ALIGNMENT-SIZE_T_ONE)) != 0) ||
+-	((MCHUNK_SIZE      & (MCHUNK_SIZE-SIZE_T_ONE))      != 0) ||
+-	((gsize            & (gsize-SIZE_T_ONE))            != 0) ||
+-	((psize            & (psize-SIZE_T_ONE))            != 0))
+-      ABORT;
+-
+-    mparams.granularity = gsize;
+-    mparams.page_size = psize;
+-    mparams.mmap_threshold = DEFAULT_MMAP_THRESHOLD;
+-    mparams.trim_threshold = DEFAULT_TRIM_THRESHOLD;
+-#if MORECORE_CONTIGUOUS
+-    mparams.default_mflags = USE_LOCK_BIT|USE_MMAP_BIT;
+-#else  /* MORECORE_CONTIGUOUS */
+-    mparams.default_mflags = USE_LOCK_BIT|USE_MMAP_BIT|USE_NONCONTIGUOUS_BIT;
+-#endif /* MORECORE_CONTIGUOUS */
+-
+-#if !ONLY_MSPACES
+-    /* Set up lock for main malloc area */
+-    gm->mflags = mparams.default_mflags;
+-    (void)INITIAL_LOCK(&gm->mutex);
 -#endif
 -
--#ifdef REPLACE_SYSTEM_ALLOCATOR
-- #define nedmalloc               malloc
-- #define nedcalloc               calloc
-- #define nedrealloc              realloc
-- #define nedfree                 free
-- #define nedmemalign             memalign
-- #define nedmallinfo             mallinfo
-- #define nedmallopt              mallopt
-- #define nedmalloc_trim          malloc_trim
-- #define nedmalloc_stats         malloc_stats
-- #define nedmalloc_footprint     malloc_footprint
-- #define nedindependent_calloc   independent_calloc
-- #define nedindependent_comalloc independent_comalloc
-- #ifdef _MSC_VER
--  #define nedblksize              _msize
-- #endif
+-#if (FOOTERS && !INSECURE)
+-    {
+-#if USE_DEV_RANDOM
+-      int fd;
+-      unsigned char buf[sizeof(size_t)];
+-      /* Try to use /dev/urandom, else fall back on using time */
+-      if ((fd = open("/dev/urandom", O_RDONLY)) >= 0 &&
+-	  read(fd, buf, sizeof(buf)) == sizeof(buf)) {
+-	magic = *((size_t *) buf);
+-	close(fd);
+-      }
+-      else
+-#endif /* USE_DEV_RANDOM */
+-#ifdef WIN32
+-	magic = (size_t)(GetTickCount() ^ (size_t)0x55555555U);
+-#else
+-      magic = (size_t)(time(0) ^ (size_t)0x55555555U);
 -#endif
+-      magic |= (size_t)8U;    /* ensure nonzero */
+-      magic &= ~(size_t)7U;   /* improve chances of fault for bad values */
+-    }
+-#else /* (FOOTERS && !INSECURE) */
+-    magic = (size_t)0x58585858U;
+-#endif /* (FOOTERS && !INSECURE) */
 -
--#ifndef NO_MALLINFO
--#define NO_MALLINFO 0
--#endif
+-    mparams.magic = magic;
+-  }
+-
+-  RELEASE_MALLOC_GLOBAL_LOCK();
+-  return 1;
+-}
+-
+-/* support for mallopt */
+-static int change_mparam(int param_number, int value) {
+-  size_t val = (value == -1)? MAX_SIZE_T : (size_t)value;
+-  ensure_initialization();
+-  switch(param_number) {
+-  case M_TRIM_THRESHOLD:
+-    mparams.trim_threshold = val;
+-    return 1;
+-  case M_GRANULARITY:
+-    if (val >= mparams.page_size && ((val & (val-1)) == 0)) {
+-      mparams.granularity = val;
+-      return 1;
+-    }
+-    else
+-      return 0;
+-  case M_MMAP_THRESHOLD:
+-    mparams.mmap_threshold = val;
+-    return 1;
+-  default:
+-    return 0;
+-  }
+-}
+-
+-#if DEBUG
+-/* ------------------------- Debugging Support --------------------------- */
+-
+-/* Check properties of any chunk, whether free, inuse, mmapped etc  */
+-static void do_check_any_chunk(mstate m, mchunkptr p) {
+-  assert((is_aligned(chunk2mem(p))) || (p->head == FENCEPOST_HEAD));
+-  assert(ok_address(m, p));
+-}
+-
+-/* Check properties of top chunk */
+-static void do_check_top_chunk(mstate m, mchunkptr p) {
+-  msegmentptr sp = segment_holding(m, (char*)p);
+-  size_t  sz = p->head & ~INUSE_BITS; /* third-lowest bit can be set! */
+-  assert(sp != 0);
+-  assert((is_aligned(chunk2mem(p))) || (p->head == FENCEPOST_HEAD));
+-  assert(ok_address(m, p));
+-  assert(sz == m->topsize);
+-  assert(sz > 0);
+-  assert(sz == ((sp->base + sp->size) - (char*)p) - TOP_FOOT_SIZE);
+-  assert(pinuse(p));
+-  assert(!pinuse(chunk_plus_offset(p, sz)));
+-}
+-
+-/* Check properties of (inuse) mmapped chunks */
+-static void do_check_mmapped_chunk(mstate m, mchunkptr p) {
+-  size_t  sz = chunksize(p);
+-  size_t len = (sz + (p->prev_foot & ~IS_MMAPPED_BIT) + MMAP_FOOT_PAD);
+-  assert(is_mmapped(p));
+-  assert(use_mmap(m));
+-  assert((is_aligned(chunk2mem(p))) || (p->head == FENCEPOST_HEAD));
+-  assert(ok_address(m, p));
+-  assert(!is_small(sz));
+-  assert((len & (mparams.page_size-SIZE_T_ONE)) == 0);
+-  assert(chunk_plus_offset(p, sz)->head == FENCEPOST_HEAD);
+-  assert(chunk_plus_offset(p, sz+SIZE_T_SIZE)->head == 0);
+-}
+-
+-/* Check properties of inuse chunks */
+-static void do_check_inuse_chunk(mstate m, mchunkptr p) {
+-  do_check_any_chunk(m, p);
+-  assert(cinuse(p));
+-  assert(next_pinuse(p));
+-  /* If not pinuse and not mmapped, previous chunk has OK offset */
+-  assert(is_mmapped(p) || pinuse(p) || next_chunk(prev_chunk(p)) == p);
+-  if (is_mmapped(p))
+-    do_check_mmapped_chunk(m, p);
+-}
+-
+-/* Check properties of free chunks */
+-static void do_check_free_chunk(mstate m, mchunkptr p) {
+-  size_t sz = chunksize(p);
+-  mchunkptr next = chunk_plus_offset(p, sz);
+-  do_check_any_chunk(m, p);
+-  assert(!cinuse(p));
+-  assert(!next_pinuse(p));
+-  assert (!is_mmapped(p));
+-  if (p != m->dv && p != m->top) {
+-    if (sz >= MIN_CHUNK_SIZE) {
+-      assert((sz & CHUNK_ALIGN_MASK) == 0);
+-      assert(is_aligned(chunk2mem(p)));
+-      assert(next->prev_foot == sz);
+-      assert(pinuse(p));
+-      assert (next == m->top || cinuse(next));
+-      assert(p->fd->bk == p);
+-      assert(p->bk->fd == p);
+-    }
+-    else  /* markers are always of size SIZE_T_SIZE */
+-      assert(sz == SIZE_T_SIZE);
+-  }
+-}
+-
+-/* Check properties of malloced chunks at the point they are malloced */
+-static void do_check_malloced_chunk(mstate m, void* mem, size_t s) {
+-  if (mem != 0) {
+-    mchunkptr p = mem2chunk(mem);
+-    size_t sz = p->head & ~(PINUSE_BIT|CINUSE_BIT);
+-    do_check_inuse_chunk(m, p);
+-    assert((sz & CHUNK_ALIGN_MASK) == 0);
+-    assert(sz >= MIN_CHUNK_SIZE);
+-    assert(sz >= s);
+-    /* unless mmapped, size is less than MIN_CHUNK_SIZE more than request */
+-    assert(is_mmapped(p) || sz < (s + MIN_CHUNK_SIZE));
+-  }
+-}
+-
+-/* Check a tree and its subtrees.  */
+-static void do_check_tree(mstate m, tchunkptr t) {
+-  tchunkptr head = 0;
+-  tchunkptr u = t;
+-  bindex_t tindex = t->index;
+-  size_t tsize = chunksize(t);
+-  bindex_t idx;
+-  compute_tree_index(tsize, idx);
+-  assert(tindex == idx);
+-  assert(tsize >= MIN_LARGE_SIZE);
+-  assert(tsize >= minsize_for_tree_index(idx));
+-  assert((idx == NTREEBINS-1) || (tsize < minsize_for_tree_index((idx+1))));
+-
+-  do { /* traverse through chain of same-sized nodes */
+-    do_check_any_chunk(m, ((mchunkptr)u));
+-    assert(u->index == tindex);
+-    assert(chunksize(u) == tsize);
+-    assert(!cinuse(u));
+-    assert(!next_pinuse(u));
+-    assert(u->fd->bk == u);
+-    assert(u->bk->fd == u);
+-    if (u->parent == 0) {
+-      assert(u->child[0] == 0);
+-      assert(u->child[1] == 0);
+-    }
+-    else {
+-      assert(head == 0); /* only one node on chain has parent */
+-      head = u;
+-      assert(u->parent != u);
+-      assert (u->parent->child[0] == u ||
+-	      u->parent->child[1] == u ||
+-	      *((tbinptr*)(u->parent)) == u);
+-      if (u->child[0] != 0) {
+-	assert(u->child[0]->parent == u);
+-	assert(u->child[0] != u);
+-	do_check_tree(m, u->child[0]);
+-      }
+-      if (u->child[1] != 0) {
+-	assert(u->child[1]->parent == u);
+-	assert(u->child[1] != u);
+-	do_check_tree(m, u->child[1]);
+-      }
+-      if (u->child[0] != 0 && u->child[1] != 0) {
+-	assert(chunksize(u->child[0]) < chunksize(u->child[1]));
+-      }
+-    }
+-    u = u->fd;
+-  } while (u != t);
+-  assert(head != 0);
+-}
+-
+-/*  Check all the chunks in a treebin.  */
+-static void do_check_treebin(mstate m, bindex_t i) {
+-  tbinptr* tb = treebin_at(m, i);
+-  tchunkptr t = *tb;
+-  int empty = (m->treemap & (1U << i)) == 0;
+-  if (t == 0)
+-    assert(empty);
+-  if (!empty)
+-    do_check_tree(m, t);
+-}
+-
+-/*  Check all the chunks in a smallbin.  */
+-static void do_check_smallbin(mstate m, bindex_t i) {
+-  sbinptr b = smallbin_at(m, i);
+-  mchunkptr p = b->bk;
+-  unsigned int empty = (m->smallmap & (1U << i)) == 0;
+-  if (p == b)
+-    assert(empty);
+-  if (!empty) {
+-    for (; p != b; p = p->bk) {
+-      size_t size = chunksize(p);
+-      mchunkptr q;
+-      /* each chunk claims to be free */
+-      do_check_free_chunk(m, p);
+-      /* chunk belongs in bin */
+-      assert(small_index(size) == i);
+-      assert(p->bk == b || chunksize(p->bk) == chunksize(p));
+-      /* chunk is followed by an inuse chunk */
+-      q = next_chunk(p);
+-      if (q->head != FENCEPOST_HEAD)
+-	do_check_inuse_chunk(m, q);
+-    }
+-  }
+-}
+-
+-/* Find x in a bin. Used in other check functions. */
+-static int bin_find(mstate m, mchunkptr x) {
+-  size_t size = chunksize(x);
+-  if (is_small(size)) {
+-    bindex_t sidx = small_index(size);
+-    sbinptr b = smallbin_at(m, sidx);
+-    if (smallmap_is_marked(m, sidx)) {
+-      mchunkptr p = b;
+-      do {
+-	if (p == x)
+-	  return 1;
+-      } while ((p = p->fd) != b);
+-    }
+-  }
+-  else {
+-    bindex_t tidx;
+-    compute_tree_index(size, tidx);
+-    if (treemap_is_marked(m, tidx)) {
+-      tchunkptr t = *treebin_at(m, tidx);
+-      size_t sizebits = size << leftshift_for_tree_index(tidx);
+-      while (t != 0 && chunksize(t) != size) {
+-	t = t->child[(sizebits >> (SIZE_T_BITSIZE-SIZE_T_ONE)) & 1];
+-	sizebits <<= 1;
+-      }
+-      if (t != 0) {
+-	tchunkptr u = t;
+-	do {
+-	  if (u == (tchunkptr)x)
+-	    return 1;
+-	} while ((u = u->fd) != t);
+-      }
+-    }
+-  }
+-  return 0;
+-}
+-
+-/* Traverse each chunk and check it; return total */
+-static size_t traverse_and_check(mstate m) {
+-  size_t sum = 0;
+-  if (is_initialized(m)) {
+-    msegmentptr s = &m->seg;
+-    sum += m->topsize + TOP_FOOT_SIZE;
+-    while (s != 0) {
+-      mchunkptr q = align_as_chunk(s->base);
+-      mchunkptr lastq = 0;
+-      assert(pinuse(q));
+-      while (segment_holds(s, q) &&
+-	     q != m->top && q->head != FENCEPOST_HEAD) {
+-	sum += chunksize(q);
+-	if (cinuse(q)) {
+-	  assert(!bin_find(m, q));
+-	  do_check_inuse_chunk(m, q);
+-	}
+-	else {
+-	  assert(q == m->dv || bin_find(m, q));
+-	  assert(lastq == 0 || cinuse(lastq)); /* Not 2 consecutive free */
+-	  do_check_free_chunk(m, q);
+-	}
+-	lastq = q;
+-	q = next_chunk(q);
+-      }
+-      s = s->next;
+-    }
+-  }
+-  return sum;
+-}
+-
+-/* Check all properties of malloc_state. */
+-static void do_check_malloc_state(mstate m) {
+-  bindex_t i;
+-  size_t total;
+-  /* check bins */
+-  for (i = 0; i < NSMALLBINS; ++i)
+-    do_check_smallbin(m, i);
+-  for (i = 0; i < NTREEBINS; ++i)
+-    do_check_treebin(m, i);
+-
+-  if (m->dvsize != 0) { /* check dv chunk */
+-    do_check_any_chunk(m, m->dv);
+-    assert(m->dvsize == chunksize(m->dv));
+-    assert(m->dvsize >= MIN_CHUNK_SIZE);
+-    assert(bin_find(m, m->dv) == 0);
+-  }
+-
+-  if (m->top != 0) {   /* check top chunk */
+-    do_check_top_chunk(m, m->top);
+-    /*assert(m->topsize == chunksize(m->top)); redundant */
+-    assert(m->topsize > 0);
+-    assert(bin_find(m, m->top) == 0);
+-  }
+-
+-  total = traverse_and_check(m);
+-  assert(total <= m->footprint);
+-  assert(m->footprint <= m->max_footprint);
+-}
+-#endif /* DEBUG */
+-
+-/* ----------------------------- statistics ------------------------------ */
 -
 -#if !NO_MALLINFO
--struct mallinfo;
--#endif
+-static struct mallinfo internal_mallinfo(mstate m) {
+-  struct mallinfo nm = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+-  ensure_initialization();
+-  if (!PREACTION(m)) {
+-    check_malloc_state(m);
+-    if (is_initialized(m)) {
+-      size_t nfree = SIZE_T_ONE; /* top always free */
+-      size_t mfree = m->topsize + TOP_FOOT_SIZE;
+-      size_t sum = mfree;
+-      msegmentptr s = &m->seg;
+-      while (s != 0) {
+-	mchunkptr q = align_as_chunk(s->base);
+-	while (segment_holds(s, q) &&
+-	       q != m->top && q->head != FENCEPOST_HEAD) {
+-	  size_t sz = chunksize(q);
+-	  sum += sz;
+-	  if (!cinuse(q)) {
+-	    mfree += sz;
+-	    ++nfree;
+-	  }
+-	  q = next_chunk(q);
+-	}
+-	s = s->next;
+-      }
 -
--#if defined(__cplusplus)
-- #if !defined(NO_NED_NAMESPACE)
--namespace nedalloc {
-- #else
--extern "C" {
-- #endif
-- #define THROWSPEC throw()
--#else
-- #define THROWSPEC
--#endif
+-      nm.arena    = sum;
+-      nm.ordblks  = nfree;
+-      nm.hblkhd   = m->footprint - sum;
+-      nm.usmblks  = m->max_footprint;
+-      nm.uordblks = m->footprint - mfree;
+-      nm.fordblks = mfree;
+-      nm.keepcost = m->topsize;
+-    }
 -
--/* These are the global functions */
--
--/* Gets the usable size of an allocated block. Note this will always be bigger than what was
--asked for due to rounding etc.
--*/
--EXTSPEC size_t nedblksize(void *mem) THROWSPEC;
--
--EXTSPEC void nedsetvalue(void *v) THROWSPEC;
--
--EXTSPEC MALLOCATTR void * nedmalloc(size_t size) THROWSPEC;
--EXTSPEC MALLOCATTR void * nedcalloc(size_t no, size_t size) THROWSPEC;
--EXTSPEC MALLOCATTR void * nedrealloc(void *mem, size_t size) THROWSPEC;
--EXTSPEC void   nedfree(void *mem) THROWSPEC;
--EXTSPEC MALLOCATTR void * nedmemalign(size_t alignment, size_t bytes) THROWSPEC;
--#if !NO_MALLINFO
--EXTSPEC struct mallinfo nedmallinfo(void) THROWSPEC;
--#endif
--EXTSPEC int    nedmallopt(int parno, int value) THROWSPEC;
--EXTSPEC int    nedmalloc_trim(size_t pad) THROWSPEC;
--EXTSPEC void   nedmalloc_stats(void) THROWSPEC;
--EXTSPEC size_t nedmalloc_footprint(void) THROWSPEC;
--EXTSPEC MALLOCATTR void **nedindependent_calloc(size_t elemsno, size_t elemsize, void **chunks) THROWSPEC;
--EXTSPEC MALLOCATTR void **nedindependent_comalloc(size_t elems, size_t *sizes, void **chunks) THROWSPEC;
--
--/* These are the pool functions */
--struct nedpool_t;
--typedef struct nedpool_t nedpool;
--
--/* Creates a memory pool for use with the nedp* functions below.
--Capacity is how much to allocate immediately (if you know you'll be allocating a lot
--of memory very soon) which you can leave at zero. Threads specifies how many threads
--will *normally* be accessing the pool concurrently. Setting this to zero means it
--extends on demand, but be careful of this as it can rapidly consume system resources
--where bursts of concurrent threads use a pool at once.
--*/
--EXTSPEC MALLOCATTR nedpool *nedcreatepool(size_t capacity, int threads) THROWSPEC;
--
--/* Destroys a memory pool previously created by nedcreatepool().
--*/
--EXTSPEC void neddestroypool(nedpool *p) THROWSPEC;
--
--/* Sets a value to be associated with a pool. You can retrieve this value by passing
--any memory block allocated from that pool.
--*/
--EXTSPEC void nedpsetvalue(nedpool *p, void *v) THROWSPEC;
--/* Gets a previously set value using nedpsetvalue() or zero if memory is unknown.
--Optionally can also retrieve pool.
--*/
--EXTSPEC void *nedgetvalue(nedpool **p, void *mem) THROWSPEC;
--
--/* Disables the thread cache for the calling thread, returning any existing cache
--data to the central pool.
--*/
--EXTSPEC void neddisablethreadcache(nedpool *p) THROWSPEC;
--
--EXTSPEC MALLOCATTR void * nedpmalloc(nedpool *p, size_t size) THROWSPEC;
--EXTSPEC MALLOCATTR void * nedpcalloc(nedpool *p, size_t no, size_t size) THROWSPEC;
--EXTSPEC MALLOCATTR void * nedprealloc(nedpool *p, void *mem, size_t size) THROWSPEC;
--EXTSPEC void   nedpfree(nedpool *p, void *mem) THROWSPEC;
--EXTSPEC MALLOCATTR void * nedpmemalign(nedpool *p, size_t alignment, size_t bytes) THROWSPEC;
--#if !NO_MALLINFO
--EXTSPEC struct mallinfo nedpmallinfo(nedpool *p) THROWSPEC;
--#endif
--EXTSPEC int    nedpmallopt(nedpool *p, int parno, int value) THROWSPEC;
--EXTSPEC int    nedpmalloc_trim(nedpool *p, size_t pad) THROWSPEC;
--EXTSPEC void   nedpmalloc_stats(nedpool *p) THROWSPEC;
--EXTSPEC size_t nedpmalloc_footprint(nedpool *p) THROWSPEC;
--EXTSPEC MALLOCATTR void **nedpindependent_calloc(nedpool *p, size_t elemsno, size_t elemsize, void **chunks) THROWSPEC;
--EXTSPEC MALLOCATTR void **nedpindependent_comalloc(nedpool *p, size_t elems, size_t *sizes, void **chunks) THROWSPEC;
--
--#if defined(__cplusplus)
+-    POSTACTION(m);
+-  }
+-  return nm;
 -}
--#endif
+-#endif /* !NO_MALLINFO */
 -
--#undef MALLOCATTR
--#undef EXTSPEC
+-static void internal_malloc_stats(mstate m) {
+-  ensure_initialization();
+-  if (!PREACTION(m)) {
+-    size_t maxfp = 0;
+-    size_t fp = 0;
+-    size_t used = 0;
+-    check_malloc_state(m);
+-    if (is_initialized(m)) {
+-      msegmentptr s = &m->seg;
+-      maxfp = m->max_footprint;
+-      fp = m->footprint;
+-      used = fp - (m->topsize + TOP_FOOT_SIZE);
 -
--#endif
+-      while (s != 0) {
+-	mchunkptr q = align_as_chunk(s->base);
+-	while (segment_holds(s, q) &&
+-	       q != m->top && q->head != FENCEPOST_HEAD) {
+-	  if (!cinuse(q))
+-	    used -= chunksize(q);
+-	  q = next_chunk(q);
+-	}
+-	s = s->next;
+-      }
+-    }
+-
+-    fprintf(stderr, "max system bytes = %10lu\n", (unsigned long)(maxfp));
+-    fprintf(stderr, "system bytes     = %10lu\n", (unsigned long)(fp));
+-    fprintf(stderr, "in use bytes     = %10lu\n", (unsigned long)(used));
+-
+-    POSTACTION(m);
+-  }
+-}
+-
+-/* ----------------------- Operations on smallbins ----------------------- */
+-
+-/*
+-  Various forms of linking and unlinking are defined as macros.  Even
+-  the ones for trees, which are very long but have very short typical
+-  paths.  This is ugly but reduces reliance on inlining support of
+-  compilers.
+-*/
+-
+-/* Link a free chunk into a smallbin  */
+-#define insert_small_chunk(M, P, S) {\
+-  bindex_t I  = small_index(S);\
+-  mchunkptr B = smallbin_at(M, I);\
+-  mchunkptr F = B;\
+-  assert(S >= MIN_CHUNK_SIZE);\
+-  if (!smallmap_is_marked(M, I))\
+-    mark_smallmap(M, I);\
+-  else if (RTCHECK(ok_address(M, B->fd)))\
+-    F = B->fd;\
+-  else {\
+-    CORRUPTION_ERROR_ACTION(M);\
+-  }\
+-  B->fd = P;\
+-  F->bk = P;\
+-  P->fd = F;\
+-  P->bk = B;\
+-}
+-
+-/* Unlink a chunk from a smallbin  */
+-#define unlink_small_chunk(M, P, S) {\
+-  mchunkptr F = P->fd;\
+-  mchunkptr B = P->bk;\
+-  bindex_t I = small_index(S);\
+-  assert(P != B);\
+-  assert(P != F);\
+-  assert(chunksize(P) == small_index2size(I));\
+-  if (F == B)\
+-    clear_smallmap(M, I);\
+-  else if (RTCHECK((F == smallbin_at(M,I) || ok_address(M, F)) &&\
+-		   (B == smallbin_at(M,I) || ok_address(M, B)))) {\
+-    F->bk = B;\
+-    B->fd = F;\
+-  }\
+-  else {\
+-    CORRUPTION_ERROR_ACTION(M);\
+-  }\
+-}
+-
+-/* Unlink the first chunk from a smallbin */
+-#define unlink_first_small_chunk(M, B, P, I) {\
+-  mchunkptr F = P->fd;\
+-  assert(P != B);\
+-  assert(P != F);\
+-  assert(chunksize(P) == small_index2size(I));\
+-  if (B == F)\
+-    clear_smallmap(M, I);\
+-  else if (RTCHECK(ok_address(M, F))) {\
+-    B->fd = F;\
+-    F->bk = B;\
+-  }\
+-  else {\
+-    CORRUPTION_ERROR_ACTION(M);\
+-  }\
+-}
+-
+-
+-
+-/* Replace dv node, binning the old one */
+-/* Used only when dvsize known to be small */
+-#define replace_dv(M, P, S) {\
+-  size_t DVS = M->dvsize;\
+-  if (DVS != 0) {\
+-    mchunkptr DV = M->dv;\
+-    assert(is_small(DVS));\
+-    insert_small_chunk(M, DV, DVS);\
+-  }\
+-  M->dvsize = S;\
+-  M->dv = P;\
+-}
+-
+-/* ------------------------- Operations on trees ------------------------- */
+-
+-/* Insert chunk into tree */
+-#define insert_large_chunk(M, X, S) {\
+-  tbinptr* H;\
+-  bindex_t I;\
+-  compute_tree_index(S, I);\
+-  H = treebin_at(M, I);\
+-  X->index = I;\
+-  X->child[0] = X->child[1] = 0;\
+-  if (!treemap_is_marked(M, I)) {\
+-    mark_treemap(M, I);\
+-    *H = X;\
+-    X->parent = (tchunkptr)H;\
+-    X->fd = X->bk = X;\
+-  }\
+-  else {\
+-    tchunkptr T = *H;\
+-    size_t K = S << leftshift_for_tree_index(I);\
+-    for (;;) {\
+-      if (chunksize(T) != S) {\
+-	tchunkptr* C = &(T->child[(K >> (SIZE_T_BITSIZE-SIZE_T_ONE)) & 1]);\
+-	K <<= 1;\
+-	if (*C != 0)\
+-	  T = *C;\
+-	else if (RTCHECK(ok_address(M, C))) {\
+-	  *C = X;\
+-	  X->parent = T;\
+-	  X->fd = X->bk = X;\
+-	  break;\
+-	}\
+-	else {\
+-	  CORRUPTION_ERROR_ACTION(M);\
+-	  break;\
+-	}\
+-      }\
+-      else {\
+-	tchunkptr F = T->fd;\
+-	if (RTCHECK(ok_address(M, T) && ok_address(M, F))) {\
+-	  T->fd = F->bk = X;\
+-	  X->fd = F;\
+-	  X->bk = T;\
+-	  X->parent = 0;\
+-	  break;\
+-	}\
+-	else {\
+-	  CORRUPTION_ERROR_ACTION(M);\
+-	  break;\
+-	}\
+-      }\
+-    }\
+-  }\
+-}
+-
+-/*
+-  Unlink steps:
+-
+-  1. If x is a chained node, unlink it from its same-sized fd/bk links
+-     and choose its bk node as its replacement.
+-  2. If x was the last node of its size, but not a leaf node, it must
+-     be replaced with a leaf node (not merely one with an open left or
+-     right), to make sure that lefts and rights of descendants
+-     correspond properly to bit masks.  We use the rightmost descendant
+-     of x.  We could use any other leaf, but this is easy to locate and
+-     tends to counteract removal of leftmosts elsewhere, and so keeps
+-     paths shorter than minimally guaranteed.  This doesn't loop much
+-     because on average a node in a tree is near the bottom.
+-  3. If x is the base of a chain (i.e., has parent links) relink
+-     x's parent and children to x's replacement (or null if none).
+-*/
+-
+-#define unlink_large_chunk(M, X) {\
+-  tchunkptr XP = X->parent;\
+-  tchunkptr R;\
+-  if (X->bk != X) {\
+-    tchunkptr F = X->fd;\
+-    R = X->bk;\
+-    if (RTCHECK(ok_address(M, F))) {\
+-      F->bk = R;\
+-      R->fd = F;\
+-    }\
+-    else {\
+-      CORRUPTION_ERROR_ACTION(M);\
+-    }\
+-  }\
+-  else {\
+-    tchunkptr* RP;\
+-    if (((R = *(RP = &(X->child[1]))) != 0) ||\
+-	((R = *(RP = &(X->child[0]))) != 0)) {\
+-      tchunkptr* CP;\
+-      while ((*(CP = &(R->child[1])) != 0) ||\
+-	     (*(CP = &(R->child[0])) != 0)) {\
+-	R = *(RP = CP);\
+-      }\
+-      if (RTCHECK(ok_address(M, RP)))\
+-	*RP = 0;\
+-      else {\
+-	CORRUPTION_ERROR_ACTION(M);\
+-      }\
+-    }\
+-  }\
+-  if (XP != 0) {\
+-    tbinptr* H = treebin_at(M, X->index);\
+-    if (X == *H) {\
+-      if ((*H = R) == 0) \
+-	clear_treemap(M, X->index);\
+-    }\
+-    else if (RTCHECK(ok_address(M, XP))) {\
+-      if (XP->child[0] == X) \
+-	XP->child[0] = R;\
+-      else \
+-	XP->child[1] = R;\
+-    }\
+-    else\
+-      CORRUPTION_ERROR_ACTION(M);\
+-    if (R != 0) {\
+-      if (RTCHECK(ok_address(M, R))) {\
+-	tchunkptr C0, C1;\
+-	R->parent = XP;\
+-	if ((C0 = X->child[0]) != 0) {\
+-	  if (RTCHECK(ok_address(M, C0))) {\
+-	    R->child[0] = C0;\
+-	    C0->parent = R;\
+-	  }\
+-	  else\
+-	    CORRUPTION_ERROR_ACTION(M);\
+-	}\
+-	if ((C1 = X->child[1]) != 0) {\
+-	  if (RTCHECK(ok_address(M, C1))) {\
+-	    R->child[1] = C1;\
+-	    C1->parent = R;\
+-	  }\
+-	  else\
+-	    CORRUPTION_ERROR_ACTION(M);\
+-	}\
+-      }\
+-      else\
+-	CORRUPTION_ERROR_ACTION(M);\
+-    }\
+-  }\
+-}
+-
+-/* Relays to large vs small bin operations */
+-
+-#define insert_chunk(M, P, S)\
+-  if (is_small(S)) insert_small_chunk(M, P, S)\
+-  else { tchunkptr TP = (tchunkptr)(P); insert_large_chunk(M, TP, S); }
+-
+-#define unlink_chunk(M, P, S)\
+-  if (is_small(S)) unlink_small_chunk(M, P, S)\
+-  else { tchunkptr TP = (tchunkptr)(P); unlink_large_chunk(M, TP); }
+-
+-
+-/* Relays to internal calls to malloc/free from realloc, memalign etc */
+-
+-#if ONLY_MSPACES
+-#define internal_malloc(m, b) mspace_malloc(m, b)
+-#define internal_free(m, mem) mspace_free(m,mem);
+-#else /* ONLY_MSPACES */
+-#if MSPACES
+-#define internal_malloc(m, b)\
+-   (m == gm)? dlmalloc(b) : mspace_malloc(m, b)
+-#define internal_free(m, mem)\
+-   if (m == gm) dlfree(mem); else mspace_free(m,mem);
+-#else /* MSPACES */
+-#define internal_malloc(m, b) dlmalloc(b)
+-#define internal_free(m, mem) dlfree(mem)
+-#endif /* MSPACES */
+-#endif /* ONLY_MSPACES */
+-
+-/* -----------------------  Direct-mmapping chunks ----------------------- */
+-
+-/*
+-  Directly mmapped chunks are set up with an offset to the start of
+-  the mmapped region stored in the prev_foot field of the chunk. This
+-  allows reconstruction of the required argument to MUNMAP when freed,
+-  and also allows adjustment of the returned chunk to meet alignment
+-  requirements (especially in memalign).  There is also enough space
+-  allocated to hold a fake next chunk of size SIZE_T_SIZE to maintain
+-  the PINUSE bit so frees can be checked.
+-*/
+-
+-/* Malloc using mmap */
+-static void* mmap_alloc(mstate m, size_t nb) {
+-  size_t mmsize = mmap_align(nb + SIX_SIZE_T_SIZES + CHUNK_ALIGN_MASK);
+-  if (mmsize > nb) {     /* Check for wrap around 0 */
+-    char* mm = (char*)(CALL_DIRECT_MMAP(mmsize));
+-    if (mm != CMFAIL) {
+-      size_t offset = align_offset(chunk2mem(mm));
+-      size_t psize = mmsize - offset - MMAP_FOOT_PAD;
+-      mchunkptr p = (mchunkptr)(mm + offset);
+-      p->prev_foot = offset | IS_MMAPPED_BIT;
+-      (p)->head = (psize|CINUSE_BIT);
+-      mark_inuse_foot(m, p, psize);
+-      chunk_plus_offset(p, psize)->head = FENCEPOST_HEAD;
+-      chunk_plus_offset(p, psize+SIZE_T_SIZE)->head = 0;
+-
+-      if (mm < m->least_addr)
+-	m->least_addr = mm;
+-      if ((m->footprint += mmsize) > m->max_footprint)
+-	m->max_footprint = m->footprint;
+-      assert(is_aligned(chunk2mem(p)));
+-      check_mmapped_chunk(m, p);
+-      return chunk2mem(p);
+-    }
+-  }
+-  return 0;
+-}
+-
+-/* Realloc using mmap */
+-static mchunkptr mmap_resize(mstate m, mchunkptr oldp, size_t nb) {
+-  size_t oldsize = chunksize(oldp);
+-  if (is_small(nb)) /* Can't shrink mmap regions below small size */
+-    return 0;
+-  /* Keep old chunk if big enough but not too big */
+-  if (oldsize >= nb + SIZE_T_SIZE &&
+-      (oldsize - nb) <= (mparams.granularity << 1))
+-    return oldp;
+-  else {
+-    size_t offset = oldp->prev_foot & ~IS_MMAPPED_BIT;
+-    size_t oldmmsize = oldsize + offset + MMAP_FOOT_PAD;
+-    size_t newmmsize = mmap_align(nb + SIX_SIZE_T_SIZES + CHUNK_ALIGN_MASK);
+-    char* cp = (char*)CALL_MREMAP((char*)oldp - offset,
+-				  oldmmsize, newmmsize, 1);
+-    if (cp != CMFAIL) {
+-      mchunkptr newp = (mchunkptr)(cp + offset);
+-      size_t psize = newmmsize - offset - MMAP_FOOT_PAD;
+-      newp->head = (psize|CINUSE_BIT);
+-      mark_inuse_foot(m, newp, psize);
+-      chunk_plus_offset(newp, psize)->head = FENCEPOST_HEAD;
+-      chunk_plus_offset(newp, psize+SIZE_T_SIZE)->head = 0;
+-
+-      if (cp < m->least_addr)
+-	m->least_addr = cp;
+-      if ((m->footprint += newmmsize - oldmmsize) > m->max_footprint)
+-	m->max_footprint = m->footprint;
+-      check_mmapped_chunk(m, newp);
+-      return newp;
+-    }
+-  }
+-  return 0;
+-}
+-
+-/* -------------------------- mspace management -------------------------- */
+-
+-/* Initialize top chunk and its size */
+-static void init_top(mstate m, mchunkptr p, size_t psize) {
+-  /* Ensure alignment */
+-  size_t offset = align_offset(chunk2mem(p));
+-  p = (mchunkptr)((char*)p + offset);
+-  psize -= offset;
+-
+-  m->top = p;
+-  m->topsize = psize;
+-  p->head = psize | PINUSE_BIT;
+-  /* set size of fake trailing chunk holding overhead space only once */
+-  chunk_plus_offset(p, psize)->head = TOP_FOOT_SIZE;
+-  m->trim_check = mparams.trim_threshold; /* reset on each update */
+-}
+-
+-/* Initialize bins for a new mstate that is otherwise zeroed out */
+-static void init_bins(mstate m) {
+-  /* Establish circular links for smallbins */
+-  bindex_t i;
+-  for (i = 0; i < NSMALLBINS; ++i) {
+-    sbinptr bin = smallbin_at(m,i);
+-    bin->fd = bin->bk = bin;
+-  }
+-}
+-
+-#if PROCEED_ON_ERROR
+-
+-/* default corruption action */
+-static void reset_on_error(mstate m) {
+-  int i;
+-  ++malloc_corruption_error_count;
+-  /* Reinitialize fields to forget about all memory */
+-  m->smallbins = m->treebins = 0;
+-  m->dvsize = m->topsize = 0;
+-  m->seg.base = 0;
+-  m->seg.size = 0;
+-  m->seg.next = 0;
+-  m->top = m->dv = 0;
+-  for (i = 0; i < NTREEBINS; ++i)
+-    *treebin_at(m, i) = 0;
+-  init_bins(m);
+-}
+-#endif /* PROCEED_ON_ERROR */
+-
+-/* Allocate chunk and prepend remainder with chunk in successor base. */
+-static void* prepend_alloc(mstate m, char* newbase, char* oldbase,
+-			   size_t nb) {
+-  mchunkptr p = align_as_chunk(newbase);
+-  mchunkptr oldfirst = align_as_chunk(oldbase);
+-  size_t psize = (char*)oldfirst - (char*)p;
+-  mchunkptr q = chunk_plus_offset(p, nb);
+-  size_t qsize = psize - nb;
+-  set_size_and_pinuse_of_inuse_chunk(m, p, nb);
+-
+-  assert((char*)oldfirst > (char*)q);
+-  assert(pinuse(oldfirst));
+-  assert(qsize >= MIN_CHUNK_SIZE);
+-
+-  /* consolidate remainder with first chunk of old base */
+-  if (oldfirst == m->top) {
+-    size_t tsize = m->topsize += qsize;
+-    m->top = q;
+-    q->head = tsize | PINUSE_BIT;
+-    check_top_chunk(m, q);
+-  }
+-  else if (oldfirst == m->dv) {
+-    size_t dsize = m->dvsize += qsize;
+-    m->dv = q;
+-    set_size_and_pinuse_of_free_chunk(q, dsize);
+-  }
+-  else {
+-    if (!cinuse(oldfirst)) {
+-      size_t nsize = chunksize(oldfirst);
+-      unlink_chunk(m, oldfirst, nsize);
+-      oldfirst = chunk_plus_offset(oldfirst, nsize);
+-      qsize += nsize;
+-    }
+-    set_free_with_pinuse(q, qsize, oldfirst);
+-    insert_chunk(m, q, qsize);
+-    check_free_chunk(m, q);
+-  }
+-
+-  check_malloced_chunk(m, chunk2mem(p), nb);
+-  return chunk2mem(p);
+-}
+-
+-/* Add a segment to hold a new noncontiguous region */
+-static void add_segment(mstate m, char* tbase, size_t tsize, flag_t mmapped) {
+-  /* Determine locations and sizes of segment, fenceposts, old top */
+-  char* old_top = (char*)m->top;
+-  msegmentptr oldsp = segment_holding(m, old_top);
+-  char* old_end = oldsp->base + oldsp->size;
+-  size_t ssize = pad_request(sizeof(struct malloc_segment));
+-  char* rawsp = old_end - (ssize + FOUR_SIZE_T_SIZES + CHUNK_ALIGN_MASK);
+-  size_t offset = align_offset(chunk2mem(rawsp));
+-  char* asp = rawsp + offset;
+-  char* csp = (asp < (old_top + MIN_CHUNK_SIZE))? old_top : asp;
+-  mchunkptr sp = (mchunkptr)csp;
+-  msegmentptr ss = (msegmentptr)(chunk2mem(sp));
+-  mchunkptr tnext = chunk_plus_offset(sp, ssize);
+-  mchunkptr p = tnext;
+-  int nfences = 0;
+-
+-  /* reset top to new space */
+-  init_top(m, (mchunkptr)tbase, tsize - TOP_FOOT_SIZE);
+-
+-  /* Set up segment record */
+-  assert(is_aligned(ss));
+-  set_size_and_pinuse_of_inuse_chunk(m, sp, ssize);
+-  *ss = m->seg; /* Push current record */
+-  m->seg.base = tbase;
+-  m->seg.size = tsize;
+-  m->seg.sflags = mmapped;
+-  m->seg.next = ss;
+-
+-  /* Insert trailing fenceposts */
+-  for (;;) {
+-    mchunkptr nextp = chunk_plus_offset(p, SIZE_T_SIZE);
+-    p->head = FENCEPOST_HEAD;
+-    ++nfences;
+-    if ((char*)(&(nextp->head)) < old_end)
+-      p = nextp;
+-    else
+-      break;
+-  }
+-  assert(nfences >= 2);
+-
+-  /* Insert the rest of old top into a bin as an ordinary free chunk */
+-  if (csp != old_top) {
+-    mchunkptr q = (mchunkptr)old_top;
+-    size_t psize = csp - old_top;
+-    mchunkptr tn = chunk_plus_offset(q, psize);
+-    set_free_with_pinuse(q, psize, tn);
+-    insert_chunk(m, q, psize);
+-  }
+-
+-  check_top_chunk(m, m->top);
+-}
+-
+ /* -------------------------- System allocation -------------------------- */
+ 
+ /* Get memory from system using MORECORE or MMAP */
 -- 
 gitgitgadget
 
