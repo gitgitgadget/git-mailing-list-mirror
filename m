@@ -1,70 +1,69 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722A7381B14
-	for <git@vger.kernel.org>; Fri,  8 May 2026 08:17:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FEE382392
+	for <git@vger.kernel.org>; Fri,  8 May 2026 08:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778228228; cv=none; b=aLf0FVTBs+d9UyoNFSJSC5BRdoPn3XcKLt8T8Jn59Yxfj83kcOK3Uq34J3u2hobWRMU4DP3LDXr4YrTgk1U1v3fIk4Gye12Cj2stoTuuVTMzYYCxEosxOmIQ2HXJjYuQim0WdbO42+0nglg9u2xO+U2Cy27OEInncI8+sTrhVDU=
+	t=1778228230; cv=none; b=f7YW+XYOOwAgm553qTlz/K2i4cyIfhKNYJ2qE5JHeaBfCzADhiwxpmKsnt1SGNuNdQZhSseoqb8m+mGEvzJpHYx4R6BGY99TXSvYHqg79/6ONES6HRQZpGgEUfV6/myH702CBvCjtVPz+z790cn20xkCWAfMaUZz1Zs9JKAqpDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778228228; c=relaxed/simple;
-	bh=RgORbJKHqbQVn1mMprl9zVyOe1oC1f1yN5ngvl5iA8k=;
+	s=arc-20240116; t=1778228230; c=relaxed/simple;
+	bh=XrqegptEScXZEZ4tIqgZeYMz23cFOzFGfQgW7Le8H1E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=QTdbvIrXT9DfsQz0iDR+BodQCPq9yrPFrXwMei2HatWQcH6cLrDBKwLR0DPPqyhgRvckuj0Hqs13I7M9KTBEQFedzzoN+yPOSKPXkaM+vFZ5wsijjczvVmBS/RuBKchbJ8KaMz62Z4/BVHcyiKqEWGxGJ0Ps8bTafotftJndrLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ti/vihml; arc=none smtp.client-ip=209.85.222.173
+	 MIME-Version:To:Cc; b=Qz+ml9nUOiR/Vqxc9fidyoeFTDLPnO3Ko4vt3GqMS+WURiVYcxZ+07lhXo7fILEiyHBWBhIqJEvyoblQqW+MccmEraBU3qbFnXT0f++DegnUyswZWgWqgBO6MDXnnALAfuFuop14w21snxSLzNSO4bcTe26kWEszkJFocQGR30U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qf6q6WV3; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ti/vihml"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8ec9f099fc6so193780685a.0
-        for <git@vger.kernel.org>; Fri, 08 May 2026 01:17:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qf6q6WV3"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-8ee9ec26edaso191195985a.2
+        for <git@vger.kernel.org>; Fri, 08 May 2026 01:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778228226; x=1778833026; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778228227; x=1778833027; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BnI1thrysx3kEVQAdKDR9hhOCjQLNCNfN1Zj/0PJk+8=;
-        b=Ti/vihmlVxBm5QJwDIU6FQ6b7j2IMVFSvosSnwFz+GjXXCIYY/9wwNZtawEvKWOTUb
-         Br5Hq5IOVUsdzHD40/DZ2f7tJHKMT6cL0XForMuCN5YmrbFpnNN9AwiEtIekwTDyEq0G
-         wQuDK1cx+TDXdnALT3N6BMK0wZtEbpYWLsFYP/qvnNHyd0Mg6iqZcr1GcsMmzfbES0vI
-         Gl5cBoJk1Ewd/EQ8Wu7VU8NQrtgJ+Swp0NXQAe4PdS3vlMWHc05Dr4VVvhqlrl0Nmke7
-         ozO2QwNRiTSMCuiGELDGdzBhVw1lBZ8rc7sh7EtSviak06Z8IP1msv61JdR79LbCE98P
-         7JIA==
+        bh=UzfeQKNRFbHs8UYc9tcKAr1Sqop512vg8zVhUqsKnsQ=;
+        b=qf6q6WV3BEfDyU/B12DnP5I0dN63R2Rnwl1dcbBoA3klytWQwug9405lyu/h7GpUz2
+         gojnACYag27XU2E3gqhuc68nmG37f8hov2K0UtmOakCxyNmCOgVx0iphIyUmvZ9witXU
+         1/ANSQhesaAFeuG3ktNKnPNMWYUO9PvZMWzBpG2SrgYtuUyPQelag9HQUJ26wDQiR0Lt
+         P7FX593ve8zlBHQu2MQQq3rFWumphobJtXgOakrKYqm7h5o2jXYNVIY6XxElsEhJupiK
+         Efuj3mWFuaSs/4Edb0seTTzbjd+UaBHG6bO87FWa4ZRPlxsRbw3ASVya7peVXtjsjaYi
+         pItg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778228226; x=1778833026;
+        d=1e100.net; s=20251104; t=1778228227; x=1778833027;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=BnI1thrysx3kEVQAdKDR9hhOCjQLNCNfN1Zj/0PJk+8=;
-        b=nqBd+8VB7GZoP1rHyWqqUuaRkz1b9S7xdid2+6f/XlK1THix+DMiVy0F6258e4Y9q3
-         Q/gizfE94XygeMvPyQAPLQRsSJB9ldOrqS+CN5kgKVPI2Fu3f231uBn55LVu02N+B6+P
-         oYX3LPrntF1KTxLIsJ8ZwqTUQIv7obdI/cK35jLZkFupRrkB+x3XNVRSdf8UxEpGTKVD
-         cdBM+njKGM3G2QQk6tVhOREWOJh0Q1hm0fm6cr/3z9OfZ06xC7srzpDSrQmfLwyzK9+O
-         GBjzFDZXtAeXaLq/PLAOTt39ELa0QmRREw3qQjgJ+GsrmzY8Qf5DiM/7h4lubXbLn77H
-         /8DA==
-X-Gm-Message-State: AOJu0Yxqr9GoK+PMHo3jQy/Vji0bgfwxIWTUS2Y+d/bWlQyHKaJscorE
-	RbTTsAJejgd5+qQl57Pc9Rn4EKPpeg+0AlzfYsVKOHRYHX2jOmejM6r8IT0CFg==
-X-Gm-Gg: AeBDievP72zJuPRrWimb58+ZsMthBJDecUJQReteqYwUyMWJdftFKbxxYA08PouR0cj
-	qSFbbfPE7kUwIxhF6mRw3tl+egJX29cDI4decas4VzDsPg0jW/rl2ni5dxjKvtpoaos0f3xIv5S
-	UR3IqOMC8skwtOdUInQfTOA+IfXT1F4GVdOecDGehPAVZ9G18jPHKnfrZYTsBqIraklVEHfqmJm
-	U6F4bD04rR5ZnLjhPN5Fpd3XT2uuTcBQy9MoVrOV4dbE873S/xSt6b0/h0mjX7gTcphtTGuOuCo
-	knA54FTBIiRHckPtzAZFzQfIa8cPhZdvOxha3NhKqqFUe7jbDPmoSAVzkZHHrM2pW8MtLs8+Nu/
-	2oRZGD4SwWCmDEgNx7AdcnIMniS25d24CF9yo+XL+j0M2z3PmqpmXg5eFP9AsBrMKlqUR0G5eFC
-	+oUkXyUp3zta1bBnQXKp3oIq1fwMhnMSyFtguH
-X-Received: by 2002:a05:620a:280d:b0:8cf:d565:fcb1 with SMTP id af79cd13be357-904d3eaf9f0mr1759547785a.5.1778228225975;
-        Fri, 08 May 2026 01:17:05 -0700 (PDT)
+        bh=UzfeQKNRFbHs8UYc9tcKAr1Sqop512vg8zVhUqsKnsQ=;
+        b=P711Fvk1Vz6HOxvTmwkeduafYLBuq1rdEUpoD6Uxg5MZtLGeNDTFFurjiusgcnsRBS
+         3ygNdszd0xX5g2fCkf/7OYjXjZ0FWGe7WUwvmj99VYdnsWWpCFggJ85wcx7jzFuikBnA
+         FQaPEucYtOzgKbyQPUFMZ34XjGO54f2zghPtOx89ZiNpvSfK18yYyQJQdGI/S69sQkgA
+         55VtK5E6q+EqcYpgHfTGdeXoD/EN4v4JRhCbTvSc39tAAs38vPcLMtBtyObiEelsP6r7
+         TWXPMoc4BEWzbikwVdGtSMG9PjYMOtYx6ZFh3N+zkK6El2wgCpWMdoAqkS1MeIEANOBm
+         KpLg==
+X-Gm-Message-State: AOJu0YxMi4+2XRw4mGjhqDLPd75uHtMqUIMAhbRkX4EPZw1NCgtCdcqs
+	nmpCV7lXrSsOugcNavpzhuczNwIkhMzIG8bWCrzwR8mBO9EDSPYjVh/KtchbVw==
+X-Gm-Gg: AeBDieuQb50t53i3TL061jFAieH1Gq6rVK9XIryiyapRe21x/p/V8pu2F1Y8Lw1ZMj3
+	R630PEPJiNE57oyzBevzCJuXxbTYuEYjDe6uzCKGcnMHd/18JChlI466z3eigglOa/2zOEKMKZ4
+	nWifGzFFVOPUPZ5UpO15smbh8nku8nUVEU9qnS24flpEohcmnaUfF+oaJreuHWnVZdNFtUvOy/I
+	g9Pz3P1HTZ0tUK2IEf/09hF2aPy0BK43UxN/GYDPkUX3fTrc8rgzHfl9nNx1y69Ufx/Q9u4L9UG
+	eoesx/kB9em0W8TFfmAm4fMkU4UwdUeoUYGdOX84sJovTyP7vwjAQcv0a8R13dKlBngvzIXozK5
+	A5rpfxJvRjpxnP2Qu2D0KP8mtlzt+Td9ocJNATPKMvouZB0E8U1IXsho0qCND4hkbRLQ9g6EKph
+	F4o6Zt5qIubqLBYx9NOZLU3Yl2iw==
+X-Received: by 2002:a05:620a:458f:b0:8cf:d9a8:561b with SMTP id af79cd13be357-904d1081bacmr1725102785a.0.1778228227055;
+        Fri, 08 May 2026 01:17:07 -0700 (PDT)
 Received: from [127.0.0.1] ([40.76.117.241])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-907b87bd685sm135958385a.31.2026.05.08.01.17.05
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-907b8d9ea06sm131815185a.20.2026.05.08.01.17.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 01:17:05 -0700 (PDT)
-Message-Id: <3a006d96c3e7c41c5ac4a621d1d4db2d7d1c91ff.1778228209.git.gitgitgadget@gmail.com>
+        Fri, 08 May 2026 01:17:06 -0700 (PDT)
+Message-Id: <86c09af4f56deaa5ee91eec5ede5e640b46cdeb9.1778228209.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2102.v3.git.1778228209.gitgitgadget@gmail.com>
 References: <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
 	<pull.2102.v3.git.1778228209.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 08:16:47 +0000
-Subject: [PATCH v3 09/11] test-tool synthesize: add precomputed SHA-256 pack
- for 4 GiB + 1
+Date: Fri, 08 May 2026 08:16:48 +0000
+Subject: [PATCH v3 10/11] t5608: mark >4GB tests as EXPENSIVE
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,130 +83,62 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Add a SHA-256 entry to the fast_packs[] table. The pack prefix and
-deflate block structure are identical to SHA-1 (the pack format does
-not encode the hash algorithm in its header). Only the suffix differs:
-SHA-256 OIDs are 32 bytes instead of 20, giving a 609-byte suffix
-compared to 513 for SHA-1, and a different pack checksum.
+Even with precomputed pack constants that reduced the helper's
+runtime from minutes to seconds, the >4GB clone tests still take
+200-850 seconds across CI jobs. The bottleneck is no longer the
+pack generation but the clone operations themselves: transporting,
+unpacking, and indexing 4 GiB of data through unpack-objects and
+index-pack is inherently expensive.
 
-The constants were generated by running the generic path inside a
-repository initialized with --object-format=sha256.
+As Jeff King pointed out [1], t5608 alone takes 160 seconds on his
+laptop while the rest of the entire test suite finishes in under 90
+seconds, and the test's disk footprint (4+ GiB source repo, then
+two clones) is problematic for developers who use RAM disks for
+their trash directories.
+
+Gate the >4GB tests on the EXPENSIVE prereq (which requires
+GIT_TEST_LONG to be set) in addition to SIZE_T_IS_64BIT, keeping
+them out of normal local test runs.
+
+[1] https://lore.kernel.org/git/20260501063805.GA2038915@coredump.intra.peff.net/
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-synthesize.c | 91 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
+ t/t5608-clone-2gb.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/helper/test-synthesize.c b/t/helper/test-synthesize.c
-index 83c40ee02a..1f28ecf0f2 100644
---- a/t/helper/test-synthesize.c
-+++ b/t/helper/test-synthesize.c
-@@ -246,6 +246,90 @@ static const unsigned char fast_pack_sha1_suffix[] = {
- 	0xe3
- };
+diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+index af93302dde..4f8a95ddda 100755
+--- a/t/t5608-clone-2gb.sh
++++ b/t/t5608-clone-2gb.sh
+@@ -49,7 +49,7 @@ test_expect_success 'clone - with worktree, file:// protocol' '
  
-+/*
-+ * SHA-256 suffix: same structure, but with 32-byte OIDs and SHA-256
-+ * pack checksum (609 bytes vs 513 for SHA-1).
-+ */
-+static const unsigned char fast_pack_sha256_suffix[] = {
-+	0xac, 0x02, 0x78, 0x01, 0x01, 0x2c, 0x00, 0xd3,
-+	0xff, 0x31, 0x30, 0x30, 0x36, 0x34, 0x34, 0x20,
-+	0x66, 0x69, 0x6c, 0x65, 0x00, 0x42, 0x53, 0xc1,
-+	0x8a, 0x9f, 0x5e, 0xc3, 0xbb, 0x47, 0xb0, 0x83,
-+	0x8a, 0x19, 0xdb, 0x31, 0xbb, 0x7b, 0x0f, 0x3b,
-+	0x80, 0xa4, 0xbc, 0x2f, 0xaf, 0x72, 0x6b, 0xdb,
-+	0x62, 0xaa, 0xba, 0xdd, 0xde, 0x77, 0xc6, 0x13,
-+	0xeb, 0x9d, 0x0c, 0x78, 0x01, 0x01, 0xcd, 0x00,
-+	0x32, 0xff, 0x74, 0x72, 0x65, 0x65, 0x20, 0x62,
-+	0x36, 0x30, 0x39, 0x37, 0x37, 0x64, 0x37, 0x63,
-+	0x34, 0x63, 0x32, 0x64, 0x31, 0x65, 0x63, 0x63,
-+	0x33, 0x66, 0x62, 0x61, 0x31, 0x64, 0x39, 0x38,
-+	0x65, 0x65, 0x31, 0x32, 0x30, 0x61, 0x64, 0x63,
-+	0x32, 0x34, 0x38, 0x33, 0x34, 0x39, 0x35, 0x30,
-+	0x62, 0x65, 0x34, 0x31, 0x32, 0x64, 0x39, 0x34,
-+	0x63, 0x38, 0x30, 0x39, 0x34, 0x38, 0x30, 0x66,
-+	0x35, 0x38, 0x62, 0x61, 0x39, 0x64, 0x61, 0x0a,
-+	0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x20, 0x41,
-+	0x20, 0x55, 0x20, 0x54, 0x68, 0x6f, 0x72, 0x20,
-+	0x3c, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x40,
-+	0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e,
-+	0x63, 0x6f, 0x6d, 0x3e, 0x20, 0x31, 0x32, 0x33,
-+	0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30, 0x20,
-+	0x2b, 0x30, 0x30, 0x30, 0x30, 0x0a, 0x63, 0x6f,
-+	0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x72, 0x20,
-+	0x43, 0x20, 0x4f, 0x20, 0x4d, 0x69, 0x74, 0x74,
-+	0x65, 0x72, 0x20, 0x3c, 0x63, 0x6f, 0x6d, 0x6d,
-+	0x69, 0x74, 0x74, 0x65, 0x72, 0x40, 0x65, 0x78,
-+	0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f,
-+	0x6d, 0x3e, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35,
-+	0x36, 0x37, 0x38, 0x39, 0x30, 0x20, 0x2b, 0x30,
-+	0x30, 0x30, 0x30, 0x0a, 0x0a, 0x4c, 0x61, 0x72,
-+	0x67, 0x65, 0x20, 0x62, 0x6c, 0x6f, 0x62, 0x20,
-+	0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x0a, 0xb7,
-+	0x80, 0x3d, 0xd7, 0x20, 0x78, 0x01, 0x01, 0x00,
-+	0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x01, 0x95,
-+	0x11, 0x78, 0x01, 0x01, 0x15, 0x01, 0xea, 0xfe,
-+	0x74, 0x72, 0x65, 0x65, 0x20, 0x36, 0x65, 0x66,
-+	0x31, 0x39, 0x62, 0x34, 0x31, 0x32, 0x32, 0x35,
-+	0x63, 0x35, 0x33, 0x36, 0x39, 0x66, 0x31, 0x63,
-+	0x31, 0x30, 0x34, 0x64, 0x34, 0x35, 0x64, 0x38,
-+	0x64, 0x38, 0x35, 0x65, 0x66, 0x61, 0x39, 0x62,
-+	0x30, 0x35, 0x37, 0x62, 0x35, 0x33, 0x62, 0x31,
-+	0x34, 0x62, 0x34, 0x62, 0x39, 0x62, 0x39, 0x33,
-+	0x39, 0x64, 0x64, 0x37, 0x34, 0x64, 0x65, 0x63,
-+	0x63, 0x35, 0x33, 0x32, 0x31, 0x0a, 0x70, 0x61,
-+	0x72, 0x65, 0x6e, 0x74, 0x20, 0x37, 0x35, 0x62,
-+	0x66, 0x30, 0x63, 0x34, 0x37, 0x61, 0x65, 0x34,
-+	0x62, 0x62, 0x33, 0x30, 0x38, 0x65, 0x37, 0x63,
-+	0x63, 0x32, 0x34, 0x38, 0x32, 0x65, 0x32, 0x32,
-+	0x65, 0x66, 0x61, 0x65, 0x33, 0x37, 0x38, 0x37,
-+	0x61, 0x39, 0x36, 0x38, 0x34, 0x38, 0x62, 0x64,
-+	0x31, 0x37, 0x34, 0x39, 0x35, 0x36, 0x37, 0x31,
-+	0x34, 0x37, 0x31, 0x35, 0x32, 0x34, 0x36, 0x64,
-+	0x64, 0x62, 0x64, 0x35, 0x34, 0x0a, 0x61, 0x75,
-+	0x74, 0x68, 0x6f, 0x72, 0x20, 0x41, 0x20, 0x55,
-+	0x20, 0x54, 0x68, 0x6f, 0x72, 0x20, 0x3c, 0x61,
-+	0x75, 0x74, 0x68, 0x6f, 0x72, 0x40, 0x65, 0x78,
-+	0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f,
-+	0x6d, 0x3e, 0x20, 0x31, 0x32, 0x33, 0x34, 0x35,
-+	0x36, 0x37, 0x38, 0x39, 0x30, 0x20, 0x2b, 0x30,
-+	0x30, 0x30, 0x30, 0x0a, 0x63, 0x6f, 0x6d, 0x6d,
-+	0x69, 0x74, 0x74, 0x65, 0x72, 0x20, 0x43, 0x20,
-+	0x4f, 0x20, 0x4d, 0x69, 0x74, 0x74, 0x65, 0x72,
-+	0x20, 0x3c, 0x63, 0x6f, 0x6d, 0x6d, 0x69, 0x74,
-+	0x74, 0x65, 0x72, 0x40, 0x65, 0x78, 0x61, 0x6d,
-+	0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d, 0x3e,
-+	0x20, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
-+	0x38, 0x39, 0x30, 0x20, 0x2b, 0x30, 0x30, 0x30,
-+	0x30, 0x0a, 0x0a, 0x45, 0x6d, 0x70, 0x74, 0x79,
-+	0x20, 0x74, 0x72, 0x65, 0x65, 0x20, 0x63, 0x6f,
-+	0x6d, 0x6d, 0x69, 0x74, 0x0a, 0x6d, 0x6d, 0x51,
-+	0x9a, 0xc9, 0x11, 0x76, 0x61, 0xa3, 0x89, 0x49,
-+	0xb7, 0xa1, 0x58, 0xc6, 0x1d, 0x8c, 0x33, 0x75,
-+	0x8d, 0x7e, 0x4d, 0x8e, 0x58, 0x91, 0xf8, 0x5c,
-+	0x57, 0xd9, 0x89, 0x9e, 0xb8, 0xd2, 0x9a, 0xd8,
-+	0xc9
-+};
-+
- static const struct fast_pack fast_packs[] = {
- 	{
- 		.format_id = GIT_SHA1_FORMAT_ID,
-@@ -253,6 +337,13 @@ static const struct fast_pack fast_packs[] = {
- 		.suffix_len = sizeof(fast_pack_sha1_suffix),
- 		.commit_oid = "aac43daf40d0377af31aa9c798a4ae8a31b55c1d",
- 	},
-+	{
-+		.format_id = GIT_SHA256_FORMAT_ID,
-+		.suffix = fast_pack_sha256_suffix,
-+		.suffix_len = sizeof(fast_pack_sha256_suffix),
-+		.commit_oid = "63c46ca51267b1d45be69a044bb84b4bf0559f09"
-+			      "d727f861d2ae94ddebdddbc9",
-+	},
- };
+ '
  
- /*
+-test_expect_success SIZE_T_IS_64BIT 'set up repo with >4GB object' '
++test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'set up repo with >4GB object' '
+ 	large_blob_size=$((4*1024*1024*1024+1)) &&
+ 	git init --bare 4gb-repo &&
+ 	head_oid=$(test-tool synthesize pack \
+@@ -60,7 +60,7 @@ test_expect_success SIZE_T_IS_64BIT 'set up repo with >4GB object' '
+ 	git -C 4gb-repo symbolic-ref HEAD refs/heads/main
+ '
+ 
+-test_expect_success SIZE_T_IS_64BIT 'clone >4GB object via unpack-objects' '
++test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone >4GB object via unpack-objects' '
+ 	# The synthesized pack has five objects, so a large unpack limit keeps
+ 	# fetch-pack on the unpack-objects path.
+ 	git -c fetch.unpackLimit=100 clone --bare \
+@@ -76,7 +76,7 @@ test_expect_success SIZE_T_IS_64BIT 'clone >4GB object via unpack-objects' '
+ 	test "$source_blob" = "$clone_blob"
+ '
+ 
+-test_expect_success SIZE_T_IS_64BIT 'clone with >4GB object via index-pack' '
++test_expect_success SIZE_T_IS_64BIT,EXPENSIVE 'clone with >4GB object via index-pack' '
+ 	# Force fetch-pack to hand the pack to index-pack instead.
+ 	git -c fetch.unpackLimit=1 clone --bare \
+ 		"file://$(pwd)/4gb-repo" 4gb-clone-index &&
 -- 
 gitgitgadget
 
