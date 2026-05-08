@@ -1,87 +1,86 @@
-Received: from mail-dy1-f201.google.com (mail-dy1-f201.google.com [74.125.82.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4F8410D32
-	for <git@vger.kernel.org>; Fri,  8 May 2026 17:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25CC2F8EA7
+	for <git@vger.kernel.org>; Fri,  8 May 2026 17:52:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778262294; cv=none; b=QkcKH8Kj9QQwiXdoxRw6Tcv5tw8JLlNMVRPu/gwn8loka04nj5x8AattjycYA64aVJpnidX/v/x0Ka05JLXVhx7hgr09Y350MB5N6+6PnqCDxDvIhkWlnbqCt8rZVLv3w/bkWLwjT5uYvs9rAffnNWy1KYP1t750M6FkzBCMEro=
+	t=1778262763; cv=none; b=f3ACYcYH64Phgcqv7mYNjHWpInceCAP6lDaEGXD5IixSJyabuNwk4N2Si5/MCcU5wp8CE0W/5YV+SLicPSunp6pbJREw86PdlMrlg54Yw/xQZdUdrUk3ttzqWvHM/8uLVGt22eNdIRNG9xxP7CRHMnoPAfSrnGY/xTwBWYWkDwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778262294; c=relaxed/simple;
-	bh=iLNIVtoujK6ZMkeE0TtqWZY2hvt9HyrDod/vuXKb01w=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=JVC3hr3x+TWwGvytGqN7OrLWgN9lBUxN8thMIbu8gyaSoJzChXDmmY95Q+Q/rK3LeXB5CDjo2P7mmqtlw3nq4dO7g1u4ktyj3C4wAHPTXkWgif0NVZj4PsVouVQeDfT1hQWhI6eTxDSIf7qFuARIm1mGkNgxj/0zKxunwsKjRyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KEqV+ArY; arc=none smtp.client-ip=74.125.82.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--snatu.bounces.google.com
+	s=arc-20240116; t=1778262763; c=relaxed/simple;
+	bh=Molzi4qZ/sZ3v8m/lM9ISEZC6OpR687owQvjUqC/68Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tJAlmMIdahneirZICmIwFZVQ4KMtdGUKDghWv9IiI1eaOIgyo9FJ1c6gy5AqPk1zHNRddtwC2BdMmscB39PZfKjIZmj6iQq4kmQWSacWkbjcgq6l9uDGGFuM3R4UGvGeZqhAyedSsvAFgxWBS/CZOFj7okTJhHEIj97v7Vz968k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AAL+1iWS; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KEqV+ArY"
-Received: by mail-dy1-f201.google.com with SMTP id 5a478bee46e88-2f485961555so5246796eec.1
-        for <git@vger.kernel.org>; Fri, 08 May 2026 10:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778262292; x=1778867092; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iLNIVtoujK6ZMkeE0TtqWZY2hvt9HyrDod/vuXKb01w=;
-        b=KEqV+ArYAk0lFab0qaZwRC1KbrrxqXRfupBFoKwVx14LUf+EIhgdD43HjIrgwRDnIl
-         EyNbONcZAJtKZr88Pym5u4BrYoCJt5xBS3zu5c/mtX4LzJPepgCTnss2nQmAsuoV0I5O
-         tQdXuJ1HWmu5jLpz3/wvJqz8zXSr+4Max5szdBlGl1oI9yGddRUnP+C4kvO2T0LuAbA6
-         fiqrmYd4Sf1KyS0e5LbesHqBKrwNJuSUHhtEB4qdkUNJIh2U1x8c2h/adTBvwX1+ooS9
-         ICpnP0lKFCp2knMtY0fouR9jIIb+l4uUtJN+2083dpEJLbQyqhAEEvnvbgukGhacuNP1
-         Yy0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778262292; x=1778867092;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=iLNIVtoujK6ZMkeE0TtqWZY2hvt9HyrDod/vuXKb01w=;
-        b=KxAlvA8biYLo/R21T7BLMhVn+B624l4ObcPRfpt9QpX1S6ZFjwJC+dkeD2QS9+a+Ks
-         cDZf/Cd64VDUvSbxbr/XnZ+k0+WiBl/DvaiES0cLvMwKzBkpi9s2vt5fVv22sZZPGzVq
-         3v7SjVT4wZlio/CaaHX/8nPC54TXhpzKImLHdMod5ZWu7m1WRgrLRLY2s3VXqR4PwoMZ
-         vd1bWQIDoH1comsbNW/uTdSh1h6nphxn0FmZdgQG6M5vGSvpvmvM3dekMNspXL3WCuIo
-         Gg+EdniGxKFsmxQQbsOJETacgxJY/eV11ZWxBq5fz9p3CnaWJiRygjXiff2JkW6z237c
-         lq7A==
-X-Gm-Message-State: AOJu0YwUyzCPEL2EV+F42DgjjRbJa4zl6KKkUxpdlxdfBoFicy93RbiJ
-	gmeqoiG3U+7z1jLrxuPDJhXQMhi5CeR759tJXHVk8zMnvEp2s1NU0iHx+U51TSUCMyjHUToKk++
-	u1w==
-X-Received: from dyhv20.prod.google.com ([2002:a05:7300:6794:b0:2f9:af7:5041])
- (user=snatu job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7301:2e89:b0:2f2:8857:17f6
- with SMTP id 5a478bee46e88-2f54806545bmr7197928eec.4.1778262292087; Fri, 08
- May 2026 10:44:52 -0700 (PDT)
-Date: Fri,  8 May 2026 10:44:51 -0700
-In-Reply-To: <CAOTNsDyygMEz4dgfkWKb=wWP0g9MhNFgDHzPPEODbMGmDQLTOQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AAL+1iWS"
+Received: (qmail 67254 invoked by uid 106); 8 May 2026 17:52:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Molzi4qZ/sZ3v8m/lM9ISEZC6OpR687owQvjUqC/68Y=; b=AAL+1iWSnIGq/iBcwRe/Lf+vZo57Kl8nNEabYvIjhpJ/S3QbXRTTCB8sQqud3gPZsy9ZJC9irpqIc70YU4bguzp2YT6YJXh4Zvp507Z0y0x4JjdyMj7RifeVWLL1gy+6K1+DbHYnsh03k/CB4+bFatn12KXYqCJqIIOLX7xtFO2cKIFZ/+wl6zG1/S4W1/nHAoojZzYZok2YzqFktnYIaqZfSs9redJEeOeQyHUk1gWB66r7Ajbao0atPEleW8HqC6ZGdXaS2rI5oGcRj+PJThAAVJnUP5yO5ICyVS5Atnri/TD3mthKEnl+OBO0EGtLmK1Cxa4a1xi+DDBUwW1C2w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 May 2026 17:52:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 129875 invoked by uid 111); 8 May 2026 17:52:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 May 2026 13:52:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 8 May 2026 13:52:40 -0400
+From: Jeff King <peff@peff.net>
+To: Greg Hurrell <greg@hurrell.net>
+Cc: Greg Hurrell <gitgitgadget@gmail.com>, git@vger.kernel.org,
+	Gregory Luke Hurrell Stewart <greg.hurrell@datadoghq.com>
+Subject: Re: [PATCH] git-jump: pick a mode automatically when invoked without
+ arguments
+Message-ID: <20260508175240.GA737125@coredump.intra.peff.net>
+References: <pull.2108.git.1778231254871.gitgitgadget@gmail.com>
+ <20260508141314.GB709299@coredump.intra.peff.net>
+ <c5e0a1fa-f228-41dd-b547-07b0ad6c0964@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <CAOTNsDyygMEz4dgfkWKb=wWP0g9MhNFgDHzPPEODbMGmDQLTOQ@mail.gmail.com>
-X-Mailer: git-send-email 2.54.0.563.g4f69b47b94-goog
-Message-ID: <20260508174451.606855-1-snatu@google.com>
-Subject: Re: [PATCH] Makefile: link osxkeychain helper against Rust
-From: Shnatu <snatu@google.com>
-To: koji.nakamaru@gree.net
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, gitster@pobox.com, 
-	sandals@crustytoothpaste.net, snatu@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c5e0a1fa-f228-41dd-b547-07b0ad6c0964@app.fastmail.com>
 
-Thank you for the suggestion! This is indeed a much cleaner approach.
+On Fri, May 08, 2026 at 04:30:36PM +0200, Greg Hurrell wrote:
 
-By wrapping `RUST_LIB` and the rust targets in `ifndef NO_RUST`, we can lin=
-k `git-credential-osxkeychain` directly against `$(RUST_LIB)` without needi=
-ng to introduce an intermediate `RUST_LIBS` variable. When `NO_RUST` is def=
-ined, `$(RUST_LIB)` evaluates to empty, and Make naturally links it as a pu=
-re C binary without any Rust dependencies.
+> On Fri, May 8, 2026, at 4:13 PM, Jeff King wrote:
+> > On Fri, May 08, 2026 at 09:07:34AM +0000, Greg Hurrell via GitGitGadget wrote:
+> > 
+> > I'd be a little worried that it is more confusing to somebody
+> > approaching the command for the first time and just runs "git jump" to
+> > not see usage or other guidance. But that might be overly paranoid.
+> 
+> Hopefully, they at least read the README before installing it from contrib/
+> (although Homebrew recently starting installing it for folks automatically,
+> so may not remain true for much longer on macOS...)
 
-To integrate this with the universal build support (`RUST_TARGETS`/`lipo`) =
-introduced in this PR, I have updated the changes to:
+Yeah, I'd hope so. And even if it might be more discoverable, I'm not
+sure that is more important than being convenient for experienced users.
 
-- Wrap the `RUST_LIB` definition block (which resolves target-specific path=
-s for universal builds) in ifndef `NO_RUST`.
-- Wrap the entire universal compilation and lipo combining block in ifndef =
-`NO_RUST`.
-- Remove the `RUST_LIBS` helper variable and use `$(RUST_LIB)` directly in =
-`git-credential-osxkeychain`.
+I guess a config option would be possible, but probably not worth it for
+something as trivial as git-jump.
+
+> It's mostly the finger effort of typing it because I generally know exactly
+> which mode I want; eg.
+
+OK, that makes sense.
+
+> This is muscle memory for me at this point, because I've had a `git jump`
+> alias for this in my dotfiles[^1] for a couple of years. Homebrew
+> installing `git-jump` by default a few months ago[^2] broke this, because
+> aliases can't shadow builtin commands.
+
+Ah, yeah, that is frustrating. We try to avoid aliases overrides to
+prevent confusion, but for an add-on tool like git-jump I think it is
+overly cautious. It might be reasonable to limit that protection only to
+commands in Git's exec-path, but I haven't thought hard about it. And I
+think it should be considered separately from this patch anyway.
+
+So yeah, your patch looks good to me. Thanks.
+
+-Peff
