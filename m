@@ -1,85 +1,78 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCAD25A357
-	for <git@vger.kernel.org>; Fri,  8 May 2026 02:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C94B1F4C96
+	for <git@vger.kernel.org>; Fri,  8 May 2026 05:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778208983; cv=none; b=ZytTjLrY7KD6+x+E2SKvOaL4ydOXVg3xJpy8c9Ff2cJkonLD/2EcgoVgvhrUftrrAbvJOmzf7KFfLgb5TYs/mQ2bEThHLyccvpEu5P5yJeDgQamFR31dVktfPMVz17z+5b1k/dGaBR5BM+bpfPUV88CfLh6Ske/SIfOBhxyEWPI=
+	t=1778218268; cv=none; b=JdVBGY3SDPtzLI7domnJtCOsy+Ar3DCd4nFw07IxMLgShm4EHUYyCWFSH3uujBjJW8DSPeNytshFKBPQHn1aKYdOa/n3RDmY3H4bJ5eFMNhu/4piLgEVZHOUGMhGJlGuHfGJnfDs/kipx0LLOYhfJSYKqEbjitTESeu7XixR3GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778208983; c=relaxed/simple;
-	bh=6ZfEXXX+Wf+XiVUO57Su92HU5q0jR21MYCxEfmxS0ck=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WhJBwiqwMRI3SEoaTwbbOZy3HoHPuk8Om/XreeWB7cPUuy3RAgBkTdwmarvXdNdzAStVwR5LoNy+BeSoejZxmbzgQTVnhVfxHy5W0uTXZ/c9Mdce0iaT6XX4qr6aumB55wWazT7EgTbmXzqqLUa1PnYpnlpNYgn9nKjkLIz8lwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gh7NipYA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pCveRTL4; arc=none smtp.client-ip=202.12.124.145
+	s=arc-20240116; t=1778218268; c=relaxed/simple;
+	bh=c+NlYE4o9Ut0+F9uUGO7AfChztWA8Jf1TnNBTq9kjr4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n3dAbuQlRTP/zpvgtlNh8X7FDfeGnRoRJOGrLZ14UBm20rWk9amelIIE5xEZREJ/96RkjNj+ZO564qOVxj+Rwjj+hWyC3pNlcWyRX9mIRJXibbp9GQIycgZH56E3t6adHg7NJOVQn24/Ya2M+rDVoieVwA4+LYX5dhe0ztwl0Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=afJkTCzm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rQ0K1r2j; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gh7NipYA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pCveRTL4"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 009AF1D00074;
-	Thu,  7 May 2026 22:56:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="afJkTCzm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rQ0K1r2j"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 062FF1D0006E;
+	Fri,  8 May 2026 01:31:05 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 07 May 2026 22:56:21 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 08 May 2026 01:31:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778208980; x=1778295380; bh=C/mbLTVEny
-	p8VzRoX5bFUcuQM6iCdizuZbEhI6MiFwQ=; b=gh7NipYAg2lRPkvC1BRk9PuljV
-	86Pq3fDznu4dMvWo9fQ8MNLPyneCZuEsRZXxbJBIFJBNnUp/IInqFNCe8XZRxmn6
-	An8qt1/oNOqy9Nx+3EfDDMS+zR1SiaHvzN+BIedInY8FnZ4Jp9Jh/41XvrGd6jrs
-	BhnhZRHkybxcv88rZqWQ7+2jy1gm70tTAbkBWNdCYASGHY2+5IAyz6wo8nXzV4Zz
-	u97U1hGyGxMSsK/NtGMyLd4IG8ISOOEGpP4TTuS5O2JRAY8luPLYygZcJxV1kY/4
-	B3Eu+nmnMyn3H2tn4lG5nNBzvPvSdIbEkGFGAoJepMH/MQqIJ78WUZOg17Dw==
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1778218264; x=1778304664; bh=G6RQW8Funzj6DL4KiGs+vsNu0pAGj2jb
+	HRZL/ooIusc=; b=afJkTCzmTYGONM7pEmCsJeVXusS7bhkP+5GcTyFKB7HM1el+
+	ee125O5KuktVNOoslIEQ5eFLrFE5Bixhpl/uWWEGCJXmYoGmeXHSX9Afncpzd072
+	VSI/qinYemVv4EVtgqLet+0rCKxYrBReFleC0o6ziKq+e3fIwwusFskOfaYKsv9m
+	2/sCfjYU3kbyYdn35jngvnfVyRf5Qn1nd1BoQKy04ABPTMy/CuQeNRcfVlk5XtNo
+	wG2xb6wGmWg/56VoRo/lnYsdT8YoWOvDZaiPYKuKEm/QOvD7TraSyRetoFujfWwg
+	PtiHWxb6tgY3amexKTtyrWT6fMGIl2V8kl8XxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778208980; x=1778295380; bh=C/mbLTVEnyp8VzRoX5bFUcuQM6iCdizuZbE
-	hI6MiFwQ=; b=pCveRTL49462/c66Z4/I7/EEmToPbyEDIBzQK5rvsGE2s7aj4ug
-	37YMP3Mrb5hRaEHZwccESxtHbtDXasvomFiCJeJp5lXC2e+tJtV6Pu/or4JcG/Ka
-	My/0UvqTYnUWhrjkQbMC9PAQTUinC438GILUAVqKNcVlZ4teU5Wz+Enq6uOhkc+d
-	Puky7ShCpyG1DKNIMoDhPj08m465s1Kqkcp/fPcz1lxDB6vdjMiw4RuXb836MKSP
-	Tn4XeUjx452NTIWQXf70vjFwMLDtKqbHXr42KemL0RwbL9AjceN/3Dcz98qrIqZD
-	bJgMQA/hnsKImb8i6TSqsR8GUtS0BUhTwDA==
-X-ME-Sender: <xms:1FD9aVr1V_brRbnJI4sL67YDCysP_j6zdGQFPSVuASaQMDWuPS02jA>
-    <xme:1FD9aeg5B0BWphORekV0LInmfTLKJzE3VAN3HTdabCzFUe1ntML-b8IkQBLrhfiK9
-    0cKnkWiaLMbqPNGDoFKyrexTc-5Hz9wTlPUxevkiWjwDrufww7hGw>
-X-ME-Received: <xmr:1FD9aaiqDPbVmXbOJhSoODiH6a5zScZLqlXu_MUSHPZ1M_VkHx8fmSj7a76tfiHaKCiJbxVjpfyEf-Wpuqq6ZXWRRLLq-EbxPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdelvddtucetufdoteggodetrf
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778218264; x=
+	1778304664; bh=G6RQW8Funzj6DL4KiGs+vsNu0pAGj2jbHRZL/ooIusc=; b=r
+	Q0K1r2j/9U11erAYz+qF8gTP+Ce80LhA3rZjVSTWe6wg/l/MXETcSyAfDo90JZ5/
+	U5UrXdUY2hOVoRmAqtRbZJE/FqE08UIHfIjKpbbtoIU/SKo0aTWtRj0GTzHtv2k2
+	mQoYkN7hiwCgzc9vbU7hH+kmHbkmrGcopJXLCPWhip3JccNMEUOJTTwLhH2oP7z3
+	kteP03W4sp3qps4Rf+Pg9Ptgt+CxdrAvitbPTNCBZJ71Kx47dzhZFWCoqxJEmmwC
+	FVRrmKKSrBXc6DtlFhBp+646yIPsQxMB/bSAfHtVWvYvTeT0g+6QYrmRuifnzAlT
+	8E+icuYmZro9+mUBBkSNw==
+X-ME-Sender: <xms:GHX9aZqF6RF7E7IHFgNyhyWxy4e8p9nS07mxnMenI3t7Pwdyttffdg>
+    <xme:GHX9aTE2QNZoc5Xz-FcGLBE5V4ZG81ftt0m9I3N2DVgiArKAE6H37sSmrfu6naab3
+    2ZHtjVOjNRb3crJu-quRE9Zk1tWKACOKm3Rgkv-YhNVrK9bFp_q>
+X-ME-Received: <xmr:GHX9aTkhsZFAb4UM8pwqOE3eMGqYb1xxtCHwGGKvu8I_eYUXrjaUtirCRqOqVvXtdBwAGZ4KPW0s-juEPoN1JF-eKN27Tu5mKA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdelheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
-    hinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:1FD9acjDOK0usPyFaUyXnV0xoqbbtE8FHlNLT3AoDzZam7VLvPiLMQ>
-    <xmx:1FD9aSLJhuKSvGgSs63cSs0nZnFtZdUGnlcO6yBUv8Kxy9p2QHRcCg>
-    <xmx:1FD9aTGJbHcEi6nRvC9IC01u8cuB8B6K9MM38n5QcZQ7vmO2HkUpPg>
-    <xmx:1FD9aeS33am5DE39q97q7boB1U-0pd2mz5QZgXnaN5IfJa_Jw0Xsjg>
-    <xmx:1FD9aS4677y3g-XeVZVMrIa5gLVNIk7hFPtBi-Tk17dX-_P9jb1Nf4FR>
+    gurhephffvvefufffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepleejfeduteeftdfgtedvveeigeffvdffkeejteevhfeftdekteekueekfeevfefg
+    necuffhomhgrihhnpehhthhtphdqfhgvthgthhdqshhmrghrthdrshhhnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphho
+    sghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthho
+    lhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:GHX9aenemiOY5wxQ_JK8iCFiOJroHEueuZ-qSGnzAsQdBL5f8Z-t5A>
+    <xmx:GHX9acu6Y0S6VAMjGb95jRmT7IFqlwFmU95svcusirrLDmdlpo_TQw>
+    <xmx:GHX9aZlr_v8l5ZTA6ooehYQfd1pkjZSGZ5WTU-Wtj0-d3Hdm1E37nA>
+    <xmx:GHX9aftP3uD7Oiz3BMgWfwNIsDOjHiSld3vTn58OSsBQm9ttRY8GgA>
+    <xmx:GHX9abEnrA81q-K2scfBTQKQw22glUTFSext-8ul2BknSjjKncojX4fV>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 May 2026 22:56:20 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 8 May 2026 01:31:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/6] mingw: stop using nedmalloc
-In-Reply-To: <pull.2104.v2.git.1778169613.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Thu, 07 May 2026 16:00:07
-	+0000")
-References: <pull.2104.git.1777811392756.gitgitgadget@gmail.com>
-	<pull.2104.v2.git.1778169613.gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 11:56:19 +0900
-Message-ID: <xmqqfr42fw30.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH] t5551: "GIT_TEST_LONG=Yes make test" is broken
+Date: Fri, 08 May 2026 14:31:03 +0900
+Message-ID: <xmqqqznmeaco.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,26 +82,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+The "test_expect_success 'tag following always works over v0 http'"
+test in t5551 fails when it tries to run "git init tags", but this
+happens only when EXPENSIVE test is allowed to run.  
 
-> The patches that remove the vendored sources have a slightly unusual shape:
-> the Git mailing list rejects messages over 100kB and
-> compat/nedmalloc/malloc.c.h alone is ~196kB of source, so the deletion of
-> that file is split at section boundaries into three commits, each
-> comfortably under the cap.
+This is because the step tries to create a repository with "git init
+tags" but the EXPENSIVE test that runs way before it creates and
+leaves around a temporary file "tags".  Have the EXPENSIVE test
+clean it up after itself.
 
-The history made strange only by the limitation of the tool (i.e.,
-mailing list) we use is like the tail wagging the dog.  Could you
-give a commit log message that describes droppage of everything done
-in the "artificially stepwise only due to mailing list limitation,
-but we wish we could do in a single step because the separation is
-not logical at all" in the later steps, to the first of such steps
-([2/6], I presume), and give each remaining patch a single liner "to
-be squashed into [2/6]" log message, or something?  Then I can
-squash them on my end.  Alternatively for this one only after we get
-favourable reviews on the early two steps to drop the use of the
-library, I can pull a single "discard everything" patch that builds
-on these two from your repository.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Thanks.
+ * As we should give individual contributors a stable base, I have
+   identified tests that fail with EXPENSIVE enabled in "master".
+   With this fixed, we should add GIT_TEST_LONG=YesPlease to the CI
+   jobs run upon PRs are created by contributors.
+
+ t/t5551-http-fetch-smart.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git c/t/t5551-http-fetch-smart.sh w/t/t5551-http-fetch-smart.sh
+index a26b6c2844..e236e526f0 100755
+--- c/t/t5551-http-fetch-smart.sh
++++ w/t/t5551-http-fetch-smart.sh
+@@ -481,6 +481,7 @@ test_expect_success 'test allowanysha1inwant with unreachable' '
+ '
+ 
+ test_expect_success EXPENSIVE 'http can handle enormous ref negotiation' '
++	test_when_finished "rm -f tags" &&
+ 	(
+ 		cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 		create_tags 2001 50000
