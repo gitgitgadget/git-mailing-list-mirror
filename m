@@ -1,68 +1,69 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBAA34D3A9
-	for <git@vger.kernel.org>; Fri,  8 May 2026 12:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A453397E75
+	for <git@vger.kernel.org>; Fri,  8 May 2026 12:51:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778244667; cv=none; b=NGUA+3+20LtZVWJCek740YTJf6AaeMZCtQYkGhS5TaFPXVN4zOiC8Xp1KmgMqr2y7cY1nAmjFJA6Elb/PKv3gtEBN6LsJV1H5huUPbi+vYIdoh3gu+aF/LafAS8hPeuT2or3PtsxXpJycQG9rnlC+Lmb4p80fnm/SQqIBoqS6Yc=
+	t=1778244668; cv=none; b=Gl/V4b2LVDRwy8W5tgnq9tgefUMQAAzxEdERDA0jM6GyfRfiI+rhz9d95vy9hv0Y70KHIUpIRpuH9yey1CrWNwSV4nMAgeGk4xkVG18HhdG3eP+Qty1hI4KfkfCyMb2Igr97B9+e5oRDCcxBV8wnn7i2nouOjvogGJA+O7yeO/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778244667; c=relaxed/simple;
-	bh=qSbSG+wrcEWAIc1R6IuHG8WxHRxQ/eNVvBziIqse42k=;
+	s=arc-20240116; t=1778244668; c=relaxed/simple;
+	bh=MKl/LzTA80UjpHrrmDvsKHK4RuRRh3bezc7DrgV9/TM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UfIkWDxmzUUQoNJ9Rz7Qv18QLPR8c03aJcwn7E0XyEgHOzeb3/uZCNZuGs853l5iLhEAP6+/4ObUO9mAotlSSAa58KW6Mc6uPXOkBIQMVdh/dIy8FrRtGtX4bJ4V1kCUlq3IEeSvU2GGamTrnTUO7Tf1KVPp1FDOleTDZR0LJ0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WR9IXSEN; arc=none smtp.client-ip=209.85.222.178
+	 MIME-Version:To:Cc; b=e9YW8IZ9XIiVZntFCXw6JWFmCaPwn4tB94A4eBhR9bEggBfskzG+fY0DhNJZiMkeSwdLwdluzCyatMHIjO3Qp2e9cjUEfvVMk37D5YYl5jq1/bhABgEML9TDFZrQawtQV+3kTRKjfuUN395S2bkmUXYPI/8XXQDW6KUhVggfHmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJVKo2q2; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WR9IXSEN"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8f0a87e23daso207148885a.1
-        for <git@vger.kernel.org>; Fri, 08 May 2026 05:51:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJVKo2q2"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8ef5776530bso191368685a.0
+        for <git@vger.kernel.org>; Fri, 08 May 2026 05:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778244664; x=1778849464; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778244666; x=1778849466; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8Tix8F3nwvzcVolImWDnGF40B1w1DatVag6dbbk5nCQ=;
-        b=WR9IXSENdJVekdOhai1a+hZ1JlpYuNIEmU0TlPWFl6IFfBGzm+FWuU4sucIewD5mrR
-         1iBbS9TMdImn9/l4coanj53ysrvViR/pcUYv/7xcNexBUzjSD8oOJ8FCCGg58QGuWyeF
-         NuprfwsnPympkeOgN4FN/xp3tGIwzgjhfdc1suA8X09nCE1dI73LKwouG3A2QeYQ6QiY
-         eIsSAiFtNiNX8Don4JFTko3ZwsyWxpmwf+UqbXJfPf681agbT5PmvvaRrUM8JiKA4lAb
-         XEukI9OwCYmLtU4x5wo+W/6sBI/9/ZMFpmoTcoHCoxJgSKQp0n6gvaN77keS9h7Rt+jF
-         RvwA==
+        bh=ciW8XeIIqHYQLH6lZNOCRzR6wq0xYJr+A1GrI2jjYjA=;
+        b=NJVKo2q2ndpWdNsP8vvtwqugfVcgUfwpCoPSBVPDcJuNOwmBmstxXLew3zg9f9jp+0
+         /3640/6A7GVQzRhlY2t3Jo4+zp09qh/5pUzBlQNdHxLoTOOvTGgkaohEc2KmVy30op8p
+         QvDrG0VVdyI0BdcYRZAJSJlACNB23ndCrTKFiZD4mmPHacAuxOkfjxymlnv3ZI8jZS35
+         csDNnx1GdykHF0oxHuoNLQbAaim8SI3ks3LPUqvWZNH87NgKsJ/qtp+54p/PF3Z6h+Mm
+         xuXz3lmTSq86d90Zq/HAUI+ORZ5/Zd8vuYRoIEQrN6GX78BHAGuhCAlyR3gbUe7wJ8RL
+         auYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778244664; x=1778849464;
+        d=1e100.net; s=20251104; t=1778244666; x=1778849466;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=8Tix8F3nwvzcVolImWDnGF40B1w1DatVag6dbbk5nCQ=;
-        b=nJnU8FLXL0uaLF37xT6zBBafQQRQ6bni2zG4tDJyVSsBqjSqhYdrDoetQP2yQq2+Tg
-         T9QnNZEkSTa9Pa53sT3f/nYlkIVBBttim3H42OpQ3V6vKnnvxkqaVh9xXn4m64Fk5t4I
-         wjEWUp8degchRG8yymiQ9Z+hbq593v38LTuBHdh50oHvEEQU3zfLA03EbbotFLegKI6r
-         aNgkrpMXHP0vcr+rSXYfki0rRgq1gZX8hDH+Na6NEKXD5VW46q83yqUHfSpcReeFIuic
-         G987M1ZuBoz1U/3B2BFwRVNjVvRE8oKn80XGW8u14bmGfH0lYXlDrm/gNEYy6yJKPpKn
-         TJ4Q==
-X-Gm-Message-State: AOJu0Yx4AMY7+c7Sj0HqGyYo41upHfjgAAXZV77QvgKtQxCr8zg66Em3
-	8MQqSnV1C8BkYkmTjsjMcX5zRuCNA0KSnpvr6bu1ebM5MR7em420RHE74pzxEw==
-X-Gm-Gg: AeBDievhoY9p2Il3sip+6/WDK9CaMhDOI82wHdndKGgb6wibxQYtFZ5+xl+t6RgAtUN
-	+/IITfDWXCtfsyz0RfdxHhjdi1L4SOBRUn4IfaQbC9HpatnEBP+hTDAiFH8k25DSNzr+Qvr8Ehm
-	ClclRD8/vKQFTz8lOiWBL/d2tIz9pZLpBiVeVrm6OJOvNf/UOMbJaBAGBB1+saOt73oj5eyU+DU
-	o+6d2gzOKrH31UBWN89qODSYbwGVjT0FAmc8rD2MiIjt20qRKULDcPba/gL4QAWFt7jJd6QsYT0
-	pygULbZaXxGBVbgBqYsO31qyS+cQkX3uP41ASPgflXDbpybhn/xVHGOqG0jHQL7EoCPEtv7DoiR
-	NBt5Ugq9L5HAfSv9y0h1K6lswEPiAGu6ksqSxNhSrxPNh0PZMZO+pjLC+gwTt6KFWA8gkChE0Er
-	QlJR94KpGNaQN+CYuXkq54lmyRHXPu
-X-Received: by 2002:a05:620a:f0f:b0:8ef:7934:22d6 with SMTP id af79cd13be357-904d6fccb8fmr1795241685a.55.1778244663992;
-        Fri, 08 May 2026 05:51:03 -0700 (PDT)
+        bh=ciW8XeIIqHYQLH6lZNOCRzR6wq0xYJr+A1GrI2jjYjA=;
+        b=N+OUYfZPaZvl/TwLAXDd+8I7NynubVkwcjAauUfTJzV6jiehhAcugkDUetKyoozSBX
+         E3KGq5RcQIOgez19fMpSvyZJmcuSnK+tsZVtMgMDbiTkkIczXl6TPHkj7i1L+m3F4HxX
+         oVBrt8tRZh9MginlfVJGUxsGNC1r7wZmrxV3JgViv/uk88NfM9yEpO9v6RdUWGythT4r
+         +7uGXB0SFnih2X1b8eS4G/ZNyG1jgTESj+jALHYhVITDeH4R4o7LLzNndx8g/yf0/K3q
+         TKDiO0GGmyQrX92zG1p40ypvFYoYZ4UuWd+jQ3y4onD1oL5CMLRNDSCna/BGrptJMJJL
+         urhw==
+X-Gm-Message-State: AOJu0YyMv6De04Qrxw8l2ozOVyMHVXuxrONWE+1esbFh2Qhv2mmPNH2v
+	965IHDkJUtgP48BxOfCl14u+Xvf/w7rk8acu95JiH+OlG5NbTIVQBsQ/qsNrjQ==
+X-Gm-Gg: AeBDievCefjQFCe+fBI+/ncel4o2dIdeBnJJTWwVCkChVl6u/ix097OVWd21yPnD/ld
+	gO2aL/FZXwK6sHFPXz77j+LneBtrAA/9hDaE3nyrydEPtTvFnMnqWl4gKvUXEveA+QxB5sQpJIB
+	DLnNMHaUJ42JeDKd9E+aH4DRoO8Ha0Tm22UOSSxxzngfCCNeYR5eMa2W2+E2AVZUiEyByHNO69f
+	kYtsysnDYQDxoH01imaDXkad1zXdMLU40kXakJ2DrTRXR0lrvmNkTfZvxTe4GieGdY1hZ2UbzoM
+	U1gaxUCDX68KVN5YvZ4gVUneeUyfPK2iTVfIe1jy3wUecgYIPoi074/dngUbmDC2rPKNB5oZsMj
+	D0EC/T211myhPnpAPR65odV2AXxraIVI/XSeFQDIkwPBvzDSthHnqje0knVlW2RNPVB8dReUz1C
+	mfOO2o8ks4nY+eknTGAsHqpgZg9vVVQm4/qinju+g=
+X-Received: by 2002:a05:620a:2699:b0:8fb:1acb:c907 with SMTP id af79cd13be357-904d3cb86a1mr1819896785a.12.1778244665509;
+        Fri, 08 May 2026 05:51:05 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.176.163])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2cd04de9sm2275267285a.44.2026.05.08.05.51.02
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91b976sm2280035085a.39.2026.05.08.05.51.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 05:51:03 -0700 (PDT)
-Message-Id: <pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2104.v2.git.1778169613.gitgitgadget@gmail.com>
+        Fri, 08 May 2026 05:51:04 -0700 (PDT)
+Message-Id: <d547877ae3efe0fc27af44819e19da863559540f.1778244661.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
 References: <pull.2104.v2.git.1778169613.gitgitgadget@gmail.com>
+	<pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 12:50:55 +0000
-Subject: [PATCH v3 0/6] mingw: stop using nedmalloc
+Date: Fri, 08 May 2026 12:50:56 +0000
+Subject: [PATCH v3 1/6] mingw: stop using nedmalloc
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,166 +75,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows' SDK wants to update GCC to v16. Since it is used in the CI
-builds also of the git/git repository, it is crucial that GCC can compile
-even the latter all right, but currently it does not, see
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+The vendored nedmalloc allocator under compat/nedmalloc/ has been
+unmaintained upstream for a very long time: the original repository at
+https://github.com/ned14/nedmalloc received its last commit on July 5,
+2014, and was archived (made read-only) by its owner on March 15, 2019.
+Our copy has been carried forward unchanged ever since.
+
+The Git for Windows commit that introduced mimalloc as a replacement
+on Windows ("mingw: use mimalloc", 2019-06-24, present in the Git for
+Windows branch thicket but not upstream) already observed at that time
+that nedmalloc had ceased to see any updates for several years.
+
+This came to a head when the Git for Windows SDK upgraded to GCC 16:
+the `add_segment()` function in `compat/nedmalloc/malloc.c.h` declares
+`int nfences = 0` and only references it inside an `assert()`, which
+GCC 16 now flags as `-Wunused-but-set-variable`. Combined with the
+`-Werror` enabled by `DEVELOPER=1`, this turns into a hard build
+failure:
+
+	compat/nedmalloc/malloc.c.h: In function 'add_segment':
+	compat/nedmalloc/malloc.c.h:3897:7: error: variable 'nfences' set but not used [-Werror=unused-but-set-variable=]
+	 3897 |   int nfences = 0;
+	      |       ^~~~~~~
+	cc1.exe: all warnings being treated as errors
+
+The same source built without complaint under GCC 15.2.0; the
+regression was bisected to the SDK package update at
+https://github.com/git-for-windows/git-sdk-64/commit/188d93dd455
+(`mingw-w64-x86_64-gcc 15.2.0-14 -> 16.1.0-1`), with the failing CI
+run captured at
 https://github.com/git-for-windows/git-sdk-64/actions/runs/25244795074.
 
-Git for Windows switched away from nedmalloc to mimalloc a long time ago,
-but recent benchmarks across Windows, macOS, and Linux (see
-https://github.com/git-for-windows/git/pull/6231) show no measurable benefit
-from mimalloc over the platforms' default allocators, so rather than
-upstreaming the mimalloc support, I will drop it from Git for Windows
-entirely.
+Rather than patch the unmaintained vendored sources to silence the
+warning, stop opting into nedmalloc altogether on Windows. The
+platform allocator is what every non-MINGW build already uses, and a
+fresh build of git.git's master against a minimal Git for Windows SDK
+upgraded to GCC 16 completes successfully.
 
-This series therefore disables nedmalloc for MINGW builds and removes the
-vendored-in nedmalloc from Git's source code; my earlier sketch in
-https://lore.kernel.org/git/00fd3145-b3d2-ddab-466d-d06fd27298ec@gmx.de/ had
-the opposite ordering only because it assumed mimalloc would land first.
-Since that's not going to happen, it's best to move forward with this, so
-that the CI builds can switch to using GCC 16 (and the current Git for
-Windows SDK) on Windows.
+The compat/nedmalloc/ subtree itself is removed by subsequent commits
+in this series.
 
-The patches that remove the vendored sources have a slightly unusual shape:
-the Git mailing list rejects messages over 100kB and
-compat/nedmalloc/malloc.c.h alone is ~196kB of source, so the deletion of
-that file is split at section boundaries into three commits, each
-comfortably under the cap. The intention (as documented by the last three
-commit messages) is for them to be squashed by the Git maintainer before
-merging.
+Assisted-by: Opus 4.7
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ config.mak.uname                    | 3 ---
+ contrib/buildsystems/CMakeLists.txt | 3 +--
+ meson.build                         | 1 -
+ 3 files changed, 1 insertion(+), 6 deletions(-)
 
-Changes since v2:
-
- * Reworded the last 4 patches as recommended by Junio, in preparation for
-   squashing them on his end.
-
-Changes since v1:
-
- * Also remove nedmalloc from the CMake and Meson configurations in the
-   first patch.
- * Add follow-up patches that drop the nedmalloc build-system plumbing and
-   source files.
-
-Johannes Schindelin (6):
-  mingw: stop using nedmalloc
-  mingw: drop the build-system plumbing for nedmalloc
-  mingw: remove the vendored compat/nedmalloc/ subtree
-  to be squashed into 3/6 (chunk 1 of 3)
-  to be squashed into 3/6 (chunk 2 of 3)
-  to be squashed into 3/6 (chunk 3 of 3)
-
- Makefile                            |   17 -
- compat/nedmalloc/License.txt        |   23 -
- compat/nedmalloc/Readme.txt         |  136 -
- compat/nedmalloc/malloc.c.h         | 5761 ---------------------------
- compat/nedmalloc/nedmalloc.c        |  954 -----
- compat/nedmalloc/nedmalloc.h        |  180 -
- config.mak.uname                    |    4 -
- contrib/buildsystems/CMakeLists.txt |    3 +-
- contrib/vscode/init.sh              |    1 -
- meson.build                         |    2 -
- 10 files changed, 1 insertion(+), 7080 deletions(-)
- delete mode 100644 compat/nedmalloc/License.txt
- delete mode 100644 compat/nedmalloc/Readme.txt
- delete mode 100644 compat/nedmalloc/malloc.c.h
- delete mode 100644 compat/nedmalloc/nedmalloc.c
- delete mode 100644 compat/nedmalloc/nedmalloc.h
-
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2104%2Fdscho%2Fstop-using-nedmalloc-with-mingw-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2104/dscho/stop-using-nedmalloc-with-mingw-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2104
-
-Range-diff vs v2:
-
- 1:  d547877ae3 = 1:  d547877ae3 mingw: stop using nedmalloc
- 2:  7b5daae659 = 2:  7b5daae659 mingw: drop the build-system plumbing for nedmalloc
- 3:  a5ccd4dae3 ! 3:  fc7f5cae10 mingw: drop the small nedmalloc auxiliary files
-     @@ Metadata
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Commit message ##
-     -    mingw: drop the small nedmalloc auxiliary files
-     +    mingw: remove the vendored compat/nedmalloc/ subtree
-      
-     -    The Git mailing list rejects messages over 100 KB, and
-     -    compat/nedmalloc/malloc.c.h alone is ~196 KB of source, so the
-     -    deletion of that file has to be split across several commits.
-     -    Carving the four smaller files (the LICENSE, the README, and the
-     -    nedmalloc.{c,h} wrappers) into a commit of their own gives the
-     -    malloc.c.h-chunk commits that follow enough headroom to comfortably
-     -    fit under the cap once email-envelope overhead is accounted for.
-     +    The previous two commits stopped opting into nedmalloc on Windows
-     +    and stripped out the build-system plumbing that referenced it; the
-     +    compat/nedmalloc/ subtree now has no callers and no consumers in
-     +    the build, so retire it from the tree.
-     +
-     +    Logically this is a single deletion of compat/nedmalloc/ in its
-     +    entirety: License.txt, Readme.txt, nedmalloc.{c,h}, and the bulk of
-     +    the subtree, malloc.c.h.  Unfortunately malloc.c.h alone is roughly
-     +    196 KB while the Git mailing list rejects messages over 100 KB, so
-     +    the deletion is artificially split across four commits cut at file
-     +    or section-banner boundaries: this commit (the smaller auxiliary
-     +    files) plus three chunks of malloc.c.h cut at its own top-level
-     +    section banners ("Overlaid data structures" and "System
-     +    allocation").  The split is purely a mailing-list accommodation,
-     +    not a logical separation; the three follow-up patches in this
-     +    series carry "to be squashed into 3/6" subjects so they can be
-     +    folded back into this commit at integration time, per Junio's
-     +    suggestion in
-     +    <https://lore.kernel.org/git/xmqqfr42fw30.fsf@gitster.g/>.
-      
-          Assisted-by: Opus 4.7
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
- 4:  95682cc2c6 ! 4:  9085f00910 mingw: drop the first chunk of compat/nedmalloc/malloc.c.h
-     @@ Metadata
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Commit message ##
-     -    mingw: drop the first chunk of compat/nedmalloc/malloc.c.h
-     -
-     -    The vendored malloc.c.h is around 196 KB of source, which does not
-     -    fit in a single mailing-list-sized message; the deletion is split
-     -    across three commits cut at the file's own top-level section
-     -    banners. This first chunk ends just before the "Overlaid data
-     -    structures" banner.
-     +    to be squashed into 3/6 (chunk 1 of 3)
-      
-          Assisted-by: Opus 4.7
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
- 5:  a605b58586 ! 5:  fa28d50d18 mingw: drop the second chunk of compat/nedmalloc/malloc.c.h
-     @@ Metadata
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Commit message ##
-     -    mingw: drop the second chunk of compat/nedmalloc/malloc.c.h
-     -
-     -    This is the second of three chunks splitting the malloc.c.h
-     -    deletion (see the preceding commit for the rationale); it picks up
-     -    at the "Overlaid data structures" banner and ends just before the
-     -    "System allocation" banner.
-     +    to be squashed into 3/6 (chunk 2 of 3)
-      
-          Assisted-by: Opus 4.7
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
- 6:  90d4137018 ! 6:  6e0fd5182f mingw: drop the rest of compat/nedmalloc/malloc.c.h
-     @@ Metadata
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## Commit message ##
-     -    mingw: drop the rest of compat/nedmalloc/malloc.c.h
-     -
-     -    The third and final chunk removes the remainder of malloc.c.h, from
-     -    the "System allocation" banner to the end of the file, and the file
-     -    itself. With this commit the compat/nedmalloc/ directory is fully
-     -    retired from the tree.
-     +    to be squashed into 3/6 (chunk 3 of 3)
-      
-          Assisted-by: Opus 4.7
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
+diff --git a/config.mak.uname b/config.mak.uname
+index 5feb582558..3636b98238 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -758,9 +758,6 @@ ifeq ($(uname_S),MINGW)
+ 	HAVE_LIBCHARSET_H = YesPlease
+ 	USE_GETTEXT_SCHEME = fallthrough
+ 	USE_LIBPCRE = YesPlease
+-        ifneq (CLANGARM64,$(MSYSTEM))
+-		USE_NED_ALLOCATOR = YesPlease
+-        endif
+         ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
+ 		# Move system config into top-level /etc/
+ 		ETC_GITCONFIG = ../etc/gitconfig
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 81b4306e72..9d6b98ecb6 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -255,7 +255,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
+ 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
+ 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
+-				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
++				OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
+ 				HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET HAVE_RTLGENRANDOM)
+ 	list(APPEND compat_SOURCES
+ 		compat/mingw.c
+@@ -267,7 +267,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		compat/win32/syslog.c
+ 		compat/win32/trace2_win32_process_info.c
+ 		compat/win32/dirent.c
+-		compat/nedmalloc/nedmalloc.c
+ 		compat/strdup.c)
+ 	set(NO_UNIX_SOCKETS 1)
+ 
+diff --git a/meson.build b/meson.build
+index 11488623bf..e896bc15a1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1285,7 +1285,6 @@ elif host_machine.system() == 'windows'
+     'compat/win32/pthread.c',
+     'compat/win32/syslog.c',
+     'compat/win32mmap.c',
+-    'compat/nedmalloc/nedmalloc.c',
+   ]
+ 
+   libgit_c_args += [
 -- 
 gitgitgadget
+
