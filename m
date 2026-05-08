@@ -1,69 +1,69 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A453397E75
-	for <git@vger.kernel.org>; Fri,  8 May 2026 12:51:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E4F3DDDB0
+	for <git@vger.kernel.org>; Fri,  8 May 2026 12:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778244668; cv=none; b=Gl/V4b2LVDRwy8W5tgnq9tgefUMQAAzxEdERDA0jM6GyfRfiI+rhz9d95vy9hv0Y70KHIUpIRpuH9yey1CrWNwSV4nMAgeGk4xkVG18HhdG3eP+Qty1hI4KfkfCyMb2Igr97B9+e5oRDCcxBV8wnn7i2nouOjvogGJA+O7yeO/w=
+	t=1778244669; cv=none; b=YMglilHrWKtLRuEme64u2dhkjNxVJEdNmjTVWgrJt1S+VBN4+UyUTayy2gBTVb9x8uyR8vKRkwr64tQfzNIc9TZ08FlAm55HQszEBl1onVPMmma5eyozaHYwtj6kF13upuTmdwZk2QEOV1hVL+XTI9F+WDFt20euxQCeQOqtUdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778244668; c=relaxed/simple;
-	bh=MKl/LzTA80UjpHrrmDvsKHK4RuRRh3bezc7DrgV9/TM=;
+	s=arc-20240116; t=1778244669; c=relaxed/simple;
+	bh=+1031/BIuu5w5bmwZL7zvmLRDc1207zloVWZ3ZrE3dg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=e9YW8IZ9XIiVZntFCXw6JWFmCaPwn4tB94A4eBhR9bEggBfskzG+fY0DhNJZiMkeSwdLwdluzCyatMHIjO3Qp2e9cjUEfvVMk37D5YYl5jq1/bhABgEML9TDFZrQawtQV+3kTRKjfuUN395S2bkmUXYPI/8XXQDW6KUhVggfHmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJVKo2q2; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version:To:Cc; b=KMzOdQo9TiM9AuRR5uTlJlXaszU5u2aom7oXLOiDUQDLeFaTV0rx5T1KglpV+1+n5QS6TqwHe3PJTA6iilvm0wxCRH2CUx6hwPqI+nbr8sqi75lhVweP2G/GKi6U93ceSsw5KYHUHY+D/Ku7yjbRMmfazPEVRCORALe31JeUrgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YNNVqHo7; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJVKo2q2"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8ef5776530bso191368685a.0
-        for <git@vger.kernel.org>; Fri, 08 May 2026 05:51:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YNNVqHo7"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-50d6b9bca48so23801991cf.2
+        for <git@vger.kernel.org>; Fri, 08 May 2026 05:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778244666; x=1778849466; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778244667; x=1778849467; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ciW8XeIIqHYQLH6lZNOCRzR6wq0xYJr+A1GrI2jjYjA=;
-        b=NJVKo2q2ndpWdNsP8vvtwqugfVcgUfwpCoPSBVPDcJuNOwmBmstxXLew3zg9f9jp+0
-         /3640/6A7GVQzRhlY2t3Jo4+zp09qh/5pUzBlQNdHxLoTOOvTGgkaohEc2KmVy30op8p
-         QvDrG0VVdyI0BdcYRZAJSJlACNB23ndCrTKFiZD4mmPHacAuxOkfjxymlnv3ZI8jZS35
-         csDNnx1GdykHF0oxHuoNLQbAaim8SI3ks3LPUqvWZNH87NgKsJ/qtp+54p/PF3Z6h+Mm
-         xuXz3lmTSq86d90Zq/HAUI+ORZ5/Zd8vuYRoIEQrN6GX78BHAGuhCAlyR3gbUe7wJ8RL
-         auYg==
+        bh=/EYIRILD95+N7j7AcrhJBblz2+6G7Q1uP61NTL0mcDY=;
+        b=YNNVqHo7mh5W6hzZGQSjqPQurW8QJZ0tS+DDkgN5z0MEyPDcT3ZS7P4qJx19EgRj25
+         Mhvjd7AZH57FP3qNiBKuQpCeBU7xDLQrmhvvydWBatvwEe+RDUP8jGEHTp4dAtI9IC72
+         u3WmnKU1poq/lLU5sstQPTsN/RMxG2rGqZXn86819hon0RKpf/qa6R35xflg5QgjpN2c
+         CUPDMEYcH37ysmoYzjL/rjmR84ma6pUiWNmARDQYayX2XWYAczmGcVcvZ7SyPuM+/O3m
+         b1+iJ/5Njs64n4XBm4TEsL6fY+igi3lBij5hXFbZNwrqJfHcuOVybz26M+Qmfh9b5Wft
+         zl3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778244666; x=1778849466;
+        d=1e100.net; s=20251104; t=1778244667; x=1778849467;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ciW8XeIIqHYQLH6lZNOCRzR6wq0xYJr+A1GrI2jjYjA=;
-        b=N+OUYfZPaZvl/TwLAXDd+8I7NynubVkwcjAauUfTJzV6jiehhAcugkDUetKyoozSBX
-         E3KGq5RcQIOgez19fMpSvyZJmcuSnK+tsZVtMgMDbiTkkIczXl6TPHkj7i1L+m3F4HxX
-         oVBrt8tRZh9MginlfVJGUxsGNC1r7wZmrxV3JgViv/uk88NfM9yEpO9v6RdUWGythT4r
-         +7uGXB0SFnih2X1b8eS4G/ZNyG1jgTESj+jALHYhVITDeH4R4o7LLzNndx8g/yf0/K3q
-         TKDiO0GGmyQrX92zG1p40ypvFYoYZ4UuWd+jQ3y4onD1oL5CMLRNDSCna/BGrptJMJJL
-         urhw==
-X-Gm-Message-State: AOJu0YyMv6De04Qrxw8l2ozOVyMHVXuxrONWE+1esbFh2Qhv2mmPNH2v
-	965IHDkJUtgP48BxOfCl14u+Xvf/w7rk8acu95JiH+OlG5NbTIVQBsQ/qsNrjQ==
-X-Gm-Gg: AeBDievCefjQFCe+fBI+/ncel4o2dIdeBnJJTWwVCkChVl6u/ix097OVWd21yPnD/ld
-	gO2aL/FZXwK6sHFPXz77j+LneBtrAA/9hDaE3nyrydEPtTvFnMnqWl4gKvUXEveA+QxB5sQpJIB
-	DLnNMHaUJ42JeDKd9E+aH4DRoO8Ha0Tm22UOSSxxzngfCCNeYR5eMa2W2+E2AVZUiEyByHNO69f
-	kYtsysnDYQDxoH01imaDXkad1zXdMLU40kXakJ2DrTRXR0lrvmNkTfZvxTe4GieGdY1hZ2UbzoM
-	U1gaxUCDX68KVN5YvZ4gVUneeUyfPK2iTVfIe1jy3wUecgYIPoi074/dngUbmDC2rPKNB5oZsMj
-	D0EC/T211myhPnpAPR65odV2AXxraIVI/XSeFQDIkwPBvzDSthHnqje0knVlW2RNPVB8dReUz1C
-	mfOO2o8ks4nY+eknTGAsHqpgZg9vVVQm4/qinju+g=
-X-Received: by 2002:a05:620a:2699:b0:8fb:1acb:c907 with SMTP id af79cd13be357-904d3cb86a1mr1819896785a.12.1778244665509;
-        Fri, 08 May 2026 05:51:05 -0700 (PDT)
+        bh=/EYIRILD95+N7j7AcrhJBblz2+6G7Q1uP61NTL0mcDY=;
+        b=BZFAnANaVzYVlFkz6S8AduZoowM1sIRLPBlQ/plCCywW6OL0I1rvH8fAKSBYYEkt13
+         SjNOQ4WiM7m4D5hrqArAVi2ZyviRClIrJgt2W8gUD9nrTvL6BTC8wYL5AXsXvesTh9GS
+         XfeMQ12oZAKXJnCJ5kh3JmGpGX73MVLae1vJe50lqtiha266Vp9mE4Cp6dN2t7XL1Ty3
+         OUM3F5tMZ9iw7mntQ7Xpw+1VkeyrGwLT/U1A4vdvABomRH1Ft0Ypwuty0oaitsdGpMLF
+         oRj45oB1sJXfz0yFwsUcPm2d7aVS4km+z1duwVW+r+7KdnSu8D1H7GjEQrTOGbVXIkFk
+         dnpA==
+X-Gm-Message-State: AOJu0YwAmT6LVAhVAogtA5BPDJsIfPFZwgkzQd30xPhkbDkTFiNSrXNQ
+	THM13wEcpQoF2ic3w8gkiRSOMWDfRd4Fo3bUgu7Cp5JnGxPu7amM181jq8mbxQ==
+X-Gm-Gg: AeBDieuYNDWp2QnelkLtoeDawRiwkfRXab5c6Qkioy8E5zHYY32NAsSK0oL/14Omaz0
+	VHrYv6LWFTIF5wD1I/jnLgq7jqh22YSL3GGFp1Ylaef+RCWAsVtk50sM4w/VcoQVn46kZ0+FisM
+	TyXy5ITOVhv+0xc9CM+nWusKcqmQSAshx0v5f2s47DGZE1opKCQPcjQEcta43HBkdI1TfEHH3h+
+	cqBHgZx94XLDCO+DYyAWM9SZn7I9NAm+tUuleUrL8R7SvHsDo7WeQMK4YTB24aO9DsaGL/VSZiK
+	UQU+55kDOB56jcWcNC3+k86JMmYVkMudm/SRKZ3d8RmoUVZ3o74Nn+N+2r9WOF3tx9F1+ToLWl1
+	bCjaEdAW/NdPyMStlMLmNeKlmFVed5cPMyTTM38r5CQT1C6IP7hScd6JkwHitOjsXdN3bzOz/2+
+	+HtrQITPKhaX46Qoj+15Q3aCj0puuV
+X-Received: by 2002:a05:622a:6096:b0:50d:7f4d:93cf with SMTP id d75a77b69052e-51461bdb40cmr170744691cf.8.1778244666770;
+        Fri, 08 May 2026 05:51:06 -0700 (PDT)
 Received: from [127.0.0.1] ([135.232.176.163])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91b976sm2280035085a.39.2026.05.08.05.51.04
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5148e6336c0sm16974491cf.2.2026.05.08.05.51.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 05:51:04 -0700 (PDT)
-Message-Id: <d547877ae3efe0fc27af44819e19da863559540f.1778244661.git.gitgitgadget@gmail.com>
+        Fri, 08 May 2026 05:51:06 -0700 (PDT)
+Message-Id: <7b5daae659f491ce8a2ba52d02ba7172106120d8.1778244661.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
 References: <pull.2104.v2.git.1778169613.gitgitgadget@gmail.com>
 	<pull.2104.v3.git.1778244661.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 08 May 2026 12:50:56 +0000
-Subject: [PATCH v3 1/6] mingw: stop using nedmalloc
+Date: Fri, 08 May 2026 12:50:57 +0000
+Subject: [PATCH v3 2/6] mingw: drop the build-system plumbing for nedmalloc
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,101 +80,108 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The vendored nedmalloc allocator under compat/nedmalloc/ has been
-unmaintained upstream for a very long time: the original repository at
-https://github.com/ned14/nedmalloc received its last commit on July 5,
-2014, and was archived (made read-only) by its owner on March 15, 2019.
-Our copy has been carried forward unchanged ever since.
-
-The Git for Windows commit that introduced mimalloc as a replacement
-on Windows ("mingw: use mimalloc", 2019-06-24, present in the Git for
-Windows branch thicket but not upstream) already observed at that time
-that nedmalloc had ceased to see any updates for several years.
-
-This came to a head when the Git for Windows SDK upgraded to GCC 16:
-the `add_segment()` function in `compat/nedmalloc/malloc.c.h` declares
-`int nfences = 0` and only references it inside an `assert()`, which
-GCC 16 now flags as `-Wunused-but-set-variable`. Combined with the
-`-Werror` enabled by `DEVELOPER=1`, this turns into a hard build
-failure:
-
-	compat/nedmalloc/malloc.c.h: In function 'add_segment':
-	compat/nedmalloc/malloc.c.h:3897:7: error: variable 'nfences' set but not used [-Werror=unused-but-set-variable=]
-	 3897 |   int nfences = 0;
-	      |       ^~~~~~~
-	cc1.exe: all warnings being treated as errors
-
-The same source built without complaint under GCC 15.2.0; the
-regression was bisected to the SDK package update at
-https://github.com/git-for-windows/git-sdk-64/commit/188d93dd455
-(`mingw-w64-x86_64-gcc 15.2.0-14 -> 16.1.0-1`), with the failing CI
-run captured at
-https://github.com/git-for-windows/git-sdk-64/actions/runs/25244795074.
-
-Rather than patch the unmaintained vendored sources to silence the
-warning, stop opting into nedmalloc altogether on Windows. The
-platform allocator is what every non-MINGW build already uses, and a
-fresh build of git.git's master against a minimal Git for Windows SDK
-upgraded to GCC 16 completes successfully.
-
-The compat/nedmalloc/ subtree itself is removed by subsequent commits
-in this series.
+With the previous commit removing every opt-in, the build-system
+plumbing for nedmalloc has nothing left to switch on. Remove it so
+that the upcoming deletion of the compat/nedmalloc/ tree is a pure
+file removal.
 
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname                    | 3 ---
- contrib/buildsystems/CMakeLists.txt | 3 +--
- meson.build                         | 1 -
- 3 files changed, 1 insertion(+), 6 deletions(-)
+ Makefile               | 17 -----------------
+ config.mak.uname       |  1 -
+ contrib/vscode/init.sh |  1 -
+ meson.build            |  1 -
+ 4 files changed, 20 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index cedc234173..2f490d402e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -283,13 +283,9 @@ include shared.mak
+ # Define SKIP_DASHED_BUILT_INS if you do not need the dashed versions of the
+ # built-ins to be linked/copied at all.
+ #
+-# Define USE_NED_ALLOCATOR if you want to replace the platforms default
+-# memory allocators with the nedmalloc allocator written by Niall Douglas.
+-#
+ # Define OVERRIDE_STRDUP to override the libc version of strdup(3).
+ # This is necessary when using a custom allocator in order to avoid
+ # crashes due to allocation and free working on different 'heaps'.
+-# It's defined automatically if USE_NED_ALLOCATOR is set.
+ #
+ # Define NO_REGEX if your C library lacks regex support with REG_STARTEND
+ # feature.
+@@ -1511,7 +1507,6 @@ BUILTIN_OBJS += builtin/write-tree.o
+ # upstream unnecessarily (making merging in future changes easier).
+ THIRD_PARTY_SOURCES += compat/inet_ntop.c
+ THIRD_PARTY_SOURCES += compat/inet_pton.c
+-THIRD_PARTY_SOURCES += compat/nedmalloc/%
+ THIRD_PARTY_SOURCES += compat/obstack.%
+ THIRD_PARTY_SOURCES += compat/poll/%
+ THIRD_PARTY_SOURCES += compat/regex/%
+@@ -2267,12 +2262,6 @@ ifdef NATIVE_CRLF
+ 	BASIC_CFLAGS += -DNATIVE_CRLF
+ endif
+ 
+-ifdef USE_NED_ALLOCATOR
+-	COMPAT_CFLAGS += -Icompat/nedmalloc
+-	COMPAT_OBJS += compat/nedmalloc/nedmalloc.o
+-	OVERRIDE_STRDUP = YesPlease
+-endif
+-
+ ifdef OVERRIDE_STRDUP
+ 	COMPAT_CFLAGS += -DOVERRIDE_STRDUP
+ 	COMPAT_OBJS += compat/strdup.o
+@@ -2983,12 +2972,6 @@ compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
+ 	-DGAWK -DNO_MBSUPPORT
+ endif
+ 
+-ifdef USE_NED_ALLOCATOR
+-compat/nedmalloc/nedmalloc.sp compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
+-	-DNDEBUG -DREPLACE_SYSTEM_ALLOCATOR
+-compat/nedmalloc/nedmalloc.sp: SP_EXTRA_FLAGS += -Wno-non-pointer-null
+-endif
+-
+ headless-git.o: compat/win32/headless.c GIT-CFLAGS
+ 	$(QUIET_CC)$(CC) $(ALL_CFLAGS) $(COMPAT_CFLAGS) \
+ 		-fno-stack-protector -o $@ -c -Wall -Wwrite-strings $<
 diff --git a/config.mak.uname b/config.mak.uname
-index 5feb582558..3636b98238 100644
+index 3636b98238..25345e02c6 100644
 --- a/config.mak.uname
 +++ b/config.mak.uname
-@@ -758,9 +758,6 @@ ifeq ($(uname_S),MINGW)
- 	HAVE_LIBCHARSET_H = YesPlease
- 	USE_GETTEXT_SCHEME = fallthrough
- 	USE_LIBPCRE = YesPlease
--        ifneq (CLANGARM64,$(MSYSTEM))
--		USE_NED_ALLOCATOR = YesPlease
--        endif
-         ifeq (/mingw64,$(subst 32,64,$(subst clangarm,mingw,$(prefix))))
- 		# Move system config into top-level /etc/
- 		ETC_GITCONFIG = ../etc/gitconfig
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 81b4306e72..9d6b98ecb6 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -255,7 +255,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_UNIX_SOCKETS WIN32
- 				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=".exe"  NO_SYMLINK_HEAD UNRELIABLE_FSTAT
- 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
--				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
-+				OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
- 				HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET HAVE_RTLGENRANDOM)
- 	list(APPEND compat_SOURCES
- 		compat/mingw.c
-@@ -267,7 +267,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
- 		compat/win32/syslog.c
- 		compat/win32/trace2_win32_process_info.c
- 		compat/win32/dirent.c
--		compat/nedmalloc/nedmalloc.c
- 		compat/strdup.c)
- 	set(NO_UNIX_SOCKETS 1)
- 
+@@ -491,7 +491,6 @@ ifeq ($(uname_S),Windows)
+ 	USE_WIN32_IPC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+-	# USE_NED_ALLOCATOR = YesPlease
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+ 	NO_REGEX = YesPlease
+diff --git a/contrib/vscode/init.sh b/contrib/vscode/init.sh
+index f2d61bb0e6..3d58f7307a 100755
+--- a/contrib/vscode/init.sh
++++ b/contrib/vscode/init.sh
+@@ -202,7 +202,6 @@ cat >.vscode/settings.json.new <<\EOF ||
+         "\\bUSE_STDEV\\b",
+         "\\Wchar *\\*\\W*utfs\\W",
+         "cURL's",
+-        "nedmalloc'ed",
+         "ntifs\\.h",
+     ],
+ }
 diff --git a/meson.build b/meson.build
-index 11488623bf..e896bc15a1 100644
+index e896bc15a1..0e00c6c57e 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1285,7 +1285,6 @@ elif host_machine.system() == 'windows'
-     'compat/win32/pthread.c',
-     'compat/win32/syslog.c',
-     'compat/win32mmap.c',
--    'compat/nedmalloc/nedmalloc.c',
-   ]
- 
-   libgit_c_args += [
+@@ -698,7 +698,6 @@ third_party_excludes = [
+   ':!contrib',
+   ':!compat/inet_ntop.c',
+   ':!compat/inet_pton.c',
+-  ':!compat/nedmalloc',
+   ':!compat/obstack.*',
+   ':!compat/poll',
+   ':!compat/regex',
 -- 
 gitgitgadget
 
