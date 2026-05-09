@@ -1,58 +1,58 @@
-Received: from out162-62-57-137.mail.qq.com (out162-62-57-137.mail.qq.com [162.62.57.137])
+Received: from xmbghk7.mail.qq.com (xmbghk7.mail.qq.com [43.163.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908F03939C1
-	for <git@vger.kernel.org>; Sat,  9 May 2026 13:44:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.137
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C0A223DFB
+	for <git@vger.kernel.org>; Sat,  9 May 2026 13:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.163.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778334272; cv=none; b=om32J6aQBNG7jMAXbRhZ0UAP5NfI7jrmlqqeaAzy7IakMIPOllwvGxSb1gzJidFTNh1URloSH5YcJDcUAKehWuoNG3CgSISPtKcBEldNP3Yra22RXOaZhdyId4hCyVPtOxS8d7x8gxBs7StAHuZgkXTRz22CZqGl29WrdCCU88Y=
+	t=1778334715; cv=none; b=ZyZwHSaUQ5LJEqV1VwKcr5Tc4GUk+92qliDFvRFAfTaM/1o0a8MWb9l9fPQuaBTz8uHVDKTS8gsipu5J/Ice7ficLzXwPUZJmyYTgDbRHY7x4W28CZHvWpRfKyx55+RdkvOpAYzo9GeYi+hU7c+GTuT89eIgs2ZyVMuonGQhVxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778334272; c=relaxed/simple;
-	bh=vG9akcKZU0669d4kF2A8zTObbC/6qQQnhORYSaK041I=;
+	s=arc-20240116; t=1778334715; c=relaxed/simple;
+	bh=oiLQTc1UVq38tpiVCRvH+EXzGNz8w0fUqevB578ayyI=;
 	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=Nq6J9lUWk7FF02jp191r4eLfpn6UwnBH4ABOLwoBln8tROjOHOWM9MynwZ045JaHSVLBaswWzfHkufmkYdn3rsZC1FwqbLC/UomlavAq9igSF5MMGZmaLEzAHBR7ha7vNnSSkWYlHEdUKPCceq+DQnlVK0IjChjk5MQF/Fw63tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=HAXP0yCV; arc=none smtp.client-ip=162.62.57.137
+	 MIME-Version; b=sQYumXc98fqrn9IKM2CCGkorEmWe61Ook7XxK8IrzYF0VxwdgG3LXwBakVznfBG4RsXnAj5E1ah6Dsz7aeZ122xY1Q19ToE1BvCc14pEgkDnixVv3QP4lq9K91a9Bdgm7sw30rWMUWo/i7q86h6HHlx56mRNyMidqYF29UvI97s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=VVBYtHkJ; arc=none smtp.client-ip=43.163.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="HAXP0yCV"
+	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="VVBYtHkJ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1778334259;
-	bh=NEWj80+CfcbtZViydu0O4AKH5c2WI6IILA2YMrAPppw=;
+	s=s201512; t=1778334703;
+	bh=gsabsll5KMcILsUEYaSj+skBqcLWvoJ23AL4ml/2Vr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HAXP0yCVoIJfVKaNmglXx6GvdwzrobMjLJk1WyHuUUEj5q929HW+BBfHMpIFQBfGO
-	 LrrEB9tXQGu/HikH5LJmnLbS9SncU/3qif06cYDwoR1H0+TW+uFctJk7IXAtpmyb7s
-	 89DYarNp9yPL87DGEAJ9ZDTO1+porJLKaa4trsRE=
+	b=VVBYtHkJIqYC2YHA7xBVUAS+8OOSiFTpfEAW/9oa7Ez1/Q5t8laGI8vdltBD3sDfq
+	 g5WWoaKGz8HQ3oZfwTNXgbgg3xv4qZyoXkitpaTj7RJ95Cirz6OT5kJaH77gPoRMj8
+	 W/8FTEQTHjyUrkJ7U5N6JN7rG5ZjVHBR2EeJycGQ=
 Received: from localhost.localdomain ([58.209.116.75])
 	by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
 	id B052222E; Sat, 09 May 2026 21:44:05 +0800
-X-QQ-mid: xmsmtpt1778334256t3qro3hej
-Message-ID: <tencent_C4AD92361C8D7B76EB4C8A6F14EA33496805@qq.com>
-X-QQ-XMAILINFO: MWB4vRr41pZmaJLAGpnfHr+z3UjZ88gHO8B24ydADI40AfIM7p6gLr0hpCMmBn
-	 y4fcJ3w4SwVZh/0XHOWChUWxclcP/MsHETY67qhsAR4yIZIR23YppBvODt6axXQk06Lj7DBBZ3h9
-	 rz5+vShYuEerzD9TWuBKacW+MZFDCzxnZB4tHaGT6Jiv1U8DLxdzMumTrlWN3iWrSHPvrYWHuezT
-	 ScnZoSpxpGPL35PS1PjAwmtN4hMO3HZAXoqVuUDCTxw+lDl0ZNjr2SxfDKeTep+B+MsMTefhsiHL
-	 q6Hx4yWHe2eq9CLc37gsWSqhlDVPvE/lwjmySjQLQz7YX8ZDVM3YY6LyzRHQtCmoXTUPsiLfH1vb
-	 Iaz/cc3+cmFNA9rdFPsUtRZdLY13upLySziNtwSPKGZD1QLfVvvcMD/dDLxlZS3dtE38ep1FCvyZ
-	 9TStakubDvUS+K10cn2S2eRtaQAwSQA4nkNzHwZQy8BaY+T5PmnhlRCY8vn3hMhx5MSyIPVrj/K0
-	 mWihOGuKkqGtQOA318u3KaDbH3W6EiPRQeuT6t+sd7R8sH9pJ6PECoMYYbEb+LEwbPP1Pqnxez0M
-	 efvrwmlJYE24e+8TLEDT5kq0Su1D3S9fBCAu9VY09rfyoZdKsXe1q32CkSt8RuAJurcy1VVwdPqs
-	 wml1eE17MlEBMhvnteAsyIDx/QABKd9q4yljtGCuj8f/42hz2MpliHVcwBN1qCO+VEYZ4TTTAkmE
-	 Bwu0R+fgHOObDWjH0ZRrEV05EvZeArLzTWmLuDADvlw+8T33CoGkT2LqXiWI2Vqn5mDfdeVDYBNs
-	 GLaVJ573mGHDnT+QnXtQMhFuSSofFTOcFTGwxcXvtjFee/4Ybzowz/82ab8NRubERvX45+E66GLB
-	 r5TLZSYua413pV8BX+oW2P05fl8EOnmz3Q8MwQd5hz2m3Fw5K/mxNbIECOWNNoQsg/bx1JG4pdrL
-	 wQRe3pP5+DCYNz4eRSxEmJY31IE8qb97H+vYALXly9xHm7T8oekuly7ZlFElngPW2terZG7zhvTV
-	 eiFhGSDduo73DUrMUnv2DM+EdQHA5yWU+DoNbkSY+R7GPqJXHT5JQFOprnMDM=
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-mid: xmsmtpt1778334251t1dy8smgx
+Message-ID: <tencent_A6BA86DF71476C6948398C167C0E0919550A@qq.com>
+X-QQ-XMAILINFO: N4f2pSPHWwtb5Y01embLGjmRjqkATicYSLfVUvCtHhXqqT8b5kiwucVJA6MtlE
+	 gUMXASZ9xDWdq9AkPlRhMWoLPMo1NPWrXFVJ9mwnyTe5Kgyksjvp7J+qKGUinvAphe11Vrb4HlJf
+	 OOsVdtta4PqjZPB+c5ACY3FeM+k4p5LO6aPI6um4NqPp/JTDmKeyCylFZfp7OYmwHPUYV5bLZFpg
+	 To/au18JuMz34Brp9voAltu4/ktkXqzx06daK5XzDOycCEoGURny2hHp/5oXItT9pJLajnME7WF9
+	 RMzvh+otbTw1ivZyBDX3VybJQy28I9NghfhJqGyrkCnEemd3b0y3I10nIiIOnYkyJ3m8Jkw9y9Qs
+	 NpgOcrU68qG33b561fYIWG8x6eZdnFMZHOJEHdQ7zlsmM7uPhkfxZpdOrwuMFnecXCFeiXnb3fZh
+	 OoXngEuzcYXaPwB6SJXkXEf6JRfSaRaPO25wM671cCMKCrh4GTFSI4w78w8FkoneuDgbKWXuvsOn
+	 ZjWT7URwlnCCvc54lCHYsH9obX5fb47/OrZ5DSokpgk1C+7VSqfoKuDqL4HBRqvLIw+F2tiUHkLR
+	 FNHvBulJNya6MiP7Zh0EVqz5wXo+hn9IjLjrkZCN1KMb42XbSlTpCn5aecHHmFYIXDuXtNxA0luI
+	 qUjOhBNoqSErtUCTiDXFkz9ImTu8ZDbLDJr0ScLcAocHnWQ2Ot2SY6XAgNq/FJ/G+egF77FFoBwT
+	 vTMg+U7+Pu1ab71b/GUS1PFYbeALR/b6u/7UgjKavP7Lt5rSeMTmijFDJj4EXkxqql8uR7cH+UGJ
+	 WRvzbX0p1SL1OLJEb5ADPfEp049FtuY9FwC8lTZTSu7wkuTdn7WuZUfmuvNgaXYwvmI5LvgHkUw3
+	 WaD696ntKg26Eie+ET2YrPlDyrtBUAeSwr7m1lSoW/avMcZzbZmE4hkGe8J12vW/8Pxuil7RjiN7
+	 U2oGtGaIDgKume6GiMzyQd3Cgq6WoQpUmmdBkU1j+8xq+EauPNuYdC+1hBxxVA1sb/4b06onZiE0
+	 h1NcZ1YUNSAOLnqjLy6kgXsgR8QY7Q+IbHRqwkUFitKODtfTlt
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
 From: Shroom Moo <egg_mushroomcow@foxmail.com>
 To: git@vger.kernel.org
 Cc: Johannes Sixt <j6t@kdbg.org>,
 	Mark Levedahl <mlevedahl@gmail.com>,
 	Aina Boot <bootaina702@gmail.com>,
 	Shroom Moo <egg_mushroomcow@foxmail.com>
-Subject: [PATCH v7 3/3] git-gui: handle GIT_DIR and GIT_WORK_TREE early
-Date: Sat,  9 May 2026 21:37:55 +0800
-X-OQ-MSGID: <20260509133756.1367-4-egg_mushroomcow@foxmail.com>
+Subject: [PATCH v7 2/3] git-gui: disable gitk visualization when no worktree available
+Date: Sat,  9 May 2026 21:37:54 +0800
+X-OQ-MSGID: <20260509133756.1367-3-egg_mushroomcow@foxmail.com>
 X-Mailer: git-send-email 2.45.1.windows.1
 In-Reply-To: <20260509133756.1367-1-egg_mushroomcow@foxmail.com>
 References: <tencent_DDD6467B3F6184562B51C23BB9DBB79EA409@qq.com>
@@ -65,202 +65,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Users expect these two invocations to be equivalent:
+When git-gui is started in a bare repository with the 'bare' option
+enabled (e.g., for blame/browser), there is no working tree.  The
+"Visualize Current Branch's History" and "Visualize All Branch
+History" menu items remain enabled, but clicking them triggers a Tcl
+error because do_gitk tries to change directory to an empty
+_gitworktree.
 
-    GIT_WORK_TREE=/some/path GIT_DIR=/some/path/.git git gui
-    git -C /some/path gui
+Fix this by disabling the two visualization menu items when the
+repository is bare and the 'bare' option is active.  Also update
+current_branch_write to keep the state consistent when the branch
+changes, and add a defensive check in do_gitk to avoid the error
+should the menu state somehow become out of sync.
 
-Currently, the environment variable variant often brings up the
-repository picker or ignores the requested worktree because
-GIT_WORK_TREE is processed too late.  Moreover, after determining
-the working tree, git-gui unconditionally exports GIT_WORK_TREE.
-When no worktree is found (e.g., in a bare repository with a
-read-only subcommand like blame), an empty value is exported, which
-confuses commands like `git branch --show-current`.
-
-Fix both issues:
-
-- Introduce resolve_initial_environment, which is called before any
-  repository detection.  When both GIT_DIR and GIT_WORK_TREE are
-  set, it changes to the specified worktree, verifies that it is a
-  valid worktree, and adopts the given GIT_DIR.  In this case, the
-  subsequent automatic detection is skipped.  After successful
-  validation, GIT_WORK_TREE is unset so that later steps do not
-  inherit it.  Export the absolute GIT_DIR before changing directory
-  to ensure Git commands see the intended repository.
-
-- Introduce set_worktree_env and unset_worktree_env helper procedures
-  to safely manage the GIT_WORK_TREE environment variable:
-  set_worktree_env sets it only when $_gitworktree is non-empty,
-  and unset_worktree_env removes the variable without error.
-  Replace all direct manipulations of GIT_WORK_TREE with these
-  helpers to avoid accidentally exporting an empty value or
-  causing 'unset' errors.
-
-- At the end of startup, use set_worktree_env instead of exporting
-  GIT_WORK_TREE unconditionally.  This leaves the variable unset
-  when no worktree exists (bare repository), fixing commands that
-  would fail with an empty GIT_WORK_TREE.
-
-When only GIT_DIR is set without GIT_WORK_TREE, the existing logic
-remains unchanged for backward compatibility.  Setting only
-GIT_WORK_TREE is not a valid Git use-case and is silently ignored.
+This complements the startup sequence improvements in the previous
+commit, which already correctly identifies bare repositories and
+leaves _gitworktree empty in such cases.
 
 Helped-by: Mark Levedahl <mlevedahl@gmail.com>
 Helped-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Shroom Moo <egg_mushroomcow@foxmail.com>
 ---
- git-gui/git-gui.sh | 103 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 79 insertions(+), 24 deletions(-)
+ git-gui/git-gui.sh | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index ff022c5bbb..1123f9855b 100755
+index 9eb93a76b5..ff022c5bbb 100755
 --- a/git-gui/git-gui.sh
 +++ b/git-gui/git-gui.sh
-@@ -1122,25 +1122,82 @@ unset argv0dir
- ##
- ## repository setup
- 
-+# Safely set/unset GIT_WORK_TREE
-+proc set_worktree_env {} {
-+    global _gitworktree
-+    if {$_gitworktree ne {}} {
-+        set ::env(GIT_WORK_TREE) $_gitworktree
-+    }
-+}
-+
-+proc unset_worktree_env {} {
-+    catch {unset ::env(GIT_WORK_TREE)}
-+}
-+
-+proc resolve_initial_environment {} {
-+	global _gitdir env
-+
-+	# Only act if both GIT_DIR and GIT_WORK_TREE are set
-+	if {[info exists env(GIT_DIR)] && [info exists env(GIT_WORK_TREE)]} {
-+		# Validate GIT_DIR by resolving its absolute path
-+		if {[catch {set _abs [git rev-parse --absolute-git-dir]} err]} {
-+			catch {wm withdraw .}
-+			error_popup [strcat [mc "Invalid GIT_DIR:"] "\n\n$err"]
-+			exit 1
-+		}
-+		set env(GIT_DIR) $_abs
-+
-+		# Change current directory to GIT_WORK_TREE
-+		if {[catch {cd $env(GIT_WORK_TREE)} err]} {
-+			catch {wm withdraw .}
-+			error_popup [strcat [mc "Cannot change to GIT_WORK_TREE:"] "\n\n$err"]
-+			exit 1
-+		}
-+
-+		# Verify that GIT_WORK_TREE is a valid Git worktree
-+		if {[catch {git rev-parse --show-toplevel} err]} {
-+			catch {wm withdraw .}
-+			error_popup [strcat [mc "GIT_WORK_TREE is not a valid worktree:"] "\n\n$err"]
-+			exit 1
-+		}
-+
-+		# Use repository path specified by environment variables
-+		set _gitdir $_abs
-+		set ::_prefix {}
-+
-+		# Unset GIT_WORK_TREE to prevent it from being inherited by child processes
-+		unset_worktree_env
-+
-+		return 1
+@@ -2036,6 +2036,10 @@ proc do_gitk {revs {is_submodule false}} {
+ 	#
+ 	set exe [_which gitk -script]
+ 	set cmd [list [info nameofexecutable] $exe]
++	if {$_gitworktree eq {}} {
++		error_popup [mc "Cannot visualize history: no working tree"]
++		return
 +	}
+ 	if {$exe eq {}} {
+ 		error_popup [mc "Couldn't find gitk in PATH"]
+ 	} else {
+@@ -2659,6 +2663,13 @@ set ui_visualize_current [.mbar.repository index last]
+ .mbar.repository add command \
+ 	-label [mc "Visualize All Branch History"] \
+ 	-command {do_gitk --all}
++set ui_visualize_all [.mbar.repository index last]
 +
-+	# Other cases (only GIT_DIR, only GIT_WORK_TREE, or neither):
-+	# Do nothing here and let the existing logic handle it later
-+	return 0
++# Cannot work without a working tree
++if {[is_bare] && [is_enabled bare]} {
++	.mbar.repository entryconf $ui_visualize_current -state disabled
++	.mbar.repository entryconf $ui_visualize_all   -state disabled
 +}
-+set force_gitdir [resolve_initial_environment]
-+
- set picked 0
--if {[catch {
--		set _gitdir $env(GIT_DIR)
--		set _prefix {}
--		}]
--	&& [catch {
--		# beware that from the .git dir this sets _gitdir to .
--		# and _prefix to the empty string; this is handled by
--		# the startup safety checks below
--		set _gitdir [git rev-parse --git-dir]
--		set _prefix [git rev-parse --show-prefix]
--	} err]} {
--	load_config 1
--	apply_config
--	choose_repository::pick
--	if {![file isdirectory $_gitdir]} {
--		exit 1
-+if {!$force_gitdir} {
-+	if {[catch {
-+			set _gitdir $env(GIT_DIR)
-+			set _prefix {}
-+			}]
-+		&& [catch {
-+			# beware that from the .git dir this sets _gitdir to .
-+			# and _prefix to the empty string; this is handled by
-+			# the startup safety checks below
-+			set _gitdir [git rev-parse --git-dir]
-+			set _prefix [git rev-parse --show-prefix]
-+		} err]} {
-+		load_config 1
-+		apply_config
-+		choose_repository::pick
-+		if {![file isdirectory $_gitdir]} {
-+			exit 1
-+		}
-+		set picked 1
- 	}
--	set picked 1
+ .mbar.repository add separator
+ 
+ proc current_branch_write {args} {
+@@ -2667,6 +2678,13 @@ proc current_branch_write {args} {
+ 		-label [mc "Browse %s's Files" $current_branch]
+ 	.mbar.repository entryconf $::ui_visualize_current \
+ 		-label [mc "Visualize %s's History" $current_branch]
++	if {[is_bare] && [is_enabled bare]} {
++		.mbar.repository entryconf $::ui_visualize_current -state disabled
++		.mbar.repository entryconf $::ui_visualize_all   -state disabled
++	} else {
++		.mbar.repository entryconf $::ui_visualize_current -state normal
++		.mbar.repository entryconf $::ui_visualize_all   -state normal
++	}
  }
+ trace add variable current_branch write current_branch_write
  
- if {![file isdirectory $_gitdir]} {
-@@ -1228,9 +1285,7 @@ if {[lindex $_reponame end] eq {.git}} {
- 
- # Export the final paths
- set env(GIT_DIR) $_gitdir
--if {$_gitworktree ne {}} {
--	set env(GIT_WORK_TREE) $_gitworktree
--}
-+set_worktree_env
- 
- ######################################################################
- ##
-@@ -2077,12 +2132,12 @@ proc do_gitk {revs {is_submodule false}} {
- 			# by setting these to the appropriate values to allow gitk
- 			# to skip the heuristics to find their proper value
- 			unset env(GIT_DIR)
--			unset env(GIT_WORK_TREE)
-+			unset_worktree_env
- 		}
- 		safe_exec_bg [concat $cmd $revs "--" "--"]
- 
- 		set env(GIT_DIR) $_gitdir
--		set env(GIT_WORK_TREE) $_gitworktree
-+		set_worktree_env
- 		cd $pwd
- 
- 		if {[info exists main_status]} {
-@@ -2111,7 +2166,7 @@ proc do_git_gui {} {
- 		# see note in do_gitk about unsetting these vars when
- 		# running tools in a submodule
- 		unset env(GIT_DIR)
--		unset env(GIT_WORK_TREE)
-+		unset_worktree_env
- 
- 		set pwd [pwd]
- 		cd $current_diff_path
-@@ -2119,7 +2174,7 @@ proc do_git_gui {} {
- 		safe_exec_bg [concat $exe gui]
- 
- 		set env(GIT_DIR) $_gitdir
--		set env(GIT_WORK_TREE) $_gitworktree
-+		set_worktree_env
- 		cd $pwd
- 
- 		set status_operation [$::main_status \
 -- 
 2.52.0.windows.1
+
 
