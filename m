@@ -1,204 +1,141 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F4239185C
-	for <git@vger.kernel.org>; Sat,  9 May 2026 21:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA0A2DA775
+	for <git@vger.kernel.org>; Sat,  9 May 2026 22:01:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778363565; cv=none; b=gCL+wFWYjR4WnrjmjyMw/aeEuhjfXItIbaBE7HEYIaz8bm5BtKB+dnf8H3kYLaXfWDSV0T0qSb+1t5GQns3AD+Ml7YxtL4LtjFsvWdCgzQ8bEfAZ59P1KvZ8VwyS+hqsGffacHDf0zxSW0ZjfcfAkW7SjpAPZtIow00m62xBBF8=
+	t=1778364081; cv=none; b=DwI8oYNsAY3Tzoz0dPst1FQ+MXd2Xi4SNfB9Lvdv6bmzqTLxqSTHL4xftGI18Y4jG9AmyD/6pFWu9dNpqVwmcofD/yIeD0Dnzv8b5rCeQl2ylPLo4YIzWhHBaAgNMwOf2TI6l/H6IJxpBZ6man/ZDkaAXjHAatokXFfGmiLFzSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778363565; c=relaxed/simple;
-	bh=9dylC0pOmB3v14IZmaZNDXig4GQt/b1P+UW7zRVkuJk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c60qvoLeb7b6GGYhcPkDH81zEZSOJIw4csr9l/F1Hl93o3r14kokNnoMHh4fgpe90H/VwEXbJaZHOOsNQkmKoPPR93Yu1oUg+BppRnvqhIK7mrozqOz2vZRGphG20LNsA/CNG2Y233bipdR9qrtDfut0ivdEENfpuyXcXQJkxE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=UGwyhiHN; arc=none smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1778364081; c=relaxed/simple;
+	bh=tu+Ocp89SodPAtiuHxZn9TOLSjF8o5IcChCQ2vOLKps=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OJm6sTZ4c8+DasuAf+YHee4img9OEoGFg8Bbwz0ULm+qTg9IpaAt/5pYemAI+itJC/3CS3Y0SEmkHPs9xQWv21gSYQPHmsQYdHcKnga7XxiAc8ARk5WlxtFRqirJ0JebftFjie+FLzk0NKWwF5JPquvA64DFWxcd7r0D4GGog38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VZmpxBc/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HxRHsJiv; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="UGwyhiHN"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-65c396d3b36so3195929d50.0
-        for <git@vger.kernel.org>; Sat, 09 May 2026 14:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1778363551; x=1778968351; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=z6OvMi4pbM6FzJex3IUmYTwNA4Bu7WJw+RQQwhon73k=;
-        b=UGwyhiHNAWLIoSfs1GIMeobdCoxhNMp93NA2gxiZJsw/M0cFOt/9DT7vR5vie3cx6x
-         qWEIBaGs/9iNvIsNAGjg7Ch91ldgiL9jjhoxyBsOplFF0tS3sf7HkQLH566QxO+tU1Vh
-         0h+tMMr1VkWlNZuUx8b+iTUqHB8pP4aDFV9riIympBm9Wn23MGAjUQcjcrcXp2qCij8a
-         6A9J7L7aFaoETZwt8Hcy8FALywQBtkmK6h43Ka0ZhkVjz2EpAdHVeem5HGF3c1UP/o6X
-         duUhwmGQwdxItf6NPU1NMt2bTdDYHFZSHo8lB2uuMJaG87+dXsAPGCjK1hYkEPncbKG3
-         mqkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778363551; x=1778968351;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z6OvMi4pbM6FzJex3IUmYTwNA4Bu7WJw+RQQwhon73k=;
-        b=LmLde1+F/lCcrVYjRJHZDthYbB445dRY97VD+Ls7Z9yOhmrA3wEaXlepnLmGM78xRg
-         1MmWwTRwEao2YAZ1QpaKmpK02P/OPyuM71bv0KseK12DvGkpaUrxS/JX7+HpcK6M3x1a
-         KMRJLg199j3HbX7iN7C3Wo3sTEOMjKztxD9fFo/xYm06l2vJlldSDS7oGRIUGNR+HMfw
-         8WUj69D/VrPkw3zzvZyNp/QtzxPyQvgxu5u2dPpehfveVxBdSJzmWbXDhbdn1HirB5xh
-         bpBSQeQbIaRdo3YKW0n4OwU8DpQ2ahg8TF+y0IQ0lceQh1VTNhQlMWyKgthFTDwY7R+V
-         MEEw==
-X-Forwarded-Encrypted: i=1; AFNElJ/ZNXr+AGnPbeHRBsoQtg+ekIL0iMAXB9fbGvXxh1/O6nhy7qpD8yEX13CfXOvROD7qVxY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyuxaurFPoxphi/TFpAk6EUqXY2zw6vj0GMh1PUOdJ41cIcGlI5
-	+plDgtc9LRoFe4U2LLLd10JKfEXd+95R3WcZ1LkKimT4FyZwFfWmZTu7ISRKlMkIums=
-X-Gm-Gg: Acq92OGYBxHdjFwcJ+73lPvt2CRsDwrAuA+v1HSPerwU1G1qY+PkS5pT/BlPVr63Wht
-	G36QEXWgX4xMT7x1x5czO19b53kfDdg+7jgEun3ZvZagddEQLzWSw2emY4S6uVqzDy5qRXxIshY
-	5spZtHK+MCUpWkbE64QL0iS2sCOGj9YcDofMrOznjymLjK3UP0AzHge2HMto4xvBN3UqQ6LVqQ4
-	M4Sm5gaoWLwQk5aRtRW6BnGrnA2zyWOwTkzxDMFFGmagbDeC4zPWqlCOFHZNSzcUOmxU9wAStJj
-	YlhV1Bq3KGtLY6mRnaA3cJDFtyrg73P3NBE7cMWXrMPZA+djbS2E6RtONj5WM8TnhK8OoNUet5z
-	NDy0ewWCgQoxHoSQ1wcBzyo7tRU5Nlx2J4Wo4vn5lkzndnCl2pMO8gvCyFoC5s4a9PSWpxotue+
-	AKIJdl0DhPsBUONPcREzglfLOaFV8GmPF7/tgyJe6NszTzPezRJIRIfFOKB4oBbpwHju7/4TLIT
-	zc2XPOOqd5Sdgonxv98uw79bbg69eB6ld3uFsAeyCsdU5Rcq6iz6X9b4tcvxAanSlAOOwCFpIrz
-	hR4YXdtobzaQBO0z
-X-Received: by 2002:a05:690c:85:b0:7bd:696d:512f with SMTP id 00721157ae682-7bdf5d9fefbmr201929617b3.13.1778363550769;
-        Sat, 09 May 2026 14:52:30 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd665298b4sm123969817b3.7.2026.05.09.14.52.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 May 2026 14:52:30 -0700 (PDT)
-Date: Sat, 9 May 2026 17:52:29 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: jean-christophe manciot <actionmystique@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: unexpected auto-maintenance, was Re: git hogs the CPU, RAM and
- storage despite its config
-Message-ID: <af+snTGFeoUUyfPU@nand.local>
-References: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
- <20260508180341.GB737125@coredump.intra.peff.net>
- <20260509175249.GA2336928@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VZmpxBc/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HxRHsJiv"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D4597A005D;
+	Sat,  9 May 2026 18:01:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Sat, 09 May 2026 18:01:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778364077; x=1778450477; bh=wwZ64Mh7ys
+	mef4JZ829RBoHYzWE+c0hU+rLzEllzqWI=; b=VZmpxBc/p5FxeQ6aAXxuFhmwuV
+	vjDBjO+OW5KYI8oA/hIR3eDx9VjsbQq6l1e3XpZcMpq+mHnipI1mkte0QiBoE8RC
+	8isuvp27y9zW5Rhqy8ShCqG2rZjHh5W+QrxRxmFBd8J3APXCIt3t7GOGaVUA6poP
+	Km9batvhYuwFaugK3mP1Z8hdL30HdiLc2UVdMvuVkozXtL7+34TE0N620WOfYTnV
+	onJTtsV3wLO1xF3ce/5q8Fhi5LWp2xXVp5xrLjLB+QpCYTKECWp0RL4wPnri4y5L
+	B8xpNUYDzI6CIrG9qmi6stMrTyZ/uuQO0tVdEK6PvZ5/e9bJIwKsB+OGC+Yg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778364077; x=1778450477; bh=wwZ64Mh7ysmef4JZ829RBoHYzWE+c0hU+rL
+	zEllzqWI=; b=HxRHsJivAMXcF6PqSuy1upknI+9wQ4L8WhpYWfRQ4fcxGzQUBGb
+	Enoj6YhEet3MrYhKE0xrgBiKExa4AJv5M7Qwi/LqDg/RJTskMfmcyKVlBJI9dW/i
+	g7zmQAe5+x3GzSFdYNvkH51HD9sXoD3o5wa+xM06+7w7Paq410iFa2yH3V5mgUZY
+	dlK8t25KZF8rwGpaPZAptf3ZywfIlQntpOzx+GOtT8ppzxVYL9k3mfPa3bY3UxQY
+	gc2vB7WVg+EyMqGtTcCAuSd83WT3TnE6WjSRRRrgS7HnSBRZvFoV0bt/71Rq4/6+
+	BqXod2ZP6HoN/qCy1gDWVNTTu0Z/EtVXIjA==
+X-ME-Sender: <xms:rK7_adhAisq09vCM4KAC5TAGwUqkhQ36MVdZHE4fb3dwcZanmeb-Pw>
+    <xme:rK7_aZBsbu0wCe8sF1ksIoURxl9VAavLiHMbmAUDmOhxWs7kgaTokZ1t-ydleTQsv
+    doc761anMf1xJHkyGqIC8x_fRx9h1J1b-v8YtHh7_TheEftghzqDQ>
+X-ME-Received: <xmr:rK7_aSGnN7D2JzPHoCCtpvFlpjIESZ6eOkuErk8ux0kbNgEU5QB4KNp3uRtbWUGCvWH8Y7GfmWCLmunsFf2eSS2i1_q_WgGg2g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudegfeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehmmhhonhhtrghlsghosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:rK7_aRLdZZF7WhqNGFO-rake4zurQpNhewmLiSl49IcYMZGS5myHPg>
+    <xmx:rK7_aWmC1oKOLAmAWEr7cn7Fmv1jMlNqXCk94bI8cN_loCCHDX4rxQ>
+    <xmx:rK7_aZQq4gPUOXr_4L0AVNUZmQl9BVE_Uy3t1NWfYCD3Bl0lIWSnJw>
+    <xmx:rK7_aYIs6Pkgrwu8Uj-VE10wIhSiOAWBY_1r06jBgn-rT_4t-wL9KQ>
+    <xmx:ra7_aZmgheCVZU1LV-ud0PZMjivDUk8kW-wm0bd_gnW7eVjWihLZaYUA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 9 May 2026 18:01:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
+Subject: Re: [PATCH 4/4] parse-options: clarify PARSE_OPT_NONEG does not
+ reject negative numbers
+In-Reply-To: <05ff821e6ffec02a3bfc5aef542592de6a7add76.1778022144.git.gitgitgadget@gmail.com>
+	(Michael Montalbo via GitGitGadget's message of "Tue, 05 May 2026
+	23:02:24 +0000")
+References: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
+	<05ff821e6ffec02a3bfc5aef542592de6a7add76.1778022144.git.gitgitgadget@gmail.com>
+Date: Sun, 10 May 2026 07:01:15 +0900
+Message-ID: <xmqq8q9sb5uc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260509175249.GA2336928@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Sat, May 09, 2026 at 01:52:49PM -0400, Jeff King wrote:
-> I don't think this affected the old "git gc --detach" because it takes
-> the lock after daemonizing[1]. We can't do the same here, though, since we
-> need to hold the lock for the foreground tasks. So either we need to
-> release and re-take the lock between foreground and background tasks, or
-> we need to teach the daemonize() function to update the "owner" field on
-> all of the tempfiles to the new child[2].
+"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I agree. We can't simply do what was done in 329e6e8794c (gc: save log
-from daemonized gc --auto and print it next time, 2015-09-19), for
-exactly the reason that you stated.
+> From: Michael Montalbo <mmontalbo@gmail.com>
+>
+> The name "NONEG" can be misread as "no negative [values]" when it
+> actually means "no [boolean] negation" (the --no-* form).
+>
+> When --inter-hunk-context and -U/--unified were converted from a
+> custom parser to OPT_INTEGER_F with PARSE_OPT_NONEG in d473e2e0e8
+> and 16ed6c97cc, the implicit rejection of negative values (via
+> isdigit() in the old opt_arg() parser) was silently lost. The
+> previous commits in this series fix the resulting bugs.
 
-Dropping and re-acquiring the lock is possible, but it's racy since
-there is a gap during the critical window while we fork(). I believe
-that the only airtight way to do this is to update the owner field of
-the tempfiles we want to pass down during daemonization.
+I do not think _NONEG has anything to do with the bug.  It was
+purely to reject --no-unified and --no-inter-hunk-context.
 
-(As an aside, do we want to do that for all tempfiles? It might be nice
-to have a "->reassign_on_fork" flag or something on the tempfile struct
-in case there are instances where the parent wants to retain ownership
-of the tempfile after fork()-ing, but I can't think of any off the top
-of my head. If we do introduce such a field, it should probably default
-to "true" to avoid any foot-guns.)
+And there was no change to remove PARSE_OPT_NONEG from anywhere and
+use OPT_UNSIGNED instead to fix any of the bugs fixed in this
+series, ...
 
-> Ultimately fixing the lock bug will solve that. Though if doing so is
-> too complicated for a quick maint release, I'm tempted to say we should
-> consider reverting 452b12c2e0 for a potential v2.54.1 (as there were a
-> few other regression fixes so far, I assume we'll have one soon-ish).
+>
+> Add a clarifying note to the flag documentation.
+>
+> Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+> ---
+>  parse-options.h | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/parse-options.h b/parse-options.h
+> index 706de9729f..c0a3a3dcae 100644
+> --- a/parse-options.h
+> +++ b/parse-options.h
+> @@ -116,7 +116,10 @@ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+>   *   mask of parse_opt_option_flags.
+>   *   PARSE_OPT_OPTARG: says that the argument is optional (not for BOOLEANs)
+>   *   PARSE_OPT_NOARG: says that this option does not take an argument
+> - *   PARSE_OPT_NONEG: says that this option cannot be negated
+> + *   PARSE_OPT_NONEG: says that this option cannot be negated (i.e.
+> + *                   prevents --no-<option> boolean form). Does not reject
+> + *                   negative numeric values like --option=-1. Use
+> + *                   OPT_UNSIGNED for options that must be non-negative.
 
-I think something like the following (untested) would do the trick:
+... I do not think the two additional sentences are warranted.  Stop
+at clarifying what negated _means_ (i.e., rejects "--no-<option>"),
+without adding what negated does _not_ mean.
 
---- 8< ---
-diff --git a/setup.c b/setup.c
-index 7ec4427368a..c07aeac4f7d 100644
---- a/setup.c
-+++ b/setup.c
-@@ -22,6 +22,7 @@
- #include "chdir-notify.h"
- #include "path.h"
- #include "quote.h"
-+#include "tempfile.h"
- #include "trace.h"
- #include "trace2.h"
- #include "worktree.h"
-@@ -2162,12 +2163,17 @@ int daemonize(void)
- 	errno = ENOSYS;
- 	return -1;
- #else
--	switch (fork()) {
-+	pid_t ppid = getpid();
-+	pid_t pid;
-+
-+	switch ((pid = fork())) {
- 		case 0:
-+			reassign_tempfile_ownership(ppid, getpid());
- 			break;
- 		case -1:
- 			die_errno(_("fork failed"));
- 		default:
-+			reassign_tempfile_ownership(ppid, pid);
- 			exit(0);
- 	}
- 	if (setsid() == -1)
-diff --git a/tempfile.c b/tempfile.c
-index 82dfa3d82f2..f0fdf582794 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -373,3 +373,15 @@ int delete_tempfile(struct tempfile **tempfile_p)
 
- 	return err ? -1 : 0;
- }
-+
-+void reassign_tempfile_ownership(pid_t from, pid_t to)
-+{
-+	volatile struct volatile_list_head *pos;
-+
-+	list_for_each(pos, &tempfile_list) {
-+		struct tempfile *p = list_entry(pos, struct tempfile, list);
-+
-+		if (is_tempfile_active(p) && p->owner == from)
-+			p->owner = to;
-+	}
-+}
-diff --git a/tempfile.h b/tempfile.h
-index 2d2ae5b657d..783d7470b54 100644
---- a/tempfile.h
-+++ b/tempfile.h
-@@ -282,4 +282,16 @@ int delete_tempfile(struct tempfile **tempfile_p);
-  */
- int rename_tempfile(struct tempfile **tempfile_p, const char *path);
-
-+/*
-+ * Reassign ownership of all active tempfiles whose `owner` field
-+ * matches `from` to `to`.
-+ *
-+ * This is intended for use by `daemonize()`; after `fork(2)`-ing, the
-+ * parent transfers ownership to the daemonized child so that its
-+ * atexit handler does not unlink tempfiles that should outlive it,
-+ * and the child claims the inherited tempfiles so that they are
-+ * cleaned up when the daemon exits.
-+ */
-+void reassign_tempfile_ownership(pid_t from, pid_t to);
-+
- #endif /* TEMPFILE_H */
---- >8 ---
-
-That's not too terrible to write, and I would feel OK about putting it
-in a 2.54.1 release soon-ish provided that others think it is reasonable.
-
-Simply reverting 452b12c2e0 (builtin/maintenance: use "geometric"
-strategy by default, 2026-02-24) feels somewhat unsatisfying, since it
-is merely making the bug less likely rather than eliminating it
-entirely.
-
-So in that sense I would prefer to "fix forward" here rather than to
-mask over the bug. But even the relatively short diff above is not so
-straightforward to reason through, review, or test, so I'm open to other
-ideas on how to proceed here.
-
-Thanks,
-Taylor
+>   *   PARSE_OPT_HIDDEN: this option is skipped in the default usage, and
+>   *                     shown only in the full usage.
+>   *   PARSE_OPT_LASTARG_DEFAULT: says that this option will take the default
