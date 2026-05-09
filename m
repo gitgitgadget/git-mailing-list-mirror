@@ -1,113 +1,168 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3214B3909AB
-	for <git@vger.kernel.org>; Sat,  9 May 2026 14:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778335723; cv=none; b=jEoPjwGz3n/AvArC3HAmPIeGLNeHl+17ghqXS7V4K33DfdXfgzi1wqTBK+rK6urcVz2dXVj4gLZqsbxJH7uOod+PMvDgpvAX4VBseX9W5v9n5qfMqvww4TYTGnqMUSj1+8OmDiXnWUZAlFV3OG2xWKS25nFxs3zTdmYiW+6gXnM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778335723; c=relaxed/simple;
-	bh=JpSS7nd9s2zTZXSZ8I0SiXyFvPMfODXtg86v3RMrjxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WlsXnRMzvhqN/3+UTLID/TB+5yIPMtbM8BeJNOJBFHWMIcQ0SIBfUU5QLf8fcnB9GZhyEJ5Lec/1pc9jgFau9gXMwuNwrnvLA23xF1kydughG64z1u20aeedUaiCrBMnveCU3E3GGIIV18UMkxDWEROAMqJBA3CZ6ZKTjFqC+C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=qq1XkyW+; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC5F17A300
+	for <git@vger.kernel.org>; Sat,  9 May 2026 15:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778339613; cv=pass; b=a5ieEU5OBvMrXHOVCSc9pID1Bklxf+ifCCZ/2k0273e1RJabmfO1roK4PcScaLCPhJjo8+ozaymyJ5H9VztfS6YXMCKoDwdzw/E/6RqyvAlPCtzEjf+syBtqJx53fVLqtIaBz5H0HH20an8kow2YXMajnsVLHpG+NVtXAfxoWOY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778339613; c=relaxed/simple;
+	bh=aMhv2wTtMmr3Lqk7FmkU/SVuTkRkGbQ7vjZfBflSFas=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qlDzXxDyePDiANau6P47Sw+OBx6doFSzMQPY5Gaw5Ll2ha4I0LXIfiepTvzy+/k9h8gqdnd4PMK8iIVgaJ4t5FSLsz+f8GrEkD9TmM3Gjq504x3DhQTCsHeFayQsige8ytLRaV4h16m0YW4of/2ePzAU3tvEJ4Zu0DzzBWYh/cU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nhExtsNa; arc=pass smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="qq1XkyW+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1778335714;
-	bh=JpSS7nd9s2zTZXSZ8I0SiXyFvPMfODXtg86v3RMrjxM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=qq1XkyW+nPRCt6gj/TT2aJiy0LooyT8qAem9d1v8zmYI+IdmDlg9KRwGm2nGLspW6
-	 Udm0eY1aQJBWlxt7t6vUj/dCpbPiikUccBzipdaJEprY/CwJ+HXRcw5nvSdIrvxVQS
-	 sOfQJCr1IUVwJuSrgeDZpa9UGVnlZwQYVVDTBIkuEe61V6lJsHsW76UWF0RTqn2lmd
-	 9JceQdVl0y6MmKFWbLpcKLCdvNAfrQmZ/vQUUzNeS91sFw07jnDUIgBQLZPj9SEP0L
-	 dl5vtnQeDJPeTE5uMZVPrjcSrRnESQLIQuxkEY3A0D8ilZcwUpzbfXHQskxfTAMoPg
-	 dVkRRATM3JaBojyCdk0LC/m6azCWGB0s0QyzoHDghYDaoy+N4oFZby7AzVniognf/I
-	 V08sTZTfuN9CnhTto/ZA157/qjtqEoGg5EkILW4NKUWg2u9+KbIg1CLLi0PiAln1hO
-	 NqAWow/08N/yV3n+Eg0Je123dx3Kl3FNb94oAb6fdhrP+Ae6YiH
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:bf3f:e933:4716:816f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A5F47200D8;
-	Sat,  9 May 2026 14:08:34 +0000 (UTC)
-Date: Sat, 9 May 2026 14:08:33 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>, Caleb White <cdwhite3@pm.me>,
-	Calvin Wan <calvinwan@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Andrew Berry <andrew@furrypaws.ca>, Jeff King <peff@peff.net>,
-	Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] ignore: note info/exclude lives in GIT_COMMON_DIR,
- not GIT_DIR
-Message-ID: <af8_4cHEESb-Zit2@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	Caleb White <cdwhite3@pm.me>, Calvin Wan <calvinwan@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Andrew Berry <andrew@furrypaws.ca>, Jeff King <peff@peff.net>,
-	Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <e3ee0a11b566dd2cc605447c111ae4620bce0fe6.1777050300.git.ben.knoble+github@gmail.com>
- <d58b6e921d3005c6170fc6c47f175214acb3fa68.1778249267.git.ben.knoble+github@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nhExtsNa"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-bba0dde4f43so442194966b.3
+        for <git@vger.kernel.org>; Sat, 09 May 2026 08:13:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778339610; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WUL4N/mkmAxEKp8JQ5U9/EP5cWQAoCPWwJd3vUFRjTT8wW1x1XuyrHRXAelQ1gOcy+
+         7QT330Q71flGnq/RciyXR+mcN1FRqYbdD8OrJCcbGdsXG7r95Nj+3IEgt1V979i6pXzy
+         EGz+WyifPRfnkS+jdx/LiMmhQNWAUjOszlpqDozIxF6kvTc6LKJT0bGKSUvlrCPzOeIe
+         me8GOC6nlueEwOXhqGHvqvz3o+PmavK8ErZY6dFZt2H6KN5mDOAFeiOcgIgxd6bt/P7z
+         CvDNlLjJqAqA+OTF3FP+mik9NELFv1RGoLUCa0Q6DjgcOEZm0LI3n4q5v5fRG8CL9rBQ
+         8dow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=bgcM8h8ZVytz3mUkdxQkBqfbzbmBi1/jJCCSfgB+UsA=;
+        fh=WNtm0f3kt99EmSIaRPqNuyoKG6NRdmY9XDHaLIXJ+lQ=;
+        b=hExI859AHICaV2nw3nPNa60lyo0zflxVic5LIkoLO6MIm9jViStNF2kaDdh2+IUrEK
+         JDgA3tUqd9iQyn40MzxxTeFUvEjX10e+QmABhqJVkswQJM+wHYptkTMikymotPlCfetk
+         PZc3o2HrVhFFK6YkLBDx+u93FJ8eABqSGBovl2tUZSk1AQOwO3lpaFOlAPUcbXd835Wd
+         CuGev9W592CatZ26T0cPlHEHpsW2/WW3LmuPtkso27uffbx4pe8IaiNIfZDdLzej7v47
+         jIwKEjxGq4JZo38YmQ1eHXlTJ5/aoxATmkbloNj42+XZ5HhfKvMFXRRKv1IXZRLysZER
+         hOcA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778339610; x=1778944410; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bgcM8h8ZVytz3mUkdxQkBqfbzbmBi1/jJCCSfgB+UsA=;
+        b=nhExtsNa7NQrD2BHN0RTMjAPq8q0PoV+P5UGemdTVSfd61J5Jbk/8jFVmDzI8w/Om2
+         FNPtx2+cgInvsaDj9JJJF7WnbcaAKtx3AYmal4R0nPQCeGOV3IdfqIYNVSSMXwmK/owD
+         NT266AMsA94KYfPdApNg7B3oWk+sTXYZNGDeBm+dVufpCSKDViCeg2BtDuB0CvfJPO2Q
+         kGvJFSEMs/pXFoHgHsX9dtZL2HqhtxXGURyyaMfwZHO96KdIIBFtrUtFNmWN8Jl4d26m
+         tJ+zaIbggsTE3EQoSnmPZan5YQj2Kr7j+pTjDTgz8tS7Prq/PKbI2G5y906UAIE6ZN6V
+         AEQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778339610; x=1778944410;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=bgcM8h8ZVytz3mUkdxQkBqfbzbmBi1/jJCCSfgB+UsA=;
+        b=ZwNZq7i4fnMfZn7oqc/EUk7tLCswWqzi0xRSvyG3i4sJOLRMgyPjH65hCwJ1GZhOja
+         +2ErZmHgSBRxlM4rrvpehoQAbPY8ORGLcjdkeA628OxDBokjm5VOHASFmIaqV4y328fm
+         gaMSmJjGxjPyq85SiNeQuaybnX6QubhKLV8OQk6OyfL0rAfmY5AbbyhQRibMNn8jOrRs
+         i4UozVKCYnTo3mzLel4Ta1STrB/OjgNzkmdjO9gDJ/M8W66OatH3lV24fm4WwuBqnzDl
+         /t2vaPS+k8XlRg0gSBF2I5zdHfSpQAkzHzTsLpO4mHeIHU9YtCHs0pc+fJKxEYGT3xNG
+         4hzA==
+X-Forwarded-Encrypted: i=1; AFNElJ+8QcVVvW2IEOTVA1yfLUPSqPblxkPYYEdL5fP+cYPbwar8mQSHR8nKFxSJaNkoT/Tpgh8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNZ3EkwCeMWTPN/exMKylhHpsWVVzW7YhQxwjp/b/BQuAd+0qs
+	nzWDGN8yvb/9uCAZZbnuwvegVdkv1X3r78tcbx3KPF6AneD4sKFmFD3V+eGYE6GwGt1XKFkAw7M
+	W9ZlQC7X+586f8FlMrkdye8M4uRpZtoB86g==
+X-Gm-Gg: Acq92OESJp3ECqDWIqtqwzTh6xkEAG2TZFZsysL9a1tv+onOpCnBSwmVa3jCO0P91dq
+	UQ2heM42wLq+KnICjnJWDbqSLg6T3sIw7XubLq+2xcu/maPBfptPhPfILhezjW4etwQmyZ35WIw
+	pD/dlPid4wnnvHnF0TVFr6rSQ7HpUN7SlnmZtoQBZKxDkD3zKPC4iYmH8vFVcAVTqtUZFF6QF9i
+	RxKoYfETSkgUA1b2WES0bm7kXyn7pmFP23dKmVYkbUDd7XigPuLWxUZJlfeINxqW7I+eGT6O/fE
+	M5OMwoWvqO93Bdw4
+X-Received: by 2002:a17:906:6185:b0:bcb:b796:fb18 with SMTP id
+ a640c23a62f3a-bcbb796fbf7mr200799066b.41.1778339609751; Sat, 09 May 2026
+ 08:13:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="38PPvsGhl+cAtoNg"
-Content-Disposition: inline
-In-Reply-To: <d58b6e921d3005c6170fc6c47f175214acb3fa68.1778249267.git.ben.knoble+github@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---38PPvsGhl+cAtoNg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
+ <20260508180341.GB737125@coredump.intra.peff.net>
+In-Reply-To: <20260508180341.GB737125@coredump.intra.peff.net>
+From: Mikael Magnusson <mikachu@gmail.com>
+Date: Sat, 9 May 2026 17:13:17 +0200
+X-Gm-Features: AVHnY4JoWzbf2yRcEfjdSxC12n8bvlKNthPaJjixk12mD2EfXu8CYI-aJVTVWBA
+Message-ID: <CAHYJk3R-TyYv1MizKmHhhADrQd+VnQjxSikpcaPLB=VfHrAwpg@mail.gmail.com>
+Subject: Re: unexpected auto-maintenance, was Re: git hogs the CPU, RAM and
+ storage despite its config
+To: Jeff King <peff@peff.net>
+Cc: jean-christophe manciot <actionmystique@gmail.com>, git@vger.kernel.org, 
+	Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2026-05-08 at 14:14:14, D. Ben Knoble wrote:
-> gitignore(5) says that the per-repository ignore file is
-> $GIT_DIR/info/exclude, but in a worktree that is not the case:
->=20
->     git rev-parse --git-path info/exclude
->     /path/to/main/worktree/.git/info/exclude
->     git rev-parse --git-common-dir
->     /path/to/main/worktree/.git
->=20
-> We actually use $GIT_COMMON_DIR/info/exclude. Adjust the documentation
-> to say so.
+On Fri, May 8, 2026 at 8:06=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, May 04, 2026 at 05:27:21PM +0200, jean-christophe manciot wrote:
+>
+> > [gc]
+> >     auto =3D 0
+>
+> This is enough to disable auto-gc. But these days we also (instead?) run
+> git-maintenance, which is controlled by maintenance.auto. So you
+> probably are getting a bunch of background git-maintenance runs kicked
+> off.
+>
+> > [pack]
+> >     threads =3D 1
+> >     windowMemory =3D 1g
+> >
+> > I expected git to use maximum one thread for packing and I'm surprised
+> > it even tried to perform packing as gc.auto was disabled.
+>
+> This should work to tell pack-objects to use only one thread, but that
+> is one thread per invocation. And we were probably kicking off a ton of
+> processes due to the background maintenance (and worse, they were all
+> doing the same work redundantly and maybe even stepping on each others
+> toes).
+>
+> +cc Stolee for wisdom on all things git-maintenance.
+>
+> Should maintenance.auto fall back to gc.auto for compatibility and
+> avoiding unwanted surprises when people upgrade?
+>
+> Also, should background maintenance be locking to avoid multiple runs?
+> It does not seem to do so, and if I run:
+>
+>   git init
+>   for i in $(seq 10000); do
+>     echo $i >>file
+>     git add file
+>     git commit -m "commit $i"
+>   done
+>
+> I get several concurrent pack-objects processes. After a few thousand
+> commits I got bored and hit ^C, and the resulting repo was corrupt!
+> Which is not too surprising, as multiple simultaneous repacks are known
+> to be unsafe, but means we should probably avoid them.
 
-This seems quite reasonable.  I always appreciate documentation patches
-that clarify things or fix inaccuracies.
+This sounds pretty horrific, this maintenance thing is enabled by
+default and there's nothing but pure chance that stops it from
+corrupting the repo if I happen to run git repack manually at the same
+time? It's hard to believe something this disruptive is even enabled
+by default, I don't expect jobs to kick off at random hours using up
+resources when I'm not working on git. (I'm assuming I'm several
+months late to protest this being enabled by default, but still). I
+would strongly suggest anything like this is *never* enabled by
+default, it is extremely surprising to find out about. Hopefully I
+misunderstood the part about this being enabled by default, and you
+still need to say "git maintenance register", right? (although the
+manpage erroneously(?) claims this will only enable tasks that are
+safe, which you seem to have disproven?). The documentation is
+extremely confusing to read, it says that registering a repo for
+maintenance will *disable* maintenance.auto in the current repo? It
+almost seems like you guys made two entirely separate things, named
+them both the same thing, and expected anyone to understand what's
+going on. git maintenance will schedule tasks to run in the background
+with cron, and if you don't do this, the config variable named
+"maintenance.auto" will control if things are repacked actively while
+doing things in the foreground? Holy moly. I'm leaving my confusion in
+place even though I figured it out because that is something else.
+
 --=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---38PPvsGhl+cAtoNg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8Fgmn/P+AJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ4irBIsfDbC94yGUyqwR93IZpLy66sJxSlg75NFV0xuJ
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAGdXAPsGnTP4tVuHAUojofZE4ldW6b/O
-saDUdF6riI2IdAZT3gEAtuPOBTnirSihYnt5Jz7/7BVbo5f9ytFfd8UDfp+RWA8=
-=srcq
------END PGP SIGNATURE-----
-
---38PPvsGhl+cAtoNg--
+Mikael Magnusson
