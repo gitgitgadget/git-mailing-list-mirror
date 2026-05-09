@@ -1,89 +1,112 @@
-Received: from joooj.vinc17.net (joooj.vinc17.net [155.133.131.76])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68071254B18
-	for <git@vger.kernel.org>; Sat,  9 May 2026 15:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.133.131.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D4A2FD1B6
+	for <git@vger.kernel.org>; Sat,  9 May 2026 17:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778342131; cv=none; b=ZSoAtBtwftqxgimyIa7E+QBz4lw9FScSpHydehUhIOHeI++YWzWzQq64XQs0M5xffygOPnH5SZHJRU+wBWqZAS3pXncXCWkOl2bmIGVxvsgEmyLqOzd0xrko+2QrHyKjyI0jN0MtkgfeWXOhwS3BJGmv7dHhq6/BCVFEV6jeQ2o=
+	t=1778349179; cv=none; b=F0L5eG977QAsyxPMcTOBAl+ETgx8grLZw3Ctqa10qrwHS83CbaCM8HeXQM4TdB8W+crA9cnOi/fZhlBEDHIlLIkmLfAmUQtdcqyioGZHO2jU4iKvk8WA5scLNfDb6CJ4xXQKyUsdHXS5/WVQR3PyKYH7a65JGA7sgPQTcCvBu1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778342131; c=relaxed/simple;
-	bh=dhKhjGq/4fztnSia5C2ASNgjU7f8mwJjLEk88TojsVA=;
+	s=arc-20240116; t=1778349179; c=relaxed/simple;
+	bh=ZK878qU4Lf6diHo9gliNmFimXyx6JSb7J8v3P/aXzFI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZLmDg1FsBF9DwPAsJMR6w9+VlAdvxbxWr0M11aMzFLMJSTYQe7j5KHk8m2nQPrHyycqM3rb24oXWVjbwIQ3ECxDa0K7ZOHap/YSl2aNqkpfn5x5lOzq/L5nOjpgYJV+7rm4HeXxTuU4cWMtBuCMcXEhl8rpTcljyrPJSpc8aiPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vinc17.net; spf=pass smtp.mailfrom=vinc17.net; arc=none smtp.client-ip=155.133.131.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vinc17.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinc17.net
-Received: from smtp-qaa.vinc17.net (2a02-8428-1b1d-4d01-96a9-491d-7b48-ba31.rev.sfr.net [IPv6:2a02:8428:1b1d:4d01:96a9:491d:7b48:ba31])
-	by joooj.vinc17.net (Postfix) with ESMTPSA id 56E96469;
-	Sat,  9 May 2026 17:55:28 +0200 (CEST)
-Received: by qaa.vinc17.org (Postfix, from userid 1000)
-	id 71C1CCA43E3; Sat, 09 May 2026 17:55:26 +0200 (CEST)
-Date: Sat, 9 May 2026 17:55:26 +0200
-From: Vincent Lefevre <vincent@vinc17.net>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
- space changes
-Message-ID: <20260509155526.GQ5260@qaa.vinc17.org>
-References: <20260506010927.GE5260@qaa.vinc17.org>
- <7cedf86c-5db7-45ef-b8d4-034b792f0def@kdbg.org>
- <20260508213943.GP5260@qaa.vinc17.org>
- <cb359a26-2878-41a0-a554-9bcd28c7404c@kdbg.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=FQSwRlwmXkb6+eQ/lXQxhFb+XMfwsVS6q0J70eXSVRQbSZcHjoDF7VNJvujb4lyQ0zRgBrDa8M4MbapZd0jmLJAiRW1pa4KAZzjQuQ6cd8TZKHgrJoSrJs7/+yWLqS977oyVZKP4H6KO2oubybAqPLvAinVE0T9bIUrosP+xUEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VBxhWnYA; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VBxhWnYA"
+Received: (qmail 1870 invoked by uid 106); 9 May 2026 17:52:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZK878qU4Lf6diHo9gliNmFimXyx6JSb7J8v3P/aXzFI=; b=VBxhWnYArnfx11OlAVwOGkOQjPdf1B45KiVUz/K7UgVFC7MlFB1CfDq12OOPZKC5xnB5/uStOMwZ1PElxAX+gGt+MUiLoRLi+C1E2DL/mQeIW97DuT+DYdjQR2GpXIb8k1w2Nm31jAehoO5ABI4HBjV72DD+p0fwiQsKnMYvkQdshcSOscbfd8zdAbZ99A3/epp0wqzrKglLDrgU4z0zZEx8RWMrLQFPosAUW1Jwaf5g7yQOaDtrwZMu6nQ2RetHX7XicMrSmKrecI9yWgtrUfVj+1OH+fHRulRsMz4aEZu4yy6hrR7fCexa+9WIEqNC+1zMODCMwFBrIE4LeWkakg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 09 May 2026 17:52:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3544 invoked by uid 111); 9 May 2026 17:52:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 09 May 2026 13:52:49 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 9 May 2026 13:52:49 -0400
+From: Jeff King <peff@peff.net>
+To: jean-christophe manciot <actionmystique@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: unexpected auto-maintenance, was Re: git hogs the CPU, RAM and
+ storage despite its config
+Message-ID: <20260509175249.GA2336928@coredump.intra.peff.net>
+References: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
+ <20260508180341.GB737125@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cb359a26-2878-41a0-a554-9bcd28c7404c@kdbg.org>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.3+4 (71f3e314) vl-169878 (2026-01-27)
+In-Reply-To: <20260508180341.GB737125@coredump.intra.peff.net>
 
-On 2026-05-09 08:16:48 +0200, Johannes Sixt wrote:
-> Am 08.05.26 um 23:39 schrieb Vincent Lefevre:
-> > On 2026-05-08 14:48:01 +0200, Johannes Sixt wrote:
-> >> This is expected behavior.
-> >>
-> >> git diff --word-diff is not agnostic to whitespace; if you drop
-> >> --word-diff, you see the line-diff that the word-diff is based on. If
-> >> you want whitespace-agnostic word-diff, you have to add -w.
-> > 
-> > This is not how it is documented. Even when using "git diff" without
-> > --word-diff, but with GNU wdiff instead, the output is fine:
-> > 
-> > $ git diff file1 file2 | wdiff -d
-> > diff --git a/file1 b/file2
-> > index da04344..0074613 100644
-> > [--- a/file1-]
-> > {+++ b/file2+}
-> > @@ -1,5 +1,5 @@
-> > 1
-> >  2
-> >  3
-> >  2
-> >  4
+On Fri, May 08, 2026 at 02:03:41PM -0400, Jeff King wrote:
+
+> Also, should background maintenance be locking to avoid multiple runs?
+> It does not seem to do so, and if I run:
 > 
-> It would have helped if you had pointed to, or cited, the documentation.
-> I cannot find documentation from which I can derive that the above
-> *must* be the correct output. In particular, I don't find any mention
-> that --word-diff operates exactly like GNU wdiff.
+>   git init
+>   for i in $(seq 10000); do
+>     echo $i >>file
+>     git add file
+>     git commit -m "commit $i"
+>   done
+> 
+> I get several concurrent pack-objects processes. After a few thousand
+> commits I got bored and hit ^C, and the resulting repo was corrupt!
+> Which is not too surprising, as multiple simultaneous repacks are known
+> to be unsafe, but means we should probably avoid them.
 
-For wdiff, it is just described as "display word differences between
-text files", and it does exactly that. For instance, if there are no
-differences in words, it shows no differences.
+There is a pretty awful bug here, and it got much worse in v2.54.
 
-For git with the --word-diff, there is actually no documentation,
-except the use of "changed words" and "word diff". No mention of
-line diff at all! So this is quite confusing.
+First, the locking for "git maintenance run --detach" is totally broken.
+We take the lock as the first step of maintenance_run_tasks(), then run
+foreground tasks, then daemonize(), and then run background tasks. But
+daemonize() forks and exits the parent process, leaving the child
+process to do the real work. But the lock subsystem registers the
+lockfile as a tempfile to be cleaned up at exit. So the moment we
+daemonize, we release the lock, even though we're still going to run
+sub-commands that should happen under lock.
 
-Note: This isn't even a line-based diff with highlighted word diff
-as done by some tools, such as Emacs diff-mode.
+I don't think this affected the old "git gc --detach" because it takes
+the lock after daemonizing[1]. We can't do the same here, though, since we
+need to hold the lock for the foreground tasks. So either we need to
+release and re-take the lock between foreground and background tasks, or
+we need to teach the daemonize() function to update the "owner" field on
+all of the tempfiles to the new child[2].
 
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+AFAICT this has been broken since a6affd3343 (builtin/maintenance: add a
+`--detach` flag, 2024-08-16). But it was mostly harmless because under
+the hood we were running the "gc" task, which ran git-gc itself in
+no-detach mode. So git-gc took its own lock, and we never ended up with
+more than one repack running at a time.
+
+But that changed in 452b12c2e0 (builtin/maintenance: use "geometric"
+strategy by default, 2026-02-24), which is new in v2.54. Now we are
+running repack directly, with no additional locking. So because of the
+lock bug from a6affd3343, that means lots of repacks running at the same
+time.
+
+Ultimately fixing the lock bug will solve that. Though if doing so is
+too complicated for a quick maint release, I'm tempted to say we should
+consider reverting 452b12c2e0 for a potential v2.54.1 (as there were a
+few other regression fixes so far, I assume we'll have one soon-ish).
+
+-Peff
+
+[1] git-gc does have a mode where it will take the lock and run some
+    foreground tasks. That mode probably has the same bug, but I'm not
+    sure if it existed before we switched to "maintenance run --auto".
+    At this point it's moot.
+
+[2] You can't just disable the atexit handler in the parent process
+    here, because then the child wouldn't actually clean them up either
+    (because its pid will not match the owner field). So we really need
+    to transfer ownership during the daemonize() process, which probably
+    needs a new tempfile.[ch] function to walk the list and update all
+    of the owner fields.
