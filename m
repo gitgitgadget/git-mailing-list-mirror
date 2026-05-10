@@ -1,166 +1,185 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB765196C7C
-	for <git@vger.kernel.org>; Sun, 10 May 2026 22:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778452246; cv=pass; b=Fo4E96qKsLXPmTDjVOKC5HZK1SiYIyvWa/gOQIjJll0zs3XvSQa6Ptg+cjdLSAbX5ykYPtP1eTmIOwYx0KW/sM3JAEMloFRIG3HotFl5uFKArG1h0GSxxPg0bEZQIdL2hO8MJQg9S80DjJ3IoOaUMwWd9O4p4Qbllu3pkvcM3hY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778452246; c=relaxed/simple;
-	bh=PqYzn8qEnoOrP6bwmeJ3iczPWHV3ZiZ1s5YTTDZPmRM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JWE8o4wIwB1CmN2/3NmtQI5ec4HUGK3G8n26XmcnxOdQ/ZowT2smdQ6m9WnLEKazW60J9m28Z33Ywi0cn/lg61jFROsJnQcGhnRsKK+gGz/W3hrdTwMUotD2O/jXk4QT3fhdCb45X88QRogiWYtwAUvZxz/gNQLaHW5piNI+DWI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=agiJX0y7; arc=pass smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7515A196C7C
+	for <git@vger.kernel.org>; Sun, 10 May 2026 22:31:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778452280; cv=none; b=s5kzFqQV3OUTM/l0ieXRVSBFnan7NwbDXFiRdfmqQq82rQB9aBNh/OsTcx67zENNctpamKrkpp0J/cN1vjs2Y8LhiZQ8Lz0CE73M9JiGjankCpkFA3Hw8/dg9eHnnsGTh26iTYU0OMqG6oqXcGK1nDbFc1tGd5nwhUu7ouIDdY4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778452280; c=relaxed/simple;
+	bh=vPyaQ8cKbxmY5hd5rAzD6jnR+XRcgKi2KdXQeKeUrQ0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=u/Lkvp6sh7sKsvE8klyeglt+kI8EbQt1OdnaiojBch2nuiFC8lQ3+NeL54/52fa04lzg2LnCTBpMZbRAerFYLZKwONXG3MaPZr02F7dE14BXCk1dxLBCqDxyjXn5ZWrjTBTTa1Bu30E9HViMn3M+slZOG1mz+H89SBp6yWQ+EBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jYKYDplt; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="agiJX0y7"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39380e79936so47164081fa.2
-        for <git@vger.kernel.org>; Sun, 10 May 2026 15:30:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778452243; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YJg0a30gmqSfASBA2UOVvSYdZvMZNiTOdCOJqzSjljEYLhJvsgLxGa+yHg5Ij9P5w6
-         RvOjd/e8TqamQljFsRS+bXoOHkn7tJm3yL0EtabKkqXg7gTzzq84hPiey/+F/Gk6ABkv
-         x6Zhv9zlrEa0Tyl4PdQfRDrr8KpNnYD0GavFx3PNZAa/SlOCeIOEgQUffEdwtbQuZRD2
-         G+b9zKsE5tL4ROnuTC2BRy3QkFB7AzUEIKmc2PbatRBOYc+gWo9HRpGSiKZzztwpLBtM
-         lZOSr2hT2PHpL/qUHtex1pvsaYVqgJwueXLkfY6tWJZJW3+tTKOOtdthT5J9EdxL2c7t
-         kNcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qptOMmbWoJQDGzjjxYbVIvVjob2ZVIsyD6U8baFzCOM=;
-        fh=DOj4aov6QCZNHIut7J9bRSVLpYXeERrLPgwttad+t8s=;
-        b=IoAR9sxt4/0hHmvZyDUrujVYMiJhovGnI1Y+11gjW6H5DsddNX9jRTk1cf010XLN8E
-         r5g2U9oL/I/TLkVRQ3IzybxzwTLbRizynuAAcSN1/z7VE4UuXjk98Bqs7btiv064TG2E
-         +L9QXjidLzyLuZxBKkLfmXMMKprKrMOb2A9XCMSvHEIsvpWfMZYKNvCU8GF9K0L2ftr9
-         At14JQJHgY6BB7v8PMJo4sD6jb7X/TzZyAXlPK0LBf4kV2hGXFZkVQjF/60WXD5FCJhP
-         oYVOGYXXP/G77aKBtjPwuaIREeDidw3ZkY958GmosNWo7NbPwnoCkv0GR2jQwdwggEn/
-         TRCA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jYKYDplt"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8b6c9fdb68cso33878366d6.2
+        for <git@vger.kernel.org>; Sun, 10 May 2026 15:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778452243; x=1779057043; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qptOMmbWoJQDGzjjxYbVIvVjob2ZVIsyD6U8baFzCOM=;
-        b=agiJX0y7IzQsuWz60Y04JoZm/Il0FLMHjMvGEGNbuEvSqEVxo+AUxgsdzmQ6smSFPm
-         YsnbYgVhRIkywWna16BvGEj+T5epwA+s5o8X4hBg6tfbMYJnxVBnJ/oXrw646njNBs1y
-         XloNl+ap7tHJhmCxTzXtf/YqXkJ9O/mCP5J0eD7zEQqoSLEuc1rZZNHUPnW1oiGuNtUf
-         A77KgxOJOjmYWzF8lFBKIF+hate3v4jOLuRVTjpmT39g+B+sDU0oQzHeZMsQ9z/taXPr
-         D56Nxw3rRFvH0pdjHXtBkn3PfBqsHuw2+4PQ9bcazALMwD52yoyFAKmRTgbJNi1l7OFL
-         mBfg==
+        d=gmail.com; s=20251104; t=1778452278; x=1779057078; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d0QZCs9oiCIxlfkhptonpD/kSgIIda9eFd+TrtrGBfM=;
+        b=jYKYDpltaNBKbnaaO/wU7TvpVn99q+TGJmqeLfIsODJpA1QxSmOA7U6O/FoBhNTeqj
+         gtv+6mpqS87emR4oHA6ZDO/01SB72m/ukW90BV4DOaYp9C2yfl596B0hWVakQOoGHWkk
+         8M6TPGYrj5jSqmqmjPP58UWQfmiIxIEso/mmlFj1cmjUvaRyEf1ofB5UiEQGBHIJNjVj
+         e+rBXLVwyTAubjXcF0bp+hx2rJej4utj7RgRHmoiZqFXQ7PnIv9pd3OLMFdte1w5H40Y
+         n0eZ+ox97suWJM2s5hxhiFBgu9Nk8u/wm0bNSMCVbwCakhFhCQrUAnFCK5QvClA+vfy7
+         2r0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778452243; x=1779057043;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qptOMmbWoJQDGzjjxYbVIvVjob2ZVIsyD6U8baFzCOM=;
-        b=XKc04rxuz/B15DNV7uD2hgIsGl7s4+s5/6r95R9+sQ+0oMtVYUakGVX2JCbePkgAyc
-         DY2xLsljzMyJYjx+eFLh1ZTC3uqfHIJCAtQ4QM/+t1pdTm4RV6Q3JMfns0H5u6bzQN7E
-         joPTK9fI5IKLGKO3+sjZDKrg+6DAWB9Pew4gAaTKWRYQjp9tKBDH1AgfvBM3Vj21cvrl
-         FUJVN2KbLlR3s2ssIqmJ4wyOubZmGejo7s0/Wd98knmV/+A8CabsiaIXn474hIINkkY4
-         2xL0+EJLyx6wvafRqar/zXlJ+y2oIy4L2RTRkWx2iqhy8K7TiHgmnUhSrEfeQuhN5Mww
-         r7Aw==
-X-Gm-Message-State: AOJu0YzAEFUa+XbIvVeN+shxtXKmbn9ciEa6k3TUzcnnLdFUyEa9Wtgf
-	8yoxrbNgnlPbnT4XUpxOsAEhftRNnuIWDneFO37vQrkfru/vdIWmuYjjFVBMLX0DUv4w68d03pb
-	pkXaY8EUn0pqQdmyKv5vPtS/xcZCj3Ug=
-X-Gm-Gg: Acq92OFO79nV5yCjQAB3XoMuHISR6chSGdbeB296zPu3xwY1Bto8ZL27aA5WrT+LWtR
-	GIPbumdAj4EV56quEvU8e8KEN1yeDbwkJrLEsSy80AuFZlLSN6T3IvgRsuO9b9LXtjzu1rftVsh
-	ybJ9rl38x2rQgzZmk4TQg5ZHOXej23zoI/I7wcSTrYx+AnAQzMAg6h6luaCZHzOAdcFIq7Uzsw0
-	4Oql3Yd0I+xEbt7xU6Ixu+QXLppA+E/B3Nszctqs9fMzzEN5u+pHSrN9IL9pEcuukwM1tp05ZQP
-	99KCAd0585kA5H+CABI+noNTgUXssbVjLnUPFfsT9ztn193/yH1r0xQRU/9gi0i27tIwtSL/C+z
-	COqq/oL/QPtEGXwV51+fAY0xQrkyo0eDl8xiyT48GjCsUcpt1kn5h
-X-Received: by 2002:a2e:b804:0:b0:386:fa6b:44e0 with SMTP id
- 38308e7fff4ca-393c40ff2e3mr58322701fa.10.1778452242933; Sun, 10 May 2026
- 15:30:42 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1778452278; x=1779057078;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=d0QZCs9oiCIxlfkhptonpD/kSgIIda9eFd+TrtrGBfM=;
+        b=pvVjaXVwzCHkNSxerMJRosRCs4rsSMarLP//KRzVSrc/37G5wfm4CKS1Wpba7xKjt3
+         W5t/LGC/1FOP7sMQJGocj6xgORnsGk4GeSymSFJfuG3LHG5uCKDX5Kr+Kb7BywwvJ4Sy
+         vwwHIMAA3MGJqlMySgHuGjVHPy1OdEYAWQYRtgWehhV2Kc4kqRKFueRWGeRrQkm6efob
+         /Un2bTIwcuoCORVzzmgLX3v2SiF80RN8iF3/bb+bHfXF+T07dr4MvlDe3Kv9E395bGRh
+         YiKPJHsAWT4OHsTs3Q1lpPh8h2qdIePIxciTfMzxx5pZ1GOcPqfAeVx9s+5q1LKnonhx
+         03og==
+X-Gm-Message-State: AOJu0YwQpuXQ7WDMZCyvPqYeu04m5VPnDgIATmeHnXjER5ZuPATULAZF
+	zZtqQ9T9CLyFrLLwVGTzYa17o5qANyXn6xlE7cktFM+A6QdBgfwIT7M24XdJAKsq
+X-Gm-Gg: Acq92OHvTgBQ+Kkd7/h6SFuuBHAkbcgM8T5kxwbnFTNmXueBsG4iMv90XW0Q5f916u6
+	eL1OxuDprVSAuJE+Fsl1uz5T8R2XM8sOBSbVvsos6o+P5CsHQJI5OYCxvUGV+xTr1OZygZkequE
+	J0REBr88q/SUayCPz5jO6c84LQ6SJwy/05PxdFCr7z8dddQArUv858t4icNBT9h3+wHm2LwuiqA
+	vbOrfcJQx1ovS8slAnX9u33YsTSo3qMRUvv0KAAAkpVlDZ2iA1k6XcsF2Nm3+WwnnTu0DUpDxBs
+	iJCguHNvNVnNs6Uza5QSv4CPVwy6HxuLdplVQYtbCTCBJZwddC0n6Mze54VKY/9R3tFxa8SvBpN
+	2uH7am2XUhsmJYRL50lakpF8WqPZFr+I8JLTBV3kh9mV2m+bwhaybn10LtY4qiHaS00tPs4bP2X
+	YGVDhKjRbEAaQxYOVcDvaTwOevn1aZImWGWrg+KLxQwhEZCu457VXpxZKcsCc/+w2DvMcfSwpwH
+	ojYo6MXCIGYIpqyk7WdqfVBd45G/WVuhjmqZ8e67dpvu7qYiNOOTKhx7rVaIE3yRXc0HeBGPz7e
+	mucTzo/gDuTF96lI13MjT07LNFJMfH1dxhVnAthLdqs2p7ONBMdpVsQPLBBfnYNR
+X-Received: by 2002:a05:6214:19c6:b0:8ae:62aa:665a with SMTP id 6a1803df08f44-8bc442dbca6mr351396956d6.28.1778452278317;
+        Sun, 10 May 2026 15:31:18 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2600:4808:6353:5c00:456a:8ccf:9ca:b527])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8bf3aed1fe1sm78141496d6.8.2026.05.10.15.31.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 May 2026 15:31:17 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Sun, 10 May 2026 18:31:14 -0400
+Subject: [PATCH v3] doc: clarify --follow and log.follow for git log
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260507-document-log-no-follow-v1-1-46ce02490eba@gmail.com>
- <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com> <xmqqecjj9ckc.fsf@gitster.g>
-In-Reply-To: <xmqqecjj9ckc.fsf@gitster.g>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Sun, 10 May 2026 18:30:06 -0400
-X-Gm-Features: AVHnY4JNqHszcEns9C-prlFpjbldGe-fquTnpJgxVa_-pGHTYMpZjz9aC5sM7MY
-Message-ID: <CAJ-ks9nb1pebMLqZ+GunkXLSMYRb_RmpDuBDrDsgJ+6m7nbzMg@mail.gmail.com>
-Subject: Re: [PATCH v2] doc: git-log: clarify --follow options
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42Nyw7CIBQFf8WwFgP0QXTlfxgXhd62GMo10KKm6
+ b8LdeNOl5OcM7OQAN5AIKfdQjxEEwy6BMV+R/TQuB6oaRMTwUTNKiZpi3oewU3UYk8d0g6txQe
+ VQhdFq3nFuCTpfPfQmecmvlw/HGZ1Az1lW14MJkzoX1s58rz7GYmcclrWGpgojwxUc+7HxtiDx
+ pHkSBT/aUTSAEillYKai+5bs67rG6xjffwVAQAA
+X-Change-ID: 20260507-document-log-no-follow-72c33dc15017
+In-Reply-To: <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com>
+References: <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com>
+To: git@vger.kernel.org
+Cc: =?utf-8?q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, 
+ Junio C Hamano <gitster@pobox.com>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1778452277; l=4091;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=vPyaQ8cKbxmY5hd5rAzD6jnR+XRcgKi2KdXQeKeUrQ0=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QKTqt4msfgh5JWpt1JHnVfdZDPo9wNfcGAyPQqaprdz+g/0t8YNJiXMtUfb30CDWrZmers0DsYr
+ yyblyfviGCQ4=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-On Sun, May 10, 2026 at 5:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Tamir Duberstein <tamird@gmail.com> writes:
->
-> > Subject: Re: [PATCH v2] doc: git-log: clarify --follow options
->
-> The second ':' feels quite funny.  I would have expected
->
->     doc: clarify "--follow" and log.follow for "git log"
->
-> or something like that.
->
-> > The --no-follow option was added by aebbcf5797 (diff: accept --no-follo=
-w
-> > option, 2012-09-21), but git-log(1) only documents the positive --follo=
-w
-> > form.
->
-> OK.  Usually we document
->
->         --no-foo::
->         --foo::
->                 describe '--foo' and '--no-foo' here ...
->
-> but we do not do so here, which is a good thng to fix.
->
-> > Document --no-follow alongside --follow. While here, describe --follow
-> > as limited to a single pathspec, rather than a single file, and mention
-> > the override in the log.follow documentation.
->
-> "Single file" is more accurate than "single pathspec", isn't it?
+The --no-follow option was added by aebbcf5797 (diff: accept --no-follow
+option, 2012-09-21), but git-log(1) only documents the positive --follow
+form.
 
-Yes, for the rename-following behavior.
+Later, 076c98372e (log: add "log.follow" configuration variable,
+2015-07-07) taught git log to act as if --follow were given when
+log.follow is true and there is a single pathspec, with --no-follow
+overriding that default. 1e9250b5aa (diff-parseopt: convert
+--[no-]follow, 2019-03-05) preserved the negated form while moving the
+option to parse-options.
 
-The part that confused me is that `--follow` is not a no-op for a directory
-pathspec. `git log --follow -- builtin` gives different output from `git lo=
-g --
-builtin`. But that is not because Git follows `builtin/` across the 81b50f3=
-c
-move to the old `builtin-*.c` paths.
+Document --no-follow alongside --follow. While here, make explicit that
+--follow is accepted only with a single pathspec but follows only file
+renames. A directory pathspec uses the same traversal mode and can show
+a different set of commits, but directory renames are not followed.
+Mention the override in the log.follow documentation.
 
-The difference comes from the traversal mode. Setting `follow_renames` make=
-s the
-revision machinery run diffs and skip the usual pathspec pruning, because a
-followed path may change. That can change which commits are shown for a
-directory pathspec, especially merges. But the actual path rewrite in
-`try_to_follow_renames()` only happens when a rename or copy destination ex=
-actly
-matches the single pathspec, so a directory pathspec is not rewritten to ea=
-rlier
-file names.
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Changes in v3:
+- Retitle the patch to avoid the awkward `doc: git-log:` subject.
+- List `--no-follow` before `--follow`.
+- Clarify that `--follow` follows a single file across renames, even
+  though the option is accepted with exactly one pathspec.
+- Document the directory-pathspec case: directory renames are not
+  followed, but `--follow` still uses file-follow traversal, disabling
+  normal pathspec pruning and possibly changing which commits,
+  especially merges, are shown.
+- Link to v2: https://patch.msgid.link/20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com
 
-I will reroll to say that `--follow` follows a single file beyond renames, =
-works
-only with exactly one pathspec, and that directory pathspecs do not follow
-directory renames even though they still use the same traversal mode and ca=
-n
-therefore show a different set of commits. I will also fix the subject and
-option ordering as suggested.
+Changes in v2:
+- Document --follow as limited to a single pathspec, not a single file.
+- Adjust the log.follow documentation to use the same wording.
+- Link to v1: https://patch.msgid.link/20260507-document-log-no-follow-v1-1-46ce02490eba@gmail.com
+---
+ Documentation/config/log.adoc |  9 ++++++---
+ Documentation/git-log.adoc    | 11 +++++++++--
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-> It is not like "git log --follow builtin" follows only changes to
-> the paths for builtin commands across "builtin-foo.c ->
-> builtin/foo.c" transition that happened at 81b50f3c (Move
-> 'builtin-*' into a 'builtin/' subdirectory, 2010-02-22).
->
-> And the way the machinery for this checkbox feature works is to notice
-> when the file it was given disappears and then find the other file
-> that the file we have been following came from, and start following
-> that old file.
+diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
+index f20cc25cd7..ba9872e98a 100644
+--- a/Documentation/config/log.adoc
++++ b/Documentation/config/log.adoc
+@@ -52,9 +52,12 @@ This is the same as the `--decorate` option of the `git log`.
+ 
+ `log.follow`::
+ 	If `true`, `git log` will act as if the `--follow` option was used when
+-	a single <path> is given.  This has the same limitations as `--follow`,
+-	i.e. it cannot be used to follow multiple files and does not work well
+-	on non-linear history.
++	a single pathspec is given.  This has the same limitations as
++	`--follow`, i.e. it cannot be used with multiple pathspecs and does not
++	work well on non-linear history.  When the pathspec names a directory,
++	Git does not follow directory renames, but it still uses the same
++	traversal mode as for file rename following; see `--follow` in
++	linkgit:git-log[1].  This can be overridden by `--no-follow`.
+ 
+ `log.graphColors`::
+ 	A list of colors, separated by commas, that can be used to draw
+diff --git a/Documentation/git-log.adoc b/Documentation/git-log.adoc
+index e304739c5e..0fb3279d19 100644
+--- a/Documentation/git-log.adoc
++++ b/Documentation/git-log.adoc
+@@ -27,9 +27,16 @@ each commit introduces are shown.
+ OPTIONS
+ -------
+ 
++`--no-follow`::
+ `--follow`::
+-	Continue listing the history of a file beyond renames
+-	(works only for a single file).
++	Continue listing the history of a single file beyond renames.
++	This option works only when exactly one pathspec is given.  If the
++	pathspec names a directory, Git does not follow directory renames,
++	but it still uses the same traversal mode as for file rename
++	following, which disables the usual pathspec pruning and can change
++	which commits, especially merges, are shown.  `--no-follow`
++	disables this behavior, including when it was enabled by the
++	`log.follow` configuration variable.
+ 
+ `--no-decorate`::
+ `--decorate[=(short|full|auto|no)]`::
+
+---
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+change-id: 20260507-document-log-no-follow-72c33dc15017
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
+
