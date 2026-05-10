@@ -1,216 +1,236 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-yw1-f193.google.com (mail-yw1-f193.google.com [209.85.128.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2633A1A58
-	for <git@vger.kernel.org>; Sun, 10 May 2026 16:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AD52494F0
+	for <git@vger.kernel.org>; Sun, 10 May 2026 20:00:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778429298; cv=none; b=Ax3M5tWOAJUKxDgPlKjQf40HeRgKH0OdBrVC9tEdIpIeeek+TW0R40ph9olNyTvDAbxLmZFp8AeG3U/cRdbFHcjrmDqaDvpoh44jhZz27mZJ2PhZFsYKFNoJ4+i+gcqoOQ7qKgd2FHeezBMRoW92au9m6sEWEBrtiTyY87hUm4o=
+	t=1778443216; cv=none; b=aZJk0QP9fEuhqLfREnPxyxVw5yQR5Q2Ows/Ycu2BKbB4137V1oRoDN5Erg1l0+gojEvlcebzuZC2ObQn49CdmR+eaQGh+88THAT2S58xV/OsfnrrDoBWVW14liDXnLUuQRGqBpKcuxr3zVrimGgKgwCnZGPUhpb/Pg+nqJQe8GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778429298; c=relaxed/simple;
-	bh=Z3yHr8n2iTyRu2FA6XAkCLYB04dI/pvBcyGK3r0YNs4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VCZIi3cjvRieXxTow8RPyI2AtonY4rO1drdtILkR81hAtLZI8rP22GuJldFjnzhjsfxpHUAJH26D3UAKLgsdmQCrfuVI2UL31R71PETw3p2SEy6YmbN777oOT0wZTvvGerGGldZ+QqFK8lKjY1cM+NAVU2+pDx4tmk23t5iAjhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C3FPn6p6; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778443216; c=relaxed/simple;
+	bh=gOsUsKYmvYt+zOnjgjAxMK3hvQcXyfAnpAtFiw1AbIM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZcQzG6bLn+t+Hp0hOwR5FfJ6D4Ue1t/1jVUMfqVhHrCyDQyBo5n9EWHsQw+onl/299iNNkTDRSTz5SbQUzrnNDjQOAPAmAIlHGxNIqP69j3C7vQFGmKLXAmMYPxjE02dIz674o/CGyhMj6T8OUAxrw01kw8q2CtSAEanZ/3t9XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=o8wXJtMJ; arc=none smtp.client-ip=209.85.128.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C3FPn6p6"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8e8c0c2d2bcso483343185a.1
-        for <git@vger.kernel.org>; Sun, 10 May 2026 09:08:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="o8wXJtMJ"
+Received: by mail-yw1-f193.google.com with SMTP id 00721157ae682-7bd8c55c885so35234867b3.2
+        for <git@vger.kernel.org>; Sun, 10 May 2026 13:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778429296; x=1779034096; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+qHYRf5Jlhpk1ZJxQ0x+SWIh6uUmI3Ww+fIns6WDUHg=;
-        b=C3FPn6p6jGmggpcoIor79OIfMjEuVnpNbZTb+0ntNwLnFziUpLKIBevJeMxEEichnU
-         piLIAYMyI5f8ltc8xq7KqGIECtSAlVREgpxo5MHXwurn+wInYj1sCNBf0L+lVS+ybaYp
-         kYqkgtNeTV29G6LY/1VT5V/wISoRoHtS6PmKIK83Gf8dZr+VD4G9PFpKBajeVDyrHrIx
-         NRol1o6s/NQOTboWdStXmnvUFkOjTlG9w+eyQ9cUJfd0yqgJ/JpvwhYW7VkJ8n6sNr9z
-         6V7jghlssrsfTtxgS7i/PocnL+LAmuQiSC25UQBTYktk0V87esXVHU6ixXWgWSR7H2/P
-         AAKg==
+        d=ttaylorr.com; s=google; t=1778443214; x=1779048014; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2fuuvZ4XMD54gBsl807V0LroZLihF5Dgs1WpZ0n9uG4=;
+        b=o8wXJtMJ6OkPtoLSzhmoP40DNg9sKphOEuCEviszFeoQTdBSwfEghEFW59SaDIE6I3
+         Nf7LHlkdXziuk5jVHcyqhJsBXvU3sLRO7oS0gU0Kdz56ymPdubmRYrlF/JD3arajZBVY
+         a8YNreByGwNvXQiWPdpoh9g+++/IADLl/Vq6ns7DjwlB3pHjzXo5xPwGEEuoDtOPL38W
+         TRxlVF1gUTUr3s9rgSZbf12DDc/88uTs2Lvll4xMQ8vXqOYz+Thdw9DB64IbADWNMeDb
+         ULLXUF4XquUEzM9TZ9DF2gw3awtmyQlMQHLF7bdSipZ2Pbv9K1hMjb7pUNlMv4e5mRa/
+         AIOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778429296; x=1779034096;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+qHYRf5Jlhpk1ZJxQ0x+SWIh6uUmI3Ww+fIns6WDUHg=;
-        b=Z/XlivgeZ829PeWtTamyAJK9Bjhu2JJhzQIHX9f+VljwvK76iP9Y35CwSluRFO7UjF
-         Hh/9KrqK1ba5GwJr3P0ZHtaj8t74QEdksvrjLNQPvUSgcz2JueOtiAQoObYNa9nL0Eq2
-         Mm/oHrsCDvilefO8mPv1W0WW2hqt2LoNsX0Kr2T+bJl8bX+z3EenHlOCEKzu7Eb1Tipk
-         2wKasGWNY87X/PcZ3qtmLUhqo2wHLhzIDSbk6ncu8lSZbF0sGKLgD3a99hVNLA9aYaZJ
-         D4yClHhQLU3JSlMbEqgX4999Ji4J0fInyl2ogrWCVxRSwSr8lbPELVm3v4g12Y/QtmFb
-         S7FQ==
-X-Forwarded-Encrypted: i=1; AFNElJ//+fkWi9Fw9evU6sqL3FaaQM16NG5hT/uF4Z1dNlnktMPwwAkm5mfPqtA6X9+vT3RSf4E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHKErBAdUSpwr32Me3Q7/GE9ZwJRiSBumiKBYsGL6vWnH4RfOL
-	tARr6xdia0AcjnQyT/L3X4X7iLB6wyFqootFlgik8Xy8zxWHnJ9N7ap8
-X-Gm-Gg: Acq92OHWTjlrQjO8MaaDEsIjWQMtspFaIXn8lFMLSF1SEh3OfRFdSJT4YRRzoaWMXb7
-	ekILVxX0Jz26wb8j088gDtnf4g5oIM6UhY584TXLKT9y+4vqRKBqywCE99GasNsM5gCi36ND9mq
-	nh5JfXX2ql84jSJ/vLIMwFE2qC1VB8SgEmYDtr4x1IL1zn1vTA5kOv8e/tgWeG6yVx0wfdRqldw
-	QDsPiuhLeftdT4uTyxjQ8osLHNxMIIqMoYEEKTL+h+rY+4Nc+EZmiN8+ctZRaoyDwq3ZFkCpnf1
-	sYVyUrTdrRXgSgae/exCFeaNkUyuShFHYGbBQbS6BrCVfy7I/VGPhvfxP5QRMimaxMjAr+SfRzB
-	vju1Wpqa2LaDHOTEaMAX1IJx6yfUVj5fgmWdYqHblLsrMkxa3NDkmSE5doFkyMY/Ko6WA4KBHIq
-	48RL/grp5DmBps7gINE71agPtvDM/hA61hl1DVeOixZCTgFe+g9r4+bjX9/M2FyD1nI+B9dyAJo
-	ORTRZ2FahDqM2yFpr97+PpDrflnIsDNkA08BEFPTIuw/u2o
-X-Received: by 2002:a05:620a:f0c:b0:8f0:7516:da99 with SMTP id af79cd13be357-904d70c4701mr3056164885a.60.1778429296092;
-        Sun, 10 May 2026 09:08:16 -0700 (PDT)
-Received: from ?IPV6:2605:a601:9b88:8300:bd3d:511d:814f:3a8? ([2605:a601:9b88:8300:bd3d:511d:814f:3a8])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2cd04de9sm2894746885a.44.2026.05.10.09.08.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 May 2026 09:08:15 -0700 (PDT)
-Message-ID: <9ddfd37d-7d71-4359-b9be-d993fbfd138c@gmail.com>
-Date: Sun, 10 May 2026 12:08:14 -0400
+        d=1e100.net; s=20251104; t=1778443214; x=1779048014;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2fuuvZ4XMD54gBsl807V0LroZLihF5Dgs1WpZ0n9uG4=;
+        b=Ul81+/ToGEa1iLm4lwz/aLEngcelxs+LOvBYUEeCv8ub8OI/YHHrFJNmPV8RfPIWCF
+         47HAxzf/yh1nhUIGXfhOKMNmce87IokUOLGLf2ciLb75THN5Bs3sFh5FxNZtNZfI3c4N
+         +lnGVn4AppkmVltUaq3JwU6TIeJoNrQzgvn2/VMJGHo7XFcP4ECBRxQWJYsRuCGm5KLF
+         +tcH7TIpVxiTifzQ/3DryoQQtZKAksUdJHcccCewW8zlN6cRJEyABd/JvIEKQSs/umSM
+         FuwriJJb+jrX5gnsVYLQ2vD83lFkWIdiu9W/LiUzX9QzO6e3MeHRPe+K7PHgzHnh3n2o
+         2Xng==
+X-Forwarded-Encrypted: i=1; AFNElJ/+iF5bL0YGzRPkmiz34P/21PH5a9DPgMyEYSG/KpPyNi1nVgougUN1YyOrfm35gy4te00=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4XcCpeGDHZVXN9rDs/KKJX65p7bQwJEg/vjpbU0UydibxCDMS
+	ALOA4tkVfnTWvgiFOfmts45oqtrlkFggxwzdb/67DprqEN8l2KXn7DAmxpXIWWK+HIA=
+X-Gm-Gg: Acq92OFi/ztXAEDslwzAdtFtlfNmo2OE3puISV1iIg0nbQ4BYUUP6raNuRkjuJFHzro
+	hB+q00jSIeAWZZhu+KW72q5zTkCcJbIIh8vqbqvs25+vSD4Shsp9dmZAPjohyWq2emk341i4+8n
+	mHJQ+3jtKHeucPN+1m/TAouWwFR02qHqQDpI9Dq9tQFkjbuzzwNoSYQ1F05JR982+b/zxF9ANLy
+	3O/h6gP37uYFWR8Co80nfU30+ssDwdHtUIoOH15RhPzvGDbiNbLtelubljABZpBJ0AnRCNrs/Ml
+	LWdDT4g527AA4ZCQMGgFqo5EGW2ek0SVNm1WPX/zfioQewS7Ob4jIAqnR7f7gsETLDff7JqAQsU
+	Ao2exFzyhJl/L207CDlVI2N03baaAQ729HQ5BAzJjvFzpmJbAeG9WNnuDSCAcWXsxLI617ctXGb
+	FaMoLEyIES9jt5HvDuviaZF5x8eoROGWOO46+FMv5RfHZVGs0p0PLTk3sdG65JTTYBA2QSQMEU3
+	cw+lDjgbYRGwAOyggAAQ5oNKR3J481sa5EN+E4H0CJXbOGgOKa6hFvIuAfot0QZMB3WQJSjD4zg
+	7MxKezu8/+szceLfFjuvkG0NBY0=
+X-Received: by 2002:a05:690c:397:b0:7bd:8952:134a with SMTP id 00721157ae682-7bdf5d99519mr222614837b3.3.1778443213769;
+        Sun, 10 May 2026 13:00:13 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66891246sm137568707b3.46.2026.05.10.13.00.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 May 2026 13:00:10 -0700 (PDT)
+Date: Sun, 10 May 2026 16:00:08 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Jeff King <peff@peff.net>,
+	jean-christophe manciot <actionmystique@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: unexpected auto-maintenance, was Re: git hogs the CPU, RAM and
+ storage despite its config
+Message-ID: <agDjyAXxkOIso8FU@nand.local>
+References: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
+ <20260508180341.GB737125@coredump.intra.peff.net>
+ <20260509175249.GA2336928@coredump.intra.peff.net>
+ <af+snTGFeoUUyfPU@nand.local>
+ <9ddfd37d-7d71-4359-b9be-d993fbfd138c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: unexpected auto-maintenance, was Re: git hogs the CPU, RAM and
- storage despite its config
-To: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Cc: jean-christophe manciot <actionmystique@gmail.com>,
- Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
- <20260508180341.GB737125@coredump.intra.peff.net>
- <20260509175249.GA2336928@coredump.intra.peff.net>
- <af+snTGFeoUUyfPU@nand.local>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <af+snTGFeoUUyfPU@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9ddfd37d-7d71-4359-b9be-d993fbfd138c@gmail.com>
 
-On 5/9/26 5:52 PM, Taylor Blau wrote:
-> On Sat, May 09, 2026 at 01:52:49PM -0400, Jeff King wrote:
->> I don't think this affected the old "git gc --detach" because it takes
->> the lock after daemonizing[1]. We can't do the same here, though, since we
->> need to hold the lock for the foreground tasks. So either we need to
->> release and re-take the lock between foreground and background tasks, or
->> we need to teach the daemonize() function to update the "owner" field on
->> all of the tempfiles to the new child[2].
-> 
-> I agree. We can't simply do what was done in 329e6e8794c (gc: save log
-> from daemonized gc --auto and print it next time, 2015-09-19), for
-> exactly the reason that you stated.
-> 
-> Dropping and re-acquiring the lock is possible, but it's racy since
-> there is a gap during the critical window while we fork(). I believe
-> that the only airtight way to do this is to update the owner field of
-> the tempfiles we want to pass down during daemonization.
+On Sun, May 10, 2026 at 12:08:14PM -0400, Derrick Stolee wrote:
+> I worry that we're assigning _all_ tempfiles to the child in this
+> case, not just specific ones like the maintenance lock. But since
+> this is specifically called only in daemonize() then it may be
+> fine.
 
-I agree that this drop/reacquire pattern would not be a safe choice.
+Right, I had wondered about this above, and I'm not sure what the right
+behavior is here. I think in our case its fine to pass all tempfiles
+down to the child, since we're about to exit.
 
-> (As an aside, do we want to do that for all tempfiles? It might be nice
-> to have a "->reassign_on_fork" flag or something on the tempfile struct
-> in case there are instances where the parent wants to retain ownership
-> of the tempfile after fork()-ing, but I can't think of any off the top
-> of my head. If we do introduce such a field, it should probably default
-> to "true" to avoid any foot-guns.)
-> 
->> Ultimately fixing the lock bug will solve that. Though if doing so is
->> too complicated for a quick maint release, I'm tempted to say we should
->> consider reverting 452b12c2e0 for a potential v2.54.1 (as there were a
->> few other regression fixes so far, I assume we'll have one soon-ish).
-> 
-> I think something like the following (untested) would do the trick:
-> 
-> --- 8< ---
-> diff --git a/setup.c b/setup.c
-> index 7ec4427368a..c07aeac4f7d 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -22,6 +22,7 @@
->   #include "chdir-notify.h"
->   #include "path.h"
->   #include "quote.h"
-> +#include "tempfile.h"
->   #include "trace.h"
->   #include "trace2.h"
->   #include "worktree.h"
-> @@ -2162,12 +2163,17 @@ int daemonize(void)
->   	errno = ENOSYS;
->   	return -1;
->   #else
-> -	switch (fork()) {
-> +	pid_t ppid = getpid();
-> +	pid_t pid;
-> +
-> +	switch ((pid = fork())) {
->   		case 0:
-> +			reassign_tempfile_ownership(ppid, getpid());
->   			break;
->   		case -1:
->   			die_errno(_("fork failed"));
->   		default:
-> +			reassign_tempfile_ownership(ppid, pid);
->   			exit(0);
->   	}
->   	if (setsid() == -1)
-> diff --git a/tempfile.c b/tempfile.c
-> index 82dfa3d82f2..f0fdf582794 100644
-> --- a/tempfile.c
-> +++ b/tempfile.c
-> @@ -373,3 +373,15 @@ int delete_tempfile(struct tempfile **tempfile_p)
-> 
->   	return err ? -1 : 0;
->   }
-> +
-> +void reassign_tempfile_ownership(pid_t from, pid_t to)
-> +{
-> +	volatile struct volatile_list_head *pos;
-> +
-> +	list_for_each(pos, &tempfile_list) {
-> +		struct tempfile *p = list_entry(pos, struct tempfile, list);
-> +
-> +		if (is_tempfile_active(p) && p->owner == from)
-> +			p->owner = to;
-> +	}
-> +}
+The only other spot that uses `daemonize()` is 'gc --detach' and 'git
+daemon'. I think before considering something like this we would want to
+reason through what the intended behavior of each of those callers is.
+If we end up pursuing a fix in this direction, I think the safest thing
+that we could do would be to have callers opt-in to this behavior so we
+can do the right thing in git-maintenance, and other callers retain
+their existing behavior.
 
-I worry that we're assigning _all_ tempfiles to the child in this
-case, not just specific ones like the maintenance lock. But since
-this is specifically called only in daemonize() then it may be
-fine.
+> Is there any concern that since the child didn't create a tempfile
+> that the atexit() may not be initialized in the child process? Or
+> will that carry over from the fork() automatically? (This is hard
+> to test without something causing a die() in the detached process.)
 
-Is there any concern that since the child didn't create a tempfile
-that the atexit() may not be initialized in the child process? Or
-will that carry over from the fork() automatically? (This is hard
-to test without something causing a die() in the detached process.)
-> That's not too terrible to write, and I would feel OK about putting it
-> in a 2.54.1 release soon-ish provided that others think it is reasonable.
+The child will have its own copy of the tempfile list as well as its own
+copy of the atexit() handlers. POSIX (via atexit(3p)) says[1] that
+atexit() behaves according to the ISO C standard:
 
-I'd rather revert the geometric maintenance default for a point
-release and let something more complicated like this percolate
-until the next release window.
+    The functionality described on this reference page is aligned with
+    the ISO C standard. Any conflict between the requirements described
+    here and the ISO C standard is unintentional. This volume of
+    POSIX.1‐2017 defers to the ISO C standard.
 
-> Simply reverting 452b12c2e0 (builtin/maintenance: use "geometric"
-> strategy by default, 2026-02-24) feels somewhat unsatisfying, since it
-> is merely making the bug less likely rather than eliminating it
-> entirely.
+, and atexit(3) says[2]:
 
-It does limit the behavior to those who previously chose to opt-in to
-this behavior, and likely that's a low number or else we'd have more
-bug reports.
+    When a child process is created via fork(2), it inherits copies of
+    its parent's registrations.  Upon a successful call to one of the
+    exec(3) functions, all registrations are removed.
 
-> So in that sense I would prefer to "fix forward" here rather than to
-> mask over the bug. But even the relatively short diff above is not so
-> straightforward to reason through, review, or test, so I'm open to other
-> ideas on how to proceed here.
+So the child has an identical copy of both the atexit() handlers and the
+tempfile list.
 
-I initially worried about cross-platform support, thinking that we
-needed to pass file descriptors / handles and Windows always has
-issues with file handles. But we aren't actually keeping a handle
-open but instead a record that we created the lock and should delete
-it when everything resolves.
+> > That's not too terrible to write, and I would feel OK about putting it
+> > in a 2.54.1 release soon-ish provided that others think it is reasonable.
+>
+> I'd rather revert the geometric maintenance default for a point
+> release and let something more complicated like this percolate
+> until the next release window.
+>
+> > Simply reverting 452b12c2e0 (builtin/maintenance: use "geometric"
+> > strategy by default, 2026-02-24) feels somewhat unsatisfying, since it
+> > is merely making the bug less likely rather than eliminating it
+> > entirely.
+>
+> It does limit the behavior to those who previously chose to opt-in to
+> this behavior, and likely that's a low number or else we'd have more
+> bug reports.
 
-For me to be convinced that this forward fix is the right direction,
-I'd need to see a test that proves the detached process will clean up
-the locks on a normal process end and an early exit.
+I agree with what you're saying. In an ideal world we would be able to
+apply a fix on top that would prevent this bug from occurring, but if
+that's not trivial to do then we shouldn't rush it in the 2.54.1 window.
+
+I think that not having this bug whatsoever (as opposed to simply
+reverting 452b12c2e0) would be preferable, but as you note we haven't
+seen any bug reports in a pre-452b12c2e0 world, so perhaps the risk is
+low enough that we could merely revert 452b12c2e0.
+
+> For me to be convinced that this forward fix is the right direction,
+> I'd need to see a test that proves the detached process will clean up
+> the locks on a normal process end and an early exit.
+
+Yeah, I agree. Testing this is a little tricky, but I played around
+with it for a while and came up with the following:
+
+--- 8< ---
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 4700beacc18..77bfa537385 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -1460,6 +1460,56 @@ test_expect_success '--detach causes maintenance to run in background' '
+ 	)
+ '
+
++test_expect_success PIPE '--detach holds maintenance lock until daemonized child exits' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		mkfifo fifo &&
++
++		git config maintenance.auto false &&
++		git config core.lockfilepid true &&
++
++		git remote add origin /does/not/exist &&
++		git config set remote.origin.uploadpack \
++			"echo \$PPID >child && cat \"$(pwd)/fifo\"" &&
++
++		# Start a detached prefetch maintenance task. Note that
++		# we are backgrounding git-maintenance here in order to
++		# determine its PID to validate that the lockfile was
++		# created by the parent.
++		{ git maintenance run --task=prefetch --detach & } &&
++		parent="$!" &&
++
++		# Open fifo for writing, which will block until the
++		# upload-pack helper opens it for reading. Once exec
++		# returns, we know that the daemonized child is alive
++		# and pinned.
++		exec 8>fifo &&
++
++		test_path_is_file .git/objects/maintenance.lock &&
++		test_path_is_file .git/objects/maintenance~pid.lock &&
++
++		# Verify that the maintenance.lock still exists, and
++		# that it was created by the parent process, not the
++		# child.
++		echo "pid $parent" >expect &&
++		test_cmp expect .git/objects/maintenance~pid.lock &&
++
++		# Close the write end of the FIFO, causing our upload-pack
++		# helper to quit. Wait until the grandparent (from the
++		# perspective of our upload-pack helper, the daemonized
++		# git-maintenance child)
++		exec 8>&- &&
++		gpid="$(ps -o ppid= -p $(cat child) | tr -d " ")" &&
++		test -n $gpid && wait $gpid &&
++
++		test_path_is_missing .git/objects/maintenance.lock &&
++		test_path_is_missing .git/objects/maintenance~pid.lock
++	)
++'
++
+ test_expect_success 'repacking loose objects is quiet' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+--- >8 ---
+
+I'm not sure how portable it is, though. I think that 'ps -o ppid=' is
+OK, since 'start_git_in_background()' uses it, but I'm not sure if $PPID
+is available on Windows.
+
+It reliably passes with the fix that I shared earlier in the thread, and
+reliably fails without it.
 
 Thanks,
--Stolee
+Taylor
 
+[1]: https://man7.org/linux/man-pages/man3/atexit.3p.html
+[2]: https://man7.org/linux/man-pages/man3/atexit.3.html
