@@ -1,66 +1,67 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09B435AC1E
-	for <git@vger.kernel.org>; Sun, 10 May 2026 13:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2633A1A58
+	for <git@vger.kernel.org>; Sun, 10 May 2026 16:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778420249; cv=none; b=cq8fN6HUAOwIL1Wuwu7348ncAMxgi1oH2KsoKO52Z4WG32dzK0yQ+sME+Yi9qgW+RKtcqJIp58eODghH7jUZk9wjuesJ1sYct0D2TLVx36nES1Ez5QJ+1f3QW9UdaeszqC2fPHkFpqvIg8wjG2xslOO644AwepEQopZt35v13YI=
+	t=1778429298; cv=none; b=Ax3M5tWOAJUKxDgPlKjQf40HeRgKH0OdBrVC9tEdIpIeeek+TW0R40ph9olNyTvDAbxLmZFp8AeG3U/cRdbFHcjrmDqaDvpoh44jhZz27mZJ2PhZFsYKFNoJ4+i+gcqoOQ7qKgd2FHeezBMRoW92au9m6sEWEBrtiTyY87hUm4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778420249; c=relaxed/simple;
-	bh=5ROuzohquZVGIBQBzSagAi9GfYjGp0ssRVhBbkEh3sQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=GJejPnlKckDJiNviqXOqIOuMQ50kcdLSqU4x2ztntQ36HSBkO0X6jE+zTtdAq8IwikBI9nFSs6kd1ZPXfLAlTDfUSyLxxzJEMi6eBBYHzScaZ5jcEsn9imdWoUdi2evcsRREDdF0Ngm2ymRunkA0SdF1f2/9C4H9Dg4HT8S2n2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fk5Mk7io; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1778429298; c=relaxed/simple;
+	bh=Z3yHr8n2iTyRu2FA6XAkCLYB04dI/pvBcyGK3r0YNs4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VCZIi3cjvRieXxTow8RPyI2AtonY4rO1drdtILkR81hAtLZI8rP22GuJldFjnzhjsfxpHUAJH26D3UAKLgsdmQCrfuVI2UL31R71PETw3p2SEy6YmbN777oOT0wZTvvGerGGldZ+QqFK8lKjY1cM+NAVU2+pDx4tmk23t5iAjhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C3FPn6p6; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fk5Mk7io"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4852b81c73aso31776005e9.3
-        for <git@vger.kernel.org>; Sun, 10 May 2026 06:37:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C3FPn6p6"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8e8c0c2d2bcso483343185a.1
+        for <git@vger.kernel.org>; Sun, 10 May 2026 09:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778420246; x=1779025046; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20251104; t=1778429296; x=1779034096; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bM1kWLVirnzNWpWUxDHLiY+nVpBdPINMk3Tk605e/k4=;
-        b=fk5Mk7iojWutBEe/zn1/Jb5+oyU4EFx8fNU6nSoYQ5dcgj/KnT3lBl0lk8dP5r30Mr
-         2npRzeBeQuCr4xaoXHSxFW7ItFF4rAJT0BnJsjTMxiFndCHw3kuF+rsKApNyIMEf+DNg
-         j4gmNpptgqEx7fu01AY2WESg2r6Go2OU0zIyGNmjsGJuW1S3mR1d2+ljB3ZC7NuuXD+2
-         xAc7vtY/RClJG/CrRunzjV3euMZnXQEDwM864IGdXJkfmB7q/6dwL+uceDwg4m3BOvv6
-         uLA7unbzvB6ohITNOvHBSLTd75JWEQw2kAvvNcZxAO0JYJcHS9zg6hUvDPn/CdJTpPS9
-         orWw==
+        bh=+qHYRf5Jlhpk1ZJxQ0x+SWIh6uUmI3Ww+fIns6WDUHg=;
+        b=C3FPn6p6jGmggpcoIor79OIfMjEuVnpNbZTb+0ntNwLnFziUpLKIBevJeMxEEichnU
+         piLIAYMyI5f8ltc8xq7KqGIECtSAlVREgpxo5MHXwurn+wInYj1sCNBf0L+lVS+ybaYp
+         kYqkgtNeTV29G6LY/1VT5V/wISoRoHtS6PmKIK83Gf8dZr+VD4G9PFpKBajeVDyrHrIx
+         NRol1o6s/NQOTboWdStXmnvUFkOjTlG9w+eyQ9cUJfd0yqgJ/JpvwhYW7VkJ8n6sNr9z
+         6V7jghlssrsfTtxgS7i/PocnL+LAmuQiSC25UQBTYktk0V87esXVHU6ixXWgWSR7H2/P
+         AAKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778420246; x=1779025046;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20251104; t=1778429296; x=1779034096;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bM1kWLVirnzNWpWUxDHLiY+nVpBdPINMk3Tk605e/k4=;
-        b=VEIsiQKaH62L5qNMyZIJvKTI0HExjmMeFhBScyaw+VdTqq8XMj4A733w6SqazTudbR
-         o8q0UiwPBur8fDSJ8FSGPEkPp5fKhGUJzZEl8Fv+/oAgFk8gA3/1i3x0PNiL8L9ffIjQ
-         YYeHwj/K/oGlQkQO8etDTyAhUEsWk+nWJp93Y8/bfyTy/8rtarUamFVTzMouzzUYuc3x
-         Nll43BoRwVHjpofmT06cAGnq/uUPJAjrrTEdkjleDXRWEs8ggYvfp+c7hBCJhENrXEfM
-         8r/NUDLAOSHFuEJH/hp3STP26/Fam7vbYPxZI2XKRlBU+ujq6t1YK6WACh8UhSOXjqEP
-         Uksw==
-X-Gm-Message-State: AOJu0YyhmcYMbFDeE1zfyqsbpMqs66klZv7CpjBYaXby43hHjORmRB1v
-	tENfEBjINMWCqAqTNYlq/hDxn2vrH+gmGGmDAqwgtQIqyak40qkPigPc
-X-Gm-Gg: Acq92OEABEGmA34iiippUP+wGhK46/RrbJuFngBJpQQwy90QdrpBiEPQU9ZW9W19ME3
-	ic8K4n3IL+duoGodDfqU4/2pG8xiofe1ChuLpDkB7WHxl+QXup4+p6Q819BROFbnTfaJmjo5GSK
-	u0MiRhZJxwoBWTHlxkJ5stNFCMszHk2NLr0BhizbhSiDWD1Bx3toC4XZlyYKUDBK3DHIspJrzMg
-	d3/rbp7ibd4Rim8PfXPg3KfVc9TdB0EKuMHr5oLdV9XhBTIF0e3oY8M7aDKzsG5CzPApG6a+eCT
-	MT9+ikkSmSTSC81JBcjOUKDHxcxX0E+9KzZaAfnJJnBuNxFiF1zNNOw9AFKyjw51J/RrQCPWbMr
-	bNC8SSvxqRVnVHBhM6LQrA7PUqqwUG9vfssryDIaOkq63NYN9BxxlE+hnzqx4akA0yAwJ66tGYl
-	Lec83aPpzbHfYqe+fdxmwYwB2hIerXj+76s6rIymgCMMWBzVRadBnmdnwiDFWYt7ut0SlpGKJN+
-	Les/A==
-X-Received: by 2002:a05:600c:3548:b0:485:3abe:ab86 with SMTP id 5b1f17b1804b1-48e51e0a6a2mr303781195e9.4.1778420246022;
-        Sun, 10 May 2026 06:37:26 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:76d:4c01:131c:ee41:99c0:e0a6? ([2a0a:ef40:76d:4c01:131c:ee41:99c0:e0a6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e6db02e6bsm54265955e9.7.2026.05.10.06.37.24
+        bh=+qHYRf5Jlhpk1ZJxQ0x+SWIh6uUmI3Ww+fIns6WDUHg=;
+        b=Z/XlivgeZ829PeWtTamyAJK9Bjhu2JJhzQIHX9f+VljwvK76iP9Y35CwSluRFO7UjF
+         Hh/9KrqK1ba5GwJr3P0ZHtaj8t74QEdksvrjLNQPvUSgcz2JueOtiAQoObYNa9nL0Eq2
+         Mm/oHrsCDvilefO8mPv1W0WW2hqt2LoNsX0Kr2T+bJl8bX+z3EenHlOCEKzu7Eb1Tipk
+         2wKasGWNY87X/PcZ3qtmLUhqo2wHLhzIDSbk6ncu8lSZbF0sGKLgD3a99hVNLA9aYaZJ
+         D4yClHhQLU3JSlMbEqgX4999Ji4J0fInyl2ogrWCVxRSwSr8lbPELVm3v4g12Y/QtmFb
+         S7FQ==
+X-Forwarded-Encrypted: i=1; AFNElJ//+fkWi9Fw9evU6sqL3FaaQM16NG5hT/uF4Z1dNlnktMPwwAkm5mfPqtA6X9+vT3RSf4E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHKErBAdUSpwr32Me3Q7/GE9ZwJRiSBumiKBYsGL6vWnH4RfOL
+	tARr6xdia0AcjnQyT/L3X4X7iLB6wyFqootFlgik8Xy8zxWHnJ9N7ap8
+X-Gm-Gg: Acq92OHWTjlrQjO8MaaDEsIjWQMtspFaIXn8lFMLSF1SEh3OfRFdSJT4YRRzoaWMXb7
+	ekILVxX0Jz26wb8j088gDtnf4g5oIM6UhY584TXLKT9y+4vqRKBqywCE99GasNsM5gCi36ND9mq
+	nh5JfXX2ql84jSJ/vLIMwFE2qC1VB8SgEmYDtr4x1IL1zn1vTA5kOv8e/tgWeG6yVx0wfdRqldw
+	QDsPiuhLeftdT4uTyxjQ8osLHNxMIIqMoYEEKTL+h+rY+4Nc+EZmiN8+ctZRaoyDwq3ZFkCpnf1
+	sYVyUrTdrRXgSgae/exCFeaNkUyuShFHYGbBQbS6BrCVfy7I/VGPhvfxP5QRMimaxMjAr+SfRzB
+	vju1Wpqa2LaDHOTEaMAX1IJx6yfUVj5fgmWdYqHblLsrMkxa3NDkmSE5doFkyMY/Ko6WA4KBHIq
+	48RL/grp5DmBps7gINE71agPtvDM/hA61hl1DVeOixZCTgFe+g9r4+bjX9/M2FyD1nI+B9dyAJo
+	ORTRZ2FahDqM2yFpr97+PpDrflnIsDNkA08BEFPTIuw/u2o
+X-Received: by 2002:a05:620a:f0c:b0:8f0:7516:da99 with SMTP id af79cd13be357-904d70c4701mr3056164885a.60.1778429296092;
+        Sun, 10 May 2026 09:08:16 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:bd3d:511d:814f:3a8? ([2605:a601:9b88:8300:bd3d:511d:814f:3a8])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2cd04de9sm2894746885a.44.2026.05.10.09.08.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 May 2026 06:37:25 -0700 (PDT)
-Message-ID: <0911df2d-aaa2-456e-a678-345239cefc67@gmail.com>
-Date: Sun, 10 May 2026 14:37:21 +0100
+        Sun, 10 May 2026 09:08:15 -0700 (PDT)
+Message-ID: <9ddfd37d-7d71-4359-b9be-d993fbfd138c@gmail.com>
+Date: Sun, 10 May 2026 12:08:14 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,74 +69,148 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] rebase: ignore non-branch update-refs
-Reply-To: phillip.wood@dunelm.org.uk
-To: Junio C Hamano <gitster@pobox.com>, mail@abhinavg.net
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-References: <20260506023944.90691-1-mail@abhinavg.net>
- <xmqqqznk9ih8.fsf@gitster.g>
+Subject: Re: unexpected auto-maintenance, was Re: git hogs the CPU, RAM and
+ storage despite its config
+To: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Cc: jean-christophe manciot <actionmystique@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
+ <20260508180341.GB737125@coredump.intra.peff.net>
+ <20260509175249.GA2336928@coredump.intra.peff.net>
+ <af+snTGFeoUUyfPU@nand.local>
 Content-Language: en-US
-In-Reply-To: <xmqqqznk9ih8.fsf@gitster.g>
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <af+snTGFeoUUyfPU@nand.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/05/2026 02:11, Junio C Hamano wrote:
-> mail@abhinavg.net writes:
+On 5/9/26 5:52 PM, Taylor Blau wrote:
+> On Sat, May 09, 2026 at 01:52:49PM -0400, Jeff King wrote:
+>> I don't think this affected the old "git gc --detach" because it takes
+>> the lock after daemonizing[1]. We can't do the same here, though, since we
+>> need to hold the lock for the foreground tasks. So either we need to
+>> release and re-take the lock between foreground and background tasks, or
+>> we need to teach the daemonize() function to update the "owner" field on
+>> all of the tempfiles to the new child[2].
 > 
->> diff --git a/sequencer.c b/sequencer.c
->> index b7d8dca47f..25bcfc5da0 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -6428,6 +6428,16 @@ static int add_decorations_to_list(const struct commit *commit,
->>   		const char *path;
->>   		size_t base_offset = ctx->buf->len;
->>   
->> +		/*
->> +		 * The global decoration table may contain names loaded by
->> +		 * a previous pretty format such as "%d".
->> +		 * This will result in refs such as "HEAD" being present.
->> +		 */
+> I agree. We can't simply do what was done in 329e6e8794c (gc: save log
+> from daemonized gc --auto and print it next time, 2015-09-19), for
+> exactly the reason that you stated.
 > 
-> Your long topic branch may have local unannotated tags that point
-> into the middle of it, marking strategic points in the topic.
+> Dropping and re-acquiring the lock is possible, but it's racy since
+> there is a gap during the critical window while we fork(). I believe
+> that the only airtight way to do this is to update the owner field of
+> the tempfiles we want to pass down during daemonization.
+
+I agree that this drop/reacquire pattern would not be a safe choice.
+
+> (As an aside, do we want to do that for all tempfiles? It might be nice
+> to have a "->reassign_on_fork" flag or something on the tempfile struct
+> in case there are instances where the parent wants to retain ownership
+> of the tempfile after fork()-ing, but I can't think of any off the top
+> of my head. If we do introduce such a field, it should probably default
+> to "true" to avoid any foot-guns.)
 > 
-> With this change, the command no longer moves them when it rebases
-> the entire topic.  Isn't it a regression?
+>> Ultimately fixing the lock bug will solve that. Though if doing so is
+>> too complicated for a quick maint release, I'm tempted to say we should
+>> consider reverting 452b12c2e0 for a potential v2.54.1 (as there were a
+>> few other regression fixes so far, I assume we'll have one soon-ish).
+> 
+> I think something like the following (untested) would do the trick:
+> 
+> --- 8< ---
+> diff --git a/setup.c b/setup.c
+> index 7ec4427368a..c07aeac4f7d 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -22,6 +22,7 @@
+>   #include "chdir-notify.h"
+>   #include "path.h"
+>   #include "quote.h"
+> +#include "tempfile.h"
+>   #include "trace.h"
+>   #include "trace2.h"
+>   #include "worktree.h"
+> @@ -2162,12 +2163,17 @@ int daemonize(void)
+>   	errno = ENOSYS;
+>   	return -1;
+>   #else
+> -	switch (fork()) {
+> +	pid_t ppid = getpid();
+> +	pid_t pid;
+> +
+> +	switch ((pid = fork())) {
+>   		case 0:
+> +			reassign_tempfile_ownership(ppid, getpid());
+>   			break;
+>   		case -1:
+>   			die_errno(_("fork failed"));
+>   		default:
+> +			reassign_tempfile_ownership(ppid, pid);
+>   			exit(0);
+>   	}
+>   	if (setsid() == -1)
+> diff --git a/tempfile.c b/tempfile.c
+> index 82dfa3d82f2..f0fdf582794 100644
+> --- a/tempfile.c
+> +++ b/tempfile.c
+> @@ -373,3 +373,15 @@ int delete_tempfile(struct tempfile **tempfile_p)
+> 
+>   	return err ? -1 : 0;
+>   }
+> +
+> +void reassign_tempfile_ownership(pid_t from, pid_t to)
+> +{
+> +	volatile struct volatile_list_head *pos;
+> +
+> +	list_for_each(pos, &tempfile_list) {
+> +		struct tempfile *p = list_entry(pos, struct tempfile, list);
+> +
+> +		if (is_tempfile_active(p) && p->owner == from)
+> +			p->owner = to;
+> +	}
+> +}
 
-sequencer.c:todo_list_add_update_ref_commands() calls 
-load_branch_decorations() so it does not update tags and the patch is 
-correct.
+I worry that we're assigning _all_ tempfiles to the child in this
+case, not just specific ones like the maintenance lock. But since
+this is specifically called only in daemonize() then it may be
+fine.
 
-Looking at make_script_with_merges() it also calls 
-load_branch_decorations() so we should probably add something like the 
-diff below. Having said that this patch is a strict improvement so we 
-can always fix make_script_with_merges() as a follow up.
+Is there any concern that since the child didn't create a tempfile
+that the atexit() may not be initialized in the child process? Or
+will that carry over from the fork() automatically? (This is hard
+to test without something causing a die() in the detached process.)
+> That's not too terrible to write, and I would feel OK about putting it
+> in a 2.54.1 release soon-ish provided that others think it is reasonable.
 
-Thanks
+I'd rather revert the geometric maintenance default for a point
+release and let something more complicated like this percolate
+until the next release window.
 
-Phillip
+> Simply reverting 452b12c2e0 (builtin/maintenance: use "geometric"
+> strategy by default, 2026-02-24) feels somewhat unsatisfying, since it
+> is merely making the bug less likely rather than eliminating it
+> entirely.
 
----- 8< ----
+It does limit the behavior to those who previously chose to opt-in to
+this behavior, and likely that's a low number or else we'd have more
+bug reports.
 
-diff --git b/sequencer.c b/sequencer.c
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5982,6 +5982,15 @@ static int make_script_with_merges(struct 
-pretty_print_context *pp,
-  			const char *label = label_from_message.buf;
-  			const struct name_decoration *decoration =
-  				get_name_decoration(&to_merge->item->object);
-+
-+			/*
-+			 * If rebase.instructionFormat includes "%d"
-+			 * then we to skip non-local decorations as
-+			 * we're only interested in branch names
-+			 */
-+			while (decoration &&
-+			       decoration->type != DECORATION_REF_LOCAL)
-+				decoration = decoration->next;
+> So in that sense I would prefer to "fix forward" here rather than to
+> mask over the bug. But even the relatively short diff above is not so
+> straightforward to reason through, review, or test, so I'm open to other
+> ideas on how to proceed here.
 
-  			if (decoration)
-  				skip_prefix(decoration->name, "refs/heads/",
+I initially worried about cross-platform support, thinking that we
+needed to pass file descriptors / handles and Windows always has
+issues with file handles. But we aren't actually keeping a handle
+open but instead a record that we created the lock and should delete
+it when everything resolves.
+
+For me to be convinced that this forward fix is the right direction,
+I'd need to see a test that proves the detached process will clean up
+the locks on a normal process end and an early exit.
+
+Thanks,
+-Stolee
 
