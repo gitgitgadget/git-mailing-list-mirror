@@ -1,83 +1,82 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507A9347C6
-	for <git@vger.kernel.org>; Sun, 10 May 2026 01:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8783A347C6
+	for <git@vger.kernel.org>; Sun, 10 May 2026 01:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778374880; cv=none; b=XHMuPpfR2q3sel+pwXFpF2iq3Q+ya7K4UPVaLjsNZHghYreD5MQw+ocVN/CjU9hOfEeO6Erbcqp4Q/HeeMHRRPafPs2wDi0atB+xbTr1kmjDRmpYqNJFCNAsWQFuW6A4MQezaUENmzeS5OTmiwF6e1t17mVx61rBvGmNQ71ioBU=
+	t=1778375478; cv=none; b=Fh+FVyFJtlj7mCPfYZLvBnVgA0DGCZI2LOFosZmoq6K+TGMeML5AKJr42KIkFUO5GbMmNonexy0SjEuD8Ktdfi6gfS86ElCdn4Qwtpqn/0kVGdokAq6Av4zpXEf7pbsHn0Vqu0I+xTDWo8ZKb4XMH0gryQMuZ8xn/bod61gOApM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778374880; c=relaxed/simple;
-	bh=1wJI0EUuWNY7nGuflZpZsQ3VONIabb4dZj1jAqATt8E=;
+	s=arc-20240116; t=1778375478; c=relaxed/simple;
+	bh=S67qOv7vr59ubiu7hdk6juLAMSmt4r7MCfiSrGkGGxs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LiCjOtMJ5CZnSNhsSwiEYvFUvQsLhiIbKNDxpeI7mSn3ZaRLcUHwecpMaVhP51353xCgzmNiIlMzVMmVOwOn+1fmGdI2G44ccu8eHvdjIXQOf5VCoEkfP96lc3fIBNbIKtMM6WLNIzvonhQ9INmYB5DfUmdJTx9qrgWl3m4sXEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g0Zs46DZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ODtH4rXu; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=NVDwOPWp2pLOrj4ZV//e8TpVN8CpdF0bDw90Bbg8uN/2xvBYB64D3B5Dw3eY42R1nQOjRJeJWevEF+PDMEtcEYfBYeyJ6P06OniyhMJOia/HsCvnF5xliJZHSvJlOlTbaAr+IVWqn7rf9c5Iv17tOjwVzSlgK5d8/Zx/gGR23rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rRMOfbv/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZHUphVeR; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g0Zs46DZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ODtH4rXu"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D00F1400139;
-	Sat,  9 May 2026 21:01:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Sat, 09 May 2026 21:01:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rRMOfbv/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZHUphVeR"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id C5DC9EC0064;
+	Sat,  9 May 2026 21:11:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 09 May 2026 21:11:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778374878; x=1778461278; bh=MSB0d0Q24l
-	eB1K10nnH70clace/l/8qVv6i8kIl2xUQ=; b=g0Zs46DZ6Z1XRgz5+8a8EqNNoX
-	zjsO0XiJ7zbxxlx2w/RCR/7LjL+mBdpzAtlKaKRDDxlwwGxHhl5hGPleJKaAu0J8
-	CE2MgFd+ZzyStHkIbk67deSxQNFpDYX4/iH67LWd1sot0XTlNB4gdLwNr10U7rVD
-	i25JudtV2XYlCxa/fV079QqTYyJ6LuxZYLMiPrWM6tVplJJ7i96C/4zODxusYXaL
-	iUoekKhV+YhOjaCeLtspnWn2kwW8GgZKzcUTHgXNOw1k5B7urAS0bBhtFyCl5buz
-	p6V9ULmW3ID9jqcLzGd8CHAwmSV5JNt71934/7EIDHpApO/GbwxVBs9+2Icg==
+	:subject:to:to; s=fm2; t=1778375476; x=1778461876; bh=OekPK1brsP
+	jRr81AK7TiYWjOKvdk98YKvOYClcXzmvE=; b=rRMOfbv//Qw+Hzsl/YvKDmu2Qc
+	A7yFTf6knCobJYX1AefSTb86KN5Ju28eMBZEgG8feuJBTMNPa/0E2LcJsdTthshO
+	2+789wrlkXAbDlfaT3MVlt6ja3oBYg0Csu4scC1re4cNVDj6VDG/h7/FbmxdBqqM
+	iziyNsqh6XWrL01ENbonUEaIOZQRWD0e1vhJrf639tJQpVhqhHC+vERGbkc4YZPS
+	IElE0ECih/Ft+2XfFIxRU/G5fhvH6xbei9zFBJjKGKyAY3kVTWXhx0XwEHXIAzna
+	wwBGvTvgDrvoPCDZQm4bSqpWDE1LNW5y1ICG/Uc8mKkyxpMVMuwODOXbYW+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778374878; x=1778461278; bh=MSB0d0Q24leB1K10nnH70clace/l/8qVv6i
-	8kIl2xUQ=; b=ODtH4rXuRRFpxLD8SL69d+ZG2YTHJ3SLaoMTwBufsFIymMQ0ZqO
-	/llMCqUAoFztnPUD+eozTSYQyNEuuynGtyWdWvVg1cxE6VG0q33kAjkdofZnmQZy
-	186aDNE0dkR5VapQpguA7RWRpR/WsrVBD8dKxs+J4e/BE/KqD7SNyLB5X8BSTUQM
-	C54Y/NlBKEEgjowgLtGNXfuthb3LuUC6MOmU5ayzH8tVAzIIDIr9KWkTGm1B04KF
-	jwRrIN0WvkDF9UG07RBK8uxGdkt74A+f+Ye4544D5NK/uwELyyRslnPTe0w5QFZ+
-	FkgoCmMOm/qLWTfqeau20fiO0NUfllrOeaQ==
-X-ME-Sender: <xms:3tj_aVWV7Ta-mpc9jIUhfLAyfGyjdBkhV3_ju_G4z6qUOLkkFuCThA>
-    <xme:3tj_acmz3ZqYkggw9xLust3s5-mJl4itwHeZlEGW9JCjbbjN6Wc3lBcWtgTeuyPQk
-    LAPwHP8ISsmQ-IAquiKS8GtPwOU_uNJ6o4yjX3CPQ9132K00yeHDQ>
-X-ME-Received: <xmr:3tj_aWYwIplg_PN42Cn3LmKiXLN-5Xq6eq1N31NQbuNikMIoJzX-mSk5NbQ3mRdziw_H_cV2AEVn8NUUmNWgmOWWKFSVBXiInQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudegjeefucetufdoteggodetrf
+	1778375476; x=1778461876; bh=OekPK1brsPjRr81AK7TiYWjOKvdk98YKvOY
+	ClcXzmvE=; b=ZHUphVeRQ8DsJ8B4UuSnFuArsYoCNA/Xw7rlh95KAhTImKs2d1F
+	iyywFyzrID+p+mTFavnQoAN8XPS4Tjwdfu5Hvtc9jJX6vhfrtZjKWTMEyaeCcCCV
+	hUnhLS2qkGlqdXegwjSNl3+tpsB0s9qrHxaga/nV3lzF9MhqLgK7lKTcRRuoNPM4
+	aKErEbwPEx6YlG9Pdwx2dUKE94gRVf0kU8pLA4R/H6u83qu1TDFpSI1ZJ0BzOg/L
+	9iRZ/mLiBMz1PR9CY4z6MRbDrtx821ubm5po4dw+XIrQiGVCV/dq3g7vsNT1zh62
+	nt7pIdoBWPkF+r6XwVpRb1RwE3n1r0TI88w==
+X-ME-Sender: <xms:NNv_aYXI-czINKT-_JKwxOVNZmMIiUUnOlr66f4HuhhjCsLveGa1yg>
+    <xme:NNv_aTmfTETxMbzJ2ofp0XJqd8vMbyE-Q0tjsZWmtc20-j3H1YjcB1aI5o5XXTtSF
+    7NWAri1eZ9ffdi0gXx0MHibno8z9lcCrohKvKjSNDFe1xoVo6H5QQ>
+X-ME-Received: <xmr:NNv_aRYPI5BW1DMnlOVi1AQVCXEEbYASx3vag1_EGYhM3BxLRXjgvLG4AaOgg5mf48hozEIGncCvcGn7jhCdPQZm9vLH_ShxfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudegjeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhmohhnthgrlhgsohesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3tj_aXNNMtZtWAkQw_GMJOGpc8bNbjhhqokRbLugF-F5T0eyaVDICg>
-    <xmx:3tj_abaBRTLCaerCq4ILsFeDe2QmXR_fQi19XnRQ9k7dwVNfTSGMrw>
-    <xmx:3tj_aV0MgJBlZirMNBlzMUr5TwEofxXccQak_Rq0Cwunhio0Pw-wBw>
-    <xmx:3tj_aRflRyXPeYD2Lmqj2J99BdYw9yZpH_cnq0dSFKzTmyx_rg0WAA>
-    <xmx:3tj_aR6SGWZT-qml0GPsFlwZEMz1JqD6DOmRCfc_5soQL4WiqrA6NdKx>
+    htvghrnhephefhkeefkeeiveelveekveekkeelgedvvdelgfeuhffhgffgieffjedviedv
+    gfegnecuffhomhgrihhnpehsvghquhgvnhgtvghrrdgtfienucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hmrghilhesrggshhhinhgrvhhgrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:NNv_aWM-47MuBhUcRrB7HySv4hMFbWS4DC-fJavnFq3U338TDr1Z0Q>
+    <xmx:NNv_aea3U8ye_MhHfyPL6U-IITuhXtxyIo0BPMDm9l6dBQWxF8DwGQ>
+    <xmx:NNv_ac0-fIG7t_ZSsLBdLW7UUX0shwqbDAmKfQ_EiqeTTo-a6MM7HQ>
+    <xmx:NNv_acf-OfXh17rgfZAAwq9G7ovRgEka7_GnJrovpU8h7uj_bfyvjw>
+    <xmx:NNv_ac6ssWZPgxKLtOMyTF8snUedHt8p0BXXmXzr-AkBitzTf0CMvy-7>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 9 May 2026 21:01:17 -0400 (EDT)
+ 9 May 2026 21:11:16 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH 0/4] diff: reject negative context values
-In-Reply-To: <pull.2105.git.1778022144.gitgitgadget@gmail.com> (Michael
-	Montalbo via GitGitGadget's message of "Tue, 05 May 2026 23:02:20
-	+0000")
-References: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
-Date: Sun, 10 May 2026 10:01:17 +0900
-Message-ID: <xmqqv7cw9ixu.fsf@gitster.g>
+To: mail@abhinavg.net
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] rebase: ignore non-branch update-refs
+In-Reply-To: <20260506023944.90691-1-mail@abhinavg.net> (mail@abhinavg.net's
+	message of "Tue, 5 May 2026 19:39:43 -0700")
+References: <20260506023944.90691-1-mail@abhinavg.net>
+Date: Sun, 10 May 2026 10:11:15 +0900
+Message-ID: <xmqqqznk9ih8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,84 +86,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+mail@abhinavg.net writes:
 
-> Negative values for -U and --inter-hunk-context are silently accepted
-> and produce structurally invalid diff output.
->
-> Malformed hunk headers:
->
-> $ wc -l GIT-VERSION-GEN
-> 106
-> $ git log -1 -p -U-500 -- GIT-VERSION-GEN | grep '^@@'                                                         
-> @@ -503,999- +503,999- @@
+> diff --git a/sequencer.c b/sequencer.c
+> index b7d8dca47f..25bcfc5da0 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -6428,6 +6428,16 @@ static int add_decorations_to_list(const struct commit *commit,
+>  		const char *path;
+>  		size_t base_offset = ctx->buf->len;
+>  
+> +		/*
+> +		 * The global decoration table may contain names loaded by
+> +		 * a previous pretty format such as "%d".
+> +		 * This will result in refs such as "HEAD" being present.
+> +		 */
 
-It may not matter in the cover letter, but why do you need ~60
-whitespace characters at the end of the command line, and many other
-lines in the message?
+Your long topic branch may have local unannotated tags that point
+into the middle of it, marking strategic points in the topic.
 
+With this change, the command no longer moves them when it rebases
+the entire topic.  Isn't it a regression?
 
+> +		if (decoration->type != DECORATION_REF_LOCAL) {
+> +			decoration = decoration->next;
+> +			continue;
+> +		}
 
->
->
-> Line 503 of a 106-line file, count "999-" is not a valid integer.
->
-> Overlapping hunks that cannot be applied:
->
-> $ git log -1 -p -U3 --inter-hunk-context=100 791aeddfa2 \                                                      
->     -- git-compat-util.h | git apply --check --reverse
-> (success)                                                                                                      
->                                                                                                              
-> $ git log -1 -p -U3 --inter-hunk-context=-100 791aeddfa2 \                                                     
->     -- git-compat-util.h | git apply --check --reverse                                                       
-> error: patch failed: git-compat-util.h:118                                                                     
-> error: git-compat-util.h: patch does not apply                                                               
->
->
-> Both options were originally parsed via opt_arg() which gated on
-> isdigit(), making negative values impossible. When they were converted
-> to OPT_INTEGER_F / OPT_CALLBACK in d473e2e0e8 (diff.c: convert
-> -U|--unified, 2019-01-27) and 16ed6c97cc (diff-parseopt: convert
-> --inter-hunk-context, 2019-03-24), the implicit rejection was lost.
-> PARSE_OPT_NONEG was added but only prevents the --no-* boolean form,
-> not negative numeric arguments.
->
-> This series restores the original invariant with stronger guarantees:
->
-> 1/4  diff: reject negative values for --inter-hunk-context                                                     
->      Change type to unsigned int, switch to OPT_UNSIGNED.                                                    
->                                                                                                                
-> 2/4  diff: reject negative values for -U/--unified                                                             
->      Change type to unsigned int, add range check in callback.                                                 
->                                                                                                                
-> 3/4  xdiff: guard against negative context lengths                                                           
->      BUG() in xdl_get_hunk() as defense in depth.
->                                                                                                                
-> 4/4  parse-options: clarify PARSE_OPT_NONEG does not reject                                                    
->      negative numbers                                                                                          
->      Documentation fix.                                                                                        
->
->
-> The config variables diff.context and diff.interHunkContext have
-> always rejected negative values. This series brings the CLI options in line.
->
-> Michael Montalbo (4):
->   diff: reject negative values for --inter-hunk-context
->   diff: reject negative values for -U/--unified
->   xdiff: guard against negative context lengths
->   parse-options: clarify PARSE_OPT_NONEG does not reject negative
->     numbers
->
->  diff.c                             | 25 ++++++++++++++-----------
->  diff.h                             |  4 ++--
->  parse-options.h                    |  5 ++++-
->  t/t4032-diff-inter-hunk-context.sh |  6 ++++++
->  t/t4055-diff-context.sh            |  5 +++++
->  xdiff/xemit.c                      | 16 ++++++++++++----
->  6 files changed, 43 insertions(+), 18 deletions(-)
->
->
-> base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2105%2Fmmontalbo%2Fmm%2Freject-negative-interhunk-context-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2105/mmontalbo/mm/reject-negative-interhunk-context-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2105
+In other words, what you want to prevent from appearing in the insn
+stream may be "HEAD", but if so, "must be DECORATION_REF_LOCAL" is
+too broad a net to catch it, and causing unintended collateral damage.
+
+As to the style, as the body of the new conditional works
+identically with the existing code to exclude the current branch, I
+wonder why it shouldn't read more like this?  The following
+illustration still uses "must be DECORATION_REF_LOCAL" and that may
+have to be corrected, of course.
+
+ sequencer.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git i/sequencer.c w/sequencer.c
+index b7d8dca47f..1ba95fbae1 100644
+--- i/sequencer.c
++++ w/sequencer.c
+@@ -6429,10 +6429,12 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		size_t base_offset = ctx->buf->len;
+ 
+ 		/*
+-		 * If the branch is the current HEAD, then it will be
+-		 * updated by the default rebase behavior.
++		 * Exclude the "current" branch, which will be updated
++		 * by the default rebase behavior.  Exclude non-branch
++		 * decorations as well.
+ 		 */
+-		if (head_ref && !strcmp(head_ref, decoration->name)) {
++		if ((head_ref && !strcmp(head_ref, decoration->name)) ||
++		    (decoration->type != DECORATION_REF_LOCAL)) {
+ 			decoration = decoration->next;
+ 			continue;
+ 		}
