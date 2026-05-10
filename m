@@ -1,166 +1,166 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A4A3002C8
-	for <git@vger.kernel.org>; Sun, 10 May 2026 22:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778451680; cv=none; b=hcV//ChphLtyionIWpEo+F/0F+snJA2Giv2S7JMYWbiXIAmYsLOFhtcShLBRIV9qfV8EaDzIFkuov0HfoEppXQ1b8bM3osuNngqPKI/zbW89+Y1uAexoG/d1lyzTEvngPbxiHPXWmmekgM4FkB/aXA+hdbf0qJu2MMvjkmiDE6k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778451680; c=relaxed/simple;
-	bh=MSRg4aFJIzz+bGWjPrhf8rB9vHrJ0IRoY8auhAOmmGQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DjZMTEWsHMomTipBwlRu6ipd06iK7eXIW5+IG0ZGq661ukJVxNa8SgmXBPWuOk830lEy7E1VoXV9SJDzgiIpBRxRiXF0VqZVdi5tte8pPDNMgpyr7VKsLDAGGy6mCUF8/q8tDRn6MeU8Ra+3+e0rmVMl+3wHCPgOHvR1qdhxA0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n/ywRMDA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uu+19r0A; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB765196C7C
+	for <git@vger.kernel.org>; Sun, 10 May 2026 22:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778452246; cv=pass; b=Fo4E96qKsLXPmTDjVOKC5HZK1SiYIyvWa/gOQIjJll0zs3XvSQa6Ptg+cjdLSAbX5ykYPtP1eTmIOwYx0KW/sM3JAEMloFRIG3HotFl5uFKArG1h0GSxxPg0bEZQIdL2hO8MJQg9S80DjJ3IoOaUMwWd9O4p4Qbllu3pkvcM3hY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778452246; c=relaxed/simple;
+	bh=PqYzn8qEnoOrP6bwmeJ3iczPWHV3ZiZ1s5YTTDZPmRM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JWE8o4wIwB1CmN2/3NmtQI5ec4HUGK3G8n26XmcnxOdQ/ZowT2smdQ6m9WnLEKazW60J9m28Z33Ywi0cn/lg61jFROsJnQcGhnRsKK+gGz/W3hrdTwMUotD2O/jXk4QT3fhdCb45X88QRogiWYtwAUvZxz/gNQLaHW5piNI+DWI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=agiJX0y7; arc=pass smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n/ywRMDA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uu+19r0A"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 77868EC00B3;
-	Sun, 10 May 2026 18:21:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 10 May 2026 18:21:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1778451678;
-	 x=1778538078; bh=xNGwJJ8byLm9uyjSm+s+qcdINTeezvyJMeJy/A2saFA=; b=
-	n/ywRMDAhNXUdpPiXFXd2vpph/UC4wTgcvDfrnWyVsFOKr67burqqdR7ty2n28wP
-	oeIiUiwWaWRz+bY7kMYeQ0xHOG044BbMYZdcDpCzMI9YDxFS0UmqLdR/Tq8DbGIG
-	Y3z9eGDAjGb6ZGAI4Dm6WLQguMKZ3AoR/Yx7Lp+NdCQMImNNMLIDsOHxvnQCC7Ju
-	P7wtskuWwKXss3ysffG9Z0Gj9WzeZhauQsLKGMrDOzyqHTfnOX9wgZXJlb4jwcw2
-	z9SS2oGzcV/xoUtoe5wV/5gVuJm3umMufDsASl/XCZXGKYdXq98PyCxR09XHBS/8
-	6ANdevCB2n8Lio45BhlnnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778451678; x=
-	1778538078; bh=xNGwJJ8byLm9uyjSm+s+qcdINTeezvyJMeJy/A2saFA=; b=U
-	u+19r0AkHVq3UeVaW4D8r7VmEGgmAzGrzFwFMzEtbO3qgaWIAa7CaEFeZbLvUjAP
-	P6AywquSOnUP/vAhoEvzRsty+vyAjdLusVddQL38FHIjavkmzSIwZi0f5dC+mdRC
-	KYxeKw6IE/8wX1OkLw0P6jbaQX8F96wsdK+PUGLcGEqOBLLJX2fSbQa716gQ0oL7
-	OEFHDy9XDSFHmpuoNslOmcFSX8GaIvujAqPRVcNYof6snrli8a2ZrAINztLDIDbI
-	OKehVY9BiGr34n2yWVjIbi4n5kQ73AYEDCyvyKPDFDuBuB8UBgOz6AutPyV2yF0E
-	+nLTJfpYt2VxlHUy5BH+w==
-X-ME-Sender: <xms:3gQBakXMBSsI-gVaNNIIe0gsj-5RZItawyOfVADCbGp-w49QtqN-xA>
-    <xme:3gQBavfdxscCZfRWqNwPtskZOpNhu3IoxRdsPRpb6mtooeESQ4WRyJkWjapHxuwCN
-    Xa19xwTn97TI2WiozkSxy-LPeJk0QV7sWu94OmJHszmpipIFwgClg>
-X-ME-Received: <xmr:3gQBagv_3i8vMxF_8RKB8yh25s-Kd735SQTBnyCHq3IqIknDW8KqEsXWorJ3ULTrdrIGYbtoIBOHck-TwZ6EQNmW6GHsbu7fMQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejvdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeefjeeugeeiiedujeeitedvkefguedthfeuffekudduieelkeeffffhteeg
-    keejgeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhmrghkrdguvghvpdhgihhthh
-    husgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehprggslhhoohhsrggsrghtvghrrhesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepshhnrghtuhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:3gQBau-j2-hf3JJvkkjBw0dKkKXggeS62xOK5cx1sgj9kiHhos6eTg>
-    <xmx:3gQBar1DNxIMWLtGRSC_r8t36gEYX2xMnKsg3GcOSEUqSBE3nVei8g>
-    <xmx:3gQBajD_m8QQnwh6k815_goi5-cFZSmhymHdNfnJ3yPDQBTSeqYo_Q>
-    <xmx:3gQBancPKhQC-VkYxeI-Zhbim69qRwzk6rA6vBOBm5JJYOkoQgiB3Q>
-    <xmx:3gQBagAISfLqY9sXH6ywJDRYJOqAkDvDUKqQHcuC0E_nrSfcEFbMz-nV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 10 May 2026 18:21:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo <pabloosabaterr@gmail.com>
-Cc: Shardul Natu via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Shnatu <snatu@google.com>
-Subject: Re: [PATCH] config.mak.dev: suppress C11 extension warning for
- Clang on Linux
-In-Reply-To: <CAN5EUNRn+SqALbGR3KE9zUKxUfuJrqvK+XJcq-t=biTw56m8kg@mail.gmail.com>
-	(Pablo's message of "Thu, 7 May 2026 12:07:39 +0200")
-References: <pull.2291.git.git.1778120192298.gitgitgadget@gmail.com>
-	<CAN5EUNRn+SqALbGR3KE9zUKxUfuJrqvK+XJcq-t=biTw56m8kg@mail.gmail.com>
-Date: Mon, 11 May 2026 07:21:17 +0900
-Message-ID: <xmqq5x4uaote.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="agiJX0y7"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39380e79936so47164081fa.2
+        for <git@vger.kernel.org>; Sun, 10 May 2026 15:30:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778452243; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YJg0a30gmqSfASBA2UOVvSYdZvMZNiTOdCOJqzSjljEYLhJvsgLxGa+yHg5Ij9P5w6
+         RvOjd/e8TqamQljFsRS+bXoOHkn7tJm3yL0EtabKkqXg7gTzzq84hPiey/+F/Gk6ABkv
+         x6Zhv9zlrEa0Tyl4PdQfRDrr8KpNnYD0GavFx3PNZAa/SlOCeIOEgQUffEdwtbQuZRD2
+         G+b9zKsE5tL4ROnuTC2BRy3QkFB7AzUEIKmc2PbatRBOYc+gWo9HRpGSiKZzztwpLBtM
+         lZOSr2hT2PHpL/qUHtex1pvsaYVqgJwueXLkfY6tWJZJW3+tTKOOtdthT5J9EdxL2c7t
+         kNcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qptOMmbWoJQDGzjjxYbVIvVjob2ZVIsyD6U8baFzCOM=;
+        fh=DOj4aov6QCZNHIut7J9bRSVLpYXeERrLPgwttad+t8s=;
+        b=IoAR9sxt4/0hHmvZyDUrujVYMiJhovGnI1Y+11gjW6H5DsddNX9jRTk1cf010XLN8E
+         r5g2U9oL/I/TLkVRQ3IzybxzwTLbRizynuAAcSN1/z7VE4UuXjk98Bqs7btiv064TG2E
+         +L9QXjidLzyLuZxBKkLfmXMMKprKrMOb2A9XCMSvHEIsvpWfMZYKNvCU8GF9K0L2ftr9
+         At14JQJHgY6BB7v8PMJo4sD6jb7X/TzZyAXlPK0LBf4kV2hGXFZkVQjF/60WXD5FCJhP
+         oYVOGYXXP/G77aKBtjPwuaIREeDidw3ZkY958GmosNWo7NbPwnoCkv0GR2jQwdwggEn/
+         TRCA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778452243; x=1779057043; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qptOMmbWoJQDGzjjxYbVIvVjob2ZVIsyD6U8baFzCOM=;
+        b=agiJX0y7IzQsuWz60Y04JoZm/Il0FLMHjMvGEGNbuEvSqEVxo+AUxgsdzmQ6smSFPm
+         YsnbYgVhRIkywWna16BvGEj+T5epwA+s5o8X4hBg6tfbMYJnxVBnJ/oXrw646njNBs1y
+         XloNl+ap7tHJhmCxTzXtf/YqXkJ9O/mCP5J0eD7zEQqoSLEuc1rZZNHUPnW1oiGuNtUf
+         A77KgxOJOjmYWzF8lFBKIF+hate3v4jOLuRVTjpmT39g+B+sDU0oQzHeZMsQ9z/taXPr
+         D56Nxw3rRFvH0pdjHXtBkn3PfBqsHuw2+4PQ9bcazALMwD52yoyFAKmRTgbJNi1l7OFL
+         mBfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778452243; x=1779057043;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qptOMmbWoJQDGzjjxYbVIvVjob2ZVIsyD6U8baFzCOM=;
+        b=XKc04rxuz/B15DNV7uD2hgIsGl7s4+s5/6r95R9+sQ+0oMtVYUakGVX2JCbePkgAyc
+         DY2xLsljzMyJYjx+eFLh1ZTC3uqfHIJCAtQ4QM/+t1pdTm4RV6Q3JMfns0H5u6bzQN7E
+         joPTK9fI5IKLGKO3+sjZDKrg+6DAWB9Pew4gAaTKWRYQjp9tKBDH1AgfvBM3Vj21cvrl
+         FUJVN2KbLlR3s2ssIqmJ4wyOubZmGejo7s0/Wd98knmV/+A8CabsiaIXn474hIINkkY4
+         2xL0+EJLyx6wvafRqar/zXlJ+y2oIy4L2RTRkWx2iqhy8K7TiHgmnUhSrEfeQuhN5Mww
+         r7Aw==
+X-Gm-Message-State: AOJu0YzAEFUa+XbIvVeN+shxtXKmbn9ciEa6k3TUzcnnLdFUyEa9Wtgf
+	8yoxrbNgnlPbnT4XUpxOsAEhftRNnuIWDneFO37vQrkfru/vdIWmuYjjFVBMLX0DUv4w68d03pb
+	pkXaY8EUn0pqQdmyKv5vPtS/xcZCj3Ug=
+X-Gm-Gg: Acq92OFO79nV5yCjQAB3XoMuHISR6chSGdbeB296zPu3xwY1Bto8ZL27aA5WrT+LWtR
+	GIPbumdAj4EV56quEvU8e8KEN1yeDbwkJrLEsSy80AuFZlLSN6T3IvgRsuO9b9LXtjzu1rftVsh
+	ybJ9rl38x2rQgzZmk4TQg5ZHOXej23zoI/I7wcSTrYx+AnAQzMAg6h6luaCZHzOAdcFIq7Uzsw0
+	4Oql3Yd0I+xEbt7xU6Ixu+QXLppA+E/B3Nszctqs9fMzzEN5u+pHSrN9IL9pEcuukwM1tp05ZQP
+	99KCAd0585kA5H+CABI+noNTgUXssbVjLnUPFfsT9ztn193/yH1r0xQRU/9gi0i27tIwtSL/C+z
+	COqq/oL/QPtEGXwV51+fAY0xQrkyo0eDl8xiyT48GjCsUcpt1kn5h
+X-Received: by 2002:a2e:b804:0:b0:386:fa6b:44e0 with SMTP id
+ 38308e7fff4ca-393c40ff2e3mr58322701fa.10.1778452242933; Sun, 10 May 2026
+ 15:30:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20260507-document-log-no-follow-v1-1-46ce02490eba@gmail.com>
+ <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com> <xmqqecjj9ckc.fsf@gitster.g>
+In-Reply-To: <xmqqecjj9ckc.fsf@gitster.g>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Sun, 10 May 2026 18:30:06 -0400
+X-Gm-Features: AVHnY4JNqHszcEns9C-prlFpjbldGe-fquTnpJgxVa_-pGHTYMpZjz9aC5sM7MY
+Message-ID: <CAJ-ks9nb1pebMLqZ+GunkXLSMYRb_RmpDuBDrDsgJ+6m7nbzMg@mail.gmail.com>
+Subject: Re: [PATCH v2] doc: git-log: clarify --follow options
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Pablo <pabloosabaterr@gmail.com> writes:
-
-> El jue, 7 may 2026 a las 4:16, Shardul Natu via GitGitGadget
-> (<gitgitgadget@gmail.com>) escribió:
->>
->> From: Shnatu <snatu@google.com>
->>
->> When building Git with Clang on Linux with DEVELOPER=1, the build fails
->> because Clang treats C11 features used in glibc headers as extensions
->> and raises errors due to -std=gnu99, -pedantic, and -Werror.
+On Sun, May 10, 2026 at 5:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Hi Shnatu!
-> This is already being discussed at:
-> https://lore.kernel.org/git/20260505-b4-pks-ci-tolerate-glibc-generic-v1-1-5786386fe512@pks.im/T/#u
+> Tamir Duberstein <tamird@gmail.com> writes:
 >
-> You might want to check out that thread.
+> > Subject: Re: [PATCH v2] doc: git-log: clarify --follow options
 >
-> Hope this helps,
+> The second ':' feels quite funny.  I would have expected
+>
+>     doc: clarify "--follow" and log.follow for "git log"
+>
+> or something like that.
+>
+> > The --no-follow option was added by aebbcf5797 (diff: accept --no-follo=
+w
+> > option, 2012-09-21), but git-log(1) only documents the positive --follo=
+w
+> > form.
+>
+> OK.  Usually we document
+>
+>         --no-foo::
+>         --foo::
+>                 describe '--foo' and '--no-foo' here ...
+>
+> but we do not do so here, which is a good thng to fix.
+>
+> > Document --no-follow alongside --follow. While here, describe --follow
+> > as limited to a single pathspec, rather than a single file, and mention
+> > the override in the log.follow documentation.
+>
+> "Single file" is more accurate than "single pathspec", isn't it?
 
-Yes, they aim to solve the same issue, but the approach taken by
-this patch to use -Wno-c11-extensions on clang may be with less
-damage than the other approach that drops -std=gnu99 from Makefile.
+Yes, for the rename-following behavior.
 
-The other approach uses the equivalent of this patch on the meson
-side, so it may be doubly so that we should use -Wno-c11-extensions
-on both build systems, no?
+The part that confused me is that `--follow` is not a no-op for a directory
+pathspec. `git log --follow -- builtin` gives different output from `git lo=
+g --
+builtin`. But that is not because Git follows `builtin/` across the 81b50f3=
+c
+move to the old `builtin-*.c` paths.
 
+The difference comes from the traversal mode. Setting `follow_renames` make=
+s the
+revision machinery run diffs and skip the usual pathspec pruning, because a
+followed path may change. That can change which commits are shown for a
+directory pathspec, especially merges. But the actual path rewrite in
+`try_to_follow_renames()` only happens when a rename or copy destination ex=
+actly
+matches the single pathspec, so a directory pathspec is not rewritten to ea=
+rlier
+file names.
 
->> Specifically, glibc's string.h uses _Generic (a C11 feature) in macros
->> like strchr. When these macros are expanded in Git's C files, Clang
->> warns about them being C11 extensions.
->>
->> GCC does not exhibit this behavior because it suppresses pedantic
->> warnings for macros defined in system headers.
->>
->> To fix this, add -Wno-c11-extensions to DEVELOPER_CFLAGS when using
->> Clang, but restrict it to Linux (uname_S == Linux). This suppresses
->> the warning for glibc headers while keeping the build strict on other
->> platforms (like macOS) to catch accidental C11 usage in Git's own code.
->>
->> Signed-off-by: Shnatu <snatu@google.com>
->> ---
->>     config.mak.dev: suppress C11 extension warning for Clang on Linux
->>
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2291%2Fkiranani%2Fnext-2-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2291/kiranani/next-2-v1
->> Pull-Request: https://github.com/git/git/pull/2291
->>
->>  config.mak.dev | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/config.mak.dev b/config.mak.dev
->> index c8dcf78779..f1dcf4329a 100644
->> --- a/config.mak.dev
->> +++ b/config.mak.dev
->> @@ -87,6 +87,9 @@ endif
->>  # The bug was fixed in Apple clang 12.
->>  #
->>  ifneq ($(filter clang1,$(COMPILER_FEATURES)),)     # if we are using clang
->> +ifeq ($(uname_S),Linux)
->> +DEVELOPER_CFLAGS += -Wno-c11-extensions
->> +endif
->>  ifeq ($(uname_S),Darwin)                           # if we are on darwin
->>  ifeq ($(filter clang12,$(COMPILER_FEATURES)),)     # if version < 12
->>  DEVELOPER_CFLAGS += -Wno-missing-braces
->>
->> base-commit: 4f69b47b940100b02630f745a52f9d9850f122b2
->> --
->> gitgitgadget
->>
+I will reroll to say that `--follow` follows a single file beyond renames, =
+works
+only with exactly one pathspec, and that directory pathspecs do not follow
+directory renames even though they still use the same traversal mode and ca=
+n
+therefore show a different set of commits. I will also fix the subject and
+option ordering as suggested.
+
+> It is not like "git log --follow builtin" follows only changes to
+> the paths for builtin commands across "builtin-foo.c ->
+> builtin/foo.c" transition that happened at 81b50f3c (Move
+> 'builtin-*' into a 'builtin/' subdirectory, 2010-02-22).
+>
+> And the way the machinery for this checkbox feature works is to notice
+> when the file it was given disappears and then find the other file
+> that the file we have been following came from, and start following
+> that old file.
