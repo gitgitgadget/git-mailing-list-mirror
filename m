@@ -1,55 +1,55 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1BE31282F
-	for <git@vger.kernel.org>; Mon, 11 May 2026 15:46:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C334406295
+	for <git@vger.kernel.org>; Mon, 11 May 2026 15:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778514407; cv=none; b=QJN3yGU9My7cK9uAF+UR46WFdzgWp283C44Ib0f8V0d41bA4LlABQOzE50efaa3EWAzZkPpzQPf9X9ILCq82VNNKIyqTjuQnDtEb7V4EHmVSBH/fXwybVxSwL0VGRC4ygDL5uJy/LZolMS1vf3c55IIAV0+P6Eg6Fq2jZnRvwqc=
+	t=1778514428; cv=none; b=d9JqUc3hSihRPi8i3ckWHyOGt/bX6HBrUjaSD6U+NgiaRFChR/xPYU19GcXe7dMmf5XFXs0O3YaEwH0rjYtydKiBWH1IMSZRxLtTsAS1Lx8D0bHiW2ZSd+2q4kVKkckXo2X6VhDNz2QaIOog2fdx8Wzsro4ivOUcPVHyyUe6P6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778514407; c=relaxed/simple;
-	bh=4U6QVcBwMbI2NUKi2kfKTisXqNAXJKOaFyiP+r1H2/U=;
+	s=arc-20240116; t=1778514428; c=relaxed/simple;
+	bh=vYsdoCElqa4KPZasmhs41k86Mmaxmh1YZDCfmhR6HMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=chJk+N9q+56bemMIaZVgzO8cIbJmo0miuoyecicy8c1PZ79q/FZNLb78Xv+WcJEPInedUyE2H0z7nnDSK793aE+mB+b7CQ3ucqaPCZ5KdzmN6HfQViXFiOGd4nvti44EsElgIQgrTWh7jWPOAUlfeMk8p17M1n/vpMhGad7LDRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=oACD+Eyz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fm1TuDiW; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=QaGcxurvIuQxrZDA/5gXvYlqWEKz8gk+n39fkJYlE3pxLuXcRqbtn8B7MwibuuHPSJyLqtsJTGauhAXDGb0PTA3yH5V54vIpRUVQXFO3o1yp8xVYsXWfIFmn964eGGO6hvUddZJEKngoaUjM+g0bIEvHhOjVDSqZ941mPkHnoRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Oth1CQ5s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LInxY9Al; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="oACD+Eyz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fm1TuDiW"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E3A9C14000F8;
-	Mon, 11 May 2026 11:46:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Oth1CQ5s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LInxY9Al"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 51901EC00CA;
+	Mon, 11 May 2026 11:47:06 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 11 May 2026 11:46:45 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 11 May 2026 11:47:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778514405;
-	 x=1778600805; bh=oQYDX71i8fAbasWRRrib7kxSNBjTXEYZIddHoa+SKzQ=; b=
-	oACD+EyzRBKAeQaCfq9PLmyt6xO4V465rB2AX4MOhlCyFOBSYAZXnBpA3xOA0kj+
-	z+PG/Ruvz2J4tmBxUihdCRCJi1RZyZfSSTwensNTtOt2nduolErTZ7FVMF4ePEgV
-	u1NcCG/gUtFitRhGtylpUETZoLE/KmSmVT+ZYX/RYGv8tantWwxL1SFzFUkDPbdU
-	DZ7fpR0NjwHt9aJgLuJPwnXd1yu8BH264CYRRuNvy7JL+eCHotqBWyqNd0wmiRx4
-	bCDOt9k0wrvRxUOHILxEIA1bCYHA0xv2eZ+DisFBxUyC46NSJNDoPItBU8JB/kec
-	QKc5e0JXdO5/Rdw+tiHqGg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1778514426;
+	 x=1778600826; bh=pzoJrobxkTeSPN2U6+GBA2zX2zR5CYrIJsdxRL4j7nY=; b=
+	Oth1CQ5sUa02bTBBsfMrz7AnAXQ4ZiHYNjHZZ93iSCx3haPBVf8VeL4NWhymPORQ
+	caLiu7v1LzHaFvD4DW9fgAZ4BbiM/U8S84DhIXYJZFycKir6kHzsdAsXslow3riQ
+	YcIsbx3TsnZYBqdNgt89SLVvUuacjSuBWir2Nh7R5l6ebxWkJ/NGHWcqxgmC+dbT
+	4RTrMoJQ8qF88AZdyrbgAp7sjfgEPjF8oqiMa/uG+i49S+jkO/u92hJsZLGPn+nh
+	S8NvRxQl4c681qb7kD6vLgaQCvpetQVWEYfKsYInySd5Tov6F7a6zG71YaJoW/mQ
+	20n4woGrV+tej0UDyWWz2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778514405; x=
-	1778600805; bh=oQYDX71i8fAbasWRRrib7kxSNBjTXEYZIddHoa+SKzQ=; b=F
-	m1TuDiW2rnULynPqUp7qWKvxSGc9Wvf18jjaGwg6y4iVV65QZVkKbrTs2s9wX9YR
-	SRBuXWHGcBYyK+xgoM1k8SOpNUyi/LCLzFNpC0+LiIFZuxHze4uu1CWkMocGArbZ
-	SMQQPz8MNPF/HkNBPUorwgNEgwsDBHmpLq8piOjwpFb28tweN2krQGagi1e4ZIDg
-	HAxCx0D0d+MK1CCU7WoxE6Z9V+p0Cd5d7hBPK7pHWIEcK3kYWTz947TJbDRG9QNb
-	mT/nYdh8rC+4bKWy8vzWayHX1ZIcBLJw5AOO4wK68gZizeTV+SscqU0lAnizdUFE
-	gvxJDyP1WIdtR0CFlEbLw==
-X-ME-Sender: <xms:5fkBapwFXBfpZoqq5ewAP4YFpal7xlWDW4NIq7If8OisB7jImmdzL0E>
-    <xme:5fkBagoCESEaMIa4dwKCdJ4UpGB-imkxs6mKLe4g4oyT6jPzkGv3sF4XMmlodF6EM
-    _rrR65QsNIYv7VIcChNeAYIg5clnTHSL0xmUjn6iDlf-QyVKpzRKg>
-X-ME-Received: <xmr:5fkBao7eGOjlaSjy0OsTAKPpAVlkfbeLT96mlG8JZMuSvfDZ3MBEGWH7KjPMe8ZcPZJh8n5w31cDQ0NdQKoukwHy9KBj52j0VaACB5E>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778514426; x=
+	1778600826; bh=pzoJrobxkTeSPN2U6+GBA2zX2zR5CYrIJsdxRL4j7nY=; b=L
+	InxY9Alh41gIxK9JCF0BTuTiWCbkUofZdLmlD9R9MbBfVBPqX3ZdtEgG/qNGbpWD
+	kx0Gj8WroZ1cWfnRMbzDCoCDoeFp4gQVyH9Ihg3IhyB74rD7/KxIEldk7tLrFDdf
+	xSMY+9f0CytmKR6mGCNTXADU+v6QJ6cfmA7s2D2bZYxtUgXLYJw3Y+jJn1HrZigC
+	KblmL0sCc97541YZE52cmLequgxrPzb8hkPEw9hzLycmePMp0yasfMuiVg2aSrvR
+	sCyZ13See0PRCbuUBqgbsdvZBY1xXTKkQGw2Tp5PhiSxeziOsUKx+nC2wfsz0ezO
+	lnL/hbPoy6RDIxXtY95qA==
+X-ME-Sender: <xms:-vkBai9yaYVospgE66n_khxqKrrP7s-3oiLt_cAu04pOKGpnI95osu4>
+    <xme:-vkBatr2_x75BS6PP_5V6TjiqCg405G54cD7D7pI1wABZBVM37NF9c8Ox2G40zLPx
+    iOhv7oXxQ5vG0cuvqHmE9H8eIP7kd-kG_2PWBGRKO1jUVf-yJSO9w>
+X-ME-Received: <xmr:-vkBanBtxNWlYp7bwbVtrOO6qzPtuuxEqk25QKk_5QJ2pwTyJHaQOolRV3j9smW48XhETIvQ7h1CdEl7di2QYJRWo869KEqXw3qtAaw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudelfeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
@@ -64,14 +64,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudelfeefucetufdote
     hrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtgho
     mhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
     dprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
-X-ME-Proxy: <xmx:5fkBancytmSUAlas9sm5kXWD1LYMW320P4rvGM6sF7OA9sQ1Mpx53w>
-    <xmx:5fkBat7UTdljNeZdHct4MGU5Y6bJHfsiftdWSwZKNzZ_5yx2bZsi6w>
-    <xmx:5fkBauvqv3u_63Q6jpprrWaOWf5JtdFpa4kcs37AZdiJIuNYz2DUSw>
-    <xmx:5fkBatiHt8rRM3TlVSIuV6MNcRSL7WDjrOUmnRbpk8eTZAH2s_RJfw>
-    <xmx:5fkBanA5FkhLp2Fm-Z4J5DR8Vk0LlsEY6X6Rze0SU5hsxZ_w9L1JZKWr>
+X-ME-Proxy: <xmx:-vkBavw8A4GIwND9Q-6-8wCgwkyh4dS-xJBGvCWmkJfGqgR_bl7ODQ>
+    <xmx:-vkBak07v4LrnbrPg2uILraxcO9EPwPj9tGG1AGner255jpQ-H1F1Q>
+    <xmx:-vkBavzbXnqhmWGarEqEVHwJkxeBwoyGoB7dj2ICXKDxl5MSWhZkoA>
+    <xmx:-vkBarHmDPDJBPNWYXSqrSsqHtWVZT_CUy8MpPHNHUUEzHYtGmJKuw>
+    <xmx:-vkBat3GHv0gHhXA-MVWMM2QRF8U7KYWV-xBodhxH9Y21vz9CYXf_VhI>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 11:46:44 -0400 (EDT)
+ 11 May 2026 11:47:04 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -79,9 +79,9 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	ben.knoble@gmail.com,
 	Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v5 2/5] name-rev: run clang-format before factoring code
-Date: Mon, 11 May 2026 17:45:46 +0200
-Message-ID: <V5_name-rev_clang-format.6cb@msgid.xyz>
+Subject: [PATCH v5 3/5] name-rev: factor code for sharing with a new command
+Date: Mon, 11 May 2026 17:45:47 +0200
+Message-ID: <V5_name-rev_factor.6cc@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
 In-Reply-To: <V5_CV_format-rev.6c9@msgid.xyz>
 References: <V4_CV_format-rev.6aa@msgid.xyz> <V5_CV_format-rev.6c9@msgid.xyz>
@@ -96,72 +96,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-We are about to move code around to prepare for adding a new
-command. Let’s deal with clang-format changes first in the affected
-areas.
+We are about to introduce a new command git-format-rev(1) to this
+file. Let’s factor some code so that we can share it with the new
+command.
+
+We want to be able to format commits found in freeform text, and
+git-name-rev(1) already has a function for that but for symbolic
+names. Let’s use a tagged union for the command-specific payload.
+
+No functional changes.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- builtin/name-rev.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+
+Notes (series):
+    v4:
+    • Pull out `*(p + 1)` instead of doing it in every `case` (Phillip)
+    • Go back to using `continue` instead of `goto` (Phillip)
+
+ builtin/name-rev.c | 53 ++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 40 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 171e7bd0e98..6357eaa76d0 100644
+index 6357eaa76d0..475efb0b82b 100644
 --- a/builtin/name-rev.c
 +++ b/builtin/name-rev.c
-@@ -519,22 +519,22 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 		if (!ishex(*p)) {
- 			counter = 0;
- 		} else if (++counter == hexsz &&
--			 !ishex(*(p+1))) {
-+			   !ishex(*(p + 1))) {
- 			struct object_id oid;
+@@ -272,6 +272,24 @@ struct name_ref_data {
+ 	struct string_list exclude_filters;
+ };
+ 
++enum command_type {
++	NAME_REV = 1,
++};
++
++struct command {
++	enum command_type type;
++	union {
++		int name_only;
++	} u;
++};
++
++static void init_name_rev_command(struct command *cmd,
++				  int name_only)
++{
++	cmd->type = NAME_REV;
++	cmd->u.name_only = name_only;
++}
++
+ static struct tip_table {
+ 	struct tip_table_entry {
+ 		struct object_id oid;
+@@ -507,7 +525,7 @@ static char const * const name_rev_usage[] = {
+ 	NULL
+ };
+ 
+-static void name_rev_line(char *p, struct name_ref_data *data)
++static void name_rev_line(char *p, struct command *cmd)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int counter = 0;
+@@ -524,25 +542,32 @@ static void name_rev_line(char *p, struct name_ref_data *data)
  			const char *name = NULL;
--			char c = *(p+1);
-+			char c = *(p + 1);
+ 			char c = *(p + 1);
  			int p_len = p - p_start + 1;
++			struct object *o = NULL;
++			int oid_ret = 1;
  
  			counter = 0;
  
--			*(p+1) = 0;
-+			*(p + 1) = 0;
- 			if (!repo_get_oid(the_repository, p - (hexsz - 1), &oid)) {
- 				struct object *o =
- 					lookup_object(the_repository, &oid);
+ 			*(p + 1) = 0;
+-			if (!repo_get_oid(the_repository, p - (hexsz - 1), &oid)) {
+-				struct object *o =
+-					lookup_object(the_repository, &oid);
++			oid_ret = repo_get_oid(the_repository, p - (hexsz - 1), &oid);
++			*(p + 1) = c;
++
++			switch (cmd->type) {
++			case NAME_REV:
++				if (!oid_ret)
++					o = lookup_object(the_repository, &oid);
  				if (o)
  					name = get_rev_name(o, &buf);
++				if (!name)
++					continue;
++				if (cmd->u.name_only)
++					printf("%.*s%s", p_len - hexsz, p_start, name);
++				else
++					printf("%.*s (%s)", p_len, p_start, name);
++				break;
++			default:
++				BUG("uncovered case: %d", cmd->type);
  			}
--			*(p+1) = c;
-+			*(p + 1) = c;
+-			*(p + 1) = c;
+-
+-			if (!name)
+-				continue;
  
- 			if (!name)
- 				continue;
-@@ -571,9 +571,9 @@ int cmd_name_rev(int argc,
+-			if (data->name_only)
+-				printf("%.*s%s", p_len - hexsz, p_start, name);
+-			else
+-				printf("%.*s (%s)", p_len, p_start, name);
+ 			p_start = p + 1;
+ 		}
+ 	}
+@@ -567,6 +592,7 @@ int cmd_name_rev(int argc,
+ #endif
+ 	int all = 0, annotate_stdin = 0, allow_undefined = 1, always = 0, peel_tag = 0;
+ 	struct name_ref_data data = { 0, 0, STRING_LIST_INIT_NODUP, STRING_LIST_INIT_NODUP };
++	struct command cmd;
+ 	struct option opts[] = {
  		OPT_BOOL(0, "name-only", &data.name_only, N_("print only ref-based names (no object names)")),
  		OPT_BOOL(0, "tags", &data.tags_only, N_("only use tags to name the commits")),
- 		OPT_STRING_LIST(0, "refs", &data.ref_filters, N_("pattern"),
--				   N_("only use refs matching <pattern>")),
-+				N_("only use refs matching <pattern>")),
- 		OPT_STRING_LIST(0, "exclude", &data.exclude_filters, N_("pattern"),
--				   N_("ignore refs matching <pattern>")),
-+				N_("ignore refs matching <pattern>")),
- 		OPT_GROUP(""),
- 		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
- #ifndef WITH_BREAKING_CHANGES
-@@ -585,10 +585,10 @@ int cmd_name_rev(int argc,
- #endif /* WITH_BREAKING_CHANGES */
- 		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text from stdin")),
- 		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `undefined` names (default)")),
--		OPT_BOOL(0, "always",     &always,
--			   N_("show abbreviated commit object as fallback")),
-+		OPT_BOOL(0, "always", &always,
-+			 N_("show abbreviated commit object as fallback")),
- 		OPT_HIDDEN_BOOL(0, "peel-tag", &peel_tag,
--			   N_("dereference tags in the input (internal use)")),
-+				N_("dereference tags in the input (internal use)")),
- 		OPT_END(),
- 	};
+@@ -596,6 +622,7 @@ int cmd_name_rev(int argc,
+ 	init_commit_rev_name(&rev_names);
+ 	repo_config(the_repository, git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, opts, name_rev_usage, 0);
++	init_name_rev_command(&cmd, data.name_only);
  
+ #ifndef WITH_BREAKING_CHANGES
+ 	if (transform_stdin) {
+@@ -663,7 +690,7 @@ int cmd_name_rev(int argc,
+ 
+ 		while (strbuf_getline(&sb, stdin) != EOF) {
+ 			strbuf_addch(&sb, '\n');
+-			name_rev_line(sb.buf, &data);
++			name_rev_line(sb.buf, &cmd);
+ 		}
+ 		strbuf_release(&sb);
+ 	} else if (all) {
 -- 
 2.54.0.13.g9c7419e39f8
 
