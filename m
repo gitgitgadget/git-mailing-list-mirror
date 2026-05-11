@@ -1,127 +1,113 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E7733993
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0562032D
 	for <git@vger.kernel.org>; Mon, 11 May 2026 00:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778458587; cv=none; b=NFGyGOrySuNJCSRyfVVxY7jg1IVVm1ob/nRtvaHqx0uigltXhHygxzGFPlXKvhcQ5yx1d9c+J4iS24wugcT7NDfWtqzt4+SmV/5qc27BZ37jLGmJ2+9JF4aWhn4jXMqjU77+esEY9wM+GgxTCznxt5aEU5Wgqqr6R5MWsMR74HA=
+	t=1778458587; cv=none; b=ZB4tLm5Q/FAuimt32bSMeZnU17R9kJh5f+KMIrgehInCuaa8ynIkVnHnMWDSYoLvuwARj7Rqc8HlHfJX8npuTJXjjSGKTDcbjSnIwL5yYeZUjrNJpwOlWPc0pLzNGz9BDJ5LM4ym2kWEhP3YtABDaeUW8IFPpGeBq0RWCFra0vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778458587; c=relaxed/simple;
-	bh=sGt1snVeS9C8K2UQWR9vEF47KnNma0jbfIb0B4GIZS0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GClNWAU/XdiTVCL8y0FDWE+5Yf/70k9jorZV2WPJXf/XzmlKmMTNTEZ2Z1JIKvniziNUIVJVSC6NHXwl6VgIba/FXUlSvQ+slrxbauKfG/Os2rl+X9D7hlC1YWQEwLbVrjsbrxRpj4etgH/Q8ZQAFEletREkzAaf5l5Y/5y7YDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G2HJBzMu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L95HP4Ac; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	bh=bXi1anQXCV/HT/ysapGYNmz9Y+MeszRkT+1nJEygseg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=TucTrnouRLlV2Jj6I2/ko1OfmsxsZDu40B2XolT+iRJuvrrINS9zT58Ji5c1f/xKdHOHcfZiZa7gQfzSZW5ZRsyQWqupf3WrZd9Csc0/2G5RsUHBEIOfKjKxQP/bKQscQxze6cIeS9bWVwoVwZxBR/lg+PTgCYCArvdprCFUs24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=abhinavg.net; spf=pass smtp.mailfrom=abhinavg.net; dkim=pass (2048-bit key) header.d=abhinavg.net header.i=@abhinavg.net header.b=JCbBU+hG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O+K9ndjW; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=abhinavg.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=abhinavg.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G2HJBzMu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L95HP4Ac"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 372571D000A1;
+	dkim=pass (2048-bit key) header.d=abhinavg.net header.i=@abhinavg.net header.b="JCbBU+hG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O+K9ndjW"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7BB3EEC0067;
 	Sun, 10 May 2026 20:16:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 10 May 2026 20:16:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sun, 10 May 2026 20:16:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=abhinavg.net; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm2; t=1778458585;
-	 x=1778544985; bh=vbkRYNP6brcdVdquwxsEdmRMEHAgSiAv0HG1GDvAHGI=; b=
-	G2HJBzMu9I8I8gPSUtlhWLpXiQ4usViiuHUVfa0CkPzYCmZ5vE8+bGK9glg+nIOf
-	OaGzWBrYOXpL3Bw/+SgUkYCDGS+IpNVSON+FE/JKYCpAoRXxt3zv0mdabpePhj+b
-	mdjOsKnj28MV5t7US/risi0thmADfd53ZQCNyg1h+BjNAoxNRs7EpZiEXqdqG2QI
-	+chgSOUyIyBHbs8Of6i5IDoEqvsc56p1hhgJZsUA7h1PepY9FuWyQfJtriXJO7Px
-	48htvdzGv9RoYuPMnrW0/+GVLuEwhNqt1XTNoijWONc1eLZUCrxADLhbbJNjYcyr
-	Ktj9caUartJ3DcSI1SQmbw==
+	 x=1778544985; bh=kD/DmLvSaWSTYHOGdNdRdrj9dDIVKXpl6o6MH86+kpQ=; b=
+	JCbBU+hGliykjtXpkPi/gVbAc6BB9KJa/NXdnk6bh64G0L5ZWd1lzks1P8Atn0kp
+	4oRaThx/4NzN0UrUkAM4wZ2bz1i5nCUF5bU0kzJNKGoO5V7lXPjlvcyDZQB60ha6
+	j0QeltBUHaZwLqTMdyGO6FmXikdol4U2StuNo74Vb8TmD9q/T+7vKDf+De6OCd1T
+	hSwYBP2Es2rcIsczRMiOYDA91BNFzE+KnVstlzC8Bmdhlcy3pg5pX6hKffpwioaN
+	MVAjCLXCgDCdVrb7hgF076jml2fyeNfZoFhZWiJOZAskJjTCxDbc5zoxzKXBAD4S
+	Ua3EiHHsCYe6+q66XQNd+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778458585; x=
-	1778544985; bh=vbkRYNP6brcdVdquwxsEdmRMEHAgSiAv0HG1GDvAHGI=; b=L
-	95HP4Acj/roc18H7eAl9vFGN1j1HlZGrksU0dfAyK7foeJJVmJ4/oRwK7KWt9Vi8
-	IXSjP6WWYYNcuAeoU/T6KABeFuL2MvcZELJLDdzU1LgAwKTwGjk2gfmCmC4U73zB
-	q5DC+eP/iR+93GNpGIz0yVNeUt+k/y9uB6HvpZ0QJYSZd64pDVNLr1dk6t1jXsge
-	A2kYrT7yBeS1hOGdRfapZCfwUTpsC/NGHvhaSfwUDeSDMk7xLLSR6kHZTffmvB0+
-	uyi1ngAVBGN6NcXyKsp4kVMFe0OTS7TAFCjLg3znqeOctnFwf0+QIUcyyw0bJ5Cc
-	W6xv9Uq0u0F57zIU1jo2w==
-X-ME-Sender: <xms:2B8BagiV8lvGbU87piej3BdkIEQYqQ9I8eFzBOSFr6sW39F-gv6tIw>
-    <xme:2B8BalmLWuNSOWdhS85YbANMKhVkXd1-0aNPavdZU6KY96iVojfVhjbHsP3Rt3W1K
-    B2KY1ZRER70nCaTlOY_H7RKWbthfiUJFtzAITN9DMTK3xEePcPTlA>
-X-ME-Received: <xmr:2B8BasiDcT7zuiLEJgEmQRu53Hbk9iBOkm8QgRZedXMZwpJsK6Vj0lOP4aWyeXoF6EQrCkFfop7XwZEZe0M-wQCviukCnnHcZA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejhedvucetufdoteggodetrf
+	1778544985; bh=kD/DmLvSaWSTYHOGdNdRdrj9dDIVKXpl6o6MH86+kpQ=; b=O
+	+K9ndjWwFq3Mlx2OMd17MJZ6R8oq2ULKrxx9pA2ZPsYtP7lrR88vZr1SRq1Ot9fm
+	5ysTYND+uxol6D/De2D1Jojjlr62RScidc6WDFiNioG4TJ6mDUBLTcaDdTOQJwrR
+	jX7FrtWhowBtR7wVkzlA4Ttq8ojh/NLzjQlI6m4cih4FQwvMv8X5Y8sV1ISQbLFd
+	4X1KEQWebeVwPLBHOI5/Sz8r1vuSxPMPryhEQR9/y93YupQxtcjsw7qz8EknAt5A
+	N8XqgGpW7yby4n6ahPrJxjwQaP5smBLjG7azqsxw12E7Lk9F0kUelhc8uSlGYvaR
+	9/qMUNq0fBUeyZIcISaPA==
+X-ME-Sender: <xms:2R8BauF2GzNW4ZdPK8K9FY6LUa1xMAywT5QCWPW1awI05fHUol5pag>
+    <xme:2R8BaqKXegA0fwQca10LvPbEwL-ddTXwfQxp-FA9mGjFtaf_Tzfl_xLzW9m9Kd-x6
+    ZtFFHC8GdsLv210PGfF_KU1L9NVvZ5suIO4NhdtOWKvG00yUjDk1Yc->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedutddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehjrghvihgvrhgsrghsshhisehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrsghrrghhrghm
-    rgguvghkuhhnlhgvhedtsehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfi
-    gvsgdruggvpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    oheprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:2B8BaoHNj68qFAf3ID20cwDr0r6qTxyQN4b0ZmFD6o2ADIhiaQvPXA>
-    <xmx:2B8Baus95p967yYvLn-SSS_J5WEm2-ggFXS1Nrc6dez2WapHgJBbsA>
-    <xmx:2B8Bapf2T6hR9Xhz2OTCJJzyqHkhplHud87L9WiUjUS_rzAbqZSlZg>
-    <xmx:2B8BakkRjFqwL79JeBJMsTl1qCaEF-NWa3PIqQNcW9LXTTGz-j423w>
-    <xmx:2R8Bagx7HoG7PZgpwMiPml3KjsuOTUT3JeCXf-dBGgkDLSSv1M6SwRkZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 10 May 2026 20:16:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Javier Bassi
- <javierbassi@gmail.com>,  git@vger.kernel.org,  Abraham Samuel Adekunle
- <abrahamadekunle50@gmail.com>,  Rene Scharfe <l.s.r@web.de>,  Elijah
- Newren <newren@gmail.com>,  Ruben Justo <rjusto@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] add -p: introduce 'w' command to view hunk with
- --word-diff
-In-Reply-To: <CALnO6CCsOMyLxAhGW10L4duaahUORwedfmtdpY3zDGpQcZoP2Q@mail.gmail.com>
-	(D. Ben Knoble's message of "Thu, 7 May 2026 10:39:03 -0400")
-References: <20260506235459.529862-1-javierbassi@gmail.com>
-	<e640ac2d-9e46-4f1e-9aef-deac80c65361@gmail.com>
-	<CALnO6CCsOMyLxAhGW10L4duaahUORwedfmtdpY3zDGpQcZoP2Q@mail.gmail.com>
-Date: Mon, 11 May 2026 09:16:23 +0900
-Message-ID: <xmqqqznix0ko.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftegshhhi
+    nhgrvhcuifhuphhtrgdfuceomhgrihhlsegrsghhihhnrghvghdrnhgvtheqnecuggftrf
+    grthhtvghrnhepuedtfffgueejveeiveffhffhjedugefffeevleelieefkeegvdfhteef
+    ledvhefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epmhgrihhlsegrsghhihhnrghvghdrnhgvthdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:2R8BavvMDgg3jqhgE56ZxaoDJJYsqw6AweF9jQe8cyioNRmnJ9mS0A>
+    <xmx:2R8BauTW-jQuDiGtpkbcLHQWPhrnDnzjhlSj1G6kwpYU2BpuUnhNCA>
+    <xmx:2R8BatOMT2s9iHpKNwbo4r-sDuwdXfaDUe6LEHrk34GB82CZ3vgFIA>
+    <xmx:2R8BarbVfkTbHHDlvo9zeJKIgYYUSQxV7964fwURW8Bvtc1D4wxI2w>
+    <xmx:2R8BanjCdVMDGTF2DJiw6r3SvHwNB8TZRYfdkBIH2iN4g4wX38futCk5>
+Feedback-ID: i43f949e9:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 564A83020081; Sun, 10 May 2026 20:16:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
-
-> I concur, though I wonder what other diff options would be useful. I
-> can imagine a world where "add --patch" allows to reshow the patch
-> with any set of custom options. Spitballing…
->
->      :show <opts>
->
-> …could work, since we have room to allow long-form commands still.
-> This could be extended to arbitrary git-* commands, and ":!cmd" could
-> be used for shelling out.
-> (Can you tell I use Vim?)
->
-> Anyway, what I like about this is we don't have to worry about running
-> out of (or thinking up new mnemonics for) single letters for different
-> combinations of diff options, so it's a bit more extensible.
+X-ThreadId: AxnbQjaRaRXw
+Date: Sun, 10 May 2026 17:15:42 -0700
+From: "Abhinav Gupta" <mail@abhinavg.net>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, "Derrick Stolee" <stolee@gmail.com>
+Message-Id: <63e04828-5895-4deb-a698-5d6f494d23f3@app.fastmail.com>
+In-Reply-To: <xmqqv7cu96q4.fsf@gitster.g>
+References: <20260506023944.90691-1-mail@abhinavg.net>
+ <xmqqqznk9ih8.fsf@gitster.g> <0911df2d-aaa2-456e-a678-345239cefc67@gmail.com>
+ <xmqqv7cu96q4.fsf@gitster.g>
+Subject: Re: [PATCH] rebase: ignore non-branch update-refs
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
 
-If you mean "don't waste a new letter, like 'w', every time you come
-up with a use case to show the patch hunk differently", I had the
-same reaction to suggest reusing 'p' but allow options after it,
-just like the output from "git diff" can be modified by giving it an
-option "--word-diff".  But how would it work for single-key folks (I
-am not one of them so I have less sympathy than I should in this
-case, but still...).
+On Sun, May 10, 2026, at 16:37, Junio C Hamano wrote:
+> it would have failed to work due to the "HEAD" thing, so even though
+> existing versions of Git may have added such local tags to the insn
+> sequence, it would not have been a workable configuration anyway.
 
+Yeah. One additional data point:
+non-interactive rebase is also broken under this configuration.
+Given a branch off main~1, it runs into the same issue:
+
+    $ git checkout -b foo main~1
+    $ git commit --allow-empty -m 'do things'
+    $ git rebase main
+      # ...
+    error: update-ref requires a fully qualified refname e.g. refs/heads/HEAD
+    error: invalid line 2: update-ref HEAD
+    You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
+    Or you can abort the rebase with 'git rebase --abort'.
+
+I'm guessing non-interactive rebase works off the same todo list so that makes sense.
