@@ -1,108 +1,126 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CBE2F8E99
-	for <git@vger.kernel.org>; Sun, 10 May 2026 23:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778457235; cv=none; b=QfN0/lEyGNgt8zRj79jc558jZnvuSr6lqn1Fwi7N/ARg9/uOen0vChliL7/H5na+IafmuWbiFECbiD51f5v0Z2H9SmtDCYKOhp6jlHFKKuosTGdahrG+lbjq2HLlDfnDPgVuGNh+ZnTufAeqJcnSQfWwCRut2Cnb+iY/oSWWCP0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778457235; c=relaxed/simple;
-	bh=eEA7GJzHE86bvg8InAAERit02CBJXalxvqBGu4DLwn8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AvdEWOOd5os4lgTBZMSpFyM+GFIx8N8kSbuQulFGCMzCwN5S3k8xKFqzQmek788XkeIgKq+S2pwIrFsd0889XjuYwOEYm4ogX+OLNDBlIfAKk3Axp/7aYfME1MKfzNtYNdLjkZFirE4TAbNdGzD+SnfvDCjFw5wgCj6dKqR44+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AwCUHjaj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UcZ3PIy3; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F8F4A35
+	for <git@vger.kernel.org>; Mon, 11 May 2026 00:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778458102; cv=pass; b=alTAKoXtBElaDnT5Q77I4F46kP1dZvUX0drw5334RY1olOQYRs5xydrddpJIKK6NzzqHSEWhPE9S2xkpzhtPWYRAyykoP6AK+4UL+ZDLbNaqcjcrmSEmRrescCvIfwbVexxsieWXnrKi0I9ws/rdWjrVKmb9ZfP7rxrVMkrMHEI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778458102; c=relaxed/simple;
+	bh=pZGzm8Emq0AlFkyMSYDBIUqJqMZtL0zGxzK5IfrMh3I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A9xV3eLqAVt3FB6Q3tsmO5j8rx3WI6CvluzpVDOWzbndVubhu1xSUKXW6daNfsQOAHZULQIHEoUZXsO1znZRErxlsZcCAy1GiMCnzzY74mBqhPN3cpai5GpUIXF17tz0oa+CbUSDuqumlzMUDz6TFbWWU0QzBkZJqRW+KZZIFn8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dGeFZc7W; arc=pass smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AwCUHjaj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UcZ3PIy3"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id A5EE7EC011D;
-	Sun, 10 May 2026 19:53:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 10 May 2026 19:53:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778457233; x=1778543633; bh=Dme3/5Nzil
-	uoQ7rcokYnh2zQnSd6vTiaenwGLDTy8EY=; b=AwCUHjajwX2Fbx7zf0FlVLM04W
-	LPFixoxNVSTCSaZgABp4+QH3nkkffg7IidEEUBfxN6AwU75m69gJK0BSR1HvLchj
-	lnFA2uOOWPfbPetMi5Gu1Tya54PNyjXnRkJ6ovJYHSf3K0FCxQGMcwQyOlhqo6KP
-	LIN3mMqRr4l/5G6TbqnXx6qfdXkQ2pCkgNIfpYgCicj4s38Vuv6w6VjkVistjifv
-	0Efc0i9x4v50D+bcHdBbIcVVwgPbchqQz3yiRi3jpLki5irZzfHQO1x4JpXTRAOF
-	Z9CQ/xj8kfOBsUKom0WkgF9BZRqQoQsJqHb2q7Rq1IPYHw/8KlRTQSXtNZSQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778457233; x=1778543633; bh=Dme3/5NziluoQ7rcokYnh2zQnSd6vTiaenw
-	GLDTy8EY=; b=UcZ3PIy3xpASgWtytwonIJZMh6NGhP/NLEhT4zsXPdUyS3H6xay
-	IRcrCwU8RP6TUGyTYtlD5p1DWwnhcKLPHzGTnRAoFHUDnIUW3rDvzVb7qRCo2uyi
-	fpb79DM1tbbEzK5D6t6D7LrVYF932Ag7/1lnT0da9kx1mKaJ7cfAIn9AMXWyMBbO
-	Uc+czswcsqhNV5NM4OUqmqFE3UGeLTWVtx6ZjKZXQqqAwBmbl39aL9GtZyf1RV1F
-	VnT1BQlm04YeXRmI8iXBfTvYDyaF51yf4P0XMEw0VYxcWkPu4vVhByhmfZo3Xwq3
-	k8Ns2O49ip1ItMINg09vFa5F/FCPPV5B9Tg==
-X-ME-Sender: <xms:kRoBasi0TPpuDW5yumru32YieOy12Zk73nIohwavtC66LI0QWyJcWw>
-    <xme:kRoBasBpo_j6KIXSOPJD8gIqdxvsJQeQANq-ot9b76uxbtaTX5L-f8zLTYb-KWHIH
-    FJ42BTAWD20ymG4v0LLycxjKIwaRpHT8udO_AnIj1rZRGP8knGUFA>
-X-ME-Received: <xmr:kRoBapGUgBnPil7vpI6xnyGQ9N5zkzIZcCb6UwWTG1sSYIjr3NasHOOyTN_CO60Q7Q3um7tqV3GP-_jhTR4C_SR9-bPI4tp1HA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthgrmhhirhgusehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjnhdrrghv
-    ihhlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:kRoBasKVBe44uwGguDIx0zsQwH7tV5xgxsycI9zTWyeSvDZahJ5kyA>
-    <xmx:kRoBallFBlU5OcvfhMuvdxECVjt5P5dAnRL2XFq3TbgssxLW8Qp6ww>
-    <xmx:kRoBasTKm0AgkqpO1cLhBF3hjZeNC8U-ggrstjlxLyIle01C2UwxYg>
-    <xmx:kRoBavKAHOc4csq8fSpjqxNFpqO8BSvdAkMRtwNY_ETAxJOmydTOSQ>
-    <xmx:kRoBasHB5X9eMZ1oMru-rumrbUpQV1qddEucAXkDnRkGwoSXx2KOPI2B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 10 May 2026 19:53:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH v3] doc: clarify --follow and log.follow for git log
-In-Reply-To: <20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com>
-	(Tamir Duberstein's message of "Sun, 10 May 2026 18:31:14 -0400")
-References: <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com>
-	<20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com>
-Date: Mon, 11 May 2026 08:53:52 +0900
-Message-ID: <xmqqik8u95yn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dGeFZc7W"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-39393ec4ed0so33238241fa.0
+        for <git@vger.kernel.org>; Sun, 10 May 2026 17:08:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778458099; cv=none;
+        d=google.com; s=arc-20240605;
+        b=IIi8fqvmi41n8OhXA8uueDHlW3xowfJKcIAvkRYUr3GDv7IKVeIBus6w/3JTcSL7Rk
+         5wsIw2IoK7CYzEjorwhHPyJJUg+0OBDKJ9PrF+XXVsKIgOi2oErCbtx+2gugJtiXM7Lo
+         T/LTspg0UL6/ox3xxqbun8jOcSC7q3SPcI6vwCSyT1c14MY+T+ny97fAJy9eiA6sTMBw
+         Lq9jC2NAFMvq3s9FjUVO4lkzxRcoQIHr6HPEJWRqyOoNNzHpicxFTUHejGg7s9/QP4/q
+         k2GbyycJ/SA+CjNRQRouPQZ5xFov/M1Et0fiu1riG6ddf/EgmiKuwLMK1/2XrqaJ51Wu
+         GDQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dBkjIUsq/74RrwYQoQsdG2VI6ce5YYTouUX73f287Ug=;
+        fh=DOj4aov6QCZNHIut7J9bRSVLpYXeERrLPgwttad+t8s=;
+        b=IaGjEfeA5R7nCwIuH8I9wRsDxEquPNBJo4NInWmw8aCKQiOo9CPGVRZTdxg4QSTtze
+         p6rYkys62/vuUVksDTHQ1cJQLkeI2KxADLktkKpR2+qt9NytARpjSG3Gqf6wbFW1LOib
+         IaGsj5vzrutxzAUOkgFXnsOo9+VutrJRGcMzS2LuLfLvat4OPr22oBcl7/xUqmELSULA
+         njV0E7lQawU99SazIcD6ahLniy4ZAKsvv4lTEJ+zy4p3uiVgMnnSQ7Gyvnb2i5OHmD/a
+         5IdTVqzbTD5kjlkSB5Cfs3n3/UzDVsYLW6lL+Kztlmv48u52ArxiGM3xQ6Gdv1qi5z+I
+         fquA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778458099; x=1779062899; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dBkjIUsq/74RrwYQoQsdG2VI6ce5YYTouUX73f287Ug=;
+        b=dGeFZc7WOHMKYB3nJPrVFf8BtX9ytv8M4v7SKdu5o1VL9O+imR3/DHqZ8VI8/uZYFE
+         ydjtoK5aLN3tVMyNbsgdoEnXXKLzz5xwopRgIb3dxDMmKGHUvXYkmfS4zavirGsyfBUc
+         7bHoR247gIvNMjJvWDsaFGaj4pTx2zLPnB0reIEPxHmq7ACppY4rEkC253vgobuYnpzY
+         K97U0WSmbRee+mpVieEVI+5pw2PGj8ntP4CShlH5EzTPsIt12MdtVzsVymyC8UtrPSwU
+         s7Oa8aCis01+/uzi4o6kepIrJ/RBP08VdKVrB+IYuuacwW7So9r0zKzWZvYAPxqRNp/R
+         rzgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778458099; x=1779062899;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dBkjIUsq/74RrwYQoQsdG2VI6ce5YYTouUX73f287Ug=;
+        b=B3hBD8VQx/SfDEeJUkszG1NNlz7QHkGah4I0EES3KHNGw7mqrohKL6xBNjqFVITlHM
+         I2S+RzLE0RvxR/huykKpyyqaFkWeZ+L7nxiJmlpLznvNlGT59nk2Cp7V28qlvFuPFbbQ
+         e9dbKAIVuwomfHQSXM+mqqYS4vWBxbACHNgVApwkxYOPC7DEM1cKevR41UBsCX1QmLl4
+         ovXBs3leobdchzK3OGWKKOy8hKf8e+VdkIC1Ursyq622Sz3Oa3RR80omc39P2tP0lOYz
+         X2QquWrFYheNbsqGipBYfdpB38lsvTn3U3CkuX9J4N056ghLdxCBZBiD5AfceUsZVRSG
+         k1zQ==
+X-Gm-Message-State: AOJu0YzU+79a7DQq3tPFVOA5yKc/2bcjf1cIcEZX6ADOHCeGkTV1wIIX
+	cEYSW0EwseSyiQpr2FEykW4bmbR3YCIkmovHtOV0CE38o5HuJHxS7USx5qKBANq5BH0UZCwrVWh
+	c+3K40qd+5KBxaqZ9WIiP6bHcNojJwaL/WlRr
+X-Gm-Gg: Acq92OEBnbWs8vXpq/duauAjO0/VQI/63D9BK8ljOa1TNTK6YXQAHbjoqF/6DteMyCO
+	vusF/CCKYs08mxwpf6acFieTAqFr4m1EEQ3qEqz6PmOtRXCqSwYEiY/y3TpBtBryhJFiKCjH3l7
+	/lvltlzLBcvils6FE8OEyORAXfyY51B3KgNyYFLjOeKZL6iNtvY9JV+tFJfI99Z7LQy+68hBFFl
+	yVhmCyqLEDM4jpZQhaV6cLApGZ71JuQ+VaaxK6sepsfJ8wS8LhS0VnPeilqHsg8H7fotQ7Xw6C1
+	MTEyorWKqZEhgwlrrxYjoC5a4yfKJOfUmUb/OQTwMUxemvd/ouevjqt/PqFkngCGM/WzTpD2l7t
+	0QVuJXyXKBR6yC5WxYDQ2IIOUtNgX7DUcXjuS5rDVC55BQrhWpScR2RkY1m90Xwk=
+X-Received: by 2002:a05:651c:210e:b0:393:cb61:1808 with SMTP id
+ 38308e7fff4ca-393cb61272dmr77354431fa.24.1778458099466; Sun, 10 May 2026
+ 17:08:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com>
+ <20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com> <xmqqik8u95yn.fsf@gitster.g>
+In-Reply-To: <xmqqik8u95yn.fsf@gitster.g>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Sun, 10 May 2026 20:07:43 -0400
+X-Gm-Features: AVHnY4I4Uq1WpP3fdDuEzjP7sMrkJlguGm9LGjayd-Au_oFD3DAvu4EN7VeuHXI
+Message-ID: <CAJ-ks9mPzCr3obAw5cE071GNjzy_ZLzF4mQdnUbQY5H4WPw3sA@mail.gmail.com>
+Subject: Re: [PATCH v3] doc: clarify --follow and log.follow for git log
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tamir Duberstein <tamird@gmail.com> writes:
+On Sun, May 10, 2026 at 7:53=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Tamir Duberstein <tamird@gmail.com> writes:
+>
+> >  `log.follow`::
+> >       If `true`, `git log` will act as if the `--follow` option was use=
+d when
+> > +     a single pathspec is given.  This has the same limitations as
+> > +     `--follow`, i.e. it cannot be used with multiple pathspecs and do=
+es not
+> > +     work well on non-linear history.  When the pathspec names a direc=
+tory,
+> > +     Git does not follow directory renames, but it still uses the same
+> > +     traversal mode as for file rename following; see `--follow` in
+> > +     linkgit:git-log[1].  This can be overridden by `--no-follow`.
+>
+> Saying that the feature does "not work well" on non-lenear history
+> is like the behaviour of the feature is "undefined" on such a
+> history.  Quite honestly, when you do not give a single filename,
+> the behaviour is "undefined", either, so I do not think we want to
+> say what happens when the pathspec you give matches a directory.
+> The feature only takes a single filename on a linear history.
+> Anything else the feature does is "undefined" random behavour.
 
->  `log.follow`::
->  	If `true`, `git log` will act as if the `--follow` option was used when
-> +	a single pathspec is given.  This has the same limitations as
-> +	`--follow`, i.e. it cannot be used with multiple pathspecs and does not
-> +	work well on non-linear history.  When the pathspec names a directory,
-> +	Git does not follow directory renames, but it still uses the same
-> +	traversal mode as for file rename following; see `--follow` in
-> +	linkgit:git-log[1].  This can be overridden by `--no-follow`.
-
-Saying that the feature does "not work well" on non-lenear history
-is like the behaviour of the feature is "undefined" on such a
-history.  Quite honestly, when you do not give a single filename,
-the behaviour is "undefined", either, so I do not think we want to
-say what happens when the pathspec you give matches a directory.
-The feature only takes a single filename on a linear history.
-Anything else the feature does is "undefined" random behavour.
+I observed this "undefined" behavior, which is why I started working
+on this patch. I think it is not reasonable to deal with undefined
+behavior by pretending it doesn't exist. The documentation should
+acknowledge and explain what happens when this option is used for all
+ways that it can be used.
