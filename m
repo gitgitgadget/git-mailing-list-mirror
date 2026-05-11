@@ -1,113 +1,118 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0562032D
-	for <git@vger.kernel.org>; Mon, 11 May 2026 00:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7807E6FC5
+	for <git@vger.kernel.org>; Mon, 11 May 2026 00:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778458587; cv=none; b=ZB4tLm5Q/FAuimt32bSMeZnU17R9kJh5f+KMIrgehInCuaa8ynIkVnHnMWDSYoLvuwARj7Rqc8HlHfJX8npuTJXjjSGKTDcbjSnIwL5yYeZUjrNJpwOlWPc0pLzNGz9BDJ5LM4ym2kWEhP3YtABDaeUW8IFPpGeBq0RWCFra0vs=
+	t=1778458841; cv=none; b=ggRDYMP6HfnoWvwUxE+z3+sZmahdb7wlGEtmC00qJ/BbXQ47dyPAbYlCJS1M0EiuLgF+wPqdXF6taq2pGweichxeAhNwId8jIdnHjK0R28t2gBGhdH5elBS+dpGW7EDHWbG/AUMvhRVHjadUqKVD0QOv61HMkVFxLHkVbwgynz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778458587; c=relaxed/simple;
-	bh=bXi1anQXCV/HT/ysapGYNmz9Y+MeszRkT+1nJEygseg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=TucTrnouRLlV2Jj6I2/ko1OfmsxsZDu40B2XolT+iRJuvrrINS9zT58Ji5c1f/xKdHOHcfZiZa7gQfzSZW5ZRsyQWqupf3WrZd9Csc0/2G5RsUHBEIOfKjKxQP/bKQscQxze6cIeS9bWVwoVwZxBR/lg+PTgCYCArvdprCFUs24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=abhinavg.net; spf=pass smtp.mailfrom=abhinavg.net; dkim=pass (2048-bit key) header.d=abhinavg.net header.i=@abhinavg.net header.b=JCbBU+hG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O+K9ndjW; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=abhinavg.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=abhinavg.net
+	s=arc-20240116; t=1778458841; c=relaxed/simple;
+	bh=Ma/sKVjB+yAkjB8IfLAUHSq4W/m8GwIvX4t2HxFkCLg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aOASeXqO3y9K89VSgpHZCLv6SgbdeMbfYTdy3HIuhpfET+mbci2h6JaTw7PkjUPRYgaXhqBQ+LwneV+iggnbZQPOdwqJOR6+V08x4uq5wTWl+rCp2otwoxumtN9l0LTya0JkH8ny+zH8g741eWIMEHTkx9FBwVwoqzLyl+hGnCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H2XSAIIE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AG2kVncB; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=abhinavg.net header.i=@abhinavg.net header.b="JCbBU+hG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O+K9ndjW"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7BB3EEC0067;
-	Sun, 10 May 2026 20:16:25 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sun, 10 May 2026 20:16:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=abhinavg.net; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1778458585;
-	 x=1778544985; bh=kD/DmLvSaWSTYHOGdNdRdrj9dDIVKXpl6o6MH86+kpQ=; b=
-	JCbBU+hGliykjtXpkPi/gVbAc6BB9KJa/NXdnk6bh64G0L5ZWd1lzks1P8Atn0kp
-	4oRaThx/4NzN0UrUkAM4wZ2bz1i5nCUF5bU0kzJNKGoO5V7lXPjlvcyDZQB60ha6
-	j0QeltBUHaZwLqTMdyGO6FmXikdol4U2StuNo74Vb8TmD9q/T+7vKDf+De6OCd1T
-	hSwYBP2Es2rcIsczRMiOYDA91BNFzE+KnVstlzC8Bmdhlcy3pg5pX6hKffpwioaN
-	MVAjCLXCgDCdVrb7hgF076jml2fyeNfZoFhZWiJOZAskJjTCxDbc5zoxzKXBAD4S
-	Ua3EiHHsCYe6+q66XQNd+A==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H2XSAIIE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AG2kVncB"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id B54521D000AA;
+	Sun, 10 May 2026 20:20:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Sun, 10 May 2026 20:20:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778458839; x=1778545239; bh=SLF0exfcKq
+	lLDORdMFSK52ngEguNZIuguxRRNrlFYXU=; b=H2XSAIIEXNUYBUZIYe6pw8CPsO
+	uXz0BjN1vRj9g8HYFGFebbxRV2a3sZKFVWbminHGaPAzmL9ytr9C7fwL6Q97BSxr
+	OktjQTz/vzVCk0hg+MSvFkkPzMqzHlAJ/ZtLs3Npszu383E9g6oI/EZ/v2M156nL
+	f/xROBupS4UhJx8YPJvnEv3vRjCbC160EC8TIncJj67OABtseJcyq5zY74q31Uc2
+	OIGCaiG7+eIqoh961CgOGHaSAZSEvpZ0nZG8Nqc2uxxh2pgGmnurnZT10qfGZc+A
+	gf/r0gw8sT733NneNPfpn1C+5JXLxS8OG/jXEq5MiFo0wW8IWQQVdGmcJgeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778458585; x=
-	1778544985; bh=kD/DmLvSaWSTYHOGdNdRdrj9dDIVKXpl6o6MH86+kpQ=; b=O
-	+K9ndjWwFq3Mlx2OMd17MJZ6R8oq2ULKrxx9pA2ZPsYtP7lrR88vZr1SRq1Ot9fm
-	5ysTYND+uxol6D/De2D1Jojjlr62RScidc6WDFiNioG4TJ6mDUBLTcaDdTOQJwrR
-	jX7FrtWhowBtR7wVkzlA4Ttq8ojh/NLzjQlI6m4cih4FQwvMv8X5Y8sV1ISQbLFd
-	4X1KEQWebeVwPLBHOI5/Sz8r1vuSxPMPryhEQR9/y93YupQxtcjsw7qz8EknAt5A
-	N8XqgGpW7yby4n6ahPrJxjwQaP5smBLjG7azqsxw12E7Lk9F0kUelhc8uSlGYvaR
-	9/qMUNq0fBUeyZIcISaPA==
-X-ME-Sender: <xms:2R8BauF2GzNW4ZdPK8K9FY6LUa1xMAywT5QCWPW1awI05fHUol5pag>
-    <xme:2R8BaqKXegA0fwQca10LvPbEwL-ddTXwfQxp-FA9mGjFtaf_Tzfl_xLzW9m9Kd-x6
-    ZtFFHC8GdsLv210PGfF_KU1L9NVvZ5suIO4NhdtOWKvG00yUjDk1Yc->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejheduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778458839; x=1778545239; bh=SLF0exfcKqlLDORdMFSK52ngEguNZIuguxR
+	RNrlFYXU=; b=AG2kVncBkc+MUEhbkA826rFuIUBtECq3Qt7lfDCgeedsW2aGjyU
+	DlPv3WQqNQnwjl6y/rNy7769GUjjR5d1NeoY43hO/FDByzDsuGDNOYASr5TBgNoE
+	uu61Qm8nDEQ+PSMIvNuv5Wy8topKyiEEpM19hfp5aI7BIHYofrEwznZw5m3gzHBy
+	asC5DrJD4y9UZ+4lViQSVkrXCcWBCtzEOHwZFwbEG3jdBK2ZPBs1pn+fAdRfbLO1
+	82CHaOnkTjftIHZxh80q//PTXs06xV40AMIM7WVW0+076PX6VvHGdUvW+L8h58Vk
+	bt94do4yMPMMqZWax4K9qgsNIDLjmsVTDUA==
+X-ME-Sender: <xms:1yABasg8Ep3fXxzzcoWFyi7p2DJF6DdIoHnbaoFJCdajvCoKyh6www>
+    <xme:1yABar537NYrIFmDDA0n_f_G9LvUazpoj6MjnHp2JAAqDqvlFhvKs8VZHTUEplpg-
+    3P4KlC56F6EAWzTvzturH-oYz6Lxs29EScl89ymCw-v9DTsbwgf0Q>
+X-ME-Received: <xmr:1yABasZCfsDKmecbQKXuzcGyAS-wS7qJTy0zZX2-BuPAHpPBDulSi9mhpyxW0sbViYjo363ISBgB_abNIySOxlt9RRfLSKbQzg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejhedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftegshhhi
-    nhgrvhcuifhuphhtrgdfuceomhgrihhlsegrsghhihhnrghvghdrnhgvtheqnecuggftrf
-    grthhtvghrnhepuedtfffgueejveeiveffhffhjedugefffeevleelieefkeegvdfhteef
-    ledvhefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epmhgrihhlsegrsghhihhnrghvghdrnhgvthdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:2R8BavvMDgg3jqhgE56ZxaoDJJYsqw6AweF9jQe8cyioNRmnJ9mS0A>
-    <xmx:2R8BauTW-jQuDiGtpkbcLHQWPhrnDnzjhlSj1G6kwpYU2BpuUnhNCA>
-    <xmx:2R8BatOMT2s9iHpKNwbo4r-sDuwdXfaDUe6LEHrk34GB82CZ3vgFIA>
-    <xmx:2R8BarbVfkTbHHDlvo9zeJKIgYYUSQxV7964fwURW8Bvtc1D4wxI2w>
-    <xmx:2R8BanjCdVMDGTF2DJiw6r3SvHwNB8TZRYfdkBIH2iN4g4wX38futCk5>
-Feedback-ID: i43f949e9:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 564A83020081; Sun, 10 May 2026 20:16:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgrihhlsegrsghhihhnrghvghdrnhgvthdprhgtph
+    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1yABao586S3DLKRipyFNfXetD6FLEPUeQlZflhm-QSzXO4OO_axkhw>
+    <xmx:1yABanBZT352VmTxZ6rYQK9E9NwpW5GTEA9KD76F6Ug7T0ils8ERNw>
+    <xmx:1yABamcOYKkiozzhoCYneGcILeWP5We5AJxwCc_lpulb6Mb_bS__JQ>
+    <xmx:1yABauLzA1pZlbRxGOCgMyWMRjB2SGvyDi51skadUPrhEFIv6m2-dg>
+    <xmx:1yABakLcvStyUQkC6xYrs_nbQXPhAYB-pAetLDbfayrWC8DvJ-qRZ4dv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 10 May 2026 20:20:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Abhinav Gupta" <mail@abhinavg.net>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>,  git@vger.kernel.org,
+  "Derrick Stolee" <stolee@gmail.com>
+Subject: Re: [PATCH] rebase: ignore non-branch update-refs
+In-Reply-To: <63e04828-5895-4deb-a698-5d6f494d23f3@app.fastmail.com> (Abhinav
+	Gupta's message of "Sun, 10 May 2026 17:15:42 -0700")
+References: <20260506023944.90691-1-mail@abhinavg.net>
+	<xmqqqznk9ih8.fsf@gitster.g>
+	<0911df2d-aaa2-456e-a678-345239cefc67@gmail.com>
+	<xmqqv7cu96q4.fsf@gitster.g>
+	<63e04828-5895-4deb-a698-5d6f494d23f3@app.fastmail.com>
+Date: Mon, 11 May 2026 09:20:37 +0900
+Message-ID: <xmqqmry6x0dm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AxnbQjaRaRXw
-Date: Sun, 10 May 2026 17:15:42 -0700
-From: "Abhinav Gupta" <mail@abhinavg.net>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org, "Derrick Stolee" <stolee@gmail.com>
-Message-Id: <63e04828-5895-4deb-a698-5d6f494d23f3@app.fastmail.com>
-In-Reply-To: <xmqqv7cu96q4.fsf@gitster.g>
-References: <20260506023944.90691-1-mail@abhinavg.net>
- <xmqqqznk9ih8.fsf@gitster.g> <0911df2d-aaa2-456e-a678-345239cefc67@gmail.com>
- <xmqqv7cu96q4.fsf@gitster.g>
-Subject: Re: [PATCH] rebase: ignore non-branch update-refs
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
+"Abhinav Gupta" <mail@abhinavg.net> writes:
 
-On Sun, May 10, 2026, at 16:37, Junio C Hamano wrote:
-> it would have failed to work due to the "HEAD" thing, so even though
-> existing versions of Git may have added such local tags to the insn
-> sequence, it would not have been a workable configuration anyway.
+> On Sun, May 10, 2026, at 16:37, Junio C Hamano wrote:
+>> it would have failed to work due to the "HEAD" thing, so even though
+>> existing versions of Git may have added such local tags to the insn
+>> sequence, it would not have been a workable configuration anyway.
+>
+> Yeah. One additional data point:
+> non-interactive rebase is also broken under this configuration.
+> Given a branch off main~1, it runs into the same issue:
+>
+>     $ git checkout -b foo main~1
+>     $ git commit --allow-empty -m 'do things'
+>     $ git rebase main
+>       # ...
+>     error: update-ref requires a fully qualified refname e.g. refs/heads/HEAD
+>     error: invalid line 2: update-ref HEAD
+>     You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
+>     Or you can abort the rebase with 'git rebase --abort'.
+>
+> I'm guessing non-interactive rebase works off the same todo list so that makes sense.
 
-Yeah. One additional data point:
-non-interactive rebase is also broken under this configuration.
-Given a branch off main~1, it runs into the same issue:
-
-    $ git checkout -b foo main~1
-    $ git commit --allow-empty -m 'do things'
-    $ git rebase main
-      # ...
-    error: update-ref requires a fully qualified refname e.g. refs/heads/HEAD
-    error: invalid line 2: update-ref HEAD
-    You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-    Or you can abort the rebase with 'git rebase --abort'.
-
-I'm guessing non-interactive rebase works off the same todo list so that makes sense.
+I smell that you'd be suggesting to replace the patch we have
+discussed with another one that declares that it is a bug to use %d
+in insn format?  I do not think how well it would fly.
