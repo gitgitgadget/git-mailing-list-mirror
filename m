@@ -1,259 +1,557 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C7E3A4F37
-	for <git@vger.kernel.org>; Mon, 11 May 2026 12:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214BA3793A8
+	for <git@vger.kernel.org>; Mon, 11 May 2026 13:06:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778504361; cv=none; b=Z9JFiSLWqeYvitDCTowLn0J+KvZcBqXsnsbr9H+N7iOwdjWoVxA0aQg7ZwiLrWmUuAfem+dgTbINOx0lmFp5bZZ/bubOqgy9WDWPscBeMe0cP8NovckcRFKgyJ78Ze2swKR/ynZx/W0lTcrNKi1fPEeb1A0pb3IGCEIsf59J8k0=
+	t=1778504809; cv=none; b=NZEvXEeUNXJyoiNTl0EfWpSj4krBPa/9jSZ//nhvHZQfESED6tYht68CnLTpwIXrXKxdocJqgq5Nhq0U5EEk28JwzSbkLWitM9NdUaALF2LdCsfIceqUeEj02v+Ksi9RM7tGH7wZ9wdQIuidfWEG4HJ2rsRwdlZxG81OnTNAyuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778504361; c=relaxed/simple;
-	bh=ghiPTC0ola8hlA/o0HiUnVt1G/+02++pF51S0JnVbIo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sGIcRXEENVSFU9MlYKh61R2gIluv0vBnpqVJ/CX3aQUnKpCz5ezqi9Jmpzf7NFxDvUWIt9XlupPXN08QMUg9mVALxTFyFh10qwofKFf1/2YWNBPThYFkqel+sYbEjXUH5ROkjN3AJYDAhjypW5sxe6KMZORW9PaGhSKwGcRkeQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0E9esS4; arc=none smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778504809; c=relaxed/simple;
+	bh=Lc+9rEQ86dMoYvrVhSGuSC6WayqRR8rROVQm58U3lDY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cKCm1lHOGFSP6wXiRyWHphMxPF7g8vO+8MeOkXhu+na/kCg2CrqN4ThMC+bM9RZ+TWIMB+dEdwQDiheXpJY/+c2TdcOAW8JqA0Xp3TF6xDm7D+19REVV0youayUPTJEiNns7AeUv20utJJhCqFH0FeVcFOBYmlAzfxyd4V5uNK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=2ZkGnzwK; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0E9esS4"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-12ddbe104ccso3767596c88.0
-        for <git@vger.kernel.org>; Mon, 11 May 2026 05:59:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778504358; x=1779109158; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VY2NL1IVN6EfjLAyQRq9VwYn6NDC+eKEt2rg8giq660=;
-        b=H0E9esS4dmiCMX2HrH2nIZw93OfWwSjUrBBaEZ1VG46kGsEJ1dSPDt8IseAJpxeEdP
-         RIApmC4Hl8tE4E5bwKe3hYAqDsromHM+C/ZXfO/esOFVCyWEmtpTcgREiowLTtz/Gi4+
-         Gc7PJoMXpfxcFV3iPAb1s2bz4hLkCi+6llauyVhb6Kkxc+PjsqejDRrUAEHXo5zkm3ZN
-         RxW0IbIb6VPq1Ti/GASlbtiR5ljE2JFD3/g0YcdRg3m3z8jHGRiDg3J3Kw+GDHgiHIIr
-         hpPnUeGXGo7yZe+lzhssMkghuEOopnzzUYKCNAIEhGJTXygDkbvLlOLI+VmakCrGs+4Q
-         4Xqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778504358; x=1779109158;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VY2NL1IVN6EfjLAyQRq9VwYn6NDC+eKEt2rg8giq660=;
-        b=ZjnWfc+53aseOQLihPr4fyeGv7TCGnFg+uPQK8OIfCoNNv4gcGuJbAKO8FVp4wGQ4p
-         AKx/gApci4cn1OVjX1+RqTU0arLzf/5d5ZerEEaSRoIha1/8g+368iyHqkyhN18RasFJ
-         N1+YKPkUqqhEe+5rtOesaOYnW/ep3gHRpFD1kja2MqmOhpp5t/4QOPkLiZRWj6YKTvxy
-         Hz/BCTdLuFO36eMLCJz7V/Fp0zdx5ELHe30ucgF2YVkeaWz4eu/AgLDayPhirutX6EvL
-         YT9Be/lrX9NsATA7KbpnT5CA5Wx9/0haFA07Od+2tDQCmbzXZ7ylRu805zABvWGA76/z
-         +hCg==
-X-Gm-Message-State: AOJu0Yxlkkhn6AzX6c9+W2q1Lt7GfwCiaCE6Nat0OPirAeN65NYH0xAz
-	ZMZbv9FjH83Qpzb1g1yUSFfERzQj7rnuWxzyBk/6GAr5qX/Tkv7RMEBDxaL3aw==
-X-Gm-Gg: Acq92OHMPi0yFK+/eNCXnekC8xIF5jjtFYextg3Ho1XHOjKpB95O5nAmeCs4oL7yN/g
-	uJoY27kDlFUT92LwFlx3sNPqeBvhDc7lsCC9GJFKJisGXWrtPQCPoeZx7IuzELA6MWD+kAQiS9a
-	HwRaaGq46H392e/bJPMGWMeD6mqbN7i2tgDwUrClRAXfxytISCxcoOxA7e8xr+36faJX3AIZSvU
-	I5vfMZl9b4AuRBC7IiuOIxkkDtLyzf5KWNZftNtMMfh5HQ0P1qGOC7ICMQ9P661pFgjbSEzz0SR
-	2w/ztx6sZyIKJ4W39gas2m5aYUtdpbf3m3M272oiW9TgLNiHfoilOpD5vaR9gQIgqITaH3VCGoa
-	FdEygH1vtSapiwmXT72DQKyeJVHnSZfmcJJ+c/vfGkgtju8sZHIdXg8VnoeVJhuc5T13hgy/kLW
-	nYi667N3siojxoPjvnSBEv4rj39ALtpyabxpY=
-X-Received: by 2002:a05:7022:3d05:b0:12d:de3f:d853 with SMTP id a92af1059eb24-1318ec61008mr11463325c88.44.1778504358046;
-        Mon, 11 May 2026 05:59:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.83.161.83])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1329fc4bf3fsm10886533c88.5.2026.05.11.05.59.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 05:59:17 -0700 (PDT)
-Message-Id: <19f1605067e26c8e393c6c2e341844bcb3dc1b41.1778504352.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2109.v4.git.1778504352.gitgitgadget@gmail.com>
-References: <pull.2109.v3.git.1778498532730.gitgitgadget@gmail.com>
-	<pull.2109.v4.git.1778504352.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 May 2026 12:59:12 +0000
-Subject: [PATCH v4 2/2] commit-reach: early exit paint_down_to_common for
- single merge-base
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="2ZkGnzwK"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1778504802;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xxbLt49rHWo9PB8OHwkSd6XYLeqosxioLiTpy3/Z98M=;
+	b=2ZkGnzwKCznswWE9wLfxBDnFNb4qBDwKRmy0frFEZdYHMQGQ/SBa5/tTC77nDfqjS0qwir
+	As+VUtrdZsTvKibq7N0DhXBi7LeQKvLlyykZ0tHZ4ajAYNNbfWXxn0soXr8OQB/QmMZ+zo
+	AobSr0mm+wwv1jK/KrAfB5Uw/sfnhx4=
+From: Toon Claes <toon@iotcl.com>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>,
+ Elijah Newren <newren@gmail.com>, Christian Couder
+ <christian.couder@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 7/8] promisor-remote: auto-configure unknown remotes
+In-Reply-To: <20260427124108.3524129-8-christian.couder@gmail.com>
+References: <20251223111113.47473-1-christian.couder@gmail.com>
+ <20260427124108.3524129-1-christian.couder@gmail.com>
+ <20260427124108.3524129-8-christian.couder@gmail.com>
+Date: Mon, 11 May 2026 15:06:34 +0200
+Message-ID: <87v7cunlid.fsf@toon--20250203-5JQV3.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-From: Kristofer Karlsson <krka@spotify.com>
+Christian Couder <christian.couder@gmail.com> writes:
 
-Commits not in the commit-graph get GENERATION_NUMBER_INFINITY and
-sort to the top of the priority queue.  After those, commits with
-finite generation numbers are popped in non-increasing order.
-When MERGE_BASE_FIND_ALL is not set the first doubly-painted commit
-with a finite generation is therefore a best merge-base: no commit
-still in the queue can be a descendant of it.  Skip the expensive
-STALE drain in this case.
+> Previous commits have introduced the `promisor.acceptFromServerUrl`
+> config variable to allowlist some URLs advertised by a server through
+> the "promisor-remote" protocol capability.
+>
+> However the new `promisor.acceptFromServerUrl` mechanism, like the old
+> `promisor.acceptFromServer` mechanism, still requires a remote to
+> already exist in the client's local configuration before it can be
+> accepted. This places a significant manual burden on users to
+> pre-configure these remotes, and creates friction for administrators
+> who have to troubleshoot or manually provision these setups for their
+> teams.
+>
+> To eliminate this burden, let's automatically create a new `[remote]`
+> section in the client's config when a server advertises an unknown
+> remote whose URL matches a `promisor.acceptFromServerUrl` glob pattern.
+>
+> Concretely, let's add four helpers:
+>
+>  - sanitize_remote_name(): turn an arbitrary URL-derived string into a
+>    valid remote name by replacing non-alphanumeric characters,
+>    collapsing runs of '-', and prepending "promisor-auto-".
+>
+>  - promisor_remote_name_from_url(): normalize the URL and extract
+>    host+port+path to build a human-readable base name, then pass it
+>    through sanitize_remote_name().
+>
+>  - configure_auto_promisor_remote(): write the remote.*.url,
+>    remote.*.promisor and remote.*.advertisedAs keys to the repo
+>    config.
+>
+>  - handle_matching_allowed_url(): pick the final name (user-supplied
+>    alias or auto-generated), handle collisions by appending "-1",
+>    "-2", etc., then call configure_auto_promisor_remote().
+>
+> Let's also add should_accept_new_remote_url() which reuses the
+> url_matches_accept_list() helper introduced in a previous commit to
+> find a matching pattern, then delegates to handle_matching_allowed_url()
+> to create the remote.
+>
+> And then let's call should_accept_new_remote_url() from the '!item'
+> (unknown remote) branch of should_accept_remote(), setting
+> `reload_config` so that the newly-written config is picked up.
+>
+> Finally let's document all that by:
+>
+>  - expanding the `promisor.acceptFromServerUrl` entry to describe
+>    auto-creation, the optional "name=" prefix syntax, the
+>    "promisor-auto-*" generation rules, and numeric-suffix collision
+>    handling, and by
+>  - adding a "remote.<name>.advertisedAs" entry to "remote.adoc".
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  Documentation/config/promisor.adoc    |  26 +++-
+>  Documentation/config/remote.adoc      |   9 ++
+>  promisor-remote.c                     | 202 +++++++++++++++++++++++++-
+>  t/t5710-promisor-remote-capability.sh | 104 +++++++++++++
+>  4 files changed, 332 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
+> index efc066c3f2..ae1686a6e0 100644
+> --- a/Documentation/config/promisor.adoc
+> +++ b/Documentation/config/promisor.adoc
+> @@ -54,7 +54,8 @@ promisor.acceptFromServer::
+>  promisor.acceptFromServerUrl::
+>  	A glob pattern to specify which server-advertised URLs a
+>  	client is allowed to act on. When a URL matches, the client
+> -	will accept the advertised remote as a promisor remote and may
+> +	will accept the advertised remote as a promisor remote, may
+> +	automatically create a new remote configuration for it and may
+>  	automatically accept field updates (such as authentication
+>  	tokens) from the server, even if `promisor.acceptFromServer`
+>  	is set to `none` (the default).
+> @@ -66,9 +67,10 @@ this option in _ANY_ config file read by Git.
+>  Be _VERY_ careful with these patterns: `*` matches any sequence of
+>  characters within the 'host' and 'path' parts of a URL (but cannot
+>  cross part boundaries). An overly broad pattern is a major security
+> -risk, as a matching URL allows a server to update fields (such as
+> -authentication tokens) on known remotes without further confirmation.
+> -To minimize security risks, follow these guidelines:
+> +risk, as a matching URL allows a server to auto-configure new remotes
+> +and to update fields (such as authentication tokens) on known remotes
+> +without further confirmation. To minimize security risks, follow these
+> +guidelines:
+>  +
+>  1. Start with a secure protocol scheme, like `https://` or `ssh://`.
+>  +
+> @@ -99,6 +101,22 @@ are resolved. The port must also match exactly (e.g.,
+>  `https://example.com:8080/*` will not match a URL advertised on
+>  port 9999).
+>  +
+> +The glob pattern can optionally be prefixed with a remote name and an
+> +equals sign (e.g., `cdn=https://cdn.example.com/*`). If such a prefix
+> +is provided, accepted remotes will be saved under that name. If no
+> +such prefix is provided, a safe remote name will be automatically
+> +generated by sanitizing the URL and prefixing it with
+> +`promisor-auto-`.
+> ++
+> +If a remote with the chosen name already exists but points to a
+> +different URL, Git will append a numeric suffix (e.g., `-1`, `-2`) to
+> +the name to prevent overwriting existing configurations. You should
+> +make sure that this doesn't happen often though, as remotes will be
+> +rejected if the numeric suffix increases too much. In all cases, the
+> +original name advertised by the server is recorded in the
+> +`remote.<name>.advertisedAs` configuration variable for tracing and
+> +debugging purposes.
+> ++
+>  For the security implications of accepting a promisor remote, see the
+>  documentation of `promisor.acceptFromServer`. For details on the
+>  protocol, see linkgit:gitprotocol-v2[5].
+> diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+> index 91e46f66f5..6e2bbdf457 100644
+> --- a/Documentation/config/remote.adoc
+> +++ b/Documentation/config/remote.adoc
+> @@ -91,6 +91,15 @@ remote.<name>.promisor::
+>  	When set to true, this remote will be used to fetch promisor
+>  	objects.
+>  
+> +remote.<name>.advertisedAs::
+> +	When a promisor remote is automatically configured using
+> +	information advertised by a server through the
+> +	`promisor-remote` protocol capability (see
+> +	`promisor.acceptFromServerUrl`), the server's originally
+> +	advertised name is saved in this variable. This is for
+> +	information, tracing and debugging purposes. Users should not
+> +	typically modify or create such configuration entries.
+> +
+>  remote.<name>.partialclonefilter::
+>  	The filter that will be applied when fetching from this	promisor remote.
+>  	Changing or clearing this value will only affect fetches for new commits.
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index 72d5b94bf7..8c8a798fdb 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -816,10 +816,197 @@ static struct allowed_url *url_matches_accept_list(
+>  	return NULL;
+>  }
+>  
+> -static int should_accept_remote(enum accept_promisor accept,
+> +/*
+> + * Sanitize the buffer to make it a valid remote name coming from the
+> + * server by:
+> + *
+> + * - replacing any non alphanumeric character with a '-'
+> + * - stripping any leading '-',
+> + * - condensing multiple '-' into one,
+> + * - prepending "promisor-auto-",
+> + * - validating the result.
+> + */
+> +static int sanitize_remote_name(struct strbuf *buf, const char *url)
+> +{
+> +	char prev = '-';
+> +	for (size_t i = 0; i < buf->len; ) {
+> +		if (!isalnum(buf->buf[i]))
+> +			buf->buf[i] = '-';
+> +		if (prev == '-' && buf->buf[i] == '-') {
+> +			strbuf_remove(buf, i, 1);
+> +		} else {
+> +			prev = buf->buf[i];
+> +			i++;
+> +		}
+> +	}
+> +
+> +	strbuf_strip_suffix(buf, "-");
+> +
+> +	if (!buf->len) {
+> +		warning(_("couldn't generate a valid remote name from "
+> +			  "advertised url '%s', ignoring this remote"), url);
+> +		return -1;
+> +	}
+> +
+> +	strbuf_insertstr(buf, 0, "promisor-auto-");
+> +
+> +	if (!valid_remote_name(buf->buf)) {
+> +		warning(_("generated remote name '%s' from advertised url '%s' "
+> +			  "is invalid, ignoring this remote"), buf->buf, url);
+> +		return -1;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static char *promisor_remote_name_from_url(const char *url)
+> +{
+> +	struct url_info url_info = { 0 };
+> +	char *normalized = url_normalize(url, &url_info);
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	if (!normalized) {
+> +		warning(_("couldn't normalize advertised url '%s', "
+> +			  "ignoring this remote"), url);
+> +		return NULL;
+> +	}
+> +
+> +	if (url_info.host_len) {
+> +		strbuf_add(&buf, normalized + url_info.host_off, url_info.host_len);
+> +		strbuf_addch(&buf, '-');
+> +	}
+> +
+> +	if (url_info.port_len) {
+> +		strbuf_add(&buf, normalized + url_info.port_off, url_info.port_len);
+> +		strbuf_addch(&buf, '-');
 
-Add MERGE_BASE_FIND_ALL to the merge_base_flags enum.  Callers that
-need every merge-base (repo_get_merge_bases_many, repo_get_merge_bases,
-repo_in_merge_bases_many, remove_redundant_no_gen) pass the flag to
-preserve existing behavior.  git merge-base (without --all) passes 0,
-triggering the early exit.
+If the url doesn't have a path, this could lead to the name being
+`example-com-8443`. But we have a MAX_REMOTES_WITH_SIMILAR_NAMES at 20,
+would this be an issue for a second remote without configured name?
 
-On a 2.2M-commit merge-heavy monorepo with commit-graph:
+As far as I can tell from handle_matching_allowed_url(), it's no issue,
+because the numeric `-%d` suffix is added and we never atoi() the number
+from existing remotes in the config.
 
-  HEAD vs ~500:   5,229ms -> 24ms
-  HEAD vs ~1000:  4,214ms -> 39ms
-  HEAD vs ~5000:  3,799ms -> 46ms
-  HEAD vs ~10000: 3,827ms -> 61ms
+> +	}
+> +
+> +	if (url_info.path_len) {
+> +		strbuf_add(&buf, normalized + url_info.path_off, url_info.path_len);
+> +		strbuf_trim_trailing_dir_sep(&buf);
+> +		strbuf_strip_suffix(&buf, ".git");
+> +	}
+> +
+> +	free(normalized);
+> +
+> +	if (sanitize_remote_name(&buf, url)) {
+> +		strbuf_release(&buf);
+> +		return NULL;
+> +	}
+> +
+> +	return strbuf_detach(&buf, NULL);
+> +}
+> +
+> +static void configure_auto_promisor_remote(struct repository *repo,
+> +					   const char *name,
+> +					   const char *url,
+> +					   const char *advertised_as,
+> +					   bool reuse)
+> +{
+> +	char *key;
+> +
+> +	if (!reuse) {
+> +		fprintf(stderr, _("Auto-creating promisor remote '%s' for URL '%s'\n"),
+> +			name, url);
+> +
+> +		key = xstrfmt("remote.%s.url", name);
+> +		repo_config_set_gently(repo, key, url);
+> +		free(key);
+> +	}
+> +
+> +	/* NB: when reusing, this promotes an existing non-promisor remote */
+> +	key = xstrfmt("remote.%s.promisor", name);
+> +	repo_config_set_gently(repo, key, "true");
+> +	free(key);
+> +
+> +	if (advertised_as) {
+> +		key = xstrfmt("remote.%s.advertisedAs", name);
+> +		repo_config_set_gently(repo, key, advertised_as);
+> +		free(key);
+> +	}
+> +}
+> +
+> +#define MAX_REMOTES_WITH_SIMILAR_NAMES 20
+> +
+> +/* Return the allocated local name, or NULL on failure */
+> +static char *handle_matching_allowed_url(struct repository *repo,
+> +					 char *allowed_name,
+> +					 const char *remote_url,
+> +					 const char *remote_name)
+> +{
+> +	char *name;
+> +	char *basename = allowed_name ?
+> +		xstrdup(allowed_name) :
+> +		promisor_remote_name_from_url(remote_url);
+> +	int i = 0;
+> +	bool reuse = false;
+> +
+> +	if (!basename)
+> +		return NULL;
+> +
+> +	name = xstrdup(basename);
+> +
+> +	while (i < MAX_REMOTES_WITH_SIMILAR_NAMES) {
+> +		char *url_key = xstrfmt("remote.%s.url", name);
+> +		const char *existing_url;
+> +		int exists = !repo_config_get_string_tmp(repo, url_key, &existing_url);
+> +
+> +		free(url_key);
+> +
+> +		if (!exists)
+> +			break; /* Free to use */
+> +
+> +		if (!strcmp(existing_url, remote_url)) {
+> +			reuse = true;
+> +			break; /* Same URL, so safe to reuse */
+> +		}
+> +
+> +		i++;
+> +		free(name);
+> +		name = xstrfmt("%s-%d", basename, i);
+> +	}
+> +
+> +	if (i < MAX_REMOTES_WITH_SIMILAR_NAMES) {
+> +		configure_auto_promisor_remote(repo, name,
+> +					       remote_url, remote_name,
+> +					       reuse);
+> +	} else {
+> +		warning(_("too many remotes accepted with name like '%s-X', "
+> +			  "ignoring this remote"), basename);
+> +		FREE_AND_NULL(name);
+> +	}
+> +
+> +	free(basename);
+> +	return name;
+> +}
+> +
+> +static int should_accept_new_remote_url(struct repository *repo,
+> +					struct string_list *accept_urls,
+> +					struct promisor_info *advertised)
+> +{
+> +	struct allowed_url *allowed = url_matches_accept_list(accept_urls,
+> +							     advertised->url);
+> +	if (allowed) {
+> +		char *name = handle_matching_allowed_url(repo,
+> +							 allowed->remote_name,
+> +							 advertised->url,
+> +							 advertised->name);
+> +		if (name) {
+> +			free((char *)advertised->local_name);
+> +			advertised->local_name = name;
+> +			return 1;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int should_accept_remote(struct repository *repo,
+> +				enum accept_promisor accept,
+>  				struct promisor_info *advertised,
+>  				struct string_list *accept_urls,
+> -				struct string_list *config_info)
+> +				struct string_list *config_info,
+> +				bool *reload_config)
+>  {
+>  	struct promisor_info *p;
+>  	struct string_list_item *item;
+> @@ -837,9 +1024,13 @@ static int should_accept_remote(enum accept_promisor accept,
+>  	/* Get config info for that promisor remote */
+>  	item = string_list_lookup(config_info, remote_name);
+>  
+> -	if (!item)
+> +	if (!item) {
+>  		/* We don't know about that remote */
+> -		return 0;
+> +		int res = should_accept_new_remote_url(repo, accept_urls, advertised);
+> +		if (res)
+> +			*reload_config = true;
+> +		return res;
+> +	}
+>  
+>  	p = item->util;
+>  
+> @@ -1097,7 +1288,8 @@ static void filter_promisor_remote(struct repository *repo,
+>  			string_list_sort(&config_info);
+>  		}
+>  
+> -		if (should_accept_remote(accept, advertised, &accept_urls, &config_info)) {
+> +		if (should_accept_remote(repo, accept, advertised, &accept_urls,
+> +					 &config_info, &reload_config)) {
+>  			if (!store_info)
+>  				store_info = store_info_new(repo);
+>  			if (promisor_store_advertised_fields(advertised, store_info))
+> diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
+> index 0659b2ac15..549acff23f 100755
+> --- a/t/t5710-promisor-remote-capability.sh
+> +++ b/t/t5710-promisor-remote-capability.sh
+> @@ -458,6 +458,107 @@ test_expect_success "clone with 'None', URL allowlisted, but client has differen
+>  	initialize_server 1 "$oid"
+>  '
+>  
+> +test_expect_success "clone with URL allowlisted and no remote already configured" '
+> +	git -C server config promisor.advertise true &&
+> +	test_when_finished "rm -rf client" &&
+> +	test_when_finished "rm -f full_names" &&
+> +
+> +	GIT_NO_LAZY_FETCH=0 git clone \
+> +		-c promisor.acceptfromserver=None \
+> +		-c promisor.acceptFromServerUrl="$ENCODED_TRASH_DIRECTORY_URL/*" \
+> +		--no-local --filter="blob:limit=5k" server client &&
 
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
- builtin/merge-base.c  |  3 ++-
- commit-reach.c        | 19 +++++++++++++++----
- commit-reach.h        |  7 ++++++-
- t/t6600-test-reach.sh | 40 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 63 insertions(+), 6 deletions(-)
+So promisor.acceptFromServerUrl only works if promisor.acceptFromServer
+is "none"? I mean which one should precedence? If
+promisor.acceptFromServer is set to "all", the promisor remote is
+accepted by the client, but not saved to the config. Is that
+intentional? Should we document that?
 
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 9b50b4660e..a87011c6cd 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -11,11 +11,12 @@
- 
- static int show_merge_base(struct commit **rev, size_t rev_nr, int show_all)
- {
-+	enum merge_base_flags flags = show_all ? MERGE_BASE_FIND_ALL : 0;
- 	struct commit_list *result = NULL, *r;
- 
- 	if (repo_get_merge_bases_many_dirty(the_repository, rev[0],
- 					    rev_nr - 1, rev + 1,
--					    0, &result) < 0) {
-+					    flags, &result) < 0) {
- 		commit_list_free(result);
- 		return -1;
- 	}
-diff --git a/commit-reach.c b/commit-reach.c
-index 766ba1156a..5a52be90a6 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -97,6 +97,14 @@ static int paint_down_to_common(struct repository *r,
- 			if (!(commit->object.flags & RESULT)) {
- 				commit->object.flags |= RESULT;
- 				tail = commit_list_append(commit, tail);
-+				/*
-+				 * The queue is generation-ordered; no
-+				 * remaining common ancestor can be a
-+				 * descendant of this one.
-+				 */
-+				if (!(mb_flags & MERGE_BASE_FIND_ALL) &&
-+				    generation < GENERATION_NUMBER_INFINITY)
-+					break;
- 			}
- 			/* Mark parents of a found merge stale */
- 			flags |= STALE;
-@@ -247,7 +255,8 @@ static int remove_redundant_no_gen(struct repository *r,
- 				min_generation = curr_generation;
- 		}
- 		if (paint_down_to_common(r, array[i], filled,
--					 work, min_generation, 0, &common)) {
-+					 work, min_generation,
-+					 MERGE_BASE_FIND_ALL, &common)) {
- 			clear_commit_marks(array[i], all_flags);
- 			clear_commit_marks_many(filled, work, all_flags);
- 			commit_list_free(common);
-@@ -477,7 +486,8 @@ int repo_get_merge_bases_many(struct repository *r,
- 			      struct commit **twos,
- 			      struct commit_list **result)
- {
--	return get_merge_bases_many_0(r, one, n, twos, 1, 0, result);
-+	return get_merge_bases_many_0(r, one, n, twos, 1,
-+				     MERGE_BASE_FIND_ALL, result);
- }
- 
- int repo_get_merge_bases_many_dirty(struct repository *r,
-@@ -495,7 +505,8 @@ int repo_get_merge_bases(struct repository *r,
- 			 struct commit *two,
- 			 struct commit_list **result)
- {
--	return get_merge_bases_many_0(r, one, 1, &two, 1, 0, result);
-+	return get_merge_bases_many_0(r, one, 1, &two, 1,
-+				     MERGE_BASE_FIND_ALL, result);
- }
- 
- /*
-@@ -540,7 +551,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- 	struct commit_list *bases = NULL;
- 	int ret = 0, i;
- 	timestamp_t generation, max_generation = GENERATION_NUMBER_ZERO;
--	enum merge_base_flags mb_flags = 0;
-+	enum merge_base_flags mb_flags = MERGE_BASE_FIND_ALL;
- 
- 	if (ignore_missing_commits)
- 		mb_flags |= MERGE_BASE_IGNORE_MISSING_COMMITS;
-diff --git a/commit-reach.h b/commit-reach.h
-index a3f2cd80eb..3f3a563d8a 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -19,9 +19,14 @@ int repo_get_merge_bases_many(struct repository *r,
- 			      struct commit_list **result);
- enum merge_base_flags {
- 	MERGE_BASE_IGNORE_MISSING_COMMITS = (1 << 0),
-+	MERGE_BASE_FIND_ALL               = (1 << 1),
- };
- 
--/* To be used only when object flags after this call no longer matter */
-+/*
-+ * To be used only when object flags after this call no longer matter.
-+ * Without MERGE_BASE_FIND_ALL and with generation numbers available,
-+ * returns after finding the first merge-base, skipping the STALE drain.
-+ */
- int repo_get_merge_bases_many_dirty(struct repository *r,
- 				    struct commit *one, size_t n,
- 				    struct commit **twos,
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index dc0421ed2f..51c23b7683 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -882,4 +882,44 @@ test_expect_success 'rev-list --maximal-only matches merge-base --independent' '
- 	test_cmp expect.sorted actual.sorted
- '
- 
-+# The following tests verify the early-exit optimisation in
-+# paint_down_to_common when merge-base is invoked without --all.
-+# Each test checks all four commit-graph configurations.
-+
-+merge_base_all_modes () {
-+	test_when_finished rm -rf .git/objects/info/commit-graph &&
-+	git merge-base "$@" >actual &&
-+	test_cmp expect actual &&
-+	cp commit-graph-full .git/objects/info/commit-graph &&
-+	git merge-base "$@" >actual &&
-+	test_cmp expect actual &&
-+	cp commit-graph-half .git/objects/info/commit-graph &&
-+	git merge-base "$@" >actual &&
-+	test_cmp expect actual &&
-+	cp commit-graph-no-gdat .git/objects/info/commit-graph &&
-+	git merge-base "$@" >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'merge-base without --all (unique base)' '
-+	git rev-parse commit-5-3 >expect &&
-+	merge_base_all_modes commit-5-7 commit-8-3
-+'
-+
-+test_expect_success 'merge-base without --all is one of --all results' '
-+	test_when_finished rm -rf .git/objects/info/commit-graph &&
-+
-+	cp commit-graph-full .git/objects/info/commit-graph &&
-+	git merge-base --all commit-5-7 commit-4-8 commit-6-6 commit-8-3 >all &&
-+	git merge-base commit-5-7 commit-4-8 commit-6-6 commit-8-3 >single &&
-+	test_line_count = 1 single &&
-+	grep -F -f single all &&
-+
-+	cp commit-graph-half .git/objects/info/commit-graph &&
-+	git merge-base --all commit-5-7 commit-4-8 commit-6-6 commit-8-3 >all &&
-+	git merge-base commit-5-7 commit-4-8 commit-6-6 commit-8-3 >single &&
-+	test_line_count = 1 single &&
-+	grep -F -f single all
-+'
-+
- test_done
+> +	# Check that exactly one remote has been auto-created, identified
+> +	# by "remote.<name>.advertisedAs" == "lop".
+> +	git -C client config get --all --show-names --regexp \
+> +		"remote\..*\.advertisedas" >full_names &&
+> +	test_line_count = 1 full_names &&
+> +	REMOTE_NAME=$(sed "s/^remote\.\(.*\)\.advertisedas .*$/\1/" full_names) &&
+> +
+> +	# Check ".url" and ".promisor" values
+> +	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" >expect &&
+> +	git -C client config "remote.$REMOTE_NAME.url" >actual &&
+> +	git -C client config "remote.$REMOTE_NAME.promisor" >>actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Check that the largest object is still missing on the server
+> +	check_missing_objects server 1 "$oid"
+> +'
+> +
+> +test_expect_success "clone with named URL allowlisted and no pre-configured remote" '
+> +	git -C server config promisor.advertise true &&
+> +	test_when_finished "rm -rf client" &&
+> +
+> +	GIT_NO_LAZY_FETCH=0 git clone \
+> +		-c promisor.acceptfromserver=None \
+> +		-c promisor.acceptFromServerUrl="cdn=$ENCODED_TRASH_DIRECTORY_URL/*" \
+> +		--no-local --filter="blob:limit=5k" server client &&
+> +
+> +	# Check that a remote has been auto-created with the right "cdn" name and fields.
+> +	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" "lop" >expect &&
+> +	git -C client config "remote.cdn.url" >actual &&
+> +	git -C client config "remote.cdn.promisor" >>actual &&
+> +	git -C client config "remote.cdn.advertisedAs" >>actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Check that the largest object is still missing on the server
+> +	check_missing_objects server 1 "$oid"
+> +'
+> +
+> +test_expect_success "clone with URL allowlisted but colliding name" '
+> +	git -C server config promisor.advertise true &&
+> +	test_when_finished "rm -rf client" &&
+> +
+> +	GIT_NO_LAZY_FETCH=0 git clone -c remote.cdn.promisor=true \
+> +		-c remote.cdn.fetch="+refs/heads/*:refs/remotes/lop/*" \
+> +		-c remote.cdn.url="https://example.com/cdn" \
+> +		-c promisor.acceptfromserver=None \
+> +		-c promisor.acceptFromServerUrl="cdn=$ENCODED_TRASH_DIRECTORY_URL/*" \
+> +		--no-local --filter="blob:limit=5k" server client &&
+> +
+> +	# Check that a remote has been auto-created with the right "cdn-1" name and fields.
+> +	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" "lop" >expect &&
+> +	git -C client config "remote.cdn-1.url" >actual &&
+> +	git -C client config "remote.cdn-1.promisor" >>actual &&
+> +	git -C client config "remote.cdn-1.advertisedAs" >>actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Check that the original "cdn" remote was not overwritten.
+> +	printf "%s\n" "https://example.com/cdn" "true" >expect &&
+> +	git -C client config "remote.cdn.url" >actual &&
+> +	git -C client config "remote.cdn.promisor" >>actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Check that the largest object is still missing on the server
+> +	check_missing_objects server 1 "$oid"
+> +'
+> +
+> +test_expect_success "clone with URL allowlisted and reusable remote" '
+> +	git -C server config promisor.advertise true &&
+> +	test_when_finished "rm -rf client" &&
+> +
+> +	GIT_NO_LAZY_FETCH=0 git clone \
+> +		-c remote.cdn.fetch="+refs/heads/*:refs/remotes/lop/*" \
+> +		-c remote.cdn.url="$TRASH_DIRECTORY_URL/lop" \
+> +		-c promisor.acceptfromserver=None \
+> +		-c promisor.acceptFromServerUrl="cdn=$ENCODED_TRASH_DIRECTORY_URL/*" \
+> +		--no-local --filter="blob:limit=5k" server client &&
+> +
+> +	# Check that the existing "cdn" remote has been properly updated.
+> +	printf "%s\n" "$TRASH_DIRECTORY_URL/lop" "true" "lop" "+refs/heads/*:refs/remotes/lop/*" >expect &&
+> +	git -C client config "remote.cdn.url" >actual &&
+> +	git -C client config "remote.cdn.promisor" >>actual &&
+> +	git -C client config "remote.cdn.advertisedAs" >>actual &&
+> +	git -C client config "remote.cdn.fetch" >>actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Check that no new "cdn-1" remote has been created.
+> +	test_must_fail git -C client config "remote.cdn-1.url" &&
+> +
+> +	# Check that the largest object is still missing on the server
+> +	check_missing_objects server 1 "$oid"
+> +'
+> +
+>  test_expect_success "clone with invalid promisor.acceptFromServerUrl" '
+>  	git -C server config promisor.advertise true &&
+>  	test_when_finished "rm -rf client" &&
+> @@ -472,6 +573,9 @@ test_expect_success "clone with invalid promisor.acceptFromServerUrl" '
+>  	# Check that a warning was emitted
+>  	test_grep "invalid remote name '\''bad name'\''" err &&
+>  
+> +	# Check that no remote was auto-created
+> +	test_must_fail git -C client config get --regexp "remote\..*\.advertisedas" &&
+> +
+>  	# Check that the largest object is not missing on the server
+>  	check_missing_objects server 0 "" &&
+>  
+> -- 
+> 2.54.0.19.gb68b9497aa
+>
+>
+
 -- 
-gitgitgadget
+Cheers,
+Toon
