@@ -1,188 +1,127 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F1730F927
-	for <git@vger.kernel.org>; Mon, 11 May 2026 10:01:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6321E492D
+	for <git@vger.kernel.org>; Mon, 11 May 2026 10:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778493693; cv=none; b=iDWv5zu05a1VX3KmCnDno5YzLo3BXfCKNGQFSlJ7WQgeCQiqzwUh8BwKB+x5PuFZ1RTe86MFEh1MK5EEen2pjN6iSgdi0mOEqglM5HzyR6Y4z0SR4stmbmQ04eUlEg7CjNB5FEGDSu5ch6Jk5fxjW+58Nlf8mAX7D0VR+ufGLPU=
+	t=1778493741; cv=none; b=ji5eb23aODkVc0Rys7C/3hDKjUpWHB1M5Jqkmhw/wtZHwtaTe2NVlIN1OqWhZaB9KmEMJU5y7ehDf8QTRvzYFpGSj2EtJ6uMeho3q6l7bbg4NBa7odMw5JmeCfU94vGVGh502FoJMWIRgYKgT7N/aBLi/kVvoUbnb04iA9ubZMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778493693; c=relaxed/simple;
-	bh=hFQB87u1CBilP7AIBviVmkfV8u/HtOBp1NUvAbpKkkw=;
+	s=arc-20240116; t=1778493741; c=relaxed/simple;
+	bh=RdGtrZlmGTYMFGKoR0Rc4BMDYYVP0jI3kdY3IYAc3i8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LHuJta/QqQFbWqsui0lOZ3HJ7y9AFTjZGVbf4GB2IJJzH8Z9azTsvKkTqKXIlIHW3VzA+sxNQzIpq5P0fkDcbHgNbfN5f4cTkaesbs3AOd26MJgOU8brXPhfRwiKD+TnZFNRpr0Bz4nTEMFNKTJW5zC6oD89tDC+/VIGGzvT8ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Px2kvNBD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C463eiGi; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=cLGE9SB7ZieGdz5SyK6kQF/r43vI3lFnuZqjTwGb+tFNoo7hbRdBHzJJdMjclYPN1xz046kmL1dp+5JV4VYmP1mqcccOTOPIv7giwlJ/iGiWZecDrmSLZYMvSKyefO8d36z9v3LCx1amQhfXnygl0qKKwrgtj5fMPFkLtUGT8iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=INGSZcwh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FFzvtWB3; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Px2kvNBD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C463eiGi"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id D288FEC033B;
-	Mon, 11 May 2026 06:01:30 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 11 May 2026 06:01:30 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="INGSZcwh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FFzvtWB3"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E964140001B;
+	Mon, 11 May 2026 06:02:19 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 11 May 2026 06:02:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778493690;
-	 x=1778580090; bh=XYapDJ5V3Ov+Fr5Z5beYQryJiLOnB8EaolzP05vo+uc=; b=
-	Px2kvNBDoA9CbecNE7Yd6jdBO4UlqKA50B96GcrXjdxBsvCtIxbqu1E1SpVUdzy8
-	6mhgzOLIhQWfNybNYesN/IQVRG7lZNZkjK2Sd+NjXs2Iv5oGiHZGKkDmxniemqCc
-	iR8sJngXLEmRk8/vPyJ2AelBKtWJnV7olvO/ILibQxtHQ53cdQQSOqL1wQK2Snp8
-	Be+XTXSlQ4hvv1R0YHsGLCpdpCcLHZAYZGlAd4gEyYfCEzBupdtkOtTTZELttycS
-	0OL5ncPXJeTy+aBnegd0lakXa+NWsPrWN0YKbJPFT+AytUxrwPE7GFo+iGN0F3hF
-	/hvOWqUEaou4tK59Kkquzg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1778493739; x=1778580139; bh=9AQNL27nwZ
+	W0CeD8ORGBaGpN8swiCUMfUV35uQwIcb0=; b=INGSZcwhAf/uCWQU/5Bn9NvmQ2
+	uJaAIPM6TTHAtiVOs/YwTIX7bhU90GTYY4xXfmd1gtz5kzP0ZTULyDrP67RWaVKB
+	ef8qCp7bcKxVaAOC7w6zPCoZD9G5TyqMFXs7s7m/9EALuiUS/cFUOfg7k/SVVz24
+	WTYwxBv3TF22Pu1nfkok0zRPM/g0bziCxL0uj2df1NOAFA8kBJSzWDFC+byef74M
+	Sun3YIWww64NW/0a8n51BghM8bYFUS/odjIxQ6jrRMakiRFU5G4sCVmQdOe9t7Uk
+	0O9Fab0o4ikET6pNDpxtwcZLKzbUu5Kh8zQwXQ7KJV1edCoHVY7cLXR/y5Vg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778493690; x=
-	1778580090; bh=XYapDJ5V3Ov+Fr5Z5beYQryJiLOnB8EaolzP05vo+uc=; b=C
-	463eiGiv1PmVANuFtrYr4k5tQ6DRP9QhEyskuHNQDld4Gyml942hxm6IMybu8ho4
-	ad9O++9j7ghl5pJJqXc3ZZueRKhunYpvnTmX9D5TcJn9lCm2lPtzsaCo74X8U415
-	gegckhpueWq9o4UFE9q6C1ZqjwdAjrZSlmxuNMuwA/rMq0ftlog1jMqfbJ1fe3XX
-	tseH5Q/ZmGt33X6hZWWZlnLgGP1o9hOI+Ak6pX9QSYJWwEO9pYZyVm8G6c4TW2sJ
-	dIz3XPmh7mcWbLfWOYe4UoLqqYbGUd+HK+G0xiJgaIlVzd39HbQnggiLecVibkf5
-	DFS1KXNBoS2OtQ2SoXbfw==
-X-ME-Sender: <xms:-qgBarhBhsOQeYVJvJQWUIYPJSc7Twr52a1Bkb6YMDUfT4JO-PvJ9A>
-    <xme:-qgBavdCp7YbWQSoPrF-Qux1x_5HdlVWC0mcnl_CZejRDQgdu2ffVU1CKuGSkJ1wW
-    ES8f0fOTxnPOplhDegFfiJCEpNvrQ4m2hrsxn8PxmdDC__m0Igplkw>
-X-ME-Received: <xmr:-qgBaod1ky1qGKEh5qQIenwMvUDIQjfUMmUfpeLJxeewZsGo7d830LNWDkMQcSVPuEdyQrNcIDqN9uYsDSbTpIRMGyMaVgpsSf52NwAi6A>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778493739; x=1778580139; bh=9AQNL27nwZW0CeD8ORGBaGpN8swiCUMfUV3
+	5uQwIcb0=; b=FFzvtWB3wdVkita/1fuMWAEmdzhUZhaG8o1CTzziRIDNqz+HgIv
+	GBqRegYGUCa8CV4My5dEYAP/kjLx9Dm59ItUhik4tlmuEf3vAGzxI5SzLLjmdmnG
+	5XSWNS2Q2kQvMdfk7fG6UcM/ifdKLoIDJy5Bpvm8G067TZA5p4lFx+EzHSanco7i
+	JS0sTOG++Tg0KaEgomF0+hY0Njb7DMe5n+744nUb1qVLiS4dIXM9JV9okGVzhPlH
+	Yi1h5fgyQAWGq8/jjrVdxlEc79EziIn0bALMDdS/uSSHjeojjXg9sjzAuZzuQamB
+	ac5gV3FKQit9FPxPdWgvnVPBl6XVdYvP+ZA==
+X-ME-Sender: <xms:K6kBanRJjm3-BO3_PUjVp2z-QICFdokQ5EgoikgDmwIFlwmz6DDnIQ>
+    <xme:K6kBarCCUclZWol1tcpIJudO38y-oxJm2DN0fMTCtus1LDxVPKXCF_w71v2_JGrJs
+    rHnhFSkl3wnJRdnIZeXq8-0V5IkgKtVcFQUpUBxTmea9DLgLbQ1jVY>
+X-ME-Received: <xmr:K6kBavGgovgwNpWOuCNeizmc51pN63eTQLrsVwWxso-vQw6UL2Yk7jKroSyVn7DqJ5uJ3XLTCiZDg8f5Xt1J8dcwI-FwKWON5bXEosZADA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudekieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesthekre
-    dttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvhe
-    ekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehjohgvrhhgsehthhgrlhhhvghimhdrihhopdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-qgBah_YnjbpjUq7paUMc-4FQadF65wtkCuRSdxWjEfThlIAkSzcOA>
-    <xmx:-qgBaslaw4BDezarvWCRlHIHrM7_5fZ9M-0QHFSf-r-J9T8kbUn5ng>
-    <xmx:-qgBar--m2DoEqcMJ1bXLOc-3fA-hpmmyaPRvVzizjawigf55Qb7OQ>
-    <xmx:-qgBainblvf9h0Lopd0Wek8Gst07mHjsA1IyNRBW0eGPwMRsEnrhbQ>
-    <xmx:-qgBanoeOOqQlMJfUe4ePFGXskzeNUO4_ne9gSVaEZ3ZwF4SJZW23tpF>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehtsghovghgihesfigvsgdruggv
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
+    uggvlhhinhesghhmgidruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtoh
+    hm
+X-ME-Proxy: <xmx:K6kBatB6suTo1TWoLk5BydgbUJFUqJdAnAkOaFgr0RtNkc7z9r8XVQ>
+    <xmx:K6kBavX-yZnfT_a-Rk-O5roGTXQVz4n1-ok9yvrF0BcJP-tM2kNZJg>
+    <xmx:K6kBahoMO8goYTrQz4UHzVBs4j9KmQAolZZb2zgqXbvBd8-W8Rv9BA>
+    <xmx:K6kBarTe1XVqo6Usd-SnjObn4f7hoWRZ8L2CkdOFwK5uFCtUO0Cicw>
+    <xmx:K6kBagOEEVAHyTezdrifkDNnNLXBrxjBkDuUt2wRVumxyLs_51rpm-vN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 06:01:30 -0400 (EDT)
+ 11 May 2026 06:02:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6f8125f1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 May 2026 10:01:27 +0000 (UTC)
-Date: Mon, 11 May 2026 12:01:24 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 426c6fb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 May 2026 10:02:16 +0000 (UTC)
+Date: Mon, 11 May 2026 12:02:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?SsO2cmc=?= Thalheim <joerg@thalheim.io>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] config: retry acquiring config.lock for 100ms
-Message-ID: <agGo9Prt8Hs2gbic@pks.im>
-References: <20260403100135.3901610-1-joerg@thalheim.io>
- <adYvSZeN0ZVqwRhi@pks.im>
- <xmqqcxz2vfpa.fsf@gitster.g>
- <91335804a092b09757331cac72092a3835020b3a@thalheim.io>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Jeff King <peff@peff.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci: enable EXPENSIVE for contributor builds
+Message-ID: <agGpJlY_iTnzVoGr@pks.im>
+References: <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
+ <pull.2102.v3.git.1778228209.gitgitgadget@gmail.com>
+ <2159f6a271b06d156134392ce3c44fe957c83378.1778228209.git.gitgitgadget@gmail.com>
+ <xmqqjyta9630.fsf@gitster.g>
+ <agF_0x0yq78J-RFk@pks.im>
+ <xmqq33zys62a.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <91335804a092b09757331cac72092a3835020b3a@thalheim.io>
+In-Reply-To: <xmqq33zys62a.fsf@gitster.g>
 
-On Mon, May 11, 2026 at 09:06:00AM +0000, Jörg Thalheim wrote:
-> May 11, 2026 at 4:32 AM, "Junio C Hamano" <gitster@pobox.com mailto:gitster@pobox.com?to=%22Junio%20C%20Hamano%22%20%3Cgitster%40pobox.com%3E > wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > > > This bites in practice when running `git worktree add -b` concurrently
-> > > >  against the same repository. Each invocation makes several writes to
-> > > >  ".git/config" to set up branch tracking, and tooling that creates
-> > > >  worktrees in parallel sees intermittent failures. Worse, `git worktree
-> > > >  add` does not propagate the failed config write to its exit code: the
-> > > >  worktree is created and the command exits 0, but tracking
-> > > >  configuration is silently dropped.
-> > > > 
-> > >  This very much sounds like a bug that is worth fixing independently.
-> > > 
-> > > > 
-> > > > The lock is held only for the duration of rewriting a small file, so
-> > > >  retrying for 100 ms papers over any realistic contention while still
-> > > >  failing fast if a stale lock has been left behind by a crashed
-> > > >  process. This mirrors what we already do for individual reference
-> > > >  locks (4ff0f01cb7 (refs: retry acquiring reference locks for 100ms,
-> > > >  2017-08-21)).
-> > > > 
-> > >  Famous last words :) Experience tells me that any timeout value that
-> > >  isn't excessive will eventually be hit in some production system. Which
-> > >  raises the question whether we want to make the timeout configurable,
-> > >  similar to "core.filesRefLockTimeout" and "core.packedRefsTimeout".
-> > >  ...
-> > >  Honestly though, I'm not really sure what to make with this. We could
-> > >  of course also add some validation that the configuration we want to set
-> > >  hasn't been modified meanwhile. But that would now lead to a situation
-> > >  where we have to update every single caller in our tree to make use of
-> > >  the new mechanism, which would be a bunch of work.
-> > > 
-> > >  And adding the timeout doesn't really change the status quo, either. We
-> > >  already have the case that we'll happily overwrite changes made by
-> > >  concurrent processes. The only thing that changes is that we make it
-> > >  more likely for concurrent changes to succeed.
-> > > 
-> > We haven't heard any response to these points raised in the message
-> > I am responding to. Should I still keep the patch in my tree,
-> > hoping that a responses may come some day? I am tempted to discard
-> > the topic as it has been quite a while since we last looked at it.
+On Mon, May 11, 2026 at 05:29:01PM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> I am not really sure what you want me to do here.
+> > So with this change we now run the tests for all "official" branches,
+> > and on pull requests. Which raises the question: are there any events
+> > that happen regularly that are excluded by this? Because if not I think
+> > it might be sensible to just enable this unconditionally, also because
+> > that would make jobs on GitLab CI run expensive tests, as well.
+> 
+> The simplicity certainly is tempting.
+> 
+> We could instead do the "let's enable only on linux-test-vars" kind
+> of "optimization", which is on the other side of the extreme, but
+> that is only valid if the kind of bugs that can be revealed only by
+> EXPENSIVE tests, which may not be caught by others, is expected to
+> be pretty much platform or configuration agnostic.  I somehow doubt
+> that it is the case.
 
-In general, the idea here is to engage in a discussion that can
-ultimately lead to one of two outcomes:
+Yeah, it's probably not.
 
-  - The discussion surfaces an area the author hasn't thought about, so
-    the patch is adapted accordingly.
+> In any case, I think spending on more machine cycles is certainly
+> cheaper than human resources for things like this.
 
-  - The discussion shows that the author already did think about the
-    issue, but hasn't documented the assumptions. In this case, it
-    should be the commit message that gets adapted.
-
-> I don't see how git can have this value configurable, given it's about
-> reading the configuration itself. Is the user supposed via command
-> line?
-
-This is a fair point indeed. But if it's not possible to change via the
-configuration itself, then the next-best thing might be to introduce an
-environment variable that allows configuring it.
-
-The other aspect that wasn't discussed in the commit message is how
-concurrent writes are handled, both when they are non-conflicting
-(updating different keys) and when they are conflicting (updating the
-same key). After spending some more time in the code I think it's
-ultimately nothing we have to worry about too much, as we only start
-reading the configuration after we've locked it.
-
-So in the semantically non-conflicting case there isn't really much of a
-race, because things already work as expected. But in the semantically
-conflicting case it's a bit different, as the latter writer will
-overwrite the result of the former one. In theory it would be possible
-to detect such conflicts by:
-
-  - Reading the configuration file.
-
-  - Taking the lock.
-
-  - Rereading the configuration to check for conflicts.
-
-But even that is racy as the first writer might have succeeded before we
-read the configuration the first time. So I'm not sure whether we can do
-anything about that in the first place, as the race basically exists in
-the outer loop controlled by the caller.
-
-So there probably isn't much we can do about that, and unless I missed
-something I think your timeout is sensible. But ideally, such nuances
-would be discussed as part of the commit message so that reviewers and
-future readers are made aware of them.
-
-Thanks!
+Agreed.
 
 Patrick
