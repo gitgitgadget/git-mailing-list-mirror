@@ -1,109 +1,147 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4EF4CA295
-	for <git@vger.kernel.org>; Mon, 11 May 2026 19:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778528696; cv=none; b=kKtvZlVDs/KJpG2pJZ7oo1dm+qKqaHCzx1LBCLJxPjXafTviAl8cmfOw6GyEib/3Tfr9nbvfzIsjbvQ//0jewBy3I61FP+t+1t79nAm/N1bsCUieCBNqod3rIVDdrKAMwa5iipczUh+2AEDgLSxxVceafL/SVK8MeoAvI63zRjE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778528696; c=relaxed/simple;
-	bh=mJQX1ckxuzCDIUFPp8JXB/G5uyQUEcj97SYxGoopOoQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AVWbPH8o9YKDy8dQNNvm+IxLyvP479yPHX4jm+YJ7yhoA+Jd2Xl5PLNPqsOqNZp5Et2GGluDUsvFJ9+naRWGmmLlPfUucuLdThodq1yelaCXuWaLeuQYStSAqObg5jqy9csVEBrahv/QaYyu8qtJ+7g5TolQB4CBsaMOUpsge0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rK+oH86b; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23CC37E31D
+	for <git@vger.kernel.org>; Mon, 11 May 2026 19:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778529315; cv=pass; b=aKd7AJt6SgBJzGUKTqdIbC25rr/wv3FtwlcA76dpbn4g0ujhcSI2uQhBoK8WCSN9rpoORxfKSO+AzHG+qsMnRfl1STVsNBxKpJmGVa2GYIDd+GEQleAAtjTMvSZlEmI+FdBH87YDFp7rljv3u+b/tJXLG7um20ABoPUW0jmlHnA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778529315; c=relaxed/simple;
+	bh=qcYVEymW2FVlB344TArYMfHyCQzbOjjbEH+ArtI5EmI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rShfTDJj8rhFxx7rRuE6WGHQGImHBYPBDOVw6hTpJ/prOJjIDxykSROROiGVj0GPWhDMpowJm8D28FtWczg3ED9bs8/288tgM5+J7d1XHmjI2P8Sryj88lGupPByoqvOKXT+ChcvwtZykr1gIQFg0viNV3JO/6TaQcCT4NNd0L4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nKPUPKGr; arc=pass smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rK+oH86b"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8acb3daf2aaso62857696d6.0
-        for <git@vger.kernel.org>; Mon, 11 May 2026 12:44:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nKPUPKGr"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c80227b1f6cso1969461a12.1
+        for <git@vger.kernel.org>; Mon, 11 May 2026 12:55:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778529313; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lSro8RAhjPhKVGnN3GDwAs6c15IVVDC6jzO+0Z1ZKLMdWseXdbUJ6+m0M4/j/y7N/X
+         ydlseBBFlJw6IJaOYOLpbexK07k5nrpEo5c82FyUanxj7EJuZykEwGcNNBiUrWBKP9MX
+         K8VjWqM6J2B9XDwKnF1EBOzm3kzLdxl8WJCkl1YwtPAGwuwYj9UWd+6ESEL3yqOkpK5G
+         gnyEaPnscQfyrKDR88bao860pxpOQkYBgnGykYJKKj1uWI+3FQYrrQlVWQG/oG7hQfDQ
+         B05pKGs5Xaq7eiSIirDo4xxilDGV2D1KawB+CBb5uier7806fhDDoypQLHisuugfns2g
+         5+nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PxughDZv2ExyLisbuqIhCs1N/oaAdXR0VIR/UAHwKrc=;
+        fh=o3JiAUjE2zsUX0IGxTCc0e2YE60WIc3Ibz2qdnue4EI=;
+        b=W4dQj2eyU00qfoqRBXyjQzYE7Z0eHE4UGcQ2oxKBFgplTpL94QEIz0tOESQXUFDQd8
+         BpP3IAJOMUWD5zDLX9NJApuTnQuEfkRkO1EN5UukMaSm5uBU7btXzyLqcligSflwDlWK
+         Rbv1Inj8O9sj9Z+IF952+gTtd2VhnMqfM+bnAcvfskUmzwffawgGse6GK7TRnVs28of0
+         Y8J3K72BJpacW+vqO3lstd380OdFhbwMniEHVmMj9BRLTf8cNQ3y+fMlqymWJwu6y+bm
+         LfCuD6BX5ppeYgJ8DoVR7NOpdqRErqh7dXsN/CvLkz5ObUf14zUzqX7P89V9QswCt1Qd
+         VVGA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778528694; x=1779133494; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=unK9ell3guKAc1IacjTzyPYRtzuooYkbTfcQ/CmVcRY=;
-        b=rK+oH86bUxeEZKnPqtZwq7vvMYE8ura9I66AtVgUUbuWPHqxl70D64nx9TKDZ6C9tY
-         WpZdUWEijtpjr3O9j5OTfe0waWRiUH0D4zBYmMT2xhLAeV08qqZwZfNXstC1+E6eujat
-         ZwqUBe4GscKc3RLJZBWNsUDEPCvdTbKPz87f7zCzCHijtLk3vHjPaj2kPqReCf1ixjg0
-         qPrt2cKJmcKUdvYqfFykwMhtoCiTS+S64lrvIzsmwknuNFg3MIyLNB0k2uy58qfNGhE3
-         05aHPXzbYE0bV+K+qB5nWZCz9D8smG3WbdXd+Xjxaaqv1mohlK6EYlcSTExraZPGTpcY
-         xaRA==
+        d=gmail.com; s=20251104; t=1778529313; x=1779134113; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PxughDZv2ExyLisbuqIhCs1N/oaAdXR0VIR/UAHwKrc=;
+        b=nKPUPKGrYlmUdlsJO2lnGMLg6+9vKnQHp3Yc83n1k3oLp2rqumLoF+GpzGBQsgSC9X
+         ivRUgvdKYaSvjQqGanf7FYcoCMGO7EunTXDVhF7sbZtDZ0OSptzK+EIP0QYq1eootmh2
+         d8h3YI7aiypcNhV9Wsl4RWlt6FEVSdvEnnTE+ssQmllI9XV/tSL43MkmR4hjFzuU1Awx
+         sfF/KFFNnw7gxcajoX1FjNMr7lH1ZFul4L+lfWRQCm7HY/uXL4rQ7+GNvIJRZYGOyorp
+         QLN3Vj0PYkIm4Jmh9AvCuE+dQksxAsPMMoRFlJrpjWnThg/WrtHPVRTceqahR/shHWKq
+         9JsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778528694; x=1779133494;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=unK9ell3guKAc1IacjTzyPYRtzuooYkbTfcQ/CmVcRY=;
-        b=CjNe+Jzymf1UBDKw4ZZ9bPdTJGFlA7dj3FSZtUr9Ib5FCbdersbbEkO1Z3e7pQYQAg
-         2mv2HgMMsYsQBr6mg0pIA9Bn1Qvg7NefUnud3XVcb6zG7sv2in5iuXWkgePzkVrM7z6g
-         3qWuLHl/Iyjt0DVt8ac+I57bPnMgSI6tIHLXJVvadkMOksJLcYRZ2SfJdtEmVEL18EsL
-         9Z9mnvVktu4FX+PXAVmTEz2b0WWaOOZSDbbti/PzoBZRRWsEl0eI1t4xL+e3BDV+UhWV
-         kbafjBOkzR+5SJQsGVoAf7dAE1QWHqJg3bebiWuQQEt2T0MLiZLKOZoEmPT80ssvhlnS
-         wlcA==
-X-Gm-Message-State: AOJu0YxAb635FkupDdIcvkoBaP5Viu3RGv63uQNsngObgs4ZEQGSPzcP
-	cw0ENqT27G4UtA9RVgfw0Bu6c88XW4pxr9w1LUiztXSZ5lbWUF6vQtHVJgmjh0iE
-X-Gm-Gg: Acq92OGpFs63p/67OmkphJVOWdwKtgJopA7eiYhAI8M0eUEVGsP5fIWfDvwU26mKCOH
-	M/m68H6k7LnxO2/N+PkfOKM/SsFctMR+Vz3p6lgllG9KTyYE0qgEQ/fjO0JH3Er5XFFkoBMUAA8
-	pQQolxGdGtJ16J6cULcPYD6LbgpMp1D00CeTLHpM+B3rNFA8SZXMVBe8ovDxXKOdx7dSWqSLU3t
-	hprkN/hRflWUcP90AMH0RFYxwb94Bldn09u/ww9nYPJu03e2Eh3OuoRESmUEncLqXY4JP/ihuVS
-	9fdq1aypXJfAc2dZnLhRs6fUXFWNzuJZ0Sx0kU7bDg3ALBUrDKohjMqxU1jKusNjBx+o01znDSY
-	0uNz++PGm3qAxhyUO9uSJMUJyJZHVhYPt+bFnha3m7GFXt96zRWANnG3ct6mHAJu3oPSKGsO/+r
-	pFWaStNfX6QKnbwKXXO8DvbvHC5Vca1t3JIgCk8vZNZPjExM7/lpyquE5R+rEY8NczfjF7Eg==
-X-Received: by 2002:a05:6214:4288:b0:8ac:a976:f8d with SMTP id 6a1803df08f44-8c662176523mr1445606d6.22.1778528693849;
-        Mon, 11 May 2026 12:44:53 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53d0702aasm339329156d6.43.2026.05.11.12.44.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 May 2026 12:44:52 -0700 (PDT)
-Message-ID: <0b4a8595-63e3-427c-8920-af4271ae1714@gmail.com>
-Date: Mon, 11 May 2026 15:44:52 -0400
+        d=1e100.net; s=20251104; t=1778529313; x=1779134113;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=PxughDZv2ExyLisbuqIhCs1N/oaAdXR0VIR/UAHwKrc=;
+        b=ZHUuy4108/fNfAJHw/U5O3JYS7Oxn3c4i8Ahb1LJdvBp4yo4fNJBO8uFdyFTxuhRqT
+         ncX+v1GXRH78njmcFgsrGnqqBv59zWkHHCchKU2oK6TY3BoEEmYXefMjFfhlgcoYNGx4
+         c2JU/rk0/gmMFa/dalWelRPx+Upqnskj5rTWjDuQ/9GHJQsERuh6BnkmGCYU2P0f29Ux
+         tvQfHU4WEO1fH0//RQhoZEqH0W8kuHkkaWwqeVsntJPj7MSA1IvlO2ollbr5s+pJ5PaT
+         EpIR0rBVPRPFHjO3HdBzvu5iegzE8+ZnJoRCNkPT7pw9BWAd27F1zGN0c+ENzsJX9XdU
+         7nlQ==
+X-Gm-Message-State: AOJu0YxaUe8Xj2zgr5Fw2OyM0xlGAGgepG3SALZ+MgPj9gd48o6+WNpR
+	B5eciNNNJZWioOmZuLDvJQPPQS5K00v3icaRQ240qwN/srSKS647zwzI9Rw4kTCXUmYtj1r0dJ2
+	9/AKSayhXuMrmtSpcF6K6QLESwo8kqsTeRSTt
+X-Gm-Gg: Acq92OF+fchgYYUIyV/dJ/US5RQqtcGWVvYCD9/Om+LmM8rUlLA0g9Wm2ZYfhNDsZ+S
+	UAhCTlRHUKI7p6RihtlbivWdq24JCROBMLfUUHkVfstcrwkEJ3MIP5kJU4hxveIsbzFGm+ktALH
+	lVypNkeHFVmN8LYpqWmZXHBkHtPn8pB5ppnsQBYJiDVr7e8cT9cmdTtFb/Nd0wzM622hg6oOJUo
+	hamIjufLAieESc9ehLsQRw3FMszSpWJ9pk9wOKIHAQ3KRmDB9EdAHr2cHPjoVCEWVEqlkd7p/PL
+	fsAo2MlRLfLQJZh/nSLoXv321P5dTcq2TVWK7gyyRnAeb5wsV4A9HiwTd2VnbKJ/aRk0FeuqJQx
+	LaA03
+X-Received: by 2002:a17:90b:58ee:b0:368:3d3e:efa6 with SMTP id
+ 98e67ed59e1d1-3683d3ef378mr6717412a91.20.1778529313149; Mon, 11 May 2026
+ 12:55:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/12] path-walk: support blobless filter
-To: Taylor Blau <me@ttaylorr.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
- johannes.schindelin@gmx.de, johncai86@gmail.com, karthik.188@gmail.com,
- kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net, ps@pks.im
-References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
- <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
- <b2deb7f81939d6ed03f0ea5c8be5ec515c1c99ab.1778523189.git.gitgitgadget@gmail.com>
- <agIiL3jBvBBLHJWD@nand.local>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <agIiL3jBvBBLHJWD@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <e3ee0a11b566dd2cc605447c111ae4620bce0fe6.1777050300.git.ben.knoble+github@gmail.com>
+ <d58b6e921d3005c6170fc6c47f175214acb3fa68.1778249267.git.ben.knoble+github@gmail.com>
+ <fd05eba1-d821-4cbe-ada6-ccab97308e56@gmail.com>
+In-Reply-To: <fd05eba1-d821-4cbe-ada6-ccab97308e56@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Mon, 11 May 2026 15:55:00 -0400
+X-Gm-Features: AVHnY4ImAxZqtZsgMuVHGkr2apqSzLb7Q7wIW-lEfByx-55uTZIe7ny7AHreD-Q
+Message-ID: <CALnO6CDeejkgXwDJwq2tmeUORf9DTP6kLEmsCoK4X_jcRMCEpw@mail.gmail.com>
+Subject: Re: [PATCH v2] ignore: note info/exclude lives in GIT_COMMON_DIR, not GIT_DIR
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Caleb White <cdwhite3@pm.me>, 
+	Calvin Wan <calvinwan@google.com>, Junio C Hamano <gitster@pobox.com>, 
+	Elijah Newren <newren@gmail.com>, Andrew Berry <andrew@furrypaws.ca>, Jeff King <peff@peff.net>, 
+	Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/11/2026 2:38 PM, Taylor Blau wrote:
-> On Mon, May 11, 2026 at 06:13:02PM +0000, Derrick Stolee via GitGitGadget wrote:
->> diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
->> index b78175fbe1..917045d5c3 100644
->> --- a/Documentation/git-pack-objects.adoc
->> +++ b/Documentation/git-pack-objects.adoc
->> @@ -402,9 +402,9 @@ will be automatically changed to version `1`.
->>  	of filenames that cause collisions in Git's default name-hash
->>  	algorithm.
->>  +
->> -Incompatible with `--delta-islands`, `--shallow`, or `--filter`. The
->> -`--use-bitmap-index` option will be ignored in the presence of
->> -`--path-walk.`
->> +Incompatible with `--delta-islands`. The `--use-bitmap-index` option is
->> +ignored in the presence of `--path-walk`. Whe `--path-walk` option
->> +supports the `--filter=<spec>` form `blob:none`.
-> 
-> s/Whe/The/ ?
-Yes, of course. This typo will follow the remaining patches in the context
-lines. Will fix in v4.
+On Mon, May 11, 2026 at 6:30=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> On 08/05/2026 15:14, D. Ben Knoble wrote:
+> > gitignore(5) says that the per-repository ignore file is
+> > $GIT_DIR/info/exclude, but in a worktree that is not the case:
+> >
+> >      git rev-parse --git-path info/exclude
+> >      /path/to/main/worktree/.git/info/exclude
+> >      git rev-parse --git-common-dir
+> >      /path/to/main/worktree/.git
+> >
+> > We actually use $GIT_COMMON_DIR/info/exclude. Adjust the documentation
+> > to say so.
+>
+> Thanks for making the documentation match reality. Are there some more
+> instances than need to be changed? If I run
+>
+>      git grep -n GIT_DIR/info origin/master Documentation/gitignore.adoc
+>
+> I see
+>
+> origin/master:Documentation/gitignore.adoc:10:$XDG_CONFIG_HOME/git/ignore=
+, $GIT_DIR/info/exclude, .gitignore
+> origin/master:Documentation/gitignore.adoc:37: * Patterns read from `$GIT=
+_DIR/info/exclude`.
+> origin/master:Documentation/gitignore.adoc:53:   the `$GIT_DIR/info/exclu=
+de` file.
+> origin/master:Documentation/gitignore.adoc:100:   such as $GIT_DIR/info/e=
+xclude and core.excludesFile, are treated as if
+> origin/master:Documentation/gitignore.adoc:149:`$GIT_DIR/info/exclude`. P=
+atterns in the exclude file are used in addition to
+> origin/master:Documentation/gitignore.adoc:150:those in `$GIT_DIR/info/ex=
+clude`.
+>
+> We also have a ton of other files under Documentation that mention
+> $GIT_DIR/info/... all of which, apart from the release notes, I
+> think should probably be using $GIT_COMMON_DIR but we can always do
+> that separately
+>
+> Thanks
+>
+> Phillip
 
-Thanks,
--Stolee
-
+Good catch, thanks. Let me adjust the ignore-related ones and leave
+the rest for now.
