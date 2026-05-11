@@ -1,127 +1,195 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6321E492D
-	for <git@vger.kernel.org>; Mon, 11 May 2026 10:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7EB3D75C7
+	for <git@vger.kernel.org>; Mon, 11 May 2026 10:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778493741; cv=none; b=ji5eb23aODkVc0Rys7C/3hDKjUpWHB1M5Jqkmhw/wtZHwtaTe2NVlIN1OqWhZaB9KmEMJU5y7ehDf8QTRvzYFpGSj2EtJ6uMeho3q6l7bbg4NBa7odMw5JmeCfU94vGVGh502FoJMWIRgYKgT7N/aBLi/kVvoUbnb04iA9ubZMI=
+	t=1778495420; cv=none; b=gs5YSFHdDouRSO5Nu0t0uKwwcqhLMVy+bugQbc0lHMQ++PMsaft6/JLj+LPOTM2S6z2FcKlYfBYjPh/fL9B/7QX8bVmbelcWz3rCbhJCZSEf9rzxgKqtg9RVXj4GCjxiUdW3t8ST6ra/bCnZxaeGIWky4p/IGNE1XbKdrQkoyyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778493741; c=relaxed/simple;
-	bh=RdGtrZlmGTYMFGKoR0Rc4BMDYYVP0jI3kdY3IYAc3i8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cLGE9SB7ZieGdz5SyK6kQF/r43vI3lFnuZqjTwGb+tFNoo7hbRdBHzJJdMjclYPN1xz046kmL1dp+5JV4VYmP1mqcccOTOPIv7giwlJ/iGiWZecDrmSLZYMvSKyefO8d36z9v3LCx1amQhfXnygl0qKKwrgtj5fMPFkLtUGT8iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=INGSZcwh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FFzvtWB3; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1778495420; c=relaxed/simple;
+	bh=2ERvR+7XPucbPElWEmeW9sMLtTIl1mmrExe86BBeYaw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=rSzwjTl5VVXU04K3Jz/D/AiTLdI8O68V0mRQkeRRJxXHOipuTMSyTZ3jveNrGPTR0HTScDTzESvVyDM6yTrPxf75RjzYFw/RdotI2jrFStlpHLc9DxpOARSUKtHgR0rzYc7djqePJVyliOErJTqQ1HEfeHb2qXc4P4QJg7zUlNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NHUUZwHs; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="INGSZcwh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FFzvtWB3"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E964140001B;
-	Mon, 11 May 2026 06:02:19 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 11 May 2026 06:02:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1778493739; x=1778580139; bh=9AQNL27nwZ
-	W0CeD8ORGBaGpN8swiCUMfUV35uQwIcb0=; b=INGSZcwhAf/uCWQU/5Bn9NvmQ2
-	uJaAIPM6TTHAtiVOs/YwTIX7bhU90GTYY4xXfmd1gtz5kzP0ZTULyDrP67RWaVKB
-	ef8qCp7bcKxVaAOC7w6zPCoZD9G5TyqMFXs7s7m/9EALuiUS/cFUOfg7k/SVVz24
-	WTYwxBv3TF22Pu1nfkok0zRPM/g0bziCxL0uj2df1NOAFA8kBJSzWDFC+byef74M
-	Sun3YIWww64NW/0a8n51BghM8bYFUS/odjIxQ6jrRMakiRFU5G4sCVmQdOe9t7Uk
-	0O9Fab0o4ikET6pNDpxtwcZLKzbUu5Kh8zQwXQ7KJV1edCoHVY7cLXR/y5Vg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778493739; x=1778580139; bh=9AQNL27nwZW0CeD8ORGBaGpN8swiCUMfUV3
-	5uQwIcb0=; b=FFzvtWB3wdVkita/1fuMWAEmdzhUZhaG8o1CTzziRIDNqz+HgIv
-	GBqRegYGUCa8CV4My5dEYAP/kjLx9Dm59ItUhik4tlmuEf3vAGzxI5SzLLjmdmnG
-	5XSWNS2Q2kQvMdfk7fG6UcM/ifdKLoIDJy5Bpvm8G067TZA5p4lFx+EzHSanco7i
-	JS0sTOG++Tg0KaEgomF0+hY0Njb7DMe5n+744nUb1qVLiS4dIXM9JV9okGVzhPlH
-	Yi1h5fgyQAWGq8/jjrVdxlEc79EziIn0bALMDdS/uSSHjeojjXg9sjzAuZzuQamB
-	ac5gV3FKQit9FPxPdWgvnVPBl6XVdYvP+ZA==
-X-ME-Sender: <xms:K6kBanRJjm3-BO3_PUjVp2z-QICFdokQ5EgoikgDmwIFlwmz6DDnIQ>
-    <xme:K6kBarCCUclZWol1tcpIJudO38y-oxJm2DN0fMTCtus1LDxVPKXCF_w71v2_JGrJs
-    rHnhFSkl3wnJRdnIZeXq8-0V5IkgKtVcFQUpUBxTmea9DLgLbQ1jVY>
-X-ME-Received: <xmr:K6kBavGgovgwNpWOuCNeizmc51pN63eTQLrsVwWxso-vQw6UL2Yk7jKroSyVn7DqJ5uJ3XLTCiZDg8f5Xt1J8dcwI-FwKWON5bXEosZADA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudekieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehtsghovghgihesfigvsgdruggv
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
-    uggvlhhinhesghhmgidruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtoh
-    hm
-X-ME-Proxy: <xmx:K6kBatB6suTo1TWoLk5BydgbUJFUqJdAnAkOaFgr0RtNkc7z9r8XVQ>
-    <xmx:K6kBavX-yZnfT_a-Rk-O5roGTXQVz4n1-ok9yvrF0BcJP-tM2kNZJg>
-    <xmx:K6kBahoMO8goYTrQz4UHzVBs4j9KmQAolZZb2zgqXbvBd8-W8Rv9BA>
-    <xmx:K6kBarTe1XVqo6Usd-SnjObn4f7hoWRZ8L2CkdOFwK5uFCtUO0Cicw>
-    <xmx:K6kBagOEEVAHyTezdrifkDNnNLXBrxjBkDuUt2wRVumxyLs_51rpm-vN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 06:02:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 426c6fb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 May 2026 10:02:16 +0000 (UTC)
-Date: Mon, 11 May 2026 12:02:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: enable EXPENSIVE for contributor builds
-Message-ID: <agGpJlY_iTnzVoGr@pks.im>
-References: <pull.2102.v2.git.1777914508.gitgitgadget@gmail.com>
- <pull.2102.v3.git.1778228209.gitgitgadget@gmail.com>
- <2159f6a271b06d156134392ce3c44fe957c83378.1778228209.git.gitgitgadget@gmail.com>
- <xmqqjyta9630.fsf@gitster.g>
- <agF_0x0yq78J-RFk@pks.im>
- <xmqq33zys62a.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NHUUZwHs"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-452169ae568so3153062f8f.3
+        for <git@vger.kernel.org>; Mon, 11 May 2026 03:30:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778495417; x=1779100217; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/sAqcq2jhyXUU3KeS6e+9V2jhxoxY3xx/eOL0Ol7zi8=;
+        b=NHUUZwHsdm4HQGSWGgHoHuTDqsqM7EJBM8yuvzHawW+NERyyVpY1Du+JYpzYU8Z3o8
+         +WGAkuij4ga9eGxQn3FI5fmfCuDJQojl2hl4ri7K7FexifKd0URtWM+WHenrZSh8/hSR
+         HW2KUKEp3+k+QcpYRNnZJxf9zvZmrS2eeUUCxJJglQQwJhqFcKK8JGBO/oCYRl9l194X
+         C12n2pby8wUDdRr5GpAWYuTta9hEt3S9OzBmYB8HD1uosqSiECnoA0g06aBRVB87Vb1/
+         6wMT5NB5xTIDEQJYzYwjmm06XyEQyoTHbjsmkZerBwqM41Tv9NHjCX6UJwYhcr+qDt63
+         JXJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778495417; x=1779100217;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/sAqcq2jhyXUU3KeS6e+9V2jhxoxY3xx/eOL0Ol7zi8=;
+        b=MBHeEP6AUER/YS+VPBIRXPG/ndDi2DOq7B3HEIMOW16C+xSUwAYW/HimcrC/9LqVY0
+         b/XUlS7cSJAnqflEaZ2JCmC75cuqM5cEdH6+xeoh3HKJ2nWc7F/SJdEPk6w5vQz7m5GT
+         TpFSh363W1E1KAOoFyb3ddzrA0dQJiuv5xlLIzSqulEK6fiQGkY/uVf4eI1ui+qRClOA
+         b6e3kDm9oKoc88YdYwzWjMQgf+BoHevpQ0QGVQUt6O1haBmGlfpI44/Qvn/duA5nY5Uy
+         PxWcaLXuOsRb7+8qqIdtnoyKkqvZiJd2fuK+YCWdXcOVTIxEOQxVpG6Y/c2VtACv0Mhh
+         Ivmg==
+X-Forwarded-Encrypted: i=1; AFNElJ8v+PJSTwlejXmiGEAX1/IeCObk+f4fqd2PP9PyyMozQEqIJU4e4YQNe36lXILBtMzJ960=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6cDT5pQX9+X81q55gdleWB2d+C9VJ6sDj1lTqssAB3aU7+flN
+	kurHpFyH5cOCCwF2KzcBlKd5t0q3sqP+65nDPptMlHSOchUzXa2DUw0zCIaWqg==
+X-Gm-Gg: Acq92OFAC/0b+NN4mfkjCaI6E9aJ/mawG/mTQ8VO+6poyRz88FznWLak5UDkJ5WDT3N
+	jfga1V3s2oEWNhNJqFffy2DVys/d7tl8dWkojuhzPETOZogEtXNxl5WhvHGvKC1YLNE1DW4asqG
+	eiufVaXklpKDrHUwnMdt0GRjrwAJlW3NMX1fJtrjVG9uABAbZmL4cCHeoRgPF/rSjUQl2YB5MEE
+	0QEcvxpm6VXqX5MSTdAG5u6bAoUw+y/tAho8MV+ry3S5d5xQ+pAspPU7V/vFoSaBQ9wKyLDHH1g
+	z85uhkh2sVl19MD2+CYfg/6cgy+X6hmMUWkv2kCgdBiTa1h2uFojSmBQALxrbq0bslxGa94nJEe
+	9vZVx+f+GMZcilOv4FEpyCt1x+V9Q+/crlzBrNAxJOZK5Xyhu8h12DLCXMm76sGY6fYHizdA1Le
+	RddIDFzMk9z7wRXAJDQMHINH1FKNjU/+WRIJf6wBAiZxtMePBwJlcG/zNlHigZM0Pm3wCuGREH7
+	WP+XYhdUmo=
+X-Received: by 2002:a05:6000:1acf:b0:43d:7d6f:f529 with SMTP id ffacd0b85a97d-4515d3dc303mr36417537f8f.31.1778495417021;
+        Mon, 11 May 2026 03:30:17 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:76d:4c01:4d98:a9b5:d032:1731? ([2a0a:ef40:76d:4c01:4d98:a9b5:d032:1731])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-458b3664e3esm9026963f8f.3.2026.05.11.03.30.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 May 2026 03:30:16 -0700 (PDT)
+Message-ID: <fd05eba1-d821-4cbe-ada6-ccab97308e56@gmail.com>
+Date: Mon, 11 May 2026 11:30:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq33zys62a.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2] ignore: note info/exclude lives in GIT_COMMON_DIR, not
+ GIT_DIR
+Reply-To: phillip.wood@dunelm.org.uk
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
+Cc: "brian m . carlson" <sandals@crustytoothpaste.net>,
+ Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+ Caleb White <cdwhite3@pm.me>, Calvin Wan <calvinwan@google.com>,
+ Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
+ Andrew Berry <andrew@furrypaws.ca>, Jeff King <peff@peff.net>,
+ Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <e3ee0a11b566dd2cc605447c111ae4620bce0fe6.1777050300.git.ben.knoble+github@gmail.com>
+ <d58b6e921d3005c6170fc6c47f175214acb3fa68.1778249267.git.ben.knoble+github@gmail.com>
+Content-Language: en-US
+In-Reply-To: <d58b6e921d3005c6170fc6c47f175214acb3fa68.1778249267.git.ben.knoble+github@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 11, 2026 at 05:29:01PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On 08/05/2026 15:14, D. Ben Knoble wrote:
+> gitignore(5) says that the per-repository ignore file is
+> $GIT_DIR/info/exclude, but in a worktree that is not the case:
 > 
-> > So with this change we now run the tests for all "official" branches,
-> > and on pull requests. Which raises the question: are there any events
-> > that happen regularly that are excluded by this? Because if not I think
-> > it might be sensible to just enable this unconditionally, also because
-> > that would make jobs on GitLab CI run expensive tests, as well.
+>      git rev-parse --git-path info/exclude
+>      /path/to/main/worktree/.git/info/exclude
+>      git rev-parse --git-common-dir
+>      /path/to/main/worktree/.git
 > 
-> The simplicity certainly is tempting.
+> We actually use $GIT_COMMON_DIR/info/exclude. Adjust the documentation
+> to say so.
+
+Thanks for making the documentation match reality. Are there some more
+instances than need to be changed? If I run
+
+     git grep -n GIT_DIR/info origin/master Documentation/gitignore.adoc
+
+I see
+
+origin/master:Documentation/gitignore.adoc:10:$XDG_CONFIG_HOME/git/ignore, $GIT_DIR/info/exclude, .gitignore
+origin/master:Documentation/gitignore.adoc:37: * Patterns read from `$GIT_DIR/info/exclude`.
+origin/master:Documentation/gitignore.adoc:53:   the `$GIT_DIR/info/exclude` file.
+origin/master:Documentation/gitignore.adoc:100:   such as $GIT_DIR/info/exclude and core.excludesFile, are treated as if
+origin/master:Documentation/gitignore.adoc:149:`$GIT_DIR/info/exclude`. Patterns in the exclude file are used in addition to
+origin/master:Documentation/gitignore.adoc:150:those in `$GIT_DIR/info/exclude`.
+
+We also have a ton of other files under Documentation that mention
+$GIT_DIR/info/... all of which, apart from the release notes, I
+think should probably be using $GIT_COMMON_DIR but we can always do
+that separately
+
+Thanks
+
+Phillip
+
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
 > 
-> We could instead do the "let's enable only on linux-test-vars" kind
-> of "optimization", which is on the other side of the extreme, but
-> that is only valid if the kind of bugs that can be revealed only by
-> EXPENSIVE tests, which may not be caught by others, is expected to
-> be pretty much platform or configuration agnostic.  I somehow doubt
-> that it is the case.
+> Notes (benknoble/commits):
+>      Changes in v2:
+>      
+>      Only adjust the documentation.
+>      
+>      brian points out that a more general extension would allow using more
+>      info/ files as "per-worktree," which I don't have the impetus to
+>      implement myself.
+>      
+>      Phillip and Junio asked for a concrete use case:
+>      
+>          A colleague is developing a tool for managing the "skill files" of
+>          various LLM tools (Claude, Windsurf, etc.). The files have
+>          requirements that make it hard to generically ignore them (e.g.,
+>          filenames and front-matter have to match), but different tasks
+>          (corresponding to worktrees) may want different active skills, so it
+>          is desirable to ignore the files. Think of this like node_modules.
+>      
+>          Unfortunately, since per-worktree ignores don't work, the current
+>          solution is to put a .gitignore file in the corresponding directory
+>          with the installed skills that ignores itself and the installed
+>          skills.
+>      
+>      Since overall reactions seem fairly negative (or require a more general
+>      extension, which I think is probably the right course but not simply
+>      implemented), I've opted to adjust the docs. They originally confused
+>      me, as I was surprised when my colleague reported that per-worktree
+>      ignores didn't work (the docs imply they should by use of $GIT_DIR).
+>      
+>      Link to v1: <e3ee0a11b566dd2cc605447c111ae4620bce0fe6.1777050300.git.ben.knoble+github@gmail.com>
+>      
+>      v1 notes:
+>      
+>      Discussed briefly at https://lore.kernel.org/git/CALnO6CCXmA+ATT7CuyWkU6P8qmLCCpMi5Ppr1c78s0heznpVyw@mail.gmail.com/T
+>      
+>      This is based on next (4f69b47b94 (Merge branch 'ps/test-set-e-clean'
+>      into next, 2026-04-23)) but cleanly applies to master (94f057755b (Git
+>      2.54, 2026-04-19)) and seen (50541634cb (Merge branch
+>      'js/parseopt-subcommand-autocorrection' into seen, 2026-04-23)).
+> 
+>   Documentation/gitignore.adoc | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/gitignore.adoc b/Documentation/gitignore.adoc
+> index a3d24e5c34..c423b650de 100644
+> --- a/Documentation/gitignore.adoc
+> +++ b/Documentation/gitignore.adoc
+> @@ -7,7 +7,7 @@ gitignore - Specifies intentionally untracked files to ignore
+>   
+>   SYNOPSIS
+>   --------
+> -$XDG_CONFIG_HOME/git/ignore, $GIT_DIR/info/exclude, .gitignore
+> +$XDG_CONFIG_HOME/git/ignore, $GIT_COMMON_DIR/info/exclude, .gitignore
+>   
+>   DESCRIPTION
+>   -----------
+> @@ -34,7 +34,7 @@ precedence, the last matching pattern decides the outcome):
+>      includes such `.gitignore` files in its repository, containing patterns for
+>      files generated as part of the project build.
+>   
+> - * Patterns read from `$GIT_DIR/info/exclude`.
+> + * Patterns read from `$GIT_COMMON_DIR/info/exclude`.
+>   
+>    * Patterns read from the file specified by the configuration
+>      variable `core.excludesFile`.
+> 
+> base-commit: 4f69b47b940100b02630f745a52f9d9850f122b2
 
-Yeah, it's probably not.
-
-> In any case, I think spending on more machine cycles is certainly
-> cheaper than human resources for things like this.
-
-Agreed.
-
-Patrick
