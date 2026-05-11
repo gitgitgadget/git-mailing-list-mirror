@@ -1,82 +1,80 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA063E5EFF
-	for <git@vger.kernel.org>; Mon, 11 May 2026 12:30:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C833D9DD6
+	for <git@vger.kernel.org>; Mon, 11 May 2026 12:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778502610; cv=none; b=SFUrz9tXAwZQdLm6PtHIljBcmL60+GTu1yGGD5WOc4ZoEVUMQp22Vs5AGUV1DQT31vrEPDh5VSNlB7pofsCgcrKgIbREvvuDmv3uUheWcrJQYey+K7Zz+mDXjR1RQnrs62Uc621njTPZSVVVyPVF7YUzk2IIGn9fLB0nORN5ZCE=
+	t=1778502610; cv=none; b=eQ2VB6wCdi1MUFeRiyreK7JXaI24Q2Lu+J3ZURcn4rEAQK4GEFtPOsmWBHFnS5TRVQPLh26CuhYesXIT9nLMQ2uwAnpFVAS6eelTz5qthwpicOI1Z5jlk2O1gyIB7Dal0vwlfxmBm1prEVK1C1s8YVV3frDtAALoQeM1rtdp5Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778502610; c=relaxed/simple;
-	bh=TnSnYOfGsj4ubU5YVw+rgfD49kv/4ws6M6r6FBr674w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XhYvvbFhqFHl4wlcSbgQYEEMl8CbrX+0+gDeuamtA3EDoPjZ+lKtKfYkDvngo7ZIplxpEZkvhvSCVRRJAhfU9XnIn9Hhbdic5sLW4tyN6FkasfOGH9bjkIbUoLEVxm4gZ3NH90VL1sDncXmq4Kc8ZpYY5dKupfk0IGwP2ZMp9Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H1gg+pxv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vmV6W6KU; arc=none smtp.client-ip=202.12.124.147
+	bh=sC2yOebk25Cy9dzpmw2mP95X/Wxmon4Ou+NBs11PSMs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JPsLHUsG/grVkYbYlcvX6MgYO2iGPz2+kiB9F/mLX9w1DA5vlUmUJHD8Icg63fULf8pFkzakIrQpVL+zwiK4IOKSQJ/+Zl/QcyndiA9lxOZ+iNFutIfz6fTnUCmGCWD4BzaMc7kXFGUYZeK3T3zv/mi80QBJ6gebwx9K3vi7OEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S/C5NJXX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=maw8z+E5; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H1gg+pxv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vmV6W6KU"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id E64241D0011B;
-	Mon, 11 May 2026 08:30:07 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 11 May 2026 08:30:08 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S/C5NJXX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="maw8z+E5"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BA40A7A011B;
+	Mon, 11 May 2026 08:30:08 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 11 May 2026 08:30:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778502607;
-	 x=1778589007; bh=Ht/RAe/txQBp2+jbYEIDGdaR/1JF/bAaGzZNB6ftog4=; b=
-	H1gg+pxvkdHpibg4ePFg3z4BOwB62q4Hk0YPBbG2f/0E2PUevkiVq9g+N8RuhwC6
-	8OfO1hqng/ZQsE0gi8Pl1zDXVTmIcNMkafrKgpULBaDJqiKftGALUk0YKy/FQvFx
-	bi4iYeMRwV6EPVw2I1yPOMlt2scC3U6sou+mIOyK0f4UuSzJZWE+BAB774qCmUjR
-	/2kxrJIdTFJalMs9BIGVO1U9lRdEYlKpfEhvJADDPjr3/HIRb1uhHNc3X7iCYCCN
-	CB0wdw8dQCkssbzR7CMbs1O2YdDq3A5hReWPkDIVkaauMEiimpBrmD5E9nTvQVdp
-	dSYCkAaPMHftdrQxqaa6xw==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1778502608; x=1778589008; bh=oGdMSStW1q
+	ANiy4beqEMPkhWz+oHwvDaI098QMDgRtI=; b=S/C5NJXXOqKuNUX7YHNeUxsskX
+	BkQ+9kIvixq6fBUBw9XZ/Nm561P8zs+YKP/AgSYt3nqcbjCni2/oe8WmEICCjA9l
+	a+cXsvhIKO17TqkPBaEdS8jC1wRMvMofYwqt6pkaKAcipRJgNFWmZHeduYXwcp2J
+	O4XHoIX1Vv2Tphvf6NwToT7ARZrTMRIn2ZcO4YoR8edbnjmem+7RVHjm6ewi7uIe
+	fKTyrMIVFKpFrOs4MuyJx20QbvgHDAa/N0wo2rfJd0oEnQVtS0DhslvUHTAQ0s/2
+	0ZwxaAdoX+j1ckI+sXkYAIpjr1jtzvowQ342Q4bC2XVjdDXodpRMYt+fyG/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778502607; x=
-	1778589007; bh=Ht/RAe/txQBp2+jbYEIDGdaR/1JF/bAaGzZNB6ftog4=; b=v
-	mV6W6KUdN9qon1hse+7mrsBUiLilqR6oHYA03ekBnlCU+KEwAAcLVYojeIOpXm6r
-	eumkkYchHVRKzbv+Kj8O7xCPxkzujfbn+VgLWs9QPBPMW7Wj+28d8GbmUvWCggIV
-	zqYdQEsvZN++shthjAdgPYFjF+yxAHfn2EfZ/tTFrAvCWGYysaml+R1RDnWBpSa3
-	afJSf/xUmpnMUSNA9TKbHzqqN454VKrxVUJUkH/E/tZrYzr86i+mfm/rUFEMB0Eh
-	S8KKfxk0XL6keJCVEhk8mpaLMcC6j1NPb/5Fga+6Vs2PqPgv4WEMbClxjuOSDf/j
-	WsoADO4pi6bBQJ5RQ9USQ==
-X-ME-Sender: <xms:z8sBalCPNBlicmMiUAjAhYagAEy3Jz3hUdukL-8O8iKIdXOXls8TJQ>
-    <xme:z8sBanMmVGlDr9qDvd18TNzdXbXeZecU1UyH9PhTm2DJnwT9-o4QyvPLNcxR6OlEq
-    HhMMi21suxeeRk2w2nlWfUirfZD1zLw3NVMI2QP0qqrBljvUXFUJA>
-X-ME-Received: <xmr:z8sBaqYLJ-gQEenxqp7k6YE8yMU1WibBKSh5W2_i43ZMW8yx4tHxZdxYqyrLOXsR2Uiayxj3Op_5fBtkhUBSb7-dO7WLZ7Opvl5DzfSS0g>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1778502608; x=1778589008; bh=oGdMSStW1qANiy4beqEMPkhWz+oH
+	wvDaI098QMDgRtI=; b=maw8z+E5lvJPDSe8VmozkcLl/oCh0jjyqwQrRbmki4l5
+	0EoLzUyZSN+rlrcWJHtrG+DQ+iMDQ1EB0/jxw38Z+yRbN6RDRZjoSt/LXFTPn6oZ
+	+SOBPn5TZLfZ0UwUXa9v05vRvY/EunAqMvH4pF9vMhld7CmxH+D6zAfkhzs70AT1
+	ReuhxopmouHK34ak+Upg5+6ySucd9dWkXlOYZ/oB/EFN3Utn6dGdvJXIP5k2/rCF
+	HfIUddAqGwWbZaSVp76wcVhT4mhmb6+j5zJJFH27M1JthOxQZJ5kHCepuW+SafHK
+	L6ZLUbLQqZsrDdOS7yCu5T+BHrNhy9Up4WG1t5q17Q==
+X-ME-Sender: <xms:z8sBavmIZy_tMktcN7Zo5ZXqTSBV9Siy5L37Seolm1TJKRkxwDegbA>
+    <xme:z8sBamhJIl_dxWXAIYLn5CfiGLP0TtU-TLdCo580jUubiU3WX8fZ3WZEDjX-HwigN
+    VaXtLWAohEZn5XmBjRCAOb6VuQ_ZUspJCGFUmhksxzUAKjUl4w9WA>
+X-ME-Received: <xmr:z8sBavcLMHQP5pFh5JS0IkDTWwQbrnsq8iHxi4gRGfnZ1aqr6PYbtBuTTUUhDdT_LSbGjLoYkGmlsz6XLM452OG_eDDP_GqhUmJ5X3uYRA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudekleefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmihhkrggthhhusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopegrtghtihhonhhmhihsthhiqhhuvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihl
-    ohhrrhdrtghomh
-X-ME-Proxy: <xmx:z8sBamuJDILfnUapacx0YvOYDb7HScqHaFDkklbKCpdnzCZzr4I7Zw>
-    <xmx:z8sBasNz5oFlowjI3RoZmfotkcuxzbvHbpdfUhXsJQPhUrUyc2Kdpg>
-    <xmx:z8sBat6aFLxODXTd3kBkyQ-lgDaXuBUpMqM9O92B7lrEJ7rL3gopUg>
-    <xmx:z8sBaiTbme7Pl2OtI2cjQ6WAizxtrTiDHes4q03N9jpd_QilFCuATQ>
-    <xmx:z8sBarf6LiUSW6haswOwt8DPk-Yg3_AmKGSQB50L03Dt0QUYZ9NcXEIO>
+    gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evueegkedtteeigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtoheprggtthhiohhnmhihshhtihhquhgvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhikhgrtghhuhesghhmrghi
+    lhdrtghomh
+X-ME-Proxy: <xmx:z8sBauhx1sAz3QdFf7h8QwgWzRxid6C7rpHL_SOj5-3Vn-7G7dRjXQ>
+    <xmx:z8sBavy--l2FBau407vVU8RhLgn20Y8LKklbY6_i8U9rg-WpCvYFvQ>
+    <xmx:z8sBaiPY2XKeIDQyM_znHyk71C1CK3o1d2q6dPb44oaixUNwsysGpA>
+    <xmx:z8sBaoXvPEdmse3xVUPwfsP4S6e_BDY9nasB2JPAQE0q9EvghTikOw>
+    <xmx:0MsBaiJUe6gMVciqqV_vyWW_bryAVEnESJKyh3Rkw2BU3X1EnZuEwZL8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 08:30:06 -0400 (EDT)
+ 11 May 2026 08:30:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 00f28584 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 May 2026 12:30:04 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 751d8f45 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 May 2026 12:30:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 11 May 2026 14:29:55 +0200
-Subject: [PATCH 1/2] builtin/maintenance: fix locking with "--detach"
+Subject: [PATCH 0/2] builtin/maintenance: fix locking and respect "gc.auto"
+Date: Mon, 11 May 2026 14:29:54 +0200
+Message-Id: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,260 +83,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-pks-maintenance-fix-lock-with-detach-v1-1-ccd7d62c9a40@pks.im>
-References: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
-In-Reply-To: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
+X-B4-Tracking: v=1; b=H4sIAMLLAWoC/yXN2wrCMBCE4Vcpe+1CUjCoryJebJLRrNW0NPEAp
+ e9u1MsPhn8WKpgVhQ7dQjOeWnTMDXbTUUiSL2CNzdSb3pmttTwNhe+iuSJLDuCzvvk2hoFfWhN
+ HVAmJxZkd9t5JhKeWmma03e/mePq7PPwVoX7btK4fe4M8xIgAAAA=
+X-Change-ID: 20260511-pks-maintenance-fix-lock-with-detach-a608e9b6adeb
 To: git@vger.kernel.org
 Cc: Jean-Christophe Manciot <actionmystique@gmail.com>, 
  Mikael Magnusson <mikachu@gmail.com>, Jeff King <peff@peff.net>, 
  Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>
 X-Mailer: b4 0.15.2
 
-When running git-maintenance(1), we create a lockfile that is supposed
-to keep other maintenance processes from running at the same time. This
-lockfile is broken though in case the "--detach" flag is passed: the
-lockfile is created by the parent process and will be cleaned up either
-manually or on exit. But when detaching, the parent will exit before all
-of the background maintenance tasks have been ran, and consequently the
-lock only covers a smaller part of the whole maintenance process.
+Hi,
 
-Fix this bug by introducing two new functions:
+this patch series addresses the issues reported in [1]. The series is
+built on top of Git 2.54.0.
 
-  - `daemonize_without_exit()` is the same as `daemonize()`, but doesn't
-    call exit(3p) for the parent process.
+Thanks!
 
-  - `lock_file_reassign_owner()` reassigns the owner of its owned
-    tempfiles so that they don't get unlinked anymore when the previous
-    owner exits.
+Patrick
 
-Together this allows us to reassign ownership of the lockfile after we
-have daemonized so that the lockfile is now owned by the child process.
+[1]: <CAKcFC3arsYExb5dCMQspo4V9UFDadFaj8Q4PUsMWZJw_eYrMzA@mail.gmail.com>
 
-Reported-by: Jean-Christophe Manciot <actionmystique@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Helped-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c           | 26 ++++++++++++++++++++--
- lockfile.c             |  9 ++++++++
- lockfile.h             | 10 +++++++++
- setup.c                | 31 +++++++++++++++++++--------
+Patrick Steinhardt (2):
+      builtin/maintenance: fix locking with "--detach"
+      run-command: honor "gc.auto" for auto-maintenance
+
+ builtin/gc.c           | 26 ++++++++++++--
+ lockfile.c             |  9 +++++
+ lockfile.h             | 10 ++++++
+ run-command.c          |  6 ++--
+ setup.c                | 31 +++++++++++-----
  setup.h                |  1 +
- t/t7900-maintenance.sh | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 124 insertions(+), 11 deletions(-)
+ t/t7900-maintenance.sh | 95 ++++++++++++++++++++++++++++++++++++++++++++------
+ 7 files changed, 154 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3a71e314c9..09cb92ac97 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1810,10 +1810,32 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
- 				   TASK_PHASE_FOREGROUND))
- 			result = 1;
- 
--	/* Failure to daemonize is ok, we'll continue in foreground. */
- 	if (opts->detach > 0) {
-+		pid_t child_pid;
-+
- 		trace2_region_enter("maintenance", "detach", the_repository);
--		daemonize();
-+
-+		child_pid = daemonize_without_exit();
-+		if (!child_pid) {
-+			/*
-+			 * We're in the child process, so we take ownership of
-+			 * the lockfile.
-+			 */
-+			lock_file_reassign_owner(&lk, getpid());
-+		} else if (child_pid > 0) {
-+			/*
-+			 * We're in the parent process, so we assign ownership
-+			 * of the lockfile to the child and then exit immediately.
-+			 */
-+			lock_file_reassign_owner(&lk, child_pid);
-+			exit(0);
-+		} else {
-+			/*
-+			 * Failure to daemonize is ok, we'll continue in
-+			 * foreground.
-+			 */
-+		}
-+
- 		trace2_region_leave("maintenance", "detach", the_repository);
- 	}
- 
-diff --git a/lockfile.c b/lockfile.c
-index 7add2f136a..96aab3c885 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -356,3 +356,12 @@ int rollback_lock_file(struct lock_file *lk)
- 	delete_tempfile(&lk->pid_tempfile);
- 	return delete_tempfile(&lk->tempfile);
- }
-+
-+void lock_file_reassign_owner(struct lock_file *lk, pid_t owner)
-+{
-+	if (!is_lock_file_locked(lk))
-+		BUG("cannot reassign ownership of unlocked lockfile");
-+	lk->tempfile->owner = owner;
-+	if (lk->pid_tempfile)
-+		lk->pid_tempfile->owner = owner;
-+}
-diff --git a/lockfile.h b/lockfile.h
-index e7233f28de..0b10b624fa 100644
---- a/lockfile.h
-+++ b/lockfile.h
-@@ -341,4 +341,14 @@ static inline int commit_lock_file_to(struct lock_file *lk, const char *path)
-  */
- int rollback_lock_file(struct lock_file *lk);
- 
-+/*
-+ * Reassign ownership of the lockfile to a different process.
-+ *
-+ * This is intended for use after `fork(2)`-ing. The parent transfers ownership
-+ * to the daemonized child so that its atexit handler does not unlink the lock
-+ * that should outlive it, and the child claims the inherited tempfiles so that
-+ * they are cleaned up when the daemon exits.
-+ */
-+void lock_file_reassign_owner(struct lock_file *lk, pid_t owner);
-+
- #endif /* LOCKFILE_H */
-diff --git a/setup.c b/setup.c
-index 7ec4427368..34deb6e985 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2156,20 +2156,18 @@ void sanitize_stdfds(void)
- 		close(fd);
- }
- 
--int daemonize(void)
-+pid_t daemonize_without_exit(void)
- {
- #ifdef NO_POSIX_GOODIES
- 	errno = ENOSYS;
- 	return -1;
- #else
--	switch (fork()) {
--		case 0:
--			break;
--		case -1:
--			die_errno(_("fork failed"));
--		default:
--			exit(0);
--	}
-+	pid_t pid = fork();
-+	if (pid < 0)
-+		return -1;
-+	if (pid > 0)
-+		return pid;
-+
- 	if (setsid() == -1)
- 		die_errno(_("setsid failed"));
- 	close(0);
-@@ -2180,6 +2178,21 @@ int daemonize(void)
- #endif
- }
- 
-+int daemonize(void)
-+{
-+#ifdef NO_POSIX_GOODIES
-+	errno = ENOSYS;
-+	return -1;
-+#else
-+	pid_t pid = daemonize_without_exit();
-+	if (pid < 0)
-+		die_errno(_("fork failed"));
-+	if (pid > 0)
-+		exit(0);
-+	return 0;
-+#endif
-+}
-+
- struct template_dir_cb_data {
- 	char *path;
- 	int initialized;
-diff --git a/setup.h b/setup.h
-index 80bc6e5f07..396af8d808 100644
---- a/setup.h
-+++ b/setup.h
-@@ -150,6 +150,7 @@ int path_inside_repo(const char *prefix, const char *path);
- 
- void sanitize_stdfds(void);
- int daemonize(void);
-+pid_t daemonize_without_exit(void);
- 
- /*
-  * GIT_REPO_VERSION is the version we write by default. The
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4700beacc1..df0bbc1669 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -1438,6 +1438,64 @@ test_expect_success '--no-detach causes maintenance to not run in background' '
- 	)
- '
- 
-+test_expect_success PIPE '--detach holds maintenance lock until daemonized child exits' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		git config maintenance.auto false &&
-+		git config core.lockfilepid true &&
-+
-+		git remote add origin /does/not/exist &&
-+		git config set remote.origin.uploadpack "cat fifo-uploadpack" &&
-+
-+		mkfifo fifo-uploadpack fifo-maint &&
-+
-+		# Open the maintenance FIFO, as otherwise spawning
-+		# git-maintenance(1) would block. Note that we need to open it
-+		# as read-write, as otherwise we would block here already.
-+		exec 9<>fifo-maint &&
-+
-+		{ git maintenance run --task=prefetch --detach 7>&9 & } &&
-+		parent="$!" &&
-+
-+		# Reap the parent process so that the exec call below will not
-+		# get SIGCHLD.
-+		wait "$parent" &&
-+
-+		# Open the git-upload-pack(1) FIFO for writing, which will
-+		# block until the upload-pack script opens it for reading. Once
-+		# exec returns, we know that the daemonized child is alive and
-+		# pinned.
-+		exec 8>fifo-uploadpack &&
-+
-+		test_path_is_file .git/objects/maintenance.lock &&
-+		test_path_is_file .git/objects/"maintenance~pid.lock" &&
-+
-+		# Verify that the maintenance.lock still exists, and
-+		# that it was created by the parent process, not the
-+		# child.
-+		echo "pid $parent" >expect &&
-+		test_cmp expect .git/objects/"maintenance~pid.lock" &&
-+
-+		# Reopen the maintenance FIFO as read-only so that
-+		# git-maintenance(1) is the only writer. This will cause it to
-+		# close the FIFO once the process exits.
-+		exec 9<&- &&
-+		exec 9<fifo-maint &&
-+
-+		# Close the FIFO used by git-upload-pack(1) to unblock it and
-+		# then wait until the maintenance FIFO is closed by
-+		# git-maintenance(1), indicating that it has exited.
-+		exec 8>&- &&
-+		cat <&9 &&
-+
-+		test_path_is_missing .git/objects/maintenance.lock &&
-+		test_path_is_missing .git/objects/"maintenance~pid.lock"
-+	)
-+'
-+
- test_expect_success '--detach causes maintenance to run in background' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
 
--- 
-2.54.0.545.g6539524ca2.dirty
+---
+base-commit: 13ef77ce6e222bef3ab145642e6ef1486075211c
+change-id: 20260511-pks-maintenance-fix-lock-with-detach-a608e9b6adeb
 
