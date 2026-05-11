@@ -1,99 +1,131 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.thalheim.io (mail.thalheim.io [135.181.61.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF63264D9
-	for <git@vger.kernel.org>; Mon, 11 May 2026 08:44:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808412D9ECA
+	for <git@vger.kernel.org>; Mon, 11 May 2026 09:06:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=135.181.61.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778489082; cv=none; b=s2PJJy23KByWM7uhn/KDc/2M2klPMU9d0Ta6AcZSoViLwU3rBcbkKRiZix3oHZX88OHX8edDMB/Kr6rlVDk3+HVgUnU6E/FS1B0sN/pAGq0+1D0iQ8McEpqK5cHhGnNHD1YFLbpj9RLpiXltBhwdhnXOwQT/qb6B8A5If5NE03w=
+	t=1778490372; cv=none; b=dqoKK56/BDGfkdPgAukq9/cwzId1aMoLRYYaiAE+zGjwZuE9kYJJ+JSv5aYQuLpKQkSQJbpzCVq40iKOyZm0homOU0BywUBNEFGHv8t/+GlLarGLg6szEbsoR2wEszvq33uQlfX+AKH9BKhng1LCa9MdOCOIXdz810HWlT4Smas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778489082; c=relaxed/simple;
-	bh=DfUa1PwkFK6CVnpelq/B0jRW+VGyiiP1NxeyLoqxm7s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bie1OwRG/J8CgK+MDQdG81RG04tlF8GXST04hitrf4OYPL5dgEjJeu1I/qHiiF8sEc+0BJlCPKau8WTb5CBtDXOmhgV9+YY91+eJWCos/I7kOYb5UTqq+Je9eKlcgCBpdb/1aWCR0NZyUZJWxfuLz96PU3p7I368u+3HUoZmnqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PoywDC3r; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778490372; c=relaxed/simple;
+	bh=xP5Yp8g1Mk+0v7wOROQPM8MsojkXN3pcOWeYakAgUZY=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=J+Tuf5JKv2kyA5QFVGDnfpRhJ3Jdf8VgdzBVoF7EHlgtxOZFxmv4wlx2/s0IcQbUDvCxzl7/gy9ncLODmMveYe3+gyXIx9XbDs6fDb+bo5q7+40yDrnlunDysKkS614PVS7JTjiMKOM2XEd3Amt6vaP/FQsCYwc3PF9mPXyUAgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thalheim.io; spf=pass smtp.mailfrom=thalheim.io; dkim=pass (1024-bit key) header.d=thalheim.io header.i=@thalheim.io header.b=R8P/kV6T; arc=none smtp.client-ip=135.181.61.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thalheim.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thalheim.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PoywDC3r"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a4113ab355so3724778e87.1
-        for <git@vger.kernel.org>; Mon, 11 May 2026 01:44:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778489079; x=1779093879; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DfUa1PwkFK6CVnpelq/B0jRW+VGyiiP1NxeyLoqxm7s=;
-        b=PoywDC3rgQCTQIsmQ58KkkWsfq8UOA/zbY6gpY/Bcku1QCCPMKXT1y+d9QlF1cFyaF
-         dEXDmmzEldEOXW34RQk0uYf/VuiGRTHbPypE92bazRBH7Spkx87+/OXTI1ICvLVdK+Ur
-         1Km/ok2vA9o5nKP2PFsn2rQ10T22p8OX6YcTUglfge02pvpj3ghwo5LI1BP67Iu8kwXk
-         RwdtH/tPaPMPwqpPznoCvXk/kld4KYesqSqOpBgWqo3lU43aiPWupKpcQHNAsz2GDxnu
-         rTJxmTI3pURCJb2USchwTJjr6WFSlZcww/TazThh+1BEu/+CQ7jIvuliKHbJNVjYPv5S
-         hJKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778489079; x=1779093879;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DfUa1PwkFK6CVnpelq/B0jRW+VGyiiP1NxeyLoqxm7s=;
-        b=Gmv7YjsIKF+lazwnsR9Uygfkpo60gYbbFo/Oxkt/d8kY/ZFEoErOZxc1T1uPyLsa+w
-         k9DdvTvuxoQA3fKV78Agp5gT6MWMc+kgkhFATjiqdyNQoU9ekSSzN4R/6vd2iJx5UloW
-         WFtMQZRlyT27wks3x+id8RJPiec4eU8EzbyZLbn7QeFLrqrj2qfICJyUw8UR6ujLwRCE
-         JYEv1E31onrIy3p77iIOY8c65Tn83ahyjgAD3UJrax7Tdd0sDrCRJHAMYfSa/e7Z/Mh1
-         AlnB+u+GXQVtablJP2u0hzOA3e3nr6RBkPeIVrf652IbmwccTcjx9JnVrv6LALhCqlQG
-         RnYg==
-X-Gm-Message-State: AOJu0YxzexJIYDJ3HH08LLcI4h4wQc9VdBdBa8VNdVIOnE6Kb7lYKkbe
-	wrlTjVT4R9vnCYW8qzti79jfzqKQOdzcUoKSy0x/EVLSczxfTm9SuG8h
-X-Gm-Gg: Acq92OG+BHySU86/J8rHckC732s9qnL+D7Ep6bbf7wZyNc4BPzCkkh2KEaW4Yacpfrz
-	+anUbTFsR1x1V5gMyNhuiw2is85s6tbp4LLQEE3DS8aAPxxTbPhr3mW4JA5VtkEoJxmvA8NVhtJ
-	mUVR8Rpw6FI27wsyf7l8gC0r/lT6odSinHCmvdzrBuz71EKj1Od+qJN5U95SBaBt1wuW5uDxH79
-	/oR222eDFh90qXlJfDwRtb2wuJfaw3/N7Mes4PbEnaKnjRUvC/6NNa7Yq7rzTgqimwI+Wo3f0zm
-	xmIWdfaPlRQJU/h4kBCOhbQEBch1kbWEBOW1BAQRYZ45b3truEK+cWWhpG7Xkx/aBaUFu2/am8O
-	OWe3/cT5yWv3PFaHKXExsL73LA8NfU/m0Y3sQvpUXkLQfWJ95NM97rs5pvaqhvkuVs10vG5xp4Z
-	20t3Rmb5R9IBezzS3uxB54ev5U4ZvI3OFn0Eh4CbEC+id2m1aPNLbWPb2Uqix7xkgdSMvM1Cmlp
-	Fa6EEg+JgUD0Qv7DkC6pHPciIHWeId1
-X-Received: by 2002:a05:6512:15a0:b0:5a8:64c7:9592 with SMTP id 2adb3069b0e04-5a8a94c8da5mr4498321e87.37.1778489078503;
-        Mon, 11 May 2026 01:44:38 -0700 (PDT)
-Received: from localhost.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8a95661e0sm2451335e87.67.2026.05.11.01.44.37
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 11 May 2026 01:44:37 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com,
-	j6t@kdbg.org,
-	kristofferhaugsbakk@fastmail.com
-Subject: [PATCH] fetch: add fetch.pruneLocalBranches config
-Date: Mon, 11 May 2026 10:44:36 +0200
-Message-ID: <20260511084436.76336-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.54.0.455.gdfa85cd088
-In-Reply-To: <xmqq7bpas6k0.fsf@gitster.g>
-References: <xmqq7bpas6k0.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=thalheim.io header.i=@thalheim.io header.b="R8P/kV6T"
+Received: from mail.thalheim.io (eve.i [IPv6:2a01:4f9:4b:4084::1])
+	by mail.thalheim.io (Postfix) with ESMTPSA id 52E08BD91FE;
+	Mon, 11 May 2026 09:06:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thalheim.io; s=default;
+	t=1778490360;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=S1m8wsjRAykO3wnS8V04u5z/fahlJftstvVb2oCPzno=;
+	b=R8P/kV6TW3EzdTnZ0Sv4Jk9LGjXvVtb+DCaVkfSbboYpLQ1VKjVh+BggnxcbmXvQxwT/L9
+	OZ1MPYzh8YR1kbzVxC0DDkoiMBPjKxm9wXlY8uaiFD5kAt+GYAeWwP2yeuAQVpx+nsvIYn
+	1LbeWWseqX2NzQjHCH0ebihaPNm2UEE=
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=joerg@thalheim.io smtp.mailfrom=joerg@thalheim.io
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Mon, 11 May 2026 09:06:00 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "=?utf-8?B?SsO2cmcgVGhhbGhlaW0=?=" <joerg@thalheim.io>
+Message-ID: <91335804a092b09757331cac72092a3835020b3a@thalheim.io>
+TLS-Required: No
+Subject: Re: [PATCH] config: retry acquiring config.lock for 100ms
+To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org
+In-Reply-To: <xmqqcxz2vfpa.fsf@gitster.g>
+References: <20260403100135.3901610-1-joerg@thalheim.io>
+ <adYvSZeN0ZVqwRhi@pks.im> <xmqqcxz2vfpa.fsf@gitster.g>
 
-> Existing call sites are about "branch -d <other>" that allows the
-> other branch to be deleted if it is part of HEAD or if it is part of
-> its tracking branch, but should "branch --prune-merged" pay
-> attention to what branch happens to be checked out the same way (not
-> a rherotical question to hint that I do not think it should---I do
-> not have a strong opinion on this either way)?
+I am not really sure what you want me to do here.
+I don't see how git can have this value configurable, given it's about re=
+ading the configuration itself.
+Is the user supposed via command line?
 
-This is a very good question! My opion is that it should work the same way
-regardless of which branch you are on, it should always compare against the
-remote's default branch.
-
-I this explains some weirdness I saw today when running it from non-main
-and prune didn't get triggered.
-
-I will look into making that change.
+Meanwhile the project I was facing this issue, added the required file lo=
+ck in its own code,
+which has since then worked perfectly to fix my use case: https://github.=
+com/raine/workmux/issues/116
 
 
-Harald
+
+May 11, 2026 at 4:32 AM, "Junio C Hamano" <gitster@pobox.com mailto:gitst=
+er@pobox.com?to=3D%22Junio%20C%20Hamano%22%20%3Cgitster%40pobox.com%3E > =
+wrote:
+
+
+>=20
+>=20Patrick Steinhardt <ps@pks.im> writes:
+>=20
+>=20>=20
+>=20> >=20
+>=20> > This bites in practice when running `git worktree add -b` concurr=
+ently
+> > >  against the same repository. Each invocation makes several writes =
+to
+> > >  ".git/config" to set up branch tracking, and tooling that creates
+> > >  worktrees in parallel sees intermittent failures. Worse, `git work=
+tree
+> > >  add` does not propagate the failed config write to its exit code: =
+the
+> > >  worktree is created and the command exits 0, but tracking
+> > >  configuration is silently dropped.
+> > >=20
+>=20>  This very much sounds like a bug that is worth fixing independentl=
+y.
+> >=20
+>=20> >=20
+>=20> > The lock is held only for the duration of rewriting a small file,=
+ so
+> > >  retrying for 100 ms papers over any realistic contention while sti=
+ll
+> > >  failing fast if a stale lock has been left behind by a crashed
+> > >  process. This mirrors what we already do for individual reference
+> > >  locks (4ff0f01cb7 (refs: retry acquiring reference locks for 100ms=
+,
+> > >  2017-08-21)).
+> > >=20
+>=20>  Famous last words :) Experience tells me that any timeout value th=
+at
+> >  isn't excessive will eventually be hit in some production system. Wh=
+ich
+> >  raises the question whether we want to make the timeout configurable=
+,
+> >  similar to "core.filesRefLockTimeout" and "core.packedRefsTimeout".
+> >  ...
+> >  Honestly though, I'm not really sure what to make with this. We coul=
+d
+> >  of course also add some validation that the configuration we want to=
+ set
+> >  hasn't been modified meanwhile. But that would now lead to a situati=
+on
+> >  where we have to update every single caller in our tree to make use =
+of
+> >  the new mechanism, which would be a bunch of work.
+> >=20
+>=20>  And adding the timeout doesn't really change the status quo, eithe=
+r. We
+> >  already have the case that we'll happily overwrite changes made by
+> >  concurrent processes. The only thing that changes is that we make it
+> >  more likely for concurrent changes to succeed.
+> >=20
+>=20We haven't heard any response to these points raised in the message
+> I am responding to. Should I still keep the patch in my tree,
+> hoping that a responses may come some day? I am tempted to discard
+> the topic as it has been quite a while since we last looked at it.
+>=20
+>=20Thanks.
+>
