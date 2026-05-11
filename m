@@ -1,122 +1,109 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059CF2F8EB0
-	for <git@vger.kernel.org>; Mon, 11 May 2026 00:33:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778459590; cv=pass; b=FbPgmCz9Kc2iAp5HPYe5g/RhUwGy2nfUWae9DODOc3cUXEdhHmJHSE3GARYmYJqLga8BW0frXoDq3VxQWAGaBRboddf7eRnvnVnw6wE5lyn36+p6PN67OrZdMaqsWOMhhO1gMoPJRSbOH06pkrzUYQzjbfuiPh0Mh9OdFgjQPKA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778459590; c=relaxed/simple;
-	bh=WC7TE+Ci2y4g+aMrEuzBf7jcPVexLulxFSfAoZrxGCw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=htJQiiECoWrmskOQIoljKymmY0LAs4SV1FSnapHqyFTGbScdqzmCt+ProVmT8gMdz3aphuOyU85kMY1T33Nt4TcpsQmGSxIkGNMJ+T4F2Dx+27JYG9ijAHuffqrXtSQI7qACv4cnldcHyPffRrlSU29SIjJ9EwnYx/3i4AhxGm8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fXOvynA3; arc=pass smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEB72F8EB0
+	for <git@vger.kernel.org>; Mon, 11 May 2026 00:33:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778459637; cv=none; b=QSB+yC/+xXXn2vq3O6W+9hFCU53BnYgPVGWyMlQiHen5r9yjkK6PohjVs5aPATq3FgqugnP8V8HcPn7U0lasXzItQbqUcED94+dVw1bD8tdr81sJjEsBArGm2zSUlklE2PHEfxjUOft53Qqv9kDO2QfHPHv1Xbfbnj74KvygnmA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778459637; c=relaxed/simple;
+	bh=JEsSiox2UQeB1VMJVkXcgxVEPewcu6JnOQZmMQFFvqY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nByBtyvJw0/Etf/Hf8PWzEyd/SmvBJJnSLAwVbvRSDWwUpHhqRPrK4el33uNQ791G7itGm/RAvcbbdlJH+Db3kDR8BgO8YfG8RA4mOc1gTbc75Hn3ckEmT8kVYrtKc10zFdVYNTRLFb6rfxrhby2yBvGtbvVu00rHzNhTd5hUkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=abhinavg.net; spf=pass smtp.mailfrom=abhinavg.net; dkim=pass (2048-bit key) header.d=abhinavg.net header.i=@abhinavg.net header.b=PxnFvCj3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O9wYWpt3; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=abhinavg.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=abhinavg.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fXOvynA3"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-393da8f389bso35762351fa.1
-        for <git@vger.kernel.org>; Sun, 10 May 2026 17:33:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778459587; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Z84hO+UoJ9Hd/RgfzDzV0mb8dApBK0boeWU16zkXiKe08KmMr9FGe3qLX/r6IQ3LwH
-         Miv+3Pnp/vivRHUrFuu4bHz5u8KOXFocYk9qOVkzBtiVYq8WUQy/AURjjiFuO3iRAn+M
-         7N6AuSUbe+jK8Fr81Tvs7DWfAVL55CO52Yj67MD1rlm0Mcd25DS21CLnGu2pJgCcx3kL
-         Y8OAbzfIux0dQ1ctBQ1CQofVYj1eQbX9gfw4NZ653MlTR+lc6Ox6asOeijn5A1wtLV6R
-         ub14gc2KJoBI0uJyZqp1qC3qIdUnzTCjlowm5PV0ZXE8JMdjTYBm4C15xbkjYW7YYbVW
-         Oomg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=88ObbYyrqdkXI/LhfoZUWWhvJyFx75HztwMZ3IVgMUM=;
-        fh=DOj4aov6QCZNHIut7J9bRSVLpYXeERrLPgwttad+t8s=;
-        b=DiPIktCkoHwvAPWIRkN9lFmEXQkOXbsF6VqPH9QLcVMebyCDB08X2nYoxyyijd+top
-         6o1PIEM7Q3qw2NoENdLQe0i1MIU6JM4y7HJbxD41lNwDhLmxlsGu0v9P08LMsTn+XmOO
-         MR2Fm+tHDCHNM41Bg9DC+Rf1u6yqTp+riaD1R2+fFXImk+OsjgUIaRE9jQcXIUrYuzJu
-         7IWbS7jPhWn5zx5kg+ltcwB5/lG7VJQmDzJPjObpuqPSuSpujMR+n8I0netJpzz7sN1/
-         tSVbEHHCbAvoGAMVBAbD9APp1NVFJZKxDN96IMvj9VHzH/zxHHd7CEot3jHi5sqIhtq6
-         gigQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778459587; x=1779064387; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=88ObbYyrqdkXI/LhfoZUWWhvJyFx75HztwMZ3IVgMUM=;
-        b=fXOvynA3Fm6iztj8inT5/NqGF05ZKyi46+FX50ce/s1km9DY0iZ3OyNfggegaimIPF
-         XomWXMjC9ciPnnNxmDVV61RzAkEQiXmc6AkabzDqQcm5xlQJZzqLY6FjswfT0zFHoU1b
-         SQyNWl0CpeNyD441Y2NyioteUD98yBXk2I4WwRB0pteAUxvOv/iHpKbzjLMZK5fxyUlj
-         KGspHOVrhOuidlvIdgHEVQuthz39AGeg8T4RGw0RcUtrhD1m1uQ+fqObP9UX5GcuGLxZ
-         Olip92zSpo/w09hUtidMMz8kKeEYhgWFRoQcpgZbCUfaJiM0uNlA8+YXmDOBhMCGUNBs
-         gECg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778459587; x=1779064387;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=88ObbYyrqdkXI/LhfoZUWWhvJyFx75HztwMZ3IVgMUM=;
-        b=Fat3Np6D1poQQStrEBOrcte4SsIF8p5mYzIvZRtaY0KBXvnP9zbGz631V/f5bKvcM0
-         9QhdhdNX+uZagDAFxpcsIzCUWn3f1o96LWHqlV9jkHdWHiYjiiE6f3fUKolTXjkqIYdA
-         0RRnJLIQN84sgHN6tlBIICY8N9sozclM0SqoaCvwnUKWOjUUTyugK8jQTvXYj3DF9dkG
-         9U1GbJ9mtaEuyePeOYvmdA2BKMNbuJ9d3oTtjkTfChIsRP43mFhLyor2QamHf2+hbQ/x
-         TbDai1S4nE3cdjUaN2ZavQ9WLINlvjOHSAESP+7KZhtekALsgBG2PMMuNVCjv+5TVQ39
-         I/yg==
-X-Gm-Message-State: AOJu0Yy1hFN52hOv1wnVxbmBQCfJdfL/2jsx1Ni64L414c8CMHYfLkg5
-	qNy8kqfxKtsVjf00P7xpWTQUNZbTEkyWAyzM3sfGjCBo1Qqm7oVBrSkOv4zQ7keSGw50YRZbX9M
-	DrmTtUKnH1eHY0BOMauqFUO9dv2DAtMI=
-X-Gm-Gg: Acq92OEL3hmzEvRY+1WRlFpwmP4Ra6vPbBOd27tQuDeuT0oCMiFS3U9E0Gm3cw2wkm/
-	Hzyu3ulTYCPnXpF3OKDR6Jow41uLgWYZmP2WAKxuU2m1VtRBM0muLxvyBg7sm+zUcY2SlktRfhP
-	iURz3x7GF1wvsIvcnfckFietdsNOHlSUONa8nB0YWB0ypnCzKkVq3r+r4Avw8vOovMbMLeCEXRV
-	qgNA4hYOuKhShW26PdjPiM5aWyjjTGnyOGuu2U1iycUjWv1vqeMNs2ploaXbPob61pj9Tj8EzT4
-	wKDGv+oZ2mCXVN7gxmGpVaiO7EM31KC/Tm2QlAuejugjE6qHZeVQB9VXay989HOLaIubtU14AxL
-	G4VIxx05hL6JlVG5fzWY9EE9JqwS91cACI2wb7b4OZEYCXmzhy/lHli6GX9dviz8=
-X-Received: by 2002:a05:651c:995:b0:38e:9638:d718 with SMTP id
- 38308e7fff4ca-394080971afmr26330621fa.13.1778459586886; Sun, 10 May 2026
- 17:33:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=abhinavg.net header.i=@abhinavg.net header.b="PxnFvCj3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O9wYWpt3"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 16AB314000DF;
+	Sun, 10 May 2026 20:33:55 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sun, 10 May 2026 20:33:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=abhinavg.net; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1778459635;
+	 x=1778546035; bh=1IDRb1/GqtE2zc3HU9sZMKnFu4BcObXL2q8K6rwRag4=; b=
+	PxnFvCj3U+keNk3fFHfqgEHthM34ilY87Uc/Z9pTrnwms/H1q5Wvpt84S994R4d4
+	yZtPR0nAg0MEijPBmU0sVV+SS5lN5mqdlREwk5eCSVNLQ9s33Z6692Y/XjryoYOW
+	jzcJVv/ZAdxUOk1kBCoFHg9j8UncStTu3vEoQ16irpVI7Uv4TS3bTd//PHhehHW5
+	MAZ/BF9/D+nsBOcAsgy22buFQSi4FcfHea0Ka6Qlk5uwQULLQdo/pVeDPv75iQq5
+	gredzEzemyIcX8pPxq+yc92GNdE4tYyX1bYlUTcVla6WOQOBtXJLvSvBke8GftqI
+	ctL7bpFVf15RKDizjbzpSQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778459635; x=
+	1778546035; bh=1IDRb1/GqtE2zc3HU9sZMKnFu4BcObXL2q8K6rwRag4=; b=O
+	9wYWpt3qoqfUYYxeQq73NSLX/Z3y3zqAyG7vbb6I61LrWUXuBzQOhYf5n8SMY0hW
+	c9sm5UuZoDW9E2u+iPNMTQxtvKT31hZR5r/2XN/MXGzNHsLuD9hC6A5FAPGdQe6W
+	7rmXvNgULlpVYZyHkwSoWS+OnRyx14HxAIPej8hUjneAzvxOwBndFlqD0AB5039M
+	65yh/M4GG+1a+Vu1TehXFwtnzAEY1f7AFsIP+0wjLhRI0ejeipSOJFGjoxkN8uOQ
+	iF8WFJaS2WAFwk3ipjo1gVirUXJU/6DuNCM9B/A3ag46c60AohqtFwyDOPs0hpE1
+	REq36Hk0fUx9i9wspbB9Q==
+X-ME-Sender: <xms:8iMBaroraDqf8BHheV-rQxSlSYlB65MzUGU2ehtfPvGHm9J315WCWw>
+    <xme:8iMBageOquwWMnRqlRLALtbMsrBmVGrk4N6zh1mVNlwL9r4wMvZT5-HvUUigB9jHp
+    uj_sjjYeA6MK8w671nISi5QntFaF1ftv4u8qUbrpVA5rnaUFXmoEHE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudejheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftegshhhi
+    nhgrvhcuifhuphhtrgdfuceomhgrihhlsegrsghhihhnrghvghdrnhgvtheqnecuggftrf
+    grthhtvghrnhepuedtfffgueejveeiveffhffhjedugefffeevleelieefkeegvdfhteef
+    ledvhefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epmhgrihhlsegrsghhihhnrghvghdrnhgvthdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:8iMBasQu0P0aWlxj238lWZCt3JSerKiJiTTcbZStyJ-T6_m7P5ReJQ>
+    <xmx:8yMBankPeAnHN7ldqXE6-WkFWl9fiBoDGvWrq1aZMy_Y5_tdZmybZA>
+    <xmx:8yMBakSC0sSZRHWUomke6RwcAcvqTmfIK06JxaTNKkNpcHlsAMdYAg>
+    <xmx:8yMBatPc8Es9fRS4ou9td2SnjJfv1Q0C95Dy3wEku55DgzPzObezBw>
+    <xmx:8yMBagWE1HgixjLh7_6YXMbubFT0MJQkrrsnIhyEksMry8IgiPdhb532>
+Feedback-ID: i43f949e9:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E11D23020073; Sun, 10 May 2026 20:33:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260507-document-log-no-follow-v2-1-ee7bcbbe612f@gmail.com>
- <20260510-document-log-no-follow-v3-1-d6d3368c64bb@gmail.com>
- <xmqqik8u95yn.fsf@gitster.g> <CAJ-ks9mPzCr3obAw5cE071GNjzy_ZLzF4mQdnUbQY5H4WPw3sA@mail.gmail.com>
- <xmqqv7cux0q7.fsf@gitster.g>
-In-Reply-To: <xmqqv7cux0q7.fsf@gitster.g>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Sun, 10 May 2026 20:32:29 -0400
-X-Gm-Features: AVHnY4Kd2ZNd7uk6wVuM84Z4Bb0Q32SvWnaVxSKdzRLmjNhODvA5uQ-qtd-ejL8
-Message-ID: <CAJ-ks9krzLO_+O74omAfeVByUBh=rDGSVSarf5PGwkdWepzubw@mail.gmail.com>
-Subject: Re: [PATCH v3] doc: clarify --follow and log.follow for git log
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ThreadId: AxnbQjaRaRXw
+Date: Sun, 10 May 2026 17:33:34 -0700
+From: "Abhinav Gupta" <mail@abhinavg.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, git@vger.kernel.org,
+ "Derrick Stolee" <stolee@gmail.com>
+Message-Id: <cc21dea8-2184-4db9-9aaf-6cd6910095f8@app.fastmail.com>
+In-Reply-To: <xmqqmry6x0dm.fsf@gitster.g>
+References: <20260506023944.90691-1-mail@abhinavg.net>
+ <xmqqqznk9ih8.fsf@gitster.g> <0911df2d-aaa2-456e-a678-345239cefc67@gmail.com>
+ <xmqqv7cu96q4.fsf@gitster.g>
+ <63e04828-5895-4deb-a698-5d6f494d23f3@app.fastmail.com>
+ <xmqqmry6x0dm.fsf@gitster.g>
+Subject: Re: [PATCH] rebase: ignore non-branch update-refs
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Sun, May 10, 2026 at 8:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Tamir Duberstein <tamird@gmail.com> writes:
->
-> > I observed this "undefined" behavior, which is why I started working
-> > on this patch. I think it is not reasonable to deal with undefined
-> > behavior by pretending it doesn't exist. The documentation should
-> > acknowledge and explain what happens when this option is used for all
-> > ways that it can be used.
->
-> No, you are misguided.
->
-> Undefined behaviour can change without notice, and users should be
-> strongly discouraged from using it.  Describing what the current
-> implementation happens to do moves us exactly in the opposite
-> direction.
->
-> `--follow` is a checkbox feature. You can use it "only with a single
-> filename on a linear history" or all bets are off otherwise.
->
-> That is what we should describe if we want to be honest.
 
-At the very least the documentation should state this...?
+On Sun, May 10, 2026, at 17:20, Junio C Hamano wrote:
+> I smell that you'd be suggesting to replace the patch we have
+> discussed with another one that declares that it is a bug to use %d
+> in insn format?  I do not think how well it would fly.
+
+No, I didn't meant to imply that. I'm happy with the patch as-is.
+
+Using %d in insn format is desirable, and I would not try to remove that.
+I ran into this issue because of my own use of %d in insn format.
+
+I was sharing an additional example for how this currently misbehaves:
+not only does it generate the 'update-ref HEAD' in interactive contexts,
+but it also breaks all non-interactive rebases with a non-empty todo list.
