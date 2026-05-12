@@ -1,167 +1,205 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF2E3DD861
-	for <git@vger.kernel.org>; Tue, 12 May 2026 17:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AC933B6CC
+	for <git@vger.kernel.org>; Tue, 12 May 2026 18:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608506; cv=none; b=UB1H1+6RGrUl1vr7/D7pR1I8+X1pNJ8zt/vPkNLm+Wc8lLBMubNnOidwxP0ljOpAOXidBcj7ssg5ChY3WWd8x3igQTnat6hySG/cgHBOucQsiL/i6Wmrgk0z6TGtx0lOkmIkh3fRHtGdr9yocJkF4sSP9A+c80sIFXZ6++Yj2uc=
+	t=1778609428; cv=none; b=PltdMlHAbd3kLNHEL0xftm0pSv6TE1kJNTKr1aMXAFDAaYRLeHzyMDghRG4XTHPcuqDb9uiuC2Xh5UcfXJPB+PEac4cVSgg0jxdx7Mj4Rn0JwT8tVIwVeso9FhxG8WcZxD4EVF0exB7+y0q13QuqLQi5x/rEKRZHr9FktDV/3J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608506; c=relaxed/simple;
-	bh=QBCXJDEXD0uRmKhzufSYQ/rFKKdAEnztZBIsM3g9FBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uRU4lC1FkVHivGTFfQggDwPUhRSf7OA/NMSZDwcMEEsvyx7aralzQSLtOjz/FkCN8EHGPqhsTtMsnPb23iJ0bSLF+ShpwkA3VgamtXHNKVGLU35pySgpup84oBListR5Z6ZWmtdL6mGOI/kXhUiFUz6/WxeYq1X4rnKP3aUaejE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4pQTcOp; arc=none smtp.client-ip=209.85.160.177
+	s=arc-20240116; t=1778609428; c=relaxed/simple;
+	bh=VyDe1eJe3I4nrxA+ZF2kGWHAQ6Q7lBEbi4X7wmf6a3M=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=lWrmwvFYpPz4jcMVQfGY2UAtIm9MT4/dIqqeye/Q69iqbGTE2QM1b/vHxSoZ4d3siWLs2QQ/XwhzH0bT6EKV7/j+uS7AKodNaJsPTITHn7/brun6Taftoy+iKHJWdBUhAT/FbvzamxIaG3lG8GsAR+TdfUkv4+RtTQGIMCT8K38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kMnSvegr; arc=none smtp.client-ip=74.125.82.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4pQTcOp"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-51306c9f2e1so58307291cf.0
-        for <git@vger.kernel.org>; Tue, 12 May 2026 10:55:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kMnSvegr"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2f7020a928eso8180752eec.1
+        for <git@vger.kernel.org>; Tue, 12 May 2026 11:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778608504; x=1779213304; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9cspBvsqpkJ0qTViMT6OGIXEBanXKE97LMiL71MHJ7g=;
-        b=l4pQTcOpq6SbLZQ3dsprygwXpLJ5c0Y2bdSYM8uCzNAy9/hXDEvVn4ProGgGLYrJVG
-         XcSddnjbu1DXwqwnSU1s0yBOoswA9kejhcsOuYAzNMb3asCjp7v5uFfPUHaezRIOHB+i
-         9kyn0bmqI2rkM9VjRElsP4i9llBTRcvZSIls3zemwKbsA2RbcLm49SVaXZP9Z3KMVmXU
-         qJoiiUMgXURzkon7lQWlfY7Np21bS/99XSbx1sMuUz38KsyCDhIzW8wCeFnbxPhbAAz7
-         kLJaDGDCuvVQaEwoULG4aY6UiIYOIJdwkvVqbfPBBtkxDlVL1dg1RQXE9FKd1UTHk/K+
-         Ld3w==
+        d=gmail.com; s=20251104; t=1778609425; x=1779214225; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6TxJS5I68hm4CxfKMSFrh6Z8i/E3yULWof1sDBSkstY=;
+        b=kMnSvegrMQdkuGPyemyytBD2NeUk5nvyae5u78tSwr/1pMbKnvU7noNHYkiCOYK+lG
+         roUHIpVNylUsaxFUYQf9AOJVBEsH+Hqgy2xdc9QoGjIM6QXrHyv8oQqQGI+9PgE39lG2
+         Rmc6r3eMSqsYtKBC85bwr5nLKz04sPdoWO1Vj6vm52DTC6WHXZKFNH/YVEyW6KLnCT02
+         VnkIgVqk8u5vDtaTh0kqbPMEENufKrSFVYEij2H/iiKaD/6HEZJrVtqPrF2j3I2VHiDk
+         g+V5b8JOTC3z8QbCCZywOzyM3aTEDsMxjsuSqnl2C04TY9bwY1sW5x1jNU/MgNMsJfCR
+         xtcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778608504; x=1779213304;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9cspBvsqpkJ0qTViMT6OGIXEBanXKE97LMiL71MHJ7g=;
-        b=Byw+42yUbtN/9sdUC6tN8vSznRizRxfR7DKEqt8MTJ9DQHlo1m3TAJuFQHebsvZl6E
-         EV3hOxXeqpbesn0WG5hlQShClWWAUx9Gj3nR/1aEUyi3pUMTjZNQSeVbZk9b3Oc4U56T
-         4ctPtK+A/D0/qAm3V/MBVIl5+C3Ysx9BWhs5UZ1PWT2pY1QZHG48StUEXPovkVHP2EBc
-         4NKyPRcRPOYvzi2ILUgRtW3DhJZ08R6gp6Gp5rS0eVBJ6+e1FRmz4GcGINeQQpzWj4SA
-         1Q3pSE+MsJtTP0HvSfcacctqtqvYRTHptZPTCBpLWJsI4vUu0QLpL78KpiscAMk3IUcn
-         owFg==
-X-Forwarded-Encrypted: i=1; AFNElJ+jNsOiRjm69lyFRabirq1jndL8lsREzNklDSmL2q4mPRrHsLJoExuv0oAXnzO0890yCPg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwLcJvI6lnKY0QQLtNcUSX+0vCesEXYkgsZOyneEwXgOHKn8lgy
-	LCcu88zCLQfqMOLgr3OHqyjqGDavSCQs3bg3R32hpjmi/9OHeAuG6PoF1WdbT9xf
-X-Gm-Gg: Acq92OGpu4fDWX6nPD+yBAal1Oi5Ojj/gR7ENzqTXF/DslGyF3L8z8wr09i0oMkjL/0
-	7uoE8Sx/dTH8trD6SrtppvuUBsWekJ931QywsexQc0sgW42GejwbWTQIhmkLnq7k87oC7pAgIpt
-	xjFAA7mdDwlUVYWrIfhVZqu+lzsf9Mth2C1U46F4CLKbH0EGzA3kmk5jHpQAxRipIgiRErtTPB3
-	GzbuvqlQxOkH3QGtVJ7ey41k75Lz2xdQnqTwWwjKIzWmZRh7TTRYr2Fjw/SKTVV7iRRK8EDHCaM
-	o01WiGnHchEFILDqNF2nvNi+nFiDDW4gdIBY1nuqaj/npgDQlaAqR/WwY6sQVfTxhoi4J2HGvoK
-	XPolcaqsct83w01NFrOyNS3KoKjeiI+kDoSEY6ZZKlXVSalPkoKRbRhg3dcTTDTfKZ2jVD3d7Rx
-	+ZF3CMIhl9SZmE1+PL98wJRPj3atO8WJfnlkzGTMHh8oAdU+zzu9Uv0lgOouPnl7lOJz6ORDS5D
-	sy4eJqsEjQ55Yg+jIFR9qXvgUwVtRcA6q7LxGiMRE6Q8pVrwps=
-X-Received: by 2002:a05:622a:5c12:b0:50d:8903:ae6e with SMTP id d75a77b69052e-514a0a1d3d8mr224151041cf.5.1778608503799;
-        Tue, 12 May 2026 10:55:03 -0700 (PDT)
-Received: from ?IPV6:2605:a601:9b88:8300:e033:f3ca:f5b3:2d9c? ([2605:a601:9b88:8300:e033:f3ca:f5b3:2d9c])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5148e7bf7e4sm125315021cf.17.2026.05.12.10.55.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 May 2026 10:55:03 -0700 (PDT)
-Message-ID: <019912f6-0dd7-4224-8c4d-3dc26b1b85c6@gmail.com>
-Date: Tue, 12 May 2026 13:55:02 -0400
+        d=1e100.net; s=20251104; t=1778609425; x=1779214225;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6TxJS5I68hm4CxfKMSFrh6Z8i/E3yULWof1sDBSkstY=;
+        b=JyG5NC9BfGoLne8t13AdEw1c5PhaUFWxvsOgOW0cJntGrFv/vlYcuci29elQvVX+/C
+         Vxov66HLCLMqdjS/djoXpHuXPT+12JKNovkP31TfH3+ZyGV5MDvYpXtJ98zTVqrunNKm
+         McHSSrMgIi92cQOqIYdtx101x8PV0euwRYA1FPf6itFQ99spwC7kDPCPpMxjgWgIb3fe
+         LzFXj+I3Rbk5iuNhyF5xdVQIqmzJjWOQS0up8opV2ALQon4KIB0QI7Ze/xy8pOQ0M7VQ
+         4d4zqlBKpWM7sla9PQ9PZA1facWUdmdGuCMzzeEKfqzKqFEGq+hPPTtmnt5dT3QOiN2m
+         iGmg==
+X-Gm-Message-State: AOJu0Yzs7yNS/pONTFYC+oAhvfbupcVksc4n2ETQjKPTkAATOlCQp+QM
+	tua9nqnvfnAPGN4OPLQVm19nGF7ebgCc9LPK5CQIIDAp5PRIT/+Z6RWcgm3D8g==
+X-Gm-Gg: Acq92OEdpz5V4ITtQ4jEsGes3GafOSV0EkWn4Ahqxzd2qmul0wVU1G40JgPQcq/BQMZ
+	BxozCnXcDxk+bVdgl5104YDFKESYLpVM6IXK/jirSwAwMAEMYaGgP58cmyczCrER3ZYEWyd/0XS
+	uldld2dNzAXYVzks6vuvLS2G9VgpxhKCTZ3kVbfVodBkZ2Z0H9etAogcAPQEKMu5Fdj3iw1yzrm
+	jIFr3xwCCt/hKXTt0ZEmn8jlGn0UtSyxDmbI7hbmkMwsIwHoC17mX9zUfGah3Y7HU+qXqaL1fo4
+	Qoowml6iuIJQFRhFi2HA6XBcbhKKLxDEewGmqA19344CNzGEX8r2AMNy0XfWH16+bkykm59Hvxb
+	1da1724fB0zSGTFerEUBAf9HGJwS5ZMWGgq2ml3CVXcHro90P8GIYFL9RkXzqM3BNeA8UdWbBCQ
+	NOfb2mUwoJI9fe63ilQrLvD3h13Yo=
+X-Received: by 2002:a05:7301:1698:b0:2d9:5cd9:b8ff with SMTP id 5a478bee46e88-30117b7f066mr98522eec.6.1778609425316;
+        Tue, 12 May 2026 11:10:25 -0700 (PDT)
+Received: from [127.0.0.1] ([57.151.128.208])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f91004b6a2sm17200816eec.0.2026.05.12.11.10.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 May 2026 11:10:24 -0700 (PDT)
+Message-Id: <pull.2105.v2.git.1778609423.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
+References: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
+From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 12 May 2026 18:10:19 +0000
+Subject: [PATCH v2 0/4] diff: reject negative context values
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] remote: add remote.*.negotiationInclude config
-To: Matthew John Cheetham <mjcheetham@outlook.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-References: <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
- <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
- <a2d15fa12af70367ac6b289f69228cd33dd97d5e.1776871546.git.gitgitgadget@gmail.com>
- <VI0PR03MB11634F3D6B345482BD992FDC9C0392@VI0PR03MB11634.eurprd03.prod.outlook.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <VI0PR03MB11634F3D6B345482BD992FDC9C0392@VI0PR03MB11634.eurprd03.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Michael Montalbo <mmontalbo@gmail.com>
 
-On 5/12/26 10:54 AM, Matthew John Cheetham wrote:
-> On 2026-04-22 16:25, Derrick Stolee via GitGitGadget wrote:
+Negative values for -U and --inter-hunk-context are silently accepted and
+produce structurally invalid diff output.
 
-> This patch is a mirror of patch 4 that added the remote config for
-> negotiateRestrict. Some of the same comments apply here too:
-> 
-> - reusing `parse_transport_option()` vs inline resetting the list
-> 
-> - values could be commit SHAs as well as refs/globs
+Malformed hunk headers:
 
-Will do. Thanks.
+$ wc -l GIT-VERSION-GEN 106 $ git log -1 -p -U-500 -- GIT-VERSION-GEN | grep
+'^@@' @@ -503,999- +503,999- @@
 
->> diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
->> index f1d889d03e..44de6d3c1f 100644
->> --- a/Documentation/config/remote.adoc
->> +++ b/Documentation/config/remote.adoc
->> @@ -126,6 +126,33 @@ values are not used.
->>   Blank values signal to ignore all previous values, allowing a reset of
->>   the list from broader config scenarios.
->> +remote.<name>.negotiationInclude::
->> +    When negotiating with this remote during `git fetch` and `git push`,
->> +    the client advertises a list of commits that exist locally.  In
->> +    repos with many references, this list of "haves" can be truncated.
->> +    Depending on data shape, dropping certain references may be
->> +    expensive.  This multi-valued config option specifies ref patterns
->> +    whose tips should always be sent as "have" commits during fetch
->> +    negotiation with this remote.
->> ++
->> +Each value is either an exact ref name (e.g. `refs/heads/release`) or a
->> +glob pattern (e.g. `refs/heads/release/*`).  The pattern syntax is the same
->> +as for `--negotiation-restrict`.
-> 
-> Should this say "..same as for `--negotiation-include`"?
-> 
-> This way each `remote.<name>.negotiationX` doc cross-references the
-> corresponding `--negotiation-X` command line option.
+Line 503 of a 106-line file, count "999-" is not a valid integer.
 
-Good find. The rest of the description uses *-include.
+Overlapping hunks that cannot be applied:
 
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index 4316f8d4ea..db73ed5379 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -1577,6 +1577,55 @@ test_expect_success '--negotiation-include avoids 
->> duplicates with negotiator' '
->>       test_line_count = 1 matches
->>   '
->> +test_expect_success 'remote.<name>.negotiationInclude used as default for -- 
->> negotiation-include' '
->> +    test_when_finished rm -f trace &&
->> +    setup_negotiation_tip server server 0 &&
->> +
->> +    # test the reset of the list on an empty value
->> +    git -C client config --add remote.origin.negotiationInclude refs/tags/ 
->> alpha_1 &&
->> +    git -C client config --add remote.origin.negotiationInclude "" &&
->> +    git -C client config --add remote.origin.negotiationInclude refs/tags/ 
->> beta_1 &&
->> +    GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
->> +        --negotiation-restrict=alpha_1 \
->> +        origin alpha_s beta_s &&
->> +
->> +    ALPHA_1=$(git -C client rev-parse alpha_1) &&
->> +    test_grep "fetch> have $ALPHA_1" trace &&
->> +    BETA_1=$(git -C client rev-parse beta_1) &&
->> +    test_grep "fetch> have $BETA_1" trace
->> +'
-> 
-> This test sets up the include list as [alpha_1, "", beta_1] which after
-> the reset should become [beta_1], but the assertions in the test only
-> check that alpha_1 (sent via the --negotiation-restrict option) and
-> beta_1 (sent via the include) appear. If the reset of the list didn't
-> work then the test still passes because alpha_1 is sent via the CLI
-> option.
+$ git log -1 -p -U3 --inter-hunk-context=100 791aeddfa2
+-- git-compat-util.h | git apply --check --reverse (success)
 
-Good point. the negotiation-restrict option is making this less clear.
-If I point the restrict option at alpha_2, then I think it exercises
-things correctly.
+$ git log -1 -p -U3 --inter-hunk-context=-100 791aeddfa2
+-- git-compat-util.h | git apply --check --reverse error: patch failed:
+git-compat-util.h:118 error: git-compat-util.h: patch does not apply
 
-Thanks,
--Stolee
+Both options were originally parsed via opt_arg() which gated on isdigit(),
+making negative values impossible. When they were converted to OPT_INTEGER_F
+/ OPT_CALLBACK in d473e2e0e8 (diff.c: convert -U|--unified, 2019-01-27) and
+16ed6c97cc (diff-parseopt: convert --inter-hunk-context, 2019-03-24), the
+implicit rejection was lost.
 
+This series restores the original invariant with stronger guarantees:
+
+1/4 diff: reject negative values for --inter-hunk-context Change type to
+unsigned int, switch to OPT_UNSIGNED.
+
+2/4 diff: reject negative values for -U/--unified Change type to unsigned
+int, add range check in callback.
+
+3/4 xdiff: guard against negative context lengths BUG() in xdl_get_hunk() as
+defense in depth.
+
+4/4 parse-options: clarify what "negated" means for PARSE_OPT_NONEG.
+
+The config variables diff.context and diff.interHunkContext have always
+rejected negative values. This series brings the CLI options in line.
+
+Changes since v1:
+
+Patch 1 and 4: Rewrote commit message to not imply NONEG was related to the
+bug.
+
+Patch 4: Trimmed to just clarify what "negated" means, without documenting
+what PARSE_OPT_NONEG does not do.
+
+Michael Montalbo (4):
+  diff: reject negative values for --inter-hunk-context
+  diff: reject negative values for -U/--unified
+  xdiff: guard against negative context lengths
+  parse-options: clarify what "negated" means for PARSE_OPT_NONEG
+
+ diff.c                             | 25 ++++++++++++++-----------
+ diff.h                             |  4 ++--
+ parse-options.h                    |  1 +
+ t/t4032-diff-inter-hunk-context.sh |  6 ++++++
+ t/t4055-diff-context.sh            |  5 +++++
+ xdiff/xemit.c                      | 16 ++++++++++++----
+ 6 files changed, 40 insertions(+), 17 deletions(-)
+
+
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2105%2Fmmontalbo%2Fmm%2Freject-negative-interhunk-context-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2105/mmontalbo/mm/reject-negative-interhunk-context-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2105
+
+Range-diff vs v1:
+
+ 1:  cca75eca0e ! 1:  f2ebb3a72b diff: reject negative values for --inter-hunk-context
+     @@ Commit message
+          starts at 116 (overlaps both). The resulting patch cannot be applied.
+      
+          The config variable diff.interHunkContext already rejects negative
+     -    values, but the command line option does not. The option currently
+     -    uses OPT_INTEGER_F with PARSE_OPT_NONEG, but PARSE_OPT_NONEG only
+     -    prevents the "--no-inter-hunk-context" boolean negation form. It does
+     -    not reject negative numeric arguments like "--inter-hunk-context=-1".
+     +    values, but the command line option does not.
+      
+          Change the type of diff_options.interhunkcontext and its static
+          default from int to unsigned int, and switch the option parser from
+ 2:  f0478d434c = 2:  fc3d2bc31e diff: reject negative values for -U/--unified
+ 3:  f9cfa0c55d = 3:  020ca774c0 xdiff: guard against negative context lengths
+ 4:  05ff821e6f ! 4:  3a656f8c0f parse-options: clarify PARSE_OPT_NONEG does not reject negative numbers
+     @@ Metadata
+      Author: Michael Montalbo <mmontalbo@gmail.com>
+      
+       ## Commit message ##
+     -    parse-options: clarify PARSE_OPT_NONEG does not reject negative numbers
+     +    parse-options: clarify what "negated" means for PARSE_OPT_NONEG
+      
+     -    The name "NONEG" can be misread as "no negative [values]" when it
+     -    actually means "no [boolean] negation" (the --no-* form).
+     -
+     -    When --inter-hunk-context and -U/--unified were converted from a
+     -    custom parser to OPT_INTEGER_F with PARSE_OPT_NONEG in d473e2e0e8
+     -    and 16ed6c97cc, the implicit rejection of negative values (via
+     -    isdigit() in the old opt_arg() parser) was silently lost. The
+     -    previous commits in this series fix the resulting bugs.
+     -
+     -    Add a clarifying note to the flag documentation.
+     +    The documentation says the flag prevents an option from being
+     +    "negated" without specifying what that means. Add a parenthetical
+     +    to clarify that it rejects the "--no-<option>" form.
+      
+          Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+      
+       ## parse-options.h ##
+      @@ parse-options.h: typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+     -  *   mask of parse_opt_option_flags.
+        *   PARSE_OPT_OPTARG: says that the argument is optional (not for BOOLEANs)
+        *   PARSE_OPT_NOARG: says that this option does not take an argument
+     -- *   PARSE_OPT_NONEG: says that this option cannot be negated
+     -+ *   PARSE_OPT_NONEG: says that this option cannot be negated (i.e.
+     -+ *                   prevents --no-<option> boolean form). Does not reject
+     -+ *                   negative numeric values like --option=-1. Use
+     -+ *                   OPT_UNSIGNED for options that must be non-negative.
+     +  *   PARSE_OPT_NONEG: says that this option cannot be negated
+     ++ *                   (i.e. rejects "--no-<option>")
+        *   PARSE_OPT_HIDDEN: this option is skipped in the default usage, and
+        *                     shown only in the full usage.
+        *   PARSE_OPT_LASTARG_DEFAULT: says that this option will take the default
+
+-- 
+gitgitgadget
