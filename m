@@ -1,76 +1,74 @@
 Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D677282F0B
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EA82D595D
+	for <git@vger.kernel.org>; Tue, 12 May 2026 01:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778550216; cv=none; b=snu9nyNBBfFtOVHrwh3DLWqCgkB6qTOseyzo48b5BP2C/cVDN8yNcjLL1ul4Bma9wzJGuPbPRqGkLrpL4Ki8hLRsw2fXl8W2w7WCTBffWn9tnjXhhueOGXUvpvapZYX/Ijz7l2IBQWbbx3ohB+LrDyjPNN9+yDuJVt1mVY6oQRc=
+	t=1778550411; cv=none; b=UEVwWIPkTx1fl+0Z5tUwsmbLc4ECr70XqdMTxvpnrIuuByaz7tXtp+LLXAMn5OQWPvO1zxg4UR8XXsWRDpmYBe3K7cFBgJt01dqhFKPhoc8OzKv5yn7TQBMpT7wJKyhO0JudksF90JAIKbLkTyJl1OV9h0SQtg7HyPNtjaHwQHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778550216; c=relaxed/simple;
-	bh=/KZiAP+7BFjrWnB44uHGxpD9TWodiHJ6goBdYFprEZY=;
+	s=arc-20240116; t=1778550411; c=relaxed/simple;
+	bh=vHdOdrLLEfBf6D6ZhqisANQSH4ZE4hJ1mPGdDkjYpbI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HiNsb2DmL/WecySNe4VYsOgnKysvEmpVRklcGGzOGUcYLlsXuDkTVSEMVsPSwxuU/PnuIseLU7jjRUZ6wIQqm8nAwBk7DwyS3brv5+0hrFE51dN15JuNn+E2Dgb4tq9NrEvB67xAkGtcRmE+d8D8UovZRqhr0H6zaeHwmZCmcFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ju4nDERF; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=s3pwX8Luv0/i9gJLm+xIUdqkOf89nGvrzz3ZOTEkDGOUocBBhe+FBuIpXECbJXfaV07NBZms+dXnRKobEPcxeT72s7xktStLtu3cg6xIm7TKpN3UXVFkxJ2FycWCN65HcpML79mNPyJmxZYOEiVnIVPI4lwoQ3Y5S2tgE9vjWvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=JQn1AIOW; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ju4nDERF"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7bd5dde63dbso52610407b3.3
-        for <git@vger.kernel.org>; Mon, 11 May 2026 18:43:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="JQn1AIOW"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-7bd6f65c781so44906227b3.1
+        for <git@vger.kernel.org>; Mon, 11 May 2026 18:46:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1778550214; x=1779155014; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1778550409; x=1779155209; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eE26YYJUfJhS/0qtVyTYShDJEHHJpTY1gI5+equDL9Q=;
-        b=ju4nDERFrp+/XQovnONQ+Tlg6vSEV5qP7uCKQv6AXY4sQ8wdr5rr8fwDI+osFGku8F
-         Yd3R4ilPuJO2aiNF+hYI7OfH1xpPm6uj6ywASMNw53bjIZaIgg8y5Y+LbiNcY0WYJesn
-         og/TgP2Pp3kDPMoDvMIAqJe5lUf/gHunQF5q6zNZay/Rwz0ks+Mhg7MyRr0SmBn3Fw+W
-         JcOtzJlyEhI365uqWgaLt+9o6B0N3stdWe+EKcbSyX4alJMneg0TIlIHGEUp3lno2aI6
-         HVtAspT5N1FZi1C2j5Iya6OGEB4eS6MPwa/MYHVJHsz6prtTHeGhCqhpChhayvGxVJj+
-         B84w==
+        bh=32AFxVVmoUs0e35dXlH+ygnQr6q4xWKq+xPiNGUaSn0=;
+        b=JQn1AIOWobRU+AAqgj0b6htFUAO0meS/JQvca8etayRyF3fwsdWuIeyEpSgajo4vyX
+         N3HmYZ9YOUad46+oT3pZWjfAqYNMNziShNxn/OWtEyTXuchiG7vqtUd3O+qsSD9xUygG
+         qfndzYvc7vzUEiD17E/8ywA36INLAdINVY1UtmsN7+DgdpmqlDGBu4dLgxoqh9Cx9YTP
+         YNVZeARA4jz5xtqay7fonKTxYAY7/0A8C7now5LluaLU4vnnuYUu4r2cjRJXwezhDkmC
+         vKqQlEGUQwoHUjifkgkvFw3FL9JyOmKkkk1AKRF/SlOUZB5y8PrI6lsUD1NRekMvUwxO
+         nopw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778550214; x=1779155014;
+        d=1e100.net; s=20251104; t=1778550409; x=1779155209;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eE26YYJUfJhS/0qtVyTYShDJEHHJpTY1gI5+equDL9Q=;
-        b=YsJzWlrvyk8MoRLtQF7Z9zX/TQ2ODxjNzmWN9H9tAFm1kEBtNv+5td3zUSXeWK+9yp
-         7D+9vBh1xwIS3u6e1usbUp+LerlKLRjq3qgU+jP7Umf/5XT2oTqm11OUzOT1BL4UHsVS
-         wXKcauE4BG1UPqrZP3gUb7z3n/P4Btd4md+PdrfP0mx/J5sGm1CbddZ+OQYKyIguZ8vQ
-         Fze2hzNPtYsEileUe4ok8Z/j0TjwW+zUMRDAjf0xqvQmLdFt3HbP+/SMFBVbVaW9H4XI
-         JbxQnDhOUjkrrrTEskdrWzNQzyOEaHIANWv4LE1+A/cloGiLrZxef7gd6cudUG697Cqk
-         +Xzg==
-X-Gm-Message-State: AOJu0YxHSZUEg+E0Gu5n9v1QfnDM/hP5ALj7wOXKJcPxoA66/kwvaEkR
-	TDvSOAccVeVAdc+xyxjyGraOfs3GQq+8/+2GLkQ/bw6Y7PgWIV039C8QZfMj7FuTv8A=
-X-Gm-Gg: Acq92OHltDH10CDjmXyagdnT6aPgR0tz1tW67lxm6S7pkk4mxBXID1LYJTulPmXm3ZK
-	sP0GgyLhJVhD1oSw23TQCkbRqRzRtIh1KsP4PqniPMPIU4S/5iPxhnW6uGmR66KJ0yIbqOHfx7o
-	n5/0pJoeBOeU/XM+DzogpHeuZ5Dp31ZMi1xmW7isRnydTkB3Eanh5ZHZchULXsQyj3tYcr8muUx
-	MR6whDmUYzRukqnZk5Tnpc+9eDRx9SmxJ9jsMTV6PGKLQQsyVsH75no/5Lc+FDfRkzxlho19xqP
-	mcIVle1NoBZiI4dS/TLYM5KmhgvwupBKefsvhF4/mzuDzriEgMlS5C/GMz9BRUepM1Jk82W1kYc
-	S/pJZmfvKYHCKytTeCoDupuwujl3B3He6zNebh8OWGJPNI3GtFujH36j0TtNDtcZrtZB03lO8Fd
-	A6SiD3bboyhnnAZctJhZRHmxTJwViLAPPWDibZwfY7jPmIZ3hLCDnlOntArnGQ09PBc+vaggGp1
-	G4+cqadlLJ1oZtskO4Gz2Ep+RsTE9PlqtxC5wqh6+2nOxQn9G2bn0Q1LkTP3NA2MDwff51INrTg
-	XMfbYQXyAiTr649C
-X-Received: by 2002:a05:690c:4990:b0:7bf:dc60:ad14 with SMTP id 00721157ae682-7c563e47602mr8026667b3.46.1778550214159;
-        Mon, 11 May 2026 18:43:34 -0700 (PDT)
+        bh=32AFxVVmoUs0e35dXlH+ygnQr6q4xWKq+xPiNGUaSn0=;
+        b=iLg8khe3So+/uL9+e6lAlw8A8nC+ZKrQ75IvYO1PfCOf6pWfdGrrkHMJoTKbqNPCpB
+         erNisE8aq/FntNT8zAPW/qCsmPZgUHxhf8TeYKx82KrDxX/DicowBpk69XA84FIT8oZM
+         tus7i9elTw3D2ihKoQBfO0uQ5SFbPnLGU5h0J7MO0gme4++37ZHWPtsGzoYZ13DcWGJv
+         gF8WZRfhduS4TcaPndIvRGvdx+zbJEoZ1oMGDVzTdAniDJ2gIL+ZCmfzpMkFND1XutqD
+         0CtKHLyOmiZ+FLU9fU8JoJblHQIsHMSIJptbuztD4cYJZ9DNRMcAfvfp7uR5u8qnWM9Q
+         VEtg==
+X-Gm-Message-State: AOJu0Yz1PPEtUiEjQNrBv6KbGHgRw9sT9RwPdjN9n+jYlpq5hJxQ1tQC
+	od3o3nuatNWLk1BtVKA4JgOXICRtQ3MzpgNWgqRoC4rZFyPau+byvBf1c0ZXcvj1TPDioU4R2Mo
+	Sl2VV0jakSw==
+X-Gm-Gg: Acq92OFu9e/Up7Zyx/uF7uH9GWy86o4ARl7vZlL+JZhihqRQiQXViIu7Fu24OVI08St
+	OXT6QN6ty2Bz+amfwZ7FVG0ePoYJjx2bp1QWI68Y0wuR3l6E6hwnhFQ7LnAUNNve23T8JFCPtPL
+	qgi75NJvVZTJPXKtEgEgEfI12NXUTTKJW/YnpBKuJ8RVEInyX0jCdq9LY8DTNLCUJWTwVVR5nda
+	2xZSbBCwhnd+i4fMqHvUYJXGcg6CUeDClsdldvlIjSiF6M91cE6lKy7YHRnFP1zBRBvsek0fT7m
+	dnQsul4fOSxHKj16NcetkFm1IW35j9ke1snywS/8+RMGL86N3K5QxsVIPUd4EmP6qL+kZ84sYV5
+	ubfTNBvKnHpi30feQH5kYhaK7ibc4i4gG2Sf3Se1ANpeknhEpIZ4FW7yvjKaT4XQbiIe2NV8awF
+	b0U7y/1Mo9OZE8xGAtwvjmV9CqT6EnyQsXxhgKHJXngL0dDn47OUvD70fKWAEXg0wlVDOn+c2oQ
+	gmY7Q4zVenTvLSntfAm8Xsd0DVQTS2SAM4oFGVgjgnh4rwkkew/Y04TfndsI5IDzu2wZSjOw5Zv
+	HFBOWZNmwYLWRqW4cVlRi6r/eYY=
+X-Received: by 2002:a05:690c:4509:b0:7bf:b4a:179b with SMTP id 00721157ae682-7c5101a01b2mr19032757b3.18.1778550408894;
+        Mon, 11 May 2026 18:46:48 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd6652750asm156512987b3.10.2026.05.11.18.43.33
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bdff00b6e9sm85725057b3.29.2026.05.11.18.46.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 18:43:33 -0700 (PDT)
-Date: Mon, 11 May 2026 21:43:32 -0400
+        Mon, 11 May 2026 18:46:48 -0700 (PDT)
+Date: Mon, 11 May 2026 21:46:47 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 00/12] pack-objects: integrate --path-walk and some
- --filter options
-Message-ID: <agKFxFbMrlYn1GWt@nand.local>
-References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
- <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 0/9] pack-bitmap: fix various pseudo-merge bugs
+Message-ID: <agKGh/zv8RF/E/uB@nand.local>
+References: <cover.1776124588.git.me@ttaylorr.com>
+ <cover.1778546804.git.me@ttaylorr.com>
+ <xmqqse7xpftn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,35 +77,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqse7xpftn.fsf@gitster.g>
 
-On Mon, May 11, 2026 at 06:12:57PM +0000, Derrick Stolee via GitGitGadget wrote:
-> Derrick Stolee (9):
->   t5620: make test work with path-walk var
->   pack-objects: pass --objects with --path-walk
->   t/perf: add pack-objects filter and path-walk benchmark
->   path-walk: always emit directly-requested objects
->   path-walk: support blobless filter
->   backfill: die on incompatible filter options
->   path-walk: support blob size limit filter
->   path-walk: add pl_sparse_trees to control tree pruning
->   pack-objects: support sparse:oid filter with path-walk
+On Tue, May 12, 2026 at 10:38:44AM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Taylor Blau (3):
->   path-walk: support `tree:0` filter
->   path-walk: support `object:type` filter
->   path-walk: support `combine` filter
+> > [Note to the maintainer: this series has been rebased onto the current
+> > tip of master, which is 7760f83b597 (Merge branch
+> > 'jc/neuter-sideband-fixup', 2026-05-11) at the time of writing].
+>
+> A note like this is very much appreciated, but please also state the
+> reason why the rebase was necessary.  "Because the current tip of
+> 'master' has advanced" is not a good reason.  "The previous
+> synthetic base was made by merging topic X and topic Y on
+> then-current 'master', but both have graduated" is a so-so ok
+> reason.  "Because the updated implementation of this series uses
+> facilities that appeared in recent 'master' that come from topics A
+> and B, which the previous iteration did not use" and "Recent updates
+> to 'master' brings in conflicting changes from topic C" are
+> excellent reasons.
 
-Thanks so much for putting this together! I'm really excited to see this
-all moving along, and am eager to get this deployed at GitHub ;-).
+I think the reason here was "bad habit that I am trying to break" ;-).
 
-I left a handful of notes throughout the series. There are a couple of
-typos I noted that I think merit a reroll, but most of my remaining
-comments are more for my own edification than identifying anything to
-change within your series.
+(Joking aside, I usually rebase my series locally before sending to
+ensure they can still be merged in cleanly. I usually remember to toss
+that rebased version aside and send the non-rebased version, but clearly
+forgot to do so here. Sorry about that.)
 
-Thanks in advance for taking a look at them. I think that the next
-reroll ought to be pretty close to the finish line.
+Thanks for queueing regardless.
 
 Thanks,
 Taylor
