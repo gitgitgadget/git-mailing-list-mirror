@@ -1,89 +1,86 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A993D9033
-	for <git@vger.kernel.org>; Tue, 12 May 2026 05:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093073F54AC
+	for <git@vger.kernel.org>; Tue, 12 May 2026 05:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778565097; cv=none; b=ADhd497OnlivHYRP3JuzStRyTc17J946/S6KPruUBEoAs5kdkZ12jw5CZ8ZXbMNL4LKIw5Ls5rNzX8gjbMli89kG1owzlIqjbEsauPwnKK+myrEza4xPzwcNAyGmDVNouMbRtk86BZPK8HsQcZaKe0nXWHBsFEm7/FOpwnDjELQ=
+	t=1778565288; cv=none; b=MZlg4Vp1t+eJ2nwdmRTabVFvmZ61Cquj+RWuN3xtdWZEmwfnX+xl16FZhrgFguVR0zmAXIJ1O0rDBZh5my7hIFoEBWxm94NZgaiZbySsEzfOkwYSRbvGmSZDBgCmIHKiHRc+ZTgxvFhEDM/UopCAjkDdNPkmhtLc5c5swx7v7FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778565097; c=relaxed/simple;
-	bh=0LRrAOEGbs7cocHukTgVc/zUsTWayqALUQRa2IdyjKQ=;
+	s=arc-20240116; t=1778565288; c=relaxed/simple;
+	bh=ccf1mcnDjafCdWg/VJBy0qa7z5gI+MTAtCIxltK8NjQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=krNDmKEkq6JeT6leLyAWAe6FNTHQxRJ8hF88+3nliPxoVM5qGqhhSGK/rvllKb8SfPjaLSIg5c+suY4z63me73WUd1elvAQ/nRt8Y+VE7n7fdFYZ3lJLikBPcUUhnW2eBz0aPtpQNiKEnmWrHnWu/CYT2nUUnaF5+WQPjAH5E9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wSH3a5pL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g5DrcfAa; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=Qgu5RacaBP83bTpBkRM8Pj5gzEQ00zbGhaCBOB2Qvhny1mFkpehgQPEmr8QlaAFnnFrbG3TSuFMbfXKjHtlx/3CLbiefC5Cmi6hu4y4lyg9fDw0ytknC4VTz8309/vXb0JEPUPQ18SqA9SHKXy93PL7KoBLzR56P0P2zFl0gGmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sYRF2a0u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oPR57fgB; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wSH3a5pL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g5DrcfAa"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id C17981D000B5;
-	Tue, 12 May 2026 01:51:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 12 May 2026 01:51:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sYRF2a0u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oPR57fgB"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DD48F1D000A6;
+	Tue, 12 May 2026 01:54:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 12 May 2026 01:54:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1778565078;
-	 x=1778651478; bh=Vh8gl5X8dvAGddwhmQ8B1otO9f5tx4yTXEXNftqySGA=; b=
-	wSH3a5pL242CktiMsOHVxqK9bYHFKct6LJ949DztmDfej0abgnfcakGIjl/gskjd
-	nwTq9RpwAK9nPHy4m4XhgqKZZlkrz0oKJlKF+IVHSvFSZioEZruJMedAykE1nUK8
-	+GPtska2KlVCssQWnM4htd5SDzwhwAC8nHSsEInt05EhPjkjUXgEa+y8nkrwN5er
-	OgArZQXvWLYEhI0y7PdyDRxb3YHPaJIdGuuBenoq1r0lToDmd9JV6/M+KtbUnRBK
-	53f9cPMQUbsvNV38zQIr8R2T0t7KDCVf3/SU++NVd6QCLvfFtT82fXEad6cghjq4
-	ZeVzv1NKfFQ6r27t7VUJtQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778565262; x=1778651662; bh=ZKJAdpLBUo
+	f7aAjICIddKXvXxdW2eci8oBIkiLWRhXM=; b=sYRF2a0uJjDtaFjRC7cma4pCdh
+	SydXjTCTNJg7/CYb4bjG1rBjhqW86fzpUWh24SoE+hRBIO8O1DqPYktC2PDTPBTJ
+	v3ESNJdOSlY4gT90qV9FsDGWhetNBTGd1fARv/TWxJ5wGHhrKp+BfxWow95MRbCh
+	W8QGWpSWGphU/WlFvc2Xiaa4AuTooeNwyLyjttXx2mvUK7X24LqxmhxLzmuuJyfa
+	ifqLWNnq+PPUMV3eoAtMfxBygvWoNp8zc6jhu6UwQlzxuH3IANTVKRx483YaNwr2
+	uRftubMGtt5UUlGJR+/gXkqdx05DfCHeJiZoSPSdY2WnqF+9ULOpxXE+AAhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778565078; x=
-	1778651478; bh=Vh8gl5X8dvAGddwhmQ8B1otO9f5tx4yTXEXNftqySGA=; b=g
-	5DrcfAaKq+qco4DJlhnj/3DUr4tHX4fC9D3zWR/taXqMmrlHCSRP0kAyveV6AFZu
-	sAKMvNjPmmGz/nT0rYQIeGk4vrs2tfDJTvrMNtITGySjztOkwJk+f2A+cvIa27YS
-	6xpsn9F/8cxGArEG+MHhKFdv76SoACfuc/vMaeZq+755f0cMwt3ZKf+6fM2/I9DL
-	9960csWGAcyJIQh4Ts9BX5niHJwVBNG4LFvAGIOFby3g5a0EHp5fSyOwg55V0h/s
-	sZRO+yuRO/zHUd8yUjokR3NIZzfEVfZmI2jjPbmO0dyGYmaXUxfro8UNCWJpf1cI
-	VlglU7DllY0pp9Q/WcDTw==
-X-ME-Sender: <xms:1r8CaspOORyPO2OIAI6kMSO3XjAJF_bDtFnoqiI0kxz3UADwLrYa3g>
-    <xme:1r8Car93VTOMtxTXLJE_X7qWVoo7lzzamTYGF_NvAmNRWV8eCapDivIlVmLlgn-CU
-    b7SGwodYQfOsgXkEq0qVIj8vRf_jdL7CuKLh8nRP1c5Xqqp3g>
-X-ME-Received: <xmr:1r8CaodlgxFvxgFuOBlBLMhE6CvLPj7s7P_ysfjPeHOjNNmuve3-MzwfdcJgXg0KDFWQjgnsd6dtyLZjGpJa0ZSrXwTVe8AJ9Q>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778565262; x=1778651662; bh=ZKJAdpLBUof7aAjICIddKXvXxdW2eci8oBI
+	kiLWRhXM=; b=oPR57fgBqrd0tp1rg6nMF5NPGp2hKxDzpP42yZMoqzCB4F6QpYE
+	Wxvk8zHjYbN2s05TAOWLHA8fMQIqXd8+dvVjeyduqTf+1rIClT5xPkL6wJiLgHq8
+	o+pM4MlXioeLposODiL3TIj3uR1slpK43DeIsy1JhwmtctjN0pbWorwd+L3hA9Tr
+	cXCGaHmoR6ThmGomfLJxXsWV5S+fpr+cPT8kt8YjMOAPhBgJVmPlzhI+Pec1aP7X
+	erfBpdCvU3gBcAJFX79ta8551oSuUxLgqhuWVQ2ey4go1gknf/tggS10RxDVwD5i
+	GaaPeczWhCpAwSsdaHX5X0fNA+YUltwb6AQ==
+X-ME-Sender: <xms:jsACarDfVC9O54re0TVVWTldztL3jvKIEQK_AXcHMFIi6mgAoDEjsw>
+    <xme:jsACaoZEiFnY1XgBcTiSqAo0iBQ6_HwchhV5wCz0Ib0ou_m-XQMz0IL6-WzzlrOCv
+    biqRyJTqClg8mt9Z5Z0GEoD9_YL4e2xjK_IKAxVEqv2DbIEJjoKyQ>
+X-ME-Received: <xmr:jsACau4jMI8Dmw3z49RZkHXX3WTveDly51023nEoD-n7rFkxDpw2fgNGcfsaBRCBtlC37DNQLf-kueUlNLPMcwzlZFt-xFHARA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddutddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehssggruhgvrhhsfhgvlhgusehgrdhutghlrgdrvgguuhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:1r8CalKjzbv-55jwlCgKx_17kC6GRI1c8lozjCSJyR1nISf8z_AGSQ>
-    <xmx:1r8Caois6nCPxoriCpoMsU3Hc5RSSn-nnFSmlLRJ2ZfFKmF8ty1FHQ>
-    <xmx:1r8CajSqG-f370JlFX6ezEPkwX5a_jLXQt2_qhCyPMd7TmdeSF-6Pw>
-    <xmx:1r8CaiUM5ixIVMJtL1hgBzndg1WSH6KhHgzWfJGnVd1aJUd-nPa0Eg>
-    <xmx:1r8Caj89NIWTu9jSKZex8qnBjiNugpSX0jo-_V9ADaSLYH-GW8nJqRJ_>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehkuhhshhgrlhesshhunhgvthdrshgvpdhrtghpthhtohepnhgvfihrvg
+    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:jsACapZK0ECbyN_z213RB5Qgi62evrWdmiafIg9dDfegfB5OBJ8VkA>
+    <xmx:jsACathCEMcN5B1OhlsLxIZxdPY543T2G9BbjPvOpM6uzmMWxphpwQ>
+    <xmx:jsACaq_fFlHGT102fjzUMuHJUL8NAjT403ZA1PjsM-TwMrLyYA76eg>
+    <xmx:jsACaoq_QWFKnSQJrzUeyumTmwWssnQA3OUECjBpmgSiWFWuEnEf5A>
+    <xmx:jsACag3NuyY6Tu0kRi4cV1k6MlGD2VTQmIVxd6T-vhRioPIR8-A_8JNa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 01:51:18 -0400 (EDT)
+ 12 May 2026 01:54:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Scott Bauersfeld via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Jeff King
- <peff@peff.net>,  Scott Bauersfeld <sbauersfeld@g.ucla.edu>
-Subject: Re: [PATCH v4] index-pack, unpack-objects: increase input buffer
- from 4 KiB to 128 KiB
-In-Reply-To: <pull.2282.v4.git.git.1777387660841.gitgitgadget@gmail.com>
-	(Scott Bauersfeld via GitGitGadget's message of "Tue, 28 Apr 2026
-	14:47:40 +0000")
-References: <pull.2282.v3.git.git.1777317998098.gitgitgadget@gmail.com>
-	<pull.2282.v4.git.git.1777387660841.gitgitgadget@gmail.com>
-Date: Tue, 12 May 2026 14:51:16 +0900
-Message-ID: <xmqqy0hpnpkb.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Kushal Das <kushal@sunet.se>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v2 2/2] commit: sign commit after mutating buffer
+In-Reply-To: <20260427221834.1824543-2-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 27 Apr 2026 22:18:34 +0000")
+References: <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
+	<20260427221834.1824543-1-sandals@crustytoothpaste.net>
+	<20260427221834.1824543-2-sandals@crustytoothpaste.net>
+Date: Tue, 12 May 2026 14:54:20 +0900
+Message-ID: <xmqqtssdnpf7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,62 +88,102 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Scott Bauersfeld via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> From: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
+> The ensure_utf8 function can mutate the buffer to change its encoding,
+> so we must call it before signing the buffer so that we do not
+> invalidate the signature, which is made over raw bytes.  Fix a bug which
+> caused the compatibility code to not convert the compatibility buffer if
+> the main buffer was invalid UTF-8.  We expect both buffers to be valid
+> UTF-8 or both invalid, since the only data that would differ between
+> them would be hex object IDs, which are always valid UTF-8.
 >
-> index-pack and unpack-objects both read pack data from stdin through
-> a 4 KiB static buffer. In index-pack, each fill() flushes consumed
-> bytes to the pack file via write_or_die(), capping every write(2)
-> at 4 KiB. unpack-objects uses the same buffer pattern for reads.
+> Add a test for this case using 0xfe and 0xff, which are never valid in
+> UTF-8.
 >
-> On FUSE-backed filesystems every write(2) is a synchronous round
-> trip through the FUSE protocol (userspace -> kernel -> userspace ->
-> back), so the 4 KiB buffer turns a clone into many unnecessary tiny
-> writes with noticeable latency overhead.
->
-> Increase the buffer from 4 KiB to 128 KiB. Introduce a shared
-> DEFAULT_IO_BUFFER_SIZE constant in git-compat-util.h (next to
-> MAX_IO_SIZE) and use it in index-pack, unpack-objects, and the
-> hashfile layer in csum-file (which already used 128 KiB but
-> hardcoded the value).
->
-> Pack file writes to a FUSE filesystem with writeback caching
-> disabled during HTTPS clones of git/git (~293 MB pack):
->
->   74,958 -> 4,687 (94% fewer)
->
-> Wall-clock time of git clone over HTTPS onto a FUSE passthrough
-> filesystem with writeback caching disabled, 3 runs per variant:
->
->   vscode (~1.26 GB pack): 84.5s -> 75.7s avg (10% faster)
->   git/git (~306 MB pack):  22.6s -> 20.0s avg (11% faster)
->
-> Signed-off-by: Scott Bauersfeld <sbauersfeld@g.ucla.edu>
+> Reported-by: Kushal Das <kushal@sunet.se>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->...
->     
->     Changes since v3
->     ================
->     
->      * Replaced strace-based syscall measurements with FUSE daemon write
->        logging. The earlier strace numbers (72,465 → 24,943, 65% reduction)
->        were distorted: strace -f ptrace intercepts every syscall in all
->        traced processes and added enough overhead to distort the
->        measurements. The FUSE daemon logging captures write sizes without
->        perturbing the traced processes, showing the true reduction is 94%
->        (74,958 → 4,687).
->      * Note: Why 4,687 writes instead of ~2k writes as would be expected
->        with a 128 KiB buffer size? It appears that fill() is calling xread()
->        on a pipe and the linux default buffer size for pipes is 64KiB. I
->        also tested using fcntl(F_SETPIPE_SZ) to increase the pipe's buffer
->        size to 128KiB, which does indeed reduce total pack file writes to
->        ~2.4K.
+>  commit.c                 | 15 +++++++++++----
+>  t/t7510-signed-commit.sh | 10 ++++++++++
+>  2 files changed, 21 insertions(+), 4 deletions(-)
 
-It seems that everybody was happy with v3 already, so let's merge it
-down to 'next'.
+This iteration hasn't seen any reaction but comparing it with the
+previous round and peeking at comments that the previous round
+received, I guess everybody commented on the previous round is happy
+with this version.
+
+Let me mark the topic for 'next'.
 
 Thanks.
+
+
+>
+> diff --git a/commit.c b/commit.c
+> index 790dd2faed..e5d725fe93 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -1726,6 +1726,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>  	struct repository *r = the_repository;
+>  	int result = 0;
+>  	int encoding_is_utf8;
+> +	bool warned = false;
+>  	struct strbuf buffer = STRBUF_INIT, compat_buffer = STRBUF_INIT;
+>  	struct strbuf sig = STRBUF_INIT, compat_sig = STRBUF_INIT;
+>  	struct object_id *parent_buf = NULL, *compat_oid = NULL;
+> @@ -1747,6 +1748,13 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>  		oidcpy(&parent_buf[i++], &p->item->object.oid);
+>  
+>  	write_commit_tree(&buffer, msg, msg_len, tree, parent_buf, nparents, author, committer, extra);
+> +
+> +	/* And check the encoding. */
+> +	if (encoding_is_utf8 && !ensure_utf8(&buffer)) {
+> +		fprintf(stderr, _(commit_utf8_warn));
+> +		warned = true;
+> +	}
+> +
+>  	if (sign_commit && sign_buffer(&buffer, &sig, sign_commit,
+>  				       SIGN_BUFFER_USE_DEFAULT_KEY)) {
+>  		result = -1;
+> @@ -1780,6 +1788,9 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>  		free_commit_extra_headers(compat_extra);
+>  		free(mapped_parents);
+>  
+> +		if (encoding_is_utf8 && !ensure_utf8(&compat_buffer) && !warned)
+> +			fprintf(stderr, _(commit_utf8_warn));
+> +
+>  		if (sign_commit && sign_buffer(&compat_buffer, &compat_sig,
+>  					       sign_commit,
+>  					       SIGN_BUFFER_USE_DEFAULT_KEY)) {
+> @@ -1818,10 +1829,6 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+>  		}
+>  	}
+>  
+> -	/* And check the encoding. */
+> -	if (encoding_is_utf8 && (!ensure_utf8(&buffer) || !ensure_utf8(&compat_buffer)))
+> -		fprintf(stderr, _(commit_utf8_warn));
+> -
+>  	if (r->compat_hash_algo) {
+>  		hash_object_file(r->compat_hash_algo, compat_buffer.buf, compat_buffer.len,
+>  			OBJ_COMMIT, &compat_oid_buf);
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 1201c85ba6..aa9108da54 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -462,4 +462,14 @@ test_expect_success 'custom `gpg.program`' '
+>  	git commit -S --allow-empty -m signed-commit
+>  '
+>  
+> +test_expect_success GPG 'commit verifies with non-UTF-8 commit message' '
+> +	printf "I hate\\376\\377UTF-8\\n" >message &&
+> +	echo unusual-message >file &&
+> +	git add file &&
+> +	test_tick && git commit -S -F message 2>err &&
+> +	git verify-commit HEAD &&
+> +	grep "commit message did not conform to UTF-8" err >lines &&
+> +	test_line_count = 1 lines
+> +'
+> +
+>  test_done
