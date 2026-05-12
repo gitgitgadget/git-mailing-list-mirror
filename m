@@ -1,163 +1,101 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABF83998BF
-	for <git@vger.kernel.org>; Tue, 12 May 2026 13:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778593997; cv=none; b=IHOBuiBwcZpCX3E3W59Rr1hK7Z0L9jNxj2oogXunyEO/A7Ip63MufQ/PHunN0k3dpZO8HZbFRejWYtyk88mDxvTZdJJ91Pp0gYe+euu3lTPmTfZvzvsaN1B+m1Gcf18mA5s+GJWNrw73W7G5x+1ivSFKkC1Mzk2qXKFQY+DCyMY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778593997; c=relaxed/simple;
-	bh=Nwlm7sBbtJnVzUiqRYNN7iGExfFhu98bMqgdvu0aEQc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fs08tkHJ/wLEVxh7GujPcW4UzAUma0PyEwPRjsxGqyK+sMec9nG+iLRHLbdQb0+VmCJLAnqmqvZeMop0zMf350b64PMnt8CExHyrQp/fxMCqqbosxDbGVu/H5+SE69RGdFSOGY41i22R/352Y9q1JDDLa319qonrVskVKG3x4tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bEXaoPHl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rOBjrMuC; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009013AFB01
+	for <git@vger.kernel.org>; Tue, 12 May 2026 14:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778595624; cv=pass; b=JXBb1C6+khBJAcrImHf9KtlWlZhCHxjAc1mWU3sh9ucARqh7PxV38yv+EyPbsjTIZzjAn3WMd+nXVth/WlmOsa61vheO5msPqW3wgkz8+zI6Ab+H7uYOfCTuUdOVUjM0+7aCxvH/X4PrtXOXQlOSWlgeacmARER7uRUOv7nLO3w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778595624; c=relaxed/simple;
+	bh=hfMjTisdqkQDSOYPoay6HsOqF5xBed4rc4Ft/lStRP8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J3VMsf/gNE5JQjGsOrIf2VbWn8g9sO+ctjtj7pvvm/uV1vcigtQX/Acb81NkPvJ2clxfeRRJF+Hxqch/Wj7Uguz7w5yWvQlDbSP0uIoiCWExmW2R3Qjpig5twCR2G3NsB+V66Zv+VppJa+E4w5JeBTV8QvhzUgg+ghqUjmsRs2o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AfLVVkG+; arc=pass smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bEXaoPHl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rOBjrMuC"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 74A021D00090;
-	Tue, 12 May 2026 09:53:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 12 May 2026 09:53:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778593994; x=1778680394; bh=ME123a7eQb
-	dhjnfuxHd31iAK3SKq2mQJemuW1UtfamU=; b=bEXaoPHlRA0nMX2Q9Y3mneeJfP
-	R80be7HHcV3dmNyTA8tsNB1VLVLsZdSiAvX0VasAoE+nTa4VTkpYognfjpqBGcil
-	RzPQsKl+gyPnU/Sp1wj9PFhxWYjMCEZHAtP2hpUUdYUOzxHDO4BjW6LrqJfDMzqY
-	/cegdI00QZxTAoBQoI6UBGv9nYLysA5jiRxvM6DPF1Dg8kOKnm4WjW+XK4yapGQk
-	9HtaeGH+2WWkMTuVLoglMNM2zFNgec29dNbxN3Ma8V/0SfzvczPuGb+4IxZofjJA
-	7N+Yjr8k6PYsK7dWOcMyXrUJ7aw0hAHd+K3Mzhl9jxsyFhxaQtHXZXzli0kw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778593994; x=1778680394; bh=ME123a7eQbdhjnfuxHd31iAK3SKq2mQJemu
-	W1UtfamU=; b=rOBjrMuClIPNQphr0+IkYUSk9wA5RiCj1XH6AXBa+XatuG+i8Uq
-	1pZEA0K0gPsg0/DTUaIpBD5h9VxKhAXVKcQMFs+R6r8p0m0LZ51ULOTzWuP0yTw+
-	yEIiYx595t0nI9HBWRSnn3MZ7gN7NqTgRQCkH+fzmcyy//Q+ATTuZpYSe8Q6LDoI
-	I9DaZ1TkZp/IDy8bD2d0FRL3hasyT4EVjKLpYnhR6V6u0B0XL1SguQd4jIFkZw4R
-	l0xvvEPJx196XO8XZoUB1/kYTM+xwAhvv/q/6egEJ2wYzdSonr2xeynta452JjQ8
-	QWipaV3Ws3k+lvC9LNyZ29hYbw8Q1ZveQqw==
-X-ME-Sender: <xms:yjADaoB3FHq7oX049TKuC4KFv1QnJFRe4YrlrJIlxnD4H7QKdh2ziw>
-    <xme:yjADauMihX-PKGl5xlEnlTbh0h76CamnP_7W85IkvUM_dPuiFHv3HpNUMDeDzpkNF
-    9pbV6MJQ2PpGW3hLbdHWAv3mykQ98Izem_yxrO0Y9Gv8w4R9xqfPg>
-X-ME-Received: <xmr:yjADalYnDzUpoNGeRmb5zbuy9NRUxaxqNun0SMat27c09cFMZQKp2y1kOgC_S0RBZ8SSpjpnyhWwUWFRYtenuL3b1aBUMDn6EQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdduleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
-    gtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehhrghrrghlughnohhr
-    ughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:yjADaltzAPCHjLT6nx-JnMo2ECLDZBbjnCYHZjToDGPmXDeykQcnJA>
-    <xmx:yjADavOuLkAP4W3ms7_Yl55rdxvxqEZ1vGvek7kVvvxy_dVPFAg0lQ>
-    <xmx:yjADak7uQtbucU7jyBhW56KURxfDtVjIB5BTbCnSOZ-1n5d-3uWpBw>
-    <xmx:yjADatQBir7Vquk98c8-onubxTBQhEaclBo5OwsCMKyjI0vZ68iDZA>
-    <xmx:yjADatNV9cCrC9vpV98H2haKSFIwBwuOmpL69to5Ru4tYl0s9YKJcTWR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 09:53:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,  Harald
- Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v7 3/5] branch: add --prune-merged <remote>
-In-Reply-To: <a2450098932a734f47ebe5f2c800bd63f760b64c.1778574229.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Tue, 12 May 2026
-	08:23:47 +0000")
-References: <pull.2285.v6.git.git.1778492691.gitgitgadget@gmail.com>
-	<pull.2285.v7.git.git.1778574229.gitgitgadget@gmail.com>
-	<a2450098932a734f47ebe5f2c800bd63f760b64c.1778574229.git.gitgitgadget@gmail.com>
-Date: Tue, 12 May 2026 22:53:12 +0900
-Message-ID: <xmqq5x4sn393.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AfLVVkG+"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7b4ee3a88e1so56843127b3.1
+        for <git@vger.kernel.org>; Tue, 12 May 2026 07:20:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778595622; cv=none;
+        d=google.com; s=arc-20240605;
+        b=k2ernA4ET9MbDZPmPEpB8+dsS3uTJQP2uJLnITbfbH6iEYvj1/cH9IoVvL6UcrJUDw
+         iwXfWcUPywo/pwdBKkhWBF/+Cp+PWR/S9m1qsAh59GwA16ViCF7COY0fIJdetwlMOSiH
+         ZQQ5PORUCU4WtLf1yFlzsKbxyoHq6UnzeQDbidqnJCdjW77SX5h55RJTPqyonaR4W4lJ
+         KcwZ3rbNGA/mcdCRpWwOM4RpwLl8H5FDMQZKZdRWI1aap1nDZIc2U/1EdwJMpjoLgiS4
+         SQ84JIwzmGWkJgH3CUbmZ5+97/YtFVzbo1W+8Rn77g8kUahiUnBL4uYV/Ndy2EJgq3HJ
+         PDVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=hfMjTisdqkQDSOYPoay6HsOqF5xBed4rc4Ft/lStRP8=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=TnmsLJieFM8UHL0RPOkXZSO0wv+Bm1eU4oZ+wozII/xInf8fpp9U+mfj0HMzfdymM7
+         fuxQalzsDen9FFy3FWRJlx9imx8TT/Y126a7UW2nJqaJsxN/XYjSuCYF/gSYEaSRDdcL
+         c8QnYVCvP4fe7R4ss0dyis9NZiY8TQ73z8662Wtm8Ew1cypo/fuRJMSFRVP4TpfU4qAk
+         8caf9OYsJZz/m0zwCSO3n+t3JULHGuQyyN6abGxQvHDDvpCZdj8p8EQVpUZrnwZ94XJw
+         jWutEyqgm9y1VIMpLTqnddXdcfRtha9PuYfrOrICXEvlyEjUFfzNRwLq/3io8YsrXBfi
+         aNhw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778595622; x=1779200422; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hfMjTisdqkQDSOYPoay6HsOqF5xBed4rc4Ft/lStRP8=;
+        b=AfLVVkG+Ql/+WFcSE//aURG0zcU5qbPL0GRDuJ6srHx+OuCCPI3MTQFzUmacW/Us/Z
+         BvEFlclXpgQMLO/hVSemRYRqRf1jEDlBQOqYnwPRCag5qQMQAj9v2qB7XH/yLBB2iv01
+         SDUX6UNLRhA3DIWV1JTcWsRIDzqePYUWjt/Sb7/PMd79cLFEskc+6A662nW+7BRi22nz
+         Fg/DFVvy4Ma/NxwYgRTOHce7E3eJCVhzcCAgb/6Odj2SQrefshCc73mUvAF6x+SFkvnt
+         fKDQEgHqYu98c7Wry18Sk7k3Bo8t0LJGqQteOPeToovsvFVjOdkCIQE0resfjzKuh6HL
+         AH/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778595622; x=1779200422;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hfMjTisdqkQDSOYPoay6HsOqF5xBed4rc4Ft/lStRP8=;
+        b=UFo97VXE5lRRsenRiWUY2A6OEdkOc7w27fQQC27KGbTuFphKKnnd8oRhJVkQMB6B/X
+         hLKhvIJ2FrxzPfeUlTDkwsjGZrx3iBtGABegAhGr1OaqUkF/+P0LtS/q+beDxXKQBfoF
+         REhpSKY0UT8lL3ilEOaVta1DIP3VJcslid1bxMksr+Muc6iNsIbdUHhO5myklzyDulXd
+         iMXmU4B7SSM8JzAQfLAaZrNltQP5Ji2HwHy6IC6r3CjQBw7IgGiSOPjB+xC4q7eFNrl/
+         +9+9l0RNC3WvAPS/bvpuU9bGvDOCdaFXoXJV12gaWYbxhfT3vCzeF9LPcHUH9w+zoxny
+         kT9w==
+X-Gm-Message-State: AOJu0YxFxHJBNVIT3bMKI/tpk/eh+9nKubZzud9sQ7vQwXvx2b35UA/+
+	bNy2B8m9rNILQtbNYnuQjoK+hCcVv26yAEiw34v2m+UmhBNRhBNsjq6TYeUCH3ZvfItTWFzE8ov
+	M4MW0QpwvaTHxyLzBBNcH/iiP5MHG4Rg=
+X-Gm-Gg: Acq92OEPMVBAudHjppbWB8Llp1HfJTEZSgy+4g7hCssyKE0z1yQPjsJvDpRm08b+bLZ
+	1sBJBcVqtTCV6JW/Z3VJkcxU4kKLzgPr+/57elbLA7DcO244Pby4YepAU4gyL/2LoABIx2dK19w
+	0r5H2U8oFWKod3Xy4JdLXrfyXxL0j4X189jTPZ5rnOemVQngGkz3neLV7n91C9M+4ZDqhHtp8I2
+	Zboe5ljiMkyIrRBJ4WJ5tft0WHUEYT3Mr/EGSLlCSQ9Kc10HV+lDHze9wsBjGoAvWZ/HQCydMvX
+	BfRlFFw=
+X-Received: by 2002:a05:690c:c6c3:b0:7b3:f33:35e5 with SMTP id
+ 00721157ae682-7bdf5e07727mr250083587b3.16.1778595622022; Tue, 12 May 2026
+ 07:20:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqik8tm16n.fsf@gitster.g>
+In-Reply-To: <xmqqik8tm16n.fsf@gitster.g>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Tue, 12 May 2026 19:50:10 +0530
+X-Gm-Features: AVHnY4ImZsqT1i2EfB9bZbZtu77eNFLpr2OOpfViGemgoVyYvNNK2AUbeBvf9tA
+Message-ID: <CALE2CrT9=5mOauUdzxJAEjeeD77RWGyXjLGGTObsk9R1eOrP0g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2026, #03)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Junio,
 
-> +`--prune-merged`::
-> +	Delete the local branches that `--forked` would list for
-> +	the same _<remote>_ arguments, but only when the branch's
-> +	push destination remote-tracking branch (the branch `git push`
-> +	would update; see `branch_get_push` semantics) no longer
-> +	resolves locally.
+I noticed my stash test patch did not appear in the list, so I just
+wanted to gently follow up in case it got missed.
 
-I thought the thing you were aiming for is this scenario:
+Patch Link: https://lore.kernel.org/git/20260505103332.43702-2-pushkarkumarsingh1970@gmail.com/T/#u
 
-    git fetch origin
-    git checkout -t -b hn/topic origin/next
-    ... work work work ...
-    git push origin
-    ... the above pushes the current hn/topic to update their next
-    git checkout master ;# or anywhere other than hn/topic
-    git fetch origin
-    git branch --prune-merged origin
-
-The last step notices that our local hn/topic has been merged at the
-remote to the target branch 'next', and the second-to-last fetch
-makes us notice that origin/next now has our hn/topic merged, so we
-no longer have a reason to keep hn/topic around.
-
-But the above description uses quite different condition.  You want
-to notice that _they_ removed 'next' (for that, the second-to-last
-fetch may need to be run with --prune) and then remove our local
-hn/topic, but to me, that sounds nonsense for two reasons.
-
- (1) Their 'next' is something contributors may fork from to work
-     on.  You exactly did that with hn/topic branch of your own.
-     Why would we even expect that to go away?
-
- (2) When disappearance of their 'next' is fetched to our
-     remote-tracking namespace, we would not even know if hn/topic
-     that used to fork from has been already integrated and stashed
-     safely on some other branch on the remote.  It sounds very
-     unsafe to remove it based on disappearance of origin/next
-     remote-tracking branch.
-
-> In other words: the branch was pushed
-> +	under some name on _<remote>_, and that name has since
-> +	been pruned upstream.
-> ++
-> +As a safety check, branches with commits not yet integrated into
-> +their upstream remote-tracking branch are refused; if the upstream
-> +itself is gone, the remote's default branch is consulted instead.
-
-Again, this is as nonsense as our example in an earlier iteration of
-having a topic forked from my 'todo' branch while the HEAD is
-pointing at the default branch that is 'master'.  If the upstream
-itself is gone, removing anything based on some other criteria
-cannot by definition a "safety check".  I'd suggest rethinking the
-logic.
-
-> @@ -171,7 +197,7 @@ static int branch_merged(int kind, const char *name,
->  	 * any of the following code, but during the transition period,
->  	 * a gentle reminder is in order.
->  	 */
-> -	if (head_rev != reference_rev) {
-> +	if (!no_head_fallback && head_rev != reference_rev) {
-
-I somehow thought that the necessary check at the lowest level can
-reuse most of the "branch -d" protection logic, except that it needs
-to pass NULL for head_rev from check_branch_commit() down to
-branch_merged() when doing "branch --prune-merged".  Do we really
-need an extra no_head_fallback parameter?
+Thanks,
+Pushkar
