@@ -1,188 +1,94 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20409402B9C
-	for <git@vger.kernel.org>; Tue, 12 May 2026 07:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778570497; cv=pass; b=Vd9ASB+FnPq2sY4QA6KwK1SG0A5q7GWxBb3ca4AnLUkvi0pxb3yM7Y4FGXzGRItdCOE67S4q4PP16+OOE3cOzjInUhYCEXJSYnx23oq6VTtmmF7cJJDNrIv0tIjOUTbof3tiIyNIs3+9nOZ/1IkW1j3qsui7/yjEByyusCkgAow=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778570497; c=relaxed/simple;
-	bh=zKxdELQ+0vEkRAtlwMa9z5VqsYSc1/Nd5UXqn/x2AZk=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=sefM4EAZMAMvG2N0mPg+anE8W+sArbvi9D8vRXM9yFRzD6MyhyAhiS0sjo/LFIq0PJPjlRqQH5vwaeDbgvG5YGvxek13dr9TlyDwEbDwdyBLgc5IbCz23FWTIbHL+bQkcAZ0LqMdBJGrjw+qKw9FRDnBdpNkPWP0EYBaUrk7xcY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=LeMlAB3g; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1138947DFA3
+	for <git@vger.kernel.org>; Tue, 12 May 2026 07:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778571319; cv=none; b=IXCEb7IZmj4Ee4yUZyl9A7+A6nXKn9EjklbWnF6pOclDdg2oF29YKLRhNy2H2uhRyuahyyfGY9NA8f4ZY6dw6JkCkIhsvmIB/Kl8mBCYOc8eTZWNgO0r15dqY1m/Hq/h3/OufYE8Xq48jC+vEgb2M4DOW5Axyc2yEkVlNyGkARM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778571319; c=relaxed/simple;
+	bh=5qiYwxOpCapzKORbIX/lh1ZCiy5sw/wbTCvW5flKzDI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FG6CpzUkAIr76bqEo7mXqu4HQtanO+2n0ZKZAAoXhmeDkJvDz3mCgcBql7ltQM4A8+eIFtrWg+gVNHYYvF+XZskuChpVUd4Z4DaDILenzejdq6FvZdS6EjARRezDi06TqJ3ExgqI3Bm8OBOLn4RMCIggvR3dwoTi9mnfi+aMCO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pUtLojry; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="LeMlAB3g"
-ARC-Seal: i=1; a=rsa-sha256; t=1778570479; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=jIecZJj0AA+0aigX0hdV/B9bNwwYssZrPc55SXNCnl2Or9H5szwqlH4Q39crtKJRSc6GTGfQJ1Gm8ElfUqzzAcURFMWxOQ4E9EabDSxplMGfg9IVTvpe7XWEIFi0oi6SomOWXvGoiN1tJdBmM85+QhIZgyzwu9TuQkRTmI5JKzA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1778570479; h=Content-Type:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=5siG8S9r4pXDjt3uM5KuZcx4zwoFEsQ0cwd6H2i/oLA=; 
-	b=dwMaXW19tf7BSCCWhKlRPvuoftjmezeOLNxph9h0v4y0iceLA003jk1YoP9pRNv8JCWVKma5PnXZ89BqDmnrcYWuMzKKCDlfgBDM58bHOH15SQjhhygH6WmJajcY9yTB9/2k0QGBpt0I8oRPY8uGnYbeknffyhgrvMOj+KQnvmA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1778570479;
-	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
-	bh=5siG8S9r4pXDjt3uM5KuZcx4zwoFEsQ0cwd6H2i/oLA=;
-	b=LeMlAB3gsXwsrprY0udv1VjkREKX8GXfWIgax/2BMTAUubVuqEyxUVBt5u7kbeJk
-	vtWyYR76TPJACvImWPG/JtUO4tZo8ixBTAEy3eTIrerC90hgjB3SlXiEwi8e9oF7lY1
-	sSYK6gKtLhGElWqsT0lBMblQg941VwcaRLoNz3JM=
-Received: by mx.zohomail.com with SMTPS id 1778570476718119.83982214134437;
-	Tue, 12 May 2026 00:21:16 -0700 (PDT)
-Date: Tue, 12 May 2026 09:21:11 +0200
-From: Miklos Vajna <vmiklos@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] log: let --follow follow renames in merge commits
-Message-ID: <agLU58gbG1y7KLz-@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pUtLojry"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-38be5e86918so64566231fa.3
+        for <git@vger.kernel.org>; Tue, 12 May 2026 00:35:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778571314; x=1779176114; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5qiYwxOpCapzKORbIX/lh1ZCiy5sw/wbTCvW5flKzDI=;
+        b=pUtLojryHzmwh2bGMPbW2m/+CJULijiwWK77rB6aaDalYMTZrBVCU0TWa2nUDRfsA2
+         efOPklkSWptSI3io6+O+oqy3PNWguWbSm/lm7uBWgdxVN/cpLWxok5RtbsDfslwbFnYB
+         A7jYc2qfmt1AgnjRtSAlc2CTMQ0CnrapMXHrkb5oFlUVyMRxA2keDNYjdTna1wqsYENQ
+         QlpnsBjaD9Koaom7B1si3nWCDSQH3LrVsYPE0qUi9Tq6RtwmiipcWKUz9OotuJHioVXZ
+         SsmLPAMhTvDT+do5hTTq/6M74biRgxbpISQ6xkWGXxZrpoesV77DpI5eqofXxXoZKGjV
+         i9MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778571314; x=1779176114;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=5qiYwxOpCapzKORbIX/lh1ZCiy5sw/wbTCvW5flKzDI=;
+        b=myQFKK7FxYHoEUZ5wSt5+LfHCmJI0cBHm4SIzFUnV0zDwW1y774M64kC4sMsDAnEFe
+         ABqVDwpXuAucn8w4TNTrqE+29GIJrnAYfW65uzCmWWvU+EbKtvjoJmiEPFjbWrgvlYbv
+         pt9ZF7AJWS5Yw1p6P9xCWv/ydUyA+LhBenycKYlnGE01QMjJC4HN4BbinlN8FuD3+Uk3
+         jaTCrMJZhT4R9vOPqhBbjdPnxHQOd8SH7s+3wXd+MTeybCVr8gRJ9mMBUNySDremBuCu
+         CQ1doz0oDOSmtkJ63dGRKAk0VCZwI1SgQ/JoftxyxXGsiINGnUqwfRk7nCsjOCPEG/qN
+         6h2w==
+X-Gm-Message-State: AOJu0Ywkb/Sit1oEe2D82Vk1RRz8KWNN6obvn26YnMtL5vH4vU9XfYBS
+	RWY4QK+gVl+BWuICj2G5MKY58yWpWjOApYMwyCdQdY23sAWFJ4A4bE2M8WniANHe
+X-Gm-Gg: Acq92OGmdcoVquf1el6hg//iUOncFoz4IbAlDghVNXZKUhwGJipHaGhoPvFlYyVFNVA
+	ob5784vyvYTqugoxehZnpFGta72fcFMFO2Q40JOiSjVFGim8qLfTJGZYHpaUOtDzNx6ZAZX9dhs
+	fL1/jP+6MjErybxUEZb44eRsdJpT7L76Cki3Cgi+daamqxeqeUvwYrlGzhdXpelMMKLhnMPLxGl
+	mo+EmOTtKXGOjhPySssmTRDw++edJxS8u/rwp05RGPPjddv7Kxl+UmtkRgjZ3kydEtsCPixGsua
+	nDMvwJecPJWKKSy3O3aeLr0bZSrIr4QwNHquFpwbioUi0/AdofGBNKESKeL41s2FlqJW5m7GveN
+	xH4Q7+2+w7uL8H4jqulsl674UgzubCX59Avdawvw5kAzn1WkNxM9fgVfwYfb/1ApQeM2aUjTAEe
+	XUjPiQlU4Gl+JbKEKWm7F8PriSryne0Cpxr60eFn3nSLNkBBzdXHdS178S+sckh6kBEfW2qmePf
+	x92ypAjsZ4o7Q==
+X-Received: by 2002:a05:6512:398a:b0:5a7:477f:41db with SMTP id 2adb3069b0e04-5a887ae1f69mr7958906e87.10.1778571312509;
+        Tue, 12 May 2026 00:35:12 -0700 (PDT)
+Received: from Mac.localdomain (h-98-128-149-74.NA.cust.bahnhof.se. [98.128.149.74])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8a955e14csm3167678e87.43.2026.05.12.00.35.10
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 12 May 2026 00:35:11 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	j6t@kdbg.org,
+	kristofferhaugsbakk@fastmail.com
+Subject: [PATCH] fetch: add fetch.pruneLocalBranches config
+Date: Tue, 12 May 2026 09:35:10 +0200
+Message-ID: <20260512073510.63435-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.72.gbe25572957
+In-Reply-To: <xmqqse7xr0t7.fsf@gitster.g>
+References: <xmqqse7xr0t7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-ZohoMailClient: External
+Content-Transfer-Encoding: 8bit
 
-Have a repo with a subtree merge, do a 'git log --follow prefix/test.c',
-the output only contains history in the outer repo, not commits that
-were merged via a subtree merge.
+> I may be misreading the above and misunderstood you, but if you mean
+> that the feature now checks with remote/origin/master when I have a
+> local branch that were forked from remote/origin/todo and set to
+> merge new changes from there, I do not think it is a good change.
 
-This is inconsistent, since doing a 'git blame prefix/test.c' does find
-the original commits. This works because find_rename() in blame.c is
-invoked for each parent, and there diff_tree_oid() is used, which uses
-try_to_follow_renames(). This means that in case a rename happens as
-part of a merge commit, git blame can follow that rename.
+I think you are right. My latest code assumes that everyone works toward
+the default branch, which is what I do 99% of the time, but yeah, it should
+be more agnostic from different workflow.
 
-Fix the problem in a similar way for the 'git log --follow' case: in
-case log_tree_diff() finds a merge commit and it would return early,
-then do some extra work in the follow_renames case first. Check each
-parent, use diff_tree_oid() and if found_follow is set, then work with
-that parent instead of returning.
+I'll take another look.
 
-This means that users examining the history of a repo with subtree
-merges can see all commits to a file with a single 'git log --follow'
-invocation, instead of one invocation for the outer repo and one for the
-history before the subtree merge.
 
-Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
----
-
-Hi Junio,
-
-I sent this out a week ago at
-<https://lore.kernel.org/git/afmfSa-p-9vuDL3E@collabora.com/T/#u>, I
-didn't get any reply to it -- so I'm somewhat optimistic that the patch
-itself is a good idea, seeing no negative comments.
-
-So this is a resend, this time to you, CC'ing the list, rather than the
-other way around.
-
-Could you please review this?
-
-Thanks,
-
-Miklos
-
- log-tree.c                          | 20 ++++++++++++++++-
- t/meson.build                       |  1 +
- t/t4218-log-follow-subtree-merge.sh | 34 +++++++++++++++++++++++++++++
- 3 files changed, 54 insertions(+), 1 deletion(-)
- create mode 100755 t/t4218-log-follow-subtree-merge.sh
-
-diff --git a/log-tree.c b/log-tree.c
-index 7e048701d0..bce09c7dac 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1142,8 +1142,26 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 				/* Show parent info for multiple diffs */
- 				log->parent = parents->item;
- 			}
--		} else
-+		} else {
-+			if (opt->diffopt.flags.follow_renames) {
-+				/*
-+				 * Detect a rename across one of the parents.
-+				 * Check each parent till we find a follow.
-+				 */
-+				struct commit_list *p;
-+				for (p = parents; p; p = p->next) {
-+					parse_commit_or_die(p->item);
-+					diff_tree_oid(get_commit_tree_oid(p->item),
-+						      oid, "", &opt->diffopt);
-+					diff_queue_clear(&diff_queued_diff);
-+					if (opt->diffopt.found_follow) {
-+						opt->diffopt.found_follow = 0;
-+						break;
-+					}
-+				}
-+			}
- 			return 0;
-+		}
- 	}
- 
- 	showed_log = 0;
-diff --git a/t/meson.build b/t/meson.build
-index 7528e5cda5..b4ae8d76d8 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -574,6 +574,7 @@ integration_tests = [
-   't4215-log-skewed-merges.sh',
-   't4216-log-bloom.sh',
-   't4217-log-limit.sh',
-+  't4218-log-follow-subtree-merge.sh',
-   't4252-am-options.sh',
-   't4253-am-keep-cr-dos.sh',
-   't4254-am-corrupt.sh',
-diff --git a/t/t4218-log-follow-subtree-merge.sh b/t/t4218-log-follow-subtree-merge.sh
-new file mode 100755
-index 0000000000..7ca607cbb8
---- /dev/null
-+++ b/t/t4218-log-follow-subtree-merge.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+
-+test_description='Test --follow follows renames across subtree merges'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup subtree-merged repository' '
-+	git init inner &&
-+	echo inner >inner/inner.txt &&
-+	git -C inner add inner.txt &&
-+	git -C inner commit -m "inner init" &&
-+
-+	git init outer &&
-+	echo outer >outer/outer.txt &&
-+	git -C outer add outer.txt &&
-+	git -C outer commit -m "outer init" &&
-+
-+	git -C outer fetch ../inner master &&
-+	git -C outer merge -s ours --no-commit --allow-unrelated-histories \
-+		FETCH_HEAD &&
-+	git -C outer read-tree --prefix=inner/ -u FETCH_HEAD &&
-+	git -C outer commit -m "Merge inner repo into inner/ subdirectory"
-+'
-+
-+test_expect_success '--follow finds the pre-merge commit through a subtree merge' '
-+	git -C outer log --follow --pretty=tformat:%s inner/inner.txt >actual &&
-+	echo "inner init" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.51.0
-
+Harald
