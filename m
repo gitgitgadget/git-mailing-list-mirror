@@ -1,139 +1,191 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B965F1FBEBC
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C91BD531
+	for <git@vger.kernel.org>; Tue, 12 May 2026 01:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778548285; cv=none; b=WKWeESEBeRrBEaFnjrO5VyYOBCk+WEpirvc1iVJI/psZifmMDlquOTtxSSXrsvKJxkQ/c9rifRvwYO+UMakYguPiEaLApwHEpncc6nHvCEbKS3A2iafkAzfoQAljnsq4TuLRNbHnlrIZb+1ktJ0K5Gct0MRHT374a9Xjh8bzxiU=
+	t=1778548767; cv=none; b=Q5Te2U0YoMrAmG1o6/91hsXIxJO3ESd6Bb5v81dLXnHNfwkMiW/5OTuut4Fw7b6WFdzxDcjzyKVn3ZnhUYNYgGPws64ZjryQoWNLbbCkNliy7+hc90N9UdiLOApcV+qzmlRktIixZ5M/Nq+rhFdmOIDo3ADKofSl6SSfut9auo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778548285; c=relaxed/simple;
-	bh=sH9bfgJoyZMHgnYarbj8wDrcw2DjQIBvo+/2EWn7MXk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lt1wz5C4sXlM/Yyqh77AwPEq3TUDFSkjjxmCfCxpDuHSJC7SAt3S999fFASlymYa66wn3EYLexCO7SfXBqwCuOWDFEMstLpgCdOD+6mzSdSVJ01uNUe4N3Zlwt2AC1WXJjBKiimSPFx14tMJmHi07gEeSFBFd6Nv/D+VwjWN8LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=WZ0EjvDZ; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1778548767; c=relaxed/simple;
+	bh=VG+KcQfUZGt/QxCpm8UqRHVba9Y1FoDUpbvZkTY3Bno=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=e1rP7oVt3cyCzAOT7koVwgGUqD4QGrA6V7O/+89U6nRvomYUUllO7JTii1Abed35toaJQiS1Yrds2sKtMFC8nY9Xo3fuzt5Rm1O9MpYQsKyIcdnZyB/Sljmm4rjUbQpWE08NIjtw1tIs6QeI0+5EzQ5Wo86k34u9Xv5ftWD0P8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xbtMOUre; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hfT3/hmp; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="WZ0EjvDZ"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7bdc947aaa3so52406777b3.0
-        for <git@vger.kernel.org>; Mon, 11 May 2026 18:11:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1778548283; x=1779153083; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8n2Xe4U2lE5ZweTKbgjwY5cCR3yW1SmVBQn6TrfByEA=;
-        b=WZ0EjvDZWFQcLlAWx79Vqc5WnsPwehjB9UsuoUjL1VHDRWCMoiQDx2d8tQhj8IVZJE
-         s2gnqIO+RNg/3d117k4eZIiQim2AXHAJoqe0fx4EHE6m8/oqd8QnI27DceTz9RoIgEFG
-         6qJem4EMl7cyv8HxHf4rmcxv1kzJ7Oa9eyJ+JVeMSo2f8XDXKKmcK6BAZeK/W64TxNmG
-         WA3mwrMQqTd7/dYW/77e3RNqAO1Fa+cMwrCd4i183naLYAF+sfX4v1dqW/Bi0hpWerhM
-         5BCyYoqOw6Wjvmapw3zoNhwuOUFDDASfBD/KFSf7vB9S3Ww0OSXqEsUfuV4SyJ2/6fKx
-         7Zhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778548283; x=1779153083;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8n2Xe4U2lE5ZweTKbgjwY5cCR3yW1SmVBQn6TrfByEA=;
-        b=WUr2kPnL+hrVUhvj+ACW+1I1QtO4r6mGOpNDpRp6IItVTlUqUngaYLdJ2WXVkPnC/6
-         B2H3TigKQjdXa00cUdua7XFmBuZzxyDTHteSG+FByEzwkxl1ZlJ2sEWJAn3gspMTyGXB
-         M8LbbTzBXGmQ5PlZcHZhlk0vSrxv0THGb5q9BhoJCsrBBvxWPbZjxkxLMKBihEOAeKT4
-         JryeDZ+vLNsW0DYT+zAp54l/K9CNRs4eKHmYFBTHdZVtThsY/RqVKsdTUfzGl/Yk87v2
-         a1ZrpojxNjypSFePMb2G/4t1aOURHKenCCEoU0Rs2G/AP5+9dn2iMZCRxT8uXM/EJBF3
-         NT9Q==
-X-Gm-Message-State: AOJu0YyFHOUR/IJsEtfBbZ3Aq0syiNicuu4ZgPgF0IC3tWHkEyWTQZva
-	lIplt/8H6zRIqDnTqpT9uP/S/tOkEi7yiYFMSX5exC7AoGxZrslebETNdjIQkT52alOyyw0bon/
-	NCK2Jl/V5Vg==
-X-Gm-Gg: Acq92OEfucWmHqOdCfedQmYZ5el+0buSAhtfE6iY3hTwH64N1XdRqE63BRjbfwJEO8L
-	mKvCP19AObyVP2l88nM9zxBSoVVZqojn1dxuDsBvTkZ0dQLwGrszTYv3p8mX1K7OJYyKGFkuRr8
-	Nhji8puPAH0IMPAjJlCm/GGJolvyYbdVB7Q5YnU9raZwqVCGbVrbZJNheL4fUGoNzZnGlXrsDsD
-	/fVLyQMKRCNC3yYdb1OMPEd8Iw/BiWSBlEcHYuDFpiqvabq7jxqqZyJ6KMNCEDaHJYgY7UDlY/3
-	NJmI2JHzbyGEiSQktVeU4slxaJKlVCfpaT4B0IbNxGFt0m3avJRBXclanLsSt+JwuDG7m7qjezD
-	q5uZjIroJqdaVsDaLm3WgOWF15gy7Sggop3R+L48a2pOJQWH8W4WAWg+J5ugS2dr4y2lg2gMCyh
-	zwmr+LXCOMpKOCNJFHhUmI7RNgfdrEzEIcpkl3vuJyT8Pq0w0/I2zD5c9YmjHUyUBcvDYs5KliS
-	t6QEAzIuZg1uKgPKn0Pmhnxo3nggmDI9NbndvZpB3SLHbBYXxftxHR8uBDT/HiVPKymQmmhDko3
-	/gUoTwAZ0mH5HP5X
-X-Received: by 2002:a05:690c:c507:b0:7ba:fd82:9131 with SMTP id 00721157ae682-7c563f410b8mr7283817b3.47.1778548282827;
-        Mon, 11 May 2026 18:11:22 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66888cc7sm155976947b3.44.2026.05.11.18.11.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 18:11:22 -0700 (PDT)
-Date: Mon, 11 May 2026 21:11:21 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 03/12] t/perf: add pack-objects filter and path-walk
- benchmark
-Message-ID: <agJ+ORhy0O6fpJJm@nand.local>
-References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
- <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
- <77329cf8f45b948f3986d004be72035c75ce40da.1778523189.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xbtMOUre";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hfT3/hmp"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 21C287A0111;
+	Mon, 11 May 2026 21:19:24 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 11 May 2026 21:19:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778548764; x=1778635164; bh=LuTeOZMj1l
+	+64fKY43PUL8NBh11/MxJqhgLqs4DChBs=; b=xbtMOUre+N3bz7Afa4CgJVsn7G
+	jT6ZyRFmm3rr+2a4ng0bKyCkuaiAY+jZ5jBw17Zj9ea5t707KVgnfiGd0+uPXDLD
+	epMq/e02mM5TO1lVOBVfeIYJBc/kBxzr21NlpHD/rNxlkdb0kkWwfp+AvYXpBpQA
+	zGzem4ElqMh0TGAYZarsx7dtbah5qhCTMapnkynpcpADZRTmYFWf6i/LbT3pqxsb
+	DvlfuFlKBWmLt93xqZQM0ROPfV6/LZxlxwa2ElSurfsQh3sXxtr6atR1oFCrkHtJ
+	0DfhCo7ZpMoBHX/aGkAmAqErAIjbHhVAqHt0oozxcN7WM28yrJZ6ygEBxKAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778548764; x=1778635164; bh=LuTeOZMj1l+64fKY43PUL8NBh11/MxJqhgL
+	qs4DChBs=; b=hfT3/hmp1Tatm1y35A9ucysEQYxPEnHZdi+UzoEDaqS/R8G+N6n
+	ydLLA1aa0xOD9f9KhiGWMSn+ov8ZJtRAxSEiEr4kmFz3489pEXTHVxsVh1CS91bG
+	nSAvd2SGcoMhKVx8lliuKUbzqFUm9yPx1WEE5V6/ILYO8nf6ot1XdCw2EFddOSws
+	wDD9dcpKdsQN52vyINbYIIrBfQR6l4rO0WMrSB7h39S/OAxAjanMtvTRNRxNlnzn
+	Kq2sbSrB/R7eHcJA7Wd1Sfn8sIZL5t2xnfDov928uJxnFPJ5/HpTQpT/L9HphkYw
+	KoHX75872dUJkPjoJC7OUZUoACck1U0PRWA==
+X-ME-Sender: <xms:HIACajOnLEUICOAraTBogtX_iYMtWyN9BWs-bNqCyN82bntfjGnjxQ>
+    <xme:HIACatD9p33BNjJRSwfMRm3l8rnDWstS8p1EYFphimIYQEQcHDTBIGfJFAwo0an3Z
+    FVlD5OWSzTeoEAApxH3hqU1qMvRqhdDhN0sscIwKoW7jMtJWPAf>
+X-ME-Received: <xmr:HIACaoev3F0njEkMTJpgRDO1leESXndoMn4qUbtTUH3CKwQsG-tWGVEJ617dBn_lA6AR_BC_p8PafoL6-nuUAv-8zPaaF4pboA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtgeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggtthhiohhnmhihshhtihhq
+    uhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhikhgrtghhuhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HIACakMkB5RTwYN3_LiYmvJythNi_2F08Qxli23aCEZ3_yxrlBm_6A>
+    <xmx:HIACagIxoSEn0ANDYx08_dqCXUGkl9Nb_cSCgB4ZFA4HLjdpg8QY5A>
+    <xmx:HIACasKnOe7aZDdMjm9Mh7oN7e0yQ0NJ2Thnq9dcKvJb63qDHndvMg>
+    <xmx:HIACai4K4KBChilDYWaNrAXgiInd82YZ3BsCYyz7sFuDMnLY36QWoQ>
+    <xmx:HIACamxm7VIj8aS7wdgAJ7VMA4-_ll2KdyP7H5QCZsXLwj8GPW5EVD2d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 May 2026 21:19:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jean-Christophe Manciot
+ <actionmystique@gmail.com>,  Mikael Magnusson <mikachu@gmail.com>,  Jeff
+ King <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH 1/2] builtin/maintenance: fix locking with "--detach"
+In-Reply-To: <20260511-pks-maintenance-fix-lock-with-detach-v1-1-ccd7d62c9a40@pks.im>
+	(Patrick Steinhardt's message of "Mon, 11 May 2026 14:29:55 +0200")
+References: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
+	<20260511-pks-maintenance-fix-lock-with-detach-v1-1-ccd7d62c9a40@pks.im>
+Date: Tue, 12 May 2026 10:19:22 +0900
+Message-ID: <xmqq4ikdqvad.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <77329cf8f45b948f3986d004be72035c75ce40da.1778523189.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
-On Mon, May 11, 2026 at 06:13:00PM +0000, Derrick Stolee via GitGitGadget wrote:
-> ---
->  t/perf/p5315-pack-objects-filter.sh | 129 ++++++++++++++++++++++++++++
->  1 file changed, 129 insertions(+)
->  create mode 100755 t/perf/p5315-pack-objects-filter.sh
+Patrick Steinhardt <ps@pks.im> writes:
 
-This is great, thank you for adding these as part of the series! :-)
-
-> diff --git a/t/perf/p5315-pack-objects-filter.sh b/t/perf/p5315-pack-objects-filter.sh
-> new file mode 100755
-> index 0000000000..b009039c89
-> --- /dev/null
-> +++ b/t/perf/p5315-pack-objects-filter.sh
-> @@ -0,0 +1,129 @@
-> +#!/bin/sh
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 3a71e314c9..09cb92ac97 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1810,10 +1810,32 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+>  				   TASK_PHASE_FOREGROUND))
+>  			result = 1;
+>  
+> -	/* Failure to daemonize is ok, we'll continue in foreground. */
+>  	if (opts->detach > 0) {
+> +		pid_t child_pid;
 > +
-> +test_description='Tests pack-objects performance with filters and --path-walk'
-> +. ./perf-lib.sh
+>  		trace2_region_enter("maintenance", "detach", the_repository);
+> -		daemonize();
 > +
-> +test_perf_large_repo
+> +		child_pid = daemonize_without_exit();
+> +		if (!child_pid) {
+> +			/*
+> +			 * We're in the child process, so we take ownership of
+> +			 * the lockfile.
+> +			 */
+> +			lock_file_reassign_owner(&lk, getpid());
+> +		} else if (child_pid > 0) {
+> +			/*
+> +			 * We're in the parent process, so we assign ownership
+> +			 * of the lockfile to the child and then exit immediately.
+> +			 */
+> +			lock_file_reassign_owner(&lk, child_pid);
+> +			exit(0);
+
+The point of reassigning the owner to somebody else is so that we
+won't clean them when we exit as the tempfile.c::remove_tempfile()
+function checks the "owner" is "me" and refrains from unlinking
+those that do not belong to us, so there is nothing wrong in this
+code, but this somehow felt awkward.  In a sense, child_pid here
+does not have to be what fork() returned but anything that is not
+our own pid.  Perhaps "we assign ... to the child" -> "we relinquish
+... to prevent us removing upon exiting" would convey the intention
+better?  I dunno.
+
+> -int daemonize(void)
+> +pid_t daemonize_without_exit(void)
+>  {
+>  #ifdef NO_POSIX_GOODIES
+>  	errno = ENOSYS;
+>  	return -1;
+>  #else
+> -	switch (fork()) {
+> -		case 0:
+> -			break;
+> -		case -1:
+> -			die_errno(_("fork failed"));
+> -		default:
+> -			exit(0);
+> -	}
+> +	pid_t pid = fork();
+> +	if (pid < 0)
+> +		return -1;
+> +	if (pid > 0)
+> +		return pid;
 > +
-> +test_expect_success 'setup filter inputs' '
-> +	# Sample a few depth-2 directories from the test repo to build
-> +	# a cone-mode sparse-checkout definition.  The sampling picks
-> +	# directories at evenly-spaced positions so the choice is stable
-> +	# and scales to repos of any shape.
-> +
-> +	git ls-tree -d --name-only HEAD >top-dirs &&
-> +	top_nr=$(wc -l <top-dirs) &&
-> +
-> +	>depth2-dirs &&
-> +	while read tdir
-> +	do
-> +		git ls-tree -d --name-only "HEAD:$tdir" 2>/dev/null |
-> +		sed "s|^|$tdir/|" >>depth2-dirs || return 1
-> +	done <top-dirs &&
+>  	if (setsid() == -1)
+>  		die_errno(_("setsid failed"));
+>  	close(0);
+> @@ -2180,6 +2178,21 @@ int daemonize(void)
+>  #endif
+>  }
+>  
+> +int daemonize(void)
+> +{
+> +#ifdef NO_POSIX_GOODIES
+> +	errno = ENOSYS;
+> +	return -1;
+> +#else
+> +	pid_t pid = daemonize_without_exit();
+> +	if (pid < 0)
+> +		die_errno(_("fork failed"));
+> +	if (pid > 0)
+> +		exit(0);
+> +	return 0;
+> +#endif
+> +}
 
-Not a huge deal, but I think we should avoid having ls-tree on the
-left-hand side of the pipe here. I would perhaps write this as:
+I was hoping that we can do without the #ifdef in this caller as
+daemonize_without_exit() already has exactly the same condtional
+compilation.  If the NO_POSIX_GOODIES side can just return silently
+wit ENOSYS, shouldn't the callers be also fine if we return failure
+instead of calling die_errno(_("fork failed")), I have to wonder.
 
-    while read tdir
-    do
-        git ls-tree -d --name-only "HEAD:$tdir" || return 1
-    done <top-dirs >depth2-dirs.raw &&
-    sed -e "s|^|$tdir/|" depth2-dirs.raw >depth2-dirs &&
+But because (1) as long as we have to call die_errno() here, we must
+keep the conditional compilation in daemonize() as well as
+daemonize_without_exit(), and (2) changing what the callers get when
+fork failed here is totally outside of this topic, I would say that
+the code around here is good as-is.
 
-(Moving sed outside of the main loop cuts down on the process count, but
-isn't a huge deal. I think the main thing I wanted to suggest here was
-avoiding 'git ls-tree ... | sed'.)
-
-The rest of the test looks great to me.
-
-Thanks,
-Taylor
