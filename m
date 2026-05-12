@@ -1,127 +1,145 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13A74E379B
-	for <git@vger.kernel.org>; Tue, 12 May 2026 06:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E322E368D52
+	for <git@vger.kernel.org>; Tue, 12 May 2026 06:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778567796; cv=none; b=riuQkE70OpSJ4nT/RfljyBOiB8JtxYJyf8cR/TTDIpBplH+bGm7V7BRI/dgCgpxzidUiqSZu0hvtOyWf7gkXRQs9OcRA9AaQL1+U5sQYqFBsYMWAw/jsnmpFXeIx0CWMhLDi+XDoDfTPJ4WbQ4afCp4Y40xOLCZc+a8m829z5w4=
+	t=1778568112; cv=none; b=Cqq67LzT8NITs3HVM6CmxXQToSGQNx1eVVNExAKJ5FBZL2IwKA0lr2K5hiVfoOfYjj6Q9r367qDW3SHiveP/MuBA2nwv7iUuZDStj/zJ56NaKHQwSpSj4L8hTW33aJbPErAa4AMO1aOESPQ0++XvaZH6dub9KWgjM4fZfeArgx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778567796; c=relaxed/simple;
-	bh=CU1CnSfYJKeDwxyCGHcimJa6jkuAPndlgpUkE019F0U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BH7AjidnRem9nA2w9J6HfzNlUPr3PI3FTG1ZHMF3jeOmF7i46fuE+3z2EShKrSB6iBUsttax0SVU5kNhj7PVdgp/oPKFp4WrgL41bvzf4nKBkrv7XbYAdeqiOCmE7pTvpG5TRvALS9atHmqkzX/0iw0JqOZpC1XdjC6jfNv7o0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vyx1XC1J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H8vdm/tC; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1778568112; c=relaxed/simple;
+	bh=tADerumj4f4LN6by7ZQsQbUPszHlBSzteUx+S9JJ8FU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DoceQbrrlNIs5jsJYamr4Xrrxzjej0qy9fnchTC3qlUqOtilgpBKcl3tnz4uCczPaegQyPUeZBxP+dJ0gk5a1vqSJZZKktB1qRn/O9vXUAdzNwUtqPqTyQZb+qMtn7KaUevyQQ7S3A0FMS/rcQEpXRV/N4Kvc2krybCW48pQ0nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fl9i0Uy9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GzWnDmWe; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vyx1XC1J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H8vdm/tC"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id BACC9EC01D4;
-	Tue, 12 May 2026 02:36:23 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 12 May 2026 02:36:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fl9i0Uy9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GzWnDmWe"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BE7A614000B7;
+	Tue, 12 May 2026 02:41:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 12 May 2026 02:41:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1778567783; x=1778654183; bh=0ujff+T79m
-	UhDztOl431Rq/L4YpEIKxDBOdHY8Y1LlY=; b=Vyx1XC1JiwuNugwEymVLprHDKb
-	qGN5Y3oORzXkVX2QmvB6pOJXqzOzSj3R/yDh3SJci3MdePJ7+jNb1KrMx1l+/W2U
-	H1bHX/7p2WKVPaogZ1YF3aj1ii9uLaPk5k35UQ8hfIJhIRnyGyItTWiz6CM0PXXO
-	D3m7gAl819MEzpei5bDjWlVOMQZOO0R5LkjmVwdRthoN0zNoLAEKidGJrWMmXJqh
-	TtzAnsfuLebAFy9kHNnV1BfXWtf5x3fYVHLAAmEErC0G4u2T2+FlDWh/WLJEOM9L
-	FTPLhPNNKfaJN1rEvhkRzOe+rNKPuQ0LYDWdFZy94aZj9uIjVVQ3AH5tLeyQ==
+	:subject:to:to; s=fm2; t=1778568096; x=1778654496; bh=HAcQQcd1n6
+	cRKldw5nPambZWhUgc4Pp9KEDn9VCqau4=; b=fl9i0Uy9a0eW7Cs0G5bffayLEa
+	y8c5zClrTPctUhnqu0dWGi5tmlyl7+CDds4IDOQbOop+Qx1WgAJStp9n06b8WxJi
+	QRIXm9u2w4EkWk4CFCug9X5eRxt0vHllScMWd7vWZ02GVr+oT6GYrO9p1jr9D4g7
+	q9jlXwKSmLziFdxiHEF/GM0Su1Po8vwEfVwWkUFhFGhFRHxSIRKwPLguXRImyzhd
+	8E5ngd8jTW94i8xvKmnjWvIDYGHZakfPpyD5zSCgz+N/LPVk+bPqDqDXRSck8rXt
+	LEshbbaW4gIlD/u+QZEZ/DzY1vLwaSATqoqhaqlMHcfFBp3Q9xoc7+NNCE0g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778567783; x=1778654183; bh=0ujff+T79mUhDztOl431Rq/L4YpEIKxDBOd
-	HY8Y1LlY=; b=H8vdm/tC04GMh1Z4pQnsv3df6ri7UDA9fr2L+D2R7p4uW/KVSCI
-	b7BaT42+w1mS4DyV+LjJ6RancPUVT4bIuL/CJffeUzKS7IOheNZd8AC7wAdyr/v2
-	aOrwEfP3TIa/Er8SCBU9KOqo8Z2HZ/oI+hWt7r/6wjh6rtq0pqXGwd03axMG5EwF
-	S6X3pXdjO45cW4KqjGpjWRGAB5sfjeEhaULrSLgzAfiwnl5IrCkCNKfofc22vHPZ
-	Kh2qh8MAV50h7cDcxI0fr8jZOruNK6mrzsfl9s5JQB8hpBNJNXzpg6CMWrDaTHiP
-	iNUrB0Y/CXo7bwFgIkc5MXy/AvrnkybTRYg==
-X-ME-Sender: <xms:Z8oCasHUHYJr3_X4jJHMheZGba_P8JFhMDu1l4mD1o38rumT4t8KfA>
-    <xme:Z8oCaszzlmVdJwTJIHkK23WPhddZ_dmsmyEAE_V3_5ZOWjKLgIctCbBSR8o_F-483
-    xWYVTP1AGcJt0Kc1Gje6cStpVmLb35I4U04bWGg3lh5s-iYLHyB>
-X-ME-Received: <xmr:Z8oCajge3bzJx-zaGtZ_EeJI5zMX5vhM22rYbB0F7_g_0K2n0n8M_--pRDmnmZzSfJR-6Q4_zRPHmvGMM2y-c9TxxS8ts8bC3JhAIljqxGU>
+	1778568096; x=1778654496; bh=HAcQQcd1n6cRKldw5nPambZWhUgc4Pp9KED
+	n9VCqau4=; b=GzWnDmWexz1w2+C4DkVybSq/Vm/+Toy7cKfOQbek3DFZ9ZXxo9D
+	MDU7kEm7rbjHZRWnrr5Pu/WqsuzHX346ZRFsGDbdbjniT80mng/h1oo2Rf8uqB+p
+	DaAt9UePf3p+2g3/Qgdnmx0eccI24+vFSH90SAr3DBmIU6iLQap7KF1UjfK8IlD9
+	+SaKDo2OCWlUwkfe1zD9eS/sM9MEwxZApNGQFVEvZc0m6bY6ALDlUMN/wk7mbRgV
+	m96mkIXsXxlygaLce1rLfn9LbFRPN9rXwo3PbcB2KinOixGr0ZW3IpcfkamZAxgb
+	jmfaayoiZ/vwLAige28LZdLY58GR7BxsEyQ==
+X-ME-Sender: <xms:oMsCauAH5xxRB2os6Lt7_MR0btCPn7JFYPBo9FTpbFeezTumkn23wA>
+    <xme:oMsCavaAHn0d50spKecoSUfQMCUTaLaXzlQp5cX1ToBaVO_Lvm_YDlPIOcFyKIXFl
+    -4qu-HwKkvpqWWqkNp_QQIX64OZR2hXAz5DirOz1mg1Cp6qacIx6w>
+X-ME-Received: <xmr:oMsCap5_tIfCJbXvfQKrwKQnMvJnIDtwWHn04b7zvFBCrrR5cvQIT9-FoGPUM92bdFWl7LAomTGaXwVNUylY98tZ2lSnOiMquw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdduudduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehmrghilhesrggshhhinhgr
-    vhhgrdhnvght
-X-ME-Proxy: <xmx:Z8oCanyxtmffLnft9Gxpv3OZCluwoqPrSL4G25QeiZEBOPe1aqcMLg>
-    <xmx:Z8oCamJ18NwefnFf0D-rjwuHBUDgqu9ecdsuYAbkEYFQN2fosndM1g>
-    <xmx:Z8oCauSHwVjfiQ7agPoO1VmwiC8bpcXw6cWEw9Z7iM24e8ATqJC8fw>
-    <xmx:Z8oCauq9gBZcB9KiZqeKMQ9QI4krlHhWbysBZjmTn_YLCr1jTveMTA>
-    <xmx:Z8oCagzVQhNy98Nk2mJ1uIceDqm1gJpPDP8pwKJkyxEpr7yEnUhQINcn>
-Feedback-ID: i197146af:Fastmail
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghr
+    hhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsegslh
+    grtghkqdguvghskhdrtghnpdhrtghpthhtohepuggvvhhnuhhllhdomhgvrdgslhgrtghk
+    qdguvghskhdrtghnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:oMsCaoZ0yyF2czhBYnSsza-NYdQSvqhpdBMqOCNf-1AgLQ4LrqISjQ>
+    <xmx:oMsCagi-7gInXxF-TZIj5unQijGulMt-4U0wNx67EFqo4xsyOXhHVg>
+    <xmx:oMsCah9zvuEg9dkGSXCzn2DNezK-05YJv7iIk3ReyS3Nq6mtOkO1Pg>
+    <xmx:oMsCajomUpJTHaXHXiQEeuIKxjfnEevNqwGngNte6-8KaPSjwbK86Q>
+    <xmx:oMsCaoK3wrFRTKrf81OuGr7yrcIffi7L-1cH7Ywm8_X36J_Q_USpyDvc>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 02:36:22 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a1799fa6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 12 May 2026 06:36:20 +0000 (UTC)
-Date: Tue, 12 May 2026 08:36:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Abhinav Gupta via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Abhinav Gupta <mail@abhinavg.net>
-Subject: Re: [PATCH] sequencer: remove todo_add_branch_context.commit
-Message-ID: <agLKVn6RF4UBYd_8@pks.im>
-References: <pull.2111.git.1778502113485.gitgitgadget@gmail.com>
+ 12 May 2026 02:41:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Chen Linxuan <me@black-desk.cn>
+Cc: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+Subject: Re: [PATCH v3 0/2] includeIf: add "worktree" condition for matching
+ working tree path
+In-Reply-To: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
+	(Chen Linxuan via's message of "Fri, 03 Apr 2026 15:02:27 +0800")
+References: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
+Date: Tue, 12 May 2026 15:41:35 +0900
+Message-ID: <xmqq4ikdnn8g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.2111.git.1778502113485.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
-On Mon, May 11, 2026 at 12:21:53PM +0000, Abhinav Gupta via GitGitGadget wrote:
-> From: Abhinav Gupta <mail@abhinavg.net>
-> 
-> The 'commit' field in 'struct todo_add_branch_context' is unused.
-> It's written to, but never read from.
-> add_decorations_to_list() gets the commit passed to it explicitly
-> as an argument.
+Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+writes:
 
-To add some historic flavor: the struct has been introduced via
-900b50c242 (rebase: add --update-refs option, 2022-07-19), and the
-`commit` field was already unused back then.
+> The `includeIf` mechanism already supports matching on the `.git`
+> directory path (`gitdir`) and the currently checked out branch
+> (`onbranch`).  But in multi-worktree setups the `.git` directory of a
+> linked worktree points into the main repository's `.git/worktrees/`
+> area, which makes `gitdir` patterns cumbersome when one wants to
+> include config based on the working tree's checkout path instead.
+>
+> Introduce two new condition keywords:
+>
+>   - `worktree:<pattern>` matches the realpath of the current worktree's
+>     working directory against a glob pattern.
+>   - `worktree/i:<pattern>` is the case-insensitive variant.
+>
+> Supported pattern features: glob wildcards, `**/` and `/**`, `~`
+> expansion, `./` relative paths, and trailing-`/` prefix matching.
+> The condition never matches in a bare repository.
+>
+> Signed-off-by: Chen Linxuan <me@black-desk.cn>
+> ---
+> Changes in v3:
+> - Apply Junio's suggestion.
+> - Link to v2: https://lore.kernel.org/r/20260402-includeif-worktree-v2-0-36e339b898d7@black-desk.cn
+>
+> Changes in v2:
+>
+> - Add missing signed-off-by lines.
+> - Link to v1: https://lore.kernel.org/r/20260401-includeif-worktree-v1-0-906db69f2c79@black-desk.cn
 
-> diff --git a/sequencer.c b/sequencer.c
-> index b7d8dca47f..19839da1e6 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6409,7 +6409,6 @@ struct todo_add_branch_context {
->  	size_t items_nr;
->  	size_t items_alloc;
->  	struct strbuf *buf;
-> -	struct commit *commit;
->  	struct string_list refs_to_oids;
->  };
->  
-> @@ -6498,7 +6497,6 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
->  		ctx.items[ctx.items_nr++] = todo_list->items[i++];
->  
->  		if (item->commit) {
-> -			ctx.commit = item->commit;
->  			add_decorations_to_list(item->commit, &ctx);
->  		}
+Can we have a volunteer (or two) to review these patches?  The
+feature sounds like a worthwhile thing to have, and the code on the
+surface looks OK-ish to me, but I am not fully back up to speed and
+can use an extra set of eyeballs.
 
-Nit: while at it we could've also dropped the curly braces according to
-our coding guidelines. But that alone isn't worth a reroll.
+Thanks.
 
-Other than that this is a welcome cleanup, thanks!
-
-Patrick
+>
+> ---
+> Chen Linxuan (2):
+>       config: refactor include_by_gitdir() into include_by_path()
+>       config: add "worktree" and "worktree/i" includeIf conditions
+>
+>  Documentation/config.adoc | 50 +++++++++++++++++++++++++++++++++++
+>  config.c                  | 25 ++++++++++--------
+>  t/t1305-config-include.sh | 66 +++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 130 insertions(+), 11 deletions(-)
+> ---
+> base-commit: 270e10ad6dda3379ea0da7efd11e4fbf2cd7a325
+> change-id: 20260401-includeif-worktree-fcb64950dfba
+>
+> Best regards,
