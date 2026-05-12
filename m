@@ -1,189 +1,128 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093073F54AC
-	for <git@vger.kernel.org>; Tue, 12 May 2026 05:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9263A40756C
+	for <git@vger.kernel.org>; Tue, 12 May 2026 05:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778565288; cv=none; b=MZlg4Vp1t+eJ2nwdmRTabVFvmZ61Cquj+RWuN3xtdWZEmwfnX+xl16FZhrgFguVR0zmAXIJ1O0rDBZh5my7hIFoEBWxm94NZgaiZbySsEzfOkwYSRbvGmSZDBgCmIHKiHRc+ZTgxvFhEDM/UopCAjkDdNPkmhtLc5c5swx7v7FU=
+	t=1778565576; cv=none; b=WYaIyA6vyyyWEom+LdF79WOubV1TidmLUaqfm6mebQHwos1MSUH6iGLsmVZhS+1sUJAABJ7rK3BRjbQkmldvNIhj4mzdQYyPsO/TxZojOaJvM2x0PuizoUqxMIcEXm+Mf+RzyE8DWXBk3M+WW7QPN4IYlyAvldJZuEX7qVbv9+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778565288; c=relaxed/simple;
-	bh=ccf1mcnDjafCdWg/VJBy0qa7z5gI+MTAtCIxltK8NjQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qgu5RacaBP83bTpBkRM8Pj5gzEQ00zbGhaCBOB2Qvhny1mFkpehgQPEmr8QlaAFnnFrbG3TSuFMbfXKjHtlx/3CLbiefC5Cmi6hu4y4lyg9fDw0ytknC4VTz8309/vXb0JEPUPQ18SqA9SHKXy93PL7KoBLzR56P0P2zFl0gGmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sYRF2a0u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oPR57fgB; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778565576; c=relaxed/simple;
+	bh=xomLBbiBfOzDNI9vNNO+7r+1w+4EplnOGuuFW4NDfYE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aXcVgKj+ySjecBxd0VUankEHa85HFCOi8wrDalC5S6HLHOCzvs3S7L1y5+rBaTLYF1E3pW5GJ2wyiiieyFpzvplRT203CNmlqTmIEHfO9EgzUkNRI9dFQJiDGTMyVvyseDUvBnNl9d9VpCfnNCs5p9Ed8H0l1fIloIaluYM9Vag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Luhtdgms; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ohaVEhly; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sYRF2a0u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oPR57fgB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id DD48F1D000A6;
-	Tue, 12 May 2026 01:54:22 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 12 May 2026 01:54:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Luhtdgms";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ohaVEhly"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C4CDD7A0064;
+	Tue, 12 May 2026 01:59:18 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 12 May 2026 01:59:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778565262; x=1778651662; bh=ZKJAdpLBUo
-	f7aAjICIddKXvXxdW2eci8oBIkiLWRhXM=; b=sYRF2a0uJjDtaFjRC7cma4pCdh
-	SydXjTCTNJg7/CYb4bjG1rBjhqW86fzpUWh24SoE+hRBIO8O1DqPYktC2PDTPBTJ
-	v3ESNJdOSlY4gT90qV9FsDGWhetNBTGd1fARv/TWxJ5wGHhrKp+BfxWow95MRbCh
-	W8QGWpSWGphU/WlFvc2Xiaa4AuTooeNwyLyjttXx2mvUK7X24LqxmhxLzmuuJyfa
-	ifqLWNnq+PPUMV3eoAtMfxBygvWoNp8zc6jhu6UwQlzxuH3IANTVKRx483YaNwr2
-	uRftubMGtt5UUlGJR+/gXkqdx05DfCHeJiZoSPSdY2WnqF+9ULOpxXE+AAhw==
+	:subject:to:to; s=fm3; t=1778565558; x=1778651958; bh=oErxQA/Ow6
+	QdPQl2vVQ5cvOO5liHFv4mF6n7K34Eq1k=; b=LuhtdgmseRbY63sPDgwqRoSbxk
+	ta7GlS7jUXJv4HOkNCxctosYaNroZqVH+kh3GUlNoNTpHIoXiGSwzMYKa72SlH5y
+	G9Zzx1lrPnVvq8vNzjr5AtYoCXxo3c7+k2+r4xwW8Fn3u5CbsAg8pXkzxupmKrkz
+	an6UY1BQ3HiUOKmreehRhxYqfLTBMjUNAtvDLdNLZXpEVDANZufoaYxuMSQTsnXL
+	3TcFribbk/Oo91EYUGFcGQN0ffLk7fdQeXUqvVL+817pBAIarTlm0cIhZ3Vo4KC3
+	Qw7+sjGBPc2QMSfKbkMl+Iy/t/hCbgRCLjPCSgN6FU+ciXgwis5kevXB6cNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778565262; x=1778651662; bh=ZKJAdpLBUof7aAjICIddKXvXxdW2eci8oBI
-	kiLWRhXM=; b=oPR57fgBqrd0tp1rg6nMF5NPGp2hKxDzpP42yZMoqzCB4F6QpYE
-	Wxvk8zHjYbN2s05TAOWLHA8fMQIqXd8+dvVjeyduqTf+1rIClT5xPkL6wJiLgHq8
-	o+pM4MlXioeLposODiL3TIj3uR1slpK43DeIsy1JhwmtctjN0pbWorwd+L3hA9Tr
-	cXCGaHmoR6ThmGomfLJxXsWV5S+fpr+cPT8kt8YjMOAPhBgJVmPlzhI+Pec1aP7X
-	erfBpdCvU3gBcAJFX79ta8551oSuUxLgqhuWVQ2ey4go1gknf/tggS10RxDVwD5i
-	GaaPeczWhCpAwSsdaHX5X0fNA+YUltwb6AQ==
-X-ME-Sender: <xms:jsACarDfVC9O54re0TVVWTldztL3jvKIEQK_AXcHMFIi6mgAoDEjsw>
-    <xme:jsACaoZEiFnY1XgBcTiSqAo0iBQ6_HwchhV5wCz0Ib0ou_m-XQMz0IL6-WzzlrOCv
-    biqRyJTqClg8mt9Z5Z0GEoD9_YL4e2xjK_IKAxVEqv2DbIEJjoKyQ>
-X-ME-Received: <xmr:jsACau4jMI8Dmw3z49RZkHXX3WTveDly51023nEoD-n7rFkxDpw2fgNGcfsaBRCBtlC37DNQLf-kueUlNLPMcwzlZFt-xFHARA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddutddvucetufdoteggodetrf
+	1778565558; x=1778651958; bh=oErxQA/Ow6QdPQl2vVQ5cvOO5liHFv4mF6n
+	7K34Eq1k=; b=ohaVEhlytxIx60lCaL5p61BTv2RcVCcR6gctcO4ToVkgoR8BpxS
+	sc+oi7Kare0NLndaJGA6/1ahqaFtU6us7sZORvN5P1zIoBJwX6kdFAYKBgMcmT64
+	q63r0Oy4RSUkPz4IdqWKLLOwr9iymbxade8PeSO+eLVM3ALsCmQpML9CsPrkoSKQ
+	g8dxQtIOhFvEBv70Txb0m2dQFjVNgfL9F6n3daThuHpaDK/s7mezChDqbPo3MJnN
+	+LGQKe8nJbMA9A8AoefCbmRaK5AxKcmiTe5gvsebW847ts1qPHo9QHHyW552VbaJ
+	70vpfCfUo5v6lYspKQmXp9wqElO5ChPKarg==
+X-ME-Sender: <xms:tsECakDcFetbSH1Au9aDtkwEZwqOQcqfp8BXpd7hkSw33PqOiODjFg>
+    <xme:tsECaoxL_kWeatEyzjsdZVCywdCwodew9A-kIyqHDjx2WGGjw9yXwACZXwxJX5jR8
+    57f8SAoNNEaBSP1hCxboESvWNmtMgtI-39HTM0CiI_o31rsHvUe>
+X-ME-Received: <xmr:tsECap3OeT0BPGHP4LDzuiSRicau6xXK2ePgC7bGbvL0I7mQm1OJ2KvyNy04EmzvvDmZ_Qka8vjC2DSgnaot-EWWoOybrafR7AJS-RbQZys>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddutdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehkuhhshhgrlhesshhunhgvthdrshgvpdhrtghpthhtohepnhgvfihrvg
-    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:jsACapZK0ECbyN_z213RB5Qgi62evrWdmiafIg9dDfegfB5OBJ8VkA>
-    <xmx:jsACathCEMcN5B1OhlsLxIZxdPY543T2G9BbjPvOpM6uzmMWxphpwQ>
-    <xmx:jsACaq_fFlHGT102fjzUMuHJUL8NAjT403ZA1PjsM-TwMrLyYA76eg>
-    <xmx:jsACaoq_QWFKnSQJrzUeyumTmwWssnQA3OUECjBpmgSiWFWuEnEf5A>
-    <xmx:jsACag3NuyY6Tu0kRi4cV1k6MlGD2VTQmIVxd6T-vhRioPIR8-A_8JNa>
-Feedback-ID: if26b431b:Fastmail
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmihhkrggthhhuse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggtthhioh
+    hnmhihshhtihhquhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:tsECagx16cn1X_TOK6ar95KQYTvSvRvfMSWAB_KClrgUNtmVnkTAPw>
+    <xmx:tsECaoFyVE4-8_6H2_6rqtvneWP4JOgEz9x1uSMsUbC3gTsrs6bbpQ>
+    <xmx:tsECarYGDvi8-gDWemtyFMrxm4drj_hMSdnCAJAM8zAIg2hk0kvcUQ>
+    <xmx:tsECaiC7oq8HCjz7H7Cx4DKr_fE_6IWlMNjTUa1-AQWn0Uq6g-p5Fg>
+    <xmx:tsECapyhcX5TuYmTfYT6X4FburazhP9PvLHk8omKk2nj2_FeygdWpYxr>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 01:54:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Kushal Das <kushal@sunet.se>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v2 2/2] commit: sign commit after mutating buffer
-In-Reply-To: <20260427221834.1824543-2-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Mon, 27 Apr 2026 22:18:34 +0000")
-References: <aeakf0xcjSteTMZp@fruit.crustytoothpaste.net>
-	<20260427221834.1824543-1-sandals@crustytoothpaste.net>
-	<20260427221834.1824543-2-sandals@crustytoothpaste.net>
-Date: Tue, 12 May 2026 14:54:20 +0900
-Message-ID: <xmqqtssdnpf7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 12 May 2026 01:59:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c3486048 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 12 May 2026 05:59:15 +0000 (UTC)
+Date: Tue, 12 May 2026 07:59:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jean-Christophe Manciot <actionmystique@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/2] run-command: honor "gc.auto" for auto-maintenance
+Message-ID: <agLBsD3y6x2ehO7G@pks.im>
+References: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
+ <20260511-pks-maintenance-fix-lock-with-detach-v1-2-ccd7d62c9a40@pks.im>
+ <20260511201800.GC22912@coredump.intra.peff.net>
+ <xmqqzf25pgm0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqzf25pgm0.fsf@gitster.g>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Tue, May 12, 2026 at 10:21:43AM +0900, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Mon, May 11, 2026 at 02:29:56PM +0200, Patrick Steinhardt wrote:
+> >
+> >> @@ -1946,8 +1946,10 @@ int prepare_auto_maintenance(struct repository *r, int quiet,
+> >>  {
+> >>  	int enabled, auto_detach;
+> >>  
+> >> -	if (!repo_config_get_bool(r, "maintenance.auto", &enabled) &&
+> >> -	    !enabled)
+> >> +	if (repo_config_get_bool(r, "maintenance.auto", &enabled) &&
+> >> +	    repo_config_get_bool(r, "gc.auto", &enabled))
+> >> +		enabled = 1;
+> >> +	if (!enabled)
+> >>  		return 0;
+> >
+> > gc.auto isn't a bool; it's the count of loose objects after which to run
+> > maintenance. So "0" works in both contexts, but will we complain if
+> > gc.auto is set to 100? I think maybe not, because we fall back to
+> > git_parse_int(), but it feels kind of fragile.
+> >
+> > The gc code uses repo_config_get_int() here.
+> >
+> > -Peff
+> 
+> Very good point.  I was about to send the same message ;-)
 
-> The ensure_utf8 function can mutate the buffer to change its encoding,
-> so we must call it before signing the buffer so that we do not
-> invalidate the signature, which is made over raw bytes.  Fix a bug which
-> caused the compatibility code to not convert the compatibility buffer if
-> the main buffer was invalid UTF-8.  We expect both buffers to be valid
-> UTF-8 or both invalid, since the only data that would differ between
-> them would be hex object IDs, which are always valid UTF-8.
->
-> Add a test for this case using 0xfe and 0xff, which are never valid in
-> UTF-8.
->
-> Reported-by: Kushal Das <kushal@sunet.se>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  commit.c                 | 15 +++++++++++----
->  t/t7510-signed-commit.sh | 10 ++++++++++
->  2 files changed, 21 insertions(+), 4 deletions(-)
+Ugh, true indeed. Will fix, thanks!
 
-This iteration hasn't seen any reaction but comparing it with the
-previous round and peeking at comments that the previous round
-received, I guess everybody commented on the previous round is happy
-with this version.
-
-Let me mark the topic for 'next'.
-
-Thanks.
-
-
->
-> diff --git a/commit.c b/commit.c
-> index 790dd2faed..e5d725fe93 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -1726,6 +1726,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
->  	struct repository *r = the_repository;
->  	int result = 0;
->  	int encoding_is_utf8;
-> +	bool warned = false;
->  	struct strbuf buffer = STRBUF_INIT, compat_buffer = STRBUF_INIT;
->  	struct strbuf sig = STRBUF_INIT, compat_sig = STRBUF_INIT;
->  	struct object_id *parent_buf = NULL, *compat_oid = NULL;
-> @@ -1747,6 +1748,13 @@ int commit_tree_extended(const char *msg, size_t msg_len,
->  		oidcpy(&parent_buf[i++], &p->item->object.oid);
->  
->  	write_commit_tree(&buffer, msg, msg_len, tree, parent_buf, nparents, author, committer, extra);
-> +
-> +	/* And check the encoding. */
-> +	if (encoding_is_utf8 && !ensure_utf8(&buffer)) {
-> +		fprintf(stderr, _(commit_utf8_warn));
-> +		warned = true;
-> +	}
-> +
->  	if (sign_commit && sign_buffer(&buffer, &sig, sign_commit,
->  				       SIGN_BUFFER_USE_DEFAULT_KEY)) {
->  		result = -1;
-> @@ -1780,6 +1788,9 @@ int commit_tree_extended(const char *msg, size_t msg_len,
->  		free_commit_extra_headers(compat_extra);
->  		free(mapped_parents);
->  
-> +		if (encoding_is_utf8 && !ensure_utf8(&compat_buffer) && !warned)
-> +			fprintf(stderr, _(commit_utf8_warn));
-> +
->  		if (sign_commit && sign_buffer(&compat_buffer, &compat_sig,
->  					       sign_commit,
->  					       SIGN_BUFFER_USE_DEFAULT_KEY)) {
-> @@ -1818,10 +1829,6 @@ int commit_tree_extended(const char *msg, size_t msg_len,
->  		}
->  	}
->  
-> -	/* And check the encoding. */
-> -	if (encoding_is_utf8 && (!ensure_utf8(&buffer) || !ensure_utf8(&compat_buffer)))
-> -		fprintf(stderr, _(commit_utf8_warn));
-> -
->  	if (r->compat_hash_algo) {
->  		hash_object_file(r->compat_hash_algo, compat_buffer.buf, compat_buffer.len,
->  			OBJ_COMMIT, &compat_oid_buf);
-> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-> index 1201c85ba6..aa9108da54 100755
-> --- a/t/t7510-signed-commit.sh
-> +++ b/t/t7510-signed-commit.sh
-> @@ -462,4 +462,14 @@ test_expect_success 'custom `gpg.program`' '
->  	git commit -S --allow-empty -m signed-commit
->  '
->  
-> +test_expect_success GPG 'commit verifies with non-UTF-8 commit message' '
-> +	printf "I hate\\376\\377UTF-8\\n" >message &&
-> +	echo unusual-message >file &&
-> +	git add file &&
-> +	test_tick && git commit -S -F message 2>err &&
-> +	git verify-commit HEAD &&
-> +	grep "commit message did not conform to UTF-8" err >lines &&
-> +	test_line_count = 1 lines
-> +'
-> +
->  test_done
+Patrick
