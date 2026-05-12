@@ -1,154 +1,110 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f66.google.com (mail-yx1-f66.google.com [74.125.224.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3E72E413
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:38:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302C228F948
+	for <git@vger.kernel.org>; Tue, 12 May 2026 01:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778549928; cv=none; b=T8p9mvVCRpd5WXp2vK8aWIktrZp3+Vg0UEl9jZ5thIbq/34ngol+pS3k1fbf1JcaWctbXCtWJ/Vs2lgv1healLUBwT8UljhXjUrFrhLnYvsyHlnGLZMVYzZN1WouEFd4+/V5M78hKLqZKomK1h6VuilY0B4x+WoMwrJLR7fjAtE=
+	t=1778550089; cv=none; b=Wxy9sRawzAmrvxoBF34GWZz4/uF/FXf+Zq0pI5VdMrYtYMPCyx38fQJKwsEL7ee++kDeT+9znd6P+jwwwJBrYYm08BkHxB94ZJO6Vw7MpHodXenWu7zqD3MOQO5ZcWcHMwD8GoypegQlz2dIG1m9p9WUBOn+wZlkpK2SM5hIu+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778549928; c=relaxed/simple;
-	bh=bhYKVssR5gSu0o5viiGEHUrx6Ns21hUdtcUBHz09QKM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jxo9ok1T2PVZqNL/hu6by1I8gsB9PKG2AwV/9An7lOn8pMSR80PuyAb3rh12WgY4Oa+P8rrJJVDsDognFaFUdmWcNfJEqHtwTWlnTZMVbUai3uKnt698qc7zxmrA7xeMWGNlEVNvqBQN8Ya/+8/zftKNGHgP7w1q6G81ubcipX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u5Pg1MWS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YIjjdEZX; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778550089; c=relaxed/simple;
+	bh=Jr6lXakWWDEGyP+PM/ceqXhx6cXswhCw8dEdYRCgqF4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WAQuf43TzdArIUM/4WdtSLReCPAligO1Z/rLqpKTJBDFVhSG5xEd6HMmJYu1AfOtIDUVMuUxlqbAl527jireMcerXGyhk5auyFBooEbfCjYtWD6WOaJuTp4QCNACKSsQsxvafTJoxHsbpV6W0KdlNjovJYH7kX3qPgT7/g+36+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GX0KjScs; arc=none smtp.client-ip=74.125.224.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u5Pg1MWS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YIjjdEZX"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id F2BC81D00115;
-	Mon, 11 May 2026 21:38:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 11 May 2026 21:38:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778549925; x=1778636325; bh=asA+kebp/C
-	EJqJ3KhqobJTrq6nZD+8NdXe8AH93i8Q4=; b=u5Pg1MWSykTkTT5MuRX+qgnUHD
-	Vwn+3qYleXf18Pzyj89DkR0waA+BQzelkzpFaRPuqb5GjlNHV2h7fCBmCjR30hlW
-	raf9/NNPISngJXZUD9XMK6TM8zumS+WvH4MUSpW/m4awZLFPqmYTzEHPqsQuPzl7
-	4dX9WH92ulq9MtENbnnchGQ91m0UyuDwmanbEUS17SjNmp50CFX5UvJBX7WBMAmZ
-	C/GS+72Gx+T25tFFnucBULKSTuCaYBi/ypva+Irwa7YGwfbR9mC43MFMlybVBve9
-	Iy365XPHn++2uj4gLc0XyE1iSyTqznN1eGaX/QOBuR2qa1zhFDEOn4VRl2OA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778549925; x=1778636325; bh=asA+kebp/CEJqJ3KhqobJTrq6nZD+8NdXe8
-	AH93i8Q4=; b=YIjjdEZXJU3kbf3a8z/lVCwYRdafUgXy4xooEGYXQ7rcMLNlj6p
-	IvgMaTr+TcGtG2CpfGx9k4Mq/x6oaIZlG4PEa7JmoAK2PDetAfvCmgAJj3QtKIHX
-	+uh76YbRRYIOQzIq9QJMJxwKmlzkFEZ/XDKtzxIU8OVA2bl24kvoeq4Rxx93YEdo
-	BRjVNJo/fs2Z3JhPnApzkTvnZvA8xSNFH/Q3PoJg8RCO/yD+8llUFgIkaKeoSn/z
-	ydlQM5PDpxpX/oSko9albGLm3my6JzPJ5l3f+L5N72IJsJ9MzvmXT1SrNi1uDp/g
-	YrsOzDe62j02mMVzx7ZHaOTeek27BmRgnKQ==
-X-ME-Sender: <xms:pYQCaoOcm0Dvr9vatO-vwodFvzvFVHSKWTxda4DUr1NvJEB4qjOyvA>
-    <xme:pYQCal080E6tKy20jgkv2Uvr9JUk1n2eIFVM9uRRLOMOZ1ySeugsO6LaEKUFz-iZF
-    bpZlcTAO4unvxuzfEvHWwDav8IcvnCJ-Dga6LV8u-91LIiEZ2W2>
-X-ME-Received: <xmr:pYQCannUs5MHi-VNgHAKc86-k3dT4ZVo8bpCMyYLWfv8kSRwTZpt9dFT-u64vk7M2tkpuSXuoxrVIxPB_lKds617helaqlT65w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtheduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:pYQCasVXo8dA2rOmEfXNeZob0aGyNMa17dmXxPtr5heOK1RbANjK3g>
-    <xmx:pYQCatsZGbaqMulD4pYjYhciS4zBAfGBG38sn4xtpUS9-mEWaD0Zgw>
-    <xmx:pYQCavYdy9kmPfa-BfIW7gejveaZPupf9_DJdUYcM0oXlaD1JDm_Ag>
-    <xmx:pYQCasUNaIHaZH_Fq6BIMwkmCaYr-vvmOKBtAiSAp-4I0765Ix5BkA>
-    <xmx:pYQCao1HvHAxClJDPPLWyCNzKHaLJw22TBlDKEBzii_tbunU6i0OQn39>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 21:38:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v3 0/9] pack-bitmap: fix various pseudo-merge bugs
-In-Reply-To: <cover.1778546804.git.me@ttaylorr.com> (Taylor Blau's message of
-	"Mon, 11 May 2026 20:46:44 -0400")
-References: <cover.1776124588.git.me@ttaylorr.com>
-	<cover.1778546804.git.me@ttaylorr.com>
-Date: Tue, 12 May 2026 10:38:44 +0900
-Message-ID: <xmqqse7xpftn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GX0KjScs"
+Received: by mail-yx1-f66.google.com with SMTP id 956f58d0204a3-651b4d09141so5123119d50.1
+        for <git@vger.kernel.org>; Mon, 11 May 2026 18:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1778550087; x=1779154887; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2nC/guMnY9Ksw6rdkVcsoslD/9hunaFEcr/kKae5Mug=;
+        b=GX0KjScs9HktwaiKwEoo6/O/ExUYff7nSvMyLxI0YzWJc8oGz9EyJd40vGgHvNnhyv
+         fj4y4cTfVRSjUapvehBTgFon++csuk9dZTiZhgxxM4MJRYBW+G3JeJp5/AmhDjSaZzjE
+         UYy0EU0ix9FCeQFInimom+mJDrRr8EbQ2g0pwz7T6hA+EeomBXolUPxJ5i0jb1u6b+Li
+         rqt9VILNHAwB9j8sTSlWeO10d3BBuulTaDcqkEqWQH0WvwNsnW7z/Yk2b9u+Tg74wu8A
+         1wvFRA7+UAO4aoYp97lEVQtsfOK20ZvxuqOZ9eqPAkVt1CrCVipLt1dryQG79zjA6OU2
+         7+HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778550087; x=1779154887;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2nC/guMnY9Ksw6rdkVcsoslD/9hunaFEcr/kKae5Mug=;
+        b=S5Lse8i6IHqD+Z/BJpGHpca0crhZONECIv0W+pptnB+3KBFxqfa7zjpGrDGO6SJffX
+         ErvX4E9TM08irSibHNM1lpL9/P/6vZiqgWuF58LQ1KX2nEYtyddWSWArzQSOqWCg+BAB
+         KNDVLL2aPfXhSf/9VKclXlT8OSEFJx0GrWzs/Ru/nMSRM6VB+4nwkRWF+7y7gVi4Nez1
+         +cqcmzkT7FwUceFZ7x9PzpJQnXLYU7kLfLGpT6FJ93oKcm51wrK6RM5qKpR3MD231ozj
+         teiThYRF1wiNbN9PLdbfaRkQ8mlo+gS4YhnZFdwCZrmtGlngEKeqPlaKKSECm6HgOS80
+         vZ0A==
+X-Gm-Message-State: AOJu0Yz8G4Z9gf6kYti6b1X6e1e7HFqd7bTDJzvAY7RmoidHuDbYfI2k
+	NwwrttRNicGJHeFHRm7ipiidOWTWcQxKarOXvuB1/YUWi5jswPdXTmN63DBSwRX8BHU=
+X-Gm-Gg: Acq92OHXAuBthjunJOhqrMgx0/nzG6QBw7deZnDlXwclUMDGnBsoCpH4nXE1EWB4q6d
+	Unw2seDZ0Z0Wy8ywseaxQbDlPhVv8XM6Kilq+KXy+WR7GZrenyHPTRQnLlvDbowFg3uhH+fQ7UV
+	zBCBWormLenh8gm1OGGKNT8pc7Bu42UP0s5iiOdb/985x+4Q2oqs47AKpe97juxzXL5oCsCEASP
+	gOy5aScnZnZdnkwpQ+bxuviww5v6vltQkUU9ZMQSARu++4GVchWviT4LdKSC+e4oZUURPVhh0j/
+	ni7J9s7TXy7H8jkTQF16bbqmX9hZYXhi9p6tqrX6tHq2LBln5K/K21tFizfEMO7Dj06C1tnwO9w
+	ar0aVXVMQ8PYDX+wm5zYYEudmghM8CwYrcnAQvT0voWRP9VYw5TTnw4JCAnvOADDCDx+VS3uUdI
+	EhIECKW0dmOybCYuvgu8MQYVWNaRhJJ0TRWNOzsKqQEXKA+4Rpfsn2xN7jgVzZgRT6i82Q1FqL5
+	PBV0BzY9rUWZZECNQHP3hZNYBW4DfHum2QHyrWhuS5h3QnVmlAz7HIsKjg1x5pjmUEjRtkerChk
+	kZrcPInYHY+n29iO
+X-Received: by 2002:a05:690e:4293:20b0:65c:27dc:4a64 with SMTP id 956f58d0204a3-65ddd38689dmr1381998d50.3.1778550087255;
+        Mon, 11 May 2026 18:41:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65d96a67a9bsm6146937d50.9.2026.05.11.18.41.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2026 18:41:26 -0700 (PDT)
+Date: Mon, 11 May 2026 21:41:25 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Taylor Blau via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
+	newren@gmail.com, peff@peff.net, ps@pks.im,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 10/12] path-walk: support `tree:0` filter
+Message-ID: <agKFRV4TjInVOCaO@nand.local>
+References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
+ <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+ <c9efff0ea8d72d2d084957e1b099801b8d8727f3.1778523189.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c9efff0ea8d72d2d084957e1b099801b8d8727f3.1778523189.git.gitgitgadget@gmail.com>
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Mon, May 11, 2026 at 06:13:07PM +0000, Taylor Blau via GitGitGadget wrote:
+> @@ -534,6 +545,18 @@ static int setup_pending_objects(struct path_walk_info *info,
+>  			free(tagged_blobs);
+>  		}
+>  	}
+> +	if (tagged_trees) {
+> +		if (tagged_trees->oids.nr) {
+> +			const char *tagged_tree_path = "/tagged-trees";
+> +			tagged_trees->type = OBJ_TREE;
+> +			tagged_trees->maybe_interesting = 1;
+> +			strmap_put(&ctx->paths_to_lists, tagged_tree_path, tagged_trees);
+> +			push_to_stack(ctx, tagged_tree_path);
+> +		} else {
+> +			oid_array_clear(&tagged_trees->oids);
+> +			free(tagged_trees);
+> +		}
+> +	}
+>  	if (tags) {
+>  		if (tags->oids.nr) {
+>  			const char *tag_path = "/tags";
 
-> [Note to the maintainer: this series has been rebased onto the current
-> tip of master, which is 7760f83b597 (Merge branch
-> 'jc/neuter-sideband-fixup', 2026-05-11) at the time of writing].
+It looks like there is some prior art here for enumerating a sentinel
+path for "/tags", but I am curious why we did the same for
+directly-listed trees in the presence of --filter=tree:0.
 
-A note like this is very much appreciated, but please also state the
-reason why the rebase was necessary.  "Because the current tip of
-'master' has advanced" is not a good reason.  "The previous
-synthetic base was made by merging topic X and topic Y on
-then-current 'master', but both have graduated" is a so-so ok
-reason.  "Because the updated implementation of this series uses
-facilities that appeared in recent 'master' that come from topics A
-and B, which the previous iteration did not use" and "Recent updates
-to 'master' brings in conflicting changes from topic C" are
-excellent reasons.
-
-> Range-diff against v2:
->  1:  c0df35f8ebd =  1:  9c7a829cbeb t/helper: add 'test-tool bitmap write' subcommand
->  2:  11de3343726 =  2:  d1ed4aadf75 t5333: demonstrate various pseudo-merge bugs
->  3:  8d908ab415e =  3:  bf3a9a07e5f pack-bitmap-write: sort pseudo-merge commit lookup table in pack order
->  4:  07f70a07c20 !  4:  a1d341c92eb pack-bitmap: fix inverted binary search in `pseudo_merge_at()`
->     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'apply pseudo-merges during
->      +test_expect_success 'apply pseudo-merges from multiple groups during fill-in' '
->       	test_when_finished "rm -fr pseudo-merge-fill-in-multi" &&
->       	git init pseudo-merge-fill-in-multi &&
->     -+	git init pseudo-merge-fill-in-multi &&
-
-OK.
-
->       	(
->     - 		cd pseudo-merge-fill-in-multi &&
->     - 
->  5:  3ed0b39843f =  5:  06e3410d323 pack-bitmap: fix pseudo-merge lookup for shared commits
->  6:  95f847211f3 =  6:  78cf7e6d80d pack-bitmap: parse commits in `find_pseudo_merge_group_for_ref()`
->  7:  f8a01cfb893 =  7:  4dbf6686718 pack-bitmap: reject pseudo-merge "sampleRate" of 0
->  8:  c37156502c0 =  8:  46d0ee2f168 Documentation: fix broken `sampleRate` in gitpacking(7)
->  9:  b905fd5d0ae !  9:  9b17dab2cf7 pack-bitmap: prevent pattern leak on pseudo-merge re-assignment
->     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'sampleRate=0 does not caus
->       '
->       
->      +test_expect_success 'duplicate pseudo-merge pattern does not leak' '
->     -+	git init pseudo-merge-dup-pattern &&
->      +	test_when_finished "rm -fr pseudo-merge-dup-pattern" &&
->     -+
->     ++	git init pseudo-merge-dup-pattern &&
->      +	(
->      +		cd pseudo-merge-dup-pattern &&
->      +
->     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'sampleRate=0 does not caus
->      +		git config bitmapPseudoMerge.test.threshold now &&
->      +		git config bitmapPseudoMerge.test.stableThreshold never &&
->      +
->     -+		git rev-parse HEAD~63 |
->     -+		test-tool bitmap write "$(basename $pack)" &&
->     ++		git rev-parse HEAD~63 >in &&
->     ++		test-tool bitmap write "$(basename $pack)" <in &&
->      +
->      +		test_pseudo_merges >merges &&
->      +		test_line_count = 1 merges
->
-> base-commit: 7760f83b59750c27df653c5c46d0f80e44cfe02c
-
-Queued.  Thanks.
+Thanks,
+Taylor
