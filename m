@@ -1,71 +1,72 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-yx1-f65.google.com (mail-yx1-f65.google.com [74.125.224.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99215234964
-	for <git@vger.kernel.org>; Tue, 12 May 2026 00:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F08231832
+	for <git@vger.kernel.org>; Tue, 12 May 2026 00:46:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778546816; cv=none; b=is08VRzq5LlBcHneBXcPwDKX/6FXVbAu80YOoJn/KeWKQMQCS/z3rCgvjzyBfnQQa6rEPFAe4SNHCPCOhq/M00nkq3gG4cYI375/d7H5GoJlFRFvGfTuI4L/kKAW0hSGt6xPuzh0uK/S9RjjU1DHZTO0ilmx9IKHvod/iIU5Wf8=
+	t=1778546818; cv=none; b=UZHGQj5C8Rq/G3S/749zrhLOrE/eM4GTjYbBuP294kneo1cy3VB0N01W2JKZ6GLj0vq7ujn9zSmoHqvkSHX0Ks7pLV5bbRM2zda45Mt+6tKlhpGXcRJMrr9vjHaAaeJEV1EFu8ewbjMTTBExIu1V9aK2xzrck2eAHMoU0OzEY7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778546816; c=relaxed/simple;
-	bh=yRYT7g5d7W0aDguTTZtMJhMG7i/CDJhhyIGRPeU/Vsw=;
+	s=arc-20240116; t=1778546818; c=relaxed/simple;
+	bh=TakGr70PE8Gt+IvrbEcdXkKJmTzvijzNsliZL+DBzXU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X5EZvCVn2xcQmnONbIxbHDPaTsM0AHUpAzlBFMR3SrSyabvZFHlGOWciz5xn8ksKd/qB0k+ozpl3DP4RRIy6tjeXZGUQk22kL60Je47bVgj2rnvIc7cPXtD8GEqFvi/HxGSEJJ3CWa6ctNhJrAT9KDIMWWTxjujCYc2dtymJcMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=HSNk33mf; arc=none smtp.client-ip=209.85.128.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=tbu6nMyJzleUPKboYkAUqm94aNCvePCCW05Og3uF/uUG2oWMGgrarjWAIYrXT9/B+GPdK0BrXYfNROWCFtS7I+77gwA5P3kKTxMczDgvO0YehpztkUB+Q0C1732Iqz8xGgA2Nhj7vwHCWc/C14JQhs+kYxq49B4rCQzPJrAdhQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NfW4VStr; arc=none smtp.client-ip=74.125.224.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="HSNk33mf"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7bdec52f48dso68504947b3.0
-        for <git@vger.kernel.org>; Mon, 11 May 2026 17:46:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NfW4VStr"
+Received: by mail-yx1-f65.google.com with SMTP id 956f58d0204a3-651bc83e74aso5163947d50.2
+        for <git@vger.kernel.org>; Mon, 11 May 2026 17:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1778546812; x=1779151612; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1778546816; x=1779151616; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6mCcJTYuBNvOoggES8Qq4ou3c+4Tt9Z5+NUl1ZcvoFA=;
-        b=HSNk33mfNXTlzE29N9IgLjpR7gf7EQQXMmuJBXH0/AgqJZbPKkdw+WyfDdE9v6L5fx
-         4v/adxLFDeDernlw5gyh5FDvAJL4w0mM7yAf8U95VaxAjO9b5gf3HkYABH3VxWxCJ+k2
-         7ag7yxO7K+CtcoC3j3oXMFQlROhbOB2UyQ/x4iW77w1sgQ4t+ws9HTaCMVWz7zUfpiUz
-         r0AM1Y9G88CoxqpFbtHCSdhQ4Hx0SH9mbP9ImcsLvln6g1MSIPmOoQC2KX5qqqoNOwrB
-         wnI62VwNslqc7NwjSoBo5CHdQluJhjkKrsWfRimVeWJ8N5tA8VbmpU9brr42oO2C8fRn
-         FNgg==
+        bh=zr1ZqLeukVnoHiQK5Iz6tu0UlgxxI322+JBSQdX5Xrc=;
+        b=NfW4VStr+2ab1kLRShZz6YekTnA8ronTjjU7K/BwOKOViXvdOvYdL6zMyNJ1g8KUpi
+         9D4lN3mP9/+1/IoTgfaYrSuaKPEx3tYxzt23304MquiR6AhQe/mVlN2j/jLr0iJkqxe2
+         E7J3TQoOCdGqce+CTRxagMXRb+wOXLwgmJV9RY044iN52ZkXv4Na+LQw3QeGJ4/yrK1h
+         oX7jAY9u7lK9zCyRNgu7YG5SZaJbskYd6inl2SXWe7p45BnV5TKsbUCM08R4U43yS9jq
+         FVHbC/hqYHIyKUeBVov2gKOCjqF4pd63AE1rwc++4XLDcksMcl/SIIGFysceTxaA61Pa
+         b8VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778546812; x=1779151612;
+        d=1e100.net; s=20251104; t=1778546816; x=1779151616;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6mCcJTYuBNvOoggES8Qq4ou3c+4Tt9Z5+NUl1ZcvoFA=;
-        b=E4Oar/hZupij6s6mSSJ5nE/oOJ+ScW+2YUPNxdKDl30B7Y5EGTBNpbZrKF2Q4C5tNt
-         fM36m21VH7UdgV5K2AbJ4SOWmERg/3O8eVULnaf43tYDb3+n0LWiGqYcDVELxHW3+pXP
-         sB7pswavYXuX2MZuM2quFLxFiTl6VOZbr/EzbEZSkcCF828YZNVdE41IxivPp5ZSO4/m
-         vVDfe+tACnV4BPw3nPEXwevaNUxTk1N84GhyMTp92Ce9xMb2YPqEjl05mhzCx6VK8sq1
-         +ExTiJLXc/4J9hbT2hg3pXEIvS8oa7piRo5p4cp2qYDvzrFFq8JHO60MCmj6Et4ZEFCe
-         MKyw==
-X-Gm-Message-State: AOJu0YzEsCSl9Ho87upsvxtu+L7XrP506U/hp/DEYE93OBJATLMIgZrv
-	Q4nJ1gA+ujwPQ9k7a1vaPMbePE5gwvgpit6NKVEzjxHbo65Ei5ioVzJlKMyPFO8VVlCbluBfxs4
-	N2U2sLIXEYg==
-X-Gm-Gg: Acq92OGiBgDTQiE8pvlq5EPEWoGsapm/dRdru37Suuq/cbuzTkScVgl4aKDkHatqiJ9
-	zmz8nwlMlBfV1Q6w2c16fPo5TCcZG17sDO9zhAw6h1swS9jUbTevjO7XLxjvIpM9jDC8I3RTWnC
-	9xGhhSLjfQ9f1gCVbVLsnfHj7eXv0PkSa8oi4Jmpo/MT2HdjMciX8H/cqFzFK/oluIVUa7AND8y
-	NSgihJIWXAE9tFLxx1hgaYw4f0ZwTF5nTBYhTEa+qWiCZ5tzuzwjkgLWojk0G6rJW0YJt2f3zkx
-	EIfY35oQAtfoVBA1/aYN+nR192P45FTzV8DLrHS973JdyXbbL70OuWgeyVdpJdcXX9sUhcomSWV
-	NwEZM70F3ZihZ46rRhRwjAufKljW6/7oftmUYO4KCEmY1XTgyp28U4R3jKCNKZWEOo5XlMEan8a
-	ttxNj4mM0BuRuZNOUBZKSDN2Bi1bMOSKba5eVPlc8kv7CDrt70VfUEiCiegAKefJkjO8RxSK8E+
-	D6OK2htqVjnqCDd1skP4rBQ2tMTdPB9x+adAjKYI+mfTMlKINoLjsBnvncEiEN/+rPpoJmAiWzg
-	afBuuDSn9aU1wk8+
-X-Received: by 2002:a05:690c:34c9:b0:7bd:6a98:58d3 with SMTP id 00721157ae682-7c50f7cdf32mr16773047b3.18.1778546812454;
-        Mon, 11 May 2026 17:46:52 -0700 (PDT)
+        bh=zr1ZqLeukVnoHiQK5Iz6tu0UlgxxI322+JBSQdX5Xrc=;
+        b=Ff5s9TuIMPx18ZOvU5pcF/Dzmr5ZbeyHIGoYARoZY83y5Bqd25Nzu/o/IkaILB29vu
+         6FAVI/EbLEUrRtBUEby+R6QxsXMohZBcbEvEj5a9H1q9rZcUe7YsCN8QxbQgZPdSgJY+
+         c/tLummA4QkLC9yM8ncw0eFsg8nBmb5J2itdhn49YW4OKVvBxxIU51xG9x5Mk/6DjeRX
+         599rH6YqXvjP+NSfs5J7KpInTfm/oMqQe4tnwOqBpZQmllXhEhLDnytIWXegguZeWAb4
+         B11CqAKdWZnutj6T15h00VGO2BGmZnwCQALpkAHJl8G2zte0CYL4yacGuPKQK2ttmsWw
+         Th+w==
+X-Gm-Message-State: AOJu0Yxt+R/1yAvNR2hOpEI4e7wMGjmx+FZroeqTErNax1/t3SEVegWd
+	zkhvDI4R8DTl1DgMKl25FC1MzraeGAO9JHPT4iw1094VU5OsOvP+dKUfxq7eVc0JlPSvSNNQtMo
+	48NLqN0Y0INyP
+X-Gm-Gg: Acq92OEaahea4r8Gukh3iTq8zUuNaBagGkIKja+ZQPvqP+sTmGQcCB6JK9x7KYgsCRT
+	DhgVdtvbtxF3JifR5KalTPFLJTEZkENUmC0xzycsdc3V+gjCx1QzM0SAP4isNJ7/jxxqNHRcTC5
+	QP+Yj4C78F9k2m10hNB6Gaeb33Crd6dZoZKxrQ4ETcEcRdHTdrTw0jldd+xCVACC17XXa7U1rk6
+	PT8vq0JF8pgKKvaFSjDzXqMoIo8ooHk3mlSWbBPz4FHgo59PJHf+Z+e28dmphWiBdlhM7l00yv6
+	uMvN+uuvbXSzRY5NfpfruhFV7WsEmxMBWV0rpHKm8AJPOiXUUyzN2nPoFcfQOFwobLxjnOEWRY5
+	1NSKmCbRDVeEeyBoS4ci7BBexYfhYBMNlvMXVHBgzaaFpzBpl1It8dFbsub6EX48F4YhHVDUMTW
+	CF0Xk8C0ZpKtlVjhKbOcyhaQ3AJiNVGBEKHnQ04Mj9dMoE8Hr/z8bdxY3p+tdpdnzlPxcpuLF1w
+	bSktPIUazJ5Ux8QrdtVNs5axvXhsddQ7ticir18HBjJWHhIfSHnKRNQSIfy8ILVwm4Qf+AciMk/
+	teiAZvBnfdMYTr5o
+X-Received: by 2002:a53:ac8e:0:b0:652:541e:9681 with SMTP id 956f58d0204a3-65c79c67ea6mr28211714d50.3.1778546815566;
+        Mon, 11 May 2026 17:46:55 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd6655f443sm160626147b3.19.2026.05.11.17.46.51
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65d96bf418bsm6254061d50.17.2026.05.11.17.46.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 17:46:51 -0700 (PDT)
-Date: Mon, 11 May 2026 20:46:51 -0400
+        Mon, 11 May 2026 17:46:55 -0700 (PDT)
+Date: Mon, 11 May 2026 20:46:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 2/9] t5333: demonstrate various pseudo-merge bugs
-Message-ID: <d1ed4aadf7547a62f2442ee247dcfca3d8b4ca9f.1778546804.git.me@ttaylorr.com>
+Subject: [PATCH v3 3/9] pack-bitmap-write: sort pseudo-merge commit lookup
+ table in pack order
+Message-ID: <bf3a9a07e5f43cf7586fc73e7acaa7cef646090e.1778546804.git.me@ttaylorr.com>
 References: <cover.1776124588.git.me@ttaylorr.com>
  <cover.1778546804.git.me@ttaylorr.com>
 Precedence: bulk
@@ -78,231 +79,105 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1778546804.git.me@ttaylorr.com>
 
-Using the test helper introduced via the previous commit, add various
-failing tests demonstrating bugs in the pseudo-merge implementation.
+The pseudo-merge commit lookup table stores each commit's position in
+the pack- or pseudo-pack order, and is used to perform a binary search
+in order to determine which pseudo-merge(s) a given commit belongs to.
 
-These are all marked as failing with one exception. The "sampleRate=0"
-test describes a latent bug, which is only reachable through a code path
-that is itself masked by a separate bug. A future commit will fix that
-bug, and, in turn, cause the aforementioned test to fail. Accordingly,
-that commit will mark the test as failing, and it will be re-marked as
-passing in a separate commit which fixes the once-latent bug.
+However, the table was previously sorted in lexical order (via
+`oid_array_sort()`), causing the binary search to fail.
 
-For the rest: the following commits will explain and fix the underlying
-bugs in detail.
+While this causes pseudo-merge bitmaps to be de-facto broken for fill-in
+traversal, there are a couple of important points to keep in mind:
+
+ * Pseudo-merge application during the initial phases of a bitmap-based
+   traversal are applied via `cascade_pseudo_merges_1()`. This function
+   enumerates the known pseudo-merges and determines if its parents are
+   a subset of the traversal roots.
+
+   This is a different path than the fill-in traversal, where we are
+   looking for any pseudo-merges which may be satisfied after visiting
+   some commit along an object walk, which involves the aforementioned
+   (broken) binary search.
+
+   As a consequence, any pseudo-merges we apply at this stage are done
+   so correctly.
+
+ * While this bug makes applying pseudo-merges during fill-in traversal
+   effectively broken, it does not produce wrong results. Instead of
+   applying the *wrong* pseudo-merge, we will simply fail to find
+   satisfied pseudo-merges, leaving the traversal to use the existing
+   fill-in routines.
+
+Fix this by sorting the table by bit position before writing, matching
+the order that the reader's binary search expects.
+
+This does produce a change the on-disk format insofar as the actual code
+now complies with the documented format (for more details, refer to:
+Documentation/technical/bitmap-format.adoc). Given that this never
+worked in the first place, such a change should be OK to perform.
+
+If an out-of-tree implementation of pseudo-merges happened to generate
+bitmaps that comply with the documented format, they will continue to be
+read and interpreted as normal.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5333-pseudo-merge-bitmaps.sh | 198 ++++++++++++++++++++++++++++++++
- 1 file changed, 198 insertions(+)
+ pack-bitmap-write.c             | 21 ++++++++++++++++++++-
+ t/t5333-pseudo-merge-bitmaps.sh |  2 +-
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 8338d7217ef..86ed6a5d78c 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -819,6 +819,20 @@ static void write_selected_commits_v1(struct bitmap_writer *writer,
+ 	}
+ }
+ 
++static int pseudo_merge_commit_pos_cmp(const void *_va, const void *_vb,
++				       void *_data)
++{
++	struct bitmap_writer *writer = _data;
++	uint32_t pos_a = find_object_pos(writer, _va, NULL);
++	uint32_t pos_b = find_object_pos(writer, _vb, NULL);
++
++	if (pos_a < pos_b)
++		return -1;
++	if (pos_a > pos_b)
++		return 1;
++	return 0;
++}
++
+ static void write_pseudo_merges(struct bitmap_writer *writer,
+ 				struct hashfile *f)
+ {
+@@ -876,7 +890,12 @@ static void write_pseudo_merges(struct bitmap_writer *writer,
+ 		oid_array_append(&commits, &kh_key(writer->pseudo_merge_commits, i));
+ 	}
+ 
+-	oid_array_sort(&commits);
++	/*
++	 * Sort the commits by their bit position so that the lookup
++	 * table can be binary searched by the reader (see
++	 * find_pseudo_merge()).
++	 */
++	QSORT_S(commits.oid, commits.nr, pseudo_merge_commit_pos_cmp, writer);
+ 
+ 	/* write lookup table (non-extended) */
+ 	for (i = 0; i < commits.nr; i++) {
 diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-index 1f7a5d82ee4..0e9638c31c3 100755
+index 0e9638c31c3..3d7a7668121 100755
 --- a/t/t5333-pseudo-merge-bitmaps.sh
 +++ b/t/t5333-pseudo-merge-bitmaps.sh
-@@ -462,4 +462,202 @@ test_expect_success 'use pseudo-merge in boundary traversal' '
+@@ -462,7 +462,7 @@ test_expect_success 'use pseudo-merge in boundary traversal' '
  	)
  '
  
-+test_expect_failure 'apply pseudo-merges during fill-in traversal' '
-+	test_when_finished "rm -fr pseudo-merge-fill-in-traversal" &&
-+	git init pseudo-merge-fill-in-traversal &&
-+	(
-+		cd pseudo-merge-fill-in-traversal &&
-+
-+		git config bitmapPseudoMerge.test.pattern refs/tags/ &&
-+		git config bitmapPseudoMerge.test.maxMerges 1 &&
-+		git config bitmapPseudoMerge.test.stableThreshold never &&
-+
-+		test_commit_bulk 64 &&
-+		tag_everything &&
-+		git repack -ad &&
-+
-+		pack=$(ls .git/objects/pack/pack-*.pack) &&
-+		git rev-parse HEAD~63 >in &&
-+		test-tool bitmap write "$(basename $pack)" <in &&
-+
-+		test_pseudo_merges >merges &&
-+		test_line_count = 1 merges &&
-+
-+		test_commit stale &&
-+
-+		git rev-list --count --objects HEAD >expect &&
-+
-+		: >trace2.txt &&
-+		GIT_TRACE2_EVENT=$PWD/trace2.txt \
-+			git rev-list --count --objects --use-bitmap-index HEAD >actual &&
-+		test_pseudo_merges_satisfied 1 <trace2.txt &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_failure 'apply pseudo-merges from multiple groups during fill-in' '
-+	test_when_finished "rm -fr pseudo-merge-fill-in-multi" &&
-+	git init pseudo-merge-fill-in-multi &&
-+	(
-+		cd pseudo-merge-fill-in-multi &&
-+
-+		test_commit base &&
-+		base=$(git rev-parse HEAD) &&
-+
-+		for side in left right
-+		do
-+			git checkout -B $side base &&
-+
-+			test_commit_bulk --id=$side 64 &&
-+			git rev-list --no-object-names HEAD --not $base >in &&
-+			while read oid
-+			do
-+				echo "create refs/group-$side/$oid $oid" || return 1
-+			done <in | git update-ref --stdin || return 1
-+		done &&
-+
-+		git checkout left &&
-+		git merge right &&
-+		git repack -ad &&
-+
-+		git config bitmapPseudoMerge.left.pattern "refs/group-left/" &&
-+		git config bitmapPseudoMerge.left.maxMerges 1 &&
-+		git config bitmapPseudoMerge.left.stableThreshold never &&
-+
-+		git config bitmapPseudoMerge.right.pattern "refs/group-right/" &&
-+		git config bitmapPseudoMerge.right.maxMerges 1 &&
-+		git config bitmapPseudoMerge.right.stableThreshold never &&
-+
-+		pack="$(ls .git/objects/pack/pack-*.pack)" &&
-+		git rev-parse "$base" >in &&
-+		test-tool bitmap write "$(basename $pack)" <in &&
-+
-+		test_pseudo_merges >merges &&
-+		test_line_count = 2 merges &&
-+
-+		test_commit stale &&
-+
-+		git rev-list --count --objects HEAD >expect &&
-+
-+		: >trace2.txt &&
-+		GIT_TRACE2_EVENT=$PWD/trace2.txt \
-+			git rev-list --count --objects --use-bitmap-index HEAD >actual &&
-+		test_pseudo_merges_satisfied 2 <trace2.txt &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_failure 'apply pseudo-merges with overlapping groups during fill-in' '
-+	test_when_finished "rm -fr pseudo-merge-fill-in-overlap" &&
-+	git init pseudo-merge-fill-in-overlap &&
-+	(
-+		cd pseudo-merge-fill-in-overlap &&
-+
-+		test_commit_bulk 64 &&
-+		tag_everything &&
-+		git repack -ad &&
-+
-+		pack="$(ls .git/objects/pack/pack-*.pack)" &&
-+
-+		# Use two pseudo-merge group patterns that both match
-+		# refs/tags/, so every tagged commit belongs to both
-+		# groups. This exercises the extended lookup table
-+		# path in apply_pseudo_merges_for_commit().
-+		git config bitmapPseudoMerge.all.pattern "refs/tags/" &&
-+		git config bitmapPseudoMerge.all.maxMerges 1 &&
-+		git config bitmapPseudoMerge.all.stableThreshold never &&
-+
-+		git config bitmapPseudoMerge.tags.pattern "refs/tags/" &&
-+		git config bitmapPseudoMerge.tags.maxMerges 1 &&
-+		git config bitmapPseudoMerge.tags.stableThreshold never &&
-+
-+		git rev-parse HEAD~63 >in &&
-+		test-tool bitmap write "$(basename $pack)" <in &&
-+
-+		test_pseudo_merges >merges &&
-+		test_line_count = 2 merges &&
-+
-+		test_commit stale &&
-+
-+		git rev-list --count --objects HEAD >expect &&
-+
-+		: >trace2.txt &&
-+		GIT_TRACE2_EVENT=$PWD/trace2.txt \
-+			git rev-list --count --objects --use-bitmap-index HEAD >actual &&
-+		test_pseudo_merges_satisfied 2 <trace2.txt &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_failure 'pseudo-merge commits are correctly classified by date' '
-+	test_when_finished "rm -fr pseudo-merge-date-classification" &&
-+	git init pseudo-merge-date-classification &&
-+	(
-+		cd pseudo-merge-date-classification &&
-+
-+		test_commit_bulk 64 &&
-+		tag_everything &&
-+		git repack -ad &&
-+
-+		pack="$(ls .git/objects/pack/pack-*.pack)" &&
-+
-+		# Configure two pseudo-merge groups: one that only
-+		# matches "stable" refs (older than one month), and one
-+		# that matches all refs. With 64 freshly-created tags
-+		# (all younger than one month) the stable group should
-+		# have zero pseudo-merges and the catch-all group should
-+		# have one.
-+		#
-+		# Use GIT_TEST_DATE_NOW to align "now" (and therefore
-+		# "1.month.ago") with the test_tick timestamps so that
-+		# the commits are within the last month.
-+		#
-+		# This exercises the date-based classification in
-+		# find_pseudo_merge_group_for_ref(), which requires
-+		# that commits are parsed before inspecting their date.
-+		git config bitmapPseudoMerge.stable.pattern "refs/tags/" &&
-+		git config bitmapPseudoMerge.stable.maxMerges 64 &&
-+		git config bitmapPseudoMerge.stable.stableThreshold never &&
-+		git config bitmapPseudoMerge.stable.threshold 1.month.ago &&
-+
-+		git config bitmapPseudoMerge.all.pattern "refs/tags/" &&
-+		git config bitmapPseudoMerge.all.maxMerges 1 &&
-+		git config bitmapPseudoMerge.all.stableThreshold never &&
-+		git config bitmapPseudoMerge.all.threshold now &&
-+
-+		git rev-parse HEAD~63 >in &&
-+		GIT_TEST_DATE_NOW=$test_tick \
-+			test-tool bitmap write "$(basename $pack)" <in &&
-+
-+		test_pseudo_merges >merges &&
-+		test_line_count = 1 merges
-+	)
-+'
-+
-+test_expect_success 'sampleRate=0 does not cause division by zero' '
-+	test_when_finished "rm -fr pseudo-merge-sample-rate-zero" &&
-+	git init pseudo-merge-sample-rate-zero &&
-+	(
-+		cd pseudo-merge-sample-rate-zero &&
-+
-+		test_commit_bulk 64 &&
-+		tag_everything &&
-+		git repack -ad &&
-+
-+		pack="$(ls .git/objects/pack/pack-*.pack)" &&
-+
-+		git config bitmapPseudoMerge.test.pattern "refs/tags/" &&
-+		git config bitmapPseudoMerge.test.maxMerges 1 &&
-+		git config bitmapPseudoMerge.test.sampleRate 0 &&
-+		git config bitmapPseudoMerge.test.threshold now &&
-+		git config bitmapPseudoMerge.test.stableThreshold never &&
-+
-+		git rev-parse HEAD~63 >in &&
-+		test-tool bitmap write "$(basename $pack)" <in
-+	)
-+'
-+
- test_done
+-test_expect_failure 'apply pseudo-merges during fill-in traversal' '
++test_expect_success 'apply pseudo-merges during fill-in traversal' '
+ 	test_when_finished "rm -fr pseudo-merge-fill-in-traversal" &&
+ 	git init pseudo-merge-fill-in-traversal &&
+ 	(
 -- 
 2.54.0.76.g9b17dab2cf7
 
