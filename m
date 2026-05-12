@@ -1,269 +1,441 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02F735837E
-	for <git@vger.kernel.org>; Tue, 12 May 2026 07:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F7D494A03
+	for <git@vger.kernel.org>; Tue, 12 May 2026 08:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778571357; cv=none; b=FRl8aPM0hvJXgBApB2bwGIDPLEivd3/nRtvSIXzYfVy89oE3CxeTtqMrbDDwgFX1Vcbddsr5MsT08IhOCAcqXlHXTFdyK2bW8Oo7bmTUmTjVxVb/mvOBxBfYYzOLtWkkQuR4ITHpaMLMI3Snabt6tnCJ0ZOSiacYB0jj3iZaihI=
+	t=1778574239; cv=none; b=YLcNv/w/Za9KXu2+3M1yxhUyq/4txAAUuIUaANzwFT2AmL17GN8DRg5+oh1ojvTF6X5WuPTwjWLMa2XS3ubqiYjAQO01/hyGL531mQohjV2ZahAyraoh6Vk6fmXwPaVhFwzB2KP1Rjm6KSu+Hz5Am0Z0r7jN0FAqKHNr4d124+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778571357; c=relaxed/simple;
-	bh=IW3ByqhMONAFaYZ6AYjZKgRP7LyZ2k1fBIEdOozuoow=;
-	h=Content-Type:Message-ID:Date:MIME-Version:From:Subject:To; b=ZjywSW8FTnQKmJ8DbodFF0BkpaVBUN0d0fEQkt0I6MTRu9qB1/LXrL6O5z3NEHQ75mwTE+yAE6WtKG8FqtAzLRE4+31L9AZ2F2o1gTulLk0gPoSetA3wt+rXBkgFZUotTc3/l7MjazjmxbswDLQeaGuYM8IB1wDfLcqjZexkDHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=ZhQm+t2h; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1778574239; c=relaxed/simple;
+	bh=g+8Fsj6XkNfkQPN5s1NuzCCKbCYgLrRk8QgD0Mk7+i0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qWm5Rf/GJQJU9V5BbwSwwCKaHh+IoQa80t5txjZmdMhnz/+YGrM/ExcEJZMFD0Qi1ltDz7fCnbI06ndHBzfjE/W0vjhmhESTIcB7kxnZdglIWKyYmPqZQhq74kJUnfdCuh9J2Ek3QqV5n8eKnfx8Sp9F3KZyTFD0RpXoYkb+1KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=orxrWi6M; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="ZhQm+t2h"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4891e86fabeso59846165e9.1
-        for <git@vger.kernel.org>; Tue, 12 May 2026 00:35:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="orxrWi6M"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8eea23d01f7so717653585a.0
+        for <git@vger.kernel.org>; Tue, 12 May 2026 01:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1778571350; x=1779176150; darn=vger.kernel.org;
-        h=to:autocrypt:subject:from:content-language:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0BS0d+7KLUZc99Yk35zz3z30BhDTXZ3lDEyGeNqbNhg=;
-        b=ZhQm+t2hNLi2eK1tCK+tw+irRx1KR3Mj/+XZVmEwiaNPeq9mDqSLOim0WZ08zziQaJ
-         n+A/Nhn4+SWm3wIKlBhvnVTYGJH5fav5sohM30TN35Dp/0HOJoCMRdfopyudhtQGjeYh
-         Qv7KFQpVtrAb/JRzqAqs1Js4prGBKfV7ESlQ3Yv19hbfHBdzHzXyNiiLf3OGokdw0XWp
-         09CA0FXeE/UVGUFFm83lwRSz3Ba1L6DCi+IUScHbauGGlphwI1Lh897uOschF/jLqVZW
-         OKgHROMBjTTICy2w1gNMuvg8usfvEc7iFHc2sOi2M9z1vMs5StgbvnThteB+uqzn69P5
-         A7Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778571350; x=1779176150;
-        h=to:autocrypt:subject:from:content-language:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778574232; x=1779179032; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0BS0d+7KLUZc99Yk35zz3z30BhDTXZ3lDEyGeNqbNhg=;
-        b=CQj65xWQrzAztJXmdehWmj5aJ8dlY64bwuby34OofoiOisWvFEyuVc3Bwat8D7CREu
-         fsmzXruoYPgDCjz9HNRig4FToQTJWZyiOf6Z+A96TgxnkJgfU/YNUF7G9WRQktULjbCu
-         i7T5bcR42L0nHDywoAws9EDhuY1SKrxz15Ir23r2PRcdF7jnyjTCH7pEpKYvjiqDWiTa
-         RHYYhH0bjERyUuGs0jTTBqaGR2f0mMDPUimmol4LZH8X1rgeN/0RmT2DYbNBvJbJv5uQ
-         3s9hL0o/GP4fkqFF81aRfUysoF5YB0uWuCul79aBsQ9TKHnxgEKgrp4+XE0Q2K3bfdZ0
-         0fgA==
-X-Gm-Message-State: AOJu0Yyiww3jvDgrL9s9rFshJmuPF85O2a7iQusavilT+1eX6rXx6trP
-	qlp3cTaby+vdFxOjs69i8C/6T4IAyKqoRBdfH15c6bVFBmyBostEhu0Wlbgeo1l8VTXhl32/ybe
-	4yyUYbRo=
-X-Gm-Gg: Acq92OGr1DvWDCu/E0X5+qx7VR6/8jrLnOYIbarO5pKOFrBFk6AP81vHxUJAqXg6Qbl
-	Hplg7oy7wRNrldEUb/pFwvkdYty+6mmffohdMfL86WUmd/l/klLxVWKQ1VBVC7JAmgmos4ulrTn
-	3fwfupAkS/PXud2t8JzUmOuKvyUKI8dL3WdhXRMT53HEpJEvl/MHfuaXkYItUtSEB3kh+ECbj8z
-	FnwKtTs/oCtZ88n+sTJwlSJqnr7EJibRvIlCY6P99GtF2wMA0tWjXyEMqtuook7xlDWiea0SMWp
-	7U2+jjTtjLXhxuVlHB1JvukXyv37C9varfjzISayFa4aGArPuGkmD6c4f7O0aVEhHBU762r9h6+
-	vN/nh/ripmXQBEwcIPA1hE1JCKiZ1K93tO3uc5nIE7pto8cJHQuL7wFkwXa0p1lH48spDNi0FN1
-	PQpU+Bjxt0+31hQfv+TSoV6uZc+oQlUyqX6oC3
-X-Received: by 2002:a05:600c:a118:b0:48a:58e1:6d02 with SMTP id 5b1f17b1804b1-48e51f35b3emr355117735e9.19.1778571350391;
-        Tue, 12 May 2026 00:35:50 -0700 (PDT)
-Received: from [192.168.1.211] ([185.19.1.47])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e9053f690sm28632005e9.7.2026.05.12.00.35.49
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 May 2026 00:35:49 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="------------scR6AWr0IUd80RR4fMrzjkil"
-Message-ID: <6ae85515-9373-4c9e-90d2-5e4176590c5b@suse.com>
-Date: Tue, 12 May 2026 09:35:49 +0200
+        bh=GpkHQlIzYolQBnKRs4+SRRU0vYvmpNYA1qiTnP+XX/A=;
+        b=orxrWi6M7fm2t9f84e3HQzVDTvH4RRm46cHGMPgKKAMcTlpP6Q7xdle50HSahM5ply
+         U6X8KqcgZfGIc3QupJgVlnC3915D8D2avklEUnEy+vYUY1VRIOytwGn7AHw8j+48pRDI
+         vSW/ljeIqWpr4Icfd9NqMtZx6ftTrZEKYWZyVIDQ7ulwNjn9wd+Gzipx2YL1IJyp/zsB
+         kMPEEOWCyB1h+SCjL50qrIu4o7hvmnQvhEt8YPnI0k2NUslR5UR4aPHMMP2UZhvOW8vU
+         9lr5w3cMGGWvYV729dskaGS9RLhdPYQVed1Fvagr3NVkQBL9HsTKM2nm+/64exrDoRZn
+         RxHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778574232; x=1779179032;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GpkHQlIzYolQBnKRs4+SRRU0vYvmpNYA1qiTnP+XX/A=;
+        b=i3AgK6H1E1gbXQzwZ9vnto+g+UszOADD3XnwvHlNIT0eu1THWy9ANu+0bIUhH9KwZB
+         f0ysM8kR1/ElVuujFAdzqiJk2htg+jMsJ5H6tcIdfLK6w9IiVymT1pe9g5qqSKolibJB
+         Ex0RZZg9Lc1tC0DzN+uyp3h8iywg6bSuSHWWije2W3etdCKuts89EDxo7R58pAqbR9Il
+         6OFUH1oPqO5lnBOIYMillAx5Uymx32xOCBOpEVTNu5Ypy1HwNqL2FrSJGTuM22IfW5Cz
+         rj9rw2Uaua0SMASDJIAo910S0vgRMloZwvRP+h3tbtlCBPNYE0zuGONCAK8s+kD8vL8J
+         zFYw==
+X-Gm-Message-State: AOJu0Yzj6bM77/49MdRKLni+CrPgqmT+BFe2jdEpW5Q4mxFkh9wevdzy
+	CwJYF7M0gh9q9uSOHdfhFWVBXI1AJ6X4S+1oQrebx9nysWTazHPcyk8hutYZuA==
+X-Gm-Gg: Acq92OGkJiNbSuRq9zmB8nq5cgXEcU7otvley4mdTZf4b7IWJpL0woW42aPFC4fOl4u
+	vs2T5u8TK85ob61juxTSKrNMUbNwp2IJSY11yfp7yZrRPCjqMf5ukwzA9sdjttjbVCiAWMLGHk7
+	TDNt+di5LsgzQSNPBsZgALGu7oTqojSJzDU6Rj/sUNpbYKpxmkyDzFcRswLfhit5ueqnepC+IGh
+	AUQrdoy10zT7p7/qMb3brXc5Npn3HwPjLxlET1C6uFiRDbhQp8S97WSu0AX8gIOaP5zRGgmrdFG
+	QSrng2ZhuWkMf0Jg2KtqA85kZ3iBCdCdqsKxKAp2xNAnS9GbpFVVRjpH3llXe8o9gXzhPBvZaZa
+	ISXzW5eqz6yKq1o0ZTwjl51/VbRZBcV1o7K8c7BiI1ZScJVt0IBWE2t5ePnz36+CW4SWMhlFsPB
+	oS+4u3xaFYJvLACU9uDVyZEQta
+X-Received: by 2002:a05:620a:4089:b0:8ed:d906:a8da with SMTP id af79cd13be357-90cfb8a9591mr256943885a.18.1778574231486;
+        Tue, 12 May 2026 01:23:51 -0700 (PDT)
+Received: from [127.0.0.1] ([20.55.117.86])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-907b87c02fbsm1403573585a.25.2026.05.12.01.23.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 May 2026 01:23:50 -0700 (PDT)
+Message-Id: <pull.2285.v7.git.git.1778574229.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v6.git.git.1778492691.gitgitgadget@gmail.com>
+References: <pull.2285.v6.git.git.1778492691.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 12 May 2026 08:23:44 +0000
+Subject: [PATCH v7 0/5] branch: prune-merged
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Daniel Mach <daniel.mach@suse.com>
-Subject: git clone fails when using --dissociate together with a reference
- repository that contains a commit-graph
-Autocrypt: addr=dmach@suse.de; keydata=
- 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
 To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-This is a multi-part message in MIME format.
---------------scR6AWr0IUd80RR4fMrzjkil
-Content-Type: multipart/alternative;
- boundary="------------02OjlxH0FfQwap19xwjB00Im"
+ * --prune-merged now checks if a branch is merged into its own upstream
+   first. If the upstream is gone, it checks against the remote's default
+   branch instead. If neither exists, the branch is refused (use --force to
+   delete anyway).
 
---------------02OjlxH0FfQwap19xwjB00Im
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Harald Nordgren (5):
+  branch: add --forked <remote>
+  branch: let delete_branches warn instead of error on bulk refusal
+  branch: add --prune-merged <remote>
+  branch: add branch.<name>.pruneMerged opt-out
+  branch: add --all-remotes flag
 
-Hi,
-
-I've stumbled upon a bug that the following command failed:
-
-$ git clone <url> <dir> --reference <old-dir> --dissociate
-fatal: unable to parse commit <SHA>
-warning: Clone succeeded, but checkout failed.
-You can inspect what was checked out with 'git status'
-and retry with 'git restore --source=HEAD :/'
-
-Omitting --dissociate fixed the error, but it wasn't clear to me what 
-might be the root cause.
-
-$ git --version
-git version 2.54.0
-
-With the help of AI I was able to create a reproducer (see the attached 
-script).
-I have verified that the reproducer works and also simplified it.
-
-AI generated report (take it with a grain of salt):
-* The Bug: During dissociation, Git correctly repacks objects and 
-removes the objects/info/alternates file. However, the git clone process 
-has already initialized its object store including the alternate's 
-commit-graph.
-   After dissociation, it fails to "forget" or reload the object store, 
-leading to a crash when it tries to use the commit-graph (which refers 
-to the now-unlinked alternate) to perform the initial checkout.
-* Proof of state: As shown in the script output, a manual git checkout 
-immediately after the failure succeeds, proving the repository is 
-structurally sound but the clone process itself was in an inconsistent 
-state.
-* Workaround: Passing -c core.commitGraph=false to the clone command 
-prevents the crash.
-
-regards,
-Daniel
+ Documentation/config/branch.adoc |   7 +
+ Documentation/git-branch.adoc    |  33 +++
+ builtin/branch.c                 | 332 +++++++++++++++++++++++++++++--
+ t/t3200-branch.sh                | 280 ++++++++++++++++++++++++++
+ 4 files changed, 635 insertions(+), 17 deletions(-)
 
 
---------------02OjlxH0FfQwap19xwjB00Im
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+base-commit: 29bd7ed5127255713c1ac2f43b7c6f257d7b4594
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2285%2FHaraldNordgren%2Ffetch-prune-local-branches-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2285/HaraldNordgren/fetch-prune-local-branches-v7
+Pull-Request: https://github.com/git/git/pull/2285
 
-<!DOCTYPE html>
-<html>
-  <head>
+Range-diff vs v6:
 
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><font face="monospace">Hi,</font></p>
-    <p><font face="monospace">I've stumbled upon a bug that the
-        following command failed:</font></p>
-    <p><font face="monospace">$ git clone &lt;url&gt; &lt;dir&gt;
-        --reference &lt;old-dir&gt; --dissociate<br>
-        <span style="color:#000000;background-color:#ffffff;">fatal:
-          unable to parse commit &lt;SHA&gt;</span><br>
-        <span style="color:#000000;background-color:#ffffff;">warning:
-          Clone succeeded, but checkout failed.</span><span
-          style="color:#000000;background-color:#ffffff;">
-        </span><br>
-        <span style="color:#000000;background-color:#ffffff;">You can
-          inspect what was checked out with 'git status'</span><span
-          style="color:#000000;background-color:#ffffff;">
-        </span><br>
-        <span style="color:#000000;background-color:#ffffff;">and retry
-          with 'git restore --source=HEAD :/'</span><br>
-        <span style="color:#000000;background-color:#ffffff;">
-        </span><br>
-        Omitting --dissociate fixed the error, but it wasn't clear to me
-        what might be the root cause.</font></p>
-    <p><span style="font-family:monospace"><span
-          style="color:#000000;background-color:#ffffff;">$ git
-          --version </span><span
-          style="color:#000000;background-color:#ffffff;"> </span><br>
-        <span style="color:#000000;background-color:#ffffff;">git
-          version 2.54.0</span><br>
-      </span><font face="monospace"><br>
-      </font></p>
-    <p><font face="monospace">With the help of AI I was able to create a
-        reproducer (see the attached script).<br>
-        I have </font><font face="monospace">verified that the
-        reproducer works and also simplified it.</font></p>
-    <p><font face="monospace">AI generated report (take it with a grain
-        of salt):<br>
-        * The Bug: During dissociation, Git correctly repacks objects
-        and removes the objects/info/alternates file. However, the git
-        clone process has already initialized its object store including
-        the alternate's commit-graph.<br>
-          After dissociation, it fails to "forget" or reload the object
-        store, leading to a crash when it tries to use the commit-graph
-        (which refers to the now-unlinked alternate) to perform the
-        initial checkout.<br>
-        * Proof of state: As shown in the script output, a manual git
-        checkout immediately after the failure succeeds, proving the
-        repository is structurally sound but the clone process itself
-        was in an inconsistent state.<br>
-        * Workaround: Passing -c core.commitGraph=false to the clone
-        command prevents the crash.<br>
-        <br>
-      </font></p>
-    <p><font face="monospace">regards,<br>
-        Daniel</font></p>
-    <p><font face="monospace"><br>
-      </font></p>
-  </body>
-</html>
+ 1:  fb9817b220 = 1:  22fa8515df branch: add --forked <remote>
+ 2:  42a2f93d44 = 2:  b443f0f367 branch: let delete_branches warn instead of error on bulk refusal
+ 3:  604ecb8965 ! 3:  a245009893 branch: add --prune-merged <remote>
+     @@ Documentation/git-branch.adoc: Each _<remote>_ may be either the name of a confi
+      +	been pruned upstream.
+      ++
+      +As a safety check, branches with commits not yet integrated into
+     -+the remote's default branch are refused. With `--force` (or `-f`),
+     -+delete them regardless. The currently checked-out branch in any
+     -+worktree is always preserved.
+     ++their upstream remote-tracking branch are refused; if the upstream
+     ++itself is gone, the remote's default branch is consulted instead.
+     ++With `--force` (or `-f`), delete refused branches regardless. The
+     ++currently checked-out branch in any worktree is always preserved.
+      +
+       `-v`::
+       `-vv`::
+     @@ builtin/branch.c
+       #include "column.h"
+       #include "utf8.h"
+       #include "ref-filter.h"
+     +@@ builtin/branch.c: static const char *branch_get_color(enum color_branch ix)
+     + }
+     + 
+     + static int branch_merged(int kind, const char *name,
+     +-			 struct commit *rev, struct commit *head_rev)
+     ++			 struct commit *rev, struct commit *head_rev,
+     ++			 int no_head_fallback)
+     + {
+     + 	/*
+     + 	 * This checks whether the merge bases of branch and HEAD (or
+     +@@ builtin/branch.c: static int branch_merged(int kind, const char *name,
+     + 					 &oid, NULL)) != NULL)
+     + 			reference_rev = lookup_commit_reference(the_repository,
+     + 								&oid);
+     ++
+     ++		if (!reference_rev && no_head_fallback && upstream &&
+     ++		    starts_with(upstream, "refs/remotes/")) {
+     ++			const char *remote_name = upstream + strlen("refs/remotes/");
+     ++			const char *slash = strchr(remote_name, '/');
+     ++			if (slash) {
+     ++				struct strbuf head_ref = STRBUF_INIT;
+     ++				strbuf_add(&head_ref, "refs/remotes/", strlen("refs/remotes/"));
+     ++				strbuf_add(&head_ref, remote_name, slash - remote_name);
+     ++				strbuf_addstr(&head_ref, "/HEAD");
+     ++				if (refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+     ++							    head_ref.buf,
+     ++							    RESOLVE_REF_READING,
+     ++							    &oid, NULL))
+     ++					reference_rev = lookup_commit_reference(the_repository,
+     ++										&oid);
+     ++				strbuf_release(&head_ref);
+     ++			}
+     ++		}
+     + 	}
+     +-	if (!reference_rev)
+     ++	if (!reference_rev) {
+     ++		if (no_head_fallback) {
+     ++			free(reference_name_to_free);
+     ++			return 0;
+     ++		}
+     + 		reference_rev = head_rev;
+     ++	}
+     + 
+     + 	merged = reference_rev ? repo_in_merge_bases(the_repository, rev,
+     + 						     reference_rev) : 0;
+     +@@ builtin/branch.c: static int branch_merged(int kind, const char *name,
+     + 	 * any of the following code, but during the transition period,
+     + 	 * a gentle reminder is in order.
+     + 	 */
+     +-	if (head_rev != reference_rev) {
+     ++	if (!no_head_fallback && head_rev != reference_rev) {
+     + 		int expect = head_rev ? repo_in_merge_bases(the_repository, rev, head_rev) : 0;
+     + 		if (expect < 0)
+     + 			exit(128);
+      @@ builtin/branch.c: static int branch_merged(int kind, const char *name,
+       
+       static int check_branch_commit(const char *branchname, const char *refname,
+       			       const struct object_id *oid, struct commit *head_rev,
+     -+			       struct commit *head_rev_override,
+     -+			       int use_head_rev_override,
+     ++			       int no_head_fallback,
+       			       int kinds, int force, int warn_only,
+       			       int *n_not_merged)
+       {
+     - 	struct commit *rev = lookup_commit_reference(the_repository, oid);
+     -+	int merged;
+     -+
+     - 	if (!force && !rev) {
+     +@@ builtin/branch.c: static int check_branch_commit(const char *branchname, const char *refname,
+       		error(_("couldn't look up commit object for '%s'"), refname);
+       		return -1;
+       	}
+      -	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
+     -+	if (use_head_rev_override) {
+     -+		if (!head_rev_override)
+     -+			return 0;
+     -+		merged = repo_in_merge_bases(the_repository, rev,
+     -+					     head_rev_override);
+     -+		if (merged < 0)
+     -+			exit(128);
+     -+	} else {
+     -+		merged = branch_merged(kinds, branchname, rev, head_rev);
+     -+	}
+     -+	if (!force && !merged) {
+     ++	if (!force && !branch_merged(kinds, branchname, rev, head_rev,
+     ++				     no_head_fallback)) {
+       		if (warn_only) {
+       			warning(_("the branch '%s' is not fully merged"),
+       				branchname);
+     @@ builtin/branch.c: static void delete_branch_config(const char *branchname)
+       
+      -static int delete_branches(int argc, const char **argv, int force, int kinds,
+      +static int delete_branches(int argc, const char **argv,
+     -+			   struct commit **head_rev_overrides,
+     ++			   int no_head_fallback,
+      +			   int force, int kinds,
+       			   int quiet, int warn_only, int *n_not_merged)
+       {
+     @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int fo
+      -		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+      -					force, warn_only, n_not_merged)) {
+      +		    check_branch_commit(bname.buf, name, &oid, head_rev,
+     -+					head_rev_overrides ? head_rev_overrides[i] : NULL,
+     -+					!!head_rev_overrides,
+     ++					no_head_fallback,
+      +					kinds, force, warn_only, n_not_merged)) {
+       			if (!warn_only)
+       				ret = 1;
+     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
+       	return 0;
+       }
+       
+     -+static struct commit *resolve_remote_head(const char *remote_name)
+     -+{
+     -+	struct ref_store *refs = get_main_ref_store(the_repository);
+     -+	struct strbuf head_ref = STRBUF_INIT;
+     -+	struct object_id oid;
+     -+	struct commit *commit = NULL;
+     -+
+     -+	strbuf_addf(&head_ref, "refs/remotes/%s/HEAD", remote_name);
+     -+	if (refs_resolve_ref_unsafe(refs, head_ref.buf, RESOLVE_REF_READING,
+     -+				    &oid, NULL))
+     -+		commit = lookup_commit_reference(the_repository, &oid);
+     -+	strbuf_release(&head_ref);
+     -+	return commit;
+     -+}
+     -+
+      +static int prune_merged_branches(int argc, const char **argv, int force,
+      +				 int quiet)
+      +{
+      +	struct string_list candidates = STRING_LIST_INIT_DUP;
+      +	struct string_list protected_default_refs = STRING_LIST_INIT_DUP;
+      +	struct strvec deletable = STRVEC_INIT;
+     -+	struct commit **head_rev_overrides = NULL;
+     -+	size_t alloc = 0;
+      +	struct string_list_item *item;
+      +	int n_not_merged = 0;
+      +	int ret = 0;
+     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
+      +		struct branch *branch;
+      +		const char *push_ref;
+      +		const char *upstream;
+     -+		const char *remote_name;
+     -+		const char *slash;
+      +
+      +		strbuf_addf(&full, "refs/heads/%s", short_name);
+      +		if (branch_checked_out(full.buf)) {
+     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
+      +		if (string_list_has_string(&protected_default_refs, push_ref))
+      +			continue;
+      +
+     -+		ALLOC_GROW(head_rev_overrides, deletable.nr + 1, alloc);
+     -+		remote_name = push_ref + strlen("refs/remotes/");
+     -+		slash = strchr(remote_name, '/');
+     -+		if (slash) {
+     -+			char *name = xstrndup(remote_name, slash - remote_name);
+     -+			head_rev_overrides[deletable.nr] = resolve_remote_head(name);
+     -+			free(name);
+     -+		} else {
+     -+			head_rev_overrides[deletable.nr] = NULL;
+     -+		}
+      +		strvec_push(&deletable, short_name);
+      +	}
+      +
+      +	if (deletable.nr)
+      +		ret = delete_branches(deletable.nr, deletable.v,
+     -+				      head_rev_overrides, force,
+     ++				      1, force,
+      +				      FILTER_REFS_BRANCHES, quiet,
+      +				      1, &n_not_merged);
+      +
+     @@ builtin/branch.c: static int collect_forked_branch(const struct reference *ref,
+      +			n_not_merged);
+      +
+      +	strvec_clear(&deletable);
+     -+	free(head_rev_overrides);
+      +	string_list_clear(&candidates, 0);
+      +	string_list_clear(&protected_default_refs, 0);
+      +	return ret;
+     @@ builtin/branch.c: int cmd_branch(int argc,
+       		if (!argc)
+       			die(_("branch name required"));
+      -		ret = delete_branches(argc, argv, delete > 1, filter.kind,
+     -+		ret = delete_branches(argc, argv, NULL, delete > 1, filter.kind,
+     ++		ret = delete_branches(argc, argv, 0, delete > 1, filter.kind,
+       				      quiet, 0, NULL);
+       		goto out;
+       	} else if (forked) {
+     @@ t/t3200-branch.sh: test_expect_success '--forked requires at least one <remote>'
+      +	test_must_fail git -C pm-force rev-parse --verify refs/heads/one
+      +'
+      +
+     -+test_expect_success '--prune-merged measures merged-ness against <remote>/HEAD, not local HEAD' '
+     -+	test_when_finished "rm -rf pm-head-indep" &&
+     -+	git clone pm-upstream pm-head-indep &&
+     -+	git -C pm-head-indep branch one --track origin/one &&
+     -+	git -C pm-head-indep update-ref -d refs/remotes/origin/one &&
+     ++test_expect_success '--prune-merged falls back to remote default branch when upstream is gone' '
+     ++	test_when_finished "rm -rf pm-fallback" &&
+     ++	git clone pm-upstream pm-fallback &&
+     ++	git -C pm-fallback branch one --track origin/one &&
+     ++	git -C pm-fallback update-ref -d refs/remotes/origin/one &&
+      +	# Detach HEAD to an unrelated commit so the candidate is not
+     -+	# reachable from local HEAD; it is still reachable from
+     -+	# refs/remotes/origin/HEAD, which is what should matter.
+     -+	git -C pm-head-indep commit --allow-empty -m unrelated &&
+     -+	git -C pm-head-indep checkout --detach &&
+     -+	git -C pm-head-indep reset --hard HEAD^ &&
+     ++	# reachable from local HEAD. The upstream origin/one is now
+     ++	# gone; the merged-ness check should fall back to
+     ++	# refs/remotes/origin/HEAD, against which "one" is reachable.
+     ++	git -C pm-fallback commit --allow-empty -m unrelated &&
+     ++	git -C pm-fallback checkout --detach &&
+     ++	git -C pm-fallback reset --hard HEAD^ &&
+      +
+     -+	git -C pm-head-indep branch --prune-merged origin &&
+     ++	git -C pm-fallback branch --prune-merged origin &&
+      +
+     -+	test_must_fail git -C pm-head-indep rev-parse --verify refs/heads/one
+     ++	test_must_fail git -C pm-fallback rev-parse --verify refs/heads/one
+      +'
+      +
+     -+test_expect_success '--prune-merged skips merged-ness check when <remote>/HEAD is unset' '
+     -+	test_when_finished "rm -rf pm-no-head" &&
+     -+	git clone pm-upstream pm-no-head &&
+     -+	git -C pm-no-head checkout -b one --track origin/one &&
+     -+	test_commit -C pm-no-head unpushed &&
+     -+	git -C pm-no-head checkout - &&
+     ++test_expect_success '--prune-merged refuses when upstream and remote default are both gone' '
+     ++	test_when_finished "rm -rf pm-both-gone" &&
+     ++	git clone pm-upstream pm-both-gone &&
+     ++	git -C pm-both-gone checkout -b one --track origin/one &&
+     ++	test_commit -C pm-both-gone unpushed &&
+     ++	git -C pm-both-gone checkout - &&
+      +
+     -+	git -C pm-no-head update-ref -d refs/remotes/origin/HEAD &&
+     -+	git -C pm-no-head update-ref -d refs/remotes/origin/one &&
+     -+	git -C pm-no-head branch --prune-merged origin &&
+     ++	git -C pm-both-gone update-ref -d refs/remotes/origin/HEAD &&
+     ++	git -C pm-both-gone update-ref -d refs/remotes/origin/one &&
+     ++	git -C pm-both-gone branch --prune-merged origin 2>err &&
+     ++	test_grep "not fully merged" err &&
+      +
+     -+	test_must_fail git -C pm-no-head rev-parse --verify refs/heads/one
+     ++	git -C pm-both-gone rev-parse --verify refs/heads/one
+      +'
+      +
+      +test_expect_success '--prune-merged never deletes the checked-out branch' '
+ 4:  717fc6758e ! 4:  2c3f751569 branch: add branch.<name>.pruneMerged opt-out
+     @@ Documentation/git-branch.adoc: Each _<remote>_ may be either the name of a confi
+      +	that name has since been pruned upstream.
+       +
+       As a safety check, branches with commits not yet integrated into
+     - the remote's default branch are refused. With `--force` (or `-f`),
+     - delete them regardless. The currently checked-out branch in any
+     --worktree is always preserved.
+     -+worktree is always preserved, as is any branch with
+     -+`branch.<name>.pruneMerged` set to `false`.
+     + their upstream remote-tracking branch are refused; if the upstream
+     + itself is gone, the remote's default branch is consulted instead.
+     + With `--force` (or `-f`), delete refused branches regardless. The
+     +-currently checked-out branch in any worktree is always preserved.
+     ++currently checked-out branch in any worktree is always preserved,
+     ++as is any branch with `branch.<name>.pruneMerged` set to `false`.
+       
+       `-v`::
+       `-vv`::
+     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
+       		struct branch *branch;
+       		const char *push_ref;
+       		const char *upstream;
+     - 		const char *remote_name;
+     - 		const char *slash;
+      +		int opt_out = 0;
+       
+       		strbuf_addf(&full, "refs/heads/%s", short_name);
+     @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
+      +		}
+      +		strbuf_release(&key);
+       
+     - 		ALLOC_GROW(head_rev_overrides, deletable.nr + 1, alloc);
+     - 		remote_name = push_ref + strlen("refs/remotes/");
+     + 		strvec_push(&deletable, short_name);
+     + 	}
+      
+       ## t/t3200-branch.sh ##
+      @@ t/t3200-branch.sh: test_expect_success '--prune-merged spares branches whose push ref is the defaul
+ 5:  be25572957 ! 5:  f79707ce7c branch: add --all-remotes flag
+     @@ Documentation/git-branch.adoc: git branch (-m|-M) [<old-branch>] <new-branch>
+       
+       DESCRIPTION
+       -----------
+     -@@ Documentation/git-branch.adoc: delete them regardless. The currently checked-out branch in any
+     - worktree is always preserved, as is any branch with
+     - `branch.<name>.pruneMerged` set to `false`.
+     +@@ Documentation/git-branch.adoc: With `--force` (or `-f`), delete refused branches regardless. The
+     + currently checked-out branch in any worktree is always preserved,
+     + as is any branch with `branch.<name>.pruneMerged` set to `false`.
+       
+      +`--all-remotes`::
+      +	With `--forked` or `--prune-merged`, act on every
+     @@ builtin/branch.c: static void collect_forked_set(int argc, const char **argv,
+       	for_each_string_list_item(item, &out)
+       		puts(item->string);
+       
+     -@@ builtin/branch.c: static struct commit *resolve_remote_head(const char *remote_name)
+     - 	return commit;
+     +@@ builtin/branch.c: static int list_forked_branches(int argc, const char **argv)
+     + 	return 0;
+       }
+       
+      -static int prune_merged_branches(int argc, const char **argv, int force,
 
---------------02OjlxH0FfQwap19xwjB00Im--
---------------scR6AWr0IUd80RR4fMrzjkil
-Content-Type: application/x-shellscript;
- name="reproducer_git_clone_dissociate.sh"
-Content-Disposition: attachment; filename="reproducer_git_clone_dissociate.sh"
-Content-Transfer-Encoding: base64
-
-IyEvYmluL3NoCgojIFJlcHJvZHVjZXIgZm9yIGdpdCBjbG9uZSAtLWRpc3NvY2lhdGUgZmFp
-bHVyZSB3aGVuIHJlZmVyZW5jZSByZXBvIGhhcyBhIGNvbW1pdC1ncmFwaC4KIyBPYnNlcnZl
-ZCBpbiBnaXQgdmVyc2lvbiAyLjU0LjAKCnNldCAtZQoKUkVQT19BPSIkKHB3ZCkvcmVwby1h
-IgpSRVBPX0I9IiQocHdkKS9yZXBvLWIiCgojIENsZWFuIHVwIHByZXZpb3VzIHJ1bnMKcm0g
-LXJmICIkUkVQT19BIiAiJFJFUE9fQiIKCmVjaG8gIj09PSBDcmVhdGluZyByZWZlcmVuY2Ug
-cmVwb3NpdG9yeSB3aXRoIGNvbW1pdC1ncmFwaCA9PT0iCmdpdCBpbml0IC1iIG1hc3RlciAi
-JFJFUE9fQSIKY2QgIiRSRVBPX0EiCmVjaG8gImNvbnRlbnQgMSIgPiBmaWxlICYmIGdpdCBh
-ZGQgZmlsZSAmJiBnaXQgY29tbWl0IC1tICJjb21taXQgMSIKZWNobyAiY29udGVudCAyIiA+
-IGZpbGUgJiYgZ2l0IGFkZCBmaWxlICYmIGdpdCBjb21taXQgLW0gImNvbW1pdCAyIgpnaXQg
-Y29tbWl0LWdyYXBoIHdyaXRlIC0tcmVhY2hhYmxlCmNkIC4uCgplY2hvIC1lICJcbj09PSBB
-dHRlbXB0aW5nIGNsb25lIHdpdGggLS1yZWZlcmVuY2UgYW5kIC0tZGlzc29jaWF0ZSA9PT0i
-CiMgVGhpcyBpcyBleHBlY3RlZCB0byBmYWlsIHdpdGggImZhdGFsOiB1bmFibGUgdG8gcGFy
-c2UgY29tbWl0IC4uLiIKaWYgZ2l0IGNsb25lIC0tcmVmZXJlbmNlICIkUkVQT19BIiAtLWRp
-c3NvY2lhdGUgImZpbGU6Ly8kUkVQT19BIiAiJFJFUE9fQiI7IHRoZW4KCWVjaG8gLWUgIlxu
-U1VDQ0VTUzogQ2xvbmUgZmluaXNoZWQgY29ycmVjdGx5IChCdWcgbm90IHJlcHJvZHVjZWQp
-IgplbHNlCgllY2hvIC1lICJcbkZBSUxVUkU6IENsb25lIGZhaWxlZCBhcyBleHBlY3RlZCAo
-QnVnIHJlcHJvZHVjZWQpIgpmaQoKZWNobyAtZSAiXG49PT0gUmVwb3NpdG9yeSBzdGF0ZSBh
-ZnRlciBmYWlsdXJlID09PSIKY2QgIiRSRVBPX0IiCmVjaG8gIkNoZWNraW5nIGlmIGFsdGVy
-bmF0ZXMgZmlsZSBleGlzdHMgKHNob3VsZCBOT1QgZXhpc3QgYWZ0ZXIgZGlzc29jaWF0aW9u
-KToiCmlmIFsgLWYgLmdpdC9vYmplY3RzL2luZm8vYWx0ZXJuYXRlcyBdOyB0aGVuCgllY2hv
-ICIgIEFsdGVybmF0ZXMgZmlsZSBTVElMTCBFWElTVFMuIgplbHNlCgllY2hvICIgIEFsdGVy
-bmF0ZXMgZmlsZSBHT05FIChEaXNzb2NpYXRpb24gZmluaXNoZWQpLiIKZmkKCmVjaG8gIkF0
-dGVtcHRpbmcgbWFudWFsIGNoZWNrb3V0OiIKaWYgZ2l0IGNoZWNrb3V0IG1hc3RlciAyPi9k
-ZXYvbnVsbDsgdGhlbgoJZWNobyAiICBNYW51YWwgY2hlY2tvdXQgU1VDQ0VFREVELiIKZWxz
-ZQoJZWNobyAiICBNYW51YWwgY2hlY2tvdXQgRkFJTEVELiIKZmkK
-
---------------scR6AWr0IUd80RR4fMrzjkil--
+-- 
+gitgitgadget
