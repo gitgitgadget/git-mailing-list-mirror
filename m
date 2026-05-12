@@ -1,54 +1,54 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C91BD531
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC6C26ED25
+	for <git@vger.kernel.org>; Tue, 12 May 2026 01:21:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778548767; cv=none; b=Q5Te2U0YoMrAmG1o6/91hsXIxJO3ESd6Bb5v81dLXnHNfwkMiW/5OTuut4Fw7b6WFdzxDcjzyKVn3ZnhUYNYgGPws64ZjryQoWNLbbCkNliy7+hc90N9UdiLOApcV+qzmlRktIixZ5M/Nq+rhFdmOIDo3ADKofSl6SSfut9auo8=
+	t=1778548908; cv=none; b=HLsi9i05WcT+uCB8z9HnYa9Gq8/1ObWNrfZjV76WbcU7LDled2p7W7I1GJQAmtwoKMUugL2ElBqBTBju/y1H9ePJMJE++cecHe5vGUNsqzbqNJ4HlxTIfw8o4lO6pkT3vJUcXGmUM2CeHVCaBFzsT39uUW/3MYDveKNzzhDLxc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778548767; c=relaxed/simple;
-	bh=VG+KcQfUZGt/QxCpm8UqRHVba9Y1FoDUpbvZkTY3Bno=;
+	s=arc-20240116; t=1778548908; c=relaxed/simple;
+	bh=w+E7NT671xOG9jui49NNDYdR9ePiijIaLBlPSZDWpLY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e1rP7oVt3cyCzAOT7koVwgGUqD4QGrA6V7O/+89U6nRvomYUUllO7JTii1Abed35toaJQiS1Yrds2sKtMFC8nY9Xo3fuzt5Rm1O9MpYQsKyIcdnZyB/Sljmm4rjUbQpWE08NIjtw1tIs6QeI0+5EzQ5Wo86k34u9Xv5ftWD0P8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xbtMOUre; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hfT3/hmp; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=IyVUvp9OibvgRIGxV1zx6h2Grg9/M1DYta4VXCafRAv0q69017mhEolVRwQpzCkFAE4SXRtJ3Pjzfq+liGiCFZr2+K45wlkM8iShV3kHGyAnPGm0Ppp/Aqnv2cV4loinOaqRv+zHYOZWBHRCAahMGa67wN2TIBmHlKX95Y5excU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LeMd9JxQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Va2BOmDZ; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xbtMOUre";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hfT3/hmp"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LeMd9JxQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Va2BOmDZ"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 21C287A0111;
-	Mon, 11 May 2026 21:19:24 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 3F0281D00106;
+	Mon, 11 May 2026 21:21:45 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 11 May 2026 21:19:25 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 11 May 2026 21:21:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778548764; x=1778635164; bh=LuTeOZMj1l
-	+64fKY43PUL8NBh11/MxJqhgLqs4DChBs=; b=xbtMOUre+N3bz7Afa4CgJVsn7G
-	jT6ZyRFmm3rr+2a4ng0bKyCkuaiAY+jZ5jBw17Zj9ea5t707KVgnfiGd0+uPXDLD
-	epMq/e02mM5TO1lVOBVfeIYJBc/kBxzr21NlpHD/rNxlkdb0kkWwfp+AvYXpBpQA
-	zGzem4ElqMh0TGAYZarsx7dtbah5qhCTMapnkynpcpADZRTmYFWf6i/LbT3pqxsb
-	DvlfuFlKBWmLt93xqZQM0ROPfV6/LZxlxwa2ElSurfsQh3sXxtr6atR1oFCrkHtJ
-	0DfhCo7ZpMoBHX/aGkAmAqErAIjbHhVAqHt0oozxcN7WM28yrJZ6ygEBxKAg==
+	:subject:to:to; s=fm2; t=1778548905; x=1778635305; bh=GPsiw4waKr
+	QnHu8e2VVLusb92v9M3GjBRDQH1Eujko8=; b=LeMd9JxQjXtcJeT3/ottHSHlGx
+	6uGuahXHhOnkZ1Nm4uE9wgYUhAvgP4qmpaLaAHCoGcEGl13wl2+DYdl3sCQGf5UL
+	IMW4eodJX82eFr4qhmvaSktlKCI6k2UOUnvmOXuo4fWKLq16+rogqFlMS1SBayNZ
+	OAJhHFf69cJRChxw1G7m01vcgxpPP6nCDdSS1cTYT5xmuQ0vVUifBSk7c86uDRvf
+	0bj0kLMOh+ZNogJgSoNhcQCX51galgB67IzPm3iu/hfmfJFkJe5Wb2A9iyThHQxJ
+	G3GW0BOv1bnqi9BCxkQQhPj/jT+VEUR3upIS5YTR3Q5bU69w4rZFDPzxarFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778548764; x=1778635164; bh=LuTeOZMj1l+64fKY43PUL8NBh11/MxJqhgL
-	qs4DChBs=; b=hfT3/hmp1Tatm1y35A9ucysEQYxPEnHZdi+UzoEDaqS/R8G+N6n
-	ydLLA1aa0xOD9f9KhiGWMSn+ov8ZJtRAxSEiEr4kmFz3489pEXTHVxsVh1CS91bG
-	nSAvd2SGcoMhKVx8lliuKUbzqFUm9yPx1WEE5V6/ILYO8nf6ot1XdCw2EFddOSws
-	wDD9dcpKdsQN52vyINbYIIrBfQR6l4rO0WMrSB7h39S/OAxAjanMtvTRNRxNlnzn
-	Kq2sbSrB/R7eHcJA7Wd1Sfn8sIZL5t2xnfDov928uJxnFPJ5/HpTQpT/L9HphkYw
-	KoHX75872dUJkPjoJC7OUZUoACck1U0PRWA==
-X-ME-Sender: <xms:HIACajOnLEUICOAraTBogtX_iYMtWyN9BWs-bNqCyN82bntfjGnjxQ>
-    <xme:HIACatD9p33BNjJRSwfMRm3l8rnDWstS8p1EYFphimIYQEQcHDTBIGfJFAwo0an3Z
-    FVlD5OWSzTeoEAApxH3hqU1qMvRqhdDhN0sscIwKoW7jMtJWPAf>
-X-ME-Received: <xmr:HIACaoev3F0njEkMTJpgRDO1leESXndoMn4qUbtTUH3CKwQsG-tWGVEJ617dBn_lA6AR_BC_p8PafoL6-nuUAv-8zPaaF4pboA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtgeejucetufdoteggodetrf
+	1778548905; x=1778635305; bh=GPsiw4waKrQnHu8e2VVLusb92v9M3GjBRDQ
+	H1Eujko8=; b=Va2BOmDZ/9mEKx7TzAG2KNiKDcrT/CmljWmR0k/SaegTycSDCF5
+	jTuXMFwzv+MeKV/VGMmzPBLeCwFf3iMRefG5Ach3a7EkqmAt+V1gYEAOAeBEBwjr
+	HB4/9RVW4wGUZAvZn8YRZCjqnXAazdRMZkOuXF9szbkGA61jAcLHt0cgMkzK+DCb
+	MGESgONf1w0HxrqcBC7WvK1XKmFsU7ZZ7Gy2pcc0JdwuGOXEFS79dDHmMnwFIGtB
+	hVXgXocCAJgkR5OQuZT/V2EFUIjxIP+bVsvXEFDsbQzsJDraEEDfrpHV2SRvBPu6
+	D9iA9ABeyogeGdaSmx/yFN3Q2OISJr4s2WA==
+X-ME-Sender: <xms:qIACaj1Y7Ub0Zgphse9DwnWA04zFhXvVZKvBjECwuEUn8nvjnb7_OQ>
+    <xme:qIACahJb-jyu1inxEPi1a0Z9WZlZE6L3ygtspoJvCX8M_RQVE6VER_F5pv4nQOPYg
+    1kBG9yH6xFrXnpODn7-WEAELUQ0gFZuqABdqXDutVc1iuuWm2tPZw>
+X-ME-Received: <xmr:qIACaqGwjwiQdEiGDQhRhT3ZQS7BaYkhnxJs0sjJQdlZkDgKJDxl9mgK8PtBEEKXh2uWn9IlQZp-ePRaZFtXKYC6UetY2TD1Sg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtgeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
@@ -56,33 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtgeejucetufdote
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggtthhiohhnmhihshhtihhq
-    uhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhikhgrtghhuhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvseht
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopegrtghtihhonhhmhihsthhiqhhuvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehmihhkrggthhhusehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
     thgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
     dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HIACakMkB5RTwYN3_LiYmvJythNi_2F08Qxli23aCEZ3_yxrlBm_6A>
-    <xmx:HIACagIxoSEn0ANDYx08_dqCXUGkl9Nb_cSCgB4ZFA4HLjdpg8QY5A>
-    <xmx:HIACasKnOe7aZDdMjm9Mh7oN7e0yQ0NJ2Thnq9dcKvJb63qDHndvMg>
-    <xmx:HIACai4K4KBChilDYWaNrAXgiInd82YZ3BsCYyz7sFuDMnLY36QWoQ>
-    <xmx:HIACamxm7VIj8aS7wdgAJ7VMA4-_ll2KdyP7H5QCZsXLwj8GPW5EVD2d>
+X-ME-Proxy: <xmx:qIACalX4M6WRluFmo_5n3WZpkR-XCqDjcbqMRy8apSjmP4xfjO9c_w>
+    <xmx:qIACaqyo19SmUCXS6MxhJurI_V2JE5q4r-9TVkoK608NWxFQkhhd9Q>
+    <xmx:qIACaiRXpegUP_VpsTt5VU4D4I-kjGUaj43Pzt_JOhhDDzLlnkf1fA>
+    <xmx:qIACaujCo6qO9gGs_3w2zmDsFrN06HO8sai6nmUqjq_ig2VEPtmFOQ>
+    <xmx:qYACaiazq4szN7DxN60V-PlJom6dIIZxvVoqgjqcXcNlN5Ea_vTNNU6r>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 21:19:24 -0400 (EDT)
+ 11 May 2026 21:21:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jean-Christophe Manciot
- <actionmystique@gmail.com>,  Mikael Magnusson <mikachu@gmail.com>,  Jeff
- King <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 1/2] builtin/maintenance: fix locking with "--detach"
-In-Reply-To: <20260511-pks-maintenance-fix-lock-with-detach-v1-1-ccd7d62c9a40@pks.im>
-	(Patrick Steinhardt's message of "Mon, 11 May 2026 14:29:55 +0200")
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jean-Christophe
+ Manciot <actionmystique@gmail.com>,  Mikael Magnusson <mikachu@gmail.com>,
+  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/2] run-command: honor "gc.auto" for auto-maintenance
+In-Reply-To: <20260511201800.GC22912@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 11 May 2026 16:18:00 -0400")
 References: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
-	<20260511-pks-maintenance-fix-lock-with-detach-v1-1-ccd7d62c9a40@pks.im>
-Date: Tue, 12 May 2026 10:19:22 +0900
-Message-ID: <xmqq4ikdqvad.fsf@gitster.g>
+	<20260511-pks-maintenance-fix-lock-with-detach-v1-2-ccd7d62c9a40@pks.im>
+	<20260511201800.GC22912@coredump.intra.peff.net>
+Date: Tue, 12 May 2026 10:21:43 +0900
+Message-ID: <xmqqzf25pgm0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,100 +92,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 3a71e314c9..09cb92ac97 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1810,10 +1810,32 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
->  				   TASK_PHASE_FOREGROUND))
->  			result = 1;
->  
-> -	/* Failure to daemonize is ok, we'll continue in foreground. */
->  	if (opts->detach > 0) {
-> +		pid_t child_pid;
-> +
->  		trace2_region_enter("maintenance", "detach", the_repository);
-> -		daemonize();
-> +
-> +		child_pid = daemonize_without_exit();
-> +		if (!child_pid) {
-> +			/*
-> +			 * We're in the child process, so we take ownership of
-> +			 * the lockfile.
-> +			 */
-> +			lock_file_reassign_owner(&lk, getpid());
-> +		} else if (child_pid > 0) {
-> +			/*
-> +			 * We're in the parent process, so we assign ownership
-> +			 * of the lockfile to the child and then exit immediately.
-> +			 */
-> +			lock_file_reassign_owner(&lk, child_pid);
-> +			exit(0);
+> On Mon, May 11, 2026 at 02:29:56PM +0200, Patrick Steinhardt wrote:
+>
+>> @@ -1946,8 +1946,10 @@ int prepare_auto_maintenance(struct repository *r, int quiet,
+>>  {
+>>  	int enabled, auto_detach;
+>>  
+>> -	if (!repo_config_get_bool(r, "maintenance.auto", &enabled) &&
+>> -	    !enabled)
+>> +	if (repo_config_get_bool(r, "maintenance.auto", &enabled) &&
+>> +	    repo_config_get_bool(r, "gc.auto", &enabled))
+>> +		enabled = 1;
+>> +	if (!enabled)
+>>  		return 0;
+>
+> gc.auto isn't a bool; it's the count of loose objects after which to run
+> maintenance. So "0" works in both contexts, but will we complain if
+> gc.auto is set to 100? I think maybe not, because we fall back to
+> git_parse_int(), but it feels kind of fragile.
+>
+> The gc code uses repo_config_get_int() here.
+>
+> -Peff
 
-The point of reassigning the owner to somebody else is so that we
-won't clean them when we exit as the tempfile.c::remove_tempfile()
-function checks the "owner" is "me" and refrains from unlinking
-those that do not belong to us, so there is nothing wrong in this
-code, but this somehow felt awkward.  In a sense, child_pid here
-does not have to be what fork() returned but anything that is not
-our own pid.  Perhaps "we assign ... to the child" -> "we relinquish
-... to prevent us removing upon exiting" would convey the intention
-better?  I dunno.
-
-> -int daemonize(void)
-> +pid_t daemonize_without_exit(void)
->  {
->  #ifdef NO_POSIX_GOODIES
->  	errno = ENOSYS;
->  	return -1;
->  #else
-> -	switch (fork()) {
-> -		case 0:
-> -			break;
-> -		case -1:
-> -			die_errno(_("fork failed"));
-> -		default:
-> -			exit(0);
-> -	}
-> +	pid_t pid = fork();
-> +	if (pid < 0)
-> +		return -1;
-> +	if (pid > 0)
-> +		return pid;
-> +
->  	if (setsid() == -1)
->  		die_errno(_("setsid failed"));
->  	close(0);
-> @@ -2180,6 +2178,21 @@ int daemonize(void)
->  #endif
->  }
->  
-> +int daemonize(void)
-> +{
-> +#ifdef NO_POSIX_GOODIES
-> +	errno = ENOSYS;
-> +	return -1;
-> +#else
-> +	pid_t pid = daemonize_without_exit();
-> +	if (pid < 0)
-> +		die_errno(_("fork failed"));
-> +	if (pid > 0)
-> +		exit(0);
-> +	return 0;
-> +#endif
-> +}
-
-I was hoping that we can do without the #ifdef in this caller as
-daemonize_without_exit() already has exactly the same condtional
-compilation.  If the NO_POSIX_GOODIES side can just return silently
-wit ENOSYS, shouldn't the callers be also fine if we return failure
-instead of calling die_errno(_("fork failed")), I have to wonder.
-
-But because (1) as long as we have to call die_errno() here, we must
-keep the conditional compilation in daemonize() as well as
-daemonize_without_exit(), and (2) changing what the callers get when
-fork failed here is totally outside of this topic, I would say that
-the code around here is good as-is.
-
+Very good point.  I was about to send the same message ;-)
