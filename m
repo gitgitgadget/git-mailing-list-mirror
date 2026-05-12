@@ -1,120 +1,122 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC6C26ED25
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:21:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1B920B80B
+	for <git@vger.kernel.org>; Tue, 12 May 2026 01:23:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778548908; cv=none; b=HLsi9i05WcT+uCB8z9HnYa9Gq8/1ObWNrfZjV76WbcU7LDled2p7W7I1GJQAmtwoKMUugL2ElBqBTBju/y1H9ePJMJE++cecHe5vGUNsqzbqNJ4HlxTIfw8o4lO6pkT3vJUcXGmUM2CeHVCaBFzsT39uUW/3MYDveKNzzhDLxc0=
+	t=1778549031; cv=none; b=ZPXJ6COqqFf0f8RR1hAZNRY4cVBq86Bg0iZsXFKezQbaZ9hWkIJRCXle/qsMtDIJiVLSSh72G18UpokFEMQ+sCT/a80orOud5HXas2uZhrFg1DWXTY5lZA23Rt9bmavY3dUZmubfEaLd6Q8dBI+9LQILxbdaBH1JWTRVnM4c1v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778548908; c=relaxed/simple;
-	bh=w+E7NT671xOG9jui49NNDYdR9ePiijIaLBlPSZDWpLY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IyVUvp9OibvgRIGxV1zx6h2Grg9/M1DYta4VXCafRAv0q69017mhEolVRwQpzCkFAE4SXRtJ3Pjzfq+liGiCFZr2+K45wlkM8iShV3kHGyAnPGm0Ppp/Aqnv2cV4loinOaqRv+zHYOZWBHRCAahMGa67wN2TIBmHlKX95Y5excU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LeMd9JxQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Va2BOmDZ; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778549031; c=relaxed/simple;
+	bh=9twfXTRt/djK1lk2wXmsay6B06fJe0XfUmzrG7IPI/0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pb0cwiI/oPeDXTYMYsJ6e4esO0pr4RUDCm7+p1Xvw5LBxQeA0iKqE8MajBge5pgpXArjzX5JB9ubIv2t1T6mmUHng4GO6AeA82YM7gzceGGYCjnXq9Go1xDoKKvLUflIVSwbzRySIZkUUfJztOl/qJm2ksFdEItDhME//YczV0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=I6DVFfZ8; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LeMd9JxQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Va2BOmDZ"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3F0281D00106;
-	Mon, 11 May 2026 21:21:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 11 May 2026 21:21:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778548905; x=1778635305; bh=GPsiw4waKr
-	QnHu8e2VVLusb92v9M3GjBRDQH1Eujko8=; b=LeMd9JxQjXtcJeT3/ottHSHlGx
-	6uGuahXHhOnkZ1Nm4uE9wgYUhAvgP4qmpaLaAHCoGcEGl13wl2+DYdl3sCQGf5UL
-	IMW4eodJX82eFr4qhmvaSktlKCI6k2UOUnvmOXuo4fWKLq16+rogqFlMS1SBayNZ
-	OAJhHFf69cJRChxw1G7m01vcgxpPP6nCDdSS1cTYT5xmuQ0vVUifBSk7c86uDRvf
-	0bj0kLMOh+ZNogJgSoNhcQCX51galgB67IzPm3iu/hfmfJFkJe5Wb2A9iyThHQxJ
-	G3GW0BOv1bnqi9BCxkQQhPj/jT+VEUR3upIS5YTR3Q5bU69w4rZFDPzxarFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778548905; x=1778635305; bh=GPsiw4waKrQnHu8e2VVLusb92v9M3GjBRDQ
-	H1Eujko8=; b=Va2BOmDZ/9mEKx7TzAG2KNiKDcrT/CmljWmR0k/SaegTycSDCF5
-	jTuXMFwzv+MeKV/VGMmzPBLeCwFf3iMRefG5Ach3a7EkqmAt+V1gYEAOAeBEBwjr
-	HB4/9RVW4wGUZAvZn8YRZCjqnXAazdRMZkOuXF9szbkGA61jAcLHt0cgMkzK+DCb
-	MGESgONf1w0HxrqcBC7WvK1XKmFsU7ZZ7Gy2pcc0JdwuGOXEFS79dDHmMnwFIGtB
-	hVXgXocCAJgkR5OQuZT/V2EFUIjxIP+bVsvXEFDsbQzsJDraEEDfrpHV2SRvBPu6
-	D9iA9ABeyogeGdaSmx/yFN3Q2OISJr4s2WA==
-X-ME-Sender: <xms:qIACaj1Y7Ub0Zgphse9DwnWA04zFhXvVZKvBjECwuEUn8nvjnb7_OQ>
-    <xme:qIACahJb-jyu1inxEPi1a0Z9WZlZE6L3ygtspoJvCX8M_RQVE6VER_F5pv4nQOPYg
-    1kBG9yH6xFrXnpODn7-WEAELUQ0gFZuqABdqXDutVc1iuuWm2tPZw>
-X-ME-Received: <xmr:qIACaqGwjwiQdEiGDQhRhT3ZQS7BaYkhnxJs0sjJQdlZkDgKJDxl9mgK8PtBEEKXh2uWn9IlQZp-ePRaZFtXKYC6UetY2TD1Sg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopegrtghtihhonhhmhihsthhiqhhuvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehmihhkrggthhhusehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qIACalX4M6WRluFmo_5n3WZpkR-XCqDjcbqMRy8apSjmP4xfjO9c_w>
-    <xmx:qIACaqyo19SmUCXS6MxhJurI_V2JE5q4r-9TVkoK608NWxFQkhhd9Q>
-    <xmx:qIACaiRXpegUP_VpsTt5VU4D4I-kjGUaj43Pzt_JOhhDDzLlnkf1fA>
-    <xmx:qIACaujCo6qO9gGs_3w2zmDsFrN06HO8sai6nmUqjq_ig2VEPtmFOQ>
-    <xmx:qYACaiazq4szN7DxN60V-PlJom6dIIZxvVoqgjqcXcNlN5Ea_vTNNU6r>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 21:21:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jean-Christophe
- Manciot <actionmystique@gmail.com>,  Mikael Magnusson <mikachu@gmail.com>,
-  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/2] run-command: honor "gc.auto" for auto-maintenance
-In-Reply-To: <20260511201800.GC22912@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 11 May 2026 16:18:00 -0400")
-References: <20260511-pks-maintenance-fix-lock-with-detach-v1-0-ccd7d62c9a40@pks.im>
-	<20260511-pks-maintenance-fix-lock-with-detach-v1-2-ccd7d62c9a40@pks.im>
-	<20260511201800.GC22912@coredump.intra.peff.net>
-Date: Tue, 12 May 2026 10:21:43 +0900
-Message-ID: <xmqqzf25pgm0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="I6DVFfZ8"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7bdec52f48dso68749337b3.0
+        for <git@vger.kernel.org>; Mon, 11 May 2026 18:23:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1778549029; x=1779153829; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pw0M1MclfQeeG/yPnPJYBLO3v8hWnF+eT8clEFUaf7k=;
+        b=I6DVFfZ8jXvPRpKgR5xUDBBfcjQ5pZQzGkJTedtMaHPCjJXspf0a8DBFsWYXQymhVU
+         xyhSijZqEVniDc/p7Pxrnyr86T/1r6XQxxSfgqxE0mjNze0zwMXug8YfQU+pijewu2sh
+         ZN6F6ucBjOYQnLGqmnUztPXAR0JEcAGcA4AMgC5H2Oh87yTt5kiYeVVE0PhtXwo58rc0
+         Qxddc/7hQ+3SW3iHwHNNniKkgEuenjwPikCbXcdThD4FkidvEcTt8a592dryU5yLiMmt
+         iywC+fRqPVpw9gmKlfVdmigTNcy2S2DJjSS8pvUDVsTOY8PRr2npiNVUEuJ7zezQ8atN
+         K3CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778549029; x=1779153829;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pw0M1MclfQeeG/yPnPJYBLO3v8hWnF+eT8clEFUaf7k=;
+        b=imzmav8r7Ggczk7j4IfjjWwu9fV16sPyLzg5bF/N8W1MLWHuPOjofd3xuTg2YlW7UL
+         EH686CBpIuSBO1GkVZJKa8zOEBQIy65N/qbYZgGCxl1z8jyV1GH6kxvmVBnpca2zlQdP
+         DlRqsylYQCBjqzElFzT/0seGpyDEUr9haKFL3JQMEvIdsKjaI2GFeyHuCJdYCUbKKZRQ
+         ShxkZRCl0dr0cILPeKOpqLM696SMksFT9+Sub/yS5+mZ0XK+YuKPoO/GA8B8s03CpEsN
+         a+F/2bd4PGBsKLQppv66I4HyHChP0PS3aaWg+P84FVfWixo8QMf18HC0j+AKV3N+G23V
+         NYBA==
+X-Gm-Message-State: AOJu0Yz82ksDZc1aSV/JfusvNXTMGSSotrQw2hfGvvi9zxL0XZOKwa+5
+	6ydMsZ48kYOz17wKNgsxDsn/pjFVAenfPCAAPDByd9MoTZxe+10vMSj57yQoaCVg/9E=
+X-Gm-Gg: Acq92OHrOkeBHtjU4RxlddTyaH2Ag/5VoHJYBq/v5nJ7Wbxu+ip63N2Dp76WwLNvY5E
+	3fWMH3yMry3bXmRBnTPUk6N8Wibaub5G0xqzksyM9Nv7h1Kw0Nf9sFCWTdWKmqj52EgNqTuHP/p
+	dqEb9lnoEzBMXNanAioGSeBKgDQJ4GE6+9dokobVNoc0E38AAXMvIwp62kgzgzTZ3F1Yq3mFuBS
+	qTgDjgipU5p1IKGLwKeSSat6TCaIen2UdW4Kj38nSZv821tcnKZ4AKT+GCpGu2R/xFlUGWxucqg
+	S+dgUJFDt+nrx1pKnQSYzft/EeE4Nr4H6G5Pi6hSONDur8hDRhmEdYbAJm6FZJ9hH3mZ4tu3s/Y
+	BJk+oak/oSdAA86Nejaf1X7kE9coAyB4NuKrpCvn2zMv69An4E+n1EAo4ddBNX+CHEqeeQ70X1u
+	iXD77W2Tmzwq034Gcl6LMfnOzkOJPZbWOZlZL7WdzhCUCUA49tT/Tm3DQniziqH+Tf4VuOjN8st
+	YrBGVGp+URieUtSZ7AmZ0mJdpqcn+WbMp9mlKKUDGGcdjgXTqdxeOl0TrqDppHNxsd0o51NCqqQ
+	s078wkkFKXEmOafZ
+X-Received: by 2002:a05:690c:3:b0:7b6:783f:2122 with SMTP id 00721157ae682-7c50e70daa6mr18241227b3.9.1778549029669;
+        Mon, 11 May 2026 18:23:49 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66558f35sm156577927b3.15.2026.05.11.18.23.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2026 18:23:49 -0700 (PDT)
+Date: Mon, 11 May 2026 21:23:48 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
+	newren@gmail.com, peff@peff.net, ps@pks.im,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 04/12] path-walk: always emit directly-requested
+ objects
+Message-ID: <agKBJJvBP/PndPMP@nand.local>
+References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
+ <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+ <50933cccf508f71f47d955d5aceacad0db612fc5.1778523189.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <50933cccf508f71f47d955d5aceacad0db612fc5.1778523189.git.gitgitgadget@gmail.com>
 
-Jeff King <peff@peff.net> writes:
+On Mon, May 11, 2026 at 06:13:01PM +0000, Derrick Stolee via GitGitGadget wrote:
+> We can tell that a path is part of the directly-referenced objects if its
+> path name starts with '/' (other paths, including root trees never have this
+> starting character). Create a path_is_for_direct_objects() to make this
+> meaning clear, especially as we add more references in the future as we
+> integrate the path-walk API with partial clone filter options.
 
-> On Mon, May 11, 2026 at 02:29:56PM +0200, Patrick Steinhardt wrote:
->
->> @@ -1946,8 +1946,10 @@ int prepare_auto_maintenance(struct repository *r, int quiet,
->>  {
->>  	int enabled, auto_detach;
->>  
->> -	if (!repo_config_get_bool(r, "maintenance.auto", &enabled) &&
->> -	    !enabled)
->> +	if (repo_config_get_bool(r, "maintenance.auto", &enabled) &&
->> +	    repo_config_get_bool(r, "gc.auto", &enabled))
->> +		enabled = 1;
->> +	if (!enabled)
->>  		return 0;
->
-> gc.auto isn't a bool; it's the count of loose objects after which to run
-> maintenance. So "0" works in both contexts, but will we complain if
-> gc.auto is set to 100? I think maybe not, because we fall back to
-> git_parse_int(), but it feels kind of fragile.
->
-> The gc code uses repo_config_get_int() here.
->
-> -Peff
+I don't know that I have anything in the way of a better suggestion, but
+I can't help but feel like the `path_is_for_direct_objects()` check is
+somewhat brittle as-is.
 
-Very good point.  I was about to send the same message ;-)
+I am not familiar enough with the path-walk.c internals to come up with
+a good suggestion off the top of my head, but I figured I'd raise it
+here in case you had thoughts on alternatives.
+> diff --git a/path-walk.c b/path-walk.c
+> index 6e426af433..59a7670c5b 100644
+> --- a/path-walk.c
+> +++ b/path-walk.c
+> @@ -248,6 +248,16 @@ static int add_tree_entries(struct path_walk_context *ctx,
+>  	return 0;
+>  }
+>
+> +/*
+> + * Paths starting with '/' (e.g., "/tags", "/tagged-blobs") hold objects that
+> + * were directly requested by 'pending' objects rather than discovered during
+> + * tree traversal.
+> + */
+> +static int path_is_for_direct_objects(const char *path)
+> +{
+> +	return path[0] == '/';
+
+If we do end up keeping this approach, should we have a NULL check on
+path itself here? I think that could even be an ASSERT(), since
+something has gone wrong if we have a NULL at this point, but I'd rather
+die by an assertion rather than a segfault here if so.
+
+Thanks,
+Taylor
