@@ -1,84 +1,85 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BC83D0BEC
-	for <git@vger.kernel.org>; Tue, 12 May 2026 16:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CF53D5C32
+	for <git@vger.kernel.org>; Tue, 12 May 2026 16:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778603698; cv=none; b=r5EYY/+J5WJPWDYLWgqYOe7wqwEcuwWKiR6Mza7oz8F9PH4sqwCMSAvTUhZy1PSAVfETuRKtyPwA5uGhpPTRJSW/maicKQeWrwv1diNE3etMrpSKSWnIQ7nS/peSn0xk5mgUZ1B2jy4NCkk0G0c7oDRXzvfdCigBTWU3KX3E4pg=
+	t=1778604735; cv=none; b=Xo8BUYBY1Lelzs/RoA2Pee2shJ5jhd6U+i8PB2W286552LmJB8RFwk+uc0ReUsOFHSD73zPv42Ezs0zEmVq3C+0zZeMe+ouKStYXsFrPRsnri+VvjUqvNl0u6KDFn3aU/yFlUmz1V2cRK1bQ77KWESp+kyDjh6mhZWNo9r/QIfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778603698; c=relaxed/simple;
-	bh=igkw3bsIDT8XQPqfTwgB5iOjz+s6Yo8cAWizN3M78AI=;
+	s=arc-20240116; t=1778604735; c=relaxed/simple;
+	bh=P30cJfni6iR/tpU3xB019xxqXHwmkGelTckI4lNyzi0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EbdQzDHfi75rS21haeFe/brUcCUTLK40MZdIC4nHnPmYhP/46d5Anh50/MugGoRncvb6vBRIkDrGElDzLmEuO/JiHT1Wr3zXKjFc546QnsXyV1CPYDaG5mZtb37BbfsMEIIli/Rz1b+j32HO1mrLiX7kMVEwk2rgmYuRd074lyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j3VOb3zj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LyCkRn+K; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=fNgc+ulMJbH6c6mDoQpY7TJp7JaGuUHyLoLeRWaIcdJabDLWLQsu2KUhh7rQSBHNRyWHY/Nc5OCuDG6Og3xM7WaYiPBJ3UDI7zII06lUjmf7YBivRzfWw7RlNB2x4nNHX68G1wogrc9eb/9jMaoYdIf0aYqHhdcIblJgizNtlwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EkidZcR1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CqJJyRpc; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j3VOb3zj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LyCkRn+K"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id D2FD81D0006C;
-	Tue, 12 May 2026 12:34:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 12 May 2026 12:34:52 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EkidZcR1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CqJJyRpc"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 760FE1D00073;
+	Tue, 12 May 2026 12:52:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 12 May 2026 12:52:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778603691; x=1778690091; bh=GnEl85eDQs
-	Pi5hT7ksSu37WfiKhXtxSgzkME57fF46I=; b=j3VOb3zjFWcaE5KhLmxPmh1bDk
-	h7dKRIb6n78wYl1yOvgDbkq8VFpmi8fGdvtLFlbdq5Ckh/ue4ibNIjZfWMEXbutb
-	v0HE96KYa+T92ddgLP6BoV8oNEoO6G71Gtb4Z1zAN1CGayYASaI+4bpth4hNYqSG
-	N75Rr8xUREi7JlJVwrTuQT0fG3I4qHefNkK7SqvTdudqw3XZo6nO3G1d9x7t7kkh
-	NoeUB4Kv7cEuh1zvwhtQ4lvPnHuHDJ9m7veW1D3T/poDl23QR7YWOJvZigYS6Ylt
-	DRsBQOidpTyhEaSfhXTtUj1dsJbv3MF1OycoZNOQsmIo133LNJ0Ey8yb+7Og==
+	:subject:to:to; s=fm2; t=1778604733; x=1778691133; bh=6mr6ICxkqC
+	oBsvEhLyY0QoTOTAECh1xQ+L5OTbMJSX0=; b=EkidZcR1T1rSXKrRQfqhQK1tTh
+	7PpLqcIWPDTdp76GhPRPFJfGrVytE3YfA6GUhGX0HixFphSUGAtsejs4oQozzX0i
+	3JMpCBLliLcnDMb8swOY0iEOmflus00RBk6Q1ffZMCZjSDYZCwh/4O4UQ9iDbX12
+	7Eb84YHlWfQGqnOPjwVrnYP0BwIsHrB7BhCAwveWX7ou3dfcF5JIpjwzmurzlV+H
+	IzVoRE3Ef0hXSu5RnesnGzFfFYv56jyEq9mQBG3ZGQ0Uv6Jh+DQqfd6JPLNgNZaY
+	DDRgCjqIFr4L96SMe/E7eDGgo08ASjAf8NlE1ZUPz1swSNBrRYdpl/iXL9OA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778603691; x=1778690091; bh=GnEl85eDQsPi5hT7ksSu37WfiKhXtxSgzkM
-	E57fF46I=; b=LyCkRn+K/7IR3XfK2AFRELtJr7JMQJ9WY3YUOtf+89FzMDv8NYK
-	GtpvFTDNWYZCdZueOrGyfdJ5llATGcT0+IVnc8LUBgRP+9tpezgFo9gZ0RZN+dsC
-	ttMZ3yWBhvGMYYsjO/LxeTwPePgxv1C0wxBIgkVs5EjqAzBtryOdQNsKjAvYqyEH
-	lB+GKuaEmqY6ItLcRoloowpLXUWvApd0gbXYqpze4me2hHFP3savYFaYhHiktd2j
-	oTaUYWeAUZrUSSzydgVMtz7CPQWnlGDAX+Q6g9BjcQbDprLXLngw35MZZJH8UimB
-	NVuwD0aKDFN6hk/xyxYIqPQaaQSuO7uFmeg==
-X-ME-Sender: <xms:q1YDaq6v0zlqk4G8B4dtnCM3jSY39pzF6b-eAWZQ9kTELNKyzkjwBQ>
-    <xme:q1YDaq7hjgrAbbOp-ZcOgYtoX3qWKHeaW_i9abBipxhztGS9TiPNxmHKX2ltUwVTt
-    R-Bg3w8CF9bLMyA_0mczQMClB841-aKIzB2NZahSPOe9l3cTDAa2A>
-X-ME-Received: <xmr:q1YDaud46jtmrRGl4u5esVCCWij5LBOzPkQmyj5dgsSnmXfp7BzE8HTfZ3EkejI4PZSQzXihpObLK9snX6MRfsdAwSOPCwMtFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddvvdelucetufdoteggodetrf
+	1778604733; x=1778691133; bh=6mr6ICxkqCoBsvEhLyY0QoTOTAECh1xQ+L5
+	OTbMJSX0=; b=CqJJyRpcwFyuTgpRmmU2k1ahfV5Ajb2C5/OpQ+7lYRhuvZzQXNK
+	c5tqNdgryAQOxeMxgnuyBecPEfKRahg3AkPZCZGFrhNDFnQVvnwo/mHILwKw9s9K
+	d1PhFVCvJzzXhsQzopXOYIH/NRsjYceaTINfSA3nScxlO3gW6jPCkPY0kSAPaadg
+	fX7EV1Ma/bw3bnOZTg/O7eO/+oPRfD0PvzjIn2d+VtnVxZCfz899xn6AxPf5hmTH
+	86cDwInDCDZTFQ4oJPgcRsf3IZwh63JrgoNNAT5bTmOhE2nUAcT29Am/SyB2+wKJ
+	oKvXiGyvJK46wzgcBGRPQyURN9/ku8W2xzw==
+X-ME-Sender: <xms:vVoDalDQN1J01L4D_8CKVDBJrOTaGvR9KMZJqhoVpuqynxV4ga03bg>
+    <xme:vVoDaqhS2vNYZYL93ZXaXzn8HkLH5TGovXhflD7jaVTnxQpb7H_Pip23LdwCwMJm4
+    0_h59B_7qUVZcOw1ZIf9cPfhGcEGCcvl0xE4PSw7ivqMtPr8baYFss>
+X-ME-Received: <xmr:vVoDalkvAktT8KvkOnV9Q8g1Lq7n34jXt0H1qdde4VZ7dt838WTSnf68TNdI5LgHdoEmD5Z7O7pcqE32sFo69ibgsH87OeGP9w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddvfeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthgrrghhohhlsehuthhurdhfihdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:q1YDamASicsGS2z1LnOkNIFHPgZSIHPyXXgLEi4aH5Z6reqpjn2exw>
-    <xmx:q1YDap9IoK1lcPEmCr2FkW89ZSn97HNjUW_ufQ_nE7exJTEANYIv6Q>
-    <xmx:q1YDapITqBGAugp3fF4CtcIBfiUjW1-seMU9mrHP7ZKxecA8IXHwDA>
-    <xmx:q1YDaqiUqLSyHLpHSAAgE3MQirENnC8T-ULIK4B1EllY_qjqMLaiww>
-    <xmx:q1YDan-fG3d72HUypSGPM0JGnoFPxlcG-a5RS3UGyAjTibvwb6Wl6RQ_>
+    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
+    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtrg
+    grhhholhesuhhtuhdrfhhipdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:vVoDauospJNFXOPTMuQxTqbRP3pxbhxXm-j8QIaXB-ITJ6mTIMRqFQ>
+    <xmx:vVoDamGROl6UEjYWxOvcx15IB6w2N2rrx0Slta96696ZEK6jFDZ_zg>
+    <xmx:vVoDaixajy-8lIR7FYMin93xYWVJ28F1wzM-UdOzHJZkcGGIuC1DYg>
+    <xmx:vVoDajoAiNstEioCP69lLIpuWeJhAcXPvcpzS-zeYdJ3DZsJS-LBIQ>
+    <xmx:vVoDaqFleLDpDo5XVVpH9PeDFM70MSROwNAgTmYOQZM1VPow4BYOjgYN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 12:34:51 -0400 (EDT)
+ 12 May 2026 12:52:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Tuomas Ahola <taahol@utu.fi>
 Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/3] t0006: add support for approxidate test date
- adjustment
-In-Reply-To: <20260512145430.13212-2-taahol@utu.fi> (Tuomas Ahola's message of
-	"Tue, 12 May 2026 17:54:28 +0300")
+Subject: Re: [PATCH v2 2/3] approxidate: make "specials" respect fixed
+ day-of-month
+In-Reply-To: <20260512145430.13212-3-taahol@utu.fi> (Tuomas Ahola's message of
+	"Tue, 12 May 2026 17:54:29 +0300")
 References: <20250318180201.3653-1-taahol@utu.fi>
 	<20260512145430.13212-1-taahol@utu.fi>
-	<20260512145430.13212-2-taahol@utu.fi>
-Date: Wed, 13 May 2026 01:34:50 +0900
-Message-ID: <xmqqfr3wlh79.fsf@gitster.g>
+	<20260512145430.13212-3-taahol@utu.fi>
+Date: Wed, 13 May 2026 01:52:11 +0900
+Message-ID: <xmqq33zwlgec.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,57 +91,114 @@ Content-Type: text/plain
 
 Tuomas Ahola <taahol@utu.fi> writes:
 
->  check_approxidate() {
-> +	old_date=$GIT_TEST_DATE_NOW
-> +	GIT_TEST_DATE_NOW=$(($old_date${4:-+0}*60*60)); export GIT_TEST_DATE_NOW
-> +	caption=$1
-> +	if [ ! -z $4 ]; then
-> +		caption="$caption; offset $4h"
-> +	fi
+> The special approxidate time formats, "noon" and "tea", wrap
+> to the previous day if the current time is before 12 or 5 pm,
+> respectively.  That holds even when an actual date is supplied;
+> therefore, "10 May at tea" and "last Friday at noon" can cause
+> the date to be set to a seemingly wrong day:
+>
+> 	now -> 2026-05-12 11:00:00 +0000
+> 	10 May at tea -> 2026-05-09 17:00:00 +0000
+> 	last Friday at noon -> 2026-05-07 12:00:00 +0000
 
-As you are not doing the test-date-now adjustment when $4 is not
-given, wouldn't it be a lot easier to read if you did something like
+It would help readers to say that Friday of that week was May 8th to
+make it easier for them to see why this is a wrong answer.
 
-	old_date=$GIT_TEST_DATE_NOW
-	if test -n "$4"
-	then
-		# the convention for $4 is a bit weird in that it 
-		# comes with its own +/- operator in front.
-		GIT_TEST_DATE_NOW=$(( $old_date $4 * 60 * 60 ))
-		caption="$1; offset $4h"
-	else
-        	caption=$1
-	fi
+> 	One year ago yesterday at tea-time -> 2025-05-10 17:00:00 +0000
+>
+> The last example is from Linus Torvalds who remarked in 2006
+> that the answer was "just silly and not even correct." [1]
 
-instead?  Other two minor points are
+It may be just me, but it was hard for me to guess if you are
+justifying how these answers are correct, or you are presenting
+examples of wrong output.  Perhaps starting the paragraph with cases
+where the "wrap to the previous" gets right to set the stage may
+make it easier to understand?  Let's see...
 
- - Documentation/SubmittingPatches prefers an explicit "test" over
-   "[ ... ]", and have "then", "else", etc. on their own lines.
+    The ... 'noon' and 'tea', wrap to the ... before 12 or 5 pm,
+    respectively.  So for example if it is 11am on 2026-05-12, then
 
- - As you never "unset" GIT_TEST_DATE_NOW, you do not have to keep
-   exporting it.  It is not like there are two variables (one for
-   shell, the other for environment) and every time you set the
-   shell one you need to export to reflect the value to the
-   environment one.  Rather, a single "export" marks a shell
-   variable and every time it changes value, it is updated in the
-   environment as well.
+	now  -> 2026-05-12 11:00:00 +0000
+	noon -> 2026-05-11 11:00:00 +0000
+	tea  -> 2026-05-11 17:00:00 +0000
 
->  	echo "$1 -> $2 +0000" >expect
-> -	test_expect_${3:-success} "parse approxidate ($1)" "
-> +	test_expect_${3:-success} "parse approxidate ($caption)" "
->  	test-tool date approxidate '$1' >actual &&
->  	test_cmp expect actual
->  	"
-> +	GIT_TEST_DATE_NOW=$old_date; export GIT_TEST_DATE_NOW
->  }
+    which would work well when you ask for "git log --since=tea",
+    for example.
+
+    That hold even when ... seemingly wrong day:
+
+> As "last Friday at noon" is mentioned in the documentation
+> (date-formats.adoc) it would be nice if it worked correctly.
+> Let's fix the glitch with a simple patch.
+>
+> Check whether we already have a specified (non-negative) mday
+> and make date_time() stick to it.  Add a suitable time offset
+> to the relevant test.
+>
+> While we are at it, add "today" as an alias of "now", so that
+> "today at noon" will do the right thing, too, and assert that
+> with a new test.
+>
+> Links:
+>   1. https://lore.kernel.org/git/Pine.LNX.4.64.0610101102560.3952@g5.osdl.org/
+>
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> ---
+>  date.c          | 8 +++++++-
+>  t/t0006-date.sh | 4 ++++
+>  2 files changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/date.c b/date.c
+> index 17a95077cf..e48cc2a4d7 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -1132,7 +1132,12 @@ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
 >  
->  check_approxidate now '2009-08-30 19:20:00'
-> @@ -182,6 +189,8 @@ check_approxidate 'noon today' '2009-08-30 12:00:00'
+>  static void date_time(struct tm *tm, struct tm *now, int hour)
+>  {
+> -	if (tm->tm_hour < hour)
+> +	/*
+> +	 * By default, "tea" and "noon" refer to last such time in the
+> +	 * past, be it today or yesterday.  With a specified mday,
+> +	 * that logic is overridden.
+> +	 */
+
+Again, this may be just me, but I happen to find the version of
+comment in Peff's review on the earlier iteration of this series
+much easier to understand.
+
+> +	if (tm->tm_mday < 0 && tm->tm_hour < hour)
+>  		update_tm(tm, now, 24*60*60);
+>  	tm->tm_hour = hour;
+>  	tm->tm_min = 0;
+> @@ -1204,6 +1209,7 @@ static const struct special {
+>  	{ "AM", date_am },
+>  	{ "never", date_never },
+>  	{ "now", date_now },
+> +	{ "today", date_now },
+
+Hmph, this may not work very well for "git log --since=today", which
+you may want to stop immediately when the traversal reaches a patch
+written before the most recent midnight, instead of stopping without
+giving anything back.
+
+>  	{ NULL }
+>  };
+>  
+> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+> index 5d66267672..e01d093514 100755
+> --- a/t/t0006-date.sh
+> +++ b/t/t0006-date.sh
+> @@ -186,8 +186,12 @@ check_approxidate '6pm yesterday' '2009-08-29 18:00:00'
+>  check_approxidate '3:00' '2009-08-30 03:00:00'
+>  check_approxidate '15:00' '2009-08-30 15:00:00'
+>  check_approxidate 'noon today' '2009-08-30 12:00:00'
+> +check_approxidate 'today at noon' '2009-08-30 12:00:00' success -12
 >  check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
+> +check_approxidate 'last Friday at noon' '2009-08-28 12:00:00'
+> +check_approxidate 'last Friday at noon' '2009-08-28 12:00:00' success -12
 >  check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
+> +check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00' success -12
 >  check_approxidate '10am noon' '2009-08-29 12:00:00'
-> +check_approxidate 'January 5th yesterday' '2009-01-29 19:20:00'
-> +check_approxidate 'January 5th yesterday' '2008-12-31 19:20:00' success +48
->  
->  check_approxidate 'last tuesday' '2009-08-25 19:20:00'
->  check_approxidate 'July 5th' '2009-07-05 19:20:00'
+>  check_approxidate 'January 5th yesterday' '2009-01-29 19:20:00'
+>  check_approxidate 'January 5th yesterday' '2008-12-31 19:20:00' success +48
