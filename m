@@ -1,120 +1,211 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA5636921B
-	for <git@vger.kernel.org>; Tue, 12 May 2026 15:06:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D571ACEDE
+	for <git@vger.kernel.org>; Tue, 12 May 2026 15:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778598380; cv=none; b=d7ayG9zkg3bd8iAsqzCFfgZiGVVV7HXcmuZ4Oy4JtyoSPAXNgxyvXSch9r3j4FABXVQwIE0QiLCRazbakjDHKAg4qDEsTQaJziSfZQhlY7Co6Dt+jsBvUh8BBHruebxxkRHEZYdmR528yXfplGUk0os5z6FIUZYsoWOYHmGV9MM=
+	t=1778598438; cv=none; b=Ll70lMjGIjt/qxHUTjcjnz2eAFElTRHFZgO5VPxZAIW9uelykyNtOxzwCqLrNSiq/NwAcVFSuhql1fZ0VxohjSIGHSTaNoOqTOw1cxYT2a9lcTksKtjbhKThM3zqNEg1BojDhNebM3nvHqxTeVnSu1Q7gf5Ggn4Bbj20TYrzAAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778598380; c=relaxed/simple;
-	bh=p0ZrU6m+7mco1xK6JHEqctSaiqZ+8gGMt6hFE7ITBuQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=uCSMZ+jionuJzWiTBiWgZ4XspuqNJYbHbP6cATLiJHAY0Du7Ww53Ma0ohadgX3NcuqYiacG3i0u4VKlFrmczZnYhCbIKzF/tfn+6l1kr7RdlX+7+YieadoZOOezPsNyVBuiinIco1AVZMsR4w+ZnLrHwprkbXQLnc02kJmQewRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=o5QXEFWO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mg1IVedI; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1778598438; c=relaxed/simple;
+	bh=JMzeLrYjkjsH9gUxDIlDo5HcOQs8xFZoCS5RiMbsfa4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UwMYwMcydkeoUhSxxNDNtcJ4ZsJv3H47wN/aWthSfNUqHP0+TlBTwDKopvyQCu5tG89eY5sVGYOwsFSKVihJAEzikN+tN2MlH87RIN9cDljZ2z91pd2rirIMV5IvAB5hiDgOmRYdL98hhJsd78wbuMbbyWb0lIAMswAoq24Sb2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nwfIY/q1; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="o5QXEFWO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mg1IVedI"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id EA8271D00056;
-	Tue, 12 May 2026 11:06:17 -0400 (EDT)
-Received: from phl-imap-14 ([10.202.2.87])
-  by phl-compute-06.internal (MEProxy); Tue, 12 May 2026 11:06:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778598377;
-	 x=1778684777; bh=A0O+U8L1SA1wBnoUm564L+GQAbW9ZaRkn+rmUum+qkA=; b=
-	o5QXEFWOAT/EYDq24K/tn1yWi8i1QdB2Ra05/0DYmaKjV9vFoqrEGIRyu8AFwomV
-	+yi9l6W3W+urlhUFoaGBweP44EQB0lkP/uTqNsths3kED4Nx63+x+CIJq4PVtFdG
-	U1AoJLjcvrjUZKDU7QixCmiFxVt4hVhFR0/nHKNzSSyJuTcvRE9rRiOk6XQryJM8
-	MwILVcth9PCtzcbZbfP8Jemu0yPp8SxpAaXe38aoQ58x7WCddwryLk1OlkkzA8j5
-	LgjsW7hXj/LM08YhIHXE/50Xi3BC5aeE8ngZdak9Fj+QwULxfOE8ScEbwOAtKI8u
-	j6/8qN2aoSl1tgGOqJU4nQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778598377; x=
-	1778684777; bh=A0O+U8L1SA1wBnoUm564L+GQAbW9ZaRkn+rmUum+qkA=; b=m
-	g1IVedId6A7QUi3hN2j9dMq+MLKRtpfmVMAOyXg2UbLHC7qLAiwokhu+2UctqEX7
-	oIPBg+diDkQzhiAL9emZSaXrWLn/kbyltoQZ/eD9yp3fasvLb2mMYE8n+3gNwWyY
-	LXQraTIFzrJud/cAq19ZMIhVfGKtLM7/CSDNo6IjVNdUp/jOxpjvp/D5lM4rlvJC
-	3Bri+vJJQaUsfGkWlTrx0AC8GKznX2+bN+GgJRTEeu2VyTItDmrLZK3RbAIXTUb+
-	3/adHkgKIbmMzDJ6J9O5j/pWWjqLo8Z5nPcCnkQttSZ0cN1mOntr9iolw6wgUk+b
-	uLmDJiPXLVMQoji5Z9Kjg==
-X-ME-Sender: <xms:6UEDaviF8CnNa0cIp-LaBdRFnkuQgJjG2PK5uVjB2DAv-mkZlLdwu28>
-    <xme:6UEDam2u9F-ruEGcsGw2ZDeF-7qaFsFwRlTAE-UCRq2ZkpZBFFpyBek_ohHTRnUOn
-    jC5gb-5xe5On8crQ0qhZF3JaiSKE4FvZ-B-3RoqKqay5GFQhfPbzg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddvudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeejpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:6UEDasZ7vhSuIYNAh1hkmjRewjuW0rHAaUocXXB0oyXdybLHeOLw7Q>
-    <xmx:6UEDaoEFhlU0fPwnFal7YvwtoJxJFq7Z9v0bLileVAr_YD2t4Qp7xA>
-    <xmx:6UEDalISowvj2nVtuYtIpaVTLdUA4eWg5EIjwqN2NtprXxlnSyqdIQ>
-    <xmx:6UEDarPYychTwIDYq31C2Ksww1MJR5xJ-exwTMOX67F6sLTyiN-frw>
-    <xmx:6UEDaiTl_FjHBX_zwEUlPMB_kO22t5tEC4WHG6ndcufmj9aR4g5VpwkA>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 47AF8C4006F; Tue, 12 May 2026 11:06:17 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nwfIY/q1"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-bce57c132b2so389071566b.0
+        for <git@vger.kernel.org>; Tue, 12 May 2026 08:07:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778598436; x=1779203236; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PekKlSbgnmin1lA4jReeYc8tYcCchfjfb7V5ytsA7DY=;
+        b=nwfIY/q1K72QRccdUGASLcF0Eo8eb/2EjJbDvY0kKS9FNiHo5gwFkLg7zTw+6CNojA
+         0mIolTo91y8dgI47k8GEiyxRip0x219YyCSzh3BqjS6P8+vyoM6OefKKgK2clNl4KbER
+         oaJ9uANM2tCVdq7SYXod+CZGJerj07cuMITDBahvpEQ6FzhrDwQp2oeS5mBXDTZ1Rboq
+         PN6MYbdv5RXXu5vr6RyNBRkT75+8nqzNodh4DuN2ZFiAUixHnF2pFGXiSkzO76j2az0b
+         P2NqPmeCJBB16ToF867/OPAQyxlyhSXJsHQG6Ua39GrrHsg6k1RwxryCuDCpKjrnGkqL
+         W/kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778598436; x=1779203236;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PekKlSbgnmin1lA4jReeYc8tYcCchfjfb7V5ytsA7DY=;
+        b=kJdJV28lpKCNOaM8sc7blI2Gcymt8liBYTc6aURcCMv4TCb6ficNhoweVwVsXR/wK5
+         ZD+3Se3cwPoQIPiZ0EXMlHmV8szAuAgpMw4xJ8wZXRyBgALB1+BFRgEKKw+zOMhjYTin
+         5PPP1BLJr5EBffxbJyY/t95dx0oyRwBHWdn08OzLq+xW9lUJEzBkH6dkenOCt48ZQrbs
+         aWpkWFYMGPginMIZ76o648Jd9clCsm1JKkuLByOnkKz5EgV4t6ptv0hJ1QnATS/gaVZ0
+         OjDNYxtpGTRR3DRfB8jhQofj0mW8isCIncErhe00xaU6+It48id2LG9wgkEW2/tAmlXZ
+         xEfA==
+X-Gm-Message-State: AOJu0YyKFHInwIpNGbXQ5JIKiM7PsO0J0ODMTIh4mH2wcCsAupuePP56
+	rkx8HleaFYoQNHkEU7sE97FFhWypNbazE499FwBfl+8/R57rnMqE2lXeJ5SVzA==
+X-Gm-Gg: Acq92OF+UkGVaHl9xaAxQ1iwrt3zAqOm5PA2cLH0TTNHxcpBdkRa0ZQPVrBJ8krAq1+
+	6+5pSDm7OVZXt8ANKomuFPGdetA5n3qj/zPEqC1T1pnI2quD6hpN9wCR3kATO2WTu10IvE9WMdS
+	TNuH57Hm1SL8wPe4aq8/hSOT+TOPaqxEvIO5JV1mf/bCNUAk7oNSwxNb9KvE26unaH6xyfknXNt
+	9ASyX9q18/HNHyarpl3SvDyxxl/4uFPL8uJGwp3VtAjCUElCMqDSFgApzTizhYp5urXAIslygkO
+	LYPE7iiLKaC06aFSC5AXQBRHn497pbqlgGrZdJCLmW8m/mmzNzSdRZqMb0JRRJqclxePKEXc3oM
+	pYCZVUTSuI03UszWjCHCmsqXH29krmxt6bCzbIHYRi7b/ass0bWWmZtc4o31NfdvWWgYg24NoGV
+	+OsJH3lsUIUSqmvjEDgqCc2lLlFupwUmSieSCO6ERcs32AQwvNRSWFESEo9buIuKuo2z5pZ/jQj
+	GdjvA==
+X-Received: by 2002:a17:907:7ba3:b0:bc1:7da0:21 with SMTP id a640c23a62f3a-bd23cefe472mr229514666b.23.1778598435406;
+        Tue, 12 May 2026 08:07:15 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:17d3:2101:5ed:447d:e5d1:52d7? ([2a0a:ef40:17d3:2101:5ed:447d:e5d1:52d7])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4549120ec0asm32594867f8f.17.2026.05.12.08.07.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 May 2026 08:07:14 -0700 (PDT)
+Message-ID: <d236de15-f03e-4bac-9eb1-c14e50a271f5@gmail.com>
+Date: Tue, 12 May 2026 16:07:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 12 May 2026 17:05:56 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Usman Akinyemi" <usmanakinyemi202@gmail.com>
-Cc: "Christian Couder" <christian.couder@gmail.com>, git@vger.kernel.org,
- "Junio C Hamano" <gitster@pobox.com>, "Taylor Blau" <me@ttaylorr.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <d6566004-f803-4824-b050-f086b6d6d76c@app.fastmail.com>
-In-Reply-To: <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
-References: <20260427140530.856125-1-usmanakinyemi202@gmail.com>
- <20260503153402.1333220-1-usmanakinyemi202@gmail.com>
- <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
-Subject: Re: [RFC PATCH v5 3/3] push: support pushing to a remote group
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] config: add "worktree" and "worktree/i" includeIf
+ conditions
+To: Patrick Steinhardt <ps@pks.im>, me@black-desk.cn
+Cc: git@vger.kernel.org,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
+ <20260403-includeif-worktree-v3-2-109ce5782b03@black-desk.cn>
+ <agLTO0amktCWMsiE@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <agLTO0amktCWMsiE@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, May 3, 2026, at 17:34, Usman Akinyemi wrote:
-> `git fetch` accepts a remote group name (configured via `remotes.<name=
->`
-> in config) and fetches from each member remote. `git push` has no
-> equivalent =E2=80=94 it only accepts a single remote name.
->
->[snip]
->
-> +This means the user is responsible for ensuring that the sequence of
-> +individual pushes makes sense. If `git push r1`` would fail for a giv=
-en
 
-Double backticks (s/`git push r1``/`git push r1`/).
 
-> +set of options and arguments, then `git push all-remotes` will fail in
-> +the same way when it reaches r1. The group push does not do anything
+On 12/05/2026 08:14, Patrick Steinhardt wrote:
+> On Fri, Apr 03, 2026 at 03:02:29PM +0800, Chen Linxuan via B4 Relay wrote:
+>> From: Chen Linxuan <me@black-desk.cn>
+>>
+>> The includeIf mechanism already supports matching on the .git
+>> directory path (gitdir) and the currently checked out branch
+>> (onbranch).  But in multi-worktree setups the .git directory of a
+>> linked worktree points into the main repository's .git/worktrees/
+>> area, which makes gitdir patterns cumbersome when one wants to
+>> include config based on the working tree's checkout path instead.
+>>
+>> Introduce two new condition keywords:
+>>
+>>    - worktree:<pattern> matches the realpath of the current worktree's
+>>      working directory (i.e. repo_get_work_tree()) against a glob
+>>      pattern.  This is the path returned by git rev-parse
+>>      --show-toplevel.
+>>
+>>    - worktree/i:<pattern> is the case-insensitive variant.
+> 
+> Seems sensible.
 
-s/r1/`r1`/ ? Goes for the others here as well
+We already support per-worktree config settings via 
+extensions.worktreeConfig, so it would be helpful to explain why it is 
+more convenient to set the config based on the worktree's path, rather 
+than just running "git config --worktree" inside the worktree. Do you 
+have multiple repositories with worktrees checked out under a common 
+prefix that you want to share the same config setting?
 
-> +special to make a failing individual push succeed.
-> +
->  OUTPUT
->  ------
->[snip]
+Thanks
+
+Phillip
+
+>> The implementation reuses the include_by_path() helper introduced in
+>> the previous commit, passing the worktree path in place of the
+>> gitdir.  The condition never matches in bare repositories (where
+>> there is no worktree) or during early config reading (where no
+>> repository is available).
+> 
+> Right. This is because `repo_get_work_tree()` would return a NULL
+> pointer in these cases, and `include_by_path()` exits early in that
+> case.
+> 
+>> diff --git a/Documentation/config.adoc b/Documentation/config.adoc
+>> index 62eebe7c5450..a4f3ec905098 100644
+>> --- a/Documentation/config.adoc
+>> +++ b/Documentation/config.adoc
+>> @@ -146,6 +146,48 @@ refer to linkgit:gitignore[5] for details. For convenience:
+>>   	This is the same as `gitdir` except that matching is done
+>>   	case-insensitively (e.g. on case-insensitive file systems)
+>>   
+>> +`worktree`::
+>> +	The data that follows the keyword `worktree` and a colon is used as a
+>> +	glob pattern. If the working directory of the current worktree matches
+>> +	the pattern, the include condition is met.
+>> ++
+>> +The worktree location is the path where files are checked out (as returned
+>> +by `git rev-parse --show-toplevel`). This is different from `gitdir`, which
+>> +matches the `.git` directory path. In a linked worktree, the worktree path
+>> +is the directory where that worktree's files are located, not the main
+>> +repository's `.git` directory.
+>> ++
+>> +The pattern can contain standard globbing wildcards and two additional
+>> +ones, `**/` and `/**`, that can match multiple path components. Please
+>> +refer to linkgit:gitignore[5] for details. For convenience:
+>> +
+>> + * If the pattern starts with `~/`, `~` will be substituted with the
+>> +   content of the environment variable `HOME`.
+>> +
+>> + * If the pattern starts with `./`, it is replaced with the directory
+>> +   containing the current config file.
+>> +
+>> + * If the pattern does not start with either `~/`, `./` or `/`, `**/`
+>> +   will be automatically prepended. For example, the pattern `foo/bar`
+>> +   becomes `**/foo/bar` and would match `/any/path/to/foo/bar`.
+>> +
+>> + * If the pattern ends with `/`, `**` will be automatically added. For
+>> +   example, the pattern `foo/` becomes `foo/**`. In other words, it
+>> +   matches "foo" and everything inside, recursively.
+> 
+> This whole listing here is the exact same as we have for the `gitdir`
+> condition. Can we maybe deduplicate these into a common section?
+> 
+>> diff --git a/config.c b/config.c
+>> index 7d5dae0e8450..6d0c2d0725e4 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -400,6 +400,12 @@ static int include_condition_is_true(const struct key_value_info *kvi,
+>>   		return include_by_path(kvi, opts->git_dir, cond, cond_len, 0);
+>>   	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
+>>   		return include_by_path(kvi, opts->git_dir, cond, cond_len, 1);
+>> +	else if (skip_prefix_mem(cond, cond_len, "worktree:", &cond, &cond_len))
+>> +		return include_by_path(kvi, inc->repo ? repo_get_work_tree(inc->repo) : NULL,
+>> +				       cond, cond_len, 0);
+>> +	else if (skip_prefix_mem(cond, cond_len, "worktree/i:", &cond, &cond_len))
+>> +		return include_by_path(kvi, inc->repo ? repo_get_work_tree(inc->repo) : NULL,
+>> +				       cond, cond_len, 1);
+>>   	else if (skip_prefix_mem(cond, cond_len, "onbranch:", &cond, &cond_len))
+>>   		return include_by_branch(inc, cond, cond_len);
+>>   	else if (skip_prefix_mem(cond, cond_len, "hasconfig:remote.*.url:", &cond,
+> 
+> I feel like this is something that we might eventually want to convert
+> to be table-driven. But I think that doesn't have to happen as part of
+> this patch series.
+> 
+>> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+>> index 6e51f892f320..8a5ba4b884d3 100755
+>> --- a/t/t1305-config-include.sh
+>> +++ b/t/t1305-config-include.sh
+> 
+> Just because it was explicitly mentioned: we might also want to have a
+> test that verifies this works with early-config parsing. We already have
+> a similar test for "gitdir:" in "conditional include, early config
+> reading".
+> 
+> And should we also have a "nongit" branch where we verify outside a
+> repository?
+> 
+> Other than that this series looks good to me, thanks!
+> 
+> Patrick
+> 
+
