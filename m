@@ -1,84 +1,90 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFC922E3E9
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAA4271443
+	for <git@vger.kernel.org>; Tue, 12 May 2026 03:50:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778550584; cv=none; b=RIX5b+Sfaz3tcs56y2mkQqwPdC/mov8L3l3GywQcMp3eXQEv9vSQJ7CliVsP/IBROoW8NIwebOUzxYUct/UktM0m0Xn+nSA2rZpdK7I6YeWMF2n1fo6eXNIsK1i1iqkARu4O/VN8MP9UnV0PfDeFdN+uzCqC342yODl1/OUaZbM=
+	t=1778557852; cv=none; b=ZPKBjCvMQKIZZzkV8btlH19KYQb+FSghM2ZUm3DbDZo9Fm3LMJZEDeXNmScr5yZREV99clu9r3iRny2stm1vT8zk3JyQZ1Onw6wsUo3EYIOQwMNe+bltwVZKsYVEYBHQclQn/x+JPnokz0lWQ+3TmezjUrAWTXayRw1Lxfn2cU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778550584; c=relaxed/simple;
-	bh=6Wci1N37GObymmhWFYgOYbr5tTZAkH3IWiS8hBnSxHQ=;
+	s=arc-20240116; t=1778557852; c=relaxed/simple;
+	bh=4Ep7heDT8nSyv76e8nSOqQLi+cyzVNtb+i6zFXqPIp8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EK27lN5+ihKfLEr2SnceOcj1JPFFMdbDzYjpoRtS5tFYDV2bZDuCb5Az+fZ/V2S9me0Tn9L5trunjipDm+LLpkpJv9yZjxLCyZEwrmdSExAFTL6/wq39iQ81YP7LF98jrJfe6p6nQg/dfYdvMqbxOFKHfBQH9sDOlPOtk9IZgX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KIz1Fdfq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n6TOTrg0; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=l9ePeSwzkRotV0BlJD4L4qd4BxJR8zZAEYGPDCT2g6su9Nnm7D0RA2wv1xllS7pqrCZ0QK2BLoGEktkuCdfQDh5gNM0yGjg8QM5pwACuTl+81U6pANzHBEmu8nGyikyk4EEaVDaNygd4Wi2mTNStEvcXpcMoyNCQPm49al/YtqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gc45sx8E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f8DVQcic; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KIz1Fdfq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n6TOTrg0"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F20877A00CE;
-	Mon, 11 May 2026 21:49:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 11 May 2026 21:49:42 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gc45sx8E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f8DVQcic"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C721B7A012A;
+	Mon, 11 May 2026 23:50:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 11 May 2026 23:50:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778550581; x=1778636981; bh=v+x2EROTNO
-	4LrArpB9VMCnfaALJKC51OtK9jt+QJ6VM=; b=KIz1FdfqvrfPYEKi8fEdDeKXPU
-	/zM9RVR8JvWXlnjI8RZCOYo7JPc9BHkI09RzwyJd9EuEtChMUZjEvBqjpMy6S3ZB
-	rJAmvfkzzpBbhoZYyDgwZ0qWpqOEjQC0mgORx9940XK61YIn3qadMmCWq1j5IYCk
-	yh8V/ynAUvtYF/crITwcIg+hT397lNxtZ9x1iIcecs8wNPKxPapnx056txoE8cUZ
-	BafoqGxHLxp+1T5q8Fb4PK8ZtFR6tyoTzRCvYjV/Nfvb9GoDyxaJuyHWlOikgb7b
-	I6QUAmeEVwBCB0pNXxC9pICKr8J+nOfqooAMTZ9ZnZdmvwuytnvSCVqg0g0A==
+	:subject:to:to; s=fm2; t=1778557849; x=1778644249; bh=QJsj9FwfmJ
+	e2IkgNXweQx3+d8k+9wSOlFHv4IJzyx2A=; b=gc45sx8E/U70rJZDCiqGhEIULI
+	2TgKQ16VnFa9FZY+1sn4G7JKf2AiG3lDsd6VAcwK1VZUgzP1uSWFq/jOSVB1lqQZ
+	Y1OjCeovM0E9xIzsV0qTAznNwLuVeBi3dzYPJe/jM+m96JFtzN9C5Oz/wvMkxTlN
+	fVyw10gwsN6jTZWtPBS5JUL+CdfXpbJr5NO2nqXsQBTrt8YRmr0puAgpnpHeSpF4
+	lYfhVYAriaF2SxMNzUgXOwMnMnzEqUxgfP3pNvluv3w5i1r/LYz6oEes7bsTsTR4
+	m0L7fIdbjlR/yUXGZhMtYoYt2yNT0Pe1xD4S5cnA1CmdPxi/GIZDV9xgWwMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778550581; x=1778636981; bh=v+x2EROTNO4LrArpB9VMCnfaALJKC51OtK9
-	jt+QJ6VM=; b=n6TOTrg0YvwbfTyYu1X0zkBhJRkQCBwyHsftAlROs17gdBaSsOz
-	tVDNpW5MY0q3i2G58kWcX+Dgx+ezxlMKdE5hahzo1znDkdmgdNNgC2UaStzCAdGI
-	VMTndhIlbhmp/xcZ7YLSLFnJiEBLT4gnmZLzUD/nGEPkBKTyFffnGGGtH6f67scl
-	kRhX+rGMghBGST8DL00imQ2VHnjN6+EudYUovySNyvClsIIPSwjFrOixtQ8yOOqF
-	D77A3qGT+pj1zwB6ISnTUZcuGnmxgogvz9x1iYyfObRwOJs5EbO0SNXVXuZnaHkc
-	YUiU+f57arv0l6RrEuOGn2ADpKygQiQ0paw==
-X-ME-Sender: <xms:NYcCalD49RWBGQAR3Foo4_nMRU-9NEZUvm9EJsC-ZYGQuH19bgFWCg>
-    <xme:NYcCaqaAv7tDpzSiJrgG9i6k0WIRqxTzONEKAQKVJrnvFy9LZifD0FTfk2U8_76xz
-    ebx9R9lh53ghpzmegELFLk_QSTwykK0Sbq0fg1v-PGBIQF83bMu>
-X-ME-Received: <xmr:NYcCao59OS7GG9nmcXP11ipvcPbSxqkCWCEyeafiO0QHOYq-2YL6Le_PU3TRspATfuNLKZRWms08b2oGEMMn4-7Emdo-FuGE6g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtheefucetufdoteggodetrf
+	1778557849; x=1778644249; bh=QJsj9FwfmJe2IkgNXweQx3+d8k+9wSOlFHv
+	4IJzyx2A=; b=f8DVQcicUp4DuIvRCZ1B0eHZQevXhNCjDunXn0wvTIhcUXXy+zt
+	B3755mmjF2I/tDWUWNF2YOHezVApy0aA0RnI+Gb6YYKY1E5QdzJ2kG5tYHqUNer/
+	LB0jJy0EEP/U5InDld6Nyvi5nAk97EGZJmRs0iRpzkh5mG/JnWs80c4IPpbUl+pt
+	NQ+7LDQwvBsHS5N+5sd0/sZ7iPJg0Tlv0wEkAsdi/WCkVLJi2Gj+oxZiShpzg2Ee
+	JKtv+m+TQ64hLnqrg8ZrleeGkNCJA2rQvRamaiwaLVxjOzfnWNpy4KbT6hiWNaSt
+	NDo5OHdg/XiUORl7tYWwDyUfXZ6d0HxbTWg==
+X-ME-Sender: <xms:maMCaqNdu4rMe1-ZM9GoeqgtR0w4Tkr_wMyvTxmtbuXZa6JpPeymfA>
+    <xme:maMCasqRnAtmnEiPYzO5chq3gNuMFU7AyfBK-Rp3E_Y6pX5iOsdRFhvFARWgh4nQn
+    3sqU75KNHP9ewLBiQz9tDtM1eIET6DXFQNGa9G8UU6Q36_5FTUdm_M>
+X-ME-Received: <xmr:maMCarHpoHc5bgkiNaay8Iw4e_ukqVvDFdP54F-y8nm3LPMvi4Nfa3VB96J2WD1BYEIcl-0rjwYCkmzlt0WDv02BK3T4FsnxIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtjeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NYcCarYz0b2nSkAA6_HQxoF5op8MJ30E6ExukZjsxJhcvR64pJtfrA>
-    <xmx:NYcCanhFZnvrAT2Cs07GyESjhTYWnyXqyP2pJw1YFNdoejAfDCDHfg>
-    <xmx:NYcCas-9kYsVrDNyzolXksaXVLLoDxCvcWTtIR4nzqu7QR3utt86VA>
-    <xmx:NYcCaioTozBWJwknic4pfRwuU3SytYdpPkHwKUj00CB7Ddk75JcM2Q>
-    <xmx:NYcCan7VktD0Uk3KhEBvPxvCI-XGRKwtGW27N43LOtzBvnYkzNt6t4b3>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgrthhhvghushesmhgrthhhvghushhmohhrvghirh
+    grrdgtohhmpdhrtghpthhtohepthgsohgvghhiseifvggsrdguvgdprhgtphhtthhopehg
+    ihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhhigrmhhthhgrkhhkrghrtddt
+    udesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:maMCahr2kVK3x21Uz9AcivDbhVS7rgz2iOTOpPBN_HwET2WqVIXsoA>
+    <xmx:maMCakb0rh15DRg4vA5kDYkXiqA-5FkqOJILsCGhJpZ6Gxro1mDGaA>
+    <xmx:maMCaqUErUYPvgdYV3meoNz7Zkai_SaoZ2-muxPfedzgRgd3ybkBUQ>
+    <xmx:maMCat-u-_V1l8D-uL9DXOqkWrrC2lZU3OwfGWiLSIq-I2k2bh8qpA>
+    <xmx:maMCajVWdubgOzigQpyXzgNP6qQ1VhxkqbUiPJGQdD4yPFeT8gu_ATH5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 21:49:41 -0400 (EDT)
+ 11 May 2026 23:50:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v3 0/9] pack-bitmap: fix various pseudo-merge bugs
-In-Reply-To: <xmqqse7xpftn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	12 May 2026 10:38:44 +0900")
-References: <cover.1776124588.git.me@ttaylorr.com>
-	<cover.1778546804.git.me@ttaylorr.com> <xmqqse7xpftn.fsf@gitster.g>
-Date: Tue, 12 May 2026 10:49:40 +0900
-Message-ID: <xmqqo6ilpfbf.fsf@gitster.g>
+To: Matheus Afonso Martins Moreira <matheus@matheusmoreira.com>
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,  Matheus Moreira
+ via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Ghanshyam Thakkar
+ <shyamthakkar001@gmail.com>
+Subject: Re: [PATCH v3 0/8] builtin: implement, document and test url-parse
+In-Reply-To: <6c0a1601cd379bcdc87b4fe3b854166a@matheusmoreira.com> (Matheus
+	Afonso Martins Moreira's message of "Sun, 03 May 2026 16:36:46 -0300")
+References: <pull.1715.v2.git.git.1777677310.gitgitgadget@gmail.com>
+	<pull.1715.v3.git.git.1777699722.gitgitgadget@gmail.com>
+	<20260503172838.GA22957@tb-raspi4>
+	<6c0a1601cd379bcdc87b4fe3b854166a@matheusmoreira.com>
+Date: Tue, 12 May 2026 12:50:47 +0900
+Message-ID: <xmqqjyt9p9pk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,29 +94,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matheus Afonso Martins Moreira <matheus@matheusmoreira.com> writes:
 
-> Taylor Blau <me@ttaylorr.com> writes:
+>> Reviewers comment: Nicely done.
 >
->> [Note to the maintainer: this series has been rebased onto the current
->> tip of master, which is 7760f83b597 (Merge branch
->> 'jc/neuter-sideband-fixup', 2026-05-11) at the time of writing].
+> Thank you!
 >
-> A note like this is very much appreciated, but please also state the
-> reason why the rebase was necessary.  "Because the current tip of
-> 'master' has advanced" is not a good reason.  "The previous
-> synthetic base was made by merging topic X and topic Y on
-> then-current 'master', but both have graduated" is a so-so ok
-> reason.  "Because the updated implementation of this series uses
-> facilities that appeared in recent 'master' that come from topics A
-> and B, which the previous iteration did not use" and "Recent updates
-> to 'master' brings in conflicting changes from topic C" are
-> excellent reasons.
+>> More a question to myself, may be, about t9904 (and may be other parts)
+>> I have in mind that the parser learned to handle
+>>
+>> file://server/share/repo
+>> correctly under Windows.
+>> I don't know if this needs to be addressed here or in a follow-up commit ?
+>
+> I'd be happy to revisit this in a follow-up. It's been a while
+> since I used MSYS but I do remember the fact it rewrites paths
+> internally. I wasn't sure how to handle it properly in the tests.
 
-Forgot one important case.  "It turns out that this fix is important
-so it was rebased to be applicable to an older maintenance release M"
-would be very much appreciated as well.
+So the only potential thing that is missing from the series is the
+above, which we are fine to postpone in a follow-up series?  I think
+that is a good stopping point.  Given that this command is new, it
+is fine that it has known and documented short-comings that will be
+improved (of course on the other hand, we are not in any urgent need
+for this new command, so we do not have to ship it half-baked).
 
-Perhaps after coming up with a few more good reasons, we should
-describe them in Documentation/SubmittingPatches somewhere.
+Is everybody happy with the patches in the current shape and should
+I mark it for 'next'?
 
+Thanks.
