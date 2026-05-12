@@ -1,130 +1,152 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3BF384CD9
-	for <git@vger.kernel.org>; Tue, 12 May 2026 06:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0892DE70D
+	for <git@vger.kernel.org>; Tue, 12 May 2026 06:49:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778568133; cv=none; b=kxUvzJibRC48dxubCSv1oilL+jLhiWEsHntCGVRg3fhHhalXnTMYvwhc1NvYdndeC1QIDI6lBn5PzGNv4+1tvPHTdRBusAfa8tCH13FxcbVwepfShKGspewcqFF3N06EqIPW0R8oH3rM9ouQy9CUV1PJi2zG7aNpYGpu5S8VDKw=
+	t=1778568580; cv=none; b=C7n2f3vjp3OuJybJCUuOUIrfVNazz62dToWYOw0J1MPyBAdSzAi9MTHHmJpQC5X9VBFEgayiYfpEeHCZKJ/zR/aCRbyVBblJz4S7k+wq2ys/IlEutJpX09KUysVrDqJTpaAoY+0rPz+/0WOn2ARDHkk+RYm1yEMF8M8fblVQRmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778568133; c=relaxed/simple;
-	bh=D8AJYJ1TZYmOaci+fU02cQ6PN/58A4E9GPBVm4sGTbA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hm3blj6qG7wryu5cOAnJYqLajBW4GcOZxMhjLuZNdXG0UUE4Hew89+HQT3JpU2PpsTCRPElNEQJOXvN/pI04iD2H9uIULCwCxaR2RkkJWs/FIzp0+LPATGmLvHC9i/dY1vbgN1mI/YErJJ+mpO8aYehM1kBRoGLlrEjCsmA3864=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GadHKQdG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d8rGFLtP; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1778568580; c=relaxed/simple;
+	bh=66oWGNsL1/fGAM3xhY/58JkiYs7GYngDr4xVNuq5fo0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ocEqsGoSPdsCofUqtLU87pTvqXZSVG+Id05TzPNc5drs2KLyExS0Kv83F+h3RdydVhMh12+btybTw+ase+1yditDlHQAh0MFPhBHSiwDWfAfBtlwfomHUClgJkFAfCxk6/yEPh4LFNVlR06RmrfE2jQLm38RQhzg/9XCR4WZKk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UZHZ6fQ+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h13ME2PJ; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GadHKQdG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d8rGFLtP"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 84917EC00BE;
-	Tue, 12 May 2026 02:41:59 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 12 May 2026 02:41:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UZHZ6fQ+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h13ME2PJ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 074F2140018F;
+	Tue, 12 May 2026 02:49:31 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 12 May 2026 02:49:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1778568119; x=1778654519; bh=jmqJLbTCRg
-	Jrx4Z6he/FHBYtkI0nTSr6FSEfz8sfat4=; b=GadHKQdGiCojlYyMo41H6vH9PK
-	ptBy9R6n+vm3aIqQF1xZfSBuOvtmh6/WbabeUIjh8YtSKujzlOxS5IcUJHVBVYO/
-	lW9TZ9qQkFaB0WYPwi+hdfzbbi2Zk8YQRsM8nueYT/oMl9yLYeKlJGCXtG9SJQ6P
-	EgBmpLGhj0q6SNzNjoPcEG9xaMLqN7dX66FASQ0y6OC0I+SqCXigiXMpx9c9lEgU
-	t0yt6uQquqB9frO0nP2XfieX1vJKGyJ7phQeeklKM0lOUe3FervDASqrk22wlOO8
-	0w5K9TZxBeNEh7y03xHtNTnWr6UJIAwuvLaUWOmYyyUOB+jVorv1LkbpfnlA==
+	:subject:to:to; s=fm2; t=1778568571; x=1778654971; bh=DetoKRuYTr
+	1UbW89cg+zFX2yDVpFXi63BSy5Yrsjydg=; b=UZHZ6fQ+DN5bsGSGBoAvqte2ge
+	YVYtTboq+altMG7glT1ldTOdNWujvKinq21gdGsCbcAg3OYk7G6OdfY/AZsBPAYE
+	FrgB+/63A0nyXyj1eH0CiV58ZuIzr1krhrQtXpbOqzlWcY18sJInPDG64ssY5QW+
+	I3wNGRzBrh30zxwFA/LT6wosEYp+6Z7ttsfNZoL/FOqC/pJQXYYYpthtxaRpskUl
+	9c52zDORJ+5JlLV3dryFKZFlPU3Y4siYJvLhRHp2hBxFHt8/+dgubcV/EuQJXq2U
+	QFd4Im5HHQNI6zdm6oi562ee+Ei0A/N/aWYP5NReaf5sKlOZJV39vvyDQr9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778568119; x=1778654519; bh=jmqJLbTCRgJrx4Z6he/FHBYtkI0nTSr6FSE
-	fz8sfat4=; b=d8rGFLtPdAGIXZESQHprufLsyWI8ofWnKF70eCyw4qec1PbM6xu
-	8FyUFmzoJurlynFZVW4GK15z1T47A8b36clqn5fV2KC4mvQBsQUf/TOzCa/mgavc
-	zsxVGovcMVrhjfP3NKo/urA48TRM2qIai6ldJC0I1jT8KI2Rjl17+edqW5uunix+
-	CysLMahsrJDiVaniXFCVdAK18H00Wvn2YO99NCW85cPy/l/UmSzizlbKUsiey1pO
-	t2fODy0xN1Ewzc1Wko0q5hZgbDpjbYbJDr/6UUv6H71Yh80Iyv/RDVdAqIr6UGwM
-	/wKtqqSYIaCMvA52XC4+TUexNktJIr9yg7A==
-X-ME-Sender: <xms:t8sCatshbzykbKO90GNPu3sEVWv2H9EcU9IWCUiL4xVhcFDXe6_3sw>
-    <xme:t8sCatUSzc7BTYoACga1wEWt3vREIplgMG3TC2rpuNptvJhLcMy_z-qIxL1e8Tqmq
-    h1NpvCvIqUpE4xwO4-YXcZTJ7JXh4JY3FDcpFOJTerhk6WDFmZp>
-X-ME-Received: <xmr:t8sCapH1qgH7laGNzNLI24--IrFvSt8Y7cMDYl2mDpzvlRPyHX9qSOKWn59ifIYzBoVIkOivUonStGA7Wk0JTzFKtuhJw4z9ZDNSgcerVO8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdduudduucetufdoteggodetrf
+	1778568571; x=1778654971; bh=DetoKRuYTr1UbW89cg+zFX2yDVpFXi63BSy
+	5Yrsjydg=; b=h13ME2PJuKlm1kYneJsEIcTZ2xTtFJbTuexYNdhCuXMXM9UbjHi
+	dW4jEP3i5wLeh/Lat4XhFPEqQLL0RX9jwiA0vCjLaXfhnxIbXeuTQxvsk31gFYTE
+	PwWHcZp/1npQtnK/+Bu0Pl2bNq6ql0POgqJUKotQweLmqIywzHdoWaJtK2weJrEi
+	8eA43gMmFvOFQYfWKj/SlY7CVVw+dAWHUiOMbrUbyQyAbLZNK0Uj9iE+vvAFFsma
+	FWT6MW+fVDc4Ok0MqEEIkMteMOvcF3n4BuAjHJZZqOCkBojUm3e9qM5DxQJ06Ni+
+	kQ3w4eDFtYj6R2gd0q+rR8SlkCaoksJdyyQ==
+X-ME-Sender: <xms:ec0Caq2b6SR0RGisOVI97MgyypqM4wkU2ckDzJGVMeY-yJWIwc1frA>
+    <xme:ec0CapqdnJpqJynnmnh21AmyaKMYwRVMnuFx4aJRWY-hb6VdxTnj_PMnF3MjBUqxi
+    8RXL1AoLTWcRSCIQomRbVfKZVMGCi2dbERClSQpYohUXfV9QFkr>
+X-ME-Received: <xmr:ec0CanWv5dN8goPmK9c7qWKJD9x__iqF1hblUxAXI4KNZo2BjKoahfaDhTtxW4EUyggmlFoPv8b_ow3-wky-hEJSI6xN6PKdbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdduuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epfedutdduhfdtleffieekvdfgheegvdevgedtudefvddvffdtteduvdehfedufedtnecu
-    ffhomhgrihhnpehmshhgihgurdhlihhnkhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosg
-    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopegtrghtsehmrghlohhnrdguvghv
-X-ME-Proxy: <xmx:t8sCav3-t_Nkyu_iQD0FDGPy48xbT_wZPI2SrojwARzlvCpmHVKzwg>
-    <xmx:t8sCarOcwMBWsPOQ4ZEnq2e76uHcBZf3wOixNKKpx6swQmU6AYV1Cg>
-    <xmx:t8sCau7jy9FlWKKu-5IrJZi9U8Gv2GtuxPnQIeWzdb-UTYnL-6-bow>
-    <xmx:t8sCal0oOVwjHzj5XpracMy2Y5RT8TB0G2dRWi4F6g8CzZyH-h7pzA>
-    <xmx:t8sCaumCbq6_fBj7O55cpFcEu-ttQ0YDSqRi1Pmp2KQAmlY7dxAiZpjq>
-Feedback-ID: i197146af:Fastmail
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphht
+    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheplhhorhgvnhiiohdrph
+    gvghhorhgrrhhivddttddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggv
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
+    gtrghtsehmrghlohhnrdguvghvpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
+    ihhnvggtohdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:ec0CairUv_r-Im_cZfjTM6CMbMuCgTrNnF96QQqeLcBqxeX5sbR5Jw>
+    <xmx:ec0CauDpIHvXFn2RLlEfWZhxFbZzdwl_FuEqHfncdzbmhKACvBlR4w>
+    <xmx:ec0CauhLpbI-0z5FuZ8wFVcRrj5vSy7rnNxwO7BBu2GdueI72XXn6w>
+    <xmx:ec0CasYqNFBqccZAt_FJMF-Q4rn6q2UbMpDlSyEO7VaQ0L6JFhsHYQ>
+    <xmx:e80CahvwZkKyBAg1l8exjCwoSAkYRId8xokoSX0YyVP03MSy1qk14brH>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 02:41:58 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 06d55bb5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 12 May 2026 06:41:56 +0000 (UTC)
-Date: Tue, 12 May 2026 08:41:53 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>, Tian Yuchen <cat@malon.dev>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] builtin/history: introduce "fixup" subcommand
-Message-ID: <agLLsbPx1zH7klvj@pks.im>
-References: <20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im>
- <20260427-b4-pks-history-fixup-v3-0-cb908f06264b@pks.im>
- <xmqq33zxp4aq.fsf@gitster.g>
+ 12 May 2026 02:49:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>
+Cc: Taylor Blau <me@ttaylorr.com>,
+    LorenzoPegorari <lorenzo.pegorari2002@gmail.com>,
+  Derrick Stolee <stolee@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>,
+  Tian Yuchen <cat@malon.dev>,
+  Eric Sunshine <sunshine@sunshineco.com>,
+  Elijah Newren <newren@gmail.com>
+Subject: Re: [GSoC PATCH v6 0/6] preserve promisor files content after repack
+In-Reply-To: <cover.1776384902.git.lorenzo.pegorari2002@gmail.com>
+	(LorenzoPegorari's message of "Sat, 18 Apr 2026 16:16:46 +0200")
+References: <cover.1775861047.git.lorenzo.pegorari2002@gmail.com>
+	<cover.1776384902.git.lorenzo.pegorari2002@gmail.com>
+Date: Tue, 12 May 2026 15:49:28 +0900
+Message-ID: <xmqqse7xm8av.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq33zxp4aq.fsf@gitster.g>
+Content-Type: text/plain
 
-On Tue, May 12, 2026 at 02:47:41PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > this short patch series introduces a new "fixup" subcommand. This
-> > command is the first one that I felt is missing in my day to day work,
-> > as I end up doing fixup commits quite often.
-> >
-> > The flow is rather simple: the user stages some changes, and then they
-> > execute `git history fixup <commit>` to amend those changes to the given
-> > commit. As with the other subcommands, dependent branches will then be
-> > rebased automatically.
-> >
-> > This is the first command that may result in merge conflicts. For now we
-> > simply abort in such cases, but there are plans to introduce first-class
-> > conflicts into Git. So once we have them, we'll also be able to handle
-> > such cases more gracefully. I still think that the command is useful
-> > even without that conflict handling.
-> >
-> > Changes in v3:
-> >   - Some more polishing of the command's description.
-> >   - Link to v2: https://patch.msgid.link/20260423-b4-pks-history-fixup-v2-0-d7571c6d36eb@pks.im
-> >
-> > Changes in v2:
-> >   - Introduce "--empty=(keep|drop|abort)" to specify what happens with
-> >     empty commits.
-> >   - Adapt documentation a bit to hopefully clarify how changes are
-> >     backported.
-> >   - Link to v1: https://patch.msgid.link/20260422-b4-pks-history-fixup-v1-0-48d4484243de@pks.im
-> 
-> The iterations v2 and v3 saw no comments, unfortunately.  I just
-> gave three patches in v3 a cursory look and nothing stood out as
-> curious or fishy.  Shall we mark the topic for 'next' now?
+LorenzoPegorari <lorenzo.pegorari2002@gmail.com> writes:
 
-I didn't plan to post another iteration, so this works for me. Thanks!
+> The goal of this patch is to solve the NEEDSWORK comment added by
+> 5374a290 (fetch-pack: write fetched refs to .promisor, 14/10/2019). This
+> is done by adding a helper function that takes the content of all
+> .promisor files in the `repository`, and copies it inside the first
+> .promisor file created by the repack.
+>
+> Also, I added a comment explaining what is the purpose of the content of
+> the .promisor files, since this wasn't explained anywhere (I found
+> information regarding this only in the message of the previously cited
+> commit).
+>
+> Finally, I added some tests to "t7700-repack.sh" and
+> "t7703-repack-geometric.sh" that check if the content of .promisor files
+> are correctly copied into the .promisor files created by a repack.
+>
+> V6 DIFF:
+>  * changed the name of the helper function to
+>    `write_promisor_file_after_repack`.
+>  * modified the helper function to create the ".promisor" file, so that
+>    is not required anymore.
+>  * modified the logic of the helper function (as suggested by Tian
+>    Yuchen)
+>  * modified the helper function to check for possible errors, and to
+>    check if the lines of the ".promisor" files are correctly formed.
+>  * fixed memory leak.
+>  * improved comments.
+>
+> LorenzoPegorari (6):
+>   pack-write: add explanation to promisor file content
+>   repack-promisor add helper to fill promisor file after repack
+>   repack-promisor: preserve content of promisor files after repack
+>   t7700: test for promisor file content after repack
+>   t7703: test for promisor file content after geometric repack
+>   repack-promisor: add missing headers
+>
+>  Documentation/git-repack.adoc |   4 +-
+>  pack-write.c                  |   9 ++
+>  repack-promisor.c             | 194 ++++++++++++++++++++++++++++++----
+>  t/t7700-repack.sh             |  61 +++++++++++
+>  t/t7703-repack-geometric.sh   |  33 ++++++
+>  5 files changed, 280 insertions(+), 21 deletions(-)
 
-Patrick
+
+Lorenzo, it seems that not many people are reviewing this final
+round, and then I noticed that the list of CC addresses lacks a big
+name in the promisor remote topic, so I added Christian to the To:
+line of this message.  Christian, you have no obligation to review
+these patches if they do not interest you, but just in case you
+weren't aware of this effort, I thought it might interest you; I am
+sure we all would benefit from your expertise.
+
+Thanks.
