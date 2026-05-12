@@ -1,149 +1,414 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazolkn19010016.outbound.protection.outlook.com [52.103.32.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5780239B95D
-	for <git@vger.kernel.org>; Tue, 12 May 2026 11:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778586979; cv=none; b=LvdRgsnc4N4w6Z7ms1NherqQk9YhrXjjuMjIpieWWsQj7u3yWTO/csgs099ysQo6kLBV1rtHvhvuuh4AF0Qg36Dj0u2ZgCoHqhepsJo3p2M/+eGrubuoE+SZvpPhbN9XsQfDFtqt5gWv9OX0rpyDw+jwvwym5Ud6z/b46mefzfI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778586979; c=relaxed/simple;
-	bh=QFUMZw34KLs4AfeDmRdupyp9ffyMT0iLmKLKFKcVATI=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AcQIzVIqnzVUagQIdO3/O729UHMEThY+Xs3vqIxgphG5nHzS39A8tpqYTT+VKt0X/G/DbHgmjSQCf81CDJIcdTS11yxkjJtAMbaCbBjtQbK4F2T40c7vc8PzgsWJ0hy1rtYQ3PqMz+EiS+uHZrtZsW34sNWqQJxp33GjMtJpe1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=NgWz6QuG; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF4838887A
+	for <git@vger.kernel.org>; Tue, 12 May 2026 12:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778588990; cv=fail; b=l9YdSr/5LvEWQ5zDjmmYIBY3aj3rqfXCfU8EtkFQUtovBXo0NFB24SCpCHFFCUwXkHg1A4DGDa7FaaUFKI441oaYtuwonQ8LFiYLyOLr4SvlGLMpRWIeSEyRQIlEI9l5+gObl4vwKGFsUn+qERZ676VEa+4y9GIsfi9GTeqJrHM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778588990; c=relaxed/simple;
+	bh=YTEm5tQyPJ5cd7E1ZpcSud6gHvS1ooVQKG4h+ArzQ98=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=lPm8uuOmKW+V6aphWE5FZmZH270xCaNRiKFprEyiSQ1Jqzm64h4ATvoRhfVwacS7QAle/ox9N7BpuxZD46C6j8G2Htu5q6HJMiPkZIpl3yFlYnwu+ldc4tGI5+adAL6fEIcNpWjtfK0JBBhnEyH9DaXVmX/udafkseLq0iigWVc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=QmmM9X3W; arc=fail smtp.client-ip=52.103.32.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="NgWz6QuG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1778586968; x=1779191768; i=l.s.r@web.de;
-	bh=GYBCJ6ci5KHeWMAOHn6pfGfka4diwt8wjEZ2itcE2WM=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=NgWz6QuGxYt16OidR3eg6WCQ6MuMpEb4wzmVOq8vjyOkC/J1M0Jap7g2Q8iQRIk4
-	 FuvSPcWKFrHDnEB3n6rCjxNuE5tfPdkv/bUr+AMCMrvJ0KhWfslcgwkft53TQqVxU
-	 Qh3+eAZ/faN4R+Ck7ae3YAMKUW6vGO2gCGgYHDqrbgBaJWDzbcBB+dPYpaxYsy3sH
-	 d6J+jAOETChyR9KuRyI+em6K0ntNh4EV5276QXnGDKGU/Q+BWjmcdSJsV/liwAMp3
-	 db8EMUzrCkguI5ZCAlYFL3P192GWp6GQ1Lq19ynd1y5w8hv7rTdtyg4WJsEj33/6t
-	 NAKuT1Y6+LrkeGFjNw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N6b8m-1xTkDW1uD0-017piN for
- <git@vger.kernel.org>; Tue, 12 May 2026 13:56:08 +0200
-From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
-To: git@vger.kernel.org
-Subject: [PATCH 0/4] strbuf: add and use strbuf_add_uint()
-Date: Tue, 12 May 2026 13:55:59 +0200
-Message-ID: <20260512115603.80780-1-l.s.r@web.de>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="QmmM9X3W"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KoFqucrFXG0qWUoBIgXm2XZ068VwH7yVlF6h1pVTTQcPA5xOdARvb5/BdYtkki3QkJAwRRs1bXZTfwxzmVWjsRUT1xJEqIRd8C1wMAxVpOFC16leCb6UReegnJXVNovyRkWQkOerxKabudxRjTy2uh2YPJYkRKNOXePsa5P+6sQJoKt6OhDeOJWmPa9JmU9kFWJtDv+YUJtHpgpxgZN09J3Q9G39a3nbLiYdaBZHWsTgd2f5BZ5cdyO++Bkg7iP9+50fFcIzzyJ4SQZqqEqHJqXazLyzx0yT0crk2ygMT+GrwXTeh5SXhNib5u21eQrab8zsIMxATdEpzYwBRCEElA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hkL9voR8zAb8Phs8AtnGK8UIxLLmQ4iYkpj2oIfK4Dc=;
+ b=oxYHOe1dRBkTgpisfGIFIBcBOCh7HR9EkVCUTM2dAAqYZjJPejT8l/N6fqaN65gn0/DiUc9LE9uWjnoREufYJgUbdHKeVYsxcO3iSiuTsQ4EaTo+z4NT7qfl9JDZPjtN9ibP/Lqbu5UXhPjAaJuQ2yeUHOhC8wCR8fQ31vGIa51P7TG7ZMPDsaltXDIgufKqbM0MG+D7enuT3DmeRNcWlN/qM2EuUKJeKezylZpTu8hZ+K72tCr+Iq/YYBkxVTqVc1x9aXyQ4XBoDFdEqzjdaQiNaOf4b/0E8DI976aKr+6ZgFvxOf+gun8Pr3suB+5do/SPGqCYnN2woEkwcYJ7pw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hkL9voR8zAb8Phs8AtnGK8UIxLLmQ4iYkpj2oIfK4Dc=;
+ b=QmmM9X3Wt8qkdeRuBV23yf40V09/jC+P6RIH/FUSyZQP3tfaq7Nzhb7WVkuvK75StvcRHjvoNKonH/bRF3y0h4EvJB40jCUNH9o4Y7bZhj9zs+/RsMdw3b4sb3SHuCg8407DZp1PfOVWbu4mmFGYTMqd1MjxCX9Xvj0QeEvqkUe7+32nRIHkRFA+4dAhnP/jmZkENARDpHsHopoyK5JkAEGQij9ufTk6SurH8yBZV7iyijG2YOMsCbJWdJJSST+ErDdb73E5Q+Yp6Oh0tNtC6AfnQal55zSkLqJ7JjQ+mBOWoqZ1JJETUq6WjLqLe/X0d8Id6uWn1N8R0u03A+KnBA==
+Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
+ (2603:10a6:800:326::21) by PAWPR03MB10184.eurprd03.prod.outlook.com
+ (2603:10a6:102:343::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.22; Tue, 12 May
+ 2026 12:29:34 +0000
+Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
+ ([fe80::5e26:cb8:bbb:cf7a]) by VI0PR03MB11634.eurprd03.prod.outlook.com
+ ([fe80::5e26:cb8:bbb:cf7a%6]) with mapi id 15.20.9913.009; Tue, 12 May 2026
+ 12:29:34 +0000
+Message-ID:
+ <VI0PR03MB11634BD90B47B89A7631F5DE5C0392@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Date: Tue, 12 May 2026 13:29:32 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/7] remote: add remote.*.negotiationRestrict config
+Content-Language: en-GB
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im, Derrick Stolee <stolee@gmail.com>
+References: <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
+ <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
+ <d2f48b78b5b4c63269b1129865d94fdab9dffd92.1776871546.git.gitgitgadget@gmail.com>
+From: Matthew John Cheetham <mjcheetham@outlook.com>
+In-Reply-To: <d2f48b78b5b4c63269b1129865d94fdab9dffd92.1776871546.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PA7P264CA0088.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:349::13) To VI0PR03MB11634.eurprd03.prod.outlook.com
+ (2603:10a6:800:326::21)
+X-Microsoft-Original-Message-ID:
+ <add9632b-bf65-4f35-8235-f853abccf868@outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:TeNO5quSXkJBZ8K3+8JRUh/2pSNAANWV6a9YNZiHNjuq7Asez28
- Q+tL4Euoz7ah7Fgp8gENE3njnmcJuFqYasuuRoGp8S3WUBdWk0m/OCOuVxH39kv3ajd5jhx
- 4BJM/+PNyVoHLzVuVAX36sd4BwGm63LNOVR4kB3YJPfWD0F5uFE5KznDUTH8f2YNIB2Lfsu
- wDb6SethzTv7RNUvwMucg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lgwsQPyaKT8=;4KtBNYvmDrXHuuO3gmjf9LT6dTO
- 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
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR03MB11634:EE_|PAWPR03MB10184:EE_
+X-MS-Office365-Filtering-Correlation-Id: af4c71f6-ff31-4b9f-3adb-08deb0221f9d
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|6090799003|8060799015|19110799012|15080799012|23021999003|5072599009|37011999003|51005399006|41001999006|12121999013|24021099003|3412199025|440099028|12091999003|40105399003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cHBoZVN5NTBIb0hmZm9oWVFhbS9vVmx4Smt6N1pUMDhYQ1FNbnRldWxaN01a?=
+ =?utf-8?B?cmJWZ3p0YVVqVzJsaXFVM3EybHZQdzc1SStWSW9Vdi8yeURTakpFaWdIc1FY?=
+ =?utf-8?B?cUVKSkVYekZRbkVBVmtlVVM5TlZKdWZJYm9xdGY5SnVFM3pXNE11NmZDclFu?=
+ =?utf-8?B?Um91aDFYRHlLVXErN3psVFpHbm9YQ0R0TU1WeDNrdE8wU1FvZ3NmTExhbGNX?=
+ =?utf-8?B?dWtoQnJZb1Ywdk10U0g2c0NkakdnL0JHT0x6RmdaMjFjSko3T2U2YVRmdG1h?=
+ =?utf-8?B?ais5czFaNy9ZRmVzRUZKbnJyU0duTEtTSldrRUREaE4wODcyYi9aVUhiZTdC?=
+ =?utf-8?B?NVV6QkJuSlg5akcwUnc0ZDNWSzNiQUFQcndtRnc4dktQV1JGempwRE9UbUsx?=
+ =?utf-8?B?S2s4V3VISTlDdVJseHhOYnhnTU96VUdyWTJ1TDlFOWhKSElyVlN2NTNLTkJY?=
+ =?utf-8?B?NGhIbnZra1ZDNGZiVUZCODZHcWczVnRLOXdjOE9IRzVtanU0MDdNN2YweDlJ?=
+ =?utf-8?B?VHVsTnRiQXAzazQrQXpTVXJneDkrS2dnaCsvaldHZ3FEb2J3YndYaTVCOHF5?=
+ =?utf-8?B?dVFUK1NxUmpMSXc5MUhoNGRubTh0SVpGRzJ4a0ZzcWlyamtRVEJiR0F3MlhX?=
+ =?utf-8?B?M0l0em5IalZSNnFKVGNXSlZsTTVTWTlaL0tNOHArTTRqcHYwWWp5Q3JvS1B3?=
+ =?utf-8?B?MVhXVE44OFJXREJLWU1kTXJrM2RZZEhpd2dPSVpxejVGOUk5NWZLbFFDUDFX?=
+ =?utf-8?B?RnlMSjJJOHo0N3YyUFdVRjRGUVF3L3NOeDQ5QlFhNlAvN0NpTEFSNXhTL0pS?=
+ =?utf-8?B?WVhJVDA3a2RueG1pM2VPRTJ3eUgxKzc5TWFGTnBxeTE0NGM2VGc0a2Z3VnFP?=
+ =?utf-8?B?b2Z2YUNkQldmQ21aVWU1cGllN3BDay9PQ1lVbDlTNTJYcVpaWDZCdXh1Yjln?=
+ =?utf-8?B?YWxHRnRRemNISEFpSzhKZ3VUMXdZd3JEWmdGTFpXSXR6N25yVDJualVKa1NY?=
+ =?utf-8?B?V1lsL21TTk5lekRBTUtsQlRxR1lQdjZZd245WFJELytaNlA1ek5VTjVMdXlw?=
+ =?utf-8?B?bFhTQ2Z0Wm10UjZrdmtvTlF6dGxCVjBIUjNQZUhuZ0Z4Y0pRRG80N0RETlBh?=
+ =?utf-8?B?aVFDUEF2NEFmNkx6TElOdmtIK2dnc0pQTFJaT05saWJianREVWtvSjh0WWlZ?=
+ =?utf-8?B?RTUxdUNST2dFbFpueW8vNEE4dEdGZ2xUUEdoT3VIa3ExZ3dBNzkxMjUreHZi?=
+ =?utf-8?B?YlREbURsd2hJbmlZMVlROUdXdnEzTjA3ZjlKQlhrZG11L1pmRi9obnB2TEln?=
+ =?utf-8?B?UHdEa3p5MTh6SVg0OG5XVGUyMCtuTjBYRk04RWpDUFE4Q0RqVVNaK25EdEMx?=
+ =?utf-8?B?NGZYVEVLUWZlRjlFTnBYQjlGVWVQLzhEazNNeldYbWpVQnJKVk4wOFRIQlNy?=
+ =?utf-8?B?d3IvYnNpTUZPZ1FXNTFiOEtRTEdzRmZjMlRFTlBPUldPZDZ2Y1E2L1NpbHhT?=
+ =?utf-8?Q?+a64b4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?YmJUM1gzNFQzM2RQa1FUazRjZzhseTNRNmI2UVZxOGthSGhKM3Y5WkpFU0Uz?=
+ =?utf-8?B?dnRJNm1MeS93WUViN3o4UUd1aXcvUTZZYWphV0x6R2xVSzBCQzNLZEYwZ1VY?=
+ =?utf-8?B?V3FWcjRMejZIZ2NxdGRFRTViVFQ1TktUZ3IwcWl5aWhQRzVWWHVuMXFiQytv?=
+ =?utf-8?B?eUhUQm5TdDJrQ0xEYWFSM3JxdEdWalB6OVFzOTg0RVA2MWtPUEFDZjFQWTIw?=
+ =?utf-8?B?MWRYTmZoZHJjazdVRE9wZFpNbmdTY3J6aWtUZHlPanNIRzBlcWRJWFhyQk1S?=
+ =?utf-8?B?NGZvOEdpemlyWDhJVTJONEphd2xEVmdiY0t1TVZaM1lveU5EUnpjNXZ3S1BN?=
+ =?utf-8?B?b3NNeHNMUTAwTElFRTVSVkxYVm9zdUhTS2NaZ1Y3Z0VBUDRRQUFLK2dZK01W?=
+ =?utf-8?B?UU03TVN2M3hKNEx6OC91Mm03Q09KM2F5RW5rT0N1cExBdDI3ZDEwVzMwdFlW?=
+ =?utf-8?B?bk1sN0tZZWZNYlo3RHN3Q1d0WGRlR3V4NitPc1ptL1Y2M1ZrZElqZHlNaGpv?=
+ =?utf-8?B?WU8yS0hPZEpZajV1R2JSY3JyVVNSVkVUblNhZEJLQWs2Mkd1VEZyT3AyekxE?=
+ =?utf-8?B?ejFMWURIZnlLa2VZQkpRYVA1eHh0dGRqTDRnZmo0Skp0NmZkc0pNVTZtRWw3?=
+ =?utf-8?B?MGdhZ2NVekw4WisrY3BOeC93MmduS3lEVnBNaHovRGlwc0M3WXZUclVBc0k0?=
+ =?utf-8?B?YzQzNmdXREJCSC8zZjJibHdBekpZc3F3QmhCN1JHcFZaME9JT1grei9xcWpN?=
+ =?utf-8?B?MFdmVThrMkNtWWRoa0JYVktvVGxVaVIwcjdMZTVzb3E0VHdoaFJPZkZzM2Yv?=
+ =?utf-8?B?R2FqT2F5cmdjRzRSdmU3Smdyc09WN1lkVHpJa3k0OThIWFZpUHNWS0xDeTlP?=
+ =?utf-8?B?dVpVMEd6SU5Ua1I3cElRSzJUUzlyNTJLZC9Ga2l4S3VteVFyTXA3R0tYMGxY?=
+ =?utf-8?B?N3I0MVFtaHR1RzJOWGN2NFhjMzJGbFdKVHlMWTkwbzdRZy9kZWpMcm42THpS?=
+ =?utf-8?B?NVA3eStOR0xURGhtWVlSUE5XV0dPaDRBWFdsNjZwRXE0dzBEbndhaHJPQzl2?=
+ =?utf-8?B?R21EclVVTkhKRlA4RGk4MlMweHBBckhnM0lVeWh5c09peW5WWlFGTGc3Nmhx?=
+ =?utf-8?B?cUREY3Y4L3pFM0tsTW5RS3BYT2RvSnFnbUFhZi84ejhVTDlqNTBidDdaS0lM?=
+ =?utf-8?B?aUxqZHlFYnZIMDVYd1FoTmIvNzdPYVNYNjBCTXo3NHJOYlhYS1BmVlpqeFZI?=
+ =?utf-8?B?U3FPYk5QVHZQSVZkRmloSStFZEU2cHI1V25Sb1AxOGI3MjVyQy9zNkYwQVhP?=
+ =?utf-8?B?U0g5b080dDBzdXhtbFpYLzZ2U2lGNzgrcWNuRDJEMnM3a0FLa0tCY2FwNk1R?=
+ =?utf-8?B?WmFPNEZKNjdnM3pWbmRhL0lMYWN6QmdUUFo5Mk9XT2pDVVU1VVRaRFpUOEpx?=
+ =?utf-8?B?b3NtSlJzMzJCdlpra3BqUHAxWG8weFQvaGhzYkV5MVJacENiTXpCd2dWVkhq?=
+ =?utf-8?B?MzViTVZ4WTZzUHlOdWpTV3Jwd05aTzFCWWtDazlWTlpUWUNXZjhHNXFtdlRK?=
+ =?utf-8?B?aFBkcTU5TFR2UGwzVmdTQjFLM3kxRExHTFp0aGpmcW44aUtDamNKaGtGWGJj?=
+ =?utf-8?B?UWhDZW9rb01rdk9DcnFUUXRuc1lBZWJRUkFZaGFpYncySXVyUXJYVkpvcmY2?=
+ =?utf-8?B?aVhTM0o3VHBWKzBpVkFidEdDK3ZwelVvTndmdTJFellMVE5DVWg5M2NHeGFr?=
+ =?utf-8?B?NVZTWEtwTXo0L004czYzVFdTblEycFg1VkVYODdOLzRMU3B6ck4wNHhWZVJC?=
+ =?utf-8?B?eUxpTXNyTGZMWlI1ZDkxNEN3eGVEZGdhK0Q2VVE5YzRMSlNCSlhJYkV6RW16?=
+ =?utf-8?Q?J6BDJ4PWoedBY?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: af4c71f6-ff31-4b9f-3adb-08deb0221f9d
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR03MB11634.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2026 12:29:34.1761
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR03MB10184
 
-Add a function that does the same as strbuf_addf(sb, "%"PRIuMAX, value),
-only faster, and use it to speed up bulk reporting of size values a bit.
+On 2026-04-22 16:25, Derrick Stolee via GitGitGadget wrote:
 
-  strbuf: add strbuf_add_uint()
-  cat-file: use strbuf_add_uint()
-  ls-files: use strbuf_add_uint()
-  ls-tree: use strbuf_add_uint()
+> From: Derrick Stolee<stolee@gmail.com>
+> 
+> In a previous change, the --negotiation-restrict command-line option of
+> 'git fetch' was added as a synonym of --negotiation-tips. Both of these
+> options restrict the set of 'haves' the client can send as part of
+> negotiation.
 
- builtin/cat-file.c |  4 ++--
- builtin/ls-files.c | 15 +++++++++------
- builtin/ls-tree.c  | 15 +++++++++------
- strbuf.c           | 12 ++++++++++++
- strbuf.h           |  6 ++++++
- 5 files changed, 38 insertions(+), 14 deletions(-)
+s/tips/tip/ as per the previous patch comments. Not important either
+way.
 
-=2D-=20
-2.54.0
+> This was previously not available via a configuration option. Add a new
+> 'remote.<name>.negotiationRestrict' multi-valued config option that
+> updates 'git fetch <name>' to use these restrictions by default.
+> 
+> If the user provides even one --negotiation-restrict argument, then the
+> config is ignored.
+> 
+> An empty value resets the value list to allow ignoring earlier config
+> values, such as those that might be set in system or global config.
+> 
+> Signed-off-by: Derrick Stolee<stolee@gmail.com>
+> ---
+>   Documentation/config/remote.adoc | 19 +++++++++++++++++++
+>   builtin/fetch.c                  | 21 +++++++++++++++++----
+>   remote.c                         |  8 ++++++++
+>   remote.h                         |  1 +
+>   t/t5510-fetch.sh                 | 26 ++++++++++++++++++++++++++
+>   5 files changed, 71 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+> index 91e46f66f5..f1d889d03e 100644
+> --- a/Documentation/config/remote.adoc
+> +++ b/Documentation/config/remote.adoc
+> @@ -107,6 +107,25 @@ priority configuration file (e.g. `.git/config` in a repository) to clear
+>   the values inherited from a lower priority configuration files (e.g.
+>   `$HOME/.gitconfig`).
+>   
+> +remote.<name>.negotiationRestrict::
+> +	When negotiating with this remote during `git fetch` and `git push`,
+> +	restrict the commits advertised as "have" lines to only those
+> +	reachable from refs matching the given patterns.  This multi-valued
+> +	config option behaves like `--negotiation-restrict` on the command
+> +	line.
+> ++
+> +Each value is either an exact ref name (e.g. `refs/heads/release`) or a
+> +glob pattern (e.g. `refs/heads/release/*`).  The pattern syntax is the
+> +same as for `--negotiation-restrict`.
+> ++
+> +These config values are used as defaults for the `--negotiation-restrict`
+> +command-line option.  If `--negotiation-restrict` (or its synonym
+> +`--negotiation-tip`) is specified on the command line, then the config
+> +values are not used.
+> ++
+> +Blank values signal to ignore all previous values, allowing a reset of
+> +the list from broader config scenarios.
+> +
+>   remote.<name>.followRemoteHEAD::
+>   	How linkgit:git-fetch[1] should handle updates to `remotes/<name>/HEAD`
+>   	when fetching using the configured refspecs of a remote.
 
+
+You say "during `git fetch` and `git push`", but does `push` actually
+honour the new config?
+
+When the `push.negotiate` config is on then
+`get_commons_through_negotiation()` from send-pack.c shells out to
+`git fetch --negotiate-only` with one `--negotiation-tip=<oid>` arg per
+ref being pushed, then the URL. This means the CLI restrict list is
+always non-empty in the subprocess so in `prepare_transport()` (in the
+below hunk) the `if (negotiation_restrict.nr)` arm is always taken and 
+the new `else if (remote->negotiation_restrict.nr)` arm is never taken.
+
+BUT.. reading ahead I see that patch 7 actually wires up negotiation
+config for push - so my commentary here will be moot! Do we want to drop
+the "and `git push`" part from this until patch 7, when it is wired up
+appropriately?
+
+One other suggestion: perhaps we should clarify that `push.negotiate`
+needs to be set for `remote.<name>.negotiationRestrict` to be honoured
+during pushes?
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 2ba0051d52..a1960e3e0c 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1601,6 +1601,19 @@ static struct transport *prepare_transport(struct remote *remote, int deepen,
+>   		else
+>   			warning(_("ignoring %s because the protocol does not support it"),
+>   				"--negotiation-restrict");
+> +	} else if (remote->negotiation_restrict.nr) {
+> +		struct string_list_item *item;
+> +		for_each_string_list_item(item, &remote->negotiation_restrict)
+> +			string_list_append(&negotiation_restrict, item->string);
+> +		if (transport->smart_options)
+> +			add_negotiation_restrict_tips(transport->smart_options);
+> +		else {
+> +			struct strbuf config_name = STRBUF_INIT;
+> +			strbuf_addf(&config_name, "remote.%s.negotiationRestrict", remote->name);
+> +			warning(_("ignoring %s because the protocol does not support it"),
+> +				config_name.buf);
+> +			strbuf_release(&config_name);
+> +		}
+>   	}
+>   	return transport;
+>   }
+
+
+See above - this new arm is not reachable on the push.negotiate=true
+path until patch 7 wires send-pack up.
+
+> @@ -2658,10 +2671,6 @@ int cmd_fetch(int argc,
+>   		config.display_format = DISPLAY_FORMAT_PORCELAIN;
+>   	}
+>   
+> -	if (negotiate_only && !negotiation_restrict.nr)
+> -		die(_("%s needs one or more %s"), "--negotiate-only",
+> -		    "--negotiation-restrict=*");
+> -
+>   	if (deepen_relative) {
+>   		if (deepen_relative < 0)
+>   			die(_("negative depth in --deepen is not supported"));
+> @@ -2749,6 +2758,10 @@ int cmd_fetch(int argc,
+>   		if (!remote)
+>   			die(_("must supply remote when using --negotiate-only"));
+>   		gtransport = prepare_transport(remote, 1, &filter_options);
+> +		if (!gtransport->smart_options ||
+> +		    !gtransport->smart_options->negotiation_restrict_tips)
+> +			die(_("%s needs one or more %s"), "--negotiate-only",
+> +			    "--negotiation-restrict=*");
+>   		if (gtransport->smart_options) {
+>   			gtransport->smart_options->acked_commits = &acked_commits;
+>   		} else {
+
+
+This new condition fires whenever `gtransport->smart_options` is NULL,
+i.e. the transport doesn't support smart options. Before this case was
+handled three lines after this hunk by:
+
+   } else {
+       warning(_("protocol does not support --negotiate-only, exiting"));
+       result = 1;
+       trace2_region_leave("fetch", "negotiate-only", the_repository);
+       goto cleanup;
+   }
+
+What happens now if a user runs --negotiate-only against a non-smart
+transport is they see an odd message:
+
+   fatal: --negotiate-only needs one or more --negotiation-restrict=*
+
+..but they may have specified --negotiation-restrict options.
+
+Do we instead want &&?
+
+      if (gtransport->smart_options &&
+          !gtransport->smart_options->negotiation_restrict_tips)
+          die(_("%s needs one or more %s"), "--negotiate-only",
+              "--negotiation-restrict=*");
+
+> diff --git a/remote.c b/remote.c
+> index 7ca2a6501b..166a56408a 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -152,6 +152,7 @@ static struct remote *make_remote(struct remote_state *remote_state,
+>   	refspec_init_push(&ret->push);
+>   	refspec_init_fetch(&ret->fetch);
+>   	string_list_init_dup(&ret->server_options);
+> +	string_list_init_dup(&ret->negotiation_restrict);
+>   
+>   	ALLOC_GROW(remote_state->remotes, remote_state->remotes_nr + 1,
+>   		   remote_state->remotes_alloc);
+> @@ -179,6 +180,7 @@ static void remote_clear(struct remote *remote)
+>   	FREE_AND_NULL(remote->http_proxy);
+>   	FREE_AND_NULL(remote->http_proxy_authmethod);
+>   	string_list_clear(&remote->server_options, 0);
+> +	string_list_clear(&remote->negotiation_restrict, 0);
+>   }
+>   
+>   static void add_merge(struct branch *branch, const char *name)
+> @@ -562,6 +564,12 @@ static int handle_config(const char *key, const char *value,
+>   	} else if (!strcmp(subkey, "serveroption")) {
+>   		return parse_transport_option(key, value,
+>   					      &remote->server_options);
+> +	} else if (!strcmp(subkey, "negotiationrestrict")) {
+> +		/* reset list on empty value. */
+> +		if (!value || !*value)
+> +			string_list_clear(&remote->negotiation_restrict, 0);
+> +		else
+> +			string_list_append(&remote->negotiation_restrict, value);
+>   	} else if (!strcmp(subkey, "followremotehead")) {
+>   		const char *no_warn_branch;
+>   		if (!strcmp(value, "never"))
+
+
+Here we use the 'empty value means reset the list' pattern, but I notice
+that the `parse_transport_option()` function already supports this reset
+pattern (and used by serveroption above), with a small difference:
+
+   if (!value)
+       return config_error_nonbool(var);
+   if (!*value)
+       string_list_clear(transport_options, 0);
+
+So NULL is an error, but empty string is 'reset'. Is it worth being
+consistent with other options that use `parse_transport_options`?
+
+> diff --git a/remote.h b/remote.h
+> index fc052945ee..e6ec37c393 100644
+> --- a/remote.h
+> +++ b/remote.h
+> @@ -117,6 +117,7 @@ struct remote {
+>   	char *http_proxy_authmethod;
+>   
+>   	struct string_list server_options;
+> +	struct string_list negotiation_restrict;
+>   
+>   	enum follow_remote_head_settings follow_remote_head;
+>   	const char *no_warn_branch;
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index dc3ce56d84..eff3ce8e2d 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -1485,6 +1485,32 @@ test_expect_success '--negotiation-restrict and --negotiation-tip can be mixed'
+>   	check_negotiation_tip
+>   '
+>   
+> +test_expect_success 'remote.<name>.negotiationRestrict used as default' '
+> +	setup_negotiation_tip server server 0 &&
+> +
+> +	# test the reset of the list on an empty value
+> +	git -C client config --add remote.origin.negotiationRestrict alpha_2 &&
+> +	git -C client config --add remote.origin.negotiationRestrict "" &&
+> +	git -C client config --add remote.origin.negotiationRestrict alpha_1 &&
+> +	git -C client config --add remote.origin.negotiationRestrict beta_1 &&
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
+> +		origin alpha_s beta_s &&
+> +	check_negotiation_tip
+> +'
+> +
+> +test_expect_success 'CLI --negotiation-restrict overrides remote config' '
+> +	setup_negotiation_tip server server 0 &&
+> +	git -C client config --add remote.origin.negotiationRestrict alpha_1 &&
+> +	git -C client config --add remote.origin.negotiationRestrict beta_1 &&
+> +	ALPHA_1=$(git -C client rev-parse alpha_1) &&
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
+> +		--negotiation-restrict=alpha_1 \
+> +		origin alpha_s beta_s &&
+> +	test_grep "fetch> have $ALPHA_1" trace &&
+> +	BETA_1=$(git -C client rev-parse beta_1) &&
+> +	test_grep ! "fetch> have $BETA_1" trace
+> +'
+> +
+>   test_expect_success SYMLINKS 'clone does not get confused by a D/F conflict' '
+>   	git init df-conflict &&
+>   	(
+> -- gitgitgadget
+> 
+
+
+General shape of this patch is good. The main thing that tripped me up
+when reading this patch is the doc claim about push, which only becomes 
+true after patch 7 lands.
+
+Thanks,
+Matthew
