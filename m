@@ -1,111 +1,121 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AB73812F1
-	for <git@vger.kernel.org>; Tue, 12 May 2026 15:19:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5228B3C5842
+	for <git@vger.kernel.org>; Tue, 12 May 2026 16:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778599161; cv=none; b=eLBrrzqPMofWbe1X2y5+QgHgq1CAOPz0y/yNEkrpPzQEbhemT2o/dBh8GYmu4FF821aAig1Gfw4ygdItwIJ8pEdigHgmAk1PJuUMgQcYejTwfoytqmCHNEShdtlzDcYNeuxVTkD4lTFGx7VLnfmwpr6SVDfqxhCuaOrIdZV6Y+w=
+	t=1778602188; cv=none; b=jcvh6hd/VJK7rhrd2x0UL1AFH0CCm4oUdyzYkC2P40yOMKAiMEuSh/0cAnCI+YBiNn/qm63jyTd2MVjo+kWB5GLrF3O9EXT2EQQH590DAVXWx+yzqnhwIUH5izWhvoflwFktSETzoCfCbRB4Txvm38CoP6yoNsQBCem8kBqneJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778599161; c=relaxed/simple;
-	bh=8p6ZwtsYyQhLMpRzy0sGQy8T28QcgYm2xOTivKDvh1k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ABLhEIaA7CUv+z+J374D8QLlAZc6L/l0bhJ4DNs5I5iml/EnE+mA5SEHU1y3USO09W5h4jzpeQdj5Qj2iEJL606E0WQnCJ+Dp4Sf2ZvSW1uPsfbn1E4d0Saddn3LPh/VDbuhaary4ddzxXx4Kxgo9P+UHSCao5ksTAV5OaaNWx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BZtjcudQ; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778602188; c=relaxed/simple;
+	bh=/tZ+UUB4CltN0lln97/+nQrrgUiH+OUUen9EeNu5JGo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rMDgnYsdQBrBRtb1u5721GtPVMytdzaP9vBcwmxfkxcBWXFsqyy6Zrzux8ih6Lk73bkOZu1bh5gwu9oQIxQzfpyhgqiKGIvlXQxJ93LVm2cQoNozSJmMXaDPjK2aboTZsKoFsySxIutqSioiVQsPXqXyRk8HtUf+GAUjTHwSA5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=doLjUyZq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OkfUaofx; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BZtjcudQ"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-439b2aad735so304504fac.0
-        for <git@vger.kernel.org>; Tue, 12 May 2026 08:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778599157; x=1779203957; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yqth+u0GIVxli6o4HJRqIqtUI2oVDcOonL4c+4p6DMw=;
-        b=BZtjcudQk1+BsmkGIIsuceMpML3aw/2vXGXIdgkWtES4ftIM0dCcmJVAUmvwjEb1bB
-         vflUnFRX9kalYYyITmZ0SnftpiUJoevAoYl/HWo+pquRUn7GWFRIiijiWScLckP4BSoO
-         bXxtNi13nr7LLazGIIQIuOW3Xs7wNTsTpV2MD7XMxBqMV95jRAVm2hzCnHrDAZnPs4A2
-         1tC3jZlt4gGE6owFkyjKWWs2TBTdyvugUZ/WlE7kT37B2ivq5pycoqrkPNm78N17LtJt
-         wB+xbEKPRzGAv2Ak9tio/VdmI8C8qy/nmKbgOOQHiwHrT/ZinfmcbikEB3dDsa3qEeDY
-         Wp0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778599157; x=1779203957;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yqth+u0GIVxli6o4HJRqIqtUI2oVDcOonL4c+4p6DMw=;
-        b=BBTjVe92yeuGl2SxzZGTZtw8pCkorIDROyTG0mhTAIjVN6ne1SwjoRhriEABCGvnsk
-         qXgraj+mZbgbVaSc+OOLwQHHU6xgi9d5XJ06II2yiAAZoOXd0EeEpPKvFmJc0UEloOWj
-         DlXL9NBLbwKTjArfXi57t+WI5lRzfMJt3WOsC3dLTSNPIjOVdXDuCEN+7TaaJ6UYxIVQ
-         ngFGM3O9eIMRKLrcJ2tFRkARzMgP8sUV16JGwr8rqu/VI542FZvxMTcTkCtzye3xvxIL
-         Cr2IkTd2UJuWJfmU9n5d79leYkHzUovYbi2ftPoYiNUDhdcWTOw6qpCwpTqsKxCQZ6Iq
-         i61A==
-X-Gm-Message-State: AOJu0Yxaea+/Hcahpxz/YTfIllBqAoou1vPHEH+rVVF1rU8cpr55Bo/c
-	5PoKe60Iq6iayUxEQhwwftSGiwwRZYfbjdcYNTVXmJ65SL6uozKfkU3p9C8qIw==
-X-Gm-Gg: Acq92OFFue9D+gtVmZOS9XM+rJnbwi5tkd6r14SpDAQRb7N0ILqs2CrBzLgSpa16Ysm
-	JnkYIt8ni/iHxc72rOqk15yqaI3UdvFJDJStjNGjhRrkDNlAGeRcqfgjK2/pmnTXWyZEcHP1zWz
-	+OtjGOU9QNZuorYcf43UlVPynHND7vBbroGEfD3i4zsryyDComU97bJM8lq4scmSetgZQ4Ny6XB
-	rm/TL/D8lk75miYhM9GxtjqWunBh33i+0NTyAqz1zTPdcflsa5kCigvV1mndFhtPK6xxhYwC8JX
-	SJM04OWWfj9G2r/LTrtmFMhIfLAKe/JQh87XPJ+iztgf/+6jslq6ikTYl5x/zRlY0Rrc8Cmu411
-	fIQeHHHMQC1BMgNIPhc0sLJNEK95hH43l/KV07l16A+AnmZCELLRPLZdBC4up14//obVK1z6jws
-	6NGz151thbioehmmhw3mcyHO2NCBk=
-X-Received: by 2002:a05:6870:142c:b0:417:359c:292e with SMTP id 586e51a60fabf-43588a362c4mr8385534fac.12.1778599157112;
-        Tue, 12 May 2026 08:19:17 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-435573e94edsm12967157fac.13.2026.05.12.08.19.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2026 08:19:16 -0700 (PDT)
-Date: Tue, 12 May 2026 10:19:13 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
-Subject: Re: [PATCH v3 3/7] odb: update `struct odb_write_stream` read()
- callback
-Message-ID: <agNEixLnzEVJRL9_@denethor>
-References: <20260401030316.1847362-1-jltobler@gmail.com>
- <20260402213220.2651523-1-jltobler@gmail.com>
- <20260402213220.2651523-4-jltobler@gmail.com>
- <20260511175835.GA4811@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="doLjUyZq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OkfUaofx"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id A4A3F1D00065;
+	Tue, 12 May 2026 12:09:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 12 May 2026 12:09:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778602184; x=1778688584; bh=BA9iFMdqvC
+	l8r3sr9ItnO4qoBaZgl+hrsRJ6ulFo4DM=; b=doLjUyZqYEZAF8Xd11hfPg0RsX
+	U36qK0HYv9g/F9QewWJomBpLinRZ3omTX2vK9tBTdvLm5PpqQCMY/72gU4ir7PIA
+	ONGxV0E58MilL6VVgg+nJbJrJLdYEs1nbHPLdfrjjClQPMHuOlhL+b89+jDF9XNE
+	sur8ogUzbTZd9zyFifomj6frsyICceovjLBHmFCw1cKJRrERRuTYDzpPVAj/VyF0
+	r5ffj2kSLS09KR7lXgomij5fKSHLV0tXbwBF/loOOVkpUenjj+e+6rE6P1RdYg8B
+	IQMeRg8/trJovIhkk2LSCJz4OSXZUSbHN/51c96BdOLNQ6RgIAB8gvlvXQ5Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778602184; x=1778688584; bh=BA9iFMdqvCl8r3sr9ItnO4qoBaZgl+hrsRJ
+	6ulFo4DM=; b=OkfUaofxa109Xvs9qmIQNbXpCBSNXTPjc1i6W+4TRLazNHm+vBV
+	lUdCwTqxWs2sf13YaYUePFd0caR8AMGSnrpNy4gaAfoZ2tEt650nzfjiGwNkhSIK
+	GlAWzlEnPWbeDTateOIzzaFz6HlmxtiX9yyOAuXXYHEaeUKjBx8dRQPecA1/gYEl
+	AXH0O6yieUY+w/Pqkksjf/vdAlDxezWp5g91gq/nrzhCtMoKJtZgFkU73+P23MOl
+	oK5fNAWxMAxD6W7BvQcaTxCy/YUTCPbKyd0kl944mtWTCuNegRP02XsgReA/xFow
+	73lfuHFYBSx5FLLg7IngZL2fntM4IeqIJTw==
+X-ME-Sender: <xms:yFADalSIbXK14s_W-8Ns-RO4KyZQpNmbmwgCNTO0mXGyVmU9cnu7Ww>
+    <xme:yFADaifF_50DysFmPzSjFUi9jVm4vpodgmYfjNJV4-CvjDIlE_wHVsec0q67Gprcy
+    iToi7ERqBJGt66yEJuhgnWKs2XIx1nWq9nMUOmIgJV9khBff1mbbA>
+X-ME-Received: <xmr:yFADakpWv-s77BrmwwHLXcSAK24czqRHrLfP5TjOYECmsjQ47p35eg20ZWS578hl5sRNXBxw7t77bNbvBCBDUUAph3N2vHmBCw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddvvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsegslhgr
+    tghkqdguvghskhdrtghnpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yFADaj-pI-Sd94Wew_MpHIy9d4cJCOVXmNVc-XZh9-cNySZCd5yMKg>
+    <xmx:yFADagd5xzvOzKWkdZSWnNpBbbTJy-2SjGNdxfvREFIdHbpmQRINDA>
+    <xmx:yFADatLwTt4D6EkIp1gfA6CdRnjgLvWoS9pldFQ1zVVOr1MTsumfVg>
+    <xmx:yFADagismb8A5v6fQm33Mi3JJ3jZL7XAbHI-mvlylWT6kOioQbtXXQ>
+    <xmx:yFADapafVq2wtyomSRWC4wqlxtSI0vqweOg83WOBAKmIO6CSYGJnUZvx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 May 2026 12:09:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  me@black-desk.cn,  git@vger.kernel.org,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 2/2] config: add "worktree" and "worktree/i"
+ includeIf conditions
+In-Reply-To: <d236de15-f03e-4bac-9eb1-c14e50a271f5@gmail.com> (Phillip Wood's
+	message of "Tue, 12 May 2026 16:07:12 +0100")
+References: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
+	<20260403-includeif-worktree-v3-2-109ce5782b03@black-desk.cn>
+	<agLTO0amktCWMsiE@pks.im>
+	<d236de15-f03e-4bac-9eb1-c14e50a271f5@gmail.com>
+Date: Wed, 13 May 2026 01:09:42 +0900
+Message-ID: <xmqqo6iklid5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260511175835.GA4811@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On 26/05/11 01:58PM, Jeff King wrote:
-> On Thu, Apr 02, 2026 at 04:32:16PM -0500, Justin Tobler wrote:
-> 
-> > @@ -1098,9 +1099,16 @@ int odb_source_loose_write_stream(struct odb_source *source,
-> >  		unsigned char *in0 = stream.next_in;
-> >  
-> >  		if (!stream.avail_in && !in_stream->is_finished) {
-> > -			const void *in = in_stream->read(in_stream, &stream.avail_in);
-> > -			stream.next_in = (void *)in;
-> > -			in0 = (unsigned char *)in;
-> > +			ssize_t read_len = odb_write_stream_read(in_stream, buf,
-> > +								 sizeof(buf));
-> > +			if (read_len < 0) {
-> > +				err = -1;
-> > +				goto cleanup;
-> > +			}
-> > +
-> > +			stream.avail_in = read_len;
-> > +			stream.next_in = buf;
-> > +			in0 = buf;
-> 
-> If we hit this "goto cleanup", we'll leak the "fd" descriptor opened
-> earlier. We either need to close(fd) here, or do so in the cleanup
-> handler (but that means consistently setting fd to a sentinel value
-> after we close it, which we do not currently do).
-> 
-> Noticed by Coverity (I guess this series just hit "jch", since it's
-> "new" as of today's run).
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Thanks, I will send another version to fix this leak.
+> On 12/05/2026 08:14, Patrick Steinhardt wrote:
+> ...
+>>> Introduce two new condition keywords:
+>>>
+>>>    - worktree:<pattern> matches the realpath of the current worktree's
+>>>      working directory (i.e. repo_get_work_tree()) against a glob
+>>>      pattern.  This is the path returned by git rev-parse
+>>>      --show-toplevel.
+>>>
+>>>    - worktree/i:<pattern> is the case-insensitive variant.
+>> 
+>> Seems sensible.
+>
+> We already support per-worktree config settings via 
+> extensions.worktreeConfig, so it would be helpful to explain why it is 
+> more convenient to set the config based on the worktree's path, rather 
+> than just running "git config --worktree" inside the worktree. Do you 
+> have multiple repositories with worktrees checked out under a common 
+> prefix that you want to share the same config setting?
 
--Justin
+Excellent point.  The documentation for the new feature may have to
+be strengthened to suggest which one of the two approaches is more
+appropriate with what use cases.
+
+Thanks.
