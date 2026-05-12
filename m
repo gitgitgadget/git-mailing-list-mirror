@@ -1,107 +1,154 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39844383329
-	for <git@vger.kernel.org>; Tue, 12 May 2026 01:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3E72E413
+	for <git@vger.kernel.org>; Tue, 12 May 2026 01:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778549617; cv=none; b=WJw0ACbJa7Xtrx7GZF/WMTpegV5euYGXn7FMxrwZvSx1O8LNU83KdZA0lZm7ciUlwP9VAkJ5qX/U2DXcpYbLy7OGDKMeOvajX1UG+vi15inFpZqau86miOLjSDQwhb9LKwm25Yytw4q2nh96tZEITjEdSPAdYP2eGoEo/0F2wiE=
+	t=1778549928; cv=none; b=T8p9mvVCRpd5WXp2vK8aWIktrZp3+Vg0UEl9jZ5thIbq/34ngol+pS3k1fbf1JcaWctbXCtWJ/Vs2lgv1healLUBwT8UljhXjUrFrhLnYvsyHlnGLZMVYzZN1WouEFd4+/V5M78hKLqZKomK1h6VuilY0B4x+WoMwrJLR7fjAtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778549617; c=relaxed/simple;
-	bh=pDm/v2+ULFiJVihOJWajfTHax8dt76RkK+16a5SeXt4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W/BDob6WZ1pQqPwUUwovXNKoLA41Mmk00075eRBhe4yaBckqtdqJxXsiXCD86/1y5oGbr39oFQ5tHuAEdFTluVp9XrCn1Ov+cAqaDdgJ6QeqIb4Qa1TP5V0Nm/QpD+9c0JJWyW6qKaEEsOIlU9aH6l68S2S67QtQXAQGc7WiBzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ECa/gNzY; arc=none smtp.client-ip=74.125.224.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1778549928; c=relaxed/simple;
+	bh=bhYKVssR5gSu0o5viiGEHUrx6Ns21hUdtcUBHz09QKM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Jxo9ok1T2PVZqNL/hu6by1I8gsB9PKG2AwV/9An7lOn8pMSR80PuyAb3rh12WgY4Oa+P8rrJJVDsDognFaFUdmWcNfJEqHtwTWlnTZMVbUai3uKnt698qc7zxmrA7xeMWGNlEVNvqBQN8Ya/+8/zftKNGHgP7w1q6G81ubcipX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u5Pg1MWS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YIjjdEZX; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ECa/gNzY"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-65318dafbcbso5189634d50.2
-        for <git@vger.kernel.org>; Mon, 11 May 2026 18:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1778549615; x=1779154415; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pDm/v2+ULFiJVihOJWajfTHax8dt76RkK+16a5SeXt4=;
-        b=ECa/gNzYLgI9kVo1rrdkw2pYESlIhiyyRVwe35oxZJfUHBmLwE8Cjk5cQzjGAhTGJj
-         Wd5IxsHjcv2qB2WHOM6Bwq2WoKeTsW1EqKwz8MQrmYq+UPn2ETPKU6SxLbiFTpTbE+Pu
-         alc597xdS/z98N+MQ4LPkDi+2IRUrpx+u4DLQ3EEEUx3wtA3qo5isT6HMpDCXW1G+BvJ
-         Avqi+Q4m7M5ey3hQXq5QnPpcfWiAeftjaeuoZ5RJvqslF2RibDREH7tFe98NWzlBvjf3
-         uX4vCGNgOZ3mZ/nPqQahWfKRvZ0jWAPz0PnUMQunjTcDi2wE31tQ/2LFdag0YykQme22
-         p8mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778549615; x=1779154415;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pDm/v2+ULFiJVihOJWajfTHax8dt76RkK+16a5SeXt4=;
-        b=BBFiufdTw6GzcTI1v/rzGSPFt+e0SmYjDS+6oyrXMIq4dOuiB+1FmAfZ9+GrE+It6y
-         G/qt112g14QE3WI82oJo2Cl2X26Ct4PPmKMMNlwUNFCefvKR14Qc7wFA2JP2z7g/aChC
-         l4nKmJb5w8PsWiZ+wkF0K/V045BWwqwdddPKsN3yQZSRvkzSJ4nVlkMq3oSu6d2Uq8TL
-         Hxm8AuGIrr5vVmEpaJ84xmNYEbB/xQK/aq/yhuaCnySCtZJb+uFCmDJ2Nd9OWxlj4MJt
-         3INFsm4QgfK59bzWg2xuAdtdymcjYC/dIAWMOm230vd+VsOE9I458Y8eeV8y0Xyaja7P
-         fVCA==
-X-Gm-Message-State: AOJu0Ywv7L6phf/YVnncIvNlvFY7X10xzVDzz9VsRxS7b1ewtxWiSogq
-	KchX/43M/iHjeiy5oXO6rbo4n7fK5mFXffToRpnuLgmah1mpH78jiE3vWMeVxkVq3yw=
-X-Gm-Gg: Acq92OEnLJHhRH7d3/LHA7of1Ssjg8LGoa6oXolLFH5fI3GPc/4FDGiSrJsVigUmHbA
-	74sEFs3RAr/PPU4xkwHOSqkFvh6xnwcvSgoxbnfTxcvn1r5eI/GR6srJdRV89lX39HYb55ccdAh
-	6XK6KOPORGbnF8L8a+QWfxp1m18wMOMyZvG3VnLr6xxYO5vln5Hmr5Rsa0qtUh6FeyGtylnEC23
-	MukzDf4AAWyeg5QuNQNxm7p/Bd+PBy1XB0bhFce7Aejhany7aJs+SPxst97guOJ5/fmnyVQETGR
-	SlNcpncGmXUDMtv3NRGvIiA20vRXuwClt4E4WA+0elqyssitZxe1h6uP8nrpsLfteFqsFVGX1mT
-	SgpVW6z03pxu+CqUo/5t5YXUki0Pci4NNHK9ZhWunLWcxUP+HbkD/FtlhYiR/af3j1TPyXp6jO4
-	pYcXerkeUVyiygEBpbbCiUEm0HRRgDWppxC6scQhKPaTTZiTh6e/slVF8Q2c+un1nRs2SQzHuTm
-	hnAJKYvpzer8Bjtjcywk3AHTLHK+GarZElbkJvPO16+MY4Q6jIJF73fxFHyxCy6mK8eeHAL5AK+
-	8/Hy+8G9lhtvbt5Aoffq7cympiM=
-X-Received: by 2002:a05:690e:440e:b0:65c:308c:a157 with SMTP id 956f58d0204a3-65c79cf0eecmr21086042d50.12.1778549615100;
-        Mon, 11 May 2026 18:33:35 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65d969fb402sm6384700d50.3.2026.05.11.18.33.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 18:33:34 -0700 (PDT)
-Date: Mon, 11 May 2026 21:33:33 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 07/12] path-walk: support blob size limit filter
-Message-ID: <agKDbUoZeiux3jdj@nand.local>
-References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
- <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
- <a1ab70405d6209a11b2eb752c154361060f1675d.1778523189.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u5Pg1MWS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YIjjdEZX"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id F2BC81D00115;
+	Mon, 11 May 2026 21:38:45 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 11 May 2026 21:38:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778549925; x=1778636325; bh=asA+kebp/C
+	EJqJ3KhqobJTrq6nZD+8NdXe8AH93i8Q4=; b=u5Pg1MWSykTkTT5MuRX+qgnUHD
+	Vwn+3qYleXf18Pzyj89DkR0waA+BQzelkzpFaRPuqb5GjlNHV2h7fCBmCjR30hlW
+	raf9/NNPISngJXZUD9XMK6TM8zumS+WvH4MUSpW/m4awZLFPqmYTzEHPqsQuPzl7
+	4dX9WH92ulq9MtENbnnchGQ91m0UyuDwmanbEUS17SjNmp50CFX5UvJBX7WBMAmZ
+	C/GS+72Gx+T25tFFnucBULKSTuCaYBi/ypva+Irwa7YGwfbR9mC43MFMlybVBve9
+	Iy365XPHn++2uj4gLc0XyE1iSyTqznN1eGaX/QOBuR2qa1zhFDEOn4VRl2OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778549925; x=1778636325; bh=asA+kebp/CEJqJ3KhqobJTrq6nZD+8NdXe8
+	AH93i8Q4=; b=YIjjdEZXJU3kbf3a8z/lVCwYRdafUgXy4xooEGYXQ7rcMLNlj6p
+	IvgMaTr+TcGtG2CpfGx9k4Mq/x6oaIZlG4PEa7JmoAK2PDetAfvCmgAJj3QtKIHX
+	+uh76YbRRYIOQzIq9QJMJxwKmlzkFEZ/XDKtzxIU8OVA2bl24kvoeq4Rxx93YEdo
+	BRjVNJo/fs2Z3JhPnApzkTvnZvA8xSNFH/Q3PoJg8RCO/yD+8llUFgIkaKeoSn/z
+	ydlQM5PDpxpX/oSko9albGLm3my6JzPJ5l3f+L5N72IJsJ9MzvmXT1SrNi1uDp/g
+	YrsOzDe62j02mMVzx7ZHaOTeek27BmRgnKQ==
+X-ME-Sender: <xms:pYQCaoOcm0Dvr9vatO-vwodFvzvFVHSKWTxda4DUr1NvJEB4qjOyvA>
+    <xme:pYQCal080E6tKy20jgkv2Uvr9JUk1n2eIFVM9uRRLOMOZ1ySeugsO6LaEKUFz-iZF
+    bpZlcTAO4unvxuzfEvHWwDav8IcvnCJ-Dga6LV8u-91LIiEZ2W2>
+X-ME-Received: <xmr:pYQCannUs5MHi-VNgHAKc86-k3dT4ZVo8bpCMyYLWfv8kSRwTZpt9dFT-u64vk7M2tkpuSXuoxrVIxPB_lKds617helaqlT65w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtheduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:pYQCasVXo8dA2rOmEfXNeZob0aGyNMa17dmXxPtr5heOK1RbANjK3g>
+    <xmx:pYQCatsZGbaqMulD4pYjYhciS4zBAfGBG38sn4xtpUS9-mEWaD0Zgw>
+    <xmx:pYQCavYdy9kmPfa-BfIW7gejveaZPupf9_DJdUYcM0oXlaD1JDm_Ag>
+    <xmx:pYQCasUNaIHaZH_Fq6BIMwkmCaYr-vvmOKBtAiSAp-4I0765Ix5BkA>
+    <xmx:pYQCao1HvHAxClJDPPLWyCNzKHaLJw22TBlDKEBzii_tbunU6i0OQn39>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 May 2026 21:38:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v3 0/9] pack-bitmap: fix various pseudo-merge bugs
+In-Reply-To: <cover.1778546804.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Mon, 11 May 2026 20:46:44 -0400")
+References: <cover.1776124588.git.me@ttaylorr.com>
+	<cover.1778546804.git.me@ttaylorr.com>
+Date: Tue, 12 May 2026 10:38:44 +0900
+Message-ID: <xmqqse7xpftn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a1ab70405d6209a11b2eb752c154361060f1675d.1778523189.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
-On Mon, May 11, 2026 at 06:13:04PM +0000, Derrick Stolee via GitGitGadget wrote:
-> [...] Blobs whose size cannot be determined (e.g. missing in a partial
-> clone) are conservatively included, matching the existing filter
-> behavior.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Makes sense, but...
+> [Note to the maintainer: this series has been rebased onto the current
+> tip of master, which is 7760f83b597 (Merge branch
+> 'jc/neuter-sideband-fixup', 2026-05-11) at the time of writing].
 
-> Notice that this inspection of object sizes requires the content to be
-> present in the repository. The odb_read_object_info() call will download
-> a missing blob on-demand.
+A note like this is very much appreciated, but please also state the
+reason why the rebase was necessary.  "Because the current tip of
+'master' has advanced" is not a good reason.  "The previous
+synthetic base was made by merging topic X and topic Y on
+then-current 'master', but both have graduated" is a so-so ok
+reason.  "Because the updated implementation of this series uses
+facilities that appeared in recent 'master' that come from topics A
+and B, which the previous iteration did not use" and "Recent updates
+to 'master' brings in conflicting changes from topic C" are
+excellent reasons.
 
-... this says that we do download missing blobs on-demand. Should we be
-(temporarily) disabling 'fetch_if_missing' for this phase, or using
-odb_read_object_info_extended() with the OBJECT_INFO_SKIP_FETCH_OBJECT
-bit set?
+> Range-diff against v2:
+>  1:  c0df35f8ebd =  1:  9c7a829cbeb t/helper: add 'test-tool bitmap write' subcommand
+>  2:  11de3343726 =  2:  d1ed4aadf75 t5333: demonstrate various pseudo-merge bugs
+>  3:  8d908ab415e =  3:  bf3a9a07e5f pack-bitmap-write: sort pseudo-merge commit lookup table in pack order
+>  4:  07f70a07c20 !  4:  a1d341c92eb pack-bitmap: fix inverted binary search in `pseudo_merge_at()`
+>     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'apply pseudo-merges during
+>      +test_expect_success 'apply pseudo-merges from multiple groups during fill-in' '
+>       	test_when_finished "rm -fr pseudo-merge-fill-in-multi" &&
+>       	git init pseudo-merge-fill-in-multi &&
+>     -+	git init pseudo-merge-fill-in-multi &&
 
-I don't know enough about 'git backfill' to know whether the current
-behavior is more reasonable than the above suggestion, so please let me
-know if I'm missing something here!
+OK.
 
-The rest looks good to me.
+>       	(
+>     - 		cd pseudo-merge-fill-in-multi &&
+>     - 
+>  5:  3ed0b39843f =  5:  06e3410d323 pack-bitmap: fix pseudo-merge lookup for shared commits
+>  6:  95f847211f3 =  6:  78cf7e6d80d pack-bitmap: parse commits in `find_pseudo_merge_group_for_ref()`
+>  7:  f8a01cfb893 =  7:  4dbf6686718 pack-bitmap: reject pseudo-merge "sampleRate" of 0
+>  8:  c37156502c0 =  8:  46d0ee2f168 Documentation: fix broken `sampleRate` in gitpacking(7)
+>  9:  b905fd5d0ae !  9:  9b17dab2cf7 pack-bitmap: prevent pattern leak on pseudo-merge re-assignment
+>     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'sampleRate=0 does not caus
+>       '
+>       
+>      +test_expect_success 'duplicate pseudo-merge pattern does not leak' '
+>     -+	git init pseudo-merge-dup-pattern &&
+>      +	test_when_finished "rm -fr pseudo-merge-dup-pattern" &&
+>     -+
+>     ++	git init pseudo-merge-dup-pattern &&
+>      +	(
+>      +		cd pseudo-merge-dup-pattern &&
+>      +
+>     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'sampleRate=0 does not caus
+>      +		git config bitmapPseudoMerge.test.threshold now &&
+>      +		git config bitmapPseudoMerge.test.stableThreshold never &&
+>      +
+>     -+		git rev-parse HEAD~63 |
+>     -+		test-tool bitmap write "$(basename $pack)" &&
+>     ++		git rev-parse HEAD~63 >in &&
+>     ++		test-tool bitmap write "$(basename $pack)" <in &&
+>      +
+>      +		test_pseudo_merges >merges &&
+>      +		test_line_count = 1 merges
+>
+> base-commit: 7760f83b59750c27df653c5c46d0f80e44cfe02c
 
-Thanks,
-Taylor
+Queued.  Thanks.
