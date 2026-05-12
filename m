@@ -1,116 +1,109 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7574F1FC7
-	for <git@vger.kernel.org>; Tue, 12 May 2026 00:04:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB49E57C9F
+	for <git@vger.kernel.org>; Tue, 12 May 2026 00:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778544254; cv=none; b=uSELJ4FlIp/xulEil5knGiZxj6GCN0EhALTYWUc08tCYQF+6sNiceF5D63+LIBvzP2u6aeF6/YdzBIzU9+ymcd0S3BXQ5PqccKOI+6pf0/JWwjdLF0+VMiVtLmEI1bVWDq4lGqJrbQEwyiAPE0sgoIXe8y15TqN+0UAxsNHva3c=
+	t=1778544610; cv=none; b=W+rnQc4QD2A0+GWbKMJ3cJnNSLWz9HZuhsTTNu8MrXVntv9+i84eIafZtTP9hBlTmLboBzFQipvmmCrP5NbpS/gzLpFmBvCknnNXo362kslEEIkAKxVv613WivUAntFaE4qv1xg1TfRalQWKvSLP1ajgevmrE9sipLrpfAC07Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778544254; c=relaxed/simple;
-	bh=ekjt/iMF8WlL2MaWCgjTx7xHJfZPAHUV//TH6xpMnZw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cZje73oARgmxZDQMRckFmXp46VG6h1B689KrOpjWfALNTOrmsflH0D2gmRYMv4RvLntnrDWFxC0aenACx1qpq26lOfincDK++8uRe8sMWkLKO1PiEUOw4LNqHTkFx5dImE15ihj8LUKleWlA6DeOIEMO8rR5yqyK+mtF+hDRHa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eBU9ItZb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KRPX43t5; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778544610; c=relaxed/simple;
+	bh=6j0xCYK1BU6pB334M2zxct0GuPooL/5DcYdw/KpdthI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C/UoDMknK9rLBMIeyP06qtStlmM6laXnWyPmXfYAsppYMZCBeBLz1leruZ4VqOQGOBwo/kgbaUamH7pQI5avsyw7ekdwzUJ/9O8E756Agn/yWvZss8H6neu7Bq/6/l2FnrYFCjdXeUX6S8+19y0kytZWAQnaS0cKPwRsrNG6/wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=lvXK7Tol; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eBU9ItZb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KRPX43t5"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1D64D1D000CD;
-	Mon, 11 May 2026 20:04:12 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 11 May 2026 20:04:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778544251; x=1778630651; bh=Eu42NkgXCS
-	OQefyzU0u2LqfckPEjz+Ut1AY4HKMG0kI=; b=eBU9ItZb2mVw0DwnxW1lhtT9g4
-	Iglh78N13838TVdj5TljiDXCNOzLXwxBM55zHSrp69M7snUn5G/n+lDokzC88Ych
-	JmKr6BN/hKAD3TKA7cIzaiMRXD2kagBBCX45ljZD9cohxqQLGOMOGRWLkVh9T+qC
-	f1BxeF2aDul4vsHZbEPprFdi/jQDSV9YbMZpHtYBxg8JFQVhL78oaWWAoOliCDFv
-	D3BLYrxxU9EakyN8ZSnv1TuwwHSsXS0icwM6GIazmYD3/SMJ+1Helgk+EejDFmgr
-	cyk7Q7T+WGOg5KxvPsQQFkmHIqxWt1hUTZNJM3bqEwcAqZam0X4tP4WcTcag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778544251; x=1778630651; bh=Eu42NkgXCSOQefyzU0u2LqfckPEjz+Ut1AY
-	4HKMG0kI=; b=KRPX43t5JKZxJ9/oyZFtGtO/JftY8lyDVL7BWkdtJOyPKpN7w97
-	8J/e74Iq0vcsBrI4XITopMg30+KrTk8BqLsGpdLlIBf7Soqy/GikNvrXaY7PHpLS
-	qIvdoMWrcSMhwLoS99I39f55xpEA8FyTzJ4LXmjPLp18OWSKLTCP216GsuaBwbgA
-	WoClPtPhSpXh16VQ/JbuFcjyOER/Vb/BIQkEtzgaV16i58ijjzniUt7udhmrHGiA
-	1szZ2TT1q+iYXAG3les2/xU4YzPu+lgNVgBLqZn0mfegz0hkPuaEOzvDNsoUyfi4
-	AkCEMVWUWrIoxf1A+JJgm4IQRR+pmFzERow==
-X-ME-Sender: <xms:e24Caum_Dl_XiqdUGXQf4nHwdvr23r6qx8TnHo1SF5c0LUY4_Ejeiw>
-    <xme:e24CaibzSiqK3Q7UjxtnItk82SIUxinXF9E6j2st0-m_cfHuvFLdfUZ7yoca-FmmP
-    36-0dmXDuou1bD5wvjhJ6NH85tMz1aoMpW7B6jipb_dJAxt2jrQ>
-X-ME-Received: <xmr:e24CahHkC-dYleMlEWy_cCiHp4r1x7aJT_CmITjbIjomjfTY_czCclLSmoLGoFTeP3mrZLJPQPh_02vARnhtwQB_K0p3rutAPA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddtfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepjhgrvhhivghrsggrshhsihesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggsrhgrhhgrmhgr
-    uggvkhhunhhlvgehtdesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvg
-    gsrdguvgdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthho
-    pehrjhhushhtohesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:e24CapZiGD288XAhfYgiZv0_9d_hld7uKnkwc1FLdzESkaCYqbxa9g>
-    <xmx:e24CatyVWj7M3kpWROTfZwo_4UpUyv27vnZlZ4YptyEVBcFeI9EezQ>
-    <xmx:e24CajTuB7f547yXmrBbE8lzjLrkRElmqtjpfuB1yZeKxCGUf4NvKw>
-    <xmx:e24CaiKNE1IJUO3S4gO6s70Vil4a_ujNhDoSafZWOTjg-PaXER93rA>
-    <xmx:e24Can34SssO0sIT6k1oWiRki104so0cpj0iZB7kKLdn9HZv1GFnEhS9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 May 2026 20:04:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  Javier Bassi
- <javierbassi@gmail.com>,  git@vger.kernel.org,  Abraham Samuel Adekunle
- <abrahamadekunle50@gmail.com>,  Rene Scharfe <l.s.r@web.de>,  Elijah
- Newren <newren@gmail.com>,  Ruben Justo <rjusto@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] add -p: introduce 'w' command to view hunk with
- --word-diff
-In-Reply-To: <CALnO6CCR9bQ71LR_buEAzX4UcR4sERnaVLc6_19sJUfXyi-HPA@mail.gmail.com>
-	(D. Ben Knoble's message of "Mon, 11 May 2026 15:16:48 -0400")
-References: <20260506235459.529862-1-javierbassi@gmail.com>
-	<e640ac2d-9e46-4f1e-9aef-deac80c65361@gmail.com>
-	<CALnO6CCsOMyLxAhGW10L4duaahUORwedfmtdpY3zDGpQcZoP2Q@mail.gmail.com>
-	<xmqqqznix0ko.fsf@gitster.g>
-	<CALnO6CCR9bQ71LR_buEAzX4UcR4sERnaVLc6_19sJUfXyi-HPA@mail.gmail.com>
-Date: Tue, 12 May 2026 09:04:10 +0900
-Message-ID: <xmqqo6ilqyrp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="lvXK7Tol"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7bde9d73678so52667257b3.0
+        for <git@vger.kernel.org>; Mon, 11 May 2026 17:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1778544608; x=1779149408; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zaa4hrhwFbH73d8xQf1v1z4voRb61033r6IRDETLrds=;
+        b=lvXK7TolU01iXwFyyDDy37BGaiK3M39NEhL+D/7RjPFbFAtsO7pWVRHWw8X0GKu6cD
+         dpuimtjHNJXuaDWfdcVG13IMZ7U8dus5vVth41B62L1MY6IvXd+UOs0A5VGZX62hZVqW
+         GNinapUoU/VjfhrwSTnRlQkcKyr7ugMokcxtOHryoDGB1Dv1JR07PHM15EY9Dc8RJKeK
+         9uEP+5s2+0EbxJL0FsuVXYDdSwZRt8tDLK89bg+p0QOWGSXX8+CVuNFx/cAlMycl5fdy
+         8x0umC71aCKACkiiJgBVqCw6iPvGdzMfCaZCLEw4jdHyaJhvlt3eQpWdyc9xWaN3wC45
+         Efqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778544608; x=1779149408;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zaa4hrhwFbH73d8xQf1v1z4voRb61033r6IRDETLrds=;
+        b=TQHGEfLhSZ+1IW/DEU9ngxi3DDK5td6BPYUIGPVgW06DeDvYWO8Z2WR4sUeiSjPjxo
+         Zyf9m1FPMDdOamvIdxvC742oTLE0eFZA+tyXsUCmSHzecbc7R3HOhqJg9/ccJf0eBE5L
+         u6xfJIDIAfI0+0bMzfCZ9/zw54tBFXiswtjyyPsY6kdpjcjncIBdtPdJ/CfJLY8gL10s
+         +LPx6U8g2Ukq6eeN15A68xx6xjJSfwHa20a4D9lHGq4TdzyUA2jla16P9XerBFdmqKxn
+         I1g0X30NWLdBD8a2+2xQxzckwtAY2yfru7OoWkCVfjxeHPvn/FLLnqhApFWYIZxo2Ugu
+         XDIA==
+X-Gm-Message-State: AOJu0YzyVzNol5lkHAFeWFSMeY9tS1CbS71njLdqpAIrg+W8qz5KkdXA
+	R9CmXxKE0bwT/Q8n9ZOZmVW1HistdUn+HsguXqdDQk1DPyt/nEM0t4frxY9wYylLW/4=
+X-Gm-Gg: Acq92OFSrbbbI3fwShL3Jy5gK/5UHqoFje7zOCCvryRAleA+csrMsL28VnmjY3RWCtN
+	0rvIE7pswShhyWJDvVS/jMt/PpNZeJnBFfzLFrMUl6EWkGPEDWeyYOyu3WCRxvKCskLmFh8tciK
+	idmTArb2g7u342A3OuQ5iRLIsL9LNY7g6Yhaj3qCTd3GQ8U3B6EGc3bhN8LQzST0c5CJL9/Up0y
+	MelFexNfS2z0AiJsqX4rtg67f/A8ZclEG7PUPdnNBVcZ7Qs3dQfb8+Vn3HJx4NjVvrfOJMtKmoD
+	e3jclMtof9UMJICryghLkIyZEFz2e4PKdu271LIZfs4blKVTw9CeBAAbwdivvLim1S/NvJrG1OY
+	tGomn1gWo1YvOwW3U6QOQBdWV1kBizWsv+pKWxzSzYLWxaBiJBM28am5zB53Aopi3KBlwHHgOHy
+	xgRRubXwY1wwc9UKD3NjE8fesrmWZL5k8LyP3iYqZ4t/l6Q7vxvE6tKbNL4h7uQo5xGot5rxTbL
+	5lxZ3GRDup24pgHG5kgSh7unc+wpMqthjLsh1OPO2Vzjk+naSK4jYrCREe/dKBnPJjbqI0u94wG
+	KPTguFi5zI8F24QX
+X-Received: by 2002:a05:690c:399:b0:7b2:9347:7ba7 with SMTP id 00721157ae682-7c50feb2246mr17758857b3.22.1778544607563;
+        Mon, 11 May 2026 17:10:07 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66885907sm158714257b3.43.2026.05.11.17.10.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2026 17:10:07 -0700 (PDT)
+Date: Mon, 11 May 2026 20:10:06 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/9] pack-bitmap: fix various pseudo-merge bugs
+Message-ID: <agJv3lVbud9V7Vxy@nand.local>
+References: <cover.1776124588.git.me@ttaylorr.com>
+ <cover.1776801694.git.me@ttaylorr.com>
+ <CABPp-BGkfavqezk2SV3+K6iF8MLm8j_=ijHiPDLmv_U_o_Ykgg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGkfavqezk2SV3+K6iF8MLm8j_=ijHiPDLmv_U_o_Ykgg@mail.gmail.com>
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
-
->> >      :show <opts>
-> ...
-> - ":" is an exception to single-key mode and always allows more text
-> to compose a longer-form "command". The first command could be "print"
-> which takes options of this kind.
+On Tue, Apr 21, 2026 at 06:37:45PM -0700, Elijah Newren wrote:
+> Here you fixed the order, but...
 >
-> Since ":" would be new, exempting it from single-key mode shouldn't be
-> too jarring I guess.
+> >     ++  git init pseudo-merge-fill-in-multi &&
+>
+> ...then you immediately run git init a second time?  I'm guessing this
+> was a stray edit made while trying to fix the order; could we get rid
+> of the duplicate?
 
-OK.  And we can use ':blah' to rarely used actions and give them
-descriptive names.  Makes sense.  word-diff sounds like a good
-candidate but it is not immediately obvious to me if machinery to
-set up the "colon is special and handles longhand commands with
-possible arguments" is worth doing.
+Oof, good catch. I'm not sure how that snuck in there, but it's fixed on
+my end.
+
+> >         (
+> >     +           cd pseudo-merge-fill-in-multi &&
+> >     +
+>
+> Looks like you addressed all the feedback so far from v1.  There does
+> appear to be a new accidental double-init that I noted above in patch
+> 4, but I didn't spot any other issues.
+
+Besides that, I found one more spot that needed some love, which is the
+new "duplicate pseudo-merge pattern does not leak" test added at the
+very end of the series, which had a wrong ordering, and piped the output
+of 'git rev-parse' directly into a test helper.
+
+I'll send a fixed up round out now.
+
+Thanks,
+Taylor
