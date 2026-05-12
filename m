@@ -1,69 +1,70 @@
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF6536A378
-	for <git@vger.kernel.org>; Tue, 12 May 2026 18:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC68E372B3C
+	for <git@vger.kernel.org>; Tue, 12 May 2026 18:10:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609432; cv=none; b=Y+chlasOCyfjWPDHa92IcRIPccAuzNl1Pz8YQ6NnKfmoMGt27TMQ0skZXmChC2E8TFUFNyy6shGJAjrpX0VjOy3QwKEXGKWOSK7OIVvxe/RqJiVnhgyiBq+Z4U/+xshEEFhKO2mb5pvE7MdfAem+X2V+0OR9C7ZKws8abCOBWYo=
+	t=1778609433; cv=none; b=OHe5pQfKUc5A3gWPbAr60fddlExkHXjxpwtvBeeVVYGsWj78K8tC3obIJZWhr+fIYazaEhQ6APrRgPBwVXqbI80TBenrhGcd82dzwtJbgyV1sYWbT8guDVfBQaxIXvZPVOwCxNTPbhvBldWXH3pIwfvwLbumIVa+a7/NHzsUMQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609432; c=relaxed/simple;
-	bh=fX4OvBVV8Pd7ppnT5E3rnJzlKJlg/3XrfBXMkyWB0oY=;
+	s=arc-20240116; t=1778609433; c=relaxed/simple;
+	bh=MHS6SwBwkELwSfYj/eg1jplSW8hzTqIYjQ9Bfq7/948=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ic0w0dzSmF3NBzTd3kzvTKVDyLfRpSp2wg6Uyf5vvMMk4J37fKpGUtibdX3HNN0pe+PbObZ9WHJnTvB/+TS7Yv8Z/4T+ZR9mPSRNf31AXjffLWGc+1W5ei8gYe5Ln+u+R5FCHLDPJrFCwyVmaXVSUW0bIWtP3q9sEO98k9XMDmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3wve2q/; arc=none smtp.client-ip=74.125.82.180
+	 MIME-Version:To:Cc; b=spZa3+EhrgwwTAS5I9BGvh9NXcB4HP3UZYXz9QZHkCeLWp8tlkwMZTTF9Q/zqRUS6br7HkLR0HlP1UczvVoPlo57kUnJsICL/82Acca7+Vpey32F3VjoIOhbxMD5QuwbtkqfidooZOojIN5h0/4Nb50yrNPJVMwxn729WeUb1Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ob7nDJ6Q; arc=none smtp.client-ip=74.125.82.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3wve2q/"
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2f7ca62a3c4so6088323eec.0
-        for <git@vger.kernel.org>; Tue, 12 May 2026 11:10:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ob7nDJ6Q"
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1332772f6b3so3203686c88.1
+        for <git@vger.kernel.org>; Tue, 12 May 2026 11:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778609430; x=1779214230; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778609431; x=1779214231; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vcLsdeWMhUMQPfZNq5JY+8B03eHo1E5r5hp/TD9BEIk=;
-        b=Z3wve2q/tifJBot2LCOh8ZzkxEcYRQ0FDbNhvA8xGw2e8f7yDWGe2bdDvbahlqhxpH
-         xPE3pO+yZWDLPth8sCXD+0HFRFceqcZqe5SViSb0TJijuX49Fv/X/om5UOrB8iVU/y7V
-         zR6zbJ0wnKG9GVGvd/CqK+aArFI+hWqf/v2vjQ7ODPTLvcBkl1OskHs9ZzZIdBHV7atN
-         i5YtcCTSZyc7gWQ8ZaeGWLjTQ1rMbQfmWqhsbzBsTKhTpalHTG0ufH9D0+s8d1qw6cxS
-         PnpC5t24pjEl0E7T3g1QEiILpMCj49OGNY2xAkfGCpCi/9fHiBwmJ+tfmxgFcG33/rXL
-         QOyg==
+        bh=KnmGdtjMa5I13rbmQlr11Ezfk+zJqJ89kDboKZFtg18=;
+        b=ob7nDJ6QfIlxOzZYJxypIAP4hVVzosZBKad1t043wAtVMVAWTRZXQPEbTmciDXr3vf
+         DWe+fRDc+H9ZHggO2AeEDYwcBdE343DVuP74xfJr6QVy0gHQabTAj62s6wWPvzuwPLgy
+         EqWMLVBWnPnYZSBGTNlByjsXTkMpKkV1ZetXyMgk5ufQTq0OnYXUhTAmySdUrcsEtCOH
+         MdMpqecdbspxAMPIiTJGs9Nld5NVbKL+m9NbP/TjwHAc9UBREgfvG9kMMQZo9zZdQKSV
+         f64eSvY/B/EXi1CY/pHfKaUGuYnkvL7ctlEpToZpR9U7+1otDAPs++EDtQk96x/8X0DK
+         oU/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778609430; x=1779214230;
+        d=1e100.net; s=20251104; t=1778609431; x=1779214231;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=vcLsdeWMhUMQPfZNq5JY+8B03eHo1E5r5hp/TD9BEIk=;
-        b=jq+znNE41hc9lrig7JOx5YM8ajpPAuiTSHazfoyzZAVCe/4dUNQSlASOamapD/OWn4
-         c6ZQurhHzFbLd7MQl/YuOvaYKpcHZwaUxCO6WfSJ3woSdAbri4nwfXiSqkalYGTGRV+F
-         XpMO7COGAQpeDaxRulnwu8AwI1LjFlGnmHcSYaosEO2BBbL/zKIrWZlo9gX83jveix6C
-         LZUdXbj6e2vE5DI63RIfNq632zmkqtHnjH8gjWyPIiu4r1fSopDqlTKylKaRIcGtin+F
-         nUDdgS2usLKXlvok1lVjH11o5uwLu3wLuTcyzhAzjvr13B2AP3bjAQDL9nCZ3Xr5QUrc
-         8hRQ==
-X-Gm-Message-State: AOJu0YybqxA6IHPnO2H+SuGrRhRzvV+02xEtW4TR+JAaJm3iuzgP/1Hf
-	vGBNXpVSkDL6uSIe+c0JNidrKIR7+Hjd7KEi8M3/eKhV9XYW4erRWIaCOTM9Ng==
-X-Gm-Gg: Acq92OGLPCjPOlE8yo8ohbE+Tra6VPPdXcoMt5mU9KCOWdrgBbGvA0G5pWqUWOgYoGw
-	0SQQAWnnOEszyk0b7quqp1oJhNwZ5NEbjxKFwVz8zFvCjA4zWwNcdHqmtGJYyocE8fvrjYGMz6e
-	ekGawtRysCkI/gcBAsI3NsuhtfAUt6DjFwwXcpJ6us8Al5Whccwb3Is2TsRwTjpZUBzNZeyfr3O
-	G+yvq9jzQoU5l1mtAUrkfrlZ77DRiV3In6JxI9sgCyJlCXTuHm2hbhPPshIoVD0cGzIzTB2j+lq
-	KnIkBxC30ToYR0y331CKdDL/Rtlkx4p54OfbRs3uyjTum928Jf3EVBPz5G/JpzFw529rzV2ShOA
-	xEpI02CIJCrDg+cWdkgp1Vpf6aPD9SZF/Ijpk3G3Mn5oFKbwtGICC9+O31mgdWOz5awES0WW2zD
-	VhOPe3OdKVd87ybSgIn7yjv8eD1k0=
-X-Received: by 2002:a05:7301:290e:b0:2d8:71c2:255d with SMTP id 5a478bee46e88-30118ca4b2bmr119445eec.14.1778609429684;
-        Tue, 12 May 2026 11:10:29 -0700 (PDT)
+        bh=KnmGdtjMa5I13rbmQlr11Ezfk+zJqJ89kDboKZFtg18=;
+        b=lQL3gI+OZrY0BXvO/fWrTfXQBnTs2gSWpI91r6I2p9Qp+UXaK3yOrdEx+axCa+g3oU
+         sY054xsRCQWEbVkBah85W7aXIL5DpyrCb5bI53LaF3IIeJpGHfpzQEn3lSQ6I9YsZ0Gb
+         ykcc5tfWrzgZLIsmsHeZ5opC8w2qHCW14C3e8TOmLQfwGpXKnSXsTxr7uH6ryeCae/F3
+         RcP7mRpYjPLWXUe/c+AvODjB/OkmC0oCYH2p62x+c8TuOlMvTtEwCyUw9evLxdZzedS1
+         0b2DVdzEDgwgobtOz4RI3naYUbZNmper+jCB+r54XhFswPYnpLTaSW6B/RwSxaa3H7++
+         eg/A==
+X-Gm-Message-State: AOJu0YzjIcVkcTlpO2qbOIGZS6s1f4VvpCdIv6lWAkSO+XxXxKv7Z3Ij
+	KpSpxm6Y47ravBiLW7Ekrv7x0vc1UMoRnG8k76pPZ4LW+5hdaoXHZKAkNYfrCA==
+X-Gm-Gg: Acq92OFUcTiIBHP0cmplgtsTfkCW5/QVAIzBmK8dDSYrIihy0plbbinzuRsuUtxPA1a
+	LBaFPXFIU6FIUsRI3enimAFhMbO3fzZw4/cchOpKz4MKK5M7tZCG1P1zU9CrwTChqrlgwpcH+7b
+	tMV0jJT0i/0O2stKBOpCRx4ww9cDK8RT/j8yV/LwM2YEd4e6Zaww6j2XSU5O3pglrR3mIVlbyfh
+	G/4MujUexY2gP6xa61ZsC0KwrGhVWjPLj8+wTklM3S1HIGFKbP7FretH+E31n5ENEXCZfAC6DZj
+	2Aw9bDGnu0aETR/98MZDCKF1QQ7Og9vT9/PrwVxB3OgoW31S6TWLMABK8KsK5HqP4iChxAWzclW
+	IJnnSYJCYffMKw97ugjCFmsfAzVRhQK5ZgDP5c35C0GSqpzKcNnrciAgLZhwy+/eqx+vZxhTbz4
+	qDD+OLFTzkPXQsllgrLn2r/6l/Clk=
+X-Received: by 2002:a05:7022:6709:b0:132:5d42:55c3 with SMTP id a92af1059eb24-1343677e63cmr17825c88.14.1778609431091;
+        Tue, 12 May 2026 11:10:31 -0700 (PDT)
 Received: from [127.0.0.1] ([57.151.128.208])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f88885b87dsm22854073eec.21.2026.05.12.11.10.28
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-132787673ffsm25675936c88.15.2026.05.12.11.10.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2026 11:10:29 -0700 (PDT)
-Message-Id: <020ca774c0ec3abadb5c987c93373f11d67d5880.1778609423.git.gitgitgadget@gmail.com>
+        Tue, 12 May 2026 11:10:30 -0700 (PDT)
+Message-Id: <3a656f8c0fb52a2949041dec55619acea9c117df.1778609423.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2105.v2.git.1778609423.gitgitgadget@gmail.com>
 References: <pull.2105.git.1778022144.gitgitgadget@gmail.com>
 	<pull.2105.v2.git.1778609423.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 May 2026 18:10:22 +0000
-Subject: [PATCH v2 3/4] xdiff: guard against negative context lengths
+Date: Tue, 12 May 2026 18:10:23 +0000
+Subject: [PATCH v2 4/4] parse-options: clarify what "negated" means for
+ PARSE_OPT_NONEG
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,62 +80,26 @@ Cc: Michael Montalbo <mmontalbo@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-The xdemitconf_t fields ctxlen and interhunkctxlen are typed as long
-(signed), but negative values are not meaningful for context line
-counts. Unlike the diff_options fields changed in the previous two
-commits, these cannot be converted to unsigned because the xdiff
-arithmetic relies on signed subtraction:
-
-    s1 = XDL_MAX(xch->i1 - xecfg->ctxlen, 0);
-
-If ctxlen were unsigned long, the signed operand would be implicitly
-converted to unsigned, and the subtraction would wrap to a large
-positive value when i1 < ctxlen, defeating the XDL_MAX clamp. The
-signed type is required for correct context-window calculations.
-
-The previous two commits reject negative values at the parse layer
-for --inter-hunk-context and -U/--unified, so negative values should
-no longer reach xdiff in normal use. Add BUG() guards at the top of
-xdl_get_hunk() as defense in depth to catch programming errors in
-current or future callers that bypass option parsing.
-
-xdl_get_hunk() is called by both xdl_emit_diff() and
-xdl_call_hunk_func(), so a single guard covers all xdiff consumers.
+The documentation says the flag prevents an option from being
+"negated" without specifying what that means. Add a parenthetical
+to clarify that it rejects the "--no-<option>" form.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- xdiff/xemit.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ parse-options.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 04f7e9193b..7cd9cf0a44 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -46,12 +46,20 @@ static long saturating_add(long a, long b)
- xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
- {
- 	xdchange_t *xch, *xchp, *lxch;
--	long max_common = saturating_add(saturating_add(xecfg->ctxlen,
--							xecfg->ctxlen),
--					 xecfg->interhunkctxlen);
--	long max_ignorable = xecfg->ctxlen;
-+	long max_common;
-+	long max_ignorable;
- 	long ignored = 0; /* number of ignored blank lines */
- 
-+	if (xecfg->ctxlen < 0)
-+		BUG("negative context length: %ld", xecfg->ctxlen);
-+	if (xecfg->interhunkctxlen < 0)
-+		BUG("negative inter-hunk context length: %ld", xecfg->interhunkctxlen);
-+
-+	max_common = saturating_add(saturating_add(xecfg->ctxlen,
-+						   xecfg->ctxlen),
-+				    xecfg->interhunkctxlen);
-+	max_ignorable = xecfg->ctxlen;
-+
- 	/* remove ignorable changes that are too far before other changes */
- 	for (xchp = *xscr; xchp && xchp->ignore; xchp = xchp->next) {
- 		xch = xchp->next;
+diff --git a/parse-options.h b/parse-options.h
+index 706de9729f..0d1f738f8d 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -117,6 +117,7 @@ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+  *   PARSE_OPT_OPTARG: says that the argument is optional (not for BOOLEANs)
+  *   PARSE_OPT_NOARG: says that this option does not take an argument
+  *   PARSE_OPT_NONEG: says that this option cannot be negated
++ *                   (i.e. rejects "--no-<option>")
+  *   PARSE_OPT_HIDDEN: this option is skipped in the default usage, and
+  *                     shown only in the full usage.
+  *   PARSE_OPT_LASTARG_DEFAULT: says that this option will take the default
 -- 
 gitgitgadget
-
