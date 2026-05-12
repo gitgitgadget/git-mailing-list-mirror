@@ -1,306 +1,167 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68A5385D7E
-	for <git@vger.kernel.org>; Tue, 12 May 2026 17:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF2E3DD861
+	for <git@vger.kernel.org>; Tue, 12 May 2026 17:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778605673; cv=none; b=cMTyXDXojCvuBIZRncPyU9TKFUQOnT2d4+oz7srgOp2ouFUtkdTKwM7UJ4XJuUhRGP+Jj9a/6HJ4wVk4pNnFHr1lL3yI66XVmWlPtwugbZNjA+fpEbbUnNvTIGiSlIW/ZcwDoG5uBKK0aBFVhTxh4JyXD8MVOLxEv+Lgobkt/4g=
+	t=1778608506; cv=none; b=UB1H1+6RGrUl1vr7/D7pR1I8+X1pNJ8zt/vPkNLm+Wc8lLBMubNnOidwxP0ljOpAOXidBcj7ssg5ChY3WWd8x3igQTnat6hySG/cgHBOucQsiL/i6Wmrgk0z6TGtx0lOkmIkh3fRHtGdr9yocJkF4sSP9A+c80sIFXZ6++Yj2uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778605673; c=relaxed/simple;
-	bh=fRynSVv8/iDdeECF8zGwnJDWcRh+ybSujcJD6suCfwk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=W8de7kZbkv3LnPq/m0nItLNvl+BhuUsa61gPo6fC73nUft+7Wa5nUo1gOd9BfwLvBV7kP7NMzGoi2KpN6cqYYeVR0wMjbfR3MePLO+LLNxNCv/zktXKLYu9FFf2HaoH4hAACdyVJUBuqI/Q/7EgobaYZ3/85lD+WL38pxfRiVRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EvP3gCVS; arc=none smtp.client-ip=209.85.216.50
+	s=arc-20240116; t=1778608506; c=relaxed/simple;
+	bh=QBCXJDEXD0uRmKhzufSYQ/rFKKdAEnztZBIsM3g9FBw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uRU4lC1FkVHivGTFfQggDwPUhRSf7OA/NMSZDwcMEEsvyx7aralzQSLtOjz/FkCN8EHGPqhsTtMsnPb23iJ0bSLF+ShpwkA3VgamtXHNKVGLU35pySgpup84oBListR5Z6ZWmtdL6mGOI/kXhUiFUz6/WxeYq1X4rnKP3aUaejE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4pQTcOp; arc=none smtp.client-ip=209.85.160.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EvP3gCVS"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-365eecc5885so5770108a91.0
-        for <git@vger.kernel.org>; Tue, 12 May 2026 10:07:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4pQTcOp"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-51306c9f2e1so58307291cf.0
+        for <git@vger.kernel.org>; Tue, 12 May 2026 10:55:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778605671; x=1779210471; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EorhB6SXL5dm82aq4wm72csffp2mQwLOQLDEylf15aw=;
-        b=EvP3gCVSIJNrq3VkTAp+AXTytw311wdR76Cda4x8YEhZOysbKb/SmxBx1CFoKeqgW9
-         vxyos8uOBOmlzxUHi83XhYP4iaJpGEUFw97Hx1qKUK9XKlwnHXid8M7FhzXFUVqnIWai
-         FhV5br6I4T5ty7N+XEmCa3OveKsvGaKJJcrNKVP/B/uO4+nZzwH4sE+gfKuSyuWCblOC
-         FNRsWRagp/6e4EnZBWkCxZhDIJeHD2vSWQZ/CCZb5qqDiVohvSEx8+Fog+FYaD83TVfV
-         SZrWRhp3+HtAGP/hn06c+dd4qyI8aFSwIPJiX7xbaezLOK49/JR5z1UpFL6RRbDhp7Y5
-         /+BA==
+        d=gmail.com; s=20251104; t=1778608504; x=1779213304; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9cspBvsqpkJ0qTViMT6OGIXEBanXKE97LMiL71MHJ7g=;
+        b=l4pQTcOpq6SbLZQ3dsprygwXpLJ5c0Y2bdSYM8uCzNAy9/hXDEvVn4ProGgGLYrJVG
+         XcSddnjbu1DXwqwnSU1s0yBOoswA9kejhcsOuYAzNMb3asCjp7v5uFfPUHaezRIOHB+i
+         9kyn0bmqI2rkM9VjRElsP4i9llBTRcvZSIls3zemwKbsA2RbcLm49SVaXZP9Z3KMVmXU
+         qJoiiUMgXURzkon7lQWlfY7Np21bS/99XSbx1sMuUz38KsyCDhIzW8wCeFnbxPhbAAz7
+         kLJaDGDCuvVQaEwoULG4aY6UiIYOIJdwkvVqbfPBBtkxDlVL1dg1RQXE9FKd1UTHk/K+
+         Ld3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778605671; x=1779210471;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EorhB6SXL5dm82aq4wm72csffp2mQwLOQLDEylf15aw=;
-        b=BhXEzlZOrzUprXD36iePw1Z2MVsFltKPHdGLNBASQzWGfJlJkCVFSlAZhHtk+G3BuM
-         mynwGxiwSOwza4xoXEYROHoRY3NVWSuZcKN+1I6AikdkWpRHJVNhHUjiWVL0dcojRIpe
-         wyFRIDYPqtRjwwieER5P63cFosVr2PTJehTtR1Mz8/Px5DFB4/Y23TZIoBz4ofbKuHPd
-         DYrcO4XPQ/tIFsCPnjdRKg6cZRYtxjZSNn57o3Ltk9JvHza161nP0wYO9mstabWJ56a6
-         B59825j9Nr2avhuiT4o/8n56PoAaafvtwbNJynK21Ph8eatZTc/48XWX375PSZMnlzmf
-         GjKQ==
-X-Gm-Message-State: AOJu0YzZ+DWUUMXr8nOf+mtznIKxiLz4OxlkLfXC34GlbXFnNHdESf14
-	qjs0n+Pkve+a2k5rb50uRCTnbR1ADZhlEDDFA6IrUJ3F7PvdGSl6IRPYmea3NO+h
-X-Gm-Gg: Acq92OEPbICgYT/6WwdKJ+6iONgazzxLR2EPWrkjSa4rmLodyZ4lxhPBkpdvEqzkYR4
-	Lqzr7ajpXRep2+DUkx8lnIn9F/qJf9cx4NAd4u2jQFkVWUMm9Mb6krRCK8apIEOfUq1fug4bKcz
-	pgFgxmVjHeJfxhreoEHwwtJgM+oIBVlE2Ae2fRHOaKeuKR8Cs6KZneyxvPI9wouXO5hqFKISTL1
-	18CXFe1+JED97U5vRsIk6HjiLOBnokDti0d9ZAgkNcu3ASXvIrOM/WmTWHs6OgyFMzDAxEfjLZc
-	dGhR8zYLOAhcxj5fpQqOPPNpe3cegRwIfTo7ph55SbvWXarMBqKRZtmouBc4mnSe0PSThsowQ1U
-	fvlgDmVqXLJDPmhw3xUTW443KJxNgtTzTvt1wwSTCMrFKmrOhVXAFf7cXFbxhBv1K5nNgfA9CpZ
-	Ztoqfv9b/ODaRZTdUIbJ7aSQqoYWM=
-X-Received: by 2002:a17:90b:1808:b0:367:bb47:9fc2 with SMTP id 98e67ed59e1d1-367d468c45cmr15361546a91.2.1778605670687;
-        Tue, 12 May 2026 10:07:50 -0700 (PDT)
-Received: from [127.0.0.1] ([20.163.246.209])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-368ac4c8f2bsm2657912a91.0.2026.05.12.10.07.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2026 10:07:50 -0700 (PDT)
-Message-Id: <6e81ed3147ac388aadd7e4034604f3be07c576eb.1778605658.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
-References: <pull.2285.v7.git.git.1778574229.gitgitgadget@gmail.com>
-	<pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 May 2026 17:07:38 +0000
-Subject: [PATCH v8 5/5] branch: add --all-remotes flag
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1778608504; x=1779213304;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9cspBvsqpkJ0qTViMT6OGIXEBanXKE97LMiL71MHJ7g=;
+        b=Byw+42yUbtN/9sdUC6tN8vSznRizRxfR7DKEqt8MTJ9DQHlo1m3TAJuFQHebsvZl6E
+         EV3hOxXeqpbesn0WG5hlQShClWWAUx9Gj3nR/1aEUyi3pUMTjZNQSeVbZk9b3Oc4U56T
+         4ctPtK+A/D0/qAm3V/MBVIl5+C3Ysx9BWhs5UZ1PWT2pY1QZHG48StUEXPovkVHP2EBc
+         4NKyPRcRPOYvzi2ILUgRtW3DhJZ08R6gp6Gp5rS0eVBJ6+e1FRmz4GcGINeQQpzWj4SA
+         1Q3pSE+MsJtTP0HvSfcacctqtqvYRTHptZPTCBpLWJsI4vUu0QLpL78KpiscAMk3IUcn
+         owFg==
+X-Forwarded-Encrypted: i=1; AFNElJ+jNsOiRjm69lyFRabirq1jndL8lsREzNklDSmL2q4mPRrHsLJoExuv0oAXnzO0890yCPg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLcJvI6lnKY0QQLtNcUSX+0vCesEXYkgsZOyneEwXgOHKn8lgy
+	LCcu88zCLQfqMOLgr3OHqyjqGDavSCQs3bg3R32hpjmi/9OHeAuG6PoF1WdbT9xf
+X-Gm-Gg: Acq92OGpu4fDWX6nPD+yBAal1Oi5Ojj/gR7ENzqTXF/DslGyF3L8z8wr09i0oMkjL/0
+	7uoE8Sx/dTH8trD6SrtppvuUBsWekJ931QywsexQc0sgW42GejwbWTQIhmkLnq7k87oC7pAgIpt
+	xjFAA7mdDwlUVYWrIfhVZqu+lzsf9Mth2C1U46F4CLKbH0EGzA3kmk5jHpQAxRipIgiRErtTPB3
+	GzbuvqlQxOkH3QGtVJ7ey41k75Lz2xdQnqTwWwjKIzWmZRh7TTRYr2Fjw/SKTVV7iRRK8EDHCaM
+	o01WiGnHchEFILDqNF2nvNi+nFiDDW4gdIBY1nuqaj/npgDQlaAqR/WwY6sQVfTxhoi4J2HGvoK
+	XPolcaqsct83w01NFrOyNS3KoKjeiI+kDoSEY6ZZKlXVSalPkoKRbRhg3dcTTDTfKZ2jVD3d7Rx
+	+ZF3CMIhl9SZmE1+PL98wJRPj3atO8WJfnlkzGTMHh8oAdU+zzu9Uv0lgOouPnl7lOJz6ORDS5D
+	sy4eJqsEjQ55Yg+jIFR9qXvgUwVtRcA6q7LxGiMRE6Q8pVrwps=
+X-Received: by 2002:a05:622a:5c12:b0:50d:8903:ae6e with SMTP id d75a77b69052e-514a0a1d3d8mr224151041cf.5.1778608503799;
+        Tue, 12 May 2026 10:55:03 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:e033:f3ca:f5b3:2d9c? ([2605:a601:9b88:8300:e033:f3ca:f5b3:2d9c])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5148e7bf7e4sm125315021cf.17.2026.05.12.10.55.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 May 2026 10:55:03 -0700 (PDT)
+Message-ID: <019912f6-0dd7-4224-8c4d-3dc26b1b85c6@gmail.com>
+Date: Tue, 12 May 2026 13:55:02 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 6/7] remote: add remote.*.negotiationInclude config
+To: Matthew John Cheetham <mjcheetham@outlook.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im
+References: <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
+ <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
+ <a2d15fa12af70367ac6b289f69228cd33dd97d5e.1776871546.git.gitgitgadget@gmail.com>
+ <VI0PR03MB11634F3D6B345482BD992FDC9C0392@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <VI0PR03MB11634F3D6B345482BD992FDC9C0392@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On 5/12/26 10:54 AM, Matthew John Cheetham wrote:
+> On 2026-04-22 16:25, Derrick Stolee via GitGitGadget wrote:
 
-Combined with --forked or --prune-merged, --all-remotes acts on
-every configured remote, in addition to any explicit <remote>
-arguments. Used alone, it errors out.
+> This patch is a mirror of patch 4 that added the remote config for
+> negotiateRestrict. Some of the same comments apply here too:
+> 
+> - reusing `parse_transport_option()` vs inline resetting the list
+> 
+> - values could be commit SHAs as well as refs/globs
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-branch.adoc |  9 +++++--
- builtin/branch.c              | 41 ++++++++++++++++++++++----------
- t/t3200-branch.sh             | 44 +++++++++++++++++++++++++++++++++++
- 3 files changed, 80 insertions(+), 14 deletions(-)
+Will do. Thanks.
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 080cdc218a..bf59f4852d 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -24,8 +24,8 @@ git branch (-m|-M) [<old-branch>] <new-branch>
- git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] <branch-name>...
- git branch --edit-description [<branch-name>]
--git branch --forked <remote>...
--git branch [-f] --prune-merged <remote>...
-+git branch --forked (<remote>... | --all-remotes)
-+git branch [-f] --prune-merged (<remote>... | --all-remotes)
- 
- DESCRIPTION
- -----------
-@@ -232,6 +232,11 @@ currently checked-out branch in any worktree is always preserved,
- as is any branch with `branch.<name>.pruneMerged` set to `false`,
- and the local branch that mirrors _<remote>_'s default branch.
- 
-+`--all-remotes`::
-+	With `--forked` or `--prune-merged`, act on every
-+	configured remote in addition to any explicit _<remote>_
-+	arguments.
-+
- `-v`::
- `-vv`::
- `--verbose`::
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 2969780210..081a1a1467 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -687,6 +687,13 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	free_worktrees(worktrees);
- }
- 
-+static int collect_remote_name(struct remote *remote, void *cb_data)
-+{
-+	struct string_list *remote_names = cb_data;
-+	string_list_insert(remote_names, remote->name);
-+	return 0;
-+}
-+
- static void parse_forked_args(int argc, const char **argv,
- 			      struct string_list *remote_names,
- 			      struct string_list *tracking_refs)
-@@ -776,7 +783,7 @@ static void collect_default_branch_refs(const struct string_list *remote_names,
- 	}
- }
- 
--static void collect_forked_set(int argc, const char **argv,
-+static void collect_forked_set(int argc, const char **argv, int all_remotes,
- 			       struct string_list *protected_default_refs,
- 			       struct string_list *out)
- {
-@@ -789,6 +796,8 @@ static void collect_forked_set(int argc, const char **argv,
- 	};
- 
- 	parse_forked_args(argc, argv, &remote_names, &tracking_refs);
-+	if (all_remotes)
-+		for_each_remote(collect_remote_name, &remote_names);
- 
- 	refs_for_each_branch_ref(get_main_ref_store(the_repository),
- 				 collect_forked_branch, &cb);
-@@ -802,15 +811,15 @@ static void collect_forked_set(int argc, const char **argv,
- 	string_list_clear(&tracking_refs, 0);
- }
- 
--static int list_forked_branches(int argc, const char **argv)
-+static int list_forked_branches(int argc, const char **argv, int all_remotes)
- {
- 	struct string_list out = STRING_LIST_INIT_DUP;
- 	struct string_list_item *item;
- 
--	if (!argc)
--		die(_("--forked requires at least one <remote>"));
-+	if (!argc && !all_remotes)
-+		die(_("--forked requires at least one <remote> or --all-remotes"));
- 
--	collect_forked_set(argc, argv, NULL, &out);
-+	collect_forked_set(argc, argv, all_remotes, NULL, &out);
- 	for_each_string_list_item(item, &out)
- 		puts(item->string);
- 
-@@ -818,8 +827,8 @@ static int list_forked_branches(int argc, const char **argv)
- 	return 0;
- }
- 
--static int prune_merged_branches(int argc, const char **argv, int force,
--				 int quiet)
-+static int prune_merged_branches(int argc, const char **argv,
-+				 int all_remotes, int force, int quiet)
- {
- 	struct string_list candidates = STRING_LIST_INIT_DUP;
- 	struct string_list protected_default_refs = STRING_LIST_INIT_DUP;
-@@ -828,10 +837,11 @@ static int prune_merged_branches(int argc, const char **argv, int force,
- 	int n_not_merged = 0;
- 	int ret = 0;
- 
--	if (!argc)
--		die(_("--prune-merged requires at least one <remote>"));
-+	if (!argc && !all_remotes)
-+		die(_("--prune-merged requires at least one <remote> or --all-remotes"));
- 
--	collect_forked_set(argc, argv, &protected_default_refs, &candidates);
-+	collect_forked_set(argc, argv, all_remotes, &protected_default_refs,
-+			   &candidates);
- 
- 	for_each_string_list_item(item, &candidates) {
- 		const char *short_name = item->string;
-@@ -944,6 +954,7 @@ int cmd_branch(int argc,
- 	    unset_upstream = 0, show_current = 0, edit_description = 0;
- 	int forked = 0;
- 	int prune_merged = 0;
-+	int all_remotes = 0;
- 	const char *new_upstream = NULL;
- 	int noncreate_actions = 0;
- 	/* possible options */
-@@ -1001,6 +1012,9 @@ int cmd_branch(int argc,
- 			N_("list local branches forked from the given <remote>s")),
- 		OPT_BOOL(0, "prune-merged", &prune_merged,
- 			N_("delete local branches forked from the given <remote>s that are merged into their upstream")),
-+		OPT_BOOL_F(0, "all-remotes", &all_remotes,
-+			N_("with --forked or --prune-merged, act on every configured remote"),
-+			PARSE_OPT_NONEG),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
-@@ -1044,6 +1058,9 @@ int cmd_branch(int argc,
- 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
- 			     0);
- 
-+	if (all_remotes && !forked && !prune_merged)
-+		die(_("--all-remotes requires --forked or --prune-merged"));
-+
- 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
- 	    !show_current && !unset_upstream && !forked && !prune_merged &&
- 	    argc == 0)
-@@ -1097,10 +1114,10 @@ int cmd_branch(int argc,
- 				      quiet, 0, NULL);
- 		goto out;
- 	} else if (forked) {
--		ret = list_forked_branches(argc, argv);
-+		ret = list_forked_branches(argc, argv, all_remotes);
- 		goto out;
- 	} else if (prune_merged) {
--		ret = prune_merged_branches(argc, argv, force, quiet);
-+		ret = prune_merged_branches(argc, argv, all_remotes, force, quiet);
- 		goto out;
- 	} else if (show_current) {
- 		print_current_branch_name();
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 8e877862f5..e93e93654e 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1771,6 +1771,27 @@ test_expect_success '--forked requires at least one <remote>' '
- 	test_grep "at least one <remote>" err
- '
- 
-+test_expect_success '--forked --all-remotes covers every configured remote' '
-+	git -C forked branch --forked --all-remotes >actual &&
-+	cat >expect <<-\EOF &&
-+	local-foreign
-+	local-one
-+	local-two
-+	main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked --all-remotes still validates explicit <remote>' '
-+	test_must_fail git -C forked branch --forked nope --all-remotes 2>err &&
-+	test_grep "neither a configured remote nor a remote-tracking branch" err
-+'
-+
-+test_expect_success '--all-remotes alone is rejected' '
-+	test_must_fail git -C forked branch --all-remotes 2>err &&
-+	test_grep "requires --forked or --prune-merged" err
-+'
-+
- test_expect_success '--prune-merged: setup' '
- 	test_create_repo pm-upstream &&
- 	test_commit -C pm-upstream base &&
-@@ -1908,4 +1929,27 @@ test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
- 	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
- '
- 
-+test_expect_success '--prune-merged --all-remotes covers every configured remote' '
-+	test_when_finished "rm -rf pm-allremotes pm-other" &&
-+	git clone pm-upstream pm-allremotes &&
-+	test_create_repo pm-other &&
-+	test_commit -C pm-other other-base &&
-+	git -C pm-other checkout -b stable &&
-+	test_commit -C pm-other foreign-commit &&
-+	git -C pm-other branch foreign HEAD &&
-+	git -C pm-other checkout main &&
-+
-+	git -C pm-allremotes remote add other ../pm-other &&
-+	git -C pm-allremotes fetch other &&
-+	git -C pm-allremotes branch one one-commit &&
-+	git -C pm-allremotes branch --set-upstream-to=origin/next one &&
-+	git -C pm-allremotes branch foreign other/foreign &&
-+	git -C pm-allremotes branch --set-upstream-to=other/stable foreign &&
-+
-+	git -C pm-allremotes branch --prune-merged --all-remotes &&
-+
-+	test_must_fail git -C pm-allremotes rev-parse --verify refs/heads/one &&
-+	test_must_fail git -C pm-allremotes rev-parse --verify refs/heads/foreign
-+'
-+
- test_done
--- 
-gitgitgadget
+>> diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+>> index f1d889d03e..44de6d3c1f 100644
+>> --- a/Documentation/config/remote.adoc
+>> +++ b/Documentation/config/remote.adoc
+>> @@ -126,6 +126,33 @@ values are not used.
+>>   Blank values signal to ignore all previous values, allowing a reset of
+>>   the list from broader config scenarios.
+>> +remote.<name>.negotiationInclude::
+>> +    When negotiating with this remote during `git fetch` and `git push`,
+>> +    the client advertises a list of commits that exist locally.  In
+>> +    repos with many references, this list of "haves" can be truncated.
+>> +    Depending on data shape, dropping certain references may be
+>> +    expensive.  This multi-valued config option specifies ref patterns
+>> +    whose tips should always be sent as "have" commits during fetch
+>> +    negotiation with this remote.
+>> ++
+>> +Each value is either an exact ref name (e.g. `refs/heads/release`) or a
+>> +glob pattern (e.g. `refs/heads/release/*`).  The pattern syntax is the same
+>> +as for `--negotiation-restrict`.
+> 
+> Should this say "..same as for `--negotiation-include`"?
+> 
+> This way each `remote.<name>.negotiationX` doc cross-references the
+> corresponding `--negotiation-X` command line option.
+
+Good find. The rest of the description uses *-include.
+
+>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+>> index 4316f8d4ea..db73ed5379 100755
+>> --- a/t/t5510-fetch.sh
+>> +++ b/t/t5510-fetch.sh
+>> @@ -1577,6 +1577,55 @@ test_expect_success '--negotiation-include avoids 
+>> duplicates with negotiator' '
+>>       test_line_count = 1 matches
+>>   '
+>> +test_expect_success 'remote.<name>.negotiationInclude used as default for -- 
+>> negotiation-include' '
+>> +    test_when_finished rm -f trace &&
+>> +    setup_negotiation_tip server server 0 &&
+>> +
+>> +    # test the reset of the list on an empty value
+>> +    git -C client config --add remote.origin.negotiationInclude refs/tags/ 
+>> alpha_1 &&
+>> +    git -C client config --add remote.origin.negotiationInclude "" &&
+>> +    git -C client config --add remote.origin.negotiationInclude refs/tags/ 
+>> beta_1 &&
+>> +    GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
+>> +        --negotiation-restrict=alpha_1 \
+>> +        origin alpha_s beta_s &&
+>> +
+>> +    ALPHA_1=$(git -C client rev-parse alpha_1) &&
+>> +    test_grep "fetch> have $ALPHA_1" trace &&
+>> +    BETA_1=$(git -C client rev-parse beta_1) &&
+>> +    test_grep "fetch> have $BETA_1" trace
+>> +'
+> 
+> This test sets up the include list as [alpha_1, "", beta_1] which after
+> the reset should become [beta_1], but the assertions in the test only
+> check that alpha_1 (sent via the --negotiation-restrict option) and
+> beta_1 (sent via the include) appear. If the reset of the list didn't
+> work then the test still passes because alpha_1 is sent via the CLI
+> option.
+
+Good point. the negotiation-restrict option is making this less clear.
+If I point the restrict option at alpha_2, then I think it exercises
+things correctly.
+
+Thanks,
+-Stolee
+
