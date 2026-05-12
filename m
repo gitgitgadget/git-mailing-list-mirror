@@ -1,743 +1,371 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010003.outbound.protection.outlook.com [52.103.33.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4915638E8A9
-	for <git@vger.kernel.org>; Tue, 12 May 2026 10:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778583316; cv=none; b=punAIyLTGJPJRqqainjOEWpr2m2+jcoMach1u+Q7TJdODgurc9z6egT5MEXIOv/+VhGHHqFrq15KtCMMtJDrERDuYjUfAMOYpFbC9qkVjMqlvT8ke21ZEWAuyzbFNwYYZvmci8ao1haRyk9dnvzU+cehWXJNiYcCj4byI3ncpL0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778583316; c=relaxed/simple;
-	bh=kO7Gb7Z5bOgHkC9PNOuhAsZenTV0USAJcDwvjaHTJ3A=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=UHlIt0+uPz6jH915k6CYgW1x/IfMCOdFEuV3ibWqlI9X8DoKHzCbElfwK6ir+v9W/sF4VI2MDkPlrNbyNPw3jpw63YEOOTDCRPTFFwpauoDhGLT1K9nZa6cG7bPYhFnfA6++/lgskRLM/OTDjOr3+JyWVK+BIKUr9TokXhfQuGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rw1mREbI; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622A93839A9
+	for <git@vger.kernel.org>; Tue, 12 May 2026 11:11:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.3
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778584285; cv=fail; b=MeHcFyB+8pbSa6d0NEN/8cvZJU4lKlI5t1RVNZ0AaEAeTzdX7ZWwdezKEmZTu9kkH1kQkZziBWzgZjCOPXv6CzDWKX9315KaA2ebo50WsX65awDNTHGmbZovAcuDpPjkDSCHwfbQbUlhPptl+bLdh+pmM2dTnDo9SfllPELE89M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778584285; c=relaxed/simple;
+	bh=1UYLXIjM6kaLC9GB+7uO9cOOZwbnm9oHSfxcABvQsQ0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=cXcFSOVeTaadxkdCAL3kyXXKyt862CZel7AxUORJLdxO4blzHFFZ/pHetUVpVNk97uoRJyjH/eLgoRv67zZi1zOK4qbYcIsTho+AHLwU2ZlfB+j71ZHsKlNJDwk07w3+hkq3WXsVCMCUzXjtqcvsUpdSdoiwlycVa7NPJLkqR7U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=slwkGFhs; arc=fail smtp.client-ip=52.103.33.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rw1mREbI"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8b6c9fdb68cso48722746d6.2
-        for <git@vger.kernel.org>; Tue, 12 May 2026 03:55:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778583309; x=1779188109; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aVejG1Yol5jwNG8MX+lZleATdLBW/G7aH2iZY7vWxAg=;
-        b=rw1mREbIgnDTWjVWyNfLzorpTxZczHzsrBKCYKDAjgR8416u1tApp+BgU8ywpbvKnX
-         ud1P4ZhunD8pN/ftNNWh1f7o1G3oGXSKSuPyISFg4aj4+xLdfpaz97XZeLOheK9rx5i7
-         fh0xCblo/qPx3cFEqgCwUm42PKO8io1vSLUlkX4fUOFKSQhNi1c9PwcFaqDvO/lr4PJu
-         m/yDhHjcxySFus1ElC2aRVTU6ELzMsXM/985ufxnF3b80SF2UeZYNym2lDeFmF7y4bNM
-         xuITmidUsqAbqBrsiXdPchV0Mhy/GkMv5tofAFL1100aPdVR+xF41oi3h3LzzNwTk+7i
-         dUBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778583309; x=1779188109;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aVejG1Yol5jwNG8MX+lZleATdLBW/G7aH2iZY7vWxAg=;
-        b=f6kHz5oJpGP42vfXzf5oDff1Oh/wHzjF4hUutNcGgap5iFPI/EuHlE+E9+IbUOpLzs
-         5cHa00L2uvmb+QBd30G6tb6zxkGHwn5RjhCmxN1ZKzzNB1JGWO5OtgsxiBhBmnIHhMW1
-         wXbPUR5kLsYioBGH3jPoSHQx3VTOXKU/Yq9VFxpqlwKrzTjw+SCzDtLgcI+niV+u1nTn
-         Bw948M0V2Ym2gFNvImOuFA+lBhIlEdgYzc1obM+27PnuTjl/Kxt/yPTkeicZ39LcDmyA
-         ZTRdPMio/MqhkX5U+lbY5T0BRjrc0D/bib1wyQwEJTMxGsw01MA3kWRNL1G7Re+Q1eAU
-         3h7Q==
-X-Gm-Message-State: AOJu0Yw6DRyKHUX04q/d0ohvSPwJhvptQZNkF1aoqLxVuf5xk914k5zm
-	OQly1lnUGi2TtyoNHtP3bn1svtErGyXHfnIGTDs7U7ZiVbEf60UYYjULme3vPv5z
-X-Gm-Gg: Acq92OHHeIIKqAXApVr+8qDll+7b7EpmkGJjDD27INC698cyw6x2sHKxiEchO+TPDz/
-	gTanyZM9OT2nSBZzsI3wgWVwNeVQQhs4VHKihZ4OZkxzTIOjW8LFOXzU/aUXIKaCInqJWl5pwsf
-	bW9dhfx/l+m8RegWwUCM8BEu5Msal5ruYq4nkmuJdKhb8AfS4qqE+EOnOvps0m7gHw98vTc1F9n
-	Yl1/M8oin+DD95hhUOJ9dWJ5spxQCdcpX9Fg8rDUpyATkqStseyEdPoUx40GFtYFUk5SEmTNOpR
-	OJZDod6XurdZSzCd4jpckhbmAfgg037ntuwDYWi6EmeCwAhE7tDnNI/OIhEDFw+g8JHuW43J9CT
-	J3MO+8f5+4+RBWaB/vjTIKHghEQDnPHIQLKv2r/L6Sd7MDWc2jN4UC7uHCYKGBdwiSsJ4MTkuP+
-	zFHUDUvZBikFLywDGavTZp6d37ug==
-X-Received: by 2002:ad4:5ccf:0:b0:899:f0b1:7332 with SMTP id 6a1803df08f44-8bc443d6389mr439972676d6.32.1778583309355;
-        Tue, 12 May 2026 03:55:09 -0700 (PDT)
-Received: from [127.0.0.1] ([172.183.89.66])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53cd827c5sm389156786d6.40.2026.05.12.03.55.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 May 2026 03:55:08 -0700 (PDT)
-Message-Id: <pull.2281.v9.git.git.1778583307774.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2281.v8.git.git.1778507225500.gitgitgadget@gmail.com>
-References: <pull.2281.v8.git.git.1778507225500.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 12 May 2026 10:55:07 +0000
-Subject: [PATCH v9] checkout: extend --track with a "fetch" mode to refresh
- start-point
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="slwkGFhs"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=upNuX42xoMRG5recBJUMOW13wa7I58Q/plTqX6/pi6k+G+MY84vbhLrKpA+o6nK4nxfEPto9O6Mm54KCY79cGOfjm0Dhr5pEbyEp40VIWpGRnJi1d4G15WAeWNp3Ot4YXLl0xd0toZbUsQLSjN7+N6hvmZKxlW3WQ860wGioDlLIl6ZCmZ/wbbv2kfR2MbthqSIy0qBjtLzbgekGu3XEPkNwP/HOrK/Nz31/5IfHOOgq0SRDPVU1e7+HgWWt0qRAToOh+y4ICI5gEsa9GJJQT3LMlqr55ShxoiysPNV/avlbfFHJAezT4ZUxUnkbS68CAYPlg7vnT+9VaywGJiZuFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uBDwT6WIq7+Q/ayaZ0Fbr85yyUyC04zhUnaB9GD7VeA=;
+ b=gRknSd5OaWOauHHxggL6ccoU5kxwMrcnRmWxKm7XV/ebo3eyqr6JehVs75NKbUp/iW9MAPS5uaFTpInolC/qbHvrxYi4ZHDVr70TCrSkQ67gxpN/yNWv+1Gic+QAl6uAvpRrJflrwRBlzmgNKc52SjvhlC1qdcE9SOZNID5AE9n+24W0A984zlhR8ZLoLxQRRZjBDxCcmN9mH+FRtxien4/nkAhzY7PXWWEqXarVdSvTdn/vEvUmcQqnrbsehQwY0q6GZNH1PVnuXscGFUWtDD62azYhmuJzJ54W5qMhijRu9S+Jd29Ax0zC+HZd1Pkn0aFhzE8IKVnibVcLXVWvig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uBDwT6WIq7+Q/ayaZ0Fbr85yyUyC04zhUnaB9GD7VeA=;
+ b=slwkGFhsH9f1uDkYcaztLvZAhTTCMkFalqrgycmhgHPVxp/LTrZC4e6fo7rWvJh6HpH1E69Uly59txhMxkP2lH3dN712ENMHlffxvuLa6FypIsLkJ2jvOXDEq+57mLUsqj0fnl8rg0+iCKpnVL1vgHoZTVcCrSsbrCpjNQu8estFb4ADrqrK58NJCfSkT3I8MGGdOT56N9xqLjeKQ+CR/rnv3Bn8JiR27KiYUgvM1cs6XT3/A/4EhAH1dScu0ZVMGv1eUAmjUHk8sZllc20QjjNKOW4NeC+tghhk9VO7SiQ+jZVQg8o2h8y3qUKXO4881WBqCuIde1YkwrtiWkTtow==
+Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
+ (2603:10a6:800:326::21) by AS8PR03MB9462.eurprd03.prod.outlook.com
+ (2603:10a6:20b:5a2::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Tue, 12 May
+ 2026 11:11:20 +0000
+Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
+ ([fe80::5e26:cb8:bbb:cf7a]) by VI0PR03MB11634.eurprd03.prod.outlook.com
+ ([fe80::5e26:cb8:bbb:cf7a%6]) with mapi id 15.20.9913.009; Tue, 12 May 2026
+ 11:11:19 +0000
+Message-ID:
+ <VI0PR03MB116340D42554FA1D08E51910BC0392@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Date: Tue, 12 May 2026 12:11:15 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/7] fetch: add --negotiation-restrict option
+Content-Language: en-GB
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im, Derrick Stolee <stolee@gmail.com>
+References: <pull.2085.v2.git.1776266066.gitgitgadget@gmail.com>
+ <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
+ <fe875399a851ba27ab193463cb6a1faf62aa6835.1776871546.git.gitgitgadget@gmail.com>
+From: Matthew John Cheetham <mjcheetham@outlook.com>
+In-Reply-To: <fe875399a851ba27ab193463cb6a1faf62aa6835.1776871546.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BL0PR0102CA0013.prod.exchangelabs.com
+ (2603:10b6:207:18::26) To VI0PR03MB11634.eurprd03.prod.outlook.com
+ (2603:10a6:800:326::21)
+X-Microsoft-Original-Message-ID:
+ <0f58f93f-3ca9-46fb-a34f-734f37c6ecd9@outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-    "D. Ben Knoble" <ben.knoble@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Marc Branchaud <marcnarc@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR03MB11634:EE_|AS8PR03MB9462:EE_
+X-MS-Office365-Filtering-Correlation-Id: aac6b5bc-5b49-4607-3538-08deb017313c
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|15080799012|24021099003|5072599009|12121999013|23021999003|37011999003|6090799003|8060799015|19110799012|51005399006|41001999006|440099028|3412199025|40105399003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?QnMzMnlmTFJRRlVjZFlnNHlPb29lY0R0UHRQM0ZpZFlkd0FPZ0dqUE5JMUhZ?=
+ =?utf-8?B?N1dBcTB6THI1OVZZNE9wNkN3empSR0tkTmRzaWRXQmpVSW9kbGpuT3R6S0NR?=
+ =?utf-8?B?a1Z1RDcyaFJ3WmIwZVZVc0hVMFJiTXJHNGlVcGN4VWZHQTdJQjJJelMrTWIw?=
+ =?utf-8?B?ZFQvR3BZVkpqTkttQnNDNGdteW5XNmdXTURxM3lZV1VoZTIrMlZ4c1I3S1Ns?=
+ =?utf-8?B?SGFSbWhVN28xbzNiNnlodzkwcmZRUXoyU0V3Wk16cGc0Tk1STHlrUWw0YnFk?=
+ =?utf-8?B?Rm5vYTB1aGJzYWFjUzBKNDBsb01LTVVtM1lZVE9STW9PYU8wamdSaXd3cG13?=
+ =?utf-8?B?OTlheTN4eEdMa1R4TUhybzZTdWZRRDdnd3M5TER0T3pzTXpPVWUyRUpWN1Aw?=
+ =?utf-8?B?NVlwb3BHb0plRllINWFuSjcxNnhwUWlTMmN4L01tM3NNZk5QWnNpRVdjQkti?=
+ =?utf-8?B?a3RYRWlhTkFmMEwvaXBIZ21RUENUcytvb1NZcnk2TnN0NUZkMTU4TmdVc1ZU?=
+ =?utf-8?B?M0kveHJuVVE5V3J4WVM1SDJHZXQyaGZwdk9iNTVGS2ZxRC9SYWF1b09kSzRD?=
+ =?utf-8?B?dXZPQjQzaDF3QTJXVG9kL3R5ODczbWNoWm9hdU5KVVc1a1RVL01lSHRyY3lP?=
+ =?utf-8?B?RXNhM2l5WmdFL1FUWG9DdTdKdzdYaDJQNnJDc2dhYkNvSjRsNTBSY0t3TVRT?=
+ =?utf-8?B?M2IrdUZRM3BLeGxQSjRRenZvQnNzbHJBcmZMeWVqTTN1Z0ozTXNqeXpXc3lv?=
+ =?utf-8?B?RGsveGhmV0dENVVJVGdzOTZ3QmNzVlVCR3JWWkVuMkFwOEx4aEJGRnZrWlFY?=
+ =?utf-8?B?UmVBcE9qL1lENWpjdlJsWHdRNDNEUGVuaTJTQ0JnOGdiWmN0WThtVEwwU05w?=
+ =?utf-8?B?dkZuRmwxRkVyQy9IUnRtaXJhNnMwVVNQZlJ4MDJrNlY5cVpXYjJFOWtLbWlT?=
+ =?utf-8?B?L2tJd0ZjRzNUV0VuMFBDV2VWVzFRaThseExFSDBwMG5VUENaMk1XbWYrcFdO?=
+ =?utf-8?B?UlpMek1vQTJvM2kvdFFtWFlJTFdoU3JHVk9hbmNqSUFka1ltZ3llcDI0MTI3?=
+ =?utf-8?B?M1FZTjlDTEw1d1JIK0tCNURhb3pXY2lMK1dxSXAvTm1aam5RTHNrdWcwTEpa?=
+ =?utf-8?B?S0Fla09zbmdrZmd1cmtoSmUrZzF3Qlp1Z0pUKzltUkZidjNQeW56ZUZZTUda?=
+ =?utf-8?B?dEV1ZWQyN3h3K0ZCdm9rODdPcndZUlNLbStJWXBOY1BCWXpkZ0NINEh4dTEw?=
+ =?utf-8?B?cHpHVnlyM3NtUnljckpZZUhVVTdSbXVoSmVoZy81K05GN2xzdW4wREpjcW5F?=
+ =?utf-8?B?MjRDVU0yZUpmcUxvQjFBTDRkbHJlR2hDaVJDZGhmVFVrbGF1cEUrS082VUVF?=
+ =?utf-8?B?bENJR1lyaHhHQXpMOTFGMUJSMVg3ck5SdXoxdHlHRG9DTVlDcUt0UUhweFNs?=
+ =?utf-8?Q?y1YMi2lM?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MHNIaGJxeWRnbTErb1FMMTNiRS8wQWJVam5tUEcrbXdsWWt5UHJQSHkyV0w0?=
+ =?utf-8?B?SW5uNFdmaTNkOFBrajAxcWwrNDdDY0JkUWlwZVZzazl1Z2Z6MXp6MU5sTGRn?=
+ =?utf-8?B?YktwUDdwQmthUWp2L05wSXMwQjI1NlZBdXYwdmgyNzBXbWc2T3RRTWVnTDZP?=
+ =?utf-8?B?RDFYTUJycjNMMlJBdFNPT2xYbkRmTm9vSWFuVXFrUzF6bzMxZ0Y4RnpIWldx?=
+ =?utf-8?B?WTFCVVZUY255c3J6blA1MXB0UFNmaVJGWCtQRzVRNEZEZC9ZaEtMVUFtazd3?=
+ =?utf-8?B?bFdiU0V1QTJDV28vcXAzekgvdk9PcXl3cCtrQ2RKUFB1RWowUnhkVzZ4dUdM?=
+ =?utf-8?B?ZTVrekgwZEc3Mm5iUjJ3Zmg0dExZNm00M3NwVG90bmJSWlA5b2xvRzk2S21Y?=
+ =?utf-8?B?MVh2NXROVEUzVm5lZEk4WWlVM0w2TDIrN00xUGhPcyt5bXlydWZrTVB6MERJ?=
+ =?utf-8?B?djUyRkpBdXhOZGFOMVAzYjZpTHdRWXVmTVU5VERhV2NYVFNNeUZ3UHVjNkwz?=
+ =?utf-8?B?N2RqL014RW5WazNxVFZtRVBVNUIrR2FsKy9zTGo5WTFjOWtzS0M4VnNMb1Z5?=
+ =?utf-8?B?TVg2d1p4eHZOUjdYVU0rSVN5Qzc5STllVXVBaFNHdmUrZkJIMXgvWXlHK1Rk?=
+ =?utf-8?B?VWtOSXFSV0VXZkhrSm1UUklhL0RuclFiMm93RGdnTnJkYXFDK3dIOEJNUHMv?=
+ =?utf-8?B?Kzd1cEZxaWxhY0tONmlvQkk4ckZqUUlQaytpMy9OZnlqaTh6OVFIUFNZaDhj?=
+ =?utf-8?B?VVkrMmdwd1ErVVBOc0F6UWtSL1RMRGM5by9hZkdBUEsySy83U1ZHeGNkQ2dP?=
+ =?utf-8?B?R3IwQzRHUWk2WDhNYUJpNUFvc2FaQXJ1YXB5alBuL3ZJbkJPRnV6ODRzUlJ3?=
+ =?utf-8?B?WVNsekYyeVZ3SkFTcTJNbHUyT1NSaXVUeUc3cUZja2dwbG5ieitLaHZkSlZM?=
+ =?utf-8?B?RmxINGNQVkdFdTFFWnJLbkZaTFBHL25rNE5wQXgwamFtb0tvcXVyTGI4Q2F1?=
+ =?utf-8?B?bHczRGtjZkpPT295NUtkRkJsemtxeGVSaXlKaFRJbndRamlQSldZQkJkdDRv?=
+ =?utf-8?B?STZtUGQyUTZqSFlDcXpHNzE5VVZ1RmhKbUhVMWxaWklmSWtYdCsrVDF6SFNQ?=
+ =?utf-8?B?WUNObmZEYzhDbVBBcDV2NjlYbnI2ZnNObUs0UFA5NUgwREt1L3RUUWVHSDI1?=
+ =?utf-8?B?eUoxcEFid09iUlg0RTJ2NEt2cGV0YmJ5d3drTndDdlk2aTdDS0p1VURLTFNX?=
+ =?utf-8?B?eUYwVWpNUFJvUWNMY0hPWTY1SlRjZEFwMlBHYVR1ZUx3OXRDejF6TEF4N3Bx?=
+ =?utf-8?B?aXhkdS9MVEF6cWFJSXlEVUd5TE1KUUUzc3FNdDdwelZKR0tUMzlndXExNldQ?=
+ =?utf-8?B?UkNYL1V3azdFOWpsU1d5OWpremxvZEI1M1ZIYVRyazFkRm5DYVpWQlJtQmpP?=
+ =?utf-8?B?aCtpcU41T2tLSmE1ZTBpWnhDRmZlUlltb0hGNTBxRWpqeHlRYlppZW5kZEE1?=
+ =?utf-8?B?R3JpdWhyNDBwOWpuL3F4SytlbmZWQzZmZVpaVzdLY3Z4ZUNwUXVibFBGa1Jt?=
+ =?utf-8?B?dFJPdEhSQUdFc1lVWmd2dlZRV2FpQXVTWG9lSW9sd2ZLWk9QWGw1ZWRwdnVh?=
+ =?utf-8?B?eUs4akVaczdJMmxVT21jdXVDRmRHUm4vTDhzMUFnN0w1UDQ2Y282TmsrZm80?=
+ =?utf-8?B?Y050NTdpeTMzNDQyRU00c0EwSFppeEdHRHIvdGM0TTZxZFFjaVBxKzgzaXV0?=
+ =?utf-8?B?SWxsaXpqeWh5bWJZTWlHM092NGJRbVZCMjdoejFnTXhFbXFXczBnNjRLc2Q5?=
+ =?utf-8?B?bXdXYTdRdklRNnliWXJ6K29OeHRSTXYrd3c5RHhvLzIxbU16a1N6RkZjdGc3?=
+ =?utf-8?Q?bxmABwQvGL34T?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aac6b5bc-5b49-4607-3538-08deb017313c
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR03MB11634.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2026 11:11:19.2214
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR03MB9462
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On 2026-04-22 16:25, Derrick Stolee via GitGitGadget wrote:
 
-If you want to fork your topic branch from the very latest of the
-tip of a branch your remote has, you would do:
+> From: Derrick Stolee <stolee@gmail.com>
+> 
+> The --negotiation-tip option to 'git fetch' and 'git pull' allows users
+> to specify that they want to focus negotiation on a small set of
+> references. This is a _restriction_ on the negotiation set, helping to
+> focus the negotiation when the ref count is high. However, it doesn't
+> allow for the ability to opportunistically select references beyond that
+> list.
+> 
+> This subtle detail that this is a 'maximum set' and not a 'minimum set'
+> is not immediately clear from the option name. This makes it more
+> complicated to add a new option that provides the complementary behavior
+> of a minimum set.
+> 
+> For now, create a new synonym option, --negotiation-restrict, that
+> behaves identically to --negotiation-tip. Update the documentation to
+> make it clear that this new name is the preferred option, but we keep
+> the old name for compatibility. Mark --negotiation-tip as an alias of the
+> new, preferred option.
 
-    git fetch origin some-branch
-    git checkout -b new_branch --track origin/some-branch
+This motivation reads well. Preparing the new naming convention before
+introducing the new, complementary option, is the right order to do this 
+in, IMO.
 
-Extend the "--track" option of "git checkout" and allow users to
-write
+> Update a few warning messages with the new option, but also make them
+> translatable with the option name inserted by formatting. At least one
+> of these messages will be reused later for a new option.
 
-    git checkout -b new_branch --track=fetch origin/some-branch
+Nice extra win!
 
-to (1) fetch 'some-branch' from the remote 'origin', updating the
-remote-tracking branch 'origin/some-branch', (2) arrange subsequent
-'git pull' on 'new_branch' to interact with 'origin/some-branch' and
-(3) fork 'new_branch' from it.
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>   Documentation/fetch-options.adoc |  4 ++++
+>   builtin/fetch.c                  | 13 ++++++++-----
+>   builtin/pull.c                   |  3 +++
+>   t/t5510-fetch.sh                 | 25 +++++++++++++++++++++++++
+>   t/t5702-protocol-v2.sh           |  4 ++--
+>   5 files changed, 42 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/fetch-options.adoc b/Documentation/fetch-options.adoc
+> index 81a9d7f9bb..c07b85499f 100644
+> --- a/Documentation/fetch-options.adoc
+> +++ b/Documentation/fetch-options.adoc
+> @@ -49,6 +49,7 @@ the current repository has the same history as the source repository.
+>   	`.git/shallow`. This option updates `.git/shallow` and accepts such
+>   	refs.
+>   
+> +`--negotiation-restrict=(<commit>|<glob>)`::
+>   `--negotiation-tip=(<commit>|<glob>)`::
+>   	By default, Git will report, to the server, commits reachable
+>   	from all local refs to find common commits in an attempt to
+> @@ -58,6 +59,9 @@ the current repository has the same history as the source repository.
+>   	local ref is likely to have commits in common with the
+>   	upstream ref being fetched.
+>   +
+> +`--negotiation-restrict` is the preferred name for this option;
+> +`--negotiation-tip` is accepted as a synonym.
+> ++
+>   This option may be specified more than once; if so, Git will report
+>   commits reachable from any of the given commits.
+>   +
 
-In the value of the '--track' option, 'fetch' can be combined with
-the existing 'direct' (default) and 'inherit' modes via a
-comma-separated list. Examples:
+By my eyes it looks like two other references to the old name remain and
+could also be updated for consistency (since --negotiation-restrict is
+now the preferred name):
 
-    git checkout -b new_branch --track=fetch,inherit some_local_branch
-    git switch -c new_branch --track=fetch origin/some-branch
+  1. Documentation/fetch-options.adoc, under `--negotiate-only`:
+       "ancestors of the provided `--negotiation-tip=` arguments"
 
-When "fetch" is requested and <start-point> is in <remote>/<branch>
-form, run "git fetch <remote> <branch>" before resolving the ref, so
-that other remote-tracking branches are left untouched. If
-<start-point> is a bare remote name like "origin" (which resolves to
-that remote's default branch), "git fetch <remote>" is run instead,
-since the target branch is not known up front. Abort the checkout if
-the fetch fails.
+  2. Documentation/config/fetch.adoc:
+       "See also the `--negotiate-only` and `--negotiation-tip` options"
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    checkout: --track=fetch
-    
-     * Support hierarchical remote names (e.g. nested/remote) by trying the
-       longest prefix first.
-     * Fold the existing-ref lookup into resolve_fetch_target() so it
-       returns the ref name directly.
+Of course the old name will still work, so this is more a nit-pick :-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2281%2FHaraldNordgren%2Fcheckout-fetch-start-point-v9
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2281/HaraldNordgren/checkout-fetch-start-point-v9
-Pull-Request: https://github.com/git/git/pull/2281
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 4795b2a13c..fc950fe35b 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1558,8 +1558,8 @@ static void add_negotiation_tips(struct git_transport_options *smart_options)
+>   		refs_for_each_ref_ext(get_main_ref_store(the_repository),
+>   				      add_oid, oids, &opts);
+>   		if (old_nr == oids->nr)
+> -			warning("ignoring --negotiation-tip=%s because it does not match any refs",
+> -				s);
+> +			warning(_("ignoring %s=%s because it does not match any refs"),
+> +				"--negotiation-restrict", s);
+>   	}
+>   	smart_options->negotiation_tips = oids;
+>   }
 
-Range-diff vs v8:
+Keeping the option name out of the translation string prevents
+accidental translation of a fixed symbol - good.
 
- 1:  61c2199fd5 ! 1:  021375e4cc checkout: extend --track with a "fetch" mode to refresh start-point
-     @@ builtin/checkout.c: struct branch_info {
-       };
-       
-      +static int resolve_fetch_target(const char *arg, char **remote_out,
-     -+				char **src_ref_out)
-     ++				char **src_ref_out, char **existing_ref_out)
-      +{
-      +	const char *slash;
-     -+	char *remote_name;
-     -+	struct remote *remote;
-     ++	char *remote_name = NULL;
-     ++	struct remote *remote = NULL;
-      +	struct refspec_item query = { 0 };
-      +	struct strbuf dst = STRBUF_INIT;
-     -+	const char *rest;
-     ++	struct object_id oid;
-     ++	const char *rest = NULL;
-     ++	const char *head_target = NULL;
-     ++	const char *short_target;
-      +
-      +	*remote_out = NULL;
-      +	*src_ref_out = NULL;
-     ++	*existing_ref_out = NULL;
-      +
-     -+	if (!arg || !*arg)
-     -+		return -1;
-     -+
-     -+	slash = strchr(arg, '/');
-     -+	if (slash == arg)
-     ++	if (!arg || !*arg || *arg == '/')
-      +		return -1;
-     -+	remote_name = slash ? xstrndup(arg, slash - arg) : xstrdup(arg);
-      +
-     -+	remote = remote_get(remote_name);
-     -+	if (!remote || !remote_is_configured(remote, 1)) {
-     ++	slash = arg + strlen(arg);
-     ++	while (1) {
-      +		free(remote_name);
-     -+		return -1;
-     ++		remote_name = xstrndup(arg, slash - arg);
-     ++		remote = remote_get(remote_name);
-     ++		if (remote && remote_is_configured(remote, 1))
-     ++			break;
-     ++		while (slash > arg && *--slash != '/')
-     ++			;
-     ++		if (slash == arg) {
-     ++			free(remote_name);
-     ++			return -1;
-     ++		}
-      +	}
-      +
-     -+	rest = (slash && slash[1]) ? slash + 1 : NULL;
-     ++	if (*slash == '/' && slash[1])
-     ++		rest = slash + 1;
-      +	if (!rest) {
-     -+		struct object_id oid;
-     -+		const char *head_target;
-     -+		const char *short_target;
-     -+
-      +		strbuf_addf(&dst, "refs/remotes/%s/HEAD", remote_name);
-      +		head_target = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-      +						      dst.buf,
-      +						      RESOLVE_REF_READING |
-      +						      RESOLVE_REF_NO_RECURSE,
-      +						      &oid, NULL);
-     ++		if (head_target) {
-     ++			*existing_ref_out = xstrdup(dst.buf);
-     ++			if (skip_prefix(head_target, "refs/remotes/", &short_target) &&
-     ++			    skip_prefix(short_target, remote_name, &short_target) &&
-     ++			    *short_target == '/')
-     ++				rest = short_target + 1;
-     ++		}
-      +		strbuf_reset(&dst);
-     -+		if (head_target &&
-     -+		    skip_prefix(head_target, "refs/remotes/", &short_target) &&
-     -+		    skip_prefix(short_target, remote_name, &short_target) &&
-     -+		    *short_target == '/')
-     -+			rest = short_target + 1;
-      +	}
-      +
-      +	if (rest) {
-     @@ builtin/checkout.c: struct branch_info {
-      +		} else {
-      +			*src_ref_out = xstrdup(rest);
-      +		}
-     ++		if (!*existing_ref_out) {
-     ++			strbuf_reset(&dst);
-     ++			strbuf_addf(&dst, "refs/remotes/%s", arg);
-     ++			if (!refs_read_ref(get_main_ref_store(the_repository),
-     ++					   dst.buf, &oid))
-     ++				*existing_ref_out = xstrdup(dst.buf);
-     ++		}
-      +	}
-      +
-      +	strbuf_release(&dst);
-     @@ builtin/checkout.c: struct branch_info {
-      +{
-      +	char *remote_name = NULL;
-      +	char *src_ref = NULL;
-     ++	char *existing_ref = NULL;
-      +	struct child_process cmd = CHILD_PROCESS_INIT;
-     -+	struct strbuf dst_ref = STRBUF_INIT;
-     -+	int have_existing_ref = 0;
-      +
-     -+	if (resolve_fetch_target(arg, &remote_name, &src_ref))
-     ++	if (resolve_fetch_target(arg, &remote_name, &src_ref, &existing_ref))
-      +		return;
-      +
-     -+	{
-     -+		struct object_id oid;
-     -+
-     -+		if (strchr(arg, '/'))
-     -+			strbuf_addf(&dst_ref, "refs/remotes/%s", arg);
-     -+		else
-     -+			strbuf_addf(&dst_ref, "refs/remotes/%s/HEAD", arg);
-     -+		if (!refs_read_ref(get_main_ref_store(the_repository),
-     -+				   dst_ref.buf, &oid))
-     -+			have_existing_ref = 1;
-     -+	}
-     -+
-      +	strvec_pushl(&cmd.args, "fetch", remote_name, NULL);
-      +	if (src_ref)
-      +		strvec_push(&cmd.args, src_ref);
-      +	cmd.git_cmd = 1;
-      +	if (run_command(&cmd)) {
-     -+		if (have_existing_ref)
-     ++		if (existing_ref)
-      +			warning(_("failed to fetch start-point '%s'; "
-      +				  "using existing '%s'"),
-     -+				arg, dst_ref.buf);
-     ++				arg, existing_ref);
-      +		else
-      +			die(_("failed to fetch start-point '%s'"), arg);
-      +	}
-      +
-      +	free(remote_name);
-      +	free(src_ref);
-     -+	strbuf_release(&dst_ref);
-     ++	free(existing_ref);
-      +}
-      +
-      +static int parse_opt_checkout_track(const struct option *opt,
-     @@ builtin/checkout.c: struct branch_info {
-       static void branch_info_release(struct branch_info *info)
-       {
-       	free(info->name);
-     -@@ builtin/checkout.c: static int git_checkout_config(const char *var, const char *value,
-     - 		opts->dwim_new_local_branch = git_config_bool(var, value);
-     - 		return 0;
-     - 	}
-     --
-     - 	if (starts_with(var, "submodule."))
-     - 		return git_default_submodule_config(var, value, NULL);
-     - 
-      @@ builtin/checkout.c: static struct option *add_common_switch_branch_options(
-       {
-       	struct option options[] = {
-     @@ t/t7201-co.sh: test_expect_success 'tracking info copied with autoSetupMerge=inh
-      +	test_cmp_rev refs/remotes/custom-ns/fetch_refspec HEAD
-      +'
-      +
-     ++test_expect_success 'checkout --track=fetch handles hierarchical remote name' '
-     ++	git checkout main &&
-     ++	git -C fetch_upstream checkout -b fetch_hier &&
-     ++	test_commit -C fetch_upstream u_hier &&
-     ++	git remote add nested/remote ./fetch_upstream &&
-     ++	test_when_finished "git remote remove nested/remote" &&
-     ++	git fetch nested/remote fetch_hier &&
-     ++	test_commit -C fetch_upstream u_hier_post &&
-     ++	git checkout --track=fetch -b local_hier nested/remote/fetch_hier &&
-     ++	test_cmp_rev refs/remotes/nested/remote/fetch_hier HEAD
-     ++'
-     ++
-      +test_expect_success 'checkout --track=inherit,direct is rejected' '
-      +	test_must_fail git checkout --track=inherit,direct -b bad fetch_upstream/fetch_new 2>err &&
-      +	test_grep "cannot combine" err
+> @@ -1599,7 +1599,8 @@ static struct transport *prepare_transport(struct remote *remote, int deepen,
+>   		if (transport->smart_options)
+>   			add_negotiation_tips(transport->smart_options);
+>   		else
+> -			warning("ignoring --negotiation-tip because the protocol does not support it");
+> +			warning(_("ignoring %s because the protocol does not support it"),
+> +				"--negotiation-restrict");
+>   	}
+>   	return transport;
+>   }
 
+Same as above - good.
 
- Documentation/git-checkout.adoc |  13 ++-
- Documentation/git-switch.adoc   |  13 ++-
- builtin/checkout.c              | 168 +++++++++++++++++++++++++++++++-
- t/t7201-co.sh                   | 144 +++++++++++++++++++++++++++
- 4 files changed, 332 insertions(+), 6 deletions(-)
+> @@ -2565,8 +2566,9 @@ int cmd_fetch(int argc,
+>   			       N_("specify fetch refmap"), PARSE_OPT_NONEG, parse_refmap_arg),
+>   		OPT_STRING_LIST('o', "server-option", &server_options, N_("server-specific"), N_("option to transmit")),
+>   		OPT_IPVERSION(&family),
+> -		OPT_STRING_LIST(0, "negotiation-tip", &negotiation_tip, N_("revision"),
+> +		OPT_STRING_LIST(0, "negotiation-restrict", &negotiation_tip, N_("revision"),
+>   				N_("report that we have only objects reachable from this object")),
+> +		OPT_ALIAS(0, "negotiation-tip", "negotiation-restrict"),
+>   		OPT_BOOL(0, "negotiate-only", &negotiate_only,
+>   			 N_("do not fetch a packfile; instead, print ancestors of negotiation tips")),
+>   		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
 
-diff --git a/Documentation/git-checkout.adoc b/Documentation/git-checkout.adoc
-index 43ccf47cf6..28f17f427e 100644
---- a/Documentation/git-checkout.adoc
-+++ b/Documentation/git-checkout.adoc
-@@ -158,11 +158,22 @@ of it").
- 	resets _<branch>_ to the start point instead of failing.
- 
- `-t`::
--`--track[=(direct|inherit)]`::
-+`--track[=(direct|inherit|fetch)[,...]]`::
- 	When creating a new branch, set up "upstream" configuration. See
- 	`--track` in linkgit:git-branch[1] for details. As a convenience,
- 	--track without -b implies branch creation.
- +
-+The argument is a comma-separated list. `direct` (the default) and
-+`inherit` select the tracking mode and are mutually exclusive. Adding
-+`fetch` requests that the remote be fetched before _<start-point>_ is
-+resolved, so the new branch starts from a fresh tip: when
-+_<start-point>_ is in _<remote>/<branch>_ form, only that branch is
-+updated; when _<start-point>_ is a bare remote name (e.g. `origin`),
-+only the remote's default branch is updated. If the fetch fails and the
-+corresponding remote-tracking ref already exists, a warning is printed
-+and the checkout proceeds from the existing tip; otherwise the checkout
-+is aborted.
-++
- If no `-b` option is given, the name of the new branch will be
- derived from the remote-tracking branch, by looking at the local part of
- the refspec configured for the corresponding remote, and then stripping
-diff --git a/Documentation/git-switch.adoc b/Documentation/git-switch.adoc
-index 87707e9265..3f54cf39e9 100644
---- a/Documentation/git-switch.adoc
-+++ b/Documentation/git-switch.adoc
-@@ -154,11 +154,22 @@ should result in deletion of the path).
- 	attached to a terminal, regardless of `--quiet`.
- 
- `-t`::
--`--track[ (direct|inherit)]`::
-+`--track[=(direct|inherit|fetch)[,...]]`::
- 	When creating a new branch, set up "upstream" configuration.
- 	`-c` is implied. See `--track` in linkgit:git-branch[1] for
- 	details.
- +
-+The argument is a comma-separated list. `direct` (the default) and
-+`inherit` select the tracking mode and are mutually exclusive. Adding
-+`fetch` requests that the remote be fetched before _<start-point>_ is
-+resolved, so the new branch starts from a fresh tip: when
-+_<start-point>_ is in _<remote>/<branch>_ form, only that branch is
-+updated; when _<start-point>_ is a bare remote name (e.g. `origin`),
-+only the remote's default branch is updated. If the fetch fails and the
-+corresponding remote-tracking ref already exists, a warning is printed
-+and the switch proceeds from the existing tip; otherwise the switch is
-+aborted.
-++
- If no `-c` option is given, the name of the new branch will be derived
- from the remote-tracking branch, by looking at the local part of the
- refspec configured for the corresponding remote, and then stripping
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index ac0186a33e..aff442c526 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -26,10 +26,12 @@
- #include "preload-index.h"
- #include "read-cache.h"
- #include "refs.h"
-+#include "refspec.h"
- #include "remote.h"
- #include "repo-settings.h"
- #include "resolve-undo.h"
- #include "revision.h"
-+#include "run-command.h"
- #include "setup.h"
- #include "strvec.h"
- #include "submodule.h"
-@@ -62,6 +64,7 @@ struct checkout_opts {
- 	int count_checkout_paths;
- 	int overlay_mode;
- 	int dwim_new_local_branch;
-+	int fetch;
- 	int discard_changes;
- 	int accept_ref;
- 	int accept_pathspec;
-@@ -113,6 +116,158 @@ struct branch_info {
- 	char *checkout;
- };
- 
-+static int resolve_fetch_target(const char *arg, char **remote_out,
-+				char **src_ref_out, char **existing_ref_out)
-+{
-+	const char *slash;
-+	char *remote_name = NULL;
-+	struct remote *remote = NULL;
-+	struct refspec_item query = { 0 };
-+	struct strbuf dst = STRBUF_INIT;
-+	struct object_id oid;
-+	const char *rest = NULL;
-+	const char *head_target = NULL;
-+	const char *short_target;
-+
-+	*remote_out = NULL;
-+	*src_ref_out = NULL;
-+	*existing_ref_out = NULL;
-+
-+	if (!arg || !*arg || *arg == '/')
-+		return -1;
-+
-+	slash = arg + strlen(arg);
-+	while (1) {
-+		free(remote_name);
-+		remote_name = xstrndup(arg, slash - arg);
-+		remote = remote_get(remote_name);
-+		if (remote && remote_is_configured(remote, 1))
-+			break;
-+		while (slash > arg && *--slash != '/')
-+			;
-+		if (slash == arg) {
-+			free(remote_name);
-+			return -1;
-+		}
-+	}
-+
-+	if (*slash == '/' && slash[1])
-+		rest = slash + 1;
-+	if (!rest) {
-+		strbuf_addf(&dst, "refs/remotes/%s/HEAD", remote_name);
-+		head_target = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-+						      dst.buf,
-+						      RESOLVE_REF_READING |
-+						      RESOLVE_REF_NO_RECURSE,
-+						      &oid, NULL);
-+		if (head_target) {
-+			*existing_ref_out = xstrdup(dst.buf);
-+			if (skip_prefix(head_target, "refs/remotes/", &short_target) &&
-+			    skip_prefix(short_target, remote_name, &short_target) &&
-+			    *short_target == '/')
-+				rest = short_target + 1;
-+		}
-+		strbuf_reset(&dst);
-+	}
-+
-+	if (rest) {
-+		strbuf_addf(&dst, "refs/remotes/%s/%s", remote_name, rest);
-+		query.dst = dst.buf;
-+		if (!remote_find_tracking(remote, &query) && query.src) {
-+			*src_ref_out = xstrdup(query.src);
-+			free(query.src);
-+		} else {
-+			*src_ref_out = xstrdup(rest);
-+		}
-+		if (!*existing_ref_out) {
-+			strbuf_reset(&dst);
-+			strbuf_addf(&dst, "refs/remotes/%s", arg);
-+			if (!refs_read_ref(get_main_ref_store(the_repository),
-+					   dst.buf, &oid))
-+				*existing_ref_out = xstrdup(dst.buf);
-+		}
-+	}
-+
-+	strbuf_release(&dst);
-+	*remote_out = remote_name;
-+	return 0;
-+}
-+
-+static void fetch_remote_for_start_point(const char *arg)
-+{
-+	char *remote_name = NULL;
-+	char *src_ref = NULL;
-+	char *existing_ref = NULL;
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+
-+	if (resolve_fetch_target(arg, &remote_name, &src_ref, &existing_ref))
-+		return;
-+
-+	strvec_pushl(&cmd.args, "fetch", remote_name, NULL);
-+	if (src_ref)
-+		strvec_push(&cmd.args, src_ref);
-+	cmd.git_cmd = 1;
-+	if (run_command(&cmd)) {
-+		if (existing_ref)
-+			warning(_("failed to fetch start-point '%s'; "
-+				  "using existing '%s'"),
-+				arg, existing_ref);
-+		else
-+			die(_("failed to fetch start-point '%s'"), arg);
-+	}
-+
-+	free(remote_name);
-+	free(src_ref);
-+	free(existing_ref);
-+}
-+
-+static int parse_opt_checkout_track(const struct option *opt,
-+				    const char *arg, int unset)
-+{
-+	struct checkout_opts *opts = opt->value;
-+	struct string_list tokens = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
-+	int saw_direct = 0, saw_inherit = 0;
-+	int ret = 0;
-+
-+	opts->fetch = 0;
-+
-+	if (unset) {
-+		opts->track = BRANCH_TRACK_NEVER;
-+		return 0;
-+	}
-+
-+	opts->track = BRANCH_TRACK_EXPLICIT;
-+	if (!arg)
-+		return 0;
-+
-+	string_list_split(&tokens, arg, ",", -1);
-+	for_each_string_list_item(item, &tokens) {
-+		if (!strcmp(item->string, "fetch")) {
-+			opts->fetch = 1;
-+		} else if (!strcmp(item->string, "direct")) {
-+			saw_direct = 1;
-+			opts->track = BRANCH_TRACK_EXPLICIT;
-+		} else if (!strcmp(item->string, "inherit")) {
-+			saw_inherit = 1;
-+			opts->track = BRANCH_TRACK_INHERIT;
-+		} else {
-+			ret = error(_("option `%s' expects \"%s\", \"%s\", "
-+				      "or \"%s\""),
-+				    "--track", "direct", "inherit", "fetch");
-+			goto out;
-+		}
-+	}
-+
-+	if (saw_direct && saw_inherit)
-+		ret = error(_("option `%s' cannot combine \"%s\" and \"%s\""),
-+			    "--track", "direct", "inherit");
-+
-+out:
-+	string_list_clear(&tokens, 0);
-+	return ret;
-+}
-+
- static void branch_info_release(struct branch_info *info)
- {
- 	free(info->name);
-@@ -1741,10 +1896,10 @@ static struct option *add_common_switch_branch_options(
- {
- 	struct option options[] = {
- 		OPT_BOOL('d', "detach", &opts->force_detach, N_("detach HEAD at named commit")),
--		OPT_CALLBACK_F('t', "track",  &opts->track, "(direct|inherit)",
-+		OPT_CALLBACK_F('t', "track",  opts, "(direct|inherit|fetch)[,...]",
- 			N_("set branch tracking configuration"),
- 			PARSE_OPT_OPTARG,
--			parse_opt_tracking_mode),
-+			parse_opt_checkout_track),
- 		OPT__FORCE(&opts->force, N_("force checkout (throw away local modifications)"),
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_STRING(0, "orphan", &opts->new_orphan_branch, N_("new-branch"), N_("new unborn branch")),
-@@ -1949,8 +2104,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			opts->dwim_new_local_branch &&
- 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
- 			!opts->new_branch;
--		int n = parse_branchname_arg(argc, argv, dwim_ok, which_command,
--					     &new_branch_info, opts, &rev);
-+		int n;
-+
-+		if (opts->fetch)
-+			fetch_remote_for_start_point(argv[0]);
-+
-+		n = parse_branchname_arg(argc, argv, dwim_ok, which_command,
-+					 &new_branch_info, opts, &rev);
- 		argv += n;
- 		argc -= n;
- 	} else if (!opts->accept_ref && opts->from_treeish) {
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 9bcf7c0b40..6dfe9ec931 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -801,4 +801,148 @@ test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
- 	test_cmp_config "" --default "" branch.main2.merge
- '
- 
-+test_expect_success 'setup upstream for --track=fetch tests' '
-+	git checkout main &&
-+	git init fetch_upstream &&
-+	test_commit -C fetch_upstream u_main &&
-+	git remote add fetch_upstream fetch_upstream &&
-+	git fetch fetch_upstream &&
-+	git -C fetch_upstream checkout -b fetch_new &&
-+	test_commit -C fetch_upstream u_new
-+'
-+
-+test_expect_success 'checkout --track=fetch -b picks up branch created upstream after clone' '
-+	git checkout main &&
-+	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_new &&
-+	git checkout --track=fetch -b local_new fetch_upstream/fetch_new &&
-+	test_cmp_rev refs/remotes/fetch_upstream/fetch_new HEAD &&
-+	test_cmp_config fetch_upstream branch.local_new.remote &&
-+	test_cmp_config refs/heads/fetch_new branch.local_new.merge
-+'
-+
-+test_expect_success 'checkout --track=fetch <remote>/<branch> leaves other tracking branches untouched' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_target &&
-+	test_commit -C fetch_upstream u_target_pre &&
-+	git -C fetch_upstream checkout -b fetch_other &&
-+	test_commit -C fetch_upstream u_other_pre &&
-+	git fetch fetch_upstream &&
-+	other_before=$(git rev-parse refs/remotes/fetch_upstream/fetch_other) &&
-+	git -C fetch_upstream checkout fetch_target &&
-+	test_commit -C fetch_upstream u_target_post &&
-+	git -C fetch_upstream checkout fetch_other &&
-+	test_commit -C fetch_upstream u_other_post &&
-+	git checkout --track=fetch -b local_target fetch_upstream/fetch_target &&
-+	test_cmp_rev refs/remotes/fetch_upstream/fetch_target HEAD &&
-+	test "$(git rev-parse refs/remotes/fetch_upstream/fetch_other)" = "$other_before"
-+'
-+
-+test_expect_success 'checkout --track=fetch with bare remote name fetches only <remote>/HEAD target' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout main &&
-+	git remote set-head fetch_upstream main &&
-+	git -C fetch_upstream checkout -b fetch_unrelated &&
-+	test_commit -C fetch_upstream u_unrelated_pre &&
-+	git fetch fetch_upstream fetch_unrelated &&
-+	unrelated_before=$(git rev-parse refs/remotes/fetch_upstream/fetch_unrelated) &&
-+	git -C fetch_upstream checkout main &&
-+	test_commit -C fetch_upstream u_main_post &&
-+	git -C fetch_upstream checkout fetch_unrelated &&
-+	test_commit -C fetch_upstream u_unrelated_post &&
-+	git checkout --track=fetch -b local_from_remote fetch_upstream &&
-+	test_cmp_rev refs/remotes/fetch_upstream/main HEAD &&
-+	test "$(git rev-parse refs/remotes/fetch_upstream/fetch_unrelated)" = "$unrelated_before"
-+'
-+
-+test_expect_success 'checkout --track=fetch aborts and does not create branch when no existing ref' '
-+	git checkout main &&
-+	test_might_fail git branch -D bogus &&
-+	test_must_fail git checkout --track=fetch -b bogus fetch_upstream/does_not_exist &&
-+	test_must_fail git rev-parse --verify refs/heads/bogus
-+'
-+
-+test_expect_success 'checkout --track=fetch warns and proceeds when fetch fails but ref exists' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_offline &&
-+	test_commit -C fetch_upstream u_offline &&
-+	git fetch fetch_upstream fetch_offline &&
-+	saved_url=$(git config remote.fetch_upstream.url) &&
-+	test_when_finished "git config remote.fetch_upstream.url \"$saved_url\"" &&
-+	git config remote.fetch_upstream.url ./does-not-exist &&
-+	git checkout --track=fetch -b local_offline fetch_upstream/fetch_offline 2>err &&
-+	test_grep "failed to fetch" err &&
-+	test_cmp_rev refs/remotes/fetch_upstream/fetch_offline HEAD
-+'
-+
-+test_expect_success 'checkout --track=fetch resolves through configured fetch refspec' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_refspec &&
-+	test_commit -C fetch_upstream u_refspec &&
-+	git fetch fetch_upstream fetch_refspec &&
-+	git remote add fetch_custom ./fetch_upstream &&
-+	test_when_finished "git remote remove fetch_custom" &&
-+	git config --replace-all remote.fetch_custom.fetch \
-+		"+refs/heads/*:refs/remotes/custom-ns/*" &&
-+	git fetch fetch_custom &&
-+	test_commit -C fetch_upstream u_refspec_post &&
-+	git checkout --track=fetch -b local_refspec custom-ns/fetch_refspec &&
-+	test_cmp_rev refs/remotes/custom-ns/fetch_refspec HEAD
-+'
-+
-+test_expect_success 'checkout --track=fetch handles hierarchical remote name' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_hier &&
-+	test_commit -C fetch_upstream u_hier &&
-+	git remote add nested/remote ./fetch_upstream &&
-+	test_when_finished "git remote remove nested/remote" &&
-+	git fetch nested/remote fetch_hier &&
-+	test_commit -C fetch_upstream u_hier_post &&
-+	git checkout --track=fetch -b local_hier nested/remote/fetch_hier &&
-+	test_cmp_rev refs/remotes/nested/remote/fetch_hier HEAD
-+'
-+
-+test_expect_success 'checkout --track=inherit,direct is rejected' '
-+	test_must_fail git checkout --track=inherit,direct -b bad fetch_upstream/fetch_new 2>err &&
-+	test_grep "cannot combine" err
-+'
-+
-+test_expect_success 'checkout --track=fetch then --track=direct drops fetch (last-one-wins)' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_lastwin &&
-+	test_commit -C fetch_upstream u_lastwin &&
-+	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_lastwin &&
-+	test_must_fail git checkout --track=fetch --track=direct \
-+		-b local_lastwin fetch_upstream/fetch_lastwin &&
-+	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_lastwin
-+'
-+
-+test_expect_success 'checkout --track=fetch,inherit fetches and inherits' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_inherit &&
-+	test_commit -C fetch_upstream u_inherit &&
-+	git fetch fetch_upstream fetch_inherit &&
-+	git checkout -b base_inherit fetch_upstream/fetch_inherit &&
-+	test_commit -C fetch_upstream u_inherit2 &&
-+	git checkout main &&
-+	git checkout --track=fetch,inherit -b local_inherit base_inherit &&
-+	test_cmp_rev refs/remotes/fetch_upstream/fetch_inherit HEAD &&
-+	test_cmp_config fetch_upstream branch.local_inherit.remote &&
-+	test_cmp_config refs/heads/fetch_inherit branch.local_inherit.merge
-+'
-+
-+test_expect_success 'checkout --track=bogus reports an error' '
-+	git checkout main &&
-+	test_must_fail git checkout --track=bogus -b bogus_branch fetch_upstream/fetch_new 2>err &&
-+	test_grep "expects" err
-+'
-+
-+test_expect_success 'switch --track=fetch -c picks up branch created upstream after clone' '
-+	git checkout main &&
-+	git -C fetch_upstream checkout -b fetch_switch &&
-+	test_commit -C fetch_upstream u_switch &&
-+	test_must_fail git rev-parse --verify refs/remotes/fetch_upstream/fetch_switch &&
-+	git switch --track=fetch -c local_switch fetch_upstream/fetch_switch &&
-+	test_cmp_rev refs/remotes/fetch_upstream/fetch_switch HEAD
-+'
-+
- test_done
+Good. Makes the --negotiate-restrict name the primary and the 'tip' the
+alias, matching the docs' preference.
 
-base-commit: 29bd7ed5127255713c1ac2f43b7c6f257d7b4594
--- 
-gitgitgadget
+Keeping the variable named `negotiate_tip` helps reduce churn in this
+patch (and has no outwardly visible impact anyway). I see a future patch
+renames the variable - nice choice for reviewability.
+
+> @@ -2657,7 +2659,8 @@ int cmd_fetch(int argc,
+>   	}
+>   
+>   	if (negotiate_only && !negotiation_tip.nr)
+> -		die(_("--negotiate-only needs one or more --negotiation-tip=*"));
+> +		die(_("%s needs one or more %s"), "--negotiate-only",
+> +		    "--negotiation-restrict=*");
+>   
+>   	if (deepen_relative) {
+>   		if (deepen_relative < 0)
+
+Much love for i18n!
+
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index 7e67fdce97..821cc6699a 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -999,6 +999,9 @@ int cmd_pull(int argc,
+>   		OPT_PASSTHRU_ARGV(0, "negotiation-tip", &opt_fetch, N_("revision"),
+>   			N_("report that we have only objects reachable from this object"),
+>   			0),
+> +		OPT_PASSTHRU_ARGV(0, "negotiation-restrict", &opt_fetch, N_("revision"),
+> +			N_("report that we have only objects reachable from this object"),
+> +			0),
+>   		OPT_BOOL(0, "show-forced-updates", &opt_show_forced_updates,
+>   			 N_("check for forced-updates on all updated branches")),
+>   		OPT_PASSTHRU(0, "set-upstream", &set_upstream, NULL,
+
+It's a shame we don't have a nice way to combine the `OPT_ALIAS` and
+`OPT_PASSTHRU_ARGV` functionality, but it's only a small duplication
+cost of the repeated definition.
+
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 5dcb4b51a4..dc3ce56d84 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -1460,6 +1460,31 @@ EOF
+>   	test_cmp fatal-expect fatal-actual
+>   '
+>   
+> +test_expect_success '--negotiation-restrict limits "have" lines sent' '
+> +	setup_negotiation_tip server server 0 &&
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
+> +		--negotiation-restrict=alpha_1 --negotiation-restrict=beta_1 \
+> +		origin alpha_s beta_s &&
+> +	check_negotiation_tip
+> +'
+> +
+> +test_expect_success '--negotiation-restrict understands globs' '
+> +	setup_negotiation_tip server server 0 &&
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
+> +		--negotiation-restrict=*_1 \
+> +		origin alpha_s beta_s &&
+> +	check_negotiation_tip
+> +'
+> +
+> +test_expect_success '--negotiation-restrict and --negotiation-tip can be mixed' '
+> +	setup_negotiation_tip server server 0 &&
+> +	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
+> +		--negotiation-restrict=alpha_1 \
+> +		--negotiation-tip=beta_1 \
+> +		origin alpha_s beta_s &&
+> +	check_negotiation_tip
+> +'
+> +
+>   test_expect_success SYMLINKS 'clone does not get confused by a D/F conflict' '
+>   	git init df-conflict &&
+>   	(
+> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+> index f826ac46a5..9f6cf4142d 100755
+> --- a/t/t5702-protocol-v2.sh
+> +++ b/t/t5702-protocol-v2.sh
+> @@ -869,14 +869,14 @@ setup_negotiate_only () {
+>   	test_commit -C client three
+>   }
+>   
+> -test_expect_success 'usage: --negotiate-only without --negotiation-tip' '
+> +test_expect_success 'usage: --negotiate-only without --negotiation-restrict' '
+>   	SERVER="server" &&
+>   	URI="file://$(pwd)/server" &&
+>   
+>   	setup_negotiate_only "$SERVER" "$URI" &&
+>   
+>   	cat >err.expect <<-\EOF &&
+> -	fatal: --negotiate-only needs one or more --negotiation-tip=*
+> +	fatal: --negotiate-only needs one or more --negotiation-restrict=*
+>   	EOF
+>   
+>   	test_must_fail git -c protocol.version=2 -C client fetch \
+
+Looks like this test is the only place asserting the '--negotiate-tip'
+string literal in the tree - good, no others to update.
+
+Except the two doc cross-references above (nits) this looks good to me.
+
+Thanks,
+Matthew
+
