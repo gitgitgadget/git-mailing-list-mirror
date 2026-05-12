@@ -1,180 +1,89 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9962535979
-	for <git@vger.kernel.org>; Tue, 12 May 2026 19:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3336A3672A3
+	for <git@vger.kernel.org>; Tue, 12 May 2026 20:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778614343; cv=none; b=tAUY+lJrOOVTozIoU3tixpf26tu/e7qKcUYzpDqQtFs2lIu584MGoyo9cYqzxoqRWFVF+13NUHwomrnXX9BSq+31ZJAgMBE/y+loTvPR78iTfG/gGcz/urHc9jVPjZoqZG3a+s9U7tNWNGBzKHpbe0jcdHBBbVv8gsAoqyWe8Uo=
+	t=1778616124; cv=none; b=eAbLDuMlIL4nA0/MjrLNAWXZuRTq0aJr39aghqLbP4ilBFBiMPEMtiMD3K7/7PTM5LK9saT11j8DUrzZNNXYdphrIBlWSCJ/d36wHDmSyDwz/PI70yTm2LhvrfN77I+yyPjPbq+S1Ij/ZlZgHDwaV41SL5eitdUP1rpARpiggf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778614343; c=relaxed/simple;
-	bh=vpLC5SzF6h8/EHtCCtdHrFcrjuwoVU59SwHYWchxMlo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rB1HhDACc1xe3Y+DBQgOy8cmNRrQ2+RRS3ewp5DaQ+4ztA1ys0ISDtn+M35Vg/GwsLNHESS1RimANuFnIJtDPwPq25KrH2arwJEoyTZfe3IYvdu0ott1Wv00fRDA1hUPFEoV8qRPiTWCr1Gl9EKq85JGdpm1SnPHvxqFwd3W/ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=XJ0gsK5P; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1778616124; c=relaxed/simple;
+	bh=zuU3EULCU6USoMdK2MTGHaLAUrarBylSca7NnjVzD74=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pWCZFlbroJBoax29oah4HE/Tf/t53xjps0HYjYfcvufQ6bHPPwN4xYRfIBsZF2X0Y5eYveUtVgwukoJX/eYae+jTlvgKRMIS0riqnTkem/0LI6XtkPFFHTO4xfdc2OCjSvbKJrQoDItNGomfklTGrXNX3yLbDJipt5myKYS+U0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=epEWPXsR; arc=none smtp.client-ip=74.125.224.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="XJ0gsK5P"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1778614330; x=1779219130; i=l.s.r@web.de;
-	bh=+1diBgJn0HLTNiVyF8R4SE834gs5LKChK0QNhXK0Eso=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=XJ0gsK5PooVF7Dg8XKiveQFUyx35focmd4p0w+eM5hZsX7WuL66f70rdI6SAYMLr
-	 t3lGHPRoHrLIAzRkr1N0a1rcvCrofFYtP/TBUERrQkagS7bRbTSYZo+iCW/+Kgmwo
-	 Oc/cfsAm0HkIy75c/ca6TK1DU2GV9MpVPkE/deyKRd4HflYw+LZi/9CssbBlzpQOh
-	 o3l+kOk/3e+ZoSIg2CeCxNcCwYJMEY+DSFDpQWcvEcjZL9fp65G0wGJYsqjc8qjS1
-	 yBicFSwEQcCQhdnb1e2Ctc9kYLPQ523Uta/gN+u430Di88HQ/1P7vYnVgioqUQtgh
-	 fLrPTtiTTrQqFo4qUg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MAcpg-1wXvRi29s0-003D3e; Tue, 12
- May 2026 21:32:10 +0200
-Message-ID: <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
-Date: Tue, 12 May 2026 21:32:09 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epEWPXsR"
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-651c5d525f6so6672632d50.3
+        for <git@vger.kernel.org>; Tue, 12 May 2026 13:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778616122; x=1779220922; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zuU3EULCU6USoMdK2MTGHaLAUrarBylSca7NnjVzD74=;
+        b=epEWPXsRWbX3M1SGuN1Ln/doIeJd1snmPOaiTsoSq/Z4jhzCefwTWixqpxdPjt33MH
+         i3sR1DA7ZdCnsxLHrF7Va+Tn6VbCHRbmK1mbJOxJUja+ycDg15+w401fmMz0NfX+9G4F
+         TCNpt8t3wqLx0AMtNfP2UqOwlhp9gxvwSYh5oE8KHCeiQDW3MJ53AmZptNrbLd2EJR8p
+         BtixTNSwNoKyzVebZ2ioGdWTsBeb5Map8w8xtCW8xgiOTA9Kojp923mi1hoamLhZVcMq
+         Fx04LowXKpCloy+mF1jg5/+452VNrsuCp+QUBWdygkrze8cL/Z1xg3ETzZCLzrBdu8k8
+         vEPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778616122; x=1779220922;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=zuU3EULCU6USoMdK2MTGHaLAUrarBylSca7NnjVzD74=;
+        b=WtXZ2K0nQzgBDz9j+oBUEYr4lwBytd/283TPH/Y8qp9ArJK4wn7qQzu6vVRjD5EL1x
+         G7/feMQ+PnxySr02Kjs/wiiXewJNNiV91ZL7C9AqjfmCkq7Wsjz79d+RbdFJzQLz6h+m
+         CwGNKvxZeXrfvWYgjbPyu1SIvp4qdRrUprjOLfj9dXaf0amS6hPTXNFI4XVe6DbFyzfX
+         BCTAdA/VjvbdD+yBlY7okgGSAJQjFmf0E2Jtprzz9cv7BRlUCWmpnSv29TA8YqhT8X3q
+         zr2ArYqpV7FJbZFszWMmQ0i8FakWDmScY6srFzDhyUOh+Tp0SoGTugI6+Sji84yVyXPV
+         ClJw==
+X-Gm-Message-State: AOJu0YxMj2hEyIMmGXj0fGv54fsjEbnIl4HqWHFhyVPWt89YWadGlTiW
+	52Rwe+0eHLWizaaJIS4gajbbS+PTi23acrJ+jeQVwtU+IXl2BjqSepawRKWJ7c41
+X-Gm-Gg: Acq92OFqIBGbrSY/gHEcAt5Tnq9LObju6GtKEPEDnxL5DBRV6+H5Um4Iv8/6jaqgWWm
+	C+ZVF1fx1oOvfn93YvEjBDGFLYhU86dvTltbg15jBPx7+CjeqfEj8KDP0D1EPNbt7u10jbPiaYK
+	8rrGdz/BfZB8V0qGhdoICgs3GBmenyq3eE8yLD2TyrOVLmQbL9WXL8XdknceRnr4X8FLXnqtyhB
+	pqV5K0tOXqWtIbX02bvORnwVm/0XXNmdFwaMtzrJdzPGeoAHdjk8Gb+zCMPt8cZhL7nE8b14qB+
+	XffKuHlu0suikYNE5K10tLxNlKEpz2ryVeg0hhuzMc+l2M4sZO9NtHDOuYTzk2KB3V8fFB5JzCB
+	u7ulb9BHWGysxanZj/31GD+PireHHHNidpaiXcdZZRPpt8ZYfxbjWumkfl9HU/i64b+njvsfJyw
+	MG1ZuCTJEh22ec+N5/e7h92DGw4dhJyI7r46nmvztHPtaBfrNuQOlesH5WzdQiDnCFAS4eOg5BO
+	OMxMgS6d6+SSZ084uOsQ0w=
+X-Received: by 2002:a05:690e:1509:b0:654:468c:7dd5 with SMTP id 956f58d0204a3-65df633c8a4mr353684d50.33.1778616122117;
+        Tue, 12 May 2026 13:02:02 -0700 (PDT)
+Received: from alibaba.. ([129.222.206.134])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65d96a67a9bsm7423765d50.9.2026.05.12.13.02.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 May 2026 13:02:01 -0700 (PDT)
+From: Zakariyah Ali <zakariyahali100@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v6] t2000: consolidate second scenario into a single test
+Date: Tue, 12 May 2026 21:01:40 +0100
+Message-ID: <20260512200140.1016654-1-zakariyahali100@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260429103607.406339-1-zakariyahali100@gmail.com>
+References: <20260429103607.406339-1-zakariyahali100@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] strbuf: add strbuf_add_uint()
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-References: <20260512115603.80780-1-l.s.r@web.de>
- <20260512115603.80780-2-l.s.r@web.de>
- <20260512184238.GC70851@coredump.intra.peff.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20260512184238.GC70851@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:g+3h+mDcCJ6TDbYEFs/Vr4H+03JqI7SfxLt7yuxuKDezfuTEF+8
- h2AWPlvAX/4rUhxEKYNen56LA2PiELeKrEIw5rXmPQmsLmuBm4oU6QmgjIW9SDK3cMrbS+U
- llFft495FOtuVGLpDEqAoj6WpCjvDcCEOj2oAZ7uQ3SmShWh9u+9azkFf6OJ+KrUyie/9U0
- UmU07Sta1/2ui/1kdYN5w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Mxhp8Yercz8=;H1gA57al/ERCqTmjGzm/tusJb5P
- ce+GNrKRqa27dVsF6ugt4JH8PKAwkjpJL3V62AIQalFbrVcr9tKFT/pTNkxeHBBCISFvV5EkH
- Yhy6ibw//2dH2IXzetHXPKaiMU8OKDXMg+8IipPgQDl8dPwGO0cXRhFsPFMP5K92PK0OACX+Y
- ySdfD5Zt+V0DelLHnocKHUN+QCErzYTglCDySMc32/fysxuId+sieajtYo3BaxuGwB/mLqtTE
- 1pASc/+W5SpNE18XetRRFhcYo0+dwDmZKopc1voae4aF+m+Yg8fweFDniNfBcNYhMnx2PDt9Q
- gM7H3lHptyeHB6lHaiuayrFygP2EwSm7ziwU+A94+5B2GgQNIJzSyOKpxdVlfDXekF3pnPu4A
- 1fEE5xJ80XwGfQv4WXQdm4zBRvyumgXNjjMxTVpjFP+TmRgFcFUHe3I/NzjXIZq/OoNh24fyX
- BqK3eM4sfv2B7TpLj3NCuQbwy8+GZ7K4h2kfAKl01zMU3fDxsdujPGV/EQxvfX25COzLqbrLq
- 4PAn0WJBpLBdYsGjPJaRK2EqRkN202N4Z7W4j3sy60hLZUUOsRV3H2Mdv/sRh81LyqmMGTgxK
- c58g/zI2xExNkoJX/gENLTtWHNd3qS9KowF5fZdm57aK+eDrDL8UigPQQEOuwxKcLa4BYU242
- bWQyYwfOAQQ2Dt7WRR886HgHra/soYwg3XtZGjrr+gCZ0/PHK0w3fE5O593/SU/JC1RfVWdsB
- GchPkemx+rv/nyRjHW1irkko0M5swdKjFODxgT9t6Uo8iDoZ8E8krpbirDK3tKAaO+Bqk8IA3
- qg0Gbl6COw+WRZDAq6TElQLIbe9FolknlieMBTNZA7wKTdyAfd3s66okXOXXheIab7ca4MqwE
- glk0gxDtWwAg2vtyRm9vSDAR88RZwJet338sLGYAs8MYHF/3SVLNadmxRgVItz20E67MPiCLp
- x1LKupvbX1+fJb3NPHvUdEhU+FJfR71MmUAtpTihXiZRYQTxZ8sG9jwdN6AUEPznq9MORYiBR
- PA6wJXtLI8DJu/QmW6A57kfe9NYokWFNm6Udc0Q0cXdx6K2OyUTEGX0ERNExP5vPdzin4q2Gn
- rFLb91KmJMBDQUvLH4wRJ6skNEbfG88L1hvLFbcZvld5zAqMyIxzN0j+Eoup2GEpj3n0VPdhg
- TTH8kJKNaZldVYTSqJPyEBt2soa8TjvHspJhjEEVZZzXZpMkb3qhPpVGqjmC8zJ4RhNJhYtBr
- uUFYflLa5A6G+nleTcxDYgcgcgsbxNn9iAL+DZeIZ3C9uGUJXz2MXS5ok4izDtXgbHnztghgP
- ulucOwzlx58HEFgv7XPkOXE2BAv2T7Y64EUQDkgTbUTYVie8B9HEkCLEwFFSGr6N2O3ckQEyt
- njaY2BpYTR1XanvRwelFHASzWaPtFIJB7a/59lc/MecVFRE0BG1tAoavIx2fa0wMwXlSmWlXU
- PPdGOgteezrUUZDTq36WYeo0eHC3+nU6xDhW2EISoPNBm8f2izKASxQxIlSdOmW+cROjpeIyp
- ovWLfXm4YIfvEv/LJr6qa0JddjwJAP7D0uistm2kT27ZPTtL1xklubiEzu1kHrB7lSo6kV9NB
- gPx6ruKfgK4gz5zHWE/cXFOK7cxKjSo4+jm7GVpurrUxRHOMkjpnWrFNNeqWDp8WEdCLxPGon
- IXl8u2YGKn7fxpmSxOrvCWQhyWkQyz9jdnT22dnq8IrWO/zSCCy8TfyrK2YodKmQ32zTjulMd
- CenHIDnN4NcDdmqEwUhBVM209jTVuYPJ/lVzkFsgAuXPqk250CMLVynhl4XSyfJi4/CrKfHvZ
- MrTo+5kJyqsAf1smgGYxWZr2OWal5i7LNy7m97SiTwqA2Qe24cHqT7XnAyknfJX97YppoP1Lj
- JP5eGVOU+eJihjDnEJaSP2SavN4sV5xq7X8vewMx9ehnM30TM8XYQfpQfCbeBwKhHWuogaM3e
- LX/D/NWB/9jCii1gkznfVP7ZjFkqlS1pIBA+qR6b6rEUjVEnzGsCu9UGj6dUcBpdX0TG58RV4
- i5DkxFu9I86TG1ISow6xVK2FA01jZ1xaSIRyV8ollar/SsdOp6J/k5BdHf99RRcum3LOGRskC
- YgLPCMewS/qmoe4uk+knmWqed20QwrjQuGabvLueN/5c6tHRzaakECF4OgiXCEdS+GQNHn6y9
- wT3oqJk3OVVwBa4IiyzlCbFDM2aYoeDrjTggtokDZGslIbBmNDhHXXL/qtqNKgz/MwzqOThCV
- wujjujR5jm1JZGqDJCtNcIMutHgLMnJ6g5FpXz5JM86HgtVQb5vtQeZ8eAjngjpLkjg3mlOE0
- 0Hk70nP6y6l+TZf1Wt6oOtBX674NACNAselgrIJ+vlyPZwgI0hAlMphnGF3xHkN+yFO9ncBkI
- qQ9kxhySvZ4FWYtsVyoc/EnfrACtFqppP3xaI5sIRJlEpgkUklFJBVjC6k1X9qMRl69yOoSpe
- xPsZiOaBxHN8MMYyOpa4VklkZNiIb1b6dmj+a2nVUK+CS+djtVpxwadYZU7w4WLv2tjQK5Wm0
- 3b+/wvDH+xbPeim4Pm/qgVbkDjUo/T+BSVILj+6oSwGNczFeTm/WEtivNJ2gXIDijUuoXktxe
- 8CyK3cC9KHZHgUKJfUOJE9fam2Uy2rBA4K3NgJlTQKY7aBWPCdSvFdy0jspoVvGvnrQLOW1I/
- jJglp0Sj27U1J9Nb0XT2xnD0f1kue9nnkG/iz7FcxqoMiR77563tNP+NNu2Iuyak00Wjhr+N3
- ZgzhG1G7dVJ+j5FVMB0WrOXdXfJHaAXdysJ3JUZiay0ESX/KZIVL5QkzrioImtS5UyOg0uGf7
- SHhqETKuVGP5JPOnAN3UlyTBQBUFJmmqUZtG4YOD7pE+6OMzd+fIMJRBjo6fSzK8l72hLJog8
- 9erKyNVKUPLijCqWLUm7oeyjLsBZqrMMiV9gijNOQobI25HTRHsCPdQ03I5hSwf43sPWDOOHP
- bnxCpw8/RWTagW9zNmfvP4k5+mPI5mCt7BnZKExKKzmfNFulymdiu5/9uEFb5oQPxGUmPJf7w
- g+mfB2kwXsIVKmyW+2ax5kSMkA0V8f57v34o/QbACimBQaQPilmblqHlqyAPbGPRJTEG6Mi6O
- jZq/uM7X+arDTdcKOoOJOFYZLJd/vrAswc5CqCOzbT0ZWj9sQPkVnxTOUdkNQAOWNUgMTieqy
- nsmzN5+aDeu2/KvzAOQiVQbiEf/kn3/1kiX/UxkJrj80N+FxGKOI6YO3TqQ1s5WVvdcD1vNRc
- yp4ZTO63pe3+X4m8HasyNqBe6n2AGiHIoDQi8fTuHY9cOP0WkhHFDMaS4EbEe5vqVzrrsyYPF
- UfLy5PtwsosWlAIFRr751LYN853xO+S8kps2e+Z/yZZwe4rpwL/t5Sq3P9ZQ2Fw2ZJ7FfW8QP
- XwnHqQc3bVk97Gfkw9yOf1ding62RVw//Z+rSvMxIZbx6KWyEx3ZDzaSi+O/0k1mQYhUau+ij
- igTMGQjR2ic8Hx95ox4Ux/p6SQ4Nx3xL+IzCJFKKf4uKOJ5xCW8Dx0+WzFVXu4aQUFoQhQ5Yh
- T/Ic/DTF6bao5A/z8Ja7gr4mn4BWR8WRvQ5y2xYzrQdVjqZtskNlvuaBFMeIKwF5f+9y4qtH+
- iRkR0nEUHoiWBDtZdW1tOKZi7/QacLZ5/qyeMLSBv6BEaZFdPSDxreIXzPGzIkiELRY1FmZEh
- x7a8y6TES1DVDqMmV2YGHZfYpG7c8MJd9OfhiSP4Wuc29Dhn0Fr4l0jaHE+8sHazxKqnwpupo
- itys51poZFjCIOJMTk1kUd8xODkcg4xmPWBGRuTZsZb7VRcVXgS/8k/usMzZsj+zOOblpHwFB
- dHrg7wIF3UM7S7pjrp6zopeHdrABlzwvbd2kf5ciFZmNCePBBlsk4cbPtCNvRxEue1uGlvbky
- j5aWBn7NGYBGadBDDRXC55lUCVTNFglH8VWkXR1Hjloh9odamTmMUAwXBEaeTpGic8WQIIsrI
- lkJWwrnUTPWzs/5+EHpL1bGOFfHOmlt8IQFdIavhllvVlo+vBx1S+rYds4hdEdCEMV+78UWlE
- LMonybRU2HsgobaHJwwfpm83X7RU09aKNQoVvqg241zhUMXFhaVrGJBJQVro+/KpNFVq4H+F5
- E/27r2hmIwhWSK2o34s1hWIwqTcpp33FEFTt7cwTq3WJn5FEElH/5vK0clsVH55ViT8+V3K5a
- +s6gBpJaJtwUvA62w8vuX9ZZ0yp/86c+fKmmhSfpADs1H499QL/9U8+Kj/Kg+4T3IveIMpozl
- wjMtl7YZx6/Gozx7jx+oZXZExbBovzCWPNqCdhb0ja0Q6BWTmH6OG9lnvt9nSKg2eEArqV58l
- VjUAvLDzIgF3dFmmguMUzqO2HWxpDhgghPjRDVcRUtcGK3eeVCDw8DoOd24bk9FoXoXX1Nfoc
- BJW+VxWd+chsWpxObkh2ym5dYMx/AFf5gir+Sxc4MlQWkzcFJOdLa9isNW8U6eKv5P0vxmYU1
- DNYEAiYbjQt3DhVUE2Ovg/o21p0sCx4R++XlKvSVwYHBbP/BR1EjamYp3CEHMmoD+8q87H8gX
- SEHW+Yf1VW3VnkusF58GWomGsezaxUE4ik0gu149KxEe+aelLL4LT2BDjXChALqLJLSfJAASd
- lBlAu8mbN8RqFAnvd2e7AZsAjNKq6v+MwNUvzxX04QopjV+I46J7RbrfeVeQTbtIdKtsKR0k+
- ji35FAgC0N4jNgcfAUtqSdXudJxi048dvV5CLy6tRncVPGaL7VU5J5Rfd13YPQBFGClC76S8a
- Vce6a2zTpycPMOG7UifZiiyeyGyAvSuP5Aoxo4XLCcgsge+YbYdMPFnJjaMiWMaNsBdtMigB7
- NO/7nrqmrB2hN8S1R9d2RJnbiJoT9fXpnwHVNM1SSqTp2T7lgmDnYZgBsEStNITt4+LdcEHQ6
- O60Ertk1FjjAxlo4E7DHsrthJ+8wFVl7lhJH1xxf7mKNd/9I1Iew8T+CmpjoB/6cz+Qe+Dc2l
- CQ1rx0sRem+40eiRixa9kSBi//FWT/utaXyX/PKY1/CQ+eIGp4pJ31ZEVTwBmJ5x2BNF4ni5A
- ShU4OQC9jIpQZ8XsfFx4LfYAuntoo2w8xcBZfcyFXJSqqT/3GGtU8Zb6ebaK1jh49Lm4Z6MAp
- bnRO84uK/TwSBvXgbU8gs4FE7nm5yzBD581FCCzI25SICAfYbbGGYnvYyf2MRGmKqYUkujo5d
- OVmJZfYi2mMY7UMhTnA5VL6DwnMBhBmtgpyR3xEKlnvYa4Vh6SdU/xq9dITKDLJLmllH4Nxku
- PEfPSJNwBPkJOK5j4/TKxOyecVOPoTETWSD8lHvsq+1RKLhUiSvVC3KEahekXRHrP6RFqA3BL
- DTjJCJLimiqmz5NJbQNbY0Yl/OatLrawQ==
+Content-Transfer-Encoding: 8bit
 
-On 5/12/26 8:42 PM, Jeff King wrote:
-> On Tue, May 12, 2026 at 01:56:00PM +0200, Ren=C3=A9 Scharfe wrote:
->=20
->> Prepare the number string in a temporary buffer.  Make it big enough fo=
-r
->> any unsigned integer value: A decimal digit can represent ln(10)/ln(2) =
-=E2=89=88
->> 3.32 bits; dividing the number of bits of uintmax_t by 3.3 and rounding
->> up gives a sufficiently close conservative size estimate.
->=20
-> Cute. The naive obvious question here is: why not just grow the strbuf
-> and format it there directly?
->=20
-> And the answer is that it's much easier to format numbers right-to-left,
-> and then you know how many digits you need. ;)
+Dear Junio,
 
-Right.  Using the strbuf to format the number at the right end and
-memmove()ing it in place is a valid approach.  I expected it to be
-faster than using a buffer on the stack because there's a chance that
-only one cache line needs to be touched.
+Thank you very much for your patient, guidance and feedback throughout the development of this patch series. It has been an invaluable learning experience for me.
 
-> You can compute the number of digits needed up front, of course, but
-> it's log-10. You might be able to do it quickly based on the size of the
-> leading bit, but there are a lot of off-by-one gotchas.
+While my initial goal with these contributions was to participate in GSoC internship, but I was unable to do so this time, however I have found the process of contributing to the Git ecosystem very rewarding. I am excited to stay involved and look forward to making more contributions in the future.
 
-That's the simplest approach and I expected the few necessary extra
-divisions to be faster than using a buffer and having to copy the
-result.
+Also, I am a software engineer with over four years of experience in the field. I am currently seeking new opportunities, specifically entry-level or internship roles where I can continue to grow. If you happen to know of any openings or could offer any advice or assistance, I would be extremely grateful.
 
-The three variants were close in my tests, the no-copy variant slightly
-winning on Apple silicon, but losing slightly more on an AMD Ryzen
-laptop CPU.  So I went with the solid choice of using an on-stack
-buffer, same as in printf(3) (at least on BSD).  Buffering at the end of
-the strbuf was not really faster; perhaps memmove(3) is just that much
-slower than memcpy(3).
+Thank you again for your time and for everything you do for the Git project.
 
-Perhaps an optimized decimal_width() could change the picture somewhat,
-but I don't expect a big win.  On the other hand I just told you how
-unreliable my expectations are, so there might be treasure after all. :)
-
-Ren=C3=A9
-
+Best regards,
+Zakariyah Ali
