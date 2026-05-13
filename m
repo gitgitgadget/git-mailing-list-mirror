@@ -1,69 +1,69 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7183B19B1
-	for <git@vger.kernel.org>; Wed, 13 May 2026 21:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706853B0AE1
+	for <git@vger.kernel.org>; Wed, 13 May 2026 21:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778707157; cv=none; b=V+t2WQRgjWXAH4hDDu9waLMZSz2wHrERUFErGxMswuEejAnmMBezJMeDvlhDbxXwOAXbk/hFTBUV8mpJHSdX4FDbSe14VSbuJ1XUTAhiovUcHyEkvwTmCZThdYUKDie3EEDLOt9IS+U0yzMTFXqgbKjo+zq422gvgDmGoEhPlE8=
+	t=1778707164; cv=none; b=KNVjob1Q1tswb5TRNgJOpCQkjW4LGIEb2fG+VYN/ZuLcmq3RkaEX0MvA/CExFVwSN6+u18qK9L4HoCs3GuWpMBwgVnDtdtENFqodXxBFQKQxyMzb/hwTgBYSKXwRDTnJ0i5cDMHjhQ17IiC3ex9+GnZzcKX0aqw+T+ii2sZorYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778707157; c=relaxed/simple;
-	bh=jB/u8bxJkoIcP+/WyLomci346rqELlXb+Vx1/80XTsU=;
+	s=arc-20240116; t=1778707164; c=relaxed/simple;
+	bh=tYpwveQognsNt3Pk3RcOlt2i/pdnG84c3Msvg8DyEpE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sQbcdHscEovFjQmpe/9lBzlLSTPOiX4BRNLg8VRedfn6AjKWM6Yl8gxDED2/MYR+rnP4/lQiWBJ2h64Sq3fYwh0K3iHBdEs5BZYHV4M4yLsn6qe3pEVRpwlvCU8g02nCMcjIsgtSMu+0UDszwC32kgJaZIBiWWayGeCUjl6wras=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mywQfK+h; arc=none smtp.client-ip=74.125.82.47
+	 MIME-Version:To:Cc; b=ZK4KF9Ks9IYkhAoNXzL9qUWyGcGwsQrrarn1i4YpcTNckDeTIpSoVn1rOVCPKhdXEjF8J3TNYzysauthLJHSLZxvMIa0LHzdiGKDaSX3P38BL0sNlJAO+TLiOxXcSKEyiIB/B/PkazzTayyYAFi0z6lwLCEqiWKrJHV0hxGKiKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SJJJ9QQF; arc=none smtp.client-ip=74.125.82.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mywQfK+h"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1332772f6b3so5690060c88.1
-        for <git@vger.kernel.org>; Wed, 13 May 2026 14:19:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SJJJ9QQF"
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2f68f3b075fso10270206eec.0
+        for <git@vger.kernel.org>; Wed, 13 May 2026 14:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778707154; x=1779311954; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778707156; x=1779311956; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Zn3rVoXV53v5GWPH6gU+qjfohIi9VOou4SkzzSlEiLw=;
-        b=mywQfK+hH6uirXDLg1euQ6iqh7lFm6ghIPKgx8Sb+c3cSLHJqyqHOnvUwfxT4Derot
-         /YrLOhTuxCcsaGNaUaC2+ZmNQK/iRLGM7bh4sR4LQU5cgTgiUGLuPNYfuh7paHz6Cc8p
-         7l/sPhyXJGqC30ff/4Jjn7cUkhkgRDe30OUPjkFM+L0pZlVPMh1AnlShyhxHkvmhY3xF
-         aozMO9UqBpgm+3Kmr7K0P2cZZ/qzxkuWCmwkYEu6n2NKWmLgWIO8H7EEC2yfg4ElIwxg
-         u9RjGGf87GT2vgqWy6Nw48rKVT7wAD8++p2KYwAP7Wzt3es96doL4X0omwkyCMCTFZ/G
-         lnKQ==
+        bh=wACVFlOjM+bnRgbybkb7aUoI1nRHejKCjSzwm0Ghhzo=;
+        b=SJJJ9QQFYaFJHA1C2bhDyBHPsSgDv4p/lP8wBVI9TUcEdLcLe+CQHFPuBdS41WC2Q7
+         q67kXwKpfe7wqUtxeFkFQvSmpAu9OmHus2pPlNNd8rPu9kORsjikEZSXxPY0p8Ot3lEF
+         AuzGMfyTmPHpkbfarWRCuPisnzCs61DWDkLAaMf8OfFnkpTtrrDIIJT/S/I411ZAbSiC
+         DKg/4xEyE2vZD8/y0sf4PW0aSzillBnhZpPQgEVawajqY50JVngGJoGvSDy0LBTVyM/i
+         dhmnkf94Bj6fOMfGsXoJpi3Bc+E8o6mSMqPP74zLxbLsY12WKeAAcrVDshfFDQ8cadTs
+         FeWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778707154; x=1779311954;
+        d=1e100.net; s=20251104; t=1778707156; x=1779311956;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Zn3rVoXV53v5GWPH6gU+qjfohIi9VOou4SkzzSlEiLw=;
-        b=l8HGvloh+6tHDYdwDqv+SKpmlOsMFl/nPj8CZ2IGeA/br/BVv4WYTCyg8etjsm4Wd3
-         YWkBux5s/PcAVDTofjE+Qc3KpgmHnfMtG2I+N9s8l9wX4cDhLmkRWnlsFGHWxdJMUbUU
-         jULbd1FI8JU2xQGBOhiA3FEzf9F+YaFiL5bvESG99QtDh4tSP97gtXmQ8HkxPP7beV6w
-         GgaYhkXsKtYyRhXw8hJMISMOUt6IpRXgbuKoZ1ApILu7K0dIkwTw5izJrWxmBnOiQciD
-         Qxzg/ocOUFZchSMe4Fsp3mUxVQh5805aReg+ZP4hXGQxhQiPkEaa+qEH6uwv6+FL1Nyb
-         aREQ==
-X-Gm-Message-State: AOJu0YzOWsU9c7Mdlj4XTX4hpP8YO3MmqLG23GW8xHmu3lAjVduUqS0z
-	jfs68FxkWmRDZpmO55UbzTF0+1LxnLw0AE0ir8EjOfIenGEetcYIau0PBZ17a0zg
-X-Gm-Gg: Acq92OH08FhvGxPfH6hWXa+RhBKbRKZvFteQO6v7PKfDD9UgIumBPHR+E7esD4a4Av5
-	aTp//Ypr1IPg3Pwftiyb0EbIFQwQooyHlVnkjsUDL1YskmGcRa0EDq8wA4j0oz/yis8BK0bTdww
-	rThlbDDpP5hcdL6FfBTYiRDM/a8pQoCmTLDj/sIewEMNWY3KsqYeRAMGuqA1Zfovh3RwiFN404/
-	LqzHqi2fbuJeOdnCrKa6B/+8WBTSz0ixLqd5HcvMLmMevo0c9o8JpWt7NO21QSKmwNl3tP3uk4i
-	vG4dqB8I9Z3JG3ZZkpOEQ9CuczYxiNdOMKB9JKkgwK/YnvogCGQBJl1y+TeKJ7kvT4O/iy7Ft2g
-	MSxk0TeDWZ9zhzylP5WCRK5hsSTFADglAEFnF/FyUiH7rNLyR0rQeH79oi6sDEe+nkCSVatJN5X
-	eguVXLmPOs8ekOxeyjflGLhwqlZg==
-X-Received: by 2002:a05:7022:43a8:b0:128:cf5c:535a with SMTP id a92af1059eb24-1343677c776mr2749123c88.11.1778707154346;
-        Wed, 13 May 2026 14:19:14 -0700 (PDT)
+        bh=wACVFlOjM+bnRgbybkb7aUoI1nRHejKCjSzwm0Ghhzo=;
+        b=XDv5O3QRIO/imf2t+y2+8kbuYGeH0tH+6Ld4UYUGh/u4dlT6jBxaGZ1t6BJxyXqzyj
+         ZyF8i6rUf2q7k6ePvM1gIYF+VpnnXY4dVN5OjJI50gHuhjpR8o46LctW4xqqH8JFArn2
+         JgGbAAlBfawRYBD7J4h5yHS6QKdAdRDefHKNWDkOVJ0WPACSN6X4oRY+gfYjmF3Tn4KK
+         NdE2yDsfooIf351dyHo2LYqZVMUEG/2NEIvJ6mzgP90YGvDcotGbnYieyVMP542w3mJQ
+         G0jkvrqKhtdRotqXCJO0PCi6Ap+0PJHqrPfH899xJWEZKY62S+2pXxcx9gIqkCdL2sZM
+         TgZw==
+X-Gm-Message-State: AOJu0Yzrh+CaJh1NpUkeybKY5fZ5TlVq+LR8GrRdjp1hH37xckvSVvGO
+	CHhMX4rn+Lv0Ry8YLk45k0xqSqwpsLSR10rlKQ/1OocJqJjPNQwJQSD707sWf77M
+X-Gm-Gg: Acq92OHMlrgnA//da6I8oqvduFLcRVccwumceQyNEGzBLrvLDFUNJ5joLN0y9w1StBM
+	FlGXPRu4CtJ+i7OEv4fyA9X3OCGiZg4i8mcUm2b9TTi/JmK0FWb7AI9CjqInT10t7MeDEMvw4hs
+	Zb1w8weqs0cMdln0w1eMrNhY6F/1wdCaJzxWtOONPXGWXTwAIidJ+lVKrkHIaLYayG0X8OyxRhw
+	LD3997GtxF8RQdZ/i1dt/rxcE+uHQf1tbwyzlBwe37zztSUUiVZ4TcvAv3EGhpZR5l/q/pWDfVV
+	vcqcVwKhMMLI6057wM+KMJq5fOFxjojOkg1Ho9gBbBjqnw738V+M5L3NFfSYsncsoaqTphi31tb
+	oml+BQh3+q84HJPq8ognh87ddX5JCe/p3uLrR7GCldEv3GxdtlOdVGAE/j+Omc1gf7TsdKjR/ep
+	iwgO/z/hnesmsx4fb+pLJbyevxiw==
+X-Received: by 2002:a05:7300:fb8b:b0:2d9:6373:ad1d with SMTP id 5a478bee46e88-30118e9ff8dmr3523448eec.20.1778707155740;
+        Wed, 13 May 2026 14:19:15 -0700 (PDT)
 Received: from [127.0.0.1] ([20.169.77.168])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbcb93f3sm1111030c88.3.2026.05.13.14.19.13
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30293e2e69esm666785eec.1.2026.05.13.14.19.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 14:19:13 -0700 (PDT)
-Message-Id: <0b1eed07907270668713df5094c2198f6b2e600f.1778707135.git.gitgitgadget@gmail.com>
+        Wed, 13 May 2026 14:19:15 -0700 (PDT)
+Message-Id: <b23244c4c274aa2b8006ee71189e6eed2dde6489.1778707135.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
 References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
 	<pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 13 May 2026 21:18:52 +0000
-Subject: [PATCH v4 10/13] t6601: tag otherwise-unreachable trees
+From: "Taylor Blau via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 13 May 2026 21:18:53 +0000
+Subject: [PATCH v4 11/13] path-walk: support `tree:0` filter
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,77 +86,394 @@ Cc: christian.couder@gmail.com,
     ps@pks.im,
     Taylor Blau <me@ttaylorr.com>,
     Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+    Taylor Blau <me@ttaylorr.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+From: Taylor Blau <me@ttaylorr.com>
 
-The tests in t6601-path-walk.sh demonstrate the behavior of the
-path-walk API under different conditions. One thing that I noticed while
-updating the behavior of directly-requested objects is that we don't
-actually emit tagged trees. This was previously not noticed due to those
-tagged trees actually being reachable from commits that we are including
-in the path-walk.
+The `tree:0` object filter omits all trees and blobs from the result,
+keeping only commits and tags. Consequently, this filter type should
+has a fairly straightforward integration with path-walk, as the decision
+to include an object depends only on its type and does not depend on any
+path-sensitive state.
 
-Update the test setup to have tree-tag and tree-tag2 point to trees that
-are otherwise unreachable.
+Mapping it onto `path_walk_info` is direct: set `info->trees = 0` and
+`info->blobs = 0` in `prepare_filters()` when the `LOFC_TREE_DEPTH`
+choice is requested with depth zero. The existing code already plumbs
+those flags through the rest of the walk:
 
-It is worth noting that this does not meaningfully change any of the
-other test cases, demontrating the bug.
+ - 'walk_objects_by_path()' sets `revs->blob_objects = info->blobs` and
+   `revs->tree_objects = info->trees` before `prepare_revision_walk()`,
+   so the revision walk doesn't try to enumerate trees or blobs itself.
 
+ - The commit-walk loop short-circuits the root-tree fetch with
+   "if (!info->trees && !info->blobs) continue;", so we never even
+   look up the root tree, let alone descend into it.
+
+ - `setup_pending_objects()` skips pending trees and blobs based on
+   the same flags.
+
+This means the path-walk doesn't allocate or expand any tree structures
+at all under `tree:0`, which matches the intended behavior of the
+filter.
+
+However, this requires first fixing some issues with how the path-walk
+API handles directly-requested trees _and_ trees requested through
+lightweight tags. These changes create substantial updates to
+t6601-path-walk.sh, which the previous change highlighted as a problem
+by tagging otherwise-unreachable trees and having them not appear in the
+output.
+
+Non-zero tree-depth filters are not supported. Those depend on the depth
+at which a tree is visited, which is a path-walk concept the filter
+machinery doesn't currently share with the path-walk API. Reject them in
+`prepare_filters()` with a helpful error and let pack-objects fall back
+to the regular traversal, the same way it already does for unsupported
+filters.
+
+Add coverage in t6601 for both `--all` and a single-branch case to
+confirm that no trees or blobs are emitted, and a separate test that
+`tree:1` is rejected with the expected error message. Place the new
+tests before "setup sparse filter blob" so they run on the original set
+of refs, before the orphan branch that the sparse-tree tests create.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- t/t6601-path-walk.sh | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ Documentation/git-pack-objects.adoc |   4 +-
+ path-walk.c                         |  53 +++++++--
+ t/t6601-path-walk.sh                | 165 ++++++++++++++++++----------
+ 3 files changed, 152 insertions(+), 70 deletions(-)
 
+diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
+index e38853391b..c86219be91 100644
+--- a/Documentation/git-pack-objects.adoc
++++ b/Documentation/git-pack-objects.adoc
+@@ -404,8 +404,8 @@ will be automatically changed to version `1`.
+ +
+ Incompatible with `--delta-islands`. The `--use-bitmap-index` option is
+ ignored in the presence of `--path-walk`. The `--path-walk` option
+-supports the `--filter=<spec>` forms `blob:none`, `blob:limit=<n>`, and
+-`sparse:<oid>`.
++supports the `--filter=<spec>` forms `blob:none`, `blob:limit=<n>`,
++`tree:0`, and `sparse:<oid>`.
+ 
+ 
+ DELTA ISLANDS
+diff --git a/path-walk.c b/path-walk.c
+index ce38dcf1e9..cb67b8ce86 100644
+--- a/path-walk.c
++++ b/path-walk.c
+@@ -390,11 +390,18 @@ static int walk_path(struct path_walk_context *ctx,
+ 					ctx->info->path_fn_data);
+ 	}
+ 
+-	/* Expand data for children. */
+-	if (list->type == OBJ_TREE) {
++	/*
++	 * Expand tree children, except when the set is directly requested
++	 * _and_ we are otherwise filtering out trees.
++	 */
++	if (list->type == OBJ_TREE &&
++	    (!path_is_for_direct_objects(path) || ctx->info->trees)) {
++		/* Use root path if expanding from tagged/direct trees. */
++		const char *expand_path = !strcmp(path, "/tagged-trees")
++					  ? root_path : path;
+ 		for (size_t i = 0; i < list->oids.nr; i++) {
+ 			ret |= add_tree_entries(ctx,
+-					    path,
++					    expand_path,
+ 					    &list->oids.oid[i]);
+ 		}
+ 	}
+@@ -442,12 +449,12 @@ static int setup_pending_objects(struct path_walk_info *info,
+ {
+ 	struct type_and_oid_list *tags = NULL;
+ 	struct type_and_oid_list *tagged_blobs = NULL;
+-	struct type_and_oid_list *root_tree_list = NULL;
++	struct type_and_oid_list *tagged_trees = NULL;
+ 
+ 	if (info->tags)
+ 		CALLOC_ARRAY(tags, 1);
+ 	CALLOC_ARRAY(tagged_blobs, 1);
+-	root_tree_list = strmap_get(&ctx->paths_to_lists, root_path);
++	CALLOC_ARRAY(tagged_trees, 1);
+ 
+ 	/*
+ 	 * Pending objects include:
+@@ -491,14 +498,15 @@ static int setup_pending_objects(struct path_walk_info *info,
+ 
+ 		switch (obj->type) {
+ 		case OBJ_TREE:
+-			if (pending->path) {
+-				char *path = *pending->path ? xstrfmt("%s/", pending->path)
+-							    : xstrdup("");
++			if (pending->path && *pending->path) {
++				char *path = xstrfmt("%s/", pending->path);
+ 				add_path_to_list(ctx, path, OBJ_TREE, &obj->oid, 1);
+ 				free(path);
++			} else if (!pending->path || !info->trees) {
++				oid_array_append(&tagged_trees->oids, &obj->oid);
+ 			} else {
+-				/* assume a root tree, such as a lightweight tag. */
+-				oid_array_append(&root_tree_list->oids, &obj->oid);
++				add_path_to_list(ctx, root_path, OBJ_TREE,
++						 &obj->oid, 1);
+ 			}
+ 			break;
+ 
+@@ -535,6 +543,18 @@ static int setup_pending_objects(struct path_walk_info *info,
+ 			free(tagged_blobs);
+ 		}
+ 	}
++	if (tagged_trees) {
++		if (tagged_trees->oids.nr) {
++			const char *tagged_tree_path = "/tagged-trees";
++			tagged_trees->type = OBJ_TREE;
++			tagged_trees->maybe_interesting = 1;
++			strmap_put(&ctx->paths_to_lists, tagged_tree_path, tagged_trees);
++			push_to_stack(ctx, tagged_tree_path);
++		} else {
++			oid_array_clear(&tagged_trees->oids);
++			free(tagged_trees);
++		}
++	}
+ 	if (tags) {
+ 		if (tags->oids.nr) {
+ 			const char *tag_path = "/tags";
+@@ -575,6 +595,19 @@ static int prepare_filters(struct path_walk_info *info,
+ 		}
+ 		return 1;
+ 
++	case LOFC_TREE_DEPTH:
++		if (options->tree_exclude_depth) {
++			error(_("tree:%lu filter not supported by the path-walk API"),
++			      options->tree_exclude_depth);
++			return 0;
++		}
++		if (info) {
++			info->trees = 0;
++			info->blobs = 0;
++			list_objects_filter_release(options);
++		}
++		return 1;
++
+ 	case LOFC_SPARSE_OID:
+ 		if (info) {
+ 			struct object_id sparse_oid;
 diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index ac294867a5..92c524d145 100755
+index 92c524d145..566db7c7e3 100755
 --- a/t/t6601-path-walk.sh
 +++ b/t/t6601-path-walk.sh
-@@ -7,17 +7,15 @@ test_description='direct path-walk API tests'
- test_expect_success 'setup test repository' '
- 	git checkout -b base &&
+@@ -77,23 +77,23 @@ test_expect_success 'all' '
+ 	3:tree::$(git rev-parse base^{tree})
+ 	3:tree::$(git rev-parse base~1^{tree})
+ 	3:tree::$(git rev-parse base~2^{tree})
+-	3:tree::$(git rev-parse refs/tags/tree-tag^{})
+-	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
+ 	4:blob:a:$(git rev-parse base~2:a)
+-	5:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
+-	6:tree:a/:$(git rev-parse base:a)
+-	7:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
+-	8:blob:child/file:$(git rev-parse refs/tags/tree-tag:child/file)
+-	9:tree:left/:$(git rev-parse base:left)
+-	9:tree:left/:$(git rev-parse base~2:left)
+-	10:blob:left/b:$(git rev-parse base~2:left/b)
+-	10:blob:left/b:$(git rev-parse base:left/b)
+-	11:tree:right/:$(git rev-parse topic:right)
+-	11:tree:right/:$(git rev-parse base~1:right)
+-	11:tree:right/:$(git rev-parse base~2:right)
+-	12:blob:right/c:$(git rev-parse base~2:right/c)
+-	12:blob:right/c:$(git rev-parse topic:right/c)
+-	13:blob:right/d:$(git rev-parse base~1:right/d)
++	5:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag^{})
++	5:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag2^{})
++	6:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
++	7:tree:a/:$(git rev-parse base:a)
++	8:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	9:blob:child/file:$(git rev-parse refs/tags/tree-tag:child/file)
++	10:tree:left/:$(git rev-parse base:left)
++	10:tree:left/:$(git rev-parse base~2:left)
++	11:blob:left/b:$(git rev-parse base~2:left/b)
++	11:blob:left/b:$(git rev-parse base:left/b)
++	12:tree:right/:$(git rev-parse topic:right)
++	12:tree:right/:$(git rev-parse base~1:right)
++	12:tree:right/:$(git rev-parse base~2:right)
++	13:blob:right/c:$(git rev-parse base~2:right/c)
++	13:blob:right/c:$(git rev-parse topic:right/c)
++	14:blob:right/d:$(git rev-parse base~1:right/d)
+ 	blobs:10
+ 	commits:4
+ 	tags:7
+@@ -471,15 +471,15 @@ test_expect_success 'all, blob:none filter' '
+ 	3:tree::$(git rev-parse base^{tree})
+ 	3:tree::$(git rev-parse base~1^{tree})
+ 	3:tree::$(git rev-parse base~2^{tree})
+-	3:tree::$(git rev-parse refs/tags/tree-tag^{})
+-	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
+-	4:tree:a/:$(git rev-parse base:a)
+-	5:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
+-	6:tree:left/:$(git rev-parse base:left)
+-	6:tree:left/:$(git rev-parse base~2:left)
+-	7:tree:right/:$(git rev-parse topic:right)
+-	7:tree:right/:$(git rev-parse base~1:right)
+-	7:tree:right/:$(git rev-parse base~2:right)
++	4:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag^{})
++	4:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag2^{})
++	5:tree:a/:$(git rev-parse base:a)
++	6:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	7:tree:left/:$(git rev-parse base:left)
++	7:tree:left/:$(git rev-parse base~2:left)
++	8:tree:right/:$(git rev-parse topic:right)
++	8:tree:right/:$(git rev-parse base~1:right)
++	8:tree:right/:$(git rev-parse base~2:right)
+ 	blobs:2
+ 	commits:4
+ 	tags:7
+@@ -533,15 +533,15 @@ test_expect_success 'all, blob:limit=0 filter' '
+ 	3:tree::$(git rev-parse base^{tree})
+ 	3:tree::$(git rev-parse base~1^{tree})
+ 	3:tree::$(git rev-parse base~2^{tree})
+-	3:tree::$(git rev-parse refs/tags/tree-tag^{})
+-	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
+-	4:tree:a/:$(git rev-parse base:a)
+-	5:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
+-	6:tree:left/:$(git rev-parse base:left)
+-	6:tree:left/:$(git rev-parse base~2:left)
+-	7:tree:right/:$(git rev-parse topic:right)
+-	7:tree:right/:$(git rev-parse base~1:right)
+-	7:tree:right/:$(git rev-parse base~2:right)
++	4:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag^{})
++	4:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag2^{})
++	5:tree:a/:$(git rev-parse base:a)
++	6:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	7:tree:left/:$(git rev-parse base:left)
++	7:tree:left/:$(git rev-parse base~2:left)
++	8:tree:right/:$(git rev-parse topic:right)
++	8:tree:right/:$(git rev-parse base~1:right)
++	8:tree:right/:$(git rev-parse base~2:right)
+ 	blobs:2
+ 	commits:4
+ 	tags:7
+@@ -572,19 +572,19 @@ test_expect_success 'all, blob:limit=3 filter' '
+ 	3:tree::$(git rev-parse base^{tree})
+ 	3:tree::$(git rev-parse base~1^{tree})
+ 	3:tree::$(git rev-parse base~2^{tree})
+-	3:tree::$(git rev-parse refs/tags/tree-tag^{})
+-	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
+ 	4:blob:a:$(git rev-parse base~2:a)
+-	5:tree:a/:$(git rev-parse base:a)
+-	6:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
+-	7:tree:left/:$(git rev-parse base:left)
+-	7:tree:left/:$(git rev-parse base~2:left)
+-	8:blob:left/b:$(git rev-parse base~2:left/b)
+-	9:tree:right/:$(git rev-parse topic:right)
+-	9:tree:right/:$(git rev-parse base~1:right)
+-	9:tree:right/:$(git rev-parse base~2:right)
+-	10:blob:right/c:$(git rev-parse base~2:right/c)
+-	11:blob:right/d:$(git rev-parse base~1:right/d)
++	5:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag^{})
++	5:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag2^{})
++	6:tree:a/:$(git rev-parse base:a)
++	7:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	8:tree:left/:$(git rev-parse base:left)
++	8:tree:left/:$(git rev-parse base~2:left)
++	9:blob:left/b:$(git rev-parse base~2:left/b)
++	10:tree:right/:$(git rev-parse topic:right)
++	10:tree:right/:$(git rev-parse base~1:right)
++	10:tree:right/:$(git rev-parse base~2:right)
++	11:blob:right/c:$(git rev-parse base~2:right/c)
++	12:blob:right/d:$(git rev-parse base~1:right/d)
+ 	blobs:6
+ 	commits:4
+ 	tags:7
+@@ -594,6 +594,55 @@ test_expect_success 'all, blob:limit=3 filter' '
+ 	test_cmp_sorted expect out
+ '
  
--	# Make some objects that will only be reachable
--	# via non-commit tags.
--	mkdir child &&
--	echo file >child/file &&
--	git add child &&
--	git commit -m "will abandon" &&
--	git tag -a -m "tree" tree-tag HEAD^{tree} &&
--	echo file2 >file2 &&
--	git add file2 &&
--	git commit --amend -m "will abandon" &&
--	git tag tree-tag2 HEAD^{tree} &&
-+	# Create tree objects that are only reachable via tags,
-+	# not from any commit in the history.
-+	child_blob_oid=$(echo "child blob content" | git hash-object -t blob -w --stdin) &&
-+	child_tree_oid=$(printf "100644 blob %s\tfile\n" "$child_blob_oid" | git mktree) &&
-+	tree_tag_oid=$(printf "040000 tree %s\tchild\n" "$child_tree_oid" | git mktree) &&
-+	git tag -a -m "tree" tree-tag "$tree_tag_oid" &&
-+	file2_blob_oid=$(echo "tagged tree file2" | git hash-object -t blob -w --stdin) &&
-+	tree_tag2_oid=$(printf "040000 tree %s\tchild\n100644 blob %s\tfile2\n" "$child_tree_oid" "$file2_blob_oid" | git mktree) &&
-+	git tag tree-tag2 "$tree_tag2_oid" &&
- 
- 	echo blob >file &&
- 	blob_oid=$(git hash-object -t blob -w --stdin <file) &&
-@@ -26,7 +24,7 @@ test_expect_success 'setup test repository' '
- 	blob2_oid=$(git hash-object -t blob -w --stdin <file2) &&
- 	git tag blob-tag2 "$blob2_oid" &&
- 
--	rm -fr child file file2 &&
-+	rm -fr file file2 &&
- 
- 	mkdir left &&
- 	mkdir right &&
-@@ -34,7 +32,7 @@ test_expect_success 'setup test repository' '
- 	echo b >left/b &&
- 	echo c >right/c &&
- 	git add . &&
--	git commit --amend -m "first" &&
-+	git commit -m "first" &&
- 	git tag -m "first" first HEAD &&
- 
- 	echo d >right/d &&
++test_expect_success 'all, tree:0 filter' '
++	test-tool path-walk --filter=tree:0 -- --all >out &&
++
++	cat >expect <<-EOF &&
++	0:commit::$(git rev-parse topic)
++	0:commit::$(git rev-parse base)
++	0:commit::$(git rev-parse base~1)
++	0:commit::$(git rev-parse base~2)
++	1:tag:/tags:$(git rev-parse refs/tags/first)
++	1:tag:/tags:$(git rev-parse refs/tags/second.1)
++	1:tag:/tags:$(git rev-parse refs/tags/second.2)
++	1:tag:/tags:$(git rev-parse refs/tags/third)
++	1:tag:/tags:$(git rev-parse refs/tags/fourth)
++	1:tag:/tags:$(git rev-parse refs/tags/tree-tag)
++	1:tag:/tags:$(git rev-parse refs/tags/blob-tag)
++	2:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag^{})
++	2:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag2^{})
++	3:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag^{tree})
++	3:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag2)
++	blobs:2
++	commits:4
++	tags:7
++	trees:2
++	EOF
++
++	test_cmp_sorted expect out
++'
++
++test_expect_success 'topic only, tree:0 filter' '
++	test-tool path-walk --filter=tree:0 -- topic >out &&
++
++	cat >expect <<-EOF &&
++	0:commit::$(git rev-parse topic)
++	0:commit::$(git rev-parse base~1)
++	0:commit::$(git rev-parse base~2)
++	blobs:0
++	commits:3
++	tags:0
++	trees:0
++	EOF
++
++	test_cmp_sorted expect out
++'
++
++test_expect_success 'tree:1 filter is rejected' '
++	test_must_fail test-tool path-walk --filter=tree:1 -- --all 2>err &&
++	test_grep "tree:1 filter not supported by the path-walk API" err
++'
++
+ test_expect_success 'setup sparse filter blob' '
+ 	# Cone-mode patterns: include root, exclude all dirs, include left/
+ 	cat >patterns <<-\EOF &&
+@@ -625,19 +674,19 @@ test_expect_success 'all, sparse:oid filter' '
+ 	3:tree::$(git rev-parse base^{tree})
+ 	3:tree::$(git rev-parse base~1^{tree})
+ 	3:tree::$(git rev-parse base~2^{tree})
+-	3:tree::$(git rev-parse refs/tags/tree-tag^{})
+-	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
+ 	4:blob:a:$(git rev-parse base~2:a)
+-	5:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
+-	6:tree:a/:$(git rev-parse base:a)
+-	7:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
+-	8:tree:left/:$(git rev-parse base:left)
+-	8:tree:left/:$(git rev-parse base~2:left)
+-	9:blob:left/b:$(git rev-parse base~2:left/b)
+-	9:blob:left/b:$(git rev-parse base:left/b)
+-	10:tree:right/:$(git rev-parse topic:right)
+-	10:tree:right/:$(git rev-parse base~1:right)
+-	10:tree:right/:$(git rev-parse base~2:right)
++	5:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag^{})
++	5:tree:/tagged-trees:$(git rev-parse refs/tags/tree-tag2^{})
++	6:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
++	7:tree:a/:$(git rev-parse base:a)
++	8:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
++	9:tree:left/:$(git rev-parse base:left)
++	9:tree:left/:$(git rev-parse base~2:left)
++	10:blob:left/b:$(git rev-parse base~2:left/b)
++	10:blob:left/b:$(git rev-parse base:left/b)
++	11:tree:right/:$(git rev-parse topic:right)
++	11:tree:right/:$(git rev-parse base~1:right)
++	11:tree:right/:$(git rev-parse base~2:right)
+ 	blobs:6
+ 	commits:4
+ 	tags:7
 -- 
 gitgitgadget
 
