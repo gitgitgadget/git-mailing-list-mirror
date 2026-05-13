@@ -1,149 +1,305 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02A0388899
-	for <git@vger.kernel.org>; Wed, 13 May 2026 08:18:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E8C39EF2B
+	for <git@vger.kernel.org>; Wed, 13 May 2026 09:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778660313; cv=none; b=C9a4++HvkB4r7/a92FT/3u8T3tT3UAtNQh8DTm1g1Ph6QjWZXIDZnLs2azLJ5w941GQuJ76Zn01sga9o1RdGUdpuKaR9LoNOCltOfS7CGSHwUB8ngKLK98G2V6B67Xa/8Ct/ucoiUZSevFD5+8FtS2CcpWWE4mGC+61cE/Us85A=
+	t=1778665821; cv=none; b=LsGqo0VJ/1Tjg2oKddesYOF+WJ2zzg4bMK9xEy0NNkiuhYYXVOshSQCF5SSSbXJqCd2+ThN8g+N3flympbF7zerYf46N0tbJfKINUPjOdQQ/+v6jyv7L9M17Qz1x7VwlIW8UdvX52FtcM+qN75uTeg9attI4Isvz4Q0cX/oFWxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778660313; c=relaxed/simple;
-	bh=7w5ycdVFPVn7YPll75/6/69c+TGWO7kb1LNjvTjP2KM=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=LGBTpzuUcVcD0VVBnA8EWQPy9Sg5gzXKHrtGQkMwpAdmN/nJPFo9I2X1NRWt3Mmh+rOQnGVMlXGjrUbwZDN0aytR6MSrzYtwO32nxRRdM0J5ZUJr9tN6PL52AH2H2LFYqaPUh9DvksgEyV+Rhso0b74vGjYPvB1MLGPZITm0eBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=alexandersandstrom.se; spf=pass smtp.mailfrom=alexandersandstrom.se; dkim=pass (1024-bit key) header.d=alexandersandstrom.se header.i=@alexandersandstrom.se header.b=kH7qnfwS; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=alexandersandstrom.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alexandersandstrom.se
+	s=arc-20240116; t=1778665821; c=relaxed/simple;
+	bh=zCQeGoGyJh0pCxnDRG1lgB3gQvU8/4VGon1Rl9IBz68=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ZmqxXMtDXZzWxfaOLxq4JQ7/8JPPM4aPra85kdcjyF1s2ZI5thrf/CGoaeXzVdHtx3KpakVqZJiVfQMHWR1S3Y3EcZI7Mt8wsz1pmA/UoT60pT//crFJlltTGIdHmKhV0HSgGyzGeh5qRs4pe3+yFUXp50VhyFCQ8v2OOme82PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gXg+YKCg; arc=none smtp.client-ip=74.125.82.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=alexandersandstrom.se header.i=@alexandersandstrom.se header.b="kH7qnfwS"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5a8e3849de7so153728e87.1
-        for <git@vger.kernel.org>; Wed, 13 May 2026 01:18:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gXg+YKCg"
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-2f3c623322bso10978087eec.0
+        for <git@vger.kernel.org>; Wed, 13 May 2026 02:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=alexandersandstrom.se; s=google; t=1778660310; x=1779265110; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YpfXzK7oExaz+DnOKRsMKZeVlMsDNfiE9iyZqwmZFEM=;
-        b=kH7qnfwS/uf1nqomzL7Q4HU9/aol2Y8NVbhNSyfJUdg+yPiQyQzApWx+Pv19/c915H
-         moPs7KnJ1t8FPT5QYDrQd28gsSKSgTlH3nw+8csjBpejHa4wyCHrmcxaPcqRGYvSCn4w
-         EJl9xCfcxSp33u6o6whfO9KT6laUVDgvNLwb8=
+        d=gmail.com; s=20251104; t=1778665814; x=1779270614; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9bZ0GddvZ8Fsqtwub+cNjkXa2OIrPFEHtslOvVK9tgg=;
+        b=gXg+YKCgO2FOC5Oe3K7D1yCIxRorOPkAgng4XpjHwF8z4EAfkNvG0d7pxo+RW1C0lo
+         th/4NP1lvGdkBz8iiBYLNj5bCIMyMz7KDY1uhg8JE30daNlxmDsFWLRyqNOLplYe5j0/
+         ebs2h7ljlO1iZYVMZtcD6lxKPhJBEJY7vcLjAccv5LlNCXVACAAEp79DH+n8gUnuq2SL
+         Xxq2PntGx3X2khPhn/OjCNCYsbPlNel2Jbb9xdjvMvwzn48DHQCUEXE8oQ2vlZP2aPc+
+         1JQWwtkMl8tFFVNfYZJdhFS0UQfkZPUJV2g/F3CFxkjWkqme4ndYjbDmVHLWC0JHh2cP
+         D9Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778660310; x=1779265110;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YpfXzK7oExaz+DnOKRsMKZeVlMsDNfiE9iyZqwmZFEM=;
-        b=naaWUsTi4F6otymgbukPGLa7XrLT631wUtYN5SRUYsHKTUOCCA4ye7ajlFyU9n7pul
-         bf3praWQfGMfa5Hj0+C31uDAnDfJpdvLiYboAyjA5ZwjVJFZ6ygDAo+fG2rydLOOH9By
-         GDma1CsGqEqloiwUi+GqdFE8YmONTXvVf/bXDw2x7kzKqb9yKkItgFR2Ov3OPNokZDV3
-         hdz0JmkTWNfsEd0yOxEVVZhwhKD62JM5JnaSWSZcuuOIJGD1Ky94DOaIaW90ZwReirOc
-         gh8b4o3YoJpb9gnU5Atue3evZWqNxcq3FI9O6m3mYIO7qCEzYS5dzQsQLayUA5YrD82M
-         7n3A==
-X-Gm-Message-State: AOJu0YzU0HbAwNsQR0gzX80MD98B5XA4zkew04AYdGyEFuQB7gxM8fEJ
-	w1OGM8frPe3tyE07az34w9gSfbuJWo4xf8NrVkC4N2IjJsH4ujGNhbUHcQaLXudG2bz0bYkVd1L
-	B6Rs=
-X-Gm-Gg: Acq92OFu9vFo+Ii/s4nznDwHs/7c+hKd/CGdi1KNnz1RIxi2NOpyYzpznDse4BkjtRb
-	FUKKZW34XzRJObCQFaPfMRb0HlEX7hVu2on5jf18dGTVbY/LtOF9ELx7wsO3748avQCyvy9SFGE
-	P87lz9ZOxGWA7Kgbb7YtSuRYZL30qsM/ymdpzq97OE2OiYlcHXjciedwfZ7r2Ir7/ovVyCxu9C5
-	Mh2vZ0zTiQ3B6CMcCmlHDxx3L5QHiQO5zDc7e0dYrnP0lKMM5eW4+RGhgPhiWvoVKIn+ArXtnpV
-	v49QhiBbxJEwA6gk5GEmmc5pYCHqJdb/Bhhi4uqRGw2xM16SRGCInlG3JNAuYm0CaJ9MFXTzvM6
-	I+eTxJnKmKY2GmIdSJsNIek2AxxUPOPKWTjjKG4jWLKIfq5Sz7+gWTXOvIFrZKt4/YzodZnti1m
-	q22MW4YJ68SUSuTMYM31ejmaMSLeDfNygiHsn1WynbTah7M8qwdsOHg3zgkdfEWbG5D4iJjSa+e
-	/GAKRSF/Ww=
-X-Received: by 2002:a05:6512:1193:b0:5a4:11b0:fae8 with SMTP id 2adb3069b0e04-5a8ef96426cmr321551e87.1.1778660309935;
-        Wed, 13 May 2026 01:18:29 -0700 (PDT)
-Received: from smtpclient.apple (151.236.205.53.c.fiberdirekt.net. [151.236.205.53])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8c6f78bd7sm2363627e87.74.2026.05.13.01.18.29
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 May 2026 01:18:29 -0700 (PDT)
-From: =?utf-8?Q?Alexander_Sandstr=C3=B6m?= <mail@alexandersandstrom.se>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
+        d=1e100.net; s=20251104; t=1778665814; x=1779270614;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=9bZ0GddvZ8Fsqtwub+cNjkXa2OIrPFEHtslOvVK9tgg=;
+        b=Lj/dH3Fm/9zMUUuTfQUDY3K8cc2DRUuN7JdGFGP4jB4jsj/mIVc8mYFoDKm439ggZB
+         tBylyx9R+UcAaFY6wNkijVMh45CMxwE1pyE4OVoADrUOQRt3iRLQ9bJPfES6Wpbb+v6P
+         BDODOgWwI60UFZtwfAZK2H742m+5bCwr6A+S+7SVVLQVtHO4l3xI4kz0thNFq1PtL9Sj
+         glCLjxV2CRoXjAHX2NhhzUo5IOwftIgqxuYWhjLzN51FXizD5J6DCwQe+fpi/yCuL+C4
+         pUCiBDANNYVOuWBnW1GANv0VPhm4asFHvk4AhEmBt2vZXFA0KM5Q3nnmgQA/AEk1x2df
+         C5Ag==
+X-Gm-Message-State: AOJu0YxszgGBaISdb5e52EtDNKBGplGHETEmGd60VHtr0c0I8WdbAd1d
+	TF+vfPlvixyQC8Mn7W2PCNtpI6eyn9/h8tTKGIGS6V2/AksrgdJXudcVDibPpg==
+X-Gm-Gg: Acq92OHI/et1QkZxiiwH7cyxJ9eMruHQBDakB3ZAi4JMuhrkJefwLK2dB6sRLoTdEST
+	qrzX2+9HLvS90mFAGYD5SuLbVl1Noc8lEVJJTBOjGJzrqtg437DPsWCzhoG4DLJnwLAOIFTWFZk
+	2od9F62o7dsvg37l4HyHC+qhcom9bZd+kWZqA0SYj6B4XVY7JwLQFaSX+yUPr51aDxVebAgjvKn
+	4zCbJfNZDmo+tgzkRa71igSo9ThCYG6Qmu4C+Llks7lFycFbTjRuXgo8tyicdTizTIvaDKrEixw
+	QtQe/Ijq0487TUo5LUgq6DTMdayo/sydQUNYl8Z9csFOKKxpO0HHeXtsYm9perTXmK3XLHQvQ1q
+	azz8sKW8BbgigANBaAkCLKzyln3wf1+T1c+gOazHzOdLXyiq6GO4IFxiqVYVGnU5sQhF8DXZCg5
+	5xvPe8BJ1WpVQrpePu0t7AUtwEzw==
+X-Received: by 2002:a05:7301:22af:b0:2ea:ed3e:13b7 with SMTP id 5a478bee46e88-30153ade874mr1067567eec.7.1778665814199;
+        Wed, 13 May 2026 02:50:14 -0700 (PDT)
+Received: from [127.0.0.1] ([52.161.178.34])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f888e381c9sm21256407eec.26.2026.05.13.02.50.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2026 02:50:13 -0700 (PDT)
+Message-Id: <pull.2301.v2.git.git.1778665812261.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2301.git.git.1778623888178.gitgitgadget@gmail.com>
+References: <pull.2301.git.git.1778623888178.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 13 May 2026 09:50:12 +0000
+Subject: [PATCH v2] remote: qualify "git pull" advice for non-upstream
+ branches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Bug: lowercase "head" resolves to wrong commit in linked worktrees on
- case-insensitive filesystems
-Message-Id: <95BE8E60-1684-4E0A-9E46-E61E81D06CE1@alexandersandstrom.se>
-Date: Wed, 13 May 2026 10:18:18 +0200
+MIME-Version: 1.0
 To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3826.700.81)
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Hello everyone,
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-I ran into a bug that took me a while to figure out. 
+When "git status" reports the local branch is behind the push
+branch, the advice suggested a bare "git pull". That follows the
+upstream, which may live on a different remote, so emit
+"git pull <remote> <branch>" instead.
 
-I'm sadly not a good enough C programmer to submit a proper patch,
-but perhaps this bug report will at least be indexed by search engines
-and help others that might have this issue to understand the cause. 
+Also enable the pull advice for push-branch comparisons; it was
+previously only set for the upstream.
 
-My guess is that it will happen much more frequently now that 
-worktrees are more popular.
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    remote: qualify "git pull" advice for non-upstream branches
+    
+    Remove the message only when diverged from push-branch, because it was
+    in the way when I used it now on my real branch.
 
-**Report**
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2301%2FHaraldNordgren%2Fstatus-pull-advice-qualified-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2301/HaraldNordgren/status-pull-advice-qualified-v2
+Pull-Request: https://github.com/git/git/pull/2301
 
-On case-insensitive filesystems (macOS APFS/HFS+), `git rev-parse head`
-(lowercase) in a linked worktree resolves to the main worktree's HEAD
-rather than the current worktree's HEAD. This causes commands like
-`git reset --soft head~1` to silently operate on the wrong commit.
+Range-diff vs v1:
 
-**Setup**
+ 1:  0a06883cc8 ! 1:  1f06873f82 remote: qualify "git pull" advice for non-upstream branches
+     @@ Metadata
+       ## Commit message ##
+          remote: qualify "git pull" advice for non-upstream branches
+      
+     -    When "git status" reports the local branch is behind or has diverged
+     -    from the push branch, the advice suggested a bare "git pull". That
+     -    follows the upstream, which may live on a different remote, so emit
+     +    When "git status" reports the local branch is behind the push
+     +    branch, the advice suggested a bare "git pull". That follows the
+     +    upstream, which may live on a different remote, so emit
+          "git pull <remote> <branch>" instead.
+      
+     -    Also enable the pull and divergence advice for push-branch
+     -    comparisons; they were previously only set for the upstream.
+     +    Also enable the pull advice for push-branch comparisons; it was
+     +    previously only set for the upstream.
+      
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+       			strbuf_addstr(sb, "\n");
+       
+      -		if (is_upstream)
+     -+		if (is_upstream || is_push) {
+     ++		if (is_upstream || is_push)
+       			flags |= ENABLE_ADVICE_PULL;
+      -		if (is_push)
+     -+			if (show_divergence_advice)
+     -+				flags |= ENABLE_ADVICE_DIVERGENCE;
+     -+		}
+     +-			flags |= ENABLE_ADVICE_PUSH;
+     + 		if (show_divergence_advice && is_upstream)
+     + 			flags |= ENABLE_ADVICE_DIVERGENCE;
+      +		if (is_push) {
+     - 			flags |= ENABLE_ADVICE_PUSH;
+     --		if (show_divergence_advice && is_upstream)
+     --			flags |= ENABLE_ADVICE_DIVERGENCE;
+     ++			flags |= ENABLE_ADVICE_PUSH;
+      +			push_remote_name = pushremote_for_branch(branch, NULL);
+      +			if (push_remote_name &&
+      +			    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+       
+      
+       ## t/t6040-tracking-info.sh ##
+     -@@ t/t6040-tracking-info.sh: test_expect_success 'status.compareBranches with diverged push branch' '
+     - 
+     - 	Your branch and ${SQ}origin/feature8${SQ} have diverged,
+     - 	and have 1 and 1 different commits each, respectively.
+     -+	  (use "git pull origin feature8" if you want to integrate the remote branch with yours)
+     - 
+     - 	nothing to commit, working tree clean
+     - 	EOF
+      @@ t/t6040-tracking-info.sh: test_expect_success 'status.compareBranches with remapped push and upstream remo
+       	test_cmp expect actual
+       '
 
-```sh
-$ git init main && cd main
-$ git commit --allow-empty -m "base"
-$ git commit --allow-empty -m "main-only"
-$ git worktree add ../linked HEAD~1
-$ cd ../linked
-$ git commit --allow-empty -m "linked-only"
-```
 
-**Expected** `head` and `HEAD` resolve to the same commit in the
-linked worktree (or `head` is rejected as an unknown revision).
+ remote.c                 | 44 ++++++++++++++++++++++++++++++++--------
+ t/t6040-tracking-info.sh | 40 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+), 9 deletions(-)
 
-**Actual**
+diff --git a/remote.c b/remote.c
+index a664cd166a..e096fdb674 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2267,6 +2267,8 @@ static void format_branch_comparison(struct strbuf *sb,
+ 				     bool up_to_date,
+ 				     int ours, int theirs,
+ 				     const char *branch_name,
++				     const char *push_remote_name,
++				     const char *push_branch_name,
+ 				     enum ahead_behind_flags abf,
+ 				     unsigned flags)
+ {
+@@ -2302,9 +2304,15 @@ static void format_branch_comparison(struct strbuf *sb,
+ 			       "and can be fast-forwarded.\n",
+ 			   theirs),
+ 			branch_name, theirs);
+-		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS))
+-			strbuf_addstr(sb,
+-				_("  (use \"git pull\" to update your local branch)\n"));
++		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
++			if (push_remote_name && push_branch_name)
++				strbuf_addf(sb,
++					_("  (use \"git pull %s %s\" to update your local branch)\n"),
++					push_remote_name, push_branch_name);
++			else
++				strbuf_addstr(sb,
++					_("  (use \"git pull\" to update your local branch)\n"));
++		}
+ 	} else {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch and '%s' have diverged,\n"
+@@ -2315,9 +2323,15 @@ static void format_branch_comparison(struct strbuf *sb,
+ 			       "respectively.\n",
+ 			   ours + theirs),
+ 			branch_name, ours, theirs);
+-		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS))
+-			strbuf_addstr(sb,
+-				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
++		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
++			if (push_remote_name && push_branch_name)
++				strbuf_addf(sb,
++					_("  (use \"git pull %s %s\" if you want to integrate the remote branch with yours)\n"),
++					push_remote_name, push_branch_name);
++			else
++				strbuf_addstr(sb,
++					_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
++		}
+ 	}
+ }
+ 
+@@ -2355,6 +2369,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		int ours, theirs, cmp;
+ 		int is_upstream, is_push;
+ 		unsigned flags = 0;
++		const char *push_remote_name = NULL;
++		const char *push_branch_name = NULL;
+ 
+ 		full_ref = resolve_compare_branch(branch,
+ 						  branches.items[i].string);
+@@ -2396,13 +2412,23 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		if (reported)
+ 			strbuf_addstr(sb, "\n");
+ 
+-		if (is_upstream)
++		if (is_upstream || is_push)
+ 			flags |= ENABLE_ADVICE_PULL;
+-		if (is_push)
+-			flags |= ENABLE_ADVICE_PUSH;
+ 		if (show_divergence_advice && is_upstream)
+ 			flags |= ENABLE_ADVICE_DIVERGENCE;
++		if (is_push) {
++			flags |= ENABLE_ADVICE_PUSH;
++			push_remote_name = pushremote_for_branch(branch, NULL);
++			if (push_remote_name &&
++			    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
++			    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
++			    *push_branch_name == '/')
++				push_branch_name++;
++			else
++				push_remote_name = NULL;
++		}
+ 		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
++					 push_remote_name, push_branch_name,
+ 					 abf, flags);
+ 		reported = 1;
+ 
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 0242b5bf7a..b686bf356a 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -646,4 +646,44 @@ test_expect_success 'status.compareBranches with remapped push and upstream remo
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'status.compareBranches with behind push branch suggests qualified pull' '
++	test_config -C test push.default current &&
++	test_config -C test remote.pushDefault origin &&
++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
++	git -C test checkout -b feature13 upstream/main &&
++	(cd test && advance work13) &&
++	git -C test push origin &&
++	git -C test reset --hard HEAD^ &&
++	git -C test status >actual &&
++	cat >expect <<-EOF &&
++	On branch feature13
++	Your branch is up to date with ${SQ}upstream/main${SQ}.
++
++	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull origin feature13" to update your local branch)
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'status.compareBranches with remapped push and behind push branch' '
++	test_config -C test remote.pushDefault origin &&
++	test_config -C test remote.origin.push refs/heads/feature14:refs/heads/remapped14 &&
++	test_config -C test status.compareBranches "@{push}" &&
++	git -C test checkout -b feature14 upstream/main &&
++	(cd test && advance work14) &&
++	git -C test push &&
++	git -C test reset --hard HEAD^ &&
++	git -C test status >actual &&
++	cat >expect <<-EOF &&
++	On branch feature14
++	Your branch is behind ${SQ}origin/remapped14${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull origin remapped14" to update your local branch)
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 
-```
-$ cd ../linked
-$ git rev-parse HEAD
-<commit: "linked-only">
-$ git rev-parse head
-<commit: "main-only">
-```
-
-`HEAD` (uppercase) correctly resolves via the per-worktree ref at
-`.git/worktrees/linked/HEAD`. But lowercase `head` falls through to
-general ref resolution, which opens a file named `head` on disk. On a
-case-insensitive filesystem, this matches `.git/HEAD`, the main
-worktree's HEAD, instead of the linked worktree's HEAD.
-
-Without worktrees the bug is latent: `.git/HEAD` is the only HEAD file,
-so the wrong codepath happens to produce the correct result. The bug
-becomes observable only with linked worktrees, where the main and linked
-worktree HEADs diverge.
-
-**Impact** `git reset --soft head~1` in a linked worktree silently
-resets to the wrong commit, staging unexpected changes. This is
-particularly confusing because there is no error or warning. The
-command appears to succeed.
-
-I realize one argument might simply be "lower-case head isn't a thing",
-so feel free to disregard if that is the projects stance.
-
-**Possible fix** During ref resolution, when the input string matches
-`HEAD` case-insensitively but is not exactly `HEAD`, git could either:
-- reject it with an error (matching Linux behavior, where lowercase
-  `head` fails with "unknown revision"), or
-- normalize it to `HEAD` and route through the per-worktree codepath.
-
-**Environment**
-- git 2.53.0
-- macOS 15.6 (APFS, case-insensitive)
-
-
-Regards,
-Alexander
-
+base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
+-- 
+gitgitgadget
