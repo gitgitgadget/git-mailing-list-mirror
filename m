@@ -1,101 +1,96 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54F13A783D
-	for <git@vger.kernel.org>; Wed, 13 May 2026 18:54:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A5F346AD4
+	for <git@vger.kernel.org>; Wed, 13 May 2026 18:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778698457; cv=none; b=N3TkQAgFLDo42D3aCaX6qwoakzl5Gnsk/FD279tt0+tEJ12CZtW6Ng79Thj918w6tViNKEET3pjD36BCnd4mBLkfOkvEaSZ2p+idCAgQ1biqbBDn4lXoFLc0yjGjxKq45Ht1azLa8jjeEpmrA3Ukg9F9NIN7RAPa+nVd3Oie/yw=
+	t=1778698642; cv=none; b=BMHiDxILs3YGhkGiZ7CPeXgTzGckZH85lzUWI/XFq9oXzu9f6R9sWDkfS8eRGJZms6f614VcTUr/vFa4tFjQ3I4UWjW0+zqUf1lzkDtCCwCI3QH/moBcuQI5tgfd3wPd80LNlREnmEA84Yl27JXCXQHP4sCOY0vTj2gC6E8HmlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778698457; c=relaxed/simple;
-	bh=Zl2j62kC95JS14OSuhRQC65DgAbJwUrYwuQV6J1vLtA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e8P/wYtwHXuhc62LXRI/hwv+m41UWfWvFsAqitgJOIJD2rfOAiCTcnQxIUVSi3ycsMte0vqKbmiv+Bq3RJQ61C7oQoL3duJbaIOH0Zdn6C56AofCjUZ91bw/lK+Oq/Pw0ZjM9nLHUvNUlqNzzbcm7cVRp0lVXX1yi5GKf+X6bsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=igr6KaDB; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1778698642; c=relaxed/simple;
+	bh=E/MtkR7CyAkGcHxVIZgF9G4xAXepJXCfHQU3dWhuoXo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=k1DooA/nVX+e24WVNbKHqb2eWy551IlySwn0cWobQ5xU8S317X2G9BvMZQuEw4eMJazo4KqBSd680qDYe652dStlqUtNLMIRqgfIcOfE/psKo4gCfceF+zIiVR8xS7bUiSsk/QzSfyDrZ6fzske56qvoMDrCS54snd/HrXN8en4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ha3KRmQZ; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="igr6KaDB"
-Received: (qmail 40145 invoked by uid 106); 13 May 2026 18:54:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Zl2j62kC95JS14OSuhRQC65DgAbJwUrYwuQV6J1vLtA=; b=igr6KaDBGN3JfUrBLa3e4+3OI2ZmrDjI/+/1HJmxyTPuW824eU/sJG0kzTItlkuES5JqFKiob1Y4RUHp+Cvul9RQZunxeeR7G2Jl1i4qMFokmJguv03nhrfZdDqJ9znX91Ec9285pWkGZjrC90zz7fP4+6gTyiabiWnMfB7HUNLG/Pk1OKIWgieMQZsdjGcQrvVAllQWteSSw4Duk8eC0f0bLnBIXM5ftivGpXe/6DidKN4inJA5jHTxytS/iIiSdcok0hsakbEfoUM27lv+pHbDEs0nHuVLjKzWYi1j44EuAJ1Bx0k25jdodlCELnVdE4PxIL9SfNaP4zddjBGExw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 May 2026 18:54:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 68671 invoked by uid 111); 13 May 2026 18:54:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 May 2026 14:54:09 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 13 May 2026 14:54:08 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Luke Martin <lmartin@paramenoeng.com>
-Subject: Re: [PATCH] pretty: drop strbuf pre-sizing from add_rfc2047()
-Message-ID: <20260513185408.GA147423@coredump.intra.peff.net>
-References: <20260512162022.GA69669@coredump.intra.peff.net>
- <xmqqtsscjf30.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ha3KRmQZ"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a884815606so7090443e87.0
+        for <git@vger.kernel.org>; Wed, 13 May 2026 11:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778698639; x=1779303439; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lsLJv7wcAXEBuh1qa6GdnyD2nmwufP/1C+yOksKIcJU=;
+        b=ha3KRmQZdg3rLQ7G6RaV7AU36yD3By2oiRz0EAMbLCNwC+iUgIPk7n5X03H4+H8G5g
+         3u9hR4+9D9321ET13FREwK0NXM10pIdrVK6FDT7o549LKA0BwbJslJVa3w6OqWuN22Qx
+         vXF+tW1tEWyUOLkUHD1hqk3zBD+7wIITB7th+5NwD2hxL5H/vDdV/4/L72FA0Dp08IkF
+         hlFo2VAi/HMm6lkzie5n5XZ4BA83a/7v5PQL2UC9A9Gyxwl1ZKNwSGgofYcYcQ4NY59j
+         GUqiJ5+GaWjy9BbqRpVUEc/Y4u645U2xxVBj6qkw3xmBIq3b8zqriJT0VR2yMiljM+Tw
+         L/xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778698639; x=1779303439;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lsLJv7wcAXEBuh1qa6GdnyD2nmwufP/1C+yOksKIcJU=;
+        b=Zo48EbSnZs2Z3QH7Lpus69Jbz1z+ZmVU/Tv1oNjyfUo83QjNYvg6qribq3e7I7PeLR
+         nAfYS5F4uqLracFHuwId2xV3ZIhjbBvkYQ3Wp6zakH7MHqAp1fhLows4smzwZRbXUcwp
+         byqXFCNGPLAej8gtW8TE0onj4f+XocM+Yk9AIjcFgazVnvo8Y9Axj9PTq6HqOvj7hd2D
+         X/9xbI/oNO42atHD7+t4sKkj4RXBogsWeYmazrVGcqXA32JoTKjGCJT1+tV+6iO28e0w
+         jSbmzUtJUtb9TrJ74ydHzUJAKvjiZo04NoykLvL67yr02pN0XGSEu7bBTIiF8LGlBf22
+         0z5A==
+X-Gm-Message-State: AOJu0Yz08AdSTG/n51KTWdvGcCEYRiEw0rZZw0fBYNcgC4E/AXnYPfrF
+	JKgUAoodXOldSq5y5SbmWAJBfD+kBo5ZGXuUj+EiApWR+MhL6H1UvZnN
+X-Gm-Gg: Acq92OHfSeOeHv6qv7QDd/+SQ+RmMqNvP0KoGeVGsfWwxrYPYnj7WE7H3gke0+6fQtM
+	wT1wPceLOKalx6XgsVPMBpszi7lWO+2MThZy1rGhCzPMxv62dHiDP5V7HplN3skRWyBerxs3sQF
+	IVNesb9sjhUohOJhDdDkRGmD+b2dkkpa12yExky1Zho0HLYZOaMagUygUdnIwP38PMSs5r5uz1M
+	Cl8VURwtwfUpO+Ca5jajB7sFly5KbjR2KvlfqAiTXeyZK2re9T+SdbLcKoBXI0mLCtYuVVsGJ8b
+	rrs3STjLkRx4WM34iOdYwjnV/hjCyFADWvE5e2DW8ozA1mxAdziTSAOEntFWA9yH9cuZNEYoFv1
+	K7Cr7Pp+4aH/tB7yCgsaoJ7UEHU1jGY0EcuYKBWkRbPs3C8Iyi7PvpNzo4KsBxEbHmN1sGdXXiO
+	1ACuBR33XOt5OYwPBDnOlxQ79LrQKzeCg5A4+g6HgDRWqeRGb927IMCiuR+P0btbx3oLcgVVHrl
+	nhVI46NSoNKoQP0
+X-Received: by 2002:a05:6512:3090:b0:5a8:9756:f6b8 with SMTP id 2adb3069b0e04-5a8f445a4cdmr1484969e87.35.1778698638689;
+        Wed, 13 May 2026 11:57:18 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8b6b2e8d9sm3391296e87.51.2026.05.13.11.57.17
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 13 May 2026 11:57:18 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com,
+	j6t@kdbg.org,
+	kristofferhaugsbakk@fastmail.com
+Subject: [PATCH] fetch: add fetch.pruneLocalBranches config
+Date: Wed, 13 May 2026 20:57:17 +0200
+Message-ID: <20260513185717.51743-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.106.g1f06873f82
+In-Reply-To: <xmqqqznfifrg.fsf@gitster.g>
+References: <xmqqqznfifrg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtsscjf30.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 13, 2026 at 10:03:31AM +0900, Junio C Hamano wrote:
+> I am not sure if this is a good idea at all.  The option is called
+> prune-MERGED and with or without --force, mergedness should be what
+> determines if a branch is deleted.
 
-> Someday we may want to go through the output from
-> 
->     $ git grep -e 'strbuf_grow(' \*.c
-> 
-> and remove this ineffective presizing.  I think any call to
-> strbuf_grow() that is immediately followed by a call to
-> strbuf_addX() is suspect, like in the following illustration (there
-> are others in these files).
+Well, when I started writing the feature it was "prune local branches",
+and it evolved from there to prune merged.
 
-Yup. I think this could be #leftoverbits material, but anybody who wants
-to pick this up should be careful to read through the whole function and
-make sure there's no subtle dependency on the grown buffer.
+But you're probably right. I did wipe up some branches with real work on my
+side using this (I restored them), so it seems to be more of a foot-gun
+than I first imagined.
 
-Skimming through, it looks like most are just leftovers from when old
-code was converted to strbuf, and the pre-growth was kept mostly out of
-conservatism.
+Seems reasonable to remove the '--force' functionality.
 
-Some of them are truly ugly to look at, like:
 
-  http-backend.c: strbuf_grow(&buf, cnt * 53 + 2);
-
-and I think in some cases we can even drop some surrounding code, like:
-
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 070a5af3e4..aa32ebc8ab 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1337,21 +1337,14 @@ static int tecmp1 (const void *_a, const void *_b)
- 
- static void mktree(struct tree_content *t, int v, struct strbuf *b)
- {
--	size_t maxlen = 0;
- 	unsigned int i;
- 
- 	if (!v)
- 		QSORT(t->entries, t->entry_count, tecmp0);
- 	else
- 		QSORT(t->entries, t->entry_count, tecmp1);
- 
--	for (i = 0; i < t->entry_count; i++) {
--		if (t->entries[i]->versions[v].mode)
--			maxlen += t->entries[i]->name->str_len + 34;
--	}
--
- 	strbuf_reset(b);
--	strbuf_grow(b, maxlen);
- 	for (i = 0; i < t->entry_count; i++) {
- 		struct tree_entry *e = t->entries[i];
- 		if (!e->versions[v].mode)
-
-So probably some satisfying cleanup opportunities available for somebody
-who wants to spend a little time with it. ;)
-
--Peff
+Harald
