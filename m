@@ -1,40 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259E71519B4
-	for <git@vger.kernel.org>; Wed, 13 May 2026 16:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5470A38837D
+	for <git@vger.kernel.org>; Wed, 13 May 2026 16:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778689358; cv=none; b=XG7vWl8ZR0F8xkncthJOIy5see5cBZvu7mgsO7sGQuh/NRn2wUdUw3q8y3CgrANRFYq2BxBbH3B//a6aUH5C4aCQPYc/CAKHm3JK6vHC59Nx2dU1Z9q6B2f6a23+9CHN76a5LU4xfSvVDq0zpTCW5PRHCLyw0UUSSLQIC0qmJRo=
+	t=1778690785; cv=none; b=tME6eCj0bKqv/9fFs2afpHK61TQFfk1LY8pnsxQSfoe0fCa3MTIthDgNQtaziWuL44cZxxFJ40J+Zc4Rf5mUdFtCIaXYxE4ScqHCOVDjdPqLA42MS0VVozg8HeNFfuY/cCA5Sby2zj//pHne95P9ml2/Q9jWFZ8bTDHaQ75/lgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778689358; c=relaxed/simple;
-	bh=NHnaF3SIyJ7Rk8+N2U/4eHjFuXQWRqYi+Houw6y9OdY=;
+	s=arc-20240116; t=1778690785; c=relaxed/simple;
+	bh=i5d2lywEFJhaCVILzk8eqmuDDNGCVToEZdtRllZNJcI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ldyqQk0gBN/moN+PSnKXZFz1Jd5EslwVOGh9MP+oH+8JrF1Wgwj9zxvBhYcBpfn2iofYfwmQ+MBgGfWF7b7+/doitEKWuX5hRmmDQIH16DmicU4g84ZqcAEtoFJSqancMBTMFem4tKms/c8540wFefTGJlleKFlzZLap4c5la+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PbKEMtdx; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=SMdjOtzw/W9mUFIXjQozyXcXv6GhgkoZWSwYNAsjnR8sWuCwMZzAeyz0qudKu9ZGGPv1I4t0gvf/Qw9oXgk5uQnytdVKGqQCZsrg/9yLDqwogQSSBRv8Ldse+Dnzg7V9+ZIviweyyEBPwlCfZIf4eAoqcwVmFqk77DMMzQHHWDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ghcELNxT; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PbKEMtdx"
-Received: (qmail 39027 invoked by uid 106); 13 May 2026 16:22:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=NHnaF3SIyJ7Rk8+N2U/4eHjFuXQWRqYi+Houw6y9OdY=; b=PbKEMtdxQSHiQwJRe/Yjyz3IQKQE9oO5L153kysXhigXYWs3ie1nmGspPIAqpUB8nsYbCzfZGg1juWk7zdBqj66z5MiMHDz3T4/Rs3Ywkb7Bck7m4rgMOrIWAEIuIhupT0pgPb4LG8gR/CPYhLqFrQTzgpe327qI9SmUg7c+fvBIYCiBzpGCPiOneB6j0pUJVX51MeZkqGXkag3WSu9Ej7nlJ9eQ8ngsMEdgC/24ATnqSsaLCMDyrX+N/doMHZfcgp8FZFHnSkVTi0TfWlmEag3ImOa2Mgyg4rmInYPQFvnKFErvWEZlzcU+yE+Om5tiiGLjuMgyHRn4ETB8aKaLMw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ghcELNxT"
+Received: (qmail 39202 invoked by uid 106); 13 May 2026 16:46:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=i5d2lywEFJhaCVILzk8eqmuDDNGCVToEZdtRllZNJcI=; b=ghcELNxTYXdw6a9ExIbvUiQsznfZb7igaHZDQCRw4CVzJQrGxMYh8+emX89kZ/ogY8idosdd8TcN4PQMBHtr69yZENaSA9LXTmkHLJuP3pw5GST9GEit23yymupMIOCgmYsCApORs9qdcWgN1Zzw8GKhgvWN+KGq7Gi3KL7RCIhrhEQZbLHAh5V34pWYsjNL92uts3fvc4xP2hdzEmRBM0KNQFRalq02NMB9pvft4n/ptxS5p5Pt8j7uOfzzdGDKzLLcJouwPdP/NAp51Qls+RemNlDRV5ntUO+0uazE1nx2V5laauUACEzdAdmW34zNj4LmAzsC0DDGvWz4qXfbsA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 May 2026 16:22:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 May 2026 16:46:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 67031 invoked by uid 111); 13 May 2026 16:22:33 -0000
+Received: (qmail 67344 invoked by uid 111); 13 May 2026 16:46:22 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 May 2026 12:22:33 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 May 2026 12:46:22 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 13 May 2026 12:22:32 -0400
+Date: Wed, 13 May 2026 12:46:22 -0400
 From: Jeff King <peff@peff.net>
 To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] strbuf: add strbuf_add_uint()
-Message-ID: <20260513162232.GB103037@coredump.intra.peff.net>
+Subject: Re: [PATCH 3/4] ls-files: use strbuf_add_uint()
+Message-ID: <20260513164622.GC103037@coredump.intra.peff.net>
 References: <20260512115603.80780-1-l.s.r@web.de>
- <20260512115603.80780-2-l.s.r@web.de>
- <20260512184238.GC70851@coredump.intra.peff.net>
- <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
+ <20260512115603.80780-4-l.s.r@web.de>
+ <20260512190105.GE70851@coredump.intra.peff.net>
+ <2f45a33b-5945-431d-97a5-7d61e271cfba@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,95 +44,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
+In-Reply-To: <2f45a33b-5945-431d-97a5-7d61e271cfba@web.de>
 
-On Tue, May 12, 2026 at 09:32:09PM +0200, René Scharfe wrote:
+On Tue, May 12, 2026 at 10:44:21PM +0200, René Scharfe wrote:
 
-> The three variants were close in my tests, the no-copy variant slightly
-> winning on Apple silicon, but losing slightly more on an AMD Ryzen
-> laptop CPU.  So I went with the solid choice of using an on-stack
-> buffer, same as in printf(3) (at least on BSD).  Buffering at the end of
-> the strbuf was not really faster; perhaps memmove(3) is just that much
-> slower than memcpy(3).
+> > ...also less nice. We are formatting into the strbuf, and then maybe
+> > memmove()-ing the result to accommodate padding. I wonder how much that
+> > affects the timing. It's extra shuffling, but memmove() etc is often
+> > surprisingly fast.
+> 
+> I gave my objectsize and objectsize:padded numbers; the difference was
+> 1.2 ms, albeit with 1.0 ms noise in padded case.
 
-I'm not sure if you did these tests initially, or if I nerd-sniped you
-into it. Either way, I am happy to be able to hear the results. ;)
+Ah, right, that makes sense.
 
-I guess it is not too surprising that they all come pretty close in
-whole-process benchmarks. These are all micro-optimizations of a
-relatively small portion of the total work the process is doing. Even
-the strbuf_grow() checks are probably slower!
+Applying the fast decimal-width from my earlier message, I came up with:
 
-> Perhaps an optimized decimal_width() could change the picture somewhat,
-> but I don't expect a big win.  On the other hand I just told you how
-> unreliable my expectations are, so there might be treasure after all. :)
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index c142ad4156..e17e3517ff 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -251,22 +251,24 @@ static void expand_objectsize(struct repository *repo, struct strbuf *line,
+ 			      const enum object_type type, unsigned int padded)
+ {
+ 	static const char padding[] = "       ";
+-	size_t min_len = padded ? strlen(padding) : 0;
+-	size_t orig_len = line->len;
+-	size_t len;
++	static const unsigned padding_len = ARRAY_SIZE(padding) - 1;
+ 
+ 	if (type == OBJ_BLOB) {
+ 		unsigned long size;
+ 		if (odb_read_object_info(repo->objects, oid, &size) < 0)
+ 			die(_("could not get object info about '%s'"),
+ 			    oid_to_hex(oid));
++		if (padded) {
++			unsigned digits = decimal_length_u64(size);
++			if (digits < padding_len)
++				strbuf_add(line, padding, padding_len - digits);
++		}
+ 		strbuf_add_uint(line, size);
+ 	} else {
++		if (padded)
++			strbuf_add(line, padding, padding_len - 1);
+ 		strbuf_addstr(line, "-");
+ 	}
+-	len = line->len - orig_len;
+-	if (len < min_len)
+-		strbuf_insert(line, orig_len, padding, min_len - len);
+ }
+ 
+ static void show_ce_fmt(struct repository *repo, const struct cache_entry *ce,
 
-I got identical times for cat-file's %(objectsize:disk) running your
-version against the one below. Not wanting to figure out all of the
-off-by-one corner cases myself, I checked stack overflow for an easy
-recipe but couldn't find one. The version below was generated by
-chatgpt, which looks plausibly correct to me.
+but it was not meaningfully faster than your version.
+
+> > I have often wondered how hard it would be to implement our own
+> > vsnprintf(), and whether we could do better than the libc ones. It would
+> > be nice to be able to add shorthands for common types (instead of the
+> > unreadable PRIuMAX mess), as well as custom ones (e.g., hex oids).
+> 
+> C99 has %ju for uintmax_t and %zu for size_t.  Hmm, do we actually
+> still need to avoid them?  CodingGuidelines says "the C library used
+> by MinGW does not" support it.  82c36fa0a9 (submodule: hash the
+> submodule name for the gitdir path, 2026-01-12) just added a %zu,
+> and there are lots of them in compat/mimalloc/ in Git for Windows.
+
+An accidental test-balloon, I guess. It's in v2.54.0, so maybe we will
+see some reports, or maybe we can eventually use it as evidence that we
+can relax a bit.
 
 -Peff
-
-diff --git a/strbuf.c b/strbuf.c
-index 9731ecdc1f..c26614a698 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -361,16 +361,52 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
- 	va_end(ap);
- }
- 
-+static const uint64_t powers_of_10[] = {
-+    1ULL,
-+    10ULL,
-+    100ULL,
-+    1000ULL,
-+    10000ULL,
-+    100000ULL,
-+    1000000ULL,
-+    10000000ULL,
-+    100000000ULL,
-+    1000000000ULL,
-+    10000000000ULL,
-+    100000000000ULL,
-+    1000000000000ULL,
-+    10000000000000ULL,
-+    100000000000000ULL,
-+    1000000000000000ULL,
-+    10000000000000000ULL,
-+    100000000000000000ULL,
-+    1000000000000000000ULL,
-+    10000000000000000000ULL,
-+};
-+
-+unsigned decimal_length_u64(uint64_t n)
-+{
-+    if (n == 0)
-+        return 1;
-+
-+    unsigned b = 63 - __builtin_clzll(n);
-+    /* approximate floor(log10(n)) */
-+    unsigned t = (b * 1233) >> 12;
-+    /* correct if estimate was low */
-+    return t + 1 + (n >= powers_of_10[t + 1]);
-+}
-+
- void strbuf_add_uint(struct strbuf *sb, uintmax_t value)
- {
--	char buf[DIV_ROUND_UP(bitsizeof(value) * 10, 33)];
--	char *end = buf + sizeof(buf);
--	char *p = end;
-+	unsigned digits = decimal_length_u64(value);
-+	char *p;
- 
-+	strbuf_grow(sb, digits);
-+	p = sb->buf + digits;
- 	do
- 		*--p = "0123456789"[value % 10];
- 	while (value /= 10);
--	strbuf_add(sb, p, end - p);
-+	strbuf_setlen(sb, sb->len + digits);
- }
- 
- static void add_lines(struct strbuf *out,
