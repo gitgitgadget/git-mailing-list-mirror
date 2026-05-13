@@ -1,73 +1,42 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24FC3C199A
-	for <git@vger.kernel.org>; Wed, 13 May 2026 21:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A993A543F
+	for <git@vger.kernel.org>; Wed, 13 May 2026 23:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778708724; cv=none; b=dyaBkVb+v9XYDJx7zqyq4KNq4sE4PTgGqXb5JGHrRRtG1GDwskOwtRihVVWvyPl2OuLbAK6eBWizTCoVI1zeWYBOio20eRbO1IlsCdheorvD9maPknPVdti88gQt9KR27RoB+QiHIMBhRmwbzU1AyU5fUHex/JUuPXTlVrx5k2o=
+	t=1778713340; cv=none; b=ipX9UZcBkv4UF/Tnas/Gju9UridEamhfIWTNtLCLYJKsmhIIrBUT3/bKJEB64k9kdJmLHcuG61zcRA0pcaGiODoa7leJvbK7fzj/Qrzneb4touyJiY/u5wOVzu9yeavIO1EJVDPU54l6wChGutp5CZR/9g+bUJS/pGdDg9Ha8uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778708724; c=relaxed/simple;
-	bh=QSPSWkhTZlwuVpKcbfGuCNdYP6AQDUHU4fUyWIZ3048=;
+	s=arc-20240116; t=1778713340; c=relaxed/simple;
+	bh=CTKdqBRLYJITU8uUj5MVp/N6Ij6nmFGt+TmmAqDV1bo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jr7FKSWxXraAm1bpKWbmXfW2LTbtpMscCgio/Aa6kl1bwEIA2m7JebmFFp2PdVmixO/QlNaXs/y12f7bMVRUEkzCSaQuutMbus2ea3voTLllCDrKn3kG1+Jyl4z/AAYvYn4I3ZsvHa391RwdPrNlS+0QEMwnGeFdqv7mvk1MQYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kj5Vg1/q; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=AT1Sa7SpXEyZyoAs98tI4q9yYZs4JE77oQdtni5K/SrpBgedw21WePizMwR2aQXoYWCFu0WsMDlqXxH5cIrMAez2fjXtipvExvlOkIWUJcYxOWOnYuK2/mWxNRDsRm4vUP8F2cMut//lZEWlFRIt0/0ldE2M5lyN6eZEcGLDNMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=IOMuFOCD; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kj5Vg1/q"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-48d146705b4so87013885e9.3
-        for <git@vger.kernel.org>; Wed, 13 May 2026 14:45:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778708721; x=1779313521; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pvm12l1d1RNCvBGxPsTUQE7+JLdr9dz0KDsSZFRBapE=;
-        b=kj5Vg1/qIa/nr3fOcfEa3PXyaOmbmajFXxiL6Jpj6rif+vMI8z36HY61DerHbM42lz
-         ZbjQBb625jXTE+ddtia68ni89uWBSlXZqKhiRX9vk4yDoCMLQdzf7J3pAVwhwClOFoO0
-         rv7EmduVOUHwXW4zAxMzTJVb8gKsRO1c8KZzMOLK0KJYEc0Qw8ObnlrUWJJS7JHyNL7b
-         2hIfBcByrCTLYbcrpnT1nfU8R5NQcyrfVUuf6MYbte7FwQBT8VVGCi7TKd2yitvZeeIx
-         O+qLZXw4yha5n/DQPbUJ44kQ/DSQlibVF+U6fzS2+2jpHOgW76LuLgq4DUs0wkxFlC9I
-         dx8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778708721; x=1779313521;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pvm12l1d1RNCvBGxPsTUQE7+JLdr9dz0KDsSZFRBapE=;
-        b=ENpflykw1tFzUe0I1wD7iykdLAAwz4xDGP5H5s9REkY5PuW+RT2xSovbChKVRGB39B
-         tK8OuegNZgYZYHkYk251M1TNi6hcDSiDHAcrU9IL62ByYUqjnKaGwrcyR1wdJVc6Ax2p
-         va6UyCqhNjNGlMEghgg5HVGBPthIfVUcrImbIjWu6j8KBYA9yzeDRx8aq13YZziWIueu
-         SNRM2SsA31mxYWuafmejq5Q9mzt2kRdDQqo0ahnz/nrQv3ouW14HwwrWHemrpi1BEiK+
-         bFEM9TAV8w0IAGRy55QEUHFxK8tdH+ME3Viy+HGui8ljECi7dU1PQJwRV/DrhWqhpYgR
-         C7ag==
-X-Gm-Message-State: AOJu0YxSRRdL09EvJdgXpLD4l8RjTzo7GtIEP7FGTMlAdfAArmhhMB4h
-	kI463p1PcahpqWeDyguHq+rJttMYXtnMcyWjF5Q1c9PhD4E0ya7zWdDA
-X-Gm-Gg: Acq92OFPFVRI9Mu7gHw22J/Jh3weJnj+YhjvXtAaNZjplWQcYeCFjxLrevG+Ns6U5Gd
-	Q99doJY0VO1nMIJ1YeifYbPRRIOYQPESDeG9NoeXeGYrvP5ZK2ujYl59TV0EeyfHP/rahwTl2RM
-	ZxuxFU9gzmspGXNLB8wuz1KEvzD0v07XsfItxc4L+DsFXHOrBSywL/iI/BXvdLxLcNj2GuUt3Tz
-	ayxS7n5lCvUyFaCArx/9NJsEfKlgSx4p4pJfQjSbimmmic3pjKvJVWGY21BIv2SyzNUjgMgfI+R
-	uCu/ErQrDYvXn/5Xvs4yaXuf/s9lwrQTdUyjddW9UHJk+XMz8YTINqfLA31mDuAvPwqcu3gLFHC
-	UvJ/T5xM2CP3N/fj03pGbt6+Un2wzJcBwGv8Rhl+U28ZUyvzoH8t5kV7T/P9bf6nvUmjtcDdZ3d
-	6CYkyca2UDf/3rsgQ1PKRfLkidNMP3d9d58W7xc0z+zat5/Y1mjg==
-X-Received: by 2002:a05:600c:1d04:b0:48e:707f:cdfd with SMTP id 5b1f17b1804b1-48fc9a02239mr75979395e9.2.1778708720379;
-        Wed, 13 May 2026 14:45:20 -0700 (PDT)
-Received: from localhost (94-21-37-251.pool.digikabel.hu. [94.21.37.251])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fd64da1absm27226985e9.14.2026.05.13.14.45.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 14:45:19 -0700 (PDT)
-Date: Wed, 13 May 2026 23:45:11 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 09/16] repack-midx: factor out
- `repack_prepare_midx_command()`
-Message-ID: <agTw579yuy4iHoMq@szeder.dev>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <cover.1777507303.git.me@ttaylorr.com>
- <1bd2f194c6f7f64f2ff1e7b55a3a69defcb6a344.1777507303.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="IOMuFOCD"
+Received: (qmail 41165 invoked by uid 106); 13 May 2026 23:02:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=CTKdqBRLYJITU8uUj5MVp/N6Ij6nmFGt+TmmAqDV1bo=; b=IOMuFOCDTWLy5MK1D3Ucrxw9WecTeJ3ZH66WZoXvj9NzNBCdbq7w2FqMxZpm/RvHHeDbGI7ZjFFWMj+raByzTBkXjowGlyvEWyj3mb0y9sPZLnudggK0lc9YswOetnO157dj4FT186fms/JfeGUY7pGfbdcmp+znWc+mrJVgAJYiGr6tz6qw6ixds4N3P5Mh+LKeCwKxwNh5nhTxu1BOikMN2Dpc1MA1d0AtxE5wakPFvuIKR2kUol+/8UbwjQtMvr1RUIS9gNAX9MOhFyZsJAeQ5f99oW8n7Gea8j/q9m+jpSZOBFu/mC2RIkW5l0XVl7FWiDJT4KB9iardsJL2HA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 May 2026 23:02:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 73170 invoked by uid 111); 13 May 2026 23:02:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 May 2026 19:02:16 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 13 May 2026 19:02:16 -0400
+From: Jeff King <peff@peff.net>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
+	karthik.188@gmail.com, jltobler@gmail.com, ayu.chandekar@gmail.com,
+	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com
+Subject: Re: [GSoC PATCH v3 1/1] graph: add indentation for commits preceded
+ by a parentless commit
+Message-ID: <20260513230216.GA1378627@coredump.intra.peff.net>
+References: <20260404092425.550346-1-pabloosabaterr@gmail.com>
+ <20260427102838.44867-1-pabloosabaterr@gmail.com>
+ <20260427102838.44867-2-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,84 +45,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1bd2f194c6f7f64f2ff1e7b55a3a69defcb6a344.1777507303.git.me@ttaylorr.com>
+In-Reply-To: <20260427102838.44867-2-pabloosabaterr@gmail.com>
 
-On Wed, Apr 29, 2026 at 08:13:31PM -0400, Taylor Blau wrote:
-> The `write_midx_included_packs()` function assembles and executes a
-> `git multi-pack-index write` command, constructing the argument list
-> inline.
-> 
-> Future commits will introduce additional callers that need to construct
-> similar `git multi-pack-index` commands (for both `write` and `compact`
-> subcommands), so extract the common portions of the command setup into a
-> reusable `repack_prepare_midx_command()` helper.
-> 
-> The extracted helper sets `git_cmd`, pushes the `multi-pack-index`
-> subcommand and verb,
+On Mon, Apr 27, 2026 at 12:28:38PM +0200, Pablo Sabater wrote:
 
-We don't have "verbs" in Git, "multi-pack-index" is the name of the
-git command, and "write"/"compact"/etc. are the subcommands.
+> @@ -1135,7 +1227,18 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+>  				graph_line_write_column(line, col, '|');
+>  			graph_line_addch(line, ' ');
+>  		} else {
+> -			graph_line_write_column(line, col, '|');
+> +			if (col->is_placeholder) {
+> +				/*
+> +				 * Same placeholder handling as in
+> +				 * graph_output_commit_line().
+> +				 */
+> +				if (seen_this)
+> +					continue;
+> +				graph_line_write_column(line, col, ' ');
+> +			} else {
+> +				graph_line_write_column(line, col, '|');
+> +			}
 
-> and handles `--progress`/`--no-progress` and
-> `--bitmap` flags. The remaining arguments that are specific to the
-> `write` subcommand (such as `--stdin-packs`) are left to the caller.
-> 
-> No functional changes are included in this patch.
-> 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  repack-midx.c | 30 +++++++++++++++++++-----------
->  1 file changed, 19 insertions(+), 11 deletions(-)
-> 
-> diff --git a/repack-midx.c b/repack-midx.c
-> index 0682b80c427..83151d4734a 100644
-> --- a/repack-midx.c
-> +++ b/repack-midx.c
-> @@ -275,6 +275,23 @@ static void remove_redundant_bitmaps(struct string_list *include,
->  	strbuf_release(&path);
->  }
->  
-> +static void repack_prepare_midx_command(struct child_process *cmd,
-> +					struct repack_write_midx_opts *opts,
-> +					const char *verb)
-> +{
-> +	cmd->git_cmd = 1;
-> +
-> +	strvec_pushl(&cmd->args, "multi-pack-index", verb, NULL);
-> +
-> +	if (opts->show_progress)
-> +		strvec_push(&cmd->args, "--progress");
-> +	else
-> +		strvec_push(&cmd->args, "--no-progress");
-> +
-> +	if (opts->write_bitmaps)
-> +		strvec_push(&cmd->args, "--bitmap");
-> +}
-> +
->  int write_midx_included_packs(struct repack_write_midx_opts *opts)
->  {
->  	struct child_process cmd = CHILD_PROCESS_INIT;
-> @@ -289,18 +306,9 @@ int write_midx_included_packs(struct repack_write_midx_opts *opts)
->  		goto done;
->  
->  	cmd.in = -1;
-> -	cmd.git_cmd = 1;
->  
-> -	strvec_push(&cmd.args, "multi-pack-index");
-> -	strvec_pushl(&cmd.args, "write", "--stdin-packs", NULL);
-> -
-> -	if (opts->show_progress)
-> -		strvec_push(&cmd.args, "--progress");
-> -	else
-> -		strvec_push(&cmd.args, "--no-progress");
-> -
-> -	if (opts->write_bitmaps)
-> -		strvec_push(&cmd.args, "--bitmap");
-> +	repack_prepare_midx_command(&cmd, opts, "write");
-> +	strvec_push(&cmd.args, "--stdin-packs");
->  
->  	if (preferred)
->  		strvec_pushf(&cmd.args, "--preferred-pack=%s",
-> -- 
-> 2.54.0.16.g1c05dfce579
-> 
+I haven't looked closely at the patch, but Coverity complained that
+the "if (seen_this)" check here is dead code, because this whole else
+block follows:
+
+                  } else if (seen_this) {
+                          if (graph->edges_added > 0)
+                                  graph_line_write_column(line, col, '\\');
+                          else
+                                  graph_line_write_column(line, col, '|');
+                          graph_line_addch(line, ' ');
+                  } else {
+			...the code above...
+
+I don't know if that just means the continue here is redundant and can
+be removed, or if it's a sign of a larger logic error.
+
+-Peff
