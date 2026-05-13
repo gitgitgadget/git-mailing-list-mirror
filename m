@@ -1,105 +1,138 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3492E0B58
-	for <git@vger.kernel.org>; Wed, 13 May 2026 16:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259E71519B4
+	for <git@vger.kernel.org>; Wed, 13 May 2026 16:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778688391; cv=none; b=YwzofJjL27NB/bmuR9lBurI/NPGpVbxKV6Zitxppsfi9eIlVzhW80zw3r/u8qFopk/7oDSA0kHTTyC+bGqMQWS9PB3RgNCWHFiTqJuOtHhb3DKMBNs8lrLRt635DI+MHC+XITZH2Orp59s0TtNxIUsYwCd7LbtqzN2eDmbd5el0=
+	t=1778689358; cv=none; b=XG7vWl8ZR0F8xkncthJOIy5see5cBZvu7mgsO7sGQuh/NRn2wUdUw3q8y3CgrANRFYq2BxBbH3B//a6aUH5C4aCQPYc/CAKHm3JK6vHC59Nx2dU1Z9q6B2f6a23+9CHN76a5LU4xfSvVDq0zpTCW5PRHCLyw0UUSSLQIC0qmJRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778688391; c=relaxed/simple;
-	bh=pVAIfloh7hj6Uk1GZcSl1JonIJEFwRkruB61qa0ANNY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kBOnuMZFi2VdAxmdER3tqnp2HByFooSJGE8ykNuHUuv8NZugg/a3NZtz7M06JYHCICxr+W4YeybcV5ifywXDfhwaKXWxeOjF+PP/piigx33vZ906+XGp5/zJfqjE1OdXk7oea9HmqWMp5LhG4fawlTiY00AtkkvO5+kRwt8eP/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EdhD5tiV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k89vJSaR; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778689358; c=relaxed/simple;
+	bh=NHnaF3SIyJ7Rk8+N2U/4eHjFuXQWRqYi+Houw6y9OdY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ldyqQk0gBN/moN+PSnKXZFz1Jd5EslwVOGh9MP+oH+8JrF1Wgwj9zxvBhYcBpfn2iofYfwmQ+MBgGfWF7b7+/doitEKWuX5hRmmDQIH16DmicU4g84ZqcAEtoFJSqancMBTMFem4tKms/c8540wFefTGJlleKFlzZLap4c5la+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PbKEMtdx; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EdhD5tiV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k89vJSaR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DCC61140016D;
-	Wed, 13 May 2026 12:06:28 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 13 May 2026 12:06:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778688388; x=1778774788; bh=pVAIfloh7h
-	j6Uk1GZcSl1JonIJEFwRkruB61qa0ANNY=; b=EdhD5tiVJ4u6QOioGaDQzEDF4w
-	Fd6wRjKNzLLkyo/Sx96Ctc22qjSA9+iYEPBWS207OFFhA1YKeWzIqXFMss+Z77bt
-	5oqxVyvKmGd0H60d3s+vjgxvywTJAIOkc3AMfLEXuwK370yK2u5gNN+DpdT8RMw4
-	2C0weI7RJEhXxg1b1hIJ3ISNUdNa9Z2b+voZF8ZYd8Fsrzyy+mxX1OswsxCcUEIh
-	9bu5HuM/jjo+7xRD3cRt6uZB9WwVhhkKjkAM0ILg41CSi7UyXTTTRNVyjgTEeCfa
-	Wx6CrnaPvjQ8pYBmPD7OHYRGOVG35VXf1IYZuZDo7nrb9pdfBVgumVpihRLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778688388; x=1778774788; bh=pVAIfloh7hj6Uk1GZcSl1JonIJEFwRkruB6
-	1qa0ANNY=; b=k89vJSaRVZeQl2/+J8yrOIBKIMUDrwpwZL0R+nzse/TZyREP1cn
-	YED7SPwAj5nW1/5dbjDqEbI4S3WCPVeVM8rS4dlKjcNIvY4r7gOAUuoYvzU5B4iw
-	jfCdSlgWQ9v4H4UrxcrAPg+LK96ozAFNB7cf5Obq7ZJgcZ7J9otDp0ghMt54gs8b
-	Q2u0J4smyX6cjC39T6ORtWAP5FPjmsumtxjiBoCRgqlisehAZ4I5vlN/0D2Y6jbr
-	tN7/2bpM0fJrNUdgY1WYzkb5a4MdDDaI8jbLq7XFPJoHE7peQMiANhZjG2f3NhbH
-	hBhysF6nsHz/oko0bCv5K6KBdqiJS7QIzyg==
-X-ME-Sender: <xms:hKEEaic33i-5ny7VL7du0INXM-ma9tifA9gPvpBG0L2Yco-txw8ISw>
-    <xme:hKEEajp98GI2uJwOdkWBM9MFujV0eiS4Ho6S0JcvZb-8K0EjUUXJuWc7ep4_WFKMn
-    4D8jNZbyYTImXlOPiouz8fkGnVacF6sJ2SX-zr4FU-9_o9U2lYJ8A>
-X-ME-Received: <xmr:hKEEag523SIh14oHr92cXmLRtZLOyo4ESPogp1yufzzF1tSXjxyZ12ZT-IsW12ghmHudvu5s6q6VLErjIBv89G065pDQ2bDjZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdehtdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpuh
-    hshhhkrghrkhhumhgrrhhsihhnghhhudeljedtsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hKEEappbDrJtJ5t645kgLvyM58z_ptQoVg9jVXMbx7wyhWEvv_7o2w>
-    <xmx:hKEEaijYwh7fZOGNflzFwSQYPibl8LTWohhNAy22GVSxqtkHJlaTug>
-    <xmx:hKEEajJ6myb3rfP6w_24GlCNNpyMG-I_o85EfXMfdxvuwmcGIWEPRA>
-    <xmx:hKEEaiD95o_ZOhKA6TurRP4XcnbtF-qlkgC7cGVPQIL5PJ3zASSHaA>
-    <xmx:hKEEavozLyKriVOAotViW546c61K4P5spHMr6UBgNb9HuiwO_1rVoLQf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 May 2026 12:06:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PbKEMtdx"
+Received: (qmail 39027 invoked by uid 106); 13 May 2026 16:22:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=NHnaF3SIyJ7Rk8+N2U/4eHjFuXQWRqYi+Houw6y9OdY=; b=PbKEMtdxQSHiQwJRe/Yjyz3IQKQE9oO5L153kysXhigXYWs3ie1nmGspPIAqpUB8nsYbCzfZGg1juWk7zdBqj66z5MiMHDz3T4/Rs3Ywkb7Bck7m4rgMOrIWAEIuIhupT0pgPb4LG8gR/CPYhLqFrQTzgpe327qI9SmUg7c+fvBIYCiBzpGCPiOneB6j0pUJVX51MeZkqGXkag3WSu9Ej7nlJ9eQ8ngsMEdgC/24ATnqSsaLCMDyrX+N/doMHZfcgp8FZFHnSkVTi0TfWlmEag3ImOa2Mgyg4rmInYPQFvnKFErvWEZlzcU+yE+Om5tiiGLjuMgyHRn4ETB8aKaLMw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 May 2026 16:22:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 67031 invoked by uid 111); 13 May 2026 16:22:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 May 2026 12:22:33 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 13 May 2026 12:22:32 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2026, #03)
-In-Reply-To: <CALE2CrT9=5mOauUdzxJAEjeeD77RWGyXjLGGTObsk9R1eOrP0g@mail.gmail.com>
-	(Pushkar Singh's message of "Tue, 12 May 2026 19:50:10 +0530")
-References: <xmqqik8tm16n.fsf@gitster.g>
-	<CALE2CrT9=5mOauUdzxJAEjeeD77RWGyXjLGGTObsk9R1eOrP0g@mail.gmail.com>
-Date: Thu, 14 May 2026 01:06:27 +0900
-Message-ID: <xmqqmry3i9a4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH 1/4] strbuf: add strbuf_add_uint()
+Message-ID: <20260513162232.GB103037@coredump.intra.peff.net>
+References: <20260512115603.80780-1-l.s.r@web.de>
+ <20260512115603.80780-2-l.s.r@web.de>
+ <20260512184238.GC70851@coredump.intra.peff.net>
+ <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
+On Tue, May 12, 2026 at 09:32:09PM +0200, René Scharfe wrote:
 
-> I noticed my stash test patch did not appear in the list, so I just
-> wanted to gently follow up in case it got missed.
->
-> Patch Link: https://lore.kernel.org/git/20260505103332.43702-2-pushkarkumarsingh1970@gmail.com/T/#u
+> The three variants were close in my tests, the no-copy variant slightly
+> winning on Apple silicon, but losing slightly more on an AMD Ryzen
+> laptop CPU.  So I went with the solid choice of using an on-stack
+> buffer, same as in printf(3) (at least on BSD).  Buffering at the end of
+> the strbuf was not really faster; perhaps memmove(3) is just that much
+> slower than memcpy(3).
 
-When somebody else discussed on the topic or if I find the topic may
-be interesting, I often pick up such patches to keep in 'seen'.
+I'm not sure if you did these tests initially, or if I nerd-sniped you
+into it. Either way, I am happy to be able to hear the results. ;)
 
-I am not sure if it qualifies as "got missed", but it seems nobody
-discussed the topic, and I wasn't sure what the point was myself.
-Surely we can pile on tests that demonstrates a command works in a
-certain way, but is this particular test demonstrate something we
-are likely to break, or something?
+I guess it is not too surprising that they all come pretty close in
+whole-process benchmarks. These are all micro-optimizations of a
+relatively small portion of the total work the process is doing. Even
+the strbuf_grow() checks are probably slower!
 
+> Perhaps an optimized decimal_width() could change the picture somewhat,
+> but I don't expect a big win.  On the other hand I just told you how
+> unreliable my expectations are, so there might be treasure after all. :)
+
+I got identical times for cat-file's %(objectsize:disk) running your
+version against the one below. Not wanting to figure out all of the
+off-by-one corner cases myself, I checked stack overflow for an easy
+recipe but couldn't find one. The version below was generated by
+chatgpt, which looks plausibly correct to me.
+
+-Peff
+
+diff --git a/strbuf.c b/strbuf.c
+index 9731ecdc1f..c26614a698 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -361,16 +361,52 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
+ 	va_end(ap);
+ }
+ 
++static const uint64_t powers_of_10[] = {
++    1ULL,
++    10ULL,
++    100ULL,
++    1000ULL,
++    10000ULL,
++    100000ULL,
++    1000000ULL,
++    10000000ULL,
++    100000000ULL,
++    1000000000ULL,
++    10000000000ULL,
++    100000000000ULL,
++    1000000000000ULL,
++    10000000000000ULL,
++    100000000000000ULL,
++    1000000000000000ULL,
++    10000000000000000ULL,
++    100000000000000000ULL,
++    1000000000000000000ULL,
++    10000000000000000000ULL,
++};
++
++unsigned decimal_length_u64(uint64_t n)
++{
++    if (n == 0)
++        return 1;
++
++    unsigned b = 63 - __builtin_clzll(n);
++    /* approximate floor(log10(n)) */
++    unsigned t = (b * 1233) >> 12;
++    /* correct if estimate was low */
++    return t + 1 + (n >= powers_of_10[t + 1]);
++}
++
+ void strbuf_add_uint(struct strbuf *sb, uintmax_t value)
+ {
+-	char buf[DIV_ROUND_UP(bitsizeof(value) * 10, 33)];
+-	char *end = buf + sizeof(buf);
+-	char *p = end;
++	unsigned digits = decimal_length_u64(value);
++	char *p;
+ 
++	strbuf_grow(sb, digits);
++	p = sb->buf + digits;
+ 	do
+ 		*--p = "0123456789"[value % 10];
+ 	while (value /= 10);
+-	strbuf_add(sb, p, end - p);
++	strbuf_setlen(sb, sb->len + digits);
+ }
+ 
+ static void add_lines(struct strbuf *out,
