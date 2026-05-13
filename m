@@ -1,102 +1,106 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65492145B11
-	for <git@vger.kernel.org>; Wed, 13 May 2026 02:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD0A390609
+	for <git@vger.kernel.org>; Wed, 13 May 2026 02:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778640474; cv=none; b=KWo9+jjUJHQkvYQTZKGP+HIZiEeY4spaR6ZfnsMYUO5i0f8e7OSFl1gG9c7Ja/dZOc98zvX98kr2OjEPUPqaiAg3f/Y95cij7tEAJ6zwOmXFKAkNGlKT2xI3JNZhy3H8FTjBdaLwps/vLA0ghTK+X0c6F+2IqifL3OLx5ujOy5I=
+	t=1778640975; cv=none; b=W1pDwjZBHm4ypxi1uK7242/YyAkzK8g0UvqQdFy7DvhnVExDF4JzuyhDpHMHBqb5jEO+YQ/hU/1/YdvK0oM29PQFcLBI6PlIcxct7z4l2G3/Dw7nSU4IHlUX6decXUbg+MeWED3KkVsB0gn6VEm0iDBdisVZZhFXGjEx0DnhJzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778640474; c=relaxed/simple;
-	bh=gYZIroZfuOkp6sfhoZxF1OAf+STuGEKfGgqG/ZPSQlw=;
-	h=Content-Type:Date:Message-Id:To:Cc:Subject:From:Mime-Version:
-	 In-Reply-To; b=P+cAYhHs6mQ0Y+9FmqmrEa+K2RnMEnqtQr/Fl4dnzwwJqZh0n2O3UjI6OFpHHsEkQDX2h29RnceO9RW5i0pF1BkwKyGFunBdVOm1wyfobbDuCqavvXXiupOKU5twUZukd2cVFpeE1E5csrN/dCCj0v6uDwLrstDGgDwLZ8HZ+G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=black-desk.cn; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1778640975; c=relaxed/simple;
+	bh=7JTpV/qxMcSh5rx10LHpv4qC4Bxik13pdcK1O7mvfUw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=awRj5Pk/ZHzhu+/IlxOLYJkAVfbIgBCyBkyu120ctGEELHeogXNaoR52GZ+hJoIQaX4pIy6PpWyqMzenQh9HWsBjtSVJGSGwzSH+HJ2UxZP/zSknObBhfwyYXJg2d2cNScJww0qArOQkqS3wgOflhKZpeG/SIxc+/KsyPXvK/B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=black-desk.cn; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=black-desk.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-362e50b4641so3843643a91.0
-        for <git@vger.kernel.org>; Tue, 12 May 2026 19:47:53 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5a860667fabso5609715e87.0
+        for <git@vger.kernel.org>; Tue, 12 May 2026 19:56:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778640473; x=1779245273;
-        h=in-reply-to:content-transfer-encoding:mime-version:from:subject:cc
-         :to:message-id:date:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=u0VjmPB1kycl2ZIwL+HPs5tzdaciK62CWnABZGtsauI=;
-        b=Cb8JyJI3qU9lWsR+oHsslbWpRUdNsvOicVK8KyfZTHKS/atgwm805A6KYUf/rUFnFr
-         6EmByosULwDxq9Xjle9jLzvE7E8+abjY78cuYREFZQs3jQyiUNd+c3G6DYgGZJHW/8iC
-         tFYRk8F6z0uHVVCf52Bt6y3nGSIdyTwll3l+/y5WKZcIlJdMOW/aknhpCbqEM2aGnyAD
-         YHcNyGancyv7At4iZVPQzvOUZsz8CfNPsdB4vc0XZ2Fe2896fmqf98akcjCCzbJSC8zL
-         PaufuiV/72uqg5CAK+Q4loTtnRUyJUkClOpDskCPfDC6JH/0ro2Kf7iKyLj4XQ07Cpv0
-         9TDA==
-X-Gm-Message-State: AOJu0YzziWd6YottK51a4GJWMhef+RkAjMSk+koBZQ/ikyJaRKTb9oL7
-	pzi0nBlhhMp6+HBQatUljeKB/5HTk0Qp9IlvKctGenOKK4S1BhXm7XWunfLdtIlJ
-X-Gm-Gg: Acq92OGzqthgOyXM7jqaHzC3a0kYAZCsO6l1TgRcH4VQ2OxD6T3EC8JQIpgRhmKtp6k
-	CklAeUmVf0rfhdEfJvhqYR4SS5RGLh88qIyUQvmp9Nycq4Iw8URSvX9pJsBp6+tsrfeRadGYhDK
-	jRlZ3Nd5g03w516OvWmTFqNdj0UNaFTtfrVObMwLhIxqQEHIJ2iZyZ7UnqwXapFwcIVETWw1JaF
-	Cd49MFTQr2Gw5X52uoJ6FbSDkDFeStj0prK48LlQnEBEsdjmNo48Sx1HZnI8i7+tzPNPmaJtEgA
-	8n3MJBhff7Y9rWJ0kcgozul6taALtZuvhQLeAEpTcgt+Vag8K2bWZj0mJHxI5V9gCCt12jxz66L
-	6jz/UkNz/nF5qW8ojwR1MiF/enpOs7mdIEgCQbEVYW/qOLjpRnHstPs/Ib5yuuA8xpoj4fO3EW8
-	D0LTKn5q6/qI3gH9YlbDXY5Oyps6GtB7IgFHsFb5NeAFePmA==
-X-Received: by 2002:a17:90b:3a8e:b0:367:b819:2214 with SMTP id 98e67ed59e1d1-368f3d25578mr1625075a91.13.1778640472578;
-        Tue, 12 May 2026 19:47:52 -0700 (PDT)
-Received: from localhost ([218.33.109.130])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-368ede2007fsm1257864a91.2.2026.05.12.19.47.50
+        d=1e100.net; s=20251104; t=1778640971; x=1779245771;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3ZAvV5lMX+RkQ9kWul51QY0UkQ21t7eHCWQj6w5GwDE=;
+        b=qVPj5Q4N4PETlF4HHe5pNyCdGEz05AIKsmY2u+Gscch7XMJfE+XJZrFTrNcQxLKs90
+         2WQIJsQ0JYMCeyasTxGrnm0odzz7hhVB1faGiUogaBmJYS9wo8/cQjn8b0vNQNkhg+MN
+         yCe3jqwFN+U16gKqQkI0kEMHku9zzN9lpbOBtSZlgIT1/ZvWUcSKXjJXJZEhddqIxSgh
+         Wzsote4iHZdgCf7Wa8z7QD8lIGCkn/0k6MgImz6R4PEt/pK1SOy+K8OEhbXYMhB5A8F7
+         0d4rVdMXZNL/zdl6qwAN07Hs/K1V7rkksEcIVPbsC98EpmyKirb3/kewKorpS0tLtRX9
+         +gKw==
+X-Forwarded-Encrypted: i=1; AFNElJ+e8tkVoorlh8UBHOmC6vhY1MXzrKU1niZK1IjMW2Jcqw3WLOIx4y5m8ZBOjQYOGPR3A74=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzmr7XBGpt8vQRab++i4nSnCIBov0vMlE8b+vxHj4r1vkVaiT8J
+	PzQtm3kShXE6vTMQ996kqwP6a9ikkHrU20+4Y0bt4MpL5yNKg2XLItCD++mtO+vgvig=
+X-Gm-Gg: Acq92OFdZcXajdcb+IQOjjD1/91iYhTikCCc7QwthRIMSWhnbsVInExSSeynNz380tF
+	AIPOo97yAnuspUuAhQ9lWvJchc9RG2zmHa4FrD59UolZf6CBIsmJId/CqnSjrsccLX89ZkiJYep
+	8xw4bz4s7jBNe/0aV1Zc9VwBXGarz8bufyBU9OMHCbQSvyEgsmc6IJIFr451cJ5a8mCTdxnRqGG
+	br79tFty+KF1GUFvhj1T5kK4cBD6MCwc3P7TGknLRf3o0nNyYonxBhBukMV15gC4d9zh4RCYbg/
+	25hAGJc42bHxZyF+Jm6e01EiCNl/LrpI1wwh6wUojaH5yOnH4YmapXp+5SntORC1sKxeNDpV/ET
+	nq6LZnydT71IFRPRkoO44EwGvNIXhMAhCQpUdxM6l19gHDVGU3KiSPMtpU5xCMPCL97sIr42/Fd
+	OI36Q1QSJK/QoEvIvISWh1VVNXo+UNGGkzVnfts4LiG8N/6Pc8JVtCjsXmaz7O4/aZyNrRDthX9
+	6Ig7805NfToIg4K1aE/qybNIv/d+A==
+X-Received: by 2002:a05:6512:3f1b:b0:5a8:7bdb:92c0 with SMTP id 2adb3069b0e04-5a8ef9aeeb6mr426667e87.29.1778640970415;
+        Tue, 12 May 2026 19:56:10 -0700 (PDT)
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com. [209.85.208.172])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8a955df99sm3812345e87.45.2026.05.12.19.56.10
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 May 2026 19:47:52 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 May 2026 10:47:48 +0800
-Message-Id: <DIH7FB91JHU1.3OOTDQ6QEZZJZ@black-desk.cn>
-To: <ps@pks.im>
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>,
- <kristofferhaugsbakk@fastmail.com>, <me@black-desk.cn>
-Subject: Re: [PATCH v3 2/2] config: add "worktree" and "worktree/i"
- includeIf conditions
-From: "Chen Linxuan" <me@black-desk.cn>
+        Tue, 12 May 2026 19:56:10 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-39393c1b5aaso55306881fa.3
+        for <git@vger.kernel.org>; Tue, 12 May 2026 19:56:10 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8qNkWHWD2OwzJQ1ioFR4t20GK8T0BKFzKtB1dPXUAbf4MDp9BTOSqPm0mhdL768Y4X1cw=@vger.kernel.org
+X-Received: by 2002:a05:6512:3984:b0:5a8:9909:50a3 with SMTP id
+ 2adb3069b0e04-5a8ef9b33f1mr477788e87.32.1778640970014; Tue, 12 May 2026
+ 19:56:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn>
+ <20260403-includeif-worktree-v3-2-109ce5782b03@black-desk.cn>
+ <agLTO0amktCWMsiE@pks.im> <d236de15-f03e-4bac-9eb1-c14e50a271f5@gmail.com> <xmqqo6iklid5.fsf@gitster.g>
+In-Reply-To: <xmqqo6iklid5.fsf@gitster.g>
+From: Chen Linxuan <me@black-desk.cn>
+Date: Wed, 13 May 2026 10:55:58 +0800
+X-Gmail-Original-Message-ID: <CAC1kPDNAFRp+t+_KRUfV_nUXj6nFBNEHp05odiVXsUOw3+tcrA@mail.gmail.com>
+X-Gm-Features: AVHnY4JsTfxdjw6lOsrLDHNn1_BwQSVxKQdW9eGLerSvsfqtykHiKj5ODizWn9A
+Message-ID: <CAC1kPDNAFRp+t+_KRUfV_nUXj6nFBNEHp05odiVXsUOw3+tcrA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] config: add "worktree" and "worktree/i" includeIf conditions
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, Patrick Steinhardt <ps@pks.im>, me@black-desk.cn, 
+	git@vger.kernel.org, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.21.0
-In-Reply-To: <agLTO0amktCWMsiE@pks.im>
 
-On Tue, 12 May 2026 09:14:03 +0200, Patrick Steinhardt wrote:
-> On Fri, Apr 03, 2026 at 03:02:29PM +0800, Chen Linxuan via B4 Relay wrote=
-:
-> > ...
-> > The implementation reuses the include_by_path() helper introduced in
-> > the previous commit, passing the worktree path in place of the
-> > gitdir.  The condition never matches in bare repositories (where
-> > there is no worktree) or during early config reading (where no
-> > repository is available).
->=20
-> Right. This is because `repo_get_work_tree()` would return a NULL
-> pointer in these cases, and `include_by_path()` exits early in that
-> case.
->=20
-> ...
->=20
-> This whole listing here is the exact same as we have for the `gitdir`
-> condition. Can we maybe deduplicate these into a common section?
-
-Sure, will be updated in V4.
-
-> ...
+On Wed, May 13, 2026 at 12:09=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> Just because it was explicitly mentioned: we might also want to have a
-> test that verifies this works with early-config parsing. We already have
-> a similar test for "gitdir:" in "conditional include, early config
-> reading".
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > On 12/05/2026 08:14, Patrick Steinhardt wrote:
+> > ...
+> >>> Introduce two new condition keywords:
+> >>>
+> >>>    - worktree:<pattern> matches the realpath of the current worktree'=
+s
+> >>>      working directory (i.e. repo_get_work_tree()) against a glob
+> >>>      pattern.  This is the path returned by git rev-parse
+> >>>      --show-toplevel.
+> >>>
+> >>>    - worktree/i:<pattern> is the case-insensitive variant.
+> >>
+> >> Seems sensible.
+> >
+> > We already support per-worktree config settings via
+> > extensions.worktreeConfig, so it would be helpful to explain why it is
+> > more convenient to set the config based on the worktree's path, rather
+> > than just running "git config --worktree" inside the worktree. Do you
+> > have multiple repositories with worktrees checked out under a common
+> > prefix that you want to share the same config setting?
 
-As I wrote in the commit message, this is not going to work with
-early-config parsing. I am working on the fix. But I am not quite
-sure that this is a must-fix issue or not.
-
-> And should we also have a "nongit" branch where we verify outside a
-> repository?
-
-Sure, will be added in V4.
-
-Chen Linxuan
+Yes, that is exactly why I added this feature. I contribute to the
+Linux kernel both as an employee and as an individual. I want to
+automatically use my company email address whenever I create a
+worktree under a specific directory.
