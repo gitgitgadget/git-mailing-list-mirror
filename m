@@ -1,82 +1,38 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68C13A71AA
-	for <git@vger.kernel.org>; Wed, 13 May 2026 07:31:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C45368D7F
+	for <git@vger.kernel.org>; Wed, 13 May 2026 08:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778657486; cv=none; b=I20u+M7MvsP9DF7TDrgDgSw2+rw2tsR9qrn2LmKSHjhVuC8pYNdc7rFO0+gD1MqzaTmTZe/Id/l1W8UwepkP/Z2grIwFd784MwJJGkitjO9HztGwCROfqlcd8ixUpy4QKush841phT/VklG2rVPYHuUsD1vjrWR8vUWJu/Vgstc=
+	t=1778659736; cv=none; b=gP+PtoxU/1ncsRSI26n88xQCXJCzYXdL02ac1ivpECp25edZ+ycqmLJTxI5jzUYQtPfV8QMpqTBOlHMAIIVRMYH6Di7vhGwBRlkdbobOmACdS2Lnl3BIkYSrTZW26olI8phfI91EqnC7Fi8FT+q+ZKu/vbvVgSYqAvf1ntIg72I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778657486; c=relaxed/simple;
-	bh=HszYVr4CqmCL1Ty6CaXW2GJCMZEeZrAUh9dSBdtoMuY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=b6i1iL3LRU2L+sUNhSR3+CzFQZoojIwW6LU0eS5Cbn8Gg9RAG5n6rQ5QGn0izLYmAkPlG3VovbaUtgU0dEVzuRG7XBdg3oxiUziT/w/sAIwtEWjBhRcYdIT5BJiFTWHzdU5JHhENqxoQty+OE+TWM4BzqCoYkXm7R8LtHzU4Sgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F/DQtS/c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PEXGgYWO; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1778659736; c=relaxed/simple;
+	bh=bbMfNOcsXSiZIgD1VMa7qXLSXzdS+bvBNWvJyJ0pnLw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=c5cKgS9sb9UHsMgT0/JXYs4Cp0zKsMtrMVSDK+Lz0IdaTxL6iRemCD2w9iFkmq6EPhft9/Qb6cDmBIKqu9z2817YTKzgS5JV/WRQz3xbMoJiwDiXQT4g3ZsGRHEgY55CckqKPXSFlHqBo4dB6cYvZwYxqbELJ0dbeJxlk+xorvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AdhGXPsh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F/DQtS/c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PEXGgYWO"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 070611D00123;
-	Wed, 13 May 2026 03:31:24 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 13 May 2026 03:31:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778657483;
-	 x=1778743883; bh=hcJh+iOiV8QOVcrUB29tAy2AaIh50EwtQ1CBbHRme1I=; b=
-	F/DQtS/c7GQ6D1+cQkjIntlea2cG7xzhvvMwtpuoAGnY1UvSsbaTfwQ/9r2+r63z
-	YmGxL//J/Dk+U32UXbeXHO4PG6PO2dA4unzrX1LucTejC7KzjP5cwJC1S9wwx/Ys
-	k7eoHyhTNyiyCswDukmXzLqnbRuG4cz//5KVF+m4r8H3oi50LW7r68fGWBxXeZ8s
-	S6qBL39dGYPwe7PaxZKUxSc2H+rDAMW0fNCzksfg0vedFUQZsurgfsAmvcKSp9jI
-	lSIZziFoWFyosu+epFa8nLh5xcBqjuoPQbvcYeYEr28o1WAOkVjocGCs2HlFFuqF
-	BodKmnwTFBpQVgGmi1PvPA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778657483; x=
-	1778743883; bh=hcJh+iOiV8QOVcrUB29tAy2AaIh50EwtQ1CBbHRme1I=; b=P
-	EXGgYWO/FIplxJWGJ1Am3zQMtd/iuY6VNBSG+w2Zn4RSLV08FQ+4XjfvtkBCcscq
-	F1VDkCm7a5VXGTMDUgW+OVA5dN6w7aHBLcD5YnAlqRiq56OP93oCDErawNZ9V7Ro
-	o//eCG9h2Yfrau1E59l5oRdQiOhykJMkcbsPaZht+yUL02hN18GZ3g8L5NjESwyv
-	rOqHnjqYqsZXIkNcse8MPHvi/X3V3n2ElyufwzvsGZY7iPrlRBw8znhPV9IcxFgo
-	/68DP9ohYutF+0kMnev4pSW4SY4RitVF207vQyX9Fpwr583Shv4NmblW6+hGqxuw
-	laEP9zX2AR1HbfsGDyK6A==
-X-ME-Sender: <xms:yygEahRVQEqo3lymb2YvLwueQ5VKjDxkQZivbhAvS2g2hFHHMHtz9w>
-    <xme:yygEatA1Ei9bYqaYoJaNeR6Wqb_VrVqBD_gFWNwya0EZSs-xgaxi1iIR1t6w2nUq3
-    N7riVuobJGMAZ6zkLcDkfpT-dMes8aWaRBcCEhr8Ib1_ILhDHzW69E>
-X-ME-Received: <xmr:yygEapGlHU4mLJzjhJwr_cxxNGZQGbQy0SjmjGs8hVkKaEcnIsRmE_Qrzs73sgAKPC4DfbDuCoBLiOAlpMxpUlMbUL0hgaKeGRUMoTL5kuE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdegtdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehmihhkrggthhhusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsthholh
-    gvvgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-    pdhrtghpthhtoheprggtthhiohhnmhihshhtihhquhgvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:yygEavAyu9MsNz1zO63Djw0TLG5Zrg8wp79P5oOw00-6b70mUNUIVw>
-    <xmx:yygEapUkbbN_zzsV45ASmqz1TlNZ_T4yQ49kboMdnWzH8S3PdWygbg>
-    <xmx:yygEajrR_7XG5HB9682wosmHRTTi1jAcm5HiBm364u_GlDwHCLD7BQ>
-    <xmx:yygEalSNOPUwW9Zh9YOnMCTX_KsPMRtrJD65iUSX0jSfqev7PxPNXA>
-    <xmx:yygEaiC0N110B-coiUhIDl44yRY2foITRS_RgQFCTKX9EPjQl6T2wDR0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 May 2026 03:31:22 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b68e7e95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 13 May 2026 07:31:21 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 13 May 2026 09:31:14 +0200
-Subject: [PATCH v3 2/2] run-command: honor "gc.auto" for auto-maintenance
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AdhGXPsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E1BB3C2BCB7;
+	Wed, 13 May 2026 08:08:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778659735;
+	bh=bbMfNOcsXSiZIgD1VMa7qXLSXzdS+bvBNWvJyJ0pnLw=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=AdhGXPshkbI0HdV8wzGmmlZSmBkq3zxaZChFpmy1JzkMkf8UF7HuR1Q1SNgVELtji
+	 TfIFQCwK6V2O4MG0hTVBKr27HnWBcU9uU92JyZFklq9he/g+eZiKyZ3xu9AtIZLq3r
+	 72GIlfrOWq9XQmCCIlQfLNbgdiKkVu4QL9lGlQAqIatzllM9WttSDMFzeI4F/3yz1/
+	 3ngWIsSXdxUgd8gmKDF/8o7XCFri84jTezBrXIHmHM99IgY5zqYsannrtgJqK1WxqR
+	 f+C6ng9L/rk2N51VKCFJM4Ma/uH58SlXwb+7B+AGoQ2c+S22kFBYT6ASN0bB+/DyBE
+	 2hBOzLQBK3VKw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE63BCD4F24;
+	Wed, 13 May 2026 08:08:55 +0000 (UTC)
+From: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+Subject: [PATCH v4 0/2] includeIf: add "worktree" condition for matching
+ working tree path
+Date: Wed, 13 May 2026 16:08:16 +0800
+Message-Id: <20260513-includeif-worktree-v4-0-f8e6212d1fba@black-desk.cn>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,103 +41,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-pks-maintenance-fix-lock-with-detach-v3-2-f27a1ac82891@pks.im>
-References: <20260513-pks-maintenance-fix-lock-with-detach-v3-0-f27a1ac82891@pks.im>
-In-Reply-To: <20260513-pks-maintenance-fix-lock-with-detach-v3-0-f27a1ac82891@pks.im>
+X-B4-Tracking: v=1; b=H4sIAHAxBGoC/33NTQ6CMBCG4auQrq3pDxTqynsYF7SdSoMppsWqI
+ dzdwooY4vL9knlmQhGCg4hOxYQCJBfd4HOUhwLprvU3wM7kRowwQUpCsfP6/jTgLH4NoR8DALZ
+ aiVJWxFjVonz4CGDde0Uv19ydi+MQPuuPRJf1L5coJlgSYZSQlulantW91T02EPuj9mghE9syb
+ JdhmeECOJeqkY2p9xi+ZfguwzNDidRQ1Q1ThP8y8zx/AT0B2wRGAQAA
+X-Change-ID: 20260401-includeif-worktree-fcb64950dfba
 To: git@vger.kernel.org
-Cc: Jean-Christophe Manciot <actionmystique@gmail.com>, 
- Mikael Magnusson <mikachu@gmail.com>, Jeff King <peff@peff.net>, 
- Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+ Chen Linxuan <me@black-desk.cn>, Phillip Wood <phillip.wood@dunelm.org.uk>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2490; i=me@black-desk.cn;
+ h=from:subject:message-id;
+ bh=bbMfNOcsXSiZIgD1VMa7qXLSXzdS+bvBNWvJyJ0pnLw=;
+ b=owEBbQKS/ZANAwAKAXYe5hQ5ma6LAcsmYgBqBDF+VJdhN8laiueYnD/2/KfIFISfFLx7NsJNK
+ 33C+RNobumJAjMEAAEKAB0WIQTO1VElAk6xdvy0ZVp2HuYUOZmuiwUCagQxfgAKCRB2HuYUOZmu
+ i5EeD/42Vw2YFsOSLe20nHuFt/DsZ2w2C8mABSRY31mYO57J8uaaI26aLb0mJN2HE4a/eiVbeG/
+ KlepAi+Q/x8k93wm6MzGhMTiDvl3sYeUpv4taRK65V4JGXhtMjEFUBXxgBylrLVMiM093WY+xMz
+ bIyjyykePPeS/v52qMecDsjS6EoH3QXbmeGpt06AInBDxA2F6ccPxl4ulLMMzQ+mo7ocOKxqt71
+ gwIFLq81tsmrhNJQuy1AhIdtPcgFpX8ZRNWpzH9IZ4TxN+r/tSPRFHh6bkzuYHrvzj4CKxZ37of
+ N34CCyPUo/3MTMgJzVRa8oHLkUJ/YqMdPz4A37f6UOurYAEKxJRTb+oPF6lbTznT5f4PJgqT4Hm
+ QGlgL5amjBp34qVvzyZ3PLyGP4fSjpscSykEl3GUYrnOJT2dNHlQsvljbSn15DfTH2mCj+l9+ma
+ AecvJratCRua2uXkZSzAG53SZuXIZFYLRQ1dpY+JWwhucQ0Q6S3ZQ/LdAgdN3vkXJFcalnri/FV
+ bLtozOHK6qRo67+Loc27966xpafkXchA7qcg3/k44cOmCRznNMQAMywmzqnOwAxL432nSVRFpjg
+ YJmorDsHexh1zd2hkHQA3brQAWAGsv0uhV1VE4k4s4TepA1ssZQWIa2OpL11+qTU9J7ejlIa77i
+ pukllX0Ru/on+Yw==
+X-Developer-Key: i=me@black-desk.cn; a=openpgp;
+ fpr=D818ACDD385CAE92D4BAC01A6269794D24791D21
+X-Endpoint-Received: by B4 Relay for me@black-desk.cn/default with
+ auth_id=573
+X-Original-From: Chen Linxuan <me@black-desk.cn>
+Reply-To: me@black-desk.cn
 
-The "gc.auto" configuration has traditionally been used to turn off
-running git-gc(1) as part of our auto-maintenance. We have eventually
-switched over to git-maintenance(1) in a95ce12430 (maintenance: replace
-run_auto_gc(), 2020-09-17), and with 1942d48380 (maintenance: optionally
-skip --auto process, 2020-08-28) we have introduced "maintenance.auto"
-to control whether or not to run auto-maintenance.
+The `includeIf` mechanism already supports matching on the `.git`
+directory path (`gitdir`) and the currently checked out branch
+(`onbranch`).  But in multi-worktree setups the `.git` directory of a
+linked worktree points into the main repository's `.git/worktrees/`
+area, which makes `gitdir` patterns cumbersome when one wants to
+include config based on the working tree's checkout path instead.
 
-At that point though we still shelled out to git-gc(1) internally. So
-if "gc.auto=0" was set we would still _execute_ git-maintenance(1), but
-the command would have exited fast because git-gc(1) itself knew to
-honor the config key.
+Introduce two new condition keywords:
 
-This has recently changed though, as we have adapted the default
-maintenance strategy to not use git-gc(1) anymore. The consequence is
-that "gc.auto=0" doesn't have an effect anymore, which is a somewhat
-surprising change in behaviour for our users.
+  - `worktree:<pattern>` matches the realpath of the current worktree's
+    working directory against a glob pattern.
+  - `worktree/i:<pattern>` is the case-insensitive variant.
 
-Adapt `run_auto_maintenance()` so that it knows to also read "gc.auto",
-similar to how it also reads both "maintenance.autoDetach" and
-"gc.autoDetach".
+Supported pattern features: glob wildcards, `**/` and `/**`, `~`
+expansion, `./` relative paths, and trailing-`/` prefix matching.
+The condition never matches in a bare repository.
 
-Reported-by: Jean-Christophe Manciot <actionmystique@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Chen Linxuan <me@black-desk.cn>
 ---
- run-command.c          | 10 +++++++---
- t/t7900-maintenance.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 3 deletions(-)
+Changes in v4:
+- Deduplicate the worktree pattern documentation by referencing the
+  gitdir syntax instead of repeating the full pattern description
+  (suggested by Patrick Steinhardt).
+- Add documentation comparing includeIf "worktree:" with
+  extensions.worktreeConfig, including a concrete use case example
+  (suggested by Phillip Wood, Junio C Hamano).
+- Add a test verifying that the worktree condition does not match
+  during early config reading (suggested by Patrick Steinhardt).
+- Add tests for the non-repository (nongit) scenario (suggested by
+  Patrick Steinhardt).
+- Add a test for the case-insensitive "worktree/i" variant
+- Link to v3: https://lore.kernel.org/r/20260403-includeif-worktree-v3-0-109ce5782b03@black-desk.cn
 
-diff --git a/run-command.c b/run-command.c
-index c146a56532..28202a81d8 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1944,10 +1944,14 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
- int prepare_auto_maintenance(struct repository *r, int quiet,
- 			     struct child_process *maint)
- {
--	int enabled, auto_detach;
-+	int enabled = 1, auto_detach;
- 
--	if (!repo_config_get_bool(r, "maintenance.auto", &enabled) &&
--	    !enabled)
-+	if (repo_config_get_bool(r, "maintenance.auto", &enabled)) {
-+		int gc_threshold;
-+		if (!repo_config_get_int(r, "gc.auto", &gc_threshold))
-+			enabled = gc_threshold > 0;
-+	}
-+	if (!enabled)
- 		return 0;
- 
- 	/*
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index df0bbc1669..97c8c701bb 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -73,6 +73,31 @@ test_expect_success 'maintenance.auto config option' '
- 	test_subcommand ! git maintenance run --auto --quiet --detach <false
- '
- 
-+test_expect_success 'gc.auto config option' '
-+	GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
-+	test_subcommand git maintenance run --auto --quiet --detach <default &&
-+	GIT_TRACE2_EVENT="$(pwd)/true" \
-+		git -c gc.auto=1 commit --quiet --allow-empty -m 2 &&
-+	test_subcommand git maintenance run --auto --quiet --detach <true &&
-+	GIT_TRACE2_EVENT="$(pwd)/false" \
-+		git -c gc.auto=0 commit --quiet --allow-empty -m 3 &&
-+	test_subcommand ! git maintenance run --auto --quiet --detach <false
-+'
-+
-+test_expect_success 'maintenance.auto overrides gc.auto' '
-+	test_when_finished "rm -f trace" &&
-+
-+	test_config maintenance.auto false &&
-+	test_config gc.auto 1 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
-+	test_subcommand ! git maintenance run --auto --quiet --detach <trace &&
-+
-+	test_config maintenance.auto true &&
-+	test_config gc.auto 0 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace" git commit --quiet --allow-empty -m 1 &&
-+	test_subcommand git maintenance run --auto --quiet --detach <trace
-+'
-+
- for cfg in maintenance.autoDetach gc.autoDetach
- do
- 	test_expect_success "$cfg=true config option" '
+Changes in v3:
+- Apply Junio's suggestion.
+- Link to v2: https://lore.kernel.org/r/20260402-includeif-worktree-v2-0-36e339b898d7@black-desk.cn
 
+Changes in v2:
+
+- Add missing signed-off-by lines.
+- Link to v1: https://lore.kernel.org/r/20260401-includeif-worktree-v1-0-906db69f2c79@black-desk.cn
+
+---
+Chen Linxuan (2):
+      config: refactor include_by_gitdir() into include_by_path()
+      config: add "worktree" and "worktree/i" includeIf conditions
+
+ Documentation/config.adoc |  48 ++++++++++++++++++++
+ config.c                  |  25 +++++-----
+ t/t1305-config-include.sh | 113 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 175 insertions(+), 11 deletions(-)
+---
+base-commit: 270e10ad6dda3379ea0da7efd11e4fbf2cd7a325
+change-id: 20260401-includeif-worktree-fcb64950dfba
+
+Best regards,
 -- 
-2.54.0.709.gd731d7959a.dirty
+Chen Linxuan <me@black-desk.cn>
+
 
