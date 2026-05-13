@@ -1,65 +1,66 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55519355F5F
-	for <git@vger.kernel.org>; Wed, 13 May 2026 18:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD663A2E07
+	for <git@vger.kernel.org>; Wed, 13 May 2026 18:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778696954; cv=none; b=WkIPWDUAs8iwc8owcO5/IB4WqRLA/6Nw+7whlWgGQTSITem7x9NATHbgpkAlHwTs90n0CAQ88qxG8jr7IHYTUYlEgeq8KA1WBHS9uBvwtAgj9dmJFFYDbn3IWMdNxdNpTq4JZQhA/eN+BZyLYSlrJ7XfOKUAU4snpNX7InPXp88=
+	t=1778697343; cv=none; b=cAtU673WeXV8+SXc23pJ1vnUE05MKaTDquxM7JDKghMigYSiiHZdZjcW19YWhzOmn8qgPsONO1DK+6JNv7tr5t45VynH5r41R3PITjP8oX9RgjThIzQjslcRWW/8mcXNdNurmQ3WLcwg3Pl/6cUOKKqxQRMmrkalV6pCqj64g0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778696954; c=relaxed/simple;
-	bh=/JQ1h7o7q6M3eXTryKDaJroGCJ/GfGXzGcShflciMew=;
+	s=arc-20240116; t=1778697343; c=relaxed/simple;
+	bh=TL2zDqNYA2+TB2hDJjqDfxEm6KQjgkNILhqRDQKToos=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tqa4qgRGftfPFKKX0KTMFBjSEx/FuvLNyhCrctfsy3mya3umk+88i6yqTtXoxkuLH1pIunhI8qXieUZdB1PEhKKNL4jEGHS1meO9UWoCwrGvflEgu6/J4mC3sggRD4Od5velZjK+IcxEAXRGw5J0iuSUIdRr1hqeNKrIgEd2oCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSa2cdjL; arc=none smtp.client-ip=209.85.222.179
+	 In-Reply-To:Content-Type; b=A3xVUf5GDg05IHjApQu85V3MZ6FfHrKRwgMzNv/EJctTq5watuxD6YGFRI+8SP4xiSN57LafxfBeBK8POPD3Y+le30/k+SZdR9jKCH3j9L4mj5aBR7jK0UU3EngvmrYGlEJvL5MhGToF/jTrm2hTUViLW9/3mFmiMtY98hyL7CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R/n1DFp8; arc=none smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSa2cdjL"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-90d13fa59e8so240921585a.2
-        for <git@vger.kernel.org>; Wed, 13 May 2026 11:29:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/n1DFp8"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-6314287380bso3548840137.3
+        for <git@vger.kernel.org>; Wed, 13 May 2026 11:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778696952; x=1779301752; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778697341; x=1779302141; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=D3MPeyOvlGSGEgMrcPC/3PykkgZs7UKYngvtbENff9o=;
-        b=MSa2cdjLkUdfyiBM1cWMKD4jrC0sUZrA2DIwnnLWJzaB6eOf4jhT+N9wq2a0QGj0+r
-         LvdcEGBwtQnN5TZAql8s8mOwvD6kgr1cL5Dq0hIropDQneN3fAZFfSTuqo4C8CLEYhZa
-         k6xzcNjREtrw/3/8/1t8VcA0pbrY5zTNWsgRGXemqJK1OrkyR+Bv1wCtiBePPxZntBRv
-         XyH9s+myQcULykkISwZ0N3BtlH/ONVETMg76xgoVKe+IH9aNyDMpaegT/NlL0ldNYUtm
-         E6kCB4L9MAhhs8flb0FKXJCL2vcsvvN8T6qBdxn3r7f+JL6MoQaQgXxud4gyDWXBK8Pk
-         QcqQ==
+        bh=WiD8rQxP6FsTpbR0KM3wLWrjU0c4Sqhl+1deTTtBP5g=;
+        b=R/n1DFp8Fmw3VzVf+CZQ63C7SQIr1EpDTEGh4+0vyNV6xOwkKE0833pUKwIURIwPKt
+         m5XQtjObkYB3VHl7wwbagD31uk5G2mYkAS07bC+v020KF4hhgjFAxu+jSc8lbSKBw9Ow
+         RfnJssMuOFAXYZ8JTBfnYLCjuTCGF7TdeANPRIkO+a9YcCPp48SnjKhCM1AFIiuQJm0U
+         oX4XINLt3aETFjmxJRMsBBjJv9ineB1dA2NRFmdCfWisX/BwmT4mvXPXAEP8Q/RDeT45
+         S99hlUaA7SSR35IdEbo3BG2FxUh88Hk5n/1FzlaM/pymQx1mKUmAerX34qLXcuLOfMyV
+         xEgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778696952; x=1779301752;
+        d=1e100.net; s=20251104; t=1778697342; x=1779302142;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D3MPeyOvlGSGEgMrcPC/3PykkgZs7UKYngvtbENff9o=;
-        b=GG6LRNWfhnu9vf5VBUlNSHIlzRqnHNNh90HMjkiX+TwtjnJMHiVpY+uOGnoNrIui1X
-         HFMgX/lKIRSWKm/lp3A+kffeLun2j0PpBIZvzcE172bCI9GL69A1VHrVbFQuNFtjwcvT
-         QcFfZ2buTlu4wtmFy4jP6BxkZuVcqYYOzHLgBd59Zfqbs+FsAh3d+EenpcKjMQrtKRYj
-         bdEcTFw3dPT7WqpMqIZcOux0YmKw5JthJ+RHSAkLVx/AfOLpUwEBpu2xHv1g4kY9Nvvm
-         b4EWeAUbCwCU+61PDd73jCBZJqcucR60yburJ/PPqOzMzfGmGzPMqm0lqFrt6aIWdPy6
-         E31Q==
-X-Gm-Message-State: AOJu0Yy7KYPt0myZOIFsL67IGn5+3SYvMs+izdUdf9dBTjgaO5x3pS6D
-	HVcb3GoIsFk2YHqhuiomvsqrNYnarrr+fO6k7jhbPeABS3PcmL7vj3pr
-X-Gm-Gg: Acq92OFYm8mXLYP2X5Rl8sxc3TTmWQ0rMLsFzS8P+pgZ5VWt8dqBfLHoSMsi6tsbzjn
-	KrkBMptO3Q+wPixb2bKk/Z5frAdfeXHUhu0StGphrEPhBC99UJyjPoQWdzbFTwZ7dfAM5Hi192o
-	u9arH1PfB4g3p0/6Upm+bxuOUW3L2w+fKZ4+ksEJfCW3OMjSzwr75Ud7+dcjkdXf+gE+CRN73vH
-	s415tBJN4PZ8JVBpuJxj0APJuck0T06Iw9xSTq9X9zdLsmft7ymvqp88g/MqQktnvSfHY/8jEWN
-	Kn1Kgb6kxbb+bUeZ2SPezfSAe9jFyPYd13n60rZhXRl6kLpTo+ymQGIhtHmHQSiigf6xPFR3syh
-	7mTZJ4sqqT7vuihIzhNS9eu6J2MLoXM2kcFceMCZ1SsAuLK1Q5p/uxuI6p35sjQtFiRBMpRLfc3
-	3IZvYb98o/Aky9BdezjeTg4dA5lZcXzMzM3KwX5h8cdQFfgVn36HqHu1yzoK3BIZ7w9V/m+w==
-X-Received: by 2002:a05:620a:4403:b0:8ee:18e7:941f with SMTP id af79cd13be357-90f8a16312amr660959585a.40.1778696952244;
-        Wed, 13 May 2026 11:29:12 -0700 (PDT)
+        bh=WiD8rQxP6FsTpbR0KM3wLWrjU0c4Sqhl+1deTTtBP5g=;
+        b=XMdM2BK3pCkdkVezt42PitQ4cCty/EnSCfdJaSQhz+64AtyFJlMZ7oMwzyuxnrOgh4
+         v5VQc0RZ/9cvPeP4vPkbn0PBcsViXLoafS3Cy1vuGfX0e5s4PnPZZogPHozVfCCkFIB4
+         femeMpoWZQX/MabX84H8gOxaVRRiJGbV7ET35C0qD63ljiUUEvpKYCZjPlnr0la5HvyD
+         ol6yJaeV4FHBpAjp1Oq4EUvA5s0x8so20a3kJiVWZ3BuGDqs99cQ8p2wnZmbML/bH9Fh
+         POOUEC8HIx2TALTfCc+etco5NkCYEkh3a1Df/O/HPBQMGZ5cBeXcaV/A3lnkUYCCBfdS
+         2tcw==
+X-Gm-Message-State: AOJu0YzPHnVWbsEfIeiAvxe5Npbi69Ma5M5rr3i1syyuOgl1AdGY056N
+	cYZ9RpltEdN9wtcSRCeDWMR1VZXRbXtxm/qn4sKqVccT1KJPhLjd9x84
+X-Gm-Gg: Acq92OG2hUpKBmG83hPxZz6/ghV46QC+O8+SmJ7bAXIHBmwS1T9pv4iID8DatRT5HF+
+	SYwV9qz2vKY6CO3Sf+LLiHUm5XqrHB242p8Cw2+WpMXTeFZyZnzVoaS0DVPumL3hrA9T7KSKOs5
+	MchP64bH84Ou3aHuiEqR5Q2f+jJ2tQeN3ZNuY/lF5KwuheU+MRKqXRBs3NSNngRH4Zb86/KC6Wx
+	K3wW/IkzzX4syY0ioqsdpmVLl1PGlZVUcYZDw5qtr6aqHsWUYG69DK8vBDm0OOhGlrR5oGtzlQi
+	uvrh3+y3BogR9XqL0JM8fLin4WV3aEThuSzI+2Xusq+IspTPjOldvdk9xjMndSFiFaSeN6nqn8Q
+	TmxI+sigTbzjpDuozn20ubEGwEd/grk0ecnxZe2c3Qbp+r6oYL4CCdumvlA9GUu/WoF6TAZtZuG
+	eJ9b3wbtNgepFwjfAkb9szBareO40OaAQMCd7OgzSpfiWW/9aJEqbSaCGjaigPxwpLzuQShjDrU
+	cD4HB4G
+X-Received: by 2002:a05:6102:2927:b0:62f:31d9:7bf with SMTP id ada2fe7eead31-637754eace2mr2890990137.17.1778697341660;
+        Wed, 13 May 2026 11:35:41 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90b2dc41fsm2824496d6.25.2026.05.13.11.29.11
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-63140216a98sm10662566137.8.2026.05.13.11.35.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2026 11:29:11 -0700 (PDT)
-Message-ID: <b7465fa5-48c9-4c94-b886-0055f0696371@gmail.com>
-Date: Wed, 13 May 2026 14:29:11 -0400
+        Wed, 13 May 2026 11:35:41 -0700 (PDT)
+Message-ID: <130ecbf0-7456-48da-ac20-d5364a1b5577@gmail.com>
+Date: Wed, 13 May 2026 14:35:40 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,8 +68,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/12] path-walk: always emit directly-requested
- objects
+Subject: Re: [PATCH v3 07/12] path-walk: support blob size limit filter
 To: Taylor Blau <me@ttaylorr.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -76,63 +76,46 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
  kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net, ps@pks.im
 References: <pull.2101.v2.git.1777926079.gitgitgadget@gmail.com>
  <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
- <50933cccf508f71f47d955d5aceacad0db612fc5.1778523189.git.gitgitgadget@gmail.com>
- <agKBJJvBP/PndPMP@nand.local>
+ <a1ab70405d6209a11b2eb752c154361060f1675d.1778523189.git.gitgitgadget@gmail.com>
+ <agKDbUoZeiux3jdj@nand.local>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <agKBJJvBP/PndPMP@nand.local>
+In-Reply-To: <agKDbUoZeiux3jdj@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5/11/2026 9:23 PM, Taylor Blau wrote:
-> On Mon, May 11, 2026 at 06:13:01PM +0000, Derrick Stolee via GitGitGadget wrote:
->> We can tell that a path is part of the directly-referenced objects if its
->> path name starts with '/' (other paths, including root trees never have this
->> starting character). Create a path_is_for_direct_objects() to make this
->> meaning clear, especially as we add more references in the future as we
->> integrate the path-walk API with partial clone filter options.
+On 5/11/2026 9:33 PM, Taylor Blau wrote:
+> On Mon, May 11, 2026 at 06:13:04PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> [...] Blobs whose size cannot be determined (e.g. missing in a partial
+>> clone) are conservatively included, matching the existing filter
+>> behavior.
 > 
-> I don't know that I have anything in the way of a better suggestion, but
-> I can't help but feel like the `path_is_for_direct_objects()` check is
-> somewhat brittle as-is.
+> Makes sense, but...
 > 
-> I am not familiar enough with the path-walk.c internals to come up with
-> a good suggestion off the top of my head, but I figured I'd raise it
-> here in case you had thoughts on alternatives.
-
-The brittle-ness is due to how trees and blobs without known paths are
-added to sets that are emitted using distinct paths. The starting '/'
-character does prevent the "/tagged-blobs" and "/tagged-trees" sets
-from ever colliding with valid paths that were discovered starting from
-root trees (with path "").
-
-I could imagine a world where we store a more robust struct that has a
-flag member to indicate that these objects were not discovered via
-normal tree walking. Changing that could lead to this method not doing
-what we expect it to do. But we are not in that future.
-
->> diff --git a/path-walk.c b/path-walk.c
->> index 6e426af433..59a7670c5b 100644
->> --- a/path-walk.c
->> +++ b/path-walk.c
->> @@ -248,6 +248,16 @@ static int add_tree_entries(struct path_walk_context *ctx,
->>  	return 0;
->>  }
->>
->> +/*
->> + * Paths starting with '/' (e.g., "/tags", "/tagged-blobs") hold objects that
->> + * were directly requested by 'pending' objects rather than discovered during
->> + * tree traversal.
->> + */
->> +static int path_is_for_direct_objects(const char *path)
->> +{
->> +	return path[0] == '/';
+>> Notice that this inspection of object sizes requires the content to be
+>> present in the repository. The odb_read_object_info() call will download
+>> a missing blob on-demand.
 > 
-> If we do end up keeping this approach, should we have a NULL check on
-> path itself here? I think that could even be an ASSERT(), since
-> something has gone wrong if we have a NULL at this point, but I'd rather
-> die by an assertion rather than a segfault here if so.
-The ASSERT() is a good idea to prevent incorrect use.
+> ... this says that we do download missing blobs on-demand. Should we be
+> (temporarily) disabling 'fetch_if_missing' for this phase, or using
+> odb_read_object_info_extended() with the OBJECT_INFO_SKIP_FETCH_OBJECT
+> bit set?
+
+I don't know that we'd want to set this everywhere. The case that is
+technically correct, but probably not ideal, is someone running 'git
+pack-objects --filter=blob:<size>' from a blobless partial clone. They
+are asking for something inefficient to create, but we _can_ still
+create it. 
+> I don't know enough about 'git backfill' to know whether the current
+> behavior is more reasonable than the above suggestion, so please let me
+> know if I'm missing something here!
+For 'git backfill', a size limit filter doesn't make sense as it's all
+about the client making decisions about how to download batches of
+objects based on the local tree data. Filtering on size isn't something
+that the client can infer in advance of downloading everything. Further,
+the direct blob requests to the server can't be filtered by size, by
+design.
 
 Thanks,
 -Stolee
+
