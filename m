@@ -1,69 +1,70 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706F33AC0F0
-	for <git@vger.kernel.org>; Wed, 13 May 2026 19:34:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0053B774A
+	for <git@vger.kernel.org>; Wed, 13 May 2026 19:34:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778700889; cv=none; b=u4MbDuHO/nxtf9LbkaqYtp+Y3r177xHjtGIxvJxeSEC2uYNV8pa0IT2PhIcIUKZBYgWkn/HtSUjwKDBJLKlGu7b2wqTnRX9aGqgTiK8QzAzUsBSBlBacdBQzae29FsS9NOQmxDHHdPF0QBlDlu/7Z+N5G31OV6d/G7me2b+2kYY=
+	t=1778700889; cv=none; b=C2/KLkfulLS/4NgtFylablybJtYmzdQ3xHQ0mPiiaOubpB0T5OhOMWSYuU/e2xjuUopkuXcLT7iHDz8HmitWkUSadSDAYne81gioIqdK2d6qBcOhZ+/WAIqtPNSBVOdvseDw2nahw9Ac33nnuYzR2GaGBMXTXs54bD76mbPQ4YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778700889; c=relaxed/simple;
-	bh=bsPBW2zprvMLkpNQwV1GE8hy6SGkdwl4MIdRfEaITpY=;
+	bh=yT+o62yAXT/D84VrkzQ9c5MAKAq4vhT81AvBDf2HMeI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OGyrHg4KnLg/5WnEAkxL5RxcetFupch1DEfbjzYsP7S550PaZP2qw9DotR1msSpCqCRiRL5hfUa9Bv4HC7NaDUbZQqdMNHUN2r4TG3rsKoEXmf6CxU12NT8X0GLTGiTPxnl2Gmb4PdO4uKYZ8lI1RHB99Y2lkVAKfdToHmwXj9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O9IuerWA; arc=none smtp.client-ip=209.85.219.51
+	 MIME-Version:To:Cc; b=XIFsHXfiwYOoPx5ri2cruljWSsKkgRNdn2taihTyZI+ltUOT8CZc4cYEQPWGMgHp22kVgBSLH3EWAGWE7dTjE7cBxrPMAch2d70J6Mju3RdHPpAmUdldFPTGVyOsBHVFgWd2x3GJOXOXiw5jWYARRwRDC7ciaEHHAhsj96nGHCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=igHEsstB; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O9IuerWA"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-8c921396e37so1070446d6.2
-        for <git@vger.kernel.org>; Wed, 13 May 2026 12:34:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igHEsstB"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-90eb7a63a30so136863285a.2
+        for <git@vger.kernel.org>; Wed, 13 May 2026 12:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778700886; x=1779305686; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778700887; x=1779305687; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X5btTfE1nEFMRlfaUQ7E/YIBxw2kjfzyMERY7EtkcRA=;
-        b=O9IuerWA67ck1TkGmSxN7/vex0EwZf/y67TGmr8XqfO+PDKgPTebVlbyY6JEQxW5mi
-         n/U5xxjytkhuriXhsNnxGIf4x03/ebibNyqCflB4abcbJ7ri/rVwCqgvp+swaCLllAxB
-         oNF3/B46nw1S45J+SXGBKfCfw9NUvOydmiiHRT5MI/3Fz4xIKKyrGDM/Wa2sSK/0F70A
-         c/NBGF35r3hWlKatE16K29h3DKzLtr575WL52YM5BRNogRH5f5m10itvo5DKtnYwtnG0
-         7JvFYbRugplthSbPjWtdHqvUSGMBOwOSv9ipwZx2iSaFJYWk7AM+KotxCq9D78Sfh+/y
-         cqKA==
+        bh=Yeg66v6kvOfuzDGUnbddN5gBrn3lQF4J1+DDnlwVl0A=;
+        b=igHEsstBghSs6v4/ileC2E9ASQ84Ujyumnx2a+9IuEb95mymdA5WnZHipJ4TRkMhxf
+         87JTxu3cEgQpNL4m0RLaemRVg5hsJKCU/RUTLgD21znALsFqVVfSRFXU383jiJswwJD7
+         O9UnwQY0WmiIHPqAqhgZZTYRJCoQXnjZ/qElrrOr/BL1OtC5Wv0UNrgDQHjiZ7AGCGun
+         Jqxw1DeUW9R7Jdv/d6Qa1SMspex7pqzvk12KgSnl7Kco04X2RN8apurUFgW4xM73Dair
+         y1R7y9r3xng6mnA58tC1DY+f5HE04To37/2TqstgYglQgo+Jer8UcmOcGfBmC3Re+Rj5
+         lmUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778700886; x=1779305686;
+        d=1e100.net; s=20251104; t=1778700887; x=1779305687;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=X5btTfE1nEFMRlfaUQ7E/YIBxw2kjfzyMERY7EtkcRA=;
-        b=kzj2W7EsHebCC4pzXUO56G7z1CQpOCs9dQDvbdfc9RZEdDyWeZyPN/JN43UcmkUGQV
-         d4LNMvCU/T4SQNdXfAA6ZA/QFB25FpOcb7Rf7Tbu2NiDYx4SzHiz1YRUlY+HnCP931KO
-         C2H7UUKYQ1azCb9KWRrV34cIFOYFM8RCxyk8OKt0HVHn6VxnY2OG4pp13XjAQa6Pf99S
-         oCaGGMjxzvfPXdf6fJHE6MuvavwUvFtxVK0Nl+ozoFKNhXQhygsCbbSnQNYih7eFQffv
-         UdkYTJS9yxN9eToixuV5RvIqBBJw9IGpVzcg7W4QK2Ihn3co69ezEi5dyhq+961Cu5NS
-         fZIA==
-X-Gm-Message-State: AOJu0Yyne2j5ToNiU/GEd0b9hHSwvv+wry5s7hfNzfO/xHC8uYLcCavv
-	V8OSMyxf/7fPPGXPelLHsxMGaXHcOb2nG27wKWyLW71Rg+qbfLycnBelQ7RV/g==
-X-Gm-Gg: Acq92OHmWAzmD8BOpIkpzcgXwY6cAhzEAOnQPR82Z7G1BgC0YU307HWAZ5GHazwDUMV
-	347xodtUKfBG+zW9AUA+Dye6I3LkIRFKi+wVRPikwMBh/5qi1eV2vd5z5VWB/02MRwc4hgJhWhP
-	3ggrmnaW2zUBanKVQaM2lNlYdNHjo5pMLukQKCf+lYFjRlDuF3wfOjFthKFayI1DuJJaARxVNZQ
-	49uTqkvGnfRlpQ+WLzXt7q6b/UiXCO64/y0T8oPohXT0nu1KW37cl74lOF39ohqY2N1OJIU2Jh6
-	5jPg+jJjMaWgMSGYD3KdLqdWsxIQmFo8dKFFys3/d7s0E3iqEibekbKlNYZXKM0nHERyDPVl1Ma
-	nvv/ZlqRGEfDW7tWKBwbIMkiXtZNcoIZHLo3ZWY5a+hXzTR9jH7eSlGR1syvfv+SQCY0HK8XlKh
-	G/T8h9iUI4pbdRPeHKxZEArFC7
-X-Received: by 2002:a05:6214:2f90:b0:8ac:b4b3:3ce2 with SMTP id 6a1803df08f44-8c7bccf8ef3mr76353936d6.41.1778700885542;
-        Wed, 13 May 2026 12:34:45 -0700 (PDT)
+        bh=Yeg66v6kvOfuzDGUnbddN5gBrn3lQF4J1+DDnlwVl0A=;
+        b=mjysZyVT6VeqmTt4ksGCkCwUd5vVvOR+OFYeKvSrPEPDQQ9kkV4P/PjR4arMrZHaUB
+         H1o3PX/qc+4J+IptZEPZvZo/q+yKhxTjLu3SsMpym4gjZqCXU+y6fyFaULhwLJ+tlN+e
+         J2T6Wy3pRkoFr4nKqH1mwLSuuAaBzYjTTFmty6d55zM7WpW6GCAhdIlEzpSRrq5xlSP0
+         OtoQiAjZM+fAOqpomWshjqCghicGFIudf9+buzNpmSIfynU4UyQVJt9GaHk5U8xX1GzS
+         OF5m2BMqwYW+hZm94DC7MVcsy25Uqqj9CXHIr2k3uIPllYPzdDR4gL9m8lszRtsr6ChQ
+         UDtw==
+X-Gm-Message-State: AOJu0YzGbgz7tiXQS1ZQzs9tALWPz2lERkgB4Xw+b2iGakdFuZ/LgqSg
+	uocsPmN2rbpKAmn3N/dGVMP6jnad/efv0elqAXBqKGQpadKFyT/wadFeue0vXA==
+X-Gm-Gg: Acq92OFt3GRcSVSihoaNO0Ue1fNyq3EfW7XSDdFXCP6EhkswcotpidsFRYIsyWr/UjQ
+	wsm/NPqOTqATt3vaZF97GnECx9VpH1GqvpB1kYLvafFz2dqUfSrEtHnRevH5G9AF8tKq7R06/j/
+	u4pySZbr1BU+WPKI+n4yLwy0Juey+pd3+oztdlLUisiPYuL0H0QF0a7IVxGVCQx/8TOzopYbsgv
+	BHCeYPC5DQ+gQmGUehPKRVUmI6RIL2OstqIOL6HVWWCalnxrKJNCjFWil+UMpGVv4TIRnpZcdh5
+	23iTDwS+586h6Gt52V+bue0U1NPZDW6p30HeHQkqzi0tEjl10IlhL+uIxRcxepBSwA47J3gyFQw
+	6/rLcGSV+Fi1iAnbLlGIIujK+btGxz7KTQb9a7agmzbBEfB7N+iYw4rqJAbfhOz2WhKSZTGB3uv
+	duFOn4co+JYq9RLtdBDP8U1A37UgIrd5BifTg=
+X-Received: by 2002:a05:620a:4694:b0:8ec:c4a7:f8fc with SMTP id af79cd13be357-90fad96747amr662493485a.43.1778700886690;
+        Wed, 13 May 2026 12:34:46 -0700 (PDT)
 Received: from [127.0.0.1] ([48.214.54.54])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90b2db84asm4145346d6.29.2026.05.13.12.34.44
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-910ba943761sm46264785a.11.2026.05.13.12.34.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 12:34:44 -0700 (PDT)
-Message-Id: <9324b26091920502026cf330ca4d84b957c1c16c.1778700883.git.gitgitgadget@gmail.com>
+        Wed, 13 May 2026 12:34:46 -0700 (PDT)
+Message-Id: <2a13e5d4bcd9a1cec616ef85f4f407d211669078.1778700883.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
 References: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
 	<pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 13 May 2026 19:34:39 +0000
-Subject: [PATCH v9 1/5] branch: add --forked <remote>
+Date: Wed, 13 May 2026 19:34:40 +0000
+Subject: [PATCH v9 2/5] branch: let delete_branches warn instead of error on
+ bulk refusal
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,278 +82,95 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-List local branches whose configured upstream falls within any of
-the given <remote> arguments. <remote> may be either a configured
-remote name (matching all of its remote-tracking branches) or a
-single remote-tracking branch. Multiple <remote> arguments are
-unioned.
+Add two new parameters to delete_branches() and the helper
+check_branch_commit():
 
-This is the building block for --prune-merged, which deletes the
-listed branches.
+* warn_only switches the per-branch refusal from a hard error
+  ("error: the branch 'X' is not fully merged" plus a four-line
+  hint about 'git branch -D X') to a one-line warning, and
+  causes the function to skip those branches without setting its
+  exit code. Each refused branch is still skipped from deletion.
+* n_not_merged, when non-NULL, is incremented for each branch
+  refused on the not-merged path, so a bulk caller can summarize
+  rather than print per-branch advice.
+
+All existing call sites pass 0 / NULL and so are unaffected. Both
+parameters are wired up so a bulk-deletion caller can suppress
+the noise normally appropriate for a one-shot 'git branch -d'.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- Documentation/git-branch.adoc |  12 ++++
- builtin/branch.c              | 110 +++++++++++++++++++++++++++++++++-
- t/t3200-branch.sh             |  54 +++++++++++++++++
- 3 files changed, 174 insertions(+), 2 deletions(-)
+ builtin/branch.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index c0afddc424..5773104cd3 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -24,6 +24,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
- git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] <branch-name>...
- git branch --edit-description [<branch-name>]
-+git branch --forked <remote>...
- 
- DESCRIPTION
- -----------
-@@ -199,6 +200,17 @@ This option is only applicable in non-verbose mode.
- 	Print the name of the current branch. In detached `HEAD` state,
- 	nothing is printed.
- 
-+`--forked`::
-+	List local branches that fork from any of the given _<remote>_
-+	arguments, that is, those whose configured upstream
-+	(`branch.<name>.merge`) is one of those remotes' remote-tracking
-+	branches.
-++
-+Each _<remote>_ may be either the name of a configured remote
-+(e.g. `origin`, meaning any branch tracking a
-+`refs/remotes/origin/*` ref) or a specific remote-tracking branch
-+(e.g. `origin/master`). Multiple _<remote>_ arguments are unioned.
-+
- `-v`::
- `-vv`::
- `--verbose`::
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 1572a4f9ef..b3289a8875 100644
+index b3289a8875..1941f8a9ad 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -38,6 +38,7 @@ static const char * const builtin_branch_usage[] = {
- 	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
- 	N_("git branch [<options>] [-r | -a] [--points-at]"),
- 	N_("git branch [<options>] [-r | -a] [--format]"),
-+	N_("git branch [<options>] --forked <remote>..."),
- 	NULL
- };
+@@ -192,7 +192,8 @@ static int branch_merged(int kind, const char *name,
  
-@@ -673,6 +674,105 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	free_worktrees(worktrees);
+ static int check_branch_commit(const char *branchname, const char *refname,
+ 			       const struct object_id *oid, struct commit *head_rev,
+-			       int kinds, int force)
++			       int kinds, int force, int warn_only,
++			       int *n_not_merged)
+ {
+ 	struct commit *rev = lookup_commit_reference(the_repository, oid);
+ 	if (!force && !rev) {
+@@ -200,10 +201,18 @@ static int check_branch_commit(const char *branchname, const char *refname,
+ 		return -1;
+ 	}
+ 	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
+-		error(_("the branch '%s' is not fully merged"), branchname);
+-		advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
+-				  _("If you are sure you want to delete it, "
+-				  "run 'git branch -D %s'"), branchname);
++		if (warn_only) {
++			warning(_("the branch '%s' is not fully merged"),
++				branchname);
++		} else {
++			error(_("the branch '%s' is not fully merged"),
++			      branchname);
++			advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
++					  _("If you are sure you want to delete it, "
++					  "run 'git branch -D %s'"), branchname);
++		}
++		if (n_not_merged)
++			(*n_not_merged)++;
+ 		return -1;
+ 	}
+ 	return 0;
+@@ -219,7 +228,7 @@ static void delete_branch_config(const char *branchname)
  }
  
-+static void parse_forked_args(int argc, const char **argv,
-+			      struct string_list *remote_names,
-+			      struct string_list *tracking_refs)
-+{
-+	int i;
-+
-+	for (i = 0; i < argc; i++) {
-+		const char *arg = argv[i];
-+		struct remote *remote;
-+		struct object_id oid;
-+		char *full_ref = NULL;
-+
-+		remote = remote_get(arg);
-+		if (remote && remote_is_configured(remote, 0)) {
-+			string_list_insert(remote_names, remote->name);
-+			continue;
-+		}
-+
-+		if (repo_dwim_ref(the_repository, arg, strlen(arg), &oid,
-+				  &full_ref, 0) == 1 &&
-+		    starts_with(full_ref, "refs/remotes/")) {
-+			string_list_insert(tracking_refs, full_ref);
-+			free(full_ref);
-+			continue;
-+		}
-+		free(full_ref);
-+
-+		die(_("'%s' is neither a configured remote nor a "
-+		      "remote-tracking branch"), arg);
-+	}
-+}
-+
-+static int branch_is_forked(const char *short_name,
-+			    const struct string_list *remote_names,
-+			    const struct string_list *tracking_refs)
-+{
-+	struct branch *branch = branch_get(short_name);
-+	const char *upstream;
-+
-+	if (!branch || !branch->remote_name)
-+		return 0;
-+
-+	if (string_list_has_string(remote_names, branch->remote_name))
-+		return 1;
-+
-+	upstream = branch_get_upstream(branch, NULL);
-+	if (upstream && string_list_has_string(tracking_refs, upstream))
-+		return 1;
-+
-+	return 0;
-+}
-+
-+struct forked_cb {
-+	const struct string_list *remote_names;
-+	const struct string_list *tracking_refs;
-+	struct string_list *out;
-+};
-+
-+static int collect_forked_branch(const struct reference *ref, void *cb_data)
-+{
-+	struct forked_cb *cb = cb_data;
-+
-+	if (ref->flags & REF_ISSYMREF)
-+		return 0;
-+	if (branch_is_forked(ref->name, cb->remote_names, cb->tracking_refs))
-+		string_list_append(cb->out, ref->name);
-+	return 0;
-+}
-+
-+static int list_forked_branches(int argc, const char **argv)
-+{
-+	struct string_list remote_names = STRING_LIST_INIT_NODUP;
-+	struct string_list tracking_refs = STRING_LIST_INIT_DUP;
-+	struct string_list out = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item;
-+	struct forked_cb cb = {
-+		.remote_names = &remote_names,
-+		.tracking_refs = &tracking_refs,
-+		.out = &out,
-+	};
-+
-+	if (!argc)
-+		die(_("--forked requires at least one <remote>"));
-+
-+	parse_forked_args(argc, argv, &remote_names, &tracking_refs);
-+
-+	refs_for_each_branch_ref(get_main_ref_store(the_repository),
-+				 collect_forked_branch, &cb);
-+
-+	string_list_sort(&out);
-+	for_each_string_list_item(item, &out)
-+		puts(item->string);
-+
-+	string_list_clear(&remote_names, 0);
-+	string_list_clear(&tracking_refs, 0);
-+	string_list_clear(&out, 0);
-+	return 0;
-+}
-+
- static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ static int delete_branches(int argc, const char **argv, int force, int kinds,
+-			   int quiet)
++			   int quiet, int warn_only, int *n_not_merged)
+ {
+ 	struct commit *head_rev = NULL;
+ 	struct object_id oid;
+@@ -309,8 +318,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
  
- static int edit_branch_description(const char *branch_name)
-@@ -714,6 +814,7 @@ int cmd_branch(int argc,
- 	/* possible actions */
- 	int delete = 0, rename = 0, copy = 0, list = 0,
- 	    unset_upstream = 0, show_current = 0, edit_description = 0;
-+	int forked = 0;
- 	const char *new_upstream = NULL;
- 	int noncreate_actions = 0;
- 	/* possible options */
-@@ -767,6 +868,8 @@ int cmd_branch(int argc,
- 		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
- 		OPT_BOOL(0, "edit-description", &edit_description,
- 			 N_("edit the description for the branch")),
-+		OPT_BOOL(0, "forked", &forked,
-+			N_("list local branches forked from the given <remote>s")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
-@@ -811,7 +914,7 @@ int cmd_branch(int argc,
- 			     0);
+ 		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+ 		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+-					force)) {
+-			ret = 1;
++					force, warn_only, n_not_merged)) {
++			if (!warn_only)
++				ret = 1;
+ 			goto next;
+ 		}
  
- 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
--	    !show_current && !unset_upstream && argc == 0)
-+	    !show_current && !unset_upstream && !forked && argc == 0)
- 		list = 1;
- 
- 	if (filter.with_commit || filter.no_commit ||
-@@ -820,7 +923,7 @@ int cmd_branch(int argc,
- 
- 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
- 			    !!show_current + !!list + !!edit_description +
--			    !!unset_upstream;
-+			    !!unset_upstream + !!forked;
- 	if (noncreate_actions > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
-@@ -860,6 +963,9 @@ int cmd_branch(int argc,
+@@ -961,7 +971,8 @@ int cmd_branch(int argc,
+ 	if (delete) {
+ 		if (!argc)
  			die(_("branch name required"));
- 		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+-		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
++		ret = delete_branches(argc, argv, delete > 1, filter.kind,
++				      quiet, 0, NULL);
  		goto out;
-+	} else if (forked) {
-+		ret = list_forked_branches(argc, argv);
-+		goto out;
- 	} else if (show_current) {
- 		print_current_branch_name();
- 		ret = 0;
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index e7829c2c4b..24a3ec44ee 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1717,4 +1717,58 @@ test_expect_success 'errors if given a bad branch name' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--forked: setup' '
-+	test_create_repo forked-upstream &&
-+	test_commit -C forked-upstream base &&
-+	git -C forked-upstream branch one base &&
-+	git -C forked-upstream branch two base &&
-+
-+	test_create_repo forked-other &&
-+	test_commit -C forked-other other-base &&
-+	git -C forked-other branch foreign other-base &&
-+
-+	git clone forked-upstream forked &&
-+	git -C forked remote add other ../forked-other &&
-+	git -C forked fetch other &&
-+	git -C forked branch --track local-one origin/one &&
-+	git -C forked branch --track local-two origin/two &&
-+	git -C forked branch --track local-foreign other/foreign &&
-+	git -C forked branch detached
-+'
-+
-+test_expect_success '--forked <remote-name> lists branches tracking that remote' '
-+	git -C forked branch --forked origin >actual &&
-+	cat >expect <<-\EOF &&
-+	local-one
-+	local-two
-+	main
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked <remote-tracking-branch> lists only matching branches' '
-+	git -C forked branch --forked origin/one >actual &&
-+	echo local-one >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked unions multiple <remote> arguments' '
-+	git -C forked branch --forked origin/one other >actual &&
-+	cat >expect <<-\EOF &&
-+	local-foreign
-+	local-one
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--forked rejects unknown remote/ref' '
-+	test_must_fail git -C forked branch --forked nope 2>err &&
-+	test_grep "neither a configured remote nor a remote-tracking branch" err
-+'
-+
-+test_expect_success '--forked requires at least one <remote>' '
-+	test_must_fail git -C forked branch --forked 2>err &&
-+	test_grep "at least one <remote>" err
-+'
-+
- test_done
+ 	} else if (forked) {
+ 		ret = list_forked_branches(argc, argv);
 -- 
 gitgitgadget
 
