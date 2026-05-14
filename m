@@ -1,106 +1,281 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E022E542C
-	for <git@vger.kernel.org>; Thu, 14 May 2026 17:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0686A239562
+	for <git@vger.kernel.org>; Thu, 14 May 2026 17:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778780521; cv=pass; b=qjPb0lRkXdjCdSnP7i8BW3TS+IzOS1CBMlg4gNzaaba5X3PDY4Mje+yyADw0mK5xSkjngIKgS4RNFTGjsei2ar41ZWOzcVqXCCy65yQ5s7c+8ergNqL8l4eqWrwMQA1iyvVJlI20RHHx4Yt72qUNceyjM8C2q75OHkR5Fwaq/Ts=
+	t=1778780749; cv=pass; b=C7exCw3/opm7PQCK+UVPxDXjXQW2I6HtyR9JcSuQttsY52QOhKRlfnM+vtQYdQe43Nmm4NsLvH1hx9x53d3nxCDXUsQqS2jdl1vsN0jumaR2Mjw5TvuzgHiUE38nEK4ggwf/EJhB4GpTU83AvJsYa/grBviOLN25Um0D35vQ/I8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778780521; c=relaxed/simple;
-	bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
+	s=arc-20240116; t=1778780749; c=relaxed/simple;
+	bh=ToAkUBxRB+iW5zEKO04oEJeuLfUO2WN4k+dhN/+McS0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lFygJO89uI6WJjk8Zln+AEOT1CLRvrkgxXzvvovNQitAHecrosOI0b938Q+3x/o5GthF/UomMCO3PzZIjgbt9OmC70iPFmZwcyLX6l2DcqcjoP5sh1QrPsqtnRQmK5hahK4VA1DhkzVKZUNKDcPt7scKXa5r+j+x38k+m6ARFe0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NXJGoY7s; arc=pass smtp.client-ip=74.125.224.53
+	 To:Cc:Content-Type; b=P9vmr6tBvAa0d05G+Nq9XHN0Q2PpIM8m9LzHQiSLX0S4zJjkkeokYhcr2vMWooY1Xwsh5rdfB7dtk5McqG+ucDPdtSMH49KHZfxTIFG3YiS+vsHu70tSNUUt6g5RHe6MGMHRbphbCWo5ukBcpnAsYyXKUz1RKRxSXtOEVfQn1lQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A0OpEl4u; arc=pass smtp.client-ip=74.125.224.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NXJGoY7s"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-65c7492a2ceso8973633d50.3
-        for <git@vger.kernel.org>; Thu, 14 May 2026 10:42:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778780519; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A0OpEl4u"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-65dd9b25829so4738126d50.3
+        for <git@vger.kernel.org>; Thu, 14 May 2026 10:45:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778780747; cv=none;
         d=google.com; s=arc-20240605;
-        b=Sp8VEV2H/32qe4jMSfuohmt8FeFlzr6P55bT25yp3wUgCD/EM0ag+qyagSqGaKyVWg
-         rd7W/A84zjIDoTHN5Hl6kMEbcEWcTASt+n6nYNOrNIjbAY46a0ziGvMJSU25WZgTm6kG
-         EHCVk1yVdr7wOLiT1mFld40ZLqpFOr/3ebVYZ1v8cIDY7UDNo8vmaNHd/8MGD2cJSmA5
-         hQX23bbbGNoAMxizu76/02+3dJoUKlmO38aVN18tWr+twsgINMqUb6YubGjENdOATRmj
-         Ay2hljkfSOXJZ+lAojshrtroleDnpiy3YNCQukGpDWqLYh1VulKL8maHxxNWnfYBV1L5
-         2b9A==
+        b=goOyp4EXwzR0S6etBLp+OpYYYCLK31U6u7upu6O0+qXIt3ynpj2VeeSwJ/6ugZyk3W
+         Txrj1Xj5mO2pvjLMWFsJPPp/7wZD0XEhEJ5jIKyFmW4hC7eMJEA2HScgq88byObo5ivL
+         vJ78LuY2hbiiLVmc7nqr+uc4+E7QGqHeVc/HeTT+MASw3vlfrttkCqclE261r3gIDDAM
+         3iHrr6KOgwkO1hYaC7Il+8DZ4oZ6PY8IT/wigcbN4IGfmFBC8ExuKe5EMODsvP/96Aoa
+         /9mtSZY1XJeyk//DLrvEf+0yk512JB1mfq8UKK5Uu+0J0PiQ7uBKqwByziLA7xeBHLyO
+         zoqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=ENqUIU5UWYYWXTx9Nu1oG3/gq7NsCugfs6gfdts0lovhe86tki1A+VrvaVxWhL7yb8
-         nNmAIKrrJXbVpl17cze/Xpkv8hSIrPKm5Wj2plAcFWCdUXx8eSvsYnZ5lV6RUbrbwke4
-         MbxGjYgHbdi3inYJJDTzY725RCNrIRJPe+mmIN99cayNL1m3TKlrntg4/ZCVzIa+kr6d
-         mUU6YoFKeh9pVO/YGOQ8A2h5GZ+6kD4XvtQapZhPY1B3+XHu/PCSrBBEILZ9/Ra+e9de
-         rFwGVi2D8NHFy79Ms+Ssoq3iQzbqBEZakzmF3Oi5l0cXaXiISVtKdqNEZHhydh2TaFZL
-         aTRQ==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=wx8T2d70QmSg8NHe/C1mZvkCrtMHCjmzXc4369ja9RY=;
+        fh=Qwwp1ngPemnQzBY2BoLoy64AzminAM50aHvg2nDhZAo=;
+        b=AloNfcSjJ64CuENFYZ88aIibWIachyZpMiEpmhKBdsc0YsTSTCO7VE+g3iOH1F7bY9
+         4kh0vIVRWd23+2gJA1edmsgx5BZutmp52sSMLEmfCSKil74FWazRSRJfDG4tXka9zL/G
+         EKzC8e6Z2t2z6T2/Dtu+YcIMPVQBUYCE9/FFpG1I+sLZ13Cglbj5y2OfqB5arM0NGoVZ
+         k/Ah2Er+sxL3DBOPw8mh7GNOIicAcOay3+Jho0yDTkP5Ho3pDdowyuMdE/8tGWseXbE2
+         xLq2xhX2ibiw/1nxdPzHQQZnMeUPuJ4se95ld5bWJoR3PdWKn0uWYsej8LpBhLUym87t
+         l3rw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778780519; x=1779385319; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
-        b=NXJGoY7skafG4O4/BgGkGKPdxPLORzufHt4HafWT/ITFvNxNyJWWwJE0ZYF812w/UM
-         EV7WaSnfUsSEFxiLs3kxx9RgNiQlz0Of0Va8ravWA9E4zbIjI3FZlyPrqC8cO2GXJh7z
-         yq7c9OGcHT9lYYdSg5tgqTe8ZZV2WiVaMEwWNuajBSo8lJxiJjlKy/+i3Sps66HBQAtu
-         pJRVUsPW75ovIK7A9Q9UIoEXMgCMNuw6DKbJYmnDRZkHeEzz+yfGz7dqyCwAoEy2JMbR
-         iZbgFmrBL3kdSpHdIEeO64NEL5bDzq81eLbT7CQvW/gy/xPbmVTyIonjhyatGfXHucXM
-         rTwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778780519; x=1779385319;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778780747; x=1779385547; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
-        b=Ygm/VIbg0XmugVVHChUUJXFD1yx2u9h3jMDAAynvhGfthpI4EBg1D/75lDMg+ZbvnP
-         9+ksJvVosoPq9E/wlHB05GSYswcPWrpfaUhnyjOZ5vmDx0kMqnX68D3pNT84zraQFUhj
-         siNYhjntFK/GO9lNDDh6JWlVn4CwkVqUTlpfUjpfhABLu2y7l4GMonm0Kp464c9uvjB5
-         fqEewJt8TjOljKMGS0ZGd8F/MeXRVGySsLswUOfNNcgudD0fxgFITaUW2gfkt+IUa8wG
-         kqkbSjI+o8pYuCaBPQkR6lthEFqO0YyMUq84kAAZ/Ok+vGoY0MQdXGSKEONJ2WKpD1aQ
-         SeuQ==
-X-Gm-Message-State: AOJu0YwgBnshHAmam1uj7DmJ5OdZYmJbSl37/KK61WhIbV/El/zF3lsX
-	MRr1Z1AZCJmf9kFQMNIoXahR971wXHWCV6UyRwbFjS7jCYB83van+JoNvVwJslWnUQ1+4+04+Ex
-	i13mKjz+t45rdFLOnieSER/R84wQXIvw=
-X-Gm-Gg: Acq92OFW4T9O2o4Y5xeJuI4m4gYZisdwQZv4KARz3QHPcymo/rR4cUN2OWDWb6kazyV
-	RvEr1L+cp5b0trZ70CrRKYQh11epmv8l3tYocRqam6tK+dBLNJknGY2BFavW3+SQPFDOzCDPoEH
-	5gf8aKPHh4ykfu721u87Ta8MTvWJMjv5fvo2o6U9r3Rmhs2Zl/Z1fnATaw6hxKPbNFycnZJdpIV
-	glpnXOxbRJRoywbtUq0uROhTY9ngbuT2u4kdY9DWeVWORyw/Hs2ok5BoinXmDOvY1KQZdPvaqFO
-	N7S4rPc=
-X-Received: by 2002:a05:690c:f03:b0:7a1:3088:e528 with SMTP id
- 00721157ae682-7c959f87470mr3682967b3.18.1778780519193; Thu, 14 May 2026
- 10:41:59 -0700 (PDT)
+        bh=wx8T2d70QmSg8NHe/C1mZvkCrtMHCjmzXc4369ja9RY=;
+        b=A0OpEl4unb47mmsZYko7TyN1tA3V/iIsO74gE+ktS9RkBG2I5Ml81uPm/nh3L0vXu0
+         y2UAkrLq5DS7SvYXS+1QmqoAnUiOO7l5LUIYwbx6eTusFdRnsqmj+xYuPx6qZNGkylbI
+         KkMg4ExiNi4gnPy8Hws+kZW3CicTQhMVxuXFLYBVXUrVoawllxG9neOw4OiTCLrjm/C5
+         aI2MqXf+iSTqZl8XAJ2fplIr8+bcZ3UphaIRArEeGGlL5jRjTp9qB6kyni+DTBp57mMg
+         7CD5uaTAjVLqxBbfsHhyK2Q3aQuwlmEQeT4drQBSIzlOYIPXGBNy98cteQwVkenIHw8m
+         76Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778780747; x=1779385547;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wx8T2d70QmSg8NHe/C1mZvkCrtMHCjmzXc4369ja9RY=;
+        b=Hc9BGCTMhw3F0dL/8FCRCvl/uZid/3WcbwNTdZFP4CHbC53nHN0z5kiMOmmFr/VCU3
+         0ET7WvYYPLCyfkkIAMyWEJND2n3gf46LGcznkpOeYkt3apWNR3+9qk7Q5whZYScGcO2I
+         uScA7eobJFC489gkfB7aHhDGi35HucUOXG3Z9CmvwH0RifEWsbIjJ+JODkjVL8HM8Egq
+         K+Te9u8MuNZdurSVSJYrClvcSz2pLtw3PFaoH2y/Ub6yOjmDFeuB8V72dW/SPL6bGxtG
+         YF8go+fJ+ovu/hjFRMnCQS+p9XHk42eIHJ3Ke14RzfjVyMuR8woiFHd0fvvKWWdpCMx2
+         5A/Q==
+X-Gm-Message-State: AOJu0Yzzv/hMnmgByT2m+31tzHoizvOEAFYZGdk6SYPC8xor+hrxqXyY
+	U3PjNf8lo5+/hT1ZqMlP4Y97Wrb35Xn/f7QZsTKu0/3If3L8Kv7f4kMhOiVeTG6tck/yJct6OnR
+	F70Sv529aZzowvjVBCyaqjZuwNe36bJw=
+X-Gm-Gg: Acq92OFI4YD0JbLu2RkCROr6aAJ+i4mCozDpZv/Fi63wiTEBH0Gqc0IdR88Y4ZXnB1F
+	/vIQXfrdoBfB7IPhSSCujTRYWIeNByibOsbnldLaL5dooniFGGh8FHplHvQsEpf6a7KKrU81dy5
+	81HUtSO3TlIsJE/hzI1GHtNquJoPSGSEBg7hI3dY0GjlxAs5ABgszbil99+5F3zbQvREqo5e8oZ
+	L7e0gh19NGy1XvKfHPfagMFJkGhHFBCY2ByneqWjAhfnt0kKEaUn7v0XqOUzKz1sXEObNRLTyhR
+	xPvmk5JfaK3gbGygV9xVd58afZar+zC98rfrpZpyD86Ap9bltjDMXTauDgW4xp7otj3mj7RKs6g
+	8WOzTX1LKHUWy4nVhHrumYWnFIzEV0C9dEPdMl3tsj3MRmFFGo1apj0G0w1WhWNGlvFdP6CyXaW
+	TcyJUUMzFKatQiFAWk
+X-Received: by 2002:a05:690e:150c:b0:64e:ebb4:1bca with SMTP id
+ 956f58d0204a3-65e2274f1famr228626d50.27.1778780746805; Thu, 14 May 2026
+ 10:45:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqik8tm16n.fsf@gitster.g> <CALE2CrT9=5mOauUdzxJAEjeeD77RWGyXjLGGTObsk9R1eOrP0g@mail.gmail.com>
- <xmqqmry3i9a4.fsf@gitster.g>
-In-Reply-To: <xmqqmry3i9a4.fsf@gitster.g>
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Thu, 14 May 2026 23:11:46 +0530
-X-Gm-Features: AVHnY4KKVGkPS67qdfHSjBOYoIZYJMl5UA1dgqtO1SQrvSUWET0mTqDW2ITu5IM
-Message-ID: <CALE2CrTea19qHKbhQK8V+uQJgh5GdT+8ia1q2jwr+hf546fnaQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2026, #03)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+References: <20260402211717.3604688-1-pabloosabaterr@gmail.com> <26d887d2-6ec2-4af1-b0bd-8e9b017bb4dd@gmail.com>
+In-Reply-To: <26d887d2-6ec2-4af1-b0bd-8e9b017bb4dd@gmail.com>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Thu, 14 May 2026 19:45:31 +0200
+X-Gm-Features: AVHnY4Kw1S2C-Pxoz2Ju8tfHBEFji2BZwgUv79tnpm21e2y53Uz0tzc-9pDrmAE
+Message-ID: <CAN5EUNQCsKD0CJqDi43i2JVBQQChAZVt_THQ1wGpdeydNHHCFw@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH 0/1] graph: add indentation for commits preceded
+ by a root
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
+	karthik.188@gmail.com, jltobler@gmail.com, ayu.chandekar@gmail.com, 
+	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+El jue, 14 may 2026 a las 17:15, Phillip Wood
+(<phillip.wood123@gmail.com>) escribi=C3=B3:
+>
+> Hi Pablo
+>
+> On 02/04/2026 22:17, Pablo Sabater wrote:
+> > When having a history with multiple root commits and drawing the histor=
+y
+> > near the roots, the graphing engine renders the commit one below the ot=
+her,
+> > seeming that they are related, which makes the graph confusing.
+> >
+> > This issue was reported by Junio at:
+> >    https://lore.kernel.org/git/xmqqikaawrpx.fsf@gitster.g/
+> >
+> > e.g.:
+> >
+> >    * root-B
+> >    * child-A2
+> >    * child-A1
+> >    * root-A
+> >
+> > [...]
+>  >
+> >    * root-B
+> >      * child-A2
+> >     /
+> >    * child-A1
+> >    * root-A
+>
+> I'm rather late to the party here, but personally I find the indentation
+> a bit confusing, it would be clearer to me if we had a blank line after
+> a root commit
 
-My thinking was mainly that git stash show normally omits untracked
-changes, while --include-untracked consults the additional untracked
-parent of the stash commit.
+Hi,
 
-I did not see existing coverage specifically checking that behavior, so
-I thought a small test for it could be useful. But I understand your
-point that not every observable behavior necessarily needs explicit
-coverage, and I'll keep that in mind for future patches.
+>
+>      * root-B
+>
+>      * child-A2
+>      * child-A1
+>      * root-A
+>
+> It takes the same amount of vertical space but keeps the children of
+> root-A together.
 
-Thanks,
-Pushkar
+I have mixed feelings about which approach to choose.
+The idea of a blank line was thought at
+https://lore.kernel.org/git/xmqq8s8vvw9m.fsf@gitster.c.googlers.com/
+but Junio argued against it for having an extra row because the
+indentation he proposed didn't collapse, however I find indentation +
+no collapse the most confusing one.
+I'd say that I'm fine with both approaches, blank line or indentation
++ collapse.
+
+> > without the patch:
+> >
+> >    * A root
+> >    * B root
+> >    * C root
+> >    * D1 child
+> >    * D root
+> >
+> > with the patch, the indentation cascades:
+> >
+> >    * A root
+> >      * B root
+> >        * C root
+> >          * D1 child
+> >       _ /
+> >      /
+> >     /
+> >    * D root
+
+  * A root
+
+  * B root
+
+  * C root
+
+  * D1 child
+
+  * D root
+
+Here I think a blank line looks worse, too much space for just 5
+commits and becomes one extra line which if this were like up to 7 or
+more parentless commits one after the other would be more noticeable.
+But there are cases that blank line might be better:
+
+  * 10_A2
+  * 10_A1
+  * 10_A
+    *   10_M
+   /|\
+  | | * 10_D
+  | * 10_C
+  * 10_B
+
+Feels like a shower of commits instead of an indented merge.
+
+Pro to the blank line, the parentless check is the same and it's just
+printing a '\n' at the right spot, while indent i'm mimicking like if
+there was a commit there.
+Anyways, I think in the majority of the cases the indentation +
+collapsing looks better.
+Sorry for the brief reply, I'm busy today.
+
+Regards,
+
+--
+Pablo
+
+>
+> Thanks
+>
+> Phillip
+>
+> > This is done by adding a is_placeholder flag to the columns, the root c=
+ommit
+> > is actually there but marked as a placeholder
+> >
+> > e.g.:
+> >
+> >     * root-B
+> >    (B) * child-A2
+> >      /
+> >     * child-A1
+> >     * root-A
+> >
+> > (B) would be root-B column with the placeholder flag active.
+> >
+> > Then teaching the rendering function to print a padding ' ' when meetin=
+g a
+> > placeholder column outputs the second example.
+> >
+> > There could also be the case where there are multiple roots
+> >
+> > without the patch:
+> >
+> >    * A root
+> >    * B root
+> >    * C root
+> >    * D1 child
+> >    * D root
+> >
+> > with the patch, the indentation cascades:
+> >
+> >    * A root
+> >      * B root
+> >        * C root
+> >          * D1 child
+> >       _ /
+> >      /
+> >     /
+> >    * D root
+> >
+> > the _ / might look weird but that's how the collapsing rendering does i=
+t
+> > for big gaps, this case being from the 4th column to the 0th column.
+> > Another patch could change the collapsing rendering for placeholders ?
+> > I haven't done it to keep it minimal, but a follow up could make it
+> > to be straight '/'. This would make it bigger but easier for the eye to=
+ follow.
+> > IMO is not worth it, but opinions are welcome.
+> >
+> > The patch also adds tests for different cases like a root preceding mul=
+tiple
+> > parents merges and the examples above.
+> >
+> > There could be some edge cases still so any testing is very welcome.
+> >
+> > Pablo Sabater (1):
+> >    graph: add indentation for commits preceded by a root
+> >
+> >   graph.c                      |  68 ++++++++++++++++--
+> >   t/t4215-log-skewed-merges.sh | 136 ++++++++++++++++++++++++++++++++++=
++
+> >   2 files changed, 198 insertions(+), 6 deletions(-)
+> >
+> >
+> > base-commit: 256554692df0685b45e60778b08802b720880c50
+>
