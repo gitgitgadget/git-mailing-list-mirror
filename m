@@ -1,105 +1,161 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE23731ED7C
-	for <git@vger.kernel.org>; Thu, 14 May 2026 15:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C6A3FBEC1
+	for <git@vger.kernel.org>; Thu, 14 May 2026 15:40:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778772991; cv=none; b=KSXNGnnbU48HZrAL5HiTI1sSXkulRB/J6sqPnSmbN5LUHNkIneY0I+wlFr3iniJ9G35MjQpUY/CmC0hE2KPPe0qp2I0d9EVp5mnZC6HJ/FLOEFhj0ScUJ4kujKLAdZqhwoS94FHJ3QIpY1PHAhJB4VnXXFuSQyQ+Kef105a4J7g=
+	t=1778773240; cv=none; b=sLuubi5F6kgWlSJXC5aNej8/f9Gzi5teq5lN3nRIzWa36oWGsqH/zC4inEc/dwOgjilVM+53MDb6Ckrl3JPkywaUi0O616oCpzLsf4fnP1QVvVXPWZnwZ1k5CchJpCpKa8x36Fu0SUPFBxzolF8jD11gwXZJj2/nz7fDHOmm9KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778772991; c=relaxed/simple;
-	bh=UqSdI4bH2WiB4LXtJXoSg9QuXV4LrBD96ekwROJi1JE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SmZi99Q1dxK4uVIB49XEjapVoVz/2G8veMUbeKMWuQJvFOrHNLdPBvlaO4YPiu967Zz8rdSAOZ2NL8+QmyB8kDsa0hPkcojz9kRO7f1V6B72GOrPzxEa1uNrvouof32CunBUU63aqaKlLfpaVy305MJTBfvRR9JenIL7Urm8Zik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rxuAEgWi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SKWkPne1; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778773240; c=relaxed/simple;
+	bh=aXjUxyTqxpg8P3V2+AXKuEoccHEL5uWAlFkx9SbYdQo=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SYsfQ7ptB2NdyfIA2qy4dlFBVa+9Dt94vtp/nUpsLJMDWkQUwCkQNmCafNYvUFz91Fo6pSlXiZ1dDh7Iq5X8f5F0Q59UPp44LlPL8TG3wCtSGBxhVroOBpen+JB3letzdClUUaNcV8my7xnhmzgFvV3CLd2fHEj9rB3IV54vBKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FtWaKu8a; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rxuAEgWi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SKWkPne1"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0A6E4EC00C0;
-	Thu, 14 May 2026 11:36:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 14 May 2026 11:36:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778772989; x=1778859389; bh=oG12x20L5J
-	iV/eWUfooVuUZ93PhMqZYOwdiYoe0jk+s=; b=rxuAEgWit36qg32Iv/A3xVLCBl
-	FroZ3oknP91lk15rVHVynwTP5nqvuwRV1Llab28MNAPnX1D9WvMfJ/wjvJ+aeY+j
-	BClmiTV4isRHadrzBx7vK8p851EkSNWrenPRFSCAjND7La7NkxaOppWdLugFEty7
-	BF+pd1iHt/o6trfQKQz0uxvYYwUKMlwR36UX/xLxxNJ2WULaihx8Y0UP4n4rMinr
-	FNf66DtEIuEG14XbcGNKdzp8EpsfkYx3Zx6oEwZ3w+Ea7kvW1j7szMyJcOu2kdFu
-	j/yeiX8AXP054DsHB2LHQterHO6g1tbpUkW60GzcKHkODaj5LGyLkYWg/YLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778772989; x=1778859389; bh=oG12x20L5JiV/eWUfooVuUZ93PhMqZYOwdi
-	Yoe0jk+s=; b=SKWkPne1VaEVizJx+qQFk62m5NQx94T+u7jpUNvSeIPr5gOc9P/
-	luJ7pNjyj0DF3fSW+UztE2WP+DsYz8UgQMhxiAUo7Awbz4j7fF+9wIvyvrSD1YJn
-	an1mv/Es4E6DtJPmnfXurf9WMnCOXDBXg1hC7mOPMiAMGJ9lYT3orLdCGmuN4vHd
-	ItQp1+b2DGGiZ4xWnCDPz5cduT10m4vHkpz+hcIDxxZt14LN6R4fP5HO9mMJtBuy
-	/fhvn+kcDfPDz1mcYUE2jx9Bxs+Ynct6qPoA7dLKK40Fft/0+pgmUhvFcuL6rf4n
-	slrfhWh0NNdoMO2UtC4DLwPdbU4OrUMQblQ==
-X-ME-Sender: <xms:_OsFapRNmTc3NHvrm5G9d02CX6RIR2XN21s6SoHl2V-8YSueFK2lFg>
-    <xme:_OsFapzAl6fj9GAMY8tKRIAEEgFMuALNWWU--0mQlAae8P09VdF-y_gCMSC0b54L2
-    BnxBsF8a8q6d-nz6Hjft322ztEQXQ9iDLt5V3UobnFPzKcgnRDllw>
-X-ME-Received: <xmr:_OsFaj04Y_hk-XwHgGThAKbLM0ckL4cXZByA9UM5Y8i1C_HXXcMx3TmCrx82Vf1gHoSzBKy14M309EfhZArdT8EZ0jjA5V5VBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdejkeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthgrrghhohhlsehuthhurdhfihdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_OsFav7NIX4tdm-U5JptCx0O9mGk62nqC2fpq-GdC43BTVxwYtEEQQ>
-    <xmx:_OsFauUe4Op_7gzSeWCFdwJFnpZLNV6tFhZpirRdEX8WFSIAIM4cwA>
-    <xmx:_OsFamAz4bzxkPbVZpjyFjFbbkQ1aSRP_t8ErJz6pcLv8FmkSk1XzQ>
-    <xmx:_OsFal4zduRCxRlUrgPa5qVbTUSijXrr6Bn9EpACVI68ZvkUhuGruQ>
-    <xmx:_esFauUtYCFxdmIzU8KY67RaRUywWD4-FR8XcqMOyIbWJIdzldc2q3GR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 May 2026 11:36:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/4] approxidate: alias "today" to "now"
-In-Reply-To: <20260514115520.6660-3-taahol@utu.fi> (Tuomas Ahola's message of
-	"Thu, 14 May 2026 14:55:18 +0300")
-References: <20260512145430.13212-1-taahol@utu.fi>
-	<20260514115520.6660-1-taahol@utu.fi>
-	<20260514115520.6660-3-taahol@utu.fi>
-Date: Fri, 15 May 2026 00:36:27 +0900
-Message-ID: <xmqqwlx6f1fo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FtWaKu8a"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a8c94cefcdso3644269e87.0
+        for <git@vger.kernel.org>; Thu, 14 May 2026 08:40:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778773237; x=1779378037; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OsLJVmsFEyyg2EXvCiIJxyLxun+tWqJbmO39RQ4ZLv0=;
+        b=FtWaKu8as5ymaRWWKKWxfT4iF+I6mB7QF+o7fGfpPl+BzaYBjQUFg2QMHNOxtyYRCf
+         fdOlr31rmDwSgL+DqjP/M/pu0Lbj3seWkd/+pC2m/wiW5+ctGbIyMe15Cbh5k19TmTqK
+         lN1khTSswtwcvWY1gLJ/ehJJm94btDuWObWrN5ZFVFom48EOGTw1xoW9rZgpTYcu6kPI
+         AGfPGwafnjq5jhUIsaWDyOThXV6Njqau+a1xXnQ/uPQd/BO4P22JBicLv9uAaG+iA7gz
+         8BwnMlvuCOPTXl8B+TckclNnqUZoDPW1cDsxSUxRw5WFVnFCkuXfuDBgv1ssVFV8zvX3
+         mdcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778773237; x=1779378037;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OsLJVmsFEyyg2EXvCiIJxyLxun+tWqJbmO39RQ4ZLv0=;
+        b=p34y9ExxMH85Rke46BrdDr89eBzOhu0VxYJ+gUDMtqbTx6UU4ix/FCTtIUdnV41AyT
+         HD+o/1KUtjHFVO/pymCNZWwZXSV5MWENEm7/YskhDQH1TdTPsN+5EIituzmcgllHcgs3
+         Dj+JEunbn3g5NS8opCI8+jL5X7vYxulb3F8346CncA78zPEB9HKUHFtN3pANr+M8z/sI
+         nCkfiFVMjsMsG3FSlbbZY7/xbRfEcGZ34rnYkbWW2r1RnokJWTpmkYmInJn2djSAV6sM
+         zyQVAFtjLbmmC+9dbfYbv1gGO6sR3lQBO3IsAzac5xFX+j8XetwlNaNtZhTXpP7Dm6va
+         otQw==
+X-Gm-Message-State: AOJu0YxM0yDuzmbMiGuZBBHCblJPLFQ84ORTEWDYXOcQUiDZNSNu211a
+	0N8cUTBMzzoqOP+aI//AWwp+KFv/0d8cr6X4Pj/S1GUbB73rCFOGx+ya7dQVbw==
+X-Gm-Gg: Acq92OGHb59Mjvv8qX1l1PMxnHRU1FVo5W82v4nr2t1T0Wl5tkQA5G+xIKTNIj5XAE8
+	T5uYt7Wueg/iJPkaTNsCEVM6seH0v1cVMxy2ARLtmGkz6Ec6JDkSKZEKKxzsRhxIIrS5vjgZUsj
+	NMyCebR5kYoBXJuJwYEotqUFIgUyNJVgud62e2/Zk6ODyg9oTcym0aBO5P0gMaPPv0oPWr/s/f4
+	Eeekac1eYCPKtsblve/ok7I6qCZcAFGuM+jl5axgQi1pz0guuTGmgnZXBoL+WZas51AFRdctiiu
+	brtWuLXjjfkoM2AMSqrt189qqHsftPfFS797t+Dg/UTQoB2bIQg7T9KWJ/k/4B6s3JqPBjYKJca
+	zz+WEpFsP5cw5tKmK11tCr5PkJt8nZN1G4ZcEZzgqI4XW+A/+vpEXjH7k91e6N05Tc/obZtSm/M
+	oEUJ2n8f5b30XFiOEogCjnrzwGHs5X6VJ32RW3SZ34iRf06fdJE6YGFfUnl3K4TN8Ndbhn1LEDu
+	oIRCzhoNthcdLVQ2dhCh3KWd1G2iBmhRlY3F8p+UJcViQGDqGutVsl4Qe8w8dc9opboP1bWtw==
+X-Received: by 2002:a05:6512:1116:b0:5a8:94c2:d49a with SMTP id 2adb3069b0e04-5a8ef9afdffmr3263448e87.27.1778773236596;
+        Thu, 14 May 2026 08:40:36 -0700 (PDT)
+Received: from localhost ([2001:2043:be0a:d700:d0be:ab8:6808:601a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a90f10c806sm553718e87.9.2026.05.14.08.40.35
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2026 08:40:36 -0700 (PDT)
+Sender: Erik <erik88@gmail.com>
+Date: Thu, 14 May 2026 17:40:34 +0200
+From: Erik Cervin Edin <erik@cervined.in>
+To: git@vger.kernel.org
+Subject: Re: [PATCH] git-jump: pick a mode automatically when invoked without
+ arguments
+Message-ID: <agXb1SXKnA69L9ak@mbp>
+Mail-Followup-To: git@vger.kernel.org
+References: <pull.2108.git.1778231254871.gitgitgadget@gmail.com>
+ <20260508141314.GB709299@coredump.intra.peff.net>
+ <c5e0a1fa-f228-41dd-b547-07b0ad6c0964@app.fastmail.com>
+ <20260508175240.GA737125@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260508175240.GA737125@coredump.intra.peff.net>
 
-Tuomas Ahola <taahol@utu.fi> writes:
+On 26/05/08 04:30PM, Greg Hurrell wrote:
+> Hopefully, they at least read the README before installing it from contrib/
+> (although Homebrew recently starting installing it for folks automatically,
+> so may not remain true for much longer on macOS...)
 
->     Sorry, I don't know if I understood.  Does the patch change the behavior of
->     that command somehow?  Is there some kind of edge case I missed?
+Oh! I didn't know that but looking closer on my homebrew installed Git,
+looks like you're right.
 
-No, I did not think it was a good idea to carve the behaviour in
-stone that "git log --since=today" behaves as if it were given "git
-log --since=now".  My reaction would have been very different if we
-were deliberatly and explicitly saying "today is synonym for now",
-but the thing is, it is not a designed behaviour but what
-approxidate does for anything it does not understand, e.g.
+I would've assumed that if users had jumped through the hoops of
+installing git-jump from contrib/ it stands to reason they would have
+some sense of what it does. But if this is landing as a part of regular
+brew install git, I'd wager there's a few unsuspecting people running
+git-jump that don't know what it does.
 
-    git log --since=decay
-    git log --since=bogus
+> Would having "git jump auto" work for you?
 
-all behave as if it were given --since=now.
+Imo, this sounds ideal -- there's something odd about `git jump` picking
+the subcommand heuristically. At least when I invoke git-jump I always
+do so with a specific intent of _where_ I want to jump. Then again, I
+never do a jump merge or a jump ws.
+
+> Homebrew installing `git-jump` by default a few months ago[^2] broke
+> this, because aliases can't shadow builtin commands.
+
+But it looks like this doesn't work in this case. Even if you have
+git-jump installed stand-alone (mine is in ~/bin/git-jump, in PATH,
+before /opt/homebrew/bin.)
+
+FWIW I alias jump to j, jump diff to jd and jump grep to jg. E.g.
+
+    git jd # git jump diff
+
+On 26/05/08 09:07AM, Greg Hurrell via GitGitGadget wrote:
+> -usage: git jump [--stdout] <mode> [<args>]
+> +usage: git jump [--stdout] [<mode>] [<args>]
+
+The usage message makes <mode> optional but doesn't explain what
+happens when you omit it. Seems worth documenting the auto-detect behavior
+there too.
+
+> But there are two situations where we can usefully infer the most
+> valuable and likely mode that a user would want to use, and select it
+> automatically when they run `git jump` without arguments:
+>
+> 1. When there are unmerged paths in the index, the user likely
+>    wants `git jump merge`.
+>
+> 2. When the working tree has unstaged changes, the user likely
+>    wants `git jump diff`.
+
+I can think of a third situation -- when there are staged changes flagged by
+git diff --cached --check.
+
+If we're going to teach git-jump how to be more clever about where to jump,
+does it also make sense to bake `git jump ws` into this?
+
+Also, if this is going to grow into a proper auto-detect heuristic, it
+might be cleaner as a first-class mode rather than logic spliced into the
+argument parser. Something like:
+
+    mode_auto() {
+        if test -n "$(git ls-files -u)"; then
+            mode_merge "$@"
+        elif ! git diff --quiet; then
+            mode_diff "$@"
+        elif ! git diff --cached --check >/dev/null 2>&1; then
+            mode_ws --cached "$@"
+        else
+            return 0
+        fi
+    }
+
+That way `git jump auto` works explicitly, bare `git jump` defaults
+to it (just `set -- auto` when $# -lt 1), and the usage text can
+document the heuristic. It also keeps the detection and dispatch in
+one place in case someone wants to tweak the priority later.
+
+All in all, I think an auto jumping mode could be genuinely useful.
