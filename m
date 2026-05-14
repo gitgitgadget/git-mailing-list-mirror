@@ -1,94 +1,129 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B206C401A36
-	for <git@vger.kernel.org>; Thu, 14 May 2026 14:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9873223707
+	for <git@vger.kernel.org>; Thu, 14 May 2026 14:33:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778768934; cv=none; b=VvclixckUXno8uAijyaP9Df+a9YCzLvfsrWu708l8LDw49P52uqLWDFIu5Jqo37FdxAr9Kqrq7a9WnnvaR57cjridIl7uLNR6ZC7jk+K2zDDgi0bC/+4FFJbUg3N0G9ffL11yhKYndh1NApPY/QDSUIivX0xRARqXwKw6lkXy2k=
+	t=1778769225; cv=none; b=OVOB9YztgZ+2VSOZJegVy13jUE23xraWPjQpfEmcziUStJ/BAn3hoHaz7eRaX/c6UkM/dtRSOS6FvoMnVw6w4uEn8pRmy9BIliT95rx7UnqEYLlikbU/by2f2Dpii60Gz5L6vh8rdmzrNwuX4wGxqu//A7qtjLf9bb/HXcViXV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778768934; c=relaxed/simple;
-	bh=zSwEQnY9/0YzZElQrAy47wOMpn4EPl5+m1FgpFQly4E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BHUlVZFC+3dsowdQPAYF9QJRPxkeNzbPu90kl3GWb0DUB76xU0Y9D6X3Gla1ES6cUIPvmY563py1nThoHxLPxW7T9Zqj+7CCzQHI9b8g8LuHky9Mz2yrjYGsrGWVj5RvoNCmbnUbFZpSlgPl+NY7NIrDJhVcV8RH2rla9F68R7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qsTo43oP; arc=none smtp.client-ip=209.85.219.42
+	s=arc-20240116; t=1778769225; c=relaxed/simple;
+	bh=YbmACli+WciggkBi6d9jqk/UKuXolG8zsWWEa43jCI4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Kd1Tm2otfvHN447u5Ofp8aR9IarLG5OvbRmpKLyVQSnMe3j8gERVu1gw889+NDIukkjd3cMQOp+tFLY0nIptVUYQ3qOquhDHd6fa07IxTGMyRjiiV4GErsOpqsHotNjHaHps9RH/Tw0gb6iX/xD6j4c1tUFFrYDGDwQai3xb35A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m3G7xy0e; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qsTo43oP"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8b6c9fdb68cso73169926d6.2
-        for <git@vger.kernel.org>; Thu, 14 May 2026 07:28:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m3G7xy0e"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8f231f3b130so620397585a.3
+        for <git@vger.kernel.org>; Thu, 14 May 2026 07:33:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778768933; x=1779373733; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+ZixOL4ZqDswk3X0usShl8fCai416x6Oy9hXP//Ypqo=;
-        b=qsTo43oPavY+cZPiDUFUXcnLUI0GcKS8PtXOVuUxnOfZYtxLUaPbQ+EkhQLxk+4wCw
-         glQPfNkCZXDEpv4omFAPzIUXbNCqS6MPzXZLthclmP2WicMt72dA8pPomA4FF6VIWlqH
-         SAU79Mc0dK5LMd9LNzfyTmIqB8SF0got9g1XRqegAPzWKTaobW2eh9/ibFYN1aQL3TAC
-         I4aKXyzuZN9pkwYagWKoPpYHY0NTao702K3TjyQ2Yj0JIkL1pylnh/2532A3E+LLTL8Q
-         GNZcXZ4PmFA1uUovnzTcCBZYULWlZU989QEDV0L56hhFuTFtYR+hT2y7ttvUeatOmweU
-         6m2g==
+        d=gmail.com; s=20251104; t=1778769223; x=1779374023; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rnyaKJlY+JX2bOPiZw/cbcEAlMRde+8bJDEi5AZA24g=;
+        b=m3G7xy0eC7I+FsqvCiKLyLiIhdDNBo3BuPoTt2YEx8pr1e1rrEQAcKWlAEKbpog78e
+         8f+PdWgxnz9jhmZXsHRWgEeoQ4C4Ra6fPo7WzvIgQSLN+oEltQpex6BNlsACkR146XmJ
+         S1+J0dqJ2qNiEcrnfxdONS+dKKjIJMz6UtJzkAe+ntFzf5yKaTo10zr/AwY5NFVbBjq8
+         rNiiki2BXG6E2Xrf/i0s/AaZ5RuLcQVJ/TQkrLTLQpIaiENTdV6ZgL60DgGhLlvCl8ie
+         co03DQQQXPlbTnDxqd4fDw8IHSL683TE06DGY5yb43Ss48Z1qqo+Vy0ehGsAJUeNwKDE
+         RnBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778768933; x=1779373733;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+ZixOL4ZqDswk3X0usShl8fCai416x6Oy9hXP//Ypqo=;
-        b=RcYWL9A+UQOkK3WM2tEhuYM8WQp8AxF3L9gU4+zF89O5nxZANcRRBUaMvdC+jOTug7
-         6xHzf39CeIHF5Z//MF+wDn4NixuxLltkqHH+SIlmxSwYHBCxXrc4To9DwfHjpSKGY5/H
-         j7myA0JklKTMzR1/bnLNRcx9kX2W0lFB1l4rEyoMavepnKkWiG8y7z55pfI4/f3xmhoZ
-         IppndXr76ERtA+NOR9a2Edj5rahs/jsaiqOYTWb25ZPKqeQdqpUtnewgTR6WXdCt3zNz
-         X8jwfvV2amgnDK40MOKXWfHfCZG6pGlL2MNNLLvzVdIWiNXYHtgVbX2aJmVXdsa/BtEI
-         J17g==
-X-Forwarded-Encrypted: i=1; AFNElJ8KeEwTvR3NM5lQugMn60pAVr+mux83L2HISTtjJEelfLOL618JvJEgGJaCrcTi+OZ+QQ0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywsz7UfhJvt5YRx7S4TLhQ+/sespCcwn4TxLv4eT7q+B4YQVS0/
-	pAQO3EzQ5GwpEtVBATeplCssqmkpr2i4t9h5c97eIJBSVFREgEzXR4wz
-X-Gm-Gg: Acq92OEHYklrrDO61YVIxQqHJG8cGAUIGIHofk7p+G8DqrAIrdtfrDpKFZCd4CCJ9TW
-	ca6NzvdJN2jsEcUzk1ddMlWEOGvBn91xdev7JEFWdNtjMJD3fsDqFWXFidITMUf0/klkA66FRt6
-	Y70Ptbih9/EZUJvSXE/6NELc8hsWjVPQ6+5+xxMQ/QnpfaxG311AE8pJrfQ0WUjX6k/Gv72/aDN
-	xttHFbi8D5PfYvQs3Po6DbajMpQAucKBleZBmrqfVWUqX50o7siJnLFkH0A/cH/ocFiCtsaHvBx
-	ckYMX1wqvBR3gskyNADZzr5oLeqFAEx/9HGFZV6YcS39NQk75g4Tuc/isdBoBOhCeMZfSDerN3n
-	0J8xi0ejOEH4HoXphfewexEDYyjBiOmcOwd7ztTHWc5Vmrs/HJRUSALeEdRobnCF+DNn0XtXeRH
-	V8TVHe6dnv9Ft1Uvf5mFxcB+eEHed9C0hSLA==
-X-Received: by 2002:a0c:e004:0:b0:89a:9ef:1922 with SMTP id 6a1803df08f44-8c7dfdbbfc8mr106734626d6.40.1778768932591;
-        Thu, 14 May 2026 07:28:52 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100::59a? ([2600:4040:264b:4100::59a])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90b2dc468sm25121606d6.30.2026.05.14.07.28.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 May 2026 07:28:52 -0700 (PDT)
-Message-ID: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
-Date: Thu, 14 May 2026 10:28:51 -0400
+        d=1e100.net; s=20251104; t=1778769223; x=1779374023;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rnyaKJlY+JX2bOPiZw/cbcEAlMRde+8bJDEi5AZA24g=;
+        b=a7yFU0BHmVG2RjhanpHEPziefyfnx8TupWj+KIdN6wRVf3h6Sht+qJk1jwkqt4GMhW
+         WjahAstQJWH4pq2SuTdda+YYkF25dWBFaP1PtEeBIXCW1MDIm40marjvg7weHYcx31qL
+         I93K7CP9ZMLlKvvRzSK9rvM0TXRK23JYGNk1jgJG6XZ/h2nl+6k4NGRIFk9YdVvURMz3
+         qhck+Iex62135XXvElm7ipQvduqm6YluPXQXK4uihjGXUPGWIt7GQBaNDrQBZ/+0u3jH
+         nLHlGqDKDD/j6i0P39hatAc7HbTY33PV9ZBjKv33UqctdLPEyqk+mhsMwKAyYY13hgzv
+         mW3Q==
+X-Gm-Message-State: AOJu0Yw1fU4+qUr9/7ewON4E0u6xAipHt7N3hhZmmisRpB6zKy4011I9
+	HSWmWmJKde214IDGwrFd1r2aG3PF7x9SPJUApzAb/GVW5jRFQanprhzspz7jcQ==
+X-Gm-Gg: Acq92OGD7enMyG2gloTrW8tHOBOJYYQ9v6AWGGcLHDHdALECQGijwnf0X1dBofra+qt
+	zECbTvvrf0c4yvsWe71bJ4HTmO4cMacB25Sfljr8spcCoXT++4QuiljYhW1m51ot6R6K2ZLVPFi
+	AHXQpvuqsd2Ra/tD78CusK/vc7q6CSnfZazMDdSWUqBztkcAla93yFT13Fsajh4w7bX2blPJ6Pu
+	M2Iqmat2BPZBJsyZxxC4FX+pREQ1yV+Y8FV4XyzVgCiRXfG3W3WhV6EbPFrbIT+4xZ2Qb7pscWi
+	zkPaTvyt2W/GUF0dUlf5rPIZcBAb8FDzfRVi/npo3NwcnTMzJ8qxBRUKucjiUkeslABnyfehybH
+	OpVU8qtQKVZPoxyYQAREpiE5YCasjjeJRuMiqzCE8hGt+WL0ti21JXi86uemH8Ondq6I3WCq6SO
+	xekh37iwg=
+X-Received: by 2002:a05:620a:40c7:b0:8c6:d309:f9c0 with SMTP id af79cd13be357-90fab32843fmr1123728085a.8.1778769222725;
+        Thu, 14 May 2026 07:33:42 -0700 (PDT)
+Received: from markl5i.lan ([2600:4040:264b:4100::59a])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-910bad2dd8esm262768585a.19.2026.05.14.07.33.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2026 07:33:42 -0700 (PDT)
+From: Mark Levedahl <mlevedahl@gmail.com>
+To: git@vger.kernel.org
+Cc: egg_mushroomcow@foxmail.com,
+	j6t@kdbg.org,
+	bootaina702@gmail.com,
+	Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH v1 00/11] Improve git gui operation without a worktree
+Date: Thu, 14 May 2026 10:33:11 -0400
+Message-ID: <20260514143322.865587-1-mlevedahl@gmail.com>
+X-Mailer: git-send-email 2.54.0.99.14
+In-Reply-To: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
+References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/3] git-gui: robustify startup and fix environment
- handling
-To: Shroom Moo <egg_mushroomcow@foxmail.com>, git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>, Aina Boot <bootaina702@gmail.com>
-References: <tencent_DDD6467B3F6184562B51C23BB9DBB79EA409@qq.com>
- <tencent_66A1C2CDB9D5B764A5B4468D3F11845A2A09@qq.com>
-Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <tencent_66A1C2CDB9D5B764A5B4468D3F11845A2A09@qq.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/9/26 9:37 AM, Shroom Moo wrote:
-> Shroom Moo (3):
->   git-gui: restructure repository startup
->   git-gui: disable gitk visualization when no worktree available
->   git-gui: handle GIT_DIR and GIT_WORK_TREE early
->
->
-After careful consideration, I find starting off by fixing what is broken in git-gui about
-using a bare-repository, and letting git core handle GIT_DIR and GIT_WORK_TREE, leads to a
-much more complete and different solution. A patch series (attempting to) do so will follow.
+git gui has a number of inter-related problems that result in problems
+during startup from anything but a checked out worktree pointing at a
+valid git repository. Some of the symptoms are:
+- blame / browser subcommands, and launching gitk, are intended to be
+  useful without a worktree, but fail to work.
+- unlike git, git-gui is supposed to use the parent directory as a
+  worktree if started from the .git subdirectory in the very common
+  single worktree + embedded git repository format. This does not
+  work.
+- git-gui includes a repository picker allowing a user select a worktree
+  from a list and/or start a new repo+worktree: this dialog appears at
+  unexpected times, masking useful error feedback on configuration
+  problems.
 
-Mark
+This patch series addresses the above issues, substantially rewriting
+the blame / browser command line process, the initial repository and
+worktree discovery processes, and using git rev-parse when possible to
+handle repository / worktree discovery including any specification of
+GIT_DIR or GIT_WORK_TREE to reduce the future likelihood of conflict
+with command line git. This also allows explicit user control to avoid
+the repository picker masking a configuration error.
+
+Note: I question why git-gui ever exports GIT_WORK_TREE. If it is not
+empty, that is the current directory when startup is complete and any
+git command will use the current directory as the worktree. If empty,
+there is no worktree and the current directory should be (and after this
+series, is) at the toplevel of the gitdir: again, there is nothing to
+communicate to another process. If a process being launched needs a
+different worktree, that should be the startup directory given to the
+process without changing git-gui's current directory.
+
+Mark Levedahl (11):
+  git-gui: allow specifying path '.' to the browser
+  git-gui: refactor browser / blame argument parsing
+  git-gui: guard set/unset of GIT_DIR and GIT_WORK_TREE
+  git-gui: put choose_repository::pick in a proc
+  git-gui: use --absolute-git-dir
+  git gui: GIT_DIR / GIT_WORK_TREE make any discovery error fatal
+  git-gui: use rev-parse exclusively to find a repository
+  git-gui: simplify [is_bare] to report if a worktree is known
+  git-gui: support using repository parent dir as a worktree
+  git-gui: improve worktree discovery
+  git-gui: add gui and pick as explicit subcommands
+
+ git-gui.sh | 276 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 135 insertions(+), 141 deletions(-)
+
+-- 
+2.54.0.99.14
+
