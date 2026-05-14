@@ -1,259 +1,106 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD53031ED7C
-	for <git@vger.kernel.org>; Thu, 14 May 2026 16:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778777496; cv=none; b=gLTg+tiixhNygpofET/2/dUKUimu8kY/dxqMtlP9gkgM09HC5fJgMFl/HSRBFxUuanjXOFZz7GLD682nzsLJJC5thFOhJf+PI+myzile/fhWU1U1m/y5wV6K1+iIIvODd55XQMJpwKdjscC5H1ZQVIxn1nggKVeXwHFbhuvMmic=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778777496; c=relaxed/simple;
-	bh=QKVsb3fS94wqSruko/HgLeh2lOW2BljQnCmBGXmZlzU=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=ATYhZbYF6DYpV0ng1aohfLPfknNDpBitISFu56jp3qHEn1Qa+Itwdv8+5Gunm/PRdCbB6lSiayFQS7qvUpIdR3YWJPSl9/7dJ+u7wKx++vPL2Yj3kgnYcMSatzSr9W+YAeEYdGH4I6NHaAlt27xIjkU3p11NYiY9i9O6Qw3b55A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U4qYGCIc; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E022E542C
+	for <git@vger.kernel.org>; Thu, 14 May 2026 17:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778780521; cv=pass; b=qjPb0lRkXdjCdSnP7i8BW3TS+IzOS1CBMlg4gNzaaba5X3PDY4Mje+yyADw0mK5xSkjngIKgS4RNFTGjsei2ar41ZWOzcVqXCCy65yQ5s7c+8ergNqL8l4eqWrwMQA1iyvVJlI20RHHx4Yt72qUNceyjM8C2q75OHkR5Fwaq/Ts=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778780521; c=relaxed/simple;
+	bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lFygJO89uI6WJjk8Zln+AEOT1CLRvrkgxXzvvovNQitAHecrosOI0b938Q+3x/o5GthF/UomMCO3PzZIjgbt9OmC70iPFmZwcyLX6l2DcqcjoP5sh1QrPsqtnRQmK5hahK4VA1DhkzVKZUNKDcPt7scKXa5r+j+x38k+m6ARFe0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NXJGoY7s; arc=pass smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U4qYGCIc"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-40427db1300so5956990fac.0
-        for <git@vger.kernel.org>; Thu, 14 May 2026 09:51:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NXJGoY7s"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-65c7492a2ceso8973633d50.3
+        for <git@vger.kernel.org>; Thu, 14 May 2026 10:42:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778780519; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Sp8VEV2H/32qe4jMSfuohmt8FeFlzr6P55bT25yp3wUgCD/EM0ag+qyagSqGaKyVWg
+         rd7W/A84zjIDoTHN5Hl6kMEbcEWcTASt+n6nYNOrNIjbAY46a0ziGvMJSU25WZgTm6kG
+         EHCVk1yVdr7wOLiT1mFld40ZLqpFOr/3ebVYZ1v8cIDY7UDNo8vmaNHd/8MGD2cJSmA5
+         hQX23bbbGNoAMxizu76/02+3dJoUKlmO38aVN18tWr+twsgINMqUb6YubGjENdOATRmj
+         Ay2hljkfSOXJZ+lAojshrtroleDnpiy3YNCQukGpDWqLYh1VulKL8maHxxNWnfYBV1L5
+         2b9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
+        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
+        b=ENqUIU5UWYYWXTx9Nu1oG3/gq7NsCugfs6gfdts0lovhe86tki1A+VrvaVxWhL7yb8
+         nNmAIKrrJXbVpl17cze/Xpkv8hSIrPKm5Wj2plAcFWCdUXx8eSvsYnZ5lV6RUbrbwke4
+         MbxGjYgHbdi3inYJJDTzY725RCNrIRJPe+mmIN99cayNL1m3TKlrntg4/ZCVzIa+kr6d
+         mUU6YoFKeh9pVO/YGOQ8A2h5GZ+6kD4XvtQapZhPY1B3+XHu/PCSrBBEILZ9/Ra+e9de
+         rFwGVi2D8NHFy79Ms+Ssoq3iQzbqBEZakzmF3Oi5l0cXaXiISVtKdqNEZHhydh2TaFZL
+         aTRQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778777493; x=1779382293; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qsOXxqhtU4assb4aI1mEos9fsDO6SK/GoADEmiCafDU=;
-        b=U4qYGCIcBrWEL+Qlp7XKOhaq4B0zjt8MOCP/EedQEYWsvmcNt/gRF/5s9Kaiq6++BU
-         5zl7MTmL1DJso2Xb5mQeXJjOXZQIZUgKRdjbMTlM3oVAbHVynZvBTiOdv4Zo2/wm3Dxd
-         JiVO8VfQEzj6yblIJ61hlyOA4WDK7mz7JSMJW14Zrtglj69rAHO28DWi5Kt5fhIWuaGz
-         AhqnujY4ceLFksAMpJl2aRVVb0HlRnnOaaqByahQIa2MTUS129EkLk6Wtl3UBK29szIw
-         6eliLv/TF26/tDIbrnwKZQKzCVJ738oG7VxvdyWmqfsVK36X7iAumeJq1/wLwcJxKtLt
-         XlPQ==
+        d=gmail.com; s=20251104; t=1778780519; x=1779385319; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
+        b=NXJGoY7skafG4O4/BgGkGKPdxPLORzufHt4HafWT/ITFvNxNyJWWwJE0ZYF812w/UM
+         EV7WaSnfUsSEFxiLs3kxx9RgNiQlz0Of0Va8ravWA9E4zbIjI3FZlyPrqC8cO2GXJh7z
+         yq7c9OGcHT9lYYdSg5tgqTe8ZZV2WiVaMEwWNuajBSo8lJxiJjlKy/+i3Sps66HBQAtu
+         pJRVUsPW75ovIK7A9Q9UIoEXMgCMNuw6DKbJYmnDRZkHeEzz+yfGz7dqyCwAoEy2JMbR
+         iZbgFmrBL3kdSpHdIEeO64NEL5bDzq81eLbT7CQvW/gy/xPbmVTyIonjhyatGfXHucXM
+         rTwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778777493; x=1779382293;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1778780519; x=1779385319;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qsOXxqhtU4assb4aI1mEos9fsDO6SK/GoADEmiCafDU=;
-        b=FODnCamSGmWnFDlUQIo7jjQcqdgt9S1x8UhkTOhyBqs5TRK4SOGqdl2m05ke3L/a5w
-         2qmrdO2/rupa4jCURkIMjNGnQjSf8oDe0qUGsghTYGV5P+PCxR9i4UB7NlbLA4uUhMQ+
-         WhlbP6XteZYVhQ9ENNLDzKXRl3D0Y6dz57JKW5sclladLPuGd6MtgKLx36Tjyjw63c3m
-         8stlnwIx27MGyv3FI+mr56Qm54ZgyhF3aVbZRxxCQAxck0iEAyyT+brZl8jhQmgqlXx9
-         Qk9yIUcohCRXBql89dD/LjkRQZSd53JJIJgjpkh1vMIf04y3h8WmsZ8TDjoU/jIZFJZ9
-         nklw==
-X-Gm-Message-State: AOJu0YxBzlzTxtUFnFtkI+dTRvTk3NI/dKkaCflTzknWMhkkX08Sp5GB
-	ZMpw2LMrFYQvQCAiqZK7nQTwd4TqAspBFYH6luVfGskX/zIKdDj3rN9AN6/DgA==
-X-Gm-Gg: Acq92OEEpoEbQ92UVXYA1/GW/vIDnUBg8K7qWJI4eWi2GOgt83mbAA0SdfDpNpvGoeq
-	vtt7YmjnJ/yPUFfjLrAI3BZ4ybWvk99Ng58hFoBWFWnJU1f1Vev2bK0aubHRuWEvgtjgrdTGwMj
-	QowzHkMdWf1lXyksscjrjXiUWCZCeIFnC7BIAEo6eTNsLrNsMtEsMOJ9y0Q6fbwl9oixDU/j4Dq
-	7OkAkLsAC+k0dZvxwR95mnq7NgzyHXSz3VJgXyOYvtQrhHdCfL8qvec6Jcb6XZSCCnaAiKQ0x9E
-	PiMxStO29UvKTV/iT/NFl3aRsN+d/BBMfvRE0tTc9VLgORtcMpaGGmegP8quwvyJCvaAgQXdMMq
-	t0y71Ppk8Pp0pxzXB5eva/gSeFHC0rtTu/VNqDrERW3a01KH5s08CKkmpIhDjrjI7qt9zaW4pJF
-	6bJyqqB7gqpL2+3M7/PqGHpcDSbdw=
-X-Received: by 2002:a05:6870:e988:b0:41c:bab:5f9d with SMTP id 586e51a60fabf-43a2d9143d1mr271197fac.4.1778777493217;
-        Thu, 14 May 2026 09:51:33 -0700 (PDT)
-Received: from [127.0.0.1] ([135.232.232.40])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-439fc1fc14csm2341613fac.6.2026.05.14.09.51.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 09:51:32 -0700 (PDT)
-Message-Id: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 14 May 2026 16:51:31 +0000
-Subject: [PATCH] revision: use priority queue in limit_list()
+        bh=1CopsHpQl4o6mmWGQ/xC+0/ysaN11Efe/J7RKBoPx1E=;
+        b=Ygm/VIbg0XmugVVHChUUJXFD1yx2u9h3jMDAAynvhGfthpI4EBg1D/75lDMg+ZbvnP
+         9+ksJvVosoPq9E/wlHB05GSYswcPWrpfaUhnyjOZ5vmDx0kMqnX68D3pNT84zraQFUhj
+         siNYhjntFK/GO9lNDDh6JWlVn4CwkVqUTlpfUjpfhABLu2y7l4GMonm0Kp464c9uvjB5
+         fqEewJt8TjOljKMGS0ZGd8F/MeXRVGySsLswUOfNNcgudD0fxgFITaUW2gfkt+IUa8wG
+         kqkbSjI+o8pYuCaBPQkR6lthEFqO0YyMUq84kAAZ/Ok+vGoY0MQdXGSKEONJ2WKpD1aQ
+         SeuQ==
+X-Gm-Message-State: AOJu0YwgBnshHAmam1uj7DmJ5OdZYmJbSl37/KK61WhIbV/El/zF3lsX
+	MRr1Z1AZCJmf9kFQMNIoXahR971wXHWCV6UyRwbFjS7jCYB83van+JoNvVwJslWnUQ1+4+04+Ex
+	i13mKjz+t45rdFLOnieSER/R84wQXIvw=
+X-Gm-Gg: Acq92OFW4T9O2o4Y5xeJuI4m4gYZisdwQZv4KARz3QHPcymo/rR4cUN2OWDWb6kazyV
+	RvEr1L+cp5b0trZ70CrRKYQh11epmv8l3tYocRqam6tK+dBLNJknGY2BFavW3+SQPFDOzCDPoEH
+	5gf8aKPHh4ykfu721u87Ta8MTvWJMjv5fvo2o6U9r3Rmhs2Zl/Z1fnATaw6hxKPbNFycnZJdpIV
+	glpnXOxbRJRoywbtUq0uROhTY9ngbuT2u4kdY9DWeVWORyw/Hs2ok5BoinXmDOvY1KQZdPvaqFO
+	N7S4rPc=
+X-Received: by 2002:a05:690c:f03:b0:7a1:3088:e528 with SMTP id
+ 00721157ae682-7c959f87470mr3682967b3.18.1778780519193; Thu, 14 May 2026
+ 10:41:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+References: <xmqqik8tm16n.fsf@gitster.g> <CALE2CrT9=5mOauUdzxJAEjeeD77RWGyXjLGGTObsk9R1eOrP0g@mail.gmail.com>
+ <xmqqmry3i9a4.fsf@gitster.g>
+In-Reply-To: <xmqqmry3i9a4.fsf@gitster.g>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Thu, 14 May 2026 23:11:46 +0530
+X-Gm-Features: AVHnY4KKVGkPS67qdfHSjBOYoIZYJMl5UA1dgqtO1SQrvSUWET0mTqDW2ITu5IM
+Message-ID: <CALE2CrTea19qHKbhQK8V+uQJgh5GdT+8ia1q2jwr+hf546fnaQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2026, #03)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Kristofer Karlsson <krka@spotify.com>
+Hi Junio,
 
-limit_list() maintains a date-sorted work queue of commits using a
-linked list with commit_list_insert_by_date() for insertion.  Each
-insertion walks the list to find the right position — O(n) per insert.
-In repositories with merge-heavy histories, the symmetric difference
-can contain thousands of commits, making this O(n) insertion the
-dominant cost.
+My thinking was mainly that git stash show normally omits untracked
+changes, while --include-untracked consults the additional untracked
+parent of the stash commit.
 
-Replace the sorted linked list with a prio_queue (binary heap).  This
-gives O(log n) insertion and O(log n) extraction instead of O(n)
-insertion and O(1) extraction, which is a net win when the queue is
-large.
+I did not see existing coverage specifically checking that behavior, so
+I thought a small test for it could be useful. But I understand your
+point that not every observable behavior necessarily needs explicit
+coverage, and I'll keep that in mind for future patches.
 
-The still_interesting() and everybody_uninteresting() helpers are
-updated to scan the prio_queue's contiguous array instead of walking a
-linked list.  process_parents() already accepts both a commit_list and
-a prio_queue parameter, so the change in limit_list() simply switches
-which one is passed.
-
-Benchmark: git rev-list --left-right --count HEAD~N...HEAD
-Repository: 2.3M commits, merge-heavy DAG (monorepo)
-Best of 5 runs, times in seconds:
-
-  commits in
-  symmetric diff   baseline   patched    speedup
-  --------------   --------   -------    -------
-            10       0.01      0.01       1.0x
-            50       0.01      0.01       1.0x
-          3751      21.23      8.49       2.5x
-          4524      21.70      8.29       2.6x
-         10130      20.10      6.65       3.0x
-
-No change for small traversals; 2.5-3.0x faster when the queue grows
-to thousands of commits.
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
-    revision: use priority queue in limit_list()
-    
-    This patch speeds up limit_list() by 2.5–3x on large, merge-heavy
-    repositories by replacing a sorted linked list with a priority queue.
-    
-    The sorted linked list used as a work queue in limit_list() has O(n)
-    insertion cost per commit, where n is the current queue length (the
-    "width" of the active walk frontier). In merge-heavy DAGs this frontier
-    grows wide — profiling on a 2.3M-commit monorepo showed 59% of total CPU
-    time in commit_list_insert_by_date(). Total cost is O(N·w) where N is
-    commits walked and w is peak queue width; in merge-heavy histories w
-    scales with N, approaching O(N²).
-    
-    Switching to a prio_queue (binary heap) reduces insertion cost to O(log
-    w), bringing total cost to O(N·log w). The practical result on the same
-    repository:
-    
-    commits in
-    symmetric diff   before     after      speedup
-    --------------   --------   -------    -------
-            3751      21.2s      8.5s       2.5x
-            4524      21.7s      8.3s       2.6x
-           10130      20.1s      6.6s       3.0x
-    
-    
-    This affects any command that triggers limit_list() — i.e., when
-    revs->limited is set — including --left-right, --cherry-mark,
-    --cherry-pick, --ancestry-path, bisect, and rebase's fork-point
-    computation. The practical trigger is git status --ahead-behind on a
-    branch that has diverged from upstream in a merge-heavy repository.
-    
-    The change is minimal (+21/−17 lines, single file) because
-    process_parents() already accepts both a commit_list and a prio_queue
-    parameter — limit_list() just switches which one it passes.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2114%2Fspkrka%2Flimit-list-prio-queue-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2114/spkrka/limit-list-prio-queue-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2114
-
- revision.c | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 599b3a66c3..2b1b3bb10e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -473,10 +473,10 @@ static struct commit *handle_commit(struct rev_info *revs,
- 	die("%s is unknown object", name);
- }
- 
--static int everybody_uninteresting(struct commit_list *orig,
-+static int everybody_uninteresting(struct prio_queue *orig,
- 				   struct commit **interesting_cache)
- {
--	struct commit_list *list = orig;
-+	size_t i;
- 
- 	if (*interesting_cache) {
- 		struct commit *commit = *interesting_cache;
-@@ -484,9 +484,8 @@ static int everybody_uninteresting(struct commit_list *orig,
- 			return 0;
- 	}
- 
--	while (list) {
--		struct commit *commit = list->item;
--		list = list->next;
-+	for (i = 0; i < orig->nr; i++) {
-+		struct commit *commit = orig->array[i].data;
- 		if (commit->object.flags & UNINTERESTING)
- 			continue;
- 
-@@ -1300,20 +1299,17 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
- /* How many extra uninteresting commits we want to see.. */
- #define SLOP 5
- 
--static int still_interesting(struct commit_list *src, timestamp_t date, int slop,
-+static int still_interesting(struct prio_queue *src, timestamp_t date, int slop,
- 			     struct commit **interesting_cache)
- {
- 	/*
--	 * No source list at all? We're definitely done..
-+	 * Since src is sorted by date, it is enough to peek at the
-+	 * first entry to compare dates.  No entry at all means done.
- 	 */
--	if (!src)
-+	struct commit *commit = prio_queue_peek(src);
-+	if (!commit)
- 		return 0;
--
--	/*
--	 * Does the destination list contain entries with a date
--	 * before the source list? Definitely _not_ done.
--	 */
--	if (date <= src->item->date)
-+	if (date <= commit->date)
- 		return SLOP;
- 
- 	/*
-@@ -1451,6 +1447,7 @@ static int limit_list(struct rev_info *revs)
- 	struct commit_list *newlist = NULL;
- 	struct commit_list **p = &newlist;
- 	struct commit *interesting_cache = NULL;
-+	struct prio_queue queue = { .compare = compare_commits_by_commit_date };
- 
- 	if (revs->ancestry_path_implicit_bottoms) {
- 		collect_bottom_commits(original_list,
-@@ -1461,6 +1458,11 @@ static int limit_list(struct rev_info *revs)
- 
- 	while (original_list) {
- 		struct commit *commit = pop_commit(&original_list);
-+		prio_queue_put(&queue, commit);
-+	}
-+
-+	while (queue.nr) {
-+		struct commit *commit = prio_queue_get(&queue);
- 		struct object *obj = &commit->object;
- 
- 		if (commit == interesting_cache)
-@@ -1468,11 +1470,13 @@ static int limit_list(struct rev_info *revs)
- 
- 		if (revs->max_age != -1 && (commit->date < revs->max_age))
- 			obj->flags |= UNINTERESTING;
--		if (process_parents(revs, commit, &original_list, NULL) < 0)
-+		if (process_parents(revs, commit, NULL, &queue) < 0) {
-+			clear_prio_queue(&queue);
- 			return -1;
-+		}
- 		if (obj->flags & UNINTERESTING) {
- 			mark_parents_uninteresting(revs, commit);
--			slop = still_interesting(original_list, date, slop, &interesting_cache);
-+			slop = still_interesting(&queue, date, slop, &interesting_cache);
- 			if (slop)
- 				continue;
- 			break;
-@@ -1509,7 +1513,7 @@ static int limit_list(struct rev_info *revs)
- 		}
- 	}
- 
--	commit_list_free(original_list);
-+	clear_prio_queue(&queue);
- 	revs->commits = newlist;
- 	return 0;
- }
-
-base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
--- 
-gitgitgadget
+Thanks,
+Pushkar
