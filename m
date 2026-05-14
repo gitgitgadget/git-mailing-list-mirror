@@ -1,164 +1,191 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460433AB267
-	for <git@vger.kernel.org>; Thu, 14 May 2026 19:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2B03A782A
+	for <git@vger.kernel.org>; Thu, 14 May 2026 19:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778788592; cv=none; b=EiH6pyUCUYmTTMAzEbIDwSWhb82wyNwKbkzB8u1ajdbOYGBs8e6ZJn2JjpHEnqm3lmpdxAnehrB5NYjLPMrto/tXCuwLS4/9ZjXGnFbP6Pfn0pHW+em1NVgvPpUxDb31IGnImpfTVp+z9OJbZFtugJfT0KBCWm+TWFOzqFubbnU=
+	t=1778788670; cv=none; b=OHvR28UtHj1n/bBpSxM7dy5INHYE+F0XjNiTB7gDosD9uqmWgiRaI+qjLffwOVrOzv/4lds46WH8qLJL6t4zDYRoKlRpN7m98DaMCf9PDD0V57S6D0O/NaD/V4GSuPvT7ms+hH9dbJ/6c1gKz03Pd0bd/imm2NIDrR0YkfC6B7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778788592; c=relaxed/simple;
-	bh=+n+0+K9kYEXTyY1MNGxbhpDsPCTVwAIpRxGd3C1WhyY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DY9Pkbcq8a6vyt34WyNbEDWb+BKruQJj7BBzrrE9P48yAIymAVfJvNVVj7pRWnnAw8AA7QNs+B4wfx12XAb7jN0OVRSGClcqtkOfGudBcOLhfaiFyy1d0/8em7Ev+8EAjnZKSSql5TUvhBzgIKLHfuc5bNIW8ZZwC62OvlVcU10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QELx+NBG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cKRCNj8M; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778788670; c=relaxed/simple;
+	bh=6oJXVllevu7qA8Z5GaFQBSiXCAfJLMDo82g/KKEZ3KU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TfUEtVzBgoWBr8fjcoiO3G9YyMPA03dZKIs6iDU7DJ/Fod3nc63zX7jKII+sxK1ownvfOipzevITcztgdKO9sRsVCGjGrm/4OqdYZpjlJXZwxxwhe05DJR1+sMfeEBpy4zKX9RVxzQbFyFg5OcBEUGN3dxYrpmhaD9TPYVOotSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JLUUNYbw; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QELx+NBG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cKRCNj8M"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87A3B140007D;
-	Thu, 14 May 2026 15:56:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Thu, 14 May 2026 15:56:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778788589; x=1778874989; bh=yNrSOzqt06
-	G30lLCiPg/K0DyLMkQC2uas+OV2l0LaqI=; b=QELx+NBG+Krgg3vhZUikBZQjpi
-	E722NYU9t4wXX/t1pIJc+sqPihvSvvguEi9q2I/mJ/2Wuvg8QJQVBAvdQNQR5A01
-	6UnTEIYAMzqBxXVZa1Vxt+8fWsbVC1cG3N1A5ZDJYCL6lVScNVcF2Mp7otGCIihs
-	xCh0ksxfJw8Rpdm8c6ZT4aJVvTMP0EkkLnysEaIJzp99bGc4+jnU/TikuV1C4KjM
-	TLUeQ+2jEvUmljuo6yPGlw7pdlIYAN1l//HFSVD2d2t1/l7cQYWZMebyBHYOQL3U
-	vColz29GR7vBZLjBQE5gtn8yDr1G/gqqxyNbKMkAXqLMU5cO8HNBO9tzk/8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778788589; x=1778874989; bh=yNrSOzqt06G30lLCiPg/K0DyLMkQC2uas+O
-	V2l0LaqI=; b=cKRCNj8Mf5zg5weIXtFKHPj84q7B+Gae90TyuGTI6QXWOtrGTOU
-	YfsnmCV04O/IugHx+rFew0hR5/ZM6LCqgAOjnzWQCbF8U4NmFuoXTqwJBUkxwrBJ
-	YRA86Ri6n4OJWHWQ2pbgcXLaCJHjR6ZVofc2l0OvCyVpu1t6vOUYtUV2rqZtUi9x
-	Ixg2eFI5zpdW7iHZgRpIqHKRPHxS6s6kmHhW2us4PiyZITnBvdxKbzbZEC7+fq4n
-	UFK6ZlgvHlbwZhKShjqvgXJrnMkcHL4e1tjpFe3gIIbAOdNnWfzv2K22oyXtNTCE
-	ouEe6nOZeryT485PGnHiQfsgNicnl2wfksA==
-X-ME-Sender: <xms:7CgGahGdQuNbBAXDvtm__PsohzUVprc7M_9Mu5DZN8sUVyE_vhKznA>
-    <xme:7CgGavqVEwrUn2LYO4CjPVXWWIpfSTXWobB8uX1D6Sogri8u6KlaBaP8-NY44D8JZ
-    gkV3HmJ1loD3U12vxWNFHoGV9idg0WgTOb0iYqkBIN6XR6iCcvcDmk>
-X-ME-Received: <xmr:7CgGaqZGA1hwFhQIydk-AWEf3XmNSwyuqpdHvWCP6QGScOgd4ctEQVi7UO2i-gaj8FonjfTfeUDrr4PkkpIuI-HF9S2pVJDFyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdekgeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepgedvgfdvheehvefhhedttedtgfefgeeikeeihfehtddtheevjedtleekkefg
-    udeinecuffhomhgrihhnpehmshhgihgurdhlihhnkhdpkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepkhgvrhhnvghlsehstghhlhgrrhgrfhhfvghnlhgrnhdruggvpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthh
-    hrihhssegthhhrihhsughofihnrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvghtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrgh
-    druhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7CgGaoVXFg-Xui1jVb3Eju9AR65JLkIC3sQa6fGaQeqev3sOqAvAXA>
-    <xmx:7CgGaj84yZGCJfn7PvsGtK43RNTtOg43qYzPfpbMpqW7MUapC-KhfA>
-    <xmx:7CgGah-RF1Zs9tOea9O5WHyhbng1paA5dfaGZqUVidA2TTSGBLuNIA>
-    <xmx:7CgGajSAQmrP73rF3Hwn2nqk4k0zf2VFOYIMB35T5BZc7-gFBz0hlA>
-    <xmx:7SgGaoLQNEPMtc5yjaidmnq5ruuQmbV1iJABIvJDfxCGivOBHUlGXmmI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 May 2026 15:56:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonas Rebmann <kernel@schlaraffenlan.de>
-Cc: git@vger.kernel.org,  Chris Down <chris@chrisdown.name>,  Jeff King
- <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 0/3] Avoid hardcoded "good"/"bad" bisect terms
-In-Reply-To: <20260514-bisect-terms-v4-0-b3e3cf1b06ce@schlaraffenlan.de>
-	(Jonas Rebmann's message of "Thu, 14 May 2026 11:07:03 +0200")
-References: <20260514-bisect-terms-v4-0-b3e3cf1b06ce@schlaraffenlan.de>
-Date: Fri, 15 May 2026 04:56:27 +0900
-Message-ID: <xmqqv7cpepec.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JLUUNYbw"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8bb09239328so69506666d6.3
+        for <git@vger.kernel.org>; Thu, 14 May 2026 12:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778788667; x=1779393467; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wBwc1BnIiHLYrnA2OijEKE1ErGWVgqTT//dN1srqyCU=;
+        b=JLUUNYbw4UGf+JryyZnBKC6teomdpr2axHsY+cHzSs2Ob0yuCbgdTgYkbrW+HNTZ5O
+         aUCfpxHuoY/wAAmPMZUmlxMSMEHmmKEedYjw+kg/cc7Sx9Dixf4XRWZU3S9ybQ8F3p4h
+         p3pb8MnYMHTbF71OF5RyYb/NOTBeWLIYWVP3ru4CwABeieTc7R60538YzryuOCsfTNT0
+         UhgQycmFyjL3JqJ1DLNrdd39wWBuwmoeazQXNTZhVs6BPpS6ENTGodnmOpIWx30Ak3J8
+         A/Epdz4uLJPrtiP4YQJdHElMWS508l9MSQra+1oSQEPE73Rpu9yBHAAnz+l5l7LQffDZ
+         hphw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778788667; x=1779393467;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wBwc1BnIiHLYrnA2OijEKE1ErGWVgqTT//dN1srqyCU=;
+        b=HWdNyzH9tKXWQmeQpaIspUMgj6IYCQALx0cNYZ566tQr+rOWQLvQJBN+K8XMQOpaPD
+         ydeVL1MlnazmP2WdphIRBdFOduljApqI+R4HyeBK1DbER8AOUmzBpbsJCIOBrC2jeZ2e
+         mCzSq/hQdZqc8TX0wLuTOcALaOdUhxK/oHCfQDvbnL53CbrtNhO/+kVByLhcBn3GzWS4
+         9UmlgGjAD7mix7SMss0BeznOPUxO9ApgvciZgPvW7PB9EAHMbIxPCo09WH388y/fxQ+T
+         6zp7OneRHWAFnHpxHJx/BnbIQD6pO+OawxeK2d91HCYQ6cQlu87sECVmd9UR7sRzZFKd
+         6m5Q==
+X-Forwarded-Encrypted: i=1; AFNElJ96jcXiibhJzJizT+YjqDqaceOIURtC/cZQ+TDCJjKL4D3fsULfd9FCwbUHy7To6MOQhFQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxbe9KdiQsXY1FaismJlHwgssVfZss6Y7QNAlSEiYWpqBavXpXM
+	3lXhC4IxY0HRpNU0pZunbhelm67WK6dZk+ERzUHpGXscdlSVU2WSyFMW
+X-Gm-Gg: Acq92OFbM+g3AbigyTdX+jgBvfV0/+RNDQjKFLVqb9GTHADtIN4DSQcSleMVe5whAQO
+	uOOrGjQvRQ59iQLaeY10br+tnQZWPOcet05ZCMfIrYpAJCtE6a2B0stvZA7YHotIwtb7S+m58hH
+	0+4RVISXGckfEug3Yq7b+0bULTGXcgyWge03JTGJopCg7dMdxjBTET/d0KuUNI0yG4fGz4a5IHH
+	766m/BchQ0czXLXiK6fMtFv3VK89OVQ/Zz8Fbhq2hI0uUDvReaEOtqDjmrQyWmUAobciQyc381K
+	GGi4Dx5LDTObDvSTutS/Uy9d+sS7MtuMP17nfSupp0AmnjOqBA8aQ8fHUdk6XxDBQjzb7LolWrN
+	l3aeTCGMrnWcZKaTOTWdq55hSJhMU+szkrDoCGJUctplloc+Ik9BmpH5VJmpCHH5B8U3fixLEZV
+	R8NZc4YnvN+jN5idj8U+08VZFJDYf3a1C7ut0VdCNPDBajDfxsvzTRQi8vjVIRpBKnVnFdkw==
+X-Received: by 2002:a0c:f014:0:b0:8c7:2c4e:ec3c with SMTP id 6a1803df08f44-8ca0f6a09d0mr16412956d6.29.1778788667122;
+        Thu, 14 May 2026 12:57:47 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c908d1bb46sm31846706d6.11.2026.05.14.12.57.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 May 2026 12:57:46 -0700 (PDT)
+Message-ID: <7e5abff7-79c9-41c3-9cfa-2aaf0e69a6a8@gmail.com>
+Date: Thu, 14 May 2026 15:57:46 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] revision: use priority queue in limit_list()
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>
+References: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Jonas Rebmann <kernel@schlaraffenlan.de> writes:
+On 5/14/2026 12:51 PM, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
+> 
+> limit_list() maintains a date-sorted work queue of commits using a
+> linked list with commit_list_insert_by_date() for insertion.  Each
+> insertion walks the list to find the right position — O(n) per insert.
+> In repositories with merge-heavy histories, the symmetric difference
+> can contain thousands of commits, making this O(n) insertion the
+> dominant cost.
 
-> While checking whether all output messages of git bisect were covered by
-> [PATCH 1/3] bisect: use selected alternate terms in status output I
-> found hardcoded good/bad refs leading to incompatibility of git
-> rev-parse --bisect with alternate bisect run terms. This is addressed by
-> [PATCH 3/3] rev-parse: use selected alternate terms to look up refs
->
-> Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
-> ---
-> Changes in v4:
-> - Always print bisect terms in single quote (Thanks, Junio)
-> - Split out quoting of bisect terms into separate commit
->> - Link to v3: https://patch.msgid.link/20260417-bisect-terms-v3-0-d659fa547261@schlaraffenlan.de
+Linear operations are bad, especially when multiplied by linear-ish
+loops, causing quadratic behavior.
 
-Having this "Link" is better than nothing, but it alone is not
-sufficient to help those who mechanise patch consumption with b4.
+> Replace the sorted linked list with a prio_queue (binary heap).  This
+> gives O(log n) insertion and O(log n) extraction instead of O(n)
+> insertion and O(1) extraction, which is a net win when the queue is
+> large.
 
-  https://b4.docs.kernel.org/en/latest/index.html
+Yes, much better.
 
-Please make sure that your cover letter of the (i+1)th iteration
-[v(i+1) 0/N] is a reply to the cover letter of the i-th iteration
-[v(i) 0/M].  With that, anybody who has the i-th iteration can
+> The still_interesting() and everybody_uninteresting() helpers are
+> updated to scan the prio_queue's contiguous array instead of walking a
+> linked list.  process_parents() already accepts both a commit_list and
+> a prio_queue parameter, so the change in limit_list() simply switches
+> which one is passed.
+> 
+> Benchmark: git rev-list --left-right --count HEAD~N...HEAD
+> Repository: 2.3M commits, merge-heavy DAG (monorepo)
+> Best of 5 runs, times in seconds:
+> 
+>   commits in
+>   symmetric diff   baseline   patched    speedup
+>   --------------   --------   -------    -------
+>             10       0.01      0.01       1.0x
+>             50       0.01      0.01       1.0x
+>           3751      21.23      8.49       2.5x
+>           4524      21.70      8.29       2.6x
+>          10130      20.10      6.65       3.0x
+> 
+> No change for small traversals; 2.5-3.0x faster when the queue grows
+> to thousands of commits.
 
- 1. Check out the i-th iteration, e.g., 
+This is good. Is there any chance that you could demonstrate this with
+any commits in the Git repo? It does have some interesting behavior,
+especially around point releases that are independent from the 'master'
+branch and thus could have lopsided symmetric differences using well-
+established tag names.
 
-    $ git checkout jr/bisect-custom-terms-in-output
+>     Switching to a prio_queue (binary heap) reduces insertion cost to O(log
+>     w), bringing total cost to O(N·log w). The practical result on the same
+>     repository:
+>     
+>     commits in
+>     symmetric diff   before     after      speedup
+>     --------------   --------   -------    -------
+>             3751      21.2s      8.5s       2.5x
+>             4524      21.7s      8.3s       2.6x
+>            10130      20.1s      6.6s       3.0x
 
- 2. Peek at any of the commits on the topic branch with notes/amlog
-    e.g.,
+Very nice! I notice that this data is in your cover letter, but
+not the commit message. Is that intentional?
 
-    $ git notes --ref=amlog show HEAD
+>     This affects any command that triggers limit_list() — i.e., when
+>     revs->limited is set — including --left-right, --cherry-mark,
+>     --cherry-pick, --ancestry-path, bisect, and rebase's fork-point
+>     computation. The practical trigger is git status --ahead-behind on a
+>     branch that has diverged from upstream in a merge-heavy repository.
 
- 3. Check out the base, e.g.,
+This also impacts 'git log --graph' when there is no serialized
+commit-graph file. We are still using limit_list() in that case.
 
-    $ git checkout --detach master...
+>     The change is minimal (+21/−17 lines, single file) because
+>     process_parents() already accepts both a commit_list and a prio_queue
+>     parameter — limit_list() just switches which one it passes.
 
-    Note that the branch that holds the i-th iteration can now be
-    accessed via @{-1} (i.e., the branch previously checked out).
+The key logic is turning the initial list into the starting
+points for the priority queue and everything else is about
+moving types around, it seems.
 
- 4. Tell B4 to fetch the latest round of the same series, by giving
-    one/any of the message-ID we learned earlier, and apply them.
+> @@ -1451,6 +1447,7 @@ static int limit_list(struct rev_info *revs)
+>  	struct commit_list *newlist = NULL;
+>  	struct commit_list **p = &newlist;
+>  	struct commit *interesting_cache = NULL;
+> +	struct prio_queue queue = { .compare = compare_commits_by_commit_date };
 
-    $ b4 am -o- \
-      "<20260417-bisect-terms-v3-2-d659fa547261@schlaraffenlan.de>" |
-      git am -s
+Here, we are _not_ using generation numbers, which is correct
+for this case because we are matching the date-based sorting
+of the previous list.
 
- 5. See what changed with range-diff
+>  	while (original_list) {
+>  		struct commit *commit = pop_commit(&original_list);
+> +		prio_queue_put(&queue, commit);
+> +	}
+> +
+> +	while (queue.nr) {
+> +		struct commit *commit = prio_queue_get(&queue);
+>  		struct object *obj = &commit->object;
+  
+This is a fun reuse of lines to take the old "drain the
+list as it is being mutated" loop and turn it into "fill
+the priority queue" and "drain the priority queue as it
+is being mutated"
 
-    $ git range-diff @{-1}...
+This code change looks good. No new tests are needed, since
+this is a performance-only change. Do any of the tests in
+t/perf/ demonstrate this improvement?
 
- 6. When satisified, replace the topic with the new iteration.
+Thanks,
+-Stolee
 
-    $ git checkout -B @{-1}
-
-It is crucial that b4 can find the newer iteration when given a
-message-ID from the older iteration in step 4 for this workflow to
-work, and for that, [v4 0/3] must be a reply to [v3 0/2].  Otherwise
-b4 will say that v3 is still the last iteration and we cannot make
-progress.
-
-> Changes in v3:
-> - when referencing newly introduced terms, reference them in single
->   quotes (Thanks, Phillip)
-> - Prefer test_grep over grep in updated Tests (Thanks, Phillip)
-> - Improve commit messages (Thanks, Phillip)
-> - Don't leak memory after read_bisect_terms() (Thanks, Phillip)
-> - Don't leak memory after xstrfmt() (Thanks, Junio)
-> - Add test case to patch 2/2
-> - Link to v2: https://patch.msgid.link/20260323-bisect-terms-v2-0-8d6bdb2c9c7e@schlaraffenlan.de
-
-With these improvements, v3 was already in a quite good shape, but
-the latest makes it look even better.  Will replace.  Thanks.
