@@ -1,274 +1,104 @@
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A5F22068D
-	for <git@vger.kernel.org>; Thu, 14 May 2026 12:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778762515; cv=none; b=gw4VEDUVq8EGp2iGuGg2fJ1cujbjsuAKNMJyHYCUshZhhAbtenPYBxJctfr9rQt/ajpjpTAFIkMvhkSwf6eTzd3FMIGq8gSlY4Z5zZMRY4BbyIIfgtwvJsAyz637tzPuwxKmzE88OaEZDNqb4bfEipv5KwIWlwI5zCQaI80DLxI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778762515; c=relaxed/simple;
-	bh=RKVKyhaCOPfQSsT4P2ITBM78cEtyaR+0E4AvJ9nz0i0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=huOY3BtctI+peX41aVMAZJWJpcOcFSb6YJASSxeQBQSoc91rfNRmXZ3fxJHvVtkT5OEBbflgi2/6KqvjoQrwCsQhZKnRbYH8J3C932LpHoZ+QedKUH0G7QwDqFhmeqaH2CDFHXKltQTr04hpKM84Tv0QjF5KJ3L3kECDjMxzBfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mT7pXQMe; arc=none smtp.client-ip=74.125.82.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D3D3E3150
+	for <git@vger.kernel.org>; Thu, 14 May 2026 13:30:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778765435; cv=pass; b=lQLvXDtCvXLwnnvzpObiimNZe2m/ismNSLuOg8E+9t+Fobyi6P+uODweCv+37dF5Qe0BK7a9hUj4kKPUClyuapGp3xehQu9Tmt1uJ+4VWbRQJ5HS5JXNlBDuxFLpmxGTXpMSGsnzzDTGp6Q+dfC/vOFlodlJeEH9dFEEepSxyXw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778765435; c=relaxed/simple;
+	bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=fjq1lPmnRue9+Wbvk0D7bR6112bLRtlZseBqsJgJHaYuPVtFGGSF17UpBny4ilCRKmhNTdTxnicTz8nPPqm7+2l3VlRvypwHGI/2OSQ/QbM1J1ko0kRtAHK0tZMdW8ClOGduQMlwouBvlSnoCkV0ZZehxNdN8v/MtKve/dSu4HY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HKVKMibZ; arc=pass smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mT7pXQMe"
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1331e851faaso2522366c88.1
-        for <git@vger.kernel.org>; Thu, 14 May 2026 05:41:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HKVKMibZ"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5a4113ab355so7666714e87.1
+        for <git@vger.kernel.org>; Thu, 14 May 2026 06:30:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778765429; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ObdEbunrFXDvzSgqWatK0iJdjIa/8GSFb/6DWxjuDcSDRqd6mdP4aDQrsjP9rccBtC
+         jSVyARRRgUkYP6HwU3awzQ8lIe6oarcTK6BdprHL8I9g2ntBf4yAC3e54oiNDMzD+q12
+         5roLHtehBI0DonBtXnTTiN6a8gxvIQwFduthgnB/OPkktBfQX9wFkykaTntJH7NA5EYx
+         c02mz3OWlAXRnMsZUFj02qS8iWJP2SRwschfg8XYi6w1rYUgSRlztqsaeeLMrXQBsxlX
+         7Vnv0SMLO+PtPXDNcImkQ9Moq1xIXAZhHgGgmwrIIkPX1SeDC7IGi/nHK16rSAzc9BJ5
+         WF7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
+        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
+        b=QiRqv6pUVk6o4L7YFilpX5Q4qSjcj9yzECQ15MQ6BOE0tCIj5kkE3OI7+/CaGjZ0jA
+         D1iIXi0x1c+cRbzA33CGekXaR+v8YGXxXRM4NKIFqGNkwjAyz30gYUl0lzF86c9pGrjW
+         e0KCtfOND91Rf+pX1vnGf1zfti9W908FNBpqlLd0P27W0CzHxAcA6R2U6rs87mrIW0gQ
+         orZniiAEMrswgl5iBwXQ81VFvjDwPDJUc+H4ErjziJC3+DXObobxtty8ijUhWhkFDyzJ
+         dABr3wqcjs6TzZBysB4/sBxIfGEL3a3++SM1vM5TMq4YKkUNMqA6jsQqXggzqEnmxwDA
+         IIUg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778762512; x=1779367312; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FAfpQhewV9SeejS26JIYoNjdEBnvKVhyj+Tv9A1HrGo=;
-        b=mT7pXQMeAUb86fwoQU0DD8t9jVCJOOnCygQP4hCIZ95jdgIcXmS1TOaY1yptYmPix3
-         /YrDm4kAbsjKtgRhiDW1F4fgcDI9vUx3eBoZqJUgBQ3K1G4QOhAPAKUKsFsldoMJL9Br
-         s4bJowrPVAzggAYmme6G/4acY/JV0sV3ENqBoLSYjU0+RISuRe58cTC2eBFYmgHsVyr0
-         bA6+j8dAbyBm/CqwanEfUBM66lB401zGiuNmX/H81T5MDsPWrCbphBpiCHYRWfLyT+vJ
-         zydle3NvpEl5X6Lm1BnFadUbht6RJ1XLd8u3AeZqR6ioUq5mIubxFzDTKNJLhnrbM2uC
-         S/1w==
+        d=gmail.com; s=20251104; t=1778765429; x=1779370229; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
+        b=HKVKMibZWzoZoSm/wsHaeZ9JKnEf4TAokzsK4NEblyctENzZp7T7ZpetXjlrPEKjls
+         oP/sJ4xlYUyWBGkq56SMNNMlMkd+mHiFcb7v2wbqFNVcIKibwFaRXlbnOIByrCOPdEZq
+         mdCYlexA/US02Nh8wCJUmrzrTJi2vw2CBze0H8s+6XDBsWxDU2W9BUeckROU2hiLtYF3
+         SiBS0/Os88oR+4Rxnm06eY7ajCWm86R9mVSIpJU1StQqkewlUg1MTunzKob6Y5fveq6n
+         4WQUaASwWnSEGXlqsVsqM7S5zy/VsKPB0VTZcRLxRIFU3V9pCq8qmavOTTqrggNrAZG/
+         XvWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778762512; x=1779367312;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=FAfpQhewV9SeejS26JIYoNjdEBnvKVhyj+Tv9A1HrGo=;
-        b=Xoj3CEk2YSfTOyvfAgCnQqfhBkZuz+AZWBhxn/kKluKqWwY199DDllT+Icsb7knjDU
-         tCFZ5IrmDKeoJiXLTyRDUEhRYKkgPuM/aJx9GeCr40d72ZaHBpLQgcWtGknY0J4aLH81
-         Q9e6nunuLSL7vQ4qV+rr3GxtEu4c7rg8NntO16MUU3xicpk6CTI1kUAEU0fqbvHzJy/J
-         ONKk7GnC8ZxOd6bw34dlZW26S6dtD4j5ryswo4Z0y4pyBBtlfZA5fW5t78kvRO05b6pp
-         FlSWrFiwvF4ktvgQz307aXZJ1qR6qtp+nDOOu0pYSLoYWi9LmkSloO4ndBvsJjzC59d3
-         rp9Q==
-X-Gm-Message-State: AOJu0Yz8OXKUzyNaHCuZecUFQxYdT/TXG8qK8Ixxl4quvt4ZeueF14RC
-	dxaMRlQ4sEpUntQ9nL+NKCo2BYZ1jfMY63mluhx1R3XNmW/pqMBo1osqHxL8N6A9
-X-Gm-Gg: Acq92OEbuA/xTpA13tIy9QqzdN9h6LOyjLGvpKq1QvGLQxXZL/kIs/5tX58LQeO6W29
-	Jn0CpAOvTl2Q3cEXrX7YKTEDhB+wSdnNPDn+LWuZ6V7fLhenxWRIU7sgyHhvPyTyj6JQjdIVjCd
-	tSJn49qL7E5G9A5Sixzn3Btjxr3yCdxBelSktiAJcYyO3yJOmE0nurT8/XIQEcAo3nwL0xH6SSr
-	KYCIyNgq5yTE2+4mY6FN3TzoB2O2XD8uRFgKMrMx4lQy8iudwJ6Q2NVaq0xp6nYpqHVP2vr8yvW
-	/MXAxJhV5GPNg/KQrB8oqv8Mles/X/r8mrYvM7N6uDa7XJMAxJJ5VWoVrV0W+SdLny3nEDb0iE5
-	+MW6bRhGjvn1nvaxYn6szqtdgCHUpifmnb/42hgtu5FUO4rGT8xmB+pAjN3J4yFKYWFtHFjIYNj
-	zzflpIgdFFN9kyIwrOMIGs309MwQ==
-X-Received: by 2002:a05:7022:6ab:b0:12d:c9b6:bbe2 with SMTP id a92af1059eb24-134c890710amr2133677c88.2.1778762511372;
-        Thu, 14 May 2026 05:41:51 -0700 (PDT)
-Received: from [127.0.0.1] ([52.234.45.179])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cb5b3c20sm4539242c88.0.2026.05.14.05.41.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 05:41:50 -0700 (PDT)
-Message-Id: <5b968245ebaf14c05233195f5c806c4e94fd3ff7.1778762495.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2085.v4.git.1778762495.gitgitgadget@gmail.com>
-References: <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
-	<pull.2085.v4.git.1778762495.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 14 May 2026 12:41:35 +0000
-Subject: [PATCH v4 8/8] send-pack: pass negotiation config in push
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1778765429; x=1779370229;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
+        b=OUVkomXIXxrkWuo/xlSMURclsvmTTqRxODvS4AEhcyt6KXt+2wZJ2slr6pCzlE6Y8/
+         u/dAh7/ixX7/fL6EIKxSRO9au2t5HmGDmIrF3taRnAk1pVWaAOqAP+KAIdM/5BredULN
+         RMCwd7ssWrCDcvIvuCiZVPOlnWp6QZqmu3C40AcKrXQDCkKl8nxqUEerLn8shT4q9+Vn
+         PexcPsLofrIiHLssHlJRJWs8p+yTqvBQwhi3kYeP9U5BTrkZ+952oARB97BScawdJz0M
+         n+u323osIQMZU475HAE7P+m8z0DZ+hv7y/dUyehKFEe7OCojOIEGg6EH2nc4A+ztI9CK
+         /svg==
+X-Gm-Message-State: AOJu0YzYP5LBhbbfUPIv6KkCBsLTgVt13l8oHXxh8i8H3YSWL/8bT9Sh
+	c+vZKinK7/a8myZ5g3k1dni1fBSvsaLXuOa0ugKb3R8f5bpg6FuoXcueCm2caEouwIUDekhsMvh
+	UY1Qzfx1CiIKVt/vzr05HVxGRjsuCv2Kozx2P
+X-Gm-Gg: Acq92OFDiARASjumPoG5bFwEcucJ3O+8pKClC0kymjfm3eNsDoYF4ekPMx8HDirT74S
+	7eXSH92EafAu5MlHPXL8VIXne/FW++KQZ3Zw/qi/gC4nL5c2z9UIeDzYfWmE8028k4lmd8ZLTzI
+	LnHMEzjn+IRlKdk3M52/EAC4MC1hPMUE0wtUqlUTU2wTNiOqoOYqmhaQm/FkDth0WX8qI0jahRI
+	qZWkOhA9OedZ/H9m1X3twdIcwtLNFH7RSPRvdtJWrFVKr/itXKaAUnNil8cbkm2OzbjeD3RaDp8
+	Vts2Ig==
+X-Received: by 2002:a05:6512:3dab:b0:5a8:7b52:946c with SMTP id
+ 2adb3069b0e04-5a8ef9a8b96mr2609848e87.22.1778765429259; Thu, 14 May 2026
+ 06:30:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: A D <diop.alpha@gmail.com>
+Date: Thu, 14 May 2026 13:30:17 +0000
+X-Gm-Features: AVHnY4KXJCWgMKAOYhD-G5BgEsnaRfUAsv1ESN4JTN_U460UwRcKcZLmqwozPdo
+Message-ID: <CANULcizX5J5zE+QgY9TOvqpjrcJM3uFOOAWRJzOW2rBweg2WNA@mail.gmail.com>
+Subject: I object the social engineering from Master to Main
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    ps@pks.im,
-    Matthew John Cheetham <mjcheetham@outlook.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Derrick Stolee <stolee@gmail.com>
+It is not your role, as a tool, to try to engineer society through
+warnings or changes of names. Your role is to deliver solid, reliable
+versioning, that's it! Leave the rest to spheres where it can actually
+be done without weaponizing your position or your audience.
 
-When push.negotiate is enabled, 'git push' spawns a child 'git fetch
---negotiate-only' process to find common commits.  Pass
---negotiation-include and --negotiation-restrict options from the
-'remote.<name>.negotiationInclude' and
-'remote.<name>.negotiationRestrict' config keys to this child process.
+I happen to be black African myself, and I never had any problem with
+the term "Master", and its history for literal decades. The term has
+been used in Computer Engineering longer than some of you have been
+alive, and I see no reason to change, or to nudge people toward
+changing it, just because it offends the sensibilities of some of you,
+who I very much doubt are even black in the first place.
 
-When negotiationRestrict is configured, it replaces the default
-behavior of using all remote refs as negotiation tips. This allows
-the user to control which local refs are used for push negotiation.
+"Master" is a term with a history, and it's cool, if some of you are
+offended by it, change your repos, but leave ours alone and keep your
+warnings to yourself.
 
-When negotiationInclude is configured, the specified ref patterns
-are passed as --negotiation-include to ensure their tips are always
-sent as 'have' lines during push negotiation.
-
-This change also updates the use of --negotiation-tip into
---negotiation-restrict now that the new synonym exists.
-
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- Documentation/config/remote.adoc |  6 ++++++
- send-pack.c                      | 37 ++++++++++++++++++++++++++------
- send-pack.h                      |  2 ++
- t/t5516-fetch-push.sh            | 30 ++++++++++++++++++++++++++
- transport.c                      |  2 ++
- 5 files changed, 70 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
-index 9ae20e4379..460b4e7952 100644
---- a/Documentation/config/remote.adoc
-+++ b/Documentation/config/remote.adoc
-@@ -122,6 +122,9 @@ command-line option.  If `--negotiation-restrict` (or its synonym
- `--negotiation-tip`) is specified on the command line, then the config
- values are not used.
- +
-+These values also influence negotiation during `git push` if
-+`push.negotiate` is enabled.
-++
- Blank values signal to ignore all previous values, allowing a reset of
- the list from broader config scenarios.
- 
-@@ -149,6 +152,9 @@ unconditionally on top of those heuristically selected commits.  This
- option is also used during push negotiation when `push.negotiate` is
- enabled.
- +
-+These values also influence negotiation during `git push` if
-+`push.negotiate` is enabled.
-++
- Blank values signal to ignore all previous values, allowing a reset of
- the list from broader config scenarios.
- 
-diff --git a/send-pack.c b/send-pack.c
-index 3d5d36ba3b..d18e030ce8 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -433,28 +433,48 @@ static void reject_invalid_nonce(const char *nonce, int len)
- 
- static void get_commons_through_negotiation(struct repository *r,
- 					    const char *url,
-+					    const struct string_list *negotiation_include,
-+					    const struct string_list *negotiation_restrict,
- 					    const struct ref *remote_refs,
- 					    struct oid_array *commons)
- {
- 	struct child_process child = CHILD_PROCESS_INIT;
- 	const struct ref *ref;
- 	int len = r->hash_algo->hexsz + 1; /* hash + NL */
--	int nr_negotiation_tip = 0;
-+	int nr_negotiation = 0;
- 
- 	child.git_cmd = 1;
- 	child.no_stdin = 1;
- 	child.out = -1;
- 	strvec_pushl(&child.args, "fetch", "--negotiate-only", NULL);
--	for (ref = remote_refs; ref; ref = ref->next) {
--		if (!is_null_oid(&ref->new_oid)) {
-+
-+	if (negotiation_restrict && negotiation_restrict->nr) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, negotiation_restrict)
- 			strvec_pushf(&child.args, "--negotiation-restrict=%s",
--				     oid_to_hex(&ref->new_oid));
--			nr_negotiation_tip++;
-+				     item->string);
-+		nr_negotiation = negotiation_restrict->nr;
-+	} else {
-+		for (ref = remote_refs; ref; ref = ref->next) {
-+			if (!is_null_oid(&ref->new_oid)) {
-+				strvec_pushf(&child.args, "--negotiation-restrict=%s",
-+					     oid_to_hex(&ref->new_oid));
-+				nr_negotiation++;
-+			}
- 		}
- 	}
-+
-+	if (negotiation_include && negotiation_include->nr) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, negotiation_include)
-+			strvec_pushf(&child.args, "--negotiation-include=%s",
-+				     item->string);
-+		nr_negotiation += negotiation_include->nr;
-+	}
-+
- 	strvec_push(&child.args, url);
- 
--	if (!nr_negotiation_tip) {
-+	if (!nr_negotiation) {
- 		child_process_clear(&child);
- 		return;
- 	}
-@@ -528,7 +548,10 @@ int send_pack(struct repository *r,
- 	repo_config_get_bool(r, "push.negotiate", &push_negotiate);
- 	if (push_negotiate) {
- 		trace2_region_enter("send_pack", "push_negotiate", r);
--		get_commons_through_negotiation(r, args->url, remote_refs, &commons);
-+		get_commons_through_negotiation(r, args->url,
-+					       args->negotiation_include,
-+					       args->negotiation_restrict,
-+					       remote_refs, &commons);
- 		trace2_region_leave("send_pack", "push_negotiate", r);
- 	}
- 
-diff --git a/send-pack.h b/send-pack.h
-index c5ded2d200..13850c98bb 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -18,6 +18,8 @@ struct repository;
- 
- struct send_pack_args {
- 	const char *url;
-+	const struct string_list *negotiation_include;
-+	const struct string_list *negotiation_restrict;
- 	unsigned verbose:1,
- 		quiet:1,
- 		porcelain:1,
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index ac8447f21e..177cbc6c75 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -254,6 +254,36 @@ test_expect_success 'push with negotiation does not attempt to fetch submodules'
- 	! grep "Fetching submodule" err
- '
- 
-+test_expect_success 'push with negotiation and remote.<name>.negotiationInclude' '
-+	test_when_finished rm -rf negotiation_include &&
-+	mk_empty negotiation_include &&
-+	git push negotiation_include $the_first_commit:refs/remotes/origin/first_commit &&
-+	test_commit -C negotiation_include unrelated_commit &&
-+	git -C negotiation_include config receive.hideRefs refs/remotes/origin/first_commit &&
-+	test_when_finished "rm event" &&
-+	GIT_TRACE2_EVENT="$(pwd)/event" \
-+		git -c protocol.version=2 -c push.negotiate=1 \
-+		-c remote.negotiation_include.negotiationInclude=refs/heads/main \
-+		push negotiation_include refs/heads/main:refs/remotes/origin/main &&
-+	test_grep \"key\":\"total_rounds\" event &&
-+	grep_wrote 2 event # 1 commit, 1 tree
-+'
-+
-+test_expect_success 'push with negotiation and remote.<name>.negotiationRestrict' '
-+	test_when_finished rm -rf negotiation_restrict &&
-+	mk_empty negotiation_restrict &&
-+	git push negotiation_restrict $the_first_commit:refs/remotes/origin/first_commit &&
-+	test_commit -C negotiation_restrict unrelated_commit &&
-+	git -C negotiation_restrict config receive.hideRefs refs/remotes/origin/first_commit &&
-+	test_when_finished "rm event" &&
-+	GIT_TRACE2_EVENT="$(pwd)/event" \
-+		git -c protocol.version=2 -c push.negotiate=1 \
-+		-c remote.negotiation_restrict.negotiationRestrict=refs/heads/main \
-+		push negotiation_restrict refs/heads/main:refs/remotes/origin/main &&
-+	test_grep \"key\":\"total_rounds\" event &&
-+	grep_wrote 2 event # 1 commit, 1 tree
-+'
-+
- test_expect_success 'push without wildcard' '
- 	mk_empty testrepo &&
- 
-diff --git a/transport.c b/transport.c
-index fa54928966..a2d8958cb8 100644
---- a/transport.c
-+++ b/transport.c
-@@ -921,6 +921,8 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	args.atomic = !!(flags & TRANSPORT_PUSH_ATOMIC);
- 	args.push_options = transport->push_options;
- 	args.url = transport->url;
-+	args.negotiation_include = &transport->remote->negotiation_include;
-+	args.negotiation_restrict = &transport->remote->negotiation_restrict;
- 
- 	if (flags & TRANSPORT_PUSH_CERT_ALWAYS)
- 		args.push_cert = SEND_PACK_PUSH_CERT_ALWAYS;
--- 
-gitgitgadget
+Cordially,
+Saliou Alpha Diop
