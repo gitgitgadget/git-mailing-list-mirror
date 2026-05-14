@@ -1,335 +1,259 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB7D33D4EE
-	for <git@vger.kernel.org>; Thu, 14 May 2026 16:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD53031ED7C
+	for <git@vger.kernel.org>; Thu, 14 May 2026 16:51:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778775937; cv=none; b=MB8G3S6LiMWQQYdyQPdoWdgxzaYezfmGmGOxyi9+eneAAGJb1d2IPeXFZVYIjTvx8YOv+EvL8Rc0tzdSZT6iKKXAatkE2ETIYnaguVBpDJrSMYYWLOuD2NtZlTSKtAXXtZw5syjlc8LoL8cwalJTWvlVDzwTEsqkxs0+ENZwaU4=
+	t=1778777496; cv=none; b=gLTg+tiixhNygpofET/2/dUKUimu8kY/dxqMtlP9gkgM09HC5fJgMFl/HSRBFxUuanjXOFZz7GLD682nzsLJJC5thFOhJf+PI+myzile/fhWU1U1m/y5wV6K1+iIIvODd55XQMJpwKdjscC5H1ZQVIxn1nggKVeXwHFbhuvMmic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778775937; c=relaxed/simple;
-	bh=Qm0eGHAVSdyUrW7F0ZGK9wLfsoqLoA/TplGhG4121K4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=He5lVaT2vMF1/kV06XXhPqMsJxtYGiU4YZ0UhvbC30sah8LPd1pLROaVfqSsZ8CMUO7aJ+v3VIZaymO2+uyiP4T2mFXMuM3qDi3VFJDmCvTs1DPF2F+ZwxX/26rQfrl0n+bSNNAVdj4ut56NJNMl70Xb6GQIqkE23j6PGVtW4Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOBOed6y; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1778777496; c=relaxed/simple;
+	bh=QKVsb3fS94wqSruko/HgLeh2lOW2BljQnCmBGXmZlzU=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=ATYhZbYF6DYpV0ng1aohfLPfknNDpBitISFu56jp3qHEn1Qa+Itwdv8+5Gunm/PRdCbB6lSiayFQS7qvUpIdR3YWJPSl9/7dJ+u7wKx++vPL2Yj3kgnYcMSatzSr9W+YAeEYdGH4I6NHaAlt27xIjkU3p11NYiY9i9O6Qw3b55A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U4qYGCIc; arc=none smtp.client-ip=209.85.160.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOBOed6y"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2b941cd869cso52436425ad.1
-        for <git@vger.kernel.org>; Thu, 14 May 2026 09:25:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U4qYGCIc"
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-40427db1300so5956990fac.0
+        for <git@vger.kernel.org>; Thu, 14 May 2026 09:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778775935; x=1779380735; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DKnZaO9bMaseUMEJwzpr+i4s3fSXM02NxS/c6DjmBog=;
-        b=TOBOed6yOoX6+tjQ/ibfp5SlVEpD4ELcpWjszoAzSCj8CL+QhqwBQn0HCPnGwW4vuf
-         +WH2FGWREpIsWazbtnJVyBdU5vbgVLIys5AsqtrgjsOTHRALFPzptN6w2rWCIEqys7KO
-         s2dXT0rkTGbtrJtrVIPNGZz7MU+MrQpflMeNzobuBRAfnymajtlAFFWOuSZ1UqHr5VEt
-         7GuW/KhVsWvE0pkGQfARd1iRqN+PVqKWOEw64oLnC1Yp1tj8h6rgFRc6Sgh7PLdnV9Ch
-         sYKvR+bJsVoUoAZQ9ohrcthMtELr5FSaMXj7o1wIqLhTeGt3s5kf5h4mAy/dFkotyMlk
-         zc6g==
+        d=gmail.com; s=20251104; t=1778777493; x=1779382293; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qsOXxqhtU4assb4aI1mEos9fsDO6SK/GoADEmiCafDU=;
+        b=U4qYGCIcBrWEL+Qlp7XKOhaq4B0zjt8MOCP/EedQEYWsvmcNt/gRF/5s9Kaiq6++BU
+         5zl7MTmL1DJso2Xb5mQeXJjOXZQIZUgKRdjbMTlM3oVAbHVynZvBTiOdv4Zo2/wm3Dxd
+         JiVO8VfQEzj6yblIJ61hlyOA4WDK7mz7JSMJW14Zrtglj69rAHO28DWi5Kt5fhIWuaGz
+         AhqnujY4ceLFksAMpJl2aRVVb0HlRnnOaaqByahQIa2MTUS129EkLk6Wtl3UBK29szIw
+         6eliLv/TF26/tDIbrnwKZQKzCVJ738oG7VxvdyWmqfsVK36X7iAumeJq1/wLwcJxKtLt
+         XlPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778775935; x=1779380735;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DKnZaO9bMaseUMEJwzpr+i4s3fSXM02NxS/c6DjmBog=;
-        b=MO4JK2yCOtZtxXXHAJhxgyxMFYspTw5cJIq3gWRTTYO83DjWvLyqMXMwvHcdZmrFot
-         FOGjID79YVOjHG1Ntuv6xxTvKOgTk8+4O+Dt6hF3pQaHD96oEBocrfm312wFCUTUgFvK
-         oX0+4SlU0xgg1ixrNrO2D2NtG7jYgneiTKXCAK/oZtPkEvWm2uKmSbG8oou2Wsrdj6Wh
-         6tGGYewRSgiqt2a1v+fvpvKVYsMB3JEycFnWt6IOmfcw9QkI1bCMfW7wfbSaOT5uM2Y+
-         xlWssqpJzsrl+3tPBxURusamgeumdUxGvsHbnNTe0GeFVfQSekphrBq9U7vGb4A3rBg5
-         Owmg==
-X-Gm-Message-State: AOJu0Yw/lRbI6OSmh0hNaOpEJSjOx0zQHilAfJiuVEAdklyCMBemLwAK
-	qOAvX0fX+vXQzA/tCCHI8YI3xwkBCo4g32KQg3AOOQdfN5pujWB5vmLurO83GEkw
-X-Gm-Gg: Acq92OFUBw8TFchRjIYXQinvNXgPgfohotBrSaMP0Qkx0dsH9uY7Rk6oOjmzLt1MxMC
-	42/tin0uq52PYazEc5u7AXzGYUEr9jEuY2OpghOqb7Nl4BtxNAcVvin5NUhZP5c6XtFpax2QlIm
-	HqfqGeDr9aUUokC4lC4HzlJWgal7pHRTCV1Vs4GGXE4mAcAIvKgxDJU1DA8rpouKeQt4tmMU3nE
-	CqfHG+uG9eDWHVme/vmayJB6RF04laUWvO0xWhamajF60K8NXGh5y8UnU99Be+5n+4q6nYRIbwO
-	C011lxIe2TOJJwQUVhBmZ95QSWddwgI6sbzaCZxSQQgDDeIZYSXlvnVwX0LPd3irQN0DpbquiMS
-	BPgTxunE9XaMM/aYDS7ah9/kZ8O062KAJphqwSiHTwdin7H/7c9JzpxKTF3To4p0eYBTxYYy4wT
-	deDyp9EMYM26T1GvISzAdvJymf
-X-Received: by 2002:a17:903:fae:b0:2bd:a5f:1d04 with SMTP id d9443c01a7336-2bd7e8aad34mr2562915ad.9.1778775935242;
-        Thu, 14 May 2026 09:25:35 -0700 (PDT)
-Received: from [127.0.0.1] ([13.66.174.86])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5d235e04sm30762605ad.80.2026.05.14.09.25.34
+        d=1e100.net; s=20251104; t=1778777493; x=1779382293;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qsOXxqhtU4assb4aI1mEos9fsDO6SK/GoADEmiCafDU=;
+        b=FODnCamSGmWnFDlUQIo7jjQcqdgt9S1x8UhkTOhyBqs5TRK4SOGqdl2m05ke3L/a5w
+         2qmrdO2/rupa4jCURkIMjNGnQjSf8oDe0qUGsghTYGV5P+PCxR9i4UB7NlbLA4uUhMQ+
+         WhlbP6XteZYVhQ9ENNLDzKXRl3D0Y6dz57JKW5sclladLPuGd6MtgKLx36Tjyjw63c3m
+         8stlnwIx27MGyv3FI+mr56Qm54ZgyhF3aVbZRxxCQAxck0iEAyyT+brZl8jhQmgqlXx9
+         Qk9yIUcohCRXBql89dD/LjkRQZSd53JJIJgjpkh1vMIf04y3h8WmsZ8TDjoU/jIZFJZ9
+         nklw==
+X-Gm-Message-State: AOJu0YxBzlzTxtUFnFtkI+dTRvTk3NI/dKkaCflTzknWMhkkX08Sp5GB
+	ZMpw2LMrFYQvQCAiqZK7nQTwd4TqAspBFYH6luVfGskX/zIKdDj3rN9AN6/DgA==
+X-Gm-Gg: Acq92OEEpoEbQ92UVXYA1/GW/vIDnUBg8K7qWJI4eWi2GOgt83mbAA0SdfDpNpvGoeq
+	vtt7YmjnJ/yPUFfjLrAI3BZ4ybWvk99Ng58hFoBWFWnJU1f1Vev2bK0aubHRuWEvgtjgrdTGwMj
+	QowzHkMdWf1lXyksscjrjXiUWCZCeIFnC7BIAEo6eTNsLrNsMtEsMOJ9y0Q6fbwl9oixDU/j4Dq
+	7OkAkLsAC+k0dZvxwR95mnq7NgzyHXSz3VJgXyOYvtQrhHdCfL8qvec6Jcb6XZSCCnaAiKQ0x9E
+	PiMxStO29UvKTV/iT/NFl3aRsN+d/BBMfvRE0tTc9VLgORtcMpaGGmegP8quwvyJCvaAgQXdMMq
+	t0y71Ppk8Pp0pxzXB5eva/gSeFHC0rtTu/VNqDrERW3a01KH5s08CKkmpIhDjrjI7qt9zaW4pJF
+	6bJyqqB7gqpL2+3M7/PqGHpcDSbdw=
+X-Received: by 2002:a05:6870:e988:b0:41c:bab:5f9d with SMTP id 586e51a60fabf-43a2d9143d1mr271197fac.4.1778777493217;
+        Thu, 14 May 2026 09:51:33 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.232.40])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-439fc1fc14csm2341613fac.6.2026.05.14.09.51.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 09:25:34 -0700 (PDT)
-Message-Id: <75d4ca7cff07a14b2f0beef4524623e541e140a8.1778775928.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2089.v3.git.1778775928.gitgitgadget@gmail.com>
-References: <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
-	<pull.2089.v3.git.1778775928.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 14 May 2026 16:25:28 +0000
-Subject: [PATCH v3 4/4] grep: prefetch necessary blobs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 14 May 2026 09:51:32 -0700 (PDT)
+Message-Id: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 14 May 2026 16:51:31 +0000
+Subject: [PATCH] revision: use priority queue in limit_list()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
 To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Cc: Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-From: Elijah Newren <newren@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
 
-In partial clones, `git grep` fetches necessary blobs on-demand one
-at a time, which can be very slow.  In partial clones, add an extra
-preliminary walk over the tree similar to grep_tree() which collects
-the blobs of interest, and then prefetches them.
+limit_list() maintains a date-sorted work queue of commits using a
+linked list with commit_list_insert_by_date() for insertion.  Each
+insertion walks the list to find the right position — O(n) per insert.
+In repositories with merge-heavy histories, the symmetric difference
+can contain thousands of commits, making this O(n) insertion the
+dominant cost.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Replace the sorted linked list with a prio_queue (binary heap).  This
+gives O(log n) insertion and O(log n) extraction instead of O(n)
+insertion and O(1) extraction, which is a net win when the queue is
+large.
+
+The still_interesting() and everybody_uninteresting() helpers are
+updated to scan the prio_queue's contiguous array instead of walking a
+linked list.  process_parents() already accepts both a commit_list and
+a prio_queue parameter, so the change in limit_list() simply switches
+which one is passed.
+
+Benchmark: git rev-list --left-right --count HEAD~N...HEAD
+Repository: 2.3M commits, merge-heavy DAG (monorepo)
+Best of 5 runs, times in seconds:
+
+  commits in
+  symmetric diff   baseline   patched    speedup
+  --------------   --------   -------    -------
+            10       0.01      0.01       1.0x
+            50       0.01      0.01       1.0x
+          3751      21.23      8.49       2.5x
+          4524      21.70      8.29       2.6x
+         10130      20.10      6.65       3.0x
+
+No change for small traversals; 2.5-3.0x faster when the queue grows
+to thousands of commits.
+
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- builtin/grep.c  | 143 ++++++++++++++++++++++++++++++++++++++++++++++++
- t/t7810-grep.sh |  58 ++++++++++++++++++++
- 2 files changed, 201 insertions(+)
+    revision: use priority queue in limit_list()
+    
+    This patch speeds up limit_list() by 2.5–3x on large, merge-heavy
+    repositories by replacing a sorted linked list with a priority queue.
+    
+    The sorted linked list used as a work queue in limit_list() has O(n)
+    insertion cost per commit, where n is the current queue length (the
+    "width" of the active walk frontier). In merge-heavy DAGs this frontier
+    grows wide — profiling on a 2.3M-commit monorepo showed 59% of total CPU
+    time in commit_list_insert_by_date(). Total cost is O(N·w) where N is
+    commits walked and w is peak queue width; in merge-heavy histories w
+    scales with N, approaching O(N²).
+    
+    Switching to a prio_queue (binary heap) reduces insertion cost to O(log
+    w), bringing total cost to O(N·log w). The practical result on the same
+    repository:
+    
+    commits in
+    symmetric diff   before     after      speedup
+    --------------   --------   -------    -------
+            3751      21.2s      8.5s       2.5x
+            4524      21.7s      8.3s       2.6x
+           10130      20.1s      6.6s       3.0x
+    
+    
+    This affects any command that triggers limit_list() — i.e., when
+    revs->limited is set — including --left-right, --cherry-mark,
+    --cherry-pick, --ancestry-path, bisect, and rebase's fork-point
+    computation. The practical trigger is git status --ahead-behind on a
+    branch that has diverged from upstream in a merge-heavy repository.
+    
+    The change is minimal (+21/−17 lines, single file) because
+    process_parents() already accepts both a commit_list and a prio_queue
+    parameter — limit_list() just switches which one it passes.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index e33285e5e6..85656d8d3f 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -28,9 +28,12 @@
- #include "object-file.h"
- #include "object-name.h"
- #include "odb.h"
-+#include "oid-array.h"
-+#include "oidset.h"
- #include "packfile.h"
- #include "pager.h"
- #include "path.h"
-+#include "promisor-remote.h"
- #include "read-cache-ll.h"
- #include "write-or-die.h"
- 
-@@ -692,6 +695,144 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 	return hit;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2114%2Fspkrka%2Flimit-list-prio-queue-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2114/spkrka/limit-list-prio-queue-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2114
+
+ revision.c | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 599b3a66c3..2b1b3bb10e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -473,10 +473,10 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 	die("%s is unknown object", name);
  }
  
-+static void collect_blob_oids_for_tree(struct repository *repo,
-+				       const struct pathspec *pathspec,
-+				       struct tree_desc *tree,
-+				       struct strbuf *base,
-+				       int tn_len,
-+				       struct oidset *blob_oids)
-+{
-+	struct name_entry entry;
-+	int old_baselen = base->len;
-+	struct strbuf name = STRBUF_INIT;
-+	enum interesting match = entry_not_interesting;
-+
-+	while (tree_entry(tree, &entry)) {
-+		if (match != all_entries_interesting) {
-+			strbuf_addstr(&name, base->buf + tn_len);
-+			match = tree_entry_interesting(repo->index,
-+						       &entry, &name,
-+						       pathspec);
-+			strbuf_reset(&name);
-+
-+			if (match == all_entries_not_interesting)
-+				break;
-+			if (match == entry_not_interesting)
-+				continue;
-+		}
-+
-+		strbuf_add(base, entry.path, tree_entry_len(&entry));
-+
-+		if (S_ISREG(entry.mode)) {
-+			if (!odb_has_object(repo->objects, &entry.oid, 0))
-+				oidset_insert(blob_oids, &entry.oid);
-+		} else if (S_ISDIR(entry.mode)) {
-+			enum object_type type;
-+			struct tree_desc sub_tree;
-+			void *data;
-+			unsigned long size;
-+
-+			data = odb_read_object(repo->objects, &entry.oid,
-+					       &type, &size);
-+			if (!data)
-+				die(_("unable to read tree (%s)"),
-+				    oid_to_hex(&entry.oid));
-+
-+			strbuf_addch(base, '/');
-+			init_tree_desc(&sub_tree, &entry.oid, data, size);
-+			collect_blob_oids_for_tree(repo, pathspec, &sub_tree,
-+						   base, tn_len, blob_oids);
-+			free(data);
-+		}
-+		/*
-+		 * ...no else clause for S_ISGITLINK: submodules have their
-+		 * own promisor configuration and would need separate fetches
-+		 * anyway.
-+		 */
-+
-+		strbuf_setlen(base, old_baselen);
-+	}
-+
-+	strbuf_release(&name);
-+}
-+
-+static void collect_blob_oids_for_treeish(struct grep_opt *opt,
-+					  const struct pathspec *pathspec,
-+					  const struct object_id *tree_ish_oid,
-+					  const char *name,
-+					  struct oidset *blob_oids)
-+{
-+	struct tree_desc tree;
-+	void *data;
-+	unsigned long size;
-+	struct strbuf base = STRBUF_INIT;
-+	int len;
-+
-+	data = odb_read_object_peeled(opt->repo->objects, tree_ish_oid,
-+				      OBJ_TREE, &size, NULL);
-+
-+	if (!data)
-+		return;
-+
-+	len = name ? strlen(name) : 0;
-+	if (len) {
-+		strbuf_add(&base, name, len);
-+		strbuf_addch(&base, ':');
-+	}
-+	init_tree_desc(&tree, tree_ish_oid, data, size);
-+
-+	collect_blob_oids_for_tree(opt->repo, pathspec, &tree,
-+				   &base, base.len, blob_oids);
-+
-+	strbuf_release(&base);
-+	free(data);
-+}
-+
-+static void prefetch_grep_blobs(struct grep_opt *opt,
-+				const struct pathspec *pathspec,
-+				const struct object_array *list)
-+{
-+	struct oidset blob_oids = OIDSET_INIT;
-+
-+	/* Exit if we're not in a partial clone */
-+	if (!repo_has_promisor_remote(opt->repo))
-+		return;
-+
-+	/* For each tree, gather the blobs in it */
-+	for (int i = 0; i < list->nr; i++) {
-+		struct object *real_obj;
-+
-+		obj_read_lock();
-+		real_obj = deref_tag(opt->repo, list->objects[i].item,
-+				     NULL, 0);
-+		obj_read_unlock();
-+
-+		if (real_obj &&
-+		    (real_obj->type == OBJ_COMMIT ||
-+		     real_obj->type == OBJ_TREE))
-+			collect_blob_oids_for_treeish(opt, pathspec,
-+						      &real_obj->oid,
-+						      list->objects[i].name,
-+						      &blob_oids);
-+	}
-+
-+	/* Prefetch the blobs we found */
-+	if (oidset_size(&blob_oids)) {
-+		struct oid_array to_fetch = OID_ARRAY_INIT;
-+		struct oidset_iter iter;
-+		const struct object_id *oid;
-+
-+		oidset_iter_init(&blob_oids, &iter);
-+		while ((oid = oidset_iter_next(&iter)))
-+			oid_array_append(&to_fetch, oid);
-+
-+		promisor_remote_get_direct(opt->repo, to_fetch.oid, to_fetch.nr);
-+
-+		oid_array_clear(&to_fetch);
-+	}
-+	oidset_clear(&blob_oids);
-+}
-+
- static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		       struct object *obj, const char *name, const char *path)
+-static int everybody_uninteresting(struct commit_list *orig,
++static int everybody_uninteresting(struct prio_queue *orig,
+ 				   struct commit **interesting_cache)
  {
-@@ -732,6 +873,8 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
- 	int hit = 0;
- 	const unsigned int nr = list->nr;
+-	struct commit_list *list = orig;
++	size_t i;
  
-+	prefetch_grep_blobs(opt, pathspec, list);
-+
- 	for (i = 0; i < nr; i++) {
- 		struct object *real_obj;
+ 	if (*interesting_cache) {
+ 		struct commit *commit = *interesting_cache;
+@@ -484,9 +484,8 @@ static int everybody_uninteresting(struct commit_list *orig,
+ 			return 0;
+ 	}
  
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 64ac4f04ee..3d08fd2a0c 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1929,4 +1929,62 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
- 	test_cmp expected actual
- '
+-	while (list) {
+-		struct commit *commit = list->item;
+-		list = list->next;
++	for (i = 0; i < orig->nr; i++) {
++		struct commit *commit = orig->array[i].data;
+ 		if (commit->object.flags & UNINTERESTING)
+ 			continue;
  
-+test_expect_success 'grep of revision in partial clone batches prefetch and honors pathspec' '
-+	test_when_finished "rm -rf grep-partial-src grep-partial" &&
+@@ -1300,20 +1299,17 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ /* How many extra uninteresting commits we want to see.. */
+ #define SLOP 5
+ 
+-static int still_interesting(struct commit_list *src, timestamp_t date, int slop,
++static int still_interesting(struct prio_queue *src, timestamp_t date, int slop,
+ 			     struct commit **interesting_cache)
+ {
+ 	/*
+-	 * No source list at all? We're definitely done..
++	 * Since src is sorted by date, it is enough to peek at the
++	 * first entry to compare dates.  No entry at all means done.
+ 	 */
+-	if (!src)
++	struct commit *commit = prio_queue_peek(src);
++	if (!commit)
+ 		return 0;
+-
+-	/*
+-	 * Does the destination list contain entries with a date
+-	 * before the source list? Definitely _not_ done.
+-	 */
+-	if (date <= src->item->date)
++	if (date <= commit->date)
+ 		return SLOP;
+ 
+ 	/*
+@@ -1451,6 +1447,7 @@ static int limit_list(struct rev_info *revs)
+ 	struct commit_list *newlist = NULL;
+ 	struct commit_list **p = &newlist;
+ 	struct commit *interesting_cache = NULL;
++	struct prio_queue queue = { .compare = compare_commits_by_commit_date };
+ 
+ 	if (revs->ancestry_path_implicit_bottoms) {
+ 		collect_bottom_commits(original_list,
+@@ -1461,6 +1458,11 @@ static int limit_list(struct rev_info *revs)
+ 
+ 	while (original_list) {
+ 		struct commit *commit = pop_commit(&original_list);
++		prio_queue_put(&queue, commit);
++	}
 +
-+	git init grep-partial-src &&
-+	(
-+		cd grep-partial-src &&
-+		git config uploadpack.allowfilter 1 &&
-+		git config uploadpack.allowanysha1inwant 1 &&
-+		mkdir a b &&
-+		echo "needle in haystack" >a/matches.txt &&
-+		echo "nothing to see here" >a/nomatch.txt &&
-+		echo "needle again" >b/matches.md &&
-+		git add . &&
-+		git commit -m "initial"
-+	) &&
-+
-+	git clone --no-checkout --filter=blob:none \
-+		"file://$(pwd)/grep-partial-src" grep-partial &&
-+
-+	# All three blobs are missing immediately after a blobless clone.
-+	git -C grep-partial rev-list --quiet --objects \
-+		--missing=print HEAD >missing &&
-+	test_line_count = 3 missing &&
-+
-+	# A pathspec-limited grep should prefetch only the two blobs
-+	# in a/.  It should fetch both blobs in one batched request.
-+	GIT_TRACE2_EVENT="$(pwd)/grep-trace-pathspec" \
-+		git -C grep-partial grep -c "needle" HEAD -- "a/*.txt" >result &&
-+
-+	# Only a/matches.txt contains "needle" among the matched paths.
-+	test_line_count = 1 result &&
-+
-+	# Exactly the two a/*.txt blobs should have been requested, and
-+	# the server packed those two objects in the response.
-+	test_trace2_data promisor fetch_count 2 <grep-trace-pathspec &&
-+	test_trace2_data pack-objects written 2 <grep-trace-pathspec &&
-+
-+	# b/matches.md should still be missing locally.
-+	git -C grep-partial rev-list --quiet --objects \
-+		--missing=print HEAD >missing &&
-+	test_line_count = 1 missing &&
-+
-+	# A second grep without a pathspec must recurse into both
-+	# subdirectories, but should request only the still-missing blob
-+	# from the promisor.
-+	GIT_TRACE2_EVENT="$(pwd)/grep-trace-all" \
-+		git -C grep-partial grep -c "needle" HEAD >result &&
-+
-+	test_line_count = 2 result &&
-+	test_trace2_data promisor fetch_count 1 <grep-trace-all &&
-+	test_trace2_data pack-objects written 1 <grep-trace-all &&
-+
-+	# Everything is local now.
-+	git -C grep-partial rev-list --quiet --objects \
-+		--missing=print HEAD >missing &&
-+	test_line_count = 0 missing
-+'
-+
- test_done
++	while (queue.nr) {
++		struct commit *commit = prio_queue_get(&queue);
+ 		struct object *obj = &commit->object;
+ 
+ 		if (commit == interesting_cache)
+@@ -1468,11 +1470,13 @@ static int limit_list(struct rev_info *revs)
+ 
+ 		if (revs->max_age != -1 && (commit->date < revs->max_age))
+ 			obj->flags |= UNINTERESTING;
+-		if (process_parents(revs, commit, &original_list, NULL) < 0)
++		if (process_parents(revs, commit, NULL, &queue) < 0) {
++			clear_prio_queue(&queue);
+ 			return -1;
++		}
+ 		if (obj->flags & UNINTERESTING) {
+ 			mark_parents_uninteresting(revs, commit);
+-			slop = still_interesting(original_list, date, slop, &interesting_cache);
++			slop = still_interesting(&queue, date, slop, &interesting_cache);
+ 			if (slop)
+ 				continue;
+ 			break;
+@@ -1509,7 +1513,7 @@ static int limit_list(struct rev_info *revs)
+ 		}
+ 	}
+ 
+-	commit_list_free(original_list);
++	clear_prio_queue(&queue);
+ 	revs->commits = newlist;
+ 	return 0;
+ }
+
+base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
 -- 
 gitgitgadget
