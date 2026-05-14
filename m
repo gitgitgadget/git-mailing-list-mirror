@@ -1,132 +1,93 @@
-Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD719379C58
-	for <git@vger.kernel.org>; Thu, 14 May 2026 21:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D2C3F4127
+	for <git@vger.kernel.org>; Thu, 14 May 2026 22:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778794432; cv=none; b=AX/QTr9okZS5YQ0uHX4uL+AKb0GQUesSjA8UdRv22lnh6CoukDRnOrLZMc+7HGUFX60kubYTxUsN0DK9Iqlw9uKRStgA+YUzrZ8HmR48FJ8QJhHTIZtXWNKH/hIvVsKhAZVqTkRU/6OEfqhWht3P5Y78T9pXpUkUOQIaCAlQgEs=
+	t=1778796967; cv=none; b=B1jVMZLo0Fy6XMjpF5D2wM+mAC9ts0C3YoD02kdpttZ4UOJfmWMOvW0o9zwT0iRl6tqEQ0WDw0EAgkibQsWBz38Sg7GWRqsIWm+ALgaRUABIpvh3UkMPMF921WledY0cWrC1rpbNsawmlfTyDHVQ5IXBNH7KB9nhLWwTUcj8CjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778794432; c=relaxed/simple;
-	bh=jTJQswBaZTj+MIP2at2xFWb/5Z7lfFwxEtBDxR2y1VQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mgysGS2GHvbvHDe3EZaIPGaIpyFdQpitPfWZYT0CuzJhO/52uTvVFVpJ3MtRMFrv+y8L+S0RYAQWkHh+Dy1rFQpdLXKDOWLSKdFKSofKlSz1/mXdPAolD8+GgGJOX2d3dEvfVZXkI6vWkIPADAUh2Jr7ucgxtmdWHm9bGXH0oh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Zk0sJt11; arc=none smtp.client-ip=84.93.230.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1778796967; c=relaxed/simple;
+	bh=BUXJJYcuAP1ksN4uTAJs9VO+QeMs6IUkjpHkLZONAHw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CnpSYCWLd1+zPRQV4bbjcrggrMsxTzaD14eKF+Nn8bb+P0DHAIUUJsobsUBbWYj0V1IMw0wRGJgiWM3Cgtc0rQJZGqENxN8l3ZY6Hn5jdr0nyi4b9bfowMtxtekhV5bj8dUafAG4KyQ0VijiCM8sh94OEKqwE056znFjE8xErlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQrQm/s5; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Zk0sJt11"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id NddewX09Y9QrZNddfwWRBA; Thu, 14 May 2026 22:30:39 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1778794239; bh=YaYmhM5hAlvtEEF2ZLCzEr7y59MtVWdJWpdcT1Q8Es0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Zk0sJt11zi0HgtcuG2W33nZUBZ1k6KY2gAAzK7ceM61fYic/JY/NVsjztAZ9TmR1v
-	 lFjuJtJ0H9V07mmmraikbsvyL5gVerUfDeUq5YALjee7hjtzeZ3FmaISAXw0kAypgO
-	 FGE24SAOYg9Jtt/zsOJtOFrp5Gplrr4hBREX+UXo5SprdpQLIYFlvOvnL9LAbRc6ko
-	 1b7KRhSuT+MYWcLCEpgCjPQxKzHvFNwes5jIUK/YuKNt7M2cEWqdkT4dS1rTUys4ZE
-	 S/nu2i1fQrZp6FIaiR1ClizV0EIhPIlTENbhtAVY7RD69+6L0gY3iETe1Q+pUBIKyT
-	 ZyXC9Sjlzj9yw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=C9tKyhP+ c=1 sm=1 tr=0 ts=6a063eff
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=PKzvZo6CAAAA:8 a=b5vF7GWAmqmo_lLt1xYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <a4da346d-3800-40ea-8828-970b15088bf3@ramsayjones.plus.com>
-Date: Thu, 14 May 2026 22:30:37 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQrQm/s5"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-394413a63d3so27199261fa.1
+        for <git@vger.kernel.org>; Thu, 14 May 2026 15:16:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778796964; x=1779401764; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4esVVq5vgfXfl7/2ovIs1/irizEhhyad0+MKXMmfNK8=;
+        b=eQrQm/s5wFmlr072a/zfqG5DdY1N/6e5ZbsQxKLv2xlGtK4KCQSM6SDCzmU1Rkrmjr
+         N9W7+zIfD4y0huAtRpPkOVGsTSPUCXV+DcJXvmifZzobQKsALgR2P/gwiMbuVAGJ68WK
+         atIdtI0Lfw2Y5bhiFp9j6cm+aNPp9ISxbxu9x2LunYS1G7heFn/54LVvUM1xd8+Ba1ku
+         k14Fwof/YfFDvwSNvM3vTSq8jyrTsrc6A9qSjNPDUMnZ4BfTt50VljSNyrVrM4xhl17t
+         GNGTbeg+Jcdmdk7DkOoaSg1OMgp28QUSj1p1UXOaatI+9Bni3z1nAPnNGRLlXPRybeJ2
+         RA/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778796964; x=1779401764;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4esVVq5vgfXfl7/2ovIs1/irizEhhyad0+MKXMmfNK8=;
+        b=o9xGYI2sxe8niLDqg8+QWc9NAm5SfSSks+6ipU2va+zx2YZLBXfdJGyKF7Cqh6aZk0
+         p7yimFgih1hYBNuX8k6kF2rZJfGwPzILSHFghMHVxbAJQBlC3ZT1rYQLEGFMA1VMEI3L
+         FOaKZkGuQXfqyWQMo9UGRauqnHtbFJdyVS3AY9OXrcnEJV1gr9YYvMjz0DOPMKAQbZwG
+         NN6FpP9otZboel9ETunnzo+000VY8RqY6tPQIhZQOdqJuX+naZX+1RyOs3TWe1g+AfuN
+         rR2/nrhI/n+cprUDDDMgKO8rrOd7c3OI9CWXIMaAg/U8nlJCKuHHbTA1UO6OySjdzLor
+         hweQ==
+X-Gm-Message-State: AOJu0YxqsUaB+nFYh1tuFrD0mbpohbZd5JB2aE62ju9JFpyKgSdG1eXr
+	LkokjQewae7gHddDmHp9FMQ3ir0L/2ZrR2Dz8qI3MMHobLVQ+gHmslWZ
+X-Gm-Gg: Acq92OGOE8aTXvC5k/L2M9d9TE4+wxxseLPmC7GHagToisLL25+NLBD/ugpvQFVD2O3
+	BwSAFRHO26rQn6J46aVHJgkdSQzI5qjzCXysAT73itIxQvQjt8HGZCGS0qGcLgeyLmANMPe7Rau
+	gnSYuqkCdD/92MIJzQDgBHTBaP6ZijK66rsAc8dUJh6SrC5ivhEiN6HJJsqDELPsS1xxBQLPwGk
+	jMbpCyDzVljsWHHxyzRJNHeXKo1TGr8QBNCA1GSJ8DAWTU2tvjDzliWkvxm2WwpLodBh4MN5wyE
+	3xEzPFXl9SFI02GKItSVvPrpc4WQ6XV82+AHzS9GDu9JjHr/FP/uPgpUqLUpcplgCQP75je2m7S
+	mwFpe1UTQ+9qb0pvzbzmx+SlLIiG7FTeXE0Zuv2RdkDJ6FFVCAweFD5Q9d2/OdRMGs37ps/Amth
+	1FxGftGWMoylLvdtW/xRsi4u+Y+gpbkqZGAGEmOmFvKp07J0npQWAdv7xdlAGNMxsxkp9tp7hgd
+	J6Evmt9zQ0gJ0qX
+X-Received: by 2002:a2e:8814:0:b0:38d:fca1:4a6c with SMTP id 38308e7fff4ca-39561d4c2c0mr1883961fa.17.1778796964118;
+        Thu, 14 May 2026 15:16:04 -0700 (PDT)
+Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3945c8d87efsm9789071fa.12.2026.05.14.15.16.03
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 14 May 2026 15:16:03 -0700 (PDT)
+From: Harald Nordgren <haraldnordgren@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	gitgitgadget@gmail.com,
+	haraldnordgren@gmail.com
+Subject: [PATCH] fetch: add fetch.pruneLocalBranches config
+Date: Fri, 15 May 2026 00:16:02 +0200
+Message-ID: <20260514221602.9918-1-haraldnordgren@gmail.com>
+X-Mailer: git-send-email 2.54.0.106.gcfa0dd594b
+In-Reply-To: <xmqqqzndel8c.fsf@gitster.g>
+References: <xmqqqzndel8c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] trailer: change strbuf in-place in unfold_value()
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Git List <git@vger.kernel.org>
-Cc: Jeff King <peff@peff.net>
-References: <9629b0c1-b28f-4cd2-8d59-67d909ca9052@web.de>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <9629b0c1-b28f-4cd2-8d59-67d909ca9052@web.de>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfJEdh+1wuMIDfiLLGOo015TfXGkgrethfQts8uO4eohSZyEys/5qn2R250PdVQ1gcU6lZvWuNJIKLT67xf8A0RCqZBcYSBkerx84S0e1LOdthX4SPU9R
- SucJfiByje6m2ogRd42VMc8NPfbRox2E8Cg7qy6ziZynh65XE3rxwt69WtajT5pS7OKPz7Fi3qHoVDqrCN+TIAgW8mj7G25vHMA=
 
-
-
-On 14/05/2026 7:40 pm, René Scharfe wrote:
-> Avoid an allocation by doing s/\n\s*/ /g (replacing NL and any following
-> whitespace with a SP) right in the strbuf instead of copying the result
-> to a temporary one and swapping them in the end.  We can safely do that
-> because the replacement is never longer than the original string.
+> I also wonder if, given that "=" in anywhere other than three-level
+> names, is invalid, we should just start accept
 > 
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
-> Formatted with --function-context for easier review.
-> Inspired by https://lore.kernel.org/git/20260513185408.GA147423@coredump.intra.peff.net/
+> 	git config foo.bar=baz
+> 	git config set foo.bar=baz
 > 
->  trailer.c | 16 ++++++----------
->  1 file changed, 6 insertions(+), 10 deletions(-)
+> and interpret them as
 > 
-> diff --git a/trailer.c b/trailer.c
-> index 470f86a4a2..b89fa12fe7 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -988,29 +988,25 @@ static int ends_with_blank_line(const char *buf, size_t len)
->  
->  static void unfold_value(struct strbuf *val)
->  {
-> -	struct strbuf out = STRBUF_INIT;
->  	size_t i;
-> +	size_t pos = 0;
->  
-> -	strbuf_grow(&out, val->len);
->  	i = 0;
->  	while (i < val->len) {
->  		char c = val->buf[i++];
->  		if (c == '\n') {
->  			/* Collapse continuation down to a single space. */
->  			while (i < val->len && isspace(val->buf[i]))
->  				i++;
-> -			strbuf_addch(&out, ' ');
-> -		} else {
-> -			strbuf_addch(&out, c);
-> +			val->buf[pos++] = ' ';
-> +		} else if (pos != i) {
+> 	git config set foo.bar baz
 
-Hmm, isn't 'pos' strictly (always) less than 'i' here? (note the post update
-of 'i' when setting 'c' at the head of the loop).
-
-> +			val->buf[pos++] = c;
-
-So, this (non-newline-or-'trailing'-space char) is always copied.
-
-Not that it matters much (depending on how long the first line is, I doubt
-the difference is measurable :) ).
-
-[Unless I'm not reading it correctly, of course - in which case, oops!]
-
-ATB,
-Ramsay Jones
+That sounds good too! Probably even better.
 
 
->  		}
->  	}
-> +	strbuf_setlen(val, pos);
->  
->  	/* Empty lines may have left us with whitespace cruft at the edges */
-> -	strbuf_trim(&out);
-> -
-> -	/* output goes back to val as if we modified it in-place */
-> -	strbuf_swap(&out, val);
-> -	strbuf_release(&out);
-> +	strbuf_trim(val);
->  }
->  
->  static struct trailer_block *trailer_block_new(void)
-
+Harald
