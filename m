@@ -1,89 +1,80 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [188.165.51.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D3D3E3150
-	for <git@vger.kernel.org>; Thu, 14 May 2026 13:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778765435; cv=pass; b=lQLvXDtCvXLwnnvzpObiimNZe2m/ismNSLuOg8E+9t+Fobyi6P+uODweCv+37dF5Qe0BK7a9hUj4kKPUClyuapGp3xehQu9Tmt1uJ+4VWbRQJ5HS5JXNlBDuxFLpmxGTXpMSGsnzzDTGp6Q+dfC/vOFlodlJeEH9dFEEepSxyXw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778765435; c=relaxed/simple;
-	bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=fjq1lPmnRue9+Wbvk0D7bR6112bLRtlZseBqsJgJHaYuPVtFGGSF17UpBny4ilCRKmhNTdTxnicTz8nPPqm7+2l3VlRvypwHGI/2OSQ/QbM1J1ko0kRtAHK0tZMdW8ClOGduQMlwouBvlSnoCkV0ZZehxNdN8v/MtKve/dSu4HY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HKVKMibZ; arc=pass smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C083D3490
+	for <git@vger.kernel.org>; Thu, 14 May 2026 13:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778766202; cv=none; b=iWj3a9nHOq6NhQmJCG40MMUx8TccTYdk+Smmt25GgNW3/2tYrpcV/fwSPsr3riUnHagIgwBswV1A2opildazzDp62iIDQXRs81LEQDCpNMf7WquBlzBjBNmDctDU/gzs8u63hPHnwuCLGbvbBFmmbB6qD+g0sNcQO9xANMwhj1I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778766202; c=relaxed/simple;
+	bh=AvPiuqkgjo5CWkd9kErip4/EqJaSanl07H7r4iL8V/U=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Opy23HZJrCsBFyfFamF0veY5UL9nLgPvZAa74lEQsGnfY9sB5TyRkscu32IaFukjYn5hhJM6/O0w8DaLCZwTGNQljChUOwWLOTtt7z15ZAz5f6AT6LmADA1LiwWrsb0sSFijI6PY8fThBzIp/iYdhG8AjKMSzKtc16++yvM9usw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=WjW3MpnR; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HKVKMibZ"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5a4113ab355so7666714e87.1
-        for <git@vger.kernel.org>; Thu, 14 May 2026 06:30:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778765429; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ObdEbunrFXDvzSgqWatK0iJdjIa/8GSFb/6DWxjuDcSDRqd6mdP4aDQrsjP9rccBtC
-         jSVyARRRgUkYP6HwU3awzQ8lIe6oarcTK6BdprHL8I9g2ntBf4yAC3e54oiNDMzD+q12
-         5roLHtehBI0DonBtXnTTiN6a8gxvIQwFduthgnB/OPkktBfQX9wFkykaTntJH7NA5EYx
-         c02mz3OWlAXRnMsZUFj02qS8iWJP2SRwschfg8XYi6w1rYUgSRlztqsaeeLMrXQBsxlX
-         7Vnv0SMLO+PtPXDNcImkQ9Moq1xIXAZhHgGgmwrIIkPX1SeDC7IGi/nHK16rSAzc9BJ5
-         WF7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=QiRqv6pUVk6o4L7YFilpX5Q4qSjcj9yzECQ15MQ6BOE0tCIj5kkE3OI7+/CaGjZ0jA
-         D1iIXi0x1c+cRbzA33CGekXaR+v8YGXxXRM4NKIFqGNkwjAyz30gYUl0lzF86c9pGrjW
-         e0KCtfOND91Rf+pX1vnGf1zfti9W908FNBpqlLd0P27W0CzHxAcA6R2U6rs87mrIW0gQ
-         orZniiAEMrswgl5iBwXQ81VFvjDwPDJUc+H4ErjziJC3+DXObobxtty8ijUhWhkFDyzJ
-         dABr3wqcjs6TzZBysB4/sBxIfGEL3a3++SM1vM5TMq4YKkUNMqA6jsQqXggzqEnmxwDA
-         IIUg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778765429; x=1779370229; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
-        b=HKVKMibZWzoZoSm/wsHaeZ9JKnEf4TAokzsK4NEblyctENzZp7T7ZpetXjlrPEKjls
-         oP/sJ4xlYUyWBGkq56SMNNMlMkd+mHiFcb7v2wbqFNVcIKibwFaRXlbnOIByrCOPdEZq
-         mdCYlexA/US02Nh8wCJUmrzrTJi2vw2CBze0H8s+6XDBsWxDU2W9BUeckROU2hiLtYF3
-         SiBS0/Os88oR+4Rxnm06eY7ajCWm86R9mVSIpJU1StQqkewlUg1MTunzKob6Y5fveq6n
-         4WQUaASwWnSEGXlqsVsqM7S5zy/VsKPB0VTZcRLxRIFU3V9pCq8qmavOTTqrggNrAZG/
-         XvWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778765429; x=1779370229;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hy5Dpe3PfCtfedSpOotAyvf9ErOig2fA602NhJRaS/M=;
-        b=OUVkomXIXxrkWuo/xlSMURclsvmTTqRxODvS4AEhcyt6KXt+2wZJ2slr6pCzlE6Y8/
-         u/dAh7/ixX7/fL6EIKxSRO9au2t5HmGDmIrF3taRnAk1pVWaAOqAP+KAIdM/5BredULN
-         RMCwd7ssWrCDcvIvuCiZVPOlnWp6QZqmu3C40AcKrXQDCkKl8nxqUEerLn8shT4q9+Vn
-         PexcPsLofrIiHLssHlJRJWs8p+yTqvBQwhi3kYeP9U5BTrkZ+952oARB97BScawdJz0M
-         n+u323osIQMZU475HAE7P+m8z0DZ+hv7y/dUyehKFEe7OCojOIEGg6EH2nc4A+ztI9CK
-         /svg==
-X-Gm-Message-State: AOJu0YzYP5LBhbbfUPIv6KkCBsLTgVt13l8oHXxh8i8H3YSWL/8bT9Sh
-	c+vZKinK7/a8myZ5g3k1dni1fBSvsaLXuOa0ugKb3R8f5bpg6FuoXcueCm2caEouwIUDekhsMvh
-	UY1Qzfx1CiIKVt/vzr05HVxGRjsuCv2Kozx2P
-X-Gm-Gg: Acq92OFDiARASjumPoG5bFwEcucJ3O+8pKClC0kymjfm3eNsDoYF4ekPMx8HDirT74S
-	7eXSH92EafAu5MlHPXL8VIXne/FW++KQZ3Zw/qi/gC4nL5c2z9UIeDzYfWmE8028k4lmd8ZLTzI
-	LnHMEzjn+IRlKdk3M52/EAC4MC1hPMUE0wtUqlUTU2wTNiOqoOYqmhaQm/FkDth0WX8qI0jahRI
-	qZWkOhA9OedZ/H9m1X3twdIcwtLNFH7RSPRvdtJWrFVKr/itXKaAUnNil8cbkm2OzbjeD3RaDp8
-	Vts2Ig==
-X-Received: by 2002:a05:6512:3dab:b0:5a8:7b52:946c with SMTP id
- 2adb3069b0e04-5a8ef9a8b96mr2609848e87.22.1778765429259; Thu, 14 May 2026
- 06:30:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="WjW3MpnR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1778766181; x=1779025381;
+	bh=AvPiuqkgjo5CWkd9kErip4/EqJaSanl07H7r4iL8V/U=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=WjW3MpnRrmjaeiF2qvMBe7HC+wm1Nx/I7pm83OTXngGd5TIVnB0Dlglgd78g66yby
+	 F5HUES2EX7+XhkZ75IW5yWcYY3hCnSebIvaFSEGgGvCQiKyByfo9wdYIigga4Kwwjs
+	 vxsoXqZnV5puRpNoyYq5dsOzYd7Pey4BvsF/64q+EmClSqAhfbUoCZ4x4KGomINn6M
+	 mD54bCneWea8MUBlOZmTtWIZAyZPQhkdMZD9fCmXZQG9JfjyzP5O+xpcZRv2d4HoO1
+	 EJKjEoUO7Aocqr9xMSk5W0XmFui9q8kqpSRzse0/twfsmaSvZb3l9RbyLdPMaQrg+E
+	 9Yp1j4mMwEy8Q==
+Date: Thu, 14 May 2026 13:42:59 +0000
+To: A D <diop.alpha@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+From: Chandra <Chandrakr@pm.me>
+Subject: Re: I object the social engineering from Master to Main
+Message-ID: <9vgoWrgWYPUN9Hyss7Tg81TfUYy2h9mjMDx7cgI9LyjRz6tA5IDJpVwfzm1xz9CuPTz1DONlAIOPkdrR7FtkODcsRVCi4PAt53hRGClCp5U=@pm.me>
+In-Reply-To: <CANULcizX5J5zE+QgY9TOvqpjrcJM3uFOOAWRJzOW2rBweg2WNA@mail.gmail.com>
+References: <CANULcizX5J5zE+QgY9TOvqpjrcJM3uFOOAWRJzOW2rBweg2WNA@mail.gmail.com>
+Feedback-ID: 10057713:user:proton
+X-Pm-Message-ID: 5d826b93bf568886e94ee79625ce3abf96e57cef
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: A D <diop.alpha@gmail.com>
-Date: Thu, 14 May 2026 13:30:17 +0000
-X-Gm-Features: AVHnY4KXJCWgMKAOYhD-G5BgEsnaRfUAsv1ESN4JTN_U460UwRcKcZLmqwozPdo
-Message-ID: <CANULcizX5J5zE+QgY9TOvqpjrcJM3uFOOAWRJzOW2rBweg2WNA@mail.gmail.com>
-Subject: I object the social engineering from Master to Main
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+I am strongly in favor of changing master to main. As a person currently in=
+ a country where 14 million of my people are enslaved, who also had experie=
+nces living in a factory as a child, with many friends who are descendents =
+or have their own experiences being trafficked, this is one of those things=
+ that causes unnecessary cognitive ergonomic friction. It's a bandwidth tax=
+ for anyone not privileged enough to know only freedom.
+
+As an engineering tool, creating pointless cognitive bandwidth sapping is c=
+ounterproductive.
+
+This is not just about history, this is about the present, where even in Fl=
+orida there are 700k people who were trafficked in the last year. This is n=
+ot just about the sensitivities of the privileged, but also about preservin=
+g the cognitive bandwidth of those without it.
+
+An engineering tool should not cause emotional recoil just to use. Accessib=
+le and ergonomic design standards ought to be upheld to support seamless us=
+age for all who use a tool.
+
+Thank you,
+
+
+Chandra Kethi-Reddy
+@archonphronesis:matrix.org
+
+Sent from Proton Mail for iOS.
+
+-------- Original Message --------
+On Thursday, 05/14/26 at 19:00 A D <diop.alpha@gmail.com> wrote:
 It is not your role, as a tool, to try to engineer society through
 warnings or changes of names. Your role is to deliver solid, reliable
 versioning, that's it! Leave the rest to spheres where it can actually
@@ -102,3 +93,5 @@ warnings to yourself.
 
 Cordially,
 Saliou Alpha Diop
+
+
