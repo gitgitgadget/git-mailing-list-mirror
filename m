@@ -1,97 +1,94 @@
-Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [188.165.51.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C083D3490
-	for <git@vger.kernel.org>; Thu, 14 May 2026 13:43:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B206C401A36
+	for <git@vger.kernel.org>; Thu, 14 May 2026 14:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778766202; cv=none; b=iWj3a9nHOq6NhQmJCG40MMUx8TccTYdk+Smmt25GgNW3/2tYrpcV/fwSPsr3riUnHagIgwBswV1A2opildazzDp62iIDQXRs81LEQDCpNMf7WquBlzBjBNmDctDU/gzs8u63hPHnwuCLGbvbBFmmbB6qD+g0sNcQO9xANMwhj1I=
+	t=1778768934; cv=none; b=VvclixckUXno8uAijyaP9Df+a9YCzLvfsrWu708l8LDw49P52uqLWDFIu5Jqo37FdxAr9Kqrq7a9WnnvaR57cjridIl7uLNR6ZC7jk+K2zDDgi0bC/+4FFJbUg3N0G9ffL11yhKYndh1NApPY/QDSUIivX0xRARqXwKw6lkXy2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778766202; c=relaxed/simple;
-	bh=AvPiuqkgjo5CWkd9kErip4/EqJaSanl07H7r4iL8V/U=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Opy23HZJrCsBFyfFamF0veY5UL9nLgPvZAa74lEQsGnfY9sB5TyRkscu32IaFukjYn5hhJM6/O0w8DaLCZwTGNQljChUOwWLOTtt7z15ZAz5f6AT6LmADA1LiwWrsb0sSFijI6PY8fThBzIp/iYdhG8AjKMSzKtc16++yvM9usw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=WjW3MpnR; arc=none smtp.client-ip=188.165.51.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1778768934; c=relaxed/simple;
+	bh=zSwEQnY9/0YzZElQrAy47wOMpn4EPl5+m1FgpFQly4E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BHUlVZFC+3dsowdQPAYF9QJRPxkeNzbPu90kl3GWb0DUB76xU0Y9D6X3Gla1ES6cUIPvmY563py1nThoHxLPxW7T9Zqj+7CCzQHI9b8g8LuHky9Mz2yrjYGsrGWVj5RvoNCmbnUbFZpSlgPl+NY7NIrDJhVcV8RH2rla9F68R7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qsTo43oP; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="WjW3MpnR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1778766181; x=1779025381;
-	bh=AvPiuqkgjo5CWkd9kErip4/EqJaSanl07H7r4iL8V/U=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=WjW3MpnRrmjaeiF2qvMBe7HC+wm1Nx/I7pm83OTXngGd5TIVnB0Dlglgd78g66yby
-	 F5HUES2EX7+XhkZ75IW5yWcYY3hCnSebIvaFSEGgGvCQiKyByfo9wdYIigga4Kwwjs
-	 vxsoXqZnV5puRpNoyYq5dsOzYd7Pey4BvsF/64q+EmClSqAhfbUoCZ4x4KGomINn6M
-	 mD54bCneWea8MUBlOZmTtWIZAyZPQhkdMZD9fCmXZQG9JfjyzP5O+xpcZRv2d4HoO1
-	 EJKjEoUO7Aocqr9xMSk5W0XmFui9q8kqpSRzse0/twfsmaSvZb3l9RbyLdPMaQrg+E
-	 9Yp1j4mMwEy8Q==
-Date: Thu, 14 May 2026 13:42:59 +0000
-To: A D <diop.alpha@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-From: Chandra <Chandrakr@pm.me>
-Subject: Re: I object the social engineering from Master to Main
-Message-ID: <9vgoWrgWYPUN9Hyss7Tg81TfUYy2h9mjMDx7cgI9LyjRz6tA5IDJpVwfzm1xz9CuPTz1DONlAIOPkdrR7FtkODcsRVCi4PAt53hRGClCp5U=@pm.me>
-In-Reply-To: <CANULcizX5J5zE+QgY9TOvqpjrcJM3uFOOAWRJzOW2rBweg2WNA@mail.gmail.com>
-References: <CANULcizX5J5zE+QgY9TOvqpjrcJM3uFOOAWRJzOW2rBweg2WNA@mail.gmail.com>
-Feedback-ID: 10057713:user:proton
-X-Pm-Message-ID: 5d826b93bf568886e94ee79625ce3abf96e57cef
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qsTo43oP"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8b6c9fdb68cso73169926d6.2
+        for <git@vger.kernel.org>; Thu, 14 May 2026 07:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778768933; x=1779373733; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+ZixOL4ZqDswk3X0usShl8fCai416x6Oy9hXP//Ypqo=;
+        b=qsTo43oPavY+cZPiDUFUXcnLUI0GcKS8PtXOVuUxnOfZYtxLUaPbQ+EkhQLxk+4wCw
+         glQPfNkCZXDEpv4omFAPzIUXbNCqS6MPzXZLthclmP2WicMt72dA8pPomA4FF6VIWlqH
+         SAU79Mc0dK5LMd9LNzfyTmIqB8SF0got9g1XRqegAPzWKTaobW2eh9/ibFYN1aQL3TAC
+         I4aKXyzuZN9pkwYagWKoPpYHY0NTao702K3TjyQ2Yj0JIkL1pylnh/2532A3E+LLTL8Q
+         GNZcXZ4PmFA1uUovnzTcCBZYULWlZU989QEDV0L56hhFuTFtYR+hT2y7ttvUeatOmweU
+         6m2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778768933; x=1779373733;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+ZixOL4ZqDswk3X0usShl8fCai416x6Oy9hXP//Ypqo=;
+        b=RcYWL9A+UQOkK3WM2tEhuYM8WQp8AxF3L9gU4+zF89O5nxZANcRRBUaMvdC+jOTug7
+         6xHzf39CeIHF5Z//MF+wDn4NixuxLltkqHH+SIlmxSwYHBCxXrc4To9DwfHjpSKGY5/H
+         j7myA0JklKTMzR1/bnLNRcx9kX2W0lFB1l4rEyoMavepnKkWiG8y7z55pfI4/f3xmhoZ
+         IppndXr76ERtA+NOR9a2Edj5rahs/jsaiqOYTWb25ZPKqeQdqpUtnewgTR6WXdCt3zNz
+         X8jwfvV2amgnDK40MOKXWfHfCZG6pGlL2MNNLLvzVdIWiNXYHtgVbX2aJmVXdsa/BtEI
+         J17g==
+X-Forwarded-Encrypted: i=1; AFNElJ8KeEwTvR3NM5lQugMn60pAVr+mux83L2HISTtjJEelfLOL618JvJEgGJaCrcTi+OZ+QQ0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywsz7UfhJvt5YRx7S4TLhQ+/sespCcwn4TxLv4eT7q+B4YQVS0/
+	pAQO3EzQ5GwpEtVBATeplCssqmkpr2i4t9h5c97eIJBSVFREgEzXR4wz
+X-Gm-Gg: Acq92OEHYklrrDO61YVIxQqHJG8cGAUIGIHofk7p+G8DqrAIrdtfrDpKFZCd4CCJ9TW
+	ca6NzvdJN2jsEcUzk1ddMlWEOGvBn91xdev7JEFWdNtjMJD3fsDqFWXFidITMUf0/klkA66FRt6
+	Y70Ptbih9/EZUJvSXE/6NELc8hsWjVPQ6+5+xxMQ/QnpfaxG311AE8pJrfQ0WUjX6k/Gv72/aDN
+	xttHFbi8D5PfYvQs3Po6DbajMpQAucKBleZBmrqfVWUqX50o7siJnLFkH0A/cH/ocFiCtsaHvBx
+	ckYMX1wqvBR3gskyNADZzr5oLeqFAEx/9HGFZV6YcS39NQk75g4Tuc/isdBoBOhCeMZfSDerN3n
+	0J8xi0ejOEH4HoXphfewexEDYyjBiOmcOwd7ztTHWc5Vmrs/HJRUSALeEdRobnCF+DNn0XtXeRH
+	V8TVHe6dnv9Ft1Uvf5mFxcB+eEHed9C0hSLA==
+X-Received: by 2002:a0c:e004:0:b0:89a:9ef:1922 with SMTP id 6a1803df08f44-8c7dfdbbfc8mr106734626d6.40.1778768932591;
+        Thu, 14 May 2026 07:28:52 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100::59a? ([2600:4040:264b:4100::59a])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90b2dc468sm25121606d6.30.2026.05.14.07.28.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 May 2026 07:28:52 -0700 (PDT)
+Message-ID: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
+Date: Thu, 14 May 2026 10:28:51 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/3] git-gui: robustify startup and fix environment
+ handling
+To: Shroom Moo <egg_mushroomcow@foxmail.com>, git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>, Aina Boot <bootaina702@gmail.com>
+References: <tencent_DDD6467B3F6184562B51C23BB9DBB79EA409@qq.com>
+ <tencent_66A1C2CDB9D5B764A5B4468D3F11845A2A09@qq.com>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <tencent_66A1C2CDB9D5B764A5B4468D3F11845A2A09@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-I am strongly in favor of changing master to main. As a person currently in=
- a country where 14 million of my people are enslaved, who also had experie=
-nces living in a factory as a child, with many friends who are descendents =
-or have their own experiences being trafficked, this is one of those things=
- that causes unnecessary cognitive ergonomic friction. It's a bandwidth tax=
- for anyone not privileged enough to know only freedom.
+On 5/9/26 9:37 AM, Shroom Moo wrote:
+> Shroom Moo (3):
+>   git-gui: restructure repository startup
+>   git-gui: disable gitk visualization when no worktree available
+>   git-gui: handle GIT_DIR and GIT_WORK_TREE early
+>
+>
+After careful consideration, I find starting off by fixing what is broken in git-gui about
+using a bare-repository, and letting git core handle GIT_DIR and GIT_WORK_TREE, leads to a
+much more complete and different solution. A patch series (attempting to) do so will follow.
 
-As an engineering tool, creating pointless cognitive bandwidth sapping is c=
-ounterproductive.
-
-This is not just about history, this is about the present, where even in Fl=
-orida there are 700k people who were trafficked in the last year. This is n=
-ot just about the sensitivities of the privileged, but also about preservin=
-g the cognitive bandwidth of those without it.
-
-An engineering tool should not cause emotional recoil just to use. Accessib=
-le and ergonomic design standards ought to be upheld to support seamless us=
-age for all who use a tool.
-
-Thank you,
-
-
-Chandra Kethi-Reddy
-@archonphronesis:matrix.org
-
-Sent from Proton Mail for iOS.
-
--------- Original Message --------
-On Thursday, 05/14/26 at 19:00 A D <diop.alpha@gmail.com> wrote:
-It is not your role, as a tool, to try to engineer society through
-warnings or changes of names. Your role is to deliver solid, reliable
-versioning, that's it! Leave the rest to spheres where it can actually
-be done without weaponizing your position or your audience.
-
-I happen to be black African myself, and I never had any problem with
-the term "Master", and its history for literal decades. The term has
-been used in Computer Engineering longer than some of you have been
-alive, and I see no reason to change, or to nudge people toward
-changing it, just because it offends the sensibilities of some of you,
-who I very much doubt are even black in the first place.
-
-"Master" is a term with a history, and it's cool, if some of you are
-offended by it, change your repos, but leave ours alone and keep your
-warnings to yourself.
-
-Cordially,
-Saliou Alpha Diop
-
-
+Mark
