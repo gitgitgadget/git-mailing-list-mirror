@@ -1,69 +1,69 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13A233E355
-	for <git@vger.kernel.org>; Thu, 14 May 2026 16:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB7D33D4EE
+	for <git@vger.kernel.org>; Thu, 14 May 2026 16:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778775936; cv=none; b=Rau/NKOAlU1DxV4WxjskMIbtYO8fXcFLYSfqekx3hv5xA/YQZChsV8lbFKgoWrpkkR1GlIcQP5YecffMwzFQ/KP5gFdikW3+FKpM4UUjPIQ1xq68lrnVEq96xvAQMtFFPUyNXHYdUpC0DrnsV84rNPPjjUiDq3SAw+q+CdjsF8M=
+	t=1778775937; cv=none; b=MB8G3S6LiMWQQYdyQPdoWdgxzaYezfmGmGOxyi9+eneAAGJb1d2IPeXFZVYIjTvx8YOv+EvL8Rc0tzdSZT6iKKXAatkE2ETIYnaguVBpDJrSMYYWLOuD2NtZlTSKtAXXtZw5syjlc8LoL8cwalJTWvlVDzwTEsqkxs0+ENZwaU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778775936; c=relaxed/simple;
-	bh=bn71+8rLW9BXb1C1orNeXDP3HhMJYkpySMNIwuD/+Ww=;
+	s=arc-20240116; t=1778775937; c=relaxed/simple;
+	bh=Qm0eGHAVSdyUrW7F0ZGK9wLfsoqLoA/TplGhG4121K4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Oaxe/I1gSYQgW3T0vv/M9KomwdJE9O6G2iTNTefJlIouq+uhGIwcM+nnzhUtg5zEbauBXh2VNkot5CcJebIG93Ie5dSE+JALIBuoal3PF7186wBNiu6VVSUyOyoDaga+OynO79+iouKw+5QgvvAzdJ/iEnmn8bNzua5qDo2N0l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q1fvq45F; arc=none smtp.client-ip=209.85.216.52
+	 MIME-Version:To:Cc; b=He5lVaT2vMF1/kV06XXhPqMsJxtYGiU4YZ0UhvbC30sah8LPd1pLROaVfqSsZ8CMUO7aJ+v3VIZaymO2+uyiP4T2mFXMuM3qDi3VFJDmCvTs1DPF2F+ZwxX/26rQfrl0n+bSNNAVdj4ut56NJNMl70Xb6GQIqkE23j6PGVtW4Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOBOed6y; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q1fvq45F"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-36643b96b99so5952439a91.0
-        for <git@vger.kernel.org>; Thu, 14 May 2026 09:25:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOBOed6y"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2b941cd869cso52436425ad.1
+        for <git@vger.kernel.org>; Thu, 14 May 2026 09:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778775934; x=1779380734; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778775935; x=1779380735; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OGGmqRtBf0dcXGRIZ3NjBu1USNSPjvGZ4jlaR9rQ8Cw=;
-        b=q1fvq45Fd+RAzRUcrmBANRqZJlE3xmDiuw45g0JyT3PKGG8Wry2SpcWXUneOTDA2VN
-         uGA0Iy4pwC0qfBwVh6Xjef+CRiPh+GlSqoTMSXLfCvCsNw3kJ+N42afPBt0qRpZXn/Mc
-         bfbOrAysVeVa0QHhJNybFF1qWS2EnW0jKkSJm3e5gjh+P++8fmreA88V+CZwl8WuI3cV
-         OAFncJfmJwAilvniyGIpheaJq8U0rhTd72VtMyKZCOhT75a5czfmazF7NejuP6QSHgyT
-         dwkqF29xJ2+qWWSZSSwE9xb6Yb1shE9hMVazfF7AyyspKI4pdIyzfapVOmELXJ0A6x8O
-         NYaQ==
+        bh=DKnZaO9bMaseUMEJwzpr+i4s3fSXM02NxS/c6DjmBog=;
+        b=TOBOed6yOoX6+tjQ/ibfp5SlVEpD4ELcpWjszoAzSCj8CL+QhqwBQn0HCPnGwW4vuf
+         +WH2FGWREpIsWazbtnJVyBdU5vbgVLIys5AsqtrgjsOTHRALFPzptN6w2rWCIEqys7KO
+         s2dXT0rkTGbtrJtrVIPNGZz7MU+MrQpflMeNzobuBRAfnymajtlAFFWOuSZ1UqHr5VEt
+         7GuW/KhVsWvE0pkGQfARd1iRqN+PVqKWOEw64oLnC1Yp1tj8h6rgFRc6Sgh7PLdnV9Ch
+         sYKvR+bJsVoUoAZQ9ohrcthMtELr5FSaMXj7o1wIqLhTeGt3s5kf5h4mAy/dFkotyMlk
+         zc6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778775934; x=1779380734;
+        d=1e100.net; s=20251104; t=1778775935; x=1779380735;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=OGGmqRtBf0dcXGRIZ3NjBu1USNSPjvGZ4jlaR9rQ8Cw=;
-        b=OmhO/5VbFqzwG+GYVwhK7LqVeigGTBSXhMVhnY0HsP/SS76xMgmxMAARDBdytqOt7J
-         5BsyO+quH6Ia+Cu1zo1R3f+T45lqKEuSq+KByj2j5yK3RBtYo/++YIsHMaq8DJtfA/2z
-         leSanu9jLoy/FaAbcng/4gwXU1CYHhVTDBeB7JmnhJmTg/xWNU1IZMGXAJVx8Vj7V8mn
-         JKzPRwC29MpOSzSzXJBcpDbjgyFs5QQHXlyK8qkf8Ewq2lOe7UZKiDuS7cl4tsKENsmK
-         tLlf24FHrs4zavPX4ZCfzL/QdMnmqY1yDLs47vC772RZFYWGjeA2AaOANlZp77+M2mWf
-         xuNg==
-X-Gm-Message-State: AOJu0YydiGl12FhhXozwszRomRSNuBhBVeinVhh74T7FSYQF8X5KspwN
-	nNyxAsITRJgU3TSKcu31XA02bS5d+lJTqZ0/yvBVz7fLJNoJlbe6UBhZ0kU/fQ==
-X-Gm-Gg: Acq92OHi65yFzmfdw7oG5ztC+I4pV3mIAWg7wKVb/i6A/a+SMWIP6+/CYsSZf0btqgh
-	LerDrtyfxl3/r9YL7Yz796pR3LRBNhbELnFAXnp7ZpKyFbOvLSwJ9D3B2L1FRNrtjX0CxZl0q2T
-	VoYt3t9agGJeYZkj8U8Qagxt6L4YiZd+y5fjTIBzJrmJpvVfqYa0Nj2hMvq2tAJSnK7aqRlP37z
-	qa+KFRWKRKtpV9BCuwpVA3QHaMBA8ZxjPm1dXZ9EF07jdHy+Hd+/qVJY+ZfENzlyY2bYvLnt9XU
-	Q+8Px5rMYbL0+iOivokZ4N5A/rysRcjDJVfIUoaBsT62yf+sJr2Je87ayyCwR6tJUXgdqXCaHR7
-	02mGX1I1v0z6m9H110EV0GkjKYyIhIKZO7/zu5N3ehFQE7WLO12RYy12NXmny9oMyxral96FxSa
-	sMtabhS4By+Cs+FIsmD60c9Vtw
-X-Received: by 2002:a17:90b:5486:b0:35f:c729:de9b with SMTP id 98e67ed59e1d1-36951cabdd1mr75259a91.20.1778775933929;
-        Thu, 14 May 2026 09:25:33 -0700 (PDT)
+        bh=DKnZaO9bMaseUMEJwzpr+i4s3fSXM02NxS/c6DjmBog=;
+        b=MO4JK2yCOtZtxXXHAJhxgyxMFYspTw5cJIq3gWRTTYO83DjWvLyqMXMwvHcdZmrFot
+         FOGjID79YVOjHG1Ntuv6xxTvKOgTk8+4O+Dt6hF3pQaHD96oEBocrfm312wFCUTUgFvK
+         oX0+4SlU0xgg1ixrNrO2D2NtG7jYgneiTKXCAK/oZtPkEvWm2uKmSbG8oou2Wsrdj6Wh
+         6tGGYewRSgiqt2a1v+fvpvKVYsMB3JEycFnWt6IOmfcw9QkI1bCMfW7wfbSaOT5uM2Y+
+         xlWssqpJzsrl+3tPBxURusamgeumdUxGvsHbnNTe0GeFVfQSekphrBq9U7vGb4A3rBg5
+         Owmg==
+X-Gm-Message-State: AOJu0Yw/lRbI6OSmh0hNaOpEJSjOx0zQHilAfJiuVEAdklyCMBemLwAK
+	qOAvX0fX+vXQzA/tCCHI8YI3xwkBCo4g32KQg3AOOQdfN5pujWB5vmLurO83GEkw
+X-Gm-Gg: Acq92OFUBw8TFchRjIYXQinvNXgPgfohotBrSaMP0Qkx0dsH9uY7Rk6oOjmzLt1MxMC
+	42/tin0uq52PYazEc5u7AXzGYUEr9jEuY2OpghOqb7Nl4BtxNAcVvin5NUhZP5c6XtFpax2QlIm
+	HqfqGeDr9aUUokC4lC4HzlJWgal7pHRTCV1Vs4GGXE4mAcAIvKgxDJU1DA8rpouKeQt4tmMU3nE
+	CqfHG+uG9eDWHVme/vmayJB6RF04laUWvO0xWhamajF60K8NXGh5y8UnU99Be+5n+4q6nYRIbwO
+	C011lxIe2TOJJwQUVhBmZ95QSWddwgI6sbzaCZxSQQgDDeIZYSXlvnVwX0LPd3irQN0DpbquiMS
+	BPgTxunE9XaMM/aYDS7ah9/kZ8O062KAJphqwSiHTwdin7H/7c9JzpxKTF3To4p0eYBTxYYy4wT
+	deDyp9EMYM26T1GvISzAdvJymf
+X-Received: by 2002:a17:903:fae:b0:2bd:a5f:1d04 with SMTP id d9443c01a7336-2bd7e8aad34mr2562915ad.9.1778775935242;
+        Thu, 14 May 2026 09:25:35 -0700 (PDT)
 Received: from [127.0.0.1] ([13.66.174.86])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36951434f55sm114932a91.9.2026.05.14.09.25.33
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5d235e04sm30762605ad.80.2026.05.14.09.25.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 09:25:33 -0700 (PDT)
-Message-Id: <c0655e5d41012d6d11caa018d6f4b222426f2c7b.1778775928.git.gitgitgadget@gmail.com>
+        Thu, 14 May 2026 09:25:34 -0700 (PDT)
+Message-Id: <75d4ca7cff07a14b2f0beef4524623e541e140a8.1778775928.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2089.v3.git.1778775928.gitgitgadget@gmail.com>
 References: <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
 	<pull.2089.v3.git.1778775928.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 14 May 2026 16:25:27 +0000
-Subject: [PATCH v3 3/4] builtin/log: prefetch necessary blobs for `git cherry`
+Date: Thu, 14 May 2026 16:25:28 +0000
+Subject: [PATCH v3 4/4] grep: prefetch necessary blobs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,240 +82,254 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-In partial clones, `git cherry` fetches necessary blobs on-demand one
-at a time, which can be very slow.  We would like to prefetch all
-necessary blobs upfront.  To do so, we need to be able to first figure
-out which blobs are needed.
-
-`git cherry` does its work in a two-phase approach: first computing
-header-only IDs (based on file paths and modes), then falling back to
-full content-based IDs only when header-only IDs collide -- or, more
-accurately, whenever the oidhash() of the header-only object_ids
-collide.
-
-patch-ids.c handles this by creating an ids->patches hashmap that has
-all the data we need, but the problem is that any attempt to query the
-hashmap will invoke the patch_id_neq() function on any colliding objects,
-which causes the on-demand fetching.
-
-Insert a new prefetch_cherry_blobs() function before checking for
-collisions.  Use a temporary replacement on the ids->patches.cmpfn
-in order to enumerate the blobs that would be needed without yet
-fetching them, and then fetch them all at once, then restore the old
-ids->patches.cmpfn.
+In partial clones, `git grep` fetches necessary blobs on-demand one
+at a time, which can be very slow.  In partial clones, add an extra
+preliminary walk over the tree similar to grep_tree() which collects
+the blobs of interest, and then prefetches them.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/log.c     | 131 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t3500-cherry.sh |  27 ++++++++++
- 2 files changed, 158 insertions(+)
+ builtin/grep.c  | 143 ++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t7810-grep.sh |  58 ++++++++++++++++++++
+ 2 files changed, 201 insertions(+)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 8c0939dd42..e464b30af4 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -21,10 +21,12 @@
- #include "color.h"
- #include "commit.h"
- #include "diff.h"
-+#include "diffcore.h"
- #include "diff-merges.h"
- #include "revision.h"
- #include "log-tree.h"
- #include "oid-array.h"
+diff --git a/builtin/grep.c b/builtin/grep.c
+index e33285e5e6..85656d8d3f 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -28,9 +28,12 @@
+ #include "object-file.h"
+ #include "object-name.h"
+ #include "odb.h"
++#include "oid-array.h"
 +#include "oidset.h"
- #include "tag.h"
- #include "reflog-walk.h"
- #include "patch-ids.h"
-@@ -43,9 +45,11 @@
- #include "utf8.h"
- 
- #include "commit-reach.h"
+ #include "packfile.h"
+ #include "pager.h"
+ #include "path.h"
 +#include "promisor-remote.h"
- #include "range-diff.h"
- #include "tmp-objdir.h"
- #include "tree.h"
-+#include "userdiff.h"
+ #include "read-cache-ll.h"
  #include "write-or-die.h"
  
- #define MAIL_DEFAULT_WRAP 72
-@@ -2602,6 +2606,131 @@ static void print_commit(char sign, struct commit *commit, int verbose,
- 	}
+@@ -692,6 +695,144 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 	return hit;
  }
  
-+/*
-+ * Enumerate blob OIDs from a single commit's diff, inserting them into blobs.
-+ * Skips files whose userdiff driver explicitly declares binary status
-+ * (drv->binary > 0), since patch-ID uses oid_to_hex() for those and
-+ * never reads blob content.  Use userdiff_find_by_path() since
-+ * diff_filespec_load_driver() is static in diff.c.
-+ *
-+ * Clean up with diff_queue_clear() (from diffcore.h).
-+ */
-+static void collect_diff_blob_oids(struct commit *commit,
-+				   struct diff_options *opts,
-+				   struct oidset *blobs)
++static void collect_blob_oids_for_tree(struct repository *repo,
++				       const struct pathspec *pathspec,
++				       struct tree_desc *tree,
++				       struct strbuf *base,
++				       int tn_len,
++				       struct oidset *blob_oids)
 +{
-+	struct diff_queue_struct *q;
++	struct name_entry entry;
++	int old_baselen = base->len;
++	struct strbuf name = STRBUF_INIT;
++	enum interesting match = entry_not_interesting;
 +
-+	/*
-+	 * Merge commits are filtered out by patch_id_defined() in patch-ids.c,
-+	 * so we'll never be called with one.
-+	 */
-+	assert(!commit->parents || !commit->parents->next);
++	while (tree_entry(tree, &entry)) {
++		if (match != all_entries_interesting) {
++			strbuf_addstr(&name, base->buf + tn_len);
++			match = tree_entry_interesting(repo->index,
++						       &entry, &name,
++						       pathspec);
++			strbuf_reset(&name);
 +
-+	if (commit->parents)
-+		diff_tree_oid(&commit->parents->item->object.oid,
-+			      &commit->object.oid, "", opts);
-+	else
-+		diff_root_tree_oid(&commit->object.oid, "", opts);
-+	diffcore_std(opts);
++			if (match == all_entries_not_interesting)
++				break;
++			if (match == entry_not_interesting)
++				continue;
++		}
 +
-+	q = &diff_queued_diff;
-+	for (int i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		struct userdiff_driver *drv;
++		strbuf_add(base, entry.path, tree_entry_len(&entry));
 +
-+		/* Skip binary files */
-+		drv = userdiff_find_by_path(opts->repo->index, p->one->path);
-+		if (drv && drv->binary > 0)
-+			continue;
++		if (S_ISREG(entry.mode)) {
++			if (!odb_has_object(repo->objects, &entry.oid, 0))
++				oidset_insert(blob_oids, &entry.oid);
++		} else if (S_ISDIR(entry.mode)) {
++			enum object_type type;
++			struct tree_desc sub_tree;
++			void *data;
++			unsigned long size;
 +
-+		if (DIFF_FILE_VALID(p->one) &&
-+		    odb_read_object_info_extended(opts->repo->objects,
-+						  &p->one->oid, NULL,
-+						  OBJECT_INFO_FOR_PREFETCH))
-+			oidset_insert(blobs, &p->one->oid);
-+		if (DIFF_FILE_VALID(p->two) &&
-+		    odb_read_object_info_extended(opts->repo->objects,
-+						  &p->two->oid, NULL,
-+						  OBJECT_INFO_FOR_PREFETCH))
-+			oidset_insert(blobs, &p->two->oid);
++			data = odb_read_object(repo->objects, &entry.oid,
++					       &type, &size);
++			if (!data)
++				die(_("unable to read tree (%s)"),
++				    oid_to_hex(&entry.oid));
++
++			strbuf_addch(base, '/');
++			init_tree_desc(&sub_tree, &entry.oid, data, size);
++			collect_blob_oids_for_tree(repo, pathspec, &sub_tree,
++						   base, tn_len, blob_oids);
++			free(data);
++		}
++		/*
++		 * ...no else clause for S_ISGITLINK: submodules have their
++		 * own promisor configuration and would need separate fetches
++		 * anyway.
++		 */
++
++		strbuf_setlen(base, old_baselen);
 +	}
-+	diff_queue_clear(q);
++
++	strbuf_release(&name);
 +}
 +
-+static int always_match(const void *cmp_data UNUSED,
-+			const struct hashmap_entry *entry1 UNUSED,
-+			const struct hashmap_entry *entry2 UNUSED,
-+			const void *keydata UNUSED)
++static void collect_blob_oids_for_treeish(struct grep_opt *opt,
++					  const struct pathspec *pathspec,
++					  const struct object_id *tree_ish_oid,
++					  const char *name,
++					  struct oidset *blob_oids)
 +{
-+	return 0;
-+}
++	struct tree_desc tree;
++	void *data;
++	unsigned long size;
++	struct strbuf base = STRBUF_INIT;
++	int len;
 +
-+/*
-+ * Prefetch blobs for git cherry in partial clones.
-+ *
-+ * Called between the revision walk (which builds the head-side
-+ * commit list) and the has_commit_patch_id() comparison loop.
-+ *
-+ * Uses a cmpfn-swap trick to avoid reading blobs: temporarily
-+ * replaces the hashmap's comparison function with a trivial
-+ * always-match function, so hashmap_get()/hashmap_get_next() match
-+ * any entry with the same oidhash bucket.  These are the set of oids
-+ * that would trigger patch_id_neq() during normal lookup and cause
-+ * blobs to be read on demand, and we want to prefetch them all at
-+ * once instead.
-+ */
-+static void prefetch_cherry_blobs(struct repository *repo,
-+				  struct commit_list *list,
-+				  struct patch_ids *ids)
-+{
-+	struct oidset blobs = OIDSET_INIT;
-+	hashmap_cmp_fn original_cmpfn;
++	data = odb_read_object_peeled(opt->repo->objects, tree_ish_oid,
++				      OBJ_TREE, &size, NULL);
 +
-+	/* Exit if we're not in a partial clone */
-+	if (!repo_has_promisor_remote(repo))
++	if (!data)
 +		return;
 +
-+	/* Save original cmpfn, replace with always_match */
-+	original_cmpfn = ids->patches.cmpfn;
-+	ids->patches.cmpfn = always_match;
++	len = name ? strlen(name) : 0;
++	if (len) {
++		strbuf_add(&base, name, len);
++		strbuf_addch(&base, ':');
++	}
++	init_tree_desc(&tree, tree_ish_oid, data, size);
 +
-+	/* Find header-only collisions, gather blobs from those commits */
-+	for (struct commit_list *l = list; l; l = l->next) {
-+		struct commit *c = l->item;
-+		bool match_found = false;
-+		for (struct patch_id *cur = patch_id_iter_first(c, ids);
-+		     cur;
-+		     cur = patch_id_iter_next(cur, ids)) {
-+			match_found = true;
-+			collect_diff_blob_oids(cur->commit, &ids->diffopts,
-+					       &blobs);
-+		}
-+		if (match_found)
-+			collect_diff_blob_oids(c, &ids->diffopts, &blobs);
++	collect_blob_oids_for_tree(opt->repo, pathspec, &tree,
++				   &base, base.len, blob_oids);
++
++	strbuf_release(&base);
++	free(data);
++}
++
++static void prefetch_grep_blobs(struct grep_opt *opt,
++				const struct pathspec *pathspec,
++				const struct object_array *list)
++{
++	struct oidset blob_oids = OIDSET_INIT;
++
++	/* Exit if we're not in a partial clone */
++	if (!repo_has_promisor_remote(opt->repo))
++		return;
++
++	/* For each tree, gather the blobs in it */
++	for (int i = 0; i < list->nr; i++) {
++		struct object *real_obj;
++
++		obj_read_lock();
++		real_obj = deref_tag(opt->repo, list->objects[i].item,
++				     NULL, 0);
++		obj_read_unlock();
++
++		if (real_obj &&
++		    (real_obj->type == OBJ_COMMIT ||
++		     real_obj->type == OBJ_TREE))
++			collect_blob_oids_for_treeish(opt, pathspec,
++						      &real_obj->oid,
++						      list->objects[i].name,
++						      &blob_oids);
 +	}
 +
-+	/* Restore original cmpfn */
-+	ids->patches.cmpfn = original_cmpfn;
-+
-+	/* If we have any blobs to fetch, fetch them */
-+	if (oidset_size(&blobs)) {
++	/* Prefetch the blobs we found */
++	if (oidset_size(&blob_oids)) {
 +		struct oid_array to_fetch = OID_ARRAY_INIT;
 +		struct oidset_iter iter;
 +		const struct object_id *oid;
 +
-+		oidset_iter_init(&blobs, &iter);
++		oidset_iter_init(&blob_oids, &iter);
 +		while ((oid = oidset_iter_next(&iter)))
 +			oid_array_append(&to_fetch, oid);
 +
-+		promisor_remote_get_direct(repo, to_fetch.oid, to_fetch.nr);
++		promisor_remote_get_direct(opt->repo, to_fetch.oid, to_fetch.nr);
 +
 +		oid_array_clear(&to_fetch);
 +	}
-+
-+	oidset_clear(&blobs);
++	oidset_clear(&blob_oids);
 +}
 +
- int cmd_cherry(int argc,
- 	       const char **argv,
- 	       const char *prefix,
-@@ -2673,6 +2802,8 @@ int cmd_cherry(int argc,
- 		commit_list_insert(commit, &list);
- 	}
+ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		       struct object *obj, const char *name, const char *path)
+ {
+@@ -732,6 +873,8 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
+ 	int hit = 0;
+ 	const unsigned int nr = list->nr;
  
-+	prefetch_cherry_blobs(the_repository, list, &ids);
++	prefetch_grep_blobs(opt, pathspec, list);
 +
- 	for (struct commit_list *l = list; l; l = l->next) {
- 		char sign = '+';
+ 	for (i = 0; i < nr; i++) {
+ 		struct object *real_obj;
  
-diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
-index 78c3eac54b..3e66827d76 100755
---- a/t/t3500-cherry.sh
-+++ b/t/t3500-cherry.sh
-@@ -78,4 +78,31 @@ test_expect_success 'cherry ignores whitespace' '
- 	test_cmp expect actual
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 64ac4f04ee..3d08fd2a0c 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1929,4 +1929,62 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
+ 	test_cmp expected actual
  '
  
-+# Reuse the expect file from the previous test, in a partial clone
-+test_expect_success 'cherry in partial clone does bulk prefetch' '
-+	test_config uploadpack.allowfilter 1 &&
-+	test_config uploadpack.allowanysha1inwant 1 &&
-+	test_when_finished "rm -rf copy" &&
++test_expect_success 'grep of revision in partial clone batches prefetch and honors pathspec' '
++	test_when_finished "rm -rf grep-partial-src grep-partial" &&
 +
-+	git clone --bare --filter=blob:none file://"$(pwd)" copy &&
++	git init grep-partial-src &&
 +	(
-+		cd copy &&
-+		GIT_TRACE2_EVENT="$(pwd)/trace.output" git cherry upstream-with-space feature-without-space >actual &&
-+		test_cmp ../expect actual &&
++		cd grep-partial-src &&
++		git config uploadpack.allowfilter 1 &&
++		git config uploadpack.allowanysha1inwant 1 &&
++		mkdir a b &&
++		echo "needle in haystack" >a/matches.txt &&
++		echo "nothing to see here" >a/nomatch.txt &&
++		echo "needle again" >b/matches.md &&
++		git add . &&
++		git commit -m "initial"
++	) &&
 +
-+		grep "child_start.*fetch.negotiationAlgorithm" trace.output >fetches &&
-+		test_line_count = 1 fetches &&
-+		test_trace2_data promisor fetch_count 4 <trace.output &&
++	git clone --no-checkout --filter=blob:none \
++		"file://$(pwd)/grep-partial-src" grep-partial &&
 +
-+		# A second invocation should not refetch any blobs, since
-+		# the prefetch is expected to filter out OIDs that are
-+		# already present locally.
-+		GIT_TRACE2_EVENT="$(pwd)/trace2.output" git cherry upstream-with-space feature-without-space >actual &&
-+		test_cmp ../expect actual &&
++	# All three blobs are missing immediately after a blobless clone.
++	git -C grep-partial rev-list --quiet --objects \
++		--missing=print HEAD >missing &&
++	test_line_count = 3 missing &&
 +
-+		! grep "child_start.*fetch.negotiationAlgorithm" trace2.output &&
-+		! grep "\"key\":\"fetch_count\"" trace2.output
-+	)
++	# A pathspec-limited grep should prefetch only the two blobs
++	# in a/.  It should fetch both blobs in one batched request.
++	GIT_TRACE2_EVENT="$(pwd)/grep-trace-pathspec" \
++		git -C grep-partial grep -c "needle" HEAD -- "a/*.txt" >result &&
++
++	# Only a/matches.txt contains "needle" among the matched paths.
++	test_line_count = 1 result &&
++
++	# Exactly the two a/*.txt blobs should have been requested, and
++	# the server packed those two objects in the response.
++	test_trace2_data promisor fetch_count 2 <grep-trace-pathspec &&
++	test_trace2_data pack-objects written 2 <grep-trace-pathspec &&
++
++	# b/matches.md should still be missing locally.
++	git -C grep-partial rev-list --quiet --objects \
++		--missing=print HEAD >missing &&
++	test_line_count = 1 missing &&
++
++	# A second grep without a pathspec must recurse into both
++	# subdirectories, but should request only the still-missing blob
++	# from the promisor.
++	GIT_TRACE2_EVENT="$(pwd)/grep-trace-all" \
++		git -C grep-partial grep -c "needle" HEAD >result &&
++
++	test_line_count = 2 result &&
++	test_trace2_data promisor fetch_count 1 <grep-trace-all &&
++	test_trace2_data pack-objects written 1 <grep-trace-all &&
++
++	# Everything is local now.
++	git -C grep-partial rev-list --quiet --objects \
++		--missing=print HEAD >missing &&
++	test_line_count = 0 missing
 +'
 +
  test_done
 -- 
 gitgitgadget
-
