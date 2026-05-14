@@ -1,156 +1,149 @@
-Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 12.mo561.mail-out.ovh.net (12.mo561.mail-out.ovh.net [188.165.41.191])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDF3A718D
-	for <git@vger.kernel.org>; Thu, 14 May 2026 10:19:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778753958; cv=pass; b=TM9EKORg46NO4Wu8QJTwT7tM2/lWdrvIGiPY6X2Fg4dOTKXKied2XpLtw6ZjpF/jOFD/Ln//bI2D8t1psXY9wZDp2IlRn+pDqayZVpNwaMYF4rvgL/FIN1r5I0RLX0rNmtHviGqxcKgfR+7M9Hjkf8Y4Xcpg5u5ALlfzJWtOaV0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778753958; c=relaxed/simple;
-	bh=lwqSxHhE1O9A4jJLcd3KWemxhEwN94Pz2KCfN0v18p0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bXx6NrHaRgNcdtemoJM/m9Kn4t7eM8rgrGjXlsUKqA5BZ/CS8m+ewQt77p5LQgwCn/pSB3xyCybRpEPKMrNvhnz/wiZ3+pVcToHi8mvv4jlgEi9/k8RpvJfWXAMADv4viCxcXAQGkT2R6FQg9dQVf2X7xE32hSnYAszIjXC6Vns=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=el02Q3HN; arc=pass smtp.client-ip=74.125.224.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="el02Q3HN"
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-651c366f7efso8977372d50.1
-        for <git@vger.kernel.org>; Thu, 14 May 2026 03:19:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778753956; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fHrjFRnPdBnPLcLWZteuHjXy4AKfXxKVhd1PYFYdU1OwePdOVRHmynxHv+kbdrX2uX
-         yKr9WtXGslnudqswLDWFjSsgLnyXPG3Ek88KbJn720kyeFqlTTEFTKYqrdgKT6e2UW8w
-         2kecaRKhq3SrCuzPh9p29XWrLLkiPKe7bB78wTpdK4jbPH2SAVqX9UQ1snStzf9Bo7oE
-         f0nF+ASUjYzN34qTyQbCcSorLuiuwC7esmt1eIGDOIFEiK1rz1tGhQXVWLuvGhvMna1N
-         +d9+W58pjZy/ntiF07So73s29bOOq0Jru2Leu9ZuJptH0ZTeKzmV7MvZ+fIy/WMu2s+m
-         cCoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=weVZIqNamE2IIBN5n1+L0eSIKomlBpdq9L4tqlBn2Q8=;
-        fh=cZu4o5Fz4CunmJcV9r1dfL9elQMf0d7pWtHf9fuHhHM=;
-        b=VjL+UlJZvTVq+T8frd7VByHmRnm1Ts2Hb5xEiYlqsoIC7fAi4/gBBbjQ2Wucitv5fS
-         tiVjzuvcRUo8QIRGGxxxR3apMhzQf5cz/tn9LZ5+8YeGZzzYfpkCqMmyX/Fbc+j3Ows5
-         CvAmsXVYizHvIfQdYr9aw3WT9pNk2Pfq2AC9iBppILFh4VTRvT8+TEneLJQX+agnmuex
-         Lp5AwPJ0vytVZT3UCf7ifuMBQZjZkXon1WhATP8kh0FKnHtmhcehIaHBWcslgwMyEmaF
-         3UhY57p3JzBI74hJgD3xhd9Pjq3cu+ZcH/qovSYT5EdcS3rMFMgHXwFdLKUzF/7yQVo+
-         59+Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778753956; x=1779358756; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=weVZIqNamE2IIBN5n1+L0eSIKomlBpdq9L4tqlBn2Q8=;
-        b=el02Q3HNxzoMX/sFX1+Mmttm/0FhgaShb6TIujOChJcjP7as3fwE8IbWymrUtCYN2g
-         HwQ97OzWoNdDDz5y2pF3K+DhS7IVrdSDO7sib4t4o9Qq1y6KSB3haE1Jdf0srzJvah9a
-         /KhFkmOZAzR/itiaSaye7pwQij0fcSz8TWKvz2PQiI3QVZHL8eJtAw7LHGXcCX2Kfkpv
-         K/IgJr9WqYUpFZkMl0Tl7OiDr7Hpz+hqRWKeCA0jBk+eBwmTFN+9ifrlJ+17Z4+pxyv1
-         7O651uLPGBeyzwiwlOD0dbos6d5blxOgMEA0wo9tNZ8SX0LOgXmNjyv7iFPJksZq++CM
-         qeDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778753956; x=1779358756;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=weVZIqNamE2IIBN5n1+L0eSIKomlBpdq9L4tqlBn2Q8=;
-        b=VGBofktmXoyNs99eMoNuU6XfUsbz7sCOLQFdhZgDDS9LpFppd5Eei3sgcAD7R9Htxg
-         Bj2FjYO6cjofEMnbSY9Ar59wuBeDxSL1P1XdEXZPsZo02n3SN7RHYw4QQppgoWty3S4U
-         ur6ETQxnt4yAlz8KBY2bkTHzUdKllvWOuXPVOxPBWQ9bkaY2r5f/Pv7l3UfNEQpTP4ML
-         uHSa5zKDbKExS1/iiEo6gENENFJ8hRYWPNEeFEG4wZem+cf7uDHsKscN4kzHZ/dcUt1G
-         4OxwH5o5dEKBxkvjD8XaO4nm7wwK8aHfkYkYJ88qenRp5Znd75aTAHvXMEbHO6MvEsEp
-         THmg==
-X-Gm-Message-State: AOJu0Yyyt+oezWYzlqOKBEx2XdAc1NTYAD8VMkWktptD7uazrtftX3vy
-	nHvWegtwzVKUJIb2UrmPwjYTzAP6JGangLZnP5L1v5kYTO8Ju/h+r4MmwNBx6AatdI6Na0NvkYo
-	NS8AClOiIugEBnlxw1rP46uMgETCKisA=
-X-Gm-Gg: Acq92OGej9FaaeIz5WbrxThygsTFyOsXB7wXK18n2MwGxDr9leheoDyyOpOV6IKsSj4
-	9CS4p1CyLDRgMd4HitXw1woEFxdbx6PUVSHBbTQV11u2+SDCS4VUaGb9VA66NAdOmNZN93BrOvG
-	GUfWJjcH6HuelMA1iKhN5zvWLofhhq1tRTz0HCEamumG14GXUsNNcFJd79tWIqvYfa1EgKai62U
-	AtuSL6pPs4jUAEmra8i4H6Kdh6WwVQQhDTD+ZlTA3YiiVFRjhpxA+JTDH7ooy5WTuWGZRwxcbUY
-	aN1YMUrJRE7u17Mkj8L6k0Ts1e8b/1bZ6TXnlvloZgs4eYkK/z5VUdSnYggjB047qxocJluo7p7
-	0fAMlYjrkv8PmEESYgUEVsDkWxVfHMWSRS71tNzegF9uBv2RHR0iEv0RDeqnY4GBTePVgx9SpQY
-	aU7NDFEmeesnQAE8de
-X-Received: by 2002:a05:690e:4419:b0:65c:391:571c with SMTP id
- 956f58d0204a3-65df6343bcemr5526269d50.49.1778753956263; Thu, 14 May 2026
- 03:19:16 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAE718EB0
+	for <git@vger.kernel.org>; Thu, 14 May 2026 10:22:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.41.191
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778754172; cv=none; b=pPm2JgOTMHHZZUAGJCGVW6ymEjIQs8G0rJhzzVM1L7nSyvpZ6smI+oLRcGyH4zPEP1Nse+btqIBvBdySZwUOsBoTuxXvZz47PKh2eUch2A2ntQsOULL5gTqOGmPDL04P1k9O06Dx3IK88t+byVBG6o31C2km9WLmvXigaZUve0U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778754172; c=relaxed/simple;
+	bh=UBZqTzPTuQwXQnTwRxpVeOnY3MFptq0LhlW+9RHMLFQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=sinNW3ueYrix2DZ7fZkSknnB5rQftp7JU8mt2W60p8ZAwSm1rPYaj7KWf0lUO8bYXARdz50y8GZRvpF6T+IFFL3faoHnekwizIoQqp1uKU6ktIMzq0VkOaR7shWNR/Paa3rVrIspStWEkT1lauB6aWfre/v1CZFi5G7nG4Z7RvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de; spf=pass smtp.mailfrom=schlaraffenlan.de; arc=none smtp.client-ip=188.165.41.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=schlaraffenlan.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=schlaraffenlan.de
+Received: from director3.ghost.mail-out.ovh.net (unknown [10.109.231.194])
+	by mo561.mail-out.ovh.net (Postfix) with ESMTP id 4gGPbf3rs3z60Vx
+	for <git@vger.kernel.org>; Thu, 14 May 2026 09:07:10 +0000 (UTC)
+Received: from ghost-submission-7d8d68f679-d4cxr (unknown [10.110.113.233])
+	by director3.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 387BAC04E3;
+	Thu, 14 May 2026 09:07:10 +0000 (UTC)
+Received: from schlaraffenlan.de ([37.59.142.114])
+	by ghost-submission-7d8d68f679-d4cxr with ESMTPSA
+	id kOqGG7yQBWrumSQAmZP82g:T4
+	(envelope-from <kernel@schlaraffenlan.de>); Thu, 14 May 2026 09:07:10 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-114S008af4490e1-64da-4304-b5a8-cd8f7c7ff1f5,
+                    C39F0B467605CB235B8620DBAA124B5209E80D88) smtp.auth=mail@schlaraffenlan.de
+X-OVh-ClientIp:95.90.63.4
+From: Jonas Rebmann <kernel@schlaraffenlan.de>
+Date: Thu, 14 May 2026 11:07:06 +0200
+Subject: [PATCH v4 3/3] rev-parse: use selected alternate terms to look up
+ refs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260404092425.550346-1-pabloosabaterr@gmail.com>
- <20260427102838.44867-1-pabloosabaterr@gmail.com> <20260427102838.44867-2-pabloosabaterr@gmail.com>
- <20260513230216.GA1378627@coredump.intra.peff.net>
-In-Reply-To: <20260513230216.GA1378627@coredump.intra.peff.net>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Thu, 14 May 2026 12:19:01 +0200
-X-Gm-Features: AVHnY4L6Qkx95vFns5Vp9KTbu-Zt7vy7myc-exzoCwnA1R9ebcC4U7pVp2IR7FM
-Message-ID: <CAN5EUNSxyT5EyTf8b4evbW+JbDeRms91zQEn_JgiinOgvpe6mQ@mail.gmail.com>
-Subject: Re: [GSoC PATCH v3 1/1] graph: add indentation for commits preceded
- by a parentless commit
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com, 
-	karthik.188@gmail.com, jltobler@gmail.com, ayu.chandekar@gmail.com, 
-	siddharthasthana31@gmail.com, chandrapratap3519@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260514-bisect-terms-v4-3-b3e3cf1b06ce@schlaraffenlan.de>
+References: <20260514-bisect-terms-v4-0-b3e3cf1b06ce@schlaraffenlan.de>
+In-Reply-To: <20260514-bisect-terms-v4-0-b3e3cf1b06ce@schlaraffenlan.de>
+To: git@vger.kernel.org
+Cc: Chris Down <chris@chrisdown.name>, Jeff King <peff@peff.net>, 
+ Jonas Rebmann <kernel@schlaraffenlan.de>, 
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+X-Mailer: b4 0.15-dev-bc6c4
+x-ovh-tracer-id: 10429773789517546273
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFcOjeNfd26R86/ODmyj5aIGkM2RT+7sDH6zAs5NouMmax32jf8r9BZHnSkO06pjzEa7iyv+AQLSlhEy4AwzQlQT9vxR59c+4GG9yA06dJwDIiKhG06ZkHRRd5NLfA+4vBIMoWcHZVvrEe2rq9Ij2fzHd0SPSwXawvkgNxKIPd7sDmzXcjYHnWCs+nZ5FIW3zRs3NxGQYXkjXWq+z/vIxMqkAnhnPMruSKJHkf5D4cTq7W/MnUotPU12Z0AXyLoE86UmUo6Vnd1JSz8sOc3jxKRE194yjg0FFmTw7+Zd1NbnCWtqxD+tKU/4OoxSqU4BC8UpySOgEbx4VGY5GZPInpkk72D7DWEQ/nj0al4ggFqpdlqofv7Fum6E3K/CViPIQi0pjP6+KULenc7m7yg5TWkASGQg9P2gPyfGNkVNFKfexNg3xs8U/4qMCJ4sMEtQf+eLSwq//20CpHdktzM+wlmX2jVfM43bxntQqjATeQJQUihD68thER15K2kysTYJE05ENbbxkjynl9EcuS/YbSWehaDsomgaFlmFbymL8Q0YyVHYo8G1rf8TBa3O6exv1SLTc7Y9PAC9HCyIO2uEg7kmTOsJuFoKSIyMPfwrO52D0+M4wUMSdijNVCBJkJjLYWdptl/sTnxrh5E4mSNGGOi+7eRf8gKcavOpgCXi54yBw
 
-El jue, 14 may 2026 a las 1:02, Jeff King (<peff@peff.net>) escribi=C3=B3:
->
-> On Mon, Apr 27, 2026 at 12:28:38PM +0200, Pablo Sabater wrote:
->
-> > @@ -1135,7 +1227,18 @@ static void graph_output_post_merge_line(struct =
-git_graph *graph, struct graph_l
-> >                               graph_line_write_column(line, col, '|');
-> >                       graph_line_addch(line, ' ');
-> >               } else {
-> > -                     graph_line_write_column(line, col, '|');
-> > +                     if (col->is_placeholder) {
-> > +                             /*
-> > +                              * Same placeholder handling as in
-> > +                              * graph_output_commit_line().
-> > +                              */
-> > +                             if (seen_this)
-> > +                                     continue;
-> > +                             graph_line_write_column(line, col, ' ');
-> > +                     } else {
-> > +                             graph_line_write_column(line, col, '|');
-> > +                     }
->
-> I haven't looked closely at the patch, but Coverity complained that
-> the "if (seen_this)" check here is dead code, because this whole else
-> block follows:
->
->                   } else if (seen_this) {
->                           if (graph->edges_added > 0)
->                                   graph_line_write_column(line, col, '\\'=
-);
->                           else
->                                   graph_line_write_column(line, col, '|')=
-;
->                           graph_line_addch(line, ' ');
->                   } else {
->                         ...the code above...
->
-> I don't know if that just means the continue here is redundant and can
-> be removed, or if it's a sign of a larger logic error.
->
-> -Peff
+git rev-parse --bisect does not work when alternate bisect terms are
+used, simply listing no revisions at all.
 
-It is dead code. The behaviour for placeholder at
-"graph_output_commit_line()" and "graph_output_post_merge_line()" is
-the same, if it's a placeholder print a padding instead of an edge,
-but I didn't give it a second thought, graph_output_commit_line() can
-have a placeholder at its right (that's why it needs the continue to
-avoid extra padding) but post merge can't and as it is dead code I
-didn't notice.
-I'll drop the dead code.
+This is because a such bisect using e.g. "old" and "new" in place of
+"good" and "bad" will name refs "refs/bisect/old" (or new) accordingly
+so the hardcoded "refs/bisect/bad" (and good) yields no results in a
+bisect using alternate terms.
 
-Thanks,
+Use the current bisect_terms to make rev-parse --bisect work in an
+alternate term bisect.
 
---
-Pablo
+Signed-off-by: Jonas Rebmann <kernel@schlaraffenlan.de>
+---
+ builtin/rev-parse.c  | 15 +++++++++++++--
+ t/t1500-rev-parse.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 218b5f34d6..7531edae9e 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -10,6 +10,7 @@
+ #include "builtin.h"
+ 
+ #include "abspath.h"
++#include "bisect.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "environment.h"
+@@ -940,13 +941,23 @@ int cmd_rev_parse(int argc,
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--bisect")) {
++				char *prefix;
++				char *term_bad = NULL;
++				char *term_good = NULL;
+ 				struct refs_for_each_ref_options opts = { 0 };
+-				opts.prefix = "refs/bisect/bad";
++				read_bisect_terms(&term_bad, &term_good);
++				prefix = xstrfmt("refs/bisect/%s", term_bad);
++				opts.prefix = prefix;
+ 				refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 						      show_reference, NULL, &opts);
+-				opts.prefix = "refs/bisect/good";
++				free(prefix);
++				prefix = xstrfmt("refs/bisect/%s", term_good);
++				opts.prefix = prefix;
+ 				refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 						      anti_reference, NULL, &opts);
++				free(prefix);
++				free(term_good);
++				free(term_bad);
+ 				continue;
+ 			}
+ 			if (opt_with_value(arg, "--branches", &arg)) {
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 98c5a772bd..38067d95f7 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -337,6 +337,31 @@ test_expect_success 'rev-parse --bisect includes bad, excludes good' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'rev-parse --bisect works with alternate terms' '
++	test_commit_bulk 6 &&
++
++	git bisect start --term-old=known --term-new=curious &&
++
++	git update-ref refs/bisect/curious-1 HEAD~1 &&
++	git update-ref refs/bisect/bad HEAD~2 &&
++	git update-ref refs/bisect/curious-3 HEAD~3 &&
++	git update-ref refs/bisect/known-3 HEAD~3 &&
++	git update-ref refs/bisect/curious-4 HEAD~4 &&
++	git update-ref refs/bisect/good HEAD~4 &&
++
++	# Note: refs/bisect/bad and refs/bisect/goood should be ignored because this
++	# is a bisect with custom terms (known/curious)
++	cat >expect <<-EOF &&
++	refs/bisect/curious-1
++	refs/bisect/curious-3
++	refs/bisect/curious-4
++	^refs/bisect/known-3
++	EOF
++
++	git rev-parse --symbolic-full-name --bisect >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '--short= truncates to the actual hash length' '
+ 	git rev-parse HEAD >expect &&
+ 	git rev-parse --short=100 HEAD >actual &&
+
+-- 
+2.54.0
+
