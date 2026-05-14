@@ -1,68 +1,68 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C592275848
-	for <git@vger.kernel.org>; Thu, 14 May 2026 15:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CAF2D238A
+	for <git@vger.kernel.org>; Thu, 14 May 2026 15:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778773598; cv=none; b=WQn7w+BPm43GmOVd9evbI6YO+CgtWwBrzLa1mqlTDT33YYACgu6UVuzTLsA6LU0tSs1rJrGtfCTMejGSdssjJHOCfiUKzf0fNtSoe59rC8ab1akoGa4ERAfYlyddsghYqevjOXROJDq1zIoJALELacfrybYsPePgTLo9VYw4g2E=
+	t=1778773599; cv=none; b=SVUJz/8G8ijmwoDdXk1aG2qJbIjhgZs2RoN7MlOLS21hRBxPLSe6qp3aGDcjgdDDalCgu45jt+l7V9jnFrFvrCZwmG6DqNxPVzeD6i4JSFMh3XdQB23aPawESlN9en1XvHBAKCz9vYpc1t5LTF+VYGeZS0hlaQHyUpH3BxkmKzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778773598; c=relaxed/simple;
-	bh=5R9FEOlJ2I99wuMOxohQZh8JPmoEa1iWdKrRFdD1bv8=;
+	s=arc-20240116; t=1778773599; c=relaxed/simple;
+	bh=Jy8K8ln/KfLV2wVRDa8gd198pgfdg9/Fr0Kh0Mv+JGw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rANEmehZoqH/UQOQIuDW42rUighK9qkNPrMut7IJ+OdIxExPWAII+3LCzvpECOA2Gy5OpxukmO1iXH2QuN3h1yZqm5LtmXfhMbytndtbqMb7CXA2qtTpdxtbHEJpPMR2MYo1rLt7OnIiurDx1DHILL6W2OjGY/int+cVo4iJ1BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SE1Lj/lO; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version:To:Cc; b=CLZ5e3jxJlcD5I2YyK+K2m/BbMffLQatnkJYeEkfchq2QSfhBKNmBbeNVjjOwt2H8WZzfOYQ0DBosVxNrh23cUCpWN9vxCPQBu7JLlyVI/k2TpKQCN2/amYrjJLD4QDGGPcHEBadUgPpOyS6evklTIad/iyPJse1c1hS0PuFmsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YNoPVlEh; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SE1Lj/lO"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-90caad2e944so382248385a.2
-        for <git@vger.kernel.org>; Thu, 14 May 2026 08:46:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YNoPVlEh"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8c9166b26b4so11607856d6.0
+        for <git@vger.kernel.org>; Thu, 14 May 2026 08:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778773596; x=1779378396; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778773597; x=1779378397; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2Ix15tTuEkjkCwaD372/Zcf8YqzVQOAKxfsIwL8CjXc=;
-        b=SE1Lj/lOH2EBCNs/yWWGM3RKeY8v/QvUEe9iE02vHpeQarw7HVAWjfbDLtciiklVN5
-         +pcVeS9n3sQIybagMW4189o0hpVWR8cobaEXXUDwlSlc+jSOaBgEXit/VBqUl8waj2Fz
-         /v99FCRRXzbZWSfXPYKLDgEbIw2krKotqd+CV6MA0WMkrWM5elO9tGpf+EAEopxqGdvX
-         w1LjlxkvzRKE8Jon0n8zL38ToOqe16gJ5eZQUJ6rog8Lh3ocHBjQAz2Dg6gUo16lOxDm
-         3tcTOoLpwcpCfi2g9P0P2gLKY/j2JEWPVppApziv6ZnnLFWQETevAlbJr2ihACbx5iBY
-         n7pw==
+        bh=KxbkaxiNQuxXrNAiSxuwznCHA68kPzMXE0+0bEwcz84=;
+        b=YNoPVlEhjFpP9ReMsmy+59MwaO0L1kbaFZFy3Na6kEJeU7H+flzLL6BCnFgzQHEoNq
+         O1I8IDV79yTIdIt+HI9z/bk0uoDTwmLHeeYiJUK+PGntyz6I6VS8yecGbQNf+SdD4hg0
+         /9gV556enTfqVWmOtOfMghjRlrq8CeDGMcpmtYQeFuRGuZui/KNuDE9x7qOR/FixyWmS
+         rqniZpJRdiLKh9aR4sdLMVH4wmjJADjbG3lu9eOsUXt1E8+7ZwRi7R7hq6Ivzepeqt/C
+         7w04JBIMApa2VnJ85kJMs9hTg0VKZCRz8XxfToc1yqAieXaQmxJp/qXLudv2oduPvy3S
+         ts5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778773596; x=1779378396;
+        d=1e100.net; s=20251104; t=1778773597; x=1779378397;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2Ix15tTuEkjkCwaD372/Zcf8YqzVQOAKxfsIwL8CjXc=;
-        b=M5imLdNxGLRTy5LwbS+YKdHS7K1rOs1rvy/Ryp8w10b73Ze+CFFBOB65jaxPZLboa5
-         EdKbJJUn8tMnW8IooFyaJfh/o8+rIy0JcEJbimFpU7cpEmPhVXN2jgJL4gWMc5EnaUi9
-         99ROwj8dhneGkAaJsZzEI+zaqULX1e1SAyn3qQ/pHQbMqlzM9zn0sJHMJ5AZRVjRDjLC
-         Wc1zx/ypCIKSmfnKiWtYkreRisFhU29HngTYnxwv41Zdf9nslyAbBZ+IEvhhpqyO9Qf/
-         LsGYjqKYpUvgFeHT+B9uCE/CgOK9naF9dkaQVQaKnJ0Qjoe5iWf9GFP/BNpmnbmBZxZt
-         AEKQ==
-X-Gm-Message-State: AOJu0YxSXkNL2MIuZIwcDNPmIS1CMvaGg+RGkg928p9N/QlmkmiY+wpf
-	i0oRhVh2651cPKFaB03nUAy26nssuPzN366lI1/PGN/ZkOnLfPHr2WY0TkZDRA==
-X-Gm-Gg: Acq92OFu+Q9FwMY2nb9o0qMPktL06cXTFgA7CHplkKPz4IIhvJthXmxb463uNWpPw2I
-	XLUXvIAAoGE1YNsdgISuBzku3hBeIfKtjDJM2UYIZDNfftSxJ0gc2V0XnfBsGkmlbA5fFqaWmrc
-	326FNFG2H6x5ZYxbh1YI4ecaAwV3Tk04HoYpLkMnRN6nkR5ZafGNQxaXsMunNdlrFZUtFJpYqP7
-	kjP0/VDZ6mWQ2d15pDVscmRWdgYf6olEe/GO0F3/QwLjwh8NTpryk+8J64EbiawixgX9P2n/2xq
-	8gs8Kqs/P0IJHBHbObxTXiVefOeIra0Gs77eOaIgRLzeQ0oGvTl6Jwr9u6ffWgA/i3IkUEBnGPa
-	0GUr+AuysxYbng1+yQ65B4JjEJHiPmwO2lUMkqbbNmduZ1gUhRcnaRATRc6HOKDjHpNp/ySvhcL
-	JW4IFVuLDxHiL4z+YByYg79VjwiPQS
-X-Received: by 2002:a05:620a:199a:b0:910:b2b9:19d9 with SMTP id af79cd13be357-911cd859e55mr19335585a.23.1778773596219;
-        Thu, 14 May 2026 08:46:36 -0700 (PDT)
+        bh=KxbkaxiNQuxXrNAiSxuwznCHA68kPzMXE0+0bEwcz84=;
+        b=ac4i6ZxNCRipbn1mFowR5rUwTNK8R8ENFOza9vzTLP3IJAyOOFDlFxc6eoW+eAb3aJ
+         frDCS76FzgfNVAWk43lY0UbMJENj+aZBmmRCKKNqRrbFWvnTrqWAxQeo993zLVl+7JzP
+         vs6+Uk/EyuXrRHbc7LSOsju0RqBtocwBMqNNPgCpXFduQBGYyqNEe+YTJU/QvWxB7sAX
+         FgHD9haxkmhEb5IFrSosw4SftqzO6FDcb68tr9X2BsxhR74vgwpf2YIsrLEn8O6dg4yC
+         VWP9wLP90j1Xa5uF+pVj+MoH023Tgtgp3t7OFLNkrWQ8hqjT7xmVRPjofdJnvEPUqML9
+         ripw==
+X-Gm-Message-State: AOJu0YwAfvFofxfeG8uckQmKN8bGwvr5YoLAw82lJ04JUFrQP1xkaSdW
+	XGNvvHeA5TlNzLWnOKjgdAF//9Bjk7yfD6CzfORICbzK47e/iPrL/jDdJAGq/A==
+X-Gm-Gg: Acq92OGRvh06WfsakZOzTbhO02b9ABXwKnxNfVlzOfihedHq4dJHpQqe6+DLwA7WDfs
+	uffO9VWDiMvOC9dyUi7IYcqeX9K1z1Xy3h8QbdV/Gd/YiSfg6NexC1bg0qUjmGQSpepPKSumUwB
+	w16p8L6wjGp0PIXNK7ql7GCLaoxY8JelGUMTQit8HpvnVVea7CcUjgTdrr7xLIihNv2i8tOA45I
+	QVGZTX5G9lwUprHNRlF4YS6bRnDiTKOI4xFYSxPV/Gc+TIbUBkzpaWFoZ2fZ7AimBhedqjW7xQo
+	Ds8sPbSb07gEvZKqYxX8H9L7kWj8Ix1mS3v9rzFd7eSURTqhPuraEKUm6nko8+85rWqNNPDYToo
+	0+mJHkiqfzg+pb3K2xmzUUFxmv42j0bXbU13UeJTmdmo4ypsB+dG1p/zIg/kBmk7QKrJNy00Lb+
+	52Jv4bYW7JeCeGMhZQ3EP2+e6DocqM
+X-Received: by 2002:a0c:e01c:0:b0:8be:9e6:3150 with SMTP id 6a1803df08f44-8ca0f668a40mr1455786d6.2.1778773597305;
+        Thu, 14 May 2026 08:46:37 -0700 (PDT)
 Received: from [127.0.0.1] ([172.208.126.102])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-910ba1825dcsm274677385a.2.2026.05.14.08.46.35
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90bb80ed0sm26282216d6.35.2026.05.14.08.46.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 08:46:35 -0700 (PDT)
-Message-Id: <5c01ec3cadce441cfa48e0499a62e57aa4cc619e.1778773592.git.gitgitgadget@gmail.com>
+        Thu, 14 May 2026 08:46:36 -0700 (PDT)
+Message-Id: <1b2f9d1a07b6e93cc9e137b4fdf6e8f5fee9214e.1778773592.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2300.git.git.1778773592.gitgitgadget@gmail.com>
 References: <pull.2300.git.git.1778773592.gitgitgadget@gmail.com>
 From: "Sebastien Tardif via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 14 May 2026 15:46:31 +0000
-Subject: [PATCH 2/3] daemon: fix IPv6 address truncation in ip2str()
+Date: Thu, 14 May 2026 15:46:32 +0000
+Subject: [PATCH 3/3] daemon: guard NULL REMOTE_PORT in execute() logging
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,81 +78,29 @@ Cc: Sebastien Tardif <sebtardif@ncf.ca>,
 
 From: Sebastien Tardif <sebtardif@ncf.ca>
 
-The sockaddr struct size (ai_addrlen) is passed as the output buffer
-size to inet_ntop(). For IPv6, sizeof(sockaddr_in6) is 28 bytes but
-INET6_ADDRSTRLEN is 46, so long IPv6 addresses are silently truncated.
+The REMOTE_PORT environment variable is used in a format string
+without a NULL check, while REMOTE_ADDR is checked. If REMOTE_PORT
+is unset, NULL is passed to printf's %s, which is undefined behavior.
 
-Fix this by passing sizeof(ip) instead, which is the actual size of
-the destination buffer. Drop the now-unused len parameter from
-ip2str() and update all callers.
+Add a fallback string for the NULL case.
 
 Signed-off-by: Sebastien Tardif <sebtardif@ncf.ca>
 ---
- daemon.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ daemon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/daemon.c b/daemon.c
-index 80fa0226d8..103c08d868 100644
+index 103c08d868..78cca8673f 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -947,7 +947,7 @@ struct socketlist {
- 	size_t alloc;
- };
+@@ -753,7 +753,7 @@ static int execute(void)
+ 	struct strvec env = STRVEC_INIT;
  
--static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
-+static const char *ip2str(int family, struct sockaddr *sin)
- {
- #ifdef NO_IPV6
- 	static char ip[INET_ADDRSTRLEN];
-@@ -958,11 +958,11 @@ static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
- 	switch (family) {
- #ifndef NO_IPV6
- 	case AF_INET6:
--		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
-+		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, sizeof(ip));
- 		break;
- #endif
- 	case AF_INET:
--		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
-+		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, sizeof(ip));
- 		break;
- 	default:
- 		xsnprintf(ip, sizeof(ip), "<unknown>");
-@@ -1019,14 +1019,14 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
+ 	if (addr)
+-		loginfo("Connection from %s:%s", addr, port);
++		loginfo("Connection from %s:%s", addr, port ? port : "?");
  
- 		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
- 			logerror("Could not bind to %s: %s",
--				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 ip2str(ai->ai_family, ai->ai_addr),
- 				 strerror(errno));
- 			close(sockfd);
- 			continue;	/* not fatal */
- 		}
- 		if (listen(sockfd, 5) < 0) {
- 			logerror("Could not listen to %s: %s",
--				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 ip2str(ai->ai_family, ai->ai_addr),
- 				 strerror(errno));
- 			close(sockfd);
- 			continue;	/* not fatal */
-@@ -1080,7 +1080,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
- 
- 	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
- 		logerror("Could not bind to %s: %s",
--			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 ip2str(AF_INET, (struct sockaddr *)&sin),
- 			 strerror(errno));
- 		close(sockfd);
- 		return 0;
-@@ -1088,7 +1088,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
- 
- 	if (listen(sockfd, 5) < 0) {
- 		logerror("Could not listen to %s: %s",
--			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 ip2str(AF_INET, (struct sockaddr *)&sin),
- 			 strerror(errno));
- 		close(sockfd);
- 		return 0;
+ 	set_keep_alive(0);
+ 	alarm(init_timeout ? init_timeout : timeout);
 -- 
 gitgitgadget
-
