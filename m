@@ -1,185 +1,161 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325124219E8
-	for <git@vger.kernel.org>; Thu, 14 May 2026 14:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CBF429800
+	for <git@vger.kernel.org>; Thu, 14 May 2026 15:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778769255; cv=none; b=S7pKMRWTcoo8RJAb66nJiwnzcRdeOT5auWHHmG/Th6osFgyn187jIxJkAEBA5C1NNA4DV8Hq/SA16kiZjz0Y5uXgOK+C4pkNXOnEOVTWhxoZ7YO39DQIK4Dt7CVLGcskvLw9f7kAq/F+6f29nA9LMZ5xDGRidz+crTRmYegYMCM=
+	t=1778771479; cv=none; b=LrvqJW9ZKy6+rtuNkYgwyMKC1JNS0aj52qWEfsyearVpRDekPZ/YJsQiN2kcipaYN661ghc+DPB3saNugXf6/gD9HJCUybjfZZnKbFWkPwmIV82I+JKo9Zbe1RlBbiC0LWqZQ0u33RIPpzzZoEMz5sKhcKCUjrmF1KI7cSnU4/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778769255; c=relaxed/simple;
-	bh=SD7/ZgM2i98RMCSLSNuX39n/0IySJ1wllGO7snKY4aE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wg/dcOTGWj7DIsGNbPEe74cnihutg7C7fa0LaYrz/0Hod39Ixdms/TxWcGdH4cpYNnq2efvVwD6WlBbvatYNamk9nKMEXcSEV6SxU1+j5RDLHR0+dgMszjFgHuhQg9lnVk62VIL0ZgV7O+TxyEE5N8UNG+GnWkRM/XdoBl8KC9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gdJB/9ao; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778771479; c=relaxed/simple;
+	bh=W5mfwmtaIaWl3jyQy9uh5St7cBhckpBX7aPoeCGHLbA=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=JxOjrX5fHJBr//mC4JwNEwt2TnbLzgco/1WwuKGpqNwuc6eGyteDADPMvZtET3i2Kw/ltU0md/ePE+IDSGMVpeP25BlQVkQlRQkE5Q8s7ko1ZOAVYYbw4YYnvJKIstpae82A3LwLbVtCf4eXkeZi1ZbxkM1oKhbl2/4vb5KrwIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=uDG7MonL; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gdJB/9ao"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-90d13fa59e8so341779485a.2
-        for <git@vger.kernel.org>; Thu, 14 May 2026 07:34:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778769253; x=1779374053; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hEs2aZhogZg4tN+4ubJl0mkvPc66Av1s8PxhInkroaE=;
-        b=gdJB/9aoytc0eG+NMcvfuVutyaLgFJvhbk7lLUXyfy8mds4y/GRYtLQ/cuo3ES7N9a
-         s93ClJIGkftYnetxZKA8WkCEPrTe3iCiBkSMRu6CIA3Hjo/A0vYlZpfl6SSOaoOnQuAQ
-         Gu5nPgSLHVUMo80jkv8T4nq/85vbT1U+gTCsNYelqWKmFaicDvtO4SbRkKy45FS5v33L
-         mBE0X76c+01/+t6ILMHp4zTC6ry5d0+qeM+CG/jCdFhJ4dX5uWlyo6r+DwejhoZN/3pC
-         NA6zRVZoqqNPp+xCtVufMQE20dxC9XtMKGvSgmXAPHxGEaofuWJZk1PaILm4Bld/LRtD
-         1ODQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778769253; x=1779374053;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hEs2aZhogZg4tN+4ubJl0mkvPc66Av1s8PxhInkroaE=;
-        b=JUgi1KKSGQFzp4q1ULmltjnIi36XDRYQeVbH3wNobql2gR89oOaOhvystBz5sAkDU0
-         wViLYmp6gWQjPe/9Iv9RjhwBubAzdZEdhXLZ6VaVUy0TOr/FLhGaOyWwv2jJz/IcmzsT
-         qkenTWuEH1CmZOJnfsefqkDhXUVu5sg23xPHRXEYqpor7BqgAKoJQCi8B+rgGKOPIR8a
-         Jc8jKkiKRP9EeGLlPayuCu/ZOGjDHsI3yk8I5+TTrExNOZWjymzB4nou7AmDOnHkkOf/
-         pbrbUXYGY18mRXTBYKGvJn6TXNNK2LGo5TC93Qro2RHln7VOR5uT+xUiz3BhEWhzt7xt
-         uymg==
-X-Gm-Message-State: AOJu0YzCU04ItQCe0mMnIhtrWIhwi8+TOpT5rvk9+i0tnDWGj0SG8F3d
-	PNaMORkoIc0GdKhHrkzXTRuTPLuhD5mEj74oUIJoiBPxMNDJckuGbzolja3Xig==
-X-Gm-Gg: Acq92OGb60uepL/HHok6fRlgoH2OpaRuDiWJFxE8ch8No9c4NML01ThSh2f8GeUD9Ce
-	+fGLa1ztBgm5J85Pv89Wal0k9CgX8wBowV+3GwYd6bBmJMTMFMJIcPpgPEiMjhdi1MvNvLIfpF3
-	46oBTpI0uZRpICgYg2O9vshKnhBw6sYjUeqIcvinrfJxKqq4wp2CLVKzm94D4N/Rs3Gbz4xnj4K
-	fEPHG1eOVE0bIkVcFLCa2zrpml5ENAxHs/liv9NgucpzQAeAbnWzj3mYB6hnsU8YemQHNnM0y55
-	dLkQJjP39AaZsMAq0V78g77qVHS/eZ7zfBVJHKlNzmk8BZ/qGtSnNvqf7H3mAh2j5O51mxOZIDJ
-	Ot297Nrc3bJK97GXp/2YXBcO6gV4ucuDilmfejioO/lLI/guEqWyy/TBU22AzWaYvi6eolp5jfT
-	4VGV7pDK77nZKyzbzhcw==
-X-Received: by 2002:a05:620a:4044:b0:8cd:9665:9eff with SMTP id af79cd13be357-90f88f92239mr1302547385a.21.1778769252112;
-        Thu, 14 May 2026 07:34:12 -0700 (PDT)
-Received: from markl5i.lan ([2600:4040:264b:4100::59a])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-910bad2dd8esm262768585a.19.2026.05.14.07.34.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 07:34:11 -0700 (PDT)
-From: Mark Levedahl <mlevedahl@gmail.com>
-To: git@vger.kernel.org
-Cc: egg_mushroomcow@foxmail.com,
-	j6t@kdbg.org,
-	bootaina702@gmail.com,
-	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v1 11/11] git-gui: add gui and pick as explicit subcommands
-Date: Thu, 14 May 2026 10:33:22 -0400
-Message-ID: <20260514143322.865587-12-mlevedahl@gmail.com>
-X-Mailer: git-send-email 2.54.0.99.14
-In-Reply-To: <20260514143322.865587-1-mlevedahl@gmail.com>
-References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
- <20260514143322.865587-1-mlevedahl@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="uDG7MonL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1778771467; x=1779376267; i=l.s.r@web.de;
+	bh=qu7UwKF13m7efGjeMiMze5RDnHjvE0Ag7FK5e0e3390=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=uDG7MonLMvxkc/v4MLGe7ENXvQqeKbxqphRmrug6CJ8GWSjHxzO9l5bvcyhPWIvh
+	 MsUE+sTY0Laq55xyAs+9Xv/BGF6atLEryaR4d6IoqSWVigVIkGQfIuaCAHfndkGIX
+	 asIOqIOOsv/+uiKz2S60RnjjJAHXFx1g7/BGM2Ozt+5o8ZRxeBpKDehn/eGVSocVj
+	 iOEdyxSbr1ncdYSy2U/7VpnDaWmUyU0zc1wAJZgL911KWXHWzc/U+NuEznWeExVWP
+	 0fklTQf0ltXodIS2S1QcucKgvxTjUoQaL2zjYtMfek8yoZzwvLltX+9ldHN0TsJ3z
+	 O3EaIzcHNbjnRcBWVQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MiuSe-1wzusI42Zo-00lsbq for
+ <git@vger.kernel.org>; Thu, 14 May 2026 17:11:07 +0200
+Message-ID: <c6e9b337-c4fc-4cbd-ac32-e8d3814749b0@web.de>
+Date: Thu, 14 May 2026 17:11:06 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] strbuf: use st_add3() in strbuf_grow()
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:nZISltmIY4yraA0jSuwvsUBtiuPGaBkyY6l6twFmlyrPmFSMBH/
+ 1PzAw54JOC4gthyqK2c++ni7/zf3jc28BYQz9tmYPeMeFVH75c796kAtfa9XzGIfXTSJU+Z
+ QP2ZNdK9cAX/PkDMXKNWwwHz+R5i7F4AQvFQvw90Yc4qHUkeCTBnOU+dfqgxgVdyHl9doLv
+ fafTPXzNa0/ZlAxpPRAqA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:2tKCeYpfSOM=;9RkDPhuhzBvP8juQf12FHj+x3Mw
+ bduvwx6swq9WDfV+xfeynOmAJ7pqaId7/Je17KpBAIDMooTblx0LTIdxRt4V5looZ53XMRXUu
+ evsgIHXkSSUBTPKn4RJIoE3cL1iBpplKYtLJgVlDbw+29ox+OYvZaX7vlLHuRiZ266v82umrt
+ zIbNC0p2rSLj50Fw/PCmYeZ2tdt8AHQL+D5ewQdiYQj4exMIdH04blBpSTCA12VsMCQ/Mh89o
+ 0hoQwIqCeCznddUB/UChaYzfyAFKfiMZTr0d+8y7RyUWufDX4t3Oih1CitTL2+a6+c+BHnm+N
+ hGek+k+uTEVQTXzmdmaGt4RlCPyFYC3ClB/cPmNQNE5nXrjbJap8r5VJgaGLefk1JsstzFtlK
+ X/YL6apCxwkXOEP3bSVqnC3/iSxSsa7hvUYF7mhhxY50a+ppThXe4vPtKXaGKy8jxCozS3Dok
+ 9FPbYOajotE5VZo63z2FowQwy/7mZ7NVguGa4+ELJJb/Q+haI9mG0THo0wDIp11JlLz1RwXEr
+ G4FolWG5Jdt32gyFXh+ccCbUiYK2PqeN8uhdVWx7cHJLgdcDkoAC7cCF5VNu68N0r4Dgik31z
+ JjzV8AYhWzm7i/LY170QyvBf9qsmTzrPPry2xXO2F6xOdtWOjlSsiG9p9DJ3Fll8JmZOBYeQ6
+ HXvH3IltjvVO6QNcElaaMfnYZZbwzUtgCP9CIgUqhnp4qMXMMMxrPH1/pJ20ixgrhLbT37z4k
+ K1OmSds9wfvcW5znNdqFYTzZKvlfL9JqwVsG9r4mlAZ3lTXvBs/KTIasZxnaQf/wg8iai+qCN
+ COY0d2PwxJl0eX6HoPUdVtQGYewpL/Vr/rXhAj2l1NxgTp19CcxPOmrDmzqha1sxV330z7jP2
+ rQHhMvSbK/ijU4cWgJaUig5ZvEJ41FoL16d2Yz6hcwIJIMoHztCYYcIGdCZlp65Tbk4z1TnpG
+ mb8FUkBPdytIOpdUhy/ZAydwzurteCgLvOxTjqMD9JvgqYqf2qS9Ei8n6cmb2sYwBeIhsrzBr
+ +fm6AHeff1ZN5AgTDP2Q76CXfPDNJNRln23vy4WNGgAVZLZ1TFipeltHIrEiza9lvTI3m+/8H
+ 33juQCQz2K2yX0xHwEKdVLcRs9rN5wXicYlpXpkrmNpVrpoKKFC98m5igxX/tkxRxlioraHh/
+ 2u3mszBn0MTakstLVUTarwZw8XCYE8l0cyNd1244/myQCYobj9qphQ1gw/jh8jO05orWS+eN3
+ sm9d5lB5vRoz/49N/WyWQZcFFIYxQrNc+yV/DLx0Hdsmy6Y/8WabrO+UHqk7XlN0QkPcJ41Ym
+ IQGpAmoRs8cAs+WxEKDh7E/8o8w4lq64HT3bnAx6HeN2KZSOwKLi5b42FG+wV9In9hv7sMNdW
+ R88Lsbv/dUETBxi8kN/R/YlfFL01oFfXJHA7eOex8y0eglo2vQlTOkBoI9HMEY9owPHcCSfnP
+ TcU+UwiNSTf2Q0cxTJLYLrttiEjhc9vHlqGA3WGdoqvIuPumgQGSYfDAOiG1aCjiMMsxU96a6
+ hs7PO6PjfayQ56kugqNLaUDuolh5XwOuUfS8xsucgbNtpldyR9lYR8EDbwHoCLFfzJ46iEDRu
+ J51RGVhutZ8TGFpUfY2CTSHXLKuSTWvn5jElSGk9qO5X50UhhtcT/W2MSCf2pK8QMsvzxr8pK
+ UHO+HH5XIVwJ1JKo5f1yCG7XV8CMa/rcTVjF7iwE5+MJpLCQaqNYYTdmIoJZQeMn58DWeB8Bs
+ t0ZPZe3ZBTaWgqXatpShk/Mt2gxZ+mAOWPn5LSkLHbeSq8d6JwR3Akn3zUkvZoFx0z+LpvMO0
+ KvnMNO8xkOckYxnlA32cQHZpU7iuVvrIeZt2L2UYtK4gOcc/hqrXunHVwQN6ukGIEBQlPHxco
+ x2RkUIaqypBkD06Ih61NnXIBBs4xcIP5GguV3IOR28Xa+DhPo68K84iqkyl2iRzJcLgmHG2+o
+ sSNbVJxP03oJ4iBBaZggXutOOX3Tea//f9SU8f9C2G7vZYQjw0qLr4/nrYztxUoUWIKQ4xPMz
+ rxV159s6EicE30bfWplb8DIgRo2KtJGJQ1KjO6AcSIfILbPpSyXhrascFiz+yVObqOqhaWdoO
+ RRcewSmHDh/drdxRcFfATpDqsg7J7csR5yNazHjnkrOYEP0OGmk3yEcSFmgrsoPdLGF4SOI2f
+ nCN8DzqyjmQw5Pr17jIv1BWqmV6IJG6ydjM72rslcvuuBiedKkOaGXXPt/qgWSajFLQC6EYks
+ 6XQpV+6x9Q9ZAazBKBYJA3/McB3EPM0msErDMMuUlHzI65GmXjLc/kOQn/yU8flhvE2d/QlUU
+ j8wlJbTBbaSX9yhasEaYujWwPDcaV3HOaXlsy2kpwUhGAFrrLAq2Fl6gu50nNLpVWFz85AM5U
+ DQWtWoPAMz5HZ3m4rAAeXmZk8aiXQPgC7bNwTIsD4Xrek0sU9exzK62bGROlN6jHJ/WKLys6c
+ Oz3NZri3Y3Cnxpi91Qr20KZbAqgWFCYCYYuKLhMGDnCZgKEyOEeJCWww6YpDlfxc/gvFL9F6t
+ p01XFLoKwj+jGwV9uw8MS42OjqM9BSuXskUCJkVwSM6usXtf/MhhQdpDbzvMsFK7xTDXVyiXj
+ wxXSCE+bTT/8nr8n5iIlBr9rdAR/M0XlYvPwi0/Sn6XMSnubEM3AzPu3EXZ+SHA4q7KHai3gf
+ rJUVvp4Klt0hEG5zEaOVAQSljfrTFbWtf5KbRcUD/evsseSXmRo4NNw6JNbIvK45WFmn24qwK
+ i3AdPeXVMLEjygyyk24/U5i0lVuZ5Dn6oALRMWGnXC1kr8o2Hegl8UKhqhmCCC8yzX/PIzdQE
+ s5Ye/qlZKmukQNAXAmv64Bwve0Pc3T+EW+toqjPiUyHcvW/PwdUnTeaXIm6CQFqDSk1NgLEqW
+ jF1xfgaic8XN81lwNEJdZ6WEcsXGBk+w/czQx2Jx6pC7Fn2ZRNOZ8HAcFkpgCEJR6x5gokxDA
+ QwQv3aLQwR7eJ+OlFw0JvYKVMy4yTajHuXeXdgXdr4V1/mpGwaLcKxdzBwdbxYgXFbgaG3bQq
+ 6fUAeVX3RJKY7BwWvQTQYQtoIoFNF80Borl7xXj2KU+HJU7g/TaRGbGP+m86yvEWgXpZbM8LQ
+ JtK5jzXGFrP34M+jZAlKDIw/xKNiHJ6RIv+8DJFdGIaXIpi6CyC7JF8lB+Bv5BhH21P6C51SX
+ rMY5zOMzNH/ahQtv3FNIjEkCsHspD0IrfqAna5f1mUmSkO1ZGXAZ6opTW0h0EcM1bKYG/h9bp
+ Rq65P9vrImVKMvmnf05pPxD6jsnShKUkjRWQ9Pyqvtta9txrrMfq7iEDE5PpbGUkZDEqITppc
+ olnaLV1lvmnPPh81srj5eY48Gg4z0uuyoxdXism8j41L4Y1VHFM3Ny+4YTbt47TvXf5P8ZXaE
+ JHj4jFcQMndwskpXuLJYf75B7iTEafYGzzhYRvLkDBoZIWnMPpH41hPJsf4i2NXfQC8pkNCnQ
+ /zVor8K8hUf+bDAdFT6IXqAw1zOxbQkCWjLoE7OO8jyYsNfsPXQqDCVGsvOOn6vlb7ql0FX99
+ 00G9uNuHuvi32Qina1DqSDBpsl0NjljBLOo4c/uSjTfyFpCtMMWEdaFr3B9x1waZ924O1uD9m
+ ewQM154Rrl6L7IBEtaCQ2GLgKhgDcH9m351Vztxe9oolav/dTgWADTgAXHPFbN4zz9oAThQFZ
+ +j1bgwTG19xKba+82rg93KJQEFqIVqBLS/KMIVY5Zgm677bbnI+amXVB8MPNC/JOAxn6M9f/8
+ 3lRuX0LGgi722Zmqtcg4ARnT13op7WVJO4NB+5B6rdfLxMK1Q2bZ5/e+/HKTlGWGr3dJxKtP+
+ PvWUCfdpLY1blC21eD+BAUYy/vy+wA7tc5VIWVCjvAjkO7F6R4ExjdRoCrNLRnX2eUNLNH+TM
+ DE3wm/Vrv17R8FNrz0jX7NZwhn5pjUssFspya8Cbs8+6yuHqHeedefwa0ZPGTGA4/5vF4PETs
+ jGLkzDwqJ1XcEmHjRqtMNNPS5cWGUjA4NFlzatwJcoZYKFGP7zDQWuFvdqNGj2VNTxXvTlpfO
+ KUEB7fzzmm67q4RpS4fTVvXexh5rrp/5KxtKUmC9bTsqfa8preZQgvubVD6flKWL0F0syLPE5
+ oi/44rppoM9eWVeLfb0YUkTlNsqW7Vc4243FJ3jWp3kTvpuQi0UbemvDSHx6YSkoIJKRYyWyp
+ GicLApXb/g//aDSdDFZQZRAniWu/fsD93XKJjJfUhQNBV2i9iF0zP7tiF+U/CZQJutB3zQ/7R
+ V6M4LNU5HEGUJ9oeaVwQtvaqfv8iJDDyVgZc70zDcRBWH+RbEGOzec9Sezi00tKo49fFOlxgv
+ YRcQS+xzipiN96f3lkrUfANBLfHaK+H/a4UaFpPGyn5OLGTb3BFpT0xhKY/33NZvvFAvPn4EV
+ kNSoN04EW+p8zDtBlktVdXeSCMl0MtbxxYU+RQixwpSjsR2qJjd67ZdJ1ftJi6ZmUesqJVahO
+ EcUtBfrDSjCvwu2R4NYFD61+Cb3+z4nbc21HnxGE1ZAJFsV3qE4qdQtIl91NMz2WierFfPU+g
+ ld+xhMcv/X++ljvDrXxFhiL+B1QTceTcm65EQWWn74dEpEr843OAYQrWFSRLCYnOnvylRulN/
+ 1ZAdkHrEqcHJL5TIAnhmqYIkyk1Vsc1X1gU6Xp7h1dqc79WDP9FuOzfcHvjbTKinjovfJncuS
+ lau58w/Pl4Y1gqs3dp+Jf4Y/KxI3oOjrDge8dj8Z3SFEIDSMxJZkgGGAJSv+27Lcc4lrK8TL7
+ 9cj2c8pddSmta+c2smiq/H6jwGEvAoT0JOKPVGFRNwQsrtLbo7prd8ODM+Mw4hkwWKOIgcs9w
+ spRp89Q/S8DsECwhy9ob5EwqBTFbNQimYaKVWtcvXz+orbqcBdSu2d/gdByrDLvYC0Uiv2nAH
+ eAxDJZyWrOYCA3pDZVjKaJJJv5lJXqn2P9GdlK8wkkahttxxGUmkM1wrrOp0nZbu6HRu00+e6
+ Xyrn+1K9pzVaSmOY7DEWFh9g97PUB6QTDmI2/hxvKzqZe6VrQEbjvHLLEYEvgy0YeiZwH4uhn
+ cu/8TGh+6y7DJcj4l9KkLbGk9b8FQLnXc2+ET8K+3T86US2qMPp0oQC7l057LNLPUfLej2n5Q
+ Ka+z1gTtu8nrnyzsMI3cC1soyo9PeLJ1OwgYJt+3jV87Wq8AY0HAeT2m6wIPINJf/NGOR0YcS
+ hJptdYo0V+hvilG6mW+OJHn0CMkqOiTY/tIdu0OstqxU0Q/euO4ZE0FSHJEfcbcUpNurdEjW6
+ grLQkjw46czXBoqieKxv6yxw366a0gxLY0X+bDr0AHGLQ3ziKbYDdOATzkZsywjldnHqZt9qU
+ GEr3BR9Q15jjlMF2e1/SmgQdhqqT9mQAw==
 
-git-gui accepts subcommands blame | browser | citool, and assumes the
-subcommand is 'gui' if none is actually given, But, git gui also has a
-repository picker (choose_repository::pick) that can create a new
-repository + worktree, or choose an existing one, switch to that, and
-the run the gui. The user has no direct control over invoking the
-picker, instead the picker is triggered by failure in the repository /
-worktree discover process: this includes being started in a directory
-not controlled by git, which is probably the intended use case.
+Simplify the code by calling st_add3() to do overflow checks instead of
+open-coding it.  This changes the error message to include the offending
+summands, which can be helpful when tracking down the cause.
 
-The picker can appear when the user has no intention of creating a new
-worktree, and the user cannot use the picker to create a new worktree
-inside another.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ strbuf.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-So, add two new explicit subcommands:
-    gui  - Run the gui if repository/worktree discovery succeeds, or die
-           with an error message, but never run the picker.
-    pick - First run the picker, regardless, then start the gui in
-           the chosen worktree.
-
-Nothing in this changes the prior behavior, the alternates above must be
-explicitly selected to see any change.
-
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- git-gui.sh | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 3a83dd5..c56aeef 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1021,6 +1021,7 @@ proc load_config {include_global} {
- ##
- ## feature option selection
- 
-+set run_picker_on_error 1
- if {[regexp {^git-(.+)$} [file tail $argv0] _junk subcommand]} {
- 	unset _junk
- } else {
-@@ -1030,6 +1031,7 @@ if {$subcommand eq {gui.sh}} {
- 	set subcommand gui
+diff --git a/strbuf.c b/strbuf.c
+index 3e04addc22..bb04d3910e 100644
+=2D-- a/strbuf.c
++++ b/strbuf.c
+@@ -106,12 +106,9 @@ void strbuf_attach(struct strbuf *sb, void *buf, size=
+_t len, size_t alloc)
+ void strbuf_grow(struct strbuf *sb, size_t extra)
+ {
+ 	int new_buf =3D !sb->alloc;
+-	if (unsigned_add_overflows(extra, 1) ||
+-	    unsigned_add_overflows(sb->len, extra + 1))
+-		die("you want to use way too much memory");
+ 	if (new_buf)
+ 		sb->buf =3D NULL;
+-	ALLOC_GROW(sb->buf, sb->len + extra + 1, sb->alloc);
++	ALLOC_GROW(sb->buf, st_add3(sb->len, extra, 1), sb->alloc);
+ 	if (new_buf)
+ 		sb->buf[0] =3D '\0';
  }
- if {$subcommand eq {gui} && [llength $argv] > 0} {
-+	set run_picker_on_error 0
- 	set subcommand [lindex $argv 0]
- 	set argv [lrange $argv 1 end]
- }
-@@ -1047,6 +1049,7 @@ blame {
- 	disable_option multicommit
- 	disable_option branch
- 	disable_option transport
-+	set run_picker_on_error 0
- }
- citool {
- 	enable_option singlecommit
-@@ -1055,6 +1058,7 @@ citool {
- 	disable_option multicommit
- 	disable_option branch
- 	disable_option transport
-+	set run_picker_on_error 0
- 
- 	while {[llength $argv] > 0} {
- 		set a [lindex $argv 0]
-@@ -1162,14 +1166,28 @@ proc pick_repo {} {
- 	set picked 1
- }
- 
-+# run repository picker if explicitly requested
-+switch -- $subcommand {
-+	pick {
-+		pick_repo
-+		set subcommand gui
-+		set run_picker_on_error 0
-+	}
-+}
-+
- # find repository.
- if {[catch {
- 	set _gitdir [git rev-parse --absolute-git-dir]
- } err]} {
- 	if {[is_gitvars_error $err]} {
- 		exit 1
--	} else {
-+	}
-+	if {$run_picker_on_error} {
- 		pick_repo
-+	} else {
-+		catch {wm withdraw .}
-+		error_popup [strcat [mc "Git directory not found:"] "\n\n$err"]
-+		exit 1
- 	}
- }
- 
-@@ -3051,7 +3069,7 @@ gui {
- 	# fall through to setup UI for commits
- }
- default {
--	set err "[mc usage:] $argv0 \[{blame|browser|citool}\]"
-+	set err "[mc usage:] $argv0 \[{blame|browser|citool|gui|pick}\]"
- 	if {[tk windowingsystem] eq "win32"} {
- 		wm withdraw .
- 		tk_messageBox -icon error -message $err \
--- 
-2.54.0.99.14
-
+=2D-=20
+2.54.0
