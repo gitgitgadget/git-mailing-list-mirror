@@ -1,105 +1,66 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E1D78F26
-	for <git@vger.kernel.org>; Fri, 15 May 2026 01:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E66146A66
+	for <git@vger.kernel.org>; Fri, 15 May 2026 03:53:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778809590; cv=none; b=LJId3eOaTegLdo7tOmPSz1bsKHhkCmMDBwMJTeu6c8wjWfBMmfwLRP+Mg4vy46CoaNyq6ACXX2+jtABByuG1k8Bb55K8KRvj9ctNUjKeIYE/qSUVtsPLB41yQRRamLkoavyZuC13PBP8tS+ZGeq3sAaUk/Ez4lv4yr+628jtBe0=
+	t=1778817229; cv=none; b=TXOBmUw8jrRbA0T11lGreLM0AkavcV1ppGUlHHagMDnnfk9+4cZEvvFNZIWwGmzqrCN2tiqmhr9QS3UrYVuYoWvK1W3AZ3aLom5URUTSQWl+hQ/vJuGPryc5bbxej+ZHheSjZSmhDDHDTsWyZWB5BWXhiojtS3UEKH6/UD/884U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778809590; c=relaxed/simple;
-	bh=oOvhH1lG3CPuhH8dtiPv0UQ+GdydH0HxkfewBuCzMpc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U/XxUmLgfKLgXN/Z8eFp0qnOmf5XB0cnteCZ7JVAHUpvtAyrxmrPeJj/e3cfLknbdPYuFWXYdQmo8m99QBNgOWHW4tvPDSBtGca0mwSX8j2j6p7h6p0569wm3SRV4XG62omvojaz0L6KnUTwK6am4IxJywQCBtUFkyQHIe5H7KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GIRr346q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HunX3cR6; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778817229; c=relaxed/simple;
+	bh=j6eNKrN1eFyySMx6qihO/8H81FLkZsb8VJlIZjjKemg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rmOKs63mpL8Jm/R2s6tcCukCzUU2qBDKWja1dpYj6j6aKISpZbHH64xdxjj3i/8O0kM/5icT//hsZd1OWOo+gYb2kJGMzuYRWeeSJGfkjLaBTz7CcNbbKd6dccgdcPKn/2ZAydkXsdwStAa+Cq5r3vsZNNhqct2JoXaM5OD9Z3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Y4s871Tt; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GIRr346q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HunX3cR6"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id A45C1EC01DA;
-	Thu, 14 May 2026 21:46:28 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 14 May 2026 21:46:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778809588; x=1778895988; bh=YYCfugOuxa
-	m13cpVdrHNaTdUCEWWDiB6j0dvxPuc0sQ=; b=GIRr346qwXeAZdXevlDMGf/qKG
-	g4ntUbdK1LTHLcaLmEXEU7/aUJRIqaWIko1P+xnsYS1Cgt4b00pbfXPyUuRANJVH
-	A1R+TSqTW6mEgaOLKDPl9wcx0vR5VUGSxT3FDKlnkofVNl6ejk1hebz7yY3gk6Wn
-	kPbRZC3jVqsaSlV/VmQEulF5rdhFB5kSUCiifTPGyuiWegmxMo1+BbNUH2ASLUsL
-	/5bSrrAvh1edcmCHAbNzUJTgEOXizlhzX4xqqo59HBtpE1XZPBDyuvRDit1wR0m0
-	MWfgyOtwJQr57pIrT4+dFPnXsdi2QbEIo82xJDPTjuneU/fpASVzmzX62gZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778809588; x=1778895988; bh=YYCfugOuxam13cpVdrHNaTdUCEWWDiB6j0d
-	vxPuc0sQ=; b=HunX3cR6xNJYD5bE6HEiW99gCdXSBfaRd6rgWnWd6SE94uSwa2W
-	3GRxdzEtGSAJOFtV/dlLAeBq1laXRT3pkBKusKkDIjSvliVcfWSfPspojTBaYAVU
-	wxryO6c0P5mKBMq6hHnF4swQs8dazoYCEdVatRkGDT8hXLQ61ZrLKkNgBdBmNUOC
-	GA2uL00IinC2SUnIQRTrbPa39b00f/cuc6VrQC45RxmHgFK0Whp6sHrfZsHBHJIc
-	KxTCySDvnMqqVsqfmGDapx6OJzbWL8P3KpFmKRhlx1UpD5seh1P4kSzXVpHjBPFw
-	R+9ou6MXkd8szMF57MWlyjDFv1Cztiy1gqw==
-X-ME-Sender: <xms:9HoGanhrRSR3wbaSttHLFWoFxEzxmxDQ-U7gYz8nFMscIUZfZPwWSw>
-    <xme:9HoGareJjqTitNMbzJ-4fbnYCPh3lhrbnNCBauG-rMNqKtWT4RsEOp4U8qgDyRKSA
-    8_J05dTqBnNUynkLbz2suRiseJry89naCOZ_rbWlukv7PyoJysy5w>
-X-ME-Received: <xmr:9HoGakcVnfvhOvWR8gK0Lk2VlNNglLjOb8gfueVLtaLnkxMkRHKeSvB85reZ40rHK-uZiDlsxt-c4OERnj_fGfjWHnObO55yqQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdeludduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhushhhkhgrrhhkuhhmrghrshhinhhghhduleejtd
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9HoGat9cPluLy80bXAcV8mRABAOTgXUJxh7dc6d8yAFKpvSkm65MZw>
-    <xmx:9HoGaolg80pGi525u6bmycvmFKWHhDZ9BQCn6m0mC8uuWafKCwjTlg>
-    <xmx:9HoGan-xOGl2LzK7gKxsTfcXmVsEFhcaOhfwb0j4yW_kthged0-o0Q>
-    <xmx:9HoGaum2gu13vtaGjbepMLv4OWbIa1lmsiFvu0Nlp9yn7FkRM_Dr4g>
-    <xmx:9HoGarfejZxdz6Z3qLpAPO5fn30kly73KCULejNqSeALaFvby1w0mXjJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 May 2026 21:46:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Y4s871Tt"
+Received: (qmail 52598 invoked by uid 106); 15 May 2026 03:53:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=j6eNKrN1eFyySMx6qihO/8H81FLkZsb8VJlIZjjKemg=; b=Y4s871Ttfh1n1yzQfB4FFhLpqqRFKepv0GTa+xBs4rr/fuoTI5j7CvYRX7fx8iX76f7qlsz6Zk9uZRGvMXXM3buwRmn5TNia/jsrEGaDse/72ypWkWcoPS35fXlx3n6w9pvTpbEvQv9UzVFGUYtNz6m1Ykt4aOk7MMJNe0HgJxmh5yRbAC9R6NTb1Vv1HkqgIoGNrznZV1riVIjTv8fU57bJ6gs4FE/obt52F/tIO2YLhVsbH+tqcokkHBAxwjeJrR8UWnT5Yz1L761jUzjT2zNHMlFAek6N9ilZFo4o1W83hez6M8wxC3D+07PGYYZMYU3F1Otgh0DNTvyNkKAO/A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 May 2026 03:53:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 96198 invoked by uid 111); 15 May 2026 03:53:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 May 2026 23:53:39 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 14 May 2026 23:53:39 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2026, #03)
-In-Reply-To: <CALE2CrTea19qHKbhQK8V+uQJgh5GdT+8ia1q2jwr+hf546fnaQ@mail.gmail.com>
-	(Pushkar Singh's message of "Thu, 14 May 2026 23:11:46 +0530")
-References: <xmqqik8tm16n.fsf@gitster.g>
-	<CALE2CrT9=5mOauUdzxJAEjeeD77RWGyXjLGGTObsk9R1eOrP0g@mail.gmail.com>
-	<xmqqmry3i9a4.fsf@gitster.g>
-	<CALE2CrTea19qHKbhQK8V+uQJgh5GdT+8ia1q2jwr+hf546fnaQ@mail.gmail.com>
-Date: Fri, 15 May 2026 10:46:27 +0900
-Message-ID: <xmqq5x4pe970.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH 1/4] strbuf: add strbuf_add_uint()
+Message-ID: <20260515035339.GA75627@coredump.intra.peff.net>
+References: <20260512115603.80780-1-l.s.r@web.de>
+ <20260512115603.80780-2-l.s.r@web.de>
+ <20260512184238.GC70851@coredump.intra.peff.net>
+ <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
+ <20260513162232.GB103037@coredump.intra.peff.net>
+ <20260513164948.GE103037@coredump.intra.peff.net>
+ <f51cdd89-dab1-44f3-8f63-7d34f6fbbba5@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f51cdd89-dab1-44f3-8f63-7d34f6fbbba5@web.de>
 
-Pushkar Singh <pushkarkumarsingh1970@gmail.com> writes:
+On Thu, May 14, 2026 at 01:09:24PM +0200, René Scharfe wrote:
 
-> My thinking was mainly that git stash show normally omits untracked
-> changes, while --include-untracked consults the additional untracked
-> parent of the stash commit.
->
-> I did not see existing coverage specifically checking that behavior,
+> > And btw, one final thing to look at if you are interested in
+> > micro-optimizing strbufs: using intrinsics for overflow detection.
+> > 
+> > Right now we use unsigned_add_overflows(), and then do the actual add.
+> > Using __builtin_add_overflow() might be faster.
+> Curious.  Clang and GCC emit the same instructions for our
+> unsigned_add_overflows() vs. __builtin_add_overflow() on x64, but clang
+> on ARM64 fails to elide the comparison: https://godbolt.org/z/91d35KofM
 
-Ah, OK.  Please more explicitly state that it is filling a gap in
-test coverage in the proposed log message; it would have helped to
-sell the patch better.  Adding even more when we already have
-adequate coverage is one thing, covering the cases we had no
-coverage is totally different matter.
+Ah, neat. I always assumed there was low-hanging fruit to pick here, but
+it sounds like the compiler is (usually) more clever than I expected.
 
-Thanks.
+-Peff
