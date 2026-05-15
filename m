@@ -1,195 +1,187 @@
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A3B401489
-	for <git@vger.kernel.org>; Fri, 15 May 2026 08:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8ED1EA7DB
+	for <git@vger.kernel.org>; Fri, 15 May 2026 08:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778833733; cv=none; b=X6ixi+QoYbZrBUzTXIw6p9v7SVU22ld8E0GVMvkuibtg66IRIxsgCzLPEt5gMdSmtYUORnGFFtGWRe0fniwGGxv7Wcf4Pwst5074E+YN31rPN9hpPJlFbCqASjDSul44dpPvhdGzqBIDaztcNRsVDnYVEIxNUxqfFtStw3e5/0A=
+	t=1778834566; cv=none; b=eqCTOMtngkMbVe8eNdaCSp+64dP9Obpo1//wnn5UoQzTTbTt+Uu5O6z0hneKhNLstpuD0H1CkEGfmLlOKoaFF+3qlITPLQitrQMyppsVKHlj5GFwhsAbXiRSw2xhK3xq9ROISjC3k4pTJyYqR7qMLUkhjKYa7Xdx7meri+VLUxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778833733; c=relaxed/simple;
-	bh=I9chlimPoZylzybpcARbBRnjzQ1Ds/eeHhV2vNpkAhg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GjTMFXyfIXSdkudgJi3kuPRfM2FA+Ja3a0DfGdkof/s+RyN7zoq5adtKXBqN7X0lO59+plJbWXQ7LgtE9PU89iGQbGwu3bgRO6BLur1Mdc7oPwGzHfCE51zwTqzdwY8Kv3yyIACD/lKTYmK5xNC3lvS+CuwqZXyBZZ7mGTQgXEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4gH0hx1HFmzRnlv;
-	Fri, 15 May 2026 10:28:48 +0200 (CEST)
-Message-ID: <39541407-dfe6-4500-b3d4-5c8ea0cdb26d@kdbg.org>
-Date: Fri, 15 May 2026 10:28:48 +0200
+	s=arc-20240116; t=1778834566; c=relaxed/simple;
+	bh=qU/BULo75FHoH6oN4Rz5efxd19H2JWRsH++Kkg6IgvA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=BSG17TunBBTjdhF41RUoMemfQQSif6h3zQ7b4WekLZ2S0JxzlipK50KL9s+KzF7xR+4VThCrdNKndtkySfDhiJGhC1/bRqYGcT+BkYxmHf6OYE+9fxF5fjfGmOKFrditb2GE3N8Xmd3sIkoIiEeFUZ9v/xSzFslX7e7gCnx59RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=5rD0udeL; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="5rD0udeL"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1778834559;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Fg24UOdK1bGiqYQNNUieUbEeaB3bydwJWjyXvzpj3i4=;
+	b=5rD0udeLjGq0GpfbuItbAbsjpQE7CE0GByNpcizB3YvhQREizpvL3nc6gO0rB1UQ5BLnTe
+	jtFoNqumIBlUA17W4/yu7x8TfALEwoIbypB7F/TfgBlLvxRwB+44f9mv0UXaOd86Ju8Xfi
+	iNyWNHHeHPmvQ9pcY0qOVgyBnysG2+A=
+From: Toon Claes <toon@iotcl.com>
+Date: Fri, 15 May 2026 10:42:26 +0200
+Subject: [PATCH v3] generate-configlist: collapse depfile for older Ninja
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/3] git-gui: handle GIT_DIR and GIT_WORK_TREE early
-Content-Language: en-US
-To: Shroom Moo <egg_mushroomcow@foxmail.com>, git@vger.kernel.org
-Cc: Mark Levedahl <mlevedahl@gmail.com>, Aina Boot <bootaina702@gmail.com>
-References: <tencent_DDD6467B3F6184562B51C23BB9DBB79EA409@qq.com>
- <20260509133756.1367-1-egg_mushroomcow@foxmail.com>
- <tencent_C4AD92361C8D7B76EB4C8A6F14EA33496805@qq.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <tencent_C4AD92361C8D7B76EB4C8A6F14EA33496805@qq.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20260515-toon-fix-almalinux8-v3-1-b545a0647f0f@iotcl.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NQQ7CIBQFr9KwFtNPqbauvIdxgfC1mBYMUFLT9
+ O5C3XRhXE4yb95MPDqNnpyKmTiM2mtrElS7gshOmAdSrRITVrJDyRnQYK2hdz1R0Q+i12acGgo
+ lU9hC1bCWk7R8OUzGWr1cv+zH2xNlyKlsdNoH697rbYTs/X+IQIEKlKBqLpRSeNY2yH4v7UDyQ
+ 2TbBvvdYKnBa9XwI6Aqsd02lmX5AOiigGIMAQAA
+X-Change-ID: 20260421-toon-fix-almalinux8-102de9138294
+In-Reply-To: <20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com>
+References: <20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, 
+ Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-Am 09.05.26 um 15:37 schrieb Shroom Moo:
-> Users expect these two invocations to be equivalent:
-> 
->     GIT_WORK_TREE=/some/path GIT_DIR=/some/path/.git git gui
->     git -C /some/path gui
-> 
-> Currently, the environment variable variant often brings up the
-> repository picker or ignores the requested worktree because
-> GIT_WORK_TREE is processed too late.
+The tools/generate-configlist.sh script generates two files:
+  * config-list.h
+  * config-list.h.d
 
-I cannot reproduce the case that brings the repository picker. All other
-failure cases that I can produce are reasonable and do not indicate that
-GIT_WORK_TREE is processed too late.
+The former is included by the source code and the latter defines on
+which files the former depends.
 
->  Moreover, after determining
-> the working tree, git-gui unconditionally exports GIT_WORK_TREE.
-> When no worktree is found (e.g., in a bare repository with a
-> read-only subcommand like blame), an empty value is exported, which
-> confuses commands like `git branch --show-current`.
+The contents of `config-list.h.d` consists of two sections:
 
-True. I think the culprit is that we export GIT_WORK_TREE in the first
-place.
+    config-list.h: Documentation/config.adoc
+    config-list.h: Documentation/git-config.adoc
+    config-list.h: Documentation/config/add.adoc
+    config-list.h: Documentation/config/advice.adoc
+    config-list.h: Documentation/config/alias.adoc
+    config-list.h: Documentation/config/am.adoc
+    config-list.h: Documentation/config/apply.adoc
+    ...
 
-I suggest the following patch to replace this and the previous patch.
+This first section actually defines on which individual files
+`config-list.h` depends and thus needs to be rebuild if one of those
+changes.
 
----- 8< ----
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH] git-gui: operate git commands without GIT_WORK_TREE
+And the second section contains content like:
 
-The manual page of the git command states about the --git-dir option:
+    Documentation/config.adoc:
+    Documentation/git-config.adoc:
+    Documentation/config/add.adoc:
+    Documentation/config/advice.adoc:
+    Documentation/config/alias.adoc:
+    Documentation/config/am.adoc:
+    Documentation/config/apply.adoc:
+    ...
 
-   Specifying the location of the ".git" directory using this option
-   (or GIT_DIR environment variable) turns off the repository
-   discovery [...], and tells Git that you are at the top level of
-   the working tree.
+These rules exist to ensure Make won't fail with the following error if
+one of the .adoc files is renamed or removed:
 
-Use this to our advantage:
+   make: *** No rule to make target 'Documentation/config.adoc', needed by 'config-list.h'.
 
-- Set GIT_DIR in the environment to the value that was discovered, so
-  that the invoked git commands operate on the same repository
-  database that Git GUI uses even after it changes the working
-  directory.
+With the no-op targets defined in `config-list.h.d`, Make knows there's
+no work to be done to generate these files, so it doesn't error out if
+it doesn't exist.
 
-- After changing the working directory to the top level of the working
-  tree, ensure that GIT_WORK_TREE is not set, because, as per
-  documentation, all git invocations from then on will assume that the
-  current working directory is also the top level working tree.
+For the Makefile build system this works great. And since
+ebeea3c471 (build: regenerate config-list.h when Documentation changes,
+2026-02-24) this script is also called from the Meson build system.
+Nevertheless, on AlmaLinux 8 the following build failure is seen:
 
-- Remove the now obsolete GIT_WORK_TREE dance when subordinate Gitk or
-  Git GUI are invoked for a submodule.
+    ninja: error: dependency cycle: config-list.h -> config-list.h
 
-Do keep the state of GIT_WORK_TREE if we are in a bare repository,
-because Git GUI is not interested in the worktree at all, as no commit
-mode is possible in a bare repository.
+This version of this distro uses Ninja 1.8.2 and it seems to have some
+issues with the format of the `config-list.h.d` file.
 
-This avoids cases where an empty GIT_WORK_TREE was exported into the
-environment, most notably by a call of `git gui blame HEAD file` in a
-bare repository.
+Ninja versions before 1.10.0 do not reset the depfile parser state on
+newlines. This causes issues when the depfile has one dependency per
+line, like we have in `config-list.h.d`:
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+    config-list.h: Documentation/config.adoc
+    config-list.h: Documentation/config/add.adoc
+
+The parser only recognizes the first "config-list.h:" as a target. On
+subsequent lines it is still in dependency-parsing mode, so the repeated
+output name is recorded as an input. This causes the error mentioned
+above.
+
+The bug in Ninja is fixed in 1.10, with commit
+ninja-build/ninja@1daa7470ab7e (depfile_parser: remove restriction on
+multiple outputs, 2019-11-20).
+
+To be compatible with older versions of Ninja, collapse the dependencies
+for `config-list.h` into a single line like:
+
+    config-list.h: Documentation/config.adoc Documentation/config/add.adoc ...
+
+This works around the bug in older versions of Ninja, and is fully
+compatible Make and with more recent versions of Ninja. And while the
+no-op targets are not needed for Ninja, they also don't do any harm.
+
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- git-gui.sh | 24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+At GitLab we build images for various distros, including AlmaLinux 8.
+On this distro we got this error while compiling Git.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 76560ec825cf..146a29a809a8 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1216,6 +1216,7 @@ if {[is_bare]} {
- 		exit 1
- 	}
- 	set _gitworktree [pwd]
-+	catch { unset env(GIT_WORK_TREE) }
- }
- 
- # Derive a human-readable repository name
-@@ -1228,9 +1229,6 @@ if {[lindex $_reponame end] eq {.git}} {
- 
- # Export the final paths
- set env(GIT_DIR) $_gitdir
--if {$_gitworktree ne {}} {
--	set env(GIT_WORK_TREE) $_gitworktree
--}
- 
- ######################################################################
- ##
-@@ -2029,7 +2027,7 @@ proc incr_font_size {font {amt 1}} {
- 
- proc do_gitk {revs {is_submodule false}} {
- 	global current_diff_path file_states current_diff_side ui_index
--	global _gitdir _gitworktree
-+	global _gitdir
- 
- 	# -- Always start gitk through whatever we were loaded with.  This
- 	#    lets us bypass using shell process on Windows systems.
-@@ -2043,11 +2041,7 @@ proc do_gitk {revs {is_submodule false}} {
- 
- 		set pwd [pwd]
- 
--		if {!$is_submodule} {
--			if {![is_bare]} {
--				cd $_gitworktree
--			}
--		} else {
-+		if {$is_submodule} {
- 			cd $current_diff_path
- 			if {$revs eq {--}} {
- 				set s $file_states($current_diff_path)
-@@ -2067,18 +2061,16 @@ proc do_gitk {revs {is_submodule false}} {
- 				}
- 				set revs $old_sha1...$new_sha1
- 			}
--			# GIT_DIR and GIT_WORK_TREE for the submodule are not the ones
--			# we've been using for the main repository, so unset them.
-+			# GIT_DIR for the submodule is not the one we've been using for
-+			# the main repository, so unset it. (GIT_WORK_TREE is already unset.)
- 			# TODO we could make life easier (start up faster?) for gitk
- 			# by setting these to the appropriate values to allow gitk
- 			# to skip the heuristics to find their proper value
- 			unset env(GIT_DIR)
--			unset env(GIT_WORK_TREE)
- 		}
- 		safe_exec_bg [concat $cmd $revs "--" "--"]
- 
- 		set env(GIT_DIR) $_gitdir
--		set env(GIT_WORK_TREE) $_gitworktree
- 		cd $pwd
- 
- 		if {[info exists main_status]} {
-@@ -2102,12 +2094,11 @@ proc do_git_gui {} {
- 		error_popup [mc "Couldn't find git gui in PATH"]
- 	} else {
- 		global env
--		global _gitdir _gitworktree
-+		global _gitdir
- 
--		# see note in do_gitk about unsetting these vars when
-+		# see note in do_gitk about unsetting this variable when
- 		# running tools in a submodule
- 		unset env(GIT_DIR)
--		unset env(GIT_WORK_TREE)
- 
- 		set pwd [pwd]
- 		cd $current_diff_path
-@@ -2115,7 +2106,6 @@ proc do_git_gui {} {
- 		safe_exec_bg [concat $exe gui]
- 
- 		set env(GIT_DIR) $_gitdir
--		set env(GIT_WORK_TREE) $_gitworktree
- 		cd $pwd
- 
- 		set status_operation [$::main_status \
--- 
-2.54.0.215.g4fe990ec16
+    ninja: error: dependency cycle: config-list.h -> config-list.h
+
+It seems this is caused by a bug in older versions of Ninja. There are
+more details in the commit message, but here are a few simple steps to
+reproduce:
+
+docker run --rm -it -v $(pwd):/git -w /git almalinux:8 bash
+    dnf -yq install epel-release
+    dnf -yq install shadow-utils sudo make pkg-config gcc findutils \
+        diffutils perl python3 gawk gettext zlib-devel expat-devel \
+        openssl-devel curl-devel pcre2-devel cargo
+    pip3 install --prefix=/usr meson ninja==1.8.2
+    meson setup build --warnlevel 2 --werror
+    ninja -C build config-list.h
+    ninja -C build config-list.h   # fails with dependency cycle
+---
+Changes in v3:
+- Stop using \n in sed(1) replacement strings because it is not
+  portable.
+- Link to v2: https://patch.msgid.link/20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com
+
+Changes in v2:
+- Simplify the changes *a lot* by doing the collapsing unconditionally.
+- Link to v1: https://patch.msgid.link/20260421-toon-fix-almalinux8-v1-1-aec1d54addde@iotcl.com
+---
+ tools/generate-configlist.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/tools/generate-configlist.sh b/tools/generate-configlist.sh
+index e28054f9e0..d1d2ba4bb7 100755
+--- a/tools/generate-configlist.sh
++++ b/tools/generate-configlist.sh
+@@ -42,9 +42,12 @@ if test -n "$DEPFILE"
+ then
+ 	QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')"
+ 	{
++		printf '%s' "$QUOTED_OUTPUT: "
+ 		printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+ 			"$SOURCE_DIR"/Documentation/config/*.adoc |
+-			sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /"
++			sed -e 's/[# ]/\\&/g' |
++			tr '\n' ' '
++		printf '\n'
+ 		printf '%s:\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+ 			"$SOURCE_DIR"/Documentation/config/*.adoc |
+ 			sed -e 's/[# ]/\\&/g'
+
+---
+base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
+change-id: 20260421-toon-fix-almalinux8-102de9138294
 
