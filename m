@@ -1,93 +1,121 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D2C3F4127
-	for <git@vger.kernel.org>; Thu, 14 May 2026 22:16:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1D521771B
+	for <git@vger.kernel.org>; Fri, 15 May 2026 01:27:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778796967; cv=none; b=B1jVMZLo0Fy6XMjpF5D2wM+mAC9ts0C3YoD02kdpttZ4UOJfmWMOvW0o9zwT0iRl6tqEQ0WDw0EAgkibQsWBz38Sg7GWRqsIWm+ALgaRUABIpvh3UkMPMF921WledY0cWrC1rpbNsawmlfTyDHVQ5IXBNH7KB9nhLWwTUcj8CjI=
+	t=1778808431; cv=none; b=a6aBzr/Mb9tGf7gguPLmE/zz3qHmHBRc2Ob52UbSGZUkE2TAHZ9AOJ9fta9M/Gv50mKaw6FAQmRQSKeqQfSkWj9e5Gl3jQiGQkqGW8lmDd3puq1vcI00BlSka0WJ2CHSZFdtZRS1GCl0ncWtO8JeQh3LY3pKOfPS4Iy4MfPUDtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778796967; c=relaxed/simple;
-	bh=BUXJJYcuAP1ksN4uTAJs9VO+QeMs6IUkjpHkLZONAHw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CnpSYCWLd1+zPRQV4bbjcrggrMsxTzaD14eKF+Nn8bb+P0DHAIUUJsobsUBbWYj0V1IMw0wRGJgiWM3Cgtc0rQJZGqENxN8l3ZY6Hn5jdr0nyi4b9bfowMtxtekhV5bj8dUafAG4KyQ0VijiCM8sh94OEKqwE056znFjE8xErlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQrQm/s5; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778808431; c=relaxed/simple;
+	bh=4rgeI3vKoRLsqK1ZLpYqI+L7wY2cnhRKyU0ZmySNEqY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rR8LePEg2Ezik9LO9LdQd4vYdjofHbHqW7QOoIynY3/yBs5R34e3rFokR9p1U5eNAcxPe65mrVkoAWTnk1b6ASNM/TIwsdbhrN7bRhKmBCH7ThunkIyaT+hCI/KhWXvusItsd6kI5ZXGSb9xv9upySU/UkqxinWml1Yg5Hex+qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=brhwP/nX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ao2HGSEx; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQrQm/s5"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-394413a63d3so27199261fa.1
-        for <git@vger.kernel.org>; Thu, 14 May 2026 15:16:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778796964; x=1779401764; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4esVVq5vgfXfl7/2ovIs1/irizEhhyad0+MKXMmfNK8=;
-        b=eQrQm/s5wFmlr072a/zfqG5DdY1N/6e5ZbsQxKLv2xlGtK4KCQSM6SDCzmU1Rkrmjr
-         N9W7+zIfD4y0huAtRpPkOVGsTSPUCXV+DcJXvmifZzobQKsALgR2P/gwiMbuVAGJ68WK
-         atIdtI0Lfw2Y5bhiFp9j6cm+aNPp9ISxbxu9x2LunYS1G7heFn/54LVvUM1xd8+Ba1ku
-         k14Fwof/YfFDvwSNvM3vTSq8jyrTsrc6A9qSjNPDUMnZ4BfTt50VljSNyrVrM4xhl17t
-         GNGTbeg+Jcdmdk7DkOoaSg1OMgp28QUSj1p1UXOaatI+9Bni3z1nAPnNGRLlXPRybeJ2
-         RA/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778796964; x=1779401764;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=4esVVq5vgfXfl7/2ovIs1/irizEhhyad0+MKXMmfNK8=;
-        b=o9xGYI2sxe8niLDqg8+QWc9NAm5SfSSks+6ipU2va+zx2YZLBXfdJGyKF7Cqh6aZk0
-         p7yimFgih1hYBNuX8k6kF2rZJfGwPzILSHFghMHVxbAJQBlC3ZT1rYQLEGFMA1VMEI3L
-         FOaKZkGuQXfqyWQMo9UGRauqnHtbFJdyVS3AY9OXrcnEJV1gr9YYvMjz0DOPMKAQbZwG
-         NN6FpP9otZboel9ETunnzo+000VY8RqY6tPQIhZQOdqJuX+naZX+1RyOs3TWe1g+AfuN
-         rR2/nrhI/n+cprUDDDMgKO8rrOd7c3OI9CWXIMaAg/U8nlJCKuHHbTA1UO6OySjdzLor
-         hweQ==
-X-Gm-Message-State: AOJu0YxqsUaB+nFYh1tuFrD0mbpohbZd5JB2aE62ju9JFpyKgSdG1eXr
-	LkokjQewae7gHddDmHp9FMQ3ir0L/2ZrR2Dz8qI3MMHobLVQ+gHmslWZ
-X-Gm-Gg: Acq92OGOE8aTXvC5k/L2M9d9TE4+wxxseLPmC7GHagToisLL25+NLBD/ugpvQFVD2O3
-	BwSAFRHO26rQn6J46aVHJgkdSQzI5qjzCXysAT73itIxQvQjt8HGZCGS0qGcLgeyLmANMPe7Rau
-	gnSYuqkCdD/92MIJzQDgBHTBaP6ZijK66rsAc8dUJh6SrC5ivhEiN6HJJsqDELPsS1xxBQLPwGk
-	jMbpCyDzVljsWHHxyzRJNHeXKo1TGr8QBNCA1GSJ8DAWTU2tvjDzliWkvxm2WwpLodBh4MN5wyE
-	3xEzPFXl9SFI02GKItSVvPrpc4WQ6XV82+AHzS9GDu9JjHr/FP/uPgpUqLUpcplgCQP75je2m7S
-	mwFpe1UTQ+9qb0pvzbzmx+SlLIiG7FTeXE0Zuv2RdkDJ6FFVCAweFD5Q9d2/OdRMGs37ps/Amth
-	1FxGftGWMoylLvdtW/xRsi4u+Y+gpbkqZGAGEmOmFvKp07J0npQWAdv7xdlAGNMxsxkp9tp7hgd
-	J6Evmt9zQ0gJ0qX
-X-Received: by 2002:a2e:8814:0:b0:38d:fca1:4a6c with SMTP id 38308e7fff4ca-39561d4c2c0mr1883961fa.17.1778796964118;
-        Thu, 14 May 2026 15:16:04 -0700 (PDT)
-Received: from Mac.localdomain (h-85-24-230-197.A753.priv.bahnhof.se. [85.24.230.197])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3945c8d87efsm9789071fa.12.2026.05.14.15.16.03
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 14 May 2026 15:16:03 -0700 (PDT)
-From: Harald Nordgren <haraldnordgren@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	haraldnordgren@gmail.com
-Subject: [PATCH] fetch: add fetch.pruneLocalBranches config
-Date: Fri, 15 May 2026 00:16:02 +0200
-Message-ID: <20260514221602.9918-1-haraldnordgren@gmail.com>
-X-Mailer: git-send-email 2.54.0.106.gcfa0dd594b
-In-Reply-To: <xmqqqzndel8c.fsf@gitster.g>
-References: <xmqqqzndel8c.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="brhwP/nX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ao2HGSEx"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8DCC3EC0076;
+	Thu, 14 May 2026 21:27:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 14 May 2026 21:27:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778808428; x=1778894828; bh=mipVfnGDJw
+	f0E/W8HvTWfm9BuENcIX80UiZo0h9C9M8=; b=brhwP/nXZfcD4+ZjpHoOHEyQUY
+	/QcH+8/BjeczVH2HvYLEWZO4czq+f7D7EsngzcGa5LmJCa1bEB3l2vn6odsyAvBn
+	mJchEFKr7TUadlb9nV05rCxm4GcT+cOZqc0HV+MWcQOI3PnIFT8d1ZhJTLj/vurP
+	1ZFYSurAKQwk/MVG0SQi3gKnuhBZspDazjc1SLrhswywNl9wiD6H5FneUaCO0Pdl
+	fC05hrTUmu23LQv0vcbUa0kM3kvtvc0rZWo+J1VxeNaaDzDS1JOYmZrdpz2Z5pky
+	bXRJMR5Sj4lK8O8VOhiFUYHWDygIZT0/6+RmGvE8lxhrp2Io+0PkSy/a27PA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778808428; x=1778894828; bh=mipVfnGDJwf0E/W8HvTWfm9BuENcIX80UiZ
+	o0h9C9M8=; b=ao2HGSEx9akevf5CcHCkRFDb2mnSgKjPvYgXnGmIr6BUn5iO34L
+	27Otqf1YZXEm7vqkHxjMCqmiipKwiyU4JyadG53pXSpmpFjN8JhIHHMlZhU0VHG7
+	87IEJo1UewBePW5SokInFDEGeuIpHZjMPwhrMMVem8lu2Y/f5hmjI6k61Ydkuj15
+	FT87Fb8Zin1GLRF2sUFGASXYm4ksTKnkTB4HepHLu1csSWUQUHzu7pTBQKYRqRJI
+	Wi3AxWxVLA/Y6OjH+9USOMLhs58c7gV3YCrnf6mVXt4rIH/9njVPqfBLk1IWCeZQ
+	Xx7G28etE/Df2Q4VLYhv8rv9QAqoT560zNg==
+X-ME-Sender: <xms:bHYGaqGp0tZzRBN6Fh4g8AqLbERHTf3kVKLzgvRT_3EuEG1LFlfkXQ>
+    <xme:bHYGaiWgsx2wDatQqMkEPKnpBeaGbYmZuLS24hQ7floT0aQHAhpiMjzUIL-SiXze_
+    AMlKNYXwse8F5_4CIWR_FeNiGTySMuSAndSRETpm0j9zNOh-DO0KA>
+X-ME-Received: <xmr:bHYGapJ7Yi2cUui1v2cSvbmDQZI-jUGZp7g2cwv3oAfYrdGw-UcdabquQ_rcMCunC50X0piS-zPU0VJ2Ry6zx3ZBN91IB5X14A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdeltdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthgrrghhohhlsehuthhurdhfihdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:bHYGai_Xqy1Uw0eb06ys8pZUt6wTFtKQpqsjKtIu2Yum8SMcs5mnMA>
+    <xmx:bHYGasIOFKSJ7fviusNOfGQ6FGlPRzItCu0IJwqNPUdinG-kwuAD6A>
+    <xmx:bHYGanniOgcvlXXs8pxIXQdD7U-I5eRXIcDIw96hnRiHCntdNEkn6g>
+    <xmx:bHYGagM3AjlGe78NMlam13ZfPqu2J1anvr7FpSsgDIj8IDOAjOrqdA>
+    <xmx:bHYGaq8fbkeGQ0MCZoyxhsVysnqnZk84H1qQXs0ewicdnxk-j1CFus-w>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 14 May 2026 21:27:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/4] approxidate: alias "today" to "now"
+In-Reply-To: <20260514210742.Yc6NZ%taahol@utu.fi> (Tuomas Ahola's message of
+	"Fri, 15 May 2026 00:07:42 +0300")
+References: <20260512145430.13212-1-taahol@utu.fi>
+	<20260514115520.6660-1-taahol@utu.fi>
+	<20260514115520.6660-3-taahol@utu.fi> <xmqqwlx6f1fo.fsf@gitster.g>
+	<20260514210742.Yc6NZ%taahol@utu.fi>
+Date: Fri, 15 May 2026 10:27:06 +0900
+Message-ID: <xmqqik8pea39.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-> I also wonder if, given that "=" in anywhere other than three-level
-> names, is invalid, we should just start accept
-> 
-> 	git config foo.bar=baz
-> 	git config set foo.bar=baz
-> 
-> and interpret them as
-> 
-> 	git config set foo.bar baz
+Tuomas Ahola <taahol@utu.fi> writes:
 
-That sounds good too! Probably even better.
+> Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Tuomas Ahola <taahol@utu.fi> writes:
+>> 
+>> >     Sorry, I don't know if I understood.  Does the patch change the behavior of
+>> >     that command somehow?  Is there some kind of edge case I missed?
+>> 
+>> No, I did not think it was a good idea to carve the behaviour in
+>> stone that "git log --since=today" behaves as if it were given "git
+>> log --since=now".  My reaction would have been very different if we
+>> were deliberatly and explicitly saying "today is synonym for now",
+>> but the thing is, it is not a designed behaviour but what
+>> approxidate does for anything it does not understand, e.g.
+>> 
+>>     git log --since=decay
+>>     git log --since=bogus
+>> 
+>> all behave as if it were given --since=now.
+>
+> Thanks for spelling that out.  So, as there is no deliberative
+> decision behind the current behaviour of "today", the code has
+> to remain non-committed on that; we are not at liberty to codify
+> the status quo.  Right?
 
-
-Harald
+Not right.  It is more like "Even though we try not to change
+existing behavoiur left and right without a good reason to avoid
+breaking existing users' expectations, we should be able to "fix"
+what is not intended behaviour but is something the code happened to
+be doing, especially if the current behaviour does not make sense.
