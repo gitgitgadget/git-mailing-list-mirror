@@ -1,37 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE3132AABA
-	for <git@vger.kernel.org>; Fri, 15 May 2026 04:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3891A3D5239
+	for <git@vger.kernel.org>; Fri, 15 May 2026 04:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778818604; cv=none; b=nqmtQStuxT0crQuoXgsPlPWTp5SWci0Pjs6wuqA8eZY2dG+OCwaThbeWwseEUW8kv36ttl0Y4rcTYxyU2kg3NwN5BGTyuePb31v6AlviQsBIzKrwOKOWwXOQ8IwP3MTT1yNx9m91ZOjpdDaRDHGrNgSqsZWlWE+ATAXOA2nzMBo=
+	t=1778819770; cv=none; b=RXS7Fxz8Lj/YYPfJc964F3PpIAFDwgWUT/D6Yo6KzqjuY2P6jwDEDawcEAzhuxL7vQ6JK2l2tFHU2s4VFR4BKPklYyJS96rh+zlmBQGeP54c61t5H6ZIN1+1CQ3e4Z7aAmuUjhYtPQOd1jl6jLvqmmiBBG0EkqmaRUyQSUzlDpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778818604; c=relaxed/simple;
-	bh=rBPdYhzv9pkOViggDTsYRwVo9TSnP+37EbNc+WnT3os=;
+	s=arc-20240116; t=1778819770; c=relaxed/simple;
+	bh=lVjke/ejnZFe3s+Ryye3sLe+0/6xbd2TnRGHjhEHDBo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B1XidT8g/Tza7jCDGbIy0vrOC3Zmv97XOY8FvzXUiJwGJtZc/dkwhkX1OAuZ4bKo9P6I0u8kPVMT4qEfMTyXbMUWjBcndFDA4jYZKb+FqwSwyaRb5ma5/S8OEMu4R7mD9bykTWkglhzay+Ix8BY76/yP47thS60trLBw2BwdYtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=a+NJqqla; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=YIvjWbOBXCcmtvP5JjdVYGOHhs4/rY+wBRK8iWoLbXm6VzPgi+bEeAmqix+TrZox8I2cUKQXlS+mtzUxh0Ka4DgfnXUepfV3oLyFa9uvUPVU2m8CqMf54Zye6hobG6fsKityB8QZlysZp84sjn08kFVp43aCu3m2RzADSsnY1Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aDEF+bIT; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="a+NJqqla"
-Received: (qmail 52723 invoked by uid 106); 15 May 2026 04:16:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rBPdYhzv9pkOViggDTsYRwVo9TSnP+37EbNc+WnT3os=; b=a+NJqqlak2dVLAJ7YmWoVZSzZ05PUO+mfmNdM3ggut2ufuXFJWZUc6t/G9p24fGYr+4gZZW1KGHTZOCr6mg/taaskBYSz8qCgAH8qtCR20vz/va3NTAeEbsIdYRc1Kk/7XD57LXEryS8cM+3/Z0c2nxMH/9KY+/yd9w2vvTbeRXnMPP5DNmDHFiKyfzeSjxBPLDu7NQ9wSnnTX2x78E3E1+CGDOWoOUOWy8D1fYEWZDgy66d71Eu+xF7h1olFFpx70yTaTwuEM4c+tJuT9Oc539Ddtp3lCfZkfmITxBtE+GB61BKMlCpR7Q9QV/ASzUp1nL2+fZGU+2nSric1uP5Fg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aDEF+bIT"
+Received: (qmail 52815 invoked by uid 106); 15 May 2026 04:36:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=lVjke/ejnZFe3s+Ryye3sLe+0/6xbd2TnRGHjhEHDBo=; b=aDEF+bITE6LW0BLatlIjHNHp5WQUE3ZlLEpdfCtR6fnHFFZvQHxOLa7R+O4YY/Bh071Vp+IOzOwdg3Mku54RUX4tTWxwcsvfPRqYvWUTtxatOdVdHhvLA9cCYXWA5Jg3hv1iArKy+GS36wpY9oJWFIoEG9V4spsFQPoBaQ82IXaPLN5m2ycM/LULmtvaila/TN1NfNw44p4rCjfM6teau61NaLji9w/L/ZvIRzxUe7ktBMkhCdnsZo/hYrvBeOs1/lXmiAHUAvdiHI9l85OPP+hPHuY6280xe244yQnLgah4vbteByrGuVzXg3BFFZziQTHeww/BRQHvbriaFP7UuQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 May 2026 04:16:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 May 2026 04:36:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 96501 invoked by uid 111); 15 May 2026 04:16:41 -0000
+Received: (qmail 96769 invoked by uid 111); 15 May 2026 04:36:06 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 May 2026 00:16:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 May 2026 00:36:06 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 15 May 2026 00:16:41 -0400
+Date: Fri, 15 May 2026 00:36:06 -0400
 From: Jeff King <peff@peff.net>
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH] revision: use priority queue in limit_list()
-Message-ID: <20260515041641.GA81292@coredump.intra.peff.net>
-References: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] strbuf: use st_add3() in strbuf_grow()
+Message-ID: <20260515043606.GA83595@coredump.intra.peff.net>
+References: <c6e9b337-c4fc-4cbd-ac32-e8d3814749b0@web.de>
+ <xmqqo6ihg690.fsf@gitster.g>
+ <0c3b4e94-b56c-4c92-a4d8-0e4364f1257b@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,51 +42,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0c3b4e94-b56c-4c92-a4d8-0e4364f1257b@web.de>
 
-On Thu, May 14, 2026 at 04:51:31PM +0000, Kristofer Karlsson via GitGitGadget wrote:
+On Thu, May 14, 2026 at 10:13:19PM +0200, René Scharfe wrote:
 
-> @@ -1451,6 +1447,7 @@ static int limit_list(struct rev_info *revs)
->  	struct commit_list *newlist = NULL;
->  	struct commit_list **p = &newlist;
->  	struct commit *interesting_cache = NULL;
-> +	struct prio_queue queue = { .compare = compare_commits_by_commit_date };
->  
->  	if (revs->ancestry_path_implicit_bottoms) {
->  		collect_bottom_commits(original_list,
-> @@ -1461,6 +1458,11 @@ static int limit_list(struct rev_info *revs)
->  
->  	while (original_list) {
->  		struct commit *commit = pop_commit(&original_list);
-> +		prio_queue_put(&queue, commit);
-> +	}
-> +
-> +	while (queue.nr) {
-> +		struct commit *commit = prio_queue_get(&queue);
+> Hmm, alloc_nr() doesn't do any overflow checking.  It should, though,
+> shouldn't it?
 
-Here we push the whole starting list into the prio-queue, which will let
-us pull the commits out in date order. But is the incoming list always
-in date order?
+Yes, probably. It's a known blind spot in the overflow checking, but
+I think is OK in practice because:
 
-If revs->unsorted_input, then we don't sort the initial list. So we'd
-now see the commits in a different order, and put them onto newlist in
-that different order.
+  1. We are growing an existing buffer by ~3/2. So even with ordering
+     the multiplication first, an overflow implies that you have a
+     single buffer consuming ~1/3 of your address space.
 
-I _think_ it may not matter because we don't call limit_list() when
-revs->no_walk is set, and we only have revs->unsorted_input when no_walk
-is also set. If that wasn't true, it would get weird when limit_list()
-calls process_parents(), which uses commit_list_insert_by_date().
+     On 64-bit systems that's impractically large, and on 32-bit systems I
+     think you generally run into fragmentation and address-space issues
+     first.
 
+  2. If alloc_nr(alloc) is less than the desired nr, we just use that nr
+     directly. So even if we did overflow, I think the result is
+     too-slow allocation, and not a buffer overflow.
 
-I was on the lookout for this issue particularly because I have another
-patch which converts revs.commits to a prio_queue totally. And I
-remember running into issues (and the solution is that sometimes the
-prio_queue has a NULL comparator and acts like a LIFO queue). But if my
-analysis is right above, we can ignore that for now. And if we
-eventually move to revs.commits as a prio_queue, then it will just slot
-in nicely here (we can drop the queue generation step and just use it
-directly).
+But it would be nice to be less hand-wavy. One of the reasons I hadn't
+dug into it further is that I wanted to start making use of intrinsics
+to avoid slowdowns. But since you're already doing that (and finding
+that the compiler was doing the fast thing anyway!) it might be a good
+time to make the jump.
 
-The rest of the patch looks as I'd expect from what my other patch does.
+That's all assuming that no overflow happens before ALLOC_GROW() gets
+the values. We also tend to do unchecked computions for the "nr" field
+there, but it's usually just "nr_foo + 1", so the same logic applies:
+you'd have to have an existing array consuming the entire address space
+minus one byte to trigger an overflow.
 
 -Peff
