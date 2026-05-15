@@ -1,116 +1,77 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A094EA36E
-	for <git@vger.kernel.org>; Fri, 15 May 2026 17:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3283D9DC0
+	for <git@vger.kernel.org>; Fri, 15 May 2026 17:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778864792; cv=none; b=LRJrlapa4F3ZJ7WPZf2VXdmCB0UJF5UZvjoHY9BfeANp/lIXq9rOlqfbjljF+LN2Pw+hDf3KTZDjGc+NUEl+sB7oj6ZTVP2+ujCX9CQVstKbSCgKd9d4yEnLPULMDB/Wacvf8tqhcXK2H301/AuLxAa7HvNkp81c4SsVR66DoSU=
+	t=1778865343; cv=none; b=P7yfK1eMi2CPpqyFz+kBfkKOiYZqh+QHaQbAbWK0Bik9leeWYo5uTcjRB0j8DKw8AvxcnTNjtTW+y3auj8UuLjRf7Q7mnZMcpwustOdUzfbKLOP03JWR9suczhv19nFtXuOrInlI1Huc6Lj0mGNKZS8zgLGPgw1Xa1Se85ZW080=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778864792; c=relaxed/simple;
-	bh=y9zbkloWio+6rjiHq6OFfppyuO61zJ6Ek22OYhDsClI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UTrFopRRUKWGm2GMiOSaz7cnXI65wcm9nO48TybAECtJMXei2xG4PlAkBuevJo+Q6EUCBtvpb+ThRlfIF5csuDzSB+VdOS+CtLL4tmWIfE0uyZA4Xmp9z2D0xbG4JnEUKWGwVI0PmrYHSF+px92UMEEdp4lHWJizrSbjBGymuc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BUfHS5UD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nT0P4Kle; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778865343; c=relaxed/simple;
+	bh=mKBzZX0tXAVl1x233E9Mx9xtFDgn18iyrNdLTz0yW78=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OQFvvu53gZxi3NKZ7XPcTvqsjRB8sv4weMgUyrJzu4zkDGFQ8KBWPkySjad67IQPt/NDc+V8oVHfUSXTlcp6r3izjXDPwVpQjSHXA9QrVJtuuRQh1l6V03mtYb8qYbnmRuNJoouAIKIDoNPKmLipdC5aDHggpTrJcdxrJ8Ya7ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=jYEcty7M; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=FoqJRVC7; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BUfHS5UD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nT0P4Kle"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3AFAB7A0048;
-	Fri, 15 May 2026 13:06:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 15 May 2026 13:06:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778864789; x=1778951189; bh=y9zbkloWio
-	+6rjiHq6OFfppyuO61zJ6Ek22OYhDsClI=; b=BUfHS5UDMAUFpdTrV4sKUvL1fI
-	vsuRqZ2PMDcmfotqXT0D6KGQVRqJ0A7k9sPt3Pq9W2xqlutoEXkUVehYEYeryimT
-	Q9KBf9S7O9yCc6BPwK8TjoffUjmyxjzW4K/Wj7VVx1xEDCOYzJtMjFIBvO+dZd2j
-	UliAI7289tKiSp5Wa4QB+ddkzP62YM1maBBrHdWwm1vsTqOyL1BsOy4rVmwKlVbB
-	mRwyP7qajccQWztXGFI76eEUhzW7LdtAoNil6IBBKGW9ClIx+L1kL0wOWblMXW79
-	CbT7fFGApYjRgcOyN9fl3gB+uHFwKejEqVvW84Yrgs0f5AKcljv2eEF9nkzQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778864789; x=1778951189; bh=y9zbkloWio+6rjiHq6OFfppyuO61zJ6Ek22
-	OYhDsClI=; b=nT0P4KleJKfSUYQ4MosGAC/VIn2ou+XiS3vRcWpjDa9V1qlCsBl
-	9RFr7HdU+AAXYgxW7DiAEETSgS55xWjv0UKP+leTId6PIh9pOYXAwOugi1fxRkq5
-	ItF6j7splCvDSrvOMKRM/uYf+qKIEfmT+LMESgEUGsdog4qLJL1jbVdqlLqHkgkk
-	xTgZIUq5FeCmIEZrvKJQsnhe5q7Id02RNaWJf7hcdT1pQYv3+t6h6zMRFz/yRWZd
-	KA3TGvsOPlZe/v/yD1pFZpaR5xTKuH/rDsmXTLkx5bllnG38d7Wcf0Nw1UvWVv2w
-	fyBBXEsUy4oPzH7bxgutoOLIml5uBY7Jetg==
-X-ME-Sender: <xms:lVIHaiJQANj8zELHjKoH6fAj99EgzusHcOjz3gbRQMraBNYtW2QsIQ>
-    <xme:lVIHahmiSk3lYqkvMz-sanhXDDWVsTaiYokNATB2vFvW2BqZZEd3AUGCE0iMwQ9YJ
-    zBbd6I7LQDi9b6PDhK9VxKdrJZgVxkdUYCoKEwctd1ikxAJqXFA>
-X-ME-Received: <xmr:lVIHagGD80crB8y37pFCif82QcENTVSnEfnFN4jrGUyYHunklLum4febSysA9K91KSPiorO1gUMX5wS_0Nj89AlMDleFYnsawQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufedtleehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdej
-    ledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrg
-    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:lVIHahExGPZbQ5ud1cBiwy8GWV6SgA17WLDzzWpbWM2jxo9TD0wsBQ>
-    <xmx:lVIHatOlb-gFdqoKOHLIHYzEszWocmZnHJnGXebq6Mm2MF_T2zghFA>
-    <xmx:lVIHagGumimcW1wzf34koMK8SMGsXx3P1qY_P4m156oEkV4o8AfM4g>
-    <xmx:lVIHakMG8GPBSUbJGJwUyOafkkxohgOsrpNjZb3F_Ft5gQsNNUQ7Lw>
-    <xmx:lVIHapmFlSb9NPAFJPl_VnSCxyPaB1tckDD5Gx9t7wTR4NlbHmTlRwdw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 May 2026 13:06:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2026, #03)
-In-Reply-To: <CAOLa=ZS8a2R79+8hD-r1JpJmHUatHo4VEC=ybjf02jLEHWsRoQ@mail.gmail.com>
-	(Karthik Nayak's message of "Fri, 15 May 2026 04:49:46 -0700")
-References: <xmqqik8tm16n.fsf@gitster.g>
-	<CAOLa=ZS8a2R79+8hD-r1JpJmHUatHo4VEC=ybjf02jLEHWsRoQ@mail.gmail.com>
-Date: Sat, 16 May 2026 02:06:27 +0900
-Message-ID: <xmqqv7cod2lo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="jYEcty7M";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="FoqJRVC7"
+DKIM-Signature: a=rsa-sha256; b=jYEcty7M4yDjz3OeFz17Cc1s5qBGq9yQYyZDEX6fW7xkGwxoQ5nr37U2OeZyjM+nl+cuJpG+C88yWm/2rfyj8UQfYBK6vGI5lqvxxx8q4+IwJqwbGQBeoTpHwdQ05oY+fnRlAcIhno8N3LMb1gl70JFyS/g1PUkiUPlWihAZq1RELBRpAwec58kvgx2/WZq/eN2yb0TeprpZF05AEf3w+3JU29T8T6eEN+Jed+pMRtMcqyChIRMrvBxjpZYlmpP+VNfK7tem3weTaIcqFierIk2zok3wlENdPyD7dHTTm09LBtmQhmxvobMK2oiF/V4wYC/MrnMEtkwTGuKtBWEwIg==; s=purelymail2; d=malon.dev; v=1; bh=mKBzZX0tXAVl1x233E9Mx9xtFDgn18iyrNdLTz0yW78=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=FoqJRVC76o1Til4LvXVfd11r7fQe5gP5lNfFAcyf3p6WxjoeOdPDJLwvB5WecaL5jfRhwiV0uDyzN07QyW8IMua7fhi0kgsSulBPXwzFRoeuZoBlBfXS5ujYdntFsaNzhho+5/F1yqZj17eX8E+Xyy7WVXecZhJ4IDbad9Rvir8wibcMAk+pyHisxLzYIctivosr6p0LZZg3nB8SA90c8mT6JlFsNPc1ceL3IBGpDYYesUg1al+P0VdHFNS4WM1iQ/AOyxHR5BwN2nKZtgxHp4BXhQQBG0LJ4064kP07kxgeiY/zzvFtzlDNihzIWM7iHFvztfDvZtp7Kd2W6+/d7w==; s=purelymail2; d=purelymail.com; v=1; bh=mKBzZX0tXAVl1x233E9Mx9xtFDgn18iyrNdLTz0yW78=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -980752005;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 15 May 2026 17:15:33 +0000 (UTC)
+Message-ID: <f4aa8cac-232a-440e-ae12-5e76c799a110@malon.dev>
+Date: Sat, 16 May 2026 01:15:28 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/8] environment: move "precomposed_unicode" into
+ `struct repo_config_values`
+Content-Language: en-US
+To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
+Cc: phillip.wood123@gmail.com, gitster@pobox.com, christian.couder@gmail.com,
+ usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com
+References: <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
+ <20260423165432.143598-1-belkid98@gmail.com>
+ <20260423165432.143598-6-belkid98@gmail.com>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <20260423165432.143598-6-belkid98@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On 4/24/26 00:54, Olamide Caleb Bello wrote:
+>   struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+>   {
+> +=09struct repo_config_values *cfg =3D repo_config_values(the_repository)=
+;
+>   =09struct dirent *res;
+> +
+>   =09res =3D readdir(prec_dir->dirp);
+>   =09if (res) {
+>   =09=09size_t namelenz =3D strlen(res->d_name) + 1; /* \0 */
+This 'precompose_utf8_readdir()' appears to be a wrapper for=20
+'readdir()', so that Git thinks it is calling a standard POSIX function.=20
+Looking at it this way, I feel the architectural design here is a bit=20
+ambiguous. I think the role of 'readdir()' (or its wrapper) should be:=20
+"You give me a directory handle, and I give you a file entry".=20
+Conceptually, it shouldn=E2=80=99t even be related to Git: you can take a l=
+ook=20
+at the rest of code of this wrapper.
 
-> Hello Junio,
->
-> I've not been active on the list past few weeks, did we reach a
-> consensus about
-> 20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com ? Or was
-> it missed, I thought it was in a ready state, but happy to reiterate as
-> needed.
->
-> Lore: https://lore.kernel.org/git/20260420-refs-fsck-skip-lock-files-v1-1-c2595e206a76@gmail.com/#t
+Since there is a wrapper for 'readdir()', there must also be one for=20
+'opendir()'. To me, initializing a flag like 'perform_precompose' when=20
+the PREC_DIR handle is created in 'opendir()' , and pass it down through=20
+the handle looks a bit more optimal. In other words, If one of them has=20
+to handle the repo pointer, I think it would be better to leave that to=20
+'opendir()' ;)
 
-I've not been active on the list past few weeks, either, so please
-don't expect me to know anything that happened during my 3-week
-absense ;-)
-
-My understanding of the status of that thread is that after
-
-https://lore.kernel.org/git/CAOLa=ZT1zE+MLeaYE_5jWmNzSvtTTBw3ZAopai+2Ei27kmYm2g@mail.gmail.com/
-
-that said you "Will add ... locally", we are all waiting for you to
-say either "after waiting for sufficient amount of time, there
-wasn't any other major change necessary, so I won't add it locally
-after all" or "we have waited for sufficient amount of time, so here
-is the hopefully final edition that includes what I added locally
-following Patrick's review".
-
+Good night, yuchen
