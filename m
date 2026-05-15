@@ -1,43 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E66146A66
-	for <git@vger.kernel.org>; Fri, 15 May 2026 03:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255483C09F4
+	for <git@vger.kernel.org>; Fri, 15 May 2026 03:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778817229; cv=none; b=TXOBmUw8jrRbA0T11lGreLM0AkavcV1ppGUlHHagMDnnfk9+4cZEvvFNZIWwGmzqrCN2tiqmhr9QS3UrYVuYoWvK1W3AZ3aLom5URUTSQWl+hQ/vJuGPryc5bbxej+ZHheSjZSmhDDHDTsWyZWB5BWXhiojtS3UEKH6/UD/884U=
+	t=1778817379; cv=none; b=dN9OePvBCHeDm6X0KbXB+pzrMAy+GhOehu03oiBvGRCN0V7oKxzUA5dOEUFhtUHBerYU9Xk+GhFi8K7PdtAZxm9pX0/0EOgpgQf65cb/9LU/hKrn7IFle8vicdRuvHDCrNnSQyH1mVgWGW6yKsumeYGIBdYchzUYXks6LkCT+Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778817229; c=relaxed/simple;
-	bh=j6eNKrN1eFyySMx6qihO/8H81FLkZsb8VJlIZjjKemg=;
+	s=arc-20240116; t=1778817379; c=relaxed/simple;
+	bh=1NtlkCpSSD6Nf9a7taSTYHZDTbEJdeDDtY90NViwwPw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rmOKs63mpL8Jm/R2s6tcCukCzUU2qBDKWja1dpYj6j6aKISpZbHH64xdxjj3i/8O0kM/5icT//hsZd1OWOo+gYb2kJGMzuYRWeeSJGfkjLaBTz7CcNbbKd6dccgdcPKn/2ZAydkXsdwStAa+Cq5r3vsZNNhqct2JoXaM5OD9Z3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Y4s871Tt; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=t/Da64T1JSmjroweNV3DmA8ENBXNrUkWYtwTzkUAZOtS2DwGxKFtxVYpoknSFcLwgmRmRH7Lf4Vz9OinxCKo/euEtrIHJw/wys0BiGDlbihUny+MKCnAPMmwjs6bGuTcNp2YbNthohdF5m2lICsNprvow9gkcA1tNKl7Bno8A00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JCvxhct5; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Y4s871Tt"
-Received: (qmail 52598 invoked by uid 106); 15 May 2026 03:53:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=j6eNKrN1eFyySMx6qihO/8H81FLkZsb8VJlIZjjKemg=; b=Y4s871Ttfh1n1yzQfB4FFhLpqqRFKepv0GTa+xBs4rr/fuoTI5j7CvYRX7fx8iX76f7qlsz6Zk9uZRGvMXXM3buwRmn5TNia/jsrEGaDse/72ypWkWcoPS35fXlx3n6w9pvTpbEvQv9UzVFGUYtNz6m1Ykt4aOk7MMJNe0HgJxmh5yRbAC9R6NTb1Vv1HkqgIoGNrznZV1riVIjTv8fU57bJ6gs4FE/obt52F/tIO2YLhVsbH+tqcokkHBAxwjeJrR8UWnT5Yz1L761jUzjT2zNHMlFAek6N9ilZFo4o1W83hez6M8wxC3D+07PGYYZMYU3F1Otgh0DNTvyNkKAO/A==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JCvxhct5"
+Received: (qmail 52621 invoked by uid 106); 15 May 2026 03:56:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1NtlkCpSSD6Nf9a7taSTYHZDTbEJdeDDtY90NViwwPw=; b=JCvxhct5eSpEgwF8HQlt+uvztu9KtsTjJkhb+uER/goiB3vuoU0J53I7Kl9dVfuB4tLZuV7pXP5JnIQgjOR09Yvsc7gaAfgqnUSYKocti4T7g8uPZa+3HgJ+UEKvQ1HGwGG9gqHPTzznFKSBaBqbGr0S+Gkd29f3GMpdO5mpprh1jwpH63TnABfuWw+ICQ2r+17l4teQPL/Yf0DDQ3w/6r0/zZfm4WW/7DUGOU/dJYe+tA9+lL/jQTh5VvJO6pip5vjpVDtCO7PYNOR8qeYW8XHOer3gzayHFaaGIqQFG2wnbYdbBIQuDVjXyoxTfv7oDFx7dyUcpeormBbSKNIEMQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 May 2026 03:53:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 May 2026 03:56:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 96198 invoked by uid 111); 15 May 2026 03:53:39 -0000
+Received: (qmail 96235 invoked by uid 111); 15 May 2026 03:56:17 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 May 2026 23:53:39 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 May 2026 23:56:17 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 14 May 2026 23:53:39 -0400
+Date: Thu, 14 May 2026 23:56:16 -0400
 From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] strbuf: add strbuf_add_uint()
-Message-ID: <20260515035339.GA75627@coredump.intra.peff.net>
-References: <20260512115603.80780-1-l.s.r@web.de>
- <20260512115603.80780-2-l.s.r@web.de>
- <20260512184238.GC70851@coredump.intra.peff.net>
- <60b1ef2a-3b12-449e-be0b-cb206425c80c@web.de>
- <20260513162232.GB103037@coredump.intra.peff.net>
- <20260513164948.GE103037@coredump.intra.peff.net>
- <f51cdd89-dab1-44f3-8f63-7d34f6fbbba5@web.de>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, gitster@pobox.com
+Subject: Re: [PATCH v4 0/7] odb: add write operation to ODB transaction
+ interface
+Message-ID: <20260515035616.GB75627@coredump.intra.peff.net>
+References: <20260402213220.2651523-1-jltobler@gmail.com>
+ <20260514183740.1505171-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,21 +42,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f51cdd89-dab1-44f3-8f63-7d34f6fbbba5@web.de>
+In-Reply-To: <20260514183740.1505171-1-jltobler@gmail.com>
 
-On Thu, May 14, 2026 at 01:09:24PM +0200, René Scharfe wrote:
+On Thu, May 14, 2026 at 01:37:33PM -0500, Justin Tobler wrote:
 
-> > And btw, one final thing to look at if you are interested in
-> > micro-optimizing strbufs: using intrinsics for overflow detection.
-> > 
-> > Right now we use unsigned_add_overflows(), and then do the actual add.
-> > Using __builtin_add_overflow() might be faster.
-> Curious.  Clang and GCC emit the same instructions for our
-> unsigned_add_overflows() vs. __builtin_add_overflow() on x64, but clang
-> on ARM64 fails to elide the comparison: https://godbolt.org/z/91d35KofM
+> Changes since V3:
+> - Fixed leak due to an fd not being closed when exiting prior to
+>   close_loose_object() being invoked.
+> [...]
+> 3:  11321ad607 ! 3:  d53ad95712 odb: update `struct odb_write_stream` read() callback
+>     @@ object-file.c: int odb_source_loose_write_stream(struct odb_source *source,
+>      +			ssize_t read_len = odb_write_stream_read(in_stream, buf,
+>      +								 sizeof(buf));
+>      +			if (read_len < 0) {
+>     ++				close(fd);
+>      +				err = -1;
+>      +				goto cleanup;
+>      +			}
 
-Ah, neat. I always assumed there was low-hanging fruit to pick here, but
-it sounds like the compiler is (usually) more clever than I expected.
+This fix looks good to me (and I think is the best way to write it,
+given the rest of the function).
+
+I briefly wondered whether callers might care about errno being
+preserved, but I couldn't find any indication that they do.
 
 -Peff
