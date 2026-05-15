@@ -1,67 +1,67 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8402D9787
-	for <git@vger.kernel.org>; Fri, 15 May 2026 13:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8855D38757B
+	for <git@vger.kernel.org>; Fri, 15 May 2026 13:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778850645; cv=none; b=F+rPCg1FVDE4pJPHSutZHp5mTVja9inw/5xxMUSHWAfbJQ+ZwbOtnGtcZPlPcGV/f5QILXGk03yIf7Yn8S3K2reglhU7n3+c1yg+FpvyNPojVXaJ+31vP1HTKlarsnt3WlioI+p7xwZO2cFR4hGWP54RWHCBb0exNRiVBqUw+qo=
+	t=1778851385; cv=none; b=fIdHIOI4odaBNRFADeIFwwzXMqdZqMyJK9zv9fXExFm7RGQ5DlnK5xpqVmpGC4e1gC5anl73XjXrbeGjYcySkFldqkoxoPwhVVrISRhgQEsnT6NXJx1T7xBOq2n9phart1e1uAdb7gOIvlX9to2joDxGjEbaIx4oSpLKhENRnh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778850645; c=relaxed/simple;
-	bh=zGOOqDKjY271d11OYEWCJDH/ME15ORdMlePyWePny+Y=;
+	s=arc-20240116; t=1778851385; c=relaxed/simple;
+	bh=BAMB+5hiX15AnVx1H0V+vXO6MCILNfBj2SpsDPDlZVs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ipDyvOv7ohofOpumuQ4UNwYbBJh5UnraRH6QaY125jkKK0+lhMY3wuzND1pdKtD6DKlGlbzE/qPpMIXvx8mTOh2+nvD9Til+aSSFXqbvtggR00Fntn8bDvD/I+70Lu5O5sFvH0YqmYOyA7xjguxxqlXXQxfAXM+fbInggGxSW04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r3YZA4X+; arc=none smtp.client-ip=209.85.222.53
+	 In-Reply-To:Content-Type; b=imoOb6gNkPNvgdTk4G7uOEyQC3V34bicVf24rg/uDrAUhFvep6etWGRyzNrz2cl0gcwchALy8lTL1/r39jmTh7tkBm7mT0waK+PpNDlh8CAERD0hZwgXnayX+tA4IIrvBT+RbW3yIgIRDoAtkL4trQbZzj/RNkN02AAjg3QfVpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PSCgCQkp; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r3YZA4X+"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-95cc1a5fe9cso2692995241.2
-        for <git@vger.kernel.org>; Fri, 15 May 2026 06:10:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PSCgCQkp"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488e1a8ac40so87139825e9.2
+        for <git@vger.kernel.org>; Fri, 15 May 2026 06:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778850643; x=1779455443; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778851382; x=1779456182; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gIQVAYBmsTvJe0zMQzfUDmjkHTkR3zEuHrP5NDyYJag=;
-        b=r3YZA4X+84Tl38va5lVdKGtSsU56aG/jrCtXXubdwNhzirv35BCIvVZkPNSX/3MjU5
-         UvQC0q7+1wBJ9Imy31LPFJyUZr9m8ieTFBXMznS5ux/vGA3y8JO8cHwpfHQK8t49nEjL
-         W+XYN/xhGLJ6Agj/a5ksCM90Ctx2/PXzabKJ1hbey5gH7fcc+OIoTssJdLWE6NXdHCEG
-         csoDx+N0dlpKRQ0R5p1Y8GjAIPJtY+8CA53fmQfTsmGCuvWB8/w9B1C5cVZp0sR674dM
-         Slxvu6AnZtQGkI/rCyAOqRNGdhO3KsFVz1eg2Imvbo3S22KDqmjSpp6G/qBQ8XNws2F1
-         LRYA==
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dUqxNwatHePDcOhfSYrNQaSh+Y7CNZ2Scsqxdhd9PzI=;
+        b=PSCgCQkpJwPJX9WDIHK7Fa6QWXOH2QxIWqkmoE2DKcMiFSZVBPqM3KTtEVupYfPTTK
+         x6d150t3ACEqAQddkoCQAWE2cuhd3JYfhUgIevlvH/s4yJmfPeDNLfyINoKiCJkzYnCi
+         iTser/kevIFe/vGm7765PbGsVG7/RnCzAV5UsJxqZZotAapaMTNqusWnDI2KH9JPwQMw
+         z2PAny57CNmAc9+PpgknLSnQt92Nkps0QDQwfxfY1o2OjVsk0ZKjbHZmgYVgdJhsUjd8
+         cHIGK+7nfLR62U7N7/HT6BUSBGNM2aV8S5yQQfL7yi26aD5WnolCkHc1yfcrBFHl38hx
+         ed1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778850643; x=1779455443;
+        d=1e100.net; s=20251104; t=1778851382; x=1779456182;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gIQVAYBmsTvJe0zMQzfUDmjkHTkR3zEuHrP5NDyYJag=;
-        b=Xd2NRPq859qQS01rvhQQDkdxXf4r7oG65hvY5tGPPGl+/sNq+T4W9mGit6klLunb5t
-         8v6EhyH2kM+NC1/cGddGabiZXOTvl6bJGUq2vsHKamDnaa7dCrGApSXNjY/6YanhkZ5q
-         E9YoKx7gdcyP6jsZSAeGSqD7pQJxCLXW4tZ/DxjqHJPq2I3tKcb1cR9jagTcLTyt0eg4
-         JKmGwtbl1wQEtcFiWwENjHBx1YsLP+fzx1FAt51onGM8TtCZwARSKKmD/ty8Ws0NeaKw
-         ljv3MoIqNeJ6hFt0gg6TKovndZKYVfk0k594DttAC8YP3Qf2FE1n8Qj+6MZ2FhHhgF8V
-         6y6g==
-X-Forwarded-Encrypted: i=1; AFNElJ//XXVhjkpwPqXuYVwW3aTY4rhSdbGkXu22C1ee5QjhHY6E6sX5mopjxYTaZH5aslE56lQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXRaUec3lo6irW6A4wnkzwzisNZH1E9znlrXn1Bt7G7iSHbpr/
-	kbedb/IdS7gH6RK0Ii/z9C16yWXlbIxhueKlvXEoSH2wYOegsokJw5N3v+blkRQl
-X-Gm-Gg: Acq92OFiW6fmRpwOr8gPRcCQBgWO0/YZesnjVD1XAaVxllYcBW728vhRTJU0K9DLrRY
-	LjKTudVwT2rwfMZiGHaUEhD8Udx+A0q4h8/K3beLkvrO78I1QhozXIPSQ4ksJ2wtqbDpg5Qmpei
-	S2WGrM487Fhg26DfpKWHhabKexbLWL8Td5TT2Hmoe83J85J21Zri0+0cT1TwJkD4cZeRElW0so1
-	ye3Zvys+usp76xLjrdxmRujj/69BXel60wjrGIpP5bHBOG0kgbQ41lsqeArH1Jv8GWIlOBsfXKt
-	g4QMARE54SYZ3NDDGOO10Btb0sga9m+1PmbDI7kJABWsxZLCpV3+or5UKXsSpmHdZg2YL3xzBQf
-	mkY5QbjXDyIZi/IhCUKxDgb34a8F72pOfOiuQVndK7+6RY+g6epJFMbyjqOGRr6mjo7l5RKSnMK
-	NLjh2rib46wdf+HFLJsLb9+mJTb8V0SopGvpZ50UBLC+PdXS8/1xqsAYSc2RSCkXOIsZ6jkVfqM
-	Gg7gJZD
-X-Received: by 2002:a05:6102:1512:b0:633:bc46:c1f2 with SMTP id ada2fe7eead31-63a3cc0b917mr1778488137.2.1778850642614;
-        Fri, 15 May 2026 06:10:42 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c908e1194csm56912906d6.12.2026.05.15.06.10.41
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dUqxNwatHePDcOhfSYrNQaSh+Y7CNZ2Scsqxdhd9PzI=;
+        b=HW21lczJFkdFZifX3bEvw69cKESJU+mm5n+uwTkK4wHm2JUJi/INTOUXQHkiz5TU7g
+         rzYaz28lE7UYG9uaPFTmUPXEyqAB+OQC3iaR752garNBzWz5U3RCygOKAxspmMEHLqtG
+         esSMXsC7HMSz+42rkIk/eIQXoMGk+xEdjZBnUoAksZp+nmkEPFwfmtPnUrk9yTSFglGx
+         IJ3uIaLqfF0BzZ3soXFGBJ3nRUQxu+WlBlNzUkTdy71EjUQzj8/DNxPwd1O8kwgY8PXu
+         9Y+ixKbusQUcta6QJvV6QFRsgb6EPqrRl/T8O96xB2gSHQYeMJtIFoiyvf0bkNziMD4n
+         7acw==
+X-Forwarded-Encrypted: i=1; AFNElJ8Vbs226unA0wOOWGRkGHW0c8OJnbmRVGu7SJB5e0IrAdP2KvMtR/UWHD3SFZp3vhffLjo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLZdByiH/3gjH1PppaZSH3AiUUnOhoNoqhDtqpouj+7YBnE1UU
+	mBZ3Gb54RT2O4pULV5RdfeGiqaxah/61pGv2tyLSJi9aL2PtS1qx1eEI
+X-Gm-Gg: Acq92OHzlSyImykS/X0Pi1RsEY5YIIqJlYI0eDVUCDIOHSBqACDYaZ91MCgQ6DMaFuA
+	t/wPlcoryMvsSPVEdrwlYdd42fRE+/kjrGm/ffBUjPrAEwdhxA+SO55ntkb6uT/3yOMcaMiPF5a
+	DiLdDJ/+SNobBfF5n5X8wJxNt4BSaGu5iWXN7RR1vahWEw7wUY7k1z41IKtv4SsgIC+1tnlyUwz
+	cDsRM/NZMNkK1MqXcUUNxiWly0zMBNDcgl947v00/rcr9ahOpBcL4QP3pSqrwpBKOzQPdNExnPW
+	rkGxEicos0vmSgIgryPoTgu4qeO2nTSxh2DRMFXFADXzoLqXTMLmqDYMQ+mG80rOiLTscB2+/yi
+	Vrl/XLsKsuTsUtBS4gTAjKcjGUgv7WTokoIAGWEG8cI4e6dfqBq9OxvXeEENd2BYLXOTWkuaGvo
+	pFzaCXyLOuGgqf1VfNya18yxR5USUhCyiEyj7NzJJuoqZq8Bxn7zAKYSfGtiisFdY5GqdTSnrEJ
+	1KJww==
+X-Received: by 2002:a05:600c:c167:b0:48f:d410:6065 with SMTP id 5b1f17b1804b1-48fe66138dfmr56687355e9.29.1778851381638;
+        Fri, 15 May 2026 06:23:01 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:662:5a01:509f:d84a:9a5e:1263? ([2a0a:ef40:662:5a01:509f:d84a:9a5e:1263])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe5ab52a6sm59156365e9.10.2026.05.15.06.23.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2026 06:10:41 -0700 (PDT)
-Message-ID: <aad34ac2-4cd5-4c85-b8ff-14c0caaa1c7b@gmail.com>
-Date: Fri, 15 May 2026 09:10:41 -0400
+        Fri, 15 May 2026 06:23:01 -0700 (PDT)
+Message-ID: <d888553a-8a99-4c79-b720-a562ac9900e2@gmail.com>
+Date: Fri, 15 May 2026 14:22:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,59 +69,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] revision: use priority queue in limit_list()
-To: Kristofer Karlsson <krka@spotify.com>, Jeff King <peff@peff.net>,
- Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
- <20260515041641.GA81292@coredump.intra.peff.net>
- <CAL71e4Mfq3SCO7vnTbFCxpzH9txWPTencV-vq-aQ=wJ7dPMV2g@mail.gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
+ space changes
+To: Vincent Lefevre <vincent@vinc17.net>, Junio C Hamano <gitster@pobox.com>
+Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org, j6t@kdbg.org
+References: <CAC2QwmKRyYfE+30Fh75gvAEmJjk8g-3k+G=RDiEJ-KGNExAEow@mail.gmail.com>
+ <xmqq8q9migqk.fsf@gitster.g> <20260514095522.GA159111@qaa.vinc17.org>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CAL71e4Mfq3SCO7vnTbFCxpzH9txWPTencV-vq-aQ=wJ7dPMV2g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260514095522.GA159111@qaa.vinc17.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 5/15/2026 3:47 AM, Kristofer Karlsson wrote:
-
-> Unfortunately git.git's mostly-linear history doesn't
-> trigger the quadratic behavior (the queue stays narrow). Even with
-> 5,584 commits in the symmetric diff, `--left-right --count` finishes
-> in ~0.4s on git.git for both baseline and patched. A 50-pair
-> interleaved run shows no statistically significant difference:
+On 14/05/2026 10:55, Vincent Lefevre wrote:
+> On 2026-05-14 16:37:39 +0900, Junio C Hamano wrote:
+>> Michael Montalbo <mmontalbo@gmail.com> writes:
+>>
+>>> @@ -457,6 +457,11 @@ endif::git-diff[]
+>>>   +
+>>>   Note that despite the name of the first mode, color is used to
+>>>   highlight the changed parts in all modes if enabled.
+>>> ++
+>>> +Word diff works by finding word-level changes within each hunk of
+>>> +the line-level diff.  The line-level alignment determines which
+>>> +changed lines are compared to each other, which can affect the
+>>> +word-level output.
+>>
+>> The added text may not say anything wrong, but I am not sure how it
+>> helps the end user to know the way machinery works internally.
 > 
->     git rev-list --left-right --count v2.47.1...v2.54.0 (git.git, 5,584 commits)
->     50 interleaved paired runs:
+> Perhaps only the first sentence should be kept and that the following
+> should be added: "Because of that, using the --ignore-space-change
+> option is recommended."
 > 
->     baseline: mean 393ms, stdev 13ms, median 392ms
->     patched:  mean 396ms, stdev 14ms, median 393ms
->     paired t-test: +2.9ms, t=1.16, p>0.05 (not significant)
+> Note: Earlier in the discussion, Johannes Sixt suggested -w
+> (--ignore-all-space), but this is wrong, as
+> 
+>    git diff --word-diff -w <(printf foo) <(printf "f o o")
+> 
+> gives no differences while one has 1 word "foo" vs 3 words "f o o".
+> 
+> However, --ignore-space-change is actually not even sufficient
+> since
+> 
+>    git diff --ignore-space-change <(printf "foo bar") <(printf "foo\nbar")
+> 
+> finds differences though there are only space changes (thus this
+> may affect hunks in case --word-diff would be used too). However,
+> I suppose that the cases where --word-diff --ignore-space-change
+> would not give a "real word diff" would be quite rare in practice.
 
-Thanks for sharing these details! Consider my curiosity sated. 
-> The existing t/perf tests don't cover this path. p0001 doesn't
-> use --left-right and p6010 is merge-base specific. I could add a
-> perf test, though it would need a merge-heavy test repo to show the
-> difference. Would a synthetic one (like p6010 does) be useful?
+I'm a bit wary of recommending -w unconditionally in case it gives 
+unexpected results. I've not really found there to be a problem using 
+--word-diff when reviewing code patches. In the examples you gave we'd 
+ideally fix the problem by computing a single word-diff per hunk from 
+the line based diff rather than splitting the hunk at each context line. 
+I think we'd probably want to exclude the leading and trailing context 
+to keep the hunk header accurate but we'd get better results by 
+calculating the word diff of everything in the hunk between the first 
+changed line and the last changed line.
 
-I'm usually interested in encoding ways to repeatedly exercise
-these performance gains and preventing regression in the future.
-However, you've demonstrated that not all repositories have a
-data shape that reveals the performance problem.
+Thanks
 
-If you happen to find a publicly-available repository that shows
-this improvement, then documenting the performance benefits for
-that repo would be sufficient. I'm familiar with performance
-work that doesn't reveal its most important gains until working
-with private repositories at the proper scale, so don't sweat
-not having a public example.
-
-I don't think it's worth constructing a synthetic repo to
-demonstrate this issue. I was hoping that it would be low-
-hanging fruit to cover this in the perf test suite, but that
-does not seem to be the case.
-
-Thanks,
--Stolee
-
+Phillip
 
