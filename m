@@ -1,67 +1,67 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A516723ABBF
-	for <git@vger.kernel.org>; Sat, 16 May 2026 14:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AF578F3A
+	for <git@vger.kernel.org>; Sat, 16 May 2026 14:48:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778942332; cv=none; b=f8jNQ1NeqKa+k8CdhJ9o4aHhQEZRaKy4zoZKlHutihNRd9U/RQaqVIPxdjpKHgGt9RKgPPAMdJc8dwm8fxl5dzpiTy589KqGwMi89BbILpJw2WZc5SvSXJE3GEQvpcTozkPN0kJBlqR8CscnzQT9X47YrJTCGr+a5hS2C0qt+0s=
+	t=1778942910; cv=none; b=qrLO03TvbH0rqY4amadAblBPIA4pGSeoI/Z4JU6HuzdhTIoXktUrStdPSziXE1A+onLf37O8fgxLFGYXvx2N+0rAeI+aEb5CsWUAeoe5YkzCVQCd0O5nKlHV+KVIykSoLeaTfTm8NkuAVaOMQJnAWq/nIwsVOfdE4r/eVwQRPSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778942332; c=relaxed/simple;
-	bh=wvRmOLQLfdt4WZfY98d8C3EjEetpOLQmeKf1bv03EFc=;
+	s=arc-20240116; t=1778942910; c=relaxed/simple;
+	bh=7FUQ695ckZEOoBytiRvSM1WEuFYDBWhx+cCqilT3vpM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ILV42D28pEeGHFrkjZWgHW/ovKiNp9Ve0no/MKrvQuP0y1ZcAn9UauqIOTRmyaP2vqjUwiGwdfOHBkZpGAFlDFjkdQJmSm9Xi8+uXotw/36wDonOLWCeMPWaoZvIz0Ij7qLeymX0OX4DQ/C4cGJaabXFyBwvjqP0sWBfg9Np2qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NRQ9koJ9; arc=none smtp.client-ip=209.85.219.50
+	 In-Reply-To:Content-Type; b=bi93SP0leifjaVg3wEp35HtJOkapRZoy5+/OathnWt5iA6CuqFSBFRaViPebtgFiRqDQCFo/bnHCisR9o5CKc+1vtYdvgoOqotgXkpdwD+XRKeaUQMqsO5XIk125q/wSgIBRbzuiOSG3KAKXGNvqaRuYly3kSbnnE9o2QQmgzDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EcdI6kIR; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NRQ9koJ9"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8c7154725easo13233826d6.0
-        for <git@vger.kernel.org>; Sat, 16 May 2026 07:38:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EcdI6kIR"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-911dfc86903so119841885a.3
+        for <git@vger.kernel.org>; Sat, 16 May 2026 07:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778942330; x=1779547130; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778942908; x=1779547708; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yGa/SlrShZyCaaCULVlgyDBW31XkHSbKb+SYtDnjI+o=;
-        b=NRQ9koJ9YfxpnVDZe/LR0L8ogRZndYoEon3MgPLBZPW62SEjQV1DzqwD+VmYXnvq+V
-         dz0RQooldfWOvAdEdlTasSLSyafgnyIo2mNbg6sgw3jnfUb/SdRrHuZ95SFijBrfaDKR
-         jLZue2uyIgrotWMdYzXTQIth/7ACkyHyj4WaPjvYKEKIYFNlJTnEWymbKHMYklxDQ+wk
-         IEgOkjCnANh3yWZ313BJKfCG3jPLaR5EtfqQKNtQ1NvAkOxF20pf2GrmgX/223eJ+3JB
-         fQQR8UvEu5/o9Wdr4kyBzuaL/1aKT7NOox1dGwGMx7vaPZZqBI7kMBEZqjCIXipYfx3/
-         1BmA==
+        bh=zQuluWfeJtAYv5NjAqQwLHIhs495xrQU4kcr2yVp0Wg=;
+        b=EcdI6kIRXgYw/kq7+gTBRzSzSlk7rl5ceRteE6kuJND3ZKTFImTmhkZovq2XItwAVY
+         V1fdsm3F0q8WDwtKNvVLHOugPiuQgXPbP/NDhqIe2SA1IHhqjIsmOcPrqkfFFy43IhOf
+         PtvgGs3I9AxEHCpVrzfhTJ8gNf/Vjn3TaiCaPmAFuN+SbFpVQvc0F7Bl+rIOuArtylhJ
+         YFDtzG6a+nCjG15F1+ghZXcjtc89itb2XgJeK+LHT5WJmyAfiWypmDJj4XPCuPa0JAQk
+         rI8jOYFuxb1XHAtt/RhSgE1Mug04tt6qHeQg388R2V9XYSVsx44CYnTwTVO2KHjv0G4w
+         QMrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778942330; x=1779547130;
+        d=1e100.net; s=20251104; t=1778942908; x=1779547708;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yGa/SlrShZyCaaCULVlgyDBW31XkHSbKb+SYtDnjI+o=;
-        b=ILnCYmCBIV/WyDWK83+jfbira4LscxPyydO2WIMj+3zltzeTvSBzsgYiuLjlSjCPNq
-         3Did2+h2KeBdG+48JZ1YcCjQkQ/SOYBaNnvCxn7PYlQ1Z+r+uzX95cENj/NFS1NJbGnC
-         rsrAcm/LUObIUL2SGNLFq2MccYqY8p8h9ZdS0UpKuDBdVcf4PPtUdJCCf7wJ7ODtpa0J
-         WQ9h9uA0hBwWbI2Vey1ChcU5pdL2s0FMTQ+CPCuPmlMZpC9bB9hKOy+HCDo+GHuXE/yd
-         SnPXl9uRqg73FLhoIQHnaGK0WW4Pmhpndvul7FjdIuzoRgIpSI4hIpcihqIlN2MvsZYC
-         hnaQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9+s9t3A+Pw9s5+m8Ja8JXL2fF0AVCaIkuxvN1USe18tKqy5fLdlWe7RdLAWjYYSCAHJas=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxBn+pmLGnDekuUsBaa9Jb9KjojQToP+mcnBjSsItMDmilSZBH
-	Yj6EOPZjc2HR2VMtQHrncV0xdZrU3tYtVxlaIH/N2UKZAqVtWGliDPZJ
-X-Gm-Gg: Acq92OGvh4ePSGXdNvg+47D5BMfyEx/8viJAcuGSGQB6zLJSzRCbPj2y+jSHLuykARU
-	esJRZkIVuhf458xAVIwrdxmUOx0GL/iqawOPWRf8CJsyIyC4SUwX5SidThTQNuTuP0Y3xCNaJJo
-	1zoEO3wk+6ertSWx4X+zV3S7pyk79P/DCGCbaJn67pY4hhZGrBUdevxWiq4kphC1GGt9In37eXJ
-	eavr6cLISKFkOV+RMnz7iRkRjKgI8+AxtT1Q+OBDa5pW0Gp7h2KiX+LdKVryLhA4n24n95oGIFw
-	GKlxwjtIAv961fFn6xMZ8c/M2nSunflLUt41j+EXdzPjI0ccGUFZHIamGMz2YpIDQXEoEznbNTp
-	r45yg+myynQcLYJt7iS05WaqLDQaK53KKO5DZ5o7oRN7qDBQmB/cuX/VtHpYz1l5iFrV5Ld3I6K
-	DBecCXudtKMV3S6k49nX0sSCg/A8H9bisTOIXu1K/k0MrPGUTfb/oA+GMlQ8dg8Vg9QlXsdmk6o
-	s5Bw03pYA==
-X-Received: by 2002:a0c:c58c:0:b0:8ab:46b6:4f3 with SMTP id 6a1803df08f44-8ca0f6b6ab7mr94798486d6.35.1778942329629;
-        Sat, 16 May 2026 07:38:49 -0700 (PDT)
+        bh=zQuluWfeJtAYv5NjAqQwLHIhs495xrQU4kcr2yVp0Wg=;
+        b=OaCntvus6GnBHRtF8+FTB7hAqRsZ+TS20A9bUZdJ95jHECzfXBkDdqOa7HbW2gXrPH
+         gZq4t1ZqxZA/YHmNZ46BYXOtcuULTHuMthO20vu3/ggEEonx3Gw+g6E+QcYvPCgazCHw
+         z+IgCawNvddFltOR29ZiWoI3mXYdG90yKF7md+GrbGTvn87IM9GK1bB1zVVfvcxpVHsT
+         PfN/k7qBh81wEEgC1m0Q3zgq/+/P+0S5PSKSmtpZqgBazOuNT6dWR4ZIKeVl1W5+J7OO
+         n0RN96BV15KC9LHRrnZ33nJmHPy6PYGLj38IzoGygnNMK1/ZCj5s7geA5SnHOgROzP7/
+         5uRw==
+X-Forwarded-Encrypted: i=1; AFNElJ8vrNvJGmyT4t6NhDo8MlPDErA8n5hppBu/jHC0+yoBEaxoZctWuEu472zEr//J9LqgRdk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVtVUxu0etq8WUkAFICDtxzEg6Z+sipcdQU96ZpviP0sQpRuas
+	P+9D17mZmbdzPzxZIjisZF8Mhyw60vX2edPFSecx+2R+KiKNUoscxdCGUgimVYHT
+X-Gm-Gg: Acq92OFfZqt22k9yQpRGyVyb2+OlwF7t3biW/fyJxu9XSSyCNxvXbAdat0qENB+3S9+
+	s1mDeW3Dln/D2jLEQER1j3t1d/ALuGvuqWe/RTUPAoz+F7fo5wqi4MqUMXjbRwnmlNQ+2kRr9Zz
+	dCURFVrxV8MXTkZwRunuYUzU4g6tCGfvyq4Q9yOUhOzCVh803rH3/hkEOQL5QtImJ0oQJ/gn3Au
+	KrpfQND7LnjZ82Mm8EA4gaq5BSo5fZFg2671hxfNeFitV+dEOqdkR1hXGomEutyONylCdGljXBK
+	x5aUk8WmNUSVR0yJFjCI46pp/GKoq4iiByJyWqoHFFRbpX+dYp9QAv1xSpzMFZqe9LvZIWMmcX0
+	GIkRJ0sM7t+Ge2yoaxw+9iLmuNb0M8ZhoQKtUw+Nt6tn1QUf3m1qRSky2DoQ1+IhS0Q7jsEFWlB
+	VTk8c6IGDDpDg/xBJs0UNsRdCO5q8s8O0MQbRhv47kkntZpwMh1dBMtkZeNqGegnOW3RYYO92qI
+	pI4gKseIQ==
+X-Received: by 2002:a05:620a:4490:b0:911:6136:281e with SMTP id af79cd13be357-911cda50e46mr1210132885a.9.1778942907599;
+        Sat, 16 May 2026 07:48:27 -0700 (PDT)
 Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90b2dc41fsm84447776d6.25.2026.05.16.07.38.49
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-910ba36e1acsm876467085a.3.2026.05.16.07.48.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 May 2026 07:38:49 -0700 (PDT)
-Message-ID: <62ed0001-5769-47f7-b31d-4948d498555c@gmail.com>
-Date: Sat, 16 May 2026 10:38:48 -0400
+        Sat, 16 May 2026 07:48:27 -0700 (PDT)
+Message-ID: <6c189058-18f0-47cf-a663-d4d177282961@gmail.com>
+Date: Sat, 16 May 2026 10:48:26 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,116 +69,101 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 07/11] git-gui: use rev-parse exclusively to find a
- repository
+Subject: Re: [PATCH v1 09/11] git-gui: support using repository parent dir as
+ a worktree
 To: Johannes Sixt <j6t@kdbg.org>
 Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
 References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
  <20260514143322.865587-1-mlevedahl@gmail.com>
- <20260514143322.865587-8-mlevedahl@gmail.com>
- <d8844726-0b08-4035-946e-c5ada0759f32@kdbg.org>
+ <20260514143322.865587-10-mlevedahl@gmail.com>
+ <4d25544d-1a7e-4407-9191-1fb05ff55244@kdbg.org>
 Content-Language: en-US
 From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <d8844726-0b08-4035-946e-c5ada0759f32@kdbg.org>
+In-Reply-To: <4d25544d-1a7e-4407-9191-1fb05ff55244@kdbg.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 5/15/26 12:06 PM, Johannes Sixt wrote:
+On 5/16/26 4:14 AM, Johannes Sixt wrote:
 > Am 14.05.26 um 16:33 schrieb Mark Levedahl:
->> git-gui attempts to use env(GIT_DIR) directly as the git repository,
->> accepting GIT_DIR if it is a directory. Only if that fails is git
->> rev-parse used to discover the repository.  But, this avoids all of
->> git-core's validity checking on a repository, thus possibly deferring an
->> error to a later step, possibly unexpected. Repository validation should
->> be part of initial setup so that later processing does not need error
->> trapping for configuration errors.
-> OK. If the user gave us GIT_DIR with our without GIT_WORK_TREE, then
-> that combination better be workable.
+>> git-gui, since 87cd09f43e ("git-gui: work from the .git dir",
+>> 2010-01-23), has had the intent to allow starting from inside a
+>> repository, then switching to the parent directory if that is a valid
+>> worktree.
+>>
+>> This certainly hasn't worked since 2d92ab32fd ("rev-parse: make
+>> --show-toplevel without a worktree an error", 2019-11-19) in git, but
+>> breaking this git-gui feature was unintentional.
+>>
+>> Add a proc to test if the parent of the git repository is a valid
+>> worktree, and set that directory as the worktree if so. Use invocations
+>> of git rev-parse to assure all validity and safety checks included in
+>> git-core are executed.
+> BTW, missing sign-off.
 >
->> Let's just invoke rev-parse so all error checking is done. Stop here if
->> the user set GIT_DIR or GIT_WORK_TREE. Otherwise, continue the existing
->> behavior and show the repository picker.
-> OK. But the paragraph is confusing, because a big "If an error occurs"
-> is missing after the first sentence.
-will fix.
->> Also, remove a later check on whether _gitdir is a directory: that code
->> cannot be reached without rev-parse having validating the repository.
-> Good.
->
->> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 >> ---
->>  git-gui.sh | 24 +++++++++---------------
->>  1 file changed, 9 insertions(+), 15 deletions(-)
+>>  git-gui.sh | 17 +++++++++++++++++
+>>  1 file changed, 17 insertions(+)
 >>
 >> diff --git a/git-gui.sh b/git-gui.sh
->> index 2e2ddc0..81789dd 100755
+>> index a03eaa7..e326401 100755
 >> --- a/git-gui.sh
 >> +++ b/git-gui.sh
->> @@ -374,6 +374,7 @@ set _gitdir {}
->>  set _gitworktree {}
->>  set _isbare {}
->>  set _githtmldir {}
->> +set _prefix {}
->>  set _reponame {}
->>  set _shellpath {@@SHELL_PATH@@}
+>> @@ -1100,6 +1100,23 @@ unset argv0dir
+>>  ##
+>>  ## repository setup
 >>  
->> @@ -1167,19 +1168,18 @@ proc pick_repo {} {
->>  	set picked 1
->>  }
->>  
->> +# find repository.
->>  if {[catch {
->> -		set _gitdir $env(GIT_DIR)
->> -		set _prefix {}
->> -		}]
->> -	&& [catch {
->> -		# beware that from the .git dir this sets _gitdir to .
->> -		# and _prefix to the empty string
->> -		set _gitdir [git rev-parse --absolute-git-dir]
->> -		set _prefix [git rev-parse --show-prefix]
->> -	} err]} {
->> +	set _gitdir [git rev-parse --absolute-git-dir]
-> Please do also set _prefix. It should fix the bug that the file chooser
-> uses an empty prefix after
+>> +proc is_parent_worktree {} {
+>> +	# Directory 'parent' of a repository named 'parent/.git' might be the worktree
+>> +	set ok 0
+>> +	if {[file tail $::_gitdir] eq {.git}} {
+>> +		set gitdir_parent [file join $::_gitdir {..}]
+>> +		set expected_worktree [file normalize $gitdir_parent]
+> We have [file dirname ...]. Is there a reason to avoid it?
 >
-> cd lib
-> GIT_DIR=$PWD/../.git GIT_WORK_TREE=$PWD/.. ../git-gui.sh browser master .
+>> +		catch {set git_worktree [git -C $gitdir_parent rev-parse --show-toplevel]}
+>> +		if {[string compare $expected_worktree $git_worktree] == 0} {
+> The purpose of this check should be explained in a comment. I think it is:
 >
-> (this is an old bug.)
+> For a repository with the database in a directory named .git we assume
+> that the working tree is the directory containing .git. But
+> configuration may point to a different worktree. Then we do not want to
+> hold on to our assumption.
 >
-> Please keep the additional indentation of the catch body.
+> However, whether [git -C elsewhere ...] uses the same gitdir that we
+> have discovered so far cannot be told from this piece of code alone.
+> Therefore, I think it is wrong to extract this check into a function.
 >
->> +} err]} {
->> +	if {[is_gitvars_error $err]} {
->> +		exit 1
->> +	} else {
->>  		pick_repo
+> Also, I don't think we can use string comparison here. On Windows, the
+> command returns the Windows style path, but Tcl my operate with a POSIX
+> style path.
+As you have correctly inferred, am trying to unambiguously establish that git running in
+the parent directory is using  the child .git as the repository. I think this actually
+requires two calls to git-revparse (--absolute-git-dir and --show-toplevel).
+- the current git repo is valid to support a worktree. Will rework.
+
+>> +			set ::_prefix {}
+>> +			set ::_gitworktree $git_worktree
+>> +			cd $git_worktree
+> So many side-effects in a function whose name suggests that it only does
+> some checks. Please, don't do that.
+>
+>> +			set ok 1
+>> +		}
 >> +	}
-> Treat the 'if' as an early exist without an else, and we don't need the
-> previously strange indentation of 'pick_repo'.
->
->>  }
->>  
+>> +	return $ok
+>> +}
 >> +
->>  # Use object format as hash algorithm (either "sha1" or "sha256")
->>  set hashalgorithm [git rev-parse --show-object-format]
->>  if {$hashalgorithm eq "sha1"} {
->> @@ -1191,12 +1191,6 @@ if {$hashalgorithm eq "sha1"} {
->>  	exit 1
->>  }
->>  
->> -if {![file isdirectory $_gitdir]} {
->> -	catch {wm withdraw .}
->> -	error_popup [strcat [mc "Git directory not found:"] "\n\n$_gitdir"]
->> -	exit 1
->> -}
->> -
->>  # _gitdir exists, so try loading the config
->>  load_config 0
->>  apply_config
+>>  proc is_gitvars_error {err} {
+>>  	set havevars 0
+>>  	set GIT_DIR {}
+> In general, I am not a fan of commits that add new functions, but no
+> call sites. Please squash this into 10/11. Ditto for is_gitvars_error in
+> 06/11.
+>
+> -- Hannes
+>
 
-will fix all.
-
+Next round should address all of your comments.
 Mark
