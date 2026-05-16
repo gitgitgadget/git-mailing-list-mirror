@@ -1,154 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B221A6808
-	for <git@vger.kernel.org>; Sat, 16 May 2026 02:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE97145B11
+	for <git@vger.kernel.org>; Sat, 16 May 2026 02:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778899883; cv=none; b=nF0ZMOxJDU3VV4c8kZ+frpzyEn2uZ9yrRP4iyES9eLyB8k1hRVHPpkg67Xeb9xckgag55KwcLf8IYrpII1x5EvLWEVGYF/y0Bhg28TguJ4BhgcHLnYR1yShTWW7RM0/9opv7XYmlD2EErZnEzFYxoif1KJklofIu/yBkIGdUZL8=
+	t=1778900152; cv=none; b=Dv6GWHoYl0m87Kx1B7cfrdo27JIc+Yp0zrySPN7UgIr9zi/2Vjhjuqmw4S69V/l3zZJ+erV+37BP+1c30Xyms7aIOAWkUG0YDNG9bIC7F6m78MF0T2y+pS6l8P5vbQfMA8u+Jsy75SdxuqZ62AHjIL9qsDlnzVde4mSQXNQlYH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778899883; c=relaxed/simple;
-	bh=pqVTqga7I2qD6iRbPCEO3fWRtGNquhJNu2nH3gIh31Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KQ2uQECpvDniLfmVZpEcmnLQfN+ejjTz4eWg2vOLtG0Y8HtSTmt2OCnaQ5gQNu2+K0w936PSWYSI+8P/+4JZ5mt5xVJDljPojHr0XVIJSNsLBDaOutcUtNSfV7YUxOHKaGTdCXLIMTn/k1FINROcXVFLSW7G0uJtZlQ8YpNZR4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=H7QebALv; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1778900152; c=relaxed/simple;
+	bh=0tVOFMny9jBjaMrvN3S6BPXlAF0UUrtma+pNHyRyoQw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vgs07CGjb7sJMZkwHSJFnAms9OUH2cvyxxC0gBWmdfxmFBnJ1nCvpXQTZKBm/X/im61AOktTZeoar7t55CayWhkBeDrZ2inlW/RJwc3RDUSdTawYvx362GHw0lC83uFNlJ127Mmiz8qukxPq7HHjVUF4f0KrtbXTsdUAA0rkAhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0/4J2i2; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="H7QebALv"
-Received: (qmail 3656 invoked by uid 106); 16 May 2026 02:51:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=pqVTqga7I2qD6iRbPCEO3fWRtGNquhJNu2nH3gIh31Q=; b=H7QebALvMuZGnlbvl+zzS1tMVwwgIqJgzFJH3LhDe1tHHV1RlEkhaMBPuFz4Oi3RRjTtvlDifXPDRMMmJoipd5eyXD4/xg8rKVqWg85yM9CR8RrRCik4f+HiY4CCLFbVPLJfvIakl4giWZlSOFifK/Yco7+SKBhXXNCAE1uOWdD8hRnjJKjyLVQ4uumToRkyiCRr3HszmOB+SYgqvRnDEldZZ6A4t8LjpHtNmnqci4sVIPAHLtXlCetCHENMhHuALCe7covcKJUPIRf3gvqlpwyocBiB7GwOfjhh5mX/uw5rIhEK9b7+JGCZdXGGx2CAMdojcpnVUvA5QMdgvbRx2w==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 16 May 2026 02:51:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7832 invoked by uid 111); 16 May 2026 02:51:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 May 2026 22:51:19 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 15 May 2026 22:51:19 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] evaluate the second argument of ALLOC_GROW only once
-Message-ID: <20260516025119.GA832077@coredump.intra.peff.net>
-References: <323f5677-301b-4d7a-b552-6606597c2b1f@web.de>
- <20260515190818.GA98370@coredump.intra.peff.net>
- <20260515195049.GA149960@coredump.intra.peff.net>
- <1d79d7bc-5441-4e72-9cb0-e8900f57172c@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0/4J2i2"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8b5de17382cso5290406d6.1
+        for <git@vger.kernel.org>; Fri, 15 May 2026 19:55:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778900150; x=1779504950; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0WjJN8U0lMjENKFcQph7jjmNgAx81DvjFnSYLqMSMZo=;
+        b=B0/4J2i23mmH5RZ/6+ziotkEKUTILZv0fC9an1NFW+9dmW2Ctwz57VDmiKCHCnruch
+         QBsL2RRLFGyZBHUqubH9N+gvdeh1DKiYqlz9fy7Crzr5qqkQok6lrnrK8LZ8Ow0nmXAT
+         zHQEurBFzub1ShX17s3v0OsdHUDGOQA2w7GCMu/Y58lEPsVvcFdbDjTGdqFrBROpAnmQ
+         OMbewhp2YTuWuMT5qaqo6ndkQuAqbCizGYORIUGtLWJy2j5zh9m3PQpKR8plkYBB+oNB
+         mB264rJsgVU9m9S0QhrjOSFK4Ej23F2hZu1LDnGquvdB3XyaDBCcAEaLUdWVyWeN8b0d
+         USiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778900150; x=1779504950;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0WjJN8U0lMjENKFcQph7jjmNgAx81DvjFnSYLqMSMZo=;
+        b=EkR0u+6LBOizvY6CS6zUKTmZfVub6QMh4R7soYBJJEIhQdaSTYyWPWbA1VgaBYZpW+
+         UjF8dvNMe9xM9XomQOiGpBGml17ZdjVi+kLeipXFupJlknem3Xserqums3fV4pUUuuI7
+         OFym47O1sXvmMDAgPGQNzNBw4TqBCkXTQTD/U1lVAnu4nkdWtakMtVUKpjL3WJzcZ4gM
+         g8v5JLBX2sXqZgDF7U6EfpsDBm9we0iOHSCrcsotWHjEWgKuv+5PkfvK8pNUbvRmemHM
+         gp6mWcVj6/ZfJy9Rxpev/FRF6c2/kQJczUbwsBz2oysDiRjSc6jGoUvgplNsfe539DVe
+         MJ5A==
+X-Gm-Message-State: AOJu0Yxg0232jjXWJLTfIBJAwdOSO7ASv5ytiSZbNoxfYIRrc6xFROdQ
+	N0dMhYz0VI56lxkoq/oT37vpTRPtUZwinkglpVAqjFTReZ9AI0Fzjlzj
+X-Gm-Gg: Acq92OHXLfoNafkl1uXPHGfrw6ZUck1vPBo38zgJmHpFgRDmWub+VozRtw8KtYAPult
+	2YM/kfyHhC0gvgxPmSx9Yjp2xyZDe0HsZtq4eLspDKK4rk34MaOAUMo6F0BKSegf63/H22IuEQa
+	KLtCBlFzWTBS1QpWd/MpH7gDP5U8nfm3MBHnSyto7XkaAjoWEpKb32/rqj1+K41/JPSlJ2TAIIB
+	+J9HVzx1EEagFZHgg8wPMO32Xn+U57+9OuZr5FiA2vo2dxW+EX9vaxU02qwq4zzFShcKw9fqroX
+	J26ilmERnxvXvQYCwsg9JEkSR0RaVvJWyWzh3nRi+GX+/Qy95fAWTos/g1okx9Y6EyU0DkIIhpx
+	gE1VMwW10SS5r/OUaVBkg9PetPd88YXLsSI1waRv/pv+I5gJRP1Y4R2W6lATwGvWNYOaGRK8dIY
+	j5qIFjXZaIipf8J4wBoWNNioOKUmBC0OU74n+hll3MuWtxkQ2+EPCnt1uV/ZsKLto1/hMMpxjaV
+	sMJ/697G+PvbvJKjzTctSOdUSwoGqfCHEXejh54/2J7HPgtsig=
+X-Received: by 2002:a05:6214:810c:b0:8ca:1ecb:a167 with SMTP id 6a1803df08f44-8ca1ecbc34amr42214236d6.38.1778900150550;
+        Fri, 15 May 2026 19:55:50 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:e033:f3ca:f5b3:2d9c? ([2605:a601:9b88:8300:e033:f3ca:f5b3:2d9c])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90874e490sm71800606d6.1.2026.05.15.19.55.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 May 2026 19:55:50 -0700 (PDT)
+Message-ID: <256d83f3-dd0b-4a86-954a-de78ec65be6a@gmail.com>
+Date: Fri, 15 May 2026 22:55:49 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1d79d7bc-5441-4e72-9cb0-e8900f57172c@web.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: UBSan failing on expensive test(s)
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <871pfcdyt0.fsf@gitster.g>
+ <20260516021343.GA174647@coredump.intra.peff.net>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260516021343.GA174647@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, May 16, 2026 at 01:01:05AM +0200, René Scharfe wrote:
+On 5/15/26 10:13 PM, Jeff King wrote:
+> On Sat, May 16, 2026 at 08:43:07AM +0900, Junio C Hamano wrote:
+> 
+>> This started happening on 'next' that runs EXPENSIVE tests thanks to
+>> Dscho's recent updates to enable them in CI.
+>>
+>> https://github.com/git/git/actions/runs/25896439353/job/76110441841#step:10:2172
+>>
+>> It claims that """
+>>
+>>      commit.c:1574:6: runtime error: signed integer overflow:
+>>      -2147483648 - 1 cannot be represented in type 'int'
+>>
+>> """.
+>>
+>> Another is related in the sense that it used to be hidden behind
+>> EXPENSIVE prerequisite, but is probably unrelated.
+>>
+>> https://github.com/git/git/actions/runs/25896439353/job/76110441842#step:10:156
+> 
+> These patches should fix both.
+> 
+>    [1/2]: apply: plug leak on "patch too large" error
+>    [2/2]: commit: handle large commit messages in utf8 verification
+Thanks for the fast fixes. I agree with you that 2GB commit
+messages are silly, but the methods you change could be used
+for other things so having better types is good. We can
+consider blocking large commits as a feature another time.
 
-> > I think as long as the behavior remains "slow, but we do not overflow
-> > any buffers" when you reach these limits, that's OK. Nobody is going to
-> > do it in practice, and we just want to make sure that malicious inputs
-> > cannot get out-of-bounds writes. It might be worth adding a comment,
-> > though, to make sure nobody ever swaps "alloc_grow_new_alloc_" for
-> > "alloc" in that macro.
-> There is no overflow check in either version (yet), so neither is safe
-> to operate close to the boundary.  Close meaning the intermediate term
-> (alloc + 16) * 3 being bigger than the maximum value.
+-Stolee
 
-Yes, but for some definition of safe. Both before and after your patch,
-as we get close to the boundary the allocation will grow slower than it
-should, but we'll never write out of bounds. The behavior for the "git
-foo" I showed earlier is slightly different:
-
-  - before your patch, ~2GB we stop doubling and instead start growing
-    the array by one at each ALLOC_GROW() call. This is because
-    alloc_nr() overflows to a small value, but the:
-
-      if (alloc_nr(alloc) < (nr))
-              alloc = (nr);
-
-    check kicks in.
-
-  - after your patch we grow to ~4GB, and then things get super slow.
-    This is because we correctly compute the new allocation as a size_t,
-    but then truncate it while assigning to alloc. So on the next
-    ALLOC_GROW() call, we'll think the buffer is way too small and try
-    to realloc again. I don't know why this is so much slower than the
-    grow-by-one above, but it is.
-
-Neither is really correct, but both are in the realm of OK: stupidly
-large input doesn't perform well, but there's no buffer overflow
-vulnerability.
-
-What I was worried about is what happens if you tweak your patch like
-this:
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 2bc1f43f48..0730dd24ad 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -870,7 +870,7 @@ static inline bool st_alloc_nr(size_t nr, size_t alloc, size_t *outp)
- 		size_t alloc_grow_new_alloc_; \
- 		if (st_alloc_nr((nr), (alloc), &alloc_grow_new_alloc_)) { \
- 			alloc = alloc_grow_new_alloc_; \
--			REALLOC_ARRAY(x, alloc_grow_new_alloc_); \
-+			REALLOC_ARRAY(x, alloc); \
- 		} \
- 	} while (0)
- 
-
-In that case we really do end up with too-small allocations and
-out-of-bounds writes.
-
-Maybe you saw that coming and that's why you wrote it as you did. But it
-is definitely subtle enough that I think it would merit a big warning
-comment that "alloc" and "alloc_grow_new_alloc_" are not necessarily the
-same type, and hence not necessarily the same value.
-
-> Here's a demo program exercising the arithmetic part of the macros:
-
-I think the difference isn't in the arithmetic values that come out, but
-in what is fed to realloc() itself. And in your harness, realloc is just
-"x = true". If you actually store the value that would be passed to
-realloc() like this:
-
-diff --git a/foo.c.orig b/foo.c
-index 2fbce8c..7498f36 100644
---- a/foo.c.orig
-+++ b/foo.c
-@@ -11,7 +11,7 @@
- 				alloc = (nr); \
- 			else \
- 				alloc = alloc_nr(alloc); \
--			x = true; \
-+			x = alloc; \
- 		} \
- 	} while (0)
- 
-@@ -31,7 +31,7 @@ static inline bool st_alloc_nr(size_t nr, size_t alloc, size_t *outp)
- 		size_t alloc_grow_new_alloc_; \
- 		if (st_alloc_nr((nr), (alloc), &alloc_grow_new_alloc_)) { \
- 			alloc = alloc_grow_new_alloc_; \
--			x = true; \
-+			x = alloc_grow_new_alloc_; \
- 		} \
- 	} while (0)
- 
-@@ -44,7 +44,7 @@ int main(int argc, char **argv)
- 	for (T i = 0;; i++) {
- 		for (T j = MIN;; j++) {
- 			T alloc1 = j, alloc2 = j;
--			bool allocated1 = false, allocated2 = false;
-+			size_t allocated1 = 0, allocated2 = 0;
- 			ALLOC_GROW1(allocated1, i, alloc1);
- 			ALLOC_GROW2(allocated2, i, alloc2);
- 			if (alloc1 != alloc2 || allocated1 != allocated2)
-
-then you see the differences. For negative values, yeah, you end up with
-big size_t values. But for an unsigned type you get different small
-allocations.
-
--Peff
