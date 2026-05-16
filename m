@@ -1,157 +1,127 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A203E63A9
-	for <git@vger.kernel.org>; Sat, 16 May 2026 15:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D552E7623
+	for <git@vger.kernel.org>; Sat, 16 May 2026 18:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778947189; cv=none; b=BOJ7CVzrCSArD5CkvqeR0/VoDgutXrMAs3f4rHCEQ9ISJR+aAXGB2/eZDpibWk+Nhj9PeZIMAbThUVb3Zs25yhA+DuwFL+d/xBPAxEI5FARRXLOHRSix1lR1MFZZKwxG/LXI2QJJcaSQEgvJxeGZoDsJ3CyoTY8RH+xCAgn9p6s=
+	t=1778956478; cv=none; b=VPmIS9KPSNxvz7cgfEcNfsCTIGD0cpqDwFYcQ3SSJdbpEH6tMNwbjutsfv1LZaAIUZD4PYSWgYaDfHoEBmkgcQOJei12G2qFknySCagvMdCTUxa4kA48RF8dYxjoZ9T7WQ5D+vJXj/dbMyOyo+su/uTKX1BYQ8TrFmgXAcoinvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778947189; c=relaxed/simple;
-	bh=sKhqXXSI1Vg6Tat3HQ5sGmZ3roeC3MthMSoDo0NrIh8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nk4vZzVq0WRQDnONxaBw8GoLLvs1vYnngiVau8F0w72LzsD6QnJL6xQF77Nn2vd7lh0S24zP9kIUoylWLVFnKgZCMTk6E6qebYMtHje+DzTY2PjxI0UnfAJUkJ558gAc7Ykvicgo4nxi85Q5As6/WF1W0x7NAIMxcmQjkT5i/9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ut+g4M3m; arc=none smtp.client-ip=74.125.82.47
+	s=arc-20240116; t=1778956478; c=relaxed/simple;
+	bh=KPnDJOcSItAxciZGFqEOE97FMivOy5tqtWzl3r9+4MU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CVYevuU7GtdDM0IjMMXDkgNy8SHKe3P9BJSgekfM2yk5CeMZtUOOoajiFbGIH9RqDVfy49ROTWEhum4aMtpqMrV1XjhW/RBW97T2r0+au83jWXMz/BvkRG+ms1ZnylEVUzc3Mn8UgJ+3O2tZjsjd+N1jWmbiaxx5ijE/Gyv4Zhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G3R2weOA; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ut+g4M3m"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1354403c610so2430009c88.0
-        for <git@vger.kernel.org>; Sat, 16 May 2026 08:59:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G3R2weOA"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2ba856db1c0so7738705ad.3
+        for <git@vger.kernel.org>; Sat, 16 May 2026 11:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778947186; x=1779551986; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778956476; x=1779561276; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WzIoVgsVyLM181K32B1UPSBcqqvUfk4q3Y+Rny7YG6c=;
-        b=Ut+g4M3mct22dwb09htf470SNbkZfiuJPo60pW4fyhNep3wVDyuSlk26ZMzRT7rBwb
-         MO3rMWgJDg6ZTK1hhFB4l2qAwy21hgxeplpBuTAfM0Uy2vg01I3EsO9E3gJz1h+wZDW6
-         XJqplP0soRQhvRefbh3AyaJo3rQxV7F2mP/czFNAdOrf+jMdo/PTcdNPzRINmVgZLwwG
-         DgPWwNAmE+gNlk8GqXSr7Ff4GpxfOifsf6+HXNlZANF5DoaLG8ZJw28IlZkJkHNWAYX7
-         JOs8TjTiAQ5Y9x8ur09pIFJGs5Czj1HDS9/bBQqbtES9JlIY5K2doWb5qS2f6Bj3pjJU
-         naUQ==
+        bh=e7hLzo+gg46Mo9NOQHrI6DpnLc2Rq7hpFj5A+PyXAis=;
+        b=G3R2weOAGTSw+hC4cZZW79+Nq5Ucw85d/UgebZzcGaQXwRtRcJipar6NEd/UsGheWa
+         knk5LNqM0vBGR4LRDMbPrzKQ/ZcZq51xqVjR280t19dMTFGM8DyIzQe9xLM0ZJe3wLjx
+         8e+pwttMGMEGGgF/Q+B/GZoovN0r6DZrUwY1g3UIxlp/KVMuJ9O6PRIqm3YnzueOW1Rl
+         IW5mQpqCGTqR2AccIMM9cNvpXzZmE5rDmBc/pN9LRBJy1uvO0MhSYLCA6y6NFyYnWHc3
+         ijKrHkDUMT5PptmfSRdsImESoHJPj/e19ycQHJXkpWv84xzXybwRnGuP2rz1XRuQ3Mqc
+         0odg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778947186; x=1779551986;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1778956476; x=1779561276;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=WzIoVgsVyLM181K32B1UPSBcqqvUfk4q3Y+Rny7YG6c=;
-        b=aI50irn7MJd0iMpd2H81SMG2bmSK1JaInOJo77rmhtdMn+/QY9DRi1pSSTfXE2nOV2
-         c+XUWV1mzUQ1pN9iwRKqpNDuBR9ewqlnM4yIlDHzxv1XtvyyspPOK14gPqQc97W+KzNx
-         TfZRKfXZGL9VMAMvsZi/l8KwsIIPqXGGf8sVO2xkA9JNrqnLKCVEzLDLtHUAFOJTGO2w
-         p9LdjSFD0xyOxqzHyxM3gTt6WgmCPRrSBh1T9urIj59Vl/OZZvbHIpov90sWYCO1sOSh
-         nXENcXvbYewNqrBMzvb1B3O086fWQDx/I3YIPjGzzHVWBm5JXVdaenCgHwno8CwL3J6k
-         krAA==
-X-Gm-Message-State: AOJu0YycgvSs9PrNYrLPwBFFG3h3mJ+MBksy4JbI+/38AIlyszlvyl00
-	G6mKERAThQWFsIHFJ/qGKJgvqL3Ld4aVl+jSQ3jTz4SVXRkd/lQnVPLVwGeYqw==
-X-Gm-Gg: Acq92OEGxlIKjqjq1GH9P/bliPp8i0qdZnG3GeUdBtv+lbin4z2HZwf0IvxhlbhMYca
-	o8QZdNreXiTUQXnng3QvHlC4d2V+EWbF8M76VE9yKXCCt/44+KbNC7iomTMPFvbAB2EJA81WjyF
-	14B/jdqZBSzdR7qSzC3txuYX74qIzuULmfTu1ah1HgetztfhvfxkShHgxQ5greLRg2zzD1fKXlv
-	tnJfkl5GU3c9eU+E7MkSSXhkQzo04sbfSvwBsFutlksACXwWH2QABbgFwofyKmheNeM7NwRQiQe
-	fHUvG6oPLuTyWMpNjDZ0KlyZzLY7Al5kUjX1icAFhKJRjE2+PaKAIbq1dXOORnWgaYchSgKKcWn
-	fAa5vQbb1mlJ+aQMJJ6O26WgCrMtgDh6w6zguJMEoh5E0V4Q0xMduo1oMbDAB92aCIjKToY7/Mq
-	u2NGR3UxA0RHCrZyh+foMZG5Bs3/sAtjC1oM7lDgU=
-X-Received: by 2002:a05:701b:2315:b0:135:245e:5d6a with SMTP id a92af1059eb24-135246de1efmr1672006c88.24.1778947186415;
-        Sat, 16 May 2026 08:59:46 -0700 (PDT)
-Received: from [127.0.0.1] ([172.182.226.210])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cc2351d9sm14934255c88.9.2026.05.16.08.59.45
+        bh=e7hLzo+gg46Mo9NOQHrI6DpnLc2Rq7hpFj5A+PyXAis=;
+        b=Mde8Y1X+Qm8ZsLr9Ep7qsZq54tuVbV9Ip4vn28OEHKITAwIgvlleyIfb09pIxp/taK
+         Zjp+EmRZC+DXHBf2RiMep45aHTPloFbZZOjHbnQnwfB/t0zh3pmjTJ+6JkeTHMhWU2kA
+         hEvOGcWFfhcNXOEKxCGuQZaOrO4cQyP795eRzv7CCJvHDxrrRinUuTmNZoitClNMj69C
+         xyWbHZI31ztUsjBZykT+GO6ANQmLcRxKGpDty2ZL4a0xnZr9HAY2+kjV1jBd3dJks6v2
+         P6KvDj0cgyymTM9fmmf6RgDQjZB0eMWoINoV6JnTKNiqd6XWpoqcB8grCu3O4MeNou95
+         NMFw==
+X-Gm-Message-State: AOJu0YyGrrqB2Uf2/3y/Lqn+qT+e1oefFbMM5pqnpRiDgP5EyTdqZuJF
+	FjDU/1K8iaOayT+B1T6UHlKWefEhoIDHu6kDCrU08ofnJsrke3sVlKjL
+X-Gm-Gg: Acq92OGdLasSGuGndcUl6Vu/4pr1tnW3ff308DqTnofugZ3jb4hkLN5ZRzYFEq1LQXM
+	T6rzfhy5SO1kzcXb6nide/VEbv5nQcYPNFn0FYLNKN8sGjubbmPRds2N6DWIxDuVjWPxUuUbq6A
+	aF8N32K4/LOK1RMCsy5B8h3C6RDf3laWbb0UWYmTdqRJA2diiLslD0CW6GZcO9tagHw2YLSW7ws
+	KEiXvurA0GSSTOZoF6vSjiVQfNmFoIvwjPTSTVueN5A54lC+fF0KKTeYfFvsiTTJpjb6sJGIVFd
+	rVlK5cB0PnFs5Rj4yvKUX4eNjVI6UBygX1/s7etOMsqAGn6UrzucEVwlKqlP3wrBGsbok2ul8fx
+	U1X+txQ7V2cYrdfqy4XQb9i0NPa+V2t5FpezPS68Zr7B6GlIvZ3vE6bIb15AecEiFINX2ZItVzP
+	g4cmdJJSfqbU/yR0kueodz9KDKWOmtkjEk9cXwK4KqQoDzoMbmRZazU3fzbWc=
+X-Received: by 2002:a17:902:9690:b0:2b2:81aa:f6c3 with SMTP id d9443c01a7336-2bd7e8a91b6mr73027565ad.29.1778956476106;
+        Sat, 16 May 2026 11:34:36 -0700 (PDT)
+Received: from Pushkar.localdomain ([42.110.173.201])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe492asm102190695ad.48.2026.05.16.11.34.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 08:59:45 -0700 (PDT)
-Message-Id: <4d11ebb79ea780c1ce619c66cf9693d819d86d4b.1778947182.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2116.v3.git.1778947182.gitgitgadget@gmail.com>
-References: <pull.2116.v2.git.1778922993480.gitgitgadget@gmail.com>
-	<pull.2116.v3.git.1778947182.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 16 May 2026 15:59:41 +0000
-Subject: [PATCH v3 2/2] t6600: add tests for duplicate tips in
- tips_reachable_from_bases()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 16 May 2026 11:34:35 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: pushkarkumarsingh1970@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	peff@peff.net,
+	ps@pks.im
+Subject: [PATCH v2] stash: add coverage for show --include-untracked
+Date: Sat, 16 May 2026 18:33:48 +0000
+Message-ID: <20260516183347.4323-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
+In-Reply-To: <20260505103332.43702-2-pushkarkumarsingh1970@gmail.com>
+References: <20260505103332.43702-2-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Transfer-Encoding: 8bit
 
-From: Kristofer Karlsson <krka@spotify.com>
+Add a test for 'git stash show --include-untracked' to
+cover the case where untracked files saved in the stash
+are included in the output.
 
-When multiple refs point to the same commit, the reachability check
-must handle them correctly.  Add three tests:
+While stash creation and restoration of untracked files
+are already tested, there is currently no explicit test
+covering the output behavior of 'stash show
+--include-untracked'.
 
- - duplicate tips, all reachable
- - duplicate tips, none reachable
- - duplicate tips at the minimum generation (exercises the
-   early-termination advancement logic)
-
-Suggested-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
 ---
- t/t6600-test-reach.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+Changes in v2:
+  - Clarify in the commit message that the patch fills a gap
+    in existing test coverage for 'stash show
+    --include-untracked'
 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index dc0421ed2f..9486002866 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -612,6 +612,51 @@ test_expect_success 'for-each-ref merged:none' '
- 		--format="%(refname)" --stdin
+ t/t3903-stash.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 70879941c2..d4867536b9 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1790,4 +1790,21 @@ test_expect_success 'stash.index=false overridden by --index' '
+ 	test_cmp expect file
  '
  
-+test_expect_success 'for-each-ref merged:duplicate, all reachable' '
-+	git branch dup-a commit-3-3 &&
-+	git branch dup-b commit-3-3 &&
-+	cat >input <<-\EOF &&
-+	refs/heads/commit-1-1
-+	refs/heads/dup-a
-+	refs/heads/dup-b
-+	EOF
-+	cat >expect <<-\EOF &&
-+	refs/heads/commit-1-1
-+	refs/heads/dup-a
-+	refs/heads/dup-b
-+	EOF
-+	run_all_modes git for-each-ref --merged=commit-5-5 \
-+		--format="%(refname)" --stdin
++test_expect_success 'stash show --include-untracked includes untracked files' '
++	git reset --hard &&
++
++	echo tracked >tracked &&
++	git add tracked &&
++	git commit -m "base" &&
++
++	echo change >>tracked &&
++	echo untracked >untracked &&
++
++	git stash push --include-untracked &&
++	test_path_is_missing untracked &&
++
++	git stash show --include-untracked >actual &&
++	test_grep "untracked" actual
 +'
 +
-+test_expect_success 'for-each-ref merged:duplicate, none reachable' '
-+	cat >input <<-\EOF &&
-+	refs/heads/dup-a
-+	refs/heads/dup-b
-+	refs/heads/commit-9-9
-+	EOF
-+	>expect &&
-+	run_all_modes git for-each-ref --merged=commit-2-2 \
-+		--format="%(refname)" --stdin
-+'
-+
-+test_expect_success 'for-each-ref merged:duplicate at min generation' '
-+	git branch dup-c commit-1-1 &&
-+	git branch dup-d commit-1-1 &&
-+	cat >input <<-\EOF &&
-+	refs/heads/dup-c
-+	refs/heads/dup-d
-+	refs/heads/commit-5-5
-+	EOF
-+	cat >expect <<-\EOF &&
-+	refs/heads/commit-5-5
-+	refs/heads/dup-c
-+	refs/heads/dup-d
-+	EOF
-+	run_all_modes git for-each-ref --merged=commit-5-5 \
-+		--format="%(refname)" --stdin
-+'
-+
- # For get_branch_base_for_tip, we only care about
- # first-parent history. Here is the test graph with
- # second parents removed:
+ test_done
 -- 
-gitgitgadget
+2.53.0.582.gca1db8a0f7
+
