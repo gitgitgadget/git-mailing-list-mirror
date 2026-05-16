@@ -1,273 +1,142 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D14F390C9E
-	for <git@vger.kernel.org>; Sat, 16 May 2026 12:52:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3036E17BEBF
+	for <git@vger.kernel.org>; Sat, 16 May 2026 13:29:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778935979; cv=none; b=ELRgiEt2T5ji5ojiT4xgQqr0oNslwtmFAfxCp/5m5piFrOlqfoVmyWi1kEAuacGvu46u8M2U7QWjzdJJySKbVyGj1AFxGRp3SMxOCMdPQkBn8MJrjN6zCtAGshj6MtzBP7Fkzwe1bvNEzX1bxwCpb5WpcsEt09jCk0CBy8T+W3A=
+	t=1778938155; cv=none; b=l7TzExfIZ5LQnRQ/jQjc2Xj0UEOsGUm17YwY0qRzvADBqyeoaZX5pSe6Fx7IkIE19lQAdmX5b3C+N9ME3bz70fj1Q7B50ZVquvVB0ikGJ60Wm1rwxWI7blBsh/bh/e3ZEyusT9ocMUsK12r0dWAbaP4imiY57eFgkVo4MzkD3Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778935979; c=relaxed/simple;
-	bh=rOvQegWvEFJQ4qbnBHVcQ/YqZDkAmfuJTGhqz+OsSgs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lcJCR16gY8aRPIgUATntaNGFhQqdTOVWoiROKqNIjGB52IiRhWAckxoS+4gbJ1bfpahVGFNYAjbW0Tldou95LhQImXAvaYUwV1p0DROZboDdHZ7bp3aJoc2LgHv7/lpfX9Vk+moffU0u92c/joj21Swb8ik92r5VrGoFOa2u15w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IU5Z95hK; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778938155; c=relaxed/simple;
+	bh=PZ/vrl2etIFW2hLopA+aP+xn0qBKV9UXcxXpTA9vemU=;
+	h=Message-ID:In-Reply-To:References:From:To:Subject:Date:
+	 MIME-Version:Content-Type; b=AN+0IdhC7Nlqy4/3AHZIkBK+uS18AyNyLpTsxN5sFea2xlQOW6X/uRhmDZUfkJtnOjw16RSR3Iep6waJ1QYh9j4e4NmhUSU/0hqstQ9YcY0HP34+6XyVzNHfmDsq752y3sgoQ+3viiRx2uP4u9s+RY+6OMPvfw1fxNNVXqbOsx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=devthusiastcraft.com; spf=pass smtp.mailfrom=devthusiastcraft.com; dkim=pass (2048-bit key) header.d=devthusiastcraft.com header.i=@devthusiastcraft.com header.b=lwoDsTiH; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=devthusiastcraft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=devthusiastcraft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IU5Z95hK"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5102582e237so9756091cf.2
-        for <git@vger.kernel.org>; Sat, 16 May 2026 05:52:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=devthusiastcraft.com header.i=@devthusiastcraft.com header.b="lwoDsTiH"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8b1f2b7f1bcso13746716d6.1
+        for <git@vger.kernel.org>; Sat, 16 May 2026 06:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778935977; x=1779540777; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=devthusiastcraft.com; s=google; t=1778938153; x=1779542953; darn=vger.kernel.org;
+        h=mime-version:date:content-transfer-encoding:subject:to:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R/pbei3UgPYll3mwEBiFRzU5Ivw7PjwHcG9d/meUAvA=;
-        b=IU5Z95hKUlhbUU5tvrVZmD4prNAhXtowpPzxNDu9JskSRhaa/oDK7BpBAr3THsg2JJ
-         HypOj6J0wmXqPy0Fc1CowFAzjteK/tRxQpquHUASqi5MH/C24GCzyEC1SVb31zdFdxrI
-         E1+pWfeZWCwqejzbTwNvjKA27GMf5dteuJuEXUgcTRUAzjU+rr1tEBhDq8I8U/KpEgPn
-         dS4Hy9eVUMgtBDpAIdiOfrD231opTuP6U4ADlenPrwrj7eFlbVmHQ3i49BkoyNu8nrhm
-         z25gUbjX91QMCFJvOPdwuaW/0a7iFwO3LG5rxxfGSOouS2ADCsfP+9Yirxpjv5aUvC9E
-         k02A==
+        bh=PZ/vrl2etIFW2hLopA+aP+xn0qBKV9UXcxXpTA9vemU=;
+        b=lwoDsTiHkJ0JgHlW8BEefaXbvSdR02kp1/LOpaiojrzFCyJVzkG0KgldBIqKcRoeDE
+         kaZE1pDoqCwCLAmcfbmmoOkkC3YtbwLTm/ZkbJkrHnR28mxMbglh0uybKty4j22BNZqB
+         2F5qsbH7xQstHFDDQADJsUGQo/STKZVvSk+bCahqKnxb1444++bBHdR21JUWUORkYR4E
+         IjU2emAYHRUvi4WC9c9cX4nlByyXS2+p/9DqveTqm4k9sfDiui7p5djf8Iw0oS6pnyXC
+         agGyGI7tWr3WaYN3e6zsjnspiCS6vHZhAcKvMq7FYSV2CYJohGVHCCskxsbux95OQr2h
+         p0XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778935977; x=1779540777;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        d=1e100.net; s=20251104; t=1778938153; x=1779542953;
+        h=mime-version:date:content-transfer-encoding:subject:to:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=R/pbei3UgPYll3mwEBiFRzU5Ivw7PjwHcG9d/meUAvA=;
-        b=GNkZlG3gdSS1N+keLbHnMntaZWi7RVDxKA4DvTxwhsJbybneTElWgBrXQG10KGuXvX
-         fvh7QD8nhG/YP5HxQrPIN0Qy/fGbB5XOwZn6Dr0BZv+ezfHilHo8u8+WrvDxiZPLp0du
-         AupWcMq+nb/3l1S5nDBDbg0DtnVyUBnIxj28P2SIlSQjULkgRcVmTr2qTDjladRuMaXs
-         0mLo2rfCJBFSTU6RQ5St+faP8suemHJcrTV+cuaAbgEyC+K7C/XPuGw5QX0NB0LvZuHq
-         blE+bMmFMEDdwElW84GeGneofJSqZeZWRmchc+/olk1nNgvqiZ94AE4AqAed+trNh7bh
-         zuyg==
-X-Gm-Message-State: AOJu0YwkRueX02auBUwONRGxh7gBQtwuZcyyJee7eVKWL1ZfoYA8oyC8
-	s10p+DzrOj+t6h6E3TRsh/DfTiu/KcgXBrvBZB2wzlFYBllaWhAVduL+uBQrig==
-X-Gm-Gg: Acq92OFYjm1YLLaTKNWnVWPp2ht2+fKt2mduENboKjskw33AnHSZK8MSpoqKI/Kfw72
-	mJZO9v9xnETmQL/QovX2AjPZo2x0eZgck4Xt/LgSYlrXX2kuQVEoxjhYrq/caXBmXkufHRz4klO
-	KWbNvO2ZRBn55YI0gNWHxnQosP5qHuy9xj6bW6D9c5sQpP1wS2tJqbJdlVyQAkL2SoYs+8SeFas
-	HVVdhCcsaEFtkSxR28Di9tBGAuey/vXlTtVaS+Qva0QHvF53ZNWpIUSkfjVu3xVIvtLpliwmhTK
-	NPM1mPnwBSeB2T7YNyQJ8BfrkaUNrwPd/aWdZF8EzFTeXCaZs5yERmlCR9Z7TMWbaMHP2OnRfre
-	hbQ7XnAaBdLESct5FCAzvmhBj5n0pVr+jGM2iIzfxdwerqLoo1mKDyNDHh1guiEtoWWvXEcPqyg
-	OXGaFZR3zn54rV5v3BgaMQSG+DYlJ4EB6OstFr
-X-Received: by 2002:ac8:584d:0:b0:516:401d:102c with SMTP id d75a77b69052e-5165a050e8emr111476931cf.21.1778935977217;
-        Sat, 16 May 2026 05:52:57 -0700 (PDT)
-Received: from [127.0.0.1] ([20.106.231.36])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51645856d4esm71951511cf.27.2026.05.16.05.52.56
+        bh=PZ/vrl2etIFW2hLopA+aP+xn0qBKV9UXcxXpTA9vemU=;
+        b=gyu7nMELxzKJOrIU5mR1jH2Oa5pAznNkIQ1Lg0/sf9nhADQUC9aMaPyNcklW5IHu4K
+         1sjNi0yzTj3pXaobpGcsz002/4m15tNRuOuD18xcJHKjKnYo7LMNdMUXzAiL/0zv2EoY
+         oLsRC0iF2vMTKgTh2v4nH4qBjddU8F+DbfEQoavYX5+O8dDSGiFjgr0gQNnXV31gwgK1
+         MBzUnpHswfseQbWpWFvB894DDcyISH2AmfDqyN1bSupllIBGsfiWHQdGJnFkzPdIOIX8
+         CGDYoVfgUjqR+roUNL2WMeYmgwicOqdZcWfCxqMDZqb67yOARq35ApIYf0Eyrf5b+FmD
+         q74g==
+X-Gm-Message-State: AOJu0YxhyyfuM6flyWNcw5wCy7Z6Ry82BnhwjVpIWvmASU45xdWFuIrd
+	bYtMBjlPF2d3qG0NoHQx8nKVg+BFIyDGiiPHhn/u+a0RTzsExNzcxjQT39jFL7e93/8v3HLmJkY
+	M1GHWmg==
+X-Gm-Gg: Acq92OFlX7FqjVjTne0Mu6Ml69VUzYUFA2reogZz2R3A6wH+yoG1ej6lOOaLI9k+nY4
+	QK0Uemftv2crbiUULrFDYzHVbdFny7iA3zezqeWl18ihzBuVSr7LEJCzUVmUyXUDcWSR6sEUMlu
+	Yie+hXuMJZYBV0ZYF2K/E5hEyyhOZzn8bcElJOwoILwktIKZ0cksDKqqXixnXczJP6H9yuVTOug
+	TMrrPxCIipdPf8mwasF3fA1G6L2Tf5+fIjogKg23Gk9I8hl/ai6Es1h6PFA92ZoZjDoJsC8k66w
+	2X2uvbosRBGuxzz2j2ZhE3OSydsCamksZyGzd3zFxWYTTEmb5Do95w9QMmJxnHyp4L1rgOvLGjL
+	0z4PCEA4WddYCk7V4lxdE4bnJbqYO9uyb42uw1gSWjbQAmjuX9gGd2qVTu6YSldiBsIHAgH9Yso
+	w+PBkKXPvu4x+++pkZ5jlj5fxZEApSZV0CU5HDDLufkUCs0tRT1oMFn2hus5VkHtg3z6aURqSMU
+	g/1PhsoV+NV59/OxBnuJwPJUh6KW2gknNoWzjdGt5UNzsXBNqVDOLPT
+X-Received: by 2002:a05:6214:509e:b0:8ac:b753:6976 with SMTP id 6a1803df08f44-8c8fae766eamr179160506d6.1.1778938152755;
+        Sat, 16 May 2026 06:29:12 -0700 (PDT)
+Received: from 019e30fa-03e7-71d9-9c7b-da442f0fbc44.local (ec2-18-207-181-13.compute-1.amazonaws.com. [18.207.181.13])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c9093e6d33sm83765336d6.22.2026.05.16.06.29.12
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 05:52:56 -0700 (PDT)
-Message-Id: <pull.2302.v2.git.git.1778935976330.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2302.git.git.1778680725459.gitgitgadget@gmail.com>
-References: <pull.2302.git.git.1778680725459.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 16 May 2026 12:52:56 +0000
-Subject: [PATCH v2] config: suggest the correct form when key contains "=" in
- set context
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 16 May 2026 06:29:12 -0700 (PDT)
+Message-ID: <019e30fa-03e7-71d9-9c7b-da442f0fbc44@devthusiastcraft.com>
+In-Reply-To: <019e17bf-b7d6-74cf-b622-b27affa43ca5@devthusiastcraft.com>
+References: <019e17bf-b7d6-74cf-b622-b27affa43ca5@devthusiastcraft.com>
+X-Mail-Abuse-Inquiries:
+ https://app.instantly.ai/privacy/report-abuse/019e30fa-03e7-71d9-9c7b-da442f0fbc44
+From: Sarah J <sarah.j@devthusiastcraft.com>
+To: git@vger.kernel.org
+Subject: =?UTF-8?Q?Re=3A_No=C3=B4men=3A_Gifted_Invite_Enclo?=
+ =?UTF-8?Q?sed_=28Github_Community_Partnership=29?=
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 16 May 2026 13:29:11 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=utf-8
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hey No=C3=B4men,
 
-A user who types "git config pull.rebase=false" gets only "error:
-invalid key: pull.rebase=false" with no clue what went wrong.
+We=E2=80=99re about to reassign the free lifetime =
+Devthusiast membership we reserved for your GitHub profile.
 
-Emit a "did you mean ..." hint suggesting the split form.  Restrict it
-to plausible-set contexts ("git config set", bare "git config <key>",
-and their 2-arg forms); explicit "get"/"unset" keep the existing error.
+If you=E2=80=99d like to claim it, just reply =E2=80=9Cyes.=E2=80=9D
 
-"=" is legal inside a subsection, so only fire when "=" lands after
-the last ".".  When the user supplied a separate value, use it in the
-suggestion instead of the suffix after "=":
+Otherwise we=E2=80=99ll pass it to another engineer in 2 days.
 
-    $ git config set pull.rebase=false true
-    error: invalid key: pull.rebase=false
-    hint: did you mean "git config set pull.rebase true"?
+All the best,
+Team @ Devthusiast
 
-Signed-off-by: Harald Nordgren <harald.nordgren@kostdoktorn.se>
----
-    config: suggest the correct form when key contains "="
-    
-     * Hint moved from git_config_parse_key() to a new
-       advise_setting_with_equals() in builtin/config.c; wired only into set
-       and bare paths.
-     * Only fires when = is after the last .; 2-arg forms use the user's
-       value.
+On Mon, May 11, 2026 3:55 PM, Sarah J =
+<sarah.j@devthusiastcraft.com>
+[sarah.j@devthusiastcraft.com]> wrote:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2302%2FHaraldNordgren%2Fconfig-hint-equals-key-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2302/HaraldNordgren/config-hint-equals-key-v2
-Pull-Request: https://github.com/git/git/pull/2302
-
-Range-diff vs v1:
-
- 1:  56eb3ce6fd < -:  ---------- config: suggest the correct form when key contains "="
- -:  ---------- > 1:  40d9eb3e5c config: suggest the correct form when key contains "=" in set context
-
-
- builtin/config.c  | 30 ++++++++++++++++++++++++++++++
- t/t1300-config.sh | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 77 insertions(+)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index cf4ba0f7cc..f14a30e720 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "abspath.h"
-+#include "advice.h"
- #include "config.h"
- #include "color.h"
- #include "date.h"
-@@ -210,6 +211,22 @@ static void check_argc(int argc, int min, int max)
- 	exit(129);
- }
- 
-+static void advise_setting_with_equals(const char *key, const char *value)
-+{
-+	const char *last_dot = strrchr(key, '.');
-+	const char *eq;
-+
-+	if (!last_dot)
-+		return;
-+	eq = strchr(last_dot + 1, '=');
-+	if (!eq)
-+		return;
-+	if (!value)
-+		value = eq + 1;
-+	advise(_("did you mean \"git config set %.*s %s\"?"),
-+	       (int)(eq - key), key, value);
-+}
-+
- static void show_config_origin(const struct config_display_options *opts,
- 			       const struct key_value_info *kvi,
- 			       struct strbuf *buf)
-@@ -1133,6 +1150,11 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
- 
- 	argc = parse_options(argc, argv, prefix, opts, builtin_config_set_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	if (argc == 1 && strchr(argv[0], '=')) {
-+		error(_("wrong number of arguments, should be 2"));
-+		advise_setting_with_equals(argv[0], NULL);
-+		exit(129);
-+	}
- 	check_argc(argc, 2, 2);
- 
- 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
-@@ -1160,6 +1182,8 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
- 			error(_("cannot overwrite multiple values with a single value\n"
- 			"       Use --value=<pattern>, --append or --all to change %s."), argv[0]);
- 	}
-+	if (ret == CONFIG_INVALID_KEY)
-+		advise_setting_with_equals(argv[0], argv[1]);
- 
- 	location_options_release(&location_opts);
- 	free(comment);
-@@ -1371,6 +1395,7 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
- 	};
- 	char *value = NULL, *comment = NULL;
- 	int ret = 0;
-+	int actions_implicit;
- 	struct key_value_info default_kvi = KVI_INIT;
- 
- 	argc = parse_options(argc, argv, prefix, opts,
-@@ -1385,6 +1410,7 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
- 		exit(129);
- 	}
- 
-+	actions_implicit = (actions == 0);
- 	if (actions == 0)
- 		switch (argc) {
- 		case 1: actions = ACTION_GET; break;
-@@ -1485,6 +1511,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
- 		if (ret == CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
-+		else if (ret == CONFIG_INVALID_KEY)
-+			advise_setting_with_equals(argv[0], argv[1]);
- 	}
- 	else if (actions == ACTION_SET_ALL) {
- 		check_write(&location_opts.source);
-@@ -1515,6 +1543,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 1, 2);
- 		ret = get_value(&location_opts, &display_opts, argv[0], argv[1],
- 				0, flags);
-+		if (ret == CONFIG_INVALID_KEY && actions_implicit)
-+			advise_setting_with_equals(argv[0], NULL);
- 	}
- 	else if (actions == ACTION_GET_ALL) {
- 		check_argc(argc, 1, 2);
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 128971ee12..f46c081413 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -462,6 +462,53 @@ test_expect_success 'invalid key' '
- 	test_must_fail git config inval.2key blabla
- '
- 
-+test_expect_success 'misplaced "=" in key: bare 1-arg form hints' '
-+	test_must_fail git config pull.rebase=false 2>err &&
-+	test_grep "invalid key: pull\\.rebase=false" err &&
-+	test_grep "did you mean .git config set pull\\.rebase false." err
-+'
-+
-+test_expect_success 'misplaced "=" in key: bare 2-arg form uses given value' '
-+	test_must_fail git config pull.rebase=false true 2>err &&
-+	test_grep "did you mean .git config set pull\\.rebase true." err
-+'
-+
-+test_expect_success 'misplaced "=" in key: set subcommand uses given value' '
-+	test_must_fail git config set pull.rebase=false true 2>err &&
-+	test_grep "did you mean .git config set pull\\.rebase true." err
-+'
-+
-+test_expect_success 'misplaced "=" in key: set with single arg hints' '
-+	test_must_fail git config set pull.rebase=false 2>err &&
-+	test_grep "wrong number of arguments" err &&
-+	test_grep "did you mean .git config set pull\\.rebase false." err
-+'
-+
-+test_expect_success 'misplaced "=" in key: explicit --get does not hint' '
-+	test_must_fail git config --get pull.rebase=false 2>err &&
-+	test_grep "invalid key: pull\\.rebase=false" err &&
-+	test_grep ! "did you mean" err
-+'
-+
-+test_expect_success 'misplaced "=" in key: get subcommand does not hint' '
-+	test_must_fail git config get pull.rebase=false 2>err &&
-+	test_grep ! "did you mean" err
-+'
-+
-+test_expect_success 'misplaced "=" in key: unset subcommand does not hint' '
-+	test_must_fail git config unset pull.rebase=false 2>err &&
-+	test_grep ! "did you mean" err
-+'
-+
-+test_expect_success '"=" inside subsection is valid, no hint' '
-+	test_when_finished "rm -f subsection.cfg" &&
-+	git config set -f subsection.cfg foo.bar=baz.boo qux 2>err &&
-+	test_grep ! "did you mean" err &&
-+	echo qux >expect &&
-+	git config get -f subsection.cfg foo.bar=baz.boo >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'correct key' '
- 	git config 123456.a123 987
- '
-
-base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
--- 
-gitgitgadget
+> No=C3=B4men, just checking if you saw my previous email.
+>=20
+> Your GitHub profile was selected for a free lifetime membership to =
+Devthusiast (normally $1,800/year).
+>=20
+> If you want to join the =
+newsletter, just reply =E2=80=9Cyes.=E2=80=9D
+>=20
+> Otherwise =
+we=E2=80=99ll pass the spot to another engineer in 7 days.
+>=20
+> All the best,
+> Team @ Devthusiast
+> On Sat, May 9, 2026 1:55 PM, Sarah J=
+ <sarah.j@devthusiastcraft.com>
+> [sarah.j@devthusiastcraft.com]> wrote:
+>=20
+> > Hey No=C3=B4men
+> >=20
+> > Annually, we pick engineers from Github=
+, and your GitHub profile https://github.com/bnhassin was selected this =
+year.
+> >=20
+> > You're officially invited to a lifetime membership to =
+devthusiast, our email newsletter for tech founders that love to tinker. =
+And because we selected your profile, it's completely free for you.
+> >=20
+> > Some of what you can expect to find in our daily newsletter:
+> >=20
+> > - Latest in AI: Latest AI news from our inside sources at OpenAI, =
+Anthropic and Google
+> > - VC Radar: The latest tech funding news, before =
+they come out on Tech Crunch
+> > - AI Wars, Model Power Rankings: =
+Today=E2=80=99s leaderboard of the top AI models
+> > - Tinker of the Week: =
+One useful open-source tool that is flying under the radar
+> >=20
+> > Please respond with =E2=80=9Cyes=E2=80=9D to acknowledge receipt of =
+this message, or we will have to choose a different profile. Once confirmed=
+ you will get your first newsletter edition!
+> >=20
+> > Welcome,
+> > Team @ Devthusiast
+> >
