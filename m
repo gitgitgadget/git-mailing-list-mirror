@@ -1,112 +1,93 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8920819539F
-	for <git@vger.kernel.org>; Sat, 16 May 2026 13:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFE71B983F
+	for <git@vger.kernel.org>; Sat, 16 May 2026 13:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778938552; cv=none; b=ofCkDC7AOy8Juaj/gKkRvxyoLgypUnxVT5taA0LVF9o1pXSn3zgaH+o7ns85ethiGutFjF0G8uDJHSGJ9vbdygZ56xqFQohG3StFjIDqFClF3kl8HWjUID5YRTAi5S0UiR+ZUKVVwS2sSS68J42jLQGPNjof7KdrgPixGu3HUrI=
+	t=1778938718; cv=none; b=BCjeTc/hpsTv+eMA4l0JWrF48g90MFwv6yqk8WK+Zw7QFB7h1EbJ0HCAohYhTBjyT1E8PXL1JpP6MnoK/BZbNDSiVJxepV2TpNfBb9lV1aZ3t3GG0zkArcgsx17GE/FqhOCdEChuqXtyCrGVrWPTj1ym9jsXzn0MzfW1k03UlYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778938552; c=relaxed/simple;
-	bh=Q5nlaroccQYdaR1pE11y8P5M6UMPDD1GTHn9A1tXqsA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hDRR2O4pgWEY2kqpzlmHJe/bq4YCU9oKuqbqj1qkvWmofsyKwIyDGI8K1mo+T4Df8d2uzTLZe0/t6GOF40lhWUWfykJkOiZl7d/NAwV1EsQgzN1hsPO8w001RXWzNK7JoDYTKDEkixWI1Kk0LFzT/6YXcXScnrzr/499vR2vfR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uO28Eokd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fkbB5d2S; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1778938718; c=relaxed/simple;
+	bh=j44DAzcSih9G9B+Z9lG+hIAdP1Rl2RQeSrP9Bjs2SSI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Cnay471KmIepuVdAAMfibVPAytrkd7PVZ9pBm3G/svCtQcrKxaeMdjsU8R/AyUooxi40MW1qWbcseaAfnKJJIZ/HxcMXZDMKKJPBLTHraa7MEFi8A3LmjYszElXTAY/h/MfWZSpSAPQXyDASmLIW3/0JqR3tiEUSIfSejWXkz1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QDojB+so; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uO28Eokd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fkbB5d2S"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id AE4E61D000A7;
-	Sat, 16 May 2026 09:35:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sat, 16 May 2026 09:35:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1778938549; x=1779024949; bh=2riBXx2RKg
-	pFW8iU8BLSbI9SudnFfGFMQSSrMAjyHo4=; b=uO28Eokd00hYXfc40Gx2shLZVD
-	uVkjxlbIaYoxhI3VV/9nVec61j+tO66SgLitazrk35MuFrb9eojzTd+Z8Hh3HEou
-	YEpKeyzz0tEv9BtHDc0T8c0N4bcvLAMxjHy7esmoo6rZIl4cJXiy5YWVwjpOOKdt
-	5dE51xLY20NxsC+itPc2l1QqeozPUYa3GCygo2VTrkbUo+MtSIuhBw9nqweTKOaF
-	FLGWi+vuGjdH+UpqNtdWAudISRJ5Z7qZMPH3HwZXmrnnov2R3KrDswDHUAf4bh15
-	G8x6sg+80/bfA01Z/kXPsP8SJjiG+BWM+aY+Rr0LG2d3gHxDT17V1lMH8kqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778938549; x=1779024949; bh=2riBXx2RKgpFW8iU8BLSbI9SudnFfGFMQSS
-	rMAjyHo4=; b=fkbB5d2S7p4UPfMirqNV0iWdFKBwJJFhu0lb8p9O+9ayYedd/Wc
-	QIfN1hwQXgzNswL6VSkXgUYWFEg97zc67VVYwg/D+D9CkvOtAe6vUh6vefcnLGjC
-	vhG72lBxtOK0cDqOdjLGJ1cwgkXFIpAhb0PUNMBNVppQOdDyXVslum6zwDKun/sF
-	1nVNMTEzVMSiBlotCd83nkRKuxJB9KZuVHmrUUoTErVhysy676usWffQH6BsimJj
-	0GKZ25o6p84kSPP7FcAVQAAUWznRokIG48qFTRO/JLJ6R8/MJeyNRnmrlUfGBAon
-	spTqOC1qFO5xz2dCCKls41OPzd7L7UpPJ0Q==
-X-ME-Sender: <xms:tXIIaqXoczekLepm1iQrinPvo-_65c6R-dzasqKjCiRNWjWck-dhKg>
-    <xme:tXIIatkMqbC5UvB1tZi2V3KGtwPvdhfv26ryT5bSj6Q_GlAaO1H2QwJfgJJV6YLxN
-    lTZTM4Xxf4CtTyG0xVTCk8sybr9qQTDhnROQqormzVOJB1lr9wifg>
-X-ME-Received: <xmr:tXIIajZ8e41i71OpQMWQ2H9yHvqA0N38Dr-r7ne-0NFiY-5hxHxeks70T3i9MA6MNpdA0bP9TvkkJpWAVxOSkdOd3HBO-HYAJA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeefgeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthgrrghhohhlsehuthhurdhfihdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:tXIIagN1FF6zCJxY20mTYOAXJPW4XETy-F3iBnIT1X6I19zi8V8_gQ>
-    <xmx:tXIIaga625XM2ZLHhaFW09XxewctCfnc5_ZA1FUxC__7Ro9w611XGA>
-    <xmx:tXIIam3mzTc53vVMAC_sJvBM6hQAhq0pSdF2SPQevlU5CtQQyjeVKw>
-    <xmx:tXIIaucdGDpz8kA5TR3Fpxhan0SqiNi0ozctBJlHslDKTHmr3PP4zw>
-    <xmx:tXIIararoy6m0gQFxvnSERJGA07cgBjwrVecrYwc3SIb5NN1bt8qlDy6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 16 May 2026 09:35:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] approxidate: make "today" wrap to midnight
-In-Reply-To: <20260516113622.23902-1-taahol@utu.fi> (Tuomas Ahola's message of
-	"Sat, 16 May 2026 14:36:22 +0300")
-References: <20260515205803.26211-1-taahol@utu.fi>
-	<20260516113622.23902-1-taahol@utu.fi>
-Date: Sat, 16 May 2026 22:35:47 +0900
-Message-ID: <xmqqik8ncw98.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QDojB+so"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-90ca6f20872so255508585a.0
+        for <git@vger.kernel.org>; Sat, 16 May 2026 06:38:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778938716; x=1779543516; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j44DAzcSih9G9B+Z9lG+hIAdP1Rl2RQeSrP9Bjs2SSI=;
+        b=QDojB+soQEK2aU2s0UU1x5aDRuDtHk0vIFTGWieVhNB6WPg8ENWJKjHlVmVU06GAgT
+         7rWNem8hBVy/WsBXFadiLatVA6+8LelTpT9wS5tp99OldT62QsE2fucV0FgvE0LIljpR
+         1lKpvoXgga/+PGYojxfTjlBdITdQC2k2kNw6pvjypeixGNeHWqYGk97kC6LNnIk9u4XE
+         C8fp3JQx/2tU+wHcUr9MyfWmf0JeKQtED9pHHN1mUC0WOMA3+kKAgfgu48qy1eTzHu5z
+         mar8vDno2hUDxWyfnfQoz8tpBfDZ6QD5TAgMyz/GJ1Rvxty2XyIxJ4rFaPHymZRXyBBe
+         I2pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778938716; x=1779543516;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j44DAzcSih9G9B+Z9lG+hIAdP1Rl2RQeSrP9Bjs2SSI=;
+        b=jbcZT6io5JHhv3IfZI6JQsWxVUeG7BaqW9OT7C1Z8ovJcSrvs/W3RHXZFWNXDdg3DX
+         IxTcdfGzH/Jv5oa+bL/QPLeOZrr2tRFzrmsVa6IcN9LoHxzqtSepCPBGaRVuoreUfqMP
+         UY8quLOjrhx3EAsG6oim39Dk6LZcQ6uDHEMveCxgexbJZRg93nGwZoE0aeiUQl6Bv47g
+         xRTNyYQa4i3Q/D5pLIzFkyXawuKOc66wDntQfrxGW+zZsbcUusOlopvhskM5ct1AIjXc
+         560hdlqvnS05nValHr+67Iu2hEVI3rtXKGKIaW/3dQJiw6UnDORcCXm9Nz/B6TbYjxnM
+         +Ksw==
+X-Forwarded-Encrypted: i=1; AFNElJ/kcZQz08ksE5DMT5EJZytknwfVO3bvRymJYJiV8l74E8T16TOyHdGGDWLVMHrYtcB4cuU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC6kpkrMSXy63GjdEmFssnI94w7IaEoAeBb3OUTY/KXUxOfjwt
+	/SG3hS66vRwDmOTFWprurWFsdMSERxMCqGICtJu99S7gAd9dtmjm9gxF
+X-Gm-Gg: Acq92OEaatl0nSXf6bY/yIOHb1kjLdWEI09LkJqr+VPfhjoP6kVgLKORnBVyxxo7uhp
+	B2Fae3KzxYFGCPrcPTFq3qJTFUNsteqRL6vmqcQ+IveKcQHtLMbA7csEsL2OSP7m50BIGqpvFAQ
+	mkyXpZnkeLYnpWFHvN0+Ph8ofpe8Ji7ruGqBVkPCZNXRJFtkKP8WEgrwNSS5XVCpcXK2vwM8+vO
+	83Gi0dN6PRx+jkVldWeUOY3VCnG35oSuEtQSE2a13qsNx6ivUldQv8hu9iijhcB2M7LOcqivsxd
+	ek/lZoQg4ZBUX8+RSzKMVLYtuOfsmVxVR2j7j1N1+aqg/bJkWjWXoYItfvTfVGhm0tXYtet5vPw
+	ygjikt33goNfDYyHjHsl/d6nJWBHwxwW2uIC+RpsmX0L1BmnB6E9SwsDMGo7JaDGpNBYEKU370I
+	c+B9D/bhbOoto5vcb1dNVkeQaW7fYsLTilqpDbSQfATiqos4GmtsRG/8qRIck5/SaR+3P52dQ=
+X-Received: by 2002:a05:620a:4541:b0:90d:6c7b:d6d9 with SMTP id af79cd13be357-910b06378f0mr1681722785a.20.1778938716336;
+        Sat, 16 May 2026 06:38:36 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-910bd623819sm869464285a.43.2026.05.16.06.38.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 May 2026 06:38:35 -0700 (PDT)
+Message-ID: <9ea3c399-70d4-4f4d-80bf-159d1086c15e@gmail.com>
+Date: Sat, 16 May 2026 09:38:35 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/11] git-gui: allow specifying path '.' to the
+ browser
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
+References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
+ <20260514143322.865587-1-mlevedahl@gmail.com>
+ <20260514143322.865587-2-mlevedahl@gmail.com>
+ <796217c3-8998-47a8-9a46-298541708d41@kdbg.org>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <796217c3-8998-47a8-9a46-298541708d41@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Tuomas Ahola <taahol@utu.fi> writes:
 
-> Although some commands do reject invalid approxidate expressions,
-> in other cases those are simply evaluated as the current time.
-> Oftentimes that is a perfectly good compromise to handle silly
-> requests, but it isn't without rough edges.
-> ...
-> Bind "today" to new function `date_today()` as an approxidate
-> special.  Make it return the last midnight if no specific time
-> is given; i.e. retain the old behavior of "noon today" and such.
->
-> Document the new behavior of "git log --since=today" in
-> rev-list-options.adoc.
->
-> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-> ---
 
-I like this construction of argument.
+On 5/15/26 11:54 AM, Johannes Sixt wrote:
+> The description isn't precise, though. '.' means to list the current
+> directory. The mentioned problem happens only if this is also the root
+> of the working tree.
+Easy to fix, will do.
 
-How does this patch mesh with your earlier effort to make "noon" and
-"tea" more sensible?  Should we eject the "today is now" step from
-that series and instead queue this patch in its place?
-
-Thanks.
+Mark
