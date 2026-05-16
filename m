@@ -1,75 +1,82 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D831960B
-	for <git@vger.kernel.org>; Fri, 15 May 2026 23:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797C86FC3
+	for <git@vger.kernel.org>; Sat, 16 May 2026 00:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778888596; cv=none; b=rsFhJtxkmhCT0cUxEJQTfw6dFMC7eWdNSWWwBw57vZS1EauYn1NHka+ATWQ8O4aMW3krFd8H+50LnoK3BOfy91Bv7t84hN859YhKz2yTc1KpqsdttSvwkpuX5+8ULTS/mBknfwRr1W0feemhzC8TFbPFEyP6DlCNnRoT3pVPAuE=
+	t=1778889809; cv=none; b=bsdL9Gk0f/XQ6IJtWo1Sw9q87lnNma9NefLVt1VLI5ILIroRRnCAdKwlmfWa0QeXm+Tdnvo8HEwKsaY/7k27lfPChYZIN7XhFYhZLe1mJLMVYJoAXGLycQshIq1ZH/jwGX52SY8woykaX3W/P04Wc5ar4oOv5m6Po9XT1RRpd8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778888596; c=relaxed/simple;
-	bh=vIbuLb0IR1pHVzi0E2PfqKSL59Hp7mrQZ4i8HR4F130=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=c1YaPzMmH5tiI+gIBiF0bQTNravu7ZQPJNmSixR/WLbvXtrt1CTnxxL8eBFlqUsnypSJMBX0W4w0TEGrp8VPRF/E3K4MY6jfNpfm0vajTGW8vfrHL6jKTu6DitqhbS0rzDmn6t4H8XhWAQwijtzg7C7SKEqhabsNFOYeXGxpiMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rVzLa6k/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ClpuwDc5; arc=none smtp.client-ip=202.12.124.159
+	s=arc-20240116; t=1778889809; c=relaxed/simple;
+	bh=nChv0xGAG/+rZfKUUTlZWgeZi99+Xn99jcGJmJQGQ2Q=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=UTgAV03xzNF2JveoSGG0fSbVet9Ax3jeD8tNCE8TUhRAit0rxD0ChdmvzrFc0z66hP6+9eTf4bropOKE6Zuumlar0Lpvp48QWp+8Ecoxtq6+eMIJsWiM50u+ZLABvl0LOXC3jiX7IE7i7P02F9rP+XkqVPmsv9ct1jK5eY6Vzpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xoA4bWBJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eixILbbi; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rVzLa6k/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ClpuwDc5"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B118F7A0071;
-	Fri, 15 May 2026 19:43:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xoA4bWBJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eixILbbi"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8CF8F7A0029;
+	Fri, 15 May 2026 20:03:26 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 15 May 2026 19:43:13 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 15 May 2026 20:03:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1778888593; x=1778974993; bh=ZZ9rhaM8HdMbGTUgaXhS5WXtdPGPZ79A
-	OOM3EJNrUCI=; b=rVzLa6k/JMMJZWCbX8F/W7J435+njh2xO7Y6lKX6NEZBuRlq
-	nm1Z8neYl4jNDiVk1xqHmQqDO/VW0dJwhkDXPe01qxr0ZJ2yfQLO9pg3/Hz+frQ+
-	mxVbZ6qxIcL0aYzQUhP+ArKoy2+KwRcBSrRFaYkCePYTQer1I2z6u3nf9x44I+FA
-	xvd+BhF11n2ruDED1AubhuXK4KKQ/rW26HY5S6UG7zvHs8ytJfJ4f/Wm+j/Uo6OO
-	TDsCMr6bSyiK1CFQ3V1TbNIH835hkoo0fqvNmRW1TeQCCDMgkgsH+5dkaKpCscow
-	sJHzyyLQ9HBGvHBzPEIDljNlL6fwSvVRr9CDeA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778889806; x=1778976206; bh=fY4dAudNcT
+	f6xondZMiJBk1tHN6K6QgXCFcfDGfmhJA=; b=xoA4bWBJqvSTSjMjqeci/uGY7/
+	E48P3GCvAZHkAt/+PQz0RJrww2we1KzL5/JQ2x1W3X5TcGsGn0pArW/RftH+OLjv
+	mM7sIpzRUZCQslI37KVyqF1q3NCOfbqfgg9vjRKhJaLyt52CW5jyXnkgKhROcD6M
+	kZxVYgd92cv47mseN2aFADcVOr1lMce+/SU1BlArt3jGeB4QmJ0p9jHmnLSMR+nC
+	a5dFtTwe1ShRpfOc6JVXBL4hgi9JaApOPZ4pfR2TtYydFqPi+J303Qrd3wWElwuZ
+	Qjvya4uIFD6ZMGo31vTnp3oF4m/x44PKdaQEmy1fEY9q6iwTz9PtZS2l5wlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778888593; x=
-	1778974993; bh=ZZ9rhaM8HdMbGTUgaXhS5WXtdPGPZ79AOOM3EJNrUCI=; b=C
-	lpuwDc54LNI8YgNuYRmpD52iEUFMmEXJu6of5dmVynqjkRWp8jsi/2lfior7nABr
-	wMMPsK+HI0UE9kMO2zfNdXhRWRiTtQND6N5ed2hZG8/jmLBIrsj4JOME58Vj9U64
-	RbTsztE62sp9fc5zV2IBomp5sXBCd0/sA3gwgfqIuguTFEz7020wFpf/7nnMmty3
-	pP1LSiO4a+EJooMyM5o6EY7J0ZrhF78E9bwTZJFXJG2DYj1hCF/LIjRsZfJSLTrP
-	SZbR/Kc4VdWnW3sRnncHM+3wPDMF0YspkElfxQ1HOVBQ0aez+6UxNLOURJ/8UTFZ
-	dYRJuuCTHYz56CZGebTqQ==
-X-ME-Sender: <xms:ka8Haq6tiuH3ULKB0in4dcqACYFAMENkxMTwkZ0jf9B8cGNRG7uKQA>
-    <xme:ka8Hap7mEXlefDjxZg0473LMbAaRDDu5CSniK6slvCXo-fFp6wnz-GKYULsnxxJnh
-    tyy3PDPw0b4VvK7GIm8j_ZRN4xGoZUaAeW0lmAEll-cSE4E0xYOVQ>
-X-ME-Received: <xmr:ka8HanEbwnP026ASYBOceUnI3_cNdDyN80Fk2HDy7XWbZ8Sy8creJJq5UQcPbGv_pfgTycR3cTBobSOjfTGITaPnn7ymTtcX8VYG3U69uWxX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufedujeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778889806; x=1778976206; bh=fY4dAudNcTf6xondZMiJBk1tHN6K6QgXCFc
+	fDGfmhJA=; b=eixILbbifTjrKPoY+3eJCp6CoRyAeRCWfAmv/FvXXI3hdyA11fu
+	eVcrRJtOice/+prj4r/FGNYxpZxSf/1BO+hewqCI7C/SF/9NhzL62BRFXoFNg8J1
+	0ToexJVSw+g4AiqLDV+pzqAgVwlbtdBb6yDVO8WYUpHaSymwVP/tcLYaJvq1by9n
+	fiSQz94ZTU8QCb6EwG2XiLEWM/Nirmat8HPxDT0/tZiLcgOKs8WKZLaPU2iCLy82
+	wvRGVefX0g7nNyttbPOW1U9G8WaPbQLk0tNs+9LKKdVbqixM94mDr6PKI4lUa2As
+	hPtg0y499Fyuh9metH8ClMBYE6YlyEPGwCQ==
+X-ME-Sender: <xms:TbQHavQsqt09OzT8EPsGts_mJzBEJ9wb7NHIq8xT2YvOFzG4NmhGuw>
+    <xme:TbQHanwc97EsJ6qQI0Vae9CjoUMj6f5lwyKyr1HR8t69bEqHRkKQxx5nVFo01Y8cs
+    K3Fnur2MiJb-nQHu2YMLWUgKkkzWoAIYzUj734h2Mnj6KCkblcwpA>
+X-ME-Received: <xmr:TbQHap2WCAJVT6cVhe-hBISrajvUT2VHSULBhNwvN9WZmRWIzeES1j9JlflImDZGpQa2YuPuThaR5yZgcsY_U9ahBz58ejqeoEybLLuv-KHl>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufedujeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
-    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
-    gidrtghomheqnecuggftrfgrthhtvghrnhepiedtffeikeegleeltdelleegffeiueehhf
-    ehvdettdejkedtvdffueeigeevieetnecuffhomhgrihhnpehgihhthhhusgdrtghomhen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ka8HaiR-UyCpQnkFWUZSJuYHELE4oIkUdrW7W63ThCRqXkI_OQxUzA>
-    <xmx:ka8HaguL1zHn2WRWbTFfmF0mVQMX8XrFrkRUDUcCqRZ0KhODTpkiNA>
-    <xmx:ka8HahwBbjVjfpzMi3wchU8shmJTPWqwSyOHGhYHrDxXVzmUBhUlNg>
-    <xmx:ka8Haq5TOr6NUhMsjSqf-j7X-fcea0TEo8OrFkvbj3Dlwoxh0mJPng>
-    <xmx:ka8HauQq3jjd6jsa8pPUAPQx6OeXY5Ub8tXgfnEjFNTWcyewTRukqzcE>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegouf
+    hushhpvggtthffohhmrghinhculdegledmnecujfgurhephffvvefufhffjgfkfgggtges
+    thdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsth
+    gvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepieehvdffhedvueeiuddt
+    gfdvhefgvedvfeefjeekheejieetueekieeitedtgefgnecuffhomhgrihhnpehofhdrth
+    houggrhienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehtrggrhhholhesuhhtuhdrfhhipdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesph
+    gvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TbQHat481Wwe6z_HKxOT_B7-LMxWLSrLsg-4l9T2FgrivaqJXIkdzA>
+    <xmx:TbQHakWUYzmbJJZWp9EoQAPlkbZkegZbWLX16Uuj6xqLpcNtMDktvg>
+    <xmx:TbQHakBtzrpqi4dwQWWbTjSIwOhaubXJDn0eeVm-lUfKSIDETikxBg>
+    <xmx:TbQHar4X977lJmtqHSOflJtZqzBqv-5kW3b7a6I3KcCeN3730n2r1A>
+    <xmx:TrQHakXV1kFXaOuWAWqblXit8uEUPUnlFYed_oIwZDUrLQWsgSbnpVT1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 May 2026 19:43:12 -0400 (EDT)
+ 15 May 2026 20:03:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: UBSan failing on expensive test(s)
-Date: Sat, 16 May 2026 08:43:07 +0900
-Message-ID: <871pfcdyt0.fsf@gitster.g>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] approxidate: make "today" wrap to midnight
+References: <20260515205803.26211-1-taahol@utu.fi>
+Date: Sat, 16 May 2026 09:03:21 +0900
+In-Reply-To: <20260515205803.26211-1-taahol@utu.fi> (Tuomas Ahola's message of
+	"Fri, 15 May 2026 23:58:03 +0300")
+Message-ID: <87lddkcjau.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,20 +86,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-This started happening on 'next' that runs EXPENSIVE tests thanks to
-Dscho's recent updates to enable them in CI.
+Tuomas Ahola <taahol@utu.fi> writes:
 
-https://github.com/git/git/actions/runs/25896439353/job/76110441841#step:10:2172
+> Although some commands do reject invalid approxidate expressions,
+> in other cases those are simply evaluated as the current time.
+> Oftentimes that is a perfectly good compromise to handle silly
+> requests, but it isn't without rough edges.
+>
+> Let's consider what "git log --since=today" should yield.
+> As it happens that "today" isn't actually a valid approxidate
+> format, the command currently tries to list commits with
+> *future* timestamps.  Perhaps it would make more sense if
+> it returned the commits made since midnight---that is,
+> during the current day.
 
-It claims that """
+I actually am of two minds about this.  
 
-    commit.c:1574:6: runtime error: signed integer overflow:
-    -2147483648 - 1 cannot be represented in type 'int'
+What should "git log --until=today" do when you run it in the late
+afternoon?  Wouldn't you want to see what you did in the morning and
+early afternoon?
 
-""".
+Because we cannot define "today" as "--since=today means the latest
+midnight and later, while --until=today means until the end of today
+[*]" without introducing an extra hint to calls to approxidate() to
+tell it who is calling for what, it is impossible to give these two
+sensible behavior at the same time.
 
-Another is related in the sense that it used to be hidden behind
-EXPENSIVE prerequisite, but is probably unrelated.
+    Side note: but because the existing history is all about the past,
+    "until the end of today" is by definition a synonym for "up to
+    now", so defining "today" the same as "now" would make "until"
+    behave just as sensibly as if we define it as "the end of today".
 
-https://github.com/git/git/actions/runs/25896439353/job/76110441842#step:10:156
+In practice, using "--until" to *not* truncate at all (which is what
+--until=now or --until=end.of.today would essentially mean) has no
+practical value, while "--since=beginning.of.today" does have more
+utility, allowing you to specify "the last 8 hours and 50 minutes"
+without knowing that it is now at 08:50 in the morning.  So I am
+still in favor of interpreting "today" as "the latest midnight, the
+beginning of today" because that would give us a more useful
+behavior than other possible definitions.  We may want to strengthen
+the justification behind the chosen definition of why we chose what
+we chose over any other time in today with something like what I
+said above, mentioning "--until".
 
+Thanks.
