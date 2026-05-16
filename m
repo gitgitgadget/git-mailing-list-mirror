@@ -1,142 +1,112 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3036E17BEBF
-	for <git@vger.kernel.org>; Sat, 16 May 2026 13:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8920819539F
+	for <git@vger.kernel.org>; Sat, 16 May 2026 13:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778938155; cv=none; b=l7TzExfIZ5LQnRQ/jQjc2Xj0UEOsGUm17YwY0qRzvADBqyeoaZX5pSe6Fx7IkIE19lQAdmX5b3C+N9ME3bz70fj1Q7B50ZVquvVB0ikGJ60Wm1rwxWI7blBsh/bh/e3ZEyusT9ocMUsK12r0dWAbaP4imiY57eFgkVo4MzkD3Qs=
+	t=1778938552; cv=none; b=ofCkDC7AOy8Juaj/gKkRvxyoLgypUnxVT5taA0LVF9o1pXSn3zgaH+o7ns85ethiGutFjF0G8uDJHSGJ9vbdygZ56xqFQohG3StFjIDqFClF3kl8HWjUID5YRTAi5S0UiR+ZUKVVwS2sSS68J42jLQGPNjof7KdrgPixGu3HUrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778938155; c=relaxed/simple;
-	bh=PZ/vrl2etIFW2hLopA+aP+xn0qBKV9UXcxXpTA9vemU=;
-	h=Message-ID:In-Reply-To:References:From:To:Subject:Date:
-	 MIME-Version:Content-Type; b=AN+0IdhC7Nlqy4/3AHZIkBK+uS18AyNyLpTsxN5sFea2xlQOW6X/uRhmDZUfkJtnOjw16RSR3Iep6waJ1QYh9j4e4NmhUSU/0hqstQ9YcY0HP34+6XyVzNHfmDsq752y3sgoQ+3viiRx2uP4u9s+RY+6OMPvfw1fxNNVXqbOsx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=devthusiastcraft.com; spf=pass smtp.mailfrom=devthusiastcraft.com; dkim=pass (2048-bit key) header.d=devthusiastcraft.com header.i=@devthusiastcraft.com header.b=lwoDsTiH; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=devthusiastcraft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=devthusiastcraft.com
+	s=arc-20240116; t=1778938552; c=relaxed/simple;
+	bh=Q5nlaroccQYdaR1pE11y8P5M6UMPDD1GTHn9A1tXqsA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hDRR2O4pgWEY2kqpzlmHJe/bq4YCU9oKuqbqj1qkvWmofsyKwIyDGI8K1mo+T4Df8d2uzTLZe0/t6GOF40lhWUWfykJkOiZl7d/NAwV1EsQgzN1hsPO8w001RXWzNK7JoDYTKDEkixWI1Kk0LFzT/6YXcXScnrzr/499vR2vfR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uO28Eokd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fkbB5d2S; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=devthusiastcraft.com header.i=@devthusiastcraft.com header.b="lwoDsTiH"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8b1f2b7f1bcso13746716d6.1
-        for <git@vger.kernel.org>; Sat, 16 May 2026 06:29:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=devthusiastcraft.com; s=google; t=1778938153; x=1779542953; darn=vger.kernel.org;
-        h=mime-version:date:content-transfer-encoding:subject:to:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PZ/vrl2etIFW2hLopA+aP+xn0qBKV9UXcxXpTA9vemU=;
-        b=lwoDsTiHkJ0JgHlW8BEefaXbvSdR02kp1/LOpaiojrzFCyJVzkG0KgldBIqKcRoeDE
-         kaZE1pDoqCwCLAmcfbmmoOkkC3YtbwLTm/ZkbJkrHnR28mxMbglh0uybKty4j22BNZqB
-         2F5qsbH7xQstHFDDQADJsUGQo/STKZVvSk+bCahqKnxb1444++bBHdR21JUWUORkYR4E
-         IjU2emAYHRUvi4WC9c9cX4nlByyXS2+p/9DqveTqm4k9sfDiui7p5djf8Iw0oS6pnyXC
-         agGyGI7tWr3WaYN3e6zsjnspiCS6vHZhAcKvMq7FYSV2CYJohGVHCCskxsbux95OQr2h
-         p0XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778938153; x=1779542953;
-        h=mime-version:date:content-transfer-encoding:subject:to:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PZ/vrl2etIFW2hLopA+aP+xn0qBKV9UXcxXpTA9vemU=;
-        b=gyu7nMELxzKJOrIU5mR1jH2Oa5pAznNkIQ1Lg0/sf9nhADQUC9aMaPyNcklW5IHu4K
-         1sjNi0yzTj3pXaobpGcsz002/4m15tNRuOuD18xcJHKjKnYo7LMNdMUXzAiL/0zv2EoY
-         oLsRC0iF2vMTKgTh2v4nH4qBjddU8F+DbfEQoavYX5+O8dDSGiFjgr0gQNnXV31gwgK1
-         MBzUnpHswfseQbWpWFvB894DDcyISH2AmfDqyN1bSupllIBGsfiWHQdGJnFkzPdIOIX8
-         CGDYoVfgUjqR+roUNL2WMeYmgwicOqdZcWfCxqMDZqb67yOARq35ApIYf0Eyrf5b+FmD
-         q74g==
-X-Gm-Message-State: AOJu0YxhyyfuM6flyWNcw5wCy7Z6Ry82BnhwjVpIWvmASU45xdWFuIrd
-	bYtMBjlPF2d3qG0NoHQx8nKVg+BFIyDGiiPHhn/u+a0RTzsExNzcxjQT39jFL7e93/8v3HLmJkY
-	M1GHWmg==
-X-Gm-Gg: Acq92OFlX7FqjVjTne0Mu6Ml69VUzYUFA2reogZz2R3A6wH+yoG1ej6lOOaLI9k+nY4
-	QK0Uemftv2crbiUULrFDYzHVbdFny7iA3zezqeWl18ihzBuVSr7LEJCzUVmUyXUDcWSR6sEUMlu
-	Yie+hXuMJZYBV0ZYF2K/E5hEyyhOZzn8bcElJOwoILwktIKZ0cksDKqqXixnXczJP6H9yuVTOug
-	TMrrPxCIipdPf8mwasF3fA1G6L2Tf5+fIjogKg23Gk9I8hl/ai6Es1h6PFA92ZoZjDoJsC8k66w
-	2X2uvbosRBGuxzz2j2ZhE3OSydsCamksZyGzd3zFxWYTTEmb5Do95w9QMmJxnHyp4L1rgOvLGjL
-	0z4PCEA4WddYCk7V4lxdE4bnJbqYO9uyb42uw1gSWjbQAmjuX9gGd2qVTu6YSldiBsIHAgH9Yso
-	w+PBkKXPvu4x+++pkZ5jlj5fxZEApSZV0CU5HDDLufkUCs0tRT1oMFn2hus5VkHtg3z6aURqSMU
-	g/1PhsoV+NV59/OxBnuJwPJUh6KW2gknNoWzjdGt5UNzsXBNqVDOLPT
-X-Received: by 2002:a05:6214:509e:b0:8ac:b753:6976 with SMTP id 6a1803df08f44-8c8fae766eamr179160506d6.1.1778938152755;
-        Sat, 16 May 2026 06:29:12 -0700 (PDT)
-Received: from 019e30fa-03e7-71d9-9c7b-da442f0fbc44.local (ec2-18-207-181-13.compute-1.amazonaws.com. [18.207.181.13])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c9093e6d33sm83765336d6.22.2026.05.16.06.29.12
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 06:29:12 -0700 (PDT)
-Message-ID: <019e30fa-03e7-71d9-9c7b-da442f0fbc44@devthusiastcraft.com>
-In-Reply-To: <019e17bf-b7d6-74cf-b622-b27affa43ca5@devthusiastcraft.com>
-References: <019e17bf-b7d6-74cf-b622-b27affa43ca5@devthusiastcraft.com>
-X-Mail-Abuse-Inquiries:
- https://app.instantly.ai/privacy/report-abuse/019e30fa-03e7-71d9-9c7b-da442f0fbc44
-From: Sarah J <sarah.j@devthusiastcraft.com>
-To: git@vger.kernel.org
-Subject: =?UTF-8?Q?Re=3A_No=C3=B4men=3A_Gifted_Invite_Enclo?=
- =?UTF-8?Q?sed_=28Github_Community_Partnership=29?=
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 16 May 2026 13:29:11 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uO28Eokd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fkbB5d2S"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id AE4E61D000A7;
+	Sat, 16 May 2026 09:35:49 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Sat, 16 May 2026 09:35:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1778938549; x=1779024949; bh=2riBXx2RKg
+	pFW8iU8BLSbI9SudnFfGFMQSSrMAjyHo4=; b=uO28Eokd00hYXfc40Gx2shLZVD
+	uVkjxlbIaYoxhI3VV/9nVec61j+tO66SgLitazrk35MuFrb9eojzTd+Z8Hh3HEou
+	YEpKeyzz0tEv9BtHDc0T8c0N4bcvLAMxjHy7esmoo6rZIl4cJXiy5YWVwjpOOKdt
+	5dE51xLY20NxsC+itPc2l1QqeozPUYa3GCygo2VTrkbUo+MtSIuhBw9nqweTKOaF
+	FLGWi+vuGjdH+UpqNtdWAudISRJ5Z7qZMPH3HwZXmrnnov2R3KrDswDHUAf4bh15
+	G8x6sg+80/bfA01Z/kXPsP8SJjiG+BWM+aY+Rr0LG2d3gHxDT17V1lMH8kqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778938549; x=1779024949; bh=2riBXx2RKgpFW8iU8BLSbI9SudnFfGFMQSS
+	rMAjyHo4=; b=fkbB5d2S7p4UPfMirqNV0iWdFKBwJJFhu0lb8p9O+9ayYedd/Wc
+	QIfN1hwQXgzNswL6VSkXgUYWFEg97zc67VVYwg/D+D9CkvOtAe6vUh6vefcnLGjC
+	vhG72lBxtOK0cDqOdjLGJ1cwgkXFIpAhb0PUNMBNVppQOdDyXVslum6zwDKun/sF
+	1nVNMTEzVMSiBlotCd83nkRKuxJB9KZuVHmrUUoTErVhysy676usWffQH6BsimJj
+	0GKZ25o6p84kSPP7FcAVQAAUWznRokIG48qFTRO/JLJ6R8/MJeyNRnmrlUfGBAon
+	spTqOC1qFO5xz2dCCKls41OPzd7L7UpPJ0Q==
+X-ME-Sender: <xms:tXIIaqXoczekLepm1iQrinPvo-_65c6R-dzasqKjCiRNWjWck-dhKg>
+    <xme:tXIIatkMqbC5UvB1tZi2V3KGtwPvdhfv26ryT5bSj6Q_GlAaO1H2QwJfgJJV6YLxN
+    lTZTM4Xxf4CtTyG0xVTCk8sybr9qQTDhnROQqormzVOJB1lr9wifg>
+X-ME-Received: <xmr:tXIIajZ8e41i71OpQMWQ2H9yHvqA0N38Dr-r7ne-0NFiY-5hxHxeks70T3i9MA6MNpdA0bP9TvkkJpWAVxOSkdOd3HBO-HYAJA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeefgeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepthgrrghhohhlsehuthhurdhfihdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tXIIagN1FF6zCJxY20mTYOAXJPW4XETy-F3iBnIT1X6I19zi8V8_gQ>
+    <xmx:tXIIaga625XM2ZLHhaFW09XxewctCfnc5_ZA1FUxC__7Ro9w611XGA>
+    <xmx:tXIIam3mzTc53vVMAC_sJvBM6hQAhq0pSdF2SPQevlU5CtQQyjeVKw>
+    <xmx:tXIIaucdGDpz8kA5TR3Fpxhan0SqiNi0ozctBJlHslDKTHmr3PP4zw>
+    <xmx:tXIIararoy6m0gQFxvnSERJGA07cgBjwrVecrYwc3SIb5NN1bt8qlDy6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 16 May 2026 09:35:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] approxidate: make "today" wrap to midnight
+In-Reply-To: <20260516113622.23902-1-taahol@utu.fi> (Tuomas Ahola's message of
+	"Sat, 16 May 2026 14:36:22 +0300")
+References: <20260515205803.26211-1-taahol@utu.fi>
+	<20260516113622.23902-1-taahol@utu.fi>
+Date: Sat, 16 May 2026 22:35:47 +0900
+Message-ID: <xmqqik8ncw98.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 
-Hey No=C3=B4men,
+Tuomas Ahola <taahol@utu.fi> writes:
 
-We=E2=80=99re about to reassign the free lifetime =
-Devthusiast membership we reserved for your GitHub profile.
+> Although some commands do reject invalid approxidate expressions,
+> in other cases those are simply evaluated as the current time.
+> Oftentimes that is a perfectly good compromise to handle silly
+> requests, but it isn't without rough edges.
+> ...
+> Bind "today" to new function `date_today()` as an approxidate
+> special.  Make it return the last midnight if no specific time
+> is given; i.e. retain the old behavior of "noon today" and such.
+>
+> Document the new behavior of "git log --since=today" in
+> rev-list-options.adoc.
+>
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> ---
 
-If you=E2=80=99d like to claim it, just reply =E2=80=9Cyes.=E2=80=9D
+I like this construction of argument.
 
-Otherwise we=E2=80=99ll pass it to another engineer in 2 days.
+How does this patch mesh with your earlier effort to make "noon" and
+"tea" more sensible?  Should we eject the "today is now" step from
+that series and instead queue this patch in its place?
 
-All the best,
-Team @ Devthusiast
-
-On Mon, May 11, 2026 3:55 PM, Sarah J =
-<sarah.j@devthusiastcraft.com>
-[sarah.j@devthusiastcraft.com]> wrote:
-
-> No=C3=B4men, just checking if you saw my previous email.
->=20
-> Your GitHub profile was selected for a free lifetime membership to =
-Devthusiast (normally $1,800/year).
->=20
-> If you want to join the =
-newsletter, just reply =E2=80=9Cyes.=E2=80=9D
->=20
-> Otherwise =
-we=E2=80=99ll pass the spot to another engineer in 7 days.
->=20
-> All the best,
-> Team @ Devthusiast
-> On Sat, May 9, 2026 1:55 PM, Sarah J=
- <sarah.j@devthusiastcraft.com>
-> [sarah.j@devthusiastcraft.com]> wrote:
->=20
-> > Hey No=C3=B4men
-> >=20
-> > Annually, we pick engineers from Github=
-, and your GitHub profile https://github.com/bnhassin was selected this =
-year.
-> >=20
-> > You're officially invited to a lifetime membership to =
-devthusiast, our email newsletter for tech founders that love to tinker. =
-And because we selected your profile, it's completely free for you.
-> >=20
-> > Some of what you can expect to find in our daily newsletter:
-> >=20
-> > - Latest in AI: Latest AI news from our inside sources at OpenAI, =
-Anthropic and Google
-> > - VC Radar: The latest tech funding news, before =
-they come out on Tech Crunch
-> > - AI Wars, Model Power Rankings: =
-Today=E2=80=99s leaderboard of the top AI models
-> > - Tinker of the Week: =
-One useful open-source tool that is flying under the radar
-> >=20
-> > Please respond with =E2=80=9Cyes=E2=80=9D to acknowledge receipt of =
-this message, or we will have to choose a different profile. Once confirmed=
- you will get your first newsletter edition!
-> >=20
-> > Welcome,
-> > Team @ Devthusiast
-> >
+Thanks.
