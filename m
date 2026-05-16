@@ -1,24 +1,24 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07301171AF
-	for <git@vger.kernel.org>; Sat, 16 May 2026 08:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2AA384CD0
+	for <git@vger.kernel.org>; Sat, 16 May 2026 08:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778919172; cv=none; b=i+Zhqu0sttPfTZTgjfJZpDqX8a4/on+xijF7s3c4YjwOmrjyKbJ1sL78tYGzeVglPYSrBZhfiK4UbIRXDFPEgk2PCB1x7lGnD44U5ZCSGOFXwd2w2f6dZeu3nkDlnTRSv1nRGDS8gpZ0tzy8gyBT1dv0+GycniT7yza+93kH7B0=
+	t=1778919303; cv=none; b=L3W5upp3eTuMjoSFcIyZBPrSnq3tapc+G6QfrjGUyniWW5noF0I09fo71MDCX/rsCM++1l7k604pbobuCGRk+n9d9Bf+ZFRa+dIaT2R7TAFf40xxqPM1judAcixQ9hetAxjBYuCK+74LnIc1er0VBCR0uH1mUHDnHpTdFOpnppQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778919172; c=relaxed/simple;
-	bh=DWBz+YZRQu0pUpjXGNCVUklGKfITgVHNWEAEgzcpiLk=;
+	s=arc-20240116; t=1778919303; c=relaxed/simple;
+	bh=WJ3GICn1e7ZMB7Zy51opqsyqSwkczgPJ4ynulPMhlC0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HoimxNrIQqnkCHsLYCtL1H9IkFmFbFJu5/SMcC2fxYhaKiHivfkMZdxGkrt8Un/FT+Hgdb7mE1nILDDUXpkOg6b29aUKgSvRjifSpnkWj6yfD8Gohhl+MUmU6Z2nfwGP+/+s2CMHBP4CE6JCa5mBS1YSAcPC8JdQEGWcOtrxpPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+	 In-Reply-To:Content-Type; b=q2PvlNvqykOyj8tyG9R18X7YLcMi2biZt4g4bIUEsLY0h3b5JqsQlcrzFfa90sIqMTf4lxtSSPVohmV9JN9pdWKRUbAvEy5uzldZ/JXuPw+p2Yj9XCWKRpjSasnXoZV9Miy1+9FHOziXPXXEiJ7GPqYphFZtkI6iDA0axbk0y/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
 Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4gHcHy1t0WzRnlg;
-	Sat, 16 May 2026 10:12:46 +0200 (CEST)
-Message-ID: <267ad9f6-7816-41ba-8981-bc0e4286577c@kdbg.org>
-Date: Sat, 16 May 2026 10:12:45 +0200
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4gHcLT6s6jzRnmG;
+	Sat, 16 May 2026 10:14:57 +0200 (CEST)
+Message-ID: <4d25544d-1a7e-4407-9191-1fb05ff55244@kdbg.org>
+Date: Sat, 16 May 2026 10:14:57 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,86 +26,95 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 08/11] git-gui: simplify [is_bare] to report if a
- worktree is known
+Subject: Re: [PATCH v1 09/11] git-gui: support using repository parent dir as
+ a worktree
+Content-Language: en-US
 To: Mark Levedahl <mlevedahl@gmail.com>
 Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
 References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
  <20260514143322.865587-1-mlevedahl@gmail.com>
- <20260514143322.865587-9-mlevedahl@gmail.com>
-Content-Language: en-US
+ <20260514143322.865587-10-mlevedahl@gmail.com>
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20260514143322.865587-9-mlevedahl@gmail.com>
+In-Reply-To: <20260514143322.865587-10-mlevedahl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 Am 14.05.26 um 16:33 schrieb Mark Levedahl:
-> git-gui includes proc is_bare, used in several places to make decisions
-> on whether a worktree exists, but also in discovery to tell if a
-> worktree can be supported.
+> git-gui, since 87cd09f43e ("git-gui: work from the .git dir",
+> 2010-01-23), has had the intent to allow starting from inside a
+> repository, then switching to the parent directory if that is a valid
+> worktree.
 > 
-> But, is_bare is out of date with regard to multiple worktrees, safe
-> repository guards, and possibly other relevant features known to git
-> rev-parse. Also, is_bare caches its result on the first call, so is not
-> useful if a later step in the discovery process finds a worktree.
+> This certainly hasn't worked since 2d92ab32fd ("rev-parse: make
+> --show-toplevel without a worktree an error", 2019-11-19) in git, but
+> breaking this git-gui feature was unintentional.
 > 
-> So, simplify is_bare to report whether git-gui has a worktree or is
-> working only from a repository.
-> 
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> Add a proc to test if the parent of the git repository is a valid
+> worktree, and set that directory as the worktree if so. Use invocations
+> of git rev-parse to assure all validity and safety checks included in
+> git-core are executed.
+
+BTW, missing sign-off.
+
 > ---
->  git-gui.sh | 25 +------------------------
->  1 file changed, 1 insertion(+), 24 deletions(-)
+>  git-gui.sh | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 > 
 > diff --git a/git-gui.sh b/git-gui.sh
-> index 81789dd..a03eaa7 100755
+> index a03eaa7..e326401 100755
 > --- a/git-gui.sh
 > +++ b/git-gui.sh
-> @@ -372,7 +372,6 @@ if {[tk windowingsystem] eq "aqua"} {
->  set _appname {Git Gui}
->  set _gitdir {}
->  set _gitworktree {}
-> -set _isbare {}
->  set _githtmldir {}
->  set _prefix {}
->  set _reponame {}
-> @@ -524,29 +523,7 @@ proc get_config {name} {
->  }
+> @@ -1100,6 +1100,23 @@ unset argv0dir
+>  ##
+>  ## repository setup
 >  
->  proc is_bare {} {
-> -	global _isbare
-> -	global _gitdir
-> -	global _gitworktree
-> -
-> -	if {$_isbare eq {}} {
-> -		if {[catch {
-> -			set _bare [git rev-parse --is-bare-repository]
-> -			switch  -- $_bare {
-> -			true { set _isbare 1 }
-> -			false { set _isbare 0}
-> -			default { throw }
-> -			}
-> -		}]} {
-> -			if {[is_config_true core.bare]
-> -				|| ($_gitworktree eq {}
-> -					&& [lindex [file split $_gitdir] end] ne {.git})} {
-> -				set _isbare 1
-> -			} else {
-> -				set _isbare 0
-> -			}
-> -		}
-> -	}
-> -	return $_isbare
-> +	return [expr {$::_gitworktree eq {}}]
->  }
->  
->  ######################################################################
+> +proc is_parent_worktree {} {
+> +	# Directory 'parent' of a repository named 'parent/.git' might be the worktree
+> +	set ok 0
+> +	if {[file tail $::_gitdir] eq {.git}} {
+> +		set gitdir_parent [file join $::_gitdir {..}]
+> +		set expected_worktree [file normalize $gitdir_parent]
 
-Very nice!
+We have [file dirname ...]. Is there a reason to avoid it?
 
-IMO, regardless of which way we end up rewriting repository discovery,
-the end result should be that we can use $_gitworktree like this to tell
-whether we are in a bare repository or not.
+> +		catch {set git_worktree [git -C $gitdir_parent rev-parse --show-toplevel]}
+> +		if {[string compare $expected_worktree $git_worktree] == 0} {
+
+The purpose of this check should be explained in a comment. I think it is:
+
+For a repository with the database in a directory named .git we assume
+that the working tree is the directory containing .git. But
+configuration may point to a different worktree. Then we do not want to
+hold on to our assumption.
+
+However, whether [git -C elsewhere ...] uses the same gitdir that we
+have discovered so far cannot be told from this piece of code alone.
+Therefore, I think it is wrong to extract this check into a function.
+
+Also, I don't think we can use string comparison here. On Windows, the
+command returns the Windows style path, but Tcl my operate with a POSIX
+style path.
+
+> +			set ::_prefix {}
+> +			set ::_gitworktree $git_worktree
+> +			cd $git_worktree
+
+So many side-effects in a function whose name suggests that it only does
+some checks. Please, don't do that.
+
+> +			set ok 1
+> +		}
+> +	}
+> +	return $ok
+> +}
+> +
+>  proc is_gitvars_error {err} {
+>  	set havevars 0
+>  	set GIT_DIR {}
+
+In general, I am not a fan of commits that add new functions, but no
+call sites. Please squash this into 10/11. Ditto for is_gitvars_error in
+06/11.
 
 -- Hannes
 
