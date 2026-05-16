@@ -1,68 +1,70 @@
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F2C405C4B
-	for <git@vger.kernel.org>; Sat, 16 May 2026 15:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228E73E5A33
+	for <git@vger.kernel.org>; Sat, 16 May 2026 15:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778947186; cv=none; b=GAOS53KZr/Y03nBv9TkiY+1tX3hXWaRI8XvycBFGKP5ep8aBs2PXiFNFKqeDARqWfpd6oULhKbqGtyL1HMalcQC0wmpey0kHfYWtU51Xqv+qmAmblCm3OTz/vQvcvkc7JHfjz6fue0cgqgCdIRuomu5SfQulSZm1t1RKTHYY4Bg=
+	t=1778947187; cv=none; b=Kn3q+T5zIFxPX2BaEnfDvg8YR9wIg40GgA+4IyTHg6VZcgt3z5bBlS0l31CanaREsENU0hPvAY6WkfXSB8wr06A+ZUL0IakRYqu2m70ZkosJ+CFO0QWEuEK63Abutm8dEIB6TO2/GAPlDDHLWS3YBTCKNKncOSr03C6Q/7OjYg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778947186; c=relaxed/simple;
-	bh=SArjMurTFf9Y7DWuAoiwAUiK3COoLAm05bocRvrGX5A=;
+	s=arc-20240116; t=1778947187; c=relaxed/simple;
+	bh=E3VON3do09vs20bQYpxjaupgf2QNXsJQ4yJxNpJAEUk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MmLoOxMQjurTEdslYeMMCEK9nwlHPxsujARhvZceB8Rf2fpbrBU9OdH7HOTjvh8DuJNvoyvcJ7taIs5NKIBZmXb0Hsg897kF+33C9fe/qapUXrlc4MckJ6SwAAeCAjJZi9GdL6HNRpC/mpQNJFBdqPDqLfDbEbQKq0adxJIaQ5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=afRIdgY5; arc=none smtp.client-ip=74.125.82.171
+	 MIME-Version:To:Cc; b=nxppsgEgs2xWy/cw+7PPbw+UThseCgecarQAZpxaNc3NvoYga7lcus6dr1flgUZtltRQCKQr44kVeWkxYX8QKKBiHAZL4Lp0c3SLsrJDE3IwabrecNGWLchsZr1V/sW32fa06IzmQNGq/IdO+XwIV+h9qVBLbkYW3PtUQvfCGTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mc08ged4; arc=none smtp.client-ip=74.125.82.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="afRIdgY5"
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2f33ae12f97so3568396eec.1
-        for <git@vger.kernel.org>; Sat, 16 May 2026 08:59:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mc08ged4"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-12c8f9846c8so936226c88.0
+        for <git@vger.kernel.org>; Sat, 16 May 2026 08:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778947184; x=1779551984; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1778947185; x=1779551985; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nBPQkyxZs6fSNd7cbgielRsKBVFFUqz0h0RH5de7kyU=;
-        b=afRIdgY5kX5ShcHP2OM4N948DDNrwAJyRQMjwzrb6wdgES4DUrRS2l3X1HdL3wfonF
-         KUuPpFFd+caKyNOexZLOmoRmrKkji941b/U0dWdtq0g/C5WIomLfllriodQCpNdSGQlp
-         16hm3cyy/k5CPANVXR7ZGfxr5bquZPdqQaBXDLJRjFMCyufyEO2bt2ICl2CzkizGWWDL
-         I2sSyuVxLnAqCqPqlpYlorNWGQ4H6T6wC6OwDK5u8+wqYBJOB0TkmVopGbF0Lqmu+/3Y
-         Fb7otZ+4vRoRDfGnQ2pUvC5XvyysXIusX4HiDhEeASkY9pbXk3sqhAA9t/rZ8LUDzAwQ
-         2V4g==
+        bh=ufeFCFjYHciUgRv320DEOzunlz9r5P1xLDmKYNzv9oo=;
+        b=Mc08ged4hwvmWUn7TI6Q/UouV3NkSyfXdVR1HeTMzQo7U2Va3yM+5BU/clIEYhb3Yx
+         Bzv4ZGCGAdZj0plLSzxpmjaPPWMGUKJsM3iTQ5NzXcPjMAJi3raQoWSvqPrVVJ3Pbqvb
+         DWatGe020fNtCFTWiGUqVExSXn0Nb9uKr169dL9n+sOmRjN77Pni4NfS5s+7m5Mx4DrQ
+         P+biufgSo4cUtqHh9N39tr1YcGdhSGsP2OJ6x8IQbM53EGr720Phl7NM1ReNAKpC/vFq
+         MdMz7oHN8d4KDbSSAEsP+gcKZMB2vdBzGw2B7QdCOXpkG0ghZ4mjPXz3Q3/E2tZ/cdq7
+         hUsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778947184; x=1779551984;
+        d=1e100.net; s=20251104; t=1778947185; x=1779551985;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=nBPQkyxZs6fSNd7cbgielRsKBVFFUqz0h0RH5de7kyU=;
-        b=ZP0Yrs01rxLboPJRE+r4gFtYINd420UhX7EwNl8DWYrZpTcSMCZxjBJrEn5rh4q9Hc
-         wyclItAlW1s9Rt11dwZQObylVqU1QXCsGe+p/E0aer+06lBV/PsBeZhxFm3u0cm0a4i2
-         GOS9M+YPLly2VCmC3AAiw8KNNWF0ZByudcFOm4qSxvM/psZfJ/vMTQS7KKOWQ5Xh/Ta5
-         cAClsSntUrhcG7z6bfX5eTZzOLp3j8SDM5YzTxtZegfAbkRZRqJPW9Rg2rJs9IYKFb3y
-         YfWgNePwOq8zfeMaAVB6RhlWYiSH7kt4jGX5wSdf/9Oavx4H36m6pmTRIECJ9noJndHB
-         FKJA==
-X-Gm-Message-State: AOJu0YygsQqAbW67AHuDLP3IQdPYx6610uc6/xveCoClkCM62/J7BAC9
-	LgssTdNuboKFjRNxvMbRSwwuHhAu0lr8qr3Ki6YnGob+5U8/Pvzu2YidUYzAuw==
-X-Gm-Gg: Acq92OFdrK+K//H8RnxvVWfYhPyGB9VA3lnnaYAV6emUw4ukkHyJpwzdM8O+w3ld1l5
-	HPl+ZTt5V9EmnyXxPajw/M15jVVtcnphz0WpbY3vQYt5zRIbVlrsvJ69LkjxrqLb2RoQaHIGIW7
-	pNT+P4K63sDez0bj1Ko/qWt1wjlkyJAPI1Bue6zX0CdYCdwHOgRSwx18olj5ovbrdp3gdYNpSnm
-	2zSXiaj9DBRm5PUfREEF8UquChe8EEdZl6NEh7uBrKzhW3ZFxfbrPFr+TLxZggsv9lvvlmfBkPs
-	iohD0k7P1xlb94RuuHAIYzGpIkAOb9TLavPBWEfeWkEGoAwE+sncbYLdBhWagkfKqj8kU11+l2s
-	gdlfX3+aK5PRm06hLIPYv2s5g2rhXGnJKLTXibQL78P2uT4OURKsbQnP+EVX1qv9jamEHn2MvnT
-	DoD8rCPhCgv11sb/zvOH0Zo0VlXh1Vx8oz82JNYoE=
-X-Received: by 2002:a05:7300:dc03:b0:2f5:5907:3a49 with SMTP id 5a478bee46e88-3039867718cmr3829102eec.30.1778947183847;
-        Sat, 16 May 2026 08:59:43 -0700 (PDT)
+        bh=ufeFCFjYHciUgRv320DEOzunlz9r5P1xLDmKYNzv9oo=;
+        b=mWJiGeiM94P+1w0oPmznvI1o2lSLgcXNtUtFmN9GB/Z8rrn4Sr80SnnbYQTD04wvL3
+         cn54Q4SISykjox4ch5DI96bTgaAszeMoYEI3vMe1R5fTJwtGptuIRCJ895D2S4oblSvG
+         wTN0y2prCzFEz27bnnfjnDGYXYywb+hRxM+ASt1enUYG5nUSXHw18kZevd7BAwrZs2vt
+         9bdEPDtTMRO6Nx55EGvWUuoZFICxnmrrGf5kzgyx79jqnbWf3g2xGFY2zMRs3qbLUW9t
+         eov1lc5JU33DNy0iGzXH7lzBc4xbptG4XN/a3EL0h53HZlrS5JOiBQ6TnMKDwGTnC9HC
+         qBRw==
+X-Gm-Message-State: AOJu0YyfUjXp9K49PuahCW6I9yk1QqqoMYU6Xf86AmlbBjxiQOkUN4vW
+	dXKvC3+3gck0HN+m8HcHleyf0n55KnSJgDVe7fnIDVgbv3vqRRvH4OIpc1PLqw==
+X-Gm-Gg: Acq92OEkdFwTjXeQ6trkMPr7puuuhptb4Yx4npM/vVu+Q+0JwEtlQdeRpXb5wXQYQZN
+	tE3PReGtgpZk8sy8SFlvVQv/jhtOE2+p7SuqOCNEnmusZJNXH7I5j123Zoi/Tvuc2gm48jfBVR7
+	RTiHadbTkRCYFMrAo24no7am4alvBdqECj6/Y1RAo82z5shgarcOOOZc7I3Z59fzsz5ejxvKWOb
+	DN9plNjwhKKc9F11E/xlmGPppO1Ydlq+uqI+VMr9YSwmrrRcIekIY4HBU/c/qJ6Al0Yy04RcS1x
+	r6H8xu9alinDBhbasJFJRuouLGUT1m1tzNJ0z4SLPhFRkBd3Usxs8qfGsm31pVc+nyqk84nQK8B
+	3RSj7YFVbK4/BeeW7Rg0kk052SJxTB8yePAE6ZXGjpb1EHDx01lR74wNb19PZwYJE1cv0EyGsQ+
+	a4DsstifYKMzgIQS9oUiIhaoZwxvPn
+X-Received: by 2002:a05:7022:ff42:b0:12c:8b9:7200 with SMTP id a92af1059eb24-1350451728amr3677811c88.17.1778947185091;
+        Sat, 16 May 2026 08:59:45 -0700 (PDT)
 Received: from [127.0.0.1] ([172.182.226.210])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-302944ffb85sm10059357eec.7.2026.05.16.08.59.42
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cc3490bcsm12176694c88.15.2026.05.16.08.59.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 May 2026 08:59:43 -0700 (PDT)
-Message-Id: <pull.2116.v3.git.1778947182.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2116.v2.git.1778922993480.gitgitgadget@gmail.com>
+        Sat, 16 May 2026 08:59:44 -0700 (PDT)
+Message-Id: <7399a12518e2021bc8f7cf3fc1f2996099f787b6.1778947182.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2116.v3.git.1778947182.gitgitgadget@gmail.com>
 References: <pull.2116.v2.git.1778922993480.gitgitgadget@gmail.com>
+	<pull.2116.v3.git.1778947182.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 16 May 2026 15:59:39 +0000
-Subject: [PATCH v3 0/2] commit-reach: use object flags for tips_reachable_from_bases()
+Date: Sat, 16 May 2026 15:59:40 +0000
+Subject: [PATCH v3 1/2] commit-reach: use object flags for
+ tips_reachable_from_bases()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,51 +78,127 @@ To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
     Kristofer Karlsson <krka@spotify.com>,
     Derrick Stolee <stolee@gmail.com>,
+    Kristofer Karlsson <krka@spotify.com>,
     Kristofer Karlsson <krka@spotify.com>
 
-This replaces the O(C*T) linear scan in tips_reachable_from_bases() with an
-O(1) flag check using the RESULT object flag.
+From: Kristofer Karlsson <krka@spotify.com>
 
-The function is called by git for-each-ref --merged and git branch/tag
---contains/--no-contains via reach_filter() in ref-filter.c.
+tips_reachable_from_bases() walks the commit graph from a set of base
+commits to find which tip commits are reachable.  The inner loop does
+a linear scan over the tips array to check whether each visited commit
+is a tip, making the overall cost O(C * T) where C is commits walked
+and T is the number of tips.
 
-Benchmarks on a merge-heavy monorepo (2.3M commits, 10,000 refs):
+Use the RESULT object flag to mark tip commits, replacing the linear
+scan with a single flag test per visited commit.  This reduces the
+per-commit tip check from O(T) to O(1) and the overall cost from
+O(C * T) to O(C + T).
 
- * for-each-ref --merged HEAD: 6.6s → 1.6s (4.1x)
- * for-each-ref --no-merged HEAD: 6.7s → 1.7s (4.0x)
+When multiple refs point to the same commit, the shared object gets
+the flag once, so all duplicates are handled automatically.  The
+early-termination advancement loop checks the flag on the sorted
+commits array directly, which naturally handles duplicates since the
+flag is on the shared commit object.
 
-On linux.git with 10,000 synthetic branches at the root commit:
+This also removes the index field from struct commit_and_index, since
+the indirection through the original tips array is no longer needed.
 
- * for-each-ref --merged HEAD: 1.35s → 0.35s (3.9x)
- * for-each-ref --no-merged HEAD: 1.82s → 0.31s (5.9x)
+This function is called by `git for-each-ref --merged` and
+`git branch/tag --contains/--no-contains` via reach_filter() in
+ref-filter.c.
 
-v2 of this patch, addressing Jeff King's feedback:
+Benchmark on a merge-heavy monorepo (2.3M commits, 10,000 refs):
 
- * Replaced the decoration hash with the RESULT object flag (simpler, no
-   extra data structure, handles duplicate tips naturally)
- * Fixed early-termination bug when multiple refs point to the same commit
-   (the decoration API overwrites on duplicate keys)
- * Removed the now-unused index field from struct commit_and_index
- * Diff is +11/-12 lines
+  Command                           Before    After   Speedup
+  for-each-ref --merged HEAD        6.57s     1.59s     4.1x
+  for-each-ref --no-merged HEAD     6.67s     1.66s     4.0x
+  branch --merged HEAD              0.68s     0.61s      10%
+  branch --no-merged HEAD           0.65s     0.61s       8%
+  tag --merged HEAD                 0.12s     0.12s       -
 
-Kristofer Karlsson (2):
-  commit-reach: use object flags for tips_reachable_from_bases()
-  t6600: add tests for duplicate tips in tips_reachable_from_bases()
+On linux.git with 10,000 synthetic branches at the root commit (worst
+case for the DFS walk):
 
- commit-reach.c        | 23 +++++++++++-----------
- t/t6600-test-reach.sh | 45 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+), 12 deletions(-)
+  Command                           Before    After   Speedup
+  for-each-ref --merged HEAD        1.35s     0.35s     3.9x
+  for-each-ref --no-merged HEAD     1.82s     0.31s     5.9x
 
+The large speedup for for-each-ref is because it checks all 10,000
+refs as tips, making the O(T) inner loop expensive.  The branch
+subcommand only checks local branches (fewer tips), so the improvement
+is smaller.
 
-base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2116%2Fspkrka%2Ftips-reachable-minimal-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2116/spkrka/tips-reachable-minimal-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2116
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+ commit-reach.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-Range-diff vs v2:
-
- 1:  7399a12518 = 1:  7399a12518 commit-reach: use object flags for tips_reachable_from_bases()
- -:  ---------- > 2:  4d11ebb79e t6600: add tests for duplicate tips in tips_reachable_from_bases()
-
+diff --git a/commit-reach.c b/commit-reach.c
+index d3a9b3ed6f..82614d2409 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -1125,7 +1125,6 @@ void ahead_behind(struct repository *r,
+ 
+ struct commit_and_index {
+ 	struct commit *commit;
+-	unsigned int index;
+ 	timestamp_t generation;
+ };
+ 
+@@ -1165,7 +1164,6 @@ void tips_reachable_from_bases(struct repository *r,
+ 
+ 	for (size_t i = 0; i < tips_nr; i++) {
+ 		commits[i].commit = tips[i];
+-		commits[i].index = i;
+ 		commits[i].generation = commit_graph_generation(tips[i]);
+ 	}
+ 
+@@ -1173,6 +1171,9 @@ void tips_reachable_from_bases(struct repository *r,
+ 	QSORT(commits, tips_nr, compare_commit_and_index_by_generation);
+ 	min_generation = commits[0].generation;
+ 
++	for (size_t i = 0; i < tips_nr; i++)
++		commits[i].commit->object.flags |= RESULT;
++
+ 	while (bases) {
+ 		repo_parse_commit(r, bases->item);
+ 		commit_list_insert(bases->item, &stack);
+@@ -1183,20 +1184,16 @@ void tips_reachable_from_bases(struct repository *r,
+ 		int explored_all_parents = 1;
+ 		struct commit_list *p;
+ 		struct commit *c = stack->item;
+-		timestamp_t c_gen = commit_graph_generation(c);
+ 
+ 		/* Does it match any of our tips? */
+-		for (size_t j = min_generation_index; j < tips_nr; j++) {
+-			if (c_gen < commits[j].generation)
+-				break;
+-
+-			if (commits[j].commit == c) {
+-				tips[commits[j].index]->object.flags |= mark;
++		{
++			if (c->object.flags & RESULT) {
++				c->object.flags |= mark;
+ 
+-				if (j == min_generation_index) {
+-					unsigned int k = j + 1;
++				if (commits[min_generation_index].commit->object.flags & mark) {
++					unsigned int k = min_generation_index + 1;
+ 					while (k < tips_nr &&
+-					       (tips[commits[k].index]->object.flags & mark))
++					       (commits[k].commit->object.flags & mark))
+ 						k++;
+ 
+ 					/* Terminate early if all found. */
+@@ -1232,6 +1229,8 @@ void tips_reachable_from_bases(struct repository *r,
+ 	}
+ 
+ done:
++	for (size_t i = 0; i < tips_nr; i++)
++		commits[i].commit->object.flags &= ~RESULT;
+ 	free(commits);
+ 	repo_clear_commit_marks(r, SEEN);
+ 	commit_list_free(stack);
 -- 
 gitgitgadget
+
