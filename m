@@ -1,195 +1,246 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E28B23C8A0
-	for <git@vger.kernel.org>; Sat, 16 May 2026 15:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B3D3559CA
+	for <git@vger.kernel.org>; Sat, 16 May 2026 15:28:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778944553; cv=none; b=IbFl86l9jaEvXIjCxNzhpJEiZy/BFh+cy88mAxw34ayx39SclFDIOI0jXgs88yg+uM71fkZXPZWjKI+U98WGkqIC0JDOqsgNkJ0yeDoI7oQM+dONALqgKcTZOn6IFU+iaCBZpx45t1qlu+GFjyTv1lGQcDEla9THEtSQkCARJ5E=
+	t=1778945341; cv=none; b=OemY8dzirpHKiGF/deWFzCIMUvBcaQdYfANejRTISvzuL+3vDBdxr8gPNwP0HdtADaE1WciOYVWnyYZSUXQ4Sk6Al+bNX9dZyBpnlxMIK4kwxihtHl9NJldWXUFTdRXEsMBTm4Un5KVga2vYfdVDm/CYfxWCvC/7OWJ2tYjNNXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778944553; c=relaxed/simple;
-	bh=qIlWtI+WcK7uD/kKyOEuFy0dD16Ky+d8ocyEoWIZ2ro=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t23FEsW557MnDFIEolsZ5MMjnYmk+ulaAl2+L01wY6siNpV9dI0P7tL3XS3RyRgBl9iznca98YGoKIsvmWHN9D+s6xCFzewhKoVMKtA9KvXCfGwvd6uRIwSTsRhBmjmQQB1iS0S5VwKWfqulZVG79ExwJm3OAtJbhD6kzi6eaqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=nzAdM9l+; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1778945341; c=relaxed/simple;
+	bh=nnGWo+5lhSDVqPNfhkNcANwa49B81VJ0zoJIvum4r90=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZoQIBEAfCdN/M//M6HZnLZFWZ+sc5YwlIWM42iPeEdLBD/gyhFDhEW6IN+oov30h/ONKZakGiwstyq7kUNfnV5RYhkz1zk+8Eni6MhQrIJJGK4j14hSwcEEll8aevGCRqpRk+WPtUIgO9BLr1bbGfFCecDkRKqqElXmFE8fkOas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ATb7t2V0; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="nzAdM9l+"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 64GFFgZa019462-64GFFgZc019462
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Sat, 16 May 2026 18:15:42 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wOGju-00BJr7-PZ;
-	Sat, 16 May 2026 18:15:42 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Sat, 16 May
- 2026 18:15:42 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 080a350c;
-	Sat, 16 May 2026 15:15:42 +0000 (UTC)
-From: Tuomas Ahola <taahol@utu.fi>
-To: <git@vger.kernel.org>
-CC: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, Tuomas
- Ahola <taahol@utu.fi>
-Subject: [PATCH v4 1/4] approxidate: make "today" wrap to midnight
-Date: Sat, 16 May 2026 18:15:37 +0300
-Message-ID: <20260516151540.9611-2-taahol@utu.fi>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260516151540.9611-1-taahol@utu.fi>
-References: <20260514115520.6660-1-taahol@utu.fi>
- <20260516151540.9611-1-taahol@utu.fi>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ATb7t2V0"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-90d042fa745so194147385a.1
+        for <git@vger.kernel.org>; Sat, 16 May 2026 08:28:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778945339; x=1779550139; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jNrU4RnF1uKSrPE2DS9d3jbJ9PudoA6Fl9e5uMc9diY=;
+        b=ATb7t2V0DqA1/oOoJvhcstCAxXxu1KjmYouLQCgGO9/Db93e5vNmMBqQGulKpXwuhl
+         fqnrPrNWfsTik3N00SOY42y9yF+4LBuukbWIli1lkfiyrx27hu5Wk5tEXIEaUO8H8bVu
+         ICKv0P4YBMLbDr2IVxIs4GV6zJs5BBqKEt+hZDRrUjqPioTG9nyHsDcaglrfy88EU9gv
+         QnfR5zH1umtI4mvOPnGhgq8r/fn7ED2MpKvo3uSg0fswT0wDN8wXO8XFi/sCYIc4lMsw
+         dNMLR6CbmK2AbAOq08mLauXtf6SPlyYXzDh15oPK99XyMknstA/JptvJPa12mu1BPE3o
+         +FwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778945339; x=1779550139;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jNrU4RnF1uKSrPE2DS9d3jbJ9PudoA6Fl9e5uMc9diY=;
+        b=iyrrR1oegWJKR91nXxzS398ucq0UnDYpHBpW/kBwY9V6XR1GwmRcuz3/8IioES0KZi
+         w5lBZyaRTcO79WMKaVvDj5Wi6rFDdbRYMkKatyXsFXNclchFMLRdVYXm7ef8q8HPXmVV
+         AvOqAUO9NYIkzDa/NVhFvlbcRWbkQP1bJG5fButPhNY343Tkov2nfArmWS8SeQd9mK62
+         1vr8HggZva7+iII98nboSiVjE3DMe52/nKtKunaczwnjHH/1hKjXVuk/mXEzg2CuV5j4
+         tMA5qUl74Cy61jzwO/deC8FcVzcwoUpWp76CFFFlQiZBDnwxWhpwHPxnWkhgRKLCpl6S
+         Dugg==
+X-Forwarded-Encrypted: i=1; AFNElJ/nRl73crsMiYcQqACEn+fwXxYzrgJcXUoO0RVIREzWyRLEp4zh5prIBSL89Q6pjfzQogk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxW/H+BTQHSNtPw7JgZUBBbPegeMlchkkahortbpsT/aLrcL7b9
+	6Z3qOENNLQctN+IVmfam0XOMWBSQ5c3CBq6w/y3d8X+N3AwTkFvzRgdhZR3HhkAz
+X-Gm-Gg: Acq92OHHlbAKBYsKreiyny2sp1Rvt3aC6DcLHfGC6ylQhgyXplhG/p4ruslgp7Uia/h
+	WHyj0+upAX1e9phEfi+CbWGIupXVbl58DbsthIb9toUqdKe8Mz2rHD69/qai4zpbyOU9kDME+8F
+	CXkE0L0Hhn41BXdw/YvE/neVMRITFRy+Pu/Nv/xk/+wOsBgNTrNZS7OVLNdee0X2puEas925qHM
+	wnHSap0YlsoffpA44TPZXeH8pBdlk7v2YSG6SX+nkLboDyDqPxG0tGZi5zTgZNPtefWxOzqsK4Q
+	jEtGavpo7KsfSgUcufOktboTq1eyvfW1PJ4pBWmcNn+H3Oj2vqsm/eCqglmPs228lu5gZQ6zlna
+	t5OtOo/ILtYrrEKuvfr0yCyzxH7dlEMFDRqphMWcerlgQuH1d74eGuo606jY1O7LUxS1DHrDpq7
+	5yIfaLa62nnq/M9bRG2ocyfBkp8w/OA9pLR0su8aceRCHwD+zh0GlIAqUUhD6upuf2BtUEx8U=
+X-Received: by 2002:ac8:7f8e:0:b0:50f:b9e7:3031 with SMTP id d75a77b69052e-51659fde5fcmr126194151cf.7.1778945338805;
+        Sat, 16 May 2026 08:28:58 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51664da7321sm39489551cf.22.2026.05.16.08.28.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 May 2026 08:28:58 -0700 (PDT)
+Message-ID: <f654eab3-2157-4591-9ae0-440efb052e8e@gmail.com>
+Date: Sat, 16 May 2026 11:28:57 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 10/11] git-gui: improve worktree discovery
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
+References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
+ <20260514143322.865587-1-mlevedahl@gmail.com>
+ <20260514143322.865587-11-mlevedahl@gmail.com>
+ <8b8feffa-1651-41aa-ac76-d2721d656b45@kdbg.org>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <8b8feffa-1651-41aa-ac76-d2721d656b45@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-08.utu.fi (130.232.247.48) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIW0hYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZW0gYDQ4OKBgNDg5GBg0cSFg=
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
- bh=U0sM+0RYb26CtHVApmbNur4ZydAv4DlSFLgEG79hy4o=;
- b=nzAdM9l+hp5sQEGmpdMvo/PX9MCpfk2cuUZXS3GR91zJ9W5Oa97mV5CdE94Nv17arpYx+HWYR5lI
-	Ap9YEmEvSFxsP6fNej+LCyL/5NuiYW5PrnwLBfuHMWpzUu+vh16Tvwkzp71SSAs2LZoWhk2m0hhl
-	IKyTUc8/bdAieTz1IDgIjqzEC4kiFGjcHQQy29fJ0/rUcC8XHGKcGSqLpFCC9gl/ikRNNJj/nmd5
-	CGSxJQOQK3Lap2pcr6DazXS1UHQXOk2ixDrqkWKczsSB5RYsaQMwlGAvB6XeebBBjphi9EgtRNY1
-	1gYBbj1FBPqWwG2YyDq2UY/vpebvljQhKSUVzg==
 
-Although some commands do reject invalid approxidate expressions,
-in other cases those are simply evaluated as the current time.
-Oftentimes that is a perfectly good compromise to handle silly
-requests, but it isn't without rough edges.
 
-Because of the silent acceptance, it is easy to forget that
-"today" isn't actually a valid approxidate format.  That is
-a bit awkward because while the fallback logic of using the
-current time does make some sense, there is no deliberative
-decision behind such behavior of "today".  Indeed, whatever
-(non-)action "today" currently has, is just an accidental
-side effect.
 
-That means "git log --since=today" is currently unlikely to
-print anything at all as it tries to list commits dated with
-*future* timestamps.  Arguably it would be more useful to
-list the commits of the current day---i.e. those made since
-midnight.
+On 5/16/26 4:16 AM, Johannes Sixt wrote:
+> Am 14.05.26 um 16:33 schrieb Mark Levedahl:
+>> git gui's worktree discovery needs update based upon prior work in this
+>> series. In the normal case, all information we need comes directly from
+>> git rev-parse (--show-toplevel, and --show-prefix). Should this work, we
+>> have a valid worktree and all git gui commands can run.
+>>
+>> If not, we need to consider:
+>> - if GIT_DIR or GIT_WORK_TREE are in the environment, just stop as we
+>>   the input configuration was wrong, the user must fix that.
+>> - if we have a browser or blame subcommand, no worktree is needed so
+>>   git-gui can run without.
+>> - using the git repository's parent is a valid worktree (if possible),
+>>   restoring prior behavior.
+>>
+>> The current directory should be either the root of the worktree, if one
+>> is found, or the top-level of the git repository.
+> I disagree in the case where no working tree is found. Then there is no
+> point in changing the current directory.
 
-On the other hand, "git log --until=today" doesn't really
-filter commits at all.  Changing the definition of "today"
-would make it return the commits made before the current day.
-That isn't without problems though---running "git log
---until=today" in the late afternoon could reasonably include
-the work done earlier that day (as the command currently
-does do).
+git-gui always changes to root of the worktree if that is found.
+Failing to cd to the root of the repository when operating with no worktree opens the
+possibility th
+>
+>> Make it so. Also, make worktree discover directly follow repository
+>> discovery, reducing the locations that might need error trapping to
+>> catch configuration issues.
+> Good!
+>
+>> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+> BTW, please make the subject line more descriptive. The word "improve"
+> does not convey anything of importance.
+>
+>> ---
+>>  git-gui.sh | 56 ++++++++++++++++++++++--------------------------------
+>>  1 file changed, 23 insertions(+), 33 deletions(-)
+>>
+>> diff --git a/git-gui.sh b/git-gui.sh
+>> index e326401..3a83dd5 100755
+>> --- a/git-gui.sh
+>> +++ b/git-gui.sh
+>> @@ -1173,6 +1173,28 @@ if {[catch {
+>>  	}
+>>  }
+>>  
+>> +# find worktree, continue without if not required
+>> +if {[catch {
+>> +	set _gitworktree [git rev-parse --show-toplevel]
+>> +	set _prefix [git rev-parse --show-prefix]
+>> +	cd $_gitworktree
+>> +} err]} {
+> We have three commands, each with their own possible failure sources.
+> One of the outcomes of an error is that we proceed anyway. I think that
+> this is incorrect if the 'cd' fails: we must not proceed if it fails.
+> Therefore, we must handle its failure separately.
+>
+>> +	if {[is_gitvars_error $err]} {
+>> +		exit 1
+>> +	}
+>> +	set _gitworktree {}
+>> +	set _prefix {}
+>> +	if {[is_enabled bare]} {
+>> +		cd $_gitdir
+> Why change the directory here? If we run `git gui browser master dir` we
+> do not want to change the directory in an uncontrolled manner. The
+> argument parser will want to check for the existence of files, and then
+> we do not want to operate from a random directory.
+>
+> Also, I think that the check must be for [is_bare] and not [is_enabled
+> bare].
 
-Still the utility of no-op "--until=today" is debatable and
-perhaps outweighed by the pros of having "--since=today" to
-mean "--since=midnight".  The thing is that the approxidate
-machinery doesn't know about its consumers, so the meaning
-of "today" has to be the same for "--since" and "--until".
+[is_enabled_bare] is correct. This code handles the case: 
+    - neither the startup directory nor GIT_WORK_TREE are useable worktrees, so [is_bare]
+is currently true.
+    - the command given is browser or blame so a worktree is not needed. We can proceed.
 
-In fact, "git log --until=" is documented as
+The bigger question is whether to change directory at all: git-gui should never touch
+files that are neither in the worktree nor in the repository. Leaving the current
+directory as neither of those could be troublesome. I have no strong feeling here though,
+will delete this.
+    
 
-	`--until=<date>`::
-	`--before=<date>`::
-		Show commits older than _<date>_,
+>> +	} elseif {![is_parent_worktree]} {
+>> +		catch {wm withdraw .}
+>> +		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n" $_gitdir]
+>> +		exit 1
+>> +	}
+>> +}
+>> +
+>> +# repository and worktree config are complete, export them
+>> +set_gitdir_vars
+>>  
+>>  # Use object format as hash algorithm (either "sha1" or "sha256")
+>>  set hashalgorithm [git rev-parse --show-object-format]
+> This moves code around. In particular, we see load_config and
+> apply_config in the context below, which now happens only after these
+> calls. How certain are we that these have no effect on the code that
+> runs now earlier?
+We need to load the system and user global config before running the repository picker. We
+(re-) load the full config including the repository after we have a repository. I think
+this is correct: git-config explicitly lists worktree dependent includeif statements,
+meaning the config can be worktree dependent, and we must not load the final config until
+repository and worktree discovery are complete.
 
-so excluding commits made today would actually match the
-documentation more closely.
+git rev-parse, etc., perform discovery and config file loading each time they are invoked,
+those are unaffected by git-gui's internal config.
 
-Moreover, a revision parameter "@{today}" is currently outright
-rejected.  Making "today" a valid approxidate time format could
-make a natural way to specify the state of the ref at the start
-of the current day.
+I will clarify this explicitly in the commit message.
 
-Bind "today" to new function `date_today()` as an approxidate
-special.  Make it return the last midnight if no specific time
-is given; i.e. retain the old behavior of "noon today" and such.
-
-Document the new behavior of "git log --since=today" in
-rev-list-options.adoc.
-
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
----
- Documentation/rev-list-options.adoc |  3 ++-
- date.c                              | 10 ++++++++++
- t/t0006-date.sh                     |  2 ++
- 3 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 2d195a1474..a5abadf689 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -23,7 +23,8 @@ ordering and formatting options, such as `--reverse`.
- 
- `--since=<date>`::
- `--after=<date>`::
--	Show commits more recent than _<date>_.
-+	Show commits more recent than _<date>_.  As a special case,
-+	'today' means the last midnight.
- 
- `--since-as-filter=<date>`::
- 	Show all commits more recent than _<date>_. This visits
-diff --git a/date.c b/date.c
-index 17a95077cf..343d6aab6f 100644
---- a/date.c
-+++ b/date.c
-@@ -1192,6 +1192,15 @@ static void date_never(struct tm *tm, struct tm *now UNUSED, int *num)
- 	*num = 0;
- }
- 
-+static void date_today(struct tm *tm, struct tm *now, int *num UNUSED)
-+{
-+	if (tm->tm_hour == now->tm_hour &&
-+	    tm->tm_min == now->tm_min &&
-+	    tm->tm_sec == now->tm_sec)
-+		date_time(tm, now, 0);
-+	update_tm(tm, now, 0);
-+}
-+
- static const struct special {
- 	const char *name;
- 	void (*fn)(struct tm *, struct tm *, int *);
-@@ -1204,6 +1213,7 @@ static const struct special {
- 	{ "AM", date_am },
- 	{ "never", date_never },
- 	{ "now", date_now },
-+	{ "today", date_today },
- 	{ NULL }
- };
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 53ced36df4..07bf6115ab 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -164,6 +164,7 @@ check_approxidate() {
- }
- 
- check_approxidate now '2009-08-30 19:20:00'
-+check_approxidate today '2009-08-30 00:00:00'
- check_approxidate '5 seconds ago' '2009-08-30 19:19:55'
- check_approxidate 5.seconds.ago '2009-08-30 19:19:55'
- check_approxidate 10.minutes.ago '2009-08-30 19:10:00'
-@@ -187,6 +188,7 @@ check_approxidate 'last tuesday' '2009-08-25 19:20:00'
- check_approxidate 'July 5th' '2009-07-05 19:20:00'
- check_approxidate '06/05/2009' '2009-06-05 19:20:00'
- check_approxidate '06.05.2009' '2009-05-06 19:20:00'
-+check_approxidate 'Jan 5 today' '2009-01-30 00:00:00'
- 
- check_approxidate 'Jun 6, 5AM' '2009-06-06 05:00:00'
- check_approxidate '5AM Jun 6' '2009-06-06 05:00:00'
--- 
-2.30.2
+>> @@ -1189,37 +1211,8 @@ if {$hashalgorithm eq "sha1"} {
+>>  load_config 0
+>>  apply_config
+>>  
+>> -set _gitworktree [git rev-parse --show-toplevel]
+>>  
+>> -if {$_prefix ne {}} {
+>> -	if {$_gitworktree eq {}} {
+>> -		regsub -all {[^/]+/} $_prefix ../ cdup
+>> -	} else {
+>> -		set cdup $_gitworktree
+>> -	}
+>> -	if {[catch {cd $cdup} err]} {
+>> -		catch {wm withdraw .}
+>> -		error_popup [strcat [mc "Cannot move to top of working directory:"] "\n\n$err"]
+>> -		exit 1
+>> -	}
+>> -	set _gitworktree [pwd]
+>> -	unset cdup
+>> -} elseif {![is_enabled bare]} {
+>> -	if {[is_bare]} {
+>> -		catch {wm withdraw .}
+>> -		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n$_gitdir"]
+>> -		exit 1
+>> -	}
+>> -	if {$_gitworktree eq {}} {
+>> -		set _gitworktree [file dirname $_gitdir]
+>> -	}
+>> -	if {[catch {cd $_gitworktree} err]} {
+>> -		catch {wm withdraw .}
+>> -		error_popup [strcat [mc "No working directory"] " $_gitworktree:\n\n$err"]
+>> -		exit 1
+>> -	}
+>> -	set _gitworktree [pwd]
+>> -}
+>> +# Derive a human-readable repository name
+>>  set _reponame [file split [file normalize $_gitdir]]
+>>  if {[lindex $_reponame end] eq {.git}} {
+>>  	set _reponame [lindex $_reponame end-1]
+>> @@ -1227,9 +1220,6 @@ if {[lindex $_reponame end] eq {.git}} {
+>>  	set _reponame [lindex $_reponame end]
+>>  }
+>>  
+>> -# Export the final paths
+>> -set_gitdir_vars
+>> -
+>>  ######################################################################
+>>  ##
+>>  ## global init
+> -- Hannes
+>
 
