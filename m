@@ -1,179 +1,305 @@
-Received: from send215.i.mail.ru (send215.i.mail.ru [95.163.59.54])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13FC3451AB
-	for <git@vger.kernel.org>; Sun, 17 May 2026 09:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.59.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E258BE9
+	for <git@vger.kernel.org>; Sun, 17 May 2026 11:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779010516; cv=none; b=H2Gy1/R8aCxGaCbjvwn1fc1jQTTG7xUTKQWDA/UL3+4mWajviYhrBTH8WAtJHoVmCGBmxUrD6fV9E+VomLmYRZfUzYunqliwse8NF0jh/V0uLhboyuX3QjYVq7LPwBmnr4RTbBfuGEMDRWA9snFgPowIYYaZOHpSVSdtvcv5ZCI=
+	t=1779017286; cv=none; b=pRqkIH6vDElQnPU+5GlmmJPgGj0jV4Lq7jaAZDqLXYiRdsYNjRUlL+gAeEI6NydkZujEYv9xYlkIU7OJQSldXs2C2oiOE5HJ6y7bAGSjy34I6N/kg9ODhwzkAFRdmuky4Qrl1C4TnHdHhlrGDVFYPlufopWwAhVLTfSmYNZnFio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779010516; c=relaxed/simple;
-	bh=fcmAwdG1SkSzRCLaBBt0GnVRk3reEWWu3iDZ1ajs1x0=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=uC6DDDzUQ1bvf26a9RhloLD9yPqXO4EceN03AoqXUVP8lfG1CQmtZNiVyInbazftbaiNLqpnuJF7F1DwJRNV1dydZwVkRQfZV/QGx19V0Iin9I0v84pQHYViiIW/gJB7Ty55c+TXXOyVZbuunxgCUPimgXM1LwKkrkxT27eeBJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leshe4ka.ru; spf=pass smtp.mailfrom=leshe4ka.ru; dkim=pass (1024-bit key) header.d=leshe4ka.ru header.i=@leshe4ka.ru header.b=e4qNVnca; dkim=pass (1024-bit key) header.d=leshe4ka.ru header.i=@leshe4ka.ru header.b=UUOI+bJD; arc=none smtp.client-ip=95.163.59.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leshe4ka.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leshe4ka.ru
+	s=arc-20240116; t=1779017286; c=relaxed/simple;
+	bh=M83PMf/ASKvUrmGINyXimeEGU4fQ8WGKzn3y7n0EOWw=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=QiVo1gMDrnA/PRp3aaq5YG9iNYT2/O0/Uv5KNz2mFVKGl+Qv3XVQRYHDobWBPLVkk7f9yirFGTnPOoUuFZOyfBeKlDnFIoWvgDZE9m6ytl6e/kfJamUNOqeMgQjz94yzOVAoXszvaLPpqQGRqihdPjRreu+lz7iHuOb3eUPMIQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=AilJIMnG; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=leshe4ka.ru header.i=@leshe4ka.ru header.b="e4qNVnca";
-	dkim=pass (1024-bit key) header.d=leshe4ka.ru header.i=@leshe4ka.ru header.b="UUOI+bJD"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=leshe4ka.ru
-	; s=mailru; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=Ae94iBAebFn2uS+gm990vDFmoIWaUH3QAgWX0u9n6Go=; t=1779010515; x=1779100515; 
-	b=e4qNVncaUZ+3sPSGzo3nG6+BMSPCjNSraosoeiI8XYY04/orkQBki1UI2ICGwpRY5vGjTJl6Jo3
-	UadsKtMcMzzOwSm4Ij/hYj/nfiYHcEFik8fy2ktORHQX5fWOKcFk1qzCfcMA40i4EQ1gBaet8rDuI
-	HFlpRtkT2hYNS8XDXOM=;
-Received: from [10.113.205.83] (port=41862 helo=send57.i.mail.ru)
-	by exim-fallback-8448d5fcc9-czf2q with esmtp (envelope-from <admin@leshe4ka.ru>)
-	id 1wOXfI-00000000XLW-3L9E
-	for git@vger.kernel.org; Sun, 17 May 2026 12:20:05 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=leshe4ka.ru
-	; s=mailru; h=Content-Transfer-Encoding:Content-Type:Subject:From:To:
-	MIME-Version:Date:Message-ID:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
-	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
-	List-Owner:List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=Ae94iBAebFn2uS+gm990vDFmoIWaUH3QAgWX0u9n6Go=; t=1779009604; x=1779099604; 
-	b=UUOI+bJDyJZeH5B1ymqwm++2aqqNl7h7pAywuVevBZPc8Tc6wzgGW5WzWIuPY6CWh4NGO4ZXDlO
-	n+yqYxAajpwlelosEfarA71cGBJiQKCNcZ4Oetlvtsyp5EGFPsDY3ZRsJzAXrd9bDMXRLEIc8+H8p
-	ptvMUhirKgdPWXa9YpA=;
-Received: by exim-smtp-8466d5ddfc-xc4sj with esmtpa (envelope-from <admin@leshe4ka.ru>)
-	id 1wOXf6-00000000Dyg-1iIg
-	for git@vger.kernel.org; Sun, 17 May 2026 12:19:53 +0300
-Message-ID: <eaa03980-fbce-4402-88b8-0f260f2927ab@leshe4ka.ru>
-Date: Sun, 17 May 2026 12:19:50 +0300
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="AilJIMnG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1779017276; x=1779622076;
+	i=johannes.schindelin@gmx.de;
+	bh=bcZryiFLSAGnMKbOyH960Ti/Uo7dWZXR21IJZwe3TD8=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=AilJIMnGL7MEeLROe49tmI0vitlvi2nFTRxe8qUnLQWo662F9shI+dU8wml0lh29
+	 rjGvkoHndYiz7u0F/ytGN8ELpPgwXdcPmKcW+c9rOnqPm2YAJEKudyL01uSl7/F+t
+	 zkxN1VHUgXjWXLYS9Y/ylpXbLrSqf/hxHSXnsvugL5fEJj8qbvh2eAcUVh+lHm6As
+	 /TdvhSyKezgxieuLo2G3a3P/AWrrckZUgdT9GKswGFSSuytn4neJSUdmPwj5cwE7N
+	 6zPR5eBGI4bS47yyYW+NU9o3fz16ULpz3TIUTBBE/BfzksMm7s1++3/BV7b7On3Vi
+	 aftJOBZeReu2hXcdgw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mirng-1x39Ca2tz2-00kljq; Sun, 17
+ May 2026 13:27:56 +0200
+Date: Sun, 17 May 2026 13:27:55 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: =?UTF-8?Q?J=C3=B6rg_Thalheim?= <joerg@thalheim.io>, 
+    Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] config: retry acquiring config.lock for 100ms
+In-Reply-To: <agGo9Prt8Hs2gbic@pks.im>
+Message-ID: <409d05a5-235b-6b19-5a33-a4e613dd447c@gmx.de>
+References: <20260403100135.3901610-1-joerg@thalheim.io> <adYvSZeN0ZVqwRhi@pks.im> <xmqqcxz2vfpa.fsf@gitster.g> <91335804a092b09757331cac72092a3835020b3a@thalheim.io> <agGo9Prt8Hs2gbic@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Alex Naidenkov <admin@leshe4ka.ru>
-Subject: git rebase --continue segfault
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Mailru-Src: smtp
-X-7564579A: EEAE043A70213CC8
-X-77F55803: 4F1203BC0FB41BD9EA22463D89EA19FF3A6DCFA4AE1896F6AE4036971BC3E451182A05F5380850404C228DA9ACA6FE270B85CE407DB38AD93DE06ABAFEAF6705305DD8A64A03214B95E776084487EFDD54C098BE40D9806F
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE768BD42809A772457EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB553375663020B905B4D011A3585FC58AAFD1173026BBF67F91437D288F2766B80188F989389733CBF5DBD5E913377AFFFEAFD269176DF2183F8FC7C045A75973B56231AD8941B15DA834481FCF19DD082D7633A0EF3E4896CB9E6436389733CBF5DBD5E9D5E8D9A59859A8B6042F1592492B88C6CC7F00164DA146DA6F5DAA56C3B73B237318B6A418E8EAB8D32BA5DBAC0009BE9E8FC8737B5C22499DE6AD2C230B254A76E601842F6C81A12EF20D2F80756B5FB606B96278B59C4276E601842F6C81A127C277FBC8AE2E8BA9D3B29298EB7A373AA81AA40904B5D99C9F4D5AE37F343AD1F44FA8B9022EA23BBE47FD9DD3FB595F5C1EE8F4F765FC72CEEB2601E22B093A03B725D353964B0B7D0EA88DDEDAC722CA9DD8327EE4930A3850AC1BE2E735F1C9CF18C8EB2269C4224003CC83647689D4C264860C145E
-X-C1DE0DAB: 0D63561A33F958A533E6DC275044D97C5002B1117B3ED6967ACCB2C6A8978F5D466072E6821086B33610D81D389A125CDE35189EBF2DEA28FEA14CD2CD220BB99C5DF10A05D560A9880EC71AF561E0AAD9143641EC25BB39625D8AB6E1FD6057F36E2E0160E5C55395B8A2A0B6518DF68C46860778A80D54AF47762AB4810619
-X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D659D46A3A78F22950C062F5470EDB029E22AE8D55C8C6C0B88D5AE8AC8F63A025460F96C77B47A45CE0B8341EE9D5BE9A0AE2958DE6F6C931A3694DEE93EB4488FF0001549F3CBF2FAE52EE4E5D9E54FDA44C41F94D744909CE297962314527CE4CCD2BDFDA72912706C98847793A3C30D8
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXMZebaIdHP2ghjoIc/363UZI6Kf1ptIMVax5M0mESuWm2awRu//sPEw=
-X-Mailru-Sender: 4D2EE57CDC377DD318D9A9C0AFBECD2D3CD3088A20C1935BB951B70A5BD4BD8E0DBDA50D270B913B9BBFB9D4C9B76856B0DF20F7571CF4112D063C67CFD4E849FF6C93352CAD091FC9C09973CC75087D1167B3295517EB76B4A721A3011E896F
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4253C1AE593082A99F15FEC50743827BE48F54E0D3146F114049FFFDB7839CE9ED35FF1F95AE02984DF043DBFC6616D56D06F796179C4B382BA910E8807524D6DB87CCD4968036E22
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpEZ9wIMwqVP4jLQVQ+dVm7x9BpDHadBV9RMjI809PraZoeXxIhjyU7V25BUH137bfA==
-X-Mailru-MI: 20000000020000000000000800
-X-Mras: Ok
+Content-Type: multipart/mixed; boundary="8323328-1600604462-1779017276=:15795"
+X-Provags-ID: V03:K1:Pl8qrAG53wbl5QTDEluo8I0FK3sAy8V1Bv+zNa/sJbdQl4h4H1E
+ iBHiDtM7aMzvSPCpAK/FeihPjTgk1YxlUUu4n8rWuCoC7Hg6LdCN8S1YaytEPrdny6cqHB9
+ LJr8kXWmzQVVHmnUvYzfk9qOeF1V9uYeoRlY0h9osp4Q49Y03SiwyUbINs4m+YVidYji7aE
+ 4TmWBdwf8chbjPK3r6tww==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:yheROftNGQU=;aQ2STxRc8XkMNPwnZmuVd9D+vRW
+ 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
 
-Hi, ive encountered on segfault when ran `git rebase --continue`. 
-Hopefully this would help
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-- i was in the middle of big rebase
+--8323328-1600604462-1779017276=:15795
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-- entered pin for signing commit
-- segfault happened
+Hi Patrick & J=C3=B6rg,
 
-```
+On Mon, 11 May 2026, Patrick Steinhardt wrote:
 
-Debuginfo Build ID: d98c557aaa4baa2e6da8a12cf5a76d241c5af104
-```
+> On Mon, May 11, 2026 at 09:06:00AM +0000, J=C3=B6rg Thalheim wrote:
+> > May 11, 2026 at 4:32 AM, "Junio C Hamano" <gitster@pobox.com
+> > mailto:gitster@pobox.com?to=3D%22Junio%20C%20Hamano%22%20%3Cgitster%40=
+pobox.com%3E
+> > > wrote:
+> > > Patrick Steinhardt <ps@pks.im> writes:
+> > > > > This bites in practice when running `git worktree add -b` concur=
+rently
+> > > > >  against the same repository. Each invocation makes several writ=
+es to
+> > > > >  ".git/config" to set up branch tracking, and tooling that creat=
+es
+> > > > >  worktrees in parallel sees intermittent failures. Worse, `git w=
+orktree
+> > > > >  add` does not propagate the failed config write to its exit cod=
+e: the
+> > > > >  worktree is created and the command exits 0, but tracking
+> > > > >  configuration is silently dropped.
+> > > > >=20
+> > > >  This very much sounds like a bug that is worth fixing independent=
+ly.
+> > > >=20
+> > > > >=20
+> > > > > The lock is held only for the duration of rewriting a small file=
+, so
+> > > > >  retrying for 100 ms papers over any realistic contention while =
+still
+> > > > >  failing fast if a stale lock has been left behind by a crashed
+> > > > >  process. This mirrors what we already do for individual referen=
+ce
+> > > > >  locks (4ff0f01cb7 (refs: retry acquiring reference locks for 10=
+0ms,
+> > > > >  2017-08-21)).
+> > > > >=20
+> > > >  Famous last words :) Experience tells me that any timeout value t=
+hat
+> > > >  isn't excessive will eventually be hit in some production system.=
+ Which
+> > > >  raises the question whether we want to make the timeout configura=
+ble,
+> > > >  similar to "core.filesRefLockTimeout" and "core.packedRefsTimeout=
+".
+> > > >  ...
+> > > >  Honestly though, I'm not really sure what to make with this. We c=
+ould
+> > > >  of course also add some validation that the configuration we want=
+ to set
+> > > >  hasn't been modified meanwhile. But that would now lead to a situ=
+ation
+> > > >  where we have to update every single caller in our tree to make u=
+se of
+> > > >  the new mechanism, which would be a bunch of work.
+> > > >=20
+> > > >  And adding the timeout doesn't really change the status quo, eith=
+er. We
+> > > >  already have the case that we'll happily overwrite changes made b=
+y
+> > > >  concurrent processes. The only thing that changes is that we make=
+ it
+> > > >  more likely for concurrent changes to succeed.
+> > > >=20
+> > > We haven't heard any response to these points raised in the message
+> > > I am responding to. Should I still keep the patch in my tree,
+> > > hoping that a responses may come some day? I am tempted to discard
+> > > the topic as it has been quite a while since we last looked at it.
+> >=20
+> > I am not really sure what you want me to do here.
+>=20
+> In general, the idea here is to engage in a discussion that can
+> ultimately lead to one of two outcomes:
+>=20
+>   - The discussion surfaces an area the author hasn't thought about, so
+>     the patch is adapted accordingly.
+>=20
+>   - The discussion shows that the author already did think about the
+>     issue, but hasn't documented the assumptions. In this case, it
+>     should be the commit message that gets adapted.
 
-```
+For what it's worth, I meant to chime in earlier, but obligations kept
+preventing me from setting aside the time to do so. Well, better late than
+never.
 
-gef➤  bt
-#0  repo_parse_tree_gently (r=0x557e86b43780 <the_repo.lto_priv>, 
-item=0x0, quiet_on_missing=0x0) at /usr/src/debug/git/git/tree.c:193
-#1  0x0000557e869161bd in repo_parse_tree (r=<optimized out>, 
-item=<optimized out>) at /usr/src/debug/git/git/tree.h:28
-#2  collect_merge_info (opt=0x557e9bf793b0, merge_base=<optimized out>, 
-side1=<optimized out>, side2=<optimized out>) at 
-/usr/src/debug/git/git/merge-ort.c:1745
-#3  merge_ort_nonrecursive_internal (opt=opt@entry=0x7ffe20ae9eb0, 
-merge_base=<optimized out>, merge_base@entry=0x557e9bf793b0, 
-side1=side1@entry=0x557e9bf79430, side2=<optimized out>,
-     side2@entry=0x0, result=result@entry=0x7ffe20ae9e80) at 
-/usr/src/debug/git/git/merge-ort.c:5256
-#4  0x0000557e8691a6b8 in merge_incore_nonrecursive (opt=0x7ffe20ae9eb0, 
-merge_base=0x557e9bf793b0, side1=0x557e9bf79430, side2=0x0, 
-result=0x7ffe20ae9e80)
-     at /usr/src/debug/git/git/merge-ort.c:5419
-#5  0x0000557e869e0e8a in do_recursive_merge (r=r@entry=0x557e86b43780 
-<the_repo.lto_priv>, base=base@entry=0x557e9bf8b800, 
-next=next@entry=0x557e9bf8b850,
-     base_label=base_label@entry=0x557e9bf627e0 "parent of db33c0f 
-(fix)", next_label=next_label@entry=0x557e9bfab130 "db33c0f (fix)", 
-head=head@entry=0x7ffe20aea160,
-     msgbuf=0x557e9bf1b710, opts=0x7ffe20aeb990) at 
-/usr/src/debug/git/git/sequencer.c:782
-#6  0x0000557e869e355e in do_pick_commit (r=0x557e86b43780 
-<the_repo.lto_priv>, item=<optimized out>, opts=0x7ffe20aeb990, 
-final_fixup=0x0, check_todo=0x7ffe20aea35c)
-     at /usr/src/debug/git/git/sequencer.c:2445
-#7  0x0000557e869ebe75 in pick_one_commit (r=<optimized out>, 
-todo_list=0x7ffe20aeb330, opts=<optimized out>, 
-check_todo=0x7ffe20aea35c, reschedule=<synthetic pointer>)
-     at /usr/src/debug/git/git/sequencer.c:4921
-#8  pick_commits (r=0x557e86b43780 <the_repo.lto_priv>, 
-todo_list=<optimized out>, opts=0x7ffe20aeb990) at 
-/usr/src/debug/git/git/sequencer.c:5030
-#9  0x0000557e869ef336 in sequencer_continue (r=<optimized out>, 
-opts=<optimized out>) at /usr/src/debug/git/git/sequencer.c:5487
-#10 0x0000557e867d536e in run_sequencer_rebase (opts=0x7ffe20aeb7a0) at 
-builtin/rebase.c:376
-#11 run_specific_rebase (opts=0x7ffe20aeb7a0) at builtin/rebase.c:755
-#12 cmd_rebase (argc=<optimized out>, argv=<optimized out>, 
-prefix=<optimized out>, repo=<optimized out>) at builtin/rebase.c:1910
-#13 0x0000557e866e9e65 in run_builtin (p=0x557e86b35530 
-<commands.lto_priv+2352>, argc=<optimized out>, argv=<optimized out>, 
-repo=0x557e86b43780 <the_repo.lto_priv>)
-     at /usr/src/debug/git/git/git.c:506
-#14 handle_builtin (args=args@entry=0x7ffe20aed760) at 
-/usr/src/debug/git/git/git.c:780
-#15 0x0000557e866eb30c in run_argv (args=0x7ffe20aed760) at 
-/usr/src/debug/git/git/git.c:863
-#16 cmd_main (argc=<optimized out>, argv=<optimized out>) at 
-/usr/src/debug/git/git/git.c:984
-#17 0x0000557e866e77e4 in main (argc=0x3, argv=0x7ffe20aeda58) at 
-/usr/src/debug/git/git/common-main.c:9
+> > I don't see how git can have this value configurable, given it's about
+> > reading the configuration itself. Is the user supposed via command
+> > line?
+>=20
+> This is a fair point indeed. But if it's not possible to change via the
+> configuration itself, then the next-best thing might be to introduce an
+> environment variable that allows configuring it.
 
-```
-```
+Well, given that the config is read first before it's written, it is
+totally possible to configure a timeout via the config, and I have some
+real-world proof that this works as intended (see below).
 
-[System Info]
-git version:
-git version 2.54.0
-cpu: x86_64
-built from commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: enabled
-gettext: enabled
-libcurl: 8.19.0
-OpenSSL: OpenSSL 3.6.2 7 Apr 2026
-zlib-ng: 2.3.3
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.0.5-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 08 May 2026 
-09:29:23 +0000 x86_64
-compiler info: gnuc: 15.2
-libc info: glibc: 2.43
-$SHELL (typically, interactive shell): /usr/bin/zsh
+> The other aspect that wasn't discussed in the commit message is how
+> concurrent writes are handled, both when they are non-conflicting
+> (updating different keys) and when they are conflicting (updating the
+> same key). After spending some more time in the code I think it's
+> ultimately nothing we have to worry about too much, as we only start
+> reading the configuration after we've locked it.
 
+Correct. I had performed this analysis myself when writing a similar patch
+to fix problems in Scalar's Functional Test suite, which wants to register
+_many_ Scalar repositories with ~/.gitconfig concurrently. The current
+iteration of the patch can be found here:
 
-[Enabled Hooks]
-pre-commit
-```
+https://github.com/microsoft/git/commit/a1c2d97cb61bc3697086d1749de848586d=
+f2ec54
 
+It does include the config setting, leaving the default as "off" (but I
+missed the separate code path to rename sections, which has _independent_
+code that also wants to lock the config file, which your patch did not
+miss). The subsequent child commit
+
+https://github.com/microsoft/git/commit/5d365c1f332b8d2214ae9c44970d6370ed=
+9caffc
+
+configures it to 150ms in Scalar repositories only. This is notably larger
+than the 100ms you suggested, and it is rooted in the fact that NTFS I/O
+characteristics are unfortunately in need of a wider margin. In other
+words, the optimal value depends on the operating system (and the CPU
+load, as Junio had pointed out).
+
+For the record, feel free to adopt whatever you want from my patches for
+your next iteration (but also feel free to ignore all of it).
+
+> So in the semantically non-conflicting case there isn't really much of a
+> race, because things already work as expected. But in the semantically
+> conflicting case it's a bit different, as the latter writer will
+> overwrite the result of the former one. In theory it would be possible
+> to detect such conflicts by:
+>=20
+>   - Reading the configuration file.
+>=20
+>   - Taking the lock.
+>=20
+>   - Rereading the configuration to check for conflicts.
+>=20
+> But even that is racy as the first writer might have succeeded before we
+> read the configuration the first time. So I'm not sure whether we can do
+> anything about that in the first place, as the race basically exists in
+> the outer loop controlled by the caller.
+>=20
+> So there probably isn't much we can do about that, and unless I missed
+> something I think your timeout is sensible. But ideally, such nuances
+> would be discussed as part of the commit message so that reviewers and
+> future readers are made aware of them.
+
+I agree. Complex cases like this would require a sort of transactional
+support to be added to `git config`, and that would in and of itself open
+a can of worms I'm not sure we should open unless there is a concrete use
+case that bites enough real-world scenarios to require acting upon.
+
+Ciao,
+Johannes
+
+--8323328-1600604462-1779017276=:15795--
