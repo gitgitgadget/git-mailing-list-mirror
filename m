@@ -1,68 +1,68 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50D430EF77
-	for <git@vger.kernel.org>; Sun, 17 May 2026 20:27:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D7F30DECB
+	for <git@vger.kernel.org>; Sun, 17 May 2026 20:27:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779049623; cv=none; b=RCGpdgGadAlLSPSYFVT2VIAAGpE7ztfrbodU1jAADcY8OqBnZiozXP63N5R5fSU/eWQ+MDGWmIYAP1AbT3Y9bYumHJ4uSJugkDX3WNJUIidqh0vz9gTxe9g+ZYYO02LglfZdL78MFtHMcEyhZm2O003jK3+m6cct/qp1+wbzpwg=
+	t=1779049626; cv=none; b=dqLzBWEWmheOrAXcTYno1QqiQLTQ5+NsDjO1bdxHt1UN3PVT/DYUkXRDxX7IRSSlA1/BHuiWPJe9y2vR8FB0PTVY3DnyvIJP0ETkWKtf1dHHx2CrO3Zo7uC4It14eHh1HEkQG2QOXgUxwhCLjdNOrbRtb4DUdB+mJqVQySmRfBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779049623; c=relaxed/simple;
-	bh=dRe6K9mV9jspPaAst6ui636oOXst3EV6frFmG7gdh8o=;
+	s=arc-20240116; t=1779049626; c=relaxed/simple;
+	bh=fNqWmpPA4Acog1H0BvG2VAdsaxiVua2/DlTMWJh928s=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=UZRhEZNOx1oC2EJrMSpcdMTfMmqBGlqY/DA4xEUdznGbMa+NIXr2NHdtEVo6sLC9FyA0LwKDRQZYmoFd12h60Wm3fVG3+XAAOdg6BtPEj3Vy2K271g7zYAvwItFL9m4pl6MfSuxcUUN8ltPnyU6FAKYDiBehYUlCDMCRtU1yT9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rZNVevUQ; arc=none smtp.client-ip=209.85.219.46
+	 Content-Type:To:Cc; b=Uw+amwoaJ9kngNEqgah/8MCvppmO/2bGuEca1VaPar86mLA787nXw5G7yysBQ9kKdqoded34xBAhqlkFJYb5ud2FI58A/WDEwH2DX6z8e24j/21bjkbhrg2LCmmDfqYZOCmTJ7U+/JPfoY06HD+7TU75cTC6WlEc3Aw1a2G0bMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OPrrqXts; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rZNVevUQ"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8be236ce888so20366496d6.3
-        for <git@vger.kernel.org>; Sun, 17 May 2026 13:27:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPrrqXts"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-90d2acb9936so179130785a.0
+        for <git@vger.kernel.org>; Sun, 17 May 2026 13:27:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779049620; x=1779654420; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779049623; x=1779654423; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eBN4G3qaA0TQ0vZ9Le2h2xZV8j2YczWN4iU99Z8ftlc=;
-        b=rZNVevUQuB7yb7zb542AxKPrlc5OtyeiQcFft7Hii7KXTumzbyjKfvxg74H8f4VZOm
-         UG+ytFUtSLnWP/dStqhRId1Ia518TUGKGE1/o9R8H7ZyLXZB4+ZCHC00ZV8gHqsllgBL
-         A6Mk5FIZo1Nj8xmOSGc7MqijZ7hg/4WPZrDBlxM3yI1DX/iU6xlVLgv9R+FmFrzxNKLE
-         Ky68caeqHVD0HH1h0KVfDXTRuY8L/7diAlZ/YOZhOVEYBextcQL4j7LxqFN6S78+7gBV
-         kYA6j3z8wSj7dz84/XSnmJxF4u0frYP/p2ZzVzq2z1Jo/5a5lmuKIJV9yedqM3Io51nm
-         MslA==
+        bh=rrGOQ/a4CXudMvpeMrpSNuSC1VxO1PRc3WjkKtna3T0=;
+        b=OPrrqXtsxlp63dOfkL7YBtxhblswG2xm9dZhI+mWQbrUq0tqmHP3InPUH8+W8rbuPm
+         ys/jFqp/e+dTdDok81Ri82oNJzfE50mmOiSjoe94pNa+SMzyPV9/sqyTFrJC5QI/Mgy2
+         fy2DZ1XkhGnD2o23kEeAp3SxgofKAJYS2vmxKgnDAh0Zgd/QRPYuxJ6fTm5ZwQXx9euC
+         V9E6iHVm9Ate//4IvZ7Sw+p9yXneOiZnxNUy3Ll6ouMO1SlyDYcHO2Z2pVLwTq7fbiX3
+         O4zFXSl9x9I/DNY9+qaLJeowX6Ox3P4B8eFh7Bs9AABdkWi2rJA2w6UAqzau6JmHSdyg
+         BRbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779049620; x=1779654420;
+        d=1e100.net; s=20251104; t=1779049623; x=1779654423;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=eBN4G3qaA0TQ0vZ9Le2h2xZV8j2YczWN4iU99Z8ftlc=;
-        b=f4zwrfPA+QGMVNg4pMIkSZZ+dORgpHidWi7qcaLQl5fXzEImhU8XkQtDAGTwGrIIj6
-         ndlb+SYOh+lI5TZ8Gpj8+xF6ZfkAZL6mvlvszKjTdB62sAuxQrLIWHm0FecAZsx6lYus
-         Tp/WmZjzucUdsv7XRzanvWWZ1qaMq2KJWDLiSLZoL9Q2FeXZCmCt2XiLJa9oc7srwuUO
-         q3UIyn9BYQ53nTuwT1ITY27hS1JZhCYA/9U9VUYvhTvqfPyeTjDkZCo0g+TpO6B8PYvg
-         O/hwl+VNayxNWuTt2dtR3w7N8LrAXb3wD3zvELWpv05E+7Oymc4aWhPZ8z1Mc4quL0EU
-         VDPA==
-X-Gm-Message-State: AOJu0Yyt/56D05hBrBs+I6DQc2V8BC9fKnz6llG0gOOZ8Ewfwcf9az8A
-	g8KX8BdeDjycnft6TBvxjiISzeqRe2NM6MfeAKq0L1v2XSCR6xTzJw1y/tBCpA==
-X-Gm-Gg: Acq92OGfPSIxAKIaD/8vVT9TBfP0pPYvI+GYonT7ISmwoM+Ka1zGxJRyCZUouDBxb9L
-	sJvmGM9md3URXVI5WBXdB5+kyYTNlppHOtqbaL3WiyUKS/xB+tdTHs1lZAdW7nH+NhBfn4Gm60P
-	DV6LWlIB0ODgTSGD6FUpyp/yu/DwiZvAHklOzgzBVwBoHPhPiqvLCzvxK5VMiW8uMczQoUAw1WF
-	XYr/VN2R1/733zWxHX8xmxyToEfuaAezYw+uKhlKNt0nKzkj3X3p7Gqy1VDQ7OiKn8Pp7GgfZrI
-	Ya5XIb6kSL2+UX5oibJXZu5nXvg6tu9KIEpd6mBhtRzHynRmbG6jgapR0gcGsScToO33nnNKd8y
-	IQGg1Ey0dAWxEiYMOPqhiGRW4X1lz4zyIVQ66jPCCeuU5jHePylla2PjU+GW5WZSW0rOnRqQHWz
-	SjBoY9ZW1bDfcEcfGx0W1tOHqf/EU=
-X-Received: by 2002:a05:6214:5d81:b0:8ca:16a6:3d52 with SMTP id 6a1803df08f44-8ca16a64320mr173268866d6.13.1779049620305;
-        Sun, 17 May 2026 13:27:00 -0700 (PDT)
+        bh=rrGOQ/a4CXudMvpeMrpSNuSC1VxO1PRc3WjkKtna3T0=;
+        b=N7PqL9883g7hdcI8SAFDJlFpJwBQLGPUNKT0VQl04g2qmLdvY2l7B0F8jf//msd+Km
+         ACNjEesuJ7nu5n08P8G5XQRivjVtIVKhmZFras95gBlB36B8mSm7YFpbtL0SP2tXf9fm
+         agb5htI4os/rnI30pXYlEcVSi95eBx44wXz0/5arO8ddE8zRnr+HkqtE4hhBpB508v6q
+         z6ZlvwWlbzGpY0wD2L58JH3mT+vljkfexCVxGlkpAfjqJrR7YljLBQR6x6J8gB/SQj9n
+         AqPDvi9p/SxEbCdZTp6H6oTDFVcqfXMM1PP5Vi09h32bFK4tGFkfq0rCiMXTUhRYvUdO
+         KGGA==
+X-Gm-Message-State: AOJu0Yx4K99C4Ri6hUlErElRzI7nZBvJ1JDgE1nRv755p0IjTnkAY1/V
+	JYTF6Gmf0p72ZFX7HvkMiM4YpEtC+3bRJINCbamfrs34DtBGKaqxWvQIsKtH2Q==
+X-Gm-Gg: Acq92OHUaSWuSggo4/4cLN08FK6yyDI13aaEB4A51Imf8kq7iBznQPkZGiwxOVm3naZ
+	vZmuG7x10Bhg+pDkUh3jqB8zw/Fl/bqhnFGTE3EUbhMGXatGUwdiCt3olHf3ouqXzbT2Q0Zh9Tt
+	Byfl1+sg6p0bzTQcbgh4gyfeouPzuT1b093iszeLRU4t3VEQHNmZFA25V0ltc85LqcAW//+tB/j
+	AGdcKTPbcmNSUAz/aKlglZl/G4IsDrGW4wp2ZBRsw4oo4Io5hBV/aqF10puIoyUKkJ8TUZjatn3
+	1Ay7eM/qAKUmFd8cCGswVnSILKP09Ofx64lFpcoLbwxREyDbnX5mXlWrsLsuDAw4zprJIuHSDMJ
+	lBnbG8ULWb4UqrrPLFA+gLdl2rd+lAV0ox/t9GSbDW/doVBX3YhRx8tfnttBdqpASXkoZhl3eFR
+	99jHZKc8NDufv/IJ4dUTF5qW0V2u8evUxZkGORhA==
+X-Received: by 2002:a05:620a:199b:b0:8ee:f43a:bb6b with SMTP id af79cd13be357-911ccd8f015mr2019465385a.10.1779049622841;
+        Sun, 17 May 2026 13:27:02 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.134.161])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca361a6e8esm31530776d6.41.2026.05.17.13.26.59
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-910bd620fbcsm1286934885a.42.2026.05.17.13.27.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 May 2026 13:26:59 -0700 (PDT)
-Message-Id: <1b4efce1b2df2fb4958c442de290cb10cb2c2a4f.1779049615.git.gitgitgadget@gmail.com>
+        Sun, 17 May 2026 13:27:01 -0700 (PDT)
+Message-Id: <4ab60a95f4847bcfee82292ff4ac47424e5aa147.1779049615.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
 References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 17 May 2026 20:26:52 +0000
-Subject: [PATCH 2/5] doc: convert git-grep synopsis and options to new style
+Date: Sun, 17 May 2026 20:26:53 +0000
+Subject: [PATCH 3/5] doc: convert git-am synopsis and options to new style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,458 +78,372 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Convert git-grep.adoc from [verse]/single-quote style to the modern
+Convert git-am from [verse]/single-quote style to the modern
 synopsis-block style:
 
 - Replace [verse] with [synopsis] in SYNOPSIS block
-- Change 'git grep' to git grep (no single quotes)
 - Backtick-quote all OPTIONS terms
-- Convert inline man page refs: grep(1) -> `grep`(1)
-- Convert inline command refs: 'git diff' -> `git diff`
-- Convert prose placeholders: <file> -> _<file>_
+- Convert inline man page refs
+- Convert inline command refs
+- Convert prose placeholders:
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/config/grep.adoc |  36 +++---
- Documentation/git-grep.adoc    | 196 ++++++++++++++++-----------------
- 2 files changed, 116 insertions(+), 116 deletions(-)
+ Documentation/config/am.adoc                  |   6 +-
+ Documentation/format-patch-caveats.adoc       |   2 +-
+ .../format-patch-end-of-commit-message.adoc   |   4 +-
+ Documentation/git-am.adoc                     | 132 +++++++++---------
+ 4 files changed, 72 insertions(+), 72 deletions(-)
 
-diff --git a/Documentation/config/grep.adoc b/Documentation/config/grep.adoc
-index 10041f27b0..83d4b76dd3 100644
---- a/Documentation/config/grep.adoc
-+++ b/Documentation/config/grep.adoc
-@@ -1,28 +1,28 @@
--grep.lineNumber::
--	If set to true, enable `-n` option by default.
-+`grep.lineNumber`::
-+	If set to `true`, enable `-n` option by default.
+diff --git a/Documentation/config/am.adoc b/Documentation/config/am.adoc
+index e9561e12d7..250e6b5047 100644
+--- a/Documentation/config/am.adoc
++++ b/Documentation/config/am.adoc
+@@ -1,11 +1,11 @@
+-am.keepcr::
++`am.keepcr`::
+ 	If true, linkgit:git-am[1] will call linkgit:git-mailsplit[1]
+ 	for patches in mbox format with parameter `--keep-cr`. In this
+ 	case linkgit:git-mailsplit[1] will
+ 	not remove `\r` from lines ending with `\r\n`. Can be overridden
+ 	by giving `--no-keep-cr` from the command line.
  
--grep.column::
--	If set to true, enable the `--column` option by default.
-+`grep.column`::
-+	If set to `true`, enable the `--column` option by default.
+-am.threeWay::
++`am.threeWay`::
+ 	By default, linkgit:git-am[1] will fail if the patch does not
+ 	apply cleanly. When set to true, this setting tells
+ 	linkgit:git-am[1] to fall back on 3-way merge if the patch
+@@ -13,7 +13,7 @@ am.threeWay::
+ 	have those blobs available locally (equivalent to giving the
+ 	`--3way` option from the command line). Defaults to `false`.
  
--grep.patternType::
--	Set the default matching behavior. Using a value of 'basic', 'extended',
--	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
-+`grep.patternType`::
-+	Set the default matching behavior. Using a value of `basic`, `extended`,
-+	`fixed`, or `perl` will enable the `--basic-regexp`, `--extended-regexp`,
- 	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
--	value 'default' will use the `grep.extendedRegexp` option to choose
--	between 'basic' and 'extended'.
-+	value `default` will use the `grep.extendedRegexp` option to choose
-+	between `basic` and `extended`.
+-am.messageId::
++`am.messageId`::
+ 	Add a `Message-ID` trailer based on the email header to the
+ 	commit when using linkgit:git-am[1] (see
+ 	linkgit:git-interpret-trailers[1]). See also the `--message-id`
+diff --git a/Documentation/format-patch-caveats.adoc b/Documentation/format-patch-caveats.adoc
+index 807a65b885..133e4757e7 100644
+--- a/Documentation/format-patch-caveats.adoc
++++ b/Documentation/format-patch-caveats.adoc
+@@ -28,6 +28,6 @@ repositories. This goes to show that this behavior does not only impact
+ email workflows.
  
--grep.extendedRegexp::
--	If set to true, enable `--extended-regexp` option by default. This
-+`grep.extendedRegexp`::
-+	If set to `true`, enable `--extended-regexp` option by default. This
- 	option is ignored when the `grep.patternType` option is set to a value
--	other than 'default'.
-+	other than `default`.
+ Given these limitations, one might be tempted to use a general-purpose
+-utility like patch(1) instead. However, patch(1) will not only look for
++utility like `patch`(1) instead. However, `patch`(1) will not only look for
+ unindented diffs (like linkgit:git-am[1]) but will try to apply indented
+ diffs as well.
+diff --git a/Documentation/format-patch-end-of-commit-message.adoc b/Documentation/format-patch-end-of-commit-message.adoc
+index ec1ef79f5e..a1a624d2ac 100644
+--- a/Documentation/format-patch-end-of-commit-message.adoc
++++ b/Documentation/format-patch-end-of-commit-message.adoc
+@@ -1,8 +1,8 @@
+ Any line that is of the form:
  
--grep.threads::
-+`grep.threads`::
- 	Number of grep worker threads to use. If unset (or set to 0), Git will
- 	use as many threads as the number of logical cores available.
+ * three-dashes and end-of-line, or
+-* a line that begins with "diff -", or
+-* a line that begins with "Index: "
++* a line that begins with `diff -`, or
++* a line that begins with `Index: `
  
--grep.fullName::
--	If set to true, enable `--full-name` option by default.
-+`grep.fullName`::
-+	If set to `true`, enable `--full-name` option by default.
- 
--grep.fallbackToNoIndex::
--	If set to true, fall back to `git grep --no-index` if `git grep`
--	is executed outside of a git repository.  Defaults to false.
-+`grep.fallbackToNoIndex`::
-+	If set to `true`, fall back to `git grep --no-index` if `git grep`
-+	is executed outside of a git repository.  Defaults to `false`.
-diff --git a/Documentation/git-grep.adoc b/Documentation/git-grep.adoc
-index a548585d4c..19b3ade16d 100644
---- a/Documentation/git-grep.adoc
-+++ b/Documentation/git-grep.adoc
-@@ -8,8 +8,8 @@ git-grep - Print lines matching a pattern
+ is taken as the beginning of a patch, and the commit log message
+ is terminated before the first occurrence of such a line.
+diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
+index ac65852918..28adf4cf65 100644
+--- a/Documentation/git-am.adoc
++++ b/Documentation/git-am.adoc
+@@ -8,17 +8,17 @@ git-am - Apply a series of patches from a mailbox
  
  SYNOPSIS
  --------
 -[verse]
--'git grep' [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
+-'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--[no-]verify]
 +[synopsis]
-+git grep [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
- 	   [-v | --invert-match] [-h|-H] [--full-name]
- 	   [-E | --extended-regexp] [-G | --basic-regexp]
- 	   [-P | --perl-regexp]
-@@ -41,139 +41,139 @@ characters.  An empty string as search expression matches all lines.
++git am [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--[no-]verify]
+ 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<action>] [-C<n>] [-p<n>] [--directory=<dir>]
+ 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+-	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
++	 [--[no-]scissors] [-S[<key-id>]] [--patch-format=<format>]
+ 	 [--quoted-cr=<action>]
+ 	 [--empty=(stop|drop|keep)]
+ 	 [(<mbox> | <Maildir>)...]
+-'git am' (--continue | --skip | --abort | --quit | --retry | --show-current-patch[=(diff|raw)] | --allow-empty)
++git am (--continue | --skip | --abort | --quit | --retry | --show-current-patch[=(diff|raw)] | --allow-empty)
+ 
+ DESCRIPTION
+ -----------
+@@ -30,45 +30,45 @@ history without merges.
  
  OPTIONS
  -------
----cached::
-+`--cached`::
- 	Instead of searching tracked files in the working tree, search
- 	blobs registered in the index file.
+-(<mbox>|<Maildir>)...::
++`(<mbox>|<Maildir>)...`::
+ 	The list of mailbox files to read patches from. If you do not
+ 	supply this argument, the command reads from the standard input.
+ 	If you supply directories, they will be treated as Maildirs.
  
----untracked::
-+`--untracked`::
- 	In addition to searching in the tracked files in the working
- 	tree, search also in untracked files.
+--s::
+---signoff::
++`-s`::
++`--signoff`::
+ 	Add a `Signed-off-by` trailer to the commit message (see
+ 	linkgit:git-interpret-trailers[1]), using the committer identity
+ 	of yourself.  See the signoff option in linkgit:git-commit[1]
+ 	for more information.
  
----no-index::
-+`--no-index`::
- 	Search files in the current directory that is not managed by Git,
- 	or by ignoring that the current directory is managed by Git.  This
--	is rather similar to running the regular `grep(1)` utility with its
-+	is rather similar to running the regular `grep`(1) utility with its
- 	`-r` option specified, but with some additional benefits, such as
--	using pathspec patterns to limit paths;  see the 'pathspec' entry
-+	using pathspec patterns to limit paths;  see the `pathspec` entry
- 	in linkgit:gitglossary[7] for more information.
- +
- This option cannot be used together with `--cached` or `--untracked`.
- See also `grep.fallbackToNoIndex` in 'CONFIGURATION' below.
+--k::
+---keep::
++`-k`::
++`--keep`::
+ 	Pass `-k` flag to linkgit:git-mailinfo[1].
  
----no-exclude-standard::
-+`--no-exclude-standard`::
- 	Also search in ignored files by not honoring the `.gitignore`
- 	mechanism. Only useful with `--untracked`.
+---keep-non-patch::
++`--keep-non-patch`::
+ 	Pass `-b` flag to linkgit:git-mailinfo[1].
  
----exclude-standard::
-+`--exclude-standard`::
- 	Do not pay attention to ignored files specified via the `.gitignore`
- 	mechanism.  Only useful when searching files in the current directory
- 	with `--no-index`.
- 
----recurse-submodules::
-+`--recurse-submodules`::
- 	Recursively search in each submodule that is active and
- 	checked out in the repository.  When used in combination with the
- 	_<tree>_ option the prefix of all submodule output will be the name of
- 	the parent project's _<tree>_ object.  This option cannot be used together
- 	with `--untracked`, and it has no effect if `--no-index` is specified.
- 
---a::
----text::
-+`-a`::
-+`--text`::
- 	Process binary files as if they were text.
- 
----textconv::
-+`--textconv`::
- 	Honor textconv filter settings.
- 
----no-textconv::
-+`--no-textconv`::
- 	Do not honor textconv filter settings.
- 	This is the default.
- 
---i::
----ignore-case::
-+`-i`::
-+`--ignore-case`::
- 	Ignore case differences between the patterns and the
- 	files.
- 
---I::
-+`-I`::
- 	Don't match the pattern in binary files.
- 
----max-depth <depth>::
--	For each <pathspec> given on command line, descend at most <depth>
-+`--max-depth <depth>`::
-+	For each _<pathspec>_ given on command line, descend at most _<depth>_
- 	levels of directories. A value of -1 means no limit.
--	This option is ignored if <pathspec> contains active wildcards.
-+	This option is ignored if _<pathspec>_ contains active wildcards.
- 	In other words if "a*" matches a directory named "a*",
--	"*" is matched literally so --max-depth is still effective.
-+	"*" is matched literally so `--max-depth` is still effective.
- 
---r::
----recursive::
-+`-r`::
-+`--recursive`::
- 	Same as `--max-depth=-1`; this is the default.
- 
----no-recursive::
-+`--no-recursive`::
- 	Same as `--max-depth=0`.
- 
---w::
----word-regexp::
-+`-w`::
-+`--word-regexp`::
- 	Match the pattern only at word boundary (either begin at the
- 	beginning of a line, or preceded by a non-word character; end at
- 	the end of a line or followed by a non-word character).
- 
---v::
----invert-match::
-+`-v`::
-+`--invert-match`::
- 	Select non-matching lines.
- 
---h::
---H::
-+`-h`::
-+`-H`::
- 	By default, the command shows the filename for each
- 	match.  `-h` option is used to suppress this output.
- 	`-H` is there for completeness and does not do anything
- 	except it overrides `-h` given earlier on the command
- 	line.
- 
----full-name::
-+`--full-name`::
- 	When run from a subdirectory, the command usually
- 	outputs paths relative to the current directory.  This
- 	option forces paths to be output relative to the project
- 	top directory.
- 
---E::
----extended-regexp::
---G::
----basic-regexp::
-+`-E`::
-+`--extended-regexp`::
-+`-G`::
-+`--basic-regexp`::
- 	Use POSIX extended/basic regexp for patterns.  Default
- 	is to use basic regexp.
- 
---P::
----perl-regexp::
-+`-P`::
-+`--perl-regexp`::
- 	Use Perl-compatible regular expressions for patterns.
- +
- Support for these types of regular expressions is an optional
- compile-time dependency. If Git wasn't compiled with support for them
- providing this option will cause it to die.
- 
---F::
----fixed-strings::
-+`-F`::
-+`--fixed-strings`::
- 	Use fixed strings for patterns (don't interpret pattern
- 	as a regex).
- 
---n::
----line-number::
-+`-n`::
-+`--line-number`::
- 	Prefix the line number to matching lines.
- 
----column::
-+`--column`::
- 	Prefix the 1-indexed byte-offset of the first match from the start of the
- 	matching line.
- 
---l::
----files-with-matches::
----name-only::
---L::
----files-without-match::
-+`-l`::
-+`--files-with-matches`::
-+`--name-only`::
-+`-L`::
-+`--files-without-match`::
- 	Instead of showing every matched line, show only the
- 	names of files that contain (or do not contain) matches.
--	For better compatibility with 'git diff', `--name-only` is a
-+	For better compatibility with `git diff`, `--name-only` is a
- 	synonym for `--files-with-matches`.
- 
---O[<pager>]::
----open-files-in-pager[=<pager>]::
--	Open the matching files in the pager (not the output of 'grep').
-+`-O[<pager>]`::
-+`--open-files-in-pager[=<pager>]`::
-+	Open the matching files in the pager (not the output of `grep`).
- 	If the pager happens to be "less" or "vi", and the user
- 	specified only one pattern, the first file is positioned at
- 	the first match automatically. The `pager` argument is
-@@ -181,65 +181,65 @@ providing this option will cause it to die.
- 	without a space. If `pager` is unspecified, the default pager
- 	will be used (see `core.pager` in linkgit:git-config[1]).
- 
---z::
----null::
-+`-z`::
-+`--null`::
- 	Use \0 as the delimiter for pathnames in the output, and print
- 	them verbatim. Without this option, pathnames with "unusual"
- 	characters are quoted as explained for the configuration
- 	variable `core.quotePath` (see linkgit:git-config[1]).
- 
---o::
----only-matching::
-+`-o`::
-+`--only-matching`::
- 	Print only the matched (non-empty) parts of a matching line, with each such
- 	part on a separate output line.
+---keep-cr::
+---no-keep-cr::
++`--keep-cr`::
++`--no-keep-cr`::
+ 	With `--keep-cr`, call linkgit:git-mailsplit[1]
+ 	with the same option, to prevent it from stripping CR at the end of
+ 	lines. `am.keepcr` configuration variable can be used to specify the
+ 	default behaviour.  `--no-keep-cr` is useful to override `am.keepcr`.
  
 --c::
----count::
+---scissors::
 +`-c`::
-+`--count`::
- 	Instead of showing every matched line, show the number of
- 	lines that match.
++`--scissors`::
+ 	Remove everything in body before a scissors line (see
+ 	linkgit:git-mailinfo[1]). Can be activated by default using
+ 	the `mailinfo.scissors` configuration variable.
  
----color[=<when>]::
-+`--color[=<when>]`::
- 	Show colored matches.
--	The value must be always (the default), never, or auto.
-+	The value must be `always` (the default), `never`, or `auto`.
+---no-scissors::
++`--no-scissors`::
+ 	Ignore scissors lines (see linkgit:git-mailinfo[1]).
  
----no-color::
-+`--no-color`::
- 	Turn off match highlighting, even when the configuration file
- 	gives the default to color output.
- 	Same as `--color=never`.
+---quoted-cr=<action>::
++`--quoted-cr=<action>`::
+ 	This flag will be passed down to linkgit:git-mailinfo[1].
  
----break::
-+`--break`::
- 	Print an empty line between matches from different files.
- 
----heading::
-+`--heading`::
- 	Show the filename above the matches in that file instead of
- 	at the start of each shown line.
- 
---p::
----show-function::
-+`-p`::
-+`--show-function`::
- 	Show the preceding line that contains the function name of
- 	the match, unless the matching line is a function name itself.
- 	The name is determined in the same way as `git diff` works out
- 	patch hunk headers (see 'Defining a custom hunk-header' in
- 	linkgit:gitattributes[5]).
- 
---<num>::
---C <num>::
----context <num>::
--	Show <num> leading and trailing lines, and place a line
-+`-<num>`::
-+`-C <num>`::
-+`--context <num>`::
-+	Show _<num>_ leading and trailing lines, and place a line
- 	containing `--` between contiguous groups of matches.
- 
---A <num>::
----after-context <num>::
--	Show <num> trailing lines, and place a line containing
-+`-A <num>`::
-+`--after-context <num>`::
-+	Show _<num>_ trailing lines, and place a line containing
- 	`--` between contiguous groups of matches.
- 
---B <num>::
----before-context <num>::
--	Show <num> leading lines, and place a line containing
-+`-B <num>`::
-+`--before-context <num>`::
-+	Show _<num>_ leading lines, and place a line containing
- 	`--` between contiguous groups of matches.
- 
---W::
----function-context::
-+`-W`::
-+`--function-context`::
- 	Show the surrounding text from the previous line containing a
- 	function name up to the one before the next function name,
- 	effectively showing the whole function in which the match was
-@@ -247,22 +247,22 @@ providing this option will cause it to die.
- 	`git diff` works out patch hunk headers (see 'Defining a
- 	custom hunk-header' in linkgit:gitattributes[5]).
- 
---m <num>::
----max-count <num>::
-+`-m <num>`::
-+`--max-count <num>`::
- 	Limit the amount of matches per file. When using the `-v` or
- 	`--invert-match` option, the search stops after the specified
- 	number of non-matches. A value of -1 will return unlimited
- 	results (the default). A value of 0 will exit immediately with
- 	a non-zero status.
- 
----threads <num>::
--	Number of `grep` worker threads to use.  See 'NOTES ON THREADS'
-+`--threads <num>`::
-+	Number of `grep` worker threads to use.  See `NOTES ON THREADS`
- 	and `grep.threads` in 'CONFIGURATION' for more information.
- 
---f <file>::
--	Read patterns from <file>, one per line.
-+`-f <file>`::
-+	Read patterns from _<file>_, one per line.
+---empty=(drop|keep|stop)::
++`--empty=(drop|keep|stop)`::
+ 	How to handle an e-mail message lacking a patch:
  +
--Passing the pattern via <file> allows for providing a search pattern
-+Passing the pattern via _<file>_ allows for providing a search pattern
- containing a \0.
- +
- Not all pattern types support patterns containing \0. Git will error
-@@ -279,44 +279,44 @@ In future versions we may learn to support patterns containing \0 for
- more search backends, until then we'll die when the pattern type in
- question doesn't support them.
+ --
+@@ -82,23 +82,23 @@ OPTIONS
+ 	session. This is the default behavior.
+ --
  
---e::
-+`-e`::
- 	The next parameter is the pattern. This option has to be
- 	used for patterns starting with `-` and should be used in
- 	scripts passing user input to grep.  Multiple patterns are
--	combined by 'or'.
-+	combined by `or`.
+--m::
+---message-id::
++`-m`::
++`--message-id`::
+ 	Pass the `-m` flag to linkgit:git-mailinfo[1],
+ 	so that the `Message-ID` header is added to the commit message.
+ 	The `am.messageid` configuration variable can be used to specify
+ 	the default behaviour.
  
----and::
----or::
----not::
--( ... )::
-+`--and`::
-+`--or`::
-+`--not`::
-+`( ... )`::
- 	Specify how multiple patterns are combined using Boolean
- 	expressions.  `--or` is the default operator.  `--and` has
- 	higher precedence than `--or`.  `-e` has to be used for all
- 	patterns.
- 
----all-match::
-+`--all-match`::
- 	When giving multiple pattern expressions combined with `--or`,
- 	this flag is specified to limit the match to files that
- 	have lines to match all of them.
+---no-message-id::
++`--no-message-id`::
+ 	Do not add the Message-ID header to the commit message.
+ 	`--no-message-id` is useful to override `am.messageid`.
  
 --q::
 ---quiet::
 +`-q`::
 +`--quiet`::
- 	Do not output matched lines; instead, exit with status 0 when
- 	there is a match and with non-zero status when there isn't.
+ 	Be quiet. Only print error messages.
  
--<tree>...::
-+`<tree>...`::
- 	Instead of searching tracked files in the working tree, search
- 	blobs in the given trees.
+--u::
+---utf8::
++`-u`::
++`--utf8`::
+ 	Pass `-u` flag to linkgit:git-mailinfo[1].
+ 	The proposed commit log message taken from the e-mail
+ 	is re-coded into UTF-8 encoding (configuration variable
+@@ -108,57 +108,57 @@ OPTIONS
+ This was optional in prior versions of git, but now it is the
+ default.   You can use `--no-utf8` to override this.
  
--\--::
-+`--`::
- 	Signals the end of options; the rest of the parameters
--	are <pathspec> limiters.
-+	are _<pathspec>_ limiters.
+---no-utf8::
++`--no-utf8`::
+ 	Pass `-n` flag to linkgit:git-mailinfo[1].
  
--<pathspec>...::
-+`<pathspec>...`::
- 	If given, limit the search to paths matching at least one pattern.
--	Both leading paths match and glob(7) patterns are supported.
-+	Both leading paths match and `glob`(7) patterns are supported.
+--3::
+---3way::
+---no-3way::
++`-3`::
++`--3way`::
++`--no-3way`::
+ 	When the patch does not apply cleanly, fall back on
+ 	3-way merge if the patch records the identity of blobs
+ 	it is supposed to apply to and we have those blobs
+ 	available locally. `--no-3way` can be used to override
+-	am.threeWay configuration variable. For more information,
+-	see am.threeWay in linkgit:git-config[1].
++	`am.threeWay` configuration variable. For more information,
++	see `am.threeWay` in linkgit:git-config[1].
+ 
+ include::rerere-options.adoc[]
+ 
+---ignore-space-change::
+---ignore-whitespace::
+---whitespace=<action>::
+--C<n>::
+--p<n>::
+---directory=<dir>::
+---exclude=<path>::
+---include=<path>::
+---reject::
++`--ignore-space-change`::
++`--ignore-whitespace`::
++`--whitespace=<action>`::
++`-C<n>`::
++`-p<n>`::
++`--directory=<dir>`::
++`--exclude=<path>`::
++`--include=<path>`::
++`--reject`::
+ 	These flags are passed to the linkgit:git-apply[1] program that
+ 	applies the patch.
  +
--For more details about the <pathspec> syntax, see the 'pathspec' entry
-+For more details about the _<pathspec>_ syntax, see the `pathspec` entry
- in linkgit:gitglossary[7].
+-Valid <action> for the `--whitespace` option are:
++Valid _<action>_ for the `--whitespace` option are:
+ `nowarn`, `warn`, `fix`, `error`, and `error-all`.
  
- EXAMPLES
+---patch-format::
++`--patch-format`::
+ 	By default the command will try to detect the patch format
+ 	automatically. This option allows the user to bypass the automatic
+ 	detection and specify the patch format that the patch(es) should be
+ 	interpreted as. Valid formats are mbox, mboxrd,
+ 	stgit, stgit-series, and hg.
+ 
+--i::
+---interactive::
++`-i`::
++`--interactive`::
+ 	Run interactively.
+ 
+---verify::
+--n::
+---no-verify::
++`--verify`::
++`-n`::
++`--no-verify`::
+ 	Run the `pre-applypatch` and `applypatch-msg` hooks. This is the
+ 	default. Skip these hooks with `-n` or `--no-verify`. See also
+ 	linkgit:githooks[5].
+ +
+ Note that `post-applypatch` cannot be skipped.
+ 
+---committer-date-is-author-date::
++`--committer-date-is-author-date`::
+ 	By default the command records the date from the e-mail
+ 	message as the commit author date, and uses the time of
+ 	commit creation as the committer date. This allows the
+@@ -172,29 +172,29 @@ committer date when applying commits on top of a base which commit is
+ older (in terms of the commit date) than the oldest patch you are
+ applying.
+ 
+---ignore-date::
++`--ignore-date`::
+ 	By default the command records the date from the e-mail
+ 	message as the commit author date, and uses the time of
+ 	commit creation as the committer date. This allows the
+ 	user to lie about the author date by using the same
+ 	value as the committer date.
+ 
+---skip::
++`--skip`::
+ 	Skip the current patch.  This is only meaningful when
+ 	restarting an aborted patch.
+ 
+--S[<keyid>]::
+---gpg-sign[=<keyid>]::
+---no-gpg-sign::
+-	GPG-sign commits. The `keyid` argument is optional and
++`-S[<key-id>]`::
++`--gpg-sign[=<key-id>]`::
++`--no-gpg-sign`::
++	GPG-sign commits. The _<key-id>_ is optional and
+ 	defaults to the committer identity; if specified, it must be
+ 	stuck to the option without a space. `--no-gpg-sign` is useful to
+ 	countermand both `commit.gpgSign` configuration variable, and
+ 	earlier `--gpg-sign`.
+ 
+---continue::
+--r::
+---resolved::
++`--continue`::
++`-r`::
++`--resolved`::
+ 	After a patch failure (e.g. attempting to apply
+ 	conflicting patch), the user has applied it by hand and
+ 	the index file stores the result of the application.
+@@ -202,36 +202,36 @@ applying.
+ 	extracted from the e-mail message and the current index
+ 	file, and continue.
+ 
+---resolvemsg=<msg>::
+-	When a patch failure occurs, <msg> will be printed
++`--resolvemsg=<msg>`::
++	When a patch failure occurs, _<msg>_ will be printed
+ 	to the screen before exiting.  This overrides the
+ 	standard message informing you to use `--continue`
+ 	or `--skip` to handle the failure.  This is solely
+ 	for internal use between linkgit:git-rebase[1] and
+ 	linkgit:git-am[1].
+ 
+---abort::
++`--abort`::
+ 	Restore the original branch and abort the patching operation.
+ 	Revert the contents of files involved in the am operation to their
+ 	pre-am state.
+ 
+---quit::
+-	Abort the patching operation but keep HEAD and the index
++`--quit`::
++	Abort the patching operation but keep `HEAD` and the index
+ 	untouched.
+ 
+---retry::
++`--retry`::
+ 	Try to apply the last conflicting patch again. This is generally
+ 	only useful for passing extra options to the retry attempt
+ 	(e.g., `--3way`), since otherwise you'll just see the same
+ 	failure again.
+ 
+---show-current-patch[=(diff|raw)]::
++`--show-current-patch[=(diff|raw)]`::
+ 	Show the message at which linkgit:git-am[1] has stopped due to
+ 	conflicts.  If `raw` is specified, show the raw contents of
+ 	the e-mail message; if `diff`, show the diff portion only.
+ 	Defaults to `raw`.
+ 
+---allow-empty::
++`--allow-empty`::
+ 	After a patch failure on an input e-mail message lacking a patch,
+ 	create an empty commit with the contents of the e-mail message
+ 	as its log message.
+@@ -278,11 +278,11 @@ operation is finished, so if you decide to start over from scratch,
+ run `git am --abort` before running the command with mailbox
+ names.
+ 
+-Before any patches are applied, ORIG_HEAD is set to the tip of the
++Before any patches are applied, `ORIG_HEAD` is set to the tip of the
+ current branch.  This is useful if you have problems with multiple
+ commits, like running linkgit:git-am[1] on the wrong branch or an error
+ in the commits that is more easily fixed by changing the mailbox (e.g.
+-errors in the "From:" lines).
++errors in the `From:` lines).
+ 
+ [[caveats]]
+ CAVEATS
 -- 
 gitgitgadget
 
