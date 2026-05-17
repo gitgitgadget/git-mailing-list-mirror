@@ -1,305 +1,247 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E258BE9
-	for <git@vger.kernel.org>; Sun, 17 May 2026 11:28:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9008732C94A
+	for <git@vger.kernel.org>; Sun, 17 May 2026 11:34:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779017286; cv=none; b=pRqkIH6vDElQnPU+5GlmmJPgGj0jV4Lq7jaAZDqLXYiRdsYNjRUlL+gAeEI6NydkZujEYv9xYlkIU7OJQSldXs2C2oiOE5HJ6y7bAGSjy34I6N/kg9ODhwzkAFRdmuky4Qrl1C4TnHdHhlrGDVFYPlufopWwAhVLTfSmYNZnFio=
+	t=1779017691; cv=none; b=s+MxQq3jrISRTh/yD57m/bl43Li2GGoMn007f52BXbqJyr+Xer2VzySgZ593R1ZmL22DX9+xio9EuaEBXAiHdpZCyATHxodlUmx//WnZBtI62KHjupGHi0cHWO1zpLheXKS1aOQIwkfjgUsb6qYlyQr2+JskIbJ++ugioV3z4dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779017286; c=relaxed/simple;
-	bh=M83PMf/ASKvUrmGINyXimeEGU4fQ8WGKzn3y7n0EOWw=;
+	s=arc-20240116; t=1779017691; c=relaxed/simple;
+	bh=g0/bQZipSK0egsP8ARCGxcVFc29LlRHOcoRMN2avvYc=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=QiVo1gMDrnA/PRp3aaq5YG9iNYT2/O0/Uv5KNz2mFVKGl+Qv3XVQRYHDobWBPLVkk7f9yirFGTnPOoUuFZOyfBeKlDnFIoWvgDZE9m6ytl6e/kfJamUNOqeMgQjz94yzOVAoXszvaLPpqQGRqihdPjRreu+lz7iHuOb3eUPMIQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=AilJIMnG; arc=none smtp.client-ip=212.227.17.22
+	 MIME-Version:Content-Type; b=J6y9IvI0vX4UzqV1RK0kc5ANfeQ/z3+EOvYLhCQs1YtrDvNBNe1+LNFFCIABOb9oFS6IDrUgMQx+fW7n7dw6QS+qNi1l8ImILiEKSHrKpIUtkQOl/2fFUA9bnsQa8oV8uzEQDOA0VrrSL6p/GCC68bDC6b+IkDuaTpJ2lID3mR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=nWnfHU/g; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="AilJIMnG"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nWnfHU/g"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1779017276; x=1779622076;
+	s=s31663417; t=1779017604; x=1779622404;
 	i=johannes.schindelin@gmx.de;
-	bh=bcZryiFLSAGnMKbOyH960Ti/Uo7dWZXR21IJZwe3TD8=;
+	bh=CICo8VSmLl7uJ9WKQA+6ZjxQ6Tkle7BGzKb5XVgyc9Y=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=AilJIMnGL7MEeLROe49tmI0vitlvi2nFTRxe8qUnLQWo662F9shI+dU8wml0lh29
-	 rjGvkoHndYiz7u0F/ytGN8ELpPgwXdcPmKcW+c9rOnqPm2YAJEKudyL01uSl7/F+t
-	 zkxN1VHUgXjWXLYS9Y/ylpXbLrSqf/hxHSXnsvugL5fEJj8qbvh2eAcUVh+lHm6As
-	 /TdvhSyKezgxieuLo2G3a3P/AWrrckZUgdT9GKswGFSSuytn4neJSUdmPwj5cwE7N
-	 6zPR5eBGI4bS47yyYW+NU9o3fz16ULpz3TIUTBBE/BfzksMm7s1++3/BV7b7On3Vi
-	 aftJOBZeReu2hXcdgw==
+	b=nWnfHU/getpL+EcNEnwkNUTAjt12+iij3maJTS6erM+sWvoAqkS89T8p0Uebyg3J
+	 L/xLLE7Dj6tXw9O9WYYZuDc5dVzRoa2hzTyArQeP+PYpGV0/gcb57GbiLxB0vpemt
+	 6StGQOe3qSDH2LtznG7m7lAGbV3ZCxX3hHgUI29agr9GC2v4hEgMkTBNcrGmET/tE
+	 3skqpaWZVoL7fVWZLiZrTldRwggY3v8PGc68vaBPHz8i0Fh5dA6tW3XpHkZArwhGo
+	 tNoNE0+03ONgCtY+CImaUKih1X17Oejjssk7I6OehURLp8/QWx9QiYOeUOqDC6SmU
+	 +d5ebmrLfSc2bBSXBw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mirng-1x39Ca2tz2-00kljq; Sun, 17
- May 2026 13:27:56 +0200
-Date: Sun, 17 May 2026 13:27:55 +0200 (CEST)
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmULr-1x67m92MUL-00nva9; Sun, 17
+ May 2026 13:33:24 +0200
+Date: Sun, 17 May 2026 13:33:22 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: =?UTF-8?Q?J=C3=B6rg_Thalheim?= <joerg@thalheim.io>, 
-    Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] config: retry acquiring config.lock for 100ms
-In-Reply-To: <agGo9Prt8Hs2gbic@pks.im>
-Message-ID: <409d05a5-235b-6b19-5a33-a4e613dd447c@gmx.de>
-References: <20260403100135.3901610-1-joerg@thalheim.io> <adYvSZeN0ZVqwRhi@pks.im> <xmqqcxz2vfpa.fsf@gitster.g> <91335804a092b09757331cac72092a3835020b3a@thalheim.io> <agGo9Prt8Hs2gbic@pks.im>
+To: Ben Knoble <ben.knoble@gmail.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH/RFC 0/5] replay: support replaying 2-parent merges
+In-Reply-To: <21A507D3-1B0D-4404-8AF5-9485B01E63A6@gmail.com>
+Message-ID: <c594ed5c-5c81-c6b7-c660-11b2ce1bb3b5@gmx.de>
+References: <4a94c675-661c-1f2a-27d0-3f10f761cf6a@gmx.de> <21A507D3-1B0D-4404-8AF5-9485B01E63A6@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1600604462-1779017276=:15795"
-X-Provags-ID: V03:K1:Pl8qrAG53wbl5QTDEluo8I0FK3sAy8V1Bv+zNa/sJbdQl4h4H1E
- iBHiDtM7aMzvSPCpAK/FeihPjTgk1YxlUUu4n8rWuCoC7Hg6LdCN8S1YaytEPrdny6cqHB9
- LJr8kXWmzQVVHmnUvYzfk9qOeF1V9uYeoRlY0h9osp4Q49Y03SiwyUbINs4m+YVidYji7aE
- 4TmWBdwf8chbjPK3r6tww==
+Content-Type: multipart/mixed; boundary="8323328-1248973449-1779017604=:100"
+X-Provags-ID: V03:K1:yIeU6begY0vC6orbgJjgvvuVs7dx6v/3yHsutmqJWyxIXM+wenW
+ GEK4U2CusFRPxKRan14DD4CVWweleKiFhaQ6ATIvzsHD1ToSA8QaL09+GmKjcexp2S+IY5U
+ a3aRpbGBedOQy/pLm+eGHUPkbXCUBn40RBSpqnCLBYuZmK6/FFygDbxXQjc/ZRE4OJSU2cK
+ ukIwy9nL8rkoECOV3Slxg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:yheROftNGQU=;aQ2STxRc8XkMNPwnZmuVd9D+vRW
- 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
+UI-OutboundReport: notjunk:1;M01:P0:PNfUAdDCe5w=;JPSyW43E0EpGg/PrfTnMzmInFOc
+ +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
+ NYclL/GQYG2Q1zVpCAebRy/6jmw=
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1600604462-1779017276=:15795
+--8323328-1248973449-1779017604=:100
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick & J=C3=B6rg,
+Hi Ben,
 
-On Mon, 11 May 2026, Patrick Steinhardt wrote:
+On Thu, 7 May 2026, Ben Knoble wrote:
 
-> On Mon, May 11, 2026 at 09:06:00AM +0000, J=C3=B6rg Thalheim wrote:
-> > May 11, 2026 at 4:32 AM, "Junio C Hamano" <gitster@pobox.com
-> > mailto:gitster@pobox.com?to=3D%22Junio%20C%20Hamano%22%20%3Cgitster%40=
-pobox.com%3E
-> > > wrote:
-> > > Patrick Steinhardt <ps@pks.im> writes:
-> > > > > This bites in practice when running `git worktree add -b` concur=
-rently
-> > > > >  against the same repository. Each invocation makes several writ=
-es to
-> > > > >  ".git/config" to set up branch tracking, and tooling that creat=
-es
-> > > > >  worktrees in parallel sees intermittent failures. Worse, `git w=
-orktree
-> > > > >  add` does not propagate the failed config write to its exit cod=
-e: the
-> > > > >  worktree is created and the command exits 0, but tracking
-> > > > >  configuration is silently dropped.
-> > > > >=20
-> > > >  This very much sounds like a bug that is worth fixing independent=
-ly.
-> > > >=20
-> > > > >=20
-> > > > > The lock is held only for the duration of rewriting a small file=
-, so
-> > > > >  retrying for 100 ms papers over any realistic contention while =
-still
-> > > > >  failing fast if a stale lock has been left behind by a crashed
-> > > > >  process. This mirrors what we already do for individual referen=
-ce
-> > > > >  locks (4ff0f01cb7 (refs: retry acquiring reference locks for 10=
-0ms,
-> > > > >  2017-08-21)).
-> > > > >=20
-> > > >  Famous last words :) Experience tells me that any timeout value t=
-hat
-> > > >  isn't excessive will eventually be hit in some production system.=
- Which
-> > > >  raises the question whether we want to make the timeout configura=
-ble,
-> > > >  similar to "core.filesRefLockTimeout" and "core.packedRefsTimeout=
-".
-> > > >  ...
-> > > >  Honestly though, I'm not really sure what to make with this. We c=
-ould
-> > > >  of course also add some validation that the configuration we want=
- to set
-> > > >  hasn't been modified meanwhile. But that would now lead to a situ=
-ation
-> > > >  where we have to update every single caller in our tree to make u=
-se of
-> > > >  the new mechanism, which would be a bunch of work.
-> > > >=20
-> > > >  And adding the timeout doesn't really change the status quo, eith=
-er. We
-> > > >  already have the case that we'll happily overwrite changes made b=
-y
-> > > >  concurrent processes. The only thing that changes is that we make=
- it
-> > > >  more likely for concurrent changes to succeed.
-> > > >=20
-> > > We haven't heard any response to these points raised in the message
-> > > I am responding to. Should I still keep the patch in my tree,
-> > > hoping that a responses may come some day? I am tempted to discard
-> > > the topic as it has been quite a while since we last looked at it.
+> > Le 7 mai 2026 =C3=A0 11:06, Johannes Schindelin <johannes.schindelin@g=
+mx.de> a =C3=A9crit :
 > >=20
-> > I am not really sure what you want me to do here.
+> >> On Thu, 7 May 2026, D. Ben Knoble wrote:
+> >>=20
+> >>> On Wed, May 6, 2026 at 6:44=E2=80=AFPM Johannes Schindelin via GitGi=
+tGadget
+> >>> <gitgitgadget@gmail.com> wrote:
+> >>>=20
+> >>> [...]
+> >>>=20
+> >>> While I was at it, git history reword had a pre-existing
+> >>> silent-success bug: a positive return from replay_revisions() (which
+> >>> means "conflict, no updates queued") was treated as success. Obvious=
+ly
+> >>> this should never occur, as a reword simply does not change any of t=
+he
+> >>> file contents, but bugs do happen. The merge-replay work is complex
+> >>> enough to make that class of bugs more likely, therefore I introduce
+> >>> error messages for those instances.
+> >>=20
+> >> Fixing this bug sounded interesting; I had a hard time spotting it
+> >> while skimming the first 2 patches.
+> >=20
+> > It's this part:
+> >=20
+> > @@ -482,6 +482,9 @@ static int cmd_history_reword(int argc,
+> >    if (ret < 0) {
+> >        ret =3D error(_("failed replaying descendants"));
+> >        goto out;
+> > +    } else if (ret) {
+> > +        ret =3D error(_("conflict during replay; some descendants wer=
+e not rewritten"));
+> > +        goto out;
+> >    }
+> >=20
+> >    ret =3D 0;
+> > @@ -721,6 +724,9 @@ static int cmd_history_split(int argc,
+> >    if (ret < 0) {
+> >        ret =3D error(_("failed replaying descendants"));
+> >        goto out;
+> > +    } else if (ret) {
+> > +        ret =3D error(_("conflict during replay; some descendants wer=
+e not rewritten"));
+> > +        goto out;
+> >    }
+> >=20
+> >    ret =3D 0;
 >=20
-> In general, the idea here is to engage in a discussion that can
-> ultimately lead to one of two outcomes:
+> Thanks, super helpful.
 >=20
->   - The discussion surfaces an area the author hasn't thought about, so
->     the patch is adapted accordingly.
->=20
->   - The discussion shows that the author already did think about the
->     issue, but hasn't documented the assumptions. In this case, it
->     should be the commit message that gets adapted.
+> (Perhaps later) if we can say _which_ descendants weren=E2=80=99t rewrit=
+ten, that might be good.
 
-For what it's worth, I meant to chime in earlier, but obligations kept
-preventing me from setting aside the time to do so. Well, better late than
-never.
-
-> > I don't see how git can have this value configurable, given it's about
-> > reading the configuration itself. Is the user supposed via command
-> > line?
->=20
-> This is a fair point indeed. But if it's not possible to change via the
-> configuration itself, then the next-best thing might be to introduce an
-> environment variable that allows configuring it.
-
-Well, given that the config is read first before it's written, it is
-totally possible to configure a timeout via the config, and I have some
-real-world proof that this works as intended (see below).
-
-> The other aspect that wasn't discussed in the commit message is how
-> concurrent writes are handled, both when they are non-conflicting
-> (updating different keys) and when they are conflicting (updating the
-> same key). After spending some more time in the code I think it's
-> ultimately nothing we have to worry about too much, as we only start
-> reading the configuration after we've locked it.
-
-Correct. I had performed this analysis myself when writing a similar patch
-to fix problems in Scalar's Functional Test suite, which wants to register
-_many_ Scalar repositories with ~/.gitconfig concurrently. The current
-iteration of the patch can be found here:
-
-https://github.com/microsoft/git/commit/a1c2d97cb61bc3697086d1749de848586d=
-f2ec54
-
-It does include the config setting, leaving the default as "off" (but I
-missed the separate code path to rename sections, which has _independent_
-code that also wants to lock the config file, which your patch did not
-miss). The subsequent child commit
-
-https://github.com/microsoft/git/commit/5d365c1f332b8d2214ae9c44970d6370ed=
-9caffc
-
-configures it to 150ms in Scalar repositories only. This is notably larger
-than the 100ms you suggested, and it is rooted in the fact that NTFS I/O
-characteristics are unfortunately in need of a wider margin. In other
-words, the optimal value depends on the operating system (and the CPU
-load, as Junio had pointed out).
-
-For the record, feel free to adopt whatever you want from my patches for
-your next iteration (but also feel free to ignore all of it).
-
-> So in the semantically non-conflicting case there isn't really much of a
-> race, because things already work as expected. But in the semantically
-> conflicting case it's a bit different, as the latter writer will
-> overwrite the result of the former one. In theory it would be possible
-> to detect such conflicts by:
->=20
->   - Reading the configuration file.
->=20
->   - Taking the lock.
->=20
->   - Rereading the configuration to check for conflicts.
->=20
-> But even that is racy as the first writer might have succeeded before we
-> read the configuration the first time. So I'm not sure whether we can do
-> anything about that in the first place, as the race basically exists in
-> the outer loop controlled by the caller.
->=20
-> So there probably isn't much we can do about that, and unless I missed
-> something I think your timeout is sensible. But ideally, such nuances
-> would be discussed as part of the commit message so that reviewers and
-> future readers are made aware of them.
-
-I agree. Complex cases like this would require a sort of transactional
-support to be added to `git config`, and that would in and of itself open
-a can of worms I'm not sure we should open unless there is a concrete use
-case that bites enough real-world scenarios to require acting upon.
+I am afraid that that particular information is lost at this point, all we
+have to work with is an `int ret`.
 
 Ciao,
 Johannes
 
---8323328-1600604462-1779017276=:15795--
+> >> Did I just miss it? Is it worth splitting that fix out to a separate =
+patch?
+> >=20
+> > Well, you _could_ argue that they were not bugs at all: a `git history
+> > reword` isn't supposed to be able to result in merge conflicts, nor is
+> > `git history split` because they leave the respective commits tree-sam=
+e
+> > (in the `split` case, the second commit).
+>=20
+> I seem to recall Patrick making a similar argument, but don=E2=80=99t le=
+t me put
+> words in anyone=E2=80=99s mouth.=20
+>=20
+> > I could see the point were anybody to suggest using `BUG()` instead of
+> > `error()` here, but erred on the "nicer to the user" side.
+> >=20
+> > The only way this _might_ be triggered before this patch series is mos=
+t
+> > likely by playing games with replace objects. Or maybe you cannot trig=
+ger
+> > it at all.
+> >=20
+> > With the changes in this here patch series, I wasn't so certain that I=
+ had
+> > covered all the edge cases (an early iteration of the quick short-cut =
+in
+> > patch 2/5 keyed only on the parent commits' trees, and forgot to verif=
+y
+> > the merge _bases_' trees, for example). That's why I think it matters =
+more
+> > now than it did before.
+> >=20
+> > Ciao,
+> > Johannes
+>=20
+> Makes sense, thanks.
+
+--8323328-1248973449-1779017604=:100--
