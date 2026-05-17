@@ -1,218 +1,109 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8837530DECB
-	for <git@vger.kernel.org>; Sun, 17 May 2026 20:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4526D305E32
+	for <git@vger.kernel.org>; Sun, 17 May 2026 23:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779049630; cv=none; b=nskgGfQ1RODPV4NRQis96xpJi2G4V7OYVDtv1V539EQ2AQNgsIcYU5Jfa8UYqoOmz0gep7nReoiSH4XWz/HmAHRHk4+zCOZWzFOJsRbELPuQH5rMnSIxRQMOE5XymrLnbpaDkA8TXlpS9hN7TDC1BFigsmbegohaEgEo7yOQeyQ=
+	t=1779060671; cv=none; b=qRvn79cifVsYuvAfEzPJguSjEK8iXYyR1PsgmMYG4dDZYf+/EY0Rtz4jgA5WRBXjc59EXWPpw9xMqzbTmHgpZPgDVjR2jEeuis/J4XZRwTz1BrmlRYurtYUJTgkwyvT27uFJng42DH8RLt/rvVquhoPaWPsIiXJvyCkIo8aF1SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779049630; c=relaxed/simple;
-	bh=mYiNQ92+mp/rAPmFex8Vx8HNVb4E0ZUgUhTueyazUXM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=iQX2mjSl08bXhVt4FCLSGdfWBRvdm3eLPEvYDZKH3B8rWyvtloXvA0u4HHdr/SS/UzrMiW46ktDRIhpZk4I34M0Ont0dBUkZVZ/TnuHrE8LdVrHZciu4ZxEgYvM+8RVK2kJFFaUTdegj9aSeK0cHob8ylRWPSwcpTf/VNF7u888=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9/czCHV; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779060671; c=relaxed/simple;
+	bh=JKhpS5rjqszOGN54GH+AveoMZaP0Z1l5OY3cd0rOB7Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=stB1gks6IEu43mmc3X4UUBoU924ja/TYvHIIbvZVO0j+oK/OXZ8kb+9K3WOC6mPEx0y3lhl+UL1J8tTjtNGeZCH0LtNy4LX7WnAAn9J4PZ5WeErInj48QWd8Q8uBdLhHkFRcfLdtyX4J1slXZshe61Wp8aJRkxFGohUt8FLMZHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yuw63Ckl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BdgsPDgW; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9/czCHV"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-50e5dbd8e0eso22756181cf.1
-        for <git@vger.kernel.org>; Sun, 17 May 2026 13:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779049627; x=1779654427; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AhVltt7QM0TwLWHahbrRlQBoJrEUlEDdh4kP8ZpMGfw=;
-        b=h9/czCHVpR/w/t3TJvlEiDuLzK+JG5EyqzennoXfsDV/lNfdQGHkbnfm2jl9SaFi3F
-         eR/TOBhbIK6VXOaVR63IBpvjzXamGkPh7dLnwOnn9F6jGDz87xpXVNiZ4feV+prUO1fR
-         2PnlqdyDdsPRdewOL8OyX76HL3/VFqC6DOmNlC3ClSeJd2uZcHTdgEODrRD8Eg1XU4W8
-         hOq4K8aDQgxaRZBmpUMV0KDZytgOcc+AfAEKxXwps2Ov1GidlTrnYNKII3vH4ebvsR15
-         rS9N+zS9WkGVMqxF2pEW+7pJOhYsX8uDCaywgOXL0f5zdpEmVO8SJHamjF2DXt2aNZxL
-         TuRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779049627; x=1779654427;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=AhVltt7QM0TwLWHahbrRlQBoJrEUlEDdh4kP8ZpMGfw=;
-        b=sime9deJrMDGYGr7l5jncVx5bFoaZfJQAPriKXcZLP775GbCcvRmQN4+1iCU9834AJ
-         X9HXYYjC3UtMejoeGOIwgPXloxwHUNka4/fUik4p8W1bGO6sUEx8YckjpphPrXpfQSCm
-         zwt8qgES+0/Yv4KX3D4sH2EJJt7GmR7Psank9tKcWqCQS/ne3ExrYam7abt3zDK8TQV2
-         lFuA+TTHj6VbGRNnAcdDLAGLRdj6sCvcvt2rvRiBpOUPKGH1BfvTlAMmaamgiZI6HUdW
-         2Z8K++1UGnYoNVqeWvDVZpd+T91SV5xZKgZqY09T15al/QMtHFV3TXT8jSGSgniE40NK
-         S8Fw==
-X-Gm-Message-State: AOJu0Yx+AE6sWxzJDPYm998KJ9EUKdfFQTvVLYnAHprL9thTomHiK970
-	sRvFaekf5eK7SC8rzGRyAjYUNzT3xjmPYYXLRcAGpiGZVa3HGMjXlpUnYfGr+w==
-X-Gm-Gg: Acq92OHVAahXn54CNdEqx6k4lffOqemuAj+LWfN7Y1e+2NHW0ITF6CsZPgmN0tb1MiX
-	n4FjosnqwRnW4Foht4vsWo1EQ7uYYMNWw0xTnMYfR98aLGRVpWILNNyXsFkUHPtxh9aLcC5cwUb
-	VMA8mCoLtLPeTsZLZCG55R+0vNrYp/GL/hNKRxX9DxvNnf4XpLoY2uC2UY1B1sKDg0JclN7gDPy
-	woHxdmInrNuhCWXoq4u1m9JKosa+G2X41e+cFshehcY2ZvjeXfoPUao6zUI7OdsKrSD2O8xvaIp
-	/WRqljFFHLwkYPrleHY1gkNlAWxolXQGYvBmGx0y8UtHgW/bno6AWyYSRUTx8fbuuXoWOTQdeFs
-	y4RvifMguzt0sJHZvlQaxxYt/4C0f2btXpqKohUuYws0nk0XwWK5Ns5Uv+73SuyhNI/huMuH4UD
-	Cwlc/jmkQciMA20mCgJLLA4QfyEI8=
-X-Received: by 2002:a05:622a:6201:b0:516:4fc0:27ac with SMTP id d75a77b69052e-5165a1f4f2emr179772621cf.50.1779049627319;
-        Sun, 17 May 2026 13:27:07 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.134.161])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51645856d4esm109748461cf.27.2026.05.17.13.27.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 May 2026 13:27:06 -0700 (PDT)
-Message-Id: <dbe4d20b4ba1af6b9c874522787634bc4e0baa19.1779049615.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
-References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 17 May 2026 20:26:55 +0000
-Subject: [PATCH 5/5] doc: convert git-imap-send synopsis and options to new
- style
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yuw63Ckl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BdgsPDgW"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 63CE4140005D;
+	Sun, 17 May 2026 19:31:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 17 May 2026 19:31:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779060668; x=1779147068; bh=6yDMp1pPJ6
+	IAWm+EwbeBUk8Kk1mRoT+r7MjjZu68CmE=; b=Yuw63Cklb/l9Cy3aK9hv5hIVi4
+	8i6g83FPSm+scuL0FGYNcyoYyWpp+28g5UuH3RrpzJqLMuLWpwNpsgU1pj7QtFOx
+	bkt7zY6JTizYIVCPurQEHOWRfm6/0zLp0L8NDHvqYdfQfDzCIshokO2q5SotCRcU
+	aDik6g6pDIEdd6F+aIkDsMsFFIq6I+MBS4ln59IdE+DY0ajOtxjQzwghUFWROJA9
+	H1vDzUZxUPU3Vi+sHb3ln+s5ECd+wnc/l13dF2GV4psDoRZs6mVTnO7Qljqg8oJy
+	cQXKY4brk1ZtiOGOo4tRkxdhon6SESRdS8hzjTM9smipMoCsWcxq2X5siqRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779060668; x=1779147068; bh=6yDMp1pPJ6IAWm+EwbeBUk8Kk1mRoT+r7Mj
+	jZu68CmE=; b=BdgsPDgWS/4HKi7Unzy/fxckq+JyM6gzLbC1r5OukDmyZ9RIYru
+	K8gs4Hc03T9W8NJsKW+TDrjpvIMdlS4lRLEHA1a3wcaVkgXaXtJ8ZAQsbiih3yiG
+	eeMfuXewo1P4boUCy+5hediAa/QwiM2wzNegJPvH6qVGGTlEvRNc24M/NdCbgyF0
+	GgvRJO4TncR1OVt7P9tQs6R+bVWvagYEpOGperf6omUZvi3AlVNBqjUCpW7gerT9
+	tq7gK2j1QwPexXF8GSFbou5NdsB3TMkXLzuRlmVm4MeH54O5K3FFHueuMeit/N9S
+	eJB76dSnQqV/b1cN+Brmch/NJrijxqfm8Vg==
+X-ME-Sender: <xms:vE8Kas7VQtM7sIkmes_r_KU63ZLH2nOIgW57AWAHEvY0X6EMdf4Pjw>
+    <xme:vE8Kahle5bTa1HdbHNNcC6nWpMa8OPFapqRWlcf6CnyxirN7rP559MYEq5JPqVxtj
+    oabNr-oHxdTrkcm8TWcbvKyqESVPW7hcSRvFZPVg0zmfWXuT2UEaQ>
+X-ME-Received: <xmr:vE8KalThAs6Y9mRlzX_qoaHeWXph2hQNR5YU1UB4nwzyFh-Gtlz9gYPsz9cIKVa4l-pDRHDiVqX4_dglLUDi5Qqnm4yhmFBKlQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeejfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrkhgrsehsphhothhifhihrdgtohhmpdhrtghpth
+    htohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:vE8KaoHYCMOHCKPohpwx80t3526EPvtwYiC5tss1-t7xn4gL16kldw>
+    <xmx:vE8KaiHkqdjLWIWFsXrYZL7hN4F7iBJy3zSYO4_BxAhI2JH5D-It9Q>
+    <xmx:vE8KauTm517O2eRP4p8HoUdwHSanIfAt-VGejc4G32qpKvuM_P-rjg>
+    <xmx:vE8KarKdZmJr9ols9aJBnZ6taJdBncIUdk4zTvlLJR8nusFrLytXxQ>
+    <xmx:vE8KalvPsuVaW1QXQK8JnSIhx2OGQZb9DyENfN8l0YuhKKqjWO6iJaun>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 17 May 2026 19:31:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Derrick Stolee <stolee@gmail.com>,  Jeff King <peff@peff.net>,
+  Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] revision: use priority queue in limit_list()
+In-Reply-To: <CAL71e4MxhcZqxPVEe38Shuqt7h5dxLDGi66hN2cFXnmg-POKWA@mail.gmail.com>
+	(Kristofer Karlsson's message of "Sun, 17 May 2026 17:26:06 +0200")
+References: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+	<20260515041641.GA81292@coredump.intra.peff.net>
+	<CAL71e4Mfq3SCO7vnTbFCxpzH9txWPTencV-vq-aQ=wJ7dPMV2g@mail.gmail.com>
+	<aad34ac2-4cd5-4c85-b8ff-14c0caaa1c7b@gmail.com>
+	<CAL71e4MxhcZqxPVEe38Shuqt7h5dxLDGi66hN2cFXnmg-POKWA@mail.gmail.com>
+Date: Mon, 18 May 2026 08:31:06 +0900
+Message-ID: <xmqqecj9d35x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Content-Type: text/plain
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Kristofer Karlsson <krka@spotify.com> writes:
 
-Convert git-imap-send from [verse]/single-quote style to the modern
-synopsis-block style:
+> I don't want to pollute this patch with that change - should I start a
+> separate thread for it or just revisit this later?
+> (Perhaps I have too many optimization patches in flux already)
 
-- Replace [verse] with [synopsis] in SYNOPSIS block
-- Backtick-quote all OPTIONS terms
-- Backtick-quote all config keys in config/imap.adoc
-- Backtick-quote bare config key references in prose
+Thanks for a great news.  I agree that it is a good idea to find a
+good stopping point and make improvements step-wise, and the patch
+posted for limit_list() is probably such a good stopping point.
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- Documentation/config/imap.adoc   | 30 +++++++++++++++---------------
- Documentation/git-imap-send.adoc | 24 ++++++++++++------------
- 2 files changed, 27 insertions(+), 27 deletions(-)
-
-diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
-index 4682a6bd03..cb8f5e2700 100644
---- a/Documentation/config/imap.adoc
-+++ b/Documentation/config/imap.adoc
-@@ -1,44 +1,44 @@
--imap.folder::
-+`imap.folder`::
- 	The folder to drop the mails into, which is typically the Drafts
- 	folder. For example: `INBOX.Drafts`, `INBOX/Drafts` or
- 	`[Gmail]/Drafts`. The IMAP folder to interact with MUST be specified;
- 	the value of this configuration variable is used as the fallback
- 	default value when the `--folder` option is not given.
- 
--imap.tunnel::
-+`imap.tunnel`::
- 	Command used to set up a tunnel to the IMAP server through which
- 	commands will be piped instead of using a direct network connection
--	to the server. Required when imap.host is not set.
-+	to the server. Required when `imap.host` is not set.
- 
--imap.host::
-+`imap.host`::
- 	A URL identifying the server. Use an `imap://` prefix for non-secure
- 	connections and an `imaps://` prefix for secure connections.
--	Ignored when imap.tunnel is set, but required otherwise.
-+	Ignored when `imap.tunnel` is set, but required otherwise.
- 
--imap.user::
-+`imap.user`::
- 	The username to use when logging in to the server.
- 
--imap.pass::
-+`imap.pass`::
- 	The password to use when logging in to the server.
- 
--imap.port::
-+`imap.port`::
- 	An integer port number to connect to on the server.
--	Defaults to 143 for imap:// hosts and 993 for imaps:// hosts.
--	Ignored when imap.tunnel is set.
-+	Defaults to 143 for `imap://` hosts and 993 for `imaps://` hosts.
-+	Ignored when `imap.tunnel` is set.
- 
--imap.sslverify::
-+`imap.sslverify`::
- 	A boolean to enable/disable verification of the server certificate
- 	used by the SSL/TLS connection. Default is `true`. Ignored when
--	imap.tunnel is set.
-+	`imap.tunnel` is set.
- 
--imap.preformattedHTML::
-+`imap.preformattedHTML`::
- 	A boolean to enable/disable the use of html encoding when sending
--	a patch.  An html encoded patch will be bracketed with <pre>
-+	a patch.  An html encoded patch will be bracketed with `<pre>`
- 	and have a content type of text/html.  Ironically, enabling this
- 	option causes Thunderbird to send the patch as a plain/text,
- 	format=fixed email.  Default is `false`.
- 
--imap.authMethod::
-+`imap.authMethod`::
- 	Specify the authentication method for authenticating with the IMAP server.
- 	If Git was built with the NO_CURL option, or if your curl version is older
- 	than 7.34.0, or if you're running git-imap-send with the `--no-curl`
-diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
-index 278e5ccd36..538b91afc0 100644
---- a/Documentation/git-imap-send.adoc
-+++ b/Documentation/git-imap-send.adoc
-@@ -8,9 +8,9 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
- 
- SYNOPSIS
- --------
--[verse]
--'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
--'git imap-send' --list
-+[synopsis]
-+git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
-+git imap-send --list
- 
- 
- DESCRIPTION
-@@ -32,30 +32,30 @@ $ git format-patch --signoff --stdout --attach origin | git imap-send
- OPTIONS
- -------
- 
---v::
----verbose::
-+`-v`::
-+`--verbose`::
- 	Be verbose.
- 
---q::
----quiet::
-+`-q`::
-+`--quiet`::
- 	Be quiet.
- 
---f <folder>::
----folder=<folder>::
-+`-f <folder>`::
-+`--folder=<folder>`::
- 	Specify the folder in which the emails have to saved.
- 	For example: `--folder=[Gmail]/Drafts` or `-f INBOX/Drafts`.
- 
----curl::
-+`--curl`::
- 	Use libcurl to communicate with the IMAP server, unless tunneling
- 	into it.  Ignored if Git was built without the USE_CURL_FOR_IMAP_SEND
- 	option set.
- 
----no-curl::
-+`--no-curl`::
- 	Talk to the IMAP server using git's own IMAP routines instead of
- 	using libcurl.  Ignored if Git was built with the NO_OPENSSL option
- 	set.
- 
----list::
-+`--list`::
- 	Run the IMAP LIST command to output a list of all the folders present.
- 
- CONFIGURATION
--- 
-gitgitgadget
+If we do not see further comments on the current patch, let's merge
+it to 'next', cook it for the standard 7 calendar days or so before
+merging it down to 'master'.  Further optimizations can be made on
+top of the updated 'master' branch as new and separate topics.
