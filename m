@@ -1,68 +1,68 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D7F30DECB
-	for <git@vger.kernel.org>; Sun, 17 May 2026 20:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5332330E84F
+	for <git@vger.kernel.org>; Sun, 17 May 2026 20:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779049626; cv=none; b=dqLzBWEWmheOrAXcTYno1QqiQLTQ5+NsDjO1bdxHt1UN3PVT/DYUkXRDxX7IRSSlA1/BHuiWPJe9y2vR8FB0PTVY3DnyvIJP0ETkWKtf1dHHx2CrO3Zo7uC4It14eHh1HEkQG2QOXgUxwhCLjdNOrbRtb4DUdB+mJqVQySmRfBI=
+	t=1779049628; cv=none; b=gFC8XYToNOjeOX+lxgeCrQGSfo8BNOX1VKTnUNn3JsOCxll47y5e6Ulg4F0ZFTbzgh3R2ahVMFcYJzMGo71CCZio91huac4Bg9M/Essn8ntDrWW18mvYWhX5+XLPcuZVWtG5T1s58FDdOL9wDn3OHoWcMzCkEP8A1dHjANuOM+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779049626; c=relaxed/simple;
-	bh=fNqWmpPA4Acog1H0BvG2VAdsaxiVua2/DlTMWJh928s=;
+	s=arc-20240116; t=1779049628; c=relaxed/simple;
+	bh=ZQvjYC/dfO9fo6V9EAOm2hWSs3AjjijL0FIvdRSkVS4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=Uw+amwoaJ9kngNEqgah/8MCvppmO/2bGuEca1VaPar86mLA787nXw5G7yysBQ9kKdqoded34xBAhqlkFJYb5ud2FI58A/WDEwH2DX6z8e24j/21bjkbhrg2LCmmDfqYZOCmTJ7U+/JPfoY06HD+7TU75cTC6WlEc3Aw1a2G0bMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OPrrqXts; arc=none smtp.client-ip=209.85.222.172
+	 Content-Type:To:Cc; b=onYKCPjFfhcpQxpso60n83rVyZ2P8t4h4mREbfahWNizInpCLOUfYP6TOc2HtHRcAtVjENcXxclKQiLCiy2WsEj4rbG+tHnFtyvkhBSmlkzQfcuP1O/K8XrlEao0DshWGv5sS2HSAWpiTuxSk5JUcokvvJdDp7mwAAH9ELLw6/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oYDImB+B; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPrrqXts"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-90d2acb9936so179130785a.0
-        for <git@vger.kernel.org>; Sun, 17 May 2026 13:27:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oYDImB+B"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-910f734b477so216002585a.0
+        for <git@vger.kernel.org>; Sun, 17 May 2026 13:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779049623; x=1779654423; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779049625; x=1779654425; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rrGOQ/a4CXudMvpeMrpSNuSC1VxO1PRc3WjkKtna3T0=;
-        b=OPrrqXtsxlp63dOfkL7YBtxhblswG2xm9dZhI+mWQbrUq0tqmHP3InPUH8+W8rbuPm
-         ys/jFqp/e+dTdDok81Ri82oNJzfE50mmOiSjoe94pNa+SMzyPV9/sqyTFrJC5QI/Mgy2
-         fy2DZ1XkhGnD2o23kEeAp3SxgofKAJYS2vmxKgnDAh0Zgd/QRPYuxJ6fTm5ZwQXx9euC
-         V9E6iHVm9Ate//4IvZ7Sw+p9yXneOiZnxNUy3Ll6ouMO1SlyDYcHO2Z2pVLwTq7fbiX3
-         O4zFXSl9x9I/DNY9+qaLJeowX6Ox3P4B8eFh7Bs9AABdkWi2rJA2w6UAqzau6JmHSdyg
-         BRbw==
+        bh=bdzZmfAIN3LPbPP0nv+Qm5fhePKQlLgg7whbOXfUIqE=;
+        b=oYDImB+B7V8/Z28YJJVg/l1SLs4DTU+1xgtm0XjIEjFYQfiNlFlKgpie0AOmE+vIpf
+         6x+i0MdIT9OXqHlLa+haoh/HSVcc7YvHDv6Ml50Re+TtQIghFXqvf2Te1lDLBJr7MDgo
+         G4p/vaZ+CQJCwt+PcY1y17swyB+OfntpVbK4wCM35HgLVcu3SAPPe94WPu24UIJzRYRq
+         uRQcPxSE2a9jMDYr8iYPanM3ipdjUChBKra5QcPOwTEA+rpHVMcfqTqu3KXkFdV0WrIu
+         zFWf5iVct+I+NZcddJf4do+gGbPZ8msXH9T09RQ2C16GTg80iECzETUwPPSBNUYpAT6E
+         DWaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779049623; x=1779654423;
+        d=1e100.net; s=20251104; t=1779049625; x=1779654425;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=rrGOQ/a4CXudMvpeMrpSNuSC1VxO1PRc3WjkKtna3T0=;
-        b=N7PqL9883g7hdcI8SAFDJlFpJwBQLGPUNKT0VQl04g2qmLdvY2l7B0F8jf//msd+Km
-         ACNjEesuJ7nu5n08P8G5XQRivjVtIVKhmZFras95gBlB36B8mSm7YFpbtL0SP2tXf9fm
-         agb5htI4os/rnI30pXYlEcVSi95eBx44wXz0/5arO8ddE8zRnr+HkqtE4hhBpB508v6q
-         z6ZlvwWlbzGpY0wD2L58JH3mT+vljkfexCVxGlkpAfjqJrR7YljLBQR6x6J8gB/SQj9n
-         AqPDvi9p/SxEbCdZTp6H6oTDFVcqfXMM1PP5Vi09h32bFK4tGFkfq0rCiMXTUhRYvUdO
-         KGGA==
-X-Gm-Message-State: AOJu0Yx4K99C4Ri6hUlErElRzI7nZBvJ1JDgE1nRv755p0IjTnkAY1/V
-	JYTF6Gmf0p72ZFX7HvkMiM4YpEtC+3bRJINCbamfrs34DtBGKaqxWvQIsKtH2Q==
-X-Gm-Gg: Acq92OHUaSWuSggo4/4cLN08FK6yyDI13aaEB4A51Imf8kq7iBznQPkZGiwxOVm3naZ
-	vZmuG7x10Bhg+pDkUh3jqB8zw/Fl/bqhnFGTE3EUbhMGXatGUwdiCt3olHf3ouqXzbT2Q0Zh9Tt
-	Byfl1+sg6p0bzTQcbgh4gyfeouPzuT1b093iszeLRU4t3VEQHNmZFA25V0ltc85LqcAW//+tB/j
-	AGdcKTPbcmNSUAz/aKlglZl/G4IsDrGW4wp2ZBRsw4oo4Io5hBV/aqF10puIoyUKkJ8TUZjatn3
-	1Ay7eM/qAKUmFd8cCGswVnSILKP09Ofx64lFpcoLbwxREyDbnX5mXlWrsLsuDAw4zprJIuHSDMJ
-	lBnbG8ULWb4UqrrPLFA+gLdl2rd+lAV0ox/t9GSbDW/doVBX3YhRx8tfnttBdqpASXkoZhl3eFR
-	99jHZKc8NDufv/IJ4dUTF5qW0V2u8evUxZkGORhA==
-X-Received: by 2002:a05:620a:199b:b0:8ee:f43a:bb6b with SMTP id af79cd13be357-911ccd8f015mr2019465385a.10.1779049622841;
-        Sun, 17 May 2026 13:27:02 -0700 (PDT)
+        bh=bdzZmfAIN3LPbPP0nv+Qm5fhePKQlLgg7whbOXfUIqE=;
+        b=Mz+oSrC7+xZPnlnyzIe5aHAbyZtelpWlegt/c557pG01DQl3DEBezoCWv4jPh7xliI
+         7uDO4cy1XCLa8HanR84cTSMmqdFaqVD7pkQYGMO3ZMZCbvGAGwftJI/ukIhdZkyH32Zi
+         yqa3Llg8ewAXDiLg9EmWCt1G8aflho1EMC5agEzCbcdzzELF8jvae1rfVmy4Oj3OJSsK
+         PS6WBoIr9cvdk0ezzRZPVPF2NoSw8WQaeo/6W/Nkvijr00xDQsustDkrWKATvPtyVaHX
+         /o6G7nIW9gZJt0qLJsmlZy3m+kq5vt6dY8ggA400H4J4uVkS/E5oT2hQrz9Gmw4j3Paz
+         MhOQ==
+X-Gm-Message-State: AOJu0Yw1vh1w613R8M95jX3fgkqgEkg2YPKzno5A1htrNR1AcsTmRz/c
+	GAjpDoGlbX7hWUCLxcy4hGhQjrr/kcqtbWR2L7htxAJwgkRJxonSO5FfyKW17w==
+X-Gm-Gg: Acq92OE9XU57rdIG4djCUPQsqeIXDmhLOnZ6fe2HvWbLWxf16VuUzg7qBqgolcuwlcK
+	y+X4VRoiZQRWI0hbJJCrfMIDzKdbIufa5DYcc42spFo6oxqFYbwVvtwgq3yAaAxFBVkmuPce27a
+	MyrfBB4ibyt6a4zhbX1P5Vq6AFcofFKYGR40pXLQIGz+F7MaATnx/I7y6Z3iv41BbIx1y8i4K//
+	r6Ds2FU6YBTuOJRRA7tM7pQ6xPqCsUvkia+Qsb0gKMuibKuqg3rzKOVuczWasxI4kHha4FYEOZx
+	hvn+tMHA6ZnINAa2Tc/H+baTgZYYc3qMLN1WPGQwdrvNvV0KV5mLArXMwdam8Mswn1++HNi1lvh
+	ULNvbYE+dS6U08IgNqdtuTyrfjsRCgduYJilZwaeWWfBUf3Dbuhd5naYXHxoOe4rBVUj5mlvKwp
+	GOby8J9QCa7guzRtzSMovpnU56568=
+X-Received: by 2002:a05:620a:1a20:b0:909:640:93b1 with SMTP id af79cd13be357-911cfbd1b03mr1966066785a.34.1779049624723;
+        Sun, 17 May 2026 13:27:04 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.134.161])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-910bd620fbcsm1286934885a.42.2026.05.17.13.27.00
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-910ba463814sm1254293085a.5.2026.05.17.13.27.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 May 2026 13:27:01 -0700 (PDT)
-Message-Id: <4ab60a95f4847bcfee82292ff4ac47424e5aa147.1779049615.git.gitgitgadget@gmail.com>
+        Sun, 17 May 2026 13:27:04 -0700 (PDT)
+Message-Id: <437e3f99c7c042a30e9c06503c3ffd2dd532b6d4.1779049615.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
 References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 17 May 2026 20:26:53 +0000
-Subject: [PATCH 3/5] doc: convert git-am synopsis and options to new style
+Date: Sun, 17 May 2026 20:26:54 +0000
+Subject: [PATCH 4/5] doc: convert git-apply synopsis and options to new style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,372 +78,356 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Convert git-am from [verse]/single-quote style to the modern
+Convert git-apply from [verse]/single-quote style to the modern
 synopsis-block style:
 
 - Replace [verse] with [synopsis] in SYNOPSIS block
-- Backtick-quote all OPTIONS terms
-- Convert inline man page refs
-- Convert inline command refs
-- Convert prose placeholders:
+- Backtick-quote all OPTIONS terms and config keys in config/apply.adoc
+- Convert single-quoted inline commands ('git apply', 'diff', etc.)
+- Wrap standalone placeholders in underscores (<n>, <root>, <action>)
+- Backtick-quote `*.rej` and GNU `patch` tool references
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/config/am.adoc                  |   6 +-
- Documentation/format-patch-caveats.adoc       |   2 +-
- .../format-patch-end-of-commit-message.adoc   |   4 +-
- Documentation/git-am.adoc                     | 132 +++++++++---------
- 4 files changed, 72 insertions(+), 72 deletions(-)
+ Documentation/config/apply.adoc |  17 +++--
+ Documentation/git-apply.adoc    | 125 ++++++++++++++++----------------
+ 2 files changed, 74 insertions(+), 68 deletions(-)
 
-diff --git a/Documentation/config/am.adoc b/Documentation/config/am.adoc
-index e9561e12d7..250e6b5047 100644
---- a/Documentation/config/am.adoc
-+++ b/Documentation/config/am.adoc
-@@ -1,11 +1,11 @@
--am.keepcr::
-+`am.keepcr`::
- 	If true, linkgit:git-am[1] will call linkgit:git-mailsplit[1]
- 	for patches in mbox format with parameter `--keep-cr`. In this
- 	case linkgit:git-mailsplit[1] will
- 	not remove `\r` from lines ending with `\r\n`. Can be overridden
- 	by giving `--no-keep-cr` from the command line.
+diff --git a/Documentation/config/apply.adoc b/Documentation/config/apply.adoc
+index f9908e210a..36fcea6291 100644
+--- a/Documentation/config/apply.adoc
++++ b/Documentation/config/apply.adoc
+@@ -1,11 +1,16 @@
+-apply.ignoreWhitespace::
+-	When set to 'change', tells 'git apply' to ignore changes in
++`apply.ignoreWhitespace`::
++	When set to `change`, tells `git apply` to ignore changes in
+ 	whitespace, in the same way as the `--ignore-space-change`
+ 	option.
+-	When set to one of: no, none, never, false, it tells 'git apply' to
++	When set to one of: `no`, `none`, `never`, `false`, it tells `git apply` to
+ 	respect all whitespace differences.
++ifndef::git-apply[]
+ 	See linkgit:git-apply[1].
++endif::git-apply[]
  
--am.threeWay::
-+`am.threeWay`::
- 	By default, linkgit:git-am[1] will fail if the patch does not
- 	apply cleanly. When set to true, this setting tells
- 	linkgit:git-am[1] to fall back on 3-way merge if the patch
-@@ -13,7 +13,7 @@ am.threeWay::
- 	have those blobs available locally (equivalent to giving the
- 	`--3way` option from the command line). Defaults to `false`.
- 
--am.messageId::
-+`am.messageId`::
- 	Add a `Message-ID` trailer based on the email header to the
- 	commit when using linkgit:git-am[1] (see
- 	linkgit:git-interpret-trailers[1]). See also the `--message-id`
-diff --git a/Documentation/format-patch-caveats.adoc b/Documentation/format-patch-caveats.adoc
-index 807a65b885..133e4757e7 100644
---- a/Documentation/format-patch-caveats.adoc
-+++ b/Documentation/format-patch-caveats.adoc
-@@ -28,6 +28,6 @@ repositories. This goes to show that this behavior does not only impact
- email workflows.
- 
- Given these limitations, one might be tempted to use a general-purpose
--utility like patch(1) instead. However, patch(1) will not only look for
-+utility like `patch`(1) instead. However, `patch`(1) will not only look for
- unindented diffs (like linkgit:git-am[1]) but will try to apply indented
- diffs as well.
-diff --git a/Documentation/format-patch-end-of-commit-message.adoc b/Documentation/format-patch-end-of-commit-message.adoc
-index ec1ef79f5e..a1a624d2ac 100644
---- a/Documentation/format-patch-end-of-commit-message.adoc
-+++ b/Documentation/format-patch-end-of-commit-message.adoc
-@@ -1,8 +1,8 @@
- Any line that is of the form:
- 
- * three-dashes and end-of-line, or
--* a line that begins with "diff -", or
--* a line that begins with "Index: "
-+* a line that begins with `diff -`, or
-+* a line that begins with `Index: `
- 
- is taken as the beginning of a patch, and the commit log message
- is terminated before the first occurrence of such a line.
-diff --git a/Documentation/git-am.adoc b/Documentation/git-am.adoc
-index ac65852918..28adf4cf65 100644
---- a/Documentation/git-am.adoc
-+++ b/Documentation/git-am.adoc
-@@ -8,17 +8,17 @@ git-am - Apply a series of patches from a mailbox
+-apply.whitespace::
+-	Tells 'git apply' how to handle whitespace, in the same way
+-	as the `--whitespace` option. See linkgit:git-apply[1].
++`apply.whitespace`::
++	Tells `git apply` how to handle whitespace, in the same way
++	as the `--whitespace` option.
++ifndef::git-apply[]
++	See linkgit:git-apply[1].
++endif::git-apply[]
+diff --git a/Documentation/git-apply.adoc b/Documentation/git-apply.adoc
+index 6c71ee69da..3f22dac1ce 100644
+--- a/Documentation/git-apply.adoc
++++ b/Documentation/git-apply.adoc
+@@ -8,8 +8,8 @@ git-apply - Apply a patch to files and/or to the index
  
  SYNOPSIS
  --------
 -[verse]
--'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--[no-]verify]
+-'git apply' [--stat] [--numstat] [--summary] [--check]
 +[synopsis]
-+git am [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--[no-]verify]
- 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<action>] [-C<n>] [-p<n>] [--directory=<dir>]
- 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
--	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
-+	 [--[no-]scissors] [-S[<key-id>]] [--patch-format=<format>]
- 	 [--quoted-cr=<action>]
- 	 [--empty=(stop|drop|keep)]
- 	 [(<mbox> | <Maildir>)...]
--'git am' (--continue | --skip | --abort | --quit | --retry | --show-current-patch[=(diff|raw)] | --allow-empty)
-+git am (--continue | --skip | --abort | --quit | --retry | --show-current-patch[=(diff|raw)] | --allow-empty)
- 
- DESCRIPTION
- -----------
-@@ -30,45 +30,45 @@ history without merges.
++git apply [--stat] [--numstat] [--summary] [--check]
+ 	  [--index | --intent-to-add] [--3way] [--ours | --theirs | --union]
+ 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+@@ -35,33 +35,33 @@ linkgit:git-format-patch[1] and/or received by email.
  
  OPTIONS
  -------
--(<mbox>|<Maildir>)...::
-+`(<mbox>|<Maildir>)...`::
- 	The list of mailbox files to read patches from. If you do not
- 	supply this argument, the command reads from the standard input.
- 	If you supply directories, they will be treated as Maildirs.
+-<patch>...::
+-	The files to read the patch from.  '-' can be used to read
++`<patch>...`::
++	The files to read the patch from.  `-` can be used to read
+ 	from the standard input.
  
---s::
----signoff::
-+`-s`::
-+`--signoff`::
- 	Add a `Signed-off-by` trailer to the commit message (see
- 	linkgit:git-interpret-trailers[1]), using the committer identity
- 	of yourself.  See the signoff option in linkgit:git-commit[1]
- 	for more information.
+---stat::
++`--stat`::
+ 	Instead of applying the patch, output diffstat for the
+ 	input.  Turns off "apply".
  
---k::
----keep::
-+`-k`::
-+`--keep`::
- 	Pass `-k` flag to linkgit:git-mailinfo[1].
+---numstat::
++`--numstat`::
+ 	Similar to `--stat`, but shows the number of added and
+ 	deleted lines in decimal notation and the pathname without
+ 	abbreviation, to make it more machine friendly.  For
+ 	binary files, outputs two `-` instead of saying
+ 	`0 0`.  Turns off "apply".
  
----keep-non-patch::
-+`--keep-non-patch`::
- 	Pass `-b` flag to linkgit:git-mailinfo[1].
+---summary::
++`--summary`::
+ 	Instead of applying the patch, output a condensed
+ 	summary of information obtained from git diff extended
+ 	headers, such as creations, renames, and mode changes.
+ 	Turns off "apply".
  
----keep-cr::
----no-keep-cr::
-+`--keep-cr`::
-+`--no-keep-cr`::
- 	With `--keep-cr`, call linkgit:git-mailsplit[1]
- 	with the same option, to prevent it from stripping CR at the end of
- 	lines. `am.keepcr` configuration variable can be used to specify the
- 	default behaviour.  `--no-keep-cr` is useful to override `am.keepcr`.
+---check::
++`--check`::
+ 	Instead of applying the patch, see if the patch is
+ 	applicable to the current working tree and/or the index
+ 	file and detects errors.  Turns off "apply".
  
---c::
----scissors::
-+`-c`::
-+`--scissors`::
- 	Remove everything in body before a scissors line (see
- 	linkgit:git-mailinfo[1]). Can be activated by default using
- 	the `mailinfo.scissors` configuration variable.
+---index::
++`--index`::
+ 	Apply the patch to both the index and the working tree (or
+ 	merely check that it would apply cleanly to both if `--check` is
+ 	in effect). Note that `--index` expects index entries and
+@@ -70,13 +70,13 @@ OPTIONS
+ 	raise an error if they are not, even if the patch would apply
+ 	cleanly to both the index and the working tree in isolation.
  
----no-scissors::
-+`--no-scissors`::
- 	Ignore scissors lines (see linkgit:git-mailinfo[1]).
+---cached::
++`--cached`::
+ 	Apply the patch to just the index, without touching the working
+ 	tree. If `--check` is in effect, merely check that it would
+ 	apply cleanly to the index entry.
  
----quoted-cr=<action>::
-+`--quoted-cr=<action>`::
- 	This flag will be passed down to linkgit:git-mailinfo[1].
+--N::
+---intent-to-add::
++`-N`::
++`--intent-to-add`::
+ 	When applying the patch only to the working tree, mark new
+ 	files to be added to the index later (see `--intent-to-add`
+ 	option in linkgit:git-add[1]). This option is ignored if
+@@ -84,8 +84,8 @@ OPTIONS
+ 	repository. Note that `--index` could be implied by other options
+ 	such as `--3way`.
  
----empty=(drop|keep|stop)::
-+`--empty=(drop|keep|stop)`::
- 	How to handle an e-mail message lacking a patch:
+--3::
+---3way::
++`-3`::
++`--3way`::
+ 	Attempt 3-way merge if the patch records the identity of blobs it is supposed
+ 	to apply to and we have those blobs available locally, possibly leaving the
+ 	conflict markers in the files in the working tree for the user to
+@@ -94,14 +94,14 @@ OPTIONS
+ 	When used with the `--cached` option, any conflicts are left at higher stages
+ 	in the cache.
+ 
+---ours::
+---theirs::
+---union::
++`--ours`::
++`--theirs`::
++`--union`::
+ 	Instead of leaving conflicts in the file, resolve conflicts favouring
+-	our (or their or both) side of the lines. Requires --3way.
++	our (or their or both) side of the lines. Requires `--3way`.
+ 
+---build-fake-ancestor=<file>::
+-	Newer 'git diff' output has embedded 'index information'
++`--build-fake-ancestor=<file>`::
++	Newer `git diff` output has embedded 'index information'
+ 	for each blob to help identify the original version that
+ 	the patch applies to.  When this flag is given, and if
+ 	the original versions of the blobs are available locally,
+@@ -110,18 +110,18 @@ OPTIONS
+ When a pure mode change is encountered (which has no index information),
+ the information is read from the current index instead.
+ 
+--R::
+---reverse::
++`-R`::
++`--reverse`::
+ 	Apply the patch in reverse.
+ 
+---reject::
+-	For atomicity, 'git apply' by default fails the whole patch and
++`--reject`::
++	For atomicity, `git apply` by default fails the whole patch and
+ 	does not touch the working tree when some of the hunks
+ 	do not apply.  This option makes it apply
+ 	the parts of the patch that are applicable, and leave the
+-	rejected hunks in corresponding *.rej files.
++	rejected hunks in corresponding `*.rej` files.
+ 
+--z::
++`-z`::
+ 	When `--numstat` has been given, do not munge pathnames,
+ 	but use a NUL-terminated machine-readable format.
  +
- --
-@@ -82,23 +82,23 @@ OPTIONS
- 	session. This is the default behavior.
- --
+@@ -129,20 +129,20 @@ Without this option, pathnames with "unusual" characters are quoted as
+ explained for the configuration variable `core.quotePath` (see
+ linkgit:git-config[1]).
  
---m::
----message-id::
-+`-m`::
-+`--message-id`::
- 	Pass the `-m` flag to linkgit:git-mailinfo[1],
- 	so that the `Message-ID` header is added to the commit message.
- 	The `am.messageid` configuration variable can be used to specify
- 	the default behaviour.
+--p<n>::
+-	Remove <n> leading path components (separated by slashes) from
++`-p<n>`::
++	Remove _<n>_ leading path components (separated by slashes) from
+ 	traditional diff paths. E.g., with `-p2`, a patch against
+ 	`a/dir/file` will be applied directly to `file`. The default is
+ 	1.
  
----no-message-id::
-+`--no-message-id`::
- 	Do not add the Message-ID header to the commit message.
- 	`--no-message-id` is useful to override `am.messageid`.
+--C<n>::
+-	Ensure at least <n> lines of surrounding context match before
++`-C<n>`::
++	Ensure at least _<n>_ lines of surrounding context match before
+ 	and after each change.  When fewer lines of surrounding
+ 	context exist they all must match.  By default no context is
+ 	ever ignored.
+ 
+---unidiff-zero::
+-	By default, 'git apply' expects that the patch being
++`--unidiff-zero`::
++	By default, `git apply` expects that the patch being
+ 	applied is a unified diff with at least one line of context.
+ 	This provides good safety measures, but breaks down when
+ 	applying a diff generated with `--unified=0`. To bypass these
+@@ -151,34 +151,34 @@ linkgit:git-config[1]).
+ Note, for the reasons stated above, the usage of context-free patches is
+ discouraged.
+ 
+---apply::
++`--apply`::
+ 	If you use any of the options marked "Turns off
+-	'apply'" above, 'git apply' reads and outputs the
++	'apply'" above, `git apply` reads and outputs the
+ 	requested information without actually applying the
+ 	patch.  Give this flag after those flags to also apply
+ 	the patch.
+ 
+---no-add::
++`--no-add`::
+ 	When applying a patch, ignore additions made by the
+ 	patch.  This can be used to extract the common part between
+-	two files by first running 'diff' on them and applying
++	two files by first running `diff` on them and applying
+ 	the result with this option, which would apply the
+ 	deletion part but not the addition part.
+ 
+---allow-binary-replacement::
+---binary::
++`--allow-binary-replacement`::
++`--binary`::
+ 	Historically we did not allow binary patch application
+ 	without an explicit permission from the user, and this
+ 	flag was the way to do so.  Currently, we always allow binary
+ 	patch application, so this is a no-op.
+ 
+---exclude=<path-pattern>::
+-	Don't apply changes to files matching the given path pattern. This can
++`--exclude=<path-pattern>`::
++	Don't apply changes to files matching _<path-pattern>_. This can
+ 	be useful when importing patchsets, where you want to exclude certain
+ 	files or directories.
+ 
+---include=<path-pattern>::
+-	Apply changes to files matching the given path pattern. This can
++`--include=<path-pattern>`::
++	Apply changes to files matching the _<path-pattern>_. This can
+ 	be useful when importing patchsets, where you want to include certain
+ 	files or directories.
+ +
+@@ -188,15 +188,15 @@ patch to each path is used.  A patch to a path that does not match any
+ include/exclude pattern is used by default if there is no include pattern
+ on the command line, and ignored if there is any include pattern.
+ 
+---ignore-space-change::
+---ignore-whitespace::
++`--ignore-space-change`::
++`--ignore-whitespace`::
+ 	When applying a patch, ignore changes in whitespace in context
+ 	lines if necessary.
+ 	Context lines will preserve their whitespace, and they will not
+ 	undergo whitespace fixing regardless of the value of the
+ 	`--whitespace` option. New lines will still be fixed, though.
+ 
+---whitespace=<action>::
++`--whitespace=<action>`::
+ 	When applying a patch, detect a new or modified line that has
+ 	whitespace errors.  What are considered whitespace errors is
+ 	controlled by `core.whitespace` configuration.  By default,
+@@ -209,7 +209,7 @@ By default, the command outputs warning messages but applies the patch.
+ When `git-apply` is used for statistics and not applying a
+ patch, it defaults to `nowarn`.
+ +
+-You can use different `<action>` values to control this
++You can use different _<action>_ values to control this
+ behavior:
+ +
+ * `nowarn` turns off the trailing whitespace warning.
+@@ -223,48 +223,48 @@ behavior:
+   to apply the patch.
+ * `error-all` is similar to `error` but shows all errors.
+ 
+---inaccurate-eof::
+-	Under certain circumstances, some versions of 'diff' do not correctly
++`--inaccurate-eof`::
++	Under certain circumstances, some versions of `diff` do not correctly
+ 	detect a missing new-line at the end of the file. As a result, patches
+-	created by such 'diff' programs do not record incomplete lines
++	created by such `diff` programs do not record incomplete lines
+ 	correctly. This option adds support for applying such patches by
+ 	working around this bug.
+ 
+--v::
+---verbose::
++`-v`::
++`--verbose`::
+ 	Report progress to stderr. By default, only a message about the
+ 	current patch being applied will be printed. This option will cause
+ 	additional information to be reported.
  
 --q::
 ---quiet::
 +`-q`::
 +`--quiet`::
- 	Be quiet. Only print error messages.
+ 	Suppress stderr output. Messages about patch status and progress
+ 	will not be printed.
  
---u::
----utf8::
-+`-u`::
-+`--utf8`::
- 	Pass `-u` flag to linkgit:git-mailinfo[1].
- 	The proposed commit log message taken from the e-mail
- 	is re-coded into UTF-8 encoding (configuration variable
-@@ -108,57 +108,57 @@ OPTIONS
- This was optional in prior versions of git, but now it is the
- default.   You can use `--no-utf8` to override this.
+---recount::
++`--recount`::
+ 	Do not trust the line counts in the hunk headers, but infer them
+ 	by inspecting the patch (e.g. after editing the patch without
+ 	adjusting the hunk headers appropriately).
  
----no-utf8::
-+`--no-utf8`::
- 	Pass `-n` flag to linkgit:git-mailinfo[1].
- 
---3::
----3way::
----no-3way::
-+`-3`::
-+`--3way`::
-+`--no-3way`::
- 	When the patch does not apply cleanly, fall back on
- 	3-way merge if the patch records the identity of blobs
- 	it is supposed to apply to and we have those blobs
- 	available locally. `--no-3way` can be used to override
--	am.threeWay configuration variable. For more information,
--	see am.threeWay in linkgit:git-config[1].
-+	`am.threeWay` configuration variable. For more information,
-+	see `am.threeWay` in linkgit:git-config[1].
- 
- include::rerere-options.adoc[]
- 
----ignore-space-change::
----ignore-whitespace::
----whitespace=<action>::
---C<n>::
---p<n>::
----directory=<dir>::
----exclude=<path>::
----include=<path>::
----reject::
-+`--ignore-space-change`::
-+`--ignore-whitespace`::
-+`--whitespace=<action>`::
-+`-C<n>`::
-+`-p<n>`::
-+`--directory=<dir>`::
-+`--exclude=<path>`::
-+`--include=<path>`::
-+`--reject`::
- 	These flags are passed to the linkgit:git-apply[1] program that
- 	applies the patch.
+---directory=<root>::
+-	Prepend <root> to all filenames.  If a "-p" argument was also passed,
++`--directory=<root>`::
++	Prepend _<root>_ to all filenames.  If a `-p` argument was also passed,
+ 	it is applied before prepending the new root.
  +
--Valid <action> for the `--whitespace` option are:
-+Valid _<action>_ for the `--whitespace` option are:
- `nowarn`, `warn`, `fix`, `error`, and `error-all`.
+ For example, a patch that talks about updating `a/git-gui.sh` to `b/git-gui.sh`
+ can be applied to the file in the working tree `modules/git-gui/git-gui.sh` by
+ running `git apply --directory=modules/git-gui`.
  
----patch-format::
-+`--patch-format`::
- 	By default the command will try to detect the patch format
- 	automatically. This option allows the user to bypass the automatic
- 	detection and specify the patch format that the patch(es) should be
- 	interpreted as. Valid formats are mbox, mboxrd,
- 	stgit, stgit-series, and hg.
- 
---i::
----interactive::
-+`-i`::
-+`--interactive`::
- 	Run interactively.
- 
----verify::
---n::
----no-verify::
-+`--verify`::
-+`-n`::
-+`--no-verify`::
- 	Run the `pre-applypatch` and `applypatch-msg` hooks. This is the
- 	default. Skip these hooks with `-n` or `--no-verify`. See also
- 	linkgit:githooks[5].
+---unsafe-paths::
++`--unsafe-paths`::
+ 	By default, a patch that affects outside the working area
+ 	(either a Git controlled working tree, or the current working
+-	directory when "git apply" is used as a replacement of GNU
+-	patch) is rejected as a mistake (or a mischief).
++	directory when `git apply` is used as a replacement of GNU
++	`patch`) is rejected as a mistake (or a mischief).
  +
- Note that `post-applypatch` cannot be skipped.
- 
----committer-date-is-author-date::
-+`--committer-date-is-author-date`::
- 	By default the command records the date from the e-mail
- 	message as the commit author date, and uses the time of
- 	commit creation as the committer date. This allows the
-@@ -172,29 +172,29 @@ committer date when applying commits on top of a base which commit is
- older (in terms of the commit date) than the oldest patch you are
- applying.
- 
----ignore-date::
-+`--ignore-date`::
- 	By default the command records the date from the e-mail
- 	message as the commit author date, and uses the time of
- 	commit creation as the committer date. This allows the
- 	user to lie about the author date by using the same
- 	value as the committer date.
- 
----skip::
-+`--skip`::
- 	Skip the current patch.  This is only meaningful when
- 	restarting an aborted patch.
- 
---S[<keyid>]::
----gpg-sign[=<keyid>]::
----no-gpg-sign::
--	GPG-sign commits. The `keyid` argument is optional and
-+`-S[<key-id>]`::
-+`--gpg-sign[=<key-id>]`::
-+`--no-gpg-sign`::
-+	GPG-sign commits. The _<key-id>_ is optional and
- 	defaults to the committer identity; if specified, it must be
- 	stuck to the option without a space. `--no-gpg-sign` is useful to
- 	countermand both `commit.gpgSign` configuration variable, and
- 	earlier `--gpg-sign`.
- 
----continue::
---r::
----resolved::
-+`--continue`::
-+`-r`::
-+`--resolved`::
- 	After a patch failure (e.g. attempting to apply
- 	conflicting patch), the user has applied it by hand and
- 	the index file stores the result of the application.
-@@ -202,36 +202,36 @@ applying.
- 	extracted from the e-mail message and the current index
- 	file, and continue.
- 
----resolvemsg=<msg>::
--	When a patch failure occurs, <msg> will be printed
-+`--resolvemsg=<msg>`::
-+	When a patch failure occurs, _<msg>_ will be printed
- 	to the screen before exiting.  This overrides the
- 	standard message informing you to use `--continue`
- 	or `--skip` to handle the failure.  This is solely
- 	for internal use between linkgit:git-rebase[1] and
- 	linkgit:git-am[1].
- 
----abort::
-+`--abort`::
- 	Restore the original branch and abort the patching operation.
- 	Revert the contents of files involved in the am operation to their
- 	pre-am state.
- 
----quit::
--	Abort the patching operation but keep HEAD and the index
-+`--quit`::
-+	Abort the patching operation but keep `HEAD` and the index
- 	untouched.
- 
----retry::
-+`--retry`::
- 	Try to apply the last conflicting patch again. This is generally
- 	only useful for passing extra options to the retry attempt
- 	(e.g., `--3way`), since otherwise you'll just see the same
- 	failure again.
- 
----show-current-patch[=(diff|raw)]::
-+`--show-current-patch[=(diff|raw)]`::
- 	Show the message at which linkgit:git-am[1] has stopped due to
- 	conflicts.  If `raw` is specified, show the raw contents of
- 	the e-mail message; if `diff`, show the diff portion only.
- 	Defaults to `raw`.
+-When `git apply` is used as a "better GNU patch", the user can pass
++When `git apply` is used as a "better GNU `patch`", the user can pass
+ the `--unsafe-paths` option to override this safety check.  This option
+ has no effect when `--index` or `--cached` is in use.
  
 ---allow-empty::
 +`--allow-empty`::
- 	After a patch failure on an input e-mail message lacking a patch,
- 	create an empty commit with the contents of the e-mail message
- 	as its log message.
-@@ -278,11 +278,11 @@ operation is finished, so if you decide to start over from scratch,
- run `git am --abort` before running the command with mailbox
- names.
+ 	Don't return an error for patches containing no diff. This includes
+ 	empty patches and patches with commit text only.
  
--Before any patches are applied, ORIG_HEAD is set to the tip of the
-+Before any patches are applied, `ORIG_HEAD` is set to the tip of the
- current branch.  This is useful if you have problems with multiple
- commits, like running linkgit:git-am[1] on the wrong branch or an error
- in the commits that is more easily fixed by changing the mailbox (e.g.
--errors in the "From:" lines).
-+errors in the `From:` lines).
+@@ -273,11 +273,12 @@ CONFIGURATION
  
- [[caveats]]
- CAVEATS
+ include::includes/cmd-config-section-all.adoc[]
+ 
++:git-apply: 1
+ include::config/apply.adoc[]
+ 
+ SUBMODULES
+ ----------
+-If the patch contains any changes to submodules then 'git apply'
++If the patch contains any changes to submodules then `git apply`
+ treats these changes as follows.
+ 
+ If `--index` is specified (explicitly or implicitly), then the submodule
 -- 
 gitgitgadget
 
