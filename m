@@ -1,98 +1,110 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154FA2F7F01
-	for <git@vger.kernel.org>; Sun, 17 May 2026 19:43:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779046992; cv=pass; b=nTifuznLsJ+7v67Jnd8vzZRPv3k0T6JHzjQkVpXUV4lK93Vev8o2a0LcQ3foekSRoiZlQiwgXwfPRnQDauG4kYYHvie4q7xiHkMLHWmsfKoCgv5oXwsuTJdxIJrjNOvFHMMVGoUSTr5JbUoSAYiHIYkI7WfoV0KlZw8JC+0ZI2g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779046992; c=relaxed/simple;
-	bh=gchZsQadrfGX/TyNNhy27n4i2BnMCXyWfBcqrKTQ3oo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=EtJKxyBzG3eSYLlgIOFKGy0ujtiAJ3R0Y7l7aQZmfpjUWIMJwACxd2pgRg1blNjMZfRA+Dgum07pIfn+zM8fXjyOr+zXxk0p9KSFuxZ8BxNI6GREKROK09aBAYVFw4TcOt/N492612l/ALyznOAP7OW01XDks2VvmO5q2hHAl6k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=enr+5Sss; arc=pass smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5B62F7F1D
+	for <git@vger.kernel.org>; Sun, 17 May 2026 20:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779049620; cv=none; b=Fj0cINqyPzkwOdM1fUNb9y86ArZwq0OixL+uhlXnKQvPdxII/3oHisfjNVppPEDk3wqymj6ebvvC/XmvvurPCqqay0GizgwgPNfPAETnBQg8T/WZRh6Kbmw0qSVSgjqP1uiflLsKI71QCqdnRLrR2jY2vSahfUHkg9C4c1lFc48=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779049620; c=relaxed/simple;
+	bh=5QMo76cZ9Az3aTYd+75pW+c1yvxYEJMKGKLmofiU9O4=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=BOB9X+ct4X5RniqnwuaI5Gr47yI0O8vV4UBOGGv5wkoikcPd1bp2ktSZN0mkjMzTYwKrjbTbHpZMBt9C9BVsqKeHn3uS0NzZbMmIILjTXsOHeuCvQaVG9/SxgP/TTczQtJaFBk1jW5tfAEUe/4Q0YO52CXnpQgDb3LWxbplATJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lp7q9Ak2; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="enr+5Sss"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-69d2e3b45a1so168268eaf.0
-        for <git@vger.kernel.org>; Sun, 17 May 2026 12:43:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779046990; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kcH83xP7jC97iBHhuXdSdKgIb7Jep1lc5NQ6YdDe+LDVqLACp0Zs0zeIb44WmQms92
-         2ERUq8Ws7KThSKXYpV5E87oC/3Sr3d93MrVdgkfg/rucaPaHdroGYQDHuvuq/8BVS1YY
-         fO26ycJ0VUk5IGGc2razwelyPj8ppt/4QVf8m1mepXSlZgMwNKYex6nkD8eCKSy8G82N
-         Kvw5mwgaYPC640r9Qg36MPZJd1eQapctSOyCJxjeu0GONO8OubJHwOj7WyhLLsNLSdrT
-         jTftBgifc79tSH+IX+rGy1dBlWSVrjf/S99GNgftZu/lgaGM+c5R8y3n/RNrMamH3ZqZ
-         7YRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=gchZsQadrfGX/TyNNhy27n4i2BnMCXyWfBcqrKTQ3oo=;
-        fh=Alk48k/bNmKhH3Coci7urZ1OhtMb0W9ZKbaSUroax+E=;
-        b=aHQHBBtOdoeFETiWC/vZeE58t0yVJBzVspqMMa833D6ewenb0UXj8iL6rYRjhPwdEk
-         naHQ/HM9BDDIELEHb794LLEzxe/GKGsKGxaFyiXXnZVhNJ6q+A92bTKZ9pvukvWxyXUx
-         SYc6/E7w6juRFMAeAKWfDGXn+nO0TX8dZ3fmGx//ppxdfGgOqHFLF1Rr0obrj/n7xyQT
-         JCvNcotcMAFft5OT9W0JwnV4VGHIMAn22fP+LFFYZe8bQqcVebrbMOhUuI5QIns+0eN2
-         zahGkR2aX8sn7Fsjut2RzcLhkCBISC66GDYQu7JChaMcOc0AHKgk8yR/f3ebvOjxobSu
-         To3w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lp7q9Ak2"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-51306c36c3eso21855381cf.0
+        for <git@vger.kernel.org>; Sun, 17 May 2026 13:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779046990; x=1779651790; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gchZsQadrfGX/TyNNhy27n4i2BnMCXyWfBcqrKTQ3oo=;
-        b=enr+5Sssbez4RC98BaHogPnpLLmwux2c2teOFQnuaf2raZwjkYOG1vbOklmFFFpqi9
-         4C+XfRoks9Q/TlIWReeQelwC/spT+Vqne/83pAKfrWiUoA9MwTYF4U6aw5MpG3NaFNub
-         mdB1a5zdKUv9KIL9Yymbr5PnPpKlc4CJUDA3eRzNV/wqS+2fGDACNO3aKU+kw3VM9i6x
-         6KHUKMXFrQOYaWxzFaX7YLwlbWqYUhwZwO9zUaP0o8QFGi2tXc2MGiCrliJqjhM/QhBM
-         VzeQHHjXEzVnnCOxf+/64F66Sg6q5G5mR+9sqia//m9Gtd72h+cscjdxixA7aKihVbBM
-         x8EA==
+        d=gmail.com; s=20251104; t=1779049618; x=1779654418; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DvVhRlPZg+OgExY6nJEBtxoyh/Pq2wsZuSzIvOs42Js=;
+        b=Lp7q9Ak2XJ17ie5xRTLzvg2QIQck2n22mFE04fEINA3RIZ45Fh6T8+RgtM2kp0f2Uf
+         H3RoL8L3QLFCBoHJD8R8Fhi9kM/vzhHXXOQ0PQXxSEpwPJlMzRQ0avpxYLH3qySKkz75
+         DQg6Y0NyhJxzHn/BaCTbXYWuH1D6utVhRJi4OJi6NNw6rrFsqwy0jVPEnLHxOdEL8HIU
+         PTW/V+8+fZttxERRoc1DecTrq7MmsI8v74PAaq4n/4ERyC1ypjnhLvJq/3ybiNWW4wwc
+         p6VJiiRY0yxAZpYown8wltbc1PZiLmZ21RFA6iz2/cJ7I3w3abWVPC5EFVL4VVZ8RmmN
+         0FyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779046990; x=1779651790;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gchZsQadrfGX/TyNNhy27n4i2BnMCXyWfBcqrKTQ3oo=;
-        b=VrWRkGBplf6B/ZrvwgpNvgMyW3RCzqbKDHVXNJYDWx2iMFBDrpdkzUcmBMnep7LIBp
-         IGc+vLgbis+GcAYcdekgcIwmlLbvzHTUNJY/N7olsVCkPaP+OpMUMApI7ahWMNjsrCjD
-         /PsdzlWRmAcPGInHJG6bRzEtPauNrtRndBDsBS8fA6yhpiOu6mynPbZIwOp3nhOf6Adx
-         gbz7+yXLZJa5bCwm7PlLRPFtgPuD69sL2rSOPxRcCDjdcdSXjr9/UPHv0O9BTAiJdlMD
-         0CpURorWPuPSF/PxSSKeS2vrf9k1CHYcEIFtGOYtHnF20ZkaEfzGkhI+gMMM4ZaROkMn
-         GbCg==
-X-Gm-Message-State: AOJu0YxwZtzRmg90KtizUaobPL7skwscJeWOQ2Hp4ZqrYr8N/elJJaki
-	DPc6fnpj4Tsq1wvdZWerueL3PBVGep+0EgVtGara08IrEKKEUjwSx8Q9j+21O1mWR8gye3Wg9lr
-	L6PB1ddRA6WJKVBFzQOR8VkP+wd4b/HbHlyRM
-X-Gm-Gg: Acq92OE0Usu71cUwgRqXps0k4pl9SuVHMAxDd9TdhIFTBeoyqGHf9oHCDsyonWVnxWs
-	GE60HG2qvI8ZN0p+ew/z/4Z/dWqFSaTmZ5mGNqzWDU5xusdhEmfM4sDaZKBTT/cb2r46oSiwrkQ
-	4jnDxXVLOWWqkmErOf1tAPoiIZP2FvvDd7mDWW7iPJyOnO2VOKGymKvn/pwHPCuUaOxKhiImV5a
-	w3pbodIr8eBvRlu/6NLAKAI9LuAiJlV71VBU55chAQNscIZINRSBW441RKYwM8iiTO4P/TEkkV+
-	2y4p1/QukJhhe2Y5mwVzVq9eFTIdxQZllW2/NEr9
-X-Received: by 2002:a05:6820:f034:b0:696:6f52:95f8 with SMTP id
- 006d021491bc7-69c94290f7fmr8251903eaf.3.1779046990032; Sun, 17 May 2026
- 12:43:10 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779049618; x=1779654418;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DvVhRlPZg+OgExY6nJEBtxoyh/Pq2wsZuSzIvOs42Js=;
+        b=Lxa0AJeQL0FPy5W/DThMCgHZ3bzX894+xKaJlnGyfS4s9Vu9eA5e+K6Htmg+XUnmlr
+         2WPbO5hfStqr26/R8q+JbP+Yr97eiPs3ydryKoSa+Kh3FEkx0rE/D9B1weefRsRrPeZ1
+         zfqKGiWwGpgqu2IDCR0BgJPSwQIlVG4sh5/WorysZlIcjRB01rgDDtlQHoKJg/8vdlZL
+         izU/zQJv/kiwTDgUBbkYrBTxVwEdVvgAcmXr+DhYM/0/7k0fEsfS95wgvlQlimOMtad6
+         oh4Qpj6PpNDGPUQS3bhZ1UH9CTZPpTkgBjWT6i9xz2p2uidGxNHLfuH08ewgKmmex7Y7
+         Mmsg==
+X-Gm-Message-State: AOJu0YyXhYlMpZT8hlpGowjnCRZLQnesMGicbjr4kYYEYSzoF3DlLoOb
+	O0n7nz6neg1BdsSf2pNMHt3VYP2uIguKvpmeJzm/Ij6s/P2mO9CxOc5YeSYslw==
+X-Gm-Gg: Acq92OELM2BM5eKrJ8a5PgF0eOse6oTX3s3bOBS5TVj6usRsnKRSRRsgsueE8HMMjw+
+	ENBqPT515V8Mz+oxCU3mUx6u7GaeFu8IO5DUYttPgGOTd8mKCm05CFHFwX+pShUOXy824Pxt5cR
+	qG7C4cHkBEVhAlsWLwb8/mQzBU7F1ImxcwLNfPWbNpiLz+e1VZQFsgtqrGvEuAnaHmRhPQDAJcD
+	If1HMg0ZIi9yh+6dTStSJOakiRGs0w2ZnK7/CvZMWmAF2mgeugD19NmcmR2qKR6OWU+F9Q7HV0M
+	oHTdLKPzBzdeWJ92u8J0ybxWxIdFRFbU6Kjf+ItEhTvJtnfYAqaX7jPUXfi9crZN1Zm82PRm75Q
+	GnxT0nb3yUeRtSoxGuvxOyoQtPMzPmoR++Vf2xXfE+PWUpDGfE0WimwGP5TSDtm6wceq/IG6WAK
+	W1Q0S5lLZ0lkEeStZPdqCbBFuN2JpksOFJ7ma3Ug==
+X-Received: by 2002:a05:622a:1181:b0:509:3257:c050 with SMTP id d75a77b69052e-5165a0dfe92mr179964471cf.24.1779049618027;
+        Sun, 17 May 2026 13:26:58 -0700 (PDT)
+Received: from [127.0.0.1] ([64.236.134.161])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca36086afcsm32357756d6.10.2026.05.17.13.26.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 May 2026 13:26:56 -0700 (PDT)
+Message-Id: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 17 May 2026 20:26:50 +0000
+Subject: [PATCH 0/5] doc: convert another batch of files to synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Sun, 17 May 2026 12:42:59 -0700
-X-Gm-Features: AVHnY4K1gVuFlFh40SvGoW72YjpXBqNab4_Fz2-GpgcU0GgluYh7F0MC69Y7JQA
-Message-ID: <CAC2QwmKi8wD_cE5aOCtX0SGhvv=yFJhKo5Vb1vyTKLq0RFWKvA@mail.gmail.com>
-Subject: Re: git rebase --continue segfault
-To: admin@leshe4ka.ru
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-On Sun, 17 May 2026 12:19:50 +0300, Alex Naidenkov <admin@leshe4ka.ru> wrote:
->
-> Hi, ive encountered on segfault when ran `git rebase --continue`.
-> Hopefully this would help
->
-> - i was in the middle of big rebase
->
-> - entered pin for signing commit
-> - segfault happened
+This time, 4 new conversions:
 
-Does `git fsck` show anything / also crash?
+ * git-grep
+ * git-am
+ * git-apply
+ * git-imap-send
+
+This batch was an opportunity to test AI-helped conversion.
+
+Jean-Noël Avila (5):
+  doc: convert git-bisect to synopsis style
+  doc: convert git-grep synopsis and options to new style
+  doc: convert git-am synopsis and options to new style
+  doc: convert git-apply synopsis and options to new style
+  doc: convert git-imap-send synopsis and options to new style
+
+ Documentation/asciidoc.conf.in                |   6 +
+ Documentation/config/am.adoc                  |   6 +-
+ Documentation/config/apply.adoc               |  17 +-
+ Documentation/config/grep.adoc                |  36 ++--
+ Documentation/config/imap.adoc                |  30 +--
+ Documentation/format-patch-caveats.adoc       |   2 +-
+ .../format-patch-end-of-commit-message.adoc   |   4 +-
+ Documentation/git-am.adoc                     | 132 ++++++------
+ Documentation/git-apply.adoc                  | 125 +++++------
+ Documentation/git-bisect.adoc                 |  80 +++----
+ Documentation/git-grep.adoc                   | 196 +++++++++---------
+ Documentation/git-imap-send.adoc              |  24 +--
+ 12 files changed, 337 insertions(+), 321 deletions(-)
+
+
+base-commit: 59ff4886a579f4bc91e976fe18590b9ae02c7a08
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2117%2Fjnavila%2Fbisect-synopsis-style-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2117/jnavila/bisect-synopsis-style-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2117
+-- 
+gitgitgadget
