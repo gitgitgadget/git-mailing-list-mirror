@@ -1,63 +1,64 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AA838AC85
-	for <git@vger.kernel.org>; Mon, 18 May 2026 18:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168EC388E6C
+	for <git@vger.kernel.org>; Mon, 18 May 2026 18:27:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779128850; cv=none; b=XtoX61Gwo98DNKg06a0NN6bdzwNuOd+K9Oyle9hhmnm8LvctxzK241hgCVf72DtIowOMEY9q2OiiXiAyQl2QWkNVUL216RZd2pZrpp4jIFPT12E6axs67hbTJYVTpbh0MWrtNdyxzaGjtwrGJecBDO5w2nJZz/U61FwS0/lsn6I=
+	t=1779128852; cv=none; b=N5mFS1LnVtC0fI1EQO6LS3W1Kjp3tZLQaaDZFTOC6wfAjcACXQS+EUg8y5rATopZCw57Jg/f9/+PPdKCartfZNm+uLwtXKAOGC9oYs0AKuplCrRSBe7KmnftP5WRcyZ1Q3L+xQYlPJtleWUK+JW6ubqPOl9aTElGzyi5RLKKeS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779128850; c=relaxed/simple;
-	bh=S/MbysyGPzw1PYQ+H5AdBqTg57tg6XB7zFpI7yqsles=;
+	s=arc-20240116; t=1779128852; c=relaxed/simple;
+	bh=P1brimXBSD3Mn6SBf13+alkeze2GMVtpYCmbiq8IJkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hxcd+U9ZhJ/A3Os7YY/7AUj5DJ7EYz1ZZieBLbqmuOv9ZvTcNKF1m8e1MuOdD9pFxSnD2hnJa7gEj2SradIyw4X33jvZqkJPk83hB/W5pSBF73yyXffCDZEl+VTS2QEUIpnvy6Dx9oMQmvXN5EzRI9EBtnIgQS8IfKBPDtrf0cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRvzwhMz; arc=none smtp.client-ip=209.85.214.178
+	 MIME-Version; b=Fv8waZuPxnpsZkfSK4S7MKtxGLQkUAt4wo/Uqqxrp2zMFOzOMqYzYkChoV4f+XCU259QMH2LJT6FxRDmej0UMILFKZafN7UGiKpF4nULYxYuEkeQfhXjhF2hO4dBvK7AXQAw41ATHZ3iY4Ts/oNsAT6OZEZlgiT4RY+8c+BjZ/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c0g1W+qV; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRvzwhMz"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ba928852a5so18222375ad.1
-        for <git@vger.kernel.org>; Mon, 18 May 2026 11:27:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c0g1W+qV"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2bc7b311e77so10571395ad.0
+        for <git@vger.kernel.org>; Mon, 18 May 2026 11:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779128846; x=1779733646; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779128849; x=1779733649; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/bSNmk7tfqS8aCYKqi7f2E69WWZeKdm0hHiySnfJOIU=;
-        b=SRvzwhMzldJu0gxv16/p7PYUB9g+L2q2SqsaFY6otZClWaAWNSrAxGvRBYMJCqCmzW
-         4YpLPIWG+HXE72Gpy36uRxB5Sy4ER2oJJapDozqEnFNwF7oPhNs8bzCYXRs4o57KUvEV
-         ke9rKnfv/vhI+L/q+A2GIKwYH364n1ebguRuhQzjyB/8FL01jbnWqFhzJNOEmzOf/a6A
-         xJ2lKFX9jAYzE07GVm4Sp+0lq9qvil/VreW0hgXFV/IivpCpVUI31IbYcacNINAbBvt7
-         xymVom75T0UNG8V7oF0T3J24mmEYaHM7WhZTXJHdm5NoK/X79ZLB4IbO1G8lagcDDThU
-         V6fw==
+        bh=V0oPRXs04pXauztxoLB7CKL8HMNfPaDumM03lO/ZSjQ=;
+        b=c0g1W+qV6Hu9IwRphT+13tAVBYGAbAdUA4xTRoh8gb+k6HpnIRJ0QoOZX5XivOpmJ1
+         d1GlP9deKVKq8v7MCiDP6eT71Hhb8vYG3bdLZCmOMQVdGP/GjLVTvSdohb51ro1k+53V
+         vc8VtkMngfMWpcVzNTsQgxHm+BXt3hIvNqHrtoNIXOeaIULMfKNaHZMpitspI1oWCtB9
+         woUosnp4/wXLrppcqHvWowbboFVQuc5OFd26IVSlza7MZErEOyMuW6adu2/V6wSv/8Xf
+         Yy7FmD9EjDFnAJ/b6pGgrem50kh9TDRdhn/xcfRY3vjpUGTH9KRq1SamKOwpQmLk4Zps
+         B1Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779128846; x=1779733646;
+        d=1e100.net; s=20251104; t=1779128849; x=1779733649;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/bSNmk7tfqS8aCYKqi7f2E69WWZeKdm0hHiySnfJOIU=;
-        b=KS7htb7PyEl+uY0nSczty57zjMesjY8uh8HvTqduChmuWB0jLOrl527zOXSxKrLEDa
-         5h1uBRQ9ve+xqjF+C1+WV1BXUezzRMkLlxWfRshD7dz6CtghFrsHl715tn/c49Bw9Z64
-         g4DCRMQLvh6ong/p2rvJMUUXg1DnHBPg6rLLExiPt2h1RyWEGAfycswvrDk+cxehYaLD
-         hiKgk4rjGvPFA3qnWv7BjUQj7aKBaKsh28qgLoEDqkbe+z9/Yyh/NlC9hu2GwNqzz+t0
-         JCbKAr3JUW9QUkgCoy4o7GBxjNaD/zTw32hZhg9jik6dXd4i77DvEGww32P5Iz7YRyDi
-         5wNA==
-X-Forwarded-Encrypted: i=1; AFNElJ/p0KWmW3D8KgiO26xaZJezMS9mr1Esjg1RhxKBDh29Ljj5yDfjyQpqKGkn+zC9vXVfSRQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcFAihIpuKrCSEWW4MoXoJEwrAYzv2EcBrW7VvjAcZf0qUdOsm
-	KEnthm0IRQ+qsJgr1lT1oy+GsXk0L26bNjIhrZBEMnJ87ra/wXRcilSW
-X-Gm-Gg: Acq92OFXhZrUAhu0J7kHNgVcBDh4dU+LOlI85/jbggbIAJNkl9tIddhQLsAr5OB8Jas
-	HKVScq617/kczCLxB3/+6CQ4v6yCcXvwjZYwnn9Xx/A4Uyzc4VkBbSeoFPzYAkJBc2pd7df9XUo
-	ELs5pdV5h+ImAARVoIBho246w4+XdZk95orfRFwoEoRdi4regBHhmYirAexfgt2Dsg90XzUUHta
-	xMIX0GlegJGbh412IMXRRYEIzevhGFIJ5tQxhW9ez1J6842d4Fbl/pstDSc8lHdvdYWcqS9qakt
-	17WdQaswTKmssF5klk1McHQ0L/BXXHNcB1oVzFvxiKKSdHjmwLWkQr0tt2EbBtVeuLvgg8eFalC
-	kE12wbtxu7VpKqPeKiSi5aOXVG3rWcOJgY/RndQgvfIUDsPoVTqEgGVWY5DS2D/VqIA2Kygy9O9
-	1iQbtWqAwfOy2/KX8kz/HZaSQ+ALjXi0REvOhEu+HQQAA/tGLeYTqEfBxAjPLnQfdq
-X-Received: by 2002:a17:903:240c:b0:2ba:de0:1eea with SMTP id d9443c01a7336-2bd7e8196dcmr176744795ad.18.1779128845758;
-        Mon, 18 May 2026 11:27:25 -0700 (PDT)
+        bh=V0oPRXs04pXauztxoLB7CKL8HMNfPaDumM03lO/ZSjQ=;
+        b=Q5ulxRqteCdsIuiVoQJjJ0W3VLTWLdi+OEGGn0p43lgzJX3HFOj26N0R2yYzWLVWLW
+         j06vtEC3tduS+qLYqTskv6ydMjOckrrePJAHMln6GIkSOQXU9dWJaV9lH6LQoWxa9A5b
+         yRPgfG1H/fsFSIQjLeWGxm+TkK0YoBR0K2C7iuKYExU3PHmNgwlcxxSgUZUbQI0bPcQc
+         pDPSh3uD9Caa9lvakYIS6xjGffvDgBzqTxE0bz46aszw+dJ//a4mQSYZBGFwfi3EhCxI
+         cvOVRyIX6cjhWZTqtBhuidRaQ4Zmy15cxqVMxUZ2ImK2Un7304WqJITBYN5tjmQkbIlV
+         dkkw==
+X-Forwarded-Encrypted: i=1; AFNElJ9ydClmSJXLApML4YLaFJnRidCF+2ktWgEsIdYSFlNVV+9RgYEIwojVVDVSfzyvriYHUv4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzCtgF1j5yRlcAqQBIzRmMoCpCLdzfEe4Pjl2uaFn+kf7/4wpmO
+	1ae9k246dctmwoDn4ZZgCBZLlTOvrBoh3XdeVmGS5DGTNBsGSRHCXC1s
+X-Gm-Gg: Acq92OECVDBB8SMpWBNk+Os3w0gQeW5ejXnTkubA1y6SJ0r4SmzY4vg5D2OKh3ozPcO
+	zmYFE0tpdNGGCReQOzDXdbTINQIIoOwWgRLKeFjiL9ef6j5bf2d/ZNFBra0aXskIH0iPERFgysO
+	zxbEq+Ehu41Rf0AI0MRQrLJIfcX0UaH1XBe2OvdtfBKPv6OryTLYmj8WXm23W+b5hMlz168AcRU
+	3dB9pNMUf38WDPMnWCPmxnRD6oYOkZ79yqG1DI3qkdML+mZ79c6GXWNVPxmPBAUUome/Sqv5Nkq
+	0jMXCM4TPijJaEVu0ak1BqxTlYXEHGwpgngckNt0mcs4lTRsvqq6FVBCtxPdnpMN5U+/0VYdwkF
+	BFfO/n8k6C0Gf7d+nuV9Y+fYjD5SSRbiBuMElQK83ksb1Fgc7hATHxcfbgF3hN0FAcAL1b2w+eK
+	qisbzcyQXv8FGq/R6CJgAUgSHLsajRQ4GfKFtnOotpvYgIQdNsbbA3AgC5MqA1h+i3y0+T0MCSG
+	bM=
+X-Received: by 2002:a17:902:f545:b0:2bd:4bc3:2995 with SMTP id d9443c01a7336-2bd5281ff47mr173144215ad.22.1779128848864;
+        Mon, 18 May 2026 11:27:28 -0700 (PDT)
 Received: from archlinux ([103.177.178.109])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5c0600a4sm148530085ad.30.2026.05.18.11.27.22
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5c0600a4sm148530085ad.30.2026.05.18.11.27.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 11:27:25 -0700 (PDT)
+        Mon, 18 May 2026 11:27:28 -0700 (PDT)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: usmanakinyemi202@gmail.com,
 	git@vger.kernel.org
@@ -66,93 +67,46 @@ Cc: christian.couder@gmail.com,
 	me@ttaylorr.com,
 	phillip.wood123@gmail.com,
 	ps@pks.im
-Subject: [RFC PATCH v5 0/3] push: add support for pushing to remote groups
-Date: Mon, 18 May 2026 23:57:18 +0530
-Message-ID: <20260518182721.155070-1-usmanakinyemi202@gmail.com>
+Subject: [PATCH v6 1/3] remote: fix sign-compare warnings in push_cas_option
+Date: Mon, 18 May 2026 23:57:19 +0530
+Message-ID: <20260518182721.155070-2-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
+In-Reply-To: <20260518182721.155070-1-usmanakinyemi202@gmail.com>
 References: <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
+ <20260518182721.155070-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This RFC series adds support for `git push` to accept a remote group
-name (as configured via `remotes.<name>` in config) in addition to a
-single remote name, mirroring the behaviour that `git fetch` has
-supported for some time.
+Replace `int` with `size_t` for `nr` and `alloc` in
+`struct push_cas_option` to avoid -Werror=sign-compare
+warnings when comparing against size-based values.
 
-A user with multiple remotes configured as a group can now do:
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+---
+ remote.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-    git push all-remotes
-
-instead of pushing to each remote individually, in the same way that:
-
-    git fetch all-remotes
-
-already works.
-
-The series is split into three patches:
-
-  - Patch 1 fix sign-compare warnings in push_cas_option
-  - Patch 2 moves `get_remote_group`, `add_remote_or_group`, and the
-    `remote_group_data` struct out of builtin/fetch.c and into
-    remote.c/remote.h, making them part of the public remote API.
-
-  - Patch 2 extends builtin/push.c to use the newly public
-    `add_remote_or_group()` to resolve the repository argument as
-    either a single remote or a group, and pushes to each member of
-    the group in turn.
-
-Changes in v6:
-- fix docs formating 
-
-Range-diff v5 -> v6:
-
-1:  e01126890c = 1:  e01126890c remote: fix sign-compare warnings in push_cas_option
-2:  adbce652e6 = 2:  adbce652e6 remote: move remote group resolution to remote.c
-3:  a8d5f4b7bd ! 3:  62a4499be6 push: support pushing to a remote group
-    @@ Documentation/git-push.adoc: further recursion will occur. In this case, `only`
-     +	...
-     +	git push <options> rN <args>
-     +
-    -+where r1, r2, ..., rN are the members of `all-remotes`.  No special
-    ++where `r1`, `r2`, ..., `rN` are the members of `all-remotes`.  No special
-     +behaviour is added or removed — the group is purely a shorthand for
-     +running the same push command against each member remote individually.
-     +
-    @@ Documentation/git-push.adoc: further recursion will occur. In this case, `only`
-     +any member push fails.
-     +
-     +This means the user is responsible for ensuring that the sequence of
-    -+individual pushes makes sense. If `git push r1`` would fail for a given
-    ++individual pushes makes sense. If `git push r1` would fail for a given
-     +set of options and arguments, then `git push all-remotes` will fail in
-    -+the same way when it reaches r1. The group push does not do anything
-    ++the same way when it reaches `r1`. The group push does not do anything
-     +special to make a failing individual push succeed.
-     +
-      OUTPUT
-
-Usman Akinyemi (3):
-  remote: fix sign-compare warnings in push_cas_option
-  remote: move remote group resolution to remote.c
-  push: support pushing to a remote group
-
- Documentation/git-push.adoc |  80 ++++++++++--
- builtin/fetch.c             |  42 ------
- builtin/push.c              | 251 +++++++++++++++++++++++++++++++-----
- remote.c                    |  37 ++++++
- remote.h                    |  16 ++-
- t/meson.build               |   1 +
- t/t5566-push-group.sh       | 160 +++++++++++++++++++++++
- 7 files changed, 502 insertions(+), 85 deletions(-)
- create mode 100755 t/t5566-push-group.sh
-
+diff --git a/remote.h b/remote.h
+index fc052945ee..741d14a9fc 100644
+--- a/remote.h
++++ b/remote.h
+@@ -418,8 +418,8 @@ struct push_cas_option {
+ 		unsigned use_tracking:1;
+ 		char *refname;
+ 	} *entry;
+-	int nr;
+-	int alloc;
++	size_t nr;
++	size_t alloc;
+ };
+ 
+ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
 -- 
 2.54.0
 
