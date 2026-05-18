@@ -1,123 +1,99 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA93C278156
-	for <git@vger.kernel.org>; Mon, 18 May 2026 02:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EB4405C49
+	for <git@vger.kernel.org>; Mon, 18 May 2026 02:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779070266; cv=none; b=Zp7gJQ6TlfuY4CTNFXM+UE8bMA/sYY+pwYdBYYiHrQc4WM7SYK5Kc04awI5EOLdwJIUHQ1786+1ddD03bRAtL5kxGkaEMfrTL1JUDPe5kd6kQ7ybL7NkJNiYHpXiCd9yyurvZJOqRKavT2LWKDpTsThRGkLooMaw2eDYI3Ur5H0=
+	t=1779072041; cv=none; b=P6r2xVbZ0RVOrOv8YeXPVr6tD/pSLCgRzqPIgfxIPe9yhVMr40R928/iDsp3bBEX+Mj5ko/TDdJDBBc6Kz6leetaC/kim1s57Hs/84OjWY7t+vx8lhPkWx9D8QC2QeoGo7w33h4ISgKhfdhqX0klRM494wHXPKHWukF/8JBnEgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779070266; c=relaxed/simple;
-	bh=clFyR7mRGfNZs3JLRlGeT60lYdCPX9Ihym43ZO/1vls=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=jntu7OoSyQb4ei5dUe/hUJBIyKJ2R3UkelyQTJaAt4WbsYvJLqN+aecUQFIs/wc5j0pq08hzD5OSMvNqv4g/S2e4zpwWjXq4zJi+q6MkX986QWs2W95+aliqtNukvm7KdZuj67/PBJPJ+ejGQw04cdYf6sJVbkG/objn0/Js79w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vq367naD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tWztYp32; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779072041; c=relaxed/simple;
+	bh=UyjbL7kMJ1oZLYyJtAqEcg6we0MPuoWnYLMw/qKWYho=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hpEPcSrCp+Qrd1cvQPmLHch32ws23JKWOP7L/BhDmjLdLIT/0ymGbmo768KysO7UWobOgnrm50QB5LkyNnDQS5HqMHOTi18D6vZeg5ePdi8L5GnYIW/8Qps1r86x9wY/2TZzpqNHx6GuTJwGP1k+IJN5QrM9oXynaomAKa+u5wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=OWJyboqo; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vq367naD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tWztYp32"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 44B7B14000F1;
-	Sun, 17 May 2026 22:11:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 17 May 2026 22:11:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779070264; x=1779156664; bh=4U18bY/540
-	aR12R9ZKxRsT1OBsHYIVyoU4iyOojvYSc=; b=Vq367naDfmJyeu+MIslpxjij6z
-	C2z/+JqB7Oo8I7ySfhR+X8yJ0l2xnYYedpdlrOCKujI8RSti+i+ELuC12OAGeHyE
-	U84Xpe6ptLcUouyHDggoyqYoecucYMbXTzxxFnTS9VT3tvgrSE/iyI85znUot/Qm
-	7BPrzjMjz/bu17IcpxDT4S3qqivPzlxIiY1oaIfxETaZ5x5Vb8B8hf4ZPwyW2wSc
-	AnTU5HY8Asj3fUqBiD7vhKLrNlXEDmiMajYbGlksoV5NsuhOMDxgg3KlB7MKHtY0
-	pcWPsMTchaQPbUZNgU9N5fY8JjMoQfiBwiZWfk82HfRISyagf//1yGu3PW+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779070264; x=1779156664; bh=4U18bY/540aR12R9ZKxRsT1OBsHYIVyoU4i
-	yOojvYSc=; b=tWztYp32kES4g72ucwhe5wOyWownk0h3OX1422o92pKRvFkDs+W
-	fH0AuKzeAo2NnH44hIg92U9yvroEZX5OHS8aI6rCCiK0s3kCVncP9CiRzW7dL0RP
-	PESKuDaVG/V/V4RjZLM+mCaMieWt8zI/jbcMjNADALrXgCtJ11ud1UcL9kX7xjB6
-	g6HSfVMv55kH/qxDmz2AxiIhfuaauauKedzS5SryUT6OYxS4BI5qTCHnrs84P9Up
-	nHQbHP3dU9WiRST7oi5G/iwIUi8tfbTdNMZZhom4CuYtE8V8T2RkdY/FqjK6AXCz
-	vVL1XEWnQuZaDFmORAdncLtty/z8lOaCLgg==
-X-ME-Sender: <xms:OHUKamGihBCQyVWwyV0Qq67BOzidPXOkgUY8UQYWtNtjHeeDDNVdHg>
-    <xme:OHUKauUJ92QF7N9fczR0BgNlR4aHcHZWBtds0rUCOaNUdbw1UQOXT-Dc1arJlg6Ia
-    mhSlHyQBYblU_eBfE1wUlHDfJVa0yLnNQRMdzwh9Cq5EqD6ZH2F0Q>
-X-ME-Received: <xmr:OHUKalICGROACWtZjOpm2lhsM14zepSA3z1ptgiE3qjyHj7as6EOtPUWPEO7BT4UgvBoVC0SE1gQGAsVGsAorvb4umbbgZM9XZLeCCHJnBgF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeejieegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepvdfgfefhjeejveefhefftdffteefudeuhfekjeeffeffueehudelueetgfei
-    tefhnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfh
-    hrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OHUKau-2c7IxTPAad3ovQRpo-MuzNO2hZyZNNDn-9tgDpyUQtV6iCA>
-    <xmx:OHUKaoLTNIXT2foQJZn-jJXu2roPmyp4Ax4MxzxzFRt_RsvQjXLxgg>
-    <xmx:OHUKajko8zMKEPO7mYyUBIj4LhSnbp7y7ZTgp8XjF-Y-OJQteLSRmA>
-    <xmx:OHUKasNpIp88F67RSq-aN-q--ZaAvmJ9fI0vQmmMZmRa76XEjaGIng>
-    <xmx:OHUKavIKpgjVq2Av1iTMo5Irxk6y-MO1IpZYy9u7uEwgx8hRGxT5odFa>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 May 2026 22:11:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH 1/5] doc: convert git-bisect to synopsis style
-References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
-	<dca7f192f1e5cdfb57682feace0a4b3a10204376.1779049615.git.gitgitgadget@gmail.com>
-	<xmqq4ik5d0le.fsf@gitster.g>
-Date: Mon, 18 May 2026 11:10:58 +0900
-In-Reply-To: <xmqq4ik5d0le.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	18 May 2026 09:26:37 +0900")
-Message-ID: <87tss5wjpp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="OWJyboqo"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 64I2eLLh010410-64I2eLLj010410
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Mon, 18 May 2026 05:40:22 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1wOnu1-00DOMP-Nh;
+	Mon, 18 May 2026 05:40:21 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Mon, 18 May
+ 2026 05:40:21 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 04213b27;
+	Mon, 18 May 2026 02:40:21 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, Tuomas
+ Ahola <taahol@utu.fi>
+Subject: [PATCH] fixup! approxidate: use deferred mday adjustments for "specials"
+Date: Mon, 18 May 2026 05:40:07 +0300
+Message-ID: <20260518024007.18689-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260516151540.9611-5-taahol@utu.fi>
+References: <20260516151540.9611-5-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+X-ClientProxiedBy: ex19-12.utu.fi (130.232.247.52) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIW0hYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZW0gYDQ4OKBgNDg5GBg0cSFg=
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=a7kLaEcSlF1/AoHVWUeVvib1IWXskpLMzZPt/KwpO34=;
+ b=OWJyboqoWR1FMsgNNcvZuODiQqs0zM2jH9il9rKyp8WD7h27MzUs8xBMV9y713RbxDFaMr3KiYoz
+	CeKfJMuf/5h2ITHDl7tT9otkU/TvpqQRX07zaGskkLvoJMgdrITDEU+/5XKvVc33+I86TE8wYRWG
+	GqqnfULHCaw9x5ZLeeHhgSIOVIPQc0oMjSbDBcXbNSDjS2NHy4lOhxzj+S01icpJ31znjtLyQMzt
+	SY/YvGwKvxavE+TCoiWq6hER010KJRHdKupTgsJoIYkxnRjtOG06KMf3e9kuScowfor3SVQw0vdg
+	A+WEfTaej6FoO53wykzusJ0iAt8UXthMAkt4Lw==
 
-Junio C Hamano <gitster@pobox.com> writes:
+Oops, let's reorder these lines.
 
->> +[synopsis]
->>  ------------------------------------------------
->>  $ git bisect reset <commit>
->>  ------------------------------------------------
->
-> and
->
->> +[synopsis]
->>  ------------------------------------------------
->>  git bisect old [<rev>]
->>  ------------------------------------------------
->
-> were a bit surprising and confusing.  They are not exactly command
-> syntax definitions (which is the SYNOPSIS section is about), but
-> examples of usage.  The one with '$' command line prompt feels
-> particularly confusing, as the prompt is not something that the
-> end-user gives, unlike what we write in the synopsis section.
->
-> Other than that, this is quite exciting.
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
+ t/t0006-date.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Well, my local test with asciidoctor did not barf, but it seems that
-the documentation pipeline run in GitHub Actions CI is unhappy.
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index b187b1bfc4..63e5628e05 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -212,9 +212,9 @@ check_approxidate 'noon today' '2009-08-30 12:00:00'
+ check_approxidate 'today at noon' '2009-08-30 12:00:00' '-12 hours'
+ check_approxidate 'noon today' '2009-09-01 12:00:00' '+36 hours'
+ check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
++check_approxidate 'noon yesterday' '2009-08-29 12:00:00' '-12 hours'
+ check_approxidate 'last Friday at noon' '2009-08-28 12:00:00'
+ check_approxidate 'last Friday at noon' '2009-08-28 12:00:00' '-12 hours'
+-check_approxidate 'noon yesterday' '2009-08-29 12:00:00' '-12 hours'
+ check_approxidate 'tea last saturday' '2009-08-29 17:00:00'
+ check_approxidate 'tea last saturday' '2009-08-29 17:00:00' '-12 hours'
+ check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
 
-https://github.com/git/git/actions/runs/26008649802/job/76444895183#step:4:4846
-
-I do not know what the differences among the three environments
-(counting your development environment---only one of which fails)
-are offhand.
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+prerequisite-patch-id: 699b43ba1ff3235d54fa068f4c9b5ab5aa58eacc
+prerequisite-patch-id: 2ab5ce03bce8b2953b418fe884f45fbd4a629337
+prerequisite-patch-id: 52e3b766b9c6f148f09682b898bf5244b22ae0ba
+prerequisite-patch-id: 1cd0e7498368f7c3b1833f12d56fefe732dd0413
+-- 
+2.30.2
 
