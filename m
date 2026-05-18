@@ -1,66 +1,66 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DB33FFAB2
-	for <git@vger.kernel.org>; Mon, 18 May 2026 12:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156F540312B
+	for <git@vger.kernel.org>; Mon, 18 May 2026 12:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779106640; cv=none; b=pSqTsKq2O10kp9fOnDPubaq9oVqs5sIxOX4UdbvaAS62CrmXPe0w8LqgzWIWA4sLCutacDVcr+f7MzctJiuWfgWxp6p7Aa0RgJMjmjAFW0js2gT6X88gfZSYw7vuiYmFgl2GOuQJ3/lEOQT8UZKZd6OXflsEEajMnBbExnolQdg=
+	t=1779106848; cv=none; b=mCdaU/RHaKMIrRznfRZ+fdy3D1FMt11KiQsNY7DgB2QFXrsxFG07s627LgHc96fdRsRhg3sgtumefiTIY2De3+UBGLzCnul2dY6vAQzkaWcfoDdao9z8LVrglHHgZOivEm3nIffpp7tlKYsJe5TE8cPEDxm3mpCJcuiKV8c4pqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779106640; c=relaxed/simple;
-	bh=lYazJi496icQkf5128S98w5bRZgx8/8ENGB9+fAIo/8=;
+	s=arc-20240116; t=1779106848; c=relaxed/simple;
+	bh=ibc2oz/vqEpVsujMuFoJRSi9q8aCdFZUHfeR7Km4bmM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eb27JEl3QHWqLZgdaGOUTAmGiXqc7W4vq+hSfp1WeOlRdFIQQMmbYzIzJFHiJpW8f0aC7Dt7KGsLtFYRjK+/k25L2cwrkbju027eNjszDGNNhDGcyhzOwnt/wYo4GAyrIgrjbPouiYienSMk3QWbFgY+XAODnNkXVPEz6r1hujo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rkM2Ele2; arc=none smtp.client-ip=209.85.222.180
+	 In-Reply-To:Content-Type; b=P0W6l7kGdXmqrygCZDfzYz/Eh/ocAEfZCmhokyMzmEp7fZwHK+sll52sYdpKpO0LTtSERvN2xXeIhYa86NjM+AMHHnrktbeSJrjNVFU5gUsROppOrgqB1v6hHDjl3m0tO1FxAZNgwwpbsps2VmlKvufgrEfoES6bPaXP2u50PPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrj8QpW5; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rkM2Ele2"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-911488599e3so275030285a.3
-        for <git@vger.kernel.org>; Mon, 18 May 2026 05:17:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrj8QpW5"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-9118b952e2bso409542585a.0
+        for <git@vger.kernel.org>; Mon, 18 May 2026 05:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779106637; x=1779711437; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779106846; x=1779711646; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WeqDAJRVgfgvXfB2PzBjkzs75+kXlCfWlAPAWxoKDN8=;
-        b=rkM2Ele2vKfSjPrv2Ij+1rChgPy5aI+C9EwUjRizcZw+v7v2+LBNZLjPy9IsmtL25X
-         /3lXehcY7oRfMJ97MQq0e+6u6esW8N23IZdcimumNiR1uDhCmzF8KOMANU0zvXRxUQAm
-         9lf2Es2dTMxwzYSK4lI/l1CclQqC0iwCi3Nm1W/7o/PPw2wJpjdrnCk+8D3KR0CU6QDJ
-         oWwKUmbmcboIs9q523Q5KywXEaNYY9c16K1Zr+09kDUyLuCj8fUdTwoY8QulFnI27xXj
-         xEoC/PJfBxxwHIdPfk7gUTUoKqCAt+xhRC56gQlAdp+UbTk3A43umznIE4pHAqNVc22F
-         C35Q==
+        bh=oSzXXui0MTjPzf7RUbuu0LQiaCBfKeXK2lot0wp3+U8=;
+        b=nrj8QpW5fTElN1U64wafMizL8h6DuX5XWA/VHdVZ+HsGbl25cGcb6L2y8ccnhXay/l
+         s2cUeqOqlPLqbQBLN6AYIyds08bapwW7iJXR2lOwEVqzRVKjP05fiFllVkrgwbF2348b
+         836duGNQjABDCAh8/azYpici/q9xDyNRSNGJ04R7gGzzccIsV2ANslqxRyqWe7eeXwVU
+         gLhQfXE3Kd8Yr01CMuvfQiajC1d1P5x2pbyW3HQG58OvlW1RNPZYG8HFRmzEm3J4pAVa
+         ZqGzv12vT/Q5khu5LHZaFwFxN2fTf8Z8etzyjcQVPVNjjY9MvXmY8EuDhdX5votXxpJN
+         2wUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779106637; x=1779711437;
+        d=1e100.net; s=20251104; t=1779106846; x=1779711646;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WeqDAJRVgfgvXfB2PzBjkzs75+kXlCfWlAPAWxoKDN8=;
-        b=inREWmPWjLlrKl3UTmc4JPBHeaS7u3JiI/1+JvtJ0IwYA2NHpWH/GT237CBo1qSLrp
-         vN/6YMfRqBPA/l1SItCalQRP7iUczALGNBk/1mDt8jFDwHcNjZDu+mpgBZRAgbJ8C/6E
-         qeXiemOresLKUsZj+ueKlR88oqqcfN6Mn96njF8LeXFNhacpvqupVtLalIN38CRk5L2v
-         lVnoHgKI4j5aMy41ep/X5podY5ixB1RAkbAIVtYPSTVvpAqahH51WVJ4iFSsetgNxnmC
-         ddjcTY0pFh3+wGP0TD4P2crY4r9ihULSM3P7Y3+ooSApfP2v8jkvoXPUeSE54GeMNWgm
-         Q/xQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8MbTe8H8GTutMccdIGtZgsnhNk1ek0MXoa1WFRXSxRazN8QRXwZux1pWIpEwZJyssbDDM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyIiEglUPj8CRSiIx/OqFauO7cH6j9W8ubPagVR0XMlBPR5z0c
-	GE+2OQ+Yodc5x20mO0LVVCIewiNHAe6+AlHqt/rROFp0sDgkVybke/1M
-X-Gm-Gg: Acq92OGZKJDShDdEDsTRN7DvudsX0MVQD298x3Bsyz8LdQm7jdiFN4VrF9H/3kkcsjW
-	jtDuI0/QrOIh1BN9Bx1wm1nChTAhUFIxL38xrxFxAGbY1jsopFoTU+3do9o0p18pJI3z5FKWEWr
-	iMLKRB2zSxbA65bZM1r5Lq3JjGgBHz6gkpeHRcJk1X4SIn7rrpoUIwcbH3GbGc73PoLix5EUknA
-	Ijkr0d1+qiECrV3PdLWYZnc7CZ233uhTKRlJz+D1ufAxkviRUE9/4sNAsWjtFwVcIf+e764dENK
-	a0J29RArquVRJSHswcSm7reO9++diZxY8TQXWkWLymIuvqv1NS+4BEYPHBdVSLra0+6bkk9lArf
-	8pf4QNztdLhzsgaCwpqcUyKhBkMvcucT3nwE6bbnP0YEdnXVg8F2MMcKd1vi6EkbyuUf9+kJfcv
-	X7O5PNxaXSARCGlJuPvDmUw3nmus3XRwhbwb3ChE4gZHuOyLbNy610ZO2HKcCcy2CgvheiHw==
-X-Received: by 2002:a05:620a:3705:b0:8ee:cbf0:8311 with SMTP id af79cd13be357-911cfdd6266mr2207534585a.54.1779106636524;
-        Mon, 18 May 2026 05:17:16 -0700 (PDT)
+        bh=oSzXXui0MTjPzf7RUbuu0LQiaCBfKeXK2lot0wp3+U8=;
+        b=Q1vBgHQQna7mGRG6Mk4/lFy7AMbA1iUZG7bwPSp3JMGiyb5eXnYdACjDnxP5PEGPZZ
+         lHnSHV7CA/rRryERFuqh1TF2wx45AfAiSnpNYrzFVP5H/uRO9Aun2ommiTdJ2YR/ibbY
+         /wvdraY8hxf7RouMyob15mWSWZIvY6NerEHXKWsiMutae114VCXbfZGiwTVy/hRrtXJT
+         pO1Tmtdv+CQNgjusKrPs9txZU1dPFJD+KYNKBqlQcxyiFTOSspqJQbmA7PKoy3zqxVqm
+         283Oouqk/utmxOrEAxWB0UoIoTdI2SFbD9TBFZRZVQV0PQh3IElMXuIqGq/D7M/9Y5BU
+         pSVg==
+X-Forwarded-Encrypted: i=1; AFNElJ+kl8ZgogxuduRcp24YFHGJ8xx4YvNim3Xb10Iy0H15EY91ECtdS+y9VzE6ZxbRCmd3KvY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxu6Zx72xgDrbw5G9Ke/fChlzqHZz01gKP2kopyiIpqIrzjhvrL
+	hGB7+GLCE1RjWPx+SuztSgN9JTrHG5wNXxDFLSLqrz7e5gDYDIMkpTOD752kVbyZ
+X-Gm-Gg: Acq92OHU5B73hsISusXYR5hCHh3rJTF8JAvtbBtp2sshi+Vv6F5P566z6z/OkiNXVnA
+	t6H6c6o2bpjNxfN1YyuIQ+1eTianSLIYABUHUX6rw7CYCRDeDflho0R3lmI2HeeAl9SrEti0aZP
+	zgtuIZRY3I3yttHVhnyUiLgL0Zu+XcpWZ+WIRHQyHp4wHTVZvoxN4EeLx0d5xcGGa19WEJ6vp6D
+	IhiFY/7Lab1CWJDIZhXEeXVYakB6w8lspua+dvcczswldg53RdyRa72GRhxhAi3ygT8hLmhNYtO
+	VQN79lvUyKA0brWceBGqo8tcfx6ZJJIhTiw5+lgXeWnxiZN1rnnJabmSqnz03kY53JB5D4efiO3
+	2FOx4X8nlpGv81WvknKmupQnfwLKGwxu4hACiOH+sJ3Fz00SD+cbwDVldVgdsHjKAr7pU08dTkA
+	IY3Ui36iWiuzw/4gIJO5H4JwMqx3MOGOicQougedry9p7kj5FHKT7VGJq2lZPOFNTp/icXxg==
+X-Received: by 2002:a05:620a:46a9:b0:911:6136:281a with SMTP id af79cd13be357-911cc4bc1b8mr2106573785a.17.1779106845927;
+        Mon, 18 May 2026 05:20:45 -0700 (PDT)
 Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca36086a61sm54347656d6.4.2026.05.18.05.17.15
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9114edfd3ebsm1341454785a.23.2026.05.18.05.20.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2026 05:17:16 -0700 (PDT)
-Message-ID: <0da4f159-8d4b-49e2-93c1-25aa0bf69371@gmail.com>
-Date: Mon, 18 May 2026 08:17:15 -0400
+        Mon, 18 May 2026 05:20:45 -0700 (PDT)
+Message-ID: <c5b333f1-0db6-4aec-a369-6503cb924e7f@gmail.com>
+Date: Mon, 18 May 2026 08:20:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,37 +68,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] Batch prefetching
-To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+Subject: Re: [PATCH] merge: use repo_in_merge_bases for octopus up-to-date
+ check
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
- <pull.2089.v3.git.1778775928.gitgitgadget@gmail.com>
+Cc: Kristofer Karlsson <krka@spotify.com>
+References: <pull.2110.git.1778566286543.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.2089.v3.git.1778775928.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2110.git.1778566286543.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5/14/2026 12:25 PM, Elijah Newren via GitGitGadget wrote:
-> Changes since v2:
+On 5/12/2026 2:11 AM, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
 > 
->  * Modified the final patch as suggested by Stolee to include pathspec usage
->    in the testcase
->  * Modified the last two patches to not re-download blobs we already have
->    locally, and adjusted the tests to verify
->  * Inserted a new first patch, containing a documentation addition that
->    would have helped me avoid making the above mistake in the first place.
+> The octopus merge path checks whether each remote head is already
+> an ancestor of HEAD by computing all merge-bases via
+> repo_get_merge_bases() and comparing the first result's OID to
+> the remote head.  This is more expensive than necessary:
+> repo_get_merge_bases() calls paint_down_to_common() with
+> min_generation=0, performs the full STALE drain, and may run
+> remove_redundant(), when all we need is a yes/no reachability
+> answer.
+> 
+> Replace this with repo_in_merge_bases(), which answers the
+> is-ancestor question directly.  When generation numbers are
+> available, repo_in_merge_bases() uses can_all_from_reach() -- a
+> DFS bounded by generation number that stops as soon as the target
+> is found or ruled out, without entering paint_down_to_common() at
+> all.  Without generation numbers, it still benefits from a tighter
+> min_generation floor.
+> 
+> Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+> ---
+>     merge: use repo_in_merge_bases for octopus up-to-date check
+>     
+>     While reviewing callers of repo_get_merge_bases() for a different patch,
+>     I noticed the octopus up-to-date loop in builtin/merge.c computes full
+>     merge-bases only to check whether each remote head is an ancestor of
+>     HEAD.
+>     
+>     The existing code calls repo_get_merge_bases(), takes the first result,
+>     frees the list, and compares the OID to the remote head. This is
+>     equivalent to an is-ancestor check, which repo_in_merge_bases() answers
+>     directly.
+>     
+>     Using repo_in_merge_bases() simplifies the code (-14/+4 lines) and
+>     avoids unnecessary work: with generation numbers it uses
+>     can_all_from_reach() instead of paint_down_to_common(), and without
+>     generation numbers it still benefits from a tighter min_generation
+>     floor. In practice this only matters for octopus merges on repos with
+>     deep history, so the main value here is the simplification.
 
-Thank you for these changes. I reviewed the updates and documentation and
-think this version is good to go. 
-> Note: Stolee also suggest some code sharing or code movement in his review
-> of v2 2/3, but possibly based on a misunderstanding of v2 2/3 (that patch
-> isn't about a diff) and it's not clear to me what could be shared or moved,
-> so that's not part of this round.
+The code change looks right to me. Do you have any performance numbers
+to share? Or was this motivated mostly as an opportunity for code cleanup?
 
-Your detailed responses in the v2 thread helped me understand that my thought
-was misguided. Thanks for giving me extra confidence in your approach here.
-
+Thanks,
 -Stolee
+
 
