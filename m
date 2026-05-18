@@ -1,211 +1,153 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB6A31A55E
-	for <git@vger.kernel.org>; Mon, 18 May 2026 10:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794183F0AAE
+	for <git@vger.kernel.org>; Mon, 18 May 2026 11:23:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779098574; cv=none; b=YLfu7VV2SdtF4Se8XPtXlp4u20Ruxgknec68keoVrMkOkSU8mdLxreA7B1BuP+CAbZ9PPYlMKRgzz7i9Mj7h/s/0sIJNSrWDihzMMcdzZMjxMxUyV8g+LqvrSA5oWDCI+hsLoWq5Np1KXqXlnODkK/H+4uARs4BFuH/W3BXnj0k=
+	t=1779103406; cv=none; b=thKXUQiex99EnCkxilDWjUW9d5d9a1PWFWsajPhEjpmdKMt+/PEyqHgLJ7haZVp8YDzGFozinhuAv0HRv0wAB8yFXoyvcpJvP0ruCXri1DxaP0CpDLHpLiuS356mqvWI13LeOhLrOZID85LmESKpsOIZ0S32DJgnzWoXa8yK/IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779098574; c=relaxed/simple;
-	bh=pOS+ECBJx90i+QANZ/f1kdXecx0zC93p7OX6W8DSs7A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=uRUNtMTdWBgxdtTkXaGGOgYVxHAiGtp1ngR7RyPs4GFBFVTJwAERMLxQCqtcdIyhYEvNU04x3aw84PQRS26eyv7WeJ8uCpikJSGve7bTOJ638hkdJua05L1NTcIUgvaxl5MqKrw/VEwHdf3IZb/7BOy581eOKYamdLiqRXh2aNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h22M5CnR; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1779103406; c=relaxed/simple;
+	bh=sJce4DW7AH8vK7VuGQp/7nUPIJ/HcP1i2PNXRd+XQyA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JCuDNGgh0WOpb6JVKXiY9ubAPZqZ4M/eH4Pm2TtRHmBNxuQaxVq5pJtxST3wBaLHA6LdvWPP/vf7GJjQd0kFMNMb3YcULitFhiN0Q1QLPej0Mia5glgH0jRuImMUCmRAzhs6hOlieLn93REr5u55R4rfGDjVQdkWAgTMf/y82Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J7IPMMOa; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h22M5CnR"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-48e56c1bf5dso9289935e9.3
-        for <git@vger.kernel.org>; Mon, 18 May 2026 03:02:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J7IPMMOa"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a40502e63bso2322510e87.0
+        for <git@vger.kernel.org>; Mon, 18 May 2026 04:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779098571; x=1779703371; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1cq0da1vmhhQNX5jzfD+h/tBIyfG7FcOw8TWQzTYTOQ=;
-        b=h22M5CnR4jhVK7e6oL+5bjwS5cV448uaSyXBFOBMboSMPNLgi0i4oDTXLaL8URq6tG
-         g92v1uWSSs/MO/7/FjchKFVp45ykFxfa+jnY7fTOv6GXltAZ8Fu0JA4ZpRXoTFIRaovs
-         w+7pISXv/exNJsWufjZTHUuQV6NGMiJlwHSg7tVY169bk4r1tDVGKOoAKsokgiEW3Mrq
-         hjojumSUV7Ue+2Y5u+wKO0TW6pk/Cqxp4+1c8gmvRqvBnaEYs/ai4j0Gdy1SqipkDo8+
-         mQETzozrLmgqs2BrARKoXJLZpGKQiS/xUL6Ru7DzJ/XwpLNYIasYbiwGIb250Tf3e4FA
-         LCQA==
+        d=gmail.com; s=20251104; t=1779103397; x=1779708197; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=gQaVGiKoDgv9lRck8JLTnCdH2TRb0LteY64yBUZ2+3g=;
+        b=J7IPMMOaVuZP8/43Qabf+9lFyalpD+d0E4w45N4gVhG75HHddfQgTxC5kaiCgI+c3q
+         YsAssOGkNyGJCz3LLogQOLf5Fwn7rhRwUgdbSMdckVBVDHYE7lQpEKun0Z+VtXhvSBSJ
+         unwt1bhQiI0HklIx4SjRQxP+GzChEGVCqvDtbh6MD0MbEssvdQHcje4QubObIa3LgGmr
+         0XsM5uj+K5PJlJ0uiQ4NJAY6cA84kHZkqBPTPd4d6Z2gSGwJCzKz1xWqBdvHoGiM7w64
+         ubuan10Ujx+i6Hlti9KTS5t5xojylJy5AcJAmZ14OHG2HiZcbHhHfSq+zQUe9updK7zZ
+         5WmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779098571; x=1779703371;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1779103397; x=1779708197;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1cq0da1vmhhQNX5jzfD+h/tBIyfG7FcOw8TWQzTYTOQ=;
-        b=SRdgCpEgCH9YGs+8iQ/RHXniWHakNrZ7rP+Vp/GpNfahipGyQjs33sOYr41NA44KOt
-         z2x5N0DDSj46JuG+TtlYHtbD3I8rijj3wC+cHco9q4FFkaIBjmfPqjCVqPHLULuhhbUA
-         4akeKFaeoS8QgQrJFnEZTbmZoggds2nAvES4l0bm0Lo50gtAL/v5ZwSheFyjeo5BbHzr
-         43YzbBRsUoDaxmdDXW06/6p0TA3l+GKt7tbR1QhoHKWoZYsINrQHSX64fiSzHm+M1YPP
-         THwZxeEPQJtPhMAoS0rSpqNzDhS0DMhHnjU+BJw6yp6Qr60/xLFq1MJai/ZC91acBxdZ
-         w/Ag==
-X-Forwarded-Encrypted: i=1; AFNElJ/ECdQJfGJnOkFV5A3HrvkkFr7Ms20Hqqww1ftv6U8w9fuceIUIN7rXjzdwQIDnFAtc6cA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0c5Hzh8WfTv97YL9ylUqjXZX2bCAqMsKVIiwL0u5zAumirAct
-	ozFGxG+tOURU4g0p1tqSaChLMR0vMXcY/Sp8xKB7/mpl1jddVgFc+Fxsl+TmZQ==
-X-Gm-Gg: Acq92OH8iRQi5xKXOI9wqIwmQtN4zrcJSripVN3TwDMaoKdgLw7OhqLQaNjpVqptNNg
-	VbKMp0yCpV924SqYXIuEZ2ltqHbh3g2uR/t52M1nXxm/kZ4SllIc0p9GhgJde1IkZXOJYd0QniF
-	kSnHAtRCTEkibzc1F2gKhqbooxxw15xGKL41wuv2zq6lhb6GjJt2bGw/1gdBlGSKyMiR9FX3ebZ
-	+cYWOiW1i7tTzj3/YddiF0mEhn/k5fMD0VEH3eo29EBQuIaxI7BZw9eqCq0ZNeSkCo0zcMRIRT4
-	5x6CbZ9EObD/YLDy+zl9Ff/CrnF2NLmpodm5UTm8tVPfiWzyC4ysZZ1uXOSr6dVpjgcWKdfJRev
-	iYiEpBD8jq+1jERjadXWmGNTvvFF4ygxdV+3Ju0xJgS9rALrKd/TLbTq0u6tOKOtjNEQr0TzT6b
-	Ux2A2gDNMaFbNagMhZDKJ24V5RX1J2POlWz/TOXjF4XVMWhl2Y5RIFUOH02repfUitpESavzSDr
-	Oi77g==
-X-Received: by 2002:a05:600c:8b6e:b0:48a:6fd4:d3d3 with SMTP id 5b1f17b1804b1-48fe61ed21amr230874125e9.20.1779098570729;
-        Mon, 18 May 2026 03:02:50 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:662:5a01:509f:d84a:9a5e:1263? ([2a0a:ef40:662:5a01:509f:d84a:9a5e:1263])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4900c16c744sm59124165e9.3.2026.05.18.03.02.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2026 03:02:50 -0700 (PDT)
-Message-ID: <e4b85275-e6e8-4610-a452-e25a554a3726@gmail.com>
-Date: Mon, 18 May 2026 11:02:48 +0100
+        bh=gQaVGiKoDgv9lRck8JLTnCdH2TRb0LteY64yBUZ2+3g=;
+        b=dM3l1ziGB3U0/AJOUmXFMSbZ2FfU3gtruaRQ/UB5hPPMv1PnBZPUJVTgHmdZEOH7Wf
+         e6ZZbFZevBzU2sOb/fJF0/afId1apiMueVgnMktOgO2qjyT2hxQF10Clrhd/Fj6wl1/m
+         Lmz19AnmhmkB/6eL/7o8iHpBymYfGw5toC7im9GzKNEei5Dbe6rzHdFb0i6+rYKQrwC0
+         ISgOK+A4jgBgJHHHWDgl+w53UtErNxNeQeTUzpg/baGYTKIJpkTspk3UQOq8PC4NAxuB
+         CfAX2q9vJtAAPFYPHsNLla9JAcQ0JMOwosw5C1qLXEEMAE5TfvQNfkbDKeFjADi1SQrQ
+         0OOQ==
+X-Gm-Message-State: AOJu0Yy0yPDugAPK/ZNj0WtSlzinv+geSR+FDAlUNhIlq1+QEAWNDWGf
+	+fOFmndhqkusYrDOItBb+crdrgx5PblvNqrhxOIUrZFYeWwAkhk45vtGAXcU0g==
+X-Gm-Gg: Acq92OEOfqW6zDcS0hrMP81Vk/VRC+mgnB3ZJ2rXVvqEf0kg4P4D6NRX1L+FtQoFiLA
+	o42KlgogAousscmQ5qDsKsHr+FzoOLbwf6yztjn8LjKQel4T/GzDTDZLMiIDox42m8dMsynE1n+
+	e0PsRV1+mrdAo0YKBAVQpdYrvGvREC88bczAxtWn/P8BBgya3w80fZ9x4xIDpeRNtplFPDy7Cb/
+	TGkaRYyb+fF5KhGOxG5TQFitMlxPNhRdPCW3Tnd710nqvGpf+ulqqun74St9TJrq29stN4yjC0e
+	5qvCJaLfBr3oQC19iLhm64IM92VlEXASYz3Qgllfy9A806tBT4Uo0yLVVY+d7jW2+pqTS38/2VA
+	zJu9zbcbswvWjDy3BJuztat5GFmf3vDL35wlfkknMC0iTJhjYyUd0SwpNMN5fCgyvJX1FiJoBlI
+	BxCe2YZnxkpJlVDxzswQmwWkBpyOnWMDtLYq0MWtYpVlyXNsv7texp4BzLHcAmCKfIFErxdgGy6
+	jbLHWLmaMVKBJ3B9gwX2djK+SM5BjoiW9Iua/Px/fzS67PmBuUoQVCJGNLHp5G4
+X-Received: by 2002:a05:6512:10c2:b0:5a8:89ad:e172 with SMTP id 2adb3069b0e04-5aa0e742357mr3823633e87.37.1779103397058;
+        Mon, 18 May 2026 04:23:17 -0700 (PDT)
+Received: from localhost ([2001:2043:be0a:d700:1996:ae89:4512:3a7e])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-395882c7214sm12065881fa.14.2026.05.18.04.23.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 04:23:16 -0700 (PDT)
+Sender: Erik <erik88@gmail.com>
+From: erik@cervined.in
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	charvi077@gmail.com,
+	Erik Cervin-Edin <erik@cervined.in>
+Subject: [PATCH 0/1] commit: allow -m/-F with --fixup=amend: or reword:
+Date: Mon, 18 May 2026 13:22:24 +0200
+Message-ID: <20260518112225.73172-2-erik@cervined.in>
+X-Mailer: git-send-email 2.54.0.772.g683d7313b1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git rebase --continue segfault
-To: Alex Naidenkov <admin@leshe4ka.ru>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>
-References: <eaa03980-fbce-4402-88b8-0f260f2927ab@leshe4ka.ru>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <eaa03980-fbce-4402-88b8-0f260f2927ab@leshe4ka.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Alex
+From: Erik Cervin-Edin <erik@cervined.in>
 
-On 17/05/2026 10:19, Alex Naidenkov wrote:
-> Hi, ive encountered on segfault when ran `git rebase --continue`. 
-> Hopefully this would help
-> 
-> - i was in the middle of big rebase
-> 
-> - entered pin for signing commit
-> - segfault happened
+The commit --fixup=reword: (and --fixup:amend) options are powerful but
+currently not well-suited for non-interactive workflows.
 
-Thanks for reporting this, if you run
+I often find myself hacking away on a branch and the last thing I do is
+finalize and formulate the commit messages. One of the current ways of
+doing this is running an interactive rebase and picking the commits in
+your branch to reword. However, doing this requires you to linearly go
+through the messages and edit them one by one. The other options which
+allows more flexible editing is to generate linear patches -- but this
+trades editing freedom for branch topology freedom and has its own
+drawbacks.
 
-	ls -l "$(git rev-parse --git-path objects/pack)"/*.pack
+The --fixup=reword: flag introduced in 494d314a05 (commit: add
+amend suboption to --fixup to create amend! commit, 2021-03-15),
+adds a third workflow which allows rewording commits without initiating
+a rebase and from the comfort of the HEAD of the branch. However, doing
+such editing is only possible using $EDITOR, which restricts its use in
+some workflows.
 
-How many pack files does it show? If there is only a single pack file 
-with a modification time matching when the rebase failed then I suspect 
-you've been bitten by the bug fixed in [1] which corrupted my repository 
-over the weekend (ironically I was rebasing my local git to include that 
-bug fix, but accidentally started the rebase with a build including that 
-bug). "git rebase" runs "git commit" to reword commits and commit 
-conflict resolutions and each time "git commit" calls 
-run_auto_maintenance() so with that bug it stands a good chance of 
-starting parallel repacks.
+When amend:/reword: were introduced in Charvi's series, -m support
+for amend fixups was discussed but not pursued
+(xmqqwnuvsw0d.fsf@gitster.g and xmqqczwmsjzl.fsf@gitster.g):
 
-Hopefully there will be a 2.54.1 release containing the fix soon
+On Fri, 26 Feb 2021 11:32:30 -0800, Junio C Hamano wrote:
+> >> > +                     if (have_option_m)
+> >> > +                             die(_("cannot combine -m with --fixup:%s"), fixup_message);
+> >> > +                     else
+> >> > +                             prepare_amend_commit(commit, &sb, &ctx);
+> >>
+> >> Hmph, why is -m so special?  Should we allow --fixup=amend:<cmd>
+> >> with -F (or -c/-C for that matter), or are these other options
+> >> caught at a lot higher layer already and we do not have to check
+> >> them here?
+> >
+> > yes, those options are caught earlier and give the error as below:
+> > "Only one of -c/-C/-F/--fixup can be used."
+> > and only `-m` is checked over here.
+>
+> And the reason why -m cannot be checked early is because we do not
+> recognize which kind of "fixup" we are doing when "only one of
+> -c/-C/-F/--fixup" check is made before this function is called?
+>
+> OK.  I wonder if we can tell which kind of fixup we are doing much
+> earlier, though.  Then we could extend it to say "Only one of
+> -c/-C/-F/-m/--fixup=amend:<commit> can be used", etc., and we do not
+> have to have this "only -m is checked here, everything else is
+> checked earlier" curiosity.  But I do not know if such a change is
+> necessarily an improvement.  I guess a better "fix" would probably
+> be to add a comment to this function where it only checks for "-m"
+> and tell readers why -c/-C/-F do not have to be checked here.
 
-Phillip
+This patch picks up that thread by allowing both -m and -F for
+amend/reword fixups, bypassing the need for an interactive editor.
+This makes it practical to, for example, write replacement messages in
+files and batch-apply them as reword fixups without stepping through
+each one interactively. It's also friendly to AI agents who have a hard time
+editing text using a non-interactive $EDITOR.
 
-[1] 
-https://lore.kernel.org/20260513-pks-maintenance-fix-lock-with-detach-v3-0-f27a1ac82891@pks.im
+Allowing -c/-C was also considered but left out of this patch -- it can
+be added in a re-roll if reviewers think it's worthwhile. I could see it
+being useful, for example if you want to use git notes as a re-write
+commit message channel. Since this is my first patch I intentionally
+thought it best to start small.
 
-> ```
-> 
-> Debuginfo Build ID: d98c557aaa4baa2e6da8a12cf5a76d241c5af104
-> ```
-> 
-> ```
-> 
-> gef➤  bt
-> #0  repo_parse_tree_gently (r=0x557e86b43780 <the_repo.lto_priv>, 
-> item=0x0, quiet_on_missing=0x0) at /usr/src/debug/git/git/tree.c:193
-> #1  0x0000557e869161bd in repo_parse_tree (r=<optimized out>, 
-> item=<optimized out>) at /usr/src/debug/git/git/tree.h:28
-> #2  collect_merge_info (opt=0x557e9bf793b0, merge_base=<optimized out>, 
-> side1=<optimized out>, side2=<optimized out>) at /usr/src/debug/git/git/ 
-> merge-ort.c:1745
-> #3  merge_ort_nonrecursive_internal (opt=opt@entry=0x7ffe20ae9eb0, 
-> merge_base=<optimized out>, merge_base@entry=0x557e9bf793b0, 
-> side1=side1@entry=0x557e9bf79430, side2=<optimized out>,
->      side2@entry=0x0, result=result@entry=0x7ffe20ae9e80) at /usr/src/ 
-> debug/git/git/merge-ort.c:5256
-> #4  0x0000557e8691a6b8 in merge_incore_nonrecursive (opt=0x7ffe20ae9eb0, 
-> merge_base=0x557e9bf793b0, side1=0x557e9bf79430, side2=0x0, 
-> result=0x7ffe20ae9e80)
->      at /usr/src/debug/git/git/merge-ort.c:5419
-> #5  0x0000557e869e0e8a in do_recursive_merge (r=r@entry=0x557e86b43780 
-> <the_repo.lto_priv>, base=base@entry=0x557e9bf8b800, 
-> next=next@entry=0x557e9bf8b850,
->      base_label=base_label@entry=0x557e9bf627e0 "parent of db33c0f 
-> (fix)", next_label=next_label@entry=0x557e9bfab130 "db33c0f (fix)", 
-> head=head@entry=0x7ffe20aea160,
->      msgbuf=0x557e9bf1b710, opts=0x7ffe20aeb990) at /usr/src/debug/git/ 
-> git/sequencer.c:782
-> #6  0x0000557e869e355e in do_pick_commit (r=0x557e86b43780 
-> <the_repo.lto_priv>, item=<optimized out>, opts=0x7ffe20aeb990, 
-> final_fixup=0x0, check_todo=0x7ffe20aea35c)
->      at /usr/src/debug/git/git/sequencer.c:2445
-> #7  0x0000557e869ebe75 in pick_one_commit (r=<optimized out>, 
-> todo_list=0x7ffe20aeb330, opts=<optimized out>, 
-> check_todo=0x7ffe20aea35c, reschedule=<synthetic pointer>)
->      at /usr/src/debug/git/git/sequencer.c:4921
-> #8  pick_commits (r=0x557e86b43780 <the_repo.lto_priv>, 
-> todo_list=<optimized out>, opts=0x7ffe20aeb990) at /usr/src/debug/git/ 
-> git/sequencer.c:5030
-> #9  0x0000557e869ef336 in sequencer_continue (r=<optimized out>, 
-> opts=<optimized out>) at /usr/src/debug/git/git/sequencer.c:5487
-> #10 0x0000557e867d536e in run_sequencer_rebase (opts=0x7ffe20aeb7a0) at 
-> builtin/rebase.c:376
-> #11 run_specific_rebase (opts=0x7ffe20aeb7a0) at builtin/rebase.c:755
-> #12 cmd_rebase (argc=<optimized out>, argv=<optimized out>, 
-> prefix=<optimized out>, repo=<optimized out>) at builtin/rebase.c:1910
-> #13 0x0000557e866e9e65 in run_builtin (p=0x557e86b35530 
-> <commands.lto_priv+2352>, argc=<optimized out>, argv=<optimized out>, 
-> repo=0x557e86b43780 <the_repo.lto_priv>)
->      at /usr/src/debug/git/git/git.c:506
-> #14 handle_builtin (args=args@entry=0x7ffe20aed760) at /usr/src/debug/ 
-> git/git/git.c:780
-> #15 0x0000557e866eb30c in run_argv (args=0x7ffe20aed760) at /usr/src/ 
-> debug/git/git/git.c:863
-> #16 cmd_main (argc=<optimized out>, argv=<optimized out>) at /usr/src/ 
-> debug/git/git/git.c:984
-> #17 0x0000557e866e77e4 in main (argc=0x3, argv=0x7ffe20aeda58) at /usr/ 
-> src/debug/git/git/common-main.c:9
-> 
-> ```
-> ```
-> 
-> [System Info]
-> git version:
-> git version 2.54.0
-> cpu: x86_64
-> built from commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> rust: enabled
-> gettext: enabled
-> libcurl: 8.19.0
-> OpenSSL: OpenSSL 3.6.2 7 Apr 2026
-> zlib-ng: 2.3.3
-> SHA-1: SHA1_DC
-> SHA-256: SHA256_BLK
-> default-ref-format: files
-> default-hash: sha1
-> uname: Linux 7.0.5-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 08 May 2026 
-> 09:29:23 +0000 x86_64
-> compiler info: gnuc: 15.2
-> libc info: glibc: 2.43
-> $SHELL (typically, interactive shell): /usr/bin/zsh
-> 
-> 
-> [Enabled Hooks]
-> pre-commit
-> ```
-> 
-> 
+Erik Cervin-Edin (1):
+  commit: allow -m/-F with --fixup=amend: or reword:
+
+ Documentation/git-commit.adoc             | 13 +++--
+ builtin/commit.c                          | 41 ++++++++++----
+ t/t7500-commit-template-squash-signoff.sh | 67 +++++++++++++++++++----
+ 3 files changed, 92 insertions(+), 29 deletions(-)
+
+-- 
+2.54.0.772.g683d7313b1
 
