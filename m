@@ -1,61 +1,53 @@
-Received: from mail.delayed.space (delayed.space [195.231.85.169])
+Received: from outbound.ms.icloud.com (ms-2002c-snip4-1.eps.apple.com [57.103.74.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73667481FAF
-	for <git@vger.kernel.org>; Mon, 18 May 2026 15:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74063AA195
+	for <git@vger.kernel.org>; Mon, 18 May 2026 16:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.74.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779119706; cv=none; b=E8oIp/D3lv/D0jgHGKbO40ieiuJDh2tHpq8CZIaYXH+nzpXNFNvycHbT/eg1fQc6chatkTVB/KMvlzGEOsSLTgY1A7GTBR9l124WmA2QY2IDkbXmKIT9DTUkL53C8OjrepWDypmDySkoJDYkdR8Lgio/AFT2Z8wZ8ymG/Dncq1g=
+	t=1779120986; cv=none; b=WVb4qJadTCU6HOmbwOIOdL29ZOgi/Hc3IOZK7788oSJWbbU50jmcJF2X6csFA8TPVfic4InAvoZhlnl499gqx6Pqfr/q8kwMSgD9T+9X/AajmgzdJ32eJD/HlL9h87YluCj7SoEDyQtcSE46LMuG7N79FQOx7cW7GjQ1QALnSNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779119706; c=relaxed/simple;
-	bh=7m8iqDlOwUHs2P6jciI4Vvex8ryYns5csHnfpeQVjMg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j40i2tefwDEpmOfaXPRxxM/rbxIjoQ59r6/eMj6a+MoNdDWVqSZoNoQnmxCwITTPsxwdv1CA+VkVYtoafH0JiioYzzz+nYMAHPK0NMOusWXLGC/cyTSWlqoCzweY2zywFp6OnWh/0N66QvkdeZBR+DfgNsEZwhM1MjK2ftab2iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=CiuCcBq/; arc=none smtp.client-ip=195.231.85.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
+	s=arc-20240116; t=1779120986; c=relaxed/simple;
+	bh=mAQYMIPTwqLgc6lySfV8LTnRfShCYK1uKVl7JrF2fto=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=puVhqOm/SiP4NyiY5cD9DOad5qteNm41A4G7hCCwDnAh6sebXBT226K+Yx7LdgTdhlFkWoJxFUC+0TkJDWIHsiGM5XaDIzxu6CINx+AhQycsTEWimPDyuWszA+Sx85bsELm5Bz38LhHXFFFPnIyazImZEC5eNZObPALOAGufOlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=WlbqYxIZ; arc=none smtp.client-ip=57.103.74.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="CiuCcBq/"
-Date: Mon, 18 May 2026 17:54:45 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
-	s=dkim; t=1779119686;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=50OIvPrPTQSj5iqYJ8gp8Auq9oi2j0quYgCCPhRK8oU=;
-	b=CiuCcBq/GcOAv1V0gNr2lfyzxm7O4tnrLTkXlJx62jY3frPW0noqNJ0xmRaWWi4U0SZRby
-	Qp0JUHvCm1X/fkM/YKtq1c862rK00n2g9aFO1cZEm1YR742C1IdNXQ6r6Vw3yKb/BJApj5
-	Wlka208FU94XjjOaKr1QALwJ0W4kbl+kSrN2Eq7is/9xqdWmxQehk7sl6YN52MM+EkxUFl
-	amPiQ84dlhS0KZ7BKa+5NcuaUmWaeRUuWpaW9fLf1jVV299xQ/eSqpybv/+2OP+g2xEUpB
-	fxqsKWlOp5cJ6ppZER2+OGaI+HOkvRTzVynV1w2Y+7ZvRsoxwnuJ/yt5ckPheQ==
-Authentication-Results: mail.delayed.space;
-	auth=pass smtp.mailfrom=mroik@delayed.space
-From: Mirko Faina <mroik@delayed.space>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Mirko Faina <mroik@delayed.space>
-Subject: Re: What's cooking in git.git (May 2026, #04)
-Message-ID: <ags1rtQnlO6KB1-Q@exploit>
-References: <xmqqv7clbizy.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="WlbqYxIZ"
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPS id EC15B1800596
+	for <git@vger.kernel.org>; Mon, 18 May 2026 16:16:15 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQxWAVkGRQNDDlYLWxcOVk1YFFYGRAJBAlYLVi1eCF4fTBwdDlgGEhZdRVIBUgBBGUoKXB5SK1sTVRdGCRkIXR0ZClBQBktaFVUXDgJCH1AfTBZXQ1oYHBlaFFwYU0VRH1RYQxlFVmlBC08dXRlbHEJkWFcJCgJRHFYNV0NUBF9QVBFXUAtccUh7SQcrAEYENgFMHlkDKXBdAD0LVRpZczQMOQQodVwEMw84Wg5bBEcUFxtcAAlLRglJHQ4EVAddBV0=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1779120977; x=1781712977; bh=mAQYMIPTwqLgc6lySfV8LTnRfShCYK1uKVl7JrF2fto=; h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme; b=WlbqYxIZ2WuvV4SE6WGfpmRcNpCOZAdzjP7p9HZerNQ4591g0i2WT7mGXZVFvAf8jdJ+gCjiPkVHPCz9Ntd8il3BolgOZ2+bRETekuz7CB+XVpeIE58k8A6IkVwhwS78rUipfJTe6ZIuf69VT0e5AIs8h3jYhhfeKN/sf/8hxA90wzCO22t3Lh+nIqBYAoUzFUn/XFHav6/EIoeTes/EMVcWpmjWdQuvjRNN8SSTFrPa6ixJsWJVAk5TObPoIgBlxvBuQ5x+yD+RYxhrMOmpHxe3NKSIQAZGDO2dF6t+HZ1D18JIbED20OCVnqzuXHrpcTB9ZEEZqn2dSRC0sPgBOw==
+Received: from smtpclient.apple (unknown [17.57.154.37])
+	by p00-icloudmta-asmtp-us-west-3a-100-percent-6 (Postfix) with ESMTPSA id E20B0180012A
+	for <git@vger.kernel.org>; Mon, 18 May 2026 16:16:14 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+From: aleksisrose@icloud.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv7clbizy.fsf@gitster.g>
-X-Spamd-Bar: --
+Mime-Version: 1.0 (1.0)
+Date: Mon, 18 May 2026 19:15:41 +0300
+Subject: Git
+Message-Id: <7C8B14F7-6F84-44BB-9E88-2AD5A7EB76C6@icloud.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (22H340)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDE2MCBTYWx0ZWRfX5YtWOnEk5R7Y
+ 9BmmIuNEMKF7ue1sZ1Pb4nVKuhnOBJ8StIvv0MPQhcvSfr8Uf3EdS5SZE0l9GHqfHduPDN1xnJV
+ y/xO2kJOlmbjz6Qk28InJe+hUIJqIyjEZPPTLhMQRGxJpU1Ld6OLjrA9FVzcEnjVnYaLtiQdYaL
+ tuRNnLTkh6Ywyh1WnVu15zUQnYHTnfQb46vx03/3HxDBFbyLRRtFY2dLo1PzHxS1ifPbheiMmvc
+ oqo1lua3PtUnfm2FNjY59H0z8/BA4KlUHh7pq5jFK5swZZP3QQAEKnko0BfxekmsikfEHYg6AHw
+ 4ztfY2s0wgTVBFaNEV4e0U1O6Ra2x6dtTHBmu2NEnaRrRV0E5k4x3Xf9wI+/KM=
+X-Proofpoint-ORIG-GUID: WyH_sT4-BWtBonHZKlF6sl3SJs-5P4LZ
+X-Authority-Info-Out: v=2.4 cv=f7hFxeyM c=1 sm=1 tr=0 ts=6a0b3b50
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=x7bEGLp0ZPQA:10 a=WwDDXL0I6WsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Rg_n17r4ioxAXGdEO_QA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: WyH_sT4-BWtBonHZKlF6sl3SJs-5P4LZ
 
-On Mon, May 18, 2026 at 10:32:01AM +0900, Junio C Hamano wrote:
-> * mf/revision-max-count-oldest (2026-05-15) 1 commit
->  - revision.c: implement --max-count-oldest
-> 
->  "git rev-list" (and "git log" family of commands) learned a new "--max-count-oldest"
->  that picks oldest N commits in the range instead of the usual newest.
-> 
->  Will merge to 'next'?
->  source: <463cc8e2764edb7de3d379f615f5cfbd0919bfa3.1778887662.git.mroik@delayed.space>
-
-Sorry, I realized it's still a bit buggy when coupled with --boundary.
-There will be a v8.
+0JnQvtGDLCDQutCw0Log0L3QsNGB0YLRgNC+0LXQvdC40LU/DQo=
