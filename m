@@ -1,188 +1,158 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazolkn19013079.outbound.protection.outlook.com [52.103.35.79])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E29364935
-	for <git@vger.kernel.org>; Mon, 18 May 2026 17:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.35.79
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779125084; cv=fail; b=RI66rMzxyxWqa7s0VwI5VjExlFwfFBODfxF46KVkwt6Q1k7fpYIixNKsbu+tgIJdX5Q7mW8seu6efWr6Tzk3FdZgYc9/L379NA0dHbFStLj3D+DQS4f6/D20JMkBhvgjha8KJYXjj5ZgKdUKGd4b1SM7iLCYsXyXg9TaUqv0b98=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779125084; c=relaxed/simple;
-	bh=+Wav25b+JNvwGcQrQ/DBKZOtgD3g4v1JVB6Z8sJp68c=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=UZeKMNTL5c678dAadPF605V1MApMu5hjnyaxSEkPHA/Jhpn6p4KjHi6jfFRJ4XswEf/wHow3TFfNTIIgE+aMciFSau2xAHXd3n+S7iLeKmjZ3+LArDQ4Sz1geX/Z3xj5KotD8Dhu1/7gRwlwcyD3jTbDuiLjA9zWd1C1etYwr9Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=lCXnUT3n; arc=fail smtp.client-ip=52.103.35.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AA838AC85
+	for <git@vger.kernel.org>; Mon, 18 May 2026 18:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779128850; cv=none; b=XtoX61Gwo98DNKg06a0NN6bdzwNuOd+K9Oyle9hhmnm8LvctxzK241hgCVf72DtIowOMEY9q2OiiXiAyQl2QWkNVUL216RZd2pZrpp4jIFPT12E6axs67hbTJYVTpbh0MWrtNdyxzaGjtwrGJecBDO5w2nJZz/U61FwS0/lsn6I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779128850; c=relaxed/simple;
+	bh=S/MbysyGPzw1PYQ+H5AdBqTg57tg6XB7zFpI7yqsles=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hxcd+U9ZhJ/A3Os7YY/7AUj5DJ7EYz1ZZieBLbqmuOv9ZvTcNKF1m8e1MuOdD9pFxSnD2hnJa7gEj2SradIyw4X33jvZqkJPk83hB/W5pSBF73yyXffCDZEl+VTS2QEUIpnvy6Dx9oMQmvXN5EzRI9EBtnIgQS8IfKBPDtrf0cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRvzwhMz; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="lCXnUT3n"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sJgAr5fsazl31s1bGypk7Xsg36QBZsIFxFnE6uzzTwXkMsn5fvnD1Ipn+MTR1I9NxMIoTPwItdUoy8HuHqO/vT/LMkxGWCx7oaFX6WZdmAMnAb5s2g/IH90+vh0FYpS6+Hm/IKJJcMW8Zi8lkC9HEJPnTSiv+PVN6hY+mF4hdXdWpcOqx0UlHgHW9sneFPTMLBJJkYkuFJQMccdfmxZRaOCErP/sHub6DfG9PuEj6tZhYYHSiSS8bbfnjBHlXEM+apKkbte9QjFeCqn8SkevCe1Oz4P0a8L2I8Nc/Tm9V8PBdrm9Hy0ydtTKWuMlOgG0DRAvK+Shv2BbnXWOHjhkkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=l/13AfG4K4OCXtMx4xX3eu3FyFMGS6pnzdpLvbxlgrw=;
- b=iqVzmxhwsYld+cHg7nV0/0zBKioqrw4A81dPBK3ELte8/khH22j+faBmyRnRSqNQiO1vhIpkU3f4KdVJz7vMC5SyKXBkuk5BZC9sdrKhWr5ujbvnAhe2G0OhVRfCnoqkgVQGnuRHdIjDQGyOtCqeZX3Uzcujq/ClqWEU+egx4NuZpr71+72p+XlPftfObXej41t9HNK4An39OYViXR0Ai1UtFtvh0AnJNd6IRD+kuMDufBZ3a34pAx/guQHVu/aFraMhGs2Crv7oNF/D6XEyVekzPwcYb1+4RchQkcyS3Y40Rza1R81vg+v7AsC81LKv5LlLYqUzb482VH3Sv2omDA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l/13AfG4K4OCXtMx4xX3eu3FyFMGS6pnzdpLvbxlgrw=;
- b=lCXnUT3nuFecbRdKIZd8GzxGHEpv+H1LPJSYm+SsQADR0qqGVgvsloYBjgdGWkFG2P5SYVNywBglV8fsf/OSkfXMd4LYbHdQHlKdnO+dLgBxlnpikpQ1q5hmac/9CVHs5/aBAwOTk3cUyPjdLyOoZ17rShdk+3aUM0lRywal29p3kGIG/NJVRjVWGLiitRJ2/TR1IzUUksQ7Pal0AntQes+ZejldMzlicLnHERt3p/hKZLiCblPkn4YH2ruM60N35iZgaaC0ZjRTfho09Q0+Icpt+PnTtF8SR0imcaMzARhnv/xJwwoLl5rj3f9GYBPplbju4DwV10JnsmpHfp7qLw==
-Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
- (2603:10a6:800:326::21) by AS8PR03MB7923.eurprd03.prod.outlook.com
- (2603:10a6:20b:426::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Mon, 18 May
- 2026 17:24:40 +0000
-Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
- ([fe80::5e26:cb8:bbb:cf7a]) by VI0PR03MB11634.eurprd03.prod.outlook.com
- ([fe80::5e26:cb8:bbb:cf7a%6]) with mapi id 15.21.0025.020; Mon, 18 May 2026
- 17:24:40 +0000
-Message-ID:
- <VI0PR03MB116343A44C3D5E2562FBBEEEBC0032@VI0PR03MB11634.eurprd03.prod.outlook.com>
-Date: Mon, 18 May 2026 18:24:38 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] fetch: rework negotiation tip options
-Content-Language: en-GB
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im, Derrick Stolee <stolee@gmail.com>
-References: <pull.2085.v3.git.1776871546.gitgitgadget@gmail.com>
- <pull.2085.v4.git.1778762495.gitgitgadget@gmail.com>
-From: Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <pull.2085.v4.git.1778762495.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PA7P264CA0007.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:2d3::11) To VI0PR03MB11634.eurprd03.prod.outlook.com
- (2603:10a6:800:326::21)
-X-Microsoft-Original-Message-ID:
- <f21c6be4-51f3-4ecb-9acf-9778d9fbaa08@outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRvzwhMz"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ba928852a5so18222375ad.1
+        for <git@vger.kernel.org>; Mon, 18 May 2026 11:27:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779128846; x=1779733646; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/bSNmk7tfqS8aCYKqi7f2E69WWZeKdm0hHiySnfJOIU=;
+        b=SRvzwhMzldJu0gxv16/p7PYUB9g+L2q2SqsaFY6otZClWaAWNSrAxGvRBYMJCqCmzW
+         4YpLPIWG+HXE72Gpy36uRxB5Sy4ER2oJJapDozqEnFNwF7oPhNs8bzCYXRs4o57KUvEV
+         ke9rKnfv/vhI+L/q+A2GIKwYH364n1ebguRuhQzjyB/8FL01jbnWqFhzJNOEmzOf/a6A
+         xJ2lKFX9jAYzE07GVm4Sp+0lq9qvil/VreW0hgXFV/IivpCpVUI31IbYcacNINAbBvt7
+         xymVom75T0UNG8V7oF0T3J24mmEYaHM7WhZTXJHdm5NoK/X79ZLB4IbO1G8lagcDDThU
+         V6fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779128846; x=1779733646;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/bSNmk7tfqS8aCYKqi7f2E69WWZeKdm0hHiySnfJOIU=;
+        b=KS7htb7PyEl+uY0nSczty57zjMesjY8uh8HvTqduChmuWB0jLOrl527zOXSxKrLEDa
+         5h1uBRQ9ve+xqjF+C1+WV1BXUezzRMkLlxWfRshD7dz6CtghFrsHl715tn/c49Bw9Z64
+         g4DCRMQLvh6ong/p2rvJMUUXg1DnHBPg6rLLExiPt2h1RyWEGAfycswvrDk+cxehYaLD
+         hiKgk4rjGvPFA3qnWv7BjUQj7aKBaKsh28qgLoEDqkbe+z9/Yyh/NlC9hu2GwNqzz+t0
+         JCbKAr3JUW9QUkgCoy4o7GBxjNaD/zTw32hZhg9jik6dXd4i77DvEGww32P5Iz7YRyDi
+         5wNA==
+X-Forwarded-Encrypted: i=1; AFNElJ/p0KWmW3D8KgiO26xaZJezMS9mr1Esjg1RhxKBDh29Ljj5yDfjyQpqKGkn+zC9vXVfSRQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcFAihIpuKrCSEWW4MoXoJEwrAYzv2EcBrW7VvjAcZf0qUdOsm
+	KEnthm0IRQ+qsJgr1lT1oy+GsXk0L26bNjIhrZBEMnJ87ra/wXRcilSW
+X-Gm-Gg: Acq92OFXhZrUAhu0J7kHNgVcBDh4dU+LOlI85/jbggbIAJNkl9tIddhQLsAr5OB8Jas
+	HKVScq617/kczCLxB3/+6CQ4v6yCcXvwjZYwnn9Xx/A4Uyzc4VkBbSeoFPzYAkJBc2pd7df9XUo
+	ELs5pdV5h+ImAARVoIBho246w4+XdZk95orfRFwoEoRdi4regBHhmYirAexfgt2Dsg90XzUUHta
+	xMIX0GlegJGbh412IMXRRYEIzevhGFIJ5tQxhW9ez1J6842d4Fbl/pstDSc8lHdvdYWcqS9qakt
+	17WdQaswTKmssF5klk1McHQ0L/BXXHNcB1oVzFvxiKKSdHjmwLWkQr0tt2EbBtVeuLvgg8eFalC
+	kE12wbtxu7VpKqPeKiSi5aOXVG3rWcOJgY/RndQgvfIUDsPoVTqEgGVWY5DS2D/VqIA2Kygy9O9
+	1iQbtWqAwfOy2/KX8kz/HZaSQ+ALjXi0REvOhEu+HQQAA/tGLeYTqEfBxAjPLnQfdq
+X-Received: by 2002:a17:903:240c:b0:2ba:de0:1eea with SMTP id d9443c01a7336-2bd7e8196dcmr176744795ad.18.1779128845758;
+        Mon, 18 May 2026 11:27:25 -0700 (PDT)
+Received: from archlinux ([103.177.178.109])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5c0600a4sm148530085ad.30.2026.05.18.11.27.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 11:27:25 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: usmanakinyemi202@gmail.com,
+	git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	gitster@pobox.com,
+	me@ttaylorr.com,
+	phillip.wood123@gmail.com,
+	ps@pks.im
+Subject: [RFC PATCH v5 0/3] push: add support for pushing to remote groups
+Date: Mon, 18 May 2026 23:57:18 +0530
+Message-ID: <20260518182721.155070-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
+References: <20260503153402.1333220-4-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR03MB11634:EE_|AS8PR03MB7923:EE_
-X-MS-Office365-Filtering-Correlation-Id: ea41ff7b-c520-413a-abd5-08deb50257db
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|51005399006|24021099003|5072599009|15080799012|8060799015|37011999003|19110799012|23021999003|6090799003|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NEFwZWVhakpUc0FvWjdodjd4Q1VpeTQ0SHVPOHJtWkp1Y1ZMcCs2REJVek1m?=
- =?utf-8?B?bmtiRWlTQkYyWWZJVkNFVFB1UnZpNEtsTkNuc21ZdUpXVzVTNHI5VnU5ZS9Q?=
- =?utf-8?B?ajE0SnY0WU90d2FJWXR4eFQ1RWpxQ2NOWU0rUXRsR2g5THpNZjNCM1VvTzlN?=
- =?utf-8?B?bzA0em5RODYxaDhXVlNXbWZza2c3bkRPM1VFS1ZpUHZnUTNCME8yU29KLzdt?=
- =?utf-8?B?UHlIeHVpMVkxM25yeTRYSnNVbkplY1orZXBFY1UrelVzRnVLaG1xU0JoZkt3?=
- =?utf-8?B?QmJ5dEVhWU85VTJiYTFsZkNtUDhFbUE2bXhmeTh6cWxmRG5Zd2lSbHhVK1pO?=
- =?utf-8?B?Slgxa1orNEUzNStUb25FQkxRVTVBQ2lZVWZoWEd3ckYvaHFnR01KUWJPOUFG?=
- =?utf-8?B?ZXZIelFxNzRHK2hBMjdXZm9pbGdnU2phenp2b2QzbExQWTJBY1RaRHh2ZFoz?=
- =?utf-8?B?ckt0UGRRWmg3dFhuTnBHRkVaenpYYjV3MzBua3crSWQwTFdyYlZmVzVDSDNt?=
- =?utf-8?B?NUxqalVvamV1UXNCWXRxSDBmKytTMDV5aXNZZldHWE1GNkNkQzhsR1BJVjNH?=
- =?utf-8?B?OTBwVVA0bEszWUFCcXhscExKYmlRUGp0RFh6SmxhUlQvUml1YlNVQmFqd1Av?=
- =?utf-8?B?N0J2ZXVVZDVrZFVQT1BvaExuSGJZMk1DUlRtOU1WaFgvbzM5c1dZaHE3VVUx?=
- =?utf-8?B?MXFUOVlaeU9zY05yN1lZMEE3eEFlZGJXUVlsZThodkZVSVBuRmZDcSt3aHZ5?=
- =?utf-8?B?RHhGdTgrRW9DTW5pUE40dFFvb2hIcFV6aUEwZ3Uxallhcmx2eklkbW1SWG5E?=
- =?utf-8?B?VTFURHVuL0YzOW5zNW5ZNDZkV2pQeWhBTFZFRUlSWjVMa3FqTTdRa3JlWUpq?=
- =?utf-8?B?SWNUV2JiTlJIT0ZiaWJtK2NUNi9vVlZVY3NjeHVqanZQYmRMU3pTVWpEVGls?=
- =?utf-8?B?T1ZwSVpPa0FJUTF4L1ZqdEt2NmFPT29rVXFFYVlPb0lpalR0WCt3c0JRU3ox?=
- =?utf-8?B?R2tjd1pndVNSYUxlWnlOU0Z4MWtLclV5T2JHbzZjWUNRQ3lkKytId2R4RGd3?=
- =?utf-8?B?cGxFUnhBQkMxdE16cDBHWHFDcnlxQTJsQjNPa1FYbndzNWoxelhNaTdHVlFU?=
- =?utf-8?B?WlN6eVVCVmJ3YnB6MGhoRjVrYitwWHI5cUJmdVlobDdaL0h2YkswY2xBOVdz?=
- =?utf-8?B?eEpQaVY5OUU5RHR6RFpncEllWWRydTdVTmxzU0VEK1MzNkZZT3I5TXp0U1dE?=
- =?utf-8?B?bWM1ZXZ4MWxBQ255MU9xWjY5aFlkMjFZdlkvSGhrV0VtRkFNcHR6YmVQVW5z?=
- =?utf-8?Q?kA2y88nXufH9O4FIl/r1bNuU46bLq9c8JV?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZmRYMVgvYTRtSEV1M3c0Q3ArY3kxRHJtSDhsb25DOTE3RnA0NEdIS0FJYVpk?=
- =?utf-8?B?SWozaVorVW04SXVyMEYzenRxZVNzS1dWSUVwLzhoSUhxK1JMaWd1QlFKVFpP?=
- =?utf-8?B?cG1rSUhHMWgvN1AvMjk0MXhUOXQ3VUVmcFE1VXpRS0NNMWRMdlJsZHFjUmt1?=
- =?utf-8?B?RkVWazhyK2hwR1JKREVvaHJLM0RIN0xHSTJ2WWRnZ0t5OWZNc1RlVHNwU01k?=
- =?utf-8?B?cHEyb3VPSU0zb2RLbEprRUNOMytKYko3ODY1T2Q0ZkRNbzh5NUFSdVpDNU5F?=
- =?utf-8?B?ekc4eUZNNWJaQ2xDUXVYSjhqNXQvMGhWanZXLy9UZ21uZm9ubHIvRUcydnRT?=
- =?utf-8?B?Ulp6bmVkRHdoWFZuSEt6Y3Z3czhrS2Z2akowMEp3elJCRFJsVWJiSktLd3V3?=
- =?utf-8?B?d1VEQ3U1UFcvZmx2OElvenVUc2dEQ1l4Z0RSRDBQS01NeG5OaDNHcFN6VnJq?=
- =?utf-8?B?c1kvRmhqVWlFM21DYmhHNUJPYVNTUGRua21RSE9WNTc1QkF3S0haYS9Eenhk?=
- =?utf-8?B?V0V6YnF2Yk8vNExwUTl2Y1RqU25YMjVaNXc1RGZVR2hXT05mUmwxVFhMZitv?=
- =?utf-8?B?ZmV4QVNJbzdvdFBiMU01M0xyaVFCeUg5UlBDdXUzMWg2NEFFaEp6MTcxd1Rp?=
- =?utf-8?B?YVhWUW5RQ3RiaUxkVWQycTdxYkd1Yjh4NnNFZmRxQyt2WXZ0WkxleGt3Zjdy?=
- =?utf-8?B?NDROeGorUm80SzFDTGd0TGlrUndwWjBjcHhwTTBOeklwOGFSdisvOGdXUWpn?=
- =?utf-8?B?SFBDRFpaNC9IYjVaUGp6c0FkZWpkYkxPMnVKc2pIWXByRGlYZENlWDk1M0tt?=
- =?utf-8?B?VXl1bUh6U2I4cjEzYmxDdkliUm5HVkpVWmdDMlAzOTJ5blBLYTdHM3ZGaENn?=
- =?utf-8?B?Z1pPMk9pQ29VVFkzSGN4U1hRVmlMTUc3NEZUek9hcDliekpwM3pRUzVhU0hF?=
- =?utf-8?B?RCtnMk8vOFVvZnYwQklIZHdmeG4vTk0raW8zaFFEcDB2K2xiZ1RZRHpxNyt6?=
- =?utf-8?B?bis3WmpTa1ZWNEdtR2xna21OUkxaY2RhbGtFY3YyMEs4aHl6RElEelpIWDV3?=
- =?utf-8?B?bGtYbDM1U01Sb1BWNDl5citTVUl5LzU3WmdGUzQ4VG81ZVNsT3l3eGJWVTNh?=
- =?utf-8?B?VVR2a3FST2dqVWNpTHBtRnJBWDNiMklmaEgzUGJKMFVnZHlVQTh3R2VxQ09m?=
- =?utf-8?B?Y1l1azNiMnpmdTlHakMyWWxpN1N3SzJJcWlmSXNheUFXYXNISlBqV3RNV2hH?=
- =?utf-8?B?UGpKZWNidHpGdnVLTUZOeXlkWk9MaHVxZG9jQjFhMG4wUXVkOUdHUG1ybTZK?=
- =?utf-8?B?ZXZoUWcvL3ZMSUZCeVRqYUR0YkFsYlY5Ymk5UC9VY01KK2diSk12T0lwU01J?=
- =?utf-8?B?cDJEb0prQ1g3VGgwUXppL05LT1ZyVGRONytnc0J3dWlFdmdQeDAyT1l0NGpt?=
- =?utf-8?B?SGRnZHpxZG1HQnhXdWRKWmNLUjkwWFVVWCtaZ2oxT04zUDdtNVZZbmRDVTB3?=
- =?utf-8?B?QmtHZC9DMU9sMlFsMTNPbU1wQ20vUzI0SE1IV3o3clVXb0xFTzZNZjZuZ0Zo?=
- =?utf-8?B?ZThXU21hem5RRGlNR0hMdXUyRWc4L3JmT21Uc3hMenVtNXo4Nmx5bkZLM0d5?=
- =?utf-8?B?Skx0SDJRTVZWbEFWMzliUFJReW5hMFhsRm4zT05yRlRHLzM4OHNiVHVmWTBj?=
- =?utf-8?B?aWhRSGJaWTZRMzRBVkpSY0o0elY2Ykd2MmRuUjF2YjZGbjE1SjVKZ3p4cWJl?=
- =?utf-8?B?ZUFTdmx0Zno5ZllHSXFTL3RZSk16dzFucmJGZzN0RlJYUyswWlI3N0VuZmtD?=
- =?utf-8?B?V3RPV1Z1dU5saTVyV2NJMU1uTWIvTkVlVDltdUVPRFVRQXFpeVdJb1pQOTRF?=
- =?utf-8?Q?4DNy/NWbUkUSq?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea41ff7b-c520-413a-abd5-08deb50257db
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR03MB11634.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 17:24:40.3950
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR03MB7923
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 2026-05-14 13:41, Derrick Stolee via GitGitGadget wrote:
+This RFC series adds support for `git push` to accept a remote group
+name (as configured via `remotes.<name>` in config) in addition to a
+single remote name, mirroring the behaviour that `git fetch` has
+supported for some time.
 
-> Updates in v4
-> =============
-> 
-> Thanks, Matthew, for the detailed review! There are some big changes in this
-> version.
-> 
->   * Expanded commit message to cite the commit that introduced the bug
->     (3f763ddf28).
->   * Renamed --negotiation-tip to --negotiation-restrict throughout docs/code
->     (including send-pack.c, transport-helper.c, builtin/pull.c). Added
->     OPT_ALIAS in git-pull.
->   * Switched config parsing to use parse_transport_option() helper. Removed
->     git push from docs (not implemented yet). Restructured --negotiate-only
->     validation flow.
->   * NEW Patch 5: Added have_sent() interface to negotiators, so included
->     haves can be de-duplicated properly by the negotiation algorithm.
->   * Replaced COMMON flag hack with negotiator->have_sent() calls. Moved
->     ref-pattern resolution into builtin/fetch.c (add_negotiation_tips()) so
->     fetch-pack receives pre-resolved oid_array instead of string_list. Added
->     test for --negotiation-tip ignoring missing refs. Added
->     duplicate-avoidance test for v0. Accepts commit hashes in addition to ref
->     names/globs.
->   * Use parse_transport_option() for config. Updated docs to mention commit
->     hashes. Removed git push from config docs. Fixed test to use correct
->     restrict/include combinations.
->   * In the last patch, add doc notes that remote config values also apply
->     during git push with push.negotiate, now that they are integrated by that
->     change.
-> 
+A user with multiple remotes configured as a group can now do:
 
-Thank you for going through the comments on v3 in detail. This is a nice
-improvement overall.
+    git push all-remotes
 
-The main thing flagged (the COMMON bit confusion) is resolved by adding
-the new have_sent() API on the negotiator interface, which is much
-clearer and cleaner. The hoisting of the ref resolution to the same
-layer and reuse of add_negotiate_tips() is also done and appreciated!
+instead of pushing to each remote individually, in the same way that:
 
-I've left replies on each patch, with only a small number of easily
-addressed comments.
+    git fetch all-remotes
 
-Thanks,
-Matthew
+already works.
+
+The series is split into three patches:
+
+  - Patch 1 fix sign-compare warnings in push_cas_option
+  - Patch 2 moves `get_remote_group`, `add_remote_or_group`, and the
+    `remote_group_data` struct out of builtin/fetch.c and into
+    remote.c/remote.h, making them part of the public remote API.
+
+  - Patch 2 extends builtin/push.c to use the newly public
+    `add_remote_or_group()` to resolve the repository argument as
+    either a single remote or a group, and pushes to each member of
+    the group in turn.
+
+Changes in v6:
+- fix docs formating 
+
+Range-diff v5 -> v6:
+
+1:  e01126890c = 1:  e01126890c remote: fix sign-compare warnings in push_cas_option
+2:  adbce652e6 = 2:  adbce652e6 remote: move remote group resolution to remote.c
+3:  a8d5f4b7bd ! 3:  62a4499be6 push: support pushing to a remote group
+    @@ Documentation/git-push.adoc: further recursion will occur. In this case, `only`
+     +	...
+     +	git push <options> rN <args>
+     +
+    -+where r1, r2, ..., rN are the members of `all-remotes`.  No special
+    ++where `r1`, `r2`, ..., `rN` are the members of `all-remotes`.  No special
+     +behaviour is added or removed — the group is purely a shorthand for
+     +running the same push command against each member remote individually.
+     +
+    @@ Documentation/git-push.adoc: further recursion will occur. In this case, `only`
+     +any member push fails.
+     +
+     +This means the user is responsible for ensuring that the sequence of
+    -+individual pushes makes sense. If `git push r1`` would fail for a given
+    ++individual pushes makes sense. If `git push r1` would fail for a given
+     +set of options and arguments, then `git push all-remotes` will fail in
+    -+the same way when it reaches r1. The group push does not do anything
+    ++the same way when it reaches `r1`. The group push does not do anything
+     +special to make a failing individual push succeed.
+     +
+      OUTPUT
+
+Usman Akinyemi (3):
+  remote: fix sign-compare warnings in push_cas_option
+  remote: move remote group resolution to remote.c
+  push: support pushing to a remote group
+
+ Documentation/git-push.adoc |  80 ++++++++++--
+ builtin/fetch.c             |  42 ------
+ builtin/push.c              | 251 +++++++++++++++++++++++++++++++-----
+ remote.c                    |  37 ++++++
+ remote.h                    |  16 ++-
+ t/meson.build               |   1 +
+ t/t5566-push-group.sh       | 160 +++++++++++++++++++++++
+ 7 files changed, 502 insertions(+), 85 deletions(-)
+ create mode 100755 t/t5566-push-group.sh
+
+-- 
+2.54.0
+
