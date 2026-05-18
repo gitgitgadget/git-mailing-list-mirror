@@ -1,89 +1,85 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65252625
-	for <git@vger.kernel.org>; Mon, 18 May 2026 00:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EDB17A2F6
+	for <git@vger.kernel.org>; Mon, 18 May 2026 00:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779064001; cv=none; b=LWDgsn2tY5SYtjVgk52syHVALIzOxL8r83UWHksJ3H57mGCFy+0MSqpbHYrbm9jQ8mUjqkauRu+Iq5eqjl7wgm8m27Y2C9IXQuixYqloI0ggAX4t7fLw6yIc5TmlXJjcjOAuEwV0CPLejYctWUdYkclCiJMoGTVne+bbRk2aKk4=
+	t=1779065169; cv=none; b=jEzdmodl3GNME6F84vIwwGXYQO66qVP4NTCcWwR6ctFogwE2whD2YQVwePh86fthks0CFunxr3sxVKMQHW1vtSkwZzOISx456lRpTVy35NlE3pMZL4ZjPRyTE/bLSdOZPBUuGMmiLrNVh/sqe2KiHt0/oEqdyd57wIN0h9gtLX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779064001; c=relaxed/simple;
-	bh=gQFY8dO6fyR6jPXUiIPwGeTzLgiqG8oS9cOzr7k8zc0=;
+	s=arc-20240116; t=1779065169; c=relaxed/simple;
+	bh=0cCayOs/NOcf7H1jtx6cZTrGpkWmBdUyYwrc0krfh7Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e0gQYxLS8Imj5Jf9O9RmvD0HCPv2xDz1cNf6pq6D8O5Z8IYfRUQhvZGjinNVwqq0r+r8OjGH+0rYfqryS+1gZKVWmuasMKmPBIcW8MHLSnnRT2rEeTxbvMekNwkT2UVTtl4FKt5MEBGW6XAIbziwM8M7xAq5vh1/0c3qeKg5joA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aRPvpUTY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eYz4+K26; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=TYbETAE1+iWA275+LDPFoMUsKmkruqBAYeoKeKX7DgXVeV4QCwmH0y3ygxcRJk8e8HkK/iYjWwkcRsVNfkpdeT03VaxDd524q+UI0rSdx+i/nhQ0vASUzHkwpSi6FQXwAsY5uDFiNFQUE6DZv4r27vPmPOMhWeksWmvDupQyDLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JLaSUNvo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d42njdCD; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aRPvpUTY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eYz4+K26"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JLaSUNvo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d42njdCD"
 Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A0A8E14000EA;
-	Sun, 17 May 2026 20:26:39 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 6F212EC0081;
+	Sun, 17 May 2026 20:46:07 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sun, 17 May 2026 20:26:39 -0400
+  by phl-compute-09.internal (MEProxy); Sun, 17 May 2026 20:46:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1779063999;
-	 x=1779150399; bh=U6HCnwlCWi8Qs9cAvMKLCW2dZkzIhFV7LJn8xj2iecg=; b=
-	aRPvpUTY+DG/A+52u18rIaQ+YMx9vJLg/KpAozSAbvDdaN6Sh/nwxU9Ba6wOWTbb
-	1WDfeeeqLfir00EX2gTckdeLtNVJL43631j4PHC8CRP1oMTKay/0wyg3Y+x9PYtZ
-	yg1qo51TIOZD5bEbWIS+8DKcBDtJPwuTzKF0kORQI/onLI9ZP+Ku10Fvcq815c2S
-	oJneT0jBW/6rpBwryF9c6vhiKWGU6cwOCFgLjuPGM9SU7Lbw/dakX7I2kOx+jkJo
-	qlFyMEmrkhH3Q90EEa2h2439ZObY1vuUy0hJlnkcj/QUI7BTdil1/pMv2O23KGua
-	RwWUc2ruWWxIRUm7ETkFlg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779065167; x=1779151567; bh=Bz68VFlGz5
+	lB0DE15lmTvkEZsCScSpTJNWk0Mq/Z2Os=; b=JLaSUNvoEaZsPnwxsltMnK4IMp
+	WCraz2b9/ugDDNdvwrXlIsuH45m4RIfa2TiBHBRzfLzoc7pTF5tae0jrlOpS27pp
+	T8YHBfJZKDmnEgtyh+Hq7YNYviUWlqXlT2VYjzDDc/45U4Fdu9IA8Z+DrgqNpQa8
+	mMHjLc5CthKUxYIuIOUaAReBlcjKjr0kBCyP5kUGP/mFLC0SCyYQT8croalFrB+y
+	SswxxOb0P2XArTqN9YxLKEA7fX7KFWwSulLb1ec5bD2zxtnNhOszAquS7nO4D8lp
+	1qoUU4UsGLKkTGNiRhcW1ME0FnW9whMU7fpZgrzEuF80OMzo5TzW17EqQ3IA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779063999; x=
-	1779150399; bh=U6HCnwlCWi8Qs9cAvMKLCW2dZkzIhFV7LJn8xj2iecg=; b=e
-	Yz4+K26fhqR+eV3D+gQ42dFwgUlojJ2ZvMbGQlc4RZY8X4XEShkKjXxJ+38lMCO0
-	/IfXuxBj2jaf5G5t+jcPyTKDTOquELvur4nLmNxg+6Uv4P7KrPa3m/Y1yuQTbnv3
-	rOG4MbwKgbnnMRJw+n39KblIgNov870K0ED3YrWhHQSkpG83I6wcRRrLHCD63yNP
-	Iugpp4D8Fk1RvEafP1Vm00Guk33EOfC2EGUudDeFUBCE0nG5gRm1TigaEZoqYfsR
-	uxr8fYpUv5oFutiwS0fk1cR8eN/nNSC+GE0py8qb6FDMpL5ceHx6n74Yzop27Xj5
-	sL/axvpn5RWguXGS43yYQ==
-X-ME-Sender: <xms:v1wKarzS-d7uJgF4idqZWDSmBiOHZSS_YEXySzK-p_SJ2SBnONtRxg>
-    <xme:v1wKaqRiMhSKIY976GUZ6TveDqoKNbxFecd04RmDUcXD3lcUOEEHGiJvWfJR9-G40
-    JKaI6poI11POUyWWe4evE4h7_FXod4-0QMirqYEoKYjuqD9Z0bEtQ>
-X-ME-Received: <xmr:v1wKaqVlLXOmi4DWsHlIIP0xWziW7pNa7HJeL1ftj0xOprTp_iNUyLLkU6_ZXdB2TofzcC_mkCyxOcgf_98SMgSiBfyCcp9JSg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeejgedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779065167; x=1779151567; bh=Bz68VFlGz5lB0DE15lmTvkEZsCScSpTJNWk
+	0Mq/Z2Os=; b=d42njdCDhbdJCDhlY7cxPJFWYbZVpU+PnzFtL/MUt8rUUbJzfT2
+	quj4y7kX+nvYUG5gtWZdkHLgt8HV32n85IlUTufpFTeGd45C98Vli3DtkVdzAKlY
+	ccLzUeOvFqO4HSdKNkana5SgK2hBZ74Wgc4Zm/xr5qLsZbhvQsEw90z3zaR2QWYb
+	Fq8gDsZEPWda6tA82Wp5MayYzwtMWxMzgr7sD8zloSxgwImREg2bEgm4AN/hm+ev
+	TOWJIbSMp7cr6xPCt+1u+kUQGCkgassWkAvwOrbKqJXVTbOok3stpP/0MpdOLWnn
+	uN3pTrQpgGyhAMgk6hBPLZOgr1CJr5fxoEQ==
+X-ME-Sender: <xms:T2EKarKQpQJ_Rii46fKYWuxadLX5uB0x1wDrSk_dBZCwJtMNYcU3Jg>
+    <xme:T2EKamBuw7vezoZ3Gt6CFE_xp_98fIjjq9aa20AbHsBFcCgsyMNhuKKWhJdhTAKM9
+    duks81U_uWn23Zc2QqXfyFsZuYEandJbhc4CPsDnDag0ng4iLiv-Kc>
+X-ME-Received: <xmr:T2EKasDR8irMxWkJYSjlc2xqu8ploS7NAe7o1riC3bPBKSF6bbXc7_cGW1ZaHdKDvBV3-IC81LcZxmi55VFJkni9DLFF5SN5cQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeejgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihho
-    ucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrg
-    htthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveev
-    fedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:v1wKakaT4nZUfwE74oxBQ3XPnPBmj9JbJIC-1RFTtMcPmD2A7nZgiw>
-    <xmx:v1wKao3OklT-LtzyfzAdolKZbttlQecwNinAW7Q7SOd_QtI_MbZu4g>
-    <xmx:v1wKaujtpub0FBE8IHgciD62Q-eTY4QsCJaVH3pFL-2K_4oGQ7LhSg>
-    <xmx:v1wKakbPnDjV21UiupLq-zAlvy9GZW4Fr5oZhN2MaV1QDkxOM9Tqlw>
-    <xmx:v1wKapXXHNmhaeCyErz-i3E3A1BA9FLX3_PdVFf7LKN8VqWbffLZdY-5>
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhovghrghesthhhrghlhhgvihhmrdhiohdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:T2EKagD5dtRQwEZPKmeDRMkdDUHqJfxe3HwYSvHQQ6b3ilXXt6L_wQ>
+    <xmx:T2EKavrBcxvwPZsobQQkcZPjrwHiN5GimIBT8ZN4sApzSdNvIc-VWA>
+    <xmx:T2EKaimNBFOC9LycwQuwiYpGYRq2Sqqjf4WlyTFbWgy1FIJE6CvwDw>
+    <xmx:T2EKanw4yHWw6C_lUjY_8Ju-tK4S8MakdlJrezNXeViil4weHaKGkw>
+    <xmx:T2EKaimr52QVEJMJYXezJgwdFIfboaFs4qUDcgZxN3lilY6WJI2Q6Nnn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 May 2026 20:26:39 -0400 (EDT)
+ 17 May 2026 20:46:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- <jn.avila@free.fr>
-Subject: Re: [PATCH 1/5] doc: convert git-bisect to synopsis style
-In-Reply-To: <dca7f192f1e5cdfb57682feace0a4b3a10204376.1779049615.git.gitgitgadget@gmail.com>
-	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Sun,
- 17 May 2026
-	20:26:51 +0000")
-References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
-	<dca7f192f1e5cdfb57682feace0a4b3a10204376.1779049615.git.gitgitgadget@gmail.com>
-Date: Mon, 18 May 2026 09:26:37 +0900
-Message-ID: <xmqq4ik5d0le.fsf@gitster.g>
+To: Joerg Thalheim <joerg@thalheim.io>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] config: retry acquiring config.lock, configurable
+ via core.configLockTimeout
+In-Reply-To: <20260517132111.1014901-1-joerg@thalheim.io> (Joerg Thalheim's
+	message of "Sun, 17 May 2026 15:21:11 +0200")
+References: <409d05a5-235b-6b19-5a33-a4e613dd447c@gmx.de>
+	<20260517132111.1014901-1-joerg@thalheim.io>
+Date: Mon, 18 May 2026 09:46:05 +0900
+Message-ID: <xmqqzf1xbl4i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,60 +87,49 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Joerg Thalheim <joerg@thalheim.io> writes:
 
-> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
->
-> Convert Documentation/git-bisect.adoc to the modern synopsis style.
->
-> - Replace [verse] with [synopsis] in the SYNOPSIS block
+> +/*
+> + * How long to retry acquiring config.lock when another process holds
+> + * it. Default matches core.packedRefsTimeout; override via
+> + * core.configLockTimeout.
+> + */
+> +static long config_lock_timeout_ms(struct repository *r)
+> +{
+> +	static int configured;
+> +	static int timeout_ms = 1000;
+> +
+> +	if (!configured) {
+> +		repo_config_get_int(r, "core.configlocktimeout", &timeout_ms);
+> +		configured = 1;
+> +	}
+> +
+> +	return timeout_ms;
+> +}
 
-This was expected.
+The above design means whichever repository happens to be passed for
+the first time as "r" to this call will fix the return value from
+the function for the rest of the system, meaning that the lock timeout
+is a per-process property and the repository parameter passed to the
+function does not matter all that much.
 
-> - Remove single quotes around command names in the synopsis
-> - Use backticks for inline commands, options, refs, and special values
-> - Apply [synopsis] attribute to in-body command-form code blocks
+It may make sense to admit that this is not a per-repository
+property (due to the use of local caching), have the function take
+no parameter and use the_repository to the config_get call.  That
+would make the intention more clear.
 
-This is very much unexpected.  I think everybody thought [synopsis]
-was invented to be used for the SYNOPSIS section at the beginning of
-each manual page, and ...
+Of course the other end of the spectrum is to get rid of the
+"configured" caching here, and ask the config system to make a
+hashtable look-up every time the function is called.  That will keep
+the lock timeout per-repository, which is closer to what the current
+function signature suggests.
 
->  SYNOPSIS
->  --------
-> -[verse]
-> -'git bisect' start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
-> -		   [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
-> ...
-> -'git bisect' help
-> +[synopsis]
-> +git bisect start [--term-(bad|new)=<term-new> --term-(good|old)=<term-old>]
-> +		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
-> ...
-> +git bisect help
+I dunno.  My gut feeling is that there aren't valid reasons why you
+would want to specifically set different timeout values per
+repository, so the simplicity of using the_repository (i.e. the
+primary repository instance this process deals with) sounds like a
+better way to go.
 
-... a change like this is very much expected and understandable, but
-new appearances of [synonsis] in places like:
-
-> +[synopsis]
->  ------------------------------------------------
->  $ git bisect reset <commit>
->  ------------------------------------------------
-
-and
-
-> +[synopsis]
->  ------------------------------------------------
->  git bisect old [<rev>]
->  ------------------------------------------------
-
-were a bit surprising and confusing.  They are not exactly command
-syntax definitions (which is the SYNOPSIS section is about), but
-examples of usage.  The one with '$' command line prompt feels
-particularly confusing, as the prompt is not something that the
-end-user gives, unlike what we write in the synopsis section.
-
-Other than that, this is quite exciting.
-
+Thanks.
