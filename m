@@ -1,99 +1,125 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EB4405C49
-	for <git@vger.kernel.org>; Mon, 18 May 2026 02:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779072041; cv=none; b=P6r2xVbZ0RVOrOv8YeXPVr6tD/pSLCgRzqPIgfxIPe9yhVMr40R928/iDsp3bBEX+Mj5ko/TDdJDBBc6Kz6leetaC/kim1s57Hs/84OjWY7t+vx8lhPkWx9D8QC2QeoGo7w33h4ISgKhfdhqX0klRM494wHXPKHWukF/8JBnEgs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779072041; c=relaxed/simple;
-	bh=UyjbL7kMJ1oZLYyJtAqEcg6we0MPuoWnYLMw/qKWYho=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hpEPcSrCp+Qrd1cvQPmLHch32ws23JKWOP7L/BhDmjLdLIT/0ymGbmo768KysO7UWobOgnrm50QB5LkyNnDQS5HqMHOTi18D6vZeg5ePdi8L5GnYIW/8Qps1r86x9wY/2TZzpqNHx6GuTJwGP1k+IJN5QrM9oXynaomAKa+u5wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=OWJyboqo; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDB63803EE
+	for <git@vger.kernel.org>; Mon, 18 May 2026 03:30:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779075053; cv=pass; b=gEAtZlMvHjCd+8aZnRj21PLfk/xmduJnRplzupjKVzOjvx2yPNXGKevZ3V18r3dn2d7Gmf+k8fWxcinV7D44sIk27YPMQhGpLTJnw/zufx1IL9HoTV7L9PeyvBAXPemMQdO/fVI8mmTHej8yAV8npJNCN69zGYUk87xuxOo5D9s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779075053; c=relaxed/simple;
+	bh=PVU7E3Bf3rNwAT2tKMO6qE+R68i7wQFSAXDblzrorf8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gryb2K7GQtxPZQgAk867P2jqU3Xp8iZ1waIUMe09JydqWrdI2EwcNDMqmGBoumm+GGsgY9AM/WecG1HjMZe2tqv/3B6T3yKSd6W4VOimNEEvoRfTe91Q3X1342/InhGiGAQiCBESOakZzVHabfCUyFfRoJfc1OV3VLHOuJYjXMs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cymwscox; arc=pass smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="OWJyboqo"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 64I2eLLh010410-64I2eLLj010410
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Mon, 18 May 2026 05:40:22 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wOnu1-00DOMP-Nh;
-	Mon, 18 May 2026 05:40:21 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Mon, 18 May
- 2026 05:40:21 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 04213b27;
-	Mon, 18 May 2026 02:40:21 +0000 (UTC)
-From: Tuomas Ahola <taahol@utu.fi>
-To: <git@vger.kernel.org>
-CC: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, Tuomas
- Ahola <taahol@utu.fi>
-Subject: [PATCH] fixup! approxidate: use deferred mday adjustments for "specials"
-Date: Mon, 18 May 2026 05:40:07 +0300
-Message-ID: <20260518024007.18689-1-taahol@utu.fi>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260516151540.9611-5-taahol@utu.fi>
-References: <20260516151540.9611-5-taahol@utu.fi>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cymwscox"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-43a86d544c2so559443fac.0
+        for <git@vger.kernel.org>; Sun, 17 May 2026 20:30:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779075050; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hUA/jm4GAnrKiX2wSpQlj8Yjcxerm6Ll186aYtGWHQO/H5/KVGNkhAikvdV/vucVQ5
+         urlJC8dTFLFSN+65sEJoJw11d1C/QbGZLEAh8NOYHAG5hGcnWSpQHw1PRuOZpj21zcKD
+         uPS40qiqbmg+G1pUA6US8+iK+PpOx9BwjDccqSjiruuaAf2R7jeXiA/mKeK8pjkInCTk
+         oJVMYNEPfBjpN2akD3+SgUGRhus78qKVT0Bp//c45KkymaXEFriX2psZcvPYLSHiW3JP
+         PSK76Pdi9gHYp9ecOCZKq+9DVSHLnY8z84+1UT7p4nwtUsq72E0o1lVqWmdwRLnlpW9X
+         oWWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=6IzGFBxy08JGOrqU1OmSBSkKsgBB+x1J3HQ96OqW1F0=;
+        fh=DyUEzJqbRq57b41m7uKqGPyssd6wDkNSPNL+BP/0vTY=;
+        b=KV0hjnbw+3O9Isb/jUpOOHbdAlxmprC/4hMXnI+aRdAhU3yvrOTb1Gc5jYwRUZKlH5
+         ZKyb15Jd04x5oFBXX2eBuJL8cZt6LWvJFEhyNxUubP109k3bzqReonc08lxFmjMVM88Z
+         /ixlgpfOKO6nWXXPaUKv0bLkHqHGPm48fFr6Rjro8T+qjFGPoz2wjM9veUIywxSq4n/b
+         P2U6NUYG7nyeUtrOAYRHGsxeXtkZHSJH2glzizrP4mEqHcES+v89T/0Wgr8xWNMdq9CE
+         i6nnSprzX8h3ouIqfLu/dMq9+FZBM+flRuASOnJB7LAk0I9RyLx0ZFkpvG0OBqQe6fqT
+         dgNQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779075050; x=1779679850; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6IzGFBxy08JGOrqU1OmSBSkKsgBB+x1J3HQ96OqW1F0=;
+        b=cymwscox4AdcGCe+pnTw9j66yI2AE2VUd0H+MKA4E5Eb0Nl3Y9cz0lACqEE5ql1kIZ
+         lUtdiSxD7Ht2ar6jmOCSuSdMIHGRKTYNXyUrZ9yzr1CN1j1A+rkuVRgzIUXpwacBOei3
+         ye6g24FaDgjdhBLALTwsKKuQqwkiXqRF90QfjDVKsqN8eL0EdWDKX7ZX69R1b9T6oJ4K
+         T+l9se+XlMmI4IvCVWd3SNaUpaFqFtXhTug4PIIyl/4cr3HUN3K9Jqgk/pKeU/LqDhuN
+         aCHj4ZqIKLlLww5oq2EfWo91RNgePlfRf6AhJ53gTh1dH8/sh/UzqBUs1E4BAPCnkF92
+         avFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779075050; x=1779679850;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6IzGFBxy08JGOrqU1OmSBSkKsgBB+x1J3HQ96OqW1F0=;
+        b=KeycrIHaIexUy6vXqSARSFPDYF5VwKNPx2rD/BGAdtSlcmpypwVGmCZ0qkx3j1UlnO
+         AHMfLaHH2zBak6wFL4uuVMn9pb5J2ftw2qebWxJirtD29v3yTxSfgB5f3jru6ssVlI+P
+         FHz8EInsnmLbtkOGoSWpgHPLC/SH5kdF8WWE6TeFOZCo3bbcnh4Vxq79sR6oUv6sVU72
+         Kd3yCE9grd/v8FaMhB0VpB+Rtm3NkYwnwjbMsPKZBaH5SPZeW+KmFYIq1nkz7W2peFlC
+         Kz8e7inQjc4YP3g7Xm9A2DnS3L/VHSYZDIDxAjZma24fwSLud+GpoPAMjyjz0tf0eQu6
+         I/4A==
+X-Forwarded-Encrypted: i=1; AFNElJ/8GZ6t0ITbGMNTWUDDOhScLiCMO3hNfh7acCkR7n+1eO44vHlhOMCOZPprnfW3D44qS7I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNd0bfPKRY1IrAv4Skqfueh+vOuqkKPR0cg3x8JIOkhxka+8WN
+	8mSV38/zjnLcvDpZgtSJ/jXVORwrnW9mFD/U4518lmftI7exHBj2wlPZJKgrskDe+r81T95kBQR
+	VVqGdZT6UuUK8ZzpYwKIyoV2SboMT3UE=
+X-Gm-Gg: Acq92OHT4ul5Pgg+7rGoKfUxbagMGN72J2emzc/MPw6qmeIisqPeAKPBJHi5axmRbVa
+	Ncg+plOwZEkoTUWA3QX5+A/3r8tCdQj2e9wrU8n9N40ngULe/DEOYBBIwX4ee1YiYuIDaoP2t0r
+	rSFNRNMX4fUk6rfTVQqVPeCm8MFOnKZbRktzfm8kFY5b/EvgKTF89aLhLWSHX5jXTJ8mnmq00DC
+	ay4HL6MdPyBnkhx3/8kRpE0ZsdJ99kB4oxTx5vYYreNGBtjPDxYF6TNSYoHz/80abov0BZa/XmD
+	ySa9C0A3E14Pirwj4UK+OaFg9qDfryzhwKipa3SU
+X-Received: by 2002:a05:6870:218f:b0:436:a4fc:f6cc with SMTP id
+ 586e51a60fabf-43a2e140f34mr8982580fac.36.1779075050228; Sun, 17 May 2026
+ 20:30:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-12.utu.fi (130.232.247.52) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIW0hYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZW0gYDQ4OKBgNDg5GBg0cSFg=
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
- bh=a7kLaEcSlF1/AoHVWUeVvib1IWXskpLMzZPt/KwpO34=;
- b=OWJyboqoWR1FMsgNNcvZuODiQqs0zM2jH9il9rKyp8WD7h27MzUs8xBMV9y713RbxDFaMr3KiYoz
-	CeKfJMuf/5h2ITHDl7tT9otkU/TvpqQRX07zaGskkLvoJMgdrITDEU+/5XKvVc33+I86TE8wYRWG
-	GqqnfULHCaw9x5ZLeeHhgSIOVIPQc0oMjSbDBcXbNSDjS2NHy4lOhxzj+S01icpJ31znjtLyQMzt
-	SY/YvGwKvxavE+TCoiWq6hER010KJRHdKupTgsJoIYkxnRjtOG06KMf3e9kuScowfor3SVQw0vdg
-	A+WEfTaej6FoO53wykzusJ0iAt8UXthMAkt4Lw==
+References: <CAC2QwmKRyYfE+30Fh75gvAEmJjk8g-3k+G=RDiEJ-KGNExAEow@mail.gmail.com>
+ <xmqq8q9migqk.fsf@gitster.g>
+In-Reply-To: <xmqq8q9migqk.fsf@gitster.g>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sun, 17 May 2026 20:30:38 -0700
+X-Gm-Features: AVHnY4ICu6v2rMGtEjfxkEKd4jzAcQohtRz32bSM1UpGBvgRsn1s9UvnSaPFEKE
+Message-ID: <CAC2QwmKORPnsmV4SM_CnmhrbF+X754ae-n9m1fgjvVsL9d-wzg@mail.gmail.com>
+Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
+ space changes
+To: Junio C Hamano <gitster@pobox.com>
+Cc: vincent@vinc17.net, git@vger.kernel.org, j6t@kdbg.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Oops, let's reorder these lines.
+On Thu, May 14, 2026 at 12:37=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Michael Montalbo <mmontalbo@gmail.com> writes:
+>
+> > @@ -457,6 +457,11 @@ endif::git-diff[]
+> >  +
+> >  Note that despite the name of the first mode, color is used to
+> >  highlight the changed parts in all modes if enabled.
+> > ++
+> > +Word diff works by finding word-level changes within each hunk of
+> > +the line-level diff.  The line-level alignment determines which
+> > +changed lines are compared to each other, which can affect the
+> > +word-level output.
+>
+> The added text may not say anything wrong, but I am not sure how it
+> helps the end user to know the way machinery works internally.
+>
 
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
----
- t/t0006-date.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I see what you mean. Maybe the doc should focus more on calling out
+the user-facing implication:
 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index b187b1bfc4..63e5628e05 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -212,9 +212,9 @@ check_approxidate 'noon today' '2009-08-30 12:00:00'
- check_approxidate 'today at noon' '2009-08-30 12:00:00' '-12 hours'
- check_approxidate 'noon today' '2009-09-01 12:00:00' '+36 hours'
- check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
-+check_approxidate 'noon yesterday' '2009-08-29 12:00:00' '-12 hours'
- check_approxidate 'last Friday at noon' '2009-08-28 12:00:00'
- check_approxidate 'last Friday at noon' '2009-08-28 12:00:00' '-12 hours'
--check_approxidate 'noon yesterday' '2009-08-29 12:00:00' '-12 hours'
- check_approxidate 'tea last saturday' '2009-08-29 17:00:00'
- check_approxidate 'tea last saturday' '2009-08-29 17:00:00' '-12 hours'
- check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
+  `--word-diff` finds word-level changes within each hunk of the
+  line-level diff, so changes that only affect whitespace may still
+  appear in the output.
 
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-prerequisite-patch-id: 699b43ba1ff3235d54fa068f4c9b5ab5aa58eacc
-prerequisite-patch-id: 2ab5ce03bce8b2953b418fe884f45fbd4a629337
-prerequisite-patch-id: 52e3b766b9c6f148f09682b898bf5244b22ae0ba
-prerequisite-patch-id: 1cd0e7498368f7c3b1833f12d56fefe732dd0413
--- 
-2.30.2
-
+I've intentionally omitted a whitespace workaround recommendation for
+now given the ongoing discussion in the thread.
