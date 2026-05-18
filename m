@@ -1,315 +1,221 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80C6301717
-	for <git@vger.kernel.org>; Mon, 18 May 2026 11:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1213FE65E
+	for <git@vger.kernel.org>; Mon, 18 May 2026 12:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779103428; cv=none; b=tFYTy+gBLac+7a9x+SiIItQGs3Fd8NjOLE8sVlGIwgiA6h64BMr+6lUi/5zAl15KqZG2bQoZoUKOfa0nQktcOdawSFVmgC0vvCOQL5UgsglKTHEYyTqHPZqGjTrDoYp2ADpN32c6C2xkAwXgQLV0fb+IH1HtMU6MFYlcN7fFSJk=
+	t=1779106447; cv=none; b=iXGiEh25yKnOWOKIPi6CYeqoQ+05Vtkrpv7JfTwsP4UOlDcl829O2cGMgcFOkOjudN6Q5GQDZII+WmiwpUf6ibLCUk6M5E9ZOWJMlRZg2hyY448mw7x/XJd2vsXLd7TPgmO3lwBdKmvAiMxwRyg6ZamQVRRhjVs86a4sHKTBbxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779103428; c=relaxed/simple;
-	bh=CO0f7a6nefu6Z7KTus8I+hChsPZe1q0vv6qnEzK2p0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gl8SHPRlXIjta+AFEfT6FDqA+kjmWwM5koAFjTEo5M8ZGSD5b3aiPF+cG5ZTvOrWOSeQ5/g4/JOlHpXd/iIuB8dyQESzedXniozb/I76WzLv4OTkvtiqq0NnNR3xE2TWkNSlrTRf9MzAhFEHB6hatFkojD+PSKKzjo4Pa8JQTfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eUVd45xL; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
+	s=arc-20240116; t=1779106447; c=relaxed/simple;
+	bh=VI/JaXZ5aRapADxYqgTvPeUob/e1SlFXvTTH7SSzg3I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=prWDNkyTHacv4thLEOueZJ8yRE8kNogZb7yXOAyhzsk8BDHvlvNb5q3gSb06E72XCehLZzGmhIjFpTMak1IFjdzbKng/+gexswVySsdYSVGYbd+jCdrRgCfWygDnJohjzhODOS8lPJbKnlZAZsOWNhu4zxytVpH6sefQ9QteUEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XIvXCzXk; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUVd45xL"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5a8891febd2so3001470e87.1
-        for <git@vger.kernel.org>; Mon, 18 May 2026 04:23:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XIvXCzXk"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-8b59772d441so30479196d6.0
+        for <git@vger.kernel.org>; Mon, 18 May 2026 05:14:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779103420; x=1779708220; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a/mU+qyxi/Qsj2HoEMwx6Nsp4QC6YVrXSG83M/8trJY=;
-        b=eUVd45xLIlqvLkPNZ7FQmNFx5nadPG/B02noZVLcrpSb7WD2J+I1UZaGIVfgLvU82K
-         LJQQ2nZrrWVAxEulVorNXZjoCi12mSo6IMtAQ9+ZBKXRlOSq3ufBWbdsHHO0ulznkX2i
-         Qo6TntGpNB8tKJCczP+kN99mhQ3KZZQPjaO0cgbuZT0Onpsq3vbgORkqV6pxDBX5Tmsx
-         wv34/Tk3p60644YN/iInKyKah3ep8YGqmrynvXwpXqXLZ2HDQnOMo1XREsIGkTbRw+pc
-         Rwf8jYi5KPZ5VJYpf4Y6ixvZaneDLPfxg2vVh83cexgAMskaPsxppeNx6Hxr/eBV4fGF
-         BciQ==
+        d=gmail.com; s=20251104; t=1779106445; x=1779711245; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NZG8Sk619lKbDLw2qT7vU09Rowpt9dtnCORt5iyvoNs=;
+        b=XIvXCzXkFYu40dx0PrwuqTjdP+8d2NcWJfpIvwiin2m/+r96xzmjIUYlqzuvHwLljm
+         X3zGEkMy5DJEkd+YulIW6T1PBDDBtU2xivl+VUG0M5I0qAt5emI5kof1TyMvoHmyWCWQ
+         urg5e5OE+aWPcWrPeS3OTd26aHK8j4m6oK2U3Mw4KiZc1dz7WxMfw5eCX2ThWKjQi4sB
+         v0iKbvOQdjayq1c1auiwLINHTZTWiP1ja9JvJZz+JrP9jg60Zm7W6OpLa2Kpj5jsJL2H
+         JOlgqzBeMxBGtbsksGtKMgwA2FiHQXye/gIijJtJo420wJ8XmyYx2NpbaM1kiHaSztwg
+         EFzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779103420; x=1779708220;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a/mU+qyxi/Qsj2HoEMwx6Nsp4QC6YVrXSG83M/8trJY=;
-        b=ewJ/C0RIvTS/pN1vJI0cLyUV/yvw/xvQso2QB6tYlAjOHfzb9hRzq6Tm+ydyRrO06l
-         1sOcAJjRlaa6+lCcuQJEfljUw4DuQ9QiV1BBuEbtYDR4pMB0kcyJGM9kbSlQIXDg5lO5
-         0nJqGfnagVpjxcy5EDcKNot8KsN2ltCp8kxZI/9bU+CEuZaOSBtneQmeSmXye2a/fz4b
-         CdmHSMCUuM1cRHJj8Meq/KiENhJZt55IB/cCE+5bL2t5mPBNlbYZ9E2WEfvrg4CDcRT9
-         TQDpH67J+h9y8ZLsBeECTKn7thmJKliClzVALBMxKkPpo9xDeOgu9iRb4Xi4S4Ps65yy
-         MpTQ==
-X-Gm-Message-State: AOJu0Yx9OwuYZL0oqFNK3eSMjeX7RMP0YaI2dyMTJPMW/pMHXIi/6kcL
-	Gmp9J3UWJYHBnaMkjkHY4r8n9AUZiceZQiVI6tmCOzAA3j7tV/MRfZiXcAxJQA==
-X-Gm-Gg: Acq92OGFkwvV/YwSINnNrxSl3Ba5swVg3j3LkkkTTi+O/u6lSdtZapeLynqQbyGRQv/
-	pcoZ9xQAf/VsPMdk26aESB7DNTV13DUPAOos85I6EEtR3eAN1nN4o8bDF+OrJKe6Q0oLV8nhqpY
-	IAnp1c+URLxCTKNJktwZ5nglFWVhspLoqZWllPqs/70SLpd6p/xJg31dnEiYTGNDCoz7jJ8GCbe
-	McSo0OVcwdlUnxW7SgmalYrXhg5MuUBBMWkzMDa4ZyytlE9UTviZHc1iGhrJsgR+zvUs/FrnsEr
-	IkNmkzUQSn4AqfPoh0q6Z9R0ORrIT+hSwNqWvE0BRl4tTRyM2+ksJU/Y3eos9ZsX3RaPp+2hkgJ
-	bmUbf8KH5nfsQ8oCbDLbcPr+FmMR+GPJXQReGiksbcoEFOkU3dCWyskwUXIMarZzCHrP8oNSb8l
-	YxNlK1ZPibbnLgXW1lLWkWNIbwajILctUN6Ncv5h6c+5IpTGIF3KJVrCUNSQn97dWNWVoru6NwR
-	/5tPSyv47W3E/aaS8foeeZzCN2WKf5kUkBsbxxyaphHobmvyvELHskx6Hy4wyBJ
-X-Received: by 2002:a05:6512:3d88:b0:5a8:7f52:62d1 with SMTP id 2adb3069b0e04-5aa0e733f44mr5386138e87.1.1779103420248;
-        Mon, 18 May 2026 04:23:40 -0700 (PDT)
-Received: from localhost ([2001:2043:be0a:d700:1996:ae89:4512:3a7e])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a91e2b6d78sm3230221e87.82.2026.05.18.04.23.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 04:23:39 -0700 (PDT)
-Sender: Erik <erik88@gmail.com>
-From: erik@cervined.in
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	charvi077@gmail.com,
-	Erik Cervin-Edin <erik@cervined.in>
-Subject: [PATCH 1/1] commit: allow -m/-F with --fixup=amend: or reword:
-Date: Mon, 18 May 2026 13:22:26 +0200
-Message-ID: <20260518112225.73172-4-erik@cervined.in>
-X-Mailer: git-send-email 2.54.0.772.g683d7313b1
-In-Reply-To: <20260518112225.73172-2-erik@cervined.in>
-References: <20260518112225.73172-2-erik@cervined.in>
+        d=1e100.net; s=20251104; t=1779106445; x=1779711245;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NZG8Sk619lKbDLw2qT7vU09Rowpt9dtnCORt5iyvoNs=;
+        b=WcYG0s2C11khboXKAc/HC+DVp8amc6nCnaS9Uf+9DlnRmFv9HkF4obX5uIAW8ixubZ
+         Or2vmkq3+4LWK6i2Vr2ThSxNnpsWiJcoumdiMZHxzW3QJuD7K8S9kzepdmA7gCEyCvWU
+         AKTKOWEtxQSxs4d7IQglRxjrzJ/cSaoD3LqnvcYWfEKYJkX2gD/koOOaCOcJyqomYAm6
+         P78ks2orfMNvqzjvk/RuJ4HiXORFobcJxOuTyoeORgEIUInq3sfgQeBsfljpQCXlAUZs
+         8gj211PYR8ay5ww+W+jI0n/H0dwvXnXiQlrDaAJFAaB5iGnntBrNvxlhyLw0DXhPC2/P
+         ISHQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9H0/azXR6tMwit1S5ayUglbz4TBZmiHna7imTeehw7Zda7+LBeiL1UBWHnWYIV8x95ztg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXRRsRHfR3HGerzch8BEcYsID019xtyls2AbRhwD6ETOgXyGB+
+	aLUNSlkreJHnDXbed5bryMmoIX1mg++VHMjs1Yfyyvejt1xDU3tw/eJB
+X-Gm-Gg: Acq92OFiaRyuwzTRvEDiEEfLAVF1czuUISMDl0XZYZ2aFiWFaxHwGPslG5BrUhHZ8rg
+	jCJ/nfWoaSM81ra+mXuWQTBC9Prl4Y0W/JLvYQRGZSsxefQDNSHs4n58rsGvFV+Yfey1ohydFYL
+	PVlkgPbCFVtYtArLmRC7XwJKE7tG4YcQkigIdA5NAA7kIH9hvQGa+V9QnDsD8EkS7EO+bQyqFLB
+	dDZ2bBhISVCTBeNXRimg+t/lkzqPG30nauy1YwE3iMavz/A5v6dh3Yua6J2I1stpMHnifDAmXR1
+	fwvaaXppv5sDQiiz2onV9VNOt2pOT5gdpmTHrmDNVRQrdRD4n61G/xgoYPS7i7GRQttWU69QVUI
+	jaXVjhkLXn7t6drFzwKZtD0fqWN83usarL0v11SFRFnszsmkVyJC+hOpwRNHkRBkR2uDX0y8oA+
+	VbMshbw2jLl0mPrLNo1uueCkHhkm9AkYJsX/0jexhsTruwVrd2rVIfZpQ6eR534d8/fjhwYQ==
+X-Received: by 2002:ad4:4183:0:b0:8ac:af21:5746 with SMTP id 6a1803df08f44-8ca0f706681mr163374376d6.42.1779106444572;
+        Mon, 18 May 2026 05:14:04 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca36190136sm53780276d6.24.2026.05.18.05.14.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 May 2026 05:14:04 -0700 (PDT)
+Message-ID: <9ff558a4-1be8-4a77-999a-b32c1812e4de@gmail.com>
+Date: Mon, 18 May 2026 08:14:03 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] builtin/log: prefetch necessary blobs for `git
+ cherry`
+To: Elijah Newren <newren@gmail.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+References: <pull.2089.git.1776379694.gitgitgadget@gmail.com>
+ <pull.2089.v2.git.1776472347.gitgitgadget@gmail.com>
+ <a705852723fbe88e94ad3de1daba548dbce32211.1776472347.git.gitgitgadget@gmail.com>
+ <a2fbb23d-0809-4a9d-8bf9-8ac0dc8ee054@gmail.com>
+ <CABPp-BGpXgDfJeDEB91U-h092-8L6Q_MLrzSLFg9HotPDZ-m-g@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BGpXgDfJeDEB91U-h092-8L6Q_MLrzSLFg9HotPDZ-m-g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Erik Cervin-Edin <erik@cervined.in>
+On 5/13/2026 7:17 PM, Elijah Newren wrote:
+> On Mon, Apr 27, 2026 at 6:17 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 4/17/2026 8:32 PM, Elijah Newren via GitGitGadget wrote:
+>>> From: Elijah Newren <newren@gmail.com>
+>>> +static void collect_diff_blob_oids(struct commit *commit,
+>>> +                                struct diff_options *opts,
+>>> +                                struct oidset *blobs)
+>>
+>> I think that this is generally a good idea, though I worry that
+>> having this hidden in builtin/log.c may not be the right long-
+>> term home.
+>>
+>> I expect that we'll find more and more examples where we want to
+>> prefetch blobs in different operations, those that exist now and
+>> those that may be created in the future. It would be preferred if
+>> they could automatically take advantage of the logic already in
+>> diff_queued_diff_prefetch() within diffcore_std() in diff.c.
+>>
+>> Ultimately, _this_ patch cares about a diff.
+> 
+> I read this patch a bit differently -- could you say more about what
+> you have in mind?
+> 
+> The body of collect_diff_blob_oids() really is just diff_tree_oid() +
+> diffcore_std() + process each pair, so at the per-commit level I am
+> already leaning on the diff library.  One of the things this patch
+> adds is accumulation across many commits: the containing loop (in
+> prefetch_cherry_blobs) is over a commit range, not over a single diff.
+> 
+> Concretely, the motivating case was a patch touching a few files where
+> upstream had tens of thousands of commits in <limit>..<head>, several
+> hundred of which modified the same set of files.  A per-diff prefetch
+> like diff.c uses would turn that into hundreds of small fetches of 1-3
+> blobs each; what this series gives you is one fetch.  So the win
+> really does live above the diff library, not inside it.
 
---fixup=amend: and --fixup=reword: require an editor to supply the
-replacement commit message. The -m and -F flags are rejected: -m is
-caught by a die() in prepare_to_commit(), and -F is caught by
-die_for_incompatible_opt4() which groups -F with --fixup as mutually
-exclusive. This makes these modes unusable in non-interactive
-workflows -- notably AI coding agents.
+My initial thought was about finding what we can abstract into the
+diff API for later reuse. Upon rereading, it's clear that this is
+tied very closely with the --cherry feature and wouldn't make a lot
+of sense in the API layer.
 
-When the amend suboption was introduced in 494d314a05 (commit: add
-amend suboption to --fixup to create amend! commit, 2021-03-15),
--m support for amend fixups was discussed but not pursued, and -F
-was already caught by the higher-layer incompatibility check grouping
-it with --fixup.
+> There are two further wrinkles in cherry that are filters layered on
+> top of the cross-commit accumulation, and they're cherry-specific in a
+> way that I don't think belongs in the diff library:
+> 
+>    1. For most commits in <limit>..<head>, cherry doesn't care about
+> the diff at all -- if the list of files modified doesn't exactly match
+> the commit of interest, the commit is skipped before patch-id is even
+> computed.  Prefetching for those would be wasted.
+> 
+>    2. We skip prefetching content for binary files (because patch-id
+> uses oid_to_hex() for such files instead of the diff contents).
+> 
+>> Could we compute a
+>> "diff prep" computation using the core diff library instead of
+>> inventing a second queue of results for diffing?
+> 
+> To check this concretely I looked at each of the existing
+> promisor_remote_get_direct() callsites for a similar producer.  The
+> closest cousin of collect_diff_blob_oids() (the only part of this
+> patch that looks like it might be close to the right shape to put in a
+> core diff library) is diff.c's diff_queued_diff_prefetch() -- but it
+> operates on the already-populated global diff_queued_diff and fetches
+> immediately, rather than setting up the diff itself and returning an
+> oidset for the caller to accumulate.  Reshaping it to match cherry's
+> needs would either break its current caller in diffcore_std() or
+> introduce a parallel function whose only consumer is cherry.  None of
+> the other sites (path-walk in backfill, index walk in read-cache,
+> three-way state in merge-ort, etc.) do anything resembling "diff two
+> trees and harvest oids."
+> 
+> And even if we did factor a helper out, cherry's filter is
+> patch-id-specific: commit_patch_id() substitutes oid_to_hex() for
+> files marked binary by their userdiff driver, so we deliberately skip
+> prefetching those.  That isn't a generic "diff prep" consideration --
+> it only makes sense because the caller is patch-id.  We could express
+> it as a predicate parameter, but with one caller that would feel to me
+> like it's just pushing cherry's policy across an API boundary for no
+> gain.
 
-Allow -m and -F to supply the replacement message body for amend and
-reword fixups. When provided, bypass the editor and directly use the
-user's message as the body, replacing the original commit's message. For
--F, the file contents are read into the message strbuf and then handled
-identically to -m.
+Thanks for the additional context. I agree with your assessment.
 
-Plain --fixup (without amend: or reword:) continues to reject -F but
-still accepts -m (even though it's practically a no-op).
+>> Patch 3 cares about a "scan prep" which cares about loading all
+>> blobs for a given tree with respect to a pathspec. This is very
+>> similar to what a checkout would do, though it ultimately uses
+>> a form of diff to find out what change should be applied to the
+>> working directory. Perhaps 'git archive' is a better matching
+>> example.
+> 
+> Agreed that archive is the closer analog -- both grep and archive do a
+> pathspec-filtered single-tree walk, whereas checkout's prefetch is
+> tied to the index and optimizes to the subset of paths that are
+> different since the previous version checked out.  Retrofitting that
+> to grep would mean materializing an index for the target revision just
+> to throw it away, which feels like more machinery to bridge the
+> abstractions than the walk itself would take.
 
-Signed-off-by: Erik Cervin Edin <erik@cervined.in>
----
- Documentation/git-commit.adoc             | 13 +++--
- builtin/commit.c                          | 41 ++++++++++----
- t/t7500-commit-template-squash-signoff.sh | 67 +++++++++++++++++++----
- 3 files changed, 92 insertions(+), 29 deletions(-)
+Makes sense.
 
-diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-index 8329c1034b..9478d5d265 100644
---- a/Documentation/git-commit.adoc
-+++ b/Documentation/git-commit.adoc
-@@ -111,12 +111,13 @@ commit, but the additional commentary will be thrown away once the
- The commit created by `--fixup=amend:<commit>` is similar but its
- title is instead prefixed with "amend!". The log message of
- _<commit>_ is copied into the log message of the "amend!" commit and
--opened in an editor so it can be refined. When `git rebase
----autosquash` squashes the "amend!" commit into _<commit>_, the
--log message of _<commit>_ is replaced by the refined log message
--from the "amend!" commit. It is an error for the "amend!" commit's
--log message to be empty unless `--allow-empty-message` is
--specified.
-+opened in an editor so it can be refined. The replacement message may
-+also be supplied directly using `-m` or `-F`, bypassing the need to open
-+an editor. When `git rebase --autosquash` squashes the "amend!" commit
-+into _<commit>_, the log message of _<commit>_ is replaced by the
-+refined log message from the "amend!" commit. It is an error for the
-+"amend!" commit's log message to be empty unless `--allow-empty-message`
-+is specified.
- +
- `--fixup=reword:<commit>` is shorthand for `--fixup=amend:<commit>
-  --only`. It creates an "amend!" commit with only a log message
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 28f6174503..269c2d782b 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -837,21 +837,19 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		hook_arg1 = "message";
- 
- 		/*
--		 * Only `-m` commit message option is checked here, as
--		 * it supports `--fixup` to append the commit message.
--		 *
--		 * The other commit message options `-c`/`-C`/`-F` are
--		 * incompatible with all the forms of `--fixup` and
--		 * have already errored out while parsing the `git commit`
--		 * options.
-+		 * `-m` (and `-F`, converted to `-m` earlier for
-+		 * amend/reword) appends the message body here.
-+		 * `-c`/`-C` are still incompatible with all forms
-+		 * of `--fixup`.
- 		 */
- 		if (have_option_m && !strcmp(fixup_prefix, "fixup"))
- 			strbuf_addbuf(&sb, &message);
- 
- 		if (!strcmp(fixup_prefix, "amend")) {
- 			if (have_option_m)
--				die(_("options '%s' and '%s:%s' cannot be used together"), "-m", "--fixup", fixup_message);
--			prepare_amend_commit(commit, &sb, &ctx);
-+				strbuf_addbuf(&sb, &message);
-+			else
-+				prepare_amend_commit(commit, &sb, &ctx);
- 		}
- 	} else if (!stat(git_path_merge_msg(the_repository), &statbuf)) {
- 		size_t merge_msg_start;
-@@ -1338,10 +1336,12 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	}
- 	if (fixup_message && squash_message)
- 		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
--	die_for_incompatible_opt4(!!use_message, "-C",
-+	die_for_incompatible_opt3(!!use_message, "-C",
- 				  !!edit_message, "-c",
--				  !!logfile, "-F",
- 				  !!fixup_message, "--fixup");
-+	die_for_incompatible_opt3(!!use_message, "-C",
-+				  !!edit_message, "-c",
-+				  !!logfile, "-F");
- 	die_for_incompatible_opt4(have_option_m, "-m",
- 				  !!edit_message, "-c",
- 				  !!use_message, "-C",
-@@ -1410,6 +1410,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		}
- 	}
- 
-+	if (logfile && fixup_message && !strcmp(fixup_prefix, "fixup"))
-+		die(_("options '%s' and '%s' cannot be used together"), "-F", "--fixup");
-+
- 	if (0 <= edit_flag)
- 		use_editor = edit_flag;
- 
-@@ -1821,6 +1824,22 @@ int cmd_commit(int argc,
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
-+
-+	if (logfile && fixup_message && !strcmp(fixup_prefix, "amend")) {
-+		if (!strcmp(logfile, "-")) {
-+			if (isatty(0))
-+				fprintf(stderr, _("(reading log message from standard input)\n"));
-+			if (strbuf_read(&message, 0, 0) < 0)
-+				die_errno(_("could not read log from standard input"));
-+		} else {
-+			if (strbuf_read_file(&message, logfile, 0) < 0)
-+				die_errno(_("could not read log file '%s'"), logfile);
-+		}
-+		strbuf_complete_line(&message);
-+		have_option_m = 1;
-+		FREE_AND_NULL(logfile);
-+	}
-+
- 	if (trailer_args.nr)
- 		trailer_config_init();
- 
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 66aff8e097..b7579ad789 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -384,18 +384,28 @@ test_expect_success '--fixup=reword: ignores staged changes' '
- 	test_cmp foo actual
- '
- 
--test_expect_success '--fixup=reword: error out with -m option' '
-+test_expect_success '--fixup=amend: with -m option' '
- 	commit_for_rebase_autosquash_setup &&
--	echo "fatal: options '\''-m'\'' and '\''--fixup:reword'\'' cannot be used together" >expect &&
--	test_must_fail git commit --fixup=reword:HEAD~ -m "reword commit message" 2>actual &&
--	test_cmp expect actual
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+
-+	amend commit message
-+	EOF
-+	git commit --fixup=amend:HEAD~ -m "amend commit message" &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual
- '
- 
--test_expect_success '--fixup=amend: error out with -m option' '
-+test_expect_success '--fixup=reword: with -m option' '
- 	commit_for_rebase_autosquash_setup &&
--	echo "fatal: options '\''-m'\'' and '\''--fixup:amend'\'' cannot be used together" >expect &&
--	test_must_fail git commit --fixup=amend:HEAD~ -m "amend commit message" 2>actual &&
--	test_cmp expect actual
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+
-+	reword commit message
-+	EOF
-+	git commit --fixup=reword:HEAD~ -m "reword commit message" &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual
- '
- 
- test_expect_success 'consecutive amend! commits remove amend! line from commit msg body' '
-@@ -432,6 +442,12 @@ test_expect_success 'deny to create amend! commit if its commit msg body is empt
- 	test_cmp expected actual
- '
- 
-+test_expect_success '--fixup=amend: -m with empty message aborts' '
-+	commit_for_rebase_autosquash_setup &&
-+	test_must_fail git commit --fixup=amend:HEAD~ -m "" 2>err &&
-+	test_grep "empty commit message body" err
-+'
-+
- test_expect_success 'amend! commit allows empty commit msg body with --allow-empty-message' '
- 	commit_for_rebase_autosquash_setup &&
- 	cat >expected <<-EOF &&
-@@ -468,10 +484,37 @@ test_expect_success '--fixup=reword: give error with pathsec' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '--fixup=reword: -F give error message' '
--	echo "fatal: options '\''-F'\'' and '\''--fixup'\'' cannot be used together" >expect &&
--	test_must_fail git commit --fixup=reword:HEAD~ -F msg  2>actual &&
--	test_cmp expect actual
-+test_expect_success '--fixup=reword: with -F option' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "message from file" >msgfile &&
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+
-+	message from file
-+	EOF
-+	git commit --fixup=reword:HEAD~ -F msgfile &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '--fixup=amend: with -F option' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "amend message from file" >msgfile &&
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+
-+	amend message from file
-+	EOF
-+	git commit --fixup=amend:HEAD~ -F msgfile &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '-F with plain --fixup still errors' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "message" >msgfile &&
-+	test_must_fail git commit --fixup HEAD~ -F msgfile 2>err &&
-+	test_grep "cannot be used together" err
- '
- 
- test_expect_success 'commit --squash works with -F' '
--- 
-2.54.0.772.g683d7313b1
+>> By implementing things in a
+>> common location, then we can have later integrations add to the
+>> confidence in the feature through tests covering each user-facing
+>> use.
+> 
+> Sounds great...but what common user-facing uses exist?
+> 
+> Looking at the existing 11 callsites of promisor_remote_get_direct()
+> after this series [1], each has pretty specialized data needs --
+> index-driven (read-cache), index-pack & pack-objects internals,
+> path-walk batches (backfill), merge-ort's three-way logic,
+> diffcore-rename's two independent rename-detection paths, plain old
+> diffs, collection across a subset of commits (cherry),
+> pathspec-filtered tree walk (grep), and
+> on-demand-single-blob-at-a-time (odb.c) -- so I don't see a natural
+> shared layer above the primitive itself (which is already
+> promisor_remote_get_direct).
+> 
+> archive, if it had prefetch logic, would be the first match.  But it's
+> not clear where the shared logic between grep and archive would live,
+> if archive even had any prefetch logic to share.
+> 
+> So I'm inclined to leave both new producers local to their builtins
+> for now, and factor a tree-walk helper when archive (or a third
+> caller) actually wants one.  But I'm happy to be told I've missed the
+> boat.
+
+No, clearly I missed the boat. Thanks for giving me insight to your
+deep understanding of this area. You executed on a good design based
+on the right amount of specialization required for this need.
+
+Thanks,
+-Stolee
+
 
