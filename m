@@ -1,72 +1,74 @@
-Received: from mail-yw1-f196.google.com (mail-yw1-f196.google.com [209.85.128.196])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B6A33ADA0
-	for <git@vger.kernel.org>; Tue, 19 May 2026 15:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154533BBAD
+	for <git@vger.kernel.org>; Tue, 19 May 2026 15:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779206260; cv=none; b=dbYxoeZ8kjpI2dx2oAPJHqY+/SG/Wl2AIceVv0N355cKuT5KCjZI5vstpj7D4ls4UFX0Vw+dTabcF4813CQqWcIDLIv87wUZAlvnszVfvbxBwB9tn7IA9MMrUG/wlLtQMd1ZOmyOsPxp1WoPF4veXzrRT1Nr1usHdGeKX5MnIWM=
+	t=1779206263; cv=none; b=ii0zsLiqLqet2PpiNZe/jB4vLbuLdCLjdJO5lQ7UcXf3zJbMLitzSf2JOKaUY/5zTrpOl0bpI7psGvptI5lcc5i7BlUoVLwWh8NkkIHi8CZoKkQwuHqFmAHtdVfcqrlPjr2U1Hp4o3DmIhcSbdGYHDTkjN3FPqGPd1wlSbSOKYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779206260; c=relaxed/simple;
-	bh=7a2YcsmdFhpdlgCk6AF/K0clPg5eV98jNrxWWbgMA+k=;
+	s=arc-20240116; t=1779206263; c=relaxed/simple;
+	bh=1c9EFMeKiMcUFwFV1I9eeCnRivnWwymIe1a2+AsnIoA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NLEwLecBtDe/q+fSJFUN4ljUWsr0dmHaM0kA2VtNABh07j1SCgPIxUkrisIsE6PbZTNuHuvJgxIXhvLD+le+EXOXgomgb3ZGY2OD0PzJSZ8KKkq9wEiubUG5YaHGM3Dx8YiiucDF5/glE3lH+Eoyed7gLSgjdUia4ukd5zLRp8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=FTF7KM1u; arc=none smtp.client-ip=209.85.128.196
+	 Content-Type:Content-Disposition:In-Reply-To; b=JQ2QxqS8xcXhCw6vRkD75ZrJzKRsLWGdroAMWkwzZImYMfJiEaZIVrgcywskYeFprM/lKNTFHO9GkokoHIhMZbEEmNMVOgPPrJO+IqKZNVLxuyGGoUachdqNovu+2BNiofvdXpU5VWW07WbcqLejdmqyFAPU8+z/sah3QpD/ciY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=f0nLty6h; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="FTF7KM1u"
-Received: by mail-yw1-f196.google.com with SMTP id 00721157ae682-7b6ae2ea4a1so33988707b3.2
-        for <git@vger.kernel.org>; Tue, 19 May 2026 08:57:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="f0nLty6h"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7c307937816so30580597b3.0
+        for <git@vger.kernel.org>; Tue, 19 May 2026 08:57:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779206258; x=1779811058; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1779206261; x=1779811061; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/O0Fhgo5ram5aCXgnYMzljhUfgjfEHHiJbPPcso3CfA=;
-        b=FTF7KM1uzAW8p0pXBrwkcQ+rKiWFJLM6F5lJGtK6Psqve3VOM92gVt++m369mazE5U
-         1K+zMGPnnTGyorZ6nBy+h2ItdhmV5VYB1ZIls9al8fSUbxpMxhmZWmNjYaXdOr0bc3R6
-         8sten86TuCAi0PqwdjktD1P2GyHwgCgMQUV5OOyEOyTyIIDObxUH045PR3IsUm3afo+T
-         rAvMXZRd9H/oEMhkX2ccAGt88hS/Zc3Jys5wA+re7cRW8TLvqsFtd7z43cbtPIxIkcMU
-         B4HP4koeX8lvKJFm1BZSKJA8pP4v9cLRTYqLiRRW8Y+JMHCUvkjCyjsQEQn+YQTTd2G3
-         fvsg==
+        bh=nIWkV8rMQ+k3LVYYUoZcEND7UFYPwejhU10oFNu8oJ8=;
+        b=f0nLty6h/4dl0VFa7PK8fmhtbWRuFEVHQkJRrTZLqq5jKI+ot9x5LjMRbxaqF6gl0+
+         RAPpC8pSguXuRsErr7JOBm/lapktbTGTG2Z2Q1qZ6OZ+rjxc8I2p/aZF64QOrELuS0lz
+         KjCQDhzxIp+wLTo8AnHtAJECUf8Bo6Vfb5cndWhGnQ6To7ZZ/GdsQWPCiB/P2AYF5hR2
+         KLt/rotIzdHsu+PrSWIPLyADEuuZ8KPsKJTX+ukDWCGY81tGatUduxQcIxzvpNlWDLyI
+         ZqiXqdygbycgrFpSTtdu6bFFUbIMHvOZYdwVVdMfqgPRvdtj6jg+Lv6MuianQgBBQ1tf
+         v32w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779206258; x=1779811058;
+        d=1e100.net; s=20251104; t=1779206261; x=1779811061;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/O0Fhgo5ram5aCXgnYMzljhUfgjfEHHiJbPPcso3CfA=;
-        b=DtAxeQJFK9Kz3mjZVCBZBpjKoV3fwpdUlodz2IfA6gtUrH/fcSlMhlog8QgHvs9LeN
-         IVdTpm7m34cccoaw7UX96Md7m87/4EsV+0bE8jV0O6+myk1v7BIcgA41xrV7PKRDsBa9
-         H4MLeAUkth12LUWPK+paCX79NaBcVyijm/GKsbxIg+CsZtCpUrU7Ee8RgC/KDy6f6GND
-         PZ1iS86NFkWX0rOE/i+1TeiwhvFXsJgca0g93peB7mxVarzez4QL4y3+zeozSGZSdbMZ
-         6kvPF8k0yeADDd6uHFD7P7OOY0FEIsmvBjoNIHRCuQZQKkmEu8Ql30qFX0KcoUvXnT73
-         7pcQ==
-X-Gm-Message-State: AOJu0Yz117BOjExBGbSdq4f5/E2cqt6J/g6X8UIW1Z+vBFx5utkR+tvR
-	9eMaG6csvw8ShwILt3WlM1aJ3ilZf8odAlanRcrsaR+qLLe63SfChD2SU6e4QhmH32mnKPj/qXn
-	wfPVoqczfS6ru
-X-Gm-Gg: Acq92OHajR1kk9Eg7R+iL/ZZs2xnjlq1Tmx/uP/02SbwNdfdMbyr3oWs7w3iHm5vY/W
-	23dtBXvnZgUn3adiANQb3pjmGmrf0+RyUWYoF5/YbFqLurTsFq+ZiX/P1pQqkZ/t+PAhs/BqSgv
-	efgRQeuiBp7w6iMvSFdVazUAFPIPSBf5Hf8w4+aVCF04Nz1fqCLzExpLue4LaV5idlHu+TRA+UU
-	/fmGnFBag70UThP5dNH3PbLgo8tVzPBP29R+P51Lv+4TYDg6TIiooPyyP02VNKeuFu7OMLYwvrJ
-	ix6+aFZLWUIZcOacp7HhAhJ0pLZb+Q/AO4RratODu4kaZVgsC9qhZPHcw3PmNJBJIB+bAFToVHS
-	ellEZUtq5fxePUksbiZuQ8ULbhsHx4lQX9vajdmM9+QebPRpFHGarKxOCj0WucUWi85aM4W7F/6
-	tcdTJRIhmEuFNG08ogGLcgqgyJWnhLAC4xk9Lp9mDDqmKWO7k5zBqpojMxC1diDOwf3XD69aTil
-	1xtQR4AGj+WUx/mAz/InCYv2eMHdEgyYQhsJWygE3C2p2foIfNhK5x53OfSvg73p3yBSumeh4VS
-	3yEDEH5q+qryo5QLNCHvgMKXLf4=
-X-Received: by 2002:a05:690c:c50f:b0:7d0:6660:1602 with SMTP id 00721157ae682-7d066602963mr1361167b3.43.1779206258087;
-        Tue, 19 May 2026 08:57:38 -0700 (PDT)
+        bh=nIWkV8rMQ+k3LVYYUoZcEND7UFYPwejhU10oFNu8oJ8=;
+        b=YcRbdo6rWLlOBtYV1d0C/+2V7V4yLY8Dv057DsS3vsnwCGaqvytC1MfCuLYK17sfi1
+         qv6aE/g+psE654C6lGYmV2Ok4ye8mL83FetJhsCQL4vHE6Krwz+SbSWxbJbroeoMT6/y
+         OmEzOCzukBVWU7DBw+jwmDO+3AcegOmg8h/7fDmuzvl9vcPvS5+byWVvq7XbP7uJbpWz
+         kvYpL4dRgojtmDhMgC4CcrASgLEE1kxX8BZ4JLBGZu044RVg5HRbNK064aUg8EIsKJR0
+         JGtIU5R4OajMkmIoLK6JHh/Ra1W55z7HqACtZDzLIVUYNl9pWpyvm13D/+9puXZTsq3A
+         GzYg==
+X-Gm-Message-State: AOJu0YxOWA00uYzgaoyAP6dICTB8b8XI1Twfw6kYVR04lQO1zHOkxWdq
+	7pP63ZzHtWA2X23xbJbUVsdnP5l4w5v++5R3uA/h0hHDVjxJrktWuF3cbTr3PDkFbva11H8s2zh
+	fA0bAalAD0g==
+X-Gm-Gg: Acq92OEfo7fGbnZj3rlVjUKWZ9gdpM0qjA27mMO+PyXzgwXJS9t9mE7FfuZX02lpNA3
+	SXW2bqxbU7R56l2rxnzpZou6ZRglyEdrWoEDTVGypfYq0HguqYvDzoj6k+FZspEo6zM4bo+ASEP
+	j+0d8TeCiOkOFD6TauxBqdCFtdVujDyeNmA43QgBqJEUCx4z0Us31CZZ6DLk+AjDfy7aG8wK5Vh
+	2nozU35fQOyjDlCy8yx/iVXXXXnT22mKsWopkIliDw3ny+1GP1P6eDQhdeY/lLSiTSJqv+dAhgw
+	KDgl2N4HDM+rY/+JVA1uU3dBqsZs94EqxjfAqFyD4TIAZn76OkDUBRHOXbFvGjkyJzkeZJgHJWg
+	dpDyKoFqYJVPWVH5r4e9urXU5nadvbEEmVMQvH+ZFLhdqHL3ivlsi+OsHKJewBqfB9rorD4PvoO
+	H9c+ae9HX+aaQDnYbyUs2vBQwkMqM7OprLawlc+t99um3XaqM2AZnwypVAHzVotH81mI9Yyfo7D
+	X+14sC9/EBcEl0oeKwX6Wb+UWIuJ1DyUspaA55Xm1N2dBSfRMS12METUxlFEmLyX9vpqihcZ8It
+	xofKEdw3PwsHlnX+
+X-Received: by 2002:a05:690c:7106:b0:7b8:3b51:c9b2 with SMTP id 00721157ae682-7c95c7ee0f9mr223601727b3.23.1779206261060;
+        Tue, 19 May 2026 08:57:41 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9bc0ccc4sm38670957b3.31.2026.05.19.08.57.37
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9d18b056sm39037497b3.46.2026.05.19.08.57.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 08:57:37 -0700 (PDT)
-Date: Tue, 19 May 2026 11:57:36 -0400
+        Tue, 19 May 2026 08:57:40 -0700 (PDT)
+Date: Tue, 19 May 2026 11:57:39 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 00/16] repack: incremental MIDX/bitmap-based repacking
-Message-ID: <cover.1779206239.git.me@ttaylorr.com>
+Subject: [PATCH v4 01/16] midx-write: handle noop writes when converting
+ incremental chains
+Message-ID: <ead11e610c8c619de08cfd2736c12daeb2f45e20.1779206240.git.me@ttaylorr.com>
 References: <cover.1774820449.git.me@ttaylorr.com>
+ <cover.1779206239.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,137 +77,97 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1774820449.git.me@ttaylorr.com>
+In-Reply-To: <cover.1779206239.git.me@ttaylorr.com>
 
-Here is another small reroll of my series to implement the last
-remaining component of the incremental MIDX/bitmap-based repacking
-strategy [1].
+When updating a MIDX, we optimize out writes that will result in an
+identical MIDX as the one we already have on disk. See b3bab9d2729
+(midx-write: extract function to test whether MIDX needs updating,
+2025-12-10) for more details on exactly which writes are optimized out.
 
-The changes since v3 are fairly small:
+If `midx_needs_update()` can't rule out any of the obvious cases (e.g.,
+the checksum is invalid, we're requesting a different version, or
+performing compaction which always requires an update), then we compare
+the packs we're writing to the packs we already know about. If there are
+an equal number of packs being written as there are in any existing
+MIDX layer(s), then we compare the packs by their name.
 
- - `repack_prepare_midx_command()` now calls its third parameter
-   "subcommand" instead of "verb".
+This comparison fails when we have an incremental MIDX chain with
+at least two layers, since we do not recursively peel through earlier
+layers, instead treating the `->pack_names` array of the tip MIDX layer
+as containing all `m->num_packs + m->num_packs_in_base` packs.
 
- - `clear_incremental_midx_files()` now avoids a redundant conditional
-   around `r->objects` and reuses a local `struct odb_source *` when
-   closing any open incremental MIDX handles.
+Adjust this to instead look through the MIDX layers one by one when
+comparing pack names. While we're at it, fix a typo above in the same
+function.
 
-As usual, a range-diff is included below for convenience. Thanks in
-advance for reviewing!
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ midx-write.c                            | 18 ++++++++++--------
+ t/t5334-incremental-multi-pack-index.sh | 16 ++++++++++++++++
+ 2 files changed, 26 insertions(+), 8 deletions(-)
 
-[1]: https://lore.kernel.org/git/cover.1777507303.git.me@ttaylorr.com/
-
-Taylor Blau (16):
-  midx-write: handle noop writes when converting incremental chains
-  midx: use `strset` for retained MIDX files
-  midx: build `keep_hashes` array in order
-  midx: use `strvec` for `keep_hashes`
-  midx: introduce `--no-write-chain-file` for incremental MIDX writes
-  midx: support custom `--base` for incremental MIDX writes
-  repack: track the ODB source via existing_packs
-  midx: expose `midx_layer_contains_pack()`
-  repack-midx: factor out `repack_prepare_midx_command()`
-  repack-midx: extract `repack_fill_midx_stdin_packs()`
-  repack-geometry: prepare for incremental MIDX repacking
-  builtin/repack.c: convert `--write-midx` to an `OPT_CALLBACK`
-  packfile: ensure `close_pack_revindex()` frees in-memory revindex
-  repack: implement incremental MIDX repacking
-  repack: introduce `--write-midx=incremental`
-  repack: allow `--write-midx=incremental` without `--geometric`
-
- Documentation/config/repack.adoc        |  18 +
- Documentation/git-multi-pack-index.adoc |  32 +-
- Documentation/git-repack.adoc           |  44 +-
- builtin/multi-pack-index.c              |  48 +-
- builtin/repack.c                        | 102 +++-
- midx-write.c                            | 206 ++++---
- midx.c                                  | 102 ++--
- midx.h                                  |  11 +-
- packfile.c                              |   2 +
- repack-geometry.c                       |  48 +-
- repack-midx.c                           | 710 +++++++++++++++++++++++-
- repack.c                                |  58 +-
- repack.h                                |  26 +-
- t/meson.build                           |   1 +
- t/t5334-incremental-multi-pack-index.sh |  63 +++
- t/t5335-compact-multi-pack-index.sh     | 113 ++++
- t/t7705-repack-incremental-midx.sh      | 525 ++++++++++++++++++
- 17 files changed, 1909 insertions(+), 200 deletions(-)
- create mode 100755 t/t7705-repack-incremental-midx.sh
-
-Range-diff against v3:
- 1:  d6c27317c25 =  1:  ead11e610c8 midx-write: handle noop writes when converting incremental chains
- 2:  629c8d23116 =  2:  ece55bf2957 midx: use `strset` for retained MIDX files
- 3:  e303bf6a4ac =  3:  5609d1941e6 midx: build `keep_hashes` array in order
- 4:  42d76c70060 =  4:  13b7c808860 midx: use `strvec` for `keep_hashes`
- 5:  2c80aa34fac =  5:  cac3fd54bf0 midx: introduce `--no-write-chain-file` for incremental MIDX writes
- 6:  2a05f4b86f3 =  6:  1bbb387d6b6 midx: support custom `--base` for incremental MIDX writes
- 7:  92aba3d366f =  7:  4a93adb3ad3 repack: track the ODB source via existing_packs
- 8:  d3ac65c1f11 =  8:  8d1b8b1d301 midx: expose `midx_layer_contains_pack()`
- 9:  1bd2f194c6f !  9:  42111e5f75d repack-midx: factor out `repack_prepare_midx_command()`
-    @@ Commit message
-         subcommands), so extract the common portions of the command setup into a
-         reusable `repack_prepare_midx_command()` helper.
-     
-    -    The extracted helper sets `git_cmd`, pushes the `multi-pack-index`
-    -    subcommand and verb, and handles `--progress`/`--no-progress` and
-    -    `--bitmap` flags. The remaining arguments that are specific to the
-    -    `write` subcommand (such as `--stdin-packs`) are left to the caller.
-    +    The extracted helper sets `git_cmd`, pushes `multi-pack-index` and a
-    +    subcommand, and handles `--progress`/`--no-progress` and `--bitmap`
-    +    flags. The remaining arguments that are specific to the `write`
-    +    subcommand (such as `--stdin-packs`) are left to the caller.
-     
-         No functional changes are included in this patch.
-     
-    @@ repack-midx.c: static void remove_redundant_bitmaps(struct string_list *include,
-      
-     +static void repack_prepare_midx_command(struct child_process *cmd,
-     +					struct repack_write_midx_opts *opts,
-    -+					const char *verb)
-    ++					const char *subcommand)
-     +{
-     +	cmd->git_cmd = 1;
-     +
-    -+	strvec_pushl(&cmd->args, "multi-pack-index", verb, NULL);
-    ++	strvec_pushl(&cmd->args, "multi-pack-index", subcommand, NULL);
-     +
-     +	if (opts->show_progress)
-     +		strvec_push(&cmd->args, "--progress");
-10:  2a87a1e4561 = 10:  ed76e6efd1c repack-midx: extract `repack_fill_midx_stdin_packs()`
-11:  3d32b9c88da = 11:  9665f1b3a64 repack-geometry: prepare for incremental MIDX repacking
-12:  1f7a5479bb8 = 12:  e0db62b9f10 builtin/repack.c: convert `--write-midx` to an `OPT_CALLBACK`
-13:  b155f25d53c = 13:  c8c846b1ac1 packfile: ensure `close_pack_revindex()` frees in-memory revindex
-14:  ef012314930 = 14:  78f1a98c1ea repack: implement incremental MIDX repacking
-15:  04cfecd5136 ! 15:  95bf8b21fff repack: introduce `--write-midx=incremental`
-    @@ midx.c: void clear_midx_file(struct repository *r)
-     +void clear_incremental_midx_files(struct repository *r,
-     +				  const struct strvec *keep_hashes)
-     +{
-    ++	struct odb_source *source = r->objects->sources;
-     +	struct strbuf chain = STRBUF_INIT;
-     +
-    -+	get_midx_chain_filename(r->objects->sources, &chain);
-    ++	get_midx_chain_filename(source, &chain);
-     +
-    -+	if (r->objects) {
-    -+		struct odb_source *source = r->objects->sources;
-    -+		for (source = r->objects->sources; source; source = source->next) {
-    -+			struct odb_source_files *files = odb_source_files_downcast(source);
-    -+			if (files->packed->midx)
-    -+				close_midx(files->packed->midx);
-    -+			files->packed->midx = NULL;
-    -+		}
-    ++	for (; source; source = source->next) {
-    ++		struct odb_source_files *files = odb_source_files_downcast(source);
-    ++		if (files->packed->midx)
-    ++			close_midx(files->packed->midx);
-    ++		files->packed->midx = NULL;
-     +	}
-     +
-     +	if (!keep_hashes && remove_path(chain.buf))
-16:  1c05dfce579 = 16:  8bd0ec98dc3 repack: allow `--write-midx=incremental` without `--geometric`
-
-base-commit: 7bcaabddcf68bd0702697da5904c3b68c52f94cf
+diff --git a/midx-write.c b/midx-write.c
+index a25cab75aba..9328f65a201 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -1152,7 +1152,7 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
+ 
+ 	/*
+ 	 * Ensure that we have a valid checksum before consulting the
+-	 * exisiting MIDX in order to determine if we can avoid an
++	 * existing MIDX in order to determine if we can avoid an
+ 	 * update.
+ 	 *
+ 	 * This is necessary because the given MIDX is loaded directly
+@@ -1208,14 +1208,16 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
+ 			BUG("same pack added twice?");
+ 	}
+ 
+-	for (uint32_t i = 0; i < ctx->nr; i++) {
+-		strbuf_reset(&buf);
+-		strbuf_addstr(&buf, midx->pack_names[i]);
+-		strbuf_strip_suffix(&buf, ".idx");
++	for (struct multi_pack_index *m = midx; m; m = m->base_midx) {
++		for (uint32_t i = 0; i < m->num_packs; i++) {
++			strbuf_reset(&buf);
++			strbuf_addstr(&buf, m->pack_names[i]);
++			strbuf_strip_suffix(&buf, ".idx");
+ 
+-		if (!strset_contains(&packs, buf.buf))
+-			goto out;
+-		strset_remove(&packs, buf.buf);
++			if (!strset_contains(&packs, buf.buf))
++				goto out;
++			strset_remove(&packs, buf.buf);
++		}
+ 	}
+ 
+ 	needed = false;
+diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
+index 99c7d44d8e9..c9f5b4e87aa 100755
+--- a/t/t5334-incremental-multi-pack-index.sh
++++ b/t/t5334-incremental-multi-pack-index.sh
+@@ -132,4 +132,20 @@ test_expect_success 'relink existing MIDX layer' '
+ 
+ '
+ 
++test_expect_success 'non-incremental write with existing incremental chain' '
++	git init non-incremental-write-with-existing &&
++	test_when_finished "rm -fr non-incremental-write-with-existing" &&
++
++	(
++		cd non-incremental-write-with-existing &&
++
++		git config set maintenance.auto false &&
++
++		write_midx_layer &&
++		write_midx_layer &&
++
++		git multi-pack-index write
++	)
++'
++
+ test_done
 -- 
 2.54.0.175.g8bd0ec98dc3
+
