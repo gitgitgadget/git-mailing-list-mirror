@@ -1,533 +1,342 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AEA400DF4
-	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A165740962E
+	for <git@vger.kernel.org>; Tue, 19 May 2026 16:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779207180; cv=none; b=mER5p66iZT3KUbmMxnlKQz0TBQI5kNw6b9O5VHfucDOaXBRENCddYEzWVA0XN/itnn7GKtLUIotckdz3RzfzHjlmT+Z50FtyPvOw7SUZqbULgfXZYMRKNBDflzFPFsczoOqAMyQ45AVzHhU8rQE3InKPO0ryXyWsfemJAX2Ybgg=
+	t=1779207900; cv=none; b=EU6JGor57iv40iENQq3u3bw+5ChuBsUqMUBQ3b+FveD2G90W0uAKEvvtx1fL8I+SaTEpya7G4QlYfjFB2avh/m32GoKRLJ3S0Qy1WW6yzUw1tBhz7aykW6lSmS/Mi6A7D5ZB6LlJbX5Io8C+BLsr+RlPV2ukiFejVhU/r0KEJVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779207180; c=relaxed/simple;
-	bh=egfGbhRDUs5s93PKNmw0wmYAaUMJfRw8aGqK+QVBxeo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fk7B4zseiceMiQlOP7C/SV0VzxPbIR9HLmeC3xNwA6J6GauGmfRL7kWxWwzIBxLp0beOLp5kaxsOhKLq64kLP1k7r9TrfSwUaZGa6xShnn/MDPkSE7N1Q6TPW9gNoUJKf1+hrjZonwXryWGH8cAFaKJmqEIHN2P4aF3p4UiX4I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=UzcrOJ9I; arc=none smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1779207900; c=relaxed/simple;
+	bh=c2TleBxgtJvpBjPEgrVrbyEMC1eTDekdUnn2Ny/BHu4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=aTskUpxNQAuLCT4fXfc76f5tAwK71q24vmemE6r+4XjpBQ9OyfWbBenTbq0l08J0cpS9PV4aVik1RBnck29mPTBWoQcUqvFRNBNrPXVcsSKoHPYSh4PhXfl8PEv0PCCUnP0FFr5+rb0eR/Ea31aqUbSta7Ce8+w7kXiJlXUJoas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R0PhiilE; arc=none smtp.client-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="UzcrOJ9I"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-651d6347a69so5229891d50.0
-        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0PhiilE"
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-132d1b2519eso9546823c88.0
+        for <git@vger.kernel.org>; Tue, 19 May 2026 09:24:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779207177; x=1779811977; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LtNyt0HMlfbBOKEZMIZHJmUI8Q6kHCDBGytrODTbr1c=;
-        b=UzcrOJ9IjZsyqG1pnKpFQYOVseZ7ulEeK+Y56yg0Nap9fPyQxCROoCTPbaiWi6Qvfu
-         NDk+UZotjJQsmebPRrl/iT3NCIAhiqmLlh8y3Eh6Yiy7Z5UJXamYkR5spTaCXwRrRKE4
-         hsYScOvpIoAKY4YnJ8pMmdkuxCwK+eCMfpu/4nP2fFWZsLPghn10hHBp41Bzr6VQIiZp
-         B1cTcPYigom9DPM9EEPL49D4C2W9DENKpq1PtOJHn50I4KmfIaKXN4ONLzqsMt+YzS9X
-         GdXJCiSfaMbdAEI/xgT9uVZDAWwysRww3894wCofDq8xPM2xWV3M0YRXAk592uOZmCl3
-         PkvA==
+        d=gmail.com; s=20251104; t=1779207898; x=1779812698; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=31blJbMt0YTHzHRZWfISuJuRD4APcA8Ezux5tOLStLg=;
+        b=R0PhiilEiZaYUTDe7UXCdSliKyqWvKr6zNWshtWw6mWC6IOGy+2MPRN6JZXHRBzHaV
+         DM1CIq9uZOZHeoNRNjKVyNGj/uSKZWRN8M59oAS/67VBERp562XvhKWDWjUKpjXD61uY
+         pW7NsINcAPGrJrdQMgBT0CgUskgrQUcSoYsR+U30LCIdgv14PUzyGG2zZD9t95qkU16b
+         c0grzh3VcKYL0NOd2inhgqnXf6DojMTXNh2kEC3kQ8QXLCBNymaDL/jIC49z4Sc7UrLS
+         ttQ2u9FzUyYGKSAGgTj863+sDUFdYKKx0WpeGlx+71btIHuAzS6yA/QHtU2sjQ2bG452
+         2DvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779207177; x=1779811977;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LtNyt0HMlfbBOKEZMIZHJmUI8Q6kHCDBGytrODTbr1c=;
-        b=g+8pU/S8MK72c9PFBr7OWeYcvhXxmPeHKR1bibu/nl/SYxUpRuSOH4cr8l593XvyOJ
-         5XeuQFJkR90v18qbN+kEpc9GivUu2+DN61CwxKcom6iLoryUX5lN8JG2Ka9vDVWQhCLz
-         G/Bm5c1LDzNPcCgjNVYFgt/hXdNuqnAJe3t4ypJXNOyxHirBZl6zk/R8Zm1DUosD53mE
-         Xj44Hr+/+aR5pjY/wYhB/yyC/F0MReoVnocvqQtopuTx7+fZqaEIj3BSx77Y4qWAkkWm
-         m1c9GArH2v+9qMYi/W8bXtXMzLJT4E9QB5tG86ZMbDFUju9qE4idL//hH5PU8PTxAPOC
-         rWtQ==
-X-Gm-Message-State: AOJu0YxTW24aVL38KLuOExEqTFcoL6eP7zf8o0ayjxme3J7xcacG+Gz+
-	46uhp5AoCeRhN6HXxczOTAMhYtuDi7mCuceFJG03VkSSFmm1OumH+ZnqSmsGPscXpZMkqff2JdN
-	xqfjA7dNG1w==
-X-Gm-Gg: Acq92OF7dCaN350/GzPQ9YDIWb32611V+Xs2Wa3WnDV/j71Jx5l5wxvrY8z2zT2bYNJ
-	maF1tdU3UbioOsfKAap/NSThNahLqzBcJNkw2dPDzcelxhl9+AeYQ4QoGVkPseURDY3xj20Fnqj
-	+WTgd1m1lVc8JBon7B9TqdyeJIqPZgFJ3U3IGxx8iBff6fIUtRjdbx5RKh06M+/pojQ5W8uYQP/
-	T8csC6a3YOmN/xLg8H2wAoi8grNIH2WTQDuJngqt3vWbpDbbW+ZSg/oKLXHlx7S2BHPxySutOS1
-	UzIBCAtnp5zT5geX6GXraraynjVvuB9dfFqoiXTZcOT3MczTHF3PqsEvcm5j/OL161iun/QWDye
-	35rRfLB5PugmDsWr7j5MIxJhDzOMxR78XJ/0Rw5YTf3z3/u8CZfxVPV7MRMp51UthqhNTudK9Ju
-	pqt9QKnJpoSY/2mHrpdxmSmhRGs/lMIG5BDFJSM8M3Ogk0k5qxHe1PxQSlhoNtiSAc5HMYWgVNd
-	c3ktWgbXnmuIrlTB6dHB+XOF0G5HWCzjD5IctCnNW7vcamUVI7GFdbNyCqWG0pXiXtiUZiLtEHv
-	pOBHvv5tHhU79ADrZswsCnQq+FQ=
-X-Received: by 2002:a05:690e:4415:20b0:65d:f682:a59b with SMTP id 956f58d0204a3-65e216647fcmr12826478d50.26.1779207177204;
-        Tue, 19 May 2026 09:12:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65e0d878cf2sm8190905d50.2.2026.05.19.09.12.56
+        d=1e100.net; s=20251104; t=1779207898; x=1779812698;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=31blJbMt0YTHzHRZWfISuJuRD4APcA8Ezux5tOLStLg=;
+        b=eq2S7k79LPzs4sw3cNOAoAKKk6RnisZKm3sDm7hjLus89AvAgQ6tc5lJhkPD4oPoNE
+         4qFqZehL1wSjlOa9eVVBS4nAF1aOqVt+wFw7Yg7KeAlMv8P4dzsKkvIYMzJBXjWm3Sio
+         Ng2g+4SV9POMi3wJeQL+JPcja5xTai1d6BPyQtf5nq1ZAGr46Eca2fG1UmIIIUaSWXIe
+         HA2XdPOpM+mChdykLb2/Hv15vUTupivooTz4FL/Oq1AWvVt/GUB9Yt7v+Yi2Ypax3l/3
+         TBtO4tQM0+v1Px/qmH88+scnsXWjpgHfyRvw4lTx1pbw3uz5siH54htNuvwE1sO664I4
+         62tA==
+X-Gm-Message-State: AOJu0YxV0PFTzJnVmhcCWYaYFccApe4J8DoYqP5WAeZAP13YHBmaj9Cp
+	gyho2SOavVI2J/iLoi8X62obbsSWCOKjWuMtMkK0W2aCUM5Jzl1EwA/BnjoCTg==
+X-Gm-Gg: Acq92OHLeMyc/cgCE0OGKt41erYz/wlUCYEHggaix9OOjZnpvfzX3R6llsdFgVBPh1x
+	iV5degEkH2S1c7L23/ECOLsoUWo8zjZil7yTZuwLWR/NMkknj006cz2mVkhLUd3SAh1K+8EYqUO
+	Iz8y4+OGVjjJDJwANsrLIpjuJ7sxG1NXziOdtlO2Q/XvVcoVx54TDQMIHR+taUgG0w/8V56BUsC
+	OFK6zlHCT779IvKQ6IYBuUDZPgzDcxCbdacluezkQWhDU3H1IyVZ671QjOOIN3tMnfw/U4Mv56+
+	u4GvtexuXd3vsHOfVlj4etqd3uYvd5lQm1wW0dLlk5sR3IDTVsTViHhjsFXNTLZnsfEvRgp83ls
+	6513mN1MOskZQybADBJpJbjNtZchPFF/Of/Y1rsHDZ8ABhDPnWzj+SCqnOoSNC2K0VFd69Lp3MD
+	keEYwvmKvdhveaOvWK1sZIvx7I0anVbJR6eLZ/0vg=
+X-Received: by 2002:a05:7022:2523:b0:123:34e8:aec2 with SMTP id a92af1059eb24-13504313d54mr8448284c88.1.1779207897531;
+        Tue, 19 May 2026 09:24:57 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.195.179])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbcb9ed3sm23690214c88.1.2026.05.19.09.24.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 09:12:56 -0700 (PDT)
-Date: Tue, 19 May 2026 12:12:55 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 8/8] pack-bitmap: build pseudo-merge bitmaps after regular
- bitmaps
-Message-ID: <30ce254312cfee2a2a82f08246c3a2546ae32578.1779207127.git.me@ttaylorr.com>
-References: <cover.1779207127.git.me@ttaylorr.com>
+        Tue, 19 May 2026 09:24:56 -0700 (PDT)
+Message-Id: <pull.2085.v6.git.1779207896.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2085.v5.git.1779135575.gitgitgadget@gmail.com>
+References: <pull.2085.v5.git.1779135575.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 19 May 2026 16:24:47 +0000
+Subject: [PATCH v6 0/8] fetch: rework negotiation tip options
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1779207127.git.me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    ps@pks.im,
+    Matthew John Cheetham <mjcheetham@outlook.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-When generating bitmaps, `bitmap_builder_init()` starts with an initial
-selection of commits to receive bitmap coverage, and then determines a
-set of "maximal" commits based on its input.
+Fetch negotiation aims to find enough information from haves and wants such
+that the server can be reasonably confident that it will send all necessary
+objects and not too many "extra" objects that the client already has.
+However, this can break down if there are too many references, since Git
+truncates the list of haves based on a few factors (a 256 count limit or the
+server sending an ACK at the right time).
 
-Commit 089f751360f (pack-bitmap-write: build fewer intermediate bitmaps,
-2020-12-08) has extensive details, but the gist is as follows:
+We already have the --negotiation-tip feature to focus the set of references
+that are used in negotiation, but I feel like this is designed backwards.
+I'd rather that we have a way to say "this is an important set of refs, but
+feel free to add more refs if needed" than "only use these refs for
+negotiation".
 
-Each selected commit starts with one commit_mask bit in its "commit
-mask" bitmap. Then, we walk the first-parent history in topological
-order and OR each commit's mask into its (first) parent. Whenever that
-OR results in the parent having more bits set, the child is deemed to be
-non-maximal, and the frontier is pushed further back along the first
-parent history.
+Here's an example that demonstrates the problem. In an internal monorepo,
+developers work off of the 'main' branch so there are thousands of user
+branches that each add a few commits different from the 'main' branch.
+However, there is also a long-lived 'release' branch. This branch has a
+first-parent history that is parallel to 'main' and each of those commits is
+a merge whose second parent is a commit from 'main' that had a successful CI
+run. There are additional changes in the 'release' branch merge commits that
+add some changelog data, so there is a nontrivial set of novel blob content
+in that branch and not just a different set of commits.
 
-That approach works extremely well for ordinary selected commits, whose
-first-parent histories often describe real sharing between the bitmaps
-we are going to write.
+The problem we had was that our georeplication system was regularly fetching
+from the origin and trying to get all data from all reachable branches. When
+the 'release' branch updated, the client would run out of haves before
+advertising its copy of the 'release' branch, but it would still list the
+new 'release' tip as a want. The server would then think that the client had
+never fetched that branch before and would send all of the changelog data
+from the whole history of the repo. (This led to a lot of downstream
+problems; we mitigated by setting a refspec that stopped fetching the
+'release' branch, but this is not ideal.)
 
-It struggles, however, to efficiently generate pseudo-merge bitmaps.
-Unlike ordinary commits for which the above algorithm is designed,
-pseudo-merges don't represent any "real" commit in history, just a
-grouping of non-bitmapped reference tips. In that sense, their first
-parent is just a part of a larger set, and treating them like ordinary
-selected commits imposes a significant slow-down when generating bitmaps
-with pseudo-merges enabled.
+What I'd like is a mechanism to say "always advertise the client's version
+of 'main' and 'release' but also opportunistically include some user
+branches".
 
-Consider partitioning all non-bitmapped reference tips into eight
-individual pseudo-merges via the following configuration:
+Based on my understanding, the '--negotiation-tip' option is close but not
+quite what I want. I could have the client only advertise 'release' and
+'main' and never advertise any user branches. But then we'd download all
+content from each user branch every time it updates. Perhaps this would
+happen even with opportunistic inclusion of more haves, but I'd like to
+explore this area more.
 
-    [bitmapPseudoMerge "all"]
-        pattern=refs/
-        threshold=now
-        stableSize=10000000
-        maxMerges=8
+There's also an issue that the '--negotiation-tip' feature doesn't seem to
+have a config key that enables it without CLI arguments. This is something
+that we could consider independently.
 
-, the cost of generating a bitmap from scratch rises significantly:
+This patch series adds a new '--negotiation-include' option that does what I
+want: it makes sure that these references are included as 'have's during
+negotiation. In order to help clarify the difference between this and
+'--negotiation-tip', I first create a synonym called
+'--negotiation-restrict'.
 
-    +------------------+-----------------+---------------+---------------------+
-    |                  | no pseudo-merge | pseudo-merges | Delta               |
-    |                  |                 | (HEAD^)       |                     |
-    +------------------+-----------------+---------------+---------------------+
-    | elapsed          |   294.1 s       |   575.0 s     |   +280.9 s (+95.5%) |
-    | cycles           | 1,365.5 B       | 2,686.9 B     | +1,321.4 B (+96.8%) |
-    | instructions     | 1,389.8 B       | 2,546.6 B     | +1,156.8 B (+83.2%) |
-    | CPI              |     0.983       |     1.055     |   +0.073    (+7.4%) |
-    +------------------+-----------------+---------------+---------------------+
+Both of these options get 'remote.*.negotiation(Include|Restrict)' config
+options that enable their behavior by default.
 
-This is a particularly poor trade-off, because the time saved by these
-pseudo-merges during, e.g.,
+During development, I had briefly considered only using config values, but
+that required some strange changes to care about the remote name in the
+transport layer. This was most different in the 'git push' integration. When
+I discovered the '--negotiation-tip' feature during the process, that gave
+me a clear pattern to follow with the addition of a config on top.
 
-    $ git rev-list --count --all --objects --use-bitmap-index
 
-is only:
+Updates in v2
+=============
 
-    $ hyperfine -L v true,false -n 'pseudo-merges: {v}' '
-        GIT_TEST_USE_PSEUDO_MERGES={v} git.compile rev-list --count \
-          --objects --all --use-bitmap-index
-      '
+This version is a near-complete rewrite based on feedback around the names
+of the previous option and config. The --negotiation-restrict option is new
+and the ability to set it via config is also new.
 
-    Benchmark 1: pseudo-merges: true
-      Time (mean ± σ):      2.613 s ±  0.012 s    [User: 2.308 s, System: 0.305 s]
-      Range (min … max):    2.594 s …  2.633 s    10 runs
+I did try to be more careful around translatable error messages, too.
 
-    Benchmark 2: pseudo-merges: false
-      Time (mean ± σ):     52.205 s ±  0.170 s    [User: 51.500 s, System: 0.697 s]
-      Range (min … max):   51.956 s … 52.458 s    10 runs
 
-    Summary
-      pseudo-merges: true ran
-       19.98 ± 0.11 times faster than pseudo-merges: false
+Updates in v3
+=============
 
-In other words, we pay a nearly ~5 minute penalty to generate
-pseudo-merge bitmaps, but only save ~50 seconds during traversal.
+ * --negotiation-tip is now an alias of --negotiation-restrict.
+ * More translatable strings use %s to isolate non-translatable options from
+   translatable words.
+ * The string_list named negotiation_tip is now renamed to
+   negotiation_restrict.
+ * The config options now allow an empty value to reset the list.
+ * The --negotiation-require option is now called --negotiation-include.
+ * Similarly, the config option is renamed and all code references.
+ * The included haves now mark their commits as COMMON so commits that they
+   can reach are not included in the negotiation walk if they are reached
+   from the restricted commits.
+ * The ref iterators are more careful about failing on bad references (ref
+   exists but object doesn't) and ignoring missing references (perhaps
+   config is erroneous?).
+ * When sending tips during push negotiation, use the --negotiation-restrict
+   option instead of -tip.
 
-The problem stems from injecting pseudo-merges into the bitmap builder
-as if they were normal commits. The maximal commit selection algorithm
-was simply not designed for that case, and performs predictably poorly.
 
-The only reason we reused the maximal commit selection routine for
-pseudo-merges alongside regular non-pseudo-merge commits is because we
-represent them both as commit objects (where the pseudo-merge commits
-just represent a made-up commit as opposed to one that actually exists
-in a repository's object store).
+Updates in v4
+=============
 
-Instead, build the regular selected commit bitmaps first, considering
-only non-pseudo-merge commits in `bitmap_builder_init()`. Once those
-bitmaps have been stored, build each pseudo-merge bitmap separately and
-attach its parent and object bitmaps to the corresponding pseudo-merge
-entry before writing the extension.
+Thanks, Matthew, for the detailed review! There are some big changes in this
+version.
 
-This keeps the regular bitmap build shaped like the no-pseudo-merge
-case. The later pseudo-merge fill can still stop at stored selected
-ancestor bitmaps, so it does not have to rewalk each pseudo-merge
-closure from scratch.
+ * Expanded commit message to cite the commit that introduced the bug
+   (3f763ddf28).
+ * Renamed --negotiation-tip to --negotiation-restrict throughout docs/code
+   (including send-pack.c, transport-helper.c, builtin/pull.c). Added
+   OPT_ALIAS in git-pull.
+ * Switched config parsing to use parse_transport_option() helper. Removed
+   git push from docs (not implemented yet). Restructured --negotiate-only
+   validation flow.
+ * NEW Patch 5: Added have_sent() interface to negotiators, so included
+   haves can be de-duplicated properly by the negotiation algorithm.
+ * Replaced COMMON flag hack with negotiator->have_sent() calls. Moved
+   ref-pattern resolution into builtin/fetch.c (add_negotiation_tips()) so
+   fetch-pack receives pre-resolved oid_array instead of string_list. Added
+   test for --negotiation-tip ignoring missing refs. Added
+   duplicate-avoidance test for v0. Accepts commit hashes in addition to ref
+   names/globs.
+ * Use parse_transport_option() for config. Updated docs to mention commit
+   hashes. Removed git push from config docs. Fixed test to use correct
+   restrict/include combinations.
+ * In the last patch, add doc notes that remote config values also apply
+   during git push with push.negotiate, now that they are integrated by that
+   change.
 
-When an existing bitmap has the same pseudo-merge parent set, reuse and
-remap that whole pseudo-merge bitmap before falling back to
-fill_bitmap_commit(). This preserves the benefit of stable pseudo-merges
-while keeping the on-disk format and reader behavior unchanged.
 
-As a result, the overhead cost for generating pseudo-merges in the above
-configuration is much smaller:
+Updates in v5
+=============
 
-    +------------------+-----------------+---------------+-------------------+
-    |                  | no pseudo-merge | pseudo-merges | Delta             |
-    |                  |                 | (HEAD)        |                   |
-    +------------------+-----------------+---------------+-------------------+
-    | elapsed          |   294.1 s       |   328.4 s     |  +34.3 s (+11.7%) |
-    | cycles           | 1,365.5 B       | 1,529.3 B     | +163.7 B (+12.0%) |
-    | instructions     | 1,389.8 B       | 1,552.8 B     | +163.0 B (+11.7%) |
-    | CPI              |     0.983       |     0.985     |  +0.002   (+0.2%) |
-    +------------------+-----------------+---------------+-------------------+
+Responded to small comments.
 
-Recall that at the start of this series, generating reachability bitmaps
-took 612.5 seconds *without* pseudo-merges. With this commit, it is
-still ~46.38% *faster* to generate reachability bitmaps *with*
-pseudo-merges than it was to generate bitmaps wihtout them at the
-beginning of this series.
 
-The changes to implement this are mostly straightforward. We exclude
-pseudo-merge commits from the existing bitmap generation, and walk over
-them in a separate pass, by either reusing an existing on-disk
-pseudo-merge, or passing the pseudo-merge commit itself back to the
-existing routine in `fill_bitmap_commit()`.
+Updates in v6
+=============
 
-(Note that the routine to build pseudo-merge bitmaps is the same both
-before and after this change, the difference is only that we do not let
-psuedo-merges participate in determining the set of maximal commits.)
+Corrected reviewed-by annotations in commit messages.
 
-The only wrinkle is that `fill_bitmap_commit()` must be taught to not
-expect that all tree objects have been parsed, which is the case for any
-portion of history reachable by one or more pseudo-merge(s), but not by
-any non-pseudo-merge commit selected for bitmapping.
+Thanks, -Stolee
 
-Now that we have decoupled how we generate pseudo-merges from their
-representation, the following commits will improve the API around
-specifying pseudo-merge groupings during bitmap generation.
+Derrick Stolee (8):
+  t5516: fix test order flakiness
+  fetch: add --negotiation-restrict option
+  transport: rename negotiation_tips
+  remote: add remote.*.negotiationRestrict config
+  negotiator: add have_sent() interface
+  fetch: add --negotiation-include option for negotiation
+  remote: add remote.*.negotiationInclude config
+  send-pack: pass negotiation config in push
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- pack-bitmap-write.c | 210 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 174 insertions(+), 36 deletions(-)
+ Documentation/config/fetch.adoc  |   2 +-
+ Documentation/config/remote.adoc |  49 ++++++++
+ Documentation/fetch-options.adoc |  29 ++++-
+ builtin/fetch.c                  |  87 +++++++++++---
+ builtin/pull.c                   |   6 +-
+ fetch-negotiator.h               |   9 ++
+ fetch-pack.c                     |  99 +++++++++++++---
+ fetch-pack.h                     |  10 +-
+ negotiator/default.c             |   8 ++
+ negotiator/noop.c                |   7 ++
+ negotiator/skipping.c            |   8 ++
+ remote.c                         |  10 ++
+ remote.h                         |   2 +
+ send-pack.c                      |  39 +++++--
+ send-pack.h                      |   2 +
+ t/t5510-fetch.sh                 | 191 +++++++++++++++++++++++++++++++
+ t/t5516-fetch-push.sh            |  32 +++++-
+ t/t5702-protocol-v2.sh           |   4 +-
+ transport-helper.c               |   5 +-
+ transport.c                      |  20 +++-
+ transport.h                      |   7 +-
+ 21 files changed, 564 insertions(+), 62 deletions(-)
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 8200aed6101..1bcb3f98a42 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -446,13 +446,17 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 	revs.topo_order = 1;
- 	revs.first_parent_only = 1;
- 
--	for (i = 0; i < writer->selected_nr; i++) {
-+	for (i = 0; i < bitmap_writer_nr_selected_commits(writer); i++) {
- 		struct bitmapped_commit *bc = &writer->selected[i];
- 		struct bb_commit *ent = bb_data_at(&bb->data, bc->commit);
- 
-+		if (bc->pseudo_merge)
-+			BUG("unexpected pseudo-merge at %"PRIuMAX,
-+			    (uintmax_t)i);
-+
- 		ent->selected = 1;
- 		ent->maximal = 1;
--		ent->pseudo_merge = bc->pseudo_merge;
-+		ent->pseudo_merge = 0;
- 		ent->idx = i;
- 
- 		ent->commit_mask = bitmap_new();
-@@ -618,6 +622,8 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
- 
- static int reused_bitmaps_nr;
- static int reused_pseudo_merge_bitmaps_nr;
-+static int pseudo_merge_bitmap_nr;
-+static int pseudo_merge_bitmap_parents;
- 
- static int fill_bitmap_commit_calls_nr;
- static int fill_bitmap_commit_found_ancestor_nr;
-@@ -631,8 +637,12 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 			      const uint32_t *mapping)
- {
- 	int found;
-+	int from_pseudo_merge = commit->object.flags & BITMAP_PSEUDO_MERGE;
- 	uint32_t pos;
- 
-+	if (ent->pseudo_merge)
-+		BUG("unexpected pseudo-merge commit in fill_bitmap_commit()");
-+
- 	fill_bitmap_commit_calls_nr++;
- 
- 	if (!ent->bitmap)
-@@ -648,10 +658,7 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 			struct ewah_bitmap *old;
- 			struct bitmap *remapped = bitmap_new();
- 
--			if (commit->object.flags & BITMAP_PSEUDO_MERGE)
--				old = pseudo_merge_bitmap_for_commit(old_bitmap, c);
--			else
--				old = bitmap_for_commit(old_bitmap, c);
-+			old = bitmap_for_commit(old_bitmap, c);
- 			/*
- 			 * If this commit has an old bitmap, then translate that
- 			 * bitmap and add its bits to this one. No need to walk
-@@ -660,10 +667,7 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 			if (old && !rebuild_bitmap(mapping, old, remapped)) {
- 				bitmap_or(ent->bitmap, remapped);
- 				bitmap_free(remapped);
--				if (commit->object.flags & BITMAP_PSEUDO_MERGE)
--					reused_pseudo_merge_bitmaps_nr++;
--				else
--					reused_bitmaps_nr++;
-+				reused_bitmaps_nr++;
- 				continue;
- 			}
- 			bitmap_free(remapped);
-@@ -696,12 +700,32 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 		 * walk ensures we cover all parents.
- 		 */
- 		if (!(c->object.flags & BITMAP_PSEUDO_MERGE)) {
-+			struct tree *tree;
-+
-+			if (from_pseudo_merge && !c->object.parsed) {
-+				/*
-+				 * Commits reachable from selected
-+				 * non-pseudo-merges are already parsed
-+				 * by the regular bitmap build.
-+				 *
-+				 * However, pseudo-merge fills can also
-+				 * reach commits that were not covered
-+				 * there, so parse any such leftovers
-+				 * before reading their tree or parents.
-+				 */
-+				if (repo_parse_commit(writer->repo, c))
-+					return -1;
-+			}
-+
- 			pos = find_object_pos(writer, &c->object.oid, &found);
- 			if (!found)
- 				return -1;
- 			bitmap_set(ent->bitmap, pos);
--			prio_queue_put(tree_queue,
--				       repo_get_commit_tree(writer->repo, c));
-+
-+			tree = repo_get_commit_tree(writer->repo, c);
-+			if (!tree)
-+				return -1;
-+			prio_queue_put(tree_queue, tree);
- 		}
- 
- 		for (p = c->parents; p; p = p->next) {
-@@ -738,6 +762,137 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 	return 0;
- }
- 
-+static int reuse_pseudo_merge_bitmap(struct bitmap_index *old_bitmap,
-+				     const uint32_t *mapping,
-+				     struct commit *merge,
-+				     struct ewah_bitmap **out)
-+{
-+	struct ewah_bitmap *old;
-+	struct bitmap *remapped;
-+
-+	if (!old_bitmap || !mapping)
-+		return 0;
-+
-+	old = pseudo_merge_bitmap_for_commit(old_bitmap, merge);
-+	if (!old)
-+		return 0;
-+
-+	remapped = bitmap_new();
-+	if (rebuild_bitmap(mapping, old, remapped) < 0) {
-+		bitmap_free(remapped);
-+		return 0;
-+	}
-+
-+	*out = bitmap_to_ewah(remapped);
-+	bitmap_free(remapped);
-+	reused_pseudo_merge_bitmaps_nr++;
-+	return 1;
-+}
-+
-+static int build_pseudo_merge_bitmap(struct bitmap_writer *writer,
-+				     struct bitmap_index *old_bitmap,
-+				     const uint32_t *mapping,
-+				     struct commit *merge,
-+				     struct ewah_bitmap **out)
-+{
-+	struct bb_commit ent = { 0 };
-+	struct prio_queue queue = { NULL };
-+	struct prio_queue tree_queue = { NULL };
-+	unsigned parents = commit_list_count(merge->parents);
-+	int ret;
-+
-+	ent.bitmap = bitmap_new();
-+
-+	pseudo_merge_bitmap_nr++;
-+	pseudo_merge_bitmap_parents += parents;
-+
-+	if (reuse_pseudo_merge_bitmap(old_bitmap, mapping, merge, out)) {
-+		ret = 0;
-+		goto done;
-+	}
-+
-+	ret = fill_bitmap_commit(writer, &ent, merge, &queue, &tree_queue,
-+				 old_bitmap, mapping);
-+
-+	if (!ret)
-+		*out = bitmap_to_ewah(ent.bitmap);
-+
-+done:
-+	bitmap_free(ent.bitmap);
-+	clear_prio_queue(&queue);
-+	clear_prio_queue(&tree_queue);
-+
-+	return ret;
-+}
-+
-+static int build_pseudo_merge_bitmaps(struct bitmap_writer *writer,
-+				      struct bitmap_index *old_bitmap,
-+				      const uint32_t *mapping,
-+				      int *nr_stored)
-+{
-+	size_t i = bitmap_writer_nr_selected_commits(writer);
-+	int ret = 0;
-+
-+	if (!writer->pseudo_merges_nr)
-+		return 0;
-+
-+	trace2_region_enter("pack-bitmap-write", "building_pseudo_merge_bitmaps",
-+			    writer->repo);
-+
-+	for (; i < writer->selected_nr; i++) {
-+		struct bitmapped_commit *merge = &writer->selected[i];
-+		struct commit_list *p;
-+		struct bitmap *parents = bitmap_new();
-+		struct ewah_bitmap *objects = NULL;
-+
-+		if (!merge->pseudo_merge)
-+			BUG("found non-pseudo merge commit at %"PRIuMAX,
-+			    (uintmax_t)i);
-+
-+		for (p = merge->commit->parents; p; p = p->next) {
-+			int found;
-+			uint32_t pos = find_object_pos(writer,
-+						       &p->item->object.oid,
-+						       &found);
-+			if (!found) {
-+				bitmap_free(parents);
-+				ret = -1;
-+				goto done;
-+			}
-+			bitmap_set(parents, pos);
-+		}
-+
-+		merge->pseudo_merge_parents = bitmap_to_ewah(parents);
-+		bitmap_free(parents);
-+
-+		if (build_pseudo_merge_bitmap(writer, old_bitmap, mapping,
-+					      merge->commit, &objects) < 0) {
-+			ret = -1;
-+			goto done;
-+		}
-+		merge->bitmap = objects;
-+
-+		(*nr_stored)++;
-+		display_progress(writer->progress, *nr_stored);
-+	}
-+
-+done:
-+	trace2_region_leave("pack-bitmap-write", "building_pseudo_merge_bitmaps",
-+			    writer->repo);
-+
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
-+			   "pseudo_merge_bitmap_nr",
-+			   pseudo_merge_bitmap_nr);
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
-+			   "building_bitmaps_pseudo_merge_reused",
-+			   reused_pseudo_merge_bitmaps_nr);
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
-+			   "pseudo_merge_bitmap_parents",
-+			   pseudo_merge_bitmap_parents);
-+
-+	return ret;
-+}
-+
- static void store_selected(struct bitmap_writer *writer,
- 			   struct bb_commit *ent, struct commit *commit)
- {
-@@ -821,6 +976,10 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 			bitmap_free(ent->bitmap);
- 		ent->bitmap = NULL;
- 	}
-+	if (closed &&
-+	    build_pseudo_merge_bitmaps(writer, old_bitmap, mapping,
-+				       &nr_stored) < 0)
-+		closed = 0;
- 	clear_prio_queue(&queue);
- 	clear_prio_queue(&tree_queue);
- 	bitmap_builder_clear(&bb);
-@@ -831,9 +990,6 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 			    writer->repo);
- 	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "building_bitmaps_reused", reused_bitmaps_nr);
--	trace2_data_intmax("pack-bitmap-write", writer->repo,
--			   "building_bitmaps_pseudo_merge_reused",
--			   reused_pseudo_merge_bitmaps_nr);
- 	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "fill_bitmap_commit_calls_nr",
- 			   fill_bitmap_commit_calls_nr);
-@@ -1015,23 +1171,6 @@ static void write_pseudo_merges(struct bitmap_writer *writer,
- 
- 	CALLOC_ARRAY(pseudo_merge_ofs, writer->pseudo_merges_nr);
- 
--	for (i = 0; i < writer->pseudo_merges_nr; i++) {
--		struct bitmapped_commit *merge = &writer->selected[base + i];
--		struct commit_list *p;
--		struct bitmap *parents = bitmap_new();
--
--		if (!merge->pseudo_merge)
--			BUG("found non-pseudo merge commit at %"PRIuMAX, (uintmax_t)i);
--
--		for (p = merge->commit->parents; p; p = p->next)
--			bitmap_set(parents,
--				   find_object_pos(writer, &p->item->object.oid,
--						   NULL));
--
--		merge->pseudo_merge_parents = bitmap_to_ewah(parents);
--		bitmap_free(parents);
--	}
--
- 	start = hashfile_total(f);
- 
- 	for (i = 0; i < writer->pseudo_merges_nr; i++) {
-@@ -1040,14 +1179,13 @@ static void write_pseudo_merges(struct bitmap_writer *writer,
- 		if (!merge->pseudo_merge)
- 			BUG("found non-pseudo merge commit at %"PRIuMAX, (uintmax_t)i);
- 
--		if (!merge->pseudo_merge_parents)
--			BUG("missing pseudo-merge parents bitmap for commit %s",
-+		if (!merge->pseudo_merge_parents || !merge->bitmap)
-+			BUG("missing pseudo-merge bitmap for commit %s",
- 			    oid_to_hex(&merge->commit->object.oid));
- 
- 		pseudo_merge_ofs[i] = hashfile_total(f);
--
- 		dump_bitmap(f, merge->pseudo_merge_parents);
--		dump_bitmap(f, writer->selected[base+i].write_as);
-+		dump_bitmap(f, merge->bitmap);
- 	}
- 
- 	next_ext = st_add(hashfile_total(f),
+
+base-commit: 6e8d538aab8fe4dd07ba9fb87b5c7edcfa5706ad
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2085%2Fderrickstolee%2Fmust-have-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2085/derrickstolee/must-have-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/2085
+
+Range-diff vs v5:
+
+ 1:  538913a327 ! 1:  c8c422f646 t5516: fix test order flakiness
+     @@ Commit message
+      
+          Use 'sort -k 3' to match the actual number of columns in the output.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## t/t5516-fetch-push.sh ##
+ 2:  580aa58943 ! 2:  ac3e8f74d9 fetch: add --negotiation-restrict option
+     @@ Commit message
+          translatable with the option name inserted by formatting. At least one
+          of these messages will be reused later for a new option.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## Documentation/config/fetch.adoc ##
+ 3:  eee0543647 ! 3:  5206640b8b transport: rename negotiation_tips
+     @@ Commit message
+          Also update the string_list used to store the inputs from command-line
+          options.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## builtin/fetch.c ##
+ 4:  63c675e93e ! 4:  eec0f90e02 remote: add remote.*.negotiationRestrict config
+     @@ Commit message
+          An empty value resets the value list to allow ignoring earlier config
+          values, such as those that might be set in system or global config.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## Documentation/config/remote.adoc ##
+ 5:  d423c56283 ! 5:  840db1d957 negotiator: add have_sent() interface
+     @@ Commit message
+          common, so the implementation is quite simple. This logic will be exercised
+          in the next change.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## fetch-negotiator.h ##
+ 6:  e86c9791e2 ! 6:  62e5ef1a4b fetch: add --negotiation-include option for negotiation
+     @@ Commit message
+      
+          Also add --negotiation-include to 'git pull' passthrough options.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## Documentation/fetch-options.adoc ##
+ 7:  e5714115b5 ! 7:  05a4b69b9b remote: add remote.*.negotiationInclude config
+     @@ Commit message
+          list to allow ignoring earlier config values, such as those that might be
+          set in system or global config.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## Documentation/config/remote.adoc ##
+ 8:  ed0be32e2c ! 8:  c69ca2e919 send-pack: pass negotiation config in push
+     @@ Commit message
+          are passed as --negotiation-include to ensure their tips are always
+          sent as 'have' lines during push negotiation.
+      
+     -    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+     +    Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+       ## Documentation/config/remote.adoc ##
+
 -- 
-2.54.0.rc1.84.g30ce254312c
+gitgitgadget
