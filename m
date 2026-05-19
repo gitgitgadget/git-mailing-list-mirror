@@ -1,83 +1,82 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D818D36308D
-	for <git@vger.kernel.org>; Tue, 19 May 2026 09:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA03B481235
+	for <git@vger.kernel.org>; Tue, 19 May 2026 09:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779184378; cv=none; b=VLDEEUtcs3jdEQ4q1I6puZ25zQOexnxIT75mYYrlUCW+70aBzJD9IqmisH0qmxwK14eYe8sUpQUkLUsmTBEpiSezRdbqHv1n5HwbFJjoAHzFtBjRV539eh2Itap61cN1AFIWt2fM/liOiDm9oikqDCRcDClb2gto7ACZ4RTeatA=
+	t=1779184379; cv=none; b=R9p9/rHhBG31Ld8VFM/sW6qbqt3s9n4Ci1Mvxhqhnvt1aSXXvoTIKAa1J6dbtz/dJz4CJamU/QNMIcIrM71QIBCaZdrUjkNp9qzEIy+kq4kRPAzzg/5OutZLdzPGYxisrvBNtCTu0m5ZMXEV3giDIDKUHAZeFQkeZOiPX+/P9KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779184378; c=relaxed/simple;
-	bh=xFTt5NbxVusqsD/on85mRQbUa8SnYJQT4JqT/PsKjIQ=;
+	s=arc-20240116; t=1779184379; c=relaxed/simple;
+	bh=V6melUA8Xgu9vv7zBDnFDZsuX8NEzYdzygn0Gbcc38M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nU2nvnYN2zV6HBjMItrBpDxmun4NYCTDW2ZaAndLQlO5ejWMB/Er2vuIv928dspilCY19Ik7we7e7q2jpQkMzR8KnifI8l719Ahjz5aOuwP4IAHVgE8QyheyyVi02G/eBAwe5glJEgWtr0IQqbNPrXiXNTb4+o7Nwm6Iqmn+CWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QiM+zl8o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bC7u3rHw; arc=none smtp.client-ip=202.12.124.150
+	 In-Reply-To:To:Cc; b=dF6Uu8QBu9ZgjdQC7RPFlMN3YcFVgpAcocqWdkbgHYM/OcgTfcUPCl68N4uT3cAP4CJcgGiqw5bR3HCcmzW8Ic/TFqo/A/nFKaMHjBTrIP2t8k6fKicSATaDpt0AlnPBtNUVaMtSYbNaG9HkCBY5prOxDGdcpYi8eYwKTMs2/3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iDEzpkQ4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S9qeHY2D; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QiM+zl8o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bC7u3rHw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 791CC1D000AA;
-	Tue, 19 May 2026 05:52:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iDEzpkQ4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S9qeHY2D"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0E50F1D000C0;
+	Tue, 19 May 2026 05:52:57 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 19 May 2026 05:52:54 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 19 May 2026 05:52:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779184374;
-	 x=1779270774; bh=YUQ8rxgA2B/JABnh3C9+BQGGT+GoNLxX9mdbHyGP7Sk=; b=
-	QiM+zl8oB7z0jSDDJNrCLVvR0KTzTmuB/Cq3TY/uQ7PXbYxn9oMEnYOQESSRbLfW
-	RZAp9cKr7bflmtUQQHILcrATjWX/LW7pJ2/UxsGGhS2xD3JkBjCZihfDOSAaO7fT
-	g0hbAkH4YEzgKQzSeorgUJ/5FP5+I07YpVM1qKp3he9ENDJS5N01oBYAhdqGi4Hh
-	2SSmInFRiD8eqVyuu1u+bRGaYsZDkqEKR1dCOWVCNu0u856bNfspmVaQsQSfC0Pk
-	88QKpd9kfNRyJ3HeUaz5rPN+N1VBVKK0aje5hLodQHT0SocUThttPAVgcEE/V4jv
-	MuUciWF0nlo4BJ1MuMtKaA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779184376;
+	 x=1779270776; bh=CzZF3rBuls+PdgzEpm3XYJ9PP7rCpkTafYAJQ5SlKQA=; b=
+	iDEzpkQ4ojN+j4yxj3mQK7i/cHgIHpI3HCuW6jCBAOqHcu3Qz4Vi3EQ3PJS7sWxH
+	3d0TGlQ2HoSj9k7W7u+RODUxRifwwZi/5W2hrSyIQCYjTinTY5eZY7iYSRt/XEPd
+	4MrLv6/7kDwD5chlwpJm595xP7UE2AYMtDpnzNjS/+/CqvHq2kLJ549McGVRP6fE
+	9AnpJU2rU6voYJyfzGuAE+it8FYACwOSSEQCN54A62/568xo9Wrr+82hlSuf47GQ
+	DdfABTez/P6nFJezmjWRfIg8LUi1gpwlvghnmByRf1Wi45JotWW9AdSaq++Xwfn+
+	riQwQRX/Ynlx8GxTso0o6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779184374; x=
-	1779270774; bh=YUQ8rxgA2B/JABnh3C9+BQGGT+GoNLxX9mdbHyGP7Sk=; b=b
-	C7u3rHwqR+/lQIZa12zOkmHAymVqkyJCRHdsEjLr1o230nHhJeS0cub9FG66KLZY
-	N7zK2nTxpy+X1yQICLrlAA7J2RiQJ3KJY8LN16DSGUTxb2opQwbTch0W8sCktp/X
-	JhM+Sj8W6SUJpAqlozpfMP4E17zMZNhGHkg7t5esEqZKJJK0TjobmyxvXMPLymSA
-	jzG7mO7C3POG8Q2/ye9jhAynKIG0Ph4ui2z4DgRmoJrx3lMG5yea4hT8tqVRYRL5
-	3HCAaFCNzAmACeMwVtHiggOdeWS6oZMMj9ChE1yodJ9dgZHMkqpHgGZCYNOyGctz
-	JsRHltSnxLOtiSTwkdscg==
-X-ME-Sender: <xms:9jIMap9XTl6RCk9frZMhBSkOPgvkiQmPPvZs3qCeinhdf3STfhKZ1w>
-    <xme:9jIMakkP1U1tOP3Q1UT4S_TSjDyUj1WzK9f8s5GpccmXchsUDCs95u7L8SdEcyQp_
-    A8Yc9f-bgPWT6-7DW-1LoQtiBKi1h6P42116Yv1A-fnnK3ptumfZfQ>
-X-ME-Received: <xmr:9jIMavWq0ZecM4Nv2D7E1-qMRyo92i2Z56JXu9QWJ78ABLxMpoFNL__d7PGRh531vWx_kaLbIxR7wQ4kkDgJ3dTfSdUTZ1N5CjQ0yHwICG4>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779184376; x=
+	1779270776; bh=CzZF3rBuls+PdgzEpm3XYJ9PP7rCpkTafYAJQ5SlKQA=; b=S
+	9qeHY2D0fFmaXrKlpNZxbiV5IuMxLCxdqHjkFTTIwqX11L6w72bn/RcYikVrk1e5
+	Z8fAFFcDj2H3oGvbRmXDkj/8VNi3YhxD/amXMW4jiTxvAs5KrtZhUwIMxjTLSYwk
+	B1LONWUNeyPjk/uCW4y2Tm5ToGFeISmKkmW05S3dc1HvHkKVOT+nF3Jh8NdugGnd
+	LUtRdENzF/pxc+ie5mejeetHGJX0YLLQRim40NWYaCNCZswVRfA/YBWvdbDbuFx6
+	mJoY86MJjqO++3kmiQgBvVm+nfyPT1kmIGWsijto3RQ0ARPB/kbtZMiVdro7kFPy
+	dJco5Dda/Q6P1X8AlFPSA==
+X-ME-Sender: <xms:-DIMauwLCFVrOqnCpdG_V-8fLO-ocd-f4YCAKz11-Z4Y2tKYrLQDxg>
+    <xme:-DIMahIC4C_nQy1ms0qGwyrRWdZKGfUjptU66OKYwZlhz_XilX8eeyE8MEQub4bg9
+    atYAHsPqObfsHRJx-Ef83WnpJ3RCH3JGe6qHCl59UgTK599CdQ7EA>
+X-ME-Received: <xmr:-DIMaoqg58sSXUkJ27nkF_qhWq4asds55H_2zloDB_GvE1ygdsakFGdO8EZ_i_uZtmo-oc_jCo5BtuT32Q7u0z0i30yDfGR8-E9gTiUHO34>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugedugeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeelgeejhfdvfffhffeluedukeetleelffffvddttdduteduhefgvdelhffffeefgfen
-    ucffohhmrghinhepvhdupghonhhlhigpvgigthgvnhhsihhonhhsrdhnrhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtoheptggrthesmhgrlhhonhdruggvvhdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9jIMapESW5kmNPKMm-huU5_sg30V8-7I6Cf2k0ZdMTZ7rhlZxDocjg>
-    <xmx:9jIMarfqNi9bTDaRH50PNBc7nIu5LeOZi2nsvZavy9NODuSou-Zp3Q>
-    <xmx:9jIMaqKz8od5n6XjHN-FPzZ_VVKs3cWnT-2cuVByZ1j5rJBoqLwmCA>
-    <xmx:9jIMagFQS1tbMOSbDDnDSm7eejm4iFIOSXWXM-JoBIooHe8pjIPayg>
-    <xmx:9jIMat3SWIbvJ3Dt_dxR3jCUvJB_pjPDV8somxffjpNYrHhQ3FzNyADN>
+    hnpeffueeiudejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileen
+    ucevlhhushhtvghrufhiiigvpeegnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrthesmh
+    grlhhonhdruggvvhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-DIMagKBtBwRkENRAOooM6Xs5qXfvJPYk_HfYWwxxj-wqAwW6WSmRA>
+    <xmx:-DIMatR2sENDIVsQunsNThI_Qc6JU6MvXLgcYKkN6DGQKc7RWM_rgQ>
+    <xmx:-DIMavtpUcTQ6TNYOo6XuoHR5MUCvarTX1oziQNvF3BwOY44VcwOdQ>
+    <xmx:-DIMaubpfm_aVoEXoOefgHcLI8-MX6iukIGdXXXJxsBlyxPopWqwRQ>
+    <xmx:-DIMagZTwi2LLjGCvjZyHO-MOg51X1KC2g2-HOF9FO-C8r4BAAhDOwI4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 May 2026 05:52:53 -0400 (EDT)
+ 19 May 2026 05:52:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 93116837 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 19 May 2026 09:52:52 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 81b1521f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 19 May 2026 09:52:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 19 May 2026 11:52:20 +0200
-Subject: [PATCH v3 16/18] setup: stop using `the_repository` in
- `initialize_repository_version()`
+Date: Tue, 19 May 2026 11:52:21 +0200
+Subject: [PATCH v3 17/18] setup: stop using `the_repository` in
+ `create_reference_database()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-pks-setup-wo-the-repository-v3-16-a00d8ea8b07f@pks.im>
+Message-Id: <20260519-pks-setup-wo-the-repository-v3-17-a00d8ea8b07f@pks.im>
 References: <20260519-pks-setup-wo-the-repository-v3-0-a00d8ea8b07f@pks.im>
 In-Reply-To: <20260519-pks-setup-wo-the-repository-v3-0-a00d8ea8b07f@pks.im>
 To: git@vger.kernel.org
@@ -94,157 +93,92 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, Elijah Newren <newren@gmail.com>,
  Junio C Hamano <gitster@pobox.com>, Tian Yuchen <cat@malon.dev>
 X-Mailer: b4 0.15.2
 
-Stop using `the_repository` in `initialize_repository_version()` and
-instead accept the repository as a parameter. The injection of
-`the_repository` is thus bumped one level higher, where callers now pass
-it in explicitly.
+Stop using `the_repository` in `create_reference_database()` and instead
+accept the repository as a parameter. The injection of `the_repository`
+is thus bumped one level higher, where callers now pass it in
+explicitly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c |  4 ++--
- refs.c          |  2 +-
- setup.c         | 29 +++++++++++++++--------------
- setup.h         |  3 ++-
- 4 files changed, 20 insertions(+), 18 deletions(-)
+ builtin/clone.c |  2 +-
+ setup.c         | 13 +++++++------
+ setup.h         |  2 +-
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 8844e3d481..24fe0eead5 100644
+index 24fe0eead5..53a41629e6 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -1229,7 +1229,7 @@ int cmd_clone(int argc,
- 	 *
- 	 * This is sufficient for Git commands to discover the Git directory.
- 	 */
--	initialize_repository_version(GIT_HASH_UNKNOWN,
-+	initialize_repository_version(the_repository, GIT_HASH_UNKNOWN,
- 				      the_repository->ref_storage_format, 1);
- 
- 	refs_create_refdir_stubs(the_repository, git_dir, NULL);
-@@ -1442,7 +1442,7 @@ int cmd_clone(int argc,
- 	 * ours to the same thing.
- 	 */
+@@ -1444,7 +1444,7 @@ int cmd_clone(int argc,
  	hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
--	initialize_repository_version(hash_algo, the_repository->ref_storage_format, 1);
-+	initialize_repository_version(the_repository, hash_algo, the_repository->ref_storage_format, 1);
+ 	initialize_repository_version(the_repository, hash_algo, the_repository->ref_storage_format, 1);
  	repo_set_hash_algo(the_repository, hash_algo);
- 	create_reference_database(NULL, 1);
- 
-diff --git a/refs.c b/refs.c
-index 844785219d..c36a322f4c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3453,7 +3453,7 @@ int repo_migrate_ref_storage_format(struct repository *repo,
- 	 * repository format so that clients will use the new ref store.
- 	 * We also need to swap out the repository's main ref store.
- 	 */
--	initialize_repository_version(hash_algo_by_ptr(repo->hash_algo), format, 1);
-+	initialize_repository_version(the_repository, hash_algo_by_ptr(repo->hash_algo), format, 1);
+-	create_reference_database(NULL, 1);
++	create_reference_database(the_repository, NULL, 1);
  
  	/*
- 	 * Unset the old ref store and release it. `get_main_ref_store()` will
+ 	 * Before fetching from the remote, download and install bundle
 diff --git a/setup.c b/setup.c
-index 406984b62c..e09483ba34 100644
+index e09483ba34..9c49319568 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -2385,7 +2385,8 @@ static int needs_work_tree_config(const char *git_dir, const char *work_tree)
- 	return 1;
+@@ -2468,13 +2468,14 @@ static int is_reinit(struct repository *repo)
+ 	return ret;
  }
  
--void initialize_repository_version(int hash_algo,
-+void initialize_repository_version(struct repository *repo,
-+				   int hash_algo,
- 				   enum ref_storage_format ref_storage_format,
- 				   int reinit)
+-void create_reference_database(const char *initial_branch, int quiet)
++void create_reference_database(struct repository *repo,
++			       const char *initial_branch, int quiet)
  {
-@@ -2402,35 +2403,35 @@ void initialize_repository_version(int hash_algo,
- 	 */
- 	if (hash_algo != GIT_HASH_SHA1_LEGACY ||
- 	    ref_storage_format != REF_STORAGE_FORMAT_FILES ||
--	    the_repository->ref_storage_payload)
-+	    repo->ref_storage_payload)
- 		target_version = GIT_REPO_VERSION_READ;
+ 	struct strbuf err = STRBUF_INIT;
+ 	char *to_free = NULL;
+-	int reinit = is_reinit(the_repository);
++	int reinit = is_reinit(repo);
  
- 	if (hash_algo != GIT_HASH_SHA1_LEGACY && hash_algo != GIT_HASH_UNKNOWN)
--		repo_config_set(the_repository, "extensions.objectformat",
-+		repo_config_set(repo, "extensions.objectformat",
- 				hash_algos[hash_algo].name);
- 	else if (reinit)
--		repo_config_set_gently(the_repository, "extensions.objectformat", NULL);
-+		repo_config_set_gently(repo, "extensions.objectformat", NULL);
+-	if (ref_store_create_on_disk(get_main_ref_store(the_repository), 0, &err))
++	if (ref_store_create_on_disk(get_main_ref_store(repo), 0, &err))
+ 		die("failed to set up refs db: %s", err.buf);
  
--	if (the_repository->ref_storage_payload) {
-+	if (repo->ref_storage_payload) {
- 		struct strbuf ref_uri = STRBUF_INIT;
+ 	/*
+@@ -2486,14 +2487,14 @@ void create_reference_database(const char *initial_branch, int quiet)
  
- 		strbuf_addf(&ref_uri, "%s://%s",
- 			    ref_storage_format_to_name(ref_storage_format),
--			    the_repository->ref_storage_payload);
--		repo_config_set(the_repository, "extensions.refstorage", ref_uri.buf);
-+			    repo->ref_storage_payload);
-+		repo_config_set(repo, "extensions.refstorage", ref_uri.buf);
- 		strbuf_release(&ref_uri);
- 	} else if (ref_storage_format != REF_STORAGE_FORMAT_FILES) {
--		repo_config_set(the_repository, "extensions.refstorage",
-+		repo_config_set(repo, "extensions.refstorage",
- 				ref_storage_format_to_name(ref_storage_format));
- 	} else if (reinit) {
--		repo_config_set_gently(the_repository, "extensions.refstorage", NULL);
-+		repo_config_set_gently(repo, "extensions.refstorage", NULL);
+ 		if (!initial_branch)
+ 			initial_branch = to_free =
+-				repo_default_branch_name(the_repository, quiet);
++				repo_default_branch_name(repo, quiet);
+ 
+ 		ref = xstrfmt("refs/heads/%s", initial_branch);
+ 		if (check_refname_format(ref, 0) < 0)
+ 			die(_("invalid initial branch name: '%s'"),
+ 			    initial_branch);
+ 
+-		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", ref, NULL) < 0)
++		if (refs_update_symref(get_main_ref_store(repo), "HEAD", ref, NULL) < 0)
+ 			exit(1);
+ 		free(ref);
  	}
+@@ -2830,7 +2831,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 				      &repo_fmt, init_shared_repository);
  
- 	if (reinit) {
- 		struct strbuf config = STRBUF_INIT;
- 		struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+ 	if (!(flags & INIT_DB_SKIP_REFDB))
+-		create_reference_database(initial_branch, flags & INIT_DB_QUIET);
++		create_reference_database(the_repository, initial_branch, flags & INIT_DB_QUIET);
+ 	create_object_directory(the_repository);
  
--		repo_common_path_append(the_repository, &config, "config");
-+		repo_common_path_append(repo, &config, "config");
- 		read_repository_format(&repo_fmt, config.buf);
- 
- 		if (repo_fmt.v1_only_extensions.nr)
-@@ -2440,17 +2441,17 @@ void initialize_repository_version(int hash_algo,
- 		clear_repository_format(&repo_fmt);
- 	}
- 
--	repo_config_get_bool(the_repository, "init.defaultSubmodulePathConfig",
-+	repo_config_get_bool(repo, "init.defaultSubmodulePathConfig",
- 			     &default_submodule_path_config);
- 	if (default_submodule_path_config) {
- 		/* extensions.submodulepathconfig requires at least version 1 */
- 		if (target_version == 0)
- 			target_version = 1;
--		repo_config_set(the_repository, "extensions.submodulepathconfig", "true");
-+		repo_config_set(repo, "extensions.submodulepathconfig", "true");
- 	}
- 
- 	strbuf_addf(&repo_version, "%d", target_version);
--	repo_config_set(the_repository, "core.repositoryformatversion", repo_version.buf);
-+	repo_config_set(repo, "core.repositoryformatversion", repo_version.buf);
- 
- 	strbuf_release(&repo_version);
- }
-@@ -2551,7 +2552,7 @@ static int create_default_files(struct repository *repo,
- 		adjust_shared_perm(repo, repo_get_git_dir(repo));
- 	}
- 
--	initialize_repository_version(fmt->hash_algo, fmt->ref_storage_format, reinit);
-+	initialize_repository_version(repo, fmt->hash_algo, fmt->ref_storage_format, reinit);
- 
- 	/* Check filemode trustability */
- 	repo_git_path_replace(repo, &path, "config");
+ 	if (repo_settings_get_shared_repository(the_repository)) {
 diff --git a/setup.h b/setup.h
-index a820041af0..c33b675ccf 100644
+index c33b675ccf..21737e9bd6 100644
 --- a/setup.h
 +++ b/setup.h
-@@ -232,7 +232,8 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	    enum ref_storage_format ref_storage_format,
- 	    const char *initial_branch, int init_shared_repository,
- 	    unsigned int flags);
--void initialize_repository_version(int hash_algo,
-+void initialize_repository_version(struct repository *repo,
-+				   int hash_algo,
+@@ -236,7 +236,7 @@ void initialize_repository_version(struct repository *repo,
+ 				   int hash_algo,
  				   enum ref_storage_format ref_storage_format,
  				   int reinit);
- void create_reference_database(const char *initial_branch, int quiet);
+-void create_reference_database(const char *initial_branch, int quiet);
++void create_reference_database(struct repository *repo, const char *initial_branch, int quiet);
+ 
+ /*
+  * NOTE NOTE NOTE!!
 
 -- 
 2.54.0.771.g3ed373ac14.dirty
