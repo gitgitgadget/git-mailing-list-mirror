@@ -1,114 +1,114 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4A2328B71
-	for <git@vger.kernel.org>; Tue, 19 May 2026 08:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014611917CD
+	for <git@vger.kernel.org>; Tue, 19 May 2026 08:16:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779178582; cv=none; b=SS7f5qqKFat2S+ruyv5CPVt6WWyrS63RFEsWjf2JlKAx5SHI5tYWkCFiCqyvVJ0V51jjc+xRY07gbLpccJgEcGpJqi7ISaWXVAeQxers0+kiBVhOHXjKVJtoEv3KjrFuugolM7BdS4Cu21M9JqNzSElnbzwB2Bj+YijGJloyN2U=
+	t=1779178598; cv=none; b=MEs0RgxupmnwIk0Ve00sP4AqUhNG88d0UvFsGIbcfhkksIBWmzOublSIFeOOoB0GuVF+CyMdXwsT7V3pSp0BF7GXRnY/DLWJ71BX6dzE8ICEqSnYxSoLfNCbHObjDDv2uiwIS2s6aZ4i1d87ublHe48HguQ5THuzaC8xIeKUd2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779178582; c=relaxed/simple;
-	bh=j0AioWpJ0JYh0Uw7O0s6FRFGSIY2ATk4805Z4UIxkHo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V2h0MFAPN5oNIFiKpjkb3MlL2sQtO+2lis4g5CcAS1LocMnma85KT8HsBNIerrwjXZbPUxOSG9Elk6iAY7Y6MvKnjbsUVn8PePbKqyxZUh2BXmzy/UlnDzWlhr2UF+2btoQ4RLRxJNmdfgi8DmHxzAmH2YpoJQ6soBi8jkX58Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4gKSDW2pmgzRnlZ;
-	Tue, 19 May 2026 10:16:11 +0200 (CEST)
-Message-ID: <5081fcc5-19b5-49aa-a33c-2c13aba7edb1@kdbg.org>
-Date: Tue, 19 May 2026 10:16:11 +0200
+	s=arc-20240116; t=1779178598; c=relaxed/simple;
+	bh=zVXgN2aofQ+vTrHHDX4OEDp3e5PBSGV0XDRW98/XdHg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Vd4RUvgxEatJMuC1cjd2mZyr451CIOW5+W4fCReSGtgUdxTcN1G4FKPSNqU9hZpjsC3duewx1mnP1U2TeiUK/BE8Y97yAKBafgYWxfumJyp/YEnvAgROuwwQWG+A5tdRhrIxWbbNQnSpKpP/oE6nnudPmYhZKWQnRl2mgsKUM3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P70XU9CQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q/5XsEmk; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P70XU9CQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q/5XsEmk"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id CBD141D00114;
+	Tue, 19 May 2026 04:16:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 19 May 2026 04:16:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779178595; x=1779264995; bh=IF/x0brrxm
+	5teshZbHBa2vBNwsPYJdKlQu/yYI8IhH8=; b=P70XU9CQTYpr9ElioMKVekQ9DB
+	G64FjHqks8VXoxX0SEb9jrlQGvYVGhSQmziZMjY1mcfU011FVoOUJy1S5SHeNQ7W
+	bQPDmk8xbcDxIZAY1f/A/ASZ/mfeGHFf9iqwNHjK7pnHXcYh+IyTlNpgiBGgXMw2
+	8ke25fGv8kjhIO3kAIkWVhej/WWG1XDs95sPE2tjhtzFVrKFXDjEATNQ9ax31ole
+	o8k01cKreKZayeqcHFNL1CrJ4IphSqxqO8Hmk6Oq5WJdLr/5fNgfyj5lyO+QaGkA
+	0BBkLT+u2t9bxz2HTs7tXUcTHn6ilXF7gP0OAeK7rXhheqbGsgtVXBGPT3JA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779178595; x=1779264995; bh=IF/x0brrxm5teshZbHBa2vBNwsPYJdKlQu/
+	yYI8IhH8=; b=Q/5XsEmkuKXIlG3akYvxZHM8hfz8DI7FS4ZEni13PnuXwH//uyD
+	Hke4EQFSrvp0x8qCMeKWtDCBhPJDpQmkLn77Qvc7B8ZxgQ0oBbAeMKMkSiObY+V+
+	rGJ9lK7AVrnBdU5dMBtXHrSSm/pVM0pl30M2FOKLgyJTtnIsH0K4kK6L4Dtj8/1j
+	J2c/AdXwWrvJL9MO+PZBz6RXJWq3v/I+DHsFBXEnmLuGSY7uJAIqZ9nO/DbB3xKF
+	vmdgIL227OgWIqmIOVFPw58nLiWKXenHqQ4YyWjktfXO7SkVf88gBuX1mCwwBlhm
+	cQ5pWRzilzhUV0dOWmO+bLxDsA97fbPzuCw==
+X-ME-Sender: <xms:YxwMalJ2PauXwuvl78SaBDwDtzQWzbvPG0KoyJNC9_kHTlp2n2Aenw>
+    <xme:YxwMamHCnV68T90oYqBGzMb3BoGQ8wxapl0f1K3dsUDsxpYEQ45r28jT7vFQ6mLpX
+    Vu1Xauf4_RqSXGQBKm-ccv1MELXNfdVCfqJ6VH-PdWAjs2nLMzX8A>
+X-ME-Received: <xmr:YxwMah8Zu9aHKB1X6gy4DSECztiv0UdB12FP5QrunV6RrmTvfOkJCzaMlpOXba-YvScmqMumtsmFnMTZfTKYa8aD099Q54ErKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeduvdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrg
+    hmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepsggv
+    nhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvg
+    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrhgt
+    nhgrrhgtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
+    dvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:YxwMamJCcaKjWrXeG1IIZ0PO0FZPfw07gII8pDWlbzt77t5PcmCDuQ>
+    <xmx:YxwMavtLPOMq4cNCFV0uilbafHZKnTDBJomiBUJJ8zS0cKrD3Hi9TA>
+    <xmx:YxwMatDCHxqKjA_eC2bXWI4o1cGz81WYetLJpZuqZTYxvJiTLLbDyQ>
+    <xmx:YxwManML8xMSiXTWBTzvmOAgQYn7362M1WxL2syYo5HHSuRkRWZmLQ>
+    <xmx:YxwMalQziJmmSpNQeCBqt-Vz9xZX25M9s4KLJEafKeBBdiAw5_xJqSG4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 19 May 2026 04:16:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Ramsay Jones <ramsay@ramsayjones.plus.com>,  "D.
+ Ben Knoble" <ben.knoble@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Marc Branchaud <marcnarc@gmail.com>,
+  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v10] checkout: extend --track with a "fetch" mode to
+ refresh start-point
+In-Reply-To: <CAHwyqnUx=59MK5zKL0uuFXKrZ6PEc1j_2WT-_xtsGewVH3gBKQ@mail.gmail.com>
+	(Harald Nordgren's message of "Tue, 19 May 2026 09:52:34 +0200")
+References: <pull.2281.v9.git.git.1778583307774.gitgitgadget@gmail.com>
+	<pull.2281.v10.git.git.1779091483321.gitgitgadget@gmail.com>
+	<xmqq8q9f9b5w.fsf@gitster.g>
+	<CAHwyqnUx=59MK5zKL0uuFXKrZ6PEc1j_2WT-_xtsGewVH3gBKQ@mail.gmail.com>
+Date: Tue, 19 May 2026 17:16:33 +0900
+Message-ID: <xmqqfr3n7r1a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 10/11] git-gui: improve worktree discovery
-To: Mark Levedahl <mlevedahl@gmail.com>
-Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
-References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
- <20260514143322.865587-1-mlevedahl@gmail.com>
- <20260514143322.865587-11-mlevedahl@gmail.com>
- <8b8feffa-1651-41aa-ac76-d2721d656b45@kdbg.org>
- <f654eab3-2157-4591-9ae0-440efb052e8e@gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <f654eab3-2157-4591-9ae0-440efb052e8e@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Am 16.05.26 um 17:28 schrieb Mark Levedahl:
-> On 5/16/26 4:16 AM, Johannes Sixt wrote:
->> Am 14.05.26 um 16:33 schrieb Mark Levedahl:
->>> +	if {[is_gitvars_error $err]} {
->>> +		exit 1
->>> +	}
->>> +	set _gitworktree {}
->>> +	set _prefix {}
->>> +	if {[is_enabled bare]} {
->>> +		cd $_gitdir
->> Why change the directory here? If we run `git gui browser master dir` we
->> do not want to change the directory in an uncontrolled manner. The
->> argument parser will want to check for the existence of files, and then
->> we do not want to operate from a random directory.
->>
->> Also, I think that the check must be for [is_bare] and not [is_enabled
->> bare].
-> 
-> [is_enabled_bare] is correct. This code handles the case: 
->     - neither the startup directory nor GIT_WORK_TREE are useable worktrees, so [is_bare]
-> is currently true.
->     - the command given is browser or blame so a worktree is not needed. We can proceed.
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-But in the case where the command is browser or blame, the argument
-parser must later check for the existence of files, provided that a
-worktree is present. But this conditional would change directory to
-somewhere that is not a worktree at all even though a worktree is
-available. So, I am still convinced that [is_bare] is correct.
+> Yeah, good point. I will try to address this and send a new patch.
 
-> The bigger question is whether to change directory at all: git-gui should never touch
-> files that are neither in the worktree nor in the repository. Leaving the current
-> directory as neither of those could be troublesome. I have no strong feeling here though,
-> will delete this.
+Please don't.
 
-OK. We need the conditional, but not change the directory.
+Next time, think deeply yourself and do not rob my time to think
+these things for you.  I do not have infinite amount of time.  A
+good balance may be if I find one issue in your current code, it is
+likely that you'd better three more issues and fix them before
+sending the next round, or something like that.
 
->>> +	} elseif {![is_parent_worktree]} {
->>> +		catch {wm withdraw .}
->>> +		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n" $_gitdir]
->>> +		exit 1
->>> +	}
->>> +}
->>> +
->>> +# repository and worktree config are complete, export them
->>> +set_gitdir_vars
->>>  
->>>  # Use object format as hash algorithm (either "sha1" or "sha256")
->>>  set hashalgorithm [git rev-parse --show-object-format]
->> This moves code around. In particular, we see load_config and
->> apply_config in the context below, which now happens only after these
->> calls. How certain are we that these have no effect on the code that
->> runs now earlier?
-> We need to load the system and user global config before running the repository picker. We
-> (re-) load the full config including the repository after we have a repository. I think
-> this is correct: git-config explicitly lists worktree dependent includeif statements,
-> meaning the config can be worktree dependent, and we must not load the final config until
-> repository and worktree discovery are complete.
-
-Good point.
-
-> 
-> git rev-parse, etc., perform discovery and config file loading each time they are invoked,
-> those are unaffected by git-gui's internal config.
-
-Also very true. Only calls to proc get_config would be affected by a
-different setup, but there are none in the code that has swapped places
-with working tree discovery. Only --show-object-format would be affected
-by the discovered environment, and for that case it is more correct to
-operate in the final setup.
-
--- Hannes
-
+Thanks.
