@@ -1,71 +1,71 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5806C403EAA
-	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A83403E9F
+	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779207165; cv=none; b=KKDxNugpKwtv4S0ofa28PurXAzfNUz3or8vDAS2OEkQ6gpSj/Ye0II5UmrrhJh5c4n5XTfQ7bOC+O1e4WVdRrU3DB7DRM5oZFp4PkqKVfwwQHhpXRW0RF6VhtptMfXG1SIw+jCtM86NiA+qNOkVDc7xVVeDRZyvRdV6NcjZ6gkI=
+	t=1779207168; cv=none; b=YObb/xNr8oLQjFYNoQ/96NF5MouvaFWKgCcQ+5llEeq3Zlfd7ATeTLSOtX0Vs70w/8agCJDEhnPlPucReiZgN4BxIocTce2HhzYqpHqqpbxtCNpBQYVutnizDJ7Bd8hxV3xjILcXcYztmDIaFzhCJAcirrjkYsHuPwDO8m79TL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779207165; c=relaxed/simple;
-	bh=KI6xAhEc1+xiWqwdyD4NXxxabi3WPyhV2H45mxS2JbA=;
+	s=arc-20240116; t=1779207168; c=relaxed/simple;
+	bh=acT59jyRJi5EosDaPfza7QicPDTUJkldWLZeMpDziP8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a2zyae+ETlcnPohw/9D1dYB/TVwIQnhhKzcoOpuayI+AEJ+vw2RnyJw1Wpld9P9TxAY/cTrQ+4ks69XwVPfZs/AhJipv0va1EvMbDRIoImu463K5JFGV3/ROrWytI09v9ZoeRKW1waEnmSFZG5GO5Iz2TTAUrUOGIJfu2Cgjshs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=SSCXvmAK; arc=none smtp.client-ip=209.85.128.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=SBeVnVPRQScG9ap6DZD7EpyvHdV0bQWOrRWymWQfsc6nW06oK3CJTFtwhjpOkENz+ev0xvD1VIEVbaXQ4sQvVJkw5jn9NTrNzOk91MMC1zfjVmdrjt8ZeMxglVU02IpVyb9uj4yzjUsruTuVLz9M4SLtbBSsQ/crHYtLr9Pqis4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ZOxnr41n; arc=none smtp.client-ip=74.125.224.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="SSCXvmAK"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7bd5e373d07so35366147b3.2
-        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ZOxnr41n"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-65c37eafcbeso4152280d50.1
+        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779207163; x=1779811963; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1779207166; x=1779811966; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JpS9BcDFk1Y4z4PkiYB7qTANd6jJcMA0dQTGMEaRyQo=;
-        b=SSCXvmAKJEOPKOT6zxtF4bWtlnbaNLDwxqIvlU26sjtDTcMdvx+b33xQfwHXRjk0TW
-         SgzPOgphjXsSe3NPSVYaC30KN74Q2qKztakSmAZI6rLAGRjNDEOJ37ruGhWz0/QQ2dv+
-         KztWnPtPMX7KkpYdTEHf/OTn/rWowLx/v+SxytJ9Z/98msgSUSeZibEv6RCHHhsTb4pD
-         0tE9XRosEb1wh8Qwefylx4hj62s+o7LeJWuIsTqLkwrOjp4T2JkzVKVDNkzBcNnI/YxL
-         b2CrcXeL4ut3vV4GyXOYJg07TMTjB6TxOr/Z4AjbUqDc+WHlMlIxOFIL6yPvMZso0BnE
-         IynQ==
+        bh=5J8XlejFgthetu2ZWx9ZSTcCatZT1ZdSwtZ70K84Jt0=;
+        b=ZOxnr41nZW+y/WUquQHcha+lOSmVCzojlFijdtyzeHcRYtIgOfzGMPLOnp6dJl7diZ
+         pN4jKirMiiOkILIU0wglP73K7rI56aoGYp/FTfcscgp8GhBF6FOI5TDMKIusL4h381Tk
+         qI6rYCDs3EdF9Vx6g1eXoktzMhvQJFvmEblW7joz6oHptGy+AGdsIlMojTnhTDHJ75cQ
+         mAv/Z6wuxLvVE8o/FwDVf5gOLy0zwNvAck5YAMKvIXndqGtbZ9G9gKBfY+XS1RtGzWKX
+         e+m337nKrfdlo7uwDO39dK9L6EsmCg7MHhFxJlicbqyaa3VHiriVgTxQgLCPwa3CqrTi
+         X2ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779207163; x=1779811963;
+        d=1e100.net; s=20251104; t=1779207166; x=1779811966;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JpS9BcDFk1Y4z4PkiYB7qTANd6jJcMA0dQTGMEaRyQo=;
-        b=QzsGNi4vxheRHU06PJLaEkk5bYH6Dbqu0qWAOibdDVjuPVTLP6xLIpcpr3Pvpa1p7n
-         iWXWL+9IZjhE7aoJWeTzQ03zipcjlQnDYha8+jBo5Ju+d7Pm7ANXZPs4xZS6FE74J8c9
-         nBrPtd/qdYO2XRpo91LN7qhhLUVHQGdA2bBXi16odOp6Q9+Ar9Wxj+klwM00BDJ9XZx+
-         aAuddluIV/Up4sWVgJLx9H3Owh0sa1k8nbXGtlTHDUXZWk/5kaHS16t0skUnAjEjUUUH
-         B+yaMxIexZeEbK17NsUSTfufNEpXgQw5I/3X6vae2UQL+jJLjNRiwXrsTXrSCnMoNmcS
-         7S7g==
-X-Gm-Message-State: AOJu0YwzisYWMaXpZSaABdob5KawnsOjHxd4uk7AnD7c6ZjcmUjVAHY8
-	h0R7A09Fg+MTGPW7+Orcoppgb9km/hr+6FIV3AarH0G/zln6fU3g1q0c50PcHOjX78x21pYcVNV
-	FmY7nfLnb4A==
-X-Gm-Gg: Acq92OEE3QT5ZfWvNrRsUpwpi03LvOMX7e9oqsP61AyXwZmpMeTBGzOT265NjaHkdQ0
-	N+wUP/G554HzTebDjzOiZZJIHs1Hc3Sw6zX624HUy9TlD6ULC8BV/Qh1PnZEDz6UIJE8rN7L5we
-	+uMMNngoandMMptWgENG8qnW9laixIHqhkscNjz7v6ykBhoXAxUE9eOxgNfO/qTxhW6BfKspih5
-	VVQ3z3ZJ0m9oMMInNWtJsdYJtBeI0wK728z77uwxMU+v5S4lQFSj3y8ncXDX0Kre7glLmvEI0Ur
-	2logaHG6SoBOQvfVZEHoG9K4qdAHGtoyaIglwfakCUImHHEmWQtpdhxWz6PntalQ6ve3XqV7dkN
-	sS07iPKM82wCu0QdZdtGr/WMbp6WFVbhZO6flmf8re3zmYFW1FtFRguOxO9c8z5H4T0zSGppAbV
-	Ft2xsIGtk8ORWqQFKVb1Rm7FQRTkU/yE9Cev5HPoZUgxYKCY+BCr+pNe6JlvI7uXgIsqwx7O6u8
-	00cS0AGYsLcPOEtd0fxxVMZBSefowv2Aq4vxx0RZiVNA/nZ2Y/6f+Lid0DBZzhWAwExtJUw4IoX
-	GL2mMn1cUNB+yE4JayN5QfKyQdI=
-X-Received: by 2002:a05:690c:86:b0:7b6:cd36:84af with SMTP id 00721157ae682-7c95b33f08cmr211464017b3.32.1779207163167;
-        Tue, 19 May 2026 09:12:43 -0700 (PDT)
+        bh=5J8XlejFgthetu2ZWx9ZSTcCatZT1ZdSwtZ70K84Jt0=;
+        b=NkDpgjkSE4EteeFYG8A1IsJ2/8IBU/0Zfg8af9YvHwyHtW3qvliGJysvFRTqwtBwe2
+         rTKmILwzx/fBUGo3fElh57T+la4XelX1P9AtgC932/j0WhN6QMdsWDDiv2YD89q1irkZ
+         EbxYdgb46OjtijXNptUmq6UxAL+A3UEZWDJ9iy7x5w9Cb+zpR+peNuXFbtao8cdsREpi
+         oWSCTPlKOi0YsDrOQQUKzY++WutJ20+ixmGVzucsaVVzHzeVab4g7bDZ17SCiun6A196
+         RCq0BPejUMNa+bvo5Qy0eQPR5XVrERSsRilxr5/uEyBSSPp2sxbZDwXgWI+/Az9OfYpM
+         2yHQ==
+X-Gm-Message-State: AOJu0YyfM4DntgqomuQeAj1Riufh3D6SgrLGr+b6oSJzFrr+OURiBWui
+	/oRedinoV95Y+fuQVEE641AoVLrnn202TNV/kYhVeTeNh0ul16P9Hk50zfwV7oDpQ2b2iRSIPAr
+	DPZenQM4LIw==
+X-Gm-Gg: Acq92OF9F+tNbEOwFEsYe1jDrbbiC27C+3tL8mMIKt+Qy3Q+KI/m3aJh2EgYMawKEI7
+	RgOZEB++ZypXrHSzZI7fXIFylewzHl3yVwOkS0OOX24wDOxvMscxyCsMzhSYMdLNYXuCQTWGUwY
+	WNxs9w5+OFrtwJQzDfxIbIHe2ddo4FppXv7UHuOkq7VtPNcz5KfmxkliOsdqavM2Cb7nHPV5YWM
+	oGpWqdWbEk1OsyO79VxG/QZRL5WdbEpjKS+3iu8cYL/E+jb6EcosMNCJasTggfOF0h6N2NX0+/q
+	a1hoItSL1NxwE/s0WsaFwy3L4Q+akBX2cXF5hNRUeixoCynBsSTXiQO5mGhdMCN5eRScGdKwhdL
+	lgqeoyhXvmTvaH/5GbIh9yF83x3Ogu3h9I40zFtsd7qdpofwizpqMi3xbCEZOVJkjqKlCCUFQO5
+	zyP04PukRngOw9YIj2W+tRKut69ARaJic1m3FoVcywR/gJ3qWP78ZMjXry4WNQoJUD+zByoLCUz
+	KHXo0ouCsKbTbM1SECTwjag7WRAgUD9gmbGfu1JKttFn/kvoQipq7EyJAt7mGWGoJsepOOZ/LaD
+	lZ7IVE+eNBsHhuC/
+X-Received: by 2002:a05:690e:1595:10b0:65e:1b4d:a7aa with SMTP id 956f58d0204a3-65e226fb9a7mr16873270d50.22.1779207165997;
+        Tue, 19 May 2026 09:12:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9bc0e213sm38649937b3.26.2026.05.19.09.12.42
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65e0d89b130sm8083999d50.5.2026.05.19.09.12.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 09:12:42 -0700 (PDT)
-Date: Tue, 19 May 2026 12:12:41 -0400
+        Tue, 19 May 2026 09:12:45 -0700 (PDT)
+Date: Tue, 19 May 2026 12:12:44 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 3/8] pack-bitmap: reuse stored selected bitmaps
-Message-ID: <6e1f6bef5f641481a6a875bc215b35fc56cef80c.1779207127.git.me@ttaylorr.com>
+Subject: [PATCH 4/8] pack-bitmap: consolidate `find_object_pos()` success path
+Message-ID: <c9a560660949c53575a9b1e81160d25212a1f484.1779207127.git.me@ttaylorr.com>
 References: <cover.1779207127.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,108 +77,55 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1779207127.git.me@ttaylorr.com>
 
-When `fill_bitmap_commit()` reaches an ancestor that was selected for
-its own bitmap and processed earlier, its object closure is already
-stored in `writer->bitmaps` as an EWAH bitmap. As a result, walking
-through that commit's tree and parents again is redundant.
+Both sides of `find_object_pos()` report success in the same way by
+setting the optional `found` out-parameter and return the resolved
+bitmap position.
 
-Teach `fill_bitmap_commit()` to notice that case. For non-root commits in
-the walk, look for a stored selected bitmap and OR it into the bitmap
-being built. If one exists, skip the commit, its tree, and its parents.
-
-Building bitmaps from scratch on the same test repository from the
-previous commits yields a significant speed-up:
-
-    +------------------+-------------+-------------+---------------------+
-    |                  | HEAD^       | HEAD        | Delta               |
-    +------------------+-------------+-------------+---------------------+
-    | elapsed          |   562.8 s   |   324.8 s   |   -237.9 s (-42.3%) |
-    | cycles           | 2,621.3 B   | 1,508.6 B   | -1,112.7 B (-42.4%) |
-    | instructions     | 2,348.9 B   | 1,436.6 B   |   -912.3 B (-38.8%) |
-    | CPI              |     1.116   |     1.050   |   -0.066    (-5.9%) |
-    +------------------+-------------+-------------+---------------------+
-
-In our testing repository, there are 1,261 commits selected for bitmap
-coverage, and 1,382 maximal commits induced as a result of that. Of the
-1,382 calls made to `fill_bitmap_commit()` (one per maximal commit), 131
-of them can be short-circuited at some point during their traversal as a
-consequence of this change.
-
-In large repositories where the cost of filling the bitmap for any
-individual commit is large, being able to short-circuit even ~9.5% of
-the calls to `fill_bitmap_commit()` results in a significant savings.
+Prepare for adding more bookkeeping around object-position lookups by
+storing the result in a local `pos` variable and sharing the success
+return path between the packlist and MIDX cases.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap-write.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ pack-bitmap-write.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 72610397020..651ad467469 100644
+index 651ad467469..6483fdc7daf 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -509,6 +509,9 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
- static int reused_bitmaps_nr;
- static int reused_pseudo_merge_bitmaps_nr;
+@@ -224,23 +224,22 @@ static uint32_t find_object_pos(struct bitmap_writer *writer,
+ 		if (writer->midx)
+ 			base_objects = writer->midx->num_objects +
+ 				writer->midx->num_objects_in_base;
+-
+-		if (found)
+-			*found = 1;
+-		return oe_in_pack_pos(writer->to_pack, entry) + base_objects;
++		pos = oe_in_pack_pos(writer->to_pack, entry) + base_objects;
+ 	} else if (writer->midx) {
+-		uint32_t at, pos;
++		uint32_t at;
  
-+static int fill_bitmap_commit_calls_nr;
-+static int fill_bitmap_commit_found_ancestor_nr;
+ 		if (!bsearch_midx(oid, writer->midx, &at))
+ 			goto missing;
+ 		if (midx_to_pack_pos(writer->midx, at, &pos) < 0)
+ 			goto missing;
+-
+-		if (found)
+-			*found = 1;
+-		return pos;
++	} else {
++		goto missing;
+ 	}
+ 
++	if (found)
++		*found = 1;
++	return pos;
 +
- static int fill_bitmap_commit(struct bitmap_writer *writer,
- 			      struct bb_commit *ent,
- 			      struct commit *commit,
-@@ -519,6 +522,9 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- {
- 	int found;
- 	uint32_t pos;
-+
-+	fill_bitmap_commit_calls_nr++;
-+
- 	if (!ent->bitmap)
- 		ent->bitmap = bitmap_new();
- 
-@@ -553,6 +559,28 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 			bitmap_free(remapped);
- 		}
- 
-+		/*
-+		 * If we encounter an ancestor for which we have already
-+		 * computed a bitmap during this build (i.e. a regular
-+		 * selected commit processed earlier in topo order), we can
-+		 * short-circuit the walk: its stored bitmap already covers
-+		 * the commit itself, its tree, and all of its ancestors.
-+		 */
-+		if (c != commit) {
-+			khiter_t hash_pos = kh_get_oid_map(writer->bitmaps,
-+							   c->object.oid);
-+			if (hash_pos != kh_end(writer->bitmaps)) {
-+				struct bitmapped_commit *stored =
-+					kh_value(writer->bitmaps, hash_pos);
-+				if (stored && stored->bitmap) {
-+					fill_bitmap_commit_found_ancestor_nr++;
-+					bitmap_or_ewah(ent->bitmap,
-+						       stored->bitmap);
-+					continue;
-+				}
-+			}
-+		}
-+
- 		/*
- 		 * Mark ourselves and queue our tree. The commit
- 		 * walk ensures we cover all parents.
-@@ -692,6 +720,12 @@ int bitmap_writer_build(struct bitmap_writer *writer)
- 	trace2_data_intmax("pack-bitmap-write", writer->repo,
- 			   "building_bitmaps_pseudo_merge_reused",
- 			   reused_pseudo_merge_bitmaps_nr);
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
-+			   "fill_bitmap_commit_calls_nr",
-+			   fill_bitmap_commit_calls_nr);
-+	trace2_data_intmax("pack-bitmap-write", writer->repo,
-+			   "fill_bitmap_commit_found_ancestor_nr",
-+			   fill_bitmap_commit_found_ancestor_nr);
- 
- 	stop_progress(&writer->progress);
- 
+ missing:
+ 	if (found)
+ 		*found = 0;
 -- 
 2.54.0.rc1.84.g30ce254312c
 
