@@ -1,41 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321151F0995
-	for <git@vger.kernel.org>; Tue, 19 May 2026 00:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277BF26738B
+	for <git@vger.kernel.org>; Tue, 19 May 2026 00:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779151313; cv=none; b=GuNJbvnddnT4jfkzLHqTtM9O4C3VF2OM3EvSBO6afUhJINnD9QcziYD0rAJz3nNO8hj1OMbeG9LhuZJIzeocDVxWZsV7kgHHsv84ntfNhVGzyXOAidn4kZbHkTaFC0yYYbBMdISoKVPC+gS7KsLuPbyZuQB+1nMm5OVovS0SH8Q=
+	t=1779151445; cv=none; b=rX6AL2El8vdunGyL0mKC6FL347xpq3hHNJrhGsvvxPkv4VqavWowx/r508qWKP9Q8eyTImGZWkV8FVk809YpnrRnEYdXfQ3b/hp62M5kgDnADavhGJz0CLl69xgy6Qy1NoPSxwrlVER9Hjh9UqiuZXH0NFgiSxK3GDEpEXnQ5JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779151313; c=relaxed/simple;
-	bh=lDFAuwYyvCeufxz53oeCGG0OgG+KYL2opPlOXj42S1U=;
+	s=arc-20240116; t=1779151445; c=relaxed/simple;
+	bh=TNnniUJ2m9+N+UyV6pyb/aV/Jd95SWGJ/gSm+UhKYaI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qtLan+VEe2R4FjzIsyJqDAXkUiC/CzreNRc0ldGysSyEpW7savtX5LdEuOQlLbVRn1yMCJeeYrp7zb5JajTEITsu1o/nz/UHlG8/g8wJ62+CmjJ71qlbJwiruzHsB+GkSCCUBQdGU3CIG9ogHACj9baAx1mwC5uDayc8UQ55B9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DUHqgeGN; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Uh37/SOxVly4J+JXcQU/ieH0X1oE6kSN55WaZtelgjpyBfYG6LiCHqa44hsNTPDVDECSxt4elK2SOFxAzIRo9cgzaKnuC6qPawkh2Azecb75J8QWad+2fRmgBAe58M9GaKaW/VjmeGESZta3qnzAPab3WLxAZpFxinX1CETLY1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=C58p/2hI; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DUHqgeGN"
-Received: (qmail 15611 invoked by uid 106); 19 May 2026 00:41:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lDFAuwYyvCeufxz53oeCGG0OgG+KYL2opPlOXj42S1U=; b=DUHqgeGNanNd/uqCERBAGdMuQUddA9F0w+9GqDsFjkAZl5I9laTdP6xhB+Y7MoMAt4FuBWhZiASBoDlYzZQnhm2AzOc++P/n2ndZTSli7KccnZYPBvXb3icAC+4sNE0oPHkPjYHhWzBHo6Whp+3QH70xmf48bw9e543xf7+e/0dE85Ib+JE33HfLStV5yUESNQJlZ0l/pmFRqSXlZrBKanxb633zNJf95RovJbm4h1iUpg5bNW+I+qjzjZEn/2w0QirZ671bj8nWjV0h33FHtPHAUrHb21OTzc29+gcZG6LhtbwbVeb2uU4W84WRNlOPYRpEHddWKXHRVH14KZKMSQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="C58p/2hI"
+Received: (qmail 15627 invoked by uid 106); 19 May 2026 00:44:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=TNnniUJ2m9+N+UyV6pyb/aV/Jd95SWGJ/gSm+UhKYaI=; b=C58p/2hIUnSxqyekY4Y8EtvsAwJXaBXuC05kvKzZ03yYFlcXTceEJe7l/3+f1HyNZnC5tLPE9FiB+CEi5SVZofbHtv5V7xR/zZgNms98EUbnJzHn5HsjzzLpX3yZAzjh9EJnlYM9f+s2U+oZhS8Y8q6OEk8CxWgWeL+BOXvGO1p7i2Hk3Yr/2YxN/WNjtvp0zF2nqkrgjPEwmBfMzDOAg6QiXeLUfcQK44V3iXRyLHeKUadOIOwcjN9cYJKF+6UXKVW4UoX9rskwkQTBIHGtNhelaBWdrcF8EO8eOuxsuIRTuH8QHo+D3qAfYzj576eH0807SFH3lkXJWL3/YQY9VA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 00:41:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 00:44:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 38246 invoked by uid 111); 19 May 2026 00:41:46 -0000
+Received: (qmail 38254 invoked by uid 111); 19 May 2026 00:44:05 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 May 2026 20:41:46 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 May 2026 20:44:05 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 18 May 2026 20:41:43 -0400
+Date: Mon, 18 May 2026 20:44:01 -0400
 From: Jeff King <peff@peff.net>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] evaluate the second argument of ALLOC_GROW only once
-Message-ID: <20260519004143.GA1612961@coredump.intra.peff.net>
-References: <323f5677-301b-4d7a-b552-6606597c2b1f@web.de>
- <20260515190818.GA98370@coredump.intra.peff.net>
- <20260515195049.GA149960@coredump.intra.peff.net>
- <9ce768d4-0cbf-4494-a1d3-55fd3b05b61e@kdbg.org>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] use __builtin_add_overflow() in st_add() with
+ Clang
+Message-ID: <20260519004401.GB1612961@coredump.intra.peff.net>
+References: <c6e9b337-c4fc-4cbd-ac32-e8d3814749b0@web.de>
+ <20260518202502.25682-1-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,41 +42,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9ce768d4-0cbf-4494-a1d3-55fd3b05b61e@kdbg.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260518202502.25682-1-l.s.r@web.de>
 
-On Sat, May 16, 2026 at 08:55:54AM +0200, Johannes Sixt wrote:
+On Mon, May 18, 2026 at 10:25:00PM +0200, René Scharfe wrote:
 
-> > Hmm, playing with it and looking a little closer, I think we don't end
-> > up overflowing the buffer because you use the size_t for
-> > REALLOC_ARRAY(). So the result is big, but then "alloc" is truncated.
+> Changes since v2:
+> - Pass variable instead of st_add3() expression to ALLOC_GROW.
+> - Add the helper st_add_overflow() that mimics __builtin_add_overflow()
+>   for size_t to avoid duplicating most of the definition of st_add().
 > 
-> Protect against double-evaluation of "alloc", too, using
-> 
-> 	size_t *palloc = &(alloc);
-> 
-> and use *palloc in the two places, then all callers are forced to work
-> with a size_t as third argument. Don't know what the damage would be,
-> though.
+>   strbuf: use st_add3() in strbuf_grow()
+>   use __builtin_add_overflow() in st_add() with Clang
 
-I think it would be nice if all ALLOC_GROW() callers used a size_t, and
-then we checked the size_t computation for overflow. But from a rough
-guess (taking your suggestion and trying to compile) we'd need to adjust
-~200 callers.
-
-And it's not just a straight conversion:
-
-  1. Sometimes the ability to represent a negative value is important,
-     and each site has to be audited. If we could agree on a "as big as
-     size_t but signed" type, that might help.
-
-  2. Changing the alloc variable type without the matching "nr" can
-     actually make things worse. We tend to catch overflow-by-1 for
-     signed types incidentally because it results in a stupidly large
-     allocation request. But if made our allocations correct, then we
-     might overflow on "nr" and start writing to some huge negative
-     offset before the array.
-
-So I think it would be a fair bit of work, though I would feel better
-about the resulting state.
+Thanks, this seems reasonable to me. The type-generic version of
+builtin_add_overflow() is much harder, but doing it just for st_add() is
+enough for our purposes here.
 
 -Peff
