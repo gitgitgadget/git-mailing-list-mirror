@@ -1,71 +1,71 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AA2400E1A
-	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9395934040E
+	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779207175; cv=none; b=ZKw/HtQHso6avLIw/zgGnSFC26rZhLVQwFiAlDwOKxLBCqZAi3LAXXPQFEDBSVIkqGYWFDtn1aCUpYJOAKtP9XwKi+zzPieWCzKdC0RAQ76wBwUgfJJXhFhvzkWLtO4VrEdGHRZykCLieFIXEYGlP9mA9T50ohJEUewGOlUAd0s=
+	t=1779207177; cv=none; b=UXauBNzP3I/ccddvoS4GLC1w36R+uAQ5AR85HnhI41yfoFX6OwdYRaECOpEQVxmXpPX0LjC1CIPgNXFg7L/MpAz8vm/Rt6SC4yl2guF7oOvV9CXwsOnpwYOKsjFUx5IqmlTHUEjDBPOmn/aVDysrw/NgeTCd4bKrRnrFCLfMKc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779207175; c=relaxed/simple;
-	bh=5ludknjU9bx8sGbwLRtQucVaYAArn2UiUJKkgD5GnSg=;
+	s=arc-20240116; t=1779207177; c=relaxed/simple;
+	bh=UZ4PsOoEN5BPY/S/fhvQoik/0bQRCIgA7pH9533UpRM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mP8tKYXUrOH2aesnN/ZCXVfFcr0JG6vV3uTO/xVSTl2eR7b0cxgU7fMfOIGDGuTQ7vF6FXG6l6ev7yfCuYQS9Trk6sX43E2lGPsT39f6L5GQQoUb/9F8djb6ur8obdvfvZPCgTlkgIhcMOhw9bmc8c1hY4uAUBbAJa11+UT0sSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=hIW7hVRl; arc=none smtp.client-ip=74.125.224.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=YPtRca2FfsX5jMpXh4xC+LJr1Jp8Kk0eLuvHG1tJnSyP/Zu0pefqEs58t6n6jB0egjZU5/GEE46+CMbNbNQsSKWQcrNyUDzyGFY9a8rbj+9HmOjLNV3sfw0kMAThHMBaNrpU3mLyA14//Y1zVr/eGK/ZFdUIE8cQHoj9dS6bvDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=lP9vhLnv; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="hIW7hVRl"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-65c37eafcbeso4152424d50.1
-        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="lP9vhLnv"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7b6ae2ea4a1so34281147b3.2
+        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779207172; x=1779811972; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1779207174; x=1779811974; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UvI2LadfSqDZo05T/HVPlbrxnMIWr6fsyCHVXtxQZ9Y=;
-        b=hIW7hVRlR5zm5H8nwmUrB/UDFynm5NDppCWqVBoNUn+K9YnmOr9CcCxXM5VMvfWI5K
-         MdqTSXgj9C4r5OGy+2jqG3PiRiBmgSv97XkQeFomfZ8umXyTjDToA7URbxshl7JUTQNZ
-         yiDoSXVNl/KuT1s/Ub3SVs1/SxB3maPT+r2qn2h1FQnK/opN5Tw5MpbMjjXSGpbazh9n
-         9cTgwNQlobmZ7pIw8Y/DmDlbKi/wFVJLGSv0WwHokvcsRhuKGp94cfTtMXrWXdVpHc3Z
-         lTbdzMU7STOAWzX0cz+N+b4bP2XciUkfEEug0QE221PK+DCD/U44AlY7Pil3VA68IGrr
-         QUvw==
+        bh=LsY+T51hvp4fGOuzVaYkMGO+IjcBDw6q/GPplWfqrvI=;
+        b=lP9vhLnvRbMAx6CjDDFHtiWI6CeDGZoM25CNVJcaaMeFNU8wK49Avub1+46PpEyT58
+         YpQ80ZGjcJFl5N9xL4gcpOhCkYhZ+MpHToQ5hjrzHV6Wqoq3yOAUjRuAbcptIymuPKJ8
+         zA49HBWb5aEP/saSZME4MFLJAmUzIVPpQS0U0l1HUHpga/zD2H5+B+4F9W4CHtI8n6VA
+         xkysGxQBrdU41wxzqTng5SdT6P+7IysYYhkH2Vpq+SPE6tj37dU0yKe7OEm4EDEp4nrM
+         Ca1ui6Gr4xhQzrPeXOlRBGek9Mdjb0jyI0y2ZbDJEAzpxHntQBbY1yXQdO2DoSA7TiU6
+         bEvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779207172; x=1779811972;
+        d=1e100.net; s=20251104; t=1779207174; x=1779811974;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UvI2LadfSqDZo05T/HVPlbrxnMIWr6fsyCHVXtxQZ9Y=;
-        b=J8fU3LdFt8kTcnuE3ATnLy7y6qqSlazjWbfwNTjsI9MrW0Y++wqzlJ0rUMvVn6A8vu
-         HqS/gX+Ai845L5K8Qe6XFmGP1ohwVDjsfaArdWzLPhGjA7UKgV0ushgZT0Slt3ZbCvmp
-         sLTe0ESuNAKxf2aWmue5s/csORNwcedhX+wz9yWMSO+7X5MPb8XC/eWvZ0mCZVgGtOTz
-         FLogt0MLeBBRN0UhDnVmvqxKSG2Ce1bFEDnWI0hZpZSpC8FHdW4f6cG1wErZZSbz3T5+
-         1ulG5lJv0Ffq/Dk2ynqJq9IVUD5djhOg6e7mPuUWTGoxXvdq2C3+6tp5m9/s03fQEurz
-         x17Q==
-X-Gm-Message-State: AOJu0YxWPcb5jj5SLHdbj01XUlUtYs20pQUtxFFYpUGjx+sKxmTelRcg
-	Qj5yzA1JHYLIfnNYLjrbUxH7Bqt3wYos8mUXNAVj2/g7ybyx+Rlu/8c81+AxFqq2+zSxHwlioMr
-	eh3R2R0CUvQ==
-X-Gm-Gg: Acq92OH4dUVU1hOzU4qv//QuX0ozgWsCmNyoWmEo1MAnUOs27LbLzTkkkn6tZfMRFX7
-	XrmjHSYTeB7qGMbv15DCPdU31qb8RLegx8aFbgKoYBcg2YmpOrvhTkVudmpj1nYvIHJXChmT5fi
-	v3102AY1jp/cA6tbqJfu/8N2H/3phZXkmABCyJ3xt6gJ36bFeHcpRGfeJ0hYE2X/RSSkdSpXLmS
-	E60wrapwLpkDS3iYP6lRtDlPobzv/xHHOgU6FBUvbnakHKT4g3EJKdBikr6YSm0tmWjnkTvzYrm
-	YIX+yzXYW5Kj4EfXMPTirPABsaD0Vc3nbAtVU6jHvahgYkAi/u79U8nD2uDmEnKVJ1BHu0XWKTf
-	qHEpymTd73TZjUo+W6J2utrnApgLsKdTOL+kWQvHv4YdneS5pO/R7JoxnOnXO7XbU9KAPLH/YqJ
-	iEotVq0a9+jjxCrWU6VXewftB3FoC3hV1hzefcum8t/B6Alw952b3tQlwWJrJ7C/4OYJtQI+jIB
-	Nx1M7WLlUZp+7lkO3lar/+xpMcDWg5+zAmw9WpTHCvszywHzoApyprJ5DyDHYvok/m+kZpt3csk
-	xBAemuJaFQli3+43
-X-Received: by 2002:a05:690e:1541:10b0:654:1261:8b3f with SMTP id 956f58d0204a3-65e226df33cmr16350157d50.16.1779207171666;
-        Tue, 19 May 2026 09:12:51 -0700 (PDT)
+        bh=LsY+T51hvp4fGOuzVaYkMGO+IjcBDw6q/GPplWfqrvI=;
+        b=PNfJmH8Mgec1hAwNLkgcOXII9AqF3LpXmsyNXtNa2B8KPp3vW4XeX5pdbYinuyImrT
+         PpyCx3fuBordagcAYTsM7ajdYmyQ7ZxNWEiL0ftXynrp6ctPL7NRZoZUIy47b5O/Jh9h
+         B6JNA1JWWth23oMo05FuZpKLTCw6gsG8VwGw2pgDW3c8im/b96brGjd8zXVTClruRnOV
+         PGDcDVcjLm8kKRs2uNx9zpermT0Tiu0EHPQgh3UAqoLY09OKdH4XLrfeiRWEDm4jwEA5
+         8+eA+JCqlW4v49RM5TNEPj0xRmAi8600c+GEZZmZcK2EDfkN/CzydC8U3nl6pHsX0sz5
+         COOQ==
+X-Gm-Message-State: AOJu0Yxd2d0YTxZh6JZuIuCJ1gB0mJ1zVh7Ng5SiCPniwTWQa7rX357M
+	Gg2MV+OTFDOWAi49x/+kym1AujkqMTOnqPPqwHpECHFMLd8K83URcw3D7qvusv+gJu3f04jeosY
+	DUI2AF8CBBQ==
+X-Gm-Gg: Acq92OGsIPtwMB3HHDgZpPdGmhZp/GIJohXOGe9d2wS7brBdXS/oMS5ZQoObnzCLBPf
+	Vr71t6h9g3r+Hy/MuOIg8OP+1KiZah8QsjtU3i9A5Q/XNVADX5HjnTc/TTeVNq8LnjEn37W4K1g
+	hsyQ3L9ASaSVO+gr60UqS25+vl66O854Ug5Tt0QEAdyS7WZeVYDVXk+dMOZMyDnk5s3KYpsOioL
+	9TW19PNLOvpzaQis7pJMfTBtn9ydQxz6bz0QcO4SqlQEQpFYNAvJILVB6l0TbWWDYfbVNfnA9qe
+	EMx7gpWp/QnxF9VZCKKdYixm7mUYJanPpvD4mxzrO3vf205ygFcP88P8lbv2xNgxHFHVCSRydFK
+	qJGPTVnOu/ej9GJgZ4/Symevkj0zzxms2ukdeU4+QeXg7ovRR462ZEwIPkSQHJD0IjKlcO6+kHF
+	T3TjrRDYQFaRnpfHWhJniv4qj9J3ipRgLHeu4uBBqi6YIYlT1Gh9koOMDJ8Pc1BOrEZdGBSamp/
+	aIrD+tbwGGrgUkp/26QLICMEi1BTajDY/qStKzCUnRrAAIpqmPHduMES0jueHYm3rNS8+Ih92AH
+	iOnSEzSMEC6e3o7SfdfB+b1M+D0=
+X-Received: by 2002:a05:690c:112:b0:7bd:9899:f916 with SMTP id 00721157ae682-7c95d2d08demr203451517b3.49.1779207174445;
+        Tue, 19 May 2026 09:12:54 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65e0db69f26sm8023440d50.17.2026.05.19.09.12.51
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9cbb0404sm38667497b3.42.2026.05.19.09.12.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 09:12:51 -0700 (PDT)
-Date: Tue, 19 May 2026 12:12:50 -0400
+        Tue, 19 May 2026 09:12:54 -0700 (PDT)
+Date: Tue, 19 May 2026 12:12:53 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 6/8] pack-bitmap: sort bitmaps before XORing
-Message-ID: <b0a4f31353a7053ab37b6d8c8f22c69bcfadfe50.1779207127.git.me@ttaylorr.com>
+Subject: [PATCH 7/8] pack-bitmap: remember pseudo-merge parents
+Message-ID: <0bd88e6a096223f117d71dc248b61770178b178c.1779207127.git.me@ttaylorr.com>
 References: <cover.1779207127.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,71 +77,119 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1779207127.git.me@ttaylorr.com>
 
-Reachability bitmaps may be stored as XORs against nearby bitmaps, up to
-10 away. However, when callers provide selected commits in an arbitrary
-order, the writer may miss good ancestor/descendant pairs and produce
-much larger bitmap files without changing query coverage.
+write_pseudo_merges() currently builds an array of temporary bitmaps for
+the parent set of each pseudo-merge, then serializes those bitmaps later
+while writing the extension.
 
-Sort the selected bitmaps in date order (from oldest to newest) before
-computing XOR offsets, leaving pseudo-merge bitmaps alone (which we will
-deal with separately in following commits).
-
-On our same testing repository from previous commits, this change shrunk
-our selection of 1,261 bitmaps from ~635.46 MiB to 176.4 MiB for a
-~72.24% reduction in the on-disk size of our *.bitmap file. The time to
-generate the smaller bitmap file decreased by ~3.69 seconds, though this
-is likely mostly noise.
+Move those parent bitmaps onto the corresponding bitmapped_commit
+entries instead. This keeps the on-disk output unchanged, but gives the
+parent bitmap the same lifetime and access pattern that later changes
+will use when pseudo-merge object bitmaps are built before the write
+step.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap-write.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ pack-bitmap-write.c | 30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 4b6fb07edd7..66282ea14b5 100644
+index 66282ea14b5..8200aed6101 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -327,11 +327,40 @@ static uint32_t find_object_pos(struct bitmap_writer *writer,
- 	return 0;
+@@ -32,6 +32,7 @@ struct bitmapped_commit {
+ 	struct commit *commit;
+ 	struct ewah_bitmap *bitmap;
+ 	struct ewah_bitmap *write_as;
++	struct ewah_bitmap *pseudo_merge_parents;
+ 	int flags;
+ 	int xor_offset;
+ 	uint32_t commit_pos;
+@@ -102,6 +103,7 @@ void bitmap_writer_free(struct bitmap_writer *writer)
+ 		if (bc->write_as != bc->bitmap)
+ 			ewah_free(bc->write_as);
+ 		ewah_free(bc->bitmap);
++		ewah_free(bc->pseudo_merge_parents);
+ 	}
+ 	free(writer->selected);
+ }
+@@ -210,6 +212,7 @@ void bitmap_writer_push_commit(struct bitmap_writer *writer,
+ 	writer->selected[writer->selected_nr].write_as = NULL;
+ 	writer->selected[writer->selected_nr].flags = 0;
+ 	writer->selected[writer->selected_nr].pseudo_merge = pseudo_merge;
++	writer->selected[writer->selected_nr].pseudo_merge_parents = NULL;
+ 
+ 	writer->selected_nr++;
+ }
+@@ -1004,42 +1007,47 @@ static void write_pseudo_merges(struct bitmap_writer *writer,
+ 				struct hashfile *f)
+ {
+ 	struct oid_array commits = OID_ARRAY_INIT;
+-	struct bitmap **commits_bitmap = NULL;
+ 	off_t *pseudo_merge_ofs = NULL;
+ 	off_t start, table_start, next_ext;
+ 
+ 	uint32_t base = bitmap_writer_nr_selected_commits(writer);
+ 	size_t i, j = 0;
+ 
+-	CALLOC_ARRAY(commits_bitmap, writer->pseudo_merges_nr);
+ 	CALLOC_ARRAY(pseudo_merge_ofs, writer->pseudo_merges_nr);
+ 
+ 	for (i = 0; i < writer->pseudo_merges_nr; i++) {
+ 		struct bitmapped_commit *merge = &writer->selected[base + i];
+ 		struct commit_list *p;
++		struct bitmap *parents = bitmap_new();
+ 
+ 		if (!merge->pseudo_merge)
+ 			BUG("found non-pseudo merge commit at %"PRIuMAX, (uintmax_t)i);
+ 
+-		commits_bitmap[i] = bitmap_new();
+-
+ 		for (p = merge->commit->parents; p; p = p->next)
+-			bitmap_set(commits_bitmap[i],
++			bitmap_set(parents,
+ 				   find_object_pos(writer, &p->item->object.oid,
+ 						   NULL));
++
++		merge->pseudo_merge_parents = bitmap_to_ewah(parents);
++		bitmap_free(parents);
+ 	}
+ 
+ 	start = hashfile_total(f);
+ 
+ 	for (i = 0; i < writer->pseudo_merges_nr; i++) {
+-		struct ewah_bitmap *commits_ewah = bitmap_to_ewah(commits_bitmap[i]);
++		struct bitmapped_commit *merge = &writer->selected[base + i];
++
++		if (!merge->pseudo_merge)
++			BUG("found non-pseudo merge commit at %"PRIuMAX, (uintmax_t)i);
++
++		if (!merge->pseudo_merge_parents)
++			BUG("missing pseudo-merge parents bitmap for commit %s",
++			    oid_to_hex(&merge->commit->object.oid));
+ 
+ 		pseudo_merge_ofs[i] = hashfile_total(f);
+ 
+-		dump_bitmap(f, commits_ewah);
++		dump_bitmap(f, merge->pseudo_merge_parents);
+ 		dump_bitmap(f, writer->selected[base+i].write_as);
+-
+-		ewah_free(commits_ewah);
+ 	}
+ 
+ 	next_ext = st_add(hashfile_total(f),
+@@ -1122,12 +1130,8 @@ static void write_pseudo_merges(struct bitmap_writer *writer,
+ 	hashwrite_be64(f, table_start - start);
+ 	hashwrite_be64(f, hashfile_total(f) - start + sizeof(uint64_t));
+ 
+-	for (i = 0; i < writer->pseudo_merges_nr; i++)
+-		bitmap_free(commits_bitmap[i]);
+-
+ 	oid_array_clear(&commits);
+ 	free(pseudo_merge_ofs);
+-	free(commits_bitmap);
  }
  
-+static int bitmapped_commit_date_cmp(const void *_a, const void *_b)
-+{
-+	const struct bitmapped_commit *a = _a;
-+	const struct bitmapped_commit *b = _b;
-+
-+	if (a->commit->date < b->commit->date)
-+		return -1;
-+	if (a->commit->date > b->commit->date)
-+		return 1;
-+	return 0;
-+}
-+
- static void compute_xor_offsets(struct bitmap_writer *writer)
- {
- 	static const int MAX_XOR_OFFSET_SEARCH = 10;
- 
- 	int i, next = 0;
-+	int nr = bitmap_writer_nr_selected_commits(writer);
-+
-+	if (nr > 1) {
-+		QSORT(writer->selected, nr, bitmapped_commit_date_cmp);
-+
-+		for (i = 0; i < nr; i++) {
-+			struct bitmapped_commit *stored = &writer->selected[i];
-+			khiter_t hash_pos = kh_get_oid_map(writer->bitmaps,
-+							   stored->commit->object.oid);
-+
-+			if (hash_pos == kh_end(writer->bitmaps))
-+				BUG("selected commit missing from bitmap map: %s",
-+				    oid_to_hex(&stored->commit->object.oid));
-+
-+			kh_value(writer->bitmaps, hash_pos) = stored;
-+		}
-+	}
- 
- 	while (next < writer->selected_nr) {
- 		struct bitmapped_commit *stored = &writer->selected[next];
+ static int table_cmp(const void *_va, const void *_vb, void *_data)
 -- 
 2.54.0.rc1.84.g30ce254312c
 
