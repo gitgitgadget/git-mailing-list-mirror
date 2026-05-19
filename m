@@ -1,71 +1,72 @@
 Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8F7400DF4
-	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3793769F0
+	for <git@vger.kernel.org>; Tue, 19 May 2026 16:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779207157; cv=none; b=VS5ssYPnaDyJW6RK5HpSgf2LWlj3k6ys/TNqKCI3MOlQL5RKJXOyEs/3RMJZNM4LJTr29l2yNPBRV9jLT+5zbBo1fu8s/jxt483LvdjeXyeCYa/atIXDH7bddQpjvhI93df8SDIA7NgrVklOIQef9eh/JYeoxAZQWkSUGx5GfdY=
+	t=1779207160; cv=none; b=cYeXYn87MhzhgxPONVyg1CNZlD4EIuwMA/Qm3YYIFB7aoU2YzcYKIUMeJW48WBeAgNDMvOGQwgTybJerJIXAzbkyHeRzi7vkHeMtXk20TKhLkr9CECVybFeqkRBkbGCXbjZYVPC+Dd4HbMIJ5fkxopxHsrP4QF9tByDXl+zIRLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779207157; c=relaxed/simple;
-	bh=weHMWDgCwXghrJRxmmcYHuFfb3bD4b1ts/hZoOrZXpw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=etZECMvj0R6l1+aVUxJSscSP9mFb/SBpxzRI6WALabqbJmVPicyLrDbr0ssFIqD3W+byN7JPU1Su4kw4peFJWHIpDRfnvMzmvEZmOEkMIT7hpOmruIhsfHKsBs9x5wE75fXgfog5aAnrNNTgjjMHr+s1EyigasM6gJ3hs4YR0Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=KLK1vLvm; arc=none smtp.client-ip=209.85.128.173
+	s=arc-20240116; t=1779207160; c=relaxed/simple;
+	bh=MdFaJH5XunxWJk95oZFF8ComNXAw6Io3/6q1Qd7hRw8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rFjZ1NWJ/ZAF4ETH1SaW/3KUGC8iQlIwh8DrTSUyduhydn8sQMlJVbaD6bWXGUtcw2rRzegIvj6zhmGS+Be3WnzenrWnUkSmdBDaoRC0AgvEZNgeiommcbjopK4cl52DKk3yTQcj03quGmbIkMLlCDnYJIsD5qdTQ+MOdwKc2TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=LuVxDGx5; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="KLK1vLvm"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7bd4c61765dso33704237b3.3
-        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="LuVxDGx5"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7bf0b1a47b1so34712237b3.0
+        for <git@vger.kernel.org>; Tue, 19 May 2026 09:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779207154; x=1779811954; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JbB0kqdNtxkVIbD2e/Isdc5v515A6sM5RVBVh5eSxiY=;
-        b=KLK1vLvmESwQ82DynjYVbydvmQta9G6TjJunzG6NQVwJe7QFcswpHi0y2akSdh8hfu
-         1Ht/pQVydtxNqXLy6YLpzQ15UF+Q4EK3lu4OEpF8I+L9ph5Hu94bOhq97DVcH5UAKVrx
-         8iXMZpTbEbw7FegCHTTYmILPBmzkmJ++ZU7urrDcIPOyuQPcxjQz0iCII7YRA8J7MyXi
-         RnDnfnnl1Sv+yKv/L4T52oeRa+582rFzURDLJhEfM4zsMXjtKEf/COOKdWgJG9Wc7mee
-         Glzp74Lv7EfQupOD7tNfF1j0GLCrMcouFo8gzvjYIEVJUBOpk5kIfID4psBFMwFvLy6V
-         5NnQ==
+        d=ttaylorr.com; s=google; t=1779207157; x=1779811957; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ejFP0Kj21EjfIgt8F66zxGWWCnqOqrdeuDCZFtQ/vZw=;
+        b=LuVxDGx5yV8fq58n1coOtM+69o6JqzMVRsVc/pkYzx+vVYP60RQcG5rOVffZHvJDKx
+         +M290IiUnIxn2VPfo4ySfp+kAMyMW0OELwX0khzzyee3qrEaALw/zxKeB3z0qjUDKLE9
+         fdzyMpyp9O0jdNJkfHAt2gAHxJm+Wzl2+9olgeuhbxh3DqEWd7mrXlXfQEsuYAMs2nbM
+         xbDDBjMQCVmfNeF9MmaTWY9+WFhMxA+wtID9DqFt2YtIg9jTQQPFmKXjaNgtnUto/jJz
+         qEVSlRlAkLDL3o6x1U5rPj+0O2nSSb1a754duI7ZNAMCuj1EnpyB54h5PNrvdcvkHZAa
+         82uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779207154; x=1779811954;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JbB0kqdNtxkVIbD2e/Isdc5v515A6sM5RVBVh5eSxiY=;
-        b=dslOZD7jpbtvR9M6CAVCMazNP1vIo2Et/dUZ33G97gvXA01LUn1xu8XclDSVOlYYKg
-         dEV29c/xnln2ymbu78NzTFIpQBg4yw3DpEuU0MTnltrJgTsfQV74T95JDAOsA8RdATkE
-         c53678PEU28vY7L/hkSvCz6jrke1XF29pGR13i34bfeqyPDnJus1FJetSkDVHm9t2pYn
-         GJ226utVhD6Ou1P24DqY/g3DJz52AoDWcYeqk6y2GVy1X84hxaiDyz9BhqvfRwBEwNgq
-         QC+Ddvgq39LKjWe0iAKDlAJhv8ciZkTC9jlZPlY/dlytUsD1hyJzho0sqtmy3/lhwcy5
-         nRVw==
-X-Gm-Message-State: AOJu0YyISJBXn5uL3Iz6ACJCiU0F8P6XxpNeO+J+TUnqtv49E2w2EGCv
-	aULFxKPoh3Xp0mOUG6gO7j1O6h3GQPIEHQIqcQ6yRmSW9+uw4uMKJWg9/LfAbOvkjieLQEDxTy5
-	MTHWFYFOHwA==
-X-Gm-Gg: Acq92OEOBl1PTpyAAL7gW+eE0fff/u4srCPDPFV2S78PuMk1pAqJGZaXHsF6i42qofS
-	NKUyeU4dGNL6Ye9WzjWys0k/7jUr0hNO5zWeWHYWjzwgABc1zEzpyzf9QP+ocZz8+yB0d3Z2M4V
-	NHMkFcGWLgfuFmlCTnD3KOr6g2tIz0jXE1ktaEcrEyBvQcU0UJNY/bAicpku2b76eVvjFsjpMjA
-	UzKLnUofpUm+YItNKI8UWFOSWAezpuvpPxXL/e0BuLaLS55cTx2Od6scpCpefrQCyUaqcMeKJ60
-	vid1kmTaScFuyGlF1/nGyRFLnhML8g7F3c2PpIs6UqZGnNmwULKWKFGLLJBznCW2wVdsHJ4B35r
-	46nxYuu2M54CelOMk7jxZLuT8VU3a9IZsd2iVuSdkRixgNzrHefd2oDHL4o3SKm0jlXFMGA0Dm/
-	RbWd0J2/rscl5fx5wZVfhHvuE58WvTy9FJeAGLGNnI/y6ICNJfsOruD8yZUbB3g7RP+qjwsB6RG
-	oSNAMzuUZTqP8hQMROefkkDWgh/OTnVppHs/viXv7JnYczRp7DUr33FIoWsbm9Il3BrBA+kCBiB
-	GTsVnW6jDAi26+z1a43AKR6wkiA=
-X-Received: by 2002:a05:690c:ed5:b0:7bd:4a12:f08b with SMTP id 00721157ae682-7c959b9161dmr217993967b3.3.1779207154526;
-        Tue, 19 May 2026 09:12:34 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779207157; x=1779811957;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ejFP0Kj21EjfIgt8F66zxGWWCnqOqrdeuDCZFtQ/vZw=;
+        b=ow48EGP69c4T27Q7CdQ6hWGdSowNQ9xYESqI/7ARTF86tAacpBCITuAX3w2NwUtbT5
+         PzdK1/EC1quY5ughRzd24IedYnwmA7fzRJS/WHLRJQkVPhdjJq50Nat0pvzXM0zjnyke
+         yRVOmgIT7/Cx/eIgP/9MfgDB/jCHMUjMYEZC2VFQHWIxg12PeVi3/He2yJtBSZtmA199
+         nd3h6gqNPu95mmnjGlU3Ur7iT3SfwKWZ4yYZftfq80AeGK9lLb3/hsRIsNpJyaR0uQv3
+         /gTRrt5RWf5+i+DGhzSFuj1bGz3EIJ6HlCX8//mdNRnBjYp63lKTZPXtxlGrvEm4/l+N
+         HOuA==
+X-Gm-Message-State: AOJu0Yz1ecsBgcKdzpnlxtjOympaM7j0+2yCc+jFIwtJWk+rWMT7QrRX
+	hVpIaHcVRkr+vyjKziiJOqi8q2Qaz7/RIQXMED0eULu7mMrDqr9J3n4Cwf1rjppfngj9+9NMuA7
+	9xPiuu6ag5Q==
+X-Gm-Gg: Acq92OH/hGr/SE3blhdCHaJlsYuyv3Oxd1RGzZcLXaAIk3MN5cnwB6/diXrWtdEvDSN
+	WBVXo6VZWbKbw/twlRWAPq4khpBefJf910YAR9n0pml9oviXlAoFgLNaT5QueYV43vDgUT4z3bV
+	LUnmVFlCAZl/NMsnXRneCKA6i8NergqNAsvsZw+VrC7Gxvfh+8NKyOhEi1xlVQtKMMOjNgIyobR
+	2mihGieeUE7JrVa/KGadRkelEDZFI8+ppxd8Wt8nKMy8asvkJ/H7URvIf/z6eOjyPCM09DtzdyN
+	TTb8eZ/QNEMrio0uJVPbv4ih9TeFd4D4GlQwM2K7+cM5CqFKiZHRYiBBYy5YrcfktKHxQUeJems
+	oBG0rnGRneJ7dlHwzeHuE0uGxGw44OjZwE81KT4cpAqMJEatb3OVTZKD+Mvop6wqnClYs375/vM
+	XptISJg4C8hZHiVKUy4FxKmf9xLgIxQzPjngKL0cSiJ8b/6hMf0kF9M4Pz78kUVRLpUwiTmXSDm
+	3BOelHr0j3zsXqdZfFnkmi5L4d3nqq/JVlhbewNJPUsXa1ePRhxJtbmECn8/xNJe34V5+k7pigE
+	qZQeg4ytv3iB6P6E2mecAWjsBU0=
+X-Received: by 2002:a05:690c:4:b0:7b8:c19c:ee9a with SMTP id 00721157ae682-7c95c1feddemr218274097b3.32.1779207157438;
+        Tue, 19 May 2026 09:12:37 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9d18dcddsm38706817b3.49.2026.05.19.09.12.33
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc996b4badsm39616697b3.11.2026.05.19.09.12.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 09:12:34 -0700 (PDT)
-Date: Tue, 19 May 2026 12:12:33 -0400
+        Tue, 19 May 2026 09:12:37 -0700 (PDT)
+Date: Tue, 19 May 2026 12:12:36 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 0/8] pack-bitmap-write: speed up bitmap generation
-Message-ID: <cover.1779207127.git.me@ttaylorr.com>
+Subject: [PATCH 1/8] pack-bitmap: pass object position to `fill_bitmap_tree()`
+Message-ID: <13191c19b91bc3f5d671b7016b97f2309f12737d.1779207127.git.me@ttaylorr.com>
+References: <cover.1779207127.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,88 +75,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1779207127.git.me@ttaylorr.com>
 
-Note to the maintainer:
+In the following commit, callers of `fill_bitmap_tree()` will be
+required to check the bit corresponding to their tree before calling
+that function. That change will reduce the overhead of setting up and
+tearing down stack frames for trees whose bits are already set.
 
- * This series is based on 'tb/pseudo-merge-bugfixes', with
-   'ps/clang-w-glibc-2.43-and-_Generic' merged in. I suggest queueing it
-   as 'tb/bitmap-build-performance'.
+To prepare for that change, have callers pass in the tree's bit position
+in `fill_bitmap_tree()`, which will make the next commit easier to read.
 
-   The latter merge is only to avoid the current Clang/glibc 2.43 CI
-   breakage, and is unrelated to the bitmap changes themselves.
+In the meantime, this change has a surprising and measurable benefit
+during bitmap generation, particularly on very large repositories.
 
-This series improves the performance of reachability bitmap generation,
-focusing on very large repositories and the penalty to generate
-pseudo-merge reachability bitmaps.
+When processing sub-trees within `fill_bitmap_tree()`, the preimage of
+this patch did the following:
 
-The first few patches address hot paths in the ordinary bitmap build:
+    while (tree_entry(&desc, entry)) {
+        switch (object_type(entry.mode)) {
+        case OBJ_TREE:
+            if (fill_bitmap_tree(writer, bitmap,
+                                 lookup_tree(writer->repo,
+                                             &entry.oid)) < 0) {
+                /* ... */
+            }
+            /* ... */
+        }
+    }
 
- - pass object positions into `fill_bitmap_tree()` so callers can avoid
-   redundant lookups,
+, first performing the object lookup via `lookup_tree()`, and then
+locating its bit position within the recursive call. This patch
+effectively reorders those two calls so that we first discover the
+sub-tree's bit position, *then* load its tree.
 
- - check subtree bits before recursing, which avoids many no-op
-   `fill_bitmap_tree()` calls,
+By reordering these two operations, we spend fewer CPU cycles per
+instruction, likely due to improved CPU dependency/cache/pipeline
+behavior. Comparing the results of: running `perf stat` before and after
+this commit, we have:
 
- - reuse already-stored selected bitmaps when `fill_bitmap_commit()`
-   reaches a selected ancestor, and
+    +--------------+-------------+-------------+-------------------+
+    |              | HEAD^       | HEAD        | Delta             |
+    +--------------+-------------+-------------+-------------------+
+    | elapsed      |   612.5 s   |   582.4 s   |  -30.1 s  (-4.9%) |
+    | cycles       | 2,857.3 B   | 2,713.3 B   | -144.0 B  (-5.0%) |
+    | instructions | 2,413.2 B   | 2,415.5 B   |   +2.3 B  (+0.1%) |
+    | CPI          |     1.184   |     1.123   |  -0.061   (-5.1%) |
+    +--------------+-------------+-------------+-------------------+
 
- - add a small direct-mapped cache from object IDs to bitmap positions
-   to avoid repeated pack/MIDX lookups while filling bitmaps.
+In a large repository with ~4.8M commit, and ~37.1M tree objects this
+change improves timing from ~612.5 seconds down to ~582.4 seconds, or a
+~4.9% improvement. More importantly, the number of CPU cycles spent
+dropped off significantly as a result of this commit, lowering our
+cycles-per-instruction ratio by about ~5.1%.
 
-On the large repository that I have been using to benchmark these
-changes (~4.8M commits and ~57M total objects), the no-pseudo-merge
-bitmap generation case drops **from ~612.5 seconds to ~294.1 seconds**.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ pack-bitmap-write.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-The next patch sorts selected bitmaps before choosing XOR offsets. This
-does not change bitmap selection/coverage, but in the same repository it
-shrinks the generated bitmap file **from ~635.5 MiB to ~176.4 MiB** by
-putting related ancestor/descendant bitmaps close enough together for
-the XOR search window to find them.
-
-The final two patches focus on pseudo-merge bitmaps. The existing code
-feeds pseudo-merges into the same maximal-commit selection machinery as
-ordinary selected commits. That machinery works well for real history,
-but not pseudo-merges.
-
-Instead, this series builds ordinary selected bitmaps first, then builds
-pseudo-merge bitmaps afterwards. The later pseudo-merge fill can still
-reuse stored selected ancestor bitmaps, and can also reuse an existing
-on-disk pseudo-merge bitmap when the parent set matches.
-
-With the coarse pseudo-merge configuration used for testing:
-
-    [bitmapPseudoMerge "all"]
-        pattern=refs/
-        threshold=now
-        stableSize=10000000
-        maxMerges=8
-
-, the optimized no-pseudo-merge case takes ~294.1 seconds, while the
-**pseudo-merge case takes ~328.4 seconds**. Before the final change, the
-same pseudo-merge configuration took ~575.0 seconds.
-
-On our testing repository, it is faster at the end of this series to
-generate bitmaps with pseudo-merges (~328 seconds as above) than it is
-to generate bitmaps without pseudo-merges at the start of this series
-(~612 seconds).
-
-Thanks in advance for your review!
-
-Taylor Blau (8):
-  pack-bitmap: pass object position to `fill_bitmap_tree()`
-  pack-bitmap: check subtree bits before recursing
-  pack-bitmap: reuse stored selected bitmaps
-  pack-bitmap: consolidate `find_object_pos()` success path
-  pack-bitmap: cache object positions during fill
-  pack-bitmap: sort bitmaps before XORing
-  pack-bitmap: remember pseudo-merge parents
-  pack-bitmap: build pseudo-merge bitmaps after regular bitmaps
-
- pack-bitmap-write.c | 431 +++++++++++++++++++++++++++++++++++++-------
- pack-bitmap.h       |   7 +
- 2 files changed, 377 insertions(+), 61 deletions(-)
-
-
-base-commit: c3d7ca7d982efc3a848fd85f34e867cfc0a99479
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 1c8070f99c0..2d5ff8fd406 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -456,10 +456,10 @@ static void bitmap_builder_clear(struct bitmap_builder *bb)
+ 
+ static int fill_bitmap_tree(struct bitmap_writer *writer,
+ 			    struct bitmap *bitmap,
+-			    struct tree *tree)
++			    struct tree *tree,
++			    uint32_t pos)
+ {
+ 	int found;
+-	uint32_t pos;
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+ 
+@@ -467,9 +467,6 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
+ 	 * If our bit is already set, then there is nothing to do. Both this
+ 	 * tree and all of its children will be set.
+ 	 */
+-	pos = find_object_pos(writer, &tree->object.oid, &found);
+-	if (!found)
+-		return -1;
+ 	if (bitmap_get(bitmap, pos))
+ 		return 0;
+ 	bitmap_set(bitmap, pos);
+@@ -482,8 +479,12 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
+ 	while (tree_entry(&desc, &entry)) {
+ 		switch (object_type(entry.mode)) {
+ 		case OBJ_TREE:
++			pos = find_object_pos(writer, &entry.oid, &found);
++			if (!found)
++				return -1;
+ 			if (fill_bitmap_tree(writer, bitmap,
+-					     lookup_tree(writer->repo, &entry.oid)) < 0)
++					     lookup_tree(writer->repo,
++							 &entry.oid), pos) < 0)
+ 				return -1;
+ 			break;
+ 		case OBJ_BLOB:
+@@ -575,8 +576,14 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
+ 	}
+ 
+ 	while (tree_queue->nr) {
+-		if (fill_bitmap_tree(writer, ent->bitmap,
+-				     prio_queue_get(tree_queue)) < 0)
++		struct tree *t = prio_queue_get(tree_queue);
++		int found;
++
++		pos = find_object_pos(writer, &t->object.oid, &found);
++		if (!found)
++			return -1;
++
++		if (fill_bitmap_tree(writer, ent->bitmap, t, pos) < 0)
+ 			return -1;
+ 	}
+ 	return 0;
 -- 
 2.54.0.rc1.84.g30ce254312c
+
