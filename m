@@ -1,176 +1,274 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F6234DCD6
-	for <git@vger.kernel.org>; Tue, 19 May 2026 06:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779170402; cv=pass; b=NbAOHtism+0m0p2m5gpFbxsK9iU4UIWkp3PKCVwNM3/wIKvbWIFeEBt+rhpe3sFY6nMKpPjo+XzI+x3NGzfAJ9uz5Y0+dNafES6taIq/SUGG/edhjSppAcnABTrVU3vIf5AY0an6IqxQvTv75X3NxWjY9U0fICXC/n3BDJEhpc4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779170402; c=relaxed/simple;
-	bh=o5r6rIUaDzW9xVzPUw4wVUQsnC+bC9ZSJrwdlxyGQOo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pyegCOdPPhgzPJYDF12vQJ0dxpZMzGq/FaUxRvosD19zVM2gf7S73Rj5zMp0fLMNvtDgIJdErDg4UyrPJeG40azvqsY74IpfijPy6tOjKucSs3aYtg9hZp6OCoU/xKq80G1zMTkMy5QxNCkFn6l/ofi5lSrQgFAQ6F9sMxEnIGU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNJNKZt7; arc=pass smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2CE384CCC
+	for <git@vger.kernel.org>; Tue, 19 May 2026 06:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779171337; cv=none; b=s3+TT4HatXjEXJ0RFm636HcWWDyzkgzsaQZXxu5uEX7Q+I2z0bKK9x9xSjsFIsuGk3aLtVv+YbQ+sPG8YDmqmC+dLUtQRfzK8CRzLaYIipwLJsEBR5jFv6kxu5q3Y/DU5Z5nAd7wMspxV8tXrFlowi0d595qWLf0ZCgyJwll+gk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779171337; c=relaxed/simple;
+	bh=664hfdowsmgidF2QUj1y8J7nLsQjymImEogOlDIWLqs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GrHPDI4ElsNINgK/0t29uDRIuqHxxyR6wgp4227SS1Zd4S71dJUeDFt4iAGMiwlxtO5K1T+rrk3Q3G6TMrqNTXnpMBdvgX0mX3APBUc28Z7UD7uUhAkfN/oAgN6ecOnulsZ75dmrDCa8AH62srhHWc6HTmla7JAB6rTTc9x0VO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gS5yRznA; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNJNKZt7"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-7bf14e33f5bso25916127b3.1
-        for <git@vger.kernel.org>; Mon, 18 May 2026 23:00:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779170400; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GKdvqFZcb0ckEwMMZi9cZYL3pTY+MJX4PwAOfMf51DdorpR0N7kYzSnIezOsCR2W/g
-         RV65c+Xr7baDBjd61omhq6HHwbGzdlhtQVJrmFzl/u29EEu0QqUKk5IRuiTM/Tju963A
-         dsiExn/q2sPQblbCsT3W05lzwrOI1Q1hdEh5KBScvUszUQcE8IEQNvCFsPwOM17m633/
-         toOukFVk6TMUpOp6TV68yVVw8mrfWoD9J7AnvziNWbjwu7wZsW58XQMqbOaJfvit/KSL
-         8joKW5FVWxqJjIB4vQ/HIAP/6+sqDJbf5ZdTMHtmNtn/K8CJ3LCPUFd7XYQJPKSJjN8c
-         flVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=K8tOWIqjfCwq98U+LLTmwGdSYPrNMG12Ua5g47zFLKo=;
-        fh=zBnTKckBWgXjsgzh6r1tKsaPxhL7mqfawWgyQSWFZA0=;
-        b=JGkf5vO8nUiSQyvA7WsL9fx8rCgRWSyRbU1KGPbBiEIh5XDcF/x3SSxDA9yiQMC0Mt
-         6jVxpE21PbwT9uxnLPeetMLodiSbg/E9Q46e7YxfsnT2FFXAZglgDz6i9+BhIqo9mnJl
-         vOZzl5C53dnNmn5sOlkSfem0dZvgMHNiWJSr3QnGB7SG1INRzA3rXi0rx6GmDNAP1nxI
-         Hoh5X8+SfrCbTNRFmEL5TfXjbl0H32yJ44IgTGi67HGFc5FtmxEA81Zx7EjP1N5yUCg2
-         dSJqQs3Yov7mNnVfskoQuIDkCWQ0kFBunKxNlWc2gLH1duB0m+owVNwYopRqlxec2NnE
-         PbEA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779170400; x=1779775200; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K8tOWIqjfCwq98U+LLTmwGdSYPrNMG12Ua5g47zFLKo=;
-        b=PNJNKZt7M2uzffuIe1tBg8AvP245boBdt3Qfd6epjGQNzXTPPjN/WQ5y7z/HEGiSCJ
-         +QQS3fYfSwYPqMmpGiQpSB5WMmsD2AI3rA4TCevLVsKdUO71Gq/7PdDBwQHqOGjbzMjY
-         oJN8hBicfmhUImNtarDQueu8d3N0KXcx2RtP0Nlsds4jBcrMLpNTxdlPyBu5/WNpo1sp
-         mI8zGn59xZhf80u6dTmAJMdsPuyzpqaQTLgdB+zpK3OonbEFp98Xv+zjyzz5LYdTYhCh
-         lZ1S5wq/Ar0nMkkg1WPUHRB+4R9DpGsgOiTLu/6Q9GEy6olunJQ5D3dQo3IDNb+9Gf61
-         iVwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779170400; x=1779775200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=K8tOWIqjfCwq98U+LLTmwGdSYPrNMG12Ua5g47zFLKo=;
-        b=ljzi0UnBfiOLXN/O0kLYlD7lpahyWcZDnqNToEfWWVAgPq8O7ph+Td/FuifW8NxJGL
-         z1M/TLAk7yAoF1q3hiyWyxPYPnl4AnggeRRqiMdwHNcUoPR+rSouW4FGv9DScn6IWmsh
-         SVDeuElE7ArNlRa1LjnCTG+j1OqpF9AxBefqKVUCl3n2iJMKp9FrLXnBp8/00Y6AG4PA
-         KsTGnuauTAly2JYjSmMF71uBeZujPcEBQMlmo/8DAfZvYIDxv4Z7bbV98i5ZZEwIu9Nq
-         eIZegh0p+rHhVd/ILeLpWdW4eXKbxFnSPzDJZF82M9IJgAngoYrso5wgTqxqZMBYev1q
-         UWkA==
-X-Forwarded-Encrypted: i=1; AFNElJ9p13fhb9PsYPmunnK9os/VW1cQjMu+f6Pj8i0zqw5S6MDXuLh6Bhxzf5YMabcOXDy8S4k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/UGu+Yl0tbcbzIx6updnrLNYmWJu93000TteR524v3wbPtL1T
-	ihp2pIPxN9Hen4w3OwCNTou9K8b0mr2gC77o4AOMiVwA5y42vAmETQNG8w5dTjwxkXMEsijS1Y6
-	i9jee9iLtd1wEf6yk0LlQGRoZGgWfNFQ=
-X-Gm-Gg: Acq92OHhnPA196wQ3o7x2ZgQBMBfFh4KiH2/AD0YDxXsoKDusHnS5e66F5iPG/CEmrn
-	n4IqRDQPji0sTXao7JVCir+vaDuGWfePLfzlQMTxF/aUld2wPLOammYz0XuFjp7ensswGDsV0Jy
-	PVtcLV1Owxj5QFfTLGYKaTeNzrRKe+908UF8CIELQI37/NNfAqP294aRE2gvVmp6rTvDu58uV1a
-	8E4GfOsbRgATMMr7aTEd521RbRaOvGCNoq+kxxmBmdDlnlvL8XL717JnlZaDYLeeM0H3b0CUwQy
-	fMVJ4p8oGkTqlBOwlXPeBPO1zLmqS/h1DHiVz7DqhCP0nC/9UI/Hv1qdKTBhV5UA1pqgd5gGJyI
-	15Xo1aQFePHPlsRkrpsC12iBFY3Eohje7gdz41a3p0Rysahhh9mbaj1clwevrvd66m53Hpm29Rj
-	xF9uIWWgduOnI0rWOu
-X-Received: by 2002:a05:690c:64c8:b0:7bd:5b06:b35e with SMTP id
- 00721157ae682-7c95c9ede3fmr189920667b3.47.1779170399980; Mon, 18 May 2026
- 22:59:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gS5yRznA"
+Received: (qmail 17898 invoked by uid 106); 19 May 2026 06:15:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=664hfdowsmgidF2QUj1y8J7nLsQjymImEogOlDIWLqs=; b=gS5yRznALwR2xCKnPs9oKrYxjv0doGTYiG3f+KdZdN/yyqX47DbTxCUcrcodrrThb6aVo8fWwDMCxIzjLkA/3QhonX1ezygmF2kwdM8OgfPOVrNnguO6IEY5nYTmZvRPTPO1C1mR5Hrk8phugwyXqxN75dbylPNh8HPPg2zdFdqUKvjfz9h98NDGz1oTdSh/MqXjqztHAdc/xUew+Z2wcZyJClVBztsjP/crQbPu7LZ0cmruTcsRGHIx+r1PkYDdQ2bvF9mYTz8hCjgZN3vKX4V3QlOAZsVTkPFsipJuWpVZwwz5ObiaJwZ3A67oqMHdsHAr2r2weGJPUd72IIjcEQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 06:15:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 43769 invoked by uid 111); 19 May 2026 06:15:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 May 2026 02:15:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 19 May 2026 02:15:34 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Rasmus Villemoes <ravi@prevas.dk>,
+	Daniel Mach <daniel.mach@suse.com>
+Subject: Re: [PATCH] commit: fall back to full read when maybe_tree is NULL
+Message-ID: <20260519061534.GA1709881@coredump.intra.peff.net>
+References: <20260519050513.GA1635924@coredump.intra.peff.net>
+ <xmqqcxys7xi4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260402211717.3604688-1-pabloosabaterr@gmail.com>
- <26d887d2-6ec2-4af1-b0bd-8e9b017bb4dd@gmail.com> <CAN5EUNQCsKD0CJqDi43i2JVBQQChAZVt_THQ1wGpdeydNHHCFw@mail.gmail.com>
- <2e8b9b1b-6a69-4e94-95ea-7f587435bfce@gmail.com> <CA+J6zkTGgeNuH0eusTy+t8LO3bjygSz4svJB=K4R5ASmBdd0uQ@mail.gmail.com>
- <CAN5EUNQoKRqt3FGLmzRGpPU1nO5jCAogP8Wm9gBZXuPbMNbQAw@mail.gmail.com> <xmqq8q9gb704.fsf@gitster.g>
-In-Reply-To: <xmqq8q9gb704.fsf@gitster.g>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Tue, 19 May 2026 07:59:43 +0200
-X-Gm-Features: AVHnY4JnC77IAjcHlLJUAqSwSvio_dom8OcIaEpeBpgf7PjVhWO3YyD7SIBPQxE
-Message-ID: <CAN5EUNSFBC0+aoW1ceGjEiKWBRjzuzUEUjg8Xys5O9rDsJdkjg@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH 0/1] graph: add indentation for commits preceded
- by a root
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com, 
-	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqcxys7xi4.fsf@gitster.g>
 
-El mar, 19 may 2026 a las 2:03, Junio C Hamano (<gitster@pobox.com>) escrib=
-i=C3=B3:
->
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
-> > By having is_parentless as a flag in 'git_graph' that every stage can
-> > access we could modify the rendering and maybe completely drop the
-> > commit placeholders, working on it for v4 but currently renders like
-> > this
-> >
-> >     * A parentless
-> >       * B parentless
-> >         * C parentless
-> >   * D1 child
-> >   * D parentless
-> >
-> > (A has indentation when it could not have, but that would require a
-> > lookahead if the next commit is also parentless)
-> > But definitely a step forward.
-> >
-> > Do we want cascading or just a fixed indentation?
-> >
-> >     * A parentless
-> >     * B parentless
-> >     * C parentless
-> >   * D1 child
-> >   * D parentless
->
-> I am late to the party, but I cannot get how the latter is viable.
-> If "A" had parent "B" whose parent was "C" that is root, wouldn't we
-> see the same output?  Or are we adding " parentless" at the end of
-> the one-liner log message?
+On Tue, May 19, 2026 at 02:56:51PM +0900, Junio C Hamano wrote:
 
-We wouldn't see the same output because A and B wouldn't get padded in
-that case. Vertical adjacency between indented commits doesn't imply
-relation because indentation means that they are "parentless",
-ambiguity happens when there's no indentation, you can't know whether
-they are related or not, but knowing that every indented commit is a
-"parentless" eliminates the ambiguity.
+> Jeff King <peff@peff.net> writes:
+> 
+> > It also means we have to reimplement a bit of the commit parsing. We
+> > can't just use parse_commit_buffer() here, because it expects an
+> > unparsed struct and wants to load everything, including parent links.
+> > But we don't know if the parent list has been munged during traversal,
+> > so it's not safe for us to touch it. Fortunately, it's quite easy to
+> > load just the tree, as it is always the first line of the commit object.
+> 
+> I was hoping that existing code to parse out the tree in
+> parse_commit_buffer() will become a call into this new helper
+> function, so that we avoid duplicating the logic.
 
-* A child
-* B child
- \
-  * C parentless
-* D1 child
-* D parentless
+Yeah, I would like to have shared more code, but I think the amount that
+can actually be shared gets overwhelmed by boilerplate. In particular,
+parse_commit_buffer() wants to keep advancing the pointer afterwards,
+since it actually reads the other lines.
 
-Some different cases:
+> > Moreover, this strategy does nothing if we lose access to the graph file
+> > unexpectedly (e.g., due to a system error).
+> 
+> Or simultaneous repack may lose the file from the filesystem,
+> perhaps?
 
-A child
- \
-  B parentless
-C parentless
+I don't think so, because our mmap would hold onto the contents until
+the process ends. You'd really need some case where we actually drop the
+mmap. I could see us doing that if we found that it was corrupted or
+something, but I don't think that happens currently. We close it only
+for odb_close(), or when writing a new graph file (and so it would only
+affect the "commit-graph write" process itself).
 
-  A parentless
-  B parentless
-C parentless
+> Looks quite straight-forward.  Don't you need to pay attention to
+> r->hash_algo and call parse_oid_hex_algop() instead?
+> 
+> Or are we pretty much sure that "r" is always "the_repository" here,
+> in which case parse_oid_hex() that uses "the_hash_algo" would be
+> sufficient?
 
-C has no indentation because if there's nothing to render below,
-indentation is disabled.
+No, I didn't even think about it, since the use of the_hash_algo is
+hidden behind the function. We definitely should use the hash algo from
+"r", since we have access to it. I'm not even sure if you can have repos
+of two different hashes loaded in the same process at this point, but
+certainly it is the correct long-term direction.
 
-  A parentless
-B child
-C parentless
+Here's a re-roll with the one-line fixup:
 
-Anyways, having more than 2 "parentless" commits one after the other
-is strange. Cascading is just having a depth counter and printing the
-padding depth times, so I'll keep it as it is more intuitive.
->
-> The former, with the understanding that "two '*' commit marks
-> vertically adjacent have parent-child relationship, otherwise we
-> draw line between '*' to connect them if they have parent-child
-> relationship", does not have such a problem.
+    diff --git a/commit.c b/commit.c
+    index cfc87ad185..499a9602ad 100644
+    --- a/commit.c
+    +++ b/commit.c
+    @@ -448,7 +448,7 @@ static void load_tree_from_commit_contents(struct repository *r, struct commit *
+     
+     	if (type == OBJ_COMMIT &&
+     	    skip_prefix(buf, "tree ", &p) &&
+    -	    !parse_oid_hex(p, &tree_oid, &p) &&
+    +	    !parse_oid_hex_algop(p, &tree_oid, &p, r->hash_algo) &&
+     	    *p == '\n')
+     		set_commit_tree(commit, lookup_tree(r, &tree_oid));
+     
+
+-- >8 --
+Subject: commit: fall back to full read when maybe_tree is NULL
+
+When we load a commit object from the commit graph (rather than reading
+the object contents), we don't fill in its "maybe_tree" entry, but
+rather wait to lazy-load it. This goes back to 7b8a21dba1 (commit-graph:
+lazy-load trees for commits, 2018-04-06), and saves the work of
+instantiating tree objects that nobody cares about.
+
+But it creates a data dependency: now the commit struct depends on the
+graph file to do that lazy load. This is a problem if we close the graph
+file; now we have a commit struct that claims to be parsed but is
+missing some of its data.
+
+It's rare for this to be a problem in practice, because we don't tend to
+close the graph files at all, and if we do we don't tend to look at
+their commits afterward. But there is one case that is easy to trigger:
+git-clone's --dissociate option will close the object database before
+running the dissociate repack, and then afterwards still try to check
+out the working tree. This will yield an error like:
+
+  fatal: unable to parse commit b29edc0babef41810f7b1c9ee1d74058f22e4080
+  warning: Clone succeeded, but checkout failed.
+
+What happens is that we expect repo_get_commit_tree() to lazy-load the
+tree, but commit_graph_position() returns COMMIT_NOT_FROM_GRAPH because
+the position slab has gone away (and even if it hadn't, we don't have
+the graph file itself available anymore).
+
+Let's try harder to find the tree in repo_get_commit_tree() by actually
+opening the commit object and parsing the tree line. This is extra work,
+but no more than we'd have to go to if we hadn't done the initial graph
+load in the first place.
+
+It does mean that a corrupt commit (e.g., one that points to a non-tree
+object for which we couldn't instantiate a struct) will repeatedly load
+the object from disk, once for each call to repo_get_commit_tree(). But
+such corruptions should be rare, and we don't tend to perform such calls
+repeatedly (usually we'd abort the operation upon seeing corruption).
+
+It also means we have to reimplement a bit of the commit parsing. We
+can't just use parse_commit_buffer() here, because it expects an
+unparsed struct and wants to load everything, including parent links.
+But we don't know if the parent list has been munged during traversal,
+so it's not safe for us to touch it. Fortunately, it's quite easy to
+load just the tree, as it is always the first line of the commit object.
+
+There is an alternative approach which I considered but rejected:
+"complete" each graph-loaded commit struct when we close the graph file
+by looking up and instantiating their trees at close time. This is the
+most elegant solution in some sense, as it resolves the data dependency
+at the moment it goes away. And it avoids ever opening the commit
+objects at all, which can be more efficient.
+
+But not always. The resolving effort scales with the number of
+graph-loaded commits, even though we may only later access one or a few.
+So the tradeoff depends on how many were loaded in total versus how many
+will be later accessed.
+
+And in most cases, we will not access any at all! Programs which close
+the object database before exiting will then do a bunch of work for no
+reason. This could be mitigated by requiring a separate function to
+resolve the graph structs before closing the file. But now each close
+call has to consider whether to call that resolving function. So we'd
+fix this case in git-clone, but we don't know what other cases (if any)
+are lurking.
+
+Moreover, this strategy does nothing if we lose access to the graph file
+unexpectedly (e.g., due to a system error). I'm not entirely sure this
+is possible now (we mmap it, so I'd guess any error would turn into
+SIGBUS anyway). But it feels like making the lazy-load more robust
+(which this patch does) is the best way to handle a wide variety of
+possible failure modes.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ commit.c                   | 33 ++++++++++++++++++++++++++++++++-
+ t/t5604-clone-reference.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 1 deletion(-)
+
+diff --git a/commit.c b/commit.c
+index 4385ae4329..499a9602ad 100644
+--- a/commit.c
++++ b/commit.c
+@@ -434,6 +434,27 @@ static inline void set_commit_tree(struct commit *c, struct tree *t)
+ 	c->maybe_tree = t;
+ }
+ 
++static void load_tree_from_commit_contents(struct repository *r, struct commit *commit)
++{
++	enum object_type type;
++	unsigned long size;
++	char *buf;
++	const char *p;
++	struct object_id tree_oid;
++
++	buf = odb_read_object(r->objects, &commit->object.oid, &type, &size);
++	if (!buf)
++		return;
++
++	if (type == OBJ_COMMIT &&
++	    skip_prefix(buf, "tree ", &p) &&
++	    !parse_oid_hex_algop(p, &tree_oid, &p, r->hash_algo) &&
++	    *p == '\n')
++		set_commit_tree(commit, lookup_tree(r, &tree_oid));
++
++	free(buf);
++}
++
+ struct tree *repo_get_commit_tree(struct repository *r,
+ 				  const struct commit *commit)
+ {
+@@ -443,7 +464,17 @@ struct tree *repo_get_commit_tree(struct repository *r,
+ 	if (commit_graph_position(commit) != COMMIT_NOT_FROM_GRAPH)
+ 		return get_commit_tree_in_graph(r, commit);
+ 
+-	return NULL;
++	/*
++	 * This is either a corrupt commit, or one which we partially loaded
++	 * from a graph file but then subsequently threw away the graph data.
++	 *
++	 * Optimistically assume it's the latter and try to reload from
++	 * scratch. This gives a performance penalty if it really is a corrupt
++	 * commit, but presumably that happens rarely (and only once per
++	 * process).
++	 */
++	load_tree_from_commit_contents(r, (struct commit *)commit);
++	return commit->maybe_tree;
+ }
+ 
+ struct object_id *get_commit_tree_oid(const struct commit *commit)
+diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
+index 470bfb610c..c232ab8c15 100755
+--- a/t/t5604-clone-reference.sh
++++ b/t/t5604-clone-reference.sh
+@@ -360,4 +360,27 @@ test_expect_success SYMLINKS 'clone repo with symlinked objects directory' '
+ 	grep "is a symlink, refusing to clone with --local" err
+ '
+ 
++test_expect_success 'dissociate from repo with commit graph' '
++	git init orig &&
++	# We are trying to make sure the dissociated repo can
++	# find the tree of the tip commit, so the test could still
++	# serve its purpose with an empty tree. But having actual
++	# content future-proofs us against any kind of internal
++	# empty-tree optimizations.
++	echo content >orig/file &&
++	git -C orig add . &&
++	git -C orig commit -m foo &&
++
++	# We will use graph.git as our "local" source to dissociate
++	# from.
++	git clone --bare orig graph.git &&
++	git -C graph.git commit-graph write --reachable &&
++
++	# And then finally clone orig, using graph.git to get our objects. This
++	# must be non-bare so that we perform the checkout step, which will
++	# need to access the tree of HEAD, which we will have originally loaded
++	# via the commit graph.
++	git clone --no-local --reference graph.git --dissociate orig clone
++'
++
+ test_done
+-- 
+2.54.0.547.gb3b6f86dd6
+
