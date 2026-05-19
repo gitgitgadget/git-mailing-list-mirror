@@ -1,61 +1,147 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A84D37701A
-	for <git@vger.kernel.org>; Tue, 19 May 2026 19:19:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B70B3BD625
+	for <git@vger.kernel.org>; Tue, 19 May 2026 20:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779218384; cv=none; b=uhUjjR1op0lsgJX+FbR5u+OPwSiWv06VeIVCBTjYTbq4xlxW7sxDEFRJSl3EZjW7jbDPJOeu4qjvwd/InRllHMDQe0ghxUhpfU5mlOzchbjvEQ5s7rToV/5vhU9/xn6t+rYkCKg0EUtVmBhM4gedqUtWhRaogHM+/NT08DfdboU=
+	t=1779224271; cv=none; b=mcXnnY0BFog3eAOFGoyHmwEXWLb8ux1oz3zylDyQpE/ShF2n6wsGZphGnFYdMhBW3m7OV+S+ZFkyHh6PL06INcXmqVIxrBgXaQNaxT1XpPSgmCiovBVm1ccaasS8aJr3To6w59peebz0g1fqCoslQt9aaSQyLuzpb/s6TSBPtl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779218384; c=relaxed/simple;
-	bh=5aO+VJC6QALmc4x/47ZgIdjfG5F30dX/v4Ew3TCdWjM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LWY2bjY17Opy8tn2dhSgmc/L49/DsU5ZImIzLzkYEiKn+nWw110NbE+XGgo90hxXvFtYM2AVS+bPmnLKM7+LJigPhqv0SHsT1XWZwBU6Ftf9dLJz1FwYM0KJ8LApVsr75WLCARRmoxu0qsKdjvepzGWTxVEO2Mcre3NHgNTSv4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=avk5hFal; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1779224271; c=relaxed/simple;
+	bh=4zq9kBjVgR9FgbutnmzcLf3+yGQYi8NX929zrXrDh5c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YFWNmfpnid94j8uaLISyl4Kxx1G6ssBJAc94qHE9AmTWJxe4V7lPIjUsLcA9r0CdqpZWgxxIDmtUoCx8QLwE47TODs8Og1w6f9AgtMu4qIYrisBs3e5O9sjDrUnDLxIRjyT7e6m4hTldBrGdKL22M5KvVectx+d5twz2ABILlCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=pOiLjbV1; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="avk5hFal"
-Received: (qmail 23218 invoked by uid 106); 19 May 2026 19:19:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5aO+VJC6QALmc4x/47ZgIdjfG5F30dX/v4Ew3TCdWjM=; b=avk5hFaluXAWupUrJPwgzIjJcQ3X77sK7v+gGnNuIZVU4rDm7B7/53CfSHd1cBO5cWyUH3d5SxFSf1jGiNI7GVu+n8QKe6BEIhVx1bwoi02j73G/vk1kSuy2IQK8PBh41NGPqsvhMz44W6G2BPTkZ3IRLdHGBBTA2JbaHcL7HL1jd+QfyHO7/g8mbCsGwlBLLrDcCtUyI/r/Py5Sib7r5ddt4Od8laV6SynTFF7x3jF3rChB5nB2rXCBNNq5dFYGb2ffFHoMeRT09nqNZ+Ee4f3KT+l+KFnvMCyZlzYPC9xCp6zZ4yVGwRwTMvg1pzIAq7K9E8AIs8b5h9oZ+DD+Qg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 19:19:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 55140 invoked by uid 111); 19 May 2026 19:19:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 May 2026 15:19:43 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 19 May 2026 15:19:41 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2026, #04)
-Message-ID: <20260519191941.GB2269222@coredump.intra.peff.net>
-References: <xmqqv7clbizy.fsf@gitster.g>
- <agyPJa3E2lPI9K/G@nand.local>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="pOiLjbV1"
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 96C2CDF9CD4
+	for <git@vger.kernel.org>; Tue, 19 May 2026 22:57:39 +0200 (CEST)
+Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:3d51:7a10:3981:3744])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 5CE44B0054C;
+	Tue, 19 May 2026 22:57:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1779224251;
+	bh=4zq9kBjVgR9FgbutnmzcLf3+yGQYi8NX929zrXrDh5c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pOiLjbV1YabTYYVP2i8HeT8b6cB7D1EeKMQnlzhEKid8+4U9QHofL/+bXVS1HXbUK
+	 YxzCKl2ilslwfJQtL0vZirweDX6lNSi/66kqHG/fjKHWRKPEJSX1lAqtt47JLKK+tD
+	 kjcnzot0s1yDN49cRqS21iaRbJpdZOYNtZ89+ioJ4KPJYMp0ktv7dncfrwNHDxApSz
+	 pkKQpxceDToUirmF58bc5jq2LQLXFFzDPECs3P+bCCqhWzdgyfbLBWRht502ApLCt7
+	 bZQ1MGiA7sOlhghT/mTGz8fnNBLHNw/Ercid4Tt1nAtX/A0Xtqno+qjsBq1rsJVqZw
+	 Ue3XePSHn3z/Q==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To:
+ =?UTF-8?B?SmVhbi1Ob8OrbA==?= Avila via GitGitGadget <gitgitgadget@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/5] doc: convert git-bisect to synopsis style
+Date: Tue, 19 May 2026 22:57:29 +0200
+Message-ID: <5072065.GXAFRqVoOG@piment-oiseau>
+In-Reply-To: <xmqq4ik5d0le.fsf@gitster.g>
+References:
+ <pull.2117.git.1779049615.gitgitgadget@gmail.com>
+ <dca7f192f1e5cdfb57682feace0a4b3a10204376.1779049615.git.gitgitgadget@gmail.com>
+ <xmqq4ik5d0le.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <agyPJa3E2lPI9K/G@nand.local>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Tue, May 19, 2026 at 12:26:13PM -0400, Taylor Blau wrote:
+On Monday, 18 May 2026 02:26:37 CEST Junio C Hamano wrote:
+> "Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
+> >=20
+> > Convert Documentation/git-bisect.adoc to the modern synopsis style.
+> >=20
+> > - Replace [verse] with [synopsis] in the SYNOPSIS block
+>=20
+> This was expected.
+>=20
+> > - Remove single quotes around command names in the synopsis
+> > - Use backticks for inline commands, options, refs, and special values
+> > - Apply [synopsis] attribute to in-body command-form code blocks
+>=20
+> This is very much unexpected.  I think everybody thought [synopsis]
+> was invented to be used for the SYNOPSIS section at the beginning of
+> each manual page, and ...
 
-> > * tb/incremental-midx-part-3.3 (2026-04-29) 16 commits
-> [...]
-> Apologies, I didn't realize you were waiting on these until seeing this
-> WC report. I sent an extremely tiny reroll
-> 
->     https://lore.kernel.org/git/cover.1779206239.git.me@ttaylorr.com/
-> 
-> that addresses the two outstanding comments you linked. They are very
-> minor changes, and queueing either version of the series would be
-> equally fine IMHO.
+In fact, the synopsis style was already applied before outside the SYNOPSIS=
+=20
+sections in diff-generate-patch.adoc when describing the output of the -p=20
+option.
 
-I peeked at the v4 range diff, and it looks good to me.
 
--Peff
+This formatting reaches beyond the synopsis, but the rationale is simple. E=
+ach=20
+time a listing contains some <placeholder>, what is actually described is a=
+=20
+model, not an actual output. The <placeholder> needs a special formatting t=
+o=20
+convey its special meaning.
+
+That may mean that the naming of "synopsis style" may not be adequate.
+
+>=20
+> >  SYNOPSIS
+> >  --------
+> >=20
+> > -[verse]
+> > -'git bisect' start [--term-(bad|new)=3D<term-new> --term-(good|old)=3D=
+<term-
+old>]
+> > -		   [--no-checkout] [--first-parent] [<bad> [<good>...]]=20
+[--] [<pathspec>...]
+> > ...
+> > -'git bisect' help
+> > +[synopsis]
+> > +git bisect start [--term-(bad|new)=3D<term-new> --term-(good|old)=3D<t=
+erm-
+old>]
+> > +		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--]=20
+[<pathspec>...]
+> > ...
+> > +git bisect help
+>=20
+> ... a change like this is very much expected and understandable, but
+>=20
+> new appearances of [synonsis] in places like:
+> > +[synopsis]
+> >=20
+> >  ------------------------------------------------
+> >  $ git bisect reset <commit>
+> >  ------------------------------------------------
+>=20
+> and
+>=20
+> > +[synopsis]
+> >=20
+> >  ------------------------------------------------
+> >  git bisect old [<rev>]
+> >  ------------------------------------------------
+>=20
+> were a bit surprising and confusing.  They are not exactly command
+> syntax definitions (which is the SYNOPSIS section is about), but
+> examples of usage.=20
+
+Are they? the "[<rev>]" block is typical of synopsis syntax, not something =
+you=20
+would actually type in.
+
+> The one with '$' command line prompt feels
+> particularly confusing, as the prompt is not something that the
+> end-user gives, unlike what we write in the synopsis section.
+>=20
+
+The '$' is an error to me. Will fix.
+
+> Other than that, this is quite exciting.
+
+
+
+
