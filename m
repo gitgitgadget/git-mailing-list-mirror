@@ -1,69 +1,69 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2148D49250C
-	for <git@vger.kernel.org>; Tue, 19 May 2026 16:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC2E495508
+	for <git@vger.kernel.org>; Tue, 19 May 2026 16:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779207905; cv=none; b=CHxUnbQ0czHInYLFuVSrrbbap+KKhejr3Ob7FwIJCeMKRYGz1O35uxuUV9NLLp/T583mkA0Wn5gMBw8olItf73sMiIi0uSy8XQTP/5SevcEQy1b5n9ElorHBjt/38B85D6H+KKEZlU/bg1JC8Ym/lDburl6oG++i+VtW+efihus=
+	t=1779207907; cv=none; b=jfH64V8tjF/FcuikgSOkctCUCocjSlucWWvq2lMwNS0DBWjGvWdS0+e4fhRz5DyNhlVihvDlLnvy5LxXb+rD5vO17Gz9WTtggwQiGUUJelZsuAGxXnEI+7s39GfdwapW6ltimqYfAP29apNtmX1HWnh2kRbxDKpSzytWelivg3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779207905; c=relaxed/simple;
-	bh=yGtqmSL5cb32k5kin+ONn3DRevoT89RcXOPnR1Z7em4=;
+	s=arc-20240116; t=1779207907; c=relaxed/simple;
+	bh=R0dIITEvNCIZ+VcfRpbNC7dzRbDdVz1XgYOx0cyB/E8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SilzF+re/fcMbognj6Vbw/EdB4GtZEYfH4QtdhFdiPgPGItpDhJtUUb+ykBylBvd0vgljL1JRf9NAqpATyjZ2qsAzI29znsnQDzcqm5CT8gAC+K51hjM0fx1/baaDlS0aAgQenn9dIw8kFJcUUIEORl0UAUNjb4mS+jmPA5aXIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QV3uv9oQ; arc=none smtp.client-ip=74.125.82.43
+	 MIME-Version:To:Cc; b=jGXrBU9OU7244oiSah8JKRRm83SbPsDaikvmvi/A19DfuIeVYux84f04irYxRdlIc5JfVo6aQ42uX4RYOg05weGbAJjsjTwVIrLxexZwUlqwAJW6ABeBYLsEHq65DTgAu3fjzZ/0z0Pc19UW90b+8gomq3UjGCzmnE2iM5W+whY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E91dXRdY; arc=none smtp.client-ip=74.125.82.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QV3uv9oQ"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-12c19d23b19so5166306c88.0
-        for <git@vger.kernel.org>; Tue, 19 May 2026 09:25:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E91dXRdY"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-2c156c4a9efso4992361eec.1
+        for <git@vger.kernel.org>; Tue, 19 May 2026 09:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779207903; x=1779812703; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779207905; x=1779812705; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NZR1SYPchHaQeg/SLUPcNdH0hE7j2wONhTNb712vYKc=;
-        b=QV3uv9oQAv7lvQUIOrPvUL7TI94+AnOTGCW49MZMIuezeubNiQwncg7swtCRitp7oj
-         nYo+g9CitRH6iTulMKQuBoY8o2ybcfTYi1JRjJ9ZiVpp10h0eh9R1It9R9w7VuAyESBc
-         D0/MC+9FERsyDcZ0V988QwdOGVct+IsdtmvNnRrl2unmc1oEPAo5LrDZ5ohOOdQVpwgd
-         Feu7By2zQX6aO3XTQvILcIIBaHIEx86KpjEB6OO3jhHAXGCw0P8TdA82Wac7SfjNJByI
-         xqvve61jWGkKRtD2BQrhJpdJFAjxf3Sb+SiORv/hvpidGssChgKpwdNX5mksZG9bVeC9
-         NiCA==
+        bh=cBcpYoUKCCelQTZZOV4T7sEX0Z+WoWiIZ//NeHzQmDc=;
+        b=E91dXRdYEh1FFaSqLHFtySy/6jMx+S5djkp9RCGsT7bN8iyto0d45PglghxNEDbse6
+         /rsR7EVxqqZt4o7qZt1UGWAtZJImqOZIPsuOZXLJrKEKQW7tTYYzGJPUflI/JHHy3O7n
+         Wtm9f7K1SFtRtw/jQ9NjfG6miy7bdp5BQsRcxqBSh7z1ABQDnq3Wtr3YWRXIVx44bic7
+         iMq3IwbBOQbzzdCeLiHkvDhOLBvYoW6/urzo+R0d8xl31zmroJsarrq3PP0rSB+3YbTo
+         jffjHwfBigrAqjrEUn3IkT0jjKa1o1XDG6sE7ZTQ13WAz34FeF4oz2aZ2BaON0ziPz6z
+         a4uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779207903; x=1779812703;
+        d=1e100.net; s=20251104; t=1779207905; x=1779812705;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NZR1SYPchHaQeg/SLUPcNdH0hE7j2wONhTNb712vYKc=;
-        b=il9Shs9J1xAH/y0U/iMC7d+YDehH11t7P8rBtNMHa3kZFe/Axvz1NJSMyEur5ha44B
-         lVdzNI+gtbZqU3UXG8Sab7pWdVh65I5R0AA52WQ6LI2aXxCInGJkyzWooi4+bA9l6Pfm
-         ppA9wOwMODdfDHsll5XOzFcwgCe8sAmUrerryQOnYtffSCg7CdPHb1aXc6AZoHT67wvV
-         qXCGfJUux389gYvCLXdf7iRhKrdVj1RbRT6qAfnRPPj7HVLyX/KM6B0j+l3JICz1DTSn
-         AA7lSoiGyCo6G+NL8p3xGgWaYMa1X/3kmeddTI3HY33X1WqXWiOYv780pZV04HBp+/B6
-         4t/Q==
-X-Gm-Message-State: AOJu0YzAkn4HOltfIW1UKANrvzjW3a1nqPWTJ+JEjwg6JJCvNyu80HZj
-	+lfAOM7Y+CuGXOAOQ4J+V20uoPuk0BPktSuExFHmPXkpou8sqz0DIOLjvfj2ww==
-X-Gm-Gg: Acq92OG8q7xDfd10Ou5+LVkFo+hh5U+tvJyI5d01tEdm/AVHDxLLqsKeiTTyuHJpYfU
-	TBRolYR2scMosJMELtW44NH/WRp0WVlRTfCR3SP3cCXmcZZJnwpSs2vojC1yAMadY0yjo11grkE
-	xvO1zVYIi8XiJy9DdUtqjAWq7SKtWnuHkmOoZLOepS/F+rIBBGTLZXCyAXIODJnQjYd0dKriJH1
-	e45o5i1pxat9PRVjLf32iM98v20UIomynwbNugHSmapRT7wISdRUyFwjQ1e51ttA1GtbOM9+TYx
-	3QB9fea/VDFv0iCOXQfa/Z2u+iTSO9Yk46685n8018zfvG54am8ROMZTh9cIXwifn8WIyJkG9Qm
-	q3SesGyKdvkVy2timbadf/5WHi7CiTjyiRJsAAndEsNNKYzOwCS+6JY9QzVyLTZE/h1mzticKpn
-	wJBR/hKuT3m9mIuBu/RMZl5+WKLyKJ
-X-Received: by 2002:a05:7300:7490:b0:2f5:5907:3a48 with SMTP id 5a478bee46e88-30398285d3bmr9326349eec.1.1779207903111;
-        Tue, 19 May 2026 09:25:03 -0700 (PDT)
+        bh=cBcpYoUKCCelQTZZOV4T7sEX0Z+WoWiIZ//NeHzQmDc=;
+        b=Ni+cyrzFo5xIMd4rWBsYATj51rdhMCuBKm/x79b6GYteaoG6Fz8wXS4AdtHgUO4qFQ
+         duH+3GW/AB4ShYZGxWoKqM6KltPdG8tuuDmfQ1QSm3qZA35lmwXpsoFkv3bqSI/2ULZm
+         1C2OG5yUdzpvCyL9176X0WyX3nfKmAA0n7hgmBbPruGtqlE89Kj2yPcj+HSrw3qHYdJU
+         DKOC86BP9uElTkWz77xVGOtr1lw1TP0c+xEcRp8hhhsbUKdTlBRiSvS6G/pE0DeqbzhY
+         v1LgyuPfobv88I8NYpn9v2Ft3yCAKityequsj5Ds0gbmbyasI6rn3nEpSwl/0S7BJShy
+         BHhw==
+X-Gm-Message-State: AOJu0Ywx9s6ZxS8LR/KTQxk0RaZpiyjMQavM5ZXyx8EfQw7UGQXoY0BB
+	rW50+JZkWTuM6LmfpqcIw8VNKVejKQ3EYb/EksNlLHap8yYm/wMx8/TlkdBoRw==
+X-Gm-Gg: Acq92OEbj7rvkr8BSdbzFUMwsAy6wc63CuxGPVUH92VeVY5w3rnmYedGvcT55dc3r0T
+	BcbfjfiZH20CwJGe5KTZrNZrDy/ujYjxb7K1/afs86m9h0HGePdC1z3LeneqmUgsmmTrFLYT4S0
+	fi6E3P1uSEuDL9YOeD73k3PmMFkmIBnQ38E0YZR2BcN6lWtPsUZZrx0D7gBLFE7oD89odpvIO7D
+	K8k6KrcYQXFs8nH+VVQvnfH9MeNDoC5yl3+EpE1csWrlW9+n+FkQABdQgNaOwFvpX+GkPN4uAkC
+	7g5YHwM+GFgOGfl2q2tihKjM5RKCp36kUxl3JjKgGvsqGGEsJbUXV1LhWJU2DRJFFUNZCyiXCU/
+	T+ewc5MctmbetTZMzPtfJdok1VLrG+U4ASJ5/pi7sAK7Z4Yg+8uviOTlaK4ONyCVDllt3H+xgHx
+	o7CYZdi8yizFSZrjtF+rHyRTq+f8YK
+X-Received: by 2002:a05:7301:4188:b0:2e0:909a:b9c with SMTP id 5a478bee46e88-30398183f2emr9083349eec.15.1779207904477;
+        Tue, 19 May 2026 09:25:04 -0700 (PDT)
 Received: from [127.0.0.1] ([172.182.195.179])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-302978ad18asm16338535eec.26.2026.05.19.09.25.02
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30297bbc9a3sm16453657eec.31.2026.05.19.09.25.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 09:25:02 -0700 (PDT)
-Message-Id: <eec0f90e02b8f1f8b972c1dda506122ef8530088.1779207896.git.gitgitgadget@gmail.com>
+        Tue, 19 May 2026 09:25:03 -0700 (PDT)
+Message-Id: <840db1d957cc7f59cf42476cb05cc389a3f34509.1779207896.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2085.v6.git.1779207896.gitgitgadget@gmail.com>
 References: <pull.2085.v5.git.1779135575.gitgitgadget@gmail.com>
 	<pull.2085.v6.git.1779207896.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 19 May 2026 16:24:51 +0000
-Subject: [PATCH v6 4/8] remote: add remote.*.negotiationRestrict config
+Date: Tue, 19 May 2026 16:24:52 +0000
+Subject: [PATCH v6 5/8] negotiator: add have_sent() interface
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,196 +82,129 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-In a previous change, the --negotiation-restrict command-line option of 'git
-fetch' was added as a synonym of --negotiation-tip. Both of these options
-restrict the set of 'haves' the client can send as part of negotiation.
+In a future change, we will introduce a capability to choose specific commit
+OIDs as 'have's in fetch negotiation, with the ability to have the
+negotiator choose more 'have's to increase coverage beyond that required
+core set. The negotiator works to avoid emitting 'have's that can reach each
+other, but that logic is hidden beneath the negotiator's iterator function
+pointer ('next'). We need a way to communicate to the negotiator that we
+have picked a 'have' so it could incorporate that into its logic.
 
-This was previously not available via a configuration option. Add a new
-'remote.<name>.negotiationRestrict' multi-valued config option that updates
-'git fetch <name>' to use these restrictions by default.
+Add a have_sent() method to the fetch_negotiator interface. This is the
+signal that allows the negotiator to track the commit as already shown and
+can perform the proper bookkeeping to avoid emitting those objects or
+anything they can reach.
 
-If the user provides even one --negotiation-restrict argument, then the
-config is ignored.
-
-An empty value resets the value list to allow ignoring earlier config
-values, such as those that might be set in system or global config.
+For our non-trivial negotiators, it is sufficient to mark these commits as
+common, so the implementation is quite simple. This logic will be exercised
+in the next change.
 
 Reviewed-by: Matthew John Cheetham <mjcheetham@outlook.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/config/remote.adoc | 18 ++++++++++++++++++
- builtin/fetch.c                  | 28 +++++++++++++++++++++-------
- remote.c                         |  5 +++++
- remote.h                         |  1 +
- t/t5510-fetch.sh                 | 26 ++++++++++++++++++++++++++
- 5 files changed, 71 insertions(+), 7 deletions(-)
+ fetch-negotiator.h    | 9 +++++++++
+ negotiator/default.c  | 8 ++++++++
+ negotiator/noop.c     | 7 +++++++
+ negotiator/skipping.c | 8 ++++++++
+ 4 files changed, 32 insertions(+)
 
-diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
-index 91e46f66f5..4dcf81fbce 100644
---- a/Documentation/config/remote.adoc
-+++ b/Documentation/config/remote.adoc
-@@ -107,6 +107,24 @@ priority configuration file (e.g. `.git/config` in a repository) to clear
- the values inherited from a lower priority configuration files (e.g.
- `$HOME/.gitconfig`).
+diff --git a/fetch-negotiator.h b/fetch-negotiator.h
+index e348905a1f..6ca422a064 100644
+--- a/fetch-negotiator.h
++++ b/fetch-negotiator.h
+@@ -47,6 +47,15 @@ struct fetch_negotiator {
+ 	 */
+ 	int (*ack)(struct fetch_negotiator *, struct commit *);
  
-+remote.<name>.negotiationRestrict::
-+	When negotiating with this remote during `git fetch`, restrict the
-+	commits advertised as "have" lines to only those reachable from refs
-+	matching the given patterns.  This multi-valued config option behaves
-+	like `--negotiation-restrict` on the command line.
-++
-+Each value is either an exact ref name (e.g. `refs/heads/release`) or a
-+glob pattern (e.g. `refs/heads/release/*`).  The pattern syntax is the
-+same as for `--negotiation-restrict`.
-++
-+These config values are used as defaults for the `--negotiation-restrict`
-+command-line option.  If `--negotiation-restrict` (or its synonym
-+`--negotiation-tip`) is specified on the command line, then the config
-+values are not used.
-++
-+Blank values signal to ignore all previous values, allowing a reset of
-+the list from broader config scenarios.
++	/*
++	 * Inform the negotiator that this commit has already been sent as
++	 * a "have" line outside of the negotiator's control. The negotiator
++	 * should avoid outputting it from next() and may use it to optimize
++	 * further negotiation (e.g., by treating it and its ancestors as
++	 * common).
++	 */
++	void (*have_sent)(struct fetch_negotiator *, struct commit *);
 +
- remote.<name>.followRemoteHEAD::
- 	How linkgit:git-fetch[1] should handle updates to `remotes/<name>/HEAD`
- 	when fetching using the configured refspecs of a remote.
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 2ba0051d52..a957739f37 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1601,6 +1601,19 @@ static struct transport *prepare_transport(struct remote *remote, int deepen,
- 		else
- 			warning(_("ignoring %s because the protocol does not support it"),
- 				"--negotiation-restrict");
-+	} else if (remote->negotiation_restrict.nr) {
-+		struct string_list_item *item;
-+		for_each_string_list_item(item, &remote->negotiation_restrict)
-+			string_list_append(&negotiation_restrict, item->string);
-+		if (transport->smart_options)
-+			add_negotiation_restrict_tips(transport->smart_options);
-+		else {
-+			struct strbuf config_name = STRBUF_INIT;
-+			strbuf_addf(&config_name, "remote.%s.negotiationRestrict", remote->name);
-+			warning(_("ignoring %s because the protocol does not support it"),
-+				config_name.buf);
-+			strbuf_release(&config_name);
-+		}
- 	}
- 	return transport;
- }
-@@ -2658,10 +2671,6 @@ int cmd_fetch(int argc,
- 		config.display_format = DISPLAY_FORMAT_PORCELAIN;
- 	}
+ 	void (*release)(struct fetch_negotiator *);
  
--	if (negotiate_only && !negotiation_restrict.nr)
--		die(_("%s needs one or more %s"), "--negotiate-only",
--		    "--negotiation-restrict=*");
--
- 	if (deepen_relative) {
- 		if (deepen_relative < 0)
- 			die(_("negative depth in --deepen is not supported"));
-@@ -2749,14 +2758,19 @@ int cmd_fetch(int argc,
- 		if (!remote)
- 			die(_("must supply remote when using --negotiate-only"));
- 		gtransport = prepare_transport(remote, 1, &filter_options);
--		if (gtransport->smart_options) {
--			gtransport->smart_options->acked_commits = &acked_commits;
--		} else {
-+
-+		if (!gtransport->smart_options) {
- 			warning(_("protocol does not support --negotiate-only, exiting"));
- 			result = 1;
- 			trace2_region_leave("fetch", "negotiate-only", the_repository);
- 			goto cleanup;
- 		}
-+		if (!gtransport->smart_options->negotiation_restrict_tips)
-+			die(_("%s needs one or more %s"), "--negotiate-only",
-+			    "--negotiation-restrict=*");
-+
-+		gtransport->smart_options->acked_commits = &acked_commits;
-+
- 		if (server_options.nr)
- 			gtransport->server_options = &server_options;
- 		result = transport_fetch_refs(gtransport, NULL);
-diff --git a/remote.c b/remote.c
-index 7ca2a6501b..620086e16e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -152,6 +152,7 @@ static struct remote *make_remote(struct remote_state *remote_state,
- 	refspec_init_push(&ret->push);
- 	refspec_init_fetch(&ret->fetch);
- 	string_list_init_dup(&ret->server_options);
-+	string_list_init_dup(&ret->negotiation_restrict);
- 
- 	ALLOC_GROW(remote_state->remotes, remote_state->remotes_nr + 1,
- 		   remote_state->remotes_alloc);
-@@ -179,6 +180,7 @@ static void remote_clear(struct remote *remote)
- 	FREE_AND_NULL(remote->http_proxy);
- 	FREE_AND_NULL(remote->http_proxy_authmethod);
- 	string_list_clear(&remote->server_options, 0);
-+	string_list_clear(&remote->negotiation_restrict, 0);
+ 	/* internal use */
+diff --git a/negotiator/default.c b/negotiator/default.c
+index 116dedcf83..05ab616f39 100644
+--- a/negotiator/default.c
++++ b/negotiator/default.c
+@@ -175,6 +175,13 @@ static int ack(struct fetch_negotiator *n, struct commit *c)
+ 	return known_to_be_common;
  }
  
- static void add_merge(struct branch *branch, const char *name)
-@@ -562,6 +564,9 @@ static int handle_config(const char *key, const char *value,
- 	} else if (!strcmp(subkey, "serveroption")) {
- 		return parse_transport_option(key, value,
- 					      &remote->server_options);
-+	} else if (!strcmp(subkey, "negotiationrestrict")) {
-+		return parse_transport_option(key, value,
-+					      &remote->negotiation_restrict);
- 	} else if (!strcmp(subkey, "followremotehead")) {
- 		const char *no_warn_branch;
- 		if (!strcmp(value, "never"))
-diff --git a/remote.h b/remote.h
-index fc052945ee..e6ec37c393 100644
---- a/remote.h
-+++ b/remote.h
-@@ -117,6 +117,7 @@ struct remote {
- 	char *http_proxy_authmethod;
- 
- 	struct string_list server_options;
-+	struct string_list negotiation_restrict;
- 
- 	enum follow_remote_head_settings follow_remote_head;
- 	const char *no_warn_branch;
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index dc3ce56d84..eff3ce8e2d 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1485,6 +1485,32 @@ test_expect_success '--negotiation-restrict and --negotiation-tip can be mixed'
- 	check_negotiation_tip
- '
- 
-+test_expect_success 'remote.<name>.negotiationRestrict used as default' '
-+	setup_negotiation_tip server server 0 &&
++static void have_sent(struct fetch_negotiator *n, struct commit *c)
++{
++	if (repo_parse_commit(the_repository, c))
++		return;
++	mark_common(n->data, c, 0, 0);
++}
 +
-+	# test the reset of the list on an empty value
-+	git -C client config --add remote.origin.negotiationRestrict alpha_2 &&
-+	git -C client config --add remote.origin.negotiationRestrict "" &&
-+	git -C client config --add remote.origin.negotiationRestrict alpha_1 &&
-+	git -C client config --add remote.origin.negotiationRestrict beta_1 &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
-+		origin alpha_s beta_s &&
-+	check_negotiation_tip
-+'
+ static void release(struct fetch_negotiator *n)
+ {
+ 	clear_prio_queue(&((struct negotiation_state *)n->data)->rev_list);
+@@ -188,6 +195,7 @@ void default_negotiator_init(struct fetch_negotiator *negotiator)
+ 	negotiator->add_tip = add_tip;
+ 	negotiator->next = next;
+ 	negotiator->ack = ack;
++	negotiator->have_sent = have_sent;
+ 	negotiator->release = release;
+ 	negotiator->data = CALLOC_ARRAY(ns, 1);
+ 	ns->rev_list.compare = compare_commits_by_commit_date;
+diff --git a/negotiator/noop.c b/negotiator/noop.c
+index 65e3c20008..edf1b456f3 100644
+--- a/negotiator/noop.c
++++ b/negotiator/noop.c
+@@ -29,6 +29,12 @@ static int ack(struct fetch_negotiator *n UNUSED, struct commit *c UNUSED)
+ 	return 0;
+ }
+ 
++static void have_sent(struct fetch_negotiator *n UNUSED,
++		      struct commit *c UNUSED)
++{
++	/* nothing to do */
++}
 +
-+test_expect_success 'CLI --negotiation-restrict overrides remote config' '
-+	setup_negotiation_tip server server 0 &&
-+	git -C client config --add remote.origin.negotiationRestrict alpha_1 &&
-+	git -C client config --add remote.origin.negotiationRestrict beta_1 &&
-+	ALPHA_1=$(git -C client rev-parse alpha_1) &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch \
-+		--negotiation-restrict=alpha_1 \
-+		origin alpha_s beta_s &&
-+	test_grep "fetch> have $ALPHA_1" trace &&
-+	BETA_1=$(git -C client rev-parse beta_1) &&
-+	test_grep ! "fetch> have $BETA_1" trace
-+'
+ static void release(struct fetch_negotiator *n UNUSED)
+ {
+ 	/* nothing to release */
+@@ -40,6 +46,7 @@ void noop_negotiator_init(struct fetch_negotiator *negotiator)
+ 	negotiator->add_tip = add_tip;
+ 	negotiator->next = next;
+ 	negotiator->ack = ack;
++	negotiator->have_sent = have_sent;
+ 	negotiator->release = release;
+ 	negotiator->data = NULL;
+ }
+diff --git a/negotiator/skipping.c b/negotiator/skipping.c
+index 0a272130fb..69472c58e1 100644
+--- a/negotiator/skipping.c
++++ b/negotiator/skipping.c
+@@ -243,6 +243,13 @@ static int ack(struct fetch_negotiator *n, struct commit *c)
+ 	return known_to_be_common;
+ }
+ 
++static void have_sent(struct fetch_negotiator *n, struct commit *c)
++{
++	if (repo_parse_commit(the_repository, c))
++		return;
++	mark_common(n->data, c);
++}
 +
- test_expect_success SYMLINKS 'clone does not get confused by a D/F conflict' '
- 	git init df-conflict &&
- 	(
+ static void release(struct fetch_negotiator *n)
+ {
+ 	struct data *data = n->data;
+@@ -259,6 +266,7 @@ void skipping_negotiator_init(struct fetch_negotiator *negotiator)
+ 	negotiator->add_tip = add_tip;
+ 	negotiator->next = next;
+ 	negotiator->ack = ack;
++	negotiator->have_sent = have_sent;
+ 	negotiator->release = release;
+ 	negotiator->data = CALLOC_ARRAY(data, 1);
+ 	data->rev_list.compare = compare;
 -- 
 gitgitgadget
 
