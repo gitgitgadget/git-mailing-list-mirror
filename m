@@ -1,129 +1,97 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0354C3D904F
-	for <git@vger.kernel.org>; Tue, 19 May 2026 21:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF25E1F8691
+	for <git@vger.kernel.org>; Tue, 19 May 2026 22:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779227790; cv=none; b=L5zbPjpNP+jcmVhdXG8oFObkQdhZ3T98uHSAGuKzvp3u5rFdsVzSKmr4VlfUlG50urdhRPWzLbMjd2SIuAOs7oWSbj4XELBQFIgsYx5DXfy50m4PJWSif3gSMd7YOqIlSt/gm1aRKd8BIHGyikOC2JJWDwjuZO1R+dcpgggz0K4=
+	t=1779228674; cv=none; b=WFuKdeVrjQxjHItPXIwX06RPe3o+cq+Rc91f5Lw5CSo6xKiZBJZo5l0dYAkyWgEbwhyb6AhwcLGIfJGDMK0ZlduHrbXEiV1H9Rxp4V3vfym0ZBRwU5RjAwx9hE/DXTCVJXzxBpgm71cP8CVYIgxtcAAMJGYfufMn8cqqdumfCwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779227790; c=relaxed/simple;
-	bh=VvZBvHWPWrdVVkxGDNh/ZORr+SdFZF11snnRXwdQ6pc=;
+	s=arc-20240116; t=1779228674; c=relaxed/simple;
+	bh=yFU/5Zc0RBmEJXe/+P63/EQwHTB06kczUxR7Wmznk/A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FUoVhegNszNgIry82LgJJyKL6YCuimUoAjhKXc1SjhoW9kZhH3oRNgh43GQoyO5BKTmDtvvMLIfXRBPNLmfLyMXPDwF7Fyw6rc9bQyXCNpLvUI5YUCiyx9FOt8zoQhKkzDMTMq3Gsk3VIwL3Rd18KxlpYmfHVeOs/N6UR7Fyygk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WJ1S1Onq; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z7fG0F1g9e2UthwJWqLfABMTfIoh3vtq98Xwx7SevjZ9sfC+UjKmclv2UR/21RV+mZYjd0tC2YybtosNKYDORgnZcr4j05H9wjLoFgK1TfkFtWpp17xpYLx5auZRbxi251gKneopsEEeaQKwbVUFHx4hQdFAfeOeM4GfrjMsSKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oejc/LVh; arc=none smtp.client-ip=209.85.167.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WJ1S1Onq"
-Received: (qmail 24163 invoked by uid 106); 19 May 2026 21:56:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=VvZBvHWPWrdVVkxGDNh/ZORr+SdFZF11snnRXwdQ6pc=; b=WJ1S1OnqamxEulY0vduOroJfp8OMPQkKbG+1Oatb+UMaluE5MXm9wR09t8wl+69kTy7PiLZZ3kaX5fLHDj3ui48F7BUmC/AuC9OEW0eBjNQI5BFwAz/Kh9B06lw3Qip8c3poQW4mH/N4hgkxaZamBOppKOCTbhcwydlrArO1871bD1GAt7o8A7t3TLQtOZ6eO6EWHVe8Qt8mJHXPqsUqcWKeSL61uzWuJXr0vDs7rXzKELW2IVFBh90v36rZ9dD1+jXs5HF9q46aBmVnRUPQgSBObk35qux8Tcfy79T69cCW0uWoBRVqJzE5YRkoTyMgL+3TnUfValskddl85aAGLA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 21:56:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 57480 invoked by uid 111); 19 May 2026 21:56:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 May 2026 17:56:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 19 May 2026 17:56:27 -0400
-From: Jeff King <peff@peff.net>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] revision: use priority queue in limit_list()
-Message-ID: <20260519215627.GB2278669@coredump.intra.peff.net>
-References: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
- <20260515041641.GA81292@coredump.intra.peff.net>
- <CAL71e4Mfq3SCO7vnTbFCxpzH9txWPTencV-vq-aQ=wJ7dPMV2g@mail.gmail.com>
- <aad34ac2-4cd5-4c85-b8ff-14c0caaa1c7b@gmail.com>
- <CAL71e4MxhcZqxPVEe38Shuqt7h5dxLDGi66hN2cFXnmg-POKWA@mail.gmail.com>
- <20260519005429.GD1612961@coredump.intra.peff.net>
- <CAL71e4O6UcnqmxDgqyGqvgvfruSzeoz6Wj5muXiwEp_8y2wAcg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oejc/LVh"
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-479d37e7d7fso1228741b6e.1
+        for <git@vger.kernel.org>; Tue, 19 May 2026 15:11:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779228671; x=1779833471; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Li0KRGknkc9VKKtgAJnLvjoE5mlmSIHzGd7BSYYgBao=;
+        b=oejc/LVh6xt3mg6q+fEjHtzmWU2LmgViPL5aILZpFDVtmi+esFW2rQCMEpnwcXMjiS
+         mB75SGFQNx3vkG20CAHUtHpeqFvitDwdDrTqQdtqau1SM9LsLGlE522CCOAX+1BUuTZj
+         cN7y2yWCnvzGS7juosWumliezJKbLWSurARN3BGRER5RkbsqJyWp0uTB3QfvoVt1Yd+4
+         9DfApXJY/whKjM6h6P4WQFHQtlHgYpT+OkTzI+esTRKbGCVUabcUUGeSpmCkL6wWBGjN
+         41+mAClvaPvhRPTmct4v16kB8F7pzW5J7eW10JyZ9ZQEwtrY8mY8k50ISpVrso5pMef7
+         zw7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779228671; x=1779833471;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Li0KRGknkc9VKKtgAJnLvjoE5mlmSIHzGd7BSYYgBao=;
+        b=F2HHMXzozNDK9H9bQ+qJ0QQgK35J2nyVLf5VDJt3XnUSBUTg3ykdW9ni4mwwPIGFI+
+         Rq7K9iz4FWM+U7U+yVFpAbqI0TTL/45s9pNeMQzTf+Sh/+AETSMONo4fIaqKeZrnFG9o
+         1eyROoMdyITxNKCsKiUUITg4f87G71FVWvdyEbd6jh6voG5fEH84e+cYhR+n0c/j392Y
+         W6p3BX4JO0Ww5ypJQ410hMIo2H3KlJ3o/UcFvh1rXxHGaShhXQUBwOwTf5V0vWW++8OB
+         Ou+yJopYAhs7qeuTmikElaCaaWmbTnyksybxl9TEfAwpcl6QzyvEX9MPmZs5W++172pf
+         26gQ==
+X-Gm-Message-State: AOJu0YwOqmLkmOsbFtDGBB30OIYfES8tWyve5QuCkjsd+1SsgamvBKEQ
+	gS4BmW+u0qfkam405VI20yowEZ0V69N0mN9UTHbRpcTUgiCfZBgXH/nX
+X-Gm-Gg: Acq92OF8EduiXUJtooL2CJfOrmhYP2eXLBZUnla/yAjZZiZtieur7DrQtUkoeRkUYPI
+	sSGJmOCx3xwe4bnr46lOvbN3BZ+Dw4UGbTpTF/MHQJimeuFYA/UxruTFZSuHXeCOMUrEZ5f2vkg
+	3loW5+FfQRldodCypQzyGBWMKA2h15d3PWKULWvvp0mTPMP5FFtjJYSeohu0Qr6Tx9KYR1FFwcP
+	yRHByxGTM5GTz/W5TtaCv1zHbIpqLyVPyMe4UkWnUM5AEYkr2C/BzrVY1opAGmbUFscW8zRI3Hp
+	wV636CpJiLReGltCyDj4VXwT4F5cCSVDdRA6hnXJZXWLRrzyv1KCJHMWnEzl6a2WZiJrb1qQmvU
+	f/GR/icyiqV0gQ4JsMVFLTJE6QfejyLU9u3Uk227OfXiKeALIqVGSJZ4PxfJgWiawZLd86gtmpE
+	/lbkrIgUb4/H8zKReH
+X-Received: by 2002:a05:6808:168c:b0:47b:bd7b:10d0 with SMTP id 5614622812f47-482e56090fcmr13413233b6e.13.1779228671563;
+        Tue, 19 May 2026 15:11:11 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-482ee4fa4a9sm6977201b6e.11.2026.05.19.15.11.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2026 15:11:10 -0700 (PDT)
+Date: Tue, 19 May 2026 17:11:07 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2026, #04)
+Message-ID: <agzGKQCfc7JYOyQx@denethor>
+References: <xmqqv7clbizy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAL71e4O6UcnqmxDgqyGqvgvfruSzeoz6Wj5muXiwEp_8y2wAcg@mail.gmail.com>
+In-Reply-To: <xmqqv7clbizy.fsf@gitster.g>
 
-On Tue, May 19, 2026 at 11:33:19AM +0200, Kristofer Karlsson wrote:
-
-> I took a look at your branch. Our approaches differ mainly in
-> how broadly the prio_queue replaces the linked list. Here's a summary
-> of the tradeoffs as I see them:
+On 26/05/18 10:32AM, Junio C Hamano wrote:
+> * jt/odb-transaction-write (2026-05-14) 7 commits
+>  - odb/transaction: make `write_object_stream()` pluggable
+>  - object-file: generalize packfile writes to use odb_write_stream
+>  - object-file: avoid fd seekback by checking object size upfront
+>  - object-file: remove flags from transaction packfile writes
+>  - odb: update `struct odb_write_stream` read() callback
+>  - odb/transaction: use pluggable `begin_transaction()`
+>  - odb: split `struct odb_transaction` into separate header
+>  (this branch is used by ps/odb-in-memory.)
 > 
-> Your approach: replace commits entirely with struct prio_queue.
-> Every access site is converted, and boundary cases (bisect,
-> topo-sort, simplify_merges) convert queue->list->queue when they need
-> list-based APIs.
+>  ODB transaction interface is being reworked to explicitly handle
+>  object writes.
 > 
-> My approach: keep the linked list for setup and add a separate
-> commit_queue for the walk phase. External callers that read the
-> list between prepare_revision_walk() and the walk are unchanged.
-> The conversion happens once when the walk begins.
+>  Will merge to 'next'?
+>  source: <20260514183740.1505171-1-jltobler@gmail.com>
 
-Yeah, I think that is an accurate summary. What I worry about with your
-approach is any code that looks at or modifies the commit list during
-the traversal. It has to know whether to use the queue or the list.
+I think this series should be ready to go now. The last version
+submitted fixed the leak reported by Peff.
 
-> On the walk side, my second and third commits refactor
-> get_revision_1() to use a vtable ("walk_ops") that selects the right
-> pop/expand strategy once and caches it:
-> 
->     struct revision_walk_ops {
->         void (*init)(struct rev_info *);
->         struct commit *(*next)(struct rev_info *);
->         int (*expand)(struct rev_info *, struct commit *);
->     };
-> 
->     static struct revision_walk_ops streaming_ops =
->         { rev_info_commit_list_to_queue, next_streaming, expand_streaming };
->     static struct revision_walk_ops limited_ops =
->         { NULL, next_commit_list, NULL };
->     /* ...reflog_ops, topo_ops, no_walk_ops... */
-
-I looked at the patch you linked for this. I'm undecided on whether this
-makes things simpler (because the if/else-cascade is in one spot) or
-more confusing (because now the details are all hidden behind a layer of
-abstraction). 
-
-> I benchmarked both approaches against a 2.4M-commit squash-merge-
-> heavy monorepo (best of 3 runs each, commit-graph present):
-> 
->   Benchmark                             mainline    kk      jk
->   rev-list HEAD (streaming, full DAG)    21.8s     6.9s    6.9s
->   --ancestry-path ~100K (limited)        21.8s     4.8s    5.0s
->   rev-list --count HEAD~10000..HEAD      17.7s     3.7s    3.8s
->   log --oneline -1000                     0.1s     0.1s    0.1s
-> 
-> Both give ~3-5x speedups over mainline. The streaming walk is
-> identical. On limited walks kk is ~4% faster, which I think comes
-> from avoiding the queue rebuild at the end of limit_list() -- jk's
-> commit_list_to_queue() drains the result list back into the queue,
-> while kk leaves the result as a linked list (which the limited walk
-> then just pops from directly).
-
-It would be easy-ish to further convert limit_list() to store newlist as
-a queue, and then transfer ownership of its fields into revs->commits
-(i.e., a struct assignment).
-
-One possible complication is that we do pass "newlist" into a few
-sub-functions, like cherry_pick_list(). Looking at that function, it
-iterates over the list, but it's not clear to me if the order matters.
-Certainly not in the first loop, but later we do some flag assignments.
-I _think_ they're all independent, but I'm not sure.
-
-Obviously we can iterate over the prio_queue in date order with a series
-of get() calls, but that is roughly equivalent to building a list (and
-we have to rebuild the queue after, too). Of course that is already
-happening in limit_to_ancestry(), which builds the reverse-order list.
-
-So I dunno. Moving to the dual-structure state feels messy and
-error-prone to me, but it does perhaps let us move a little more
-incrementally.
-
--Peff
+Thanks,
+-Justin
