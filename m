@@ -1,85 +1,85 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F6B4CA293
-	for <git@vger.kernel.org>; Tue, 19 May 2026 16:31:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07AE2C11DE
+	for <git@vger.kernel.org>; Tue, 19 May 2026 16:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779208297; cv=fail; b=UniSNRbjGNNH+8LZ+zQ/7Sw2MstB/qfQ8YB0gs3jnb64JMfZjwBgGbM83CgPYjRFfxi0ZA50auYSilDrWv7A3V/cSNVZev79zEkx/J5Dg5Ov35qL4vdqeOBTrxxWkV5tAR1g35QzfANUGiAZppyYWBOMBWNdI/ZRKMhpg90KhsY=
+	t=1779208303; cv=fail; b=uddX3M0W76llryz4qyP/2NuKzBZcnBECgSOSOml0iLVCtYVujh7Taz5S7Bvge56CMy/byRdbMByEV/55WUJsMRD5kez3RgDUFcPOyevaZgGksf5PFJe4tRQplyNql6rll/wsNEJnsG14rjy8my1e2l3TTgrIvfD+tl52lWCAotY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779208297; c=relaxed/simple;
-	bh=52Zv6AKw7uxNOsDeOaMLsxQIrh8lrxad/LfAWp31+5g=;
+	s=arc-20240116; t=1779208303; c=relaxed/simple;
+	bh=AvUDVDJ+SZg+0voh348Ke4e03CbAYpTCWQurJBgvZok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=cRaRE/SpZonUy7cfigyDWh4FXCja48Uvz6wWV/LwuC8agn29iWoY1Z/BmiDsojfPaGwURY/Nmh+MpOSeVFPx2WMOCdOmxQjM9foHKDOrCMh5UE+AVMW4egm1LgsckrN1xMpRfB0O/u86BXV3sh9E6HCK4iIKwZPMa6p3y6i6kzA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=ZHmhKRpg; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=D+gvxaff; arc=fail smtp.client-ip=205.220.177.32
+	 Content-Type:MIME-Version; b=jwHdJdxLuNXfLXuVklUk3evcw32sbbwF7DeSGgWXddsK/O8pUT+fI1z3fI6E+ehpjjNa2VA9u/P4EDPS7s4fagk07BeuMSnKd9F+ZfMn0MxcmMnwhL12iQISwR8J84gTmEQny/zeDUfjSvwne981Y2WVLu4ud0nmI2I9o82+Q8s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=maRVE9pI; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=vo2quNj7; arc=fail smtp.client-ip=205.220.165.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="ZHmhKRpg";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="D+gvxaff"
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64JGTalZ658661;
-	Tue, 19 May 2026 16:31:30 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="maRVE9pI";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="vo2quNj7"
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64JG91GM177948;
+	Tue, 19 May 2026 16:31:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=OVS5RYiNoTtZDAOy25XmgCRCE5AlA4D1X5gir4NU9gg=; b=
-	ZHmhKRpguyCTAiLjdsLkV8G9lu3A/zDqYG3PWcVB2had8MKJV1PjBQBsGS5vZ14h
-	SID+39sqkehcjO5hB54ZYesgzDDPSKTP2c/T5oisObaBWOfPFevHyCDJilDxSbaO
-	bVbByvkSnU+3LJneKCwQz22CnCiJ7AyHiHvSC8ncznyv6eQ/278TE3yvv6taIe6q
-	Gp9YVk8aE1YlZQKlYb6Wbxu4SfjdxUo72BuJPMbvnLjwakXoOQPPmhovSDp4nDp6
-	NeVgclVETXMtmTheYngkdk19RmFMp9aNT+lv4/XsKhu3lh/epZ3eYYousDcz/GRc
-	vRLqVKzx+fFyxGqxpOv25w==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e6h1sw3em-1
+	corp-2025-04-25; bh=Bd1CjkN9JkMS6ufEM+Ew54p+BSKm1Z1LCDdEEyv+NM0=; b=
+	maRVE9pItERDkG28RaI375dLe6uMNcheff+cOmvK7zGlRMFevVEP4dubeADH5z0Z
+	E5yzYWe20K1wi8CUWuB3fiEvioD6s8qp6xaF76JumLtAUr8PQZTbRstafKAQLnCm
+	+l6tgHqE3r3+2Idww9YGI7u7OFoCX6yPx4O2RIabr4jbRZ0s/CNJLlDMeVbrDZth
+	LRmAh3ARqgg6g/6GQa6E9kPTfQFt7Ag7/eWM4UbLINdFZcCu66DIeM8YJdDFXGS9
+	Iw8+VeepEXZMFJeBcWNpr8nS9POU0ff4iZ/GqT2kygE+52a5oF51v09mjCAIon/c
+	WkfiGEW+Jhy8F3bwwzSujQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e6h86w4kx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 19 May 2026 16:31:29 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 64JGTlZQ011897;
-	Tue, 19 May 2026 16:31:28 GMT
-Received: from sn4pr0501cu005.outbound.protection.outlook.com (mail-southcentralusazon11011018.outbound.protection.outlook.com [40.93.194.18])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4e6f1b0sh2-1
+	Tue, 19 May 2026 16:31:36 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 64JGTmYL036597;
+	Tue, 19 May 2026 16:31:35 GMT
+Received: from sn4pr0501cu005.outbound.protection.outlook.com (mail-southcentralusazon11011060.outbound.protection.outlook.com [40.93.194.60])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4e6f1b15ky-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 19 May 2026 16:31:28 +0000 (GMT)
+	Tue, 19 May 2026 16:31:35 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=D5yLJXYT5v1m4tKXI5qP4TZrPYAlhBY1NBQk77/2VoEjxmI6HPIpHHlM7FyGZThzLTvy+1i9BYUKOVsHe3iu3J3oF+hAr1xHEPEPSwfS+zpeD3zx0zFR3y+wWpsG88wh8bxqWaB6NVkdbAdL2cliYSlk5tpnYg6W37RX4OU0z2Uh9I/U4ZcfsQQ6xJt6orJ00XMHV3j1kTsgled08q4T5giTYqFzEJ5tbx0FeZY81ZUQr53LlHk+zUqJ4CX6gp2TcESLCFvNySSp0mpKDDWzux/qOF4wRia/k0oCCAMnFvWM3X6bZCXQjNn3cKWoVu4RqKFVA1ShxNLm2z106ckOig==
+ b=cyQSLOTBHqj2dJYUPS7izdSwYwDRRqSZNuFSC6SLX6c0L9C//JHfPk/9Rk6QTtVzo5Aawl6djDoo34lpDe8/nP+rjn1TMGfptQLgpRTE34vTPgrVeSDyRt6cK9RpGja0vYW0ZDMIfqV0VvQIo/q2Wr5ngNtkapzsFZOfKU2Du9F0I4Z1Oy1N8/PypuEEKlwv8ttyoGB5OeQkdQflnUXOaAVOVdpndm6kL+QU2qUz/iotDs6Y1Zmj3Q2oHea12uXlRcCVwmoLnEYnK8DDWhRIOvXaSSSBVl8GAnWMmHunCp+1wpmOiCe8e/W6rjLdxlPnc3Sh1Ev9Bqi78pkjXj10hA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OVS5RYiNoTtZDAOy25XmgCRCE5AlA4D1X5gir4NU9gg=;
- b=YA9POCvvBG579TkOZkthmpLNBSZ2pj5/7QktsLqRuz54uh/mNciiC3arlHre4yHk6gcVtvLoEEv9y/OhGPWMgb5ywdBRF6eKPpz7shlNK/u2stc3SKX6do8N9VFEcs/m905qA2aDR6MWygJDabErmc/IOagAZoE5diadqAufKTklHE4GxARROZsGNoHydCJIkkVBf5oTp0InH+bETOvZ57KuCnOiN8JAlCEWr7fvdWQRUFGb2iY520TwKhCj4t0k/pE3qB3+MH9lJZqD13r1XNSP7hZLBxF4zRHXAooIU8o0xqoB6xqASaIU60LveSzmDBsBSJxqYxQdKUF8g/NHpg==
+ bh=Bd1CjkN9JkMS6ufEM+Ew54p+BSKm1Z1LCDdEEyv+NM0=;
+ b=gVw6hW7tCX3ooV3C30bcC5ZGINv3SsMP6S7VCbYHLP344E5PoYn6W/VJJuc0j7qsFjGm2a/7fhJUPmWfqyqF+4CmMrr3QAzHiHE6jG36rk5UYRbrnq5/uUeUjz4KuBHQwtyE8IVhMT14+lpAemKP9s4xj3l5CTLrMr1pBUyMNfAHRDYkmWR6TryUGC8ksjK2MWVSJRNbFlMAIvJk5YoJEpy4gqHmF8liFuT01M2yoFwibAjnBix9s507BVS3NlVcfVkGVcSMoQa9QR+ALqJNimwD+9nhJ9WeFOwpdzBWK4K2dJdCUIZSyRj/hRywoxAM1+6LSuGakpzjKEWgBaM+wQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OVS5RYiNoTtZDAOy25XmgCRCE5AlA4D1X5gir4NU9gg=;
- b=D+gvxaffcQIomy3pufUxBDiRxTDmdERcJ/TI6vgg0wq6akSJ6KNgKgeJbo/HnW1UYTvt9Xq5trt+FXddS65ZK4FWUcDhyWpBkm3JeKBsVNxFP2oWFgMH1hc16zGnIw0z8d+laK36vdVriZlRnmRWUadBT+q6GeUaHz5LcnkquDY=
+ bh=Bd1CjkN9JkMS6ufEM+Ew54p+BSKm1Z1LCDdEEyv+NM0=;
+ b=vo2quNj7flCU6Cilh9j/kjic3qhodOyIh1PPWZIY2Va5JHwUz5npg1aO9dRZsAJc6Uz0xdkJxBYp4zRqXNwiTb0zIkxeMMzYrf9w4oYzr8+pMRXVh2pqv+fxP/Uw9KEF6HSinIjquLVWp++OG/Uem6C/m6plszTiKfBPZSZngZM=
 Received: from DM4PR10MB7505.namprd10.prod.outlook.com (2603:10b6:8:18a::7) by
  SA2PR10MB4491.namprd10.prod.outlook.com (2603:10b6:806:f8::23) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.25.23; Tue, 19 May 2026 16:31:25 +0000
+ 15.21.25.23; Tue, 19 May 2026 16:31:30 +0000
 Received: from DM4PR10MB7505.namprd10.prod.outlook.com
  ([fe80::f14:5389:d117:967c]) by DM4PR10MB7505.namprd10.prod.outlook.com
  ([fe80::f14:5389:d117:967c%4]) with mapi id 15.21.0048.013; Tue, 19 May 2026
- 16:31:25 +0000
+ 16:31:30 +0000
 From: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Patrick Steinhardt <ps@pks.im>,
         Elijah Newren <newren@gmail.com>,
         Kristoffer Haugsbakk <code@khaugsbakk.name>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 8/9] Documentation: document external notes command options
-Date: Tue, 19 May 2026 22:00:37 +0530
-Message-ID: <12aa52077b4111892d2c966a2bff205d5b4ad170.1779207350.git.siddh.raman.pant@oracle.com>
+Subject: [PATCH 9/9] t: add tests for external notes command
+Date: Tue, 19 May 2026 22:00:38 +0530
+Message-ID: <3a470a117d5e0a7e130eff0d203ed7e3700b5d61.1779207350.git.siddh.raman.pant@oracle.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1779207350.git.siddh.raman.pant@oracle.com>
 References: <cover.1779207350.git.siddh.raman.pant@oracle.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PN4P287CA0061.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:267::10) To DM4PR10MB7505.namprd10.prod.outlook.com
+X-ClientProxiedBy: PN4PR01CA0119.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:275::14) To DM4PR10MB7505.namprd10.prod.outlook.com
  (2603:10b6:8:18a::7)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,261 +89,852 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM4PR10MB7505:EE_|SA2PR10MB4491:EE_
-X-MS-Office365-Filtering-Correlation-Id: ab6ac86c-460d-4439-9aa5-08deb5c411a2
+X-MS-Office365-Filtering-Correlation-Id: f2dd7488-590f-40ae-df6c-08deb5c414a9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|10070799003|56012099003|18002099003|22082099003|3023799003;
+	BCL:0;ARA:13230040|366016|1800799024|376014|10070799003|56012099003|18002099003|22082099003|3023799003|20052099010;
 X-Microsoft-Antispam-Message-Info:
-	poLLS/7RpUHMEaLRRY/3bBWzxzDS+8SfhhTz+gMXM9vKWMyNniKxc7o/+NJWiCQbsV43eJmaWUgRRyT3cgiqAk4IaVCG680sES+0F9wF1nhGUavxBden/vesDOKGypqCXA3BRMEQjmrw0N7Mm21zBPuBUZ1K1K/q72DoRW1BS4QrlKzBIKikUiCB4A4xhpQWn9NuIAshjx8a6m4V4Bpfq5MII3ZckW78JVQWzwoCMkG0Ey22eILNoQERjvEgY6jQvb6qK4N0+6BQo5fJSoIbWXB1M5LfbE4aDYyn6Vn52TZ2iqrKy3hpoPAu8+EAkFbD48pxBUKF6wlEW5e7SVnJT2ICWQNfWC67UKDL5R6Hyk3xlQKvCaWF7EFw2VzNrNtF/ZbddJNBBZ4n+WD90+bUKOdn7C4YrBitFEfyTNiArzfSqtU21/ZVlo2OAB4YyRcl7GaakYFoc9kcg7tqloLMl1yScjboy8uMyC/v9ZgbnLMBYAwrhRg/LLtwGD8ZZvafPaI15Ba32vuz3QmRvlFviwBrsgKf+oe0hNr2dBxytevYRyOfAUfUEnh3DUcqT8mii31e3mptNNNAVnaHMEGUQcDR/do6DvqYkrPtlvVg2Y/V6CVt1KQdjnZJ3ZejzlD5Xa6xQ5cyJNUAMx3Mi9zwcsWbJrqKRp6YLH+juPNIt/btdV7kLfJbOqa8eB4R4bCW
+	AgBsLf3RmfzKix8GmBiXk/wZVn/QDhygrbFdGjNKbzvzZBDviYFxYud8VOioNbHQY3E4se5Nwo7q4bEQtYAodABr+HayroueJO8AwXOlRLHCrVy6wMA3Ep4OhLY6e5Nz6cEIOTcihBid+DtGuTWa40/tv4iQkqDOxBfY1JDkh0iJuMmlbqtojlLCHAtTJlsSzhhthqNn6an12ALeSkF5PABikuk+l1s1TTQcau/5ar7XFQu6Nu2pQb2LU8MDNRTm2gIyuTC+WNRLzlWuPq9lNk17ZTev3NoYnx5pr/vCowsk7zU8fgcZIQFAORngrtC7GQM8zj5AA3Q3Io1/YTAzKdjEi2ExiHVw7fI+WQJSPyS2RfuvBm+lliA3DZLsvOYdaTdKotMyQWbGPH39+INch8wIzYusP7BZGt3Ja+UL+GE41SOUsFGUKnLGfdhF1hkA22K1XUhlm+4s7vGiyJBCwdjU5LktQ3qD8uXso00orvIJCpBcnX0Zp00q635PywY34b22YL4ketucyJnVPmmKvwCt5TnRE8bqOgIsernXIU/AUeYm/Fu2fWjMaRO0OZTUYnCttudmAK8+lazL2JNhQIxPcVetMy/9EN8a+b9y6XdiOth2mKkAC+YQxtLuA2gpyztmfjXi2tDinMKdgA0VO7ep/jBy2Hc0FLTz3gd0TFl/eJir1+yA5dMAZWKQ1FCZ
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB7505.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(10070799003)(56012099003)(18002099003)(22082099003)(3023799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB7505.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(10070799003)(56012099003)(18002099003)(22082099003)(3023799003)(20052099010);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?USodwbM+/0Oi+BDf5y+Di36o5Yp+LKMpZfGzNWXTDc+P5rs1kfV9kRfd7Q9e?=
- =?us-ascii?Q?OfnRS64INGnUI59ZnSpQ9C3f8o8KMw9J/IdRxfrfiD5MG69ObC+KRUxjeErC?=
- =?us-ascii?Q?ARk6gmWGbN3Z2pIveTvnsuWfIq3vC8EU1OJfKAriAi+mdX0HC4wDmkjFGPOl?=
- =?us-ascii?Q?L8vgxEJNVILD6LOdY+IKh0vRxjxBLcm3dsWcF5MwXDu/1bX+oftx7/lfiLOu?=
- =?us-ascii?Q?oMkJNbDa9SQjeG3G7d/hzeu2vnKLDOhPUzN/vCxP1Np6wQ00+rMG0aekJbfx?=
- =?us-ascii?Q?kDnY/tWaY+FZUpcFl0LVGKrdJHB8ZTZeMn5c2dOchkEPn5GjHA97ozgmTmKe?=
- =?us-ascii?Q?Ly4im/iMCnJ6zz+/4xACTarPkBEAcdSccjFQnDeibUcZl4WGkS7++kXlNb76?=
- =?us-ascii?Q?qDaCY6AmiyIahpmjRlHU2g9Ld7h7H8iokM7xWw2GPIZvI3cl/A08FysZ/xSU?=
- =?us-ascii?Q?maA/4pp7lQWWwSVit8+kvOn+j2GDTcnQQhyjMzZMq6ou9kIcmclOu9RyN8oq?=
- =?us-ascii?Q?GY6R/jg33/3/g5GQQfkVkkyQNgnNGlrgXCC+l0ZCw41ONl3G5LwysWRvd/gv?=
- =?us-ascii?Q?YlKUJxIUJnMAU84ikd812DI6xT9d+7p61xmP+uSCePAP6TFIlvCKY8vVL+/H?=
- =?us-ascii?Q?AfhSQtNKkl8H2I8zi5vuBrAm45a94mtj3Tc/5Sr2LlZc5cz7VtTkxXS52rhU?=
- =?us-ascii?Q?AQoTofcuc/HViPnvL5HDUTXW0lGupf+kXKwyH0f8arXHdb5jCbQllAhG+gaR?=
- =?us-ascii?Q?HXddgjzWtwxHzN+jZ0VTYEIsMyhADNQ5k4UDZ5THoP3ZQsX8tdscFPF2JMPL?=
- =?us-ascii?Q?c6qxpHcYXmUV3HG2+An41i/yAcRvWtotPIImJbA/Zaz7OGXiDJJDvWYJhpZ0?=
- =?us-ascii?Q?Wc8YT3tA5tHCYqo1IfQ9KvStiu1Pn1fBxyW5JNGBGJqxv473S/XDsA227vu3?=
- =?us-ascii?Q?JUYdcatTeobbRXyU1c40E8jkKxWcJNurLlNn7JlLQtBc3JyHdWnCKuKSdeLa?=
- =?us-ascii?Q?SiUtfXbWxR4ut9y5x/BaxGF02bCM1hgMelNRhqxsCn2ETLpUaYjIPA6BPjtu?=
- =?us-ascii?Q?/a5bBa+npgew+E9o1Qx/djxE9QokNNWAHkhBwqODf6+GOM2vU+KLI2eQIStJ?=
- =?us-ascii?Q?mJtHNXCY7EBv2yTd9nl9kwhuVVDCNgIuRKT0JWNEkw/BSqaOsl/XuqKoXs/L?=
- =?us-ascii?Q?9m7lAcfRi2+jBoLfBbb+GdgdfYshX+CCkoQuvWwKDQOxk2NsaH/79UaSe6ku?=
- =?us-ascii?Q?FoGJotsuffDByC5WOCVS2sQodKhihTu3nHZgIzwDazDZm5FIQ4tY07iJsBgc?=
- =?us-ascii?Q?lopVD2Lf8wneVaOoEcDb1W6WZ6My61r6ZEmF6E3FiNRoj4m8dTdi2hEJLyDW?=
- =?us-ascii?Q?/Vj+6He4DbV8ACsXoL8Ma3GKmMRDZYxfyNpw6AlBQEO+NSbqrgcBHoZPW0ZN?=
- =?us-ascii?Q?H/Eri2hlOICOwrYfxQBLYZX1q9gHU+EV0PW1I510w0vc6X0t0K5ZD5FGWroz?=
- =?us-ascii?Q?lERagmPS8xzmxEhD88z9Og55cWBBdKGuHHc2jHcZtf4S5ww5q1istw0lD++n?=
- =?us-ascii?Q?S+266aT93OXzNheV9jYxn44RAfrBaGr43LOrfG4afQQAg8MtPd25454g1DGa?=
- =?us-ascii?Q?XfXCEjghpefFnZbzF2pjt6Afj1ITc1zTTSBM1PyoyiGl4YrlwEdn2BA6rtex?=
- =?us-ascii?Q?pH8CFf3MZvbAMlvzOL3QiIWeAy5NNUN+tdk7Ybd9VH4P03CHmpMEA3FCMDmd?=
- =?us-ascii?Q?ZfWjCeAqsM5PxVUbfDyWuJOiQJJGMO9n7dL1v+CRRXd9qbRV+Gc9eeLR1l9W?=
-X-MS-Exchange-AntiSpam-MessageData-1: UeYGnBudiO6tEjGuARIgHiisNnxRluX1b2w=
+	=?us-ascii?Q?zb4QOAy7XunYZlBB+0Gtoga/k2JbYDpQGZORnl4ARUK/90+Y/Kdc0dBZfGGZ?=
+ =?us-ascii?Q?ABrBm1zM1P84gVooPyK7ehnZDaijSvCqRyGqzQFoQkLr3RSVZ4ijk30QNQ0s?=
+ =?us-ascii?Q?mtLbu2Dm0snZ1JseIPVay7/uTcaTPEez3HDJDvvXbIhVXw1y/KYhCfDuFIUI?=
+ =?us-ascii?Q?x6OKPNeE7N69T6JVp9J4B8d79g3Fj4bqPx1Q1vcSDhCR32JWZaA/NoNupn4H?=
+ =?us-ascii?Q?MpVuE2Lhvt7p4GzxBwlYRPRHboc2KM148v9dZiKtZpxitvdbG88mDjrl6jt5?=
+ =?us-ascii?Q?732Q/4duSVlM7dn3bkcDjvI3inC9zXTecOKLEQkRvNkFI7P1QfdVfU1OauAq?=
+ =?us-ascii?Q?bLGAs+2kc/LJonNxNyKUJL1rEx7+pD+gvoUi/mO+YuDrm5s3U4IwGYHj8Rfg?=
+ =?us-ascii?Q?2izs0FGT+eg7DH/fqdvvmpIwOY13wJC3XJf3LTecU9uAPm2GWY68tDUYsXj4?=
+ =?us-ascii?Q?6tjOkHCkvZNDFUQ+J2h2Ege5DsxJanjguujkmaxgqxhhztKB45vfJPkpvMvm?=
+ =?us-ascii?Q?ttVcFszaCa1dVx0Vejwvn6cx4gvW8i+t3A43RJZnB6DkWU1m3IfRvSRYW96+?=
+ =?us-ascii?Q?LllM3rByPp7hGdksTSIe+27QihpoqNdgjuRaK4jP3qJT8uHzn/qXZx+M+ttP?=
+ =?us-ascii?Q?LIMvaAYfKWLmmBi71V31foWbUDl3XRhCr7xT+2p/w6uT4I4+/hmNS2YRt1g5?=
+ =?us-ascii?Q?kg/6Ii7XKIUvtXCTh+Nhy3J+D6IbheMbOLSwSmMLNoqMo/B9coxa6pB3sugJ?=
+ =?us-ascii?Q?epUpdAlfvRCxg58MkM9iU5dZPF5BwY5cOx9vGBJR38aupo8qiHq7kgmL3MMP?=
+ =?us-ascii?Q?UrCSUjvrXBTqcTGRWfh75xMzvWsQ2fb2OvR2tfRVr+txEMTo7CbYOt3O4yhr?=
+ =?us-ascii?Q?6e9v5Fnmj8C1vcQFK/EdiW9Jz6S5rXed6am2s+hZ9V2bLm+PaCgAJ76hSpna?=
+ =?us-ascii?Q?h8eu5pDaQkGDNMrOLQWuICFX8w7APxDdsbF3HVY3OMFyaG+UwEr8D+WwY646?=
+ =?us-ascii?Q?TkJODlfbOQp9vH5fUkoXUaYeegqz5ICgKETf7SeG4gEcwZ9VxSvYOxAXFMV2?=
+ =?us-ascii?Q?M8U2AkRb0R5pe7lTuGTyM4W1t2xckE6GL/xYWgj1Fc2DhSbGTeCky+e3ZTpq?=
+ =?us-ascii?Q?yNrZHJ2GE3yxOTR+b+2GnEc5MhA/50rjtgKXR9yy5GEIbisNF6o2Mku+w5Pz?=
+ =?us-ascii?Q?SKI5X42bTv1+IqEiWuKHsxw4D3aap91YqABBNmS0WY5lzAvw1y7DKnCygeJZ?=
+ =?us-ascii?Q?52swXIgxEf7soRY4sI0cHeA9STdFeXWfu0FtnoArwpNd9wgdjIiYazS2fPz1?=
+ =?us-ascii?Q?MmjKMr/eSu99snaxt1ZzeRlkGtwa47NwW4pHhPjIsxt36f4b0bweAOhSvGwJ?=
+ =?us-ascii?Q?kkfs2Hj/tfzKy/2ewsCAAumv3dvZ4XHOHQOWxYZkT7k4HCuMFh2j+Wc+Ime5?=
+ =?us-ascii?Q?QJqlDr6gM9/z4SmSX51sTWlKOv4Nn6qVnmlMrU//yGknF3V2QQzeFj3Tb81J?=
+ =?us-ascii?Q?HR0Uy02EKs/NDR+VL0pKbyzNi0pVOgiV0NuNj2b1OQr/z0kclEkX+b7js/VL?=
+ =?us-ascii?Q?wBJS8zTF+y8XP+0hYhzJRwTbvlpDdcaYwTnOQ1pmmKfwWTu7K6zokBwHxnVo?=
+ =?us-ascii?Q?Bphh4O0d0PG0ZyDiwbLa2JolCeB9iR6e1muCeb9gzzBl2ehDtYy+pNhG7YlA?=
+ =?us-ascii?Q?ESvdhryW1C1IZ3wnu/S4m3N7ECYaKHBt437uK+r0xu2DQqvEhXt49k6a9inL?=
+ =?us-ascii?Q?ARquLoumqnwiraAJoSFrDGqX9/ZHsRN30yePtv4JYA6TmJWPR8ygOwyOh4JK?=
+X-MS-Exchange-AntiSpam-MessageData-1: p5KrGZzzpZDwT1wLVjsVbmzVB9aRdPMFWRA=
 X-Exchange-RoutingPolicyChecked:
-	khs+UNwD1RNQ3BaLTGuZD+LK+N7qz453AXKGiAQR05Crgyxq2/eXkvEYfgJk/uCf7bLPsFA46uz93k2BmxmsjavVhCpQPUgKCTxtkDwyUpvfxDjWNmDteeCdNyVGN5URZfNoMcYSUFuefhCao69cxOK9Po8vnGWfRKyjguINf2rF+2/Bk6VDKOq5W9oktz/Cg2a2u8OZbO6JjHMk3ctz5XptAaZpav3holytG7IVJKhguRNFOe6+9VDWxlhiiJ7aRsmOsbP4SN4Lf6qfWJqOBdAwKKDun24bZFL/jsg9x8ZYCy7Xh3HXc5DIwesAQq0E34L4XnEz5C4L/yAU1XIVGQ==
+	I3QOhOrCegtHu5ieYGe9eAcbOfLw32Oejgli2m7u41PETg24/dLJQD61Uqu9wJW+L5F4AtW2uPRo39OKy1XGPeBjYk9JZPZytQb9uoi3Zji0hUei9PGfOugjdcBuy/e/LbFSLRuYoCOfpdNcRk3D7cNGygn2kqcrxKhXEg4lHvMzkgBl8AJJH9Lvan+J5Vvz9eYOHttxw83Tv8+ylp22K+CZrR1snMJOedAvhKA2dJevKeWYReQ2A33BIA540/CRXhkV+gS6gACVxOYsZmZdRaBEeqbehvA0L9R/CGmCB194Tr4gVO7Yg7TglD/8ImavvnZ1vYm2XHFpLakqZe+Zjg==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	6e44zZKIAZOKnzPwVE8lI/D28kApZF9hKvFBOtxMvFkwVtKXVR05f59jNS/WN2hsMU7vZO4RNJ+8pygS26MLrzgeMMMMaNVHO7t0DJOrRAvS9m8O889V/f0uSQCDp+8zjBR6+jOtZRFb/e5phqtxT/2KH/qfFmQqQix5loXJfeBoDLBo8mI9DsTXckYcHeX/NwrYIEpDZ8ZSuoMizhCek9900UBH0aYgtBWGcXM+y1/ZVSHNcwf7jC2pOIi6eshDlGTPnOmkWNel5RUgCmp081KCU4FFK44VxonbkHLcaY/rv0Yc5IVBn2kt26X0ew2jHpK2bgwtR6wGgq9XTO3W7zCw9ZPA40OR79JD9NNOYyOlfRoDpVYHDYl8sq+gWDr9eGbsHlCHgXNLcNWl5a3u8H9L0K9OPb97zpXfmsubsNWagSEq6aOqClkPn1JrY6y5/qWFzQwfqFI5q0GNtd2BzNUe1bo0NMnLTULl4JP9JtQXjCeDsjWRAmtNO5vrSczMbGZWYAer8Sa20FDI5sAarGoZHXtUDRO03SlE2Y/M5UpSrTp8mg7HQiSQK6lwWzToH4Izl3Wyr9z52CtOXLd3VJ/DcZjcoFRh8hKOfzWe290=
+	mgfYn7ZvuuhA+lPxlV3yY3o88lRLO+W5AGMEsiZmeoXSX0Px6x5giDDUsockKkzfu9ep4FscoWccH23/RvaCpgLEZyHwpRSZJuQzOXjXnt5zfA8OqQ1Pgbfq4H/WJbimmt0jtpzf5X8Y2nyaIVYPFSxcBI179TDcQ8Cq9Rwrlpklkq6CsgPu5+zdIfOoMzPR1FQjFJnRKY8sEVepIkRWpHntM3fI/CV37D758XKeTWAm4dBaUE8nwQgixg5AWQZUv4DOcCupBgj51qI4NbTus5IUGU7zh3lAjoWjgR97I2nuPLqVRHnepxiTj+rvzvWE11oXh8xiEq2MOiWI9ZSjw0J8Qu2+ycZqOENh3+XcwsXvPAO0GnflxtCXdSabfDGethp1mIUefYU0W4bFMU9PPKCcD5cTLKPJeKDOUmdUUvoSQMJCydBy34Dj9Z0TwVHsANMyYnOvar37vuttA0+G+T+pdzH5VcCapCed84OEpCbywWRhnhX2VN2JmQ41awKrvP7kJi2auMdghQ5QKar7n0amdl/7wliro0MR34As9PVly1PcN1TlX6umWzUw7YTrmRpPI/FDpFXQ3Ud2AFFD1+ZD7Bw/V1LrEyHT0ESrcs0=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ab6ac86c-460d-4439-9aa5-08deb5c411a2
+X-MS-Exchange-CrossTenant-Network-Message-Id: f2dd7488-590f-40ae-df6c-08deb5c414a9
 X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB7505.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 16:31:24.9245
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 16:31:30.1922
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GKICZobiMjVCsbCVigNkYmA1PKoGTcJOML57a1GWCNJSV1Z8KmjxPje3MmjsmOZADJbYgagsSiWBnbIuywDyZ+XbILy8aV9Hk/HlFF1X9n0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: BLptL3nCXGF1J3Z1nQBQcvcMdDtlzYKDsJb51MUjPrx7UTPjSDxHR2Of1WvcOc0btvDU83uyNA47HXda5YUl/mIKTuFNV7jYkIMJsT2ePCU=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4491
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-19_04,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxlogscore=999 adultscore=0 mlxscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 classifier=spam adjust=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=999 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2605130000 definitions=main-2605190165
-X-Proofpoint-GUID: eEhpE-r0KW3e5GUofsGyJza-lS4lS-bN
-X-Authority-Analysis: v=2.4 cv=d9jFDxjE c=1 sm=1 tr=0 ts=6a0c9061 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE2NCBTYWx0ZWRfX9sbh8hPidbos
+ Ol7ZIkpWSaCM2weziCpJwkJ4iN8xAWZ8aHDlMRIByoszR7ZNe5/ouwB2VfJjsib5vRfXd82f5LF
+ P2+XnpKLpTdIgdSiFVgVeEpL2JuLUPFEqkBuzc562kKLqdpYWUJUAJ6n8QK4ccgQR7MkC5ClDdv
+ PzflYfbSeN/2up2blztG4nEbqaIFiG5PgI7TBU0OHZ5JqKx/epRSKJL/8/fcRiEly4Opk87S8FU
+ 2ZyItq+3jREsQBxppfnnPcD/O2f9ukpy8MoiZLmxvsYdAy1P3tddUFPNgKDBhl+oAG8ie52OhiV
+ t0FfITTLQ4hHc0UXJgBNy/EBXU0XWRpzAI5HWB617tNSGJ55Qk8Wbho7dZA3qaA5HlZpuIoRTBs
+ pjKXTPTAap/AlksF1ePkITeysp5nq0FWVL7gCOqYH5cOjJtVnEtd4smhpoASfqYBOB/m7LBqQq6
+ 2pqAhgtzgcCCvFQtbkg==
+X-Proofpoint-GUID: tCPwg3dEn-vigeRBr4H42NEmwuhuO03i
+X-Proofpoint-ORIG-GUID: tCPwg3dEn-vigeRBr4H42NEmwuhuO03i
+X-Authority-Analysis: v=2.4 cv=TLN1jVla c=1 sm=1 tr=0 ts=6a0c9068 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10
  a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=BqU2WV_vvsyTyxaotp0D:22 a=yPCof4ZbAAAA:8 a=xw003-oIY7mu9iacZTsA:9
-X-Proofpoint-ORIG-GUID: eEhpE-r0KW3e5GUofsGyJza-lS4lS-bN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE2NCBTYWx0ZWRfXx4I/gBvMlqtu
- kh2MhMnsqIzqvU1BxHjuDR3OFcqTMVbxyLXE+VgXx1+fl+11G09qE49KFTww2JckvPr/lX8iV0u
- 4U4l1kY1ofsw6170yTsLNdZSVuqTrvMo+zEg5NweXw6lJ30dUagZw1HzSzc5+3vOhfsS/yuTpOj
- CK+/u/4BxogRNqgsyeP/OLZzgZ+M0gJhcKMuE8EhXLX50ud/j/ZhdOGW6DmoCyNA9mEteK17dnF
- I6/NxkWgdibrTi0yR4t2KBFb9YAWRI6ZHniERXtO8DQjd6O2Q+u/PT+aXnmnOHn+HWIAWn89Ev9
- PBIlNV5zdhxZhnauduE8aXw0XT4D3XBMQf3do/Cx0ljj26ZgUByFNTIocsCm5NA9nvTP6wm04FY
- NcR70SuZTO6bfQScMzqQA/6NVHtLXCmFPT01Aqkh1O26pZq2sk5Lfyf/UvjaGRvYwjQpI3CB9X3
- daXs27KQblpbwS9C3hw==
+ a=x0eKOSpe3m1H3M0S9YoZ:22 a=yPCof4ZbAAAA:8 a=s0T0KiOntWEaJek3ZQsA:9
 
 Assisted-by: Codex:gpt-5.5-xhigh-fast
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 ---
- Documentation/config/notes.adoc        | 57 ++++++++++++++++++++++++++
- Documentation/git-format-patch.adoc    | 11 ++++-
- Documentation/git-range-diff.adoc      |  6 +++
- Documentation/pretty-options.adoc      |  9 ++++
- contrib/completion/git-completion.bash |  4 +-
- 5 files changed, 84 insertions(+), 3 deletions(-)
+ t/helper/meson.build                        |   1 +
+ t/helper/test-external-notes                |  64 +++
+ t/helper/test-notes-external-config-reset.c |  20 +
+ t/helper/test-tool.c                        |   1 +
+ t/helper/test-tool.h                        |   1 +
+ t/lib-notes.sh                              |  19 +
+ t/t3206-range-diff.sh                       |  68 +++
+ t/t3301-notes.sh                            | 437 ++++++++++++++++++++
+ t/t6120-describe.sh                         |  17 +
+ 9 files changed, 628 insertions(+)
+ create mode 100755 t/helper/test-external-notes
+ create mode 100644 t/helper/test-notes-external-config-reset.c
+ create mode 100644 t/lib-notes.sh
 
-diff --git a/Documentation/config/notes.adoc b/Documentation/config/notes.adoc
-index b7e536496f51..b3ef3fa52950 100644
---- a/Documentation/config/notes.adoc
-+++ b/Documentation/config/notes.adoc
-@@ -34,6 +34,63 @@ The effective value of `core.notesRef` (possibly overridden by
- `GIT_NOTES_REF`) is also implicitly added to the list of refs to be
- displayed.
- 
-+`notes.externalCommand`::
-+	Command to invoke as a long-lived helper when showing commit messages
-+	with the `git log` family of commands. Git sends one commit object ID
-+	per request on the command's standard input:
-++
-+------------
-+<hex-commit-id>
-+------------
-++
-+For each request, the command must respond on its standard output with either
-+`<hex-commit-id> missing` followed by a newline, or `<hex-commit-id> ok <n>`
-+followed by a newline and exactly `<n>` bytes of UTF-8 note text followed by a
-+newline. The command must respond to each request as it is received; Git does
-+not send all commit object IDs before reading responses. Empty note text is not
-+displayed. If Git cannot start or communicate with the command, or the command
-+sends an invalid response, Git warns once and disables it for the rest of the
-+command. External notes are only used while formatting output by default; see
-+`notes.externalCommandForGrep` to include them when matching commits.
-++
-+This setting is only respected in protected configuration (see
-+linkgit:git-config[1]). This prevents untrusted repositories from running
-+arbitrary commands when notes are displayed.
-++
-+This setting does not take effect when:
-++
-+--
-+* the value is empty;
-+* `--no-notes` is given;
-+* `--no-external-notes` is given; or
-+* `--notes=<ref>` is given by itself without `--external-notes` or `--notes`.
-+--
+diff --git a/t/helper/meson.build b/t/helper/meson.build
+index 675e64c0101b..739614b90e78 100644
+--- a/t/helper/meson.build
++++ b/t/helper/meson.build
+@@ -35,6 +35,7 @@ test_tool_sources = [
+   'test-mergesort.c',
+   'test-mktemp.c',
+   'test-name-hash.c',
++  'test-notes-external-config-reset.c',
+   'test-online-cpus.c',
+   'test-pack-deltas.c',
+   'test-pack-mtimes.c',
+diff --git a/t/helper/test-external-notes b/t/helper/test-external-notes
+new file mode 100755
+index 000000000000..5e9dde3977ab
+--- /dev/null
++++ b/t/helper/test-external-notes
+@@ -0,0 +1,64 @@
++#!/bin/sh
 +
-+`notes.externalCommandName`::
-+	Name to use in the `Notes (<name>):` header for notes returned by
-+	`notes.externalCommand`. Defaults to `external`. This setting is only
-+	respected in protected configuration.
++prefix=${TEST_EXTERNAL_NOTES_PREFIX:-external-notes}
++response=${TEST_EXTERNAL_NOTES_RESPONSE:-ok}
++line_ending=${TEST_EXTERNAL_NOTES_LINE_ENDING:-lf}
++exit_after_response=${TEST_EXTERNAL_NOTES_EXIT_AFTER_RESPONSE:-}
++exit_delay=${TEST_EXTERNAL_NOTES_EXIT_DELAY:-}
++delay=${TEST_EXTERNAL_NOTES_DELAY:-}
++char_delay=${TEST_EXTERNAL_NOTES_CHAR_DELAY:-}
++ignore_term=${TEST_EXTERNAL_NOTES_IGNORE_TERM:-}
 +
-+`notes.externalCommandTimeoutMs`::
-+	Number of milliseconds to wait when reading each response from
-+	`notes.externalCommand`. Defaults to `100`. If the command does not
-+	produce the expected response in time, Git warns once and disables it
-+	for the rest of the command. A value of `0` disables timeout handling,
-+	so reads can block until the command writes output or exits. This
-+	setting is only	respected in protected configuration.
++newline='\n'
++case "$line_ending" in
++crlf)
++	newline='\r\n'
++	;;
++none)
++	newline=
++	;;
++esac
 +
-+`notes.externalCommandForGrep`::
-+	Boolean indicating whether notes returned by `notes.externalCommand`
-+	are included when matching commits with `--grep`, wherever notes would
-+	normally participate in grep matching. Defaults to false. This does
-+	not make hidden notes searchable in formats such as `--oneline` or
-+	`--pretty=%s`; use `--notes` or `--external-notes` if those formats
-+	should search notes too. When enabled, revision traversal may invoke
-+	the external command for many commits that are not ultimately
-+	displayed, which can be expensive for slow commands. The note output
-+	can also change which commits match. This setting is only respected in
-+	protected configuration.
++echo start >>"$prefix-starts"
 +
- `notes.rewrite.<command>`::
- 	When rewriting commits with _<command>_ (currently `amend` or
- 	`rebase`), if this variable is `false`, git will not copy
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index 566238245028..472b37e5237a 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -26,7 +26,7 @@ SYNOPSIS
- 		   [--[no-]cover-letter] [--quiet]
- 		   [--commit-list-format=<format-spec>]
- 		   [--[no-]encode-email-headers]
--		   [--no-notes | --notes[=<ref>]]
-+		   [--no-notes | --notes[=<ref>]] [--[no-]external-notes]
- 		   [--interdiff=<previous>]
- 		   [--range-diff=<previous> [--creation-factor=<percent>]]
- 		   [--filename-max-length=<n>]
-@@ -395,6 +395,15 @@ configuration options in linkgit:git-notes[1] to use this workflow).
- The default is `--no-notes`, unless the `format.notes` configuration is
- set.
- 
-+--external-notes::
-+--no-external-notes::
-+	Invoke or do not invoke `notes.externalCommand` to obtain external
-+	notes. Like `--notes=<ref>`, `--external-notes` names an explicit
-+	note source and by itself does not include the default notes refs.
-+	Use `--external-notes --notes` to include the default notes refs
-+	too, or combine `--external-notes` with `--notes=<ref>` to include
-+	external notes with specific notes refs.
++test "$ignore_term" = true && trap '' TERM
 +
- --signature=<signature>::
- --no-signature::
- 	Add a signature to each message produced. Per RFC 3676 the signature
-diff --git a/Documentation/git-range-diff.adoc b/Documentation/git-range-diff.adoc
-index 5cc5e2ed5673..1de23f300517 100644
---- a/Documentation/git-range-diff.adoc
-+++ b/Documentation/git-range-diff.adoc
-@@ -12,6 +12,7 @@ git range-diff [--color=[<when>]] [--no-color] [<diff-options>]
- 	[--no-dual-color] [--creation-factor=<factor>]
- 	[--left-only | --right-only] [--diff-merges=<format>]
- 	[--remerge-diff] [--no-notes | --notes[=<ref>]]
-+	[--[no-]external-notes]
- 	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
- 	[[--] <path>...]
- 
-@@ -101,6 +102,11 @@ diff.
- 	This flag is passed to the `git log` program
- 	(see linkgit:git-log[1]) that generates the patches.
- 
-+`--external-notes`::
-+`--no-external-notes`::
-+	This flag is passed to the `git log` program
-+	(see linkgit:git-log[1]) that generates the patches.
++emit_output() {
++	if test -n "$char_delay"
++	then
++		LC_ALL=C
++		payload=$(printf "$@"; printf .)
++		payload=${payload%.}
 +
- `<range1> <range2>`::
- 	Compare the commits specified by the two ranges, where
- 	_<range1>_ is considered an older version of _<range2>_.
-diff --git a/Documentation/pretty-options.adoc b/Documentation/pretty-options.adoc
-index 658e462b2533..aad851c92cfd 100644
---- a/Documentation/pretty-options.adoc
-+++ b/Documentation/pretty-options.adoc
-@@ -93,6 +93,15 @@ being displayed. Examples: "`--notes=foo`" will show only notes from
- 	"`--notes --notes=foo --no-notes --notes=bar`" will only show notes
- 	from `refs/notes/bar`.
- 
-+`--external-notes`::
-+`--no-external-notes`::
-+	Invoke or do not invoke `notes.externalCommand` to obtain external
-+	notes. Like `--notes=<ref>`, `--external-notes` names an explicit
-+	note source and by itself does not include the default notes refs.
-+	Use `--external-notes --notes` to include the default notes refs
-+	too, or combine `--external-notes` with `--notes=<ref>` to include
-+	external notes with specific notes refs.
++		while test -n "$payload"
++		do
++			char=${payload%"${payload#?}"}
++			printf '%s' "$char" || return 1
++			payload=${payload#?}
++			sleep "$char_delay" || return 1
++		done
++	else
++		printf "$@"
++	fi
++}
 +
- `--show-notes-by-default`::
- 	Show the default notes unless options for displaying specific
- 	notes are given.
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a8e7c6ddbfb2..146444e65860 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2023,7 +2023,7 @@ _git_fetch ()
++while IFS= read -r commit; do
++	if test "${TEST_EXTERNAL_NOTES_BODY+x}" = x
++	then
++		note=$TEST_EXTERNAL_NOTES_BODY
++	else
++		note=$commit
++	fi
++	printf "%s\n" "$commit" >>"$prefix-requests"
++	test -z "$delay" || sleep "$delay"
++	if test "$response" = missing
++	then
++		emit_output "%s missing%b" "$commit" "$newline"
++	else
++		emit_output "%s ok %d%b%s%b" \
++			"$commit" "${#note}" "$newline" "$note" "$newline"
++	fi
++	test "$exit_after_response" = true && break
++done
++
++test -z "$exit_delay" || sleep "$exit_delay"
+diff --git a/t/helper/test-notes-external-config-reset.c b/t/helper/test-notes-external-config-reset.c
+new file mode 100644
+index 000000000000..1c6b26e3b49a
+--- /dev/null
++++ b/t/helper/test-notes-external-config-reset.c
+@@ -0,0 +1,20 @@
++#include "test-tool.h"
++#include "notes-external.h"
++
++int cmd__notes_external_config_reset(int argc, const char **argv UNUSED)
++{
++	if (argc != 1)
++		die("usage: test-tool notes-external-config-reset");
++
++	set_external_notes_command("helper");
++	set_external_notes_command_name("label");
++	set_external_notes_command_timeout_ms(250);
++	set_external_notes_for_grep(1);
++	reset_external_notes_command();
++
++	printf("configured=%d\n", external_notes_command_configured());
++	printf("name=%s\n", external_notes_command_name());
++	printf("timeout_ms=%d\n", external_notes_command_timeout_ms());
++	printf("grep=%d\n", external_notes_for_grep_enabled());
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index a7abc618b388..31bb2d1dca47 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -45,6 +45,7 @@ static struct test_cmd cmds[] = {
+ 	{ "mergesort", cmd__mergesort },
+ 	{ "mktemp", cmd__mktemp },
+ 	{ "name-hash", cmd__name_hash },
++	{ "notes-external-config-reset", cmd__notes_external_config_reset },
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "pack-deltas", cmd__pack_deltas },
+ 	{ "pack-mtimes", cmd__pack_mtimes },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 7f150fa1eb9a..ff25f0a29cf2 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -38,6 +38,7 @@ int cmd__match_trees(int argc, const char **argv);
+ int cmd__mergesort(int argc, const char **argv);
+ int cmd__mktemp(int argc, const char **argv);
+ int cmd__name_hash(int argc, const char **argv);
++int cmd__notes_external_config_reset(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__pack_deltas(int argc, const char **argv);
+ int cmd__pack_mtimes(int argc, const char **argv);
+diff --git a/t/lib-notes.sh b/t/lib-notes.sh
+new file mode 100644
+index 000000000000..07422540d58f
+--- /dev/null
++++ b/t/lib-notes.sh
+@@ -0,0 +1,19 @@
++# Helpers for scripts testing notes behavior.
++
++# notes.externalCommand is run through a shell, so quote the path.
++external_notes_command=$(
++	printf "%s\n" "$TEST_DIRECTORY/helper/test-external-notes" |
++	sed "s/'/'\\\\''/g; s/^/'/; s/$/'/"
++)
++
++# The helper above is a shell script. Few Windows CI tests (3 out of 10
++# in matrix) are spending more than the production default timeout just
++# starting the shell and exchanging the first response, so tests that
++# are not about timeout behavior fail. So let us opt into a wider 1s
++# deadline for Windows instead of 100ms.
++external_notes_command_timeout_config=
++if test_have_prereq MINGW
++then
++	_timeout_config="notes.externalCommandTimeoutMs=1000"
++	external_notes_command_timeout_config="-c $_timeout_config"
++fi
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 1e812df806bb..96adeb9bc4fe 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -6,6 +6,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- __git_format_patch_extra_options="
- 	--full-index --not --all --no-prefix --src-prefix=
--	--dst-prefix= --notes
-+	--dst-prefix= --notes --external-notes --no-external-notes
- "
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-notes.sh
  
- _git_format_patch ()
-@@ -2215,7 +2215,7 @@ __git_log_common_options="
- __git_log_gitk_options="
- 	--dense --sparse --full-history
- 	--simplify-merges --simplify-by-decoration
--	--left-right --notes --no-notes
-+	--left-right --notes --no-notes --external-notes --no-external-notes
- "
- # Options that go well for log and shortlog (not gitk)
- __git_log_shortlog_options="
+ # Note that because of the range-diff's heuristics, test_commit does more
+ # harm than good.  We need some real history.
+@@ -690,6 +691,37 @@ test_expect_success 'range-diff with --notes=custom does not show default notes'
+ 	grep "## Notes (custom) ##" actual
+ '
+ 
++test_expect_success 'range-diff with --external-notes' '
++	topic_oid=$(git rev-parse topic) &&
++	unmodified_oid=$(git rev-parse unmodified) &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		range-diff --no-color --external-notes \
++		main..topic main..unmodified >actual &&
++	test_grep "## Notes (external) ##" actual &&
++	test_grep "^    -    $topic_oid$" actual &&
++	test_grep "^    +    $unmodified_oid$" actual &&
++	! grep "## Notes ##" actual
++'
++
++test_expect_success 'range-diff with disabled external notes' '
++	test_when_finished "git notes remove topic unmodified || :" &&
++	git notes add -m "topic note" topic &&
++	git notes add -m "unmodified note" unmodified &&
++	TEST_EXTERNAL_NOTES_PREFIX=range-diff-external-notes \
++		git -c notes.externalCommand="$external_notes_command" \
++		range-diff --no-color --external-notes --no-external-notes \
++		main..topic main..unmodified >actual &&
++	cat >expect <<-EOF &&
++	1:  $(test_oid t1) = 1:  $(test_oid u1) s/5/A/
++	2:  $(test_oid t2) = 2:  $(test_oid u2) s/4/A/
++	3:  $(test_oid t3) = 3:  $(test_oid u3) s/11/B/
++	4:  $(test_oid t4) = 4:  $(test_oid u4) s/12/B/
++	EOF
++	test_cmp expect actual &&
++	test_path_is_missing range-diff-external-notes-starts
++'
++
+ test_expect_success 'format-patch --range-diff does not compare notes by default' '
+ 	test_when_finished "git notes remove topic unmodified || :" &&
+ 	git notes add -m "topic note" topic &&
+@@ -780,6 +812,42 @@ test_expect_success 'format-patch --range-diff with --notes' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'format-patch --range-diff with --external-notes' '
++	topic_oid=$(git rev-parse topic) &&
++	unmodified_oid=$(git rev-parse unmodified) &&
++	test_when_finished "rm -f 000?-*" &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		format-patch --external-notes --cover-letter --range-diff=$prev \
++		main..unmodified >actual &&
++	test_line_count = 5 actual &&
++	test_grep "^Range-diff:$" 0000-* &&
++	test_grep "## Notes (external) ##" 0000-* &&
++	test_grep "^    -    $topic_oid$" 0000-* &&
++	test_grep "^    +    $unmodified_oid$" 0000-* &&
++	! grep "## Notes ##" 0000-*
++'
++
++test_expect_success 'format-patch --range-diff with disabled external notes' '
++	test_when_finished "git notes remove topic unmodified || :" &&
++	git notes add -m "topic note" topic &&
++	git notes add -m "unmodified note" unmodified &&
++	test_when_finished "rm -f 000?-*" &&
++	TEST_EXTERNAL_NOTES_PREFIX=range-diff-external-notes \
++		git -c notes.externalCommand="$external_notes_command" \
++		format-patch --external-notes --no-external-notes \
++		--cover-letter --range-diff=$prev main..unmodified >actual &&
++	test_line_count = 5 actual &&
++	test_grep "^Range-diff:$" 0000-* &&
++	grep "= 1: .* s/5/A" 0000-* &&
++	grep "= 2: .* s/4/A" 0000-* &&
++	grep "= 3: .* s/11/B" 0000-* &&
++	grep "= 4: .* s/12/B" 0000-* &&
++	! grep "Notes" 0000-* &&
++	! grep "note" 0000-* &&
++	test_path_is_missing range-diff-external-notes-starts
++'
++
+ test_expect_success 'format-patch --range-diff with format.notes config' '
+ 	test_when_finished "git notes remove topic unmodified || :" &&
+ 	git notes add -m "topic note" topic &&
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 27439010dfbc..5a162dff3917 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -6,6 +6,7 @@
+ test_description='Test commit notes'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-notes.sh
+ 
+ write_script fake_editor <<\EOF
+ echo "$MSG" >"$1"
+@@ -16,6 +17,11 @@ export GIT_EDITOR
+ 
+ indent="    "
+ 
++run_with_limited_time () (
++	{ set +x; } 2>/dev/null
++	"$PERL_PATH" -e 'alarm shift; exec @ARGV' -- "$@"
++)
++
+ test_expect_success 'cannot annotate non-existing HEAD' '
+ 	test_must_fail env MSG=3 git notes add
+ '
+@@ -909,6 +915,437 @@ test_expect_success 'displayed notes are used for grep matching' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'notes.externalCommand shows external notes from protected config' '
++	commit=$(git rev-parse HEAD) &&
++	parent=$(git rev-parse HEAD^) &&
++	rm -f external-notes-starts external-notes-requests &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log -2 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	{
++		printf "%s\n" "$commit" &&
++		printf "%s\n" "$parent"
++	} >expect-requests &&
++	test_cmp expect-requests external-notes-requests &&
++	test_grep "Notes (external):" actual &&
++	test_grep "^    $commit$" actual &&
++	test_grep "^    $parent$" actual
++'
++
++test_expect_success PERL,EXECKEEPSPID 'notes.externalCommand terminates helper during exit cleanup' '
++	commit=$(git rev-parse HEAD) &&
++	test_env TEST_EXTERNAL_NOTES_EXIT_DELAY=10 \
++		run_with_limited_time 2 \
++		git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --external-notes -1 >actual &&
++	test_grep "^Notes (external):$" actual &&
++	test_grep "^    $commit$" actual
++'
++
++test_expect_success 'notes.externalCommandName labels external notes' '
++	commit=$(git rev-parse HEAD) &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		-c notes.externalCommandName=commit-id log -1 >actual &&
++	test_grep "Notes (commit-id):" actual &&
++	test_grep "^    $commit$" actual
++'
++
++test_expect_success 'notes.externalCommandName is rendered literally' '
++	commit=$(git rev-parse HEAD) &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		-c notes.externalCommandName=refs/notes/commits \
++		log --external-notes -1 >actual &&
++	test_grep "^Notes (refs/notes/commits):$" actual &&
++	! grep "^Notes:$" actual &&
++	test_grep "^    $commit$" actual
++'
++
++test_expect_success 'notes.externalCommandTimeoutMs rejects negative values' '
++	test_must_fail git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandTimeoutMs=-1 log -1 2>err &&
++	test_grep "notes.externalCommandTimeoutMs must be non-negative" err
++'
++
++test_expect_success 'notes.externalCommandTimeoutMs times out delayed response' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_DELAY=1 \
++		git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandTimeoutMs=1 \
++		log -1 >actual 2>err &&
++	test_cmp expect actual &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
++test_expect_success 'notes.externalCommandTimeoutMs applies to whole response' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_BODY=x \
++		 TEST_EXTERNAL_NOTES_CHAR_DELAY=0.02 \
++		git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandTimeoutMs=50 \
++		log -1 >actual 2>err &&
++	test_cmp expect actual &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
++test_expect_success PERL,EXECKEEPSPID 'notes.externalCommandTimeoutMs terminates timed-out helper' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_DELAY=10 \
++		run_with_limited_time 2 \
++		git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandTimeoutMs=1 \
++		log -1 >actual 2>err &&
++	test_cmp expect actual &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
++test_expect_success PERL,EXECKEEPSPID 'notes.externalCommandTimeoutMs force-kills timed-out helper' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_DELAY=10 \
++		 TEST_EXTERNAL_NOTES_IGNORE_TERM=true \
++		run_with_limited_time 2 \
++		git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandTimeoutMs=1 \
++		log -1 >actual 2>err &&
++	test_cmp expect actual &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
++test_expect_success 'notes.externalCommandTimeoutMs=0 disables timeout' '
++	commit=$(git rev-parse HEAD) &&
++	test_env TEST_EXTERNAL_NOTES_DELAY=1 \
++		git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandTimeoutMs=0 \
++		log --external-notes -1 >actual &&
++	test_grep "^Notes (external):$" actual &&
++	test_grep "^    $commit$" actual
++'
++
++test_expect_success 'notes.externalCommand handles CRLF note bodies' '
++	body=$(printf "A\r\nB") &&
++	test_env TEST_EXTERNAL_NOTES_BODY="$body" \
++		git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --external-notes -1 >actual &&
++	test_grep "^Notes (external):$" actual &&
++	test_grep "^    B$" actual
++'
++
++test_expect_success 'notes.externalCommand accepts CRLF missing response' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_RESPONSE=missing \
++		 TEST_EXTERNAL_NOTES_LINE_ENDING=crlf \
++		git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'notes.externalCommand rejects unterminated missing response' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_RESPONSE=missing \
++		 TEST_EXTERNAL_NOTES_LINE_ENDING=none \
++		 TEST_EXTERNAL_NOTES_EXIT_AFTER_RESPONSE=true \
++		git -c notes.externalCommand="$external_notes_command" \
++		log -1 >actual 2>err &&
++	test_cmp expect actual &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
++test_expect_success PERL,EXECKEEPSPID 'notes.externalCommand rejects unterminated live response without deadlock' '
++	git log -1 >expect &&
++	test_env TEST_EXTERNAL_NOTES_RESPONSE=missing \
++		 TEST_EXTERNAL_NOTES_LINE_ENDING=none \
++		run_with_limited_time 2 \
++		git -c notes.externalCommand="$external_notes_command" \
++		log -1 >actual 2>err &&
++	test_cmp expect actual &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
++test_expect_success 'notes.externalCommand accepts CRLF protocol lines' '
++	commit=$(git rev-parse HEAD) &&
++	test_env TEST_EXTERNAL_NOTES_LINE_ENDING=crlf \
++		git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --external-notes -1 >actual &&
++	test_grep "^Notes (external):$" actual &&
++	test_grep "^    $commit$" actual
++'
++
++test_expect_success 'notes.externalCommand missing response shows no external notes' '
++	write_script external-notes-missing <<-\EOF &&
++	while IFS= read -r commit
++	do
++		printf "%s missing\n" "$commit"
++	done
++	EOF
++	git log -1 >expect &&
++	git -c notes.externalCommand=./external-notes-missing log -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'notes.externalCommand empty note shows no external notes' '
++	write_script external-notes-empty <<-\EOF &&
++	while IFS= read -r commit
++	do
++		printf "%s ok 0\n\n" "$commit"
++	done
++	EOF
++	git log -1 >expect &&
++	git -c notes.externalCommand=./external-notes-empty log -1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'notes.externalCommand rejects invalid note lengths' '
++	write_script external-notes-invalid-length <<-\EOF &&
++	while IFS= read -r commit
++	do
++		printf "%s ok %s\n" "$commit" "$1"
++	done
++	EOF
++	git log -2 >expect &&
++	for bad_length in -1 +1 1x x
++	do
++		git -c notes.externalCommand="./external-notes-invalid-length $bad_length" \
++			log -2 >actual 2>err &&
++		test_cmp expect actual &&
++		test_grep "notes.externalCommand failed" err &&
++		test_line_count = 1 err || return 1
++	done
++'
++
++test_expect_success 'notes.externalCommand is suppressed by --no-notes' '
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" log --no-notes -1 >actual &&
++	test_path_is_missing external-notes-starts &&
++	! grep "Notes (external):" actual
++'
++
++test_expect_success 'notes.externalCommand is suppressed by --no-external-notes' '
++	rm -f external-notes-starts &&
++	git log -1 >expect &&
++	git -c notes.externalCommand="$external_notes_command" \
++		log --no-external-notes -1 >actual &&
++	test_cmp expect actual &&
++	test_path_is_missing external-notes-starts
++'
++
++test_expect_success 'notes.externalCommand combines with explicit notes ref' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --notes=other --external-notes -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "Notes (other):" actual &&
++	test_grep "^    other note$" actual &&
++	test_grep "Notes (external):" actual &&
++	test_grep "^    $commit$" actual &&
++	! grep "^    order test$" actual
++'
++
++test_expect_success '--show-notes=ref remains additive after --external-notes' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --external-notes --show-notes=other -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "^Notes:$" actual &&
++	test_grep "^    order test$" actual &&
++	test_grep "^Notes (other):$" actual &&
++	test_grep "^    other note$" actual &&
++	test_grep "^Notes (external):$" actual &&
++	test_grep "^    $commit$" actual
++'
++
++test_expect_success 'notes.externalCommand can be enabled without default notes refs' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --external-notes -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "Notes (external):" actual &&
++	test_grep "^    $commit$" actual &&
++	! grep "^    order test$" actual &&
++	! grep "^    other note$" actual
++'
++
++test_expect_success 'notes.externalCommand combines with default notes refs' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --external-notes --notes -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "Notes:" actual &&
++	test_grep "^    order test$" actual &&
++	test_grep "Notes (external):" actual &&
++	test_grep "^    $commit$" actual &&
++	! grep "^    other note$" actual
++'
++
++test_expect_success 'notes.externalCommand obeys last --external-notes option' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git log --no-notes -1 >expect &&
++	git -c notes.externalCommand="$external_notes_command" \
++		log --external-notes --no-external-notes -1 >actual &&
++	test_cmp expect actual &&
++	test_path_is_missing external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log --notes=other --no-external-notes --external-notes -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "Notes (other):" actual &&
++	test_grep "^    other note$" actual &&
++	test_grep "Notes (external):" actual &&
++	test_grep "^    $commit$" actual &&
++	! grep "^    order test$" actual
++'
++
++test_expect_success 'notes.externalCommand honors raw notes formatting' '
++	commit=$(git rev-parse HEAD) &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		show -s --format=%N >actual &&
++	test_grep "^$commit$" actual &&
++	! grep "Notes (external):" actual
++'
++
++test_expect_success 'format-patch --external-notes includes external notes only' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		format-patch --external-notes -1 --stdout >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "^Notes (external):" actual &&
++	test_grep "^    $commit$" actual &&
++	! grep "^    order test$" actual
++'
++
++test_expect_success 'notes.externalCommand is not used for grep matching' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		log --grep="$commit" >actual &&
++	test_must_be_empty actual &&
++	test_path_is_missing external-notes-starts
++'
++
++test_expect_success 'notes.externalCommandForGrep includes external notes in grep matching' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		-c notes.externalCommandForGrep=true \
++		log --grep="$commit" -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "Notes (external):" actual
++'
++
++test_expect_success 'notes.externalCommandForGrep does not search hidden notes' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandForGrep=true \
++		log --oneline --grep="$commit" -1 >actual &&
++	test_must_be_empty actual &&
++	test_path_is_missing external-notes-starts
++'
++
++test_expect_success 'notes.externalCommandForGrep honors --no-external-notes' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		-c notes.externalCommandForGrep=true \
++		log --no-external-notes --grep="$commit" -1 >actual &&
++	test_must_be_empty actual &&
++	test_path_is_missing external-notes-starts
++'
++
++test_expect_success 'notes.externalCommandForGrep combines with explicit notes ref' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		-c notes.externalCommandForGrep=true \
++		log --notes=other --external-notes --grep="$commit" -1 >actual &&
++	test_line_count = 1 external-notes-starts &&
++	test_grep "Notes (external):" actual &&
++	test_grep "Notes (other):" actual &&
++	! grep "^    order test$" actual
++'
++
++test_expect_success 'notes.externalCommandForGrep is ignored from local config' '
++	commit=$(git rev-parse HEAD) &&
++	rm -f external-notes-starts &&
++	test_config notes.externalCommandForGrep true &&
++	git -c notes.externalCommand="$external_notes_command" \
++		log --grep="$commit" >actual &&
++	test_must_be_empty actual &&
++	test_path_is_missing external-notes-starts
++'
++
++test_expect_success 'notes.externalCommand is not used with explicit notes ref' '
++	rm -f external-notes-starts &&
++	git -c notes.externalCommand="$external_notes_command" log --notes=other -1 >actual &&
++	test_path_is_missing external-notes-starts &&
++	! grep "Notes (external):" actual
++'
++
++test_expect_success 'notes.externalCommand is ignored from local config' '
++	rm -f external-notes-starts &&
++	test_config notes.externalCommand "$external_notes_command" &&
++	git log -1 >actual &&
++	test_path_is_missing external-notes-starts &&
++	! grep "Notes (external):" actual
++'
++
++test_expect_success 'notes.externalCommandName is ignored from local config' '
++	test_config notes.externalCommandName local &&
++	git -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		log -1 >actual &&
++	test_grep "Notes (external):" actual &&
++	! grep "Notes (local):" actual
++'
++
++test_expect_success 'reset_external_notes_command clears cached helper config' '
++	test-tool notes-external-config-reset >actual &&
++	cat >expect <<-\EOF &&
++	configured=0
++	name=external
++	timeout_ms=100
++	grep=0
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'notes.externalCommand warning is shown once' '
++	write_script external-notes-fail <<-\EOF &&
++	while IFS= read -r commit
++	do
++		printf "%s-mismatch missing\n" "$commit"
++	done
++	EOF
++	git -c notes.externalCommand=./external-notes-fail log -2 >actual 2>err &&
++	test_grep "notes.externalCommand failed" err &&
++	test_line_count = 1 err
++'
++
+ test_expect_success 'Allow notes on non-commits (trees, blobs, tags)' '
+ 	test_config core.notesRef refs/notes/other &&
+ 	echo "Note on a tree" >expect &&
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 8ee3d2c37d02..abbdb42dc9f7 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -15,6 +15,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-notes.sh
+ 
+ check_describe () {
+ 	indir= &&
+@@ -867,6 +868,22 @@ test_expect_success 'format-rev with %N (note)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'format-rev with %N uses external notes' '
++	commit=$(git -C repo-format rev-parse HEAD) &&
++	rm -f repo-format/format-rev-external-notes-starts \
++		repo-format/format-rev-external-notes-requests &&
++	printf "%s\n" "$commit" >input &&
++	printf "%s\n\n" "$commit" >expect &&
++	TEST_EXTERNAL_NOTES_PREFIX=format-rev-external-notes \
++	git -C repo-format -c notes.externalCommand="$external_notes_command" \
++		$external_notes_command_timeout_config \
++		format-rev --stdin-mode=text --format="tformat:%N" \
++		<input >actual &&
++	test_line_count = 1 repo-format/format-rev-external-notes-starts &&
++	test_cmp input repo-format/format-rev-external-notes-requests &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'format-rev --notes<ref> (custom notes ref)' '
+ 	# One custom notes ref
+ 	test_when_finished "git -C repo-format notes remove" &&
 -- 
 2.53.0
 
