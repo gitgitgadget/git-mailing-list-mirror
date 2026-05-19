@@ -1,109 +1,125 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B01B3E16A6
-	for <git@vger.kernel.org>; Tue, 19 May 2026 08:36:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779179783; cv=none; b=u/K97Keqyn1yrYoml42HLQgxfHVX6ggjRl7B9WgLo2W7AT35ZiIx+cY44puN7QxbDvSKzwkjn2VDA49CSm2Owv4wrRzT1fJjthdNv2VwY7qPrOFJ++VplAwSqg4spDQM6IHvzoeIg3m0+4wCC9nvl65yG7jSwf5JxYzFBhzzTR8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779179783; c=relaxed/simple;
-	bh=3eqx6bTc+kt3IRPfhwnLhhY0qvuxA+UCcJ6lwEwj1Z8=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Shxok1XIXzMOBNJy58Uhsvoi/iNWGMm+/bLnvNU8RUxXZ88ti+r9yFnbwfuKoJpjVRuXpMpI4qshMpGg89jASTYDvN5x665KTLZanApzQz0jYGjG6ndjun8Fax+TXkUNWZs+DED1A8XHhJAyzWp0UcwD1Q0WjpfyS2EK+GUuCtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=A5F3SpNS; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53903E16B6
+	for <git@vger.kernel.org>; Tue, 19 May 2026 08:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779179939; cv=pass; b=pHoZFao8My33KflQzPdUwHF+pFKG2x6WlQJ3bKnM8M4kALRFBU0sRZISm4y7BcbdvtIJYpmJut0+oi5ykNzEaSUjeKrdCB6Zg8KknGXt3QMS7H3A95APkYKGaIQS4rq5AWVzAEXeDC87Hb2HF1sp1DugTMtuf9Ol2QXcGneAzPM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779179939; c=relaxed/simple;
+	bh=7cnfPK/ClGfAsDbUakeaS8eJNH0QOtR32PUxdwpSTvM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pQDStCpay8VfolmMI/NwlizqT+LVo0ebQ6TOcJ6EVn9rI/XC8hy3eACWfUqAgjb6uzrpSpGS34EUBGf6XDv97tKmBW/uelzg2E4Fvjx5hVixwY5VhvInnQJ2KuOPTVTFqsdYVJadbjLnw7IkyMm3HrnJc+/4IP8DOmes5XreYBU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lu2xy5N3; arc=pass smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="A5F3SpNS"
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 64J8a0Dk016900-64J8a0Dm016900
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 19 May 2026 11:36:00 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wPFvk-00FiXZ-Fw;
-	Tue, 19 May 2026 11:36:00 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Tue, 19 May
- 2026 11:36:00 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 7a67c629;
-	Tue, 19 May 2026 08:35:59 +0000 (UTC)
-Date: Tue, 19 May 2026 11:35:59 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Jacob Keller <jacob.e.keller@intel.com>
-CC: <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] describe: bail of --contains --all is used with
- --exclude or --match
-Message-ID: <20260519083559.onq6r%taahol@utu.fi>
-In-Reply-To: <20190226215348.5119-1-jacob.e.keller@intel.com>
-References: <20190226215348.5119-1-jacob.e.keller@intel.com>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lu2xy5N3"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-bd8f6ef4ba6so309324966b.3
+        for <git@vger.kernel.org>; Tue, 19 May 2026 01:38:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779179936; cv=none;
+        d=google.com; s=arc-20240605;
+        b=In8o1mB6rM8QAXvDvp8AUoPMqBNWL618DenQ+g1wovcECegxGmDv68mN3czCL4r4qv
+         LHVAU0EjYTpa8FhkJne9bhaXeTIPhuryrsCLpCgD9EjhVnvd54jc7Dq5lWwPk2v3VQhm
+         9FTviOVQJh38y+dSIfh4CEypbLk8ZxwY0LnVn66/+GFtTqXpGIjchMQjY0JVkR+K6vm4
+         q9qhRU/1jhWs+5NqRaq2SmUsc+RujI8ObPc7GknNXDOdfqe3QxdhjkTOF4IZglfBAakR
+         oX2UM53kSKbmH9OVZE4qMjm+/Cdxpt43r8UmPcRC4j7Vjafn2QtNc+2UsfriWjJ0G02w
+         D9oQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=bZiuBdsbN37XpZMZ9PsAMuUO834qigGlrNC1859ogGU=;
+        fh=+cV05xTzo7dNMa3Zi2EIDc1gA3slaAuwhYpcBkpKrds=;
+        b=j3algLrxa2ECM95fKoitxTwLjPOWKDLZyiJXc4rTQkBr1sRdRizulsDhlrPZGO05Nf
+         A6gS5diJZMG+6RvFuFIWpaG8luZ5tw2wDrzaGC6lUg8TK8QubjZv1EDZ1wpa6Y3Mty96
+         x6Wt5C1yQIYDkIB2F7BNRjEB6rijsfxxJGcz1DBsaKJZNjxUiOMn0zeCktU5i6eT+vfE
+         E7g98VrwEfmOxmf1qx52RyXL5iyScceAF6EWbnsHbHRdNxoA4At0KsCDMM1M5XIFMmuP
+         aFaERmluwqUAn2Xn9M1EZHfhEbgnGrWH5kc8WV0uc+eIBILA6Fx1dBQTZWiosuB0XGpS
+         yk7w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779179936; x=1779784736; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bZiuBdsbN37XpZMZ9PsAMuUO834qigGlrNC1859ogGU=;
+        b=lu2xy5N32Wexi3G7glBMICKRdVMtxTCsazAHHhW5VsGtrM2NU3N9ZQbpS1kiy6NIlE
+         DIkvZQMMstO7ZBPa7lgwnfEthKJcyj0jIIiPzcW/l2EyGivJ118TKTzeovYpV/Fw8mpx
+         zLknwsatBRbpJEC2Uoc2HjgELNMKc8k0yRGsbROBvzLIT7TxXU/Swt+fVnPDC5ewaCtW
+         rcAT2AQtDO+qCGTd7U9tcfzV0wikYRUIICCBEZecl6BXV/TIaEblLCCHiQ391IixvHT4
+         Ul6mG6SWJP06+AeFWnVg6LWeG+WJ4uLP97CKZ8wfVYVfPoSpRJwjAZAQptX5NbVWd0Ae
+         YKGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779179936; x=1779784736;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bZiuBdsbN37XpZMZ9PsAMuUO834qigGlrNC1859ogGU=;
+        b=tFfBUsEoMIHBuMqay5Xp10pOsTQVGEPixQAenqYENr4Gn7sMdnNW6uCjdGOUWfZhY8
+         jvaELxWu7BOSuiTuj5N9H+CHHURU//BBVBbNbQxWyGeOMBK8iQrmbuJqqQFMZ8ePyVy3
+         pSJokxMG5cKoIv3oOgRlkVlzNt/HRKmHyIXrU9bVYN6B9gIOKK9uv4Qr4WILKiIAN3eC
+         cA2gbSiqB7399mzvQul/14RonTwJVmWhPdzq+Oiz+yxzkCzWXfEBd7VxeIjEqTC2vAsf
+         KnHImzErRsUo60I0sLqLgoFXX5pvAv0GnH+UrFZgbylcxwJ7vISf4lInI1mDbSFMl1l+
+         +zWg==
+X-Forwarded-Encrypted: i=1; AFNElJ+A8++poeNZT8zp5deDKstiP16CG0abOVk3o7BABG0Drd1yO9C66aN0isPgzZww8zwbO7s=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6dtohKjnh7PNg84N7dcIVZtm0EDjvOp5Rcn2N0SZux94HSFqX
+	ewRUdaxwgwiYrV6Y1YLczrPguv7jBGCsagZevZDZ1HxN8qu1tjuEpd8rINlwB3Pe4HDOaYDeRlL
+	IqFGB8wjeNoP0EK5eN+EJfF7RRFLoXKA=
+X-Gm-Gg: Acq92OFi64p2LQPzSObDEGG8R/3k8zaystoN3jRZ15h76siuhxe4PNa8zvdpKdH6L+0
+	5e/Lxi3c5YZhF07YZ214vK8w34wAEGD8YIkoWwhsWAOUAua0BOho7dGPNNTldaBF3MYFu0ZOy/S
+	QZzraz/ZL4Rm8Kkkdjn82g2K8HmGb+1JZ3kk7oHa00/CCejY+WPzyusa0UcYUnAkVD6RJw5fnck
+	K3NOocuh5quLgd3J8bwbzrS9gDlQu6mwLCYCt6oAo4X/+kMbUC2sG15snHf2Hctt9Yo3XWNnBbe
+	gtcX4fQ=
+X-Received: by 2002:a17:906:6a01:b0:bc3:989f:5179 with SMTP id
+ a640c23a62f3a-bd5177ee410mr1015884566b.22.1779179935505; Tue, 19 May 2026
+ 01:38:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-03.utu.fi (130.232.247.43) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhaXEgCCQsHCkYNRgMNBAQNGigBBhwNBEYLBwVIWEhaSFlcSFlbWEZaW1pGWlhfRltYSFBIWEhYSFtIWEhYSFhIWVFIDwEcKB4PDRpGAw0aBg0ERgcaD0hYSFpcSAIJCwcKRg1GAw0EBA0aKAEGHA0ERgsHBUhYSFpaSAIJCwcKRgMNBAQNGigPBQkBBEYLBwVIWA==
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
-X-FE-Policy-ID: 3:5:2:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=k2OSp0tVz8M1FH7hB9VoLxh1RWmAHdvGq/MX5+74qIk=;
- b=A5F3SpNSSWdx156GReg9x+olWVJ0wQ0Hq5dsABksewDhluabwuUwO5DTrYclVom7ns8XINdvsetP
-	Hc61Rvpla0GqwtmyUHtzs3c3wKlS50Iam0rP07ZFEvak53b+Kznc4E+uL1UNurtrgQ11ojLTNhAC
-	uVyD745Bq4PdR/9gDNnXysZijq4ShItlaKM0UsNrZcKbAhYkY7j4R1aQacF8WrwiKcF1tg4ABYD+
-	tI0ERvy/4Q+a3m8l0WzvtyX/ZcuwRDirv4ob2Ikv4mEyXcJGGHSrGqO3BYNaTqCyW/uRBikZmkTi
-	EwM+Vo3E0ttFZfwZ1bfE68yTPMmZfoZuSvY/kA==
+References: <pull.2281.v9.git.git.1778583307774.gitgitgadget@gmail.com>
+ <pull.2281.v10.git.git.1779091483321.gitgitgadget@gmail.com>
+ <xmqq8q9f9b5w.fsf@gitster.g> <CAHwyqnUx=59MK5zKL0uuFXKrZ6PEc1j_2WT-_xtsGewVH3gBKQ@mail.gmail.com>
+ <xmqqfr3n7r1a.fsf@gitster.g> <CAHwyqnVtZDsBiGSk5rvMJGGk_KRg7XY_rJO4Q37hOxgoO_SJaA@mail.gmail.com>
+In-Reply-To: <CAHwyqnVtZDsBiGSk5rvMJGGk_KRg7XY_rJO4Q37hOxgoO_SJaA@mail.gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 19 May 2026 10:38:18 +0200
+X-Gm-Features: AVHnY4IryIfIqzWMCMcXtxRIUhkUv-PHtKWgA8VqETC4Xm5dBlUh7vJcA12HOnw
+Message-ID: <CAHwyqnXMWMz+_8Yccgje1FuzcxK2x26eNd9i7+_H1xHLs-VA+g@mail.gmail.com>
+Subject: Re: [PATCH v10] checkout: extend --track with a "fetch" mode to
+ refresh start-point
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Marc Branchaud <marcnarc@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Jacob Keller <jacob.e.keller@intel.com> wrote:
+> > > Yeah, good point. I will try to address this and send a new patch.
+> >
+> > Please don't.
+> >
+> > Next time, think deeply yourself and do not rob my time to think
+> > these things for you.  I do not have infinite amount of time.  A
+> > good balance may be if I find one issue in your current code, it is
+> > likely that you'd better three more issues and fix them before
+> > sending the next round, or something like that.
+> >
+> > Thanks.
+>
+> I already sent the patch. Sorry about that!
 
-> From: Jacob Keller <jacob.keller@gmail.com>
-> 
-> If you try to use git describe --contains with --all, the exclude and
-> match patterns are silently ignored.
-> 
-> This results in unexpected behavior, as you may try to provide patterns
-> and expect it to change the result.
-> 
+I didn't realize how much time this took away from you. My motivation
+was always to put the topic into a better position ASAP, to avoid
+anyone else reviewing an old version.
 
-I got just bitten by that, and yes, it was quite unexpected.
-
-> Check for this, and have describe die when it encounters this, instead
-> of silently ignoring the provided options.
-> 
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
-> 
-> I just found this while trying to use it, the patterns weren't being applied
-> properly.
-> 
-> This is pretty quick/dirty, I haven't had time to write a test, or anything.
-> 
-
-Would you like to resurrect the patch?  It seems it was never merged,
-nor the underlying problem fixed:
-
-```
-$ git describe --contains --all --match=bogus
-master
-$ git describe --contains --all --exclude="*"
-master
-```
-
->  builtin/describe.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
->  [...]
+But I do know that it lands in your inbox each time there is a new
+patch. So I will try to cut down on the amount of patches from now
+one, since they are not free in terms of yours and other time. Sounds
+ok?
 
 
---Tuomas
+Harald
