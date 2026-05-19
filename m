@@ -1,156 +1,231 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8FD3EF0D2
-	for <git@vger.kernel.org>; Tue, 19 May 2026 09:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BAD3DB65A
+	for <git@vger.kernel.org>; Tue, 19 May 2026 09:33:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779182799; cv=pass; b=dLx/58IudIhgdQhYHfLGQZdmhL6ykDTJLKe71MMzsMuDwxGZmIMXQTGuCbBMFh3YALABaGSUTS2Ntr6f8b9yYeZ2okW4qFyVXYBPwP9j0OWU2XZAa1+3RNXsfs0H9QSmaTDVwa2YgtLXUgYRhkyOt4+AkQJHJN6fRaSaKWpmmnY=
+	t=1779183213; cv=pass; b=jEDsL7wp/6g3XAQVtQofg/+XYpTyiYvYevspapGPris3exMWaE847Eno3HuH4qSZXYucyd/8LDqS7zf9IwW53PjK5xzfu5Gnt5K7AbJVCmwnFYsT88hRE/QQcqrr3dX478B5AkGXZCISnqZObs4XPocqnzQUI6+zGWFBV85MYVI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779182799; c=relaxed/simple;
-	bh=n1NR4zuE6EsaabLI3q7MFizOYQPhlkmp+EIke3dzfwM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Kl1IbI91hHQN9r6C0fYUfha+hFnHHcIYBRQ/j7tM2icvk3CMm1ICGStueGS5fIedklHbp0aZNzaQwQGgkVvRso90O8VyXm+fwWiVANF1rODz6b1NsxjxlprpU4c2A+IzMLkC5O9/AA676IpMVPOBLAHSpypW/3l0ulw7aRcG9c0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jVwnvD2P; arc=pass smtp.client-ip=209.85.221.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779183213; c=relaxed/simple;
+	bh=nw/DvNZB9Rjuqz3SDGP9S4qxZS8/zx08wXIYSINZhPU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RHorjufrHb0VbJfcWLutZ34Uh1VLK0mLl9ANFgQGjRz796fZ/ThyAn/SFqFmswQdXuANlGchpOe05/s+OP1QZqr3d3B49xypvYlWvSlYKn3rfHnaw1XC2hMzmbct/Da5n8rTx6NC5tMwc7kGk2/dhs6Az96c9SE2mW12ahzRpkE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=M/in8m5d; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVwnvD2P"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5752b279662so1072030e0c.2
-        for <git@vger.kernel.org>; Tue, 19 May 2026 02:26:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779182797; cv=none;
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="M/in8m5d"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7c52e49d978so27508087b3.2
+        for <git@vger.kernel.org>; Tue, 19 May 2026 02:33:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779183211; cv=none;
         d=google.com; s=arc-20240605;
-        b=eieFLSHEqh1lvq2Asd0E0Petzk0YJsSm3zmkxtAQkURKQmrYDR3n2SQrriWLXgtOW1
-         FciIJ6q+pdgcUMnkwDVG2VSUYJ/T3xFF47rdMmmsbvYDmu6VIClNbXeLWb26fuQTQKvr
-         +ictr1Cl7oDJzxfLX6w3tfTV2Y0/NwWmLexTLo2urAdhVC+x4OA6g0G8zRzWySQdwwId
-         e6VVGLCPWjOaNA9xMHu3iDgtEMGgwE4Ax6dF1Yt+aTKdOmuQrDJP8vWrXuyPBTT09OO8
-         AX82jnZHdTv2BuLx4SrGypll+/W1Y25/Wni6HiZ3Q5D6NRxvxNtDQhaPH/dso6pt3CLU
-         81Ew==
+        b=LJmRMC0nIQ4veo00D+O4rmmEpLoc4Uh/bdwxw+ojm6EoNcmAXwXr80enXBdxbPWH21
+         5Cpgkcj+vsED4LkYRWJAIXhQD+IxDLkShuxSBhYxGn/tNJf+O5lKFH3VjLiYOAn92NKX
+         2mGjPwBUdLWEXWLeMKlLue1Kxk2edUrSG+K/Vxax6AZFKNGZOWOud5OagE/JZc1AuGSg
+         x/9QRR7rEsevgf1D3V9YDYLn0CVD8Ml6kOL8Mt+fah7p8l7y/9Jj7FIwejEHwihSVwhQ
+         0eCqJbI10BKg/zmDzheL2ruyVsUMeBSklLFFBwNPtMTJ9ahZTNeBGE8n3mfARepiC3Ih
+         pjaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=pWtvvC500072r0k2jG7l4UC2JDjrHFwN3Wlh3Hf5BaE=;
-        fh=4MfBEAXS2VjQDY/I+ja0W6oblPVtjbn+6rU5oDKUeS4=;
-        b=k4ohd1Yk/fjde3CkPHR1THaUktN1GhfC2G3gXU4b1sP5+kBR6o5zHzioJ6EfJnnTxw
-         lmdM6NnPu5f70tpDLW4FHhxy2CbFNpKX4hymvTUHVwK5FIfSTuJPrTUc2tcVFjzLt/5T
-         IfWlzsTZjLbFIRlKtCQQekItMBxw1/2yMngKE2CqKUDnU+apU6d51WEt5uafO6UJdwao
-         wsuFJeKU8QEXXc4z+PluY70LfMZN8g41h7OvieEoPSQ+2v29BQO3fGoQRLVPCBS3AYsL
-         fKl4G+SYxrcbRVbCzxLHSorUinseSu4ZqSfX5Xsuh0Ne7KY8P+ITw9wv0TZpEI6AxYYt
-         GS0w==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=S8WUHUmwBvMJVE2s5GnIP8kY3JI/str7VB50nhmIaZw=;
+        fh=77Cdu10HPJrSoxsDIxsXz7o1lrADaOs8FZjdpUhUffg=;
+        b=CvvSMZyWGGbXU6vGb/7UnTYJ709KgYNMjjeekm8sD8Pui/YNhJLKg6HTqwqS1a4r8P
+         slHDs0Ub7x66VDHAPNZMqW1RX3+JF6OBTj1z2cwweCJ1PWnKWI1y3tBgPCbo7XNZtSKS
+         fDI374jDnlwlA9HsTpU70s+L3+8Ing6AN1Jptb32xJdUD2LsAcqGI1opOsPmbABpWFcr
+         CA0LzHN9q7QElCHuJlUOSCfmfvzD79rwsvlmGQFXPH7TF2cxfr5PdpAtVpzbr56+3hiM
+         33PgF7X0hLBdX7g8MQDWwki1wrL3OTyj01NEA0knogGxQ5lrt7IhRI6jy2ej7gBA76zm
+         FDEQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779182797; x=1779787597; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pWtvvC500072r0k2jG7l4UC2JDjrHFwN3Wlh3Hf5BaE=;
-        b=jVwnvD2Pkbs22avTC2ax7vjWO9ood6ak458kVlgzD5RHYBhyx5eO5mkeT3Fu7PgclC
-         fqpmnCVeLGbEmJmiXc3lyRYp2C0vDlaIhrbvrm2sn/BKXr9ztn0TwwKxs4jQIC9lIGTu
-         DoVTnNoroPfgcbpUcPVO2iqg8k6/70GQ9IfTOtqh+/NnlEn0GAu2bB+OwcrP2QJ8N65P
-         E1F7iqYQHhfYFr/WQnA8VNhH77wp2l4FMa38UeEa3qMgP5Iftp1KFNQ9krYiWL54EB1c
-         rr1a3zjeRc0dUCrImiuHq+VoLzdCGlEh8YKu8jCJW4gPV05EjjOQpd6UeFscoEEiXD0i
-         WbsQ==
+        d=spotify.com; s=google; t=1779183211; x=1779788011; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=S8WUHUmwBvMJVE2s5GnIP8kY3JI/str7VB50nhmIaZw=;
+        b=M/in8m5dHw2rDRi13cjz8ZHEyMkDrD19y37WnfMmLqOSUTbTlO43/3SfsOaOE4NxC2
+         9vwTQTx93mpxQh6yPBGpZVYjwq/DEXnLoyjpRklcA/PSl9KqzkHViUw7NkI0LN0nlXZN
+         yfbWNU6WNEcD/EOpwlpnX2pCLRvyox4U2XoL0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779182797; x=1779787597;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pWtvvC500072r0k2jG7l4UC2JDjrHFwN3Wlh3Hf5BaE=;
-        b=nt9dNyFPNQGe1cAycxQN6EpzK/+BfvLdJXCGPQsg2u4CQNgJAtz0STw2xfP/CLJSe7
-         5I60fWN/O8ZEBcz0wBcfBltKqP2BFZMPEf/e0tZeJEwaks0VIy8XuVXvhC8QMVLRbixX
-         YbNoqP/BEqVo0kKcSp2kxsh2qcD9vFOl95QZ2mdLvy0MPr2nySnWpHMgcGxgFBqws1VZ
-         BAsM1IhjF/RIDvYr2Rbd/jxb9k2Jnc147U/S5QbIl9tcJfDZLqWJ2HmPLTUkJ6nXFrkU
-         yakzRlcsL/+1iYJq1YulcBW4zhl26cF/kMIAM1vCh02gau4VJ4WoCaV6aklMOOCyj6BX
-         NO8A==
-X-Forwarded-Encrypted: i=1; AFNElJ/hBwSGG27bRZdB/zQ0Axmp2dkXwUfKqEBc8s/o4ck8rE5VO/zOVLjyMvpWJ9RPT/8JNLc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YycUmMl/qSrchuEjyU8zg/lxqqibzPgU/k/4sCcXHYWOKAuHwpP
-	/C70/JKywY9dr6QVZrXLLcMqcbq48lFLhxz5ILm1S3BmnrpzRl89kojIe3HbRAQtcAvVMYHXgye
-	vigjEtnIRk/sdjvOhlMDVYV/cUbBshsw=
-X-Gm-Gg: Acq92OEOKqYzVVj6oQrNC+w2uTJy/ZjY/3EMNDakqwcLA3o7wEm0HcV/UMRT3XDr7Dl
-	bkqDvlUHagJZZt6MRS5w4e6WdjrSZkriXlA2N17nSotNY47erKF+Fq3EWHY8PinlfMf+iUyePTX
-	2BFNtX5cAJEm4XUqBCxIW4nSIOawkeCEekMznIJk7tq52Jxpj6IDMYH7LV0zSmNe27BSvwZgWoU
-	D/Ox1NsMUgT0WPSkd12gOIthGiLPDvenxVVYpTq94DYvyJAeV7mlgUtE/SZt4r5rtlfBsnm9iug
-	8GY3O8AecgZ5eR/MyWzPbOIfQL6Wy7xse8axer/yGZxJjElC5tbDHEsesZTJDlsegkZxYic/SXB
-	+g7WwMq/H
-X-Received: by 2002:a05:6102:956:b0:612:21f8:5afd with SMTP id
- ada2fe7eead31-63a3d94e0ebmr8444113137.12.1779182796860; Tue, 19 May 2026
- 02:26:36 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 19 May 2026 02:26:35 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 19 May 2026 02:26:35 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260518-pks-setup-wo-the-repository-v2-0-6933c0f1d568@pks.im>
-References: <20260420-pks-setup-wo-the-repository-v1-0-f4a81c4988e8@pks.im> <20260518-pks-setup-wo-the-repository-v2-0-6933c0f1d568@pks.im>
+        d=1e100.net; s=20251104; t=1779183211; x=1779788011;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S8WUHUmwBvMJVE2s5GnIP8kY3JI/str7VB50nhmIaZw=;
+        b=FvhiWXfwsdW0AtXXYENUVgnoJRCQfBPaSqUHG8ohZ8/QAt1CzdSPcDrSTgkJeQaybP
+         jYiXcMsyWK7g0qsNA1wbOQqRM9TcC9AOujyN6M+w3M3oNREvYgdLQ4LxatJoz0Yj7Vmq
+         sQWbkuNFSdgMDZoZMFRSR2N+Pl+oKdbcofSTefzS1P4fiRVRjzntfcAd/P0BiEVeotrX
+         awqQZMCywbXtX5mhoFEt0y2aPc0EKhbgoNHymioA8nSXw2ancYydflYUo07RiKOJ4IOw
+         6V9Q5+JdEBdsOzRlhA4XULCxLwaIYxmH3veIQwdHmKMzompLa5BK2tsEY7g8KEyNSOEJ
+         gWEw==
+X-Forwarded-Encrypted: i=1; AFNElJ+vmGPUpWpYBc25mFSdFUrb86YUIbAIX5felDA7m2EPmXkxT4RXIDFECXP/s8UpcRTrrm8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIKfnjVAzCXgYFIHcMCLTAye3aAzKm59iYZlmN5uK9n1VbFfHp
+	DHCFVoBOXB41FTLowHVPNqt2WyqBHPB9lUB+CU9duTZ7huJj0km6A4UgMo1kT7Exe9oqNGa4xh3
+	KZroql90Wh6ugo5mKJABnjGtcqtiMDp9SUyc0QDx3vw==
+X-Gm-Gg: Acq92OH5rGsbSHrjIopdkRvvUz0kOejNwpYo4WHOhiWTCPvRr70/FYgqba6s1dqgSGe
+	a8c6HyNllK3YaXIsp57m6bwwjxsZepzw21+i5dA0tBYyFsY2FUNHkzziDEGls4GRVeIDTdwkPYZ
+	qE/oJB12D9i/sT663k1/MB34OaX8zqwibmLyzMpR/OGutxnkYgl6HBwfOPFDHQSf6jO+o6kKnTP
+	spxBeGxIjMduc0oX/JULmZLLWmM37hFwFVx+ybhySbUkTmKofNIxFQq1MT204jCVM/egiHrrand
+	T8banTPKFx+7ilcTmho=
+X-Received: by 2002:a05:690c:4424:b0:7b3:852d:eed8 with SMTP id
+ 00721157ae682-7c95a66e7damr186074097b3.20.1779183210824; Tue, 19 May 2026
+ 02:33:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 19 May 2026 02:26:35 -0700
-X-Gm-Features: AVHnY4JWwYVKdhwcHm1eQ18lz4fIxEWM3xmibHaJnST3eW_kMvrq9mBn9fnmcZU
-Message-ID: <CAOLa=ZSxhtorR+t-4M_COxfu6HwpcB0hr43OhqcwgkU+VLX6qQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/18] setup: drop uses of `the_repository`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>, Tian Yuchen <cat@malon.dev>
-Content-Type: multipart/mixed; boundary="000000000000990db40652284628"
-
---000000000000990db40652284628
+References: <pull.2114.git.1778777491939.gitgitgadget@gmail.com>
+ <20260515041641.GA81292@coredump.intra.peff.net> <CAL71e4Mfq3SCO7vnTbFCxpzH9txWPTencV-vq-aQ=wJ7dPMV2g@mail.gmail.com>
+ <aad34ac2-4cd5-4c85-b8ff-14c0caaa1c7b@gmail.com> <CAL71e4MxhcZqxPVEe38Shuqt7h5dxLDGi66hN2cFXnmg-POKWA@mail.gmail.com>
+ <20260519005429.GD1612961@coredump.intra.peff.net>
+In-Reply-To: <20260519005429.GD1612961@coredump.intra.peff.net>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Tue, 19 May 2026 11:33:19 +0200
+X-Gm-Features: AVHnY4I7B87z-9rJ54D83A-Kw6c1rMtw2MGXZ8SCW_QGwH6lpHDWe5AmGNI7e54
+Message-ID: <CAL71e4O6UcnqmxDgqyGqvgvfruSzeoz6Wj5muXiwEp_8y2wAcg@mail.gmail.com>
+Subject: Re: [PATCH] revision: use priority queue in limit_list()
+To: Jeff King <peff@peff.net>
+Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, 19 May 2026 at 02:54, Jeff King <peff@peff.net> wrote:
+>
+> On Sun, May 17, 2026 at 05:26:06PM +0200, Kristofer Karlsson wrote:
+>
+> > Another note - I think I managed to apply the same change to
+> > get_revision_1 too - speeding up a monorepo "git rev-list HEAD" by
+> > 3.3x so it seems like a reasonable thing to do.
+> > This simplifies process_parents and also makes
+> > commit_list_insert_by_date dead code.
+> >
+> > The only caveat is that get_revision_1 starts to get messier and the
+> > rev_info struct needs both a prio_queue and a linked list of commits -
+> > and then flushing everything
+> > from the list into the prio_queue when executing get_revision_1.
+>
+> IMHO it is worth replacing rev_info's list with a prio_queue and letting
+> that be the source of authority. You do have to be careful to cover
+> cases where the list _isn't_ date-sorted, but prio_queue supports that
+> with a NULL comparator.
+>
+> You do still have to convert between list and queue at a few spots, but
+> I think in the long run many of those could be converted to use a queue.
+>
+> You can see my patches to do so at:
+>
+>   https://github.com/peff/git jk/revs-commits-prio-queue
+>
+> I've been running with them locally for a few years. Mostly I hadn't
+> gotten around to polishing them, and I think I had wanted to do some
+> more perf testing. It sounds like you have a good candidate repo for
+> showing off the improvement. ;)
+>
+> If you'd like to go in that direction, please feel free to pick out
+> whatever is useful from what you find on that branch.
+>
+> > I don't want to pollute this patch with that change - should I start a
+> > separate thread for it or just revisit this later?
+> > (Perhaps I have too many optimization patches in flux already)
+>
+> Yes, it definitely makes sense to do that as a separate change. If you
+> look at the patches I linked above, note that they'll get a bit simpler
+> by rebasing on top of your limit_list() changes, since it does some of
+> the same things.
+>
+> -Peff
 
-> Hi,
->
-> I've had enough of "setup.c" and its complexities, so I finally decided
-> to take the bullet and start refactoring this subsystem. This here is
-> the first out of the following three steps:
->
->   1. Drop all uses of `the_repository`. This doesn't yet allow us to get
->      rid of `USE_THE_REPOSITORY_VARIABLE`.
->
->   2. Convert a couple of global variables and drop
->      `is_bare_repository_cfg`, which then allows us to drop
->      `USE_THE_REPOSITORY_VARIABLE`.
->
->   3. Refactor the subsystem a bit so that we stop intermixing repository
->      discovery and repository initialization. This is my original
->      motivation as I want to get rid of `odb_prepare_alternates()`, but
->      due to the way we initialize the repository it has proven to be
->      extremely tedious.
->
-> Most of the patches in this series here are rather mechanical. There's
-> only a handful of patches that warrant more attention:
->
->   -  2/18: setup: stop using `the_repository` in `is_inside_worktree()`
->   -  3/18: setup: stop using `the_repository` in `is_inside_git_dir()`
->   -  9/18: setup: stop using `the_repository` in `setup_work_tree()`
->   - 10/18: setup: stop using `the_repository` in `set_git_work_tree()`
->
 
-I think the series looks to be in a good state, I left some small nits,
-feel free to ignore.
+I didn't know about your prior work on this -- very cool!
 
-- Karthik
+I took a look at your branch. Our approaches differ mainly in
+how broadly the prio_queue replaces the linked list. Here's a summary
+of the tradeoffs as I see them:
 
---000000000000990db40652284628
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: bb74c97bea967f55_0.1
+Your approach: replace commits entirely with struct prio_queue.
+Every access site is converted, and boundary cases (bisect,
+topo-sort, simplify_merges) convert queue->list->queue when they need
+list-based APIs.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vTUxNa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mODdjREFDQnhmUDA3UEVDSnhsdDN0Zjd4Z1d1alRNNQpJYWpRSHkxZ1J3
-K0NnU0ZXWGllQUxJeUZMYjB5OTlVSGVYbC81cSt1ZDRMc2pPNEs2c3FOcDdnVDNTYldxRDVuCnhI
-bExHT1FWMjA2K0RucVFHdE95MHprdXA1MHg2OW9oMXpMeEtyUjlxTW5pTGpZRUNFWlFlVVlmRmlG
-WkZ0RlAKeDczSDN1R0ZMK2F1TUFLZnl2eVUyaGlsVGFzMmozT2xKeGpMVnBGSVBGM2p1MkF5RXhi
-bDVxdFdYTnJwM2JraQo2S3NTaVJYc0hPcThPeXlnS0ZPd0pKY1NmcFFwZ20zMThCSHNpdVg0QzVB
-eE00QUdQU2xoZUNHQTJUclZsVm5BCm5rbmVTWFYrQ0N6Qmg0RDA2UTF1QjZxVjQrZXY1K0xHR2xl
-blpUSldNZjZ1d2s0UE54SjNkeldrTEsvVGtUT1YKOHNCem5FK0c4RW1QRW5pSzNYUXI0azFKM2wr
-K2FHUzlrR0hNaXRzaXJyQWRaSllVRjFYaHlkVXNBRnQ4bGttbgo5SjBCajZid2VpLzdoR2RKZDNt
-cnRMWEdaOUxxdEJPSlg5UFFSNDB1bTBtYWpvbGlFR05yb1JPSDhDaVdwWVB3ClpBRGxlRlhtYi9k
-RU05MkxYMThZejBIdS9nd2c4am4xWWJ3SlpnWT0KPXFFOXoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000990db40652284628--
+My approach: keep the linked list for setup and add a separate
+commit_queue for the walk phase. External callers that read the
+list between prepare_revision_walk() and the walk are unchanged.
+The conversion happens once when the walk begins.
+
+A quick size comparison:
+
+  Your branch:  12 files changed, 167 insertions, 152 deletions
+  My branch:     4 files changed, 138 insertions,  78 deletions
+
+The main reason mine touches fewer files is that the list stays as a
+list during setup, so bisect.c, builtin/rev-list.c, line-log.c, and
+list-objects.c don't need changes.
+
+On the walk side, my second and third commits refactor
+get_revision_1() to use a vtable ("walk_ops") that selects the right
+pop/expand strategy once and caches it:
+
+    struct revision_walk_ops {
+        void (*init)(struct rev_info *);
+        struct commit *(*next)(struct rev_info *);
+        int (*expand)(struct rev_info *, struct commit *);
+    };
+
+    static struct revision_walk_ops streaming_ops =
+        { rev_info_commit_list_to_queue, next_streaming, expand_streaming };
+    static struct revision_walk_ops limited_ops =
+        { NULL, next_commit_list, NULL };
+    /* ...reflog_ops, topo_ops, no_walk_ops... */
+
+This replaces the nested if/else chain and makes each walk mode
+self-contained. The init function for streaming_ops drains the list
+into the queue; limited_ops just pops from the list directly.
+
+The thing I'm less sure about is the prio_queue dual-mode usage in
+your branch -- using compare=NULL for FIFO mode. It works, but it
+means call sites need to reason about which mode the queue is in
+(heap vs array), and the queue<->list conversions at boundaries add
+up. In the two-field approach, the list is always a list and the
+queue is always a heap.
+
+That said, your approach is clearly cleaner long-term if the
+remaining list consumers eventually migrate. And the single-field
+design avoids the "only one should be non-empty" invariant that
+mine relies on.
+
+I benchmarked both approaches against a 2.4M-commit squash-merge-
+heavy monorepo (best of 3 runs each, commit-graph present):
+
+  Benchmark                             mainline    kk      jk
+  rev-list HEAD (streaming, full DAG)    21.8s     6.9s    6.9s
+  --ancestry-path ~100K (limited)        21.8s     4.8s    5.0s
+  rev-list --count HEAD~10000..HEAD      17.7s     3.7s    3.8s
+  log --oneline -1000                     0.1s     0.1s    0.1s
+
+Both give ~3-5x speedups over mainline. The streaming walk is
+identical. On limited walks kk is ~4% faster, which I think comes
+from avoiding the queue rebuild at the end of limit_list() -- jk's
+commit_list_to_queue() drains the result list back into the queue,
+while kk leaves the result as a linked list (which the limited walk
+then just pops from directly).
+
+The perf profiles confirm this: compare_commits_by_commit_date is
+11.3% in jk vs 8.0% in kk for the ancestry-path case, and
+sift_down_root is 7.3% vs 5.8%. The rest of the profile is
+identical.
+
+I put up a draft PR with the two follow-up commits (on top of the
+limit_list change) so you can see the full picture if you're
+curious:
+
+  https://github.com/gitgitgadget/git/pull/2118
+
+I don't have a strong preference for which approach we end up with,
+since both will achieve the same performance. So it's mainly a
+question about which one is easier to maintain, where everyone else
+in this thread has more stake than I have :)
+
+- Kristofer
