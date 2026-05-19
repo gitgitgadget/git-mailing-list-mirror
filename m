@@ -1,114 +1,106 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462BE31F991
-	for <git@vger.kernel.org>; Tue, 19 May 2026 14:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EFE2EE262
+	for <git@vger.kernel.org>; Tue, 19 May 2026 15:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779202491; cv=none; b=mjL0cm01EPnBb0wEK3P2Y2wvEGHkmQTnwcJJ6WkPtBjrreKgl2ZB0hWowmE7x40P6HMZGhxCsVzGD0LKcoU9n0tv/Y6S7sr7E6AtH8YKK54KNcHD2EiDZGBNcgdZR7q47iJOyDNoTJFotqMI2ZBPgP1sa7IwPiF5+9M3KNCnD1Y=
+	t=1779203289; cv=none; b=tMVhtULMMioj34jZuyNf+LO/sljmIlKv1+48MA9ti2d/LrZtqDFxBSJcKOTDdriGRPPOwHs3fDXEgd6XbFhZCyOm4Kg2WXZ+bR4374q9fJZMEkABMOY6/wfixi1tVYvvXETBQiBi7/v5h4NH8qzYT9+rY/e6Csb/dthRs52jT7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779202491; c=relaxed/simple;
-	bh=RcRx+RA6XY9YG9IX4V1BAexA1l6wSADSAB0fwGVfH2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=HqaOGLXQN9C83im46Lfum5Lam+2doQRElz3Ooo0S+Ap1RAEOEWcu6Z61O3nkoOFNCcDbHsmImk2ARSyZH7M/iVJ64NR+WgXUKbxThS79cFweCBvysRZRgpkEy1WUrQRYij4xfG/bpfaPlFlU7uBtakp2+byan4Op+iEcRowvMsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lU5HZlcA; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1779203289; c=relaxed/simple;
+	bh=bU3hZ4meFNUMDXpQAfJ008BSj5ewgIQ2V35o8EzwvIE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aqeI9tgHW9r+WL3nJrqp0Ei0Z2I29zaRlSe8zLQShhraOotIQlStlakWl46hBkkB2+8Qi9v0EYSBzhAGgBECSGSs0QtN74RgLPBxiRP7Kq9CHmI1VnUdp/hWkIAyX4wgUb7Iu4vBX94oHlnSj3BDz3Jounvr+s6qd/XvMdrcY6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyBPaQD1; arc=none smtp.client-ip=209.85.222.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lU5HZlcA"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so21686285e9.3
-        for <git@vger.kernel.org>; Tue, 19 May 2026 07:54:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyBPaQD1"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-94de664b541so809340241.1
+        for <git@vger.kernel.org>; Tue, 19 May 2026 08:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779202488; x=1779807288; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=gmail.com; s=20251104; t=1779203287; x=1779808087; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/mUEj0wpephdHMSObPBe5gyzUcLpmIs4s4ymhhW1wt0=;
-        b=lU5HZlcA/sjh//gQ1z9vz2aUFOAH4Jidsf0BpIxDzGkWjLQgHoG3yWpSzL6UbdEICo
-         +Yd/ZewEw4qaXG8N84nQaSp7kaN2KIGY2I+/ysgjUMumFCGl29Ao8P+PqLCo0YOmhgn+
-         9ENy4KAZ/n+oEeQ9aYbpDAlbg8tfkyuxJNdEBbOF9E3xTThv6tk8/7SWWd2oTw8HwrHl
-         7Z/BNqgtvZys6nFq15LK4ojjXRyGXN95lOaAu6t7CXbWDuvwVTXaoXTAzU07eDB/9+N8
-         R2+SRKA9sAJtGkycjIjAWqH5tcDc8slOVnhZYmVcz5bq9Pmie1CdLd6Md9hiGm7rEG2l
-         uIuw==
+        bh=MvAPF1pVm63wmtxBui/V78Gv7jIFJ8ov4uCKQk/+jMM=;
+        b=fyBPaQD1B4lVUuy7XE8oQcUg4TYenbdu85pzUpaXMRmoKmcb1r5YjqWEoKlGjtl8KZ
+         67iNcgzULlTRkqTWneGo2+5a7iQVX8+lDD1WuXkkihJTfeV7pwB8Q4hyvMZAgq/3vsYq
+         nL7hyxokQtG6Mau8vAc3ocvr9fv2AviSy52sR1b+fCz89QPFRCOVEELlHESE+QnaSabq
+         cAoVN2UcJOYwR//OzsValP31tT8MTgsmCzu0mqWsaebDd58VcQ+TpPa4Dny2+yEgj16r
+         2/DCT7jV6fFJIIN/Wd3rzxbzF+89gzuLIQi1CwSnHxCmf4KTA28IvjJida2IYo1X4DuB
+         RTFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779202488; x=1779807288;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20251104; t=1779203287; x=1779808087;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/mUEj0wpephdHMSObPBe5gyzUcLpmIs4s4ymhhW1wt0=;
-        b=C2LoRVZAwRPB5v0bTje1xGCl5bBjC4x8HFCoPd4ZhOsb4CRW1DHoa5VyPyZHAkA/ew
-         aCAaOmFYTYgEvPlkbASljo2lsJOsCCNirlDVx/sLFEj1aPWvkbxhjt7uvz4XKkPTWnFQ
-         I41+E9arUPL617wlV2n/pPifQAZQCAhQnxUzmfMJwVPvnMmTDP8YAs3dvumMVsnB9tWI
-         3KHDybAXFwznal0zNA6VyrVYTPpKjtfF7wZm07/VSacCKrpNFkWBX4quj9n4XGxPetaJ
-         O0UrGKVs8uDnIIkzEcfBgfb3y5gyVB8d3SOJeZxRnGgRp76r/IokMOxT/xOPc11G/nGY
-         dpew==
-X-Gm-Message-State: AOJu0Yybt0kyoO9LtI9niYYJmEzCanntkiQJMvysm+OpMA5J1rSMZJCi
-	fWEl4+BIU/0cNOTNuikfOvL/tha9g+c6L610iKXpssNP6CaAvar1Klf9SM7Z/A==
-X-Gm-Gg: Acq92OGT9fGB7oeNRPphs+7MP82XdY5es0kr0bH+YZ8IW9OP35K1zChQh0mRu++yrHG
-	XllEf6w2izVWOeq+WcZX5V8xiAFdNLV89YO1g6lovP1JXpDAbaFHV/uWJ+8zaGREOsGTFYoBgdK
-	nS5YzRPwltbZDz9poElurwtbKLgq68t9WuATzhEVPxZ668DB88/EYEnXJkKMRrzw0/L1xp5Q9Be
-	CFBpzB6bp+t5MtJ60scoclHn8uLJEKHQCAila28QOm/4cKrJQvyr23zHtpjwxdz358tnbyP6Vg4
-	2KX9RzKQNwYSf0eWnXLI2F55oHILGaoDWeATbRymdzQs2kj4+QBDfu9V4anb+zVi1qDn/zDJHZ3
-	8Y8XGfENbAsws0uETEK46kZEchGgDjLBuiUZGCm3IFUEgJzUDb0bkUWcJKm41ixus24UroQkmNf
-	Cmu5noUh8cZ5tE3IotevR4F6a6L88lXM6s4A7jN+P939/d2adwDdDfkQrlroOYeusIlJl6iItbM
-	3d0Fo8ul1Qlp1hYafO38oLtHrjW36KwqQ==
-X-Received: by 2002:a05:600c:4e87:b0:48a:768b:eea9 with SMTP id 5b1f17b1804b1-48fe60e51bamr328533585e9.4.1779202488329;
-        Tue, 19 May 2026 07:54:48 -0700 (PDT)
-Received: from lorenzo-VM ([84.33.159.46])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48fe4c8d39esm336469125e9.7.2026.05.19.07.54.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 07:54:47 -0700 (PDT)
-Date: Tue, 19 May 2026 16:54:45 +0200
-From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>, fox <fox.gbr@townlong-yak.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH] http: fix memory leak in fetch_and_setup_pack_index()
-Message-ID: <agx5tblaCZNsYEBq@lorenzo-VM>
+        bh=MvAPF1pVm63wmtxBui/V78Gv7jIFJ8ov4uCKQk/+jMM=;
+        b=NNQAI6/K1WO7mZtWcnOjVQLOr3gu6XJT5s3kSvXcYK0GN1aKwVHHU6UtQb8a0oXlSE
+         zS7c4HnIDpbbBBIuJVj/Vgz0alUuk1Qxpr7rZeLarqbSy+2I3iamIAjzgh0L50Efy29J
+         u0Jfl5z9a2aRUF1m0wJnz27rLzESTG8w47s2hRsO1KsCaTtDkurvOasARUjxXmFs7IXr
+         Qv91Lv047PsFhrJHfJ/d11E95CuHDSCSyDo+B6CoziLp7EaRMi4ktASwO5K01Z/aezXB
+         EJy7hOOy+9flPKG9etBIW5nauBx3fn4FkXCitfJKObhxC4JqH483FIMZggJN0psnRSxv
+         XxCQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9UUDEUUoIOQON83uqQCZB6c6QLTFPFg2GHxlw/MdBmN2LDbU4sjui4w1dStZyGozPFci0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywv8+fQ22xrutFMdbmKp14To5hthna+Bympsfhsn98SiLNQYUPg
+	zowuj3tEbz5RcIuPETsecDDNXyxluVYAQVqks8xiNzU+Zd7ReIocxJad
+X-Gm-Gg: Acq92OE3noqVrUVfhNJUzwxExdO+2jyCTvn0mgyE5ObmruxMt1S6jezEkG7WuyzeVPJ
+	y/S2KNqUhWEibBMrUESyhgiiK+eVbr6e75QYBTXqIs21yzG/TolFEdMQEsjCxbiiif1RUoPAz6c
+	/sDPJhLvqmOj47sTm2b+/Sq0B3qOFJslyDARRBbl169oXcqX4gtbNiRsGH16Sl+1GaJ8wZErRBa
+	a8KKKG94ODjdn2IXXqcO/xqmEgHMRR8afJNQeSJsGbmxV+WEaGOtSB0Fv3LjqqLYAA+gF8r8CDX
+	IYjqboFOkoYdSpb4ASYfbjumYKYQ34sCPmXHqkODQFgUXyFBGuLT0fGtwl69kKNT3AcH7lskmpD
+	1ocptj/qSBvB5vQjd5cx4tkK14qI0pdlJNhtGSmU7y+rdkS/XUVXFy715XU84eQrkc8ApWZt0hO
+	lkZKm3y+Rbc/tIad92uDJcEONF7bWTlC0L8axY3kZygousUC9gbw99WmuNhyQmzrst7KKtWw==
+X-Received: by 2002:a05:6102:80a5:b0:634:5339:33bf with SMTP id ada2fe7eead31-63a3ec894fcmr10111877137.18.1779203286561;
+        Tue, 19 May 2026 08:08:06 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca361905bdsm93042176d6.23.2026.05.19.08.08.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 May 2026 08:08:06 -0700 (PDT)
+Message-ID: <b78904f6-5465-4dcf-bf6a-629f925ce1b2@gmail.com>
+Date: Tue, 19 May 2026 11:08:05 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] fetch: rework negotiation tip options
+To: Matthew John Cheetham <mjcheetham@outlook.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im
+References: <pull.2085.v4.git.1778762495.gitgitgadget@gmail.com>
+ <pull.2085.v5.git.1779135575.gitgitgadget@gmail.com>
+ <VI0PR03MB11634DBCD7ED97E3358AC9339C0002@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <VI0PR03MB11634DBCD7ED97E3358AC9339C0002@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Inside the function `fetch_and_setup_pack_index()`, when the pack
-obtained using `fetch_pack_index()` fails to be verified by
-`parse_pack_index()`, the function returns without closing and freeing
-said pack.
+On 5/19/2026 5:13 AM, Matthew John Cheetham wrote:
+> On 2026-05-18 21:19, Derrick Stolee via GitGitGadget wrote:
+> 
+>> Range-diff vs v4:
+>>
+>>   1:  7409a479d6 ! 1:  538913a327 t5516: fix test order flakiness
+>>       @@ Commit message
+>>                   Use 'sort -k 3' to match the actual number of columns in the output.
+>>              +    Reviewed-by: Matthew John Cheetham <mcheetham@outlook.com>
+>>            Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> 
+> mjcheetham@outlook.com, not mcheetham@outlook.com.
 
-Fix this by calling `close_pack_index()` to munmap the index file for
-the leaking pack (which might have been mmapped by `fetch_pack_index()`
-or `verify_pack_index()`), and then free it.
+OH NO! Sorry for this typo that I copied into every commit. 
+> LGTM
+> 
+> Thanks,
+> Matthew
 
-Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
----
- http.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+I'll fix this reviewed-by tag and resend. Sorry :(
 
-diff --git a/http.c b/http.c
-index 67c9c6fc60..c28be26ad9 100644
---- a/http.c
-+++ b/http.c
-@@ -2545,11 +2545,13 @@ static int fetch_and_setup_pack_index(struct packfile_list *packs,
- 	}
- 
- 	ret = verify_pack_index(new_pack);
--	if (!ret)
--		close_pack_index(new_pack);
-+
-+	close_pack_index(new_pack);
- 	free(tmp_idx);
--	if (ret)
-+	if (ret) {
-+		free(new_pack);
- 		return -1;
-+	}
- 
- 	packfile_list_prepend(packs, new_pack);
- 	return 0;
--- 
-2.54.0.dirty
+Thanks for the review!
 
