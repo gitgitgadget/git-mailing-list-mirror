@@ -1,141 +1,130 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A031EEA49
-	for <git@vger.kernel.org>; Tue, 19 May 2026 02:31:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779157911; cv=pass; b=cLl7CfJMVpnmSGxfWvH/2pj7LQo3bDqJfrgNS2gNJQTQd4szKVgMC9/u/fPvqxRPrx14yAlGX8dN9Ajga7VwepsfEJ49Fxif96AaC16urwZQjtoXgEUOlE/fYq+TYqTEAVfQMV8pxyLFOQAiJraqPaQU3E6CYx/24WgdbS/SbTs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779157911; c=relaxed/simple;
-	bh=YMwTXszDU2xrsjRHdrQ80knsNFt+gvueSIJVzxaoM/E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C7AKZXP/ivBzxsENYELC8afo72XX6ZvpYtClO9wXiFtnvvOMPC6ebxFg4J2qYvHM9WacFaiXrZFhHoSfA38OQD7CkQTiUSxXJQ91pkjtA2WSzEBT+uTvcjuNFkHLJBS4OkWctSq+ZrfP3vPHUBCC/jB4fs92G7n9/ppcTku75n0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvLZh+DV; arc=pass smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884830FF1D
+	for <git@vger.kernel.org>; Tue, 19 May 2026 03:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779160279; cv=none; b=mMJEueG6EQziqzQk2iTrKtADQ8a1bGljb8KceJU0yf9qkVK+Ve5ACISvoNs3Pyg7HAuUz/PJQe6qyQEi+qMmbbjXSoC8NOULiFR3CBipznUZEMb51St1AgR2e1vxYQEDQLQCVwAoSdnneEEJGVLyT12qcRusamV6aHHjlOajKY8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779160279; c=relaxed/simple;
+	bh=R6g9yHLLNxH0n82V6zN4XBNq2xCeBw7sNuG0X/Wstxo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cZHst9i8ayKD9qSBOdLpqsCAsy4jVZWrELBxcXekOFNNY/OKPApZD7kvdLA4NXnKoDMrbN/0coiHDAFCIvFWALycBDYf0ypTlMIC6AYav3hcLMm4NJ0a4jh+5LPqdHfJK/26/5RchSihQNgJyxyWtmCXy7oMKo4en3BxFqSvNpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YCoPsb71; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EM9jTw7u; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvLZh+DV"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5a8d1f43432so5466879e87.3
-        for <git@vger.kernel.org>; Mon, 18 May 2026 19:31:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779157908; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZI5O2u3sHCNygdqhGzidku2IZjMbBMgsW00Y9yZOivVZsgjO7bPtsd3m6xHbyEpjNd
-         wmg8xabONvzZh9U+/INGas/h5NVvgMs5CniR9perYffhSdvS3cRXDqesEkrsYGA5w0+R
-         stVjMovgu47cfICV7nZV9Fw4UIFSP9xHGmxPIJVp8I/HSuo4v4Ebb5bkneM80oIVbKId
-         z2OwrLqAbIIlUG0VGs1c9WUcJQDrKqIy8yDnZsP2j2XP9jeFuXs47bsUArsn214jRTKR
-         E9UV2LPZkoJd39FuOA6sPXr7AwwY+lFXGNbv6f7seUx76hF9dCqeoXkCcLp9vr42/fLg
-         Fnuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=jOgSxd923ILOu8gLAPvBLWzM7CDE4+gGD7u8rk4QnFM=;
-        fh=fGi7tw2ILZiOzsk9sUI0bmKLTL9qem7HyuUZnWN1ULc=;
-        b=d2fNnaqhBHlLRQYSz+QXBqtMooNebbePViB3HDoThU8YcwWQ/OsgifV2/mDHmRi59Z
-         y2oTdvt+beFnHPMuUhGE3CkniEBnmB7RXaB/CkzRgo+eAluNhoxWlocHF/G6wg/BmBhe
-         zmUtjZhq2WO1OD+OHy2k0p9fu2VvI4YI0Y8qnFWYqY1N4l1/+06flEo0WqAW0NB5JQMQ
-         Inn61b7cN/RvXTLsxCckoQLM+A8exb/XpsJfBF4i2ElZ1PpuL3YK4ANQ6hIr3qD1mVdI
-         lGRJoK7P+nCU20ucC/kjY4+5MMYHmXnM+3HQB89H2wIEsLxDE2kgIRA15Oe970BkNJtB
-         QWPQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779157908; x=1779762708; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jOgSxd923ILOu8gLAPvBLWzM7CDE4+gGD7u8rk4QnFM=;
-        b=NvLZh+DVO2UevNpV3CLCWc1qOLKkXe6Upv4N3J58FrXVtx3jrivULUgM7gpK4pM6Qf
-         FVkaDDxeEr/ma7USfFIxQV8kcu/SgW2ssIR1GB3OrAZYpnckP2WjtEykFyJor08VkHCP
-         4Uksmrn7vNixMiR7b03N8R0IfhBNdY5A4LftVp1iDds/eestYLgEW03eaOaUAJQI59qO
-         VyImevOKOCfleojtv1js+qp7fdqyijnx1/2jPP993VNw/3qch8EJmK+DU7w6Kb2tivWF
-         7ma8ZqqToo6ZQW+V6AUu5dLtC8mqvVM3T1CzBCuc5Ee7tnM+zpRr/UkS62JWPk/v5Bte
-         9r1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779157908; x=1779762708;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jOgSxd923ILOu8gLAPvBLWzM7CDE4+gGD7u8rk4QnFM=;
-        b=I5lMmYNoTDERNA7JXDEiWhjrAJhpOIXfTKnpQiaspOtR5C4IAbl6VZwi5a8dliaCiY
-         U/abVgaDURubVESvjH3/pP/0ENt/aMti4sszhhHhWgfzqRIxUiKvrk+6UhS7fBptnHlp
-         bjb8JLF1yfB1Zk0xjEXuvxgXeI6NHQhahqvSQ5u9qtu+cRptF8///CriC+UYDfC4idVY
-         YYLUpTa+6tKXjPpNlIVtzAUUiwgkuvP33QyH3hi4tb5U3bGEnGNCo/Q7/vQrlfyvGjki
-         osFoNkqbAHyM4DDf5bnfPWZLMhP+XBSp6ll9DK2QtUVCEjnIki6bkPqIovHomENDH/OZ
-         upXw==
-X-Forwarded-Encrypted: i=1; AFNElJ8UiZGKRzDbmaHDcaupdXnM+7PYTm0iZfg0/cAoEwgCUuEq98VoX4M63+dyjmzBTeyGkSA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzsx9be44gQB/2NoeSa2KCeLCOkHqGIQTG+k3nonqPUke3wkf6O
-	B2QyT0LF72xddOHEmn2ZkrvdquTm633Y0tJtSitGOPZxF3MB7ZzZhfZpklXwAwxWpKtG+mo5c5j
-	a8HOWjFH2k0QaG379xCpPXU320Oj7b8s=
-X-Gm-Gg: Acq92OEUwKbm8/vjli5zg4pbVwXd4FjqIh0Ou6hSS6u+Mllt99FqolR39e52rFTHJP7
-	u3Z7Khaae3EtR9U2qH9qx9+3K3OFavI4QWsNrnj5l72+AanvOHwyURAG8sNWkRomZjwwDi2Qbk/
-	0AfLC3cXiSXPov7IM6AvRxtIYhqb/qpIs4Xt4MtDJHRGplO1ZQN3MLF52Joc8+bNLq3/nrQHHIr
-	1JTZlyNNXB1Wduj8dD6g0GDD+enu0aaGbVESpDDMqtvNpJ4jqoo3MFn56FMkBE8utl8uNlStO9S
-	srwDQZhz
-X-Received: by 2002:ac2:4c47:0:b0:5a8:886a:a734 with SMTP id
- 2adb3069b0e04-5aa0e60d297mr5276514e87.5.1779157908143; Mon, 18 May 2026
- 19:31:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YCoPsb71";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EM9jTw7u"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4867BEC007C;
+	Mon, 18 May 2026 23:11:17 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 18 May 2026 23:11:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779160277; x=1779246677; bh=U6k6pEkZM3
+	BD1MuFqYV28tgUzO+7q488X2CxZJhg5qg=; b=YCoPsb71xAhmU4Cq94g7BO/cWY
+	5Mq7b/mlClwflygdsNm8VuhlKsfMF0QmuKuFSPuqSMMUcNwG5HQOm+/BEhPGv45s
+	8Q+0S7EoCZgg4CHwQJiOLS6ras9JOgjsSHjimk5XftoNoqi/5GxBHxWQXAEe+GGT
+	Fen+lYHFwHyUVZNIIcNrUMbj8+Ps/6BKEA6rYBteZSBrBHLMIYw3zRiMUxikj5it
+	3BM38/sMQErnZTm4rAEviL84VUWyqV9B/LpOIEC2eHBnBvFqCzuSUCkcN77Uu4G0
+	oPXFAfm4mJZoiEAvwv1/bG6JOVhH8mHipIQWsCKmpgFT+be9tLU+1d37aQVw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779160277; x=1779246677; bh=U6k6pEkZM3BD1MuFqYV28tgUzO+7q488X2C
+	xZJhg5qg=; b=EM9jTw7uEOqyf2lcqzozH+s0ZWymWpIVk6Trlba1Qb9HOf+iVXA
+	PBYgIAdKfmlnuYss6f11WLNICaDXKPep9SrxwmMCZsRi68Me92sGzAKT3NZ0U4cZ
+	aNlHK9Qhhzl20EH8YpLzLVY/nFoSo5BrHXdecVdASelCWcr4de/RJ1oaHfxBnieJ
+	CI0erhiEd1c/VDx42aP+C/dYKdzw5icdgZi1C9JPg7Su6cZX9/1E2zUV5BTI9pSG
+	F37cAXkvCPmUMaxIX/W2qJJf7+AoZLvDvdGJ2/mtwdDlo7Ny+r6cSdy2pOkAoc5o
+	vJdTgjHwqRTfSbYWR6SHXas5dwdSwQ1zPYg==
+X-ME-Sender: <xms:1dQLatTWUy6Ms6H1gVEoorHA8RaIxA5rxpcdrEL09PcgiBOi8k_Sbg>
+    <xme:1dQLaqcxlucVd-QnTtTiv7JkLB4BXRpb75W4OTxM12RXO8DFCn03QSoFXZFMOZdOA
+    K1VNIz5RYrR5BqUvAMqWbTbWmdcaSKYcP0y07Ctibjoksd1Nw4vCWs>
+X-ME-Received: <xmr:1dQLasqIRmxiX_UvCXD7IvkNb-UHq-reJ3asEIcLLnwIcswcCiUwn8jK4r4-svwgHIQx3LD9ImZtxvOF3nima7nn2wp2dk0HLQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugedtieefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehmmhhonhhtrghlsghosehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    jheitheskhgusghgrdhorhhgpdhrtghpthhtohepvhhinhgtvghnthesvhhinhgtudejrd
+    hnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1dQLar8pE6P9Y_0BrF7G9m2LgPoDuLUEemZQnDPIlTEAF8iV97cXWw>
+    <xmx:1dQLaocvNCtwqPmBwUQKrQrQpJEenwnQyXjzNEJOX56-F_MbBIkBpQ>
+    <xmx:1dQLalKlj7kNKzQLUKp4qqH3b5WdIfewmMNAV2qhxFebEw8oXOuFzA>
+    <xmx:1dQLaoiGUaJThM6W6WnOt86MttTiT53OsOnb8boqZgBvsTskeB-NgA>
+    <xmx:1dQLamXYD1QTtDaS9VgpE1OwgOxMFibTkyho7G6ifMWjQ6hyja3QJI6K>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 May 2026 23:11:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chris Torek <chris.torek@gmail.com>
+Cc: Michael Montalbo <mmontalbo@gmail.com>,  Johannes Sixt <j6t@kdbg.org>,
+  vincent@vinc17.net,  git@vger.kernel.org
+Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
+ space changes
+In-Reply-To: <CAPx1Gvd_FqnsjCkpAA5uy7aDz9oQnWx7WTvKk-kLWemkqF9PsQ@mail.gmail.com>
+	(Chris Torek's message of "Mon, 18 May 2026 19:31:35 -0700")
+References: <CAC2QwmKRyYfE+30Fh75gvAEmJjk8g-3k+G=RDiEJ-KGNExAEow@mail.gmail.com>
+	<xmqq8q9migqk.fsf@gitster.g>
+	<CAC2QwmKORPnsmV4SM_CnmhrbF+X754ae-n9m1fgjvVsL9d-wzg@mail.gmail.com>
+	<89224cb5-27b1-45b6-93d8-a0ad5e2447a2@kdbg.org>
+	<CAC2Qwm+BLNf-2kvePKNF-FKQX3raOBzSRmwd0ZEdzmo8TqkMGA@mail.gmail.com>
+	<CAPx1Gvd_FqnsjCkpAA5uy7aDz9oQnWx7WTvKk-kLWemkqF9PsQ@mail.gmail.com>
+Date: Tue, 19 May 2026 12:11:15 +0900
+Message-ID: <xmqqo6ic8564.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAC2QwmKRyYfE+30Fh75gvAEmJjk8g-3k+G=RDiEJ-KGNExAEow@mail.gmail.com>
- <xmqq8q9migqk.fsf@gitster.g> <CAC2QwmKORPnsmV4SM_CnmhrbF+X754ae-n9m1fgjvVsL9d-wzg@mail.gmail.com>
- <89224cb5-27b1-45b6-93d8-a0ad5e2447a2@kdbg.org> <CAC2Qwm+BLNf-2kvePKNF-FKQX3raOBzSRmwd0ZEdzmo8TqkMGA@mail.gmail.com>
-In-Reply-To: <CAC2Qwm+BLNf-2kvePKNF-FKQX3raOBzSRmwd0ZEdzmo8TqkMGA@mail.gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Mon, 18 May 2026 19:31:35 -0700
-X-Gm-Features: AVHnY4LJNBX6amUBXJnIu4XRAvTGVPiHrm1fIv6VNYWGB1nkJw8tZo2pnO8TMvI
-Message-ID: <CAPx1Gvd_FqnsjCkpAA5uy7aDz9oQnWx7WTvKk-kLWemkqF9PsQ@mail.gmail.com>
-Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
- space changes
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, vincent@vinc17.net, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, May 18, 2026 at 7:11=E2=80=AFPM Michael Montalbo <mmontalbo@gmail.c=
-om> wrote:
-> Yeah, I was trying to explain the difference Vincent saw compared to wdif=
-f,
-> but I agree with your criticism. In "beating around the bush" regarding
-> implementation details / making a direct comparison to wdiff, it has been
-> hard to craft a meaningful message.
+Chris Torek <chris.torek@gmail.com> writes:
 
-My opinion is: don't do that, just get right to it.
+> Call it an "implementation note" (or, if you like, a "practical
+> consideration"?).
+> Something along these lines might work...
+>
+>   Implementation Note
+>
+>   The --word-diff option currently operates by taking the same
+>   line by line diff that you get without the option, then massaging
+>   the result into a word-by-word difference. This may cause an
+>   unnecessarily-larger diff than you would see with a more-clever
+>   implementation. If and when Git acquires a more-clever
+>   implementation, the output may change. Note that this is
+>   similar to the --diff-algorithm option, which may change the
+>   output.
+>
+>   Regardless of which algorithm is used, _any_ diff simply shows
+>   _a_ way to achieve some particular change. It's impossible for
+>   any algorithm to tell whether someone deleted two lines and
+>   then put one back exactly as it appeared earlier, saving the
+>   resulting text, vs deleting a single line, for instance. Only a
+>   keystroke-by-keystroke logger would be able to tell what the
+>   human operator actually typed into some editor. Git does
+>   not have that information, and having it is not desired.
+>
+> Chris
 
-> > If we document the algorithm in such detail, we cast it in stone. I
-> > wouldn't want to paint ourselves into that corner.
+I understand your frustration in the second paragraph ;-) but let's
+not go there.  The first paragraph is excellent.  It gives readers a
+clear enough explanation to understand what is happening and stop
+complaining where there is nothing to complain about (which is
+already hinted by the "Note that" at the end).
 
-> I also agree with this sentiment. I haven't been able to come up with a
-> message that threads the needle appropriately, so I'm open to dropping
-> the patch or reworking it if others have suggestions.
-
-Call it an "implementation note" (or, if you like, a "practical
-consideration"?).
-Something along these lines might work...
-
-  Implementation Note
-
-  The --word-diff option currently operates by taking the same
-  line by line diff that you get without the option, then massaging
-  the result into a word-by-word difference. This may cause an
-  unnecessarily-larger diff than you would see with a more-clever
-  implementation. If and when Git acquires a more-clever
-  implementation, the output may change. Note that this is
-  similar to the --diff-algorithm option, which may change the
-  output.
-
-  Regardless of which algorithm is used, _any_ diff simply shows
-  _a_ way to achieve some particular change. It's impossible for
-  any algorithm to tell whether someone deleted two lines and
-  then put one back exactly as it appeared earlier, saving the
-  resulting text, vs deleting a single line, for instance. Only a
-  keystroke-by-keystroke logger would be able to tell what the
-  human operator actually typed into some editor. Git does
-  not have that information, and having it is not desired.
-
-Chris
