@@ -1,114 +1,139 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014611917CD
-	for <git@vger.kernel.org>; Tue, 19 May 2026 08:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3133E0C6B
+	for <git@vger.kernel.org>; Tue, 19 May 2026 08:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779178598; cv=none; b=MEs0RgxupmnwIk0Ve00sP4AqUhNG88d0UvFsGIbcfhkksIBWmzOublSIFeOOoB0GuVF+CyMdXwsT7V3pSp0BF7GXRnY/DLWJ71BX6dzE8ICEqSnYxSoLfNCbHObjDDv2uiwIS2s6aZ4i1d87ublHe48HguQ5THuzaC8xIeKUd2g=
+	t=1779178926; cv=none; b=scdJryRDu7clUVrxsEyoW+wapoZXI6MekXrzEzYAgsG8VC4DISWk255dft50K1Ow8vD9Q9hGyIM/UfoL5PRi8FcXAo7fuXCX2n7ns+U80JEuzrRdb4B/zT57jTYYhMaVQBhfvfjiB1vgunfC8d4lc0H/MAvPrVFCWQ+fEuFBxB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779178598; c=relaxed/simple;
-	bh=zVXgN2aofQ+vTrHHDX4OEDp3e5PBSGV0XDRW98/XdHg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vd4RUvgxEatJMuC1cjd2mZyr451CIOW5+W4fCReSGtgUdxTcN1G4FKPSNqU9hZpjsC3duewx1mnP1U2TeiUK/BE8Y97yAKBafgYWxfumJyp/YEnvAgROuwwQWG+A5tdRhrIxWbbNQnSpKpP/oE6nnudPmYhZKWQnRl2mgsKUM3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P70XU9CQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q/5XsEmk; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P70XU9CQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q/5XsEmk"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id CBD141D00114;
-	Tue, 19 May 2026 04:16:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 19 May 2026 04:16:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779178595; x=1779264995; bh=IF/x0brrxm
-	5teshZbHBa2vBNwsPYJdKlQu/yYI8IhH8=; b=P70XU9CQTYpr9ElioMKVekQ9DB
-	G64FjHqks8VXoxX0SEb9jrlQGvYVGhSQmziZMjY1mcfU011FVoOUJy1S5SHeNQ7W
-	bQPDmk8xbcDxIZAY1f/A/ASZ/mfeGHFf9iqwNHjK7pnHXcYh+IyTlNpgiBGgXMw2
-	8ke25fGv8kjhIO3kAIkWVhej/WWG1XDs95sPE2tjhtzFVrKFXDjEATNQ9ax31ole
-	o8k01cKreKZayeqcHFNL1CrJ4IphSqxqO8Hmk6Oq5WJdLr/5fNgfyj5lyO+QaGkA
-	0BBkLT+u2t9bxz2HTs7tXUcTHn6ilXF7gP0OAeK7rXhheqbGsgtVXBGPT3JA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779178595; x=1779264995; bh=IF/x0brrxm5teshZbHBa2vBNwsPYJdKlQu/
-	yYI8IhH8=; b=Q/5XsEmkuKXIlG3akYvxZHM8hfz8DI7FS4ZEni13PnuXwH//uyD
-	Hke4EQFSrvp0x8qCMeKWtDCBhPJDpQmkLn77Qvc7B8ZxgQ0oBbAeMKMkSiObY+V+
-	rGJ9lK7AVrnBdU5dMBtXHrSSm/pVM0pl30M2FOKLgyJTtnIsH0K4kK6L4Dtj8/1j
-	J2c/AdXwWrvJL9MO+PZBz6RXJWq3v/I+DHsFBXEnmLuGSY7uJAIqZ9nO/DbB3xKF
-	vmdgIL227OgWIqmIOVFPw58nLiWKXenHqQ4YyWjktfXO7SkVf88gBuX1mCwwBlhm
-	cQ5pWRzilzhUV0dOWmO+bLxDsA97fbPzuCw==
-X-ME-Sender: <xms:YxwMalJ2PauXwuvl78SaBDwDtzQWzbvPG0KoyJNC9_kHTlp2n2Aenw>
-    <xme:YxwMamHCnV68T90oYqBGzMb3BoGQ8wxapl0f1K3dsUDsxpYEQ45r28jT7vFQ6mLpX
-    Vu1Xauf4_RqSXGQBKm-ccv1MELXNfdVCfqJ6VH-PdWAjs2nLMzX8A>
-X-ME-Received: <xmr:YxwMah8Zu9aHKB1X6gy4DSECztiv0UdB12FP5QrunV6RrmTvfOkJCzaMlpOXba-YvScmqMumtsmFnMTZfTKYa8aD099Q54ErKQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeduvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohephhgrrhgrlhgunhhorhgughhrvghnsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrg
-    hmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepsggv
-    nhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgrrhgt
-    nhgrrhgtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
-    dvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:YxwMamJCcaKjWrXeG1IIZ0PO0FZPfw07gII8pDWlbzt77t5PcmCDuQ>
-    <xmx:YxwMavtLPOMq4cNCFV0uilbafHZKnTDBJomiBUJJ8zS0cKrD3Hi9TA>
-    <xmx:YxwMatDCHxqKjA_eC2bXWI4o1cGz81WYetLJpZuqZTYxvJiTLLbDyQ>
-    <xmx:YxwManML8xMSiXTWBTzvmOAgQYn7362M1WxL2syYo5HHSuRkRWZmLQ>
-    <xmx:YxwMalQziJmmSpNQeCBqt-Vz9xZX25M9s4KLJEafKeBBdiAw5_xJqSG4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 May 2026 04:16:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Ramsay Jones <ramsay@ramsayjones.plus.com>,  "D.
- Ben Knoble" <ben.knoble@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Marc Branchaud <marcnarc@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v10] checkout: extend --track with a "fetch" mode to
- refresh start-point
-In-Reply-To: <CAHwyqnUx=59MK5zKL0uuFXKrZ6PEc1j_2WT-_xtsGewVH3gBKQ@mail.gmail.com>
-	(Harald Nordgren's message of "Tue, 19 May 2026 09:52:34 +0200")
-References: <pull.2281.v9.git.git.1778583307774.gitgitgadget@gmail.com>
-	<pull.2281.v10.git.git.1779091483321.gitgitgadget@gmail.com>
-	<xmqq8q9f9b5w.fsf@gitster.g>
-	<CAHwyqnUx=59MK5zKL0uuFXKrZ6PEc1j_2WT-_xtsGewVH3gBKQ@mail.gmail.com>
-Date: Tue, 19 May 2026 17:16:33 +0900
-Message-ID: <xmqqfr3n7r1a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1779178926; c=relaxed/simple;
+	bh=UroReQyq+TS9tksc/fBfYZhMAUmD1iG2/AjtN1+yPVM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZSzSKjXY4L2Nl4SGZbo1cvt0Skki6SuARG07p84WRh6Y0EoUKoVc6MJaJlLzR4XG70KfUSHHcGT2xw0Ng/5HiahCxSl+qBCLHpkSJ2RDEsG+fanucNSAdxUWbHB1hGkJ0bRSm2271n+7dly5djr11S+3lpbAGaQCN9/IIgtOkjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4gKSM71tXwzRpKj;
+	Tue, 19 May 2026 10:21:55 +0200 (CEST)
+Message-ID: <3b16fbc6-074b-410d-861e-6f77794b02a0@kdbg.org>
+Date: Tue, 19 May 2026 10:21:55 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 11/11] git-gui: add gui and pick as explicit
+ subcommands
+Content-Language: en-US
+To: Mark Levedahl <mlevedahl@gmail.com>
+Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
+References: <50df7f28-c63c-4762-b542-b888ea3604c0@gmail.com>
+ <20260514143322.865587-1-mlevedahl@gmail.com>
+ <20260514143322.865587-12-mlevedahl@gmail.com>
+ <e336544b-941d-43ed-890f-2b8950dbaf88@kdbg.org>
+ <fad43240-1089-4447-b97d-ee553c34eef1@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <fad43240-1089-4447-b97d-ee553c34eef1@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Harald Nordgren <haraldnordgren@gmail.com> writes:
+Am 16.05.26 um 17:42 schrieb Mark Levedahl:
+> On 5/16/26 4:18 AM, Johannes Sixt wrote:
+>> Am 14.05.26 um 16:33 schrieb Mark Levedahl:
+>>> diff --git a/git-gui.sh b/git-gui.sh
+>>> index 3a83dd5..c56aeef 100755
+>>> --- a/git-gui.sh
+>>> +++ b/git-gui.sh
+>>> @@ -1021,6 +1021,7 @@ proc load_config {include_global} {
+>>>  ##
+>>>  ## feature option selection
+>>>  
+>>> +set run_picker_on_error 1
+>>>  if {[regexp {^git-(.+)$} [file tail $argv0] _junk subcommand]} {
+>>>  	unset _junk
+>>>  } else {
+>>> @@ -1030,6 +1031,7 @@ if {$subcommand eq {gui.sh}} {
+>>>  	set subcommand gui
+>>>  }
+>>>  if {$subcommand eq {gui} && [llength $argv] > 0} {
+>>> +	set run_picker_on_error 0
+>>>  	set subcommand [lindex $argv 0]
+>>>  	set argv [lrange $argv 1 end]
+>>>  }
+>>> @@ -1047,6 +1049,7 @@ blame {
+>>>  	disable_option multicommit
+>>>  	disable_option branch
+>>>  	disable_option transport
+>>> +	set run_picker_on_error 0
+>>>  }
+>>>  citool {
+>>>  	enable_option singlecommit
+>>> @@ -1055,6 +1058,7 @@ citool {
+>>>  	disable_option multicommit
+>>>  	disable_option branch
+>>>  	disable_option transport
+>>> +	set run_picker_on_error 0
+>>>  
+>>>  	while {[llength $argv] > 0} {
+>>>  		set a [lindex $argv 0]
+>> Can we please use the available disable_option and enable_option feature
+>> instead of a new variable. Just for consistency around repository discovery.
+>>
+>>> @@ -1162,14 +1166,28 @@ proc pick_repo {} {
+>>>  	set picked 1
+>>>  }
+>>>  
+>>> +# run repository picker if explicitly requested
+>>> +switch -- $subcommand {
+>>> +	pick {
+>>> +		pick_repo
+>>> +		set subcommand gui
+>>> +		set run_picker_on_error 0
+>>> +	}
+>>> +}
+>>> +
+>> It just feels wrong to have a new pick_repo call before repository
+>> discovery. Can we not treat this case below as if regular repository
+>> discovery failed and then end up in the existing call of pick_repo?
+> 
+> So, your suggestion is to create an error inside the catch clause, assure GIT_VAR and
+> GIT_WORK_TREE are unset so we don't throw and error message and abort, and then fall
+> through to the existing pick_repo clause?
 
-> Yeah, good point. I will try to address this and send a new patch.
 
-Please don't.
+I think I would be happier with the structure
 
-Next time, think deeply yourself and do not rob my time to think
-these things for you.  I do not have infinite amount of time.  A
-good balance may be if I find one issue in your current code, it is
-likely that you'd better three more issues and fix them before
-sending the next round, or something like that.
+if not subcommand pick
+    discover gitdir
+    if error
+        set subcommand pick
 
-Thanks.
+if subcommand pick
+    pick_repo
+    set subcommand gui
+
+because this clarifies that pick_repo must erase all current traces of
+GIT_DIR and GIT_WORK_TREE from the envionment and must complete with a
+valid setup.
+
+With the structure in the proposed patch
+
+if subcommand pick
+    pick_repo
+    set subcommand gui
+
+discover gitdir
+if error
+    pick_repo
+
+we still need the same operation of pick_repo, but after it runs due to
+a pick command, we go into "discover gitdir" mode in an already modified
+environment, something that does not happen if pick_repo runs due to the
+error in the gitdir discovery.
+
+-- Hannes
+
