@@ -1,97 +1,119 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF25E1F8691
-	for <git@vger.kernel.org>; Tue, 19 May 2026 22:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FE3352003
+	for <git@vger.kernel.org>; Tue, 19 May 2026 23:22:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779228674; cv=none; b=WFuKdeVrjQxjHItPXIwX06RPe3o+cq+Rc91f5Lw5CSo6xKiZBJZo5l0dYAkyWgEbwhyb6AhwcLGIfJGDMK0ZlduHrbXEiV1H9Rxp4V3vfym0ZBRwU5RjAwx9hE/DXTCVJXzxBpgm71cP8CVYIgxtcAAMJGYfufMn8cqqdumfCwQ=
+	t=1779232956; cv=none; b=IXekEGyVkDTaZNikcs6mgiLEVc8YzyTtBCM2GcGC+TfwaSWjPSMUjWKdxKbW1bFwJrOI2B6fwR1RX8FIS0qQrd+iRzZGy/e4l7hi7F+PcVtdQKq3kx3l79rlabPTm9ZSejY9Y6166t9HSqkfoaAgkb6yfR+MaHaigYMKgusw1Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779228674; c=relaxed/simple;
-	bh=yFU/5Zc0RBmEJXe/+P63/EQwHTB06kczUxR7Wmznk/A=;
+	s=arc-20240116; t=1779232956; c=relaxed/simple;
+	bh=UYk5XR4//XgrvsAD1LSfURGIve7FJQqE6YKIF2Abr0s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7fG0F1g9e2UthwJWqLfABMTfIoh3vtq98Xwx7SevjZ9sfC+UjKmclv2UR/21RV+mZYjd0tC2YybtosNKYDORgnZcr4j05H9wjLoFgK1TfkFtWpp17xpYLx5auZRbxi251gKneopsEEeaQKwbVUFHx4hQdFAfeOeM4GfrjMsSKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oejc/LVh; arc=none smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=lQuuILVhlvmLHEqMLgOJuEW8DFQcZ6uliLDMBZZyCeNkoUPmMWJCXqctJBVSaUS+3oyitYLjg9sxTCJ9RleO1it83o27NLnW/Zw9tiwsfHZvFF55rbvbKuubbpzr67280T64PgWVdMCuUTs7QuLWFEoPhoa9cEJfeyj7mbTfb08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=CpQyjFRZ; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oejc/LVh"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-479d37e7d7fso1228741b6e.1
-        for <git@vger.kernel.org>; Tue, 19 May 2026 15:11:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="CpQyjFRZ"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7bf0b47d2f1so35308827b3.3
+        for <git@vger.kernel.org>; Tue, 19 May 2026 16:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779228671; x=1779833471; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1779232954; x=1779837754; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Li0KRGknkc9VKKtgAJnLvjoE5mlmSIHzGd7BSYYgBao=;
-        b=oejc/LVh6xt3mg6q+fEjHtzmWU2LmgViPL5aILZpFDVtmi+esFW2rQCMEpnwcXMjiS
-         mB75SGFQNx3vkG20CAHUtHpeqFvitDwdDrTqQdtqau1SM9LsLGlE522CCOAX+1BUuTZj
-         cN7y2yWCnvzGS7juosWumliezJKbLWSurARN3BGRER5RkbsqJyWp0uTB3QfvoVt1Yd+4
-         9DfApXJY/whKjM6h6P4WQFHQtlHgYpT+OkTzI+esTRKbGCVUabcUUGeSpmCkL6wWBGjN
-         41+mAClvaPvhRPTmct4v16kB8F7pzW5J7eW10JyZ9ZQEwtrY8mY8k50ISpVrso5pMef7
-         zw7A==
+        bh=WBowm8MBxK1/8sL2mFGb34vT3K+rfuZWej3/KPmQmH0=;
+        b=CpQyjFRZ2a5KhiqzihiNf44lW2KC+d/5MNiIo1CHj9OWJJyq/anGL6nEju4IqPnCej
+         xt9cYOUQ8VY0qAa/OCfRpaul2wvk8mVdzD4gkTFGg/phavlEm7YXmKKL4h5ljhYA5dQA
+         25hTPCcWK7LTAM9PL7HyrD9J+sFH6nRumxK57hfg9oHIE3dKw7FT671Dl7Z5EqlV97Fb
+         AfImBwl9lqCl1eCEdWSK+KBUhSY86HIQB5iAeogBxodHrXmlzaQZs+R6Ks7HdWx/1CLr
+         niLgN+6YxdEL7l3yO3ZwjKk3BABw9hikzY+GjY0RShEkM8z+0oh+fI2lMAtJ5ckNYJPo
+         eEsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779228671; x=1779833471;
+        d=1e100.net; s=20251104; t=1779232954; x=1779837754;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Li0KRGknkc9VKKtgAJnLvjoE5mlmSIHzGd7BSYYgBao=;
-        b=F2HHMXzozNDK9H9bQ+qJ0QQgK35J2nyVLf5VDJt3XnUSBUTg3ykdW9ni4mwwPIGFI+
-         Rq7K9iz4FWM+U7U+yVFpAbqI0TTL/45s9pNeMQzTf+Sh/+AETSMONo4fIaqKeZrnFG9o
-         1eyROoMdyITxNKCsKiUUITg4f87G71FVWvdyEbd6jh6voG5fEH84e+cYhR+n0c/j392Y
-         W6p3BX4JO0Ww5ypJQ410hMIo2H3KlJ3o/UcFvh1rXxHGaShhXQUBwOwTf5V0vWW++8OB
-         Ou+yJopYAhs7qeuTmikElaCaaWmbTnyksybxl9TEfAwpcl6QzyvEX9MPmZs5W++172pf
-         26gQ==
-X-Gm-Message-State: AOJu0YwOqmLkmOsbFtDGBB30OIYfES8tWyve5QuCkjsd+1SsgamvBKEQ
-	gS4BmW+u0qfkam405VI20yowEZ0V69N0mN9UTHbRpcTUgiCfZBgXH/nX
-X-Gm-Gg: Acq92OF8EduiXUJtooL2CJfOrmhYP2eXLBZUnla/yAjZZiZtieur7DrQtUkoeRkUYPI
-	sSGJmOCx3xwe4bnr46lOvbN3BZ+Dw4UGbTpTF/MHQJimeuFYA/UxruTFZSuHXeCOMUrEZ5f2vkg
-	3loW5+FfQRldodCypQzyGBWMKA2h15d3PWKULWvvp0mTPMP5FFtjJYSeohu0Qr6Tx9KYR1FFwcP
-	yRHByxGTM5GTz/W5TtaCv1zHbIpqLyVPyMe4UkWnUM5AEYkr2C/BzrVY1opAGmbUFscW8zRI3Hp
-	wV636CpJiLReGltCyDj4VXwT4F5cCSVDdRA6hnXJZXWLRrzyv1KCJHMWnEzl6a2WZiJrb1qQmvU
-	f/GR/icyiqV0gQ4JsMVFLTJE6QfejyLU9u3Uk227OfXiKeALIqVGSJZ4PxfJgWiawZLd86gtmpE
-	/lbkrIgUb4/H8zKReH
-X-Received: by 2002:a05:6808:168c:b0:47b:bd7b:10d0 with SMTP id 5614622812f47-482e56090fcmr13413233b6e.13.1779228671563;
-        Tue, 19 May 2026 15:11:11 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-482ee4fa4a9sm6977201b6e.11.2026.05.19.15.11.10
+        bh=WBowm8MBxK1/8sL2mFGb34vT3K+rfuZWej3/KPmQmH0=;
+        b=UJGzna9AbA5vkj5DrStunjpZDd0a7YgCS16cqowauZ4cA4GtK3jJuLa3LiAgOBfhZL
+         4NCbsXnND4eQ4aFU0C36GG5/DtLTaZtCgAx0mUYqzndbNTuhcZyhCqHYp5tjikyjKXem
+         Go82luCzRO7US50Pd3qRSXBqbPXpB8NTENqiByHU3r4hxqIX+KDs/+orujWTdfxtsnSb
+         7+B/TJ4gvvah7uih1Ke5r5MD5nIB8zntUxpk+ZqdlrC0WVJEMkSRTDcomc4tqv7XQke7
+         RCiklPlwX17HTUAExCCPpx4cdDA19JEnCUy4CTCwe1jpFw6lhFEy5X0sUmSQvgCYKzVt
+         Wz7A==
+X-Gm-Message-State: AOJu0YxQtu9tGZu/fgIB5/39NDSbs8aZ9p6OeHCYL1PGkGHwELqIgyQ0
+	OVCAkbEdBFkQ97Yu//ypD2vSbFdUZKwugBkbW/r7kx8kdxJQI4iPxB4qg/NGWwsR9epefQFqh65
+	alhkd8zg=
+X-Gm-Gg: Acq92OHZgGP5rwDLQ6JxCx7RrydLPmuIqqZ6FCJ9/r/ZJijOVxJdaotPSepkld9M4/E
+	bOV0G5ghdaNDRDJPNbzs2ZlcJ6Q0Bf7Y4yzYeFqSrVhQO8MKy9g72zOe2UPPLgNRczGe9UYMbWT
+	nyMa0bupW9is2wCnEiIQcHlMDZq99yplnF/9O+C1l+iPNFpEEag6KtFZpX+TwagBXnzkPczLg2f
+	H/b7ktN2unzZ3cnM5R5w3Lbn7Ksza3A+YCCznb2jpGqZs6+bujLjNHlI2R8sasmlaORojYprEDu
+	jErlACQeJoDHpWAMAWu9yeybfyjqkyLfXij9VZutkako7U4qGWQHA5sueOVFDtZPAR39VRkvrBv
+	QJ/62yfLqwJzlKLG5AQOnf4HbWLMzrUIuElnaJ+ur7amjvgEtKBcM8Q2ppjgTyPVNbrPKvZ07sa
+	iIrI6VumlgEg8oIwwEb1nRUXL3+TEJcDl2zhzo/k33nbUGrSzRvKxZNPdIHStxltO6uWL6XKc2T
+	FJI8tkCCoZl+vMTZDSfXesSYL9pQF7j932yC1S0gncSdKcD87MA5nRAKwrac3gmbjI9oXo0jSVu
+	Efa2RZFcAP0uvTid
+X-Received: by 2002:a05:690c:f08:b0:7bd:882a:43ef with SMTP id 00721157ae682-7c95b82774cmr226782817b3.26.1779232953750;
+        Tue, 19 May 2026 16:22:33 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc991c9b64sm45213697b3.1.2026.05.19.16.22.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 15:11:10 -0700 (PDT)
-Date: Tue, 19 May 2026 17:11:07 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (May 2026, #04)
-Message-ID: <agzGKQCfc7JYOyQx@denethor>
-References: <xmqqv7clbizy.fsf@gitster.g>
+        Tue, 19 May 2026 16:22:33 -0700 (PDT)
+Date: Tue, 19 May 2026 19:22:27 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
+	newren@gmail.com, peff@peff.net, ps@pks.im,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v4 04/13] path-walk: always emit directly-requested
+ objects
+Message-ID: <agzwsxV2KEkkaGPV@nand.local>
+References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+ <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
+ <e77c8a6bbc22da3428751f81ff5ee79aa5364237.1778707135.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv7clbizy.fsf@gitster.g>
+In-Reply-To: <e77c8a6bbc22da3428751f81ff5ee79aa5364237.1778707135.git.gitgitgadget@gmail.com>
 
-On 26/05/18 10:32AM, Junio C Hamano wrote:
-> * jt/odb-transaction-write (2026-05-14) 7 commits
->  - odb/transaction: make `write_object_stream()` pluggable
->  - object-file: generalize packfile writes to use odb_write_stream
->  - object-file: avoid fd seekback by checking object size upfront
->  - object-file: remove flags from transaction packfile writes
->  - odb: update `struct odb_write_stream` read() callback
->  - odb/transaction: use pluggable `begin_transaction()`
->  - odb: split `struct odb_transaction` into separate header
->  (this branch is used by ps/odb-in-memory.)
-> 
->  ODB transaction interface is being reworked to explicitly handle
->  object writes.
-> 
->  Will merge to 'next'?
->  source: <20260514183740.1505171-1-jltobler@gmail.com>
+On Wed, May 13, 2026 at 09:18:46PM +0000, Derrick Stolee via GitGitGadget wrote:
+> diff --git a/path-walk.c b/path-walk.c
+> index 6e426af433..05bfc1c114 100644
+> --- a/path-walk.c
+> +++ b/path-walk.c
+> @@ -248,6 +248,17 @@ static int add_tree_entries(struct path_walk_context *ctx,
+>  	return 0;
+>  }
+>
+> +/*
+> + * Paths starting with '/' (e.g., "/tags", "/tagged-blobs") hold objects that
+> + * were directly requested by 'pending' objects rather than discovered during
+> + * tree traversal.
+> + */
+> +static int path_is_for_direct_objects(const char *path)
+> +{
+> +	ASSERT(path);
+> +	return path[0] == '/';
+> +}
+> +
 
-I think this series should be ready to go now. The last version
-submitted fixed the leak reported by Peff.
+Hmm, I still find this a little brittle. I think that 'path' here is
+doing a number of jobs: it serves as a strmap key, it's visible to the
+caller, and now also a "direct object" marker.
+
+Could we instead store this explicitly on the type_and_oid_list, e.g. a
+"direct" flag? I'm not sure whether that type has the right scope for
+this information. If not, I wonder if there is another way to store this
+information, since I worry that future callers may not know about this
+convention and end up changing the result of the path-walk depending on
+how they name their paths.
 
 Thanks,
--Justin
+Taylor
