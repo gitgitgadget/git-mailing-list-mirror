@@ -1,35 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5789454768
-	for <git@vger.kernel.org>; Tue, 19 May 2026 01:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAE1DDC5
+	for <git@vger.kernel.org>; Tue, 19 May 2026 01:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779153577; cv=none; b=iTrODehKitsAyxnKDHohVLJMklsrrwl7tgPJGJRLWElEcPRSFwdFakgnxWlzc8eU8fKDiNmk9dPvj9XzUyqW02sSuc/AufbMOk19o++8QxBOUI2HTPLelRbm1lEdGfLyVnBLajaq5hYMJerrHg/Fi0FILukQBV7VCo2te/Phvu8=
+	t=1779153662; cv=none; b=krRRJrXhrCtJ+LY7KPxoYAaltHw1eUIQDHHMOT2oMC2iKNIFz0SGs4VgT2n5hdsfEBYSXhpDZYs2Cd0cCdHlO/Qbi+tzowO8mVwUZB2oo2+Kcn699cDd4A5ZPGjYTestrPOQX4436XE3jUQfulSmycwDXlKMUgB9O9cz1uxHjrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779153577; c=relaxed/simple;
-	bh=WUL2MNwLdyzbHj4VLZ6a6nviSuIKy4S+hQyN1ClEm/E=;
+	s=arc-20240116; t=1779153662; c=relaxed/simple;
+	bh=n3kXkEIWp00SuylK9XeYykmhGT6IK235LlJ8BUS5wxk=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W7NoLm0yOn3OpzfEsPesd6sCeamyY5bh26FmcjH3AO3WTytJemAYIGoyB7m8+Ar1Z7O5xpd44JCNu3ahW8GprZktOeYyYM/OVryllCTOgBz48dNyJoso7uBBT+YY2ptk9H0Pk0QW9jYBeVNNxGP3ZhOpJ0oRzJNGJ1vpxUEYB8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OOOOzYlt; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ef44FzcS3yNvBkwS2hF8szn5Vgb6zQfRyXu3aLbGKUzhfJh+C9HbHN82jvLVs9oDRXq/+g8Rm+wymhymrV65bdLf8R5MwinljNOra+mZp2zYbqL2SrHNM86ppQHkw3IComEH+jcfzNV5DKcYifCeKGDZGd0Dgea/M1bmmJr55EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TkQJb1hE; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OOOOzYlt"
-Received: (qmail 15820 invoked by uid 106); 19 May 2026 01:19:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WUL2MNwLdyzbHj4VLZ6a6nviSuIKy4S+hQyN1ClEm/E=; b=OOOOzYltBhlQSzMOD0XtUVDwcu/ubi5BhaMtsCX66A9nQdL8wwBUqpuNFMGIXTGlomgwQoeBstnoaBr4XsqGPPOcfl+rkTKOeyFJ6E77m3a1JqXQelm9KqJjHlXPTR10iTEYgCbrDmTWtKZRhq3V8oYNLqHnIlLQzZhtshlD27ZcuGjljftnibW711SUqN8izFwyp5HFSLiFSjA3bfvg8/OtJMnwLN9WogwoxgV6mhorfjqtLCwaaFT5WGEt2i+X1DLvl4CUA22K4F5pAnXU9colnJT39ayZaH7FAS0sssvpcTj1yU71voUA0s+hfuda/YHhIt0cnbg8+/aR/g1eJA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TkQJb1hE"
+Received: (qmail 15825 invoked by uid 106); 19 May 2026 01:21:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=n3kXkEIWp00SuylK9XeYykmhGT6IK235LlJ8BUS5wxk=; b=TkQJb1hE3Vhw9kYe0zlDQNlKOB3RCF7qP7HxwcLT4xTTaZpofge1iDN0g0KF1MRy8xMHsW/zS4/mHiaa9ZGbN8SDsl30bwXPlv2xBYYYeIGhbtkDU7oopjrBvpRFb4o7CyGuXbkqeue2U9zSy+5YM+n2X8vDwGWjhlgN0iu8055itVOguI1qwPhMMvgzDLoUY6rAUSHe0LVhqnfGuu/C8ywWPoHhQ+F6wdVpKr0vH44nFNM5juML1q5D+bB+QHV8Knm7bV/ScjwMgExTGTiacYcCpo/y0z8rZNwbu2uaPAYgNX877bZ0pjKgwf2iRSbyiSQxAQm/zf8QEbvQ5Yzpyg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 01:19:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 May 2026 01:21:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 38821 invoked by uid 111); 19 May 2026 01:19:38 -0000
+Received: (qmail 38864 invoked by uid 111); 19 May 2026 01:21:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 May 2026 21:19:38 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 May 2026 21:21:03 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 18 May 2026 21:19:34 -0400
+Date: Mon, 18 May 2026 21:20:59 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 2/3] quote: drop sq_dequote_to_argv()
-Message-ID: <20260519011934.GB1615870@coredump.intra.peff.net>
+Subject: [PATCH 3/3] quote: simplify internals of dequoting
+Message-ID: <20260519012059.GC1615870@coredump.intra.peff.net>
 References: <20260519011837.GA1615637@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -41,65 +41,60 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20260519011837.GA1615637@coredump.intra.peff.net>
 
-The last caller went away in f9dbb64fad (config: parse more robust
-format in GIT_CONFIG_PARAMETERS, 2021-01-12), when we switched to using
-sq_dequote_step().
+Our sq_dequote_to_argv_internal() helper was wrapped by the to_argv()
+and to_strvec() forms. Now that we have only the latter, we can stop
+wrapping it and drop the argv-only bits.
 
-The "to_argv()" form is not a great interface. If you care about raw
-speed, then sq_dequote_step() lets you work incrementally without extra
-allocations. If you care about simplicity, then sq_dequote_to_strvec()
-puts the result in an encapsulated data structure. With sq_dequote_to_argv(),
-you have a data dependency on the original string but still have to
-remember to manually free the argv array itself (but not its elements).
-
-So it's sort of a worst-of-both-worlds middle ground. Let's get rid of
-it.
+Note that in theory sq_dequote_to_strvec() could take a const input
+string, which would be friendlier to its callers. We couldn't do that
+with the to_argv() form because it reused the input string to hold the
+output elements. But since we're built on sq_dequote_step(), which
+munges the input, we'd have to rework the parser. Since no callers care
+about it currently, we'll leave that for another day.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- quote.c |  5 -----
- quote.h | 12 +++---------
- 2 files changed, 3 insertions(+), 14 deletions(-)
+ quote.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
 diff --git a/quote.c b/quote.c
-index b9f6bdc775..cff78af3a4 100644
+index cff78af3a4..235fac8e47 100644
 --- a/quote.c
 +++ b/quote.c
-@@ -202,11 +202,6 @@ static int sq_dequote_to_argv_internal(char *arg,
+@@ -171,9 +171,7 @@ char *sq_dequote(char *arg)
+ 	return sq_dequote_step(arg, NULL);
+ }
+ 
+-static int sq_dequote_to_argv_internal(char *arg,
+-				       const char ***argv, int *nr, int *alloc,
+-				       struct strvec *array)
++int sq_dequote_to_strvec(char *arg, struct strvec *array)
+ {
+ 	char *next = arg;
+ 
+@@ -191,22 +189,12 @@ static int sq_dequote_to_argv_internal(char *arg,
+ 				c = *++next;
+ 			} while (isspace(c));
+ 		}
+-		if (argv) {
+-			ALLOC_GROW(*argv, *nr + 1, *alloc);
+-			(*argv)[(*nr)++] = dequoted;
+-		}
+-		if (array)
+-			strvec_push(array, dequoted);
++		strvec_push(array, dequoted);
+ 	} while (next);
+ 
  	return 0;
  }
  
--int sq_dequote_to_argv(char *arg, const char ***argv, int *nr, int *alloc)
+-int sq_dequote_to_strvec(char *arg, struct strvec *array)
 -{
--	return sq_dequote_to_argv_internal(arg, argv, nr, alloc, NULL);
+-	return sq_dequote_to_argv_internal(arg, NULL, NULL, NULL, array);
 -}
 -
- int sq_dequote_to_strvec(char *arg, struct strvec *array)
- {
- 	return sq_dequote_to_argv_internal(arg, NULL, NULL, NULL, array);
-diff --git a/quote.h b/quote.h
-index 400397b11a..989f2388c0 100644
---- a/quote.h
-+++ b/quote.h
-@@ -68,15 +68,9 @@ char *sq_dequote_step(char *src, char **next);
- 
- /*
-  * Same as the above, but can be used to unwrap many arguments in the
-- * same string separated by space. Like sq_quote, it works in place,
-- * modifying arg and appending pointers into it to argv.
-- */
--int sq_dequote_to_argv(char *arg, const char ***argv, int *nr, int *alloc);
--
--/*
-- * Same as above, but store the unquoted strings in a strvec. We will
-- * still modify arg in place, but unlike sq_dequote_to_argv, the strvec
-- * will duplicate and take ownership of the strings.
-+ * same string separated by space. The strvec will duplicate and take
-+ * ownership of the strings, but note that "arg" is still modified in-place
-+ * during parsing.
-  */
- int sq_dequote_to_strvec(char *arg, struct strvec *);
- 
+ /* 1 means: quote as octal
+  * 0 means: quote as octal if (quote_path_fully)
+  * -1 means: never quote
 -- 
 2.54.0.524.g198262df96
-
