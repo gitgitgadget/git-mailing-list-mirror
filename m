@@ -1,71 +1,71 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B0D36A35F
-	for <git@vger.kernel.org>; Wed, 20 May 2026 20:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D89B36A036
+	for <git@vger.kernel.org>; Wed, 20 May 2026 20:24:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779308675; cv=none; b=Ei1hwktb4hWbLD7A+zxl9V5C2u3BwOi0wqvXOnKzqtiihF/l+JhImE54sCoOLB79Ikx+aqb+2QY/o7pz855+oSlxZGKttAz+zhCyFvU+N/VBP8YRKykKAFwWfoGMJ16bPL1dVxq5SFu2Xus9iXBoj/lJuAo9PJ5iJ7r5SIe8bGI=
+	t=1779308676; cv=none; b=IRtm3XYnN3Ihq1tazP1vpQ7M4UXoVv7TFar/pKC2ckFEhzCenLSD5uWJL/pG+gObBh4T6/lDu15uvUeyZoTn3M+DMBKfJtI9PU62SXq7uHm6TPZjPeBOnTLH7D8QoeFHeEv7p1Tnze0m0hSXD/N/wweh8HPQDjXA7iy5LSPqxK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779308675; c=relaxed/simple;
-	bh=tiHFvqYYVRB4vhr94CNSsomxbYrwuzdwFprUNs7Cs+A=;
+	s=arc-20240116; t=1779308676; c=relaxed/simple;
+	bh=yWxV9z04YhKDR5qvrWnvalbzChs1wLWh0nMLZZMapZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/tKzvL/E4hvnsnvHfK3nq7gpd/SHDhVZEOBG92BSMxI++9pxYekxFry40qpa5KlR3oLEPTBUiKbtkWTw1y84aXQZ/S1UmvsQZfvJQbAvqcprkTfN9Nf3K6SObMcGcfjkTxGirxVLWKB5yNQMXynxry1ag4TR0W+G9bs1PDUdCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V2TMlaH/; arc=none smtp.client-ip=209.85.222.181
+	 MIME-Version; b=bprwO+V+GHuvyPIFuKfLJgHfTc5jQWhsnbvVh/ImKR9T2vRLMOQDc9SPTm7bb9MBJ9kktVxITXpNv89f0ahH1Pk/7fNatk71++XEwcUYxDEiUh84ppV+AYE+NLdClQqdCVM2c3eYWDcldn4xAt2imVgdrVDnCdZv5lSauwjdtZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rNElonk3; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V2TMlaH/"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-90eb7a63a30so363279785a.2
-        for <git@vger.kernel.org>; Wed, 20 May 2026 13:24:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rNElonk3"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-912278ed3b5so572792685a.0
+        for <git@vger.kernel.org>; Wed, 20 May 2026 13:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779308673; x=1779913473; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779308674; x=1779913474; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kOTiS/6+0k4Yg0mrnjSm1pJvyqR1cA0EHelpgzh8IlM=;
-        b=V2TMlaH/CkoQKYJuhp2fjkd3CwZi8PFffl/Jvg0uy85x+dWC9DLGv7CGl0NdK34NQi
-         +6DVlqNe7sCj8o5kWCD4pjrPTmMfkBbgaH0EhyDD3KmI28D4yhEUbbYUkhqmRGfDRm77
-         juju7lmQCUP0ZI7ICByY7iwqlwKBM/VmklrHsnyhE+iVh5pi8KXNYEt1mV8M0pKFAibT
-         1gxLbzEfgfPxhzSkPgHfCzSch8m77jeLO/dOawkLdukj98GdDEMK/OtgMS7JtfftyxzC
-         K5dj0YhelCapZOUbOLwMSSqb0Pm3FzHnqyRVD5pUbt0CaVZ9FioAWTTlRQ5n14AKfHN5
-         t9iA==
+        bh=LyrVznUKvHvby3pNi9jvGNzJq+624m2dUnvOnh6Rtqo=;
+        b=rNElonk3Huy3rhXluJqc9MW9hcCGEAwbksmtdUt/QMnGUl4XYlyhVZWGAEYmV5sgfp
+         jEfkHPrTEbiQZnXIylkwZY8Rl8GQAtmWCcvKTq0XBDgtjufDrEoBbnzZrgPCRiQCD2RI
+         2GiNUYMMEzrXAGNwdbt2myleJSE33pjrzL5KZ2T5mh3IzpwI6CvrtVq9y+s8Sy0ybdT8
+         48qxe2ZYf6ZxMlF6VySJxUTSJxSo2D1ycSIvItJcrtV3zATemynP70S+y90x6o/Ti/Q7
+         6Z3GjS89nePliwhhE6t7t58dVKmWsSlVK0h5sNxXLsFQDmdbfBSv2GKJjBApb9yTchl8
+         73UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779308673; x=1779913473;
+        d=1e100.net; s=20251104; t=1779308674; x=1779913474;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kOTiS/6+0k4Yg0mrnjSm1pJvyqR1cA0EHelpgzh8IlM=;
-        b=MShNgtLb62UMfn1FO1M2lETj72Dranif2xSfwgzJZL0lLXREzgnH5gyf1MpFf2yhyU
-         6Fwi65Gvcd4mPglXCZnhd74w10CaY7IlNdFgFpwBROwbAqxLXjlmc2Kl8OxK854xeQwA
-         yYw/oOC77QaEpUR26IhvDMU850AwyvyGwlH4AwKARakMwBgywTT/RM1hE8gYvZ4YtIP1
-         0gBeoFCKQXV55qaOKDwQn/z3nQvAYKMAdYlGLmuVK1+DjQTLqAGtNRqM9L/4k8yeZJbh
-         YuGI0sgCJMt+0fAhCa6FSRMovENJiz2ipwxHfoaDEjmMaMt+tg0GTNGIrPqimNCx7wnk
-         i2qA==
-X-Gm-Message-State: AOJu0Yz/8wzK4lYA+XFsvxp2Qs5OwabvEWF9JSImyhU7n+aDwGfy0Ejg
-	8IoMIVZYJyW0L7QUngNxcwnRow0HJZPiSBJXosm2HytWg0/0fVcOVuYR5d3tm+CF
-X-Gm-Gg: Acq92OGQ6u2Ze7RmCU+25TCIL5JmC05lgpfI/fT9m5pePefCmXhsYjBaFixetju11Ty
-	DfEzeQI5VN+Smje0O4gOyhUq953qBuhfsuqlFyErreMxHVEOUmXAtiPF7F9b9fTYJQ/yME3k0kr
-	XyuL4X8Z6/sgLGQihUX7j++quo+lA5d2WJ/PvfPrWn52DJN0vJlTWd+vIiBI2EC0MAmnl+oa8fR
-	a/ucRQBt8XBnXO4NcJomuZE6h100FTL/NZ5xdv68Bj3HbyrcCvfsI9pBHMvkigJH8r2Qrja3nyU
-	g/DvBeAIzOY8lxBgMCV9jroZ+0ix6RdHU5H6bLcYIDrZFFwXMSq+6i/+OM4kW13QlTLAXR9NCh6
-	xMfYyCasgBE0/21qp5L2pKMXLFtqDlioc0CH9XLgmde7CI7Lz1iAMhcnJCT6DusHpXxRiprLV8d
-	KFMrFdsmcXSj3TVbmnU9o721tsUw==
-X-Received: by 2002:a05:620a:1727:b0:90c:fc17:95f8 with SMTP id af79cd13be357-911cfdd63a4mr4067397785a.51.1779308672777;
-        Wed, 20 May 2026 13:24:32 -0700 (PDT)
+        bh=LyrVznUKvHvby3pNi9jvGNzJq+624m2dUnvOnh6Rtqo=;
+        b=biaJLf0zRz9O8TIPOa0W+zFC1xqlvFILFqm/zdP3vc06XV1CiiWTy1bI7lHLCvYlOq
+         3pcAf6ARjsNslOhh1lSt/mouYQbFD9lXs9YVBQRF/khv/PgoVo9fHMLsaJ9RetlJeWHA
+         BnmW1Fw6FLXerx0BER0fLm6au7GTCQhvpml6Dg1NbZRoah0CkdIZkzeWR6iYIUqc4UR+
+         Kt799lIFy6tC8LvgH3ahx2AQBuC6Ly2FAbA/Mc0toM6UF/w0IURH5OJjs2t8zFp5jg6P
+         6c3IEyNkdy5lYoBgEgmQ0iNhJm6SdGHjvZbgamz3GxF9OBwJIy0viBcnKSqeM7cQ213Y
+         /2ig==
+X-Gm-Message-State: AOJu0YzhyFk48i/kCcCo9kwnW808iOoxVOJGi0TMNhYbQc6YEM+Te9GJ
+	rEewfoh8SLSxPdgVDSZ+jUOvtqI/wpPCM/91H8Tx1sQjNwI1ikwgNgur8NBIVyzW
+X-Gm-Gg: Acq92OEoVeLSIZPOZdAiJ/liNb4zZpuTCqvuNqMCrfsRbJnB6TsQJgfV8IqZvjMi+Vq
+	gQhFVLJ9zVlD95nukV+WUW17T/U48U5HuapaUqJDZlDjX2QuShuHCP0UopVRDDqKybD7j1FXHLf
+	8VCtMutoFWz3nxqlg5tlmMa2kBjoJc/dbHyKjUDZkrnbYWsXeXR925es5hfWUq4Q50xwem94Jbu
+	HpU6IhCXHudBSR34K2y1f6QQJDd62l+JX8q31qXTLyZC/OJiFXCoaA2N6yE2iroTGLeXh5TIDn8
+	jAGrCzJk3SiWEsnXRA/L18FtmUIusmWKPr2zsX6YE3HGzzRJ1a5h7txG+riKhXrTctH+5P1LwCM
+	IGRDbC2NW4oM06ZS0ucK+kXvG/8FfkxvFlJ7MVH9W8GgaPj4aHa70H3F90Vm/0olAopZSLWZaKH
+	GucAgHoSIQ0vUQNwB6C6oPIpcu5w==
+X-Received: by 2002:a05:620a:b1c:b0:914:9f68:cd00 with SMTP id af79cd13be357-9149f68d138mr203680585a.18.1779308673731;
+        Wed, 20 May 2026 13:24:33 -0700 (PDT)
 Received: from markl5i.lan ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca361905d4sm129891136d6.32.2026.05.20.13.24.32
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca361905d4sm129891136d6.32.2026.05.20.13.24.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 13:24:32 -0700 (PDT)
+        Wed, 20 May 2026 13:24:33 -0700 (PDT)
 From: Mark Levedahl <mlevedahl@gmail.com>
 To: git@vger.kernel.org
 Cc: j6t@kdbg.org,
 	egg_mushroomcow@foxmail.com,
 	bootaina702@gmail.com,
 	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v2 01/11] git-gui: guard set/unset of GIT_DIR and GIT_WORK_TREE
-Date: Wed, 20 May 2026 16:24:00 -0400
-Message-ID: <20260520202411.108764-2-mlevedahl@gmail.com>
+Subject: [PATCH v2 02/11] git-gui: return status from choose_repository::pick
+Date: Wed, 20 May 2026 16:24:01 -0400
+Message-ID: <20260520202411.108764-3-mlevedahl@gmail.com>
 X-Mailer: git-send-email 2.54.0.99.14
 In-Reply-To: <20260520202411.108764-1-mlevedahl@gmail.com>
 References: <20260514143322.865587-1-mlevedahl@gmail.com>
@@ -78,136 +78,130 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-git-gui unconditionally exports _gitdir as GIT_DIR, and _gitworktree as
-GIT_WORK_TREE, to the environment, and furthermore unconditionally
-unsets these environment variables in many
+The repository picker (choose_repository::pick) on success always
+returns with the current directory at the root of the selected worktree,
+and with the global variable _gitdir holding the name of the git
+repository, possibly as a relative path. On failure, _gitdir = {}. If
+the selection was from the "recent" list, no validation has occurred.
 
-git gui must have a repository, so _gitdir can never be empty and its
-export is always valid if repository discovery completes successfully.
-
-git gui might not find a worktree, so _gitworktree can be empty. While
-having no worktree is valid for blame/browser subcommands, exporting
-GIT_WORK_TREE=<empty> is not valid. Rather, an empty GIT_WORK_TREE
-raises errors in git builtins, for instance 'git branch --show-current'
-as used by git, and causes breakage. This is one cause of git blame /
-git browser not working without a worktree.
-
-A user may set GIT_DIR and/or GIT_WORK_TREE to override git's normal
-discovery rules, including repository configuration of core.worktree
-and/or worktree specific gitdirs. It is always safe to export the
-absolute pathnames of the discovered values, even though they may not be
-needed. However, the gitdir might not be found from the worktree without
-GIT_DIR being set. Furthermore, the worktree defined by the discovered
-gitdir might be overridden by GIT_WORK_TREE set before git-gui started.
-So, it is also sometimes necessary that one or both of these variables
-is set.
-
-So, let's provide two procs, one to unset GIT_DIR / GIT_WORK_TREE if
-they are set, one to set GIT_DIR and, if not empty, GIT_WORK_TREE,  so
-all call sites do the same thing, and problems with _gitworktree == {}
-are avoided.
+There are too many side effects in this interface. Note that the picker
+only supports worktrees with a .git entry in the worktree root, so git
+repository and worktree discovery will work starting in the current
+directory on return. So, let's change pick to return a 0/1 value, 1
+meaning a worktreee + repo was selected and the current directory is the
+worktree root, and leave validation and setting of _gitdir,
+_gitworktree, and _prefix to the caller. Note: pick actually does not
+return if something was not selected, rather it terminates git-gui.
+But, let's pretend at the call site that pick returns 0/false instead.
 
 Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 ---
- git-gui.sh | 39 +++++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ git-gui.sh                | 10 ++++++++--
+ lib/choose_repository.tcl | 21 ++++++++-------------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/git-gui.sh b/git-gui.sh
-index 23fe76e498..4ba25da7b6 100755
+index 4ba25da7b6..4a736190a9 100755
 --- a/git-gui.sh
 +++ b/git-gui.sh
-@@ -1122,6 +1122,22 @@ unset argv0dir
- ##
- ## repository setup
- 
-+proc set_gitdir_vars {} {
-+	global _gitdir _gitworktree env
-+	if {$_gitdir ne {}} {
-+		set env(GIT_DIR) $_gitdir
+@@ -1151,10 +1151,16 @@ if {[catch {
+ 	} err]} {
+ 	load_config 1
+ 	apply_config
+-	choose_repository::pick
+-	if {![file isdirectory $_gitdir]} {
++	if {![choose_repository::pick]} {
+ 		exit 1
+ 	}
++	if {[catch {
++		set _gitdir [git rev-parse --git-dir]
++	} err]} {
++		catch {wm withdraw .}
++		error_popup [strcat [mc "Unusable repo/worktree:"] " [pwd] "\n\n$err"]
 +	}
-+	if {$_gitworktree ne {}} {
-+		set env(GIT_WORK_TREE) $_gitworktree
-+	}
-+}
-+
-+proc unset_gitdir_vars {} {
-+	global env
-+	catch {unset env(GIT_DIR)}
-+	catch {unset env(GIT_WORK_TREE)}
-+}
-+
- set picked 0
- if {[catch {
- 		set _gitdir $env(GIT_DIR)
-@@ -1207,8 +1223,8 @@ if {[lindex $_reponame end] eq {.git}} {
- 	set _reponame [lindex $_reponame end]
++	set _prefix {}
+ 	set picked 1
  }
  
--set env(GIT_DIR) $_gitdir
--set env(GIT_WORK_TREE) $_gitworktree
-+# Export the final paths
-+set_gitdir_vars
+diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
+index 7e1462a20c..4b06afee93 100644
+--- a/lib/choose_repository.tcl
++++ b/lib/choose_repository.tcl
+@@ -15,7 +15,7 @@ field w_recentlist ; # Listbox containing recent repositories
+ field w_localpath  ; # Entry widget bound to local_path
  
- ######################################################################
- ##
-@@ -2007,7 +2023,7 @@ proc incr_font_size {font {amt 1}} {
+ field done              0 ; # Finished picking the repository?
+-field clone_ok      false ; # clone succeeeded
++field pick_ok           0 ; # true if repo pick/clone succeeded
+ field local_path       {} ; # Where this repository is locally
+ field origin_url       {} ; # Where we are cloning from
+ field origin_name  origin ; # What we shall call 'origin'
+@@ -220,6 +220,8 @@ constructor pick {} {
+ 	if {$top eq {.}} {
+ 		eval destroy [winfo children $top]
+ 	}
++
++	return $pick_ok
+ }
  
- proc do_gitk {revs {is_submodule false}} {
- 	global current_diff_path file_states current_diff_side ui_index
--	global _gitdir _gitworktree
-+	global _gitworktree
+ method _center {} {
+@@ -327,8 +329,7 @@ method _git_init {} {
+ 	}
  
- 	# -- Always start gitk through whatever we were loaded with.  This
- 	#    lets us bypass using shell process on Windows systems.
-@@ -2017,8 +2033,6 @@ proc do_gitk {revs {is_submodule false}} {
- 	if {$exe eq {}} {
- 		error_popup [mc "Couldn't find gitk in PATH"]
- 	} else {
--		global env
--
- 		set pwd [pwd]
+ 	_append_recentrepos [pwd]
+-	set ::_gitdir .git
+-	set ::_prefix {}
++	set pick_ok 1
+ 	return 1
+ }
  
- 		if {!$is_submodule} {
-@@ -2050,13 +2064,11 @@ proc do_gitk {revs {is_submodule false}} {
- 			# TODO we could make life easier (start up faster?) for gitk
- 			# by setting these to the appropriate values to allow gitk
- 			# to skip the heuristics to find their proper value
--			unset env(GIT_DIR)
--			unset env(GIT_WORK_TREE)
-+			unset_gitdir_vars
+@@ -409,6 +410,7 @@ method _do_new2 {} {
+ 	if {![_git_init $this]} {
+ 		return
+ 	}
++	set pick_ok 1
+ 	set done 1
+ }
+ 
+@@ -621,7 +623,7 @@ method _do_clone2 {} {
+ 	}
+ 
+ 	tkwait variable @done
+-	if {!$clone_ok} {
++	if {!$pick_ok} {
+ 		error_popup [mc "Clone failed."]
+ 		return
+ 	}
+@@ -632,18 +634,12 @@ method _do_clone2_done {ok} {
+ 	if {$ok} {
+ 		if {[catch {
+ 			cd $local_path
+-			set ::_gitdir .git
+-			set ::_prefix {}
+ 			_append_recentrepos [pwd]
+ 		} err]} {
+ 			set ok 0
  		}
- 		safe_exec_bg [concat $cmd $revs "--" "--"]
+ 	}
+-	if {!$ok} {
+-		set ::_gitdir {}
+-		set ::_prefix {}
+-	}
+-	set clone_ok $ok
++	set pick_ok $ok
+ 	set done 1
+ }
  
--		set env(GIT_DIR) $_gitdir
--		set env(GIT_WORK_TREE) $_gitworktree
-+		set_gitdir_vars
- 		cd $pwd
+@@ -721,8 +717,7 @@ method _do_open2 {} {
+ 	}
  
- 		if {[info exists main_status]} {
-@@ -2079,21 +2091,16 @@ proc do_git_gui {} {
- 	if {$exe eq {}} {
- 		error_popup [mc "Couldn't find git gui in PATH"]
- 	} else {
--		global env
--		global _gitdir _gitworktree
--
- 		# see note in do_gitk about unsetting these vars when
- 		# running tools in a submodule
--		unset env(GIT_DIR)
--		unset env(GIT_WORK_TREE)
-+		unset_gitdir_vars
+ 	_append_recentrepos [pwd]
+-	set ::_gitdir $actualgit
+-	set ::_prefix {}
++	set pick_ok 1
+ 	set done 1
+ }
  
- 		set pwd [pwd]
- 		cd $current_diff_path
- 
- 		safe_exec_bg [concat $exe gui]
- 
--		set env(GIT_DIR) $_gitdir
--		set env(GIT_WORK_TREE) $_gitworktree
-+		set_gitdir_vars
- 		cd $pwd
- 
- 		set status_operation [$::main_status \
 -- 
 2.54.0.99.14
 
