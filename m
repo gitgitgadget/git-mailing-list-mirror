@@ -1,89 +1,86 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F97265620
-	for <git@vger.kernel.org>; Wed, 20 May 2026 02:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E05175A6A
+	for <git@vger.kernel.org>; Wed, 20 May 2026 02:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779243984; cv=none; b=pr2HnaVPBiRTccl9JRLW0Cgr58BWb/YhhWVeq6U4MIg1/KOebEvEumtfxf5iEHVYHPdEDLyS2fS/g6i0tUoSpHs/xqN2eKNrRjybi2B1VG5JMjvGgQ9iSq7qWtcv41CygggOP7tsrKonBkA5tNfH9uZbUOJlRzARWdPufgS29RM=
+	t=1779244462; cv=none; b=PmQJmmP9PzysYIu3yorh9mHgDNBoJcS9D4NjNZO3xAHYotBnpiw7lswgJbHNULBV2/bUNnEdLnRlt91lyHSa8LnaAFaoK8ieoz7aaJID9SQkhlPp4hd5T0ejYsE9waw18r+0TfRuV/K+jzj+tBxWAFxqIrPE81UmXFZOfTDNhYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779243984; c=relaxed/simple;
-	bh=qgph2ySgRZ9pfWMevX+foTGI/SrfbULxLRXVUG2iRuU=;
+	s=arc-20240116; t=1779244462; c=relaxed/simple;
+	bh=UZh16Hqh3IrTzMVOKvwoqU9MqyfdkbaHxDg+/9QKXSU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BrbjxKjR9ATHsNfBpMpfVnZub66ffFrRP02jQYu5gu5g3PEb0XpbISHwtO8STPX4/lUdyljgXcghUPdRAZ6VEljxlh7BCnV5tpnzrFNJTGjXqDyMLPIAFomLWwpl2MgO6sH0pmfrSiuJLbWjTOMLeKYsHovRH98cCVphbswuEwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TXya4Lpk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vdsoW32e; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=kpEaw5ZI/DITVKeQaDFhDQXhdjtgt+E412KAUzCU+pLwvfkDZjHwgXzxEHf6+UVo7P982FxWUajccMzAYT+SF2WtcRaU9D0xsGpH6kTHclhpUo9jH4NNPCqaLPGoX33MlepgRiXOrliIhKm5GJvxQ71WmFagye44tgfawM7Ubko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JCk0mwqP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LG0AedPa; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TXya4Lpk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vdsoW32e"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JCk0mwqP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LG0AedPa"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C86037A0122;
-	Tue, 19 May 2026 22:26:17 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 0F1321D0013D;
+	Tue, 19 May 2026 22:34:20 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 19 May 2026 22:26:18 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 19 May 2026 22:34:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779243977; x=1779330377; bh=1UpPflVINS
-	T1vdoGKTk6SoIu0RD82loGWEqnM87lFNo=; b=TXya4Lpku0MbaYvS9lAeH3wuZN
-	Kt49/pUpV92hw+xKI58AaCWUKCJD65P0zRAonbD+Pip8lirlLRETKXolIzhsfoVr
-	kTGD7XUmPekgvh8z1JZDqS2WH3lKtgBPNcKY/rALZSSlauRPyhei7pXsAUZGhpT8
-	bDivAk3TUJjIVsBsqSlWw6hUZfwKv8+ftphEkzC8S6sKsa3Zlj+HljvHJHjZlwa/
-	hRlBxacJpX18d6sVc2OEfqaQx+3RaioH6yzRCUlaMhC2God45sYX4S4ySRYrA9TG
-	VUVGCdgdyvyWr4EY9SgjpgghapDvFbnk91BhpKB8DpcEcA49tJnUBotJbcMQ==
+	:subject:to:to; s=fm2; t=1779244459; x=1779330859; bh=EdsJFgWMTk
+	qHMDVOvBYfydBrIIzAYaVHloGrxTX6Tvs=; b=JCk0mwqPAOiLcUP0gOt9KgH4GF
+	MfqiGhgaBlDcaHa19csY21Ps9Atx+1iNhM+SED3k3+vOCT7Me7EDyDJbJN0m3xSi
+	O40Z5xXrUMUCEIpHgkeU+cQtLBV8/ukU9EoJWT/00V5GHq85GpuOH/q/4UZtzvJp
+	3ZjhI0JtpwEGMZeJARao6Al8ec7yH3COCiZSvCVhWhfu2otjhr28K/yLZnefZ4/T
+	0OwAmSnOI1kVe4O0BRgiBZcaQpLH53mMgL0nnL5g01zf4xV7VUw1bOQWsiEcIdYX
+	4Q3GWp3E9La9cGsNAz5XRSnevs1vNbYeCrg2f2+fFshXounvMSe9e+NbBUNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779243977; x=1779330377; bh=1UpPflVINST1vdoGKTk6SoIu0RD82loGWEq
-	nM87lFNo=; b=vdsoW32eQGmzRA1kgtB+CL9S51F50po0PeReZSr2DGNnk1JUFla
-	T3WMFHUIdvePPLdQ4v1xKu5ONLbrTLQ/K47RViK8KhwqAcibug7ItoWVQ1SgJLLH
-	V0SxH/xAUIu4ERRbtZBTVJs2i8LBOeNokJwUYx201fsvLY1B7oYaQyJPpTCamYla
-	GvK5dym+I7XK4gYbXrBDxnKuIexZLZcgC1F0lcX9UjE1TVqluH9wlxxDhNWeMetX
-	LRTPKJq9Cch57rIeONx2t5bOzgfssjkt0T9UBoZ5qQQ4dQ9hioABIXvvEyN6LNoN
-	upWiDPh3+zLXbbSpS7Mup/URU/Rsd9DI6VA==
-X-ME-Sender: <xms:yBsNasUnCJ0XQiKGrjq7PY5mENRRMUSm6FpSh5Xdc402CGGeSKWsQw>
-    <xme:yBsNaqkKuSQAMvIX7zAw0_tptfSgoUtu8CHE9brOublWWWy7g1-SXjZJ3cgnCCOpP
-    vhJr14bQlvDTR-uO1WGAM8S2fx_9OWtVviwoUmahTK_thDQBhpiMQ>
-X-ME-Received: <xmr:yBsNanDuZ2w5NacfciK2f5OmMxixnEaSm1jV3DDkc240rLxdi91ybDIEVbp6EdX_OlioSPjsXJ1knEIqwVImewjThPPmxW_o9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeefgedvucetufdoteggodetrf
+	1779244459; x=1779330859; bh=EdsJFgWMTkqHMDVOvBYfydBrIIzAYaVHloG
+	rxTX6Tvs=; b=LG0AedPaZkjasSHcHQgxndJlUSOO1DpbXY/U/TKi2T77vopJ3Yr
+	l27PUtTspNHzuVLaBCkHUJH2kD3xTV6CQdLmYoQCIjW2SlH6qxj2fNMCK5mGP56q
+	pVEFuGNz2Y9I02RLZMVTtJSXANVun9qcqhtEt8ezBu66KIWZnuRoc+6f3+NjOAXM
+	WbAGiwKJMW6OF1TBQPR7ECsxFvEQfQdHbqFVYkoRDAuftOZfnNkSs+QoBFc2w0dc
+	oY5nvr2bRXi/O6oIz59idYFGMngCANrVq+DGcBVfulAuuMWOF9LG1T7kxSsxT1PQ
+	ChxwyYbZw0V2PFRNRi55Ptbgror0iPn9Iig==
+X-ME-Sender: <xms:qx0Nagq2mRmCfEFe8d47waoQQ4Y6nz4rkNQCjbeTCg0MFrStVx88-w>
+    <xme:qx0NaqW_qHQzGUY6hMKinLjFoVDHpXIXR9RG29rLpXtq4yCQ7Zd-9IAio1jZtxR9_
+    yDGmnVRio9BfRPI5cL0iZMcX35RyB2AjxGlKDW_YleZ0WstA36IuNU>
+X-ME-Received: <xmr:qx0NavAx51Jp9DftwEgtMamI_kjqcVppfYRDLRatNPKxhKR429VbM3ifQZYoeJjAQmRrUfSJybd1SUY_68Gq5NEJ4l4gSEzR7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeefgeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehtrdhguhhmmhgvrhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
-    lhhmrdhorhhgrdhukhdprhgtphhtthhopehvugihvgesghhithhhuhgsrdgtohhmpdhrtg
-    hpthhtohepmhgvsegruggrmhhjrdgvuhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:yBsNapgjcVj-ZlRiJMA7WI6W1gaaBwOF7Z21iIFYFAsIzgSrlSRLkw>
-    <xmx:yBsNakwICnEOfOVUONmjBClHUafcnXGk607uEV_3PN67VDNfMjXptw>
-    <xmx:yBsNaq2wfeUlcaiTm4D5cJr_TyB9iCLA_bIVsTv--C9EUqjjl-imng>
-    <xmx:yBsNap982Q_7Z1J1PrBU1bRuGDDZIDwZsZeo-YRBuRkhGMhWV2lP-Q>
-    <xmx:yRsNats7ku1HhqkhARYjoRvjf0_5VOb9Tw0xPD9yw0rWTzId9V0NaEDX>
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhhjtghhvggvthhhrghmsehouhhtlhhoohhkrdgtoh
+    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qx0Nau1SexDJyCDIaY0tGg063PrTS4WWt-xbvm5EXpqjx1riPAFJWw>
+    <xmx:qx0Nah0M9S_ByYobLGcOD5G3Rx0pmOvS56vwTN6P_V4OeFk7A5LHYg>
+    <xmx:qx0NajBVJHQtLoAK3vBsg92BqmP8ju_l5giEqR6mpkGnVwyYJX-2Xw>
+    <xmx:qx0Nag7cSU5z281SVFAj8RAlLr3rmPtzM8vLwKIdFZhKbABJlxaGEw>
+    <xmx:qx0Nas83mHQAT4smEmTv6TAG9JJ2dA2tArYicVR6csBBkAYapg86EjOM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 May 2026 22:26:16 -0400 (EDT)
+ 19 May 2026 22:34:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Thomas Gummerer <t.gummerer@gmail.com>,  Elijah
- Newren <newren@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Victoria Dye <vdye@github.com>,  Adam Johnson <me@adamj.eu>
-Subject: Re: [PATCH] stash: reuse cached index entries in --patch temporary
- index
-In-Reply-To: <pull.2306.git.git.1779194605735.gitgitgadget@gmail.com> (Adam
-	Johnson via GitGitGadget's message of "Tue, 19 May 2026 12:43:25
-	+0000")
-References: <pull.2306.git.git.1779194605735.gitgitgadget@gmail.com>
-Date: Wed, 20 May 2026 11:26:14 +0900
-Message-ID: <xmqqldde6cl5.fsf@gitster.g>
+To: Matthew John Cheetham <mjcheetham@outlook.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v6 0/8] fetch: rework negotiation tip options
+In-Reply-To: <MRWPR03MB116167F956F0616EE71F527EEC0002@MRWPR03MB11616.eurprd03.prod.outlook.com>
+	(Matthew John Cheetham's message of "Tue, 19 May 2026 17:48:17 +0100")
+References: <pull.2085.v5.git.1779135575.gitgitgadget@gmail.com>
+	<pull.2085.v6.git.1779207896.gitgitgadget@gmail.com>
+	<MRWPR03MB116167F956F0616EE71F527EEC0002@MRWPR03MB11616.eurprd03.prod.outlook.com>
+Date: Wed, 20 May 2026 11:34:18 +0900
+Message-ID: <xmqqh5o26c7p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,40 +90,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Matthew John Cheetham <mjcheetham@outlook.com> writes:
 
->  2 files changed, 83 insertions(+), 6 deletions(-)
+> On 2026-05-19 17:24, Derrick Stolee via GitGitGadget wrote:
 >
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 32dbc97b47..48189cb9f7 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -372,6 +372,57 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
->  	return 0;
->  }
->  
-> +static int create_index_from_tree(const struct object_id *tree_id,
-> +				  const char *index_path)
-> +{
-> +	int nr_trees = 1;
-> +	int ret = 0;
-> +	struct unpack_trees_options opts;
-> +	struct tree_desc t[MAX_UNPACK_TREES];
-> +	struct tree *tree;
-> +	struct index_state dst_istate = INDEX_STATE_INIT(the_repository);
-> +	struct lock_file lock_file = LOCK_INIT;
-> +
-> +	repo_read_index_preload(the_repository, NULL, 0);
-> +	if (refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL, NULL))
-> +		return -1;
+>> Updates in v6
+>> =============
+>> 
+>> Corrected reviewed-by annotations in commit messages.
+>> 
+>> Thanks, -Stolee
+>> 
+>
+> v6 look good to me!
+>
+> Thanks,
+> Matthew
 
-Is this "non-zero return from refresh_index() leads to a failure"
-intended?  The old "git read-tree HEAD" wouldn't have cared if the
-original index were unmerged, for example, but with this update, we
-will see an immediate failure.  There are other conditions that
-refresh_index() flips its local variable has_errors on, which leads
-to its non-zero return.
-
-Since "git stash -p" is almost always invoked when the user has
-unstaged modifications, I am not sure allowing refresh_index() to
-notice and barf is what we want here.
+Thanks.
