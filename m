@@ -1,275 +1,354 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AC7375F88
-	for <git@vger.kernel.org>; Wed, 20 May 2026 07:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F133A033
+	for <git@vger.kernel.org>; Wed, 20 May 2026 12:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779261078; cv=none; b=KoCXuoyQvZX2CLV5CZUFCk4Po23L8JJpUt5D0sV9M9YLE20aye+sElTxUsDrY8i44CFFjnFuQGfQDQhB8P1ZHYRjk+UiOp++mCWexeWW6k8FyngSuvLaPGxWKJ/sn+XE6dQqyNXGzus9ER983xRhw0iOlBo8mJQW3WQ4jgAek+I=
+	t=1779280315; cv=none; b=m3eU3f8PtgCS03MC3MlvdYBvL9it/TSxMtnGo+PVS9lfaJ11qUgMt2dIU5wYdA3SuTquWyo50pwM7Zxjm0MFixq/NgSx1qKQU1DDpHUXYbmI7VkB4yNnJlowWBAFsKfd6LkB4CBgwhZE7qFxADU2iAmgHV/oQCjY0rFpx0zmv6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779261078; c=relaxed/simple;
-	bh=fn/PwDaoRbXn4317I3ylTn0iJMVD1wKwPyt/nk2mUWY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=j/VZ4ybtRtkjAr2tqxUhjFktf0B3DACLgIirbRSwW0nuP8XmDDSi5DzArBqW7GEkkzAGzU0378y7a1likqdMNqc0EZ2399uzKv70rRTl3ezl/ZJ28AMNEh4grKzmtBo0Klz6nRRsNIQSvzlPsgFmbsO82jHB7rxuNOUVkpSKqs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=H8miFI90; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kkeIV4iT; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1779280315; c=relaxed/simple;
+	bh=m2fKZWIUyDuZ29tcFgnexWVkoA34Qn1PX6kbFghnFF0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=U/29OWk7frBsinYHl91h3bpAlbjKX2Yi4z1u2S7xK5JIBTaWaOiUP7iEYZ8opJGfOuISjbZgyDDGnidgLH3W7PjBXhRXQ+FKXqQK+PQlyqdbg/VD+nV7COQ8QuQP4hq2d8K9VvCW9ZlCocWy3ypDMFUzW4pcF/7QMT/mP6FTPU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFPP5oW8; arc=none smtp.client-ip=74.125.82.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="H8miFI90";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kkeIV4iT"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7AC97140003A;
-	Wed, 20 May 2026 03:11:15 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 20 May 2026 03:11:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779261075;
-	 x=1779347475; bh=5/o7QjiksXigv8G7jKh49883+xn/6Ti/sx8M2YjsqPw=; b=
-	H8miFI90zwRqGJFy1DSvHUlJCUfvk2D/qhMkpk58MFm2Fue8r31iYjrSlQeB8VBy
-	qTWOubm4Bo94A2emci2Sw6XBz4IseEcioYryKb1+ApVwpnuyzAeaHrMMO6yArKWq
-	9Nz1XbiMiMwzz/ecpI97mMoOrpjBFB8DjwflhWXZtH/ZFZl+rHRIOBeW9KlygDEx
-	OlfC2Q/Bf+oz0ztCMz9u5OuhbIw4ungiIiyuyVFNf19mPqFz2SsF+BHTKNWVoBtN
-	cxpfPacSxjw4wEYGLL5CJAV+nEdsmY/x/44ApIViJsqtL6PpJzNxHi9PyyOvGPbu
-	uwxmDiXdVBDkMjEBlvU9NA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779261075; x=
-	1779347475; bh=5/o7QjiksXigv8G7jKh49883+xn/6Ti/sx8M2YjsqPw=; b=k
-	keIV4iTOCu6Zip3YlqJQK79u/oePv4WrnN3cx420NuHBx1r+11egWOPbhWkKEFhf
-	dZnxWgB0kqku7REBUkzroD2i3P6GJj+ZAwesNMscRpCOa8V/TunAFYKW8TUU+KRw
-	og2EKkflB4qkyoNCsapK6D+3NpRGsa9Wqn39N3VO51HxwtfnXkiVt8Qbpe8QGNka
-	ClXu5oAkU3dRCGnFJVSaEOQSB3QSAcXIse0C7E2vSIZyS+TdrMW12/fAWYXfSdaf
-	5/TKdNDDHljbtnv8tI93Wa2G97WTIdRq4+egQ8dPAElYaMLktJPtMzB17ZneZTZ0
-	PyIvC5M6CwhKMjQ8AY1KQ==
-X-ME-Sender: <xms:k14Nah4RhqjGNjCIxvnmVKRjdZB42Qj92qtcBa-BbOfW0oGSD9pM75A>
-    <xme:k14NapsRrduCR8BD_pnOhFv7OLE0kKt6txzqMSOOagsm4JSyQYdX8Aq70jai2DXX3
-    h7HDycpLWIxT5c8JnkE-8hgpY_tyzSVJQ-vGqzaN_Ox_YyeIxVDow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeefleelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:k14Nauin9AzIZxotGbhB110gjUGnelhmWS725iYVhicycRjm87zXAw>
-    <xmx:k14Nas37BSZzbE6f5HnGQnRgcLpO0VBlZPiimHMQfVrPTIvZmayi3w>
-    <xmx:k14NagiaAyW2xTeJjylQ1FR6YaPWyyMC7tF4IoVIi9pTpPM9fbOxHw>
-    <xmx:k14NakcT4jyBYgyi5tyGaFVe4ey1J89R_KrVMjql60ITsDLwbytRPg>
-    <xmx:k14Nahsv3WmDEV1BwNjLXOEHAzUnGRPYc3RV5qKeuPvxdkknmbuCHrHX>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 48C6A3020073; Wed, 20 May 2026 03:11:15 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFPP5oW8"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1332772f6b3so6031462c88.1
+        for <git@vger.kernel.org>; Wed, 20 May 2026 05:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779280312; x=1779885112; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GZ1UEAJZaoYfyq1r7yuAzu/kVupEM1L6QYURMbbLubM=;
+        b=ZFPP5oW8lCfZ/7Ng9iXexVWdkg2MJqMIngBhvaIsBoSSOQw1hGsY9ZrLWZzVDixN9i
+         eeM4rK7DOKgDu3gUNFWQFnBBvm4yRoxDb3HzSuULA+8UxWN1P3jdzpfQR11/5NM+qqS0
+         whwJ+aWJroEz7agGM/whneSgajFQRGwHjWYxcD+6wyRrQ5eunD37vT12MfP06E27nXXQ
+         ZIuSp9W4RwekIu8GrH+h59IkBo88I3tSbZCwlyNs+4ZMHuYgJB+zrzCfNIY0vwgiacZ2
+         4+vwv5BziXxT9bRuKv93GdtUbsmGeBVgUP3liyjWkHConxZxSCRbZaomXYrG7Zzc+EZS
+         gacw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779280312; x=1779885112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GZ1UEAJZaoYfyq1r7yuAzu/kVupEM1L6QYURMbbLubM=;
+        b=js2Jf+pt1N4ixvleF5rM7szc1/9n5yP4IESGJlc/kYFh3FVisz0H7/pW5DW6IbFGNH
+         SXMXrhJN0t4naytRwl8SYCV82bvXOganwxXfngtwlkBwt9FN3ymHL6dYCDPIDMgem/CS
+         tQFwNt/k/qtPja6rrGO03kXckSHeseqakao9rUIVaz2vJMWJLc/9JPxwQ5cYWfIj3Sz0
+         uHGLlApW1v8dugxwaF8RAty2nuQwwpahgAJSLmH2rxJ1QwFfStfgMXkmmyn/8U5/yPBI
+         ji+pR+U5eACrIR8S3DbQuvCc4jyR25nxpdsL0ylMILuTAle7lzMvSI6QhRSyR9eUc0CI
+         /ujA==
+X-Gm-Message-State: AOJu0YxMmBU6bXBXYvXoz6WRmVsd2K3Y/W6GJSzo3xpPl8yaVtbGRd65
+	DvU9u2eiJhSfCxa4LiPoB7hvdYJ+4GV1bTtkMvTGez3fS/XqTM4/fNM2etMr7g==
+X-Gm-Gg: Acq92OGdF0awKfoW9p1w5Fw8XIuGd0h3HqTfZejccGJ5WTfTH9KPmW6QThY0gVURqVK
+	PT9R8t6v+uttr7YERJG64t9TiBozkZGXPsa4WPV3cBx0vSsNJ8Qqq8OUYm5/RtQ98lNNY3Bf4j2
+	1CQLQyR6dXn778TeZjbjZwr+VJUg12x3vb0/wFs6ZnP7DNxj96m+vALiAAYe6cU5z932k5ymtq1
+	o88YB3N9MAFl2tsYM5Ym8pUZp0aCqt+0XMbsxgMqm3IhsdbIQo0FjxQxxgTLm+7PAc0fnyg0BuP
+	ntC5dYy6Eh9evN0xb2K2R+RNFzjLFSsMHyqqBZchYtcqrPCyeHasrTnoLULcz0pCR5uikS9jm3e
+	vJl9a1MFyK5VSLiD1UXQ8oqxwAfD++EY7KCcf3nOBgopj8v8DCnn8RHFrDZJDiiPLWtb6srCNnl
+	vRJASbv+sg3v0Q0m/ml+OO7X1BGA==
+X-Received: by 2002:a05:7022:2523:b0:12a:6c4b:9d01 with SMTP id a92af1059eb24-1350430f349mr9110993c88.7.1779280311364;
+        Wed, 20 May 2026 05:31:51 -0700 (PDT)
+Received: from [127.0.0.1] ([68.220.58.147])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbed2232sm27231972c88.7.2026.05.20.05.31.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 May 2026 05:31:48 -0700 (PDT)
+Message-Id: <pull.2108.v2.git.1779280307112.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2108.git.1778231254871.gitgitgadget@gmail.com>
+References: <pull.2108.git.1778231254871.gitgitgadget@gmail.com>
+From: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 20 May 2026 12:31:46 +0000
+Subject: [PATCH v2] git-jump: pick a mode automatically when invoked without
+ arguments
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: APJPVL9XindV
-Date: Wed, 20 May 2026 09:10:54 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Derrick Stolee" <stolee@gmail.com>, git@vger.kernel.org,
- "Oswald Buddenhagen" <oswald.buddenhagen@gmx.de>
-Message-Id: <344cc7d8-4ab3-40f4-9564-80e5888c5bc9@app.fastmail.com>
-In-Reply-To: <xmqq8q9qwxrr.fsf@gitster.g>
-References: <V2_caveat_commit-graph.68b@msgid.xyz>
- <V3_caveat_commit-graph.6b6@msgid.xyz>
- <39f029d7-0c12-4a79-a701-04abf82cfde8@gmail.com>
- <7eae7ad5-5b09-4069-aafe-571f3e345b83@app.fastmail.com>
- <xmqq8q9qwxrr.fsf@gitster.g>
-Subject: Re: [PATCH v3] doc: add caveat about turning off commit-graph
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Greg Hurrell <greg@hurrell.net>,
+    Erik Cervin Edin <erik@cervined.in>,
+    Greg Hurrell <greg.hurrell@datadoghq.com>,
+    Greg Hurrell <greg.hurrell@datadoghq.com>
 
-On Mon, May 11, 2026, at 03:16, Junio C Hamano wrote:
->>>[snip]
->>
->> It=E2=80=99s certainly not necessary, yeah. :)
->>
->> I am basing this on a recollection of someone quoting this from
->> SubmittingPatches:
->>
->>     Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:`=
- and
->>     `Tested-by:` lines as necessary to credit people who helped your
->>     patch, and "cc:" them when sending such a final version for inclu=
-sion.
->>
->> They said that this was outdated since Junio does it himself. But then
->> Junio replied and said that it=E2=80=99s good/better if the contribut=
-or does it.
->
-> I used to say "let me do this to skip one extra roundtrip" but I
-> stopped saying so.  Perhaps I should be a bit more explicit and stop
-> being silently nice to contributors who do not follow the guidelines
-> to the letter in order to unconfuse you and your friends.  It
-> actually is a tempting thought.
+From: Greg Hurrell <greg.hurrell@datadoghq.com>
 
-I am personally okay with adding these trailers and think it=E2=80=99s n=
-ice to
-document such review/ack/etc. interactions.
+When `git jump` is invoked with no positional arguments (and no
+arguments after `--stdout`) it currently prints usage and exits with
+status 1.
 
-Just considering this part in isolation, I imagine that you not filling
-in missing acks etc. will lead to less such trailers because (1) most
-contributors don=E2=80=99t seem to follow up with such updates if the on=
-ly
-change is the trailers section, and (2) most people here (culturally)
-don=E2=80=99t add explicit trailer lines in their replies (e.g. an =E2=80=
-=9CLGTM=E2=80=9D is
-clearly an ack, but not explicit).
+But there are several situations where we can usefully infer the most
+valuable and likely mode that a user would want to use, and select it
+automatically:
 
->>     Well, this is another instance that I may be trying to be too
->>     helpful and over extending myself, which does not make the process
->>     scale well (the other one being the "one final resend after the
->>     list reached a consensus").
->>
->>     If the authors collect Acks and Reviewed-by's and resend after the
->>     list reached the concensus, it may take one extra iteration, but I
->>     no longer have to keep track of these trailers myself, which coul=
-dOn Mon, May 11, 2026, at 03:16, Junio C Hamano wrote:
->>>[snip]
->>
->> It=E2=80=99s certainly not necessary, yeah. :)
->>
->> I am basing this on a recollection of someone quoting this from
->> SubmittingPatches:
->>
->>     Do not forget to add trailers such as `Acked-by:`, `Reviewed-by:`=
- and
->>     `Tested-by:` lines as necessary to credit people who helped your
->>     patch, and "cc:" them when sending such a final version for inclu=
-sion.
->>
->> They said that this was outdated since Junio does it himself. But then
->> Junio replied and said that it=E2=80=99s good/better if the contribut=
-or does it.
->
-> I used to say "let me do this to skip one extra roundtrip" but I
-> stopped saying so.  Perhaps I should be a bit more explicit and stop
-> being silently nice to contributors who do not follow the guidelines
-> to the letter in order to unconfuse you and your friends.  It
-> actually is a tempting thought.
+1. When there are unmerged paths in the index, the user likely
+   wants `git jump merge`.
 
-I am personally okay with adding these trailers and think it=E2=80=99s n=
-ice to
-document such review/ack/etc. interactions.
+2. When the working tree has unstaged changes, the user likely
+   wants `git jump diff`.
 
-Just considering this part in isolation, I imagine that you not filling
-in missing acks etc. will lead to less such trailers because (1) most
-contributors don=E2=80=99t seem to follow up with such updates if the on=
-ly
-change is the trailers section, and (2) most people here (culturally)
-don=E2=80=99t add explicit trailer lines in their replies (e.g. an =E2=80=
-=9CLGTM=E2=80=9D is
-clearly an ack, but not explicit).
+3. In the presence of conflict markers or whitespace errors (as reported
+   by `git diff --check`), the user likely wants `git jump ws`.
 
->>     Well, this is another instance that I may be trying to be too
->>     helpful and over extending myself, which does not make the process
->>     scale well (the other one being the "one final resend after the
->>     list reached a consensus").
->>
->>     If the authors collect Acks and Reviewed-by's and resend after the
->>     list reached the concensus, it may take one extra iteration, but I
->>     no longer have to keep track of these trailers myself, which could
->>     be a big win.
->>
->>     So, I dunno.
->>
->> In conclusion for now: I dunno. :)
->
-> I do not know either, but if we agree that everybody should do so
-> themselves and I should refrain from applying the ones that lack
-> Acks, I can adjust.  There will be lot of unapplied patches left on
-> the mailing list initially until the contributors adjust their
-> behaviour, but in the long run it may be beneficial?
+In this commit we teach `git jump` a new "auto" mode which detects these
+cases and dispatches to the corresponding mode automatically. The user
+can either explicitly spell out `git jump auto`, or just leave it at
+`git jump` (because "auto" is the default).
 
-Okay, if the proposal is to *not* e.g. graduate series to `next` that
-haven=E2=80=99t applied the acks etc. then I understand how it will like=
-ly lead
-to some stalls until people adjust.
+If none of the interesting cases listed above applies, then auto mode
+falls back to the existing usage-and-exit behavior.
 
-To be clear, I imagine this is how it would play out:
+Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
+---
+    git-jump: pick a mode automatically when invoked without arguments
+    
+    Changes since v0:
+    
+     * Added explicit "auto" keyword/mode.
+     * Updated additional detail to usage info and README.
+     * (Bonus) Added ws usage example to README.
 
-=E2=80=A2 The series in itself is ready for `next` and has no unapplied =
-acks
-  etc.: it graduates to `next`
-=E2=80=A2 The series in itself is ready for `next` but has unapplied ack=
-s etc.:
-  it does not graduate to `next` since the contributor should send a new
-  version with the trailer changes
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2108%2Fwincent%2Fauto-jump-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2108/wincent/auto-jump-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2108
 
-***
+Range-diff vs v1:
 
-There is also the paragraph previous to the trailer one:
+ 1:  87fa66d233 ! 1:  5fbc8480ef git-jump: pick a mode automatically when invoked without arguments
+     @@ Commit message
+          arguments after `--stdout`) it currently prints usage and exits with
+          status 1.
+      
+     -    But there are two situations where we can usefully infer the most
+     +    But there are several situations where we can usefully infer the most
+          valuable and likely mode that a user would want to use, and select it
+     -    automatically when they run `git jump` without arguments:
+     +    automatically:
+      
+          1. When there are unmerged paths in the index, the user likely
+             wants `git jump merge`.
+     @@ Commit message
+          2. When the working tree has unstaged changes, the user likely
+             wants `git jump diff`.
+      
+     -    Detect these two cases and dispatch to the corresponding mode
+     -    automatically, falling back to the existing usage-and-exit behavior
+     -    when neither holds.
+     +    3. In the presence of conflict markers or whitespace errors (as reported
+     +       by `git diff --check`), the user likely wants `git jump ws`.
+     +
+     +    In this commit we teach `git jump` a new "auto" mode which detects these
+     +    cases and dispatches to the corresponding mode automatically. The user
+     +    can either explicitly spell out `git jump auto`, or just leave it at
+     +    `git jump` (because "auto" is the default).
+     +
+     +    If none of the interesting cases listed above applies, then auto mode
+     +    falls back to the existing usage-and-exit behavior.
+      
+          Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
+      
+       ## contrib/git-jump/README ##
+     -@@ contrib/git-jump/README: To use it, just drop git-jump in your PATH, and then invoke it like
+     - this:
+     +@@ contrib/git-jump/README: git jump grep foo_bar
+     + # arbitrary grep options
+     + git jump grep -i foo_bar
+       
+     - --------------------------------------------------
+     ++# jump to places with conflict markers or whitespace errors
+     ++# (as reported by # `git diff --check`)
+     ++git jump ws
+     ++
+     + # use the silver searcher for git jump grep
+     + git config jump.grepCmd "ag --column"
+     ++
+      +# pick a mode automatically: "merge" if there are unmerged paths,
+     -+# "diff" if the worktree has unstaged changes, otherwise show usage
+     -+git jump
+     ++# "diff" if the worktree has unstaged changes, "ws" if there are
+     ++# whitespace problems; otherwise show usage
+     ++git jump auto
+      +
+     - # jump to changes not yet staged for commit
+     - git jump diff
+     ++# with no explicit mode, same as "auto"
+     ++git jump
+     + --------------------------------------------------
+       
+     + You can use the optional argument '--stdout' to print the listing to
+      
+       ## contrib/git-jump/git-jump ##
+      @@
+     @@ contrib/git-jump/git-jump
+      +usage: git jump [--stdout] [<mode>] [<args>]
+       
+       Jump to interesting elements in an editor.
+     - The <mode> parameter is one of:
+     -@@ contrib/git-jump/git-jump: while test $# -gt 0; do
+     - 	shift
+     - done
+     - if test $# -lt 1; then
+     --	usage >&2
+     --	exit 1
+     +-The <mode> parameter is one of:
+     ++The <mode> parameter is one of the following,
+     ++defaulting to "auto" if omitted:
+     + 
+     + diff: elements are diff hunks. Arguments are given to diff.
+     + 
+     +@@ contrib/git-jump/git-jump: grep: elements are grep hits. Arguments are given to git grep or, if
+     + 
+     + ws: elements are whitespace errors. Arguments are given to diff --check.
+     + 
+     ++auto: select one of the other modes based on worktree state;
+     ++      "merge" if there are unmerged paths, "diff" if there are
+     ++      unstaged changes, "ws" if there are whitespace errors.
+     ++
+     + If the optional argument `--stdout` is given, print the quickfix
+     + lines to standard output instead of feeding it to the editor.
+     + EOF
+     +@@ contrib/git-jump/git-jump: mode_ws() {
+     + 	git diff --check "$@"
+     + }
+     + 
+     ++mode_auto() {
+      +	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true"; then
+      +		usage >&2
+      +		exit 1
+      +	fi
+     -+	if test -n "$(git ls-files -u)"; then
+     -+		set -- merge
+     -+	elif ! git diff --quiet; then
+     -+		set -- diff
+     ++	if test -n "$(git ls-files -u "$@")"; then
+     ++		mode_merge "$@"
+     ++	elif ! git diff --quiet "$@"; then
+     ++		mode_diff "$@"
+     ++	elif ! git diff --check >/dev/null 2>&1; then
+     ++		mode_ws "$@"
+      +	else
+      +		usage >&2
+      +		exit 1
+      +	fi
+     ++}
+     ++
+     + use_stdout=
+     + while test $# -gt 0; do
+     + 	case "$1" in
+     +@@ contrib/git-jump/git-jump: while test $# -gt 0; do
+     + 	shift
+     + done
+     + if test $# -lt 1; then
+     +-	usage >&2
+     +-	exit 1
+     ++	set -- auto
+       fi
+       mode=$1; shift
+       type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
 
-    After the list reached a consensus that it is a good idea to apply t=
-he
-    patch, re-send it with "To:" set to the maintainer{current-maintaine=
-r}
-    and "cc:" the list{git-ml} for inclusion.  This is especially releva=
-nt
-    when the maintainer did not heavily participate in the discussion and
-    instead left the review to trusted others.
 
-    Do not forget to add trailers such as `Acked-by:`, [...]
+ contrib/git-jump/README   | 12 ++++++++++++
+ contrib/git-jump/git-jump | 29 +++++++++++++++++++++++++----
+ 2 files changed, 37 insertions(+), 4 deletions(-)
 
-And I have only managed to follow that part maybe, probably one single t=
-ime.
+diff --git a/contrib/git-jump/README b/contrib/git-jump/README
+index 3211841305..ac35792e55 100644
+--- a/contrib/git-jump/README
++++ b/contrib/git-jump/README
+@@ -75,8 +75,20 @@ git jump grep foo_bar
+ # arbitrary grep options
+ git jump grep -i foo_bar
+ 
++# jump to places with conflict markers or whitespace errors
++# (as reported by # `git diff --check`)
++git jump ws
++
+ # use the silver searcher for git jump grep
+ git config jump.grepCmd "ag --column"
++
++# pick a mode automatically: "merge" if there are unmerged paths,
++# "diff" if the worktree has unstaged changes, "ws" if there are
++# whitespace problems; otherwise show usage
++git jump auto
++
++# with no explicit mode, same as "auto"
++git jump
+ --------------------------------------------------
+ 
+ You can use the optional argument '--stdout' to print the listing to
+diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+index 8d1d5d79a6..43d3b42a41 100755
+--- a/contrib/git-jump/git-jump
++++ b/contrib/git-jump/git-jump
+@@ -2,10 +2,11 @@
+ 
+ usage() {
+ 	cat <<\EOF
+-usage: git jump [--stdout] <mode> [<args>]
++usage: git jump [--stdout] [<mode>] [<args>]
+ 
+ Jump to interesting elements in an editor.
+-The <mode> parameter is one of:
++The <mode> parameter is one of the following,
++defaulting to "auto" if omitted:
+ 
+ diff: elements are diff hunks. Arguments are given to diff.
+ 
+@@ -16,6 +17,10 @@ grep: elements are grep hits. Arguments are given to git grep or, if
+ 
+ ws: elements are whitespace errors. Arguments are given to diff --check.
+ 
++auto: select one of the other modes based on worktree state;
++      "merge" if there are unmerged paths, "diff" if there are
++      unstaged changes, "ws" if there are whitespace errors.
++
+ If the optional argument `--stdout` is given, print the quickfix
+ lines to standard output instead of feeding it to the editor.
+ EOF
+@@ -82,6 +87,23 @@ mode_ws() {
+ 	git diff --check "$@"
+ }
+ 
++mode_auto() {
++	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true"; then
++		usage >&2
++		exit 1
++	fi
++	if test -n "$(git ls-files -u "$@")"; then
++		mode_merge "$@"
++	elif ! git diff --quiet "$@"; then
++		mode_diff "$@"
++	elif ! git diff --check >/dev/null 2>&1; then
++		mode_ws "$@"
++	else
++		usage >&2
++		exit 1
++	fi
++}
++
+ use_stdout=
+ while test $# -gt 0; do
+ 	case "$1" in
+@@ -99,8 +121,7 @@ while test $# -gt 0; do
+ 	shift
+ done
+ if test $# -lt 1; then
+-	usage >&2
+-	exit 1
++	set -- auto
+ fi
+ mode=$1; shift
+ type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
 
->>     be a big win.
->>
->>     So, I dunno.
->>
->> In conclusion for now: I dunno. :)
->
-> I do not know either, but if we agree that everybody should do so
-> themselves and I should refrain from applying the ones that lack
-> Acks, I can adjust.  There will be lot of unapplied patches left on
-> the mailing list initially until the contributors adjust their
-> behaviour, but in the long run it may be beneficial?
-
-Okay, if the proposal is to *not* e.g. graduate series to `next` that
-haven=E2=80=99t applied the acks etc. then I understand how it will like=
-ly lead
-to some stalls until people adjust.
-
-To be clear, I imagine this is how it would play out:
-
-=E2=80=A2 The series in itself is ready for `next` and has no unapplied =
-acks
-  etc.: it graduates to `next`
-=E2=80=A2 The series in itself is ready for `next` but has unapplied ack=
-s etc.:
-  it does not graduate to `next` since the contributor should send a new
-  version with the trailer changes
-
-***
-
-There is also the paragraph previous to the trailer one:
-
-    After the list reached a consensus that it is a good idea to apply t=
-he
-    patch, re-send it with "To:" set to the maintainer{current-maintaine=
-r}
-    and "cc:" the list{git-ml} for inclusion.  This is especially releva=
-nt
-    when the maintainer did not heavily participate in the discussion and
-    instead left the review to trusted others.
-
-    Do not forget to add trailers such as `Acked-by:`, [...]
-
-And I have only managed to follow that part maybe, probably one single t=
-ime.
+base-commit: 1c00d2d8392f603a6263f11f1a50fde96ae5475e
+-- 
+gitgitgadget
