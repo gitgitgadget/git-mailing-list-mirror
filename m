@@ -1,69 +1,69 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7F133A033
-	for <git@vger.kernel.org>; Wed, 20 May 2026 12:31:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686C32C0260
+	for <git@vger.kernel.org>; Wed, 20 May 2026 13:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779280315; cv=none; b=m3eU3f8PtgCS03MC3MlvdYBvL9it/TSxMtnGo+PVS9lfaJ11qUgMt2dIU5wYdA3SuTquWyo50pwM7Zxjm0MFixq/NgSx1qKQU1DDpHUXYbmI7VkB4yNnJlowWBAFsKfd6LkB4CBgwhZE7qFxADU2iAmgHV/oQCjY0rFpx0zmv6Q=
+	t=1779282632; cv=none; b=ZD9HKEZ0lN9zkv73hFjW3hhqn6nU2NbX7iq1bNmV4M0RxkhRxevwsqZI/8C1F9F27rqpDLoeTxak+Bx14y9gyj33ZGbA6OXegxrZDOWw3WYfgnZxrujLtu6HUbaDSlYpigbXmzW4iA6yHPWYKDVDCjvnuEfTJbSiAOK3ZVy+PJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779280315; c=relaxed/simple;
-	bh=m2fKZWIUyDuZ29tcFgnexWVkoA34Qn1PX6kbFghnFF0=;
+	s=arc-20240116; t=1779282632; c=relaxed/simple;
+	bh=LX+QSRr5mNDF43LrTudIAlp+mgofQ/bhK2TQzpV29+4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=U/29OWk7frBsinYHl91h3bpAlbjKX2Yi4z1u2S7xK5JIBTaWaOiUP7iEYZ8opJGfOuISjbZgyDDGnidgLH3W7PjBXhRXQ+FKXqQK+PQlyqdbg/VD+nV7COQ8QuQP4hq2d8K9VvCW9ZlCocWy3ypDMFUzW4pcF/7QMT/mP6FTPU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFPP5oW8; arc=none smtp.client-ip=74.125.82.47
+	 MIME-Version:To:Cc; b=YlIREClIKcSZ8BeHqgqTGM4OVsbxV3s1IsnxF8D9X7M6l1nvpgwf7CcoweN9YhZAkexNrHaosb1HMSjR2rOdD8Wo6SiH5QxOPFxTXjlVyh96EApUdlE0Z4LfA3Gy/7XxyRWxdOty6kYZtAC4+8XdQ3UzseyPNFpZEgacxbeilKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dIYBY6pt; arc=none smtp.client-ip=209.85.222.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFPP5oW8"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1332772f6b3so6031462c88.1
-        for <git@vger.kernel.org>; Wed, 20 May 2026 05:31:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dIYBY6pt"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-9568159ee07so3294443241.1
+        for <git@vger.kernel.org>; Wed, 20 May 2026 06:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779280312; x=1779885112; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779282627; x=1779887427; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GZ1UEAJZaoYfyq1r7yuAzu/kVupEM1L6QYURMbbLubM=;
-        b=ZFPP5oW8lCfZ/7Ng9iXexVWdkg2MJqMIngBhvaIsBoSSOQw1hGsY9ZrLWZzVDixN9i
-         eeM4rK7DOKgDu3gUNFWQFnBBvm4yRoxDb3HzSuULA+8UxWN1P3jdzpfQR11/5NM+qqS0
-         whwJ+aWJroEz7agGM/whneSgajFQRGwHjWYxcD+6wyRrQ5eunD37vT12MfP06E27nXXQ
-         ZIuSp9W4RwekIu8GrH+h59IkBo88I3tSbZCwlyNs+4ZMHuYgJB+zrzCfNIY0vwgiacZ2
-         4+vwv5BziXxT9bRuKv93GdtUbsmGeBVgUP3liyjWkHConxZxSCRbZaomXYrG7Zzc+EZS
-         gacw==
+        bh=RBSAwtsViCTZd0sTzG8Pg11PAqo687zhPrFuyL14zVo=;
+        b=dIYBY6ptkZVu8cZiGmGjjVmDHdaZTF1SDef04Nc0EgcLwWjQoy4LWTRF8e+WZRww1E
+         CqVzukfWxI5cezarcPnuZkXc2jhSzpglvKeeijxo9DsX7mtf7DmSlfFJUBrMjmB2dYNV
+         KGw9ISuVZVYVPdmyArggduaFOnkMI3M1R6/jnTkMmpLtnG0vwVtgkEHyenNxqrLyfuKa
+         IO10Xow80fCbGJDf8ShtwEb7s1lfjDyRG7D/Bp9Tm3TgRZvfpBOoInvIHMnad5NKAs4r
+         VES78uF7CgoYXwaMhkqZLCdWx8hxgOhvvSHzfO4uW0/trB+fkXGA0wPBrOL+/s+vw5J4
+         p+kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779280312; x=1779885112;
+        d=1e100.net; s=20251104; t=1779282627; x=1779887427;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=GZ1UEAJZaoYfyq1r7yuAzu/kVupEM1L6QYURMbbLubM=;
-        b=js2Jf+pt1N4ixvleF5rM7szc1/9n5yP4IESGJlc/kYFh3FVisz0H7/pW5DW6IbFGNH
-         SXMXrhJN0t4naytRwl8SYCV82bvXOganwxXfngtwlkBwt9FN3ymHL6dYCDPIDMgem/CS
-         tQFwNt/k/qtPja6rrGO03kXckSHeseqakao9rUIVaz2vJMWJLc/9JPxwQ5cYWfIj3Sz0
-         uHGLlApW1v8dugxwaF8RAty2nuQwwpahgAJSLmH2rxJ1QwFfStfgMXkmmyn/8U5/yPBI
-         ji+pR+U5eACrIR8S3DbQuvCc4jyR25nxpdsL0ylMILuTAle7lzMvSI6QhRSyR9eUc0CI
-         /ujA==
-X-Gm-Message-State: AOJu0YxMmBU6bXBXYvXoz6WRmVsd2K3Y/W6GJSzo3xpPl8yaVtbGRd65
-	DvU9u2eiJhSfCxa4LiPoB7hvdYJ+4GV1bTtkMvTGez3fS/XqTM4/fNM2etMr7g==
-X-Gm-Gg: Acq92OGdF0awKfoW9p1w5Fw8XIuGd0h3HqTfZejccGJ5WTfTH9KPmW6QThY0gVURqVK
-	PT9R8t6v+uttr7YERJG64t9TiBozkZGXPsa4WPV3cBx0vSsNJ8Qqq8OUYm5/RtQ98lNNY3Bf4j2
-	1CQLQyR6dXn778TeZjbjZwr+VJUg12x3vb0/wFs6ZnP7DNxj96m+vALiAAYe6cU5z932k5ymtq1
-	o88YB3N9MAFl2tsYM5Ym8pUZp0aCqt+0XMbsxgMqm3IhsdbIQo0FjxQxxgTLm+7PAc0fnyg0BuP
-	ntC5dYy6Eh9evN0xb2K2R+RNFzjLFSsMHyqqBZchYtcqrPCyeHasrTnoLULcz0pCR5uikS9jm3e
-	vJl9a1MFyK5VSLiD1UXQ8oqxwAfD++EY7KCcf3nOBgopj8v8DCnn8RHFrDZJDiiPLWtb6srCNnl
-	vRJASbv+sg3v0Q0m/ml+OO7X1BGA==
-X-Received: by 2002:a05:7022:2523:b0:12a:6c4b:9d01 with SMTP id a92af1059eb24-1350430f349mr9110993c88.7.1779280311364;
-        Wed, 20 May 2026 05:31:51 -0700 (PDT)
-Received: from [127.0.0.1] ([68.220.58.147])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbed2232sm27231972c88.7.2026.05.20.05.31.47
+        bh=RBSAwtsViCTZd0sTzG8Pg11PAqo687zhPrFuyL14zVo=;
+        b=UDSUD9IVs0hq6uXDK5ADFH25SmYQZJBkME3DeBg9zVk8GfLD8vGhm6q5TzIH0DIY7W
+         /6N7x/Roa9yS2jyh+30hHPqPKFFIWbUcUwHAO95+O+6wtxu9b9fa5P10TrSmJW5USGCT
+         H4pyiHRjVckD916obddEZdDrsmUs5jtRZl284Awa2vqocGomNqiZ+dtRXf8PDubiWjkX
+         KmfuQfs2Cfltlz6LysGM8LgkUwSkKQg+lLay8mE7NySNSxzHgK5gSlt2M4bmBoWkPdp4
+         SzLC8sJBDobc7nPzxtURHMgDrP6DeruK2uoqKG0d3UGDYHhWs4CI7l6FqUh+QrBqVVN3
+         NamA==
+X-Gm-Message-State: AOJu0Yy9Ns6572HX9Gyw/jT7uD8lyb2PsQ2dsZ5hCBCVZ9Bd/7S+t9IR
+	i0aM1yWiMa5vOYBFkfH9UFT1sqEs0B2dkK50eiLe4P2gZjS6bds2ZUP+nD1S5w==
+X-Gm-Gg: Acq92OEeRKR5SoBUqMkEzs4moohoCOwxPUAO5nAKvGcE4qjuyi/2lZJ85XTOOiWeR4v
+	DWk64UwGdBMpBqulgYklCNVWHVbkmIDmeEmlCAkgbDJ81DNFtA0WUtPikx0BNa1l5SJdl/M9wfm
+	nXDNG/7InqPoiwsRsdpzgOEhRYQUBeSmQW+QzxKVKFXE2JoNr6NTonHMarF8cQyvA74VlGikIfQ
+	y9DRiUejwYdnbxaEHJy5u5p1I2p4w9E0QsGdYY3ZeS8xb7c0u8r9bCdprC2qwGyTcrbJh1vdueb
+	42mM283H+J1nOTdH66xuCBSssu92xH2tHwxJoRdNgkVJjwFRfEmkP66RXNXFz2NcKwAovgLspmo
+	lIMRUwe9jirOGw0F2t8oyyxj600HQuvkNcqrfL4cjUxJT4xuWgrSaLMnYJXnug+XKPkFJzfbZQQ
+	pOzsdKeX8aft6GE5u9gbXTYIHcO+G6
+X-Received: by 2002:a05:6102:358e:b0:605:5d09:8631 with SMTP id ada2fe7eead31-63a3fc98de6mr12563696137.29.1779282627190;
+        Wed, 20 May 2026 06:10:27 -0700 (PDT)
+Received: from [127.0.0.1] ([172.174.190.121])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca36086a61sm122508046d6.4.2026.05.20.06.10.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 05:31:48 -0700 (PDT)
-Message-Id: <pull.2108.v2.git.1779280307112.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2108.git.1778231254871.gitgitgadget@gmail.com>
-References: <pull.2108.git.1778231254871.gitgitgadget@gmail.com>
-From: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 20 May 2026 12:31:46 +0000
-Subject: [PATCH v2] git-jump: pick a mode automatically when invoked without
- arguments
+        Wed, 20 May 2026 06:10:26 -0700 (PDT)
+Message-Id: <pull.2301.v3.git.git.1779282625696.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2301.v2.git.git.1778665812261.gitgitgadget@gmail.com>
+References: <pull.2301.v2.git.git.1778665812261.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 20 May 2026 13:10:25 +0000
+Subject: [PATCH v3] remote: qualify "git pull" advice for non-upstream
+ compareBranches
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,281 +74,331 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Greg Hurrell <greg@hurrell.net>,
-    Erik Cervin Edin <erik@cervined.in>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-From: Greg Hurrell <greg.hurrell@datadoghq.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-When `git jump` is invoked with no positional arguments (and no
-arguments after `--stdout`) it currently prints usage and exits with
-status 1.
+Enable ENABLE_ADVICE_PULL for push-branch comparisons too, not just
+the upstream entry, so the "use git pull" hint prints when the local
+branch is behind its push branch.
 
-But there are several situations where we can usefully infer the most
-valuable and likely mode that a user would want to use, and select it
-automatically:
+Spell out "git pull <remote> <branch>" so running the suggested
+command actually pulls the ref the user was told about; plain
+"git pull" would fetch the upstream instead.
 
-1. When there are unmerged paths in the index, the user likely
-   wants `git jump merge`.
-
-2. When the working tree has unstaged changes, the user likely
-   wants `git jump diff`.
-
-3. In the presence of conflict markers or whitespace errors (as reported
-   by `git diff --check`), the user likely wants `git jump ws`.
-
-In this commit we teach `git jump` a new "auto" mode which detects these
-cases and dispatches to the corresponding mode automatically. The user
-can either explicitly spell out `git jump auto`, or just leave it at
-`git jump` (because "auto" is the default).
-
-If none of the interesting cases listed above applies, then auto mode
-falls back to the existing usage-and-exit behavior.
-
-Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
-    git-jump: pick a mode automatically when invoked without arguments
+    remote: qualify "git pull" advice for non-upstream branches
     
-    Changes since v0:
-    
-     * Added explicit "auto" keyword/mode.
-     * Updated additional detail to usage info and README.
-     * (Bonus) Added ws usage example to README.
+     * Only suggest git pull <remote> <branch> when plain git pull wouldn't
+       do the right thing.
+     * Tests: when upstream and push are the same ref, the message stays
+       plain git pull.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2108%2Fwincent%2Fauto-jump-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2108/wincent/auto-jump-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2108
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2301%2FHaraldNordgren%2Fstatus-pull-advice-qualified-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2301/HaraldNordgren/status-pull-advice-qualified-v3
+Pull-Request: https://github.com/git/git/pull/2301
 
-Range-diff vs v1:
+Range-diff vs v2:
 
- 1:  87fa66d233 ! 1:  5fbc8480ef git-jump: pick a mode automatically when invoked without arguments
-     @@ Commit message
-          arguments after `--stdout`) it currently prints usage and exits with
-          status 1.
+ 1:  1f06873f82 ! 1:  3703be9aac remote: qualify "git pull" advice for non-upstream branches
+     @@ Metadata
+      Author: Harald Nordgren <haraldnordgren@gmail.com>
       
-     -    But there are two situations where we can usefully infer the most
-     +    But there are several situations where we can usefully infer the most
-          valuable and likely mode that a user would want to use, and select it
-     -    automatically when they run `git jump` without arguments:
-     +    automatically:
+       ## Commit message ##
+     -    remote: qualify "git pull" advice for non-upstream branches
+     +    remote: qualify "git pull" advice for non-upstream compareBranches
       
-          1. When there are unmerged paths in the index, the user likely
-             wants `git jump merge`.
-     @@ Commit message
-          2. When the working tree has unstaged changes, the user likely
-             wants `git jump diff`.
+     -    When "git status" reports the local branch is behind the push
+     -    branch, the advice suggested a bare "git pull". That follows the
+     -    upstream, which may live on a different remote, so emit
+     -    "git pull <remote> <branch>" instead.
+     +    Enable ENABLE_ADVICE_PULL for push-branch comparisons too, not just
+     +    the upstream entry, so the "use git pull" hint prints when the local
+     +    branch is behind its push branch.
       
-     -    Detect these two cases and dispatch to the corresponding mode
-     -    automatically, falling back to the existing usage-and-exit behavior
-     -    when neither holds.
-     +    3. In the presence of conflict markers or whitespace errors (as reported
-     +       by `git diff --check`), the user likely wants `git jump ws`.
-     +
-     +    In this commit we teach `git jump` a new "auto" mode which detects these
-     +    cases and dispatches to the corresponding mode automatically. The user
-     +    can either explicitly spell out `git jump auto`, or just leave it at
-     +    `git jump` (because "auto" is the default).
-     +
-     +    If none of the interesting cases listed above applies, then auto mode
-     +    falls back to the existing usage-and-exit behavior.
+     -    Also enable the pull advice for push-branch comparisons; it was
+     -    previously only set for the upstream.
+     +    Spell out "git pull <remote> <branch>" so running the suggested
+     +    command actually pulls the ref the user was told about; plain
+     +    "git pull" would fetch the upstream instead.
       
-          Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
       
-       ## contrib/git-jump/README ##
-     -@@ contrib/git-jump/README: To use it, just drop git-jump in your PATH, and then invoke it like
-     - this:
-     +@@ contrib/git-jump/README: git jump grep foo_bar
-     + # arbitrary grep options
-     + git jump grep -i foo_bar
+     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
+       			flags |= ENABLE_ADVICE_DIVERGENCE;
+      +		if (is_push) {
+      +			flags |= ENABLE_ADVICE_PUSH;
+     -+			push_remote_name = pushremote_for_branch(branch, NULL);
+     -+			if (push_remote_name &&
+     -+			    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
+     -+			    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
+     -+			    *push_branch_name == '/')
+     -+				push_branch_name++;
+     -+			else
+     -+				push_remote_name = NULL;
+     ++			if (!upstream_ref || strcmp(upstream_ref, full_ref)) {
+     ++				push_remote_name = pushremote_for_branch(branch, NULL);
+     ++				if (push_remote_name &&
+     ++				    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
+     ++				    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
+     ++				    *push_branch_name == '/')
+     ++					push_branch_name++;
+     ++				else
+     ++					push_remote_name = NULL;
+     ++			}
+      +		}
+       		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
+      +					 push_remote_name, push_branch_name,
+     @@ t/t6040-tracking-info.sh: test_expect_success 'status.compareBranches with remap
+       	test_cmp expect actual
+       '
        
-     - --------------------------------------------------
-     ++# jump to places with conflict markers or whitespace errors
-     ++# (as reported by # `git diff --check`)
-     ++git jump ws
-     ++
-     + # use the silver searcher for git jump grep
-     + git config jump.grepCmd "ag --column"
-     ++
-      +# pick a mode automatically: "merge" if there are unmerged paths,
-     -+# "diff" if the worktree has unstaged changes, otherwise show usage
-     -+git jump
-     ++# "diff" if the worktree has unstaged changes, "ws" if there are
-     ++# whitespace problems; otherwise show usage
-     ++git jump auto
+     -+test_expect_success 'status.compareBranches with behind push branch suggests qualified pull' '
+     ++test_expect_success 'status.compareBranches behind both upstream and push' '
+      +	test_config -C test push.default current &&
+      +	test_config -C test remote.pushDefault origin &&
+      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+      +	git -C test checkout -b feature13 upstream/main &&
+      +	(cd test && advance work13) &&
+      +	git -C test push origin &&
+     ++	git -C test branch --set-upstream-to upstream/ahead &&
+      +	git -C test reset --hard HEAD^ &&
+      +	git -C test status >actual &&
+      +	cat >expect <<-EOF &&
+      +	On branch feature13
+     -+	Your branch is up to date with ${SQ}upstream/main${SQ}.
+     ++	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
+     ++	  (use "git pull" to update your local branch)
       +
-     - # jump to changes not yet staged for commit
-     - git jump diff
-     ++# with no explicit mode, same as "auto"
-     ++git jump
-     + --------------------------------------------------
-       
-     + You can use the optional argument '--stdout' to print the listing to
-      
-       ## contrib/git-jump/git-jump ##
-      @@
-     @@ contrib/git-jump/git-jump
-      +usage: git jump [--stdout] [<mode>] [<args>]
-       
-       Jump to interesting elements in an editor.
-     - The <mode> parameter is one of:
-     -@@ contrib/git-jump/git-jump: while test $# -gt 0; do
-     - 	shift
-     - done
-     - if test $# -lt 1; then
-     --	usage >&2
-     --	exit 1
-     +-The <mode> parameter is one of:
-     ++The <mode> parameter is one of the following,
-     ++defaulting to "auto" if omitted:
-     + 
-     + diff: elements are diff hunks. Arguments are given to diff.
-     + 
-     +@@ contrib/git-jump/git-jump: grep: elements are grep hits. Arguments are given to git grep or, if
-     + 
-     + ws: elements are whitespace errors. Arguments are given to diff --check.
-     + 
-     ++auto: select one of the other modes based on worktree state;
-     ++      "merge" if there are unmerged paths, "diff" if there are
-     ++      unstaged changes, "ws" if there are whitespace errors.
+      +	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
+      +	  (use "git pull origin feature13" to update your local branch)
+     @@ t/t6040-tracking-info.sh: test_expect_success 'status.compareBranches with remap
+      +	EOF
+      +	test_cmp expect actual
+      +'
      ++
-     + If the optional argument `--stdout` is given, print the quickfix
-     + lines to standard output instead of feeding it to the editor.
-     + EOF
-     +@@ contrib/git-jump/git-jump: mode_ws() {
-     + 	git diff --check "$@"
-     + }
-     + 
-     ++mode_auto() {
-      +	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true"; then
-      +		usage >&2
-      +		exit 1
-      +	fi
-     -+	if test -n "$(git ls-files -u)"; then
-     -+		set -- merge
-     -+	elif ! git diff --quiet; then
-     -+		set -- diff
-     ++	if test -n "$(git ls-files -u "$@")"; then
-     ++		mode_merge "$@"
-     ++	elif ! git diff --quiet "$@"; then
-     ++		mode_diff "$@"
-     ++	elif ! git diff --check >/dev/null 2>&1; then
-     ++		mode_ws "$@"
-      +	else
-      +		usage >&2
-      +		exit 1
-      +	fi
-     ++}
+     ++test_expect_success 'status.compareBranches with behind push branch and no upstream' '
+     ++	test_config -C test push.default current &&
+     ++	test_config -C test remote.pushDefault origin &&
+     ++	test_config -C test status.compareBranches "@{push}" &&
+     ++	git -C test checkout --no-track -b feature15 upstream/main &&
+     ++	(cd test && advance work15) &&
+     ++	git -C test push origin &&
+     ++	git -C test reset --hard HEAD^ &&
+     ++	git -C test status >actual &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch feature15
+     ++	Your branch is behind ${SQ}origin/feature15${SQ} by 1 commit, and can be fast-forwarded.
+     ++	  (use "git pull origin feature15" to update your local branch)
      ++
-     + use_stdout=
-     + while test $# -gt 0; do
-     + 	case "$1" in
-     +@@ contrib/git-jump/git-jump: while test $# -gt 0; do
-     + 	shift
-     + done
-     + if test $# -lt 1; then
-     +-	usage >&2
-     +-	exit 1
-     ++	set -- auto
-       fi
-       mode=$1; shift
-       type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+     ++
+     ++test_expect_success 'status.compareBranches behind upstream-equals-push suggests plain pull' '
+     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
+     ++	git -C test checkout -b feature16 origin/main &&
+     ++	(cd test && advance work16) &&
+     ++	git -C test push origin HEAD:main &&
+     ++	git -C test reset --hard HEAD^ &&
+     ++	git -C test status >actual &&
+     ++	cat >expect <<-EOF &&
+     ++	On branch feature16
+     ++	Your branch is behind ${SQ}origin/main${SQ} by 1 commit, and can be fast-forwarded.
+     ++	  (use "git pull" to update your local branch)
+     ++
+     ++	nothing to commit, working tree clean
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+      +
+       test_done
 
 
- contrib/git-jump/README   | 12 ++++++++++++
- contrib/git-jump/git-jump | 29 +++++++++++++++++++++++++----
- 2 files changed, 37 insertions(+), 4 deletions(-)
+ remote.c                 | 46 +++++++++++++++++++-----
+ t/t6040-tracking-info.sh | 78 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 115 insertions(+), 9 deletions(-)
 
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 3211841305..ac35792e55 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -75,8 +75,20 @@ git jump grep foo_bar
- # arbitrary grep options
- git jump grep -i foo_bar
- 
-+# jump to places with conflict markers or whitespace errors
-+# (as reported by # `git diff --check`)
-+git jump ws
-+
- # use the silver searcher for git jump grep
- git config jump.grepCmd "ag --column"
-+
-+# pick a mode automatically: "merge" if there are unmerged paths,
-+# "diff" if the worktree has unstaged changes, "ws" if there are
-+# whitespace problems; otherwise show usage
-+git jump auto
-+
-+# with no explicit mode, same as "auto"
-+git jump
- --------------------------------------------------
- 
- You can use the optional argument '--stdout' to print the listing to
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 8d1d5d79a6..43d3b42a41 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -2,10 +2,11 @@
- 
- usage() {
- 	cat <<\EOF
--usage: git jump [--stdout] <mode> [<args>]
-+usage: git jump [--stdout] [<mode>] [<args>]
- 
- Jump to interesting elements in an editor.
--The <mode> parameter is one of:
-+The <mode> parameter is one of the following,
-+defaulting to "auto" if omitted:
- 
- diff: elements are diff hunks. Arguments are given to diff.
- 
-@@ -16,6 +17,10 @@ grep: elements are grep hits. Arguments are given to git grep or, if
- 
- ws: elements are whitespace errors. Arguments are given to diff --check.
- 
-+auto: select one of the other modes based on worktree state;
-+      "merge" if there are unmerged paths, "diff" if there are
-+      unstaged changes, "ws" if there are whitespace errors.
-+
- If the optional argument `--stdout` is given, print the quickfix
- lines to standard output instead of feeding it to the editor.
- EOF
-@@ -82,6 +87,23 @@ mode_ws() {
- 	git diff --check "$@"
+diff --git a/remote.c b/remote.c
+index a664cd166a..2b82f6b312 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2267,6 +2267,8 @@ static void format_branch_comparison(struct strbuf *sb,
+ 				     bool up_to_date,
+ 				     int ours, int theirs,
+ 				     const char *branch_name,
++				     const char *push_remote_name,
++				     const char *push_branch_name,
+ 				     enum ahead_behind_flags abf,
+ 				     unsigned flags)
+ {
+@@ -2302,9 +2304,15 @@ static void format_branch_comparison(struct strbuf *sb,
+ 			       "and can be fast-forwarded.\n",
+ 			   theirs),
+ 			branch_name, theirs);
+-		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS))
+-			strbuf_addstr(sb,
+-				_("  (use \"git pull\" to update your local branch)\n"));
++		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
++			if (push_remote_name && push_branch_name)
++				strbuf_addf(sb,
++					_("  (use \"git pull %s %s\" to update your local branch)\n"),
++					push_remote_name, push_branch_name);
++			else
++				strbuf_addstr(sb,
++					_("  (use \"git pull\" to update your local branch)\n"));
++		}
+ 	} else {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch and '%s' have diverged,\n"
+@@ -2315,9 +2323,15 @@ static void format_branch_comparison(struct strbuf *sb,
+ 			       "respectively.\n",
+ 			   ours + theirs),
+ 			branch_name, ours, theirs);
+-		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS))
+-			strbuf_addstr(sb,
+-				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
++		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
++			if (push_remote_name && push_branch_name)
++				strbuf_addf(sb,
++					_("  (use \"git pull %s %s\" if you want to integrate the remote branch with yours)\n"),
++					push_remote_name, push_branch_name);
++			else
++				strbuf_addstr(sb,
++					_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
++		}
+ 	}
  }
  
-+mode_auto() {
-+	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true"; then
-+		usage >&2
-+		exit 1
-+	fi
-+	if test -n "$(git ls-files -u "$@")"; then
-+		mode_merge "$@"
-+	elif ! git diff --quiet "$@"; then
-+		mode_diff "$@"
-+	elif ! git diff --check >/dev/null 2>&1; then
-+		mode_ws "$@"
-+	else
-+		usage >&2
-+		exit 1
-+	fi
-+}
+@@ -2355,6 +2369,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		int ours, theirs, cmp;
+ 		int is_upstream, is_push;
+ 		unsigned flags = 0;
++		const char *push_remote_name = NULL;
++		const char *push_branch_name = NULL;
+ 
+ 		full_ref = resolve_compare_branch(branch,
+ 						  branches.items[i].string);
+@@ -2396,13 +2412,25 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
+ 		if (reported)
+ 			strbuf_addstr(sb, "\n");
+ 
+-		if (is_upstream)
++		if (is_upstream || is_push)
+ 			flags |= ENABLE_ADVICE_PULL;
+-		if (is_push)
+-			flags |= ENABLE_ADVICE_PUSH;
+ 		if (show_divergence_advice && is_upstream)
+ 			flags |= ENABLE_ADVICE_DIVERGENCE;
++		if (is_push) {
++			flags |= ENABLE_ADVICE_PUSH;
++			if (!upstream_ref || strcmp(upstream_ref, full_ref)) {
++				push_remote_name = pushremote_for_branch(branch, NULL);
++				if (push_remote_name &&
++				    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
++				    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
++				    *push_branch_name == '/')
++					push_branch_name++;
++				else
++					push_remote_name = NULL;
++			}
++		}
+ 		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
++					 push_remote_name, push_branch_name,
+ 					 abf, flags);
+ 		reported = 1;
+ 
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 0242b5bf7a..b613aba33a 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -646,4 +646,82 @@ test_expect_success 'status.compareBranches with remapped push and upstream remo
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'status.compareBranches behind both upstream and push' '
++	test_config -C test push.default current &&
++	test_config -C test remote.pushDefault origin &&
++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
++	git -C test checkout -b feature13 upstream/main &&
++	(cd test && advance work13) &&
++	git -C test push origin &&
++	git -C test branch --set-upstream-to upstream/ahead &&
++	git -C test reset --hard HEAD^ &&
++	git -C test status >actual &&
++	cat >expect <<-EOF &&
++	On branch feature13
++	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull" to update your local branch)
 +
- use_stdout=
- while test $# -gt 0; do
- 	case "$1" in
-@@ -99,8 +121,7 @@ while test $# -gt 0; do
- 	shift
- done
- if test $# -lt 1; then
--	usage >&2
--	exit 1
-+	set -- auto
- fi
- mode=$1; shift
- type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
++	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull origin feature13" to update your local branch)
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'status.compareBranches with remapped push and behind push branch' '
++	test_config -C test remote.pushDefault origin &&
++	test_config -C test remote.origin.push refs/heads/feature14:refs/heads/remapped14 &&
++	test_config -C test status.compareBranches "@{push}" &&
++	git -C test checkout -b feature14 upstream/main &&
++	(cd test && advance work14) &&
++	git -C test push &&
++	git -C test reset --hard HEAD^ &&
++	git -C test status >actual &&
++	cat >expect <<-EOF &&
++	On branch feature14
++	Your branch is behind ${SQ}origin/remapped14${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull origin remapped14" to update your local branch)
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'status.compareBranches with behind push branch and no upstream' '
++	test_config -C test push.default current &&
++	test_config -C test remote.pushDefault origin &&
++	test_config -C test status.compareBranches "@{push}" &&
++	git -C test checkout --no-track -b feature15 upstream/main &&
++	(cd test && advance work15) &&
++	git -C test push origin &&
++	git -C test reset --hard HEAD^ &&
++	git -C test status >actual &&
++	cat >expect <<-EOF &&
++	On branch feature15
++	Your branch is behind ${SQ}origin/feature15${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull origin feature15" to update your local branch)
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'status.compareBranches behind upstream-equals-push suggests plain pull' '
++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
++	git -C test checkout -b feature16 origin/main &&
++	(cd test && advance work16) &&
++	git -C test push origin HEAD:main &&
++	git -C test reset --hard HEAD^ &&
++	git -C test status >actual &&
++	cat >expect <<-EOF &&
++	On branch feature16
++	Your branch is behind ${SQ}origin/main${SQ} by 1 commit, and can be fast-forwarded.
++	  (use "git pull" to update your local branch)
++
++	nothing to commit, working tree clean
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
 
-base-commit: 1c00d2d8392f603a6263f11f1a50fde96ae5475e
+base-commit: 7bcaabddcf68bd0702697da5904c3b68c52f94cf
 -- 
 gitgitgadget
