@@ -1,404 +1,82 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686C32C0260
-	for <git@vger.kernel.org>; Wed, 20 May 2026 13:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779282632; cv=none; b=ZD9HKEZ0lN9zkv73hFjW3hhqn6nU2NbX7iq1bNmV4M0RxkhRxevwsqZI/8C1F9F27rqpDLoeTxak+Bx14y9gyj33ZGbA6OXegxrZDOWw3WYfgnZxrujLtu6HUbaDSlYpigbXmzW4iA6yHPWYKDVDCjvnuEfTJbSiAOK3ZVy+PJU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779282632; c=relaxed/simple;
-	bh=LX+QSRr5mNDF43LrTudIAlp+mgofQ/bhK2TQzpV29+4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YlIREClIKcSZ8BeHqgqTGM4OVsbxV3s1IsnxF8D9X7M6l1nvpgwf7CcoweN9YhZAkexNrHaosb1HMSjR2rOdD8Wo6SiH5QxOPFxTXjlVyh96EApUdlE0Z4LfA3Gy/7XxyRWxdOty6kYZtAC4+8XdQ3UzseyPNFpZEgacxbeilKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dIYBY6pt; arc=none smtp.client-ip=209.85.222.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63849204F8B
+	for <git@vger.kernel.org>; Wed, 20 May 2026 13:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779283704; cv=pass; b=efq2z9y9dkn3jMH8D2KF8FzWqc5MwPAOhYe8ttF08i0a3eLhifosaWFhyKwlPgbjzuyfkS9Jrp9LrvS1EXMjMBhOLiaBQ2wDapBzcQS1hxkQ5XK2UyfYUXWOXtDDirXb4sHLT6BW/mYbI0OQC5/Gy6hVrEEfnxUyOHbizQry4xM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779283704; c=relaxed/simple;
+	bh=Uew5YiNXQTthuc0fVK/inIwl7NGLTxr9RDa3Ia1pmv4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VLKw6EWy2NRx6zVY0kvICCq/mJ4x/5dK4ZKYIX4UXIKFSB1urP5+dHEoQo0w0kskpKHjYP9xbI7plF7/2IzfteeA+r8BLEvw8781FCI7iMq9pnMn/FezSA8rhbDAFTKQoD81RZjm6Hmv5VKwwYXiHzZcFURkEoW3CXgjQNwBFl4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=kO3VRv60; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dIYBY6pt"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-9568159ee07so3294443241.1
-        for <git@vger.kernel.org>; Wed, 20 May 2026 06:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779282627; x=1779887427; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RBSAwtsViCTZd0sTzG8Pg11PAqo687zhPrFuyL14zVo=;
-        b=dIYBY6ptkZVu8cZiGmGjjVmDHdaZTF1SDef04Nc0EgcLwWjQoy4LWTRF8e+WZRww1E
-         CqVzukfWxI5cezarcPnuZkXc2jhSzpglvKeeijxo9DsX7mtf7DmSlfFJUBrMjmB2dYNV
-         KGw9ISuVZVYVPdmyArggduaFOnkMI3M1R6/jnTkMmpLtnG0vwVtgkEHyenNxqrLyfuKa
-         IO10Xow80fCbGJDf8ShtwEb7s1lfjDyRG7D/Bp9Tm3TgRZvfpBOoInvIHMnad5NKAs4r
-         VES78uF7CgoYXwaMhkqZLCdWx8hxgOhvvSHzfO4uW0/trB+fkXGA0wPBrOL+/s+vw5J4
-         p+kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779282627; x=1779887427;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RBSAwtsViCTZd0sTzG8Pg11PAqo687zhPrFuyL14zVo=;
-        b=UDSUD9IVs0hq6uXDK5ADFH25SmYQZJBkME3DeBg9zVk8GfLD8vGhm6q5TzIH0DIY7W
-         /6N7x/Roa9yS2jyh+30hHPqPKFFIWbUcUwHAO95+O+6wtxu9b9fa5P10TrSmJW5USGCT
-         H4pyiHRjVckD916obddEZdDrsmUs5jtRZl284Awa2vqocGomNqiZ+dtRXf8PDubiWjkX
-         KmfuQfs2Cfltlz6LysGM8LgkUwSkKQg+lLay8mE7NySNSxzHgK5gSlt2M4bmBoWkPdp4
-         SzLC8sJBDobc7nPzxtURHMgDrP6DeruK2uoqKG0d3UGDYHhWs4CI7l6FqUh+QrBqVVN3
-         NamA==
-X-Gm-Message-State: AOJu0Yy9Ns6572HX9Gyw/jT7uD8lyb2PsQ2dsZ5hCBCVZ9Bd/7S+t9IR
-	i0aM1yWiMa5vOYBFkfH9UFT1sqEs0B2dkK50eiLe4P2gZjS6bds2ZUP+nD1S5w==
-X-Gm-Gg: Acq92OEeRKR5SoBUqMkEzs4moohoCOwxPUAO5nAKvGcE4qjuyi/2lZJ85XTOOiWeR4v
-	DWk64UwGdBMpBqulgYklCNVWHVbkmIDmeEmlCAkgbDJ81DNFtA0WUtPikx0BNa1l5SJdl/M9wfm
-	nXDNG/7InqPoiwsRsdpzgOEhRYQUBeSmQW+QzxKVKFXE2JoNr6NTonHMarF8cQyvA74VlGikIfQ
-	y9DRiUejwYdnbxaEHJy5u5p1I2p4w9E0QsGdYY3ZeS8xb7c0u8r9bCdprC2qwGyTcrbJh1vdueb
-	42mM283H+J1nOTdH66xuCBSssu92xH2tHwxJoRdNgkVJjwFRfEmkP66RXNXFz2NcKwAovgLspmo
-	lIMRUwe9jirOGw0F2t8oyyxj600HQuvkNcqrfL4cjUxJT4xuWgrSaLMnYJXnug+XKPkFJzfbZQQ
-	pOzsdKeX8aft6GE5u9gbXTYIHcO+G6
-X-Received: by 2002:a05:6102:358e:b0:605:5d09:8631 with SMTP id ada2fe7eead31-63a3fc98de6mr12563696137.29.1779282627190;
-        Wed, 20 May 2026 06:10:27 -0700 (PDT)
-Received: from [127.0.0.1] ([172.174.190.121])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ca36086a61sm122508046d6.4.2026.05.20.06.10.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 06:10:26 -0700 (PDT)
-Message-Id: <pull.2301.v3.git.git.1779282625696.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2301.v2.git.git.1778665812261.gitgitgadget@gmail.com>
-References: <pull.2301.v2.git.git.1778665812261.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 20 May 2026 13:10:25 +0000
-Subject: [PATCH v3] remote: qualify "git pull" advice for non-upstream
- compareBranches
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="kO3VRv60"
+ARC-Seal: i=1; a=rsa-sha256; t=1779283697; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=VxiWYVtKB13yoKWSkjZ7lLs4U5ExUOTeg6+5eLckklVSkkPEU5TkoyBRdsZFEniHMTdCgrkJ/h9qH7J5/oDkvTFUeaLVdSKed1LqUqeoPo3vo1Fs7V7fXavT/i2t+1+J0M6yXFq6i/vbLjcTorvn3/zB3lvQAbfl/3ig6cxFx5I=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1779283697; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=tWZu9iF6ePPOCkq/Y7nhMDXSfArQRKdOqm/Io1/DyBA=; 
+	b=SLFOgspGAfUhAQOOnCwdFIP7vnmggBELGn6yS5HvXIM3R6zzsRh5YLfPIVXhbrf3mKfbvxufGt433vwhkPt6+A1X+/WTMus9lytI9M0o9yAFtmHnSfAhpkDYq/Z8tRlTXY/+/HaxABP3yr65z/22dVp1OJs236sYBbBKEZzimPA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
+	dmarc=pass header.from=<vmiklos@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779283697;
+	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=tWZu9iF6ePPOCkq/Y7nhMDXSfArQRKdOqm/Io1/DyBA=;
+	b=kO3VRv60O3BOnMGVBP5ebcKz8d/9rP3HBLIOlwWcFqLPYoE4UkT1jVXxmSdq4Ztd
+	Hiq7zivMGa5waI5Gi3ItiseBMi6iOSiTd80SlNry7uJESWH8mmhE+R2FCVOTdkNHgv0
+	GMr9BbfQuBHr/taj4xPajn1tVb2UeYGIw1kvXVak=
+Received: by mx.zohomail.com with SMTPS id 1779283695943300.31201207684194;
+	Wed, 20 May 2026 06:28:15 -0700 (PDT)
+Date: Wed, 20 May 2026 15:28:11 +0200
+From: Miklos Vajna <vmiklos@collabora.com>
+To: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] log: let --follow follow renames in merge commits
+Message-ID: <ag2265RJal-tJLoW@collabora.com>
+References: <agLU58gbG1y7KLz-@collabora.com>
+ <agwAkHzjrJQPVtCS@collabora.com>
+ <xmqqo6ib7vlp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo6ib7vlp.fsf@gitster.g>
+X-ZohoMailClient: External
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hi Elijah, Jeff,
 
-Enable ENABLE_ADVICE_PULL for push-branch comparisons too, not just
-the upstream entry, so the "use git pull" hint prints when the local
-branch is behind its push branch.
+On Tue, May 19, 2026 at 03:37:54PM +0900, Junio C Hamano <gitster@pobox.com> wrote:
+> > :-) Should I just wait more or should I resend this?
+> 
+> Rather, ask other reviewers
 
-Spell out "git pull <remote> <branch>" so running the suggested
-command actually pulls the ref the user was told about; plain
-"git pull" would fetch the upstream instead.
+I did a small improvement to how 'git log --follow' works, as in if the
+rename happens inside the merge commit itself, then the rename was
+detected "vs the first parent", but it wasn't detected "vs other
+parents", which is painful with a "subtree" merge commit.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    remote: qualify "git pull" advice for non-upstream branches
-    
-     * Only suggest git pull <remote> <branch> when plain git pull wouldn't
-       do the right thing.
-     * Tests: when upstream and push are the same ref, the message stays
-       plain git pull.
+I'm not sure if it adds value, but I can append a one-paragraph summary
+of Junio's comment in this thread to the end the commit message, to be
+more explicit that the inherent limitation of the current log follow
+design (single path, once a rename is detected, we only care about the
+new path) is not changed with the patch, this is just a fix patch so
+'git log' works better, similar to how 'git blame' already does.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2301%2FHaraldNordgren%2Fstatus-pull-advice-qualified-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2301/HaraldNordgren/status-pull-advice-qualified-v3
-Pull-Request: https://github.com/git/git/pull/2301
+May I ask you to review the patch?
 
-Range-diff vs v2:
+Thanks,
 
- 1:  1f06873f82 ! 1:  3703be9aac remote: qualify "git pull" advice for non-upstream branches
-     @@ Metadata
-      Author: Harald Nordgren <haraldnordgren@gmail.com>
-      
-       ## Commit message ##
-     -    remote: qualify "git pull" advice for non-upstream branches
-     +    remote: qualify "git pull" advice for non-upstream compareBranches
-      
-     -    When "git status" reports the local branch is behind the push
-     -    branch, the advice suggested a bare "git pull". That follows the
-     -    upstream, which may live on a different remote, so emit
-     -    "git pull <remote> <branch>" instead.
-     +    Enable ENABLE_ADVICE_PULL for push-branch comparisons too, not just
-     +    the upstream entry, so the "use git pull" hint prints when the local
-     +    branch is behind its push branch.
-      
-     -    Also enable the pull advice for push-branch comparisons; it was
-     -    previously only set for the upstream.
-     +    Spell out "git pull <remote> <branch>" so running the suggested
-     +    command actually pulls the ref the user was told about; plain
-     +    "git pull" would fetch the upstream instead.
-      
-          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-      
-     @@ remote.c: int format_tracking_info(struct branch *branch, struct strbuf *sb,
-       			flags |= ENABLE_ADVICE_DIVERGENCE;
-      +		if (is_push) {
-      +			flags |= ENABLE_ADVICE_PUSH;
-     -+			push_remote_name = pushremote_for_branch(branch, NULL);
-     -+			if (push_remote_name &&
-     -+			    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
-     -+			    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
-     -+			    *push_branch_name == '/')
-     -+				push_branch_name++;
-     -+			else
-     -+				push_remote_name = NULL;
-     ++			if (!upstream_ref || strcmp(upstream_ref, full_ref)) {
-     ++				push_remote_name = pushremote_for_branch(branch, NULL);
-     ++				if (push_remote_name &&
-     ++				    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
-     ++				    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
-     ++				    *push_branch_name == '/')
-     ++					push_branch_name++;
-     ++				else
-     ++					push_remote_name = NULL;
-     ++			}
-      +		}
-       		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
-      +					 push_remote_name, push_branch_name,
-     @@ t/t6040-tracking-info.sh: test_expect_success 'status.compareBranches with remap
-       	test_cmp expect actual
-       '
-       
-     -+test_expect_success 'status.compareBranches with behind push branch suggests qualified pull' '
-     ++test_expect_success 'status.compareBranches behind both upstream and push' '
-      +	test_config -C test push.default current &&
-      +	test_config -C test remote.pushDefault origin &&
-      +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-      +	git -C test checkout -b feature13 upstream/main &&
-      +	(cd test && advance work13) &&
-      +	git -C test push origin &&
-     ++	git -C test branch --set-upstream-to upstream/ahead &&
-      +	git -C test reset --hard HEAD^ &&
-      +	git -C test status >actual &&
-      +	cat >expect <<-EOF &&
-      +	On branch feature13
-     -+	Your branch is up to date with ${SQ}upstream/main${SQ}.
-     ++	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
-     ++	  (use "git pull" to update your local branch)
-      +
-      +	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
-      +	  (use "git pull origin feature13" to update your local branch)
-     @@ t/t6040-tracking-info.sh: test_expect_success 'status.compareBranches with remap
-      +	EOF
-      +	test_cmp expect actual
-      +'
-     ++
-     ++test_expect_success 'status.compareBranches with behind push branch and no upstream' '
-     ++	test_config -C test push.default current &&
-     ++	test_config -C test remote.pushDefault origin &&
-     ++	test_config -C test status.compareBranches "@{push}" &&
-     ++	git -C test checkout --no-track -b feature15 upstream/main &&
-     ++	(cd test && advance work15) &&
-     ++	git -C test push origin &&
-     ++	git -C test reset --hard HEAD^ &&
-     ++	git -C test status >actual &&
-     ++	cat >expect <<-EOF &&
-     ++	On branch feature15
-     ++	Your branch is behind ${SQ}origin/feature15${SQ} by 1 commit, and can be fast-forwarded.
-     ++	  (use "git pull origin feature15" to update your local branch)
-     ++
-     ++	nothing to commit, working tree clean
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-     ++
-     ++test_expect_success 'status.compareBranches behind upstream-equals-push suggests plain pull' '
-     ++	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-     ++	git -C test checkout -b feature16 origin/main &&
-     ++	(cd test && advance work16) &&
-     ++	git -C test push origin HEAD:main &&
-     ++	git -C test reset --hard HEAD^ &&
-     ++	git -C test status >actual &&
-     ++	cat >expect <<-EOF &&
-     ++	On branch feature16
-     ++	Your branch is behind ${SQ}origin/main${SQ} by 1 commit, and can be fast-forwarded.
-     ++	  (use "git pull" to update your local branch)
-     ++
-     ++	nothing to commit, working tree clean
-     ++	EOF
-     ++	test_cmp expect actual
-     ++'
-      +
-       test_done
-
-
- remote.c                 | 46 +++++++++++++++++++-----
- t/t6040-tracking-info.sh | 78 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 115 insertions(+), 9 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index a664cd166a..2b82f6b312 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2267,6 +2267,8 @@ static void format_branch_comparison(struct strbuf *sb,
- 				     bool up_to_date,
- 				     int ours, int theirs,
- 				     const char *branch_name,
-+				     const char *push_remote_name,
-+				     const char *push_branch_name,
- 				     enum ahead_behind_flags abf,
- 				     unsigned flags)
- {
-@@ -2302,9 +2304,15 @@ static void format_branch_comparison(struct strbuf *sb,
- 			       "and can be fast-forwarded.\n",
- 			   theirs),
- 			branch_name, theirs);
--		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS))
--			strbuf_addstr(sb,
--				_("  (use \"git pull\" to update your local branch)\n"));
-+		if (use_pull_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
-+			if (push_remote_name && push_branch_name)
-+				strbuf_addf(sb,
-+					_("  (use \"git pull %s %s\" to update your local branch)\n"),
-+					push_remote_name, push_branch_name);
-+			else
-+				strbuf_addstr(sb,
-+					_("  (use \"git pull\" to update your local branch)\n"));
-+		}
- 	} else {
- 		strbuf_addf(sb,
- 			Q_("Your branch and '%s' have diverged,\n"
-@@ -2315,9 +2323,15 @@ static void format_branch_comparison(struct strbuf *sb,
- 			       "respectively.\n",
- 			   ours + theirs),
- 			branch_name, ours, theirs);
--		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS))
--			strbuf_addstr(sb,
--				_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
-+		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
-+			if (push_remote_name && push_branch_name)
-+				strbuf_addf(sb,
-+					_("  (use \"git pull %s %s\" if you want to integrate the remote branch with yours)\n"),
-+					push_remote_name, push_branch_name);
-+			else
-+				strbuf_addstr(sb,
-+					_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
-+		}
- 	}
- }
- 
-@@ -2355,6 +2369,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 		int ours, theirs, cmp;
- 		int is_upstream, is_push;
- 		unsigned flags = 0;
-+		const char *push_remote_name = NULL;
-+		const char *push_branch_name = NULL;
- 
- 		full_ref = resolve_compare_branch(branch,
- 						  branches.items[i].string);
-@@ -2396,13 +2412,25 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
- 		if (reported)
- 			strbuf_addstr(sb, "\n");
- 
--		if (is_upstream)
-+		if (is_upstream || is_push)
- 			flags |= ENABLE_ADVICE_PULL;
--		if (is_push)
--			flags |= ENABLE_ADVICE_PUSH;
- 		if (show_divergence_advice && is_upstream)
- 			flags |= ENABLE_ADVICE_DIVERGENCE;
-+		if (is_push) {
-+			flags |= ENABLE_ADVICE_PUSH;
-+			if (!upstream_ref || strcmp(upstream_ref, full_ref)) {
-+				push_remote_name = pushremote_for_branch(branch, NULL);
-+				if (push_remote_name &&
-+				    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
-+				    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
-+				    *push_branch_name == '/')
-+					push_branch_name++;
-+				else
-+					push_remote_name = NULL;
-+			}
-+		}
- 		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
-+					 push_remote_name, push_branch_name,
- 					 abf, flags);
- 		reported = 1;
- 
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 0242b5bf7a..b613aba33a 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -646,4 +646,82 @@ test_expect_success 'status.compareBranches with remapped push and upstream remo
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'status.compareBranches behind both upstream and push' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature13 upstream/main &&
-+	(cd test && advance work13) &&
-+	git -C test push origin &&
-+	git -C test branch --set-upstream-to upstream/ahead &&
-+	git -C test reset --hard HEAD^ &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature13
-+	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
-+	  (use "git pull" to update your local branch)
-+
-+	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
-+	  (use "git pull origin feature13" to update your local branch)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches with remapped push and behind push branch' '
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test remote.origin.push refs/heads/feature14:refs/heads/remapped14 &&
-+	test_config -C test status.compareBranches "@{push}" &&
-+	git -C test checkout -b feature14 upstream/main &&
-+	(cd test && advance work14) &&
-+	git -C test push &&
-+	git -C test reset --hard HEAD^ &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature14
-+	Your branch is behind ${SQ}origin/remapped14${SQ} by 1 commit, and can be fast-forwarded.
-+	  (use "git pull origin remapped14" to update your local branch)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches with behind push branch and no upstream' '
-+	test_config -C test push.default current &&
-+	test_config -C test remote.pushDefault origin &&
-+	test_config -C test status.compareBranches "@{push}" &&
-+	git -C test checkout --no-track -b feature15 upstream/main &&
-+	(cd test && advance work15) &&
-+	git -C test push origin &&
-+	git -C test reset --hard HEAD^ &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature15
-+	Your branch is behind ${SQ}origin/feature15${SQ} by 1 commit, and can be fast-forwarded.
-+	  (use "git pull origin feature15" to update your local branch)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'status.compareBranches behind upstream-equals-push suggests plain pull' '
-+	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-+	git -C test checkout -b feature16 origin/main &&
-+	(cd test && advance work16) &&
-+	git -C test push origin HEAD:main &&
-+	git -C test reset --hard HEAD^ &&
-+	git -C test status >actual &&
-+	cat >expect <<-EOF &&
-+	On branch feature16
-+	Your branch is behind ${SQ}origin/main${SQ} by 1 commit, and can be fast-forwarded.
-+	  (use "git pull" to update your local branch)
-+
-+	nothing to commit, working tree clean
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-
-base-commit: 7bcaabddcf68bd0702697da5904c3b68c52f94cf
--- 
-gitgitgadget
+Miklos
