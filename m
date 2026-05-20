@@ -1,112 +1,148 @@
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80657F9E8
-	for <git@vger.kernel.org>; Wed, 20 May 2026 00:10:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF9126290
+	for <git@vger.kernel.org>; Wed, 20 May 2026 00:12:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779235829; cv=none; b=QW2zCiaX5iJSJH4FxpPZ6XYWY6da4RbQy5+Kc4/1Tqbs1mGwvne2AXlUWqOHBsKkx2e6VI0mapR/QmfvmZFGmjK4pPwqwc+SPYILHcFBwudDniOuBZmLposuOkEEGXUJ4EHUZ9OhTzzc/rtHqf22LAvZMPIizmU+6AwxDaJiwlI=
+	t=1779235975; cv=none; b=ggAJiFpmCSTghjkdvQgOiuwblefWb1FeMLppmJ1PdBSEJeWnypSIIuyp6IAS2tx74uJb2ZNM535IY6SeLbZULWAc23zAWSnCxqCAK7o/53T9kSfAxpT8rZXT1tV24u8QT6tean50f9FPefQr5fbEQ7UnSRabefSvWjZabcFsTWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779235829; c=relaxed/simple;
-	bh=nyfvazgeZZQnOs5OWBhdvdza0Dz5H+cqYphFC1l9gBQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZMyX8HfeOXWHNcbwSQkl94lyWVMPBNlbjFnIWf17pJmXk5AojWSYpUj9XSc6bC6P+r+cCDJiGX+qr6JDw+haD4nmuqM5P/vDkeWRHPU5HX08KK6oMS1QwK4aKevO9k/mNO4acKPZa57NI+0SCbLiIYCGEasJAHavlsHsqmWMgDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ULWWbbPU; arc=none smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1779235975; c=relaxed/simple;
+	bh=tdWY5arJff/hL45cnrp3bHtrNliw9cTp/F6XSgqzIUo=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=UGrwBv/PVR9Dgx3GN7CRbLVqlVAZQbr0x6Namb28xF7Lo1ySb869PlZL3bx959TfIocBJ47t5BvIzWHujjKre8HhV8SA/NlZ9r/VO8KTUSr7iE6fWu7qqdJFOMdFp/+JbBTcwq7fz9UsUbQHbMV0gPnvoXmi2oZ/fH/Ua7N5UZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ffYHPOfu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=puMDIhSY; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ULWWbbPU"
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-65dead17c24so3958270d50.2
-        for <git@vger.kernel.org>; Tue, 19 May 2026 17:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779235827; x=1779840627; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NrEZ+QDP38lDR4IxsATNYDTeVmljG5Vv52M4vvaqFp0=;
-        b=ULWWbbPU8VljG/XgReRnWsNzlSn1Gd5PfkgMdttg2nESDAUsNu4kqpB9bFGKZ3j9yg
-         BrG5nRA7LpSQVH5MmbrJswXEUiJWGGm7WU26NXB0+Vr4FX4ZiCs46Ql13ieDGPnUZWjL
-         SjHyTAUG/4iQ7D+4hvBA6QBqPsiftrnYVeQplh8xmJQOG4oXzp246/mYZsTlTo0fjsJP
-         baKUHYrzorL7wRiPBc9erIoVzNHBcQevZBkZl7eCBIFZyTT3pN+z7cI1f2LIkAhrMV2h
-         MIAanJvv7SIJAJejzWaBR5XQtT9LWM//iVa6RsHvOKc/XAScPXFCShR0QBArBm5gb0Yi
-         lSYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779235827; x=1779840627;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NrEZ+QDP38lDR4IxsATNYDTeVmljG5Vv52M4vvaqFp0=;
-        b=i9CeWTM+qaWXkqmCeTSRgUZR31y8dT1lClDaAkHdH/fNKmlv0wVbYWxoolLVTQbH+9
-         /T/9eSd9+R8D1twwwtWAZNNmp6VOpwsO76xZP9+cWoamd3pM8y00VPEhXk+k7MznAb9P
-         b/BaK/Z3+e8XCqx+s+6curWwO82iXyFvAJJ5E9cHIiGU8QWcG5yCvyCuVf/HaGCHCiO4
-         l5iM7yXSZZuNtld7COawM3FKBBgRA5MFR4nKGbGRFTRWTuz2IEqeQEKRxtl03Ga2PtZx
-         lKRi1YlksFnec0MrLMkjuMQS0rr5dX9GI37nyvjLJik57RHuhNyyTIuAx6WnQ6F/47Wa
-         vllA==
-X-Forwarded-Encrypted: i=1; AFNElJ/ho3g4IOR8+eQ2xfsObIZBXYVBMeIYmOZJ+xw2+egmjyf7GMRC0Y287afszfga+IpRnQ4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZPsaYVUvUZi847n+DneZZlQrVJ5LZObFMVyC0ShXJoUtFUIiB
-	ZqQv1xe7vDuD6ddO5wimVOKgu00SQ8pVTaWdwmFis9RHc8802E/k3krQRf40gv8DjrP9s+hQjbo
-	Mcbg2TaA=
-X-Gm-Gg: Acq92OE4tL16MyH+1iJzLMSj446GH/41OkQJLclAdBpEuphxRalHyWVGWTKr+VzIe0v
-	bVjKGsC06+yu4pMn9BhA8Ir7zVorvcqDcHsN4wQc2BnSQ4EWWNZSmAu2kBgxtBMP62ISgIkBS+1
-	aoF13kV0QbCwXerhVUgED0/yL24CtsvDsp4pA/3uncY5dFni7kRKmWltTANTvFHm+xii4cSm4yc
-	+VhMTQnSvgQR+uSJKEMf8X1fa/21qC6K4RJWft0JcSNSvajClaLmRtyIfHQnByuSXVaa+GWhdug
-	tg6DQ6m5xqmN6VMcxi5s3FbaUZpkXz5XIrv+RZXj+F6Cw7IiuaTw4vW1Cz/WbpKzc947KDUM9tV
-	OLyaGc380Ca2uGay+g9/NircE5HAZ/T1Xg6/FSNTda6W6AsVKaKxioiFmq9qGdHwtCN9CXlaIAz
-	8spzJAKDU3aARzut0CHW+WrY500ut6CgstBwRhHIr5vgl4lJe8asT5l7prpcYz3tP56aoFYy3QU
-	FM1rBsa81mD8h/ryFmRwV/ML1K+7WctfrEMDGhBNzKiHreeRabcVBLe/Mw9XOQ5kYBxNQR6yPmU
-	GAG/MvK2YossOWL1
-X-Received: by 2002:a53:d008:0:b0:65c:5329:788e with SMTP id 956f58d0204a3-65e227bacc0mr18658401d50.32.1779235827527;
-        Tue, 19 May 2026 17:10:27 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9c6cd4f5sm45326217b3.35.2026.05.19.17.10.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 17:10:27 -0700 (PDT)
-Date: Tue, 19 May 2026 20:10:26 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Jean-Christophe Manciot <actionmystique@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>, Jeff King <peff@peff.net>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 1/2] builtin/maintenance: fix locking with "--detach"
-Message-ID: <agz78jjYEAif4lZt@nand.local>
-References: <20260513-pks-maintenance-fix-lock-with-detach-v3-0-f27a1ac82891@pks.im>
- <20260513-pks-maintenance-fix-lock-with-detach-v3-1-f27a1ac82891@pks.im>
- <xmqqy0hnipy4.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ffYHPOfu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="puMDIhSY"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 27CE81D000C3;
+	Tue, 19 May 2026 20:12:53 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 19 May 2026 20:12:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779235973; x=1779322373; bh=9Czd5CyQc5
+	qbxkUA1IariEvcNdTd3qAU5LrnfsjV55k=; b=ffYHPOfuhbxB5zFPDCsraOGnyt
+	wjRxOn1dwa3xWwxC1OpQsufegrArdO45ikw7bs5nVjuam41SYnxFTkx0vKbcm0Jj
+	USbwmYIP1nrQe2Xt4prdQOTZaDiJXUuX8FhmidYv7KqwcUfXl+QxdEui/JBHiII2
+	Gsv+fJubZ4S4CPqfL/3mq3lexmkfH087ZeSDdv8hTBdthgjHtOwyLhQOxLkf5fLP
+	XVFQqyvjwzjD6ffUh/A+vU0dzmZBHNQRG8B9GeuxpFiDeeMXPCVciiU82Gv35N40
+	c3Nqrbo0iA6/XRQlBm/leM6+KgQ/29RBqzW6bmqtFhQzeSB2Epb60TvVQBZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779235973; x=1779322373; bh=9Czd5CyQc5qbxkUA1IariEvcNdTd3qAU5Lr
+	nfsjV55k=; b=puMDIhSY9Cp3M9IcS1tX9Ti3Yohs0gx1V4iVrAG4f34quUJ6b11
+	g4Ws5WMFf16lm9iYeIF2oUTsPhJuO4DeHT90+GbpMmOOESp2rHuLsQXDymQzEwQc
+	nroyz5gZyidLxi1quGhnI2pxld6jr5bn8e+HaeFHz3GTgr0W+dt+s2V4rrFeFEdT
+	7QzKBClSi1MgJi+lOCP6BM/0Txnr4kAwJgsa/Cxd6A0ZIfJE1RX7nSMl9G1dUWu6
+	pEUwog4q0mFV7YMIeRsNQybGeWpIGkjLEfGCVatuZTH00TATN2UTkiafemseOAGK
+	roeHDxYH20XhYSH+ZQXKyI+79I0KdvpiANw==
+X-ME-Sender: <xms:g_wMakMcmeDVSdp-uYUqn6fMEDlzHbG3MdOg8JXzq0TVJN8hxssISQ>
+    <xme:g_wMatgaDYvMj-AlBbjFgNBEHbNOMK9GvSxUD2M2mvoqVUWYChdDwJ1u_D9jtkeWc
+    kKZKSXU9cq3kDyFrZ-cnFWiFRz3RwfjIGN8JrkZ0nqedPidAPM_cg>
+X-ME-Received: <xmr:g_wMau5S8JBFMcx9in4MYtOYVELilKp4kzsyqoPcsGNAC52UoGhsHHMqkNUcZA0T9f3IAOYcw24PK4dI7a1tfi9CIgEO4kvKNWASZb5TJJON>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeefudeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
+    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
+    homhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehioh
+    httghlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:g_wMas3YyYVlv-cO75c12mYq4nSgHdSe7UtAGHU4YGLJb9yMq5GwWw>
+    <xmx:g_wMahutNXTxoips2BWVOxgeuqStTOD5ZpjHOdyaSL1kwVFz3PDZsQ>
+    <xmx:g_wMaq6s5sRNUyd5WT2bHHNVEp9xSVe-rvJ_FpAUEe5XjXzcYJyBvw>
+    <xmx:g_wMalfWyvKMLtjEs5snWmKv-lWrOny6ERNJdC6Wb1UfjxDEg_468g>
+    <xmx:hfwMakf21-S9kdr44PBraToQOmZZbgYnPUsuLS8WnSfJcWEDJm0KCABf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 19 May 2026 20:12:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Elijah Newren
+ <newren@gmail.com>,  Toon Claes <toon@iotcl.com>,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 4/8] promisor-remote: add 'local_name' to 'struct
+ promisor_info'
+References: <20260427124108.3524129-1-christian.couder@gmail.com>
+	<20260519153808.494105-1-christian.couder@gmail.com>
+	<20260519153808.494105-5-christian.couder@gmail.com>
+Date: Wed, 20 May 2026 09:12:48 +0900
+In-Reply-To: <20260519153808.494105-5-christian.couder@gmail.com> (Christian
+	Couder's message of "Tue, 19 May 2026 17:38:04 +0200")
+Message-ID: <87a4tvq6pr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy0hnipy4.fsf@gitster.g>
+Content-Type: text/plain
 
-On Wed, May 13, 2026 at 07:06:27PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > Note that this is a broader fix, as we now always reassign tempfiles
-> > when daemonizing. This is a natural consequence of the semantics of
-> > `daemonize()` though, as it essentially promises to continue running the
-> > current process in the background.
->
-> Exactly.  I do agree that it is the right wy to look at it.  The
-> process that daemonise creates and leaves in the background is
-> logically the process that continues to execute the service the
-> process the user started, and unless the original process explicitly
-> says "we are done serving this thing" and cleans up tempfile or
-> lockfile it needed to serve that thing, it is natural to make the
-> surviving process to take over the responsibility.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Yeah, this is how I had been thinking about it as well.
+>  struct promisor_info {
+> -	const char *name;
+> +	const char *name;	/* name the server advertised */
+> +	const char *local_name;	/* name used locally (may be auto-generated) */
 
-Thanks, Patrick, for making the change. I think that this series is in a
-good spot, though I'd like to hear from Peff who had some comments on
-the second patch from the previous round.
+OK.
 
-Once this is merged, I would suggest that we consider tagging a v2.54.1
-with this in it, as the failure mode is pretty significant for users who
-have concurrent maintenance processes running.
+> @@ -449,6 +450,7 @@ struct promisor_info {
+>  static void promisor_info_free(struct promisor_info *p)
+>  {
+>  	free((char *)p->name);
+> +	free((char *)p->local_name);
+>  	free((char *)p->url);
+>  	free((char *)p->filter);
+>  	free((char *)p->token);
 
-Thanks,
-Taylor
+Having to cast away constness is irritating, but to the users of the
+struct it may be safer to mark the members const so that they do not
+touch them, perhaps.  It is not a new problem with this patch but is
+inherited from the existing code, so let's not worry too much about
+it.
+
+> +static const char *promisor_info_internal_name(struct promisor_info *p)
+> +{
+> +	return p->local_name ? p->local_name : p->name;
+> +}
+
+Hmph.
+
+> @@ -829,7 +836,7 @@ static bool promisor_store_advertised_fields(struct promisor_info *advertised,
+>  {
+>  	struct promisor_info *p;
+>  	struct string_list_item *item;
+> -	const char *remote_name = advertised->name;
+> +	const char *remote_name = promisor_info_internal_name(advertised);
+
+Is this really a "remote_name", though?  As ...
+
+> @@ -937,7 +944,8 @@ static void filter_promisor_remote(struct repository *repo,
+>  	/* Apply accepted remotes to the stable repo state */
+>  	for_each_string_list_item(item, accepted_remotes) {
+>  		struct promisor_info *info = item->util;
+> -		struct promisor_remote *r = repo_promisor_remote_find(repo, info->name);
+> +		const char *local = promisor_info_internal_name(info);
+
+... this name "local" is "the name the thing is locally known to
+us", promisor_info_local_name() might be a better name?  I dunno.
+I jsut found it odd that the return value of the same function is
+stored in variables named "remote" and "local" at the same time ;-)
