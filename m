@@ -1,118 +1,112 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1E48C1F
-	for <git@vger.kernel.org>; Wed, 20 May 2026 00:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80657F9E8
+	for <git@vger.kernel.org>; Wed, 20 May 2026 00:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779235441; cv=none; b=EYPxCR71OGLBdo+OCczI+D3k43CYpOYiA5DARZ18YrWVSEGB6xHb8+VV/jssIXUhqU4nSifRc3W7t6+MjSRiZMqfelavjJ3hRRo4LCs6q89/Htavy8rYEV4z1Zn+L+qU/eO14o99JAcFuqKU42Eg6plMwoVtKtvXmctAvoTY+2k=
+	t=1779235829; cv=none; b=QW2zCiaX5iJSJH4FxpPZ6XYWY6da4RbQy5+Kc4/1Tqbs1mGwvne2AXlUWqOHBsKkx2e6VI0mapR/QmfvmZFGmjK4pPwqwc+SPYILHcFBwudDniOuBZmLposuOkEEGXUJ4EHUZ9OhTzzc/rtHqf22LAvZMPIizmU+6AwxDaJiwlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779235441; c=relaxed/simple;
-	bh=ZmJoGGioFkGE8w9robAO8/9IA5jD/0doLakJ5ANz01g=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=R3zlGYvYAlgvL/Q2UE7AEI4bzgC9R+6o9Q32OCy/sE4a+5X+5Za3C4GZCxmN2PTFmvcYBaQVrAxxcMRA5IspXtja7aL4lLA64N763GMVqW+fYD8Jlxpn8dhmOAX6Uga0pikIIvS/RKsPCf3UpdahrZj86HN4DCWGC8NowvyFXl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p3SSCub4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CJ6bLF7Y; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779235829; c=relaxed/simple;
+	bh=nyfvazgeZZQnOs5OWBhdvdza0Dz5H+cqYphFC1l9gBQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZMyX8HfeOXWHNcbwSQkl94lyWVMPBNlbjFnIWf17pJmXk5AojWSYpUj9XSc6bC6P+r+cCDJiGX+qr6JDw+haD4nmuqM5P/vDkeWRHPU5HX08KK6oMS1QwK4aKevO9k/mNO4acKPZa57NI+0SCbLiIYCGEasJAHavlsHsqmWMgDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ULWWbbPU; arc=none smtp.client-ip=74.125.224.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p3SSCub4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CJ6bLF7Y"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 79FD51D00117;
-	Tue, 19 May 2026 20:03:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 19 May 2026 20:03:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779235438; x=1779321838; bh=nqBHbpiYSN
-	MmSgcy6VhN+EC/CfznCokiToZxZIlYLxo=; b=p3SSCub4X5bNejBLx4VSjX6cw7
-	pduyPYHBKXAT7lV3tGl4zYxt5KqAKU9UrWSjtODKKKysuG/xLJTFPb+kOgtQqGqm
-	a9lOV3qilTqkh4zIozhd3ohmHqK8IzgVcO88pD++cl3PIezpgjZld8lBaPzIwJIf
-	HZ0Z4fXxCgZbTiMYEXqxTqqv86mKr3GZLQDiefelHo9VeVW2WO0ACxaaPzFKDFNu
-	A/KRWMgFblS4fudCxFdGrDm0U+iv7aSELZuUU0rZ8BRvYJXF28lxgkGFh+vJhkxJ
-	LNhcU+FfUgI5HFjwMt2mcQb1skVfuK2wHOFGEWXMg1Rq4Uw0kkETJXYHy4Wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779235438; x=1779321838; bh=nqBHbpiYSNMmSgcy6VhN+EC/CfznCokiToZ
-	xZIlYLxo=; b=CJ6bLF7YYki1oKpWfp0it+bXPqJTukw1EQEWMbcgvj62n+0h/s7
-	CjBFthq8n+olyGyljm0XycEkz3GoHabnvHcnahKNRITu4E/qh5HPW5F2BjdYBc+5
-	5zl4uYB3TClaq7yntOuN5PWIhp0z3w9se5Den/geuVUb4FXHqmxwXFwPiTnjTgy9
-	7zW3zBO2jBjXaYD+rv4/rD4XNOX3efsr9i6qRviOmZoGLTcBX8S+i6RM+54ZzYDM
-	CghbxRjCsb/I8bWyAOP/oUvyfOnVhJ+Cr0xN9l2I5Dc+WH+06HjcHMd8Y+PbeYQm
-	YC3RDZbzC0ov6TMgOLbbEqLwrufiSHaiFEQ==
-X-ME-Sender: <xms:bvoMaq32oAgzn_u9xOOq-9kDEIlx6oOTQGIj3-DjasOgwGjxpITUbg>
-    <xme:bvoMavV5crZeSY1r1g-UbjQnSvrAJQnuh21FflgJVkhbsUIjRHIB6v8ZqgYe2tjNF
-    2upR0jR442fNmF_OPu1Ez1SM0SAz4T8TDsF_Iph3CgjgKppVydxOQ>
-X-ME-Received: <xmr:bvoMalLnb1fx5iQct5kVByPe-Py8Vcj8XatRJNO3duILPHGmwL9BJmXRfIVmklvLO9-oLOpmoXYlOO7JfidsIrDPQ1MS221I1MfKm8cFSYSq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeefudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
-    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhiugguhhdrrhgrmhgrnhdrphgrnhhtsehorhgrtg
-    hlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
-    phhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bvoMah2YwK4rEC6nP0k5CP6gjmHSufxul-YBzAearO5rMvzqHm3N5w>
-    <xmx:bvoMar6mGxl_2Gw_SlBFtiQiy3N9OkwrHihbeHgZw62Pm7dfJb8CSw>
-    <xmx:bvoMaq8SClbRViWmKFgwFe6LslWL3i4iEVPEwfPzsdfOqYsW9CjAUw>
-    <xmx:bvoMaiWKQR5G3URwDw1O7i41ZtbOnBIpyYaR1iaCB79a1fAL5BceJw>
-    <xmx:bvoMauG8yFTnth9B2NWxC5pkgGHmTiTFqRNWIMwBRUyIPgrCzSi65NfZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 May 2026 20:03:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Cc: git@vger.kernel.org,  Calvin Wan <calvinwan@google.com>,  Patrick
- Steinhardt <ps@pks.im>,  Elijah Newren <newren@gmail.com>,  Kristoffer
- Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 7/9] notes: support an external command to display notes
-References: <cover.1779207350.git.siddh.raman.pant@oracle.com>
-	<9619077369f1a567bd505b1de1e4f672a5cd1950.1779207350.git.siddh.raman.pant@oracle.com>
-Date: Wed, 20 May 2026 09:03:54 +0900
-In-Reply-To: <9619077369f1a567bd505b1de1e4f672a5cd1950.1779207350.git.siddh.raman.pant@oracle.com>
-	(Siddh Raman Pant's message of "Tue, 19 May 2026 22:00:36 +0530")
-Message-ID: <87fr3nq74l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ULWWbbPU"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-65dead17c24so3958270d50.2
+        for <git@vger.kernel.org>; Tue, 19 May 2026 17:10:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1779235827; x=1779840627; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NrEZ+QDP38lDR4IxsATNYDTeVmljG5Vv52M4vvaqFp0=;
+        b=ULWWbbPU8VljG/XgReRnWsNzlSn1Gd5PfkgMdttg2nESDAUsNu4kqpB9bFGKZ3j9yg
+         BrG5nRA7LpSQVH5MmbrJswXEUiJWGGm7WU26NXB0+Vr4FX4ZiCs46Ql13ieDGPnUZWjL
+         SjHyTAUG/4iQ7D+4hvBA6QBqPsiftrnYVeQplh8xmJQOG4oXzp246/mYZsTlTo0fjsJP
+         baKUHYrzorL7wRiPBc9erIoVzNHBcQevZBkZl7eCBIFZyTT3pN+z7cI1f2LIkAhrMV2h
+         MIAanJvv7SIJAJejzWaBR5XQtT9LWM//iVa6RsHvOKc/XAScPXFCShR0QBArBm5gb0Yi
+         lSYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779235827; x=1779840627;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NrEZ+QDP38lDR4IxsATNYDTeVmljG5Vv52M4vvaqFp0=;
+        b=i9CeWTM+qaWXkqmCeTSRgUZR31y8dT1lClDaAkHdH/fNKmlv0wVbYWxoolLVTQbH+9
+         /T/9eSd9+R8D1twwwtWAZNNmp6VOpwsO76xZP9+cWoamd3pM8y00VPEhXk+k7MznAb9P
+         b/BaK/Z3+e8XCqx+s+6curWwO82iXyFvAJJ5E9cHIiGU8QWcG5yCvyCuVf/HaGCHCiO4
+         l5iM7yXSZZuNtld7COawM3FKBBgRA5MFR4nKGbGRFTRWTuz2IEqeQEKRxtl03Ga2PtZx
+         lKRi1YlksFnec0MrLMkjuMQS0rr5dX9GI37nyvjLJik57RHuhNyyTIuAx6WnQ6F/47Wa
+         vllA==
+X-Forwarded-Encrypted: i=1; AFNElJ/ho3g4IOR8+eQ2xfsObIZBXYVBMeIYmOZJ+xw2+egmjyf7GMRC0Y287afszfga+IpRnQ4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZPsaYVUvUZi847n+DneZZlQrVJ5LZObFMVyC0ShXJoUtFUIiB
+	ZqQv1xe7vDuD6ddO5wimVOKgu00SQ8pVTaWdwmFis9RHc8802E/k3krQRf40gv8DjrP9s+hQjbo
+	Mcbg2TaA=
+X-Gm-Gg: Acq92OE4tL16MyH+1iJzLMSj446GH/41OkQJLclAdBpEuphxRalHyWVGWTKr+VzIe0v
+	bVjKGsC06+yu4pMn9BhA8Ir7zVorvcqDcHsN4wQc2BnSQ4EWWNZSmAu2kBgxtBMP62ISgIkBS+1
+	aoF13kV0QbCwXerhVUgED0/yL24CtsvDsp4pA/3uncY5dFni7kRKmWltTANTvFHm+xii4cSm4yc
+	+VhMTQnSvgQR+uSJKEMf8X1fa/21qC6K4RJWft0JcSNSvajClaLmRtyIfHQnByuSXVaa+GWhdug
+	tg6DQ6m5xqmN6VMcxi5s3FbaUZpkXz5XIrv+RZXj+F6Cw7IiuaTw4vW1Cz/WbpKzc947KDUM9tV
+	OLyaGc380Ca2uGay+g9/NircE5HAZ/T1Xg6/FSNTda6W6AsVKaKxioiFmq9qGdHwtCN9CXlaIAz
+	8spzJAKDU3aARzut0CHW+WrY500ut6CgstBwRhHIr5vgl4lJe8asT5l7prpcYz3tP56aoFYy3QU
+	FM1rBsa81mD8h/ryFmRwV/ML1K+7WctfrEMDGhBNzKiHreeRabcVBLe/Mw9XOQ5kYBxNQR6yPmU
+	GAG/MvK2YossOWL1
+X-Received: by 2002:a53:d008:0:b0:65c:5329:788e with SMTP id 956f58d0204a3-65e227bacc0mr18658401d50.32.1779235827527;
+        Tue, 19 May 2026 17:10:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9c6cd4f5sm45326217b3.35.2026.05.19.17.10.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2026 17:10:27 -0700 (PDT)
+Date: Tue, 19 May 2026 20:10:26 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Jean-Christophe Manciot <actionmystique@gmail.com>,
+	Mikael Magnusson <mikachu@gmail.com>, Jeff King <peff@peff.net>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 1/2] builtin/maintenance: fix locking with "--detach"
+Message-ID: <agz78jjYEAif4lZt@nand.local>
+References: <20260513-pks-maintenance-fix-lock-with-detach-v3-0-f27a1ac82891@pks.im>
+ <20260513-pks-maintenance-fix-lock-with-detach-v3-1-f27a1ac82891@pks.im>
+ <xmqqy0hnipy4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy0hnipy4.fsf@gitster.g>
 
-Siddh Raman Pant <siddh.raman.pant@oracle.com> writes:
-
-> This problem excaberates on scale.
+On Wed, May 13, 2026 at 07:06:27PM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> One solution to this is a realtime fetch or faster updation via
-> external means, but unfortunately we lose the coherence in the
-> display of information, and the user would end up reinventing
-> git log.
+> > Note that this is a broader fix, as we now always reassign tempfiles
+> > when daemonizing. This is a natural consequence of the semantics of
+> > `daemonize()` though, as it essentially promises to continue running the
+> > current process in the background.
 >
-> So let's add support for an external command to display the notes.
+> Exactly.  I do agree that it is the right wy to look at it.  The
+> process that daemonise creates and leaves in the background is
+> logically the process that continues to execute the service the
+> process the user started, and unless the original process explicitly
+> says "we are done serving this thing" and cleans up tempfile or
+> lockfile it needed to serve that thing, it is natural to make the
+> surviving process to take over the responsibility.
 
-It is unclear how we would arrive at "So let's" from the previous
-paragraph.  It is not limited to notes but multiple people updating
-the same thing racing against each other happens all the time in the
-main part of the history, no?  Isn't a better solution for such
-racing situation usually based on a better merge support, I have to
-wonder?
+Yeah, this is how I had been thinking about it as well.
 
-> We split the addition of documentation and tests from this commit for
-> easier review. The new help text added in Documentation/ in the next
-> commit should make the usage clear.
+Thanks, Patrick, for making the change. I think that this series is in a
+good spot, though I'd like to hear from Peff who had some comments on
+the second patch from the previous round.
 
-It is unclear why a large body of code that is not documented or
-whose uses are not illustrated by examples found in the test scripts
-is easier to review, though.
+Once this is merged, I would suggest that we consider tagging a v2.54.1
+with this in it, as the failure mode is pretty significant for users who
+have concurrent maintenance processes running.
+
+Thanks,
+Taylor
