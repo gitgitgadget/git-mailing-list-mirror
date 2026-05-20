@@ -1,116 +1,118 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525CF2F7EF5
-	for <git@vger.kernel.org>; Tue, 19 May 2026 23:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1E48C1F
+	for <git@vger.kernel.org>; Wed, 20 May 2026 00:03:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779234817; cv=none; b=r8k5pQfL468SpR7zhlK9J1HMhe0OPx3fAyjJ6okH2CekgDJFziaMcuw2xXGn8rH+hfI4vKfexRllbcEx2ji8n2/33wHxItB8NG+h3nDztALGndK1PR8LcVONt/5Z0HvLzbSDqssIpd81oCI+fHiJ65ilitXGHOsIGH0pw6zXyCE=
+	t=1779235441; cv=none; b=EYPxCR71OGLBdo+OCczI+D3k43CYpOYiA5DARZ18YrWVSEGB6xHb8+VV/jssIXUhqU4nSifRc3W7t6+MjSRiZMqfelavjJ3hRRo4LCs6q89/Htavy8rYEV4z1Zn+L+qU/eO14o99JAcFuqKU42Eg6plMwoVtKtvXmctAvoTY+2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779234817; c=relaxed/simple;
-	bh=DibVpD2qi728e+UQ9fibbrxZDCrlCWTV0/C73AxoGjg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=geSPmOMhzqcb5DrvxcU5faLOcybo8eRec71nGY3HOY7sBJrOQyFX3fdCroCiM+W4opZPjmtkiFurHsr5J6AD9IX0uCeGv6Lx1ZL2o28UEdFTKGfbf6KCibnUbnJZkEUgDp3R84GGZ+WOrqd+ZrQwucY+HJXg+SjAUOtJQ0FU0Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=fGnSizQY; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1779235441; c=relaxed/simple;
+	bh=ZmJoGGioFkGE8w9robAO8/9IA5jD/0doLakJ5ANz01g=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=R3zlGYvYAlgvL/Q2UE7AEI4bzgC9R+6o9Q32OCy/sE4a+5X+5Za3C4GZCxmN2PTFmvcYBaQVrAxxcMRA5IspXtja7aL4lLA64N763GMVqW+fYD8Jlxpn8dhmOAX6Uga0pikIIvS/RKsPCf3UpdahrZj86HN4DCWGC8NowvyFXl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=p3SSCub4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CJ6bLF7Y; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="fGnSizQY"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7cb345cb5bfso30897317b3.0
-        for <git@vger.kernel.org>; Tue, 19 May 2026 16:53:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779234815; x=1779839615; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pbfIi9Ks385gZbmwJPDC7L/cLwDwbo/etQaJglv+634=;
-        b=fGnSizQYp0BZ+6RPJWC+frNxWCj4mUT+VIM7DqEcRh4jdk8BJDaDL7lNugVGrkqiV4
-         D+LpAUssiLRZQh/Qj7s2+DininS8yuAe7nu3ZWhhl3gIgxIQp1fimlxXt8YQJY6n2Nyi
-         xPWQ/OHBN4aI7Y+yaLWVEWSuBGX1o/PdB9H11Gwwdy7OADckNeeRC0h3dUJE1bWYURL7
-         2ib9mV9N3FcJmt8PNc+d7Mr04ErM9niVkIyQCtL60y1d3WzlJIjLTUrrNwZgKKnyLpZX
-         vlwgThV9fvr7EHbZRWn2RHoWzLUqM7b+lxxirz2fuuczwdvAXHqSo7MSI1UXPRGA9yG7
-         ornA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779234815; x=1779839615;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pbfIi9Ks385gZbmwJPDC7L/cLwDwbo/etQaJglv+634=;
-        b=o0UuVyI7Ofo+NeDCjb1K0Cu8Rm1yzV+wjJW3YLrfcmpH+MtnJP+az/WJkHDJeSTiuC
-         kpU23NAPhZwYMiVsyDE3gZqqxiQYv0A/RTubBKfu9JZ49AAj0c75A7yjfbzR0Uw+S2aC
-         fesw6CaydN1xpmbqtTENB2CDGFe2A++VvpA8zp6QbmcnhfZ6cv/AzTCpQcNttXyI0ZU8
-         fs8HP2hAc2udzGQln6aVfEIgZAk3MA3SKaq6lUnAdE1H0KKv/xDQHF6jBO+IltRoTeP+
-         LWuiNgq8ShQu0HhPY7Z1N6p/4COvsVwylg8GWWTNGWwkoQuvOdgZJYEqrn2k+Zde6vPg
-         bTEg==
-X-Gm-Message-State: AOJu0Yy7ZK6/3OckAJxJgvHIGe3LL3KhSuJJratHvhP0ayd5rQ5AHGbd
-	bs/WnCjPcDQ+9462DLQAR/3q3jeVxS2I3B63752jZ4U0RVBukJ703/k6CsQ9jVlQoyE=
-X-Gm-Gg: Acq92OHWkXvPWFe+J4LklkmL47u3XPb2+7MA5JRxNWxN9NYXHnQXxsVKQ1M9/sA8iwK
-	R6VIPbyvm7Nng0AB2RoF47mmtoicp5PmLywhHCkW+gPkv1H5PlRy4oP1SmYYdt7o7sQSPPMdOCb
-	langWlZxNeg/MHUw6Roqi60+h1t+rlmSp3PC39LXvmViRnddP1LhSbNcCtGWZY6mMtlTV1qeB83
-	bIXBQjgfwZePpUW3CyLYjNPU1MN0OYpuozmMr8fLBqNkNn79tKTl8065tew1G0A3VxdEIzTb+Jx
-	ax7kx0eB3fdkgaN0SH+O5vya844RELRDvh6QLIMdwV9MXg5o7ydcybHegeQW0ObEjSl0oYks1bR
-	d+ER630LpkIB7/WSSg8Z5h3XoiQYVWk9g/6zTL7pQjeeiKrF2tSkc0UvqE5cgGJeUsTHnv0g9aa
-	f6i6zQuNA61YTU2OjrqJy0BBcq4lSEW0pruHJqqgdAPW00iU8DuYyUyvi31BNdan2SFN3jTz8Kw
-	gMvr+j3476egIz67i6aFlSXE8cMHS5sxfrbr9XdfRsDytRfToA8YtDkeEbzfBgjw9Scm4ZY5Nf3
-	dpOtN10hIjE1iQI5
-X-Received: by 2002:a05:690c:e3ce:b0:7bd:d4f4:261e with SMTP id 00721157ae682-7c95b33f043mr222941707b3.31.1779234815335;
-        Tue, 19 May 2026 16:53:35 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc9d18dcddsm44336637b3.49.2026.05.19.16.53.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 16:53:34 -0700 (PDT)
-Date: Tue, 19 May 2026 19:53:33 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 00/13] pack-objects: integrate --path-walk and some
- --filter options
-Message-ID: <agz3/ZxZZHBKofR9@nand.local>
-References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
- <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="p3SSCub4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CJ6bLF7Y"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 79FD51D00117;
+	Tue, 19 May 2026 20:03:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 19 May 2026 20:03:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779235438; x=1779321838; bh=nqBHbpiYSN
+	MmSgcy6VhN+EC/CfznCokiToZxZIlYLxo=; b=p3SSCub4X5bNejBLx4VSjX6cw7
+	pduyPYHBKXAT7lV3tGl4zYxt5KqAKU9UrWSjtODKKKysuG/xLJTFPb+kOgtQqGqm
+	a9lOV3qilTqkh4zIozhd3ohmHqK8IzgVcO88pD++cl3PIezpgjZld8lBaPzIwJIf
+	HZ0Z4fXxCgZbTiMYEXqxTqqv86mKr3GZLQDiefelHo9VeVW2WO0ACxaaPzFKDFNu
+	A/KRWMgFblS4fudCxFdGrDm0U+iv7aSELZuUU0rZ8BRvYJXF28lxgkGFh+vJhkxJ
+	LNhcU+FfUgI5HFjwMt2mcQb1skVfuK2wHOFGEWXMg1Rq4Uw0kkETJXYHy4Wg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779235438; x=1779321838; bh=nqBHbpiYSNMmSgcy6VhN+EC/CfznCokiToZ
+	xZIlYLxo=; b=CJ6bLF7YYki1oKpWfp0it+bXPqJTukw1EQEWMbcgvj62n+0h/s7
+	CjBFthq8n+olyGyljm0XycEkz3GoHabnvHcnahKNRITu4E/qh5HPW5F2BjdYBc+5
+	5zl4uYB3TClaq7yntOuN5PWIhp0z3w9se5Den/geuVUb4FXHqmxwXFwPiTnjTgy9
+	7zW3zBO2jBjXaYD+rv4/rD4XNOX3efsr9i6qRviOmZoGLTcBX8S+i6RM+54ZzYDM
+	CghbxRjCsb/I8bWyAOP/oUvyfOnVhJ+Cr0xN9l2I5Dc+WH+06HjcHMd8Y+PbeYQm
+	YC3RDZbzC0ov6TMgOLbbEqLwrufiSHaiFEQ==
+X-ME-Sender: <xms:bvoMaq32oAgzn_u9xOOq-9kDEIlx6oOTQGIj3-DjasOgwGjxpITUbg>
+    <xme:bvoMavV5crZeSY1r1g-UbjQnSvrAJQnuh21FflgJVkhbsUIjRHIB6v8ZqgYe2tjNF
+    2upR0jR442fNmF_OPu1Ez1SM0SAz4T8TDsF_Iph3CgjgKppVydxOQ>
+X-ME-Received: <xmr:bvoMalLnb1fx5iQct5kVByPe-Py8Vcj8XatRJNO3duILPHGmwL9BJmXRfIVmklvLO9-oLOpmoXYlOO7JfidsIrDPQ1MS221I1MfKm8cFSYSq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeefudegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefufhffjgfkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepteevteehgfevhfdthfduhfetgeefjeekhfelleetueevuedttddthfdvieej
+    teelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhiugguhhdrrhgrmhgrnhdrphgrnhhtsehorhgrtg
+    hlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
+    phhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:bvoMah2YwK4rEC6nP0k5CP6gjmHSufxul-YBzAearO5rMvzqHm3N5w>
+    <xmx:bvoMar6mGxl_2Gw_SlBFtiQiy3N9OkwrHihbeHgZw62Pm7dfJb8CSw>
+    <xmx:bvoMaq8SClbRViWmKFgwFe6LslWL3i4iEVPEwfPzsdfOqYsW9CjAUw>
+    <xmx:bvoMaiWKQR5G3URwDw1O7i41ZtbOnBIpyYaR1iaCB79a1fAL5BceJw>
+    <xmx:bvoMauG8yFTnth9B2NWxC5pkgGHmTiTFqRNWIMwBRUyIPgrCzSi65NfZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 19 May 2026 20:03:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Cc: git@vger.kernel.org,  Calvin Wan <calvinwan@google.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Elijah Newren <newren@gmail.com>,  Kristoffer
+ Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 7/9] notes: support an external command to display notes
+References: <cover.1779207350.git.siddh.raman.pant@oracle.com>
+	<9619077369f1a567bd505b1de1e4f672a5cd1950.1779207350.git.siddh.raman.pant@oracle.com>
+Date: Wed, 20 May 2026 09:03:54 +0900
+In-Reply-To: <9619077369f1a567bd505b1de1e4f672a5cd1950.1779207350.git.siddh.raman.pant@oracle.com>
+	(Siddh Raman Pant's message of "Tue, 19 May 2026 22:00:36 +0530")
+Message-ID: <87fr3nq74l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
-On Wed, May 13, 2026 at 09:18:42PM +0000, Derrick Stolee via GitGitGadget wrote:
-> UPDATES IN V4
-> =============
+Siddh Raman Pant <siddh.raman.pant@oracle.com> writes:
+
+> This problem excaberates on scale.
 >
-> Thanks, Taylor for the careful review.
+> One solution to this is a realtime fetch or faster updation via
+> external means, but unfortunately we lose the coherence in the
+> display of information, and the user would end up reinventing
+> git log.
 >
->  * Several typos are fixed.
->  * The performance test is corrected for issues around piping Git commands
->    and made more robust to the existence of submodules.
->  * BIG: The tree:0 patch is significantly updated in this version. Taylor
->    correctly smelled a problem with the new logic to emit the /tagged-trees
->    object set, and that signaled that those trees were previously never
->    emitted. I update the test to demonstrate that changing the data shape
->    (including tagged trees that are otherwise-unreachable) doesn't change
->    the test behavior, signaling a bug. The behavior change details all the
->    complexities of visiting only directly-requested trees under a tree:0
->    filter and recursing on all trees in other cases.
+> So let's add support for an external command to display the notes.
 
-Thanks for the new round; I gave this a lighter pass since I had
-reviewed v3 in detail and the range-diff here looks good. I focused in
-on a few patches in particular, and left a couple of minor comments.
+It is unclear how we would arrive at "So let's" from the previous
+paragraph.  It is not limited to notes but multiple people updating
+the same thing racing against each other happens all the time in the
+main part of the history, no?  Isn't a better solution for such
+racing situation usually based on a better merge support, I have to
+wonder?
 
-My main reservation is that the "path starts with a '/' slash character
-when directly requested" behavior feels brittle to me, and I am not sure
-if there is a cleaner way to express that.
+> We split the addition of documentation and tests from this commit for
+> easier review. The new help text added in Documentation/ in the next
+> commit should make the usage clear.
 
-I'm curious what your thoughts are there. I think barring that things
-are near-complete here, though I did note one issue with the t/perf
-changes (that is my fault for having a bad suggestion on the earlier
-round).
-
-Thanks,
-Taylor
+It is unclear why a large body of code that is not documented or
+whose uses are not illustrated by examples found in the test scripts
+is easier to review, though.
