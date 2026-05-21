@@ -1,55 +1,55 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0584C39E9B0
-	for <git@vger.kernel.org>; Thu, 21 May 2026 07:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4493A3E9C
+	for <git@vger.kernel.org>; Thu, 21 May 2026 07:42:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779349374; cv=none; b=iSrrqQsnPD+Ov0ybNTbYYdFhosH9pXkvdJIYWqtnrIsELchr1APucQqkTRy87bX4icMuG5VN/iTzjb90L1F1xVED3aZ4ehu2EJTuWr3eySkKr+RxmYVrsXne+BxgrKtFm9uwt1e8SDsOOtF4zOdrDNIj2PSnCHBKU2DMcIvuSoc=
+	t=1779349376; cv=none; b=t7O+nUn/Y5cWh+8jHTj5EhFMoRpaFU+c6b65h/RGldKuhOfwCA4E0SfbFTEnoPWtWdOc746OgfhqKu1DPR2B5kKRXv0Y54NUTBvohyqPjO6mGowXOafngECgmCOaXqXyotXTWrfLG2/ej1oz1SXIyFAhuhyISBM6kgfMKvUH1dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779349374; c=relaxed/simple;
-	bh=W5E58cR702ktCVYrRdaM6eqfV9Mae7hHEllrH3vgGrM=;
+	s=arc-20240116; t=1779349376; c=relaxed/simple;
+	bh=Kaw4AQ8uUDA2Uz0wvpwm2huuOS0Mi9MCo/gdxLNv9ak=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=brIDL96MIFDCRArkUxVrQT5OtW9Rg15NkcjMJUaZdEM6Pr+9Na5mpR/Pz/wMf/wD4GTs0CbD893qkxsFIBkU2TlALb8T9TsCInoajWSS/8lmpmTxYEd/6r40VnGRXra16czXzBON9ypchV1IbtlqY4StA8ZHSYAWvROcfI1PFKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q5mL1d1x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NdwI7BBW; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=Vi74Y4DfV1keWD5sWGL2vw3UXxnOvzWtxuurWLxnGLkIGlRENwUDoVxGIhk9lMCTm/LiOBh/xYQrLNgDflJ1xw37ucYa+cO88Oq39ze2TAO8q/ns1B6adh8mt3ciuVMM4LtM2oe44wCJJ5GRx1KSCI+TbcEZLqIvaP4k6UqTxsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ASStNeEU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nx/9WL/1; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q5mL1d1x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NdwI7BBW"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ASStNeEU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nx/9WL/1"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 16FFEEC009E
-	for <git@vger.kernel.org>; Thu, 21 May 2026 03:42:52 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BE586140006C
+	for <git@vger.kernel.org>; Thu, 21 May 2026 03:42:54 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 03:42:52 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 03:42:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779349372;
-	 x=1779435772; bh=hlbrUA446SwoGRpUiVVd0AU9KVJ3C31A0LTrp8IK9So=; b=
-	Q5mL1d1xRCAUMpzS2bke9ptqr0CSkdOZe+QvilUpgtphIUMa91eYc3vD+WkJbdge
-	lrMQFgbRvJvedYP/kBAxbwyLyRRmvFMm1Od9gGs401Yw/F20Ql57wgrCOzwl2At7
-	Ch9iXdlAIly0Nnw35xhOgNPmx/XjU7dpBd/2ErxKHluJJe/XCGjbGMNQJCiX0S6J
-	ilMPWnL016gd26FrlBGgJZY7VJcyWdKm7/izC6WvFHpYePCsXSk6Mz61PwokCUYi
-	QtrxsqocW3WOPchJpoG6q1Q/yT13mrgYPUkhjxJ45MLVQ9twUPXBy3OFHAcKfwA9
-	R8/9cO7In9u91kO9VehrXw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779349374;
+	 x=1779435774; bh=FSKodS6z48wfHZksFB+tY/Lvh7uD9yQSXz0AKFGO5F4=; b=
+	ASStNeEU4hswM5M358v/nNbbuc1ZKe6l+GOVeYIvg2xoLRHqg+HkxlFivZGnzYaJ
+	3sFDfDn6GA2mj0tRiv1Ax4edlhlHex5blGvrDiHhkskXYWHRh0kbkzjE9WGK/8Xy
+	y/HfY+0E7GnVTz47QQ52vqqP2Q7/TPLOMTllYTdUxLIe24bc5mv5kttCU9I+ase5
+	5B4Gcj8k6lzloqLMDmS4qwzqqvJiDff63thE7CkIj0R15xbQHWDTmbldqvXMaxCo
+	ycOOM13bg2kgJmj218HZXgPRf5mrP3gebho0AWZMgrIAutVsyD7XUiNwo8e6FJDx
+	7x9mG7buHrr5QLOsyv4cWQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779349372; x=
-	1779435772; bh=hlbrUA446SwoGRpUiVVd0AU9KVJ3C31A0LTrp8IK9So=; b=N
-	dwI7BBW3KDz6CoTYrk3WIt8otaT/SbSl3NF1vgK+zvZdNDe4HL4vhiifTW1IcpC6
-	4H4PB16ZkkldgnhLeDUkuxsK7+7gBWTFOksZmKrsYxxgo8YVt3WAkiMoc+tR1Wib
-	s69rk9zAh5+XAT8q/NgXJ4jHscfafWJj3tdviTp1gS1Lnf44+b6mhwmnzk+Ykedj
-	9+BsmuqFqzGQuarwD9WxFlGXpoXjvU7rB2QMyNfsXvjDMzExD8k6jue6kLaw+ekk
-	VA8UQ0gNa3mcyuPb8MG5NAoz0rSF6ewd7BaDdWyDFpjepkObvoWL/Dpdojh98mQf
-	6cgxnpEqRDv+KtbF0qqbg==
-X-ME-Sender: <xms:fLcOamQAmXPLarHotP37RQU6YO-wGE0NrAc0MdP_C_JCrq9p96Es3Q>
-    <xme:fLcOaisXT2kHYmFKS44MiBxj046O4oIiaWNE9mZRsHBJATRhGdTYjl6iTzqu8bkrs
-    PA2J2osS4k5ujagolirdL1KYQYfeOe9NpXeTODBGLj7hlzVmA98WA>
-X-ME-Received: <xmr:fLcOapfqQwd5SNFi-q4cXfpo9sKeI8CZzThsZDfy2MAf0E0IZR-LDmE6CCZ3PeEpUjZh8qNoZ3qIo0-78OE-0USsKQHZmhg3kgJpOl2XAnw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779349374; x=
+	1779435774; bh=FSKodS6z48wfHZksFB+tY/Lvh7uD9yQSXz0AKFGO5F4=; b=n
+	x/9WL/1jOK1GYWjnHjgHQjPwLkIUxm4Iyqh9IHwBVrXUq9fymxbUKY8LY6M6TJAp
+	fXinon5EDeyCG/C2QovRYSql6ey/ZP0FmwoK7ObjQ9MO76MhrVqzHi4GjAH9+2f1
+	8Eb10g2KlXqqryuorUh/6ESJINHHnI5YP2EwCVvXOvet8RXvSWiu8/LlP8QwxtXE
+	zlzr3UZs4mjyK2uyKPzmahtoemXn50ArPTEKbd5WJ0jeAE/9VOzjhJDibds61bLp
+	yt/fsqZhRpZ7qNeZNGdPvqKlsFIpPmDxxHrCCghZsLbvN9aL93uXUf/PDFB30MRt
+	BBtw+ZjIeWYYnK+NXgkww==
+X-ME-Sender: <xms:frcOapO_4__rZf4Vhq0-IiBJwpwcR60veSy3MbG9TwA85ddvHXU8Hw>
+    <xme:frcOai64Ok7cXGmenydQimNfeuohpsNFm37WkJkcmMrFRRqXQJUqRi-oj3KLZJU7z
+    zFHWbl4wqoqHPGfuL-MOL-XD3nEWx0bt0QiML6evrQYTUu6xVCrHA>
+X-ME-Received: <xmr:frcOat4qBDtupel8P5pSxk_MP2xFfFQx_0I9J4t5o_CYH3FOzup2VeYMhyeDcU8VaYcCSBHYoLqhUHfLlfgilgD-sakyC8Znsv9puM3pPDM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeileegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,22 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeileegucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:fLcOanINWLo5EUA3_LUsfG6On5c5UYHF8g2t88S-1C0csjQ9Lvo_cg>
-    <xmx:fLcOavYaz1X4mNgFppxRxScg5GomObre1SBX85WDPt8SGL7HdRkVSA>
-    <xmx:fLcOaqtr2osxxdBzGxqc_gXPQ_zdhhKhOKdtNFaChkU-OP7Q9hXssw>
-    <xmx:fLcOakuDXmMMloJt9FFsuLnwkjk1KpTkadKBlvCAvczS5lP2ZTZreg>
-    <xmx:fLcOamSdEjrzng6VYaS_gCbxZLo7AHLw1BSih3pNBeV3isvIciUo1m7u>
+X-ME-Proxy: <xmx:frcOaq01Z1CdssadfToEwjs4GztWU558TKfttDS9xVVrKZgC07Zi3A>
+    <xmx:frcOahU-zBiDWv9mA1DtjWgkmsrgfu3TVIc6zlYdIoW1llQ7Qle6tg>
+    <xmx:frcOat45xEEdLJdvSKmyNyIKQHzMPXPt5N02-hHLbuYMK05J9FtkVw>
+    <xmx:frcOagIhMTjBc8EpuXagmQ8KrfLr_ERl5kLET-4mJuzQy-gDfFhHIA>
+    <xmx:frcOal9K-Mz_J7t4-VbQTkWDr9ziUNsAD79r5IDH5YnEBU_bzoko_FW5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 21 May 2026 03:42:51 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 21 May 2026 03:42:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f4b04c7a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 80260947 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 21 May 2026 07:42:50 +0000 (UTC)
+	Thu, 21 May 2026 07:42:53 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 21 May 2026 09:42:33 +0200
-Subject: [PATCH 6/8] setup: stop initializing object database without
- repository
+Date: Thu, 21 May 2026 09:42:34 +0200
+Subject: [PATCH 7/8] repository: stop reading loose object map twice on
+ repo init
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,93 +83,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-b4-pks-setup-centralize-odb-creation-v1-6-f130d2a7e8ae@pks.im>
+Message-Id: <20260521-b4-pks-setup-centralize-odb-creation-v1-7-f130d2a7e8ae@pks.im>
 References: <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
 In-Reply-To: <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-The function `setup_git_directory_gently()` is responsible for
-discovering and setting up a Git repository based on various environment
-variables and the current working directory. The result is thus a fully
-usable Git repository.
+When initializing a repository via `repo_init()` we end up reading the
+loose object map twice:
 
-One oddity of this function is that we may set up the object database
-even in the case where we don't have a repository, namely in the case
-where the `GIT_DIR_EXPLICIT` environment variable is set but points to a
-non-existent repository. If so, we call `setup_git_env_internal()` with
-the value of the environment variable so that the repository's Git
-directory is configured, even if it points to a non-existent directory.
+  - `apply_repository_format()` calls `repo_set_compat_hash_algo()`,
+    which in turn calls `repo_read_loose_object_map()` if we have a
+    compatibility hash configured.
 
-Historically though, this function didn't only configure the repository,
-but also initialized the object database. We retained this behaviour
-from a preceding commit, even though it really doesn't make much sense
-in the first place -- there is no repository, so we don't have an object
-database either. There seemingly isn't much of a reason to construct the
-object database, as we typically won't try to read objects when we don't
-have an object database.
+  - `repo_init()` calls `repo_read_loose_object_map()` directly a second
+    time.
 
-There's one exception though: git-index-pack(1) may run outside of a
-repository, which can be used to perform consistency checks for a
-packfile. The code path is _almost_ working: we already know to call
-`parse_object_buffer()`, which can read objects without an object
-database being available. And that works for all object types except for
-commits, because `parse_commit_buffer()` calls `parse_commit_graph()`,
-and that function doesn't handle the case where we don't have an object
-database.
-
-Fix this instance to check for the object database instead of checking
-for the Git directory having been initialized. With this fixed, we can
-now stop constructing an object database completely.
+Drop the second read of the loose object map in `repo_init()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- commit-graph.c | 4 ++--
- setup.c        | 7 +++----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ repository.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 9abe62bd5a..0820cf5fb8 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -740,13 +740,13 @@ static struct commit_graph *prepare_commit_graph(struct repository *r)
- 	struct odb_source *source;
+diff --git a/repository.c b/repository.c
+index 2c2395105f..61dfbb8be6 100644
+--- a/repository.c
++++ b/repository.c
+@@ -301,9 +301,6 @@ int repo_init(struct repository *repo,
+ 	if (worktree)
+ 		repo_set_worktree(repo, worktree);
  
- 	/*
--	 * Early return if there is no git dir or if the commit graph is
-+	 * Early return if there is no object database or if the commit graph is
- 	 * disabled.
- 	 *
- 	 * This must come before the "already attempted?" check below, because
- 	 * we want to disable even an already-loaded graph file.
- 	 */
--	if (!r->gitdir || r->commit_graph_disabled)
-+	if (!r->objects || r->commit_graph_disabled)
- 		return NULL;
- 
- 	if (r->objects->commit_graph_attempted)
-diff --git a/setup.c b/setup.c
-index 0dc9fe4565..4a8d6230b1 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2043,13 +2043,12 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 			setup_git_env_internal(repo, gitdir);
- 		}
- 
--		repo->objects = odb_new(repo,
--					getenv_safe(&to_free, DB_ENVIRONMENT),
--					getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
+-	if (repo->compat_hash_algo)
+-		repo_read_loose_object_map(repo);
 -
- 		if (startup_info->have_repository) {
- 			struct strbuf err = STRBUF_INIT;
- 
-+			repo->objects = odb_new(repo,
-+						getenv_safe(&to_free, DB_ENVIRONMENT),
-+						getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
- 			if (apply_repository_format(repo, &repo_fmt, &err) < 0)
- 				die("%s", err.buf);
- 
+ 	clear_repository_format(&format);
+ 	strbuf_release(&err);
+ 	return 0;
 
 -- 
 2.54.0.771.g3ed373ac14.dirty
