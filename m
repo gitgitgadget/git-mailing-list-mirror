@@ -1,146 +1,177 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A5E395AC7
-	for <git@vger.kernel.org>; Thu, 21 May 2026 19:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779391047; cv=pass; b=cf10zXwSAhQZe3OxnA+S7aTqLr+twjCmoiPrnaY2Sju6OajBGVYElpkkMjCNAoVdSNPQRulK4k3ImoEJKxyVaMwXEe3Xbt2q63+nQz8ykybx74nA+0ioVox7GMKmWBgDn2wgr/eVeX3GxZNjhJscBm4xMPuXfRt8pKoO9Ykx0VQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779391047; c=relaxed/simple;
-	bh=lPbbyOomagHhj02/g5K95xDLy3Sxc4pu5+6Av8cNJi4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bjdcFh+IEAAFboAmJN/BER7rF/R6o84+W8ypIiGHSIoF3snS8iNkrbRhHzuq5Q5j3EDROlqAK5tKYXPf1gFEMuNaS1rnAQbHAT880wfeNtzQclqH0J46xRWcBzUAykbvbeWWxfr4x9phH4zN9FuAX5awioSUmKyQtrnkKcv7ZNg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3DXW7Ue; arc=pass smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E07B1FC7
+	for <git@vger.kernel.org>; Thu, 21 May 2026 21:18:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779398315; cv=none; b=fXysYNYYbk1oFcU7UvLLhKshE37KDIQfgPtH6LImUrJ2SR+a7r3QM7ntSzmCHZmwhthLGYDH8s68kT4Q//W6oODXk8g1z+ep2zyLMF+Gb6tJA7mtYGLkNSkYlj19fo+RqYDVSSAAMxvIscVZUhpuXYRwz6ffCcLE0Cuk11/LHE0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779398315; c=relaxed/simple;
+	bh=wihn01Ri7QeuOBRvqMqjSxc2jJmhK4qoxf8xyoThx9Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CWJoSI7CmT6IHFEbpzXnzMLDQ+J8zqCj+t9L2yT9Lz0tbtgxiCKkvur78DIneFlxgrS3777fcZTMMZ1T6roQiOV8vnngl/pakdiPYNm1smPDHqaQv3Lgue+xppjKJJCgSLXQkdvUJ8kQ9w9hzpiajF8JaO7d708x32W+JrEoCNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zg+YlHzO; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3DXW7Ue"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-bd56d108454so1256874466b.2
-        for <git@vger.kernel.org>; Thu, 21 May 2026 12:17:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779391041; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VDoEgS6nU7gOQ/z2wgpwTsKDwQrJ7W4cCzltUu0QYO5h3k4I+Hfg8r1KMZQAXXjU5H
-         yx+hLHlPHU7eAt+9aEfVdiRHlivX4tnqSeDui+it8e0eiS22pj3HEuTRlCcy8ZsBzMHM
-         ZbBvqQo77VxTWVao04C/uRWscaOG4eLnWaC6+MsgQYALMYmirbD2pg34wi29CnerXlk+
-         yjWE+TMK2tpjLk63DntcIRvftkPxi3B0SgG/Eo0FXLSTMuwIRa/WSU5mK5WCoyNKRbPP
-         /IOKC9YMQevMhkSspXw4FAh1VWK7yIJAiR9251ZBUJfdGigpPaRAWlQjEFtyELWgXZ5k
-         tE2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=lPbbyOomagHhj02/g5K95xDLy3Sxc4pu5+6Av8cNJi4=;
-        fh=o3g/mmBpkwab2WBLkwfWhQL5AYY/8CdPQlkPvP7ZYK4=;
-        b=KyY3lEF2qwgfnG+xJco/2kZU19oFangIplyYPkLsie9Ifhcp4cXmPMckAlgFbKtMYU
-         H1MZYzS1dBJlk1PbJo6ZG3Sr7AyY6YucOFsuGCdveQtVXMqzoqBAdPiHZch/j+r5+d7W
-         m1UMHQbXg0bSkZ9Fc2eLEcHb3eKjl/B1qm/1+K2WA96wAH6+gL+df/AG0anCxhuEiiKI
-         GYENhpoHd8mxYFMUtTMzGDN59M7r+35sqd8bh+FJ4BIKg+LWXbeKW2ZxwsoqnDvdZ1JK
-         /5qle3odUhz4YZTvRYzqyvnOUxUQhILmJefMw98IkdfUFXx4iRPmBkSY31PigoSt9Z6s
-         J5mA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779391041; x=1779995841; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lPbbyOomagHhj02/g5K95xDLy3Sxc4pu5+6Av8cNJi4=;
-        b=k3DXW7Uem1mpte0PVPdaSQv9LZk+dfizmPxNPQG1RzPZqELt0tW71JXOzcgBHCuHPB
-         zKmncIOoAn4NnNGIasAbYT1TeTDU3aGqw31wmhSfekNo+ygLFTg054ZjujV3Wulx/M1z
-         k1hFxT/SyZtVat4KCPxfBjebXIKKnkjqomsgG8+lNM4eftUSWK7JmgqVKJAyT5rG8V3A
-         7F8Lr42+yJMeP2krD7NZrjtVg+LVkYAJBCAZSkAZ0a33mYzYKFHio/Y/LHnEP2hj5shq
-         /6/fQ4lKUftyp97AeDo70/d6tL/OCziysKOnm4b4UUtQEr8J26mV3wHWEY3Ea5NpPYwe
-         NWug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779391041; x=1779995841;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lPbbyOomagHhj02/g5K95xDLy3Sxc4pu5+6Av8cNJi4=;
-        b=KlmF1JvHoSbnnPMYE0BGreuNCDHicO89xB/zvABknP9E8J8u26izX/WaUpLQwWjQ3q
-         vxKbuTzD1Xnh47vlCQyAbOQbp3uOY40Btf9ZPgoot6knvjIEezcq0dmf3yni59+AYrus
-         Wc7uIacd9yeUEHTKShpLRjABp3aMptdQbB0y0TJd9EsJg7ywvaAL9bRwwQ8ulBmb3yrA
-         wDw6xFUaYXpqQMcv8BA7utRdiUYYOPDGDxavcw6nCrkKcHLP0GTxdonJ/GdP8HKOXfIN
-         aYZfA9nF63k4BNSPSla8d7t9/X1FzSu1hkbwHdGjNBqmL3GpcOSLQmjCvUXRdloODUgB
-         Tv7Q==
-X-Forwarded-Encrypted: i=1; AFNElJ8Qt9YcRgHbNPCQ9UZok0A6Wj/QtLqBApZpaiFQGuTW8rJajoimJpWIds3s6MYZjUtmZK8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXY7eEjNadiJ2W+iipTd6OomOwzm8Ss7lJghAv7fCca7BR13Sf
-	/ZVtNs/Fuyb0Nf7HJ2h9tg6aufB6PGTU6+OQVfvVPdmos5wdUr9AWeHa9N55PsYrd+oGyVvueXI
-	mIcMNjw7nXr5NkxQyW+vvRwRpO1ObEZk=
-X-Gm-Gg: Acq92OGYyakWjHUXokPIa6Z51rJrgp0ubSRLJYtpzcTl1axegA2PV6SjN/K+CKLpgm1
-	B1BWtdjLIY2TLaYkEG0qOtt43gf4r7tNOT6K5jqYbsKDNQr8EwsTYbrYLkBTJzGlWjrnGUgL/ho
-	Tm2zNT/s6IjdL+us3ZMIyouCXQPxOVyJWINCaPL+oqxp2m1ByAd9nmZ2dyEJ5aTn9qRfTRmBT4l
-	M3M0/XBsHVVvJQVhIp1wQ5DmzkBkrYmUqqASroW2U1mGMrJC6tzFHY+Aihlm1YqEol0Ojz8v8OX
-	AQbj8vM=
-X-Received: by 2002:a17:906:8a54:b0:bd5:2c56:71a2 with SMTP id
- a640c23a62f3a-bdd263c7cf9mr20713366b.36.1779391040789; Thu, 21 May 2026
- 12:17:20 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zg+YlHzO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1779398312;
+	bh=wihn01Ri7QeuOBRvqMqjSxc2jJmhK4qoxf8xyoThx9Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zg+YlHzO99LV3mtSPeJawQCTse30ziqkL8+jEMNPXpZ007d9Se5o1ojHPhwgN/YmU
+	 ruDOaf/lZVPaZX8zU2IDFOR9MyqZgCJn6GiIdzKhDHl5M+a/9gIydxUp0ji6tD8gwP
+	 UP6eJR2icgXQtu+M94PIru5ES9J8sj1/AEzwIIUf55L5qmtk6nTiiEof3+LQzcFJEB
+	 C9HpEKbxbH3G/CTsNNSyPxKZlx16K7FwMqoBusEjT/muVscuMmAVKCaW1xLSjtg457
+	 N9rpKM+zfmXgm6sgXF7/MFMm7mvSuNwl/ZLviHdpMBgB28LNqhVOALR2RRGq84ppdt
+	 mgEeLg92QAwG5t0rPxH3MdF0Z+nr2mCfTB9j9Qi5PqgU/Uj+iYqdaSWuP9dLeG1MMt
+	 Zar83peGFkKeFdbfH3O2bkZkX0n31EOQPrtqPGFQI4v4e+o76WNp5j++zPvLitKKC1
+	 fuZPJsnBvmHeOedMt3kg/CL9bg5S4xXGm6y7nZ6Efko2CZRwErz
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3194:a876:8e20:f33])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3614320123;
+	Thu, 21 May 2026 21:18:32 +0000 (UTC)
+Date: Thu, 21 May 2026 21:18:30 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"newren@gmail.com" <newren@gmail.com>, "ps@pks.im" <ps@pks.im>,
+	"code@khaugsbakk.name" <code@khaugsbakk.name>
+Subject: Re: [PATCH 7/9] notes: support an external command to display notes
+Message-ID: <ag92poA7U6ZefRv3@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"newren@gmail.com" <newren@gmail.com>, "ps@pks.im" <ps@pks.im>,
+	"code@khaugsbakk.name" <code@khaugsbakk.name>
+References: <cover.1779207350.git.siddh.raman.pant@oracle.com>
+ <9619077369f1a567bd505b1de1e4f672a5cd1950.1779207350.git.siddh.raman.pant@oracle.com>
+ <ag5b4O7-k-3QBR4W@fruit.crustytoothpaste.net>
+ <4086055f59eec99f94847a1b37c684a084f08e0b.camel@oracle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
- <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com> <f87e96e99d64c48bd92afecf3a6a819d36e56f6c.1778700883.git.gitgitgadget@gmail.com>
- <6501a3d5-a5ec-421b-8526-ee7d4ae5ea98@gmail.com> <f1d15d08-6fee-479f-8ed0-34efd256d8dc@gmail.com>
-In-Reply-To: <f1d15d08-6fee-479f-8ed0-34efd256d8dc@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 21 May 2026 21:16:44 +0200
-X-Gm-Features: AVHnY4JX_oAKq6xjDFR4Ng-Ww8uoCEJhL3GbjfxzlH919Z_I1dJ5ZEgTJ9x7ulM
-Message-ID: <CAHwyqnVhhwT80Ao+7QLUAsTnUJaN5vE=ZiaxeqF3rYxxiD_Qww@mail.gmail.com>
-Subject: Re: [PATCH v9 3/5] branch: add --prune-merged <remote>
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qbyzH2sQOhw08CYF"
+Content-Disposition: inline
+In-Reply-To: <4086055f59eec99f94847a1b37c684a084f08e0b.camel@oracle.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--qbyzH2sQOhw08CYF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-> While we want to clean up topic branches, we want to avoid cleaning up
-> branches like "master" which follow an upstream branch and therefore
-> look like they've been merged straight after they've been pulled. So I
-> think as well as checking that the local branch is merged into its
-> upstream branch, we want to check that the local branch is not pushed to
-> the upstream branch i.e. that branch@{upstream} !=3D branch@{push}.
+On 2026-05-21 at 04:12:41, Siddh Raman Pant wrote:
+> On Thu, May 21 2026 at 06:42:00 +0530, brian m. carlson wrote:
+> > > Assisted-by: Codex:gpt-5.5-xhigh-fast
+> >=20
+> > Just a question here: was this written in whole or in part by Codex, or
+> > was it just used as a reference to ask questions?  I ask because the
+> > style of notes-external.c differs quite a bit from the style we use (for
+> > one, the horizontal rule comments) and we have this in
+>=20
+> AI tools typically don't generate comments in code like in this series,
+> you can see by trying out for yourself. Each comment is hand-written by
+> me. Sorry, I'll remove those lines in v2 after this discussion.
 
-This one I handle already by letting the default branch be guarded.
+I've actually seen AI tools do things very similar to what you've
+written.
 
+> > SubmittingPatches:
+> >=20
+> >     The Developer's Certificate of Origin requires contributors to cert=
+ify
+> >     that they know the origin of their contributions to the project and
+> >     that they have the right to submit it under the project's license.
+> >     It's not yet clear that this can be legally satisfied when submitti=
+ng
+> >     significant amount of content that has been generated by AI tools.
+> >=20
+> >     [...]
+> >=20
+> >     To avoid these issues, we will reject anything that looks AI
+> >     generated, that sounds overly formal or bloated, that looks like AI
+> >     slop, that looks good on the surface but makes no sense, or that
+> >     senders don=E2=80=99t understand or cannot explain.
+>=20
+> Please tell me why this change is a slop and doesn't make sense.
 
-Harald
+I didn't say this was slop and didn't make sense.  I quoted the portion
+that says that we don't accept anything AI generated, including for
+license reasons.  There's still very little clarity about whether AI
+code is a derivative work of the training set or whether it can be
+copyrightable at all, very especially on a worldwide basis.  We don't
+want to end up with a legal or license problem that the DCO was intended
+to solve.
 
-On Thu, May 21, 2026 at 11:46=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> Hi Harald
->
-> A couple more thoughts ...
->
-> On 18/05/2026 16:27, Phillip Wood wrote:
-> > On 13/05/2026 20:34, Harald Nordgren via GitGitGadget wrote:
-> >> From: Harald Nordgren <haraldnordgren@gmail.com>
-> >>
-> >> Delete the local branches that --forked <remote> would list, but
-> >> only those whose tip is reachable from their configured upstream
-> >> remote-tracking branch (branch.<name>.merge): the work has already
-> >> landed on the upstream it tracks, so the local copy is no longer
-> >> needed.
->
-> While we want to clean up topic branches, we want to avoid cleaning up
-> branches like "master" which follow an upstream branch and therefore
-> look like they've been merged straight after they've been pulled. So I
-> think as well as checking that the local branch is merged into its
-> upstream branch, we want to check that the local branch is not pushed to
-> the upstream branch i.e. that branch@{upstream} !=3D branch@{push}. That
-> should also avoid deleting newly created topic branches that match their
-> upstream (I think that's probably less likely to happen in practice as
-> I'd expect the branch to be checked out and therefore protected against
-> deletion).
->
-> Also as this is a destructive operation (there is no way to restore a
-> deleted branch and its reflog) it would be good to have a --dry-run optio=
-n.
->
-> Thanks
->
-> Phillip
->
+> If I wanted to mislead here, I would not have used the "Assisted-by"
+> trailer, which is now being used in kernel land:
+>=20
+> https://www.kernel.org/doc/html/latest/process/submitting-patches.html#us=
+ing-assisted-by
+
+The kernel and Git do different things.  Linux generally allows AI and
+we generally restrict its use quite heavily.  Linux tries to never break
+dependent projects and we don't have that policy.
+
+I appreciate the header being included and agree that it should be, but
+it's important we ask questions about the provenance of the code when AI
+is used because many people do not read SubmittingPatches (or
+contributing documentation in general).
+
+> > I'll note that it also has a lot of global variables, which are common
+> > in the codebase but we're trying to move away from,=C2=A0
+>=20
+> Is there a new facility to store the config without a global variable?
+>=20
+> If the issue is the number, I can make a housing struct if you want.
+
+We'd typically use repo_config_get_string or such to fetch the
+configuration these days.  If you don't want to fetch it multiple times,
+we'd generally read all the config and put it in a struct that we'd
+initialize with a function at a suitable time.
+
+There's effort to avoid the global variables because they don't work
+well in libraries and we want to allow libgit.a to be used more
+generally.  In addition, Rust considers static mutable variables to be
+unsafe, so as we add more Rust, we'll need to minimize the use of any
+globals.
+
+> I added comments to explain the code clearly as it's being followed,
+> especially since this is a new feature and I wanted the intent to be
+> clear.
+>=20
+> If you could tell me which comments to remove, that would be great.
+
+I don't think it's necessarily a problem to have the comments, but it is
+uncommon in our codebase, which is what drew my attention.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--qbyzH2sQOhw08CYF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmoPdqYJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZwUp9kjtw828lMAG4xtj/GONhKgKkurCd8nIvkItzaDB
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAGyXAP0cI+LCH50ceUF8KnwbMJbbmD/P
+dl3C+J/1E+FHNTI+IwEA6j0l4GqND2lZdDbYB7bd0UmORNMefWl2Pb12IjL2Ww4=
+=DHax
+-----END PGP SIGNATURE-----
+
+--qbyzH2sQOhw08CYF--
