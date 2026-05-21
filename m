@@ -1,94 +1,142 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE76379C4E
-	for <git@vger.kernel.org>; Thu, 21 May 2026 16:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F28368D4D
+	for <git@vger.kernel.org>; Thu, 21 May 2026 16:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779381465; cv=none; b=ng5HH2lTRfcl+dIUZUKzGz7cg61HZ08ikzwkUHgZJi9OKUc65GENYC9V1VK0EB0IC7upUm+Qk8UfEyKDjT5c5nP8D5nDdaMovIEnyJ4sagOn1HygvoxHdaDA+eLB6yRjYOlloKcy5qq217QLBzsrRAsUMdtSrl7APUQ7VVnH94M=
+	t=1779382169; cv=none; b=FmgDzt63rSvATZ9vGF2laGFHNEDGrCtqG/BvYo1HhOhGEzWaO1ArFWIV+C9/TI1XE+3Ky2E7uIJ+qaMOB8vKeQ0oFYu4aE93BMKdx4/JPRb8rM4Wv497fzjR+cCXQB6wHQlpHTGh6fIX8Wu54hLM34tLCI20FH53aicm6oUBQg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779381465; c=relaxed/simple;
-	bh=inKHx/J1+/S3Hh9kmCzeLj6ppIiXj+gcaSXk/XZBXpk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iitH4yeAAVGL7awfWBmwtW4iZ8DrVZrcmpYPZwmJvYwHQoV8FKVizzp0zbG8oqmtgG0scFABOLhsec/cqCoC2ekatBEC+pkUCoyekKxvTLJkCo5dkA3FQQe4XTaFzuUPFo2u0ml0ZYmoYpzydRTdvjwyxwgLmpjeShwGtCaLhVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=ZG4aG1iv; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=hSwooukM; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1779382169; c=relaxed/simple;
+	bh=rmEM9vc1ULilZ7TieA+WpiqPjJ1o7NMRqluqjHN/xcI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=njAnwVcDNvImOGS0FhmlfyoLl3PFU6WxkbelM4BfdNUxkh1JDPEZZJNX2pg88jIniaESkB29PB2Gpx9Z1lrsvDEyHPiy7kF99wYJgmopiHaexta/6PO2mKbuOXRtZrwqRb5zFsMWyvf/Wyw6uqVxfmtMgtkS3R6kGyZZ+10jjHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wNyd3E8m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e5gEOCEW; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="ZG4aG1iv";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="hSwooukM"
-DKIM-Signature: a=rsa-sha256; b=ZG4aG1ivnEG7RnIcARS6miyn/gXZ/d0mHOleA3ZPPlBZsJcHn3PpcxLxTe31SzTDVfmmzA8t+Su1HqVDuol5NGAkM+heUbOphzMpOP0REN2kuvn2RLucAFE7l72iEW3qLs4NEbfQy6N6XfLCHiKXqpVn7IH6+OlgSUQdshZ19swaQj4oTYandm4p3DIWbCIQw6EKOWQ3Czh+757DtRBKezIVORA9lFJfmvdpWJITyZxnjQQS364yM+pvMz6mVTHQaaMUsx29WJDZ1N1NrT9HT80HJBqqIQ/muZXYoksi4i6zORzuRkJpEJkOtbYuamQfcGY1Bfh1R6NvOkNt/+VKZQ==; s=purelymail3; d=malon.dev; v=1; bh=inKHx/J1+/S3Hh9kmCzeLj6ppIiXj+gcaSXk/XZBXpk=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=hSwooukMToqjgXFD0ff+ht13rfW2HPu77fD1xkipWkFOcJJSpkvqzwX+uhH6YC/yG5hIyabpXz/E3cfvsyoH5/vSe8TVrMUHUHtZTGSga3V7+d92XwLawzWIdEJVqM2+Dga+AG1gRAmahkthPiuLUaPK+TPoPhhnB/DwA3w9oQmVLuJ0XwGdOxboui7j6n0yJZwUD/JOJU29odLK8qImNLPGjr/Vw77FwoWiItBq37eFda4p7FvuS7nN93kXIOx7r0OGVd5WlI0AxqmyvWM2gHRsnDCjbRw7AwFEy2YyejW4k5iYFPq7xgT4tKii9gxKz0VlUeFdTRUX7PC7AiM5Bw==; s=purelymail3; d=purelymail.com; v=1; bh=inKHx/J1+/S3Hh9kmCzeLj6ppIiXj+gcaSXk/XZBXpk=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1535445548;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Thu, 21 May 2026 16:37:34 +0000 (UTC)
-Message-ID: <08efcc49-0db8-49f6-8971-633aa55eb66c@malon.dev>
-Date: Fri, 22 May 2026 00:37:29 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wNyd3E8m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e5gEOCEW"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id CF20D1D0008F;
+	Thu, 21 May 2026 12:49:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 12:49:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779382166; x=1779468566; bh=lDFAi5XhQR
+	R+iLio90EKfPdyvqumuN3/1WBjSQoc6O8=; b=wNyd3E8mFFneztwjH+wfqAE10z
+	kCIqnZh3aBHzAdQuQkN7de86I8bz7/h9h94TNQZSltsSuWprMIYQ1ETL9n1JX9cS
+	SblnNSiQ6GfU+9MUxNYLEF5UefhTCEjTwsCKhuDYzW0R50mxR+xyFTVxp1Sml6OT
+	EFwchQjGh3ImHzhx3id480WF/7V+zgk/ldZtxZ+cuMK8qWN6h8CJ1srVNWKDDy2O
+	24M7cjEMo/gbYAPKGU4CcJ1AUlyDtAPFW6o7cO5R0FZK0UeWgqz7+aXreV+eENXk
+	fXASKGMQIutj1Cwou7eS2vqmvzr1+Gfd2fgcs/VY0Z/wdFNWoK1/gEVde1Qg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779382166; x=1779468566; bh=lDFAi5XhQRR+iLio90EKfPdyvqumuN3/1WB
+	jSQoc6O8=; b=e5gEOCEW95EmsvOXWza0O8X5IHdXIgfuV8TJ6+IiBWjNicpBaon
+	QrOm6OLUGt4mQk0eo6z/oi5weVygjIWOdYfiP4ivjc5bm6be51NeAYfte+UD8C1j
+	r59X3gPqyUo1z0brn95BRbcJJlLmi48UGUsDYVVurCoK1Oi7axxVnKliA3Mr7bgi
+	O59A1se9hQQE07hC6+Nj4aE7rk58GTScbNKgfai2tfz6kPnlMaK73w2jCcnmIKzW
+	+9bny9nzo68H8oaTRz8BUzXvHin604lfX6Rv0jFEfyntphZ04gWOzvb2P1qcRqSQ
+	XC4gofXOIezgSfGQyfQV2IjOkRtjywCf+qg==
+X-ME-Sender: <xms:ljcParobxZ2Um7j9ptEzHifxnb2xFPPv5YmQEgqt6m9EDoTxaDutdQ>
+    <xme:ljcPatHhH9HJVXVyXT4qmGm-L9YAoLg4CMiEJLTAEk1lWCWN24Cwvmntwyp2xWQr5
+    eKVGPejINCHTRdiCHehZBITkR2fKcbkHxa-bZIqMrWTsGGaS_j8XE8>
+X-ME-Received: <xmr:ljcPaln0nk7h24oBnwSi9e-KvBkWDTkmNthnCpih7lrwFMyTWmLKLrjH08_9O5yx-37i9sr-RyGC2q3JPTUoQgaW5WDF31lU7A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeektdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:ljcPaomDDKIm1umxsjEO7aCTsS8OycMhDzYxel-kJmSsygB3RWrnsA>
+    <xmx:ljcPauuSLrjpYtmFCLFCCe2Cqrdsc1gn0xUQDrHRXuXBxmUSFb3wAw>
+    <xmx:ljcPajkxCYkdm0K4MT39u2Z4cBatk_ounB6Vcs6b9U-AMRLB4R-Gug>
+    <xmx:ljcPahs1gteojvW0ldk5m3SgVsLSFMyIZ8gJrDa7LrNalqTKG5JK3g>
+    <xmx:ljcPalOMbXsVcZxpN79lAeMxkGYXlxVK2aQrE1KwfeMyVC1uR6NaQH8V>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 May 2026 12:49:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/8] t0001: plug test gaps for git-init(1) with
+ GIT_OBJECT_DIRECTORY
+In-Reply-To: <20260521-b4-pks-setup-centralize-odb-creation-v1-1-f130d2a7e8ae@pks.im>
+	(Patrick Steinhardt's message of "Thu, 21 May 2026 09:42:28 +0200")
+References: <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
+	<20260521-b4-pks-setup-centralize-odb-creation-v1-1-f130d2a7e8ae@pks.im>
+Date: Fri, 22 May 2026 01:49:24 +0900
+Message-ID: <xmqqcxyozp0r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] environment: move "trust_ctime" into `struct
- repo_config_values`
-Content-Language: en-US
-To: Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org
-Cc: phillip.wood123@gmail.com, gitster@pobox.com, christian.couder@gmail.com,
- usmanakinyemi202@gmail.com, kaartic.sivaraam@gmail.com, me@ttaylorr.com
-References: <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
- <20260423165432.143598-1-belkid98@gmail.com>
- <20260423165432.143598-2-belkid98@gmail.com>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <20260423165432.143598-2-belkid98@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain
 
-Hi Bello!
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 4/24/26 00:54, Olamide Caleb Bello wrote:
+> In subsequent commits we'll rework how we set up the repository. This is
+> a somewhat intricate and thus fragile sequence, there's many things that
+> can go subtly wrong, and there are lots of interesting interactions that
+> one can discover.
+>
+> One such discovered edge case was the interaction between git-init(1)
+> and the "GIT_OBJECT_DIRECTORY" enviroment variable. When set, the
 
-The code itself looks great to me, but I have some reservations about=20
-the description here (in terms of why trust_ctime is eagerly parsed):
+"environment"???
 
- > `core.trustctime` is parsed eagerly
- > because it is used in low=E2=80=91level stat=E2=80=91matching functions
- > (`match_stat_data()`), where a lazy parse could cause unexpected
- > fatal errors and complicate libification efforts.
+> behaviour is that the object directory should be created at the path
+> that the variable points to. This behaviour is documented as such in
+> its man page:
+>
+>   If the object storage directory is specified via the
+>   GIT_OBJECT_DIRECTORY environment variable then the sha1 directories
+>   are created underneath; otherwise, the default $GIT_DIR/objects
+>   directory is used.
+>
+> Curiously enough though we don't seem to have any tests that exercise
+> this directly, and thus a subsequent commit inadvertently broke this
+> expectation.
+>
+> Plug this test gap.
 
-It's true that if we use repo_config_get_bool() to parse trust_ctime,=20
-following the call stack downwards, there is a die() call. The terminate=20
-condition is that the configuration does not exist or contains invalid=20
-characters.
+Nice.
 
-But I think there is another factor: match_stat_data() is called on a=20
-hot path. The following code is implemented in read-cache.c,=20
-refresh_index() function:
-
-=09for (i =3D 0; i < istate->cache_nr; i++) {
-=09=09...
-=09=09new_entry =3D refresh_cache_ent(istate, ce, options,
-=09=09=09=09=09      &cache_errno, &changed,
-=09=09=09=09=09      &t2_did_lstat, &t2_did_scan);
-=09=09t2_sum_lstat +=3D t2_did_lstat;
-=09=09t2_sum_scan +=3D t2_did_scan;
-=09=09if (new_entry =3D=3D ce)
-=09=09...
-
-The call chain: refresh_index() -> refresh_cache_ent() ->=20
-ie_match_stat() -> ce_match_stat_basic() -> *match_stat_data()*
-
-Therefore, if the variable is lazily parsed, this means there will be a=20
-performance regression whenever the index status needs to be checked,=20
-e.g. 'git status'.
-
-So, I guess it would be better to extend a bit:
-
-'...where a lazy parse could cause unexpected fatal, and result in a=20
-performance regression...'
-
-Thanks, yuchen
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t0001-init.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index e4d32bb4d2..e89feca544 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -980,4 +980,14 @@ test_expect_success 're-init reads matching includeIf.onbranch' '
+>  	test_cmp expect err
+>  '
+>  
+> +test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
+> +	test_when_finished "rm -rf init-objdir custom-odb" &&
+> +	mkdir custom-odb &&
+> +	env GIT_OBJECT_DIRECTORY="$(pwd)/custom-odb" \
+> +		git init init-objdir &&
+> +	test_path_is_missing init-objdir/.git/objects/pack &&
+> +	test_path_is_dir custom-odb/pack &&
+> +	test_path_is_dir custom-odb/info
+> +'
+> +
+>  test_done
