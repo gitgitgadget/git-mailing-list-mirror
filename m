@@ -1,207 +1,111 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BF93B1016
-	for <git@vger.kernel.org>; Thu, 21 May 2026 10:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3DD3C3792
+	for <git@vger.kernel.org>; Thu, 21 May 2026 11:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779360882; cv=none; b=VWwMAdDnWuSK7pceKJe9439g+/ZQh/HKVi3Bx8Bf2jgIUbi5KrGItxif3LB2dRyWKil+7XDavKRlguDBgq/jTxvfN3MU/g/Ded5aizcsIUAGFu15TCm9MiggDnEJwMcksTerwpiP80+e5ZYm+mMUNMYoRSjUpaKXwcjsn2XZPr0=
+	t=1779363592; cv=none; b=FQgbzEG2vTk2vGx2enu6vQekKVBqdtTAdKn9zRv/IFWluWOJb+zkngLqhj35vrX7xa9+ubqnL0UeRSExCiAKB0xdu5jnChL28QrrqyWMnnHy02zU30aVBAEiHxlqN31eUP7fncfrWXRpmQoc9TAp/uZYGd1o0/8EYsfzoYrR0tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779360882; c=relaxed/simple;
-	bh=n1m+EjCGyhRlOz+P3eSe4WVyIKORMkaz9LfcGRGnwuM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N/Y9Va9G2xoR7s4P8yWctCPzAX+GjjG4ueLIHZxz++zt07BBCgaALsBfiHhwdfmGNnyhyy+4epHYxyI7nfYPVFaUsTm4TqZxCxI8UtoBnc07bbm+H9ZpEBIgyh8wrfUIw9ZI+g/mtGySLD+o+YcgW9x1FOyEduhOaemob9Y9pns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=JwbVtKFR; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1779363592; c=relaxed/simple;
+	bh=UZbg/rY0rj2cEVMPm3pYhJ0Nhm+c0zvdAkkGORZQE+w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZRYRSgq0ERxtXaFC/LkKT3rRj+bM+9Dn553dyzBLh4ciGxpx0NMH6IcQOhosv4huSYW4XuNnK4VBmSLePkkvh6zP7MPaQhLrGyYCKRRC6oRgkgS9sNyd/Xrgc4cvrE4qhTO3e57tPglyCmCmqne1E3EjsIi3cSuBaPyVfpB3MTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f1RZsMIW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m5kEPiLN; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="JwbVtKFR"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 64LAsJE6003518-64LAsJE8003518
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 21 May 2026 13:54:20 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wQ12h-003RdA-OG;
-	Thu, 21 May 2026 13:54:19 +0300
-Received: from localhost (130.232.143.226) by ex19-06.utu.fi (130.232.247.46)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 21 May
- 2026 13:54:19 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id da19aa5e;
-	Thu, 21 May 2026 10:54:19 +0000 (UTC)
-From: Tuomas Ahola <taahol@utu.fi>
-To: <git@vger.kernel.org>
-CC: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, Tuomas
- Ahola <taahol@utu.fi>
-Subject: [PATCH v5 1/4] approxidate: make "today" wrap to midnight
-Date: Thu, 21 May 2026 13:54:05 +0300
-Message-ID: <20260521105408.8222-2-taahol@utu.fi>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260521105408.8222-1-taahol@utu.fi>
-References: <20260516151540.9611-1-taahol@utu.fi>
- <20260521105408.8222-1-taahol@utu.fi>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f1RZsMIW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m5kEPiLN"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5D92A14000E6;
+	Thu, 21 May 2026 07:39:47 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 07:39:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1779363587; x=1779449987; bh=lA4ERLiOVC
+	K03QFlpGH7aZSou1HYaS4ZdECw6hw9JK0=; b=f1RZsMIWahExGWHMteR5eVAFEI
+	6b8zjT/bIFifdfRWUtrqkIlsajH/PdERrR5WxpmEi4/DwVZ37aq/9QxFIZNK5uyG
+	nX7hUv8qElWUPfUz2ULFKkbJ/h+uJnqlUNQCaDa5hkhteumVHxxza8ddNdIhadOz
+	jjClxej9+9/tBd3n7lkLRg8LWTT82Bv5hbEBpzBBeLtVMTVadEq0eu2Lc9gWsfSX
+	ludg74uR0xLg9phg9AU3eNfvZt2UoYDcr8P79MmaE7wR1T3lYXZEhOGAExPG8UxW
+	y7/IfdKdlswvybXf8Mwu+rBUwggzQRQOkP8b+GE4bd4mRsrEk/gWeCwQm0BQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779363587; x=1779449987; bh=lA4ERLiOVCK03QFlpGH7aZSou1HYaS4ZdEC
+	w6hw9JK0=; b=m5kEPiLN7YlwvCJ7Xd1CE/IkJrRjsaXpz4xmwuBUVLjGp5T25n3
+	2lFRRyRqq3/rX5HcnxS/ogT02zqHDY48OvV2clpog41P6kN0HVBg3IfOJCas4wM6
+	lZKlbyCpYvRNnRlKfs0XE4kr/cZucjYfMtVE+Xmg/wYDvgY6+rT9Rq6s2JLb1prS
+	wBNiLPOcR2iQy0GjRmInJMQx6qnckh1qyz8SwcWGM02Gb49z65jSPDD817QUvvvx
+	V6J5gzSRXvRK0zUa99i5KA8tLY1SlcinIsaMna9CNgWKTExq+E5WLNEDEDQLozpH
+	2zZkG8VaYg95vc4D+joAPFj36RhE27NkBVA==
+X-ME-Sender: <xms:A-8Oal32FEUehXvY88-UfMXOAf1370B-f-kFzkWu1OlyKrzfh8czKg>
+    <xme:A-8Oajhr0rQrkqAZP3AYLrGDr1jBUz05Ytj59QkN7OP8FUOFaDzZsEkQjpMNFrcce
+    iLNs6GjRyYAqgV7mppFNS-pFUIw6ItP9cfnIUDeD2zKbosBFbC2og>
+X-ME-Received: <xmr:A-8OajT_CaYGT9YFhkrFjodLlK76Jzu58rhW-KL7QsZc0cdlqMSqxPe32jVsCEvzLmvUWQZqqpcujpsvvbfi45ZuZ2TpKgjL22TH0IeCp7s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejgeduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:A-8OasjkRPLxsFC4Jixa9NDJEtz-icnTSP7e7XHqZAgaMluJTjI-Mw>
+    <xmx:A-8Oar6Uos-7pFQTagTyhw9FnPK4hndzEngrjN6JS5-vu2nGtOoW4Q>
+    <xmx:A-8OahCKlWfjUKyVU7lZ0YRwwc3_WVKhYnD97R-vAWzrCbMFDEkcmg>
+    <xmx:A-8OaqYySQnVFNcNkmO_H26oQcc9He2C1gy4U9OyXTO5DxD4rRjKOw>
+    <xmx:A-8OaoTWdzyB5lMGOkNNjn2RX_QqBHn0t5nlu4ibqDE1v4QNOI8wHXNa>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 May 2026 07:39:46 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 85382622 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 May 2026 11:39:43 +0000 (UTC)
+Date: Thu, 21 May 2026 13:39:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] small quote.[ch] cleanup
+Message-ID: <ag7u-LkIyYvnhtfX@pks.im>
+References: <20260519011837.GA1615637@coredump.intra.peff.net>
+ <xmqqjyt084sn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-11.utu.fi (130.232.247.51) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIW0hYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhZW0gYDQ4OKBgNDg5GBg0cSFg=
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
- bh=iPJRtybD61SmTRHxGlRhzf+uxmQvjj1yv9qoxFFrqH0=;
- b=JwbVtKFR0tzxBHunfn4X/l6RX4IDG528x2rgn+p0iBFCZDHJwxKQRWbqfkeICsuzrtzuiCasl4Yz
-	E+BiQvJW/dAh64utohgYVO9RffaUf7btCJlFCmyV1w216iJFTvLb1treFrOe8iB7IilWoMBE86YI
-	8dvWepzfjIynXi3ak/X0OGRzYKAeU21zp5SBX6NzGY/SWum1mg9Rk72ZQ2xzNuEuC91GyY9RQlIV
-	GqqHODbCchA2PR+ulmDOk6kVIBff6TPiLe5d73SUBzOWsthhN5PH3pAxFlB7S/KbsJEk6lDeXNZK
-	yPf3/ZJ1BSu1uw9Mt9wDTfT9ePFXw3F4lqOrFg==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqjyt084sn.fsf@gitster.g>
 
-Although some commands do reject invalid approxidate expressions,
-in other cases those are simply evaluated as the current time.
-Oftentimes that is a perfectly good compromise to handle silly
-requests, but it isn't without rough edges.
+On Tue, May 19, 2026 at 12:19:20PM +0900, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > I noticed some unused code while looking at an unrelated topic. So
+> > here's a small cleanup.
+> >
+> >   [1/3]: quote.h: bump strvec forward declaration to the top
+> >   [2/3]: quote: drop sq_dequote_to_argv()
+> >   [3/3]: quote: simplify internals of dequoting
+> >
+> >  quote.c | 21 ++-------------------
+> >  quote.h | 14 ++++----------
+> >  2 files changed, 6 insertions(+), 29 deletions(-)
+> >
+> > -Peff
+> 
+> These were very straight-forward and pleasant to read.  Queued.
+> Thanks.
 
-Because of the silent acceptance, it is easy to forget that
-"today" isn't actually a valid approxidate format.  That is
-a bit awkward because while the fallback logic of using the
-current time does make some sense, there is no deliberative
-decision behind such behavior of "today".  Indeed, whatever
-(non-)action "today" currently has, is just an accidental
-side effect.
+Indeed, all of these steps make sense to me. Thanks!
 
-That means "git log --since=today" is currently unlikely to
-print anything at all as it tries to list commits dated with
-*future* timestamps.  Arguably it would be more useful to
-list the commits of the current day---i.e. those made since
-midnight.
-
-On the other hand, "git log --until=today" doesn't really
-filter commits at all.  Changing the definition of "today"
-would make it return the commits made before the current day.
-That isn't without problems though---running "git log
---until=today" in the late afternoon could reasonably include
-the work done earlier that day (as the command currently
-does do).
-
-Still the utility of no-op "--until=today" is debatable and
-perhaps outweighed by the pros of having "--since=today" to
-mean "--since=midnight".  The thing is that the approxidate
-machinery doesn't know about its consumers, so the meaning
-of "today" has to be the same for "--since" and "--until".
-
-In fact, "git log --until=" is documented as
-
-	`--until=<date>`::
-	`--before=<date>`::
-		Show commits older than _<date>_,
-
-so excluding commits made today would actually match the
-documentation more closely.
-
-Moreover, a revision parameter "@{today}" is currently outright
-rejected.  Making "today" a valid approxidate time format could
-make a natural way to specify the state of the ref at the start
-of the current day.
-
-Bind "today" to new function `date_today()` as an approxidate
-special.  Make it return the last midnight if no specific time
-is given; i.e. retain the old behavior of "noon today" and such.
-
-Document the new behavior of "git log --since=today" in
-rev-list-options.adoc.
-
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
----
-
-Notes:
-    v4->v5: Add the usual `*num = 0` dance and a test to clarify why it's useful.
-
- Documentation/rev-list-options.adoc |  3 ++-
- date.c                              | 11 +++++++++++
- t/t0006-date.sh                     |  3 +++
- 3 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/rev-list-options.adoc b/Documentation/rev-list-options.adoc
-index 2d195a1474..a5abadf689 100644
---- a/Documentation/rev-list-options.adoc
-+++ b/Documentation/rev-list-options.adoc
-@@ -23,7 +23,8 @@ ordering and formatting options, such as `--reverse`.
- 
- `--since=<date>`::
- `--after=<date>`::
--	Show commits more recent than _<date>_.
-+	Show commits more recent than _<date>_.  As a special case,
-+	'today' means the last midnight.
- 
- `--since-as-filter=<date>`::
- 	Show all commits more recent than _<date>_. This visits
-diff --git a/date.c b/date.c
-index 17a95077cf..633d1176fe 100644
---- a/date.c
-+++ b/date.c
-@@ -1192,6 +1192,16 @@ static void date_never(struct tm *tm, struct tm *now UNUSED, int *num)
- 	*num = 0;
- }
- 
-+static void date_today(struct tm *tm, struct tm *now, int *num)
-+{
-+	if (tm->tm_hour == now->tm_hour &&
-+	    tm->tm_min == now->tm_min &&
-+	    tm->tm_sec == now->tm_sec)
-+		date_time(tm, now, 0);
-+	*num = 0;
-+	update_tm(tm, now, 0);
-+}
-+
- static const struct special {
- 	const char *name;
- 	void (*fn)(struct tm *, struct tm *, int *);
-@@ -1204,6 +1214,7 @@ static const struct special {
- 	{ "AM", date_am },
- 	{ "never", date_never },
- 	{ "now", date_now },
-+	{ "today", date_today },
- 	{ NULL }
- };
- 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 53ced36df4..d95afdda33 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -164,6 +164,7 @@ check_approxidate() {
- }
- 
- check_approxidate now '2009-08-30 19:20:00'
-+check_approxidate today '2009-08-30 00:00:00'
- check_approxidate '5 seconds ago' '2009-08-30 19:19:55'
- check_approxidate 5.seconds.ago '2009-08-30 19:19:55'
- check_approxidate 10.minutes.ago '2009-08-30 19:10:00'
-@@ -181,12 +182,14 @@ check_approxidate '15:00' '2009-08-30 15:00:00'
- check_approxidate 'noon today' '2009-08-30 12:00:00'
- check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
- check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
-+check_approxidate 'January 5th today pm' '2009-01-30 12:00:00'
- check_approxidate '10am noon' '2009-08-29 12:00:00'
- 
- check_approxidate 'last tuesday' '2009-08-25 19:20:00'
- check_approxidate 'July 5th' '2009-07-05 19:20:00'
- check_approxidate '06/05/2009' '2009-06-05 19:20:00'
- check_approxidate '06.05.2009' '2009-05-06 19:20:00'
-+check_approxidate 'Jan 5 today' '2009-01-30 00:00:00'
- 
- check_approxidate 'Jun 6, 5AM' '2009-06-06 05:00:00'
- check_approxidate '5AM Jun 6' '2009-06-06 05:00:00'
--- 
-2.30.2
-
+Patrick
