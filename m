@@ -1,296 +1,118 @@
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9AE2D3A75
-	for <git@vger.kernel.org>; Thu, 21 May 2026 13:45:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103003176E4
+	for <git@vger.kernel.org>; Thu, 21 May 2026 14:00:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779371115; cv=none; b=fNaqRZELqD6WBrX+249Ro7Nu9atZ/I7S5ow5J4R8Zx5EAN2fM1YC33/2OsiGeXflS54xuoTh6byhWdLUATCh3LC1FwH9BVyq26yAlBjB60hlVGKaCRpMfblgs64BwMK9LTebKd5LqpIUtEMRIM6SVHcx/UdNEMzgoqPhJ3ofS7I=
+	t=1779372051; cv=none; b=DStvrp7/ZtK9wEZwtWOUNYNxt2cbXOxkf+qoCU0p0EYztmC+zwE24uyV7JfRElpdRvNJXgwiXBo9HHbFMKkM7oEJwVo6Bg+NAVP/Uk6Fowq6uO4MYVnNflz/z6VaPQRgTZcLzfDI+MV4N1KP0ol8Q+ZI9xGRr2Z3Cnp42vvlx3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779371115; c=relaxed/simple;
-	bh=p4KjZSskMlEvQjSktNrVnCTtrJAxFXVdfaXpIYZzodM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=PBf+qekuNWpuVPj04n3DrkTZMFjsxTvzWPpuP75KLrmdFmlnJlTl5ghplGouo06b5EyMk7T2IgWCWC+TNEzDi/GJF1AU5n7x7J1wBq46+X7WMpdsVNeNUR2ZOcF32fPr46Lm/k8b3/iEO8Evo5Ijr6GGPND4A6eyPDzWV1zRCGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f/CeyKeQ; arc=none smtp.client-ip=74.125.82.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779372051; c=relaxed/simple;
+	bh=NOxmv9K7BtZBIX0s3tdoaFRsglGpolADQZZhvpFUOZc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=poP7XxFeCP36B8pKFsDru6VGQCTzs7d10kofII6I4ahVrRPv/jLwI4H+yEBP2yE3PdVnDllDYmy5D82qqCtOrFtXbrLn9zFuIPgLLU6o6JHOWetLraB2eo+oYojsz7v280Ant9GRZfa7fAmtKpS2/OU/A7GWHdM1CyF2LCx++zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JGEQ4VFv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o2+UOOGh; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/CeyKeQ"
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-13621cca8f5so2118609c88.0
-        for <git@vger.kernel.org>; Thu, 21 May 2026 06:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779371112; x=1779975912; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xqDCiwFH+qxQ5Ihn9K2ilFJGF2K/U4lvnMnB2ulIGxY=;
-        b=f/CeyKeQAdUwWItfaAh2Y6KYYZ77Czbb9krmczvkW5DbhtnW1wVqxNdBgqcDrLmKp+
-         1VwjqEWHqkR+S4/n7+WJKqigI/rOQp5zBxnZA7wT9OgxFbbRgDhk9Tpg5Q8ua7QE/MfY
-         50WCrWXauMhlvVLJJJ+KL6FAIeten97UFYDZC2yPmSlmXTGEWDkPFR8Z2tg1hcXLhv+i
-         FaaTw385DiNohNSYtqpUxvrfc29sg16XhdfDPHZMxrrdR9VwYatpgJYlMsQfJ2EEm7Jb
-         ezaxZVq4Fi5Nfs5Mii1laAkBXHM+wiFABMMaSnlvjs8KLG19RMBO3Be3e7XotXRlqenz
-         1WvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779371112; x=1779975912;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xqDCiwFH+qxQ5Ihn9K2ilFJGF2K/U4lvnMnB2ulIGxY=;
-        b=ERIF++HvgzApKe1wipTIYmbRiR3QWvoeFagSeCoiM7P2Da5v5WwF/qYa+Y2AwGKOpo
-         uhvUhgVUPXk26cca20OAkTgcKrRfiMvnj9fQMDHv/AC4ZKZN8h7TA5umVMuhFCIPYu5H
-         3y5LH+b0KdI5Vrie+/pM2isGDnd9J7z/j2aL/amU0PM+3V8IlOOty3zA0zSBmMX6MXDK
-         VcvzweYpLpX97lz3/MGJSD4KMnN6g0HrFdvG7LYTV47hsjqsnpxBTyqSkB+1FuVfYRMx
-         uy9ynF0lsMy1G2GnHMHhNG5XgaYy59Dn6umJNkP+zfTk+EgqWvVCmahhrlOCxogGt79X
-         2ZcA==
-X-Gm-Message-State: AOJu0Yz07f0C5GkVT9kZsub1UPvgt+bNx2j9Z3oYrsP4Dr9pVQrjtk4R
-	vQmbcXVGtRuladjsSVs50fM0qYAeSlq8f3LYS+/gWCFZUOtAaYrihR1yqtx4bg==
-X-Gm-Gg: Acq92OHa2DB9VJ3dtYMQkhocICGVDYDCD1w9jqApn5i4ZOXv9Mi8OS+8CKhE7GgXylC
-	29+6JvnQrWP4fFgATmM4o9a9hDxRUiWgdkPI+UcI1xY7pjQPhaCWvuJBpthpGtculvuvnxrzCrX
-	8qnNQFTTiFPCiLOmZ1kegu+LsW+MjkUmWl2LP2EXEUl+awtyPyLA0dsvXTLw/PyOlsgTX4x6uJh
-	Kf4h+LlnjS7afrraIunTjeHRGPTzrUzhIlk9+/4Ow+LevGOcmsWIaRjRL3rgYS08z23BPtiJ7Uy
-	JboUx+1+rAtjSYFP3jgae1tdGDPQcKT0M2M/ZTAc/06r7JMbXXy9ZmQP47Z1OvGs6aDEsmOSUXm
-	FOuYJSWriAPSxpUSEdyLIKjAz5eub5JIsxLcmC8Ck/aj6Hw+orMpeqqTA0+zxQxpgb3wLadqYQm
-	MbinFR8GjdOwltC5oyiTYr4/UeCKY=
-X-Received: by 2002:a05:7022:69d:b0:133:54fb:7241 with SMTP id a92af1059eb24-136322777famr1495448c88.0.1779371111931;
-        Thu, 21 May 2026 06:45:11 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.226.241])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1365232eec1sm226773c88.3.2026.05.21.06.45.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2026 06:45:11 -0700 (PDT)
-Message-Id: <pull.2108.v3.git.1779371110195.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2108.v2.git.1779280307112.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JGEQ4VFv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o2+UOOGh"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD6017A013F;
+	Thu, 21 May 2026 10:00:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 21 May 2026 10:00:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779372048; x=1779458448; bh=rgvtrQNOWG
+	garLaJkDiVYIGFV/0CEfkOUDH/yhOMz64=; b=JGEQ4VFvqCAA1LI2u59gxWk6O2
+	j89C0MyWP87hiJKWmeDOAOh7jTOB6yTSZJJdB7VVlk6HMqq+kbAtAkkOCH/qwbnP
+	4s34Fr1+wQNhGooSGwla+f6ChTPn9YaX2QEAlNkzFX45WAG4JYqJG756iEZDTQS9
+	HE7RWBF++oI99XfQARVfKtWC1eEkuGAdyuxSOuhTRoURP3c7z2uVKzNWtdr1J6Wv
+	YFAe/EK2lYfryjNgrzx46eTa/0QttR2teQXmJov+mBnsU3pSlhxYrmSWikge8e7X
+	GZ+QrUjmj2IoH54oMQvhk+eCG6mcHWN4aeeI35bogKDjoN8UnK7NEz1DKPeQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779372048; x=1779458448; bh=rgvtrQNOWGgarLaJkDiVYIGFV/0CEfkOUDH
+	/yhOMz64=; b=o2+UOOGhIlAlpOeFyOTVGwnYuR1IKTWsrckuXACaqfthqn88MBJ
+	/IS1lfbs6s0QMNPR1Nhg3QDKFWO5CbzhqCL8nF7bZHTEeBNkWxZxbygu/3wi0Qnx
+	dNhntGljZgitm73kInz9tEATSnkRL1CbpaTgYB3f/17s41Rz0Q6FSG/pQ9uFho4Y
+	swsOvxMgjAtFfCg4A6jZlDeZ5oq/00ONwhpxgp1yQ+aW35aIBRAB2tHVGy8MmaVC
+	jZQmKLo6s5kB9UzQ8t1ozxDkqRsCHK3jP12eO2A4e65AU4yzCQYgaYv3+FYpBfSV
+	fHXBQRE2HnIXKHN9LjQtIhuyOvZdG8QbUXg==
+X-ME-Sender: <xms:EBAPavN24wpaZ6trfOqQqxIP_QCY9M38j6UjC-45mA1wTj1TWd5LHQ>
+    <xme:EBAPasP7iWBYZ3f8amxhqNE1_9rFPWbJmXEpT0rPJTVWIZKF0Wvz47qZRyEt9uB7X
+    iRU8SBeOFEcWJujwKLNqPjVHlqPby4njCTicD7tX1RJJ3-nkR8D>
+X-ME-Received: <xmr:EBAPaghA-S_3pkY7MkzMvwBktVayxSJi4o_eRXxpoJhvAeIAw3ZfmbIvaFIIqntBUb-OlcI2lTiPH1f_isRXq7i13v9yJjKPBA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejieelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieel
+    ffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhrvghgsehhuhhrrhgvlhhlrd
+    hnvghtpdhrtghpthhtohepvghrihhksegtvghrvhhinhgvugdrihhnpdhrtghpthhtohep
+    ghhrvghgrdhhuhhrrhgvlhhlsegurghtrgguohhghhhqrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:EBAPapvhtuKyURmPxUvNn6MnMTJ5S5Zl2vljjylNGkHDJ93fCX4GdA>
+    <xmx:EBAPamQlKIPYbCR5Om9NFWccJlvNaYRg6TByRUSX2SDOUc7nYzVxOg>
+    <xmx:EBAPal0jLWzth5RMfb0dE4IMG4mi3QjMagQYFddkD4ofOxGvHtVjHQ>
+    <xmx:EBAPajv4k1CkbFClzD-PHNcMTygWjF7vF9ybhz05VwIKL9ooIvqDWg>
+    <xmx:EBAParc34w11aYv1bnRuFFuwDi8Q7IyHYOwk3YiXkpeh5SL9W2-uesH5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 May 2026 10:00:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Greg Hurrell
+ <greg@hurrell.net>,  Erik Cervin Edin <erik@cervined.in>,  Greg Hurrell
+ <greg.hurrell@datadoghq.com>
+Subject: Re: [PATCH v3] git-jump: pick a mode automatically when invoked
+ without arguments
+In-Reply-To: <pull.2108.v3.git.1779371110195.gitgitgadget@gmail.com> (Greg
+	Hurrell via GitGitGadget's message of "Thu, 21 May 2026 13:45:09
+	+0000")
 References: <pull.2108.v2.git.1779280307112.gitgitgadget@gmail.com>
-From: "Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 May 2026 13:45:09 +0000
-Subject: [PATCH v3] git-jump: pick a mode automatically when invoked without
- arguments
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	<pull.2108.v3.git.1779371110195.gitgitgadget@gmail.com>
+Date: Thu, 21 May 2026 23:00:46 +0900
+Message-ID: <xmqqlddczwtt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Greg Hurrell <greg@hurrell.net>,
-    Erik Cervin Edin <erik@cervined.in>,
-    Junio C Hamano <gitster@pobox.com>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>,
-    Greg Hurrell <greg.hurrell@datadoghq.com>
+Content-Type: text/plain
 
-From: Greg Hurrell <greg.hurrell@datadoghq.com>
+"Greg Hurrell via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-When `git jump` is invoked with no positional arguments (and no
-arguments after `--stdout`) it currently prints usage and exits with
-status 1.
+>      * Removed stray # from README.
+>      * Don't both teaching "auto" to select "ws" mode, because it is always
+>        subsumed by "diff".
+>      * Update usage string to make clear that git jump --stdout foo is not a
+>        synonym for git jump --stdout auto foo, because distinguishing
+>        between foo as <mode> and foo as <arg> is fraught with ambiguity.
+>     
+>     In answer to Junio's question:
+>     
+>     > If more than one interesting cases apply, what happens, and what
+>     > should happen?
+>     
+>     it's an ordered choice (merge > diff).
 
-But there are two situations where we can usefully infer the most
-valuable and likely mode that a user would want to use, and select it
-automatically:
+After 'diff --quiet "$@"' says "nothing interesting between the
+index and the working tree", I actually think it may be worth using
+either 'git diff --check HEAD "$@"' or 'git diff --cached --check "$@"'
+to see if ws fix is needed.
 
-1. When there are unmerged paths in the index, the user likely
-   wants `git jump merge`.
-
-2. When the working tree has unstaged changes, the user likely
-   wants `git jump diff`.
-
-In this commit we teach `git jump` a new "auto" mode which detects these
-cases and dispatches to the corresponding mode automatically. The user
-can either explicitly spell out `git jump auto`, or just leave it at
-`git jump` (because "auto" is the default).
-
-If none of the interesting cases listed above applies, then auto mode
-falls back to the existing usage-and-exit behavior.
-
-Signed-off-by: Greg Hurrell <greg.hurrell@datadoghq.com>
----
-    git-jump: pick a mode automatically when invoked without arguments
-    
-    Changes since v2; all of these in response to feedback from Junio:
-    
-     * Removed stray # from README.
-     * Don't both teaching "auto" to select "ws" mode, because it is always
-       subsumed by "diff".
-     * Update usage string to make clear that git jump --stdout foo is not a
-       synonym for git jump --stdout auto foo, because distinguishing
-       between foo as <mode> and foo as <arg> is fraught with ambiguity.
-    
-    In answer to Junio's question:
-    
-    > If more than one interesting cases apply, what happens, and what
-    > should happen?
-    
-    it's an ordered choice (merge > diff).
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2108%2Fwincent%2Fauto-jump-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2108/wincent/auto-jump-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2108
-
-Range-diff vs v2:
-
- 1:  5fbc8480ef ! 1:  af758dcfd2 git-jump: pick a mode automatically when invoked without arguments
-     @@ Commit message
-          arguments after `--stdout`) it currently prints usage and exits with
-          status 1.
-      
-     -    But there are several situations where we can usefully infer the most
-     +    But there are two situations where we can usefully infer the most
-          valuable and likely mode that a user would want to use, and select it
-          automatically:
-      
-     @@ Commit message
-          2. When the working tree has unstaged changes, the user likely
-             wants `git jump diff`.
-      
-     -    3. In the presence of conflict markers or whitespace errors (as reported
-     -       by `git diff --check`), the user likely wants `git jump ws`.
-     -
-          In this commit we teach `git jump` a new "auto" mode which detects these
-          cases and dispatches to the corresponding mode automatically. The user
-          can either explicitly spell out `git jump auto`, or just leave it at
-     @@ contrib/git-jump/README: git jump grep foo_bar
-       git jump grep -i foo_bar
-       
-      +# jump to places with conflict markers or whitespace errors
-     -+# (as reported by # `git diff --check`)
-     ++# (as reported by `git diff --check`)
-      +git jump ws
-      +
-       # use the silver searcher for git jump grep
-     @@ contrib/git-jump/README: git jump grep foo_bar
-      +# whitespace problems; otherwise show usage
-      +git jump auto
-      +
-     -+# with no explicit mode, same as "auto"
-     ++# with no explicit mode and no args, same as "auto"
-      +git jump
-       --------------------------------------------------
-       
-     @@ contrib/git-jump/README: git jump grep foo_bar
-      
-       ## contrib/git-jump/git-jump ##
-      @@
-     - 
-       usage() {
-       	cat <<\EOF
-     --usage: git jump [--stdout] <mode> [<args>]
-     -+usage: git jump [--stdout] [<mode>] [<args>]
-     + usage: git jump [--stdout] <mode> [<args>]
-     ++   or: git jump [--stdout]
-       
-       Jump to interesting elements in an editor.
-      -The <mode> parameter is one of:
-     -+The <mode> parameter is one of the following,
-     -+defaulting to "auto" if omitted:
-     ++The <mode> parameter is one of the following.
-     ++With no <mode> and no <args>, it defaults to "auto".
-       
-       diff: elements are diff hunks. Arguments are given to diff.
-       
-     @@ contrib/git-jump/git-jump: mode_ws() {
-      +		mode_merge "$@"
-      +	elif ! git diff --quiet "$@"; then
-      +		mode_diff "$@"
-     -+	elif ! git diff --check >/dev/null 2>&1; then
-     -+		mode_ws "$@"
-      +	else
-      +		usage >&2
-      +		exit 1
-
-
- contrib/git-jump/README   | 12 ++++++++++++
- contrib/git-jump/git-jump | 26 +++++++++++++++++++++++---
- 2 files changed, 35 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/git-jump/README b/contrib/git-jump/README
-index 3211841305..aabec4a756 100644
---- a/contrib/git-jump/README
-+++ b/contrib/git-jump/README
-@@ -75,8 +75,20 @@ git jump grep foo_bar
- # arbitrary grep options
- git jump grep -i foo_bar
- 
-+# jump to places with conflict markers or whitespace errors
-+# (as reported by `git diff --check`)
-+git jump ws
-+
- # use the silver searcher for git jump grep
- git config jump.grepCmd "ag --column"
-+
-+# pick a mode automatically: "merge" if there are unmerged paths,
-+# "diff" if the worktree has unstaged changes, "ws" if there are
-+# whitespace problems; otherwise show usage
-+git jump auto
-+
-+# with no explicit mode and no args, same as "auto"
-+git jump
- --------------------------------------------------
- 
- You can use the optional argument '--stdout' to print the listing to
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 8d1d5d79a6..79286d8112 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -3,9 +3,11 @@
- usage() {
- 	cat <<\EOF
- usage: git jump [--stdout] <mode> [<args>]
-+   or: git jump [--stdout]
- 
- Jump to interesting elements in an editor.
--The <mode> parameter is one of:
-+The <mode> parameter is one of the following.
-+With no <mode> and no <args>, it defaults to "auto".
- 
- diff: elements are diff hunks. Arguments are given to diff.
- 
-@@ -16,6 +18,10 @@ grep: elements are grep hits. Arguments are given to git grep or, if
- 
- ws: elements are whitespace errors. Arguments are given to diff --check.
- 
-+auto: select one of the other modes based on worktree state;
-+      "merge" if there are unmerged paths, "diff" if there are
-+      unstaged changes, "ws" if there are whitespace errors.
-+
- If the optional argument `--stdout` is given, print the quickfix
- lines to standard output instead of feeding it to the editor.
- EOF
-@@ -82,6 +88,21 @@ mode_ws() {
- 	git diff --check "$@"
- }
- 
-+mode_auto() {
-+	if test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" != "true"; then
-+		usage >&2
-+		exit 1
-+	fi
-+	if test -n "$(git ls-files -u "$@")"; then
-+		mode_merge "$@"
-+	elif ! git diff --quiet "$@"; then
-+		mode_diff "$@"
-+	else
-+		usage >&2
-+		exit 1
-+	fi
-+}
-+
- use_stdout=
- while test $# -gt 0; do
- 	case "$1" in
-@@ -99,8 +120,7 @@ while test $# -gt 0; do
- 	shift
- done
- if test $# -lt 1; then
--	usage >&2
--	exit 1
-+	set -- auto
- fi
- mode=$1; shift
- type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
-
-base-commit: aec3f587505a472db67e9462d0702e7d463a449d
--- 
-gitgitgadget
+But I am not a target audience of this feature, so I'll let others
+figure out what to do here.
