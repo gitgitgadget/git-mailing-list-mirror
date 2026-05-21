@@ -1,99 +1,124 @@
-Received: from out203-205-221-245.mail.qq.com (out203-205-221-245.mail.qq.com [203.205.221.245])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF03F1E51E0
-	for <git@vger.kernel.org>; Thu, 21 May 2026 05:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.245
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FEF3BB40
+	for <git@vger.kernel.org>; Thu, 21 May 2026 05:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779339809; cv=none; b=eI9hS3XTAG7W0vqd6R/Qrl85qNP0dpFkkMZg4uTRvOa7mSHfYKly5vU9HwLqcLhme9vSewU7lLQySho3Gq2SKKE6fOon/RtLOzYzvpbkDxYgcs2FDNuKm6WpnpqqhkGObcYlP3t/kvGIE911MzjIY+11FkgTRjxZUsr9LzQrOMY=
+	t=1779340370; cv=none; b=gpmalXABABEcjUavHuSSF5B5d6f0r1J1LO698uCORISmm6rReFlJp2oX35PY51fWAYe6lij9/X75nVKy9W4MI7zT2r4ZaIWqJtG1PTqsWlzyxcqPVwQz/xR1E12rVWEW6pMco0IWIM3HlYyoa8KBMOexieY1PZpObp9pwL5ib2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779339809; c=relaxed/simple;
-	bh=hHDcFVZcaBJaoy3mjnAmp912IrmoCyCOhMukPRAS68Q=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version; b=nbhKMNiJ9OUVjBFP4CrwklhuBeB5JVTqp7dLGtWCbMTml9uQLzMyTI1fgfpyAW+eZTx91cXdJCk0uaN7Z+YC4ig0y1Q4xdyCDFI+2VbQhTjTwaOp5ScjcoS9YJLBKbMsWejPDLIocXkeBLf33oymMcl6Ruuez5X251vW3aM7S8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=EELX+8qG; arc=none smtp.client-ip=203.205.221.245
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	s=arc-20240116; t=1779340370; c=relaxed/simple;
+	bh=sTpCGHSMUdrvFusvXYyMnRb2mDEhH6EnrhTi6EIigT8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=GomeJK7eUggiRugqgNyisi4zobOHEjgB5LpfYROAQjZwy2RShbRv8dOP3Z+ztubwe4eKmrSMzxCplBCsCkTGEUUN2EsCyOrGaA6y2erffIHGt7FAHFW9hBjGnBGvsss9eKjwtr9avkiNZoVrrh1KCjdqDWriyqZt5YqWdhdb6ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VSu/Tyvi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ht+FCl7I; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="EELX+8qG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1779339797;
-	bh=VVr5ZOVHSOkI0QLfjhVsyqpKAR2mbm9dT1EebpkxsP4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EELX+8qG0F+OsLTLUni2PpW36wHVavigVUrAye1zXAPYaDPPpuGfYYZuKODVaQkS8
-	 vltp5sY5mVD4nLsA2cwM7/TZ7G4mfE8zBe9KSI90Wid7b5EUbLN0WjZEocS2dtYKGG
-	 yJG1iEDEhRXa7b/CkfQcBEvM5erumzF1Yvi0JFz8=
-Received: from DESKTOP-31CF0TC ([121.224.209.33])
-	by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
-	id C5916B9; Thu, 21 May 2026 13:03:05 +0800
-X-QQ-mid: xmsmtpt1779339785tp9jsalur
-Message-ID: <tencent_407FE60B6954528497709B6CAD49018D120A@qq.com>
-X-QQ-XMAILINFO: ODafEzNm5ExjZ7/PfdhL2VQE6BkIpvVIexujCtcM0VNjOPVZ7Qc5zc3HSdrLs6
-	 xHerWGQedHOzBe+6c+2FSglFujiub4jBPKsDjL3b+mHLfqOexJ5GsGvJgfu0isD/SH849zhvW24i
-	 E+knc1AGJGXnstxCjuoEmGuER3USHDCoRoCUJXpDqQhopBGAD2qG5UgtNpcqemeK3fXmLLq/IhRz
-	 EBCs21qPNE2vbSnEofyvPvCrUMUA7+K9Ta540RMfgGZPzZ3hq6ZBscjorPINpUKshpQVd65l/Hym
-	 rToZYIvdwZ2DRceIZ/i7t2k8OX9PO8Ci1jzJ5Pu2muJNcuuBM89vcll3qSo7ArvzqIP4IHfysH55
-	 SdMEEEpEx1bJzWHv0hn4OzkPsFf4yH17oq/JyXzgRobR+iPS7HYgpk5c0JFZ2FTf6Ir2u/v6U7Cc
-	 Lj5gMiSYOtYIZQOHBEWZVbm0isiNDPIwlBRuzG8bUXvrkQ2BMUuzXj/htyO9SxRHj0NDVm+KvLP6
-	 F4ixjTr5RL35ZP9cnUpixZMK+KUxIrk97eq3SISWJ8vNGUcovumREBdPKe4ZDp816syRk8p2HJA2
-	 z1nRctsahdtuAzRskWZELuJni7J45kuAOVZdPvcdlFvwwMZmVh2jw7a3j1nDjRfAZ48QViS7dBfR
-	 NMRTUeqRQhq4d5V5yrE1jZs25ovkf4goE4IvRinBUD6Ud499XFa76JYH8Fvn7TcJRrB8BiD99wrR
-	 0aVv221An1O9Lc3mbjs92wGQWMRix3FAuLdzZeHgzNwZH0EYnJOUhQMmQwSPB9xuDcLaBMu+N5AK
-	 7ZDz64vom/o5CMQm9vKokBudhF+cTg3PYZvIpMsOPfdrWReDI+bhvNLl7kUL4ewhwCTzAspzM+H4
-	 jLgcbegUauqPKot33O+ueaf1YFqk9JJ7G/NrKeMhampV/axKbxmy8l+a5awmYNeBPdfYoS1YcKcK
-	 32mPj6X/lI+J7CIrEl2C60udOOaIbPbrXiWftw8jd3QtS7x9T9jgoTc+trkSfoby9ZWxb7nBiPbq
-	 ZHeIHM1EyqYpR0Y528SZDGqz/jycU=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-From: Shroom Moo <egg_mushroomcow@foxmail.com>
-To: Mark Levedahl <mlevedahl@gmail.com>
-Cc: git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Aina Boot <bootaina702@gmail.com>
-Subject: Re: [PATCH v2 10/11] git-gui: adapt blame/browser parsing for bare operation
-Date: Thu, 21 May 2026 13:02:59 +0800
-X-OQ-MSGID: <20260521050301.174-1-egg_mushroomcow@foxmail.com>
-X-Mailer: git-send-email 2.54.0.windows.1
-In-Reply-To: <20260520202411.108764-11-mlevedahl@gmail.com>
-References: 
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VSu/Tyvi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ht+FCl7I"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9363BEC00D1;
+	Thu, 21 May 2026 01:12:47 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 01:12:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779340367;
+	 x=1779426767; bh=kdseD71tDw1c5VZWDyUhEZn/2Bc0e996YBfMfBV78ko=; b=
+	VSu/TyviNS4QtJ1PC/Qd6OEw4uEgv/fMMFB1H5FXMXcn2g3LoMzOw/VrWlLtjE8x
+	MLrbVmuoiq5U/TAD5jjtcJcxngvBMPDL86tM42sLyi7mUhWJP1YslRhmXQB+PjBs
+	MTOFfq5+WruxoU5l2pWMekgO8wq/MU8Adjf+7Con9txzynDcSrlrg9bLYMKY9GrE
+	lOEgROaw367XSdh9QcmB/gb/mfyhWF1JpTqy6rvOs3xB1CW+9tO3Ml8Mt4a3ejqo
+	6Mcgzh5GSdbwkSNkuPiQlbImyxiunDKVQ5t3cDmLtSr5JHBD/pMwMWUNdc3zmso+
+	btxKAKFor79G1n3VfV2e/Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779340367; x=
+	1779426767; bh=kdseD71tDw1c5VZWDyUhEZn/2Bc0e996YBfMfBV78ko=; b=H
+	t+FCl7Im5OVVRoHYUpshh9YFwgiteelhH9ICILyhvI5R//0JetQt9mazfQBt3F/o
+	4q9DxFBR5YMQ1JA4o+RT0ea3zE5ZYwJm1ldU5VFKUJE6SZClwlV7qfePxpNmo0qc
+	hb6IO4h5T9puZn/bkheayfwKmoCCu583AnrjccgxJ9+NUvBYMdqXygcyMiz3HIgb
+	YZFsRDVgxEsLE+1LLBC5TCxq5hNlMQZni20wqgz1PGio4K3zvspvNHVwWNcAa/JV
+	VRz3lv2zxOTdo6kLB5Nz4gfZKISo7/jR2O0UgguCR8HXIBtUxLUH+zd7tvzXaxrA
+	OISjy3FSUXn98sGgkesWw==
+X-ME-Sender: <xms:T5QOajGPrTtztcSAQEoe5WiE3PTLSO5tQsdWAhy79w8pYc4GOPxYAQ0>
+    <xme:T5QOarLRRrIjtu9dweQR9-cTNzjc-XN8hzJMhUeyo0UsU3-_aKuAhL1gIiNJ8SBdz
+    TghU-JnJZrqFnc6uk_M0UYG6gMfl2-fWLXEwsew-5jbUeSpCU5HZg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeiieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehsihguughhrdhrrghmrghnrdhprghnthesohhrrggtlhgvrdgtohhmpd
+    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:T5QOauqhZdXQOEThSgBpgYn85TpF4O097AWjEe-dlb3hup8BGrVdVg>
+    <xmx:T5QOauJWF-EgLNna4Mb-ci0YX2Ujs6bmORi8wkg_KDcytHmGOHY7Iw>
+    <xmx:T5QOajTHbBjuGhVL_iCk7kbypJeWY8U8ibM3XL-u6c0K2gj6iR6U7A>
+    <xmx:T5QOatviNeG0WGzzbaxcVsYy0O1Qg5CBYwNVFX_i_ePtkaYq-rg81w>
+    <xmx:T5QOakgM5nPX5_w3pOuxrJp_b3mJbAJf8iGpgkH5V8Cf5TPNFUzv8vGM>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 55CC23020073; Thu, 21 May 2026 01:12:47 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AmEhG8rwk0hg
+Date: Thu, 21 May 2026 07:12:27 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Siddh Raman Pant" <siddh.raman.pant@oracle.com>, git@vger.kernel.org
+Cc: "Patrick Steinhardt" <ps@pks.im>, "Junio C Hamano" <gitster@pobox.com>,
+ "Elijah Newren" <newren@gmail.com>
+Message-Id: <72839071-153f-4306-a705-3be0dc203109@app.fastmail.com>
+In-Reply-To: <20260521041908.41055-1-siddh.raman.pant@oracle.com>
+References: <20260521041908.41055-1-siddh.raman.pant@oracle.com>
+Subject: Re: [PATCH] Documentation/git-range-diff: add missing notes options in
+ synopsis
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 5/21/26 4:24 AM, Mark Levedahl wrote: 
-> +proc find_path_type {head path} {
-> +	if {$path eq {./}} {
-> +		# the root-tree exists in every rev, ls-tree gives data on the contents,
-> +		# not the type of tree itself. So, if the rev exists, return {tree}
-> +		if {[catch {set objtype [git ls-tree $head]}]} {
-> +			set objtype {}
-> +		} else {
-> +			set objtype {tree}
-> +		}
-> +	} else {
-> +		# test that the path exists in head, ls-tree gives info on the path only
-> +		if {[catch {set objtype [git ls-tree {--format=%(objecttype)} $head $path]}]} {
-> +			set objtype {}
-> +		}
-> +	}
-> +	return $objtype
-> +}
+On Thu, May 21, 2026, at 06:19, Siddh Raman Pant wrote:
+> git-range-diff supports note options which are also mentioned later in
+> the help, but they are missing from synopis. Let's fix that.
 
-In v1, argument parsing relied on file exists within the worktree to 
-determine if a path existed, without using ls-tree. In v2, the use of 
-git ls-tree seems to actually be intended to list directory contents, 
-rather than querying the type of the path itself. 
+s/synopis/synopsis/ or s/synopis/the synopsis/
 
-If $path is a directory (a tree object), git ls-tree outputs the 
-object type for every entry within that directory, one per line. 
+>
+> Fixes: bd3619188682 ("range-diff: pass through --notes to `git log`")
 
-The variable objtype is assigned a multi-line string. When compared 
-against "tree", the match fails, causing the function to return an 
-empty string, which subsequently leads to an error. We can change to 
-"git cat-file -t" or similiar approaches. 
+This project doesn=E2=80=99t use `Fixes` trailers. Mentions of commits g=
+o in the
+commit message body (outside the trailers) using `git log -1
+--format-reference <cmt>`.
 
-Shroom
+The Linux project has uses for this structured information since there
+is a lot of backporting of bugfixes. But I haven=E2=80=99t heard of a ne=
+ed for
+that in this project.
 
+> Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+> ---
+>  Documentation/git-range-diff.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Okay, there is no need to update the synopsis in the source code since
+git-range-diff(1) is excluded from `t/t0450-txt-doc-vs-help.sh`. So this
+looks correct.
+
+>
+> diff --git a/Documentation/git-range-diff.adoc
+>[snip]
