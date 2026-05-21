@@ -1,95 +1,91 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5929425B081
-	for <git@vger.kernel.org>; Thu, 21 May 2026 12:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F169B29D294
+	for <git@vger.kernel.org>; Thu, 21 May 2026 13:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779368325; cv=none; b=oYyIv3z/dVHOghc/M1vUB3jL81WHb53cb7lEoRIZwA8cJYpt8mjukOAFYYhIje673cyrZnwbDNTguRfrN3m7t8PTNHCag8J1WjVolYUTZNw2iCAhRccA0cfpw19tHwFyyC8sDO5eTqXSfNrQ+mi9eDLxeMSnkiNGUbAwxkUcvE0=
+	t=1779370169; cv=none; b=EIdZOJTDa5UnhUlFH0+GWJpMsCoPBV3AqFOPGRZKYEh4EPqxFrF0Qq6tFDd5zb4d88QpNf+tjo+qqB2tqyU5aGaxcYXkwnLNQ/15UBaJIWxERo5mcqdbH7EQC+avhXJZsBgvrR00GBmglV9M2vKgKm9ZS1WXIqkNO53DrdjSuX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779368325; c=relaxed/simple;
-	bh=+s/fX0SL+pU+svejTgao4s6fEKvCnIW/C8n9WLICgK8=;
+	s=arc-20240116; t=1779370169; c=relaxed/simple;
+	bh=e58aJrS6teugOr4rvDURzwvQtyw1ACpEdwwiR3FdNHA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=htHuia1d4bl11ONzIr8yYg/NaiUOzqh0nMK3gOAzWYhEBfWNJ0RQjvuJL3vq0hPr357ksohvVAcPW0hCAbkY7nOjpffh4jraYyGLxeCPHvaWva19rsKgxc+UpIdc+jAHYlPdh9NtgYAym3uD+7Qs8Uc4FN00V6qTjTlfcO/0Eyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jI9NvdH4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gTE89xJP; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=OdbU91TXf+ZmhAm0U7EWRaSCtDcDXGGy5nWQEhOr1VTGgodTgad0kB+DPkoldAyHg085zOTB7TcaAiS3f4/CVspG+fOM7IqcizFYoCP4Wv1AaRBkhnQxJf5Cm77/lpsoZpWU8gf5sjlQWepZyLW0dThWbhCNEPTSYGD8/r4tH9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VNLK8pNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pEplWLlk; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jI9NvdH4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gTE89xJP"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 221221D00106;
-	Thu, 21 May 2026 08:58:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 08:58:42 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VNLK8pNP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pEplWLlk"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ED42D7A0146;
+	Thu, 21 May 2026 09:29:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 21 May 2026 09:29:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779368321; x=1779454721; bh=2UVZqY7fGh
-	CTDKcrQeukb9s+3aD1PgmnwmuyQxe5rXA=; b=jI9NvdH44cZoypA7BJg0kBpLnN
-	7rWjYSWBMzfViYf02pXXQc/E6VqtQEsXIk/ml3ThPxeW6eZj1b2ybtAKbsSUW6VR
-	CicIDeSEvy7RNJtqsd3KDoE/SCXsHuZ+iAGbIVZitfyJvhXT6kc1QjW73K5bfwil
-	NeCzpAXYMpYX61eew/Txd/baB9BW1WMW9/TxAdNuAsG4A2OiK1Ym1xdB+jTZPz+9
-	RQwKvG8jAkKdDSdVoZyRBw238CePi1G6mxcrCcTAFhDX9Kya+hcqEurJOMsexDOE
-	77YSDnoSoSFk3fIj3MTBV6UOQ/ynV6tyzXPTekbT65HBFZFLkCIf3sbNkJYQ==
+	:subject:to:to; s=fm2; t=1779370166; x=1779456566; bh=J3NKIjVp6c
+	fCV6t1XlcRFR7rgfWI1ipqSVdY1yJug+M=; b=VNLK8pNPZwt13NlE5P+LMohhJj
+	oszFC7KAKBsXohmhp6li288/DpWVQ74c9SHravaeI65kZfLJ95/dScVeGHuEB5xY
+	jbOP4OwkRwHt1SCUXRPiwshzeV57oNa0vkQJJSJhCCwlytx2YnRa4SMisD+wgpdz
+	FYBOKB46RLLx5bI7n4yNSVNLJRB9DWCDGZblkd8FElUIVp/DQis5J5HorMoZx+uO
+	X80C2Mea2Jg2FxbSWr5VCkRJOGwU+gaQtWVW6KEbUeqVkB84oKL2sGjAmOCC7UAm
+	SvOCd70Shh74liyKzQSlHlavIniUNRtAZyAdLlNDF54db7jL+m8X7Bwu+MMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779368321; x=1779454721; bh=2UVZqY7fGhCTDKcrQeukb9s+3aD1Pgmnwmu
-	yQxe5rXA=; b=gTE89xJPrRrD5JAI2Q4DwiNm62TCPChfYf4d/7GyWSGGDdzYZaM
-	BwOMXCRixBX7Qw+MKGgKxpLresH12XSlFHvCYoQEUJZmAKIrKrrT45RSaVI/US1a
-	lB+MdGG/iOXrqS4bacADAOiypP7bp+AMkFENZngAfMKEv26d2AmgCYeA4MNjwj0Y
-	Lt8qGa6Lw/NiwZFdjR19wLyNkytJZ/Tsl6MYAZe0zpH7intZzOUXIizT+2Cyj6xc
-	w0CNDXNZm0PkXSqWdnmRJsJiSocrRXI8LGJymw9x9kQdRx4pjHrOGOLeA/VMq0sG
-	ly+/KMYcvvNuK7YkD+QBMS/gJI1a/6aRopg==
-X-ME-Sender: <xms:gQEPakYMje6Sg7S8ScppcqxBIyw-rAf0epVtArgYp1ZxjrYpe27Y4Q>
-    <xme:gQEPakXTKV3ZB_BufeeUtjxJ6sfnQgZRJehxKmFR2_hTgTO72gInqsfgDCJyozAZ_
-    Lf_YfDGlklyJFsTDttow_lg8oo1OuUh7PAC8xUTAKvTW6grHc2VXQ>
-X-ME-Received: <xmr:gQEPajMiu1kvBaTrY6NkQjwusbsNlgH3GTq4eoIcUNScl5wVSkjPplSjGcgp-9SCxEzzPqb2qF6Mb75QpbXihac6mjN6OoQhtQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejheejucetufdoteggodetrf
+	1779370166; x=1779456566; bh=J3NKIjVp6cfCV6t1XlcRFR7rgfWI1ipqSVd
+	Y1yJug+M=; b=pEplWLlkOI+jrZosIcu2k4the8IHnDXf2Z4X8kLEu/gnuQr9Wd8
+	3J8Th4gRj5t6o+gypjhvH5c49DlFt85BtUrxLMunTNFkm7VaFP75cumOM0Hi8VHp
+	28F2iJ7nOTsLBn+VKyAepFyEvAbQbkzvfxXNJUjajuIAExir/Z7yUYJy6w0vAFLX
+	HqKtXrr2bU+G5zHqgVofP1+CiYxtAUEKs8cPQODbfEhqQCv8xKrsdUSP43ZGdfHQ
+	9m6o8XFifQsSAQEg11tbn7g4vPCwOVbVj6k9WBRQJIWu4RH+QlCdMRWOKRzDNGwF
+	hwtAmv+yHJa5n3uC/ieNM/NzUCTcJgc9GaA==
+X-ME-Sender: <xms:tggPaiar3BM_TJVn0tH4M8QLR38-swQFcpS-stNAbcOUjlwJwjo6hA>
+    <xme:tggPanoHj3CbCyXClswXr-C0Il2wnujO-FObgrmpKhmchB-XXXs5N6dDYzX65ytK1
+    4dEoqDtgktl2QxyAorSNSd3HndiMvziC_JI-PeLs09pn4UX9_ZDnQ>
+X-ME-Received: <xmr:tggPavOmWQlAvq_6ZIIN0zTA_ST0flzTNLrHBaXsLap9sA7AP9_X_EfDlCxgSc2iARFDNAdNyngyH7dLsrPf0fxPB3qMuTMTfg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejieefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
     geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
     drtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprh
-    grmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopegs
-    vghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmrghr
-    tghnrghrtgesghhmrghilhdrtghomhdprhgtphhtthhopehhrghrrghlughnohhrughgrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:gQEPauYXDSi0O0QBB-RlJWsKaAyBqvAB4Kc2WAAUA8vpqF6FbeC0Hg>
-    <xmx:gQEPai_NGhak6Boc3ljW3fMqhinSQfPyYNuFjLh20DM6MGyR0TEYKg>
-    <xmx:gQEPavR94d4EAeuvta-sb4i2vESM-X5qL2kLfzNC125lMgOCRcuIeQ>
-    <xmx:gQEPascRwqUeFBZYUjrzjUUHrU4rgwj4tKvsSrQnU97XWTiBF2amyA>
-    <xmx:gQEPavgj3pBiyxRKXSmQ8wRxsSp86nFqyKDXHxRKdkuaWG50horj44hC>
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkh
+    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
+    thhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohephhgrrhgrlhgunhhorhgugh
+    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:tggPaqrV3bfMLitL3hLf3a4OdSRzO4NujP2o4rl7fePxVCt9py6SfA>
+    <xmx:tggPaseJ10NiG8BK3vftEW0DVwiN_xQH4LHR4lea4aZ_Nd2Nv1yqnQ>
+    <xmx:tggPaoTTT3DGfCpCP2pcqsv4ODQJJwahRLk1hFjg_ZyaZag32JPW1w>
+    <xmx:tggPatYCkHO0tPML0qoobjh3Vch6dqRG7kjNCGvr0j5SEtusuV7vUw>
+    <xmx:tggPaiXh1_RJGkgudWpmazblCpI_QNRv8nuER-ybxTHmiO0fRHUeSd4Y>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 May 2026 08:58:41 -0400 (EDT)
+ 21 May 2026 09:29:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Phillip Wood <phillip.wood123@gmail.com>
 Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Ramsay Jones <ramsay@ramsayjones.plus.com>,  "D.
- Ben Knoble" <ben.knoble@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Marc Branchaud <marcnarc@gmail.com>,
-  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v11] checkout: extend --track with a "fetch" mode to
- refresh start-point
-In-Reply-To: <b8932b27-8006-4b43-b7e5-1fac0fbf42c7@gmail.com> (Phillip Wood's
-	message of "Thu, 21 May 2026 10:49:13 +0100")
-References: <pull.2281.v10.git.git.1779091483321.gitgitgadget@gmail.com>
-	<pull.2281.v11.git.git.1779177508772.gitgitgadget@gmail.com>
-	<xmqq1pf77kml.fsf@gitster.g>
-	<b8932b27-8006-4b43-b7e5-1fac0fbf42c7@gmail.com>
-Date: Thu, 21 May 2026 21:58:39 +0900
-Message-ID: <xmqqtss02a2o.fsf@gitster.g>
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,  Harald
+ Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v9 3/5] branch: add --prune-merged <remote>
+In-Reply-To: <6501a3d5-a5ec-421b-8526-ee7d4ae5ea98@gmail.com> (Phillip Wood's
+	message of "Mon, 18 May 2026 16:27:01 +0100")
+References: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
+	<pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
+	<f87e96e99d64c48bd92afecf3a6a819d36e56f6c.1778700883.git.gitgitgadget@gmail.com>
+	<6501a3d5-a5ec-421b-8526-ee7d4ae5ea98@gmail.com>
+Date: Thu, 21 May 2026 22:29:25 +0900
+Message-ID: <xmqqmrxs28ne.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -101,27 +97,68 @@ Content-Type: text/plain
 
 Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> One.  Have you considered the case where the remote-tracking refs
->> are overlapping, e.g., where "origin" and "upstream" point at
->> different URLs but they both store in "refs/remotes/upstream/*"?
->> Perhaps their URLs may textually be different but are pointing
->> logically at the same place (e.g., one ssh:// the other https:// for
->> example).
->> 
->> What should happen?  What does happen after you apply this patch?
+> I think being able to prune branches that have been merged into their 
+> upstream is a good idea. However, I find the focus on remotes rather 
+> than upstream branches in the UI a bit confusing. While the upstream of 
+> a branch is often a remote tracking branch it doesn't have to be. For my 
+> personal projects I often do
 >
-> It would be worth looking at what "git checkout --track" does in that 
-> case and seeing if we can share the code.
+> 	git checkout -b topic master
+>
+> and it would be nice to be able to run
+>
+> 	git branch --prune-merged master
+>
+> to clean up those topics that have been merged.
 
-It always is a good idea to think how we can share code for
-different purposes to solve a new problem, but in this particular
-one, I am not sure if "git checkout -t -b topic upstream/main"
-codepath has much to offer to solve what the new "before the
-checkout, update from the remote" feature wants to do.  To the
-former, it does not matter how refs/remotes/upstream/* are updated
-and by fetching which remote at all.  The only thing it cares about
-is to leave the record that this new "topic" branch works with
-refs/remotes/upstrea/main.  But the latter needs to be able to
-compute which remote it should fetch from.  It is a problem that
-existing code had no need to solve.
+Excellent suggestion.
 
+The task at hand is to make a list of things that "track" (in the
+"checkout -t" sense) something, see which one in that list are
+descendant of that something, and removing those that have already
+been merged into that something.  There is nothing that requires
+that something to be a remote-tracking branch at all.
+
+If
+
+    git branch --forked master
+
+(i.e., "who tracks 'master' in the 'checkout -t' sense") were
+available, then
+
+    git branch --merged master | sort >1
+    git branch --forked master | sort >2
+    comm -12 1 2
+
+would give us the list of branches that forked from 'master' and
+have already been merged, i.e., candidate to be removed via the
+"prune-merged" mechanism.  With the built-in "git branch -d"
+protection to require capital "-D" to force removal of a new work
+that is not merged to tracked, we actually need only 
+
+    git branch --forked master |
+    xargs git branch -d
+
+to do so.  We may want to give --dry-run to "git branch -d" so that
+you can say
+
+    git branch --forked master |
+    xargs git branch -d --dry-run
+
+to see what would be removed.
+
+And again, there is no strong reason why "--forked" has to work only
+with remote-tracking branches.
+
+> Similarly I think it is 
+> confusing that
+>
+> 	git checkout -b topic origin
+>
+> starts a branch from the default branch on origin, but if I run
+>
+> 	git branch --prune-merged origin
+
+Sorry, this was my bad.  I agree that it is not a useful thing for
+"origin" to mean "origin/*" here when it is established that
+"origin" to mean "origin/HEAD".
