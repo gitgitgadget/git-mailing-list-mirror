@@ -1,55 +1,55 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684383815DD
-	for <git@vger.kernel.org>; Thu, 21 May 2026 07:42:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC89384CE8
+	for <git@vger.kernel.org>; Thu, 21 May 2026 07:42:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779349361; cv=none; b=P+H3vvGM/9GuC/+YH48ZRrGsMdbBVYiMILECnHygpiutAJXSJOPcAVMOXchTG0+q13su0nz5a1LPsivotCdWQH4uG4mfE59+9UkXr6L9J1clIhTcszPTQBH9cfJS69wMgXk79/jvXwZCz1JA68z+Dp619hRjeXxO9NFdCCnsHVA=
+	t=1779349364; cv=none; b=ELFheeDqQBOjcjxZKdgPveqXsWCZixFT9mzAkSxkre2NSOrPTuHNHpboOv5lJ+/aeQCmOzz1LyU68jFDydu6ECvttv9twSrh5TM2zy7KioJTjO5SLFnjHSdiIPx3RS3h46vl4CBLv3oJk1nIMoJYmmgXBeU/J9ms2heGrFkO74w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779349361; c=relaxed/simple;
-	bh=LvfTjDXKPyiu8TdAOUnAQHR7wR2MyJxdmq+T2oeRFDA=;
+	s=arc-20240116; t=1779349364; c=relaxed/simple;
+	bh=oaXYKYaWmp6AcVJ2yFCtmidV1MLgRol1V3uEsuKqkSc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=j4XF5+BjMRm+m6SWG9TwxscHOLMgvPzBXsKlLo8/dXSjnKrts7DEhkGZos45iaTf0AuqjubVqH+jbKaXDnwCZGgefwkDP1LNukp2SXDGT/wgwE2IJFH3pe0CsHahm2+vaZ+dFBA4TGcvnuwLty2lQi2nkrRFXZgYKFRllmddfBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pMW0vfo7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5gIEwPc; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=Yjq/oLtb7JPO6pzZvnCq0HktmrescqA256ewk99pX7vW3ZoFSNLeHoNl42Sjc+hSDdeSrOS64nTzzcAkKPN12HTX0F5GZd/huBC9ymhNas8dkuBhvBZK4SWZg8Tsva938RBINHusq7WuxfzFO0ME9E0gjqrsDIHG0UmyGko7Mzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DR2Lf5Qi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vmgNtRQi; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pMW0vfo7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5gIEwPc"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 89A2BEC00A2
-	for <git@vger.kernel.org>; Thu, 21 May 2026 03:42:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DR2Lf5Qi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vmgNtRQi"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 408181400070
+	for <git@vger.kernel.org>; Thu, 21 May 2026 03:42:42 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 21 May 2026 03:42:39 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 03:42:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779349359;
-	 x=1779435759; bh=qZIpod9oCrOSlvKEd2OJ40NL1WF8dIzOLf4jbc/Nz94=; b=
-	pMW0vfo7NVLOHrm4/cpV3EKJyvEJbKhKvTIA12Tg4k3jNbfTjbSeLOuetApMUS0U
-	+zRIk1DNvdiLyHiIeL46e3TolRYuOF8q4+KhNYdtDrnGNcziqMYspGWBXvcWov+2
-	9VUihs2YtJa9efR9N6YYeiPM8ga3P8PhU/5kSTuZAx/rMiKWcdN69odQtx0y2ud1
-	fZuX5ez7zRx1XypWjP7Hnx1mB0zpNv3y1RKSgJTJqiThiPy340i4CjCuPE7gEgwJ
-	fKH+fZpM84j6+OUEOI8fTLSgbLykpmK6CqDc+IwRljmyOcRrNSnUNUofV3bskbtk
-	9Y9q2izoqJFznICQI9NEQw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779349362;
+	 x=1779435762; bh=2MXSWSNCRxXab41eIz4FebuQurEfYA3u0hpkVA2VZlc=; b=
+	DR2Lf5QiWydkglCw8hnOdryC6/y/v2lshX6m5eDM+EVJAQ9cGG85bsja1ds9DRuA
+	zGPq8rACcOv9fClG3gU+M8818kR6MdvbfdUxPpL6XyQXAIkYxiV46fae43eIAq77
+	da9TC+XNWtsYWw2bE5AIcewNeKTe2M0FMZV4zaY2kHPJStAYKTEPE3ZnLALz4YOc
+	exFNE/vcHaWqHqUizhnXZKUev275vPOmLm7N/s/R9cCzlI+dhJ7oIPDuHcJU5BS4
+	XqgzNd8rNrxmh3uYeUad43R3Ah+i1M7/SRmJ0lOKr1ZEQezQAFiqmqSfX5pJ4d10
+	8xiRpTEAJARvzi3RX1e5ug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779349359; x=
-	1779435759; bh=qZIpod9oCrOSlvKEd2OJ40NL1WF8dIzOLf4jbc/Nz94=; b=W
-	5gIEwPctBSvYBXlpDMkEBJy0H4cCgo6DqG/qqETFUjzVrlAlEvYzinfWDut9NmXZ
-	AEIbpvK3C+rwowwk5JpMkyiExjAUcio5eCyjqbvZL/47x0gYhzi3lTbGiikINQJS
-	NlIeJ+qOkfQHFEcBixR9k2mJBWojx2bwcy5wywJWrdRN4NRNBijAUkJN5PWBmUwb
-	RfJre+WtLQGh0gTr/3wCVdStk8EdjX2UlBJPbN5cmEFKFEWaJXKicdrVaKAT8RDo
-	fcov9pPFjfAhbajYssleiNxbFpiyvZL60c83uvAIbKQyPLNnxbQ0URki+dlXhrMi
-	gwmFP3Zkv/Mp4DXRJ7pJw==
-X-ME-Sender: <xms:b7cOaj8jbL3ooxNRY--LaooOByPQ2hNersW6gq2NXd4-4hxDOiQ-6Q>
-    <xme:b7cOamqwaZUuYhFT1UFLov-RvzZSiqMktF8oJVo9Sv--zhlrE88LO7gpHlkwkdTPp
-    kEceuGOCejp3Twno38MwRVSsbyb_s8ARVaGHohe3cGr2sK9i90jQQ>
-X-ME-Received: <xmr:b7cOamrEWZwG84k_6EYYmRML2zOWOohEFHy7sHekxpOPJLsojSjYvCX4hcCSEKGSlNE3qlJfaPADS3Kxn1yNaLNWExdFoLMBIfOlNTICre8>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779349362; x=
+	1779435762; bh=2MXSWSNCRxXab41eIz4FebuQurEfYA3u0hpkVA2VZlc=; b=v
+	mgNtRQiCfsSjtmgcDExYKo/FUtiMrbdADneIxHu86J2h5t+rT+UeEugd1FhX9ddn
+	a3YxYkZ4izyEzzVE3EiKffsefswgWmxnPBDGLGwR4gAlOnnff495JKzK7OnpNe5T
+	+bSaPET3VRWB9yYaCoJ09SZnbnPBxjTzBi9MT2DBSo1GrsBDLIVepdXPe9C7incH
+	dj4khzpWDNBdzgl3KBsL7P+Q0R0rllIjwm/xwEhwu9HVgHr/x6ZvTJH2IOe1qr55
+	jz5lQXWLrCM1J8BXaFD1qdqMWiI9b1TMvZZ+thq+iEU10UvPnds/J/ScAu24fXfl
+	QDPFYOsCFOjFe3T9JO6DA==
+X-ME-Sender: <xms:crcOaqPP67njfQXL3fqYVcsZv-ioD-OhxgrWvMtjwsU2hJKsOAr2-w>
+    <xme:crcOav7u13AOg-NP4W54dR2ELkhiGK64_5sRapPC7Ik-gLZcVMhHSeBo4YW1gKRhJ
+    3ZytPeGa5OrqEdSbsiKDGna6L2mo55-8LF_R2lQnsR9JwAHkywQpw>
+X-ME-Received: <xmr:crcOam5h8x5Jlsli5dNlhvY5dHkaNZn8tL_Uwq7TPqqWWNs-QKbWadU9LlSZW4aOQL-SMMhy2X5JKpmiYugT80RFWp7iLfM04tFkyz_MAlU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeileegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucenucfjughrpefhfffugggtgffkfhgjvfevofesthejre
@@ -59,22 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeeileegucetufdote
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmh
     houggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
     ohhrgh
-X-ME-Proxy: <xmx:b7cOakle3Z5fgVSSdnNNtBy2i63R8TNW-gyTT4-J-G-zsxqyu6aSBA>
-    <xmx:b7cOaoGwZ2ECEjSzHFDdExBN2T95zPmonedV94-nk5BltRbqno7Zew>
-    <xmx:b7cOatr5UPiQJkynWPAaZTUADDfcR0xWM21Iu62G2F5JG40z6XLATw>
-    <xmx:b7cOak5H6-o6phnTGB6rzR0vTZovFnaOMyMSZcmUuWkuzD-5xS4fKw>
-    <xmx:b7cOavvR-Yv3VfR2QzSQz1YQUG2OtISqh1yI6pxK-mm14RmpciqIgZRY>
+X-ME-Proxy: <xmx:crcOav3QBnWViOk066Beo5MSWXimOIoMpPalUyfRWAvTNommM5FUNw>
+    <xmx:crcOaiU_C6QhQTWPGycjpKxUeZKMkahDQjxrIjWgzRDahPPTQ41WtA>
+    <xmx:crcOaq4NTAH29eCrW0dN2TlQm0-wz1aM2N_Jpa9X0k2hdqWU1cTXrw>
+    <xmx:crcOapIwE3GAqss4EW8VYGJzCqlH12a3Z-d_3zgmfE-FC-KOiHJfXA>
+    <xmx:crcOaq9Z9biGImkXAJPZdtveqLfYsDBZe-2EV-nbKxqc7Xzo80guszf_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 21 May 2026 03:42:38 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 21 May 2026 03:42:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 04c81e28 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 2939b102 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 21 May 2026 07:42:38 +0000 (UTC)
+	Thu, 21 May 2026 07:42:40 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 21 May 2026 09:42:28 +0200
-Subject: [PATCH 1/8] t0001: plug test gaps for git-init(1) with
- GIT_OBJECT_DIRECTORY
+Date: Thu, 21 May 2026 09:42:29 +0200
+Subject: [PATCH 2/8] setup: drop `setup_git_env()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,59 +82,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-b4-pks-setup-centralize-odb-creation-v1-1-f130d2a7e8ae@pks.im>
+Message-Id: <20260521-b4-pks-setup-centralize-odb-creation-v1-2-f130d2a7e8ae@pks.im>
 References: <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
 In-Reply-To: <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-In subsequent commits we'll rework how we set up the repository. This is
-a somewhat intricate and thus fragile sequence, there's many things that
-can go subtly wrong, and there are lots of interesting interactions that
-one can discover.
+The `setup_git_env()` function is a trivial wrapper around
+`setup_git_env_internal()` and has a single call site only. Drop the
+function.
 
-One such discovered edge case was the interaction between git-init(1)
-and the "GIT_OBJECT_DIRECTORY" enviroment variable. When set, the
-behaviour is that the object directory should be created at the path
-that the variable points to. This behaviour is documented as such in
-its man page:
-
-  If the object storage directory is specified via the
-  GIT_OBJECT_DIRECTORY environment variable then the sha1 directories
-  are created underneath; otherwise, the default $GIT_DIR/objects
-  directory is used.
-
-Curiously enough though we don't seem to have any tests that exercise
-this directly, and thus a subsequent commit inadvertently broke this
-expectation.
-
-Plug this test gap.
+While at it, drop stale documentation in "environment.h" that points to
+this function, even though it hasn't been exposed to callers outside of
+"setup.c" since 43ad1047a9 (setup: stop using `the_repository` in
+`setup_git_env()`, 2026-03-27) anymore.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0001-init.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ environment.h | 8 +-------
+ refs.c        | 3 ++-
+ setup.c       | 7 +------
+ 3 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index e4d32bb4d2..e89feca544 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -980,4 +980,14 @@ test_expect_success 're-init reads matching includeIf.onbranch' '
- 	test_cmp expect err
- '
- 
-+test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
-+	test_when_finished "rm -rf init-objdir custom-odb" &&
-+	mkdir custom-odb &&
-+	env GIT_OBJECT_DIRECTORY="$(pwd)/custom-odb" \
-+		git init init-objdir &&
-+	test_path_is_missing init-objdir/.git/objects/pack &&
-+	test_path_is_dir custom-odb/pack &&
-+	test_path_is_dir custom-odb/info
-+'
+diff --git a/environment.h b/environment.h
+index 9eb97b3869..ccfcf37bfb 100644
+--- a/environment.h
++++ b/environment.h
+@@ -130,13 +130,6 @@ void repo_config_values_init(struct repo_config_values *cfg);
+  * `the_repository`. We should eventually get rid of these and make the
+  * dependency on a repository explicit:
+  *
+- *   - `setup_git_env()` ideally shouldn't exist as it modifies global state,
+- *     namely the environment. The current process shouldn't ever access that
+- *     state via envvars though, but should instead consult a `struct
+- *     repository`. When spawning new processes, we would ideally also pass a
+- *     `struct repository` and then set up the environment variables for the
+- *     child process, only.
+- *
+  *   - `have_git_dir()` should not have to exist at all. Instead, we should
+  *     decide on whether or not we have a `struct repository`.
+  *
+@@ -147,6 +140,7 @@ void repo_config_values_init(struct repo_config_values *cfg);
+  * Please do not add new global config variables here.
+  */
+ # ifdef USE_THE_REPOSITORY_VARIABLE
 +
- test_done
+ /*
+  * Returns true iff we have a configured git repository (either via
+  * setup_git_directory, or in the environment via $GIT_DIR).
+diff --git a/refs.c b/refs.c
+index 0f3355d2ee..e7070eb743 100644
+--- a/refs.c
++++ b/refs.c
+@@ -126,7 +126,8 @@ struct ref_namespace_info ref_namespace[] = {
+ 		 * points to the content of another. Unlike the other
+ 		 * ref namespaces, this one can be changed by the
+ 		 * GIT_REPLACE_REF_BASE environment variable. This
+-		 * .namespace value will be overwritten in setup_git_env().
++		 * .namespace value will be overwritten during repository
++		 * setup.
+ 		 */
+ 		.ref = "refs/replace/",
+ 		.decoration = DECORATION_GRAFTED,
+diff --git a/setup.c b/setup.c
+index d723306dfe..252b443117 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1074,11 +1074,6 @@ static void setup_git_env_internal(struct repository *repo,
+ 		fetch_if_missing = 0;
+ }
+ 
+-static void setup_git_env(struct repository *repo, const char *git_dir)
+-{
+-	setup_git_env_internal(repo, git_dir, false);
+-}
+-
+ static void set_git_dir_1(struct repository *repo, const char *path, bool skip_initializing_odb)
+ {
+ 	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+@@ -2023,7 +2018,7 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+ 			if (!gitdir)
+ 				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
+-			setup_git_env(repo, gitdir);
++			setup_git_env_internal(repo, gitdir, false);
+ 		}
+ 		if (startup_info->have_repository) {
+ 			repo_set_hash_algo(repo, repo_fmt.hash_algo);
 
 -- 
 2.54.0.771.g3ed373ac14.dirty
