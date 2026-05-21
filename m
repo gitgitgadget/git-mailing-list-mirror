@@ -1,255 +1,138 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9753382DE
-	for <git@vger.kernel.org>; Thu, 21 May 2026 08:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BAB1D5CE0
+	for <git@vger.kernel.org>; Thu, 21 May 2026 08:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779351569; cv=none; b=M46ddU7kuUI/xs+S786gyIBZA4vus4iAGMURcevpMijQEahVr2Tv0BK69NbDgE0Yq+cVssHlAjE5zMHngwJFSDtnfUrFpkThiYpZ+FDpyfgGaYtF52iFPnf1bMixuZgR4FUKzDRNGB88mvpxjY+CZJAqFINSiqP1e/Fhmx5GNe8=
+	t=1779351596; cv=none; b=Azw7bSO0E9xUKEwUaWxVbA+6Lw+R1rMkFFzqZ1N6fGWMb9aBa9VWWRnmptRC5sWzRJ0GPX7GCCKHfHjX+MZiz4DWpRgxw7cmZxUoBguOvBRmXOvpXNl9OOSeLLxG7dBNtfj9Abr2hO4mIb8827g55HSsddKY5wfrj7tSwMf0i7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779351569; c=relaxed/simple;
-	bh=7DeFRdWPN5zHlzRcODxb5cq0QubV88cgNhwfSZCtGYs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CAFF0e07/PZUimFzrN67Jtg5yegx0uAvRgCui1A1j4XnWlFf8w0H8QN9fE5nGsR/IjgochKMOwVpwFS9Ja9bFbbi/ORu1wuiJUteEidtF2fr7EE7+cNxijgRZpC//JWB+ebYvD4X0YlXfxZTNb7o85T9X8viamSobjSMNCpz2lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y3AgmvuO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KZrJkQgh; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779351596; c=relaxed/simple;
+	bh=z1WoIjcnYkT+CHOMi5a+6LlszLVJMel9Fg2o9RVxgiU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r4Czra6jPdQceWOz3p3PPIPD28E19Jmd9VHJGrIvKtxxeRYuekPfeMqg6op3fZ0MmIrZHQfoNQmZuTyZsa0IrgIF4/RtSwTSwZ46Dz9gWTvywhBcFeRgt0dODRIOIOtPn5wg5PxLsfO88qI4PPn1nTNxhVznj+gpTZjeHWyYBPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=abYEURno; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J/S/pHrf; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y3AgmvuO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KZrJkQgh"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 420CDEC00F4;
-	Thu, 21 May 2026 04:19:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 21 May 2026 04:19:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="abYEURno";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J/S/pHrf"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6472AEC0110;
+	Thu, 21 May 2026 04:19:54 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 21 May 2026 04:19:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779351566; x=1779437966; bh=8rTG7bjVQS
-	wbmEDdun8HdGb6OXqhuF9JKu5wOu7l3L4=; b=Y3AgmvuOAOMjMQZ9xHTHJ1cmpZ
-	JiPMJLXz0t9yAGkK4hqkNA7X+kjNS0YSRcLjlNrvPGSq5qTKlPGpujWIW/b/HM0k
-	qbJ8lI8L6kdlzLXU3Wxv9lMJ9aUaNPs3oYmUofuIDhx0XN2W+gLhV1W/ExP2z0Vx
-	RxFbJnvNKcSHmfYi4cgYN803usfd0z29Sdx093+iLFCcrjEuuLQc5nwv+WesHxHy
-	1vqJb09A/aYuIQa0ZpUTlhZaeQlRiTdzw7oiGK7Rv5ewggWiovOdVVPvnygv13w4
-	X7QvnXW1NKMX0GPZS3hQJ1OCa+45rAn6Ptm1JZc/Y7PiGTrTUqHzID4XTozg==
+	:subject:to:to; s=fm3; t=1779351594; x=1779437994; bh=6af7BCmn35
+	NJ4S6jbk/Hjgvnu8nQiIAKCuQZNrZfYfk=; b=abYEURnoEtzzHD6dyk4j+TT0fj
+	sTpDdQH5xOXx14uC5fyhQidgOwXUC20Ac1JxS+E8MzRA5RKZhSNzdrFhFgK3piWu
+	ULiWa7B1EBnkMzlKkQhri/UOOAZItwLFv03qlvB8w+mD33r4if7Z0LOrnwbYiI3U
+	GAurULQueKShbg1lXuzW2/iUe2HZEEKPEKx/wOS9qfS9lVk5IL3AKFDNMisAxLOW
+	HybhE63KhKIegfyPXTb9endVGVgrik+VlQl7pUUzgYpjuOaLB3kE8YnT+yXKA1hI
+	2SN0zZBZWiIkZrpwQ82wb2MA3Y0GpU0e+RN0Q3sWzFbyzI1qAMFR9G3ZKGuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779351566; x=1779437966; bh=8rTG7bjVQSwbmEDdun8HdGb6OXqhuF9JKu5
-	wOu7l3L4=; b=KZrJkQghPNZTfS0jxTXyqiIufzp9leBRq+Fgx1dyO6Z8qMVcR0U
-	Lh/Whe3/grOzlobILimMJMlSO1W3LLVWVeUaFMttTIu9MkUu6mDzJE8bpOzu0bZM
-	URSX1vY3VtIOZFxUgdyTa6qgoltzTC56azAXOzsiDcGR/9jre9rn6MJJEC1zskiH
-	LE2x6G4byfGJO4PeVCVIJfCQRvKeChqKJiF9Jg4wyZsZ3xyOKnE4+zNt8YrRlMWW
-	hROOBBpKKmjrNa9m3s7m4nF73MeyK2BomZ+r/yuRCoFw3Id01Os3F5SCkOfyys5t
-	DtJeTkhO2QCN5rg5u5RTSuDdQpevYFBg+eQ==
-X-ME-Sender: <xms:DsAOag12RqE9_b-tiOxN3wXUFATDY6fBgOG9SEvSRdm_bT-CeQN-IA>
-    <xme:DsAOaiGyOnYMfKLU0wq0rvUumQXipCP1XVGZdu8Lx4xD9adDvXvl4OOUndEgZzVFP
-    I0h3lLMfQpfIkEutbYbzf-EIn1lgq7vWBDWth-ljEiqY6YwJH1uyGA>
-X-ME-Received: <xmr:DsAOat6LXVWO5zLKyH4wzpbNh_iMmaszCfWtsvpfKTf0qBbQ-Ys-IzMVbWcl-RGUP-xzXCU6fPBWA7vqjeTgirKXw4CYsuKqCA>
+	1779351594; x=1779437994; bh=6af7BCmn35NJ4S6jbk/Hjgvnu8nQiIAKCuQ
+	ZNrZfYfk=; b=J/S/pHrf4OYXWjhsGfq2rvYqTN+bycaEA6PgQUSTC7be2Qs+Oxs
+	HydpVVVtjBE4DWfuDQYDYxGR/N6SiaO0ZIj303oNn7Vnb3m6zutQEGBOIe5TsePp
+	/++UvgR4rBW5biEsCQeeteKYCLKDVGy+Tr0uY6d8SKmh0zuuix0zskByAhuK6ua2
+	CEscj9OjOUe2OJrXhPYTzHGLX+OH1irx/qJExOvIwiTyVvajEgspzC9CzsMYuH29
+	K+K5oktvnlVb/wn1g5S2GahtIFwOM1cp5YzkuBYE4OEAO0g9f+L+FFDTRJ0SAvv+
+	f9lwPWCaz/tnBM+xNZA/++Zq/3rAa+EaPSg==
+X-ME-Sender: <xms:KsAOaojuCZus_cwYxBshOLRjOqx8Q-XBAXquqGxoW2jkN2qOsl0p-g>
+    <xme:KsAOanBffJ3eb435URWbX_I2HO9lW-3WSfxtmU5nnyZRJ0DTVn-BiMqlizqvGdTdk
+    bLTHXRxd04ArTAcwwJsD6ZRchbdstLnbeU7HjgauaXm4m5iy3TL-g>
+X-ME-Received: <xmr:KsAOats4PBui8K1d5b_3F1pDQ_GlSTqX86JCp3rgOenhdjsJiH8zR_zx7WV74HrybdPOsUrC3FZgG_lLWT5K-_HcWyRlHd01iy5mFRnmFPY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejtdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehhrghrrghlughnohhrughgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:DsAOaosPRrISO4ioVmYYbl8nCHkEwmhMXVsM389JIDO9HOqUxmLNMg>
-    <xmx:DsAOau61MGU3hAirGCekF-ST7qL0Sttf7S5wSM6kRqiNnJW2ZYWbfQ>
-    <xmx:DsAOajWYL0PPMDqsHZwuCeVnmotDPbFSLp5JcqrPezzCK6Wyn4zSBA>
-    <xmx:DsAOag-AyizX0RqtFsD_IX2hHO0XKzMlemh8WlUZOENlXyP5Xd-uog>
-    <xmx:DsAOapbzVAXotEbGhMazu7ejLBmnWmq4mFCvNbsmzuUFtid9klOuGy2o>
-Feedback-ID: if26b431b:Fastmail
+    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvud
+    ehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:KsAOakZAdy9eDdkYhkTvhaoPEdDyPmhSiz8i9tiu7mxzvmMm_EsHeg>
+    <xmx:KsAOaoW_0ze60SYGDtsCM8SapTBHh8vEe8hJHEVZ4dv-3HY1OMOq7g>
+    <xmx:KsAOag71bYWyEDjvWYJylejrn1XYWLocLP-K6vAYMQRRf5w3WkMokg>
+    <xmx:KsAOarideIL6CMMEkVTOAodCRGW5VSw9fq2G-cg_CIDnn3BeEwc9ZQ>
+    <xmx:KsAOapAS4f_hrtnAWyHHPc_YYl27vSn52hx-i8_2TdtTIdwb63I1Vyd1>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 May 2026 04:19:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3] remote: qualify "git pull" advice for non-upstream
- compareBranches
-In-Reply-To: <pull.2301.v3.git.git.1779282625696.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Wed, 20 May 2026
-	13:10:25 +0000")
-References: <pull.2301.v2.git.git.1778665812261.gitgitgadget@gmail.com>
-	<pull.2301.v3.git.git.1779282625696.gitgitgadget@gmail.com>
-Date: Thu, 21 May 2026 17:19:24 +0900
-Message-ID: <xmqqy0hd18fn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 21 May 2026 04:19:53 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c20eac21 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 May 2026 08:19:51 +0000 (UTC)
+Date: Thu, 21 May 2026 10:19:48 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] connect: use "service" enum for "name" argument
+Message-ID: <ag7AJMbav6KgSCjj@pks.im>
+References: <20260519052219.GA1703179@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260519052219.GA1703179@coredump.intra.peff.net>
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, May 19, 2026 at 01:22:19AM -0400, Jeff King wrote:
+> diff --git a/connect.h b/connect.h
+> index 1645126c17..c56ecddc0e 100644
+> --- a/connect.h
+> +++ b/connect.h
+> @@ -7,7 +7,12 @@
+>  #define CONNECT_DIAG_URL      (1u << 1)
+>  #define CONNECT_IPV4          (1u << 2)
+>  #define CONNECT_IPV6          (1u << 3)
+> -struct child_process *git_connect(int fd[2], const char *url, const char *name, const char *prog, int flags);
+> +enum git_connect_service {
+> +    GIT_CONNECT_UPLOAD_PACK,
+> +    GIT_CONNECT_RECEIVE_PACK,
+> +    GIT_CONNECT_UPLOAD_ARCHIVE,
+> +};
+> +struct child_process *git_connect(int fd[2], const char *url, enum git_connect_service, const char *prog, int flags);
+>  int finish_connect(struct child_process *conn);
+>  int git_connection_is_socket(struct child_process *conn);
+>  int server_supports(const char *feature);
 
-> +		if (use_divergence_advice && advice_enabled(ADVICE_STATUS_HINTS)) {
-> +			if (push_remote_name && push_branch_name)
-> +				strbuf_addf(sb,
-> +					_("  (use \"git pull %s %s\" if you want to integrate the remote branch with yours)\n"),
-> +					push_remote_name, push_branch_name);
-> +			else
-> +				strbuf_addstr(sb,
-> +					_("  (use \"git pull\" if you want to integrate the remote branch with yours)\n"));
+This is all quite tightly-packed, and the patch would be a good
+opportunity to maybe add some documentation. But that's certainly
+moving the goalposts quite a bit.
 
-Here is where "git pull" is suggested as a fallback when the history
-is diverged (e.g., you pushed and then you rebased).
-
-> +		}
->  	}
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 4614036c99..bf37c5280c 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -620,8 +620,22 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+>  	return ret;
 >  }
 >  
-> @@ -2355,6 +2369,8 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
->  		int ours, theirs, cmp;
->  		int is_upstream, is_push;
->  		unsigned flags = 0;
-> +		const char *push_remote_name = NULL;
-> +		const char *push_branch_name = NULL;
->  
->  		full_ref = resolve_compare_branch(branch,
->  						  branches.items[i].string);
-> @@ -2396,13 +2412,25 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb,
->  		if (reported)
->  			strbuf_addstr(sb, "\n");
->  
-> -		if (is_upstream)
-> +		if (is_upstream || is_push)
->  			flags |= ENABLE_ADVICE_PULL;
-> -		if (is_push)
-> -			flags |= ENABLE_ADVICE_PUSH;
->  		if (show_divergence_advice && is_upstream)
->  			flags |= ENABLE_ADVICE_DIVERGENCE;
-> +		if (is_push) {
-> +			flags |= ENABLE_ADVICE_PUSH;
-> +			if (!upstream_ref || strcmp(upstream_ref, full_ref)) {
-> +				push_remote_name = pushremote_for_branch(branch, NULL);
+> +static const char *connect_service_cmd(enum git_connect_service service)
+> +{
+> +	switch (service) {
+> +	case GIT_CONNECT_UPLOAD_PACK:
+> +		return "git-upload-pack";
+> +	case GIT_CONNECT_RECEIVE_PACK:
+> +		return "git-receive-pack";
+> +	case GIT_CONNECT_UPLOAD_ARCHIVE:
+> +		return "git-upload-archive";
+> +	}
+> +	BUG("unknown git_connect_type: %d", service);
+> +}
 
-Here we _know_ that our repository has separate upstream and
-push/publish repositories.  But we may not be able to "qualify" it
-in the following "if" statement, in which case ...
+Shouldn't this say "unknown git_connect_service" instead of "_type"?
 
-> +				if (push_remote_name &&
-> +				    skip_prefix(full_ref, "refs/remotes/", &push_branch_name) &&
-> +				    skip_prefix(push_branch_name, push_remote_name, &push_branch_name) &&
-> +				    *push_branch_name == '/')
-> +					push_branch_name++;
-> +				else
-> +					push_remote_name = NULL;
+Other than that this patch looks good to me, and I agree that this makes
+the argument a bit easier to understand.
 
-... we assign NULL to push_remote_name to "punt".
-
-> +			}
-> +		}
-
-Which means that this call to the helper function cannot distinguish
-between the case where we were in "push" and pushing to the upstream
-(i.e., "git pull" without extra arguments is perfectly a sensible
-suggestion) and the case where we were in "push", diverged, and
-triangular (i.e., "git pull" with or without extra arguments is not
-an appropriate thing to suggest) but we cannot exactly tell what is
-going on.
-
-Shoudln't the "punt" case refrain from suggesting "git pull"?
-
->  		format_branch_comparison(sb, !cmp, ours, theirs, short_ref,
-> +					 push_remote_name, push_branch_name,
->  					 abf, flags);
->  		reported = 1;
->  
-> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-> index 0242b5bf7a..b613aba33a 100755
-> --- a/t/t6040-tracking-info.sh
-> +++ b/t/t6040-tracking-info.sh
-> @@ -646,4 +646,82 @@ test_expect_success 'status.compareBranches with remapped push and upstream remo
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'status.compareBranches behind both upstream and push' '
-> +	test_config -C test push.default current &&
-> +	test_config -C test remote.pushDefault origin &&
-> +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-> +	git -C test checkout -b feature13 upstream/main &&
-> +	(cd test && advance work13) &&
-> +	git -C test push origin &&
-> +	git -C test branch --set-upstream-to upstream/ahead &&
-> +	git -C test reset --hard HEAD^ &&
-> +	git -C test status >actual &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature13
-> +	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull" to update your local branch)
-> +
-> +	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull origin feature13" to update your local branch)
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'status.compareBranches with remapped push and behind push branch' '
-> +	test_config -C test remote.pushDefault origin &&
-> +	test_config -C test remote.origin.push refs/heads/feature14:refs/heads/remapped14 &&
-> +	test_config -C test status.compareBranches "@{push}" &&
-> +	git -C test checkout -b feature14 upstream/main &&
-> +	(cd test && advance work14) &&
-> +	git -C test push &&
-> +	git -C test reset --hard HEAD^ &&
-> +	git -C test status >actual &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature14
-> +	Your branch is behind ${SQ}origin/remapped14${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull origin remapped14" to update your local branch)
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'status.compareBranches with behind push branch and no upstream' '
-> +	test_config -C test push.default current &&
-> +	test_config -C test remote.pushDefault origin &&
-> +	test_config -C test status.compareBranches "@{push}" &&
-> +	git -C test checkout --no-track -b feature15 upstream/main &&
-> +	(cd test && advance work15) &&
-> +	git -C test push origin &&
-> +	git -C test reset --hard HEAD^ &&
-> +	git -C test status >actual &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature15
-> +	Your branch is behind ${SQ}origin/feature15${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull origin feature15" to update your local branch)
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'status.compareBranches behind upstream-equals-push suggests plain pull' '
-> +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-> +	git -C test checkout -b feature16 origin/main &&
-> +	(cd test && advance work16) &&
-> +	git -C test push origin HEAD:main &&
-> +	git -C test reset --hard HEAD^ &&
-> +	git -C test status >actual &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature16
-> +	Your branch is behind ${SQ}origin/main${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull" to update your local branch)
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
->
-> base-commit: 7bcaabddcf68bd0702697da5904c3b68c52f94cf
+Patrick
