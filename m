@@ -1,66 +1,66 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB8C305E3B
-	for <git@vger.kernel.org>; Thu, 21 May 2026 22:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4FB30567F
+	for <git@vger.kernel.org>; Thu, 21 May 2026 23:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779404211; cv=none; b=f12fBh3k7s/1mYOD9nCY2o4XD/EkJiiZ5eQ8HzILXltNZ+S8sMZxZEEiM0Bf5IRRE34Kak0JGaT3TL3LwkdSUqtd3yPgj+vdkgei8uf3mtOgvuktTv5D4e4gIjPlAOIkhOXY291M9SgxBOxgJLLHnSMw4aj1sI7t1PGzRW1VvSQ=
+	t=1779404444; cv=none; b=rRmX+gTxmLWB4cibKUJJm3D4RXV+AxVgwHRobHpqYUfsbXTqaw1VZyoQqWKDdoMoT0K/JMj1009Qq2fTaQ53zK1RcofGm1edLFpElcyGNcuuKXlb+jpvPEkcs/szFtc4QyFWu2DnpJHhAR+Ya5eCO/X8bkqORaelusxcTtyKZCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779404211; c=relaxed/simple;
-	bh=vlc2xs5Phh1d+JI+xhd6b24mJ2SYGx/G+3o6bFzSpZs=;
+	s=arc-20240116; t=1779404444; c=relaxed/simple;
+	bh=Fb2WrywYfHe7Taq7suM1u/gTOzdA9I5/x9KTOXlE9CI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wv0MDynvc7y6UpgZRSuZ2+sPxoEeG1cybYmigF5RnC+ZtH1NkCOBEvknibY5qfoLUd7HQWw56YV6HW+VHNtG60Vejt652K1u4TqNSxjrNKyB3vQiv2f59LIll4tqSec/uTQojXjJRa2pPIbU5HaHGPXwvnGkGg85K4qiOzrEpek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oRzUS+6f; arc=none smtp.client-ip=209.85.219.41
+	 In-Reply-To:Content-Type; b=pihHmdhua1nu39N5/bCNiHtxmQtQ5dlywRY5qmcOjaFVX2YIt9De9jtENPskhxmDz5NTc5WLoLUVuCJ0dM8r0r0wBkkAsu2ikrJmYv1bC7s+/2+fo+hYPXU7fIBnhEP81CYPG5xZ/b15I9UuImBaElkFLohXj9eR/24psSy65rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XuWlJyV1; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oRzUS+6f"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8acae26e564so82635136d6.2
-        for <git@vger.kernel.org>; Thu, 21 May 2026 15:56:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XuWlJyV1"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-50e63771d91so66698611cf.0
+        for <git@vger.kernel.org>; Thu, 21 May 2026 16:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779404209; x=1780009009; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779404442; x=1780009242; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=u0hm8M9ugRTcqzK9TNqGIM8lSELSnqTq4F5cnhvyEkk=;
-        b=oRzUS+6f8q087Qyb1RlDDdzLpqk9uepkWK4cWR3heDOJIP4WLHiN9ZmxzTBKGQzdud
-         uH7uBMieH64Cg9xUNx/ewoSM3f1WQma5gsbGVPj9UEenl4lzZAYi2XKkOKlIKup8lcQb
-         7hkfFqxKrT/n9BspBtA2YaXhbSIDP70k2d4eY6eUFUunCbTeTO81w7zEEuV/fvu0aGTe
-         vGFLB1WYtJ/XB3XYtLBTXSU/bCGEoMyOmmOKijB1dhkTOvErXCb7fN7g/9Atv42rYw/e
-         NVQkT44Gb7GjAsk7UYU/bzqBa0yayUTwV2Ik8v1MD7rRtTh2hdC5sE0MEQUsEXwwnpen
-         qfyQ==
+        bh=+RK2p4ITOOItjoJn+67wpZ2hy+l7wPMqT/uQKogXEZ0=;
+        b=XuWlJyV1y1+pNOKKX0kpQyyPysDY0W6Dy45+cYXFcZMhlntbe3P7XQdUP4tb7xKbCl
+         M8ysRJI7kKCnRSVb7qXYlE4U95/nCXaqZyE8qeBivQtegSFv7e5aoAT8XkTyCWn5xBSO
+         0E+NnUCKFeW4cbIkDogXZ+DrOT4eKlAaFbb8zol+dOZf5qScTrJtSfZnbHHqtmFsVcrH
+         h+TNtBu3jGeGR0nLdMlpzF+Jbp2Fn82KnJVWLb3cuoGgXpjGwM9/BCnir0ZRCg1wWdAO
+         6HwYETUvxQTzUjuaU+4VV7fwV+U1kClKJced21fl3Ga5iOiMWufOXWrLg/q0Tqj7v3ob
+         VmWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779404209; x=1780009009;
+        d=1e100.net; s=20251104; t=1779404442; x=1780009242;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=u0hm8M9ugRTcqzK9TNqGIM8lSELSnqTq4F5cnhvyEkk=;
-        b=CGjuZyXdSwxzy5NImNBpxWnzjeojLQl3Rs5uJPFxB3bofCeWDEi7pgZuvV9ULRMHUG
-         iEtVE4LxG3tLr6Jm6ipvLw8hFR5vMbEh3nTP8ESJ52vAzx6XzT3oulBCGzU0RsmHtlwM
-         FF6EY7ozYIOCzGm85KAC0T7N3DqChi8X5pmV3GnnkqOHcYWheBB9Gt/wVJ2rC1jSeMQu
-         S5trPMMTmZXTpjfIJp6AKZtvdCniYrukxdGoKDrThfcj4h7QYFiFmCoz0+EhOlRSSrkr
-         UdAE3Gko5pA8pQb7DyWir8HCjhqLpk7AFqjXH5Edly1De0ZrrrNMfj6lJKemZMFFnodU
-         mumg==
-X-Gm-Message-State: AOJu0YzZGQJKH/QyI5ZbKQtihPvfqnAciBp7x3lQegIc4qGymRdbS1BL
-	r05o2pbnUPSCxqR35oIZ619+qvAFnVDsI+T+PqLtr1q+r8fzoxI2gyMr
-X-Gm-Gg: Acq92OHiWJmKSPwEFoKTwA5a8K2PSRJnwL1hY5apCKTM4xeI9J025kVBC3gaaEVYo/o
-	AIVa/IwtC2Ru4YG+iFN1zdfiiY0EzstNMhXN5sV1IEAQ1lz/IMmkeaB8TXLwp+RTyhXpFaa1rgy
-	Tv3zzsENtl85MafuoUNSHEpow9vm7HeVCoCYGH7H3TZ01IhWrxqPscezHETY+rtIZ/iDCPeXIoU
-	hqxg9T5uNtkeuLYGm9K1Mw2YMbhzu3YWq7HgSCkQLBUpJ3gvRruVQnZSsVQJEfYZfyvsyHQL03+
-	YXtRQLK4oOAGxCrtuv30nBnZP3OW7NaqjaNBq/on6xee/iH5x+4MPMJnDDcEiPq3qvW/X5sNTHE
-	HNOJx1wRgEroi75YQwo8iVqU1B4QTHqe7die5BoHxRCFLhf1cg40c29/V0aFs1IHU5T7/aabMM+
-	+41a0jTr9iF27F5u+qQti3nMWHxjz9bXJAlmCbn5B7lg9r0Fv6EXeyL33tohM7UQhqyvjP2Ysl/
-	6W4UiuDsGXwmBouwqeWGL8R83jInJCDKFIMqO9pgsK4v0eJctKXfdVG9O8=
-X-Received: by 2002:a05:6214:54c3:b0:8ac:732b:6cf1 with SMTP id 6a1803df08f44-8cc7b674477mr26175016d6.24.1779404209356;
-        Thu, 21 May 2026 15:56:49 -0700 (PDT)
+        bh=+RK2p4ITOOItjoJn+67wpZ2hy+l7wPMqT/uQKogXEZ0=;
+        b=XPt0TdAsgfmxBrAy6PCU92EhIR6mV0dk/yzwbb6txdCx6dXqqPzynepRmt9FZ4IAkZ
+         al/IAdqP6C2DQ926NelWlBA9lVDvX/KJeCv1fPItDHo7DhJgQ42qkNmK4XZTSTVELyUe
+         DVWvd+HTUMjx2Fec4oQLP5h30+MA0eWTXdA+GQR4dp+vafUSB0TiRbGuzaisNmuVHCF6
+         /hqQqQXhNAqXWyopEdZKAIDaXNp++rV2h6ztWC+ShpPg7qFWDDsOe5FjLqUNbIvUqoFZ
+         OxDayCq+8PzIkREcNn6OVxfD3Pim3rj99RMZB9DEYilqRsWQ9AM5lKjsXXA/bDc7sQ35
+         Y/+w==
+X-Gm-Message-State: AOJu0YxA/+6UOxdCc2KFWHVgC4XFHsJxLkyuXvmPfpyXHtaflb1r9NaL
+	fbSIEXmwqUBIfi/zxTOufaawpZXTr7K9nQvUwuxCFWGOeonmrdLHiYlN
+X-Gm-Gg: Acq92OE1fLScver5d4HNYNq4nNh3tdPPrkGG17nEdj5b9i5NwilEJ0nMjPcNKJJSLY/
+	5n95z7gJ6lcgCq5C2AHJDo5+IZDCQN4/0hGwC+dKmh5dMHRa6b/fE7he4oX4g+ZpwE/LQmFdaFg
+	hyK0LcjRezdM6GzLnuMdezLhsU8vBI9EA3IDP2B/XycZlAPxCXbTdyJ0rfiDwFfXTJS7WVmb9xP
+	P/jvpUjiAYFinmRZK5kyi1PrISFD21FCiVynzVC6WMGHm9iqmcIf3xdFCt1W4OElBclh1RBqVeJ
+	FUDF7lR5F5cPAMYDc3Y2nwYcmDdE+1gpyXlcYi2DHnsEO2+PP/jsd/ACL6/WvQjl9BScqNwBJCh
+	uzsAN2cjCbBm/FxAWY63wymKSyEXnAAeEAqjdQZASjIl2wQ1ePYcyVDuMP/A60VB7Zu4z5b0t4i
+	SF81rUF3roRlyeewmqxy72DMp9kptei3ABkeQi3lYLEFt6qnNtPNPWutk2ZGPG5QIpshL6t0hJe
+	My+9BVOprIwXVDeZ+4/ozfB+ifwF1oRfZxvDyKvCwepqrcB
+X-Received: by 2002:a05:622a:418b:b0:50f:be4f:465e with SMTP id d75a77b69052e-516d466fb5dmr20623511cf.53.1779404441887;
+        Thu, 21 May 2026 16:00:41 -0700 (PDT)
 Received: from ?IPV6:2605:a601:9b88:8300:b19a:969:106e:4f95? ([2605:a601:9b88:8300:b19a:969:106e:4f95])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80dcd813sm1226086d6.10.2026.05.21.15.56.48
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc812e269csm803716d6.25.2026.05.21.16.00.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 15:56:48 -0700 (PDT)
-Message-ID: <2485a7c4-c798-4886-ab64-a22fa70f55be@gmail.com>
-Date: Thu, 21 May 2026 18:56:48 -0400
+        Thu, 21 May 2026 16:00:41 -0700 (PDT)
+Message-ID: <53d46614-7d9d-49ab-ace7-71367f6d2f40@gmail.com>
+Date: Thu, 21 May 2026 19:00:39 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,8 +68,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/13] t/perf: add pack-objects filter and path-walk
- benchmark
+Subject: Re: [PATCH v4 04/13] path-walk: always emit directly-requested
+ objects
 To: Taylor Blau <me@ttaylorr.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -77,40 +77,58 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
  kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net, ps@pks.im
 References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
  <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
- <fb8a0f9c43d4e41712839a93c4db6a294a7b5285.1778707135.git.gitgitgadget@gmail.com>
- <agz3fOHvVKGLMxgb@nand.local>
+ <e77c8a6bbc22da3428751f81ff5ee79aa5364237.1778707135.git.gitgitgadget@gmail.com>
+ <agzwsxV2KEkkaGPV@nand.local>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <agz3fOHvVKGLMxgb@nand.local>
+In-Reply-To: <agzwsxV2KEkkaGPV@nand.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 5/19/26 7:51 PM, Taylor Blau wrote:
-> On Wed, May 13, 2026 at 09:18:45PM +0000, Derrick Stolee via GitGitGadget wrote:
->> +	>depth2-dirs &&
->> +	while read tdir
->> +	do
->> +		git ls-tree -d --name-only "HEAD:$tdir" 2>/dev/null || return 1
->> +	done <top-dirs >depth2-dirs.raw &&
->> +	sed "s|^|$tdir/|" <depth2-dirs.raw >depth2-dirs &&
+On 5/19/26 7:22 PM, Taylor Blau wrote:
+> On Wed, May 13, 2026 at 09:18:46PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> diff --git a/path-walk.c b/path-walk.c
+>> index 6e426af433..05bfc1c114 100644
+>> --- a/path-walk.c
+>> +++ b/path-walk.c
+>> @@ -248,6 +248,17 @@ static int add_tree_entries(struct path_walk_context *ctx,
+>>   	return 0;
+>>   }
+>>
+>> +/*
+>> + * Paths starting with '/' (e.g., "/tags", "/tagged-blobs") hold objects that
+>> + * were directly requested by 'pending' objects rather than discovered during
+>> + * tree traversal.
+>> + */
+>> +static int path_is_for_direct_objects(const char *path)
+>> +{
+>> +	ASSERT(path);
+>> +	return path[0] == '/';
+>> +}
+>> +
 > 
-> Ugh, I think that this was a bad suggestion on my part, since $tdir
-> should be empty at this point.
+> Hmm, I still find this a little brittle. I think that 'path' here is
+> doing a number of jobs: it serves as a strmap key, it's visible to the
+> caller, and now also a "direct object" marker.
 > 
-> Could we use --format here like so?
+> Could we instead store this explicitly on the type_and_oid_list, e.g. a
+> "direct" flag? I'm not sure whether that type has the right scope for
+> this information. If not, I wonder if there is another way to store this
+> information, since I worry that future callers may not know about this
+> convention and end up changing the result of the path-walk depending on
+> how they name their paths.
 
-The --format option is clean. The full loop will look like this:
+I don't find this as fragile as you do, because these "direct" paths
+_need_ to start with '/' to avoid collisions with other paths that may
+exist _and_ this meaning is internal to the data within the API. Callers
+can't change this data, though they will see the paths themselves in the
+callback function.
 
-	while read tdir
-	do
-		git ls-tree -d --format="$tdir/%(path)" "HEAD:$tdir" || return 1
-	done <top-dirs >depth2-dirs &&
-
-> I guess that breaks if $tdir contains a formatting atom, so perhaps we
-> should keep the spirit of the original (but using an intermediary file
-> instead of piping the output of Git to another command).
+And as I mentioned before, this is a memory-efficient storage of this
+indicator bit because it only consumes memory when it is "on" and the
+vast majority of cases where it is "off" it doesn't take any extra
+storage.
 
 Thanks,
 -Stolee
-
 
