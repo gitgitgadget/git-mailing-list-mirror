@@ -1,128 +1,120 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BF7331A7B
-	for <git@vger.kernel.org>; Thu, 21 May 2026 08:59:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D4D376A16
+	for <git@vger.kernel.org>; Thu, 21 May 2026 09:31:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779353977; cv=none; b=QXUzHyu7RC2PvA+OtTvZuCtJ8UgdHHFxG8TGTs45QZ71YAfl7dVQxz+z/7gvrdP1eSrWoecUD2VL/TSKshK4SNZVcyQgbEPt/AiyOdrVrBQb+Hg2/yWj5MJ0Rw4lS8aTpF7B6YFPWJdu3m2atLtycAIoOWDHS5m7mT0Th209siA=
+	t=1779355886; cv=none; b=rvZ0yN7s21qxavaOwFLg4CgE+h8KUQ07gJIjLU2Bc1YOgzzLNsIPCFfUYxuRI4GL46IIq76X0VXjmys1/uH9iwv8im7vtskQ/VhhW1fQGiU8vbEODZtWSZaykDdRiE8WvSZyBlYu+fO+DNunxLwjpaYO4kR8dh16qQ1xZYewd1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779353977; c=relaxed/simple;
-	bh=bhDqT9w0RdhPbu/YNLteYpBttzXW8cbq0kzChI83ab4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uuHSr09z5iL6UjZ595b8gn+di4tXENPU0AN/XMYA6L4oJ6U6FS7F8mirbUN4lFQOB08X273wY6W20lyOi5jXLD4b5jgcBqhs46JYoJd+D79bl7qNKf7MRbwvZ1N2Qk9hHAuNr1U4aXnJTQLFlq1S7aZGoGoppMAINiQV2L7suYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hrEXABrt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kj6cCKL+; arc=none smtp.client-ip=103.168.172.155
+	s=arc-20240116; t=1779355886; c=relaxed/simple;
+	bh=RZjOyH5ZcQVCPd+VcTN3i+1tGHHwKM4kqsCaKGyoVUc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FTF9oOWOKXryNMnfI2RyS01n+7XyHx2E7WslQ3jJyytyDjcvmDTxRdpp/WzXAYtwpngEgM+itO4Y/YAHtFQo16lqb+D2NhpIDM0k2pUpV+qgjehCjsTIKemBTkZybAdohHm3424YFtjnMzCGSZ3J6l9m0khWPQWnPY2XWIlSHoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h0zWH8xB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fWaJ7+JW; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hrEXABrt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kj6cCKL+"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 08AB1140006D
-	for <git@vger.kernel.org>; Thu, 21 May 2026 04:59:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h0zWH8xB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fWaJ7+JW"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 706FA140007C;
+	Thu, 21 May 2026 05:31:24 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Thu, 21 May 2026 04:59:35 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 21 May 2026 05:31:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779353975;
-	 x=1779440375; bh=C3j0r7fHi2lucorREOBJR8WiB40fk67il+TS18T8R54=; b=
-	hrEXABrt4LscEcs8PVcMDzYDT0jAs/G3nuxVrCjs1/vECH7KGHyJLgE8wpci95XV
-	qo2CZ+/Srapx7yqjSwNSGCmRyXfT/OYWjDbsK4A0XIysU/r0oTV6Soj+OWlbSvqQ
-	HrfFuo1IjgFky+fr/5+lIPfIVyymgQiGXfU6VHha5EXYEW77PjEOiX6+maKY/Qmr
-	SCnYLCfiGnZGN3OWMHI03ALKgFANj+a583Jcq//S9dlQk/V22NFgu7sSKjQw9jX5
-	RVxBJKIb+2Fay/XmR1HBpvr9kruX3+txyFWQKHKcM6B3hDCoAe5iUVTDWGY03XXg
-	RqfEh1mtWlYMJxVJGno2Mg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1779355884; x=1779442284; bh=9pD7NfWh1i
+	f05p+ROnzxErOZZvT7KC3sh/LFOquLmC0=; b=h0zWH8xBSkSK9WYjOUczcOC3Ck
+	WHKDGhE8B9Ap0MELMZrKpbTfs6jJpw8A74L5db8qAL0czItBRrKuJMkiY3wn3m+h
+	kYLYZ7KUVxWjJKtyeViFV8mpuj+oXHTTYXhx9HdjqEfhe7xDlVJCUbqQh1jSpjnz
+	LUPFLdNGuxAquLHJof9YouTrqrmRVgG2roEp3FTR6H6ocYZLrS/QSGFfdOfyczeH
+	/5DI9hnmGxr2I8VYhaGD5WD6BSyR9HyRMiNjxMgN8Vyk4SnLWJOaLjIbGjZ7ahJ6
+	IQpTkD5An87kQ5keOgRua+J0ZeCYWZgFmfnbFCDy8Zl1v8X0b2udcBRoOM5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779353975; x=
-	1779440375; bh=C3j0r7fHi2lucorREOBJR8WiB40fk67il+TS18T8R54=; b=K
-	j6cCKL+/kp+LtQ3Tj0V9n5owHcoObHq1m7XdtrmdqWEfhNw29mESAaweRKJdIzSh
-	QoberKe6KeS1PekPfmOFl2shxR/OKKODE4lnh0u51KDPoMUguW869mJ1nl78tg1L
-	5oYbWBs5NFHL8GTKcRONsmtIXQzvbJblMl4A9/7e8dmAbSXWNbO7r/2k9SwQqG6B
-	vzbpLNy1AVS87zm/Axyv2MTBKqfHkG3CfIfvBr09bz+J4M/hoVqwjiXQ262WzuB5
-	oh2fMcrEITL/zaW7sJt1RO6jP7Xn234bEzqj5uALy1fERDV1ULgL+HGTgD6X8Tut
-	8+IKS3ulVJ7F8X0IicKuw==
-X-ME-Sender: <xms:dskOarnS3RhtQlaqK2FDNiKGX4y4SVpMlQOdDPF0YMpyagu_BglzVw>
-    <xme:dskOalwD8TjYLPGWnRz-FviNa-muz8fG8XKOBE_nhU1J32K58dFkab6m4n3TUp4-e
-    fN84E90sd77h1RljOjQ8ioboWt4PqCGvzw7v8xjg7u5P1rDxiXtuw>
-X-ME-Received: <xmr:dskOanSBlST0CiTg_vujovUOu4hTFbhwFWrKTHR3nPTvAI5issHVT5Sl2Ou0ERDGd6fSgaZZAiwUA6libt1zHSSFL0Wbx4erS7fzKdvV_UI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejtdelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779355884; x=1779442284; bh=9pD7NfWh1if05p+ROnzxErOZZvT7KC3sh/L
+	FOquLmC0=; b=fWaJ7+JWiHfMfDR43OPyb86Vd5vJIL+G4k5Ud+FSfTVxCbrBiAo
+	J0kk9RAXAIkEmj9SZy1OIs2tkX5o07AdAKuY2LmwIpXs4PYX5DIEy84FRqNxW19I
+	9S+rS94cbDMsvw7XSA/QlA+UXNWqw42OZCLDZe8vcegZcSXrMoWgtbAIU8SkZNr4
+	C7lFtoHjyrlF0pek/4C6wHzlH14RRbNLpngiBxpc+koK8g3t57iZJGrRSqFXnGW8
+	I0/gfAP+GxMxtsKzxY7xTm5wdLCid3KKRj54X1hwHhtgj9L12vWi6SSCQUGGEjiI
+	rCfR/kkS0f73YQoiVzBfAaaf1c8joeP8+DQ==
+X-ME-Sender: <xms:7NAOagLQmtAYqyyE2qiWlDA3SeMnoFR0FhYOy2OBNjg0nEKXP9aMJw>
+    <xme:7NAOanlUdhixxYXjxW6BF7KVWdqft_2osSm_9hI3chVixJYV9I2xsTk5rP5Tbvw9U
+    sMqep9i9xtAAGWokjWYi1IJEK2AmTbSq4L_JrLfEBaEEVPPmxzCZQ>
+X-ME-Received: <xmr:7NAOauG1ULzq5f0I-foCGbE2upLpLXz7c3Ub2J_s_HMI8JZI_gSYISY7SIzZA_NiFMzjrDOxqfh_M151UVGPAxdHSTg1qicuIc2FPIKepb4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejudeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
-    dmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefr
-    rghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrg
-    htthgvrhhnpefgffefheffveeijeeuffevtdehgefhteejfeefvefhhfeuiefhkeetkeel
-    hfehudenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
-    thhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:dskOaovXWz2eieo4ZhYbsl1lCkGUujKhyVDwA-izfCkGkNSrnK2mvg>
-    <xmx:dskOapudCoNk4cjSegJJ1uh9EsyC6Vd6-IQN8Cz7nECLknJMhBop6g>
-    <xmx:dskOauxJrctkGU3LuNFu_XzQeh-KOr4xLqF2d4F8H0zbsnO3qG81RQ>
-    <xmx:dskOaviKwUVJmWWvvIbaCL5-EEdWp_27i-SF7nKU0Ljyi768mtrM9w>
-    <xmx:d8kOar0f8XjQmyASAARBcfPkYPX-wQgZEWeqc8PBxquQfYpzRrfGD4Z3>
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknh
+    hosghlvgdoghhithhhuhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehi
+    ohhttghlrdgtohhm
+X-ME-Proxy: <xmx:7NAOanEa_GPPMnqHuUMgXiD7pHt0aHpPkYXyUwQEIvTXDGt2c2k4oQ>
+    <xmx:7NAOarNDptpaiid2IhBqn6_E-RhEPjiFpyPMitqLCDlkyCmk3Ylbxw>
+    <xmx:7NAOamEmMyevV8vm7YAWHSNgH4HS6fuescd_uMTc0LgemZSAsb-Y_A>
+    <xmx:7NAOaiOHgZJYujLXK3NnmucQ1K26Ns5tL3BGu5-YqsY9g0TmdCLhng>
+    <xmx:7NAOavnvE0w9EVAMe1apdef1HzjkQnxbI_GRzgv3rNdwmNFw5WsTjBoi>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 21 May 2026 04:59:34 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 May 2026 05:31:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id acc8994a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 21 May 2026 08:59:33 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a8e04675 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 21 May 2026 09:31:21 +0000 (UTC)
+Date: Thu, 21 May 2026 11:31:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 21 May 2026 10:59:25 +0200
-Subject: [PATCH 2/2] gitlab-ci: update macOS image
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: Re: [PATCH v3] generate-configlist: collapse depfile for older Ninja
+Message-ID: <ag7Q5_qz2MCAcdFp@pks.im>
+References: <20260422-toon-fix-almalinux8-v2-1-45d8471ed0e9@iotcl.com>
+ <20260515-toon-fix-almalinux8-v3-1-b545a0647f0f@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-b4-pks-gitlab-ci-updates-v1-2-53bb46ed33e0@pks.im>
-References: <20260521-b4-pks-gitlab-ci-updates-v1-0-53bb46ed33e0@pks.im>
-In-Reply-To: <20260521-b4-pks-gitlab-ci-updates-v1-0-53bb46ed33e0@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260515-toon-fix-almalinux8-v3-1-b545a0647f0f@iotcl.com>
 
-The GitLab CI jobs for macOS are all using the macOS 15 images. While
-these images are not deprecated yet, there is a new image for macOS 26
-generally available by now [1].
+On Fri, May 15, 2026 at 10:42:26AM +0200, Toon Claes wrote:
+> diff --git a/tools/generate-configlist.sh b/tools/generate-configlist.sh
+> index e28054f9e0..d1d2ba4bb7 100755
+> --- a/tools/generate-configlist.sh
+> +++ b/tools/generate-configlist.sh
+> @@ -42,9 +42,12 @@ if test -n "$DEPFILE"
+>  then
+>  	QUOTED_OUTPUT="$(printf '%s\n' "$OUTPUT" | sed 's,[&/\],\\&,g')"
+>  	{
+> +		printf '%s' "$QUOTED_OUTPUT: "
+>  		printf '%s\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+>  			"$SOURCE_DIR"/Documentation/config/*.adoc |
+> -			sed -e 's/[# ]/\\&/g' -e "s/^/$QUOTED_OUTPUT: /"
+> +			sed -e 's/[# ]/\\&/g' |
 
-Switch two of our jobs to use the new image. The third job still
-continues to use the old image. This ensures broader test coverage until
-this old image gets deprecated.
+The `-e` switch is now arguably not necessary anymore, but that's not a
+huge concern.
 
-[1]: https://docs.gitlab.com/ci/runners/hosted_runners/macos/
+> +			tr '\n' ' '
+> +		printf '\n'
+>  		printf '%s:\n' "$SOURCE_DIR"/Documentation/*config.adoc \
+>  			"$SOURCE_DIR"/Documentation/config/*.adoc |
+>  			sed -e 's/[# ]/\\&/g'
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- .gitlab-ci.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The extra printf could've been rolled into the second printf call via
+`printf '\n%s:\n'`, but that's not a huge concern, either.
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 1c6777acf3..e0b9a0d82b 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -104,10 +104,10 @@ test:osx:
-         image: macos-15-xcode-16
-         CC: clang
-       - jobname: osx-reftable
--        image: macos-15-xcode-16
-+        image: macos-26-xcode-26
-         CC: clang
-       - jobname: osx-meson
--        image: macos-15-xcode-16
-+        image: macos-26-xcode-26
-         CC: clang
-   artifacts:
-     paths:
+Other than that this looks good to me, thanks!
 
--- 
-2.54.0.926.g75ba10bac6.dirty
-
+Patrick
