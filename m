@@ -1,56 +1,56 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0232E974D
-	for <git@vger.kernel.org>; Thu, 21 May 2026 18:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E453603F7
+	for <git@vger.kernel.org>; Thu, 21 May 2026 18:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779386574; cv=none; b=Z/5rJBuBUkaPrp1C7rhK6CTCQoEWHP7ESbb9qvQfpirljaH+8ethg9htTYZ8+k849lkPOLUJfum8OH3+FDBxLWDf3hIe2qxoNvvvRMeGSPKHrPlpVq+449wSD5O7dENWZ4SJ6LGeUAEVUeqG1I2HIlrFeymdL37i3lLNLyfSFSU=
+	t=1779386590; cv=none; b=aPuGQdaSoRXNs02m+HyFpI7wPpm29L3IXQgwoAb0Uj8Xq3KU7Msqj8ctU2a5f9Ha3Ed0kJUurewoKgEA3g07esHhy9jCWfMxgTaNKOJEZyZG/FeXTIabJwBEno52EiRjenTZcVxKyV6rxDroZi+hXUjJw8TnBhjPIkGDkXfTm2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779386574; c=relaxed/simple;
-	bh=Mb/sXdPtHf8x55+euw/D9Yr/t8Wxze85hIEK+3fb8CY=;
+	s=arc-20240116; t=1779386590; c=relaxed/simple;
+	bh=80c3qCAznjofzR230ueBE3sumJVNlGGlOQ0j5zAcB4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cqIJPMszxvZfdQiXHqE2IllR4hL1BpSJHMNQcclRSyJsNEz6lCaxR6d5iJVd0vYhsaKYMynHgEvdYdPHzjDAbXf7vaZ7CV2EteQ2wVFpOBgpYCT2HsQqDwL0mBEgtlAO/ljo5MQAsSJjPZCnPDnJpHHCpF4tBQeXZ6A0CU3YNyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KobZ95Ay; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UOe7h5Zb; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=tNgYo7tBFiWXSNJEvZP9udfKmyEaD/n//LlRxOEmXYafF+GrK1xTtwvfv4nh8h8ILw9vCCJBDFlQhIpJq5ls3RKHLPsjpKYY6zBIqwzIMaWTviTUhSYJGAxWZDoJ8TIGvY8k0hgpScs6QFFzNNlyrLVdcoFw3zT5k/tpq2fq7u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=e5K/x86d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dDIZh/49; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KobZ95Ay";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UOe7h5Zb"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id B65A91D00084;
-	Thu, 21 May 2026 14:02:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="e5K/x86d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dDIZh/49"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8B7481D00089;
+	Thu, 21 May 2026 14:03:08 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 21 May 2026 14:02:50 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 21 May 2026 14:03:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779386570;
-	 x=1779472970; bh=qLTg/6m///Z62AH45FAoRr0FZ+G5hBDGGm4Z3IsX8Ww=; b=
-	KobZ95Ay74xNGl+OsAIpVWTIlXmdD3p0sFTDHzV6OpcuusyoqWjV3JkLCL1UBTBv
-	GOXG8vCTTOnsE/g/ua/3r/03y2IlYEBUAnS7p7nFYUfC+bTHKB39jAsBIcr7AnBT
-	psHqc+Y6VIiLQYjQq9kgfZesk+HA3Bxb9Oi280xScgZIBGTcoZMTXpBZgvefXmQN
-	0mjBQbscXfCZHXIRn/+Zmp3W9YTgDVjZwfWUD1rPH4xcSLBq6ih+gZQGZUlAs97n
-	TfkXzeDxid/PvxznA3XlsbJFDztBh6zYH/gGXCIPJe/n27VwDDDY3HsrGgTL0TaR
-	DtvrQAbXAJis/JvFB+m+Fg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779386588;
+	 x=1779472988; bh=2dve/nTJzDUrVpIuiqjdquZ/yiLBHWRJShiB9eqSlaA=; b=
+	e5K/x86dm62j6WiWp2Bb+HZocn5oJXQf6iTTFMhFBEBPu54wLr+4+0RoJFVVvseS
+	Ze5U2M/KD06X+Iw8tOm8Ii1EZSU+RSdXVyLR06su+AVR/6tGTrUdkFIH3gVxjAKC
+	un+p1yfW602lMOsuEj3N7ZDWJ+ODeJ2+fjiudF64ePC3PhE3pLZb46kvLhC7GYXh
+	f2ZT0cP2mbuY3/3p1p2d3kCv8FdWOhxiUdZ/WuYn4mdNdDnt/6GEuGcVt9WLI3Zb
+	2GaY3A3uSGnDGy3niBSslqYZEmHsOIw6HmnbJbdvpDQDtVmssBBmKq9ekbrkNK3N
+	qvYzRSC2iXv/kVvBnFmFAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779386570; x=
-	1779472970; bh=qLTg/6m///Z62AH45FAoRr0FZ+G5hBDGGm4Z3IsX8Ww=; b=U
-	Oe7h5ZbtJiteF4KcvOQFnTZVirjutHBTVf14bEvKe/kXhjCDJVkpTV/s6u6fXKeH
-	a+/x3vKfFw+KfyMyXPxzVki9i5HwF7lRnDJGNWJ2nhluRvTBzuws0wQLJifohh8Q
-	M6BvN3XjtZrqsaiZiDkX+7z7TukNYCg7Wjjlt7+Wj834kqq8HP2mTvFTMIPlKS6C
-	96FVCKKiYuy68z3BAPXbb8dRhqBGcm8k4EvjhOdxw/kaZ52MQv09iNc0mbnAAxXD
-	N5ZZ6+L80Y/AOiml2dgGrb9mUsD5x10FAhnbBOUuNUHo2b1lBJcf7ZTUKyl3MAzu
-	10c0YE8qGbmAMu+wqbpKg==
-X-ME-Sender: <xms:ykgPaloSW2efKZuYNjLrf-kMmodQDk1CozJNyj4bEgX1ysPKk3xtAOk>
-    <xme:ykgPaq60uf9vOaZ5Nn4emtBuSNM_nZE4R2I_PdMco7v9m1-JcHL6PVzjoX4Ok3a_p
-    ed-f-519z7aXUSZ-fmK2Q4hkX_TLDDoYDWcxL1ImW-KbO9Fd8iiwA>
-X-ME-Received: <xmr:ykgParrFmBdB9y7FSum_gNOAQvMkZ0YmOfnr9LHO0ZMHaVO2KPpIcKKjsEShcryTvS3ubj9sj0rBfw1YUvHuA5CCo47xLS_0iITXLDo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeekudejucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779386588; x=
+	1779472988; bh=2dve/nTJzDUrVpIuiqjdquZ/yiLBHWRJShiB9eqSlaA=; b=d
+	DIZh/49dEJGE3E3U9+SgC2+9Zcy8zfASw799+7yemJ5Yzye03pGk434zEWnXff48
+	OigNOPubJKBG3ivwqTeT6P2d1JUKLOy+H7qHZ6QqHVo0F7lNSFdiSNRruSv2bkwE
+	c/lldQfUk5sRRyam/KhgcPh0/aNSevfagbHUn1XFSQuK70P8SqKT+i9ZnxihcRLt
+	0dKqZ012DraxSfgg0RZmRpr874U1djv0sovXQrmVi5f28w32ScWD8HcWCVIbzz+R
+	JUbfUHc9m7G0D2EXp/9elIZsSnsh+GbdLLRCBE5xgh1RsLEfN7mL0OMs8merGK/j
+	en/NnEC6DS8v2IGdtgf5A==
+X-ME-Sender: <xms:3EgPaha7cIGfbJW7ZEdGz43Egk6kpCcocnRyBXZLJZsFqOnc6KJUpqA>
+    <xme:3EgPav1jL6Ps3kMnlrO_J_xD2Snqyutw0KfrhL2SxytA-ENREuaOwwb6vuaL2zMtw
+    JISzwqvRnbSubHPrdBJqvSHLrMPd046fvOV1G6fIaJj8ct0TUTZ>
+X-ME-Received: <xmr:3EgPahXpvNZW987SjhFd937JVOf2pn7YQXwYF597LIGWCfVbx0OqiZTI1fAs1zaW_Vp0V01qeGTjirDut6ZtuqkNmWJnWDmxxHeqOQw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeekudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
     hlucfvnfffucdlfeehmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredt
@@ -62,21 +62,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeekudejucetufdote
     gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
     uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhiugguhhgrrhhthh
     grshhthhgrnhgrfedusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:ykgPasjHikuvftiW8v0zZ-piJzt85jUUNbEHsnR2JeRM-R1eemZSeA>
-    <xmx:ykgPalJBhoBPnZdfoji2GT6j662xgiu_adlf6l6DPYor0hGdPXExgQ>
-    <xmx:ykgPasCFRBmx7n0G7zODPGSOw1UWe8l_UDnXXJA2LxzQdeR2vMGmBw>
-    <xmx:ykgPalgzhoKsMeVHfZehJ0ZvVyltoY7bYpQNgS7m1J7TF8Y_4XYJ-A>
-    <xmx:ykgPariObxilT_xaDp6nC7ibO87EGSztKpEYeVxU1a5g7tvCrhUl4IN1>
+X-ME-Proxy: <xmx:3EgPapWf_iXFvUoaluREKEon4nGpJegl1-MbZ6ScsA4YjWLieE_YEw>
+    <xmx:3EgPagdMh64NnL5LWj3SqrHRtgpuLfau2tOtjkC9MQaj-gz8dIwbmA>
+    <xmx:3EgPaiUq7xD-0cwvA_nCy8hRofBafOMMs1F88ZmML3nWwROPg55fuA>
+    <xmx:3EgPapc5oXNWXvwpj74EdHD2paqLZZi92g5SGgBIHIpFJgKqzlGyAw>
+    <xmx:3EgPan0M5sjksJGC3Hr7zA-dbahAreh45u1pYYLlPcCo0pj4ZX0oFpNm>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 May 2026 14:02:49 -0400 (EDT)
+ 21 May 2026 14:03:07 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH 2/4] doc: replay: simplify replay.refAction description
-Date: Thu, 21 May 2026 20:01:59 +0200
-Message-ID: <simplify_replay.refAction.70b@msgid.xyz>
+Subject: [PATCH 3/4] doc: replay: use a nested definition list
+Date: Thu, 21 May 2026 20:02:00 +0200
+Message-ID: <--ref-action_definition_list.70c@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
 In-Reply-To: <CV_doc_replay_config.709@msgid.xyz>
 References: <CV_doc_replay_config.709@msgid.xyz>
@@ -91,53 +91,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-We don’t need to list what each argument does since the documentation
-for `--ref-action` does that. So let’s simplify the `replay.refAction`
-description by referring to git-replay(1).
+This bullet list for `--ref-action` introduces a term with a colon.
+This is exactly what a definition list is, structurally. Let’s be
+sylistically consistent and use the definition list markup construct.
 
-Also make sure to not self-link for the git-replay(1) inclusion.
+We can reuse the `::` delimiter since we use an open block.
+But for consistency use the typical nested definition list
+delimiter, namely `;;`.
+
+Also drop the harmless but unneeded indentation.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/config/replay.adoc | 17 +++++++----------
- Documentation/git-replay.adoc    |  1 +
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ Documentation/git-replay.adoc | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/replay.adoc b/Documentation/config/replay.adoc
-index 7d549d2f0e5..42e521694d1 100644
---- a/Documentation/config/replay.adoc
-+++ b/Documentation/config/replay.adoc
-@@ -1,11 +1,8 @@
- replay.refAction::
--	Specifies the default mode for handling reference updates in
--	`git replay`. The value can be:
--+
----
--	* `update`: Update refs directly using an atomic transaction (default behavior).
--	* `print`: Output update-ref commands for pipeline use.
----
--+
--This setting can be overridden with the `--ref-action` command-line option.
--When not configured, `git replay` defaults to `update` mode.
-+	Specifies the default mode for handling reference updates. Either `update` or `print`.
-+ifdef::git-replay[]
-+See `--ref-action`.
-+endif::git-replay[]
-+ifndef::git-replay[]
-+See `--ref-action` for linkgit:git-replay[1] for details.
-+endif::git-replay[]
 diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-index f9ca2db2833..4de85088d6c 100644
+index 4de85088d6c..b4fe43ec687 100644
 --- a/Documentation/git-replay.adoc
 +++ b/Documentation/git-replay.adoc
-@@ -211,6 +211,7 @@ to use bare commit IDs instead of branch names.
- 
- CONFIGURATION
- -------------
-+:git-replay: 1
- include::config/replay.adoc[]
- 
- GIT
+@@ -80,10 +80,10 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
+ 	Control how references are updated. The mode can be:
+ +
+ --
+-	* `update` (default): Update refs directly using an atomic transaction.
+-	  All refs are updated or none are (all-or-nothing behavior).
+-	* `print`: Output update-ref commands for pipeline use. This is the
+-	  traditional behavior where output can be piped to `git update-ref --stdin`.
++`update` (default);; Update refs directly using an atomic transaction.
++	All refs are updated or none are (all-or-nothing behavior).
++`print`;; Output update-ref commands for pipeline use. This is the
++	traditional behavior where output can be piped to `git update-ref --stdin`.
+ --
+ +
+ The default mode can be configured via the `replay.refAction` configuration variable.
 -- 
 2.54.0.13.g9c7419e39f8
 
