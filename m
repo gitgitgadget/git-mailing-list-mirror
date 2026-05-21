@@ -1,55 +1,55 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E453603F7
-	for <git@vger.kernel.org>; Thu, 21 May 2026 18:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48BA39FD9
+	for <git@vger.kernel.org>; Thu, 21 May 2026 18:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779386590; cv=none; b=aPuGQdaSoRXNs02m+HyFpI7wPpm29L3IXQgwoAb0Uj8Xq3KU7Msqj8ctU2a5f9Ha3Ed0kJUurewoKgEA3g07esHhy9jCWfMxgTaNKOJEZyZG/FeXTIabJwBEno52EiRjenTZcVxKyV6rxDroZi+hXUjJw8TnBhjPIkGDkXfTm2c=
+	t=1779386610; cv=none; b=Lvm4je2wdq98qx8t3ZPUumAsnZAe0FSLpsO205scw36JjVCTXSYOKynJvGTlbpO294w49Ur6oHavn64dJ9isspgdLXRFNystAn1x4bHB2mILojEb/k+m8BtBhq9QVhV4tbVM11PXiOf8pzXE4CkUeugJBlGdiOKbTOoorEtKZTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779386590; c=relaxed/simple;
-	bh=80c3qCAznjofzR230ueBE3sumJVNlGGlOQ0j5zAcB4A=;
+	s=arc-20240116; t=1779386610; c=relaxed/simple;
+	bh=+/hudcWb4VJM2jCjYJ/ee0Gp/JDG+xlkZGOVhcwFjE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tNgYo7tBFiWXSNJEvZP9udfKmyEaD/n//LlRxOEmXYafF+GrK1xTtwvfv4nh8h8ILw9vCCJBDFlQhIpJq5ls3RKHLPsjpKYY6zBIqwzIMaWTviTUhSYJGAxWZDoJ8TIGvY8k0hgpScs6QFFzNNlyrLVdcoFw3zT5k/tpq2fq7u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=e5K/x86d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dDIZh/49; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=Kr/quCGQ4iO/xDtHsDpkJve3zWmqa1Cic+/UaPhryVKPJfaVX/s/tA6bqDqXVl7aWDqD/nNTEay8gQBWL1VgjtL48cyU7up/0MTT6x7agMUYS5kjkSYX1bjov4MCErA1ys0GXYd9YTjBeFmqbOnPwnZwIbMGiqJhF2JZ7ZroynQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FVZ1Wn9N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VbB+CE9O; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="e5K/x86d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dDIZh/49"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8B7481D00089;
-	Thu, 21 May 2026 14:03:08 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FVZ1Wn9N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VbB+CE9O"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 83F3D7A009D;
+	Thu, 21 May 2026 14:03:27 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 21 May 2026 14:03:08 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 21 May 2026 14:03:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779386588;
-	 x=1779472988; bh=2dve/nTJzDUrVpIuiqjdquZ/yiLBHWRJShiB9eqSlaA=; b=
-	e5K/x86dm62j6WiWp2Bb+HZocn5oJXQf6iTTFMhFBEBPu54wLr+4+0RoJFVVvseS
-	Ze5U2M/KD06X+Iw8tOm8Ii1EZSU+RSdXVyLR06su+AVR/6tGTrUdkFIH3gVxjAKC
-	un+p1yfW602lMOsuEj3N7ZDWJ+ODeJ2+fjiudF64ePC3PhE3pLZb46kvLhC7GYXh
-	f2ZT0cP2mbuY3/3p1p2d3kCv8FdWOhxiUdZ/WuYn4mdNdDnt/6GEuGcVt9WLI3Zb
-	2GaY3A3uSGnDGy3niBSslqYZEmHsOIw6HmnbJbdvpDQDtVmssBBmKq9ekbrkNK3N
-	qvYzRSC2iXv/kVvBnFmFAw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779386607;
+	 x=1779473007; bh=TE8FprOsPtwK5HTSdANSk7G1s+s/esjfOd8c+RPG534=; b=
+	FVZ1Wn9N98bGxf2f4dFiXSjPhAZDazb11IqM5PkpJFz/b7Ht/yGNyL8ouods4wtU
+	PWr/2EZeymcovPNo6St/n/iJVt7HJfBb0W+tdFxk7KmDfbrnWutolin3h4PFF98H
+	FYy8ASjVYnTXpztnY8zfynpLpLD3Spm+tCU/Y4Kfb4K0wEjD9WI8lfEmbUKRZr6y
+	gOB/udx2PTBJDq3nwBpvMOYRisHuqwIKhPge9Xn5VXkF33y4gilfkqOD/2s+YL79
+	h8uBEzp58Uy3+cVlBkyvyDT9Qa/R7aSk8QHlRplygigvSVbKJQNkpqER07a6iqzj
+	GbXKqR3M1ZR5VZANKMJ31w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779386588; x=
-	1779472988; bh=2dve/nTJzDUrVpIuiqjdquZ/yiLBHWRJShiB9eqSlaA=; b=d
-	DIZh/49dEJGE3E3U9+SgC2+9Zcy8zfASw799+7yemJ5Yzye03pGk434zEWnXff48
-	OigNOPubJKBG3ivwqTeT6P2d1JUKLOy+H7qHZ6QqHVo0F7lNSFdiSNRruSv2bkwE
-	c/lldQfUk5sRRyam/KhgcPh0/aNSevfagbHUn1XFSQuK70P8SqKT+i9ZnxihcRLt
-	0dKqZ012DraxSfgg0RZmRpr874U1djv0sovXQrmVi5f28w32ScWD8HcWCVIbzz+R
-	JUbfUHc9m7G0D2EXp/9elIZsSnsh+GbdLLRCBE5xgh1RsLEfN7mL0OMs8merGK/j
-	en/NnEC6DS8v2IGdtgf5A==
-X-ME-Sender: <xms:3EgPaha7cIGfbJW7ZEdGz43Egk6kpCcocnRyBXZLJZsFqOnc6KJUpqA>
-    <xme:3EgPav1jL6Ps3kMnlrO_J_xD2Snqyutw0KfrhL2SxytA-ENREuaOwwb6vuaL2zMtw
-    JISzwqvRnbSubHPrdBJqvSHLrMPd046fvOV1G6fIaJj8ct0TUTZ>
-X-ME-Received: <xmr:3EgPahXpvNZW987SjhFd937JVOf2pn7YQXwYF597LIGWCfVbx0OqiZTI1fAs1zaW_Vp0V01qeGTjirDut6ZtuqkNmWJnWDmxxHeqOQw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779386607; x=
+	1779473007; bh=TE8FprOsPtwK5HTSdANSk7G1s+s/esjfOd8c+RPG534=; b=V
+	bB+CE9Oh9L1/uDCj59KuxEKUtvv++O4kqrrnJB4NRuqYTOH+3bZ/Lw7nCIIrt9re
+	7qYNM7GKs+zbKa6ROiUotH/kEEMRW0Gtd4HeMj8APGTYGdAAoU/Ct74wC0Hs6U+g
+	AYtD/pGpYFs/Q6PnVrvF580cFlvmvHyi3W09NV7eITrvDhM1e8rnqBhYefC3PKEb
+	of8SWUGICqkPL8qZQfZuE1jscVO7A+TL61N0S50+g15xDAISuf8hwloKmkjPQ+fG
+	EmT4THpvVs+EKhMXYoV9bE+7eQ1NjXMndN09TFJZeEg3zLH2otd95bX7uJcfOgMF
+	UBTGbI3a7pRyz9EXu+BXQ==
+X-ME-Sender: <xms:70gPakqzcFog_EjMsKyuqCjNliagAlSzcew8lpmd2Rm0NdA8qoUdEUc>
+    <xme:70gPaiHKGunfCBIxSBmoGEtKiKXgt6I6IOxcmoHPi2yhm0wKuyiOk2uy0J5Kx1N4V
+    sw6D8eHoHYH2PM2KFPoKI_dsbf1kp-liVIiNlbQhUoCgDFKfK0CSA>
+X-ME-Received: <xmr:70gPamm-63pV6NhPLCvY1vr4rVtwdsyaJLpn3jrBevo1qI8NxVIVc6HuwXI-Wxp2K5rinkvjdsy6XW8vYsxbOkcth8rwy6coLcpgDP8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeekudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
@@ -62,21 +62,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeekudekucetufdote
     gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
     uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhiugguhhgrrhhthh
     grshhthhgrnhgrfedusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:3EgPapWf_iXFvUoaluREKEon4nGpJegl1-MbZ6ScsA4YjWLieE_YEw>
-    <xmx:3EgPagdMh64NnL5LWj3SqrHRtgpuLfau2tOtjkC9MQaj-gz8dIwbmA>
-    <xmx:3EgPaiUq7xD-0cwvA_nCy8hRofBafOMMs1F88ZmML3nWwROPg55fuA>
-    <xmx:3EgPapc5oXNWXvwpj74EdHD2paqLZZi92g5SGgBIHIpFJgKqzlGyAw>
-    <xmx:3EgPan0M5sjksJGC3Hr7zA-dbahAreh45u1pYYLlPcCo0pj4ZX0oFpNm>
+X-ME-Proxy: <xmx:70gPalnsCKN1c-N_evvmtcY6nbR3oOJQ-AaV3tsBoZPqCrxDLbyOkg>
+    <xmx:70gPansTkuniYxCJB0A7U_laLFDZGVyF-5MVF47nyFZ4d-V1PF3WuA>
+    <xmx:70gPaolOqFryc-lrsIo6FUkfl8SM8MWdun4biDqT8nw6unGzPxadJw>
+    <xmx:70gPaiuQV3LVpgThnXaMhP3PKq8Yth9iQkwzx5SL6k2afnwY1tpkMg>
+    <xmx:70gPaqEHHVwkiULt1ZvfP8hu4DPVGFzWXfs8-fE9C-tgTInBDxnaH1Ql>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 May 2026 14:03:07 -0400 (EDT)
+ 21 May 2026 14:03:25 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH 3/4] doc: replay: use a nested definition list
-Date: Thu, 21 May 2026 20:02:00 +0200
-Message-ID: <--ref-action_definition_list.70c@msgid.xyz>
+Subject: [PATCH 4/4] =?UTF-8?q?doc:=20replay:=20move=20=E2=80=9Cdefault?= =?UTF-8?q?=E2=80=9D=20to=20the=20right-hand-side?=
+Date: Thu, 21 May 2026 20:02:01 +0200
+Message-ID: <default_RHS.70d@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.13.g9c7419e39f8
 In-Reply-To: <CV_doc_replay_config.709@msgid.xyz>
 References: <CV_doc_replay_config.709@msgid.xyz>
@@ -91,40 +91,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This bullet list for `--ref-action` introduces a term with a colon.
-This is exactly what a definition list is, structurally. Let’s be
-sylistically consistent and use the definition list markup construct.
-
-We can reuse the `::` delimiter since we use an open block.
-But for consistency use the typical nested definition list
-delimiter, namely `;;`.
-
-Also drop the harmless but unneeded indentation.
+This is now a definition list (see previous commit) and parentheticals
+like this do not go on the left-hand-side. Moving it to the other side
+makes it stand out just as much and is also more consistent with the
+rest of the documentation.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-replay.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+
+Notes (series):
+    > do not go on the left-hand-side.
+    
+    At least I haven’t seen it.
+
+ Documentation/git-replay.adoc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-index 4de85088d6c..b4fe43ec687 100644
+index b4fe43ec687..39ecc2e1876 100644
 --- a/Documentation/git-replay.adoc
 +++ b/Documentation/git-replay.adoc
-@@ -80,10 +80,10 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
+@@ -80,7 +80,7 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
  	Control how references are updated. The mode can be:
  +
  --
--	* `update` (default): Update refs directly using an atomic transaction.
--	  All refs are updated or none are (all-or-nothing behavior).
--	* `print`: Output update-ref commands for pipeline use. This is the
--	  traditional behavior where output can be piped to `git update-ref --stdin`.
-+`update` (default);; Update refs directly using an atomic transaction.
-+	All refs are updated or none are (all-or-nothing behavior).
-+`print`;; Output update-ref commands for pipeline use. This is the
-+	traditional behavior where output can be piped to `git update-ref --stdin`.
- --
- +
- The default mode can be configured via the `replay.refAction` configuration variable.
+-`update` (default);; Update refs directly using an atomic transaction.
++`update`;; (default) Update refs directly using an atomic transaction.
+ 	All refs are updated or none are (all-or-nothing behavior).
+ `print`;; Output update-ref commands for pipeline use. This is the
+ 	traditional behavior where output can be piped to `git update-ref --stdin`.
 -- 
 2.54.0.13.g9c7419e39f8
 
