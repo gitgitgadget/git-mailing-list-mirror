@@ -1,155 +1,149 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CD837F8D5
-	for <git@vger.kernel.org>; Thu, 21 May 2026 10:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779359123; cv=pass; b=cFWwkhrwrUAU1/T7jg0ZuDbHpi/p+LZpONx1cZifzdUgAPZCRNB132XtH7bgOhI8C3l6oZyCgI995ACGIy5oWVIAqr6iYcqKHRkuDYKK4/kCMZWFzR2A6pfEVVlrj7PKKD9lAdIw39lL2ucK2+nI4rkz4/OF970n5Yb8wNlkg0Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779359123; c=relaxed/simple;
-	bh=UL7RaEAVnhhbYxuEbI4ps5EOmPEyP9dWMyF9Vsv3xE0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YbBfBopHww0w7klJXghFugfB6Xh0jneoQYxvnpeStjoLSqAdNZi8NRlx0zmoAAlyDwYYFxoKwVusjRbUPxlk7uFdnyhHygfFC14YRxkD1e5Pw//APO4e15VC2KIihWOAGdxhKPQvdX2C8lEZHbBApUGPTB8mImTStDFVFahRbrU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WFJFRXre; arc=pass smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E9D3B0ACD
+	for <git@vger.kernel.org>; Thu, 21 May 2026 10:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779360880; cv=none; b=Lk5E16DoJ8TAHAgP7scUsGVN+NrM2Ag1b7kk/Uv113kmY3o3CoZzeKg81i7b/IR/PPfriR/4GdJq9aHQyOIy2c758OzZox2Zyjs6XByW6IcJ7YhihSQRHM9SRNdCRxUhxTWEY6EmWtB0gtFrHobwmU+5txqOZUH3HBdqCyIYr2M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779360880; c=relaxed/simple;
+	bh=q3SG9wxex0/dnujtSKOop6YrvKyxaUmpy9cjLt4pljE=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Oe891dlJFQj+DWCmUo5gPy1Fr1G59f0xqIAVLU/tn84uz3pR+8w3tyZjsLJg5PVqTzCzbc2i5Tg5+ToT8x9OyPynCpSgjxpOtHRshjGayVkchN9cQj4eohzptsd8AJAy3bbc082AmjERyCmkOg2bSydQXPSDy2CKdYgLTUs+y8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=BmKLTgun; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFJFRXre"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-67c2d57a5ceso9457545a12.3
-        for <git@vger.kernel.org>; Thu, 21 May 2026 03:25:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779359120; cv=none;
-        d=google.com; s=arc-20240605;
-        b=aX3rsis7SegMnRnBiMPshJzBDBtnkYN6QuKxHLaXNyFJjsdBHP0O87XqngAgwIRjnm
-         q8KmlLIpK5j7EKHA3ZU1BzQ90M5jiu9+vmTtLmMyfQ6z1DqzziEvc79/SmaYmzquPreK
-         2VttweVfIpxMMnvzo+t6MJLmWUP7mlAyBH4roj4CiAuLb0f4ujEgEVCwwUQqQsx81ypl
-         VBTgvQFzwqcipjr1MFEsL1pevgppeY6Lmjcpt7yzIQaoAiRqfOLbWbT9cwGkz0BSpJHn
-         4i2hN64VoGpD3lyycTtpBsf65Svv9cZZvtn/fOizVW/SFbaRQop6eBl5AUOqKe9LGve6
-         7YmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LNNCbu0R/rcYJMKFI8/ZZHJvM8GHX7h8ZHDo4uBKW6A=;
-        fh=HYObPq293bJ9dUdAAjd2A04iLft1ADAaCvOhDTeSDes=;
-        b=kNrv+8zjgvh6hjXNwZCnb/vGAwkVVSwk3UgBK75glPe3sdfDKdpycYdjaE+elI9CZm
-         Hl074BwsYKDCV3oshTnc2bB5SQHWbS0MpV5WFPloFpywfp6WQsFNruWVfDvto7t7RYT3
-         cxIlF1U/VSMtTyndHaagYjupx84j8ZpMefm88T/3/iOhG2yp6dRYaO+Y1v5Gmrqa9AxQ
-         ufKjnnTW48rR/RdW1mDZB+e7i0IDKRj1st1+31hM0/GnbojMSQy4NfhQR78ebjYy9tGD
-         a1eW+Avs3ft/5HqjM4y6PJE9UJjOJIKbVXKQXg7KLGUGPBHHZVrBNmDcS8bhehkamExd
-         Q2DA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779359120; x=1779963920; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LNNCbu0R/rcYJMKFI8/ZZHJvM8GHX7h8ZHDo4uBKW6A=;
-        b=WFJFRXreUXLFQUF8qfYtLWsSQOajoQg0xdBRKJlI5p2Ao2xhElgAvm4anp80AxemL7
-         vYDm72rGKPO2bUAAtuNNwvgK80WYT6eiVz/CuO05/5+T9S5y80Q4Mu1N9KluJuf37WAT
-         logQoSX0wRq4KkZgYj07UG+5qj5vpndKVpfyeiojPMNK7wci13n9UETSuQrMU8T0UJ5D
-         zfzW0Tz90TWaQGzsyHxlinY2vBnFV2ss8rd7VTJSnxO5+xol2c6ZjVQoh5p56ZoiyKie
-         wGYch28UsF/DbBiaOpu6aKj2BIgJ+zRojU9InoPqT9fuK76B54bO0AtNtSC4AC/TVDCx
-         Hn+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779359120; x=1779963920;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LNNCbu0R/rcYJMKFI8/ZZHJvM8GHX7h8ZHDo4uBKW6A=;
-        b=iZ4tALZPDKbgGdW3bCzBL5h4ks9hZPlaDrlwmY2/cNkFEYenv21ZBA975Z2taapOak
-         X0qjstWyZcDxnB3fA9LUGoHc7m2zxCOYZUiJ9UpjVVeXJR2jtonrZqBwhMH1US9KQKBz
-         ixnFnxh4e/3MCh0KRGoixa9akU+Ks5x/nwppOA8P0FpH2MQAq7jdi1einzi6QVHge9vv
-         X9v9X2JnTza3Ch2D0e/XYsLccwEElfNlUc1Lz+l5N83hQb/QXI1WAaZUJSaUq5SZJgfp
-         5bwXaJssmRiqA0Q7ZhfVAqgbohqd7ovT7KyIIu49e52aC3leknK5r3WLSSwLG88oiHYP
-         XgQw==
-X-Forwarded-Encrypted: i=1; AFNElJ+laAnnzwD5+Y5570rNa+nGS3PFlyjTG0EY6/jIkKZJ8+GHz3OvWtKv4HIAG2Wz+uzh6wE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtUS7Ope4vxwyPasH3pZVzKGFxLnyXE614E5aX555eZFPF4Beg
-	kEPyXKg4JYVZo4kHwNgkK27/CcYaO7ToD1ol/VGuMA4xsb3BM89Q+MjLD48bu76+C+LCDnxJoFv
-	1fU5MTSipgwfOcixsBWlHs6XE+cvYfII=
-X-Gm-Gg: Acq92OGTMk9S8ngfWbtG5Vrmuxs6XUOleKVqAs/L/8NXabSMj3h5QfjyP/vJAUbTJPf
-	378Tp5s7qbflkySG4c3pEYj+OVT18lhSBShf4vQkAspK7dPP+/tai21/+GCIkgHrWTVJ47HP4CI
-	iL7gHyntlOfxbQBatGbfB6quX+soV4oaR9XT7AAbJsspTctNGR4fqg/U+w7t5v0qAAi8l0/9qnG
-	zFyMDYv1lsb+HPy9AXi2pntgxO8aa8YbVfssX02skxuXuIdMWZhvDmI1jdzWl+crZM4ZgJUaOs8
-	wt/9/qA=
-X-Received: by 2002:a17:907:160f:b0:bd4:d0f2:679e with SMTP id
- a640c23a62f3a-bdc14376954mr132869666b.33.1779359120247; Thu, 21 May 2026
- 03:25:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="BmKLTgun"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 64LAsKFm003533-64LAsKFo003533
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 21 May 2026 13:54:20 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1wQ12i-003RdH-5o;
+	Thu, 21 May 2026 13:54:20 +0300
+Received: from localhost (130.232.143.226) by ex19-06.utu.fi (130.232.247.46)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 21 May
+ 2026 13:54:19 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id eff92ffd;
+	Thu, 21 May 2026 10:54:19 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, Tuomas
+ Ahola <taahol@utu.fi>
+Subject: [PATCH v5 3/4] approxidate: make "specials" respect fixed day-of-month
+Date: Thu, 21 May 2026 13:54:07 +0300
+Message-ID: <20260521105408.8222-4-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260521105408.8222-1-taahol@utu.fi>
+References: <20260516151540.9611-1-taahol@utu.fi>
+ <20260521105408.8222-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2281.v10.git.git.1779091483321.gitgitgadget@gmail.com>
- <pull.2281.v11.git.git.1779177508772.gitgitgadget@gmail.com>
- <xmqq1pf77kml.fsf@gitster.g> <b8932b27-8006-4b43-b7e5-1fac0fbf42c7@gmail.com>
-In-Reply-To: <b8932b27-8006-4b43-b7e5-1fac0fbf42c7@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 21 May 2026 12:24:43 +0200
-X-Gm-Features: AVHnY4JD7jn7eEv3C4aCnZq17aTW_nWndd6Au0vCWNmLpXFQrmxpzZ3zaU006Os
-Message-ID: <CAHwyqnWeqQEoTM=pum0_Ui6+=cXdxFJgWEWxNWoFpFo8xaW8eg@mail.gmail.com>
-Subject: Re: [PATCH v11] checkout: extend --track with a "fetch" mode to
- refresh start-point
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Marc Branchaud <marcnarc@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-11.utu.fi (130.232.247.51) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZW0gYDQ4OKBgNDg5GBg0cSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhbSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFlbSBgNDg4oGA0ODkYGDRxIWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=cdSu9oGbe8UtJVQLuo9s27+ECv2wFWS4md+XOoDv1KA=;
+ b=BmKLTgunErQ802B3mQt6m4MWNfENzL3uKtBH5GHRm7N1WtFRFEiJPzFAKhxlyUQGhNeVFu01kR8P
+	XHIlJtZ6r0e6zsrBs/olb2tcpxZkD3KxANRtGQ/k0jVc6KIcSRtDcXvVZk6+X9QZZZi1Z9i9sd1V
+	2GiDoySVvueSaR7aJftZJZillCpu5IUy90GgA8CgE62/YbmZvTrlSAxwTPWBhPNYw9AXVBhvPlO7
+	f2keIVMOYbGavE/qyEUr/8SEhPa62tFs2gYpOsmcic588qwj7gt6gnZkZdvOB4UudXXkxnzW6k8x
+	yBTWRCrCtCbxMhRHPQhOA43psPMR0XIvbd0zDg==
 
-Interesting idea! I will think about it.
+The special approxidate time formats, "noon" and "tea" differ from
+"12pm" and "5pm" by having the feature of wrapping to the previous day
+if the current time is before those hours:
 
+	now  -> 2026-05-13 11:00:00 +0000
 
-Harald
+	12pm -> 2026-05-13 12:00:00 +0000
+	5pm  -> 2026-05-13 17:00:00 +0000
 
-On Thu, May 21, 2026 at 11:49=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> On 19/05/2026 11:34, Junio C Hamano wrote:
-> > "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> >>      checkout: --track=3Dfetch
-> >>
-> >>       * Find the right remote by checking which remote's fetch refspec=
- maps
-> >>         to the user's start-point, instead of assuming the start-point=
- begins
-> >>         with the remote's name. This fixes cases where the user has a =
-custom
-> >>         refspec mapping into a namespace whose name differs from the r=
-emote
-> >>         (e.g. fetching from origin into refs/remotes/upstream/*).
-> >
-> > This comment is even before looking at the patch text.  After
-> > getting one issue pointed out, I'd expect you to think about related
-> > issues before sending a new round out.
-> >
-> > One.  Have you considered the case where the remote-tracking refs
-> > are overlapping, e.g., where "origin" and "upstream" point at
-> > different URLs but they both store in "refs/remotes/upstream/*"?
-> > Perhaps their URLs may textually be different but are pointing
-> > logically at the same place (e.g., one ssh:// the other https:// for
-> > example).
-> >
-> > What should happen?  What does happen after you apply this patch?
->
-> It would be worth looking at what "git checkout --track" does in that
-> case and seeing if we can share the code.
->
-> Thanks
->
-> Phillip
->
-> >
-> >>       * For a bare namespace name, follow <namespace>/HEAD first to fi=
-gure
-> >>         out which branch to fetch.
-> >
-> > What should happen if HEAD does not exist?  What does happen after
-> > you apply this patch?
-> >
-> > Thanks.
-> >
->
+	noon -> 2026-05-12 12:00:00 +0000
+	tea  -> 2026-05-12 17:00:00 +0000
+
+However, that logic carries too far.  Even when the date is specified,
+the behavior of the "specials" depends on the current time.  Assuming
+the same time as above, we get:
+
+	today at noon -> 2026-05-12 12:00:00 +0000 (should be 13 May)
+	13 May at tea -> 2026-05-12 17:00:00 +0000
+
+or, using an example mentioned in date-formats.adoc:
+
+	last Friday at noon -> 2026-05-07 12:00:00 +0000 (should be 8 May)
+
+The quirk seems to be rather old.  Already in 2006, Linus Torvalds
+remarked that the date yielded by "one year ago yesterday at tea-time"
+was "just silly and not even correct".  Indeed, even today it gives:
+
+	One year ago yesterday at tea-time -> 2025-05-11 17:00:00 +0000
+	  (should be 12 May)
+
+Let's fix all of those with a simple patch.  Check whether we already
+have a specified day-of-month in `tm->tm_mday` and make `date_time()`
+stick to it.  Ensure the correct behavior with relevant tests.
+
+Links:
+  1. https://lore.kernel.org/git/Pine.LNX.4.64.0610101102560.3952@g5.osdl.org/
+
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
+ date.c          | 6 +++++-
+ t/t0006-date.sh | 4 ++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/date.c b/date.c
+index 633d1176fe..1e9cfe4b6f 100644
+--- a/date.c
++++ b/date.c
+@@ -1132,7 +1132,11 @@ static void date_yesterday(struct tm *tm, struct tm *now, int *num)
+ 
+ static void date_time(struct tm *tm, struct tm *now, int hour)
+ {
+-	if (tm->tm_hour < hour)
++	/*
++	 * If we do not yet have a specified day, we'll use the most recent
++	 * version of "hour" relative to now.  But that may be yesterday.
++	 */
++	if (tm->tm_mday < 0 && tm->tm_hour < hour)
+ 		update_tm(tm, now, 24*60*60);
+ 	tm->tm_hour = hour;
+ 	tm->tm_min = 0;
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index b9bb7a05d9..62cbada774 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -209,8 +209,12 @@ check_approxidate '6pm yesterday' '2009-08-29 18:00:00'
+ check_approxidate '3:00' '2009-08-30 03:00:00'
+ check_approxidate '15:00' '2009-08-30 15:00:00'
+ check_approxidate 'noon today' '2009-08-30 12:00:00'
++check_approxidate 'today at noon' '2009-08-30 12:00:00' '-12 hours'
+ check_approxidate 'noon yesterday' '2009-08-29 12:00:00'
++check_approxidate 'last Friday at noon' '2009-08-28 12:00:00'
++check_approxidate 'last Friday at noon' '2009-08-28 12:00:00' '-12 hours'
+ check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00'
++check_approxidate 'January 5th noon pm' '2009-01-05 12:00:00' '-12 hours'
+ check_approxidate 'January 5th today pm' '2009-01-30 12:00:00'
+ check_approxidate '10am noon' '2009-08-29 12:00:00'
+ check_approxidate 'January 5th yesterday' '2009-01-29 19:20:00'
+-- 
+2.30.2
+
