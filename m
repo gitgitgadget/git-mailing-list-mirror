@@ -1,158 +1,109 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53261356772
-	for <git@vger.kernel.org>; Fri, 22 May 2026 17:46:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E029357CFB
+	for <git@vger.kernel.org>; Fri, 22 May 2026 18:24:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779471979; cv=none; b=dHit0Nq561VI5KTEBR8XY+NMXBMwaGBemWm0NOm/Hg0qL0s8lNpphjGlktx5Vb9HnpCUGtETPMEPKeHNVqSUz/RpqcCR1oMrW5RQjFEpDvBgk25z+gH+jXQdpMcSBkWO9PXAstNK+PKU6I+M1DEfsPwNuwmW3W+8e2TOd56qyro=
+	t=1779474245; cv=none; b=q8Bs5K7E5R0yjXsV36XqVZMvYhn8jwzuwJi+OZeXWR7F9MaC6JRA8xPIOcbrPNaRAeH0lO3u0qpYlmSCnF2dTn+JVDL9e/DWBgu3SgUfc5t85d9AxdL/DN0LlaCE4ksGX5lseaAdqRZPtvzwu0VTkun2xtmqf0pBDXMzeMAJqzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779471979; c=relaxed/simple;
-	bh=3Izi1v0Tumf4MUHuAgabX+xV/VYEpP/GJSgSffw0ySM=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=cQpb/fwpmjUqM/QV2DIBX4518f2O3lJL/UB6Vk7swW/lakH7jl205Dkrk5I5m+vqGT7F0gsMlDfS8mk4bqoVQFK3a/ngA7tgPJy/F33eaHKSR/iNecj5G8u30o8+78+00GweQEZ5rzYRRB8ZpH4OMkeTigc6zSQrbnoQA9VgVCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E1EVBcSY; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1779474245; c=relaxed/simple;
+	bh=le/DFIr9ZBIKOZj9+O/ib8+HttXUJbZP7wB0cHOW74Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BAx25KgFDEd8iTi4NWnT/sKFWX46HIfcR/tYaeBfrWshu1fe1ZSYPmRppeZjhEKsaWYp9TErxRt3tTkZ32ENCNDJ7smIYlDiqhKiTDAFTjwE98SV4qLsLc0L/IUDlMvYPpqRXe9IYb6pQXxl4n4QiXdUMUTQNeLY263PUVJ5IMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n4SGUkhr; arc=none smtp.client-ip=209.85.219.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E1EVBcSY"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7ca947f9b00so71969327b3.0
-        for <git@vger.kernel.org>; Fri, 22 May 2026 10:46:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n4SGUkhr"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8b1f2b7f1bcso115052466d6.1
+        for <git@vger.kernel.org>; Fri, 22 May 2026 11:24:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779471977; x=1780076777; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3Izi1v0Tumf4MUHuAgabX+xV/VYEpP/GJSgSffw0ySM=;
-        b=E1EVBcSYUVCkyiGlbXZZWcg0jjB2SN09FFT/Z0fAgae75Nxl/mzwtXwMuXbFCalfbn
-         1ZSOM5LS8zLCv9ZwazwEBKlBzDtGOL+oysBGseucVoCw5L5O0LUPLV7p9cEGviZWy/1F
-         5rDFgnt0JPpuLo8sKKeRykgrKCKM5UbpE7DUjb6auAwIP1++YZRUNpXaUXn5xr07bMy8
-         UADk0F1gakHjjNJWKk5IjjkU3Wve0i7U6f+yTPneR0sHhP8FpJXJx7r00azMIh2mm4xL
-         KibU7sMETGvdgc8bHnnRwpE92wWfT4iu3XYTzOTvdhJO+BndMNCaV7QR5Ip5F6cc5Is7
-         ZkDQ==
+        d=gmail.com; s=20251104; t=1779474243; x=1780079043; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C52W6dlI/rCHUeFXxQHGtEKP7Jd2Njy/i1jxiQHOz0c=;
+        b=n4SGUkhrvbLtW2o0HTogPBEcWn7/9ESUFG2SDuMv2xPXfm9pMmZ8hTAJtzcMP3XFgJ
+         YP9oFrr6o/Dlh9zB8gWcMK4dZSblkCsitugzHu9sBj++pip/4kuP5HRABU1UaVdzNeZo
+         iL9AOLl2tntkzBbV1x2pj7hiVScaPKloga50rsIYcSupMpi6uBRNHj0EKFgS4M0y/PTo
+         q85ue96M9Vbnon1YBfL+efYjwWc+7SJa9ZODlIpwwZMItxkKpk1GWMsft4s/bpITDOqk
+         Sbc5qNkz3ZprZfRnRd6ibqCp4d3sU94x8ep2+Zkl4OGJ0zo04WRASrLta7j1HEznaclv
+         4luQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779471977; x=1780076777;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3Izi1v0Tumf4MUHuAgabX+xV/VYEpP/GJSgSffw0ySM=;
-        b=rVM7sQ/8OnJilZ2vyANJTawEAUogyzB8E2zMCyokG8t4LWjHDefYw7oslZaTQRQW5x
-         3uFwRSORCMSC3UUzo1yOlVodVKiMgj3CORQZQtZ1WuqisHSQANNUVXgEqV9Yj7t2jDYe
-         ZJZxuiKeSMlEQMQuqQl28+JUZ7h9BtLYuFpVVSwFnWWyMkx9TCCiaXwk75mrgK4Sa6Vx
-         v/+spq61CLStHUU4TMSVOoHCOdWhSDHGRdt9R2yWm97ZOpQ2ooPMFQvAu63LCfv6Hwn3
-         x2QZwi3ihCYj+YKS31BGKX8uzF5iJh9owMvp/LdMTxyC0QSZ4ZlEkYyaA0BataAaZpeR
-         73mQ==
-X-Gm-Message-State: AOJu0YwKeTIGM3u0pxk2kTRbnC7+dMh7l/CnyVZ9y+nKmvi5nuDbYWCp
-	HKD8WRdrTliEsYFNOGDzL+2J3t+H7Yb1re/U1eMoqWgcsGofETzLFWvR
-X-Gm-Gg: Acq92OFvxp813q6eVZGSp04mzC4HI2eqhgGm4ptdlfsPwCTfqH28VdgXYatoje5pGQr
-	hwYxAkPOIPo826DGccQHTr+J1Jsdet6uAvW3/0fro+isnjX1AibvtResIY/M5vAuZ2YmwdrC9k3
-	9Mn4shF3P7xSuDEQ2Ej6c5sZU8lnpY5FaZ0urgAWjTX3QQYplJHE6B0PN8PGTlXSyO5NShNfs52
-	/g4hfMuKkv2OegWFoEI6u+EvkyUmLlVZvgI3yeU1amfeDv0dxXI2uO1Zt9FYn6KVHBU22AqdaTh
-	PyZ4DLSThdJTdlW2AYi6T7R1yyJCOD+itUtDN5BStipTRLcvJXIBA6I2B8sf7EUmJpK/Qn9qvcI
-	2ArmmWQVmpMpJq0JkPSIbkdQEAPf1E5U+vKeYH1hjtDX/gp3O8RtPG2BdS6l/g0xx61mU8am+Fc
-	1gDqJHLVEoyX4/6rAi1FtBZM1i9Y/z/1zePGR3aiYLo7wGxCKZiDd/gegkw32AcLz3Rb7IfWBSD
-	Qv6cHVSHOG57phZXdc93GLQ/5Q+rAdBJM/1zdLGJcfFs3XvaQC/IWE=
-X-Received: by 2002:a05:690c:6d89:b0:79b:deb2:f5ed with SMTP id 00721157ae682-7d3356de6bdmr54023757b3.23.1779471977075;
-        Fri, 22 May 2026 10:46:17 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90fb:c300:d482:f98c:bd24:64d])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d3873d080esm11279457b3.0.2026.05.22.10.46.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2026 10:46:16 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20251104; t=1779474243; x=1780079043;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C52W6dlI/rCHUeFXxQHGtEKP7Jd2Njy/i1jxiQHOz0c=;
+        b=WTNxQCG+c/qANoOkSfYI2Rl+1y67DBjwQjyE09GMmpBDRL7lWq8ljQuLW1pbEzzGE1
+         D9qjp6QZ2n+P4OqE8BZeGugY+RHVyqXyUMgwEFpAV8Rwt3P+vmTkDY0bqyXaRBynPx8x
+         T7m4QrhrqClLLt8UK00M4ZyqtZgYBNRfNoLwnJsxRkuLBDm1M5+p+7jGMhcc0oGI2UKf
+         6v+z43oveswSg2rv1+C1t6enkHxChnEsWPOn+uNANj+0tIno+rJLy0u9z6cap0QYAroW
+         HcCmvf0RkfZwMMhm55Wxr0fMV56/UVQyfU0Tli34qnjp90tVvOBxwoBpfXok83FlSfVZ
+         zXbA==
+X-Forwarded-Encrypted: i=1; AFNElJ9ckxmqjrlI//WGA0c7I3k06gWP8PPj4j7GYs90uBn1GRXLW2kVV9k0eo+fdAVBS2nhzw4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwEmzgVEmy1b52U1z92zZWQQRIMvfn2PmlM5lciYAupDgpM6f+V
+	67YzIyA0vzlmoBRq7UbpFKTNZvkZ0QCzt/Q5xDnn5/SUiyos5pgieXsv
+X-Gm-Gg: Acq92OEsQlHuNizp51keKtNL3tMuwwJt+VTcs1VRdK997i0ARQmkEAJs/nD8Rz2VZBI
+	nTnUQG2gr9B1IZXrVxVaibZNmZPq+eZmG9YeNrSxN3yBrO0YoF4LCTw3aItmViWABWDuI/xfs4k
+	3oz0sbE99yM2fO0KfMEvzpMuj4anMB4DRQ4M71A7tGr0wemIY5vJItd/5kvXbTdyXKQzPp+EuCt
+	6A6lZ9shP9HUKdoqkcdpQvgjvSgRB44uXuo7UTBE5+JSP4QTXzC63VrHPFtgntfXAZ1EcMA5djc
+	xgF7+rq61Y/OmTME5sW2LtW55HRU3RBGh+4fpY1nneMhldAS5Z3k7nhGF+A4/mXhPiuMslpI2vs
+	Z7lq1NrZNImuWYUDvNeL7urpv8/JJHRfQelp4fUNisQJi/kINqMhSFErX+/6NTUsYSECmJUTWPl
+	XJwZHx2A7dAS8cIiztI6ZTFHzrBWdIBJ1hSdIadu8o19fLL3ZcWXLgCbRTzNQTOB+KlitzdQ==
+X-Received: by 2002:a05:6214:626:b0:8cb:e78f:21de with SMTP id 6a1803df08f44-8cc7becc501mr62462006d6.11.1779474243326;
+        Fri, 22 May 2026 11:24:03 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc81306d70sm25135566d6.35.2026.05.22.11.24.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 11:24:02 -0700 (PDT)
+Message-ID: <6d8d0b30-99f2-49f1-bd82-3515aad9aacb@gmail.com>
+Date: Fri, 22 May 2026 14:24:02 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: I discovered a minor issue with `git fetch`.
-Date: Fri, 22 May 2026 13:46:06 -0400
-Message-Id: <65A1122B-D57C-4789-8C2A-E6330B6992AF@gmail.com>
-References: <CAD6AYr9YmcnkdW=Nx=HUKcuaNbv1ukrAbXRnKyGibCQDy8N3hQ@mail.gmail.com>
-Cc: git@vger.kernel.org
-In-Reply-To: <CAD6AYr9YmcnkdW=Nx=HUKcuaNbv1ukrAbXRnKyGibCQDy8N3hQ@mail.gmail.com>
-To: SURA <surak8806@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/13] pack-objects: integrate --path-walk and some
+ --filter options
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+ johannes.schindelin@gmx.de, johncai86@gmail.com, karthik.188@gmail.com,
+ kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net, ps@pks.im
+References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+ <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
+ <agz3/ZxZZHBKofR9@nand.local>
+ <4d7a75e9-8260-4e33-a786-72e0aa3026ae@gmail.com>
+ <ahCGL+AsIaR+63Pr@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ahCGL+AsIaR+63Pr@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 5/22/2026 12:37 PM, Taylor Blau wrote:
+> On Thu, May 21, 2026 at 07:01:33PM -0400, Derrick Stolee wrote:
+>>> I'm curious what your thoughts are there. I think barring that things
+>>> are near-complete here, though I did note one issue with the t/perf
+>>> changes (that is my fault for having a bad suggestion on the earlier
+>>> round).
+>>
+>> I like the suggested change to t/perf but I don't share your concerns
+>> around the '/' character in the path (I go deeper into why in the
+>> thread).
+> 
+> Sounds good. I think a minor re-roll for that would be good, but I
+> better understand your viewpoint around the '/' leading character now,
+> so I think other than that we're good to go from my perspective.
+
+Thanks! v5 is on its way with the update to the perf script.
+
+Thanks,
+-Stolee
 
 
-> Le 22 mai 2026 =C3=A0 03:48, SURA <surak8806@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFHello everyone
->=20
-> The child processes spawned by `git fetch` can become zombie processes.
-> In most scenarios, these zombie processes are reaped by Process 1, so
-> this typically doesn't cause any problems.
->=20
-> However, within a Docker container, the application service itself is
-> sometimes designated as Process 1 (for instance, a service written in
-> Go). Since these application services lack the capability to reap
-> zombie processes, the zombies will gradually exhaust the available PID
-> resources.
-
-See also lore.kernel.org/git/202602231615147.3294516-1-cshung@gmail.com and s=
-ubsequent discussion for related material.
-
->=20
-> Here are the simple steps to reproduce this issue:
-> 1. `git clone https://github.com/SURA907/pid-1.git`
-> 2. `cd pid-1`
-> 3. `docker build -t pid-1 .`
-> 4. `docker run -d --name pid-1 pid-1:latest`
-> 5. `docker exec -it pid-1 /bin/bash`
-> 6. `mkdir repo && cd repo && git init --bare`
-> 7. `ps -ef`
-> ------
-> UID PID PPID C STIME TTY TIME CMD
-> root 1 0 0 07:16 ? 00:00:00 tail -f /dev/null
-> root 7 0 0 07:16 pts/0 00:00:00 /bin/bash
-> root 13 0 0 07:16 pts/1 00:00:00 /bin/bash
-> root 29 7 0 07:17 pts/0 00:00:00 ps -ef
-> ------
->=20
-> 8. `git fetch https://github.com/git/git.git`
-> 9. `ps -ef` (Run this command from a separate terminal session
-> connected to the container)
-> ------
-> UID PID PPID C STIME TTY TIME CMD
-> root 1 0 0 07:16 ? 00:00:00 tail -f /dev/null
-> root 7 0 0 07:16 pts/0 00:00:00 /bin/bash
-> root 13 0 0 07:16 pts/1 00:00:00 /bin/bash
-> root 30 13 1 07:17 pts/1 00:00:00 git fetch https://github.com/git/git.git=
-
-> root 31 30 0 07:17 pts/1 00:00:00 /usr/local/libexec/git-core/git
-> remote-https https://github.com/git/git.git
-> https://github.com/git/git.git
-> root 32 31 2 07:17 pts/1 00:00:00
-> /usr/local/libexec/git-core/git-remote-https
-> https://github.com/git/git.git https://github.com/git/git.git
-> root 36 30 30 07:17 pts/1 00:00:00 /usr/local/libexec/git-core/git
-> index-pack --stdin -v --fix-thin --keep=3Dfetch-pack 30 on sura-pc
-> --pack_header=3D2,399455
-> root 38 7 0 07:17 pts/0 00:00:00 ps -ef
-> ------
->=20
-> 10. ps -ef (after fetch ends)
-> ------
-> UID PID PPID C STIME TTY TIME CMD
-> root 1 0 0 07:16 ? 00:00:00 tail -f /dev/null
-> root 7 0 0 07:16 pts/0 00:00:00 /bin/bash
-> root 13 0 0 07:16 pts/1 00:00:00 /bin/bash
-> root 52 1 0 07:19 ? 00:00:00 [git] <defunct>
-> root 53 7 0 07:19 pts/0 00:00:00 ps -ef
-> ------
->=20
-> A zombie process has appeared. It appears to originate from a `fetch`
-> subprocess that terminates very quickly; despite several attempts, I
-> have been unable to successfully capture it.
->=20
-> This issue was discovered within a legacy service. A few days after
-> upgrading to Git 2.53.0, the system's PID resources were exhausted by
-> zombie processes. This is likely the result of recent changes, as this
-> problem did not exist in earlier versions (2.4x).
->=20
-> To be honest, this is not an urgent matter; I have already deployed
-> `tini` as the init process (PID 1) to prevent the service from
-> becoming unavailable.
->=20
