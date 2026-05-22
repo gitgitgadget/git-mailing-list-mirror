@@ -1,60 +1,60 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5285723395F
-	for <git@vger.kernel.org>; Fri, 22 May 2026 02:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE692C375E
+	for <git@vger.kernel.org>; Fri, 22 May 2026 02:52:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779418298; cv=none; b=jr79rjJZ39u084WNUX+IxGWgVOhRrUSV285aGJ/F0kqWAFTECpxR/pirSO6OlPXwPtfmo19HJlLKOBA2M/4NRP/x5GFNZDPPCne/upLdkJUK4qvm25CUKjo7wnAXNPEKkbD6aHP97gcUtBar1A1a9dJzOrpFH6j1WtI4BSaVSsE=
+	t=1779418349; cv=none; b=GzXegxYIvZaw7pSpPaDOQfFqplOZts7Fm7KPAe3O7pRriYKHz7WfBiAgB2CimansXgcBRWTKrTAOESAfS6CmIW0sGNcaTe96FVuS7VbhdhQV45SaU2EYWYGw10TDQo85M2Q05rAUkdlkoHoiBJpx+jWLmgYbPkT31pfeB30cAWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779418298; c=relaxed/simple;
-	bh=5cVuOu0titi7C0x3ioPmhTwCWF53TPKIe7ol7Qp76+k=;
+	s=arc-20240116; t=1779418349; c=relaxed/simple;
+	bh=WVZyOHkAGVuD7zeHe/sNxPsdDZDh5JBMh9Hv3cfEcBM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GxG5JBHzh1CS6D4N1t0eiC+3bXOHx52k4SIUJKjSo/1rF5JF2CIwn70O5iGb4NS753834OaAAQ56elKdJQC4kFHY+SPy32byXIOdaGWxiCugp8h9yzDJXemP4M4ddFr1u0o4qhx3axdLwY7IT5oAeGKQh+l7EDeZeX+58SCKPU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UyIfZfP0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LlFEcDWU; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=KsIQDa/zw8cZPxsFwU6/7H2zs5ZCnKesgCq8S+JL5s1Thox3+0dBdcmV2gk8uFr/MkHFDdXX1A0Qb7wM5G+o55TVQJFHiUGxsdDS6DF8J7PYlwJZcgY2HWK9N6s7GI5wKtqBwWSS/4efPUKvmifWKP1nu8yGs5xp5M8UxZAiNEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xfdz4+Tz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DO9as1aH; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UyIfZfP0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LlFEcDWU"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xfdz4+Tz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DO9as1aH"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2BBBA1D0008F;
-	Thu, 21 May 2026 22:51:35 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E08757A00A6;
+	Thu, 21 May 2026 22:52:26 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 21 May 2026 22:51:35 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 21 May 2026 22:52:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779418295; x=1779504695; bh=yCTib/F9r3
-	CZD71fKogtVICgKbPnES8eG9IF2CrcN0w=; b=UyIfZfP0DMDLhUaRuJQPbPJpRV
-	E3y1Ebb19eOKkTPaewcpKqQGdoH5tN9/aN05g/nxK7b9SUvlwwaEftcJ7jAavwCt
-	4vTNwjXxw4X9oMKrsjPh3ZhHGBfetHrV6wVJfUwuSr0/4B+kkBpAV/1TsLz0KrsN
-	Nw9izK034QCo6c+iuiYjnpZKqyY2+obl8q8FA5x4HdIx0JVKR+DuKTCK54ZP4y4b
-	lUmb6EKQPrFIWm1Ox2FLF6JdyXQ/74G4FU2aWjHvm5dwKWK5vzLDnPtac5PNkisT
-	lHlhHIZAISJLeCMXDQMBi9ScWSuGYJTSycyNqrRyxyQYcj+drybHOYWEHo0g==
+	:subject:to:to; s=fm2; t=1779418346; x=1779504746; bh=0L/QTowD1G
+	jCR82pJOHr432Tpcp85wh5VDIqbQ7dkE4=; b=Xfdz4+TzfSTQwDAQPXNVMLm38f
+	qvIbSU+Vvhnf2GQwYgsLFBJX3CDqRrQVG02QRI2nN4Joo27NDMsRcVXmvm+OoSRP
+	Dr+3r98Er55biFgtfYRdkTEhRB50uqvsJCXdToA/ad92hA8u3o35dar9SAs3giOw
+	gatpk4HpsYlUQhd9BzN9sMVp9/6si1VWNUTRNAAQF54+D5eNQp5NyDt/CyYOWTwo
+	Zd4l+5vKDNVJLa5xqs7y+npAYNKU+1ASgXlIwUMOIWgvpyNu+7Xlgky9Y1K4PjRs
+	N+hXVaX26TbfdZjN9jHh9b2h/ML9cU3OlLbttN5rLuAin995gHpMtKmKKF8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779418295; x=1779504695; bh=yCTib/F9r3CZD71fKogtVICgKbPnES8eG9I
-	F2CrcN0w=; b=LlFEcDWUBKUwkerSD5aiXnn5AVL8HARmcRyGJiWBSkAh6v+U4P7
-	w9SiPF6TEPr2ZsyN5slf8pQRQ0td9eHvvi6CYxetPPj9RhKVQlUv8+K6BqQQI+JH
-	ZiA7Ktn6WcatfbjX4ElY9BMERZgBj+gZ6WlPbk9rUuN5CBSjxlpRZW7xTkPOjhOe
-	FjdOhWMcaPkrV8oG3mh72COKYJJluUYJ6t35CaR+zZD8kyKsSEUD5UInpfEXNLLn
-	dmhBShu9/ceA6JdMcBz5L+jL6L/ovyhOs70uXPNQaWYbMxGV4ZkAq4nVhf1jTi2O
-	faZmWDojCg5ibWtfG84jlsdU/HWFtb5FPiQ==
-X-ME-Sender: <xms:tsQPan6xOpng6ZttHfbInEK1AQ8EdbmNeHvK10anQECBmAEODkn6Tw>
-    <xme:tsQPavLKatz74vL3Hw_gCUlKyOu6k0_D8tmJVPHl8DeE46r6oyS7QrxaO8uvFIsu-
-    wuG82nO2tBSbc830Ua65uSAsuGFZDdptMXr8fAaON4ULtPAI6picg>
-X-ME-Received: <xmr:tsQPaguxKaqyZS0OzGAMSrdt3In-WnQuzJja4-IaXHqxp3L64K6b66qDMMUaWHU7THv-SZb_DEWiqt26uWpEmv6-DnT370cgww>
+	1779418346; x=1779504746; bh=0L/QTowD1GjCR82pJOHr432Tpcp85wh5VDI
+	qbQ7dkE4=; b=DO9as1aHqsaCS5IPr52Ced8oIvzXSVM9qnMklxeaVyIrkzZaIBt
+	Q5d10TWoWSmBLzC6HFkv1IMrDDsSzQhAJzpd9Wj/LRXyCT7QFXXarXL8p/8ecDYb
+	tfFU7txkwoWP2Bhkqafy8HO8be2BSUkzkKjJC226TuyQ2GZyWjIEe5VbWS4zlnb5
+	Me9Bj2my8er4qmRBAcdGRpUvGgfhPNSFWU2XjsudmLopPIThkCkWmUz/3kpvFIR0
+	dn5BEGb0dbk7cPAJ2UX+twn+MbnOe/DRkNmYh2GGa3WP24Qh2u6oTjae8oxF99mn
+	YA/HXN4pmmcGJLQ3DMN4tYUz1uaUtx1dciA==
+X-ME-Sender: <xms:6sQPanM0-pTBCJy1CeyYS_VZYX8BcdF7jHXVNbAx9DhIYZS3cDkI9Q>
+    <xme:6sQPakOreUzSldK0tWDNJs8XxsD4IGG2XhmbYlEXcZZlc4N3trQ232C0tzQuvYYf4
+    ObJqWO9Qq1zdDkiPHwbITUqZKOx9vYb_fikyIGsK9-_5S8iC3LPrw>
+X-ME-Received: <xmr:6sQPaoj5s8Ze_2MIuhE-HphPH-AZ47xZDZzqXV7s6DD6lc95JYNxuQFKn_PAu7nZcwbTQVyfCW7emYpopZu0ezz2PJiOQXmMIA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeelvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    gurhephffvvefujghffgffkfggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    htvghrnhepteeijefgieduheffhfetgeeggedtvdefieeiuddvudetkeetgeefteejjefg
+    hfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
@@ -63,14 +63,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeelvdegucetufdote
     ohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohephhgrrhgrlhgunhhorhgugh
     hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
     tghomh
-X-ME-Proxy: <xmx:tsQPauKxozeGz9BT9qOnYaVPBJDcPoeG2uiDMYHm9T71d3PbxzEdeA>
-    <xmx:tsQPap-dkAJldKa6mrHIVdG7La2iuZnjLYGEzqRTxLhbDrsVWVajWw>
-    <xmx:tsQPanxWEYhzdNmQhtK-q3NDdjKTIuEfFCLVm3GwWcIjyimLb9f91w>
-    <xmx:tsQPam6WPzkuKuKKJldNlmGUZ-g1lTntNxIJYfDJRz9EVlBNoeLMTQ>
-    <xmx:t8QPal1CsXjOVyu6ZkI_o897BQjQQI-LALc-xsJPq5cjJ67KvLqF0QzE>
+X-ME-Proxy: <xmx:6sQPahvd4NREFwnkHE6iJX1kN1CFZSMGAzaGJFykJQboF46fnH2CJQ>
+    <xmx:6sQPauQ6_TCEcxslt8uYUVptgsTjSO8TuHp9_RhCu_YGvaYHd_UH8g>
+    <xmx:6sQPat1KOLPHq7x24fdBk0HyNHkNCM1jErwbHMzPsdC1XRtsJ_YqGA>
+    <xmx:6sQParvJ0P_WxFOjW5XjfmD3f9P4x3xRXijwCeIHgjnSwkiv4zf4Vw>
+    <xmx:6sQPavYE5GZyVZ6dB1yELZI3QDB1IHcSy3-7m7KocF1VMH_9k7NbrEqs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 May 2026 22:51:34 -0400 (EDT)
+ 21 May 2026 22:52:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
@@ -84,9 +84,9 @@ In-Reply-To: <718e28c7e0120a826385189213cccec1f0fce1af.1779403204.git.gitgitgadg
 References: <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
 	<pull.2285.v10.git.git.1779403204.gitgitgadget@gmail.com>
 	<718e28c7e0120a826385189213cccec1f0fce1af.1779403204.git.gitgitgadget@gmail.com>
-Date: Fri, 22 May 2026 11:51:33 +0900
-Message-ID: <xmqq8q9cw40a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Fri, 22 May 2026 11:52:25 +0900
+Message-ID: <xmqq5x4gw3yu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,75 +94,6 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 1e24c95a69..29d38e9060 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-
-Due to the way the patch is split between 1/4 and 2/4, it is
-impossible to comment on the change to delete_branches etc. that are
-needed for this step.  I'll use "git diff master... builtin/" instead.
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 1572a4f9ef..b89fd56112 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -1,43 +1,47 @@
-> ...
-> @@ -132,78 +136,87 @@ static const char *branch_get_color(enum color_branch ix)
->  static int branch_merged(int kind, const char *name,
->  			 struct commit *rev, struct commit *head_rev)
->  {
-
-This one is called from check_branch_commit().  In "--prune-merged"
-code paths, as we will see below, kind==FILTER_REFS_BRANCHES is
-passed.
-
-But note that there is no reason to expect "--prune-merged" will be
-the only one to pass FILTER_REFS_BRANCHES to this function.  Most
-notably, "git branch -d" without "-r" would set FILTER_REFS_BRANCHES
-to filter.kind and passes the value here.
-
->  	/*
->  	 * This checks whether the merge bases of branch and HEAD (or
->  	 * the other branch this branch builds upon) contains the
->  	 * branch, which means that the branch has already been merged
->  	 * safely to HEAD (or the other branch).
->  	 */
->  	struct commit *reference_rev = NULL;
->  	const char *reference_name = NULL;
->  	void *reference_name_to_free = NULL;
->  	int merged;
->  
->  	if (kind == FILTER_REFS_BRANCHES) {
->  		struct branch *branch = branch_get(name);
->  		const char *upstream = branch_get_upstream(branch, NULL);
->  		struct object_id oid;
->  
->  		if (upstream &&
->  		    (reference_name = reference_name_to_free =
->  		     refs_resolve_refdup(get_main_ref_store(the_repository), upstream, RESOLVE_REF_READING,
->  					 &oid, NULL)) != NULL)
->  			reference_rev = lookup_commit_reference(the_repository,
->  								&oid);
->  	}
-
-We find its upstream in reference_rev; if this is non-NULL, the
-branch MUST be merged to that revision for it to be safely removed.
-
->  	if (!reference_rev)
->  		reference_rev = head_rev;
-
-But when ehad_rev is given, and if there is no upstream, we check if
-the branch is merged to whatever happens to be checked out instead.
-For the purpose of "--prune-merged", therefore, we MUST pass NULL in
-head_rev when we call this function.  We'll see what is done in the
-caller later.
 
 "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
@@ -324,152 +255,3 @@ after seeing this message a few times, even the most novice user
 would know how to use "git branch -D" to remove unneeded branches.
 
 Use of advice_if_enabled() may make it more palatable.
-
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 45455cb8ce..c8589cd3a6 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -1798,4 +1798,143 @@ test_expect_success '--forked requires at least one <branch>' '
->  	test_grep "at least one <branch>" err
->  '
->  
-> +test_expect_success '--prune-merged: setup' '
-> +	test_create_repo pm-upstream &&
-> +	test_commit -C pm-upstream base &&
-> +	git -C pm-upstream checkout -b next &&
-> +	test_commit -C pm-upstream one-commit &&
-> +	test_commit -C pm-upstream two-commit &&
-> +	git -C pm-upstream branch one HEAD~ &&
-> +	git -C pm-upstream branch two HEAD &&
-> +	git -C pm-upstream branch wip main &&
-> +	git -C pm-upstream checkout main
-> +'
-> +
-> +test_expect_success '--prune-merged deletes branches integrated into upstream' '
-> +	test_when_finished "rm -rf pm-merged" &&
-> +	git clone pm-upstream pm-merged &&
-> +	git -C pm-merged branch one one-commit &&
-> +	git -C pm-merged branch --set-upstream-to=origin/next one &&
-> +	git -C pm-merged branch two two-commit &&
-> +	git -C pm-merged branch --set-upstream-to=origin/next two &&
-> +
-> +	git -C pm-merged branch --prune-merged "origin/*" &&
-> +
-> +	test_must_fail git -C pm-merged rev-parse --verify refs/heads/one &&
-> +	test_must_fail git -C pm-merged rev-parse --verify refs/heads/two
-> +'
-> +
-> +test_expect_success '--prune-merged with a literal upstream argument' '
-> +	test_when_finished "rm -rf pm-literal" &&
-> +	git clone pm-upstream pm-literal &&
-> +	git -C pm-literal branch one one-commit &&
-> +	git -C pm-literal branch --set-upstream-to=origin/next one &&
-> +	git -C pm-literal branch keepme one-commit &&
-> +	git -C pm-literal branch --set-upstream-to=origin/main keepme &&
-> +
-> +	git -C pm-literal branch --prune-merged origin/next &&
-> +
-> +	test_must_fail git -C pm-literal rev-parse --verify refs/heads/one &&
-> +	git -C pm-literal rev-parse --verify refs/heads/keepme
-> +'
-> +
-> +test_expect_success '--prune-merged unions multiple <branch> arguments' '
-> +	test_when_finished "rm -rf pm-union" &&
-> +	git clone pm-upstream pm-union &&
-> +	git -C pm-union branch one one-commit &&
-> +	git -C pm-union branch --set-upstream-to=origin/next one &&
-> +	git -C pm-union branch two base &&
-> +	git -C pm-union branch --set-upstream-to=origin/main two &&
-> +
-> +	git -C pm-union branch --prune-merged origin/next origin/main &&
-> +
-> +	test_must_fail git -C pm-union rev-parse --verify refs/heads/one &&
-> +	test_must_fail git -C pm-union rev-parse --verify refs/heads/two
-> +'
-> +
-> +test_expect_success '--prune-merged with a local-branch argument' '
-> +	test_create_repo pm-local &&
-> +	test_when_finished "rm -rf pm-local" &&
-> +	test_commit -C pm-local base &&
-> +	git -C pm-local branch topic base &&
-> +	git -C pm-local config branch.topic.remote . &&
-> +	git -C pm-local config branch.topic.merge refs/heads/main &&
-> +	git -C pm-local checkout --detach &&
-> +
-> +	git -C pm-local branch --prune-merged main &&
-> +
-> +	test_must_fail git -C pm-local rev-parse --verify refs/heads/topic &&
-> +	git -C pm-local rev-parse --verify refs/heads/main
-> +'
-> +
-> +test_expect_success '--prune-merged spares branches with un-integrated commits' '
-> +	test_when_finished "rm -rf pm-unmerged" &&
-> +	git clone pm-upstream pm-unmerged &&
-> +	git -C pm-unmerged checkout -b wip origin/wip &&
-> +	git -C pm-unmerged branch --set-upstream-to=origin/next wip &&
-> +	test_commit -C pm-unmerged local-only &&
-> +	git -C pm-unmerged checkout - &&
-> +
-> +	git -C pm-unmerged branch --prune-merged "origin/*" 2>err &&
-> +	test_grep "not fully merged" err &&
-> +	test_grep "Skipped 1 branch" err &&
-> +	test_grep "git branch -D" err &&
-> +	test_grep ! "If you are sure you want to delete it" err &&
-> +	git -C pm-unmerged rev-parse --verify refs/heads/wip
-> +'
-> +
-> +test_expect_success '--prune-merged skips branches whose upstream is gone' '
-> +	test_when_finished "rm -rf pm-upstream-gone" &&
-> +	git clone pm-upstream pm-upstream-gone &&
-> +	git -C pm-upstream-gone branch one one-commit &&
-> +	git -C pm-upstream-gone branch --set-upstream-to=origin/next one &&
-> +
-> +	git -C pm-upstream-gone update-ref -d refs/remotes/origin/next &&
-> +	git -C pm-upstream-gone branch --prune-merged "origin/*" &&
-> +
-> +	git -C pm-upstream-gone rev-parse --verify refs/heads/one
-> +'
-> +
-> +test_expect_success '--prune-merged never deletes the checked-out branch' '
-> +	test_when_finished "rm -rf pm-head" &&
-> +	git clone pm-upstream pm-head &&
-> +	git -C pm-head checkout -b one one-commit &&
-> +	git -C pm-head branch --set-upstream-to=origin/next one &&
-> +
-> +	git -C pm-head branch --prune-merged "origin/*" &&
-> +
-> +	git -C pm-head rev-parse --verify refs/heads/one
-> +'
-> +
-> +test_expect_success '--prune-merged spares the local default branch' '
-> +	test_when_finished "rm -rf pm-default" &&
-> +	git clone pm-upstream pm-default &&
-> +	git -C pm-default checkout --detach &&
-> +	git -C pm-default branch --prune-merged "origin/*" &&
-> +	git -C pm-default rev-parse --verify refs/heads/main
-> +'
-> +
-> +test_expect_success '--prune-merged protects the default branch by name only' '
-> +	test_when_finished "rm -rf pm-default-alias" &&
-> +	git clone pm-upstream pm-default-alias &&
-> +	git -C pm-default-alias branch --track trunk origin/main &&
-> +	git -C pm-default-alias checkout --detach &&
-> +	git -C pm-default-alias branch --prune-merged "origin/*" &&
-> +	git -C pm-default-alias rev-parse --verify refs/heads/main &&
-> +	test_must_fail git -C pm-default-alias rev-parse --verify refs/heads/trunk
-> +'
-> +
-> +test_expect_success '--prune-merged with literal arg also protects default-name' '
-> +	test_when_finished "rm -rf pm-literal-default" &&
-> +	git clone pm-upstream pm-literal-default &&
-> +	git -C pm-literal-default checkout --detach &&
-> +	git -C pm-literal-default branch --prune-merged origin/main &&
-> +	git -C pm-literal-default rev-parse --verify refs/heads/main
-> +'
-> +
-> +test_expect_success '--prune-merged requires at least one <branch>' '
-> +	test_must_fail git -C pm-upstream branch --prune-merged 2>err &&
-> +	test_grep "at least one <branch>" err
-> +'
-> +
->  test_done
