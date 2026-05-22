@@ -1,119 +1,112 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E35280331
-	for <git@vger.kernel.org>; Fri, 22 May 2026 22:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EA082866
+	for <git@vger.kernel.org>; Fri, 22 May 2026 23:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779489616; cv=none; b=YJwA0aTbqLkA1KA2HOIiK9eOSRa4cn2+Q6K70xziwt11ZXl5YQsbThjMAbnmOuQoVeKNyDD4jDk0frNWRqgtvqCL3YTzc3h1uEIS0haRXQ1PsOvoXFMehxRis8tRsD/gA9wwzr9pgpGECYNd2alT/SHxJXpV9qOOEXRCuLGNZIM=
+	t=1779490836; cv=none; b=FghAN5T5xBq9repHYKoyWya8y/S5/u9XnaSgSYktgdycocYQR1glWqF3aGhrP85gJsRQBGue7ZVyTWKv7jPalgzlxi6U3DcMQ8QhiIZBlE1wVO5ASOYRt8WQwVog8xZanK96YrEwbJMlgjSxdvybciqFotl3js8eE1L2lL5iOd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779489616; c=relaxed/simple;
-	bh=duvzmIT6zaxS22luk3gdVqimnLk+7jmEsfgJHFsrlB4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F1a5yncMWmlO7vCtZnGvw4H38fIwdTQPWKIKaWPPoB5KP3s7in9ZxAJ/4Ez0Os7bX8l81FvmIuSQ+rrUFH/pP5sH6CmfPfMiiw4w8TCFF8GYS15NkrVSs0WXAj0kHrYM2NY7ZahxFLK/ecaaDv1TZlPciYYTjimkahV2i8a05bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=XxmIw98I; arc=none smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1779490836; c=relaxed/simple;
+	bh=DF34Xkmqibb71l2ispqx1QHUIyvlue4jNAF/+j2iX/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WtRyjnljSM8xMbOUdJ5v/Wn4mpOg72ENBZSr7khZGKYS7j0G/YYroQneisfNzzD0raXiB0hj5xkibBfuA5gl8bQSIKA+1PPJzIWrKeZCordJyXcMuXJLX+1aboubKX1rWZLDBwl+KGTs38+ze9UqLd9xiBKkH1qW5RZywsz0aVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xf9LV69F; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="XxmIw98I"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-65c21049dafso7136028d50.2
-        for <git@vger.kernel.org>; Fri, 22 May 2026 15:40:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xf9LV69F"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-516d65a15f6so15590311cf.1
+        for <git@vger.kernel.org>; Fri, 22 May 2026 16:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779489613; x=1780094413; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fDp58pAau1ND334ABwFMvdvVI6OZS/G3URDTcxV/dns=;
-        b=XxmIw98I7oRl6q+2WEXcZ+RUsB/rS9VcDcXo7xmTWe/w9Tjl3bKFbVBonnoYp2NUm2
-         rI6EDwLi0Q9yen8FOgzlrGFJjzwK5kfecwAk5mbhOIcbVVioSfe+143bKn35T17Bx4iz
-         IOfPeG/8gxaV3KzIbRvBF0mBaGDw/72PDn+yGbhXKPqZEaZleWc2vpETd0kORhcp2FMS
-         ODF808a43Lzx09JVDuOBiO6Z5b7LTcwsuIUPW8QCEBy3hzBlnLGu1YT/4Qn80pH5kB1X
-         KGm96anuKxv42IBvs07z7hZZj8gn17wZ6GnEWKuJtdyG9B11ODXn1AQb2EM37DqEwCUe
-         dVKA==
+        d=gmail.com; s=20251104; t=1779490830; x=1780095630; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i2d2NBIoS2NdHXaVMNCMN8IGlVrKPGXmAmLWzCbHbHw=;
+        b=Xf9LV69FqIRThwegnkxkejBDaKv5FJ8lTe2oVPZyDlPzUSbctIZVJDPy+oulLZynkK
+         0qJXF5eMIaOQr5OdSlX4AhwmHy5uFt31Z7PNtSUcf1Ft3Ui5bnfRI/XR2FQn0hCdUTUG
+         PpBmKy5o0RdEqFhwYgPwL2fgjfUHpwlvtfXFw4us4mck7RnTflBeoSZJVVLLtwQXf7Uc
+         fQGxFktcJJmzhCbr6lHgeEd9iXsemQDdfPPNdil5Uxv90nBZ1iOLiDImt0kf1ANRTE/l
+         il62VFP9tT0/Qnw5PE9mvF+QzG7wmat/fW90sUjFpE0dqn+P9I4m4ltmk2dXjnPDaDTk
+         GWpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779489613; x=1780094413;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fDp58pAau1ND334ABwFMvdvVI6OZS/G3URDTcxV/dns=;
-        b=rMaXlL56AXgUheWzfT73IED+iJU4tzX3orU+4odVIgQ+l9YYLmR9NzfwhsP49vvIYR
-         MrhsJUnZJqHRPXkX0eW+/4Q+HVuxqNr/mZoy08fIi7IqS/7tlTdAiFfJZLVz7Dls5hwq
-         DRQxvRcKvtznH3u9p5AqKlXprZwB37htuMG8L+4DbKL9rpqbaqfLjXk1EETM9fvQax3H
-         LMr8XtlsxZCKjeD/ONeUKrOXFC4/kT5JfoLqs9+9YOmzrggbBbVx1zNvz9864SaXJHMM
-         3CRRVlRwFhG7d92rhR+xVe4ZZ/4VprXRctyoEGOjJirCW/c9bt1r1BCy2Q0khsed/Mvi
-         j2Sw==
-X-Gm-Message-State: AOJu0Yx8MOELNZYkNuO+ARknpdFeuReg7w0z3rm1hshmhzputb8Jq6uO
-	yJz04BKoCQ9xHPdkaWilANigfj40igi11xu0VI3FVKJ+edQ0moBFUcFJBUUkAAvQ1Us=
-X-Gm-Gg: Acq92OFXR/8VFaQJI70OzR/6wYLZPDwNuMehRdjq7Lm4J4/Zo3wFA8gDBpuX+7+J55L
-	KcjFQA7qvvSiDnwCYN4phXjJYl0Lo3O20/9saYQfJ0IJYaSoW5VL9SbKRO+bWJs6HGllJyRNpjc
-	bQuHgbp0eOifUtwJdmBUSXSTbiy1UJ4GK+urG/wHcXw2rpw1I2SpE0Ksf7qYa9VqLdFB3USJUGR
-	nEG9NHe1Jt03T5MZZltuhegERsSxihTnzqHRtCAcb4pub2FmmBjuhNbCVxnKwxO0vo/EZP9da4f
-	MsYvfspfCHxqt6Q30om5sazXDbhLSPsOyiGiNrv03micq/NJzMPwsNdhq5F2gci7oq2LIIHy4hR
-	a2Ey720wl133jF/J9ISMVE8GgphL2Fw9FbUbfkaRQWk9Kho4kLz9gkFd4qJLFlaZKP/ieCiSUDO
-	0VLwN07kxBIApyjWkOd6iMVgz50aJRHr3rk4Tj9rqtuk98/L1WZAEWuTUlNuCzdrcMVZJUowMYN
-	0qOW1UmEroZuagxYq+UNbu9CKsOxdMiSugZntZeG3r6wcKaDZl+L35DbO8E5ckeF3xKNJbWzYXw
-	bq+i9PZo/cyexK6x
-X-Received: by 2002:a53:acd0:0:10b0:65e:18a4:3021 with SMTP id 956f58d0204a3-65ec992ca26mr4673177d50.52.1779489613625;
-        Fri, 22 May 2026 15:40:13 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d38be2dc91sm14076927b3.23.2026.05.22.15.40.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2026 15:40:13 -0700 (PDT)
-Date: Fri, 22 May 2026 18:40:11 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v5 00/13] pack-objects: integrate --path-walk and some
- --filter options
-Message-ID: <ahDbS+CtwsGx62Q3@nand.local>
-References: <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
- <pull.2101.v5.git.1779474277.gitgitgadget@gmail.com>
+        d=1e100.net; s=20251104; t=1779490830; x=1780095630;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i2d2NBIoS2NdHXaVMNCMN8IGlVrKPGXmAmLWzCbHbHw=;
+        b=docgX/hax8XIkjvV6KXSjmYPMPt2K2I4TW/lJVNdECHvbSijf6vPNfJ4NCUgpHf8TP
+         RiKJeMSje2q5PW3mLtbkYziX4ZuOigbPBUXFIzbLtzNJNhkNvrOL8cqS+HCf2jEETkg9
+         GluXmHi6Kiiooq5ju+cNhFaeh1up8u51B6YpbLOpiehbnFmRPkiyhqiD7LoB0fH78g9M
+         ug6iI/FNV/Dih0TTqEeqafym8mGW+Mkjth2iGWaTAGVBu4vaFtL1LbEUx1iSJtwbsfMD
+         Ww0VF6EGfrSnCC34xdMeEhOWzMN1VhuSXHZd9a4j+zBk3nkXGWqEjaOmXdW4fxbBvIgi
+         pRTg==
+X-Forwarded-Encrypted: i=1; AFNElJ86AtkvaUeH2HAV+65PlWnRd4TnTxml/TSg4cqnE5GoSDaofe3ogCqeV+0tszJ/BYxNXZY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzXf82XwqxDnrOEmkXGsx4k3vxxmdvf5POfRspXIR4AsrAIizn
+	YRJiYOSkyMA/wc7cj9IInSEyHlpdal01POVj/z4Xkr6aanQK2Qa817LjrYzORVdz
+X-Gm-Gg: Acq92OFupGvCjWiLCUlL3M8HSMrrGa7AoK87BxxT2oaeDi8ll8zDaocaMSGaixrrQxi
+	zEdstqN2fLw0WnWho4Mx3CPqM1EqXQjvTdoIlN6xEMROAtUxHnssJEd3EfB72+6zieIRvvRGY8/
+	CWmExUX39xPjFmt9G/8BRVlcKxPkMxShQSOiQcR/BtD+cWKrHQc0+gIHermf46QnY+ToXoovaHD
+	OhLVtBBqucuN/No56DJm3fiOhu8JxREdPf8j00uAwxYz/TMsfRLP8iILRAI2/z1qmhUhUXFHsqs
+	P13u9FFjCq57pIn3GTNsYFQiMRvG0aIfpre3KkdLUmC2kRrxHcguP+tRtqCWFCz93wfCF+CNwnJ
+	rEUs6u7qRvc5PzFIcTCT+C2V92BIpWPSRr3TT/2LIm5mjJB7sGtWy5818y8Tz257Q1vNpRTtsIB
+	BfQEj5eWV189DJOcOCYXjZo3MK4+H2p595dIgPVDTxhMxkPTfzvqp66WKN3mfdWK5vunf/++0=
+X-Received: by 2002:a05:620a:179e:b0:8d8:697:1cf2 with SMTP id af79cd13be357-914a23e28admr1182362385a.30.1779490829507;
+        Fri, 22 May 2026 16:00:29 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-914bba1b8f4sm248664785a.45.2026.05.22.16.00.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 16:00:28 -0700 (PDT)
+Message-ID: <fca71977-cc14-4b38-b310-9808b61880f5@gmail.com>
+Date: Fri, 22 May 2026 19:00:27 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.2101.v5.git.1779474277.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/11] git-gui: use rev-parse exclusively to find a
+ repository
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
+References: <20260514143322.865587-1-mlevedahl@gmail.com>
+ <20260520202411.108764-1-mlevedahl@gmail.com>
+ <20260520202411.108764-5-mlevedahl@gmail.com>
+ <8d1488ec-c4de-4ddd-b3cd-e1e8b4a343bf@kdbg.org>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <8d1488ec-c4de-4ddd-b3cd-e1e8b4a343bf@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, May 22, 2026 at 06:24:24PM +0000, Derrick Stolee via GitGitGadget wrote:
-> Range-diff vs v4:
->
->   1:  0840110116 =  1:  0840110116 t5620: make test work with path-walk var
->   2:  d7c87545f3 =  2:  d7c87545f3 pack-objects: pass --objects with --path-walk
->   3:  fb8a0f9c43 !  3:  697ef716d2 t/perf: add pack-objects filter and path-walk benchmark
->      @@ t/perf/p5315-pack-objects-filter.sh (new)
->       +		awk "{print \$4;}" >top-dirs &&
->       +	top_nr=$(wc -l <top-dirs) &&
->       +
->      -+	>depth2-dirs &&
->       +	while read tdir
->       +	do
->      -+		git ls-tree -d --name-only "HEAD:$tdir" 2>/dev/null || return 1
->      -+	done <top-dirs >depth2-dirs.raw &&
->      -+	sed "s|^|$tdir/|" <depth2-dirs.raw >depth2-dirs &&
->      ++		git ls-tree -d --format="$tdir/%(path)" "HEAD:$tdir" || return 1
->      ++	done <top-dirs >depth2-dirs &&
->       +
->       +	d2_nr=$(wc -l <depth2-dirs) &&
->       +
->   4:  e77c8a6bbc =  4:  91845bcef0 path-walk: always emit directly-requested objects
->   5:  f4904f81e0 =  5:  fdb9361198 path-walk: support blobless filter
->   6:  f37467e46f =  6:  89726faf7e backfill: die on incompatible filter options
->   7:  133c1b156c =  7:  3884d4737f path-walk: support blob size limit filter
->   8:  0f517be8e3 =  8:  31b4ef0fa1 path-walk: add pl_sparse_trees to control tree pruning
->   9:  b4dc09ab69 =  9:  7d8f0aa036 pack-objects: support sparse:oid filter with path-walk
->  10:  0b1eed0790 = 10:  a68676d0de t6601: tag otherwise-unreachable trees
->  11:  b23244c4c2 = 11:  b0db73c6cc path-walk: support `tree:0` filter
->  12:  7e1e503361 = 12:  6845988f50 path-walk: support `object:type` filter
->  13:  a615b1a707 = 13:  d33d899251 path-walk: support `combine` filter
+On 5/22/26 4:46 AM, Johannes Sixt wrote:
+> Am 20.05.26 um 22:24 schrieb Mark Levedahl:
 
-The range-diff looks good to me. Thanks!
+> 
+> Sorry, but I cannot agree with "prefix is only known after the worktree
+> is found". The prefix is a property that can be known even if we haven't
+> asked where the top-level of the working tree is. See more below.
+> 
+>> This is true even when running the repository
+>> picker: that option provides a list of prior selections, and does no
+>> validation on the list beyond checking that the directories exist.  For
+>> now, just initialize _prefix along with other global variables.
+>>
 
-Thanks,
-Taylor
+> 
+> You cannot leave the _prefix empty, because it breaks `git gui browser
+> master dir` when invoked from a subdirectory of the working tree.
+> 
+> This line must remain. I see that you add it back in later patch. There
+> may be some motivation to move prefix discovery, but there is no
+> motivation to remove it at this point.
+
+
+
+Never mind, I confused myself on the process. THis patch has only affected repo discovery,
+worktree discovery is later so should be left untouched here.
+
+Mark
