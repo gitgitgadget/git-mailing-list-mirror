@@ -1,175 +1,106 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E670A357CF3
-	for <git@vger.kernel.org>; Fri, 22 May 2026 05:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECCF3A1A59
+	for <git@vger.kernel.org>; Fri, 22 May 2026 05:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779427769; cv=none; b=IH5ox2uVXiUz1QMZX6t0ajA/vbFHKAsYFFlkahvpeArR7o+F1Sob+sTIAQ2GJG9mIPXV9bpBNX7k/DCN+1nEqsEMi9YUom/DTiMeAe+QeZ3GUDVdWm35GC2EYYLXx+MsmYZNb14KaNidbfpIl4zZFRpmA1kqFnAtsI0DVVOr45Y=
+	t=1779428596; cv=none; b=Ep3CM++n0jHhQr0gqUGSzIMhnogA8YJlwg7rfLsyhI9DW/10uffSOyCfpPx1+HdxZb1/pPF6kxSrBTI69EpyW8qgwT2RPQHMAqBcGWXCELSVHqHurLwNFFGXhnsNzHU9UBMr7SkUAf2nAhCwlTBl/GVBLkBDhoKppOyATkgzUuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779427769; c=relaxed/simple;
-	bh=bC2MyaNsNyNZfK5ay9SebXPYLRFswLSAVQC7yivYQQM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n/JJi2ppNilS9a6ZPtZb3IYIbOYvjf0BDOBN9h2OCRt3Ot1enS9v2xdiBJwGw7BYtxTOpx59FqVOyZ+LEqsFc4WU5wtCd6IWWIgWJ9bsOQIoBGFKBOy5QRNqztgyDrjBbUflST4PvTpJdco7HLft16UA2mrPRTBkIpioUDBMHSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PW35BZZa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VwktLKcG; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779428596; c=relaxed/simple;
+	bh=EB7KzGHsqLfIRWPDxzyrWbur2Zfp2trM9xJVAj/5mEY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W17eK5ET+qy2H5XcqKEMc3n46Dp/Zs+03/IjirXXIL+H9KbXOf7gddMxqPnn5aCIT21w+e74LUQjIobY4ZWXzUX4z64PkhJTCF70phYY7SDFs07QvAQT7k5xiKccy4YxO+PUTGurkOiTBjNttW3FTKKsARI6XZV7MNQTK5DdwII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=D8C+SJs+; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PW35BZZa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VwktLKcG"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 350661D000E0;
-	Fri, 22 May 2026 01:29:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 22 May 2026 01:29:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779427767; x=1779514167; bh=S8wUuo65tC
-	JTKPNsp6PJo5Gz0JoK4gYCYtiCJ2AAcM8=; b=PW35BZZazKPaJoOSKcAbLgNi36
-	QqabHNGAfzZplF1TXFZilxWQwbLaksZG/NQUdO/GsU0NPS5v7tbrn5ehqTICVch1
-	vuGGoh/4GHK4mMj90g/mYtCidiKFOMC/0h6phdUvW9LQW1il859hEOBIHiEmgGaH
-	llYzkYNycsLYRnrbYFpcaFaakXt0okK+424C9nIQ4dRpDtOQWrvSRxA2rAksa0+n
-	7HIgMqk1CtpVnXtlacrW1SKBCuci6BT+EYP77akjD372Y5wwzM6VAPys3HPxOJNw
-	O5DK7VCjxfNGVFXBOFhJyZ+IR8iopJcGl21UJ7T1Lrnil4mEhVj6UlEB9arw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779427767; x=1779514167; bh=S8wUuo65tCJTKPNsp6PJo5Gz0JoK4gYCYti
-	CJ2AAcM8=; b=VwktLKcG0BCiXnCoaxsnhy3OiXse9cu9LVCYYjIzULv4cAssPAC
-	g+JE6Dbk1WRJTQAz/wAb98QvLh5asZUxuk+07pygMf8xU5NdR2iDmdHzhEdJ9Jzf
-	CGN+vf2El9Ew0jf16F2MPYyV7fWKErQa2NwTrO7MFOB+p9rOrudktGmvrdKenbMY
-	TkkzJISNN6eNcE9doZ/dm6+rpstHy/DZIMOxljeknMCy7mv41YMjnUvHWJFQd4IC
-	JpUkhjtNWhxZ8n1VGHiPITjYMyDXeUMqj7mQTc7b9+kKhTmcoq70EWp+jSlxjnwo
-	H1lMWHwhBdpXlwaq/vhzhJNAfGrwVp6UgEA==
-X-ME-Sender: <xms:tukPasbQYDoftSySBBrbsj2Ko4tfqYE-DbUIspKVbrkTREf_d5KSbw>
-    <xme:tukPauaIgWTWnSqFYAAlY7ilNBawl1X3P2EW371bOJvUzKb7sNdn45h1KwPvV836X
-    nNSBjcAZ9qjK2HWqx2y2osrEToO-VQHpQsinQIu3w9-SNwlcfukEQ>
-X-ME-Received: <xmr:tukPar_7F0KVfa4XLOGD6PIzmynm0zYO6WNgJeE0QC5Z8NCO46ckpc26iKHBaeXIHwOHjo2dYgYCksuvfkXAcZYDRhPzpzZrOw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeelgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehmmhhonhhtrghlsghosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:t-kPaljYlz_AgvLc81O4_R5TeQ_FguGFWTZiHwNDiEIEOTMD04pdHw>
-    <xmx:t-kPajdjZ-7RKkJ4ztcvY-Z2t3Aa7gt7L1THejRig1DFPadaZR5hMw>
-    <xmx:t-kPakr2ctz9hEfU6HH2uWriI8jt8dnmZ1_7myIBOg-XHM2IJSPxSg>
-    <xmx:t-kPagBtXOaBZkqxfTBOcEdBV27uLqkjbPsPsRBZhwa2GUUEESJzQg>
-    <xmx:t-kParemBLtJ3xZ1HblDOcTEVfI5erKZAWrUXd_dM9JNXxLvFrapw_-_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 May 2026 01:29:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH 1/5] xdiff: support external hunks via xpparam_t
-In-Reply-To: <8c0ea0bc0742651e634db7a3002e8cbe1240acf9.1779415884.git.gitgitgadget@gmail.com>
-	(Michael Montalbo via GitGitGadget's message of "Fri, 22 May 2026
-	02:11:20 +0000")
-References: <pull.2120.git.1779415884.gitgitgadget@gmail.com>
-	<8c0ea0bc0742651e634db7a3002e8cbe1240acf9.1779415884.git.gitgitgadget@gmail.com>
-Date: Fri, 22 May 2026 14:29:25 +0900
-Message-ID: <xmqq33zkui4q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="D8C+SJs+"
+Received: (qmail 47203 invoked by uid 106); 22 May 2026 05:43:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=EB7KzGHsqLfIRWPDxzyrWbur2Zfp2trM9xJVAj/5mEY=; b=D8C+SJs+UnO/VXGy3bTALE7CbmLNJLiBmWD6g1H04R+KhbEOr8dYQiNwnZvvg58Dj1B5cnQjVGwXFeHKn1pLqcpCmbpxj8acQ2WHYSmF5iHGz4rPM/fmCITI4F/5d20fD0xyuNJbYfEDViCCQVLQgc9GVzfzwc0BJdLnqtWnYdBPUzyj5l2Z4jNGa1xybANOVZKuymg651N2LC6OcqZ57hDzGY56G1Lw7rFVKvzvRwfpkEut3Qo4I5IlHLGLZWegU7fiFEXdYUxULclTjzUrBvsLs7wagkDAPh5InYnyaRSqouMPsGqcCHoe30c1M9gWSvdM+btFd893fquzCv+nag==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 May 2026 05:43:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 99296 invoked by uid 111); 22 May 2026 05:43:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 May 2026 01:43:17 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 22 May 2026 01:43:12 -0400
+From: Jeff King <peff@peff.net>
+To: Miklos Vajna <vmiklos@collabora.com>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] log: let --follow follow renames in merge commits
+Message-ID: <20260522054312.GD861761@coredump.intra.peff.net>
+References: <agLU58gbG1y7KLz-@collabora.com>
+ <agwAkHzjrJQPVtCS@collabora.com>
+ <xmqqo6ib7vlp.fsf@gitster.g>
+ <ag2265RJal-tJLoW@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ag2265RJal-tJLoW@collabora.com>
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, May 20, 2026 at 03:28:11PM +0200, Miklos Vajna wrote:
 
-> +/*
-> + * Populate the changed[] arrays from externally supplied hunks,
-> + * bypassing the diff algorithm.  Validates that hunks are in order,
-> + * non-overlapping, and within bounds.
-> + *
-> + * Returns 0 on success, -1 on validation failure.
-> + */
-> +static int xdl_populate_hunks_from_external(xdfenv_t *xe,
-> +					    const struct xdl_hunk *hunks,
-> +					    size_t nr_hunks)
-> +{
-> +	size_t i;
-> +	long j, prev_old_end = 0, prev_new_end = 0;
-> +	long total_old = 0, total_new = 0;
-> +
-> +	/*
-> +	 * Clear changed[] arrays.  xdl_prepare_env() may have dirtied
-> +	 * them via xdl_cleanup_records().  The allocation is nrec + 2
-> +	 * elements; changed points one past the start (see xprepare.c).
-> +	 */
-> +	memset(xe->xdf1.changed - 1, 0,
-> +	       (xe->xdf1.nrec + 2) * sizeof(bool));
-> +	memset(xe->xdf2.changed - 1, 0,
-> +	       (xe->xdf2.nrec + 2) * sizeof(bool));
+> Hi Elijah, Jeff,
+> 
+> On Tue, May 19, 2026 at 03:37:54PM +0900, Junio C Hamano <gitster@pobox.com> wrote:
+> > > :-) Should I just wait more or should I resend this?
+> > 
+> > Rather, ask other reviewers
+> 
+> I did a small improvement to how 'git log --follow' works, as in if the
+> rename happens inside the merge commit itself, then the rename was
+> detected "vs the first parent", but it wasn't detected "vs other
+> parents", which is painful with a "subtree" merge commit.
+> 
+> I'm not sure if it adds value, but I can append a one-paragraph summary
+> of Junio's comment in this thread to the end the commit message, to be
+> more explicit that the inherent limitation of the current log follow
+> design (single path, once a rename is detected, we only care about the
+> new path) is not changed with the patch, this is just a fix patch so
+> 'git log' works better, similar to how 'git blame' already does.
+> 
+> May I ask you to review the patch?
 
-This, especially the starting offset of -1, looks horrible.  The
-internal layout of xdfenv_t might happen to match the way the above
-code expects, which is how xdl_prepare_ctx() may have give you, but
-it somehow feels brittle.  I guess the assumption that changed[]
-does not point at the beginning of the allocated area (e.g., it is a
-no-no to free(xe->xdf1.changed) or realloc() it) is so pervasive that
-it cannot be helped.  Sigh.
+I saw Junio's comment. I was about to write something very similar
+before I saw that he had already done so. ;)
 
->  int xdl_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp,
->  	     xdemitconf_t const *xecfg, xdemitcb_t *ecb) {
->  	xdchange_t *xscr;
->  	xdfenv_t xe;
->  	emit_func_t ef = xecfg->hunk_func ? xdl_call_hunk_func : xdl_emit_diff;
->  
-> -	if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0) {
-> -
-> -		return -1;
-> +	if (xpp->external_hunks) {
-> +		if (xdl_prepare_env(mf1, mf2, xpp, &xe) < 0)
-> +			return -1;
-> +		if (xdl_populate_hunks_from_external(&xe,
-> +						     xpp->external_hunks,
-> +						     xpp->external_hunks_nr) < 0) {
-> +			/*
-> +			 * Invalid external hunks; fall back to the
-> +			 * builtin diff algorithm.  Re-runs
-> +			 * xdl_prepare_env() via xdl_do_diff().
-> +			 */
-> +			xdl_free_env(&xe);
-> +			if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0)
-> +				return -1;
+I think we can probably all agree that both before and after your patch,
+--follow is never going to do the _right_ thing, which is to follow
+paths independently down both sides of history.
 
-If the external tool keeps sending bogus hunks, silently falling
-back to what we would have done if there weren't any external stuff
-may be necessary to pleasantly keep using Git, but two and a half
-short comments here.
+I am OK conceptually with making the current broken behavior slightly
+more useful if it is easy to do. But I am not sure if we are making
+things more useful here or not. If we see a merge where the file "bar"
+was previous "foo" on one side and "bar" on the other, our broken follow
+is going to either pick "foo" or "bar" to continue with as we traverse.
+But which one is right? Whichever name we choose, we are potentially
+omitting results from the other side.
 
- (1) "What we would have done" is exactly the same as what appears
-     in the corresponding "else" block.  Can we make sure that we do
-     not have to keep updating both copies in the future with some
-     code rearrangement?
+Right now we pick the first-parent name always. But it does not seem
+more correct to me to pick one from another parent. You'd be missing
+further commits using the original name along the first-parent track.
 
- (2) The writer of the external tool may want to see some trace of
-     warning under certain flags when a failure of the tool forces
-     the receiving end to fallback.
+There might be a more useful rule like: if the path is untouched versus
+the merge result in all parents but one (i.e., TREESAME), then choose
+the parent where it was changed, including any --follow processing. But
+we already do something like that for history simplification. Which
+makes me wonder if you could get the results you want through some use
+of history-simplification flags.
 
- (3) If the tool throws too many broken replies, perhaps we want to
-     disable it automatically?
+Or maybe we already do that TREESAME check. Simplification kicks in when
+the traversal is limited by path, and --follow mode by definition has
+such a path. But I'm not sure if the --follow code would see the
+simplified parent list or not.
 
-> +		}
-> +	} else {
-> +		if (xdl_do_diff(mf1, mf2, xpp, &xe) < 0)
-> +			return -1;
->  	}
-> +
->  	if (xdl_change_compact(&xe.xdf1, &xe.xdf2, xpp->flags) < 0 ||
->  	    xdl_change_compact(&xe.xdf2, &xe.xdf1, xpp->flags) < 0 ||
->  	    xdl_build_script(&xe, &xscr) < 0) {
+So I dunno. Probably some experimenting could yield more analysis there,
+but with the patch as-is I'm not convinced that it is not going to make
+some cases worse.
+
+-Peff
