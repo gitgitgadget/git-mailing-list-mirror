@@ -1,43 +1,47 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A1F3101A6
-	for <git@vger.kernel.org>; Fri, 22 May 2026 04:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC32A379C40
+	for <git@vger.kernel.org>; Fri, 22 May 2026 05:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779425707; cv=none; b=UTj/b7zPk6gi1lpuLUcRiRbSFRu5qCbJRg+k2mcmn/305seP60dRAQBREwRFiRWTy5tDVp4aC1aPUaQJYOcrzqDtEkECF6XBOsjijWzWIQfGz5JdWQk6E4t8PVjkiYkTr3MhOinpRA/HwytD407W7VYyHuapfAbGnRh5Ti3aV1A=
+	t=1779426658; cv=none; b=LqNyF5Fn6aN6sszSQ18Fc08OEhEgDTIParyd9XsSb3ZSOAwzGqtlOqPZEnI77hOr7MaNS/ORaP06ef18rN4bJ61MyXCaKvGgM7pYgWoblr6eOQXeuAgbQgEo/T8m59rV5nHNNFnbNvqOQ/jWEgYjuxLWQYiBwU9gNt8zJeWqQss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779425707; c=relaxed/simple;
-	bh=fv+4awjyGduox81zemW2nMHYlW4TLruxLZqOVG5pdBg=;
+	s=arc-20240116; t=1779426658; c=relaxed/simple;
+	bh=J96gmn+XHTYOZXWeUQHUPbTUgKe7bHOAViSopd1nVHY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HuoCbklpZyIUp5/XOaI+mrOU05CtXTKTpFPhF9Bmces3We4S4s/EKwZ9iD+lEvanuDhkhGqplXgO7d54ihsL9shYDlJyGsNElCw79m7rHGaDqCoqUi1D+gVEtOIH7ZFC6UXFoNxCE//b2bKg9wWaQlc6w+kTgefCZzbJ4Eqa3YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TTeZcgoM; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=OAHbVLKnI9kT0FdUL1os9zY8mQlOnL7FauA8PAhNgyO3t3WBjXr017hEN2RIo+OiATm8hBh1tJPzo0qq3JqyXkAgRKZqn6Xrv9/ms5QRFBPBYyoUPd9o3gKZa56HLe2zfKRZd7a1zmN6mBGDo6coV4zNk/tajwYrTkr6dm0HRwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UCvYF3Gz; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TTeZcgoM"
-Received: (qmail 46997 invoked by uid 106); 22 May 2026 04:55:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fv+4awjyGduox81zemW2nMHYlW4TLruxLZqOVG5pdBg=; b=TTeZcgoMRAwn3bMqp+2Hd4XluD3CdLeGOS78gHO4d2JzVPWp6UvmY4vNKm6IiLeeUhRDTNGeHw7Sra0bDGS6dPO7q/RwtLXQC855hOIOq9ghBcYqNzM0cKToembw/l0oDbBZ0A/aOEQA4VasbU4JtaXrEYA/fkeRZ39ALCusaTrG01Hkosia9fXGqX8Fj0+ZAm9bPX1805J27jYF8Lc+g6wKdd3m1gSBRNvJbKmJPkPff2Jin3TY1FddR3hGBsPjDLklMljgbeEOnRPkuHmZ6gmBABgR1LidWZM4JbUz379h3YTwM+LVbrHYRAdf7VDuLcyeD4IdmswKOUl+gkzoaw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UCvYF3Gz"
+Received: (qmail 47056 invoked by uid 106); 22 May 2026 05:10:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=J96gmn+XHTYOZXWeUQHUPbTUgKe7bHOAViSopd1nVHY=; b=UCvYF3GzXYq7m7K3uEoXHgvXmZrC29zS7d3EKyyFz35A2PQQcxTEp6IrSVuGoOhXI8Q72UvYIOP2Yrmg7e0zX6wtxDDdMS3YI/n00cK09PWFpa+5OKqWV0phhgq5JENCSwFLCxwXOWCOak0I9OVsUsyMqVKWXbk9ranaRcLVDnUE9w7rRn4EWPwTZC6rq50D6Cd/ojadYGmeGVsy2MflFa4y+4Zus8Ki7dfl1cF0ZKZYYvV7rm2lJoa34zvwd/33+6YUdw8VQJd9OVHZxluzwFHdhBVS2cMKVwFzV/IDITBEepGMDpb82XtOCJsAywDjaN8HouxJGa/FHNN2Qs7PYw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 May 2026 04:55:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 May 2026 05:10:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 98833 invoked by uid 111); 22 May 2026 04:55:08 -0000
+Received: (qmail 98995 invoked by uid 111); 22 May 2026 05:10:53 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 May 2026 00:55:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 May 2026 01:10:53 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 22 May 2026 00:55:03 -0400
+Date: Fri, 22 May 2026 01:10:48 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	slonkazoid <slonkazoid@slonk.ing>
-Subject: Re: [PATCH] http: handle absolute-path alternates from server root
-Message-ID: <20260522045503.GB861761@coredump.intra.peff.net>
-References: <20260512162619.GA69813@coredump.intra.peff.net>
- <xmqqo6ikjeqp.fsf@gitster.g>
- <20260513185825.GB147423@coredump.intra.peff.net>
- <agbOEsZ8NmE8SyfV@pks.im>
- <20260515170134.GC88375@coredump.intra.peff.net>
- <ag7xbkTF11N22waX@pks.im>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Siddh Raman Pant <siddh.raman.pant@oracle.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"newren@gmail.com" <newren@gmail.com>, "ps@pks.im" <ps@pks.im>,
+	"oswald.buddenhagen@gmx.de" <oswald.buddenhagen@gmx.de>,
+	"code@khaugsbakk.name" <code@khaugsbakk.name>
+Subject: Re: [PATCH 4/9] run-command: add support for timeout in command
+ finisher
+Message-ID: <20260522051048.GA862219@coredump.intra.peff.net>
+References: <cover.1779207350.git.siddh.raman.pant@oracle.com>
+ <f58c8c522814dce9257f64733e9fbc9bd9f446c0.1779207350.git.siddh.raman.pant@oracle.com>
+ <b69605a6-e841-47b9-a899-a57e184d3c8b@kdbg.org>
+ <2f7eea03273ffaacc50a9ae186673da88fc3345f.camel@oracle.com>
+ <cf52154c-1275-4a4b-957e-5aa17f22705c@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,52 +50,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ag7xbkTF11N22waX@pks.im>
+In-Reply-To: <cf52154c-1275-4a4b-957e-5aa17f22705c@kdbg.org>
 
-On Thu, May 21, 2026 at 01:50:06PM +0200, Patrick Steinhardt wrote:
+On Thu, May 21, 2026 at 04:36:05PM +0200, Johannes Sixt wrote:
 
-> > Packfile URIs help with the actual pack generation (even if we're
-> > blitting out bits from the disk with verbatim packfile reuse, we still
-> > have to handle gaps and compute the checksum over the output pack).
-> > 
-> > But it doesn't help with the server computing the set of objects the
-> > client needs in the first place. IIRC, packfile URIs work by the server
-> > saying "oh, I was going to send you object XYZ, but you can get it from
-> > this stable pack instead". So the server still has to compute the set of
-> > objects (and send any that are not mentioned in URI packs). Bitmaps
-> > help, but there's still non-trivial computation and storage on the
-> > server.
+> Am 21.05.26 um 11:59 schrieb Siddh Raman Pant:
+> > The timeout is for the failure path, where the external helper has
+> > already stopped following that protocol or is blocked on something
+> > outside git's control. Since git starts the helper and puts it on the
+> > log/grep path, git also needs a bounded way to recover when that helper
+> > does not make progress. Otherwise an optional note source can prevent
+> > the main git command from completing.
 > 
-> I guess it depends on the actual server-side implementation, but in the
-> general case this is of course true. A server could decide to for
-> example overserve objects in case the client does a full clone, or it
-> could arrange packfiles in a special way that allows it to serve at
-> least some kinds of requests efficiently.
+> That Git communicates with a process that looks like it stopped is the
+> normal case, for example:
+> 
+> - Output is sent to the pager. The user can take their time to study the
+> output. All the while, git waits patiently for the user to advance the
+> pager.
+> 
+> - Git fetch transfers large amounts of data across the network. Most of
+> the time it waits for data to arrive and does nothing. The peer process
+> looks like it hangs. Git does not decide to kill the connection at any
+> time. It is the user's decision to do so.
+> 
+> If the notes provider hangs, then it is not on Git to decide when it has
+> waited long enough.
 
-True, though you still have to receive the client wants/haves before
-getting to the packfile-uri phase. The alternative is for the server
-send URIs during the ref advertisement. But we have that, too, these
-days: the bundle-uri feature. (Which I completely forgot about while
-writing my earlier email).
+Yeah, I agree with your point of view. If I understand this patch series
+correctly, it is about adding an external process to map commit ids to
+note data. So I can think of some existing features that are quite close
+to that in nature, none of which use timeouts:
 
-So I do think that bundle-uris can probably be an adequate substitute
-for dumb-http in terms of reducing server load. Though...
+  - textconv filters and external diffs which process data in the middle
+    of a git-log invocation
 
-> Packfile URIs definitely need some love to become feasible, yes, and I
-> don't think they have evolved much since their introduction. I still
-> feel like they are the better mechanism for offloading traffic compared
-> to bundle URIs though, as we already have packfiles around anyway.
+  - long-lived clean/smudge filters map blobs to arbitrarily large text
 
-...yeah, I agree that storing both bundles and packs can be annoying for
-a server, depending on your setup. In theory it would not be hard for a
-slightly-clever server endpoint to store packfiles for regular Git to
-use, and then generate the bundles on the fly by cat-ing the bundle
-header and the packfile, both of which can be sent out as raw bytes
-without further processing.
+  - cat-file's batch mode maps object ids to user-specified data about
+    that object
 
-Anyway, we are far afield from the patch that started this thread. ;) I
-do agree with the general notion that we _should_ be able to get
-smart-http close to the server-side expense of dumb-http with a few
-tricks like these.
+As you note, it's up to the command to be well-behaved. Git should
+notice and respond appropriately if the command closes the pipe, of
+course. Sometimes a timeout can help with a poorly behaved command, but
+IMHO it is not worth the cost of non-determinism that it brings.
+
+Moreover, the bits touching run-command here make me nervous, especially
+after the challenges we saw in the child-cleanup topic that was reverted
+just after v2.54. There is often a shell interposed between Git and the
+sub-command, and we don't always know how the shell will react to
+signals. Using SIGKILL will eventually get us _something_ to wait() on,
+but it might not even be the process we care about!
+
+I don't really care much about this external-notes feature one way or
+the other, but if we are going to do it, I don't see any reason why it
+would not behave like all of the other similar parts of Git.
 
 -Peff
