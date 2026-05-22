@@ -1,118 +1,112 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415D935AC1B
-	for <git@vger.kernel.org>; Fri, 22 May 2026 16:21:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72937349CE9
+	for <git@vger.kernel.org>; Fri, 22 May 2026 16:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779466903; cv=none; b=FCLVWaWI/jGWklYEv77EVq4oCY3Kgz0yVUJhnm99SOybT0eZBtc9VRtrNkcXyXIXSR0vaTjBC38TJeVlwjQON+sWLhDon2CR0NG8Q1+k+/K5HS+3j5CI3WCtU8erBxk000whxn+InOwpXvWffQ86WboIBfCeNXiHRDhMubkZt58=
+	t=1779467774; cv=none; b=neVQnIQU8HTpVYB8BogvNm7C9x+xNvwsNtQLo1T2uQK8mU3nkAVZqnNRIvbXXoEHENA5/9d0V7u/j8JsoU0E2rYfepFY6VU4SvqfswGwS4wX/xSjbw3graTa8RW0I4J3fCDBjPrPrzcEKO8y67bA9Q7rGYtChsSIEqLOVWjeoEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779466903; c=relaxed/simple;
-	bh=Mj3GJ4Hv+dWZCzp7y64cW5b7b4J+SjX1CVIQVlkqVgQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=TDk69OSNk7n35tO4deiWFYQqCwlH4pKfLWVK/3RsZE15EJQ0pbOyNr7xkf2jtppiK6oPJltM2m2Pnb5eW3FYq1VJ4Dc0SYfOSVBKYfAODT//3zESorW/lZbCF0lXLxFJ2JvuDragY7iZ0wWiSmOgy/cgSAh8/I4Y8bjCZPLYKYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=p0ysvD4p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fiSjLTjr; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1779467774; c=relaxed/simple;
+	bh=SGsS0PCl6G2xaqtnqeiRt+iqlZITRKhRy6VZnVbP4xA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aFG2VRij7UEbKMQASQtNdYj3xDQPtDC8HS0ww9zPKCsH6865Dp2YYzh02ZWq6ghtN4K/kQ1frGXc2jOc9ete2kc2+ZbjASq+3POHwEN0h2K8awRr8yGTzcIp+GlgyJtfFyCjjMR+IFgYe4q04rCpF7uyqJTE5ZdJEeZuJWr3ZGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=k1BL9Tzn; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="p0ysvD4p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fiSjLTjr"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 12906140006F;
-	Fri, 22 May 2026 12:21:36 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Fri, 22 May 2026 12:21:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779466896;
-	 x=1779553296; bh=96KvQjibT2TSf5cOA6KOR8RwTOBsECzuHwo7JF541EY=; b=
-	p0ysvD4puDqLOV0f8xeTq9aMErFbomiX9q477yxpnRMMQLvSFQAKgMuWVGnhfrtk
-	6cBhi3SiNF8oL4OjWEtI+Kl7nr16wF+RlFygn33nBHA9FodsGjex/1kmsj9NzSi5
-	lrjkhSPNonv8+kCU3e+1OGYbhEZN/9PGjFrAzB8LjHhNvJZ6kDfdcGaRR6N8h4To
-	hl/0HWN3nocBnFGHbRwxs/gszxveQpG2VcMdB3Th+vWdLHCgnypC/Um4c7unkWOg
-	zSITubxyQ+h0sEQwkVfcAKbGY/OHf87z2FSiqwMDk9MacrYWM0qF4kdd7kd6qOTX
-	nXKJKlvWt/3vULMRFL4CzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779466896; x=
-	1779553296; bh=96KvQjibT2TSf5cOA6KOR8RwTOBsECzuHwo7JF541EY=; b=f
-	iSjLTjr/Wk79Huaol2H3e+LH7PBrV+eKVANndbPz06SJ/YIil1sBOdVyGsr0SGfE
-	QzotiBF8Cp7FSzacpQXImKo+nvLuqafkzoSltS6mpdzUJAN19xfDUVWkZHdkcfCB
-	Ys3EUEKM5nsF46Bh6sgnO5QZvocXSBAXh4cJtFsilqjTVXxAyHGcWZsCPsC+JDWU
-	0ZPPVpIy9hefS7uYwqqGL8Hq8zplhH47v4UTo4iVGozuDF8QEnl+10wnRQ5y6YLN
-	mJR1n7Oo22aARAIV+vr7tNoxqIwAJnLZvmbIy6Lf5y9f6l2kPPjTGcs6gogUb+cZ
-	pQuVZezJ4LPJ07hh4qfUg==
-X-ME-Sender: <xms:j4IQah1ST46KMebBktlQmbYRHZuZ_yAw7YpEVVzc8jv36nZvB0f--3E>
-    <xme:j4IQai7Y1o8b3o0dvE0TeWcE6bxsGxj5-9rUpjfrCrOAYeQqavrnby_htwwB0BznV
-    dPcUC3LxxY9Xhv35hk-EpoumlBNfeVFy0WrX-mwSvbztyYwB6RA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduhedtieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqre
-    dtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeev
-    jedugeevfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehhihesrghlhihsshgrrdhishdprhgtphht
-    thhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:j4IQancaR0uf6oKMKV5fYJpj9dt3FV1tWJJfbvu6AjnTaqbpBbcdBQ>
-    <xmx:j4IQarA84V9whfBPYlafMz0yEpNKbL0xkBSPwGjogAKe-0d0yJgp7g>
-    <xmx:j4IQaq8s7m7r7Mfp2FofH9taIuck2KgrEQNA5ouKvZbFr4lnL-T0_Q>
-    <xmx:j4IQamKOeHkqojQ9i3gADTJzmrdGGJLPzDYm7NKudTFfCM7kOl4WSg>
-    <xmx:kIIQamSnTvmDHI8hvbI1bfUCvmZ2XqFgjheTWp5IM99nRzeXvc-01tGY>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id D6D093020073; Fri, 22 May 2026 12:21:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="k1BL9Tzn"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7cd35604a95so68373117b3.1
+        for <git@vger.kernel.org>; Fri, 22 May 2026 09:36:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1779467772; x=1780072572; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SGsS0PCl6G2xaqtnqeiRt+iqlZITRKhRy6VZnVbP4xA=;
+        b=k1BL9TznUMSPYtrDVq2W4cSV2Z8kRYMdKFS6ZaaX0zGj/rDyPOAlcdWfYly4Szx/EU
+         Gzo6Q7UDr7uQOLyrJvXXfJl27UC1p9eKMxOgHmbY3hGDdLt+j/pm+b6cMoFGwOADpzps
+         1TUjRMgjOgzWeSd9TGl84fVbeyMm4WFJ+SUNKdL+28cSp2wY+VoNWRaA/MWFgpxL0JoV
+         FIzSoIyvpDMLZ5XDOhJ/VbE+5zht3Wijpu4CyE6tbJeie6Lyxw+/NgM/lazanm0t3y/s
+         io38BLw8vHCl3yUTuP0pE6rpk6hvRn/CTBd44GNxKDYVzzeb+RT3AzxUGRC1fpFNS7Tf
+         8HIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779467772; x=1780072572;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SGsS0PCl6G2xaqtnqeiRt+iqlZITRKhRy6VZnVbP4xA=;
+        b=kr7Kvoep37IzvVFOGOf8uHqFpSeSnVWioxW9uEQjQMAdZ3Y4Fokf1h6JnEA2GvNEKY
+         XOQDjmr0OptyNFdwbdcVDVPaLl4u6Msr1fpiodwW9mlXBvOyCwIM0gavWj2KKRrhsfel
+         ol/7kXSiLgT3EI31cGc72RTnbihfNP6dD/crYB9ZnwIi8CC4Mln8UgkZxALaL/hL0FT3
+         LD1SX4IkqhlVNSRvgnX2Ttcgv7+WXzsXP/vhYyCnZT1ilhzGlwhM153k46tj0oPZtgup
+         yQC/UJ6EQdklacuzaPxCMRb5jYjKivVZSFpM+WfdrWhOe7zmzjV1eVlKWmfjV9DPTgcv
+         ZyDg==
+X-Forwarded-Encrypted: i=1; AFNElJ+EaYaxHFoikBGAVr49vD2kqFe3KC6nbdRnQnb9khHyoklb9lVMVQgcEGGXVC3kFsBIXxk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZq/ptQv1XvwO1wlSoVFOPbWnN5bVH1Y6Bpzs6Od92p2dsElAL
+	va4qj189oC9gLevmhJi34hHmf22mDAtuPehhaDL/LTMEnbiKEckEiWD7DA3hpfsxRfg=
+X-Gm-Gg: Acq92OFt9Igyo9e0FvkKyLq4045ct/0TeKYPzfGes5Egp+UN6KhhVqHFA+Iip8v+oSe
+	1SULcIumiK+0KZ+y8wdoco78jozhB7ZlCY+o/0vk5Vr2Gqqtml+qC8E6rB5EeCZNvQn13h2mM+v
+	h7UpPL/oDBoEAS7DIe7DcC9FOeQqNQNShCAqE7QvYm518c9KMcQxQ4ZkLyxgdkOKcBsmU/f576K
+	ryol1HgRy56hPp1W0zCI1EZlCQAC9uNVNvIZNcj81qpgoESY2NneiHehnEXebNbP93hY33vHwRQ
+	Ciq1CPxwT5QC0VeSBogyyBp/yxz7P+JIwkT0Dntwp7osjNDXro+fu/swniFqjK7mBojRmWXoOLb
+	eZxCVtl9Ljf80WMuAzXFj2EQevTsguzRt3ihnOQMlaSW+qhm5pZuMFdiWOiGp3kbsxCHzGYlfy3
+	LqnRVr2o8Z2AUZgRe05NeAd8koVVdS1ScwUQQ7/PASzNrNOGkKyD2M/vafRpoSnbpd3vKEuy9km
+	m7p5Kg0EAAdTxCV6PNHgHbzCro3y/38HEwi8SgySD0ay6+Z3HScmraPOQPjwrcFRlALorOZB7ZI
+	3OQenv6cVhMl2sHxUpB60vsW27I=
+X-Received: by 2002:a05:690c:6d82:b0:7d0:79f:3390 with SMTP id 00721157ae682-7d20d50ffc3mr67665387b3.21.1779467772437;
+        Fri, 22 May 2026 09:36:12 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d389e0e9c9sm10573697b3.18.2026.05.22.09.36.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 May 2026 09:36:11 -0700 (PDT)
+Date: Fri, 22 May 2026 12:36:08 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
+	newren@gmail.com, peff@peff.net, ps@pks.im
+Subject: Re: [PATCH v4 04/13] path-walk: always emit directly-requested
+ objects
+Message-ID: <ahCF+PGcJ5pACQDW@nand.local>
+References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
+ <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
+ <e77c8a6bbc22da3428751f81ff5ee79aa5364237.1778707135.git.gitgitgadget@gmail.com>
+ <agzwsxV2KEkkaGPV@nand.local>
+ <53d46614-7d9d-49ab-ace7-71367f6d2f40@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ADHeAfI0scng
-Date: Fri, 22 May 2026 18:21:07 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Alyssa Ross" <hi@alyssa.is>, git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <60a0ec9b-0263-42f5-83b1-c55275c7772a@app.fastmail.com>
-In-Reply-To: <20260522154418.5883-1-hi@alyssa.is>
-References: <20260522154418.5883-1-hi@alyssa.is>
-Subject: Re: [PATCH] receive-pack: fix updateInstead with core.worktree
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <53d46614-7d9d-49ab-ace7-71367f6d2f40@gmail.com>
 
-On Fri, May 22, 2026, at 17:44, Alyssa Ross wrote:
-> This used to work, but when push_to_checkout() started being called
-> before push_to_deploy(), push_to_checkout()'s side effect of adding
-> GIT_WORK_TREE to the same environment that would be used by
-> push_to_deploy() wasn't taken into account.  Fix by only mutating the
-> environment for push_to_commit(), rather than the shared environment.
+On Thu, May 21, 2026 at 07:00:39PM -0400, Derrick Stolee wrote:
+> > Could we instead store this explicitly on the type_and_oid_list, e.g. a
+> > "direct" flag? I'm not sure whether that type has the right scope for
+> > this information. If not, I wonder if there is another way to store this
+> > information, since I worry that future callers may not know about this
+> > convention and end up changing the result of the path-walk depending on
+> > how they name their paths.
 >
-> Fixes: a8cc594333 ("hooks: fix an obscure TOCTOU "did we just run a ho=
-ok?" race")
+> I don't find this as fragile as you do, because these "direct" paths
+> _need_ to start with '/' to avoid collisions with other paths that may
+> exist _and_ this meaning is internal to the data within the API. Callers
+> can't change this data, though they will see the paths themselves in the
+> callback function.
+>
+> And as I mentioned before, this is a memory-efficient storage of this
+> indicator bit because it only consumes memory when it is "on" and the
+> vast majority of cases where it is "off" it doesn't take any extra
+> storage.
 
-This project doesn=E2=80=99t use `Fixes` trailers.[1] Mentions of commit=
-s go in
-the commit message body (outside the trailers) using `git log -1
---format-reference <cmt>`.
+Ah, I didn't realize that we added '/' at the beginning to avoid
+collisions. This approach makes sense to me!
 
-The Linux project has uses for this structured information since there
-is a lot of backporting of bugfixes. But I haven=E2=80=99t heard of a ne=
-ed for
-that in this project.
 
-=F0=9F=94=97 1: https://lore.kernel.org/git/72839071-153f-4306-a705-3be0=
-dc203109@app.fastmail.com/
-
-> Signed-off-by: Alyssa Ross <hi@alyssa.is>
-> ---
->[snip]
+Thanks,
+Taylor
