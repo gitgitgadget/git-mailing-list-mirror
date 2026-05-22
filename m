@@ -1,114 +1,154 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A61139EF05
-	for <git@vger.kernel.org>; Fri, 22 May 2026 09:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A429F3A6B83
+	for <git@vger.kernel.org>; Fri, 22 May 2026 09:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779440727; cv=none; b=uJbDxbqDZjSwnBqxJFyhkcyfqcvSmpHSk3c4k2ilAHzFPA06AIJYViaQO0hFFyqx++2EvN/hKqj/w24ZSNPqD7zwTzNJ6yrcAdZAq1DjRA2CaEKBBg77HRgEsKUvzHS633YCgvxPOV6nvcuDd1cYrgVqC7kKyB5tmSP4RlwItMs=
+	t=1779443268; cv=none; b=lfvv5CobtADeJRFyFvw+Kiw2OmAtvPWo04XCaLJqJGum8l12cKfpTjIMRkuQft8mH8DrpURbExQ0f9d6PnQkGDGCxSSQn2Hz+vPjZtJEaK7AcHHPwGh6Z4/ZSr0qZ44k4+5HwSHnNDUpGx5wa6HfOVNs6LwsDxLN7haOer9Lj0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779440727; c=relaxed/simple;
-	bh=FT9HoCCZfoc/vdE05CRltTmCi+d2oLrYmCOpj+IEO0k=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=NxvAnNR6z/DAVML1NxDJDcbN5fvW4fpShyJ0yC5erFVgdFnHtDi3gd/sYzZ6XUgeROjl3nm9xp6E1NB5lWaDLgYn3mof0RwOD+1yeCVwwBp1KcsEhYoXEAVxkwfo0ADjudqbuGlVkdvGEzaSCaHa2C52kF5wXqqYyj0qkrLIelk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EOi+K1Z3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ddcH4qaW; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1779443268; c=relaxed/simple;
+	bh=6+uNkIDzV5KLi6R3sNBWWgbBjs/spz+RdeorFbEK6q0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Npk0N+CbucgaFdW4JJFXHo/ZjAVMALCHup6oQ9QaeWenWHW9rEiKKBMH5zEKJmGX9xtcGET+iFrRdyA9G3WmOzdBfeKOPWwZfjBbWsCp2WMQ9svU/s9ZkbzatgPZn56b9XgkLKU15Do58Efv55jWicQx7M9AMGvdsOg0ghvrgnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dFJugXBE; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EOi+K1Z3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ddcH4qaW"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 733CA1400056;
-	Fri, 22 May 2026 05:05:25 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Fri, 22 May 2026 05:05:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779440725;
-	 x=1779527125; bh=FT9HoCCZfoc/vdE05CRltTmCi+d2oLrYmCOpj+IEO0k=; b=
-	EOi+K1Z3vwS6rerNwPBMl8ZmADv2m8oIXKDNWBGAtuRfEuL7LSREcwQGxSGG779W
-	pcFYP9YnJbswuAxm39VHLJt7tt8WYiZSSksWiqhg2ouz8RT+l6EsQeTBt+YqgIGA
-	1ssvMG0kkwhYTxhqh5jzbtC/TuwFNj9lHsXtwnEzVqfox1hZnkp9Y+oAPz/yoyD+
-	gd1CD7vOIewNqxuKmiPivDjdU4bOTURD2PPVf/7ukwr5iqm45FgYB9R5PHYQu/7g
-	wy4TjMhGRXIjrif92JRer3XxAQQvB5BBzMmcylFpq4wDrpRKR8V/f+eWHQFczU3Y
-	+Cb6NqS+VinexQuODmeYGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779440725; x=
-	1779527125; bh=FT9HoCCZfoc/vdE05CRltTmCi+d2oLrYmCOpj+IEO0k=; b=d
-	dcH4qaWATq3RwupFk/hE7F0MVW65ymPeTiCym3Z2fbB+ZinukBk0WMtpUw0nyUVy
-	+AdmDJRrs2CacQ2Qpj0f/lY/HShfO8g3OVooosDEVqaLrSyeYUaSyCvexDaMaa9G
-	/E1tHgBkBsSTQXfQmFd8QDObDYhV7kgq87aq5asDCiPiI8JWeKgdNnijWsV5WJPW
-	3ewsmm1MTRDcfJBMx2H8dYtq0wGZVREFeE6vWfMWPdxPudJmoMBHmWNiAqI/87XC
-	NGk06lUabQBSl8b70hrIzFwoEMTuonUOpnKD+MgPAe83IAIpwqKKFTo0WapSfcxR
-	k2d50X0rHgAh8q3Bxa32w==
-X-ME-Sender: <xms:VRwQanXCkopqbIEKzaiWYHrndbzXQn2GHsg9w9RVqFAb3nRsQCMV-Jg>
-    <xme:VRwQaqa9nHBfxxAj7VgjgRdmKvW0jk1OJQztgfQ6ecMgxFApnfT30Q6fBdJB2jhPT
-    gcs9C9Et6-jqYsG-NpaqwLZ4dNWhd1r5nTjOVxs2suuKQne1jko>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeelleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
-    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:VRwQauCwFk1KWVFgbGmWpeXBkks3eIT6SP6TmqPiLfcTY-D6Sdx2wQ>
-    <xmx:VRwQamfY7KuDSyI9VKQjMCNoMnBbMIatpjNgcudkAeG6dgJ-cbWKpA>
-    <xmx:VRwQapIr_7jv0s_T7OXo49g8MjBwR7jlwwp4IHmOx71HvKLrxgTPuw>
-    <xmx:VRwQapek-mlIfA6uLK80ELQNuQpHoaNg-k6WhoS2NTWKV22_euyf_g>
-    <xmx:VRwQaiIKTcif6O2JqS43qRLxujDCvs7AyEwU0Gvr3pwfeby864PNAsYU>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 50AB63020081; Fri, 22 May 2026 05:05:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dFJugXBE"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-44a14580111so5451253f8f.0
+        for <git@vger.kernel.org>; Fri, 22 May 2026 02:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779443265; x=1780048065; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6luNQ3vbZp0gppRMmaDqs3TsCp2V9snd/4a+KVoTTag=;
+        b=dFJugXBEn9uR4OCEdgFuVYoCN5XQBf425OvjehO4COcnk9idkUTdi5Lgd/9bdM5ZLg
+         600ac80fP1NUAU0u08QMfdqR9/LXWnGLzip1nmHqpyrMHJnud/lG2R+grnt4JSvsIOgr
+         wWESgiigw4b+SU3zQqFsUOOEeCnxRQGdkEG8fn0J7jaqqMCaNdvc+Fepiy9B/2QFDkVa
+         AxtTaPAWRrlnLdqmkpHCJzT+Yxboi3awjNKr9on6NEM6UMxRdanknyEj7c5enmC1pmDy
+         +oi4fDX+XhW5LoL5rbbHZjAVxkPHuAurdiIH0+1psM6i8xyJojGthrGLxrjNNDwoRT7t
+         gbEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779443265; x=1780048065;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6luNQ3vbZp0gppRMmaDqs3TsCp2V9snd/4a+KVoTTag=;
+        b=F5ugnwYMl2MEQlnY0LRDi/yMrhI06mM0aWyeMvkCbDKUMFaW75AlDnr6HcGJP+tW/Q
+         AvM97x/UuSXZ3v7IiMCgNLjuDpvK9hdesBu8pIV6h5/ZgYMm5+Csal5Rd6dtu64vqeUN
+         H+homlJzFaS2h6QEWaAm5wm+m/YL1yyWW3++8lNpBxVDqSrjR3ipcJTz6ZLA99J2tCJT
+         ccO3ZThVoYtmK4Z2fH01t1uJYCNKRUa+C3f/sAFy69rxor+vC6Pv810UDUT9clfXFx9b
+         mRzR7pkBrjfV7AHpw9x+d/GZrFrkWtQs/PfmkG+8XO5B2pTjyyM1Vo0vrOyobFMt+6/S
+         oRJg==
+X-Forwarded-Encrypted: i=1; AFNElJ8leBpTE2KzOO9Bp8bYpafI3MkuJHJdWmZKWhtokHSyMZ3mM8KAsIP2kIbtqPbE0EH2Y+0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIcyP7+HRXcYr6g9kwBqQJOBQBnQi4+vfFINP5bt79H+1Bulmx
+	OxvDNtPubmhch3iOK0aoRl/+T7YeCkCxYEm664TOhQ2X6le/5AlMANkx
+X-Gm-Gg: Acq92OEo0Lq/g7n1dThf79r23V53O7hDxNCZ55xp3MBLjkF87UbWNaU2ZKVGrk3qZI4
+	irnqjqjwcWnWcUWW/JQlhrPwektK5vxOjGuLBbqLrgaQW4GUfgsxb2EHTIP2lvmqdpwjE0MMzJH
+	c7k14tjC9yEErITqVJqlYQxx3htYx+MU8Zx55i6+IWvLxN2MvqIONllAx33lP0/Hrg7G4rZSHvr
+	RNysxKZPr1JXpLFFleCIiXkVmJpwqKGVxWiBaHDokCEMFP5e1588wDN0skqQHpq5wOymn4Vs7oM
+	ift7iYrCHQ8PMMPf06KO/W8th2k3X0JmiGwJnDoc/GvH9S81fcCzXE60RLzGYtEI9q2u1Nx5e61
+	KzaviboOBxcTFLHzxul/BsOol7e4oFyesj3L2KZyVWzi7zRsYP+Jr5vLQr+K5XxWnk7mBrAtpKk
+	74rQtEyicLB7V4mFZDFjCXeqmXOqeFbDCLXCEHz2a+nzvHSEBkqdI1xcAYksaOrPFdvPPcVK17r
+	lf8LjFbF+DDXaeHMTK+76tB
+X-Received: by 2002:a05:6000:26cf:b0:45e:b215:12e9 with SMTP id ffacd0b85a97d-45eb368903emr3924610f8f.6.1779443264696;
+        Fri, 22 May 2026 02:47:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eb6d47b82sm2688781f8f.19.2026.05.22.02.47.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 02:47:44 -0700 (PDT)
+Message-ID: <6ae90274-3fbb-4d2a-b0f4-cd9260e4d6b3@gmail.com>
+Date: Fri, 22 May 2026 10:47:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AKLsyOUqBm4J
-Date: Fri, 22 May 2026 11:05:04 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org
-Message-Id: <b6b3448b-ae21-49ad-9c5f-e1a7ab8dad70@app.fastmail.com>
-In-Reply-To: <ag_yUsOEO6AjT4Ky@pks.im>
-References: 
- <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
- <20260521-b4-pks-setup-centralize-odb-creation-v1-1-f130d2a7e8ae@pks.im>
- <741c2a26-7380-4d8e-aa91-fb237e9f10dc@app.fastmail.com>
- <ag_yUsOEO6AjT4Ky@pks.im>
-Subject: Re: [PATCH 1/8] t0001: plug test gaps for git-init(1) with
- GIT_OBJECT_DIRECTORY
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v9 3/5] branch: add --prune-merged <remote>
+To: Harald Nordgren <haraldnordgren@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+References: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
+ <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
+ <f87e96e99d64c48bd92afecf3a6a819d36e56f6c.1778700883.git.gitgitgadget@gmail.com>
+ <6501a3d5-a5ec-421b-8526-ee7d4ae5ea98@gmail.com>
+ <f1d15d08-6fee-479f-8ed0-34efd256d8dc@gmail.com>
+ <CAHwyqnVhhwT80Ao+7QLUAsTnUJaN5vE=ZiaxeqF3rYxxiD_Qww@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAHwyqnVhhwT80Ao+7QLUAsTnUJaN5vE=ZiaxeqF3rYxxiD_Qww@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 22, 2026, at 08:06, Patrick Steinhardt wrote:
->>[snip]
->
-> That reads a bit better.
->
->>>[snip]
+Hi Harald
+
+On 21/05/2026 20:16, Harald Nordgren wrote:
+>> While we want to clean up topic branches, we want to avoid cleaning up
+>> branches like "master" which follow an upstream branch and therefore
+>> look like they've been merged straight after they've been pulled. So I
+>> think as well as checking that the local branch is merged into its
+>> upstream branch, we want to check that the local branch is not pushed to
+>> the upstream branch i.e. that branch@{upstream} != branch@{push}.
+> 
+> This one I handle already by letting the default branch be guarded.
+
+I used "master" as an example of a branch name above. There is no 
+guarantee that a remote even defines a default branch, let alone that 
+there is only one local branch where the its upstream and push 
+destinations match. I don't see how you can avoid checking that the 
+branch pushes to a different ref than its upstream and still be safe.
+
+I'm going to be off the list from now until the week after next, I'll 
+catch up with this thread when I'm back on line.
+
+Thanks
+
+Phillip
+
+
+> 
+> Harald
+> 
+> On Thu, May 21, 2026 at 11:46 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >>
->> Isn=E2=80=99t it more that =E2=80=9Cthe upcoming changes *would have*=
- broken=E2=80=9D them if
->> not for this change? This seems to refer to a an alternative commit
->> history where this change does not exist?
->
-> Grammar is hard :) But yeah, this of course refers to an alternative
-> commit history I had at one point in time that did break this.
->
-> Fixed locally, will wait a bit before sending out the next version.
+>> Hi Harald
+>>
+>> A couple more thoughts ...
+>>
+>> On 18/05/2026 16:27, Phillip Wood wrote:
+>>> On 13/05/2026 20:34, Harald Nordgren via GitGitGadget wrote:
+>>>> From: Harald Nordgren <haraldnordgren@gmail.com>
+>>>>
+>>>> Delete the local branches that --forked <remote> would list, but
+>>>> only those whose tip is reachable from their configured upstream
+>>>> remote-tracking branch (branch.<name>.merge): the work has already
+>>>> landed on the upstream it tracks, so the local copy is no longer
+>>>> needed.
+>>
+>> While we want to clean up topic branches, we want to avoid cleaning up
+>> branches like "master" which follow an upstream branch and therefore
+>> look like they've been merged straight after they've been pulled. So I
+>> think as well as checking that the local branch is merged into its
+>> upstream branch, we want to check that the local branch is not pushed to
+>> the upstream branch i.e. that branch@{upstream} != branch@{push}. That
+>> should also avoid deleting newly created topic branches that match their
+>> upstream (I think that's probably less likely to happen in practice as
+>> I'd expect the branch to be checked out and therefore protected against
+>> deletion).
+>>
+>> Also as this is a destructive operation (there is no way to restore a
+>> deleted branch and its reflog) it would be good to have a --dry-run option.
+>>
+>> Thanks
+>>
+>> Phillip
+>>
+> 
 
-Thank you for considering my small input, as always.
-
-Cheers.
