@@ -1,102 +1,162 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9114014A0
-	for <git@vger.kernel.org>; Fri, 22 May 2026 16:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB65D37AA8B
+	for <git@vger.kernel.org>; Fri, 22 May 2026 16:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779467827; cv=none; b=IkNDv+iy3cXT9YIpN/vfksb4zUP6CNEgCV6UKmiTBiWfz6lrFKsErFRxa5vGROVTGhA3Y/w2Pc2Qkf74DAa/BwjLQzHUNKF/TDOP3lueDS+SP7kBQTWp//BgazNA947rpVZtSbKTEI+xrbVPWbaOjQDrMsNVZNomXbfBa6MBOvw=
+	t=1779469061; cv=none; b=mT9ywJS3vsi+tbW+m9lWLr6OJ1wjzqXLGaaZn5jfH386Zb5F5RpSn08HY1LTrZlzR6QrITiTz11PsYR0tlsiQ3+cmfB4+6r1Rmm0ZGgdQc7Z8mTwRm3cmrFvR+cQS9jExmajABZ92YnFa2NZEIcGfNTGkR2eQm3vQGJ+aZwfQV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779467827; c=relaxed/simple;
-	bh=0d290nwWWcJRzs6lIVs4Ig8I0NR6T1mqY9zntra+a3s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iLeGWx+RTuUEsh/QIXSbfL5uh0QadnaJSFA7Ppf3vlaDMa/hZBe0VKV5Uzx+SkevboubC3/iKQbPwvqAt4C9mN4wNOMTtjQsmevCl1vJFDdLmsQW/0B5qj14GOn4skGA1lTD/BEPuxEmIWmbmJA9ap/b2OvAROPcHtc05eSh3W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GFybE/9r; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1779469061; c=relaxed/simple;
+	bh=rzQkhLDa+ml/PsinfZyYe0aBLVxjUuZvJN2uAH6IZpk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ad7cY1y24f4DqFF4gYjD/xxQV3KF5ZCYMwI646Z84wQD6QBtLf8jdpR/ox/8dQbDfUzbCbaD5m5KJbFQc3/1l+zkiF9fmEoVkToSgO/7LtOtDs6zErrW4MYORpydWJBRFOkb5VxSmgUiIVFByJGI0UIbuX1wN96Ntdi7LONyFdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fr4MOvJ7; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GFybE/9r"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7cd35604a95so68385637b3.1
-        for <git@vger.kernel.org>; Fri, 22 May 2026 09:37:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fr4MOvJ7"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-914c1ced558so11721085a.3
+        for <git@vger.kernel.org>; Fri, 22 May 2026 09:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1779467825; x=1780072625; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0d290nwWWcJRzs6lIVs4Ig8I0NR6T1mqY9zntra+a3s=;
-        b=GFybE/9rgu7/s2EXfDNOqyv9uCXDZh8Sgr8gP4VnSM3EMt/4erxoSXYB9ja5T4vXQb
-         +DGWuji0avY4OorXk9L2OKOXEX8gy5Lcd/zZF4Q90kPnq3cCItNAY7kImi8KcRq2CWzn
-         jkDSUp+mTGDqgY/3AmBGHqVTmkVYX5qdpyy06NmberekjgFi10a5QMBjMleXbhYgDSxZ
-         NmluC7h+zaW9JBpRBW1FB7NiOr/yrOK1hRH6b3c61omBuOU1bQ0B+vdaXe3IQr92/sbD
-         xI3bbaLDhWRJjAkOWa3nSYzD8tw/xcIXdiejk/fWbTXWQfxHSZkbQ733dANmK9ufrDj5
-         8lxw==
+        d=gmail.com; s=20251104; t=1779469059; x=1780073859; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TAdQcqlFDApTTi+wxzCgoDfR5Nslr8aKKOnOHj8Phus=;
+        b=fr4MOvJ7ZvgG58djrKosRsU+q/Re5FfwL6l39ZaSLDyICnuylt9wcEN2srPL/HnJH8
+         7FhykqU5XQqvmvpR6/qlNbcL0DbhL0yRwyvwN57a+TorosPO2M9Fmd0ofa1nvo6XgUbN
+         H98QxbUp1u0r1fhFiY9vHVLT1qO75jrjNXpHfP5Y4fFVkhPWx6I68quyfdpm7s0eAsiS
+         MJxOEbSvtjxu1uBpG2C9vS04qzBEmvxFKM6BaqLRmW9Bi9PHlOQh1TiphSUgaWyGWAe+
+         bIe6LBhLvqeaoALVy5Z0UBFQHtRI/HkYK5GggkxT0+QzgBs1GrlTM0UpwasrLex2E3Wq
+         AjbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779467825; x=1780072625;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0d290nwWWcJRzs6lIVs4Ig8I0NR6T1mqY9zntra+a3s=;
-        b=lLAoQ+VILjw9QRqkMrFDZsnW0KePtYq9C74zpSdYnmdxJzu5QD7j3EZjmp8FMjg2iW
-         HZ7VbQpoIX3HGXYKTAgHoR69DPVwL3hz83A/3jZGoiw5z0ghwfizG3HPwZg2pfFfTbOd
-         KVwfOdXBJkNAVg/GolE6ll7Evy8XUVK/ANfPMfYslFS5cHGoo6jtmfUGZVNNz7yDYAbC
-         ixQbeNdbG4XF8X2JZMXUXBt4Te1le/FHB6C+2dqz8UwujcwDoJ8Z9ZrM3PBfaXhYKfmz
-         2KlI9f2RAjHS9BOZWkmtM6618qSx3D76EtPhaZZvmUzyJXhnsiIDgDz6T+OyyhIP1iaN
-         3yOg==
-X-Forwarded-Encrypted: i=1; AFNElJ+JkrOzhEtuP3FsrQvQCa1cYG20vd/oF0A6jGSg/u4f6LR5Ihs2VSqeOYUtcL16gHjrUJY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzdcf4iaKj+rAj+2wzWv0z/TxRH/z3e6/unyeK/z5wglPn5ho0d
-	43M9BRzFqxIZaXCmHFJFDMEJfYdFD+K/5eUXyGiARXj02uEO5zB6JLK8O0cekczhFBA=
-X-Gm-Gg: Acq92OEXGOnl26XRIr0X6fnr4Ha5RR6m5LAf2g5UvhpRTykewzwT0gBhZw4MTKk/Qhk
-	jWtqMeWQsyPVz8ZLiTNxYq+bzIUCLNMu6d2QzoOGnZVBBwVZox7d5+FoClUKY1vUpyMye6l4dq8
-	TDtAmDwBG5iZ0c+grg2CwgQKa04lomd12O22HjWc7/EvxIkqk1LqWEjsBBqByyyQjO+b2Kzvz+w
-	OaZI4hqPQuOmlHFX/E+rzxXtNrR7FVOKmyRKPc2ekc/4MNXGgPNLobOtfj/MRtXQi0NX/tnKyBK
-	pSOFufYrlnrGTKDUZNqt7a8Lm395xrIvDfxO39mDg42AfD6yJwRM9L+ZgIdOsvQ5M8uBue6afzS
-	FgPQlKmKtCatf3vcB3pv989vJJJc9IjhBPCbrtn++rmeD470iYmRIeCIkTUMBjj8oBjOxwOdIek
-	YNMvY54c0Ekh/AqQZpqGFRRjDkK9C4aebMpb8JTEs0xfudQXU8/J/tQy/F0GH54SsGEmMXU//Tq
-	vuYEodLXn9hhaYr4qBmPUJBRTElvBKHLXySRhfLbgcC6DCHY/W6ofsQhvM5afuhWBU2dacxJ4VB
-	kQYbDeC6VmN3Kw4z+1UnEEn8Ngc=
-X-Received: by 2002:a05:690c:64c7:b0:7cf:eae6:7ea0 with SMTP id 00721157ae682-7d3574262aemr34834567b3.12.1779467824930;
-        Fri, 22 May 2026 09:37:04 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d3873d080esm10528877b3.0.2026.05.22.09.37.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2026 09:37:04 -0700 (PDT)
-Date: Fri, 22 May 2026 12:37:03 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com,
-	newren@gmail.com, peff@peff.net, ps@pks.im
-Subject: Re: [PATCH v4 00/13] pack-objects: integrate --path-walk and some
- --filter options
-Message-ID: <ahCGL+AsIaR+63Pr@nand.local>
-References: <pull.2101.v3.git.1778523189.gitgitgadget@gmail.com>
- <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
- <agz3/ZxZZHBKofR9@nand.local>
- <4d7a75e9-8260-4e33-a786-72e0aa3026ae@gmail.com>
+        d=1e100.net; s=20251104; t=1779469059; x=1780073859;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TAdQcqlFDApTTi+wxzCgoDfR5Nslr8aKKOnOHj8Phus=;
+        b=b6FMJrH2DRJdX4iTX8vf40Wkq8i2EHm08ZlBOy1Zgx+9YQqhk22ma+CmWakLzkh3q5
+         xoFyBK5+mKxGjDsYlWXf7pR27lNV2cbHa2WOI52HfxbpowmN2SbmjRNbhR1MfyZUty1v
+         eFfdIDPWX6oqbBssAW3p5W0cOQEnYjn9tXSHu1rufChFHzw2bBQ243bNfZFt/1dkSTwJ
+         J9oqkBHJxkzmNbcKtxc88bcz64n3UpOCr8jTkZa79u8rg5r2Z/gtMB3YTCq+miNA1JMU
+         i+B7sOWEXHjmaXGd97ZxTnWClJrPZYk+xky1Y8d61VnqfVUvq3QlA6F1GlwNkFc59w5L
+         /S1A==
+X-Gm-Message-State: AOJu0Ywqtje49zpYI9C6n6nnCU5RHpVXt7pT1zMxxlaBQabxSFTnNrHH
+	Oma6CIL7QpCv039kugVKsqWv2VcmTzb27RFVrALWbrlecarzP7TsH7YM
+X-Gm-Gg: Acq92OE1NP4g/8gTuv9HpRzvc7QufXq6GYZl4G5Qa1ZVFRGBTgpnkVNUAHDiq+Kgysc
+	yk4Rxv2BbqmxG6xttkspM41TYcnL9xTm/30bVc5Lt8d9vx7PeKX+5peLBEdIDwYjTJW0RWSCFON
+	r7vAmjKFaXvJx2VFlstFX1nGw/Kay11DVJ9hbciUIDloHnyfd3u8wsFnSgbZWvvpuaWuGd/NGNj
+	TYp4GDZpcO9MzPY9AB7NSdL4MvLUkh67RGpCh4YTo6yAI+85oJmkLHNJihC5Zvh0pLqoCqICGpT
+	8nYLq3MkudSNUWnCujQlwDLwPAUnT7oVXXsnZ2aFTn+jhamv3J2EbxsdsQVPfWeznFntcNh+AKp
+	NgxDpVcRjhEQoIH0xFYYKdBgGjq2MIny+yDgUykxVk7JUvt3wv2pCwpYnUWwGKgyIp0QW6ssy7t
+	nw0iUjNurWTThASIW8VV217EVyewsQ4SXMzuB5VnxkNgFUrNkc70qDG3UpauBGosMzfVoS0og=
+X-Received: by 2002:a05:620a:1708:b0:912:c611:8110 with SMTP id af79cd13be357-914b49da8f9mr629672685a.46.1779469058592;
+        Fri, 22 May 2026 09:57:38 -0700 (PDT)
+Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-914bb9d63a3sm176476585a.23.2026.05.22.09.57.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 09:57:37 -0700 (PDT)
+Message-ID: <8d03455a-82dc-4d32-aa57-af3d92714e31@gmail.com>
+Date: Fri, 22 May 2026 12:57:37 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4d7a75e9-8260-4e33-a786-72e0aa3026ae@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/11] git-gui: try harder to find worktree from gitdir
+To: Shroom Moo <egg_mushroomcow@foxmail.com>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+ Aina Boot <bootaina702@gmail.com>
+References: <tencent_9FA5CF10A1D7CAC770366E84AD5CA9A2D107@qq.com>
+Content-Language: en-US
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <tencent_9FA5CF10A1D7CAC770366E84AD5CA9A2D107@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 21, 2026 at 07:01:33PM -0400, Derrick Stolee wrote:
-> > I'm curious what your thoughts are there. I think barring that things
-> > are near-complete here, though I did note one issue with the t/perf
-> > changes (that is my fault for having a bad suggestion on the earlier
-> > round).
+
+
+On 5/22/26 11:09 AM, Shroom Moo wrote:
+> On 5/22/26 1:45 AM, Mark Levedahl wrote:
+>>> Additionally, [file exists {gitdir}] checks for the gitdir file in 
+>>> the current working directory. Since the function has not yet 
+>>> switched to $_gitdir when this check runs, it is almost impossible 
+>>> to find the file. Consequently, this logic never triggers, preventing 
+>>> linked worktrees from being recognized. 
+>>>
+>>> Maybe the identification of linked worktree should not directly look 
+>>> for the gitdir file, but should check whether there is a.git file and 
+>>> its content points to... /.git/worktrees/... ? Anyways, using the 
+>>> literal {gitdir} to search in the current directory lead to risks. 
+>>>
+>>> Shroom
+>>>
+>> We cannot get to this code if not inside the gitdir, and if the user set GIT_DIR and/or
+>> GIT_WORK_TREE to do something clever, that either worked or the code already threw an
+>> error. git, without GIT_WORK_TREE set, uses the current directory as the worktree, or the
+>> parent directory containing .git. So, we must be inside the gitdir if this code path gets hit.
+>>
+>> Mark
+> The relative path issue with {gitdir} is indeed difficult to trigger 
+> in practice. To trigger this problem, the following conditions must 
+> be met simultaneously: 
+> - git rev-parse --absolute-git-dir succeeds (the repository is valid). 
+> - git rev-parse --show-toplevel fails (the working tree is 
+> undetectable).
+> - The current directory is not $_gitdir.
+> - A gitdir file exists under $_gitdir (i.e., the gitdir of a linked 
+> worktree). 
 >
-> I like the suggested change to t/perf but I don't share your concerns
-> around the '/' character in the path (I go deeper into why in the
-> thread).
+> Unluckily, this occurs in:
+>
+> ```MINGW64 Shell
+> # Firstly, enter a test folder
+> mkdir test-main
+> cd test-main
+>
+> git init
+>
+> echo main > file.txt
+> git add file.txt
+> git commit -m "initial"
+>
+> # In feature branch
+> git branch feature
+>
+> # Add worktree
+> git worktree add ../test-feature feature
+>
+> cd ../
+> cd test-feature
+> cat .git
+>
+> cd ../
+>
+> mkdir outside
+> cd outside
+>
+> export GIT_DIR="/(PREVIOUSPATH)/test-main/.git/worktrees/feature"
+> unset GIT_WORK_TREE
+> git gui blame HEAD file.txt --trace
+> ```
+>
+> ```Wish
+> puts $_gitworktree
+> ```
+>
+> The current directory is "outside", not the expected linked worktree. 
+> [file exists {gitdir}] in find_worktree_from_gitdir searched in the 
+> current directory but failed, resulting in the inability to identify 
+> linked worktree. The blame mode can still work without worktree. 
+>
+> Shroom
+>
+You exported GIT_DIR pointing to a valid gitdir, and as documented git takes your current
+directory ("outside") to be the worktree. This is working as expected. Had finding a
+worktree failed, git-gui would issue an error message and stop because you defined GIT_DIR.
 
-Sounds good. I think a minor re-roll for that would be good, but I
-better understand your viewpoint around the '/' leading character now,
-so I think other than that we're good to go from my perspective.
-
-Thanks,
-Taylor
+Mark
