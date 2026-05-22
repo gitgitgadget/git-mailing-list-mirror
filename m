@@ -1,121 +1,84 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E166E3D3309
-	for <git@vger.kernel.org>; Fri, 22 May 2026 10:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779447103; cv=pass; b=EnD0ol2cc3qRIgF7wNehAxr+n10jCEuITl0nXVf+2bXEFoWiGw52OwDb+va0dA4WeyIx6ADzzAOyikvPB3Qhb6lKFsyPaoG4G5xKwuT0qJdgLEXRIFizMbg1tNzfWM+TWYvsYhd6PYWK0V4GJLhmrpjaFTFa9WNuVDqr4flrOCw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779447103; c=relaxed/simple;
-	bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rsfbQ8QKfn3E15KzoE6tGmUvo90xdB1Mk9lOwHNGGiTOWpoQK/YIEdvdbO/ryWI5JxOsjKK5KoGS36jIM7EhD9LuyxuSDU7gRbKM3D6Y5x9gk3WQW1QvvV4FgCZ9YQ4QWhjin2C8FXIiwYvHP5IWMoHw6isczzOh58mhE6+B0Jk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IMvuTVFE; arc=pass smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IMvuTVFE"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-bd11a3729e8so1127380466b.0
-        for <git@vger.kernel.org>; Fri, 22 May 2026 03:51:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779447100; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fCBKeITqciA6rDugTEjUOeopcwgPa5Kruz4e3dWPiiyOkZLZAWYUSTEOqEASjzX59X
-         VzM3baJHBgkiRmsyWqxUgwxVvhOppl6d4m9cXhSMrRb0vPbEqG+Vvv3USGde6dKPFUyh
-         y+WI7RT1xAHSWnk+P5sastQ/sxW60rHQ/TwOKk1vr2V5xEWPVcPUFBt9IZzzJtM96LFM
-         VKP2cx507YCi0bgQzuJ0ALUrdv5PsjT2mu6HZAC5LrHOjvoQ4/LGn5dcMmfxlqP0QjT5
-         EdJEzUNajKvK8HeBeYCMgo1lVmT0fkG7/fCP7g3Iy2ULzkqT+nMy/gCp5UEmN97LNa0N
-         XHlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
-        fh=9M+nktag9+0fYhU/4lAF0LF7vM7i6WvymUVaXn7UOoU=;
-        b=ER7FuckOyxE8fU5cVg1fY163IXmWmjqbpi11cuys+Doj7/gQpi/gYvLAEIeKREDaLw
-         xVJ9Md2pTAad5ar5JKHTJMAIQABau4MRII5fANjAd8K5Ef45781uTX7tnUfWaSwVeK1T
-         CQGViuCtbZ0ibOM1wTMrBcfMZoj/9C9HI5Uw5uzPbMRrJb4dkC/HZcHwO3BS/j/3zGMg
-         6bdrBjKrgzm7tJEimKWaSgPr3Xx8uAtmA55V8eml6YV9xXCfETXe0o6OlhV7lzUMusbW
-         wJ7f4CBotrVF0HHuaQ485Q/vnTRPepw78IXgLz3/c7llKGN+VFHeUbOt/c/k628el2l0
-         dqVg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779447100; x=1780051900; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
-        b=IMvuTVFEbZIC1mDB/0aaDehlW1L4hLvyXNQ4cvntN1PRrqPYKg0O/W3Lx7qiQGa5wS
-         2scZsceQU4b7rsokvskV60qwyCytAY9FHehbMeDyqSiYEeV08bZiaL8FH5WILgbo5ehA
-         hkC1/ih1Ghvotjj9W8OWH3jnv06bXi7X8KGI2Qk2PK7IJygnOSlxRpvXKgfqH+Jk+6dC
-         rSelieIzlkQqttD44WsrhwKwMYwtIkAL79GPMw2Bm1X41rLrBFUeP2knaf6BwzrfvXB4
-         4GRosF3bmbaA1oS0XN31pwPNjtWAWlkPFHnD/UQVnlDYABhv7G30nuIX/zrh4UMRY1zq
-         JTUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779447100; x=1780051900;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
-        b=RcbIn7+MUC7clZA1KW6CbF99v3GZKMIcRRFEB6ZF1S253DQCgevOW3SInH53TcQl5V
-         KZK6RgP95g2bsRvgPvaI4/OEByt7KJ9+ObqXtBrLZg67dUwY68zRSU2a0EtDAt6kNXXh
-         5SDY69iGLm8HRxh+dnMQQhrHXU54Zn7n7Ct5lpJBcDXAXTTM5nvAz0Nv88aP0iG1mmXw
-         qAAn6zDI+MnJKDh2csBUnShRIfD+fKcMiCrBDdOevQ9LpTHFSL+c0qtYatqdeU/WzBQT
-         0cQ1RCVGn3Ghg7yRbGuEzW5z7xf1CfwvB4rWYf1B7snf0zSWXS8y0MhBaFqMTvIkUlyr
-         +FuQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8YjUZzp693m8Xocarxzcne12mSzH0QryAhol7QUQLP54a4bxpLQoM1Br0+CvnJv/OdMlw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyin4M/QTEWPbhfIOjITnhEqrsWThMpMJBFXCU18vM0R5tGUVSK
-	LolXNHL7aWW9JKmcK01zLTIOjPcdtJHC5h2dzETsIC/becoqsdZuYxBvqJqELqaE8byCzAk5wUa
-	9q9JdeoK7d3KMDYP3uGymooAYUiI/qVM=
-X-Gm-Gg: Acq92OF4zIDio6cxzFNJCQp6hUTFucjG/T8s4C39I67Vl2WAmnoSLF3Cj4LSduxW4+d
-	W6M9bVf8Kq0pblzHmDxA0VzLu4UF3mHBjnYFtTlsM7q5cVGofoY+HSReV1yqpW1SJ8VLYtlOeq5
-	If9S5BQQy2I2Ffs3ySh9nUgNvHPi0aJYDHounDArAwF+Rt8cca4wTed2DArOq/HLprQOQsPJg6X
-	xeuDbIQAOnvZivT/49rXlbL6YebpEMjz6pm8kyjhDKZC9tlpgMEuciquoqAd0Zh9I4NuRS8NNzw
-	B4OF7mU=
-X-Received: by 2002:a17:907:94c3:b0:bc2:70ca:c41e with SMTP id
- a640c23a62f3a-bdd25ce0bf7mr183777966b.25.1779447099921; Fri, 22 May 2026
- 03:51:39 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F188F30100E
+	for <git@vger.kernel.org>; Fri, 22 May 2026 11:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779449124; cv=none; b=B00bJzWEj/AtuDoQB/jYSJ3PvggUy0oCdadsotnBUmMqX39l1cw3gJJGCUG5FISUjEnJm4mcF61Dt3vUZm8Zuiz4nw2OVzNFBy0m06EcJIHWvNM880z9yV8HJcYrSMgG3QG4xiEbZTEgpYDUkio5s60KstSRUD5dOXSvSWs4wk0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779449124; c=relaxed/simple;
+	bh=LAzp7tbM/vg7yzUNIa8s9bkyGlg7hrXTbFciNxk6fRc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FbSel+OHYTp6lwkodFbLfvDqqbYqV9nw4iM0NqPMJlS6aBeKE1eFiizeF3dTjtPW91T/dNTcqugKKQD8Md7xGyg66wkvuLY17R+4P/S97u3OHGSrCxa3GtkafE1GU6tmKxJTa/0cFMNyS+t9RGpDZMr3Plug3joTUm8BMKrNP1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4gMNHM1HTRzRnlY;
+	Fri, 22 May 2026 13:25:18 +0200 (CEST)
+Message-ID: <190c909d-4c17-488f-9ebe-f7927ebf7e87@kdbg.org>
+Date: Fri, 22 May 2026 13:25:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
- <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com> <f87e96e99d64c48bd92afecf3a6a819d36e56f6c.1778700883.git.gitgitgadget@gmail.com>
- <6501a3d5-a5ec-421b-8526-ee7d4ae5ea98@gmail.com> <f1d15d08-6fee-479f-8ed0-34efd256d8dc@gmail.com>
- <CAHwyqnVhhwT80Ao+7QLUAsTnUJaN5vE=ZiaxeqF3rYxxiD_Qww@mail.gmail.com> <6ae90274-3fbb-4d2a-b0f4-cd9260e4d6b3@gmail.com>
-In-Reply-To: <6ae90274-3fbb-4d2a-b0f4-cd9260e4d6b3@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 22 May 2026 12:51:03 +0200
-X-Gm-Features: AVHnY4KJYwj7f5cu3FTkOL3H7DEc9a6BwBbtPxYIAcT1tu2LvOz0nIMZisECWVA
-Message-ID: <CAHwyqnXSq-fSE3vhtaOxQ9iy1dwP-Rg3Db5dD75Pn8N5dfJqsg@mail.gmail.com>
-Subject: Re: [PATCH v9 3/5] branch: add --prune-merged <remote>
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/4] branch: add --forked <branch>
+Content-Language: en-US
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
+ <pull.2285.v10.git.git.1779403204.gitgitgadget@gmail.com>
+ <f2df15983067ce39b6c33ab81115863d5c3567f4.1779403204.git.gitgitgadget@gmail.com>
+ <273103d7-c816-4cde-9e89-b630c37b0749@kdbg.org> <xmqqse7kt0ge.fsf@gitster.g>
+ <CAHwyqnX=zvjpy3w8qn+H7L_Ncxs5+tK5Va-Lr4ZXX=XYLs2YZQ@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <CAHwyqnX=zvjpy3w8qn+H7L_Ncxs5+tK5Va-Lr4ZXX=XYLs2YZQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> >> While we want to clean up topic branches, we want to avoid cleaning up
-> >> branches like "master" which follow an upstream branch and therefore
-> >> look like they've been merged straight after they've been pulled. So I
-> >> think as well as checking that the local branch is merged into its
-> >> upstream branch, we want to check that the local branch is not pushed to
-> >> the upstream branch i.e. that branch@{upstream} != branch@{push}.
-> >
-> > This one I handle already by letting the default branch be guarded.
->
-> I used "master" as an example of a branch name above. There is no
-> guarantee that a remote even defines a default branch, let alone that
-> there is only one local branch where the its upstream and push
-> destinations match. I don't see how you can avoid checking that the
-> branch pushes to a different ref than its upstream and still be safe.
+Am 22.05.26 um 12:49 schrieb Harald Nordgren:
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>>
+>>> The icing on the cake would now be that
+>>>
+>>>     git branch --merged origin/main --forked origin/*
+>>>
+>>> provides the list of branches forked from origin that have already been
+>>> integrated.
+>>
+>> Yup, that is very nice.  Also with "--merged" replaced with
+>> "--not-merged", i.e., "our work building on top of origin's, and
+>> still need to be finished", would give us a good list to work on.
+> 
+> This is nice, but I think this would require an overhaul of other
+> infra as well, maybe better to do as a follow-up?
+This can certainly be done as an extension in a follow-up patch. But the
+UI must still be planned accordingly, i.e., --forked can only take a
+single argument. For example, in
 
-Ok, I'll give it a shot!
+    git branch --forked foo bar
 
-> I'm going to be off the list from now until the week after next, I'll
-> catch up with this thread when I'm back on line.
+'bar' is the pattern of branches to show. The "list" is filtered
+according to '--forked foo'. That is, if 'bar' was not forked from
+'foo', the output is empty.
 
-Enjoy the time off!
+You would have to require
 
+    git branch --forked foo --forked bar
 
-Harald
+to list all branches forked from 'foo' or 'bar'.
+
+In the first implementation, you can restrict uses of other options with
+--forked or even with a branch pattern. But you cannot be loose by
+accepting multiple branch patterns with one --forked option, because
+that would later clash with --list mode.
+
+-- Hannes
+
