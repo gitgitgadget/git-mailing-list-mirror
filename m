@@ -1,137 +1,114 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DFF3A901C
-	for <git@vger.kernel.org>; Fri, 22 May 2026 08:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A61139EF05
+	for <git@vger.kernel.org>; Fri, 22 May 2026 09:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779439771; cv=none; b=tF5bH2Ep2yKGDbIsHUGosvrmrZOavxURmDFM3CH+/0Sc1sAdqmXhvwx7iOlvvoNwvbcVMK3P15+W3fUc4yBlbZat364qiKavDXx0itpD9LCDrMWEEIC4TJMYxLd2IgNSlrutPW+Y8Lvr755T01KwRTRq3EXTi6gsNDZ1/6YQDJA=
+	t=1779440727; cv=none; b=uJbDxbqDZjSwnBqxJFyhkcyfqcvSmpHSk3c4k2ilAHzFPA06AIJYViaQO0hFFyqx++2EvN/hKqj/w24ZSNPqD7zwTzNJ6yrcAdZAq1DjRA2CaEKBBg77HRgEsKUvzHS633YCgvxPOV6nvcuDd1cYrgVqC7kKyB5tmSP4RlwItMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779439771; c=relaxed/simple;
-	bh=c9V4AbCySQzBAina8cqTsuVfGccGNSuYKf7amefW1zA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jh6ZImdWVt4GR00k3KwT12JAWNDJlcSeN6tEc+w4XI8o1477Ikf+xp79KdYiaufwJKK28jfONwwySqrOlkhpsBXvH2BxJ2olae6pVErthOmhkfJnHcC071aRKwdxy0xm65WFd+OHVKCdFT0xZJSFbsA0arfbxISuTveEzDtSNec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BPfIA8hP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iftwoTd2; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779440727; c=relaxed/simple;
+	bh=FT9HoCCZfoc/vdE05CRltTmCi+d2oLrYmCOpj+IEO0k=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=NxvAnNR6z/DAVML1NxDJDcbN5fvW4fpShyJ0yC5erFVgdFnHtDi3gd/sYzZ6XUgeROjl3nm9xp6E1NB5lWaDLgYn3mof0RwOD+1yeCVwwBp1KcsEhYoXEAVxkwfo0ADjudqbuGlVkdvGEzaSCaHa2C52kF5wXqqYyj0qkrLIelk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EOi+K1Z3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ddcH4qaW; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BPfIA8hP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iftwoTd2"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 422DCEC011A;
-	Fri, 22 May 2026 04:49:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 22 May 2026 04:49:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779439766; x=1779526166; bh=hf4eWEfB5/
-	JOujwLvP450f4shaLItpYDrDh4BUJGq/U=; b=BPfIA8hPoCso/x32qAhAninuZ3
-	gIfopd+KhyaurQzZ0036QN9tcR+fwW8pZCO8MUju0C1EsH2zFbGS0p3Lj+XSfYCR
-	oEeCc6EIJegwBb2jarGvWXKW/JHk+ko0RZcD4NNJEHgtFRI366+CCo6q7jMSSwdX
-	o94u+zcRLck4nKZH4gtO7bsmvUO5cO8oohAFQ4U/Q8Hs8TyHYEq4+DpzwTeGWD5+
-	bJcAPJX7Iy6Dm+7Qj8ID7KZ/tNItKDVNhBQLtDBHikyprS0pdAS9AmUjXtutcLl/
-	wKTYkNuns26nkLYeYsVlc65nE0mz73/IMxalUEY6sIlCx8SiaypG9+Ek4e0w==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EOi+K1Z3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ddcH4qaW"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 733CA1400056;
+	Fri, 22 May 2026 05:05:25 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Fri, 22 May 2026 05:05:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779440725;
+	 x=1779527125; bh=FT9HoCCZfoc/vdE05CRltTmCi+d2oLrYmCOpj+IEO0k=; b=
+	EOi+K1Z3vwS6rerNwPBMl8ZmADv2m8oIXKDNWBGAtuRfEuL7LSREcwQGxSGG779W
+	pcFYP9YnJbswuAxm39VHLJt7tt8WYiZSSksWiqhg2ouz8RT+l6EsQeTBt+YqgIGA
+	1ssvMG0kkwhYTxhqh5jzbtC/TuwFNj9lHsXtwnEzVqfox1hZnkp9Y+oAPz/yoyD+
+	gd1CD7vOIewNqxuKmiPivDjdU4bOTURD2PPVf/7ukwr5iqm45FgYB9R5PHYQu/7g
+	wy4TjMhGRXIjrif92JRer3XxAQQvB5BBzMmcylFpq4wDrpRKR8V/f+eWHQFczU3Y
+	+Cb6NqS+VinexQuODmeYGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779439766; x=1779526166; bh=hf4eWEfB5/JOujwLvP450f4shaLItpYDrDh
-	4BUJGq/U=; b=iftwoTd29LG80WB/Gdrk7EUg0uKiTQjMFsTpq+n2VvTZQ3W2wYC
-	vLLmIF3tRWl50xIvPX746bEMR5H9SnUJmaIkVC3/c7RvQ2jWyIr6f66CklQwAq+J
-	WeNgKMaEQvqY9krlRSuOlyy9m/+PkaVQdYJmz6MNHEV6Inl9RG1h65IzQGu+amWi
-	Am6+VDdIq5NJbNlA3atVy5EBbdQLVwCxjcShapjosy+egNDE4yjma7NE89V6OBj6
-	mA5g4mRMHNDnLBcopFzEQ3BqX01puIy1ucIUDLUdCy7fEPH6Key+NAEEXw8FNAvU
-	ggr5pkrapdq30e9w5pQerY30fwXS46zhEqg==
-X-ME-Sender: <xms:lhgQar1TtR7AZkFoLJr45gcEY-DcRsCDnhXYJ7ybEeO-QEjshA5aYg>
-    <xme:lhgQahE223fy7CWP9ZpXISm0eq74FdmS3M4YpYEdRiWqXcpg1aFJbSHdhYek6xBMX
-    x92XUFeFEdLohNjxPAEKTdeFlJlXIA9L-j-fvymP2VeLwNTqZ_J>
-X-ME-Received: <xmr:lhgQag5Zf_7FE_2PKLixla5MPJrOsW07_qF6-c-0QZyRetvZ6s1yFW9fHqfioqfrF3mG1fIaUG-Dv1PGeR1HSvZ4_Lzg4areqA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeelkeelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779440725; x=
+	1779527125; bh=FT9HoCCZfoc/vdE05CRltTmCi+d2oLrYmCOpj+IEO0k=; b=d
+	dcH4qaWATq3RwupFk/hE7F0MVW65ymPeTiCym3Z2fbB+ZinukBk0WMtpUw0nyUVy
+	+AdmDJRrs2CacQ2Qpj0f/lY/HShfO8g3OVooosDEVqaLrSyeYUaSyCvexDaMaa9G
+	/E1tHgBkBsSTQXfQmFd8QDObDYhV7kgq87aq5asDCiPiI8JWeKgdNnijWsV5WJPW
+	3ewsmm1MTRDcfJBMx2H8dYtq0wGZVREFeE6vWfMWPdxPudJmoMBHmWNiAqI/87XC
+	NGk06lUabQBSl8b70hrIzFwoEMTuonUOpnKD+MgPAe83IAIpwqKKFTo0WapSfcxR
+	k2d50X0rHgAh8q3Bxa32w==
+X-ME-Sender: <xms:VRwQanXCkopqbIEKzaiWYHrndbzXQn2GHsg9w9RVqFAb3nRsQCMV-Jg>
+    <xme:VRwQaqa9nHBfxxAj7VgjgRdmKvW0jk1OJQztgfQ6ecMgxFApnfT30Q6fBdJB2jhPT
+    gcs9C9Et6-jqYsG-NpaqwLZ4dNWhd1r5nTjOVxs2suuKQne1jko>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeelleduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehivhgrnhgsrghluhhtrgdruggvvhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:lhgQavuMQ9w4BlMq9RwoRN-xu_CsfPDJmHvXwj9cpKSwik7DHsH-pA>
-    <xmx:lhgQap6-EciQEzvsEbHg3ODll2MevCKi6lO_jThnZsbikM0MdE0bCg>
-    <xmx:lhgQaiVrDi3cDpUoG_7DKMhLEUYyygYyCA_9Odr8okXe8Ftul1_3bw>
-    <xmx:lhgQaj_wbYeK0SEZhhIOsXuHvkdcEDRt_-ZtjXpgJaRXs3Xl45GDFw>
-    <xmx:lhgQasYcmVK3IIjfu5pYXBHY4G6E9mT5y4CoB2_kNYmiAJ-5wAkPBgaN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 22 May 2026 04:49:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ivan Baluta via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Ivan Baluta <ivanbaluta.dev@gmail.com>
-Subject: Re: [PATCH] doc: clarify push.default=simple in triangular workflows
-In-Reply-To: <pull.2115.git.1779433093971.gitgitgadget@gmail.com> (Ivan Baluta
-	via GitGitGadget's message of "Fri, 22 May 2026 06:58:13 +0000")
-References: <pull.2115.git.1779433093971.gitgitgadget@gmail.com>
-Date: Fri, 22 May 2026 17:49:24 +0900
-Message-ID: <xmqq8q9bu8vf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeeg
+    jefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:VRwQauCwFk1KWVFgbGmWpeXBkks3eIT6SP6TmqPiLfcTY-D6Sdx2wQ>
+    <xmx:VRwQamfY7KuDSyI9VKQjMCNoMnBbMIatpjNgcudkAeG6dgJ-cbWKpA>
+    <xmx:VRwQapIr_7jv0s_T7OXo49g8MjBwR7jlwwp4IHmOx71HvKLrxgTPuw>
+    <xmx:VRwQapek-mlIfA6uLK80ELQNuQpHoaNg-k6WhoS2NTWKV22_euyf_g>
+    <xmx:VRwQaiIKTcif6O2JqS43qRLxujDCvs7AyEwU0Gvr3pwfeby864PNAsYU>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 50AB63020081; Fri, 22 May 2026 05:05:25 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: AKLsyOUqBm4J
+Date: Fri, 22 May 2026 11:05:04 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org
+Message-Id: <b6b3448b-ae21-49ad-9c5f-e1a7ab8dad70@app.fastmail.com>
+In-Reply-To: <ag_yUsOEO6AjT4Ky@pks.im>
+References: 
+ <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
+ <20260521-b4-pks-setup-centralize-odb-creation-v1-1-f130d2a7e8ae@pks.im>
+ <741c2a26-7380-4d8e-aa91-fb237e9f10dc@app.fastmail.com>
+ <ag_yUsOEO6AjT4Ky@pks.im>
+Subject: Re: [PATCH 1/8] t0001: plug test gaps for git-init(1) with
+ GIT_OBJECT_DIRECTORY
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"Ivan Baluta via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, May 22, 2026, at 08:06, Patrick Steinhardt wrote:
+>>[snip]
+>
+> That reads a bit better.
+>
+>>>[snip]
+>>
+>> Isn=E2=80=99t it more that =E2=80=9Cthe upcoming changes *would have*=
+ broken=E2=80=9D them if
+>> not for this change? This seems to refer to a an alternative commit
+>> history where this change does not exist?
+>
+> Grammar is hard :) But yeah, this of course refers to an alternative
+> commit history I had at one point in time that did break this.
+>
+> Fixed locally, will wait a bit before sending out the next version.
 
-> From: ivanbaluta <ivanbaluta.dev@gmail.com>
+Thank you for considering my small input, as always.
 
-Just noticing, but don't you want to spell your name just like you
-spell it in your e-mails?  I.e., 
-
-    From: Ivan Baluta <ivanbaluta.dev@gmail.com>
-
-Use the same name for your sign-off below.
-
-> The documentation for 'simple' push mode currently focuses on the
-> centralized workflow. However, the implementation in builtin/push.c
-> falls back to 'current' behavior when pushing to a remote different
-> from the upstream (a triangular workflow).
-
-It is not just implementation, but that is how it was designed to
-do.
-
-Whether centralized or triangular, "simple" works as a restricted
-form as "current", with the same restriction.  That is, both
-"current" and "simple" push out only the current branch to a single
-destination that is configured, and "simple" insists that the
-destination has the same name as the local branch.
-
-So I am not sure if this three-line patch adds much value.
-
-I agree that it _is_ confusing that the current text singles out the
-centralized workflow when describing "simple".  But the remedy may
-not be to add "what happens in triangular, then?", but it may be to
-clarify that the need to configure the push destination whether your
-push destination is the same as or different from your upstream, no?
-
-Something along this line, perhaps?
-
-    `simple`;;
-    push the current branch with the same name on the remote.
-    +
-    This mode requires that the remote repository to be pushed to is
-    known.  When pushing back to the same remote you pull from, the
-    current branch must also have an upstream tracking branch with the
-    same name.
-    +
-    This mode is the default since Git 2.0, and is the safest option
-    suited for beginners.
-
-That way, the description would be more self standing and the
-readers hopefully do not have to refer to another mode (`current`)
-to understand what happens, no?
+Cheers.
