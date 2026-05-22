@@ -1,69 +1,70 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984F737206D
-	for <git@vger.kernel.org>; Fri, 22 May 2026 18:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B29B372B27
+	for <git@vger.kernel.org>; Fri, 22 May 2026 18:24:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779474286; cv=none; b=kbDQJLt5D6W8LnET0JAFaFJIYT0rfwlj6tU2af4DD2wKS1r3wBsjzvyQPNCBpHeeaVB7tTLizbpl/x9B2REJl8pY0/+pbLRk254MtqhC4r1qu92/yBSsY056nIHoEJ2SowdYTbQWMHWc6ItE7x7gCKmYrcttuU7P1NqgAb0PF+k=
+	t=1779474286; cv=none; b=trg0zJQid6sE6XTm1+Cv5H3MdHCJZmUFSrVx3egHRmOEQH85lvQR65v/TEwa4QYj6lo/Ac0tEALfjPhzamgOmTUIWufcFY4ed9pM40dNuMoGjJWmvfbBBisxkWJneffC/Z23G4ZLFsAWWrAuQq/C6kxZLcceEihCdBPiAu+VM9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779474286; c=relaxed/simple;
-	bh=3kPKw3Rk+xXdwDTx5X7fWm7+KiJklPi7bhfwxG2fXJU=;
+	bh=LeFyMe1118DgmUpEzzW0gHeKJ1oDj3ht5PPWWKvxZs8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=CKSAO3KqFr8R1pZicZoPmrswQNvtnG+LsrEMsqGAhlKGIWCtQOMHRttYSJDOWvIBXejFrs+AlDPIhlSHB+dP0PyZoQEr6hGPa9Wiw3wr1Sdu1SnPu3iSK9DrsedDAAKgdqVxWRYNQAmUw63GbZi0qD7deperLdjKO6JTyNKJkMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BWS7jhsa; arc=none smtp.client-ip=209.85.160.173
+	 MIME-Version:To:Cc; b=u42VmlF4W7cUZ58xN8eD0lHT/CDVPKKOsirneZushhkkU9LpsbeKhR1zTP0RpW+EFQGQIJOh2XdFA/i0kyU4dlq8OpMN7/iX7dpjfBL6JN3jyhojhRpyh5Dbz3sEHW0sRPlmdyNt+XKWL1OPBx6nWVmv6L04JsnTdCLbASESCI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d9KJEoFT; arc=none smtp.client-ip=209.85.160.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BWS7jhsa"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-516e130c64fso9011cf.3
-        for <git@vger.kernel.org>; Fri, 22 May 2026 11:24:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d9KJEoFT"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-50e63771eb0so75706501cf.3
+        for <git@vger.kernel.org>; Fri, 22 May 2026 11:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779474283; x=1780079083; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779474282; x=1780079082; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AfFz+oBiHcd6CYn3ou64EwQvdh1J1Q8TD+BgSrpUxBw=;
-        b=BWS7jhsa53pMjZHty65+Hm7PAyxLrTZGCSiImh1dEL3QDplb/hGatBeTT0elENwqp/
-         fE7q6EoN2xomxGkPvCr5FRh46/sv+W2d+zGnbjX2QznSGojySy75VAEmfO3W+vy0OE/r
-         QmRpbyQhqlZIp9ynuv53pP6BMUAWDASSudazCHxSNOIu15RuyOHFqia18iPzGrG41Psa
-         SzwHaM6Lltp8YNiHXdpAp3KHMEyTEMr/gCrg+WK/zyT85FuIRxz39574dO4t/MLulIMW
-         9C8f8mGD4+kreO6N1a1JsaIVXbbksDH7CAWa302FMSagrfRQHJb8GYOvo1+K9v3oVGU2
-         EDaQ==
+        bh=aHxQNnJxu4IDUH4opT2oLg+oXtRGUHkxZKbc6hRI9/4=;
+        b=d9KJEoFTBK0YWO7peWKu+12yjTeR8vucrU7dadlX9Lp2A157/aVOXtmRYjEj5IX5Hz
+         QFAS5BqzWqjDrWE+oCJjBnbNZGxcQbVp6Gnh0psJUE3oeOdUtostWqf5jk1CIZRS4PWQ
+         yajWUlolXhzpy4tTAJfbdv6DHvtOykYHvc956YhfHRjfyhVajMb9Q3vrFhPeRxsTjy2X
+         l2G1lIwxQmWHNex0X9SVyzYUlX/TRvDufcEmC1PLSiFuVoI6IxaezVExBzHvyazMp6d3
+         emWTzC96eOHF0MwKgfGpUjIJ+7l8wuw9neq99wbdDD7+L++B5osvX+WJcjJOcQD5GOO3
+         JWhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779474283; x=1780079083;
+        d=1e100.net; s=20251104; t=1779474282; x=1780079082;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=AfFz+oBiHcd6CYn3ou64EwQvdh1J1Q8TD+BgSrpUxBw=;
-        b=SQF3ENeiiGmdEBs620mIyeKsblsNkx3E+qagXEOC/KRl6z9PtbgLIlTymsEWjsiaIo
-         STCpE5+Z7w7sfywqetnP0X/HgNqHwN0gmv61syKHXMLrsGS6gCKqlhLJzcu9PI47ayxD
-         9KmKeLH0aK0lVr6VYn8pb420OWGBfbWl3ttHef1/qME3PV60PWgChiA76PUieBWCa9xL
-         ylWmeddoXNJYgU94TaRMJnybYovDhyA5F6X+201OAfUbz/HsQaQQDB6kB1GtS7sCAPxi
-         6Pb/p4nUuZfQn+sXRsYecII0KjWpgYFlEZmtm9q6HGHfSb2hK0pgT/KRY49FR/JERQRW
-         /JOg==
-X-Gm-Message-State: AOJu0YzKKH+7UAU7MpTRWTuIx/Nt5tsFymN3R+9L1wm3A1lFZejOETA+
-	2h+BbE7v2jpmGElB9y4+wcEbvJT6ajdXVFK2llym270fmOpmYV4dwbIJt0OYulhB
-X-Gm-Gg: Acq92OEC64X01V0qjWGAOlEkTPUiIza0A1Hxe7fFA0fQPVurN18eW/N2VD9VAFwNB6u
-	JpJWoMEyVG5Inx+PmiX5Wg5YtfPdqnM0McqyuZzvge0CT6S73NPkXiaJVkt9l9d/5/pEB7C84jq
-	tTMV5xgfXGDdvymSvibRp5neinCC6njaQjqDvbo5A9PoiqSCsLTHrFJF9tsf5RBkm3c23JI52nM
-	J8R8hrm80l0pPnIorAOz9NXmaZF6mLKJj1ikkQ9XORVsO5Q8E/rklimU/cjYpuaRqZAatZHTklI
-	G26EhwReCIodO6zC/XUFSe8hkbqF9hzkZ2JMp7DRasnK6TVWloeeBQJGcr7y7wGO1+oLAzbpVvy
-	jYLGDgEmSBr+06k9vBTyZt0zdw8s01O8+ppXnPbWNqu9s2Ob+VF8tawmBxevBJNHiKhXhVgWaUq
-	w67+cpbao2SRuFuPLXPVDlOnR5blI=
-X-Received: by 2002:ac8:7d49:0:b0:50d:7135:5631 with SMTP id d75a77b69052e-516d429b4damr68089251cf.6.1779474283479;
-        Fri, 22 May 2026 11:24:43 -0700 (PDT)
-Received: from [127.0.0.1] ([57.151.123.243])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-516d8b0023bsm22124891cf.1.2026.05.22.11.24.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=aHxQNnJxu4IDUH4opT2oLg+oXtRGUHkxZKbc6hRI9/4=;
+        b=QMToXYRMADc8QaVkNApiyWL3vhldCa3GTXIRIuLKnIlnmcyQAAQgKg6grd1t6F64cn
+         I3wunH3hj1t4eu/oxYYo9ztsfGuTKKHXyLLl37okZxdbTHmOnEtv86F4H1d/rMkJA5mX
+         2T1g1oJ89FND3CKXd8/+UpQ+C+4vebS8s312Rnl0Ao+tQkMSWbTjDVszc2982bd14oon
+         QJHuO2kRT/x6XVyi71Zvs2CIE5kWXyhF1bQmHI/pBrBnYN51fALolL5/2XYJeu4lbF/t
+         lChGW7IeYfa4R0sVzbcrX/VPphKIAYwLItROmfmt6MQy/5Ug4TTEvbkH1EyhFUSjVgHR
+         S20g==
+X-Gm-Message-State: AOJu0YyVG71KmXjTUYbpf9VemrSbEh2imU537E1t7Dol+Im7xvRQPil1
+	8yKa9oRZV9zg0JHqMEJqQoBWauenkxQnONzpoeYX1e7n3v59adkG6ZJi8o8XPMNa
+X-Gm-Gg: Acq92OEab74UhGLI9TKZ+KCyGQvQ3zPIAZ9iGGQisv8CV4VeW5/3dzuCv2r0/ORL6yG
+	WHQzLrJDLOFHcCYyUXe/+9nTbPDa6yWudWYQjTv/jYGwvDFxfjuJtpSQUy6SfMNdZFA4Jmro2Ev
+	ocpS9vCEW5yS3Hu9l7H75SEosw9Nm0hOFR3/JyC/ixdeUyirHvTL/X2z/9Bx5cnmfOTHd1CWnXb
+	p0BbRcGMAmqDkSyFwE/wwAJN+wwxcwrXMSYq/KqBd9WHY07zV8CPMUHva+MIOFY3iFKO6XVid4d
+	whNVIqlUEBKdoamj8jlvvChn91NZU6HAdZQ2C4SysIceaC1Oi6I+dwmaum4kZUUlZopBQRTgUbA
+	THt7MkVfHI+hQ4Pr4HHtAaUB1ipKYL0Yw3r9RZikw97KRSsmOrJ0SwzfBaBaSwRg0nq3ERINy6l
+	AezbZiHW5OX7IyEhvIh2H8yXGB/gs=
+X-Received: by 2002:a05:622a:8588:b0:50f:de06:45e2 with SMTP id d75a77b69052e-516d436f402mr54986981cf.31.1779474282185;
         Fri, 22 May 2026 11:24:42 -0700 (PDT)
-Message-Id: <91845bcef0692bf15b41af1dbf01dcc02baf42ee.1779474277.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([57.151.123.243])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-516d8b25a01sm22669341cf.8.2026.05.22.11.24.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 May 2026 11:24:41 -0700 (PDT)
+Message-Id: <697ef716d234e432dfc5e4b54f35ca527d22aa5e.1779474277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2101.v5.git.1779474277.gitgitgadget@gmail.com>
 References: <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
 	<pull.2101.v5.git.1779474277.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 22 May 2026 18:24:28 +0000
-Subject: [PATCH v5 04/13] path-walk: always emit directly-requested objects
+Date: Fri, 22 May 2026 18:24:27 +0000
+Subject: [PATCH v5 03/13] t/perf: add pack-objects filter and path-walk
+ benchmark
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,164 +91,185 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-We are preparing to integrate the path-walk API with some --filter options
-in 'git pack-objects', but there is a subtle issue that is revealed when
-those are put together and the test suite is run with
-GIT_TEST_PACK_PATH_WALK=1.
+Add p5315-pack-objects-filter.sh to measure the performance of
+'git pack-objects --revs --all' under different filter and traversal
+combinations:
 
-When a filter reduces the set of requested objects, this results in
-filtering out directly-requested objects, such as in the download of needed
-blobs in a blobless partial clone.
+ * no filter (baseline)
+ * --filter=blob:none (blobless)
+ * --filter=sparse:oid=<oid> (cone-mode sparse)
 
-The root cause is that the scan of pending objects in the path-walk API
-respects the filters set in the path_walk_info instead of overriding them
-for pending objects.
+Each filter scenario is tested both with and without --path-walk,
+producing paired measurements that show the impact of the path-walk
+traversal for each filter type as we integrate the --path-walk feature
+with different --filter options. It currently has no integration so
+falls back to the standard revision walk. Thus, there are no significant
+differences in the current results other than a full repack (and even
+then, the --path-walk feature is not incredibly different for the
+default Git repository):
 
-We can tell that a path is part of the directly-referenced objects if its
-path name starts with '/' (other paths, including root trees never have this
-starting character). Create a path_is_for_direct_objects() to make this
-meaning clear, especially as we add more references in the future as we
-integrate the path-walk API with partial clone filter options.
+Test                                             HEAD
+-----------------------------------------------------
+5315.2: repack (no filter)                      27.91
+5315.3: repack size (no filter)                250.7M
+5315.4: repack (no filter, --path-walk)         34.92
+5315.5: repack size (no filter, --path-walk)   220.0M
+5315.6: repack (blob:none)                      13.63
+5315.7: repack size (blob:none)                137.6M
+5315.8: repack (blob:none, --path-walk)         13.48
+5315.9: repack size (blob:none, --path-walk)   137.7M
+5315.10: repack (sparse:oid)                    72.67
+5315.11: repack size (sparse:oid)              187.4M
+5315.12: repack (sparse:oid, --path-walk)       72.47
+5315.13: repack size (sparse:oid, --path-walk) 187.4M
+
+The sparse filter definition is built automatically by sampling
+depth-2 directories from the test repository, making the test work
+on any repo passed via GIT_PERF_LARGE_REPO. For repos that lack
+depth-2 directories, a single top-level directory is used; for flat
+repos, the sparse tests are skipped via prerequisite.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/technical/api-path-walk.adoc |  7 ++++
- path-walk.c                                | 42 ++++++++++++++--------
- path-walk.h                                |  5 +++
- 3 files changed, 39 insertions(+), 15 deletions(-)
+ t/perf/p5315-pack-objects-filter.sh | 129 ++++++++++++++++++++++++++++
+ 1 file changed, 129 insertions(+)
+ create mode 100755 t/perf/p5315-pack-objects-filter.sh
 
-diff --git a/Documentation/technical/api-path-walk.adoc b/Documentation/technical/api-path-walk.adoc
-index a67de1b143..6e17b13d61 100644
---- a/Documentation/technical/api-path-walk.adoc
-+++ b/Documentation/technical/api-path-walk.adoc
-@@ -48,6 +48,13 @@ commits.
- 	applications could disable some options to make it simpler to walk
- 	the objects or to have fewer calls to `path_fn`.
- +
-+Note that objects directly requested as pending objects (such as targets
-+of lightweight tags or other ref tips) are always emitted to `path_fn`,
-+even when the corresponding type flag is disabled. Only objects
-+discovered during the tree walk are subject to these type filters. This
-+ensures that objects specifically requested through the revision input
-+are never silently dropped.
-++
- While it is possible to walk only commits in this way, consumers would be
- better off using the revision walk API instead.
- 
-diff --git a/path-walk.c b/path-walk.c
-index 6e426af433..05bfc1c114 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -248,6 +248,17 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 	return 0;
- }
- 
-+/*
-+ * Paths starting with '/' (e.g., "/tags", "/tagged-blobs") hold objects that
-+ * were directly requested by 'pending' objects rather than discovered during
-+ * tree traversal.
-+ */
-+static int path_is_for_direct_objects(const char *path)
-+{
-+	ASSERT(path);
-+	return path[0] == '/';
-+}
+diff --git a/t/perf/p5315-pack-objects-filter.sh b/t/perf/p5315-pack-objects-filter.sh
+new file mode 100755
+index 0000000000..445ff25be2
+--- /dev/null
++++ b/t/perf/p5315-pack-objects-filter.sh
+@@ -0,0 +1,129 @@
++#!/bin/sh
 +
- /*
-  * For each path in paths_to_explore, walk the trees another level
-  * and add any found blobs to the batch (but only if they exist and
-@@ -306,14 +317,19 @@ static int walk_path(struct path_walk_context *ctx,
- 
- 	if (list->type == OBJ_BLOB &&
- 	    ctx->revs->prune_data.nr &&
-+	    !path_is_for_direct_objects(path) &&
- 	    !match_pathspec(ctx->repo->index, &ctx->revs->prune_data,
- 			   path, strlen(path), 0,
- 			   NULL, 0))
- 		return 0;
- 
--	/* Evaluate function pointer on this data, if requested. */
--	if ((list->type == OBJ_TREE && ctx->info->trees) ||
--	    (list->type == OBJ_BLOB && ctx->info->blobs) ||
-+	/*
-+	 * Evaluate function pointer on this data, if requested.
-+	 * Ignore object type filters for tagged objects (path starts
-+	 * with `/`).
-+	 */
-+	if ((list->type == OBJ_TREE && (ctx->info->trees || path_is_for_direct_objects(path))) ||
-+	    (list->type == OBJ_BLOB && (ctx->info->blobs || path_is_for_direct_objects(path))) ||
- 	    (list->type == OBJ_TAG && ctx->info->tags))
- 		ret = ctx->info->path_fn(path, &list->oids, list->type,
- 					ctx->info->path_fn_data);
-@@ -374,10 +390,8 @@ static int setup_pending_objects(struct path_walk_info *info,
- 
- 	if (info->tags)
- 		CALLOC_ARRAY(tags, 1);
--	if (info->blobs)
--		CALLOC_ARRAY(tagged_blobs, 1);
--	if (info->trees)
--		root_tree_list = strmap_get(&ctx->paths_to_lists, root_path);
-+	CALLOC_ARRAY(tagged_blobs, 1);
-+	root_tree_list = strmap_get(&ctx->paths_to_lists, root_path);
- 
- 	/*
- 	 * Pending objects include:
-@@ -421,8 +435,6 @@ static int setup_pending_objects(struct path_walk_info *info,
- 
- 		switch (obj->type) {
- 		case OBJ_TREE:
--			if (!info->trees)
--				continue;
- 			if (pending->path) {
- 				char *path = *pending->path ? xstrfmt("%s/", pending->path)
- 							    : xstrdup("");
-@@ -435,8 +447,6 @@ static int setup_pending_objects(struct path_walk_info *info,
- 			break;
- 
- 		case OBJ_BLOB:
--			if (!info->blobs)
--				continue;
- 			if (pending->path)
- 				add_path_to_list(ctx, pending->path, OBJ_BLOB, &obj->oid, 1);
- 			else
-@@ -532,15 +542,17 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	push_to_stack(&ctx, root_path);
- 
- 	/*
--	 * Set these values before preparing the walk to catch
--	 * lightweight tags pointing to non-commits and indexed objects.
-+	 * Ensure that prepare_revision_walk() keeps all pending objects
-+	 * even through an object type filter.
- 	 */
--	info->revs->blob_objects = info->blobs;
--	info->revs->tree_objects = info->trees;
-+	info->revs->blob_objects = info->revs->tree_objects = 1;
- 
- 	if (prepare_revision_walk(info->revs))
- 		die(_("failed to setup revision walk"));
- 
-+	info->revs->blob_objects = info->blobs;
-+	info->revs->tree_objects = info->trees;
++test_description='Tests pack-objects performance with filters and --path-walk'
++. ./perf-lib.sh
 +
- 	/*
- 	 * Walk trees to mark them as UNINTERESTING.
- 	 * This is particularly important when 'edge_aggressive' is set.
-diff --git a/path-walk.h b/path-walk.h
-index 5ef5a8440e..657eeda8ec 100644
---- a/path-walk.h
-+++ b/path-walk.h
-@@ -36,6 +36,11 @@ struct path_walk_info {
- 	/**
- 	 * Initialize which object types the path_fn should be called on. This
- 	 * could also limit the walk to skip blobs if not set.
-+	 *
-+	 * Note: even when 'blobs' or 'trees' is disabled, objects that are
-+	 * directly requested as pending objects will still be emitted to
-+	 * path_fn. Only objects discovered during the tree walk are filtered by
-+	 * these flags.
- 	 */
- 	int commits;
- 	int trees;
++test_perf_large_repo
++
++test_expect_success 'setup filter inputs' '
++	# Sample a few depth-2 directories from the test repo to build
++	# a cone-mode sparse-checkout definition.  The sampling picks
++	# directories at evenly-spaced positions so the choice is stable
++	# and scales to repos of any shape.
++
++	git ls-tree -d HEAD >top-entries &&
++	grep "^040000" top-entries |
++		awk "{print \$4;}" >top-dirs &&
++	top_nr=$(wc -l <top-dirs) &&
++
++	while read tdir
++	do
++		git ls-tree -d --format="$tdir/%(path)" "HEAD:$tdir" || return 1
++	done <top-dirs >depth2-dirs &&
++
++	d2_nr=$(wc -l <depth2-dirs) &&
++
++	if test "$d2_nr" -ge 2
++	then
++		# Pick two directories from evenly-spaced positions.
++		first=$(sed -n "1p" depth2-dirs) &&
++		mid=$(sed -n "$((d2_nr / 2 + 1))p" depth2-dirs) &&
++
++		p1=$(dirname "$first") &&
++		p2=$(dirname "$mid") &&
++
++		# Build cone-mode sparse-checkout patterns.
++		{
++			echo "/*" &&
++			echo "!/*/" &&
++			echo "/$p1/" &&
++			echo "!/$p1/*/" &&
++			if test "$p1" != "$p2"
++			then
++				echo "/$p2/" &&
++				echo "!/$p2/*/"
++			fi &&
++			echo "/$first/" &&
++			if test "$first" != "$mid"
++			then
++				echo "/$mid/"
++			fi
++		} >sparse-patterns &&
++
++		git hash-object -w sparse-patterns >sparse-oid &&
++		echo "Sparse cone: $first $mid" &&
++		cat sparse-patterns &&
++		test_set_prereq SPARSE_OID
++	elif test "$top_nr" -ge 1
++	then
++		# Fallback: use a single top-level directory.
++		first=$(sed -n "1p" top-dirs) &&
++		{
++			echo "/*" &&
++			echo "!/*/" &&
++			echo "/$first/"
++		} >sparse-patterns &&
++
++		git hash-object -w sparse-patterns >sparse-oid &&
++		echo "Sparse cone: $first" &&
++		cat sparse-patterns &&
++		test_set_prereq SPARSE_OID
++	fi
++'
++
++test_perf 'repack (no filter)' '
++	git pack-objects --stdout --no-reuse-delta --revs --all </dev/null >pk
++'
++
++test_size 'repack size (no filter)' '
++	test_file_size pk
++'
++
++test_perf 'repack (no filter, --path-walk)' '
++	git pack-objects --stdout --no-reuse-delta --revs --all --path-walk </dev/null >pk
++'
++
++test_size 'repack size (no filter, --path-walk)' '
++	test_file_size pk
++'
++
++test_perf 'repack (blob:none)' '
++	git pack-objects --stdout --no-reuse-delta --revs --all --filter=blob:none </dev/null >pk
++'
++
++test_size 'repack size (blob:none)' '
++	test_file_size pk
++'
++
++test_perf 'repack (blob:none, --path-walk)' '
++	git pack-objects --stdout --no-reuse-delta --revs --all --path-walk \
++		--filter=blob:none </dev/null >pk
++'
++
++test_size 'repack size (blob:none, --path-walk)' '
++	test_file_size pk
++'
++
++test_perf 'repack (sparse:oid)' \
++	--prereq SPARSE_OID '
++	git pack-objects --stdout --no-reuse-delta --revs --all \
++		--filter=sparse:oid=$(cat sparse-oid) </dev/null >pk
++'
++
++test_size 'repack size (sparse:oid)' \
++	--prereq SPARSE_OID '
++	test_file_size pk
++'
++
++test_perf 'repack (sparse:oid, --path-walk)' \
++	--prereq SPARSE_OID '
++	git pack-objects --stdout --no-reuse-delta --revs --all --path-walk \
++		--filter=sparse:oid=$(cat sparse-oid) </dev/null >pk
++'
++
++test_size 'repack size (sparse:oid, --path-walk)' \
++	--prereq SPARSE_OID '
++	test_file_size pk
++'
++
++test_done
 -- 
 gitgitgadget
 
