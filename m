@@ -1,70 +1,70 @@
 Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFAC2EDD58
-	for <git@vger.kernel.org>; Fri, 22 May 2026 16:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB637998A
+	for <git@vger.kernel.org>; Fri, 22 May 2026 16:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779466254; cv=fail; b=FhPFKRmyL+rjkKR1gkEK20TmtjpLOFnnzYgGhKAzqXPFs9kXhx09IK+9Ys+J6u6VfVoMzNW1GNXLfxjySAxaYEAFwTZwz1OEQYew6by6pkXiTkonjDvmAEhfwNyiUnk8sgE4PbrvQzt2lODqM7B9I2k7QEW1CpbqcavfoDVnR58=
+	t=1779466263; cv=fail; b=s6QJT3pku1TQNgRsNzE8s8t2/8bcFLYYVaxHWth+NUDK4Ea40tqook5MQcxgYdsSOWBTK8vezf2L+oo0KOHEUwmGd1wAB6RqpzItnB+u7pip0lmxDaDCnBvw8j8E4U8Sb8z4Sj4gbg0ofFvWgZZKkXkqgiFgztH+wNCDFQYMQs8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779466254; c=relaxed/simple;
-	bh=lCaBe5qJpFeSnHlkIECzNn4SlDrfC19xIoxZcB9cY4Y=;
+	s=arc-20240116; t=1779466263; c=relaxed/simple;
+	bh=BmMe8CI4BTpX2idpc41NQ77yknCfnWIK6LQEXGj5yyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=LGfh979g+S2Zog18biTksNH9tkNjIPsZkryOetT3YOqrUOzrrFPB4uXi/9113YDJC9HlYM6bWiLqXzuguvdycottHBUq5uxGCsZhA/Pr2lF82bzWLEPkRjrkoixFUMJbWs8Yej9XpOhJeTC2uEjhP4cM8jZJG+RlY9xP5ctLm2A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=lxFHmUaY; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=EvZXA7gD; arc=fail smtp.client-ip=205.220.177.32
+	 Content-Type:MIME-Version; b=hGInHY5xmsDmFoUWurtoEzH5Bs6X7rlsLEr+LU2ZAI6mRcNK46JF1ov5WVnN+Rf/N+hB+PDjdbDFlYPJtmrONBTHZ6OeRUDm8+sqRUFp2pNT4rPtJ04AFmDXrhXGFCcI1o+5WzBQvME7UUKvVXrYj6DVF9H/hOi6bWvNioaDoWM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=W/QjAOJJ; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=GpB5UvHV; arc=fail smtp.client-ip=205.220.177.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="lxFHmUaY";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="EvZXA7gD"
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64MD6fmQ3300693;
-	Fri, 22 May 2026 16:10:42 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="W/QjAOJJ";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="GpB5UvHV"
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64MD0UNu3753046;
+	Fri, 22 May 2026 16:10:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=f5ywQv/rhsuqZeCDhqjC6WU4EZvQgW4j0cWKvbHLEzw=; b=
-	lxFHmUaY1PnWE4lW75BzjnB9cpDfXU7Bnx5RSXhdiNkCs5F0g5OPQlX9VDOYgqfj
-	rZOErCqQgA8nnwPgtoKmTAEPc+5F8K7c4kjNvpBGs937H25JmRrQs67k/OqVpJzr
-	EJ1vPOFvMCLhUWigbuDvfK/qBptnofH7i4+YCv00skBLWoWLm6RqrVvS/pEHBBoj
-	p99Pq+gme2ibFfTpUUYX6RG+DWgGtqvPMDIJkDy8//T6TvIbJ7DW5Uh10ZLeQhW2
-	+dasul4wumhjpXShILRNkuX41gHSOs2fhh88RHMWuhfcEax8Pju8b/51H+AuJulp
-	vka/R+Fe+FcQ8J2xgSGtpA==
+	corp-2025-04-25; bh=L2bokitCHtXjUmgEhLeD+ZUarxk/bZ9yeCOOwTYRiwk=; b=
+	W/QjAOJJkRPesbrg5Ngk5PuiN3j3CKrAc7CLZLXM6fBRNq1Q3NYI4vqxT5AjExc8
+	F2+hm+8nEN6wDNoazMuBRK1+b3BP6h3yZ+1VWiu52xakctgCfgnggP27wFjmI8s7
+	gM7A1zbSD4vx/ECiuXkV6LeyqlJSD8STYj4T/cS0Fr5lt6YSc7jq7/OzXbgOxBa5
+	z5NP7kVml3V9I0O+B2YleEL0UAbnrDRyXv044udDWFaJtQMXdPJbb86ASl25Y/RO
+	IviLVmwH98OnpBw26abi1g4LnTD/t6ytkumZr3t/CYg3mpx9aynGH4zGfMEUF+w2
+	h2k/jfFjXcsHXQpuKBE52w==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e6h2sk3ab-1
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e6h1t36ed-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 22 May 2026 16:10:41 +0000 (GMT)
+	Fri, 22 May 2026 16:10:43 +0000 (GMT)
 Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 64MGANig026158;
-	Fri, 22 May 2026 16:10:40 GMT
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 64MGANim026158;
+	Fri, 22 May 2026 16:10:43 GMT
 Received: from ph0pr06cu001.outbound.protection.outlook.com (mail-westus3azon11011025.outbound.protection.outlook.com [40.107.208.25])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4e6f1m79ne-2
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4e6f1m79ne-3
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 22 May 2026 16:10:40 +0000 (GMT)
+	Fri, 22 May 2026 16:10:43 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dC9dc6UEq6CThDYPUdBm1ZFrY6zZAlwU5YZgysbOeZMfLzanL+3BhJlGY9NflqZsQyNpaBD8BygLAqaHPZC2BMZATSeAuB26tnSse7jtWLAVMUjhydZU2+LXiE5b4ac4Z4/7m46X5+lylD+co4CByDBMuSPzadjmOXpPuDMgQTouhpw7Rm1ppgihK4zXByThgGw4DM1DsBmirBxNw1tg9lFwW3Ai8qwajV6ReiGJUPS27EY36xsTHBiUdTqlUU4500T4gHzb6lK/teRx98cYZiqaRbcoyDAltnWWvazvK2oSPoGQ3UdQtnlmdwSM4m9eggV7QRsjd+l2M3qWV2pF5Q==
+ b=FExjKWR+TQ144Tmcfc1tYShcNFRsQwQoK4w1lLr2/T8RFdDEekPGaVueoOmWXh4g4Wn1VDUKaoihSx8I1aYNqTxpOu2/wfWj96gxEl95+jc4UX7nk/OsEw8p8f8XsJ2mf7kZ7jwyeQ6HxY5CI1mgCbXZLKfYQEkfCITlAOMbSDMGquQthJUqr8e1ItayHvj6YiE6L8oMrJHBV5d+lmXN2cU7/2PPgR5pPVJSW4GJc7hnMOS3Fc+yQDRtuX5ZjQPeCgwoymyvckgsdAVX5BL6BKhC74eJniai4vjVkYkPWWLlqZPEY6Olw8MGvaL7LgNW/RxwTA2VbeUfmezvwtvTvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f5ywQv/rhsuqZeCDhqjC6WU4EZvQgW4j0cWKvbHLEzw=;
- b=l1L9jOjvTGpBtdQYmMzkmMdUYElJdQJMAQfcHJjTmx+ARccpVwvcrWF44vLrB9jRYnbLfWJQI9BMhK+p+PTbXS1In9Jxsq5qRM1u9tgqKX+H8zLtkmjv60b4/dXfxfbXykF/qkZTOtVPBk4/77kmoChJH+5k0TSG+8YQqloCcFB0l6d9myrYZtY985IJv7yRn2f2dT7fImiAl/D640x3mi2g499BumdIcEa3oke3HfmBXJqkStR8VQiziishEKtroKNtCM0zKKdrt/yox0pyqdSUgL8haYwMylNerfaPdTuj/DWqGXu2p6rkj//2QNOY6nsNPKsjRdR2ULpg/+Xu3A==
+ bh=L2bokitCHtXjUmgEhLeD+ZUarxk/bZ9yeCOOwTYRiwk=;
+ b=QMFehNsc6UQcr4/9NLm1JiZAFeHR+2ivrLi7LRFh6/N7fZGJhEmIYGFi8bpCdoIkPrwE7AWlD0t9NxQubBArxB4X9kyEjXHzJrg3nr2Flg53wXNS75IXZWXo+WixvH0O7hgnBo1VO4UCQAwDA73H7WILWZEAOD6d4pKeolrF/hcz9ER6ma2kflEOG5HVXaO/STIl/gQTspG2YAoAB3WSxkz0kI0kMbVL1PMryH+Us6Mfbi70jvl1ABGdD7moLTDX6yFkFJA8A1uIRRUjqrqfCtZm31cRmNRHANqrsCzoBKslN1Pzx+VBL6Sz9b7J0s9M4e7IC4wu5D5PRN+90znR6A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f5ywQv/rhsuqZeCDhqjC6WU4EZvQgW4j0cWKvbHLEzw=;
- b=EvZXA7gDsMvKBcLpR5t/cd4ThncPgCiDmgLR9C0xGkCoySImaMQGvA7u1odbBGnPknx2s4zwna7D+dg0opEQMOvxR9zh6ydocYn3Erh4C5TOd4SpzCERnWogYMRxMSXuuAKGTRGTGgCgAnqyNIYIF5Nt6U9DNI8Bt4NiguKrPv4=
+ bh=L2bokitCHtXjUmgEhLeD+ZUarxk/bZ9yeCOOwTYRiwk=;
+ b=GpB5UvHVBTV59AwFH+Rs2kn50mCiIDMd30v4olavoGVMlXatc2OGTBy5zbOKu1NpfEqoAmYd1cDqd03BL1UbLEYm8jRi48JPajZrVMHjeAtKBvopiSy+5+/54CfOh3NcQCr9rokfa5e8L05zgDwpcrc4pJyQ+WN/ovdC8xPkpzE=
 Received: from DM4PR10MB7505.namprd10.prod.outlook.com (2603:10b6:8:18a::7) by
  DS4PPF18D5A7206.namprd10.prod.outlook.com (2603:10b6:f:fc00::d0d) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Fri, 22 May
- 2026 16:09:57 +0000
+ 2026 16:10:01 +0000
 Received: from DM4PR10MB7505.namprd10.prod.outlook.com
  ([fe80::f14:5389:d117:967c]) by DM4PR10MB7505.namprd10.prod.outlook.com
  ([fe80::f14:5389:d117:967c%4]) with mapi id 15.21.0048.016; Fri, 22 May 2026
- 16:09:56 +0000
+ 16:10:01 +0000
 From: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
@@ -73,16 +73,16 @@ Cc: Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: [PATCH v2 2/4] wrapper: add support for timeout and deadline in read helpers
-Date: Fri, 22 May 2026 21:39:36 +0530
-Message-ID: <49efc097154be9f7c387ecbaafcf54e612028d9e.1779464886.git.siddh.raman.pant@oracle.com>
+Subject: [PATCH v2 3/4] t3301: cover generic displayed notes behavior
+Date: Fri, 22 May 2026 21:39:37 +0530
+Message-ID: <e494bea038262847ea14d223718f6059e52c1f40.1779464886.git.siddh.raman.pant@oracle.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1779464886.git.siddh.raman.pant@oracle.com>
 References: <cover.1779464886.git.siddh.raman.pant@oracle.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PN4P287CA0107.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:276::10) To DM4PR10MB7505.namprd10.prod.outlook.com
+X-ClientProxiedBy: PN4P287CA0049.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:270::12) To DM4PR10MB7505.namprd10.prod.outlook.com
  (2603:10b6:8:18a::7)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,63 +92,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM4PR10MB7505:EE_|DS4PPF18D5A7206:EE_
-X-MS-Office365-Filtering-Correlation-Id: 647ab8c6-2c47-4005-e9b0-08deb81c909d
+X-MS-Office365-Filtering-Correlation-Id: b3e7c3ef-5bb6-44f0-411a-08deb81c93ac
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|3023799007|22082099003|56012099003|18002099003;
+	BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|22082099003|56012099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	9bqjc1WEnKEhaduT31TVMl3zfBrzjEhTCoYNhhViEGtvZF7FmJg1jzP4zw9UtSJcPuWjLsXLiqXPeF5eBMApsn08vqinkbxjmrksJx6DLEmFEorzPa5D6DQOdoPgJrI2LbzeNCo3yGCwNd69pz7O8epmAFN3XnRFu7H0yliXoshbCk4q2RJ9u1r6UEGi/y+w0oULymK/o3RhGDgsDZ06YPYgLj6qhYdBQMlbTrmJatrTSgWhnVwh1FNEHdyBsjiXVMbrvh2rOyGoTj32qL7auCbGV28WLvKdRXT9d6muSgFBlhK/Fpb97aNlSUTV6ve+f56GRClzup4A2Y2fw9Fft9Ho0yjN2t0o5tu+E7hC70d05IkKADsnJhwITdZ8ld4AZ2UP4BOGvhfkIAcAt0mSOsUzZSfxDI6C4WS/XkTGmACnr+tF21qjRd9ijVI5G7r2Q6QIfOq0lHXasu/2mLw+hEJ7vuNHHcArb0jIAd45YfH63NqzOJF+focENkp8lAsG36/6qWYeeces3YqWEExeDh8tKVP7Q/sbbV4wt6yz13Fspqkyb3xwnHyxyiz5HHmx0ns4d18v/Es+/ahVKVmGfIQ5wjZnp+FqPMjHcSokl0rohrBsMJOBcmkGFtDMfsVpDBZ+N5n5lMhVFviMZKP/swslvoaw64PTNchzel1/QsFExadlfo2v6LhDCUpjiQhA
+	XNDX/IbOtqmrdJDU9lW6MZbQtl1vP2mq90xsUWDWMpfoyJER+FW6TjuWx8GozNouv1JRew3QyZrobxDycpmHaxhgQWy0rLOJm3EoXo9k7Pv7x7fZRM/OkUxZUh2oT4Vgd0Hg3mk16v9eKspStrlXMsyk5EvCj/H4NY2jDVQQGlOuo0+pz/MlNNm8CaIcFVhEPBaG521+KJfogRnoNkMTNgt1xLB7xSbTC3chR4aoz73l719oPyXAVWEgMwGTjE7nC2Npk/4yrbjMaizsSb7PK7Izv/Axl70ECkhC4Ezlb9aUbb+4l1cDj/qguvZakGyG6G7lGuV3iMxp66yQ3rD+6ZkXUmaSNcNaMTqEWnA1Kx7P/ubbxZx1ToaG6x/FP19mAe+PMaZrphFZS1u6vnIa7MMEKbhiENdAp5TC3lXyAETAF79cbHWSFKPscSfnI9nZNCCvrEXp6+qU/2mJcIW2abxmuDo9ILpguBzdjCXTd4FMWrU8vaS8DHLDqBSfEbpJNuU6T+7ymCWg4HDsq7p9p3xLEyd5DJYE+XdzKydx8qeQroD0EJpT0eJhj1TdbbsZpmialY5Ob2BlRayY/AGTWVMjfhUxzoOt7UlSR5BoDarXwudJnCWXmI9JNpEQisycSXt9lzRqsD1CFXifv7SrQYinGyReIK3mnB3FqCMzttziGBhLrEVoknzAIPjVrhXw
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB7505.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(3023799007)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR10MB7505.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?EW0XbfUC2oBWUvCqZX6UhEVtdiw9sJN4+SvQA/NlvPHTvXpPMLEetSIu3r5q?=
- =?us-ascii?Q?poW8umkh3P9IVgE/+KFf6azRLDP8Fjx7RItuXSxaG/BCe2w8cKrLTeInapfs?=
- =?us-ascii?Q?6VSRd3NgH36bXLpMf2pac4mLx1QmEx+NCK0ZqKdGpOwp9I2aWbnx30y6xAO8?=
- =?us-ascii?Q?kg/SI+Bxr6zbab2tEuwSgXJ5JSLxTEHsMxzcVOT1nChDT4G5a3QuIAAmnD1g?=
- =?us-ascii?Q?b3BJypKDvOXZC9h54h9Ud8GhAv+oHYF4IWvhe/CNmZJB23qOt/dkgFg5r0oM?=
- =?us-ascii?Q?5wkMYSzoFH/rEq7YKw7/HL+sVip/fDDjxklg3wevlHmgwQnuxFhVcbFhJR51?=
- =?us-ascii?Q?/rZcQvdfXgYDEO4IL/wLX1tHGcHcLYS6E5H5b+zKz/4KEYd5qE2apaNEAymT?=
- =?us-ascii?Q?XsKIoPhhDW/wRzhUrMlWDs0qcuqCNvgiR9m/e97AzeJn+ZUEUcKANoZOBArF?=
- =?us-ascii?Q?NA1xvdwnvzEiLB5YFWwDN4uLxiZtSvLcmkKwmrxUXHI/kyv+Kgn8+S1cXG9p?=
- =?us-ascii?Q?KuVBKrZehpOobQRfVzkBWZCK1iuJAsOBtRqliZSpwJFHUAHBUIukKHNyBb8x?=
- =?us-ascii?Q?xGXuI/TE+iM7udW+GGAF4RoQmLrjci8WrvOfcykB4kIeEjwccaalCAgxyMSI?=
- =?us-ascii?Q?pqZKYZ/hrq8kqzv/czNkWhHhg5oKvfiMWnYOhq1gSeZDWRI8Wi0j+G4u67WX?=
- =?us-ascii?Q?BDVDUxOlwAiWvaCdyPxpSLja8/AKrZtrroHmFSEZ5w2M+CDsRDSykHMxQkmT?=
- =?us-ascii?Q?+bAbRKdxAMcGOJMgZ+036y4w8xWLy1ErpmbSKk6vs5voCbgiBZUlIDnlS4Na?=
- =?us-ascii?Q?6n9hBXTkFgIClSC3UleC9XSx1WjS8cF/ZHtbbpyGqSXrvqB6gS3Sph+7R8HF?=
- =?us-ascii?Q?wxhft6ArqvuAPP104TZQnV9onw5oR/moQJksrpGhErRYn97McxyUsNz1REEf?=
- =?us-ascii?Q?HRr5p9dpRsGwo+6cinHhWuYumnIrzRg63+3oo1JP2lHmmFi/3c3zPcrEfNdW?=
- =?us-ascii?Q?6AhP1HU3/1lj1uNLRkEWWyLL+dZCkQvYUsw5AbX0OJ8ZOwbi45kWhJkmU1//?=
- =?us-ascii?Q?HPlta1CXkC+sXWbkFiq6uwLfYwFPRb91wC/K/k8XoOj1mUGBX5KeeMBM+pDG?=
- =?us-ascii?Q?hz542xyA9a01JrBl13mruIea7+FI3s96O6buITF+xJptDFZXKCoWDzi63uWR?=
- =?us-ascii?Q?3jjqdYYuvrnNAFKonZUCy9fAQ9QtyHi1PCYZDPffdcBPtIjTpqqLYz/xdSX+?=
- =?us-ascii?Q?EiNdDyt6awQ6uvEGgJklNIQIbtptFW4/VJudR8QlwiOY0sb2hroku5W+eZRR?=
- =?us-ascii?Q?/ndmTiYfsSbgBj/6MuP7DZuwscSscmE/Hjd0IjtEtNvhvtxB7slbddzNlUwM?=
- =?us-ascii?Q?vTowwRGNPrgSvnou6l7x7ZKguEjqyI1mOkzVb1U6ln7P5YMiC1bWPeeMKCKt?=
- =?us-ascii?Q?baCY5M9Po28+pCH0zWtWLDN3/+PzcFsd3Ww+wRebR91mxRwG8rRSYLbt4PKx?=
- =?us-ascii?Q?xlCiYRifI8GKOpyZHL2o+aTc2b9sftRNVXrO7Wae5Ra+8GefLFeXy7DUNtw4?=
- =?us-ascii?Q?rCtXUkxc6thvbhPhE0J2iHhaPH0JKY8aIZksUkOhHCviEDh17Y2CXWEq+DCb?=
- =?us-ascii?Q?xT4FiR+51KuHs0XqGWGSDuCiJ5CYKcU8OdRo/O274+9PJfmHew+1yONpUU6b?=
- =?us-ascii?Q?x0pPxHfCb408iJtWFtIrV3AQf6Bu6RLcBgrddEL3Pi+7xV5NgYN7ROR5WI0u?=
- =?us-ascii?Q?K66An5OPyGyu4QEijQnbI0GHOJuR4bSaFqVL2OFuNKe9uktUakKQQoGKpKaf?=
-X-MS-Exchange-AntiSpam-MessageData-1: Q9tDWcFMfn1ryAfkE5Xos8lWC09UMydJcy8=
+	=?us-ascii?Q?hq+Zbday6Y/diQisfWlzhoLcQDIX+PLARHSgiAas1tzq1VhHltozmWn4JJ5L?=
+ =?us-ascii?Q?9/IMwiltR3wlc6fJCtZSXXsk06kkrAtwBIyUL5wccrKwF8oFaCLsbfEo0nZH?=
+ =?us-ascii?Q?HXiKeamEzWm0iyzwq+AKa6i1LfeLVZq/ZkQYHOlgD0/rIeqcCHHohcEKkjHD?=
+ =?us-ascii?Q?/vTVIUUrW96/L2YtvWqbx6H+zQL7t2MMxB+ydMQWNBIhcwQ7+Lp+nc5v6SD2?=
+ =?us-ascii?Q?pJ7kOGo1wccBQZh3i9lA3jOjghEzBXEFOuF1WtZgiXxGmgJH6u/Rk1B2/jXQ?=
+ =?us-ascii?Q?9QQkh7MnNuMh0txRtwdi44SvwZhuj0wJN9hrEbzCwjtGQkC/YBK/Rq9HL2cE?=
+ =?us-ascii?Q?UH9WGj1dOXnWdb0JxYYbOWG3AZanzLQhgbcNtxU/kgY+70UYGLqPcIR9ihze?=
+ =?us-ascii?Q?NS+ZAN6NQR3XA65f3cy8M92xS75GCvOAIxP+7QVPaMFv5jlpVJegu4Mv6nsN?=
+ =?us-ascii?Q?/qwPqObNI7oUk0w9tCjpLgwrFSp2A0WZnKVdkfuU+6gTds1Uy/5MUuaOmRHJ?=
+ =?us-ascii?Q?Y8x+CQyRgmJPMNytT1SGsPUAoLAYF3dRvYIEmSZftZBChaJGLhiKngBoV3px?=
+ =?us-ascii?Q?0qdUUXfK/suSA8HCfA4uKSZ1t5N+tzxmLZIaGtr7mwpZGsJ2iv4qieqwiXB5?=
+ =?us-ascii?Q?XGYg2eB+6kDc+raJmURznVjzWYofQfQdVL+3drEKmwqmVsPhQqrZvM77H/q2?=
+ =?us-ascii?Q?8moSEQr82NCNrwgGKsmw5r/QD2KWpsFrYabYHOZoH6jUUMiwWjFMxCk1wYdt?=
+ =?us-ascii?Q?9ZTZJYItMU8g+1RacZdTDaff/WIQkaJGooB8VNnMYzhCRbbGG30vLnuUDzFv?=
+ =?us-ascii?Q?xbjJJdPgMO1/85Jv3V2AL0yVN1U06TtkBrEK8E2eHmv7vOvizUvYP3Vd11tU?=
+ =?us-ascii?Q?sL3kbGL5APCBpPNLExyCnZwFO89kJMwrbLzyVjWvDucDJuZUlcLeAc+ybH5v?=
+ =?us-ascii?Q?AKroV6JCZ3opWeB9AiBlTYZbT1Hi7Gnk030mLbxzDMcYTMOujWbA9Li6ZUOq?=
+ =?us-ascii?Q?VkpQ1UAYfyu5kJ9sLK03JPccU80mRqEiAqyAt8gtuDXY1mvJhgaC9mSLH39N?=
+ =?us-ascii?Q?P7tfn9uQYND3FITOeOeFBTDDaKozVDNVq2qfuXjkcS5h4up5ug2zrLIMj5Wo?=
+ =?us-ascii?Q?Aea+77lk2f5/bGXfb+FTUbDUgqP82Qsql0CiTcFHRV1SY+FVTaPgxCnmkLe9?=
+ =?us-ascii?Q?OL2FvywPy9Cow7zWYy3/1dIu09RtUU04213swO722QjSj8I2gj4JmCwQFZpn?=
+ =?us-ascii?Q?I5kofXPIBOlFwXImeeIOdGnYAHpPbBi1btIjslKFQ2VzvNLRFI1gLF75BVZX?=
+ =?us-ascii?Q?fvdldLwy9hHjWjx0GWhM7VixnV4+Sh2DRK1ad1dn9MIp1qc8+nytc7iz0xXz?=
+ =?us-ascii?Q?FAJYqQK2XiRBcTArZHj5FFZF6/XKXu9TmQN2qKzTMbVI+GKxeewy1xOOcXUk?=
+ =?us-ascii?Q?bp9dlrpUWS/WLCEIhPPdSPGkZMqVxF/YEpbuLNhrKZiz85kc8zz5mPJrJI0T?=
+ =?us-ascii?Q?nJ/RPqsrVZDG7QAq3bK0mXbzPVBy7UN/H91U86BvQHXJfVtBtwwfFD40melu?=
+ =?us-ascii?Q?Aru0vYNfHVSuDVaZTiYu5rQdZ/92hLa10KICGImRb6ZLvVfxB63vi+j+MvKo?=
+ =?us-ascii?Q?Jy22fji3tSZSB3YafcjQY8k7TYoRE+AYLWgTXunRrktWlzMRQi5T2xiCPfus?=
+ =?us-ascii?Q?fu9eSTeMbvs7THKwjuuNgNE8Q/ENjVdKcpm/z5Bq5HSg2iHuXVHpCbLXp48F?=
+ =?us-ascii?Q?W8JvJVL4Tshr5YFO/tonA2EU/Z8v3OOQcnPCbM3moLmPz6hWWts7DgK8xOqM?=
+X-MS-Exchange-AntiSpam-MessageData-1: hthoD33ppItH0F3FDJ7fXq2SSWz4Dsn92OM=
 X-Exchange-RoutingPolicyChecked:
-	boNl/MyvsvhHEdrluemvuOvJbFn59C7LGhdSYk2RtkZ99C0+iuvuWNVf11Ob9YQlJJBc44tUISZ6ExlDWTTFg+nD9BnLSHLDLmk0X2Jij3Ab0wdCNQngeWtsMd5iJ1UAZWyMCoxL2t9lonRtc9qf76d/rA1bUjUefoqwvsZsX/V9y7GL8Gyi/hIhVjlCw2aruljj5/rPoZwi0f3aVSPtUZSq2H3UB/YywY+Lcal5kCQULM1hSNjGIqhEsT6U0IxII01n2df9Olk8SNGyylaGTf0sv31CpVG1UL1GfJThf8jw4TpGhyd0DOWxIigV6JLrfnD5KyrsM5osJ2PGGfQtaA==
+	dRBiHVlb1QQCpkFygkPjvmBO1m11TorTFIJlsI9Q4mqYVEjplXcmpBPm6DNOmpgKRWY31bngbJDCwRXsf4Y5+jtJlFWgNOG69yB/qhpIdWeSCXJ9Jq6wPuf10jWApTmR/M7huVL6Z5+h7HHROemIDF60uX7glVb+2sJ+Tcf/e2RmK+mRfBzTE5AhzpL/5RjEXGNA25ARAmOR5hswqdkql5MgO5tj14tVfpwVBFsRNHyLwaSezsmuBFciMGpvcdgTS0/p0Qi6JzEWA6n1I9Tp5RBgwV2JKyyzkY9QboD00obZridb4ICQg0nDRTybGTqEMdHXBywigeah9dh4a5Kbxw==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	tRe4MCljDW1ZetCKCgzc9m4V/A0ntSQlYZ3l6Y9rNsIRnb8K/HpvM6yMx8sTLP5k2PHaiyQC51fELg4M+NSlr2CS1j0s2VgrUZSnaavSYoEwnX2WJay6PLSsVGBvBIbPcETBVxlryiEF6WHO4+98QV83HCmvVLnM4tq0O/cB+KrwWd3SIbxAAPR+J7G8uPr4zZUPXP7rXGQP1JnFw/T3XXuXvo5aUca0AXN54DsEXofQ65TDk/AS0ZjbEPl09+fQCByS2zaNth/iS2S9jLCZnSzihnESdWZ89r6c99jED9ac0H80P3MBqjEIdah1B+HoEA9NtaUkjZnozA9UtUSpJBIfaGTMrrMgJ60Ro2TW2EsEaZeZmHF4nIfkWZgEo65wq3GKaqZnjxJjLVpm13zAxZrqbolybl/5zU2+Naa6GakFoB/4uI03Gp8cdCHOAZLeJCNMPX8PAvJYrPhKv/udXzpI1soL8ReiP4IAgY35zODPKYTdTF+WFsJTTKgXKkC4qFbzLirQ8kObH7DWezjc7kGsYXvxiMxltitUSyf8lzoB35ovGEN/MrcUn3OIj/+sZUVwj7gTEVhmmI7Fr2RMYONXrfHmaY28x2OCWx4+Q8o=
+	t6C9gNSvJskjWHFcbMug1bUz3TC5g4ZcwQMfQ+nhVWY8R2ikSO4DYY7nV+rR5go9s5MoU8SY1XljFh+t2bYBD/7EbYsx0rfB++HK8dS0XWqhCo/yE0MnlyA5dEHNGSAS8dE/JhUgbMsQgaUxk8i52MqBHAQgVB6m6JWl/fSGrLOSPzEc0/gWdO4DR3gQ+MmC7HS2CVaXWg0AhGGEp32vINDbEcWKh+qfZ4LSZM8jsW1f1RbKQ2WIzsdmiJhxB4MyweH9QNkNA2j0N2jXYvyZec5o1Ho9CVd3x1N3FRhC+oI3JgDxQotTEcZDNBIszqz7Snyo+tcaVmy/VpM3M6nqdB7IuiocnUhu4xKrpi39l3p5lUKJz0wDUY2F3Ih8SohvaH4Nb5jx9STCEi+Xlc2Gcjq0IaL44eq9k9dadSm2oXKmQ8x7ZI+K72fcbq1ebtiVBqHh16Vs4DL3ZvaFGQNZixuM8Zl1xa76JNx4IxO0EJzXl+/P+eVpKxG68s81qT8b0EVNNmt1ZKPP76y7QWpg1jFUv4q97Mfbf7vJ9efncz0PcIxvPEEKW4y20M0HiTSCdKraMPmMRA/cwcpsVqVtieFdepLOvnp4XAL406/RJkY=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 647ab8c6-2c47-4005-e9b0-08deb81c909d
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3e7c3ef-5bb6-44f0-411a-08deb81c93ac
 X-MS-Exchange-CrossTenant-AuthSource: DM4PR10MB7505.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2026 16:09:55.9801
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2026 16:10:01.1069
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R7TpqGqk8kv0a5Ea6TQq2xlrMKYiMmE3u0nsb/+yWJ/hy8scxqZAb/VbeNWooSeHIP0KTaNR4bHHKlerwPrD/FGHUzPrBVtkzYYF+5qi1aI=
+X-MS-Exchange-CrossTenant-UserPrincipalName: elvKI3Dd/yNjGrLijozmcIM9LANlXp8/KjDPwgJAxP/77xf5AnT0vFgH1hwLnmr8ZHVUtu+IG3BepTmP+l4XjJKjL5dJTGenwNOy4R4I7ko=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF18D5A7206
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
@@ -157,337 +157,70 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  spamscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
  mlxscore=0 mlxlogscore=999 malwarescore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.19.0-2605130000 definitions=main-2605220161
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDE2MSBTYWx0ZWRfX9bGbVuBSb/ot
- Y/XkIR2LSZawkyTRoXUfcbkx6PEn3s81YucTYxIUEPdYuhyBqqsFh1xnyOs8UjQUb5QeHy5nMjs
- oBqBS3TIlyJIvi5ESIFcXq7Ry+ewwjR/DZVT68/YDo+vARNhUlwHb5U6dXVprwxNjYWJ9BULmkX
- GejPnqKLKTUPMnmMeOvnT2GEF4AghSlihDAYuFpAKLF78/VrnclHT/qpnVjm55CRmek/BajsBxE
- EYS8wovm3DHwtdWrzPEGjEW5IU9gw7Cp7xCVsTWv0huPNGLaBAHYv2OToK0mgNvm3EH2e0mXPcr
- lFm7fhez9YOxoD/3ElukNmDXwXNAY3rb/MTEhISb4IcJTFMM81zousRjmhLQUE3jvDreCFMubrF
- yqEcOTWkmqtYLlUrESsp2m15ZRqGGzhSPZnkqo2osXkChg1QDfCuVVCfq/uZSXdCvg9WyApavN0
- PWbB0Aknsz3yJiNwd7KUuxCZQP8lV1EQhrZ66wTg=
-X-Proofpoint-ORIG-GUID: MHv9ilvh1qMRq88zz2hZqUeGltGaz_5M
-X-Authority-Analysis: v=2.4 cv=dc6wG3Xe c=1 sm=1 tr=0 ts=6a108001 b=1 cx=c_pps
+X-Proofpoint-ORIG-GUID: hSwm-NNuCxQRRIo9-soysiQMEJ0alNqQ
+X-Authority-Analysis: v=2.4 cv=aoKCzyZV c=1 sm=1 tr=0 ts=6a108003 b=1 cx=c_pps
  a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10
  a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=x4eqshVgHu-cdnggieHk:22 a=yPCof4ZbAAAA:8 a=ElfticSEwONjoEU1SbMA:9
+ a=o5oIOnhZENCTenyL_yNV:22 a=yPCof4ZbAAAA:8 a=zp6zO9qf0PI-K8SJbKMA:9
  a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12301
-X-Proofpoint-GUID: MHv9ilvh1qMRq88zz2hZqUeGltGaz_5M
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDE2MSBTYWx0ZWRfX7FjIu5rO+jNh
+ yV8mk6gI2W4IlNzRKMxbwIx2tHHQcHJpNlSiH90bL0VUCO+i3X5douP4vWB4/99UKuzUqlY1ynu
+ 36FEiUQAUIT3OoTWx+/lytV5DU1fRpDXg1kqY8V0Djxa5R5piUb5auFUwi4ZjCHtXWbQkguQEk7
+ cf6UXs/SFKNxj1jVkil0/lKri6vFfx7JvGp2+dIi0FkuUSWxLiPUYUG4vXEx22GDsGK1sKyxBPo
+ BhL10E7G7tHEkOoNN1Mq3hg6bba1d9L0G8WOol08fhjsaObIbGAHC3M4agSGCxpAWfZAAmR+8ER
+ j/n5Tj0WLl72LlRwnyFVVBjzzQozrlbSeHkAgQMS09lrTmkhKJ744GZL9xdcz3PENnlpDtMfaMq
+ crJQLxfFDE2Iq/Bab1zTcb1PpqavLhLNwKGRROE7fR63HY1GNqYpy7MTLlq6F5UHw2vMGcpLXzr
+ iMPY85GwmEGggEjby9C3s6AroncKeiDve6pJCHJY=
+X-Proofpoint-GUID: hSwm-NNuCxQRRIo9-soysiQMEJ0alNqQ
 
-Add read helpers which allow a caller to enforce a timeout per read,
-and a deadline for the read in case multiple reads have to be done
-under a common timeout.
+Displayed notes already participate in common log behavior.
+Add explicit coverage for raw notes formatting, --no-notes
+suppression, explicit notes refs, and --grep matching before
+teaching external notes to feed the same display path.
 
 Assisted-by: Codex:gpt-5.5-xhigh-fast
 Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
 ---
- strbuf.c  |  26 +++++++++-
- strbuf.h  |   4 ++
- wrapper.c | 139 ++++++++++++++++++++++++++++++++++++++++++++++++++----
- wrapper.h |  23 +++++++++
- 4 files changed, 182 insertions(+), 10 deletions(-)
+ t/t3301-notes.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/strbuf.c b/strbuf.c
-index 3e04addc22fe..b3fc7c624aa2 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -749,13 +749,15 @@ int strbuf_getline_nul(struct strbuf *sb, FILE *fp)
- 	return strbuf_getdelim(sb, fp, '\0');
- }
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index d6c50460d086..27439010dfbc 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -885,6 +885,30 @@ test_expect_success '--show-notes=ref accumulates' '
+ 	test_cmp expect-both-reversed actual
+ '
  
--int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term)
-+static int strbuf_getwholeline_fd_with(struct strbuf *sb, int fd, int term,
-+				       xread_cb_t xread_cb,
-+				       void *cb_data)
- {
- 	strbuf_reset(sb);
- 
- 	while (1) {
- 		char ch;
--		ssize_t len = xread(fd, &ch, 1);
-+		ssize_t len = xread_cb(fd, &ch, 1, cb_data);
- 		if (len <= 0)
- 			return EOF;
- 		strbuf_addch(sb, ch);
-@@ -765,6 +767,26 @@ int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term)
- 	return 0;
- }
- 
-+int strbuf_getwholeline_fd_deadline(struct strbuf *sb, int fd, int term,
-+				    uint64_t deadline_ns)
-+{
-+	return strbuf_getwholeline_fd_with(sb, fd, term, xread_deadline_fn,
-+					   &deadline_ns);
-+}
++test_expect_success 'displayed notes honor raw notes formatting' '
++	git show -s --format=%N >actual &&
++	test_grep "^order test$" actual &&
++	! grep "Notes" actual
++'
 +
-+int strbuf_getwholeline_fd_timeout(struct strbuf *sb, int fd, int term,
-+				   int timeout_ms)
-+{
-+	return strbuf_getwholeline_fd_with(sb, fd, term, xread_timeout_fn,
-+					   &timeout_ms);
-+}
++test_expect_success 'displayed notes are suppressed by --no-notes' '
++	git log --no-notes -1 >actual &&
++	test_cmp expect-not-other actual
++'
 +
-+/* Non-timeout version for compatibility. */
-+int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term)
-+{
-+	return strbuf_getwholeline_fd_timeout(sb, fd, term, 0);
-+}
++test_expect_success 'explicit notes ref replaces default displayed notes' '
++	git log --notes=other -1 >actual &&
++	test_cmp expect-other actual
++'
 +
- ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
- {
- 	int fd;
-diff --git a/strbuf.h b/strbuf.h
-index 06e284f9cca4..f896da1277a6 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -535,6 +535,10 @@ int strbuf_appendwholeline(struct strbuf *sb, FILE *file, int term);
-  * descriptor.
-  */
- int strbuf_getwholeline_fd(struct strbuf *sb, int fd, int term);
-+int strbuf_getwholeline_fd_timeout(struct strbuf *sb, int fd, int term,
-+				   int timeout_ms);
-+int strbuf_getwholeline_fd_deadline(struct strbuf *sb, int fd, int term,
-+				    uint64_t deadline_ns);
- 
- /**
-  * Set the buffer to the path of the current working directory.
-diff --git a/wrapper.c b/wrapper.c
-index 16f5a63fbb61..1f42845e031e 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -9,6 +9,7 @@
- #include "parse.h"
- #include "gettext.h"
- #include "strbuf.h"
-+#include "trace.h"
- #include "trace2.h"
- 
- #ifdef HAVE_RTLGENRANDOM
-@@ -220,28 +221,129 @@ static int handle_nonblock(int fd, short poll_events, int err)
- 	return 1;
- }
- 
--/*
-- * xread() is the same a read(), but it automatically restarts read()
-- * operations with a recoverable error (EAGAIN and EINTR). xread()
-+static int wait_for_fd(int fd, short poll_events, int timeout_ms)
-+{
-+	struct pollfd pfd;
++test_expect_success 'displayed notes are used for grep matching' '
++	commit=$(git rev-parse HEAD) &&
++	git log --grep="order test" -1 >actual &&
++	test_grep "^commit $commit$" actual &&
++	git log --no-notes --grep="order test" -1 >actual &&
++	test_must_be_empty actual
++'
 +
-+	if (timeout_ms < 0) {
-+		/* Negative timeout makes no sense. */
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	pfd.fd = fd;
-+	pfd.events = poll_events;
-+
-+	while(1) {
-+		int ret = poll(&pfd, 1, timeout_ms);
-+
-+		if (ret <= 0) {
-+			/* Retry if interrupted. */
-+			if (ret < 0 && errno == EINTR)
-+				continue;
-+
-+			/* Set errno if timeout happened. */
-+			if (ret == 0)
-+				errno = ETIMEDOUT;
-+
-+			return -1;
-+		}
-+
-+		/* Invalid FD passed. */
-+		if (pfd.revents & POLLNVAL) {
-+			errno = EBADF;
-+			return -1;
-+		}
-+
-+		/* Some error happened. */
-+		if (pfd.revents & POLLERR) {
-+			errno = EIO;
-+			return -1;
-+		}
-+
-+		/* HangUp => We are ready to consume output till EOF. */
-+		if (pfd.revents & (poll_events | POLLHUP))
-+			return 0;
-+	}
-+}
-+
-+/**
-+ * xread_timeout() is the same as read(), but it automatically restarts read()
-+ * operations with a recoverable error (EAGAIN and EINTR). xread_timeout()
-  * DOES NOT GUARANTEE that "len" bytes is read even if the data is available.
-+ *
-+ * Fails with ETIMEDOUT when no bytes become available within timeout_ms
-+ * milliseconds. A zero timeout disables timeout handling, so reads can
-+ * block until the file descriptor is readable. Negative timeouts are invalid.
-  */
--ssize_t xread(int fd, void *buf, size_t len)
-+ssize_t xread_timeout(int fd, void *buf, size_t len, int timeout_ms)
- {
- 	ssize_t nr;
-+
- 	if (len > MAX_IO_SIZE)
- 		len = MAX_IO_SIZE;
-+
- 	while (1) {
-+		if (timeout_ms && wait_for_fd(fd, POLLIN, timeout_ms))
-+			return -1;
-+
- 		nr = read(fd, buf, len);
-+
- 		if (nr < 0) {
- 			if (errno == EINTR)
- 				continue;
--			if (handle_nonblock(fd, POLLIN, errno))
--				continue;
-+
-+			if (timeout_ms) {
-+				if (errno == EAGAIN || errno == EWOULDBLOCK)
-+					continue;
-+			} else {
-+				if (handle_nonblock(fd, POLLIN, errno))
-+					continue;
-+			}
- 		}
-+
- 		return nr;
- 	}
- }
- 
-+/* Non-timeout version for compatibility. */
-+ssize_t xread(int fd, void *buf, size_t len)
-+{
-+	return xread_timeout(fd, buf, len, 0);
-+}
-+
-+static int remaining_timeout_ms(uint64_t deadline_ns)
-+{
-+	uint64_t now, remaining_ns;
-+
-+	if (!deadline_ns)
-+		return 0;
-+
-+	now = getnanotime();
-+	if (now >= deadline_ns) {
-+		errno = ETIMEDOUT;
-+		return -1;
-+	}
-+
-+	remaining_ns = deadline_ns - now;
-+	return (int)((remaining_ns + 999999ULL) / 1000000ULL);
-+}
-+
-+/* (deadline_ns = 0) disables the deadline and short-circuits to xread(). */
-+ssize_t xread_deadline(int fd, void *buf, size_t len, uint64_t deadline_ns)
-+{
-+	int timeout_ms;
-+
-+	if (deadline_ns == 0)
-+		return xread(fd, buf, len);
-+
-+	timeout_ms = remaining_timeout_ms(deadline_ns);
-+	if (timeout_ms < 0)
-+		return -1;
-+
-+	return xread_timeout(fd, buf, len, timeout_ms);
-+}
-+
- /*
-  * xwrite() is the same a write(), but it automatically restarts write()
-  * operations with a recoverable error (EAGAIN and EINTR). xwrite() DOES NOT
-@@ -283,13 +385,15 @@ ssize_t xpread(int fd, void *buf, size_t len, off_t offset)
- 	}
- }
- 
--ssize_t read_in_full(int fd, void *buf, size_t count)
-+static ssize_t read_in_full_with(int fd, void *buf, size_t count,
-+				 xread_cb_t xread_cb,
-+				 void *cb_data)
- {
- 	char *p = buf;
- 	ssize_t total = 0;
- 
- 	while (count > 0) {
--		ssize_t loaded = xread(fd, p, count);
-+		ssize_t loaded = xread_cb(fd, p, count, cb_data);
- 		if (loaded < 0)
- 			return -1;
- 		if (loaded == 0)
-@@ -302,6 +406,25 @@ ssize_t read_in_full(int fd, void *buf, size_t count)
- 	return total;
- }
- 
-+ssize_t read_in_full_deadline(int fd, void *buf, size_t count,
-+			      uint64_t deadline_ns)
-+{
-+	return read_in_full_with(fd, buf, count, xread_deadline_fn,
-+				 &deadline_ns);
-+}
-+
-+ssize_t read_in_full_timeout(int fd, void *buf, size_t count, int timeout_ms)
-+{
-+	return read_in_full_with(fd, buf, count, xread_timeout_fn,
-+				 &timeout_ms);
-+}
-+
-+/* Non-timeout version for compatibility. */
-+ssize_t read_in_full(int fd, void *buf, size_t count)
-+{
-+	return read_in_full_timeout(fd, buf, count, 0);
-+}
-+
- ssize_t write_in_full(int fd, const void *buf, size_t count)
- {
- 	const char *p = buf;
-diff --git a/wrapper.h b/wrapper.h
-index 15ac3bab6e97..10d85c467b86 100644
---- a/wrapper.h
-+++ b/wrapper.h
-@@ -15,6 +15,8 @@ const char *mmap_os_err(void);
- void *xmmap_gently(void *start, size_t length, int prot, int flags, int fd, off_t offset);
- int xopen(const char *path, int flags, ...);
- ssize_t xread(int fd, void *buf, size_t len);
-+ssize_t xread_timeout(int fd, void *buf, size_t len, int timeout_ms);
-+ssize_t xread_deadline(int fd, void *buf, size_t len, uint64_t deadline_ns);
- ssize_t xwrite(int fd, const void *buf, size_t len);
- ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
- int xdup(int fd);
-@@ -44,9 +46,30 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
- int git_mkstemp_mode(char *pattern, int mode);
- 
- ssize_t read_in_full(int fd, void *buf, size_t count);
-+ssize_t read_in_full_timeout(int fd, void *buf, size_t count, int timeout_ms);
-+ssize_t read_in_full_deadline(int fd, void *buf, size_t count,
-+			      uint64_t deadline_ns);
- ssize_t write_in_full(int fd, const void *buf, size_t count);
- ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
- 
-+typedef ssize_t xread_cb_t(int fd, void *buf, size_t len, const void *cb_data);
-+
-+static inline ssize_t xread_timeout_fn(int fd, void *buf, size_t len,
-+				       const void *cb_data)
-+{
-+	const int *timeout_ms = cb_data;
-+
-+	return xread_timeout(fd, buf, len, *timeout_ms);
-+}
-+
-+static inline ssize_t xread_deadline_fn(int fd, void *buf, size_t len,
-+					const void *cb_data)
-+{
-+	const uint64_t *deadline_ns = cb_data;
-+
-+	return xread_deadline(fd, buf, len, *deadline_ns);
-+}
-+
- static inline ssize_t write_str_in_full(int fd, const char *str)
- {
- 	return write_in_full(fd, str, strlen(str));
+ test_expect_success 'Allow notes on non-commits (trees, blobs, tags)' '
+ 	test_config core.notesRef refs/notes/other &&
+ 	echo "Note on a tree" >expect &&
 -- 
 2.53.0
 
