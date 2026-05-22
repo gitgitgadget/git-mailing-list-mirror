@@ -1,66 +1,40 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from smtp.smtpout.orange.fr (smtp-70.smtpout.orange.fr [80.12.242.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01869340DB8
-	for <git@vger.kernel.org>; Fri, 22 May 2026 12:04:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30C13815F9
+	for <git@vger.kernel.org>; Fri, 22 May 2026 12:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779451493; cv=none; b=Gl6wKJTS7BNt7HJi7Ufzo5rtMOoodF7L9OJfpfWOFy024ih/RECUOM67AqwQ7y/z/qnIsTnOgzBFhJNTqCdgARcFvto4VoMXVTvwOBhVjKDw1WUMijNnjKK1+FrgyOfl9R35U7mRZMXE+9WRyUp5ciP0mavpxt52Wp1Ngyx8p0I=
+	t=1779452936; cv=none; b=nmqXdUQlkW2WxpMccCxKwtjVxAUicMFJbuWXOx/q5CXRU3emD5M4UatBtGIP7JX5JwcCNsdYaU8DZQrydlgHfZna+839B+LhtLO0T65A2LXbicKFUhTZKjdC6TfdTlpi8OAxtl0qzFDDoJsV4Tut8gJjs8oSn72p/279x7cpVJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779451493; c=relaxed/simple;
-	bh=/GcenNb/MJYNLMLymXgJ28OVOe70zcH9VdoXinEVS8c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F6IIlnU/JLXDmINkFybJkV0j1bq/STVP5A2tKrRXTe/kWLFFx6Y5rcCfGRRv+hwMMrW5eZCvzMzkpT4Wzbyfu3K2aTpjU0NJRCEk0JQI3IlwpxQY133TpvYWY5M3EQBrs9/y8Sryz+/N5PVE1fYulLsOwcCA0i+8e5cg3pSWdoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mgCzpLx4; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779452936; c=relaxed/simple;
+	bh=4Ti/lTT7XSReQoGGCbnvYhHZ8AUFsfVjuLIQaMwkL3A=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=M3H5ei2lOg3wQfk6RborbPoJ3XYblgNqHSIbPFJE/HpkZw/cbUSCi7pzF7OO+HXH6YsDNpfn3CFzpkI9+T7sCCcMuugBSvIR4seiAk75Ffi4CgKIbRV368OKbINIJqsyU1PoT16HEH2vlKX7dmfBV2bugbYEgVncNBfAJdXQCXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=orange.fr; spf=pass smtp.mailfrom=orange.fr; dkim=pass (2048-bit key) header.d=orange.fr header.i=@orange.fr header.b=O1BqdhAy; arc=none smtp.client-ip=80.12.242.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=orange.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orange.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mgCzpLx4"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-50e5bea4045so55159751cf.3
-        for <git@vger.kernel.org>; Fri, 22 May 2026 05:04:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779451491; x=1780056291; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/GcenNb/MJYNLMLymXgJ28OVOe70zcH9VdoXinEVS8c=;
-        b=mgCzpLx49tU5vZ7vDj8u2P8idBbPHkLmv2PTocOVeCRzUAnkhBtn2jAErTkTQLKOo8
-         gfCo48Fj010VB+NRKeWWeFRFfMDbGpRnXoAp2PXU9C3dC6XCAXIltjcmyUWe5LLeDUAi
-         icpKELQTa67hfBCiLjm0YEyPMaK+PVa3EP6u4i+hnSd00C190FfYcn+pCMfNQIra29DP
-         jkBZzYpzrhCKFb4XuoTC4TegPno1DrYFQt3imoHFBgobNTTKr5VMWRoLoyhuzSwDE6y3
-         JS4oNmD7DEOPIFH4ujvbq+e1YgbX+VFtDU9vfJXw8yrCOghjZWULTdRsZZhDLeAQessD
-         84DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779451491; x=1780056291;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/GcenNb/MJYNLMLymXgJ28OVOe70zcH9VdoXinEVS8c=;
-        b=YHYpe79/ZFtndaHazZr7jfGQecRRbrDkQq9Q8PLEdbUbPOlW8zt09f77BMLI8qSZz9
-         6a2CptrE42ZYpj6o9bXnSwvssofQOQcKO8FMQLoyQVqkJHSoEp9uJZQlw8Q6Gho2IoxV
-         boH+08XqPfsTQE0BiwZ+VoB7J6QzECuerfuDzPCxNIZIasKp2VETS7gk91pEIHj7knoe
-         mIfaYV5kEwmV03RZwFiN+ip+if7J3/VRLLkgZTTkcySFOiIBDwyGpZUjnq/HUEvWG8kB
-         6F2lmFrA4ifuJhHfFnZeMTVJuMD5i3jPKP+op5jd36q/ShiJMb/gKZ3715AYo7o1WSRz
-         yMaw==
-X-Forwarded-Encrypted: i=1; AFNElJ9WhMOEJcsHJkrIfndZFOvLWvKQcQC362O8lnCc8/S/GqjRlG4kXn4zWIMq3okV0uPa9P0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2bPHjfpTU2CMG9wLnXzQmtZdLlihHXQKkN2s3VASVLyNbeCPm
-	YFwr2uGzoS7THCOEED5O/19Gl/Qp/V5SxydDOAOP7Kr6Mtt+zeq5VM/31gKO71Yi
-X-Gm-Gg: Acq92OGccGptvOn5MnJgQYnO2mCExiabp1FrAXRwo4eJpO2tL0BwmmUpBkAe1Ei0pta
-	uXDu2GayrB9p4I5RjHNVL4d25fqUxnTUM4WVSsoM8+NZ7PZtUjrThNkic1gtJkWFlOa0mNFt8D9
-	JIbGfOFBV0224zDZp4OSypzqu4vsZ/VKRpVwvs39kkT1lWCvj72yn2jNreDFWEaTxXLy/v3ftxM
-	7Jz+oMetw6dExQSEzysdwGnLq4h85q4u8Sr30DGDaOS8Y7XUo0d13b2A5v7mtRtq5cql7jZhHRh
-	M4VSb2eoGoK3KL9NUMXRiDpAS32P5pBsVUR1Y9z6vCC7+T/2B/DTigNU22L9/xFA3g8XchkRA2q
-	UXqi6afF18s0xSE/P2qcm2LU/JtzF2jpI8yP5UmNrsOnWp/HvmA212cal+WIN/6AIRSpjxFOeIx
-	3i2xQyhuxT9kM5FqyW7h8Dqzh1UoHuaYIvefCDRKdYYQt/f+SL6bKGET5G4nUcIZ1Q3cv5/jI=
-X-Received: by 2002:a05:622a:198e:b0:510:1543:31eb with SMTP id d75a77b69052e-516d460460dmr45780681cf.53.1779451490826;
-        Fri, 22 May 2026 05:04:50 -0700 (PDT)
-Received: from ?IPV6:2600:4040:264b:4100:d17e:f99:a560:8cad? ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-516d8b0065asm11872491cf.2.2026.05.22.05.04.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 May 2026 05:04:50 -0700 (PDT)
-Message-ID: <f54ea491-4165-43fa-b1ac-14d0fe63fc75@gmail.com>
-Date: Fri, 22 May 2026 08:04:49 -0400
+	dkim=pass (2048-bit key) header.d=orange.fr header.i=@orange.fr header.b="O1BqdhAy"
+Received: from [IPV6:2a01:cb00:11de:5800:d09e:5b3d:9f12:a3c]
+ ([IPv6:2a01:cb00:11de:5800:d09e:5b3d:9f12:a3c])
+	by smtp.orange.fr with ESMTPSA
+	id QOzcwqjSEXCmEQOzdw0M1o; Fri, 22 May 2026 14:28:45 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=orange.fr;
+	s=t20230301; t=1779452925;
+	bh=3MiT4wDgF3rgKMmXH6RciZ1qz7xR1PAh6NGT7ct7Cq0=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject;
+	b=O1BqdhAyM47OvTMyuoerj+4/DL8Fer9WiQb26HMuKYCs6P4JHJ044ZcVRQVSXivuo
+	 A+mKmIN5pmE+lRYG4PXeW+USTa5g7JPoEJrI6icsJKcP6Ffz54Ag9bfQrsTUE/44Hi
+	 ROFb4WiUWRLT06BzeJ8oaAMiafiTlGf5UimgsgcgvX8FYzC8hfmnT+cmlviesGcUxD
+	 Vo+7O4hGi1qejo7xJwOvYVQVy7jOHs0fWbTzAQTa71lLtV/dt8+sL2BgvUb3IcWk5V
+	 Cr+FzAzYE4U5AWHaqFrT4vazp8mvIS2efjdBER56alJt5GWyQAR3N6p8ZUBJUDdZaA
+	 KZLXwJCP3e4jg==
+X-ME-Helo: [IPV6:2a01:cb00:11de:5800:d09e:5b3d:9f12:a3c]
+X-ME-Auth: ZmFicmljZS5zYWx2YWlyZUBvcmFuZ2UuZnI=
+X-ME-Date: Fri, 22 May 2026 14:28:45 +0200
+X-ME-IP: 2a01:cb00:11de:5800:d09e:5b3d:9f12:a3c
+Message-ID: <36eec9c1-1d2b-4cd1-a64c-a02936d8a2ae@orange.fr>
+Date: Fri, 22 May 2026 14:28:44 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,34 +42,31 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] git-gui: use rev-parse exclusively to find a
- repository
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
-References: <20260514143322.865587-1-mlevedahl@gmail.com>
- <20260520202411.108764-1-mlevedahl@gmail.com>
- <20260520202411.108764-5-mlevedahl@gmail.com>
- <8d1488ec-c4de-4ddd-b3cd-e1e8b4a343bf@kdbg.org>
-Content-Language: en-US
-From: Mark Levedahl <mlevedahl@gmail.com>
-In-Reply-To: <8d1488ec-c4de-4ddd-b3cd-e1e8b4a343bf@kdbg.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US, fr-FR
+To: git@vger.kernel.org
+From: Fabrice SALVAIRE <fabrice.salvaire@orange.fr>
+Subject: Why do we need to wait 1s between a git add and commit
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+Dear all,
 
+I wrote a Python tool to dump a wiki to a git repository, that does 
+basically a succession of subprocess calls to git add and commit.
 
-On 5/22/26 4:46 AM, Johannes Sixt wrote:
-> Sorry, but I cannot agree with "prefix is only known after the worktree
-> is found". The prefix is a property that can be known even if we haven't
-> asked where the top-level of the working tree is. See more below.
-Rewording is necessary, but:
-This patch already adds
-set _prefix {}
-to the globals init block.
+Recently, I discovered this tool doesn't work any longer and that git 
+commit (2.54 on Fedora 42 / 43) crashes randomly.
 
+I cannot explain this behavior since my code is trivial.
 
-_prefix can only be non-empty if normal gitdir / gitworktree discovery (without GIT_DIR)
-runs and finds the current directory is a descendent of the worktree root. That step comes
-later, even if the picker is run.
+I had the intuition to add a sleep time of 1s just after a git call, and 
+it solves the issue.
 
-Mark
+I noticed for some cases that another call to git commit were 
+successful. For most cases, git fsck and gitk report issues.
+
+It looks like the state of the git repository was not yet completed 
+before the end of the git subprocess.
+
+Cheers,
+
