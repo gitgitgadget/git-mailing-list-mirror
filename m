@@ -1,115 +1,121 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A253D25D0
-	for <git@vger.kernel.org>; Fri, 22 May 2026 10:50:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E166E3D3309
+	for <git@vger.kernel.org>; Fri, 22 May 2026 10:51:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779447027; cv=pass; b=LaAQ+OVxHWWxa62xr0uv8RtvFiY8N4Ihe8vDkd+8rpDNDiLJ62B9QroevInO7iJ7GHJrq/IxN9JnIrDX4Mstn7TGUh+cnsvIScS5g+Mny/L50jER9EjhvyJANkj5/KrUILB7fQGLX6M1aeJWPgYMtuGz12BvYFtEek0P+NuEVzI=
+	t=1779447103; cv=pass; b=EnD0ol2cc3qRIgF7wNehAxr+n10jCEuITl0nXVf+2bXEFoWiGw52OwDb+va0dA4WeyIx6ADzzAOyikvPB3Qhb6lKFsyPaoG4G5xKwuT0qJdgLEXRIFizMbg1tNzfWM+TWYvsYhd6PYWK0V4GJLhmrpjaFTFa9WNuVDqr4flrOCw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779447027; c=relaxed/simple;
-	bh=Rnot76blbh5WZm7IBIuoZPuaaxoRQ2uEubZDT7s2glg=;
+	s=arc-20240116; t=1779447103; c=relaxed/simple;
+	bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=olAnnfn82UseQ267u4GQEjBzkwFlF7BQ5Tp6aqWAwv+JwHZlM3RtzP7R3gU7YGHAAUsiXErR0cftP7iI53XgKiUQdvvp8VPqAanG83013RA9BdpiC3JrPbwsBYvNFabsDIjhlBqdlT1qAkEoITC+TvmphtQShbr3orvCE76LMUY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Un7gdsbc; arc=pass smtp.client-ip=209.85.218.47
+	 To:Cc:Content-Type; b=rsfbQ8QKfn3E15KzoE6tGmUvo90xdB1Mk9lOwHNGGiTOWpoQK/YIEdvdbO/ryWI5JxOsjKK5KoGS36jIM7EhD9LuyxuSDU7gRbKM3D6Y5x9gk3WQW1QvvV4FgCZ9YQ4QWhjin2C8FXIiwYvHP5IWMoHw6isczzOh58mhE6+B0Jk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IMvuTVFE; arc=pass smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Un7gdsbc"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-bd01481e592so1022210766b.2
-        for <git@vger.kernel.org>; Fri, 22 May 2026 03:50:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779447025; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IMvuTVFE"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-bd11a3729e8so1127380466b.0
+        for <git@vger.kernel.org>; Fri, 22 May 2026 03:51:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779447100; cv=none;
         d=google.com; s=arc-20240605;
-        b=UAyo0msA5HNUXe/gTHU4nv+pA/mxsxQwTEbAUXkPj9B3WLXo/8m80lOUgecUW5Eb8G
-         UVyIe6FuJY3gLo0wiWixjFGqE92AATNTtURMi4XkGHbRj3Jang84FRJ333mVuAci0V2d
-         m3e3/0T/ZEvYIhfD2dtCYeXeX1jhrKhmjHvWumEYhas7opX3gDdQpufQsYXAHZTTqZO6
-         bWSpdnoTqQSpkwctVSD7rbjOLQRIlNJOuVkUQG660qXDZJe9NK4CxjhAnWEgAUvTTwhP
-         eWgo8fOyILVlHWVrzeHNfGG891vm49FkJC3Bh8SXK6vCnv1OXdFlE2VaE1UIkC0yZdJE
-         jwwg==
+        b=fCBKeITqciA6rDugTEjUOeopcwgPa5Kruz4e3dWPiiyOkZLZAWYUSTEOqEASjzX59X
+         VzM3baJHBgkiRmsyWqxUgwxVvhOppl6d4m9cXhSMrRb0vPbEqG+Vvv3USGde6dKPFUyh
+         y+WI7RT1xAHSWnk+P5sastQ/sxW60rHQ/TwOKk1vr2V5xEWPVcPUFBt9IZzzJtM96LFM
+         VKP2cx507YCi0bgQzuJ0ALUrdv5PsjT2mu6HZAC5LrHOjvoQ4/LGn5dcMmfxlqP0QjT5
+         EdJEzUNajKvK8HeBeYCMgo1lVmT0fkG7/fCP7g3Iy2ULzkqT+nMy/gCp5UEmN97LNa0N
+         XHlQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=hs2hY6yI0+fB+/x2VfP5av9ufjuyo+WpTJ4SlOVmkVc=;
-        fh=u0YzrhG14BayFVUYPMhFOS7qdTqx/2eqKUnq0Img7+A=;
-        b=JPCaCp2dhQTmBuj9MmSaTIXTrTYObYhmQlLOJ5bBcwHKAnWwNikXQsVVVYMDovPHI+
-         GofbiQpd9emJGgx+I1wUrycqtyOvuVSfrzSXWPwGtBw/pau9kh4ASRQbec5ZccitBCbT
-         mPES6lx25atly0ilJ30GDBO0CLuISSmy9n7TDCL1zFLBKdjE++HdOTujwMNfCN/nL3JD
-         yPbDkhdhyg90k8hEiL8/JiFCtNmBXsKRU1N91iQ/DbQ/ITcDEXFoq6iTRKxtvrRj3hKh
-         AAitrL1TbPK3mnzPb4d8YEZeORNOl0KI08Zq0QEEQ1EhdJwg2CPO00Tyf12E/C7v9vBW
-         lcXA==;
+        bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
+        fh=9M+nktag9+0fYhU/4lAF0LF7vM7i6WvymUVaXn7UOoU=;
+        b=ER7FuckOyxE8fU5cVg1fY163IXmWmjqbpi11cuys+Doj7/gQpi/gYvLAEIeKREDaLw
+         xVJ9Md2pTAad5ar5JKHTJMAIQABau4MRII5fANjAd8K5Ef45781uTX7tnUfWaSwVeK1T
+         CQGViuCtbZ0ibOM1wTMrBcfMZoj/9C9HI5Uw5uzPbMRrJb4dkC/HZcHwO3BS/j/3zGMg
+         6bdrBjKrgzm7tJEimKWaSgPr3Xx8uAtmA55V8eml6YV9xXCfETXe0o6OlhV7lzUMusbW
+         wJ7f4CBotrVF0HHuaQ485Q/vnTRPepw78IXgLz3/c7llKGN+VFHeUbOt/c/k628el2l0
+         dqVg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779447025; x=1780051825; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779447100; x=1780051900; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hs2hY6yI0+fB+/x2VfP5av9ufjuyo+WpTJ4SlOVmkVc=;
-        b=Un7gdsbcCYt3S9kbLBAqSpcg4OwQmw+hU/FWhAmnc0F9pIgOH/Z7tyUAxzHUkO8ggR
-         krgFbAKpyzYabFcCOsBsxMB46lF0K0oSP8tLBN5nCSFMCQ8VvfdLi1xFQAjDRpvvjW/V
-         dC+GKiHXkCGzq9Z4TR7LW34yo8LBVp40Xx+tGaw4WGceYd0qCyINBqhZhQBK0b/msqOs
-         Weala7S3dimPYdu59Ey2En47EBgJWiz70OciU6CYcRZwOIiyR/O1MdZYvpcEsjftvPjH
-         OOLtL9AlVX8nuJ/Wi60b+kLTYeqVY6RyCeQb9IB7nce8jSU+MHBT+tiR6iqAji6cqmef
-         Z2rQ==
+        bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
+        b=IMvuTVFEbZIC1mDB/0aaDehlW1L4hLvyXNQ4cvntN1PRrqPYKg0O/W3Lx7qiQGa5wS
+         2scZsceQU4b7rsokvskV60qwyCytAY9FHehbMeDyqSiYEeV08bZiaL8FH5WILgbo5ehA
+         hkC1/ih1Ghvotjj9W8OWH3jnv06bXi7X8KGI2Qk2PK7IJygnOSlxRpvXKgfqH+Jk+6dC
+         rSelieIzlkQqttD44WsrhwKwMYwtIkAL79GPMw2Bm1X41rLrBFUeP2knaf6BwzrfvXB4
+         4GRosF3bmbaA1oS0XN31pwPNjtWAWlkPFHnD/UQVnlDYABhv7G30nuIX/zrh4UMRY1zq
+         JTUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779447025; x=1780051825;
+        d=1e100.net; s=20251104; t=1779447100; x=1780051900;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hs2hY6yI0+fB+/x2VfP5av9ufjuyo+WpTJ4SlOVmkVc=;
-        b=DSrDeOq+bC3UQJe7BaNN36cA05qelgDaE3Fw0CkCKmGUbZRJX2ImKXELtGIv1TYZsn
-         H41xZgHVlXUVeV3lALCwfat1XNJM2vUdbt3iFBBaCEVccO/KUVdulKvsMUHKuCMIKvsC
-         Gu3bdPeMs8Zv91hOBL93DzgfBK94kTji+ip9oNeuEgYbP5JNhehJnv0lgYpdWkNqEUQj
-         ghGPGvbGX3q9IxgzB3rA7skKlFCIok6y/2SuB6Cy4+On9W3Eb/el4bCLjWKKm4bH2/SM
-         n1FO8LS0GWFpumoeBmLpf6BQEWP/P2iRhxygUqFCAq1DPEUxMhb8mNjNQbtReRrX9NNI
-         UhYQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9VpRY3VuU6cMJi5lSHjyzJv0hZPUVGXiZg31vbCpSeb9RPm3VAeYbel1tUEtGlimIOARE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5LWVfn+h/cGuWc+Z1HDIzxXQataiCU3N8ql2xPscu+cubklLI
-	lE+w/b7CBEQ2D9mE79QQInptMOL1CfZzSP9PHtFQZWt3rBGHHxVbv0e4Rd+xoZcK59TIxP7DYu4
-	DEN/ztvR6RClt7e/ZwWbmyzFMq2/Oh3I=
-X-Gm-Gg: Acq92OG0t50c6tDiDu6/qLsFgTXGbOCEotDLav5nuOdAUJ4yhg6944Q8xeCpZhY7aNp
-	CcSTSWBa7K4p0Ki7hesiT1CvxLJZi8zN8WpqslvMEKUY0eaV6tH9ZqVGOga2LuJITTJbBtqB328
-	slXOjNeicwolfMhT5ozYR5RWPmBu8ogzuSdpORwLZcKEPR3/uUB0gYRkPizG1dJPKgHqN8dqyMs
-	Ejpa4O170CV03Fi91f4GshDcdOxaWv0awLOUHFvGXoIlUlXGKnR/jVfYeThBbqpC3pdPoHeNsU+
-	gfzLcGA=
-X-Received: by 2002:a17:906:6a0b:b0:bd4:99f5:52f6 with SMTP id
- a640c23a62f3a-bdd264bf66bmr192813566b.34.1779447024610; Fri, 22 May 2026
- 03:50:24 -0700 (PDT)
+        bh=UJquJNvflbu6ucFKUxUZPIdXR35RGW9DAC2d7MrDd+8=;
+        b=RcbIn7+MUC7clZA1KW6CbF99v3GZKMIcRRFEB6ZF1S253DQCgevOW3SInH53TcQl5V
+         KZK6RgP95g2bsRvgPvaI4/OEByt7KJ9+ObqXtBrLZg67dUwY68zRSU2a0EtDAt6kNXXh
+         5SDY69iGLm8HRxh+dnMQQhrHXU54Zn7n7Ct5lpJBcDXAXTTM5nvAz0Nv88aP0iG1mmXw
+         qAAn6zDI+MnJKDh2csBUnShRIfD+fKcMiCrBDdOevQ9LpTHFSL+c0qtYatqdeU/WzBQT
+         0cQ1RCVGn3Ghg7yRbGuEzW5z7xf1CfwvB4rWYf1B7snf0zSWXS8y0MhBaFqMTvIkUlyr
+         +FuQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8YjUZzp693m8Xocarxzcne12mSzH0QryAhol7QUQLP54a4bxpLQoM1Br0+CvnJv/OdMlw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyin4M/QTEWPbhfIOjITnhEqrsWThMpMJBFXCU18vM0R5tGUVSK
+	LolXNHL7aWW9JKmcK01zLTIOjPcdtJHC5h2dzETsIC/becoqsdZuYxBvqJqELqaE8byCzAk5wUa
+	9q9JdeoK7d3KMDYP3uGymooAYUiI/qVM=
+X-Gm-Gg: Acq92OF4zIDio6cxzFNJCQp6hUTFucjG/T8s4C39I67Vl2WAmnoSLF3Cj4LSduxW4+d
+	W6M9bVf8Kq0pblzHmDxA0VzLu4UF3mHBjnYFtTlsM7q5cVGofoY+HSReV1yqpW1SJ8VLYtlOeq5
+	If9S5BQQy2I2Ffs3ySh9nUgNvHPi0aJYDHounDArAwF+Rt8cca4wTed2DArOq/HLprQOQsPJg6X
+	xeuDbIQAOnvZivT/49rXlbL6YebpEMjz6pm8kyjhDKZC9tlpgMEuciquoqAd0Zh9I4NuRS8NNzw
+	B4OF7mU=
+X-Received: by 2002:a17:907:94c3:b0:bc2:70ca:c41e with SMTP id
+ a640c23a62f3a-bdd25ce0bf7mr183777966b.25.1779447099921; Fri, 22 May 2026
+ 03:51:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com>
- <pull.2285.v10.git.git.1779403204.gitgitgadget@gmail.com> <f2df15983067ce39b6c33ab81115863d5c3567f4.1779403204.git.gitgitgadget@gmail.com>
- <273103d7-c816-4cde-9e89-b630c37b0749@kdbg.org> <xmqqse7kt0ge.fsf@gitster.g>
-In-Reply-To: <xmqqse7kt0ge.fsf@gitster.g>
+References: <pull.2285.v8.git.git.1778605658.gitgitgadget@gmail.com>
+ <pull.2285.v9.git.git.1778700883.gitgitgadget@gmail.com> <f87e96e99d64c48bd92afecf3a6a819d36e56f6c.1778700883.git.gitgitgadget@gmail.com>
+ <6501a3d5-a5ec-421b-8526-ee7d4ae5ea98@gmail.com> <f1d15d08-6fee-479f-8ed0-34efd256d8dc@gmail.com>
+ <CAHwyqnVhhwT80Ao+7QLUAsTnUJaN5vE=ZiaxeqF3rYxxiD_Qww@mail.gmail.com> <6ae90274-3fbb-4d2a-b0f4-cd9260e4d6b3@gmail.com>
+In-Reply-To: <6ae90274-3fbb-4d2a-b0f4-cd9260e4d6b3@gmail.com>
 From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 22 May 2026 12:49:46 +0200
-X-Gm-Features: AVHnY4J-A6g71G16qkM7yhsKj3EnDh9x1O4ad1VnWz3xt6-mUgNq4s1cG9wu5io
-Message-ID: <CAHwyqnX=zvjpy3w8qn+H7L_Ncxs5+tK5Va-Lr4ZXX=XYLs2YZQ@mail.gmail.com>
-Subject: Re: [PATCH v10 1/4] branch: add --forked <branch>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Date: Fri, 22 May 2026 12:51:03 +0200
+X-Gm-Features: AVHnY4KJYwj7f5cu3FTkOL3H7DEc9a6BwBbtPxYIAcT1tu2LvOz0nIMZisECWVA
+Message-ID: <CAHwyqnXSq-fSE3vhtaOxQ9iy1dwP-Rg3Db5dD75Pn8N5dfJqsg@mail.gmail.com>
+Subject: Re: [PATCH v9 3/5] branch: add --prune-merged <remote>
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset="UTF-8"
 
-> Johannes Sixt <j6t@kdbg.org> writes:
->
-> > The icing on the cake would now be that
+> >> While we want to clean up topic branches, we want to avoid cleaning up
+> >> branches like "master" which follow an upstream branch and therefore
+> >> look like they've been merged straight after they've been pulled. So I
+> >> think as well as checking that the local branch is merged into its
+> >> upstream branch, we want to check that the local branch is not pushed to
+> >> the upstream branch i.e. that branch@{upstream} != branch@{push}.
 > >
-> >     git branch --merged origin/main --forked origin/*
-> >
-> > provides the list of branches forked from origin that have already been
-> > integrated.
+> > This one I handle already by letting the default branch be guarded.
 >
-> Yup, that is very nice.  Also with "--merged" replaced with
-> "--not-merged", i.e., "our work building on top of origin's, and
-> still need to be finished", would give us a good list to work on.
+> I used "master" as an example of a branch name above. There is no
+> guarantee that a remote even defines a default branch, let alone that
+> there is only one local branch where the its upstream and push
+> destinations match. I don't see how you can avoid checking that the
+> branch pushes to a different ref than its upstream and still be safe.
 
-This is nice, but I think this would require an overhaul of other
-infra as well, maybe better to do as a follow-up?
+Ok, I'll give it a shot!
+
+> I'm going to be off the list from now until the week after next, I'll
+> catch up with this thread when I'm back on line.
+
+Enjoy the time off!
 
 
 Harald
