@@ -1,24 +1,24 @@
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41DF5B1EB
-	for <git@vger.kernel.org>; Sat, 23 May 2026 08:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F061429E0E5
+	for <git@vger.kernel.org>; Sat, 23 May 2026 08:19:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779523311; cv=none; b=Ko/PdZ54F+KXbmUYcP+RJZZdhCp33kWq6fAUWZ6ydKz93ttgSBrU+MvpsC/25aV2VkZ+KZCLp4ixPvWX59kqg3XcAP2j+3ipxKS++SGF4nbmXxxwNVK7c3iN/zzfrACgDenGcSeTegqHv89NE2recJOVFeSNs59oqHHL97Bp8Dc=
+	t=1779524352; cv=none; b=q4t4kcCdT/oM8Bv8GdSB7a3ox99oaNSWgxgi40Mxp5gS+dwWTveNkQXX+jyuqjLIVFlHmFCp2GY1HW4O67apg4t9AdpHydMJJ+mpTCC/nFNt+8AV+pUCvFuFFsAiUZM8udXH5q2jopImibDE1H4IBYSnUDmouyGUWWLqFTGZ2Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779523311; c=relaxed/simple;
-	bh=PurIBlpP/jcmktq38oTQez0RqpUKzZqJmRzllLrUwJA=;
+	s=arc-20240116; t=1779524352; c=relaxed/simple;
+	bh=HSVIdeCSXlw1L9hsUZmrGy/8c3kGa6V1wJ5dUGEewdU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LuKcA1OrtMZXAXL9nH8FEeYI3mCrMawOyoIxU5LqrwmESiiON6G60EpeIT4mcOekGdUUGjty3xcxp0DFopWUre1cqPUjZcvE57eSp0X/7aWItUfFt9Ep2GaIHfk1paWf/iz0+Sg5n+t+N1nGxl8JnyualOXVtR0St7gYHRoJWHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
+	 In-Reply-To:Content-Type; b=PrdSU1Vnn5TaOk5D5739fzpWmUhmTDlOyMuman/cOjh252CMONeyVUXdNdyCt0ZGa9qs1kjD+gkYYD2oVyH+5iarWoj5HMBGqvp18R4Yieom86wRtF6a7ap6nQEPL3uSZ7UDvzYIYEhXzQhI0XKJY31ivlTxB455GUf3WKnEGDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
 Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4gMvjx0nF4zRpKp;
-	Sat, 23 May 2026 10:01:40 +0200 (CEST)
-Message-ID: <c8d1ab1e-e0cb-44e2-afcd-728b7b43774c@kdbg.org>
-Date: Sat, 23 May 2026 10:01:40 +0200
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4gMw5v1MtBzRnlL;
+	Sat, 23 May 2026 10:18:59 +0200 (CEST)
+Message-ID: <b332c7d9-c86b-4d4b-a873-1600d910a237@kdbg.org>
+Date: Sat, 23 May 2026 10:18:59 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,54 +26,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] git-gui: try harder to find worktree from gitdir
-To: Shroom Moo <egg_mushroomcow@foxmail.com>
-Cc: git@vger.kernel.org, Aina Boot <bootaina702@gmail.com>,
- Mark Levedahl <mlevedahl@gmail.com>
-References: <tencent_E13EB585242AD7C263B8B3B732A428465D09@qq.com>
+Subject: Re: [PATCH v2 01/11] git-gui: guard set/unset of GIT_DIR and
+ GIT_WORK_TREE
 Content-Language: en-US
+To: Mark Levedahl <mlevedahl@gmail.com>
+Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
+References: <20260514143322.865587-1-mlevedahl@gmail.com>
+ <20260520202411.108764-1-mlevedahl@gmail.com>
+ <20260520202411.108764-2-mlevedahl@gmail.com>
+ <e5a9a410-bf62-4afd-9560-2dea01fe936b@kdbg.org>
+ <eb748327-6652-4477-82bb-9db9f8388ec0@gmail.com>
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <tencent_E13EB585242AD7C263B8B3B732A428465D09@qq.com>
+In-Reply-To: <eb748327-6652-4477-82bb-9db9f8388ec0@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Am 21.05.26 um 06:55 schrieb Shroom Moo:
-> On 5/21/26 4:24 AM, Mark Levedahl wrote:
->> +	} elseif [file exists {gitdir}] {
->> +		if {[catch {
->> +			set fd_gitdir [open {gitdir} {r}]
->> +			set gitlink_parent [file dirname [read $fd_gitdir]]
->> +			catch {close $fd_gitdir}
->> +			set worktree [git -C $gitlink_parent rev-parse --show-toplevel]
->> +			set parent_gitdir [git -C $worktree rev-parse --absolute-git-dir]
->> +			if {$::_gitdir ne $parent_gitdir} {
->> +				set worktree {}
->> +			}
->> +		}]} {
->> +			catch {close $fd_gitdir}
->> +			set worktree {}
->> +		}
->> +	}
+Am 22.05.26 um 13:54 schrieb Mark Levedahl:
+> The manual page is incomplete: if the repository has set core.worktree=/somehere, that is
+> the root of the worktree and the current directory is always ignored. git rev-parse will
+> report /somewhere as the answer to --show-toplevel regardless of current directory, even
+> if inside the gitdir, and even if GIT_DIR is used.
+> 
+> The user can override with GIT_WORK_TREE, and if so we must keep GIT_WORK_TREE in the
+> environment if it was set. [...]
 
-> Additionally, [file exists {gitdir}] checks for the gitdir file in 
-> the current working directory. Since the function has not yet 
-> switched to $_gitdir when this check runs, it is almost impossible 
-> to find the file. Consequently, this logic never triggers, preventing 
-> linked worktrees from being recognized. 
+Oh, well, these intricacies! Let's scrap my patch and keep yours.
 
-I think you are misunderstanding which use-case this code is addressing.
-The case can be triggered very easily.
-
-First, the code before the part we see above is intended for the special
-case where we start in a .git, where `--show-toplevel` bails out and we
-define the worktree to be the directory containing .git.
-
-However, if we start in .git/worktrees/feature, then the code cited
-above kicks in, because `--show-toplevel` still bails out,
-`--absolute-git-dir` does not end in '.git', but now we have a file
-named 'gitdir' in the current directory. In this case, we define (and
-this is new with this patch) that the worktree is the one where the
-'gitdir' points.
+The other patch that removes cd $_gitworktree from do_gitk should still
+be good, I think.
 
 -- Hannes
 
