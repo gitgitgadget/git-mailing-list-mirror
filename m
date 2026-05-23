@@ -1,69 +1,68 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10662F1FDE
-	for <git@vger.kernel.org>; Sat, 23 May 2026 11:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A24381B1B
+	for <git@vger.kernel.org>; Sat, 23 May 2026 11:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779534467; cv=none; b=A3wBRsQKJISjqExGPwCSaYmmjl2ihmMwa77+pvrpy+ZJVXeeCWO4XMc1CycAiXJZJlM0Ip5hHAH6jhDrMYzVBSnpfqUs4LjrFHYFrL8BsoKS9+XGNAqbx/iDB88wyDYvSIOWrb9Pp687pqNgcazT7mos3li29jjVgt9k5jOcr90=
+	t=1779534468; cv=none; b=YJ0D2siOZBfJIYp/8ZEslHejGtgNkPW3X+nI8zH9n5KFqbPCRj3RTs783jLK90VxdEncRFK00dpG0jPQKeU7Ryv5KcQLDUtVKDqGbrBK+UMgrmEYqmyXCo/vgwi6bV1tPBq6h7Wzf5J0zH6FUwM3l8YPvQSK5mp9j7q5cAiWT9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779534467; c=relaxed/simple;
-	bh=wfHWyTm/kXCqxM1zJHD7pgT0Xic8gb/kU+/IWPf6Zeg=;
+	s=arc-20240116; t=1779534468; c=relaxed/simple;
+	bh=urspriZ0fKCCMiwEsdk8yk2ejx/eE4/LNGH62MgGsg4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JxMvlOA6AKlvqTwf3q6bVEZV2KVCc1GAFhSjIbJNyPb8+EDAs5mFK/l1G16Q68c8XQWDSxe3aY+hXNoiogeyFMoeDLCxJ2IWkisG6qorQH43v940K+I8J/RzYH0Sz0p3vN0dqz7L/3k4xuonNnPQ597S4s/E+E0S28eLo0XRssg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YWquKQjH; arc=none smtp.client-ip=209.85.160.182
+	 MIME-Version:To:Cc; b=Pf8xWotJait2bVSVA1xBR8JjSzSrXWSYvVhUmX+Z40LtTBJ4tZbteBMFoxrIxJ4UOyul/8VaPtJwXTHxHpexeC/wmFHqvCds42bhnO4uRUMOiEKHnA64fb16Fp44xin2L82oEeIc+RAa2tRB6tzPfXLmcTfPgA42ZlTpVnnac3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KbfNAyy+; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YWquKQjH"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-50e5dbd8e0eso94676581cf.1
-        for <git@vger.kernel.org>; Sat, 23 May 2026 04:07:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KbfNAyy+"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8b6ea7716bfso97201436d6.0
+        for <git@vger.kernel.org>; Sat, 23 May 2026 04:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779534465; x=1780139265; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779534466; x=1780139266; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VxfXWm/Q8Ks3q2P8RLta9Faodf5nIwWsZaieBZletOg=;
-        b=YWquKQjHujQvnoGgmFhoPHxxIpordPVSWsVTyAFN3XiQQm4nTxdtRRqdyEDXhw/YOK
-         ascKitDyeu4Z3CCdjMkpD934I4Ng9lRujDze1Z3YOVipINE/2+wCGfLTcqxGebdp7jr2
-         pFEp16ZjePeOt+5am/btl+qk87VlB2YAgx3pfhZs/T9EE/PR+6JCXCLu7XjZw7sV8aa5
-         E3amah9EvhmIQ4CNUcjpkuTi6aJPdzWFNBT+LmdU+GjtRiXD6RjTZu+p35H2cGOVNLeE
-         jxh0s30DR2YXEbQ0yXoP4xPPttF0kSaePnGK3GFRkfU2MGxGPwMaJyC3Kz0r7AmXbwi/
-         8zEw==
+        bh=g/2yMQEGTFy/uT5vZjNUuyAN/lEYNNrDQUHRHlXdw+Y=;
+        b=KbfNAyy+NmKrScElwTuoLVzypYnvx+SFPpneR7zLukcyQnFl3h4OOkCS/NL1h51JqA
+         b6pU3UB4+/Y9v8t9Wx4tiGRBWDjB3AkmdVew/xDhlVJPJzzWDe9IFIIKlttJULafM45d
+         R+gTzgZvilD9PLbXPDHaU1athWw8sKiLrf2piWsxcdBXVvN2cC6BocOLHBXor5nRn0Js
+         tO4EuPSROk/Bm1lhBa8jXOJ4V96kF579ubiZG88ivf3FvDZ1kuuVW1msWdWAHIG/+aTD
+         UNGrqqRF3OfFKP0/CL+UlwCOxvNnB2szhJCI9snXek6faCqUi+Btw5wS3RQTwynwcYU5
+         AaKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779534465; x=1780139265;
+        d=1e100.net; s=20251104; t=1779534466; x=1780139266;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=VxfXWm/Q8Ks3q2P8RLta9Faodf5nIwWsZaieBZletOg=;
-        b=PPGK5Awlli/kToNRjjHWI/nN6N37Q3pbuKXQ6BSrDhHMsZs4x2WFQDn+h9yD7H0z4C
-         5VsaEr8qdhqzA5qCP4GLaE13B8wQCy7+RlXBpfvGe6UKJwIPJulWIfRfzWvRuGwNpKPm
-         YaE7Vq6PCZM8Be37W25Vzz913xKjqw8ADD0LCBtY6BqHy++iyP3GA5Bcez/Ym59SslYy
-         +/bRb+vqW/fpxcEMTtNJG8ethSmiZs363LvNghIkw3dd5zlR+t9MgT41YXVP6246ec3M
-         7HTI4UDHmofzdjReTpGl0jsiVBIQdITADWE+N3RXZj4/rD4uN1jxE25iCOAbD9l1fAnu
-         fgCQ==
-X-Gm-Message-State: AOJu0YwtsYIip+BaViBQwl8+zQpQhaZ5KtkSPaOB17sZd9dLe58PXqIr
-	Hu3h2CDTgtasYN+InefppipJ1UELG5a/74WrQJ3/01ggX8vfIFFt6dMaHAa7TxSs
-X-Gm-Gg: Acq92OFqXNkqOwNE1AaS228Ba893tCZO7Zxlx8flERCL+bGqsf9iBm1EE9AadHjj71d
-	RUleqwEethYMrjslkRlcPGFTTV7BTDZS29OZwnBrsxv2K3HtGjX4s42r+gqwmRoesmJmiwLKyM2
-	U118czUPOfVzyyimZaP8QyrkZNPtLRDRdfrma+cCjAB/nxgezueesEpq0XSZSEtG1ItSJwfBogu
-	OhiHkcLT3SDd7SvPycHR2Il6en9p9WxhbST7mARhwaKeEWb86sxabvdUK7wjrzXe3b0hQSyUdkW
-	deuoBR89qK9fhOowiEjtNBk2d+MsxjAnzZ1EXC59/4mvK41IDAFRFknatSd0TFBVMrOMfr4DHjl
-	uodwq3XfeKylRhb4gpQyY88/VEYAps7ujUySZwRCihhTzE3ZFKP1Xf9CBOhB1ecfxUEtXgLZX+U
-	wkxbGxh+POLrxMwGyS8IkHokZPVw==
-X-Received: by 2002:a05:622a:1650:b0:516:e862:7610 with SMTP id d75a77b69052e-516e8627d14mr4605461cf.40.1779534464913;
-        Sat, 23 May 2026 04:07:44 -0700 (PDT)
+        bh=g/2yMQEGTFy/uT5vZjNUuyAN/lEYNNrDQUHRHlXdw+Y=;
+        b=qIjlNJUv0Us1eUBMRM7aEBPPBylfu3WHxZV8oOpVWrVn9cf4WFH5kl7mDgdK/8DpV0
+         SzsQuAyPBCxGD2jyXnKCsyGUupF+pHY0sYd3GyKEcTnlMwykZ7N7m2KiMCdWBi/Z4hrp
+         e+og7NOOk3YWdUiorTApar/WzSRWDchJP86DeqWCheXyP+5EkhotH2IVrr3ZCFMMxSs0
+         djYp2YvMrF6UhhE1cyl2BzJ3h4hRdBDffpGmRiohLR13bJ02ql0CYK5uZfttJDS5GbNn
+         N8sjrunS5e5E+6r710hzdc4XHj1MDK3WfRXd6lJQ3WZKAG61gsQ9JdoOMvYGwE/WtEre
+         cBpg==
+X-Gm-Message-State: AOJu0Yx6OoXdlBRsehSJwG0ESm46Q8dM1VRTO4HamrEq+cgXun3nvWFn
+	t4cQ9ntg4+UlVWLtYDaywvJ+50ybNBP8O4Klq0mC7gef5whZ8yDZjrmpYkqK1Knf
+X-Gm-Gg: Acq92OGFumTi9aJC9A168VcvHrLPbMY3m1/1EdEZ3j7BtXQt3OzwLt5RelzbBdyiD5i
+	ti+ZFSfLsiJ8E6BvPKOOKJ9I3oeycd22ZQiCXpU6amu/zRGWTpFCM/eor6KfVdiWfCx6f4rqAt4
+	n8Mi9RiiNXuX1v4eQBIvDyQwLoA+YV3kS4jqj4wNBAbhv4vcIw+u9Lv4syE67D9ehSzYQCWLSPC
+	QtHauYcLUWhZiRw/vmco6ipnEgFcyl152h11+n6R1iD0y3WMyNtLTWwsWpNPvkilzRjfGh8HunJ
+	JEuyzh1sCK2ywL1VBMh2LPsUQ4XRDRSivKOEKsqAc8vPIBDJ6Zus1fA0NqcwfgZWnbBLdL7BJ+f
+	cR1BZHvIopqx7XX4gd9Mil6WiB2l2V85goSqm5DOdYss3lXE1uKyxjB18YrYPSWe+Ka26EmZB8l
+	oakAskieahgdUhDYMwraqajqPw5weoCak6PvXh
+X-Received: by 2002:a05:6214:d86:b0:8ca:1cee:7c3b with SMTP id 6a1803df08f44-8cc7b6759f5mr123418726d6.29.1779534465912;
+        Sat, 23 May 2026 04:07:45 -0700 (PDT)
 Received: from [127.0.0.1] ([4.236.159.145])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-516d8b247c4sm37064331cf.7.2026.05.23.04.07.44
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80df8b6csm45493736d6.20.2026.05.23.04.07.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2026 04:07:44 -0700 (PDT)
-Message-Id: <4da209249227f6a824cc34c8697d1ed79dfa18e0.1779534462.git.gitgitgadget@gmail.com>
+        Sat, 23 May 2026 04:07:45 -0700 (PDT)
+Message-Id: <87c80205cc3c7be131cafe37b786311a35b4e044.1779534462.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2256.git.git.1779534462.gitgitgadget@gmail.com>
 References: <pull.2256.git.git.1779534462.gitgitgadget@gmail.com>
 From: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 May 2026 11:07:41 +0000
-Subject: [PATCH 1/2] t2000: consolidate second scenario into a single test
- block
+Date: Sat, 23 May 2026 11:07:42 +0000
+Subject: [PATCH 2/2] t2000: cleanup unused debug code and variables
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,93 +83,47 @@ Cc: Christian Couder <christian.couder@gmail.com>,
 
 From: Zakariyah Ali <zakariyahali100@gmail.com>
 
-Now that the test script has been modernised, consolidate the eight
-separate test_expect_success blocks that together form the second
-test scenario (setup, tree writes, checkout, symlink creation, and
-final state check) into one self-contained block.
+Remove the show_files function which is no longer used after removing
+test_debug calls, and remove an unused tree3 variable assignment in
+the second test scenario.
 
-This makes it easier to read: data set-up, the operations being
-tested, and the expected outcome are now all in one place.
+These cleanups address feedback from Junio C Hamano regarding the
+modernization of this test script.
 
-Helped-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
 ---
- t/t2000-conflict-when-checking-files-out.sh | 55 ++++-----------------
- 1 file changed, 9 insertions(+), 46 deletions(-)
+ t/t2000-conflict-when-checking-files-out.sh | 12 ------------
+ 1 file changed, 12 deletions(-)
 
 diff --git a/t/t2000-conflict-when-checking-files-out.sh b/t/t2000-conflict-when-checking-files-out.sh
-index af199d8191..43ec901f9e 100755
+index 43ec901f9e..7b61370549 100755
 --- a/t/t2000-conflict-when-checking-files-out.sh
 +++ b/t/t2000-conflict-when-checking-files-out.sh
-@@ -83,59 +83,22 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
- # path path3 is occupied by a non-directory.  With "-f" it should remove
- # the symlink path3 and create directory path3 and file path3/file1.
+@@ -23,17 +23,6 @@ test_description='git conflicts when checking files out test.'
  
--test_expect_success 'prepare path2/file0 and index' '
-+test_expect_success 'checkout-index -f resolves symlink conflict on leading path' '
- 	mkdir path2 &&
- 	date >path2/file0 &&
--	git update-index --add path2/file0
--'
--
--test_expect_success 'write tree with path2/file0' '
--	tree1=$(git write-tree)
--'
--
--test_debug 'show_files $tree1'
--
--test_expect_success 'prepare path3/file1 and index' '
-+	git update-index --add path2/file0 &&
-+	tree1=$(git write-tree) &&
- 	mkdir path3 &&
- 	date >path3/file1 &&
--	git update-index --add path3/file1
--'
--
--test_expect_success 'write tree with path3/file1' '
--	tree2=$(git write-tree)
--'
--
--test_debug 'show_files $tree2'
--
--test_expect_success 'read previously written tree and checkout.' '
-+	git update-index --add path3/file1 &&
-+	tree2=$(git write-tree) &&
- 	rm -fr path3 &&
+ . ./test-lib.sh
+ 
+-show_files() {
+-	# show filesystem files, just [-dl] for type and name
+-	find path? -ls |
+-	sed -e 's/^[0-9]* * [0-9]* * \([-bcdl]\)[^ ]* *[0-9]* *[^ ]* *[^ ]* *[0-9]* [A-Z][a-z][a-z] [0-9][0-9] [^ ]* /fs: \1 /'
+-	# what's in the cache, just mode and name
+-	git ls-files --stage |
+-	sed -e 's/^\([0-9]*\) [0-9a-f]* [0-3] /ca: \1 /'
+-	# what's in the tree, just mode and name.
+-	git ls-tree -r "$1" |
+-	sed -e 's/^\([0-9]*\)	[^ ]*	[0-9a-f]*	/tr: \1 /'
+-}
+ 
+ test_expect_success 'prepare files path0 and path1/file1' '
+ 	date >path0 &&
+@@ -96,7 +85,6 @@ test_expect_success 'checkout-index -f resolves symlink conflict on leading path
  	git read-tree -m $tree1 &&
--	git checkout-index -f -a
--'
--
--test_debug 'show_files $tree1'
--
--test_expect_success 'add a symlink' '
--	test_ln_s_add path2 path3
--'
--
--test_expect_success 'write tree with symlink path3' '
--	tree3=$(git write-tree)
--'
--
--test_debug 'show_files $tree3'
--
--# Morten says "Got that?" here.
--# Test begins.
--
--test_expect_success 'read previously written tree and checkout.' '
-+	git checkout-index -f -a &&
-+	test_ln_s_add path2 path3 &&
-+	tree3=$(git write-tree) &&
+ 	git checkout-index -f -a &&
+ 	test_ln_s_add path2 path3 &&
+-	tree3=$(git write-tree) &&
  	git read-tree $tree2 &&
--	git checkout-index -f -a
--'
--
--test_debug 'show_files $tree2'
--
--test_expect_success 'checking out conflicting path with -f' '
-+	git checkout-index -f -a &&
+ 	git checkout-index -f -a &&
  	test_path_is_dir_not_symlink path2 &&
- 	test_path_is_dir_not_symlink path3 &&
- 	test_path_is_file_not_symlink path2/file0 &&
 -- 
 gitgitgadget
-
