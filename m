@@ -1,87 +1,78 @@
-Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFEA38A73F
-	for <git@vger.kernel.org>; Sat, 23 May 2026 11:47:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87288388868
+	for <git@vger.kernel.org>; Sat, 23 May 2026 11:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779536847; cv=none; b=ZSSuTXpoYzaUNkSD/YtWTwjN+IBNym2v3ax7cw1ciohVcYgo6Jpo59Kwn9hEmPJfbIZo3S5DAhNCjg6NxZm1CK5Bz3YecAKdvFwthL09VQ5E0tsY2OWGnnyRHkxwj7C42SHBnKWk5KQa9olAusiPyhZXYb9ji0+oOWvFHr0a8bI=
+	t=1779536971; cv=none; b=XM60j2qw2ZXNRXgXMf1O1Ghy/VXo6lKrXjrIinZ0TG+2Tbhy8ODQuhBRIdl1scEMwY9iQzSwfZhSLLOJAGI1bw4Nphpmf5WB3OKmX1Jw1lF0NR1DwKe1kBR3k0Vlausfxt/K7tEw9PmEFZJpEQ2fFvC60A77YaWVDGM5h2g12/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779536847; c=relaxed/simple;
-	bh=QXfD53VC56BrN3zrSh0qeVBL2JxKdVu6Rj9gL8jlcOg=;
+	s=arc-20240116; t=1779536971; c=relaxed/simple;
+	bh=05DOtS6A5ynCCDVhehvvqe7X8b+Aih1ezlilMtRn77E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LbjGEdWjNZaEDhTY+lHtsynLHRvbph3M2YrIE43lwIkDvVbK7VZLyJS7U0XCPcvuMOXSPAlQ4ZZ7uUYMlVLCZ353sCAgLBBdXCSJKQcOh2JImFCtRMC3K/6Paa9pjJ8bU0z3zPmsoZsam0MzpHKxu5qodudhyw3ubCbogypRS1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EuAF485S; arc=none smtp.client-ip=209.85.214.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=OdDEPvurgYvvf/+/YFgWcoN/PfEWpzgxnaJDXvSi93F3Mg0HkjhvJfdRQrg2DWyOTcaLda62nvWKDeFS2cwKqIfFgOVk5YGurGpEzstLX74Rp/SSjyXEw7noIFNV3HLoDp7tZnhwYFvDZpWuyGWe1hdgX0sES/STwUsdFETuI1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=d76/q8uB; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EuAF485S"
-Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-2b9fcf7c91bso92335145ad.0
-        for <git@vger.kernel.org>; Sat, 23 May 2026 04:47:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779536845; x=1780141645; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qgNUQQX8csrL17wlLz4+4lXQzAH5tzKq8vFy0uxzuRc=;
-        b=EuAF485S5G0J5kgJS9gix7rtD33kvn6IPeuwrwoqY1yd1DYLtD0bF3n5R49d9LEcFe
-         rNfpvcUaWr3/ZGue+FJVjZVClNajetzCor+7yVGYEUQsQ/wWyZIF3mQHdhE+rrIoplSm
-         sVwZjX9q45jz/du6ZtQ9B3L1rIOWKO8H6xt69i+ogmiW3vlUCvywdAHlE9e5y1tC5Ted
-         ejcxHZCUpXGkScfpyeZXR4HVkaPGAXKdj8D/I+fV6LMa8VifJNG6p0N81fORyx+oxa77
-         taJhxqRw6w/dsWTok4qs2/Z6kpHeMYtUKhndrcOn0phNIDIxqfhPvfKdFV383iQZkqbG
-         lF5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779536845; x=1780141645;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qgNUQQX8csrL17wlLz4+4lXQzAH5tzKq8vFy0uxzuRc=;
-        b=ppofRJ/aXlry9hFurtx4e+/WkQKoYJm3GDIAweECHrNIzZvT1PWWZmTR1ctNDr2FXE
-         lgFHxO89u/N6tUKVTJ5lDorql3k7aAkn6QcQ+orEUKe3qJhtu4vTa59zjihfGtWHLywX
-         cbLpVBE/hDf7Ls2r4qAGrLSYRpkj0HT3UelcninHuVUA4JQAtU750buwk7Alx1jZtThA
-         GfX9vFgiiBz1vKmZMrK8GTEp8vz8OfTrKJofr8haiVPjKa8W+gbUs3Hz9jma8zt103er
-         r8oa5Wy4TEhVU55oPkW1koEtEWaRBICwIIprzgdUUYuNHa9sjG2/f258OhOSnK0pnrxq
-         wPGg==
-X-Forwarded-Encrypted: i=1; AFNElJ+LDpKXpjMK/uQWEcuHWGnODfTV0XUoBbKeX9NXLUnUGZA0KXdrhxDvJkzsuNRe7HkJxe0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2rD5qjKmAiZmIYqhdHzPyJEEPHvw3B1uGhMAApxlrWc1nL29c
-	SmdhGKmP2nxlo1ZUEtHJ6gAl6aw3dcwmJlRtpz0irSjUndFbEB9KOk3/
-X-Gm-Gg: Acq92OGQQyzE2UWCbQ57LhD8cTdBgYwTxkO6yrdoJz84ftdldRXEwW6crE15y4HccK0
-	yoDVhdhgRBtvZEfPLKaj5JPPm5gIWBE93Qa3XGWjqarK7YxE9siX7wgcaE2K5pwaFG8fGLuMVUv
-	41Uoz8SktdmdQsgRWhZ0UdozO16ody6EkpyiY5Sx9HSJgE4moKdVEibYrIFMD4bP1K3mocoIO50
-	17GRCL8fdYY3CEPsxaDlUUdOXuCczMFtU6MgRw1BH8na7o1GvuIj5KJK1jCiwOzvoFoVgWVimgo
-	Sedn9DkjakROMmYUrUHI2lZolIN600TJoAtgpExGrlpWot5ORwJqjarqjryjudETKo13FPrBMIV
-	hlUr6mo0hPsQnxncAi4JiFI2NSwNmkk+Xc7/ejcvfjbD+gievkJa+gQoFDZDSwk1J9TNp5R8i1d
-	yt8mbEsKv+xZKbQc67+RnpjvVWkQ7FttDUL1koiKGM
-X-Received: by 2002:a17:902:f650:b0:2bd:8db9:cc0c with SMTP id d9443c01a7336-2beb038e50cmr78049305ad.6.1779536844990;
-        Sat, 23 May 2026 04:47:24 -0700 (PDT)
-Received: from DESKTOP-IB4GOVS ([121.224.209.33])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb5695f54sm45102075ad.10.2026.05.23.04.47.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2026 04:47:24 -0700 (PDT)
-From: Aina Boot <bootaina702@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>,
-	Mark Levedahl <mlevedahl@gmail.com>
-Cc: Shroom Moo <egg_mushroomcow@foxmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 01/11] git-gui: guard set/unset of GIT_DIR and GIT_WORK_TREE
-Date: Sat, 23 May 2026 12:46:26 +0100
-Message-ID: <20260523114629.1298-1-bootaina702@gmail.com>
-X-Mailer: git-send-email 2.53.0.windows.3
-In-Reply-To: <b332c7d9-c86b-4d4b-a873-1600d910a237@kdbg.org>
-References: 
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="d76/q8uB"
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id DEF824CD7C
+	for <git@vger.kernel.org>; Sat, 23 May 2026 13:41:20 +0200 (CEST)
+Received: from piment-oiseau.localnet (unknown [82.64.51.39])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id BB9FC19F5A7;
+	Sat, 23 May 2026 13:41:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1779536473;
+	bh=05DOtS6A5ynCCDVhehvvqe7X8b+Aih1ezlilMtRn77E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=d76/q8uBSElii5m4x2CWy1KOF7r7yi/YKWFcmm3TC/qOq3Vh43+4XToKUVvcmRcwx
+	 Asp45E+Qv7KexRJ/V6fo72RfSPDMr/mmD3ToVeM2xwXzEJhkMVD12tdFozkI5YvVLq
+	 YOAPWs9riXQjHhxxw3gVy7H5nFzK2PiDoMU/SHrbviFBtxHXfJ59BKTkBij8dgKrZN
+	 O/Aa5zYQEtU/iTDfo9lhTXU702JaaUVSdUg6Mx5LmBIMRxsPKohqpH/JpNRXHOpKZ5
+	 Zs10hGiSgtJJUS0bWi78j4idk1PCAI/WDbiNXPjAxRt7edv17Ciq1gF26UTdJje73d
+	 a1sfvsp0U5WkQ==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, kristofferhaugsbakk@fastmail.com
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, adrian.ratiu@collabora.com
+Subject: Re: [PATCH 0/4] doc: hook: small improvements
+Date: Sat, 23 May 2026 12:24:13 +0200
+Message-ID: <2832179.mvXUDI8C0e@piment-oiseau>
+In-Reply-To: <CV_doc_hook.6f0@msgid.xyz>
+References: <CV_doc_hook.6f0@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On 5/23/26 8:19 AM, Johannes Sixt wrote:
-> The other patch that removes cd $_gitworktree from do_gitk should still
-> be good, I think.
+On Thursday, 21 May 2026 18:25:54 CEST kristofferhaugsbakk@fastmail.com wro=
+te:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>=20
+> Topic name: kh/doc-hook
+>=20
+> Topic summary: Small improvements to git-hook(1) and the associated confi=
+g.
+>=20
+> [1/4] doc: hook: remove stray backtick
+> [2/4] doc: hook: consistently capitalize Git
+> [3/4] doc: config: include existing git-hook(1) section
+> [4/4] doc: hook: don=E2=80=99t self-link via config include
+>=20
+>  Documentation/config.adoc      |  2 ++
+>  Documentation/config/hook.adoc | 19 +++++++++++++------
+>  Documentation/git-hook.adoc    | 11 ++++++-----
+>  3 files changed, 21 insertions(+), 11 deletions(-)
+>=20
+>=20
+> base-commit: aec3f587505a472db67e9462d0702e7d463a449d
 
-Agree. It either succeededly set the directory or work without a 
-worktree, cd is practically unnecessary. 
+This series looks good to me.
 
-Aina
+Thanks
+
+
+
