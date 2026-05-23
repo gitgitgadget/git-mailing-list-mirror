@@ -1,371 +1,287 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB476390228
-	for <git@vger.kernel.org>; Fri, 22 May 2026 23:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779491551; cv=none; b=rQhW8OV+iSz4U0pJE5stgsPmnlZd+fkj7C++vmkZhueRCegkkcUw2RUFaE71b+C2tpv389KKf6UKnAPqp59kFPOoOtHgS/NXOEuFfgkVBha9vYi7L9iZnsPyHPViuqShtkLuBtjsAX5DEpD0OLnL36DMAPYeTvo8cehCP2D36ks=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779491551; c=relaxed/simple;
-	bh=NU1u3wpWbtbXeWvfmROgPVnOUfx+1/B4jlqlXb4lfPA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=j9fY/PH4vgpq8TrUZo2ckF30SpKDQRPS13EZ3es2cbiJa9Jj/8G3dnNsHTHYtWeRwDkvFAFnKEXTBVc2QbsuJ6y/41jqU7fLLyThGMa2CcKVXd9pdX++DjvMbAcQUU9xXLq8UOaSH5XegZaCnFxWMcgMGUghqm9KLLhZ+bc0jjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hAZyUF4Z; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E66D3438B5
+	for <git@vger.kernel.org>; Sat, 23 May 2026 06:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779516306; cv=pass; b=kgWxBE7TcVPonqYr32p/sYkdjvQDKVoz8t4Dp7t+WybJZPTHzX5Z7/BJs0kMmQCPZmRqcndomQuWAEnO10uJaNFD2e/v8P0fC8amppn47yXaxVrlyukko8mQPSmHUOg8qoyqgMQWlW4CCigY5mmAX4wOKFrQCWQiiATgGH7LADQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779516306; c=relaxed/simple;
+	bh=9IB1Ef7Vy3QK2qVM24zY0RLTzIvPlugXk+kS/Lw6kc0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=kdMkgW8zIEiKd59TwvDJC7CMhxUJn7tBlweXuhXbwS+4zoXuiguZNp/VfS8MBli7KWcEa5NVbJWZmKLcZBgzqMUxWrhjap1uxMgoUC0IU+B7O7iN74vq6MDVpaUYzbxMuOG6aNQhmQZnrrcXnyI5FkxQwkyKz/9Ouu8v57GOcdI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=Rv3+v7yw; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hAZyUF4Z"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-512f750d4b2so87358921cf.1
-        for <git@vger.kernel.org>; Fri, 22 May 2026 16:12:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779491547; x=1780096347; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/u8I5YhqGUSZ3K0Aab5x1zyY+8ql9EUt69VTpOJu4PU=;
-        b=hAZyUF4Z2t+bPp6AmBQuusSBMNbixaPTAa0hV9nBydmSga1x4DgLkQ/h7FCjBcdhrW
-         f6CcNqxAUkPz+dytKgJgEO8uiq1pHBbThMLLq4FN8IurDWtRMPFOObMNE8tEOgRiL+7N
-         Q1j1ugK4xhXHh7keL/0YRoRYaVxojeA2l5nF4WZU9EKUyPAkPV6bnUQDjoMwarKolQDS
-         mAwcqsLTONXketN5Zxq4ISuzQ2m+M25nf6sIb2LqcgxQi/CzJFQhesAb0/oWbuGeit1A
-         AIHfqxD4crQu74X/HzZ18Na1h26C0vMLrt9lk5CKDurOoqcHkRLr15FGV2K80x1UUDMz
-         E1hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779491547; x=1780096347;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/u8I5YhqGUSZ3K0Aab5x1zyY+8ql9EUt69VTpOJu4PU=;
-        b=PpPI+NvQJpMlSnT+u1kmE5Qztso7JjKPZcnO3znlo0/TMRdRcyDfI9IShMfeToRGRr
-         Ilmo1cNgckIwJjRY+PS0Qi6h3Wc23dWc9zeXi6bfgeu3BOVDmBuT/VENxP32AgC1gVGw
-         rjoOker2vyVj/zZ4ntrS2Ab4BP4MvM+9O6HUFc+zyIeKWAdKLbBoNd06uOqgj3FH3yY9
-         EeLNp2Tdf7LFnyzdb4azrx1J53A+4iUWUIwgmVk66l3UP5Gnh8LoiD8DIlszPCumuriX
-         0yLCb9yLd3jWaI7Ypwltb1jyg2PPIQ+baNA+5oa/iHQ8xpKYgiH2V2SSivbYqihGL98B
-         8+JQ==
-X-Gm-Message-State: AOJu0YxjJzdmgeSLPUGLiqKI7JmnhnkbFFF9+POT/R3bz3zq2JiOr6Bo
-	BAP9kANW30AYiMP5OhLpUMXF74Du0z+rU2PAWUzh2YGAoTsmPJknVS/9AZ2BBQ==
-X-Gm-Gg: Acq92OH0XBOGdIvr2Ue63GuiDey4b5jCN0dvb3W6dhWJGvmr6rJ5ipomCMrDHTrLVyG
-	GCqwnULay1MWZlBwY2xfEPvqsauxppoX3ktierwXaSJkUifax+Xvf+aoS1m0F0u8hkSzsdldCDt
-	yF3r6ol/9okqiLQKQKA58dFEQ6cRIzQBsFNA4ispY7QM+WSy2BIYxaplCAEB/8Tblh6e1JrB7aN
-	AtOG/c13nNr/3WRQ0x3ZCSV3KZyWn+wJM34OsXy0B24AfSbjpwT+SKQsFaHpF1NcukR2nPyEhVm
-	Aj6VEwxabih//V8BRKiVoN3ctRpBMyo+SFFS2LqIYg2s1/QkdaQlz/oo+2li8yC4Tv0W20NHO0K
-	1Hyk6FxbppgEWNO/BWRTg+KSMNXrjNTVpjqY7TlJJw7sRRMClWd+HHY2qzTK0hWAwm2i5PYK1Mp
-	FokeZBkSr/jxH4jYud6Z8GMha/EBE=
-X-Received: by 2002:a05:622a:90:b0:516:e236:1d3e with SMTP id d75a77b69052e-516e236221dmr7199081cf.6.1779491547564;
-        Fri, 22 May 2026 16:12:27 -0700 (PDT)
-Received: from [127.0.0.1] ([64.236.160.200])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-516d8cb9650sm26281441cf.22.2026.05.22.16.12.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 May 2026 16:12:27 -0700 (PDT)
-Message-Id: <pull.2306.v2.git.git.1779491545531.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2306.git.git.1779194605735.gitgitgadget@gmail.com>
-References: <pull.2306.git.git.1779194605735.gitgitgadget@gmail.com>
-From: "Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 22 May 2026 23:12:25 +0000
-Subject: [PATCH v2] stash: reuse cached index entries in --patch temporary
- index
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="Rv3+v7yw"
+ARC-Seal: i=1; a=rsa-sha256; t=1779516298; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Vs2s01cEcW2LXlZ2IASalmGxRDdU9TyQebJCOyWJAeavfjkKyRA1xJYjBfSMsguHjYPptxlA7e5uiwG2yJjkQkftQ04jWbLNI43QQnjDoyBlabSj9tVyZ1E/EAV5nqJLt40GQiGQ9PAgA5oFir5yCIz9VR4jZwYiPqTN/NlGZpI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1779516298; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=BC30cNhpqeXTJWRwNXrF3Oh5eUJl/+gjjL+t8xowaFw=; 
+	b=czcwBArxKfRdm6t93MYSeTH8uGqKvJLUTp9iZ+6xj2wC1tq5o2KzICDrrq1Rdb50x+5wcVzUUKJ7/Pu/eQyzbjuFqKGvM9ufVhsS1ZUtr4FwVjwjUPqdpDn6xUZIg8dllNd2GJdS/UVjtlvf9gyx44AxbFfbbhZg2TTPcm45EpE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
+	dmarc=pass header.from=<vmiklos@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779516297;
+	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=BC30cNhpqeXTJWRwNXrF3Oh5eUJl/+gjjL+t8xowaFw=;
+	b=Rv3+v7ywW062CtfBhU2xa+tv7WhrCQyZQ2Y/1+KaMJP7eGzC1PpGNTWln4cmYp7K
+	WoxMmHCKk1FY/S/OABHrCqyMVr+sW5y+7FiJSazKokev3Lx0Q440PvSslSXqHye8JGX
+	ZwMdV3wevIU0fXK1Ku/YX+cd89woFom6+ssGf8os=
+Received: by mx.zohomail.com with SMTPS id 1779516295640775.4625328719308;
+	Fri, 22 May 2026 23:04:55 -0700 (PDT)
+Date: Sat, 23 May 2026 08:04:50 +0200
+From: Miklos Vajna <vmiklos@collabora.com>
+To: Jeff King <peff@peff.net>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: [PATCH] log: improve --follow following renames in merge commits
+Message-ID: <ahFDgq4TAcs29zCA@collabora.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Thomas Gummerer <t.gummerer@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Victoria Dye <vdye@github.com>,
-    Adam Johnson <me@adamj.eu>,
-    Adam Johnson <me@adamj.eu>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260522054312.GD861761@coredump.intra.peff.net>
+X-ZohoMailClient: External
 
-From: Adam Johnson <me@adamj.eu>
+Have a repo with a subtree merge, do a 'git log --follow prefix/test.c',
+the output only contains history in the outer repo, not commits that
+were merged via a subtree merge.
 
-`git stash -p` prepares the interactive selection by creating a
-temporary index at HEAD, switching `GIT_INDEX_FILE` to it, and then
-running the `add -p` machinery.
+There is an inherent limitation of the current 'git log --follow'
+design, since it's limited to a single filename, and once 'git log' sees
+a rename, it only tracks the new path, which only works with mostly
+linear history.  Still, 'git blame prefix/test.c' does find the original
+commits, so it's fair to expect 'git log --follow' can do the same.
 
-That temporary index was created by running `git read-tree HEAD`.  The
-resulting index had no useful cached stat data or fsmonitor-valid bits
-from the real index.  When `run_add_p()` refreshed that temporary index
-before showing the first prompt, it could end up lstat(2)-ing every
-tracked file, even in a repository where `git diff` and `git restore -p`
-can use fsmonitor to avoid that work.
+Fix the problem by improving when to update the followed path in
+log_tree_diff(). If the path is untouched versus the merge result in all
+parents but one, then choose the parent where it was changed, including
+any --follow processing.
 
-Create the temporary index in-process instead.  Use `unpack_trees()` to
-reset the real index contents to HEAD while writing the result to the
-temporary index path.  For paths whose index entries already match HEAD,
-`oneway_merge()` reuses the existing cache entries, preserving their
-cached stat data and `CE_FSMONITOR_VALID` state.
+This is almost the same as requiring that all but one parents are
+TREESAME, except we don't consider the addition of a file as
+"interesting". With this, the pre-merge history of subtree merge is
+visible in git log, but the behavior is unchanged for other cases (e.g.
+when a file was previously named differently on multiple parents).
 
-This makes the refresh performed by `run_add_p()` behave like the one
-used by `git restore -p`: unchanged paths can be skipped via fsmonitor
-instead of being scanned again.
-
-In a 206k file repository with `core.fsmonitor` enabled and a one-line
-change in one file, time to first prompt dropped from 34.774 seconds to
-0.659 seconds. The new perf test file demonstrates similar improvements,
-with maen times for without- and with-fsmonitor cases dropping from 6.90
-and 6.83 seconds to 0.55 and 0.28 seconds, respectively.
-
-Signed-off-by: Adam Johnson <me@adamj.eu>
+Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
 ---
-    stash: reuse cached index entries in --patch temporary index
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2306%2Fadamchainz%2Faj%2Foptimize-stash-patch-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2306/adamchainz/aj/optimize-stash-patch-v2
-Pull-Request: https://github.com/git/git/pull/2306
+Hi Jeff,
 
-Range-diff vs v1:
+On Fri, May 22, 2026 at 01:43:12AM -0400, Jeff King <peff@peff.net> wrote:
+> I think we can probably all agree that both before and after your patch,
+> --follow is never going to do the _right_ thing, which is to follow
+> paths independently down both sides of history.
 
- 1:  b228160cc4 ! 1:  8785572c4d stash: reuse cached index entries in --patch temporary index
-     @@ Commit message
-      
-          In a 206k file repository with `core.fsmonitor` enabled and a one-line
-          change in one file, time to first prompt dropped from 34.774 seconds to
-     -    0.659 seconds.
-     +    0.659 seconds. The new perf test file demonstrates similar improvements,
-     +    with maen times for without- and with-fsmonitor cases dropping from 6.90
-     +    and 6.83 seconds to 0.55 and 0.28 seconds, respectively.
-      
-          Signed-off-by: Adam Johnson <me@adamj.eu>
-      
-     @@ builtin/stash.c: static int reset_tree(struct object_id *i_tree, int update, int
-      +	struct lock_file lock_file = LOCK_INIT;
-      +
-      +	repo_read_index_preload(the_repository, NULL, 0);
-     -+	if (refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL, NULL))
-     -+		return -1;
-     ++	refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL, NULL);
-      +
-      +	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
-      +
-     @@ builtin/stash.c: static int stash_patch(struct stash_info *info, const struct pa
-       		goto done;
-       	}
-      
-     - ## t/t3904-stash-patch.sh ##
-     -@@ t/t3904-stash-patch.sh: test_expect_success 'none of this moved HEAD' '
-     - 	verify_saved_head
-     - '
-     - 
-     -+test_expect_success 'stash -p with unmodified tracked files present' '
-     -+	git reset --hard &&
-     -+	echo line1 >alpha &&
-     -+	echo line1 >beta &&
-     -+	git add alpha beta &&
-     -+	git commit -m "add alpha and beta" &&
-     -+	echo line2 >>alpha &&
-     -+	echo y | git stash -p &&
-     -+	echo line1 >expect &&
-     -+	test_cmp expect alpha &&
-     -+	test_cmp expect beta &&
-     -+	git stash pop &&
-     -+	printf "line1\nline2\n" >expect &&
-     -+	test_cmp expect alpha &&
-     -+	echo line1 >expect &&
-     -+	test_cmp expect beta
-     + ## t/perf/p3904-stash-patch.sh (new) ##
-     +@@
-     ++#!/bin/sh
-     ++
-     ++test_description="Performance tests for git stash -p"
-     ++
-     ++. ./perf-lib.sh
-     ++
-     ++test_perf_fresh_repo
-     ++
-     ++test_expect_success "setup" '
-     ++	mkdir files &&
-     ++	test_seq 1 100000 | while read i; do
-     ++		echo "content $i" >files/$i.txt || return 1
-     ++	done &&
-     ++	git add files/ &&
-     ++	git commit -q -m "add tracked files" &&
-     ++	echo modified >files/1.txt
-      +'
-      +
-     - test_expect_success 'stash -p with split hunk' '
-     - 	git reset --hard &&
-     - 	cat >test <<-\EOF &&
-     ++test_perf "stash -p, no fsmonitor" \
-     ++	--setup 'echo modified >files/1.txt' '
-     ++	printf "q\n" | git stash -p >/dev/null 2>&1 || true
-     ++'
-     ++
-     ++if test_have_prereq FSMONITOR_DAEMON
-     ++then
-     ++	test_expect_success "enable builtin fsmonitor" '
-     ++		git config core.fsmonitor true &&
-     ++		git fsmonitor--daemon start &&
-     ++		git update-index --fsmonitor &&
-     ++		git status >/dev/null 2>&1
-     ++	'
-     ++
-     ++	test_perf "stash -p, builtin fsmonitor" \
-     ++		--setup 'echo modified >files/1.txt && git status >/dev/null 2>&1' '
-     ++		printf "q\n" | git stash -p >/dev/null 2>&1 || true
-     ++	'
-     ++
-     ++	test_expect_success "stop builtin fsmonitor" '
-     ++		git fsmonitor--daemon stop
-     ++	'
-     ++fi
-     ++
-     ++test_done
+Sure.
 
+> I am OK conceptually with making the current broken behavior slightly
+> more useful if it is easy to do. But I am not sure if we are making
+> things more useful here or not. If we see a merge where the file "bar"
+> was previous "foo" on one side and "bar" on the other, our broken follow
+> is going to either pick "foo" or "bar" to continue with as we traverse.
+> But which one is right? Whichever name we choose, we are potentially
+> omitting results from the other side.
 
- builtin/stash.c             | 70 +++++++++++++++++++++++++++++++++----
- t/perf/p3904-stash-patch.sh | 43 +++++++++++++++++++++++
- 2 files changed, 107 insertions(+), 6 deletions(-)
- create mode 100755 t/perf/p3904-stash-patch.sh
+Indeed, I didn't consider this case.
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 32dbc97b47..c4809f299a 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -372,6 +372,56 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
- 	return 0;
- }
- 
-+static int create_index_from_tree(const struct object_id *tree_id,
-+				  const char *index_path)
-+{
-+	int nr_trees = 1;
-+	int ret = 0;
-+	struct unpack_trees_options opts;
-+	struct tree_desc t[MAX_UNPACK_TREES];
-+	struct tree *tree;
-+	struct index_state dst_istate = INDEX_STATE_INIT(the_repository);
-+	struct lock_file lock_file = LOCK_INIT;
+> There might be a more useful rule like: if the path is untouched versus
+> the merge result in all parents but one (i.e., TREESAME), then choose
+> the parent where it was changed, including any --follow processing.
+
+I like this idea: it keeps working with the subtree use-case I have in
+mind and goes back to not change behavior when the file has history on
+multiple parents.
+
+> So I dunno. Probably some experimenting could yield more analysis there,
+
+I think requiring TREESAME for all but one parents is too strict, since
+a subtree merge will look like an addition vs the first parent and will
+look like a rename on the first parent. It seems to me that handling
+addition as TREESAME can be correct: if the file was just added, that
+suggests it has no prior history.
+
+So a slightly relaxed rule could be: if the path is untouched or just
+added versus the merge result in all parents but one, then choose the
+parent where it was changed, including any --follow processing.
+
+Here is a patch that implements that idea. It works for the subtree
+merge use-case I outlined and I also added a test to show that the
+behavior is unchanged for the "multiple parents have actual history for
+this file" case you mentioned.
+
+What do you think?
+
+Thanks,
+
+Miklos
+
+ log-tree.c                          | 55 ++++++++++++++++++++++++-
+ t/meson.build                       |  1 +
+ t/t4218-log-follow-subtree-merge.sh | 64 +++++++++++++++++++++++++++++
+ 3 files changed, 119 insertions(+), 1 deletion(-)
+ create mode 100755 t/t4218-log-follow-subtree-merge.sh
+
+diff --git a/log-tree.c b/log-tree.c
+index 7e048701d0..368144fafc 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -1142,8 +1142,61 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 				/* Show parent info for multiple diffs */
+ 				log->parent = parents->item;
+ 			}
+-		} else
++		} else {
++			if (opt->diffopt.flags.follow_renames) {
++				/*
++				 * If the path is untouched in all parents but
++				 * one, then choose the parent where it was
++				 * changed.
++				 */
++				struct commit_list *p;
++				struct commit *changed_parent = NULL;
++				int n_changed = 0;
 +
-+	repo_read_index_preload(the_repository, NULL, 0);
-+	refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL, NULL);
++				for (p = parents; p; p = p->next) {
++					struct diff_options diff_opts;
++					int interesting = 0;
++					int i;
 +
-+	hold_lock_file_for_update(&lock_file, index_path, LOCK_DIE_ON_ERROR);
++					parse_commit_or_die(p->item);
++					repo_diff_setup(opt->diffopt.repo, &diff_opts);
++					copy_pathspec(&diff_opts.pathspec,
++						      &opt->diffopt.pathspec);
++					diff_opts.flags.recursive = 1;
++					diff_opts.flags.follow_renames = 1;
++					diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
++					diff_setup_done(&diff_opts);
++					diff_tree_oid(get_commit_tree_oid(p->item),
++						      oid, "", &diff_opts);
 +
-+	memset(&opts, 0, sizeof(opts));
++					for (i = 0; i < diff_queued_diff.nr; i++) {
++						struct diff_filepair *pair = diff_queued_diff.queue[i];
++						if (DIFF_FILE_VALID(pair->one)) {
++							interesting = 1;
++							break;
++						}
++					}
 +
-+	tree = repo_parse_tree_indirect(the_repository, tree_id);
-+	if (!tree || repo_parse_tree(the_repository, tree)) {
-+		ret = -1;
-+		goto done;
-+	}
++					diff_queue_clear(&diff_queued_diff);
++					diff_free(&diff_opts);
 +
-+	init_tree_desc(t, &tree->object.oid, tree->buffer, tree->size);
++					if (interesting) {
++						n_changed++;
++						changed_parent = p->item;
++						if (n_changed > 1)
++							break;
++					}
++				}
 +
-+	opts.head_idx = 1;
-+	opts.src_index = the_repository->index;
-+	opts.dst_index = &dst_istate;
-+	opts.merge = 1;
-+	opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
-+	opts.fn = oneway_merge;
-+
-+	if (unpack_trees(nr_trees, t, &opts)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	if (write_locked_index(&dst_istate, &lock_file, COMMIT_LOCK)) {
-+		ret = error(_("unable to write new index file"));
-+		goto done;
-+	}
-+
-+done:
-+	release_index(&dst_istate);
-+	if (ret)
-+		rollback_lock_file(&lock_file);
-+	return ret;
-+}
-+
- static int diff_tree_binary(struct strbuf *out, struct object_id *w_commit)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1321,18 +1371,26 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
- 		       struct interactive_options *interactive_opts)
- {
- 	int ret = 0;
--	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
- 	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
-+	struct commit *head_commit;
-+	const struct object_id *head_tree;
- 	struct index_state istate = INDEX_STATE_INIT(the_repository);
- 	char *old_index_env = NULL, *old_repo_index_file;
- 
- 	remove_path(stash_index_path.buf);
- 
--	cp_read_tree.git_cmd = 1;
--	strvec_pushl(&cp_read_tree.args, "read-tree", "HEAD", NULL);
--	strvec_pushf(&cp_read_tree.env, "GIT_INDEX_FILE=%s",
--		     stash_index_path.buf);
--	if (run_command(&cp_read_tree)) {
-+	head_commit = lookup_commit(the_repository, &info->b_commit);
-+	if (!head_commit || repo_parse_commit(the_repository, head_commit)) {
-+		ret = -1;
-+		goto done;
-+	}
-+	head_tree = get_commit_tree_oid(head_commit);
-+	if (!head_tree) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	if (create_index_from_tree(head_tree, stash_index_path.buf)) {
- 		ret = -1;
- 		goto done;
++				if (n_changed == 1) {
++					diff_tree_oid(get_commit_tree_oid(changed_parent),
++						      oid, "", &opt->diffopt);
++					diff_queue_clear(&diff_queued_diff);
++					opt->diffopt.found_follow = 0;
++				}
++			}
+ 			return 0;
++		}
  	}
-diff --git a/t/perf/p3904-stash-patch.sh b/t/perf/p3904-stash-patch.sh
+ 
+ 	showed_log = 0;
+diff --git a/t/meson.build b/t/meson.build
+index 7528e5cda5..b4ae8d76d8 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -574,6 +574,7 @@ integration_tests = [
+   't4215-log-skewed-merges.sh',
+   't4216-log-bloom.sh',
+   't4217-log-limit.sh',
++  't4218-log-follow-subtree-merge.sh',
+   't4252-am-options.sh',
+   't4253-am-keep-cr-dos.sh',
+   't4254-am-corrupt.sh',
+diff --git a/t/t4218-log-follow-subtree-merge.sh b/t/t4218-log-follow-subtree-merge.sh
 new file mode 100755
-index 0000000000..4cfce638be
+index 0000000000..fc846ebeb4
 --- /dev/null
-+++ b/t/perf/p3904-stash-patch.sh
-@@ -0,0 +1,43 @@
++++ b/t/t4218-log-follow-subtree-merge.sh
+@@ -0,0 +1,64 @@
 +#!/bin/sh
 +
-+test_description="Performance tests for git stash -p"
++test_description='Test --follow follows renames across subtree merges'
 +
-+. ./perf-lib.sh
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 +
-+test_perf_fresh_repo
++. ./test-lib.sh
 +
-+test_expect_success "setup" '
-+	mkdir files &&
-+	test_seq 1 100000 | while read i; do
-+		echo "content $i" >files/$i.txt || return 1
-+	done &&
-+	git add files/ &&
-+	git commit -q -m "add tracked files" &&
-+	echo modified >files/1.txt
++test_expect_success 'setup subtree-merged repository' '
++	git init inner &&
++	echo inner >inner/inner.txt &&
++	git -C inner add inner.txt &&
++	git -C inner commit -m "inner init" &&
++
++	git init outer &&
++	echo outer >outer/outer.txt &&
++	git -C outer add outer.txt &&
++	git -C outer commit -m "outer init" &&
++
++	git -C outer fetch ../inner master &&
++	git -C outer merge -s ours --no-commit --allow-unrelated-histories \
++		FETCH_HEAD &&
++	git -C outer read-tree --prefix=inner/ -u FETCH_HEAD &&
++	git -C outer commit -m "Merge inner repo into inner/ subdirectory"
 +'
 +
-+test_perf "stash -p, no fsmonitor" \
-+	--setup 'echo modified >files/1.txt' '
-+	printf "q\n" | git stash -p >/dev/null 2>&1 || true
++test_expect_success '--follow finds the pre-merge commit through a subtree merge' '
++	git -C outer log --follow --pretty=tformat:%s inner/inner.txt >actual &&
++	echo "inner init" >expect &&
++	test_cmp expect actual
 +'
 +
-+if test_have_prereq FSMONITOR_DAEMON
-+then
-+	test_expect_success "enable builtin fsmonitor" '
-+		git config core.fsmonitor true &&
-+		git fsmonitor--daemon start &&
-+		git update-index --fsmonitor &&
-+		git status >/dev/null 2>&1
-+	'
++test_expect_success 'setup merge with rename sources on multiple parents' '
++	git init left &&
++	printf "shared content\n" >left/a.txt &&
++	git -C left add a.txt &&
++	git -C left commit -m "left: a.txt" &&
 +
-+	test_perf "stash -p, builtin fsmonitor" \
-+		--setup 'echo modified >files/1.txt && git status >/dev/null 2>&1' '
-+		printf "q\n" | git stash -p >/dev/null 2>&1 || true
-+	'
++	git init right &&
++	printf "shared content\n" >right/b.txt &&
++	git -C right add b.txt &&
++	git -C right commit -m "right: b.txt" &&
 +
-+	test_expect_success "stop builtin fsmonitor" '
-+		git fsmonitor--daemon stop
-+	'
-+fi
++	git -C left fetch ../right master &&
++	git -C left merge -s ours --no-commit --allow-unrelated-histories \
++		FETCH_HEAD &&
++	git -C left rm a.txt &&
++	printf "shared content\n" >left/c.txt &&
++	git -C left add c.txt &&
++	git -C left commit -m "Merge: rename to c.txt" &&
++
++	printf "more content\n" >>left/c.txt &&
++	git -C left add c.txt &&
++	git -C left commit -m "modify c.txt"
++'
++
++test_expect_success '--follow does not switch when multiple parents supply a rename source' '
++	git -C left log --follow --pretty=tformat:%s c.txt >actual &&
++	echo "modify c.txt" >expect &&
++	test_cmp expect actual
++'
 +
 +test_done
-
-base-commit: 7bcaabddcf68bd0702697da5904c3b68c52f94cf
 -- 
-gitgitgadget
+2.51.0
+
