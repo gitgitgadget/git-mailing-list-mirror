@@ -1,177 +1,232 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203371A23A4
-	for <git@vger.kernel.org>; Sat, 23 May 2026 18:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF43433D6E1
+	for <git@vger.kernel.org>; Sat, 23 May 2026 19:48:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779560398; cv=none; b=Aqn2dTBDlFfOWxao0UemyLpwwcw2GcMkLHxv5JO93cQOVhOiS1DrnkjnSD03Ivq+Uf58zbIvAHAzt+WWp0YQePFq7khay+wpP4aiWf1YHt78/OxSJ5zB0Z8vwrXA7bwCuVOhYGhJRms6XYtvAMiv2i+1M2NyRalygT4/nLenouI=
+	t=1779565719; cv=none; b=pV2pDxjgbxrNuV0t0M65MSXje8IlTeJR0lhJ81V711ZyNuIrRHvzF9nbLg1g9f9fKslS4h1omBbfFViFhbf4Vopjd1meYu99U7W5pnuG05fwmpmU2cBW7CyRRpw88VXBxLC1b4Jq9u7AizpCGZrZELkrlfKwFVM/gy8ADamMoOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779560398; c=relaxed/simple;
-	bh=6rZGVBSVSkrUvPDYmBD6smeqezFl6QbQbrKeXoCYNLs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hezAoq05ubxupIdIa2stEA5aSoeiA6ecUQMN9eqVng2StSpmaGAp5zGXPP8JosU3s/xXEIuRFpr53hLrX+VPqj/JHOFLUgkMJQkDgNTjbiCpunXlpzENW3yPC9AIzkv9zHZQUls0dMbMoO2g9anGfqnHWutGnfAtcK9DZtOS8JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OadYpU2C; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1779565719; c=relaxed/simple;
+	bh=Ru5iBCIhUsWMKVWRUAwxoq2zab+JemmueSgnuUykcok=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=I9wRU/8o+kVjyG2P7iMjQSsV7dQpQ/IMN8S0Y8pW8qoyCdpe3mbxnTdsRQh8CBvO0fKHTAkveihFxV9ALJl5xRyAb7BtZY352cw+5m5NpVg/DphnlVN4qaS819AMgD0XuvQN1eIKmuxifKHhSQfIZYkFfvv7vw/U94dy1MG7UWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bQICcgbS; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OadYpU2C"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8b59772d441so104262446d6.0
-        for <git@vger.kernel.org>; Sat, 23 May 2026 11:19:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bQICcgbS"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8b7dccd6fe4so81442026d6.1
+        for <git@vger.kernel.org>; Sat, 23 May 2026 12:48:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779560396; x=1780165196; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779565717; x=1780170517; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6ahvqfI1xKE5RAIAe2J9UktHy59AkHGPkhsdE8lxEC8=;
-        b=OadYpU2CRS5HKTAmqp0E5PV8y/VHLomtcyAnhsUp82cNIzf2zk+5DuDgSToVLNJfLJ
-         2ZHelxjNraKTV9m5614RFMCqKjy6d9g6ynbEPSYLh1ei+RBeGiYY+eoUEjTGOaBGg94a
-         peENDrtiXX6CfvBwGNe5+CEWhYugD1sfe0K6q/6lmL2kXIS/ZiI0iE9HuUOvIN/1k1iz
-         NHiapU1pSJrr+yKLtv+9vd5uD3e2vjfN8ZYZJ7PA7I7ot5Y15TWdUZxvgn/nsiIHUK37
-         1wHInCEaXnObsu/XCIESToahUPImS4PHIMFyk8/yv6Ry1HLsDZL3LMnQbYy6IFwl+N5t
-         q4Og==
+        bh=jZQurbgxbGoPKJgFIanvISOp62hJkznlQT+I5IM/pCs=;
+        b=bQICcgbSQL5ntKykSGF7R1jKE/yLuCjRhP5bm5/anFBZ06e9GzVLJo1cbYOCRDlWIA
+         xQT6t1HEyDvswBpfcelTwN1K7oEHCbZzXwfdold57xA+uIrxOBbl3qFSo5FIQeDqk+gQ
+         y5kQizd0naTy6HXhj2EVqvTykbu/paWK5MI8aVCCsI3BVQjTwo9K770cBuF7gunPBvIE
+         llUb5d4TFNghWTSzmsbADXGNp+rGCLonp6VIX87uQXGZFCO9KRNldDNH8kbCxvX7O9dh
+         P9i3DZqGJRbOxasxk/hJTKXhg3Nqhx93/BM2V2U4HHzYJ4cZbC72PtWPwXlJ3cJIuz7u
+         mwYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779560396; x=1780165196;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1779565717; x=1780170517;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=6ahvqfI1xKE5RAIAe2J9UktHy59AkHGPkhsdE8lxEC8=;
-        b=k3Cf1kTUfR8wWvbo4xvJ68BMsQqT+x3CvCW8vYAtvZVHJgC+UvvIUQWHZL0vg8OOJQ
-         WxZHM8dno0mfnsjp+Vj6JMfxd2mf4SrYOsSivlsPNcaQbp2/3AmE5q3rW/nHuPs0WyBg
-         tYXORAX88i9whuBCo5HqfmGASzjhloA07UdjSeueqBwW9G2M+3jqYU4OazZCHx/oMvH2
-         ohT1hGrz9A9aw9VTKm9FgZf2ML+BXZFetoYUkD1mwT3KZmMVw8PqL2g0sllV7yvTbn58
-         IjP8+618+n959ob09NnK/66o2q1C6ED2s+Tt8ueqXREOuin6zgJZpE5oQuOi9denkuj+
-         YLeA==
-X-Gm-Message-State: AOJu0YxfZB3KCq5HITD0J1sGCec6TFWz2NxEx4kUvfj10Dzl6N5aVvJU
-	YB888jhaIVIgqPtYf6y5OfFA3dyYK1yz+9E0Xk+PgaZye9tbb4BrLIz7g/BqSbEy
-X-Gm-Gg: Acq92OG538clLxH2zQvfRt+gZb6SQmP4r4ZYRCcD2a02TqAh1QlZTHDQAlzjK+6pYuf
-	y7aGkR1rt80rhNxR5PFY1BKg3VcHTIrMBQENG76ecJXu9xl4WX9mT/sEbP74cIUrH+B3hhs5F3O
-	/ONAocz8Ym6qm4ANtdUOA2809WkDOfFlSwU0cfLROXJtSaEdBBS7r5ayvd06Z6DlL00ye6Z51Nk
-	eXLsIAJ5ksAmWCZqavaCZllEHdtB8U8Xv+jD/IpTykxRdWtVkZLmAyGAYA0Ftckrqmv5Lay8ff4
-	xlx0NqdGMztl/ejc4+mvmpKXEg0jsnXtieiHwjJFWaZmxbnLU7BQoEkWp/2ae4vjnhg2tLfLLYB
-	uky8c4NLc+5W640LAL6Cg/+VNDOr9JuF7kU/wI47Eoe+0N/HN9w8qOCkkRi6C/2VD0XFRyn9wVg
-	gGiFV9AuQW4FECBW3c88oyoSV+tQ==
-X-Received: by 2002:a05:6214:f62:b0:8cc:d29:9f6e with SMTP id 6a1803df08f44-8cc7b5847bemr147378196d6.22.1779560396019;
-        Sat, 23 May 2026 11:19:56 -0700 (PDT)
-Received: from markl5i.lan ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc81323f7csm52254576d6.46.2026.05.23.11.19.54
+        bh=jZQurbgxbGoPKJgFIanvISOp62hJkznlQT+I5IM/pCs=;
+        b=Sic3iKEViDqDOVahtj8GOM3aqGjrc0XyxIwczM+2SOND1facfqYGef9cFC+KanYIsW
+         ABzl0Tz9exZU3V+E9Bgxun6+JCskcvKyV5nC+krKWrzxbwVI06V7mdumaGn3XlfMG/jZ
+         u4mZIYslCftLiyZuciEEPdm3uoYaoI5jyvnNT0l70cb1Ig+97jinsxG5wQWYUfea3oPW
+         4igcyEBJ59webbLVSn0UBCd6NVvk9ZT0uOvQvn6O4HqZOkXigwn9yf9/K7TT8iCdGVk/
+         7PZJ0JR8u0bRLdGTedZFGzC7JS8NT0YHVIn2Ge65WykFCYaNt2BS3ZdoFTtp/si67eqJ
+         Fs3g==
+X-Gm-Message-State: AOJu0YyaTabZmBoySk/oYOoTEJyPTJmYR1oaBosWeLQgcqIyz//RgT5j
+	K/CC8VosMOB7XRlPFfWtvvchyoWB+5bFMCoVuyzelMMS5hFk/ce4JS8MoNiXnA==
+X-Gm-Gg: Acq92OG4Iw9mK+HqDG6/VGAu9t+lfveo47PcUdsUuV1r82nK0S5F/6Z4iVOM2joCsWR
+	ac6FakvsOVeMqKw5eDYrm1oX4DP+juopUWqib7W5f/YNOIaQUiYyPQkJX6451udtYDfeUsRFnlI
+	lg7ljOPDkFhH77QJmYSV9/VUiIF8yMgdqzrwz8nXc3TC3EDCR+hPzM0wW1RONvdnhcUIhz66zmQ
+	MjiM9D3EQmwHxmuGrzWhDFkPx11on8SSRB/7Gjh3Mbu1AdnrUQmORyNPxbzVHM0J9cUH1TrIS28
+	ycftHfpqU6RArsoKr0UMucfQ5nMhK074tn86zveMIZKumquEpGrfHayiZ1x7lB5pNlMccjYi9YA
+	x54DCwRnD8KuMQEMQtS6oDbwOtCw6wIk09fCzEd5NHj8YiNWuY+6onzFP7OFCGJqyXVmbXDsbvH
+	Rf5UmbmGK2/qVSWjjNUkXJstewFvClhelHfk1KyQ==
+X-Received: by 2002:a05:6214:3104:b0:8bc:15b:aa6 with SMTP id 6a1803df08f44-8cc7b5d785fmr150677456d6.44.1779565716613;
+        Sat, 23 May 2026 12:48:36 -0700 (PDT)
+Received: from [127.0.0.1] ([135.232.232.48])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80dcd43dsm55149086d6.3.2026.05.23.12.48.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 May 2026 11:19:55 -0700 (PDT)
-From: Mark Levedahl <mlevedahl@gmail.com>
-To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	egg_mushroomcow@foxmail.com,
-	bootaina702@gmail.com,
-	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] fixup git-gui: allow blame to show uncommitted changes
-Date: Sat, 23 May 2026 14:19:50 -0400
-Message-ID: <20260523181950.201345-1-mlevedahl@gmail.com>
-X-Mailer: git-send-email 2.54.0.99.14
-In-Reply-To: <20260520202411.108764-11-mlevedahl@gmail.com>
-References: <20260520202411.108764-11-mlevedahl@gmail.com>
+        Sat, 23 May 2026 12:48:35 -0700 (PDT)
+Message-Id: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2281.v12.git.git.1779358803652.gitgitgadget@gmail.com>
+References: <pull.2281.v12.git.git.1779358803652.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 23 May 2026 19:48:32 +0000
+Subject: [PATCH v13 0/2] checkout: --track=fetch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Marc Branchaud <marcnarc@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Commit a0db0d61fb ("git-gui: Generate blame on uncommitted working tree
-file", 2007-05-08) added ability for git-gui's blame to use uncommited
-content in the worktree in the blame display. The specific mechanism
-that allows this is passing head as {} to the blame constructor, and this
-mode is enabled by specifying no head, which means the current branch is
-used, and no swapping of head / path is possible. Path checking looks for the
-path existing in the currently checked out branch, so files unknown to
-git cannot be blamed. This mirrors git blame behavior. Both now will
+ * Create a preparatory commit that exposes find_tracking_remote_for_ref()
+   and advise_ambiguous_fetch_refspec() from branch.c, so checkout can reuse
+   the same lookup git branch --track uses.
+ * Use advise_ambiguous_fetch_refspec() for the "multiple remotes match"
+   case, so the wording matches git branch --track.
 
-    use the worktree contents of the file $path as the basis for blame,
-        including showing an empty blame if the file exists and is empty.
-    error if $path is remove from the worktree, even if it exists on the
-          current branch.
+Harald Nordgren (2):
+  branch: expose helpers for finding the remote owning a tracking ref
+  checkout: extend --track with a "fetch" mode to refresh start-point
 
-The latter behavior is a change: before this patch, git-gui will show
-the unknown file in its entirety with no annotations. The new behavior,
-following git blame, reports that git knows nothing about the file.
-
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
-This patch will be squashed into 0011 in a v3, or kept separate. The
-comment in patch 11 saying blame's use of the worktree is unaffected
-is wrong, this fixes blame to do exactly what git-blame does with
-worktree content. Slightly different than what git-gui did before
-regarding unknown files, but I think git-blame's approach is correct.
+ Documentation/git-checkout.adoc |  17 +-
+ Documentation/git-switch.adoc   |   5 +-
+ branch.c                        |  96 ++++++-----
+ branch.h                        |  16 ++
+ builtin/checkout.c              | 139 +++++++++++++++-
+ t/t7201-co.sh                   | 276 ++++++++++++++++++++++++++++++++
+ 6 files changed, 498 insertions(+), 51 deletions(-)
 
 
- git-gui.sh | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+base-commit: aec3f587505a472db67e9462d0702e7d463a449d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2281%2FHaraldNordgren%2Fcheckout-fetch-start-point-v13
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2281/HaraldNordgren/checkout-fetch-start-point-v13
+Pull-Request: https://github.com/git/git/pull/2281
 
-diff --git a/git-gui.sh b/git-gui.sh
-index ae609f86f1..114511974a 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3084,11 +3084,16 @@ blame {
- 		}
- 	}
- 
--	# no swapping allowed if head not given, use current branch (HEAD)
-+	# If head not given, use current branch (HEAD), no swapping allowed,
-+	# and blame may use the worktree file content.
-+	set use_worktree 0
- 	if {$head eq {}} {
- 		load_current_branch
- 		set head $current_branch
- 		set canswap 0
-+		if {$subcommand eq {blame} && ![is_bare]} {
-+			set use_worktree 1
-+		}
- 	}
- 
- 	# -- before "rev" arg means we got -- path head
-@@ -3098,7 +3103,16 @@ blame {
- 		set canswap 0
- 	}
- 
--	set objtype [find_path_type $head $path]
-+	if {$use_worktree} {
-+		if {[file isfile $path]} {
-+			set objtype {blob}
-+		} else {
-+			set objtype {}
-+		}
-+	} else {
-+		set objtype [find_path_type $head $path]
-+	}
-+
- 	if {$objtype eq {} && $canswap} {
- 		set objtype [find_path_type $althead $altpath]
- 		if {$objtype ne {}} {
-@@ -3108,7 +3122,7 @@ blame {
- 	}
- 	set current_branch $head
- 
--	# check that path exists in head, and objtype matches need
-+	# check objtype matches need
- 	if {$objtype ne $required_objtype} {
- 		switch -- $required_objtype {
- 			tree {set err [strcat \
-@@ -3130,8 +3144,13 @@ blame {
- 	browser {
- 		browser::new $head $path
- 	}
--	blame {
--		blame::new $head $path $jump_spec
-+
-+	blame   {
-+		if {$use_worktree} {
-+			blame::new {} $path $jump_spec
-+		} else {
-+			blame::new $head $path $jump_spec
-+		}
- 	}
- 	}
- 	return
+Range-diff vs v12:
+
+ -:  ---------- > 1:  2369afad24 branch: expose helpers for finding the remote owning a tracking ref
+ 1:  bcd034dbed ! 2:  60adf0e67d checkout: extend --track with a "fetch" mode to refresh start-point
+     @@ Commit message
+              git checkout -b new_branch --track origin/some-branch
+      
+          Identify the remote whose configured fetch refspec maps to
+     -    <start-point>, then run "git fetch <remote> <src-ref>" for just that
+     -    ref so other remote-tracking branches are left untouched. When
+     -    <start-point> is a bare <remote> (e.g. "origin"), follow
+     +    <start-point> using find_tracking_remote_for_ref() (the same lookup
+     +    "--track" uses to pick which remote to record in
+     +    branch.<name>.remote), then run "git fetch <remote> <src-ref>" for
+     +    just that ref so other remote-tracking branches are left untouched.
+     +    When <start-point> is a bare <remote> (e.g. "origin"), follow
+          refs/remotes/<remote>/HEAD to learn which branch to refresh. If
+          "git fetch" fails but the remote-tracking ref already exists locally,
+          warn and proceed from the existing tip; otherwise abort.
+     @@ builtin/checkout.c: struct branch_info {
+       	char *checkout;
+       };
+       
+     -+struct fetch_target_cb {
+     -+	char *dst;
+     -+	struct string_list matches;
+     -+};
+     -+
+     -+static int match_fetch_target(struct remote *remote, void *priv)
+     -+{
+     -+	struct fetch_target_cb *cb = priv;
+     -+	struct refspec_item q = { .dst = cb->dst };
+     -+
+     -+	if (!remote_find_tracking(remote, &q) && q.src)
+     -+		string_list_append(&cb->matches, remote->name)->util = q.src;
+     -+	return 0;
+     -+}
+     -+
+      +static void fetch_remote_for_start_point(const char *arg, int quiet)
+      +{
+      +	struct strbuf dst = STRBUF_INIT;
+     -+	struct fetch_target_cb cb = { .matches = STRING_LIST_INIT_NODUP };
+     ++	struct tracking tracking;
+     ++	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
+     ++	struct string_list ambiguous_remotes = STRING_LIST_INIT_DUP;
+      +	struct child_process cmd = CHILD_PROCESS_INIT;
+      +	struct object_id oid;
+      +	struct remote *named_remote;
+      +	int bare_ns;
+     -+	size_t i;
+      +
+      +	strbuf_addf(&dst, "refs/remotes/%s", arg);
+      +	if (check_refname_format(dst.buf, 0))
+     @@ builtin/checkout.c: struct branch_info {
+      +		free(head_path);
+      +	}
+      +
+     -+	cb.dst = dst.buf;
+     -+	for_each_remote(match_fetch_target, &cb);
+     -+
+     -+	if (cb.matches.nr > 1) {
+     -+		struct strbuf msg = STRBUF_INIT;
+     -+
+     -+		strbuf_addf(&msg,
+     -+			    _("cannot fetch start-point '%s': fetch refspecs "
+     -+			      "of multiple remotes map to the same destination:"),
+     -+			    arg);
+     -+		for (i = 0; i < cb.matches.nr; i++)
+     -+			strbuf_addf(&msg, "\n  %s", cb.matches.items[i].string);
+     -+		strbuf_addstr(&msg,
+     -+			      _("\nadjust 'remote.<name>.fetch' so only one "
+     -+				"remote maps there, or omit '=fetch'"));
+     -+		die("%s", msg.buf);
+     ++	memset(&tracking, 0, sizeof(tracking));
+     ++	tracking.spec.dst = dst.buf;
+     ++	tracking.srcs = &tracking_srcs;
+     ++	find_tracking_remote_for_ref(&tracking, &ambiguous_remotes);
+     ++
+     ++	if (tracking.matches > 1) {
+     ++		int status = die_message(_("cannot fetch start-point '%s': "
+     ++					   "fetch refspecs of multiple remotes "
+     ++					   "map to '%s'"), arg, dst.buf);
+     ++		advise_ambiguous_fetch_refspec(dst.buf, &ambiguous_remotes);
+     ++		exit(status);
+      +	}
+      +
+     -+	if (!cb.matches.nr) {
+     ++	if (!tracking.matches) {
+      +		if (bare_ns && named_remote &&
+      +		    remote_is_configured(named_remote, 1))
+      +			die(_("cannot fetch start-point '%s': "
+     @@ builtin/checkout.c: struct branch_info {
+      +	strvec_push(&cmd.args, "fetch");
+      +	if (quiet)
+      +		strvec_push(&cmd.args, "--quiet");
+     -+	strvec_pushl(&cmd.args, cb.matches.items[0].string,
+     -+		     (char *)cb.matches.items[0].util, NULL);
+     ++	strvec_pushl(&cmd.args, tracking.remote,
+     ++		     tracking_srcs.items[0].string, NULL);
+      +	cmd.git_cmd = 1;
+      +	if (run_command(&cmd)) {
+      +		if (!refs_read_ref(get_main_ref_store(the_repository),
+     @@ builtin/checkout.c: struct branch_info {
+      +			die(_("failed to fetch start-point '%s'"), arg);
+      +	}
+      +
+     -+	for (i = 0; i < cb.matches.nr; i++)
+     -+		free(cb.matches.items[i].util);
+     -+	string_list_clear(&cb.matches, 0);
+     ++	string_list_clear(&tracking_srcs, 0);
+     ++	string_list_clear(&ambiguous_remotes, 0);
+      +	strbuf_release(&dst);
+      +}
+      +
+     @@ t/t7201-co.sh: test_expect_success 'tracking info copied with autoSetupMerge=inh
+      +	test_must_fail git checkout --track=fetch -b local_ambig ambig_ns/fetch_ambig 2>err &&
+      +	test_grep "fetch_ambig_a" err &&
+      +	test_grep "fetch_ambig_b" err &&
+     -+	test_grep "remote.<name>.fetch" err &&
+     ++	test_grep "tracking namespaces" err &&
+      +	test_must_fail git rev-parse --verify refs/heads/local_ambig
+      +'
+      +
+
 -- 
-2.54.0.99.14
-
+gitgitgadget
