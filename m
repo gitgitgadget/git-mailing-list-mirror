@@ -1,68 +1,68 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9916395DB8
-	for <git@vger.kernel.org>; Sun, 24 May 2026 17:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43F439A4BA
+	for <git@vger.kernel.org>; Sun, 24 May 2026 17:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779644550; cv=none; b=I77bjbQnwC9vTZEYblkXAfswp2PH3rFx9YxxTsd01gilSOowKNtTHHEs96aIIen2U+sHf6lH6nb3a9Oei+uFrVuVW0fum7Cyw8ygJ5fJ+IrWofD8cBSFERrtUZyvxA0gejQx1rxv3IaoWTdq4w9qzdooaM6aWFVczZoom4zLGzQ=
+	t=1779644551; cv=none; b=kq2DFd/bMR9R79Hq24cdZcGSgLzqNFTbN6twVrGoekM+zgkdHKDZDbvvYTAqOekwl6L4vaRMAF9Q/8kWeazccHqUhaX6YdnbVAw+cZfZaquTI4N7aNA73ElhFVQU4Eja1Eoteyn1vbVMnsz/vU68Igff1qHonTiFr63pUTq5Mn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779644550; c=relaxed/simple;
-	bh=yu+yEZOCCVkRInQ3f7RBsxJHdOFARRsbSxMXLJaPW4Y=;
+	s=arc-20240116; t=1779644551; c=relaxed/simple;
+	bh=Tzf7MyHSZXtpC5HS5UWvumYPHkx2G+DS6+AmajDJY7Y=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rbJFcstEixyczKVK9sqlSuq9jwc/4wVj77MH1+WvTJZ8dnX/ioR0PCUtS7D1a7ABs0SXvzvT0vcYcttZ3X4lyoDH5ICkE2hQLZZMibQKlKNoy520Lcyi9MUWCpgrr1wSwV16FUR6Qe/enIUevkU881eOLgHOaDht0DSBOAYo8pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZEPnYueY; arc=none smtp.client-ip=209.85.219.48
+	 MIME-Version:To:Cc; b=dJY34FwfKbJG26/CY1efXrKuVTHlzTsX2V9hlrIpiOGrCIW43UigzZwMN0qv60+AgG/hmsu3yJltQ3fnPo6GNhDPSWpvegras5LKGP2+cnKdWFlGno68vzW+xnB8zT7i6mlkVfOJ19mgAOZlo/Lnwa5HZ0xdjV3VaDxiBOPMIL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dmuuxkNh; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZEPnYueY"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-8b4000e51fdso99842326d6.1
-        for <git@vger.kernel.org>; Sun, 24 May 2026 10:42:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmuuxkNh"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8b1f2b7f1bcso137524696d6.1
+        for <git@vger.kernel.org>; Sun, 24 May 2026 10:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779644548; x=1780249348; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779644549; x=1780249349; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j4Gc0Hae9+3EIppu6xUxu7z/Fnoo0QpIC3M3q6iZKBU=;
-        b=ZEPnYueYgs1zEeH+PbudqpfJGnpFZh0R111ZGy+hhJdmcoVPIHTwnkK4v5RjpABZJj
-         fagkkLbdNMRedmakMCsa8RsXbgKYyxzGVfbwNkz0Z4S944Z1c3kHFcs0p0eybzpqWoXM
-         xb2SpESearBqSVxPNWV9UAuCoikXuW5PbVHckBjpESKs3LxOZzIPzeBI0SgFTBs7VFBH
-         a5q84KsDEfkpHiStpBKxKbDxEWRqelDKDIa9NbqipXUma/Y8PJlFAX87FbSg9YfF9BtD
-         HiXGQE3rfmGfTtXZc+rv1pipJ7wKmU9SQ5NiW9wWHoLmlxcfQe4msgydSa1v1/uEh15H
-         dOGw==
+        bh=3V0o4kw0ZuOEd29AlytYMOPlJqVzjswVAdppPVOw/oA=;
+        b=dmuuxkNhdwVdyL5rCBPmKRGKcKftLyMj11LbkTuAmQaYYxChMtjld80ASttXhk8ze6
+         97qW9YILg+lRIyYGCGejZCaoaQbdp6GM62KzUvd+WS0lvpTMdsieUFVBi/blDSaLNGBD
+         0QxXB1txom8ugJdilTL+AGQg3ktMk0Jq5JQMvgRqyWauuzdeq6mxqooY+3+zpYUCyhpQ
+         NNRC0A0kZsegm8AI2jX1LxW/oMaX43kFGCmYXU2+qFcAcnZuqWIpljGOLSpg1XAVqmVH
+         xEyYW6ku7nDCjztip5mmKApwSYlt/xMdH4owTuRwpn2CjmEk2xVMl17lwUAO5b+TtrIg
+         o/TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779644548; x=1780249348;
+        d=1e100.net; s=20251104; t=1779644549; x=1780249349;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=j4Gc0Hae9+3EIppu6xUxu7z/Fnoo0QpIC3M3q6iZKBU=;
-        b=YAsNXCSsuvf6NOxeT/FTmf1Ji6NyaSYLTDmfbnDvd23XlwiqIxOdF2VnDJRXzfTeQe
-         mLjRcU6vwzLNJrXZvFJtruthZqUpJMdU1Chod6w3UDz/0j96thtFSE1wZrDhItPOLR92
-         GVF8fe87fJB/WMe5CvKA3BZuWtyoLCG17Ft+dwXDahao3Sh1VKtIKJqYZjU5kp7CKvhP
-         O7FRe07GpqKyBovtHXu75QHYYEPr9E8+JMMMUP7oyJNf+58QluPj5mNc0q4c7LY0WJRv
-         FKe5eMmeWCanK8od2vrpN5NKrqRnRVvjgVVGxmrLwHl9YZmQzDqgMqTl3mEYUwHry+xC
-         Ca1g==
-X-Gm-Message-State: AOJu0YzsHA5I9YOeCcE/zr42vLXhYGnO9G/ZQxC13Gqllp74kK/+MD1B
-	jsVDRAb+Qk21dYsB5Vx1RB71ZQ+aCf5N3tbDlvvMDCe0MhcLdBSo6m9/rKbuZQzJ
-X-Gm-Gg: Acq92OHPHi2IMyFnFyIEtg1HoWMbc349W3uoRxfpjJylbX4dPljfBb/Lc0d131Y4qPr
-	DScz0GpfqDIwe75lQD3kasz8nA7HKxVl10k0O+brMKUkSE2f85pCenU+tZKr4ePXykRuB91i+SY
-	VBnvzR+FsYh8jsvp7I1Z/+YgKG4hgBHyswJGUDB90EDc6a9nic2N2y+csB/fisC5QxiPUEw3NJt
-	WIvC8Jb8jGBu4+s+sFb0O0zNcYO/SGvLSvTWRi+sBfExOyXTLlBVzr5lBySgCJPYp6LEjPe3GbX
-	WDS7PxjxxDZoOtynBYZRBL84wyeFPMwPJYxJOfKS52IbymkD5um1+S72B4bkQ5E7VmrTy/1akzs
-	3YAR13tIMU4q9d/nP5KW+b8BvPLF7tCuJJnBFMM3w1OFEstxyzYU7LtfaQO19qvP1Gx8p3g75si
-	ivpwHTY3xDI0E5CPtW8HAUNWUClnlZltynrOuF
-X-Received: by 2002:a05:6214:c88:b0:8be:35bd:8273 with SMTP id 6a1803df08f44-8cc7b616dd9mr177536376d6.12.1779644546795;
-        Sun, 24 May 2026 10:42:26 -0700 (PDT)
+        bh=3V0o4kw0ZuOEd29AlytYMOPlJqVzjswVAdppPVOw/oA=;
+        b=nvoMTQyBlNMPPfbz5WQtjbsoeLYohVntZmgZwORpoZAdeIdlC0FVBJSBDYUQKy8R0r
+         ajrobx6kA8LEB+FbUiC9AI0PsC7OZATbH2gpcqV6zhqyaQ3pYe2ze//i9v9yMiVW6NK7
+         ES8tX7qVhoEfuHeDJItS9nt6+hxQ2MSDbCKOXjmFVqP66zzCMmo7O4yQS1Wnbx9C4fDa
+         ygsH+sT04L6PXW/iauWEIW/QyZrG9Y+yQ4eX1NuvJpm+42PuanSPLnoKDu4El5yhe8sr
+         M6ZZpaRafW5OO6YWylWwyvSBhSwbtoaK7UJHOogfJMTE4hGEm8cBwMwNelKjWZJj39eA
+         +w/Q==
+X-Gm-Message-State: AOJu0Ywm/5n/4YJMNxCz2UiCvKbR6vkkI6CtB8VGdDeHswRtdUOCmY/x
+	tE5ZX2dQWfsHOZaipcWlek3YHvxt/csijksb/V/8kRFF6iOSvIfrFEFTpHzi4DBs
+X-Gm-Gg: Acq92OFgAnByse8r/bN2+4JM6fO8LNDz2Zvmvd7KiQaB0omqMoIjXhk16ocASvvs8Ch
+	/60J/KpHe9bsOD18tr5NCm1ISPQgkAwNxrRMREPc6W0lqU9jDeTiZd7o3m+CCt8rt7ArFC1VMnP
+	+tJvrK3gnE5z/gbl2d4zybILannxdyXHz9kYk4QEPg01a9y77ihLQH5mhD+o1hAzQDJOprESVSK
+	Agem4jepTHJ3g80QJXGbQEzOoq6kmiQTnYRCQdDw6enO3Kb4oRCDw3jBlZkpFQF2SPxHdhZH1NW
+	0Lhh2CeWbwFJRpPQXW+ZMJG6K9IsUz+bSueddmz7MBqvdBFposNEdn3xzxX/vsMyCYU2xTVMleV
+	JpemHB34JZQ0KEt3C84PbGM9JhwmJKS/3ppmmtbxU65MiuV+mQJZfKyuKY0n7TlshguCjohlcXn
+	km8ojubtHuD8MPA3ngpA8T/YX/Cg==
+X-Received: by 2002:a05:6214:4306:b0:8c2:7cc5:b5d5 with SMTP id 6a1803df08f44-8cc6e694af4mr209365116d6.17.1779644547910;
+        Sun, 24 May 2026 10:42:27 -0700 (PDT)
 Received: from [127.0.0.1] ([20.102.235.84])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc8131eaeasm87272716d6.44.2026.05.24.10.42.24
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc8130d540sm88119086d6.38.2026.05.24.10.42.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2026 10:42:25 -0700 (PDT)
-Message-Id: <4742f5e634b55820f3b5a626ec97e24617fdae3d.1779644541.git.gitgitgadget@gmail.com>
+        Sun, 24 May 2026 10:42:27 -0700 (PDT)
+Message-Id: <711a0e2235103489f17ff867439e007abd0e4291.1779644541.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
 References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 24 May 2026 17:42:19 +0000
-Subject: [PATCH 2/3] commit-reach: optimize queue scan in paint_down_to_common
+Date: Sun, 24 May 2026 17:42:20 +0000
+Subject: [PATCH 3/3] commit-reach: optimize queue scan in ahead_behind
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,104 +78,97 @@ Cc: Kristofer Karlsson <krka@spotify.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-paint_down_to_common() terminates when every commit remaining in its
-priority queue is STALE. This was checked by queue_has_nonstale(),
-which performed an O(n) linear scan of the entire queue on every
-iteration, resulting in O(n*m) total overhead where n is the queue
-size and m is the number of commits processed.
+Apply the same nonstale_count optimization from the previous commit
+to ahead_behind(). This replaces the remaining caller of the O(n)
+queue_has_nonstale() scan with an O(1) counter check, allowing
+queue_has_nonstale() to be removed.
 
-Replace this with an O(1) nonstale_count that tracks the number of
-non-stale commits currently in the queue. The counter is incremented
-by maybe_enqueue() and decremented on dequeue and by mark_stale()
-when a commit transitions to STALE while still in the queue. Since
-each commit appears at most once (guaranteed by the ENQUEUED flag
-from the previous commit), the counter is exact.
-
-ahead_behind() also uses queue_has_nonstale() and will be converted
-in the next commit.
+ahead_behind() already deduplicates queue entries using the PARENT2
+flag (via insert_no_dup), so the counter is maintained through
+insert_no_dup() and mark_stale() using PARENT2 as the queued_flag.
 
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- commit-reach.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ commit-reach.c | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index c16d4b061c..356ff52d08 100644
+index 356ff52d08..41deb8fc78 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -40,12 +40,25 @@ static int compare_commits_by_gen(const void *_a, const void *_b)
- 	return 0;
+@@ -61,16 +61,6 @@ static void mark_stale(struct commit *c, unsigned queued_flag,
+ 	}
  }
  
--static void maybe_enqueue(struct prio_queue *queue, struct commit *c)
-+static void maybe_enqueue(struct prio_queue *queue, struct commit *c,
+-static int queue_has_nonstale(struct prio_queue *queue)
+-{
+-	for (size_t i = 0; i < queue->nr; i++) {
+-		struct commit *commit = queue->array[i].data;
+-		if (!(commit->object.flags & STALE))
+-			return 1;
+-	}
+-	return 0;
+-}
+-
+ /* all input commits in one and twos[] must have been parsed! */
+ static int paint_down_to_common(struct repository *r,
+ 				struct commit *one, int n,
+@@ -1051,12 +1041,15 @@ struct commit_list *get_reachable_subset(struct commit **from, size_t nr_from,
+ define_commit_slab(bit_arrays, struct bitmap *);
+ static struct bit_arrays bit_arrays;
+ 
+-static void insert_no_dup(struct prio_queue *queue, struct commit *c)
++static void insert_no_dup(struct prio_queue *queue, struct commit *c,
 +			  int *nonstale_count)
  {
- 	if (c->object.flags & ENQUEUED)
+ 	if (c->object.flags & PARENT2)
  		return;
- 	c->object.flags |= ENQUEUED;
  	prio_queue_put(queue, c);
+ 	c->object.flags |= PARENT2;
 +	if (!(c->object.flags & STALE))
 +		(*nonstale_count)++;
-+}
-+
-+static void mark_stale(struct commit *c, unsigned queued_flag,
-+		       int *nonstale_count)
-+{
-+	if (!(c->object.flags & STALE)) {
-+		if (c->object.flags & queued_flag)
-+			(*nonstale_count)--;
-+		c->object.flags |= STALE;
-+	}
  }
  
- static int queue_has_nonstale(struct prio_queue *queue)
-@@ -68,6 +81,7 @@ static int paint_down_to_common(struct repository *r,
+ static struct bitmap *get_bit_array(struct commit *c, int width)
+@@ -1082,6 +1075,7 @@ void ahead_behind(struct repository *r,
  {
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	int i;
+ 	struct prio_queue queue = { .compare = compare_commits_by_gen_then_commit_date };
+ 	size_t width = DIV_ROUND_UP(commits_nr, BITS_IN_EWORD);
 +	int nonstale_count = 0;
- 	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
- 	struct commit_list **tail = result;
  
-@@ -79,20 +93,22 @@ static int paint_down_to_common(struct repository *r,
- 		commit_list_append(one, result);
- 		return 0;
- 	}
--	maybe_enqueue(&queue, one);
-+	maybe_enqueue(&queue, one, &nonstale_count);
+ 	if (!commits_nr || !counts_nr)
+ 		return;
+@@ -1100,14 +1094,17 @@ void ahead_behind(struct repository *r,
+ 		struct bitmap *bitmap = get_bit_array(c, width);
  
- 	for (i = 0; i < n; i++) {
- 		twos[i]->object.flags |= PARENT2;
--		maybe_enqueue(&queue, twos[i]);
-+		maybe_enqueue(&queue, twos[i], &nonstale_count);
+ 		bitmap_set(bitmap, i);
+-		insert_no_dup(&queue, c);
++		insert_no_dup(&queue, c, &nonstale_count);
  	}
  
 -	while (queue_has_nonstale(&queue)) {
 +	while (nonstale_count > 0) {
- 		struct commit *commit = prio_queue_get(&queue);
- 		struct commit_list *parents;
- 		int flags;
- 		timestamp_t generation = commit_graph_generation(commit);
+ 		struct commit *c = prio_queue_get(&queue);
+ 		struct commit_list *p;
+ 		struct bitmap *bitmap_c = get_bit_array(c, width);
  
- 		commit->object.flags &= ~ENQUEUED;
-+		if (!(commit->object.flags & STALE))
++		if (!(c->object.flags & STALE))
 +			nonstale_count--;
++
+ 		for (size_t i = 0; i < counts_nr; i++) {
+ 			int reach_from_tip = !!bitmap_get(bitmap_c, counts[i].tip_index);
+ 			int reach_from_base = !!bitmap_get(bitmap_c, counts[i].base_index);
+@@ -1136,9 +1133,9 @@ void ahead_behind(struct repository *r,
+ 			 * queue is STALE.
+ 			 */
+ 			if (bitmap_popcount(bitmap_p) == commits_nr)
+-				p->item->object.flags |= STALE;
++				mark_stale(p->item, PARENT2, &nonstale_count);
  
- 		if (min_generation && generation > last_gen)
- 			BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
-@@ -134,8 +150,10 @@ static int paint_down_to_common(struct repository *r,
- 				return error(_("could not parse commit %s"),
- 					     oid_to_hex(&p->object.oid));
- 			}
-+			if (flags & STALE)
-+				mark_stale(p, ENQUEUED, &nonstale_count);
- 			p->object.flags |= flags;
--			maybe_enqueue(&queue, p);
-+			maybe_enqueue(&queue, p, &nonstale_count);
+-			insert_no_dup(&queue, p->item);
++			insert_no_dup(&queue, p->item, &nonstale_count);
  		}
- 	}
  
+ 		free_bit_array(c);
 -- 
 gitgitgadget
-
