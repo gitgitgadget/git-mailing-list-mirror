@@ -1,118 +1,155 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E3427A12F
-	for <git@vger.kernel.org>; Sun, 24 May 2026 12:09:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C352BFC7B
+	for <git@vger.kernel.org>; Sun, 24 May 2026 12:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779624543; cv=none; b=e+MaoYECdTFTfu/5yli8+r4/McXzZXQbyL9VnbomJNfGxgXjMlmfDA0OL1HdR17JHqqlx8h5IfqXsYFcxLYwNu0Z0NNJgCnzmFz9qQvTXjq2W6V7Snm82QVTExEri0z8akMdgIGIV7HK3yTPey4CLUaSYC5dAcdwHiR3YQx1QuU=
+	t=1779625696; cv=none; b=fE4V3T1uyHOg+UjsxLfREdNT2WglkccNhwkyVqc4OpCb5x1vTghuI2HOdT0uNIqgp65Vm+yTJh4P+sJqmrhC6nQwKUjlJNplH5oiy0Zys3Jki62eLL3AQG04WlkhoymtycP4XJvQOtRXjnpQmvFPsJo4qzntjjLY55t5J/2dLPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779624543; c=relaxed/simple;
-	bh=YPKxrD7HDWdtAc4A8FITVEcLGzF0A3nspZ/+TFXqAiA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qeW5s7dHKWQekOto0yE0Snk+mQ9x9muU08p2WOObrxXSTDX/fcn+6tUIednW1KgdJIqnWD+J/bazS+H4YH9GSq2p2cIgJJDWlBflO7jhWUObk2E7HakwCc0IWfkX15Li5CJDW8U6U7sUwYyoulbyylRVbJ3cn3bK3pslw4KXti8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EiD4+jSd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gLc8y7So; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779625696; c=relaxed/simple;
+	bh=n4Uj5iuUXuv1k5XY3ajCnrZVg8l/RWc+VRZ87RQm0jQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=WYrf9GjQbGtOLv7hwvZVd+A8ct6uaW5MSzeqx4hLNjla1UTRXzboiuTK1OyWaSlgRGuwLIevPXcvXOqoLdfaufMHLATBQyZyuVTB+nqutW+6U8Nx79wH3Z18A+eDav+FU92IrDO7I2sRZQNaSdPDYazIz8NjUI6Y+dWlsD0dZdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pCIWTZdM; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EiD4+jSd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gLc8y7So"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 00D5A1D0002E;
-	Sun, 24 May 2026 08:08:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 24 May 2026 08:09:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779624539; x=1779710939; bh=lOfYfx6UKY
-	UNkbSjY8pNg5pjuUUkd1HbdEIOM5a0ia8=; b=EiD4+jSdapmc4lmPpFh8t/tndF
-	gctRSKAVaaoqIAIUVC9rHz0ayrBBJVnfSCbtGbWFgFJdFQNpPvlUCDTfPZlDMEaP
-	EmZUacXnmjva8sr3ViZ2UHRqVABu2CnGYuc76EWy41+r/yka00Yk5JptU37aPJua
-	aWlRIFp9RcO/NVM14C9dzzt7shizx1Yks7mZCMhI2x9plKN6EIQPiPuNVJvr74Gi
-	IPy/iIuoE6XYdgTEC5cBnal39V3VZxOXHBEUn71eP4AnMA1P0k7Aq8o2z8GEIAp7
-	aAZCxaHU5pQ8eMvMMjDFjn9loko0hNgVm5lYOXu/zRavaC8JDfbYH4C0PjVA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779624539; x=1779710939; bh=lOfYfx6UKYUNkbSjY8pNg5pjuUUkd1HbdEI
-	OM5a0ia8=; b=gLc8y7SoOfO5yYih/CVvEnVWlzqPpT5AKJGJ/a9W3ZwbGJl82ii
-	nbWSjjmaZDAFD8WSqvXhYCfIk5udZ9ColeAPKFvtX0hBOVfzTPHeyb1XxxCc7gLT
-	w61gh8ahWvjqIRBwURnraI7MFPX/9AFUJQvSLi45BmimQipUusV7tLhdqb8IG6vu
-	jozAGXYUVzUjc4m16NMSaa8TuHaXNvrro3csh9om8hEsfGshSUGvk1Qq9UxJev4s
-	CrlTrgR8nDXU6K6ng3xMLycDsqTUqbNk+kXkA8QzE5bpS/ME5zEXq+3TomDNzvdX
-	lPnLttZRDq0zRidBV+3J7pgUIlN9Pk3q/iw==
-X-ME-Sender: <xms:W-oSatkvgKHpyQoZF1P9hdK744igNEus-YBh_NJPEIP2fvsUSsyVfw>
-    <xme:W-oSav0VzJuql9nNl1bGdB1isKkXL6g0JQh4YXYXxhoclRvsRychPOz93lWJWJxFU
-    JkdCGtHJuDnzPYZRqZr8jpo0xJxLwmHXVRhzOnuPhga8NMI2ZGEqA>
-X-ME-Received: <xmr:W-oSaoq4zMpavqekoci6P82gYAwy_TKKB-hRSBc_sGaNrHoCGhmhOeeSHkt96KfMkS3ZAYJZRn38qDth23bRWlLr58qKTfcB_zU8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheehkeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    peiirghkrghrihihrghhrghlihdutddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:W-oSasecTusLTIiL2lTWoLx-tY1CBT9Yb7_qjNN6Fmsb3eaujURxtA>
-    <xmx:W-oSanrACJixCC8fZbg-mtfIhCKw5XuZzlGkmQRP3ps9AC-Eh6PYew>
-    <xmx:W-oSatHdtSM2el0GHiAQnGUseD3DYaYoLxQK0tx7ICyxtAVZqbpYkA>
-    <xmx:W-oSantLUNwcVcCaQGRKzVMpKJWidC59dUF3zuwm6APEMr_cWJJImQ>
-    <xmx:W-oSakIvjvx8zt576-Nbb5Zk4jLCvlzMoOA74oXK2dDKEA9ErH-E9F2U>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 May 2026 08:08:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Zakariyah Ali <zakariyahali100@gmail.com>
-Subject: Re: [PATCH] completion: hide dotfiles for selected path completion
-In-Reply-To: <pull.2311.git.git.1779590184752.gitgitgadget@gmail.com>
-	(Zakariyah Ali via GitGitGadget's message of "Sun, 24 May 2026
-	02:36:24 +0000")
-References: <pull.2311.git.git.1779590184752.gitgitgadget@gmail.com>
-Date: Sun, 24 May 2026 21:08:58 +0900
-Message-ID: <xmqq8q99huw5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pCIWTZdM"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8acb3daf2aaso157699326d6.0
+        for <git@vger.kernel.org>; Sun, 24 May 2026 05:28:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779625694; x=1780230494; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=EhwHE3p3PGO3GGAKtAbXhzqFHJmLxfERfTTdVfvvfc4=;
+        b=pCIWTZdMg0u5PGFlBvCTzbLujaLriW3l6gveF78CGsHhnbhOrqLYgACaQadYm7m0DN
+         Q2wg0L75O1lDbKWF1HO27r1/IfApjf2PAsqfrNSe+lmhke78CIpTLbZ4boAMI3YldcQN
+         Ykt5Ay4GQF/kWqqc5GB6vJC0RczscaDrus/GOzVGd5t5exUR9CDKU5Dj0MUh0FE33qaT
+         3GO9PnBtTrp5wq5yCvavosTE+oBPz8da5KQU51lLIl93npZtzOIBEIo6Tz1bcaId2nVr
+         5/0z+vtki16cWvk3SsnxPiz6sas5BbTUCbiy3ONJJUG38atqnLhRGn8wLX6JPTupMaJN
+         v07Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779625694; x=1780230494;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EhwHE3p3PGO3GGAKtAbXhzqFHJmLxfERfTTdVfvvfc4=;
+        b=VHAkOB14m7WBNFv367rJmEGXZzVbnqQBjCN6u5PTFtr+lm4ldzLRi34eo6XN1E8dnc
+         7pcn89nE+9qsgdiUl+sWFxBnXQRiv4EQxpVWloiSBkrv+lZlgBnN0LcdOc6t6eiXDOJy
+         O89r6SbGip4Q10d39MhE2lIGlfS3N9kTwVEVFVcgD8X8jmxNamwH29+Y9UVa+yjEAH+/
+         7oz/FbVxPYpwffGWtAvVvjPygNt+47246V+xeZa+7yWYt9cLn3c4aIgSN5C7fHKKCC2M
+         9GHBAZsyad/mAEgdzV6cGgyOvhlt3/W1tZmSdhs4dnNpWuSZpoFzVaLAslUXcAnPK/vn
+         sFBA==
+X-Gm-Message-State: AOJu0YygVY0UBr5Ta7m37StfpLDEd3Pz2wSL1Hsz59nnufLxnWKAt/pu
+	RO2syUjU3/ZYBkb+6lGCu3GH740fRT4k14yKtPtPcC6Lp/lhTWzekDOfRSkRaQ==
+X-Gm-Gg: Acq92OGlmrLjupdbfndxDLd6bRQzivVvaOH8A9BZJOoNKoGXdi4hqzLO5yCMBBsxoPT
+	PG6anWCsbyUTZrSB6qCkZjHLBI+eaNYAJr5rY8Wkbuxz2cHoJWZ2JLwblGsPBHYUwkwudNol/C2
+	IssBMwD/TEooTQmMP0C7Sk9DNsJCkGTlktSpfFG6LHNsZrunEY9mJ+btuppCaXfADvAPGl3mu/f
+	qEGzHkpYSfv13Kch0q9pBOrJsPVH2MQ/ok6kjenBUASd2SZIf8F6ZHQ0q89e5rd5AmkAeNolaug
+	KIHaDKkt07pOhE04iOUsjoyQ6Bq4ceo8lNOAJ66qs56phE6T6gnCkLM9D58FiZRttjGKoBeSQG+
+	twwQThfP6WuTrXNjYZc+Z88ZBU293hwri0tsz1/hjudMNmkeTBPrcjU6AvYJrRx4lCPoDbnAZSC
+	aNaXNVH2uzCKj4zst9mkUJi6DdkCfItBmQX7fd
+X-Received: by 2002:a05:6214:3018:b0:8ac:a689:34ce with SMTP id 6a1803df08f44-8cc7b6a26e7mr171102026d6.45.1779625694297;
+        Sun, 24 May 2026 05:28:14 -0700 (PDT)
+Received: from [127.0.0.1] ([52.150.30.131])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80ffc87dsm83398796d6.21.2026.05.24.05.28.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 May 2026 05:28:13 -0700 (PDT)
+Message-Id: <pull.2123.git.1779625693328.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 24 May 2026 12:28:12 +0000
+Subject: [PATCH] fetch: pass transport to post-fetch connectivity check
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-"Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Kristofer Karlsson <krka@spotify.com>
 
-> From: Zakariyah Ali <zakariyahali100@gmail.com>
->
-> Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
-> ---
->     completion: hide dotfiles for selected path completion
->     
->     The completion helper for index paths uses git ls-files rather than
->     shell filename completion. As a result, leading-dot paths such as a
->     tracked .gitignore were offered even when the user had not started the
->     path with ..
+When fetching with a transport that sets `self_contained_and_connected`
+(as index-pack does for self-contained packs), check_connected() can
+use find_pack_entry_one() to skip connectivity verification for refs
+whose objects exist in the new pack. This avoids sending those OIDs to
+the rev-list child process.
 
-Writing 'path with ".".' would have been easieer to grok.
+However, store_updated_refs() never passed the transport to
+check_connected(), so opt.transport was always NULL and this
+optimization was dead code for post-fetch connectivity checks.
 
->     Hide leading-dot path components for git rm, git mv, and git ls-files
->     when completing an empty path component. Explicit dot completion is
->     still preserved, so git rm . can still complete .gitignore.
+Thread the transport parameter through store_updated_refs() and set
+opt.transport so that check_connected() can take advantage of
+self-contained packs.
 
-I am not sure why this is a good idea.  If we said "git rm g<TAB>
-and offered ".gitignore" as a candidate, it may be annoying, but
-tracked (or untracked for that matter) ".gitignore" and "gitfoo"
-should be treated the same way by "git rm <TAB>" no?
+On a large repository (2.4M commits, 374K files, 10.9K local refs),
+fetching 200 new commits:
 
->     This removes the existing TODO expectations in t/t9902-completion.sh and
->     adds coverage for explicit dot completion.
+  Before: rev-list connectivity check  22s,  total fetch  36s
+  After:  rev-list connectivity check   5s,  total fetch  14s
 
-In any case, all of the above should be in the proposed log message,
-not below the three-dash line.
+The remaining 5s is spent verifying refs not contained in the new pack.
+
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+    fetch: pass transport to post-fetch connectivity check
+    
+    We're working on reducing git fetch times on a large monorepo (2.4M
+    commits, 374K files, 10.9K local refs). Profiling showed the post-fetch
+    connectivity check (rev-list --objects --stdin --not --all) dominating
+    wall time when there are new objects.
+    
+    While investigating, I noticed that check_connected() already has a fast
+    path for self-contained packs — it uses find_pack_entry_one() to skip
+    refs whose objects are in the new pack. builtin/clone.c passes the
+    transport to enable this, but store_updated_refs() in builtin/fetch.c
+    does not, making the optimization dead code for fetches.
+    
+    The fix is a three-line change to thread the transport through.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2123%2Fspkrka%2Ffetch-transport-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2123/spkrka/fetch-transport-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2123
+
+ builtin/fetch.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index a22c319467..647fd1c30c 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1213,6 +1213,7 @@ N_("it took %.2f seconds to check forced updates; you can use\n"
+    "to avoid this check\n");
+ 
+ static int store_updated_refs(struct display_state *display_state,
++			      struct transport *transport,
+ 			      int connectivity_checked,
+ 			      struct ref_transaction *transaction, struct ref *ref_map,
+ 			      struct fetch_head *fetch_head,
+@@ -1228,6 +1229,7 @@ static int store_updated_refs(struct display_state *display_state,
+ 	if (!connectivity_checked) {
+ 		struct check_connected_options opt = CHECK_CONNECTED_INIT;
+ 
++		opt.transport = transport;
+ 		opt.exclude_hidden_refs_section = "fetch";
+ 		rm = ref_map;
+ 		if (check_connected(iterate_ref_map, &rm, &opt)) {
+@@ -1432,7 +1434,7 @@ static int fetch_and_consume_refs(struct display_state *display_state,
+ 	}
+ 
+ 	trace2_region_enter("fetch", "consume_refs", the_repository);
+-	ret = store_updated_refs(display_state, connectivity_checked,
++	ret = store_updated_refs(display_state, transport, connectivity_checked,
+ 				 transaction, ref_map, fetch_head, config,
+ 				 display_array);
+ 	trace2_region_leave("fetch", "consume_refs", the_repository);
+
+base-commit: 6a4418c36d6bad69a599044b3cf49dcbd049cb45
+-- 
+gitgitgadget
