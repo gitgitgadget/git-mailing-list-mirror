@@ -1,92 +1,83 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523242D877D
-	for <git@vger.kernel.org>; Sun, 24 May 2026 09:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E3427A12F
+	for <git@vger.kernel.org>; Sun, 24 May 2026 12:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779616538; cv=none; b=JIPiXKJfKE5vbaQY+uy/q/cMiMQutY0Qm3UnawXViXiMwsttUrLJWshB7iIvp8vwfGcesFggi7tD6dgCTKViJkuv7ZmAi0ztV2xxO+OeC/VLc45b6XmP/OzveYxzErjAmgMhIvtn2Ii5pmapS8/9heCGk5NJ5Bz/y4jhlAEvm/A=
+	t=1779624543; cv=none; b=e+MaoYECdTFTfu/5yli8+r4/McXzZXQbyL9VnbomJNfGxgXjMlmfDA0OL1HdR17JHqqlx8h5IfqXsYFcxLYwNu0Z0NNJgCnzmFz9qQvTXjq2W6V7Snm82QVTExEri0z8akMdgIGIV7HK3yTPey4CLUaSYC5dAcdwHiR3YQx1QuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779616538; c=relaxed/simple;
-	bh=nFsknLFouGxxwDpelCxoLa1o2sRNcY1eVkQpiYRj3iI=;
+	s=arc-20240116; t=1779624543; c=relaxed/simple;
+	bh=YPKxrD7HDWdtAc4A8FITVEcLGzF0A3nspZ/+TFXqAiA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZhRDYpGMDFLb/Hi38qcnUO/pzqPilPDTr4/KyBUPYz626mNIr7dkPzWRG/UiYifBouAdO8YvenFTGR8IBNwXsZbEl8Wvlcm/6CtN8ieyJ/k0/59scyMnnMrk0mtyp1zN85stk8YtqSiRruhb2j7nfhpHaKA2pJk9aMODjhRRRzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=geb3Si5K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lv8PQuuZ; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=qeW5s7dHKWQekOto0yE0Snk+mQ9x9muU08p2WOObrxXSTDX/fcn+6tUIednW1KgdJIqnWD+J/bazS+H4YH9GSq2p2cIgJJDWlBflO7jhWUObk2E7HakwCc0IWfkX15Li5CJDW8U6U7sUwYyoulbyylRVbJ3cn3bK3pslw4KXti8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EiD4+jSd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gLc8y7So; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="geb3Si5K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lv8PQuuZ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61C67EC00E3;
-	Sun, 24 May 2026 05:55:35 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EiD4+jSd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gLc8y7So"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 00D5A1D0002E;
+	Sun, 24 May 2026 08:08:59 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 24 May 2026 05:55:35 -0400
+  by phl-compute-04.internal (MEProxy); Sun, 24 May 2026 08:09:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779616535; x=1779702935; bh=wYHzOZWaFb
-	oOxyWLyg4oodrpaJ4n2nLXwNvQsWvAEqg=; b=geb3Si5KUroVtnbHBOaibKQySd
-	8EXZ3REZSjAOfvN6K9z5wXeFspuoV3P/U0sSNBLrVJoypnHjPTfSx8OPeliGmfK9
-	bXKDcBc0zGCu1DHXQxYgevgGME4/AfQ3bBRPiugRX+ag4W8fTaUtv6CzSchmzcrs
-	gBbaf6vSLG0Ym7Gh9d8/7dYq5mPEOppKRjO8sv46+sc1hhqWdWfwOc/IlHCGsjPR
-	Zhmace2eKmrf0Mj3LvmEiCna0MkeS5rg+IikS4gGivzbg5fAQvK3kkZSoNJTLy1d
-	x8hBu/mPsZRlw7aTHVjOCkr/Sl8wXgxDB9ZuIL09kasNzJcpFgOpeqmOriLg==
+	:subject:to:to; s=fm2; t=1779624539; x=1779710939; bh=lOfYfx6UKY
+	UNkbSjY8pNg5pjuUUkd1HbdEIOM5a0ia8=; b=EiD4+jSdapmc4lmPpFh8t/tndF
+	gctRSKAVaaoqIAIUVC9rHz0ayrBBJVnfSCbtGbWFgFJdFQNpPvlUCDTfPZlDMEaP
+	EmZUacXnmjva8sr3ViZ2UHRqVABu2CnGYuc76EWy41+r/yka00Yk5JptU37aPJua
+	aWlRIFp9RcO/NVM14C9dzzt7shizx1Yks7mZCMhI2x9plKN6EIQPiPuNVJvr74Gi
+	IPy/iIuoE6XYdgTEC5cBnal39V3VZxOXHBEUn71eP4AnMA1P0k7Aq8o2z8GEIAp7
+	aAZCxaHU5pQ8eMvMMjDFjn9loko0hNgVm5lYOXu/zRavaC8JDfbYH4C0PjVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779616535; x=1779702935; bh=wYHzOZWaFboOxyWLyg4oodrpaJ4n2nLXwNv
-	QsWvAEqg=; b=lv8PQuuZCxCJqiqGlysAkyFyZPzFUUyUDBNflOx/+1mVAq1hyB9
-	ZcDm8zpS+LDKV3dUFbi/upHWlWCA6wdzgglUU7t5kmMCFVvNTwfzFkgdsHCiu+0w
-	lzp6TxpaP1uPxaSQ+ElRsLXaX/l2qhFvsmjp3D8QuTRjAHtOqp6ZiXUPcpVwcC5r
-	F+7QyAM43tz9jwelqmt4Ln63tA2Cd88rxr9vZZ9I8E9xdLL5ZZSTIEk2uUR9FZit
-	okYCjengatjPZQkoC86iEBpd4F3EkfF6ouA+3lSyY3fd1f1sgOkhTUrqbAWLYYIp
-	mI0cRunZ2DNAFAnGcAs/eRjMt4jWMptFNxg==
-X-ME-Sender: <xms:F8sSah1kEAs9aHHLjoqLZt0bYWQ2bTb63C-wu5J61njF9dWJ9SU1ow>
-    <xme:F8sSaqqOXBMgIiiWpPG5AC-lX1fIcfNXHRzdp8P2ha7G5W5OiZNG9tmcxHqNoxUb3
-    WgtGYEW-cvvJCQg9OsfLpWyHCaUhq-qLwp9GmiOBSbNsrgQ6_WUKTc>
-X-ME-Received: <xmr:F8sSalhPa97oi7MTzFwJv5JOr7_BzRLxNiIgcW5GxaddhMWtmqqHD3OsyUK8N0LdlUtFtgBT2_WHoNzAY1nfWgfns9dm9tnUzbSB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheehieefucetufdoteggodetrf
+	1779624539; x=1779710939; bh=lOfYfx6UKYUNkbSjY8pNg5pjuUUkd1HbdEI
+	OM5a0ia8=; b=gLc8y7SoOfO5yYih/CVvEnVWlzqPpT5AKJGJ/a9W3ZwbGJl82ii
+	nbWSjjmaZDAFD8WSqvXhYCfIk5udZ9ColeAPKFvtX0hBOVfzTPHeyb1XxxCc7gLT
+	w61gh8ahWvjqIRBwURnraI7MFPX/9AFUJQvSLi45BmimQipUusV7tLhdqb8IG6vu
+	jozAGXYUVzUjc4m16NMSaa8TuHaXNvrro3csh9om8hEsfGshSUGvk1Qq9UxJev4s
+	CrlTrgR8nDXU6K6ng3xMLycDsqTUqbNk+kXkA8QzE5bpS/ME5zEXq+3TomDNzvdX
+	lPnLttZRDq0zRidBV+3J7pgUIlN9Pk3q/iw==
+X-ME-Sender: <xms:W-oSatkvgKHpyQoZF1P9hdK744igNEus-YBh_NJPEIP2fvsUSsyVfw>
+    <xme:W-oSav0VzJuql9nNl1bGdB1isKkXL6g0JQh4YXYXxhoclRvsRychPOz93lWJWJxFU
+    JkdCGtHJuDnzPYZRqZr8jpo0xJxLwmHXVRhzOnuPhga8NMI2ZGEqA>
+X-ME-Received: <xmr:W-oSaoq4zMpavqekoci6P82gYAwy_TKKB-hRSBc_sGaNrHoCGhmhOeeSHkt96KfMkS3ZAYJZRn38qDth23bRWlLr58qKTfcB_zU8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheehkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
-    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgt
-    phhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epiigrkhgrrhhihigrhhgrlhhiuddttdesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:F8sSau-Npp9YexbapGq9pVoB_O71ZST7mGCac4iTMuUvTOBXvnvKCg>
-    <xmx:F8sSapVYQzl3pNMkclE5pNUuqlAEVQXlHk4MzFIMQJmDa2MFWVqamw>
-    <xmx:F8sSaqBLQNSqnVA-rIy4kFLdypajWfJTu26ivGSHSGlW-Hggk0QDRA>
-    <xmx:F8sSamHv2GML3xqR1z8-uBwTxynfPQqKWBM9Nkz_iW0a2VxWKf7B4w>
-    <xmx:F8sSamxRqB27jMciadXXUmdRM-aOzUfFcVVWK2eeorINbqrDhmcS4wjq>
+    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
+    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    peiirghkrghrihihrghhrghlihdutddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:W-oSasecTusLTIiL2lTWoLx-tY1CBT9Yb7_qjNN6Fmsb3eaujURxtA>
+    <xmx:W-oSanrACJixCC8fZbg-mtfIhCKw5XuZzlGkmQRP3ps9AC-Eh6PYew>
+    <xmx:W-oSatHdtSM2el0GHiAQnGUseD3DYaYoLxQK0tx7ICyxtAVZqbpYkA>
+    <xmx:W-oSantLUNwcVcCaQGRKzVMpKJWidC59dUF3zuwm6APEMr_cWJJImQ>
+    <xmx:W-oSakIvjvx8zt576-Nbb5Zk4jLCvlzMoOA74oXK2dDKEA9ErH-E9F2U>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 May 2026 05:55:34 -0400 (EDT)
+ 24 May 2026 08:08:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
-  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
- <jltobler@gmail.com>,  Siddharth Asthana <siddharthasthana31@gmail.com>,
-  Ayush Chandekar <ayu.chandekar@gmail.com>,  Zakariyah Ali
- <zakariyahali100@gmail.com>
-Subject: Re: [PATCH 0/2] [GSoC Patch] t2000: modernize path checks to use
- helper functions
-In-Reply-To: <pull.2256.git.git.1779534462.gitgitgadget@gmail.com> (Zakariyah
-	Ali via GitGitGadget's message of "Sat, 23 May 2026 11:07:40 +0000")
-References: <pull.2256.git.git.1779534462.gitgitgadget@gmail.com>
-Date: Sun, 24 May 2026 18:55:33 +0900
-Message-ID: <xmqqldd9i12i.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Zakariyah Ali <zakariyahali100@gmail.com>
+Subject: Re: [PATCH] completion: hide dotfiles for selected path completion
+In-Reply-To: <pull.2311.git.git.1779590184752.gitgitgadget@gmail.com>
+	(Zakariyah Ali via GitGitGadget's message of "Sun, 24 May 2026
+	02:36:24 +0000")
+References: <pull.2311.git.git.1779590184752.gitgitgadget@gmail.com>
+Date: Sun, 24 May 2026 21:08:58 +0900
+Message-ID: <xmqq8q99huw5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,38 +89,30 @@ Content-Type: text/plain
 
 "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This is my GSoC microproject submission modernizing test path checks in
-> t/t2000-conflict-when-checking-files-out.sh.
+> From: Zakariyah Ali <zakariyahali100@gmail.com>
+>
+> Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
+> ---
+>     completion: hide dotfiles for selected path completion
+>     
+>     The completion helper for index paths uses git ls-files rather than
+>     shell filename completion. As a result, leading-dot paths such as a
+>     tracked .gitignore were offered even when the user had not started the
+>     path with ..
 
-I do not quite get where you intend to fit these two patches.
+Writing 'path with ".".' would have been easieer to grok.
 
-> base-commit: 60f07c4f5c5f81c8a994d9e06b31a4a3a1679864
+>     Hide leading-dot path components for git rm, git mv, and git ls-files
+>     when completing an empty path component. Explicit dot completion is
+>     still preserved, so git rm . can still complete .gitignore.
 
-This is fairly old, v2.54.0-rc2~9.
+I am not sure why this is a good idea.  If we said "git rm g<TAB>
+and offered ".gitignore" as a candidate, it may be annoying, but
+tracked (or untracked for that matter) ".gitignore" and "gitfoo"
+should be treated the same way by "git rm <TAB>" no?
 
-But the thing is, your earlier clean-up to this t2000 script
-4a9e0972 (t2000: consolidate second scenario into a single test
-block, 2026-04-29) was queued on za/t2000-modernise-more was merged
-to 'master' at b5d94909 (Merge branch 'za/t2000-modernise-more',
-2026-05-21).  But what is most curious about these two patches is
-that the [PATCH 1/2] starts like so:
+>     This removes the existing TODO expectations in t/t9902-completion.sh and
+>     adds coverage for explicit dot completion.
 
-    From: Zakariyah Ali <zakariyahali100@gmail.com>
-
-    Now that the test script has been modernised, consolidate the eight
-    separate test_expect_success blocks ...
-
-I take that to be a reference to your previous effort in za/t2000-modernise-more
-topic.  But these two patches are changing the code as if that did
-not even exist.
-
-If the za/t2000-modernise-more topic were still not merged to
-'next', sending in replacement patches works just fine. but a new
-patch that ignores anything that have already been merged to 'next'
-or 'master' is counter-productive.
-
-
-
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2256%2Falibaba0010%2Fmodernize-test-path-checking-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2256/alibaba0010/modernize-test-path-checking-v1
-> Pull-Request: https://github.com/git/git/pull/2256
+In any case, all of the above should be in the proposed log message,
+not below the three-dash line.
