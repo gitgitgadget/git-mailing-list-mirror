@@ -1,174 +1,151 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43F439A4BA
-	for <git@vger.kernel.org>; Sun, 24 May 2026 17:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779644551; cv=none; b=kq2DFd/bMR9R79Hq24cdZcGSgLzqNFTbN6twVrGoekM+zgkdHKDZDbvvYTAqOekwl6L4vaRMAF9Q/8kWeazccHqUhaX6YdnbVAw+cZfZaquTI4N7aNA73ElhFVQU4Eja1Eoteyn1vbVMnsz/vU68Igff1qHonTiFr63pUTq5Mn8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779644551; c=relaxed/simple;
-	bh=Tzf7MyHSZXtpC5HS5UWvumYPHkx2G+DS6+AmajDJY7Y=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=dJY34FwfKbJG26/CY1efXrKuVTHlzTsX2V9hlrIpiOGrCIW43UigzZwMN0qv60+AgG/hmsu3yJltQ3fnPo6GNhDPSWpvegras5LKGP2+cnKdWFlGno68vzW+xnB8zT7i6mlkVfOJ19mgAOZlo/Lnwa5HZ0xdjV3VaDxiBOPMIL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dmuuxkNh; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B16415A864
+	for <git@vger.kernel.org>; Sun, 24 May 2026 18:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779645703; cv=pass; b=kvpd2/sfmrWtF8wNk0acqA2BSWwrpCTBxALPod2wMf0ZCWXeNTO92qsPfPtjpaYy70fVO2HoS7McfuNL7ikjMyE5cnzNTtReWmibdhmffrl1ucsedCYJc0P9h6ZDQPfi6k1YL+D+jJm3ZJFTHR8GXoI+nmhRXqTt0VgC+eZGsbo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779645703; c=relaxed/simple;
+	bh=DrhOUrQw8bM6zorvWXs/dSBviuIoEjKzVUGlXHahUdk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kRZYZlEZ6pzS1s/hdirFXkZSttCmB3EiMb5j2HoBNk2+eF6H6dq3NBo0GKGhYZ+6i77T0JDfyPuMjyp9EQ8tkK4aDV7ey1AuTP01XorFRc5AMm4JSA+JCaeCzsmYwCPTPHQ4w6oqXEW8ijcij6MYHHpEE2Aq4Vi0uAUD3YCJ2eU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FwNJ48Vy; arc=pass smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmuuxkNh"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8b1f2b7f1bcso137524696d6.1
-        for <git@vger.kernel.org>; Sun, 24 May 2026 10:42:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FwNJ48Vy"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7e61b59e03eso1052701a34.2
+        for <git@vger.kernel.org>; Sun, 24 May 2026 11:01:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779645701; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PojNyWS0/8gdBWgl3V7n1IhKsVk61ZiARuiTLuYdsIrItCtHjBR6G7DanUUOCESjOt
+         63NuDw2h1wdJsWmSQe9N9KKy1w34NfMVhbtiU+IB6UodHOX1g5atTJGce+IEpExiPvj8
+         Glqf1b2tEi5oe0LSCL5OcyxppQws5TZQQ8k/lJf/3RNRV2Zm4pTDVQM4BExtTUjn22iO
+         P5q4Xulcy8WxWKyOLViWs8U4htWxRHmI7hBsW7E/zhAoCvQ4Yz9YJL5JHcQcWI8pXPOh
+         X7dImnA5PWl4+CMdkiCnnE608zYt3ZGcggi4ON9F5d+F2vCjUjtKaz2K12maafaZnlx4
+         B5aw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=gqnlGS/b6eue7jS0GGU7RuSmhW8y+tSx532G8seHTMo=;
+        fh=6khFuHNBSq4WRUFoOfI6zGQl3315QHcT2QA3Djl9EBU=;
+        b=M9t9g26/cli/Gm4LWqXH3uN0EdbAOJDx+MRBbsMSpndJsXgUQVpKaHjZMdgFeZ2LCU
+         nGdFe1bLiCJeqtKFlO5hZYtAlZ0pKIh5ppLkV7nMuDf2Ci5IXQNqaH8uoopaiPDOE//5
+         HS/9IBd0Jf3CXDcs+8LcS9kwfpYoxkXl3cJczmVIIV3o2Fzg16vc1wR2d6g1qH6fMnDG
+         cQ5Z4tV8TA55hUHTyGAAPs0S0EAsKc7HXBE/bK6kzP10MFYLLL9qhqBOhuJYsjvYlPMF
+         jeUdV/Gqt6JNbLB0gLHJxMmzqdzUA9feuVS573jRwpctBHRaWqaVYMBgpqilbXnrCRaK
+         AZng==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779644549; x=1780249349; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779645701; x=1780250501; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3V0o4kw0ZuOEd29AlytYMOPlJqVzjswVAdppPVOw/oA=;
-        b=dmuuxkNhdwVdyL5rCBPmKRGKcKftLyMj11LbkTuAmQaYYxChMtjld80ASttXhk8ze6
-         97qW9YILg+lRIyYGCGejZCaoaQbdp6GM62KzUvd+WS0lvpTMdsieUFVBi/blDSaLNGBD
-         0QxXB1txom8ugJdilTL+AGQg3ktMk0Jq5JQMvgRqyWauuzdeq6mxqooY+3+zpYUCyhpQ
-         NNRC0A0kZsegm8AI2jX1LxW/oMaX43kFGCmYXU2+qFcAcnZuqWIpljGOLSpg1XAVqmVH
-         xEyYW6ku7nDCjztip5mmKApwSYlt/xMdH4owTuRwpn2CjmEk2xVMl17lwUAO5b+TtrIg
-         o/TQ==
+        bh=gqnlGS/b6eue7jS0GGU7RuSmhW8y+tSx532G8seHTMo=;
+        b=FwNJ48VymP5WI3EVXOBwcdS4OFGTkEkbXS3esjxd/PbWX8LFLH8l39cIfH6BV+5oxI
+         T0yRtZLg+qoapKvejqBBaTJdw+6YnRLUBZAPJSJds7nNws+EnliF1MxfvaYVQfvtrN4o
+         K2sjdh+3Np8w+g+kovicILLDcAgxZZkuWl02Ez6TBqEZNumjtaTI8WeGXA5xTUokecAz
+         zN51xX2Kpd1LtejrPZ4IBm1+JYS1H2UBnHNgGnalwuveMY0NAoA5OBJHva4zh+CKyXyg
+         lCfJFusxVoAncrLv6gi2Ja9nd4b/BbOCQmrfJ3t/w4VPjsFoIYQ1dkLiZJmg3fiGFf4I
+         G0NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779644549; x=1780249349;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1779645701; x=1780250501;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=3V0o4kw0ZuOEd29AlytYMOPlJqVzjswVAdppPVOw/oA=;
-        b=nvoMTQyBlNMPPfbz5WQtjbsoeLYohVntZmgZwORpoZAdeIdlC0FVBJSBDYUQKy8R0r
-         ajrobx6kA8LEB+FbUiC9AI0PsC7OZATbH2gpcqV6zhqyaQ3pYe2ze//i9v9yMiVW6NK7
-         ES8tX7qVhoEfuHeDJItS9nt6+hxQ2MSDbCKOXjmFVqP66zzCMmo7O4yQS1Wnbx9C4fDa
-         ygsH+sT04L6PXW/iauWEIW/QyZrG9Y+yQ4eX1NuvJpm+42PuanSPLnoKDu4El5yhe8sr
-         M6ZZpaRafW5OO6YWylWwyvSBhSwbtoaK7UJHOogfJMTE4hGEm8cBwMwNelKjWZJj39eA
-         +w/Q==
-X-Gm-Message-State: AOJu0Ywm/5n/4YJMNxCz2UiCvKbR6vkkI6CtB8VGdDeHswRtdUOCmY/x
-	tE5ZX2dQWfsHOZaipcWlek3YHvxt/csijksb/V/8kRFF6iOSvIfrFEFTpHzi4DBs
-X-Gm-Gg: Acq92OFgAnByse8r/bN2+4JM6fO8LNDz2Zvmvd7KiQaB0omqMoIjXhk16ocASvvs8Ch
-	/60J/KpHe9bsOD18tr5NCm1ISPQgkAwNxrRMREPc6W0lqU9jDeTiZd7o3m+CCt8rt7ArFC1VMnP
-	+tJvrK3gnE5z/gbl2d4zybILannxdyXHz9kYk4QEPg01a9y77ihLQH5mhD+o1hAzQDJOprESVSK
-	Agem4jepTHJ3g80QJXGbQEzOoq6kmiQTnYRCQdDw6enO3Kb4oRCDw3jBlZkpFQF2SPxHdhZH1NW
-	0Lhh2CeWbwFJRpPQXW+ZMJG6K9IsUz+bSueddmz7MBqvdBFposNEdn3xzxX/vsMyCYU2xTVMleV
-	JpemHB34JZQ0KEt3C84PbGM9JhwmJKS/3ppmmtbxU65MiuV+mQJZfKyuKY0n7TlshguCjohlcXn
-	km8ojubtHuD8MPA3ngpA8T/YX/Cg==
-X-Received: by 2002:a05:6214:4306:b0:8c2:7cc5:b5d5 with SMTP id 6a1803df08f44-8cc6e694af4mr209365116d6.17.1779644547910;
-        Sun, 24 May 2026 10:42:27 -0700 (PDT)
-Received: from [127.0.0.1] ([20.102.235.84])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc8130d540sm88119086d6.38.2026.05.24.10.42.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2026 10:42:27 -0700 (PDT)
-Message-Id: <711a0e2235103489f17ff867439e007abd0e4291.1779644541.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
-References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 24 May 2026 17:42:20 +0000
-Subject: [PATCH 3/3] commit-reach: optimize queue scan in ahead_behind
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=gqnlGS/b6eue7jS0GGU7RuSmhW8y+tSx532G8seHTMo=;
+        b=pu3WTOmtCuRPJ4TrfxqeV+X2nHLt7ObIWWD5F7gA1Uq5Ad0ZL+575NVBa8JQRbtPIe
+         hiabGoo9evZcgkOVQppvp3HmZF0U2Qgq39cpeqM6D8vHWOIiLlxq4vGo6etZxvh6YzBS
+         VZEr2B2GKKs8BBayvsTaWT43zpAaJo8zhJIZ2kAKG2tEWFpxQzaYr8EltCvq2OwaI0P6
+         ykT4ozqGh8ziFI3IT4z8Q2g6+E1BbI2LVVz6MmQYYkWu1Uh66sT+gabhLD7CaPDB1xOH
+         FywSLV84jFVdEmBagwGrBkYayUMUoQuG29zMIyvXU1qbgGyHyFtZgIWxqNTv2/Os8dw0
+         oxyg==
+X-Forwarded-Encrypted: i=1; AFNElJ+fV0s5MQx0YbUsW7lTirTtZM+H3mHG+itRgHHUfCZFTMytlB5IuZN3Sz+BMLthCIVrduY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZZwaWYJgzHTa5Oj25BK+2W+5qkjoMsdDN6RLGSFxx1p+GSmx0
+	OvZPopnz7f+aPOGGR1+xKXYmw7k70v0G0eyc3c7TmB6Sf48P/5Iu3E2mAvPTD+kUvs29wxuM8Dy
+	HnJQIrdmgpHSpoXajcHyy1hUBKpIcORKq+xxr
+X-Gm-Gg: Acq92OFAVYs57GWb/LPLvMq70QoDqwe0GfOj83HNLLemJ7kwbqBW+CFFu/D1ItzRaGD
+	BVIl/QofRnOl6NlQ7ZCgkPhTRLlyCSTo8LA87MELT7PG1AqhCfo5UuIXF1kHN7DO1ya3eYCSHQW
+	yjLIN8Vdtu32wWxDJXYtg+/pihVYHX14nGAMGM2LDWivtWCYNwGx7dvHfoCJ5wq3xjaXTA/2S+U
+	RxD7riNmna5WkCzKTV1YKg0WJiNpvxfUPyY0KsKtY87Uj1AlmQGGadQG4WIKZ3bEBYKrnTtFsMT
+	+2ENiXaaHR+mTkxZhhE+Iyap6V2P88bxdi0cFdMD
+X-Received: by 2002:a05:6820:4b04:b0:69d:5b47:bffc with SMTP id
+ 006d021491bc7-69d7ecf2f95mr6095253eaf.58.1779645700886; Sun, 24 May 2026
+ 11:01:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+References: <pull.2120.git.1779415884.gitgitgadget@gmail.com>
+ <8c0ea0bc0742651e634db7a3002e8cbe1240acf9.1779415884.git.gitgitgadget@gmail.com>
+ <xmqq33zkui4q.fsf@gitster.g> <CAC2QwmKkwnr+TvLDnDuLEvGJeoraB=_YWC6idA57dxUqQ_5Fcg@mail.gmail.com>
+ <xmqqtsrxi43j.fsf@gitster.g>
+In-Reply-To: <xmqqtsrxi43j.fsf@gitster.g>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sun, 24 May 2026 11:01:29 -0700
+X-Gm-Features: AVHnY4Jo9mHmtYfspCIAndJrNNqiB7oqpnA4znUE5HuZ7xp27ADpvEIiKPwZXEE
+Message-ID: <CAC2QwmLbFvMetGdVFdzJ3MmHo95LPx2Mohpj8NHk=uxKwt+ckA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] xdiff: support external hunks via xpparam_t
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristofer Karlsson <krka@spotify.com>
+On Sun, May 24, 2026 at 1:50=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Michael Montalbo <mmontalbo@gmail.com> writes:
+>
+> >> > +      * Clear changed[] arrays.  xdl_prepare_env() may have dirtied
+> >> > +      * them via xdl_cleanup_records().  The allocation is nrec + 2
+> >> > +      * elements; changed points one past the start (see xprepare.c=
+).
+> >> > +      */
+> >> > +     memset(xe->xdf1.changed - 1, 0,
+> >> > +            (xe->xdf1.nrec + 2) * sizeof(bool));
+> >> > +     memset(xe->xdf2.changed - 1, 0,
+> >> > +            (xe->xdf2.nrec + 2) * sizeof(bool));
+> >>
+> >> This, especially the starting offset of -1, looks horrible.  The
+> >> internal layout of xdfenv_t might happen to match the way the above
+> >> code expects, which is how xdl_prepare_ctx() may have give you, but
+> >> it somehow feels brittle.  I guess the assumption that changed[]
+> >> does not point at the beginning of the allocated area (e.g., it is a
+> >> no-no to free(xe->xdf1.changed) or realloc() it) is so pervasive that
+> >> it cannot be helped.  Sigh.
+> >>
+> >
+> > Agreed it is ugly. I wanted to make sure the entire changed[] including
+> > sentinels were clear as a defensive measure for downstream callers
+> > (xdl_change_compact). I agree this results in something that is ugly
+> > and brittle, but in the end I thought it was superior to relying on the
+> > fact that upstream zeroes the entire changed[] array. Maybe if the
+> > comment was more explicit about why this is happening it would be
+> > helpful?
+>
+> Perhaps make these memset() into calls to a helper function that is
+> defined in xdiff/xprepare.c with a descriptive name and placed near
+> where xdl_prepare_ctx() is.  That way, the patch in question does
+> not even have to expose the strangeness of changed[] (i.e., it has 2
+> more elements than it would normally contain to make the memory
+> region for changed[-1] and changed[N] valid, and freeing it requires
+> free(changed-1)) to the code path.  It only needs to say "Hey, I am
+> clearing changed[] arrays because of XXX" without having to say "by
+> the way, the memory layout of changed[] is strange this way", the
+> latter of which is not exactly of interest for readers of this code.
+>
+> >     /*
+> >      * Clear changed[] arrays including sentinels.
+> >      * xdl_prepare_env() may have dirtied them via
+> >      * xdl_cleanup_records(), and xdl_change_compact() reads
+> >      * the sentinel at changed[-1] during backward scans.
+> >      */
+>
+> And this belongs in xdiff/xprepare.c near that new helper function.
 
-Apply the same nonstale_count optimization from the previous commit
-to ahead_behind(). This replaces the remaining caller of the O(n)
-queue_has_nonstale() scan with an O(1) counter check, allowing
-queue_has_nonstale() to be removed.
-
-ahead_behind() already deduplicates queue entries using the PARENT2
-flag (via insert_no_dup), so the counter is maintained through
-insert_no_dup() and mark_stale() using PARENT2 as the queued_flag.
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
- commit-reach.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
-
-diff --git a/commit-reach.c b/commit-reach.c
-index 356ff52d08..41deb8fc78 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -61,16 +61,6 @@ static void mark_stale(struct commit *c, unsigned queued_flag,
- 	}
- }
- 
--static int queue_has_nonstale(struct prio_queue *queue)
--{
--	for (size_t i = 0; i < queue->nr; i++) {
--		struct commit *commit = queue->array[i].data;
--		if (!(commit->object.flags & STALE))
--			return 1;
--	}
--	return 0;
--}
--
- /* all input commits in one and twos[] must have been parsed! */
- static int paint_down_to_common(struct repository *r,
- 				struct commit *one, int n,
-@@ -1051,12 +1041,15 @@ struct commit_list *get_reachable_subset(struct commit **from, size_t nr_from,
- define_commit_slab(bit_arrays, struct bitmap *);
- static struct bit_arrays bit_arrays;
- 
--static void insert_no_dup(struct prio_queue *queue, struct commit *c)
-+static void insert_no_dup(struct prio_queue *queue, struct commit *c,
-+			  int *nonstale_count)
- {
- 	if (c->object.flags & PARENT2)
- 		return;
- 	prio_queue_put(queue, c);
- 	c->object.flags |= PARENT2;
-+	if (!(c->object.flags & STALE))
-+		(*nonstale_count)++;
- }
- 
- static struct bitmap *get_bit_array(struct commit *c, int width)
-@@ -1082,6 +1075,7 @@ void ahead_behind(struct repository *r,
- {
- 	struct prio_queue queue = { .compare = compare_commits_by_gen_then_commit_date };
- 	size_t width = DIV_ROUND_UP(commits_nr, BITS_IN_EWORD);
-+	int nonstale_count = 0;
- 
- 	if (!commits_nr || !counts_nr)
- 		return;
-@@ -1100,14 +1094,17 @@ void ahead_behind(struct repository *r,
- 		struct bitmap *bitmap = get_bit_array(c, width);
- 
- 		bitmap_set(bitmap, i);
--		insert_no_dup(&queue, c);
-+		insert_no_dup(&queue, c, &nonstale_count);
- 	}
- 
--	while (queue_has_nonstale(&queue)) {
-+	while (nonstale_count > 0) {
- 		struct commit *c = prio_queue_get(&queue);
- 		struct commit_list *p;
- 		struct bitmap *bitmap_c = get_bit_array(c, width);
- 
-+		if (!(c->object.flags & STALE))
-+			nonstale_count--;
-+
- 		for (size_t i = 0; i < counts_nr; i++) {
- 			int reach_from_tip = !!bitmap_get(bitmap_c, counts[i].tip_index);
- 			int reach_from_base = !!bitmap_get(bitmap_c, counts[i].base_index);
-@@ -1136,9 +1133,9 @@ void ahead_behind(struct repository *r,
- 			 * queue is STALE.
- 			 */
- 			if (bitmap_popcount(bitmap_p) == commits_nr)
--				p->item->object.flags |= STALE;
-+				mark_stale(p->item, PARENT2, &nonstale_count);
- 
--			insert_no_dup(&queue, p->item);
-+			insert_no_dup(&queue, p->item, &nonstale_count);
- 		}
- 
- 		free_bit_array(c);
--- 
-gitgitgadget
+That sounds a lot nicer. Will update.
