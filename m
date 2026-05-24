@@ -1,68 +1,64 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137ED13B7AE
-	for <git@vger.kernel.org>; Sun, 24 May 2026 17:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0205F393DC7
+	for <git@vger.kernel.org>; Sun, 24 May 2026 17:42:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779644422; cv=none; b=baAFtTX/LixNLOmDsGpx0rL7/JzC9FIzEniYS7IszxiPk/eYUgxLWqnAAg94O+UKPXLs0vSWKr/i06xfP4dpjYMFP50AbyiM3wFBbLmf/qtSEICDSQRA+qN6m5n2amolC1MPz24KzLX55qzZI3kzZA/VQSLFtD7gt8WlD32GVms=
+	t=1779644545; cv=none; b=C/jrH1RZL4bpc66s1wnxFFN77KnkcM0dp761KelvBOSQODTA8dlVI6lox3h5UZdALzOdHMk5jD0oVGCANWzPd7+qIbyBRv03yE4fRl11ViA9dGb9PCja++/IZQciZ1jiLjMCLtbaNLf/BoNS4VKlP4T8KgxDSxf3hvmtwuaGafE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779644422; c=relaxed/simple;
-	bh=RPf0EdqQozY95WFpYXjn/elQR87Gx41GRI+jc/RriLs=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=i45bxNlef1OcVviPOOBJKY5wWc2dv1/1ksi+Ibl1DpwjjIO1P70IrKLFVcf4crN09WbKDRW5uVgJHa6VAQvjZtGiEl+ZuKxU+9mFtsKmzM+xJ4Z0HruZpoT7Hruwh2H+/w5cEp6h8pmRfJqP+8olg/mzPNh3nmK9AmZMZN/wrPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ihv0lTY/; arc=none smtp.client-ip=209.85.160.179
+	s=arc-20240116; t=1779644545; c=relaxed/simple;
+	bh=c6BhRptdGswUTE8UG6wLKTt986oyaXl/QiFlTO70f5Y=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZpGUg3GND+aNG7MJYjUaSN6fHK/bPR6hzlkJTxso6U0Sugdvkvcm/z6+/4oyzwOTsV3XOIxbyRmWJxuySWZX+cTw/c9yax6x8EbJWeddVfm6FYeXjT5tCaAq3N5p3BqbxWkTbHuV+ouQ/FYL1nnoz1l3lXsyZU2MCe8N8GNeyrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Obw+GlQM; arc=none smtp.client-ip=209.85.219.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ihv0lTY/"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-50e63771d91so86179431cf.0
-        for <git@vger.kernel.org>; Sun, 24 May 2026 10:40:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Obw+GlQM"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8b7105dfb35so120045466d6.3
+        for <git@vger.kernel.org>; Sun, 24 May 2026 10:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779644420; x=1780249220; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779644543; x=1780249343; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ci9b31Gy8cacGxUm0cUrKxyzn/+zqa8PyufDrdqX5Ps=;
-        b=Ihv0lTY/5As8C4QPjXRcokkDDEpbIG734ilJNxyNPOeh+JToWL4oVHtokZzpV+H6nF
-         kAXM54VHBPUk/otuOi590p1cqWD8mFxAqcWp1v8Pq73wl1/STCSDNBG8VtSStU3nx+xr
-         7LjtKSwS4YHnGDoBcOXe3PMyqWbJam9MiFLGbk2HbiDEK8uEiLs4nVG0XNCh9qTMByYj
-         IdXBmBtkTAQR8D2VuXw01wj3xVtTOoNTFm2vpx9QL+SVXH+Z/rc3UMywf1yJOYfyHEW7
-         7oYG/0E3KTquXFi1RuE0yw56weiMkm/q1+mtWYvN+rrnCwF126zrPcWIvu+dK8PAACkQ
-         /myg==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=tXn6g/gvKCFnnOmtKyIo5L7S7TZaouzE4jVYyosbWIE=;
+        b=Obw+GlQMXDwTQGXCt3QDGRmaZQQSz/oed6iWo1f3nX4N8RVOa0msOcAoXWkqw1iNxS
+         rlzt6l58vBZquZkT7uJHLk/UL612+6RxdArG6tE2TtUCd1UeLJuZW7cyEWKW54swMRNO
+         yNtY7hCWRNNxkvB4Br2YgpxRb0y0A3eWJgS7nvD5VeV9a/tOgvNCvogLI0EdFyVME2hs
+         3AxAP/ZXl6l2AZBcGv3XD0F8/HYuLYvryJnJUyPVqVjzgQIDzDmD+93Zjuwj+vQF5Qrw
+         DDqQsAGo5jdTg5AfQRD4uXLtIB2yyriXPNNBZ61R83UGlCkn4e0pNIFjs8AT+AF7gPjO
+         psNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779644420; x=1780249220;
+        d=1e100.net; s=20251104; t=1779644543; x=1780249343;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Ci9b31Gy8cacGxUm0cUrKxyzn/+zqa8PyufDrdqX5Ps=;
-        b=tLGjyF9Q0vBdNmsIVGTlt0euYlsIqWiq4H7W0LpPBrNHxE1w11GwsJ0FjNnpBbVcyf
-         HNZhBp1mInQoHzPu3YdNaagnoZlOPav/GIRrk7je3IpxOPTA2moa5F0+o6H3J8HavKlu
-         T5lBvotclkGffQqiTww7FNydvnBofAJu4DHjAtRJX563/qo65z75aQr7aU5EtGnDL+Sn
-         RtCSr15ZBnTzi2NOFuew9UVyqf+TDtPR43ozJcbIneyf3d6VqqyQvcY+hRgh4gyxA6pQ
-         8Py77aeNz8dSk+qUXrC2l9qdL5mzMP3PvEaDM+K1AY4DjVuyqZIOQqIwsEMIHvsU+V2F
-         6vbw==
-X-Gm-Message-State: AOJu0YzzkA0Pg8jHHNKnFr9/OZvcKyoZySVMlDDHobs+3cN6vpJkwdY5
-	4UwuHRmgDNYKx4312063YqlrSuEkdSvRYSujSuNdLpM+b2OCf6bd+Kzk31CqDQ==
-X-Gm-Gg: Acq92OGPWoGWTW7CdzIirq0/+a00FBa/wJ/xaw4tJvJt9rwlsBnCNysQHTbK+2hKVMW
-	Xpij8pVjOITAsOFXjbHAy4U8zshxrjX3QnCUALA7mfDZG/cn86L7nw+HVDr86K1eX+iaF0CobZl
-	LOZf2VOAGkCXVPxKpzpzryk6FVQkufmqiwIyTJdvLAXj59tdUmH3i6HN/OsZcMx5ESP2xsVM12W
-	tQPx9NU2f7LW+dY/gVn5VlJdzQ2J35xMO0MSOxYMBnbgi0k6TkkNXQp7vq+DfvYaUb9h6w1vLJt
-	Im6Oy1xAahmWGQDBqNiHgZLlGBOP5sVVuJ77+UxC/qUDx7aWJ6QfoPZu7iSQ1JjbUhZDi8Pv8eS
-	YDTAjLIOmK9+cDjxvBJbvtovsXxnGgorl1wxHqpcF+jKLQJrYUj81UZWO9LrGG/FXnHoiKk07ZS
-	pRvbQKel1zNa7MBPcGgN8Kgsyx
-X-Received: by 2002:a05:622a:1348:b0:516:d570:82a9 with SMTP id d75a77b69052e-516d57095bemr168619571cf.56.1779644418996;
-        Sun, 24 May 2026 10:40:18 -0700 (PDT)
-Received: from [127.0.0.1] ([20.161.78.65])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc8131fc67sm89167426d6.45.2026.05.24.10.40.17
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tXn6g/gvKCFnnOmtKyIo5L7S7TZaouzE4jVYyosbWIE=;
+        b=fOTvDSJG3/8figDUbYVo5Azf8PRb3s5vlqOSGYr8KmP/GtnoOGK5PuSVPKoDSBIJc9
+         c1onMvAEH97SkX8/WZ4uwP37P9Xq5kyC1X6jUBqOAtldoOU/HbiwmX/qXF+TYazF35A/
+         lDbiTjTiMeO+Nfhc43gk98zo7NGaI2KAJm9LZLL8TMiofWHKI7ThN4JL83DRa+BkYXJP
+         s+4WpngsBpsUztRw43mdSBEvjNadNSRnOvnY+NIYyaon6WKQObNrj6PCXbSZU9waLD8H
+         1o1Db/w7ZvYSyzTfbxNZuSq0qIblk09S+XpHSXy06pXa0jMYer9DsrEfU1CIlqGbSnkn
+         FC8w==
+X-Gm-Message-State: AOJu0Yz0Rxf2y220JOBs2utE1WOcSiSkQzhFWl+BICB/Mvvx1sqIRY8l
+	wimgIWB9pVO27o4XWP7jLCH2H7JF4dBJoOK8QDUejNjG866xnAULs7GDQDaAPsAk
+X-Gm-Gg: Acq92OH2Q4pxvQjLlv6iS/E/DJ1kwkEj+CR9vy8ET5ebbbrv0qAFP/mBxIcTUU5Hqys
+	QTru/LoaYLPyM9wR1PFiKIe78tZrBd6CnEdIaF1nf+jyTuByrk4dY6sr+coDj+oajyNKDJucfCA
+	VXkbsgrGAI2vyc0Z5FHrPXEfO0qkoKI3bjoroZy3/kSppxM5CTflBG+eGtyqnUctlPujuAUD/+1
+	xypS6KBlLaxoofjXHEc89Xq+jASd3SK6EXBvN8D3+Cb2qxQ/+RbGQClsvEoXRz2DV2KJ7oQXz8m
+	8RfSaIV5i8pT5q6usddkYrELvW5NY4h775D2XW1Z/biUQkJYKzcisCIH6TeLSaN/FAnY9FhyVdV
+	Jwlf2spKZHgWEfe0hrVq/D6upsvNx6LoWmw7J6N8/Y8bMHs1qWVAy/M1rr76cvAgek7RZRh2lQd
+	RGZnRQ0E7jiVWNDJh33uxdE5psYA==
+X-Received: by 2002:a05:6214:498f:b0:8ca:1e60:9312 with SMTP id 6a1803df08f44-8cc7b56a0camr194089226d6.17.1779644543014;
+        Sun, 24 May 2026 10:42:23 -0700 (PDT)
+Received: from [127.0.0.1] ([20.102.235.84])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc81306c57sm88535816d6.34.2026.05.24.10.42.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 May 2026 10:40:18 -0700 (PDT)
-Message-Id: <47542cbd42eb13b63d0d852fb2f5bf967952b318.1779644412.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2121.git.1779644412.gitgitgadget@gmail.com>
-References: <pull.2121.git.1779644412.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 24 May 2026 17:40:12 +0000
-Subject: [PATCH 2/2] restore: avoid sparse index expansion
+        Sun, 24 May 2026 10:42:21 -0700 (PDT)
+Message-Id: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 24 May 2026 17:42:17 +0000
+Subject: [PATCH 0/3] commit-reach: replace queue_has_nonstale with a counter
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,172 +69,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Cc: Kristofer Karlsson <krka@spotify.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+paint_down_to_common() and ahead_behind() terminate when every commit in
+their priority queue is STALE. The current check, queue_has_nonstale(), does
+an O(n) linear scan of the queue on every iteration, costing O(n*m) total
+where n is the queue size and m is the number of commits processed. This
+series replaces that scan with an O(1) counter.
 
-Teach update_some() to handle sparse directory entries at the tree
-level rather than expanding the entire sparse index. When iterating a
-source tree during checkout/restore operations:
+Performance measurements with git merge-base --all and git for-each-ref
+--format='%(ahead-behind:...)':
 
- - If a directory matches a sparse directory entry with the same OID,
-   skip it entirely (no change needed).
+git.git (merge-base)
+                                          Baseline  Dedup  Dedup+Ctr
+seen..next, 33 merge bases:               157ms    165ms    143ms
+seen..master, 1 base:                      47ms     40ms     44ms
+master..next, 1 base:                      62ms     60ms     63ms
 
- - If the OID differs and we are in non-overlay mode (e.g., restore
-   --staged), update the sparse directory entry's OID in place. This
-   is semantically correct because non-overlay mode removes paths not
-   in the source tree anyway.
+(seen=fe056fe1, next=c82f1880, master=6a4418c3)
 
- - In overlay mode (e.g., checkout <tree> -- .), fall through to
-   recursive descent so individual file entries are preserved
-   correctly.
+Large monorepo, 2.4M commits (merge-base)
+                                          Baseline        Dedup+Ctr
+component import, wide frontier (1):      8083ms           3778ms
+component import, wide frontier (2):      5664ms           4207ms
+component import, wide frontier (3):      4558ms           1796ms
 
-Also switch from index_name_pos() to index_name_pos_sparse() for
-individual file lookups to avoid triggering ensure_full_index() when
-the file is already individually tracked in the index.
+Large monorepo, 2.4M commits (ahead-behind)
+                                          Baseline        Dedup+Ctr
+component import, wide frontier (1):      8216ms           4145ms
+component import, wide frontier (2):      6107ms           4528ms
+component import, wide frontier (3):      4725ms           1999ms
 
-Update the test expectation in t1092 to assert that 'restore --staged'
-no longer expands the sparse index.
+Linear history (merge-base), no regression:
+master vs HEAD~10000:                     4410ms           4180ms
+master vs HEAD~50000:                     4412ms           4494ms
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- builtin/checkout.c                       | 57 +++++++++++++++++++++---
- t/t1092-sparse-checkout-compatibility.sh |  8 ++--
- 2 files changed, 55 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1345e8574a..67f03dea10 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -31,6 +31,7 @@
- #include "revision.h"
- #include "sequencer.h"
- #include "setup.h"
-+#include "sparse-index.h"
- #include "strvec.h"
- #include "submodule.h"
- #include "symlinks.h"
-@@ -142,14 +143,56 @@ static int post_checkout_hook(struct commit *old_commit, struct commit *new_comm
- }
- 
- static int update_some(const struct object_id *oid, struct strbuf *base,
--		       const char *pathname, unsigned mode, void *context UNUSED)
-+		       const char *pathname, unsigned mode, void *context)
- {
- 	int len;
- 	struct cache_entry *ce;
- 	int pos;
-+	int overlay_mode = context ? *((int *)context) : 1;
- 
--	if (S_ISDIR(mode))
-+	if (S_ISDIR(mode)) {
-+		/*
-+		 * If this directory exists as a sparse directory entry in
-+		 * the index, we can handle it at the tree level without
-+		 * descending into individual files.
-+		 */
-+		if (the_repository->index->sparse_index) {
-+			struct strbuf dirpath = STRBUF_INIT;
-+
-+			strbuf_addbuf(&dirpath, base);
-+			strbuf_addstr(&dirpath, pathname);
-+			strbuf_addch(&dirpath, '/');
-+
-+			pos = index_name_pos_sparse(the_repository->index,
-+						    dirpath.buf, dirpath.len);
-+			if (pos >= 0) {
-+				struct cache_entry *old =
-+					the_repository->index->cache[pos];
-+				if (S_ISSPARSEDIR(old->ce_mode)) {
-+					if (oideq(oid, &old->oid)) {
-+						strbuf_release(&dirpath);
-+						return 0;
-+					}
-+					if (!overlay_mode) {
-+						/*
-+						 * In non-overlay mode (e.g.,
-+						 * restore --staged), we can
-+						 * replace the sparse dir OID
-+						 * directly since files not in
-+						 * the source tree should be
-+						 * removed anyway.
-+						 */
-+						oidcpy(&old->oid, oid);
-+						old->ce_flags |= CE_UPDATE;
-+						strbuf_release(&dirpath);
-+						return 0;
-+					}
-+				}
-+			}
-+			strbuf_release(&dirpath);
-+		}
- 		return READ_TREE_RECURSIVE;
-+	}
- 
- 	len = base->len + strlen(pathname);
- 	ce = make_empty_cache_entry(the_repository->index, len);
-@@ -165,7 +208,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
- 	 * entry in place. Whether it is UPTODATE or not, checkout_entry will
- 	 * do the right thing.
- 	 */
--	pos = index_name_pos(the_repository->index, ce->name, ce->ce_namelen);
-+	pos = index_name_pos_sparse(the_repository->index, ce->name, ce->ce_namelen);
- 	if (pos >= 0) {
- 		struct cache_entry *old = the_repository->index->cache[pos];
- 		if (ce->ce_mode == old->ce_mode &&
-@@ -182,10 +225,11 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
- 	return 0;
- }
- 
--static int read_tree_some(struct tree *tree, const struct pathspec *pathspec)
-+static int read_tree_some(struct tree *tree, const struct pathspec *pathspec,
-+			  int overlay_mode)
- {
- 	read_tree(the_repository, tree,
--		  pathspec, update_some, NULL);
-+		  pathspec, update_some, &overlay_mode);
- 
- 	/* update the index with the given tree's info
- 	 * for all args, expanding wildcards, and exit
-@@ -580,7 +624,8 @@ static int checkout_paths(const struct checkout_opts *opts,
- 		return error(_("index file corrupt"));
- 
- 	if (opts->source_tree)
--		read_tree_some(opts->source_tree, &opts->pathspec);
-+		read_tree_some(opts->source_tree, &opts->pathspec,
-+			       opts->overlay_mode);
- 	if (opts->merge)
- 		unmerge_index(the_repository->index, &opts->pathspec, CE_MATCHED);
- 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index d69434e7ab..8186da5c88 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2608,19 +2608,19 @@ test_expect_success 'restore --staged with wildcards' '
- 	test_all_match git diff --cached
- '
- 
--test_expect_success 'sparse-index is expanded: restore --staged' '
-+test_expect_success 'sparse-index is not expanded: restore --staged' '
- 	init_repos &&
- 
- 	git -C sparse-index checkout -b restore-staged-exp base &&
- 	git -C sparse-index reset --soft update-folder1 &&
--	ensure_expanded restore --staged .
-+	ensure_not_expanded restore --staged .
- '
- 
--test_expect_success 'sparse-index is expanded: restore --source --staged' '
-+test_expect_success 'sparse-index is not expanded: restore --source --staged' '
- 	init_repos &&
- 
- 	git -C sparse-index checkout -b restore-source-staged base &&
--	ensure_expanded restore --source update-folder1 --staged .
-+	ensure_not_expanded restore --source update-folder1 --staged .
- '
- 
- test_done
+The improvement depends on how wide the frontier gets during the walk.
+Component imports in the monorepo create wide frontiers where the queue
+grows large, making the O(n) scan expensive -- up to 2.5x speedup for
+merge-base and 2.4x for ahead-behind. Linear history and simple merges show
+no regression.
+
+With a very narrow frontier the counter approach adds a small constant
+overhead per iteration (maintaining the counter and the ENQUEUED flag)
+compared to the old scan which would return almost immediately. Both are
+O(1) and cheap in that scenario, so it should not matter in practice -- the
+benchmark numbers above confirm this.
+
+Kristofer Karlsson (3):
+  commit-reach: deduplicate queue entries in paint_down_to_common
+  commit-reach: optimize queue scan in paint_down_to_common
+  commit-reach: optimize queue scan in ahead_behind
+
+ commit-reach.c | 58 ++++++++++++++++++++++++++++++++++++--------------
+ object.h       |  2 +-
+ 2 files changed, 43 insertions(+), 17 deletions(-)
+
+
+base-commit: 6a4418c36d6bad69a599044b3cf49dcbd049cb45
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2124%2Fspkrka%2Fqueue-has-nonstale-v3-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2124/spkrka/queue-has-nonstale-v3-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2124
 -- 
 gitgitgadget
