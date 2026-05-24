@@ -1,24 +1,24 @@
 Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C829E265623
-	for <git@vger.kernel.org>; Sun, 24 May 2026 07:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3001A9B58
+	for <git@vger.kernel.org>; Sun, 24 May 2026 07:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779606044; cv=none; b=hL/r3PgiFtwVOyt9zX6tqOj0EcarG0sOeHFEysxeDvRbnWjWlaudYpojiT5BcHI96GCBOcG+3X8Sk7bL709/a1qvTcpnSUrt5Wrlv+RTWEpUXt7hif26ij6ix1hMP38SElJ4nf29ufffYSUPHcXHGiDOCpq8M7W80uqfMPY5Po0=
+	t=1779607000; cv=none; b=U8nipwCer0DGMheSw/EiQFhOqI10+7BE1NUtAyg/ZF2T3pSuDjgEFvt/QkHIiZHBWklcp010zylDvSgiB2tz3fAu//GHnDBvtFM18cvqjp7vMAtbqdjP9VjB5KrvG7a/pek4h7D1x2OXCu694EWzLB/7Wb1o/fLxrW+G6EVPG6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779606044; c=relaxed/simple;
-	bh=uGJu45hnTcADybiwVTTrh0XJ3tvPqCg64YznY4D7VH4=;
+	s=arc-20240116; t=1779607000; c=relaxed/simple;
+	bh=dXZ6tQcmLdwadFoOatsmwkedsrwVEwUYtKqfLJw40SE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iLvjG+D3PoIrqMy55hZgvF2OtQkeHZrnFppKffQp9j+0Iw65DXo0t0nqEdhA0oz0TrkcW/e4IGB3rUki6oT5XjLzHI//0R2GmYw2t7ZO9Upp5DA3L5j30V7nCJAYY7DDm4etmsujAEYV8ii8VtFLUp1sSCz/Qiiio2ygw5nWp1o=
+	 In-Reply-To:Content-Type; b=JxnYpqmbmwyh/1c+kovssDSIwrEO6aO3FaBaaCyGkK/ZxhSnhL5YSrLznFeu1vraF4kLDhCCpxFLIyxQKnYipb2ot/y/4wodQpMhagrSVEM/CO2uoB+W4rHaSGAaM3FwBYhQB81emcGHtDt4p2ONsOGUdmffGNO9+PcV2FKZF8Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
 Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4gNVJv166GzRnmQ;
-	Sun, 24 May 2026 09:00:31 +0200 (CEST)
-Message-ID: <03385a9e-bc94-4096-8fa5-7b8298269230@kdbg.org>
-Date: Sun, 24 May 2026 09:00:30 +0200
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4gNVgP1V5XzRnCp;
+	Sun, 24 May 2026 09:16:33 +0200 (CEST)
+Message-ID: <43f070e4-e624-4a33-8c24-294520fb503a@kdbg.org>
+Date: Sun, 24 May 2026 09:16:33 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,83 +26,87 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/11] git-gui: add gui and pick as explicit
- subcommands
+Subject: Re: [PATCH v2 00/11] Improve git gui operation without a worktree
+Content-Language: en-US
 To: Mark Levedahl <mlevedahl@gmail.com>
 Cc: egg_mushroomcow@foxmail.com, bootaina702@gmail.com, git@vger.kernel.org
 References: <20260514143322.865587-1-mlevedahl@gmail.com>
  <20260520202411.108764-1-mlevedahl@gmail.com>
- <20260520202411.108764-12-mlevedahl@gmail.com>
-Content-Language: en-US
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20260520202411.108764-12-mlevedahl@gmail.com>
+In-Reply-To: <20260520202411.108764-1-mlevedahl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Am 20.05.26 um 22:24 schrieb Mark Levedahl:
-> git-gui accepts subcommands blame | browser | citool, and assumes the
-> subcommand is 'gui' if none is actually given, But, git-gui also has a
-> repository picker (choose_repository::pick) that can create a new
-> repository + worktree, or choose an existing one, switch to that, and
-> the run the gui. The user has no direct control over invoking the
-> picker, instead the picker is triggered by failure in the repository /
-> worktree discovery process: this includes being started in a directory
-> not controlled by git, which is probably the intended use case.
+Am 20.05.26 um 22:23 schrieb Mark Levedahl:
+> git gui has a number of inter-related problems that result in problems
+> during startup from anything but a checked out worktree pointing at a
+> valid git repository. Some of the symptoms are:
+> - blame / browser subcommands, and launching gitk, are intended to be
+>   useful without a worktree, but fail to work.
+> - unlike git, git-gui is supposed to use the parent directory as a
+>   worktree if started from the .git subdirectory in the very common
+>   single worktree + embedded git repository format. This does not
+>   work.
+> - git-gui includes a repository picker allowing a user to select a
+>   worktree from a list and/or start a new repo+worktree: this dialog can
+>   appear at unexpected times, masking useful error feedback on
+>   configuration problems.
 > 
-> The picker can appear when the user has no intention of creating a new
-> worktree, and the user cannot use the picker to create a new worktree
-> inside another.
+> This patch series addresses the above issues, substantially rewriting
+> the initial repository/worktree process to rely upon git rev-parse so
+> that git's knowledge of access rules, repository configuration, and use
+> of GIT_DIR / GIT_WORK_TREE (or git --gitdir / --work-tree) is used
+> throughout, replacing code largely based upon what git did in 2008. This
+> also means that git gui will naturally gain any new rules implmented in
+> git-core.
 > 
-> So, add two explicit subcommands:
->     gui  - Run the gui if repository/worktree discovery succeeds, or die
->            with an error message, but never run the picker.
->     pick - First run the picker, regardless, then start the gui in
->            the chosen worktree.
+> With this, git-gui only exports GIT_WORK_TREE when non-empty.
+> GIT_WORK_TREE is needed, and must be exported, if the user is overriding
+> core.worktree in the git repository. But, GIT_WORK_TREE cannot be used
+> to specify the lack of a worktree, so exporting an empty GIT_WORK_TREE
+> is one of the problems fixed by this series.
 > 
-> Nothing in this changes the prior behavior, the alternates above must be
-> explicitly selected to see any change.
+> v2 of this series is a very substantial rewrite driven by j6t's review,
+> with patches reoranized and squashed, interfaces to the repository
+> chooser changed, a different code structure to allow user control of the
+> repository picker, a different approach to fixing the command line
+> parser for blame / browser, and other more minor changes. Patches
+> for fixing blame / browser are now after all discovery refactoring as
+> they cannot be tested without some of those fixes.
+> 
+> Many subtle things are fixed beyond the list at the top, including
+> better compatibility with git blame and repeatable browser / blame
+> operation for specific revs not in the worktree, regardless of the
+> worktree state. j6t indicated that in the git-gui project, the following
+> fails in the current release:
+> 
+> cd lib
+> GIT_DIR=$PWD/../.git GIT_WORK_TREE=$PWD/.. ../git-gui.sh browser origin/master .
+> 
+> This is due to a _prefix issue, and is fixed as of the patch
+>      git-gui: use git rev-parse for worktree discovery
+> 
 
-Good.
+I've completed my review of this iteration.
 
-> @@ -1174,7 +1184,7 @@ proc unset_gitdir_vars {} {
->  
->  # find repository.
->  set _gitdir {}
-> -if {$_gitdir eq {}} {
-> +if {[is_enabled gitdir_discovery]} {
+Repository and working tree discovery is already converging fast.
+However, I have issues with the proposed argument parsing of the browser
+and blame modes, in particular, I don't think that we need to
+accommodate the uncanny file-before-rev argument order and that it
+disregards the worktree completely. Maybe we should postpone any changes
+in this area, if possible?
 
-This makes a factually unconditional branch into a conditional one.
+Throughout, we use a strange indentation style of 'if {[catch ...' that
+is violated in new code, but I left uncommented. It should indent the
+catch body one additional level like so:
 
->  	if {[catch {
->  		set _gitdir [git rev-parse --absolute-git-dir]
->  	} err]} {
-> @@ -1186,7 +1196,7 @@ if {$_gitdir eq {}} {
->  }
->  
->  set picked 0
-> -if {$_gitdir eq {}} {
-> +if {$_gitdir eq {} && [is_enabled picker]} {
->  	unset_gitdir_vars
->  	load_config 1
->  	apply_config
-> @@ -1202,6 +1212,12 @@ if {$_gitdir eq {}} {
->  	set picked 1
->  }
->  
-> +if {$_gitdir eq {}} {
-> +	catch {wm withdraw .}
-> +	error_popup [strcat [mc "Git directory not found:"] "\n\n$err"]
+	if {catch {
+			commands that can fail
+		} err]} {
+		error handling here
+	}
 
-I wondered where this $err is filled in, and it can only be the error
-from a failed gitdir discovery. Good.
-
-> +	exit 1
-> +}
-> +
->  # find worktree, continue without if not required
->  if {[catch {
->  	set _gitworktree [git rev-parse --show-toplevel]
-This looks good!
+Thank you very much for working on this topic.
 
 -- Hannes
 
