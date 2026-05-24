@@ -1,228 +1,200 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AD21DFFD
-	for <git@vger.kernel.org>; Sun, 24 May 2026 13:05:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779627912; cv=pass; b=hilzkkzRfT++zCatVUaD9X7NAv5sumtVDaSN5RLZFH/3oQ6mcu+YCWHpAl0tRl6vuY2iGyujVScbF+FoSg1wqsWmS/225rqY7N0RtiUMurKxro2obLDF90AtKI/U/bfko4rE32eo0ZZaTVCAo7YgraCHnpPU8eq3r/S0SiLKgco=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779627912; c=relaxed/simple;
-	bh=ESVcasOeRvr+qMT1iNmOG2O2ywumWhui0KCO46r5Oz0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ExhasqxsXHLeKegxFzyHk6YDUFvzhK8Gui8MV1XQlLekPnZpUx4ERDevq7mRhOqM63ZI7/KrpKwRur16ooBE06c2i8FmpkbnsA37oEtflmtjJu4AEIYFilgu7zxkMTAempnC/4FpZTBx+iwj3yevJ0j9k4OehCPfsyd5yevqeh8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=bXPGlROh; arc=pass smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1058399356
+	for <git@vger.kernel.org>; Sun, 24 May 2026 15:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779634835; cv=none; b=I0Td2GVQ9QPeAYvPjVPfesadTnSFQmelU2CgQqNU9zLfEOc47ny8XPSFHRrP6AM2T0D8SgpJGLlAikoxOl7ydfpT7gougm644Bn3l75Ml9qyyyv5xjSce0o6n4WgY30JSd9e+CqVrIIrirxrVA/hUbB0ysNN56cGFcN7p7MQxc8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779634835; c=relaxed/simple;
+	bh=yRmRuXodaRF68sCz+VlmBR+HtLcB7zZ9+JI1Nfh5rI4=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W0GM5tM7hlgbto3W9V8LJHZ5StjRaXIe9a+lt6/svUhMOSRrdL6P63CRnjH5NN4Lt7l/HV39DW0pRGe6r68niluWVcwp54XKCHGkvd+fE1P0CZLM9kc3KBlLToHDuRhyGA728oHYaxv91c4RVUcrkPNzCXS5tp18W4Feqx9vqU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l17NO8G3; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cervined.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="bXPGlROh"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7bd65714dcaso86292867b3.3
-        for <git@vger.kernel.org>; Sun, 24 May 2026 06:05:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779627909; cv=none;
-        d=google.com; s=arc-20240605;
-        b=cn68fdi1c05ZB8aHJalfixKbUsjb0jd7283gYZgzpt1/3Y8gVx17fycjzKGLx+sZ35
-         W2x4siiHMWL5R8GJ8Lhcao+XqMikHGaCxezXzhQWrAmt2NPpwZ6u2osgUtah8JgNu3/g
-         De6kuPvOM7/lUPOi9EiMmCthR/wHbS+WM4GUhuzsAQibJnS7iJl0Su+BMe3O0LEvsLBv
-         SkDjrvOy9I57DFg/72nfYoPGU6D2xv0MSyhU9heBpsbi8V2uF95DPs00g11VfkjjuSfL
-         sQf0c73lSze2We5lvw5YXEu9n3oySM5reUn9s4kObekXndFv3deVWd/HpCeAS92/XsjR
-         yuDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=FROtN96Iosb2qd2uqwVHijbdMx2YPwP/jzZBcQSMLag=;
-        fh=xVfeUGQU9wchXVAQQFvL97NUfYmzdzCSDcc/rBcymtA=;
-        b=VksK+xJVbqb1E+xKuwdjF5q0Ul1KNJTHtn8m76KvQYlRDyw9cp41z2wZcfPubM7Vv+
-         E8zHB08HsDv55mnJg0wTN7m4cEDX66oFckoIDZtX+ii4HRX6gCG+kDLi8uNe1SjMQWMD
-         iICy42sd0BUnhH4rX0qBiTXLUnEl6yXGnSq93K4TfRqtxrqgTdx8ho897bW1QCdvnb1q
-         IWOlR0uMck4v0RDO75CzF9Npuqg0nRm4Vv0rRLmlp7w2cxCJUXzaBpNDEwpQtlsG3wCS
-         C4UZM6vaQkjXTd0EuIS2HrYIy9BXwUcYlVB8rNBCZXZ8XYCaz9Tj8pg0u6HkRKiC9Tqr
-         08Jg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l17NO8G3"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a995ab70d1so11078391e87.3
+        for <git@vger.kernel.org>; Sun, 24 May 2026 08:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1779627909; x=1780232709; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FROtN96Iosb2qd2uqwVHijbdMx2YPwP/jzZBcQSMLag=;
-        b=bXPGlROh0yN5miHA3RtzhbFtIQnWaLmta61lvtejqRn2eiktyMV2yOCrej3jdlFxtd
-         X3TQLOVQBFiw1s0SDGfGJjnRpxk3sFiSOJHHG2XnJLWrle9CG06B0tAkjTTMSxYx0Rzj
-         2vCsbC351ppq3+mg/bWxpZoUdfdxFmx6HGbbU=
+        d=gmail.com; s=20251104; t=1779634829; x=1780239629; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=x2XsN6IAp7LNOKPsS4JZdXHa+XAwbDhtMNszRpVsmvc=;
+        b=l17NO8G3byLNk0Ygiut1tEKJhf6hpzEfj6np5+5aURUNaVfzzOhVfw8DZd3S05iNox
+         ofiuLnIff67LQRDWFFGcInWcMWNdxL3XFcjSVAhlO1NTc61mWN1kS8HiQ3mdhSBPbZKY
+         tUW+I+GzQsqaCOy+nzWEaPuBUfXGkOqbSB5rRE1kxWaGnf/7qA/R/PYTMmSLrqgr37tH
+         oZAqZnZB+zfx4L0PPyP6JuntorGrTRgC9mue8eO7GWrGvXt7c4IaJs0n1UvB5WO0Q78l
+         PhPUFPAYP6ClpgxMtyKs5ybcRP/6m98udPt+bvYRjOVUytZy7m5b/K10mG3pW7HeoxRW
+         p8Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779627909; x=1780232709;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=FROtN96Iosb2qd2uqwVHijbdMx2YPwP/jzZBcQSMLag=;
-        b=VaE/N4y6hvqiGunBjFXM522YOtgUEod/wMmwqFSMt6Fo5u8RRp6r/vwJvdvKDG/ay2
-         SG6fEw3s+b7ceeqda79iK+KcTAYAUWOK8KAl0X9BGqxLOsAWr/CcZ3/YD7VDsQeMvB5V
-         G5VNBgdCSF7bWdM+Dzx4Yn/iYqWNFRXAlML/7DOJbAUK7LbvppbJxd492CPREi/+99IX
-         7hWNYAEcgI99DxwFaxpXrZi8EV9Q3YhJJbBFhjuf4Kh6FtdABaUe/BGWhNYEk3nKLVCW
-         8Vy7hCZ6NVKugqIxezZswdA/atRLBAWh3U8i1MndS9ajWnG1yPynpCtOMgXTM4D0xQDJ
-         yZig==
-X-Forwarded-Encrypted: i=1; AFNElJ8w+bYpSOc12WJ+9Glx0XKGLffh4G4qxv0jwhAO67npEBKbgG8H0bAiwcWksPQDlK/Gm1w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvKwKHvecE3Keb1u6O8mdFZeqiMSm28HMZJjNx+hmgzdvqUSzk
-	YB1PEmDss8fcQSyWnPL5DKbpaY5FAuUwJ7YpanCvqJQ5F2EWzN3uaiAjVH/txHixxNinyAoHuGG
-	T8M92buZqlqVhx7WBMN8Z07hw5oiKmASR/2RhWrri1Q==
-X-Gm-Gg: Acq92OFTF8QdAtBVCi5weTeHz9Ux0aDf1CmwyjYnK11EAdfuAdojzboNGoF6hVhgxzB
-	TTXCQjU7maEB7CUugkdDclwwVhPkK79Fxx6Vw5X0lkRwuUHRA2QgOvvNzjUF5T09/MZfWEFC202
-	yZB08CEoPQoQaIiN4f+ZoVPcHVqWzHHaN4JCnnOzyYl/xdcoEyZn8ZFWGU6XxJF5jys2kz0lEdb
-	/BBcppgBY7l4JBECxAI/CekFzRweT99B7BEbl5RzOqgAJ2OaVZGfHK3Pg4xh5Z2dZMiZ0w3DLA2
-	fL9kKR3n
-X-Received: by 2002:a05:690c:48c7:b0:7bd:a6ea:c4d4 with SMTP id
- 00721157ae682-7d3367b4fffmr116870047b3.44.1779627908673; Sun, 24 May 2026
- 06:05:08 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779634829; x=1780239629;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:to:from:date:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=x2XsN6IAp7LNOKPsS4JZdXHa+XAwbDhtMNszRpVsmvc=;
+        b=a6e6OUTwb5il2KqJFBqJcDIued1Uh06y95ryhOL0A/958PhDP5uUDwRFjRUDeSpE7R
+         7zLR5C+rKPXV9FHV36Y6gpt3jCDZvqWMh1Nx+rqvtbEyNdO0a588KCDOwg37xi1sA9F1
+         sVsIXSLQyv/VXWLakCBrcuR4LnKOXsdSW5BpzHb3Pq/U13GEMxP3dqX6JUgnHUkt7GzP
+         IZDdIBZ8S0W3xg2c6IRNF06uyyhqgTN86x1eBkQ6cNIRK6UIku/vLmEIpkXd4xTvVY+B
+         MwL7geHfWeYd8NzQ7r8liCWsggGTJ5UO6vKlRABbdlRcLalsbFtw6qGjtmkaSQU4DBQV
+         uMQQ==
+X-Gm-Message-State: AOJu0YzkxHloucR2NCvnjDEIGXarwqIBYNaQcJO8q41nw0CjaYZEz43Z
+	R7nCI+0QWCpZbdP67w+807q/lLHLYzf2hSKtHYvGZ+9UUg7DpF9TudccXQDWWw==
+X-Gm-Gg: Acq92OFDfQEHIZuAVJ9ZtZONwl+D7scJGGvILsQPD+i+W93p1xBoPZKKCrJQfl1w22S
+	5zq0pP7J6ruukQuHxQCTZh0yVVW8Cg5Lzvv13v5LMAFIx+H7nZ/7xA7m4bOY5lJ299DHFD8X2hy
+	/MAiFuAiiDo4ha+DOtddgGWuP5wnkc+n2w7BpxCnPAPG6/UF9T8T4YimKOGx9/cJxGqmY/zm0/o
+	i3G9xDNwT4CQAIVfa0BP379QLizD0URx7lhb3m1wWNgVNCg0ZRX5uDiWIH21GtdQMu05wQb3oi5
+	I1mE2e999wuSnWBO551pLH2HnJcLoaXwFZ713n6eA0N2+24wyRduZc2u9irswem9bOuoks4JW9Y
+	46seZf6j8N/OQ/AZo99BDSI4aJ9UDGpjSaRS5g40n/weyeVEACCgs5hzRGeqNSyVBfVHVFCb+ny
+	rfdhMN9/CqwMnNbrR23fkHUXRQaCLxvb3TIKjWzZedeSyf3SE2VhtWIiSwsoxmzD9lj4hR3UpIp
+	F1gHKVkUJc5VuIDLxBdGycU9jQ/3Xb0UHt7Zb5ZnLJMX1QFZ1+FcMT9o5yyJA==
+X-Received: by 2002:a05:6512:3d17:b0:5a8:84a5:bffa with SMTP id 2adb3069b0e04-5aa323a4992mr3115335e87.5.1779634828812;
+        Sun, 24 May 2026 08:00:28 -0700 (PDT)
+Received: from localhost ([2a02:1406:184:15ad:75eb:b5af:3337:5dd9])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa32ceb596sm1958980e87.46.2026.05.24.08.00.28
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 May 2026 08:00:28 -0700 (PDT)
+Sender: Erik <erik88@gmail.com>
+Date: Sun, 24 May 2026 17:00:26 +0200
+From: Erik Cervin Edin <erik@cervined.in>
+To: git@vger.kernel.org
+Subject: Re: [PATCH 1/1] commit: allow -m/-F with --fixup=amend: or reword:
+Message-ID: <aguM7UIbAo19Zojv@mbp>
+Mail-Followup-To: git@vger.kernel.org
+References: <20260518112225.73172-2-erik@cervined.in>
+ <20260518112225.73172-4-erik@cervined.in>
+ <xmqqik8kc2nj.fsf@gitster.g>
+ <ac6aaaca-2b7c-4892-ba93-0dc3e3c18ff7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2123.git.1779625693328.gitgitgadget@gmail.com> <xmqq4ijxhst9.fsf@gitster.g>
-In-Reply-To: <xmqq4ijxhst9.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Sun, 24 May 2026 15:04:57 +0200
-X-Gm-Features: AVHnY4KrinKQUR0RPNR4BoX8wLY8AztXo3Z0Wyo5XWrqzWAa0X21aJ9ron5IHq0
-Message-ID: <CAL71e4Oct7SHEi+=Xx8Q9LxrRKXi_oov=wm86VyWwioyNCGoaA@mail.gmail.com>
-Subject: Re: [PATCH] fetch: pass transport to post-fetch connectivity check
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ac6aaaca-2b7c-4892-ba93-0dc3e3c18ff7@gmail.com>
 
-Good catch! After finding this case, I looked into the other related
-call sites but found that they are already correct as-is:
-- builtin/clone.c - already passes opt.transport (this is where I
-copied it from)
-- builtin/receive-pack.c (3 calls) - no transport object available to propa=
-gate
-- fetch-pack.c - only used for the --deepen path, which sets
-connectivity_checked when it passes,
-  so the store_updated_refs() check is skipped entirely and transport
-is not needed
-- bundle.c - no need for transport
+> > > --fixup=amend: and --fixup=reword: require an editor to supply the
+> > > replacement commit message. The -m and -F flags are rejected: -m is
+> > > caught by a die() in prepare_to_commit(), and -F is caught by
+> > > die_for_incompatible_opt4() which groups -F with --fixup as mutually
+> > > exclusive. This makes these modes unusable in non-interactive
+> > > workflows -- notably AI coding agents.
+> > 
+> > "Unusable" may be stronger than reality, as you can make creatie use
+> > of GIT_EDITOR to achieve what you want.  "awkward" or "poorly suited"
+> > would be more fitting.
+> 
+> Indeed
 
-I am not 100% sure, but I suppose it's always possible to follow up
-with more reuse of this later.
+Fair, "poorly suited" is more accurate. It's not impossible, just very
+awkward.
 
-- Kristofer
+> > > Plain --fixup (without amend: or reword:) continues to reject -F but
+> > > still accepts -m (even though it's practically a no-op).
+> > 
+> > Is it "practically a no-op"?
 
-On Sun, 24 May 2026 at 14:53, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Kristofer Karlsson <krka@spotify.com>
-> >
-> > When fetching with a transport that sets `self_contained_and_connected`
-> > (as index-pack does for self-contained packs), check_connected() can
-> > use find_pack_entry_one() to skip connectivity verification for refs
-> > whose objects exist in the new pack. This avoids sending those OIDs to
-> > the rev-list child process.
-> >
-> > However, store_updated_refs() never passed the transport to
-> > check_connected(), so opt.transport was always NULL and this
-> > optimization was dead code for post-fetch connectivity checks.
-> >
-> > Thread the transport parameter through store_updated_refs() and set
-> > opt.transport so that check_connected() can take advantage of
-> > self-contained packs.
-> >
-> > On a large repository (2.4M commits, 374K files, 10.9K local refs),
-> > fetching 200 new commits:
-> >
-> >   Before: rev-list connectivity check  22s,  total fetch  36s
-> >   After:  rev-list connectivity check   5s,  total fetch  14s
-> >
-> > The remaining 5s is spent verifying refs not contained in the new pack.
->
-> Impressive.
->
-> The check_connected() function itself is a battle tested helper
-> function, with the optimization that originates in c6807a40 (clone:
-> open a shortcut for connectivity check, 2013-05-26), and then
-> polished in 26b974b3 (check_connected(): delay opening new_pack,
-> 2026-03-05), allowing available "transport" to be taken into account
-> does make very good sense.
->
-> The other call to check_connected() that appear in builtin/fetch.c
-> does not pass opt.transport, either, but this one checks before we
-> even fetch any packs over any transport, so a tweak similar to this
-> patch would not help that code path, I guess.  In fact, many calls
-> to check_connected() elsewhere use opt that is often local to the
-> scope, that do not have transport at all.  I wonder if there are
-> some of them that benefit from a similar tweak?
->
-> Thanks.
->
->
-> >
-> > Signed-off-by: Kristofer Karlsson <krka@spotify.com>
-> > ---
-> >     fetch: pass transport to post-fetch connectivity check
-> >
-> >     We're working on reducing git fetch times on a large monorepo (2.4M
-> >     commits, 374K files, 10.9K local refs). Profiling showed the post-f=
-etch
-> >     connectivity check (rev-list --objects --stdin --not --all) dominat=
-ing
-> >     wall time when there are new objects.
-> >
-> >     While investigating, I noticed that check_connected() already has a=
- fast
-> >     path for self-contained packs =E2=80=94 it uses find_pack_entry_one=
-() to skip
-> >     refs whose objects are in the new pack. builtin/clone.c passes the
-> >     transport to enable this, but store_updated_refs() in builtin/fetch=
-.c
-> >     does not, making the optimization dead code for fetches.
-> >
-> >     The fix is a three-line change to thread the transport through.
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2123%=
-2Fspkrka%2Ffetch-transport-fix-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2123/spk=
-rka/fetch-transport-fix-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/2123
-> >
-> >  builtin/fetch.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index a22c319467..647fd1c30c 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -1213,6 +1213,7 @@ N_("it took %.2f seconds to check forced updates;=
- you can use\n"
-> >     "to avoid this check\n");
-> >
-> >  static int store_updated_refs(struct display_state *display_state,
-> > +                           struct transport *transport,
-> >                             int connectivity_checked,
-> >                             struct ref_transaction *transaction, struct=
- ref *ref_map,
-> >                             struct fetch_head *fetch_head,
-> > @@ -1228,6 +1229,7 @@ static int store_updated_refs(struct display_stat=
-e *display_state,
-> >       if (!connectivity_checked) {
-> >               struct check_connected_options opt =3D CHECK_CONNECTED_IN=
-IT;
-> >
-> > +             opt.transport =3D transport;
-> >               opt.exclude_hidden_refs_section =3D "fetch";
-> >               rm =3D ref_map;
-> >               if (check_connected(iterate_ref_map, &rm, &opt)) {
-> > @@ -1432,7 +1434,7 @@ static int fetch_and_consume_refs(struct display_=
-state *display_state,
-> >       }
-> >
-> >       trace2_region_enter("fetch", "consume_refs", the_repository);
-> > -     ret =3D store_updated_refs(display_state, connectivity_checked,
-> > +     ret =3D store_updated_refs(display_state, transport, connectivity=
-_checked,
-> >                                transaction, ref_map, fetch_head, config=
-,
-> >                                display_array);
-> >       trace2_region_leave("fetch", "consume_refs", the_repository);
-> >
-> > base-commit: 6a4418c36d6bad69a599044b3cf49dcbd049cb45
+No, I was mistaken. The message is kept until autosquash.
+
+    The `-m` option may be used to supplement the log message of the
+    created commit, but the additional commentary will be thrown away
+    once the "fixup!" commit is squashed into _<commit>_ by `git rebase
+    --autosquash`.
+
+I was trying to fill in the gaps here on the intent of the pre-existing
+behavior (to reject -F with --fixup) and I kind of assumed the message
+was being discarded.
+
+> > For the same reason, "-F" would be just as useful as "-m" in this context,
+> > and it feels a bit inconsistent to allow one while rejecting the other.
+> 
+> Yes, looking at the way the code is structured I wonder if these options
+> were made incompatible to simplify the implementation, or maybe the
+> implementation merely reflects those restrictions.
+
+I think it would. I kept the pre-existing behavior because I wasn't sure
+if the rejection meant "Error. You are doing something that doesn't make
+sense -- you probably meant to do something else" or "Sorry. What you're
+trying to do is not supported"
+
+A closer look at the original implementation 30884c9afc (commit: add
+support for --fixup <commit> -m"<extra message>", 2017-12-22) makes it
+clear the intent here is the latter:
+
+    Those options could also support combining with -m, but given what
+    they do I can't think of a good use-case for doing that, so I have not
+    made the more invasive change of splitting up the logic in commit.c to
+    first act on those, and then on -m options.
+
+There is a case to not reject them, it was just deemed unnecessary
+complex for something without a clear use-case.
+
+In the ideal case, given that -m works (and does something useful), it's
+reasonable to expect -F to do the same (for the same reasons as
+--fixup=reword:.) Although, it's arguably less crucial in this
+usecase. Given what its ephemeral nature, such a message is likely a
+terse comment, -m "forgot to format" or similar.
+
+I think it makes sense to allow -F for all --fixup variations, for
+consistency. For the plain --fixup, -c/-C are probably less justifiable,
+but -F mirroring -m seems worthwhile for consistency's sake in all
+variations.
+
+> > A potential problem of the above code is if we find something wrong
+> > in message and complain later in the control flow
+> > in message and complain later in the control flow, we have long lost
+> > where the message came from, as the point of the above code is
+> > exactly to pretend that "--fixup:amend/reword -F" message did *not*
+> > come from a file with the "-F" option, but from the command line via
+> > the "-m" option.
+
+Now that you mention this, I guess a message on stdin can be arbitrarily
+large, have null bytes and maybe some other oddities which the -m
+would never have.
+
+> I wonder how hard it would be to refactor prepare_to_commit()
+> so that it can accommodate "--fixup=amend:<commit> -F"
+
+I think this is doable.
+
+> > > +test_expect_success '--fixup=amend: with -m option' '
+> > >   	commit_for_rebase_autosquash_setup &&
+> > > -	echo "fatal: options '\''-m'\'' and '\''--fixup:reword'\'' cannot be used together" >expect &&
+> > > -	test_must_fail git commit --fixup=reword:HEAD~ -m "reword commit message" 2>actual &&
+> > > -	test_cmp expect actual
+> > > +	cat >expected <<-EOF &&
+> > 
+> > This comment is not about the added logic, but I notice that among
+> > 86 hits with string "expect" in this file in today's "master", only
+
+> > 14 hits are with string "expected", i.e., the prevalent name for the
+> > "golden copy result" that is compared with the actula result (called
+> > "actual") is "expect", not "expected".  Please do not make the
+> > situation worse.
+
+Mea culpa. I overlooked this distinction.
+
+> In this case it would be better to use
+> 
+> 	test_commit_message HEAD <<-EOF
+> 	amend! $(git log -1 --format=%s HEAD~)
+> 
+> 	amend commit message
+> 	EOF
+> 
+> and avoid creating actual and expect all together.
+
+That would also work (except it has to be HEAD~2, since the reword
+commit advances HEAD by one)
+
+Thank you both for the review. I will reroll as a V2 taking your
+suggestions into account.
+
+- Erik
