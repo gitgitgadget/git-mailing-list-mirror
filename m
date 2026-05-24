@@ -1,86 +1,92 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F35222580
-	for <git@vger.kernel.org>; Sun, 24 May 2026 08:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523242D877D
+	for <git@vger.kernel.org>; Sun, 24 May 2026 09:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779612612; cv=none; b=XvjS+C+7p+Qm6w3/i8VK1KuAShWYkMCn3SlJ7YWrcficqbKJqzimLXxq7UaxP4vvlLf0BMfC4qXJcVWnfgn/lItzQAlwDmI37feMY/r6DSHkJkZEUQd4SugTBH0meb0g7ZVS0Gf6Smi1T1WIcD/ynN8a1g0aOmDZ0NyP7AvVbTo=
+	t=1779616538; cv=none; b=JIPiXKJfKE5vbaQY+uy/q/cMiMQutY0Qm3UnawXViXiMwsttUrLJWshB7iIvp8vwfGcesFggi7tD6dgCTKViJkuv7ZmAi0ztV2xxO+OeC/VLc45b6XmP/OzveYxzErjAmgMhIvtn2Ii5pmapS8/9heCGk5NJ5Bz/y4jhlAEvm/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779612612; c=relaxed/simple;
-	bh=cO84m8PdtsrgAKJbDmTUCEH6xmMLLrMAQV5F4HOBrqg=;
+	s=arc-20240116; t=1779616538; c=relaxed/simple;
+	bh=nFsknLFouGxxwDpelCxoLa1o2sRNcY1eVkQpiYRj3iI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=metPzTpM2qvGM0iAm5uz8szHHcLKj4iHj28aEZyU0Zw+HNMAd5dyZWHJo1ElXOobz003Uy+yqWCvKETTBPmFN4V18l4hKgUg/fCTb1pll3fzsyiIDJ6806UMvzA42Gfsh4/zw9D2jdPK8B5OhUQUkl7tqWGsVzl0//aRzhhvTsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CcJbRQez; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XSP/Jb0T; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=ZhRDYpGMDFLb/Hi38qcnUO/pzqPilPDTr4/KyBUPYz626mNIr7dkPzWRG/UiYifBouAdO8YvenFTGR8IBNwXsZbEl8Wvlcm/6CtN8ieyJ/k0/59scyMnnMrk0mtyp1zN85stk8YtqSiRruhb2j7nfhpHaKA2pJk9aMODjhRRRzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=geb3Si5K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lv8PQuuZ; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CcJbRQez";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XSP/Jb0T"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6A56FEC0128;
-	Sun, 24 May 2026 04:50:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sun, 24 May 2026 04:50:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="geb3Si5K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lv8PQuuZ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 61C67EC00E3;
+	Sun, 24 May 2026 05:55:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sun, 24 May 2026 05:55:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779612610; x=1779699010; bh=smkvBg9Fch
-	ZeUh7S+IzSGz1V6JDo2bPyBxHuFTg9/44=; b=CcJbRQezSE9ri5VieNMmPVjpd1
-	nHaXlmg6h8bvoG8jbH88IEWxWPMrwiSAf8ZhmM18dHzfitqWe4Tprlm+9z1pl5cD
-	6cOHCZf2w6UGo6sKjkXoTH3QgvMu562EUNz/mLWlpc9dJQW7xUP5pDQyeXw2zrfn
-	PoLdEETpy179FPmSGLbxHI+Ln1+4MZrjjVpCC2vKkrF9tKys6bVmthFzPAvct46W
-	oKIZiki0SoTstL731/7jT85O1WxkzF8xZy+Tv4lCJ2Cr4zxJYf2VQT+4xMXHDbw/
-	rPFNXMiu4geJgKCxeKPwx58ZEJNhy9et0kVvPLvTnMG2hHu8NO+ZJpljBq6g==
+	:subject:to:to; s=fm2; t=1779616535; x=1779702935; bh=wYHzOZWaFb
+	oOxyWLyg4oodrpaJ4n2nLXwNvQsWvAEqg=; b=geb3Si5KUroVtnbHBOaibKQySd
+	8EXZ3REZSjAOfvN6K9z5wXeFspuoV3P/U0sSNBLrVJoypnHjPTfSx8OPeliGmfK9
+	bXKDcBc0zGCu1DHXQxYgevgGME4/AfQ3bBRPiugRX+ag4W8fTaUtv6CzSchmzcrs
+	gBbaf6vSLG0Ym7Gh9d8/7dYq5mPEOppKRjO8sv46+sc1hhqWdWfwOc/IlHCGsjPR
+	Zhmace2eKmrf0Mj3LvmEiCna0MkeS5rg+IikS4gGivzbg5fAQvK3kkZSoNJTLy1d
+	x8hBu/mPsZRlw7aTHVjOCkr/Sl8wXgxDB9ZuIL09kasNzJcpFgOpeqmOriLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779612610; x=1779699010; bh=smkvBg9FchZeUh7S+IzSGz1V6JDo2bPyBxH
-	uFTg9/44=; b=XSP/Jb0Ty07G2i6y4oq04AgejbFOeEFh4mcjO3w+u3xVAAJhz8K
-	3ZxeFH+sWJmKQETqpSZoNswkjFAFeskEWucUp1x+HoZyE2jEomjT8pmq20SAziLN
-	rGGdzaIw0g0kyMd6G9/ecIHcOtO3gm1HMeIqPNl0E7c0VAeC4kqbB7YZmHiTO5MB
-	ATsZdof94gCWV0B0ECUH1E0UkS4Dn0t7L6CE1MfNCj1PCGg4CKTiG1FbQwsbfMUh
-	wMLTRvsmtlsWg486ASIFzPd7lRyC6eRuUkbQ8ct/vqm+o4wP2QT1q5xFX/6Y0x/3
-	t2Ndkxy/fDPiznDaPW7yy7PMIEaewIa9V7g==
-X-ME-Sender: <xms:wrsSaiUb-vsawo0SdNj9ZIZ4nWajiPQSASr_spVIA1YRxhRbN-4hsw>
-    <xme:wrsSalmNK330HqzbtPiNdxj_gsB3n60hxSq4snQ3oE1sPyI7gvLxrlPu50bSS9Afd
-    WmBNWDo57VKtsaZhjNb4_k2RpNml3GHLYVyD7Q7Rtf38EQOtndJGg>
-X-ME-Received: <xmr:wrsSarYyf1ZLytuQQLOd1-eTZg3UOn2uDAnoWsQ3l_EzrYb0hiUgHWceYkLy0RMOr8XhWfBwV3xuubpec9_Pi6iWKXuChVh7NOoj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheehgeelucetufdoteggodetrf
+	1779616535; x=1779702935; bh=wYHzOZWaFboOxyWLyg4oodrpaJ4n2nLXwNv
+	QsWvAEqg=; b=lv8PQuuZCxCJqiqGlysAkyFyZPzFUUyUDBNflOx/+1mVAq1hyB9
+	ZcDm8zpS+LDKV3dUFbi/upHWlWCA6wdzgglUU7t5kmMCFVvNTwfzFkgdsHCiu+0w
+	lzp6TxpaP1uPxaSQ+ElRsLXaX/l2qhFvsmjp3D8QuTRjAHtOqp6ZiXUPcpVwcC5r
+	F+7QyAM43tz9jwelqmt4Ln63tA2Cd88rxr9vZZ9I8E9xdLL5ZZSTIEk2uUR9FZit
+	okYCjengatjPZQkoC86iEBpd4F3EkfF6ouA+3lSyY3fd1f1sgOkhTUrqbAWLYYIp
+	mI0cRunZ2DNAFAnGcAs/eRjMt4jWMptFNxg==
+X-ME-Sender: <xms:F8sSah1kEAs9aHHLjoqLZt0bYWQ2bTb63C-wu5J61njF9dWJ9SU1ow>
+    <xme:F8sSaqqOXBMgIiiWpPG5AC-lX1fIcfNXHRzdp8P2ha7G5W5OiZNG9tmcxHqNoxUb3
+    WgtGYEW-cvvJCQg9OsfLpWyHCaUhq-qLwp9GmiOBSbNsrgQ6_WUKTc>
+X-ME-Received: <xmr:F8sSalhPa97oi7MTzFwJv5JOr7_BzRLxNiIgcW5GxaddhMWtmqqHD3OsyUK8N0LdlUtFtgBT2_WHoNzAY1nfWgfns9dm9tnUzbSB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheehieefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
     gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhhmohhnthgrlhgsohesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:wrsSaoMpoIjk_9nceVjesSz4ExsYHb8_7pf4c4k2H_nTxd5fUt3leQ>
-    <xmx:wrsSaoaUgp282bj0YVHl6cu_Z3Lfq8EuTPvyhIFd75uC_peuD8KwCg>
-    <xmx:wrsSau3uJ9CkmYt2ysPGZW-oX1jvfKqxJ7Uhck0TLmUkdlnW6eC9MQ>
-    <xmx:wrsSame8ENIEsxsLKHIKPUZNdl8vO50G91dx0oH8lc-MqzUKv81LSA>
-    <xmx:wrsSam6YooQolFb8Qp9_4UNNmZDhdmcYZYimfbJP9Ku5gjiSo6wNCfiZ>
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopehsihguughhrghrthhhrghsthhhrghnrgefudesghhmrghilhdrtghomhdprhgt
+    phhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epiigrkhgrrhhihigrhhgrlhhiuddttdesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:F8sSau-Npp9YexbapGq9pVoB_O71ZST7mGCac4iTMuUvTOBXvnvKCg>
+    <xmx:F8sSapVYQzl3pNMkclE5pNUuqlAEVQXlHk4MzFIMQJmDa2MFWVqamw>
+    <xmx:F8sSaqBLQNSqnVA-rIy4kFLdypajWfJTu26ivGSHSGlW-Hggk0QDRA>
+    <xmx:F8sSamHv2GML3xqR1z8-uBwTxynfPQqKWBM9Nkz_iW0a2VxWKf7B4w>
+    <xmx:F8sSamxRqB27jMciadXXUmdRM-aOzUfFcVVWK2eeorINbqrDhmcS4wjq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 May 2026 04:50:09 -0400 (EDT)
+ 24 May 2026 05:55:34 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 1/5] xdiff: support external hunks via xpparam_t
-In-Reply-To: <CAC2QwmKkwnr+TvLDnDuLEvGJeoraB=_YWC6idA57dxUqQ_5Fcg@mail.gmail.com>
-	(Michael Montalbo's message of "Fri, 22 May 2026 12:06:37 -0700")
-References: <pull.2120.git.1779415884.gitgitgadget@gmail.com>
-	<8c0ea0bc0742651e634db7a3002e8cbe1240acf9.1779415884.git.gitgitgadget@gmail.com>
-	<xmqq33zkui4q.fsf@gitster.g>
-	<CAC2QwmKkwnr+TvLDnDuLEvGJeoraB=_YWC6idA57dxUqQ_5Fcg@mail.gmail.com>
-Date: Sun, 24 May 2026 17:50:08 +0900
-Message-ID: <xmqqtsrxi43j.fsf@gitster.g>
+To: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
+  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>,  Siddharth Asthana <siddharthasthana31@gmail.com>,
+  Ayush Chandekar <ayu.chandekar@gmail.com>,  Zakariyah Ali
+ <zakariyahali100@gmail.com>
+Subject: Re: [PATCH 0/2] [GSoC Patch] t2000: modernize path checks to use
+ helper functions
+In-Reply-To: <pull.2256.git.git.1779534462.gitgitgadget@gmail.com> (Zakariyah
+	Ali via GitGitGadget's message of "Sat, 23 May 2026 11:07:40 +0000")
+References: <pull.2256.git.git.1779534462.gitgitgadget@gmail.com>
+Date: Sun, 24 May 2026 18:55:33 +0900
+Message-ID: <xmqqldd9i12i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,50 +96,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Michael Montalbo <mmontalbo@gmail.com> writes:
+"Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> > +      * Clear changed[] arrays.  xdl_prepare_env() may have dirtied
->> > +      * them via xdl_cleanup_records().  The allocation is nrec + 2
->> > +      * elements; changed points one past the start (see xprepare.c).
->> > +      */
->> > +     memset(xe->xdf1.changed - 1, 0,
->> > +            (xe->xdf1.nrec + 2) * sizeof(bool));
->> > +     memset(xe->xdf2.changed - 1, 0,
->> > +            (xe->xdf2.nrec + 2) * sizeof(bool));
->>
->> This, especially the starting offset of -1, looks horrible.  The
->> internal layout of xdfenv_t might happen to match the way the above
->> code expects, which is how xdl_prepare_ctx() may have give you, but
->> it somehow feels brittle.  I guess the assumption that changed[]
->> does not point at the beginning of the allocated area (e.g., it is a
->> no-no to free(xe->xdf1.changed) or realloc() it) is so pervasive that
->> it cannot be helped.  Sigh.
->>
->
-> Agreed it is ugly. I wanted to make sure the entire changed[] including
-> sentinels were clear as a defensive measure for downstream callers
-> (xdl_change_compact). I agree this results in something that is ugly
-> and brittle, but in the end I thought it was superior to relying on the
-> fact that upstream zeroes the entire changed[] array. Maybe if the
-> comment was more explicit about why this is happening it would be
-> helpful?
+> This is my GSoC microproject submission modernizing test path checks in
+> t/t2000-conflict-when-checking-files-out.sh.
 
-Perhaps make these memset() into calls to a helper function that is
-defined in xdiff/xprepare.c with a descriptive name and placed near
-where xdl_prepare_ctx() is.  That way, the patch in question does
-not even have to expose the strangeness of changed[] (i.e., it has 2
-more elements than it would normally contain to make the memory
-region for changed[-1] and changed[N] valid, and freeing it requires
-free(changed-1)) to the code path.  It only needs to say "Hey, I am
-clearing changed[] arrays because of XXX" without having to say "by
-the way, the memory layout of changed[] is strange this way", the
-latter of which is not exactly of interest for readers of this code.
+I do not quite get where you intend to fit these two patches.
 
->     /*
->      * Clear changed[] arrays including sentinels.
->      * xdl_prepare_env() may have dirtied them via
->      * xdl_cleanup_records(), and xdl_change_compact() reads
->      * the sentinel at changed[-1] during backward scans.
->      */
+> base-commit: 60f07c4f5c5f81c8a994d9e06b31a4a3a1679864
 
-And this belongs in xdiff/xprepare.c near that new helper function.
+This is fairly old, v2.54.0-rc2~9.
+
+But the thing is, your earlier clean-up to this t2000 script
+4a9e0972 (t2000: consolidate second scenario into a single test
+block, 2026-04-29) was queued on za/t2000-modernise-more was merged
+to 'master' at b5d94909 (Merge branch 'za/t2000-modernise-more',
+2026-05-21).  But what is most curious about these two patches is
+that the [PATCH 1/2] starts like so:
+
+    From: Zakariyah Ali <zakariyahali100@gmail.com>
+
+    Now that the test script has been modernised, consolidate the eight
+    separate test_expect_success blocks ...
+
+I take that to be a reference to your previous effort in za/t2000-modernise-more
+topic.  But these two patches are changing the code as if that did
+not even exist.
+
+If the za/t2000-modernise-more topic were still not merged to
+'next', sending in replacement patches works just fine. but a new
+patch that ignores anything that have already been merged to 'next'
+or 'master' is counter-productive.
+
+
+
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2256%2Falibaba0010%2Fmodernize-test-path-checking-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2256/alibaba0010/modernize-test-path-checking-v1
+> Pull-Request: https://github.com/git/git/pull/2256
