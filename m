@@ -1,126 +1,109 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676C81F4CB3
-	for <git@vger.kernel.org>; Mon, 25 May 2026 22:18:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4952F1F4CB3
+	for <git@vger.kernel.org>; Mon, 25 May 2026 22:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779747504; cv=none; b=VO1fJ1EdNfpQ9YspfY6O3mrx/xiU559pCeaSM7wAPKzphN0oUm1331zcP0nMhcNnag0+0HnrjCgVwd/voLdWOCAqh8tzBE7fGtRQS+5YB5Nckfj/b+szMxfnlIIdOb+HaDx/YZShjYZH7qGim16onSmi8snkm+C6x68E3kfGPCg=
+	t=1779747914; cv=none; b=OtV8vS8H76vViaHAKD+hM17SJtj0N2DXCFJAeiHHj+P1XnYfUy1yCpZwpuf/X44s4YQ0vopTocDdBsYdaSFAO+3EsAc46ydxC4aQb5A9i+AEcOV/+8cm7VK3tar3wuCunSdhpuRzdmy0hLPlQKpi8vTo8pO7rxp+c/kKZWR9l6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779747504; c=relaxed/simple;
-	bh=QQvbRAAJMCC74Dfhc2J/0Dto8bSkYMPSb1CVtkpWbdo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MA/f3GYTJYYfs9PIhJs4GWdbr5bGQGN2Oq4ayykjt+3HzkKV/lqOIX99TriqX7Ga98l6TcjrZen0UPK8RZyuPqab4FxbmrIeEb/eRFAjugPJXsuEv1nam1CyTGT0byr1+cU7iB/bO9mis8wj5MX7iVPA7h9M8ALCZBP1pMR7b0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YkgpPka5; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1779747914; c=relaxed/simple;
+	bh=OFkQu4wTpLAM3l8ueMA/kS8iYVTN9sSuYX4l2fQN2rw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=qUOF9hhPz07WwC6r+MDs4h/4jSbFGdnJRvNhBLbuqqvn0zjePYPMWjpJX/bohq93eA1WxVb62u3R0Q13+E/3i7tiomWKdUUzW2e+z40svfni1FNZ8ArTv6NEm9uD0+L5D+Aj4OUgE6AhnajGRqHDzGYWAmjryAAPHAAb7tWBd7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UDYk3z7R; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YkgpPka5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1779747501;
-	bh=QQvbRAAJMCC74Dfhc2J/0Dto8bSkYMPSb1CVtkpWbdo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=YkgpPka51zaoP0zqrnn/vzKVAMpdzIai015G0pCl70cKSAsUZUgjZCB5qDoUN9BKP
-	 Qn154aYtKaNakC4el0xJNsYbisZG6cdL0/evsKEIQY7+1hhXXb1l0ldnGZhEuuFWR3
-	 4ah5jXRVgKdA22nYMZAVABfqvE9IMzFxokvxvI35bTji7lYDIbv2cj5fdtSYsEr7sz
-	 TpsnEOR2JWPtbYCY42WY0sGsmJLO7B1MP+F+ZRNUlO551wEfae2ckGviiijTOuXU5X
-	 fNmyzsZrsex6MmFO6ddSjB1M3Oy8YkL96qQ7ULJb3rFG1ZBjwzejZTBWBF0hYMTH0l
-	 7oUiwtSmwwjENRGH5fW9qWnbRfZ0+P6bBhA/JMbWf0ICAEPD1lhKD9zNnu2nSfc46j
-	 HJVJVvhnL2bzeu6gqfRZTdkt1b551h7UCSyja5zRc/xQEuXDUG+c+VamD/PdQ2L6L8
-	 qQxJyRNqzIthZ0BZfvDU0yBCiR/3Xx5E6JLOL4QuMrhLBa4pwnp
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:4762:abe:10d6:485])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 352162007E;
-	Mon, 25 May 2026 22:18:21 +0000 (UTC)
-Date: Mon, 25 May 2026 22:18:19 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Amogh Dambal <amoghdambal1@gmail.com>
-Cc: Jeff King <peff@peff.net>, Michael Montalbo <mmontalbo@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: Expected test suite behavior
-Message-ID: <ahTKq_zCmEDJpoN5@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Amogh Dambal <amoghdambal1@gmail.com>, Jeff King <peff@peff.net>,
-	Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org
-References: <CAC2QwmKgQW2c6_OhepsB1hzXYHxpX0X4eyQS0dPcxRZLOnCdig@mail.gmail.com>
- <20260525072711.GE2737798@coredump.intra.peff.net>
- <23221493-ea81-47c3-9647-6c6ac8d03360@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UDYk3z7R"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c8027e876fcso4100828a12.1
+        for <git@vger.kernel.org>; Mon, 25 May 2026 15:25:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779747913; x=1780352713; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UxWkHsqmoI1rIfLz57XYn+EKbEq558NA5HFSgWM4vEY=;
+        b=UDYk3z7RfP1UBRi9bimSCTBAPi2+4uKUAlw/aaBQ0CHtxHA3jS16TYy0Vy0qvvlPst
+         O41/Slp8KwAZ6rTgfFk//BQR43EgDz5GG4auSkM/wNhWzFj21ZQkOrX1NkcZr68yLqc+
+         2+4OwpUhjSVry3HLo/Ahybu7Y2yQ/yt+IucrAJQfitftzK6RK6Ebbg8XHwBVvKfVBt38
+         jcxrafu/DzeHKPGtEo8J19rJg+B6moCPe+BnIbh7KWWeyXlVD9sxLGgJYraiw4h3UG5f
+         w1Sv2jJL/oQPxOuow7DhTSUnlf1z/+dNm995hw9IPLadzzTBkB1IBXQqKzTHoBqxNJEp
+         wemg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779747913; x=1780352713;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UxWkHsqmoI1rIfLz57XYn+EKbEq558NA5HFSgWM4vEY=;
+        b=EwIJ712M9bONeWFRlJMszAMXZOLH/zG46GPuNLF3mjYm6kX2TyWSNQSJy5/gh+Mi6d
+         ksR9o4lou+XLX3q+vBeDjquFJSZFM3OaLdnLqW2+M0d8/w4F+b0EFIAFgcoWa2cOW7fO
+         zyKVrFw2offmez1I8uA3hgWbZ7eNsjpzzK6Hmc624V8ewCfcHUbJKIaNHdsRJdVzwH7E
+         J7QdIbuFi0V4BYS9FD8p2hZniIDLTV3oeubIotqB4t5aefXYyPTwpiW+6hE2H8p4PB3r
+         fdESRS3MLblfDIPGZOc2Ws88kxI9Xe20qMmKU7n+XPsqP7hItunvSXKTfeOvPbGUVcMc
+         2Lbw==
+X-Forwarded-Encrypted: i=1; AFNElJ/hFc0XjN1mBay8+g2m/OXq9nbycXW26FfZEu+GGsd8cNDkYXB9dV750eYrHuATbkRXiCg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrZW5HkJxmBbGEARKf44RHigEwgfU8rFeBgKayqrbn9G62WWGH
+	SbsmaSBAjhOcdAzwLhY8Dhb9IECYcc5Ch6HqCNsX3KaUlZfbmCMuxzlI
+X-Gm-Gg: Acq92OEUdfnUPgdwAsvC+sLW8yx0WRKuEBaFQrt6KjlGuhoMLf+p0pyKNgPfmfJuqEA
+	OzXcMZIdoMgfZMpArEx3FKJvk8p200CEU0+cCt7pKLzLTCYC8DuIfY/PuebarKAihz/wujG1RoD
+	3zkUcyt7yuO1HgzuchIXzH2Lfpw7bi2Xt4mfGv73jMKrwTCbVDN0ODREKQAF3QppA+8JKQFuG27
+	nyCPDSHL/25OjRXTxBhwsAQct8lYQrDKqSrLM7y+q2uWm3Ietmiktfyw/PqmcMMHHggKxbWgJiB
+	3WuxpLlX2Gr29Np4m4czajj1f1NrIPFr3t5EX1Zh9jqtiSopLsf5lpP/SbQuGOiNo0yV3v98hRB
+	4cUdKJiEOkIi5miUImsnxgfp265jLUrm5f57jarZv0MlEYwfkcIGEOzqMMweS/fUV52g+BI2Jql
+	WNd3cgNiGVOCwiiHtCAWmC6l99k2WaIVf9HanuUZQbmt2+If+cOhuvgg==
+X-Received: by 2002:a05:6a21:6010:b0:3a3:327:c5c8 with SMTP id adf61e73a8af0-3b328556349mr16302335637.0.1779747912624;
+        Mon, 25 May 2026 15:25:12 -0700 (PDT)
+Received: from [10.2.0.2] ([159.26.103.58])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85202b3867sm8382419a12.11.2026.05.25.15.25.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 May 2026 15:25:12 -0700 (PDT)
+Message-ID: <4649049a-ded5-4cc6-bc2b-d5f543e6df99@gmail.com>
+Date: Mon, 25 May 2026 15:25:11 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ficy+Klwt70wF0oJ"
-Content-Disposition: inline
-In-Reply-To: <23221493-ea81-47c3-9647-6c6ac8d03360@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: Expected test suite behavior
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Jeff King <peff@peff.net>, Michael Montalbo <mmontalbo@gmail.com>,
+ git@vger.kernel.org
+References: <CAC2QwmKgQW2c6_OhepsB1hzXYHxpX0X4eyQS0dPcxRZLOnCdig@mail.gmail.com>
+ <20260525072711.GE2737798@coredump.intra.peff.net>
+ <23221493-ea81-47c3-9647-6c6ac8d03360@gmail.com>
+ <ahTKq_zCmEDJpoN5@fruit.crustytoothpaste.net>
+Content-Language: en-US
+From: Amogh Dambal <amoghdambal1@gmail.com>
+In-Reply-To: <ahTKq_zCmEDJpoN5@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+ > What are the OS and file system on the host?  We tend to see
+ > executable bits set when NTFS, FAT, or other Windows-adjacent file
+ > systems are used on Linux and you're mounting `$(PWD)` into the
+ > container as a volume.
+
+Ah, this is a smoking gun. I'm not on a Windows-adjacent file system; 
+I'm running macOS Sequoia 15.5 on the host. Specifically:
+
+$ uname -msprsv
+Darwin 24.5.0 Darwin Kernel Version 24.5.0: Tue Apr 22 19:54:26 PDT 
+2025; root:xnu-11417.121.6~2/RELEASE_ARM64_T8112 arm64 arm
+
+But I am mounting $(PWD) into the container as a volume.
 
 
---ficy+Klwt70wF0oJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ > Git doesn't use `/tmp` for most files in the tests.  Those are stored
+ > under `t/`, so you'd want to create your test directory there.
 
-On 2026-05-25 at 22:01:23, Amogh Dambal wrote:
-> `GIT_TEST_OPTS=3D--verbose` was very illuminating. I captured STDOUT/STDE=
-RR:
-> `make test GIT_TEST_OPTS=3D--verbose &> git-test-verbose-fail.tmp`, which
-> shows that almost every test fails `check_config` because a `git init` is
-> creating a `.git/config` file whose executable bit is set:
+ACK, good to know, thanks! I am still seeing the same behavior with a 
+`debug` directory under `t/`:
 
-What are the OS and file system on the host?  We tend to see
-executable bits set when NTFS, FAT, or other Windows-adjacent file
-systems are used on Linux and you're mounting `$(PWD)` into the
-container as a volume.
-
-> --
-> Initialized empty Git repository in /root/git/t/trash
-> directory.t0001-init/plain/.git/
-> plain/.git/config is executable?
-> not ok 1 - plain
->=20
-> [...]
->=20
->=20
-> However, I'm not able to reproduce this, e.g. directly using the local bu=
-ilt
-> binary seems to work fine:
->=20
-> mkdir -p /tmp/debug && cd /tmp/debug
-> /root/git/git init plain
-> ls -alhrt /tmp/debug/plain/.git
-> root@ec94ab1b260e:/tmp/debug# ls -alhrt /tmp/debug/plain/.git
-> total 24K
-> -rw-r--r-- 1 root root   92 May 25 21:26 config
-> drwxr-xr-x 3 root root 4.0K May 25 21:26 ..
-> drwxr-xr-x 4 root root 4.0K May 25 21:26 refs
-> drwxr-xr-x 4 root root 4.0K May 25 21:26 objects
-> -rw-r--r-- 1 root root   23 May 25 21:26 HEAD
-> drwxr-xr-x 4 root root 4.0K May 25 21:26 .
-
-Git doesn't use `/tmp` for most files in the tests.  Those are stored
-under `t/`, so you'd want to create your test directory there.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ficy+Klwt70wF0oJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmoUyqsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ1V8Yfq3ml9OGGyFOnwxKZNl7C+zXiz3Ow7+d23ihgjh
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAAsAAQCbT5pz7IujoogUa6WVHcXKpC1e
-lj0jMha5zEfM4xwudwD/fuRnIj3QE/UdKDkscxkczjaCJCnhNhdKv/mJqJDUZgk=
-=LC9x
------END PGP SIGNATURE-----
-
---ficy+Klwt70wF0oJ--
+root@ec94ab1b260e:~/git/t/debug# /root/git/git init plain
+root@ec94ab1b260e:~/git/t/debug# ls -alhrt 
+/root/git/t/debug/plain/.git/config
+-rw-r--r-- 1 root root 111 May 25 22:24 /root/git/t/debug/plain/.git/config
