@@ -1,83 +1,84 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C3318B0F
-	for <git@vger.kernel.org>; Mon, 25 May 2026 22:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEA3305677
+	for <git@vger.kernel.org>; Mon, 25 May 2026 23:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779749655; cv=none; b=BRI1+PCt/96pXbY5I9tiL5aROMwFweBnzEgW0rx5TXGoDJfzpnSWDrhIqeMhAgDmWNoqPbtdEFieltjYa0NUwPbcw03qQeCub8CQspzrr/kjGvFQYUUW+ssFVEu/D1YhTa2YkWVaI9723wnTKPEvS9wswEoupIORw3fff43YWBA=
+	t=1779750548; cv=none; b=KmxstB8rAjfFP38mIaS7Cy58/FV/xZFnHsI7Ql84+0gZFJdWgv2gjSmwI7N1hQ7GUppUwk0AhILenxG21e2ZqiLPEODlWAv3hNyOtyBJFKbFNVtLCxwRT6JFyOwttL6wdy/2fE9omWAgGcJjHrpjr1VfUd9trF5L9CZjLCkNcGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779749655; c=relaxed/simple;
-	bh=6URr4VX9erhXiefJRBXE2CeB2jPxhYqlETp0Io12sWw=;
+	s=arc-20240116; t=1779750548; c=relaxed/simple;
+	bh=HmwzVh+JZU5uSgl26ZFkL7LQtfKYaqJneRWZ1ADhSx0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Iqd+B6ISIqVPp+YRWsmMY802MgTSvUxwc4SpzxyVmpbdimNlgq3YgQagLvfKHjbY6TGTjdl3Qr7HMpgpF3EmrDWBxJzx0EgiSDfou1wtDV73ewJjOLDPYCJl4tgl/jXKmnj90+grUZ4+YDBiwg39NZV1qe5qcF5Y6GkrjJA0Omg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nbr2s/Cx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=spvogxcx; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=gN7dTBgz7s7Geo8tl7ddhty7fe9iox6JZGTilfaxUyrZqVP0hGICYppT6uub9I5wV/h1OU0M4E/rIPS9xpxdJyUI5jz9N66D6hH/WgVpl8YX2w6bbsHiQQyHzQqlRpLyz+AsjpVS7wNRCECEpZo3plp6JN+5aOFc4J9SJvqu930=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wQ3Ycyaw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GyO+sKnv; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nbr2s/Cx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="spvogxcx"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7AC6D14000C1;
-	Mon, 25 May 2026 18:54:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 25 May 2026 18:54:13 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wQ3Ycyaw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GyO+sKnv"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 45C2814000F1;
+	Mon, 25 May 2026 19:09:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 25 May 2026 19:09:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779749653; x=1779836053; bh=BexlhmGg1u
-	SAWcVi4SofyBJEP2KhkeP95S4rWbRSD5Y=; b=Nbr2s/CxR9WN8//zcwFv64S3Lt
-	rsTBuhFnMG2gKjyJoaEjQkP1QGzOMlxhPOdb6+DRJ1TQ9CUNAEq9ehX/Dnqvrf08
-	Kom2RH7fliJtaaaUkbQvJbAnSzy7eAKvo0KLQB2Z2MHOWi98PlwiN8epSfoLhi7y
-	1t04xVBl06Jx1d8zgIwSE1CSPpxX5inEPclyl/RKBTynlewBHZhVZlg84HYJe2ab
-	JGHMEj75jPzl5+TPxNXqGR4Pg7+n8DiSeP/Xy7y7G0LIlj7fMc0dmuoZ7HZ7Zfhk
-	tDhEXjiYD/6OZ4qDOKKT+gKKzCWNtq42n13gWUtj6sJEyye7NKD0tx7TEZOw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1779750546;
+	 x=1779836946; bh=6C1qKyEmD+67/DBfBdSwhok0VOWDhi4gKW/7Q9S36EM=; b=
+	wQ3YcyawlD6HNeVpoO01A7GZmhyP3hQ1pkewKY18Z8zkihdzC8dQOAmGF3ZnyhBj
+	56osMVW80c1zIUwFYMWmD8sAyajwUQSHMfrfZ8xQemPe+ObQezsqlwAc6VzaQBb2
+	TnUBX4oThlQUyatE/hdUvG6YZqV83oSRwdDc3Cyl/RolJZ+eFoHmBa9Np0DjVvh/
+	FcWhWizn1DevR8bP4SzbZ8UGq1tfyAnjgozuLldpxe7NZkkiu2eyJvMN8DdyPS5Z
+	/adq0Dm1mILdKt/aK4NNbzBjYvIkp9anf9vE0uCpQrhjYhZguF1oHKqoG05SW1IV
+	GSQ+JGnz09Z0WDVO/4HYsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779749653; x=1779836053; bh=BexlhmGg1uSAWcVi4SofyBJEP2KhkeP95S4
-	rWbRSD5Y=; b=spvogxcxgW4h8VegIsxQLWHZEHD6wb8zoXnhCNTDgw18e8Fyj06
-	5ZcelwGqtZsiagjGhUrYi9J+eO21nyr2GBnpEtamePuU7FjaDW+5jOPshD8fBoyX
-	A/xrrJ38zGCNqesTvee45QRWwPoO0Mkxs2stMh/g+pRpQkh7REJTYg912S9Aoock
-	sCRzmxd5JSiSkMje46kMES4fT8KWDDTddP8a8RoLj6D6fMACV5Sev+CHzjzXm37p
-	WTW2OYuzyZHsB1sWnim02NIPy1/eAly71lSp8ImsakLbKjC8M2QcpWYjkXKRgQbh
-	CYxXKtaBmel+VhJAGSzE59t3b3YRO5sPVow==
-X-ME-Sender: <xms:FdMUavIBFL6HKlc4Mpuk5xZpFTPqFrBns2xBy4sn5SsvFoFh32FAQQ>
-    <xme:FdMUaqAmiar3Eu4EFbyWDA_u8xhzYahXtpiFGm9PCfO6VLWkc6wXOGo1703EDFBGU
-    gOjPt0iosVgSFP-sbRZqqiYAnDef2vKppCc_mQ9viifpSnjdnw_>
-X-ME-Received: <xmr:FdMUagDFq9MqwfFOq_1KBdwl86ZCKnIWKghcArCItFwypafqX4GvnBmkGrBMvYCU3JzgCPfU0fmh9SsBOu2BMF4olugbEvl8lN2X>
-X-ME-Proxy-Cause: dmFkZTE9lY9/bCc0VvqYDJozxyc7EPwAoNvm4k4+7Jk+9XOs9uDxAJuZU6tdrVU15H0XNd
-    GvElR0Vl/TZbzjQP4pBbv9hZgzqs7zFs1zzXTRvNAts2IQcO6B4TNiL0atyj7ltR/YJKuH
-    +d04KzJv7unYmrbPxL0KDKiU+NwUUeX2N9Uye98DkI566zfRM3UOsA9L8qfyliMmiZs3cK
-    MXRmFIuV+G9PZzP6ziTTKfYWbXtvLJo9Cqb0c+eXmghqUsP68OoAZHwlQfM8quQtjOo7Uw
-    rSBlWhGpuGb3wUXSVyHbHaiwk1Fxvdztzf1pPLdguavtTgwXs+Jd9B0+XC7dZW5t2TfbEe
-    fJyg8EMtCiOx2Vj+LVkwmEXrHvCIAObAwA+0RbXoh1/76INGfe8IC0EHTi8keDkuslmbtA
-    ZqcvNzUTlmhIKBQm21BPwzxAC2dFXktfEXYivNVTSnBSdPWtyukCiJUE+LEjQgHUdP8YLW
-    p03NnbY27dBa5DnqQV9O/UQOYbnURQXI/IswwWQnVt/Ki1utfNrG5fs7rnhIMJ1RZskmDV
-    uzhtgO3DWAFTHmVUyOu4CAADHasrIoxFcqwvBnN/aGqEKz9uyJtJLJN/eDFXgKwRhB9qFA
-    b53xHRQqZjDgmkz5rnC5+21dUCb8K5GOQCF40OO5OaT6xJYnnpu2/62iRjKw
-X-ME-Proxy: <xmx:FdMUakALwpQBxXAsTptNGCYrkVTvu2e45n7MdlhcWDjijz8pFGj3qg>
-    <xmx:FdMUajoH0MD7Pg-1IsAtcj7q20NrnMoNkfnlGw3TeKrquhQDw3dWhg>
-    <xmx:FdMUammJhfgJIMsV8lleSGDitCMCP-PNybz_imXWmvNsyS-5IEeeRg>
-    <xmx:FdMUarwfVds3oVWtb1N6sZSFYQ-_3Yu7xjz2W8R3oX-qbBELTCDh4Q>
-    <xmx:FdMUanT9Zn-23W48U_gXi6A_lpS4naxYxPQmOrZKgTim1TlIOD73kOmN>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779750546; x=
+	1779836946; bh=6C1qKyEmD+67/DBfBdSwhok0VOWDhi4gKW/7Q9S36EM=; b=G
+	yO+sKnvxbH+5xZlvVrAeXAHA0J/0pVnCd7i5vIgaOSNhXivBx12lQ4myw0mCzmew
+	rTqZVc3mgizN6VbqySlixwOFbhq8WJ61T+T2nfkAgVUJfOHpGsmbvGruiRVATGME
+	7PUmF2+wrROu+Ay9C2TVNcJuyoKNkM1Y1zzWzw//ARa6zpyL0gPBuQt3MY9GgrZh
+	JU9mI5ZSVZEFA73HpXq1x9IAexK5t9orUHTWVIDcOAJuWn4EEI5L5G6d425zgnue
+	3DLZDTPp3Sbb2BeaZDuhkGns3MxBo+ufx39Qf5xAHDfcgqn9miRPyz9OfxBhtgXb
+	gN6dWTl5fOQuMHr8O+CtQ==
+X-ME-Sender: <xms:ktYUaqC03HounqrD61YGWx-4az1KqWJiQwDzj1e4D4QOrZsY_HB5wg>
+    <xme:ktYUarho70A4qRerUP7TgzYOE5ZQ3MggXcxnyZiYCyz-KiUjJo_Oh0IRR9CFYIERG
+    2AmCyQb_j8hx7pfLko_vsFPrKCm4wziQncdvkYrhJe-Sl4pT-UGWA>
+X-ME-Received: <xmr:ktYUain0jkUkbCux2zZ1pXTTPGwrujrFgzFjIqDtoV8urDIERO5yE02bXkZfn2nptmKSyb8de9ANvpvHwe4JSCCu2IxUosVXwthY>
+X-ME-Proxy-Cause: dmFkZTE1wHyAG64rZ8BdbWR/vWwXHixaDbsvYgvNjyG9B3T8XKgxaqE5GMEPi1Mirfds62
+    pFj8PFYOVeFop5aotwU3EK3HA6Tyr/Yc1LHxzHaOLmDIJ32y0pfWAVNbWNTBd5thyh3tfp
+    X+3EDKX9tkiv9k3hrPtgRbjdoIlDq7BA1sXS9NJdPDiMOcWvLhE1EcrT0AvMKb4QL3KgXg
+    S98/OTSn05AS2y6UDyD+RFrhNPzgPyDG7pSebwCF+MVjIA8veRGOGHVrui0qev1gMt0/NS
+    AlTNbOpE5A92ZTg/xd2reJlbD0iTFfnpfegiygfDA93wd/6Jv6p4oDUhrydr97Y0hnsHLa
+    E2urGPLpeIyYe0AzFUaeZFt4e8ChlJKUQXoYMu+MDxIEBUMgGkhyTYGo/32b4eMRa108Bd
+    uuJpHjN9MknAs80zC+/Bdp4lYUbCi4781bgR5n+aFny7Ctzket3ixRrUG/A+iWAx1y6/mT
+    YN36ujFb0aZM9GixRwFZSzW4rtRhowx3wRaqD/xdzI9Xpy5X3+oTmUIOScsJgz229yy2Hf
+    nTAd+x0id0T4Y7EIak6/ZYPl4WBqGVHSTqg0IGIkk7quzC7Dl35te9+Q1r6PpNEW1CtMpw
+    aj2r+QrFnGbmmMjaECBjN5LncuFAww/EhpWiZuJA8ZVbCeBZ+WQPDkw4av3w
+X-ME-Proxy: <xmx:ktYUanrZJopTzejkKcidA50ATwvQxbhzTYxmGs2dTdJFZhiKCAKofQ>
+    <xmx:ktYUarFqp68et84mu9fCojAnCpvi1pUMeTR6fy2u__qlBCFmXwbcpg>
+    <xmx:ktYUajzB5VvM33UwwRmzHjhFKy-Ehbq6Kb8S4UGf7ib5e_6okQPmSw>
+    <xmx:ktYUagpCqj8OzQ-YN_0ORMZBA0u2gZQVGG3EXUuPIMalAGYymG7DvQ>
+    <xmx:ktYUatmbqJqsBdk51GRzOn_xoZqvAqMPOUI_OVVDbhZyFKM8hEZW1yR_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 May 2026 18:54:12 -0400 (EDT)
+ 25 May 2026 19:09:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Alyssa Ross <hi@alyssa.is>
-Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2] receive-pack: fix updateInstead with core.worktree
-In-Reply-To: <20260525162311.66240-2-hi@alyssa.is> (Alyssa Ross's message of
-	"Mon, 25 May 2026 18:23:12 +0200")
-References: <20260522154418.5883-1-hi@alyssa.is>
-	<20260525162311.66240-2-hi@alyssa.is>
-Date: Tue, 26 May 2026 07:54:11 +0900
-Message-ID: <xmqqv7cbcd7w.fsf@gitster.g>
+To: Jens =?utf-8?Q?Tr=C3=B6ger?= <jens.troeger@light-speed.de>
+Cc: Chris Torek <chris.torek@gmail.com>,  git@vger.kernel.org
+Subject: Re: How does git track history overwrites?
+In-Reply-To: <074E783A-027D-4C5B-BC44-CC38C53735D7@light-speed.de> ("Jens
+	=?utf-8?Q?Tr=C3=B6ger=22's?= message of "Tue, 26 May 2026 08:47:10 +1000")
+References: <089615C1-6526-4ADC-926A-6A232F330DA2@light-speed.de>
+	<87se7gasn8.fsf@gitster.g>
+	<074E783A-027D-4C5B-BC44-CC38C53735D7@light-speed.de>
+Date: Tue, 26 May 2026 08:09:04 +0900
+Message-ID: <xmqqfr3fnl2n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,70 +86,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Alyssa Ross <hi@alyssa.is> writes:
+Jens Tröger <jens.troeger@light-speed.de> writes:
 
-> Previously, only one of push_to_checkout() or push_to_deploy() was
-> called.  In a8cc594333 (hooks: fix an obscure TOCTOU "did we just run a
-> hook?" race, 2022-03-07), this was changed to always call
-> push_to_checkout(), and then to call push_to_deploy() if
-> push_to_checkout() didn't run anything.  This change didn't take into
-> account that push_to_checkout() had a side effect of modifying env, and
-> that modified env broke updating the worktree in push_to_deploy() if
-> core.worktree was configured.  To fix this, only mutate the environment
-> used inside push_to_commit(), rather than the environment that might
-> later be passed to push_to_deploy().
+> Thank you Chris and Junio!
 >
-> Signed-off-by: Alyssa Ross <hi@alyssa.is>
-> ---
-> v2: reword commit message in response to feedback
-
-You also fixed an incorrectly indentated line in the new test, which
-is very much appreciated.
-
-Will queue.  Thanks.
-
 >
->  builtin/receive-pack.c |  2 +-
->  t/t5516-fetch-push.sh  | 11 +++++++++++
->  2 files changed, 12 insertions(+), 1 deletion(-)
+>> [Junio] Where does this line in your discussion page at GitHub (which is
+>> omitted from the post to this list) come from?
+>> 
+>>    commit fda77690955e9b63c6687d8806bafd56a526e45f (grafted, HEAD)
+>> 
+>> Are you doing anything funky with .git/info/grafts by any chance?
 >
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index c7b2818f20..7ee157532d 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1460,8 +1460,8 @@ static const char *push_to_checkout(unsigned char *hash,
->  
->  	opt.invoked_hook = invoked_hook;
->  
-> -	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
->  	strvec_pushv(&opt.env, env->v);
-> +	strvec_pushf(&opt.env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
->  	strvec_push(&opt.args, hash_to_hex(hash));
->  	if (run_hooks_opt(the_repository, push_to_checkout_hook, &opt))
->  		return "push-to-checkout hook declined";
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 117cfa051f..db6cc18673 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -1791,6 +1791,17 @@ test_expect_success 'updateInstead with push-to-checkout hook' '
->  	)
->  '
->  
-> +test_expect_success 'denyCurrentBranch and core.worktree' '
-> +	test_when_finished "rm -fr cloned cloned.git" &&
-> +	git clone --separate-git-dir cloned.git . cloned &&
-> +	git --git-dir cloned.git config receive.denyCurrentBranch updateInstead &&
-> +	git --git-dir cloned.git config core.worktree "$PWD/cloned" &&
-> +	test_commit raspberry &&
-> +	git push cloned.git HEAD:main &&
-> +	test_path_exists cloned/raspberry.t &&
-> +	test_must_fail git push --delete cloned.git main
-> +'
-> +
->  test_expect_success 'denyCurrentBranch and worktrees' '
->  	test_when_finished "rm -fr cloned && git worktree remove --force new-wt" &&
->  	git worktree add new-wt &&
->
-> base-commit: aec3f587505a472db67e9462d0702e7d463a449d
+> That line is the result of a `git log` after the `git fetch` I mentioned in my initial email.
+
+Sorry, I may have been unclear.  I specifically meant the "grafted,
+" part in the message.  I know how "git log" output looks like ;-)
+
