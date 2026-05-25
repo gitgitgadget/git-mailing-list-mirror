@@ -1,121 +1,218 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF383D45ED
-	for <git@vger.kernel.org>; Mon, 25 May 2026 08:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779698305; cv=none; b=MPzszxogWD2JrY9/IL0difxJ1DSZ2UJnIR9DTygAcIY680Cys79bs3h6jWEzrdMGCV6zmHwQoazAVzlTptWpMo/GZryerDR5u7qfb86zwFc3anisNjlzrUplDhKSMM4dPq454D42itbftH7Mw6o/bsn6Nl8JWlHje4DX6eAif0M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779698305; c=relaxed/simple;
-	bh=mfH+ShMzPMyADysvNOZUpEWFAEJgsl+lEhWZY0y1WTA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=peEVe2qRw+pziq4wuI1P6qzqVE5O549FjjJBIa0B8ONY08Q98ElU6LhkF/sSuVtEDjeOi3ityjnANbQK/B+YFBaLOGVW6SjcLuunxyXCqb6v+xZAg9Sww+LxzpFC3GzWIhuGu9j9mcOJ+hn6MBQ5esazceQUu7Omot0J7yloMKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pnEYuxP8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CKVlNRnn; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77253E3C72
+	for <git@vger.kernel.org>; Mon, 25 May 2026 08:54:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779699267; cv=pass; b=JAAmXXOUmGTdELhymx57F+PWKdY2zLm9TGwGdbS9Dcjxhn6a8yD+oydjPbzXYdAUyIsE4g5RFw5SX785C4x80x1X0UJqgHc6si9SCicyErUp1XwXAnQoRUq/l/HJ6F8vKNDfk9pTYAF4mOveeGjTj5IP8ODqfl/mntPAdJ+pHco=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779699267; c=relaxed/simple;
+	bh=PhOgLsA/+zjDCVt3q5zhzVVbDVVyeiTbzG0Fw6JSvYY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EwS1IEJDeSlxM9IA+cLgQTJ9DvIW4c/q8zxJdlStdLkdXmaSWr+H1K7b6jKvSjTcEQzjZTQBaIrUuVAd0cDiT/O6tbTA+mKChgr16aGsEo6nW4WfOLTWs8xUAnZC0J6RAbpNx1wHYWsTJCWrmDYOSivplfiC2VF+AcCxr+N0faQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=GW4jiBEr; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pnEYuxP8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CKVlNRnn"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id EF813EC0696;
-	Mon, 25 May 2026 04:38:22 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 25 May 2026 04:38:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779698302; x=1779784702; bh=T6kg+j0Oc+
-	DPzSlO8jkwsqjAjHxu7HtHb8wNPqFdyZ4=; b=pnEYuxP8VY3fj6R45YDHODHaFT
-	HlMlkmh56Bca+5zmrGR5ka8QjgD7ueNTZl2yNrkPI6sSq4sj2G1iABMMicvXbEnI
-	GlruQpYQK/OU1fVEEwY64KBcfqPTvfKYYolCOKREK8WkibspaXFB8C8GcUKmuePd
-	cwZw+gZFFkLRszMDPdNQ6P+Ym0/EbzA1yljns1G3ixDLNMqhfPjr10I6PKr5O8Y6
-	LVd8ozPp3s/w8FlivGJ4T7AqSsHvF1ivPD3SRhIjte4XY5K4xH9czivhBGNdGOHt
-	0BxgD0SM/6PcKOnYoecPHaOG6U2iPMthY3gk2YkSdca84oYsw3GRZO3CsXaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779698302; x=1779784702; bh=T6kg+j0Oc+DPzSlO8jkwsqjAjHxu7HtHb8w
-	NPqFdyZ4=; b=CKVlNRnn8WcT9MF0WButnHrPKQF6JeRyKyndeki8Rk4NNyXbuMv
-	gKldwJfmvEak3A+0p7tKDOW2QzkN59uXKX0v/22JDTolFv/p4mfizc5dokV8bbEu
-	NvLqKMDbaYkv140HsWLx4fyuUfQktC1NMBGeoglTXsr5WGotQBSNMtLPMxJ7UH18
-	Tvs7WI5Dvtl9OqVWoxFsq/qoYqaskW8SRK/60D6uJFJwAu8EfeHrLS9ECiDxx7bS
-	4hDDvRh4WAKn0FStNxZF6T2KyjeBaTn1oYZw8kspLnxmeFoIgECKCYN/APJpRUrF
-	/qHBok78x9kwULLSjfBxVBHnr569FAKqINA==
-X-ME-Sender: <xms:fgoUappOposfWF7o1ArCOGLi0YUNTXTIfW83DiVSW_LrjXfI26AgoQ>
-    <xme:fgoUaii6kv3jDXpWwWnwb03IoB33NB1an9P6hr-rT1Ym7jMg605dW80ooqZddSp8d
-    jKwCJfRYXAt4AGSnOXRIUzAehmBJcAFa_PyMRSB579ZR-eg0oG6>
-X-ME-Received: <xmr:fgoUaujFq7rMiI7YUk1ZnbEkYRKCYZPHP37S91OzDcpLUf4go5w3bERNe2h4p3RgouQcGh_YmMtI3qq__8qO2MZZavFoLRoCZFY->
-X-ME-Proxy-Cause: dmFkZTGRveO0tZacf8dKdTbKySKkm8a0yGl4S1lWZVMO9crp3Q4Bt4hoEjtNlyEU9/7uBF
-    z8PrvnL2VcO3H/RiO9oK/Xx/ijSX6cYru9BS496EQ73tDz+aLbDjJ2mR9f+glTgaNTTEXh
-    Yxp67y4DmDLRi6fmBbENegYQmJN/VfF9GaSW2RIDQDnMyqZKZECGoGGEwH2eBA27qlPgRz
-    A+vmMkTYTFxMFo2mMILUPMoRRp7qPtROqfPCgy6P1Tje25WqASL7rDG752a57OhC1FWwxe
-    P5JbP2DVNUX59S5LmLq1Gt9JPJTIBzZtZm51wMgzlZPMM3VG0iiae1UhfeePzOV7m2TugW
-    qaMy6SeZL2g0UuRnucKwBNd5TQvk9zblsSDdhK90wFcC0c5RjYeLw9THyVxfuLZPqgDqHN
-    /9Bug03KuIjH3sgdvjRj30iEZivR/+SejOsmyw8VemlDk8Co4wE75EuUQ5k4gFqet0f4w3
-    VwG1ulPXDD37/dVULEcKI+8IrymmVyFW1fZJlTKS2oot05dvGC+klYbUmbKo6XEY/1g3iZ
-    ugRacW6jQ/5A+W/eRdvvrS6fTAf9URSaN7HKYUtUEUbYymbGtlgrlFnOCljm+YmO2+L3Op
-    4qtzFJxm0p9o17+1Zi/RHuJ51p2Cn1IhwPRXPVYNV/W4vHYqAzp2VcPZSeuQ
-X-ME-Proxy: <xmx:fgoUagjecvbJOtZ9TryfaV3HZAZtNLUomMpZ2BkVdtcD4bao1cIwKQ>
-    <xmx:fgoUamJ22fam0WOVQUq4MRicI8OUKQyRycwUPVQhss5rn0q6Q5E1kw>
-    <xmx:fgoUanHNR51lYzl1uHcq7-x9P2Y_mNXAPQsswPT0oWRRYK8zcHNNDA>
-    <xmx:fgoUaiRHizIgn2KRXNulctob7apN9pRc18xVOzEw0M4uAk4TrMZf_g>
-    <xmx:fgoUaqIncGaQqkwjN2UFUGJeQZoDXT4t2J5ExwYtdStFWoq8Om-IFzn6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 May 2026 04:38:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Jeff King <peff@peff.net>,  Kristofer Karlsson via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/3] commit-reach: replace queue_has_nonstale with a
- counter
-In-Reply-To: <CAL71e4MOH2iPve19dKixLHSgpC3ZAZz59zLWEWRoxW1a7vhMwg@mail.gmail.com>
-	(Kristofer Karlsson's message of "Mon, 25 May 2026 09:59:59 +0200")
-References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
-	<20260525064755.GA2737798@coredump.intra.peff.net>
-	<CAL71e4MOH2iPve19dKixLHSgpC3ZAZz59zLWEWRoxW1a7vhMwg@mail.gmail.com>
-Date: Mon, 25 May 2026 17:38:21 +0900
-Message-ID: <xmqqfr3fg9z6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="GW4jiBEr"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7bd6f65c781so75866667b3.1
+        for <git@vger.kernel.org>; Mon, 25 May 2026 01:54:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779699264; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Wif0oqWv97YztU+HijIfCFQZJxdoVP6N5jk1OaNTgOvYZ3C9zTYmFkrlYuZhQSmifj
+         1gaa1X1kLZH4kwttC1xynjDcH5mIuOUd3yRKntIwIiukB/s08QarlRMkLNAk9PQ7vKqu
+         p9wmbor+li/TpfgqlHuN4vNAnj39WXMOlG7NFguDSDWIaLpv0F7Lvd+9TbXvTDu9lYe/
+         uJzBnu5Ub/1f+OzCFr8KYFU9pdDh0//SpNsFS9wLSA3Tl2pvl3Scqe+0oWzkr0UYlqFk
+         pnIStRX9E4znh8F/Kj4zCyzsD4HyQtQaYm1MJw6r5X7MvJqCdDStIw4nJFD5rP9+rP6Y
+         MarA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=tNFEzq5bOp/aNwoaPr0C6W9Lm3V84I97yenLbL3lTMU=;
+        fh=A40sDa4gcQ/WFC/YqW0LeCnK2EYuXhWeczIDO+5X/yw=;
+        b=allVdKXoAUfDDFpY5OOo0E4QNURnlFtKMdgW9ZPUTeNlJJEzdB6j2DH0L+HLtoHLTJ
+         rfsgpkaDepw4bhw2Kg0iIciiyhi+a29uyCC763oH7pOh9s1+zRfaRyexkEXbbGgSIgt0
+         lfhOGVINMzEKlaFKMMgyWuS6RfDct6QF26GDvpW067TgKOP9qIcIyydCd+4/hmdqamEZ
+         jbpugCe3i0q6ZS/CYqQAEMc61ojFgmfrFymlNr+9/44VxnOflHlsO1fGifHEQQ/Wj4+0
+         I80/4zntGPD/FijBl3SVNi50nbGHBsyez6duQunQbKH5fEAPYYWV+UrZhVfICc1Xs9oF
+         GMwQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1779699264; x=1780304064; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tNFEzq5bOp/aNwoaPr0C6W9Lm3V84I97yenLbL3lTMU=;
+        b=GW4jiBEr25yfhCZ/sMve0DCFNWTnm1Z4jCe/c45xB4MGT2JYzbghzzG7tndvI6ZQmO
+         LRPXC6QwnS+LuM5YzOFkS5PaOponAsSRcFwNNYlTftE3g4JvPvLDioQ5dIg94pFJmV6O
+         7n/fUGOd+759KUhOTEF8j4EmWG4k3FzQuFDds=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779699264; x=1780304064;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tNFEzq5bOp/aNwoaPr0C6W9Lm3V84I97yenLbL3lTMU=;
+        b=EBbur8/1Vje5cAhYEe5o/wQ5Z9oGYV5RbyuuP1K52z4pQreorHibHbix4pTY2K0WJi
+         ixMwsi9gtocHCDDlTy6DsETB5LRyDqPgIGrhBojQ7e/2VossBufc+ixZenJdymjMmxPy
+         7Y7WDTN57cakUyBOL1PrenAurzbeP6bU5ovRewRV4HdDChYh58tvSq/ZPURn0egBcWsg
+         TBLAuKT5s7LkRH88jYH+6UoO6gp9WgCxRn8cq6xTC0ECEKtY8N4K5e6NrHqATb4PdvZv
+         2GlSiVetPfGoQTzD2MprP1F7vSH6j7tkPCKfD4pkDUGWJMFTVn5VmTnHWjwINnQhMeZ4
+         Om4A==
+X-Forwarded-Encrypted: i=1; AFNElJ8PRoSoNPccudLswTWiaRuzB6UpP91tNMTP2rT/dTMqvGU4Prk+dlvli7S2yafKIx6w0o4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywu8co8hrIXwQ8H/NESoen1PAfNu9vsKfML+wj31Qq6waN9R8W6
+	4CcoMH4Ew7sywtbDuT0v2REGO8TzfAb2ZqVSIWXMhppQCCU5yia/nMM6hiPJPevUs1hpHf3H4DM
+	fqz1/09QoVZUroA7AHhp4rHvxTQDVBesQPhWJ1JFsxQ==
+X-Gm-Gg: Acq92OEm7FM2LMHbl06KG/wPcXSuQAqs2dd2iTEoZyqjCo8acaUdkv+dd6zRAuUaBuo
+	3cVE9t76hGxVXBHuoqXyGDcYRvWxUxTdDp0vPsi6fjaFEGZr2STczLRtchlpt4FIcXUV8od1dcu
+	oKd2dDzQviUkvGFQwZOiDEU9aBhejMfZq2H279QjEW2K8QfuRdDSds6F8h0mIRZoPzFrHrrimBF
+	NpBJn9FvHnfkwd+lydEay1gBUoSWT3FcylPeqxjLaNAoYbKeVntii+hZHG+X0XDjem0xjgnhgIn
+	WkIu89zfJoI/JbURFbs=
+X-Received: by 2002:a05:690c:260a:b0:7ba:f6b4:3582 with SMTP id
+ 00721157ae682-7d357426975mr112690337b3.16.1779699263932; Mon, 25 May 2026
+ 01:54:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
+ <4742f5e634b55820f3b5a626ec97e24617fdae3d.1779644541.git.gitgitgadget@gmail.com>
+ <42aef000-7952-482d-8532-2287cf32b275@gmail.com>
+In-Reply-To: <42aef000-7952-482d-8532-2287cf32b275@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 25 May 2026 10:54:12 +0200
+X-Gm-Features: AVHnY4KuHbgWi01oCP-EvbjmqJ7gEqH1g-_vLzL58S-sTgmG4EoCVenyrMbBncE
+Message-ID: <CAL71e4PKL9e9empOBppF-RxufaQK95DJh0icAmtfd4cnGUN-Wg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] commit-reach: optimize queue scan in paint_down_to_common
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Kristofer Karlsson <krka@spotify.com> writes:
+I have been thinking a bit about encapsulation too - the problem is twofold:
+1. ENQUEUED is a tag on the commit object but it represents membership
+   inside the queue and so we already have an implicit assumption that it only
+   matches one queue (at a time).
+2. The counter is touched on enqueue/dequeue BUT also when mutating objects -
+   that last part is tricky to encapsulate as a part of the queue.
 
-> That's an excellent approach! Much cleaner in general.
+That said, I think if we go in the direction of Jeff's idea with an amortized
+O(1) staleness check, this becomes simpler - and we can perhaps do something
+to structure _that_ code instead. Something like this perhaps:
+
+struct stale_prio_queue {
+  prio_queue pq;
+  commit *nonstale_cache;
+}
+
+and add the corresponding wrapper functions.
+
+I think the encapsulation idea becomes even stronger with that approach than
+with the counter based approach.
+
+
+- Kristofer
+
+On Mon, 25 May 2026 at 03:59, Derrick Stolee <stolee@gmail.com> wrote:
 >
-> I benchmarked it against the counter on a monorepo with wide-frontier DAGs
-> (2.4M commits, component import merges). Using merge-base --all to bypass
-> the early-exit optimization from kk/paint-down-to-common-optim:
+> On 5/24/26 1:42 PM, Kristofer Karlsson via GitGitGadget wrote:
+> > From: Kristofer Karlsson <krka@spotify.com>
+> >
+> > paint_down_to_common() terminates when every commit remaining in its
+> > priority queue is STALE. This was checked by queue_has_nonstale(),
+> > which performed an O(n) linear scan of the entire queue on every
+> > iteration, resulting in O(n*m) total overhead where n is the queue
+> > size and m is the number of commits processed.
+> >
+> > Replace this with an O(1) nonstale_count that tracks the number of
+> > non-stale commits currently in the queue. The counter is incremented
+> > by maybe_enqueue() and decremented on dequeue and by mark_stale()
+> > when a commit transitions to STALE while still in the queue. Since
+> > each commit appears at most once (guaranteed by the ENQUEUED flag
+> > from the previous commit), the counter is exact.
 >
->                Baseline    Cache   Counter
->     import(A)    8079ms   3686ms    3723ms
->     import(B)    5498ms   3993ms    4038ms
->     import(C)    4350ms   1748ms    1766ms
+> This idea has a lot of merit, but I'm a bit concerned about the
+> organization of data. My ideas of how to improve things may also
+> impact patch 1's use of ENQUEUED.
 >
-> The cache performs on par with the counter - within noise on all three
-> cases. No new flags needed, much simpler diff.
-> The amortized O(1) is just as good as true O(1) in practice, and it avoids
-> the ENQUEUED flag and counter bookkeeping entirely.
-
-Nice.
-
-> I went with back-to-front scanning as you suggested, and also clear
-> the cache when the cached entry goes stale. Applied to both
-> paint_down_to_common and ahead_behind.
+> > -static void maybe_enqueue(struct prio_queue *queue, struct commit *c)
+> > +static void maybe_enqueue(struct prio_queue *queue, struct commit *c,
+> > +                       int *nonstale_count)
+> >   {
+> >       if (c->object.flags & ENQUEUED)
+> >               return;
+> >       c->object.flags |= ENQUEUED;
+> >       prio_queue_put(queue, c);
+> > +     if (!(c->object.flags & STALE))
+> > +             (*nonstale_count)++;
+> > +}
+> > +
+> > +static void mark_stale(struct commit *c, unsigned queued_flag,
+> > +                    int *nonstale_count)
+> > +{
+> > +     if (!(c->object.flags & STALE)) {
+> > +             if (c->object.flags & queued_flag)
+> > +                     (*nonstale_count)--;
+> > +             c->object.flags |= STALE;
+> > +     }
+> >   }
 >
-> I can rewrite the patchset with this approach and add you as co-author or
-> suggested-by? Or I think I can wait for you to push it yourself.
-> You did all the work here, and just didn't have enough data points to
-> motivate it?
-
-I can take from either of you two ;-).  Thanks for working so well
-together, as always.
+> These two methods have some concerns on my end:
+>
+> 1. We need to store the nonstale count somewhere other than the
+>     priority queue, even though it's necessarily representing a
+>     subset of the commits within the queue.
+>
+> 2. mark_stale() needs a queued_flag. (I need to check to see if
+>     this is indeed changing in multiple callers or should always
+>     be ENQUEUED).
+>
+> >   static int queue_has_nonstale(struct prio_queue *queue)
+> > @@ -68,6 +81,7 @@ static int paint_down_to_common(struct repository *r,
+> >   {
+> >       struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+> >       int i;
+> > +     int nonstale_count = 0;
+>
+> My preference would be to create a new struct that contains a
+> prio_queue as a member _and_ a nonstale_count. It could initialize
+> with compare_commits_by_gen_then_commit_date by default.
+>
+> The important thing is that consumers of such a "stale-tracking"
+> queue would not be setting the STALE or ENQUEUED bits themselves,
+> but instead the queue would be responsible for that.
+>
+> This could allow us to simplify callers by always assuming we can
+> "add" an element to the queue and the queue will use its ENQUEUED
+> bit to prevent duplicates from reaching its internal prio_queue.
+>
+> Such a data structure could be private to commit-reach.c for now,
+> since all the methods that would use it seem to be colocated there.
+>
+> This is a big ask, but I'm interested to see if such an approach
+> would simplify things here.
+>
+> Here's a potential breakdown of how to build such a thing in
+> "small" patches:
+>
+> 1. Create the data structure and update paint_down_to_common and
+>     ahead_behind to use that structure, but still use the existing
+>     prio_queue methods on its internal member.
+>
+> 2. Add the ENQUEUED bit and methods on the new struct that add
+>     that bit as it adds commits to the inner prio_queue. It would
+>     also ignore commits that already have that bit. (Should it
+>     also remove the bit as commits are removed from the queue?)
+>
+> 3. Now add the nonstale_count (or stale count?) to the struct and
+>     have it control the STALE bit modifications, with increasing
+>     the stale count when ENQUEUED is live, and decreasing the stale
+>     count as such a STALE object is dequeued.
+>
+> I like the idea of this being encapsulated within the struct and
+> its helper methods. But the proof will be in the implementation.
+>
+> Thanks,
+> -Stolee
+>
