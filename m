@@ -1,69 +1,69 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE45B357A40
-	for <git@vger.kernel.org>; Mon, 25 May 2026 10:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CDF332EC8
+	for <git@vger.kernel.org>; Mon, 25 May 2026 10:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779704919; cv=none; b=f9rdykCDvZT6dAtHvHkqgv1VBTDbklyEIpZtBdi/eF1p29wJw4TAGJu8MlB+urcDeJHTbPNTVmAd8hYpZrVNpoEwhI2QD0h+KQD9sEdjgT5kdmJK0JlooN1dKHaV3GZMdroCIzWZYFG9xTu+ibwS3YKAuDoJN9ctvH3RcdeZJ2I=
+	t=1779704919; cv=none; b=BM2y31ao44Y0uJHMEweluUq/JeAkVrGAVPd3YL9mZsryKuO3KC+r8q3ggxlfNMNoYmfviuo9E+v+3nCxBE3uwL68xWVhbVT4KcOpcbzaFpMBsGeEiKs414OWBR7N3uwYhFYfCdYJDLqW0YGFoaA/FZU8Yo1IW/m9j47uo1Od1C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779704919; c=relaxed/simple;
-	bh=dRe6K9mV9jspPaAst6ui636oOXst3EV6frFmG7gdh8o=;
+	bh=ZQvjYC/dfO9fo6V9EAOm2hWSs3AjjijL0FIvdRSkVS4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=kjfLoSA7hwiWoMdEkBLpK5a8LHgoxBmYI/l49/JYuinnpLeZ4f5+i4YL+UdJGbfPkY0oQIpOAnbfLkz7hoYRq0Lzxu6c4Kiezvn+pjh8w0xE4Jx2fSlh3svbfp2CrTDDKz2Ik5r1/tL9VcFWXhZ8e+tuHqPi+VfuDL8mx7+9Er8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X0GiOYl1; arc=none smtp.client-ip=209.85.222.179
+	 Content-Type:To:Cc; b=KcoB/wKHoRZ+Dym6vdUOJpnXeGYwEaiVxTBkTt+/aQx7yf4qrkGQve4EH4/k9ySAHbzDEhFMU9KPxUoIb26PEp+FKWYJI6JmWgY5ksCZ/D5fR2HwH4K6qKR6o2ewClFqg5AqZFEks8bOOJ2RnMfph4y29ixltUoJk/xBsTiHJG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgnBP1dZ; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0GiOYl1"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-914bb8e95c2so143624285a.1
-        for <git@vger.kernel.org>; Mon, 25 May 2026 03:28:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgnBP1dZ"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8cac189e516so52383436d6.2
+        for <git@vger.kernel.org>; Mon, 25 May 2026 03:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779704914; x=1780309714; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779704917; x=1780309717; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eBN4G3qaA0TQ0vZ9Le2h2xZV8j2YczWN4iU99Z8ftlc=;
-        b=X0GiOYl1zx2Gjr+0z8W3MK4/kVHn6E5UEyq/wONyF5p2WfVP7ApEUA5tU0cyBnvnH5
-         t91pm6FXkmpok4lteWJVAl1HwX4EpF2GKzoM791sMFGJ6o6YJ9CZwDDtxy+y3gzzPkPo
-         xdy4+VmJNhyRhZlZtY9JzJQpa51Y1evKmmW46naPrF4+h+Y0jqUxtdFaI6tY6lwrx4la
-         Z4uUtLLXe66rQNN2+PrYR9QeiASd2L8MpJxXH9vRYaqiOqvqGpC3OlZ2elJB6YC6LxXa
-         RYKRFyKoYjUVmMzvdpMlkf4BLZTlDsCE1F2P0F9X63H3H1H5miKMUjw1JYm7eNh6mg+M
-         DdBA==
+        bh=bdzZmfAIN3LPbPP0nv+Qm5fhePKQlLgg7whbOXfUIqE=;
+        b=NgnBP1dZs+ELqrMR3wK9OsB/o+w9JpkkNN+cYzxhL91IcekxYLP3A9aRri59VADawc
+         V6o5Gpn8AkAM02Uq16cTZCvK0RbjZNttosHu4tClKS1lBMvgJtEyFDTaDA5P8I4o8dZF
+         OXujzX65QbeFhY6SK854tUlQi1fqqPmZ2nzKoApZZb4qajuy9D+h4cmBwrjmICRhKnTc
+         JaJndnQY1w06JRhtsr9xu6td1yRdXcwkpXhXFupZ/nrvHJXi31sRihT2SvjSgCDfUSjH
+         bWn9FdDEzAQeP7rmhghXGQKbLzlchs6XCqH5EzyloG3qpu9bcNpOfUK1etejinAQa+la
+         quNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779704914; x=1780309714;
+        d=1e100.net; s=20251104; t=1779704917; x=1780309717;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=eBN4G3qaA0TQ0vZ9Le2h2xZV8j2YczWN4iU99Z8ftlc=;
-        b=RpnvAysundcKrW+Ia4oKTDfFMw8sXHDWzuqvOfxOZ4G7634gRpIaLpcbT4nhC2BnVO
-         mH3egu3/KJCxEgPBd7oeADdsnSulbaM1NskITFlf9bbYQaOXiAJX4y2oTEVaf6/8Bfo9
-         u7d7uI1AygV+rogiTiknx9UVeW3Nxek2x3wvsbrAXLq5xBdriPHelAcS1slFmzMrm7+9
-         1g/mb6XS0mNvvX+28/nMKlYulg4azYlg88TS9OGByUlm7U/9iTheSuC3AgnhJ2DdYycg
-         WGHAOZRfRTW+YmccltRxKBpkPe0/ULqJvSFUKdQ5KqHRI+e9tT6YUdHvvDwBLRTG9O9O
-         OmDQ==
-X-Gm-Message-State: AOJu0YwyqKwMHSR7IVLHnZlx0N6KvQFVi6U3touZgASahsdbf5/wiu8I
-	u1FA+e/H0WoUOqRwVF8Zf0psVMZ76jaCz4XNx9lECmtids7Iaq8WFw4PrqxAfQ==
-X-Gm-Gg: Acq92OFRbsGNP38E4+Bp6gYMS/yBzdDZAqsyQKEtg4BKTLiU3DGe2Kx+FzHVHKK8DQ0
-	UMVA+JR6EWSE3yHy08vCsbZsbBaxLP+bO8HPvzJv5EnYagrAwoGdTw4EX1T/7yfUXP6Tms54WMy
-	AlwmRjTx45Cd21G4+0FbofKIMcrGZwYb2g49chLGMS3fPmyvVugs8jEHzyI7TmlzFPEKyyTLpTH
-	T0hQkd7RH31R1QZ146dIZIET341E/1bm7yYnan/uN2fqzmmYvu+XkwXBfR5DQIXmCTtHRLmqlfN
-	SaK4lpUUGZhwgPEeW8iBLJ+v3CznLxCS98TbhN9hLMBoSAL2fbkLzN8oBde7SCbjcTjYcAxaQ02
-	Ea+O4TisR2T6IKKGYa1zQiIAnbzI0w9E4c/m1pPpbaWxG23BCp1BZpUhUeeQI98fvZE1vMtMyVr
-	aWcBRcEQAxRplWKQZMyEV1QIsl0w==
-X-Received: by 2002:a05:620a:2a08:b0:914:acfb:117f with SMTP id af79cd13be357-914b48d5cf2mr1864383685a.8.1779704913637;
-        Mon, 25 May 2026 03:28:33 -0700 (PDT)
+        bh=bdzZmfAIN3LPbPP0nv+Qm5fhePKQlLgg7whbOXfUIqE=;
+        b=WwEShzKLPR8SStF0mvutinHTj3rstwSh87PFHmOdJ39SjqtbxF8VNl0EatLlI6jgF5
+         gPxS/4OH6IllY9K6+CBlUQ6JRVVXPxiNCc+TUE/K/f5utSn7qYpjpYC/iYPu3vtsJKEa
+         /325kDEBDhj3vSkol1TS0sGlhn4SqsEfg9Gejo8jjVbaToUj9x4ye1byV+NowfShWTip
+         v+bfPlY9Q5c0ajEZanSDVnR8k1kS2eKS7ybilRIUQSvndDZB+pcYkVQARp4jjA/qBxg/
+         QBJ16vYPh04HtMB8eEfqiXcBrqQSvoW9/qx14KyDQXqjYHUMPbu+h9KjZAS+iLFtVngM
+         kqFw==
+X-Gm-Message-State: AOJu0YyEqWhZ8cwm19rSdNahzS5Y4mQEG2YKQ8JV+1pnCF3fM3k5gPvJ
+	9ih7FGFbi+O6z9mukc8FZBRZDiBcAvW0Oj7b+FJTAomeA+Balqv1ONBuqtL2bpFD
+X-Gm-Gg: Acq92OELK3yKUU/zRKcYgvPCZHSKJC+n/54kJTzAErD9Ca2vLBXhmSiSjCY46mU7aSh
+	DhKLqRsJAW9eaXa5SDlIUM7/jkakhMzgW9u4ji43pthORWVR6zxJjqUOPMbG1WeRu2tNUhgco04
+	5vvn73Tmo1zem6lzREMMKLZe+RK/pZZ+33raCoowrB3DDUz7slUOZ5wL4q17DSjsTqBD6At+tNL
+	RHQFkEIIKEM8hrcGIP9jSQV2RvBMfMNFVtna6Htz70n2iSHES79uLaGVcuKNJo4K1jcilcYWrKS
+	L+B6zFRKSuh7+5wq1MkwlbJ20KbBW0pefSP3EbEQoy5bZRFmNVTLfkRyBBuZkWA2iN5LcRvmrk0
+	l4uuXRjFsF8gyzsd9uubdcaPHNQvdV1mzVn8+NGh6wiBSOJmjQrKyXcaru2C2oyvZQ4XOyz41Ru
+	bDI3c6NAuSOuc2oYLoBtW7psTPOQ==
+X-Received: by 2002:a05:6214:5a03:b0:8a6:1216:fb78 with SMTP id 6a1803df08f44-8cc7b5eaecamr218911306d6.46.1779704916895;
+        Mon, 25 May 2026 03:28:36 -0700 (PDT)
 Received: from [127.0.0.1] ([130.131.15.84])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-914bb90376csm1047042585a.16.2026.05.25.03.28.32
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc81306d70sm104817156d6.35.2026.05.25.03.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2026 03:28:32 -0700 (PDT)
-Message-Id: <fceaf195e8d2ddcb593f1b9cfacd88e996c48b75.1779704908.git.gitgitgadget@gmail.com>
+        Mon, 25 May 2026 03:28:36 -0700 (PDT)
+Message-Id: <60a420ea38b852570d55cf059e68b08d773571dd.1779704908.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2117.v2.git.1779704908.gitgitgadget@gmail.com>
 References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
 	<pull.2117.v2.git.1779704908.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 25 May 2026 10:28:24 +0000
-Subject: [PATCH v2 3/6] doc: convert git-grep synopsis and options to new
+Date: Mon, 25 May 2026 10:28:26 +0000
+Subject: [PATCH v2 5/6] doc: convert git-apply synopsis and options to new
  style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,458 +80,356 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Convert git-grep.adoc from [verse]/single-quote style to the modern
+Convert git-apply from [verse]/single-quote style to the modern
 synopsis-block style:
 
 - Replace [verse] with [synopsis] in SYNOPSIS block
-- Change 'git grep' to git grep (no single quotes)
-- Backtick-quote all OPTIONS terms
-- Convert inline man page refs: grep(1) -> `grep`(1)
-- Convert inline command refs: 'git diff' -> `git diff`
-- Convert prose placeholders: <file> -> _<file>_
+- Backtick-quote all OPTIONS terms and config keys in config/apply.adoc
+- Convert single-quoted inline commands ('git apply', 'diff', etc.)
+- Wrap standalone placeholders in underscores (<n>, <root>, <action>)
+- Backtick-quote `*.rej` and GNU `patch` tool references
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/config/grep.adoc |  36 +++---
- Documentation/git-grep.adoc    | 196 ++++++++++++++++-----------------
- 2 files changed, 116 insertions(+), 116 deletions(-)
+ Documentation/config/apply.adoc |  17 +++--
+ Documentation/git-apply.adoc    | 125 ++++++++++++++++----------------
+ 2 files changed, 74 insertions(+), 68 deletions(-)
 
-diff --git a/Documentation/config/grep.adoc b/Documentation/config/grep.adoc
-index 10041f27b0..83d4b76dd3 100644
---- a/Documentation/config/grep.adoc
-+++ b/Documentation/config/grep.adoc
-@@ -1,28 +1,28 @@
--grep.lineNumber::
--	If set to true, enable `-n` option by default.
-+`grep.lineNumber`::
-+	If set to `true`, enable `-n` option by default.
+diff --git a/Documentation/config/apply.adoc b/Documentation/config/apply.adoc
+index f9908e210a..36fcea6291 100644
+--- a/Documentation/config/apply.adoc
++++ b/Documentation/config/apply.adoc
+@@ -1,11 +1,16 @@
+-apply.ignoreWhitespace::
+-	When set to 'change', tells 'git apply' to ignore changes in
++`apply.ignoreWhitespace`::
++	When set to `change`, tells `git apply` to ignore changes in
+ 	whitespace, in the same way as the `--ignore-space-change`
+ 	option.
+-	When set to one of: no, none, never, false, it tells 'git apply' to
++	When set to one of: `no`, `none`, `never`, `false`, it tells `git apply` to
+ 	respect all whitespace differences.
++ifndef::git-apply[]
+ 	See linkgit:git-apply[1].
++endif::git-apply[]
  
--grep.column::
--	If set to true, enable the `--column` option by default.
-+`grep.column`::
-+	If set to `true`, enable the `--column` option by default.
- 
--grep.patternType::
--	Set the default matching behavior. Using a value of 'basic', 'extended',
--	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
-+`grep.patternType`::
-+	Set the default matching behavior. Using a value of `basic`, `extended`,
-+	`fixed`, or `perl` will enable the `--basic-regexp`, `--extended-regexp`,
- 	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
--	value 'default' will use the `grep.extendedRegexp` option to choose
--	between 'basic' and 'extended'.
-+	value `default` will use the `grep.extendedRegexp` option to choose
-+	between `basic` and `extended`.
- 
--grep.extendedRegexp::
--	If set to true, enable `--extended-regexp` option by default. This
-+`grep.extendedRegexp`::
-+	If set to `true`, enable `--extended-regexp` option by default. This
- 	option is ignored when the `grep.patternType` option is set to a value
--	other than 'default'.
-+	other than `default`.
- 
--grep.threads::
-+`grep.threads`::
- 	Number of grep worker threads to use. If unset (or set to 0), Git will
- 	use as many threads as the number of logical cores available.
- 
--grep.fullName::
--	If set to true, enable `--full-name` option by default.
-+`grep.fullName`::
-+	If set to `true`, enable `--full-name` option by default.
- 
--grep.fallbackToNoIndex::
--	If set to true, fall back to `git grep --no-index` if `git grep`
--	is executed outside of a git repository.  Defaults to false.
-+`grep.fallbackToNoIndex`::
-+	If set to `true`, fall back to `git grep --no-index` if `git grep`
-+	is executed outside of a git repository.  Defaults to `false`.
-diff --git a/Documentation/git-grep.adoc b/Documentation/git-grep.adoc
-index a548585d4c..19b3ade16d 100644
---- a/Documentation/git-grep.adoc
-+++ b/Documentation/git-grep.adoc
-@@ -8,8 +8,8 @@ git-grep - Print lines matching a pattern
+-apply.whitespace::
+-	Tells 'git apply' how to handle whitespace, in the same way
+-	as the `--whitespace` option. See linkgit:git-apply[1].
++`apply.whitespace`::
++	Tells `git apply` how to handle whitespace, in the same way
++	as the `--whitespace` option.
++ifndef::git-apply[]
++	See linkgit:git-apply[1].
++endif::git-apply[]
+diff --git a/Documentation/git-apply.adoc b/Documentation/git-apply.adoc
+index 6c71ee69da..3f22dac1ce 100644
+--- a/Documentation/git-apply.adoc
++++ b/Documentation/git-apply.adoc
+@@ -8,8 +8,8 @@ git-apply - Apply a patch to files and/or to the index
  
  SYNOPSIS
  --------
 -[verse]
--'git grep' [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
+-'git apply' [--stat] [--numstat] [--summary] [--check]
 +[synopsis]
-+git grep [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
- 	   [-v | --invert-match] [-h|-H] [--full-name]
- 	   [-E | --extended-regexp] [-G | --basic-regexp]
- 	   [-P | --perl-regexp]
-@@ -41,139 +41,139 @@ characters.  An empty string as search expression matches all lines.
++git apply [--stat] [--numstat] [--summary] [--check]
+ 	  [--index | --intent-to-add] [--3way] [--ours | --theirs | --union]
+ 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+@@ -35,33 +35,33 @@ linkgit:git-format-patch[1] and/or received by email.
  
  OPTIONS
  -------
+-<patch>...::
+-	The files to read the patch from.  '-' can be used to read
++`<patch>...`::
++	The files to read the patch from.  `-` can be used to read
+ 	from the standard input.
+ 
+---stat::
++`--stat`::
+ 	Instead of applying the patch, output diffstat for the
+ 	input.  Turns off "apply".
+ 
+---numstat::
++`--numstat`::
+ 	Similar to `--stat`, but shows the number of added and
+ 	deleted lines in decimal notation and the pathname without
+ 	abbreviation, to make it more machine friendly.  For
+ 	binary files, outputs two `-` instead of saying
+ 	`0 0`.  Turns off "apply".
+ 
+---summary::
++`--summary`::
+ 	Instead of applying the patch, output a condensed
+ 	summary of information obtained from git diff extended
+ 	headers, such as creations, renames, and mode changes.
+ 	Turns off "apply".
+ 
+---check::
++`--check`::
+ 	Instead of applying the patch, see if the patch is
+ 	applicable to the current working tree and/or the index
+ 	file and detects errors.  Turns off "apply".
+ 
+---index::
++`--index`::
+ 	Apply the patch to both the index and the working tree (or
+ 	merely check that it would apply cleanly to both if `--check` is
+ 	in effect). Note that `--index` expects index entries and
+@@ -70,13 +70,13 @@ OPTIONS
+ 	raise an error if they are not, even if the patch would apply
+ 	cleanly to both the index and the working tree in isolation.
+ 
 ---cached::
 +`--cached`::
- 	Instead of searching tracked files in the working tree, search
- 	blobs registered in the index file.
+ 	Apply the patch to just the index, without touching the working
+ 	tree. If `--check` is in effect, merely check that it would
+ 	apply cleanly to the index entry.
  
----untracked::
-+`--untracked`::
- 	In addition to searching in the tracked files in the working
- 	tree, search also in untracked files.
+--N::
+---intent-to-add::
++`-N`::
++`--intent-to-add`::
+ 	When applying the patch only to the working tree, mark new
+ 	files to be added to the index later (see `--intent-to-add`
+ 	option in linkgit:git-add[1]). This option is ignored if
+@@ -84,8 +84,8 @@ OPTIONS
+ 	repository. Note that `--index` could be implied by other options
+ 	such as `--3way`.
  
----no-index::
-+`--no-index`::
- 	Search files in the current directory that is not managed by Git,
- 	or by ignoring that the current directory is managed by Git.  This
--	is rather similar to running the regular `grep(1)` utility with its
-+	is rather similar to running the regular `grep`(1) utility with its
- 	`-r` option specified, but with some additional benefits, such as
--	using pathspec patterns to limit paths;  see the 'pathspec' entry
-+	using pathspec patterns to limit paths;  see the `pathspec` entry
- 	in linkgit:gitglossary[7] for more information.
- +
- This option cannot be used together with `--cached` or `--untracked`.
- See also `grep.fallbackToNoIndex` in 'CONFIGURATION' below.
+--3::
+---3way::
++`-3`::
++`--3way`::
+ 	Attempt 3-way merge if the patch records the identity of blobs it is supposed
+ 	to apply to and we have those blobs available locally, possibly leaving the
+ 	conflict markers in the files in the working tree for the user to
+@@ -94,14 +94,14 @@ OPTIONS
+ 	When used with the `--cached` option, any conflicts are left at higher stages
+ 	in the cache.
  
----no-exclude-standard::
-+`--no-exclude-standard`::
- 	Also search in ignored files by not honoring the `.gitignore`
- 	mechanism. Only useful with `--untracked`.
+---ours::
+---theirs::
+---union::
++`--ours`::
++`--theirs`::
++`--union`::
+ 	Instead of leaving conflicts in the file, resolve conflicts favouring
+-	our (or their or both) side of the lines. Requires --3way.
++	our (or their or both) side of the lines. Requires `--3way`.
  
----exclude-standard::
-+`--exclude-standard`::
- 	Do not pay attention to ignored files specified via the `.gitignore`
- 	mechanism.  Only useful when searching files in the current directory
- 	with `--no-index`.
+---build-fake-ancestor=<file>::
+-	Newer 'git diff' output has embedded 'index information'
++`--build-fake-ancestor=<file>`::
++	Newer `git diff` output has embedded 'index information'
+ 	for each blob to help identify the original version that
+ 	the patch applies to.  When this flag is given, and if
+ 	the original versions of the blobs are available locally,
+@@ -110,18 +110,18 @@ OPTIONS
+ When a pure mode change is encountered (which has no index information),
+ the information is read from the current index instead.
  
----recurse-submodules::
-+`--recurse-submodules`::
- 	Recursively search in each submodule that is active and
- 	checked out in the repository.  When used in combination with the
- 	_<tree>_ option the prefix of all submodule output will be the name of
- 	the parent project's _<tree>_ object.  This option cannot be used together
- 	with `--untracked`, and it has no effect if `--no-index` is specified.
+--R::
+---reverse::
++`-R`::
++`--reverse`::
+ 	Apply the patch in reverse.
  
---a::
----text::
-+`-a`::
-+`--text`::
- 	Process binary files as if they were text.
- 
----textconv::
-+`--textconv`::
- 	Honor textconv filter settings.
- 
----no-textconv::
-+`--no-textconv`::
- 	Do not honor textconv filter settings.
- 	This is the default.
- 
---i::
----ignore-case::
-+`-i`::
-+`--ignore-case`::
- 	Ignore case differences between the patterns and the
- 	files.
- 
---I::
-+`-I`::
- 	Don't match the pattern in binary files.
- 
----max-depth <depth>::
--	For each <pathspec> given on command line, descend at most <depth>
-+`--max-depth <depth>`::
-+	For each _<pathspec>_ given on command line, descend at most _<depth>_
- 	levels of directories. A value of -1 means no limit.
--	This option is ignored if <pathspec> contains active wildcards.
-+	This option is ignored if _<pathspec>_ contains active wildcards.
- 	In other words if "a*" matches a directory named "a*",
--	"*" is matched literally so --max-depth is still effective.
-+	"*" is matched literally so `--max-depth` is still effective.
- 
---r::
----recursive::
-+`-r`::
-+`--recursive`::
- 	Same as `--max-depth=-1`; this is the default.
- 
----no-recursive::
-+`--no-recursive`::
- 	Same as `--max-depth=0`.
- 
---w::
----word-regexp::
-+`-w`::
-+`--word-regexp`::
- 	Match the pattern only at word boundary (either begin at the
- 	beginning of a line, or preceded by a non-word character; end at
- 	the end of a line or followed by a non-word character).
- 
---v::
----invert-match::
-+`-v`::
-+`--invert-match`::
- 	Select non-matching lines.
- 
---h::
---H::
-+`-h`::
-+`-H`::
- 	By default, the command shows the filename for each
- 	match.  `-h` option is used to suppress this output.
- 	`-H` is there for completeness and does not do anything
- 	except it overrides `-h` given earlier on the command
- 	line.
- 
----full-name::
-+`--full-name`::
- 	When run from a subdirectory, the command usually
- 	outputs paths relative to the current directory.  This
- 	option forces paths to be output relative to the project
- 	top directory.
- 
---E::
----extended-regexp::
---G::
----basic-regexp::
-+`-E`::
-+`--extended-regexp`::
-+`-G`::
-+`--basic-regexp`::
- 	Use POSIX extended/basic regexp for patterns.  Default
- 	is to use basic regexp.
- 
---P::
----perl-regexp::
-+`-P`::
-+`--perl-regexp`::
- 	Use Perl-compatible regular expressions for patterns.
- +
- Support for these types of regular expressions is an optional
- compile-time dependency. If Git wasn't compiled with support for them
- providing this option will cause it to die.
- 
---F::
----fixed-strings::
-+`-F`::
-+`--fixed-strings`::
- 	Use fixed strings for patterns (don't interpret pattern
- 	as a regex).
- 
---n::
----line-number::
-+`-n`::
-+`--line-number`::
- 	Prefix the line number to matching lines.
- 
----column::
-+`--column`::
- 	Prefix the 1-indexed byte-offset of the first match from the start of the
- 	matching line.
- 
---l::
----files-with-matches::
----name-only::
---L::
----files-without-match::
-+`-l`::
-+`--files-with-matches`::
-+`--name-only`::
-+`-L`::
-+`--files-without-match`::
- 	Instead of showing every matched line, show only the
- 	names of files that contain (or do not contain) matches.
--	For better compatibility with 'git diff', `--name-only` is a
-+	For better compatibility with `git diff`, `--name-only` is a
- 	synonym for `--files-with-matches`.
- 
---O[<pager>]::
----open-files-in-pager[=<pager>]::
--	Open the matching files in the pager (not the output of 'grep').
-+`-O[<pager>]`::
-+`--open-files-in-pager[=<pager>]`::
-+	Open the matching files in the pager (not the output of `grep`).
- 	If the pager happens to be "less" or "vi", and the user
- 	specified only one pattern, the first file is positioned at
- 	the first match automatically. The `pager` argument is
-@@ -181,65 +181,65 @@ providing this option will cause it to die.
- 	without a space. If `pager` is unspecified, the default pager
- 	will be used (see `core.pager` in linkgit:git-config[1]).
+---reject::
+-	For atomicity, 'git apply' by default fails the whole patch and
++`--reject`::
++	For atomicity, `git apply` by default fails the whole patch and
+ 	does not touch the working tree when some of the hunks
+ 	do not apply.  This option makes it apply
+ 	the parts of the patch that are applicable, and leave the
+-	rejected hunks in corresponding *.rej files.
++	rejected hunks in corresponding `*.rej` files.
  
 --z::
----null::
 +`-z`::
-+`--null`::
- 	Use \0 as the delimiter for pathnames in the output, and print
- 	them verbatim. Without this option, pathnames with "unusual"
- 	characters are quoted as explained for the configuration
- 	variable `core.quotePath` (see linkgit:git-config[1]).
- 
---o::
----only-matching::
-+`-o`::
-+`--only-matching`::
- 	Print only the matched (non-empty) parts of a matching line, with each such
- 	part on a separate output line.
- 
---c::
----count::
-+`-c`::
-+`--count`::
- 	Instead of showing every matched line, show the number of
- 	lines that match.
- 
----color[=<when>]::
-+`--color[=<when>]`::
- 	Show colored matches.
--	The value must be always (the default), never, or auto.
-+	The value must be `always` (the default), `never`, or `auto`.
- 
----no-color::
-+`--no-color`::
- 	Turn off match highlighting, even when the configuration file
- 	gives the default to color output.
- 	Same as `--color=never`.
- 
----break::
-+`--break`::
- 	Print an empty line between matches from different files.
- 
----heading::
-+`--heading`::
- 	Show the filename above the matches in that file instead of
- 	at the start of each shown line.
- 
---p::
----show-function::
-+`-p`::
-+`--show-function`::
- 	Show the preceding line that contains the function name of
- 	the match, unless the matching line is a function name itself.
- 	The name is determined in the same way as `git diff` works out
- 	patch hunk headers (see 'Defining a custom hunk-header' in
- 	linkgit:gitattributes[5]).
- 
---<num>::
---C <num>::
----context <num>::
--	Show <num> leading and trailing lines, and place a line
-+`-<num>`::
-+`-C <num>`::
-+`--context <num>`::
-+	Show _<num>_ leading and trailing lines, and place a line
- 	containing `--` between contiguous groups of matches.
- 
---A <num>::
----after-context <num>::
--	Show <num> trailing lines, and place a line containing
-+`-A <num>`::
-+`--after-context <num>`::
-+	Show _<num>_ trailing lines, and place a line containing
- 	`--` between contiguous groups of matches.
- 
---B <num>::
----before-context <num>::
--	Show <num> leading lines, and place a line containing
-+`-B <num>`::
-+`--before-context <num>`::
-+	Show _<num>_ leading lines, and place a line containing
- 	`--` between contiguous groups of matches.
- 
---W::
----function-context::
-+`-W`::
-+`--function-context`::
- 	Show the surrounding text from the previous line containing a
- 	function name up to the one before the next function name,
- 	effectively showing the whole function in which the match was
-@@ -247,22 +247,22 @@ providing this option will cause it to die.
- 	`git diff` works out patch hunk headers (see 'Defining a
- 	custom hunk-header' in linkgit:gitattributes[5]).
- 
---m <num>::
----max-count <num>::
-+`-m <num>`::
-+`--max-count <num>`::
- 	Limit the amount of matches per file. When using the `-v` or
- 	`--invert-match` option, the search stops after the specified
- 	number of non-matches. A value of -1 will return unlimited
- 	results (the default). A value of 0 will exit immediately with
- 	a non-zero status.
- 
----threads <num>::
--	Number of `grep` worker threads to use.  See 'NOTES ON THREADS'
-+`--threads <num>`::
-+	Number of `grep` worker threads to use.  See `NOTES ON THREADS`
- 	and `grep.threads` in 'CONFIGURATION' for more information.
- 
---f <file>::
--	Read patterns from <file>, one per line.
-+`-f <file>`::
-+	Read patterns from _<file>_, one per line.
+ 	When `--numstat` has been given, do not munge pathnames,
+ 	but use a NUL-terminated machine-readable format.
  +
--Passing the pattern via <file> allows for providing a search pattern
-+Passing the pattern via _<file>_ allows for providing a search pattern
- containing a \0.
+@@ -129,20 +129,20 @@ Without this option, pathnames with "unusual" characters are quoted as
+ explained for the configuration variable `core.quotePath` (see
+ linkgit:git-config[1]).
+ 
+--p<n>::
+-	Remove <n> leading path components (separated by slashes) from
++`-p<n>`::
++	Remove _<n>_ leading path components (separated by slashes) from
+ 	traditional diff paths. E.g., with `-p2`, a patch against
+ 	`a/dir/file` will be applied directly to `file`. The default is
+ 	1.
+ 
+--C<n>::
+-	Ensure at least <n> lines of surrounding context match before
++`-C<n>`::
++	Ensure at least _<n>_ lines of surrounding context match before
+ 	and after each change.  When fewer lines of surrounding
+ 	context exist they all must match.  By default no context is
+ 	ever ignored.
+ 
+---unidiff-zero::
+-	By default, 'git apply' expects that the patch being
++`--unidiff-zero`::
++	By default, `git apply` expects that the patch being
+ 	applied is a unified diff with at least one line of context.
+ 	This provides good safety measures, but breaks down when
+ 	applying a diff generated with `--unified=0`. To bypass these
+@@ -151,34 +151,34 @@ linkgit:git-config[1]).
+ Note, for the reasons stated above, the usage of context-free patches is
+ discouraged.
+ 
+---apply::
++`--apply`::
+ 	If you use any of the options marked "Turns off
+-	'apply'" above, 'git apply' reads and outputs the
++	'apply'" above, `git apply` reads and outputs the
+ 	requested information without actually applying the
+ 	patch.  Give this flag after those flags to also apply
+ 	the patch.
+ 
+---no-add::
++`--no-add`::
+ 	When applying a patch, ignore additions made by the
+ 	patch.  This can be used to extract the common part between
+-	two files by first running 'diff' on them and applying
++	two files by first running `diff` on them and applying
+ 	the result with this option, which would apply the
+ 	deletion part but not the addition part.
+ 
+---allow-binary-replacement::
+---binary::
++`--allow-binary-replacement`::
++`--binary`::
+ 	Historically we did not allow binary patch application
+ 	without an explicit permission from the user, and this
+ 	flag was the way to do so.  Currently, we always allow binary
+ 	patch application, so this is a no-op.
+ 
+---exclude=<path-pattern>::
+-	Don't apply changes to files matching the given path pattern. This can
++`--exclude=<path-pattern>`::
++	Don't apply changes to files matching _<path-pattern>_. This can
+ 	be useful when importing patchsets, where you want to exclude certain
+ 	files or directories.
+ 
+---include=<path-pattern>::
+-	Apply changes to files matching the given path pattern. This can
++`--include=<path-pattern>`::
++	Apply changes to files matching the _<path-pattern>_. This can
+ 	be useful when importing patchsets, where you want to include certain
+ 	files or directories.
  +
- Not all pattern types support patterns containing \0. Git will error
-@@ -279,44 +279,44 @@ In future versions we may learn to support patterns containing \0 for
- more search backends, until then we'll die when the pattern type in
- question doesn't support them.
+@@ -188,15 +188,15 @@ patch to each path is used.  A patch to a path that does not match any
+ include/exclude pattern is used by default if there is no include pattern
+ on the command line, and ignored if there is any include pattern.
  
---e::
-+`-e`::
- 	The next parameter is the pattern. This option has to be
- 	used for patterns starting with `-` and should be used in
- 	scripts passing user input to grep.  Multiple patterns are
--	combined by 'or'.
-+	combined by `or`.
+---ignore-space-change::
+---ignore-whitespace::
++`--ignore-space-change`::
++`--ignore-whitespace`::
+ 	When applying a patch, ignore changes in whitespace in context
+ 	lines if necessary.
+ 	Context lines will preserve their whitespace, and they will not
+ 	undergo whitespace fixing regardless of the value of the
+ 	`--whitespace` option. New lines will still be fixed, though.
  
----and::
----or::
----not::
--( ... )::
-+`--and`::
-+`--or`::
-+`--not`::
-+`( ... )`::
- 	Specify how multiple patterns are combined using Boolean
- 	expressions.  `--or` is the default operator.  `--and` has
- 	higher precedence than `--or`.  `-e` has to be used for all
- 	patterns.
+---whitespace=<action>::
++`--whitespace=<action>`::
+ 	When applying a patch, detect a new or modified line that has
+ 	whitespace errors.  What are considered whitespace errors is
+ 	controlled by `core.whitespace` configuration.  By default,
+@@ -209,7 +209,7 @@ By default, the command outputs warning messages but applies the patch.
+ When `git-apply` is used for statistics and not applying a
+ patch, it defaults to `nowarn`.
+ +
+-You can use different `<action>` values to control this
++You can use different _<action>_ values to control this
+ behavior:
+ +
+ * `nowarn` turns off the trailing whitespace warning.
+@@ -223,48 +223,48 @@ behavior:
+   to apply the patch.
+ * `error-all` is similar to `error` but shows all errors.
  
----all-match::
-+`--all-match`::
- 	When giving multiple pattern expressions combined with `--or`,
- 	this flag is specified to limit the match to files that
- 	have lines to match all of them.
+---inaccurate-eof::
+-	Under certain circumstances, some versions of 'diff' do not correctly
++`--inaccurate-eof`::
++	Under certain circumstances, some versions of `diff` do not correctly
+ 	detect a missing new-line at the end of the file. As a result, patches
+-	created by such 'diff' programs do not record incomplete lines
++	created by such `diff` programs do not record incomplete lines
+ 	correctly. This option adds support for applying such patches by
+ 	working around this bug.
+ 
+--v::
+---verbose::
++`-v`::
++`--verbose`::
+ 	Report progress to stderr. By default, only a message about the
+ 	current patch being applied will be printed. This option will cause
+ 	additional information to be reported.
  
 --q::
 ---quiet::
 +`-q`::
 +`--quiet`::
- 	Do not output matched lines; instead, exit with status 0 when
- 	there is a match and with non-zero status when there isn't.
+ 	Suppress stderr output. Messages about patch status and progress
+ 	will not be printed.
  
--<tree>...::
-+`<tree>...`::
- 	Instead of searching tracked files in the working tree, search
- 	blobs in the given trees.
+---recount::
++`--recount`::
+ 	Do not trust the line counts in the hunk headers, but infer them
+ 	by inspecting the patch (e.g. after editing the patch without
+ 	adjusting the hunk headers appropriately).
  
--\--::
-+`--`::
- 	Signals the end of options; the rest of the parameters
--	are <pathspec> limiters.
-+	are _<pathspec>_ limiters.
- 
--<pathspec>...::
-+`<pathspec>...`::
- 	If given, limit the search to paths matching at least one pattern.
--	Both leading paths match and glob(7) patterns are supported.
-+	Both leading paths match and `glob`(7) patterns are supported.
+---directory=<root>::
+-	Prepend <root> to all filenames.  If a "-p" argument was also passed,
++`--directory=<root>`::
++	Prepend _<root>_ to all filenames.  If a `-p` argument was also passed,
+ 	it is applied before prepending the new root.
  +
--For more details about the <pathspec> syntax, see the 'pathspec' entry
-+For more details about the _<pathspec>_ syntax, see the `pathspec` entry
- in linkgit:gitglossary[7].
+ For example, a patch that talks about updating `a/git-gui.sh` to `b/git-gui.sh`
+ can be applied to the file in the working tree `modules/git-gui/git-gui.sh` by
+ running `git apply --directory=modules/git-gui`.
  
- EXAMPLES
+---unsafe-paths::
++`--unsafe-paths`::
+ 	By default, a patch that affects outside the working area
+ 	(either a Git controlled working tree, or the current working
+-	directory when "git apply" is used as a replacement of GNU
+-	patch) is rejected as a mistake (or a mischief).
++	directory when `git apply` is used as a replacement of GNU
++	`patch`) is rejected as a mistake (or a mischief).
+ +
+-When `git apply` is used as a "better GNU patch", the user can pass
++When `git apply` is used as a "better GNU `patch`", the user can pass
+ the `--unsafe-paths` option to override this safety check.  This option
+ has no effect when `--index` or `--cached` is in use.
+ 
+---allow-empty::
++`--allow-empty`::
+ 	Don't return an error for patches containing no diff. This includes
+ 	empty patches and patches with commit text only.
+ 
+@@ -273,11 +273,12 @@ CONFIGURATION
+ 
+ include::includes/cmd-config-section-all.adoc[]
+ 
++:git-apply: 1
+ include::config/apply.adoc[]
+ 
+ SUBMODULES
+ ----------
+-If the patch contains any changes to submodules then 'git apply'
++If the patch contains any changes to submodules then `git apply`
+ treats these changes as follows.
+ 
+ If `--index` is specified (explicitly or implicitly), then the submodule
 -- 
 gitgitgadget
 
