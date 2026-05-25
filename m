@@ -1,112 +1,117 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12508322A
-	for <git@vger.kernel.org>; Mon, 25 May 2026 02:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7E63438B5
+	for <git@vger.kernel.org>; Mon, 25 May 2026 02:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779676588; cv=none; b=Gs3EdNv6ybBs8jrV1wqhZkrEnx1XnT28GkyddsGbi3Gdg1RlZBM009lXi24p5Mp91DSwILicbE7rTOzJV+Fkncm/PyKx40+Ek/+oO5mFUj/z9qOQkASwNkHD6MnzAr5+JmYTty3zNWD1zUS8xHkayZ/1pjfiCpoNZlQdeUBYwyY=
+	t=1779677932; cv=none; b=pH7kcAhhXzbf3qJyP2VGTSqRGDTJQVPJdl7IUnq9lzcTPqcq3vdbibHmhmy49imxrnQFOq9y7tdDnSAExb3ZYbF11wHHwuySd1suJGSkekI/AOqbyQ2qr8a7cdrmQx9Lhf2JQFhHf+0R7ybhm6mqTBemgMn4FWccEg+MPr7OpD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779676588; c=relaxed/simple;
-	bh=krX/m5t7Vmt86wIiEDMeF9EbOhRHeScrNKkzodWVJPM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ku9et4w0hAvNYrw5Lki0TJhJz9HL9/LDOcv9Sq0CEwTsjzMiBE5dnj2QVOedUnpv9BLKa9Cuso2feagMFIcd77VJcIRF0/YPW0rToYWViG/FAvVhKDO+fYfhilgb4uKXeaeGFuHXR4FUUHD7yl6H1H/ApNPt5NTQ5GsvDC7re4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=black-desk.cn; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=black-desk.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a8ee4b703fso8246277e87.0
-        for <git@vger.kernel.org>; Sun, 24 May 2026 19:36:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779676585; x=1780281385;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=9GIdYgXKWdbnYtZ/rN0wuNcHykw2liy+VxHDuHwh9Yo=;
-        b=CTvyCjxbu48iRtO2L3SDTbhaUPev4T/sO7Y+n0x3G93swb7Z7egOjEBuup4ptnl0cn
-         8VRb7LuF1gFS1UPbj6ivTlt3e6+WsLDfXYCAcDG9O6RP0YoC8P/JQAqpZ2KiIhDiMr8J
-         oklFQUGrKY6qFN/MF0cFds9E0ofUi+R/ulFd6GTJAIlsyT2jAl6ywvSbJDYojBWKLeIS
-         ej2fHHk9gOrehGg+oUhX9bEpZ1j7RugmXg0q8DqC5Rzk70YoYc4h5byaHAxhUazytW2t
-         nH1V53l5RIw16Z8TQUTFyjvgm+jEo/LMiP6k2HwW7eMQXD3Ue6qik+jCMyCIStVIrrg1
-         i3aw==
-X-Forwarded-Encrypted: i=1; AFNElJ/kNQmsxWiJR1tOUBPpx4QOIH1qT77ifwMXUKkkw9XfxsTYlbuh9JghRSQkNSJbmBsHzWs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YywCSqqmbjnjt01ptxXJw3jnqSLxfO0cnON5dGszEuO+B/330x8
-	MaZYye1+lqBenoIr1EbjtCMHB2NkOCI/k3tDw6xya0b6QN5vmZd66ed1TkJSRePE3FA=
-X-Gm-Gg: Acq92OFvgthKTQKV+EkejyWQswH/ABcXtNMlyi/ujeUfrsBlvSk+xvgx10sRPcvFqTT
-	gJUROR0svlSjDiy5YqsqlrLNoK4UtsHmO6c4dCUAXi6cj1wFZvcj0EALylX3ksW3BfZIV/isrik
-	yRCPGheX1hpv2KFvW9WNizqxYH/l0ZS6/2oc0ahk6mFIdxGQliJWF9eat+ZNZVI8azmB571g3JI
-	gTFBXVL3Si2b4YQC7MtPsc8ILw2SyCS0BB02QPF+ox0YFnQMtAU+VBh+tAK8EXNO5qHmcNnJ0ra
-	93VuHX+I5X+cW8PYrah8+xf91TsKfvHClc4shaNoHaJoJE6F/D1jy1Kc3kDY4IEroz9Q16dYUzP
-	7/0k19RY4Afr+sTw2PXlQv8ScTKM6isySSLvtrpm4GOj7mWgO0TxciradjNi27P/4iQpVdvbvAg
-	4Ddo3aaDhNle266q1xJzhSC6lR4fdEQuWD0sh0SPv42cdQAzCc5eohsHVHkhRCtgCgpY5zhosGa
-	6Px6nWvmD0fsF1BscXVuleBkyR54Q==
-X-Received: by 2002:a05:6512:682:b0:5a8:65ce:e832 with SMTP id 2adb3069b0e04-5aa323e10admr2892543e87.36.1779676584596;
-        Sun, 24 May 2026 19:36:24 -0700 (PDT)
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com. [209.85.208.170])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa32cb37b4sm2363525e87.1.2026.05.24.19.36.24
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 May 2026 19:36:24 -0700 (PDT)
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39393ec4ed0so82498941fa.0
-        for <git@vger.kernel.org>; Sun, 24 May 2026 19:36:24 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/xEVfWQvQo7N8ayarb7cJltgHc7/XpfKDRltrx1Ol/W/wvPp5VUvOM7+q2NM4b2EAnTaI=@vger.kernel.org
-X-Received: by 2002:a05:6512:2245:b0:5aa:b6a:6025 with SMTP id
- 2adb3069b0e04-5aa323e3171mr3612685e87.42.1779676584260; Sun, 24 May 2026
- 19:36:24 -0700 (PDT)
+	s=arc-20240116; t=1779677932; c=relaxed/simple;
+	bh=KZJGLcWeWzajH4md0IUWhSG2iArUrjCTy+2URPeSC0s=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Jnfb3u8qUkXEnDnckJ85wryfDDkfdHdiFhCKgL4g79HCHYjVCaDC/Z2gMRqyAOyIpWPiA395IZEdB+mVQYTyaGkg5ZIi16ZKxu8PYSRPmTxRBJF02P0LyfVwCla9kOhgAvWsboK1nUrZebImYsRMCrFjCsBltAPapE87cJSjVJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LQowV3qv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ju5O53oV; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LQowV3qv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ju5O53oV"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5EECA14001AB;
+	Sun, 24 May 2026 22:58:50 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sun, 24 May 2026 22:58:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1779677930; x=1779764330; bh=HuHRsJ1qXhczNuYvj1HxJjMQYgQbS+X9
+	D+RM95eZxbg=; b=LQowV3qvdbAI6xarYKQWGh1SUlHCkHFAyJCGdWWAn89coI/I
+	ecCR2POaSa4NvzNhOeyJzZElLgLB1z3EV+3cGYjxG3yN3qSynkBI1YTDwntlRRun
+	xS10hUo8Zvo6U4XVJ0oW6rhJ4Kf32FbI9bP96mnJxp5t2ydESSIegjrji8pj9XAP
+	fDH3LPYSLueVOZiTZCcSncfOCLDLYxeI+sPIeaUIf23QtXeCe9xvtn2/SadYftjH
+	RearXqInDMXP6ZaYUUl1KHIMbM8R8V87F0j0pj09pqEOBLAZu4qOe9uqCDplYKq8
+	znsgI+SF9brnKQaATSNSABVuBg+Q8AXHx013qA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779677930; x=
+	1779764330; bh=HuHRsJ1qXhczNuYvj1HxJjMQYgQbS+X9D+RM95eZxbg=; b=J
+	u5O53oVeCk+B+ZFGYYmsDymsz8zMCHi4FcVrCVq5JL43rKidXgq1uQHFPo/JnZ9y
+	urLDm/7EyAhvlwIWhgZmPoPFKcnRRu5vRbEmjhXra0CYXGQRE/ammT8N4tkgV+DU
+	2TISyz1hCMNS6vhKxYP4LE9ElnbDm1uHIZLVlPNYDPdXci0zA9jb9bULiIRJ9gl3
+	FVSdk7n6Z7puAHW3ur106X/u1I0wUqmIKUNz4e9+7nF+PJ9GLoMddvEdWzucdqSJ
+	fSp0gFCJnB5a6Iw4YzMFMxD2qGYBF7RjojnP4sYm+eXzsbw2ZBCPbmiyvl7ADPbZ
+	LP6dgBGxm2Gw3usuwZ0kA==
+X-ME-Sender: <xms:6roTaiG1FGyGsaj9p6A-GV-HWANr5u-KEauhGiSYlA57vfpmjKPryw>
+    <xme:6roTapVkjBDbLfDS8O-zMj1dVEx6zH3jI_PRdexnFEAwS41Fzk1SAWQRc0SeAAcva
+    8rD_UIILjHSzDLAGd7Eyear3XALFm_sjVj5mn70Q9tTeUuicl9h>
+X-ME-Received: <xmr:6roTapynyVHZEQk10BJYtWAUaEXt3UE-CfFAmA_oKQ-DTZMkANN9Zye2BIk10ZdlgnoAMYuRIWLNbs2kXkX9-Jz5dREhgF2cSIsX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheejieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkfgggtgesthdtredttdertd
+    enucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosgho
+    gidrtghomheqnecuggftrfgrthhtvghrnhepiedtffeikeegleeltdelleegffeiueehhf
+    ehvdettdejkedtvdffueeigeevieetnecuffhomhgrihhnpehgihhthhhusgdrtghomhen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
+    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6roTanPOHPNi6un2ODZzdxd4zV9RrxsBAZmvzHpJQpFNF6xgOfg1Ag>
+    <xmx:6roTaq62iVojWHDmWYC6y_9r_CKqvUoO2yxJUSrT9c6hsGgp8vhRvQ>
+    <xmx:6roTaoMHwzDlemTK1EJsWip_JMYUPjZtK3hI9xohKFk8ESsk1HvOnw>
+    <xmx:6roTaomXIl5LKMER3ePqYxgIR3rV4JFw6y0hBNttzywedDTsyAbFOA>
+    <xmx:6roTatfnd3SvJHDNH7-_pgkrqTr4db43GvRFx3WIcq-9mX7Xxkea2r1L>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 24 May 2026 22:58:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] SubmittingPatches: proactively monitor GHCI pages
+Date: Mon, 25 May 2026 11:58:48 +0900
+Message-ID: <xmqq1pf0gpp3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260513-includeif-worktree-v4-0-f8e6212d1fba@black-desk.cn> <xmqqbje4grra.fsf@gitster.g>
-In-Reply-To: <xmqqbje4grra.fsf@gitster.g>
-From: Chen Linxuan <me@black-desk.cn>
-Date: Mon, 25 May 2026 10:36:12 +0800
-X-Gmail-Original-Message-ID: <CAC1kPDNKfm9Q=FWJkvpUSBmpmxL+RaOCifST8p=ViDwqVceNsg@mail.gmail.com>
-X-Gm-Features: AVHnY4KQx7ZWqO7X79NG_p0eibfxB1eDrEb9JThGmwmwMe3Zq_aIcRnHa8cH9Jk
-Message-ID: <CAC1kPDNKfm9Q=FWJkvpUSBmpmxL+RaOCifST8p=ViDwqVceNsg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/2] includeIf: add "worktree" condition for matching
- working tree path
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Chen Linxuan <me@black-desk.cn>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, May 25, 2026 at 10:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-> writes:
->
-> > The `includeIf` mechanism already supports matching on the `.git`
-> > directory path (`gitdir`) and the currently checked out branch
-> > (`onbranch`).  But in multi-worktree setups the `.git` directory of a
-> > linked worktree points into the main repository's `.git/worktrees/`
-> > area, which makes `gitdir` patterns cumbersome when one wants to
-> > include config based on the working tree's checkout path instead.
-> >
-> > Introduce two new condition keywords:
-> >
-> >   - `worktree:<pattern>` matches the realpath of the current worktree's
-> >     working directory against a glob pattern.
-> >   - `worktree/i:<pattern>` is the case-insensitive variant.
-> >
-> > Supported pattern features: glob wildcards, `**/` and `/**`, `~`
-> > expansion, `./` relative paths, and trailing-`/` prefix matching.
-> > The condition never matches in a bare repository.
-> >
-> > Signed-off-by: Chen Linxuan <me@black-desk.cn>
-> > ---
->
-> The test in this series fails in GitHub CI for Windows, it seems.
->
-> https://github.com/git/git/actions/runs/26377220573/job/77639885088
+Even those contributors who do not come from GGG and do not first
+push their changes to their repositories on GitHub with CI enabled,
+can still monitor the CI runs triggered by integration of their
+topic to 'seen' and other branches to notice a breakage their topic
+caused to the system.
 
-It seems that "includeIf.worktree:/.path" not working on windows.
+Encourage them to help the project by keeping an eye on these CI
+runs.
 
-Will be updated in V5
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/SubmittingPatches | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
->
->
+diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
+index e270ccbe85..ad2dce1998 100644
+--- c/Documentation/SubmittingPatches
++++ w/Documentation/SubmittingPatches
+@@ -792,6 +792,17 @@ relevant for debugging.
+ Then fix the problem and push your fix to your GitHub fork. This will
+ trigger a new CI build to ensure all tests pass.
+ 
++Even if you do not use GitHub CI to test your changes, pay close
++attention to new failures on the branches when the maintainer pushes
++out after your topic gets merged to the 'seen' branch to make sure
++that your topic is not breaking the CI, and retract your breaking
++topic quickly while you fix the breakage you caused.
++
++To see maintainer's push, keep an eye on this page:
++
++  `https://github.com/git/git/actions/workflows/main.yml?query=event%3Apush+actor%3Agitster`
++
++
+ [[mua]]
+ == MUA specific hints
+ 
