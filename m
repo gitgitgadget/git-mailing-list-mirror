@@ -1,88 +1,194 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E14309DCF
-	for <git@vger.kernel.org>; Mon, 25 May 2026 10:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AA23537FB
+	for <git@vger.kernel.org>; Mon, 25 May 2026 10:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779703338; cv=none; b=ZpIA3JAazc2CN+99F1YrcA4vt+2ODeB5lBfwrafE1kxKHX29gRPGTpiI7WQPN8zkPms+pQolhgkPbDK8bGaJj/+2gth8nzqkxJOPaKfZl+Vm+F5mlMlT0vVC66Mqh2I36Gq1sU0hOmv7sMijJ6B9DxBl0sGrEv1S0wCT+MZnWpE=
+	t=1779704912; cv=none; b=ELtE65+3oyVGwjQ1yGn838haiDFuvLFvp6bRFQOJmNjaeO55Xpeyt8We/9BK5OnHZOszxsSG+m6Jiwkvc58j8G9QHjWJcYyTrrcVRBaKMZjxTsYBhL7SUDiAmKMepBdznP0X+169u2eLlMCCOsFqS6UHk05jhqi7rutkR4xRO4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779703338; c=relaxed/simple;
-	bh=CI3PitbuOdrC2z/rToBJa5OGWchA7sMNRoJHmGn+7TM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g8RNO1MqvTMiutCG6iGhrEDnd37W4lueHPlHxPzGekNywBnip2wSZ7b+0Y9L0MW10HWCs2+GDj1sUfBZ9UCU3o7xA/A2JAbdeSik1da7PhHylIKq7SNE3U4D4bgCiiufgvNFxBnlEBuvPS61BaClTqq+PYNqi/jBqsFNRFwu0T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Du1HWhVx; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1779704912; c=relaxed/simple;
+	bh=Bv2d9kn503yhSJa5vNnVaEPNtcPjVQlnkeVHXgRQdk8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=TbEDIW426jRCiP9jyjpYOtDwM+rWuULURaeokwjxe38HeNdnL83GSuSCvP7xL2ae6f4QqHkT9mjkXQEkigFFMF6ppSCVg+5Yhu7a8w3C9/ZAR8rivmkpwhtjTbZcj2LopeF/K8EKRYJa5ZEeV3yLR7S3JuMS2z+I9eWr0vA9Ud0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1yh385J; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Du1HWhVx"
-Received: (qmail 11244 invoked by uid 106); 25 May 2026 10:02:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=CI3PitbuOdrC2z/rToBJa5OGWchA7sMNRoJHmGn+7TM=; b=Du1HWhVxfK/s7C9auUocFFhm38zR7+Hihs3GTigOHV1NGQpzQ4juMVGhQq5NAHr+vt0/wFqv9UcFqC6eV2Y4ZvdkQVfdrg7vp3gCz6H7VAKzKCroYlxO9HRLxExvO7Eg9pYWple7eD/a2xrx3x/e4fW/Pt9ZYZzQ/ZyCknPJIxsIlQzOLmomyOe0Ypu7TVs2pVG8jBt0K4ortLs9x5z9cjs3Iztv1pxDTY6qw/+UTlbDSh3jAISMlvJU5AuJUXkHfBf9gTLgiZnXSeupH0LXcUpXWwekN79d7zW/AfDA9bORScIOW/nv18TZ/VUaAvuKS7iM845QEOvYwStJWNqSDA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 May 2026 10:02:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15187 invoked by uid 111); 25 May 2026 10:02:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 May 2026 06:02:21 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 25 May 2026 06:02:15 -0400
-From: Jeff King <peff@peff.net>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>,
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 1/3] commit-reach: deduplicate queue entries in
- paint_down_to_common
-Message-ID: <20260525100215.GB3868724@coredump.intra.peff.net>
-References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
- <1d3751569ba3a5f0c353fb468578d6c5bcd0b738.1779644541.git.gitgitgadget@gmail.com>
- <xmqqpl2kgyvy.fsf@gitster.g>
- <ca39c8ca-ca4c-4954-a1ab-633bfa55f64b@gmail.com>
- <CAL71e4NxpbM8QZYhVA_SSC4vDmAFv-Kpe6qDcurefgPkSSdSnQ@mail.gmail.com>
- <xmqqse7gez5l.fsf@gitster.g>
- <CAL71e4ODJeCJctKg=3o9PKD6Rw3_xHnrjc+zT_MYFc=CdNc59A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1yh385J"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-8b74b460d77so130137396d6.3
+        for <git@vger.kernel.org>; Mon, 25 May 2026 03:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779704910; x=1780309710; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EnpPODLwWj0Mx12OfcKN9RaADNBKaGd/MkTRuRuqfmM=;
+        b=C1yh385JZVmSQTDyPs5O/qUr3k1upnE6R5rla3cr6KtVtqPvh3X67jqP69Ht1fYJfb
+         gTxgIV/RAL6E7MeEwUmXvPwcPU95n4nTjItEXG9arCOgBTSccIuKnqXsdGzRmHTe4ZTM
+         fVj+Wbk5jxxVM5dH1WlB4w5YHgjG6tLhVXINHL+642OdJn0T+7e8nuj2fhulDnd0fcLB
+         OPe1pm2yq/I2EIfZeaZwYCZN7/pUznWiy4GQmx3JSppznS4kLunN5Yr0Ou/DuOfDXbvy
+         qFeUZiIh+14s+InWVVUIDPqcYLhH8qo4nRXOkm2mYPS18JM7ljW3xUopgqfQOZ9x/l3f
+         POYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779704910; x=1780309710;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EnpPODLwWj0Mx12OfcKN9RaADNBKaGd/MkTRuRuqfmM=;
+        b=mdTjiyxAAapCwrTd5jCf0HftJkmFAYcI+NNIql4OlPTsInHS9Qz0gtdvuNxUG7f2Tv
+         dqfXdS5vnZVKIXB+RZ3DjgSZvPJwStHOd6Jy1r5YAr9aDdWPhLKyfCVj7ufReQmt7Xx8
+         Wops6MNFpAaA1/bx0apFNTJXi+vbCy9ldTnIIXh20S/AUSk29GF4GKk6rOOV+4UZaFmJ
+         aPujsruvU8JW0jMwlNnlsqR7wXOVy+OY/JT4leWhwNM2ci9/VsLsPljK+3bZieQUNeUs
+         TUkC3j6BXYjGYUFhObf1zjNCtHbI8ICyrYUiSAvWbH2c4I7nXjONYsMx3VUf2oFc56yp
+         C/yA==
+X-Gm-Message-State: AOJu0YzzgzUPN3Ajc4TxqF5OT0i4tyus9dXbJLelvEKs2CTtyvBvee9l
+	AF1A2V0gV0OhiucmHvfIpEy2KZZaCEHqSOv5nQ26vzGUqqmqr95rCiF98tbMC8hl
+X-Gm-Gg: Acq92OFvJCB0N6c8EKScVb1d05Kl5Z8Q4ViTa8MFf9bWL3PtGGkePYphUOIfgoGr2wE
+	pKqnM0ZpgygwsvC7cUkZ5v+YaK3NJMHKUnJPZd7/mCN77RcVK35NsjUkS1gDOr0w/ACEcIrXmZ4
+	kNgTw8O8vLdJ9u4oAkc+3369f0bmDkUDoxE5RLBq4+HyFafmynJIYNuhXAV67LIM1ZcxSeqoPTV
+	4O9/0Ko+DX2qmImwFb7JmEdASfrdhJ6zRRDZcYXGaY8knr9OkoSVfemWnndLEs/a1ffNYXcDegl
+	cwkQItpCaF7h9uPo+ynOD9Jj/YYJC/uuhXa0oKN3ztxhe0Vdj0r4VB+/02SS6WT80k+EkCtzliD
+	M48xedJdhyqo2myDplGlIvQyz8vMeBbcCL70jiqNGxYjnHrILj74MIX+CR/qy+/ylzk1rWE/wk4
+	fElMESQFOg5uW4CnYXNj1iMzQQ+w==
+X-Received: by 2002:a05:622a:a18:b0:516:dd5d:4f3b with SMTP id d75a77b69052e-516dd5d53e1mr157261031cf.8.1779704909897;
+        Mon, 25 May 2026 03:28:29 -0700 (PDT)
+Received: from [127.0.0.1] ([130.131.15.84])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-516d8b0065asm88149361cf.2.2026.05.25.03.28.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 May 2026 03:28:29 -0700 (PDT)
+Message-Id: <pull.2117.v2.git.1779704908.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
+References: <pull.2117.git.1779049615.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 25 May 2026 10:28:21 +0000
+Subject: [PATCH v2 0/6] doc: convert another batch of files to synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAL71e4ODJeCJctKg=3o9PKD6Rw3_xHnrjc+zT_MYFc=CdNc59A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-On Mon, May 25, 2026 at 09:53:09AM +0200, Kristofer Karlsson wrote:
+This time, 5 new conversions:
 
-> Good catch Jeff! I think it's possible that I missed the flag cleanup case
-> here, but it's also possible that I got lucky and it worked anyway.
+ * git-bisect
+ * git-grep
+ * git-am
+ * git-apply
+ * git-imap-send
 
-Well, you did add it to ALL_FLAGS, so it might have been your
-subconscious making you lucky. :)
+This batch was an opportunity to test AI-helped conversion.
 
-> That said, I think the observation in the other email thread/commit is key
-> here. I will reply back in that one, but it seems like this can all be
-> simplified using Jeff's idea with an amortized O(1) solution by caching a
-> known non-stale entry in the queue, and thus becomes obsolete. I will post
-> a new patchset when the discussion slows down.
+Changes since v1:
 
-Nifty, thanks.
+ * clarify the use of synopsis vs code block in git-bisect, which also
+   include using '$'
 
-> As for general flag management, I will spend some more time thinking about it.
-> I don't fully trust static code analysis to work, but some cheap assertion
-> based model might give a nice trade-off.
+Jean-Noël Avila (6):
+  doc: convert git-bisect to synopsis style
+  doc: git bisect: clarify the usage of the synopsis vs actual command
+  doc: convert git-grep synopsis and options to new style
+  doc: convert git-am synopsis and options to new style
+  doc: convert git-apply synopsis and options to new style
+  doc: convert git-imap-send synopsis and options to new style
 
-I think it would be really nice if we had per-operation flags kept
-outside of the structs completely. If you're a masochist, I fiddled
-around a bit with using a hash instead in this thread:
+ Documentation/asciidoc.conf.in                |   6 +
+ Documentation/config/am.adoc                  |   6 +-
+ Documentation/config/apply.adoc               |  17 +-
+ Documentation/config/grep.adoc                |  36 ++--
+ Documentation/config/imap.adoc                |  30 +--
+ Documentation/format-patch-caveats.adoc       |   2 +-
+ .../format-patch-end-of-commit-message.adoc   |   4 +-
+ Documentation/git-am.adoc                     | 132 ++++++------
+ Documentation/git-apply.adoc                  | 125 +++++------
+ Documentation/git-bisect.adoc                 | 109 +++++-----
+ Documentation/git-grep.adoc                   | 196 +++++++++---------
+ Documentation/git-imap-send.adoc              |  24 +--
+ 12 files changed, 346 insertions(+), 341 deletions(-)
 
-  https://lore.kernel.org/git/20250826055210.GA1031277@coredump.intra.peff.net/
 
-It's sadly (but not surprisingly) quite slow. I do wonder how a slab
-would work there, but it would take a bit more surgery. We only allocate
-slab ids for commits, and we'd have to do so for all objects if we want
-to hold flags.
+base-commit: 56a4f3c3a221adf1df9b39da69b8a6890f803157
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2117%2Fjnavila%2Fbisect-synopsis-style-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2117/jnavila/bisect-synopsis-style-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2117
 
-Probably a dead-end, but it would be neat if all of these flag
-allocation worries just went away.
+Range-diff vs v1:
 
--Peff
+ 1:  dca7f192f1 ! 1:  7284281fe0 doc: convert git-bisect to synopsis style
+     @@ Documentation/git-bisect.adoc: that, as it cleans up the old bisection state.)
+       With an optional argument, you can return to a different commit
+       instead:
+       
+     +-------------------------------------------------
+      +[synopsis]
+     - ------------------------------------------------
+       $ git bisect reset <commit>
+     - ------------------------------------------------
+     +-------------------------------------------------
+     + 
+     + For example, `git bisect reset bisect/bad` will check out the first
+     + bad revision, while `git bisect reset HEAD` will leave you on the
+      @@ Documentation/git-bisect.adoc: To use "old" and "new" instead of "good" and bad, you must run `git
+       bisect start` without commits as argument and then run the following
+       commands to add the commits:
+       
+     +-------------------------------------------------
+      +[synopsis]
+     - ------------------------------------------------
+       git bisect old [<rev>]
+     - ------------------------------------------------
+     +-------------------------------------------------
+       
+       to indicate that a commit was before the sought change, or
+       
+     +-------------------------------------------------
+      +[synopsis]
+     - ------------------------------------------------
+       git bisect new [<rev>...]
+     - ------------------------------------------------
+     -@@ Documentation/git-bisect.adoc: to indicate that it was after.
+     +-------------------------------------------------
+     + 
+     + to indicate that it was after.
+       
+       To get a reminder of the currently used terms, use
+       
+     +-------------------------------------------------
+      +[synopsis]
+     - ------------------------------------------------
+       git bisect terms
+     - ------------------------------------------------
+     +-------------------------------------------------
+     + 
+     + You can get just the old term with `git bisect terms --term-old`
+     + or `git bisect terms --term-good`; `git bisect terms --term-new`
+      @@ Documentation/git-bisect.adoc: If you would like to use your own terms instead of "bad"/"good" or
+       subcommands like `reset`, `start`, ...) by starting the
+       bisection using
+       
+     +-------------------------------------------------
+      +[synopsis]
+     - ------------------------------------------------
+       git bisect start --term-old <term-old> --term-new <term-new>
+     - ------------------------------------------------
+     +-------------------------------------------------
+     + 
+     + For example, if you are looking for a commit that introduced a
+     + performance regression, you might use
+      @@ Documentation/git-bisect.adoc: of `git bisect good` and `git bisect bad` to mark commits.
+       Bisect visualize/view
+       ~~~~~~~~~~~~~~~~~~~~~
+ -:  ---------- > 2:  4fb33dd440 doc: git bisect: clarify the usage of the synopsis vs actual command
+ 2:  1b4efce1b2 = 3:  fceaf195e8 doc: convert git-grep synopsis and options to new style
+ 3:  4ab60a95f4 = 4:  b9c2adfa1d doc: convert git-am synopsis and options to new style
+ 4:  437e3f99c7 = 5:  60a420ea38 doc: convert git-apply synopsis and options to new style
+ 5:  dbe4d20b4b = 6:  d88824bf09 doc: convert git-imap-send synopsis and options to new style
+
+-- 
+gitgitgadget
