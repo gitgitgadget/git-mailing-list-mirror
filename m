@@ -1,176 +1,128 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6040526E6F3
-	for <git@vger.kernel.org>; Mon, 25 May 2026 07:31:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779694289; cv=none; b=VkOo/mjNernXNJRC8H4hfHpEbQe+gX8E551PMeKOCJkBKgZbXPTC1HGomrFdDUxv4q9iTjjtBmEXkLq0a8gn9XU7516Rt1ieG6O7DDDhPmk/CVJSRbff+3bW760Bv2vwUCSpqjnUmnhUyB1RhfNkHrGS/3jYyLXSK0bOSXjcCHs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779694289; c=relaxed/simple;
-	bh=sOkEOAWncYTHjPd6AnbFUhX2jrODjBxA1BpG8u3A1QE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fTchF0tZJ6OjBwRsqgFd1q3Ur6v2S+EReDYZ4zlnL39PCcMf9MFoB9Au070ehEvlJcFGP7IEy0qSoZUtpfLueLvdjyQ0sJ88vb6OnS00nkAzIAKfmRGdWeT/FOQsA5cyDIec/63SO7jySPb5DPcJOL8z/Y20tENjzngJpU3stPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PkO4ylF4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ePcTvD7x; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD1F1AAE28
+	for <git@vger.kernel.org>; Mon, 25 May 2026 07:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779695604; cv=pass; b=fc+jl1e3Anr96uUeWc4IpEuRRI6QC0o9kiD7JFehOmTaaWFJ9TPHwpfP7y9vd2va9MvG6TMMV9snjYRK3YRTH6cOisNwzzmmvVgHrNFgjTc7lA5lSHFnNP2Srcv5jDufKP6f7JjpdOrlOmW5iwe5wKJBt42EiGPBKgUW9qFBe7M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779695604; c=relaxed/simple;
+	bh=8ro1H/3LRqvmYDlrX99i+/X1QjEave2MUBx2ntaR7uE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=K+gqJnLvyEl0NKJQLCitTJmLpAg4l8gJRNzh4LBstZ0tN2siZxvqp0cEAO9J1mrXkoMXlgIhEUryQuvET7Ns5p2odlxOovWWk1Fx8BDq9UM/6SnzVpOt4bSjQXsdUk8t1ThBelyQuU5bbtu5WFOUctPmRs/YKV54jmPlconKIPo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=aTv2pCYI; arc=pass smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PkO4ylF4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ePcTvD7x"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 04280EC00B3;
-	Mon, 25 May 2026 03:31:25 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 25 May 2026 03:31:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779694284; x=1779780684; bh=QciXOjmk/I
-	wRNatYdTbicCcWJpurrgdF91CE99tVrRo=; b=PkO4ylF4mksdlM7r2oedNyXPtO
-	PVC7pCYJEx6NLS0IsDnq6A8/rBtzGiBwFuYLUJgKg4aRq22n0z9IzWn71njfgwYy
-	AmCncGhCL2SClunfFnIawMBacmwWNrerzkeeoJKvqD15/BRDVpLjKdJXPMaQQ3Aa
-	5XbHKw7Tw60Z2B9rhrgovYr0rTdzreJdmrYqZx/PHMoh5PmlvpGaBP6XEr695tRL
-	mQfOX1FTV2Geds5t+ouUPBh7826p+4veezug517jp5NWr9jkjqb7YL3VAlRwzxaP
-	1KS+La/RA5osEPG8fKGR/k9A4UWkNHj8SYAyk0UUxTcsM1SK+C2/XKQE14BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779694284; x=1779780684; bh=QciXOjmk/IwRNatYdTbicCcWJpurrgdF91C
-	E99tVrRo=; b=ePcTvD7xXH8iQaci0kD2ceW36fgHoCbtQNdp9Z+5dNzvQ6RyocE
-	Z6cujzNJX8CwuO+52NAA4iphnMH4XCcXu94mKvidSVGohsGmmzxHAwIu3mpmIQao
-	bpMUflU8mi5Ut/1mUNCNaa5zMCg/o89m0iHvaTFOgAlHoPVM+DJmdG5TUjVvUvov
-	sw/yEldISz1UeR1+cMAB2ki61IxlZ1/WLW+o1A1kSAwlS7Fs9AkdS6ASNdcO3E1W
-	YX3jiFO3BipwHO0jvRNB1mH+QDDTn3X5R2KWuPy/av2ou3kJwqnywgFH8/af/jjD
-	7gmmxYlyWlQybpv9VMYpXKHc0hl8qQOw23w==
-X-ME-Sender: <xms:zPoTapb9HNx-k2TUmMaAwqMFCS6Aezmk-PKXdIqKDsGIjVnON54q6A>
-    <xme:zPoTahErJC0d2K_hStnzFz-te1DA_XRqqHIW76nGJAYlUYi3ujPCF2aGoC9x-J3gM
-    5Ac5S9EzpMb-Z0_aqCHIJ96LvkGjJFWmkkmsEq2bof759tgMaIl>
-X-ME-Received: <xmr:zPoTaqJweHBjfKkCCbM5C4hurZjn01ySSU5LLxwXl3juMH2dZOM_GZKidz9DTGBtxZ1mczpYhqPubf3O6N1nRbFn9nFNDpAtwzOj>
-X-ME-Proxy-Cause: dmFkZTGZ7n6c0LgcTP4nREecbCooKwix3d+Fidu5St0w5/5TcxiL3gO1/IfUxefrYf9G+v
-    IK6HFi/7F8bGf0lpP+nTPE8/PoT3SfX3L07BxpIk8m+uP3LKW2s271Q+uLDDJcN9TBNApv
-    0Fku5qpwr3KpenOvVU39zBkLv6BDhuAoVUsuK+g5IRPJs7Ix5/YgIts9EnoRaNpW0I1vI2
-    cLHH9/MnT35kZodvRRCP0tx+caM8778M61F43M4rjwbYf20qH625PPbzE/wj/BgebaGc4s
-    0QfCGDU3sRcVnrAcGO/FylGXWJJ2hGL1p57l9LDGWf0YsKqzAOyTqGJzWSCRL08hOcM8G2
-    e2L67pWw6BOzVfBl9pWPekc9U0QzM8zY/ZEzxysBbx0j2hMWOYD/GzK1GT+pcnPFO3iPDS
-    a/TgI90gUW2K9COrkuyiB5rgp39bWPoqH4ry1nexpVnIDqoZrSBoCBO3P9mdyh784uz6vB
-    tV0Yt8tHESRo7GgslA0+EkoNeLhd6tcf8xBpV7b2xD76JudH9Yqxy2YFY9jNZlfPNNjVyj
-    voRrVC3tZ6mqVLRI2u6MzbLho15Ztwiy6X55vexM3Bk0w13dzH03LDPGfJ0lZxi0x/84J+
-    agewiAUPFNQxb5jP6MhIlSeGMtBn714fnstz1F473TkeNZiIrWK1foA+mEBg
-X-ME-Proxy: <xmx:zPoTasPgHrydt9TOUE4hAVlnEMEm0lAzUOa6gq9dL5ka_fALulofLw>
-    <xmx:zPoTaqlAs5hQWG0byEircBJEqEUX6PuzgiDvhDF2AiFePrAfd453Tw>
-    <xmx:zPoTag5Zn8h8mLMBnl6AssS7DurdBAb1qQR7ZPIW5YnkbHClRdGL5w>
-    <xmx:zPoTau08UGZlzKDzlzAeU1U5vk3NcBNL3x896b6ydj0v_iJptHoogw>
-    <xmx:zPoTajNUZaVnSYtOJsUQ-f04CTQO6zfEi52dVvVwYkq2E-mdf_j_T78R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 May 2026 03:31:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrick Steinhardt <ps@pks.im>,  Chen
- Linxuan <me@black-desk.cn>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v5 0/2] includeIf: add "worktree" condition for matching
- working tree path
-In-Reply-To: <20260525-includeif-worktree-v5-0-1efe525d025a@black-desk.cn>
-	(Chen Linxuan via's message of "Mon, 25 May 2026 11:20:07 +0800")
-References: <20260525-includeif-worktree-v5-0-1efe525d025a@black-desk.cn>
-Date: Mon, 25 May 2026 16:31:22 +0900
-Message-ID: <xmqqjysseyid.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="aTv2pCYI"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7bf1eaba464so85062267b3.1
+        for <git@vger.kernel.org>; Mon, 25 May 2026 00:53:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779695602; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SVnJW18sBfAPOJITGL/dx+4l8fQJDgdIUcH4nvjqkxTwLKf5g6Kf7TpxZ3ndsbcokp
+         k+ulVzC3rxoBFW0F4Cbx+mzWRfqjWmEOD+jT+ZpApC9SpVhKza5ZxitodM33X2Nx0/er
+         cWBbbiKNbSkT2c5kVP5Iv/agBaFn9Oc3QyDaLC89kdoUJ0gr/J6eITibE0aUSSWgwstW
+         F/8gX+heXvr2unsrq8GRCMfutn5p19wBtWA3GgkRaRfOyjdKnGurG1M6tD42K6tZlG7c
+         MFMnDP6IgW0MtXMfT+pv+teOT5qunh/NMO27PE+vf+LxX2Yu7iuU4pWw07jnOcTjgwnm
+         O/NQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=HeLDcxOLOyuM/diD2LcSFHY/Mpm2wP375zT+OwyAL3A=;
+        fh=mb7QjXbSwCASTsFk69IENETLs6mjpdpTRue20jMZ+wU=;
+        b=LJXWMUCcjy+A4UBcvRcg7Rm6efn1jgikn5bIUFWr1+LfNQiu2cENuZT/z0JBXGHVmp
+         LD6e72vpavrgbK66z+TK5NKGNZYmYJssEK6MNQIPlX0l1wDrzwlaoF0A8uFvRFjwPql4
+         OTldGlLLjkUdd/VJivuJiOifOyzDbY7EN+dyo456gIcEikXemx8qCsWdDBMPWE1Fhs4j
+         IyqxAJ7sgsEiXCOq3KPp5R22Fy9V8pxwhoYNlcOgkGUKbbwk6bY+i6/tmhOY6eIW4MF/
+         kNp7ny6C+pUulCjqSGlKA/3Z0KweJzD0fOB2BIH6rPInwQUguNyUx0hpzHjmUJbHQgJb
+         LG4Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1779695602; x=1780300402; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HeLDcxOLOyuM/diD2LcSFHY/Mpm2wP375zT+OwyAL3A=;
+        b=aTv2pCYI8eEzd6cyy+EPcC3qUeLSNCEpKWiZtsVcTcfl63zUoZEz1x1+yqTKdFGr+m
+         53aVj5SmRnE3HI1eyqoSVNiKiOZn6UJ1kAw1UK0c6V4Ihv2YtPaBDxAqtEhUbnU/Jtf9
+         D0jVzYMNjP/KOeqUgqvZTee17c87iXTDHsdjY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779695602; x=1780300402;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HeLDcxOLOyuM/diD2LcSFHY/Mpm2wP375zT+OwyAL3A=;
+        b=K9PReXjrJk1WX669C3crawbQ9vQ0sVih6RTZ0/4+cpaV50dJgiyU5fzkea3Gbca5ku
+         NjmMTsqlhsWfJdazqLN3GHtXiehyW/QuuPYKOCyjrSDcyJfb/la6HwoXNf9HVvpYmQZB
+         ijPeacwG9jFpZRnQA36LpdumCeRKSrymTSbNsTiX5Fa/NZ8qS37S8GVDA6XF3KFKZIHq
+         G37CZYHMBu9fqNSMT6yAVfNCLpFugWFPB5LtB52I0w29KausFaKecjjBMEncVcmXHIWV
+         iHLNT9A37hqj9SoBowGcdJ/C3OENRA/Bbgcv7/OC+ja7UE6IbA+8LfnixcO3HQPgmknQ
+         kMng==
+X-Forwarded-Encrypted: i=1; AFNElJ9YvdX7Z4Q9NsUX7FKSksgW0vpVYY8eQ6wH78wwqt/Yf4xPJZgby+neEURfYq0FikwsKaE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4sQFgDUmkDnZbPUMO0ytk+e47BhLO4PIchx3+LcYWHVaJ6xNq
+	adoeUoUL9avDfMgmPiACdCsHnQaTlRnSIeqGwUIhxWuLJnajqMg1Td0h5bvmze6v/idrTTuBiOj
+	5XRP8/8kKGL+VjRS2+fC3g0F4p5zeWQ2B7UWOYAVz1g==
+X-Gm-Gg: Acq92OHIC7jWBM9bcoxrh3ITVT7AMxoXJG0M+HBwu8aAtqi0GHkrvYfQo0vDnpikjb7
+	SLJ1do/bR2o9Z06rfIII9vgLNgQo/KSI8wqdJsRny3a/O4HmKbH+rdIKyj5YFDmudiSZp9C2Be2
+	kEQIKwwl/VkTR45hpjRXSOZF6PNytlnbTh+xFQzgFDgenldJphCM0vDKKrxhEaRmg2wZov4za7A
+	ViTz9pKxnAL6/ywPtksoFj6HhzQVpq0+BCdhaKbAaCqiQZdAxWlOEz8i2hwXBO2E44Jz63MTvFO
+	t/mim6r1LYgGCm47IJWykbOzBdRUnw==
+X-Received: by 2002:a05:690c:6908:b0:7bd:8ce4:92c with SMTP id
+ 00721157ae682-7d335fbccdamr152795227b3.31.1779695601771; Mon, 25 May 2026
+ 00:53:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
+ <1d3751569ba3a5f0c353fb468578d6c5bcd0b738.1779644541.git.gitgitgadget@gmail.com>
+ <xmqqpl2kgyvy.fsf@gitster.g> <ca39c8ca-ca4c-4954-a1ab-633bfa55f64b@gmail.com>
+ <CAL71e4NxpbM8QZYhVA_SSC4vDmAFv-Kpe6qDcurefgPkSSdSnQ@mail.gmail.com> <xmqqse7gez5l.fsf@gitster.g>
+In-Reply-To: <xmqqse7gez5l.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 25 May 2026 09:53:09 +0200
+X-Gm-Features: AVHnY4L7Bn7ioMk3_OYGi_65z4MIrAshBs_kFIgmhESb9wnQUQWdH3Zw6X83QZk
+Message-ID: <CAL71e4ODJeCJctKg=3o9PKD6Rw3_xHnrjc+zT_MYFc=CdNc59A@mail.gmail.com>
+Subject: Re: [PATCH 1/3] commit-reach: deduplicate queue entries in paint_down_to_common
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>, 
+	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
-writes:
+Good catch Jeff! I think it's possible that I missed the flag cleanup case
+here, but it's also possible that I got lucky and it worked anyway.
+That said, I think the observation in the other email thread/commit is key
+here. I will reply back in that one, but it seems like this can all be
+simplified using Jeff's idea with an amortized O(1) solution by caching a
+known non-stale entry in the queue, and thus becomes obsolete. I will post
+a new patchset when the discussion slows down.
 
-> Changes in v5:
-> - Fix Windows CI failure: use `**` glob pattern instead of `/` in the
->   "worktree without repository" tests, since `/` as a path pattern is
->   Unix-specific and does not match Windows paths.
+As for general flag management, I will spend some more time thinking about it.
+I don't fully trust static code analysis to work, but some cheap assertion
+based model might give a nice trade-off.
 
-Would it have worked if you used something like "[/\\].path",
-instead of "/.path", to cover directory delimiters for both systems?
+Thanks for all the feedback!
+- Kristofer
 
-I am not asking to make further changes.  I am trying to understand
-what the extent of the problem was.
-
-There are tons of [includeIf] that spells path patterns with the
-assumption that '/' can be used as the directory separator, like
-these lines taken from <master:t/t1305-config-include.sh>:
-
-    echo "[includeIf \"gitdir:foo/\"]path=bar" >>.git/config &&
-    echo "[includeIf \"gitdir:~/foo/\"]path=bar2" >>.git/config &&
-    echo "[includeIf \"gitdir:**/foo/**\"]path=bar3" >>.git/config &&
-    echo "[includeIf \"gitdir:./foo/.git\"]path=bar4" >>.gitconfig &&
-    echo "[includeIf \"gitdir/i:FOO/\"]path=bar5" >>.git/config &&
-    echo "[includeIf \"gitdir:foo/\"]path=bar6" >>.git/config &&
-    [includeIf "gitdir:**/foo/**/bar/**"]
-    echo "[includeIf \"gitdir:~/foo/\"]path=bar2" >>.git/config &&
-    echo "[includeIf \"gitdir:./foo/.git\"]path=bar4" >home/.gitconfig &&
-    echo "[includeIf \"gitdir:bar/\"]path=bar7" >>.git/config &&
-    echo "[includeIf \"gitdir/i:BAR/\"]path=bar8" >>.git/config &&
-    echo "[includeIf \"onbranch:foo-branch\"]path=bar9" >>.git/config &&
-    echo "[includeIf \"onbranch:?oo-*/**\"]path=bar10" >>.git/config &&
-    echo "[includeIf \"onbranch:foo-dir/\"]path=bar11" >>.git/config &&
-
-and there is none, as far as I can tell, that uses a backslash as
-directory separator.
-
-Shoudln't the new worktree location code normalize the pathname
-before doing a pattern matching so that it would allow '/'-separated
-path pattern to match?
-
-FWIW, here is the diff between v4 and v5.
-
- t/t1305-config-include.sh | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
-
-diff --git c/t/t1305-config-include.sh w/t/t1305-config-include.sh
-index 07b6fb649c..25f484eec5 100755
---- c/t/t1305-config-include.sh
-+++ w/t/t1305-config-include.sh
-@@ -462,6 +462,19 @@ test_expect_success SYMLINKS 'conditional include, worktree resolves symlinks' '
- 	)
- '
- 
-+test_expect_success !CASE_INSENSITIVE_FS 'conditional include, worktree, case sensitive' '
-+	git init wt-case &&
-+	(
-+		cd wt-case &&
-+		test_commit initial &&
-+		wt_path="$(pwd)" &&
-+		wt_upper=$(echo "$wt_path" | tr a-z A-Z) &&
-+		echo "[includeIf \"worktree:$wt_upper\"]path=case-inc" >>.git/config &&
-+		echo "[test]wtcase=1" >.git/case-inc &&
-+		test_must_fail git config test.wtcase
-+	)
-+'
-+
- test_expect_success 'conditional include, worktree, icase' '
- 	git init wt-icase &&
- 	(
-@@ -495,7 +508,7 @@ test_expect_success 'conditional include, worktree does not match in early confi
- 
- test_expect_success 'conditional include, worktree without repository' '
- 	test_when_finished "rm -f .gitconfig config.inc" &&
--	git config set -f .gitconfig "includeIf.worktree:/.path" config.inc &&
-+	git config set -f .gitconfig "includeIf.worktree:**.path" config.inc &&
- 	git config set -f config.inc foo.bar baz &&
- 	git config get foo.bar &&
- 	test_must_fail nongit git config get foo.bar
-@@ -503,7 +516,7 @@ test_expect_success 'conditional include, worktree without repository' '
- 
- test_expect_success 'conditional include, worktree without repository but explicit nonexistent Git directory' '
- 	test_when_finished "rm -f .gitconfig config.inc" &&
--	git config set -f .gitconfig "includeIf.worktree:/.path" config.inc &&
-+	git config set -f .gitconfig "includeIf.worktree:**.path" config.inc &&
- 	git config set -f config.inc foo.bar baz &&
- 	git config get foo.bar &&
- 	test_must_fail nongit git --git-dir=nonexistent config get foo.bar
+On Mon, 25 May 2026 at 09:17, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Kristofer Karlsson <krka@spotify.com> writes:
+>
+> > While doing the audit I noticed that reasoning about flag safety is
+> > currently entirely manual. Would there be interest in something more
+> > systematic (e.g. runtime registration/assertion, dynamic allocation or static
+> > analysis of flag usage)? I have some local work on that already, but I was
+> > not sure if this was something worth spending time on or not.
+>
+> If there weren't existing code that are so tied to their current
+> uses of fixed flag bits and assumption that nobody else uses these
+> bits outside their intended use, I'd love to have any of these.
+> Uncolliding and unbounded number of usable bits per object that are
+> *fast* to access would be good (and commit-slab was an attempt to
+> introduce a framework that can be used as the basis for such a
+> system).  Independent of that, if we can statically analyze the uses
+> of these bits to prove that the same flag bits are never used at the
+> same time for colliding purposes, that would really be valuable.
