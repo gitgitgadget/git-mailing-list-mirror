@@ -1,184 +1,123 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA075478D
-	for <git@vger.kernel.org>; Mon, 25 May 2026 01:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1857F1DED40
+	for <git@vger.kernel.org>; Mon, 25 May 2026 02:14:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779674398; cv=none; b=l/YJnv2SeDKZRLrXxogGzPrgj18QI4vmeq8AJ7aKBTu5rgijAYlX66ShjdWKdV7oGbGplODGrl1vP1MZXNshufRG7NhwQ/LdBrXFir9bsGLSFMkvUGaMX1sw4Mg58WBY7Z8yoRqV6amnPrEnRTRb9Ht82GmIcMoNlakpyTPW37w=
+	t=1779675262; cv=none; b=kFl4WCKfw4Fm+GE4j1m6JISsGbfhB05kauC6n8qWAWzn1EhPN/kz1h46EKKL2dQ13SqXdM6MZ3CXKhVmHidOwf+YBAr3yV5Fno+DSma2skrTNjwqUtW+FFFEkqq1gjUH/pQnhe/xjeZaojGJkZ79ef50kHgUFvW6Krp4ywiDADE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779674398; c=relaxed/simple;
-	bh=cUFPoA1b3/vh5+7iiuH1YM6SExTFk/iN2F+c5mJgtDo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E2YXwB/yvcOoCKozd2m8CY402sJzZIbwF878Aqy/5h/Clz0VdbjJH3DMzF7Ywttln6moa3x0pQkamRSoFJEnFzkySCkoFa7EDxghCYqP2lwmeL8MjsqWhloYXazx6ems4iDaMzmxdTM2xBRgIrRamnKgnkwRu9tDSM3Cwgn1YJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jwPMVZFz; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779675262; c=relaxed/simple;
+	bh=oAJDtxF0f22wRnblcyZDTgesPO1nnLRs/jaDp2YZkBI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uy0nGC1pId0I8mE/50ucJMiIArTlTdzmf/W6F0UJ6HQj27EGB1GqRdpYQbRsVI8AHrvCMsKFsBSFUtg4bKdRNjso+HPvXDaZwfmLLvR+Ia42DqA1uV2f3sUSEkUOdGdfDk0pA4pNWORXXKK1WsQmqmIfGWZskTxYy5hiW74D5Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ElqkGS/5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JhQzWkfH; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwPMVZFz"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-8b98482b253so154490156d6.1
-        for <git@vger.kernel.org>; Sun, 24 May 2026 18:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779674396; x=1780279196; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rL3IwZZz2x3mg4FJ2GCzz/PLHK5mP7+1PAsqr3EFrzk=;
-        b=jwPMVZFz8KT7DIE1ViE6rczY4SobjaJfiPcBsYv/bLa4MdI7QY2vX4oo/2kVUK9qG7
-         dt8scOqc/JHILbwbdAo8eQ8vuZAZrLW1M7/ZRl78kyN9OQcVGRcWijn1LniKegfaP8jo
-         6A43WozeBIy0hfv+XP3O7EeYwFEjs93MUQr4CrVGvttFLP0looK+cFWwOYhdT1/m+3GB
-         Skz4tOg3dZh7XaMvUwb0uvaQO0UeI4G8N2tWFM1S5WCZigpjJT81WarLYIuafXZYuuwL
-         yP2XNvsZXVErTy0y6z70mj9HNFmm1skb+TUYwXhGhqZ03gXKcaHtDS9M2fhml6WtovOq
-         frCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779674396; x=1780279196;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rL3IwZZz2x3mg4FJ2GCzz/PLHK5mP7+1PAsqr3EFrzk=;
-        b=L57CnYKw1Y8T0k+O9zh3N+anpnovyZheQdY/JQa4Ca0w/Oiwmcir1ydDDN+73VnwXl
-         u/nuWdHK3Zom7se2KQG++CKKRw9Fu5HgA+7sBugArTKPjTFzSTy4wgGssLXMYRUhT3Cs
-         SVq5M1YSgoWlwF1BYgnGa260wN2+JUOuwDmqSnVma1GR9iP3dX7TVQJVc9dvPx/zS0up
-         LU/JZ0QU/JWtBafLxHaJvsZsCCLkOj5r8IFAF6/OfFB8vWtFLlquksCNpuCQvKWVzl0o
-         XsXwt0ujVztvr3ob2q7fsrecPkcHmE6VsRGRWkXxezvufBvyooxPmpA9t6WXgkylANL1
-         qbZQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/OC2rtLV/o8DlrILlNz8fU0LsJVgLlwGS6n2ekJ8qNbyXZXmcNgEWLfemj6k5U1liol90=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5sCIvmG0HA483m3/kBSqtApGKDcUFO2C9Dad7e1kpY8yeb8IP
-	2eFK88Cm6L2wPH2B26US57cFOhS36sIUq2xjKUYn53JBAQS4tNKF3OJl
-X-Gm-Gg: Acq92OFKDptlTO3+eHrZA3qMIjv9A09oaTjk7/FbJBwPwsMZGw2ubEEYxn0xeJMbpxA
-	2QlI071jx+I2eYf0/BsV8pa8dy8F+QhTlXxGm+7TwbJuh7vrgU0xLOUjOIS/+34yQ8PCOiup6b/
-	5RWSW8i7BGz+/JsyYvTg0ZECWZNAgwtjrUyopaAssLrhxM4XXigyAh1rmlarl0DipooJS67Lc7X
-	3XG5q2Yz2ezhuEmgLgKB6XT6WJLTAdm8ejrhIeE+wEP9t92iPUbbipbdZ34pRaOs8V/OB/DPc0K
-	62axr9hXInm38Prv8ZiW+ZuygExocbd8yNyWBQkOo9fI4IMrzPQgaYXVt50P/21w3gD6IF2tNdP
-	1d0PgGme4B0WKd0FEq8KOWX5F6r2t/la4OZgcVMSMy8JUQP1iL0dsWnZA4dUBSIxoiFr8caAThq
-	UjmaQ8ZWoNcDdlR9Ft/ijvYUazz7ECiMyxnAOpaoTEBOS5tN6b30tWKHd6pS9T+GcBZ6B/81wCJ
-	x8KvaQnU6YcP3W3FiFJcrxG5LUrP2gYhDlh/bhTzM/9OWfspHrx4RwdBBKvQg==
-X-Received: by 2002:a05:6214:1c85:b0:8ac:a6f7:8a70 with SMTP id 6a1803df08f44-8cc7b5d288amr221249206d6.22.1779674396473;
-        Sun, 24 May 2026 18:59:56 -0700 (PDT)
-Received: from ?IPV6:2605:a601:9b88:8300:4178:7958:947f:ef4f? ([2605:a601:9b88:8300:4178:7958:947f:ef4f])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cca9c02e56sm98316d6.43.2026.05.24.18.59.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 May 2026 18:59:54 -0700 (PDT)
-Message-ID: <42aef000-7952-482d-8532-2287cf32b275@gmail.com>
-Date: Sun, 24 May 2026 21:59:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ElqkGS/5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JhQzWkfH"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 48BCDEC062F;
+	Sun, 24 May 2026 22:14:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Sun, 24 May 2026 22:14:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779675260; x=1779761660; bh=bLhSLrHzrq
+	cP6p2c/fyT4adKcx6yrEAQdFf4oMjcbNM=; b=ElqkGS/5IrnvL2v/9uQndsOgFQ
+	P18fZkRrsD8qIdqRKnuVU5G884hGyah1LZq0SdTxkNxN52R6b7JJCE+d7P5pvR+w
+	xvCkc2LNGNwsu3ZL/E0Cp2ElgPG6CR5v7zYgLj069JgRxX/H5KQcD8okSkvrRctT
+	VR9PLbzQw9wEmTJexYmqxdpBbqsgaBx28qQxHYb7FR0qSD5/qSCXW0/PLZapYuOx
+	OsWFlk+Hr5T1DxBXtjRGC7xrpPBnIRpGonL6nIaJJr1G7e1eKz8CSGyZAr/y7DIi
+	yVZ53F4lewC5qQ2UGYvpQnfcs0PHe3Pf32is0iSqZVTx91v4oV8EC4vK2PJQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779675260; x=1779761660; bh=bLhSLrHzrqcP6p2c/fyT4adKcx6yrEAQdFf
+	4oMjcbNM=; b=JhQzWkfHuIpmEDH48Njie2e8zxey1RcMGYFQryFBJHjEwAPwR7B
+	B+D+9wRJg1gkepyE48ncmCJ1nr2v2+wVbLJufFiGo0/HjlUyhd91Gtt7sle2M8g/
+	PAgypqTx2Q+FkT9HLZ7WszFC2cp57DDCY3TlFIbKdi7/dvfeXgOf2dgSuBECB4zH
+	XqX4gSBJy9Z2SPm8GbcMQ7L0c4Cg7CuhF+icwSzsNI0a0mnf23uDOq+xzUxAq9Ro
+	+Ld2FODSy6GjP04GTL5bKys/hKdWBGUBRNNN5pxFm/KtpH8g7Uox51BIIa0OkXje
+	KyYPbWhiwa3jqO2AzSCjM5zgFu/x2t3PpUQ==
+X-ME-Sender: <xms:e7ATau1M27Tj7yQCoW6FNaDRduAFQJbf9rIaEaBnmA0zHqeFjVftRQ>
+    <xme:e7ATahwdqAcReg4aROrIPJwVkEFiFLiGCHwYgpNs3DtOp_7wnxN78TqiSj3SyglYI
+    g9T6FeFO1G6tAJfJMF6eNNa61ztinbYV9gEYt61IlN_tHA39aMcKA>
+X-ME-Received: <xmr:e7ATalFhQLJZBdBwsIMKaQzdoOVUU4dTPlTH2vIqxFD2pl0flFL2RtEnTaKiD99u6jqM3uggWZozPToqM25mXUfayfl9zyiY5kid>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheejheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfei
+    jedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvg
+    hvnhhulhhlodhmvgdrsghlrggtkhdquggvshhkrdgtnheskhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrh
+    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsegslhgrtghkqdguvghskhdrtg
+    hnpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhk
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:e7ATakaV0QN1Sp_PcKSOxL1HlvcjA3kS4eHIbdAyTeI_TSRjHITdfA>
+    <xmx:e7ATanDOu7A8nN0HQ7-Mvly-ZDbSkJMoTwA1MT1Hey0l5RzDYMveNg>
+    <xmx:e7ATasmAGPmsiLjy9R_PsZq4n5BTtjV1QF_3JFmkkkfK7CLDoVSMHw>
+    <xmx:e7ATaowp_K3T4llD3toRAoZ-ce8iutyXqYi1Jvwel8SKM1lYXC-tdg>
+    <xmx:fLATajbB0KtGh2MtbxknAC8TP-M13xgigkDH2Iy--_EzucxElts4tvZY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 24 May 2026 22:14:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+Cc: git@vger.kernel.org,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+  Patrick Steinhardt <ps@pks.im>,
+  Chen Linxuan <me@black-desk.cn>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 0/2] includeIf: add "worktree" condition for matching
+ working tree path
+In-Reply-To: <20260513-includeif-worktree-v4-0-f8e6212d1fba@black-desk.cn>
+	(Chen Linxuan via's message of "Wed, 13 May 2026 16:08:16 +0800")
+References: <20260513-includeif-worktree-v4-0-f8e6212d1fba@black-desk.cn>
+Date: Mon, 25 May 2026 11:14:17 +0900
+Message-ID: <xmqqbje4grra.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] commit-reach: optimize queue scan in
- paint_down_to_common
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristofer Karlsson <krka@spotify.com>
-References: <pull.2124.git.1779644541.gitgitgadget@gmail.com>
- <4742f5e634b55820f3b5a626ec97e24617fdae3d.1779644541.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <4742f5e634b55820f3b5a626ec97e24617fdae3d.1779644541.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 5/24/26 1:42 PM, Kristofer Karlsson via GitGitGadget wrote:
-> From: Kristofer Karlsson <krka@spotify.com>
-> 
-> paint_down_to_common() terminates when every commit remaining in its
-> priority queue is STALE. This was checked by queue_has_nonstale(),
-> which performed an O(n) linear scan of the entire queue on every
-> iteration, resulting in O(n*m) total overhead where n is the queue
-> size and m is the number of commits processed.
-> 
-> Replace this with an O(1) nonstale_count that tracks the number of
-> non-stale commits currently in the queue. The counter is incremented
-> by maybe_enqueue() and decremented on dequeue and by mark_stale()
-> when a commit transitions to STALE while still in the queue. Since
-> each commit appears at most once (guaranteed by the ENQUEUED flag
-> from the previous commit), the counter is exact.
+Chen Linxuan via B4 Relay <devnull+me.black-desk.cn@kernel.org>
+writes:
 
-This idea has a lot of merit, but I'm a bit concerned about the
-organization of data. My ideas of how to improve things may also
-impact patch 1's use of ENQUEUED.
+> The `includeIf` mechanism already supports matching on the `.git`
+> directory path (`gitdir`) and the currently checked out branch
+> (`onbranch`).  But in multi-worktree setups the `.git` directory of a
+> linked worktree points into the main repository's `.git/worktrees/`
+> area, which makes `gitdir` patterns cumbersome when one wants to
+> include config based on the working tree's checkout path instead.
+>
+> Introduce two new condition keywords:
+>
+>   - `worktree:<pattern>` matches the realpath of the current worktree's
+>     working directory against a glob pattern.
+>   - `worktree/i:<pattern>` is the case-insensitive variant.
+>
+> Supported pattern features: glob wildcards, `**/` and `/**`, `~`
+> expansion, `./` relative paths, and trailing-`/` prefix matching.
+> The condition never matches in a bare repository.
+>
+> Signed-off-by: Chen Linxuan <me@black-desk.cn>
+> ---
 
-> -static void maybe_enqueue(struct prio_queue *queue, struct commit *c)
-> +static void maybe_enqueue(struct prio_queue *queue, struct commit *c,
-> +			  int *nonstale_count)
->   {
->   	if (c->object.flags & ENQUEUED)
->   		return;
->   	c->object.flags |= ENQUEUED;
->   	prio_queue_put(queue, c);
-> +	if (!(c->object.flags & STALE))
-> +		(*nonstale_count)++;
-> +}
-> +
-> +static void mark_stale(struct commit *c, unsigned queued_flag,
-> +		       int *nonstale_count)
-> +{
-> +	if (!(c->object.flags & STALE)) {
-> +		if (c->object.flags & queued_flag)
-> +			(*nonstale_count)--;
-> +		c->object.flags |= STALE;
-> +	}
->   }
+The test in this series fails in GitHub CI for Windows, it seems.
 
-These two methods have some concerns on my end:
-
-1. We need to store the nonstale count somewhere other than the
-    priority queue, even though it's necessarily representing a
-    subset of the commits within the queue.
-
-2. mark_stale() needs a queued_flag. (I need to check to see if
-    this is indeed changing in multiple callers or should always
-    be ENQUEUED).
-
->   static int queue_has_nonstale(struct prio_queue *queue)
-> @@ -68,6 +81,7 @@ static int paint_down_to_common(struct repository *r,
->   {
->   	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
->   	int i;
-> +	int nonstale_count = 0;
-
-My preference would be to create a new struct that contains a
-prio_queue as a member _and_ a nonstale_count. It could initialize
-with compare_commits_by_gen_then_commit_date by default.
-
-The important thing is that consumers of such a "stale-tracking"
-queue would not be setting the STALE or ENQUEUED bits themselves,
-but instead the queue would be responsible for that.
-
-This could allow us to simplify callers by always assuming we can
-"add" an element to the queue and the queue will use its ENQUEUED
-bit to prevent duplicates from reaching its internal prio_queue.
-
-Such a data structure could be private to commit-reach.c for now,
-since all the methods that would use it seem to be colocated there.
-
-This is a big ask, but I'm interested to see if such an approach
-would simplify things here.
-
-Here's a potential breakdown of how to build such a thing in
-"small" patches:
-
-1. Create the data structure and update paint_down_to_common and
-    ahead_behind to use that structure, but still use the existing
-    prio_queue methods on its internal member.
-
-2. Add the ENQUEUED bit and methods on the new struct that add
-    that bit as it adds commits to the inner prio_queue. It would
-    also ignore commits that already have that bit. (Should it
-    also remove the bit as commits are removed from the queue?)
-
-3. Now add the nonstale_count (or stale count?) to the struct and
-    have it control the STALE bit modifications, with increasing
-    the stale count when ENQUEUED is live, and decreasing the stale
-    count as such a STALE object is dequeued.
-
-I like the idea of this being encapsulated within the struct and
-its helper methods. But the proof will be in the implementation.
-
-Thanks,
--Stolee
+https://github.com/git/git/actions/runs/26377220573/job/77639885088
 
