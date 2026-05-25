@@ -1,93 +1,82 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C5E37BE97
-	for <git@vger.kernel.org>; Sun, 24 May 2026 23:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6501BF33
+	for <git@vger.kernel.org>; Mon, 25 May 2026 00:20:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779666261; cv=none; b=P3zN9QS9qPsPElNRva5RTW55PaFGubUWeQZZai010GB6F3+SxPbpuosCJjHc9wyYWFs0QQwQjvASD6y7SQkClYSvR/uLN4UtXYcgc3mplbzbAl+/YnYnveyWMumSO4RhiCfUrnSSagnmhhihPDC+PdpGhchkP+JyZnw3e1ULcBM=
+	t=1779668415; cv=none; b=GLvYkQiljMovzI2DhYTNGKv4voLecFVvk/gDem4RtCaKCpFtRwBpzxTgn4jY7jonN6CQ4PnOoWRqkBWJZKgDBQpiau26kuTp/IkgKO5iLFnb6tHvidjtwcFshw9mIVx4dM5HLmnfnJtSVK+28lWnEGgmhah8jxoDYOE2o7jEwec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779666261; c=relaxed/simple;
-	bh=ZHR1WDxsXFPrSbfN5buJ2KJA/9FKjXtQw9NDnm6XMsQ=;
+	s=arc-20240116; t=1779668415; c=relaxed/simple;
+	bh=sa9Ty/QxtA6vFv2qCPyay6mmDwkfoTUYnnxLidn4v+w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gEPQQ4BrZLX7AgYbCYwaAfLgKrBNo/IacV1Tj2wfPdxPupYnz7crvFWPWEsQuRArw8erIByCEHGrkicjgjCcnPqFHClSBu08Z1GedkmaU2yUfy0XlNC6PA7C6R8WT3gtxwTnz9Flk/xUazBLvs0ijzuzTD6mohqGoQ25e/1BiXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wk5+GgCL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ciWxjhml; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=WJ8TfdRf9y2xBK9ofd3xKSttITP9SX5M+NXrSguTTDx9HuR0XHUI7TXrxdLznYYK6G6J3MvEFTec+O280MKUDSHsSzosDZAz7oVdt4JilgBVQkW0IdcFdB0cRoLHYJia5B8KmY8uG7v1s9Ok1pa1pxVT8EVbVjDcQcTkYCCu1xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lOTMXzDA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HcPQoqhu; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wk5+GgCL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ciWxjhml"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 763B6EC0212;
-	Sun, 24 May 2026 19:44:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 24 May 2026 19:44:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lOTMXzDA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HcPQoqhu"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8BAE5EC01F0;
+	Sun, 24 May 2026 20:20:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 24 May 2026 20:20:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779666259; x=1779752659; bh=pCN1LBkQ7V
-	DFbvFFWDQ5V2mVQK0tTELlbSXP5qWpoGs=; b=Wk5+GgCLyH4bOtsA6n/FvPlXKx
-	KoBD0yzZuDm4z5f9PHJKhy/X2h63bh/fI9vyI5Q6V3+wMtLJ/1FpIwuRwDFuqCg8
-	BSPo/tEfslfm5gDuNfvZKILsb7Gv3qH94hvO+ppYI3c2XycV2goCrsA7S4/0TWtS
-	DXh3gCxznrtV7Oc2jHI7G9IQ5XEE0itT9O5lGyOlmt1Qz+EJ6RjfI9ykwJVCNUM2
-	uS0KU/1SoaxJOaItbv/0BYXr+hdzIjKcs3zBRg7r/V0rO7AR0e8lr9G58DLzKXVQ
-	MYTt7hkKuHJgVuvEjxKfMAFSxHPzFbhQz+y9TjlxqKr04xT64o43EycDoE/w==
+	:subject:to:to; s=fm2; t=1779668412; x=1779754812; bh=V4vV16SvEm
+	6raV3T0wHOwtY2djV0nFMZ4wEOrwuTw2E=; b=lOTMXzDAri2ag88mom+/F6D0O+
+	PonkDkAxTRhkKN4zYZCXq4plIF7tiKcCDZ8RZuJrNTz036WJIYYFSrA29UY7nrpe
+	JMEIPArOcQPsFELqM7wtLyuB5HhmNCA5wNJP4lHsHHxcoaoA/8pOSpVmo9qHp5/B
+	d0OYUE1voY/xB5mtv+m1nj4MLChbbISm5o3k8/IPWmnrgyOf7PEt/d4fy9ZJVsCh
+	6quigSQKioqHlz2wChf+S9dDBgZ7/AxlHA1E/uU7fGyRjBrecaRVOY8FDKcQWXad
+	XVWlFNDazUMY1IL9cgO8ai5jxjHhVE2zp6RS+1r6wgiSS59EXQP5IcTg+TQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779666259; x=1779752659; bh=pCN1LBkQ7VDFbvFFWDQ5V2mVQK0tTELlbSX
-	P5qWpoGs=; b=ciWxjhmlVaZ5Fl4ffeAjPvOfGPY8cvxU/RvjT2/++r1/UWdrtfG
-	whMk1XQ35g0ROgIZ0y4TFky6B/BtlNq5dnJZ3bBY4R/+cc1HTIyPxv7GOkh8CzLg
-	M4EkL6BDYSvVrWPlqHz8ECPagjtqIowo2WE0S7m7Q7T/Uuwn6ySfdWPKUwi6ydIV
-	W083gHP8/9vgNZZJL4YvJMooaGgKZW7p9KowflmRsXdtmBy2v3jSjevmVbMBVzID
-	7dlEEKOxwSV3PI3axD7fLMQBvfsK/u1bva6Fuw2mhKIrRx4dRUs9tOVv1BT8fQFp
-	1Zo7eX3221sKeB64q04r9e04aeYo/D5aXIQ==
-X-ME-Sender: <xms:U40Tar9QKnxhoqYROtYPxP2DR0uiMAl4tS5yqmOklzoZj5N7H5Li9Q>
-    <xme:U40TauF5DkfOaDVgqJsQ5RQjeV5dOYf6JvXDJDolK_85bp90Td2lDF7acgTfvecwf
-    K_OMiGwucdVgD-OFez6e4GK-z2U6QR1W06CeYtlspK_ky752EK7xQ>
-X-ME-Received: <xmr:U40TalQsBjl__jtuZ_mZj3XHbSmZWWSYPIo9oSreqem00hdhdlDaGlsi7Uzmw9-ZBNrJY02ptvgUZGqeX8dmsWlDN-f6j0tyuBw1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheejvdekucetufdoteggodetrf
+	1779668412; x=1779754812; bh=V4vV16SvEm6raV3T0wHOwtY2djV0nFMZ4wE
+	OrwuTw2E=; b=HcPQoqhupQbSjDzm/qAs5LOXvfHD2Xd9xE0Qi5vK2FinEEhwC9Q
+	suBD/IAEDoGfyO8/BklbdVz24RoCsd4bzi6jxWcC4sDQkipVdhjyRDxJRgQc6meD
+	V/vAIDWre+yWHl2iP7X3MICc32Cwx/8XOrM5rydowwq5fdvYBldYBVock8zsXSPF
+	VKKhj98o+a2Nu1vQtWev21MOglRqWmncch6sWdZsssriN8HL+1++Qn01WWRKk85q
+	i9Xc/qroNUSW3FW6sh/uqkfQyc+A+Q5CzdFVSmdjCBrcgOgMT9W9MU1Cb28/Ghqa
+	i2+bjO6CpGhnjzLQ8VfyDEJXc/Uqbd0goIg==
+X-ME-Sender: <xms:vJUTanp5CKv6hOtGz9o0wPcT9tr6kVV2U_5f2GRe-m9w_INlhlD_GQ>
+    <xme:vJUTaooVZpv6VAhdAWf60sHrxTj7e2ktmY6HHVqefWsCevdu7uNDP8LCYFnJMmb9V
+    rOGRHQR716YToVLvUvt7ATpynA4yZH-Clirv1hU6URxPo5pc-CcNA>
+X-ME-Received: <xmr:vJUTapM189ZBATKZfpHkg8iagy1nWGfpC4V4tqM5v70ygAzg0lJCTAo2c3dfylr7sxcMa21zuV0hDf2bw3zCJ3IDNoqIr0d54RW4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduheejfeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeei
-    geeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepudefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
-    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrd
-    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgt
-    hhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehjohhhnhgtrghikeeisehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
-    hilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:U40TalT3Ue6PeiQ5QqDT6KiyqfasZYFcp_loRUU6CllNDlqFOMK2Cg>
-    <xmx:U40Tao3RdY9dcWPuuGf5Ax71sPEKx3TEGVCv9g5CrD_up3NZWb3Fbw>
-    <xmx:U40TavwyFXGrgVr2Q32mCEL6tg4H4xCiv_gB6sCGLfz9SSq0bgw8NQ>
-    <xmx:U40TakwAEzRVOysfgyBjNRjaOSAEwI_t7jaiWzB1VpigkI4QtvhKMQ>
-    <xmx:U40TapN72qUx2eUfROYUxiPN1EBaoQ3aywn1YbMq2_QKUvsrI6vZVzyh>
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeive
+    ffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehhihesrghl
+    hihsshgrrdhishdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:vJUTapzvU77ZjzU0OMr6sQrm5hI6CvGPLdug08rodxbaLHFzDp3asA>
+    <xmx:vJUTaitjFEy1_VptER4TpB5zDxOKaH4xMS15RttmrdOz-0_6uBaYlA>
+    <xmx:vJUTai4pAbodO91T-fhZkC4S5pDA-novP2whf32ktQ0M-muvP3zIKw>
+    <xmx:vJUTahTw0J-3q_N5NBlbY92CyR9pzGjV5GQ5qOJnVNX_VaHNVVFbUA>
+    <xmx:vJUTaovxJjadGzjIbnrgnfjBj4WTOGOSutq4a1SwxkHjDRM3CmIhgraJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 May 2026 19:44:18 -0400 (EDT)
+ 24 May 2026 20:20:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  christian.couder@gmail.com,
-  johannes.schindelin@gmx.de,  johncai86@gmail.com,  karthik.188@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  newren@gmail.com,  peff@peff.net,
-  ps@pks.im,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v5 00/13] pack-objects: integrate --path-walk and some
- --filter options
-In-Reply-To: <ahDbS+CtwsGx62Q3@nand.local> (Taylor Blau's message of "Fri, 22
-	May 2026 18:40:11 -0400")
-References: <pull.2101.v4.git.1778707135.gitgitgadget@gmail.com>
-	<pull.2101.v5.git.1779474277.gitgitgadget@gmail.com>
-	<ahDbS+CtwsGx62Q3@nand.local>
-Date: Mon, 25 May 2026 08:44:17 +0900
-Message-ID: <xmqqldd8gypa.fsf@gitster.g>
+To: Alyssa Ross <hi@alyssa.is>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH] receive-pack: fix updateInstead with core.worktree
+In-Reply-To: <20260522154418.5883-1-hi@alyssa.is> (Alyssa Ross's message of
+	"Fri, 22 May 2026 17:44:18 +0200")
+References: <20260522154418.5883-1-hi@alyssa.is>
+Date: Mon, 25 May 2026 09:20:10 +0900
+Message-ID: <xmqqfr3ggx1h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,45 +86,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Taylor Blau <me@ttaylorr.com> writes:
+Alyssa Ross <hi@alyssa.is> writes:
 
-> On Fri, May 22, 2026 at 06:24:24PM +0000, Derrick Stolee via GitGitGadget wrote:
->> Range-diff vs v4:
->>
->>   1:  0840110116 =  1:  0840110116 t5620: make test work with path-walk var
->>   2:  d7c87545f3 =  2:  d7c87545f3 pack-objects: pass --objects with --path-walk
->>   3:  fb8a0f9c43 !  3:  697ef716d2 t/perf: add pack-objects filter and path-walk benchmark
->>      @@ t/perf/p5315-pack-objects-filter.sh (new)
->>       +		awk "{print \$4;}" >top-dirs &&
->>       +	top_nr=$(wc -l <top-dirs) &&
->>       +
->>      -+	>depth2-dirs &&
->>       +	while read tdir
->>       +	do
->>      -+		git ls-tree -d --name-only "HEAD:$tdir" 2>/dev/null || return 1
->>      -+	done <top-dirs >depth2-dirs.raw &&
->>      -+	sed "s|^|$tdir/|" <depth2-dirs.raw >depth2-dirs &&
->>      ++		git ls-tree -d --format="$tdir/%(path)" "HEAD:$tdir" || return 1
->>      ++	done <top-dirs >depth2-dirs &&
->>       +
->>       +	d2_nr=$(wc -l <depth2-dirs) &&
->>       +
->>   4:  e77c8a6bbc =  4:  91845bcef0 path-walk: always emit directly-requested objects
->>   5:  f4904f81e0 =  5:  fdb9361198 path-walk: support blobless filter
->>   6:  f37467e46f =  6:  89726faf7e backfill: die on incompatible filter options
->>   7:  133c1b156c =  7:  3884d4737f path-walk: support blob size limit filter
->>   8:  0f517be8e3 =  8:  31b4ef0fa1 path-walk: add pl_sparse_trees to control tree pruning
->>   9:  b4dc09ab69 =  9:  7d8f0aa036 pack-objects: support sparse:oid filter with path-walk
->>  10:  0b1eed0790 = 10:  a68676d0de t6601: tag otherwise-unreachable trees
->>  11:  b23244c4c2 = 11:  b0db73c6cc path-walk: support `tree:0` filter
->>  12:  7e1e503361 = 12:  6845988f50 path-walk: support `object:type` filter
->>  13:  a615b1a707 = 13:  d33d899251 path-walk: support `combine` filter
+> This used to work, but when push_to_checkout() started being called
+> before push_to_deploy(), ...
+
+We tend to try describing where things started breaking a bit more
+precisely.  The above seems to say that you know that in the past
+push_to__checkout() was not called before push_to_deploy(), and it
+no longer is the case these days?  Can you spell out in what commit
+that change happened (refer to the commit using the "git show -s
+--pretty=reference" format)?  I.e.
+
+	... but when X started doing Y at a8cc5943 (hooks: fix an
+	obscure TOCTOU "did we just run a hook?" race, 2022-03-07),
+	<<this bad thing>> started to happen.
+
+It isn't really we are exercising "checkout" and "deploy" both at
+the same time, but an old commit started to always call _checkout
+only to see if that actually invokes the hook, and if it didn't,
+then call _deploy.  The intent still is to use either one of these,
+but as you exactly identified what is wrong in the current code, the
+call to _checkout that is only done to probe if it is used at all
+started to contaminate the environment with that commit.
+
+So this change ...
+
+> -	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
+>  	strvec_pushv(&opt.env, env->v);
+> +	strvec_pushf(&opt.env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
+>  	strvec_push(&opt.args, hash_to_hex(hash));
+
+... looks like absolutely the right thing to do.  And ...
+
+>  	if (run_hooks_opt(the_repository, push_to_checkout_hook, &opt))
+>  		return "push-to-checkout hook declined";
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 117cfa051f..f51fb11a6d 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -1791,6 +1791,17 @@ test_expect_success 'updateInstead with push-to-checkout hook' '
+>  	)
+>  '
+>  
+> +test_expect_success 'denyCurrentBranch and core.worktree' '
+> +	test_when_finished "rm -fr cloned cloned.git" &&
+> +	git clone --separate-git-dir cloned.git . cloned &&
+> +	git --git-dir cloned.git config receive.denyCurrentBranch updateInstead &&
+> +	git --git-dir cloned.git config core.worktree "$PWD/cloned" &&
+> +        test_commit raspberry &&
+> +	git push cloned.git HEAD:main &&
+> +	test_path_exists cloned/raspberry.t &&
+> +	test_must_fail git push --delete cloned.git main
+> +'
+
+... a test that protects similar breakage in the future is also
+excellent.
+
+>  test_expect_success 'denyCurrentBranch and worktrees' '
+>  	test_when_finished "rm -fr cloned && git worktree remove --force new-wt" &&
+>  	git worktree add new-wt &&
 >
-> The range-diff looks good to me. Thanks!
-
-Good.  And as you in <ahDbS+CtwsGx62Q3@nand.local> were already
-happy with everything else in the previous iteration of this series,
-not just the changes the range-diff output shows, but also the
-non-changes from the previous iteration, look good to you ;-).
-
-Let's mark the topic for 'next'.  Thanks, both.
+> base-commit: aec3f587505a472db67e9462d0702e7d463a449d
