@@ -1,232 +1,327 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6BD3D648C
-	for <git@vger.kernel.org>; Mon, 25 May 2026 08:00:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779696014; cv=pass; b=CUeGwodj03EO4RLLYJistYpod9yYMziqvfmN/6+ec2PsbZ6lYwDdAHtSey+/4/BlCoxteu3EestfsD34pZvKh6gsSsItelxpN80FlC2O+GOPozV5PqRibYzUIucSPNq1EfCL6UUUnweTPnFg2xuVKV8+RM/YasjhsTW/TRYxJaE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779696014; c=relaxed/simple;
-	bh=+Bor0oTZcMZHSUL4aPpkV/BBZq3/vtR4Xy+eLeluU5A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QRnKwuOOlQIHC+fsnPZvSKqvbI/hh3/epEMrEV0nsrE6XtgNFoX8o8W9EnR7zw3ggPe1i8pwdbOT8GLIhwNRioUPuUfqTq/vPdcKaLlLAWNvkAtw0+1SRPnEv0W/wj4U96HPw8JkU/LqeEK6n8XxqGMfIP0QhYqh2tN5OogvQgk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Xs0R6RBb; arc=pass smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA773DD850
+	for <git@vger.kernel.org>; Mon, 25 May 2026 08:33:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779698002; cv=none; b=CO27IVswjp4tNVa91vKYkhglhvX64jw1l4n8S1Uc6nVTGyZ9xCHHCKF6hPYv3gf2O9ZI6cwNG5/hF9lD1kDs9f8Qxx9ALQ2qtgIReAbJLfqOwiRyz3GO0qGZnza5LyVCdr0khWShcwWk8H3/D0dR7Cx5xSN+kjit2wOl1VxtIA8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779698002; c=relaxed/simple;
+	bh=+LLkAd3wqmR2GWuOly04Y/iMvi8BDOva03FFx3nYnFs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=LxPKuFfsirMH1xx3YsLBxKPvtWjgpuAfi3DQELlI1vfmT9I/DdL4YhcXQT/Go6cVVu/d8kheRv5YyZ1Cwn3VijdVlFDlEh7RITFNGMGC/SW7MErEkd+a/gVoQqJ/mOfm8kW3ddshJsh/gUJaJ5MbDA+ZKABdZzlZ4CURs4psKjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jlCpy5g/; arc=none smtp.client-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Xs0R6RBb"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7bd4c61765dso89061417b3.3
-        for <git@vger.kernel.org>; Mon, 25 May 2026 01:00:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779696011; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JpZswxycb8JSeqXF52fskM+pld/A0nSZY/pA4VZKTfK1EBGfraX3ec1PPXZuFCKP8d
-         pxKfK4Zy4gQtFjMZcn1u0ppbyBskpEk3G5EwsU8e5h61Spgufp/n97b2aEn8yvT1GhSk
-         uYkL35W7WDYZ/5mJHetr/ZpHBq33dwwswpM7omeq4Ob9/3lMXTPVBtY8KpkcfUU24aJf
-         Z6GC+RQPQ/9OTKopF99fBOZ7ZRs4A4ViMe9XzTk2IJl/nFzHZoBWMtylqFUmIoNtL54h
-         XaunnW14zi7rVlHvAohW6/EH1u64z1MXHid/qJF07Bx2nxdrMDYJSFnvQ6R4y2ST/kWs
-         AmIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=z1vDQphCE6/51TShD/3e2yhnnZWgll00nzkrbcE/PIc=;
-        fh=e3wq8csdHGoBhTCTlkFhUgBqLQINJ+TRyNE5GqYCqPE=;
-        b=X5Gcc/Xzer0evKnfUzRb5yrIPOMfPjKlHl9qwImGHtRvUrxa0LKq/NbQnqgyPuX6zE
-         rXtmRsFZR3N2Sb50Rx0ucX3rzam5FIShvC/Jh+YiB8MgVaOL9wSaDu3Ewfi7XUkRx5Ax
-         fvTY99izKbsGKyxWMHJkTvPlwK/fus1LxBMYN4KWR/baAGPODNMBF5juywjtkN6+dH5m
-         dVA4d84pSrOFDHuqZ/wFAoWfp37B7Sb0DgjrxZnCWCNHWq3+h9zK1HGy71W2fvoqpV22
-         Zo4YgKFwUPE39ILfwhdkO3TzVM2hioyqK9RcrJ4J08afwhAw58EE5iCFtPL6YQGyHWmy
-         dpsQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jlCpy5g/"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-2ee990e8597so22970760eec.1
+        for <git@vger.kernel.org>; Mon, 25 May 2026 01:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1779696011; x=1780300811; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=z1vDQphCE6/51TShD/3e2yhnnZWgll00nzkrbcE/PIc=;
-        b=Xs0R6RBbb6G1hdtZgJpG40iJJCwZDghbkId7tW4ADKSSPxxaDVwYBf9HLvFUFtruzn
-         nP9LyOj5X8KXSmm5jmIIrDliLwonVYlAPxH6QF8Cp8rgN9Al/DjY2Cs8OiXPht3q6L/7
-         bvmS7jk/UxC4TUvTS0hcmjLWIkXMj3y6b7ZOI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779696011; x=1780300811;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779697997; x=1780302797; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z1vDQphCE6/51TShD/3e2yhnnZWgll00nzkrbcE/PIc=;
-        b=WJlb+deGY3hqUXkIqTIyQy7CQ/azJx2TRVdLMU46Q23tPisHOPl+SW+rwtISI0/55K
-         wq6qs2ZQ4wSfZr9EYYr43p71pwCRRyvTh8gY+KNMtMOnvEzh7os9n2+SaEGwUVxD8D9A
-         0dBwXlify9s46hPAAf/ES8pCZXZPXD2Pl1q9Ep22XfStTf6wXHu5G4TykM96lcK4oGEV
-         cngfi6d9l/CRbBPpLzpEGBm/m8cUe8WCOqP+DM2ACRYOthYibYsDG7koQbg4+b+A++QF
-         eUSHRtytv6MMU/k4ZRjZSPAa5RGayOgigbbJglSoHhGjCzWYmd/KKvFb6VMwE5aTuLWX
-         JCBw==
-X-Forwarded-Encrypted: i=1; AFNElJ+Bi5o89PqkrmJJx+efoqiAm5/eFITZPXvULtL5uiL7Iv+Oh9FL/6HRPzQ3UauMQYFyJwA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx8JN4sEiCbQ+PXsNDDrzwTxHnO6v4pE7f5afJ1lIizlqwD8Oyt
-	zCJjRGe2wQVjJxXSAA3XU4pPw1pFdSgKo9nrHs38RW98pKgXnn6PQaESdDJI5OMC++3Eu2mNV1R
-	QXM53Rqa5mwU4q9J7QCtdIe8c4z7Dh2l1sRxDtUjviQ==
-X-Gm-Gg: Acq92OHCaEgg9LS8Pfg8A0BO4+tUgQ2uAQ+2xVEBpIVKHs2BucGlwJWUlRbAkOB5kYb
-	41DbhK+bzTYnlloTvcrxe63y2pcw5MYHLDHh5ttT9OVpHbOewQs2O8MIvBryCSHlFxjP6ZO3NuL
-	qZ080k99DuhlIAJioHurtcd1+qIr2aogVupcjNfRtVNEiM58j8yNQBstgtJE5QrQFxsJCKrwH5G
-	e9dxB4D/agdR4Tqp8IXtTDVl9w8YWhLEms9jxkV5/oDj3ySSEb9+TSPrTAIMWjkBQRJAtpCuuo4
-	j17VWSRs
-X-Received: by 2002:a05:690c:630d:b0:7d0:2b7:6b14 with SMTP id
- 00721157ae682-7d3374b1b83mr149540307b3.50.1779696011092; Mon, 25 May 2026
- 01:00:11 -0700 (PDT)
+        bh=xcerY8479EiRgGz2g1TICXO32Eerqm1KeTujLMvfZRI=;
+        b=jlCpy5g/kLYr66xEnl22/g7/y1Gx2VYDgYfOpQhIeh36/9NMTVq2bIyx60AcUZYAgk
+         9xfIB40HkG0APcsQSxhbRj8YWgIeTc6RJ9B7jon2465M9zYK4iuDi3cv1Xh5RaoPVn7r
+         OWhWcVm6a0ENCCYMYi4jQ+O35/AIgoir2bY5v/KwVm5NcTUhBZdOVeZjBiq2uJNmuHS/
+         EerF/QhCuH1NiqyQGturn/VsQsekFnG2W2rMxjaanmYjEi4PHAFZJJshypuBOc6/g7ej
+         MBg8pySDiwYxX2paoS+wZn/Gazy3mp72iEERmHAflm4P1ULiRLSIzXLs6BDQcNEiO/vW
+         i8Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779697997; x=1780302797;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xcerY8479EiRgGz2g1TICXO32Eerqm1KeTujLMvfZRI=;
+        b=hKMlpZ/Ul0d35VT3eeNkMBZiYPKmnGpz8PkD6FvL6TV8jEWN0IwbHO8nlZvN9MpjAx
+         RIu+YOApjTTlMUnikRL/kdnLUH5B6ncjMoHppstt1TmatCOiHKZKZg4zG2qfWXhHfo1O
+         JMNKprwmrxgz/xqyrXbSZbze/DTIFpvAGMi9E/Qd7uO5/2iWbBuhjGVv2N8lkiDRbmew
+         qfX38ZNGKOmfhAxRuef3Wu2ovbYvWxrUpOvR27mtVsLeQs1U6ylLjEU4GID8ppcVTt+p
+         GUlBFhuotRWqaB0acIThpq+llTwfx6oQaMdyqi5llRVJVJjM7o98BV7ySo/NmTU5mWt9
+         S2Ow==
+X-Gm-Message-State: AOJu0Yx9mH2P1iOC9zJXJdYijtBhoP6RrK6Gq+Pv5nToDdq4DiOE9k4h
+	6KT8WLma0VHzojATMC5GKzZdXo1aDqYLDpVicR0/2tgT72YgzlNXiQBHmDc46Q==
+X-Gm-Gg: Acq92OFvSsM+LwG6DpO8MBrogbNXXkrswX/qi92k0aWLH+3IDjNs6SK0OzjCHPRkOCs
+	jxSuBYrQXDug9SW3O/zS1m0HcOmROG/d0Q7HbRKjfOmoG/2ef+d8+WdOk9Rm4StH30Y6LAgewDG
+	j2KeQ+xctSOWS/r861HX7/oQQ4HAOWct1/NJzU0yLPcxhIWnAsvIB0Lv9pcBKhLGAhHupzQc2Pl
+	QWuYhkvujnyA+xBze2/DsPr3ghK1AwXpQGcCb7patFO+o4Bz8Fu0/9w8MtcBx8Up+3e8vM0ZREi
+	ecJqVdcRIC2ckL7Azy08YoI7t3bZfGgEM5Ex6ctEzmiS8tFln0aoIQsoiBAvTG1qvPa3aqxgocl
+	1KaLZQ2/FVR1j86Ej4hv6xzaqpPuCheKrQ58PWZ/o2rXjGV1u19R1eHFPDJzEtxvW2BLYjebiyE
+	hQp2JgNHRL8EI0Gqz/LPFDgojX+Cb6qq+TWGcNzA==
+X-Received: by 2002:a05:693c:8848:b0:304:59cc:aee8 with SMTP id 5a478bee46e88-30459ccb57emr3331821eec.18.1779697997259;
+        Mon, 25 May 2026 01:33:17 -0700 (PDT)
+Received: from [127.0.0.1] ([52.159.247.178])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30452230f1bsm7142478eec.14.2026.05.25.01.33.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 May 2026 01:33:16 -0700 (PDT)
+Message-Id: <pull.2302.v3.git.git.1779697995418.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2302.v2.git.git.1778935976330.gitgitgadget@gmail.com>
+References: <pull.2302.v2.git.git.1778935976330.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 25 May 2026 08:33:15 +0000
+Subject: [PATCH v3] config: suggest the correct form when key contains "=" in
+ set context
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2124.git.1779644541.gitgitgadget@gmail.com> <20260525064755.GA2737798@coredump.intra.peff.net>
-In-Reply-To: <20260525064755.GA2737798@coredump.intra.peff.net>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 25 May 2026 09:59:59 +0200
-X-Gm-Features: AVHnY4IL_EFOckhlJ0OskQ9sRvmxhGpbd4d8rmHOUGdelo5C6levSEi_uvhP5-A
-Message-ID: <CAL71e4MOH2iPve19dKixLHSgpC3ZAZz59zLWEWRoxW1a7vhMwg@mail.gmail.com>
-Subject: Re: [PATCH 0/3] commit-reach: replace queue_has_nonstale with a counter
-To: Jeff King <peff@peff.net>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-That's an excellent approach! Much cleaner in general.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-I benchmarked it against the counter on a monorepo with wide-frontier DAGs
-(2.4M commits, component import merges). Using merge-base --all to bypass
-the early-exit optimization from kk/paint-down-to-common-optim:
+A user who types "git config pull.rebase=false" gets only "error:
+invalid key: pull.rebase=false" with no clue what went wrong.
 
-               Baseline    Cache   Counter
-    import(A)    8079ms   3686ms    3723ms
-    import(B)    5498ms   3993ms    4038ms
-    import(C)    4350ms   1748ms    1766ms
+Emit a "did you mean ..." hint suggesting the split form.  Restrict it
+to plausible-set contexts ("git config set", bare "git config <key>",
+and their 2-arg forms); explicit "get"/"unset" keep the existing error.
 
-The cache performs on par with the counter - within noise on all three
-cases. No new flags needed, much simpler diff.
-The amortized O(1) is just as good as true O(1) in practice, and it avoids
-the ENQUEUED flag and counter bookkeeping entirely.
+"=" is legal inside a subsection, so only fire when "=" lands after
+the last ".".  When the user supplied a separate value, use it in the
+suggestion instead of the suffix after "=":
 
-I went with back-to-front scanning as you suggested, and also clear
-the cache when the cached entry goes stale. Applied to both
-paint_down_to_common and ahead_behind.
+    $ git config set pull.rebase=false true
+    error: invalid key: pull.rebase=false
+    hint: did you mean "git config set pull.rebase true"?
 
-I can rewrite the patchset with this approach and add you as co-author or
-suggested-by? Or I think I can wait for you to push it yourself.
-You did all the work here, and just didn't have enough data points to
-motivate it?
+Signed-off-by: Harald Nordgren <harald.nordgren@kostdoktorn.se>
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+    config: suggest the correct form when key contains "="
+    
+     * Skip the hint when the inferred value contains whitespace, so git
+       config set pull.rebase=false "hello world" no longer suggests a
+       malformed command.
+     * Replace the inline actions == 0 check with a named actions_implicit
+       flag, simplfied the code.
 
-- Kristofer
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2302%2FHaraldNordgren%2Fconfig-hint-equals-key-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2302/HaraldNordgren/config-hint-equals-key-v3
+Pull-Request: https://github.com/git/git/pull/2302
 
-On Mon, 25 May 2026 at 08:47, Jeff King <peff@peff.net> wrote:
->
-> On Sun, May 24, 2026 at 05:42:17PM +0000, Kristofer Karlsson via GitGitGadget wrote:
->
-> > paint_down_to_common() and ahead_behind() terminate when every commit in
-> > their priority queue is STALE. The current check, queue_has_nonstale(), does
-> > an O(n) linear scan of the queue on every iteration, costing O(n*m) total
-> > where n is the queue size and m is the number of commits processed. This
-> > series replaces that scan with an O(1) counter.
->
-> We faced a similar problem in limit_list() but solved it a bit
-> differently (mostly because I was worried about keeping the counter up
-> to date in all cases).
->
-> It's described in more detail in b6e8a3b540 (limit_list: avoid quadratic
-> behavior from still_interesting, 2015-04-17), but the general idea is to
-> just cache the interesting element we found, and invalidate the cache
-> when it gets removed from the queue or gets marked UNINTERESTING.
->
-> The equivalent code for the STALE flag here is something like this:
->
-> diff --git a/commit-reach.c b/commit-reach.c
-> index d3a9b3ed6f..d1621be89f 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -39,12 +39,25 @@ static int compare_commits_by_gen(const void *_a, const void *_b)
->         return 0;
->  }
->
-> -static int queue_has_nonstale(struct prio_queue *queue)
-> +static int queue_has_nonstale(struct prio_queue *queue,
-> +                             struct commit **nonstale_cache)
->  {
-> +       if (*nonstale_cache) {
-> +               struct commit *commit = *nonstale_cache;
-> +               if (!(commit->object.flags & STALE))
-> +                       return 1;
-> +       }
-> +
-> +       /*
-> +        * This might also benefit from looking back-to-front, since
-> +        * earlier commits are more likely to get popped sooner.
-> +        */
->         for (size_t i = 0; i < queue->nr; i++) {
->                 struct commit *commit = queue->array[i].data;
-> -               if (!(commit->object.flags & STALE))
-> +               if (!(commit->object.flags & STALE)) {
-> +                       *nonstale_cache = commit;
->                         return 1;
-> +               }
->         }
->         return 0;
->  }
-> @@ -61,6 +74,7 @@ static int paint_down_to_common(struct repository *r,
->         int i;
->         timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
->         struct commit_list **tail = result;
-> +       struct commit *nonstale_cache = NULL;
->
->         if (!min_generation && !corrected_commit_dates_enabled(r))
->                 queue.compare = compare_commits_by_commit_date;
-> @@ -77,12 +91,15 @@ static int paint_down_to_common(struct repository *r,
->                 prio_queue_put(&queue, twos[i]);
->         }
->
-> -       while (queue_has_nonstale(&queue)) {
-> +       while (queue_has_nonstale(&queue, &nonstale_cache)) {
->                 struct commit *commit = prio_queue_get(&queue);
->                 struct commit_list *parents;
->                 int flags;
->                 timestamp_t generation = commit_graph_generation(commit);
->
-> +               if (nonstale_cache == commit)
-> +                       nonstale_cache = NULL;
-> +
->                 if (min_generation && generation > last_gen)
->                         BUG("bad generation skip %"PRItime" > %"PRItime" at %s",
->                             generation, last_gen,
-> @@ -1053,6 +1070,7 @@ void ahead_behind(struct repository *r,
->  {
->         struct prio_queue queue = { .compare = compare_commits_by_gen_then_commit_date };
->         size_t width = DIV_ROUND_UP(commits_nr, BITS_IN_EWORD);
-> +       struct commit *nonstale_cache = NULL;
->
->         if (!commits_nr || !counts_nr)
->                 return;
-> @@ -1074,11 +1092,14 @@ void ahead_behind(struct repository *r,
->                 insert_no_dup(&queue, c);
->         }
->
-> -       while (queue_has_nonstale(&queue)) {
-> +       while (queue_has_nonstale(&queue, &nonstale_cache)) {
->                 struct commit *c = prio_queue_get(&queue);
->                 struct commit_list *p;
->                 struct bitmap *bitmap_c = get_bit_array(c, width);
->
-> +               if (c == nonstale_cache)
-> +                       nonstale_cache = NULL;
-> +
->                 for (size_t i = 0; i < counts_nr; i++) {
->                         int reach_from_tip = !!bitmap_get(bitmap_c, counts[i].tip_index);
->                         int reach_from_base = !!bitmap_get(bitmap_c, counts[i].base_index);
->
->
-> I don't have a repo handy which reproduces the problem, so I can't see
-> if it improves things. But if it's easy to do, can you report on the
-> timing change with your monorepo?
->
-> I do think what I've shown here is a bit hacky (just like the
-> limit_list() one), as we are relying on heuristics about the order in
-> which items are taken from the queue. So even if it performs well, we
-> may still prefer the counter version for being truly O(1). But having
-> timing numbers would be useful for comparing the two approaches.
->
-> -Peff
+Range-diff vs v2:
+
+ 1:  40d9eb3e5c ! 1:  6b9d66361d config: suggest the correct form when key contains "=" in set context
+     @@ Commit message
+              hint: did you mean "git config set pull.rebase true"?
+      
+          Signed-off-by: Harald Nordgren <harald.nordgren@kostdoktorn.se>
+     +    Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## builtin/config.c ##
+      @@
+     @@ builtin/config.c: static void check_argc(int argc, int min, int max)
+      +		return;
+      +	if (!value)
+      +		value = eq + 1;
+     ++	if (!*value || strpbrk(value, " \t\n"))
+     ++		return;
+      +	advise(_("did you mean \"git config set %.*s %s\"?"),
+      +	       (int)(eq - key), key, value);
+      +}
+     @@ builtin/config.c: static int cmd_config_actions(int argc, const char **argv, con
+       		exit(129);
+       	}
+       
+     +-	if (actions == 0)
+      +	actions_implicit = (actions == 0);
+     - 	if (actions == 0)
+     ++	if (actions_implicit)
+       		switch (argc) {
+       		case 1: actions = ACTION_GET; break;
+     + 		case 2: actions = ACTION_SET; break;
+      @@ builtin/config.c: static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+       		if (ret == CONFIG_NOTHING_SET)
+       			error(_("cannot overwrite multiple values with a single value\n"
+     @@ t/t1300-config.sh: test_expect_success 'invalid key' '
+      +	test_grep ! "did you mean" err
+      +'
+      +
+     ++test_expect_success 'misplaced "=" in key: value with whitespace skips hint' '
+     ++	test_must_fail git config set pull.rebase=false "hello world" 2>err &&
+     ++	test_grep "invalid key: pull\\.rebase=false" err &&
+     ++	test_grep ! "did you mean" err
+     ++'
+     ++
+      +test_expect_success '"=" inside subsection is valid, no hint' '
+      +	test_when_finished "rm -f subsection.cfg" &&
+      +	git config set -f subsection.cfg foo.bar=baz.boo qux 2>err &&
+
+
+ builtin/config.c  | 34 +++++++++++++++++++++++++++++-
+ t/t1300-config.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/config.c b/builtin/config.c
+index cf4ba0f7cc..8c7ab36fcb 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -1,6 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ #include "builtin.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "config.h"
+ #include "color.h"
+ #include "date.h"
+@@ -210,6 +211,24 @@ static void check_argc(int argc, int min, int max)
+ 	exit(129);
+ }
+ 
++static void advise_setting_with_equals(const char *key, const char *value)
++{
++	const char *last_dot = strrchr(key, '.');
++	const char *eq;
++
++	if (!last_dot)
++		return;
++	eq = strchr(last_dot + 1, '=');
++	if (!eq)
++		return;
++	if (!value)
++		value = eq + 1;
++	if (!*value || strpbrk(value, " \t\n"))
++		return;
++	advise(_("did you mean \"git config set %.*s %s\"?"),
++	       (int)(eq - key), key, value);
++}
++
+ static void show_config_origin(const struct config_display_options *opts,
+ 			       const struct key_value_info *kvi,
+ 			       struct strbuf *buf)
+@@ -1133,6 +1152,11 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
+ 
+ 	argc = parse_options(argc, argv, prefix, opts, builtin_config_set_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
++	if (argc == 1 && strchr(argv[0], '=')) {
++		error(_("wrong number of arguments, should be 2"));
++		advise_setting_with_equals(argv[0], NULL);
++		exit(129);
++	}
+ 	check_argc(argc, 2, 2);
+ 
+ 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
+@@ -1160,6 +1184,8 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
+ 			error(_("cannot overwrite multiple values with a single value\n"
+ 			"       Use --value=<pattern>, --append or --all to change %s."), argv[0]);
+ 	}
++	if (ret == CONFIG_INVALID_KEY)
++		advise_setting_with_equals(argv[0], argv[1]);
+ 
+ 	location_options_release(&location_opts);
+ 	free(comment);
+@@ -1371,6 +1397,7 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 	};
+ 	char *value = NULL, *comment = NULL;
+ 	int ret = 0;
++	int actions_implicit;
+ 	struct key_value_info default_kvi = KVI_INIT;
+ 
+ 	argc = parse_options(argc, argv, prefix, opts,
+@@ -1385,7 +1412,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 		exit(129);
+ 	}
+ 
+-	if (actions == 0)
++	actions_implicit = (actions == 0);
++	if (actions_implicit)
+ 		switch (argc) {
+ 		case 1: actions = ACTION_GET; break;
+ 		case 2: actions = ACTION_SET; break;
+@@ -1485,6 +1513,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 		if (ret == CONFIG_NOTHING_SET)
+ 			error(_("cannot overwrite multiple values with a single value\n"
+ 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
++		else if (ret == CONFIG_INVALID_KEY)
++			advise_setting_with_equals(argv[0], argv[1]);
+ 	}
+ 	else if (actions == ACTION_SET_ALL) {
+ 		check_write(&location_opts.source);
+@@ -1515,6 +1545,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 		check_argc(argc, 1, 2);
+ 		ret = get_value(&location_opts, &display_opts, argv[0], argv[1],
+ 				0, flags);
++		if (ret == CONFIG_INVALID_KEY && actions_implicit)
++			advise_setting_with_equals(argv[0], NULL);
+ 	}
+ 	else if (actions == ACTION_GET_ALL) {
+ 		check_argc(argc, 1, 2);
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 11fc976f3a..4e12b78536 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -469,6 +469,59 @@ test_expect_success 'invalid key' '
+ 	test_must_fail git config inval.2key blabla
+ '
+ 
++test_expect_success 'misplaced "=" in key: bare 1-arg form hints' '
++	test_must_fail git config pull.rebase=false 2>err &&
++	test_grep "invalid key: pull\\.rebase=false" err &&
++	test_grep "did you mean .git config set pull\\.rebase false." err
++'
++
++test_expect_success 'misplaced "=" in key: bare 2-arg form uses given value' '
++	test_must_fail git config pull.rebase=false true 2>err &&
++	test_grep "did you mean .git config set pull\\.rebase true." err
++'
++
++test_expect_success 'misplaced "=" in key: set subcommand uses given value' '
++	test_must_fail git config set pull.rebase=false true 2>err &&
++	test_grep "did you mean .git config set pull\\.rebase true." err
++'
++
++test_expect_success 'misplaced "=" in key: set with single arg hints' '
++	test_must_fail git config set pull.rebase=false 2>err &&
++	test_grep "wrong number of arguments" err &&
++	test_grep "did you mean .git config set pull\\.rebase false." err
++'
++
++test_expect_success 'misplaced "=" in key: explicit --get does not hint' '
++	test_must_fail git config --get pull.rebase=false 2>err &&
++	test_grep "invalid key: pull\\.rebase=false" err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'misplaced "=" in key: get subcommand does not hint' '
++	test_must_fail git config get pull.rebase=false 2>err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'misplaced "=" in key: unset subcommand does not hint' '
++	test_must_fail git config unset pull.rebase=false 2>err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'misplaced "=" in key: value with whitespace skips hint' '
++	test_must_fail git config set pull.rebase=false "hello world" 2>err &&
++	test_grep "invalid key: pull\\.rebase=false" err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success '"=" inside subsection is valid, no hint' '
++	test_when_finished "rm -f subsection.cfg" &&
++	git config set -f subsection.cfg foo.bar=baz.boo qux 2>err &&
++	test_grep ! "did you mean" err &&
++	echo qux >expect &&
++	git config get -f subsection.cfg foo.bar=baz.boo >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'correct key' '
+ 	git config 123456.a123 987
+ '
+
+base-commit: 6a4418c36d6bad69a599044b3cf49dcbd049cb45
+-- 
+gitgitgadget
