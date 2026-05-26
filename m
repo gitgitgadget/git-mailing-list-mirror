@@ -1,80 +1,80 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272093C1976
-	for <git@vger.kernel.org>; Tue, 26 May 2026 05:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763953BFAD7
+	for <git@vger.kernel.org>; Tue, 26 May 2026 05:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779775041; cv=none; b=SgQ1nbx6b24S7mqBbG3FCes5VOg++1Td5+XX8YqA4NVvpKFnGzKPdTLNSSq7+pzSkRTZ2CDVpps1SanyvPiMyCQO0FI1AHloBoG0G19ygZe3A/6bgiZj1v0Dh7eS9BWuMFHWgX2+qHfUK6TjIDp0GTcCz9mNhAi5uin3BXemVNM=
+	t=1779775044; cv=none; b=dG9vrTpXDqK62FD7JaJFy70yUyLKRrojKA7XGKIgjWI6P9ftW1YiAAzB8JzJU2u3t2d6qwXVAu96CtqQ4cfQwjOQy/AGa4CcWNHV29UiuMf5Rsneo0FcFhI7p7MJ/QIVmjWQIMKpwoGRQWUYu5BKeNleQg/t2LOPo14JJHbZrCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779775041; c=relaxed/simple;
-	bh=CDbvr2ibRCNZFdhAU16vtEtOBFO0YaAxApiF9VThXek=;
+	s=arc-20240116; t=1779775044; c=relaxed/simple;
+	bh=mElZI7zMmdm0ASmHE45y2POjw+COlzcT1YEPv0zSHjc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NZWNrD0m4rHfhlW2+jugYZKwpjOTvl0oHr2Nk2KyR1T98G1KLwm6ovxl9JRYMOVH8yUFan85rQLiUzj01MfvdRO1etLtgvARVFoAS6JA06Y8HJoVWcNgGHj70L2BtlsLz4wypw2/5nOUg5psPK63gsM3lSkht05EWIfaoGAUbAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jSGrzRjr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gqWjmrL/; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=lnH6PQ8QwBHLh76W063fsCcMH7416pLPKhRIfKEFSZXg9rRTFJCCpR57Z/QcQy1L2Z3XWMiVuxDCizO1u4+qtY9sPNbsXXX1CuYjVzCSb40uqZGKvTVVbaNMho8ckunUFRDdQIU2y7xiZAGRQ/cqerny0EO3ieVGwqd6A1lRFXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D61DunRP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UGhG4djf; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jSGrzRjr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gqWjmrL/"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 803A97A0112;
-	Tue, 26 May 2026 01:57:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D61DunRP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UGhG4djf"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BAF637A00CD;
+	Tue, 26 May 2026 01:57:18 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Tue, 26 May 2026 01:57:16 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 26 May 2026 01:57:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779775036;
-	 x=1779861436; bh=64fAQ4FOAeFMeo3MBAzrJInYjtdGwr6QTmvIV4MQfAU=; b=
-	jSGrzRjrN09xEyPRHKYNcEVI0r95BYduC2CHLbzBo1w8eo6JWr6zPJF5r09az1Vb
-	zD3TIRoxxo29Ri+tzM9bldOGmTLy/N+FbCnuANbapvD+mue+DntzbqSEMocEG6/K
-	fTpU+XcJczyzv7+N0QvQq4aAMgUxEGwIFRvvatlY78gyx0odYmOSyASAKwQE7twL
-	xIqPMpiB5npVP5zPQVt2mgFiIOBw4foFcl3+KQMPq2PR3M8hsuMvBOGoOv9BJKIN
-	5kaMqz2mIJArCiLBoc79E/H2bTHRkemhH+3pI1F5AvvexEy4SLdONHzHjvTm3Tyg
-	EiuaOAmDbZhRIaKw+sDRmA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1779775038;
+	 x=1779861438; bh=B+NTQbmxWeRK6a/325puout5oQosyo0se0bLv4ELjhk=; b=
+	D61DunRP7TFv94NYpPpm6ssKK9ukQVOM0uO2gzyVAzcxSHXhXNJZ1xaZw4WOsbzP
+	bJQwE7O9rJ6tdR6PtJwNoC+XsQfikkpQQK+OsYpv1uFcow7qoqZPTmR9qS/rZcCH
+	tfgalHVCS2bJw8YyO9XPd7reLt73859kybW6iACD353vHW+WcFKmr4iAeDX2hZZp
+	vJulvnhR0V2k77xnBRv8/VcbPJMgX8Oo8CQnahMcyQSe2O620bgIGgCfbEYDdhl/
+	SZAAE7nHUdWgyU5+eLM1KpsqDhXd/+wZEgzYS6BHfc+/isMiK55zGGVliPVz8Ot2
+	jlKQkQJB+IKwe56IvGnpag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779775036; x=
-	1779861436; bh=64fAQ4FOAeFMeo3MBAzrJInYjtdGwr6QTmvIV4MQfAU=; b=g
-	qWjmrL/pWzubjuVYXdLtMI7IFOTIRL1zn8K64HbPkQwG2lwSx3J4SsKEK2EHNW7M
-	YEnX4lGPjS/iTvU7z2RsdTfPPPNv4DHvj9wqqG4tqZJOrytJMHm7VWr1dSp7x1PL
-	miG+nRzGL6tVAF2z2k92SzHvLSmFhuMQ1jS/HSw0pZSLgHfCFabfSFN7BH1ED+D8
-	Y+82eA/gdutX0A7nf52Xj6o7JDT3LLPhytXVch0RpIhVPzdob1hPYAq+ZhUwJWC3
-	aO9BvUUY8AQbi/8ETP9In31mz+g25PB2pw32zDskgAxEwW6fgx5FFgeMu6Cwbi0w
-	1pAqdJvjbJJlMomhsYlCg==
-X-ME-Sender: <xms:PDYVamzx28LAC_D5QuV0qoBDQor-knIVN9EnBH_6Khle3AWLLf8PnQ>
-    <xme:PDYVapvK7nvVBxBAPQmLjaEY2tFcV7A_nLi64V05yCa5Qp7E0S3Ml4P9x8PXBhih0
-    WK_zqvy2s2RhJjnmhOSQOWGAOKxnaGiy4Sjgj_8afRKgT5ZZSUdMw>
-X-ME-Received: <xmr:PDYValuOFbT4mvRjoRerLHIMPAe-4uHJd2OlMAilAABjLtR8MSXLTAl4_zFTPYxvMPlVw9w5i_iCyROc7-tSNPTSPSzpIgCzgSwAf_WijA>
-X-ME-Proxy-Cause: dmFkZTENDWPlIMehrI0p5s3nwkhC94E3+Vziz2RDPzn8dE1M2zUbfRmFf4UZfcnyV6gcS+
-    CxVZxxC3667h+nAhR6pqpNggMXlVeZYl4wzEaI+cHAj5vReVVsTehM35WU8cFIvMy7RAR2
-    sq0fQV5df/lYICvHIopy1DHD/0D9dQZ+yGFyfl6DCWWUsVYBztrbDdiCcnBYzMAu7+IeCJ
-    IjvSOmbtjdbu+S0zT14pNcqslKmSRNuzmYU57jfQ53GS85OjSTswjgKmMrEguMgZ2qBqI0
-    mjGPmHfCy62a9sJdy7nxYZhhmNtd2tZhnvvTcAoLqkPtY+35gVYtxanNVk7O0FGv4PbDAp
-    mAnaqpT9j6qv7+LI2jWFx//65ow7KyG5DaGMKQ888W03hFKdeCgTS7zhqYXyy3sgZuMR07
-    lB3L0vyQZVxGV3MEeNkU8ZZKK4cOqZsNPWY1dWNMqJ/M6VONpv8TQRQ6DcUCUchMsBO3hu
-    utDAVmU5G4s0t/vruP/6+oDZw08Mid3RyZ/FLN8Bnuk/D7cMYjJxHfQWfUU7VVT/GcqOMv
-    MWrNFEmlWir8PyzIZQtiB6KqMNLi4n3YtjCyXSSB5E9c0GIz4zjnkZQwat2i2ya+Du9sNk
-    W4Frn4WmJvSqGqWd6k20vwYJNZ/6IUlcg3xkTbFEApeGWNA3hsxV9ue9ku+g
-X-ME-Proxy: <xmx:PDYVamPiwRmjUa-OzRLFHA32WRNVMKknPIZHuQpAu0WXUAJyfdZ71A>
-    <xmx:PDYVar3RlyCBL9WuVzE7-cPtU2vgOd1maQq-zOk8JFBZ7eQyOcDqzw>
-    <xmx:PDYVaqOc4ZFsoG4mwD3CGouySNi7sDQ7fRisB4VcyzdyPJxRf69trg>
-    <xmx:PDYVaj0t4f2EL1R9m_K3fP77DeXk2rAmQDxBDXnyxib9rwAxz3zw3Q>
-    <xmx:PDYVah2i4p6KIKLu1H45U4wCYiBuQKSzKQZDeHdSQcb39NYaeir3s7jj>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779775038; x=
+	1779861438; bh=B+NTQbmxWeRK6a/325puout5oQosyo0se0bLv4ELjhk=; b=U
+	GhG4djf2qP957h/ty6pS3psoqVdtT/0j8Wgy5EGYzz9gvsA6dlRjUeI2tr9z1USJ
+	T8GVrUgseYvlql7ZXnxeTyCUrPnGMF0yEvIk1TYxq7VNhJi78sPqhUb4kmpByl0g
+	1yZOe3lcYlx6AlgBHe8GrCexWnlqFzk5XyYyTeyzAXG/KdhgHSGB78szSuRv17A6
+	noFOeRdkeRDB/hDbZr9ObYswx3Uxl1mf+ndXsmKi6SwOPx+rck4Rq19VQNsdMsSG
+	ioiV9+9KZhuRxHUFr8vRGdhPvK3BQgfEIo1/NMak5VdfbBrg/Cgf2pRQbPa4fjal
+	3mhdoSj62tw3dXcC+7FIA==
+X-ME-Sender: <xms:PjYVap9Lx57fWNW5WWnrOmiIzuVUq2kgyoph371HzrXAnjUSzFkvdw>
+    <xme:PjYValIEMvOiJW38wuASnI15sLBxZLygetDS_15oUNDPJJpicYvpcOow2PwpMK4NH
+    Y1x5PnF3vV4FDphf94oSN8SNTnrr9wEqLA3m9hj2d5FGsqYAEgJiA>
+X-ME-Received: <xmr:PjYVakaLQ8iis2zIS_OMYgovWZvsqZ8nzO-xMx96mW34TvmMko0h4ag3k22fMUUBPiUUfAVYYQmC0KwV429cvNMYHJIvky7CqOuUzWvnlA>
+X-ME-Proxy-Cause: dmFkZTGqV+s7APH2UOcyHrhmKoqvwvNlffKSOiADVJ3qphopUXzmz9WB+uhd8kvRj6fGOt
+    PwdV3OwDCIIjXBuAbAJ5aINiGe6qOPkUFokhvK/aggOjrwBNXUFKnxQK+mQlrwGOPxfEqt
+    2f6Zj7uGanL5di5UW+nZQNrz1A3MWRt6vU223vYI3FnPxXG+5+9BuQSKKbHYtLUJlH+oyM
+    a6eQmpjyvNqHfILSoi/RPScZwGwUuNbjPUi9b+0jpNYZwUweMAFUzaDtmG0RCDIIF9bttt
+    RwHuEuLQNnjzjrwyiZKjkmpswsjviFfPY601Oz3Y5htNkxzh92TASzYWAP18jHC/uxM3ND
+    v8/8heasfF6SwQP0Laj9/+Lie8tJnXiecNPa9XO47fjnG+ltK8Ft80gRYrV2Sf74BnK25M
+    +NwbbpkH2i8MM41fp/aY8jyNF+0xo3r3EP7Emyfsn31HX9FyM+ykPocKK8fe11z3RPxSY7
+    eqrOl6kYLwIMs0XSq12zJUnwntKa3xL5NrmwIYvoZEtmW1Vfpe4iEkghnAJv03e3PSb6Dh
+    GiarZv1Rbpk3iYpqnpRXOLwu8Ai4ujpnwkshYwr+Q1OB7P3Jj5uw/mi78d28LtvRb4wVSt
+    DKPpqwC24sNKKQe8T4OjHLHGnpVYh/yfd99UPlQkq5s7wTLXZ8pwtYpdQicg
+X-ME-Proxy: <xmx:PjYVanK0NfUIqG8XLljRjnn8vHnydjsKvEl9_atwBNmtGsNEQlZL4Q>
+    <xmx:PjYVaiC8dUcY3w06J6usI4l63DWa1bAtBhh1e534FOFpHnzVJHXsrg>
+    <xmx:PjYVaspaN2wy1LTgJo6pRxMfjDodf5FxnrKzg0WyzRiY8NZ-QBJDFw>
+    <xmx:PjYVatgtLhs3swzrSqg-EHIiVuND9SI1khKpj-Yl1JYH_npw5wbaIQ>
+    <xmx:PjYVaj9xnVv-OPg8gL_Ck7nWKeeq0v4URmpUu3w6SLywAPXvR2q8ulb->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 May 2026 01:57:15 -0400 (EDT)
+ 26 May 2026 01:57:17 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 941f0598 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 26 May 2026 05:57:14 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 05b87a20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 26 May 2026 05:57:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 26 May 2026 07:57:00 +0200
-Subject: [PATCH v2 5/8] setup: stop creating the object database in
- `setup_git_env()`
+Date: Tue, 26 May 2026 07:57:01 +0200
+Subject: [PATCH v2 6/8] setup: stop initializing object database without
+ repository
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260526-b4-pks-setup-centralize-odb-creation-v2-5-2fa5b385c13e@pks.im>
+Message-Id: <20260526-b4-pks-setup-centralize-odb-creation-v2-6-2fa5b385c13e@pks.im>
 References: <20260526-b4-pks-setup-centralize-odb-creation-v2-0-2fa5b385c13e@pks.im>
 In-Reply-To: <20260526-b4-pks-setup-centralize-odb-creation-v2-0-2fa5b385c13e@pks.im>
 To: git@vger.kernel.org
@@ -91,155 +91,86 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-In the preceding commit we have stopped creating the object database in
-`repo_set_gitdir()`. But the logic is still somewhat confusing as we
-still end up creating it conditionally in `setup_git_dir()`, which is
-called multiple times.
+The function `setup_git_directory_gently()` is responsible for
+discovering and setting up a Git repository based on various environment
+variables and the current working directory. The result is thus a fully
+usable Git repository.
 
-Drop the conditional logic and instead create the object database in all
-places where we have discovered and configured a repository.
+One oddity of this function is that we may set up the object database
+even in the case where we don't have a repository, namely in the case
+where the `GIT_DIR_EXPLICIT` environment variable is set but points to a
+non-existent repository. If so, we call `setup_git_env_internal()` with
+the value of the environment variable so that the repository's Git
+directory is configured, even if it points to a non-existent directory.
 
-This leads to even more duplication than we already had in the preceding
-commit, but an alert reader may notice that we now (almost) always call
-`odb_new()` directly before having called `apply_repository_format()`.
-The only exception to this is `setup_git_directory_gently()`, where we
-also call the function when _not_ applying the repository format. This
-will be fixed in the next commit, and once that's done we can then unify
-creation of the object database into `apply_repository_format()`.
+Historically though, this function didn't only configure the repository,
+but also initialized the object database. We retained this behaviour
+from a preceding commit, even though it really doesn't make much sense
+in the first place -- there is no repository, so we don't have an object
+database either. There seemingly isn't much of a reason to construct the
+object database, as we typically won't try to read objects when we don't
+have an object database.
+
+There's one exception though: git-index-pack(1) may run outside of a
+repository, which can be used to perform consistency checks for a
+packfile. The code path is _almost_ working: we already know to call
+`parse_object_buffer()`, which can read objects without an object
+database being available. And that works for all object types except for
+commits, because `parse_commit_buffer()` calls `parse_commit_graph()`,
+and that function doesn't handle the case where we don't have an object
+database.
+
+Fix this instance to check for the object database instead of checking
+for the Git directory having been initialized. With this fixed, we can
+now stop constructing an object database completely.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 37 ++++++++++++++++++++++++++-----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
+ commit-graph.c | 4 ++--
+ setup.c        | 7 +++----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
+diff --git a/commit-graph.c b/commit-graph.c
+index 9abe62bd5a..0820cf5fb8 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -740,13 +740,13 @@ static struct commit_graph *prepare_commit_graph(struct repository *r)
+ 	struct odb_source *source;
+ 
+ 	/*
+-	 * Early return if there is no git dir or if the commit graph is
++	 * Early return if there is no object database or if the commit graph is
+ 	 * disabled.
+ 	 *
+ 	 * This must come before the "already attempted?" check below, because
+ 	 * we want to disable even an already-loaded graph file.
+ 	 */
+-	if (!r->gitdir || r->commit_graph_disabled)
++	if (!r->objects || r->commit_graph_disabled)
+ 		return NULL;
+ 
+ 	if (r->objects->commit_graph_attempted)
 diff --git a/setup.c b/setup.c
-index 3bd3f6c592..0dc9fe4565 100644
+index 0dc9fe4565..4a8d6230b1 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -1035,8 +1035,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- }
- 
- static void setup_git_env_internal(struct repository *repo,
--				   const char *git_dir,
--				   bool skip_initializing_odb)
-+				   const char *git_dir)
- {
- 	char *git_replace_ref_base;
- 	const char *shallow_file;
-@@ -1053,10 +1052,6 @@ static void setup_git_env_internal(struct repository *repo,
- 	repo_set_gitdir(repo, git_dir, &args);
- 	strvec_clear(&to_free);
- 
--	if (!skip_initializing_odb)
--		repo->objects = odb_new(repo, getenv_safe(&to_free, DB_ENVIRONMENT),
--					getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
--
- 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
- 		disable_replace_refs();
- 	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
-@@ -1072,10 +1067,10 @@ static void setup_git_env_internal(struct repository *repo,
- 		fetch_if_missing = 0;
- }
- 
--static void set_git_dir_1(struct repository *repo, const char *path, bool skip_initializing_odb)
-+static void set_git_dir_1(struct repository *repo, const char *path)
- {
- 	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
--	setup_git_env_internal(repo, path, skip_initializing_odb);
-+	setup_git_env_internal(repo, path);
- }
- 
- static void update_relative_gitdir(const char *name UNUSED,
-@@ -1089,7 +1084,7 @@ static void update_relative_gitdir(const char *name UNUSED,
- 	trace_printf_key(&trace_setup_key,
- 			 "setup: move $GIT_DIR to '%s'",
- 			 path);
--	set_git_dir_1(repo, path, true);
-+	set_git_dir_1(repo, path);
- 	free(path);
- }
- 
-@@ -1102,7 +1097,7 @@ static void set_git_dir(struct repository *repo, const char *path, int make_real
- 		path = realpath.buf;
- 	}
- 
--	set_git_dir_1(repo, path, false);
-+	set_git_dir_1(repo, path);
- 	if (!is_absolute_path(path))
- 		chdir_notify_register(NULL, update_relative_gitdir, repo);
- 
-@@ -1879,8 +1874,15 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
- 	}
- 
- 	if (is_git_directory(".")) {
-+		struct strvec to_free = STRVEC_INIT;
-+
- 		set_git_dir(repo, ".", 0);
-+		repo->objects = odb_new(repo,
-+					getenv_safe(&to_free, DB_ENVIRONMENT),
-+					getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
- 		check_and_apply_repository_format(repo, NULL);
-+
-+		strvec_clear(&to_free);
- 		return path;
- 	}
- 
-@@ -2032,13 +2034,19 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	    startup_info->have_repository ||
- 	    /* GIT_DIR_EXPLICIT */
- 	    getenv(GIT_DIR_ENVIRONMENT)) {
-+		struct strvec to_free = STRVEC_INIT;
-+
- 		if (!repo->gitdir) {
- 			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
- 			if (!gitdir)
- 				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
--			setup_git_env_internal(repo, gitdir, false);
-+			setup_git_env_internal(repo, gitdir);
+@@ -2043,13 +2043,12 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+ 			setup_git_env_internal(repo, gitdir);
  		}
  
-+		repo->objects = odb_new(repo,
-+					getenv_safe(&to_free, DB_ENVIRONMENT),
-+					getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
-+
+-		repo->objects = odb_new(repo,
+-					getenv_safe(&to_free, DB_ENVIRONMENT),
+-					getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
+-
  		if (startup_info->have_repository) {
  			struct strbuf err = STRBUF_INIT;
  
-@@ -2048,6 +2056,8 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 			clear_repository_format(&repo_fmt);
- 			strbuf_release(&err);
- 		}
-+
-+		strvec_clear(&to_free);
- 	}
- 	/*
- 	 * Since precompose_string_if_needed() needs to look at
-@@ -2796,6 +2806,7 @@ int init_db(struct repository *repo,
- 	int exist_ok = flags & INIT_DB_EXIST_OK;
- 	char *original_git_dir = real_pathdup(git_dir, 1);
- 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
-+	struct strvec to_free = STRVEC_INIT;
++			repo->objects = odb_new(repo,
++						getenv_safe(&to_free, DB_ENVIRONMENT),
++						getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
+ 			if (apply_repository_format(repo, &repo_fmt, &err) < 0)
+ 				die("%s", err.buf);
  
- 	if (real_git_dir) {
- 		struct stat st;
-@@ -2816,6 +2827,9 @@ int init_db(struct repository *repo,
- 	}
- 	startup_info->have_repository = 1;
- 
-+	repo->objects = odb_new(repo, getenv_safe(&to_free, DB_ENVIRONMENT),
-+				getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT));
-+
- 	/*
- 	 * Check to see if the repository version is right.
- 	 * Note that a newly created repository does not have
-@@ -2879,6 +2893,7 @@ int init_db(struct repository *repo,
- 	}
- 
- 	clear_repository_format(&repo_fmt);
-+	strvec_clear(&to_free);
- 	free(original_git_dir);
- 	return 0;
- }
 
 -- 
 2.54.0.926.g75ba10bac6.dirty
