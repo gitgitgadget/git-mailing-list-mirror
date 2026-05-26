@@ -1,68 +1,68 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CBC400E15
-	for <git@vger.kernel.org>; Tue, 26 May 2026 16:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D084028DA
+	for <git@vger.kernel.org>; Tue, 26 May 2026 16:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779814058; cv=none; b=UyyXpafzaQnzEFcKNsCL8uQ4ecHprF7vY3nj7OpW/rGhHabAkJ262tDHY9d3yD3TiUYeD6w7HGYbvi9NNRHTFnvHa89YjCpjD2MAR3AaxTZuixdlx2fzmgDwhKrRo/8Za0sixHysWrrQfreleoIWSFZoO2EQavgR2w9n8KNrvVs=
+	t=1779814059; cv=none; b=poCmO4ASLyoT9OAsNiSX5/VaKmeKLSLNYOUezFXoxL41KPF8tYICDh8p11dalXAFehEhqGFVTI26lMcyeveYGQSELD193UmdDNqXFFE5jhdjO0hVyZ6Z0ITM05/DY8fb4BlxNZRHKUS1PahVh4DNgT+ASQDsELLQJCjO4RzEufE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779814058; c=relaxed/simple;
-	bh=/zjBgBHdAARG7uqMpAY0So4yfznH9j0s4n3AcEGkNoY=;
+	s=arc-20240116; t=1779814059; c=relaxed/simple;
+	bh=yoDQ4w6884OK4PP+6lZSw5e14XDvg1K6BWNpTlh3jDI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=adT7vn7NO8QMUUSi71Mbe8SGpMOSGjY8g8n9Fso5kFwDYVwkBoOONk46sqCVgx+Xznf67UHUh/yv9q3M+UkCGQtozU/8mBscPb13YLwszzqRp6FSwmAOXZiAiuNj8EonshTL4Ua5vGCvAVWpKzP3Qz8f1bcXZsRtz3GngOP6+10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OsgYZvfH; arc=none smtp.client-ip=209.85.219.52
+	 MIME-Version:To:Cc; b=cJw2IJlu0I2jJcolhC2C+W8Iq2rtFG5EoHx8FfbnPuAcTccWW6ZktKn2uv6NHgv41/fd/QLYxcu6WcQuy+ipo8yvlF+nEjJx15XL90KJlOoeg43XyyRp6x8U3SsNIz9C4Dpu6WQl5SoggrJ7HeOYNBiCeRqVG9QPt4GK39i175A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+1Aru3J; arc=none smtp.client-ip=209.85.160.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OsgYZvfH"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8b6dd874471so160528216d6.0
-        for <git@vger.kernel.org>; Tue, 26 May 2026 09:47:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+1Aru3J"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-516d6402264so30250291cf.2
+        for <git@vger.kernel.org>; Tue, 26 May 2026 09:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779814056; x=1780418856; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779814057; x=1780418857; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cCqirxs1wxfcwwNqmlu7KuKF+9ohCCmzW3dhfSfA5Z8=;
-        b=OsgYZvfHxUQHVx8Y6VvwyEfbTv4frM7gMrPYdi3+l+aio3KgmZBcarYeomY1fJ8HHr
-         UyuGWfwW8G+CmNINGeE1VfqiepMg7RVlo4af5vblWkc1rwQxqRAeQbPkyJfJt1ouDzn0
-         6rCP0k1RMLQHCMrta2i5dDIX1pTu6/finDk9bAQH3Zf7GwtXkVH7ymdqOgl88FiDRJ68
-         lBVD8ZhBKzx9pwnSxP/kpdboyncfFWH7vqNmeFjHhhVgxIN/oucI372MW/0CSsVFoex7
-         Qt+skqUnU5KLNGV5zM4p8XAAzi/+uAdo1I3cDSP3X0Iv7zF7ispnBIRPOyh7S3AL0UaV
-         GCYQ==
+        bh=xIWFayKHf4AOv2QLTRTpiJlLuaJ91sKfzwoT9NgL7Cw=;
+        b=B+1Aru3JJebjej36M4m40TASi80k0yNiCcHedakd/J4VDad7E0TnkXkTkloQsEe9wT
+         6AJhjvtmZmKIdKo4auqYRsVOaeiuB1F1mxbsjowx+4nZDNgJyjxJAKVwIAcTnujgpmwr
+         WKcZnxv+nHFNVc5vWPWnASks3/pJMF7D3fLf2CdYCnUx8dvW45CbJnnNnP00Lp7l7OvE
+         yXRbNrucivR22oghQYskGhxXkzuaXcw7+ptO//KCipMVSreIs43rQnK9zcCQKBRnSdJB
+         8J1dNkTAubl9JODKQL9WXfOV3A3dFoE6fs/QZZgYNgx21MypxfTMubxR5EoMLiNdmDPa
+         ZlMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779814056; x=1780418856;
+        d=1e100.net; s=20251104; t=1779814057; x=1780418857;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=cCqirxs1wxfcwwNqmlu7KuKF+9ohCCmzW3dhfSfA5Z8=;
-        b=TtnX6b7jswRhQTUsuC3bIOpxGqFdrbppoV1bO2pXIu+detMrWhRUv9hCJ9VHqBvUda
-         rsmQSEoNEoXqCBV/zGhknhTuD40cgsGv5rdh3Iiz5/IXHcsI7xJHp7Fe8rhN7Crda3Rh
-         6TNksOJmj0Z0RQ7G041dazSchjEnKwcPebJDM8yR80pG2TyEYYANe7fd+it2JlaBlHDX
-         XEBBV3a0cMifaxW6k0wH9+LpRqyFkceWhmvPtWEAEUkxMWMPaFd9HZUqETHBkoXfduxa
-         rSzcOQGZf5Nen+9SRIFbAyzanfPWb9U+dP+Gu2dqZqYppHmMXpVRChIA4Qn1tRrhufbX
-         oa4w==
-X-Gm-Message-State: AOJu0Yza9wM6L4CEj63PsOG++ig2v+qkjsdeoSX+7hAla8W5SDFgAkWp
-	s0+dtsaj632f+Hn4WhEY6LomtN9jA1EsUEhayxOobwz6w2GPt0pGwLDpk1Hiag==
-X-Gm-Gg: Acq92OECaFwbuEPko6ivkvKb1HmRIari9B8lynacLJYUhGcyEWMV//Xg0ej5i6xhil7
-	pz/61Nun7jpBs9e81np3zEPOGBtVpTj5U6z4RO8cAclGhV7hI2mTCC6KH2bRwGUzxc2gTylQ7fO
-	pauuXcHRvi5KjsBHR0x9gU5rUpQT+RkwqowvQxISKlXJpUcp/TtoKyz1+vkOT5m2zcrLhyHXVbe
-	KsnwWr9r8PDxeMltvRYvJ/6KsFYcupul9qZOcaRuHG74BaeusbEiS7crBKLu0kgCqsCsWhIMN/3
-	6Lb5c3qHgl1gJpwvst8pS6YiIJSjL9qhYHGhY332p6SUcNm+69itGQld/awC2jxQQx8AuCU3o8c
-	ECVaLn2dj5i1+/uT2qmF9jWDVhNrpEXWiR3gMXUCdOn8/cfDLHAdw/jP51lP/M5TGxGfUjAjDuB
-	z5iA5naRdOjRK8tM+yEqEtCTE=
-X-Received: by 2002:a05:6214:5086:b0:8ca:7f:89b1 with SMTP id 6a1803df08f44-8cc7b5a2b1bmr306790816d6.12.1779814056128;
-        Tue, 26 May 2026 09:47:36 -0700 (PDT)
+        bh=xIWFayKHf4AOv2QLTRTpiJlLuaJ91sKfzwoT9NgL7Cw=;
+        b=MbsFKdz+KCtK9g600p7M1Gahh7StFpGKTQ5rMN6LENRS4aDxUm16W8AEYDaIX4LL8A
+         QkZ3nqiEGbWiD20MSueUc523aVTjN13BpC5NqAVpw31hVFhVhn+q1RBvnzBLiJdHYNRT
+         68pHgUsN6Mc2LTJXZmoVClpTtKQuQlNXkeFL5GSbFT+9MAicHP97zkXy0KOmTbgDC/tc
+         ClfWck7e/MvUCC76xppryB44rPMmshM36HXL7UDtrEexyx/9WFfzxYScTnUJy5/lImPj
+         Kd6g0t0le0rJANHdsPrCEcFFIb8VxxDS8IEHMVDwuvGXp56098gUbUN0M4WI87sLLbhm
+         Xenw==
+X-Gm-Message-State: AOJu0YwAzHbPkfTCZgmI8cK+qWizKXRB0xvR3wl4L4ZUez0kQD/XsGnI
+	IJxrbLREx2+wyXf3J3szWosIVMznmWi5LiM1Qut5ls8ircRBRH/XOJdI6iDizg==
+X-Gm-Gg: Acq92OEDx8zPFdCxOwFwWQ4G1LpDRwzzsanKRZjabQtubDuyw9gEKDeBfO4kAVEdawG
+	YnEbUMComlZbN3L9o4HNj4tGH0ItcCzFdDqSZUS/R+JnMa6ArwGUGRz7aAhyL+NIKBr10hyedHF
+	ciCFgDOYkTA/z2P9crzq1bKGPLwXpih5KIsapDhB1rCvhnsfDjuWuxAn6984ErD3EGDRSGzl8/k
+	3DPmkdKk0Mq0BIfCl47xBYGIyEX/nf/H1UjHndFkJy2OLKqHkIcvD6pHis2Bl7zn7mwTaWjr9op
+	SVM1h6TSEEe5fC8sM2Q2/uG4NuMbSoVL7USsbIPomsCjWLTnlft/LBHFguF9NTwm96KJ66FHzuB
+	iNpm7y5fEnT4u6XiAqpxhh8rK9QbeReuHdr+zQwA1Rwb7gpcK3SSGip/tmuBNIadeg6RB+RCie/
+	MS1hOS0zPdLbB2Kp0IuE7DriI=
+X-Received: by 2002:ac8:5d04:0:b0:50d:770f:ad23 with SMTP id d75a77b69052e-516d42ea812mr273570251cf.26.1779814057119;
+        Tue, 26 May 2026 09:47:37 -0700 (PDT)
 Received: from [127.0.0.1] ([20.55.87.56])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80deb2a2sm152161976d6.15.2026.05.26.09.47.35
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80dcf4a9sm144140136d6.2.2026.05.26.09.47.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2026 09:47:35 -0700 (PDT)
-Message-Id: <6cb8924a2740a676f26ee262f35908d03d180b73.1779814052.git.gitgitgadget@gmail.com>
+        Tue, 26 May 2026 09:47:36 -0700 (PDT)
+Message-Id: <652381886f8cf839d533b9322c1c5e5983f3ffe4.1779814052.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2122.git.1779814052.gitgitgadget@gmail.com>
 References: <pull.2122.git.1779814052.gitgitgadget@gmail.com>
 From: "Evan Haque via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 26 May 2026 16:47:29 +0000
-Subject: [PATCH 3/5] git-son: add to command list as mainporcelain
+Date: Tue, 26 May 2026 16:47:30 +0000
+Subject: [PATCH 4/5] git-son: add documentation
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,28 +78,100 @@ Cc: Evan Haque <evanhaque1@gmail.com>,
 
 From: Evan Haque <evanhaque1@gmail.com>
 
-Register git-son in command-list.txt as a mainporcelain command so
-that it appears in "git help" output and is discoverable through the
-standard help machinery.
+Add a man page (git-son.adoc) documenting the synopsis, options, and
+usage examples for the new command. Register the page in
+Documentation/meson.build so it is built by the meson doc target.
 
 Assisted-by: Claude Opus 4.6
 Signed-off-by: Evan Haque <evanhaque1@gmail.com>
 ---
- command-list.txt | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/git-son.adoc | 64 ++++++++++++++++++++++++++++++++++++++
+ Documentation/meson.build  |  1 +
+ 2 files changed, 65 insertions(+)
+ create mode 100644 Documentation/git-son.adoc
 
-diff --git a/command-list.txt b/command-list.txt
-index 21b802c420..880177e0fd 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -186,6 +186,7 @@ git-show                                mainporcelain           info
- git-show-branch                         ancillaryinterrogators          complete
- git-show-index                          plumbinginterrogators
- git-show-ref                            plumbinginterrogators
-+git-son                                 mainporcelain
- git-sparse-checkout                     mainporcelain
- git-stage                                                               complete
- git-stash                               mainporcelain
+diff --git a/Documentation/git-son.adoc b/Documentation/git-son.adoc
+new file mode 100644
+index 0000000000..17ec992bfd
+--- /dev/null
++++ b/Documentation/git-son.adoc
+@@ -0,0 +1,64 @@
++git-son(1)
++==========
++
++NAME
++----
++git-son - Create an independent child repository that knows its parent
++
++SYNOPSIS
++--------
++[verse]
++'git son' [--inherit] [--branch <branch>] <name>
++
++DESCRIPTION
++-----------
++
++Create a new independent Git repository inside the current working
++tree as a subdirectory named `<name>`. Unlike a submodule, the child
++repository is not tracked by the parent; instead, `<name>/` is added
++to the parent's `.gitignore`.
++
++The child repository is configured with a remote called `parent`
++pointing back to the parent repository's origin URL (or local path
++if no origin is set), allowing the child to fetch from the parent
++at any time.
++
++OPTIONS
++-------
++--inherit::
++	Fetch the parent's history into the child repository at
++	creation time. Without this flag, the child starts with a
++	single initial commit.
++
++--branch <branch>::
++	When used with `--inherit`, check out the given branch from
++	the parent instead of the default branch. This option
++	requires `--inherit`.
++
++<name>::
++	The name of the subdirectory (and child repository) to create.
++	Must not already exist.
++
++EXAMPLES
++--------
++
++Create a simple child repository:
++
++	git son my-tool
++
++Create a child that inherits the parent's history:
++
++	git son --inherit my-fork
++
++Create a child starting from a specific parent branch:
++
++	git son --inherit --branch feature my-experiment
++
++Later, from within the child, fetch updates from the parent:
++
++	cd my-tool
++	git fetch parent
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index f4854f802d..1ae7e5f644 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -139,6 +139,7 @@ manpages = {
+   'git-show-ref.adoc' : 1,
+   'git-show.adoc' : 1,
+   'git-sh-setup.adoc' : 1,
++  'git-son.adoc' : 1,
+   'git-sparse-checkout.adoc' : 1,
+   'git-stage.adoc' : 1,
+   'git-stash.adoc' : 1,
 -- 
 gitgitgadget
 
