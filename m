@@ -1,146 +1,142 @@
-Received: from fout-c4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A65305679
-	for <git@vger.kernel.org>; Tue, 26 May 2026 02:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADD13644DE
+	for <git@vger.kernel.org>; Tue, 26 May 2026 02:54:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779762385; cv=none; b=n53FFk8z7MdxGcdmIKuAURM2W2JIYfZE1978/Qjhk4HFudIjOAv/q09tzDR0QM164jdNidbnHj+ylQTAF8Gh3Ak9tNherbq3P+jW0byjrHn7wq1LfV9r1lljyO4Y45s69XWMjZFQYdYzB8rexuKUQ4wJ/26SJIVsuOFaTuC3Cl0=
+	t=1779764094; cv=none; b=CP+2e8oehWeUFKfvPAosaRE+bfNiL41/PflUC0tX8ohbr3xZE8QSZdo3NnJHHhaXlQnySopEFjfrEE4CiF4h2GAylXmofWxOTQctusNb9JCFAS/YwMLk+CWFu/JWeoaW5Wi0Likp9YvzE22fm5oPz57U7SwfgRWCUfc1c171Y80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779762385; c=relaxed/simple;
-	bh=F+D+dYMTOpu4JdXiqg8uuuX1PrjP6SRi+mHzsP9SxWA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kc+PkjSe7JdZMOPo8B9QqB4T+DvU05fOt/7Xi3kkrXDdJFRkvuki29oC3uSsBfErpqaTETFEJF/Ovc0n0mdID67TXjcfKmH2VnGwxKR3SnHPHsPPhVXDZKvznXrxI99zM0dZ12U+Zt4yj9I5KO9K3LIh6GWSPvLctScl+A2Ft8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=abbhb1cz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B2ZDaTPZ; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779764094; c=relaxed/simple;
+	bh=bfx3Qs2pnXHeW8fkyMz3RwLjQ5LSL6cgX2Aai310ENg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pz9yNN9Ptq6/MB+3hM6l7zYnwCggVcWe43vKR40bUeNXOZSVqaNDuzFyhcf8Z/IbCuIKQAxcusH8XRkl0UcdQKuqvLsJ+GGxwP2HRmOeNsjHhMO2Sfak86r8SUTRnf8bxRCbvOSN/NMlTB7T0tT3r9nwEM6g+mQfEjCb7oUoJPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=beQWUWKT; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="abbhb1cz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B2ZDaTPZ"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id E7EA31D00104;
-	Mon, 25 May 2026 22:26:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Mon, 25 May 2026 22:26:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779762382; x=1779848782; bh=5SUBh33yia
-	znv6mQ7zPcaJ9WIz0U1EvsGq4hbxLu/e0=; b=abbhb1czxoGN/OBGPUDSw/M/Wp
-	sQKLhRUCIs8IH2ef8cy1u5FmcXrgZUtxD4Z+F9FT56LrZXkIwtoAv+SJd/dps0Q5
-	oZggrtrEEp+guF1legf+iA5LU1IqovD+Y8yQ5O/5xHqp+47QoUv4ebtVHxzUBK2V
-	ji0dci1w1tCAqOhkbQdOpZcKW1CPj8dBEJ77PUoBW1l2EAZKHByd+JwXIIigxtET
-	Kd7eIJQo+N09ZDW9EMujg2KF8+VuNorAJMuSw+mad4BJbdPHcFaoOBWb6JVdrq57
-	m1+4zCCavVRHg8FklyrdnggMxQbgPazXbx2yDp9Fd3Dl984VciDryv8WG/Fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779762382; x=1779848782; bh=5SUBh33yiaznv6mQ7zPcaJ9WIz0U1EvsGq4
-	hbxLu/e0=; b=B2ZDaTPZeLW1wk2DJQ2LK3weGPzqwQvYZIkIU5SbBU1RElZBfb/
-	OX77szkFMwIqM3xfpb0vbPs3ckE1btpX7Q8/3lt4uvl5s0vZyjvh+sOj4FGnoKsH
-	p7H31mT6l07lQm+U3EcR4n+wBgbwApLV6VdD1Zs1Mekg9sYFTIEayECjV5LPuPww
-	QThZYtvyPPuNBM7gKu3Z9Y3exX4r71m7hgbraic6tBGwSOVJx2JD/qd8X8a4Rsp6
-	ehcEUt2QYXe95horDyYvi3q1bu72I7BwdUYKXVuTBcxypBOSEQagjdV//CWRtRKO
-	S0BRrfWAPgDvbdVwYQHovi7CLJg2l4xnJcA==
-X-ME-Sender: <xms:zgQVaieRe4HSOxw2Cr3GpWwWLG-WV8tBsMjCwGQZEfbp29U8NoyuIQ>
-    <xme:zgQVajOYKCuAM6OP9FsG_v6JvDwuMLyaOVD_ZQYQHGsfnhHH2-KFWmCwNsUsQ3p4u
-    5Bz2rbg1vTn4mOHaY8jD-WrKaA_rf0r74B37ag3hxcdQbxn1rZC>
-X-ME-Received: <xmr:zgQVaoit9M9FcCu7MzW4Ohlx-nR3kM6rKVIVls3_e-zOSGi4Cs6KSZQXHfUQ1PlA9bObZeNIlFH3uRZnjaVAU3aGoSpFJsSc33oX>
-X-ME-Proxy-Cause: dmFkZTFjRp2NkHc0cm5BP8RcXvyH337Cd0NlLw9Ayu6d3vdx0RD++lqfXyfKrqD508FJXx
-    wR2LXwxlOq/M1MujkYCvxSr2o3U64iz4gONbESkm8AB2viEf4aD7GDO2RIlt7hbiwpT1Ol
-    HSsAJbpnSXDFOp2Y8wPJPAqqyS6UzYPwGWriomY/T3R2f9aHOe/qVV/KUQbyyJkz8Cm4Bs
-    QkmchfGwlmQBsUHtCZJWqN82MLnPSqxcF1lhJiZqKR9qeleveyvBnAxf0F5nt78UOUm62e
-    v95I+1+d5NZcqvrFIyU47Fj6b0gDl4nDPcLcEqPuWoatsnrwcQpUR0UgbCvI3PPxzIrSbu
-    52Q6muiamHQX9IEmYBQFFpocqyFG+7dRc1IGIX9s9gj+QWWTnjoI1W/nS/SYwLooIpvX7/
-    fzQf0ozOZGaAUjvCzDt0Yi3/4qERB0Tjf4/qUrT639FLw+AlOiNOwa/C08AymOOj68W9LE
-    x2HYJYR+lukMd9Kp11RquzKFDEUQ/NF0x6jTpGAfujdVWdzZ6MAOrlXzBIyATcjDk21iEf
-    URM0IMng4zEBDqZD5MTcmUJGW1n6ucRlgIJqB174hLD9Hdr5spLdFZrsDWnWGMFVhPsCvc
-    IzaQ3f/WA+Exc3ky6h4H7qoCHg8qIHK5ocp+uXP0nFXvaEMdyzwpr8Sbcz+A
-X-ME-Proxy: <xmx:zgQVau0gliHsI7hPBMSFXFoqn9M-5uG2ctoK92tYk-ONNI3LakZoGQ>
-    <xmx:zgQVaqgoPryE0rw160DH93_nmiHrUoxFVMI7omFj9a8w_uiDN9ciSA>
-    <xmx:zgQVameNdHimiE4JreVPKASWnpUSxSXCgpk3FYrjTCbo9WazhQDdeA>
-    <xmx:zgQValnSiTUADI_ABM51L3gy2tSjQZnI2Yc59a6Z5f6FT0adD_iPjg>
-    <xmx:zgQVasANnbc_PWN3mHCJogC4OjMYq9sUXw27GtVyDZkUPiuhXymyvomV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 May 2026 22:26:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v2 3/4] diff: add long-running diff process via
- diff.<driver>.process
-In-Reply-To: <c25647c6e571e293fc994e0620ca37709f680f8a.1779733799.git.gitgitgadget@gmail.com>
-	(Michael Montalbo via GitGitGadget's message of "Mon, 25 May 2026
-	18:29:57 +0000")
-References: <pull.2120.git.1779415884.gitgitgadget@gmail.com>
-	<pull.2120.v2.git.1779733799.gitgitgadget@gmail.com>
-	<c25647c6e571e293fc994e0620ca37709f680f8a.1779733799.git.gitgitgadget@gmail.com>
-Date: Tue, 26 May 2026 11:26:21 +0900
-Message-ID: <xmqqjysqnbxu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="beQWUWKT"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-5148cbdea08so84884531cf.2
+        for <git@vger.kernel.org>; Mon, 25 May 2026 19:54:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779764091; x=1780368891; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ArhXb/F3pKjHoCGoerHhhtPtp+2Dl+4QWsgA7Wu+TOw=;
+        b=beQWUWKTfo0GnrePCVfj4LcHNyG0epBOAvfVVly0ezHmaEXi2r5drHUGSvbRcJLb4z
+         KhDXJ911qIhj4L3wlg8Ko2gFjBvIdZZU4+x1iqSRYPG6sXqxaD32yhSC86iRyRndzDpa
+         md2sDavbPl0Rw/H2qeP/Swr/LviP0tnRy1EkLyF6qJNSLJ69wW5G3eaKO93nSm9GVtSu
+         jjIbcWp4e0S8NaUb3fVzB7wA3EESsU/wgb4ViXTh0F0sUxYnd0VyW5AcIAE4SGfSVUUc
+         xi9XLztfcTcIBSVr33Tzt7PB5h+doHCvigZXhGoPnLzUHVmpAtjmTDBlQBhZFECZYXNt
+         U0vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779764091; x=1780368891;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ArhXb/F3pKjHoCGoerHhhtPtp+2Dl+4QWsgA7Wu+TOw=;
+        b=RjZ7R4aIznU7TvUGygWKZ4eWrK0Ceo1gNICIDVlE+/7y7pFChpglD7mxTOPk6qQ9Sj
+         KtZANPMw2qfetHC+B6JiKSEN6TBHrlS8U4Bz3bGAmpBlm33sUZAIPVok8+40WIaqWJlt
+         uu/Fi2Ht5Z6YhofAF6G7+UNeoHHrlr25pqAdLZQOJ/KR9+O7BcPZSafss7kOAjPAU2fS
+         2ddEkTwKnaC8ucXD+fY24TV+MjxKLFmChBcrEMNO8OkBspLr5dWwMir2vG6xU2Qyixjl
+         BbCDhEoNT2lil19UEDvQcozvYWv41PLjlyytLANzn3yW9y4S7plkxjAotQw8B7lQuMfr
+         66tw==
+X-Gm-Message-State: AOJu0YxnwtoH2j/rE3HpBb2QYe+DLsI25VZhe/rqQvQ3EHLbLYbRybWR
+	l9bWlnqIYf1u63xQrqnCXEzToo43r1+ZIua8dprvHdRnT+vb4rPxlCCF
+X-Gm-Gg: Acq92OGeNcfTlxrmdtfO8Gk9ZdDQw24PuFl1ulvUs2z8GD/osJLD+eTcp1rv404r8rR
+	6HGmArx/a5OOmdQ6tm5v5Aat6miHpqbA9NfGAHDdsHujZMN6zhCy+DCUhyibeJeLSgkoxmml8r9
+	tKAnXh2RWF1m9zysGDWFbFhh/vXn5HBwuPtG0Hf5PUQKoGbxJtQmVR7SMPQG4C9ft3OiSbVqt6l
+	DcBE111Dspr5hYJCcDomci1mTx9/ycSCPhFcfzl6sVVsdMa2rOMfsahyUDHy5neh7hehz+Vz7pQ
+	goXr2H6XzIgPIsIKTy+y2MZ3TYU4//boFYYBplBRywK48oLrvKcNa12inhA0v8yA+0MlvSBYy0R
+	41OnOgBNXu4gOfxO2c++ZhLru1Y6AcBFPKSzXVNvJL4LQpDJWxuos7gIRJ7oBI+NyE+D2gJjRx5
+	obKr/QBJ1AJK9iNwQ3D1DvmoVOXIy5875GJGDwB4LYdk98yHQLzgrQPRGdMMij8yh2ExcPVa5i1
+	Z1tZblzJh1RH46Uuy0IV5AicpwIDXsAr4aLqldSgPKfC+oishQ=
+X-Received: by 2002:a05:622a:4115:b0:516:cfb9:2845 with SMTP id d75a77b69052e-516d4636a0fmr225350601cf.46.1779764090705;
+        Mon, 25 May 2026 19:54:50 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:4178:7958:947f:ef4f? ([2605:a601:9b88:8300:4178:7958:947f:ef4f])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51706a2655dsm6501661cf.12.2026.05.25.19.54.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 May 2026 19:54:50 -0700 (PDT)
+Message-ID: <7b8d12c0-21bc-4bc1-9e0e-81fbd4b3a2bd@gmail.com>
+Date: Mon, 25 May 2026 22:54:49 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] restore: avoid sparse index expansion
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.2121.git.1779644412.gitgitgadget@gmail.com>
+ <47542cbd42eb13b63d0d852fb2f5bf967952b318.1779644412.git.gitgitgadget@gmail.com>
+ <xmqqtsrwh0hx.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqtsrwh0hx.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 5/24/26 7:05 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Zero hunks with status=success means the tool considers the
-> files equivalent.  Git skips diff output for that file.
 
-Is "zero hunk" a common word or some random string you invented?  If
-the latter, which is I am assuming it to be, you should define what
-it means at/before the first use.  Here in the proposed log message,
-and ...
+>> -	if (S_ISDIR(mode))
+>> +	if (S_ISDIR(mode)) {
+>> +		/*
+>> +		 * If this directory exists as a sparse directory entry in
+>> +		 * the index, we can handle it at the tree level without
+>> +		 * descending into individual files.
+>> +		 */
+>> +		if (the_repository->index->sparse_index) {
+> 
+> I wonder if this deep nesting is a sign that the newly added code
+> from here to ...
+> 
+>> +			struct strbuf dirpath = STRBUF_INIT;
+>> +
+>> +			strbuf_addbuf(&dirpath, base);
+>> +			strbuf_addstr(&dirpath, pathname);
+>> +			strbuf_addch(&dirpath, '/');
+>> +
+>> +			pos = index_name_pos_sparse(the_repository->index,
+>> +						    dirpath.buf, dirpath.len);
+>> +			if (pos >= 0) {
+>> +				struct cache_entry *old =
+>> +					the_repository->index->cache[pos];
+>> +				if (S_ISSPARSEDIR(old->ce_mode)) {
+>> +					if (oideq(oid, &old->oid)) {
+>> +						strbuf_release(&dirpath);
+>> +						return 0;
+>> +					}
+>> +					if (!overlay_mode) {
+>> +						/*
+>> +						 * In non-overlay mode (e.g.,
+>> +						 * restore --staged), we can
+>> +						 * replace the sparse dir OID
+>> +						 * directly since files not in
+>> +						 * the source tree should be
+>> +						 * removed anyway.
+>> +						 */
+>> +						oidcpy(&old->oid, oid);
+>> +						old->ce_flags |= CE_UPDATE;
+>> +						strbuf_release(&dirpath);
+>> +						return 0;
+>> +					}
+>> +				}
+>> +			}
+>> +			strbuf_release(&dirpath);
+>> +		}
+> 
+> ... here may become easier to understand if it is made into a small
+> helper function with a descriptive name.
 
->
-> Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
-> ---
->  Documentation/config/diff.adoc   |   8 +
->  Documentation/gitattributes.adoc |  40 ++++
->  Makefile                         |   1 +
->  diff-process.c                   | 206 +++++++++++++++++++
->  diff-process.h                   |  28 +++
->  diff.c                           |  23 +++
->  t/.gitattributes                 |   1 +
->  t/t4080-diff-process.sh          | 338 +++++++++++++++++++++++++++++++
->  8 files changed, 645 insertions(+)
->  create mode 100644 diff-process.c
->  create mode 100644 diff-process.h
->  create mode 100755 t/t4080-diff-process.sh
->
-> diff --git a/Documentation/config/diff.adoc b/Documentation/config/diff.adoc
-> index 1135a62a0a..4ab5f60df6 100644
-> --- a/Documentation/config/diff.adoc
-> +++ b/Documentation/config/diff.adoc
-> @@ -218,6 +218,14 @@ endif::git-diff[]
->  	Set this option to `true` to make the diff driver cache the text
->  	conversion outputs.  See linkgit:gitattributes[5] for details.
->  
-> +`diff.<driver>.process`::
-> +	The command to run as a long-running diff process.
-> +	The tool communicates via the pkt-line protocol and returns
-> +	hunks that are fed into Git's diff and blame pipelines.
-> +	If the tool returns zero hunks, the file is treated as
-> +	unchanged for both diff output and blame attribution.
-> +	See linkgit:gitattributes[5] for details.
+Good idea. I'll try that and send a v2.
 
-... also here.
+Thanks,
+-Stolee
 
-I do not know if you mean "the tool returns no hunks" (there is no
-"hunk <old_start> <old_count> <new_start> <new_count>" line passed
-from the tool over the protocol) or "the tool returns zero-hunk"
-(there is a special "zero-hunk" message to signal this particular
-condition sent over the protocol), and this description does not
-quite help disambiguating between the two.
-
-If the former, then avoid "zero hunks" as it sounds like a noun with
-special meaning.  Yes, we can say "tool returns one hunk", "tool
-returns 31 hunks", etc., so "tool returns zero hunks" may logically
-be correct, but "when the tool returns no hunks with status=success"
-is much less confusing, I think.
