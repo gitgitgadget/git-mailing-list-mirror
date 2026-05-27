@@ -1,69 +1,69 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A428023BCF7
-	for <git@vger.kernel.org>; Wed, 27 May 2026 15:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1675837C90B
+	for <git@vger.kernel.org>; Wed, 27 May 2026 15:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779897007; cv=none; b=pnrbjt2WVqhdslk/8Kkv/Hwl3Y1o5s1BoGhb6VGEa70InyO63TbvUNcB4hb/SLh9waNBEqAv/Nd3TUvEqQYNSb58smKRJPZqOZe08GDIM73Kl+sCe8sJWk51pIa3B5tSwzALr8vdVjEuz+6YcgUB61ilmbRzddnZgrdCywZUk1U=
+	t=1779897009; cv=none; b=JAjMQxXkbTD/JtmpniYc7bmDAmDltUhq5hyfRkU9jIvKo09tdO81Ej8C2U3xHhhoy+YOj1fVaHPYx+FXWMLIUDQRDl36qSCjnbI7ySNuhvupPTlqcIzd8rJ96IOyLGysAuGetMsxtQojZZuECaSKqk1cg+gKaYG4snT5JN+aUDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779897007; c=relaxed/simple;
-	bh=zCFYjsO80RMR+48Vmx5o9a11THc7cOYN/gl0pW92CFQ=;
+	s=arc-20240116; t=1779897009; c=relaxed/simple;
+	bh=QK7QQrzl6sUUJHWlCohx57yvG04D/Fj96gc8nrQEO68=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aSrzqcga5DqTIrDDF2Ix7TfTKMrpW+pryo95xtw0S9ZUwibCKPMQd7hx+G5rOfI6zbn6CxljrP4efcWIL+crFU/pt40pjNRlbhun5UtzmG6zGTitFgqasOHKGAFXS2HqyxS9pK8kUxLEsxGlxJt33MJFWLvdkRWbpm/4OCSTR6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n1Vu1r2p; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version:To:Cc; b=qgrMHbDFH/Q6g4EXKZBNUSKDTdqWzVI8xVafOys4tZzwKq+eB73ufI/lv8Y6wl6fieziYn56XIizt3vVgwBNmx17fSodBm6X/pWNHeUtLr3BQaeyyEt8FzgJnJEES9R9gt7ZiyORvoERASIIgAHFo8QBfb8AgAjQBfMEJWmFiXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FXsM1uc/; arc=none smtp.client-ip=209.85.160.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n1Vu1r2p"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-914a90b69a3so661609785a.3
-        for <git@vger.kernel.org>; Wed, 27 May 2026 08:50:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FXsM1uc/"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-516da301e64so81772761cf.1
+        for <git@vger.kernel.org>; Wed, 27 May 2026 08:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779897005; x=1780501805; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779897007; x=1780501807; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SxvIYZlBmrOj1lyC8Hwt6k3FQnXINMslKAkJNNH/LmY=;
-        b=n1Vu1r2p2ubB3oHtnn4kIlyuAxsH2HdZZs0q41YXSq6aHI3ScIXedgFZC8iYWXqV6D
-         8OQ658olrXtgBEqvES3bg+uJPdko+b4u55Nm6WBYcBhnz/gji8QoVUUGXHfBt7L2ahYx
-         PCRcYRhO4ZHHZcMpYLBX2QCwI9X61KzzdUPJFyqc55e4L/aIPyHpLSd2nFIEWn719to/
-         9N8kNfgmgcKRY05fX9/RrjWO2dX17HAJ/pApysbs9HV4FcRHKtUg3EcSkGFBp/e7oMG5
-         JCzhYUmPixVZ4Smr5PgxpFtPUB9/b6GulZNX1IVXARkMi1RFoqZjmNXtzRZOpQzBghKj
-         mvjA==
+        bh=pbg3DvMuupzOQWgBS1ZhKQbRzi+lutCw8qMIotgespc=;
+        b=FXsM1uc/SbC+QRy8OYPAjr13YM7uFsninXVwwUraznOVjf1uVFMUB8k/lCUTk7aQDv
+         hZ4s/FjGkoRd55J+5UG5iHEVa0AGRoe73d3OCYin8r/t8g7ETIT0yUwMYzevztChUJ26
+         My+0tlyapraL0DMm7zTonDb8yB7wge7UkyVzZxqtACZX993EOJMFIq0HtfP8VMIS9zsj
+         /5BLZBkiGB0UOIkwhcjGW7KXUtRmWPZ1jYuvvol7279CS8i/H6MIQjymz/WJs8fmJRXC
+         yzqmiXmRnPkzEY3IME1YLTFu1HkbLcjM+1OtaJek3Iou2snl8SND1GVWVM/EktelQsKH
+         AXlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779897005; x=1780501805;
+        d=1e100.net; s=20251104; t=1779897007; x=1780501807;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SxvIYZlBmrOj1lyC8Hwt6k3FQnXINMslKAkJNNH/LmY=;
-        b=tOl6HK02sdWzbeixGXuAP8fe0TObvqRmaLe8svPpO6EraLUzrfshicE+3bMcwoS7lw
-         1Ta3C0cKMXtYYmQ2GWuDb5+pilhfmdmCKlLFn7VgNQOMnJOnIRp9HHYCbOHE6uwayCzT
-         FaLeHSOMhxMekQ1J79F081kFptvn21mKbt0fsb/yz6N6bZCW3roFQmaH3Ebuj+CNnnCK
-         uESNvILexZAzoKOrpVHoVQEJcf33bYOPsIWPcmCQizPQPcLmpTpOehBCpTx1QMRmbL0h
-         qO1G0RjjDf46ZxjXwil0XLGN8Uonepou8ipx2zVr5ILuUPIocg5STZb6ypzGrFcUe2Iq
-         DSEg==
-X-Gm-Message-State: AOJu0YztDtgP6lNhSurYiRUe06LDd1bjtYDWc3Dt/sksjLWbIuCQtzbv
-	TV+uAuUdwN9Fh+ud7iNQY1tsCoEk6wB9odTNuXh/Bh/lmOU1CZpYqeIh6tDxgw==
-X-Gm-Gg: Acq92OFIwmm+LB6hRolqdPjXFCQmimlys+5dAYdqf3+fsNWeM/MzmB1V6HgmsGiGkdj
-	PRCVGbGuPLQpEblgUqhN+0A16gmDyEnIjd8nPxud4MZzlFbx+vJ7jc7KBnOThtWntPKHL4aZGHX
-	IbUGb0fGqrcWJQqzSkCrSgzXxDhh2PQaZLmmMolFLgfmg43aCz2YXerF1xKP5Tw7n6CRV3LxQYG
-	AfGx8AuOQ6Lw+it8VqhpTTJFLJk44Ok3zb6ezz1TSmmpFDWx/UmAdu5VgXZ201xRsNP5uI9LO7m
-	RAh1jVmAtyXcx7PXKgeeYD6HGOZW2UTjTasBPGzVmnAc1aliYQVwcG1BjKf9qI1NiRabwC65oSK
-	F+PBqpMDUdZxu50OVKbJ19dMZtudRcrpv2WmOsKK7X0bya6pJB6wxwyxT7RkFelrtECjQan0ZWO
-	LC5uJOm+NAUfPCYOpzprpcvJWlOmw=
-X-Received: by 2002:a05:620a:4004:b0:90f:c88d:ebc6 with SMTP id af79cd13be357-914b48c68b4mr3603392285a.17.1779897005559;
-        Wed, 27 May 2026 08:50:05 -0700 (PDT)
+        bh=pbg3DvMuupzOQWgBS1ZhKQbRzi+lutCw8qMIotgespc=;
+        b=PvUsGmon/un/ZCGsQT7jsxwIaF9y76d6311bHffRsbE43DG4Be2ZRqfvNE1TWD0bQD
+         qbK6D2IOUT1IQNZS3nLLlDWHuQDJBLGslxM02oJ/lPfjLmrahD5wbLYer95CC1b5gYSu
+         /nDMLOn0vI4F2dxrUIWY8OCN5/JhjCaK/OfTXNtsaKjxxGZJw8k8fUrCEh/3eMPDP8Jl
+         oEtaJRS7HNdxS9vpvyoj+RVeEPYslb8yj4BllZhzkZDYElsCP3Z7d6WJbD66fS4WKswf
+         oLi5njllTH4jlcLNvKD8UmQrllVl+PtIYJRD3OpdSFuU9K4gKAO14IQwZR33FipmNyZR
+         xcKw==
+X-Gm-Message-State: AOJu0YzJ77dbqcaKQhfAUlBZNBqKO6RbvAqaHG7IjMwWP0xvmjNh8504
+	6V+8a3cPCdExipkyhpf64UPiG+iSfvUE6CLXZV5vKJFk0GPYk4L7j1zaKzyyQQ==
+X-Gm-Gg: Acq92OETgfIQBxZ8Hz8fLBMw8lFCMHMeBuHV0rTB9dL+r1ZLvwG2xlB/juhaP8Rj/8m
+	aAzUDQ/TNGG3kcq9z+MU0qrE34N8LHRRvG+yJnr28v/FYBRLVXdQGOFOj5ETq1F4wSwGXwFWreB
+	l8Cmc4nyskoG/Z9NxdSN8YO/Mk6JLS9g69LlU9D9PifaDdnRwh6MaDEuRv/7ooFNOKs+uNSG2/q
+	+sZoBKQxnp6k0XBTyulJg3omNbvS4LjUTSPL1rnEYhyLpvw9XO+HEbHxxwg+Ci/ygWZCIXpy4Th
+	CVp4D/sx4bL9R7lfAxccv0VlDai0ig7muJBwX/cx4dVGaxhkKrZdMrsqpXphmofUIAB6NU/oCxn
+	QmxglFy11D9vzIM9WOSGmQ80bGcg6ZLPGLl+KF/SnqHVejoVH26WhczTlCJMLN7RYgiEGOo+wF/
+	u++LbVHMpgoftdctB0vgqzGT4qCqU=
+X-Received: by 2002:a05:622a:53:b0:516:e13b:77b3 with SMTP id d75a77b69052e-516e13b7e03mr244268741cf.59.1779897006609;
+        Wed, 27 May 2026 08:50:06 -0700 (PDT)
 Received: from [127.0.0.1] ([135.119.239.32])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-914f86e9ba7sm503115885a.6.2026.05.27.08.50.04
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc8131eaeasm170704696d6.44.2026.05.27.08.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 08:50:05 -0700 (PDT)
-Message-Id: <743adab469c748aed66555e5390379b54154216d.1779897003.git.gitgitgadget@gmail.com>
+        Wed, 27 May 2026 08:50:06 -0700 (PDT)
+Message-Id: <99917cb3077e1c353c9e95cc88460484121d1f88.1779897003.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2127.git.1779897003.gitgitgadget@gmail.com>
 References: <pull.2127.git.1779897003.gitgitgadget@gmail.com>
 From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 27 May 2026 15:50:00 +0000
-Subject: [PATCH 1/3] pack-objects: call release_revisions() after cruft
- traversal
+Date: Wed, 27 May 2026 15:50:01 +0000
+Subject: [PATCH 2/3] revision: introduce rev_walk_mode to clarify
+ get_revision_1()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,30 +79,121 @@ Cc: Kristofer Karlsson <krka@spotify.com>,
 
 From: Kristofer Karlsson <krka@spotify.com>
 
-enumerate_and_traverse_cruft_objects() initializes a rev_info on the
-stack but never calls release_revisions() afterwards.  This is not
-visible on master but becomes a leak once the revision walking
-machinery uses dynamically allocated structures.
+get_revision_1() dispatches to different walk strategies based on a
+combination of rev_info flags: reflog_info, topo_walk_info, and
+limited.  These conditions are checked in multiple places within
+the function -- once to select the next commit, and again to decide
+how to expand parents -- and the two chains must stay in sync.
 
-Add the missing release_revisions() call.
+Extract the mode selection into a rev_walk_mode enum and a small
+get_walk_mode() helper, resolved once at the top of get_revision_1().
+Both dispatch sites now switch on the same mode variable, making it
+obvious that they agree and easier to verify that all modes are
+handled.
+
+No functional change.
 
 Signed-off-by: Kristofer Karlsson <krka@spotify.com>
 ---
- builtin/pack-objects.c | 1 +
- 1 file changed, 1 insertion(+)
+ revision.c | 62 ++++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 48 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 480cc0bd8c..67025e8625 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4275,6 +4275,7 @@ static void enumerate_and_traverse_cruft_objects(struct string_list *fresh_packs
- 	traverse_commit_list(&revs, show_cruft_commit, show_cruft_object, NULL);
- 
- 	stop_progress(&progress_state);
-+	release_revisions(&revs);
+diff --git a/revision.c b/revision.c
+index e1970b9c5d..9d0fc696d0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -4327,22 +4327,48 @@ static void track_linear(struct rev_info *revs, struct commit *commit)
+ 	revs->previous_parents = commit_list_copy(commit->parents);
  }
  
- static void read_cruft_objects(void)
++enum rev_walk_mode {
++	REV_WALK_REFLOG,
++	REV_WALK_TOPO,
++	REV_WALK_LIMITED,
++	REV_WALK_STREAMING,
++};
++
++static enum rev_walk_mode get_walk_mode(struct rev_info *revs)
++{
++	if (revs->reflog_info)
++		return REV_WALK_REFLOG;
++	if (revs->topo_walk_info)
++		return REV_WALK_TOPO;
++	if (revs->limited)
++		return REV_WALK_LIMITED;
++	return REV_WALK_STREAMING;
++}
++
+ static struct commit *get_revision_1(struct rev_info *revs)
+ {
++	enum rev_walk_mode mode = get_walk_mode(revs);
++
+ 	while (1) {
+ 		struct commit *commit;
+ 
+-		if (revs->reflog_info)
++		switch (mode) {
++		case REV_WALK_REFLOG:
+ 			commit = next_reflog_entry(revs->reflog_info);
+-		else if (revs->topo_walk_info)
++			break;
++		case REV_WALK_TOPO:
+ 			commit = next_topo_commit(revs);
+-		else
++			break;
++		case REV_WALK_LIMITED:
++		case REV_WALK_STREAMING:
+ 			commit = pop_commit(&revs->commits);
++			break;
++		}
+ 
+ 		if (!commit)
+ 			return NULL;
+ 
+-		if (revs->reflog_info)
++		if (mode == REV_WALK_REFLOG)
+ 			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
+ 
+ 		/*
+@@ -4350,20 +4376,28 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 		 * the parents here. We also need to do the date-based limiting
+ 		 * that we'd otherwise have done in limit_list().
+ 		 */
+-		if (!revs->limited) {
+-			if (revs->max_age != -1 &&
+-			    comparison_date(revs, commit) < revs->max_age)
+-				continue;
++		if (mode != REV_WALK_LIMITED &&
++		    revs->max_age != -1 &&
++		    comparison_date(revs, commit) < revs->max_age)
++			continue;
+ 
+-			if (revs->reflog_info)
+-				try_to_simplify_commit(revs, commit);
+-			else if (revs->topo_walk_info)
+-				expand_topo_walk(revs, commit);
+-			else if (process_parents(revs, commit, &revs->commits, NULL) < 0) {
++		switch (mode) {
++		case REV_WALK_REFLOG:
++			try_to_simplify_commit(revs, commit);
++			break;
++		case REV_WALK_TOPO:
++			expand_topo_walk(revs, commit);
++			break;
++		case REV_WALK_STREAMING:
++			if (process_parents(revs, commit,
++					    &revs->commits, NULL) < 0) {
+ 				if (!revs->ignore_missing_links)
+ 					die("Failed to traverse parents of commit %s",
+-						oid_to_hex(&commit->object.oid));
++					    oid_to_hex(&commit->object.oid));
+ 			}
++			break;
++		case REV_WALK_LIMITED:
++			break;
+ 		}
+ 
+ 		switch (simplify_commit(revs, commit)) {
 -- 
 gitgitgadget
 
