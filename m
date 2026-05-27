@@ -1,70 +1,69 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407E846AEFC
-	for <git@vger.kernel.org>; Wed, 27 May 2026 18:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAB247B401
+	for <git@vger.kernel.org>; Wed, 27 May 2026 18:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779905917; cv=none; b=H0a4VyFwX1T80LClTwHOlelAwFT1GLNwCp0a/JxqxZuqVz19jayv26aksc2hsUgRfYDsKPrCIBuLee5q9zQ/SsnAntULoPJJBEgAYPHh3u/LEqm8+e760LizgGvgrLFPHHbIAjlJM+Ym9ActZmPw1ot3VjgCiiGptgeENjHg1CU=
+	t=1779905919; cv=none; b=G8MO7oNfSULyNM0Efn9nZx/ngOtxRSLYRirNvtpKqafd+3Hp3NZGfj0eGZosf53ARqUUI098IxqGyNSeBHvSFUquHiFY20Ac6osRCK2z993qhnvs3TZYrFyWuRwtthTyWy31jsjCcYR7h8R5IIr7szb2anUwI5HjoPvpeJZkhQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779905917; c=relaxed/simple;
-	bh=ibo5E6hS6Z8RzS6e/C98f64QZg4vj/RQmA68t2CjalI=;
+	s=arc-20240116; t=1779905919; c=relaxed/simple;
+	bh=5R9FEOlJ2I99wuMOxohQZh8JPmoEa1iWdKrRFdD1bv8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=CmJyqvpLEJjUkNULj2oQmeoa7Sjvnse/JBd3JdralSheNcbAVnvKCkJOShZPFFBlXUhiTtqoqRM4bTxfOVx/9XVV2bYm3ibnKWfeJdfn2XU1QT3CDZVSnm3fabcqBiI9C6LwpYPCw41Mh1KjBohJsanZPbYVE22K2HxjO7wIhPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkaabxGN; arc=none smtp.client-ip=74.125.82.50
+	 MIME-Version:To:Cc; b=fHYw3kwDgt56VZ/AE3GeqWhrDO7hy5te9mJdJ3MmHwFI3XjvAYkv9tjM5hD0x/lw+CUpmbJhPWPOxYTjvkhGKBz4z5iQnq1RS/SjwI9V32DxltSczE/cY1+UdvDCxVx8xdJ96kG8JbG6nlBWXQtgd4VtwTxQcXooYnctYgGqsJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JMlDJF0i; arc=none smtp.client-ip=74.125.82.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkaabxGN"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1334825de43so10626137c88.0
-        for <git@vger.kernel.org>; Wed, 27 May 2026 11:18:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JMlDJF0i"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1353c2f35cfso2377367c88.1
+        for <git@vger.kernel.org>; Wed, 27 May 2026 11:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779905915; x=1780510715; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779905917; x=1780510717; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gCanl2UTdnJmm5I1wrST2Zf4CXnElEoaku2wr4IvBUQ=;
-        b=nkaabxGNXteIxvibLqwnznQS+eIIazcJenuG8jfWJPc4zvwlk8GvrRDnjZPVQIkXZR
-         HBKSXjJ8oH6ZExA39l/lNIByYwmYjP4sXfCd6Z/N7G4L9Fzhzza3OlzzHS3zwhGvpS9u
-         771UkvYaGL/1lZfuSXINEOCo4KHQV/MJaWg/EBHMp2G1B/j795Ahp03npO1kmjoATPnv
-         cXK4OZVggkC6UM1wTWQvfCFy2kvlsLSCXQqS6Wip7Jndn+wV20cBwARwRZVQsajwCKx+
-         AmC7D74kY6C4UV+kb+PBfrDo8QnXNzjWVCZJC8zsM+qQMEQBtymrkwcfsT2WMaFV21Sr
-         gWVg==
+        bh=2Ix15tTuEkjkCwaD372/Zcf8YqzVQOAKxfsIwL8CjXc=;
+        b=JMlDJF0iTwuOGf06J/KCmxi5JLbIK1Cc8ArHTqtpKW6sy0yyPmENyb2r1qPJLTA8BQ
+         lE3XhuELOyx+gHBmZkprY4x6d46J8qtta4xkcCGq9egt+m2MhfK4t4409LQMDomCCkLl
+         YfwNhNBB0E7r+ImB9srLQjMu4jSeBVMn3d3d4VrjvertV1+7BfJqNR7hoosMazMqflV6
+         d2PdqtZpveGr/RA3164uNLcuYjkbrhEgOcg4au8ADIaEWBxiGbViiwaDlzaPPEbFKxZE
+         Hryc3Hhw3VullV/78s/ZAgWqOCttfWEsg5Y25wu5Dw3dvLrDpWnfj4hbdHx7eGMUH6Uz
+         voeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779905915; x=1780510715;
+        d=1e100.net; s=20251104; t=1779905917; x=1780510717;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gCanl2UTdnJmm5I1wrST2Zf4CXnElEoaku2wr4IvBUQ=;
-        b=qVmnnWZlOfIE1EqsRiKkUlXk71hu7jyPgx3qqB7Ub30I5e155o2bJB4Rzng2FzLJO6
-         k7jKEpAduogXxi7zuFmWCvgh8cF4B6AkD3JiC098Hq+4FPRoHkeuTb9CPjnxJqXweKwv
-         3936ZKVhJoFM8+cIf8HSL7QBvtaMfar50Kdqp4U+El0XSSxF2VFIL0SgLny2ZYinngpu
-         fpOJ+wDp+BikGJXD9OQAiatFdi+lyXHacjSa/XfnMwJs3QdW92x7vSDPyz85GIOFSygl
-         w07xRS1FUImru5iKhBABpbA5h967l/HXQYRfMSQpxerPQVWf4NNG8N2DHAUj8Mth8Cit
-         UUkA==
-X-Gm-Message-State: AOJu0YyFBxlgbyi+rFGe81XBXfIpC5QgoZTLPQMg39PzYkhb/1gTS2Fc
-	D3PHNt9rNcHfIMTYSWSEht9sRCXO1xL3DMwSJ6/5Yl0oj3KDDLpYrjgs+pzCJQ==
-X-Gm-Gg: Acq92OGqmHj50y8BBBsJy2WJeMH/HdEi3qn7Cp4FcyPbmw1CpgXcHU4ilLfBrFMtj/o
-	8Ltn7h9F5mOSLYSjcgKN9fACi0D8aFrerll6+8MHujwzSXL9RUYPkHn3vcdaV3GbooF2mwU2rnt
-	xSRDm8vD/ului4TcfnTGHDvPbIcITYbMOvZ1mvQ+WMRne//6bev2oGfMPOEn9QMvombA8gaMKbu
-	riLa5t07F/AtbFlphW8r/U37UKeWzlEvM4ECRgf1eLO0nW4hUu4QW7LzDpOrR2VaNq015B2jshy
-	seYvoSaMOTiKoUCRPmiv4dE5jzb8O/0QOgb8kS/MdbwO1yAZ2AiFLlc5lITYvkTOazl8bOmQFxG
-	ACacR+/cMgHwhA8JK/Sm/JpZCkm6zumxNnqzDeurccLXSZ1d0vLDEb3cJijtNRZ+LupOZGfkTLF
-	syGze3l/H7HfR80Zmrk1I8ZjnMWTWm
-X-Received: by 2002:a05:7022:fd0a:b0:134:def6:e73f with SMTP id a92af1059eb24-1365fa38920mr8333453c88.21.1779905915083;
-        Wed, 27 May 2026 11:18:35 -0700 (PDT)
+        bh=2Ix15tTuEkjkCwaD372/Zcf8YqzVQOAKxfsIwL8CjXc=;
+        b=gg/yx6e/NxGrJ36rxUMSROAbd6hWXGtXhw89rLpb6xIFMIFGlH4qiAqUHIEuYaLOnv
+         EIVgA/XBvo0doeev4j7wz87uHsJtZh/8mgnaU2IykSZBi81mMyqfd1pnqneg0vPSC+Ue
+         JWniTaNAM+LPo+gHGlEivyv9GiExjwGJx5oApv1GfFTh1/M9cK25pKEQqCkEQtykfpb2
+         2NMYZee2/nX1LqVSB7+YPdJsLgDCy5ymmSloDRTUvTQdzDVCUJi50TKvsdQwMy+xPxSV
+         ZymYw1YOKmwBe25uDAqj0uLft7eXD01c4Bf2Z9F2ljGtojEBnzK4nKBazU7gVKTM1Ykg
+         XK5w==
+X-Gm-Message-State: AOJu0YwJTYsg1lYAO3aQ+ZOCluFW5dRtRRh5opkq67rcQ7wtFVTccHr6
+	eR8fJkeNUuzG0cfwTML9RO0FKirSfAmz/jU98C7utXQHVrjWnq+DVALURnuMJr2I
+X-Gm-Gg: Acq92OETkNn+Eq5Cugb+zApaqpIBFZI3ylHD7YAlFML6R7ISsbBp0WMwF/NrOwXu/MN
+	VS3HHQ+RQr5ppvx/N6drxJOqdwDk0gsREi/aCREhO1hmS+HzztvsjdUfeSZL9ADpwDxdyKVDHMm
+	rS/8XoEDTPJIpPSR+FRtuuiUo3JG62GVDUhXqVXTDKMAq5iHyML7rMw7AURZWZTTGJ1UBSfFcHf
+	ZH2q3KblDg4b+/jCuVJzOFTTpM8y/Qofsthjn2AMen2SJZ5gujdflvuY5oMP737ZBv0XW2D1gQ+
+	DJJpFBKfsqE3lF/nQdgwIyQZyY34jQ3/0IXWEC7zq0vRbk6JLmq/ZNf4Sl6yphoFYDk8UzuOaC5
+	1+36+OgWHth9ehtwqBF0jGmymsFY2Wcty5ukjsouaiMHsi8MNZUMurIIf3NDvBtcTuBsvAkQjia
+	LaLMHu25MlsM9nqlhYghZRye7i5TkxNoHY47PgxOA=
+X-Received: by 2002:a05:7022:613:b0:134:feba:3fd with SMTP id a92af1059eb24-1365fd7ccb7mr11072540c88.37.1779905917217;
+        Wed, 27 May 2026 11:18:37 -0700 (PDT)
 Received: from [127.0.0.1] ([172.215.212.101])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1366aba39d7sm10249707c88.14.2026.05.27.11.18.34
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1366a40305csm10018762c88.7.2026.05.27.11.18.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 11:18:34 -0700 (PDT)
-Message-Id: <b2d81438117a716417a031c74b678a8f91701af4.1779905911.git.gitgitgadget@gmail.com>
+        Wed, 27 May 2026 11:18:36 -0700 (PDT)
+Message-Id: <5c01ec3cadce441cfa48e0499a62e57aa4cc619e.1779905911.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2300.v2.git.git.1779905911.gitgitgadget@gmail.com>
 References: <pull.2300.git.git.1778773592.gitgitgadget@gmail.com>
 	<pull.2300.v2.git.git.1779905911.gitgitgadget@gmail.com>
 From: "Sebastien Tardif via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 27 May 2026 18:18:29 +0000
-Subject: [PATCH v2 1/3] daemon: fix IPv6 address corruption in
- lookup_hostname()
+Date: Wed, 27 May 2026 18:18:30 +0000
+Subject: [PATCH v2 2/3] daemon: fix IPv6 address truncation in ip2str()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,48 +80,81 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Sebastien Tardif <sebtardif@ncf.ca>
 
-getaddrinfo() is called with AF_UNSPEC hints, so it may return IPv6
-results. However, the code unconditionally casts ai_addr to
-sockaddr_in and passes AF_INET to inet_ntop(). On IPv6-only hosts,
-this reads from the wrong struct offset, producing garbage IP
-addresses.
+The sockaddr struct size (ai_addrlen) is passed as the output buffer
+size to inet_ntop(). For IPv6, sizeof(sockaddr_in6) is 28 bytes but
+INET6_ADDRSTRLEN is 46, so long IPv6 addresses are silently truncated.
 
-Fix this by checking ai_family and extracting the address pointer
-into a local variable before calling inet_ntop() once with the
-correct family. Die on unexpected address families.
+Fix this by passing sizeof(ip) instead, which is the actual size of
+the destination buffer. Drop the now-unused len parameter from
+ip2str() and update all callers.
 
 Signed-off-by: Sebastien Tardif <sebtardif@ncf.ca>
 ---
- daemon.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ daemon.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/daemon.c b/daemon.c
-index 0a7b1aae44..80fa0226d8 100644
+index 80fa0226d8..103c08d868 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -674,9 +674,20 @@ static void lookup_hostname(struct hostinfo *hi)
+@@ -947,7 +947,7 @@ struct socketlist {
+ 	size_t alloc;
+ };
  
- 		gai = getaddrinfo(hi->hostname.buf, NULL, &hints, &ai);
- 		if (!gai) {
--			struct sockaddr_in *sin_addr = (void *)ai->ai_addr;
-+			void *addr;
-+
-+			if (ai->ai_family == AF_INET) {
-+				struct sockaddr_in *sa = (void *)ai->ai_addr;
-+				addr = &sa->sin_addr;
-+			} else if (ai->ai_family == AF_INET6) {
-+				struct sockaddr_in6 *sa6 = (void *)ai->ai_addr;
-+				addr = &sa6->sin6_addr;
-+			} else {
-+				die("unexpected address family: %d",
-+				    ai->ai_family);
-+			}
+-static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
++static const char *ip2str(int family, struct sockaddr *sin)
+ {
+ #ifdef NO_IPV6
+ 	static char ip[INET_ADDRSTRLEN];
+@@ -958,11 +958,11 @@ static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
+ 	switch (family) {
+ #ifndef NO_IPV6
+ 	case AF_INET6:
+-		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
++		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, sizeof(ip));
+ 		break;
+ #endif
+ 	case AF_INET:
+-		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
++		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, sizeof(ip));
+ 		break;
+ 	default:
+ 		xsnprintf(ip, sizeof(ip), "<unknown>");
+@@ -1019,14 +1019,14 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
  
--			inet_ntop(AF_INET, &sin_addr->sin_addr,
-+			inet_ntop(ai->ai_family, addr,
- 				  addrbuf, sizeof(addrbuf));
- 			strbuf_addstr(&hi->ip_address, addrbuf);
+ 		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+ 			logerror("Could not bind to %s: %s",
+-				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
++				 ip2str(ai->ai_family, ai->ai_addr),
+ 				 strerror(errno));
+ 			close(sockfd);
+ 			continue;	/* not fatal */
+ 		}
+ 		if (listen(sockfd, 5) < 0) {
+ 			logerror("Could not listen to %s: %s",
+-				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
++				 ip2str(ai->ai_family, ai->ai_addr),
+ 				 strerror(errno));
+ 			close(sockfd);
+ 			continue;	/* not fatal */
+@@ -1080,7 +1080,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
  
+ 	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
+ 		logerror("Could not bind to %s: %s",
+-			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
++			 ip2str(AF_INET, (struct sockaddr *)&sin),
+ 			 strerror(errno));
+ 		close(sockfd);
+ 		return 0;
+@@ -1088,7 +1088,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
+ 
+ 	if (listen(sockfd, 5) < 0) {
+ 		logerror("Could not listen to %s: %s",
+-			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
++			 ip2str(AF_INET, (struct sockaddr *)&sin),
+ 			 strerror(errno));
+ 		close(sockfd);
+ 		return 0;
 -- 
 gitgitgadget
 
