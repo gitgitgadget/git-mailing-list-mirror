@@ -1,80 +1,80 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF46175A9F
-	for <git@vger.kernel.org>; Wed, 27 May 2026 14:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F287175A9F
+	for <git@vger.kernel.org>; Wed, 27 May 2026 14:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779890433; cv=none; b=Z4XndWDp9Bv3d+VVJtuiozY4REwEtCwsvFF7+Tn5WCBjibBfaxiOU5ToBxf9qabvpCi4DrW4orhi65FA0Yh+iwSJe4lRBjXxYuGku+v/Oi+v9xpzM+OmvbjDqceQDHs5BW8HnidyWgq2sCXxWDWNbsJ68oa0feqVuN23xQIYEuQ=
+	t=1779890451; cv=none; b=tivhrLQH4zIOzc29Hv1RvxKbPSWqIF4loBVeA17s8XW0QMQYdRf/qkax0FM0GryQ3PxQo7n+kYOhpY1BpgOUBnUfjJp6f91m6RrWGAmfhIKpZ/DeNQI9/JlWvG1whvVt9qAoOfMXL5vX+9VcpEi2om8yKs+lJn9PP+kTdav68CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779890433; c=relaxed/simple;
-	bh=FFMdo/vF/M3lr67juTTrY9EeqHai64APKroqVgTVIvk=;
+	s=arc-20240116; t=1779890451; c=relaxed/simple;
+	bh=GFiM/SyLDuX+zUALz9bTf6e6QF1V78wPUJzAX8iNS4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YyxpZuL46L+C7qwdYbwE1VhrE4KFv378p10y/BN/M+HS5GgWlbMzaV/viXbV1o8P+e2VgKpi/FDoSk16RaxASRzaPqvCnaIxM2JMI2M9om8/E2UyicebjMWUcTu8Us4wpqK1dvXxvttq+ERHcJI7A/7YFBpWNsaqcdo6OGMtIbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=L0XRhDiF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v8QYSRQ3; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version; b=i7+At93Adt6e0oSgOJtm6JmDF6764fG8EXYXxdPfy90vi/0qtkiqGpfZZvdU8Tin+d8+e5MFVqzkIn9u5kl64qavGQdiCHM7HD7jDUJzUO8FcSrD/lt9y5CyPOkh1r/l9ylRyAm68gkeLDZjoPa1kukEYc9zzL5ahgTT+N9iJ2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=A+AoXVXG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bBleR1lh; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="L0XRhDiF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v8QYSRQ3"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F15A9140016D;
-	Wed, 27 May 2026 10:00:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="A+AoXVXG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bBleR1lh"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D7872140015F;
+	Wed, 27 May 2026 10:00:49 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 27 May 2026 10:00:30 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 27 May 2026 10:00:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779890430;
-	 x=1779976830; bh=a8N+d/rtAEDDB65OwtX4cKq+kUtLyqF/SGacH40nVJg=; b=
-	L0XRhDiFcAW26jRJjuwGsy/szpVK96DaNY1It2sROUtG1oP8Y7rc+bkIdxU8AcGj
-	eIsGGigkFtA1rHLUkVkrefDtTcIRHKCXFMEhKCA41VHK9SFx9uXtNuE9xiO5D8w/
-	ZvtZQ34bosSgWS8VGPOoLYzARm2vdwV7TqzcG6kMcRC4ewJPlc2o0n4W/hGqzPm5
-	w1j9rUChstmRs1KXr5Hnh2T8PFhm1tSjENuMqflZ1ZGPaIl/Vms4Cd9yDNBHwKu3
-	eAapVQMVCaeb8/eae8D/lVndgzuUZHJQfByotvq+74BeCcGz3di0FPeuhoz0KA1o
-	YYAvLc0FdMK4OceLxoTykw==
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1779890449; x=
+	1779976849; bh=0/DcUbDxXsUIGCzcQOVfUeWfFBUlT5cisBrln0bNj84=; b=A
+	+AoXVXG5LUno9ffeRwuGFTmSho9g22beWBHlcHp3wsWUSk7GIlEflkjkwuOfxc0A
+	LF2ntp1InIAoH6TxeO7wf1rKX6RMXMqJ0NZxmlmOROkHFAMdYDRoUAefNwhdMHZ8
+	Ua1zUk/ehmLRxmWCammmNnOizRqxjWsm1WjBryniat7AnccEAIDlsLczRGtgRx3b
+	07LYfNWKVzmbDTSawqSOXcThfJ2JsaHyojMHB9MRRim6eMHfAuKz26m2aAJHFuiR
+	XY5XyXUEmrWt5td9z5L6FfMqRb61Tva5tHuZg/8POtRnD7BLFpbNxVP886/7/E4D
+	bDW9DCHPtWPJHlYB2N7vA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779890430; x=
-	1779976830; bh=a8N+d/rtAEDDB65OwtX4cKq+kUtLyqF/SGacH40nVJg=; b=v
-	8QYSRQ3oFqgkTYFheiePdYcIMZCeA2Wr+MXI5iJNDSog7odd9D/Tr7DaK8XsajbQ
-	pYwjGpAyF1bo1nRdP8hd+BsuuzDAoHTaNA+PkqBMOS/K4JTo9SZ90nidS1vg8QGT
-	HfeF4KTVrbkHTIYGlYzb9G9bpzqzgAY3LOd9/mOJUDqkHfEhKXRZkW7O8SZjckUj
-	t43VyWng44qvPjuLqrP0BUjOsEVrk8NWS9nIJj0z1pSMHA8zl0XoAmIuVfg0i9+l
-	h6BGGTgjnDnQrYCB3y/0y8nMFUI5tPV3iPbtAdVf9JvnUVujrYJvh29XlokZ2ORC
-	tj7xPtbCrAix9/NYV+m+A==
-X-ME-Sender: <xms:_vgWarPOH24Jz5jbbE3Zcc_D9xYjOxNHXQAz_xZ3OAicApovx40o6Do>
-    <xme:_vgWatbLFfAejkjAUX_rsRNwbj8GyrrXwX2uoco-1phQ9Z4TS0yL-zQTsVe27CZYX
-    JZN6J7mJzSKgY47VLs7aDQPi-qyVhp2mMWXdcW5ssi_Yh-bgEjyDA>
-X-ME-Received: <xmr:_vgWanoWMIA1a3DHlXULR54dj8d4HsO-8M4z3UBHR_aOtm5bo7LDCXPOeGawIZ51y-g0IKvrjPJc_jjg2HanOT500UjVIuq6F2gUI3A>
-X-ME-Proxy-Cause: dmFkZTGG2hpARLeqnRSHOIc+SFB5kVpJ+N3zRoTnNFgYt5uPAI182xgK+W6SP7PZlvTPO8
-    7yKAbnl4ucHwBCBs3ayhyIQgpspj3oxyVEC5ngscETt4wkBsXW27loxD+Ruwn534YAZLF+
-    W5GapvBB7ri/AmWqURclKomLDAEvV3Fz2z0As/rO5ITHksAml7YOQ9Xqr7dbCv6tK4hkg9
-    jtozJo4w3ckAi3ltKO5rzTU/WANX0/GShkyFrmYMxl3ql0Fmj3EaP79uCdjjIxYoOjlg+3
-    wmO8TEck2uqt1mOJrqf72vi5i4CRoRPt+bOHwYqhIM3vgq8uBNXRpuqgtL+nufMS9oQKXa
-    Gr9ejCouL/mwdNK+TZAWS0vKrUdRCP6j/0/P8aISZHezQvHw0Oek4rXNF6Q83f1Tmu5dSn
-    LdKZgYmCFD9FgNNM3akbiHc0mZcg+BhwFh6t/8B64oyoCfagU3LCqwlWJOwPZiaei03QSw
-    oX09OLKzQthtW41UPNWssqHJUZ8H1QjlexA/Uc2keZtWAYDWOTp66bi9gV00mvH/0Zp74d
-    JGsqwvdAfLqbdYKiU1dRJ4GWYafgCkCnc62S3QBP5GDsXfC9GOeSz0PpB6AlHY9X3SYLbZ
-    ZaQCcxqscmCUs9CpCERIRB8EEAAN73cNwlq9rAxQ/Ew6nmkYMNTikSm7KmPQ
-X-ME-Proxy: <xmx:_vgWapax7TVAY-vrifXLbarictmhkCTJuhopISs3GiS3WUyHWlu3iQ>
-    <xmx:_vgWanTcarimCHYzDM326lOA_MDIOgfZnkjJzjZChUYSF0nKUW392A>
-    <xmx:_vgWao6WEWXjrBc_-ABLVtu_y5REon0g-aw_UJUxUBB5cockVRm5Iw>
-    <xmx:_vgWaky4ezISe5a1MM7dzAxf11IxAEw0doPk8iIOHmOsq-yN7U8r5Q>
-    <xmx:_vgWatjcQeQVFiIx22jvQb6ISlQKh9Ys0zSFxB9a_1U0O8GJEDf7LKZv>
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1779890449; x=1779976849; bh=0
+	/DcUbDxXsUIGCzcQOVfUeWfFBUlT5cisBrln0bNj84=; b=bBleR1lhmUx0k001F
+	lIJJGVLjR6erm29Us+7nCfZsSpZAmJyIQD1JfiuCGabhgP5aVpgot76iwufFWikH
+	QYpT2jV+FzXFbCd77UJGUt3IE2S3I9CxMqEmbs2cp2+3lQZjcc9xQRh+yJzvGbDa
+	uCXvAIxdMcb8u7X7N52ITfqr97Jz4NQgS8RI/GUG4+vCFrIqRbQ7fPKL9EGV1ogg
+	dwXlaQFtMrVeX/oue2mtpQPuU18H6EtJ6kwMXqPfjp33X7358eSLEe3kGBPtHcCD
+	NKFJcj0Powv9uTDqA/wRqgQ8xggEKEMgkl9wEWDaYkkP3Zur/VDvnQZghiWgpMEc
+	98gyA==
+X-ME-Sender: <xms:EfkWaoAUfYNp6UfCzb90E5cI1dUQ57xSc3supa5isOX8n4YniWEhE6c>
+    <xme:EfkWah-yfvSF-8bbZk_Bc6MMVRPRDxOV-CrFkOJcMwW1GWUn-_OukGPi0eRMWIG_n
+    vXexDM8-d6IWT_wjC4VIPw3njijWL1K2j2hVCx5eEXj72A-0_PToQ>
+X-ME-Received: <xmr:EfkWao-5Czk8uN9vycbbA1Ksji2Ds8NMxdBA0siEctr4Chwx-UX16XjB_C5EPafahvRRgQO-KgxdWX_poJ4hrLm6rhxB_T7dm3e5iow>
+X-ME-Proxy-Cause: dmFkZTGfAx7OkGpgk1BXIH0VLuC26ATohY1xoGoDXIclj1Qh6HEKGOhzgU/IedhLW2QT8Q
+    jlxdzMjNThRq2zjPo4VasJeuX9Q1B3yIOzIZZ7DCRhQM5Agr8dnm6tYnUqYmPCQWEGt+rA
+    jBx5SchTL9zZX9Hdojbwi/xYNcIFGubrKf56cS5sTXwQBJG3P3+7EPifnj+zBN7jnx1QXO
+    coJbNxUwvC3LLoetAT8QHFNM53bdN/paH+9hz05585dRIMKtDfUJOrzR7xUtlYztomowbd
+    RIfjAOLoVjkkU5R3gsrlor+XRCwVhMOmP+01X1iE0MATEYQCihI4ZypDc3nzNESiICLCTb
+    0r/KoALdx+Lp3u8aXAoFiwZeUuU8xQOuNDhK5asTk1RrhNs/01O//dAiA5iEIAMThrlBws
+    hYa0G9PfwLJy4Ek/sTLd5FhQxM9bWtMOrdkJGezpIb8hwO353DQG3yo1udSCFun7khUIcE
+    IUjUudLmHEPoN0JYBMGkIi6xwCW85lQtTCs5jLEezC5NHfNEp2J1AXUl+/6Y8JPs/tX8Ph
+    QASBdxX6LYkDdE8uqIEm5mh5pk/Powh4ZQwWsESz0sF+dp0/VMC4Dnb2ldD1zwICB66QCG
+    SzhVuK9Cixd6qQDWdwXrWx5ZEE1VXTLXgiW+UU214wsMxgDjOEJ69CKdtRrg
+X-ME-Proxy: <xmx:EfkWaof_Us3lCo8yTFeFuJv5v1T1vuC85QlCu9tK-k_1j8_4JxMkiQ>
+    <xmx:EfkWahGSvwq9DKCx6BIV9r9HY2VfHd8FDC96tx_aCe_PwZshp-YAlw>
+    <xmx:EfkWamf4CSEZHRYdpvzKBNwtg73TgWh_vY3mysOVXB41EI_w_z6eFQ>
+    <xmx:EfkWarFXMsWCijEP9Zvb3t5dfkpIM8x0buFyhjr0neaY-H4WpMdD6A>
+    <xmx:EfkWaqGbsBoyP8QeRSPao05_Iflu6uwlRdzCI2IlsIsJe3GBZHwo3mjM>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 May 2026 10:00:29 -0400 (EDT)
+ 27 May 2026 10:00:48 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 1/2] *: replace deprecated free_commit_list
-Date: Wed, 27 May 2026 15:59:25 +0200
-Message-ID: <commit.h_replace_deprecated.715@msgid.xyz>
+Subject: [PATCH 2/2] commit: remove deprecated functions
+Date: Wed, 27 May 2026 15:59:26 +0200
+Message-ID: <commit.h_remove_deprecated.716@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.6.gf6fa7dd4140
 In-Reply-To: <CV_commit.h_remove_deprecated.714@msgid.xyz>
 References: <CV_commit.h_remove_deprecated.714@msgid.xyz>
@@ -84,86 +84,50 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Replace `free_commit_list` with `commit_list_free`. The former was
-deprecated in 9f18d089 (commit: rename `free_commit_list()` to conform
-to coding guidelines, 2026-01-15).
+These functions were deprecated in a series of commits merged in
+52882024 (Merge branch 'ps/commit-list-functions-renamed', 2026-02-13).
 
-This allows us to remove all the deprecated functions in the
-next commit:
-
-• `copy_commit_list`
-• `reverse_commit_list`
-• `free_commit_list`
+The compatibility was for in-flight topics at the time.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- builtin/history.c | 4 ++--
- replay.c          | 2 +-
- upload-pack.c     | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ commit.h | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/builtin/history.c b/builtin/history.c
-index 0fc06fb2045..091465a59e2 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -284,7 +284,7 @@ static int setup_revwalk(struct repository *repo,
+diff --git a/commit.h b/commit.h
+index 58150045afa..5352056f87a 100644
+--- a/commit.h
++++ b/commit.h
+@@ -203,25 +203,6 @@ struct commit_list *commit_list_reverse(struct commit_list *list);
  
- 		commit_list_insert(original, &from_list);
- 		ret = repo_is_descendant_of(repo, head, from_list);
--		free_commit_list(from_list);
-+		commit_list_free(from_list);
+ void commit_list_free(struct commit_list *list);
  
- 		if (ret < 0) {
- 			ret = error(_("cannot determine descendance"));
-@@ -892,7 +892,7 @@ static int split_commit(struct repository *repo,
- 	if (index_file.len)
- 		unlink(index_file.buf);
- 	strbuf_release(&index_file);
--	free_commit_list(parents);
-+	commit_list_free(parents);
- 	release_index(&index);
- 	return ret;
- }
-diff --git a/replay.c b/replay.c
-index 4ef8abb6077..da531d5bc68 100644
---- a/replay.c
-+++ b/replay.c
-@@ -120,7 +120,7 @@ static struct commit *create_commit(struct repository *repo,
- out:
- 	repo_unuse_commit_buffer(repo, based_on, message);
- 	free_commit_extra_headers(extra);
--	free_commit_list(parents);
-+	commit_list_free(parents);
- 	strbuf_release(&msg);
- 	free(author);
- 	return (struct commit *)obj;
-diff --git a/upload-pack.c b/upload-pack.c
-index 9f6d6fe48c8..2bf450ab288 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -886,7 +886,7 @@ static void deepen(struct upload_pack_data *data, int depth)
- 					     data->deepen_relative, depth,
- 					     SHALLOW, NOT_SHALLOW);
- 		send_shallow(data, result);
--		free_commit_list(result);
-+		commit_list_free(result);
- 	}
+-/*
+- * Deprecated compatibility functions for `struct commit_list`, to be removed
+- * once Git 2.53 is released.
+- */
+-static inline struct commit_list *copy_commit_list(struct commit_list *l)
+-{
+-	return commit_list_copy(l);
+-}
+-
+-static inline struct commit_list *reverse_commit_list(struct commit_list *l)
+-{
+-	return commit_list_reverse(l);
+-}
+-
+-static inline void free_commit_list(struct commit_list *l)
+-{
+-	commit_list_free(l);
+-}
+-
+ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
  
- 	send_unshallow(data);
-@@ -900,7 +900,7 @@ static void deepen_by_rev_list(struct upload_pack_data *data,
- 	disable_commit_graph(the_repository);
- 	result = get_shallow_commits_by_rev_list(argv, SHALLOW, NOT_SHALLOW);
- 	send_shallow(data, result);
--	free_commit_list(result);
-+	commit_list_free(result);
- 	send_unshallow(data);
- }
- 
+ const char *repo_logmsg_reencode(struct repository *r,
 -- 
 2.54.0.6.gf6fa7dd4140
 
