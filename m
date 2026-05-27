@@ -1,40 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9973B5F63
-	for <git@vger.kernel.org>; Wed, 27 May 2026 10:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB78F357CFE
+	for <git@vger.kernel.org>; Wed, 27 May 2026 10:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779878374; cv=none; b=kzPfR9cUzT10hbcFJ/Cug/uF1oZNaEPgjCnz2QODWcWwWth5kKoWKBq19lJlZFBmB2+3TzXHqnQnY+53/ex060IkhBol9gHSnX7bB4wbgVfHxJTvmJCj1sKuAe02g6QlXbLjFR6BnmzjMXVQgefwY2JUu4OussQYDYcC9T+ZPvc=
+	t=1779879402; cv=none; b=nJPWck0Rs87MiddbHzqjGTseHIKk16KNVdd5syt57GDq9L5zC9qUlEPTXGg0dTPzijeN8gVajoVlPOWDq2+d3As0q7pY68ayscxmOoPPdadeSlBA9EDfv3BIrQEXl2rlyPja0ubOavCnSvB//bnXxO1dsZtpcUSo/+y4BwZl+OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779878374; c=relaxed/simple;
-	bh=yqtyw4s8hgHJ6UvLK7WrU2aodwzzBNv4/gyKS3+qpi4=;
+	s=arc-20240116; t=1779879402; c=relaxed/simple;
+	bh=TRwugpVjndTyGhlUmjC3EQRpFImE5EAC0pRw4qFF4Yc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=COJsrx9M/ui+4DJ2I5hFXAg30jRf5IuC5OT/cBF9aF0imTVGa4aU/bNi1bDmBzVBohyCx1OJ4b9jSAfgdk5GjicVa8PvtxlzetwOAo7LIEdXR6qhC6CKxOc+x/9c+6t3KpEXWSAjOCqyeYefGixq36NLMJpaGcimUKSMZ8vB0lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=flkfhL3k; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=CJxBMCpCLB8p2l4euXTgNQRfR3eYbCmNaGv0Eo1Eg0j0XueCClHYWQTZwTiDB8rCjiEftdL+V0C2cB9hgtr60IzEKHFSxml5tV5f72mZGvgU2hIziIfrtmmOeKd2tcaxbCp50Od17VymqIx4UPgIamsLLH5jnw1y36boSwePxSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Uqe4+um4; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="flkfhL3k"
-Received: (qmail 29333 invoked by uid 106); 27 May 2026 10:39:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=yqtyw4s8hgHJ6UvLK7WrU2aodwzzBNv4/gyKS3+qpi4=; b=flkfhL3kHOXRzXT/usBJpweVM3uqT1HpWllZl3Bdg5jyg+poWwkhns0RkgayHIYoJ3PSDIoZOX8l0TKrPbSwkgnHD3fqKIGO5aVL2fmqdm6XRNcqI/195USJTwkb2LvSYeMmDDzYfjjX0oRc2DUpkA5L8yWpz5ho7z61GEFrQ0onNag/EYwO/s3E3jZCIQochuElN7tvCuYMWY+EdCkBVKHLh7OwiWshofCk+z6qKH1xDEv1uygOA1U8/fbDJAFNcL1KGpZd9ABA+GnxessGnzOemem1DnyWMvvs1mnimG5GWg5yAlLsBHSqjycxt5BUjQZN+HuACBtVaxfIdi6MFw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Uqe4+um4"
+Received: (qmail 29395 invoked by uid 106); 27 May 2026 10:56:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=TRwugpVjndTyGhlUmjC3EQRpFImE5EAC0pRw4qFF4Yc=; b=Uqe4+um4/QTd+RIODoULmdlU33ne0+Wbu0cuuEKARzRyTj2tsO/SJoeYSMND5R7elJqU0Hwhpo7m+85RcN+QeBsreJyYgSMMeSRJwVkJoRBJiLe59najjr3mKj0T7BzpSf3ulYhl9YVsYtg0CGWjY+GqBeOhpYTxBKqxCQFbkWP9tRMaizADxjSHhD6fZZZRsVPYw1HbrqBQZxHO9x8+CI9ghYn+BunOhXMCXIlsMwxUKz4ZUGdpMJehGhStnYZNGeBf3hlueqI17PoMjDaXHsPJMHRPKcQMHsGeXAeW0z5UM/FwRm7Tj03q/ckNOvjKolf67xEqjO+CdhxZlGbUcA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 10:39:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 10:56:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 73517 invoked by uid 111); 27 May 2026 10:39:31 -0000
+Received: (qmail 73674 invoked by uid 111); 27 May 2026 10:56:39 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 06:39:31 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 06:56:39 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 27 May 2026 06:39:30 -0400
+Date: Wed, 27 May 2026 06:56:39 -0400
 From: Jeff King <peff@peff.net>
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] fetch: pass transport to post-fetch connectivity check
-Message-ID: <20260527103930.GJ981444@coredump.intra.peff.net>
-References: <pull.2123.git.1779625693328.gitgitgadget@gmail.com>
- <20260527083216.GA981444@coredump.intra.peff.net>
- <CAL71e4MrVqC1=AR6x0_8S=8kVqPdDkhgCZRb4etFsxTzd6s_8Q@mail.gmail.com>
+To: SURA <surak8806@gmail.com>
+Cc: git@vger.kernel.org
+Subject: git-maintenance detach timing, was Re: I discovered a minor issue
+ with `git fetch`.
+Message-ID: <20260527105639.GK981444@coredump.intra.peff.net>
+References: <CAD6AYr9YmcnkdW=Nx=HUKcuaNbv1ukrAbXRnKyGibCQDy8N3hQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,72 +41,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAL71e4MrVqC1=AR6x0_8S=8kVqPdDkhgCZRb4etFsxTzd6s_8Q@mail.gmail.com>
+In-Reply-To: <CAD6AYr9YmcnkdW=Nx=HUKcuaNbv1ukrAbXRnKyGibCQDy8N3hQ@mail.gmail.com>
 
-On Wed, May 27, 2026 at 12:04:19PM +0200, Kristofer Karlsson wrote:
+On Fri, May 22, 2026 at 03:45:25PM +0800, SURA wrote:
 
-> You're right. I dug into this further and realized the problem is deeper
-> than just the flag not being set in builtin/fetch.c.
+> A zombie process has appeared. It appears to originate from a `fetch`
+> subprocess that terminates very quickly; despite several attempts, I
+> have been unable to successfully capture it.
 > 
-> Even if we add:
-> transport->smart_options->check_self_contained_and_connected = 1;
-> to prepare_transport(), the optimization still won't work for fetches.
+> This issue was discovered within a legacy service. A few days after
+> upgrading to Git 2.53.0, the system's PID resources were exhausted by
+> zombie processes. This is likely the result of recent changes, as this
+> problem did not exist in earlier versions (2.4x).
 > 
-> The optimization is fundamentally clone-only.
+> To be honest, this is not an urgent matter; I have already deployed
+> `tini` as the init process (PID 1) to prevent the service from
+> becoming unavailable.
 
-I have wondered if the transport could do the same thing for:
+Yeah, I agree that you need some kind of zombie-reaping init process.
+But I did wonder if we might have started generating more zombies here.
 
-  git init
-  git fetch ...
+I did a little poking around with "strace -p 1". I didn't see extra
+fetch processes, but I did see a lot of zombie git-maintenance processes
+getting reaped. Which makes sense; by default we run background
+maintenance with --detach. We can't ever reap that ourselves, since the
+whole point is that it might outlive the parent fetch.
 
-When we do not send any "want", then we'd expect the pack we receive to
-be self-contained.
+Once upon a time, we used to run "git gc --auto", and it would check
+whether gc was needed (using a simple count of objects and packs) before
+detaching. So in most cases it would realize there was nothing to be
+done and exit immediately without daemonizing, and would get reaped by
+git-fetch.
 
-But in practice that is not that exciting, as it is a special case that
-does not come up that often.
+We switched to running "git maintenance" in v2.29. But it didn't yet
+have a detached mode; it just run "git gc --detach" under the hood, so
+the behavior was roughly the same (gc was reaped by maintenance which
+was reaped by fetch).
 
-I suspect there's some hybrid mode where we could save some work. It is
-easy for index-pack to come up with a list of "edges" from the pack it
-got that point outside of the pack. We just need to know that those
-edges are reachable from existing refs. So really we could be checking
-the connectivity of those edges, rather than the actual ref tips.
+Later, git-maintenance learned its own --detach flag, as of v2.47. But
+unlike gc, it detaches immediately, and then each sub-task decides if it
+needs to be run or not. So every "git fetch" will generate a detached
+maintenance process that then gets reaped by init.
 
-Would that be less work? I'm not sure. It saves walking over the
-newly-fetched history, but in practice that is probably not that
-expensive. It potentially saves a lot when the edge is a ref tip; for a
-true fast-forward we'd see a ref going from A..B, and if index-pack
-tells us that it just needs A, we can skip the traversal entirely.
+And if you moved from a pre-v2.47 version, then you'd see an increase in
+such processes.
 
-But index-pack isn't really thinking in terms of commits, but rather the
-whole object graph. So you're going to find that commit A is needed, but
-also all of the tree entries in the existing history that weren't
-touched by the new history (e.g., B touched path "foo" but not "bar", so
-it gets a new top-level tree, a new blob for "foo", but still references
-the existing blob for "bar"). I guess you could speculatively load A^{tree}
-to cull the list.
+I think this is probably OK in practice. It is an extra fork that git-gc
+never incurred, but as long as you have a functioning init process, they
+won't accumulate.
 
-So I dunno. I think there is some room for speedup here, and in many
-common cases you could skip the rev-list invocation entirely. But it's
-not trivial, and I think is far afield from what your patch was
-originally trying to do. ;)
-
-> I was unable to reproduce the benchmark numbers from my original commit
-> message.
-
-Yeah, I wondered where the numbers came from. It is very easy to fool
-yourself with fetch benchmarks, because even "fetch --dry-run" will
-transfer objects, and under the hood we try to optimize out as much
-object transfer as possible. So you really have to start from the exact
-same on-disk state for each trial.
-
-> The patch as submitted is indeed inert for non-clone fetches.
-> It looked like a simple improvement, but it's clear that it was incorrect.
-> I'll drop it, and I apologize for the noise here.
-
-No problem. You've been generating some interesting optimization work
-lately, so I can't complain. :)
-
-I'll probably have more comments on your other topics, but I'm out of
-time for tonight.
+I do wonder if git-maintenance could be more like git-gc here. Its
+notion of tasks is more abstract, but it could in theory ask each task
+"do you need to run?" and if they all say "no", then it can quit without
+detaching. That would save an extra fork() for every noop
+auto-maintenance call. I don't know how measurable that is in practice.
+Or even how easy it is for each task to do such a check. Something like
+"prefetch" is kind of all-or-nothing; you find out whether it needs
+doing by doing it.
 
 -Peff
