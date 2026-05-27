@@ -1,72 +1,70 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71B02147E6
-	for <git@vger.kernel.org>; Wed, 27 May 2026 04:24:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2994222339
+	for <git@vger.kernel.org>; Wed, 27 May 2026 07:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779855859; cv=none; b=hL2aYT44hD4iLB9ii/935ppAN6JlRYQJQd/5WWKTp78/fXx6AOcfFPbxYHgpXGBFVz0GjMWTWV8XdiSbZ/6w7KL6R2QdkewCFNfQKgxlpUF1Ac9SKSsXKD3xEXXWuAcX6iLcz73mVoRfWle90nqiSif4DRqdEAnwaRAc49+K5rA=
+	t=1779865516; cv=none; b=OxLJ7XqyWWHuf2owU44hRY0oBddiPIBV75xCYP8Kfle3SJjkKBFSOSAyFxeBm1kjptANS88NjnnR5gFpooAavNmSky9YoCIY4vMHyBGnK0sAAiVjow1MBVIjGf+lxLdfeK0ChL4TuD/yJzZGgwNNQbIESrrup5AbOJ2iyHBcuIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779855859; c=relaxed/simple;
-	bh=HWzO9FWbRYOWT7eUh2shZ5UcfdP7ryZvIdqBkD5/42A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gYBoXOgz0R7B5iw7Q8D6KjkcpIzWfY5nBnYRFrSEG3X74VZeHlqV/K8Q10to0J+XlELKOn5+uK5JVryxEHcXsistPWZCErAmQ34lqIGcWCkvp5h8TWr6WQxeTuniMNmvQbnppIOMaa23zYUeJXPXrW3FjPynXyrYyLPEPckL7/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NptvioAy; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779865516; c=relaxed/simple;
+	bh=ptrBPg0n/TFYXziEU/26H6aPsmU5+yEIF4FxOwOpdS0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KHPrXCD0fIKyRuhman0Kmviy0vOfKdqWIWY4pqaUz0bO4axJh9xdizla8JfOYrVayx52fsyF7mS3DX83NSG6+pVF62HwXlumEUFnuMOB34d/uUjEuFJZIW/dsVqrstFZ5/UD429goGKDAPkxWrXC4Pf+E4Qq/qMWShaTPXnnH0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=DEess27A; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NptvioAy"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-36a3e47bba4so685438a91.2
-        for <git@vger.kernel.org>; Tue, 26 May 2026 21:24:17 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="DEess27A"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4903d5c67bfso30344435e9.1
+        for <git@vger.kernel.org>; Wed, 27 May 2026 00:05:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779855857; x=1780460657; darn=vger.kernel.org;
+        d=spotify.com; s=google; t=1779865513; x=1780470313; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=U31sT3Lh/IQ68bKuh91lAlnznQtGqYTwktz3xH2WsIE=;
-        b=NptvioAyWK4+Kox5hzcd/XUYIjuWeEV4Bm+O6bW7rRq6Is3Vbki7bfOepeZsaOGsUZ
-         rVP4smxHycxgWiPrXXf+QTCvX+ZbTFTbsUU5H8yED5tgQjCR6RjCQ2P8ugRU4Gz37Tbv
-         aLEM/r18g5pYVZ+SUae8Q9PubyWID32TpQe9mw0jLejO7Y2yZfPJBvk5waLyIvpj6JRF
-         BbzmTCuAgAdyzICo7syQnrcY2v6Jbq74e1kltR1axdkqFuq8OyuM3LY8n2os5tCuBevk
-         eImnLu6Auy+Aau07+wuQoVopYSqFw1GDIj6MTAUeJmptQhsoPwPh/j2lY5Xf5UDP/bC2
-         u42A==
+        bh=EvqKpOG0N6dsc1pDiHhFStSlWTaTsWTl7Lf2XsmO9V0=;
+        b=DEess27A3K4EEOo2DKwJov6s3Oq+/taYa9TuUUiVryjTdKWdwymr8XYn8EDY3KmhJY
+         JW6fl58F/YM5zqwrjyfQqMDSN8EtM+lu7Bh/B0wEm2buOwYvvT/cqMx8Dgt0LCN+k7Q1
+         TpcPqS9E2hq88JwBQV7ujUUt+SF+0ZWSJjfP4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779855857; x=1780460657;
+        d=1e100.net; s=20251104; t=1779865513; x=1780470313;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=U31sT3Lh/IQ68bKuh91lAlnznQtGqYTwktz3xH2WsIE=;
-        b=SoM89jhTlbUcwpv9rsswxRBSHbRbNT2yG1RmD9DMf8iy8JVOYoNwtYcSt5wtpBUP8b
-         7nSmnw+ChjqaZmSA8pwosoe+N+6SS7qZctxnJpBvE5JGlD+xmJnG+hBr1O6AOHRdUSdI
-         uRj1TQVRfsJ4oHEcdNhYm9B2ZmDMG/8YTVDguMK8LdBNXI0DOtGLqWEW+uI2ljladnNj
-         5csHgLjCvJdMyhD6qzFX22sjQFGJkzzCzbaLvAwW6zxqT+RLEUHRIfJQZym0PbgrE2eW
-         J8qyzctjqvVZ1qqeUk3Bmte7oYKoztgPJKDJgL0g5YMnQDcRG4oSQNEctURIIyOuvMe7
-         U/ng==
-X-Gm-Message-State: AOJu0YzwylWVg3NXXXiHVESSeX3yKDhYqvigPEOYyLG4Z5PZID984cQ3
-	DDdmio6TuDRBBpPiGxLV+LXo3Iia4BuEG6W3T+hbeD+girK92xNQc2fRmQnDjQ==
-X-Gm-Gg: Acq92OHgqXdiQNc1M2Bp+Vy5nb49kZzVh9pieMZU95io0/ZpXsOM4sMDaxcyFMn1TZP
-	h/KYqRhAdAw3qsJVajno1sv8GboVBjbquBmFH6Aucwi0N3oMV/YUJ5SKmspaT6uaMx+dK5+8Qbd
-	BssHVB514oTIZ2yf16c8jvNpUTZlYzms3G/h0Y+b+lplYEGQek9+DN2GqRPVFKTQySzU8EU6A5R
-	0NNWwklk80FvQ8GwrlzZufG+H8OqCv0yP2NLTMLMcqHv98IMFrNCQLOveZTwO3O0c0jhDn/0e3k
-	u/e/vhtOSyEPTseGGMXDnTZHDyJqIRhcPVFhAzmmHZffsqJXZhZkB0i8mdDsu+/cadBlc9UMth5
-	Kgoxg6Lu2fOqFpLK0jvoOqRcVrkj2st5p76PBlMXdmTznq+p8W+AvPzdHMqmPMOkflfG+FH5rJ0
-	VDaWFCJfT0YE61R8LsqPwaql/DtdCvannxqiV45JxIAQjd19AJgV2GPETWGT+AhHoEMAz2sHRvZ
-	HHed6PZDdE7KqNnXw==
-X-Received: by 2002:a17:902:c407:b0:2b2:b1a5:aa4e with SMTP id d9443c01a7336-2beb061fe54mr136842765ad.3.1779855857347;
-        Tue, 26 May 2026 21:24:17 -0700 (PDT)
-Received: from localhost.localdomain (122x211x77x66.ap122.ftth.ucom.ne.jp. [122.211.77.66])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58d9fe9sm135625495ad.65.2026.05.26.21.24.16
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 26 May 2026 21:24:16 -0700 (PDT)
-From: Keita Oda <ainsophyao@gmail.com>
+        bh=EvqKpOG0N6dsc1pDiHhFStSlWTaTsWTl7Lf2XsmO9V0=;
+        b=SZ5/crpi3wIeyKQC1mrEDL1PjijbySRp+hMTCLJofiskfW72puEqoWem+Bo0QBz2Nl
+         qYS+kagOuX9frXbHvTVwLfqhxcSM7nti82M65935W/o/TYl1+k21xFp4OOcZX9eRe0yf
+         0jpl4hVk/XkodjYoiJKSKkX1dcVYpcsEx1BnpWTX1KygJHYptUmIoB1Th/I3layx3+QP
+         /q0AWu+WTwVctPDd5Qr/E58jayh1SAzjEnZH09O91Tk+K7p12EvZvG7f7k1giJkNPiMe
+         6x3/swxuL3ZEApo+DCFQWV4cm0Pxi6wJ0bhSiatkLCQNTWY48WYFiawDVLSDCJ7iO9p2
+         QG5g==
+X-Gm-Message-State: AOJu0YzLtqiANFM3KhcxAq19KvMHx3WZhT4PwwiZgd5IQ//HKSFqmxd/
+	IOJzRBkQAOaePkJKmdMNNPfNG0D7j4RiUrCN5DVP/AdJ77nvkoJaF3g7X0ErZjgSWVDTGLX2u/s
+	KpIPVkBY=
+X-Gm-Gg: Acq92OFy9PfwrQUcl4Li1AaTVKrBzis4+6E4k3mu13eQsYMhuIqcYxwIFveyIP/DxEZ
+	sifIHkUNmzJNsV+ZAkTVQaWH4qeV7Q6za62bwTAgcYKHskcktL82ekLjyu6AuhLQ8326WS5kPUz
+	Ucpl/d/S7pEcNIaKrXoORipwAwUHHRFIdsaUwSMkQKmMpHevroi0/ylv1qpLC92DSsfrZMqjSIU
+	lfkXbUdo3isR0KPySM5ZHV48AFivy9mA7PlrxtmrL/AuZb+ImKz+/DYrgjPwmKiX6cN3bAFUPaW
+	hyB5wMoykzvN6oDUUCz8JsnaLVjkGtItiVZsbWto1fOVhYbMU66BxbxWDj+LGdR4gxxEkX0HRRL
+	f1lhJyIupWsxifH3nrWpe/wF+xD8KbKhDZdQvfxiIrdq/kz8AOSV4tEwrdKJJjfUvFo0r3S7MhE
+	YaUEEY6sPB+BW0Y1/fZVkeBUl2r4zTHd8ewffa4XjeL9udbMox
+X-Received: by 2002:a05:600c:3b8c:b0:490:480e:266 with SMTP id 5b1f17b1804b1-490480e02eemr385641965e9.26.1779865513441;
+        Wed, 27 May 2026 00:05:13 -0700 (PDT)
+Received: from krka-x1c.spotify.net ([95.202.8.70])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45edb5b1a28sm3923197f8f.26.2026.05.27.00.05.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 00:05:12 -0700 (PDT)
+From: Kristofer Karlsson <krka@spotify.com>
 To: git@vger.kernel.org
-Cc: Keita ODA <ainsophyao@gmail.com>
-Subject: [RFC PATCH 3/3] t4034: cover moved-and-edited word diff alignment
-Date: Wed, 27 May 2026 13:24:02 +0900
-Message-Id: <20260527042402.13607-4-ainsophyao@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20260527042402.13607-1-ainsophyao@gmail.com>
-References: <20260527042402.13607-1-ainsophyao@gmail.com>
+Cc: Jeff King <peff@peff.net>,
+	Derrick Stolee <derrickstolee@github.com>
+Subject: Re: limiting git branch --contains
+Date: Wed, 27 May 2026 09:05:09 +0200
+Message-ID: <20260527070510.3510836-1-krka@spotify.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20230324191009.GA536967@coredump.intra.peff.net>
+References: <20230324191009.GA536967@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,75 +73,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Keita ODA <ainsophyao@gmail.com>
+Hi!
 
-Add a focused --word-diff-align test with a moved permission-style block where
-one value changes inside the moved block.
+I'm reviving this old thread because I believe the discussion here
+is still relevant and the patch Peff included is good. I think I
+accidentally created the exact same patch before I found this thread.
 
-The test is intentionally small.  It checks that the changed line is paired and
-that the RFC renderer exposes the old and new value with word-diff-like
-markers.
+I work on a large repo (millions of commits, ~8000 remote tracking
+branches) where "git for-each-ref --contains <commit> refs/remotes/"
+was taking 4+ seconds even with a commit-graph, and much worse for
+deeper commits. I started investigating and building a more complex
+batched solution before I realized that the cached DFS algorithm
+(contains_tag_algo) already exists and does exactly what's needed --
+it just wasn't enabled for branches.
 
----
- t/t4034-diff-words.sh | 46 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+With generation numbers (commit-graph), the cached algorithm is
+strictly at least as good as the uncached one. Both have the same
+walk floor -- the generation cutoff in contains_tag_algo is equivalent
+to the STALE boundary in paint_down_to_common. The cache then provides
+a pure win: O(total unique commits) instead of O(N * commits per ref).
 
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 0be647c2f..7bf696b17 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -148,6 +148,52 @@ test_expect_success '--word-diff=plain' '
- 	word_diff --word-diff=plain --no-color
- '
- 
-+test_expect_success '--word-diff-align marks moved-and-edited block lines' '
-+	cat >old <<-\EOF &&
-+	#define LIMIT_PUBLIC_UPLOADS       25
-+	#define LIMIT_PUBLIC_INVITES       8
-+
-+	/* Public resource permissions. */
-+	#define PERM_RESOURCE_READ         0x0001
-+	#define PERM_RESOURCE_LIST         0x0002
-+	#define PERM_RESOURCE_COMMENT      0x0004
-+	#define PERM_RESOURCE_EXPORT       0x0008
-+	#define PERM_RESOURCE_SHARE        0x0010
-+	#define PERM_RESOURCE_ARCHIVE      0x0020
-+	#define PERM_RESOURCE_DELETE       0x0040
-+	#define PERM_RESOURCE_ADMIN        0x0080
-+
-+	#define PERM_INTERNAL_DEBUG        0x0100
-+	#define PERM_INTERNAL_IMPERSONATE  0x0200
-+
-+	#define AUDIT_POLICY_STRICT        1
-+	#define AUDIT_POLICY_VERBOSE       2
-+	EOF
-+	cat >new <<-\EOF &&
-+	#define LIMIT_PUBLIC_UPLOADS       25
-+	#define LIMIT_PUBLIC_INVITES       8
-+
-+	#define PERM_INTERNAL_DEBUG        0x0100
-+	#define PERM_INTERNAL_IMPERSONATE  0x0200
-+
-+	#define AUDIT_POLICY_STRICT        1
-+	#define AUDIT_POLICY_VERBOSE       2
-+
-+	/* Public resource permissions. */
-+	#define PERM_RESOURCE_READ         0x0001
-+	#define PERM_RESOURCE_LIST         0x0002
-+	#define PERM_RESOURCE_COMMENT      0x0004
-+	#define PERM_RESOURCE_EXPORT       0x0001
-+	#define PERM_RESOURCE_SHARE        0x0010
-+	#define PERM_RESOURCE_ARCHIVE      0x0020
-+	#define PERM_RESOURCE_DELETE       0x0040
-+	#define PERM_RESOURCE_ADMIN        0x0080
-+	EOF
-+	test_must_fail git diff --no-index --histogram --word-diff-align old new >actual &&
-+	test_grep "^-#define PERM_RESOURCE_EXPORT\\[-.*0x0008-\\]" actual &&
-+	test_grep "^+#define PERM_RESOURCE_EXPORT{+.*0x0001+}" actual
-+'
-+
- test_expect_success '--word-diff=plain --color' '
- 	cat >expect <<-EOF &&
- 		<BOLD>diff --git a/pre b/post<RESET>
--- 
-2.39.3 (Apple Git-146)
+In my benchmarks, the improvement is significant and scales with the
+number of refs and the depth of the target commit:
+
+git.git (69K commits, 5826 tags) with commit-graph:
+
+  Scenario              Master    Cached    Speedup
+  Deep (v2.30.0)        1.08s     292ms     3.7x
+  Recent (HEAD~100)     338ms     240ms     1.4x
+  Orphan (unreachable)  271ms     241ms     1.1x
+
+Large monorepo with commit-graph:
+
+  Scenario              Master    Cached    Speedup
+  HEAD~10000            511ms     239ms     2.1x
+  HEAD~50000            4.14s     272ms     15x
+  Orphan (unreachable)  4.13s     252ms     16x
+
+I also tested with varying ref counts on git.git. The cached
+algorithm is faster or tied in every scenario I tested -- the
+crossover point is around 3-6 refs, below which both complete in
+single-digit milliseconds.
+
+Without commit-graph, the difference is even more dramatic (41-54x
+on git.git with 5826 tags), though the theoretical argument is less
+clean: without generation numbers, contains_tag_algo has no walk
+floor and may traverse to root commits for unreachable targets.
+In practice the cache still wins for N > 1, but I don't have a
+proof that covers all possible DAG shapes. I think we should start
+by optimizing it for the case where we have generation numbers,
+and maybe keep exploring if there are any meaningful scenarios
+without generation numbers where it would actually be a regression.
+
+To reproduce the benchmarks:
+
+  # Setup
+  ORPHAN=$(git commit-tree HEAD^{tree} -m "unreachable")
+  git commit-graph write --reachable
+
+  # git.git with 5826 tags
+  git for-each-ref --contains v2.30.0 refs/tags/
+
+  # Large repo with remote refs
+  git for-each-ref --contains HEAD~50000 refs/remotes/
+
+-- Kristofer
+
