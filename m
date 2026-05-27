@@ -1,124 +1,192 @@
-Received: from rush.cubic.ch (rush.cubic.ch [176.9.78.115])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7453F4A3E
-	for <git@vger.kernel.org>; Wed, 27 May 2026 04:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.78.115
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C912147E6
+	for <git@vger.kernel.org>; Wed, 27 May 2026 04:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779854429; cv=none; b=iszzgq3Sst50rOv4No2Ai9Ksuk9cSdvLGReBYx6qdQTiIB3sECVpp5hA8rQvGRvNYs+j8MlzNjPe/1/KqlVmBA5p9k405JK2jtxLLHADidWCB8Ncbw5wUbLLn0m+LlRBMhRSAFaCQp7JNYuL+iSzQIkMmNEWE7PeLghMJ7GcnxQ=
+	t=1779855855; cv=none; b=K2AUWa6fwNhzWS6DtsgpFjPZWFMqvjGT8SH2GxU7J5yIkaJyP3W0OKw/MTj2JH9i5kBC6f3zdPCOrKFLYW6F2qWXl5iXvuecO7bjpuAYI74T70Urpyh40c3UMuiLFkEWqNzLl4yasrx9XdG2g+uRnXTeeP4hvYtXkNLIMWmCSFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779854429; c=relaxed/simple;
-	bh=c2vYffJyznC355QfC302/l4CESzVoBS7Q0GlfJtvzEE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aUA7igFGREorSIx7CkOVtJGEzUZFynbYBgKXQn/Lds24YBZC1IxHS2EJ8CSA3LXFETnNU4stjB5GqnfhvktylmgW85LZrYJwv5oXkkcNu35QYZHJIGaKF48oJ3+vPHhJclLjAJsKReBo7FL7Pf1FRLQzcieTwBKQyTV4zQp0Mwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decentral.ch; spf=pass smtp.mailfrom=decentral.ch; dkim=pass (2048-bit key) header.d=decentral.ch header.i=@decentral.ch header.b=HEK+J/+/; arc=none smtp.client-ip=176.9.78.115
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decentral.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decentral.ch
+	s=arc-20240116; t=1779855855; c=relaxed/simple;
+	bh=wvPCytO/iDn4eeex49RPBpVuFdI/MUOykAV86Z53YQg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Sa4t6bwR/Z+ki4yQh9XQFCPiILv5DycINkYIDy6F7X6NVcYnR6IizjDH5odtiYFlvSnJV+5wrp2RL9XjVu+6Ni7iEeBzfv2XkdtILpHVmgPZ8SM5f8LodMLXTVsHVnxXGRgVj2PJWI1OCM42ixlV22R2xudbnstDQaZCERZ+bks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GlPWwTyg; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=decentral.ch header.i=@decentral.ch header.b="HEK+J/+/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=decentral.ch; s=rsa2;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID; bh=QITM+FKQiqtC17swuTMEZZa3A8Kg8y+TUGzQv7kPE38=;
-	b=HEK+J/+/KwgY+PQljqj7Fhbg2meQuLec0j/zjZRRc95V9BTrjvB95BryRKqUGyoYirbasT5FA4noqZ3tgQhJwH0OuN+ZSbh2yF2vqtO64gxdyWqdgHpgLd7NAgEHJXeqJptOQ0wmdMjO+kLLrWEwHxcqHbrn8O93MuhBgoibe+H67s15Cnu3ELrN5LOnGtTc2mp5YUkRyxpSB2+oDs8JBGvpqaQWnWYvzBSTFGm4bM6qVPSUj2UxBDd/AtO68uUDVHtfaxX1mkAoDJJ+3HCgZ19U2OYCaJjPDJFiLclyrUAM3xHcbopq9F/5o4mNwg0TK/I1CtHTz9pDAS0Ic5pLNA==;
-Received: from james.decentral.ch ([85.195.242.225] helo=[192.168.219.13])
-	by rush.cubic.ch with esmtpa (Exim 4.76)
-	(envelope-from <stuff@decentral.ch>)
-	id 1wS4vL-0007oL-4F; Wed, 27 May 2026 05:27:15 +0200
-Message-ID: <983b4ba0-d2b0-4d29-aabe-9e7b3987d514@decentral.ch>
-Date: Wed, 27 May 2026 05:27:14 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GlPWwTyg"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8413ba03989so678202b3a.1
+        for <git@vger.kernel.org>; Tue, 26 May 2026 21:24:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779855854; x=1780460654; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=47tVY0NB13PUY9lsnmIO3KxS1P7xGyMFRWJe5L8ZG10=;
+        b=GlPWwTygWUdau94cYtzZh4OMEx0roaGINhuCHLiXaN0rf+09WI4zStLrhJI7rsEsI6
+         2MudQXYi4DWrYH38m3j871v9nkwpxfkTjTP30Ft276St+UrMjybfXWiycGZRGF8FjOqu
+         F+x77YCyAB6y1KCy7HDsq6LllQGT7vtbr0wezaYjRoT9yXiMU7WRtM6yxWTyjAr/cBY1
+         xO5T/btlPZk8Ty1NRDJuunjrEa6MSPh4i8YbFIxnH0jTfs8OzeqbyMxr8phWkvysQiL+
+         UwlfuTLpgBbMWZiN1ClXonEs169DwO/M5ckm7UPoTK7RbQhEacvHpjddm04odYFk/GOI
+         ehRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779855854; x=1780460654;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=47tVY0NB13PUY9lsnmIO3KxS1P7xGyMFRWJe5L8ZG10=;
+        b=WvHuSv3ac0WsN3ZYCqWsyLercAf2dKIxVyHqduGQ3rj1AI0XxF3BzjgnU6US+aY7MV
+         NNpKSsD09PB3K3a3k84fExQ77A21OWq1KCIDJtx9ZFf3HteQe+8n1NjFQiPf+d1dzZgz
+         nAmKrJgcQhpfKik2y5+S3+FNLRgPB/w2VFLp5SivL3XL8qE6DQE+PqD5hmFsMTV/9hRi
+         j/kyvKZKaTAc+zXUIzegFicJTEicX2iK/Tar69ENJJR3SG3qw1sLbecXsD9H45QCgLmM
+         0YP53yIJOQ7P+Vg2p7+I5BsB+NQGb58XDLkZCpEA+NewnmesHBIpugAhvKYJ5RjSL/nl
+         uEsg==
+X-Gm-Message-State: AOJu0YwOog/a6LACHiXiAdGgSO9mh8tJ8uIXdYR6CBCSS39x6NAtvYn9
+	Z19/+0zpEeUJ8fP5BiNLIuofBkPEZGKP1VLA235VBlRs8kojv5DYN/jeqh6cLw==
+X-Gm-Gg: Acq92OE/UxiQUyxwX5AHWtpkO3DzSkaQxqurAYmA8vJys0CD+ujTiAOf3za2vmpJe47
+	rjzsug6uhgwl9zeqhuZyeTur8oagNGJod/sLz029lJ6Cmd4fR82L79Wr6a+PAQtHFB2DXc7JLlx
+	rSAST7daUZ+LMoqFBWvA0qWZ8jTW4J+ONYIDJHGZ1KEnAOle+OQpKVcC54YMOklSdTKB65xnsOa
+	tescuOnCmaOmcbA84PSsGv5Nh7NRYlFG3JtiVvwKazkuDAN/zPNFmHGxGUS8S4rrA2rccR/vYKf
+	ScsaceSx/1NO97WA16Ln3Ysa4eXAKr/sdf6bzMbRkp2Va6xuVBcWvCHOZ/JMVMSW1+rqvXKHyWO
+	ei9xxz24x44M2b7fX6THtKfd0SFzBN06v1Mir2bgi88M7bRIb3LQW+BP244xQjEgT5z9wCyMagx
+	Sy9A15zsF51PBeHS63nJDtINs/zpJMWG9dPeALZSZ5r6qr0N9S1P2jEUzA7rocYp5+2fqex2wwc
+	d+Gubljr1zTEq+hG0XIbCL+yZtE
+X-Received: by 2002:a17:903:3850:b0:2ba:7374:76e7 with SMTP id d9443c01a7336-2beb03312ffmr120528365ad.0.1779855853749;
+        Tue, 26 May 2026 21:24:13 -0700 (PDT)
+Received: from localhost.localdomain (122x211x77x66.ap122.ftth.ucom.ne.jp. [122.211.77.66])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58d9fe9sm135625495ad.65.2026.05.26.21.24.12
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 26 May 2026 21:24:13 -0700 (PDT)
+From: Keita Oda <ainsophyao@gmail.com>
+To: git@vger.kernel.org
+Cc: Keita ODA <ainsophyao@gmail.com>
+Subject: [RFC PATCH 0/3] diff: pair edited lines inside moved blocks
+Date: Wed, 27 May 2026 13:23:59 +0900
+Message-Id: <20260527042402.13607-1-ainsophyao@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git mv after the fact
-To: Junio C Hamano <gitster@pobox.com>, Chris Torek <chris.torek@gmail.com>
-Cc: Frieder Hannenheim <mail@fhannenheim.net>, git@vger.kernel.org
-References: <02663c67-01ad-4dd1-aae6-9e9706f3d040@fhannenheim.net>
- <CAPx1Gvd9+z0th9whCbcA60_bWproPp+kwp3qDmhQOe4G=0=E6A@mail.gmail.com>
- <xmqqy0h5lfa0.fsf@gitster.g>
-Content-Language: en-US
-From: Tim Tassonis <stuff@decentral.ch>
-In-Reply-To: <xmqqy0h5lfa0.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Yeah, and while we're at at it: why not another patch for
+From: Keita ODA <ainsophyao@gmail.com>
 
-git rm 
-file_i_deleted_but_didnt_tell_git_and_dont_want_an_error_message_because_thats_offensive
+This is an RFC for a review aid, not a proposed final UI or option name.
 
-because that's always very rude, too, telling me to have to use
+The motivation is the gap between --word-diff and --color-moved.
+--word-diff is very useful when the line-level diff already found useful
+old/new line pairs.  --color-moved is useful when moved lines are exact
+matches.  But when a block is moved and one line inside the block is edited,
+the small edit can be buried in a large delete/add region.
 
-git rm -f
+That case matters for review.  A one-line move is usually easy to inspect by
+eye.  A ten-line moved block with a one-character change inside it is harder
+to audit.  A small synthetic permission-table example in patch 3 uses this
+shape:
 
-Because I also am very sensitive and don't like to be told I fucked up 
-and have to be more specific about what I actually want. That's just 
-toxic, man.
+  -#define PERM_RESOURCE_EXPORT       0x0008
+  +#define PERM_RESOURCE_EXPORT       0x0001
 
+That particular toy example is not meant to show something that
+--color-moved cannot see.  It is meant to make the review question small:
+can Git expose "this moved line was also edited" in a lightweight way?
+The real-world cases below are less about proving that existing modes are
+blind, and more about making the row-to-row correspondence explicit enough
+that the small edits are easy to check.
 
+This series adds an opt-in prototype, --word-diff-align, that post-processes
+the emitted diff symbols and tries to pair similar deleted and inserted lines.
+It does not change the underlying diff algorithm, patch semantics, apply, or
+merge behavior.
+The prototype is deliberately language-agnostic.  It does not parse source
+code or build an AST; it only tokenizes diff lines into small text tokens and
+scores local token overlap.  This keeps the experiment applicable to code,
+tests, generated tables, documentation, and other text files.
 
+The prototype is intentionally split into three pieces:
 
-On 5/27/26 05:09, Junio C Hamano wrote:
-> Chris Torek <chris.torek@gmail.com> writes:
-> 
->> On Tue, May 26, 2026 at 6:18 AM Frieder Hannenheim <mail@fhannenheim.net> wrote:
->>> I'd like to propose a new flag for git mv, that updates the index
->>> like git mv normally would but does not move the file. ...
->>
->> You may already know this, but technically no flag is needed:
->> you can just "git add" the new name and "git rm" the old one,
->> with the same effect.
-> 
-> Correct.
-> 
->> A flag for "git mv" would be convenient (and slightly more
->> efficient, not in terms of storage but in terms of CPU time
->> spent discovering that the contents under the new name
->> already exist in the object database).
-> 
-> May be convenient, but I do not get the "efficient" part.  Do you
-> mean that for two operations "add" and "rm", you need to spend two
-> index writes plus one file contents hash, as opposed to one index
-> rite without having to do any contents hash?
-> 
->> But Git will discover
->> the rename on its own in the usual way regardless of how
->> you get to that point.
-> 
-> This is not incorrect per-se, but it is a confusing thing to say to
-> somebody who does not know the equivalence of "mv" and "rm + add".
-> It would not be clear to them that you are not talking about what
-> happens during "mv" or "rm + add", but about what happend during
-> "git log -M", "git diff -M", etc.
-> 
-> There is "git rm --cached" that can be used to recover from an
-> "oops, I removed the file from the filesystem without telling Git".
-> 
->      $ date >new-file.txt
->      $ git add new-file.txt
->      $ rm new-file.txt
->      $ git rm --cached new-file.txt
-> 
-> I think the requested "feature" is not all that outrageous.  It
-> would be a similar value as a morning-after correction measure for
-> "oops, I moved the file in the filesystem without telling Git".
-> 
->      $ date >old-file.txt
->      $ git add old-file.txt
->      $ mv old-file.txt new-file.txt
->      $ git mv --cached old-file.txt new-file.txt
-> 
-> Thanks.
-> 
-> 
+  * patch 1 adds the candidate retrieval and line-pair scoring, and exposes
+    selected pairs with an RFC/debug comment;
+  * patch 2 adds a small RFC-only renderer that inserts word-diff-like
+    markers on the selected pairs, so that the recovered pairs are easier to
+    inspect;
+  * patch 3 adds a focused test case.
+
+The current prototype is still larger than I would like, but the split keeps
+the experimental pieces visible.  The full series is about 1000 inserted
+lines; roughly 800 lines are option plumbing, tokenization, candidate
+retrieval, scoring, pair selection, and debug comments, while about 200 lines
+are temporary rendering code for review.
+
+The scoring model is:
+
+  S = W + aL
+
+where W is a 5-line-window token overlap score and L is a center-line token
+LCS score.  A small 64-bit window fingerprint is used only as a candidate
+retrieval index; candidate pairs are scored again before they are selected.
+Tokens repeated in the surrounding small window carry less weight for the
+center-line score, which is a local-IDF-like approximation.  This keeps tokens
+such as "import" or "#define" from overwhelming the line-specific identifier.
+
+Some real-world examples that motivated the prototype:
+
+  * CPython opcode/metadata renumbering, where many table rows stay logically
+    paired but their numeric values shift;
+  * CPython test parameterization rewrites such as tuple rows becoming
+    dict(input=..., expected=...) rows;
+  * Git's own expected-output tables, where a column width change adds spaces
+    across many rows and a row insertion shifts the surrounding context;
+  * Git's own remote.c refactoring, where extracted helper code has small
+    identifier changes.
+
+As a rough trigger-rate sanity check, I ran the prototype over 5734 changed
+file pairs sampled from recent Git, CPython, and Rust history.  The stricter
+"crossing and edited" signal, which ignores the many adjacent row pairs and
+looks for pairs that cross another recovered pair, appeared in 739 file pairs
+(about 13%).  This is not a gold-label quality number, but it suggests that
+the mode is not only triggering on the synthetic test.
+A small manual review found both clear wins and loose matches.
+
+I found the problem easiest to inspect with four-way comparisons:
+
+  * git diff --histogram
+  * git diff --histogram --word-diff=plain
+  * git diff --histogram --color-moved=blocks
+  * git diff --histogram --word-diff-align
+
+I put a small set of rendered four-way examples here:
+
+  https://oda.github.io/git-diff-rfc-examples/rfc-word-diff-align/
+
+These links are supplemental; the patch series is intended to be readable
+without them.
+
+Known limitations:
+
+  * the UI/debug output is not final;
+  * generated or boilerplate-heavy hunks, especially Rust generated test
+    updates, can still produce loose matches;
+  * one-line long-distance pairs are often less useful than block-level pairs;
+  * the prototype intentionally gives local and remote pairs similar treatment
+    for now, to make the recovered pairings visible for discussion;
+  * thresholds and tie-breaking are still experimental.
+
+The question for this RFC is whether this kind of language-agnostic line-pair
+annotation is worth pursuing in core, and if so whether it should be shaped as
+word-diff plumbing, a color-moved extension, or a separate opt-in mode.
+
+Keita ODA (3):
+  diff: add word-diff-align line pairing
+  diff: render word-diff-align pairs for RFC review
+  t4034: cover moved-and-edited word diff alignment
+
+ diff.c                | 996 +++++++++++++++++++++++++++++++++++++++++-
+ diff.h                |   1 +
+ t/t4034-diff-words.sh |  46 ++
+ 3 files changed, 1035 insertions(+), 8 deletions(-)
 
 -- 
-decentral.ch - IT Stuff
-Tim Tassonis
-Badenerstrasse 219
-8003 Zürich
-stuff@decentral.ch
-+41 79 229 36 17
-
+2.39.3 (Apple Git-146)
