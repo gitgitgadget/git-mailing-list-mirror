@@ -1,138 +1,180 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641C53A6F0F
-	for <git@vger.kernel.org>; Wed, 27 May 2026 10:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779876273; cv=pass; b=IkMDwLdWpRosL7g3PZeU8hXa/3cqqIhps8IaXf81PbDKXP4RpbHdxh7KJlip7TeYkHvOJWwcVHrdq2EhE3cuq3aeqbhBUZYPGSnmEqiKt533kvKNSaLDnHJ4mHLOBKi4LN47jdq5ZpwXim+d7ddU7gTFPCLDFxEeqA9xlMwqGK0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779876273; c=relaxed/simple;
-	bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C+GWG+Vhm7BGSv0CSl0Ida7Hl/canLpCIw/7fCP9YQmn+w0aBXn9ypFpDMhk98fYs9QwvXtnVtrFHfLyH+eCgl4kWGKPixfwSrpNdX+fQlQsKDHd9jfdHbx6FAvLlBm9WHVteTxqxaLg+kFzA9WAKHJOO1HEqhE7cI1K21/ajB0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=BkunhAlb; arc=pass smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F202379EDA
+	for <git@vger.kernel.org>; Wed, 27 May 2026 10:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779877538; cv=none; b=sKe0fxXNHJJ87+aeZ6MDkd321BsGtMn6lgwOP8UGv+Y/1WeHa2fRgXd98ZL/51PVOXiRbXpLOX6OvWEs8So2Xae6v5hOtwflcMSE2eSftDVceFflZiHTx6affbzGphcPeiBfocS+tP3ShHzsyLcqLWrQNxtQVmxvAb5kMq5oYbg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779877538; c=relaxed/simple;
+	bh=fIilEl0pSHRsWXwH0oZlBLY6CYsELLbVNINsiSu9Q1s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KUJoKLHfQ8jzwYSSV3KnN69diPKttHY+bLAwSnuPh/R/hLSZw/eQdMeA5QqtTDHkKZ/ZI1SuxDR+2tTPCpTZXoLgN7u7C0gGA6TUlaXkLReFkfLmmOiHTiZrTltnw8LppDtTwuG43X9mmBu1KGG+WKudiRhaSSdCgjYZaL4GMns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gBCPsnzs; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="BkunhAlb"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7bf0b47d2f1so100525987b3.3
-        for <git@vger.kernel.org>; Wed, 27 May 2026 03:04:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779876270; cv=none;
-        d=google.com; s=arc-20240605;
-        b=LZsIsUF5uyJTS4aBjggPeEgxdKLYek+bbBgKXpH2kSS8dzysskx7FOYZsmiVODCuu9
-         icZZrBEVprwfRzTIzl9uK6ajExp5NGQ/odNA4gCI6AInvTgKjEZR34EFJWTejEzL3tKW
-         wmA5wTAmwIjH8gOdlXzdrkYDwcVtT2VOVTXWZiA4AhSbvQ+UuaGr8vDjUNlxdGrA1h5u
-         vrm6Psm/bZfzB9yFQF+OmF/OunvDD73vT/LFMapAyiuJb6ZlQ4y7IgPglf4GWXVu19NY
-         Gngyhc4efhXnrAg/z0L5ygdT334LF9KzA2L7Wr9bh/o/mXdNbhDmEym/cMDZmPmQFxH6
-         kQOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
-        fh=ua7AJFhAjCObxU7QDBcGPVVnMPmipTCHVyCvKCf6YZk=;
-        b=EJC1+/pUMaI3OyXuGhGEcGGuV06aA6Dq5/rHEo0q0ebjLfSAuqfsE2yIP1bqRx77uA
-         jaHep/LwVrEYGWkB0t9dSYniTnU7EMFhwXTCMT1tysjtIw6BZat2j/Ct+8DwjEbH1iff
-         O8eHdYSZ4joY3J8zUWBvtJRZAdLKIFXhYYaE8KZ7xSfqKaye6BOUFcpWfGgF70PuEXPs
-         s3NkW13sPISvfaG9eyA4fNvmv8uJBk5B/Klc0qVYgWVWeRpW7Kp/e3dkaO7qo3Ut7V/6
-         a0BPNDx/6NX8AnGtdsBzqzQAJWTk6iQaeRGA2zn0h83N25Lr826IMl4RZxBhILsK/uvb
-         Mz5A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1779876270; x=1780481070; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
-        b=BkunhAlbda9ezbS2XFE4k5T5dB1tHXzwKgAzdg5O55lsfmvGx8G9OFEOiAZDv+QAcx
-         J4RMwianIwtaSV2q/TzHtTNyxP2MxkYjKO9Hg61+6RVXHF1vJ7+ESS4Vm565HVxPKVjH
-         u/H8uHmS6lKpTuQU2HzXM6V5EyrcIQUFQjq7I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779876270; x=1780481070;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
-        b=Fu+YR5JOCBjGJwRq5+hE1nNCWYspYXXc1Sb007NIycV7pArEq6FNBM44UzlgyyhMH/
-         GvWOZLm0oCaPc/M/9alo9+RCRMlkP6LqxO1KGHu/QVnxJWr+1ApLSbnKetz42OLfWWYA
-         FEIyGFK6bkhFY+Aoog95lon6YP2P000Du7C5x9qqUaLOYuH6QE0Xd6QguxYkGpEXttTa
-         CWGMK/gyf5HByZLAXXXFYccQ7/refEW1xKrtviOw6n1oipeMXWP4BT/i8VjXuJU2LPK+
-         lbdI/ff2lHAH+Phu9L/dFKNc+tDLhUmrOqriD8MGLpeDs0Xozbsg9yB0t4yEayJ9KVzh
-         1UOw==
-X-Forwarded-Encrypted: i=1; AFNElJ+IKJyczise/DanDngpwBFP8QuHzzMlnXMP+KHZXZaJl8jtUju6cxY+D4Kj6+VfmfVU8As=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdqBy+Bv4lquzy0ydrXWFaloIYSHCOTNjcVAaOgIstCoWZz/k3
-	2CTVqKqb29ToYPZL2Ie1h6lumnCJNCYXJUvH1jjFfk96acBrttpo8y9ksS/55suuF5dLacWp7/G
-	LsrM2/DmNS2g5zSHXsv74KnZOJp0/nDbsy9Qn0zWGDrmita9SXonajswULA==
-X-Gm-Gg: Acq92OEswZPpUqtkYJyxpVmK9Ym3+ESjY3WmQlW/+4d0qsL7N9JlsBWhENM693qF6aJ
-	2wuT5YZ1WBZaP3ZCW8/NvwqlxG3eHpwEcG6JoX+MTKpcpoSBVfK96p54P66D38/mIQHonq0tMLS
-	GfSNPK9dSrHwaQfCDMetZUvtIRVAFleugzBR771nuqid96NH8SoUUD2EZkm3i1Ert4a63vpmiJg
-	FNmqwauGEILv9pJ1t4p+SiDxZoac0YPqwouM46e9FRAIa+wybHWt+zAMDSM2pZ6aCEx4r+R3TkN
-	O+km23C/XlPdsuU=
-X-Received: by 2002:a05:690c:e3ec:b0:7bf:4a9:1a86 with SMTP id
- 00721157ae682-7d33ad502c5mr230564817b3.45.1779876270324; Wed, 27 May 2026
- 03:04:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gBCPsnzs"
+Received: (qmail 29258 invoked by uid 106); 27 May 2026 10:25:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fIilEl0pSHRsWXwH0oZlBLY6CYsELLbVNINsiSu9Q1s=; b=gBCPsnzsOqusr1U0OFWuYwoP13pVWiEQQ0zQx2CoJnn9FeK6IZGlfx4VtZZYPTiZeS61wTLcN/2K8Um3919CGB7eGxjMUbp92L+gyfmoO3vnAYIwL0sCDOuTIqQ/pOxqPnYV+juYkt+f/9LUhgJ1Qtra8MClcab2h3YK75pHwFphjognlB+Dzi8VS/xal2V1KMswW9DY+cbJQKT5XkTBiN1eooWK79MlEi+d79wTH6+fiWiRlE5hcIV2doIyYWftrVdDQF9hg5IAfMgB996RADJ7qf6cbBa52sKMn1jD8EDf+f6c5LfA/iExQzLXHX4w8x5E3dQzhaoZKnBEDwINDw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 10:25:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 73187 invoked by uid 111); 27 May 2026 10:25:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 06:25:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 27 May 2026 06:25:34 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 8/8] pack-bitmap: build pseudo-merge bitmaps after
+ regular bitmaps
+Message-ID: <20260527102534.GH981444@coredump.intra.peff.net>
+References: <cover.1779207127.git.me@ttaylorr.com>
+ <30ce254312cfee2a2a82f08246c3a2546ae32578.1779207127.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2123.git.1779625693328.gitgitgadget@gmail.com> <20260527083216.GA981444@coredump.intra.peff.net>
-In-Reply-To: <20260527083216.GA981444@coredump.intra.peff.net>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 27 May 2026 12:04:19 +0200
-X-Gm-Features: AVHnY4LqpK26yHWS0BKltcDUpk8S_RaHKlDPJbtT_jxT_lOhX6l55k1qwDIekzk
-Message-ID: <CAL71e4MrVqC1=AR6x0_8S=8kVqPdDkhgCZRb4etFsxTzd6s_8Q@mail.gmail.com>
-Subject: Re: [PATCH] fetch: pass transport to post-fetch connectivity check
-To: Jeff King <peff@peff.net>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <30ce254312cfee2a2a82f08246c3a2546ae32578.1779207127.git.me@ttaylorr.com>
 
-You're right. I dug into this further and realized the problem is deeper
-than just the flag not being set in builtin/fetch.c.
+On Tue, May 19, 2026 at 12:12:55PM -0400, Taylor Blau wrote:
 
-Even if we add:
-transport->smart_options->check_self_contained_and_connected = 1;
-to prepare_transport(), the optimization still won't work for fetches.
+> Each selected commit starts with one commit_mask bit in its "commit
+> mask" bitmap. Then, we walk the first-parent history in topological
+> order and OR each commit's mask into its (first) parent. Whenever that
+> OR results in the parent having more bits set, the child is deemed to be
+> non-maximal, and the frontier is pushed further back along the first
+> parent history.
+> 
+> That approach works extremely well for ordinary selected commits, whose
+> first-parent histories often describe real sharing between the bitmaps
+> we are going to write.
+> 
+> It struggles, however, to efficiently generate pseudo-merge bitmaps.
+> Unlike ordinary commits for which the above algorithm is designed,
+> pseudo-merges don't represent any "real" commit in history, just a
+> grouping of non-bitmapped reference tips. In that sense, their first
+> parent is just a part of a larger set, and treating them like ordinary
+> selected commits imposes a significant slow-down when generating bitmaps
+> with pseudo-merges enabled.
 
-The optimization is fundamentally clone-only.
+This is a great explanation of the problem, and especially this:
 
-I was unable to reproduce the benchmark numbers from my original commit
-message. The patch as submitted is indeed inert for non-clone fetches.
-It looked like a simple improvement, but it's clear that it was incorrect.
-I'll drop it, and I apologize for the noise here.
+> In other words, we pay a nearly ~5 minute penalty to generate
+> pseudo-merge bitmaps, but only save ~50 seconds during traversal.
 
--- Kristofer
+makes it clear that we're doing something sub-optimal. And it points us
+in the right direction, since that traversal should be able to generate
+the pseudo-merge bitmap we need in the first place! So that should be
+our goal to work towards.
 
-On Wed, 27 May 2026 at 10:32, Jeff King <peff@peff.net> wrote:
->
-> On Sun, May 24, 2026 at 12:28:12PM +0000, Kristofer Karlsson via GitGitGadget wrote:
->
-> > From: Kristofer Karlsson <krka@spotify.com>
-> >
-> > When fetching with a transport that sets `self_contained_and_connected`
-> > (as index-pack does for self-contained packs), check_connected() can
-> > use find_pack_entry_one() to skip connectivity verification for refs
-> > whose objects exist in the new pack. This avoids sending those OIDs to
-> > the rev-list child process.
-> >
-> > However, store_updated_refs() never passed the transport to
-> > check_connected(), so opt.transport was always NULL and this
-> > optimization was dead code for post-fetch connectivity checks.
-> >
-> > Thread the transport parameter through store_updated_refs() and set
-> > opt.transport so that check_connected() can take advantage of
-> > self-contained packs.
->
-> That makes sense in principle, but one thing puzzles me. We only turn on
-> the optimization in check_connected() if the transport's smart_options
-> has the self_contained_and_connected bit set. And we set that only when
-> we were told via check_self_contained_and_connected to do so (and we
-> pass the appropriate option to index-pack, which tells us the result is
-> OK).
->
-> And the only place that turns on check_self_contained_and_connected is
-> in builtin/clone.c. So how does this optimization work for a non-clone
-> fetch? Am I missing some code path?
->
-> -Peff
+> Instead, build the regular selected commit bitmaps first, considering
+> only non-pseudo-merge commits in `bitmap_builder_init()`. Once those
+> bitmaps have been stored, build each pseudo-merge bitmap separately and
+> attach its parent and object bitmaps to the corresponding pseudo-merge
+> entry before writing the extension.
+
+And then this solution follows naturally from the earlier explanations.
+Good.
+
+In some ways this goes back to the pre-v2.31 way of generating bitmaps,
+which is to just traverse for each bitmap independently. But as you
+note, the whole idea of pseudo-merge bitmaps is that they aren't
+overlapping in any meaningful way. So doing one fill-in traversal per
+pseudo-merge makes sense, and hopefully we hit enough real bitmaps that
+it's not too costly.
+
+> As a result, the overhead cost for generating pseudo-merges in the above
+> configuration is much smaller:
+> 
+>     +------------------+-----------------+---------------+-------------------+
+>     |                  | no pseudo-merge | pseudo-merges | Delta             |
+>     |                  |                 | (HEAD)        |                   |
+>     +------------------+-----------------+---------------+-------------------+
+>     | elapsed          |   294.1 s       |   328.4 s     |  +34.3 s (+11.7%) |
+>     | cycles           | 1,365.5 B       | 1,529.3 B     | +163.7 B (+12.0%) |
+>     | instructions     | 1,389.8 B       | 1,552.8 B     | +163.0 B (+11.7%) |
+>     | CPI              |     0.983       |     0.985     |  +0.002   (+0.2%) |
+>     +------------------+-----------------+---------------+-------------------+
+
+Nice. The time savings are going to depend on how many pseudo-merges we
+generate, I think. And I'd guess that the numbers above come from making
+one big pseudo-merge bitmap, per the config you showed earlier. But you
+probably only want a handful of them in any repo, so hopefully it
+doesn't scale _too_ badly.
+
+> Recall that at the start of this series, generating reachability bitmaps
+> took 612.5 seconds *without* pseudo-merges. With this commit, it is
+> still ~46.38% *faster* to generate reachability bitmaps *with*
+> pseudo-merges than it was to generate bitmaps wihtout them at the
+> beginning of this series.
+
+Sure, though 612.5 seconds is all in the distant past. We only care
+about 294.1 seconds now. ;)
+
+More seriously, I do think the interesting question here is how the time
+scales for various pseudo-merge configurations. I don't know if we have
+any real operational experience with them yet. The original idea is that
+you might slice up the ref space into a few chunks. I'd guess that the
+old code performed badly-ish overall, but the time did not grow all that
+much as you increased the number of chunks. But with the new code, I
+suspect that the cost grows more linearly with number of chunks. That's
+just a guess, though.
+
+The other thing we hope for with pseudo-merges is that the chunks are
+selected such that most of the chunks don't change (because they are
+composed of old, stable refs). So in subsequent bitmap generations, we
+can either reuse them either verbatim or as a starting point (if there
+were only additions). But all of that is going to be heuristic and
+depend on your config, the changes the repo sees over time, and so on.
+
+So I don't know if we'd really have good numbers on that.
+
+> Now that we have decoupled how we generate pseudo-merges from their
+> representation, the following commits will improve the API around
+> specifying pseudo-merge groupings during bitmap generation.
+
+I think we're at patch 8/8 here. I guess you have more to come
+eventually, but for now this part is just misleading. ;)
+
+>  pack-bitmap-write.c | 210 ++++++++++++++++++++++++++++++++++++--------
+>  1 file changed, 174 insertions(+), 36 deletions(-)
+
+The patch looks reasonable, though I'm not all that familiar with the
+ins and outs of the pseudo-merge code. I'd trust the tests here more
+than my review.
+
+> @@ -696,12 +700,32 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
+>  		 * walk ensures we cover all parents.
+>  		 */
+>  		if (!(c->object.flags & BITMAP_PSEUDO_MERGE)) {
+> +			struct tree *tree;
+> +
+> +			if (from_pseudo_merge && !c->object.parsed) {
+> +				/*
+> +				 * Commits reachable from selected
+> +				 * non-pseudo-merges are already parsed
+> +				 * by the regular bitmap build.
+> +				 *
+> +				 * However, pseudo-merge fills can also
+> +				 * reach commits that were not covered
+> +				 * there, so parse any such leftovers
+> +				 * before reading their tree or parents.
+> +				 */
+> +				if (repo_parse_commit(writer->repo, c))
+> +					return -1;
+> +			}
+
+Makes sense. This should be a quick noop for the regular bitmap build,
+since we'll have the parsed flag set. And it should even allow use of
+the commit-graph if it's available.
+
+-Peff
