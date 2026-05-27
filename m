@@ -1,101 +1,124 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from rush.cubic.ch (rush.cubic.ch [176.9.78.115])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE45828640B
-	for <git@vger.kernel.org>; Wed, 27 May 2026 03:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7453F4A3E
+	for <git@vger.kernel.org>; Wed, 27 May 2026 04:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.78.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779852125; cv=none; b=NSzmkxa22E/4bziqWWy2SU7bpGfeJ8cBrDxKae0D9barAA/0tLqWPxQA8otxh3sfvjBJ/6N+TX/LQ1x7WQmGqBGnKZVU3ArNZaGLC6MKyCWOdAXakBt9pKDS8gT/3VFO4ywUWPM6h1PlWaPynyTbSO4yIb9P9PKYfl3QRV7hmFw=
+	t=1779854429; cv=none; b=iszzgq3Sst50rOv4No2Ai9Ksuk9cSdvLGReBYx6qdQTiIB3sECVpp5hA8rQvGRvNYs+j8MlzNjPe/1/KqlVmBA5p9k405JK2jtxLLHADidWCB8Ncbw5wUbLLn0m+LlRBMhRSAFaCQp7JNYuL+iSzQIkMmNEWE7PeLghMJ7GcnxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779852125; c=relaxed/simple;
-	bh=Ssmpdt92NzTdpjnhER+lvtWRN71yOFhTPnvPpk/bss8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cLmmE7TMTrQtZlq1YIfprOTD0ECc0ola4uiiYgSHwj5pQoEHRKjt5OfZRqt/xC+94cpINWybPzhKpaXxf5oAJJyczs4LvNP/2CMgZ+z/4afBB57/U1911YEnOaEkY5wELE1wThreTdlJX/1+QplPq/cdn0Jg6TE1wxP15Ac/zKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=txUQ7KFs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UD6NoOb2; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1779854429; c=relaxed/simple;
+	bh=c2vYffJyznC355QfC302/l4CESzVoBS7Q0GlfJtvzEE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aUA7igFGREorSIx7CkOVtJGEzUZFynbYBgKXQn/Lds24YBZC1IxHS2EJ8CSA3LXFETnNU4stjB5GqnfhvktylmgW85LZrYJwv5oXkkcNu35QYZHJIGaKF48oJ3+vPHhJclLjAJsKReBo7FL7Pf1FRLQzcieTwBKQyTV4zQp0Mwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decentral.ch; spf=pass smtp.mailfrom=decentral.ch; dkim=pass (2048-bit key) header.d=decentral.ch header.i=@decentral.ch header.b=HEK+J/+/; arc=none smtp.client-ip=176.9.78.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decentral.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decentral.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="txUQ7KFs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UD6NoOb2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 23C42140005F;
-	Tue, 26 May 2026 23:22:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 26 May 2026 23:22:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1779852123; x=1779938523; bh=uotVgIbgm5
-	FL9nBHGjqrfrtZWvXq6aXY88NfDXtXaA4=; b=txUQ7KFsZWasOtMJ0341usFCFa
-	uyHRP7QsM7OWhhBj9IxopOoGVRK+tT2s7n1SKXpIqp3rRCbS8Xo9zLGHADr0lFDP
-	2PfxRGvI3j2d9D/iSlKoeALrL8RgTS+unGNtV9chG+p2RLkSY/gtrKqwU6vEJk/P
-	fo4oibIhha1/ld+59sbRC7rBWFgkOoDf3x8jiGumvIAhBVzfYD1v8cqRMLgw4ZZR
-	C7h96ro9SLEgDw0olLweMcK24/L4HzzBki85gGlM8IrlrWyQdhkIvYpX08iOokDU
-	dYaatGKBNo0Rwfn2KjkGT5r6/GN0UnTgG76IlgrjO3mr6CNqZNduiaqqQDQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779852123; x=1779938523; bh=uotVgIbgm5FL9nBHGjqrfrtZWvXq6aXY88N
-	fDXtXaA4=; b=UD6NoOb2VHhI8Tf/8mdHBsF/O1RkoPWaMoi09aWmg8mMCdFdr3H
-	uyEn0PCvh8KJeuOyzwFOJ1UkQLdtZ79WNpK5mvuJ+iJ0nQ4g+1UGmXLvHfqP4bZ9
-	8VcDUQl4pMsm01/Acr+aRz2GGgx6qlkSI2GDzaGhHgSZ+jgsEbyRv5+BFfkzun5N
-	9SA8lTGTShzZ5zgjY8k8qwvnCHN+S6qKMk0g4YBu+O7lDpicRZButMFN4JWC7gGa
-	eHMG6bmm2+DHzt2vH+4nWGfzkcvnQG5NWs2ejwvUdRvmHGvrBdr9rSoBkcMdeHSa
-	fbkSEwtgxdpXlY6mblI+dH+Ed99JtlgLqVQ==
-X-ME-Sender: <xms:W2MWaj4BtUIQCf23c0MVtaZOvPCUgjQL22oZoDgWlY-XJ9486qoReA>
-    <xme:W2MWav77hVJZbkGBp3KRl5Bl1vCi35WsEuqEBvCUYXACh2eRTRolx5zeSnkXLw5Nm
-    u0MDP8_iQDX-boggiICIbbyq09JmI6eLImyJAp8xt34Qbh4w5JZM-A>
-X-ME-Received: <xmr:W2MWaveMhIPJAzoxraI9qoLY8GjGihkWDun3KpqB0YmSagAwBAqqINvC_qH1MOp0cTnrGZ_VcCzFoaraLgeOn-qO5q43n09oSAuK>
-X-ME-Proxy-Cause: dmFkZTFsjLr3xN6bFXCqOe89ts3sKl+G+3Pddi6/D/dnAPau5CPfGG9p4iU3LQuJt/e8LT
-    qPoQ396gROi1HxoBhq+nDQ2GmSe9bUqvDff1hNYmMsidnN7Kqa7pdQENJUmEKLjmk3PHeR
-    5QQ63woLK1hoxX2w956HlbKQiGXdURT4kA976PJAfjd1ekqNOsSSg7/g20Utf68tOmhWdF
-    8Ur/6C0Ff6gViDZE6Lgl2vSDUUBS7LUn7HqRnLgXkgoVJxUC+2UsuRzAaVlWb4+OrSgwut
-    auHP3sOgnSsqAS2u3zDEBQ354Aph8XsZPYxAYGbx76GEAzZqfOk1pB3iMT5wG5LD4TCSpv
-    jz590RC8yBgHQr6lO7Kcdb7poQgPAq1ZhkCkp0XLzRTyhuL+vKkZZ0e3nJyhbE/g2Rd4ad
-    cdToXmHqKehUmjQSwKaZrgvXzBEY604/Qp2cWXIO085xcr+ZIeQZgeZh9B6uoPhUVSrn+F
-    20stq5F1tqp/FzM106DygvsJXAxi3se9RMooq4CoBfuXEjie/cf0ZWMda/V3pMyop2g0+4
-    RxDS7KP1xeJZvrOHHG9/WloHFEnFZ0b4+kT51aRFmSLn+zCONxlh0YjoS/pRe5Wr5fjP2b
-    eck2zUi2AlNsOEwe50JFGA5REAyKXRD950M0BzCRpTqvPhDrD1IudFyzc9XQ
-X-ME-Proxy: <xmx:W2MWajD96RQctcuTyj9PecWulU5fTeqT5ulIcqLcRep0EoBes75jsQ>
-    <xmx:W2MWai8jm9Yg0moouyChYEdJFSaIJ7EADoPi5_14DiEk2KVCwD1n6g>
-    <xmx:W2MWauKClEG-zv_P_cLqE_e0YeE0cp01Bg0LcJULuKpH6swJ4Hqvig>
-    <xmx:W2MWarjZFYZUQnmoAr-Z9WaABaAnLIYznxTDyIhn4A0ynJUYwsDaoQ>
-    <xmx:W2MWau_tJYcimfnoICQDtcwwD0K4ZI_qC3VjKUbgGlA9NO_DdNS-fqf2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 May 2026 23:22:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Zakariyah Ali <zakariyahali100@gmail.com>
-Subject: Re: [PATCH v2] completion: hide dotfiles for selected path completion
-In-Reply-To: <pull.2311.v2.git.git.1779808987825.gitgitgadget@gmail.com>
-	(Zakariyah Ali via GitGitGadget's message of "Tue, 26 May 2026
-	15:23:07 +0000")
-References: <pull.2311.git.git.1779590184752.gitgitgadget@gmail.com>
-	<pull.2311.v2.git.git.1779808987825.gitgitgadget@gmail.com>
-Date: Wed, 27 May 2026 12:22:00 +0900
-Message-ID: <xmqqqzmxlep3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=decentral.ch header.i=@decentral.ch header.b="HEK+J/+/"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=decentral.ch; s=rsa2;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID; bh=QITM+FKQiqtC17swuTMEZZa3A8Kg8y+TUGzQv7kPE38=;
+	b=HEK+J/+/KwgY+PQljqj7Fhbg2meQuLec0j/zjZRRc95V9BTrjvB95BryRKqUGyoYirbasT5FA4noqZ3tgQhJwH0OuN+ZSbh2yF2vqtO64gxdyWqdgHpgLd7NAgEHJXeqJptOQ0wmdMjO+kLLrWEwHxcqHbrn8O93MuhBgoibe+H67s15Cnu3ELrN5LOnGtTc2mp5YUkRyxpSB2+oDs8JBGvpqaQWnWYvzBSTFGm4bM6qVPSUj2UxBDd/AtO68uUDVHtfaxX1mkAoDJJ+3HCgZ19U2OYCaJjPDJFiLclyrUAM3xHcbopq9F/5o4mNwg0TK/I1CtHTz9pDAS0Ic5pLNA==;
+Received: from james.decentral.ch ([85.195.242.225] helo=[192.168.219.13])
+	by rush.cubic.ch with esmtpa (Exim 4.76)
+	(envelope-from <stuff@decentral.ch>)
+	id 1wS4vL-0007oL-4F; Wed, 27 May 2026 05:27:15 +0200
+Message-ID: <983b4ba0-d2b0-4d29-aabe-9e7b3987d514@decentral.ch>
+Date: Wed, 27 May 2026 05:27:14 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: git mv after the fact
+To: Junio C Hamano <gitster@pobox.com>, Chris Torek <chris.torek@gmail.com>
+Cc: Frieder Hannenheim <mail@fhannenheim.net>, git@vger.kernel.org
+References: <02663c67-01ad-4dd1-aae6-9e9706f3d040@fhannenheim.net>
+ <CAPx1Gvd9+z0th9whCbcA60_bWproPp+kwp3qDmhQOe4G=0=E6A@mail.gmail.com>
+ <xmqqy0h5lfa0.fsf@gitster.g>
+Content-Language: en-US
+From: Tim Tassonis <stuff@decentral.ch>
+In-Reply-To: <xmqqy0h5lfa0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-"Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Yeah, and while we're at at it: why not another patch for
 
-> This matches standard shell filename completion behavior, where dotfiles
-> are hidden by default unless the user starts their input with a dot.
+git rm 
+file_i_deleted_but_didnt_tell_git_and_dont_want_an_error_message_because_thats_offensive
 
-OK, with this rationale added, I no longer have problem with the
-proposed new behaviour.
+because that's always very rude, too, telling me to have to use
 
-As I'm not going to give a serious review  on the patch body itself,
-I would really appreciate somebody more knowledgeable on the
-existing bach completion code than I am to take a look.
+git rm -f
 
-Thanks.
+Because I also am very sensitive and don't like to be told I fucked up 
+and have to be more specific about what I actually want. That's just 
+toxic, man.
+
+
+
+
+On 5/27/26 05:09, Junio C Hamano wrote:
+> Chris Torek <chris.torek@gmail.com> writes:
+> 
+>> On Tue, May 26, 2026 at 6:18 AM Frieder Hannenheim <mail@fhannenheim.net> wrote:
+>>> I'd like to propose a new flag for git mv, that updates the index
+>>> like git mv normally would but does not move the file. ...
+>>
+>> You may already know this, but technically no flag is needed:
+>> you can just "git add" the new name and "git rm" the old one,
+>> with the same effect.
+> 
+> Correct.
+> 
+>> A flag for "git mv" would be convenient (and slightly more
+>> efficient, not in terms of storage but in terms of CPU time
+>> spent discovering that the contents under the new name
+>> already exist in the object database).
+> 
+> May be convenient, but I do not get the "efficient" part.  Do you
+> mean that for two operations "add" and "rm", you need to spend two
+> index writes plus one file contents hash, as opposed to one index
+> rite without having to do any contents hash?
+> 
+>> But Git will discover
+>> the rename on its own in the usual way regardless of how
+>> you get to that point.
+> 
+> This is not incorrect per-se, but it is a confusing thing to say to
+> somebody who does not know the equivalence of "mv" and "rm + add".
+> It would not be clear to them that you are not talking about what
+> happens during "mv" or "rm + add", but about what happend during
+> "git log -M", "git diff -M", etc.
+> 
+> There is "git rm --cached" that can be used to recover from an
+> "oops, I removed the file from the filesystem without telling Git".
+> 
+>      $ date >new-file.txt
+>      $ git add new-file.txt
+>      $ rm new-file.txt
+>      $ git rm --cached new-file.txt
+> 
+> I think the requested "feature" is not all that outrageous.  It
+> would be a similar value as a morning-after correction measure for
+> "oops, I moved the file in the filesystem without telling Git".
+> 
+>      $ date >old-file.txt
+>      $ git add old-file.txt
+>      $ mv old-file.txt new-file.txt
+>      $ git mv --cached old-file.txt new-file.txt
+> 
+> Thanks.
+> 
+> 
+
+-- 
+decentral.ch - IT Stuff
+Tim Tassonis
+Badenerstrasse 219
+8003 Zürich
+stuff@decentral.ch
++41 79 229 36 17
+
