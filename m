@@ -1,173 +1,144 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F32D223336
-	for <git@vger.kernel.org>; Wed, 27 May 2026 14:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36641E0DE8
+	for <git@vger.kernel.org>; Wed, 27 May 2026 14:36:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779890935; cv=none; b=i/YuSpj9oxvYQKtHLJjvOnh8nfA5s9Az+cNrvISOa05COnUDP/OmnrZYRYI3FJJfqcRLdh3r7y1mclWr1IR6rlOCAgwN/50yBudcxT1mabI+LPNbCqfZM2+qLABPsHRjn8i1ezEW5z4fVTNUeORIMVC2yQybv8dFFYti94vhYFw=
+	t=1779892576; cv=none; b=A8+Uh+3nDVUbnaClTL7GAI77eLdMjYXMSTJ1UDLDlDwxWRL9FohpQoSZgY/Ctjd3Nmi4HedtWT98GmxHbnXMACBE4KGs1tFiXmk6L5HGFbTO3RRCm23g+iwnr75AY4p0lbaZzqnS25afQIzUfYiqeb+c24f8bgqM71R4fYK+Jfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779890935; c=relaxed/simple;
-	bh=D167C/RHsLTI16g7rjfKOrOHe0Kjz3OBFXSWDP5Nuaw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OB+lL0y3E0eeb7gky5jOZnzHgsJXjxbGgQJgNBp6/Kwm6SRDESrLUM7eaaqwKbwGUhzV23olGl1rmc5Bt3UXTkunzthQ8V2lNt6MQbmeQ0rufUDNdp16qOvV6TB00+B7QWAe7RbDUlDhr62012mkzD9Jun6YNz1vJzqb4+9T1rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SqL9g8cY; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779892576; c=relaxed/simple;
+	bh=Dhq02FQ348ROHUiTdQTTn3ZE7DPBHPx0JSepi60le5A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OOD+wnS9ANoBKyrdlYdBqlqWrZMYfvxQyFe5mh2oKFsBp5szNgF7Ujjrq9SOZJVHbkZ2B/nAYR4HACSj/XLdk98m0TWQJdIFnG7hr4o9dMP1fPM1xvDDFWVcnR+9Dd8EoPyuHfJnfabMpFauICyi3P1R/PqHEJB1rUffjaW0ABI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=jp9lLyEF; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SqL9g8cY"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-bd21ffaca79so2165233666b.0
-        for <git@vger.kernel.org>; Wed, 27 May 2026 07:08:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="jp9lLyEF"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7bdec52f48dso108523777b3.0
+        for <git@vger.kernel.org>; Wed, 27 May 2026 07:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779890932; x=1780495732; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZwUYFbPIqqwZIiDmntvA5rfNiQ5P4q2eyAxyioD3Zw0=;
-        b=SqL9g8cYSvcGj2jCTtPaw/kuT2DU6xOyJGRNLBvWo2mlFU/6KFTeTw1C2QIH3BwShg
-         ivvpLXNv64PtaReRO6qep6KEx4Ww3NovRMQcx/DdidRkmqYOhGLz9T5vggmTDx1+dInU
-         H+uzwqV5Jn9xuPvL0Mic2nyg+2PJzVd29qlA2grLAEl5Yw/gPpVTQTRs75UQLJiffgwb
-         bxOKKwe/hhk1jXETrYaH+sPmOBsVgXI6tV/NTPpWyUd5f97WfMzdvVkPn6voxPcQpczU
-         TRGmqzCklKFpgWLGursN24Sb5fvnu+oP62beQ6zlcUMdvly9pqeoJOYNJMAE1PcqJsd7
-         ltHw==
+        d=ttaylorr.com; s=google; t=1779892568; x=1780497368; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bl4VNojSouUxLXZgeBbg38bgzQeG1Vs9X/7tFiLc5K0=;
+        b=jp9lLyEFDPsiILOZTC1KYnduRkd50WJ8zRG2dMNPF2fK3U8nFlYVT5PtmthUR5v190
+         qcynzn9qGIu9UQs/lci/Ylnsi9eGgv1gCCJfG1DziwSoklM39ud864dEqOibGdSfM0rU
+         WoC9wew6H+Yt54PvEEfuSzz7sXY5RQiKk6i04ojbHDA+1I6uNp+eObtwfMlvlYxG4/M+
+         d7DoOfWcCSafq/uwjHRyHXfYPJLjVsNdsXst4Hhr6UYoJ+5qnN7OMgKwVnLwPXYqze3y
+         In5ZIeHhSj+pWg3VPs28gQRYPA+7slqHce2BR+1+wpwZryLOI1xFrO77hGuM2Krb7gc6
+         HpVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779890932; x=1780495732;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZwUYFbPIqqwZIiDmntvA5rfNiQ5P4q2eyAxyioD3Zw0=;
-        b=jJsIqEmyc1rtiqpNzXImqP8Z6ce+JxjKiTboKchhQtGNAjsyLobJOV55UeO/l1NQc4
-         IwJWaDAncLMT1f86mR0DCb0aTDfy9rl+DMgUdCe53o4qZQQ0RD1qk8UgxJxqhJij8ufp
-         q/Cl4BXHzPwGRix0DZhTVdU+gnIBVm+DuybjCSd0hPsuAo/iBYCgSS5nzTLagRbUptB2
-         eeXAUSh1r5YJhsm02gsMzpTSAHOF44gk4mYUe2aR7qD7H2ZbbnSEKtqz3tmIhxdZopG2
-         UnyCmD1M9aPL9RkFGl76STSQzT5GGmU2uYa4fbattn2Xpk/ucwHMJF6pB5aH8UlpYanQ
-         Bm/w==
-X-Gm-Message-State: AOJu0YyOBK6wGdRnGcGHmXxGdinhBxeiUbXR9KiJUv+sIw0ccw09Q0qf
-	ltAAsWX/eAyy3t9wK1n6yFE+Olj4izEBLMwI5SexwsPTJoH8KVpEzGmq7pcGNQ==
-X-Gm-Gg: Acq92OHA1tbiYFnsOYa+j4/3pC15tgx/Aobj1ODdAR4vdGnzn9ANli/a5jK5YCvDRTs
-	wAC5tm7HbPbg0c+6zkKYxn/j9P21Woyct3FI+ZBNjoO44YZHKqCic09IDoBuz0sS13PedHbtIyu
-	QQrNYAz2voD9Cc6U4v5J55aW+Vk/KTUX/0MFcP+95spPbtgzmRgjZvQDwzRCIVUadj7ekxhL9/l
-	5MefhInc3hSWyD+JvILFAZaiAMJHg1frGERDmtjGToQdIjYitQOOopSm00jKiSLHQgNqFgB8gnZ
-	0DXLTXsHfPQ4pL8/g7UvPZJDsUfX30cotcxRrWby2tp1NrM0XxvTekuKAzFMGXuAZaLDhpNdFGt
-	ToPdEJkT4Nh7al/NNA5IxMapFVY7bxFwdtwayCQArL3DlYdVQcoJiZWcBJ6UgAqMExm6iu3hIrr
-	GyjCrJRny9lq+AU0jw157Tus6NC/jSToXnQEn1cYVwo2etc0ggi/8VxK+DGocqSE9l1Dc1rQUSF
-	jftEpPi2/XvmzA5DWhsVGFBxKk7x7qPhD/cOK30DHP5apBFyjhWt5tQChMx
-X-Received: by 2002:a17:906:459a:b0:bd2:be3:572a with SMTP id a640c23a62f3a-bdd482f0eb4mr847444366b.6.1779890931489;
-        Wed, 27 May 2026 07:08:51 -0700 (PDT)
-Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-be1ca138bc7sm268122366b.41.2026.05.27.07.08.50
+        d=1e100.net; s=20251104; t=1779892568; x=1780497368;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Bl4VNojSouUxLXZgeBbg38bgzQeG1Vs9X/7tFiLc5K0=;
+        b=JS+Ci+L0PZUNLQ0D/wIOld0WT1JNEoLZJSoXsLCXtjFNLN+3+eF+IYeMDmSH69GxgS
+         MiGpPbp6buqqgyya5dcQzOk2393chG/KSqubXpUr/jK9wdlJp9pW/FJ2NIkdbqODJrEf
+         B9dwIofAtXQ7Qwq4hlyHm25kS4xAvumQdCN+BHOcRmulcM94G37g6djDWoHAYIEbSUEg
+         18/Srf/Del39/cTzKsV8YnYyDDEKOHEuZ08b/193ULGC6RBrkG1OzqDSxqnBa8psIiGz
+         Ee6k3hBfSsSCTQAkftChjZaveguegPSv8bFiCBR0oH2ln1KDUvQIkNlKD8W1YEDGJfOZ
+         h79A==
+X-Gm-Message-State: AOJu0YwnNkm63tVCcTUAuUnnZDZSExPXv0IP5AmELd+fL8/YSft0oaWZ
+	qQHsEp+MNvhIZMX/DMQ8q47+eawhDxLjHXHj3Z0lB40wmUEsSRG0s9NxXfKF2TPS6OM=
+X-Gm-Gg: Acq92OHYdO+3ByaCw2Od5L4Q3tiW/jlmGc+qP68XDbDPU6Q5nFbLzvaSc4Del9cuKPB
+	EiioN8mKhGlhH6wfuOxjUTcaw6Zkv4d+ViY31yYS/kh8Wgn2PviUknbWGD+JVJn7pQmtP5/EjPB
+	3uwIK1gur1xsvq03dDzhBoTCSS17JYGMEWS9qiWgljviAd4D77mvOQKdFzFYU5FCnCxHwBCY0+e
+	fuIytrO3cHXzdFxbqQsM9s5mG0fcQ6dxvltLFbSQB4vrK+BSO1E4gpeMCaR3kbcgOA4/VHk7m6Q
+	wOy48giUHcqbNFa2S4U6PhG32IWXcGCYOlxEJgUyz9hr39PB8S8jNKAvbOQdiL5ZkZRs3LnQx95
+	bs7/46xEg1qMYgC2ukbsD4qAjb2zSO2q+dJlqcBPrIYotSGdTg0ni3bVWOZWrOxDRtcRJWe42Nk
+	SrkdqDWPJA96RiPLjUcyeHkOo+IzKRo2S7f3W/VvENlpC5zh4RF8AJENVpbMyYTo2rZCeqLOyuU
+	94beb5DwgNMpdMX/ZhvAYUrAnjb2XM8YyEForsd406vFE1sxDuI7Xq2L3sRTEZc6DJLnp08f+xV
+	aHK9z5GTY2N0Lsi5o3XAENEGGCLHttS34YHN/g==
+X-Received: by 2002:a05:690c:34c9:b0:7dc:1c56:2901 with SMTP id 00721157ae682-7dc1c562a3fmr447817b3.1.1779892567596;
+        Wed, 27 May 2026 07:36:07 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d38be2dc79sm76870927b3.25.2026.05.27.07.36.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 07:08:50 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Toon Claes <toon@iotcl.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 8/8] doc: promisor: improve acceptFromServer entry
-Date: Wed, 27 May 2026 16:08:20 +0200
-Message-ID: <20260527140820.1438165-9-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.54.0.275.g96c817d129.dirty
-In-Reply-To: <20260527140820.1438165-1-christian.couder@gmail.com>
-References: <20260519153808.494105-1-christian.couder@gmail.com>
- <20260527140820.1438165-1-christian.couder@gmail.com>
+        Wed, 27 May 2026 07:36:07 -0700 (PDT)
+Date: Wed, 27 May 2026 10:36:06 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 1/8] pack-bitmap: pass object position to
+ `fill_bitmap_tree()`
+Message-ID: <ahcBVlwysYlKsjUs@nand.local>
+References: <cover.1779207127.git.me@ttaylorr.com>
+ <13191c19b91bc3f5d671b7016b97f2309f12737d.1779207127.git.me@ttaylorr.com>
+ <20260527085740.GB981444@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260527085740.GB981444@coredump.intra.peff.net>
 
-The entry for the `promisor.acceptFromServer` in
-"Documentation/config/promisor.adoc" has a number of issues:
+On Wed, May 27, 2026 at 04:57:40AM -0400, Jeff King wrote:
+> It is indeed surprising. There's a possible candidate for the speedup
+> here:
+>
+> > @@ -482,8 +479,12 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
+> >  	while (tree_entry(&desc, &entry)) {
+> >  		switch (object_type(entry.mode)) {
+> >  		case OBJ_TREE:
+> > +			pos = find_object_pos(writer, &entry.oid, &found);
+> > +			if (!found)
+> > +				return -1;
+> >  			if (fill_bitmap_tree(writer, bitmap,
+> > -					     lookup_tree(writer->repo, &entry.oid)) < 0)
+> > +					     lookup_tree(writer->repo,
+> > +							 &entry.oid), pos) < 0)
+> >  				return -1;
+> >  			break;
+>
+> Whenever "found" is false, we cut out early and skip the hash lookup in
+> lookup_tree() entirely. But that should almost never happen! It implies
+> that a reachable object is not in the pack/midx, and thus the bitmaps is
+> not closed (and we'll refuse to generate it).
 
-- it's not clear if new remotes and URLs can be created,
-- it looks like a big block of text,
-- it's not easy to see all the options,
-- it's not easy to see which option is the default one,
-- for "knownName", it says "advertised by the client" instead of
-  "advertised by the server",
-- it doesn't refer to the new related `acceptFromServerUrl`
-  option.
+That's right, and I had actually written something like the following
+while developing this patch:
 
-Let's address all these issues by rewording large parts of it
-and using bullet points for the different options.
+--- 8< ---
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 2d5ff8fd406..328e1c13df3 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -481,7 +481,7 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
+ 		case OBJ_TREE:
+ 			pos = find_object_pos(writer, &entry.oid, &found);
+ 			if (!found)
+-				return -1;
++				BUG("huh??");
+ 			if (fill_bitmap_tree(writer, bitmap,
+ 					     lookup_tree(writer->repo,
+ 							 &entry.oid), pos) < 0)
+--- >8 ---
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/config/promisor.adoc | 53 ++++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 18 deletions(-)
+, but couldn't trigger it in either the test suite nor in my sample
+repository. I left it in there as a sanity measure.
 
-diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-index 455ce40be8..f07a2e883b 100644
---- a/Documentation/config/promisor.adoc
-+++ b/Documentation/config/promisor.adoc
-@@ -32,24 +32,41 @@ variable is set to "true", and the "name" and "url" fields are always
- advertised regardless of this setting.
- 
- promisor.acceptFromServer::
--	If set to "all", a client will accept all the promisor remotes
--	a server might advertise using the "promisor-remote"
--	capability. If set to "knownName" the client will accept
--	promisor remotes which are already configured on the client
--	and have the same name as those advertised by the client. This
--	is not very secure, but could be used in a corporate setup
--	where servers and clients are trusted to not switch name and
--	URLs. If set to "knownUrl", the client will accept promisor
--	remotes which have both the same name and the same URL
--	configured on the client as the name and URL advertised by the
--	server. This is more secure than "all" or "knownName", so it
--	should be used if possible instead of those options. Default
--	is "none", which means no promisor remote advertised by a
--	server will be accepted. By accepting a promisor remote, the
--	client agrees that the server might omit objects that are
--	lazily fetchable from this promisor remote from its responses
--	to "fetch" and "clone" requests from the client. Name and URL
--	comparisons are case sensitive. See linkgit:gitprotocol-v2[5].
-+	Controls which promisor remotes advertised by a server (using the
-+	"promisor-remote" protocol capability) a client will accept. By
-+	accepting a promisor remote, the client agrees that the server
-+	might omit objects that are lazily fetchable from this promisor
-+	remote from its responses to "fetch" and "clone" requests.
-++
-+Note that this option does not cause new remotes to be automatically
-+created in the client's configuration. It only allows remotes which
-+are somehow already configured to be trusted for the current
-+operation, or their fields to be updated (if `promisor.storeFields` is
-+set and the remote already exists locally). To allow Git to
-+automatically create and persist new remotes from server
-+advertisements, use `promisor.acceptFromServerUrl`.
-++
-+The available options are:
-++
-+* `none` (default): No promisor remote advertised by a server will be
-+  accepted.
-++
-+* `knownUrl`: The client will accept promisor remotes that are already
-+  configured on the client and have both the same name and the same URL
-+  as advertised by the server. This is more secure than `all` or
-+  `knownName`, and should be used if possible instead of those options.
-++
-+* `knownName`: The client will accept promisor remotes that are already
-+  configured on the client and have the same name as those advertised
-+  by the server. This is not very secure, but could be used in a corporate
-+  setup where servers and clients are trusted to not switch names and URLs.
-++
-+* `all`: The client will accept all the promisor remotes a server might
-+  advertise. This is the least secure option and should only be used in
-+  fully trusted environments.
-++
-+Name and URL comparisons are case-sensitive. See linkgit:gitprotocol-v2[5]
-+for protocol details.
- 
- promisor.acceptFromServerUrl::
- 	A glob pattern to specify which server-advertised URLs a
--- 
-2.54.0.275.g96c817d129.dirty
+> So it really is the case that we do the same operations in a different
+> order. Weird.
 
+Yeah, I puzzled over this for quite a while myself. I really think that
+this is reordering produces more favorable cache behavior or codegen
+that results in a meaningful speedup.
+
+> But the patch itself looks correct to me, and I get ~6% speedup on a
+> from-scratch bitmap generation of linux.git. I guess it could vary
+> between architectures and compilers (I'm using gcc on x86), but since
+> the reorg is setting us up for further optimizations in the next patch,
+> I suppose there's no need to look a gift horse in the mouth.
+
+Good, I'm glad that it was reproducible on your machine. And I agree
+;-).
+
+Thanks,
+Taylor
