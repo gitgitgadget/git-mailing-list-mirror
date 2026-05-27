@@ -1,37 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4151A7E792
-	for <git@vger.kernel.org>; Wed, 27 May 2026 08:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A953DBD4E
+	for <git@vger.kernel.org>; Wed, 27 May 2026 08:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779870746; cv=none; b=jOj3ta1Rdvx7NPaGXRYBJMtH4uCaiXqvVjlm41E+hNPjmytp2nUhChLjW0s7ayGVaB3AmHhpPwj6zaCKrk21FqaiLKaw6IfsEyiBRs/AHrmQtb9jbbK8IWuTXRUitv+OTQXs9GQeEiItdXMlZ2yeHm++433d+/dZ3egImxa9AoQ=
+	t=1779872263; cv=none; b=krTY2tx4k8RQCVaHdi0dNdvbcJmPlyBCx0aHODmpLainP5l/DYW0ub48fknmR93323V0YgIDwuiqaR188z+Wz7MxAO8+e/73lTeFr+TD1Qk+RH4YaPOkD3GSOvOi4ya2CQSriafCE1SBit+vSwca7ZAHWH1bZ29goNvGYdZTwxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779870746; c=relaxed/simple;
-	bh=KCYX4tyhWtslInB/MLDY0zRRt+e+x9d0rIRfoU+zDRg=;
+	s=arc-20240116; t=1779872263; c=relaxed/simple;
+	bh=8zwicSTVawlJcNWFC5qFoRCqZC7AOicv13w9emuyVYQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j67jcD1HjOxOZnENkozN0TsE1nzmysg9MminAhoDewYz2HTpRw+BaJR42ZYtG+RBiJMzKwLWGjIle87m3zFTQqzOli8hhlcTahm3oJRoYxLyLQQ950uPJQofLXzBYZhJKEv87MUnVeRr2Ni+qoW72Kxy+Ef4gc8jN+WSbqKyuMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZAaEcGlb; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rth9JnQRXKzt5hY2/pSOj7bAPkeVyLD18b6jV0P/s5+OWHDX5ktpaukq2rJ3iPR3cC4TGIM/3tQyd8tW3aFRkBY6kMGYvGVrkW7tPgMw2+iR+E289Za7hjwXoAXfZbFr6T52IMv0nwc2gAt/fXHQS8c8sAb7y8L0ZUqysNoFPhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MvO9vxg1; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZAaEcGlb"
-Received: (qmail 28637 invoked by uid 106); 27 May 2026 08:32:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KCYX4tyhWtslInB/MLDY0zRRt+e+x9d0rIRfoU+zDRg=; b=ZAaEcGlbF3D1yOyuucD2RB6YiqCQTwVTa0VS8K99hmWm3BMabShyH7TbWs+6lPMRBWVgPwD9LYLhyaufRK1ZQxorENOE3T325SrtZAOTkNDK8Mu2mgPTLgNGphdgs1TAbNcKpRsyGBLwtekTrelJXWjeCn1oNK9y4YJzs6MW9hhmgKwEZHgzaj9s7xTwL25wfsUdQkvv/nkOCDhPflRC1HgK7m99FPUW/CWdVWF/qusvoxrjzeTphVV+QCyr7346WqzUgiKCpfLrD3G5MQo+60oY90oAPZVPQe9hBzP7LPa/JnpXkcFBRZohcGcyqtzs4vkjgw5WHkuqWTM64qB2Bg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MvO9vxg1"
+Received: (qmail 28751 invoked by uid 106); 27 May 2026 08:57:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8zwicSTVawlJcNWFC5qFoRCqZC7AOicv13w9emuyVYQ=; b=MvO9vxg1DTDM/MMufVrv6/0nfv5D/Wr4Q4+8GwRPXYePv/MM1SEkJ4k/jAAUy9+7r/Eb992H2aiwAkWAi9GHMg5WC5oaauKLltWaZokciLpKxNq0HbCu5Y/AoZB5t5FbD/O6kGJvZpAC0VOmmf3fwJjdSS/4sRtfNM02OlVE+2oXjvXvYJdlvVxIyW0wLWhk29udf+UFTc3qaPeRUL7HA5ntozQhP3j88yg7iEMqxvmFzGgKVrNFt26z6D/jL4vg1iG4i6H+OijP7G3FAJ16ieLSmOWcbGDX91S0FQsaKuLpXY0W57mDsXWIF3zLncaiLI2MSPDjyGkZ7oe7fdIWrQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 08:32:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 08:57:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 71155 invoked by uid 111); 27 May 2026 08:32:21 -0000
+Received: (qmail 71391 invoked by uid 111); 27 May 2026 08:57:45 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 04:32:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 04:57:45 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 27 May 2026 04:32:16 -0400
+Date: Wed, 27 May 2026 04:57:40 -0400
 From: Jeff King <peff@peff.net>
-To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH] fetch: pass transport to post-fetch connectivity check
-Message-ID: <20260527083216.GA981444@coredump.intra.peff.net>
-References: <pull.2123.git.1779625693328.gitgitgadget@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 1/8] pack-bitmap: pass object position to
+ `fill_bitmap_tree()`
+Message-ID: <20260527085740.GB981444@coredump.intra.peff.net>
+References: <cover.1779207127.git.me@ttaylorr.com>
+ <13191c19b91bc3f5d671b7016b97f2309f12737d.1779207127.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,35 +43,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.2123.git.1779625693328.gitgitgadget@gmail.com>
+In-Reply-To: <13191c19b91bc3f5d671b7016b97f2309f12737d.1779207127.git.me@ttaylorr.com>
 
-On Sun, May 24, 2026 at 12:28:12PM +0000, Kristofer Karlsson via GitGitGadget wrote:
+On Tue, May 19, 2026 at 12:12:36PM -0400, Taylor Blau wrote:
 
-> From: Kristofer Karlsson <krka@spotify.com>
+> In the following commit, callers of `fill_bitmap_tree()` will be
+> required to check the bit corresponding to their tree before calling
+> that function. That change will reduce the overhead of setting up and
+> tearing down stack frames for trees whose bits are already set.
 > 
-> When fetching with a transport that sets `self_contained_and_connected`
-> (as index-pack does for self-contained packs), check_connected() can
-> use find_pack_entry_one() to skip connectivity verification for refs
-> whose objects exist in the new pack. This avoids sending those OIDs to
-> the rev-list child process.
+> To prepare for that change, have callers pass in the tree's bit position
+> in `fill_bitmap_tree()`, which will make the next commit easier to read.
 > 
-> However, store_updated_refs() never passed the transport to
-> check_connected(), so opt.transport was always NULL and this
-> optimization was dead code for post-fetch connectivity checks.
-> 
-> Thread the transport parameter through store_updated_refs() and set
-> opt.transport so that check_connected() can take advantage of
-> self-contained packs.
+> In the meantime, this change has a surprising and measurable benefit
+> during bitmap generation, particularly on very large repositories.
 
-That makes sense in principle, but one thing puzzles me. We only turn on
-the optimization in check_connected() if the transport's smart_options
-has the self_contained_and_connected bit set. And we set that only when
-we were told via check_self_contained_and_connected to do so (and we
-pass the appropriate option to index-pack, which tells us the result is
-OK).
+It is indeed surprising. There's a possible candidate for the speedup
+here:
 
-And the only place that turns on check_self_contained_and_connected is
-in builtin/clone.c. So how does this optimization work for a non-clone
-fetch? Am I missing some code path?
+> @@ -482,8 +479,12 @@ static int fill_bitmap_tree(struct bitmap_writer *writer,
+>  	while (tree_entry(&desc, &entry)) {
+>  		switch (object_type(entry.mode)) {
+>  		case OBJ_TREE:
+> +			pos = find_object_pos(writer, &entry.oid, &found);
+> +			if (!found)
+> +				return -1;
+>  			if (fill_bitmap_tree(writer, bitmap,
+> -					     lookup_tree(writer->repo, &entry.oid)) < 0)
+> +					     lookup_tree(writer->repo,
+> +							 &entry.oid), pos) < 0)
+>  				return -1;
+>  			break;
+
+Whenever "found" is false, we cut out early and skip the hash lookup in
+lookup_tree() entirely. But that should almost never happen! It implies
+that a reachable object is not in the pack/midx, and thus the bitmaps is
+not closed (and we'll refuse to generate it).
+
+So it really is the case that we do the same operations in a different
+order. Weird.
+
+But the patch itself looks correct to me, and I get ~6% speedup on a
+from-scratch bitmap generation of linux.git. I guess it could vary
+between architectures and compilers (I'm using gcc on x86), but since
+the reorg is setting us up for further optimizations in the next patch,
+I suppose there's no need to look a gift horse in the mouth.
 
 -Peff
