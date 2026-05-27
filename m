@@ -1,63 +1,63 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5C631F993
-	for <git@vger.kernel.org>; Wed, 27 May 2026 14:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4570E1A6813
+	for <git@vger.kernel.org>; Wed, 27 May 2026 14:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779890926; cv=none; b=hjhiZiKQHQ/M9TlixFSeyRMSRXesxd/lvwhLTfAy/dV6rEYNDDbdh8tiWemYdUAI2QqsmwK26UgCnIIfdFCaUMj/bHRNHCtrr6WXCK2QXeC3jO8YJ9oylA9wqzjUkF6S21RB6PDKhMraVTeIPqsyAHDsSIjqeZtGXBybjbB9CiA=
+	t=1779890927; cv=none; b=gcPc/crelSQ5h8NfL5RF3Z/Ox36hliyL5KzWNpqMKh18+VSCDzWMNYpyGiSLiQ21Omhpg4KEDj/flKpu1f5T61pQyxP/BCKFMZW41k/gR2nHPd4+yW4Ve9GKsiwOI8TxIGNKBCU34N+lVXcKy/3WSyJw05zg8y8xHu2X94en15I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779890926; c=relaxed/simple;
-	bh=GjOEWrGPrIzjSW78iUZlGqs+oLp0krsw1DRGx0jEkhc=;
+	s=arc-20240116; t=1779890927; c=relaxed/simple;
+	bh=EFFOYrQL/HMvqw5uOdbrEzrEojwroRwtEUbCC/uhd10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lrsgf1qMQKhthafGZ0qFxrXbJbxcX7p/a22C8QPVwnv6ouE6Sk28gCgNlcCkiOxYeI0AIhhcJQsVNRSKW73rPqlMf4zd69vHh0B+tP+crlZgkXC3zShaF5d//xNi7UTPkK1G0l6/JsoigRreqMHr7IFnpE1oFMxQg9cVOV/IRvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fr/b/mzT; arc=none smtp.client-ip=209.85.208.48
+	 MIME-Version; b=gkXqjOt2KZRVDqGB56LX41CRbR+bCKIfL7j48+tVtn1F9CkQLk++OoEoqRfR4yfo51UKG7jGlfoNIMAVBQVN1Wv2yVll0Te80TxyovUNe3jSBDkcM3wWu/3FOfihNEJcQ0APXyRj+biToGg6aKv5XY0QrXm+fWvJEMyTqyHhKko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r95EezHJ; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fr/b/mzT"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6870f904c6bso13645362a12.0
-        for <git@vger.kernel.org>; Wed, 27 May 2026 07:08:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r95EezHJ"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-bd8d0e4e341so1679800366b.0
+        for <git@vger.kernel.org>; Wed, 27 May 2026 07:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779890923; x=1780495723; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779890924; x=1780495724; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O4+MqYTX8H+Q3WdFNZMIKwooBRQTqE+CzJ2nJOEPUro=;
-        b=Fr/b/mzT3LMD/Ra+Qe3w69o7l7c9frSGqd5V8thaVGPzRQ7GKhulZQRK6N5tadsPBE
-         YvPnDe62K/MhqWxNKYBoVgmfw4146Le0WeVO4AwEyXJuTaM6FAqzDMBcNxhhe7Rbg/xf
-         /sWSGe9WAyc5eIeN2r96iIpxfgjjvF97hZv3NTEBTLSWQUkdbE11cHmxIaklYuaZgwqC
-         634xK+pPgDFIwvpTFEwY/UevdE+EHdWVfVRc8wajTaW781irbaNkNJGfqr7teetJqo1J
-         v61lhRgk0feBNHMe0hOfRcQZDyhHpzbtk1YJrjHrY60JJA70EFtfjuDmcKvwoHPLHEOC
-         KdZg==
+        bh=v6hh9q527b51iO6SbQAf73XYSFmXa59KvCeATLikT2Q=;
+        b=r95EezHJu9Xt3bIYCIUz3eMg91V85Vk5kOnVN2OZQRpIfyyxod3NbQC9tTWQg9EWli
+         U6Q4CjmGdT3LqiLH6IbBLo8C337I15tB0+yVaOZo0CdYr5IRp3liXv8jyRAs8ge/8k+J
+         v5NAMKEH2sdqsajLGyjkGympUqWfOAm/g8NhyRkM4Asbqovzh0kiM1yV1Iks8jeRn9TD
+         mIhoeErdK0+c8QxNCLKFSiHRRmvZJVmXeYAgybd8qlp2u3H7I9SZWOTjf6RWvNeRZfWt
+         BdCknu98bBhxB6pDA7ysvxjf9dCAu6Qm7LlfAgsKeKeik7p3T5T0AcAGB1rWHwAbW+er
+         BUjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779890923; x=1780495723;
+        d=1e100.net; s=20251104; t=1779890924; x=1780495724;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=O4+MqYTX8H+Q3WdFNZMIKwooBRQTqE+CzJ2nJOEPUro=;
-        b=ErqKyay1SnVRB/YeaOFqnb+8vaTD+HudeyHjov/9jsjJ+a7H54ZYgB7aMmi3rXPVKX
-         udDNR+eY8wmFFTM9D3N28p1xgeBJ33fVe/7yZ2rpl2c4ImoGkdPNkYBn9JffG09jUICz
-         gy7zJn8Sg56om7SX0gbCmKeF3NhF8yeVs8RP8DnHFXnnOzQg8U1WgTnzIo0nXI94TLb8
-         f1Tn5WTORmuPn003ZHBapHRcbHgmLupRctmktvWOJdDauszm8tVSgyl3XbnWFqwzmtcW
-         0UkJ8k59gNjQZaA5mZqO3RfbSJkxGo6t+HkdrtDlJbuhs4we85ZpEIlESDgdc+VspU7z
-         oLLA==
-X-Gm-Message-State: AOJu0YzgSYQGJ5JHlsxOGUkAVmRSSFbD7ThD+GJeJw33i8y5RxY26MWy
-	MBNpjUFGE4Zog7LdeLq9z1yKP235GvWTq+sCB1bJJMdrj6YW7DNhfyetrLJ0cA==
-X-Gm-Gg: Acq92OHCBY5InP9g7Y4+pHMywnj1Ou6bKcSuqbmRrGLVeWiCljF/7tVwF1+6STWRO21
-	Du5tqi1qSkpj5Yx2H+TNgt6rkGk/rLKaN+n6ZYbW059aOtpjG9W6K4BXyUOtz/NxrHdfvbSSSj+
-	/J9VPhy9qE2uaoX5dw3RvdpGdHlHR7dEy8AH9fz5ByuLpL/yBMcs9S3e7lAGLSTP0WHHYdClGkA
-	Z3Gd1dSYD8ndd3dTSICfrwyvWzdWXFDlPSn02uviDfDlWgkYAbAQkXzsTZYEzGWrEh/S7KiT7eY
-	x9FgPfd+r0ncc/DVB70XMief5y82GYo3HP1P9nR5e41QOyxJeC4QTKO5uCFHqhrAEq2iumO4n4n
-	O/frxKPrTRUfLBw7M4/g8xFnPx5eoCumPap/7375Cw7p5R6hoNWI5M2zTym+GF79GyCIQ1ynsVS
-	nJGDDTmDflMUMD9Yykpe6Dv+rOiO6uoevS3be85cXeEPX0bS/XKHcKmGGZe3DDAMM4puiVkSsMY
-	VddFkzV06IbD0O7DOuhcdy3GlV0jdefOEhMTlwKcHQTzvyVtg==
-X-Received: by 2002:a17:906:8a64:b0:bda:916b:c87e with SMTP id a640c23a62f3a-bdd28b6f18emr1054688566b.12.1779890922772;
-        Wed, 27 May 2026 07:08:42 -0700 (PDT)
+        bh=v6hh9q527b51iO6SbQAf73XYSFmXa59KvCeATLikT2Q=;
+        b=EUJ1pUwdDok/BgtfntZzA8OK1VJjBzoRZ3qvzfjPN7pchPDLQ9+KsnLZnoEK4/MbgI
+         GEMVUHfQSn+XfIU4ItyG/4UZA5srHko4XjHRu3ursipjxu3KbqdGEX4sYp0MsSFyh0CY
+         BipnynkzUf/Qv9sit6IxOvSS+lQgI+lTGqaFkOCvSlyqz0i3+GCFZZ5WsGBeHwR17UV3
+         8nULxVVQHbLc+n7XtMR2U5PJg2FjPUeYcRSLGZHlLiiu0K8nXXaIZBov2/roxfzcIPsI
+         7hFr0JPyUn4choSKNXdoKfKkLM8jK//2Sh4h0HgS6mo7iLxMLPqS6s3g6hbAIxLAkZhE
+         gEYA==
+X-Gm-Message-State: AOJu0Yw1VI7RbpOQO+t2KJw9bK0zDz7vztnQfh9b4x889h1DDA6o0s2p
+	v4wmhKHSbwyZa7+1jfAWvFVlcd8Itlz39oDYF4pSne6RVtUwKOCEZ7sOqjDlZQ==
+X-Gm-Gg: Acq92OH+6+es6HdHY4ByWnekU7rcLM8oNmDEQyQB+foeGhgHn5UGN2Y9hSYnuPyFFnN
+	iMuoGXrz1B6hFjpaT2BRb09x1gn6pDoexrn1Wz9cJ0ZGU9bXYIVR4AcldfSn0Xtc3TolN8N4ZGG
+	7nojyyDnAQY8hC8cfIVUi36//KEmkHe3ltXxh7IJI4UwAmEOrlvZBmphH6Y00+x1S6+tnj351vM
+	YxFjOMYgmXMHPgEiNvKFKZVeKANlhk9xsKRzu16rj0FwDnGjAuUrGzF3Gtcpk2fUFefYykDRLQw
+	TZuTJgl8ES/z5ZOOJK0qCTJx+G7Xg5G4HkEnMz/hj4FO+P9Uh+ocT9viClRwkWx3HZ/6gWRoFwx
+	6UHPv7Xrx3zjOPybDnYR9T8XPo5T35xeiihtLw0n3xNpugAjJNO73F56hGKymTT1PJQM5tiGHUZ
+	emKQfGIhm0czD6dRzuhjxxY2WGA374o+nEaXfwvDC+uIyRmWpBHLI/IQ6Q2qSfsVLoxsSrrA72S
+	6Ja7fL5YkpPOUe5NXWO2gcRoKHlbhXqn7Uh4qG53rr1od0POCmUCyMj5bWI
+X-Received: by 2002:a17:907:1c02:b0:be2:cf3b:acb0 with SMTP id a640c23a62f3a-be2cf4aef94mr480677266b.12.1779890924419;
+        Wed, 27 May 2026 07:08:44 -0700 (PDT)
 Received: from christian--20230123--2G7D3 ([62.35.114.108])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-be1ca138bc7sm268122366b.41.2026.05.27.07.08.41
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-be1ca138bc7sm268122366b.41.2026.05.27.07.08.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 07:08:42 -0700 (PDT)
+        Wed, 27 May 2026 07:08:43 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -69,9 +69,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 2/8] urlmatch: change 'allow_globs' arg to bool
-Date: Wed, 27 May 2026 16:08:14 +0200
-Message-ID: <20260527140820.1438165-3-christian.couder@gmail.com>
+Subject: [PATCH v4 3/8] urlmatch: add url_normalize_pattern() helper
+Date: Wed, 27 May 2026 16:08:15 +0200
+Message-ID: <20260527140820.1438165-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.54.0.275.g96c817d129.dirty
 In-Reply-To: <20260527140820.1438165-1-christian.couder@gmail.com>
 References: <20260519153808.494105-1-christian.couder@gmail.com>
@@ -84,48 +84,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The last argument of url_normalize_1() is `char allow_globs` but it is
-used as a boolean, not as a char.
+In a following commit, we will need to normalize a URL glob pattern
+(which may contain '*' in the host portion) and extract its component
+offsets (host, path, etc.) for separate matching. Let's export a
+dedicated helper function url_normalize_pattern() for that purpose.
 
-Let's convert it to a `bool`, and while at it convert the two calls to
-url_normalize_1() so they pass 'true' or 'false' instead of '1' or '0'.
+It works like url_normalize(), but passes allow_globs=true to the
+internal url_normalize_1(), so that '*' characters in the host are
+accepted rather than rejected.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- urlmatch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ urlmatch.c |  5 +++++
+ urlmatch.h | 12 ++++++++++++
+ 2 files changed, 17 insertions(+)
 
 diff --git a/urlmatch.c b/urlmatch.c
-index bf8cce6de9..b2d88a5289 100644
+index b2d88a5289..20bc2d009c 100644
 --- a/urlmatch.c
 +++ b/urlmatch.c
-@@ -112,7 +112,7 @@ static int match_host(const struct url_info *url_info,
- 	return (!url_len && !pat_len);
+@@ -441,6 +441,11 @@ char *url_normalize(const char *url, struct url_info *out_info)
+ 	return url_normalize_1(url, out_info, false);
  }
  
--static char *url_normalize_1(const char *url, struct url_info *out_info, char allow_globs)
-+static char *url_normalize_1(const char *url, struct url_info *out_info, bool allow_globs)
- {
- 	/*
- 	 * Normalize NUL-terminated url using the following rules:
-@@ -438,7 +438,7 @@ static char *url_normalize_1(const char *url, struct url_info *out_info, char al
- 
- char *url_normalize(const char *url, struct url_info *out_info)
- {
--	return url_normalize_1(url, out_info, 0);
-+	return url_normalize_1(url, out_info, false);
- }
- 
++char *url_normalize_pattern(const char *url, struct url_info *out_info)
++{
++	return url_normalize_1(url, out_info, true);
++}
++
  char *url_parse(const char *url_orig, struct url_info *out_info)
-@@ -704,7 +704,7 @@ int urlmatch_config_entry(const char *var, const char *value,
- 		struct url_info norm_info;
+ {
+ 	struct strbuf url;
+diff --git a/urlmatch.h b/urlmatch.h
+index 6b3ce42858..db1a335e72 100644
+--- a/urlmatch.h
++++ b/urlmatch.h
+@@ -37,6 +37,18 @@ struct url_info {
+ char *url_normalize(const char *, struct url_info *);
+ char *url_parse(const char *, struct url_info *);
  
- 		config_url = xmemdupz(key, dot - key);
--		norm_url = url_normalize_1(config_url, &norm_info, 1);
-+		norm_url = url_normalize_1(config_url, &norm_info, true);
- 		if (norm_url)
- 			retval = match_urls(url, &norm_info, &matched);
- 		else if (collect->fallback_match_fn)
++/*
++ * Like url_normalize(), but also allows '*' glob characters in the host
++ * portion. Use this when normalizing URL patterns from user configuration.
++ *
++ * Note that '*' is a valid path character per RFC 3986 (as a sub-delim),
++ * so glob patterns using '*' in the path are also accepted.
++ *
++ * Returns a newly allocated normalized string and fills out_info if
++ * non-NULL, or NULL if the pattern is invalid.
++ */
++char *url_normalize_pattern(const char *url, struct url_info *out_info);
++
+ struct urlmatch_item {
+ 	size_t hostmatch_len;
+ 	size_t pathmatch_len;
 -- 
 2.54.0.275.g96c817d129.dirty
 
