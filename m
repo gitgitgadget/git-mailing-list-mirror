@@ -1,141 +1,74 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2994222339
-	for <git@vger.kernel.org>; Wed, 27 May 2026 07:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4151A7E792
+	for <git@vger.kernel.org>; Wed, 27 May 2026 08:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779865516; cv=none; b=OxLJ7XqyWWHuf2owU44hRY0oBddiPIBV75xCYP8Kfle3SJjkKBFSOSAyFxeBm1kjptANS88NjnnR5gFpooAavNmSky9YoCIY4vMHyBGnK0sAAiVjow1MBVIjGf+lxLdfeK0ChL4TuD/yJzZGgwNNQbIESrrup5AbOJ2iyHBcuIg=
+	t=1779870746; cv=none; b=jOj3ta1Rdvx7NPaGXRYBJMtH4uCaiXqvVjlm41E+hNPjmytp2nUhChLjW0s7ayGVaB3AmHhpPwj6zaCKrk21FqaiLKaw6IfsEyiBRs/AHrmQtb9jbbK8IWuTXRUitv+OTQXs9GQeEiItdXMlZ2yeHm++433d+/dZ3egImxa9AoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779865516; c=relaxed/simple;
-	bh=ptrBPg0n/TFYXziEU/26H6aPsmU5+yEIF4FxOwOpdS0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHPrXCD0fIKyRuhman0Kmviy0vOfKdqWIWY4pqaUz0bO4axJh9xdizla8JfOYrVayx52fsyF7mS3DX83NSG6+pVF62HwXlumEUFnuMOB34d/uUjEuFJZIW/dsVqrstFZ5/UD429goGKDAPkxWrXC4Pf+E4Qq/qMWShaTPXnnH0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=DEess27A; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	s=arc-20240116; t=1779870746; c=relaxed/simple;
+	bh=KCYX4tyhWtslInB/MLDY0zRRt+e+x9d0rIRfoU+zDRg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j67jcD1HjOxOZnENkozN0TsE1nzmysg9MminAhoDewYz2HTpRw+BaJR42ZYtG+RBiJMzKwLWGjIle87m3zFTQqzOli8hhlcTahm3oJRoYxLyLQQ950uPJQofLXzBYZhJKEv87MUnVeRr2Ni+qoW72Kxy+Ef4gc8jN+WSbqKyuMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZAaEcGlb; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="DEess27A"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4903d5c67bfso30344435e9.1
-        for <git@vger.kernel.org>; Wed, 27 May 2026 00:05:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1779865513; x=1780470313; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EvqKpOG0N6dsc1pDiHhFStSlWTaTsWTl7Lf2XsmO9V0=;
-        b=DEess27A3K4EEOo2DKwJov6s3Oq+/taYa9TuUUiVryjTdKWdwymr8XYn8EDY3KmhJY
-         JW6fl58F/YM5zqwrjyfQqMDSN8EtM+lu7Bh/B0wEm2buOwYvvT/cqMx8Dgt0LCN+k7Q1
-         TpcPqS9E2hq88JwBQV7ujUUt+SF+0ZWSJjfP4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779865513; x=1780470313;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EvqKpOG0N6dsc1pDiHhFStSlWTaTsWTl7Lf2XsmO9V0=;
-        b=SZ5/crpi3wIeyKQC1mrEDL1PjijbySRp+hMTCLJofiskfW72puEqoWem+Bo0QBz2Nl
-         qYS+kagOuX9frXbHvTVwLfqhxcSM7nti82M65935W/o/TYl1+k21xFp4OOcZX9eRe0yf
-         0jpl4hVk/XkodjYoiJKSKkX1dcVYpcsEx1BnpWTX1KygJHYptUmIoB1Th/I3layx3+QP
-         /q0AWu+WTwVctPDd5Qr/E58jayh1SAzjEnZH09O91Tk+K7p12EvZvG7f7k1giJkNPiMe
-         6x3/swxuL3ZEApo+DCFQWV4cm0Pxi6wJ0bhSiatkLCQNTWY48WYFiawDVLSDCJ7iO9p2
-         QG5g==
-X-Gm-Message-State: AOJu0YzLtqiANFM3KhcxAq19KvMHx3WZhT4PwwiZgd5IQ//HKSFqmxd/
-	IOJzRBkQAOaePkJKmdMNNPfNG0D7j4RiUrCN5DVP/AdJ77nvkoJaF3g7X0ErZjgSWVDTGLX2u/s
-	KpIPVkBY=
-X-Gm-Gg: Acq92OFy9PfwrQUcl4Li1AaTVKrBzis4+6E4k3mu13eQsYMhuIqcYxwIFveyIP/DxEZ
-	sifIHkUNmzJNsV+ZAkTVQaWH4qeV7Q6za62bwTAgcYKHskcktL82ekLjyu6AuhLQ8326WS5kPUz
-	Ucpl/d/S7pEcNIaKrXoORipwAwUHHRFIdsaUwSMkQKmMpHevroi0/ylv1qpLC92DSsfrZMqjSIU
-	lfkXbUdo3isR0KPySM5ZHV48AFivy9mA7PlrxtmrL/AuZb+ImKz+/DYrgjPwmKiX6cN3bAFUPaW
-	hyB5wMoykzvN6oDUUCz8JsnaLVjkGtItiVZsbWto1fOVhYbMU66BxbxWDj+LGdR4gxxEkX0HRRL
-	f1lhJyIupWsxifH3nrWpe/wF+xD8KbKhDZdQvfxiIrdq/kz8AOSV4tEwrdKJJjfUvFo0r3S7MhE
-	YaUEEY6sPB+BW0Y1/fZVkeBUl2r4zTHd8ewffa4XjeL9udbMox
-X-Received: by 2002:a05:600c:3b8c:b0:490:480e:266 with SMTP id 5b1f17b1804b1-490480e02eemr385641965e9.26.1779865513441;
-        Wed, 27 May 2026 00:05:13 -0700 (PDT)
-Received: from krka-x1c.spotify.net ([95.202.8.70])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45edb5b1a28sm3923197f8f.26.2026.05.27.00.05.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 00:05:12 -0700 (PDT)
-From: Kristofer Karlsson <krka@spotify.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	Derrick Stolee <derrickstolee@github.com>
-Subject: Re: limiting git branch --contains
-Date: Wed, 27 May 2026 09:05:09 +0200
-Message-ID: <20260527070510.3510836-1-krka@spotify.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20230324191009.GA536967@coredump.intra.peff.net>
-References: <20230324191009.GA536967@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZAaEcGlb"
+Received: (qmail 28637 invoked by uid 106); 27 May 2026 08:32:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KCYX4tyhWtslInB/MLDY0zRRt+e+x9d0rIRfoU+zDRg=; b=ZAaEcGlbF3D1yOyuucD2RB6YiqCQTwVTa0VS8K99hmWm3BMabShyH7TbWs+6lPMRBWVgPwD9LYLhyaufRK1ZQxorENOE3T325SrtZAOTkNDK8Mu2mgPTLgNGphdgs1TAbNcKpRsyGBLwtekTrelJXWjeCn1oNK9y4YJzs6MW9hhmgKwEZHgzaj9s7xTwL25wfsUdQkvv/nkOCDhPflRC1HgK7m99FPUW/CWdVWF/qusvoxrjzeTphVV+QCyr7346WqzUgiKCpfLrD3G5MQo+60oY90oAPZVPQe9hBzP7LPa/JnpXkcFBRZohcGcyqtzs4vkjgw5WHkuqWTM64qB2Bg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 08:32:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 71155 invoked by uid 111); 27 May 2026 08:32:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 04:32:21 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 27 May 2026 04:32:16 -0400
+From: Jeff King <peff@peff.net>
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH] fetch: pass transport to post-fetch connectivity check
+Message-ID: <20260527083216.GA981444@coredump.intra.peff.net>
+References: <pull.2123.git.1779625693328.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.2123.git.1779625693328.gitgitgadget@gmail.com>
 
-Hi!
+On Sun, May 24, 2026 at 12:28:12PM +0000, Kristofer Karlsson via GitGitGadget wrote:
 
-I'm reviving this old thread because I believe the discussion here
-is still relevant and the patch Peff included is good. I think I
-accidentally created the exact same patch before I found this thread.
+> From: Kristofer Karlsson <krka@spotify.com>
+> 
+> When fetching with a transport that sets `self_contained_and_connected`
+> (as index-pack does for self-contained packs), check_connected() can
+> use find_pack_entry_one() to skip connectivity verification for refs
+> whose objects exist in the new pack. This avoids sending those OIDs to
+> the rev-list child process.
+> 
+> However, store_updated_refs() never passed the transport to
+> check_connected(), so opt.transport was always NULL and this
+> optimization was dead code for post-fetch connectivity checks.
+> 
+> Thread the transport parameter through store_updated_refs() and set
+> opt.transport so that check_connected() can take advantage of
+> self-contained packs.
 
-I work on a large repo (millions of commits, ~8000 remote tracking
-branches) where "git for-each-ref --contains <commit> refs/remotes/"
-was taking 4+ seconds even with a commit-graph, and much worse for
-deeper commits. I started investigating and building a more complex
-batched solution before I realized that the cached DFS algorithm
-(contains_tag_algo) already exists and does exactly what's needed --
-it just wasn't enabled for branches.
+That makes sense in principle, but one thing puzzles me. We only turn on
+the optimization in check_connected() if the transport's smart_options
+has the self_contained_and_connected bit set. And we set that only when
+we were told via check_self_contained_and_connected to do so (and we
+pass the appropriate option to index-pack, which tells us the result is
+OK).
 
-With generation numbers (commit-graph), the cached algorithm is
-strictly at least as good as the uncached one. Both have the same
-walk floor -- the generation cutoff in contains_tag_algo is equivalent
-to the STALE boundary in paint_down_to_common. The cache then provides
-a pure win: O(total unique commits) instead of O(N * commits per ref).
+And the only place that turns on check_self_contained_and_connected is
+in builtin/clone.c. So how does this optimization work for a non-clone
+fetch? Am I missing some code path?
 
-In my benchmarks, the improvement is significant and scales with the
-number of refs and the depth of the target commit:
-
-git.git (69K commits, 5826 tags) with commit-graph:
-
-  Scenario              Master    Cached    Speedup
-  Deep (v2.30.0)        1.08s     292ms     3.7x
-  Recent (HEAD~100)     338ms     240ms     1.4x
-  Orphan (unreachable)  271ms     241ms     1.1x
-
-Large monorepo with commit-graph:
-
-  Scenario              Master    Cached    Speedup
-  HEAD~10000            511ms     239ms     2.1x
-  HEAD~50000            4.14s     272ms     15x
-  Orphan (unreachable)  4.13s     252ms     16x
-
-I also tested with varying ref counts on git.git. The cached
-algorithm is faster or tied in every scenario I tested -- the
-crossover point is around 3-6 refs, below which both complete in
-single-digit milliseconds.
-
-Without commit-graph, the difference is even more dramatic (41-54x
-on git.git with 5826 tags), though the theoretical argument is less
-clean: without generation numbers, contains_tag_algo has no walk
-floor and may traverse to root commits for unreachable targets.
-In practice the cache still wins for N > 1, but I don't have a
-proof that covers all possible DAG shapes. I think we should start
-by optimizing it for the case where we have generation numbers,
-and maybe keep exploring if there are any meaningful scenarios
-without generation numbers where it would actually be a regression.
-
-To reproduce the benchmarks:
-
-  # Setup
-  ORPHAN=$(git commit-tree HEAD^{tree} -m "unreachable")
-  git commit-graph write --reachable
-
-  # git.git with 5826 tags
-  git for-each-ref --contains v2.30.0 refs/tags/
-
-  # Large repo with remote refs
-  git for-each-ref --contains HEAD~50000 refs/remotes/
-
--- Kristofer
-
+-Peff
