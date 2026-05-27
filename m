@@ -1,165 +1,209 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C73737A488
-	for <git@vger.kernel.org>; Wed, 27 May 2026 15:37:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779896257; cv=pass; b=RrDPsB7DDB08JkBTpUYa9vO94D/LKGD5vvAfW/sqJx6E/I7B7y7vUJUms9hHE9thVHPCg+2sYoic6eeDOh86LKNYow/wUxdVi+rQaO2FWeWKTsrJq7i28xV+APufvpSA8OLG4nSId5Qo/Y22lppx7WGUvqlC6YOj5Fw2v/QlcVg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779896257; c=relaxed/simple;
-	bh=ZLtbTWxa8fznBSchZel29NC3yGHedWpN8d1nyWdezkc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QYfpVBKxdYGFBwGvh771aJ5nJwIb37vIZJfnFECODrkM3ODRX/GYyjeMnIrZtghAl8ib3OjExtCqAGC4NnVAJM54XdVeRYYq35ciQnw2Osl+iFezTOwYHmKN7SKQVoxbin8ul5WUJOjYYE9vrkEisMJSllpI+IOzL/zHwSGfUEk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CxFwFIOq; arc=pass smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7413254BB
+	for <git@vger.kernel.org>; Wed, 27 May 2026 15:50:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779897007; cv=none; b=R7GU4mCqIvaJO5QJmxgk/7XNEhfbLOpPEgnLB7bHZ4wWBgiwVgspx+vwcXxhiRqhJqMvLjLofBiuQqFF+B1OYAcGG2ci14kfx42QLRtUAfkxE87SNDrFooMrSYVUxtU52MX5wk6otcUh93I/l6aeaOu2hFIaH1uRAqJIhvLh9Dk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779897007; c=relaxed/simple;
+	bh=z6bfwM5hGCMD0z78FIY69ZO2gHZb3scaCN56GEVyvJY=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=QrQNIjjbHmlJK4hBJGIlmMzZTWurmQcc6fyInyLT1HWv/p/K/01pwjprkZReWojJP7a+pJ+Ysxft1epLQvJj/XxRiIb1Z8GwNXy9nKtevba11cDz7IBqmQEaus2YCq0jgqq/2l2WVZLvIjm7jq9jtzojuIs7AXdGWJ7MUiliaJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKuGo0ZN; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CxFwFIOq"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-134ac81c445so20329687c88.1
-        for <git@vger.kernel.org>; Wed, 27 May 2026 08:37:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779896255; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WzEaar2s8k2Cek9H694xnXVeoVWiLAoseyVukyWXFzHZ/ocfdxhy74QRZvCmD+jAay
-         SULbuiSQ2qfrOODTboOKnWsu5dGulRwXynUQCXpanAX0H2fmun3aEt+bwBv0vFYjY4lG
-         11DqSn0cUclhq37a3KvCfumDif7/x7l26y2mA5qdBKym2N+BozQdndr3S6PyG78Zu8mC
-         VK5lm612LIbBaRg/glAW+cZMMiraKaDkko5KNoqtUfvpxe7sKpr0P5UmNEg6x46E6ej8
-         mUDY/J6gKK2Vh5DqhWGh/27h0gi8+jtbbrH/QJ/M4G6NH4UwfPvHocGkpLc9O/e1xWVN
-         SKGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zqVj8JKNn4zO/sXzzG6jY80+UraIb1yP4XTDUKMlrMM=;
-        fh=H7s48KkX+86qsoAa/1engEp2kkLtba5IzgUZWIMlixs=;
-        b=ZGkoIiyWBwvxNqfgkq6qKSD2mC6a0svMBIZUUCkSDcMysZ1bibWTHyz1R89XBk2f98
-         5EDGAZBJjG3G6OrC029DAuJjs7v9PSMaKgrlcDA60N1uz0QfC+7DjYeAumLuXVG66kdv
-         S2M47bs2oxf+fIZ7ZBzRMX7NYJth8xvNw2Wq8uIEP/UwusxIUF538TdAKWmsnPahMCit
-         cuUwf72HnRNBw5sR5By9ZTtF55zWuHVBktkOr1G8XUdtTpwOW9Ln2rLQrRz2EXKIDH//
-         ID9mEDCCOPlu/S9lkHEbwSx2xE9fuDlj1P2T4z1MTF/+iuHOpJbwfJ2qCuJfEzExvxXY
-         kBkw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKuGo0ZN"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-51306c36c3eso129363471cf.0
+        for <git@vger.kernel.org>; Wed, 27 May 2026 08:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779896255; x=1780501055; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zqVj8JKNn4zO/sXzzG6jY80+UraIb1yP4XTDUKMlrMM=;
-        b=CxFwFIOqwHVWWtmYExjvXr9MdZ8OaJ2Qe4yOma76w94zacrM343h8qKaIxOzNIVc+l
-         CoiMn4bKvKMR287HJqKQFRjkuEOt8w+XVP5Es/zeL8Wu5I/7xWovK50l8ThyiRlVzhbf
-         nHQPuk4wrziQ8+JVeRuTY8DXfWwTIhrJUi3KbChgpw+iUqqXxeK9W1YhQw2EO5zIgXJ0
-         sWvZedyoq3R6D2iz2ruxJDP+p/Y0Bu5s0L+AwXQlL5ft4xS+ud/m7f7aTYZtKGF59TjX
-         ni9CrYUrFdqgMw8A7PvwHFpIRy5g5JYfYkZRnjKtzkhq0rpatsCo9BKv3D/8QEO/YJFz
-         muDg==
+        d=gmail.com; s=20251104; t=1779897004; x=1780501804; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ACsA6KYMvxIQFHg0Tqox5VSQMgVpmZIcZLUh7Kg90PA=;
+        b=XKuGo0ZNCB1ku4NND7nAVZpvj1YTkcKIAyLG5WjTTz2qwxG5/K06JJQGp1wiQt3kXk
+         ptuVl1InnYVEOKA4xi0NiptBd7JyX06V2JyOCOCe3QjkpqOLSlxeeL9TMaTpgXgOjFcs
+         3cN7/QYDZxWA05KS2dAwf4b2zmXlG+/jdjTqnD8DYnUk/2UnhF6mUxouiJEkTxetvEhE
+         kA6UDyolcb5Ji15HBgIvsUQbXv0TtgOSxGCRiCfUD91PE6GpTo6fc9F0MsdZBQYssbRR
+         1W5psn4UJbhCLtLt8Abjzc1i/f7AX/9updFquzZM8BmgEK5CBoAt7bMxQiQi9RhudrBp
+         vyHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779896255; x=1780501055;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zqVj8JKNn4zO/sXzzG6jY80+UraIb1yP4XTDUKMlrMM=;
-        b=k4PTiEuKtF3yNIVTpdiFYstvPJ+HUkPXu7GPQ3bb49zK1U8ANz6eUkn6rLJrrOxTek
-         uUdFOqVF7X+AQmW/wRzqHFbYwiKzL5FgYVd4OOD0OtMDjTEmsdCu2+ghRUK4WtIAyeCn
-         yEhD23mAo/fehwN8Hqp67vvzeL6X8lx+tQk+wlSb+RmJ9N4j2Vd1bhOiuhOo7mPma2lg
-         HNLhCdeYnKnPTSj2IBcNFI1pFru0tqhk5Hwa1yUHjtpq7pumHUfnI1ei3VyuOyE0cvjX
-         4vzUVxTf2opIBincQnKJ0Ihk36suzzIq2GrRNk0ukSf3ZcWCsJF06o2vkipNKWjqMzUi
-         D9Mw==
-X-Gm-Message-State: AOJu0YxU9PnoqMZw0rrHUaHpyWxwuo0oU7RVxx0W+PzQ7CX7DkvfFh5q
-	yRPc7y9UShN8nlqJJu3o43CyprtcDvhi7bfpJC1duVnKVGhv7iqYm4vHp2Grm/CC/BmY9tWUC9v
-	hGgTmhhlxeZ5z7yeQ210Wlh67/LmuAXE=
-X-Gm-Gg: Acq92OFQzPyTUI2CZC4GRAiJ0yiABv0HdRGMfjmoULyevrKRAIXa064MMhdMEak9d+g
-	kc5jJ2V0jxYgMfTtZaZBxbcRD7upkQgC+XW6rfCX2K8Z0k7kExVMWcm7CtRRSvbNfXof/X1q3RE
-	SNChZdpXoMUllQByeUE7JUkwWWCb9wPvvjNaqo2G60kdHfw4aEqlrJuKQ1QGwpVV6L3eXW4BT9g
-	PJ2pQNUjy5uUwK07CeeTpzIEtAdJbEP8K5vAYBmq37R+z7eqrHXfCuuecvGsz8+kKK1YC5FAP4g
-	faQ2Sp1DYxwyWymnrEZ37EfAPWi64uu2gLcLJA8P6ZZsI1pqa6sTrop7ghTnCFg3XULp
-X-Received: by 2002:a05:701b:2905:b0:130:6904:e817 with SMTP id
- a92af1059eb24-1365fd74536mr5558185c88.39.1779896255390; Wed, 27 May 2026
- 08:37:35 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779897004; x=1780501804;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ACsA6KYMvxIQFHg0Tqox5VSQMgVpmZIcZLUh7Kg90PA=;
+        b=AEXeO0jR3LQp3BEQN+kyGhYT7GXaVoWm3A/MWikDmtFmaxjsHKqmf7vy0bCq16gwVW
+         gGn1z2wnMac9UptL2b2yWHTisSoQWTOuwqep6+N4VIkS/E/kJVf4AbPaNYxp9uyreT3d
+         reJdYarCGTJ3nKnGEIAw2JM+JWt+73M4RUEviqtBGkviYiqrSWsqEpZ5GE6dxqH5TKnj
+         wJ/biU8sfZneXtgWxF+1/kO4+VTDvY2RF3kxfTHXIvcvaAA33+xmuWCbhS+KeMyIpWn8
+         tHYZ98Ug7gC58I1+lpY8mXRUM3Dotg/C0w+ubPLWLceLSDgfy6QPER2y6xt9C+arotKm
+         jqWg==
+X-Gm-Message-State: AOJu0YxAhZhTx9SFaUYlZbz7M6K3edjh1LEGn8Q1vUqmg40O5SSEbssm
+	NCnoNhv2yLip5XxpqS9VUlCwWSm5nt6hT+hBVmO6FT1oCh74UrYYAzs4IAEMfA==
+X-Gm-Gg: Acq92OEyRxD9DIAbr2uQPZkFUHhd3USyNVcncqCEyfIxEssZ5ik+IpcPsisUmSxbnm/
+	iMN9cXKLzHe/FBOXhXYWeCeItfn+PsPW1ZHQokEaKC3HvXAm3d6rT+oVkUqqQqdkjXmfNWOz76Z
+	PUe0kEzLQMTHhIN+8JnhciCkHjH02cYbJ7yFJLAb91ILSueXiOk3ZhcwUxGpF2B2+RUnYr6/eyb
+	5Rsp6dgKMtcSRcDjUuHjMF3SRa5dE+NDdKJ682VO8wwocRRV8NKYZk+QxotQLqCcw5KpWxogi+A
+	BEYcsa0MqkgY9zreelxp8+mTSYMNIRk/VDQo0AHrC3jMisqVs/9Lj4RQD84IqLikZiLEu54m5qD
+	v/CByxFrWBiAfxKEavMac1bhQYTheU10IpTiBoj/+lcRPwsIL++4hzAT+MU+XeBCDwp+/kdMpXk
+	ankhWulq3XnhuhC4WGX400HjfYntI=
+X-Received: by 2002:ac8:5d51:0:b0:516:debc:135e with SMTP id d75a77b69052e-516debc4be3mr289320411cf.35.1779897004362;
+        Wed, 27 May 2026 08:50:04 -0700 (PDT)
+Received: from [127.0.0.1] ([135.119.239.32])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cc80692b1bsm190952326d6.0.2026.05.27.08.50.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 08:50:03 -0700 (PDT)
+Message-Id: <pull.2127.git.1779897003.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 27 May 2026 15:49:59 +0000
+Subject: [PATCH 0/3] revision: use priority queue for streaming walks
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260427124108.3524129-1-christian.couder@gmail.com>
- <20260519153808.494105-1-christian.couder@gmail.com> <20260519153808.494105-7-christian.couder@gmail.com>
- <97b9f2cd-7c82-4d4c-b574-31176074e566@app.fastmail.com>
-In-Reply-To: <97b9f2cd-7c82-4d4c-b574-31176074e566@app.fastmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 27 May 2026 17:37:24 +0200
-X-Gm-Features: AVHnY4JXMXgnamJo1FIeoPZ4T6DEu96Kc8Z-5fvOQeZ5_xSqdSLDZINN8rspRNc
-Message-ID: <CAP8UFD33N91V5dt3NL5xozfVm6rc=-6r11nTMq+RM=eNp+R2xg@mail.gmail.com>
-Subject: Re: [PATCH v3 6/8] promisor-remote: trust known remotes matching acceptFromServerUrl
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, Toon Claes <toon@iotcl.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Kristofer Karlsson <krka@spotify.com>
 
-On Sat, May 23, 2026 at 5:17=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Tue, May 19, 2026, at 17:38, Christian Couder wrote:
-> >[snip]
-> >
-> > Let's then use this helper in should_accept_remote() so that, a known
-> > remote whose URL matches the allowlist is accepted.
->
-> I don=E2=80=99t understand this comma break?
+This is a follow-up to kk/limit-list-optim (now in master), which replaced
+the O(N) sorted linked-list insertion in limit_list() with a priority queue.
+In the review thread for that patch, I mentioned that the same approach
+could be applied to the streaming (non-limited) walk in get_revision_1().
+Junio suggested doing it as a separate topic, and Peff noted he had a local
+branch (jk/revs-commits-prio-queue) doing a broader conversion of
+revs->commits to prio_queue entirely.
 
-I have removed it in the v4 I just sent. Sorry for the confusion.
+This series takes a lighter-weight approach: it keeps the linked list for
+setup and external callers, and adds a separate commit_queue field that the
+streaming walk drains into on first use. This avoids touching bisect,
+line-log, and list-objects code, at the cost of a "only one should be
+non-empty" invariant between the two fields.
 
-> > ++
-> > +Before matching, both the advertised URL and the pattern are
-> > +normalized: the scheme and host are lowercased, percent-encoded
->
-> This next paragraph seems to go back to describing how things work. But
-> this paragraph as well as all of the following ones belong to this list
-> item:
->
->       4.   Be careful using globs [...]
->
->            Before matching, [...]
->
->            The glob pattern can [...]
->
->            If a remote with the [...]
->
->            For the security implications [...]
->
->     promisor.checkFields
->     [...]
->
-> I don=E2=80=99t know what the intent is. But using an open block will del=
-imit
-> the ordered list.
->
->     diff --git Documentation/config/promisor.adoc Documentation/config/pr=
-omisor.adoc
->     index cc728bb0b5e..f07a2e883bd 100644
->     --- Documentation/config/promisor.adoc
->     +++ Documentation/config/promisor.adoc
->     @@ -109,6 +109,7 @@ and to update fields (such as authentication toke=
-ns) on known remotes
->      without further confirmation. To minimize security risks, follow the=
-se
->      guidelines:
->      +
->     +--
->      1. Start with a secure protocol scheme, like `https://` or `ssh://`.
->      +
->      2. Only allow domain names or paths where you control and trust _ALL=
-_
->     @@ -130,6 +131,7 @@ guidelines:
->         subdomain. This is extremely dangerous on shared hosting platform=
-s
->         (e.g., `https://*.github.io/*` trusts every user's site on the
->         entire platform).
->     +--
->      +
->      Before matching, both the advertised URL and the pattern are
->      normalized: the scheme and host are lowercased, percent-encoded
+Together with the limit_list() change already in master, this eliminates all
+commit_list_insert_by_date() callers from revision.c.
 
-Thanks for the suggestion, it is indeed much better this way, and this
-is what is used in v4.
+Patch 1 is a small leak fix -- a missing release_revisions() call in
+pack-objects that becomes visible once the commit queue uses a dynamically
+allocated prio_queue array.
+
+Patch 2 introduces a rev_walk_mode enum to replace the repeated if/else
+chains in get_revision_1(). The function dispatches on walk mode in multiple
+places (next commit, expand parents, flag clearing) and these chains must
+stay in sync. The enum resolves the mode once and both dispatch sites switch
+on the same variable. This is a lighter alternative to the vtable-based
+refactoring I mentioned before. No functional change.
+
+Patch 3 is the actual conversion of the streaming walk to use a priority
+queue.
+
+== Why this helps ==
+
+The streaming walk in get_revision_1() inserts newly discovered parent
+commits into a date-sorted queue. On master, this uses
+commit_list_insert_by_date(), which walks the linked list to find the
+insertion point -- O(w) per insert, where w is the queue width (active walk
+frontier).
+
+In merge-heavy repositories, the walk frontier stays wide:
+
+
+Repository Commits Peak width Avg width
+=======================================
+
+monorepo (2.4M) 2,420K 2,653 1,700 linux.git 1,445K 581 235 git.git 82K 188
+82
+
+On the monorepo, each of the 2.4M commits requires scanning an average of
+1,700 list entries to find the insertion point. With the priority queue,
+this drops to ~11 heap comparisons.
+
+== Benchmarks ==
+
+All benchmarks: best of 3 runs, same machine, commit-graph present.
+
+Streaming walks (affected by this series):
+
+git rev-list --count HEAD (monorepo, 2.4M commits)
+
+  master:   17.94s
+  patched:   3.38s   (5.3x faster)
+
+git rev-list HEAD (monorepo, full output)
+
+  master:   27.72s
+  patched:   8.61s   (2.8x faster, I/O-bound fraction unchanged)
+
+
+Regression checks -- non-merge-heavy repos (streaming path, but frontier
+stays narrow so O(w) insertion was never the bottleneck):
+
+git rev-list --count HEAD (linux.git, 1.4M commits)
+
+  master:    1.76s
+  patched:   1.81s   (no change)
+
+git rev-list HEAD (linux.git, full output)
+
+  master:    4.46s
+  patched:   4.52s   (no change)
+
+git rev-list --count HEAD (git.git, 82K commits)
+
+  master:     83ms
+  patched:    86ms   (no change)
+
+
+Regression checks -- other walk modes (not affected by this series):
+
+git rev-list --count HEAD~5000...HEAD (monorepo, limited path)
+
+  master:    7.36s
+  patched:   7.02s   (no change)
+
+
+== Profile breakdown ==
+
+perf profiling of rev-list --count HEAD on the monorepo shows where the time
+goes:
+
+master (17.94s): commit_list_insert_by_date 79% 14.25s fixed overhead
+(parse/lookup) 21% 3.69s
+
+patched (3.38s): heap ops (compare + sift) 16% 0.53s fixed overhead
+(parse/lookup) 84% 2.85s
+
+The queue maintenance itself sped up 27x (14.25s to 0.53s). The overall 5.3x
+is lower because the fixed costs -- object lookup (17%), commit-graph
+parsing (14%), memory allocation (10%) -- are roughly constant between the
+two versions at ~3s.
+
+This means the patch removes the dominant bottleneck entirely. After the
+patch, the walk cost is dominated by irreducible per-commit work (parsing
+and object lookup) which scales linearly with commit count regardless of
+frontier width.
+
+Kristofer Karlsson (3):
+  pack-objects: call release_revisions() after cruft traversal
+  revision: introduce rev_walk_mode to clarify get_revision_1()
+  revision: use priority queue for non-limited streaming walks
+
+ builtin/pack-objects.c |   1 +
+ commit.c               |  13 -----
+ commit.h               |   2 -
+ revision.c             | 113 +++++++++++++++++++++++++++--------------
+ revision.h             |  12 ++++-
+ 5 files changed, 88 insertions(+), 53 deletions(-)
+
+
+base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2127%2Fspkrka%2Fstreaming-prio-queue-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2127/spkrka/streaming-prio-queue-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2127
+-- 
+gitgitgadget
