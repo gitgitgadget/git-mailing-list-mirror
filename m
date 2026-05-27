@@ -1,112 +1,138 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3FC1990A7
-	for <git@vger.kernel.org>; Wed, 27 May 2026 10:04:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779876250; cv=none; b=PaxkmGN05Hwsfc10XSEeYuqzNPNg8mriUJQ+t0UC9LDdUAPOjum0urcwalgMW7thWSIq2BRh1rgFYgDm4tLrY3iMhnzz9bktybyr+CL7bNPnkKctRouw9h+XEgx4zW5vCMBliHV9BFHRMnA8BkYhw6Jl9ON8CkPzg8oI+qBLM6U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779876250; c=relaxed/simple;
-	bh=WwpHzt1aJk1gMlc9HcUSRpzC/uYpEIrdpFARaxC9oto=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JHupJqkx5vK+mTCumzu5AyAOPphFIjKpyRTKO1UpGOUxB/6YNyucmCBtnJm/J460BdG6zUxhHTsHLkI2kHWF+P1CyrNZvfBskTno4tiSFvcwFt1+/kDVSuUiFH/MPjP8L8R9xSq9Jt/tkfJNyA45XljUA5whRgb26SqYvb5YY/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DF5hxOrQ; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641C53A6F0F
+	for <git@vger.kernel.org>; Wed, 27 May 2026 10:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779876273; cv=pass; b=IkMDwLdWpRosL7g3PZeU8hXa/3cqqIhps8IaXf81PbDKXP4RpbHdxh7KJlip7TeYkHvOJWwcVHrdq2EhE3cuq3aeqbhBUZYPGSnmEqiKt533kvKNSaLDnHJ4mHLOBKi4LN47jdq5ZpwXim+d7ddU7gTFPCLDFxEeqA9xlMwqGK0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779876273; c=relaxed/simple;
+	bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C+GWG+Vhm7BGSv0CSl0Ida7Hl/canLpCIw/7fCP9YQmn+w0aBXn9ypFpDMhk98fYs9QwvXtnVtrFHfLyH+eCgl4kWGKPixfwSrpNdX+fQlQsKDHd9jfdHbx6FAvLlBm9WHVteTxqxaLg+kFzA9WAKHJOO1HEqhE7cI1K21/ajB0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=BkunhAlb; arc=pass smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DF5hxOrQ"
-Received: (qmail 29160 invoked by uid 106); 27 May 2026 10:04:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WwpHzt1aJk1gMlc9HcUSRpzC/uYpEIrdpFARaxC9oto=; b=DF5hxOrQp4zwxYEQjMmalSWc4smELwjH49mbLUfR19GilRoRX6nFr7HD8PJKIYvuJLQXQ3EcoMfhahQVHdRdU/DYfZswEy0YiSy7Wm8G3qg5QBufan/zndLcv28Gzo5w0nHdP1Ua5W9LriRtuHiS96MDhBp9J28TRhdVDm2GAK7dAMhrMX6qZghAxDZxhIywkKLnxicxpeg++yTGSgDLtDh84fySpEV5rtzzicqoAmghjxz6JCHzGjBLnD2aM31YnT+WufBvHZS2WFBaPnFhN/4E30gq8WtkW7uii9klDJcjeMYqFx35i7Rl0gYOrInPIeBe92HPYJSkDrBRcOPcqQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 May 2026 10:04:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 72698 invoked by uid 111); 27 May 2026 10:04:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 May 2026 06:04:11 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 27 May 2026 06:04:06 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 6/8] pack-bitmap: sort bitmaps before XORing
-Message-ID: <20260527100406.GG981444@coredump.intra.peff.net>
-References: <cover.1779207127.git.me@ttaylorr.com>
- <b0a4f31353a7053ab37b6d8c8f22c69bcfadfe50.1779207127.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="BkunhAlb"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7bf0b47d2f1so100525987b3.3
+        for <git@vger.kernel.org>; Wed, 27 May 2026 03:04:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779876270; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LZsIsUF5uyJTS4aBjggPeEgxdKLYek+bbBgKXpH2kSS8dzysskx7FOYZsmiVODCuu9
+         icZZrBEVprwfRzTIzl9uK6ajExp5NGQ/odNA4gCI6AInvTgKjEZR34EFJWTejEzL3tKW
+         wmA5wTAmwIjH8gOdlXzdrkYDwcVtT2VOVTXWZiA4AhSbvQ+UuaGr8vDjUNlxdGrA1h5u
+         vrm6Psm/bZfzB9yFQF+OmF/OunvDD73vT/LFMapAyiuJb6ZlQ4y7IgPglf4GWXVu19NY
+         Gngyhc4efhXnrAg/z0L5ygdT334LF9KzA2L7Wr9bh/o/mXdNbhDmEym/cMDZmPmQFxH6
+         kQOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
+        fh=ua7AJFhAjCObxU7QDBcGPVVnMPmipTCHVyCvKCf6YZk=;
+        b=EJC1+/pUMaI3OyXuGhGEcGGuV06aA6Dq5/rHEo0q0ebjLfSAuqfsE2yIP1bqRx77uA
+         jaHep/LwVrEYGWkB0t9dSYniTnU7EMFhwXTCMT1tysjtIw6BZat2j/Ct+8DwjEbH1iff
+         O8eHdYSZ4joY3J8zUWBvtJRZAdLKIFXhYYaE8KZ7xSfqKaye6BOUFcpWfGgF70PuEXPs
+         s3NkW13sPISvfaG9eyA4fNvmv8uJBk5B/Klc0qVYgWVWeRpW7Kp/e3dkaO7qo3Ut7V/6
+         a0BPNDx/6NX8AnGtdsBzqzQAJWTk6iQaeRGA2zn0h83N25Lr826IMl4RZxBhILsK/uvb
+         Mz5A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1779876270; x=1780481070; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
+        b=BkunhAlbda9ezbS2XFE4k5T5dB1tHXzwKgAzdg5O55lsfmvGx8G9OFEOiAZDv+QAcx
+         J4RMwianIwtaSV2q/TzHtTNyxP2MxkYjKO9Hg61+6RVXHF1vJ7+ESS4Vm565HVxPKVjH
+         u/H8uHmS6lKpTuQU2HzXM6V5EyrcIQUFQjq7I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779876270; x=1780481070;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Al+MY3aizSXcJEZBCC0d5yeeJJcFUVEZDpenzofJwME=;
+        b=Fu+YR5JOCBjGJwRq5+hE1nNCWYspYXXc1Sb007NIycV7pArEq6FNBM44UzlgyyhMH/
+         GvWOZLm0oCaPc/M/9alo9+RCRMlkP6LqxO1KGHu/QVnxJWr+1ApLSbnKetz42OLfWWYA
+         FEIyGFK6bkhFY+Aoog95lon6YP2P000Du7C5x9qqUaLOYuH6QE0Xd6QguxYkGpEXttTa
+         CWGMK/gyf5HByZLAXXXFYccQ7/refEW1xKrtviOw6n1oipeMXWP4BT/i8VjXuJU2LPK+
+         lbdI/ff2lHAH+Phu9L/dFKNc+tDLhUmrOqriD8MGLpeDs0Xozbsg9yB0t4yEayJ9KVzh
+         1UOw==
+X-Forwarded-Encrypted: i=1; AFNElJ+IKJyczise/DanDngpwBFP8QuHzzMlnXMP+KHZXZaJl8jtUju6cxY+D4Kj6+VfmfVU8As=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdqBy+Bv4lquzy0ydrXWFaloIYSHCOTNjcVAaOgIstCoWZz/k3
+	2CTVqKqb29ToYPZL2Ie1h6lumnCJNCYXJUvH1jjFfk96acBrttpo8y9ksS/55suuF5dLacWp7/G
+	LsrM2/DmNS2g5zSHXsv74KnZOJp0/nDbsy9Qn0zWGDrmita9SXonajswULA==
+X-Gm-Gg: Acq92OEswZPpUqtkYJyxpVmK9Ym3+ESjY3WmQlW/+4d0qsL7N9JlsBWhENM693qF6aJ
+	2wuT5YZ1WBZaP3ZCW8/NvwqlxG3eHpwEcG6JoX+MTKpcpoSBVfK96p54P66D38/mIQHonq0tMLS
+	GfSNPK9dSrHwaQfCDMetZUvtIRVAFleugzBR771nuqid96NH8SoUUD2EZkm3i1Ert4a63vpmiJg
+	FNmqwauGEILv9pJ1t4p+SiDxZoac0YPqwouM46e9FRAIa+wybHWt+zAMDSM2pZ6aCEx4r+R3TkN
+	O+km23C/XlPdsuU=
+X-Received: by 2002:a05:690c:e3ec:b0:7bf:4a9:1a86 with SMTP id
+ 00721157ae682-7d33ad502c5mr230564817b3.45.1779876270324; Wed, 27 May 2026
+ 03:04:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b0a4f31353a7053ab37b6d8c8f22c69bcfadfe50.1779207127.git.me@ttaylorr.com>
+References: <pull.2123.git.1779625693328.gitgitgadget@gmail.com> <20260527083216.GA981444@coredump.intra.peff.net>
+In-Reply-To: <20260527083216.GA981444@coredump.intra.peff.net>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Wed, 27 May 2026 12:04:19 +0200
+X-Gm-Features: AVHnY4LqpK26yHWS0BKltcDUpk8S_RaHKlDPJbtT_jxT_lOhX6l55k1qwDIekzk
+Message-ID: <CAL71e4MrVqC1=AR6x0_8S=8kVqPdDkhgCZRb4etFsxTzd6s_8Q@mail.gmail.com>
+Subject: Re: [PATCH] fetch: pass transport to post-fetch connectivity check
+To: Jeff King <peff@peff.net>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, May 19, 2026 at 12:12:50PM -0400, Taylor Blau wrote:
+You're right. I dug into this further and realized the problem is deeper
+than just the flag not being set in builtin/fetch.c.
 
-> Reachability bitmaps may be stored as XORs against nearby bitmaps, up to
-> 10 away. However, when callers provide selected commits in an arbitrary
-> order, the writer may miss good ancestor/descendant pairs and produce
-> much larger bitmap files without changing query coverage.
-> 
-> Sort the selected bitmaps in date order (from oldest to newest) before
-> computing XOR offsets, leaving pseudo-merge bitmaps alone (which we will
-> deal with separately in following commits).
+Even if we add:
+transport->smart_options->check_self_contained_and_connected = 1;
+to prepare_transport(), the optimization still won't work for fetches.
 
-That order certainly makes the most sense. I'd have thought we ended up
-there incidentally because of the order in which we consider the
-commits, but perhaps not. I wonder if this got much worse when we
-re-wrote the bitmap generation code a few years ago.
+The optimization is fundamentally clone-only.
 
-That was in v2.31.0, I think. Repacking linux.git with bitmaps, though,
-I couldn't find any difference in size between v2.30 and v2.31. They're
-both ~67M. But that also didn't shrink with this patch, either.
+I was unable to reproduce the benchmark numbers from my original commit
+message. The patch as submitted is indeed inert for non-clone fetches.
+It looked like a simple improvement, but it's clear that it was incorrect.
+I'll drop it, and I apologize for the noise here.
 
-If you have some spare CPU cycles to burn, I would be interested in a
-comparison of the bitmap size of your test repo using v2.30.0, v2.31.1,
-and this patch.
+-- Kristofer
 
-> On our same testing repository from previous commits, this change shrunk
-> our selection of 1,261 bitmaps from ~635.46 MiB to 176.4 MiB for a
-> ~72.24% reduction in the on-disk size of our *.bitmap file. The time to
-> generate the smaller bitmap file decreased by ~3.69 seconds, though this
-> is likely mostly noise.
-
-Certainly good numbers. The obvious follow-up question is: how does the
-reading side fare? I'd expect it to be a little better, if only because
-there are fewer bytes to consider when XOR-ing. But if there's some
-hidden assumption we're missing, then it could get wildly worse. It
-would be good to confirm that that didn't happen. ;)
-
->  static void compute_xor_offsets(struct bitmap_writer *writer)
->  {
->  	static const int MAX_XOR_OFFSET_SEARCH = 10;
->  
->  	int i, next = 0;
-> +	int nr = bitmap_writer_nr_selected_commits(writer);
-> +
-> +	if (nr > 1) {
-> +		QSORT(writer->selected, nr, bitmapped_commit_date_cmp);
-> +
-> +		for (i = 0; i < nr; i++) {
-> +			struct bitmapped_commit *stored = &writer->selected[i];
-> +			khiter_t hash_pos = kh_get_oid_map(writer->bitmaps,
-> +							   stored->commit->object.oid);
-> +
-> +			if (hash_pos == kh_end(writer->bitmaps))
-> +				BUG("selected commit missing from bitmap map: %s",
-> +				    oid_to_hex(&stored->commit->object.oid));
-> +
-> +			kh_value(writer->bitmaps, hash_pos) = stored;
-> +		}
-> +	}
-
-OK. It took me a minute to wrap my head around this. The real work is
-done by QSORT(). But because we maintain a hash pointing into that
-array, we have to go through each hash entry and fix up its pointer.
-
-Looks correct.
-
--Peff
+On Wed, 27 May 2026 at 10:32, Jeff King <peff@peff.net> wrote:
+>
+> On Sun, May 24, 2026 at 12:28:12PM +0000, Kristofer Karlsson via GitGitGadget wrote:
+>
+> > From: Kristofer Karlsson <krka@spotify.com>
+> >
+> > When fetching with a transport that sets `self_contained_and_connected`
+> > (as index-pack does for self-contained packs), check_connected() can
+> > use find_pack_entry_one() to skip connectivity verification for refs
+> > whose objects exist in the new pack. This avoids sending those OIDs to
+> > the rev-list child process.
+> >
+> > However, store_updated_refs() never passed the transport to
+> > check_connected(), so opt.transport was always NULL and this
+> > optimization was dead code for post-fetch connectivity checks.
+> >
+> > Thread the transport parameter through store_updated_refs() and set
+> > opt.transport so that check_connected() can take advantage of
+> > self-contained packs.
+>
+> That makes sense in principle, but one thing puzzles me. We only turn on
+> the optimization in check_connected() if the transport's smart_options
+> has the self_contained_and_connected bit set. And we set that only when
+> we were told via check_self_contained_and_connected to do so (and we
+> pass the appropriate option to index-pack, which tells us the result is
+> OK).
+>
+> And the only place that turns on check_self_contained_and_connected is
+> in builtin/clone.c. So how does this optimization work for a non-clone
+> fetch? Am I missing some code path?
+>
+> -Peff
