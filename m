@@ -1,162 +1,160 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F6132B11D
-	for <git@vger.kernel.org>; Thu, 28 May 2026 19:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779996109; cv=none; b=G7EbGuziPTD14GNRpBRlhHzf3R5/Z7PxpThG5jhWj+dvVwWuIX99eXalgGXn3LLlbkO928b2Vcooln9IMl3hG71eAYK3PSNX3OFhBLbFSS4IudRAX2jJuY4ZyDahSndAsG4e/zLDeJcjYMqA/TY2vbhvL+RxAPW5eOmdGHLzS5o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779996109; c=relaxed/simple;
-	bh=pwsprhFsEIDlakVXSaHrSxLvPw1zy1qsqlfu3kn2+I4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ERrd9sJWIdUdzIJQrNcht40U5T81uOZahy9UWMVo8gpe/rfzCgn0nT62ejBgp5cqAZEuIUK2PhtIVQOh3wyWiD5mB8iwiTDroM6fYmDFErUhCw9fjVhSV4KAaU/y9BZuegpPbEUMbGQy0TarpEElucer0/gGFHboZyFoN2FkQHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pahj7VSZ; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C864332695F
+	for <git@vger.kernel.org>; Thu, 28 May 2026 19:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779996317; cv=pass; b=ulJL9e5VTSZ2LuMXOMk0On8JTHe/otwqayc0utCRCVCQl6CMa6/Px6tovZEhDe5fKzjyVNpeori2rcYPMJfygl76KhcwXE7i/V9jik6OnxBMuYObjqOfih9jb8S3luDa/Hw78fTAeVNekrQUCB5LcEi+OanxLLZviytB3OmYt0w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779996317; c=relaxed/simple;
+	bh=N69ihSJQKQuKk7NfHCwcWCXiG4jyaKdjODWX9uEGPRs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RCRU1ADQ7UIFvNV1Deb2mb5DxccyY2ayFmv2oopGS0x5sGM3IB6BPmbeKISKyuAis3ZdqePsmfmMFzG0zQYiOgs2Zzo4gcE/27ECtJoSBixIrVO2YU1O/NhJjnRTmE7IxnL5EP6oEITaXJbF6Hvp7O5gC17g7grPaeQhSNQTsoQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kt5Jequj; arc=pass smtp.client-ip=209.85.210.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pahj7VSZ"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-132830d8281so111350c88.1
-        for <git@vger.kernel.org>; Thu, 28 May 2026 12:21:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kt5Jequj"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7e61e251966so2831139a34.0
+        for <git@vger.kernel.org>; Thu, 28 May 2026 12:25:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779996315; cv=none;
+        d=google.com; s=arc-20240605;
+        b=RNaCMgWDqd1AOuTHFBp5FBxdcZyryU/dxWQ5WghSFnLghQC+NB9uhttMnTJ7tU6mQS
+         rQWmdWKGnkMhZfktY4NTN29EZv37iCrSp/S+irhO5f+QmK+LKAr6JaVG6o4SSDI2n6dD
+         euwIvCxyeqzf2B+QXAmqmpWSBMDe5alopP7jXmhX6grUfmRSvURpWtlh6XFWjpCEj7v4
+         bxkzZVz+sti/A0nkMUEAgY/P6yfH+qQjQmCGeraB8Ny9mFS6Y32sIl3SxMpb0otVzp1f
+         50g4PYVQ3J+DR6Up6cLTAnThF6CDr+woi7gnuyRXRgcXruAuXiz3iCz4weLuhsr53mX6
+         rYmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7sdJqFbimNi4vCOVILnuXN0OwbHYNqY/FkRmagiiYg4=;
+        fh=JMmuO7brvYWqrhAwyGXuH0bKGLkIdTdk3zONN/jj1T0=;
+        b=i85zvRlZIcPd82WS9HUK14kyNCr3I+y0wVedkmoxAiVno/M7bHwgi4FuwlvCwXi0Aa
+         WFZuww0/NBC47svEMh66m5HeoTAnutxV3qw+LnYyTj/WfvzkXsLOrkJKHDkRbeFlhais
+         BeSj+pJGAjCiXhMbCmfZCy1MwhvUSnXm2ZSqZ/P/SqAaHENZdvAAdbPJqmqdM4qNI1t6
+         2dhvzFpVVtLc4ToP0Wuhq5q/G8w9lfQBnIbxngHYPDYGJ2HgNAmaK2YTf+pVnjjBuKb/
+         9I19Xd77GQ6tgNUozsE06QLUk9PuCuDkW2rzxoYHJXdRVZP779fN3NENY4fq3MZJiQbw
+         HwuA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779996108; x=1780600908; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779996315; x=1780601115; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Adi7TlI5CP7Ret78xXrWgTuOUlTsc1Z3boN/GhiygME=;
-        b=Pahj7VSZfB8OoYjQYmusu/TYmA1939IMG/gf2dj6LazMCPD4Ci45Q8qPAih6T7Fvdx
-         jXXcpNAbT9xCtJzwV538MPazLNcJvGbf60xxBNKa8QWMyadWYscALLQ1cadXiuzTI1uW
-         +qTQBV0EMGfj5tduqnY9QQa6fU/fmKokevd/KmOfbrbE3x/QoMTM9309oy0E/1rqb6AH
-         9zD1EGAA2w/35K4PhBjCs0du2cdV8ecTO53txxJnMdBmnHB+Moy5xobpfghoV5UGaxAu
-         RzV/7L/4qcxZ7Je/D3+cLHN6vLXX+xOQnBX9B8i+QhMdvvm45R8Ut9tgisWBKabJo/dC
-         pZrA==
+        bh=7sdJqFbimNi4vCOVILnuXN0OwbHYNqY/FkRmagiiYg4=;
+        b=kt5JequjFrDwFtSflwZzv4iaLrJLHqDdvubYKxXzPMuyiFcVucL1wh/EapZhIBV8DU
+         Ka5/lLl9ZO2HBH7+jaTmI0SqbigpLMpHLaStpASU49q4o0tW+lhQNNm4X2SiXlBP0MJJ
+         UX1PwBzMYh4lR5Ld8jP6mCRL3S8YMv8lbYsxwhq+MZJHfPyBOAA6lVK89Ew2wzHzjFBp
+         Esj6HqKJV1992imP+meGr4h4G+aXKmvWuFQzp6GeeTUnXmDbyzuYlcz8hyQy+DsqmQam
+         Ir/X32IyO1xoQhAfZi6h8gHXvfC9Q+HoUUgbtxDSg/y5Ua40Eo4y96xvs3g/OsW14ELd
+         EvLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779996108; x=1780600908;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1779996315; x=1780601115;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Adi7TlI5CP7Ret78xXrWgTuOUlTsc1Z3boN/GhiygME=;
-        b=CdzNT6PKUlmtm9HZXehZ1TrJRlshDNCQApa9ChCdU1gkznKQ72r1UYv3Azj7yJ2T+8
-         3+XWLTuMMxz0wQkYNT0uufuvoAU2oIJNs6lsvyiaaLxNzElYdFQgQxLBdGE10kwWZtsz
-         CNp8uGJoIl9HTBU0gS/tUUUpQvTE5pao6FCfPPOH2oTtu6sczH16iSF8S8xK9dPGekDU
-         YedvY0/zTA/AM61miTcMYRD+/LfBV5z5B6walWPq/PEjxWI1bo77eHOBjc1NrjhZnsLf
-         tblfFC0buwOfa4/C69OQSgzpHG4pvvULRv0iGvZSG2nyjWjxvmFulxfzHnzruSmB5AhP
-         OMNA==
-X-Gm-Message-State: AOJu0YxLbYwd4I21s1dRmI2sh9iatZUl6kNVGyfPx15UKTQOtWEEvxxx
-	/XaSY/diH3VBmlBMklcfMRmok9KJukowD/M2W5pPRi6tgna6WBVeT+++i877tQ==
-X-Gm-Gg: Acq92OEaL3zt84BTsn+3CxJNtZk7zIIBJ6hW8HuDqKG4fDMkQwa6LVZB+dtTj/oHQhf
-	6YNHWDDLfVlRSpY4d15cH7OmTYOfZgW5OBt2t7M83nxIDFpz5BhNQeerirC6DH6NhO1AKg7B1uu
-	G8WvD4eOOI0TOTBUwbJi61MTX9ytlMcr6CPj7BZf1y2sLpnGOS81ACDASlz4ncmxCmHs6doJAJR
-	FlmgvQVCMqpBwnPhFMql/EF3pEXBOSUxOMsQcnSKyRzOWImyVFt3LZB7O33lX0fPqqOq1H0SFl3
-	HJsThrZs8x0zZDjtpt811fpdH64G1ALjHZ79yyGwxypy1ef7Emz5+Kn4+2UevyU/vN1iOxaPUtE
-	Zvx8aRSQlURV8+QSCZU4EQQwk4a+rn+tYl38eAQFMcFW+pW39bl4EsU+j5DEAUaPiuIp82zlEgj
-	n0SZqAviJH+rQgybILJ5XUqMcXFpoartygZQyOsfA=
-X-Received: by 2002:a05:7022:213:b0:137:9ee5:2087 with SMTP id a92af1059eb24-137a9046080mr133763c88.31.1779996107522;
-        Thu, 28 May 2026 12:21:47 -0700 (PDT)
-Received: from [127.0.0.1] ([172.182.195.228])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-137a9ac8405sm90952c88.12.2026.05.28.12.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 12:21:46 -0700 (PDT)
-Message-Id: <pull.2113.v2.git.1779996106005.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2113.git.1778686956622.gitgitgadget@gmail.com>
-References: <pull.2113.git.1778686956622.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 28 May 2026 19:21:45 +0000
-Subject: [PATCH v2] doc: clarify that --word-diff operates on line-level hunks
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=7sdJqFbimNi4vCOVILnuXN0OwbHYNqY/FkRmagiiYg4=;
+        b=o9qqq/ya3w+JDHfX25Po0myDx5O+yHS9h7DukFL/ZQMfQ6R+hBqdJE7v3C26kq9JjT
+         aCRlCbEaYrIKCFIvi6S4v0xgEuQyXvJzzggWufBFPGjnc8+3Zi3tOyL25QmDlSp3R0wu
+         6NIwcLioEjJHualPMmm5SM10YAraA0n65Q0ZKLu9Qs7dTYfeB22/FmV5yQNWOSpIVKWL
+         /ST2Gpk1kZfazJE6eBVydOwiNE8/Z8U9eUjBdBEsp2pKo5BQvkT0yUuZdr+OO6e9vBJQ
+         8OMyu5ZhCI1CNhMWqjkP0xY4sx4aV5riK89PV2KRWsWQzieaUuoN/Mwq8f+gtn9AkUnu
+         WYaQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+a/HYNnjR4UxC3puA7XIGdsIeNSQW3+c7DvPFJQSJmBoneu08XOa6NSGmBAjQ0b+RQ2Ng=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUczUEEAgnMvEn2CMsNCNkESmG8q7AC4xaKuOaMxlS1jIIv/85
+	MSwGDl24ZhSkM8s8zRsxcz65Q37uvYqDloH0z6QEbmCkIYp/p8YgU5ZP2nFEZBM7AT50WsqJdMc
+	Crd7081PlmXrlfQtPGhE7361O2UwQYDH4nuPO
+X-Gm-Gg: Acq92OHmg49KzZmVyCFznAxiTjGN+m2SKlZxByRrGENhlchvnx+5l6HZ3WKqjwj8uIX
+	x1p4y4IFtvBn+spvzJ1z6D8I5g7Q4lgp7aBpOwckG4aWBM0ae8NSE5IfiiGiShT5OLmrG18+9zS
+	t4tmxBuRayBu2sBX4M8T8g8FMsdfciOP+TMaC/5wNX6qWVuVK9Ppk3UWV6/81/0Za9Xi0MMe2HT
+	+bXGbt513Z9WIX9OsuoQhkKCtL4MAtcWgjI0E+Z4yXJQNBOJq9DlgGhr3X/6q1LTynz8kBlJ2DV
+	Hx2QTwDHKYsQhJK68/FXsUT1w0vMK7SltOervUutdl9e9WEjf8A=
+X-Received: by 2002:a05:6820:1625:b0:69d:a224:6ee7 with SMTP id
+ 006d021491bc7-69df738dc2amr1800338eaf.54.1779996314707; Thu, 28 May 2026
+ 12:25:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
-
+References: <CAC2QwmKRyYfE+30Fh75gvAEmJjk8g-3k+G=RDiEJ-KGNExAEow@mail.gmail.com>
+ <xmqq8q9migqk.fsf@gitster.g> <CAC2QwmKORPnsmV4SM_CnmhrbF+X754ae-n9m1fgjvVsL9d-wzg@mail.gmail.com>
+ <89224cb5-27b1-45b6-93d8-a0ad5e2447a2@kdbg.org> <CAC2Qwm+BLNf-2kvePKNF-FKQX3raOBzSRmwd0ZEdzmo8TqkMGA@mail.gmail.com>
+ <CAPx1Gvd_FqnsjCkpAA5uy7aDz9oQnWx7WTvKk-kLWemkqF9PsQ@mail.gmail.com>
+ <xmqqo6ic8564.fsf@gitster.g> <CAC2QwmLXk=CXNo8+Ja0fL5pN1YYMTkh7XHAUwN1c9VxuFhyy4Q@mail.gmail.com>
+In-Reply-To: <CAC2QwmLXk=CXNo8+Ja0fL5pN1YYMTkh7XHAUwN1c9VxuFhyy4Q@mail.gmail.com>
 From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Thu, 28 May 2026 12:25:01 -0700
+X-Gm-Features: AVHnY4LXj44K9vKGcjOLudzxYn2oUWQ8vzPOsxAtVwAIa7POYTroWqo7rj9bx84
+Message-ID: <CAC2QwmKjr2eiFNPPmERq7n-UjE-SF2vE4eHDanYE-4heWxzQVw@mail.gmail.com>
+Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
+ space changes
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Chris Torek <chris.torek@gmail.com>, Johannes Sixt <j6t@kdbg.org>, vincent@vinc17.net, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The --word-diff documentation describes the output modes and
-word-regex mechanics but does not explain that word-diff operates
-within the hunks produced by the line-level diff rather than
-performing an independent word-stream comparison.  This can
-surprise users when the line-level alignment causes word-level
-changes to appear even though the words in both files are
-identical.
+On Wed, May 20, 2026 at 1:21=E2=80=AFPM Michael Montalbo <mmontalbo@gmail.c=
+om> wrote:
+>
+> On Mon, May 18, 2026 at 8:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >
+> > Chris Torek <chris.torek@gmail.com> writes:
+> >
+> > > Call it an "implementation note" (or, if you like, a "practical
+> > > consideration"?).
+> > > Something along these lines might work...
+> > >
+> > >   Implementation Note
+> > >
+> > >   The --word-diff option currently operates by taking the same
+> > >   line by line diff that you get without the option, then massaging
+> > >   the result into a word-by-word difference. This may cause an
+> > >   unnecessarily-larger diff than you would see with a more-clever
+> > >   implementation. If and when Git acquires a more-clever
+> > >   implementation, the output may change. Note that this is
+> > >   similar to the --diff-algorithm option, which may change the
+> > >   output.
+> > >
+> > >   Regardless of which algorithm is used, _any_ diff simply shows
+> > >   _a_ way to achieve some particular change. It's impossible for
+> > >   any algorithm to tell whether someone deleted two lines and
+> > >   then put one back exactly as it appeared earlier, saving the
+> > >   resulting text, vs deleting a single line, for instance. Only a
+> > >   keystroke-by-keystroke logger would be able to tell what the
+> > >   human operator actually typed into some editor. Git does
+> > >   not have that information, and having it is not desired.
+> > >
+> > > Chris
+> >
+> > I understand your frustration in the second paragraph ;-) but let's
+> > not go there.  The first paragraph is excellent.  It gives readers a
+> > clear enough explanation to understand what is happening and stop
+> > complaining where there is nothing to complain about (which is
+> > already hinted by the "Note that" at the end).
+> >
+>
+> Thanks for the ideas, Chris. Here is my attempt at synthesizing Chris'
+> suggestions and Junio's feedback:
+>
+>   The `--word-diff` option operates by taking the same line-by-line
+>   diff that is produced without the option and computing
+>   word-by-word changes within each hunk.  This may produce a
+>   larger diff than a dedicated word-diff tool would.  If Git
+>   acquires a different implementation in the future, the output
+>   may change.  Note that this is similar to the `--diff-algorithm`
+>   option, which may also change the output.
+>
+> Does this work?
 
-Add an implementation note explaining the two-stage relationship
-and that the output may change if Git acquires a different
-implementation in the future.
+Updated the patch with the revised wording:
+https://lore.kernel.org/git/pull.2113.git.1778686956622.gitgitgadget@gmail.=
+com/T/#t
 
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
----
-    doc: clarify that --word-diff operates on line-level hunks
-    
-    CC: Vincent Lefevre vincent@vinc17.net, Johannes Sixt j6t@kdbg.org
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2113%2Fmmontalbo%2Fmm%2Fdoc-word-diff-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2113/mmontalbo/mm/doc-word-diff-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2113
-
-Range-diff vs v1:
-
- 1:  73f7b06c06 ! 1:  bc5ca5a147 doc: clarify that --word-diff operates on line-level hunks
-     @@ Commit message
-          changes to appear even though the words in both files are
-          identical.
-      
-     -    Add a short note explaining the two-stage relationship.
-     +    Add an implementation note explaining the two-stage relationship
-     +    and that the output may change if Git acquires a different
-     +    implementation in the future.
-      
-          Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
-      
-     @@ Documentation/diff-options.adoc: endif::git-diff[]
-       Note that despite the name of the first mode, color is used to
-       highlight the changed parts in all modes if enabled.
-      ++
-     -+Word diff works by finding word-level changes within each hunk of
-     -+the line-level diff.  The line-level alignment determines which
-     -+changed lines are compared to each other, which can affect the
-     -+word-level output.
-     ++The `--word-diff` option operates by taking the same line-by-line
-     ++diff that is produced without the option and computing
-     ++word-by-word changes within each hunk.  This may produce a
-     ++larger diff than a dedicated word-diff tool would.  If Git
-     ++acquires a different implementation in the future, the output
-     ++may change.  Note that this is similar to the `--diff-algorithm`
-     ++option, which may also change the output.
-       
-       `--word-diff-regex=<regex>`::
-       	Use _<regex>_ to decide what a word is, instead of considering
-
-
- Documentation/diff-options.adoc | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index 8a63b5e164..c8242e2462 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -457,6 +457,14 @@ endif::git-diff[]
- +
- Note that despite the name of the first mode, color is used to
- highlight the changed parts in all modes if enabled.
-++
-+The `--word-diff` option operates by taking the same line-by-line
-+diff that is produced without the option and computing
-+word-by-word changes within each hunk.  This may produce a
-+larger diff than a dedicated word-diff tool would.  If Git
-+acquires a different implementation in the future, the output
-+may change.  Note that this is similar to the `--diff-algorithm`
-+option, which may also change the output.
- 
- `--word-diff-regex=<regex>`::
- 	Use _<regex>_ to decide what a word is, instead of considering
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
--- 
-gitgitgadget
+Please feel free to pick up, modify, or drop as appropriate.
