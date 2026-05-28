@@ -1,127 +1,181 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C44366072
-	for <git@vger.kernel.org>; Thu, 28 May 2026 08:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779956098; cv=pass; b=doPSHcdQLrj92ft6iHVg6ToeTCm/qX7t/hn2RG3rBxm4OI1TjPL+iwbeLKU0sERIyRckTOw5rjM6VZgIAZBqaN2aDRNGOambt5GuL7y9gnZweunH9VLjqGYrcE2Py2To3Cxlcgf70pXDhDQjzQ/Ujuu8LHE+rSKT80zroWpAiLg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779956098; c=relaxed/simple;
-	bh=cZVnWLb4f2HpkbsKMSi4ZGMPBJGTVcqpMkyK5PDifMI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ub89YaZgQndo6hDQ18dbo5m+4q5Qd8RWbk9ouSC/sz/dQGHGCdXwrlL73pGXlou+tnFCFVMysOugK6dmsF8108bxapK0rJq5MFfkH40pxm8+z3vGtnsG6JeJBF+jWFSZMBBaCR48ltbpSrPBsRONvA/dc57w6l1gn7vdrku5Fac=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J8VB258G; arc=pass smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14548399365
+	for <git@vger.kernel.org>; Thu, 28 May 2026 09:01:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779958864; cv=none; b=Mr/ds6XF1j6QtOG35+Ic2Z6NELzHQELhtykUQwKkylE6kKQ2Jb2r/KuzBqD4UeZOMP4X1AuYRWWxHLVe4UdVpZif4JpPKSv7IWycpW5uSwn4bvz/VUnI+boSAtk2lcnXV+grOJ5h6K7jX4Ego8hrgY8CQgu9XgTTSAv2MGod2EI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779958864; c=relaxed/simple;
+	bh=yp3FIP2q3Kc7FuyJ+kt4WrFWP+RiSP3IlOck4+Fver4=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=SguC2qvk/HP+AbkEetYSJYUemHCZoreiXH4Hh6p/HxLdPT+U1hgYorHQyZiT/D+WwOeAcakxtlcijC2HhA3QVO+JTd3rbAeBw0I+wKL28ru+tevwUAdRIdMsnNMm0Gzw/9vOdiT+NQwckzSN+DYwye+W/Z4bGJeH3INygiBog4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ImfO2iwb; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J8VB258G"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-68abd694c1fso1063825a12.2
-        for <git@vger.kernel.org>; Thu, 28 May 2026 01:14:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779956095; cv=none;
-        d=google.com; s=arc-20240605;
-        b=f7F8pcf43Pzjcn0D0MItrX+waZdqiNAKed8RTief3yhKGXPQtZupnuS6IbwflBHKHc
-         z0MiMjAHvITFqFh2eCegBuKMZuUWxRvh/n4u3Af+HysvvmO6QVKTdS3AEQIylfx0R/TU
-         smaPEg3y5sNYWL7bURIQPGRMTwWskQLUDclx7BNOgZcanTyqWm6PYEKU6OoN0xlcDA4i
-         7rWy9Yp2trI48NYj6SFN/4ngkMCmgpMWfz6P7FzBBaZNKdL0bTt9MVVK6Uzeor+owiy+
-         3QXjsyEKuYuNkBdxLZzIptE1yw9vk7RodrLFCajiJid3nCL8/xCd4whs7eg84vFlVcCJ
-         QhQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Dyk9ubzC1jo/J3Wpmii2lwlOmguh7D/B11gFqLU8yoM=;
-        fh=ouPrBrWwm4N5POGwdJPNRkNGFZpP50DNWYdvtwo8LTY=;
-        b=RaH4UVPXbYyV3VWvvM3WzNNSIHsMu3780loniqdNzA0MPndfOZYu6EF/nf5VqfJUSH
-         AnHtedQEz1gOqhtJhJBeWrRMKq1UG5A+K5E9sPSXG7sf5Lo5vEufsnDrawbH0HjWRMpj
-         ufEhajtJCQFtZt0E+CEKUKXpT/ZbECmK/7qzFMF0e3xeVadF9H2C8pEU4Gi+A9i5JdQJ
-         ipp01RCFDBMoa7XNyHqfdBlqFkHCfXR5dbHedFrX6RVJkFKnaIMcLy1spZ6bBxaAazfp
-         req70Y1OqOyTtHZZhm7G+UyeNn0WGe/CdT+SF5iFfJHRKc2RDWAEM/iJYjTA4bML2lAs
-         4thg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ImfO2iwb"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-50e5dbd8e0eso144996041cf.1
+        for <git@vger.kernel.org>; Thu, 28 May 2026 02:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779956095; x=1780560895; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dyk9ubzC1jo/J3Wpmii2lwlOmguh7D/B11gFqLU8yoM=;
-        b=J8VB258Gf8QBOmLa+gW7fHX0JJY/IUo2+Kr/2W2jz/qLtBOv/6Uo4fc4poR+8H8blO
-         COhe0pOMthBjt8tju9JCNycK5nPv79ia41EySJ7bZguNZjP4pVS2eOYZWVv7bb6n0uYO
-         zrzGiLsNAt924Op3sy8rZoqQhYxTsRdzEp52IsJ1KCqa1FY5ra0Kk8oQ4Pa5cXj2bCkg
-         /2uOxrVjAwA6BTwrxvph6wjxMrg/oTFW1OW+C6E76NaFNcNW4D3BxHdkORY6HMjVWlKS
-         yBOOcTCGk8LMVlNMuczGNGt5Wvl9J5oYSyCrlAO4b10IjBIBQVa3LdVzM8XePo7C2QFx
-         hJZg==
+        d=gmail.com; s=20251104; t=1779958862; x=1780563662; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=a9usWtJ4qypRxPn2ghiuAIPgG6yFLYGzv/NdILwBEOc=;
+        b=ImfO2iwbqx9kEfqaWnTbaJH9UbXU3t7PVFm8Whl+HgzkVozka0bgcdi+zRPpnEyIIB
+         IxU4iNbM63tEbI7SXxJeNdwHWopqQHabV3urJRqjlkR4xvNpK04Ymm2Q8obJ6yGDeLmt
+         mMyYbiykPPQslclZ71akWgps4zAtYzzKVBPYP+3xBzBngOK+nqxjmtx2G/s3WafPKU6F
+         BnAqGYw3bjkqCHlSIfin48o1qJKUoKA7Q91u6rIZnIYaKp+CYVH6/pU0MbEUJ/BtEHGB
+         lP1meq/7XOriruddK139PRLk4J7UVkHhGnfIes6i5A8gTccybT3esbr88nVbVF6xiGZ8
+         gpZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779956095; x=1780560895;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Dyk9ubzC1jo/J3Wpmii2lwlOmguh7D/B11gFqLU8yoM=;
-        b=i7k3iNUlLxIRICIWjrbJtyNLIM9xrwmnZpjQd6L/HX+k/ys9xibjajeE5N30QXg2pn
-         0nmRH6WnCEWbO/ahm6HWOub/XostBK4X1lAUV0PhiGEWUTKkVdZEDr+zQAzFlhqyULuo
-         849zTFcV2X2wWKyMmLnJ1ogzHwbxYZiAduQRbIgo3mF7S7h8bi7cqb+wJ4wpn5C/1A0X
-         Jc6rH2L69DUnvuF5CEnmUgz9w46UAucmGzDdVHiXaNubHThbR73NmZDgtoRcQrrwvjJc
-         Wn4wOGpInvTVHQ6aiKVrXBhhCB5Z1ooCCRO++5RmQ6EDrEoimbzbeq4oMJ9nBsFbXnIg
-         8kiA==
-X-Forwarded-Encrypted: i=1; AFNElJ8QYIUAkgh1C246svBO67GVczeJ87JsgoaRAv45UpIudMur3vMpLY+DeSk47Z43OT/z2lI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxhNnUwsT/xU9ff+1C4E7+znqjV8l9Jg7GdQtZn6M/AaN1GD6j
-	9DpjMkTlaHbXay/o2Or6RD0k1C/50exQvm+efitxMFlBDcXyMnOAMlJwdFJlwCC0Y0mZ4w8unsw
-	3KyNqvDCJfRJDsKjN7TbEZqgiG+XVp2c=
-X-Gm-Gg: Acq92OGlQ8Tq03Dvjz4RT26F8IEC30Wk1msF9EszgYDKKc6aHj+xST81GTJYZllb2aS
-	wOJZYURmF+8LfJevu/8xYecDFvfoLrv8HnkOQIqPi40yR/QGFw5sCGdnkVYBxr7A8b1qUT1mq+6
-	hCayb/XLpvNGfyq63T3TyfCgi8UEIAUawd+M5yWpzyukJqWIqFnfYcsZZo6Mq9yqTJTZ9lVsOBc
-	WKO9Rw9PwJrtldtekSlbibDTDN2CSj/zRoUd7pmBPrPPOPJPGuKkHZC8sHdW42UFM2iFI2p06Rr
-	/rQU2l0B9MyCs2hC/A==
-X-Received: by 2002:a17:907:94c5:b0:bce:259:3d64 with SMTP id
- a640c23a62f3a-bdd262d11a7mr1540518166b.37.1779956095149; Thu, 28 May 2026
- 01:14:55 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779958862; x=1780563662;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a9usWtJ4qypRxPn2ghiuAIPgG6yFLYGzv/NdILwBEOc=;
+        b=I3FVyA3ClMg7wn7dmEZy6xdMlRLasDMmwrNmt4v8jMTaSLjcPKFwHHvDJwmKvbu8F2
+         ZqahGTV4h4Yd5ty0EAFq3MVLN+y9o0mm2sZBQdO06EN7F9b9KYdysPKJkPIaUPtSoHBv
+         8e7zZvwJQBSLY4Uey/Vht4HK/vZqcB7etj00PYJkpfC4S/q1bWYZp10iQBzlCRYVJrpF
+         XvtyKSeBXHJ6ua8h17BikHKQf4aq2sLFDf2fgAYMKKPSzbhxa1vEROBRu+h3DdyPBQUo
+         cBC4sl4v0gzhP6nijFNosYjMXro5uCMoGJCvJZZ1kqfUJZRW6/DWeAOqS4E/SpK1/PV/
+         WUpQ==
+X-Gm-Message-State: AOJu0YwCSx0MIIz9+d4/3YXkDf1kpkVPCWWL+UoFd3MmhpOvQAJvNf3b
+	HanEZnbZD3APA/C9BKkqV5yGx6DY2ia8ajz3oVeKOsubj+ZhXYQCJk/+lXDNVA==
+X-Gm-Gg: Acq92OEtriw136yDsMYuyhL4mRGH3CKeU5iLoRpNRwnM//tRbqZqSu2BvyLQ8bDc/b2
+	y0+NSqMAZCvLLKS90ZWKtzuRLuack3PZm3cJVbHoQf8lkU/DL8/u+ATkD7g/mxvFoSOiSCaayV5
+	4fqnmMbxY/MdKF92E7w1Di770q/e3Gur6c7Jlumc07Xn+1FeBu6oDVcaMcJ58pvj64vSRxqseP9
+	ZODPJ14iTZ5fE90Ftu61Qtkh49SDCJv8d3TzsTnsvQ6WEqp1j8pRee9EQMOhIn8SSYNrx9dpgIR
+	a6YTmxFSlpHyvXbxiMsHE5EfnuESMTSNmcWRM/P/SLtqhvBii0Ch4Cq8XnIb9qHuAoPUDD+zPeV
+	WzPcZ2bG61LSQvsENgRmCqp6v6v3GER/Rv+AMcDERbWH3SHKWyzY3jMGJCv93Jo/WpiwWsiCPtc
+	gy093AzIM+YNwyQxQKTYt3LusTH6O8raw/gFY4
+X-Received: by 2002:a05:622a:48b:b0:516:e517:6dff with SMTP id d75a77b69052e-516e51770admr270440841cf.1.1779958851910;
+        Thu, 28 May 2026 02:00:51 -0700 (PDT)
+Received: from [127.0.0.1] ([20.161.68.240])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51706af131dsm67610111cf.21.2026.05.28.02.00.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2026 02:00:51 -0700 (PDT)
+Message-Id: <pull.2128.git.1779958849319.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 28 May 2026 09:00:48 +0000
+Subject: [PATCH] t3070: skip ls-files tests with backslash patterns on Windows
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2313.git.git.1779901919956.gitgitgadget@gmail.com>
- <xmqqse7cjku5.fsf@gitster.g> <CAHwyqnWjHTpWfbMcBHOabny5NQN7xTZmxew2yDWWu3AoosngWA@mail.gmail.com>
-In-Reply-To: <CAHwyqnWjHTpWfbMcBHOabny5NQN7xTZmxew2yDWWu3AoosngWA@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 28 May 2026 10:14:15 +0200
-X-Gm-Features: AVHnY4JghVEO98GNUbE5GEGKNiTDHjKfCqbyb5linD5Lgv4fon5aD3jgw2zNB8o
-Message-ID: <CAHwyqnXgxnDNiq0UWyAsz6CHvroYPZ36EGbaUn=-OmP6w3gsWw@mail.gmail.com>
-Subject: Re: [PATCH] pkt-line: initialize packet_buffer to avoid macOS linker warning
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: @dscho,
+    Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-So maybe we can do something like this then?
+From: Kristofer Karlsson <krka@spotify.com>
 
-```
-+       # Silence Xcode 16.3+ linker warning about __DATA,__common alignmen=
-t.
-+       LD_MAJOR_VERSION =3D $(shell ld -v 2>&1 | sed -n
-'s/.*PROJECT:ld-\([0-9]*\).*/\1/p')
-+        ifeq ($(shell test "$(LD_MAJOR_VERSION)" -ge 1167 && echo 1),1)
-+               BASIC_CFLAGS +=3D -fno-common
-+        endif
-```
+On Windows (MINGW), backslashes in pathspecs are silently converted to
+forward slashes (directory separators), which changes the glob semantics.
+This causes 36 test failures in t3070-wildmatch when the "via ls-files"
+variants test patterns containing backslash escapes (e.g. '\[ab]',
+'[\-_]', '[A-\\]').
 
-Harald
+The wildmatch function itself handles these patterns correctly — only the
+ls-files code path fails because pathspec parsing converts the
+backslashes before they reach the glob matcher.
 
-On Thu, May 28, 2026 at 9:40=E2=80=AFAM Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
->
-> > According to Internet, Xcode 16.3 or newer introduced this insanity,
-> > it seems.  How about adding -fno-common to your CFLAGS?  If it
-> > solves the issue, then we can think about teaching config.mak.uname
-> > to detect macOS with problematic versions of compilers and add the
-> > flag as workaround.
->
-> Yes, this works:
->
-> ```
-> make -s CFLAGS_APPEND=3D"-fno-common"
-> ```
->
->
-> Harald
+Skip these ls-files tests on platforms where BSLASHPSPEC is not set,
+which is the existing prereq that captures exactly this semantic:
+"backslashes in pathspec are not directory separators."
+
+Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+---
+    t3070: skip ls-files tests with backslash patterns on Windows
+    
+    On Windows (MINGW), backslashes in pathspecs are silently converted to
+    forward slashes (directory separators), which changes the glob
+    semantics. This causes 36 test failures in t3070-wildmatch when the "via
+    ls-files" variants test patterns containing backslash escapes (e.g.
+    \[ab], [\-_], [A-\\]).
+    
+    The wildmatch function itself handles these patterns correctly — only
+    the ls-files code path fails because pathspec parsing converts the
+    backslashes before they reach the glob matcher.
+    
+    Skip these ls-files tests on platforms where BSLASHPSPEC is not set,
+    which is the existing prereq that captures exactly this semantic:
+    "backslashes in pathspec are not directory separators."
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2128%2Fspkrka%2Fwildmatch-windows-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2128/spkrka/wildmatch-windows-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2128
+
+ t/t3070-wildmatch.sh | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index 655bb1a0f2..3394122218 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -99,6 +99,13 @@ match_with_ls_files() {
+ 	match_function=$4
+ 	ls_files_args=$5
+ 
++	prereqs=EXPENSIVE_ON_WINDOWS
++	case "$pattern" in
++	*\\*)
++		prereqs="$prereqs,BSLASHPSPEC"
++		;;
++	esac
++
+ 	match_stdout_stderr_cmp="
+ 		tr -d '\0' <actual.raw >actual &&
+ 		test_must_be_empty actual.err &&
+@@ -108,36 +115,36 @@ match_with_ls_files() {
+ 	then
+ 		if test -e .git/created_test_file
+ 		then
+-			test_expect_success EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): match dies on '$pattern' '$text'" "
++			test_expect_success $prereqs "$match_function (via ls-files): match dies on '$pattern' '$text'" "
+ 				printf '%s' '$text' >expect &&
+ 				test_must_fail git$ls_files_args ls-files -z -- '$pattern'
+ 			"
+ 		else
+-			test_expect_failure EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): match skip '$pattern' '$text'" 'false'
++			test_expect_failure $prereqs "$match_function (via ls-files): match skip '$pattern' '$text'" 'false'
+ 		fi
+ 	elif test "$match_expect" = 1
+ 	then
+ 		if test -e .git/created_test_file
+ 		then
+-			test_expect_success EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): match '$pattern' '$text'" "
++			test_expect_success $prereqs "$match_function (via ls-files): match '$pattern' '$text'" "
+ 				printf '%s' '$text' >expect &&
+ 				git$ls_files_args ls-files -z -- '$pattern' >actual.raw 2>actual.err &&
+ 				$match_stdout_stderr_cmp
+ 			"
+ 		else
+-			test_expect_failure EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): match skip '$pattern' '$text'" 'false'
++			test_expect_failure $prereqs "$match_function (via ls-files): match skip '$pattern' '$text'" 'false'
+ 		fi
+ 	elif test "$match_expect" = 0
+ 	then
+ 		if test -e .git/created_test_file
+ 		then
+-			test_expect_success EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): no match '$pattern' '$text'" "
++			test_expect_success $prereqs "$match_function (via ls-files): no match '$pattern' '$text'" "
+ 				>expect &&
+ 				git$ls_files_args ls-files -z -- '$pattern' >actual.raw 2>actual.err &&
+ 				$match_stdout_stderr_cmp
+ 			"
+ 		else
+-			test_expect_failure EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): no match skip '$pattern' '$text'" 'false'
++			test_expect_failure $prereqs "$match_function (via ls-files): no match skip '$pattern' '$text'" 'false'
+ 		fi
+ 	else
+ 		test_expect_success "PANIC: Test framework error. Unknown matches value $match_expect" 'false'
+
+base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+-- 
+gitgitgadget
