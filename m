@@ -1,118 +1,133 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AE3CE4AD
-	for <git@vger.kernel.org>; Thu, 28 May 2026 14:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD7C2E7372
+	for <git@vger.kernel.org>; Thu, 28 May 2026 15:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779978546; cv=none; b=T9FIoLo+/pUgNPvbzz86fnYIm4EfmBlqKKY6wS2rx0iAWIsmJkVn5bnR/51a0OesS9+7Q4MKyyICWHoFfTSYzZseV06lB8uvajjqiJU9jgHLW60kfRJom2VlVEq+iwWeq3Ac5FLfTZ4TakmcUdZTOpg0alEWHJu+SMz4+9a82zU=
+	t=1779982137; cv=none; b=Ce+2xeTk/h29cNG42H3SVwAo5ZcsaEPljTCoUSqrmloIN2S0ByF13RzDggeiV0GyMDBpyV0Vaeu3TpLk/upxxLl5YKHKXeGVlZY3iwxT2YuGDZiF5xhBBnJJMlc98y3/K3DYIvSM4sygnRXearzxnbJUb4FjxEHnpA8uk/kO76o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779978546; c=relaxed/simple;
-	bh=xgEzEwCIug+9XYyZenVJMtN9c5cgU+x6b4/6isP+nbc=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=OWd0BkiqmizUpRzKMeRbcMhvmilw+FRPgQvTdiWKQxecWapTSWZaGao55wmRK2bIqNbMKMhcWXuzKLwB5DVSel9CyneE3iF6yoc8F9EmUpCuPBTMCrhFy1rsbyL+IrZzS+qSJBv+UbvGsSDRADmXLGRrG41IbhdKbSH509YfQSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fxZ0fot3; arc=none smtp.client-ip=209.85.222.176
+	s=arc-20240116; t=1779982137; c=relaxed/simple;
+	bh=/GCabf1iUdzTxKe9rIciUOchK9C8fRhIQPJx/ZCUchY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XtUaXewj9O93pipFfRh63EVFWEGiOlJuO8lEiKzJXLvf6CV8ZeGVcRRLydZWeeD0QBhQu0DF7qqJjY2iamIgbwbc+bNzUpBtkOaRs/Qyn9dpF7xGVRggiXwFtdbHg8dWpEVwZW6wDeOnMloOyV0I3SnJbJtmwvpQ2+WcvU10c9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hnCNGoEP; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fxZ0fot3"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-914b4be9c4bso605141885a.0
-        for <git@vger.kernel.org>; Thu, 28 May 2026 07:29:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hnCNGoEP"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-914beab9a08so466332885a.3
+        for <git@vger.kernel.org>; Thu, 28 May 2026 08:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779978544; x=1780583344; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dSAUZW2ejVH0RfwWXoY0z2H8PKj3AHT4keeSXjAXGAU=;
-        b=fxZ0fot3zXSymHNs2yrrakV27HO70nG1P24FqP4LZPObcs6xltvIl+rYmR1sBz0UpU
-         cnWXjl34dCu/zq1vuh8i397Dr37oaLmrwmee3tKZNv5eQe5hCgR+GNsqM6Kv0kVMuXHe
-         5UfyGUSw8x33hH+XMoReYABXNJBKFtx1IBEegOISYMOraxFNnP9vQPhwr4xqpDPTAy62
-         PL03T8YOrgTjs+RKX8OP+DQmhn73LIpoSGH9dBIdDKnUaY984GW7ip14vOn9z2TSIkKD
-         jjmyUWCrDW2nOsPa/u3qbBiLYY4LK2oyUV3WsNaRV9tFSWvawXvDVUkCP37GWeccf5o2
-         6L7Q==
+        d=gmail.com; s=20251104; t=1779982136; x=1780586936; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wA0KhmLvIrpM1iELunY0b9FVkLyxINjmeg32K05QEsI=;
+        b=hnCNGoEPwt+f31XJSQJYNKElXL46myESe0npmRXc+eVFfTq84C9Nkh9WoXp2xlZQiW
+         6tfIkzJzMtgn691RG139vwGtVSBCmDwDXqk4aUU17SRs+Hc14voYvfqROawew/CTZcfZ
+         URsfacvJBDDtjaqrWkdpBqyOvdsY28Ntz32w0TrsYml/76yMdehcaZ5ErQwnmq+nZvgg
+         +UrjqcHWp1PLrlZ2g50odWtzv+TCrqdbNQMUdWVR5CcZF7XOeQ7PC5Ioq8jK4ITaxtJq
+         /jdg8hDiVaCqCqUap8MH1izH+9mgA3a4AvMov/nyz8qBjsU1u0EgF3O+pPgTQk/yb8PW
+         xoqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779978544; x=1780583344;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dSAUZW2ejVH0RfwWXoY0z2H8PKj3AHT4keeSXjAXGAU=;
-        b=dOS7CeDyTbzialUEHo3omUV1MYC1gFeBz42EmLlaUh1uno4wAwffhvmtZ0SJlR46Sk
-         DreUmwDCSOx+bETTgGz2WiPFMQ1K2aQvKU1++N6ibRSeHnHeVOz4/w2eW3ZOO4POIAvs
-         3h0ki2BvBOi/dlTye2zwOgdVoIyZuDaj44SwhcKgXnR+X7aC7C56SPf9IXA1fpmBVyH6
-         lSrIugD0fJUwrWq3MWO6lpOzJcNuukBCUxqJSP6eDkNuYVru1N8l4ZvzyxGH2mGiOHoJ
-         ZTQ6/h1bQ3W4+SSxcbwbQsvRnAj5twFSpzzEBkQgkdElUHpl83gunT1typ23V1JQI+Wq
-         2b5A==
-X-Forwarded-Encrypted: i=1; AFNElJ9ozM7ryrZZi4iovEWvZpuH4Q2485pSdV5LyjjD9kau/iymC4sIT//ig7K5jyf2xT53hrU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDyTgHMa7d5ADPuPWfYJOQGW4BZvDAmu6jS6cONmF6syiKFJBW
-	mKzO0ijPMOk/3ea2LOp6wlfFitGaxWHHKdhudRKb9wdSnOebeRx+vRSb
-X-Gm-Gg: Acq92OGTlkzH17Vw2FpNH1WteXKcGg7zobCABi2j6VvseN4lTuaYNzVByxOFfYJEWxN
-	w2nWAyQtdlwk5BDalCtZAl/t8utdbZ/aSv+WtWzcyZlmqKzN2d60nHFgO5nGjHMQ8v8njogGVrp
-	+N0sIu3If7fCyljVg54bYdTHury52ApCLyvFIzAb+8DtrERL2gNNfPs0Q/OLhvBLv9rYe/LoCLF
-	bwoR0f5xvP+RLsjv/zlwhDFZHZzbvdHu/CCd+3Aa2qH0cPGfHlyOJ31xiTAJT1kpROXbbvkyBVK
-	QTiL1FFseqdi4hdyaZjsCbfswUKq+tMZdfFvaRUjSvmd+69Uo12wph2LoqQDXulcxYvcs7YRJ1x
-	aueclR8bFbRZFvuG8rXqYeWQ/KBkBHgpkwok5MIaaL/l9ajeJqQhfI7dRErIUjUfoCzWU802rnc
-	wdOx42y3uXUR4+Q4T6imUQqK4k/7y7qS8EuwDD6OL3WCcBPIvKhe8+tCxfOo4n6RVM9AX1mPahr
-	svWa2dBwD1DVVKVgd9Dpuv9rM8gVCLdyq5kyoAXfiMq5wLo0v2pqO4=
-X-Received: by 2002:a05:620a:2b4d:b0:8f0:5793:ea80 with SMTP id af79cd13be357-914b4934533mr4067304885a.16.1779978543618;
-        Thu, 28 May 2026 07:29:03 -0700 (PDT)
-Received: from smtpclient.apple ([2600:1004:b0c1:ccde:c24:287e:ed2e:fcc6])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-914f8800e1dsm816892185a.34.2026.05.28.07.29.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 07:29:02 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20251104; t=1779982136; x=1780586936;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wA0KhmLvIrpM1iELunY0b9FVkLyxINjmeg32K05QEsI=;
+        b=Fkwn8cUqt06YThSi+95JJgcJ5IRWYrQ1u/5rVmED2UrCQL/PLqX/YEuogp4BjGy+Vt
+         3jlV9vRRKDf15To8oIgdtqCyP4Tu4DN5Ed+N8p4FiXLSdCz/5E4qCYNzPZc6mnVY64vB
+         19ieA+xZvIs44fyb7FD616PO7N1k9jPPURuyNYMG7LxgepoI87chtfHR/aI23T7/Qa64
+         neOeNK9s/4ACxFrYoE6jIjovrCoxxbSkfSMXYLMpcjQs5t+H4vNtwNAK7hOs70lIoZJG
+         aF1VBQPdPbcP43PD4WBAcHL0NZeAkgPtlcJzwpxIvlpGWmmpB5JcQ1M0NrKwCC0w76UF
+         pIqw==
+X-Forwarded-Encrypted: i=1; AFNElJ85rcD6CT6mKyNMlklm0wTlAf8ZD9234RjqVN1n8Lz71AC20Wq2AWDSOM5DkFr01soKeJ8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwybzpQ1ET5E5sFwyqfwn8wydFv162WQj0kZAcqaQhruat2Dy7p
+	hXcd0Kb9hxmzz5UU1dgh8u2o+ry30QoZcm4pvsg5Er/GYhTVw23KjQxs
+X-Gm-Gg: Acq92OGgpvxn7KFnGVmqcS+pNR4LGIYSzqkdUqD76IUFw11NA8W24HL6tFswZNJb+9B
+	+/RljcAkWSvqvi2F1sTpsIQ1C/5tinMgWYkK86k2uqi5ARzNhM+2YAot+jdYc0uI0Y4XBQ0ySDW
+	44mT6EzVaV4MB/PJRx/1PBQTddhrs5XFM4O6jNHzA4tp+mG3HhhrPwGkhKVCQINCsr2UNe8Awgp
+	S/bnR6Of4u/OWG07GC5tIywJxQxFdTyRx9zJ2/qfgPEQ5drBD+c42/sQRnmH5eGkNub8FNx7kjf
+	TnPzWlPjiXg6RkFtzuZAJ/gFqG1JaudT0tCyQR9SRP8grcyV1grq70cBppfQ761LiUb5DBkvQkw
+	/LlGH1G9PMdetQO89HJt1f2JYVWot+g2EKggcMBglmnYjqmUSjccIicdExNtKh/SOKzIghaFb40
+	tFJ/sQmUARH6KH+qWORijdFIppcRYKedEZbF7mfp6btDi5eeNDYWWJ7wUeXhKKsPBXrgqOJTPYj
+	nhwI3UozUQQ5p9WU9hrKka9Q1oJ9cAc6pXIc35mI2Ny7qxPKh3n8Y2vTIN0KA==
+X-Received: by 2002:a05:620a:45a4:b0:913:7bc8:79b4 with SMTP id af79cd13be357-914b49f711dmr3948288485a.51.1779982136026;
+        Thu, 28 May 2026 08:28:56 -0700 (PDT)
+Received: from ?IPV6:2605:a601:9b88:8300:4178:7958:947f:ef4f? ([2605:a601:9b88:8300:4178:7958:947f:ef4f])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-914f870c37dsm847436385a.19.2026.05.28.08.28.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 May 2026 08:28:55 -0700 (PDT)
+Message-ID: <a708e23d-e0c2-48c9-86e9-1227f12edd53@gmail.com>
+Date: Thu, 28 May 2026 11:28:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: git mv after the fact
-Date: Thu, 28 May 2026 10:28:51 -0400
-Message-Id: <1FEDBC47-5DDB-4C42-A7C7-695630D330BF@gmail.com>
-References: <877bootp3l.fsf@gitster.g>
-Cc: Chris Torek <chris.torek@gmail.com>,
- Frieder Hannenheim <mail@fhannenheim.net>, git@vger.kernel.org
-In-Reply-To: <877bootp3l.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] pack-objects: support bitmaps and delta-islands with
+ `--path-walk`
+To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+ Elijah Newren <newren@gmail.com>
+References: <cover.1779923907.git.me@ttaylorr.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <cover.1779923907.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 5/27/26 7:18 PM, Taylor Blau wrote:
 
-> Le 27 mai 2026 =C3=A0 19:24, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> =EF=BB=BFChris Torek <chris.torek@gmail.com> writes:
->=20
->>> Chris Torek <chris.torek@gmail.com> writes:
->>>> A flag for "git mv" would be convenient (and slightly moreefficient ...=
+> Here is a trimmed-down reroll of my series to make `--path-walk` work
+> with reachability bitmaps and delta-islands. This series was originally
+> an RFC that was a companion to Stolee's recent patches to extend
+> `--filter` support to `--path-walk` [1].
+> 
+> Since the previous round, Stolee's series has graduated and incorporated
+> the filter-related patches from my earlier RFC [2]. What remains are the
+> three patches here that implement support for reachability bitmaps and
+> delta-islands under `--path-walk`.
+> 
+>   * The first patch allows `--path-walk` to use reachability bitmaps when
+>     they can answer the request, falling back to path-walk enumeration
+>     when they cannot. It also lets bitmap writing see the same commit
+>     candidates that the regular traversal would have shown to the bitmap
+>     selector.
+> 
+>   * The second patch is preparatory, and factors the
+>     delta-islands-specific tree-depth recording from `show_object()` into
+>     a helper.
+> 
+>   * The final patch teaches the path-walk callback to perform the same
+>     delta-islands side effects as the regular traversal: propagating
+>     island marks for commits, and recording tree depths for trees. This
+>     gives `resolve_tree_islands()` the same input in either enumeration
+>     mode, so the existing island checks can be reused unchanged.
 
->>>=20
->>=20
->> On Tue, May 26, 2026 at 8:09=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
->>> May be convenient, but I do not get the "efficient" part.
->>=20
->> A normal `git mv` renames the index entry and the file in the working
->> tree without running `git add` on the *contents*, so there's no new hash
->> computation.  Presumably a `git mv --after foo bar` would do the same: ve=
-rify
->> that there is no existing `bar` in the index, that there is an existing `=
-foo` in
->> the index, and that there is no `foo` but there is a `bar` in the working=
- tree,
->> and then it would rename (add-and-remove, really, because of sorting)
->> the index entry, without scanning the working tree contents.
->>=20
->> In other words, we skip reading the 3 terabyte file, or whatever.
->=20
-> Yup, that matches what I wrote.  We do not rehash and we only write
-> the index just once.
+I've applied these patches locally and confirmed that each one passes the
+test suite with GIT_TEST_PACK_PATH_WALK=1, which helps to confirm that
+the changes are correct (all existing bitmap tests create and use the
+bitmaps with --path-walk unless explicitly disabled).
 
-One thing I wondered: if we don=E2=80=99t have an exact move but assume (by n=
-ot hashing), doesn=E2=80=99t that mean the index would differ from what=E2=80=
-=99s on disk? I originally thought that might be a problem, but the more I t=
-hought the more I realized that=E2=80=99s a fairly typical state anyway.
+Should we add GIT_TEST_PACK_PATH_WALK=1 to the test-var CI build, now
+that this is going to be more commonly used?
 
-Just seemed like a potential footgun to me, but perhaps not worth worrying a=
-bout.=20=
+Do you have any end-to-end performance data to demonstrate that these
+changes are effective at scale? Are we still producing packfiles with the
+pack-file compression and now with .bitmap files? How does this impact
+the performance of a clone or fetch when using a bitmap index at read
+time?
+
+With that in mind, should we update any t/perf/ test to cover some of
+these scenarios? I'm running a few with GIT_TEST_PACK_PATH_WALK=1 on
+my laptop as a test, but it's taking a while. If you have stats ready
+from your local testing, then that would be interesting.
+
+Thanks,
+-Stolee
+
