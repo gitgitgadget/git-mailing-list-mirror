@@ -1,189 +1,166 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D75D3ACEF6
-	for <git@vger.kernel.org>; Thu, 28 May 2026 09:23:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779960220; cv=pass; b=T4HhCFjuQYWKiPMxDU2r6dBQhmZIQDd/HT9o1YRCj9R12zbVfz1VqMS9S2lC0FxmAGwyAFsjV6Lt9nt6eyJbJLzVIPnfyTs7K/vSIszuKkb9AUXeABA2DuW71RztOKqndgNxjiBN+Xxpt+U/uIW3iSk/4DjtpQeFKNPCU3P/Vz0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779960220; c=relaxed/simple;
-	bh=NI9OENpubvDwWlae9Y10U3gHzdYWJzh4cztZl5iwpfQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DTL/Z03VfkWR012W+NuTEbgt+WOTM+77dS5EOxcdm8ccRYq+1JBaueCHSTeIca7RAzmbIZDejcTpS+7g86+1MQ7muKZdBe9MHkeWgc963fDhBF8y3q3pwhlP2j2sDeQRZBsYPSjQhbwar3zI/bj8PKTLBM5WGCVWuhOORruRc/4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qej0Ukd1; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617C23E316F
+	for <git@vger.kernel.org>; Thu, 28 May 2026 11:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779969109; cv=none; b=XveicSIWaHVY5ch5384ADAdITjKkmLNLmCHvAjMmZedL0Wudm4DJxpEOPhyZSnm+xPj1mqZvL5IfdzHJ/naMXen98EvlQuRuSZ9r1oNUwj/wwt3l3ASeWgARQP2hHlyNyu/lijiDIxmtpChpcjFDPTmTFREc9XAcAn07JDm2nqw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779969109; c=relaxed/simple;
+	bh=moVSKcmtfiWe3MK2XmpwWBoUL+wr2DdQOxuDtuAf4k8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=p/gZ+2PXNECax2X3g5YxkkEnIQEJjhaEmTmcWkfy+fy3zhebX24uRQ6QUqz8yOZRHXMN9fB8nWF6z881aGlv4BTQq7inRnVfQmgv5mNGl8aBT5BwiynsVMI1zNj4smUcebu9h7iJtwv3/2gu2ZEx+XVplJSlJx85cfAzEmhvlHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=sdqD19M/; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qej0Ukd1"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1363e78746eso8624805c88.1
-        for <git@vger.kernel.org>; Thu, 28 May 2026 02:23:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779960217; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NDHSFdHPVuCjXqQ1PhUqARX4R5WFkXq9GUXsiMSWWTP9wWvezROrtdGUyZ/Hp5KJ1Z
-         y+fhUjqH2wUghDt5cBQmZMwVkmxMI7hPt1RAuc4/1mw1ULP80PRNXVzrKFiKxIm4S91v
-         /4/nEK8e9V4LtowmvpNoRF/bz+FMw5vVTlW49bKst8qBm9PoSl8GKbWzDprL4uGJAUF6
-         vJXhloVTh3SX8Bcuen9tRv1Ek82OQHJqGouPFXcMxLh99HBQQoVWhDwzEcXww4O8HFDX
-         pzXoT/ihpqZddowNwQJ9rI7Va6M+OvGotECPv1IKRyt9PA3AVBdnqdRGBRw8Ds2UaVVF
-         UGvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1KZQt2UHJplDXs8GFJ70K/DEbPunP6CL3So5E5rC0NE=;
-        fh=sIJhQ321fhC6D7H6+P1gj2drfdspi883By/CGh2fjOw=;
-        b=gEgZkn2r4ydWpIhfflAUCSAINpxEPA95SSfiwUT56i+0O+fcfOJq5kccBHg+rGtr+2
-         AWHpGcZ5Mibbcw9kIFmrDQ/fGo4Bo+4AAkCIqG2i6rHtKWfElb+vLt7ibGPYp9YxZJ1l
-         DTCFUYqRbWmV0ZxELVvGU5N8V1OzkVRhx+Rsplz7698sPiBBrYw+9o3rlxc8VhmwJFyG
-         Uz/mKgmWfxtamFzwy6Hs3QKSBerhcMuCX1EU/2M1dpUjzyzRkyWT+SnWvb4OQEEtAWEA
-         MiBuTPDv07EErnicP7Emxh1885gEJIS43YhZz1wxeDrszGx8zI3w4r4/U0GOWwbbgxuM
-         9jZQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779960217; x=1780565017; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1KZQt2UHJplDXs8GFJ70K/DEbPunP6CL3So5E5rC0NE=;
-        b=Qej0Ukd1Iq8u22z62bwOx/nHWMPG29zVMynJ9T1Z2mKk4kFXTfor8+gzlZzMSrYv9B
-         rM02VRHvGGGzDZJgnGzrQj6N9IRHy4SQVSEe6D+ueQPTnxqBjRdzpJ3EaDSTCLjHbR/8
-         I09vj28coLLcrSHgcL/shnAy8A+BLM38WSs7BhKftcIhybmrYcbbZk5UJs6xdlgCLlCr
-         EGhKGmMR2dG9/HEwZQFLLCMKUj3GYotkMLK2IATu0fMkAy7kSFfOnBEi8Aljs7x9g9C5
-         BGYzNXbOy1gH6XZTehK72Y66WEZ6Mqxe/7SSFVA7DsVk1S57X+vUt/g4DTe5SX3L2AqS
-         k/7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779960217; x=1780565017;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1KZQt2UHJplDXs8GFJ70K/DEbPunP6CL3So5E5rC0NE=;
-        b=cbyKlc+Cg5gOPCZzKITW5DrNXGakLwwKSwbn21CK/kz8jB7lQeJotrJ00tRRtvvxV8
-         8TJiu37FQYdSZWv52p8NfVrnYpEjb/VEuk/HTi/hW2kdoDWxejwvgjTrNE6ch6LdQqJy
-         hmlWEYZF1DDklLdVGz5fW/EsYHdagKtgUuWBG9e+WHjrJljqVTelsJFM3M8yKg4HyPiv
-         hz8ZPQu0eODy0xP4PomsceXNAeu6Ucf2PjcJ68zQjkwrqvWepZVgs5R4ip18L0VEsgtM
-         2WuiBXUb9maivEhd3OTf4diLS+bcGoMWE3Mbcq49aX5AdbHdEte+7eneiC+kZuNrWd1C
-         A29w==
-X-Gm-Message-State: AOJu0YydwTtFRwOaX3pb9e/RDYF2YJ/z4tlpwBZ3Nup7NcZvbJwvH4fM
-	KrpGyCx73Xt/AMfZxv2wCbBRoO2xDtspjlT93dr5l8XagoyVUR6DnZ4TFOnD+x1znl0JLq0Fjjz
-	wRc1GksBbZWLzSmkjgXkexZO5W+wz2ABLfJVi
-X-Gm-Gg: Acq92OGUR5aP5/9pdwdLGTj/2zals6lvYsGzfNM+QI0sViPD1NR5i4J2Jg37HPeDNr7
-	FRLFn3gOQcsuWwFofNM/6jtlh6OC4dUCkK2xDARvhWOm/OjpxWF/NNbVhERfO6p3BxQQCFYCWx1
-	4X6v97hFsu6A5D8m2npZcdZ4a33rC4sGRnBHU8H5MJyyJy67Nom823pWuS3g53dlWcgWl7FAba1
-	w+lAjd+Rs86PnIzIzzuLzEBt3f0R81GFDK91TJ/zpdAnaZc761pZO7i4gRAFYsD7KT/2D/nh4ZL
-	4VZXJBTaRwp9Jqp+vWfE+pwKvWwELglo9yKoFJ016n+kPx46Zf5dew7kQEH7xWv94yEvRXMHlHT
-	VmafqB5Y6ELjdOQ==
-X-Received: by 2002:a05:7022:b042:20b0:136:73ec:922d with SMTP id
- a92af1059eb24-13673ec94e7mr6264443c88.36.1779960217435; Thu, 28 May 2026
- 02:23:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="sdqD19M/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1779969104; x=1780573904;
+	i=johannes.schindelin@gmx.de;
+	bh=moVSKcmtfiWe3MK2XmpwWBoUL+wr2DdQOxuDtuAf4k8=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=sdqD19M/NEL6bmoOOckCu7xb5McHQbguGqQD2Hz02HOhgzgSE0swWIcK8rgiELX+
+	 XM2U3e4J0hGuoi6gM7NUl7YkbZ7lBzhMqnU8sA5MT4Y4N+dlPLgNb5lVfp9xcl0nV
+	 DWVobzJtYMem7CBtGblzPQGA7ZuMtj96VJiL3oONoWsQI4YP+weTWWozDtasrJ/A1
+	 gUSkk58snf+ANQDBzsg2WwG5bgr9tOw+o+j1PjD6aiJSRCtxRhrmrcnzAmOg50S27
+	 AZm5qUAhQTiv0Wcz92gknzk9jzipXKvykfc8xoAiaMfWCuSrNElFPJkGb81RBcPP7
+	 P2rtfkDPTbD1WbDGIw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMGRA-1wlsoQ21Di-00XO53; Thu, 28
+ May 2026 13:51:44 +0200
+Date: Thu, 28 May 2026 13:51:42 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Joerg Thalheim <joerg@thalheim.io>
+cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] config: retry acquiring config.lock, configurable
+ via core.configLockTimeout
+In-Reply-To: <20260517132111.1014901-1-joerg@thalheim.io>
+Message-ID: <f449d0db-0434-f870-c69f-793f2b096816@gmx.de>
+References: <409d05a5-235b-6b19-5a33-a4e613dd447c@gmx.de> <20260517132111.1014901-1-joerg@thalheim.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <tencent_530FD5EC0E2FA9A005AB4725@qq.com>
-In-Reply-To: <tencent_530FD5EC0E2FA9A005AB4725@qq.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 28 May 2026 11:23:24 +0200
-X-Gm-Features: AVHnY4JNHvEKGY5DbJyewd3srkVYM2V22-nMBz72Xy2YxhxNg8CVZMS357Eg2vA
-Message-ID: <CAP8UFD1TyE6bx8uhJ-hZuSv5t6D7rwRZ8m448-rVepNnyN1=CA@mail.gmail.com>
-Subject: Re: Suggestion: Real-time or Conflict-Reducing Collaboration Support
- for Specific Directories
-To: =?UTF-8?B?6IOh6ZSm?= <hujin2@sunline.cn>
-Cc: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:txKlS9smQri0BfYkcxtJkLyADbazcy08OwOCxDYU0MklyH1OMua
+ f9Uf59RQgRmNGuy03zq7dHwkgk2ne3bbob5T61dZz+dVPTAZQU1ok4SfoIwmkE7qiFMUjXK
+ Tkq9TVS7iZqiypvgSB61R8nojZIJKE6T6kdljtxNjrkS88+qTGls5Rpunt5GjYu/0UDc99b
+ cfSqhst5xcdBB+v7NZc5w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:wH8MsBWC5cM=;ioGIeoBME3CnEWTxtV6phn7t3+f
+ 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
+ YCs0q0Us4X0h1cTJfZ823U8C8oWEl9JN/UMK2Mo
 
-Hi Hujin,
+Hi Joerg,
 
-On Thu, May 28, 2026 at 7:16=E2=80=AFAM =E8=83=A1=E9=94=A6 <hujin2@sunline.=
-cn> wrote:
->
-> Dear Git Team,
->
-> My name is Hujin, and I am an IT engineer from China. I have been using G=
-it for more than 10 years.
->
-> First of all, I would like to express my appreciation for Git. In my expe=
-rience, Git remains one of the best and most reliable version control syste=
-ms in modern software development. It has played an important role in many =
-projects I have worked on.
+On Sun, 17 May 2026, Joerg Thalheim wrote:
 
-Thanks.
+> I matched the core.filesRefLockTimeout naming rather than reusing
+> microsoft/git's core.configWriteLockTimeoutMS, but can switch if the
+> downstream compat matters more.
 
-> However, I have also encountered a recurring difficulty in daily use. For=
- certain types of files, especially files under script directories or other=
- frequently modified directories, conflicts happen quite often because upda=
-tes are not synchronized in real time. In some project scenarios, multiple =
-engineers may edit related scripts at the same time, and this can lead to r=
-epeated merge conflicts and extra coordination costs.
->
-> I wonder whether Git could provide, in future versions, some optional fea=
-tures similar to online collaborative documents, or directory-level collabo=
-ration mechanisms for specific files or folders. For example, users could e=
-nable special real-time update, lock, notification, or conflict-reduction b=
-ehavior for selected directories such as scripts. This could help reduce co=
-nflicts and make Git even more convenient for teams working on highly share=
-d files.
->
-> I understand that Git is designed as a distributed version control system=
-, and such functionality may not be simple to implement. Still, I believe a=
-n optional feature in this direction could be very helpful for many enginee=
-ring teams.
+I see that there is quite a bit of precedent for naming a config setting
+`*Timeout` and implying that it specifies milliseconds, e.g.
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-corefilesRefLockTimeout
 
-First I don't think it's Git's role to provide a full collaborative
-editor, but you are right that it could provide mechanisms that could
-help.
+In general, I am pretty wary of unit-less numbers [*1*], that's why I
+chose that "MS" suffix. However, the prior art in Git is clear, and I
+should not have missed it. Therefore, I have no objections against
+`core.configLockTimeout` as-is; I'll take care of providing a smooth
+upgrade path in Microsoft Git.
 
-Then there are a number of features/mechanisms that other SCMs or
-tools provide that could perhaps help:
+Thank you,
+Johannes
 
-- Jujutsu's working copy as a commit
-(https://docs.jj-vcs.dev/latest/working-copy/)
-
-It could help write a background script that constantly pushes and
-rebases the current commit to a shared server as the user types,
-mimicking a real-time sync.
-
-Jujutsu's first-class conflicts could perhaps help too.
-
-- Pijul's CRDTs and the Theory of Patches (https://pijul.org/manual/theory.=
-html)
-
-To seamlessly merge real-time changes without locking the file or
-constantly throwing conflict errors, modern collaborative editors
-abandon SCM snapshot merging entirely. Instead, they use one of two
-mathematical models:
-
-  - Operational Transformation (OT): Used by Google Docs.
-  - Conflict-free Replicated Data Types (CRDTs): Used by newer tools
-like Figma, Zed, and Apple Notes.
-
-Pijul's underlying Rust library (libpijul) which already uses CRDTs
-could be wrapped and adapted to fit a real-time context.
-
-- Michael Haggerty=E2=80=99s `git-imerge`
-(https://softwareswirl.blogspot.com/2013/05/git-imerge-practical-introducti=
-on.html)
-
-I think this is the right way to simplify complex merges and rebases
-as much as possible, which is useful if a lot of such operations have
-to be made.
-
-- CRDT AST (https://github.com/aaronmunsters/AST_CRDT)
-
-- Automerge (https://automerge.org/docs/hello/)
-
-- Yjs (https://github.com/yjs/yjs)
-
-It would be indeed complex to implement any of these in Git.
-
-The nice thing if someone would want to implement backend
-collaborative editing features is that these days an AI could perhaps
-resolve merge conflicts automatically. (But of course users should
-have a way to override the AI's decisions if they think it's wrong.)
-There are already a number of tools out there doing that for regular
-development.
-
-Best,
-Christian.
+Footnote *1*: In general, I am quite wary of unit-less numbers in
+configurations. There's not only the precedent of Mars Climate Orbiter
+https://en.wikipedia.org/wiki/Mars_Climate_Orbiter#Cause_of_failure, I
+also heard a story that seemed to be entertaining only in hindsight where
+a German car's software improperly interpreted a British speed limit sign
+to mean km/h instead of mph.
