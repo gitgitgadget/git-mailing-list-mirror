@@ -1,100 +1,131 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982E631618C
-	for <git@vger.kernel.org>; Thu, 28 May 2026 05:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2500F34389E
+	for <git@vger.kernel.org>; Thu, 28 May 2026 05:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779945856; cv=none; b=mNPgoGpuhyqJ7LO9LZpDXL3lyfVe/1rOzPeeu1/08STWnkXWgSaahpriHfgqWOsReh44EyONk1VfIsJcW66iCDNq08BgBx/ogI9pBGtAxQldhkuXwr5T1BdlcS834mI02v7ZIZkhD7jinabYL4drzNTyv9gbcKtu/FawZ62JiKk=
+	t=1779946927; cv=none; b=MiiZ0br5cYeUHvMsgzxa3plgQ2rs5hj7+6OPCzUSZcqqzW9Kw0jOlLaXghT7+k2Fq2K0bSdfmUUvL6JfWloXGX0XTD5QGTyfd29eQ42ZUGTI8Ny561H3dD7ZLPIY9Ef5Wl/DZ2HSwVZcS3+vgs5h2Orz9YWujoJynqugVPWq6nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779945856; c=relaxed/simple;
-	bh=sWd2f+t/AFTODXUvnZh08vdvvFcO5KJ0vjmbaM3WzBw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cu+AJ639RuFDh682qQFAXqUJf/gIlpTA6mFxk1WcCcSLPT4KUjlZascBEY21r0s4ztJNkDIKctw456JF9kHu4RqVrLLUPyTqag9vnqqakOSAwPpwOjVBVQ0sgxJsZKGM9jfhzTZtO5vFVui4iGTeB4B53bjskrkGfgxDV37PYrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QY3nymou; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VVR2v3I5; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1779946927; c=relaxed/simple;
+	bh=ZILsq6KUpSUBDrEMqERn4glDRXwEqrbl132DBjuZ0I4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=BLow1QAVw9rZJJTeD4CQkxyu1yHsx9DfCWevVM3uiSrS0tTPWJR7y5cKjxXgZQiaisqtKZmnVbNF1RV7Xn3Txmxhl57onFBVSaZmYK8PwJ/6TgygW9wirhAb+wwjtA1mHdeR5eHwWpRop7lnp3N2MXWUUzt0c1K3Oim3vKcZYWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W3qmOQ39; arc=none smtp.client-ip=209.85.167.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QY3nymou";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VVR2v3I5"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id D2B6CEC00D7;
-	Thu, 28 May 2026 01:24:13 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 28 May 2026 01:24:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1779945853; x=1780032253; bh=GTWH9vo4zk
-	GwjJcKEjCVHS5fOY2/Wrv7N/qQ7WREGMQ=; b=QY3nymouKjDIC+qzeI8I/UwbOP
-	GQbZRbXqjcuIaABq947/O1za4itzzHkLv0iQKikEHlBlOzhmTY6alFFEjcflPnk0
-	8Nf5RF6qCZy1JXYqay5HEJH9NMnQ6P4QV3B2hSLgY4jF1jcrOQKWXQyr38Ew9OJx
-	rKPmLGLKLxH6cSSE7Q0qJv3OCwu0OmR/oXibhyoaZZS3kn3yT8XgVVpMAIzwou8s
-	gQzmvE0CI72q0oUHTDLQcBqtYZbaDHHitO3XITq4j3tV3RvaRED/EQ4XbaCbkkOq
-	5oKB9RZQ9Dac2TDsHbDORWMR+dwTaWjybOd+zPQ84vBzXkPKwrVmw0b6CHhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1779945853; x=1780032253; bh=GTWH9vo4zkGwjJcKEjCVHS5fOY2/Wrv7N/q
-	Q7WREGMQ=; b=VVR2v3I5A+Zibrq49QTOR7wopXcZOxy/dHHk/+fSXyYx4k3fJKB
-	vL5hBnZSQZqqQk5j1SCKXunw/NjTcLzd7ehKetbHrrIGJzaomb5IRXQjZdjQz/W9
-	BUzcpT6doZrp0MYpD4jF4w/undNWUy7YW6bn5rXdhBo75pGS7x0EPemjBJp/284/
-	2w5bF1wV0jdAFN18jkJTiYIRLjEABlNmnG1BTF8lFd8EQ/z1Aw1SAkqZWnTIJ0k1
-	HCN1u0q18DEoKEQil/+mKOErIYwMA+L67/7TtaahpTivYNfWaDDwBRks1lnR2hnr
-	bAkUDWNxfY5WEMy+MB4SThtqjxFjjrCWN2Q==
-X-ME-Sender: <xms:fdEXajwDG5KlcNJjkXfw6SIY12FkYSQZZDoHqF7MqlLRBfx5vQbqYQ>
-    <xme:fdEXaitAii-G4dhzMsbSntA0-SE_Tnp_MT1R__sKFsOup16OQ2JCp2uD-5eqWDNAt
-    foFgG3EEvh9B_O9etRmPprge_StykM4pWgC778zNwIQeiXR3gwJFg>
-X-ME-Received: <xmr:fdEXaqv8pRk3d5SSiwO6issNMAVpHr-Xg_gw1UyNspBV7v6X37325MRl3qib9ENQoGzhB-kKMzYJvMR4d0xe_JQ32KUyGivBUgjh_FmfpQ>
-X-ME-Proxy-Cause: dmFkZTGfQyQF0PWGyrvlrK75i3Ug/04vj4+I/tJSX4cAudfNhg2CCx6A9zBPnP1p76vDjP
-    t+u4cTBcmjfIRjGWlx7EiXfFt92C2+Hd8blicyZ6Y7YWF83WUXtXLsU6BeYBq4ROGkmKqB
-    jnQp4zsJzbAk39QCH1onvGbFRmO9RMc/9o6fvZMGWCUT7D3XtzxznBfo9IJ1cgv/DFAykO
-    pAnyMeE/6nAWJdcQRDDgkDdBZYf1PxR2yv0/NGxfsLXq1ZbaXBPAp21vrSPeyP1LBx90Ag
-    APqxVnvz/UZdD2W7iHY1K0MjhbfAfKtZd9IFwuL16mrTW7OFZQisXLVLDMj1h39IM/Z/QV
-    sb15WNXnNU8CFkiZl7TUMzDUBrM4fCZp/xlvVtZcQhsp6hZ20rQwU+kVvx2kDYiQ+t+KuJ
-    nvJR2lRgMBKEyRigJ9fZ0zU7ZJzUs9EOnQ21vsFrLe5WvWIqSQnboGvBEtA4b9OKgvYHrP
-    IntTWVS/OQTh/+pgG4J0ohP044Apwvq4FEgArxhFv0PWFzVjcEQaZ1mtzHZ5Xl+SzwRvYX
-    wR7o95LwcIlOOpEnpBbk9oeJPRHQ/Fwb1Vmg3bzgoSHjHmaLzruSwCUYYV4k9IMB3KHs8J
-    GMF/AUggNK7+FxJH1XjliMpAr3gQvLA75Dm7bEMv5GaB5MgE6FaaaaTnmjdQ
-X-ME-Proxy: <xmx:fdEXanO6HC0i6p8-PUmDgPtho2n5UW46xNO_L1-OOf-ZGLE_T3ubTg>
-    <xmx:fdEXao0wJAtBZ-BGuwCeMJjRlE0n3TA87EK4ZpNfQ-RqCpk-xJjuIQ>
-    <xmx:fdEXajPblFQr61WBO3_L90vSl1c2E5T6JH5MeQC9hJi6UQxmG-NfBA>
-    <xmx:fdEXao0wKHtEbRdbU-pFonWhQPVPrsSBDjojHNxAS76XGqw7Tr19mQ>
-    <xmx:fdEXaq0fuLsQsMwtv3WPq6rv41kiu5hhap3NCq1-bSrixqS6rKJbk0b9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 May 2026 01:24:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5ac85f70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 May 2026 05:24:12 +0000 (UTC)
-Date: Thu, 28 May 2026 07:24:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 2/2] commit: remove deprecated functions
-Message-ID: <ahfRevYta06fOaKS@pks.im>
-References: <CV_commit.h_remove_deprecated.714@msgid.xyz>
- <commit.h_remove_deprecated.716@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W3qmOQ39"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-4855003f70bso4147838b6e.1
+        for <git@vger.kernel.org>; Wed, 27 May 2026 22:42:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779946925; x=1780551725; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vgvYRCNyA3Mj0XaIpTmIaliowI4mxEvo6obOI85VtBw=;
+        b=W3qmOQ39C/1S0YH8zHQhSaHBaot7sy2ezyaeuARqbVKvx7U6RF8YgQv7l6fcCcgm27
+         HsZ24nShGJw08RTc4/DoSuMj2ibqahUN7+ybT+fighe67wE2pXVeKTVmwfYoBJ7OUxs2
+         x3RRIBBAVyU33CGKYtMyVic68qcZwiiPbXeWBshcsfYLW0XYmmGcFITerTRHyJyFwy/i
+         zOaeL3kuF9pOCvnuPp/amF+WLZvBFEKqORGzf5zzyLjgHW3/ZL1AuAp00XK4UONXZ+z0
+         fyS3mtlQOjhqSLVF1L62k7UXhsq9JZmlAw6AnHZ+fz4G5vwMg+4jIBbAVE2IUsGhROuy
+         UzQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779946925; x=1780551725;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vgvYRCNyA3Mj0XaIpTmIaliowI4mxEvo6obOI85VtBw=;
+        b=cT9Ix32XaCGaLYvhGM5JwjASSszYUyBhf1WnqN05L06mt/dDDKjWjzn2Ts/Zqt8x9x
+         JCdrs7j7Q0qlDCbSYp1s5TmYshH6t3lwoErwxG7BtgDPpWbKD4YxBPed6NGZTmUMsOVI
+         /n8vowpdMadl8jVt+ibcaPhmvhSxNKRf9NiFO13cCqApyRv0NRf6F3aO5fhld8x9nE11
+         A8Oxg3y2TTCMO/5LnBySsarfL9Tg1BsJr5YKWs45VTmiO5iy72mFwFkPy8sEJo+7uauf
+         tlByLZNUP9SqBvXpzxfaXSkkSLU3SvaiOfF8Cn80wrFRbosCvG2gts7DIEPQ2aPznGxb
+         FrAA==
+X-Gm-Message-State: AOJu0Yxnln74GZtUbP6qOuoU8FpDX1Ueef2g2s6neaWKTuw87CbK26V+
+	G+OE0jJb1gVoXf91x+4Z5B+PpQkutgiCeMEVxAJfvToYVx1e6OEpUOEQVuSP4A==
+X-Gm-Gg: Acq92OFJyvRVSBryHz1E/IGrmMrAxojpSQZPS57G80RLNwShDglcqrrkDd3HhVdq5sp
+	oPePU3QEO4D1PH+SMo2A6+3PFYHvrbrnO37P4A4NXtXLJM1ac7GnS+zkuccd8MhaDQqAYr3XKmR
+	9Ikt8GrsWnHX4ksISGeC0UdKh9xjdP7N21+z0B+r1ArAetMlJhMQwoMYm4lYoV8biSIqacrNFE/
+	5CNHmmkJnRtWc/9xh/awh3nyl+Y3/nbjZDFXjhxCC37kC0q6ymU0v0ZSbB8jgSn7Dil+x9muxOY
+	H+8ONr048SBCvjfmZNoUHzMhHFW4s5gbarThEHpdCOjZMtay7CYGTFpRl9/T07HSDcrO4n9E/Qn
+	qsnY6AhhnRN/1dkIYbwUFDvRJ4iUTETLC3oygG6YXSlBQdXVYrjq6l+wYMwEUt7ZEzfo2ZZcR0L
+	O9AN6XMOsRHWFaz4yvNmTIxAcr+/AMXHmaRtI=
+X-Received: by 2002:a05:6808:4fe7:b0:479:fc87:27ee with SMTP id 5614622812f47-48549ed0b14mr14857160b6e.1.1779946925044;
+        Wed, 27 May 2026 22:42:05 -0700 (PDT)
+Received: from [127.0.0.1] ([52.154.21.50])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-43b635d26b5sm18790451fac.6.2026.05.27.22.42.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 22:42:03 -0700 (PDT)
+Message-Id: <pull.2126.git.1779946921.gitgitgadget@gmail.com>
+From: "Son Luong Ngoc via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 28 May 2026 05:41:59 +0000
+Subject: [PATCH 0/2] rebase: handle --update-refs branch symrefs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <commit.h_remove_deprecated.716@msgid.xyz>
+To: git@vger.kernel.org
+Cc: Son Luong Ngoc <sluongng@gmail.com>
 
-On Wed, May 27, 2026 at 03:59:26PM +0200, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> These functions were deprecated in a series of commits merged in
-> 52882024 (Merge branch 'ps/commit-list-functions-renamed', 2026-02-13).
-> 
-> The compatibility was for in-flight topics at the time.
+git rebase --update-refs can fail after the normal rebase path has
+successfully updated the current branch when another local branch is a
+symbolic ref to it.
 
-Yup, makes sense. Thanks for following through with the cleanup!
+One practical way to arrive at that setup is a default branch rename from
+master to main. While the migration is in progress, a user may keep
+refs/heads/main as a symbolic ref to refs/heads/master so that both names
+continue to work locally.
 
-Patrick
+If pull.rebase is enabled, a plain git pull can then finish the rebase of
+master and still fail while trying to update the main alias. The reported
+failure looked like this, with line breaks adjusted for the cover letter:
+
+Successfully rebased and updated refs/heads/master.
+error: update_ref failed for ref 'refs/heads/main':
+cannot lock ref 'refs/heads/main':
+is at fc2c7bd5f17abec7861ef759edcd33a1e16662a1
+but expected 531cabdfb49098d6ffa502ed4bf91d1b35edfcfa
+Updated the following refs with --update-refs:
+Failed to update the following refs with --update-refs:
+        refs/heads/main
+
+
+The sequencer builds its update-ref todo commands from local branch
+decorations. It excludes the current branch by comparing the literal
+decoration name with the resolved HEAD ref, so refs/heads/main is not
+recognized as the current branch alias. The final update then dereferences
+the alias back to master, but master has already moved, so the old-OID check
+fails.
+
+This series keeps that failure mode explicit by adding a known-breakage test
+first, so that the behavioral expectation is clear before the fix. The fix
+then resolves local branch symref decorations before queuing update-ref
+commands, skips aliases of the current branch, and skips duplicate
+referents. That keeps the existing old-OID protection on the single real
+branch update. It also avoids teaching the final ref update step to treat
+this race-looking mismatch as success.
+
+Patch overview:
+
+ * Patch 1 records the branch-symref failure in t3404.
+ * Patch 2 flips the test and canonicalizes sequencer behavior.
+
+Son Luong Ngoc (2):
+  t3404: add failing branch symref test
+  rebase: skip branch symref aliases
+
+ sequencer.c                   | 63 +++++++++++++++++++++++++++++------
+ t/t3404-rebase-interactive.sh | 25 ++++++++++++++
+ 2 files changed, 77 insertions(+), 11 deletions(-)
+
+
+base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2126%2Fsluongng%2Fsl%2Frebase-update-refs-symrefs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2126/sluongng/sl/rebase-update-refs-symrefs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2126
+-- 
+gitgitgadget
