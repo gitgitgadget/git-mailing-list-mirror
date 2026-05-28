@@ -1,108 +1,152 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6E3306B37
-	for <git@vger.kernel.org>; Thu, 28 May 2026 02:57:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994812E6CB8
+	for <git@vger.kernel.org>; Thu, 28 May 2026 03:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779937026; cv=none; b=sxafVwaAhzTxM1czibzAp0MJCdqJrwhz08G6oWkHkQFT8+BR/cDBrU0zRbkZmUVFxhhDVdQtIwbjbNL9CFDF+OVkIwuINdmeWPl8erOhag9lRG7y3RLxPPrLIeF7kOs9ifUReGETcDW75VER4XIH3HOCoBWfhmJWnEeFbHMuQ2Q=
+	t=1779937479; cv=none; b=nRjD1FmwUiizP6DwD0A945cX7EOqhSqnEQV/vAEq0txh5qANiGECbPVaRL+dvOnebeYHepyiGDY+00wGEfq9/r4UcUXy8HtyEEhlI9a7xnfv8ij659sFqIoRniKo4/JmpvcIPvKZ1CKR+EofTbWQk257okxI0MOW6GsPSfn5IDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779937026; c=relaxed/simple;
-	bh=PZdmn2UcRkgPDrEYR+osPrmeMA137gYmKZZVTR0k858=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Rf0RGCpVkHc9Fn494olwGbPRUobnoKggS0sTzvsE3JOzp1HpkwGthpcOUNn9mGJJPqpSt1bNHc7ayfTk7sCY2In2WRoG0dw3Jv1T6aFzkAfj6ZfxK7QZll6hKf5kr19Vfd4czwfBy7GJY93XriwheD9R0PZEqPWCVkI4spQpM6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N98f4b46; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779937479; c=relaxed/simple;
+	bh=CjRjHp6h6dP3bI5v1xT4xXMEJPT6xuxrz+hrFPFJfmI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uTTNbZJhJtTAkc85Cfr+m+DuCdOaE6ea3ZJOZvZpaDrs07wnmZHr8RtozNV1mqNmuEJSw6+O1ARKc0sLXx0mIes24gogl8OzyTQo/ArWbKHQDJsx5eN8aypFltJA+3wv1DlKV9jL434dskYsaDMWN2ZYm8pxRloXpDOU+eKVbwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jy+rbUn5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oaBmvvHY; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N98f4b46"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-913cc4d7c71so1349547185a.2
-        for <git@vger.kernel.org>; Wed, 27 May 2026 19:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779937022; x=1780541822; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lc0oeybmfOqK+rwhDo/k1Hjo6mvMEU+S0BNNf1Re8Tw=;
-        b=N98f4b46l1ilZcqH/OChL3Il3P0W+Ehv9Bi617DqUx3iba3Bo8DHAuG8oHgBuz3Of9
-         KXOehE0Kk+usegTx/31Sqws5RSK7q3+uogEwoXlR5wKKE2MOFM5fk5wHhSt1cDYRvQUr
-         AV0LZcrLbVULaspDi+rGQYQJWa5Q3cs+fwrRvOKmzSHvn3Ye5T4mF0Y3x8pMmDJSrCaL
-         2uUjbm7Re8/8B8tXJaPBjMeUIt01zlS6sel2xpAQfb9oJAWoQY/OMYcr+VmM46v3rjfp
-         JouavHG7IP0ysPQ53Uh6zWc2xLTBbUHIuyApgIE3IsOILafwiRBbaFjWbWNdFU7bhIW3
-         TXzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779937022; x=1780541822;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lc0oeybmfOqK+rwhDo/k1Hjo6mvMEU+S0BNNf1Re8Tw=;
-        b=XGF7Z3Z56wG6i20eBDCXht3/ym+HKN05102aG3M/u+VGJew6j4DUBSFeY54u5qIB4t
-         OskiXhGjNNDYM+1vEzBW6aj/txttUav5Sicj0tCC9DTJrqPETf/KwjXKSSgKwMFhVzzn
-         DYqxBnv2pV9ElWkgRe7M3fpjyZgB+z0C0QIyI1OxTar15BT/FxfKq3qVQuu99kyybLT+
-         SgPNOPcE1egux/d3a7PW7N/JnFZdGWDFkunKRnpSHIjlssvTrcP8g/4mAYztNHEZ1CuC
-         vV6l45gpgYSJ3g+Utysf5MuHg/h0IlBJNby3FSjUWT8FDX920pYyt4Tasj4Wd0k43+0R
-         XZ6g==
-X-Gm-Message-State: AOJu0YxPHAOM1ZbNexNB5191pXmzhWx6snG7MtQ3Ui4mYypDZMQje62i
-	rpUmTxlcLsVHYnFF/DCQwRLr73BtBBiNhaM20ISh/JsAhCxGGfsuDmbSM74YBw==
-X-Gm-Gg: Acq92OFhnK+3Qrw5NsK0OtdVO3EVUQCnEtrTGYuW5zNiQR+RL4HXf1Wci464XBmQvrB
-	oRiW6mZm+GlkcHdgXOORCMMReVsm6oVckE6wb24ZMvMnkkoOPicbSZ6fYBdPXz+eZ5DDAF9ACO8
-	HFYMKobu35MJawx+0xqjU41vFncvofoY5Ndf5egfOk/v7MTT3DmKRzzzdE0MBaa1HUiIrxdwUe6
-	jJKQJLzkB2SchvkjM8xzDGpeXfp8R/mQEoqxJtosSxlZ/O6CxrKvvit7aJtM9e+RbHtThAafzMp
-	1CrrUQzuDI4y+5Tl7SLtGh1yTjq9g6rDtIDIyvGrrR00wnGQDGUdxHrOlCLLyIj2hFj8tdY4bH7
-	tU5PjxDiw2S8S50SOsuKudJWXobH/sBZWqFzkEwcC2Nsu14ByhELqYZj5AqIwBTO9x8FDarly7V
-	vDgaWFiQvDfVdJQgDxZkYUinycZklpg2EEVK9y
-X-Received: by 2002:a05:620a:3724:b0:908:c3fe:843b with SMTP id af79cd13be357-914b4a22cd8mr3862470585a.59.1779937021819;
-        Wed, 27 May 2026 19:57:01 -0700 (PDT)
-Received: from [127.0.0.1] ([74.235.126.66])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-914f8820fb0sm664668685a.46.2026.05.27.19.57.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 19:57:01 -0700 (PDT)
-Message-Id: <4e742940711c71da755528ee0f4669125218aa66.1779937016.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2300.v3.git.git.1779937016.gitgitgadget@gmail.com>
-References: <pull.2300.v2.git.git.1779905911.gitgitgadget@gmail.com>
-	<pull.2300.v3.git.git.1779937016.gitgitgadget@gmail.com>
-From: "Sebastien Tardif via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 28 May 2026 02:56:56 +0000
-Subject: [PATCH v3 3/3] daemon: guard NULL REMOTE_PORT in execute() logging
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jy+rbUn5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oaBmvvHY"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 987121D000BE;
+	Wed, 27 May 2026 23:04:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 27 May 2026 23:04:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1779937476; x=1780023876; bh=rdSsdtozw/
+	fVKoVSEroq4sijt3cDsW9GfMXMVNJOaes=; b=jy+rbUn58BjjM3N6QjP+xj+CTq
+	SF+zPhqR9kMQC9lPorcpEvK5Cn3wv6wJ5K49wVxtpo+GvRt2mYBpk0+OnIVe7LV9
+	3wKbLtdyL6j6p1FX0wZB2Cmm2drR2v4Hj4fT6+AHlXhUITQB8Tit7KCCpUmLqt0V
+	ncMVpRcaoaOicaHEL1bUPfvyPbWbDwVhjJK8RQE/EUM3jDTPfUO0b01YkbKm1M2f
+	UIGNnPb6vOjiqWG/+SZMFvX6T3au2Jyy8TJoUJFImIosMZ9riUcceWwc+A+9lAxC
+	fxNcokMXaqS1XVsfWVH7wiDzpe9O8PDoqlKAmc2mSHRZSyeACeXzwMLMkUgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779937476; x=1780023876; bh=rdSsdtozw/fVKoVSEroq4sijt3cDsW9GfMX
+	MVNJOaes=; b=oaBmvvHYrAmI2zX2rEyDTVOuB6QDUxA3uRd+i1YkNBqS0IM2QfQ
+	1oHM16/Qhg9gPrPxAKe5/5Wz4Y/btuFAC/1NnvGGTZMg0ZfGIxf34l+iOiOaFimF
+	jkh9m18ZLRCZ80NVFn4wR8zC12F6ns6IDYXVTeSBLEvjbC1E2TcUbzKx9NVKUqH8
+	ma2CLAu22eG76ovPIPmdfOLIf8t77mo9oUKWJkG5vsCxfT/Uo1TQdqnA7tI4HnM7
+	mvGbMp2E+WsLjbdDGyrNVsO8kQjm+6otVXswR7KnJOvLtvwac6lJoaRjOnJZbX7b
+	pWIekZjpEPzfrmpgUkQbGSOcO1XG+YnmRiQ==
+X-ME-Sender: <xms:xLAXamLursATex6_as4v4ZVfIwMcXRIwgbruUzgoXORB8zwa8xXRRA>
+    <xme:xLAXalJMLlbwEL-GP0F6Hm_aRQ7iGhvD6tNGfcCDCwgajc6H1N1qq2ooa_Au6EbcJ
+    X1j8XK0uUjS-5rwxDNS_6EzBX15TWP_3RCgJE7O5WQf5LQ8dI46Dms>
+X-ME-Received: <xmr:xLAXars4yi9GRBEsj2p43__OAWEfFVqLIcMPNCZEs4f8utRMHT8x-MtO-z8tEoL_98uJ1YiWZtLwHq-ZdqV30Da6pm2rBwfpaUrR>
+X-ME-Proxy-Cause: dmFkZTGJZEtVg4/lsM9xYA43aXjo6raK4eqK+b5HRX4OuBvGE9zInZlYiBswRPqXvQh2Ol
+    JD/lanxQTo37oXalWlybAj/DAYNgkTWh6oLhNpwTfQ09HaYqpi4TJAjUYgtYwl3SZuPjuc
+    4HE6QzxvqG0eSwrtamAfEUPyIhR/fKJcwCductsu7t4abRddTSRcObS2uJ8uwHF2SsGxhB
+    u0wCOgVfnmOLJB7QBzZJzhka/zM8iBSj+DyPsonarjjnHe/WisRPHNcVPzUkZ5wSFB+23U
+    EnmLPJf4ajYSfUc3YxV1aP/equAFI5tCRj6BNnRr85S98cJJPP1TfJhQhK5Os2WcYa9KVg
+    l9A8jIbVIvEZfRb08QLlOJdnbcUu/pNVJpbVrrW3C0zgoFEalhKkks73/LY1Pw92watPEe
+    fFhZi5gz/+CEI2HOU1TdOBQFQACtSfD1+awhaOSBKint3GOmzHOVXKz9pbx1qvFIRuZfdR
+    AW93Bc58RhlPGTaqLI53tXHpz0i6yIpDuRVb6ZGwLgJepbAs1AY9X2iiJQJAbkWtnaPOdh
+    qKjorY9YPyRJdkux5yASMjl4oBb+y7ZQOmE68Dk5ttZc4RBEn/Ptk9hNrZwHtfUWc2Oq6N
+    KTqhzfhrAWbDu5ENIhqvmrg9YGtQ/OFM1zR7AIM3sEimn2gQCDbjvRrc2Gog
+X-ME-Proxy: <xmx:xLAXaqQ3lle9Wg5u-FtJe5HE3WHentAeB1ZcPZ0LI72pqRRcb8BFjw>
+    <xmx:xLAXapM-ZHEz8heiSXvhuFkQmY1bRK3CTJg_G4A8fuFoH5UUNY5DSA>
+    <xmx:xLAXanYEAdDbxCkM18dIJBkZPu1lx5kCpHt2wZZ3WoLMk-O8YjinCA>
+    <xmx:xLAXarz9I3P6mZ8A5smSokMP0vSVtDWJfaonAWVD_B5z_tNYBLiVhg>
+    <xmx:xLAXam7a1QhDdrGF1zSdPJXOlAo6q6IkhdtTu5tTBnzVRwocZSI0wCl7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 27 May 2026 23:04:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH] pkt-line: initialize packet_buffer to avoid macOS
+ linker warning
+In-Reply-To: <pull.2313.git.git.1779901919956.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Wed, 27 May 2026 17:11:59
+	+0000")
+References: <pull.2313.git.git.1779901919956.gitgitgadget@gmail.com>
+Date: Thu, 28 May 2026 12:04:34 +0900
+Message-ID: <xmqqse7cjku5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Sebastien Tardif <sebtardif@ncf.ca>,
-    Sebastien Tardif <sebtardif@ncf.ca>
+Content-Type: text/plain
 
-From: Sebastien Tardif <sebtardif@ncf.ca>
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-REMOTE_ADDR and REMOTE_PORT are both set by the same code path in
-handle(), so when the existing REMOTE_ADDR check passes, REMOTE_PORT
-is guaranteed to be non-NULL.  Guard REMOTE_PORT as well so that a
-future change that breaks this invariant does not pass NULL to
-printf's %s, which is undefined behavior.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>     pkt-line: initialize packet_buffer to avoid macOS linker warning
+>     
+>     Removes this warning:
+>     
+>     $ make -s -j8
+>     GIT_VERSION=2.54.0.380.gc69baaf57b
+>     ld: warning: reducing alignment of section __DATA,__common from 0x8000 to 0x4000 because it exceeds segment maximum alignment
 
-Signed-off-by: Sebastien Tardif <sebtardif@ncf.ca>
----
- daemon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This sounds nuts.
 
-diff --git a/daemon.c b/daemon.c
-index 103c08d868..78cca8673f 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -753,7 +753,7 @@ static int execute(void)
- 	struct strvec env = STRVEC_INIT;
- 
- 	if (addr)
--		loginfo("Connection from %s:%s", addr, port);
-+		loginfo("Connection from %s:%s", addr, port ? port : "?");
- 
- 	set_keep_alive(0);
- 	alarm(init_timeout ? init_timeout : timeout);
--- 
-gitgitgadget
+Not complaining at you, but we are talking about char[]; what
+alignment constraints are they talking about?
+
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 3fc3e9ea70..cfd2799677 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -8,7 +8,7 @@
+>  #include "trace.h"
+>  #include "write-or-die.h"
+>  
+> -char packet_buffer[LARGE_PACKET_MAX];
+> +char packet_buffer[LARGE_PACKET_MAX] = {0};
+
+I do not like this; it sounds more like a workaround for broken
+linker (and compiler to certain degree).
+
+This, compiled with a stupid compiler that is too faithful to the
+source text, may make the resulting object file on disk larger by
+64kB, since the original said "I need 64kB area in BSS with its
+starting address recorded as 'packet_buffer'" (which costs almost
+nothing) and the updated says "Here is a 64kB of literal data"
+(which would record the literal data, even if its bytes happen to be
+all NUL).  Luckily both versions of GCC and Clang I have notices
+that the literal data is all NUL and still keeps the area in BSS
+with no change in the object file size or output from "size
+packet-line.o", so to me and others on similar systems as I use,
+this probably is a benign no-op, but not everywhere.
+
+Are there different versions of C compiler available on macOS for
+you to try?  I am hoping that even though vendor compilers tend to
+lag a bit behind from the public upstream, the problems may have
+already been fixed in more fresher versions.
+
+    ... goes and looks ...
+
+According to Internet, Xcode 16.3 or newer introduced this insanity,
+it seems.  How about adding -fno-common to your CFLAGS?  If it
+solves the issue, then we can think about teaching config.mak.uname
+to detect macOS with problematic versions of compilers and add the
+flag as workaround.
+
+
+>  static const char *packet_trace_prefix = "git";
+>  static struct trace_key trace_packet = TRACE_KEY_INIT(PACKET);
+>  static struct trace_key trace_pack = TRACE_KEY_INIT(PACKFILE);
+>
+> base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
