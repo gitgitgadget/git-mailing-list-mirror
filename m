@@ -1,160 +1,120 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C864332695F
-	for <git@vger.kernel.org>; Thu, 28 May 2026 19:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8CA2E7376
+	for <git@vger.kernel.org>; Thu, 28 May 2026 19:31:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779996317; cv=pass; b=ulJL9e5VTSZ2LuMXOMk0On8JTHe/otwqayc0utCRCVCQl6CMa6/Px6tovZEhDe5fKzjyVNpeori2rcYPMJfygl76KhcwXE7i/V9jik6OnxBMuYObjqOfih9jb8S3luDa/Hw78fTAeVNekrQUCB5LcEi+OanxLLZviytB3OmYt0w=
+	t=1779996677; cv=pass; b=tukuqNqdevMBptyarjpVqNj0PCJ1t1EI84R0/rBL0Y+4yqeiPWk3JT1Z4mXLt+TdIdmfps53h+iNKHAoAxUkamQSK41KbJgaYZWZb+d8vjBEz8zcGR6hgLaFzJkZzSNR5m3zDXyjP61uCnk1Jwx64Q6p5iEuKGM/kEI4DGdIh9k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779996317; c=relaxed/simple;
-	bh=N69ihSJQKQuKk7NfHCwcWCXiG4jyaKdjODWX9uEGPRs=;
+	s=arc-20240116; t=1779996677; c=relaxed/simple;
+	bh=EA8/bAO+jE3aCLIFJovh/aaKq9z3QsNjwLuBW0ftuhQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RCRU1ADQ7UIFvNV1Deb2mb5DxccyY2ayFmv2oopGS0x5sGM3IB6BPmbeKISKyuAis3ZdqePsmfmMFzG0zQYiOgs2Zzo4gcE/27ECtJoSBixIrVO2YU1O/NhJjnRTmE7IxnL5EP6oEITaXJbF6Hvp7O5gC17g7grPaeQhSNQTsoQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kt5Jequj; arc=pass smtp.client-ip=209.85.210.53
+	 To:Cc:Content-Type; b=HQSqayAld7z5cHcjHcqkXWzxt97olBXdPVhLn8yz2Yz/5LPKvaVlivZnVKBE0Z/xhmrtxYwGSpU2bupy2m0h62KmJppH4BLiCR+IJSrHLGOxrKB9Ll6T3uRvpBg0HIwCTx0w7DakNpK/SyvNxVsjCoSW98aVHJ7K+RFpeovZ/60=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qLz5mu4p; arc=pass smtp.client-ip=209.85.161.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kt5Jequj"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7e61e251966so2831139a34.0
-        for <git@vger.kernel.org>; Thu, 28 May 2026 12:25:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779996315; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qLz5mu4p"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6949192b840so3681491eaf.3
+        for <git@vger.kernel.org>; Thu, 28 May 2026 12:31:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779996675; cv=none;
         d=google.com; s=arc-20240605;
-        b=RNaCMgWDqd1AOuTHFBp5FBxdcZyryU/dxWQ5WghSFnLghQC+NB9uhttMnTJ7tU6mQS
-         rQWmdWKGnkMhZfktY4NTN29EZv37iCrSp/S+irhO5f+QmK+LKAr6JaVG6o4SSDI2n6dD
-         euwIvCxyeqzf2B+QXAmqmpWSBMDe5alopP7jXmhX6grUfmRSvURpWtlh6XFWjpCEj7v4
-         bxkzZVz+sti/A0nkMUEAgY/P6yfH+qQjQmCGeraB8Ny9mFS6Y32sIl3SxMpb0otVzp1f
-         50g4PYVQ3J+DR6Up6cLTAnThF6CDr+woi7gnuyRXRgcXruAuXiz3iCz4weLuhsr53mX6
-         rYmg==
+        b=AFQOET7ybo7X0cBZUZRbbf9PdDyRXl6D3IlohWhv5V4VLY2AJunA41nMuezzPCMVfb
+         1JBMW1or25O6ssx4rQ8oLuuL2UxTIL8KGSZYQqgQCXmnrIYfj8GfXKWPATCfvMrfwxBw
+         F11Nv2fKJpTC9hQ5OVLj6BbAI4eaFzMMSU08RM8Wb0GGQCskWk0zSMycXcRQB+wliwwS
+         DmNYXpFVeKFoMIaVp7Cet1f9Y1UhaFgqzH742+jQ7k7VYsIygZqppPLet733CMlXEsrw
+         hhOZNxZog8Duz99DS7o56EyRU424Wpwp8fS3rDS56KeAAjf/2yt0PWIOt4wZhO3wvq07
+         JdRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=7sdJqFbimNi4vCOVILnuXN0OwbHYNqY/FkRmagiiYg4=;
-        fh=JMmuO7brvYWqrhAwyGXuH0bKGLkIdTdk3zONN/jj1T0=;
-        b=i85zvRlZIcPd82WS9HUK14kyNCr3I+y0wVedkmoxAiVno/M7bHwgi4FuwlvCwXi0Aa
-         WFZuww0/NBC47svEMh66m5HeoTAnutxV3qw+LnYyTj/WfvzkXsLOrkJKHDkRbeFlhais
-         BeSj+pJGAjCiXhMbCmfZCy1MwhvUSnXm2ZSqZ/P/SqAaHENZdvAAdbPJqmqdM4qNI1t6
-         2dhvzFpVVtLc4ToP0Wuhq5q/G8w9lfQBnIbxngHYPDYGJ2HgNAmaK2YTf+pVnjjBuKb/
-         9I19Xd77GQ6tgNUozsE06QLUk9PuCuDkW2rzxoYHJXdRVZP779fN3NENY4fq3MZJiQbw
-         HwuA==;
+        bh=knxjkYhh2ZKrThSYNSbXhCyNZ27urHSDYIGH+jazeR0=;
+        fh=qf1fOvL4U1mbe1MoPyMXOD6BmqNgOYBQ/WV21QRzEoE=;
+        b=HOA5TM15o886Ew1kqxm31cPsLhWK3v6ZDUVOD/hSjh+i6yQ5ZjXRg8jPAUWNmy8eO0
+         9U2CBLkFZ5GsN8uhbxml2qEx4Ts/hboI4gIaisThQ3fbSM1Fe7ulYJEdpbpTASR7jeBO
+         8+2G2nVgYVWnlr2FfZJXi2vyvRVk1TkK7vMKRaM1dYWI4lABshYZfK3uIdHytccw80nU
+         Nr9YecDIAXNXmRgl0QfvbtvTNStsSMZT/R+2J1F8SS0fr7ekB/z4yY4IETJI+xJzZyKp
+         qKu40+ze6PIBRuyeY+l7gXuUpY2W18277k7I/pMB2OXNX6uOgTR4XfXOqBPlQmuESmfx
+         TqnA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779996315; x=1780601115; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779996675; x=1780601475; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7sdJqFbimNi4vCOVILnuXN0OwbHYNqY/FkRmagiiYg4=;
-        b=kt5JequjFrDwFtSflwZzv4iaLrJLHqDdvubYKxXzPMuyiFcVucL1wh/EapZhIBV8DU
-         Ka5/lLl9ZO2HBH7+jaTmI0SqbigpLMpHLaStpASU49q4o0tW+lhQNNm4X2SiXlBP0MJJ
-         UX1PwBzMYh4lR5Ld8jP6mCRL3S8YMv8lbYsxwhq+MZJHfPyBOAA6lVK89Ew2wzHzjFBp
-         Esj6HqKJV1992imP+meGr4h4G+aXKmvWuFQzp6GeeTUnXmDbyzuYlcz8hyQy+DsqmQam
-         Ir/X32IyO1xoQhAfZi6h8gHXvfC9Q+HoUUgbtxDSg/y5Ua40Eo4y96xvs3g/OsW14ELd
-         EvLw==
+        bh=knxjkYhh2ZKrThSYNSbXhCyNZ27urHSDYIGH+jazeR0=;
+        b=qLz5mu4pUuxDyzMOje6eTwTr4KC+wmrQKYxvxWjC4h3Rm5iRYtirBCGt/r7kD/CB2F
+         TQNAoFAtX7uxEMRqprmYNAKvp4IqRQaKFBzxAWAGDixZ8pP5uzki4OhTHG886E6S20OK
+         qnwif3yJiJUjW8FToeGqCCJ8T6zG3tpwuNUyTez5fZaBTepLdnE833C/+cO20nzvWjT1
+         Cyq/jqSGSZHZnWx48K1Z0oO6Olu4lTjkbNmN20QI5UV4Dci9nlixKbep3tRM2sh4UsWm
+         nU+sZtDg9MLDIaJCtnbwnSmU8HY/5AhnM944WmgGEWtqIVySR7wFyONHDH0bVLknUlat
+         zXaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779996315; x=1780601115;
+        d=1e100.net; s=20251104; t=1779996675; x=1780601475;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7sdJqFbimNi4vCOVILnuXN0OwbHYNqY/FkRmagiiYg4=;
-        b=o9qqq/ya3w+JDHfX25Po0myDx5O+yHS9h7DukFL/ZQMfQ6R+hBqdJE7v3C26kq9JjT
-         aCRlCbEaYrIKCFIvi6S4v0xgEuQyXvJzzggWufBFPGjnc8+3Zi3tOyL25QmDlSp3R0wu
-         6NIwcLioEjJHualPMmm5SM10YAraA0n65Q0ZKLu9Qs7dTYfeB22/FmV5yQNWOSpIVKWL
-         /ST2Gpk1kZfazJE6eBVydOwiNE8/Z8U9eUjBdBEsp2pKo5BQvkT0yUuZdr+OO6e9vBJQ
-         8OMyu5ZhCI1CNhMWqjkP0xY4sx4aV5riK89PV2KRWsWQzieaUuoN/Mwq8f+gtn9AkUnu
-         WYaQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+a/HYNnjR4UxC3puA7XIGdsIeNSQW3+c7DvPFJQSJmBoneu08XOa6NSGmBAjQ0b+RQ2Ng=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUczUEEAgnMvEn2CMsNCNkESmG8q7AC4xaKuOaMxlS1jIIv/85
-	MSwGDl24ZhSkM8s8zRsxcz65Q37uvYqDloH0z6QEbmCkIYp/p8YgU5ZP2nFEZBM7AT50WsqJdMc
-	Crd7081PlmXrlfQtPGhE7361O2UwQYDH4nuPO
-X-Gm-Gg: Acq92OHmg49KzZmVyCFznAxiTjGN+m2SKlZxByRrGENhlchvnx+5l6HZ3WKqjwj8uIX
-	x1p4y4IFtvBn+spvzJ1z6D8I5g7Q4lgp7aBpOwckG4aWBM0ae8NSE5IfiiGiShT5OLmrG18+9zS
-	t4tmxBuRayBu2sBX4M8T8g8FMsdfciOP+TMaC/5wNX6qWVuVK9Ppk3UWV6/81/0Za9Xi0MMe2HT
-	+bXGbt513Z9WIX9OsuoQhkKCtL4MAtcWgjI0E+Z4yXJQNBOJq9DlgGhr3X/6q1LTynz8kBlJ2DV
-	Hx2QTwDHKYsQhJK68/FXsUT1w0vMK7SltOervUutdl9e9WEjf8A=
-X-Received: by 2002:a05:6820:1625:b0:69d:a224:6ee7 with SMTP id
- 006d021491bc7-69df738dc2amr1800338eaf.54.1779996314707; Thu, 28 May 2026
- 12:25:14 -0700 (PDT)
+        bh=knxjkYhh2ZKrThSYNSbXhCyNZ27urHSDYIGH+jazeR0=;
+        b=gBBuB1Gx+bgv1N25NC4WN69O4J419kU3PdyD+cM3ZnwP3ZdLECimd1zuSSH1C3/e9n
+         9EgBhmldC9+mnBQd4lCAr4zPJ/4LCfpalD3aEag0iYKYyUX7+UVD8hhH3pcGjuPR+6SS
+         fuOn/PJHbqytwTpR3AwUaSTEQwTk6Lemsyr6EldedFqyna8uiNTiEPpwnTVEKe8FtFEx
+         NJL20+0s69kCIi5gBgHSRVPZN9ZSx5aoNO7Z7cehsu6Tc2E8HpeGy2MaCNqMTR5jVRdY
+         FISRSKULyYakisoTQNNy+aX0d1NAn7qAdmxdg4v1EgCkQ1L1bO2ez56RAhlNHe76pszF
+         VoGw==
+X-Forwarded-Encrypted: i=1; AFNElJ8t1HShkPa5GM3ERcaX6k05oYpXioPnFxN2/6iy7Gvj9wXlVv7H5Qj+lgmHJjJDmheqx2Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzi4Rd/KGKX4o8HcNkU9bqOGkq33JDwXR5466pjggiz7NWOL9Bm
+	UIbc9POJXKLAA/y+5/oPUKQXT1S7p/S8t8HyXyP9bwC4KGGAoRaqcnDcXO2Aj2wG7sxqM63fM7/
+	8Oxqf6K/qAx8/NypEgAp5xlQbyXKx96z58qGt
+X-Gm-Gg: Acq92OFZEPnauEEoeHLxK9AwhqOa9x6niHLvRHWfhOfFuPbSlGxvJ82jcNVRllQHYhG
+	mmiyJ3seZV+3IBLVoipTTJJTFC6jhEZJTGQ0ZgFh7WlZq7DiJG60GFKGHlWbepavuftYKNz2xDW
+	nqP86A8nN8ZZ6wbyZS5GnfTDjQmkDW+6hP5ldIB5GtnEgsEmjwzvhHTImVW8P+F9v7s0Rvqlu/H
+	OkayQKf6srxiSIoeF9DDGrrFMIO7kcaCJCIREY/R2jLEgofzkeg1Ehpl+25oBPcFIP7tcnrU9a1
+	u42DVC4hOT3j/3XY9g66QMlhNiyX9P4+TZo/C6MltOXNbCilxPuaqoRBPZdJ6Q==
+X-Received: by 2002:a05:6820:c0d1:20b0:69b:56e5:e4ce with SMTP id
+ 006d021491bc7-69d7ec6a630mr9550948eaf.37.1779996675531; Thu, 28 May 2026
+ 12:31:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAC2QwmKRyYfE+30Fh75gvAEmJjk8g-3k+G=RDiEJ-KGNExAEow@mail.gmail.com>
- <xmqq8q9migqk.fsf@gitster.g> <CAC2QwmKORPnsmV4SM_CnmhrbF+X754ae-n9m1fgjvVsL9d-wzg@mail.gmail.com>
- <89224cb5-27b1-45b6-93d8-a0ad5e2447a2@kdbg.org> <CAC2Qwm+BLNf-2kvePKNF-FKQX3raOBzSRmwd0ZEdzmo8TqkMGA@mail.gmail.com>
- <CAPx1Gvd_FqnsjCkpAA5uy7aDz9oQnWx7WTvKk-kLWemkqF9PsQ@mail.gmail.com>
- <xmqqo6ic8564.fsf@gitster.g> <CAC2QwmLXk=CXNo8+Ja0fL5pN1YYMTkh7XHAUwN1c9VxuFhyy4Q@mail.gmail.com>
-In-Reply-To: <CAC2QwmLXk=CXNo8+Ja0fL5pN1YYMTkh7XHAUwN1c9VxuFhyy4Q@mail.gmail.com>
+References: <pull.2094.git.1777349126.gitgitgadget@gmail.com>
+ <pull.2094.v2.git.1779738059.gitgitgadget@gmail.com> <CALnO6CA5GPS2CMv_x_=wOPBgspe31FkW=h832GCBpAUbBoJNLg@mail.gmail.com>
+ <xmqqo6hzjrde.fsf@gitster.g>
+In-Reply-To: <xmqqo6hzjrde.fsf@gitster.g>
 From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Thu, 28 May 2026 12:25:01 -0700
-X-Gm-Features: AVHnY4LXj44K9vKGcjOLudzxYn2oUWQ8vzPOsxAtVwAIa7POYTroWqo7rj9bx84
-Message-ID: <CAC2QwmKjr2eiFNPPmERq7n-UjE-SF2vE4eHDanYE-4heWxzQVw@mail.gmail.com>
-Subject: Re: [BUG] "git diff --word-diff" gives a diff while they are only
- space changes
+Date: Thu, 28 May 2026 12:31:03 -0700
+X-Gm-Features: AVHnY4J6962S-5WE4FdYiQWB850409OcLkGKmM7QbPD0y5WV75dcZSbbrswQn38
+Message-ID: <CAC2QwmJZyVY0EZnr1144gRrAxBxVoxd1x64t60DL-SeWFyn6Rw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] line-log: integrate -L with the standard log
+ output pipeline
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Chris Torek <chris.torek@gmail.com>, Johannes Sixt <j6t@kdbg.org>, vincent@vinc17.net, 
-	git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 20, 2026 at 1:21=E2=80=AFPM Michael Montalbo <mmontalbo@gmail.c=
-om> wrote:
+On Thu, May 28, 2026 at 11:55=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> On Mon, May 18, 2026 at 8:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> >
-> > Chris Torek <chris.torek@gmail.com> writes:
-> >
-> > > Call it an "implementation note" (or, if you like, a "practical
-> > > consideration"?).
-> > > Something along these lines might work...
-> > >
-> > >   Implementation Note
-> > >
-> > >   The --word-diff option currently operates by taking the same
-> > >   line by line diff that you get without the option, then massaging
-> > >   the result into a word-by-word difference. This may cause an
-> > >   unnecessarily-larger diff than you would see with a more-clever
-> > >   implementation. If and when Git acquires a more-clever
-> > >   implementation, the output may change. Note that this is
-> > >   similar to the --diff-algorithm option, which may change the
-> > >   output.
-> > >
-> > >   Regardless of which algorithm is used, _any_ diff simply shows
-> > >   _a_ way to achieve some particular change. It's impossible for
-> > >   any algorithm to tell whether someone deleted two lines and
-> > >   then put one back exactly as it appeared earlier, saving the
-> > >   resulting text, vs deleting a single line, for instance. Only a
-> > >   keystroke-by-keystroke logger would be able to tell what the
-> > >   human operator actually typed into some editor. Git does
-> > >   not have that information, and having it is not desired.
-> > >
-> > > Chris
-> >
-> > I understand your frustration in the second paragraph ;-) but let's
-> > not go there.  The first paragraph is excellent.  It gives readers a
-> > clear enough explanation to understand what is happening and stop
-> > complaining where there is nothing to complain about (which is
-> > already hinted by the "Note that" at the end).
-> >
+> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
 >
-> Thanks for the ideas, Chris. Here is my attempt at synthesizing Chris'
-> suggestions and Junio's feedback:
->
->   The `--word-diff` option operates by taking the same line-by-line
->   diff that is produced without the option and computing
->   word-by-word changes within each hunk.  This may produce a
->   larger diff than a dedicated word-diff tool would.  If Git
->   acquires a different implementation in the future, the output
->   may change.  Note that this is similar to the `--diff-algorithm`
->   option, which may also change the output.
->
-> Does this work?
+> >>      ++ ! test_grep "^diff --git" actual &&
+> >>      ++ ! test_grep "^@@" actual
+> >
+> > I wish we had docs for all the little test helpers=E2=80=A6 in particul=
+ar, I
+> > think this is supposed to be "test_grep !" ?
 
-Updated the patch with the revised wording:
-https://lore.kernel.org/git/pull.2113.git.1778686956622.gitgitgadget@gmail.=
-com/T/#t
+Good catch, thank you! Will submit a fix and try to address the lack
+of docs in a follow-up.
 
-Please feel free to pick up, modify, or drop as appropriate.
+>
+> Good eyes.  I wonder if we teach test-lint to catch these.
+
+I had the same thought, and started working on a series that does this
+and migrates
+existing offenders. I should be able to submit it soon.
