@@ -1,175 +1,130 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AD51E5702
-	for <git@vger.kernel.org>; Thu, 28 May 2026 23:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E14C24677B
+	for <git@vger.kernel.org>; Thu, 28 May 2026 23:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780011081; cv=none; b=MtGhY6pIjqtFECOr98yJsxGYS9wfN/cEP416gGeNxd4YWP/e/ypnDOsMLr6p42Qv1fKC6LcH+lFKT4ljHVEwM7TY22+AjnzhTz9TVvlPBPuVxSSBJXq+v8dQFqBtHX+aNRWvqu+CX/WBFeqJWHDzZ7BtRdrjw45cB8hJdbWDCTI=
+	t=1780012191; cv=none; b=odBfr9xsWkpBnL78JT6oTZfHFXMS0ZPWkCNVpIRk8B+EAbahLej/cQsAZuAWnKCmAt5tCBVvtVbHwS18Muw2ie7LlajjqwCAXARYjX/+N7sAeG/Yg2Ouko75RIIiFC+460CxR0AEE+tEG+Ul6NYQ0UMXn9bD2haVmDFv3KmpJ5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780011081; c=relaxed/simple;
-	bh=nPwLjlfNAe8XvYnkAlVqMCKTOvjg5JBRBBVO6yBzZsY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ddlh7qe6VKBSUMuLITF2eGX9izJqlS+G4j3dLbKzKwkKcl9Pp7NMxR+WIRpdaat+TbPb3S+uLoiRYWFHMLSGc3IqHkPiKn1bbb7skXBl41tD0ua7McOBLlDGQXJUzxTEGmf0VtQ1y47QyeqpHrBNDAroXb0EUvgON+BNxOFNJP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iC629+1C; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1780012191; c=relaxed/simple;
+	bh=eQTPmJJt4PLGiVSDi7k3AT0VdtjuWXBozCK6o283OoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZLFBW1O+F5EKPpMaxSb2bFG10iocuImqIhiy4iwP8bgpYp0Ibfpoc4dsfbhxpDIyPF4h+mZ29z+qhN7F9ToZeGA2h+hQjV/hxseZGQKqFGnx58zIEiMZ1MFeSUMpgJzFIjdZfgW5ZvgEmTiO4l7RhYs/rQ03uZKJIOgCifi4zk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mkBU0sWy; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iC629+1C"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780011078; x=1811547078;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=nPwLjlfNAe8XvYnkAlVqMCKTOvjg5JBRBBVO6yBzZsY=;
-  b=iC629+1CUQ8iqppBLZrwMqM/gbXKQEKpyCaQgF6kZUuZqGNPypxvwim1
-   kbFu9VTEpe1XGwnkyB7u9UemzDgFF3bKaLiUITzexPVdYuHlJzWip3Lur
-   WHJJgbb1TKGgkAb+HflhsiL1JYKQJwn2yV7qG482/g1cvlNy4XYGAohcd
-   yUkLFxpJrzmF4EnTQu97dnt4UwYZ9TxycorZZXqvVes0qVzkAJC3/lfXk
-   BlFJ3xlpOv2vFkFBThF66M/GCtHOx1d5mlK+YuQNmBP8/Izdi62Nqj77W
-   Y4rNB3GlKRnHw2IOA14gMgLT02WT1V0YKapeFzZ5UlU7N4QTpWX2aEsLh
-   w==;
-X-CSE-ConnectionGUID: fCE0UoFGSU64+6yugRgTgA==
-X-CSE-MsgGUID: hOCzrUAETjyxejoYWDx3iA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11800"; a="91432001"
-X-IronPort-AV: E=Sophos;i="6.24,174,1774335600"; 
-   d="scan'208";a="91432001"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2026 16:31:12 -0700
-X-CSE-ConnectionGUID: LxDV1TFMR3Goci/opZ8hyg==
-X-CSE-MsgGUID: FgUCrxevT5m97NNkphrVMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,174,1774335600"; 
-   d="scan'208";a="241861642"
-Received: from orcnseosdtjek.jf.intel.com ([10.166.28.109])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2026 16:31:12 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Tuomas Ahola <taahol@utu.fi>
-Subject: [PATCH] describe: fix --exclude, --match with --contains and --all
-Date: Thu, 28 May 2026 16:29:51 -0700
-Message-ID: <20260528232950.187002-2-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.54.0.633.g0ded84c31b89
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mkBU0sWy"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-44e1ebb3122so8088325f8f.2
+        for <git@vger.kernel.org>; Thu, 28 May 2026 16:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780012188; x=1780616988; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AQ2ZJMwsvTef92Y1UW8Z+Aj0fqTfuoRZH2MvmnlKg0E=;
+        b=mkBU0sWyN8C4FD4dOV5kodwCxDxFmu2lRU7nJhhqQNkI3I1/2yd+emLB7CKtvrlJ0Q
+         R4iLWbrhiKuN7ADq2wa3pqfSmep7+QPH/4tQ7e4tL869v8P/Mm/BPSJaWzbdM4AjPaxM
+         pTflSMNTFGS8uzQDuU2Jxh5Vp/b4iNv1Yg/FxYbk+BTHFF/Fy3F+u2GfxCGw38kJvVh4
+         kxrVrKqgCQmoM4CFuPKpY3CASKn8EpSM8HVHf+0lnDmAg+osHNN1hmSxm4F3Jt841GEL
+         UxO2Wgj9c4C7DwwKEmJeCKgsXguqmNggCkg6eW7f4iruj/UpfZKT010+LZLjfwfC5JSe
+         Dhhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780012188; x=1780616988;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AQ2ZJMwsvTef92Y1UW8Z+Aj0fqTfuoRZH2MvmnlKg0E=;
+        b=iGCLTB43knlBKq9N66emQLHW8lTUEG9DEwTZnr0i+ry3G7QtUOgPV9lfMdanAwYbwE
+         mhTzVP03D0gIvs/STLfERMJsmXUdZwYdZkhggcTlPmLDDfHsIn16zw6MsdC/NWXrAfU6
+         Yfb3RStGRG/C+SGCURUKgeyhyJcdfKU3yTLY39XmmmrJAaJfrijuqXi53NcrOBmi10qy
+         dOuP+MTSQM/KpGZDEWFZGFduVGodv71qMg6IqirvwVj689Q959Msnl6iLjNycGFxMeuW
+         OEUM5bbuzI2V+qN86GSzwhJvLXfzN97AsX/5CjNtYvnAsnyoLJHL7bAREDm/Lf2y8SR6
+         UqqQ==
+X-Gm-Message-State: AOJu0YyY22HH5IiJX3X/+AMok8r6WFYsyAfqkeDU3QxyzDDj7pwphlsz
+	ZyaDIl/4Z8r2+kC3pxjGR8l0iLAO77do44hUdY6tyD2L8xQcT7Zze9Ks4EL2Og==
+X-Gm-Gg: Acq92OEgUVlI0tiL/3l0CsYPFSUmsNjdXMgXFIs6Xm9Nr54E036EH8+k8yjH5i4/frv
+	UF12Vd0KTjIb5Hsy9dtzkNUj2V7LXcw+UYwNUs0flxLfcXRzSEzDEk22/r6ZzZC65/zfzzocUdR
+	rHTH1yoPpdMnMuheMhmIStAk/TEwbjhQp67qdmCICTBln/7XXX0g1zaraWPUDaba4kzAG2ydQ/2
+	VCbqqgY9iksNuEeAFliQLMTaPJM7mXcOJiUOSGeWaOVUJMeeIAtSTBWTjvd2941WGSj7q4q3iQ7
+	gGcK7E+vWB+05VHz6TNsiYtxXZ3G3M08+zGvAcJjdKiFOztFIoTsQ98KAuT5ugzUBaTRM+jEJg8
+	HfwAnNAg09hxTv/RYCehk4Pa3iaWgyW9q5XuzveJPBnnfxAl8/kcdJe7fZV2Pp17LiCsRhhFjTL
+	fpPbggmYos1/MJxVrMZ/XfvVgjYdWMrpchQjxu/vBSkVYCkM1w2Ckq6ln2ZMyvilQBYdp21+htc
+	2SHuLSIxB20aenohFGka0uWMpnZyFJJPw==
+X-Received: by 2002:adf:fd8d:0:b0:43f:e990:2f5d with SMTP id ffacd0b85a97d-45ef145aad5mr428322f8f.35.1780012187997;
+        Thu, 28 May 2026 16:49:47 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.159.46])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef258f1ffsm180331f8f.21.2026.05.28.16.49.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2026 16:49:47 -0700 (PDT)
+Date: Fri, 29 May 2026 01:49:44 +0200
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>, fox <fox.gbr@townlong-yak.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v2] http: fix memory leak in fetch_and_setup_pack_index()
+Message-ID: <ahjUmMCKxREamQE-@lorenzo-VM>
+References: <agx5tblaCZNsYEBq@lorenzo-VM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agx5tblaCZNsYEBq@lorenzo-VM>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Inside the function `fetch_and_setup_pack_index()`, when the pack
+obtained using `parse_pack_index()` fails to be verified by
+`verify_pack_index()`, the function returns without closing and freeing
+said pack.
 
-git describe --contains acts as a wrapper around git name-rev. When
-operating with --contains and --all, the --match and --exclude patterns
-are not properly forwarded to name-rev as --exclude and --refs options.
+Fix this by calling `close_pack_index()` to munmap the index file for
+the leaking pack (which might have been mmapped by `fetch_pack_index()`
+or `verify_pack_index()`), and then free it, when the verification
+fails.
 
-This results in the command silently discarding match and exclude
-requests from the user when operating in --all mode.
+Also, do some more cleanup by removing the useless call to the function
+`unlink()`. This is not necessary anymore since 63aca3f7f1 (dumb-http:
+store downloaded pack idx as tempfile, 2024-10-25), when
+`fetch_pack_index()` started registering its return value (in this case
+`tmp_idx`) as a tempfile to be deleted at process exit.
 
-We could check and die() if the user provides --contains, --all, and
---match/--exclude. However, its also straight forward to just pass the
-filters down to git name-rev.
-
-Notice that the documentation for --match and --exclude mention the
---all mode. It explains that they operate on refs with the prefix
-refs/tags, and additionally refs/heads and refs/remotes when using
---all.
-
-Fix the describe logic to pass the patterns down with the appropriate
-prefixes when --all is provided. This fixes the support to match the
-documented behavior.
-
-Add tests to check that this works as expected.
-
-Reported-by: Tuomas Ahola <taahol@utu.fi>
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
+ http.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-I was looking into reviving the patch that just added a simple die() and
-realized that its actually pretty straight forward to just fix the support
-instead. I'm open to either route, if we think this support isn't
-necessary... I'm not sure if there are any gotchas or other issues with how
-I implemented this.
-
- builtin/describe.c  | 18 +++++++++++++++---
- t/t6120-describe.sh | 29 +++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 1c47d7c0b7c3..faaf44cec573 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -712,13 +712,25 @@ int cmd_describe(int argc,
- 			     NULL);
- 		if (always)
- 			strvec_push(&args, "--always");
--		if (!all) {
-+		if (!all)
- 			strvec_push(&args, "--tags");
-+
-+		for_each_string_list_item(item, &patterns)
-+			strvec_pushf(&args, "--refs=refs/tags/%s", item->string);
-+		for_each_string_list_item(item, &exclude_patterns)
-+			strvec_pushf(&args, "--exclude=refs/tags/%s", item->string);
-+
-+		if (all) {
- 			for_each_string_list_item(item, &patterns)
--				strvec_pushf(&args, "--refs=refs/tags/%s", item->string);
-+				strvec_pushf(&args, "--refs=refs/heads/%s", item->string);
- 			for_each_string_list_item(item, &exclude_patterns)
--				strvec_pushf(&args, "--exclude=refs/tags/%s", item->string);
-+				strvec_pushf(&args, "--exclude=refs/heads/%s", item->string);
-+			for_each_string_list_item(item, &patterns)
-+				strvec_pushf(&args, "--refs=refs/remotes/%s", item->string);
-+			for_each_string_list_item(item, &exclude_patterns)
-+				strvec_pushf(&args, "--exclude=refs/remotes/%s", item->string);
- 		}
-+
- 		if (argc)
- 			strvec_pushv(&args, argv);
- 		else
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 8ee3d2c37d02..f46e628d6a1a 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -359,6 +359,35 @@ test_expect_success 'describe --contains and --no-match' '
- 	test_cmp expect actual
- '
+diff --git a/http.c b/http.c
+index 67c9c6fc60..99da4d7529 100644
+--- a/http.c
++++ b/http.c
+@@ -2538,18 +2538,18 @@ static int fetch_and_setup_pack_index(struct packfile_list *packs,
  
-+test_expect_success 'describe --contains --all --match' '
-+	echo "tags/A^0" >expect &&
-+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
-+	test_must_fail git describe --contains --all --match="B" $tagged_commit >actual &&
-+	git describe --contains --all --match="A" $tagged_commit >actual &&
-+	test_cmp expect actual
-+'
+ 	new_pack = parse_pack_index(the_repository, sha1, tmp_idx);
+ 	if (!new_pack) {
+-		unlink(tmp_idx);
+ 		free(tmp_idx);
+-
+ 		return -1; /* parse_pack_index() already issued error message */
+ 	}
+ 
+ 	ret = verify_pack_index(new_pack);
+-	if (!ret)
+-		close_pack_index(new_pack);
 +
-+test_expect_success 'describe --contains --all --match branch' '
-+	echo "branch_A" >expect &&
-+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
-+	git describe --contains --all --match="branch*" $tagged_commit >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'describe --contains --all --match and --exclude' '
-+	echo "branch_C~1" >expect &&
-+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
-+	git describe --contains --all --match="branch*" --exclude="branch_A" $tagged_commit >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'describe --contains --all --exclude' '
-+	echo "branch_A" >expect &&
-+	tagged_commit=$(git rev-parse "refs/tags/A^0") &&
-+	git describe --contains --all --exclude="A" --exclude="c" --exclude="test*" $tagged_commit >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'setup and absorb a submodule' '
- 	test_create_repo sub1 &&
- 	test_commit -C sub1 initial &&
++	close_pack_index(new_pack);
+ 	free(tmp_idx);
+-	if (ret)
++	if (ret) {
++		free(new_pack);
+ 		return -1;
++	}
+ 
+ 	packfile_list_prepend(packs, new_pack);
+ 	return 0;
 -- 
-2.54.0.633.g0ded84c31b89
+2.54.0.129.g2dffd77b94.dirty
 
