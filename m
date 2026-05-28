@@ -1,69 +1,69 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCA22FF15B
-	for <git@vger.kernel.org>; Thu, 28 May 2026 02:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6E3306B37
+	for <git@vger.kernel.org>; Thu, 28 May 2026 02:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779937025; cv=none; b=UZvf0Ix89Qe9x0MXO0I+oi4QbdRGwvQDnwzkRPrm+HNmK+PQTLthDHAOFYFb1+3bl5jqktuwIx+R484WDXwLpqrZeWXXR5CX884/e1od4bAbZKgBJIFl7ya8Le0Nctx3IHGAiBIcJXmxChR3v1IZAzNazw7tNVxI2vl00d6Cfhg=
+	t=1779937026; cv=none; b=sxafVwaAhzTxM1czibzAp0MJCdqJrwhz08G6oWkHkQFT8+BR/cDBrU0zRbkZmUVFxhhDVdQtIwbjbNL9CFDF+OVkIwuINdmeWPl8erOhag9lRG7y3RLxPPrLIeF7kOs9ifUReGETcDW75VER4XIH3HOCoBWfhmJWnEeFbHMuQ2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779937025; c=relaxed/simple;
-	bh=5R9FEOlJ2I99wuMOxohQZh8JPmoEa1iWdKrRFdD1bv8=;
+	s=arc-20240116; t=1779937026; c=relaxed/simple;
+	bh=PZdmn2UcRkgPDrEYR+osPrmeMA137gYmKZZVTR0k858=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=STdBA1IG9J/e/2xagfi0QkC3yJWlPtCMHftUDM6RUzQoSntb8oYqOya/NF8qYSBwTKkOP6DILjf5HKPW5qCJ2jtWKjpbgrRPxgBYH1kKklRmeCg+aQI6eHutkWSgzWlMmGBdVm+eYfSV9O8jeRRtFdv1ocfIucUXDJZrHpC01o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M5NFYVw2; arc=none smtp.client-ip=209.85.160.175
+	 MIME-Version:To:Cc; b=Rf0RGCpVkHc9Fn494olwGbPRUobnoKggS0sTzvsE3JOzp1HpkwGthpcOUNn9mGJJPqpSt1bNHc7ayfTk7sCY2In2WRoG0dw3Jv1T6aFzkAfj6ZfxK7QZll6hKf5kr19Vfd4czwfBy7GJY93XriwheD9R0PZEqPWCVkI4spQpM6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N98f4b46; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5NFYVw2"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-50e614fdb42so96191591cf.3
-        for <git@vger.kernel.org>; Wed, 27 May 2026 19:57:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N98f4b46"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-913cc4d7c71so1349547185a.2
+        for <git@vger.kernel.org>; Wed, 27 May 2026 19:57:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779937021; x=1780541821; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779937022; x=1780541822; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2Ix15tTuEkjkCwaD372/Zcf8YqzVQOAKxfsIwL8CjXc=;
-        b=M5NFYVw2ChvqZxgxmAfslRWlg6GA5DgAFIjZGd0hydvfsCjJuZm5mkAUzO+En/Z0wh
-         3D5GqFYVB0Y/G+UiyKV225TJWkM0YDzngEMF2G3iesSAe0yYZHTNEfHbpdaP6DWFOG1i
-         44Nn/kYSYYYTr+OHITlEjpb8vviLGPU2SGkUsfEPxddObTpFnDDGTEM8djdn/EjL/qAd
-         K4UUva3E/NSVRqUyY9E70JivsCIsZq+tyx9ANjv6Vt0Os9k2F1QBbOdC/9uy91xKWQmQ
-         M5740bfqtq/ckL0PM1o6nYabDGu1Pq/YvwmST45oX0SIPJSeTJRQhppVPAw3woVxWzxD
-         fc4A==
+        bh=lc0oeybmfOqK+rwhDo/k1Hjo6mvMEU+S0BNNf1Re8Tw=;
+        b=N98f4b46l1ilZcqH/OChL3Il3P0W+Ehv9Bi617DqUx3iba3Bo8DHAuG8oHgBuz3Of9
+         KXOehE0Kk+usegTx/31Sqws5RSK7q3+uogEwoXlR5wKKE2MOFM5fk5wHhSt1cDYRvQUr
+         AV0LZcrLbVULaspDi+rGQYQJWa5Q3cs+fwrRvOKmzSHvn3Ye5T4mF0Y3x8pMmDJSrCaL
+         2uUjbm7Re8/8B8tXJaPBjMeUIt01zlS6sel2xpAQfb9oJAWoQY/OMYcr+VmM46v3rjfp
+         JouavHG7IP0ysPQ53Uh6zWc2xLTBbUHIuyApgIE3IsOILafwiRBbaFjWbWNdFU7bhIW3
+         TXzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779937021; x=1780541821;
+        d=1e100.net; s=20251104; t=1779937022; x=1780541822;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2Ix15tTuEkjkCwaD372/Zcf8YqzVQOAKxfsIwL8CjXc=;
-        b=OnNHUu1vai3KZrJoizazbe0yFi28iV9aG7DES5fPR3/sICuvgzhhT88sXhKMqJFLPc
-         b+/LBxeXsx53lrgwxp4kQr/Xf6ih8IKOJmBa2Cpq94fLFDz4Ei2VEufo5dhy5RyQ2Gar
-         aQAUhKrJzyDTYO54D9U2tcbNOlt8n4tBPuezdy35xRBGQpvYjdXH5Rxzat7EeicVcBR6
-         hlLzWiYYcVu9S/VSoamZT3nAeLbrdIY5K+iXNReE8RoIsUcZURcbGvn+1N7hRlN3FdUa
-         Rq4G3QJuXNCYhOjYPYBb0lZyyPTk94YbrtHMhlTibGYW7SPw2ZJZYcp3joWgLGms1drX
-         q9vQ==
-X-Gm-Message-State: AOJu0YxxqBKNTCFbfDuKySk0Nsqb7wLzIriGxZzHpU55iWhCGjrTZwzY
-	TYTrfyM7STqnS0zWXrxX9jiJQw8YoZrYscqicIxdh5l5yFX5ii+G0c8G6fw7Sg==
-X-Gm-Gg: Acq92OFOe/JCuHp8yaWQkVWBq7dSDTsQhs/M/0ExLFUJbPjy5lnZ2UKLC9pY+STCC6d
-	bJuVZUCTf/SmjGPZbzCB8V+OWL9TRz9Z64Av9NRQdh0n71r7PYmVd47OnbYgoE1qryY50k4mF2N
-	eCB/KLn7DxudAWvgR//PMydGEnvI+IODf3KnRKasH1IYE1PQOIZtB1eLbzxSWGekkh+ZWV31KdZ
-	l7Ia9dQyaqMoBZSSH3Q9udXpi7+p3HVMin3ufkAc6OONVM2uO06lckSuORH3cel+ds1cs0v0Sv6
-	C0Q+bJ5irjXWs946r8G0EFDCAs2Bn4QONow+Mr+7xfmn+c4jhtNzQ6iz0Zfe+d/hS79JQV8fRUd
-	YH7/8XG7ZPd6YtKiC81D5C1GujV+9w5/67l/wm8YT+BD30kT+tA5OfdbdctijEEpqEXyPjtTsXB
-	zvH2LW2IO0gQ3XdUYy4nV6Rfsq4lIeVjFdn6QY
-X-Received: by 2002:ac8:6906:0:b0:515:189c:e0f8 with SMTP id d75a77b69052e-516d432f6cfmr330272611cf.17.1779937020915;
-        Wed, 27 May 2026 19:57:00 -0700 (PDT)
+        bh=lc0oeybmfOqK+rwhDo/k1Hjo6mvMEU+S0BNNf1Re8Tw=;
+        b=XGF7Z3Z56wG6i20eBDCXht3/ym+HKN05102aG3M/u+VGJew6j4DUBSFeY54u5qIB4t
+         OskiXhGjNNDYM+1vEzBW6aj/txttUav5Sicj0tCC9DTJrqPETf/KwjXKSSgKwMFhVzzn
+         DYqxBnv2pV9ElWkgRe7M3fpjyZgB+z0C0QIyI1OxTar15BT/FxfKq3qVQuu99kyybLT+
+         SgPNOPcE1egux/d3a7PW7N/JnFZdGWDFkunKRnpSHIjlssvTrcP8g/4mAYztNHEZ1CuC
+         vV6l45gpgYSJ3g+Utysf5MuHg/h0IlBJNby3FSjUWT8FDX920pYyt4Tasj4Wd0k43+0R
+         XZ6g==
+X-Gm-Message-State: AOJu0YxPHAOM1ZbNexNB5191pXmzhWx6snG7MtQ3Ui4mYypDZMQje62i
+	rpUmTxlcLsVHYnFF/DCQwRLr73BtBBiNhaM20ISh/JsAhCxGGfsuDmbSM74YBw==
+X-Gm-Gg: Acq92OFhnK+3Qrw5NsK0OtdVO3EVUQCnEtrTGYuW5zNiQR+RL4HXf1Wci464XBmQvrB
+	oRiW6mZm+GlkcHdgXOORCMMReVsm6oVckE6wb24ZMvMnkkoOPicbSZ6fYBdPXz+eZ5DDAF9ACO8
+	HFYMKobu35MJawx+0xqjU41vFncvofoY5Ndf5egfOk/v7MTT3DmKRzzzdE0MBaa1HUiIrxdwUe6
+	jJKQJLzkB2SchvkjM8xzDGpeXfp8R/mQEoqxJtosSxlZ/O6CxrKvvit7aJtM9e+RbHtThAafzMp
+	1CrrUQzuDI4y+5Tl7SLtGh1yTjq9g6rDtIDIyvGrrR00wnGQDGUdxHrOlCLLyIj2hFj8tdY4bH7
+	tU5PjxDiw2S8S50SOsuKudJWXobH/sBZWqFzkEwcC2Nsu14ByhELqYZj5AqIwBTO9x8FDarly7V
+	vDgaWFiQvDfVdJQgDxZkYUinycZklpg2EEVK9y
+X-Received: by 2002:a05:620a:3724:b0:908:c3fe:843b with SMTP id af79cd13be357-914b4a22cd8mr3862470585a.59.1779937021819;
+        Wed, 27 May 2026 19:57:01 -0700 (PDT)
 Received: from [127.0.0.1] ([74.235.126.66])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51706adc446sm59358801cf.15.2026.05.27.19.56.59
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-914f8820fb0sm664668685a.46.2026.05.27.19.57.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 19:57:00 -0700 (PDT)
-Message-Id: <5c01ec3cadce441cfa48e0499a62e57aa4cc619e.1779937016.git.gitgitgadget@gmail.com>
+        Wed, 27 May 2026 19:57:01 -0700 (PDT)
+Message-Id: <4e742940711c71da755528ee0f4669125218aa66.1779937016.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2300.v3.git.git.1779937016.gitgitgadget@gmail.com>
 References: <pull.2300.v2.git.git.1779905911.gitgitgadget@gmail.com>
 	<pull.2300.v3.git.git.1779937016.gitgitgadget@gmail.com>
 From: "Sebastien Tardif via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 28 May 2026 02:56:55 +0000
-Subject: [PATCH v3 2/3] daemon: fix IPv6 address truncation in ip2str()
+Date: Thu, 28 May 2026 02:56:56 +0000
+Subject: [PATCH v3 3/3] daemon: guard NULL REMOTE_PORT in execute() logging
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,81 +80,29 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Sebastien Tardif <sebtardif@ncf.ca>
 
-The sockaddr struct size (ai_addrlen) is passed as the output buffer
-size to inet_ntop(). For IPv6, sizeof(sockaddr_in6) is 28 bytes but
-INET6_ADDRSTRLEN is 46, so long IPv6 addresses are silently truncated.
-
-Fix this by passing sizeof(ip) instead, which is the actual size of
-the destination buffer. Drop the now-unused len parameter from
-ip2str() and update all callers.
+REMOTE_ADDR and REMOTE_PORT are both set by the same code path in
+handle(), so when the existing REMOTE_ADDR check passes, REMOTE_PORT
+is guaranteed to be non-NULL.  Guard REMOTE_PORT as well so that a
+future change that breaks this invariant does not pass NULL to
+printf's %s, which is undefined behavior.
 
 Signed-off-by: Sebastien Tardif <sebtardif@ncf.ca>
 ---
- daemon.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ daemon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/daemon.c b/daemon.c
-index 80fa0226d8..103c08d868 100644
+index 103c08d868..78cca8673f 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -947,7 +947,7 @@ struct socketlist {
- 	size_t alloc;
- };
+@@ -753,7 +753,7 @@ static int execute(void)
+ 	struct strvec env = STRVEC_INIT;
  
--static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
-+static const char *ip2str(int family, struct sockaddr *sin)
- {
- #ifdef NO_IPV6
- 	static char ip[INET_ADDRSTRLEN];
-@@ -958,11 +958,11 @@ static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
- 	switch (family) {
- #ifndef NO_IPV6
- 	case AF_INET6:
--		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
-+		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, sizeof(ip));
- 		break;
- #endif
- 	case AF_INET:
--		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
-+		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, sizeof(ip));
- 		break;
- 	default:
- 		xsnprintf(ip, sizeof(ip), "<unknown>");
-@@ -1019,14 +1019,14 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
+ 	if (addr)
+-		loginfo("Connection from %s:%s", addr, port);
++		loginfo("Connection from %s:%s", addr, port ? port : "?");
  
- 		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
- 			logerror("Could not bind to %s: %s",
--				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 ip2str(ai->ai_family, ai->ai_addr),
- 				 strerror(errno));
- 			close(sockfd);
- 			continue;	/* not fatal */
- 		}
- 		if (listen(sockfd, 5) < 0) {
- 			logerror("Could not listen to %s: %s",
--				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 ip2str(ai->ai_family, ai->ai_addr),
- 				 strerror(errno));
- 			close(sockfd);
- 			continue;	/* not fatal */
-@@ -1080,7 +1080,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
- 
- 	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
- 		logerror("Could not bind to %s: %s",
--			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 ip2str(AF_INET, (struct sockaddr *)&sin),
- 			 strerror(errno));
- 		close(sockfd);
- 		return 0;
-@@ -1088,7 +1088,7 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
- 
- 	if (listen(sockfd, 5) < 0) {
- 		logerror("Could not listen to %s: %s",
--			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 ip2str(AF_INET, (struct sockaddr *)&sin),
- 			 strerror(errno));
- 		close(sockfd);
- 		return 0;
+ 	set_keep_alive(0);
+ 	alarm(init_timeout ? init_timeout : timeout);
 -- 
 gitgitgadget
-
