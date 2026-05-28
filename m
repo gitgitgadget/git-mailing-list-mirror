@@ -1,124 +1,138 @@
-Received: from fout-c2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0472212D1F1
-	for <git@vger.kernel.org>; Wed, 27 May 2026 23:22:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779924151; cv=none; b=KfMQV53Ks2ig0E5yzI1rm7QxjiZhb5C5MfCNoBbuzDksX6XL8KBF/7sfMiVH9RgemjNYznempKEiP96J5PeuCbMV/DBuL8t8o4oYqKRbLKetQ4/kRx+Z9FZf1hNfqA18YT4lPmsHX+IKKcNWMGr6vAAa72R1DIWyghenwS7HNXU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779924151; c=relaxed/simple;
-	bh=oeu0Yt15kpmkq1vk+oo71nQqdk1x6oWoItSD9EcywF0=;
-	h=From:To:Cc:Subject:References:Date:Message-ID:MIME-Version:
-	 Content-Type; b=GHSqpzSiE8zcIAKy4AeaiAoa+HhrA/2Gkq+UAdH/DaU4aZiU86BQ5WQVSPL3UGcDjbVRfjNFiibzreALlIF+OnKfTsIvap2Dx4kOFIMigPjS08VJEUp6T8FZUBRWhGUxjx5Ti1I/LU6OuKDwSZIi1VYKWjVYYA0ApFiFe6MN5DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aW945deb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AIDb/IZC; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7321A262A
+	for <git@vger.kernel.org>; Thu, 28 May 2026 00:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779929027; cv=pass; b=lzalyGXDuZsXGYAii3Yq3Ga7/Jf30c1Y0hlHsAl1j1ha/mPpZnc2gAezjoMUWxqcjoh3PnTU9OWRtF/MCqtnZEVWKHdtAJE9ukMJW42M7SNyLJ2Q+Bq+6xJXJBPxXwmLwGdQrdkLD4gFj9b669vlIncx4WR3JxcSgzaCwQdCokw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779929027; c=relaxed/simple;
+	bh=TU+LW1i8Alfty+zHmhgjKbFayvaWIofqQj3wBfgr7zQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TgqcDLewNF6qYKfizWLp/llwKRBKxtaVadwpLxgrNau4GaUH8WSsoLdVhtqrsbrFoUsU6Ayk1eOGGa2cpcQkkaSBPqYWP5Fjp3p2hLkl2YpzVkiU7OLNLwBC4DVooJjgp2kY5raXDXRo3B5y/TnPWQZTHaM1fZ3/itjql0T9sRM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b3FM4DjB; arc=pass smtp.client-ip=209.85.161.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aW945deb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AIDb/IZC"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id DD40C1D000C0;
-	Wed, 27 May 2026 19:22:28 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 27 May 2026 19:22:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1779924148; x=
-	1780010548; bh=tKdXdcIzDESBRwcquV5hycZqsofH4fWt6rWpZx2fQaI=; b=a
-	W945deb+UDWKh1zf0CBYtbHTNcUV3L9AlAY+8qJqxX7kl6FH60zxEsn3R2mRP6Qg
-	ykdnvEzK7q+ej1G49RbJucXkLi884J81mPiL68Dis8jLwmLusEMbLUErPyJWnpdh
-	6V2YZBcFdXw1lkR1HsbgcDrtihV90TwzCBIUdsHZOorU7DA4z+E30UqrPvXLz62C
-	oRpjhAwesDFkNWHBlB5aTldV2UyC1nDC5a59lNSBV9lodZkgiadBRrDkTuE8ANU4
-	WTc/XlavrvviHWf+CXPtxK8IVftRP8h16K8+/iIE1A5fLhkvhUBRHumZU08rgKPI
-	IG9PoluymJCN2yiaXutHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1779924148; x=1780010548; bh=t
-	KdXdcIzDESBRwcquV5hycZqsofH4fWt6rWpZx2fQaI=; b=AIDb/IZC/oimHIn7A
-	fp+JBdI28IxW6oybYKoBzEI7Qq0g1Huo4FTUvtXdOR/gkWBvXZT4w/l1k3JH+pTP
-	ZfWzqcyFNjYitG6roFMzBCpVnNPhUrXGJntyc/lXPkpsCGzzAkZ8l7fkPJj2lWoy
-	VtGmd2rVUkraxiroX68CWiROHqrYDynu6Fj31pCPSHC+k1XG6YShMcMSfNrcuDxe
-	5hpaDdCJymz8ITQ861/XGbomXGK5ybDtzEt+Ob6V7vx3b8UNlHikRdOa/N1ItM1u
-	tP8PH9FL3Kyn+gjvJRoOFMiYajTEW5imnfuHmSrl/aXkt256aFv8+6SPGWZ8jQvH
-	V6JiQ==
-X-ME-Sender: <xms:tHwXaj-sT-gzkljXU8yIf8dMH7v7dsuldczci9rWloqbBsAw6aPLhg>
-    <xme:tHwXamux700ShVbmudxuPeRKgwTLa6__eSVIvKXeXL7cOd6LFlXukPIF-cxXuiDO4
-    wibpyE0FiB4caO-_lCeXOiHeW0W6fLNdEnrbup1XKZpC_NfYx7WgQ>
-X-ME-Received: <xmr:tHwXamC6Ak-wZT8l0jKDEuYACaVzD8R3UBeQIyJYfjNSxpR5vnnyMTk2y01jGiPrYl52KFrWrWDM3OafTnnngSd2h4uVpR3-7p1usR7faMSx>
-X-ME-Proxy-Cause: dmFkZTEe4E1Y4x8uT6eCLLwrEBDS9XNdFoVWNOTSnv2J/kfHA0kiGW/uaR/gHOKBBOpzjk
-    uimHYQIj+HWvKMB6eOXeb0hPfZgrQuz5b0Z68KDZVxqu9a7ZjnypOR+zdnSqYTaFVHfaQ5
-    6XnJzBz6P/GeFFHCM0ZAU2TC+pcwrFvfJGWKadcC5TrdKTCVZ/Ss9XC4X+GFyg25LxrC7c
-    Lcxq1pPdFyxAZechC7QtcFg8AnlsoEjoAMHlxC2Dkj2TRiws13LQw6gIdwZcrYOpEvzW+Q
-    sz5f+m3Tzz08z+4rZLIeU8FsDyjY4y9aUkwmvCYVgIuTA9BT7ve0g+ndhb31L4Y5jYNKYP
-    AOwXdTDQMqbHYMXLGYTPpGvglIBwUxZNCaygQPrHj2NV5SZk8tZMLGsHdITFl7/dnQgelv
-    GGmPdD7Eqvv5IFnE/FnHdD13CCk2hsX4rms4z8NaWCwCdFGliWDl7lkQVs7of35G62w9iu
-    7wQTY2d1H70ILWTDBXXDRrqSlHd81FxEHQM9L2womx7605OVIVGu5MSZBdzWVIsNxlqjYo
-    eqi8iMXSDl7sBcg5kEt7XQbhXjJl/SDRU8EOwun1ZtrdPMXYys9Cgvad821RtOfSmLLbc5
-    UrF3Sxmp6FolA4mqJlAWekZ0t9p6zAIppuK0X/mjw5re1ZwCBNzjFybaL/kg
-X-ME-Proxy: <xmx:tHwXauWoOwH9DJWDCCes91qTnqW8XEzjBRt7um5cWq2PYMqHzo2LsQ>
-    <xmx:tHwXakDdgRa76pio6CFsMPb3bMgrQQUE2VWSIj-RdCWFd9YSLnhDNg>
-    <xmx:tHwXah8CqQcjB1XMC4geCtNCWf5g5T3ion7tW3tQYJxHl7H03NDcZg>
-    <xmx:tHwXarHUXHmgvzDSTc-btvLNduUu6NWwNFkdrV25K-gofYslXKLQqg>
-    <xmx:tHwXapz_l3vfw2PtAYJ_A5Vkr0q0P2kzUx_qXYRo9OsNyASDZg1yGtmI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 May 2026 19:22:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Frieder Hannenheim <mail@fhannenheim.net>,  git@vger.kernel.org
-Subject: Re: git mv after the fact
-References: <02663c67-01ad-4dd1-aae6-9e9706f3d040@fhannenheim.net>
-	<CAPx1Gvd9+z0th9whCbcA60_bWproPp+kwp3qDmhQOe4G=0=E6A@mail.gmail.com>
-	<xmqqy0h5lfa0.fsf@gitster.g>
-	<CAPx1GvetxY1T7cuFN_xe51EURr-ED2BqW3E82jj90ko3PSYSyg@mail.gmail.com>
-Date: Thu, 28 May 2026 08:22:22 +0900
-Message-ID: <877bootp3l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b3FM4DjB"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-69df5352d0eso136546eaf.3
+        for <git@vger.kernel.org>; Wed, 27 May 2026 17:43:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779929025; cv=none;
+        d=google.com; s=arc-20240605;
+        b=a3sBYlinQZGJat0JyUMv91YMBHW/N6nsKR7FnKB4reKYrkIlMSJDzckGhs5TH6isNf
+         WOD5czuNNKGFPCNAu1Qnh/xiOil53PFmdXwzbQ7zCycB1biBotOz4SRFMBiUxJorWeyN
+         e+McsvqtabE4B4DJIx1Zph1/VipFk266wleBq2ssWQ1MvIO/uOqjvTIeYFiwzUB5jecF
+         8T2LOMPrhTfF4rx2WKFODAzJxBuSlVS3xdb1tAgUl4x2TdfNEXUH5dz+lY+P+btDIGWM
+         wvT735jmWl8gs5yWb2IiUwQoX5iZDvdNG6waLp/nP4zWhWtOmkRrZMjhUMAKMlvmxOvK
+         tPjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=6aD1ms3pBSrGIi1nMKx7flkyDvcE8MTZy3yY8X+CBqA=;
+        fh=rkhRy1Bs+h9prhM4gDAf3kqmnHac5faeazeRDO4Qev8=;
+        b=K3Lxn+AudsMQGWzFTvZJSRml+0a0t6Htg2pelBaxNYMUpzn8Pq5RWsUyIl8xtEqOrI
+         irW0JujHw/sdhaZIgFcJ7m11gydLa6lmjJ7rYBa9RVVcIGtLLz8OpheM2AWiaMJGpFvC
+         YxmtRHMEtWlvCZ1GP23rSdCJGCQiHUIJHL1S3raLBv79aIyAwflDUqGJQvN7W/sTcDnX
+         spyYKO4L0vljiYx8pBN1yW3ST8euipvGJ0IDgIoEjOFufYHP9yHPjaQaixzavn3ChrUN
+         1g1X7hS71DQ1yQM0Tq63pryRBSSdE5sdLv+CIATnTLocYYYls2FjS5PapMwtTFAMFhc9
+         70+Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779929025; x=1780533825; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6aD1ms3pBSrGIi1nMKx7flkyDvcE8MTZy3yY8X+CBqA=;
+        b=b3FM4DjBtx2ex1rlaK/laoTR0c7bfRyfheUwiLiYsa6POxIfxDiZ6WAOsmulgbKbPc
+         3V34pLDpt1V4iciDGBbVHZ6akkmWemFQdLZXgfT0C0Ig45J23VTITw5rUMDONy2Gbqlu
+         ChcsrdubHJ8Dc7DT0oBVEe5aGZsBITLKjCxfpd95u6OiL1P01uBXDJ7MnHAUU3au2cU6
+         XF6xFmNdDH3KDOx/bnXjWpA1e8NL/aorbvOqD/UXRED0hsBpHMdghBq62NevMwH/OJs/
+         R4bN5ubfIXeA7AuZKVuSHYY5oaiNIwTUcPEGBi7kQ3tU+Ykq4FT7dH8cXP8cSqT3azN2
+         o0pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779929025; x=1780533825;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6aD1ms3pBSrGIi1nMKx7flkyDvcE8MTZy3yY8X+CBqA=;
+        b=TcS0zQGT/rpW47/T247kJGkiA83TtJwUkcBIr5AN+moEV1+tnSxp+NpuCzkB9/nWKp
+         oJqmfGTCcVubD21+PlN9lf4GGq47n338U1yTqzqfbJWzwN8GIqCf/6pmGrK24Gv196GC
+         nGLrdTVIW65Tm4IUX2lxOvRjoAkvopyDcYdFgDC4G+fuxTEyQNSGE7lpfY2rZG1VofRT
+         3GZgGl5tEmDA9mXPtavYuRc4282/WkJbDeP+cEbYv5ObiWdMo7tmG55H2maqwE8bLCOH
+         ba3OlfGBjiowZfc87DBP7Dfic3Nrrn0WfnVCvUn2+dVI/aVY69NB3zKq6rweDwftK/9X
+         M/zg==
+X-Forwarded-Encrypted: i=1; AFNElJ9LgGejg/kiXgLqLZOKQ53rTNIHQ2fLLmBZ7QDzK7id18mawFfTHlKJw2ytVvWcrHAFL34=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNVFPLKrwIfQ8Aly8MEQabdpfq70QdnAZ1czq+/MiQgt7EVFOF
+	gTlv2d+GnZ1R6Z49F0VY+QJTAnS8ovvinfFFcRd+qiQsAFf7KE0GmcfH3kVMr27FAO8QXKyAg6b
+	Nu5LlzLQq5CekJjSzOMLRaFoMYjXzyhEof59h
+X-Gm-Gg: Acq92OEDjpR5f9ria/O4/Pnv91CvpQbvhlm/hHbM1h5U50BcabJrxQeMBkeVnpIl/Bu
+	PsECEsEPFDRbkzIm5N1u9qQYTVw9wAn9EU2sl89Uwv4vAf1IaBcOFkCNydAgsippT7vmSU3g3CI
+	1FRaDsmuz3QV5OsQRed3KE9p2sx6NkwVuvbAoAa+AGH7r/TuI151RfFXFFanICAjd3m3LPuc6ss
+	cBjrrfJwpU38ZiXzk1uoli3JUJ1YfLgzMzz+DEL4Ts6utdXmBN85UnsPp1MeoERHOTrQanyArjG
+	+q4fHhb1NXcMe4g=
+X-Received: by 2002:a05:6820:16a7:b0:69d:e9bc:5893 with SMTP id
+ 006d021491bc7-69de9bc5944mr1974161eaf.4.1779929024851; Wed, 27 May 2026
+ 17:43:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20190226215348.5119-1-jacob.e.keller@intel.com> <20260519083559.onq6r%taahol@utu.fi>
+In-Reply-To: <20260519083559.onq6r%taahol@utu.fi>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Wed, 27 May 2026 17:43:32 -0700
+X-Gm-Features: AVHnY4IDTd1F5BIKykls57mbNr1Xy9jWdGc4xHZaS7AM-rCuOSFlQXtjxCnMCk0
+Message-ID: <CA+P7+xr0tP6Ft3qPwbkxNRgNB2a24_WFC+8DymFnm11Ks=sf5g@mail.gmail.com>
+Subject: Re: [PATCH] describe: bail of --contains --all is used with --exclude
+ or --match
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Chris Torek <chris.torek@gmail.com> writes:
+On Tue, May 19, 2026 at 1:36=E2=80=AFAM Tuomas Ahola <taahol@utu.fi> wrote:
+>
+> Jacob Keller <jacob.e.keller@intel.com> wrote:
+>
+> > From: Jacob Keller <jacob.keller@gmail.com>
+> >
+> > If you try to use git describe --contains with --all, the exclude and
+> > match patterns are silently ignored.
+> >
+> > This results in unexpected behavior, as you may try to provide patterns
+> > and expect it to change the result.
+> >
+>
+> I got just bitten by that, and yes, it was quite unexpected.
+>
+> > Check for this, and have describe die when it encounters this, instead
+> > of silently ignoring the provided options.
+> >
+> > Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> > ---
+> >
+> > I just found this while trying to use it, the patterns weren't being ap=
+plied
+> > properly.
+> >
+> > This is pretty quick/dirty, I haven't had time to write a test, or anyt=
+hing.
+> >
+>
+> Would you like to resurrect the patch?  It seems it was never merged,
+> nor the underlying problem fixed:
+>
+> ```
+> $ git describe --contains --all --match=3Dbogus
+> master
+> $ git describe --contains --all --exclude=3D"*"
+> master
+> ```
+>
 
->> Chris Torek <chris.torek@gmail.com> writes:
->>> A flag for "git mv" would be convenient (and slightly moreefficient ...
->>
->
-> On Tue, May 26, 2026 at 8:09 PM Junio C Hamano <gitster@pobox.com> wrote:
->> May be convenient, but I do not get the "efficient" part.
->
-> A normal `git mv` renames the index entry and the file in the working
-> tree without running `git add` on the *contents*, so there's no new hash
-> computation.  Presumably a `git mv --after foo bar` would do the same: verify
-> that there is no existing `bar` in the index, that there is an existing `foo` in
-> the index, and that there is no `foo` but there is a `bar` in the working tree,
-> and then it would rename (add-and-remove, really, because of sorting)
-> the index entry, without scanning the working tree contents.
->
-> In other words, we skip reading the 3 terabyte file, or whatever.
-
-Yup, that matches what I wrote.  We do not rehash and we only write
-the index just once.
-
-> Anyway, comparing to `git rm --cached`:
->
->> I think the requested "feature" is not all that outrageous.  It
->> would be a similar value as a morning-after correction measure for
->> "oops, I moved the file in the filesystem without telling Git".
->
-> I agree, but I also don't see it as valuable enough to bother
-> writing a proper implementation.
-
-Yup, I was merely agreeing with your "convenient" comment.  I do not
-think it is such a high-priority item for any active developers
-among us to drop something they are doing and writing it instead.
+Apologies for a delayed response. I'll try to look into reviving this tomor=
+row.
