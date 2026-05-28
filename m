@@ -1,68 +1,68 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049B534389E
-	for <git@vger.kernel.org>; Thu, 28 May 2026 05:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB80B34389E
+	for <git@vger.kernel.org>; Thu, 28 May 2026 05:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779946930; cv=none; b=ZaSTpH0HhcWeXW5yX4skt/9bsLAIstZlDGc+xomVPdsjteoYZ8wNa3It9W8X18Sj/NZlTi2TXswuLfVVGAtnvDkkVM6Wxa0XlQBGp1ySK7zKMMAOfcX5XUqA0Ay5Xr0sVqvDiZk4V5yE/DTYA9Jqwbd8TMIqbqQKCMO6Z0aTca8=
+	t=1779946933; cv=none; b=iPZm93u73gBGn0xrcTe/zbKw8zV42oZMsBSCfZRfa0DRwB4iLqmvS4zFh9En0aC2BbWuvr5znJt6gity4xapZC2aE8S74FolWK/2PpGcMyrOrbv8DU0AaepKsTHjoaYYzT7TVcM9rCiKxtNtwZBlrzqyy+bV38WlG33c1D20ZUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779946930; c=relaxed/simple;
-	bh=4NB8jU98vOzmnbXcWvAz+QHPWSRcFWNAc4pUNE4hKhw=;
+	s=arc-20240116; t=1779946933; c=relaxed/simple;
+	bh=BOggmc9vJ2PmKTBymzZHwiw/gFyHL+LQ1l/kPMgZF+c=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Ei0plrreD+Ddg6G/oVwM8LiR4CdFJBt8WJL1qkex2ydFn9uek/flYaq01mHHidzV7+273vlN9b1KXSjeAp2a/eWrYDhLos3fjSPpUyRPOX+0cDQeVjREAp2uiHxZnCZO5zvwzeUhJZC+t9ryRmJ7hVQeghvMPLFec+/BRwYbfr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d6lHnL1I; arc=none smtp.client-ip=209.85.210.43
+	 MIME-Version:To:Cc; b=XOZPbcjB6LFQUNiGN/2jb6zk0giOxlanvTDOJAmT2uURNmcevGF+fx5azpGziFLkf6JPNCGq4lzngkF1+FVwpR/Y2O1rqDE7HeApmg5pFv/r3jQYsrj5NVtsyDezyKmlj+Dy2rjUTNJsk/l3I8BsQuiPI6n7594UiuAAx5imDXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEptFDCM; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d6lHnL1I"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7e615efd7d7so4490647a34.2
-        for <git@vger.kernel.org>; Wed, 27 May 2026 22:42:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEptFDCM"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-69de16f5e80so787953eaf.0
+        for <git@vger.kernel.org>; Wed, 27 May 2026 22:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779946928; x=1780551728; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779946931; x=1780551731; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p3zNYFhTqaNLMC9OrmvT23m3yf3PlCl9O7yy9avsdJs=;
-        b=d6lHnL1IC246uPknmlo21KT6om8TKXTHXXid8DWNvmkjNiIhSLjNCyDThSSQXHccPc
-         ZGButy2tQjhyNnuxRoyFcZsTvFgaz3KnLqJrLOiTAlc/X5R1VfiDRTgUdJUWhad5y/U4
-         oLFtf0iQJ/w5PavXEd9wtlh9wYa6CfL6PNkc3egxJdpJjs3OqrI72pu4lVd3MoUOV5p6
-         w6HaWAz8vOc/bJyoW058bwHjBo3XdB9MKbBfxAqzOyfRoJh25FZA24JhctzEUj+rj/e6
-         dWStUnEOF47naQihYEjV+bqbIePWGDVyjT5g8ChKh3OJd8XD4kUbVOE4/XXO/z0vMKNu
-         jE0Q==
+        bh=SD2lh/if50ZXfJaPuKv7ba1+jrsl2XhwvFMHJ53CJ8c=;
+        b=OEptFDCMSlwaufQF2iOiahgnCpJY9ciR/Dp039lZypUZahGPajzBvIy4u775+alCdA
+         quRogWqH1PVLlOVhCDrveIV/6Jt1frCpfpvg9unHXp+UMiYZWBY1jF3fuj2M47AgN7Xn
+         9UuUVcfSGxH1ZIP6SnrH3gzYNiYQoHYBKocGsj5+C1KCvwTKEeGk1lJP5S0HVsDrEImH
+         vXVf8Yi1IyGihBhKPfAL9l4fZ7eW5IlLugLdZb+ipC0rmnY+zhM8hQZh1pbCcckWN2Fu
+         wKrjH1b70q5tLyLI/MQs7dCn/IlpFOP2sYIxTRAq/Jsz1WikatliOaChmYrUrvqwltCh
+         ZXlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779946928; x=1780551728;
+        d=1e100.net; s=20251104; t=1779946931; x=1780551731;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=p3zNYFhTqaNLMC9OrmvT23m3yf3PlCl9O7yy9avsdJs=;
-        b=Q1ZB5HWmk9BiUW8u5JIdrf035lvpJm2ixbnyXGG/e1myOnnX+L4ZlAW4+8jHrgUBnj
-         xJKEgLeZe9kb1G5ddQ4IYkHIx+qvBZqK1PIjcaWP94U5n38qcP97izJ/v/iANmiUdW5e
-         0RGslTFJ7hUoWvjkLSb5Z57I0Pb0uLMt0Ow8GZ10O0fASwSC769gHCqxXUW6qWeIuuys
-         ou1xvoEPQLlhHVCaGhrVHcs0rVwPp8Lu70e81RaYJamxH7H8/pmee/KRBGvASClOTEgP
-         IDXg3IztSFFLpGAPc4oYTpigbAhW/a3BG73Kuv/Nd81omIu7HOcdXYfLGy+rOBoLOewh
-         sNEg==
-X-Gm-Message-State: AOJu0YzBbk4PFgEJEBv/AjzVycoQgIbAbDy+ytd/XGJVt2TFHVQM3/eC
-	2hr2EK4+flSuvnE29FqvRpG2e3nzwd00RcjappDi5AIRAWw1qCuav1Gr/IZDzg==
-X-Gm-Gg: Acq92OHRjwjJ/Nt28i65AVxJrjOoCYIVuBVYLhHl643vXwh0tjQLRYudD9ahzvUuM9q
-	9rAExqYZtkJfWwshwdIn6mjrcsqtGezwBlw+nOZzkZEnxboG3bNM8HaSjPA+/XaPGj+5q2bauQf
-	fdLXJt9w8MihPKKagfvXxKh8vONNwlHFcKXS6XTgLkZEO9fwm9CNI70/DYMieXqFV4lbhaIqHtJ
-	0kAAf1CtYA69unGhXVsHOkccZcY2tIuZlIva7jSWmUyzdiCLnPWtFwpEQz12U04scr+XRpv69UQ
-	CC/9FzQGs1tNavsosta3kKZjN1DyqCtWA1PsWnzP3QrxshwHFkmouitZnzMiR4Aau3w4MR/jZe4
-	DHCiz1zyKOAtFKd6+iyqh5DDSPLfixJRczzZUtswcsVUDPv2ygdsfaMrQwiiyYbEjEljf9VV44O
-	FjCKlI4UqM6F6xrFAOPw6DxIQdzAaIlY1ktaRebqWAy+3g2g==
-X-Received: by 2002:a05:6830:67eb:b0:7df:5fc:3fd5 with SMTP id 46e09a7af769-7e5fed29659mr17447390a34.1.1779946927897;
-        Wed, 27 May 2026 22:42:07 -0700 (PDT)
+        bh=SD2lh/if50ZXfJaPuKv7ba1+jrsl2XhwvFMHJ53CJ8c=;
+        b=VgHuN2lWVlPgSAy3aGl1tmo0y4rii7wiYJb23Rus47n+nS6cAVdHIWut/3mMlxMP1r
+         T7stcl3cNLUogNYVCJxQK8MeUp0bIhZRzIOHb61slPC7ZhGqT73g90NkbHY1ikEdaHwz
+         D8uozsO6NmqE6Vuu/S9CZkz5NrTcuKadJNhVAEdhOjGYEbFEuyjbvtlYfFo2adHE0DPb
+         i/Xz5OezV6ThvTV1K2GkYQooWFX9Sp1bIWPD/+0oyjt6DiCHfTJr4TLpWls5jdzOdL9r
+         aMYDhYR7fzgbQURi4i0iHhlcMj0/FwPr1yRGwGehbk84GiNQrN5SHk64UU7Q1tQ0i8p1
+         sxqw==
+X-Gm-Message-State: AOJu0Yw0tinwUIcYcjc/IcZEVnWFP2hKXCkXcV+0PcWuHEULtpLLuTVS
+	s9N7BY7OiWL2sqVQIfZme/rRluoV0eOtWXgi7a1D53/O9cI/fwxvgpJc2BqdGQ==
+X-Gm-Gg: Acq92OH5NbI7i/B/NeLKSWVJRppLQ+rJCWKWR73ntL7hKu0yRUuYtBr2LsDrPP1zhR9
+	Rs3DDCidjKIPB7zyznB+nFYAJUeEjZLbs/HvqVLGDsgiWHmhAmx27BpgIT40aHKqcfKkq+GAhMv
+	i48x5h9rK9Zn6JnFQv9gEuOGVmq3aCZIZDmywPE5BjGX48EKDhS8Md3GVg8rGiAlzpm6PHOTnWb
+	v9DUZxV67u/fNg+yAb61LmPo9UkyrnHF+ZCPtfEH6Bl0XalEfHi/RJVpFoj/OITIttrniAahR0p
+	+vXEwKW9PLQabKt7iRpzGCtwa7hl43TnuaFUfetJuT8TvhYzjJr1j52ply+Gx7CXh4dFHjpKpfZ
+	E7aBMal3Nm/u7pXc42E1tFYR4TAvvtIvbQwmKyQfbpIegXJamWGY61pqtYwM6G2GKgctnt8DEyt
+	ZKz2fKJ37JxZ3zUQZ/FEcls9UZuv55aZUaEG8=
+X-Received: by 2002:a05:6820:222a:b0:69b:5696:e63f with SMTP id 006d021491bc7-69d7ebbfcb2mr12235081eaf.24.1779946930718;
+        Wed, 27 May 2026 22:42:10 -0700 (PDT)
 Received: from [127.0.0.1] ([52.154.21.50])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e606459bf7sm13086929a34.1.2026.05.27.22.42.05
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69d90813a6bsm9190749eaf.0.2026.05.27.22.42.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 22:42:06 -0700 (PDT)
-Message-Id: <a550923440a233daea0b9819e05d6c380de00d09.1779946921.git.gitgitgadget@gmail.com>
+        Wed, 27 May 2026 22:42:09 -0700 (PDT)
+Message-Id: <0ab0a717441e9fc7c494da194065a948a35a7f01.1779946921.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2126.git.1779946921.gitgitgadget@gmail.com>
 References: <pull.2126.git.1779946921.gitgitgadget@gmail.com>
 From: "Son Luong Ngoc via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 28 May 2026 05:42:00 +0000
-Subject: [PATCH 1/2] t3404: add failing branch symref test
+Date: Thu, 28 May 2026 05:42:01 +0000
+Subject: [PATCH 2/2] rebase: skip branch symref aliases
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,57 +78,148 @@ Cc: Son Luong Ngoc <sluongng@gmail.com>,
 
 From: Son Luong Ngoc <sluongng@gmail.com>
 
-rebase --update-refs queues local branch decorations by their literal
-refnames. When a branch such as refs/heads/main is a symbolic ref to
-the current branch, the normal rebase path first updates the current
-branch and the queued symref update later tries to update the same
-referent with the old value it recorded before the rebase.
+rebase --update-refs records local branch decorations before replaying
+commits. If a decoration is a symbolic branch such as refs/heads/main
+pointing at refs/heads/master, updating it later dereferences back to
+master and can fail because the normal rebase path already moved that
+branch.
 
-Add a known-breakage test that exercises this case so that the fix can
-flip it to test_expect_success. The expected behavior is that the branch
-symref keeps pointing at the rebased current branch.
+Resolve local branch symref decorations to their referents before
+queuing update-ref commands, and skip duplicates. This keeps branch
+aliases from scheduling a second update for the same underlying branch
+while still using the existing old-OID check for the single queued
+update.
 
 Signed-off-by: Son Luong Ngoc <sluongng@gmail.com>
 ---
- t/t3404-rebase-interactive.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ sequencer.c                   | 63 +++++++++++++++++++++++++++++------
+ t/t3404-rebase-interactive.sh |  2 +-
+ 2 files changed, 53 insertions(+), 12 deletions(-)
 
+diff --git a/sequencer.c b/sequencer.c
+index 1ee4b2875b..4a83d1337c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6445,15 +6445,22 @@ static int add_decorations_to_list(const struct commit *commit,
+ 				   struct todo_add_branch_context *ctx)
+ {
+ 	const struct name_decoration *decoration = get_name_decoration(&commit->object);
+-	const char *head_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+-						       "HEAD",
++	struct ref_store *refs = get_main_ref_store(the_repository);
++	const char *head_ref = refs_resolve_ref_unsafe(refs, "HEAD",
+ 						       RESOLVE_REF_READING,
+-						       NULL,
+-						       NULL);
++						       NULL, NULL);
++	char *resolved_head_ref = refs_resolve_refdup(refs, "HEAD",
++						       RESOLVE_REF_READING,
++						       NULL, NULL);
++	struct strbuf update_ref = STRBUF_INIT;
+ 
+ 	while (decoration) {
+ 		struct todo_item *item;
+ 		const char *path;
++		const char *ref = decoration->name;
++		const char *resolved_ref;
++		int is_symref = 0;
++		int flags = 0;
+ 		size_t base_offset = ctx->buf->len;
+ 
+ 		/*
+@@ -6461,12 +6468,44 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		 * updated by the default rebase behavior.
+ 		 * Exclude it from the list of refs to update,
+ 		 * as well as any non-branch decorations.
++		 *
++		 * Resolve branch symrefs after checking for the current HEAD so
++		 * that aliases do not schedule duplicate updates for their
++		 * referents.
++		 *
+ 		 * Non-branch decorations may be present if the pretty format
+ 		 * includes "%d", which would have loaded all refs
+ 		 * into the global decoration table.
+ 		 */
+-		if ((head_ref && !strcmp(head_ref, decoration->name)) ||
+-		    (decoration->type != DECORATION_REF_LOCAL)) {
++		if (decoration->type != DECORATION_REF_LOCAL) {
++			decoration = decoration->next;
++			continue;
++		}
++
++		if (head_ref && !strcmp(head_ref, ref)) {
++			decoration = decoration->next;
++			continue;
++		}
++
++		strbuf_reset(&update_ref);
++		resolved_ref = refs_resolve_ref_unsafe(refs, ref,
++						       RESOLVE_REF_READING |
++						       RESOLVE_REF_NO_RECURSE,
++						       NULL, &flags);
++		if ((flags & REF_ISSYMREF) && resolved_ref) {
++			if (!starts_with(resolved_ref, "refs/heads/")) {
++				decoration = decoration->next;
++				continue;
++			}
++
++			strbuf_addstr(&update_ref, resolved_ref);
++			ref = update_ref.buf;
++			is_symref = 1;
++		}
++
++		if ((is_symref && resolved_head_ref &&
++		     !strcmp(resolved_head_ref, ref)) ||
++		    string_list_has_string(&ctx->refs_to_oids, ref)) {
+ 			decoration = decoration->next;
+ 			continue;
+ 		}
+@@ -6478,19 +6517,19 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		memset(item, 0, sizeof(*item));
+ 
+ 		/* If the branch is checked out, then leave a comment instead. */
+-		if ((path = branch_checked_out(decoration->name))) {
++		if ((path = branch_checked_out(ref))) {
+ 			item->command = TODO_COMMENT;
+ 			strbuf_commented_addf(ctx->buf, comment_line_str,
+ 					      "Ref %s checked out at '%s'\n",
+-					      decoration->name, path);
++					      ref, path);
+ 		} else {
+ 			struct string_list_item *sti;
+ 			item->command = TODO_UPDATE_REF;
+-			strbuf_addf(ctx->buf, "%s\n", decoration->name);
++			strbuf_addf(ctx->buf, "%s\n", ref);
+ 
+ 			sti = string_list_insert(&ctx->refs_to_oids,
+-						 decoration->name);
+-			sti->util = init_update_ref_record(decoration->name);
++						 ref);
++			sti->util = init_update_ref_record(ref);
+ 		}
+ 
+ 		item->offset_in_buf = base_offset;
+@@ -6501,6 +6540,8 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		decoration = decoration->next;
+ 	}
+ 
++	strbuf_release(&update_ref);
++	free(resolved_head_ref);
+ 	return 0;
+ }
+ 
 diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 58b3bb0c27..42ba8cc313 100755
+index 42ba8cc313..29447c0fc3 100755
 --- a/t/t3404-rebase-interactive.sh
 +++ b/t/t3404-rebase-interactive.sh
-@@ -1978,6 +1978,31 @@ test_expect_success '--update-refs ignores non-branch decorations' '
+@@ -1978,7 +1978,7 @@ test_expect_success '--update-refs ignores non-branch decorations' '
  	test_cmp expect actual
  '
  
-+test_expect_failure '--update-refs skips branch symrefs to current branch' '
-+	test_when_finished "
-+		test_might_fail git rebase --abort &&
-+		git checkout primary &&
-+		test_might_fail git symbolic-ref -d refs/heads/update-refs-symref-alias &&
-+		test_might_fail git branch -D update-refs-symref update-refs-symref-base
-+	" &&
-+	git checkout -B update-refs-symref-base primary &&
-+	test_commit --no-tag update-refs-symref-base symref-base.t &&
-+	git checkout -B update-refs-symref &&
-+	test_commit --no-tag update-refs-symref-topic symref-topic.t &&
-+	git checkout update-refs-symref-base &&
-+	test_commit --no-tag update-refs-symref-newbase symref-newbase.t &&
-+	git checkout update-refs-symref &&
-+	git symbolic-ref refs/heads/update-refs-symref-alias refs/heads/update-refs-symref &&
-+
-+	git rebase --update-refs update-refs-symref-base 2>err &&
-+
-+	test_cmp_rev update-refs-symref-base update-refs-symref^ &&
-+	test_cmp_rev refs/heads/update-refs-symref refs/heads/update-refs-symref-alias &&
-+	test_write_lines refs/heads/update-refs-symref >expect &&
-+	git symbolic-ref refs/heads/update-refs-symref-alias >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '--update-refs updates refs correctly' '
- 	git checkout -B update-refs no-conflict-branch &&
- 	git branch -f base HEAD~4 &&
+-test_expect_failure '--update-refs skips branch symrefs to current branch' '
++test_expect_success '--update-refs skips branch symrefs to current branch' '
+ 	test_when_finished "
+ 		test_might_fail git rebase --abort &&
+ 		git checkout primary &&
 -- 
 gitgitgadget
-
