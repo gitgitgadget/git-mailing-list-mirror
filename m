@@ -1,27 +1,27 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E381343888
-	for <git@vger.kernel.org>; Thu, 28 May 2026 05:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FE5343895
+	for <git@vger.kernel.org>; Thu, 28 May 2026 05:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779944896; cv=none; b=ICDE99b1ZrSFaxIrbW6gmanUq1Lil2LL9zdMUe7P7yW43uQSXQTllO0Yw2hU5Ppzke1LAuVl0hjXmOz7mJvEzepsB7DqtPm2Wx911uZ49R0UvjQTOHcoIl3brOAvkTqazxnxlU+9dkqmz8LR92t9mbYFrtYNMstUPlSfqF1Ig/A=
+	t=1779945364; cv=none; b=WeRIDqkaQOji9aWrJFzHts8OzB2qVfWYZ0WSSezguTpnWuyhSVW7pHK/ZVzDg+D6EmerYwzvk4Sifnlr5uw7N2PWTJ9/cYYRr6hN59RTdwnwLnIkMBefKvRwLtuR5wdAWATsS7u8fbb5f6tTyUIXEUz0x/+V3GTwV4quPV9xIYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779944896; c=relaxed/simple;
+	s=arc-20240116; t=1779945364; c=relaxed/simple;
 	bh=VmyzLisQL1OtX4dXxJR4Vyw2otA2vrS6zs4rHdxC/no=;
-	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=C+WAjwLY1AE3tRhRwUm8GVnTyLAQIKapXj4Rn07d6oxr35LJjYDXiS8MT5TEns6rrdxRt9TRDc7RHVIxTYoyqGzcuoSPVzIRIYCWKmvjCzm8NNZ61/Pn77LCNhHTDiqh6jX4g1ixcHocw6vnjXJ5CVHfPGYiWbxJrWVeL8ei0es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunline.cn; spf=pass smtp.mailfrom=sunline.cn; dkim=pass (1024-bit key) header.d=sunline.cn header.i=@sunline.cn header.b=BCds67GH; arc=none smtp.client-ip=54.243.244.52
+	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=IAW3+qfxRmGWEWI/NeP0VyUhBxyDu2pWcKvYCfAkacF3KbL543M1Y8Hl/cntlBdMzTe+BfbpPCREGdoFZ4l7Zfm4Jlt635XYLIfZCHYc9TCVJZe0gAohrzdQus1671gVmx1cXjCgUxaDCIaogBz6bfkNvpcmpjF1hd0rtSwZbCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunline.cn; spf=pass smtp.mailfrom=sunline.cn; dkim=pass (1024-bit key) header.d=sunline.cn header.i=@sunline.cn header.b=s6QWGli/; arc=none smtp.client-ip=54.207.19.206
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunline.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sunline.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sunline.cn header.i=@sunline.cn header.b="BCds67GH"
+	dkim=pass (1024-bit key) header.d=sunline.cn header.i=@sunline.cn header.b="s6QWGli/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sunline.cn;
-	s=rfib2312; t=1779944888;
+	s=rfib2312; t=1779945354;
 	bh=VmyzLisQL1OtX4dXxJR4Vyw2otA2vrS6zs4rHdxC/no=;
 	h=From:To:Subject:Mime-Version:Date:Message-ID;
-	b=BCds67GHprAQVPVdxwVCkIPCdx3BUn+uq1whigb2ZJWK1hSNo9o7BueqVMpLfTutB
-	 7jH8YW+TQfr6NW4UV0RbFq/Te+K1TvYGtgyFXuOlo6DvK4ESNeFSLtADp6+9tNvZAZ
-	 LFe7yfPPBLImVCWaJmhydEtZsdbimacuKPLLpJqQ=
+	b=s6QWGli/MKDu515lV0L6PmShxPAyhH+4jryT+fpFLqfwhYx+3pKIm0vYpyeHXvrQL
+	 MusL4A/66e8B9XGL4DDyEA/DI5CRLnaJ1HBcNoim6eJYd3mB2U7xWvL+AfnUGY7vBo
+	 i5ar7nHfxuFE2OGWlfI64393s350NPvplKyyVj3c=
 EX-QQ-RecipientCnt: 1
 X-QQ-GoodBg: 2
 X-BAN-DOWNLOAD: 1
@@ -29,12 +29,12 @@ X-BAN-SHARE: 1
 X-QQ-SSF: 00400000000000F0
 X-QQ-FEAT: D4aqtcRDiqSwkqKLQj+J8S+T4iI3B9fh5njmt0jmxRE=
 X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-Originating-IP: NOoZJ3Gd6s6NVtNL8B4evJdjALIGCqKuhrLLek7NmKo=
+X-QQ-Originating-IP: 6roohaUYpBRkUBTyC6tKPq6Pbzc0A7YDVHQNUvY6cm8=
 X-QQ-STYLE: 
-X-QQ-mid: lv3gz6b-0t1779944885t934e43a5
+X-QQ-mid: lv3gz6b-0t1779945351tff4c6e17
 From: "=?utf-8?B?6IOh6ZSm?=" <hujin2@sunline.cn>
 To: "=?utf-8?B?Z2l0?=" <git@vger.kernel.org>
-Subject: 
+Subject: Suggestion: Real-time or Conflict-Reducing Collaboration Support for Specific Directories
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,36 +44,36 @@ Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: base64
-Date: Thu, 28 May 2026 12:08:05 +0700
+Date: Thu, 28 May 2026 12:15:51 +0700
 X-Priority: 3
-Message-ID: <tencent_124443E95FD3502A16815464@qq.com>
+Message-ID: <tencent_530FD5EC0E2FA9A005AB4725@qq.com>
 X-QQ-MIME: TCMime 1.0 by Tencent
 X-Mailer: QQMail 2.x
 X-QQ-Mailer: QQMail 2.x
-X-BIZMAIL-ID: 10404604405836623916
+X-BIZMAIL-ID: 7016819642478190862
 X-Address-Ticket:version=;type=;ticket_id=;id_list=;display_name=;session_id=;
 X-QQ-SENDSIZE: 520
 Received: from qq.com (unknown [127.0.0.1])
 	by smtp.qq.com (ESMTP) with SMTP
-	id ; Thu, 28 May 2026 13:08:06 +0800 (CST)
+	id ; Thu, 28 May 2026 13:15:52 +0800 (CST)
 Feedback-ID: lv:sunline.cn:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: M1WXC/ARMOUbNGQz5s4Sf/VfvTWrXt+aBwCnqUto858dzQQ2eZC4Awnb
-	lxNz8wNbD78IlY27iHZw+Zgz9804y3GZR3k8D82pxBMcKTbUboLwrIMiyoxdygbxsj1x04/
-	0/nk12NleUF+2WTDGpuCZMmKW1f53+YNZ4p19k/2CFcUsJVu3BtcxxfYY1qKG+nUTBBaN49
-	9cfQW5i8BwZyfQJr+euguv5HTCNfw/hu7jJiiSPuhf4TCKHzFCw0uWC11gs0w8brhAItJVl
-	4GNDDjtlEGxioWRZXHb64W2fwiHLU7AFfQ1AbTMFMZoYzKwuOeZ3V2oGOrHvohToKdXQS10
-	+MA+vLoGSChyXmquRWEVZdGXaWiBIwvClLkTXCrVL7fiyQVdYT5yTiIjgRgZs+PvpL2JiMl
-	Oe3Ca7eLXbtVArrMGtVPlSydTQBvOOu0nsU/Ybxle9MFIND1+/KVbUvtv9wxwFEKuBWxujb
-	r3ereRnRwiWe115JtMoANEhhGRsriPmSE48Bhhd2H1Fomvby1Lm2qz7bSM6CY0Elu8ysq1Y
-	86zkGAAhkUU2KFZp4o258g1EophLQhJRCrXr0qUjKPH9/EkJw3EQxntaXNYDJp1QjitoBvU
-	qLqF3knwjSHTo8x3VZR0NcAZH//u2kqwTqUIpWc2W5PEanyJocnpQ1dRdb8MCTcStPZs07C
-	3KaNm909QlU2AhmUMscSh69abYwP6gKwJmdqqLw/SYiNkJnEXk9tzY9NhIhlUEuZmrBhf/K
-	HArn+k9QzVIzcdRaOniY9tbD7BdbErXJ5SJSZAb0JetwcZa767hGWN22ZpBEeNn+BUNfPKa
-	SSRHNnE+pBLEtVYTm8+EuRfvHjyau3z60RSbaAmZPq6X7s3fS2tCveqH0fTzPF9rpEBGpkB
-	l5tSz0tVaxtqmYftcdVaTzLIt5ObMfbsaNUpDi7ONNIVW/yNr1NTczvzYK4qWCsexYLZ2S9
-	CWgtuC+Bd+EfaBASK6IID8EqxditG6RrKonQ9beP59SGQ2/oJMj6XeyzflabAbX/67e/qAx
-	pmAKYNxw==
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-XMAILINFO: Mtb4Ej7QpsMmf1LsLUujaJIAOSEafHzUZ0KJ1MORITEwABh10SCu1YiI
+	FFHjSEeTD7iRTXZrkFZXn/7s+/eC+VLBQcQNj9FXsNkhV9Z31X9dvQ7ew7H8daJR7IUwRMU
+	93yjPTItyZaXjpsFk8QdJM81dfUmg4rsm2qaylnQcKl0xb9aSSsC9PiRX+SLG2nnKhkodJU
+	McyQC58SxnJY970Tmn71D1BMuranQyWHZerubVOlhqmIsi6xFpxo8fv8mHh/vKwVttqMmzd
+	yCdL8rpSwkhDGdhO4yzppUWKHhaiimfGfPgt5JbMNB+RvFZkuwDpmRI+5TngTXhikjdxdjl
+	DYax8JxYHwFcLn8+2ygVXhmNP2A7wiP2cRdMG+R69CZ76gEZC836D5XVw+/HOZRmrAo1Shc
+	ykgwqSP1TQZX7LbEeINSR7bq0UQ+o62CzGb//aUUewqSZROmcxr/mVm2y7T/jAvH0HJQKn1
+	nJdnrt27XSrVgAlFb1jwVtIvJ9QNiSeoFEEgMR2ZgYb1sbZIG5yrMLNSLfY/8RTPu0PZUeh
+	+sffWaw029krns2ELisB0MIFUgJiJcYS53yKeqBosixXRQ2lSd2VF/s6rBm2U9DrG9P/Ldt
+	6HFAzKcK5p8LWw1eTCzWC0fhfiEML6lOpw0wCtTJk+Ka40/GR4htfnNwbU30kibd1vmWQRG
+	WsptU3VkxlegMwiEX7Hi0lB4J2U9WILtfoezNO/DQoV26DE5NbZsaqpOwCdm0K4w2Jzubhw
+	XSK9KXHLLkZIVJvMXQG/rENx1BWTtwigahaSmYSYP4Cp+WVqfVWwNRQ3kpamvUSV8V5pOeI
+	166Hf6p4s88os9AteaChj5sm2UpjGcLWU5G7RNuM4PceVziBTdp8D3v1mmp5IxQd8+XDXbO
+	R/oFLQ4uTDwLEXOz+uu/dM7jNHfgAmd4KFm0auoG54ocsJo2FhrHV0rCfKC2w1mqfaapF1k
+	/IEI/4NpO9xN8qHUx9mEwNu9+0Wlt6hIooeizZ51RD5Xc/6nBFzWozWtffOHezVDa/tatsw
+	NIInFT8azbST9lha7d28F+OCl5Qrw3iVSWGNpGhQ==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
 X-QQ-RECHKSPAM: 0
 
 RGVhciBHaXQgVGVhbSwNCg0KTXkgbmFtZSBpcyBIdWppbiwgYW5kIEkgYW0gYW4gSVQgZW5n
