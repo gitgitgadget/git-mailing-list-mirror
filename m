@@ -1,117 +1,100 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C5D3191BD
-	for <git@vger.kernel.org>; Thu, 28 May 2026 05:24:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982E631618C
+	for <git@vger.kernel.org>; Thu, 28 May 2026 05:24:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779945853; cv=none; b=sB54k1M+Z4FHyfHN3Xc8o4uoqOxfoINTty+EuG+TEww7I/cuuklkHgAM/KVG3G2/oyNBCBgaWIGoX/RcUV9CsHAES8D8JGz5rlE0bp5dXNFwzfXLsjyTZVs4ptKBmObKsF9Abjy0E+t4rpN4i691PtMV8ipZ9ROtaxH7749vbK0=
+	t=1779945856; cv=none; b=mNPgoGpuhyqJ7LO9LZpDXL3lyfVe/1rOzPeeu1/08STWnkXWgSaahpriHfgqWOsReh44EyONk1VfIsJcW66iCDNq08BgBx/ogI9pBGtAxQldhkuXwr5T1BdlcS834mI02v7ZIZkhD7jinabYL4drzNTyv9gbcKtu/FawZ62JiKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779945853; c=relaxed/simple;
-	bh=YxoDF5gSO+3X3jMSPCVfXoC6G7UwcHQf+zygiLBCK/c=;
+	s=arc-20240116; t=1779945856; c=relaxed/simple;
+	bh=sWd2f+t/AFTODXUvnZh08vdvvFcO5KJ0vjmbaM3WzBw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=btdLJPAF1bcfpqcVXzCoctb/EK+tjYLCGh0oC6KjZj9WSvK6ppfIvtoZ5Ro4jwt9qDOFUULmpEVTTPvEKwnTpLlC8LDI3wQGQTLgeS35J/nJsHr2l2/GsakoUTpOnIK9Z3z/qK6pjuTtZBzDlnrpDDEWePow6kAYZeATiOe4/dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p0Zyji0Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aQ74JXtZ; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cu+AJ639RuFDh682qQFAXqUJf/gIlpTA6mFxk1WcCcSLPT4KUjlZascBEY21r0s4ztJNkDIKctw456JF9kHu4RqVrLLUPyTqag9vnqqakOSAwPpwOjVBVQ0sgxJsZKGM9jfhzTZtO5vFVui4iGTeB4B53bjskrkGfgxDV37PYrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QY3nymou; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VVR2v3I5; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p0Zyji0Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aQ74JXtZ"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D3AF01400112;
-	Thu, 28 May 2026 01:24:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QY3nymou";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VVR2v3I5"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D2B6CEC00D7;
+	Thu, 28 May 2026 01:24:13 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 28 May 2026 01:24:10 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 28 May 2026 01:24:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1779945850;
-	 x=1780032250; bh=UTdbv51M7U4AwD8MHypkGEW/fViNgbpy550lmWNCwyw=; b=
-	p0Zyji0YsoUyLIn+r/HXBzpHr8vSXNUW3X37K0q+J2v6MVzU5vZoGzshPI+nw84/
-	/HMsxKiNB7o2Xc3BqbM/X9MOsR4Y2hBTLwDVym+Zfoa101/Yy0ZELDGrN76363DR
-	S99kjtBlWd235W4Oc8ZNmpjCUxnof+OBeydN3XlGrDwQNJT0cTnlqyyyOMIGHCo5
-	YvjlU2tS9PglpxRgPIfGHllAxOcXmG8KUULEINLJjdZeepuxczSgpGiXIrO80HKd
-	8KUMWtoSxlYBDmZ3/70Ab62OcGz+q2ablBsEgNHxbrxaXwey6qnfI+UiwcIJUd3H
-	bcbKQfn45F8bFGLF1N29Ew==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1779945853; x=1780032253; bh=GTWH9vo4zk
+	GwjJcKEjCVHS5fOY2/Wrv7N/qQ7WREGMQ=; b=QY3nymouKjDIC+qzeI8I/UwbOP
+	GQbZRbXqjcuIaABq947/O1za4itzzHkLv0iQKikEHlBlOzhmTY6alFFEjcflPnk0
+	8Nf5RF6qCZy1JXYqay5HEJH9NMnQ6P4QV3B2hSLgY4jF1jcrOQKWXQyr38Ew9OJx
+	rKPmLGLKLxH6cSSE7Q0qJv3OCwu0OmR/oXibhyoaZZS3kn3yT8XgVVpMAIzwou8s
+	gQzmvE0CI72q0oUHTDLQcBqtYZbaDHHitO3XITq4j3tV3RvaRED/EQ4XbaCbkkOq
+	5oKB9RZQ9Dac2TDsHbDORWMR+dwTaWjybOd+zPQ84vBzXkPKwrVmw0b6CHhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779945850; x=
-	1780032250; bh=UTdbv51M7U4AwD8MHypkGEW/fViNgbpy550lmWNCwyw=; b=a
-	Q74JXtZD5lA6z6vG4XAZn+809ShbZohTPa3iePQdHxN7/kawdRBG9nYMxuPbvjDY
-	S/1Qzstw8p3xeSt6Z7DM38XxPLT1KonB9FScmkO0ZzNl+yFR2JpRir7TMennqk20
-	ujUYIFOKTM90f1Q66MtSz3mfQep6g066tyKov+Yrue0A16jXHyQU702iPrlzDuAc
-	laGPs5XErEeE1yVD+pAUWruAAKCcVOe/dZ1z5UNiaE5lwlRrHmaXFS+wxKhkCSlJ
-	n18LWDQ3KXTjATrdswbAUWLQUJM9RZ2J8ApreoovY5VR90siagcZpf+cLLC3nWjJ
-	4ZurKktm2fv65EJdbT9SQ==
-X-ME-Sender: <xms:etEXauoMe3t2GkdUugLqdK-PiMaYs9JY6mhW7PDQ6cFhUMCZ6rOfwg>
-    <xme:etEXakGziKbJvjbSbxx9hgVg2lp1wDE6fq8GHJAZxzbLmf0gJhCK2bbgrkI_9FWOh
-    drOaCUZ1htvHjv-gpiFIRzLVlYrCXtx4g5dlXxozbpt8xei2DCIzg>
-X-ME-Received: <xmr:etEXagnBqovsq_HNtKloHMdSz9Met82BgN8YQJi2EKLk3BKeelZxnMRKl45xU7_yizvR3ZiuTp4_qNOxwsjME1GVPQu5z3levKdI_nGn9A>
-X-ME-Proxy-Cause: dmFkZTFl5qZnB8j8cGxODzxmBI1jaoa3VeYr+z3jXNND/R/XwPp0OK4EsNgTHn1a8aYqGC
-    aLmF8KdkRUM3z9Q9Op36n5hHmb//7n7Y/3q2oRGlD/m1Mwb8EKrDPa+IAPLz8ksWxeHKqa
-    dObDUiAlUPVsrKAiuoYIOXzMJBkW0J2nKgeUpoBmiXT8v725MsiMkckRuzf5Fim/vneDY4
-    VZf0C/C9YxjvTFqaJUoQzagDnqAorIO6JVmxH+Nk9qIkMNIQWwEH4nSYBWFqQThMOE2vDf
-    FjO7maFJxiYCGiq4S4qSDx8GQwHNHpRDAQnwJnN/Utj7T/SZAipKNGNYQF6cyDupKyu+dr
-    nAoqIttAMyVg1BCl5EmQxVMBLTNQ8S+lKeMYOPqIbeMyiAxBKwA0QPa3IoNNqkekIJ4Qbn
-    gbMCmppF+d7vGuiOB5stdlFZKBiBhz1OVg2ILK1NjWI2DVKmRoUbpZUreu5dk26zTPAHxf
-    K/Qpe04UGTuC/FX5EEeDV7is1ViI2C6sKhKvLDAeIySAGMp7bOm3K0naTEs8CWMCTZY+Og
-    swcGw9KPLv3gbVvsBF8qeHtWRvmNni0rXTgU/9fmCKof/OZc0Pyp7ZQse7koT06UNHQdDZ
-    RFPiUdjCGiUxr0DW+tN2PYyab6/kevsNR1TULvQdG3bsQo00sA+HAqmyuMEQ
-X-ME-Proxy: <xmx:etEXannKOIwMVs3DwvHueFS109c2o8KVQI1dvF4aUR50Jt_XH8Rk-w>
-    <xmx:etEXahtnBLqYJs8taGyvDkvURplhuXeW4bJveDptb7c68-k5jGxFVA>
-    <xmx:etEXaqmp96kfP-GoWV1tUwPmvpQ6XxxbwphBIui_224FQVu9XSCCXw>
-    <xmx:etEXasscgERJcWctWCSkrNVJXRID6uBFBXa17eeldyViMH0TGZUWoQ>
-    <xmx:etEXasPVS3qMKcq1rzKKTo315Ddd22LMGiO1rac3PS3jvL9wegMPmmPb>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1779945853; x=1780032253; bh=GTWH9vo4zkGwjJcKEjCVHS5fOY2/Wrv7N/q
+	Q7WREGMQ=; b=VVR2v3I5A+Zibrq49QTOR7wopXcZOxy/dHHk/+fSXyYx4k3fJKB
+	vL5hBnZSQZqqQk5j1SCKXunw/NjTcLzd7ehKetbHrrIGJzaomb5IRXQjZdjQz/W9
+	BUzcpT6doZrp0MYpD4jF4w/undNWUy7YW6bn5rXdhBo75pGS7x0EPemjBJp/284/
+	2w5bF1wV0jdAFN18jkJTiYIRLjEABlNmnG1BTF8lFd8EQ/z1Aw1SAkqZWnTIJ0k1
+	HCN1u0q18DEoKEQil/+mKOErIYwMA+L67/7TtaahpTivYNfWaDDwBRks1lnR2hnr
+	bAkUDWNxfY5WEMy+MB4SThtqjxFjjrCWN2Q==
+X-ME-Sender: <xms:fdEXajwDG5KlcNJjkXfw6SIY12FkYSQZZDoHqF7MqlLRBfx5vQbqYQ>
+    <xme:fdEXaitAii-G4dhzMsbSntA0-SE_Tnp_MT1R__sKFsOup16OQ2JCp2uD-5eqWDNAt
+    foFgG3EEvh9B_O9etRmPprge_StykM4pWgC778zNwIQeiXR3gwJFg>
+X-ME-Received: <xmr:fdEXaqv8pRk3d5SSiwO6issNMAVpHr-Xg_gw1UyNspBV7v6X37325MRl3qib9ENQoGzhB-kKMzYJvMR4d0xe_JQ32KUyGivBUgjh_FmfpQ>
+X-ME-Proxy-Cause: dmFkZTGfQyQF0PWGyrvlrK75i3Ug/04vj4+I/tJSX4cAudfNhg2CCx6A9zBPnP1p76vDjP
+    t+u4cTBcmjfIRjGWlx7EiXfFt92C2+Hd8blicyZ6Y7YWF83WUXtXLsU6BeYBq4ROGkmKqB
+    jnQp4zsJzbAk39QCH1onvGbFRmO9RMc/9o6fvZMGWCUT7D3XtzxznBfo9IJ1cgv/DFAykO
+    pAnyMeE/6nAWJdcQRDDgkDdBZYf1PxR2yv0/NGxfsLXq1ZbaXBPAp21vrSPeyP1LBx90Ag
+    APqxVnvz/UZdD2W7iHY1K0MjhbfAfKtZd9IFwuL16mrTW7OFZQisXLVLDMj1h39IM/Z/QV
+    sb15WNXnNU8CFkiZl7TUMzDUBrM4fCZp/xlvVtZcQhsp6hZ20rQwU+kVvx2kDYiQ+t+KuJ
+    nvJR2lRgMBKEyRigJ9fZ0zU7ZJzUs9EOnQ21vsFrLe5WvWIqSQnboGvBEtA4b9OKgvYHrP
+    IntTWVS/OQTh/+pgG4J0ohP044Apwvq4FEgArxhFv0PWFzVjcEQaZ1mtzHZ5Xl+SzwRvYX
+    wR7o95LwcIlOOpEnpBbk9oeJPRHQ/Fwb1Vmg3bzgoSHjHmaLzruSwCUYYV4k9IMB3KHs8J
+    GMF/AUggNK7+FxJH1XjliMpAr3gQvLA75Dm7bEMv5GaB5MgE6FaaaaTnmjdQ
+X-ME-Proxy: <xmx:fdEXanO6HC0i6p8-PUmDgPtho2n5UW46xNO_L1-OOf-ZGLE_T3ubTg>
+    <xmx:fdEXao0wJAtBZ-BGuwCeMJjRlE0n3TA87EK4ZpNfQ-RqCpk-xJjuIQ>
+    <xmx:fdEXajPblFQr61WBO3_L90vSl1c2E5T6JH5MeQC9hJi6UQxmG-NfBA>
+    <xmx:fdEXao0wKHtEbRdbU-pFonWhQPVPrsSBDjojHNxAS76XGqw7Tr19mQ>
+    <xmx:fdEXaq0fuLsQsMwtv3WPq6rv41kiu5hhap3NCq1-bSrixqS6rKJbk0b9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 May 2026 01:24:09 -0400 (EDT)
+ 28 May 2026 01:24:12 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4fccab63 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 May 2026 05:24:06 +0000 (UTC)
-Date: Thu, 28 May 2026 07:24:04 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5ac85f70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 May 2026 05:24:12 +0000 (UTC)
+Date: Thu, 28 May 2026 07:24:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 1/2] *: replace deprecated free_commit_list
-Message-ID: <ahfRdFXJf9SRaz5q@pks.im>
+Subject: Re: [PATCH 2/2] commit: remove deprecated functions
+Message-ID: <ahfRevYta06fOaKS@pks.im>
 References: <CV_commit.h_remove_deprecated.714@msgid.xyz>
- <commit.h_replace_deprecated.715@msgid.xyz>
+ <commit.h_remove_deprecated.716@msgid.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <commit.h_replace_deprecated.715@msgid.xyz>
+In-Reply-To: <commit.h_remove_deprecated.716@msgid.xyz>
 
-On Wed, May 27, 2026 at 03:59:25PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+On Wed, May 27, 2026 at 03:59:26PM +0200, kristofferhaugsbakk@fastmail.com wrote:
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > 
-> Replace `free_commit_list` with `commit_list_free`. The former was
-> deprecated in 9f18d089 (commit: rename `free_commit_list()` to conform
-> to coding guidelines, 2026-01-15).
+> These functions were deprecated in a series of commits merged in
+> 52882024 (Merge branch 'ps/commit-list-functions-renamed', 2026-02-13).
 > 
-> This allows us to remove all the deprecated functions in the
-> next commit:
-> 
-> • `copy_commit_list`
-> • `reverse_commit_list`
-> • `free_commit_list`
-> 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  builtin/history.c | 4 ++--
->  replay.c          | 2 +-
->  upload-pack.c     | 4 ++--
->  3 files changed, 5 insertions(+), 5 deletions(-)
+> The compatibility was for in-flight topics at the time.
 
-Heh. Funny to see that I introduced the new functions, and that I was
-also the one that continued using the old ones most :)
+Yup, makes sense. Thanks for following through with the cleanup!
 
 Patrick
