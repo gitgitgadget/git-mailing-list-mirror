@@ -1,63 +1,68 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from mail.luna.gl (mail.luna.gl [141.147.12.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ED6352004
-	for <git@vger.kernel.org>; Fri, 29 May 2026 08:43:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62983D76
+	for <git@vger.kernel.org>; Fri, 29 May 2026 11:53:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.147.12.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780044208; cv=none; b=Jm1ZOSVIdhsiXtBpo4cjc0KWxaXuzmYu7k/ltD7TTO8Gt5P907VCesh8yx2DbfcWWJDfQF0jGsE1NDsk/y7O0763nvlTjYUhmLkK4qTnQGLUs/OzX2QputIIrjNXEbKEaiOkybIVTJJl2soO9Wf7oDfOvRE0cmcQKz25nyWbUfQ=
+	t=1780055618; cv=none; b=RKBpKThIHUgaDw7Gx0Z8RkAYJEz3QQhRaqd9jgo9FxSX7kzOY5vbrv5BAWn/lO+hFopA2O5eVyLymT3ZozrmlzvR6+gQUAuijS77hM32JUuZImPne3yrXygEA9evNiBWeMO9lloiiag3139pD1TKfWbNyUpZue47amQ4lbJl9L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780044208; c=relaxed/simple;
-	bh=awKErBWHXfuxTWdEGlcsG1aiUWoeQEBANtJPQLuxRxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OMWBLxffmQRFw4nGbfoQgj765yMYJJ44crOhjrXIXMWyS7tUAAxfXFS6L7xppP8cGu8U2zdGjAbN9UDvKS7azFIjvqv2ppuB22/XxriLF4XuVHPBza/d2N7lnu+8vSHAD7Cs7iew5MfzyWzqhI0MNaB/b73EW2iDlS+uL1Iaf2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eM1w4E2t; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1780055618; c=relaxed/simple;
+	bh=wbiztgB5MGA7sba6/+DsIhp4+4u44FIYOFY+p8rjDw8=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Z6OIEYvZZWVSjmlsxkg7TaVnzpDm8gKcjzb2HuMZFcWkUzemoLCTiHEplHKg66AoOVDmbYHGG5S3Tgv9Mn3AbUfZ3NAalid+7oTr7+J3XZE+mjk7gGJGNy0jNt7Gx54iWQvthLwEIPY+UroVSE+9JhweRm3Yq1yW0DFwvTXiDKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl; spf=pass smtp.mailfrom=luna.gl; dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b=qGBjt0Ph; dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b=CRUpcq6R; arc=none smtp.client-ip=141.147.12.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=luna.gl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eM1w4E2t"
-Received: (qmail 5860 invoked by uid 106); 29 May 2026 08:43:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=awKErBWHXfuxTWdEGlcsG1aiUWoeQEBANtJPQLuxRxM=; b=eM1w4E2tsQ8zz2zRQ4nccCByz5/O/Mb1gNr8teKcfJYlfPw1hnJWlaFn41j3/k7wuANQ7mpIOBltdtyD2vyQcJ8sghw6lNH0Xy0kdTj4gTrCtb8N0EYBBBvpt6BVKKcv0TaQcU3E47qCstju/SG4bpyG0orB5rrHQJDekQt2RpjtCprsstEWVmx3YiiFqq6dWFz6xfJs/cjUk2JGr48oGWFmrTcMEKLolgeZbV1wewM3DdgCA55lmcyhcAsyOn+V2iqr6WRQtGz3tv5ReRYDf0du46L5wl3h9avVZf/6IdUBBVAwj7pv5gd7keLvptuvLbo0er+mlkdUaIONn2yLRw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 May 2026 08:43:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9283 invoked by uid 111); 29 May 2026 08:43:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 May 2026 04:43:29 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 29 May 2026 04:43:25 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] commit-reach: stop sorting in paint_down_to_common()
-Message-ID: <20260529084325.GF1106035@coredump.intra.peff.net>
-References: <450163b0-82c8-4b57-baab-a269efe430aa@web.de>
+	dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b="qGBjt0Ph";
+	dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b="CRUpcq6R"
+DKIM-Signature: v=1; a=rsa-sha256; s=202405r; d=luna.gl; c=relaxed/relaxed;
+	h=Subject:From:To:Date:Message-ID; t=1780055483; bh=a4PVk2G9svClGS8DT8ulNdy
+	SkfeDXjUV8Xp9iIl1SYM=; b=qGBjt0PhN7L5nhYJZqa8wC4GzCM6chKNWDvznh2ZUIyr8IpYn9
+	rzo+5LabbFg8GMh3CmBiiBZ7RPeU+JhWIKfl+tki702U/F0VtYlXhp6luAjQDqvh+FvuwhMNxVi
+	ym+NHXpHoXcYUmNHB8jKuBUtg3QV/p2idM87Y+DyZTn88VC2x+aQ6gXTY6pTLaXTXmO5t/SIQk3
+	FCtZea5lnwL3g2MnKdUFQGW4Qpm+D3qGQLzmxHOUm7BbvpYWyQXUFQFpnBAke9/WNg5dpi4izVs
+	wHhwjeiqB2IZd3LgfyXHRNx5TjijTvZr658i/m5n5YnjDsOPm/1ZH2EXeUQYeOVelAw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202405e; d=luna.gl; c=relaxed/relaxed;
+	h=Subject:From:To:Date:Message-ID; t=1780055483; bh=a4PVk2G9svClGS8DT8ulNdy
+	SkfeDXjUV8Xp9iIl1SYM=; b=CRUpcq6RCUpGWjDEbGcu4Jgb+Tz4ECNutBKoUctJOu0bE0dV6u
+	Ri1RU7/yWyEDCbknF1XtaFr/dh9zRvXnUEBg==;
+Message-ID: <fffe0ea9-baea-47cc-b354-5be4fff08983@luna.gl>
+Date: Fri, 29 May 2026 13:51:23 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <450163b0-82c8-4b57-baab-a269efe430aa@web.de>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: Luna Schwalbe <dev@luna.gl>
+Subject: [BUG] internal date format does not accept small unix timestamps
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 27, 2026 at 05:52:17PM +0200, René Scharfe wrote:
+While trying to create some test commits, I noticed the following issue:
 
-> None of the three callers of paint_down_to_common() care about the order
-> of its result list: merge_bases_many() sorts it again after removing
-> stale items, remove_redundant_no_gen() and repo_in_merge_bases_many()
-> throw the list away without even looking at it.  So drop the unnecessary
-> commit_list_sort_by_date() call.
+GIT_AUTHOR_DATE and GIT_COMMITTER_DATE should accept the "Git internal 
+format" (displayed by git log with --date=raw), but this fails for small 
+unix timestamps. A quick binary search indicates that it happens when 
+the unix timestamp is below 100000000 (9 digits).
 
-Seems like an easy win. If some of the callers do not even look at the
-result, could we avoid building it at all in those cases (e.g., by
-passing in a NULL result pointer)?
+So for example, GIT_AUTHOR_DATE='99999999 +0000' fails with "fatal: 
+invalid date format", while GIT_AUTHOR_DATE='100000000 +0000' works as 
+expected.
+It seems to be unaffected by the choice of timezone offset.
+Padding the timestamp with zeroes also does not change the behavior.
 
-I guess there is not much to be gained, though. The result is a list of
-merge bases, so it should usually be rather small. The benefit in your
-patch is probably not performance, but just reducing the size of the
-code.
+The --date option does accept all the values, but interprets them 
+wrongly and gives bogus results (most of them time it seems to act as if 
+no date option was given, using the current system time, but with some 
+inputs I've also observed things like "current date&time but set the 
+year to 2000").
 
--Peff
+I tested everything with git built from commit 
+2f8565e1d14d2de4cfbc9da0132131bf0d0dc087.
+
+Luna
