@@ -1,41 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933783A257A
-	for <git@vger.kernel.org>; Fri, 29 May 2026 05:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CF13A383A
+	for <git@vger.kernel.org>; Fri, 29 May 2026 06:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780033228; cv=none; b=mp4YFg4qi7cl/qY/Gjc+u5nBb2OV9Rg8ugUvbOgzameK+od/fcAvL1BjFSeyMb3i0vBj0RtG4ChRVOQ52sRLkkgXOjMRCR+F+MBv50abhtgpEBWF1a+eLXyXN0QKkQJF7KkMtE/qgFrqQnbdqlItTreWKKYGuf8h+OL+JrCdQ78=
+	t=1780034445; cv=none; b=UXZRf4SdeTvM2yZKRDpztnGWGORql8ihXre4MSfNFlc24XiuRvSLiLi0Th9G3IdpB/tAvcmgZ83uShZX2cYitGmrp/gAvP7Wm+jWWdi3eWJGigAKar5o3XAAVxRXs40YZrOAl9A5umlGYu0doeFrwapmcl8aEJwdS47YeWTNOo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780033228; c=relaxed/simple;
-	bh=pj7EBG8Losr25dvBQpDhw+jCRa3pnIM7Pw2pFwgfjbQ=;
+	s=arc-20240116; t=1780034445; c=relaxed/simple;
+	bh=jUanLIghu4Y46PI4MNUTFUM76xvjVZcOStu9uybQ040=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ar2dSoBlEKnQmTxcP36gkk9rP1C6GuGOJqx/4/kI/ShPPDa/Dt8VJBDbMZVWstdEZydZE7c+FAZ1krvX0k6JuapBaGqM8phpA4vtiwDGwFssOIDASw4lMfG1srq8Ga1CQV0RvyvF2LRIxnZUMrNMvgv7/OP9TzvtZbVHrob9/Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gN7OpeTk; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=grfXl/1dg9WeMJ8fIoaOQPQYIkLQgEOaXa1etcpuLWlsIyeOfNXdph4+7cDFRfp5BXQFuDb8UaJ9mYWTVt/x3eq/lmgcgwdQk2cpBOv59SrlZURxBRzz8rNFkyMqJelgScTD6dBiESIo4uCMjMmMUhvcl7mnH8O+DqV7jYW4HJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LV5/7mFI; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gN7OpeTk"
-Received: (qmail 3901 invoked by uid 106); 29 May 2026 05:40:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pj7EBG8Losr25dvBQpDhw+jCRa3pnIM7Pw2pFwgfjbQ=; b=gN7OpeTkTkVK+wd55Yn7neXfnfknmKToS1g4knCwV3mtz4kzmG6KPHSO+bQeddO+pVQ+8TsSuX/GpFEd0jmCpi5UNVUHRM8Cu/QU0fRP4oxjUZ251linlx3W+WXHuVB3QEU9y7NFmdpZKd3AJB8jrpf8DkRRmTwXObEfCwjjI9vVtvtsw2Z9WNGltw+PZ7TKQQt4OXFDvnqY9dO4I7DVWo6ElABqrtc0PLTpdi67nEPC7RyL0iZm08Q5UDhwNnMBHKrA2pVYklTi8Dm6kCYIE/AwPqYk6T5MomiCyuMf8E9D3sY7OgEnBzfhQI8w/3ZNspLjP2jhv9wYS07tYp7nmQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LV5/7mFI"
+Received: (qmail 3987 invoked by uid 106); 29 May 2026 06:00:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jUanLIghu4Y46PI4MNUTFUM76xvjVZcOStu9uybQ040=; b=LV5/7mFIzOcoBGE3I4Dw3OGDMI4fS+9pZ0MxzRaR/D/BZnIGhg6+K5MXWStYyzbafJKSD4ObL0kzVggTm52U3bzCTbt+H8vL/WgcSO3VzYsqCC5UL1ZGQKN2yXyiZLlx+W3qa32oA3I9uNuURKQB3XKTt6bO5kst04APfnmIvXw52UA3A66yDXGARQxYHrBvUozr8gD+FAhGw90AjdpTItamcHFE/KtDVz8Z/rzeNdJ0LavtYX5Vp2pb4T9wbJhsOYOJ609P4xczzizW6TZYBz/z0riwDSG3XOwWjdPSPOBK5xRz9w6LqBa/mfP8AkswkYEyiw2ARFfP0PmnVQxQZQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 May 2026 05:40:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 May 2026 06:00:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7286 invoked by uid 111); 29 May 2026 05:40:28 -0000
+Received: (qmail 7473 invoked by uid 111); 29 May 2026 06:00:46 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 May 2026 01:40:28 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 May 2026 02:00:46 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 29 May 2026 01:40:24 -0400
+Date: Fri, 29 May 2026 02:00:42 -0400
 From: Jeff King <peff@peff.net>
-To: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	fox <fox.gbr@townlong-yak.com>
-Subject: Re: [PATCH v2] http: fix memory leak in fetch_and_setup_pack_index()
-Message-ID: <20260529054024.GA1104383@coredump.intra.peff.net>
-References: <agx5tblaCZNsYEBq@lorenzo-VM>
- <ahjUmMCKxREamQE-@lorenzo-VM>
- <20260529053659.GC1099450@coredump.intra.peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 3/8] pack-bitmap: reuse stored selected bitmaps
+Message-ID: <20260529060042.GA1106035@coredump.intra.peff.net>
+References: <cover.1779207127.git.me@ttaylorr.com>
+ <6e1f6bef5f641481a6a875bc215b35fc56cef80c.1779207127.git.me@ttaylorr.com>
+ <20260527092412.GD981444@coredump.intra.peff.net>
+ <ahcCX+xAKFOL8HcW@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,97 +44,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260529053659.GC1099450@coredump.intra.peff.net>
+In-Reply-To: <ahcCX+xAKFOL8HcW@nand.local>
 
-On Fri, May 29, 2026 at 01:36:59AM -0400, Jeff King wrote:
+On Wed, May 27, 2026 at 10:40:31AM -0400, Taylor Blau wrote:
 
-> But it _could_ be done as a preparatory patch. And the rationale for
-> doing that on its own I think is roughly:
+> > > Teach `fill_bitmap_commit()` to notice that case. For non-root commits in
+> > > the walk, look for a stored selected bitmap and OR it into the bitmap
+> > > being built. If one exists, skip the commit, its tree, and its parents.
+> >
+> > I feel like this _shouldn't_ be necessary, because the idea of the
+> > current writing code is to go from the roots up, following inverted
+> > parent pointers, and passing the bitmap up as we go. So whenever we
+> > visit a commit we should in theory have all of the ancestor's bits set
+> > in that bitmap. But I remember that the simple-and-stupid approach ended
+> > up being too memory hungry, so we pick some focal points in the graph
+> > and then fill them independently.
 > 
->   1. It is mostly doing nothing, because 63aca3f7f1 registered it as a
->      tempfile, so it will be cleaned up at process end anyway (whether
->      we succeed in fetching it or not).
+> It's sharing within the non-first parent history that is killing us
+> here. I think what you said is true in a completely linear repository
+> with no merges. But since we only pass commit masks from commits to
+> their first parents, we don't reuse any already-generated bitmaps for
+> common points in history not shared between commits' first parents.
+
+Ah, that makes sense. I had forgotten exactly how the maximal-commit
+selection worked, and what we compromised versus the original naive
+"build from the bottom up" strategy.
+
+> Yeah, these were for my own curiosity as much as anything. I had written
+> them as a temporary measure in order to write the "[...] there are 1,261
+> commits selected for bitmap coverage, and 1,382 maximal commits induced
+> [...]" portion of the commit message above.
 > 
->   2. It is maybe a little harmful, because we are going to unlink() it
->      now, and then later the tempfile code will try to unlink() it again
->      (so a simultaneous fetch could have created the same file).
+> Once I had written it, I found the result useful enough to keep around.
 
-BTW, for (2) I wondered about going in the opposite direction. If we
-actually passed the tempfile back up, like in the patch below, then we
-could use delete_tempfile() to do the unlink (and remove it from the
-tempfile list).
-
-And then your patch would want to similarly delete_tempfile() in its
-error path.
-
-But I don't think it really buys us much. _If_ we were going to keep
-passing the tempfile struct up the call stack on success, then we could
-store it and call delete_tempfile() as soon as we had ran index-pack on
-it. But that's even more surgery, for again little gain (we delete our
-tempfiles a little earlier, rather than at process end).
-
-So I'm inclined to go in the direction that shortens the code. ;)
+Makes sense. It might help us (or even some very clueful user) debug or
+fine-tune parameters down the road.
 
 -Peff
-
----
-diff --git a/http.c b/http.c
-index ea9b16861b..e83a3857b3 100644
---- a/http.c
-+++ b/http.c
-@@ -2546,9 +2546,10 @@ int http_fetch_ref(const char *base, struct ref *ref)
- }
- 
- /* Helpers for fetching packs */
--static char *fetch_pack_index(unsigned char *hash, const char *base_url)
-+static struct tempfile *fetch_pack_index(unsigned char *hash, const char *base_url)
- {
- 	char *url, *tmp;
-+	struct tempfile *ret;
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (http_is_verbose)
-@@ -2575,23 +2576,24 @@ static char *fetch_pack_index(unsigned char *hash, const char *base_url)
- 	tmp = xstrfmt("%s/tmp_pack_%s.idx",
- 		      repo_get_object_directory(the_repository),
- 		      hash_to_hex(hash));
--	register_tempfile(tmp);
-+	ret = register_tempfile(tmp);
-+	free(tmp);
- 
--	if (http_get_file(url, tmp, NULL) != HTTP_OK) {
-+	if (http_get_file(url, ret->filename.buf, NULL) != HTTP_OK) {
- 		error("Unable to get pack index %s", url);
--		FREE_AND_NULL(tmp);
-+		delete_tempfile(&ret);
- 	}
- 
- 	free(url);
--	return tmp;
-+	return ret;
- }
- 
- static int fetch_and_setup_pack_index(struct packfile_list *packs,
- 				      unsigned char *sha1,
- 				      const char *base_url)
- {
- 	struct packed_git *new_pack, *p;
--	char *tmp_idx = NULL;
-+	struct tempfile *tmp_idx;
- 	int ret;
- 
- 	/*
-@@ -2607,11 +2609,9 @@ static int fetch_and_setup_pack_index(struct packfile_list *packs,
- 	if (!tmp_idx)
- 		return -1;
- 
--	new_pack = parse_pack_index(the_repository, sha1, tmp_idx);
-+	new_pack = parse_pack_index(the_repository, sha1, tmp_idx->filename.buf);
- 	if (!new_pack) {
--		unlink(tmp_idx);
--		free(tmp_idx);
--
-+		delete_tempfile(&tmp_idx);
- 		return -1; /* parse_pack_index() already issued error message */
- 	}
- 
