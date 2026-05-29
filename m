@@ -1,145 +1,163 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0828B330650
-	for <git@vger.kernel.org>; Fri, 29 May 2026 16:06:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865C1342CB3
+	for <git@vger.kernel.org>; Fri, 29 May 2026 16:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780070767; cv=none; b=ilhPHkoRkDus573UoWsJuy6Umoc6rjDHcHYspnzL9G6b1T4QLx+vdTYXcnSJNOW8+45eKTGR9pgnfUNh87b6kwHm6K5r3O3uUlr7gXVSEnyjhEe8zf3sP62JcdRAHlF73hVsPo7gvLI1es35UKeA8g4kqMjj58yGamOVRVYuKO4=
+	t=1780071136; cv=none; b=HhSZdyS6Ww0HR85NBtUSQdK4b66PQhRWFMQksKYZ28d7mMskNcmhaWRH3r8arViy1oN1PgrNzPEamwQS0ywt+FGGV41dTYLnXey5g+HE/f33owrtFAytpSbE1IAMADNC5UeAcpDxedV3maSjAUDijNMGCZ09cGtEcSK80XcOj4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780070767; c=relaxed/simple;
-	bh=Ug/cE1nZjgpoXfz0a3eSRiz1KJA6v9jzDeJyMEvDIvg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Jffo6ID3/iUcxuyYlk39gGc4aFMTg9DJIIDAcekjabvRedVKovFAcWL8I4QL9qalKlGjYRTAAe/n2DSjQDp0Qbc57sy+3r6UMCURVTur9GlWEp6RUR0ETM97KJIU0dvkFShrjVkMQbxPaUNA1QtsasoZ8ZdD/tshzzA0NX8f6So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFNcG8sB; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFNcG8sB"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8419ab3a297so2443706b3a.2
-        for <git@vger.kernel.org>; Fri, 29 May 2026 09:06:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780070765; x=1780675565; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dHizE1Fuqmb62Qi660JTl9iEb9ui0iOAai+iiyV/mJA=;
-        b=PFNcG8sBGk+gcYM+cJSH5yk4PzTizKwTsrvNDhAUeOlcM/EhOEtMyOM+ZTOXR+z8uG
-         7H6fwYDNwlmT/I2lA8mshKMaIHSzRc1hn3u669giDw4khkFPyjx11vf7gZBg0RkjWZIS
-         ao/Oc2errGhjnQDpkeDVgqNbH8z3O6PuRi9p+AIAbUeInLJ+m31T7VB56BlACeul/rwr
-         ZJt80231J/6eAMPkQTjjbmtl90yHgYYTA7wvWwoOCmXGlbzCfrFqHVzLbhYdEI06t63N
-         9DLlk8k2RcP5UcR2rcmVaspaiYqbpDm1aDm8Sqqbk6QkWwyrPExujDJep3NmSAR3wL8i
-         Glrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780070765; x=1780675565;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dHizE1Fuqmb62Qi660JTl9iEb9ui0iOAai+iiyV/mJA=;
-        b=gr8H4fQp1wmvjRdRv3HqMHsa6H0F4CdXdWEdX0muKsp7Xswx0QAL3+wyvgXV2HBVrd
-         uwKZmIfpKpt0iudkBpc0z4nuVNRSDO4HOcEyNS7gXJ1GyW1jIzQS3uFDXWOZvq+ff47d
-         uKJmLrxINB0PgJ42WV8M+w5fl/ozQptZpF2s5A5M2xmm9jv77eyp/xE16Sqhm31LG5UX
-         3N81V6tH7fmMHQJbZlPIeqjv5hsEoyzJfGAdFl+d/bHrpuM5G8gnRglA1N7IRJNw+F+c
-         b1AlaA0TDZZRtm4YTalY+uB9Tg9zLq+VB9IiHvgOjPt2GEKxfd+8oLGHjnfR1GyDCToz
-         viMw==
-X-Gm-Message-State: AOJu0YzchCwlCQIndWECXzlOOQiMbBSQjClpCGefKIZBzdhjd17xPug4
-	RyOfghWJxRBA7+3y9QHKpLdz2q/rH8ZDAeDtky8KKUo7z0HgoFJ3KZL8cCIGsg==
-X-Gm-Gg: Acq92OFmC4F6btNTEs8lQyB4MO2DBca2MoiBxJJHLXcpa/Ppio81cfvcvkSSg8oY2B4
-	ItVqFgKEm9k/dIJLReRx+neZ3YRt3Hhy97rX40GJ2FMis75b+gCvQhnZKlGq0c4JicGktbzvY0y
-	GHHe8glypUq00FOWDc1RIIFkuZAWTG55Rtmv/qgwThq6rWI3C9fJmEkFaBCO8Ulfu1aSKT+NGtI
-	oER/LKHAhmjP8EkgIcSHrtoNSxmjxiHtrabnJymPi9XdkiFozRwnHDDOpaeW4k4GGrC25BV/bY5
-	gSDqvVN1VepELh2f856DMTodegDRdZObJHB2OEhs8CP/61jlHImfrWoMR1xc/3YmJSv/hvTjzIn
-	kdgRsH4GhDTTH5MilT7i5jXIllZI2ZeGJBoHBE6pNGcjPIG8otdRFtCj+4inuwCrKeXkrHeE2FH
-	Vzp2AuKW2XdRTMcxpg3LiXHsNotLNPk+MqKsI7
-X-Received: by 2002:a05:6a00:3386:b0:841:d095:fcd7 with SMTP id d2e1a72fcca58-8422544231cmr130991b3a.30.1780070764964;
-        Fri, 29 May 2026 09:06:04 -0700 (PDT)
-Received: from [127.0.0.1] ([172.190.85.16])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8421f537e53sm918229b3a.6.2026.05.29.09.06.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 09:06:04 -0700 (PDT)
-Message-Id: <pull.2131.git.1780070763044.gitgitgadget@gmail.com>
-From: "Arijit Banerjee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 29 May 2026 16:06:02 +0000
-Subject: [PATCH] index-pack: retain child bases in delta cache
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1780071136; c=relaxed/simple;
+	bh=YDKo8B9KD9faDfkLZSwdO385gfy4g6X559ywCge4VW4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hWv0oReTzAW+cazkX1EgvnNhhYFWI1N0G4OvOitPX8Ajtyw4EkwT/ReHt3EPAaCXlB4C7FEj8p9rSdCqZMfOZ/U6REtRKWkY+QTLL719SnkUmFCBENqGR0BKlqWCQk3+wIOIaXa1IXb1shEm4Jg/AGx6905yiqw2r7JNSPN9Y8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net; spf=pass smtp.mailfrom=opperschaap.net; arc=none smtp.client-ip=80.241.56.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opperschaap.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opperschaap.net
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4gRpJz2g3rz9v7j;
+	Fri, 29 May 2026 18:12:03 +0200 (CEST)
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of wesleys@opperschaap.net designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=wesleys@opperschaap.net
+Message-ID: <c5527d8c-9147-4355-a07d-153d3977108e@opperschaap.net>
+Date: Fri, 29 May 2026 12:11:59 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Arijit Banerjee <arijit91@gmail.com>,
-    Arijit Banerjee <arijit@effectiveailabs.com>
+Subject: Re: git hook question
+To: Jeff King <peff@peff.net>
+Cc: Git maillinglist <git@vger.kernel.org>
+References: <cc9fda14-d8e8-4982-9a3d-9aa816c0b90c@opperschaap.net>
+ <20260529052141.GA1099450@coredump.intra.peff.net>
+Content-Language: en-US
+From: Wesley Schwengle <wesleys@opperschaap.net>
+In-Reply-To: <20260529052141.GA1099450@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 4gRpJz2g3rz9v7j
 
-From: Arijit Banerjee <arijit@effectiveailabs.com>
+On 5/29/26 01:21, Jeff King wrote:
+> On Fri, May 29, 2026 at 01:01:34AM -0400, Wesley Schwengle wrote:
+> 
+>> I understand the why, normally pre-push gets `<local-ref> SP
+>> <local-object-name> SP <remote-ref> SP <remote-object-name> LF'. This has a
+>> similar feel, albeit a different syntax. The difference feels like a minor
+>> bug, but not one I'm worried about at this moment: you would expect it to
+>> get the same arguments/parameters as the regular pre-push hook. But I
+>> digress.
+> 
+> I think the "git hook" command is mostly intended for scripting, and the
+> caller is expected to understand the context and provide the appropriate
+> arguments. The hook command itself doesn't know about what a "pre-push"
+> hook should look like.
+> 
+> So not a bug, but definitely a gotcha that could perhaps be better
+> explained in the documentation.
 
-When resolving a delta whose result has children of its own,
-index-pack adds the result to work_head, accounts its data in
-base_cache_used, and calls prune_base_data(). It then immediately
-frees that same data.
+I think the "normal" pre-push makes more sense than the one I'm seeing 
+right now, but perhaps that's me. But I think that the docs would 
+perhaps need an update to why this `remote url' are the arguments. 
+Especially if you read `githooks(5)' it seems a little strange.
 
-This bypasses the existing delta base cache policy and can force later
-descendants to reconstruct the queued base again. Let the existing
-delta_base_cache_limit pruning policy decide whether to keep or evict
-the data instead.
+>> My actual question is: Is there a way to tell the hook "Don't give me
+>> arguments, just run the plain command that is defined". I looked in `man 1
+>> git-hook', but I was unable to find something that looks like it.
+> 
+> I don't think so; the command is expected to handle (or ignore) the
+> arguments as appropriate. You could obviously write a wrapper script to
+> handle that, but since hook commands are run with a shell you can inline
+> it, like:
+> 
+>    git config hook.npm-test.command 'npm run test #'
+> 
+> Git will paste together the shell command:
+> 
+>    npm run test # "$@"
 
-Signed-off-by: Arijit Banerjee <arijit@effectiveailabs.com>
----
-    index-pack: retain child bases in delta cache
-    
-    Speed up the local pack indexing phase of clone/fetch for large
-    delta-compressed packs by keeping reconstructed delta bases available
-    for reuse when they are queued for later delta resolution.
-    
-    When index-pack reconstructs a child base and queues it for resolving
-    descendant deltas, it currently frees that data immediately. This can
-    force the same base to be reconstructed again. Instead, keep it in the
-    existing delta base cache and let the existing delta_base_cache_limit
-    policy decide whether to retain or evict it.
-    
-    This does not add a new cache or increase the cache limit. The object
-    data is already accounted in base_cache_used, and prune_base_data() is
-    already called at this point.
-    
-    Correctness:
-    
-     * t/t5302-pack-index.sh passed all 36 tests.
-    
-    Benchmarks on a quiet Ubuntu 24.04 VM, 16 vCPU, 32 GiB RAM, local SSD:
-    
-    pack baseline patched wall-time change RSS change linux blobless 69.17s
-    57.98s 16.2% faster -0.0% linux full 280.72s 236.32s 15.8% faster +1.9%
-    
-    Five-repeat public-repo medians also improved: git.git 13.1%, libgit2
-    14.0%, redis 13.5%, cpython 4.8%.
-    
-    Perf on the linux blobless pack showed the same direction under
-    profiling: 76.64s baseline vs 61.09s patched, with similar RSS.
+That doesn't work on my side:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2131%2Farijit91%2Findex-pack-retain-child-base-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2131/arijit91/index-pack-retain-child-base-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2131
+$ cat ~/.config/git/js.config && git config --get hook.npm-test.command 
+&& GIT_TRACE=1 git poh
+[hook "npm-test"]
+   event = pre-push
+   command = npm run test #
+   enabled = true
+npm run test
 
- builtin/index-pack.c | 1 -
- 1 file changed, 1 deletion(-)
+[snip, alias expansion]
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index cf0bd8280d..027c64b522 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1212,7 +1212,6 @@ static void *threaded_second_pass(void *data)
- 			list_add(&child->list, &work_head);
- 			base_cache_used += child->size;
- 			prune_base_data(NULL);
--			free_base_data(child);
- 		} else if (child) {
- 			/*
- 			 * This child does not have its own children. It may be
+11:49:46.746800 run-command.c:673       trace: run_command: git push 
+origin HEAD
+11:49:46.746811 run-command.c:765       trace: start_command: 
+/home/wesleys/.local/libexec/git-core/git push origin HEAD
+11:49:46.749640 git.c:502               trace: built-in: git push origin 
+HEAD
+11:49:46.752107 run-command.c:673       trace: run_command: unset 
+GIT_PREFIX; ssh git@gitlab.com 'git-receive-pack '\''some/repo'\'''
+11:49:46.752135 run-command.c:765       trace: start_command: 
+/usr/bin/ssh git@gitlab.com 'git-receive-pack '\''some/repo'\'''
+11:49:47.549946 run-command.c:1576      run_processes_parallel: 
+preparing to run up to 1 tasks
+11:49:47.549988 run-command.c:673       trace: run_command: 'npm run 
+test' origin git@gitlab.com:some/repo
+11:49:47.550012 run-command.c:765       trace: start_command: /bin/sh -c 
+'npm run test "$@"' 'npm run test' origin git@gitlab.com:some/repo
 
-base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+> @skirbi/semtic@0.0.18 test
+> tap origin git@gitlab.com:some/repo
+
+No valid test files found matching "origin" "git@gitlab.com:some/repo"
+11:49:48.145805 run-command.c:1604      run_processes_parallel: done
+error: failed to push some refs to 'gitlab.com:some/repo'
+
+> The more
+> general form of this trick is to use a shell function, like:
+> 
+>    f() { your_cmd_here; }; f
+
+Also seems to fail:
+
+[hook "npm-test"]
+   event = pre-push
+   command = git npm-test
+   enabled = true
+
+[alias]
+   npm-test = !f() { npm run test; }; f
+
+
+11:53:14.678237 run-command.c:673       trace: run_command: 'f() { npm 
+run test' origin git@gitlab.com:some/repo
+11:53:14.678248 run-command.c:765       trace: start_command: /bin/sh -c 
+'f() { npm run test "$@"' 'f() { npm run test' origin 
+git@gitlab.com:some/repo
+f() { npm run test: 1: Syntax error: end of file unexpected (expecting "}")
+
+The wrapper script seems the only viable solution. I do think it's a 
+little annoying, because any linter, tester, thing that gets called by 
+this infra now needs to add wrappers. Which means you either need to 
+start making a githook repo for all the tests that you have.
+
+The following circles back a little to the first response.
+
+Tt kind of diverges from `git hook run pre-push' and how additional 
+arguments are given on the command line with that invocation. Wrappers 
+need to become aware on way it is called, either via hook or via a 
+manual way, because of the `remote url' that gets added.
+
+Normal hooks get that info via their STDIN, wouldn't this also make 
+sense for these type of hooks? It makes differentiation much easier.
+
+Cheers,
+Wesley
+
 -- 
-gitgitgadget
+Wesley Schwengle
+
