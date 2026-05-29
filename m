@@ -1,199 +1,162 @@
-Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2D23BCD3D
-	for <git@vger.kernel.org>; Fri, 29 May 2026 12:04:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780056281; cv=none; b=ZugSfZtVQKLuE78l1TnkbWDc6JNwmuHDLLPbr8Kd0IF5qx00XOk+RKWCTxEg6U6dwFXNN9GAb4sM8DuovdTpwBCvXxmddua1CzsZO+XxE+C2xdJmtC4CQdTlmHxs03JiWmsjmRkodHF9wUl7ze7Ld8bHieqjrkPnCuAgzfqSQyA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780056281; c=relaxed/simple;
-	bh=1To2p24V3hzt8xTvEHl4vVqGJ0EyQxFZGPRS23be55Y=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=kcSPAPVZ3bvaKIhlgCcXjrAzZFPMLYprNbWu0qqk882v56qh2FdGsJprvpC0U3obdttVDjl3Nw8s4NhQjb/kLY3O9Q9tZTprGc7XFivGt3pjDAJfyHuU55IRl0gMM9ULJQY+aRO2E6v12TAarvzwe9Y+XuAVTh9hnNYaaEqjIIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W6j3khzC; arc=none smtp.client-ip=74.125.224.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB053002A0
+	for <git@vger.kernel.org>; Fri, 29 May 2026 12:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780058148; cv=pass; b=Actzc72ZZGb3k0Oc4KdrxVQcQaRSmo/6XZ2QRmSmXOsLoabCaX3ZUfD2d5aGyHrucotp/65Vt0DuijKqROlzWjP0CfWJkzQ43EYK9WMQ/Rb84oQTg1N4sNq3z7QCYYMqLQ6pbzPLXApFprYSA42GimIVNY3RDOMCAnADICAL42I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780058148; c=relaxed/simple;
+	bh=XQFPW5iUN+G2nYGyk3sse5/HthP2yOzbJI3vGvo4wgs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aqy/CfLIXPMJ3lx3wzGK7oz/A6fmf2HhYbU436BWHoastKPxCuC478eZ3fj46DUHKzq4amTuFPVp3tYKb9PMtegw1Yj3fty4Cok1XgDGKINO58+BMPznBY3ZfLqH2sV2IGTt8w5V5bhHFyMfoIKvJ1HQlmU5ABdrhHbhtiFYKRo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=eficode.com; spf=pass smtp.mailfrom=eficode.com; dkim=pass (2048-bit key) header.d=eficode.com header.i=@eficode.com header.b=FEaYpQQq; arc=pass smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=eficode.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eficode.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W6j3khzC"
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-654672a6d68so13326339d50.0
-        for <git@vger.kernel.org>; Fri, 29 May 2026 05:04:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=eficode.com header.i=@eficode.com header.b="FEaYpQQq"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-68b73f1a8ebso2476189a12.1
+        for <git@vger.kernel.org>; Fri, 29 May 2026 05:35:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780058145; cv=none;
+        d=google.com; s=arc-20240605;
+        b=O/pRYF181qQ7BFtdcYQ5ByzOLFs7B5YjOVKFA9igQf36vExUlQ9WpBMT/sAs9Plpda
+         J2LTaBqqemIOUJTGZXd+OxyuUHBCasLBgxd3yo4blZbmSS8AooKL8XyoxCA2LXOotf/a
+         lfPIAUc4ghVOrCNXg7ooDS7krESRBZc2oanFJTiDUmrrZXreO1L0woRySvpf0eAwlZJB
+         gVYxyDOF+l1pvL3rWbX3ho+YNkjEL/g1xDnaDX/6f4QBGRY9aAKHFC5DolLSJFSP6Sb0
+         /kA36eCsSnTkUGEsQjauRkhsi9GlIpxSa5QcjStXLGRh+P/1U6b1bewhj90+xwBsMbzl
+         1K0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=q9fA91Qq2oalofJQpPFZH11up8B90bnA88Q/d4VZRP0=;
+        fh=JQCJAUsm3LBOukjBOLJDoNeIpEZQSCmYCzASfNjyl5A=;
+        b=Mwxm1ip6Cj6MXnG5xobzDVDFSAFMrH5ZaSFEkQv+cSxHNacGJoXOtB4uX5rdATByqM
+         FO42YeZSlKxvoKIsQ9V+lwVWtq5o+6OHsQTqF1EHGXBnUq+lnyZXKGI0dcra6cQim4is
+         se4IHfKJaXb6FWfahNZUdpFUeyvl5gffyXVDEHw+OMg1eBB1R9f/0chcj8kCByk8TrSG
+         CByeJX5WkgwRrkHAxIrNiedBBfNwge8frlxjXAbupP6nXCr2B8hcsl9SykXBf+hIM0cb
+         57gmLgveJTF+hJbXlIkdn639i0f6rsrLaI4GfGHxYdmD06nPpV+HHKKSDAXxqzdcONRw
+         ZXzw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780056279; x=1780661079; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wqcZNrM2tHsbPyiuGK/x9rxIBFtX6kL/9m9QowsM1Nw=;
-        b=W6j3khzCHpmpa62AjT2Ni9xkXRmG9L+Ea0I1qV85+DLGNMOosktK8ePbwHm5PUILDM
-         3GMo/SxARjtRV61/tto2JVnjF3wbVvFyJZPpENe1L3PyoFeac+7Nv4aR58cbJ+s7M7zx
-         bWf6kJ9qgl/nbfFA4f6PeNC0NuHHA0npO/hUExXot9wiqOraj+Zp2yjn2QQjXuenkAyx
-         b3UqZBHOLkJSOS0cld+EVpyTV1qrLGM+QmV1DYIZX0hc2UOKz9GJOtdF85bTiNQclocl
-         lKutKIgIccyvx6H4z4gcmOpNtTBoXw91G6ff6ATEcBg0WwBaMLfQ8zqXX2AkfIJX1FaO
-         DBwg==
+        d=eficode.com; s=google; t=1780058145; x=1780662945; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q9fA91Qq2oalofJQpPFZH11up8B90bnA88Q/d4VZRP0=;
+        b=FEaYpQQq7mNyUViXpNTDW9ibVzI947dOYqeD/3OLGAD262lwrsxkiirNQQGHHArF0A
+         BxrtWYzKL0J5truVIui1tv3f7TmrtICu9SnVMfVGi5vjTo8yxwhR051djPVWyqCMhzWE
+         5268lGlQpoVhNkrimmUCNWwVL2O+QUd74c54WVwhNewNNVZeK6uNGBjcduQFJ1VfltfC
+         Laij/DdTu/CUZG8J1YQO5sUKZOLfk6lqpFcw7bHldts2KnG4IDWSQoZqLlIq/vF/6vkr
+         1udlMiUfc9paFpd9YD3ib6DYip8DOzRHmrf9XjcjbPAJAsvIAfzHE7+Znw9ftr9e3ZnG
+         26YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780056279; x=1780661079;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wqcZNrM2tHsbPyiuGK/x9rxIBFtX6kL/9m9QowsM1Nw=;
-        b=L5xRCxndeTlEdjN/QCg6XjhdnKVoRN1jN5zWhrPa4joxHPYCImRhckQxjK18WG0meB
-         vJTpseJ1P34dm4Q1zrncqh6zNR6+xrfbOzqxI1mFEk3d2qoeWcTX6lkp+NNqdf6SZxIe
-         bagd+PuTwT3LuTd68035mzml/DCD+qY2UFyEdAGteKYpHgvEfaF4lhAl8droIvy4Ba5g
-         PFKyzSdmGgt4YdVE82kAQwrTx+2m3ouDgryQT4cSfoq5/+FKPkx3qzdKW1ROF73otzC0
-         ablS8AkKL6CwRnFOfWb/S3qZ4I81zBhwG35qmeTZ5f1s6aijNGzhNB6rIdRVCJOahrwN
-         ZOuQ==
-X-Gm-Message-State: AOJu0YzpbmWtpuQtzlHCcUqZMkowLow+gJUvWMZYkQJYF/zVex4JZFfz
-	s+7o5ib96HyWyzUsssIH98QKLwtYQ4XdWkfMMdyA9NgsSn8L5CVBWK3K
-X-Gm-Gg: Acq92OHw9uwuRjLKwST4OThlQgbPfO4pL22/8efLY42ewm1UGqyP1/EoTdF1DYg92qi
-	/U2I7tn07SoxvsIfMdKNMFK+taOvIl5s5M2u65v5x0ZJl9cMwzYi9tqChgLK48KVknplA2hFQaS
-	Rm2PX8Dznls34luC8xk1uO0aHRgn4LkfmvYcNBPLqVw666d1dc1GKyvnsKmjWpptlUZYydwc907
-	czhV8KNTenE71t1QDYgXr/mfz7mL28f4DyRQqCy/LpDK5CNcZhra1ZMxAFdjVvvTYrcyDjzO+sw
-	68Qa1wPcD7G8t38u57aeyy3Bfxl0CIcjbHZ7iMD94gTCqrZNT90XBpJ+93rZvzHiCJuS3O55xMm
-	n21ogk4Bk9tpMsi+sstddHt3jQxxA0L/R4WIK6/PmNJnA98VFa+v7nR1VFievd01YJXHxluue6v
-	hqP2JMkQesyAqTU7Ya4gwB2Y+aaSvk/iLGWQTiXcwPoEviogIKzBHf6jUdIHmK5fFFZwovjP8HC
-	5cnPrq3slMLJvMXSVFCxiQ8JmS6RBn67ftNtqyNHpHn7/X+hIME+qc9
-X-Received: by 2002:a05:690e:169b:b0:65c:217d:f01f with SMTP id 956f58d0204a3-66052cb1c04mr1783567d50.3.1780056279006;
-        Fri, 29 May 2026 05:04:39 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90fb:c300:a5b1:99dc:3743:5205])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6605367d0b8sm623018d50.6.2026.05.29.05.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 05:04:38 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20251104; t=1780058145; x=1780662945;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=q9fA91Qq2oalofJQpPFZH11up8B90bnA88Q/d4VZRP0=;
+        b=qi8vs9ZojWBoXWIrBqD9lEPVsJSw199XY6bYryXIGY5xdi5M6mwjLnBSr60hgYSx8y
+         SII8ULsi8Fis13Q8MQ334q46ZQ7hU//BBeCv50TTt+zN8UVyWIU//TTsdZDKBAu4DFNj
+         fHcR4p5cM9ZyCtTc9HcAis4L80y7iurbrCOwhm0yerErBgiRpR+yWYFh3MjKfy/wCanu
+         aqLi7A/Auy98wdUjBwKiQ+VVETIxs4arRfwFrDQ6OmXMcwgVHeoI5eoK3Hm7Rz4iR7rZ
+         hpRjcLDbvfDMCLAA3JD7OuYbDiJEZ8ejrjlXvjQ7aAALdPh5DBu0h65ddbOuOGViVQII
+         KV1g==
+X-Forwarded-Encrypted: i=1; AFNElJ8hPBQe3A1VV/lkwu9mnUTzDnPL8mdmH6r+XuPiw4XE2yvA3XM8N3FNcom7riJ54mwebmk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxkbxluajiUrS9DA5fUAJZaphoAJnB8Th4/Owv7D7VJ4ufSFXdk
+	ltK/5mbMDCogTEa3/qgyoqvgeaPb15C4Q0ltiaWXAD/NUrP6YJNiTWF7De+AAEprH/IvZNOEkUQ
+	1aMIG8U6UhkIjX+bUr9nwO33iiy9zFtHUpVG40iVxT+IFdFl96ohpjrMt
+X-Gm-Gg: Acq92OEYLQRzRVqas7zvN3VP7Z4slbMuOy5qxIub3P8GW9FY4xiPI+qSwdp6Qa7Ul/Y
+	oPGeLpAbqXyl/b6Moc/Gr9HElUkPirNunntou+Pk4yo6+ohDubtyIkmQONAlKOL+hiFoSohm49A
+	yV8o79HLS5mvq79W9rbc7IY+KFSTP3iGUopM+lMDgNx9fiT6kv1k3uSp3p+is+1+vrFVR7p+3Ql
+	aPYWWnoIR4Q03VzTDx0BiwAT85pC7FiqIvaEPlRtk97oEez4Q3zkBpezslupVMFEiAoMtT/T1hO
+	NltQ+Xoc6lNcLqVTW7kSAhsX+BMYIlC9Z8VI+6UQa/EnS1XCEFI7v+t3Wtge0rY5kGbYU5n+3h8
+	rLDAGr9WGdTYK8n9PVasdulNqAA==
+X-Received: by 2002:a17:907:2d0e:b0:bad:92f5:daea with SMTP id
+ a640c23a62f3a-be9cb20303fmr147088666b.14.1780058144958; Fri, 29 May 2026
+ 05:35:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3 0/3] line-log: integrate -L with the standard log output pipeline
-Date: Fri, 29 May 2026 08:04:27 -0400
-Message-Id: <B59BA5B1-184D-48A8-8BAD-11EB6F8EB50C@gmail.com>
-References: <pull.2094.v3.git.1780001267.gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Michael Montalbo <mmontalbo@gmail.com>
-In-Reply-To: <pull.2094.v3.git.1780001267.gitgitgadget@gmail.com>
-To: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+References: <pull.2122.git.1779814052.gitgitgadget@gmail.com> <7377E3A2-C866-4E3D-85FC-BC6E10CBF8FC@gmail.com>
+In-Reply-To: <7377E3A2-C866-4E3D-85FC-BC6E10CBF8FC@gmail.com>
+From: Claus Schneider <claus.schneider@eficode.com>
+Date: Fri, 29 May 2026 14:35:34 +0200
+X-Gm-Features: AVHnY4KO0RGHGXUpdsacHu1Nzze9EIUzumqpY2dCX1cqI5ZYvuG8-g7bxZdfpZQ
+Message-ID: <CA+GP4bqNrnER14GaxOSPdQCO0HFJzv6Kjo6VVFhr=KredVu0jw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] git son: add command to create independent child repositories
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Evan Haque via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Evan Haque <evanhaque1@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi ..
 
-> Le 28 mai 2026 =C3=A0 16:47, Michael Montalbo via GitGitGadget <gitgitgadg=
-et@gmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFSince its introduction, git log -L has short-circuited from
-> log_tree_commit() into its own output function, bypassing log_tree_diff()
-> and log_tree_diff_flush(). This skips no_free save/restore,
-> always_show_header, diff_free() cleanup, and means that pickaxe (-S, -G,
-> --find-object) and --diff-filter cannot suppress commits whose pairs are a=
-ll
-> filtered out, because show_log() runs before diffcore_std().
->=20
-> This series restructures the flow so that -L goes through the same
-> log_tree_diff() -> log_tree_diff_flush() path as normal single-parent and
-> merge diffs, then uses that to enable several non-patch diff formats.
->=20
-> Patch 1: revision: move -L setup before output_format-to-diff derivation
->=20
-> Preparatory reorder in setup_revisions(). The -L block sets a default
-> DIFF_FORMAT_PATCH when no format is requested; move it before the derivati=
-on
-> of revs->diff from output_format so the default is visible to that check. N=
-o
-> behavior change on its own.
->=20
-> Patch 2: line-log: integrate -L output with the standard log-tree pipeline=
+I would motivate to fix in git-submodules in stead. I updated the
+logic around the ignored setting of a submodule, so it is truly
+ignored - both in git status(already) and `git add`, which now
+explicitly requires `--force`. It now gives the ability to configure
+your submodule as 'loosely' by tracking branches without the friction
+of `git add` is staging it all the time and you get conflicts in
+PR/integrations. You can use git submodule status to list the sha1 of
+the submodule for release etc.
 
->=20
-> Rename line_log_print() to line_log_queue_pairs(), stripping it down to on=
-ly
-> queue pre-computed filepairs. log_tree_diff_flush() handles show_log(),
-> diffcore_std(), and diff_flush(). This fixes pickaxe and --diff-filter
-> suppression, and aligns the commit/diff separator with the rest of log
-> output. Rejects --full-diff, which is not yet supported when filepairs are=
+https://github.com/gitgitgadget/git/pull/1987
+alias "git-add: Skip submodules with ignore=3Dall unless --force and
+explicit path used by bicschneider =C2=B7 Pull Request #1987 =C2=B7
+gitgitgadget/git"
 
-> pre-computed.
->=20
-> Patch 3: line-log: allow non-patch diff formats with -L
->=20
-> Expand the allowlist to accept --raw, --name-only, --name-status, and
-> --summary. These only read filepair metadata already set by the line-log
-> machinery. Diff stat formats (--stat, --numstat, --shortstat, --dirstat)
-> remain blocked because they call compute_diffstat() on full blob content a=
-nd
-> would show whole-file statistics rather than range-scoped ones.
->=20
-> Changes since v2:
->=20
-> * Switch "! test_grep" to "test_grep !" in tests.
+Please try this update and then describe what is ( still ) missing as
+i am looking into submodules in general and will try to "fix" the
+friction points of developers.
 
-Thanks ! I did not read the tests carefully for semantic value, but the rati=
-onale and overall code looks good to me as discussed previously.
+Best regards
+Claus Schneider
 
-The range-diff here looks good, too.=20
-
-
-> Michael Montalbo (3):
->  revision: move -L setup before output_format-to-diff derivation
->  line-log: integrate -L output with the standard log-tree pipeline
->  line-log: allow non-patch diff formats with -L
->=20
-> Documentation/line-range-options.adoc         |  10 +-
-> line-log.c                                    |  30 ++----
-> line-log.h                                    |   2 +-
-> log-tree.c                                    |  10 +-
-> revision.c                                    |  24 +++--
-> t/t4211-line-log.sh                           | 100 +++++++++++++++---
-> t/t4211/sha1/expect.parallel-change-f-to-main |   1 -
-> .../sha256/expect.parallel-change-f-to-main   |   1 -
-> 8 files changed, 121 insertions(+), 57 deletions(-)
->=20
->=20
-> base-commit: 9f223ef1c026d91c7ac68cc0211bde255dda6199
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2094%2Fm=
-montalbo%2Fmm%2Fline-log-use-log-tree-diff-flush-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2094/mmonta=
-lbo/mm/line-log-use-log-tree-diff-flush-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/2094
->=20
-> Range-diff vs v2:
->=20
-> 1:  9633eb62c6 =3D 1:  9633eb62c6 revision: move -L setup before output_fo=
-rmat-to-diff derivation
-> 2:  7acfc5376e =3D 2:  7acfc5376e line-log: integrate -L output with the s=
-tandard log-tree pipeline
-> 3:  10a3d8dde2 ! 3:  ae0b7f3ca8 line-log: allow non-patch diff formats wit=
-h -L
->     @@ t/t4211-line-log.sh: test_expect_success '-p shows the default patc=
-h output' '
->      +test_expect_success '--raw shows mode, oid, status and path' '
->      +    git log -L1,24:b.c --raw --format=3D >actual &&
->      +    test_grep "^:100644 100644 [0-9a-f]\{7\} [0-9a-f]\{7\} M    b.c$=
-" actual &&
->     -+    ! test_grep "^diff --git" actual &&
->     -+    ! test_grep "^@@" actual
->     ++    test_grep ! "^diff --git" actual &&
->     ++    test_grep ! "^@@" actual
->      +'
->      +
->      +test_expect_success '--name-only shows path' '
->      +    git log -L1,24:b.c --name-only --format=3D >actual &&
->      +    test_grep "^b.c$" actual &&
->     -+    ! test_grep "^diff --git" actual &&
->     -+    ! test_grep "^@@" actual
->     ++    test_grep ! "^diff --git" actual &&
->     ++    test_grep ! "^@@" actual
->      +'
->      +
->      +test_expect_success '--name-status shows status and path' '
->      +    git log -L1,24:b.c --name-status --format=3D >actual &&
->      +    test_grep "^M    b.c$" actual &&
->     -+    ! test_grep "^diff --git" actual &&
->     -+    ! test_grep "^@@" actual
->     ++    test_grep ! "^diff --git" actual &&
->     ++    test_grep ! "^@@" actual
->      +'
->      +
->      +test_expect_success '--stat is not yet supported with -L' '
->=20
-> --
-> gitgitgadget
+On Tue, May 26, 2026 at 11:29=E2=80=AFPM Ben Knoble <ben.knoble@gmail.com> =
+wrote:
+>
+>
+> > Le 26 mai 2026 =C3=A0 13:08, Evan Haque via GitGitGadget <gitgitgadget@=
+gmail.com> a =C3=A9crit :
+> >
+> > =EF=BB=BF
+> > Motivation
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > When spinning off a new project that is related to an existing reposito=
+ry,
+> > there is no built-in way to create a child repository that maintains a =
+link
+> > back to its parent without the tight coupling of submodules. Submodules=
+ pin
+> > the child to a specific commit and require the parent to track the chil=
+d in
+> > its index, which is too heavyweight when the child is meant to be fully
+> > independent.
+> >
+> > The typical workflow today is manual: git init, git remote add, update
+> > .gitignore =E2=80=94 three steps that are easy to forget or get wrong. =
+git son
+> > automates this and establishes a lightweight convention for the parent-=
+child
+> > relationship: a remote named parent in the child, and nothing in the pa=
+rent
+> > except an ignore rule.
+>
+> I don=E2=80=99t really understand the motivation, but if your goal is to =
+create another repo with the current one as a remote, how does something li=
+ke
+>
+>     git clone . child
+>
+> help you? (I=E2=80=99m pretty sure you can even set the remote name to =
+=C2=AB parent =C2=BB if you wish.)
+>
+> You also didn=E2=80=99t mention worktrees or subtrees, which might be use=
+ful for you.
