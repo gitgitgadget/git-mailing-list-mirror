@@ -1,161 +1,107 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7906D2E4257
-	for <git@vger.kernel.org>; Fri, 29 May 2026 00:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780016151; cv=pass; b=ZFfxA8ieyBcR5PSMtM9BPIUJ6rsbsXfQyGpsP5y7V5LYltejt0pqUm2me1V3pfzMlV2/ZXVOVkun0q29qIfk2LMHu+rDNxsYzg0Pz62N+Qbjs3xe1pO2yOlP/PNffVjGhgW3P0zRihXzdhFAgiSXkKmnY2R8v3VYZnh77CRG7UU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780016151; c=relaxed/simple;
-	bh=pUDZZGoHft+XRCLB6pz1qJUxzJKirSR+l7PBEzkc4H4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nB9F8t+aEyVSUI2eDNBXJHwaAxvJgTq5JpommBiFiZW8ZnVDymvfxJqdHSeUniqjtCPNaEGoPoXys1IL/XvkpCKaxd/wKQh+qDP18Tsd/pqk4XOsukbPbveXvXbm3CLGGGX/fXUkpY65a2wDiVxh0K3EzrBf5GigKTg6OR1ruu4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kjsMavW0; arc=pass smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42616351C3D
+	for <git@vger.kernel.org>; Fri, 29 May 2026 01:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780019730; cv=none; b=lpz0+pynbnfCEAOBTQ9bkY0pZadicqK1E3WvilQ0DcdBFwxpUL+NnVKMHVE4I4EOoTyOTeAKSnP35bBNQzFGBn2gS4KcRQmc6XD7S2Pet49nVmwZw3sy0m9wpCBwiroZXTmUjVhowaE7GtccTHsNZ0MLBdy0T5vVnXm49PSgzCI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780019730; c=relaxed/simple;
+	bh=d419zB4+5bB3icqFmGcffSn0K8Kw3ZeCNFsVM2uCaxE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fYwKD0IWqrGA05uqNoR43Ea5pQe8xMpautprrj4wn9s/HAoV28rphV3aOeIL+ZEQAP83Lnhh9i3KPzM25szumjijEKgtj3SPJi+9fhbkw0JrKcnGUeCjpaT1qxutJ+rKZTL9hCquY7twRoMKHPzNYG36Tr9iTZjyFty7K08kgAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YI/e7xN6; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kjsMavW0"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6877c719cb0so12923441a12.2
-        for <git@vger.kernel.org>; Thu, 28 May 2026 17:55:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780016149; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gzJYqrkkAgX+VbNGnvx+szMaE3BJE4KWQILcycewhHloe/O86GGRHqIfMoJD2uCYoM
-         YnaL5Aj1svBEfEMjquID+dO+rO31GmE4RXavL8VDP2/53umN4Jaug5A0ffvCKa+gLbht
-         ZT4UBadw5HZHS9VRKOq2WlapCY9vKAXlUG1fAjv7v5+SaiJBx/OYBiM4DXKypWf7onYs
-         GMScv4iV5PLve+C7nVzNFN9+8uUPOcMbHMGlaQBnfotpzly22Puh6k8FUldNkRJMfc5u
-         EZ+IMUyu1LebBxQggPLOqlnT3FmQvUQJTqy+Dvu6rHph2HnMzafHco11+5Ii22hwCDJe
-         LqFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=e+cEO01gtXQXUxzWl+rt0cd2SzBV4SBpli2cFrxDw/0=;
-        fh=4xrY3atBCCYNrISxtVmjBqCmf3u072+qK8fdCrdwsxQ=;
-        b=fL627i5oxzr/4sfT5CfLz4LiqGP5eL+3k3x3SjckHDt1JnJOS/IJlKs66nLJqjyUJo
-         QtbUqa3nNjEBCG9Vtfc8OlouFk8gsGAgZ0aCnbuUKHkcw4++KCYyh1VCNWoLBgx/nw4N
-         b2wB1ZldKir6xUzKgKh697K0P/TfJ+uQC7b57t71heJRPZ0k2jx3XyOZL/9EPzqkegl3
-         eI/qoeaYCyiiW8LIO3ocaxTE/XvkWaRAzDyAQ7/r+hH+DhocjAbPwjXGnXUEX5CvPdyb
-         jjZsCjPV3ZPYd2NwRKMMWIBkylzjl4bCLH3yDOzh+WNheW1L5n1H7OezQkHcLPUfAhfo
-         Jlmg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YI/e7xN6"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-914bf8abeaeso557582585a.0
+        for <git@vger.kernel.org>; Thu, 28 May 2026 18:55:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780016149; x=1780620949; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e+cEO01gtXQXUxzWl+rt0cd2SzBV4SBpli2cFrxDw/0=;
-        b=kjsMavW0igLcfjVPazNIeMvMx+R5iMJtx/E2vfzZ/dAAp++ErQzq2rnSdVM9XqUeGc
-         cujZmS97GgDqV1ndhc60y3Szmf7CP8Droc2njB8UROn2bpgWLpr6Dy6+iIgeZ51ZE8HV
-         UhxQ40pN176DowWsP9/dJliGM+VxNjUbqJiCNm50zrmRIY0eQMKUEkz6pMYywmxhmSuM
-         jkg3ZawQh3w/q5y4mgTRvyqqiZCFoVu6JFi1fUuoF+gNg5XP/O3Y+8oafe/48/exCcVf
-         75vsgb4IKNIzjNbNsTxyL75ErgFttO+OA7v9DuRuwdFA2kgDkS37u/fjSQ4YCyEbQJrN
-         qdKA==
+        d=gmail.com; s=20251104; t=1780019728; x=1780624528; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=W6KO+YS7iDJSFK+xLVU45EWMo8Dliph6j8ncV6BJk2Y=;
+        b=YI/e7xN6hRrJGstbYL6tDppHmTNYpz7dvRmOugYFfAIO2u9pka4+tWHFIEJc1lCCIb
+         WO343lqLohJ21BA5zz9KCTR+qO3Kp+cGv/Q7cPazNuoT+GzqWDDoj/rlvrbvWSPy8/t8
+         Rlmo1kaEDv7cY6w2wT6xjKMtpmrAFxTzv0XeO18U6r6iMFqNcsRAdQSkVy5tVWATkXUP
+         2NnjE1+cnHs5M1Dzs4JK3nyfDN1pjeA6MU1pE9KcFsM4n+9bsY8zwIWcKnOHpcAfAmA+
+         NvReZmfhSd7L3ZB8uEP7KuJ9VeBumQzRVmFr2VLLg3gkRfPyvMJjMGac4iLxvF1VBVvS
+         Koiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780016149; x=1780620949;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=e+cEO01gtXQXUxzWl+rt0cd2SzBV4SBpli2cFrxDw/0=;
-        b=ptdfc+LBlb37Pi7ayA9CeLvdO2a5uZbRJ3HS/ZWWzmOOVODYbiY3qtSiAyjFwrHGRl
-         /8drGHJ7hGo3No8+sB0i1sckzmnyMjYfma7QGaJykBB1KXUkoioxDkbbnAksnVTMAKfn
-         vJXQ6yz1AFJ5rozqWwybIYgMDcBoWvbY/yP0hh5QMIkvoguhELpuqPm6aTamO9ftjXcH
-         AR51t/IFFluR0yLg6CYgyimg2aYHWH8EQvRGxrTUWgEFbi2uOBHZpl2fNGfrahn6HVsN
-         0cg4dooKJOEUUAaPQ3Rq7/x4hzxUQPQ0T6J/QdmlbqeJTiAVEpdz9gvLhZ+mnwgKe98/
-         OOCw==
-X-Forwarded-Encrypted: i=1; AFNElJ8W2tWeA7MWHi6Ap/DE17+3KuYqmERa7WfvfUqRE/84eEZEgbQZD/5/ZXZ2Wju2DJuMUEk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj8Byl+rD4ppCDF2FAPPXOC5amw1kQQ8YksIfqtsMuA3QeaWG/
-	CLRgunoOpUx9q944gF5JHEQ4YMT/aYgx2ARly6y2vPMblxOXFmDNW5+VMneXxKy0IYwisEYechp
-	IsoXkAtagwKAtjrPgeomXO4xCMb4KUS0YbfeD
-X-Gm-Gg: Acq92OEY5toYUyjgln+mfuL8SLGTYuB2pNyxe/Io5Qh5eq2oZzyrhrClz+AjvLX1A+E
-	88cZxbUDurhMeseMT/Ey/hDboLcVFwvlSKfQC8rc4JwTZvciDtaRtWVXeoEbnpwo/J8wxc7FY7o
-	7U2uS+t4ZEVcGSn0QnTAzl/+StNACOHgq6TOECPU0pessfM4ybLoKvThqtlKcVdIm/GYxe8C66c
-	Eq0nzzGEKK+/Pw0hzefFwMZUjtb+lDPk9gua8PwiRMyxqK5gglP4FSFtyenR1dbLRGZdoLKa7AJ
-	jdBAKHBTZRTXPFMEDMqAu+GTEC9VY7HUaKslp7cD5Jaz2zEc4xk=
-X-Received: by 2002:a05:6402:3604:b0:677:75e5:a1b3 with SMTP id
- 4fb4d7f45d1cf-68c10976bf1mr216954a12.18.1780016148693; Thu, 28 May 2026
- 17:55:48 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780019728; x=1780624528;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W6KO+YS7iDJSFK+xLVU45EWMo8Dliph6j8ncV6BJk2Y=;
+        b=SevFTWqZMhpWWeJqgbcLnei8R04+o1HxzpcV4gLGjwCWDeXTDs6hB0lX8GMKOYJocP
+         7LPa6+PX+sgqEc3GRKkKLLuKXf7brfFo9dseGpbHh6HqURQpwPOSTyIql5RxsK7B/cce
+         ThU62Y4q6RJ+IZyZbjXkQWjWGuSXMtYMEM+AROM/xwNoBb27s5xTas1k8ngTY+draOsz
+         vGVFPjYOIG1cRERYAwZnBbLLf3bzc8zb7TbMlvNo7NWAhgSf93wo/nR8e/TCm0TFKPVX
+         sMPLPSc2tWpNoFw+cv6veodvWQCOPjNtCZmwvSj2LeEm/MbCVPA4hqMe55z2pRM433bg
+         LpPg==
+X-Gm-Message-State: AOJu0YxlVAZ62IgY2lOykHs3WC4iY9pAnVLbLuE4JbzpVATlxmgg4rZ1
+	cErlHuDobRARFeQ+RZacug231FOjEHUdZ1A8k/er+Rhqxfs1VHKtJ3QEr3fLyg==
+X-Gm-Gg: Acq92OHsLKJj/pBgoHg3g64yOPBzWqGiDvQOvjT3egxJQ3fzaHoI0rdrrqiwX0jH0yw
+	tdqo82ZrSchQhmz3mDXePAEhP6JcyTVXXXVc0M4eDsVUrl1lR5MTxQ2AzRFfEEprO+ighM8riiX
+	mstUtpiQmCfxLYDa3rUIfj5UL3QMh4GtC42EzYlB4op4lkWBqZr4TuUvKJl+fDz3U8xDg+Z0CUa
+	7mwooUVfcNzTlXS04lan9OLiraDSDbmWIBemzKijEeEbwtSv/v+LxrBnYbOJ2u2X0gkHwgP5bc7
+	awZ0Vu0RxQWN8qNk3tBVyKXv57vBtc0iQUctEeGZui/Nvb1BdRDUeAPZS873WKw3UlDEAu1mEbT
+	6C8O/hwRwPfd1xoQk21paKEgiT0XL7hluL7z73UlpQqd+KHVfDKq/5/FxSqYAjpfdYFcEFfg3cL
+	UTVgpeEsm0XZPP4QumPb2xXUiToHpWHcQLWM8=
+X-Received: by 2002:a05:620a:2815:b0:914:e691:60ce with SMTP id af79cd13be357-9152fd6250emr124519185a.17.1780019728150;
+        Thu, 28 May 2026 18:55:28 -0700 (PDT)
+Received: from [127.0.0.1] ([48.214.54.48])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9153262b95esm10627785a.37.2026.05.28.18.55.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2026 18:55:26 -0700 (PDT)
+Message-Id: <pull.2315.git.git.1780019726297.gitgitgadget@gmail.com>
+From: "Brandon Dong via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 29 May 2026 01:55:26 +0000
+Subject: [PATCH] doc: add missing --message long option to merge docs
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2120.git.1779415884.gitgitgadget@gmail.com>
- <pull.2120.v2.git.1779733799.gitgitgadget@gmail.com> <c25647c6e571e293fc994e0620ca37709f680f8a.1779733799.git.gitgitgadget@gmail.com>
- <xmqqjysqnbxu.fsf@gitster.g>
-In-Reply-To: <xmqqjysqnbxu.fsf@gitster.g>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Thu, 28 May 2026 17:55:35 -0700
-X-Gm-Features: AVHnY4KtQRzVJhDHctUUsWI8Cv_xhks-GW0VtEwvLx78I4gdvU6B9NF_MrE02ec
-Message-ID: <CAC2QwmLa24iaUz5G0rnt-kxE5_o+4WdS2eYA_JyC_GfPhLUW6g@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] diff: add long-running diff process via diff.<driver>.process
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Brandon Dong <brandondong96@gmail.com>,
+    Brandon <brandondong96@gmail.com>
 
-On Mon, May 25, 2026 at 7:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Zero hunks with status=3Dsuccess means the tool considers the
-> > files equivalent.  Git skips diff output for that file.
->
-> Is "zero hunk" a common word or some random string you invented?  If
-> the latter, which is I am assuming it to be, you should define what
-> it means at/before the first use.  Here in the proposed log message,
-> and ...
->
-> >
-> > Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
-> > ---
-> >  Documentation/config/diff.adoc   |   8 +
-> >  Documentation/gitattributes.adoc |  40 ++++
-> >  Makefile                         |   1 +
-> >  diff-process.c                   | 206 +++++++++++++++++++
-> >  diff-process.h                   |  28 +++
-> >  diff.c                           |  23 +++
-> >  t/.gitattributes                 |   1 +
-> >  t/t4080-diff-process.sh          | 338 +++++++++++++++++++++++++++++++
-> >  8 files changed, 645 insertions(+)
-> >  create mode 100644 diff-process.c
-> >  create mode 100644 diff-process.h
-> >  create mode 100755 t/t4080-diff-process.sh
-> >
-> > diff --git a/Documentation/config/diff.adoc b/Documentation/config/diff=
-.adoc
-> > index 1135a62a0a..4ab5f60df6 100644
-> > --- a/Documentation/config/diff.adoc
-> > +++ b/Documentation/config/diff.adoc
-> > @@ -218,6 +218,14 @@ endif::git-diff[]
-> >       Set this option to `true` to make the diff driver cache the text
-> >       conversion outputs.  See linkgit:gitattributes[5] for details.
-> >
-> > +`diff.<driver>.process`::
-> > +     The command to run as a long-running diff process.
-> > +     The tool communicates via the pkt-line protocol and returns
-> > +     hunks that are fed into Git's diff and blame pipelines.
-> > +     If the tool returns zero hunks, the file is treated as
-> > +     unchanged for both diff output and blame attribution.
-> > +     See linkgit:gitattributes[5] for details.
->
-> ... also here.
->
-> I do not know if you mean "the tool returns no hunks" (there is no
-> "hunk <old_start> <old_count> <new_start> <new_count>" line passed
-> from the tool over the protocol) or "the tool returns zero-hunk"
-> (there is a special "zero-hunk" message to signal this particular
-> condition sent over the protocol), and this description does not
-> quite help disambiguating between the two.
->
-> If the former, then avoid "zero hunks" as it sounds like a noun with
-> special meaning.  Yes, we can say "tool returns one hunk", "tool
-> returns 31 hunks", etc., so "tool returns zero hunks" may logically
-> be correct, but "when the tool returns no hunks with status=3Dsuccess"
-> is much less confusing, I think.
+From: Brandon <brandondong96@gmail.com>
 
-Yes, "zero hunks" was my own invention and I see why it's confusing. Will
-update the messaging to use "no hunks" instead and do a broader sweep of
-the documentation to clarify the protocol and expected tool behavior.
+Include mention of --message flag in merge docs to match what is
+accepted (builtin/merge.c) and to make it consistent with the git
+commit docs.
+
+Signed-off-by: Brandon Dong <brandondong96@gmail.com>
+---
+    doc: add missing --message long option to merge docs
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2315%2Fbrandondong%2Fmerge_message_docs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2315/brandondong/merge_message_docs-v1
+Pull-Request: https://github.com/git/git/pull/2315
+
+ Documentation/git-merge.adoc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/git-merge.adoc b/Documentation/git-merge.adoc
+index a055384ad6..6581f4c69c 100644
+--- a/Documentation/git-merge.adoc
++++ b/Documentation/git-merge.adoc
+@@ -68,6 +68,7 @@ OPTIONS
+ include::merge-options.adoc[]
+ 
+ `-m <msg>`::
++`--message=<msg>`::
+ 	Set the commit message to be used for the merge commit (in
+ 	case one is created).
+ +
+
+base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+-- 
+gitgitgadget
