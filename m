@@ -1,92 +1,135 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CB3A63EF
-	for <git@vger.kernel.org>; Sat, 30 May 2026 10:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8FA22259F
+	for <git@vger.kernel.org>; Sat, 30 May 2026 15:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.170
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780137879; cv=pass; b=VFcrWxA9gnGnad/ICrGSeL7s69m0lOnJxakMHkPNCGKxvTOlOSRx3E+1YzJg7KW2h/nSFx1xV9eVoZHxEMcqBm/S9BYz0Xw5Up1Oz7n199rYdo+jj1rgayR/5kHvBOOf7+xs7tqez4xabJws5h05y7H3g2XB8cBhgOxLMd+9nh0=
+	t=1780153676; cv=pass; b=hBUVRd/7TiG0tSDxBEjQo5O2Uq9rz9Tv6FV8qf71vpvHi0GljEwIQ0YEvXiByc7XucI+2xPW+3kSOjJVoyVRIqkUFixw7u3cN6GuqgGI8URyQxmcrSo1d7zoa0jaIJugwZ9y+azYWhtkzyByu3qQs8rcvZ2SvbDDPcGt9BYBDQo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780137879; c=relaxed/simple;
-	bh=pE0QzHDYrZLMw4qv9biKAthPn1FlzVZiiyH5WYIskis=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=nGrcG2N5ivKi3vqVpQZv9zwAIW5DYMGCMHrFY0zhuL7XLrDvC/+3wG3TwLVm7cdKIKbY/8Y0nHO+6Hfs2TEDpz3sj5MN06oIRrHfsK17OXqsI/7qv8pGQkZfxA/vitHWJ5eH4V3lJwg6JBSr6HMJfIoFpYafWiGOHUnePfTYC2I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lAFu7GkI; arc=pass smtp.client-ip=74.125.82.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780153676; c=relaxed/simple;
+	bh=bVn/5ZKAfsZsibh2gSpRZ8ql+q8oDPPZo8Bd2oa/XLc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=IdQaKM5MOJJ5RnaJ9KHKA3+KKFRVDBpLwm7X817FXV9+39PcH+CoKgRqwzaFbcfxDT91A42LQGkXiiqqXarR1HCu+G2kiARlTkH9CEsumKwAnrVfHRHa7e7CdUyGlBdU49GWGfkOkgr8uXEqyK5XZztzMjpVvgygOaMDOhb7WYA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=diyguys.net; spf=pass smtp.mailfrom=diyguys.net; dkim=pass (2048-bit key) header.d=diyguys-net.20251104.gappssmtp.com header.i=@diyguys-net.20251104.gappssmtp.com header.b=NHofN9ZP; arc=pass smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=diyguys.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=diyguys.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lAFu7GkI"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-304dc707bfbso248820eec.2
-        for <git@vger.kernel.org>; Sat, 30 May 2026 03:44:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780137876; cv=none;
+	dkim=pass (2048-bit key) header.d=diyguys-net.20251104.gappssmtp.com header.i=@diyguys-net.20251104.gappssmtp.com header.b="NHofN9ZP"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-84237c55ef9so74865b3a.0
+        for <git@vger.kernel.org>; Sat, 30 May 2026 08:07:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780153674; cv=none;
         d=google.com; s=arc-20240605;
-        b=CGDAAPW+1TXZPkn4NDVlvbxYWhea58D5NcWwKuO65tzS7qlVIXpRzmWU/PlWzfUbJS
-         DjbP1iR19RIz2QgoacC4Ah2tDxxj7+O+COYoJ1vswQBp+ZVVJo87jfykI26cuyrT5yqY
-         80FJ+lKzNlEcrUqz3TK4KDAaK/PH/YzNC53UnvDpr5J8ypS3QH+GHWSlDEOn+lkVCpHN
-         jQMQrj2cS2OyFc3nobXc+ty5Lr0uIsvkWW5L21i5gDfI5SiBj7k4VRPRxtCPs23182q8
-         xaaN/AiLXcY7SQ/HXVNqJbkh4com7BNfAlPHfC1ViK/2P0KBLiZ3QXvOz3hiVb4BK1QU
-         cz4Q==
+        b=BWGK6je56PGgOos2b9M5rSliy7lbG+AM4IW3pRZ1XQvhwAmLIhAM6jALr/z5MngLUG
+         Epzl+X6RkYnX0LXCiRwNib3A7Y9TAlPot5GODi+iyh4qKxpGwvFzmICsrd6DAK0kI58A
+         Q58jfVUvMt9lPu6BHnFftY1nMYx4TwFYgZZoRSHMVgOVbB0E0JzIHW+o/Oq+WkrUqQUz
+         dTgnyzn2aAp4mVk3VPhpCCOcBALMYTGrC8OgQ7zl8tgFUsWwYyB55tE3BcPfW0MTX/SX
+         QwkgpUazyBPjBlitsQD22YvBOyJ3Xy7CHfi3N6p5L3nlcAxq2nURiW1mExboIAZF0ZTR
+         jt/A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=pE0QzHDYrZLMw4qv9biKAthPn1FlzVZiiyH5WYIskis=;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:dkim-signature;
+        bh=bVn/5ZKAfsZsibh2gSpRZ8ql+q8oDPPZo8Bd2oa/XLc=;
         fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=U0TvsGjuPoTBNJBXe7J0zde/0JgMHBca8JpmK9aHyRM0XrqCC2yJBPWrNZO9/iiubp
-         umrU7pyEKJr83JG4S6TJvZPUkrYoYJJP3GbUgJm+Tyw4nfA2sbapzNGfntkXls1rcW3Y
-         jmJyC88qM2de70Q5C/mMLVZ93nfHRDvh1ubJzokVmjLMaxKvsE2Z+sE+t6FGLXiALrE1
-         svp+l5xhjKvdrVHFHYC0n68H054B4uwOK25G5qu0BT/cKEl5WD6HQhjVUhlCMe0QePIy
-         hVa04ogSh+mQSJ2AfbOQjVvOg5DvMQkrsrVlxqpQqJb40GhEWSs1Oi67Q6cK7r5CK1y9
-         RXTw==;
+        b=HiPBYpLicA3rmVY4VYrMd+zXdgMC7saAOlof2i00Ng4Z4y/Faf0zyiKnwEBx2HwVrz
+         EjyfzaySB+hQasP3C8vZIY6JeUhb6r2YyGZknh8PS1SkFY1rOheSahffU4OkYGPcFnmS
+         qWEXCXPRLpJpd9ZU4+1GayGuxZHF/40zMIKILly+mcBJS6c1hIPsY8bpw8YdaysX8DBd
+         nFPgxIJlJOFIFOJmFxfhZtPUTTbSQjNvUXXfG73RGVZJyHOW8gwOdrI9zK3xLBTRLMbf
+         9w70hRID8NgwmQkGy4TJ9CnLBlHrtvG2aR9WDMbpSxd9Cor3NKoVwepxMGMFMjIiWhjF
+         tgpw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780137876; x=1780742676; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pE0QzHDYrZLMw4qv9biKAthPn1FlzVZiiyH5WYIskis=;
-        b=lAFu7GkIf1MMZWe4e+qFf6QZyTlPZX9fuPN+ZlDEnTAKuGG0dHd9kRKJpjfdZ1u5af
-         zlMNTHm3Bi6UJvs16rknoe4Y7mP+rCiJZoJxUmsPf8mQaR1K41jnKphmdZkpI3vI6/FB
-         NMHuoouj57fwh4rmhHZk+Lrb4Tz7dlCZhtgRx4VeafEGcpjivvIXmAJHDoTcHe29bICA
-         Sh7T6lFXXBMtbJoSKPmiT1xKuJiryKnGLEm8tKeEUE1pzP9ZCzHjs3dey0qxQSZVljRv
-         4UeG86pnkIbkhMwGtCDeEog5Tb4piBRO0E2l6/mc8DjvzX+CG4EPjd2mnw+XBS15A4cV
-         0LqQ==
+        d=diyguys-net.20251104.gappssmtp.com; s=20251104; t=1780153674; x=1780758474; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bVn/5ZKAfsZsibh2gSpRZ8ql+q8oDPPZo8Bd2oa/XLc=;
+        b=NHofN9ZPk8so6H4GvV24bOS06nVAgEdM/h2218vEt2ihOFVGq2CqNc1oLFA6PYc9E5
+         0TGLGZRTdv1h+pQXkgRcypvdnhkEeJCGMroQ17/pWTpLyltloYGWeUkDz0TVJxJ7B2HT
+         8viyHJhNX86KZXiJlmDXvgccUtonbKMNd5WAylR4oLxmefxa8hoPxy/4dlSR0yr+/5sc
+         /yBlCj+tqq7CNdJrBp9rhJPoZjRR8GfXwmlDoFs+/pFdDXTthvwvqzYYkSLCTpPoCDRf
+         6juQPNa5sw5g1VJUmF094V502P7NxGKyH/XR9jAYSpqk1b9Qu9QSEpTWMGCQpAF/c7y5
+         YFqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780137876; x=1780742676;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pE0QzHDYrZLMw4qv9biKAthPn1FlzVZiiyH5WYIskis=;
-        b=MPKeF1i1GG15TOL+X9U7xbSUR1wjP49iM8e8NqMx2sT3egHvQ8zIvuyqv9xnwFj/Vy
-         /vnx4fhM5lf6cOWO0E42F7W3O5iXo9No2P7LkoYjrY03/N4wpB3xX9wcsSubFH4FALdF
-         2UXHSRXgHcmII2erYOAekGPwAWm7gDeRrJPNbs90sqQ7B3KrhVUETUyRsswR8IvU1QOE
-         Yyvz68ELD1PHd6cXrVLXqhc3xRqbjp18Myaoyeb79hCyBl5RrVV29G5q9rrIS98ks5l2
-         1n2eYiiwFIFJmSCGSl+Q3oUc6jbJ+UIi6WJ02l+QOLO6YXtNvh8z4Y1/YOZNTLMQzGIf
-         hbsg==
-X-Gm-Message-State: AOJu0YxzrNOTDc5nSd8yvD91/jg86S08pkENs41hmSr1zZjVQQx+DWXt
-	QVK0HmIaJ/3EyBlSV6jDaBg3ujZgmXT/fp97m4MA49gS+WPpNK9F2a/qEU8itNbxAt0Os9LglVX
-	0gE+V8/l+arbfBNE9qSTm22vfthjNTRuEWA==
-X-Gm-Gg: Acq92OGXKa+nlm1vChNUblVWYUJVP08hhZft/RK564XQM+GlXx1+pIWJJA67ZSt6+jt
-	QTVXWuzcVfM3Q46+PHA7Bsv+dN9ffzmIJ+vBc9gqWu/5LQIIOCgv5vSSHWbWzYhRD60/8Ep7u5h
-	j4gnVyiUQZZ6KFk/PEP4+WbsHQ1I7eMQqmYbcU/h3t2+PXiUSk/wUhtdX5YlPMt9054vmhBBUmc
-	u8+GHFDfDMlTd6Aa1GKkJXns954XO4MwTSloRv10YhXO4sCUAtGJTuC5tj8ArAub7yMqj+N1s15
-	UBUP0OB8dVPvh7JTDrW4txQrT3R/e/ruoNIrP6Li+567c3y0HyU=
-X-Received: by 2002:a05:7300:a198:b0:304:8361:a8a7 with SMTP id
- 5a478bee46e88-304fa65a384mr589382eec.4.1780137876018; Sat, 30 May 2026
- 03:44:36 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780153674; x=1780758474;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bVn/5ZKAfsZsibh2gSpRZ8ql+q8oDPPZo8Bd2oa/XLc=;
+        b=YIcbDlwo4y7DNOaQDGHH+4JjPzNrY0MemvEIUjZskSgEpi4IbQ+y7ucPFfCWv7MG3y
+         zuq3L9pRvLOIqb3uWCM0A+cEnc6lOF8oD45mgimYk+/lkJLQmRVDR5IiTV/I8giQL/iJ
+         aava55LlR0Md8U+IJFdSCp+11VLQdFhbAALilzu7KL3En5J+afqQyPp60zK4vPjpfrFa
+         WQfM3JyLUrWl+P29IEx2pPzH7IYwE2ZpuY2ZCrVssvG/FJxoKCOFoP/qagEQr0Po5QgY
+         VpimYwUsNRoxejABuMB5hxPmJirx1S5XTiIGmOzkl9iMx7EzA6OCeLr41BDt2jwN4dlf
+         9S/g==
+X-Gm-Message-State: AOJu0YwdDS03+Hi9jNH+JSSiEt3NAPayZ2wPcp/3DDRCKc5i+QhXlxje
+	S79W6VIgZsIUuSUUiJ/440v3DOvjXdrP+4t3VsV5OR+w6CeYLCL0sQArf9veZIMQheoIBJ4EbiB
+	ukaKJzqceybQvE+kU1kMdPL8hxCt48eTXSYP8hcZIbqThFZ4A1Qe9
+X-Gm-Gg: Acq92OGbCrFRAIw/ubu/yrMP/vd0t25A9d9GvD1QBqBmaLNtEaf5Cxy6LmijNlsYlu6
+	YUO9HTxIa2IquGvq9St83kjXULaKqPqJKR8V7DsYBbKoyqh/T8MpNeLqAoUaZhESXEQyubDtJiY
+	q0UDAwbfVsAabUI9dMQyeFkbxbdEdxjcuy2381P5qhc+0oKS1xeqggwfO5CN40snQHuMug6W6Hx
+	aqITaOqb5MqMs2IKex0BQOQvdH3q2gXZaw2y6CksGz95id8z0rXgce2mS4hrCLb3g0fhr3wfy3j
+	vPrx5UoRbUgQLGSdv7xY33tl90K1KVbifERJKw8PzENU0ZAS0KV0EJY1s71PkRT6lVOu7aKoOry
+	IhaFYaZC+VhYdq7NCKVZIKDeSO7sKs0b6Tud3WsfpJ+yahKcagGaZ79usCE/Hgd8spLNVdOyxPg
+	eO23rA7XvxlHqIYuo=
+X-Received: by 2002:a05:6a00:4097:b0:82d:30f:b197 with SMTP id
+ d2e1a72fcca58-8422545070bmr3832277b3a.22.1780153673888; Sat, 30 May 2026
+ 08:07:53 -0700 (PDT)
+Received: from 843110291511 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 30 May 2026 08:07:53 -0700
+Received: from 843110291511 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 30 May 2026 08:07:53 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Alix Brunet <alixbrunetcontact@gmail.com>
-Date: Sat, 30 May 2026 12:44:25 +0200
-X-Gm-Features: AVHnY4ISPF1O5ghNc3nGycHTc5Neo__ExbDQtkSq62_ndKOXIIbjxS9DSJeX6TA
-Message-ID: <CAPCeX5a6HxD8pAcE9th8+0zhsa-nabRrJQpjKXJrg02zc6EAOw@mail.gmail.com>
-Subject: git-history drops signatures
+From: Bret Engle <bret.engle@diyguys.net>
+Date: Sat, 30 May 2026 08:07:53 -0700
+X-Gm-Features: AVHnY4J3pIJe1nQVTe-_CxjyDhTteQyqvEy4wEoaf5nc2YP_Zice_xgEV700QO8
+Message-ID: <CAE5UgKWMqBF+JDTEfHYWomWG2zBe6d6UMnFnOUR5C0WWt2Hfyg@mail.gmail.com>
+Subject: =?UTF-8?Q?Unique_article_idea_=E2=80=93_your_thoughts=3F?=
 To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hey team ;
+Hello,
 
-I noticed `git history` drops signatures,
-Even though `git rebase` can keep / re-sign commits (`-S`)
+For many seniors, gardening and lawn care are not just tasks on the
+honey-do list. They are enjoyable hobbies that also have amazing
+physical and mental health benefits. Still, as we age, it becomes more
+difficult to perform the activities that keep a yard beautiful and
+functional.
 
-Will this ever be implemented?
+We=E2=80=99d like to write an article for your readers about how to maintai=
+n
+their outdoor living spaces as they age.
+
+The article is totally free. In it, we can talk about a variety of
+topics, including low-maintenance, budget-friendly landscaping
+options, senior-friendly gardening features like raised beds, and/or
+tips for making your outdoor living spaces more accessible.
+
+To give you a feel for our writing style, here are a couple of samples
+from our blog:
+
+Great Home Improvements You Can Do Yourself
+https://diyguys.net/blog/great-home-improvements-you-can-do-yourself/
+
+Ultimate Guide to DIY Shelving
+https://diyguys.net/blog/ultimate-guide-to-diy-shelving/
+
+If you=E2=80=99re open to featuring our proposed content on your site, plea=
+se
+let us know.
+
+Thank you for your consideration!
+Ray Flynn and Bret Engle
+DIYguys.net
+
+
+=E2=80=95Totally fine if this idea doesn=E2=80=99t click - we can reshape i=
+t or pitch
+something that aligns more naturally with your content style and
+goals. Our goal is to deliver value both to readers and through online
+visibility. However, if you=E2=80=99d like to opt out, just tell us!
