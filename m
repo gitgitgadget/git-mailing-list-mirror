@@ -1,208 +1,131 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D20D1F1513
-	for <git@vger.kernel.org>; Sun, 31 May 2026 23:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F0374E67
+	for <git@vger.kernel.org>; Sun, 31 May 2026 23:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780268592; cv=none; b=m9BiZP3VRt2lLHtTTI1BdNARlJs8Su4jJh7kAseQqijVqCH5Q9KSgFRzep6YjtOjDJvhONqR+C+ad4CzJtqyfSoRtjQS3r9ajw2pvYmmAwiAQlI+hXaBmY+bsuqvRZl13f1K6tGSNpHeIxwkXJY0en9Uyjt2VBmOZrziVOZNtC0=
+	t=1780269414; cv=none; b=so6icIKiL96qk6u0f4uKnWPCTqFevRhBxqtIQq85EzhNamFidixl4y1MDjVFn3tVYAQrpZHW2wM7Qu3v6J53szdgOxK6Dwh0tyfmqYON9O180ezFtxHhu+pfT5dudy9Q8VRfCPp3OFhwR6YnJj5dz05GyziwrRTD9Hszt0UuwCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780268592; c=relaxed/simple;
-	bh=mFKJjMhl+Z6Npo0yD9aye8WUJd2zXKGGxsSxyd4eWcA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UF2WXddMXrHZolD91OSmgdB2WGtEV1mCp/YVmgLcAURSmNmUq5+zXD8BHRlfepRlqTvCH8WzVmu8e0kyV5vcT4C47LEwmhBY6i+/MElpXW5dq9EHIx/Zlh0/86F0Fn2Lf9qx9BC9eZxm71BeJ3ZacqvItZkV0SR9xRwG/RzHSjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYJ/fao0; arc=none smtp.client-ip=209.85.219.41
+	s=arc-20240116; t=1780269414; c=relaxed/simple;
+	bh=/hfLfnoTBH6LwPl2qxfCohw8YrmoMG2qqpDbGYxQCzc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fbozUQM4MLfMI23c1nceLOXR2Jbql/fu1LfAoMB1kGPaPejO8zUJ4cHsdtPTYejBQUGLCJzPNuVur6Fd40PXJG+RvKFrw5PVJTh5nRdjQJFujwo7tmk534f2wl3NWi35nCBl0Jyv9FXUKqCkEgjNawxqd+7ySKSsEUI1N8emCZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K6sWfxR3; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYJ/fao0"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-8ccea53f35cso28458916d6.1
-        for <git@vger.kernel.org>; Sun, 31 May 2026 16:03:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K6sWfxR3"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-51758478240so483951cf.2
+        for <git@vger.kernel.org>; Sun, 31 May 2026 16:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780268590; x=1780873390; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2MLfIM5AN5iCsdpyGtiqWmsFqns3yQe4TOcWgiSDtoE=;
-        b=CYJ/fao0UySM4kOVFExGB4Nn6THgoagMYdzCbhnPNAmw69N20X3qEQYRYOIHPVP2do
-         XfVzCiokhSAvQTWKUnx0q6nvNaWur7eUNxNZTp0zYvp28EfuHIro4IiBcrRWsMGq+5rt
-         dL1Q865J8C1ol+0P5I+TY1zYAV/pGYt9K7zjKcTtrq2jc6LitjPylv50GZ1Dh1xXTRIo
-         dClZKFIi9YDOyU4j5xWAi+y6F2ej6Nohn6arHno03I9nfn1wnltt5QZDmY5GgNWmhUhH
-         Z3d5x9M+FWzEYhJ7uQdIAz92djMjrs0SUFjmVANj6g4jXft8jESp2DkRD5JpNh0GOFYt
-         qEcA==
+        d=gmail.com; s=20251104; t=1780269408; x=1780874208; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9KqQOxr3E3qMEcoFX5UD2Nf6VwFgoB4GQrjpVgpCi7g=;
+        b=K6sWfxR3NFM4jUqZmKakjpNefkP6pCFbi/0xQ+Jlwg5ssTiKquqluENN5Uj/8KxiSo
+         g2TTa754hrs51uNKgFhTbktMxLKE8OU/48d+CnoFx9UFPCuA/SQ5e7Br3aBYNQmhaeUw
+         48nEwv6Bv66PRTIJMXvTyBZYAPeseU+P3MKDkRlxPEX+65yr951955HrUZPpMQxcVjAR
+         zO2CKpxVHk9pl5RyINRZbAHHopdQjOGptNle6HgbYYlvLlpaFsYVHnGR+GXw7wFnbVKf
+         7Bq69R4JcwWK/Ta9QhJNVdw50TW3AQ+jV2kZ9IejK7lwoMx+wNfxJnEqu29wOiWAx4PO
+         rhig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780268590; x=1780873390;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2MLfIM5AN5iCsdpyGtiqWmsFqns3yQe4TOcWgiSDtoE=;
-        b=C9d0hq4NZwSZQMRnGeK8XLGuS2PjnDn9xc6hstzXnlgIpCg5v39Y5UPxU/M3ad1luk
-         hdy0hF5MRx9lN2y5w8XSUHhgx1QgVuQvWRZQTVUEbbsprRU+AzdpB2m/PMer4Fzx0sYK
-         6WgaNtRYmUS2jPTnBlIEJbYLHrZaYch29nAgWyaiFAhtlw9u/BFzImIH60VXq5dSeUND
-         gpNsmrDLnHrZknuCFyz3snfNDgFN7oxUJrk8hE2xEvfssviSfsEZUEBbb1JkrZ11Lg9p
-         PZRHA5BX2b1Hl5MmjKKJkdentg+IzteX8Tl5BWULsDX20E/8voEMilQDRyeG0kIcIy1m
-         fgNg==
-X-Gm-Message-State: AOJu0YzABQ1njxtZrbY4bm4sFfTaGcCvGPLF7WcRvQF+SlkYkftAvIsE
-	NCW2/UVI6CEzCv1ySkrKvnqZGlJUQtpuT435iyPLo84Hq25r8XeYjXL8K9E0+3mp
-X-Gm-Gg: Acq92OGdCxLcsTP2zmvMKJlTAJ34E71Cn6rotl7L5OGkkE+6+rkGPiEz9fslXPhwa7v
-	IBU7FiUhVaVQFE2T0bri7/dMq75F/AXyZ2XPjbb9D/K6MkDnmy27UeSUfT3Q69wyEqbA/WTrGy/
-	JDhyVzFk43STTrK+eL28pnx/sbO906d/cGx/wv/lZgCP7bBfMRUbQzx6MvHonD2FEKGtCcHuUXd
-	zbWzVizo8dOfCdhBneLmOkzXzdkeD0U3OyZFkmSaEKkrOjMzm/FkoNCuR/WP1MT/ylqb+DvbkGi
-	7Iw7bCnMoqpwy4YNn7E2x42nS/r+Drpu2rKuuPz+L5qCZIRgxBmv2Fqj6nDghOQ31pqOY7wHYXs
-	P+WGazQpWfDAHGsZ/PkotgqBpkDLmJH1x8Kw0Wnjd0X0xGZiYIcvyfoPAFdqLGjyLcSf2mg+R6F
-	1XDoJ5g+f0n3rB2+yNcWw2iNuw3eb5+sBNAaca
-X-Received: by 2002:a05:6214:20a3:b0:8c6:27f7:30e1 with SMTP id 6a1803df08f44-8ccefd4d0bfmr120414316d6.15.1780268590173;
-        Sun, 31 May 2026 16:03:10 -0700 (PDT)
-Received: from markl5i.lan ([2600:4040:264b:4100:d17e:f99:a560:8cad])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ccea042bb5sm78268426d6.8.2026.05.31.16.03.09
+        d=1e100.net; s=20251104; t=1780269408; x=1780874208;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9KqQOxr3E3qMEcoFX5UD2Nf6VwFgoB4GQrjpVgpCi7g=;
+        b=WbQIUQGxta5MJgVe2BXdYCY4IgWaE4KB9rDZHGvqo8uVf9odE3rdEh7q6u8PYF/4Zt
+         zH6RX45F8OH710HO8DQmcXgZGIgqe6HbmjrSr0dyrHF5/HegK/IyQMFTTZZUDZJG+MbP
+         /5JIJ+wVCNGMlb3UpHX+HbOvpi+VXWlI73hyvcssk2Eun3eg/5IvkxDa6VZg37s3QXB2
+         1ug6tZMzDy+6qGzjIoUmqiTyYUJI4lUCzAUst9MsNtnOqZoHHjQF8uu4bVyY6fm+SOqD
+         WEfs7jmS5ij3lHJ4MqVEl9IkQzv92/6LV61c6UzsgSNVQW3CJfTeYiMZjxBUgdm8sqNh
+         Sx4w==
+X-Gm-Message-State: AOJu0YyvxGiCAinB/d53lQGKbr5xa1CYXS0jx+E7wXuwuswI6OzOeyyr
+	DcoEjMsaZDYipRFjFaF20Av0qFaFiZT3TIVMVlyVNypQ+FVaRAE+F74E1z7Oo5R3
+X-Gm-Gg: Acq92OETAN8Q/QLPMrDHdgl2UeG5UR4Bd7djjld0Ol27WuVyruyQ7t3Flxw/OCi+IFf
+	wfVGyv1AgwLT93TMuOIXBaKWvJhBVThSZfepF0OoPIapV1cjLksnTw4bJvbkAjfR80assZhzlpi
+	kzIDg543hc+LZ2vxL7NiVMlNKb1EDZXth+4JXehQn3GW67MeekxK+gYJbE7+rfFMgkobbV2Ju7j
+	RQhB3fv+p52aFpQ+OCMD7I8Y1dRvArBm9zRMJpW5T0FkU/qFPwfnEejQKL//X4NL/T9A6OnPGDn
+	yL0muLjfO7n63wMDCppv6kQBX2SQ0bFG+pC81jEp8yNk2N+AEV3YNXYouKhqCdIn8hH92ckOTd2
+	flZsYBnnXdAEfkVItGEOzeLtXMiIa+lmco1s782IH41OKR3P0YwaWWPxvlCEYeMJGcKLaOid2Pi
+	W9VcAGyYongmaR8GYMex/9edLsdapQmDdW04OSTv8=
+X-Received: by 2002:a05:622a:4c0b:b0:516:d955:ea4 with SMTP id d75a77b69052e-5173a712bfbmr137233291cf.17.1780269408116;
+        Sun, 31 May 2026 16:16:48 -0700 (PDT)
+Received: from [127.0.0.1] ([172.214.155.179])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51741b06870sm41058511cf.4.2026.05.31.16.16.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2026 16:03:09 -0700 (PDT)
-From: Mark Levedahl <mlevedahl@gmail.com>
-To: git@vger.kernel.org
-Cc: j6t@kdbg.org,
-	egg_mushroomcow@foxmail.com,
-	bootaina702@gmail.com,
-	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v3 12/12] git-gui: add gui and pick as explicit subcommands
-Date: Sun, 31 May 2026 19:02:25 -0400
-Message-ID: <20260531230225.126817-13-mlevedahl@gmail.com>
-X-Mailer: git-send-email 2.54.0.99.14
-In-Reply-To: <20260531230225.126817-1-mlevedahl@gmail.com>
-References: <20260520202411.108764-1-mlevedahl@gmail.com>
- <20260531230225.126817-1-mlevedahl@gmail.com>
+        Sun, 31 May 2026 16:16:47 -0700 (PDT)
+Message-Id: <pull.2314.git.git.1780269406949.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 31 May 2026 23:16:46 +0000
+Subject: [PATCH] Makefile: drop duplicate %.a from link recipes
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-git-gui accepts subcommands blame | browser | citool, and assumes the
-subcommand is 'gui' if none is actually given, But, git-gui also has a
-repository picker (choose_repository::pick) that can create a new
-repository + worktree, or choose an existing one, switch to that, and
-the run the gui. The user has no direct control over invoking the
-picker, instead the picker is triggered by failure in the repository /
-worktree discovery process: this includes being started in a directory
-not controlled by git, which is probably the intended use case.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-The picker can appear when the user has no intention of creating a new
-worktree, and the user cannot use the picker to create a new worktree
-inside another.
+Three link recipes list archive files twice on the link line: once
+via $(filter %.a,$^) and again through $(LIBS), which expands to
+$(filter-out %.o,$(GITLIBS)) $(EXTLIBS). On macOS the linker warns
+about the duplicates:
 
-So, add two explicit subcommands:
-    gui  - Run the gui if repository/worktree discovery succeeds, or die
-           with an error message, but never run the picker.
-    pick - First run the picker, regardless, then start the gui in
-           the chosen worktree.
+  ld: warning: ignoring duplicate libraries: 'libgit.a', 'target/release/libgitcore.a'
 
-Nothing in this changes the prior behavior, the alternates above must be
-explicitly selected to see any change.
+Drop the redundant filter from the test-helper, fuzz-program, and
+unit-test recipes so they match the pattern used by other link
+recipes in the file.
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- git-gui.sh | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+    Makefile: drop duplicate %.a from test-helper link rule
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 22939215a6..933e72c9b2 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1024,6 +1024,8 @@ proc load_config {include_global} {
- ##
- ## feature option selection
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2314%2FHaraldNordgren%2Fmakefile-test-helper-dedup-libs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2314/HaraldNordgren/makefile-test-helper-dedup-libs-v1
+Pull-Request: https://github.com/git/git/pull/2314
+
+ Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b31ecb0756..309d1d1e74 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3392,7 +3392,7 @@ perf: all
+ t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS)) $(UNIT_TEST_DIR)/test-lib.o
  
-+enable_option picker
-+enable_option gitdir_discovery
- if {[regexp {^git-(.+)$} [file tail $argv0] _junk subcommand]} {
- 	unset _junk
- } else {
-@@ -1035,6 +1037,9 @@ if {$subcommand eq {gui.sh}} {
- if {$subcommand eq {gui} && [llength $argv] > 0} {
- 	set subcommand [lindex $argv 0]
- 	set argv [lrange $argv 1 end]
-+	if {$subcommand eq {gui}} {
-+		disable_option picker
-+	}
- }
+ t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
  
- enable_option multicommit
-@@ -1050,6 +1055,7 @@ blame {
- 	disable_option multicommit
- 	disable_option branch
- 	disable_option transport
-+	disable_option picker
- }
- citool {
- 	enable_option singlecommit
-@@ -1058,6 +1064,7 @@ citool {
- 	disable_option multicommit
- 	disable_option branch
- 	disable_option transport
-+	disable_option picker
+ check-sha1:: t/helper/test-tool$X
+ 	t/helper/test-sha1.sh
+@@ -4015,13 +4015,13 @@ fuzz-all: $(FUZZ_PROGRAMS)
+ $(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
+ 	$(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
+ 		-Wl,--allow-multiple-definition \
+-		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
++		$(filter %.o,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
  
- 	while {[llength $argv] > 0} {
- 		set a [lindex $argv 0]
-@@ -1080,6 +1087,9 @@ citool {
- 		set argv [lrange $argv 1 end]
- 	}
- }
-+pick {
-+	disable_option gitdir_discovery
-+}
- }
+ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_OBJS) \
+ 	$(GITLIBS) GIT-LDFLAGS
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+-		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
++		$(filter %.o,$^) $(LIBS)
  
- ######################################################################
-@@ -1168,7 +1178,7 @@ proc unset_gitdir_vars {} {
- 
- # find repository
- set _gitdir {}
--if {$_gitdir eq {}} {
-+if {[is_enabled gitdir_discovery]} {
- 	if {[catch {
- 			set _gitdir [git rev-parse --absolute-git-dir]
- 		} err]} {
-@@ -1180,7 +1190,7 @@ if {$_gitdir eq {}} {
- }
- 
- set picked 0
--if {$_gitdir eq {}} {
-+if {$_gitdir eq {} && [is_enabled picker]} {
- 	unset_gitdir_vars
- 	load_config 1
- 	apply_config
-@@ -1195,6 +1205,12 @@ if {$_gitdir eq {}} {
- 	set picked 1
- }
- 
-+if {$_gitdir eq {}} {
-+	catch {wm withdraw .}
-+	error_popup [strcat [mc "Git directory not found:"] "\n\n$err"]
-+	exit 1
-+}
-+
- # find worktree, continue without if not required
- if {[catch {
- 		set _gitworktree [git rev-parse --show-toplevel]
-@@ -3104,14 +3120,15 @@ blame {
- 	return
- }
- citool -
--gui {
-+gui -
-+pick {
- 	if {[llength $argv] != 0} {
- 		usage
- 	}
- 	# fall through to setup UI for commits
- }
- default {
--	set err "[mc usage:] $argv0 \[{blame|browser|citool}\]"
-+	set err "[mc usage:] $argv0 \[{blame|browser|citool|gui|pick}\]"
- 	if {[tk windowingsystem] eq "win32"} {
- 		wm withdraw .
- 		tk_messageBox -icon error -message $err \
+ GIT-TEST-SUITES: FORCE
+ 	@FLAGS='$(CLAR_TEST_SUITES)'; \
+
+base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
 -- 
-2.54.0.99.14
-
+gitgitgadget
