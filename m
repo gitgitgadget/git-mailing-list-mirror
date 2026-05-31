@@ -1,81 +1,83 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9038316A395
-	for <git@vger.kernel.org>; Sat, 30 May 2026 23:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA471A9FBC
+	for <git@vger.kernel.org>; Sun, 31 May 2026 00:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780184832; cv=none; b=NDRBi4Mfrwv2cFmgxKR1wHPTYDWruRU5AcbzTLoYlh7w21K8fT7jRudTOrSX7KbyUfWzns24fw9REvvSyUUQBSPn9Xr7MXDRev8BJYWHGIJbPwvogoT+U/9/4/HZVEMjYWxvdEa08FoxvMhPPIxpCWRv9/UrlbnFPr1GbYu5C0U=
+	t=1780188400; cv=none; b=rZF3jMzoqx2apG10SKkWNvi2AW+WvBxhPCSUvmvpQ67Y77pNr8JE+ZIJxP4lfK6TWEYZbAL+l8nNBrdPMFVm2sfG4Zk2L0eYDorWJiRPnHcTT5lSrStQwB7xxbfJp3yUums4cQqVnwoRnpCmH3V/FjMhNZI+mfCDOovHGaxC5nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780184832; c=relaxed/simple;
-	bh=YlHfFJJ/9KBt0RGMJIGStXkBB9Acfu8NKcTSrbwbeyE=;
+	s=arc-20240116; t=1780188400; c=relaxed/simple;
+	bh=d0Pb1DK72qxMlo4qJtU46UW8u2q1auEYjDhgxvxF240=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Aq9eYvAOPep6zzzZJMXwFyfPKZhu6n+3tYd4vXwR9SL2jOh4kwfdw4dubTj/KUXozeJnzDK0rZDriUaWuTaKR2kL38tXuU0GLLfKvJIg8V+2QJtLVsQ4nkichtxU5f16OahjTcsNSoDOTkdNcWEFLVPQ2Us9hNsDvVHaWZF6gCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j2paOr/Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQf0dH/t; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=OW6slSPXDAXsiPqY1SJMlzeaNUfS5JB81dtkm56Mu+fYLnkItPdDswMaXwgxOrygTt4/o973NJl28HJhkerkh1wOE2eJqYcfr2W1ouh95H0rKnCy7YEb5XV13sda0PAEPJA912djxSTDjXe8Vp83hHr2upcgDqTIQ/XPaXJVTJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LEiLkljt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L8BrzvIE; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j2paOr/Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQf0dH/t"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4E9B31D00031;
-	Sat, 30 May 2026 19:47:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 30 May 2026 19:47:09 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LEiLkljt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L8BrzvIE"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 13FFA7A0065;
+	Sat, 30 May 2026 20:46:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sat, 30 May 2026 20:46:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1780184829; x=1780271229; bh=klINtNg1Sl
-	wwEckkD9SdTHaUgcZcT3GORtp0Nje+3B4=; b=j2paOr/YERD7DS+aCiX6+sItU3
-	tywuD6STN7awLziLFbIndstft78SIgaGxIomro3DLQA86F+K4L+Ay/z+70OVZDNi
-	iBraIkXlZDX4jhDnXWeWIKMFvYlJEwfFQv3MhzK5kILOtdruEmEg5PvccTdwwCg4
-	EO/bANNxmVIjegjVF8XTCeII74zTHNo9+KoUtJWo7gd/nnRLBgt4GjjX7/gxXCFN
-	DoA3wfK1zsCv+5Mo+SYhim0KsJozMiEvRxXbunygWscg9x3vR8a+sQqF0V4TQgzU
-	+d7u43m4sKJfrjeBT041JJ4gc1UBltmicQ6Wnh/a88stPWXtOCXtZw4a7miw==
+	:subject:to:to; s=fm2; t=1780188396; x=1780274796; bh=XptlJL1TqY
+	S6jGZaTHXH/b9pOb7PBQT+jqTbAjWi9tU=; b=LEiLkljtRfgQT6iQXRdmolOKO4
+	6Ax4UGdkEuxtwohZ1syWWDIR7oBvxYa7TB+HsF+SjuxftC54rykWV9mhyXOOb+Oq
+	xAhb2QwE8Tl4608KbYVqYkxWoNfptLpQC5GsLrYCdxjvJ2X9b/cJdEDbsrFlQfty
+	8o/qE/m04Y7OGxJYcnAhjLzwJJ2HGvMHQUBw94J/P0bjAMFcGjI7GezMFvUnoDje
+	arCvhTYYWFQNqPrjEvFInyS0LjbUNND8wH+2lqTdUOosnGhbzUnBk3vLisgrm2yC
+	XREZb3nxLteW/PTAzarBqr5VOwIzWAz25A4Ax84Q4RdSO78sidcv9abBWe+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1780184829; x=1780271229; bh=klINtNg1SlwwEckkD9SdTHaUgcZcT3GORtp
-	0Nje+3B4=; b=SQf0dH/tSHYfcruuo8zmLgqUVdgoHKQ6cq8tilLvCg8/Igwe9sI
-	FMve8SIzyzEdrOFiCX70dbLpZ8sqB9Ge0zaFD0kJeFbUL1UYLymhA9Z8tmvXC7gR
-	+YX24WKpf87KVsAglKDVT1LJ5lJgQMuspDLkEzM6z2V4ayVyFdL8sOas/BWNVwdr
-	FNgwbFQVc5Oeg/M4/Dk6LJh0jc8PFqFkxRcxC6TDC9PBOzrVqLkqbYqlvBctkxR9
-	FQdN0o2EYTRYPKcLS7I4lSHUswXSRhE+g0f5UC5dNS2gqv+sN7EwReonoNCZnUSH
-	ant0yBBvtUMLLPTb58ILptVzbE5I3/eKj8g==
-X-ME-Sender: <xms:_HYbas54081s-mUzzWBUq5Le5swGZSU9F4wZ0f7GHs6AvMclVzJlQw>
-    <xme:_HYbakxqqL7xe1NEazJrNDOgpTBdj7FyXoap12_g7Yso-zhKZc7gbjk5jVgxZkoER
-    ncvfIJgm8F0mRRYVoD_aSBwXN9BQuvQYo5zamojBjReLaqe6nsEiQ>
-X-ME-Received: <xmr:_HYbajwdWAY2By8CZQAbxT8PYc-T5DF-0u76IEmtiiGV2zWxdAUyDhAdsbY0U6bEw2hf-YmONoXmwXJTuFm2ggJoYQAeYmDAa5UK>
-X-ME-Proxy-Cause: dmFkZTEPXBxufqq66s1ivm9WxI/IvJ7R83eV10bVnbm52A9trPJTfELPfiZAP/zR4u85tC
-    b0yR5T4ZiCMBUpIbBBMWElI2CD0rV6oIKzQkEJooz9EijX8TtRHR4lE9v727uK+cx8KCR4
-    0+akClYnRViCaR3eS1nDzp/3XwjjXmrC59F4VhSUlLBOHalw9+53lvDUwK8Eu/F6+B5w52
-    dHaJqnW/+xgXJ/lyeGtstWFoorGklFDyl+bQFZDBImyyfpDXySc+ehDaf8EE9ks+XaADzj
-    PLiiDun4BX2vulhQTOGCP8rqttDpdyZYGzrncnFGeD5y/z365sa0FyofeGmhNUo9xPmLsc
-    8aUlEv5Xp0sGPfNlnNVRWX1nbLeZRRBmXlwDLwq6q8+d7dcHiiuvtgqrqUyNRzDNh7ISII
-    buup7c+CIlnZ25jQ25Dsr8XWyedyIRY8hlV8g9wPZoZhMPvTxAJtway66OyXMn1vs/sY0U
-    q6pJzbaHUUBPmvIGqAmxdPQbwmfKW0a+EhpY4bFAy+QHh83TiX4c/faJOxiAT/ROLsFI/V
-    xR5vqiMA1UcHJjmCk+9xdNy8pnK6xtrCgDl1lnGts+LZ45nXzEF6y8nBOmBjaMo4DNr0Dw
-    hKn9rhjZz4MJ7/qyRTjHTotk0u499KpUBDuY6HRzeTRWXD0tVKwMCf6imruA
-X-ME-Proxy: <xmx:_HYbasyEuV7-O57i6CVyNF4_hvkemRNkO6-aBY8UYEMHv37n9Vc0OA>
-    <xmx:_HYbataPcouI0ghDTzXf72tD8YhgACeDltJxpZBpBh6gM3-I_UCRgQ>
-    <xmx:_HYbatXbRX4oTTto9Z2tL6YRzWNITNiuzOaiNYZPzR0fEdvW6uM91A>
-    <xmx:_HYbarg_1TtcyHGbCoj4O8DkYI0XI4TxAJcpN2-fjSycp15FBhbh6w>
-    <xmx:_XYbalVkzPFnLw8nNqL8MIfgYLEsy7ToE4HPJpCN7RSEzw7EVY13p_eA>
+	1780188396; x=1780274796; bh=XptlJL1TqYS6jGZaTHXH/b9pOb7PBQT+jqT
+	bAjWi9tU=; b=L8BrzvIE+AAPZioSoyOUMIMC44KHTVqQJFciOlSKIG9dlKP52Re
+	Z8kvNC7/Lty3OnMhinxoHBK1IxGJTFGBfu1zWPRqzhHEE/HTt6pa3QsmKGYSwh4A
+	qDvQz6iObjhIMxVB0PQ/7glmihqYVZwwFNZFxzgiCHw/tQWQLUKRmDR2ApG6ZK45
+	yuLSWBxjvcT/jvoB/C+CdkRHmXxxi71imusFSHKBgpeu435WofXiKSc4LzH8IU+p
+	Lpqfu8TeGRibKqrjWesGfr4xmnnzOkF6pzh/QMPzu+JYl/Z8ru5u6BLzIsh/nFkD
+	10LmCLkhoO0HTDmy1zvG8EOxk7dcBaL4Edw==
+X-ME-Sender: <xms:7IQbamck4a9FHUFvXFHX5mg2hMSW7dMfkblvj5KYJSeab_9AOe0m4Q>
+    <xme:7IQbanHwsSVzRu0c_J2GKj6nWUlezf6KW6ChCcy-61ogUxinfEznALE-MEe_uzsZy
+    Dv0DhLiBJC635vnXqUfROuFYS2h9i3lJUsOU2uYuXajm5Y5xxfXfA>
+X-ME-Received: <xmr:7IQbav14BzQLquap6J4GMK7m7u0qFdKNa8PTgFqBSxMt5zcjSS40LlKC9kj4kEBst7EeCPd5nqfOSK-51Oi8Xb2vXFyStyvsppIk>
+X-ME-Proxy-Cause: dmFkZTEU0ZzRAJ0FxF4Ety1I/vSd8OHLIGA4ep1aiLZCoSDkBdRXznnB62J5l9Ufz6wsrI
+    +IBatqN5kkXeYCHJ9xKAoJXelIMNRF59HnutzLzXd36j+iLJTCtz35OITsEKg67wX9it8h
+    ktVN5P86TTzjrSadPnZpNfz5vpYtTackPomUxED6jH9HVJffbx7bWsv9PmwA7QtnoLQclC
+    DEi69gME1pDTBr8WgRULl8FCR5hK0Jqy3YwWPhvPJQpcZAZT2pUa9VYUPKkrw4x2SOve+5
+    /YttnkIHJ339i2PFSA25P+CnyXWZ5xm2aQsoSwvSLC7h5dmRjlaFyB9DT5waTcnqA2nFDg
+    0htIE+jeJ5FSZK8f6EuPPX4rWgZsp9rAJdoznMX1rfZRZdMnXVzld70AN+i0es0nEsgBkw
+    3DXSp2OFC1LwBLvgt0HI6vJF0Rdgcrf7zil/ighfvcke6qn2f6iFRe+4tFQCMJnke+L+im
+    8jdguZlkV46xG9wZvRBMxfAbc/x2T029di9GSkchI3XzsDlaG50M+XuiwpavV0ee+/7RUD
+    x3DvqVd7MZSiJM1yWb3Ygar4A79iFPKAt7I3ZUx46h38whtfom+wY6NIt6kwvvzEJbSluv
+    vOo7pZ7ZZv7yGTbpeFHsSI67t7pO/mPhaa6AbdLsu0x3cil4SDQGue3ADMmw
+X-ME-Proxy: <xmx:7IQbavn7vlITxOIG-lSGL991XSv87CLFlp3z6KG0g1NdQfyCLWUlPg>
+    <xmx:7IQbav-7VD7XXfxljSYrsb5ux_Yj7aLWfNSfxK7MnQwEcKGPOp2W1g>
+    <xmx:7IQbakp_CyCBFfsCkJXW3bFRd2QuDf7ZtuWDVtqanwJQip6q6JyteQ>
+    <xmx:7IQbaon2stPjYdDF6kGXOPxbklPgQ357haVAOCfnvbZBCzPqGQH9iA>
+    <xmx:7IQbam2vWYr_XRmFQuJtL-qgBLXWmcOfr5Rmfl5Rf3pNtYPq5nwBqu07>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 30 May 2026 19:47:08 -0400 (EDT)
+ 30 May 2026 20:46:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>,  Tuomas
- Ahola <taahol@utu.fi>
-Subject: Re: [PATCH] describe: fix --exclude, --match with --contains and --all
-In-Reply-To: <20260528232950.187002-2-jacob.e.keller@intel.com> (Jacob
-	Keller's message of "Thu, 28 May 2026 16:29:51 -0700")
-References: <20260528232950.187002-2-jacob.e.keller@intel.com>
-Date: Sun, 31 May 2026 08:47:07 +0900
-Message-ID: <xmqqo6hwcves.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/2] status: improve rebase todo list parsing
+In-Reply-To: <b80bc1e0a298e2773a2fdab3e73651d59b8d39b7.1777648598.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Fri, 1 May 2026 16:16:39 +0100")
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+	<cover.1777648598.git.phillip.wood@dunelm.org.uk>
+	<b80bc1e0a298e2773a2fdab3e73651d59b8d39b7.1777648598.git.phillip.wood@dunelm.org.uk>
+Date: Sun, 31 May 2026 09:46:35 +0900
+Message-ID: <xmqqbjdwcsno.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,59 +87,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> git describe --contains acts as a wrapper around git name-rev. When
-> operating with --contains and --all, the --match and --exclude patterns
-> are not properly forwarded to name-rev as --exclude and --refs options.
->
-> This results in the command silently discarding match and exclude
-> requests from the user when operating in --all mode.
->
-> We could check and die() if the user provides --contains, --all, and
-> --match/--exclude. However, its also straight forward to just pass the
-> filters down to git name-rev.
->
-> Notice that the documentation for --match and --exclude mention the
-> --all mode. It explains that they operate on refs with the prefix
-> refs/tags, and additionally refs/heads and refs/remotes when using
-> --all.
->
-> Fix the describe logic to pass the patterns down with the appropriate
-> prefixes when --all is provided. This fixes the support to match the
-> documented behavior.
->
-> Add tests to check that this works as expected.
->
-> Reported-by: Tuomas Ahola <taahol@utu.fi>
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
->
-> I was looking into reviving the patch that just added a simple die() and
-> realized that its actually pretty straight forward to just fix the support
-> instead. I'm open to either route, if we think this support isn't
-> necessary... I'm not sure if there are any gotchas or other issues with how
-> I implemented this.
+> +static void abbrev_oid_in_line(struct repository *r,
+> +			       struct strbuf *line, char **pp)
+> +{
+> ...
+> +	have_oid = !repo_get_oid(r, p, &oid);
+> +	*end_of_object_name = saved;
+> +	if (!have_oid)
+> +		goto out; /* object name was a label */
 
-It is curious that this fails in some but not all CI jobs, and even
-more curious that these failures look the same.
+Can there be a label "deadbeef123" that is unrelated to an object whose
+object name happens to abbreviate to "deadbeef123"?
 
-e.g., https://github.com/git/git/actions/runs/26671595367/job/78615760984#step:4:1984
+> +	case TODO_MERGE:
+> +		skip_dash_c(&p);
+> +		while (true) {
+> +			p += strspn(p, " \t");
+> +			if (!p[0] || (p[0] == '#' && (!p[1] || isspace(p[1]))))
+> +				break;
+> +			abbrev_oid_in_line(r, line, &p);
+> +		}
+> +		break;
 
-  +++ diff -u expect actual
-  --- expect	2026-05-30 02:21:23
-  +++ actual	2026-05-30 02:21:23
-  @@ -1 +1 @@
-  -branch_A
-  +remotes/origin/remote_branch_A
-  error: last command exited with $?=1
-  not ok 70 - describe --contains --all --exclude
-  #	
-  #		echo "branch_A" >expect &&
-  #		tagged_commit=$(git rev-parse "refs/tags/A^0") &&
-  #		git describe --contains --all --exclude="A" --exclude="c" --exclude="test*" $tagged_commit >actual &&
-  #		test_cmp expect actual
+What does this loop do?  A "merge" command may look like "merge
+[[-C|-c] <commit>] <label>", and we give each whitespace-separated
+token to abbrev_oid_in_line()?  Would "<label>" that is ambiguous
+cause an issue?  You may want to limit the scope of what the loop
+does a bit, e.g., massage only the token after -C/-c, or something?
 
-Rings any bell?
+> +	case TODO_FIXUP:
+> +		skip_dash_c(&p);
+> +		/* fallthrough */
+> +	case TODO_DROP:
+> +	case TODO_EDIT:
+> +	case TODO_PICK:
+> +	case TODO_RESET:
+
+Doesn't RESET also take a <label>?  And if it happens to be the same
+as an abbreviated object name, e.g., "deadbeef123", of an unrelated
+object, would wt-status say "reset deadbeef1", causing a mismatch?
+If this is indeed an issue, would moving this to the "no-op" section
+below, next to TODO_LABEL, solve it?
+
+> +	case TODO_REVERT:
+> +	case TODO_REWORD:
+> +	case TODO_SQUASH:
+> +		abbrev_oid_in_line(r, line, &p);
+> +		break;
+> +
+> +	/*
+> +	 * Avoid "default" and instead list all the other commands so
+> +	 * that -Wswitch (which is included in -Wall) warns if a new
+> +	 * command is added without handling it in this function.
+> +	 */
+> +	case TODO_BREAK:
+> +	case TODO_EXEC:
+> +	case TODO_LABEL:
+> +	case TODO_NOOP:
+> +	case TODO_UPDATE_REF:
+> +		break;
+>  	}
+> -	string_list_clear(&split, 0);
+> +
+> +	return true;
+>  }
