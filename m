@@ -1,64 +1,71 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6050713A258
-	for <git@vger.kernel.org>; Sun, 31 May 2026 17:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4FC31352B
+	for <git@vger.kernel.org>; Sun, 31 May 2026 18:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780250240; cv=none; b=r7Mkxos4dF8cMbe+x+ZjFX8wOex3SUREMmRqIfRBddK4Fw8ofQuPgqrAW/HvrRrkYaNA5nGXKnYr/t3J7B5h0BqVwrh/PRKXhKonXnR3NRWshjoagr9mhvlB2OlrDjREpQ8H82+/Lut9XAZVGuJIEoDiFmU12XpgUijA8k0tBNU=
+	t=1780253085; cv=none; b=psc6EDnrBycGiLnvKPvUqcpU8bkLdyvrQqBk3ypjcE6Dl1ws9pMdyZIRFZE8X7kDdQ0AT8TezQX4GEH2Z5degGFbnQC07PfQn4bLMY+hqgnWzxxUe+dZJGa+idXQAcHbRigCu+x6MdJ0RVS0+o9hiOOrd3xKwR+W9N/QZTeHGE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780250240; c=relaxed/simple;
-	bh=M/MmGvfS8o7Dh78KxHjBYWqY1Y7G6XEBZVNBlGjY1jQ=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=Vc9C5Dpl/b7+zzDGjMbIdFxPVj9ra9NK0vS1lm9ME+NbJ9SjIGF5NFnZ8S/6S4HsrTou2kiK0v6cEI4CXyW6859aStG2goXCM0H/kvrPbyVAEJW+2rOpwPI7ganPLZi/LvZ1QVdZnwcV9+gLxstPBqsDka/cI+gEI9lD5Bcd+7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=csOM037+; arc=none smtp.client-ip=209.85.222.179
+	s=arc-20240116; t=1780253085; c=relaxed/simple;
+	bh=0uQnQovcD3JsjitumO3LN9s2w5wq/IzMBsUtxeQY5h4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MJwhTUaMRdfeNC7YIybC85Wb24uqrGeUFpwsL8rxiVs+xuKcHacLHMSd/de1PCLVpnPWOjV4+fE8E5hFHatmv9x/zCJINX6iY9RxjMYr5sHtpM2/diYp5R4msqF2v6UVwaVundU89B70UBaNZxTXpW0lFIcqqhazGH15RKoj0vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bY9beor4; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="csOM037+"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-91550dfc11fso82572185a.1
-        for <git@vger.kernel.org>; Sun, 31 May 2026 10:57:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bY9beor4"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-490a765f2feso6502935e9.1
+        for <git@vger.kernel.org>; Sun, 31 May 2026 11:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780250238; x=1780855038; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PU3NiTwxmPFgpxT2TEvKdEbIUahtZW20jEMA3kjtWdY=;
-        b=csOM037+6hhcQmTLrBGZ5USJI6TCR856ZJQLAxoS+MfEwozplUqdBxaXDMKRzD9g3h
-         FQBv8AYUjEN0VBzYgQvRhz1hZ2XA4Tre/YRHSURRIw6GIgo+ezj0Qp4XtvJUxIg0T035
-         aEpIG5ixv6d790Ey1Ptv+mlwcUAy2/LzQGqK56rsIUxTZUbxPvLCvoHrK2MIJhWKahby
-         bo1ffj9moYdK7Bxyy+iQecnmeLeqIDhtdpqAFKCKy76IKI1ycKIZkdQeeZGLQ1dcZgDP
-         h0mehcRJTUC5UFY3GBM+ePJEj+6tohGX1JZ9iaw5RKVyhYLfwSUdc898xEzWPpS0UytD
-         NusQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780250238; x=1780855038;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780253081; x=1780857881; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PU3NiTwxmPFgpxT2TEvKdEbIUahtZW20jEMA3kjtWdY=;
-        b=VG1N7sUy6bBfEpIwSRvhJFoQ3o1p/GYdvvK2o+uWWwN2RLSlU1cdbHMbjHO+FKoVrg
-         GB7isOg0gkguJ5DHt086KTIJbllpT59z2rD/p29Q9BjNc1ceeWv8xGkI3vSFXMwTp2+X
-         H9P+dsTVCp8s6lZlJdR9jCO+8QZdHoFr8qTvdeaTPZp+506uwo0/ribGzh6fAY6nKqkL
-         OfJbGij3N0OBatKknxJhDc41s3ZE2MprSYb+lP4p6k83R7Um8Hnp530TU1T5CF/+rcWI
-         NZVz2NoOmbOGTnai7B+J/BIX0WVk87ZgWQxuIIMxr4dZJMkhZUDu7+T/Wu7YI92bp7TJ
-         9Ujw==
-X-Gm-Message-State: AOJu0Yxcmm+oBlY54T21qTMYFfuZeLlEXUosE3zqFUKquDKOgl58xzM0
-	2NfZhXaizqlgO9i/GfDd60ovS/F5dAF+0eFSedPf71uB8jzA+PT++dA7Mm36cA==
-X-Gm-Gg: Acq92OG48LXGJr/dsMm5V7ITwKadovtFNwt2+hWyH9nzsb3U+keTs55pPCOcR4DAK9s
-	Pxy8F3xHdmdBt8PJRZ/qnBcsR2GAtw/jBo8w/zgs5mshEBVXJX63QOo9vdEdceSd6qQpmQZ4MQV
-	y/7Ri0dEFc/7dJ/fHlEDGP+b6WiBu6t8uw6xrTejstx2txmN8iQ9g8MsabOckG9IyV4SpgKJNlJ
-	SaL8zGkmvdjkJngHwy9GBgJ9FOyqXi5L58QxPEzp1AfV+2zELEruu+26dQRyhR2bD1XQT+ADlgF
-	xXx/ludJt82Jwy856mM3rTOs61tjByxR6txCpq4gyfQ43DtFhw4wuVwgKOCMKD6qUhpBYxeB3Vv
-	vmc760UnyKbkU3V76puYAoJ6vCBHnYsp+x6po9W0TEbN8mUvoOibwTgw5CHM7GO6xWqfesPAGtG
-	uOu2No/LMXozP+Dr40b3s9JXfYN5sQHA/VAhk/L9k5Ra5NDmti
-X-Received: by 2002:a05:620a:7108:b0:8f8:cdd0:df80 with SMTP id af79cd13be357-9153dbf89ccmr1397429685a.59.1780250238224;
-        Sun, 31 May 2026 10:57:18 -0700 (PDT)
-Received: from [127.0.0.1] ([48.217.251.180])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-915324489b4sm779744185a.1.2026.05.31.10.57.16
+        bh=4V8p7q76sVzp/rbiLEzocLiHs6+E56rFezWSSL+Nf/E=;
+        b=bY9beor4/MAUYz/WjgGWIHA92g+AkriFEuOfaNgTpmCxGqI83jfV5Nw7Wq2UcFgWTA
+         F1tM8/aRZLKM0UrHum1DprJ42zVr7RfMr0UbZ/+b6v9lIwlfZeuDa9ZSLYgEocwImM4C
+         VXXNi95qYHv0C8x2sPkApJyhwvn1xepGoxqc8nPEeFX8VykrpvGg7NN+shdLrRj20sR7
+         5RVdQyYaWRP2rAWKJOEbk8gkTtenMIvb/Q82DK+Z/q6jRzgFrI4xkNlmNJfPEPLaEuSL
+         QRZjvy/5krOZCY9GQCifq74CPU7TuknGl+juudURhrmBfm4V8hz3NzewYxevHFoOcXvV
+         4BFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780253081; x=1780857881;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4V8p7q76sVzp/rbiLEzocLiHs6+E56rFezWSSL+Nf/E=;
+        b=I7gWEVljE+AvvL+7SsLWrhZFOdcAQ5yJvWU5IIb5LhJBmRMfF5jS6B9ZRdf0ZkLAU1
+         f1OKumxHyyMxF1UPZqNENZ8syDojXK2qFSrVx6WK8CY3bhihoRdMmUpqEgy5E6/CxcvX
+         lP3kd/vpJhWXA8kHK7cn8PhTH8IuIHl6f68Jk+k63KfUePLLzmfvIHxlner1X9YZXsKC
+         4k81dHxjTlhb77Xfthh89Bj3CgwbSuQxooZ/xofg7yUlCIpPbTgCLHB/yQnbZ4fK+Ho7
+         PeVsLpldctQfJlnJk/nrC/AjUmYaYuMZ8wADyGuQfrb8CtzvzZ8BnJGWvUOgR4jmp75e
+         RNXg==
+X-Gm-Message-State: AOJu0YwVARj+RZhW6BTM4mBJBohD5QQGw3BGZ0hTVxWy/eehNv4vKgmR
+	9whfyC+tYz0tcMXG8FryNrKGObQwQt3djPtHmK1yWMuA/BoXHx3KVT0p80KOpg==
+X-Gm-Gg: Acq92OHdtyAGDMlHYKPW+++SrfwW9fSW8moj0+t5Z2nk8qIqzomdrixudwQrBDGyi+p
+	cLRhZEpcmnZtQj5GCD0pkyuUK5qN5a/nmgeLSXbYvGWphJJPP0A3X6Sz6lFE+Mk8H8o4NqOrlex
+	V/tE2Wiy6yarX8MrhxAy0KgB9CWVfbSC17t5/aGr+F9rm0mxYU6po3ZYcOhoT9/86DBimnBmowm
+	+1an2n8LGNvZzbIQlWduabRTo5Ei+bTQ1zIN83lJrjWaaYx4WbGm7A9XXClYqdCqcl+LsynEtes
+	bCG/WeR6fcXqkGRMLmxnGCE3jVkSzNhRM6AMZFtcI9R8vcZVnSg2JTgrskoeFSMSBdV3fl1xjmY
+	sUPv+WaYH6b1BLYMvSnvwcog6Lt/wAvK+klsuyEgYPRusr52T1GMO5wNZSw+7nEnqoGgFjMtyOp
+	pxfRzDf5NsrNO1MxVPx59tUKf8ye8=
+X-Received: by 2002:a05:600c:4714:b0:490:53b0:9e53 with SMTP id 5b1f17b1804b1-490a290bdfcmr150131245e9.1.1780253081024;
+        Sun, 31 May 2026 11:44:41 -0700 (PDT)
+Received: from void ([2a00:a041:e0a8:f400:3b90:bc78:60d8:574e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c09be7fsm60409435e9.7.2026.05.31.11.44.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2026 10:57:17 -0700 (PDT)
-Message-Id: <pull.2132.git.1780250236304.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 31 May 2026 17:57:15 +0000
-Subject: [PATCH] prio-queue: use cascade-down sift for faster extract-min
+        Sun, 31 May 2026 11:44:40 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
+To: git@vger.kernel.org
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH v2] doc: fix typos via codespell
+Date: Sun, 31 May 2026 21:43:58 +0300
+Message-ID: <20260531184428.55905-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260506101631.18127-1-algonell@gmail.com>
+References: <20260506101631.18127-1-algonell@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,226 +74,632 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
 
-From: Kristofer Karlsson <krka@spotify.com>
+There are some typos in the documentation, comments, etc.
+Fix them via codespell.
 
-Replace the standard sift-down in prio_queue_get() with a
-cascade-down approach.
-
-The standard approach places the last array element at the root,
-then sifts it down.  At each level this requires two comparisons
-(left vs right child, then element vs winner) and, when the
-element is larger, a swap (three 16-byte copies).
-
-The cascade approach instead promotes the smaller child into the
-vacant root slot at each level — one comparison and one copy.
-The vacancy sinks to a leaf, where the last array element is
-placed and sifted up if needed — typically zero levels since the
-last array element tends to be large.
-
-In the common case, work per extract drops from 2d comparisons
-+ 3d copies to d comparisons + d copies: roughly half the
-comparisons and a third of the data movement.  The sift-up phase
-can add work when the last element is smaller than ancestors of
-the leaf vacancy, but this is rare in practice.
-
-Simplify prio_queue_replace() to a plain get+put sequence.  This
-is semantically equivalent: the old implementation wrote to slot 0
-and sifted down, which has the same observable effect as removing
-the root and inserting a new element.  No caller observes queue
-state between the two operations.  The previous implementation
-shared sift_down_root() with get, but the cascade approach no
-longer accommodates that cleanly since sift_down_root() now
-expects the element to reinsert at queue->array[queue->nr], left
-there by prio_queue_get() after decrementing nr.  This is fine in
-practice: replace is only called from pop_most_recent_commit()
-(fetch-pack, object-name, walker) and show-branch — none of
-which appear in any hot path.
-
-A synthetic benchmark (10 rounds of 10M put+get cycles, ascending
-integer keys, CPU-pinned, median of 3 runs, same compiler and
-Makefile flags) shows consistent improvement across all queue
-sizes, with no regressions:
-
-    queue width       baseline    cascade    speedup
-    ------------------------------------------------
-             10        4.32s      3.97s      1.09x
-            100        7.95s      6.49s      1.23x
-          1,000       11.30s      9.66s      1.17x
-         10,000       16.34s     14.15s      1.16x
-        100,000       21.43s     18.66s      1.15x
-
-With descending keys (worst case — the last element always sinks
-to a leaf in both approaches) the cascade still wins slightly
-(1-4%) by replacing swaps with copies, and never regresses.
-
-In end-to-end git commands the improvement is modest because
-sift_down_root is only ~8% of total runtime.  Profiling
-rev-list --count on a 2.5M-commit monorepo shows sift_down_root
-dropping from 8.2% to 0.4% of total runtime.  The improvement
-scales with DAG width: wider DAGs produce larger priority queues,
-amplifying the per-level savings.  In small or narrow repos the
-queues stay shallow and the effect is negligible.
-
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
-    prio-queue: use cascade-down sift for faster extract-min
-    
-    Hi, I am not sure this is just noise or not but I thought it at least
-    was interesting.
-    
-    I looked into the internals of prio_queue and found it was technically
-    doing too much work and could be simplified/optimized. I found I could
-    optimize it by ~20% for the common case (adding commits that would
-    typically end up far back in the queue) but only ~1% for the reverse
-    case (adding things to the front of the prio queue). The average speedup
-    is somewhere in between I suppose. That said, this is not really the
-    bottleneck so the overall boost seems to be around ~3-4% improvement for
-    repos with wide DAGs.
-    
-    I would normally classify this as not urgent or important, but I think
-    the advantage is that the change is very small and simple and it already
-    has good unit tests (t/unit-tests/u-prio-queue.c).
-    
-    With that said, here are the details:
-    
-    The prio_queue_get impl is based on removing the root entry, then moving
-    the very last element into the root slot, then sifting it down into the
-    right place. This uses both comparisons between sibling elements in the
-    heap as well as comparisons between the element to add and one of the
-    siblings. Then it uses swap operations to move things correctly.
-    
-    This patch instead promotes the smaller child upward at each level,
-    leaving a vacancy that sinks to a leaf, then places the removed element
-    there with a short sift-up to keep the heap balanced.
-    
-    We can analytically compare this - for a sift-distance of d we can
-    reason about the number of operations to execute.
-    
-    Before: 2d comparisons + 3d copies
-    After:   d comparisons +  d copies
-    
-    
-    After changing sift_down in this way, the replace operation can't simply
-    depend on it anymore, so I reimplemented it as a sequence of get + put.
-    This is technically correct but maybe not as efficient. However, I am
-    not sure that it matters, since I couldn't see any usage of the replace
-    operation in any hot path.
-    
-    Performance: Profiling git rev-list --count on a 2.5M-commit monorepo
-    shows sift_down_root dropping from 8.2% to 0.4% of total runtime,
-    effectively eliminated as significant overhead.
-    
-    Synthetic benchmark 10 rounds of 10M put+get cycles, CPU-pinned, median
-    of 3 runs, same compiler and Makefile flags.
-    
-    Ascending keys (git's typical pattern -- parents have lower priority
-    than children):
-    
-    queue width  baseline  patched  speedup
-             10     4.32s    3.97s    1.09x
-            100     7.95s    6.49s    1.23x
-          1,000    11.30s    9.66s    1.17x
-         10,000    16.34s   14.15s    1.16x
-        100,000    21.43s   18.66s    1.15x
-    
-    
-    Descending keys (worst case — last element always sinks to leaf in both
-    approaches):
-    
-    queue width  baseline  patched  speedup
-             10     4.84s    4.78s    1.01x
-            100     9.43s    9.20s    1.03x
-          1,000    15.28s   14.71s    1.04x
-         10,000    23.61s   23.49s    1.01x
-        100,000    29.16s   28.22s    1.03x
-    
-    
-    No regressions in any scenario.
-    
-    End-to-end benchmarks
-    
-    All benchmarks use a benchmark setup of 1 warmup run followed by 10
-    timed runs. Each configuration is built from the same source tree and
-    tested on the same repo in alternating order.
-    
-    linux kernel (1.4M commits) — range v5.0..v6.0 (311K commits):
-    
-    Command                      baseline  patched  speedup
-    rev-list --count v5.0..v6.0     455ms    440ms    1.04x
-    
-    
-    I also ran it on git.git but did not see any performance diff at all,
-    due to the size and narrow DAG.
-    
-    The improvement scales with DAG width: wider DAGs produce larger
-    priority queues, amplifying the per-level savings. In small or narrow
-    repositories the priority queues stay shallow and the sift-down cost is
-    already negligible, so the change is not noticeable.
+v2:
+  - Drop typos under po/ and git-gui/ (different projects).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2132%2Fspkrka%2Fcascade-sift-down-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2132/spkrka/cascade-sift-down-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2132
+ Documentation/SubmittingPatches            |  2 +-
+ Documentation/git-sparse-checkout.adoc     |  2 +-
+ Documentation/technical/build-systems.adoc |  6 +++---
+ builtin/pack-objects.c                     |  2 +-
+ commit-graph.h                             |  2 +-
+ compat/precompose_utf8.c                   |  2 +-
+ hook.h                                     |  2 +-
+ meson_options.txt                          |  2 +-
+ midx-write.c                               |  2 +-
+ odb/source.h                               |  2 +-
+ packfile.h                                 |  2 +-
+ path.h                                     |  2 +-
+ reftable/system.h                          |  2 +-
+ t/README                                   |  2 +-
+ t/chainlint.pl                             |  2 +-
+ t/chainlint/chain-break-false.expect       |  2 +-
+ t/chainlint/chain-break-false.test         |  2 +-
+ t/t1700-split-index.sh                     |  2 +-
+ t/t3909-stash-pathspec-file.sh             |  6 +++---
+ t/t4052-stat-output.sh                     |  2 +-
+ t/t4067-diff-partial-clone.sh              |  2 +-
+ t/t9150/svk-merge.dump                     | 10 +++++-----
+ t/t9151/svn-mergeinfo.dump                 | 18 +++++++++---------
+ t/unit-tests/clar/README.md                |  2 +-
+ 24 files changed, 40 insertions(+), 40 deletions(-)
 
- prio-queue.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index d570184ec8..35b4952c8a 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -92,7 +92,7 @@ input and avoids unnecessary churn from many rapid iterations.
+   topic are appropriate, so such an incremental updates are limited to
+   small corrections and polishing.  After a topic cooks for some time
+   (like 7 calendar days) in 'next' without needing further tweaks on
+-  top, it gets merged to the 'master' branch and wait to become part
++  top, it gets merged to the 'master' branch and waits to become part
+   of the next major release.
+ 
+ In the following sections, many techniques and conventions are listed
+diff --git a/Documentation/git-sparse-checkout.adoc b/Documentation/git-sparse-checkout.adoc
+index 0d1618f161..e286584c67 100644
+--- a/Documentation/git-sparse-checkout.adoc
++++ b/Documentation/git-sparse-checkout.adoc
+@@ -134,7 +134,7 @@ the `clean.requireForce` config option is set to `false`.
+ +
+ The `--dry-run` option will list the directories that would be removed
+ without deleting them. Running in this mode can be helpful to predict the
+-behavior of the clean comand or to determine which kinds of files are left
++behavior of the clean command or to determine which kinds of files are left
+ in the sparse directories.
+ +
+ The `--verbose` option will list every file within the directories that
+diff --git a/Documentation/technical/build-systems.adoc b/Documentation/technical/build-systems.adoc
+index 3c5237b9fd..ca5b5d96f1 100644
+--- a/Documentation/technical/build-systems.adoc
++++ b/Documentation/technical/build-systems.adoc
+@@ -47,7 +47,7 @@ Auto-detection of the following items is considered to be important:
+ 
+   - Check for the existence of headers.
+   - Check for the existence of libraries.
+-  - Check for the existence of exectuables.
++  - Check for the existence of executables.
+   - Check for the runtime behavior of specific functions.
+   - Check for specific link order requirements when multiple libraries are
+     involved.
+@@ -106,7 +106,7 @@ by the build system:
+ 
+   - C: the primary compiled language used by Git, must be supported. Relevant
+     toolchains are GCC, Clang and MSVC.
+-  - Rust: candidate as a second compiled lanugage, should be supported. Relevant
++  - Rust: candidate as a second compiled language, should be supported. Relevant
+     toolchains is the LLVM-based rustc.
+ 
+ Built-in support for the respective languages is preferred over support that
+@@ -142,7 +142,7 @@ The following list of build systems are considered:
+ 
+ === GNU Make
+ 
+-- Platform support: ubitquitous on all platforms, but not well-integrated into Windows.
++- Platform support: ubiquitous on all platforms, but not well-integrated into Windows.
+ - Auto-detection: no built-in support for auto-detection of features.
+ - Ease of use: easy to use, but discovering available options is hard. Makefile
+   rules can quickly get out of hand once reaching a certain scope.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 480cc0bd8c..558cf821fe 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1349,7 +1349,7 @@ static void write_pack_file(void)
+ 			 * length of them as buffer length.
+ 			 *
+ 			 * Note that we need to subtract one though to
+-			 * accomodate for the sideband byte.
++			 * accommodate for the sideband byte.
+ 			 */
+ 			struct hashfd_options opts = {
+ 				.progress = progress_state,
+diff --git a/commit-graph.h b/commit-graph.h
+index f6a5433641..13ca4ff010 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -18,7 +18,7 @@
+  * This method is only used to enhance coverage of the commit-graph
+  * feature in the test suite with the GIT_TEST_COMMIT_GRAPH and
+  * GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS environment variables. Do not
+- * call this method oustide of a builtin, and only if you know what
++ * call this method outside of a builtin, and only if you know what
+  * you are doing!
+  */
+ void git_test_write_commit_graph_or_die(struct odb_source *source);
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index 43b3be0114..6e709bd138 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -85,7 +85,7 @@ const char *precompose_string_if_needed(const char *in)
+ 		out = reencode_string_iconv(in, inlen, ic_prec, 0, &outlen);
+ 		if (out) {
+ 			if (outlen == inlen && !memcmp(in, out, outlen))
+-				free(out); /* no need to return indentical */
++				free(out); /* no need to return identical */
+ 			else
+ 				in = out;
+ 		}
+diff --git a/hook.h b/hook.h
+index b4372b636f..27bb1aeb2e 100644
+--- a/hook.h
++++ b/hook.h
+@@ -128,7 +128,7 @@ struct run_hooks_opt {
+ 	 * While the callback allows piecemeal writing, it can also be
+ 	 * used for smaller inputs, where it gets called only once.
+ 	 *
+-	 * Add hook callback initalization context to `feed_pipe_ctx`.
++	 * Add hook callback initialization context to `feed_pipe_ctx`.
+ 	 * Add hook callback internal state to `feed_pipe_cb_data`.
+ 	 *
+ 	 */
+diff --git a/meson_options.txt b/meson_options.txt
+index 80a8025f20..d936ada098 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -106,7 +106,7 @@ option('highlight_bin', type: 'string', value: 'highlight')
+ 
+ # Documentation.
+ option('docs', type: 'array', choices: ['man', 'html'], value: [],
+-  description: 'Which documenattion formats to build and install.')
++  description: 'Which documentation formats to build and install.')
+ option('default_help_format', type: 'combo', choices: ['man', 'html', 'platform'], value: 'platform',
+   description: 'Default format used when executing git-help(1).')
+ option('docs_backend', type: 'combo', choices: ['asciidoc', 'asciidoctor', 'auto'], value: 'auto',
+diff --git a/midx-write.c b/midx-write.c
+index 561e9eedc0..19e1cd10b7 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -1461,7 +1461,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
+ 
+ 		/*
+ 		 * Attempt opening the pack index to populate num_objects.
+-		 * Ignore failiures as they can be expected and are not
++		 * Ignore failures as they can be expected and are not
+ 		 * fatal during this selection time.
+ 		 */
+ 		open_pack_index(oldest);
+diff --git a/odb/source.h b/odb/source.h
+index 0a440884e4..2f51fcb9ff 100644
+--- a/odb/source.h
++++ b/odb/source.h
+@@ -341,7 +341,7 @@ static inline int odb_source_read_object_stream(struct odb_read_stream **out,
+  * are only iterated over once.
+  *
+  * The optional `request` structure serves as a template for retrieving the
+- * object info for each indvidual iterated object and will be populated as if
++ * object info for each individual iterated object and will be populated as if
+  * `odb_source_read_object_info()` was called on the object. It will not be
+  * modified, the callback will instead be invoked with a separate `struct
+  * object_info` for every object. Object info will not be read when passing a
+diff --git a/packfile.h b/packfile.h
+index 49d6bdecf6..5729a37018 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -124,7 +124,7 @@ struct packfile_store {
+ 	 * that packs that contain a lot of accessed objects will be located
+ 	 * towards the front.
+ 	 *
+-	 * This is usually desireable, but there are exceptions. One exception
++	 * This is usually desirable, but there are exceptions. One exception
+ 	 * is when the looking up multiple objects in a loop for each packfile.
+ 	 * In that case, we may easily end up with an infinite loop as the
+ 	 * packfiles get reordered to the front repeatedly.
+diff --git a/path.h b/path.h
+index 0434ba5e07..4c2958a903 100644
+--- a/path.h
++++ b/path.h
+@@ -217,7 +217,7 @@ void safe_create_dir(struct repository *repo, const char *dir, int share);
+  *
+  *   - It always adjusts shared permissions.
+  *
+- * Returns a negative erorr code on error, 0 on success.
++ * Returns a negative error code on error, 0 on success.
+  */
+ int safe_create_dir_in_gitdir(struct repository *repo, const char *path);
+ 
+diff --git a/reftable/system.h b/reftable/system.h
+index c0e2cbe0ff..628232a46f 100644
+--- a/reftable/system.h
++++ b/reftable/system.h
+@@ -84,7 +84,7 @@ struct reftable_flock {
+  * to acquire the lock. If `timeout_ms` is 0 we don't wait, if it is negative
+  * we block indefinitely.
+  *
+- * Retrun 0 on success, a reftable error code on error. Specifically,
++ * Return 0 on success, a reftable error code on error. Specifically,
+  * `REFTABLE_LOCK_ERROR` should be returned in case the target path is already
+  * locked.
+  */
+diff --git a/t/README b/t/README
+index adbbd9acf4..085921be4b 100644
+--- a/t/README
++++ b/t/README
+@@ -972,7 +972,7 @@ see test-lib-functions.sh for the full list and their options.
+  - test_lazy_prereq <prereq> <script>
+ 
+    Declare the way to determine if a test prerequisite <prereq> is
+-   satisified or not, but delay the actual determination until the
++   satisfied or not, but delay the actual determination until the
+    prerequisite is actually used by "test_have_prereq" or the
+    three-arg form of the test_expect_* functions.  For example, this
+    is how the SYMLINKS prerequisite is declared to see if the platform
+diff --git a/t/chainlint.pl b/t/chainlint.pl
+index f0598e3934..2d07a99700 100755
+--- a/t/chainlint.pl
++++ b/t/chainlint.pl
+@@ -35,7 +35,7 @@
+ #
+ # In other languages, `1+2` would typically be scanned as three tokens
+ # (`1`, `+`, and `2`), but in shell it is a single token. However, the similar
+-# `1 + 2`, which embeds whitepace, is scanned as three token in shell, as well.
++# `1 + 2`, which embeds whitespace, is scanned as three token in shell, as well.
+ # In shell, several characters with special meaning lose that meaning when not
+ # surrounded by whitespace. For instance, the negation operator `!` is special
+ # when standing alone surrounded by whitespace; whereas in `foo!uucp` it is
+diff --git a/t/chainlint/chain-break-false.expect b/t/chainlint/chain-break-false.expect
+index f6a0a301e9..db6f8b12a4 100644
+--- a/t/chainlint/chain-break-false.expect
++++ b/t/chainlint/chain-break-false.expect
+@@ -1,4 +1,4 @@
+-2 if condition not satisified
++2 if condition not satisfied
+ 3 then
+ 4 	echo it did not work...
+ 5 	echo failed!
+diff --git a/t/chainlint/chain-break-false.test b/t/chainlint/chain-break-false.test
+index f78ad911fc..924c9627c0 100644
+--- a/t/chainlint/chain-break-false.test
++++ b/t/chainlint/chain-break-false.test
+@@ -1,6 +1,6 @@
+ test_expect_success 'chain-break-false' '
+ # LINT: broken &&-chain okay if explicit "false" signals failure
+-if condition not satisified
++if condition not satisfied
+ then
+ 	echo it did not work...
+ 	echo failed!
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index ac4a5b2734..869fb4a14e 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -502,7 +502,7 @@ test_expect_success 'do not refresh null base index' '
+ 		git checkout main &&
+ 		git update-index --split-index &&
+ 		test_commit more &&
+-		# must not write a new shareindex, or we wont catch the problem
++		# must not write a new shareindex, or we won't catch the problem
+ 		git -c splitIndex.maxPercentChange=100 merge --no-edit side-branch 2>err &&
+ 		# i.e. do not expect warnings like
+ 		# could not freshen shared index .../shareindex.00000...
+diff --git a/t/t3909-stash-pathspec-file.sh b/t/t3909-stash-pathspec-file.sh
+index 73f2dbdeb0..3afa6bff3d 100755
+--- a/t/t3909-stash-pathspec-file.sh
++++ b/t/t3909-stash-pathspec-file.sh
+@@ -29,7 +29,7 @@ verify_expect () {
+ test_expect_success 'simplest' '
+ 	restore_checkpoint &&
+ 
+-	# More files are written to make sure that git didnt ignore
++	# More files are written to make sure that git didn't ignore
+ 	# --pathspec-from-file, stashing everything
+ 	echo A >fileA.t &&
+ 	echo B >fileB.t &&
+@@ -47,7 +47,7 @@ test_expect_success 'simplest' '
+ test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	# More files are written to make sure that git didnt ignore
++	# More files are written to make sure that git didn't ignore
+ 	# --pathspec-from-file, stashing everything
+ 	echo A >fileA.t &&
+ 	echo B >fileB.t &&
+@@ -66,7 +66,7 @@ test_expect_success '--pathspec-file-nul' '
+ test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
+ 
+-	# More files are written to make sure that git didnt ignore
++	# More files are written to make sure that git didn't ignore
+ 	# --pathspec-from-file, stashing everything
+ 	echo A >fileA.t &&
+ 	echo B >fileB.t &&
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index e009585925..62d3d2604c 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -420,7 +420,7 @@ test_expect_success 'merge --stat respects COLUMNS with long name' '
+ # enough terminal display width, will contain the following line:
+ #     "<RED>|<RESET>  ${FILENAME} | 0"
+ # where "<RED>" and "<RESET>" are ANSI escape codes to color the text.
+-# To calculate the minimium terminal display width MIN_TERM_WIDTH so that the
++# To calculate the minimum terminal display width MIN_TERM_WIDTH so that the
+ # FILENAME in the diffstat will not be shortened, we take the FILENAME length
+ # and add 9 to it.
+ # To check if the diffstat width, when the line_prefix (the "<RED>|<RESET>" of
+diff --git a/t/t4067-diff-partial-clone.sh b/t/t4067-diff-partial-clone.sh
+index 30813109ac..a9dec84c30 100755
+--- a/t/t4067-diff-partial-clone.sh
++++ b/t/t4067-diff-partial-clone.sh
+@@ -159,7 +159,7 @@ test_expect_success 'diff succeeds even if prefetch triggered by break-rewrites'
+ 	# We need baz to trigger break-rewrites detection.
+ 	git -C client reset --hard HEAD &&
+ 
+-	# break-rewrites detction in reset.
++	# break-rewrites detection in reset.
+ 	git -C client reset HEAD~1
+ '
+ 
+diff --git a/t/t9150/svk-merge.dump b/t/t9150/svk-merge.dump
+index 42f70dbec7..6a8ac81b11 100644
+--- a/t/t9150/svk-merge.dump
++++ b/t/t9150/svk-merge.dump
+@@ -77,7 +77,7 @@ Content-length: 2411
+ PROPS-END
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -206,7 +206,7 @@ Content-length: 2465
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -310,7 +310,7 @@ Content-length: 2521
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -417,7 +417,7 @@ Content-length: 2593
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -534,7 +534,7 @@ Content-length: 2713
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+diff --git a/t/t9151/svn-mergeinfo.dump b/t/t9151/svn-mergeinfo.dump
+index 47cafcf528..d5e1695637 100644
+--- a/t/t9151/svn-mergeinfo.dump
++++ b/t/t9151/svn-mergeinfo.dump
+@@ -87,7 +87,7 @@ Content-length: 2411
+ PROPS-END
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -260,7 +260,7 @@ Content-length: 2465
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -365,7 +365,7 @@ Content-length: 2521
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -473,7 +473,7 @@ Content-length: 2529
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -578,7 +578,7 @@ Content-length: 2593
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -767,7 +767,7 @@ Content-length: 2593
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -948,7 +948,7 @@ Content-length: 2713
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -1172,7 +1172,7 @@ Content-length: 2713
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+@@ -1414,7 +1414,7 @@ Content-length: 2713
+ 
+ # -DCOLLISION_CHECK if you believe that SHA1's
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+-# enough guarantees about no collisions between objects ever hapenning.
++# enough guarantees about no collisions between objects ever happening.
+ #
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+diff --git a/t/unit-tests/clar/README.md b/t/unit-tests/clar/README.md
+index 41595989ca..a45b9c8e5d 100644
+--- a/t/unit-tests/clar/README.md
++++ b/t/unit-tests/clar/README.md
+@@ -138,7 +138,7 @@ raise errors during test execution.
+ __Caution:__ If you use assertions inside of `test_suitename__initialize`,
+ make sure that you do not rely on `__initialize` being completely run
+ inside your `test_suitename__cleanup` function. Otherwise you might
+-encounter ressource cleanup twice.
++encounter resource cleanup twice.
+ 
+ ## How does Clar work?
+ 
 
-diff --git a/prio-queue.c b/prio-queue.c
-index 9748528ce6..18005c43c4 100644
---- a/prio-queue.c
-+++ b/prio-queue.c
-@@ -62,17 +62,21 @@ static void sift_down_root(struct prio_queue *queue)
- {
- 	size_t ix, child;
- 
--	/* Push down the one at the root */
--	for (ix = 0; ix * 2 + 1 < queue->nr; ix = child) {
--		child = ix * 2 + 1; /* left */
-+	for (ix = 0; (child = ix * 2 + 1) < queue->nr; ix = child) {
- 		if (child + 1 < queue->nr &&
- 		    compare(queue, child, child + 1) >= 0)
- 			child++; /* use right child */
-+		queue->array[ix] = queue->array[child];
-+	}
- 
--		if (compare(queue, ix, child) <= 0)
-+	/* Place queue->array[queue->nr] (left by caller) and sift up. */
-+	queue->array[ix] = queue->array[queue->nr];
-+	while (ix) {
-+		size_t parent = (ix - 1) / 2;
-+		if (compare(queue, parent, ix) <= 0)
- 			break;
--
--		swap(queue, child, ix);
-+		swap(queue, parent, ix);
-+		ix = parent;
- 	}
- }
- 
-@@ -89,7 +93,6 @@ void *prio_queue_get(struct prio_queue *queue)
- 	if (!--queue->nr)
- 		return result;
- 
--	queue->array[0] = queue->array[queue->nr];
- 	sift_down_root(queue);
- 	return result;
- }
-@@ -111,8 +114,7 @@ void prio_queue_replace(struct prio_queue *queue, void *thing)
- 		queue->array[queue->nr - 1].ctr = queue->insertion_ctr++;
- 		queue->array[queue->nr - 1].data = thing;
- 	} else {
--		queue->array[0].ctr = queue->insertion_ctr++;
--		queue->array[0].data = thing;
--		sift_down_root(queue);
-+		prio_queue_get(queue);
-+		prio_queue_put(queue, thing);
- 	}
- }
+Interdiff against v1:
+  diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+  index 40e95bccb4..23fe76e498 100755
+  --- a/git-gui/git-gui.sh
+  +++ b/git-gui/git-gui.sh
+  @@ -109,7 +109,7 @@ foreach p [split $env(PATH) $_path_sep] {
+   	if {[file pathtype $p] ne {absolute}} {
+   		continue
+   	}
+  -	# Keep only the first occurrence of any duplicates.
+  +	# Keep only the first occurence of any duplicates.
+   	set norm_p [file normalize $p]
+   	dict set _path_seen $norm_p 1
+   }
+  diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+  index a4703af028..7e1462a20c 100644
+  --- a/git-gui/lib/choose_repository.tcl
+  +++ b/git-gui/lib/choose_repository.tcl
+  @@ -15,7 +15,7 @@ field w_recentlist ; # Listbox containing recent repositories
+   field w_localpath  ; # Entry widget bound to local_path
+   
+   field done              0 ; # Finished picking the repository?
+  -field clone_ok      false ; # clone succeeded
+  +field clone_ok      false ; # clone succeeeded
+   field local_path       {} ; # Where this repository is locally
+   field origin_url       {} ; # Where we are cloning from
+   field origin_name  origin ; # What we shall call 'origin'
+  diff --git a/git-gui/lib/themed.tcl b/git-gui/lib/themed.tcl
+  index f4cffeac66..c18e201d85 100644
+  --- a/git-gui/lib/themed.tcl
+  +++ b/git-gui/lib/themed.tcl
+  @@ -4,7 +4,7 @@
+   
+   namespace eval color {
+   	# Variable colors
+  -	# Preferred way to set widget colors is using add_option.
+  +	# Preffered way to set widget colors is using add_option.
+   	# In some cases, like with tags in_diff/in_sel, we use these colors.
+   	variable select_bg				lightgray
+   	variable select_fg				black
+  diff --git a/po/el.po b/po/el.po
+  index c45560c996..703f46d0c7 100644
+  --- a/po/el.po
+  +++ b/po/el.po
+  @@ -2748,7 +2748,7 @@ msgid "Low-level Commands / Interrogators"
+   msgstr "Εντολές Χαμηλού Επιπέδου / Ερωτημάτων"
+   
+   #: help.c:37
+  -msgid "Low-level Commands / Syncing Repositories"
+  +msgid "Low-level Commands / Synching Repositories"
+   msgstr "Εντολές Χαμηλού Επιπέδου / Συγχρονισμού Αποθετηρίων"
+   
+   #: help.c:38
+  diff --git a/po/ko.po b/po/ko.po
+  index 6bc20a43e3..7a6847f023 100644
+  --- a/po/ko.po
+  +++ b/po/ko.po
+  @@ -2062,7 +2062,7 @@ msgid "Low-level Commands / Interrogators"
+   msgstr "보조 명령 / 정보 획득 기능"
+   
+   #: help.c:37
+  -msgid "Low-level Commands / Syncing Repositories"
+  +msgid "Low-level Commands / Synching Repositories"
+   msgstr "보조 명령 / 저장소 동기화 기능"
+   
+   #: help.c:38
 
-base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+Range-diff against v1:
+1:  381e2c1fc3 ! 1:  674edefc99 doc: fix typos via codespell
+    @@ compat/precompose_utf8.c: const char *precompose_string_if_needed(const char *in
+      				in = out;
+      		}
+     
+    - ## git-gui/git-gui.sh ##
+    -@@ git-gui/git-gui.sh: foreach p [split $env(PATH) $_path_sep] {
+    - 	if {[file pathtype $p] ne {absolute}} {
+    - 		continue
+    - 	}
+    --	# Keep only the first occurence of any duplicates.
+    -+	# Keep only the first occurrence of any duplicates.
+    - 	set norm_p [file normalize $p]
+    - 	dict set _path_seen $norm_p 1
+    - }
+    -
+    - ## git-gui/lib/choose_repository.tcl ##
+    -@@ git-gui/lib/choose_repository.tcl: field w_recentlist ; # Listbox containing recent repositories
+    - field w_localpath  ; # Entry widget bound to local_path
+    - 
+    - field done              0 ; # Finished picking the repository?
+    --field clone_ok      false ; # clone succeeeded
+    -+field clone_ok      false ; # clone succeeded
+    - field local_path       {} ; # Where this repository is locally
+    - field origin_url       {} ; # Where we are cloning from
+    - field origin_name  origin ; # What we shall call 'origin'
+    -
+    - ## git-gui/lib/themed.tcl ##
+    -@@
+    - 
+    - namespace eval color {
+    - 	# Variable colors
+    --	# Preffered way to set widget colors is using add_option.
+    -+	# Preferred way to set widget colors is using add_option.
+    - 	# In some cases, like with tags in_diff/in_sel, we use these colors.
+    - 	variable select_bg				lightgray
+    - 	variable select_fg				black
+    -
+      ## hook.h ##
+     @@ hook.h: struct run_hooks_opt {
+      	 * While the callback allows piecemeal writing, it can also be
+    @@ path.h: void safe_create_dir(struct repository *repo, const char *dir, int share
+      int safe_create_dir_in_gitdir(struct repository *repo, const char *path);
+      
+     
+    - ## po/el.po ##
+    -@@ po/el.po: msgid "Low-level Commands / Interrogators"
+    - msgstr "Εντολές Χαμηλού Επιπέδου / Ερωτημάτων"
+    - 
+    - #: help.c:37
+    --msgid "Low-level Commands / Synching Repositories"
+    -+msgid "Low-level Commands / Syncing Repositories"
+    - msgstr "Εντολές Χαμηλού Επιπέδου / Συγχρονισμού Αποθετηρίων"
+    - 
+    - #: help.c:38
+    -
+    - ## po/ko.po ##
+    -@@ po/ko.po: msgid "Low-level Commands / Interrogators"
+    - msgstr "보조 명령 / 정보 획득 기능"
+    - 
+    - #: help.c:37
+    --msgid "Low-level Commands / Synching Repositories"
+    -+msgid "Low-level Commands / Syncing Repositories"
+    - msgstr "보조 명령 / 저장소 동기화 기능"
+    - 
+    - #: help.c:38
+    -
+      ## reftable/system.h ##
+     @@ reftable/system.h: struct reftable_flock {
+       * to acquire the lock. If `timeout_ms` is 0 we don't wait, if it is negative
 -- 
-gitgitgadget
+2.54.0
+
