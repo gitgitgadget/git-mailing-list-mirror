@@ -1,103 +1,120 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63683655FD
-	for <git@vger.kernel.org>; Sun, 31 May 2026 10:44:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780224255; cv=none; b=PZGrPky+4P8L2ff7jsyBI4Tnuq+KoUOCzT8OSU3lewThcQZcgINsDEfQD7x9lKZ92koFP25LbFJI7uOztpeFTHaH3WSRuvQmnYmS5YBVEeHnhkOKFVIwi1CuEgbAOlGcNHolnEVgLXG4T8XhZ8oJMwNWK+7LiqYWJ2AzKg8WI4M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780224255; c=relaxed/simple;
-	bh=rQtoY5bRvBS7kv/EWz4MNgINzXBpsNWuucv8WMBB1D4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HUM5NBdGxse/+4b8c3dVof4bQfeiIivlwlajsfVMATw/Ztqq7XcpKsCsqUgIGk4ewUpnQheBxfGjjdgLXS20S3FnxPrjfGCxZnBQT5KxHGHrpUprBhQQKaGkN6qTLDWU2GEvV0iIQomd775Lt8jtZL4zpdcP7wP9zDN3FPSEvsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pBKRNFSV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dp6ih/Ax; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE6B157A5A
+	for <git@vger.kernel.org>; Sun, 31 May 2026 11:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780225278; cv=pass; b=WHL0lxoF59VGFcwX+yGNkYPn/3P2OMnIAPJuAN2MuX8IA/amR99sU/QVJdnyCoKfKyx1OEmpBr0eWnEi1b90EM7NUSomtNSrUwdK4HaX2E/TIjEtHP1gr4Iamlp7zm4zimAzhwD/gyqOSZuO3HMG68NGHDYwQzSXFhFLfvPQBco=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780225278; c=relaxed/simple;
+	bh=sO1r1P/in8H+htHOw/khxHDm1efS+Vj796hI5ZzoyCs=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=rJjEtkLAv/ip0PqJHce9pHkcK+QU3KpO6q3IHB1y4pNy4qbcNCtrjt2Q90sZ7D+sqtrdsVYCb+aDB2mUMW0ZzivS3FpCs8Dx2b443pOWR/jyRGWv685CBlmzThPDiaXimMR7VbPYwXb7rsMWm03ic6VT2K55KkaBfUbB6qEGYNE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R4+toSrQ; arc=pass smtp.client-ip=74.125.82.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pBKRNFSV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dp6ih/Ax"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 218A9EC0728;
-	Sun, 31 May 2026 06:44:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sun, 31 May 2026 06:44:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1780224253; x=1780310653; bh=UtAbT9CPsa
-	gT9DCkgoIrGgWlCdK4NFDDwUDIri9PSV0=; b=pBKRNFSVrRVX/OmnzXZzqz3BtQ
-	7C1Do0MsnoUUWKW5tlGrcBn34Z9QQ2O41N5tw3iTN52CCByx5oKsejTFKjA/sPuS
-	zbSnOYAgIq7cT77BMH+pwgDYTxnkIjV0m0fHiVxfcTBbIkobQwSqCzBrzxOr0Q1h
-	0oOWadpnO2Qxrwc1LxVJSlkomYc9KzcthIQDNv92SLmG1n4pwgKgB0Eyxc/ltzMr
-	LdBXwkmStNfxJMykW2x06sa2l8Y2PuN4RGZo9jjPIBne4sldOMoZ+NYMxwsVAuYx
-	lhm3oN2VRSFagC1uKYxbnimNeb5IRUlUU9FTsGKR48VC8UQkroW4/qQQNYvw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1780224253; x=1780310653; bh=UtAbT9CPsagT9DCkgoIrGgWlCdK4NFDDwUD
-	Iri9PSV0=; b=dp6ih/Axad2w1hgoly9bptrj591ySVHeh4/I3FomT24c1WyCzif
-	3Vh5CpSEHNd2w1UZo0+s6Z+43HjSuT2XyOC89Vq+OdoCpYBKBTENtQ9W1ekv3lMl
-	0vHriYWYHDVsGSkU5rF+G5XTfZGXUgFLIeDYdi5GsDXlfLnyKC8m0tVc+wQkUp2Z
-	KW/f4KyGVqc0sPUtNZEXxWX69imlYR7Wfwii6DYeRGo+KJN3BJQ5owpg6E+GfYwd
-	nZvN9lamdhXrND7SMcTu2MZELJxgJG79CQrq/tkvBOZW5ma0BfWaXL09M6BzhPXW
-	Q1+tsGiPguCgwewa6YtirGHzy9d3PE00iLA==
-X-ME-Sender: <xms:_RAcanvQ_FH2MAKAD-y73b1sMwosj1AHJBTpgp5qrelIjrhWXQQp5g>
-    <xme:_RAcavcGhkodfnnvxyavxDRfB5jqsAcQvKBjXWKHSNCwgQQ5KedpRqxILS7becVTk
-    CGIUG2mIOW-g973waoT3a_4beiq0MkpncPa2M4e8VDxSPUuw94Bag>
-X-ME-Received: <xmr:_RAcavzu8DAvE8Zzhf6rwY1tATf0xcOl-lBiTf8FvdDXL1Hh3GGjSEFOI0Oe8I-QiRXMPAVs1aEKutYiIQMwGV7u8FEtAagbappU>
-X-ME-Proxy-Cause: dmFkZTF6NyMpg600qiOVLjkSmitSuGybXgw6vu9TjzyopdgdBV83stZrDeb6w5jgfOsoMe
-    lipJ4zv49vunm3wPuujZ6OJ6CFCglemaix/QytijpQ9Ii7dRZXOo2IcXzIuE7/2Wpwk71p
-    VB83gvv2+rgOIDhakb0PIfRANYFxK5Q0iw4WSn87PprWR0K8/B5n5NQpIxcY4cZ3hnigwS
-    awzW0fQry80tQLZhDk9H71d+ON4KrTTfC4W/yNUVAW6OHRpsX+vE4niXFolKRcEEGDiamq
-    BrS3AIFDUoKGXEjAkL5/KTNvQuYSbxuBhQUZQwQAFSu8h2S4EfBJFe1XraHWKzoGlKFVdX
-    W/Wvwl1Ou+yLbNkSkc17BGvsozJOriJ3KXXFL9G/Xc6Jx5uGGNPRGO8Bq9yV1NiGhg8u58
-    C7qO6j61uySL41Tj/oOykKT5dsdtiHjur5v/oI2EY6ktXTCi+J0DRhUu/BWSqdPoLQAMd8
-    4LYUFtZlutHGh2ZVjTZCN/1xgwgdkaxF42zlW0SpDEDntlzriMBkhtnf7N8JUvjgudVb/N
-    npeNd6qbs4rEBCTW5p6HICUmebXQxgYsCLwTxKMuuYNIbknk07HOT20w3GQGexcYtmHq1B
-    1gK9AYLxq9CA17k54X82cqoazNQ2a8r+PVMosq2wmH5Y/eGxv+RxnysllIdg
-X-ME-Proxy: <xmx:_RAcalE3vP5-UPPdFm1uyGdqhrtENTKUJHSbcEKP5qCq1HnA-84Y-w>
-    <xmx:_RAcajyJw3mGQMFhjlbttSkrbvIw3isBscfzPZNpeGqV8Grmju1jzg>
-    <xmx:_RAcamukc18LSAKBqXAtlZ0XPwaTd45_RR_2lnsuSkU5qU-_eZ0nTQ>
-    <xmx:_RAcag03hG44ypwn_Lgw-pM4LhKut9eWDenDzK6ieEeG5p7cKP5TBA>
-    <xmx:_RAcaltUytWNH3748DU_Zcy5Ack3NAjjcQotdc-PZXvnWmO3INkQGYgc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 31 May 2026 06:44:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v3 0/6] [RFC] diff: add diff.<driver>.process for
- external hunk providers
-In-Reply-To: <pull.2120.v3.git.1780087700.gitgitgadget@gmail.com> (Michael
-	Montalbo via GitGitGadget's message of "Fri, 29 May 2026 20:48:13
-	+0000")
-References: <pull.2120.v2.git.1779733799.gitgitgadget@gmail.com>
-	<pull.2120.v3.git.1780087700.gitgitgadget@gmail.com>
-Date: Sun, 31 May 2026 19:44:11 +0900
-Message-ID: <xmqq5x43dfk4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4+toSrQ"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-13721dfd471so7978254c88.1
+        for <git@vger.kernel.org>; Sun, 31 May 2026 04:01:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780225277; cv=none;
+        d=google.com; s=arc-20240605;
+        b=H1Uh3vG2vQHL+93lKv/yENnKnpYL0/vOnHZu04PcVFQwCObc9a0b0mKszhrY2KkI9i
+         qXlW1gL0Uiir7tfszzhQEbWx6lCTs40tddmXqL/+pG0I4gr6VNBYnFAdxjxPsepCf3eM
+         I+tr9r/V/qDzTycw8KWV27mf2Pk7RSE66ENS1AmKCJR03ANgfKV+5E2ReZkRu8M/HssV
+         JkRLs87V6RsEmBkCTdlwBjWXS4pyttjn1+lsTEC5OEotILJf6z0vYeF16/9n7v8IIS34
+         eAucHuwSdywnRC/IgxFmfbHreaa+b1ahHrVlzByJLiEBdgTAV+m+L2nSfmyS+2k1rUMy
+         0Jmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=IHSKaixxsXS3A0vij6FpUzOpqAY/UZa8lwqjilmt6c4=;
+        fh=Z5fqQ1JTxD0RfUHq+ieuiOIxXWErYlQo8d5Olo/1o7I=;
+        b=j2u+sJiS0ZdocZbEgzXNuYn7/t2g0oFq3z+Y4ZznsdWh86pt1ORtDjRDlrHId+iSPK
+         5NSrEPE27qX5S5i7c7w8cSSiXgldI3qQdF1/72winOXTuuPikWdmv9ggt2Y2/Lnk/o4X
+         Gfzl41M3NEbLFW269hiM64EuaNIymzSf/QB8LoBPzSIxvBZ8CkSnJgYeyXgmJfrQ+SG6
+         8GDguAOOZlLjZGT9f7SjT6H4L/SN5I8SCIZmg271rjnTU1kvRBxCTdAYYL2CU2q+nQHH
+         q8xOAbrQyScYy/caLc76hUbNuRTR3SDgF7h3rOOnWlKWyh1SJ/JwK8i4oprv/oNxJ2LH
+         3liQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780225277; x=1780830077; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IHSKaixxsXS3A0vij6FpUzOpqAY/UZa8lwqjilmt6c4=;
+        b=R4+toSrQqxJxlMvo8+XO5xL3lCvsIq6eNJLw05JtYHUQjDETu/WKUkK6TljSpEQ62y
+         hISdC5dVS2D2xZhYQ5cbs9BnqZqy9F3G1K6UB4VjLO0QXQWC+thub2wvNUrYOlkX7htD
+         8XHQ228OZTsZqLOY5Ujy4YvmcNe75pORCt2fkUbGqXr2PMyFm3eIpxwDZygk5wxP10j5
+         eNS/l+1R3gdH+m20th6mGWZzWg08ahnoaWLvPBXvw0fxAoENqMLP4aEB35p1ktdnkabk
+         Obo9Fqtztmp8B6vKqQXu3ZwISajU71ZhTgvbu9xG1PZzbGhsGW7pfCDlzs17/P2zmFyS
+         JlDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780225277; x=1780830077;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IHSKaixxsXS3A0vij6FpUzOpqAY/UZa8lwqjilmt6c4=;
+        b=hkpbLBB08mxK2JHEve9wxF68ESGVDJ49aRjiHn6oWjrtG9CTznZemhqR2U5VUD8ZbA
+         njepplPVxmnaaOVhb5aRQ8b3OLvVwIZ5bzx1J4r8WdhOFulOio33q0dmlPqB6qNCaC6q
+         mJ8XL8Oksm+EGM5dClY99l/2kbA9lfGxY0sfzzAcSPhDoDVrmVRs8vltfTLRCJel3CM9
+         8TJ0LK4czeAR/EYpb+VEUXoU31CtH01TmpLu51Msudwn/BmBIt/gNBo4WBMhi56EExP0
+         yy2bpjLEWLDANCOZMjnQ0Se9mVVRp00aXa00AMBXd70ySBXDCtczXhMIqaXVkUaTuGDE
+         E+/g==
+X-Gm-Message-State: AOJu0YyAGrmIUJx9gVLeHSlJ+3vEzyDDSZUmakcGp+pK4meHCbpzC11W
+	bYGyfFgzZ5tVWAlLad6kaYn0t4JgSzuQUwVZ/7+pEgfahlU1RSkv7WJukh8cyEeQIkjDEzRO8I7
+	kvuQwhwhn+R9AnFNtgd7qLUuSvtjAp+0BUZps
+X-Gm-Gg: Acq92OH77LERPHpyq0RproSfmG3IGn6fNiKX2eDEA6RqI1PO9VefGP/2IbOzte0umqF
+	KvEDyJxQyP40O/JUfrXdszwD7G1SEg22bb99D+EQxtxsg/FW39l2wMHQyEC4AfiWQisa8JszNhN
+	XHVJgC7j9IyKB3NCAtobnJksgMObCdZuROVBRoQO6PFA4rRnf5j+9fd4V4Z86uODb6VM6ImoomR
+	B5bQt8/l5osZ1Y6KxiJDkcbw73+PXdAcxS/5oDVvbeZMl7k+kTRzuEYykZZ0tQto+csEQUPAsIC
+	0paxO3SGJWfzKrbmnK+mOsCdwG1uxsWDQRQiF2aFEqAETxMyLBs+hh5+mHaMCrqrDZ9JM8vZxgv
+	/ErI=
+X-Received: by 2002:a05:7022:6299:b0:136:5ee8:5fae with SMTP id
+ a92af1059eb24-137d3f0f117mr2542674c88.14.1780225276594; Sun, 31 May 2026
+ 04:01:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sun, 31 May 2026 13:01:04 +0200
+X-Gm-Features: AVHnY4LM9ewtnyNrGcyfQ8Xgnkr4kDn-V8UkiCSBDo0-IYEWMEECxIONB9qyTbY
+Message-ID: <CAP8UFD1cUEWOWDHZ=6MZxncBCswMMhw6mWTsUzjj1e5huN0T_g@mail.gmail.com>
+Subject: Draft of Git Rev News edition 135
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
+	"Matthias A." <mha1993@live.de>
+Content-Type: text/plain; charset="UTF-8"
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi everyone,
 
-> Language-aware diff tools (e.g., Difftastic) and format-specific analyzers
-> can produce better line matching than Git's builtin diff algorithm, but
-> diff.<driver>.command replaces Git's output entirely, losing downstream
-> features like word diff, function context, color, and blame.
+A draft of a new Git Rev News edition is available here:
 
-This seems to break CI on Windows; take a look at
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-135.md
 
-  https://github.com/git/git/actions/runs/26709491830/job/78717295153
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-for an example.
+  https://github.com/git/git.github.io/issues/844
 
-Thanks.
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Tuesday
+June 2nd, 2026.
+
+Thanks,
+Christian.
