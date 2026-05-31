@@ -1,71 +1,71 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B180033E344
-	for <git@vger.kernel.org>; Sun, 31 May 2026 23:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C46D1F1513
+	for <git@vger.kernel.org>; Sun, 31 May 2026 23:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780268588; cv=none; b=d9woYLIG88+I2BUP9+1kgsVjgLkTML0bendXc86Fk35mPUc/AAT0cNyY2fgedyqt2p4pNB50FK2opvSl1WbJzPz2Ps2pW9A5DBewlHRIZT3i39JTnWrNodkn6aW6lGpTkDV3zNOKM52FrcE6qvQFeFhTjwln5kEuaVGyzuAWDF8=
+	t=1780268588; cv=none; b=YHHsv3uhUE/filGTJEBXI58jBcWqKLxyKB9gbQY7Fv2pLzF913y3QXBtt62Wm8zR4y+Eynq9GrJh/nWOqBmyOy04R0nWUo/VrvzXQJ+hDZnoPtbGQg6r8zHvCmN9qGP2cSuJnzGkbeKAvr/MeITeHtRvOB9H5Zg4hR81C3+zVtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780268588; c=relaxed/simple;
-	bh=9+g/1zK/LVsoMGwUZearav/FC3f+CT+TjCydhisFubU=;
+	bh=iR4pD9/euYpLeA2OvgJFOAKXc1ocuC0xgAaZRcWoTJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/QdNOGcYzVTWgN24OO2yoRIrAPfIZqB0bvFO5CwBlDtbn0PYfCcG+jquuduVwIV5UdF9GvIW23sCAkSkMhATkttPfDepnUppwNX3yvXBXC1N3J1b6On6SFWHjdn1WHQ9742EYs3M1HjWzyXyaFHcWvuH7JigpNydOkxXU15JEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a4X6xClE; arc=none smtp.client-ip=209.85.219.45
+	 MIME-Version; b=dKDbLcspUMa1hrkiCcEMUjDOleiwonkYcJlu+L7s8FTBU++/YWb9CQa6LTOeL6LZRxkc1NFDQBQtOnazavfCF5w5lYMfj/Ruhdgg8eubWiyGRpwmh/KeVp2uYfNE3EAHeSD/S9sZRFdP6BNqVhiVOju+9tVFn85/lXc3a52PfMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BcBO5Dw7; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a4X6xClE"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8ce9df48e1bso9862466d6.1
-        for <git@vger.kernel.org>; Sun, 31 May 2026 16:03:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BcBO5Dw7"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-516d61baff3so105640141cf.0
+        for <git@vger.kernel.org>; Sun, 31 May 2026 16:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20251104; t=1780268586; x=1780873386; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YjOeQJzGG7H7XrycqiIG8heGUeDDT1NYwuaM/QmOy5Y=;
-        b=a4X6xClEG9AUWx3UtydDsANs3UJDtdKGfgxnoU6WCgTU5V6zm9qY3oSpl5UVWBSb+A
-         Fyclm938TFn4G6n09MHeP8k/l9X+qOgJRFaHcgdeCVUYAn37ldJ5H3eGqQhwtViCr4xp
-         TXXGyuHAUqGKSnGM1xaF5lo+Ep1n25i5m/YqWSoQ0C+5u7zEsFbz7YTSyLGBMxTFjo/B
-         AMVTpPqDffaoxA0bkEk6/x2TGW5bISaQazT3LXeDebGUn2T0RrT+rjj7tUgny2K7rVv/
-         Jgt8qzqHSZMZwKhjZmplE6ax/i6PtXTQ7CWjKUnYmsE3TVrqsPcxWaIC0BKqRPdN4zAz
-         6H6g==
+        bh=mCKxjRQ95jTU9TCc3m7Wg6laH+SeQMjQl4mFv86x3/s=;
+        b=BcBO5Dw7jX2r1Uj1rVxyBPt8/ZMsVWE/XSoRx/kYU3+pQ5CguxCz6zMswb/jw0Qc0L
+         1SlHaijJ59fvq0Y1yX3IdZe0eSeBOxxFEDfzGpru8Zgaazg3GPNgs8q5yoOEdVLLUPsN
+         EOmuYiCzGE3shEOumbNIYKKWOtdyV93mCxbD+0qf1YWutCUJ7QqWCA0SAQ17r3qx8NsT
+         cupDkakjjErccQsI8mv4444N6rhhp7S9zfbO5Z+3uZkFzeX+95MdSh4MsB5eBTJCiX8R
+         JILu5H/WlToQ7iMds4rA1xtEiBgJC48RgZfTS9nBi8lbb5q2xJ/Kgn6LCshUcym36/TA
+         pGBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1780268586; x=1780873386;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YjOeQJzGG7H7XrycqiIG8heGUeDDT1NYwuaM/QmOy5Y=;
-        b=kWcJzfCbwiUrL7gQAbjzJ1YiP6JKM3sHfsNbSJ93RrWCZhuRCNtLpDAMKz+X7srRAh
-         z8t8STrqnNZUUFDhwko+cq9KShvjr6hlNldE/t706DuhSRfA13gi/ZusE4r1aUaA42TA
-         cNRTyruvPG/Ol34yjmFPBKMsKobqg8TQdtuX2KonncloUZEj382MwvkSa8kyoOEI9gRL
-         3JC4LGmHmhVWDxNq/OraOT+VTzmwE0QG+KjcU3Iy9aNAm0gO2Ldo97r9eakTX1CtybZL
-         N6QeeUHrPTFQIisqR3j1PqziiTrROzcSy78AKjkneOgS8Vs/DyX/5VpBnPFdV/gQQ1+j
-         Rk3w==
-X-Gm-Message-State: AOJu0Yy9yiPKpHa8jF2T0qc0C9IqZlz5VkOQqdNADiUUozPES2Kd7Ss3
-	+8lOcR5l+IlXWTYnZdi22J2AlNCzNKD0yV0NOx2c0YK/m0Eeh6ErcZobFRci1Vu6
-X-Gm-Gg: Acq92OGUplaYczJp0OgCyjpVQXSdo9+cJqTDupyQ6XOXemqLk9IYWih/jqsj1knFRNB
-	fsB3VhwvR1LIZ2g+8/cUqc2PbR8YT5xcN1UE3vDMCtOPJNwy0jxlaehVEf5Fh/SqXRynsRFQGnX
-	d6cQgmG/EXaBVScleZOk3XSLHmMpPhGcCt3nhfmX7EtX8OA925mHwjRosEvDHsoUotKE9LjH3Bz
-	eYIe/0Br5arahaG9spQn9twCIv/36jvdzymLTEyegbh9Fly3aXUDnDzyToTvpz7LskbYc8Wjb10
-	m+QHYaHZbGhSnSJnE/BVqF56lj/EmjgYpff3SoyvWFiyn/fG5M3HF2gZwIdRiK8IDNFGBE09flM
-	3hH3mWWS+0p6rCTd+gjpQyLzd9CaY+Y5noe1xjgRN4+omhm2FoDJe1vDrrED/DHd+J03MRij+MU
-	M3b6RWdXHjjMjUtzXsEnDo4pxodazhp0CI+kgi
-X-Received: by 2002:a05:6214:54c5:b0:899:f0b1:7332 with SMTP id 6a1803df08f44-8ccefdaa82cmr146934456d6.32.1780268585775;
-        Sun, 31 May 2026 16:03:05 -0700 (PDT)
+        bh=mCKxjRQ95jTU9TCc3m7Wg6laH+SeQMjQl4mFv86x3/s=;
+        b=DqlGnNnny+jDOJdwcWVf1mZq8hwIEo3m5VgKDRXcuhn5WdPWHW2eoTc799H/4+Kygy
+         /lnqBv2U9doJnlyaiBlrwPL/E+q4SzII4kfo0gxme95evPYpwWfBr+Gz/6f8G2VjRcRo
+         e9ckrHIYhxZGQCs5yBKULu7iIoHC4AHd9XlI/nLTixQGP3/7l1kiBg64isGQdhoJO6m9
+         JR54u0NUj/uPf5nEsM5VWbDgmOQdxnsUyX46fUvmbui++bpYQjYR9M5ICj+tRTvx/Qvs
+         LOi6n4Z8Qziei4k/5h7L3/i9kYScOARp6/XJ45EWiVhrwWBnBGFSEKowpeFRKeClAMiY
+         +NKQ==
+X-Gm-Message-State: AOJu0Yxw3zIBVpNLaK6UiGK7ukmqgtbrZ8Z6kGRHo81eqZUNPOo+pIpj
+	0yGVD1gYuulpbTK2WbZM9IJYTKSUc9GCWUfDI3pogtb98QuUhyKYk0LxuiTXEBdQ
+X-Gm-Gg: Acq92OFL+tCSy3nNLwESGqHJA8rl3Xx8zUp5y+XtCgl1PGfQS2bDo9J+NbqN/9MKP8p
+	uzcHSpRVo/BcjpYXoVUATzGGkcVpdd/MyYs76wk6nff8GX5b4ZuonmHiVYcYKExiuS3XguX3Okf
+	0rhSmg482wrStQTwLqEPCIv0lfyRLAhzxaWIvDvs/WZPtnpKJHU2TPe2q49ym0HJsa6Xw5HjsCl
+	RMqG7MkOhYdSNpjZ8LcvATpEabWkII3t2TosOa8oIr2xjWTvDfPTJMzPGNIxmlPedNG2u/1633U
+	CVC4XV6eHuR3YN+bLugqoPnOu1lkkz1zl2wOesxmD74FfXanHH6ixqpukAkLiNC8eg8SW11+dkR
+	+yNtsqs+QvSxs1umWrmgo65dE3tSOWjs3/SRgNk42uOzXmJD1VvkTmEeKsmJp8EV//gEccCXmpN
+	MSoFVqmfXwQRgEqVfcYu6DO8PDoB70x0qNK5qx
+X-Received: by 2002:a05:622a:a591:b0:50e:578e:bb18 with SMTP id d75a77b69052e-5173a884280mr136171321cf.47.1780268586415;
+        Sun, 31 May 2026 16:03:06 -0700 (PDT)
 Received: from markl5i.lan ([2600:4040:264b:4100:d17e:f99:a560:8cad])
         by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ccea042bb5sm78268426d6.8.2026.05.31.16.03.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2026 16:03:05 -0700 (PDT)
+        Sun, 31 May 2026 16:03:06 -0700 (PDT)
 From: Mark Levedahl <mlevedahl@gmail.com>
 To: git@vger.kernel.org
 Cc: j6t@kdbg.org,
 	egg_mushroomcow@foxmail.com,
 	bootaina702@gmail.com,
 	Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH v3 07/12] git-gui: use git rev-parse for worktree discovery
-Date: Sun, 31 May 2026 19:02:20 -0400
-Message-ID: <20260531230225.126817-8-mlevedahl@gmail.com>
+Subject: [PATCH v3 08/12] git-gui: simplify [is_bare] to report if a worktree is known
+Date: Sun, 31 May 2026 19:02:21 -0400
+Message-ID: <20260531230225.126817-9-mlevedahl@gmail.com>
 X-Mailer: git-send-email 2.54.0.99.14
 In-Reply-To: <20260531230225.126817-1-mlevedahl@gmail.com>
 References: <20260520202411.108764-1-mlevedahl@gmail.com>
@@ -78,134 +78,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-git gui uses a combination of tcl code and git invocations to determine
-the worktree and the location with respect to the worktree root
-(_prefix). But, git rev-parse provides all of this information directly,
-and assures full error and configuration checking are done by git
-itself. The entirety of discovery in normal configurations involves
+git-gui includes proc is_bare, used in several places to make decisions
+on whether a worktree exists, but also in discovery to tell if a
+worktree can be supported.
 
-	git rev-parse --show-toplevel (gets worktree root)
-	git rev-parse --show-prefix (shows location wrt the root)
+But, is_bare is out of date with regard to multiple worktrees, safe
+repository guards, and possibly other relevant features known to git
+rev-parse. Also, is_bare caches its result on the first call, so is not
+useful if a later step in the discovery process finds a worktree.
 
-An error thrown on either of these lines means the worktree discovered
-by git is unusable, or git did not discover a worktree because the
-current directory is inside the repository. If the user has defined
-GIT_DIR or GIT_WORK_TREE, this is a user configuration error and git-gui
-should stop.
-
-Otherwise, the blame or browser subcommands can be used without a
-worktree.
-
-A separate error might occur when changing to the root of the discovered
-worktree. The cause would be file system related and completely outside
-of git's control, so trap that independently.
-
-Discovery of the repository and the worktree must be guarded to trap
-errors: the intent is that any configuration problems are caught during
-discovery, and later processing need not include error trapping and
-recovery. So, move all worktree discovery code to be immediately after
-repository discovery.
-
-This does move configuration loading to occur after worktree discovery
-rather than before. None of the code executed in worktree discovery has
-any option controlled by a git-gui configuration variable, so no impact
-is expected. git itself will always read the repository configuration,
-including worktree specific configuration data if that exists, so this
-is unaffected by when git-gui loads its own config data. Also, we cannot
-be sure the worktree dependent configuration can be loaded before
-full discovery is complete.
+So, simplify is_bare to report whether git-gui has a worktree or is
+working only from a repository.
 
 Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 ---
- git-gui.sh | 61 ++++++++++++++++++++++++------------------------------
- 1 file changed, 27 insertions(+), 34 deletions(-)
+ git-gui.sh | 25 +------------------------
+ 1 file changed, 1 insertion(+), 24 deletions(-)
 
 diff --git a/git-gui.sh b/git-gui.sh
-index aed3bc7200..53b6859345 100755
+index 53b6859345..abee222903 100755
 --- a/git-gui.sh
 +++ b/git-gui.sh
-@@ -1187,6 +1187,33 @@ if {$_gitdir eq {}} {
- 	set picked 1
+@@ -372,7 +372,6 @@ if {[tk windowingsystem] eq "aqua"} {
+ set _appname {Git Gui}
+ set _gitdir {}
+ set _gitworktree {}
+-set _isbare {}
+ set _githtmldir {}
+ set _prefix {}
+ set _reponame {}
+@@ -524,29 +523,7 @@ proc get_config {name} {
  }
  
-+# find worktree, continue without if not required
-+if {[catch {
-+		set _gitworktree [git rev-parse --show-toplevel]
-+		set _prefix [git rev-parse --show-prefix]
-+	} err]} {
-+	if {[is_gitvars_error $err]} {
-+		exit 1
-+	}
-+	set _gitworktree {}
-+	set _prefix {}
-+}
-+
-+if {![is_bare]} {
-+	if {[catch {cd $_gitworktree} err]} {
-+		catch {wm withdraw .}
-+		error_popup [strcat [mc "No working directory"] " $_gitworktree:\n\n$err"]
-+		exit 1
-+	}
-+} elseif {![is_enabled bare]} {
-+	catch {wm withdraw .}
-+	error_popup [strcat [mc "Cannot use bare repository:"] "\n\n$_gitdir"]
-+	exit 1
-+}
-+
-+# repository and worktree config are complete, export them
-+set_gitdir_vars
-+
- # Use object format as hash algorithm (either "sha1" or "sha256")
- set hashalgorithm [git rev-parse --show-object-format]
- if {$hashalgorithm eq "sha1"} {
-@@ -1202,37 +1229,6 @@ if {$hashalgorithm eq "sha1"} {
- load_config 0
- apply_config
- 
--set _gitworktree [git rev-parse --show-toplevel]
+ proc is_bare {} {
+-	global _isbare
+-	global _gitdir
+-	global _gitworktree
 -
--if {$_prefix ne {}} {
--	if {$_gitworktree eq {}} {
--		regsub -all {[^/]+/} $_prefix ../ cdup
--	} else {
--		set cdup $_gitworktree
+-	if {$_isbare eq {}} {
+-		if {[catch {
+-			set _bare [git rev-parse --is-bare-repository]
+-			switch  -- $_bare {
+-			true { set _isbare 1 }
+-			false { set _isbare 0}
+-			default { throw }
+-			}
+-		}]} {
+-			if {[is_config_true core.bare]
+-				|| ($_gitworktree eq {}
+-					&& [lindex [file split $_gitdir] end] ne {.git})} {
+-				set _isbare 1
+-			} else {
+-				set _isbare 0
+-			}
+-		}
 -	}
--	if {[catch {cd $cdup} err]} {
--		catch {wm withdraw .}
--		error_popup [strcat [mc "Cannot move to top of working directory:"] "\n\n$err"]
--		exit 1
--	}
--	set _gitworktree [pwd]
--	unset cdup
--} elseif {![is_enabled bare]} {
--	if {[is_bare]} {
--		catch {wm withdraw .}
--		error_popup [strcat [mc "Cannot use bare repository:"] "\n\n$_gitdir"]
--		exit 1
--	}
--	if {$_gitworktree eq {}} {
--		set _gitworktree [file dirname $_gitdir]
--	}
--	if {[catch {cd $_gitworktree} err]} {
--		catch {wm withdraw .}
--		error_popup [strcat [mc "No working directory"] " $_gitworktree:\n\n$err"]
--		exit 1
--	}
--	set _gitworktree [pwd]
--}
- set _reponame [file split [file normalize $_gitdir]]
- if {[lindex $_reponame end] eq {.git}} {
- 	set _reponame [lindex $_reponame end-1]
-@@ -1240,9 +1236,6 @@ if {[lindex $_reponame end] eq {.git}} {
- 	set _reponame [lindex $_reponame end]
+-	return $_isbare
++	return [expr {$::_gitworktree eq {}}]
  }
  
--# Export the final paths
--set_gitdir_vars
--
  ######################################################################
- ##
- ## global init
 -- 
 2.54.0.99.14
 
