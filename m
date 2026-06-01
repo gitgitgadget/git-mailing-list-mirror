@@ -1,126 +1,169 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91473BA253
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 14:20:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685F73DB62A
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780323639; cv=none; b=LzjwNP6qeKEvu0d+QjfCH2vcaRP8X5hRT/VBtxB+DH+9UgIUXw67Huu/6PCtDLqKq4h6TgCfmPoL1ZP07Jc/HmkqJVAx5WA460LsxalO+8aK50ye7qooWIgMawcm9f2tOEoXGfuJ+SA1t6tu0G67bWV2dKk0sGMM3fBEfbZmaKg=
+	t=1780327229; cv=none; b=nl12+K0nLaKLfFYUKl2/KumGLbUSW0zhEhdaSc1B2OnF6N6tMF61FsC0MEOg13JrTnq5PCGelJoivYfjGqUjuA1Fdcm2+ZyRlNIYGVEVhQ43emQ1YJxIQyeyeFm0gpTeWl2+mkrq3hZQl7LzN0yiEfY4jd5/lkmYm/iYWpvOTLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780323639; c=relaxed/simple;
-	bh=vZ4swa+xxODExLmdtNu6dRua9TOMYMrC17d6RrMzpgA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OyaF3ZDpYNagkujkZktamrZ02inodwygjk9kB4iaZGDZGXxWrBCtn19NAXYwm9mIUuw10ePIJYs9qnKeT+H7VfCL6eMQRO2mQSK2kJfccR32slgiAPHi33w/rWJP3RrI918SFuBYCGVme2c7AItHVUK75Zmxh6420CahIJEfwx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M5Kxke2i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g9cGE6nh; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1780327229; c=relaxed/simple;
+	bh=CXDiMQC48gkB6kQRrAdcuT+H4d/lUR+hB/2k7roFQpg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EEg+s3NZCMb8M0tu8HDPu0gaPvimgdMcCyNgQUKznYJ6Abg9Y8fqA4vWC4z9oyHP31Z9nPdy+RZRcA1YLChm6r1PB7QsmhRl4qloDA/zTqpMS00E4oTUYGjPc/Ug77XI6iD3ZicHmKd29Q5QqyfyLraBMVMqKrqk/5rXfdpBppE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=biGpXs6G; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M5Kxke2i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g9cGE6nh"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 22D4CEC0188;
-	Mon,  1 Jun 2026 10:20:37 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 01 Jun 2026 10:20:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780323637; x=1780410037; bh=vVsAiRxd2n
-	5TWn8uSyy6/gbQPKW8jF5VoI+klHra8Rs=; b=M5Kxke2iITZLHMa6nbWeitAv4K
-	0g2jRFZ0bL2zm7nMpt7+g00uLN2JA4fO5dealSJv2XLFSlRSgFhoDM1XfT0r/DG5
-	lnOpoD6t8kmFRw7Tpb/IxDLwUqNAs4jnnJaQgcp7Dsaeor5Ug+lCIfVwIcWPuQu2
-	c/Gbfp21C9f9chxs0h5lp7uaQY5NMzs9JVnKQklKONT3UzU/6ABM9QcZ7dOC5Uxj
-	TTGPV8swWwfaXeh2Ss/KGOEVSlwJLaVnnSIaMDv39TwpPsqx1CS54kJRcPuhl3nN
-	SgnLJ9T1m4UH2BUp1DadseYLv3DcH5inC+V5OUt+Dywl1Ls2FPaxdKZFU5TA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780323637; x=1780410037; bh=vVsAiRxd2n5TWn8uSyy6/gbQPKW8jF5VoI+
-	klHra8Rs=; b=g9cGE6nhdLcze4MFO8eAhSd0B4hAWZJjBi3PHKXFZDHk+ry41Ot
-	5OkNTmaNE3mqHsXmvHqHbKyuVJM37NY24wUZEunTj1pIPMS915dDbMD9uLQZ3NxF
-	OGT1Cq2Fx6N6yMWXV17603X2o0AiD3d2rKsS4GurhNUts3797VtCi4umW2zpipgw
-	Q9UUSt7lr3/UtYM+69aVSE2b1MYACqtbSAEj39V6jyvtvnb+ZIG/2duBOwGGwsGV
-	NErmUcFlz+4k9XslKrXUhTI85JcSmekSkCEUybs64NHY+EgeFHGdNQMXvBPxXysq
-	K8BAd3crHfPF8/MII2vpXvg6ROvwg/dfijg==
-X-ME-Sender: <xms:NJUdap8jMK4OkhYIcVzhg887HVgSG-9swV5Bu_A9J0aRJ4ZlDidYzQ>
-    <xme:NJUdaleI3gvrnvZJb748kI5gwF62NCOtmFZrMdd5dsQh7uxl98Huu0cNw4hERRaf5
-    6BOa1wELaimK6a9a52h22Rq1H9ub0zx5vxJ3lUV1y-CQrhEPjrb>
-X-ME-Received: <xmr:NJUdaqGy04gVF_--Jz0BJ2DOVnPYfX_7XUonyqNY1hfbS521WU1sJKyzfH3ShG93Yi6i_6dEEEfLkc2KYrQdfHVUkPAr5UvGK59tHR-Z3EPN>
-X-ME-Proxy-Cause: dmFkZTG3G0cVIAs1v/CfTQVGVXJE2xb9bLD2kvwhIFDdqojKS39hN3d8wETsqya+BRKKLZ
-    FfeevzQiyYRSz4sBcL33IUIL6DBfgvJEyifS+CjpINQObOd9LUwkOpZNbwkCKMrHyAkXil
-    JdLI4Gg8c3o+Z4eTn7SpiQNixVkliCyKWSg2OtKqgNb/Vh90rV5m7nqsQBIrEBvjCgdWmK
-    FvzqmZpF9vWrAGBlYdjsdvhMKwNYMQONBGekIYDYX5Yaff7RB7GU+K2HaiSif5aGuLjgJv
-    y+jsboWIgLvVZ1uMX0Pz6IVeHNn0S/zORUl/UbF6B1/j+JC4357NN6GQFJRVP0WgKb6uR8
-    U6rSMy6JHzGKPf0K14Ln5og+q5hldnfUthua7yv9sJ7OfOTXn2HNdxc5J9nUJSb3dqgZJI
-    hbVI8BzkRDXVQQkObA3YwpRZmZcOlQeMBxc/UDCGan27Eg35QYiPA9lpFDX4oMXwWk3j6A
-    vqXwed0jLlh4OHuEEsgCk6WzkY5IRoakVQcj5BdhPux0kQVtn6rYwHBEDTwkFUTLa7y7lK
-    zhC5gOVtUfP75CYVriVzxgxqu8AcQJuR3eMnjun8iXdm6jYaZ5KlbLAzagQ2JkDdc/k/am
-    2jK5g7kbI70Bm9w3QMFx86RdWCvpsGrp1xEx6FCMwtFe9T7alfzMMlKR85/A
-X-ME-Proxy: <xmx:NJUdarc1ncmqP6sMsbTkqg1nrzjypBwFmnXWENjRJdrR3doVvK9i6Q>
-    <xmx:NJUdasFSubp2UtP6h-yELwkt30DNeoSPwoNkgYD0HuSn2oKK2qYZxA>
-    <xmx:NJUdasViXAw4cloEb93Dbepajj4-z6DTL7bQPyUOBmrQ4IWMer0CIw>
-    <xmx:NJUdarIZmZVBo_4sRPCtZ-R5-kFzTAZ7dKA9eEEZSw3Xl04KtXY-SQ>
-    <xmx:NZUdak-aFm1FFvWqaHXUpv-DyTk8y6YM9O4sw9KFSWpf_m58X1QYlqMz>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 10:20:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d37d6fbe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 1 Jun 2026 14:20:34 +0000 (UTC)
-Date: Mon, 1 Jun 2026 16:20:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-Message-ID: <ah2VL-ftCQelNoOc@pks.im>
-References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
- <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
- <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
- <ah12uk7IFxS92OR1@pks.im>
- <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="biGpXs6G"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-45fd461e4a5so1416206f8f.0
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780327226; x=1780932026; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2QQrke9QBxF0psqPTRLmIW4Aub4nualcSaLAi3Sq33Y=;
+        b=biGpXs6G4M+CpPY6cHIXk4v39RCtRmlExT2NpfS6wL4XFVSo11yeEFgH6xZsJbjQ1e
+         LwlRoHdKDDxWh8qdxYzH183uYclfm0LkFoeJI35QTU0P4zJxkQVR7+MP5adD9ur5KCqd
+         x9vPxSR6dIYJPxb3pYjTO6E90u0wzAYIL2C8vBWfW/XvZAYpObA6sjRZ9RT5H4c+VFMt
+         UfSQmE5TtGuph76ENygJ3H/T26nhdmn+sro9//wKxZHH8VzDdxSVbxkjD9mBT4+qiMS0
+         Msq4yFW34NEHaI71tXQZ8HcHPznRPucoxs8kCPrxOqa64iXd4pI73hZnKMD5kchdw3Od
+         fATQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780327226; x=1780932026;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2QQrke9QBxF0psqPTRLmIW4Aub4nualcSaLAi3Sq33Y=;
+        b=WaRTzOmYgywk50faPeVIJNX5j0fLPhHmQqJcvQCyPAWLPEoMtUtozEsDa1ywHm8YIk
+         usNaFBro66GfLcPkHLuZDohRHZaevlZF2lOJZFoaReTP8kTIECVMfYSkp4sl4oYDDjlq
+         Zvwn/FmwOju13D6s0UQwyzdsjw8x4cL/GUFxPOIEowS0ep/QSX9tT4uQZT74vzGD44Dw
+         LRx1WCQVe3UTsDy3YHNbebBQQHYsA+eFgmq/a6XvFw7MSKGYN2vGfj9T9Rs/hm1PRdNU
+         I9BYNd4AWGxXFe8LNU0xUkvPm5coLkezhO8bUmOJASJ1VxqM9ZfIhJWTMXcqdn7ZsLHB
+         NTaA==
+X-Gm-Message-State: AOJu0YxwaVIoHR4FQtlnGelalBDPk3oPBDpYbsZcYcvGI+QI+wQGVmHF
+	TRmqFUFOshI/OJnTKMiFR/5qv73Mq3r/fXzfobOcJIP2oB5JMLJhISty
+X-Gm-Gg: Acq92OH61K20C9d37g8J6BAbJkymyyzuYybLpPpOh8RRCNZrgwUa/wbqUw8KKr5LYhl
+	TDVwBk8YzEIMQwrQ/KOAjjKMchAyIb7AudPzxPrbcoVe5NXUm/3tC1OTrMYOxwESnF8k7AFmDJ2
+	ovElIwxYfpt83CTWL5PJs/pcQdXyP+nJLc7NFjB11GEuewOOJIq4CMaCyWmFamR8Hu+gzD91fju
+	SETGbcOatuIZ/OjWDLwnXZeyiR5f7TIJemTUUEgvf8dZlgI9vnSa/goIZCtpv2Xijw5p5qOeF0i
+	NK0dS0Ow1QXltdnvszZn3zWBqY+L1+SZZwNQ0UXCPUnK/ITY2mvNYb5OXkEokogWYwMpe0+oy3R
+	8GH9Azwj9HgCzZdEReppOY5h7jathCsdJoT5hS7IVEWDYV9qKlNeRsm0b/61B/Ywl0tVvnGzaPd
+	wShF5ZAwvWJrh9g7UuaT6EsR6RQUOEdN7/K8O4iXpVQQL+0Y+04i+89oQukebYRKgJTikxpLa0B
+	Bq5H+0psDhSUw==
+X-Received: by 2002:a05:6000:c11:b0:452:3677:3fb3 with SMTP id ffacd0b85a97d-45ef6b02b00mr14965252f8f.1.1780327225622;
+        Mon, 01 Jun 2026 08:20:25 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef34bcc30sm25892719f8f.12.2026.06.01.08.20.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Jun 2026 08:20:25 -0700 (PDT)
+Message-ID: <4fafee2c-4151-45f4-a842-17d6b77d951c@gmail.com>
+Date: Mon, 1 Jun 2026 16:20:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] status: improve rebase todo list parsing
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+ <cover.1777648598.git.phillip.wood@dunelm.org.uk>
+ <b80bc1e0a298e2773a2fdab3e73651d59b8d39b7.1777648598.git.phillip.wood@dunelm.org.uk>
+ <xmqqbjdwcsno.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqbjdwcsno.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 01, 2026 at 02:48:05PM +0100, Phillip Wood wrote:
-> 
-> 
-> On 01/06/2026 13:10, Patrick Steinhardt wrote:
-> > On Mon, Jun 01, 2026 at 11:31:46AM +0200, Kristoffer Haugsbakk wrote:
-> > > On Mon, Jun 1, 2026, at 09:56, Patrick Steinhardt wrote:
-> > > > diff --git a/git.c b/git.c
-> > > > index a72394b599..6bf6a60360 100644
-> > > > --- a/git.c
-> > > > +++ b/git.c
-> > > > @@ -591,7 +591,9 @@ static struct cmd_struct commands[] = {
-> > > >   	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
-> > > >   	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
-> > > >   	{ "init", cmd_init },
-> > > > +#ifndef WITH_BREAKING_CHANGES
-> > > >   	{ "init-db", cmd_init },
-> > > 
-> > > This can be marked as deprecated.
-> > > 
-> > > 	{ "init-db", cmd_init, DEPRECATED },
-> > 
-> > Ah, indeed! Added locally now, thanks.
-> 
-> Deprecating this command seems very sensible to me. As well as marking it
-> deprecated, do we want to print a warning when it is run? I imagine anyone
-> who has this command in their muscle memory is unlikely to be reading the
-> man page on a regular basis so wont see the warning there.
+Hi Junio
 
-I was wondering whether we want to call `you_still_use_that()` here. I
-found it to be a bit heavy-handed as it's so trivial to replace with
-git-init(1), but on the other hand it's a trivial thing to do.
+On 31/05/2026 01:46, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> +static void abbrev_oid_in_line(struct repository *r,
+>> +			       struct strbuf *line, char **pp)
+>> +{
+>> ...
+>> +	have_oid = !repo_get_oid(r, p, &oid);
+>> +	*end_of_object_name = saved;
+>> +	if (!have_oid)
+>> +		goto out; /* object name was a label */
+> 
+> Can there be a label "deadbeef123" that is unrelated to an object whose
+> object name happens to abbreviate to "deadbeef123"?
 
-Patrick
+In theory yes, but I had assumed it was so unlikely to happen that we 
+could ignore it. If we want to be more careful then we could add a "bool 
+maybe_label" argument for commands that accept a label or a revision and 
+check if "refs/rewritten/$object_name" exists before trying repo_get_oid().
+
+>> +	case TODO_MERGE:
+>> +		skip_dash_c(&p);
+>> +		while (true) {
+>> +			p += strspn(p, " \t");
+>> +			if (!p[0] || (p[0] == '#' && (!p[1] || isspace(p[1]))))
+>> +				break;
+>> +			abbrev_oid_in_line(r, line, &p);
+>> +		}
+>> +		break;
+> 
+> What does this loop do?  A "merge" command may look like "merge
+> [[-C|-c] <commit>] <label>", and we give each whitespace-separated
+> token to abbrev_oid_in_line()?  Would "<label>" that is ambiguous
+> cause an issue?  You may want to limit the scope of what the loop
+> does a bit, e.g., massage only the token after -C/-c, or something?
+
+The parents can be a label or any revision so we want to abbreviate the 
+parent if it is a hex object id. The same is true for "reset" below.
+
+Thanks
+
+Phillip
+
+> 
+>> +	case TODO_FIXUP:
+>> +		skip_dash_c(&p);
+>> +		/* fallthrough */
+>> +	case TODO_DROP:
+>> +	case TODO_EDIT:
+>> +	case TODO_PICK:
+>> +	case TODO_RESET:
+> 
+> Doesn't RESET also take a <label>?  And if it happens to be the same
+> as an abbreviated object name, e.g., "deadbeef123", of an unrelated
+> object, would wt-status say "reset deadbeef1", causing a mismatch?
+> If this is indeed an issue, would moving this to the "no-op" section
+> below, next to TODO_LABEL, solve it?
+> 
+>> +	case TODO_REVERT:
+>> +	case TODO_REWORD:
+>> +	case TODO_SQUASH:
+>> +		abbrev_oid_in_line(r, line, &p);
+>> +		break;
+>> +
+>> +	/*
+>> +	 * Avoid "default" and instead list all the other commands so
+>> +	 * that -Wswitch (which is included in -Wall) warns if a new
+>> +	 * command is added without handling it in this function.
+>> +	 */
+>> +	case TODO_BREAK:
+>> +	case TODO_EXEC:
+>> +	case TODO_LABEL:
+>> +	case TODO_NOOP:
+>> +	case TODO_UPDATE_REF:
+>> +		break;
+>>   	}
+>> -	string_list_clear(&split, 0);
+>> +
+>> +	return true;
+>>   }
+> 
+
