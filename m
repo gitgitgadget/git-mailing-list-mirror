@@ -1,62 +1,62 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512D3DB65D
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0A73D8104
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:44:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780328644; cv=none; b=I+tAEEDSt6IE3+NVbsQc9FilGX5twrDdsVCEvS90jru989P6m35ARDXAZJMWJzlnOljBtfML7uA0QLCO9rb/aFF82I815TAz4CnvQLADilZ1SBvD+kxCPCOGlyFR6iqAODIrZtF4Lk+0xT+PLevMXZrbk+AMdKhOIGpNNUsVLJQ=
+	t=1780328645; cv=none; b=DyndKvxcdL/pP7b/h0RI/Rwskqh7Cmsg8qM41E6wf0plKBXp5AnP2k1pSsVq0jK2xG07i/K2PtX42UzmKfdspb6w+vvbwcuMibcSVyLy0kCOcBIBOfV6onB9+jLnGwi9X7GJm9omGCdIZTK26PHqMVsj7P9B5JzrWwyHZSrNwWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780328644; c=relaxed/simple;
-	bh=4Y4NDm4o8RwKdb1z/W9htDeexNMWRgx9dhK91zBK0/s=;
+	s=arc-20240116; t=1780328645; c=relaxed/simple;
+	bh=tf8XiYNvW3xfKV8FctG7UVk1Kf7uZV8HLTCIyxQ6gP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z9chQlZjEu5WNGVURBzvd+O+5mSpKR47i0uOUJ9+NBZLtBhpGStYDpkn00ya8Oy1eknIlJkKJNSEXW8zg9i1XK4EpUg38EYD0uVwuWbLjMrqVeRyHpDFNfZIdaLHUUfunIwvtlEkfxxbB8cFIfGaEuBdUqVF4xCspQF1Ed7lci8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nn4+jUNj; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version:Content-Type; b=sP3R6+6rkrhH8BGSFaDnabRZ3LgLD/8MeTaGjs2gUXSvIFs8gUWGuPOT5yZhreBsnkx9I2LL/1STARLvAn3WKIYpiNtbBYUpUAn6MaKWpY1OQba/kzUxiXux/+Ib4tENRiRwd/TdnpVAlpiLrL25aahjjqJ9XI6nnWtBbbTSgE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LVmzdil4; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nn4+jUNj"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4903997fcb5so106078005e9.2
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:44:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LVmzdil4"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-45ef189aa1cso2763890f8f.0
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780328641; x=1780933441; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780328643; x=1780933443; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1CELvFCxq6rfJcTKZu4iOV2bK60mIvfL14mWG/965XE=;
-        b=Nn4+jUNjP111GaJgoZOKwZxamPidWw3D2jH2Ca4rneXzQJZqV6PVBKIJTJviv9Ijsh
-         Ccm5Wn9emoa2Ivch2VqkeJzcGQwU2QvoV1rws0778VMHKOfayqEa9qDokH+XgNm/s084
-         oZkBRXQpuWSg5OQH9+AC1DU1ifA0uAnD357WbAoTCLlVpe081eir7/3Hfx0mK9YsAqOd
-         0VZRsyKFmdwfIsmaSJqJmbumyeiO/6pbI62OybNbn8P0HEjCwzGAYU+yqmWBLwAQpXDy
-         cijpA5W8k/nmyAlf18fWtOhl6vdTUus6AeAchsKGFrE73f3RiFlGJVSjnn/Lsowip+wK
-         1XQg==
+        bh=ITUfnTpQJhScuzx0WJslvdLIqgGFtd6IeMFAYHTtAJc=;
+        b=LVmzdil4rwQGaO50DZaGeVGYuHtDZIk2LTJdEwX2J9P64EF3Fjb4F5SuQMihg/69r/
+         TwmH6t40QzNIuj6Rfs0eJDAZzB17i9+f7iPbiiV0hbIsZ998idTwwg9ENzVszBWwyqP9
+         eFQP+758bEV/E14z4mZYXfziETgshKk79sMGI2bzJ67AdLGCmz5kemjlSe+Fyk4BSYud
+         Lc3DN/wgZSv3ZJkAmTewqkm5tMkVlqsmm7Rt5VcLb4/brkGI4i0UkOscCxFUKEwNMrz3
+         ZgOpuY+7x3TntH9s/sopLb+bzPeZiqBHoOOkiL0G5+gTEZiGXLS3VcL8PmcZW1MqYDk4
+         Inlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780328641; x=1780933441;
+        d=1e100.net; s=20251104; t=1780328643; x=1780933443;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=1CELvFCxq6rfJcTKZu4iOV2bK60mIvfL14mWG/965XE=;
-        b=YOOEX6BoJpfmUS72okbsRyMjJNfGXA+YAzu1+yr6eMcj6KM/GqLMtcC3/gv7SZm11m
-         ovPVVcN0qenU89fandPkwR+qFkNonfhFHca2wuOYusQg4Nh2XJgQptCg/3O31+0xNL8z
-         bCXj9bWzzQninlaW0dL/KwVf0XFb440VIeR1haz8Qc6os4484yQ7U1nPtDFoge6ErPIR
-         st0l450w4tlh4x0zWjAH5aRs6VYtLRo2jm0mlCYA0LRZcbfjXp5BwZJ8BHJDlQ4d+WyJ
-         n4PnZF4EfYGBBjXGZc0/tMyIpykDdqgZjYYUEnfcY6DG1TzMVjePJGqZPuU3IDsPR3SB
-         egCQ==
-X-Gm-Message-State: AOJu0YyW/2l5JxBFXekTM57GeGcm5chvkzgJ/x3nV1BxGSB6kTICH0X1
-	JNLNxy1EioSb0bcpAnt6kW/eRREqE46fa5OuR7YVeJJo3qAin7MQXmhN3fjx0Mgb
-X-Gm-Gg: Acq92OFdVrAgHbi6gcio49GTejTdixbm1/pFVTdNS6lvcBlvTM/D6UIH3EQhVKk9+zw
-	YYwLE35XGESiBeaqa1FpkW0ZbyBJd9rGW2+BxtKXCXat8DPQmSa61t7FQXY3qG32TdcSvOij9b/
-	Q2kFlQX2go6DBviteqEThZR9N5r0DMmaYDWeXiZz4po0u0iQk9mXKIsnRyOMlD5y+NaKUxDsDqx
-	3sQyceq2uxK4EiKLOELyIROPGDCzKpSWNewOpKQZ+KOMHxAeAt7Ld5iw29sMVkT/P383qvktOkR
-	+Vmxt9QywNueLSxLFoXErf7YRKMh7+JbtSx3Z8wO4rr8xQYgXZ4qB9eLv6Rj9riUFUuBb6iDWQa
-	uUFt0VIzMJMnOL4BureqMHO0N6nDGhVDFVzHCoqfidvh8so0CMx5GB66KYLWSE8mxllydRyrvfd
-	c5X7oKBgUxCypTRD6Pihgq9u6Z98h+9uWYiiRfMLK7sRQa2wniUsiqDTrC5gAofSRJqA==
-X-Received: by 2002:a05:600c:6214:b0:490:44eb:c1d7 with SMTP id 5b1f17b1804b1-490a297e571mr266639565e9.30.1780328640591;
-        Mon, 01 Jun 2026 08:44:00 -0700 (PDT)
+        bh=ITUfnTpQJhScuzx0WJslvdLIqgGFtd6IeMFAYHTtAJc=;
+        b=nv8BIgbC02x6NbrrpBDW7IotZQVwwCrKnIEMOhU0+k4/crLBlsILv8Fx3PQLKDOV0z
+         m/BR13Gi0IwGxKwVnAi86rrx4Nb1nxGPzlPEf78yN7kZh8vkiM5zJm9f/ROD2UmA09c3
+         6emz3Db8yKBOk02Pt1z67LPZs6bhjPnsP3TF9RAWpczpr+NxAHxmXCfGQ0s8stQRhjy+
+         2Z03it5s+RyYYJNhnY4aNY7+1mn6BKy5ZfwwXyLxzt4/M350n3pr4LmFaTShYBCBtebZ
+         8StwLYfEBV44LgMsCarUjFwyisq+aUwHgq6lTf3sI3B/xfzfo/Hl8ZUqW8MaPLL7lLqp
+         DiCg==
+X-Gm-Message-State: AOJu0YzJq7U+YnwYl1Mc7/T//cJU4AESjTI9buakvN6pglLP2SIegwEj
+	TMr8PlJDDzUhUxFXw/dp8s4B/UE0jUUbG0navs1dHMBLo76jjgAKmAVr7dWv5Mbq
+X-Gm-Gg: Acq92OEGipmyIiLwZtUZpr4OdU8odqShgNTpI+qv01yYi+xTLjTBOUX8Cs6BZnnurqQ
+	5A9kqGOXVrDrDnYlRchWWZg4ODz0gpbYbEky1a11mpOA1D4haLEhIwk8CqFwxYUr5nZjeeTqQtq
+	JMHvTldK5Yf0oqzPSaEmr5yt2tXj7f6kmLj3mKhXDlvFkRjpi/Wo8Bm5lCII2KiBVzScfhZ9RIR
+	M9Ra+gTG129CZJVKZQIQd819HLRZ3PBdu6Z/O+epF3RiRNnM2LLB/d0IsNDMuOX0+b20FFxByNE
+	igOmHGVw3akBA9vbyPgKMo+F/Pf+cuO0N7nCoLGwLzqCRPLSR7NmkzRLaCz7R1N4ThbyLj/pvG4
+	pvqjYG8xOmosBD3NYSuKTZFVD7D2SPh8E7uAn4oC6IYhk66FywhSZ8gh6U+VMtxzYuasIaYnaSN
+	BOjojMWehGER1O9j5qyvuqFyhZg9rY5CffLEjrf2XdkSO4ph8j5PJxTuDthC8zcx2DMg==
+X-Received: by 2002:a05:600c:4f89:b0:48a:9540:1a3a with SMTP id 5b1f17b1804b1-490a292c7aamr226021895e9.8.1780328642788;
+        Mon, 01 Jun 2026 08:44:02 -0700 (PDT)
 Received: from pop-os.lan ([2605:59c0:e07:e310:19bb:fe0b:a332:fe8a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e81ef4sm350485e9.12.2026.06.01.08.43.58
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e81ef4sm350485e9.12.2026.06.01.08.44.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 08:44:00 -0700 (PDT)
+        Mon, 01 Jun 2026 08:44:02 -0700 (PDT)
 From: Olamide Caleb Bello <belkid98@gmail.com>
 To: git@vger.kernel.org
 Cc: phillip.wood123@gmail.com,
@@ -65,9 +65,9 @@ Cc: phillip.wood123@gmail.com,
 	kaartic.sivaraam@gmail.com,
 	me@ttaylorr.com,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v4 6/8] environment: move "core_sparse_checkout_cone" into `struct repo_config_values`
-Date: Mon,  1 Jun 2026 16:42:09 +0100
-Message-ID: <20260601154211.82370-7-belkid98@gmail.com>
+Subject: [PATCH v4 7/8] environment: move "sparse_expect_files_outside_of_patterns" into `repo_config_values`
+Date: Mon,  1 Jun 2026 16:42:10 +0100
+Message-ID: <20260601154211.82370-8-belkid98@gmail.com>
 X-Mailer: git-send-email 2.53.0.155.g9f36b15afa
 In-Reply-To: <20260601154211.82370-1-belkid98@gmail.com>
 References: <20260423160832.114816-1-belkid98@gmail.com>
@@ -81,19 +81,19 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The `core.sparseCheckoutCone` configuration was previously stored in an
-uninitialized global `int` variable, risking cross‑repository state
-leakage.
+The `core.sparseCheckoutExpectFilesOutsideOfPatterns` configuration was
+previously stored in a global `int` variable, making it shared across
+repository instances and risking cross‑repository state leakage.
 
-Move it into `repo_config_values`, where eagerly‑parsed repository
-configuration lives. `core.sparseCheckoutCone` is parsed eagerly
-because it determines the fundamental sparse‑checkout mode and is
-consulted very early during repository setup; a lazy parse could
-leave the sparse‑checkout state undefined and complicate
-libification. This preserves the existing behavior while tying the
-value to the repository from which it was read, avoiding cross‑
-repository state leakage and continuing the effort to reduce reliance
-on global configuration state.
+Store it instead in `repo_config_values`, where eagerly‑parsed
+repository configuration lives. This option is parsed eagerly because
+it controls how sparse‑checkout paths are interpreted – a fundamental
+behavior that many commands rely on; a lazy parse could cause
+inconsistent sparse‑checkout handling and complicate libification.
+This preserves the existing behavior while tying the value to the
+repository from which it was read, avoiding cross‑repository state
+leakage and continuing the effort to reduce reliance on global
+configuration state.
 
 Update all references to use `repo_config_values()`.
 
@@ -101,266 +101,77 @@ Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
 ---
- builtin/mv.c              |  2 +-
- builtin/sparse-checkout.c | 37 ++++++++++++++++++++++---------------
- dir.c                     |  3 ++-
- environment.c             |  4 ++--
- environment.h             |  2 +-
- sparse-index.c            |  2 +-
- 6 files changed, 29 insertions(+), 21 deletions(-)
+ environment.c  | 6 ++++--
+ environment.h  | 5 +++--
+ sparse-index.c | 2 +-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 2215d34e31..ef3a326c90 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -574,7 +574,7 @@ int cmd_mv(int argc,
- 
- 		if (ignore_sparse &&
- 		    cfg->apply_sparse_checkout &&
--		    core_sparse_checkout_cone) {
-+		    cfg->core_sparse_checkout_cone) {
- 			/*
- 			 * NEEDSWORK: we are *not* paying attention to
- 			 * "out-to-out" move (<source> is out-of-cone and
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index f4aa405da9..92d017b81f 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -73,7 +73,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
- 
- 	memset(&pl, 0, sizeof(pl));
- 
--	pl.use_cone_patterns = core_sparse_checkout_cone;
-+	pl.use_cone_patterns = cfg->core_sparse_checkout_cone;
- 
- 	sparse_filename = get_sparse_checkout_filename();
- 	res = add_patterns_from_file_to_list(sparse_filename, "", 0, &pl, NULL, 0);
-@@ -334,6 +334,7 @@ static int write_patterns_and_update(struct repository *repo,
- 	FILE *fp;
- 	struct lock_file lk = LOCK_INIT;
- 	int result;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	sparse_filename = get_sparse_checkout_filename();
- 
-@@ -353,7 +354,7 @@ static int write_patterns_and_update(struct repository *repo,
- 	if (!fp)
- 		die_errno(_("unable to fdopen %s"), get_lock_file_path(&lk));
- 
--	if (core_sparse_checkout_cone)
-+	if (cfg->core_sparse_checkout_cone)
- 		write_cone_to_file(fp, pl);
- 	else
- 		write_patterns_to_file(fp, pl);
-@@ -402,15 +403,15 @@ static enum sparse_checkout_mode update_cone_mode(int *cone_mode) {
- 
- 	/* If not specified, use previous definition of cone mode */
- 	if (*cone_mode == -1 && cfg->apply_sparse_checkout)
--		*cone_mode = core_sparse_checkout_cone;
-+		*cone_mode = cfg->core_sparse_checkout_cone;
- 
- 	/* Set cone/non-cone mode appropriately */
- 	cfg->apply_sparse_checkout = 1;
- 	if (*cone_mode == 1 || *cone_mode == -1) {
--		core_sparse_checkout_cone = 1;
-+		cfg->core_sparse_checkout_cone = 1;
- 		return MODE_CONE_PATTERNS;
- 	}
--	core_sparse_checkout_cone = 0;
-+	cfg->core_sparse_checkout_cone = 0;
- 	return MODE_ALL_PATTERNS;
- }
- 
-@@ -577,7 +578,9 @@ static void add_patterns_from_input(struct pattern_list *pl,
- 				    FILE *file)
- {
- 	int i;
--	if (core_sparse_checkout_cone) {
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
-+
-+	if (cfg->core_sparse_checkout_cone) {
- 		struct strbuf line = STRBUF_INIT;
- 
- 		hashmap_init(&pl->recursive_hashmap, pl_hashmap_cmp, NULL, 0);
-@@ -636,13 +639,14 @@ static void add_patterns_cone_mode(int argc, const char **argv,
- 	struct pattern_entry *pe;
- 	struct hashmap_iter iter;
- 	struct pattern_list existing;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	char *sparse_filename = get_sparse_checkout_filename();
- 
- 	add_patterns_from_input(pl, argc, argv,
- 				use_stdin ? stdin : NULL);
- 
- 	memset(&existing, 0, sizeof(existing));
--	existing.use_cone_patterns = core_sparse_checkout_cone;
-+	existing.use_cone_patterns = cfg->core_sparse_checkout_cone;
- 
- 	if (add_patterns_from_file_to_list(sparse_filename, "", 0,
- 					   &existing, NULL, 0))
-@@ -690,7 +694,7 @@ static int modify_pattern_list(struct repository *repo,
- 
- 	switch (m) {
- 	case ADD:
--		if (core_sparse_checkout_cone)
-+		if (cfg->core_sparse_checkout_cone)
- 			add_patterns_cone_mode(args->nr, args->v, pl, use_stdin);
- 		else
- 			add_patterns_literal(args->nr, args->v, pl, use_stdin);
-@@ -723,11 +727,12 @@ static void sanitize_paths(struct repository *repo,
- 			   const char *prefix, int skip_checks)
- {
- 	int i;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	if (!args->nr)
- 		return;
- 
--	if (prefix && *prefix && core_sparse_checkout_cone) {
-+	if (prefix && *prefix && cfg->core_sparse_checkout_cone) {
- 		/*
- 		 * The args are not pathspecs, so unfortunately we
- 		 * cannot imitate how cmd_add() uses parse_pathspec().
-@@ -744,10 +749,10 @@ static void sanitize_paths(struct repository *repo,
- 	if (skip_checks)
- 		return;
- 
--	if (prefix && *prefix && !core_sparse_checkout_cone)
-+	if (prefix && *prefix && !cfg->core_sparse_checkout_cone)
- 		die(_("please run from the toplevel directory in non-cone mode"));
- 
--	if (core_sparse_checkout_cone) {
-+	if (cfg->core_sparse_checkout_cone) {
- 		for (i = 0; i < args->nr; i++) {
- 			if (args->v[i][0] == '/')
- 				die(_("specify directories rather than patterns (no leading slash)"));
-@@ -769,7 +774,7 @@ static void sanitize_paths(struct repository *repo,
- 		if (S_ISSPARSEDIR(ce->ce_mode))
- 			continue;
- 
--		if (core_sparse_checkout_cone)
-+		if (cfg->core_sparse_checkout_cone)
- 			die(_("'%s' is not a directory; to treat it as a directory anyway, rerun with --skip-checks"), args->v[i]);
- 		else
- 			warning(_("pass a leading slash before paths such as '%s' if you want a single file (see NON-CONE PROBLEMS in the git-sparse-checkout manual)."), args->v[i]);
-@@ -836,6 +841,7 @@ static struct sparse_checkout_set_opts {
- static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
- 			       struct repository *repo)
- {
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	int default_patterns_nr = 2;
- 	const char *default_patterns[] = {"/*", "!/*/", NULL};
- 
-@@ -873,7 +879,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
- 	 * non-cone mode, if nothing is specified, manually select just the
- 	 * top-level directory (much as 'init' would do).
- 	 */
--	if (!core_sparse_checkout_cone && !set_opts.use_stdin && argc == 0) {
-+	if (!cfg->core_sparse_checkout_cone && !set_opts.use_stdin && argc == 0) {
- 		for (int i = 0; i < default_patterns_nr; i++)
- 			strvec_push(&patterns, default_patterns[i]);
- 	} else {
-@@ -977,7 +983,7 @@ static int sparse_checkout_clean(int argc, const char **argv,
- 	setup_work_tree();
- 	if (!cfg->apply_sparse_checkout)
- 		die(_("must be in a sparse-checkout to clean directories"));
--	if (!core_sparse_checkout_cone)
-+	if (!cfg->core_sparse_checkout_cone)
- 		die(_("must be in a cone-mode sparse-checkout to clean directories"));
- 
- 	argc = parse_options(argc, argv, prefix,
-@@ -1141,6 +1147,7 @@ static int sparse_checkout_check_rules(int argc, const char **argv, const char *
- 	FILE *fp;
- 	int ret;
- 	struct pattern_list pl = {0};
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	char *sparse_filename;
- 	check_rules_opts.cone_mode = -1;
- 
-@@ -1152,7 +1159,7 @@ static int sparse_checkout_check_rules(int argc, const char **argv, const char *
- 		check_rules_opts.cone_mode = 1;
- 
- 	update_cone_mode(&check_rules_opts.cone_mode);
--	pl.use_cone_patterns = core_sparse_checkout_cone;
-+	pl.use_cone_patterns = cfg->core_sparse_checkout_cone;
- 	if (check_rules_opts.rules_file) {
- 		fp = xfopen(check_rules_opts.rules_file, "r");
- 		add_patterns_from_input(&pl, argc, argv, fp);
-diff --git a/dir.c b/dir.c
-index fcb8f6dd2a..4f493b64c6 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3508,8 +3508,9 @@ int get_sparse_checkout_patterns(struct pattern_list *pl)
- {
- 	int res;
- 	char *sparse_filename = get_sparse_checkout_filename();
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	pl->use_cone_patterns = core_sparse_checkout_cone;
-+	pl->use_cone_patterns = cfg->core_sparse_checkout_cone;
- 	res = add_patterns_from_file_to_list(sparse_filename, "", 0, pl, NULL, 0);
- 
- 	free(sparse_filename);
 diff --git a/environment.c b/environment.c
-index 739b647ebe..b0e873e9f5 100644
+index b0e873e9f5..57587ede56 100644
 --- a/environment.c
 +++ b/environment.c
 @@ -70,7 +70,6 @@ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
  #endif
  enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
  int grafts_keep_true_parents;
--int core_sparse_checkout_cone;
- int sparse_expect_files_outside_of_patterns;
+-int sparse_expect_files_outside_of_patterns;
  unsigned long pack_size_limit_cfg;
  
-@@ -526,7 +525,7 @@ int git_default_core_config(const char *var, const char *value,
- 	}
+ #ifndef PROTECT_HFS_DEFAULT
+@@ -550,8 +549,10 @@ int git_default_core_config(const char *var, const char *value,
  
- 	if (!strcmp(var, "core.sparsecheckoutcone")) {
--		core_sparse_checkout_cone = git_config_bool(var, value);
-+		cfg->core_sparse_checkout_cone = git_config_bool(var, value);
+ static int git_default_sparse_config(const char *var, const char *value)
+ {
++	struct repo_config_values *cfg = repo_config_values(the_repository);
++
+ 	if (!strcmp(var, "sparse.expectfilesoutsideofpatterns")) {
+-		sparse_expect_files_outside_of_patterns = git_config_bool(var, value);
++		cfg->sparse_expect_files_outside_of_patterns = git_config_bool(var, value);
  		return 0;
  	}
  
-@@ -723,4 +722,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->zlib_compression_level = Z_BEST_SPEED;
+@@ -723,4 +724,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
  	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
  	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
-+	cfg->core_sparse_checkout_cone = 0;
+ 	cfg->core_sparse_checkout_cone = 0;
++	cfg->sparse_expect_files_outside_of_patterns = 0;
  }
 diff --git a/environment.h b/environment.h
-index 508cb1afbc..befad9a388 100644
+index befad9a388..609cdaa07f 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -96,6 +96,7 @@ struct repo_config_values {
- 	int zlib_compression_level;
- 	int pack_compression_level;
+@@ -98,6 +98,9 @@ struct repo_config_values {
  	int precomposed_unicode;
-+	int core_sparse_checkout_cone;
+ 	int core_sparse_checkout_cone;
  
++	/* section "sparse" config values */
++	int sparse_expect_files_outside_of_patterns;
++
  	/* section "branch" config values */
  	enum branch_track branch_track;
-@@ -178,7 +179,6 @@ extern unsigned long pack_size_limit_cfg;
+ };
+@@ -179,8 +182,6 @@ extern unsigned long pack_size_limit_cfg;
  extern int protect_hfs;
  extern int protect_ntfs;
  
--extern int core_sparse_checkout_cone;
- extern int sparse_expect_files_outside_of_patterns;
- 
+-extern int sparse_expect_files_outside_of_patterns;
+-
  enum rebase_setup_type {
+ 	AUTOREBASE_NEVER = 0,
+ 	AUTOREBASE_LOCAL,
 diff --git a/sparse-index.c b/sparse-index.c
-index 13629c075d..53cb8d64fc 100644
+index 53cb8d64fc..1ed769b78d 100644
 --- a/sparse-index.c
 +++ b/sparse-index.c
-@@ -154,7 +154,7 @@ int is_sparse_index_allowed(struct index_state *istate, int flags)
- {
+@@ -675,7 +675,7 @@ void clear_skip_worktree_from_present_files(struct index_state *istate)
  	struct repo_config_values *cfg = repo_config_values(the_repository);
  
--	if (!cfg->apply_sparse_checkout || !core_sparse_checkout_cone)
-+	if (!cfg->apply_sparse_checkout || !cfg->core_sparse_checkout_cone)
- 		return 0;
+ 	if (!cfg->apply_sparse_checkout ||
+-	    sparse_expect_files_outside_of_patterns)
++	    cfg->sparse_expect_files_outside_of_patterns)
+ 		return;
  
- 	if (!(flags & SPARSE_INDEX_MEMORY_ONLY)) {
+ 	if (clear_skip_worktree_from_present_files_sparse(istate)) {
 -- 
 2.53.0.155.g9f36b15afa
 
