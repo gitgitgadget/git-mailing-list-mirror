@@ -1,125 +1,121 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1E0258EC1
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 07:14:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D733538838A
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 07:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780298093; cv=none; b=FdvgcKKiEr6pFqCDdHP9QoIaJ8Z7VJrNMSDDf9rGMU5hiWuwItDz4Mnj6/gScpKcBSxN5WRrBm+nWyvWNMHKToCL4lCa1f3o6HTGuMN/0R/8qh74/HRFyVhIn4fOWkbI74KQx18wyyj3ZCNSNpAvitnqm3957+OieF62Ga/Na/Q=
+	t=1780300567; cv=none; b=HnL7czL4DXgaqrilFiaGm6FCEclnJDCZCF5xfMkm1uECXFMC73+W/ssiUHjYBLybvlxbhSFW22/ZL+I1IJUw3yL4cwP7ng97xc2Ky0elTfQzDzp3caEKRn9xaNIx3HyDhLvkO40yFkUxHuvou4faEIXjjQtSBKTIEuQQHm5sndc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780298093; c=relaxed/simple;
-	bh=Wi5cel/TL1pH4o+SruVniERNpr2T9RbybXELQWJdfb8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p4wfd628ACx1mRUCDiBg44iP21oP3H8jPb/fNtjCj2W+Mny6VgDSAhIyV5/FCohKr42GHILVYRwLKYyCtbhKe55yA1aqm3EhCvleAZbVRdXAlqAHu5wpA+Jh0M+bw/MQM0NhjdR4FsNpmQpg7qnXGV75DgyFEHsnok1vgZF5rxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aM8rmJPF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=do9n2+yL; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780300567; c=relaxed/simple;
+	bh=WNRtes65jhA8FWY4CeWwHFo6duOSMy0W6Ym7QLKTOgU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SEZLmnd3SyMofN8b5Kbvrhel6nuUJeNeGJwIIzcF7MRHaUWsJmOvLpeP9JyH+t1bYCV5GyJH8t2SWsqnrskAn47FirJgQDoHsUO/ajfpRCWvgGQkvznn/GddxvK+RrYmxNfbvjZFLkr03W3NTao+jFOzBM1U3W720yINC+ObFag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tKFRkkSu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IuF5tCxR; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aM8rmJPF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="do9n2+yL"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id C9D991D00245;
-	Mon,  1 Jun 2026 03:14:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Mon, 01 Jun 2026 03:14:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780298090; x=1780384490; bh=Wi5cel/TL1
-	pH4o+SruVniERNpr2T9RbybXELQWJdfb8=; b=aM8rmJPFvFk6ab57heHcwNDkNN
-	xhn79mrHUzql/XFAxSeshVpjBGNReq4Tl16z+r01kChbFkk8jXU7p2DvAdrDp0zj
-	unOxPwz5SObpk5iwsLDjJoJNva+rL96CZgX2zHWlstksWoKrVcCD1VPYnM3T+TA/
-	JfmR7E6GB5P/U4PNp7ok4Y6GHY5p8FjqAA+OqfvJ6DfKrRfqOBsI+L1ZYr631i1/
-	rt743LP2V7d0dmNvykKvGkYHM5tW8nLA3c/QQwmbbQ1ESDjR519NUvJe3ugzyGBw
-	dfZm0s/Q47nNV5hCG2wHOnBLLGU9PxATxVMKC752ywgXv8IXAcP9E9eSPi8w==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tKFRkkSu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IuF5tCxR"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 210B514000CF
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 03:56:05 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 03:56:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1780300565; x=1780386965; bh=XEN6hJsl5T
+	XyvSlpgAY1T2Y/Cw5ORZV+yPYS0H2XcdY=; b=tKFRkkSuTY0WfwQsouxDPsYM4N
+	9CCnsBEWE8hBPzfi/UkvSV75A/p7BmFFEUx3Sm128SIIKnmM3W80TxzfRMp+6YiF
+	HJ2Gw9IYMrvwTmivXX7YW3EQBNd56GR86RxMtfSc4utjg9AFccT3Iysy7Mloy4gQ
+	98p7YI7TCfn6n1uILBOhzZL6BUcuB1UahB0PAVGupoYC9J5qp5c6mobTi11bKAL7
+	YgMfTJJhE/bDvG+4pYyoNUhq529ARbHFQjFk8Ng9M/twuon168ecXytRzF/Gj9js
+	ZSyHj9xv3kRLXXs4R7i8/UCkGh79A5CKrQyQYtWLwJB9bb1PVTWoQnsPHSEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780298090; x=1780384490; bh=Wi5cel/TL1pH4o+SruVniERNpr2T9RbybXE
-	LQWJdfb8=; b=do9n2+yLvVjpPgaGBIpxhY8juNm61jIZ6IKNUBs4ry8siHbBwOZ
-	MwkPG0WyFrRuqmmUhbkbGBGbKUyi6pwSUp8tDkMA+R6dHgfKiEdW0UcV34l3pWkN
-	d/pZUmSvG5KYfdufIoo7U5GgUPM/3ql0bq5SAX5A2Adx/kCkH9GCq1X0xbFIcToC
-	YVfkiDr6v6elsFnv2zRcEgOeyAXg9EcaDvOryBJpwZsj6nW4RQ0HFzzhPNNLx5MD
-	qCJpSazQgC9YSV/rsWtYIqrXbac1wmJKHvidCHLQ6Qa/tqF3vBdCsvcXenHBBNgk
-	p5wP3XQBZiRJU/wx5LbLFZG3ZOWIX8JIY6Q==
-X-ME-Sender: <xms:ajEdaidBvTleJoZczTLvrez0BDd_OLY7PrcZ7xItlQMwkQB76UFhYw>
-    <xme:ajEdav4Ig3ehLsjCyh8VUetgDFgCG0fV5oy-fjbxT9vM0yeaJ1nKchYcbBLwrehyA
-    L2--jqzm99lA0ml59LKjEtb9OHqVFYTiiEHrd-VjCd_AbYkMPri8g>
-X-ME-Received: <xmr:ajEdatViynMRBbHoRy0pgxyTfmO3tWWnBEaIrgnDaa9LU5pG874hOHqYFvPtFtoCKn39msOxSA2CslyTDluiq6xNcxMzxHTIAdQ5>
-X-ME-Proxy-Cause: dmFkZTGjvkFuTOfq1UNBxcXm6+u5IirxoxNFTJ+u9UWpFgdE64H/ZyOSBCU5kg7bWj+6OI
-    tKDgFdYylgE5a7ucy2xpnMUVjiRH3p6UmGoBhifzGeWINaWmlhX5EYkAWrQry6asEF/Fbn
-    ctOUBet+3YNt+ryTEH20ymjfS5DyKZ6NX2Y/29WhWP5tQqCkKzbRQYscQgO4S4dsJvlWP8
-    VQFKA/QGPV47kg/XfxYAyrBVhT069zykqf4rTwmdT23FKVShSGq0IPIt3xt+r3W8r1bHfO
-    C0Of5krJ4zlkMqZuNikNNaou6/xH9fNdkDf5qnhFXffr5hAOm0yvPeaDseINCSAtZ/77tm
-    GCyPJjYZpAFVfxWRav27LPlaV0PjOOKi80vCdO8yCJ0rdx+CeKgzBQg4lYb+q9PulhnSzs
-    c3glaUwa+LdlnyvlmdRKbpyczh5UR/vilFpvaBGCHPKTL/U9jF/Ll5mrUjJyWnaAJ117X4
-    WghnDxobEZaUjw28P5kBMo7C39Mv5sTyuv9a3bxU119O3EHm3Mz+PJnxtYY/D640wy94II
-    i32eqgHgUDHTNlKDdAG461RUNSyYGrWP+2sQK8kf9uuRx6v0tmWGFvjyyfHPo2cdIr1hjA
-    hVHZQFcg349svJh2EcRTDDiCaqP9iuP93NdT7l8sRgFv7iDHVRcGNvGnuSng
-X-ME-Proxy: <xmx:ajEdam7iQNgsaCn7O5vF_1s9-ICjhU7iaLrydi87LxEV15LrqagpGA>
-    <xmx:ajEdagoM7eZzUmuVGzyOK2_GjPMXYusZLkn_o1VkIrRqqMEdn4KpJw>
-    <xmx:ajEdahk7J6A_eODAZ5Q_8MmkErTNgngV9gU4icVXrFr4EPP7GFlZVA>
-    <xmx:ajEdakMW4abxw0eDG2W6HiL8u7S2h1uen7FJHTiQeYoqw2ZPXveZzQ>
-    <xmx:ajEdar5l7loFAnhTLMaKmywtoFU8jjLa9sqsvo2fNrZTQDZH8SboN814>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 03:14:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: kristofferhaugsbakk@fastmail.com,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] commit: remove deprecated functions
-In-Reply-To: <20260529083716.GE1106035@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 29 May 2026 04:37:16 -0400")
-References: <CV_commit.h_remove_deprecated.714@msgid.xyz>
-	<V2_CV_commit.h_remove_deprecated.732@msgid.xyz>
-	<20260529083716.GE1106035@coredump.intra.peff.net>
-Date: Mon, 01 Jun 2026 16:14:48 +0900
-Message-ID: <xmqqa4te91g7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1780300565; x=1780386965; bh=XEN6hJsl5TXyvSlpgAY1T2Y/Cw5O
+	RZV+yPYS0H2XcdY=; b=IuF5tCxRkO77D2AiBoIMZFqJ82nG5SWtxxXsrEmsd/V2
+	tW8GUjI3eQU+/DfF79TnZpsLky79GT/2yzS9qPOGegaTUdQmejFAQntxQMCIS+83
+	YrQTHiC2cxKvmsRCjla3RUIFxVaziz0Hf7EkPN1Wa1DJpZiSQncQfUMYFTJSqVMg
+	dFcoqTZGl6UhiUCADAnmn9iqtJn9QeFAfYeXHvVuIyF1aPbeE3aePROg8KSlcsKt
+	A03H1+2G0KgLvhiW7uISDFXQtsdOfz6EaiOkOU7u+R6DAYcA4HhSZ4QEyhfFTK+/
+	RlvYSIul3aGWfwrzJBLGY1St5FV8FNgdz1+NEZdhxg==
+X-ME-Sender: <xms:FTsdatUUiyy5HTOL-CV127jqcF-G6MMp4h_HuDbZZau-p91HbS4JUA>
+    <xme:FTsdakhR63wseaEZSb1ZfxuHtM5Eq8TuL7Rs2eB4D-zcPkzEphKfia-aUw0XLsR-c
+    uLD9wJHQQZUhmjXWW4D68wpXj_uzWgCWRFIztPlqC4OQonBDZXZig>
+X-ME-Received: <xmr:FTsdavC2unVQNp9ECZkT8bkoc_T2oTXeS3SwUbrXynMA8iu0PWbr-ukgmB4u6T50XHOhM-gN3UEctv2Etf3rBGczykc00FYSgLSabuYxm1zT>
+X-ME-Proxy-Cause: dmFkZTE5ljiuiek7x1YteN42RnVk+bpStIfYV9LngajjWAMtm8sNZU3BVrSsCGWNMCk5hA
+    Vet8KZJ6tUFjogEJiI3Vx9a39Kp663eXLtCjB6TwZzF2Mtc1tlu6ac7EWjT2Dy/Cwgr597
+    wNuKuLLGZOLpiq48wWvft8BIq57pScvNttloaQAnUjJOiB1IkSvSbZO5AqrB07Odkw9N1l
+    RjfhOLCNctFw4mjgyKbUwIqPJBo8f600zbx92jTdSr+Whw0hWW589u2x4tOAX1DLkinI6Q
+    QSSaBGxVuZLv5Nhu0+hxaC2+F9/xFBJ6tjjA+Vp8Qp6FV26TIuFG5EkvwFFVat62PDj6N5
+    GiiVzkSnGI5h/RI3c0asru4ZVbO52n1NfIooS61tHDLdrCzk0tgeNBxSto9iPLPIl/tN0S
+    G9WdqxTgY5DXazAqwlGmDUeKm5ud3uVnZ4P9aMKPS4X2anvyrwR82J8HhKZdOLmG9mLoNh
+    04GowUa5cG/gIpfhfxkcXL3Ks26yjFuiL5q311wopIMJMnKALyQidvzgfZo3JEKC7rzZHC
+    PUbjpNu9n7veBXdFEo22ndw8QeUskRlL9yJ8H0jMvbCjPsoHupLI3NByEErwDYekGp8+mg
+    ZJWjLPqNuVv1XECjyvnZdRdUO7BQHCqSztVk8WCWMhMEkZ1lTsTguEb58rWg
+X-ME-Proxy: <xmx:FTsdalcFkQ5Ej7ypq8i1r21NPPmx7EBrqMVKPDJC_jtduGJmMWH3HA>
+    <xmx:FTsdandl5H1EbAm87ZW71KCi5awWSb0PBUqFq9pNR3xVFAWkZ5jamQ>
+    <xmx:FTsdapgKx0rpSvCoL2TTjraSFXPEw_YvCwflqF80q1Cu8BQM90sBEA>
+    <xmx:FTsdajQcY02H819RcFZOWpgAIAjfndKxeQDwf6mK4HGJr-YnGtIrLQ>
+    <xmx:FTsdaolYPUJt4gk57e-ldZ7JQUh9J4FPkz8gYQdZVqNlCctfk_r9LYj5>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 1 Jun 2026 03:56:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 57f898bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 1 Jun 2026 07:56:02 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] Deprecate git-init-db(1) alias
+Date: Mon, 01 Jun 2026 09:55:58 +0200
+Message-Id: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA47HWoC/yWM0QqCQBBFf0Xm2YFVwqxfCR/c3atNwSY7WwTiv
+ zvZy4UD95yVFFmgdK1WyviIyisZNHVF4T6mGSzRmFrXdq5zDS9P5YglI4wFPEthSTbRc3Do43n
+ q/eUEMt8+k3yP9m34s779A6H8grRtO0YbfKN9AAAA
+X-Change-ID: 20260601-pks-deprecate-git-init-db-c0e8d7f8b94e
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Thu, May 28, 2026 at 09:00:09AM +0200, kristofferhaugsbakk@fastmail.com wrote:
->
->> Topic summary: Remove deprecated comments that were slated for removal
->> after Git 2.53.0.
->
-> This looks obviously correct to me, but the whole topic made me wonder:
-> was it worth retaining the old names and deprecating them, versus just
-> removing them back then?
->
-> Topics in flight would have needed an update then, but they did
-> eventually anyway. So it feels like the total amount of work done is
-> larger, compared to just fixing them as the topics were merged. Either
-> way the compiler tells us, and the adjustments themselves are small.
+this small patch series deprecates the git-init-db(1) alias in favor of
+git-init(1).
 
-Your alternative approach will depend on the integrator doing all
-the fixups at the merge time.
+Patrick
 
-The amount of effort required by the entire community as a whole may
-have been larger, but the way the rename was carried out did spread
-them thinner.
+---
+Patrick Steinhardt (2):
+      builtin/init-db: rename to "builtin/init.c"
+      builtin/init-db: deprecate alias for git-init(1)
 
-Admittedly, with help from rerere and merge-fix mechanism, such a
-"fixup at the merge time" typically needs to be done only once per
-the other conflicting topic in flight, but still, when constructing
-a workflow, I try to avoid having to depend on the single bottleneck
-for a task that does not need to be performed by the single
-bottleneck, especially when the single bottleneck has other tasks
-that can only be done by the single bottleneck.
+ Documentation/BreakingChanges.adoc | 3 +++
+ Documentation/Makefile             | 1 +
+ Documentation/git-init-db.adoc     | 5 +++++
+ Documentation/meson.build          | 2 +-
+ Makefile                           | 4 ++--
+ builtin.h                          | 2 +-
+ builtin/{init-db.c => init.c}      | 8 ++++----
+ git.c                              | 6 ++++--
+ meson.build                        | 2 +-
+ t/t5502-quickfetch.sh              | 4 ++--
+ t/t5503-tagfollow.sh               | 2 +-
+ 11 files changed, 25 insertions(+), 14 deletions(-)
 
-> Not a huge deal either way, but just pondering for future such
-> situations.
->
-> -Peff
+
+---
+base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
+change-id: 20260601-pks-deprecate-git-init-db-c0e8d7f8b94e
+
