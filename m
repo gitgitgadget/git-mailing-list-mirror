@@ -1,166 +1,166 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F29376A1D
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 12:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DAA41754
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 12:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780317195; cv=none; b=h/vdLHsVK8YVPxsDe6tR6algqVNUGGhe5s5QRArhU8KHVAD+a4nE59oGD9pezb+OsNRytPeXSgCMICoCu4ngnlCvddHVxAYYRUnZTy5iiiLH5fZHm0GQygmYU3NUFL1qUKAHorkGvgq20yPYFYQJFebSlZksgw4SMAXqZ0GZo7k=
+	t=1780318248; cv=none; b=MMTWz34FyEKVJ4SkxAvpZ72rGdAX6oh98cEAn7s7GIHhX1eFVYMd0sSQenMujQnx4x/ePXRHclQtNMoyDGEkK1jFARyvAjWeCuQL+PmlReckd61ERguGqIJFCe/C9Eo6Jv/TE/wdjSVdGzEXWxeXMwVz8fUWqwEzIpl/yhTOAUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780317195; c=relaxed/simple;
-	bh=lf29jNzNPUDIeO4wZrlJrd82C1YHjYEjtSP4mgOxOcY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TraQ9WrX0oQOE4aPWPdYJPc+83ukN5TvZb1Q8s3ccSU62WkhhvVQ0d8rUW2kMcMIA2rjTNjZaCmAX4kanOBK8YWAjhNT97jkvww02FQkcGD6UBarv5TvhKv/bH/YIscJtTysUBpMEtFbOHXmwgOx/qmUmt6KXvjOhjyFigkepZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TsfHhOoO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CYyRxD9Z; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780318248; c=relaxed/simple;
+	bh=xOjdYfflqpoMB/FV7B5Jov/JJWpxyJgNTF3yB9y+824=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UMnL4wZx/EXJin2xW0zCwp/osbYzaRYaGrVx59VbSIE1GUY5JOmjXXtMY1rfpezs+HH/WIDhE+B+bhELBM14YQKMPuJC3Q2QQnkeqjIKqqYmykxAUt7d7/0l/nqNgi8ZY7Ll6ruGQ88+ZOINjx3O1VuxmKUXsMU1Zqd0gv/ZpY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lrlRbefr; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TsfHhOoO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CYyRxD9Z"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 108F71D003E6;
-	Mon,  1 Jun 2026 08:33:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 01 Jun 2026 08:33:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780317193; x=1780403593; bh=9iuyYP0NMA
-	7aDPvFiwBn9/n24sn+TzAMj4z5tFfzTTE=; b=TsfHhOoO9rNYm5p/mDR+x/PnqD
-	iweshoJXvbcxjSjSTPz+ioCrnHRSPTXtEcTtUK1G+MxHzhIC0SRfUnJgUChmlMr1
-	C61vzJj+3h3yJ08yAwkOdRb1WWBIDdWRtQIbq3IESUaCG5iOPetat4H2HkGejjRP
-	ixkH2ClwLD9VbsoT02z6C6N1Di7ubaC9lniG7uy+q+/q/RhiaKWdRZquQlP4hkk0
-	/gBt0QIvtW3mQ/3PYxmR8xgQCiRl/T+wR2rzBvncdAurdpOUKI6vY9d0gQrGi54o
-	LlIyRSoNfj8GlSxVEPbhsr+7w4BrTRTdeLmxEX96bKGTguw1GM6nQdwTLSMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780317193; x=1780403593; bh=9iuyYP0NMA7aDPvFiwBn9/n24sn+TzAMj4z
-	5tFfzTTE=; b=CYyRxD9ZoGtmBo8IlfH3x/+Y3ZxQaKzTJd14YvmJgZWV6NYxhf6
-	CXK9/HZ7JvMIjVQBlKu/NsR168qYtSl8SpMJeE7vW34KgnIPYMHb3n6pSZT63ahE
-	rpI8o5XzZkitnQHuPBIWXPc1l8IkwMlwYr5U+rcBqZ56XdmrAw5XAaYipgC1XZ6F
-	wpi/61pGYDM30BEGErZUX1v9ZEQTrckrIV5BgbvQE141MboPLyJJ3eEQXpvCIDRI
-	8QwlAQOMXEHRkm5CdkCY5QcIOcNGsW29btoNLokZLUiSWfUlx1fWWOHyNm6NNU/X
-	GNJlt7hZF6+j7Q+C2hvLHA7f5Gct0UO6YAw==
-X-ME-Sender: <xms:CXwdapWB_j70XAgour9BS-NbPINzutNXKFsa4wxpS5mYcPKiOcnjuQ>
-    <xme:CXwdagnLU4kcNv0jwzWOckOlrbcAhV3_2DmGfOTqZlithhUsIauVppNn0Yr2Yop2U
-    zKn18wUSIlZKoAyt_cL55LSQvshJHYGabC62zURe-4yj4CHFkAc>
-X-ME-Received: <xmr:CXwdaqaWTSkjs8f-7duwpq12jmOdM-rU5cII-EhJqV3qcwTC9mpIIEi_kyGgMZwF8SSu08dzMiudTQU6Wb2ulneRkGCLORKA5Oas>
-X-ME-Proxy-Cause: dmFkZTFxwq+W0/+8S0jElCZDn7v1OZxXQhOjTIbqFL5CWiIFQ+lpNiCdug7dXyNdMg3+lB
-    01TRCdGuiYmTruA722jt+/gnRTXlnmxnPDZvVLa1tJSh/gJX7+y63kCRjOa8vJ0o/WWPuZ
-    7PxkKKA1H8PElcvXfdArPt8RDuDshBX6N1Q6g+Gu/dfqNmSzdFQ5nVsdMmtRC33UTWgsAL
-    hMh1e0kkwNwounEMpHVMFJaDy5krtwjkwvwZfFwILJGBa8MNXZiBGkFDwjmyYywndsNgwU
-    6spgQnXdaaaViCLzt/LB3zWoTn6sYyY+mL5znNkJQQXmM0Af1Dzadfa4S8F7g8LiPynGiq
-    TYqC9M8BuZTiQrC2PX+NiXoCVGgMTzPVCL+HklDNqgf4B2mDa5HsqKzljsbcriU/fdv6Go
-    xE6bah+tdGUK3XvtouIfcyxiOAl2LA0kiS8NMyjz3fU0JNpMzUx0+R5VEeh2I48ElyXd8H
-    0xFC8weSnFMbbyD/FKJD0/AHqFfipmYuPy+s+J32SvchMSX9lWHAX8yyHNIiDn7yX0JLCr
-    3Qh1KbIzfoJU5UtBPAPLrqjyGYkT2Wbmzxwj5e5B3bX5kccZDVHhhiOpKTMCw8cUDeXLio
-    d3dp119bbQDURKeznvA9C/TnA2tjP9zN9umNgSm5VJZJxmm1qPmw8YZ32VRg
-X-ME-Proxy: <xmx:CXwdarNWivkkL1C5oh1QG4rUOq1W7b6KRFjpkEsx_RK9jJHmBv05cg>
-    <xmx:CXwdavbxEF50oRfrIVdQOg3Re0OkSPqDmwX_xTdzrOnPyFwRBv8MQg>
-    <xmx:CXwdap1X-PfqE2gbNbRSscSS8LYAsRdtADvzABeyvgOoYHFrgQTFQw>
-    <xmx:CXwdaldvGyZD1syRhsz2xMHPvxRZs7vDED8wPbrFYSYCte3wyyVrFA>
-    <xmx:CXwdal5I68kes8P3_3gIn3VHon6Hd0rUCipgOfrs2TzJhFUnMETyGgEo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 08:33:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 5/5] cache-tree: fix verify_cache() to catch
- non-adjacent D/F conflicts
-In-Reply-To: <a87bbaa84fd5dcb2a585f82c4a5dfa1572b54588.1776731171.git.gitgitgadget@gmail.com>
-	(Elijah Newren via GitGitGadget's message of "Tue, 21 Apr 2026
-	00:26:11 +0000")
-References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
-	<a87bbaa84fd5dcb2a585f82c4a5dfa1572b54588.1776731171.git.gitgitgadget@gmail.com>
-Date: Mon, 01 Jun 2026 21:33:12 +0900
-Message-ID: <xmqqldcy4f07.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lrlRbefr"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8cce8873b56so28864516d6.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 05:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780318246; x=1780923046; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CTrkxbDRVYvg1EvT6MZCHj/XGbDyIfeKv1TKdmNIL7c=;
+        b=lrlRbefr+EZ4zu5NQeY2BQojTe1dfDwVmWu5NFZzoXfrM4JE9liRvFqB+OEuJCHoBh
+         tcJ7oB8Zxxk1PtrsGHVYHZM/NT4h93VQsPWp9I0Ztge9Z+5oZBfdWunOcypkv24/8J6z
+         HKmrOR2llZ8IJlIGe7t/O5Sl3p43czTgrK1mmDeZLCNI0oYJ6l3xwNkd88JFUeukf4oS
+         ++1gUMkK82ercjUR1XntGlW2A1OBxE4E9j+ZLtC66ojmUz6ZO0kZTxsuBIdIdkxXBkJ8
+         lIazgSHArkWysALJNr1mUDopNgucMSX24AHgcMphsychk1CZ7O70x+sgPldqv8tf9Nfu
+         Tg/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780318246; x=1780923046;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CTrkxbDRVYvg1EvT6MZCHj/XGbDyIfeKv1TKdmNIL7c=;
+        b=qu2EZw05c8OXfdHG1E7Gm+4+RJVQC9sb0SElTQifjDjQicIQIzsOexP/s51N92V+B3
+         p3O1NQ3dDgDBcI8G0RBXZtC2LSQeUSwXJI/54IDAOpfQ6u07a6hmpPiJbvpLFyLfgvK4
+         0Gw259EYIjUwH81Yu53swaPYpDiW0HOIlctTB49WCn/R96zJwVq9qsR7g3RC0gc+yvFI
+         y9ABW/HK955gxlxFK2VE10gVC8cJHqpm/4AUkZKI/onSgJkVKvixQEN3u2i8/dPgRPkD
+         TXYBIc+yqfjYJvcsK647a3O+CPq1PR5uJPVdjprtCNslhkDEug9Dzw45VunLVQOU9Voe
+         ZD0w==
+X-Forwarded-Encrypted: i=1; AFNElJ863TlLSrYJ/hLUW68L2jY2A1ou9BGf1sdSuTHPoUjcUAdeiSRyQuG0WnSyAbMopBz+g6I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZTIdgpxGbyGSSID7n8JRs43Af8hzz6aw8HpewtgZlRzKDk7ab
+	UJhFWB2Nl2taOdh/wbMeMyGnzE4CfBrkgIDaxrk4lOutKyfYSugEFgWb
+X-Gm-Gg: Acq92OHE19I/aUcYN/+8Eh39UCC1jZj9Ahuk2sdDpOX8XcwN49PQQBcz8YZQpFjt13E
+	Ude9nM3QgLCHBOCpN/gYbPklS99kP+tMz1eloUyKLoSRdenO+ZIH8hhR6qzp2aVp5wN3fRTL/Ly
+	zUvyycoobNrr8nMJgwQAy0rR6SVJ+YqKBBQe4OuV0zzNa7d8fOpX0kMsc36PJZFJkmRQjgZ1SiK
+	u1wmB+rv8H9f5DtvshM/f/pxppuXCsQcqhmHE9Jx3RfeS9dvSzApCZ3tjCH4vwFEJpiE4oyVCI6
+	446jJqrPsDk5s+dUyy12aXMFJ22B/bnotV1YDaFDP9bQKDuSv4wgcTzEQcYtW0gSYy3r15CwPNm
+	qmhlzVLPfCKhsSRvKv5XaWGMxGm64ZuEKerql3pF/iuoFYlrPrLSa59KzpqkPp5Lo+JW+hK7U9g
+	zMoVlz88iyCO8ynEw8ZPiY/QJo6lQbhNMHMs5VO2QDqPdbQEwrnUitwOk7ZpG5E7P/zdXvwhlag
+	Q0C9YbwNArQpD/qwxQ=
+X-Received: by 2002:ad4:5ba2:0:b0:89c:8353:1fa0 with SMTP id 6a1803df08f44-8cce4ac8640mr196070066d6.4.1780318246335;
+        Mon, 01 Jun 2026 05:50:46 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ccea2163b0sm93468446d6.38.2026.06.01.05.50.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Jun 2026 05:50:45 -0700 (PDT)
+Message-ID: <4882be43-9bc5-48cf-b74c-4a05453b2fef@gmail.com>
+Date: Mon, 1 Jun 2026 08:50:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] index-pack: retain child bases in delta cache
+To: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Arijit Banerjee <arijit91@gmail.com>,
+ Arijit Banerjee <arijit@effectiveailabs.com>
+References: <pull.2131.git.1780070763044.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.2131.git.1780070763044.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 5/29/2026 12:06 PM, Arijit Banerjee via GitGitGadget wrote:
+> From: Arijit Banerjee <arijit@effectiveailabs.com>
+> 
+> When resolving a delta whose result has children of its own,
+> index-pack adds the result to work_head, accounts its data in
+> base_cache_used, and calls prune_base_data(). It then immediately
+> frees that same data.
+> 
+> This bypasses the existing delta base cache policy and can force later
+> descendants to reconstruct the queued base again. Let the existing
+> delta_base_cache_limit pruning policy decide whether to keep or evict
+> the data instead.
+> 
+> Signed-off-by: Arijit Banerjee <arijit@effectiveailabs.com>
+> ---
+>     index-pack: retain child bases in delta cache
+>     
+>     Speed up the local pack indexing phase of clone/fetch for large
+>     delta-compressed packs by keeping reconstructed delta bases available
+>     for reuse when they are queued for later delta resolution.
+>     
+>     When index-pack reconstructs a child base and queues it for resolving
+>     descendant deltas, it currently frees that data immediately. This can
+>     force the same base to be reconstructed again. Instead, keep it in the
+>     existing delta base cache and let the existing delta_base_cache_limit
+>     policy decide whether to retain or evict it.
+>     
+>     This does not add a new cache or increase the cache limit. The object
+>     data is already accounted in base_cache_used, and prune_base_data() is
+>     already called at this point.
+>     
+>     Correctness:
+>     
+>      * t/t5302-pack-index.sh passed all 36 tests.
 
-> I could not find any caller in current git that both allows the index to
-> get into this state and then tries to write it out without doing other
-> checks beyond the verify_cache() call in cache_tree_update(), but
-> verify_cache() is documented as a safety net for preventing corrupt
-> trees and should actually provide that guarantee.
+Is there any chance that you ran this also with SANITIZE=leak to make
+sure that we aren't introducing a memory leak? (It's hard to tell just
+from the patch context, though your description is convincing.)
 
-Oh, absolutely.  This kind of tightening is very much appreciated.
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2131%2Farijit91%2Findex-pack-retain-child-base-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2131/arijit91/index-pack-retain-child-base-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2131
 
-> diff --git a/cache-tree.c b/cache-tree.c
-> index 7881b42aa2..f11844fe72 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -192,22 +192,62 @@ static int verify_cache(struct index_state *istate, int flags)
->  	for (i = 0; i + 1 < istate->cache_nr; i++) {
->  		/* path/file always comes after path because of the way
->  		 * the cache is sorted.  Also path can appear only once,
-> -		 * which means conflicting one would immediately follow.
-> +		 * so path/file is likely the immediately following path
-> +		 * but might be separated if there is e.g. a
-> +		 * path-internal/... file.
->  		 */
->  		const struct cache_entry *this_ce = istate->cache[i];
->  		const struct cache_entry *next_ce = istate->cache[i + 1];
->  		const char *this_name = this_ce->name;
->  		const char *next_name = next_ce->name;
->  		int this_len = ce_namelen(this_ce);
-> +		const char *conflict_name = NULL;
-> +
->  		if (this_len < ce_namelen(next_ce) &&
-> -		    next_name[this_len] == '/' &&
-> +		    next_name[this_len] <= '/' &&
->  		    strncmp(this_name, next_name, this_len) == 0) {
-> +			if (next_name[this_len] == '/') {
-> +				conflict_name = next_name;
-> +			} else if (next_name[this_len] < '/') {
-> +				/*
-> +				 * The immediately next entry shares our
-> +				 * prefix but sorts before "path/" (e.g.,
-> +				 * "path-internal" between "path" and
-> +				 * "path/file", since '-' (0x2D) < '/'
-> +				 * (0x2F)).  Binary search to find where
-> +				 * "path/" would be and check for a D/F
-> +				 * conflict there.
-> +				 */
-> +				struct cache_entry *other;
-> +				struct strbuf probe = STRBUF_INIT;
-> +				int pos;
-> +
-> +				strbuf_add(&probe, this_name, this_len);
-> +				strbuf_addch(&probe, '/');
-> +				pos = index_name_pos_sparse(istate,
-> +							    probe.buf,
-> +							    probe.len);
-> +				strbuf_release(&probe);
-> +
-> +				if (pos < 0)
-> +					pos = -pos - 1;
-> +				if (pos >= (int)istate->cache_nr)
-> +					continue;
-> +				other = istate->cache[pos];
-> +				if (ce_namelen(other) > this_len &&
-> +				    other->name[this_len] == '/' &&
-> +				    !strncmp(this_name, other->name, this_len))
-> +					conflict_name = other->name;
-> +			}
-> +		}
+Indeed, this PR has a passing linux-leaks build that exercises this
+test script. [1]
 
-The narrow and tall comment block is a sign that this loop is
-getting too deeply nested.  I wonder if it makes it easier to follow
-if we extract this new logic into a small helper function on its
-own?
+[1] https://github.com/gitgitgadget/git/actions/runs/26605615549/job/78399938323?pr=2131#step:9:1405
 
-What the code checks and how it does so both make sense to me, though.
+>     Benchmarks on a quiet Ubuntu 24.04 VM, 16 vCPU, 32 GiB RAM, local SSD:
+>     
+>     pack baseline patched wall-time change RSS change linux blobless 69.17s
+>     57.98s 16.2% faster -0.0% linux full 280.72s 236.32s 15.8% faster +1.9%
+>     
+>     Five-repeat public-repo medians also improved: git.git 13.1%, libgit2
+>     14.0%, redis 13.5%, cpython 4.8%.
+>     
+>     Perf on the linux blobless pack showed the same direction under
+>     profiling: 76.64s baseline vs 61.09s patched, with similar RSS.
+A lot of this information that is in your cover letter would be helpful
+to include in your commit message, for posterity.
 
-Thanks.
+Also, I prefer to see performance numbers for these repos reflected in
+results from our performance test suite. We have a test for this purpose,
+so you could try running this from t/perf/ for your local copies of these
+repos:
+
+  GIT_PERF_LARGE_REPO=<path> ./run HEAD~1 HEAD -- p5302-pack-index.sh
+
+And this should result in a standard comparison table that will help
+present your results in a way that is familiar to Git contributors.
+
+> @@ -1212,7 +1212,6 @@ static void *threaded_second_pass(void *data)
+>  			list_add(&child->list, &work_head);
+>  			base_cache_used += child->size;
+>  			prune_base_data(NULL);
+> -			free_base_data(child);
+>  		} else if (child) {
+A nice and simple change. Good find!
+
+Thanks,
+-Stolee
+
