@@ -1,82 +1,84 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C27935F609
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 06:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1E0258EC1
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 07:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780296198; cv=none; b=Y8anWPYFXwZ/g4AN1Wahgbl5ltjNP5DRkMuX86RYxRMm33iEEaQ/Xun0ZpGfMz41Nw389peCaLE39KzerHeQEiCqOFjeIUQUqJHPuYExTYlrmkNn3VCiBttSyf5gqy8BjxH6Xioe4YuEwegtRTwsWixJbCUnoj7gP6okamKr3kE=
+	t=1780298093; cv=none; b=FdvgcKKiEr6pFqCDdHP9QoIaJ8Z7VJrNMSDDf9rGMU5hiWuwItDz4Mnj6/gScpKcBSxN5WRrBm+nWyvWNMHKToCL4lCa1f3o6HTGuMN/0R/8qh74/HRFyVhIn4fOWkbI74KQx18wyyj3ZCNSNpAvitnqm3957+OieF62Ga/Na/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780296198; c=relaxed/simple;
-	bh=CzVDCbG5dmf/d7U5W4oo5ys7fByxKh8gxzAP8rj5Sg0=;
+	s=arc-20240116; t=1780298093; c=relaxed/simple;
+	bh=Wi5cel/TL1pH4o+SruVniERNpr2T9RbybXELQWJdfb8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IuAcDtYe+yfSjmryX0mo+xL9NQStWaP+A5PrUGGOavggbLxWLq0WhGkiwY2W/Q3HjvyTw9ue8sLD/MR0ibWBEzzu2aunpmJyMHrds7g62zAQICppmzSaEE1JqXoGjtKI8gvjCRm337kFPeX2r6ql2rHo1uZvbRwYqxQM5j395UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QfPhw9BZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KVT3lPIq; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=p4wfd628ACx1mRUCDiBg44iP21oP3H8jPb/fNtjCj2W+Mny6VgDSAhIyV5/FCohKr42GHILVYRwLKYyCtbhKe55yA1aqm3EhCvleAZbVRdXAlqAHu5wpA+Jh0M+bw/MQM0NhjdR4FsNpmQpg7qnXGV75DgyFEHsnok1vgZF5rxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aM8rmJPF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=do9n2+yL; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QfPhw9BZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KVT3lPIq"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1330A1D00268;
-	Mon,  1 Jun 2026 02:43:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aM8rmJPF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="do9n2+yL"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id C9D991D00245;
+	Mon,  1 Jun 2026 03:14:50 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 02:43:15 -0400
+  by phl-compute-10.internal (MEProxy); Mon, 01 Jun 2026 03:14:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780296194; x=1780382594; bh=ubti8wtZWe
-	znfNUZY1QdTlbeZNrBNZGH8mjyn6ZT360=; b=QfPhw9BZOTs8xpI11wjqh7/7E7
-	RDAUFiPX2+h5Z4TXdp2dwSDgB+XKnZVEkk2Jq6IYTd7RfhvbarRPzni8/ul0qHqZ
-	bxCK7fUwXz4QHIiCU5uGixuvLv/xk/HHxgfr1ZvjnilnWr63qjPhAIFm58pMjGvP
-	rCt4ypnwHmwhCP2I5lZ9oer9KniHMQTEhFMNBCxma1hALjeSUwRIGw5Ml6rC74WV
-	VAkox+CVj4gABPDUCUrbHhbczgDPqcjGWQAJtHiqDtB8MwrAZYKlIxOK6kJBxuRw
-	ACwFeBmsMxFEc43R7l9NJcXLkd9FL79oquNorNWlZdAgn4XwACEJyNBzPn3g==
+	:subject:to:to; s=fm3; t=1780298090; x=1780384490; bh=Wi5cel/TL1
+	pH4o+SruVniERNpr2T9RbybXELQWJdfb8=; b=aM8rmJPFvFk6ab57heHcwNDkNN
+	xhn79mrHUzql/XFAxSeshVpjBGNReq4Tl16z+r01kChbFkk8jXU7p2DvAdrDp0zj
+	unOxPwz5SObpk5iwsLDjJoJNva+rL96CZgX2zHWlstksWoKrVcCD1VPYnM3T+TA/
+	JfmR7E6GB5P/U4PNp7ok4Y6GHY5p8FjqAA+OqfvJ6DfKrRfqOBsI+L1ZYr631i1/
+	rt743LP2V7d0dmNvykKvGkYHM5tW8nLA3c/QQwmbbQ1ESDjR519NUvJe3ugzyGBw
+	dfZm0s/Q47nNV5hCG2wHOnBLLGU9PxATxVMKC752ywgXv8IXAcP9E9eSPi8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780296194; x=1780382594; bh=ubti8wtZWeznfNUZY1QdTlbeZNrBNZGH8mj
-	yn6ZT360=; b=KVT3lPIqoM8pKKlZe443dM8wJC1RYli7cD0tc86WYuFNxZTgXDu
-	+wJ5Q3wgSirhAmu/sU5OzMPT5C2kF+1+Z+vtdtzR9b4EhAlbrOh/llzBcZHwY01A
-	Zllodq+IN/VB7+R08LXvxyVAkqRuT2RS3Ad1QHbeBORl1FkJ2tOOxsjaiphhzLDd
-	WnEK7lMFPYbFQTUd+p4z/vqbaIJt/eMVrxFXlBpNZWIAcgbhbLy908036dGbTxQA
-	MoubHKnd4vxXsaM7+ewmoG8GgkzLjwri/Q2MpiwB+UX/iOQ0d18+VtkxmsuGQTya
-	XzcGy+lY1bPxHz3NEfT+7kDdQbqWKrmW+ZA==
-X-ME-Sender: <xms:AiodainuOkjRuTMYK_5SGtTUFBgyYG-uLN24NH12E88ykmFtFK0WDA>
-    <xme:Aiodag3-CjIuIplbtxj9EHmbe2h6UQBxbmPQaxyXC7J2ZWNHQ_Y1FPrfkgA5cgVI5
-    PzEZY2QcqbXDswr-mE21L3Bz3Cv_fyAz5c3Az_2Zid4ukMUl7LN1Q>
-X-ME-Received: <xmr:Aiodalrn0xY_CuaJjQVgocYMDAfdnUtfOk2-Y0TKeWOslN6fuJQmQB51HAhmiYkyP9FGI_S_5pm6vxxXU41-73hX4F0DZepqNx9T>
-X-ME-Proxy-Cause: dmFkZTFtgnrwG50RKBJH/AFxO/K9pwxOUuWGW6DpoOY7N0uVYX1EPJOTzB8aKunuVgf6xL
-    Px4ZN2aELXxfj5+zXzZnvb47hQY2WcdM3ke3MJMemWxv9rkyLnoVzNIPWuWjIRc2ghs+fM
-    ++xrh0EC6vzvOBIejLQZTAjRzfm7RCEayUJfGcESzYxfKwx4/TINmnZFHoKpY2VBUk+/5J
-    o8zlMa0QJgJXcz+7Kpk7gnQSekYDCQ5rQzT1tMMUD5ciYFqsyw+Y6SV7xko9Acslt8cGNw
-    ykdRyjsaymeSPxvfnbe6IA4Hx+MC+dO/DVXyEoFbmGycJJ1Mf0ARfp3WoDPB+K9VFA68sf
-    Uwjh2aignydr9Sv8dzcBVEDRd9KdNE/uCDs1vcJeRwWqs5o8uIXKPBKGMZvkb2IeMxsTOv
-    3mUWa5N6Az4BSv+qpuC1P6MqRNj1Ho6KaZ8HyI8sMeiALxIX2w7TiHWq0bAOwk6VFKk86Z
-    OaCeOSt9bjDsb0Ser3mCfNye6C+YVOeb4AWhNwmM8iYmd9TzXVM2R2UO/AjlnP89bbwefE
-    2G3p0KUS7r+rEWE3Vs2brHki9Xe9L2bVC1s5+WMCJdzxV40B51PB5+BR5oJtVkKfG7SKLa
-    oDZOE85TjbS/9dSggACd+X5erK1Ep6dyekgoqAu8HB5tmJAWYFMCrXdXegyw
-X-ME-Proxy: <xmx:AiodaldrLEaTQ5Ahq5xVDRfejYZZe6Tqu3UJt9g2E1A5Xv68eeOAcQ>
-    <xmx:AiodasoTz9zLgBzzhDRSB52RDX_H-1unAcdubxKZl8ki8KKjCCW-LA>
-    <xmx:AiodauE2wci8vuJ8_Bi11eng7gUzlvcuCjNi20AvuaHkbguqrTfh6g>
-    <xmx:AiodakuX6U6vawh6vgyDVjK6tZ7V5J9ajT3NhPrjG8cRsgzLg0NUsQ>
-    <xmx:AiodahICBtdsb2OyOeSb5Mn_gYw2FXfS0gdg8oLWRoIvQvVSC9zdYodc>
+	1780298090; x=1780384490; bh=Wi5cel/TL1pH4o+SruVniERNpr2T9RbybXE
+	LQWJdfb8=; b=do9n2+yLvVjpPgaGBIpxhY8juNm61jIZ6IKNUBs4ry8siHbBwOZ
+	MwkPG0WyFrRuqmmUhbkbGBGbKUyi6pwSUp8tDkMA+R6dHgfKiEdW0UcV34l3pWkN
+	d/pZUmSvG5KYfdufIoo7U5GgUPM/3ql0bq5SAX5A2Adx/kCkH9GCq1X0xbFIcToC
+	YVfkiDr6v6elsFnv2zRcEgOeyAXg9EcaDvOryBJpwZsj6nW4RQ0HFzzhPNNLx5MD
+	qCJpSazQgC9YSV/rsWtYIqrXbac1wmJKHvidCHLQ6Qa/tqF3vBdCsvcXenHBBNgk
+	p5wP3XQBZiRJU/wx5LbLFZG3ZOWIX8JIY6Q==
+X-ME-Sender: <xms:ajEdaidBvTleJoZczTLvrez0BDd_OLY7PrcZ7xItlQMwkQB76UFhYw>
+    <xme:ajEdav4Ig3ehLsjCyh8VUetgDFgCG0fV5oy-fjbxT9vM0yeaJ1nKchYcbBLwrehyA
+    L2--jqzm99lA0ml59LKjEtb9OHqVFYTiiEHrd-VjCd_AbYkMPri8g>
+X-ME-Received: <xmr:ajEdatViynMRBbHoRy0pgxyTfmO3tWWnBEaIrgnDaa9LU5pG874hOHqYFvPtFtoCKn39msOxSA2CslyTDluiq6xNcxMzxHTIAdQ5>
+X-ME-Proxy-Cause: dmFkZTGjvkFuTOfq1UNBxcXm6+u5IirxoxNFTJ+u9UWpFgdE64H/ZyOSBCU5kg7bWj+6OI
+    tKDgFdYylgE5a7ucy2xpnMUVjiRH3p6UmGoBhifzGeWINaWmlhX5EYkAWrQry6asEF/Fbn
+    ctOUBet+3YNt+ryTEH20ymjfS5DyKZ6NX2Y/29WhWP5tQqCkKzbRQYscQgO4S4dsJvlWP8
+    VQFKA/QGPV47kg/XfxYAyrBVhT069zykqf4rTwmdT23FKVShSGq0IPIt3xt+r3W8r1bHfO
+    C0Of5krJ4zlkMqZuNikNNaou6/xH9fNdkDf5qnhFXffr5hAOm0yvPeaDseINCSAtZ/77tm
+    GCyPJjYZpAFVfxWRav27LPlaV0PjOOKi80vCdO8yCJ0rdx+CeKgzBQg4lYb+q9PulhnSzs
+    c3glaUwa+LdlnyvlmdRKbpyczh5UR/vilFpvaBGCHPKTL/U9jF/Ll5mrUjJyWnaAJ117X4
+    WghnDxobEZaUjw28P5kBMo7C39Mv5sTyuv9a3bxU119O3EHm3Mz+PJnxtYY/D640wy94II
+    i32eqgHgUDHTNlKDdAG461RUNSyYGrWP+2sQK8kf9uuRx6v0tmWGFvjyyfHPo2cdIr1hjA
+    hVHZQFcg349svJh2EcRTDDiCaqP9iuP93NdT7l8sRgFv7iDHVRcGNvGnuSng
+X-ME-Proxy: <xmx:ajEdam7iQNgsaCn7O5vF_1s9-ICjhU7iaLrydi87LxEV15LrqagpGA>
+    <xmx:ajEdagoM7eZzUmuVGzyOK2_GjPMXYusZLkn_o1VkIrRqqMEdn4KpJw>
+    <xmx:ajEdahk7J6A_eODAZ5Q_8MmkErTNgngV9gU4icVXrFr4EPP7GFlZVA>
+    <xmx:ajEdakMW4abxw0eDG2W6HiL8u7S2h1uen7FJHTiQeYoqw2ZPXveZzQ>
+    <xmx:ajEdar5l7loFAnhTLMaKmywtoFU8jjLa9sqsvo2fNrZTQDZH8SboN814>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 02:43:14 -0400 (EDT)
+ 1 Jun 2026 03:14:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH] sub-process: use gentle handshake to avoid die() on
- startup failure
-In-Reply-To: <pull.2133.git.1780287309846.gitgitgadget@gmail.com> (Michael
-	Montalbo via GitGitGadget's message of "Mon, 01 Jun 2026 04:15:09
-	+0000")
-References: <pull.2133.git.1780287309846.gitgitgadget@gmail.com>
-Date: Mon, 01 Jun 2026 15:43:13 +0900
-Message-ID: <xmqqo6hu92wu.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: kristofferhaugsbakk@fastmail.com,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] commit: remove deprecated functions
+In-Reply-To: <20260529083716.GE1106035@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 29 May 2026 04:37:16 -0400")
+References: <CV_commit.h_remove_deprecated.714@msgid.xyz>
+	<V2_CV_commit.h_remove_deprecated.732@msgid.xyz>
+	<20260529083716.GE1106035@coredump.intra.peff.net>
+Date: Mon, 01 Jun 2026 16:14:48 +0900
+Message-ID: <xmqqa4te91g7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,94 +88,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/sub-process.c b/sub-process.c
-> index 83bf0a0e82..22c68bd10d 100644
-> --- a/sub-process.c
-> +++ b/sub-process.c
-> @@ -132,18 +132,19 @@ static int handshake_version(struct child_process *process,
->  	if (packet_flush_gently(process->in))
->  		return error("Could not write flush packet");
->  
-> -	if (!(line = packet_read_line(process->out, NULL)) ||
-> +	if (packet_read_line_gently(process->out, NULL, &line) <= 0 ||
->  	    !skip_prefix(line, welcome_prefix, &p) ||
->  	    strcmp(p, "-server"))
->  		return error("Unexpected line '%s', expected %s-server",
->  			     line ? line : "<flush packet>", welcome_prefix);
+> On Thu, May 28, 2026 at 09:00:09AM +0200, kristofferhaugsbakk@fastmail.com wrote:
+>
+>> Topic summary: Remove deprecated comments that were slated for removal
+>> after Git 2.53.0.
+>
+> This looks obviously correct to me, but the whole topic made me wonder:
+> was it worth retaining the old names and deprecating them, versus just
+> removing them back then?
+>
+> Topics in flight would have needed an update then, but they did
+> eventually anyway. So it feels like the total amount of work done is
+> larger, compared to just fixing them as the topics were merged. Either
+> way the compiler tells us, and the adjustments themselves are small.
 
-If `packet_read_line_gently()` returns `< 0` (due to an EOF or read
-error), `line` will be `NULL`.  The error message printed will be:
+Your alternative approach will depend on the integrator doing all
+the fixups at the merge time.
 
-    `Unexpected line '<flush packet>', expected filter-server`
+The amount of effort required by the entire community as a whole may
+have been larger, but the way the rename was carried out did spread
+them thinner.
 
-This is misleading when the remote process didn't send a flush
-packet; it hung up or crashed.
+Admittedly, with help from rerere and merge-fix mechanism, such a
+"fixup at the merge time" typically needs to be done only once per
+the other conflicting topic in flight, but still, when constructing
+a workflow, I try to avoid having to depend on the single bottleneck
+for a task that does not need to be performed by the single
+bottleneck, especially when the single bottleneck has other tasks
+that can only be done by the single bottleneck.
 
-
-
-> -	if (!(line = packet_read_line(process->out, NULL)) ||
-> +	if (packet_read_line_gently(process->out, NULL, &line) <= 0 ||
->  	    !skip_prefix(line, "version=", &p) ||
->  	    strtol_i(p, 10, chosen_version))
->  		return error("Unexpected line '%s', expected version",
->  			     line ? line : "<flush packet>");
-
-Ditto.
-
-> -	if ((line = packet_read_line(process->out, NULL)))
-> -		return error("Unexpected line '%s', expected flush", line);
-> +	if (packet_read_line_gently(process->out, NULL, &line) < 0 || line)
-> +		return error("Unexpected line '%s', expected flush",
-> +			     line ? line : "<read error>");
-
-We catch error return (< 0) or a line with payload (!!line) and
-report an error here, because we want to see <flush> here.  OK.
-
-
-> @@ -171,7 +172,7 @@ static int handshake_capabilities(struct child_process *process,
->  	if (packet_flush_gently(process->in))
->  		return error("Could not write flush packet");
->  
-> -	while ((line = packet_read_line(process->out, NULL))) {
-> +	while (packet_read_line_gently(process->out, NULL, &line) > 0) {
->  		const char *p;
->  		if (!skip_prefix(line, "capability=", &p))
->  			continue;
-
-While this correctly stops the loop if packet_read_line_gently()
-returns a non-positive value, doesn't it introduce a subtle bug?
-
-`packet_read_line_gently()` returns:
-
-  - `> 0` for a normal line (which keeps the loop running).
-
-  - `0` for a flush packet (which we expect as the normal terminator
-    of the capabilities list, stopping the loop).
-
-  - `< 0` for an EOF or read error (which also stops the loop).
-
-In the original code, an EOF or read error would have caused
-`packet_read_line()` to call `die()`, aborting the process.
-
-With the new code, if the child process dies or closes its pipe
-during the capabilities handshake, the loop will terminate, and the
-function will return `0` (success). The parent process will proceed
-as if the capabilities were successfully negotiated.  Any further
-communication with the child process would fail so the damage may
-not be huge, but somebody must check if the loop terminated because
-of a flush packet, or an error.
-
-	while (1) {
-	        const char *p;
-        	int len = packet_read_line_gently(process->out, NULL, &line);
-
-		if (len < 0)
-			return error(_("subprocess `%s` failed to give capabilities"),
-				process->args.v[0]);
-		if (!skip_prefix(line, "capability=", &p))
-			continue;
-		...
-
-or something, perhaps?
+> Not a huge deal either way, but just pondering for future such
+> situations.
+>
+> -Peff
