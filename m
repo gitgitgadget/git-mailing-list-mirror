@@ -1,103 +1,112 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCD9343893
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 21:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E6C343893
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 21:58:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780350796; cv=none; b=AyL06zZHjp60Vd9270IXVdM9RhGE9jg7MMglCd5AH16P9F1XSobD6owVmxyExEjg0ScmpJVv6E2MVYXbElxgw7IP95hmkFMrY63AIfg75pRPFKV6Ixiu+0i2wWk9Vf2Xzm6fhSueEJrqp8qEaR9efmLTvXNH/kZVmNnDgnTYS5s=
+	t=1780351132; cv=none; b=UJmHDEa5sc3nPT7wdPtqMVgCqhLK2TQYjtWgLRp0wX49mc21RiKao84b0yOMGVJjB+D97pt/mobOp9GewE0MyaQpHnbIvn231xNXX6lh+p9c5/FT2ndscPrlz1WP6HXzVe2pm3tk4GRAoZqfRob6dUedTf88tZ48V8sfREYrwRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780350796; c=relaxed/simple;
-	bh=qVlin407SgrQr/eb71uxErx3V3HIWNQSilWyTu/YEcE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Xer9wq2bsgczi4YexFcQn8Ui77bAgsNsdSwH/JXw/yBSZ+kekcEDYK57eQX/yGEcAkma+iQ09r1WlPJkBM/Z1LcF4FjzapExvNH47xDowcMiScaKqSUgSDbEthWPXNqJSI3Qu/GFYvVgwqM2iBZwJjXuF9lXiFjvbHT059SV7js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nvkUDn+m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jMpYje2R; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780351132; c=relaxed/simple;
+	bh=+WoMz93SBPgmaMB/p6V3T9XTuzsDhYc/7nICs2kmKB8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=qyISPaIJYZrixcjureR26ZFYNFyA+3KPkPKp9YZXtIAHx+ObTGb33bKl3qSor58/KNMq+T3fxfbNpLmjryuJYor4uuQJhb6GCpc2xVwVNwN7qIEpFZ4IVN9IS/Yb5JqdTxLTo7rs054HDJskIw/MH6hi7iop9UNGlJLvQ4SBpvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EoYUGKPU; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nvkUDn+m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jMpYje2R"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1C7847A0060;
-	Mon,  1 Jun 2026 17:53:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 01 Jun 2026 17:53:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780350794; x=1780437194; bh=ZUsj+/qfw8
-	+ci9MDTE3LbRbelKNKoCsZXarrmnMI3s0=; b=nvkUDn+mgTnRIdfrNWtzedZd9u
-	SiHGiaqko7vnZUpnTvs/G3asuB1FUrnuwSiUFPO+LpmzhV4Wee5w7Lu2ORKypd1y
-	/z1w1A4Yb74RM24A+ZXRmcm3IGLxhvMxCuMAg1oHZUfq2PW2aW6rIeB+n3CRWf1h
-	I1wltQCVMEzOwWZvhpPYFHu1oBLufG2BgvFJ35Ac1nACkM5Efcp8VQ0DSXQ/hzRE
-	G+gER+/JhH2nU5NJ9Kwejuvd3zBbWfSZX5b823v0Ol2xVJrxJerOWva/6QdMFWUa
-	m9puSwQJAgtCexS6UM66l3qCsz2i0JhNav9IDNKGIpXHnUxmobtTJ6LWbYlg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780350794; x=1780437194; bh=ZUsj+/qfw8+ci9MDTE3LbRbelKNKoCsZXar
-	rmnMI3s0=; b=jMpYje2RArjxnwoYx/3KUgBOlS7VnnQ0ZUAuXab0VW/zV/XpfXN
-	znGwzmewfaiVIR4IAroHiwQcBveunOfokD11kdBdteAOaDx/Ic7xEgSOOAefsk9M
-	dbDm1O/dnKXQJhnSmS8GpmCMrzYVMirY2yN2I8U6PNWNwKVpdkcKs2MLR5y2OFS3
-	wlO0hMl9c0tyW8UnEGKekf6t2ty8LLlqtOWv8VaMKruabz3u4UCo6uXVRQKSpCgt
-	LF2N+uvyzAXxM5bOAs2ReymzhUbsfF9LioqQxHasd6mzG0pCBGhdNbsi2HK4f8YK
-	Bf2k/RWBnTBj0mYfyqxB1rkxh9rbjy+pm3w==
-X-ME-Sender: <xms:Sv8dagqS-TC3eTJValx4N39xPGPaQ1n7zw4undWJnEeu3oZQNYq8eA>
-    <xme:Sv8datgQ3Xvv1CxcE-MS3JB3foNnneuH7t0_ztdRJji8-CUa5JtjH4eOLFT9XkTsI
-    QE31Qi3rbMl7M-lGEycDo1JCGRAKsIgRB_cMuPeFyB3woA2Q5DkzA>
-X-ME-Received: <xmr:Sv8datjOdNTZxYgQJ0FS1K1NcbOB9U8lM0mmdJnPQb1MVKvD4a36o_lE2YhE2LUxWRvJYJjNKG9YcP7N2Ico6xFQhv1A5ErFO5Cj>
-X-ME-Proxy-Cause: dmFkZTF5befuiwzZC5I14ijxr5Qd6p7azfs2pxvEVbJfrI3WlegN08INrW/E1i5Bsus135
-    tYLq9pl5SiqzxpmTHOMmzY/bEHsXYqUrLLY6LomHE7R3Us2dn+HrbLj8RAMBUxFFojVnnm
-    B/uiiKyAYn8/RnGM/s2Ct+SeeQzX/T+2Z8ibumCXh4lhuktMGP3lWFu5AdXGB22Rn11VnS
-    hA83XTW27se/Y8URKLb1Qg5yKsTuVsoUTAufCCnR0fRjKPpHUKeIbUQtzY+XN7zLcJxcgP
-    N5PbyWcoQixHVM/hCyPJSvBf3ezsnWzkEddfXggFuieBwap+wej4iV4c6iHIC56uUhHIFA
-    xUiwvfuZfjBlT/hCUJRAIJGV9CR2WnhKmKv9afMDU+A8a4Kk6/PhUiyUHtoICQ9SXxLIlW
-    YQpsuiKOP0utDLg3l7LVeXiAkj4qb3VsvQIcXOcNl8GYbvTokq8GuvjDmsaFrrSQQ7akHq
-    ci0gbHlCVVug1wqsIZLwIgawPu7UUNH2GJ4esbrZYQeZAe4ihak3rncYAUgo5UNh1hFbpv
-    vAVz1hvkp0wkUyJmaHg7r8VtfS3Mfzs1JrJorogRPTUYhB65ZWJR81nQN1T9mrJWH096wb
-    ZY9dvxOrnRy+r1FaG6N0+x+vJD+9GRdphIjXwK6Lt3z3VmV4wepOYeVkFfzQ
-X-ME-Proxy: <xmx:Sv8dajhMU-yBdKmugjOma_LREFj-OUp3DOADVipDcPbJO7HX5fRGkw>
-    <xmx:Sv8datKAp35i4D4iSs4OCE8ZvMVtqfW0YgCzHp5W-1tRcdb32n9T4Q>
-    <xmx:Sv8daiHfokwfEz8kPGugvObq9fFDVVAGmSKsXYsJRmG_WLN6GaASkg>
-    <xmx:Sv8dahTvdZwxZqGuNom9z_OCmJFGCuBK2iUTkuc1AeBVcerMRbYARA>
-    <xmx:Sv8damwkvrSt9pisI69M_yWXIKdvzA2QT3EnL-3LlZz3sZV12JG7PefI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 17:53:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
-Subject: Re: [PATCH v3 0/3] line-log: integrate -L with the standard log
- output pipeline
-In-Reply-To: <B59BA5B1-184D-48A8-8BAD-11EB6F8EB50C@gmail.com> (Ben Knoble's
-	message of "Fri, 29 May 2026 08:04:27 -0400")
-References: <pull.2094.v3.git.1780001267.gitgitgadget@gmail.com>
-	<B59BA5B1-184D-48A8-8BAD-11EB6F8EB50C@gmail.com>
-Date: Tue, 02 Jun 2026 06:53:13 +0900
-Message-ID: <xmqqzf1e2aie.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoYUGKPU"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-59c9b666822so1720652e0c.3
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 14:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780351130; x=1780955930; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6qSKB6L+/8gmILB/2p5ONBDjdgD5YxniTDU8oZ6bFDo=;
+        b=EoYUGKPUa27nd5dknzGu7j8XyBZCJyN62/ws4sKE4IMDq2GBhKLnruaUHVCaLwkotu
+         JGOPS4w/zDDsXGTIm6Hkq2wL/7UhstVjAAGFUWWdCZTYyyaymfosv71vQZ0o/oNbdAuf
+         SY5rsZaRzPfKTZrSwj61NPUJZasApvnSbE4b2Jb59yWJOvAipwy/7d2jTHM8IC5KrqUp
+         THEdRd9v7IvAzEPR8V5pJhKs+SoBxi4V8Heq3ePe/QnRE8qKF8/dOlNP+0KIdQePuuwF
+         evyg0JBHv/kRqtKT+FDYbo+EN/1DoxVbqjUL5hoCZwXB1fp4rQuKfH3xusHXfh8D980y
+         KPYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780351130; x=1780955930;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6qSKB6L+/8gmILB/2p5ONBDjdgD5YxniTDU8oZ6bFDo=;
+        b=NMaNh1bp11lu0Ntt1G48iivtddz3uSenHq/jw8+pcIHLS5ORHdUzTZ/iWRkqITQMbg
+         YLp9BMmoHOUvMDczuMf//grJ0/DETKTmAkvuLA6ds90UJhJ5Ha2oNz0iyU0rC313YIKN
+         6ggEDWjaASJQDRJUroiUgUuNmCwRHnr8ovYdSEL5sU0Wxe+BMh76I0SPfVRakZIZLMVo
+         X53aJV2gf+V/aDFcJZyMqjgGmjlEB2jQg7aiCiD9D8hn6w/fkuk1Jpi9eQfibOq3Rlqy
+         +yTXxeVkNOrSx6rznu+/EU8Fbg+fW41cHNc5eCmJAdnz+GWA9RPNeNIt9+XdhA6hvMSq
+         YOkA==
+X-Gm-Message-State: AOJu0YyfSPlU2RNQvF60il6DMqwCBq5z1d+VxuTc1OIviQknzaVZMHav
+	rpBp35aolsQdYBuMYxFzDBpp7ghwOjR0HjTZT4Mcrf2muU1q31XQNz/M
+X-Gm-Gg: Acq92OGFXF3KO3CRzKvgx4WHOz3/LoqgpM991OgHjUD7uUKACRlvD27NMqJYOyU4UUX
+	NBgCvKRySnsIKo/kRyW5KIinqF9CRcW0myY6Ii9+7myHHwrnMopYpGj9aHYX9zf0Ferq+ZuTFze
+	JBlaMD5jM18PGCYkYjF0LRrI1UFImRHOR7U/gSsdEFg6LJoevLKPo3/RnSeuoaG/FmKE02EtPB0
+	gJkVBqu27ubZZJTAsFjH5V7fhLk/8qNOFrlO1JTPkOF5WT5ddGZKT+pLa6pr/a9dWxxbU10Fjou
+	cqXASIn1IroCLGQ04sJOgERw8iIW5jL1kYLmUqHCdsg9lP4g2bomz4jnODlsnsG4mBQXchhxl4l
+	+wxnWlOA/mfm9Z/puLiSbbm0NEaAeF6nQkRUIvoikABdFOXE9VCz5rj8qm1YSt3OCrEMaNFyhz9
+	CS/5KK2IoACbrDs0vdLTqYaZgOscVMYh5E4hX76QtndmHCuX5cMgMFPuzu51za+/Q=
+X-Received: by 2002:a05:6122:2891:b0:59e:f727:4bb4 with SMTP id 71dfb90a1353d-59ef72781dbmr4688996e0c.1.1780351130483;
+        Mon, 01 Jun 2026 14:58:50 -0700 (PDT)
+Received: from smtpclient.apple ([189.62.148.96])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-599d4754259sm8394393e0c.7.2026.06.01.14.58.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jun 2026 14:58:50 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [GSoC][PATCH 4/4] repo: add path.commondir with absolute and
+ relative suffix formatting
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <20260601151950.30686-5-jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 1 Jun 2026 18:58:35 -0300
+Cc: git@vger.kernel.org,
+ jltobler@gmail.com,
+ gitster@pobox.com,
+ phillip.wood@dunelm.org.uk,
+ sandals@crustytoothpaste.net,
+ kumarayushjha123@gmail.com,
+ a3205153416@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <81475C6C-3E0F-492D-BC20-45518BC00FE8@gmail.com>
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260601151950.30686-5-jayatheerthkulkarni2005@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
 
-Ben Knoble <ben.knoble@gmail.com> writes:
 
->> Changes since v2:
->> 
->> * Switch "! test_grep" to "test_grep !" in tests.
->
-> Thanks ! I did not read the tests carefully for semantic value,
-> but the rationale and overall code looks good to me as discussed
-> previously.
->
-> The range-diff here looks good, too. 
+> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
+> index 7c7dfbb052..dd2706e1f7 100755
+> --- a/t/t1900-repo-info.sh
+> +++ b/t/t1900-repo-info.sh
+> @@ -184,6 +184,7 @@ test_expect_success 'setup test repository layout =
+for path fields' '
+> mkdir -p test-repo/sub
+> '
+>=20
+> +test_repo_info_path 'commondir' '../.git'
+> test_repo_info_path 'gitdir' '../.git'
 
-Thanks, both.  Let's mark it for 'next' then.
+I was thinking here, maybe you need to take a look at
+git-rev-parse's tests and check what are the corner cases.
+
+For example, `git rev-parse --git-common-dir` documentation
+says:
+
+    --git-common-dir:
+        Show $GIT_COMMON_DIR if defined, else $GIT_DIR
+
+This way, you should take a look on how git-rev-parse tests
+test those two cases (GIT_COMMON_DIR and GIT_DIR) and do
+something similar here.
 
