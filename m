@@ -1,138 +1,140 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F342D7814
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:52:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE1A37B40A
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780321976; cv=none; b=DmdTpYSGTO7FUyIGLgLPk6PnNcHls5+L0CWmYJMNS9FhdvlebcR+RcD+xAckf7KSeUk6GYK76ajxSEjPcwdGiJIBedmyr5eqzIUPUo5e4hzbNi1lwEMSW8WfXzimW7unEyMagZHJfhL5JKBCS2AyAOSr3bp8plzABtGt21zy3/c=
+	t=1780322108; cv=none; b=mwIdTJsGSEYhiNNUOGTpGedpvCnvTefq/N+vNsnzcBobSG9VhSlSmCfcxQtBIfqLVVPR0aw3TqpKVumZOyKLqsVGnQU6hsKUeAQsIMhezWs9uSfku3grOw9traZBkx0pdp5eJnwp/4u7JBmDOy2SxNZibz1ARonkZBDKb2NGO6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780321976; c=relaxed/simple;
-	bh=l83VF5PjM8sJdH6+dA48QiaEH/4qWjmsSGPzYsUEMoI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GhTCPSfgr73HygwhAun0lTI3LsRMnI0wDvAAgVxeOoQtrC8W9/obVn9EJ7y1T++vYSxy9wDqTZOLZZX+peAK3GsiVATygzptsv1MzesCnkatrwosX5Or9AZ4UWgxI8sCNLtpqaACZDimci6rg7tUzocjgHWg2cGN7iHDzvSaimA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kKZzJBj3; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780322108; c=relaxed/simple;
+	bh=YHIATr2yD19PLo72vOM+ydMmV1ECYKWDhekU4a/mfKs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sDhLCqUXyo4j607HBdW6JZx5YLIkrkBe4/yVMgpufxBHoCAgs1kLNmQ2gil0UZdoR57G2K7KW6I0KLxZdG9H0nzXEE9HUS40ZkRVrFS/PD/7X+2YX0OkuftTTbucR/A+UpkKgVXUkhAzE6VuG9q8kvgPezRN9DhBRfU1BpptjZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JPUNvU9s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MFhQ04Am; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKZzJBj3"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-45eeea039ebso1781749f8f.1
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 06:52:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780321974; x=1780926774; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6OkCmZthgK7RjB9r3NbqlUullEI4OklovQ/CxkQTKak=;
-        b=kKZzJBj3sVFjDgcJTU3X+MIix1RnnM0hwbpd4cgbCSEaGZyKw5OzimlXmmAhWr42IZ
-         SqHBSCso0a5w3KypccGy/v9WreekkYp17e5XkKPmXTR1DWhOHHRvHCquuyJtwcE2PoFw
-         MRDySHCa/6Fk/Cqn0ChLaaGgiyuiNRuRB62U0jAgR3AZ13S1dpxwkdVmaoMEZvLtRhzZ
-         ryxVxSB8UavGjCAnPRlMgsQcSQsmmFrqte2R9HI0dYo/7NiBUrvohsr+1F0tIVgT2fzv
-         2HiyQ2gxguDlNUeYtD29NUUJggAc+6ApFaAGkGkV9az1xpYD9gkRX1cpgECkwrX+U32g
-         4Kgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780321974; x=1780926774;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6OkCmZthgK7RjB9r3NbqlUullEI4OklovQ/CxkQTKak=;
-        b=CHAbh0ZjHtuXDaJYjpqPdFngFhYmMGceqZcJ/rPqWQUj+cVLXSgxQnOB46tGQjnr3N
-         73sWilBGAIbp5DGcY4gPRw/YThM9MLttvns1KdItDzUOCQ+oWIsa70NpVMZ3Ire9ufhw
-         pHjPjaddarJ+ZBHxtqclDcWa88g6IFTjYPvOlQL//vNYiayEwMVKeN7WKbkIplpms9cO
-         uVPLdVU+JQxbX9ckFj1zkIx7w3RR/geesr5FTK2cglhumSO7UgUIkXZODRXnuqp4svUi
-         tyl6e0iYTBmc1JdZmE4JH6Sqi6zUufjVvsayDS3bBBURuMi76Mn4Mi++gXcFytE0ge6H
-         x/KQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8bUrW4Qh2B/y/pTlS7qPoGV43LIM+zKsJXSPRmM102zKIhAv3ZWCSz/ixQwXa4VxlBCnw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyheXaxXvNYU/jhq4OYUwC4/lLkLyv9FCLUmGI/7Z97EfLhioa
-	UOTpFEg1BZz9AQqhBbLO71ltcilwyGk4xbIkhX24ve1AcqUsvjY5jOee
-X-Gm-Gg: Acq92OFXmRpL85KgHzfamklpgsNbDrYwqRzhmyDYZXnQoU+TqsqdV7O/MfW0qS1IFWU
-	2oesTBDjoQZjrF/uAIbD6jza7ScruyMWoB8rtNwUT5XWI9uMDIRvHTg6R/gDTkOPp+Tb9lKXoex
-	KI2g0fDrLOXHf8ZroubyWi7pBTpB5TJUjfynkCA/qZuG89cVAfUF2HaftjHD13Ei+tjE17QJNF7
-	iBSLuclsq6Sfpb1IQWyDhCUaA1k2DBuh03GmdIEzykRfHS1QwB8jclPvU7OsWViw2QsL2qe9ByD
-	DPntMGbPL6+SU1HUyRLaC7DkKkzSZHt4xb+VINDjeHpnr3ZJ8TqcWfRGgq1G477zGbA0gRE861r
-	CztIjLQBOcwVBJamP1O3s2AsMKns1y7wJDYjfD2RCMJbin8BWEKyHTbz3wdz44Ll22goKvBdsIG
-	r5I9/bhp1qTpsyNLLksq4XdTvaDjACG5qLF4AWanDW6DyboXRgeu5pKfbHPZnhEgs8DvcxoPykb
-	ycT7Kv6mLVjvA==
-X-Received: by 2002:a05:6000:4685:b0:43d:2be:e54 with SMTP id ffacd0b85a97d-45ef6bad806mr11683967f8f.39.1780321973750;
-        Mon, 01 Jun 2026 06:52:53 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef34bd896sm24337995f8f.14.2026.06.01.06.52.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 06:52:53 -0700 (PDT)
-Message-ID: <67e1a735-4f7b-476a-8841-09649290dd51@gmail.com>
-Date: Mon, 1 Jun 2026 14:52:52 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JPUNvU9s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MFhQ04Am"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 911F9EC00CA;
+	Mon,  1 Jun 2026 09:55:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 01 Jun 2026 09:55:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1780322105; x=1780408505; bh=p6WyJ47mwp
+	8L0sIZ0yvYehYxv7VjEMXHdxyIJxDkwqk=; b=JPUNvU9s/JCXtmdW4FqyIQK8Uc
+	z9D1Hq9xmyAaK1G283O2BTe1bLC9Fppu/rYgVSRpVoxFMGxVksqIB1JVtMVR+NbG
+	RRSGC5kdQYPqAhDbS1zLQ92ne+xufZW3i8z3wEhTPHRhfLnfYJTXO7r9Dea+zFYv
+	wMf710JcQ2eI8qcjNTYWzo+pDvO4Ff7cpEpmcnCP7mEswqcmiL2CbDQhrJpYSp0k
+	ia6q5IwqAupCn/DMhDjJ96pMPPT/n+NqUFXXc4ImQWr7DobMgxJGfQFhQ4iwiAnP
+	QwI8rT0jo2y8+WiNZL8Ve9e5kDjl+d4HcHqmYYEbToFWrTqKgtNRUS9yciiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780322105; x=1780408505; bh=p6WyJ47mwp8L0sIZ0yvYehYxv7VjEMXHdxy
+	IJxDkwqk=; b=MFhQ04Amzh5jbDt3viOZ1q3V8ESyWXNDpW8OqDlfuzpJozfWsDl
+	jjTF5Y2DFGeEeiA46JXXhIIaPa3KcD1Te3jhS6e6eT5TwBrCq822H2zMlB6Q7PDu
+	KyJ92obJY5H9yYk6JvBfTddupr901KtTqpAKXaxlAy8mzMUwOXdxZmKY38F6mSIX
+	45myfESoFOllRJN1d+h0LhPbLwBEFOhl2BRBn1jCSNs08OpBSibN3wVQUnBR9MW/
+	CfDwk84shSbey+UHH1hm9YN/i1Bf14PSMHtZTwLKQPeu0OIqIs4tRhzbh4LkcF3Z
+	troU+JHsk7ntOWFtTK6Y+JVjLFooET07MZQ==
+X-ME-Sender: <xms:OY8daqd0TpgzPhD0tONhrV_d8FkeTgpacg7ABRRFRb9mJ4vDchqj9Q>
+    <xme:OY8darN1WBXa_wVJDcmPbKyPKXQABNcTpRT5Ep4N63nN9OxFpKPbmcXDYeh9qET5W
+    VNEGpL4Pe82GXZNat78i9C-WvhIBN_Fgip58lsCzkSed81zUlIHrg>
+X-ME-Received: <xmr:OY8dagj9VrmL-4-XchVt_MJHGT1aQh6gLQ0m2xlPZd_JeSWWXjFA-HjNtjaUnQ2uoyr1EAFSXUreFaUCrbmuU-8heatEA5hWM1KPapigzW9G>
+X-ME-Proxy-Cause: dmFkZTFxShnUas0qojzGMMQMx9looi+zsrN/taUUmMYaL+F9Qz4zyySuGdn2LoUDZBRw8A
+    tj2YBDSVfPJ4XMJ3222YaoqGbiGTiq1NT3iTBVVdGA02FsgecBa/dNwCKzSxRIDzr48Alu
+    QdUSkU89BVdVOWpnaPSqXbNem265zl41YhACcw8smqwWTdP5/9oPTz7CzYtGImi2idwZrM
+    qB1N0lu3OflAoPtJcws0C2jCchFuPTjLIppVNTFdMy7H7vvAOc3yn5IJxntyfWnKvLlRWo
+    CEpPo7Dw6rvtczTm6s36FKLIGZcWT1HIprMU5W948iV+OvPHafASg2t//3FiImSpnyPsXp
+    eocy9ZXgfKOMAhMOnjK0yWIC6havy2cA9F+Iq0zDtH73CslgE/8Wk7YDA9SjAt+aILB5EO
+    0XDl6RacbMnCdg4NTBMwQ4RT9Esounx21OeavdpWmuRASegb4FVRbDkmxy/SdmsZ7RkBEK
+    xy3eB4W3ryZAZOUKBlUIgwleaxzvsi48Bzac1udETGuXgta+lWN2/KL2DvJziVQTbpOYy9
+    gpMdx3IKmI52AStOImpv44W5istJIIGLhCkg/LLrMAH+c9j/DJE+20z1gjWne3rsQWc8mp
+    FRSo6Z5UW65aFeBxqdN8tgoFDkY9Fj5vVcoL9jTll+/AwmSukfvi2hHmpqNQ
+X-ME-Proxy: <xmx:OY8dam363h0x2uKiZTMZbCCpeCi6uUo3FQD8aEK0lYips0IjEpGVCg>
+    <xmx:OY8daijEqxwdsB5j-QoO4UnxvoKK3gYcPa075DdZcYkNi05y0PtPaA>
+    <xmx:OY8daufC1Fo8A7lmU1hDLHXjcV_3ZpD2cZ9L9spYvp3twMKUOvo3MQ>
+    <xmx:OY8datmZkVrRFTkoPP0vHTy4AHYYximVDfvZFx25jXO1t5BRFZO6pA>
+    <xmx:OY8dakC9rVWw0e_XfOJyWoNlHr6Zj-2lTGP54ArP1BQgryOmHfEDvU1A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 1 Jun 2026 09:55:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e5be0791 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 1 Jun 2026 13:55:00 +0000 (UTC)
+Date: Mon, 1 Jun 2026 15:54:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/5] Duplicate entry hardening
+Message-ID: <ah2PLBluBFy44AQI@pks.im>
+References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
+ <xmqqpl2a4f09.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] t3404: add failing branch symref test
-To: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Son Luong Ngoc <sluongng@gmail.com>
-References: <pull.2126.git.1779946921.gitgitgadget@gmail.com>
- <a550923440a233daea0b9819e05d6c380de00d09.1779946921.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <a550923440a233daea0b9819e05d6c380de00d09.1779946921.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqpl2a4f09.fsf@gitster.g>
 
-On 28/05/2026 06:42, Son Luong Ngoc via GitGitGadget wrote:
-> From: Son Luong Ngoc <sluongng@gmail.com>
+On Mon, Jun 01, 2026 at 09:33:10PM +0900, Junio C Hamano wrote:
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> rebase --update-refs queues local branch decorations by their literal
-> refnames. When a branch such as refs/heads/main is a symbolic ref to
-> the current branch, the normal rebase path first updates the current
-> branch and the queued symref update later tries to update the same
-> referent with the old value it recorded before the rebase.
+> > We had some corrupt trees with duplicate entries in real world repositories,
+> > which triggered an assertion failure in merge-ort. Further, the corrupt tree
+> > creation in the third party tool would have been avoided had verify_cache()
+> > correctly checked for D/F conflicts. Provide fixes for both issues,
+> > including 3 preparatory changes for the merge-ort fix.
+> >
+> > Elijah Newren (5):
+> >   merge-ort: propagate callback errors from traverse_trees_wrapper()
+> >   merge-ort: drop unnecessary show_all_errors from collect_merge_info()
+> >   merge-ort: free diff pairs queue in clear_or_reinit_internal_opts()
+> >   merge-ort: abort merge when trees have duplicate entries
+> >   cache-tree: fix verify_cache() to catch non-adjacent D/F conflicts
 > 
-> Add a known-breakage test that exercises this case so that the fix can
-> flip it to test_expect_success. The expected behavior is that the branch
-> symref keeps pointing at the rebased current branch.
+> This is a fix to an important corner of our system, but somehow left
+> in "Needs review" state for much longer than I would have liked, so
+> even though I am officially on vacation ;-), I took some time to
+> read these through (by the way it was a pleasant read, thank you).
 
-Thanks for adding a test, I'd find it easier to review this series if 
-the test was added in the same patch as the fix which is our usual practice.
+Honestly, I always shy away from the merge-related subsystems. It has a
+lot of subtleties that I don't have any experience with, so I never
+really consider my input to be helpful here.
 
-> +test_expect_failure '--update-refs skips branch symrefs to current branch' '
-> +	test_when_finished "
-> +		test_might_fail git rebase --abort &&
-> +		git checkout primary &&
-> +		test_might_fail git symbolic-ref -d refs/heads/update-refs-symref-alias &&
-> +		test_might_fail git branch -D update-refs-symref update-refs-symref-base
-> +	" &&
-> +	git checkout -B update-refs-symref-base primary &&
-> +	test_commit --no-tag update-refs-symref-base symref-base.t &&
-> +	git checkout -B update-refs-symref &&
-> +	test_commit --no-tag update-refs-symref-topic symref-topic.t &&
-> +	git checkout update-refs-symref-base &&
-> +	test_commit --no-tag update-refs-symref-newbase symref-newbase.t &&
-> +	git checkout update-refs-symref &&
-> +	git symbolic-ref refs/heads/update-refs-symref-alias refs/heads/update-refs-symref &&
+> I wonder if we create a rule like
+> 
+>     Those of you who have more than 30 commits in our project are
+>     expected to review one topic (or more) from other contributors
+>     for every three patches you send and ask for reviews by others.
 
-I think we want to test a symref that does not match HEAD as well. 
-Rather than adding a new test, can we instead add a couple of symref 
-branches to the test "--update-refs updates refs correctly"?
+Heh, that would make me condense patch series into fewer patches ;)
 
-Thanks
+> it would help balance the patch vs review ratio, perhaps?
 
-Phillip
+It's a good question. I typically try to aim for reviewing series on the
+mailing list at least every second day, and I always encourage other
+folks in my team to do the same. But recently I (well, rather we)
+haven't really been able to due to the current situation at GitLab,
+which forces us to put almost all of our focus towards a different
+project for a while.
 
-> +
-> +	git rebase --update-refs update-refs-symref-base 2>err &&
-> +
-> +	test_cmp_rev update-refs-symref-base update-refs-symref^ &&
-> +	test_cmp_rev refs/heads/update-refs-symref refs/heads/update-refs-symref-alias &&
-> +	test_write_lines refs/heads/update-refs-symref >expect &&
-> +	git symbolic-ref refs/heads/update-refs-symref-alias >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->   test_expect_success '--update-refs updates refs correctly' '
->   	git checkout -B update-refs no-conflict-branch &&
->   	git branch -f base HEAD~4 &&
+Overall I agree that everyone who is a core contributor should also make
+reviews part of their regular worflow. At least for corporate
+contributors that might also make it easier to communicate this to their
+respective employers. Regardless of that, my expectation is that there
+will be times where it works well, and other times where it works less
+well.
 
+Patrick
