@@ -1,62 +1,62 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E6C343893
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 21:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56061359A99
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 22:04:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780351132; cv=none; b=UJmHDEa5sc3nPT7wdPtqMVgCqhLK2TQYjtWgLRp0wX49mc21RiKao84b0yOMGVJjB+D97pt/mobOp9GewE0MyaQpHnbIvn231xNXX6lh+p9c5/FT2ndscPrlz1WP6HXzVe2pm3tk4GRAoZqfRob6dUedTf88tZ48V8sfREYrwRg=
+	t=1780351473; cv=none; b=d+GKDq3fjEZcHRHYeY+jqSqFm3Bd4VNDHl5g1ed5nOcjQajXJssYwkrKZxlfF9SBmaCaiPnGuk3d09EU7vQYfDmS2ZLj8TlKSj2m2EyniEqVXzaJOwra5MNKoi2jntijnEIq8CBz0VDSP2Q5ieXxmIS7FOHZDC4KhuXPkvap1xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780351132; c=relaxed/simple;
-	bh=+WoMz93SBPgmaMB/p6V3T9XTuzsDhYc/7nICs2kmKB8=;
+	s=arc-20240116; t=1780351473; c=relaxed/simple;
+	bh=UASa9mpT0bD++VSF/jT1m3AjO5qRPDaXwRcKsWmI5oU=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=qyISPaIJYZrixcjureR26ZFYNFyA+3KPkPKp9YZXtIAHx+ObTGb33bKl3qSor58/KNMq+T3fxfbNpLmjryuJYor4uuQJhb6GCpc2xVwVNwN7qIEpFZ4IVN9IS/Yb5JqdTxLTo7rs054HDJskIw/MH6hi7iop9UNGlJLvQ4SBpvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EoYUGKPU; arc=none smtp.client-ip=209.85.221.169
+	 Message-Id:References:To; b=Tkf+RDF8SUZyWtW5dpJdrhFQjb/MYIA/2bvQP1+SZy2NtsVLYIilfhQlcD02b6elAbmm9Gb9W8Z9HTAgEVHhrxY5N8bPuI0G8ZY5DKyagrM8gN2wVRh4NgT2DnPiMYDH3Oq0Q0FmxEVvv3NsytB4SQytE4kd0YmiWcDs8Es4tJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sr3Fj6uj; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EoYUGKPU"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-59c9b666822so1720652e0c.3
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 14:58:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sr3Fj6uj"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-963a722ed59so934455241.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 15:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780351130; x=1780955930; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780351471; x=1780956271; darn=vger.kernel.org;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6qSKB6L+/8gmILB/2p5ONBDjdgD5YxniTDU8oZ6bFDo=;
-        b=EoYUGKPUa27nd5dknzGu7j8XyBZCJyN62/ws4sKE4IMDq2GBhKLnruaUHVCaLwkotu
-         JGOPS4w/zDDsXGTIm6Hkq2wL/7UhstVjAAGFUWWdCZTYyyaymfosv71vQZ0o/oNbdAuf
-         SY5rsZaRzPfKTZrSwj61NPUJZasApvnSbE4b2Jb59yWJOvAipwy/7d2jTHM8IC5KrqUp
-         THEdRd9v7IvAzEPR8V5pJhKs+SoBxi4V8Heq3ePe/QnRE8qKF8/dOlNP+0KIdQePuuwF
-         evyg0JBHv/kRqtKT+FDYbo+EN/1DoxVbqjUL5hoCZwXB1fp4rQuKfH3xusHXfh8D980y
-         KPYA==
+        bh=UASa9mpT0bD++VSF/jT1m3AjO5qRPDaXwRcKsWmI5oU=;
+        b=Sr3Fj6ujDk7VT4IRJMuWdYVD0rawfs6+cCGS4E7OR4fzcu8M3MQZVZBcCASSlF1oJu
+         5OEl4xnjASWLkTivgSuDh7aytztazrPwXNnpba9YplLDM0nrEizWgnkMizOex6ibR5f2
+         GEsIO23TMSP76ZXdIxW/3EWKIvDijFdsybhFirXP8p5zRAnzG0zAmkDZkaSTOLfrq9Hc
+         833OxsjmRf9DIBYF+Pl4UWpkA8XwS1M/U34kzKhvm2cIGlIzAANAomsi+Iyq5pxwaeuc
+         BPlEIV57piRN7esdPOBkMWc3bwCr/7qTLH1t8s9eCHuv5YkSr/VfoD11k8UIBQbrEd3k
+         4/LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780351130; x=1780955930;
+        d=1e100.net; s=20251104; t=1780351471; x=1780956271;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6qSKB6L+/8gmILB/2p5ONBDjdgD5YxniTDU8oZ6bFDo=;
-        b=NMaNh1bp11lu0Ntt1G48iivtddz3uSenHq/jw8+pcIHLS5ORHdUzTZ/iWRkqITQMbg
-         YLp9BMmoHOUvMDczuMf//grJ0/DETKTmAkvuLA6ds90UJhJ5Ha2oNz0iyU0rC313YIKN
-         6ggEDWjaASJQDRJUroiUgUuNmCwRHnr8ovYdSEL5sU0Wxe+BMh76I0SPfVRakZIZLMVo
-         X53aJV2gf+V/aDFcJZyMqjgGmjlEB2jQg7aiCiD9D8hn6w/fkuk1Jpi9eQfibOq3Rlqy
-         +yTXxeVkNOrSx6rznu+/EU8Fbg+fW41cHNc5eCmJAdnz+GWA9RPNeNIt9+XdhA6hvMSq
-         YOkA==
-X-Gm-Message-State: AOJu0YyfSPlU2RNQvF60il6DMqwCBq5z1d+VxuTc1OIviQknzaVZMHav
-	rpBp35aolsQdYBuMYxFzDBpp7ghwOjR0HjTZT4Mcrf2muU1q31XQNz/M
-X-Gm-Gg: Acq92OGFXF3KO3CRzKvgx4WHOz3/LoqgpM991OgHjUD7uUKACRlvD27NMqJYOyU4UUX
-	NBgCvKRySnsIKo/kRyW5KIinqF9CRcW0myY6Ii9+7myHHwrnMopYpGj9aHYX9zf0Ferq+ZuTFze
-	JBlaMD5jM18PGCYkYjF0LRrI1UFImRHOR7U/gSsdEFg6LJoevLKPo3/RnSeuoaG/FmKE02EtPB0
-	gJkVBqu27ubZZJTAsFjH5V7fhLk/8qNOFrlO1JTPkOF5WT5ddGZKT+pLa6pr/a9dWxxbU10Fjou
-	cqXASIn1IroCLGQ04sJOgERw8iIW5jL1kYLmUqHCdsg9lP4g2bomz4jnODlsnsG4mBQXchhxl4l
-	+wxnWlOA/mfm9Z/puLiSbbm0NEaAeF6nQkRUIvoikABdFOXE9VCz5rj8qm1YSt3OCrEMaNFyhz9
-	CS/5KK2IoACbrDs0vdLTqYaZgOscVMYh5E4hX76QtndmHCuX5cMgMFPuzu51za+/Q=
-X-Received: by 2002:a05:6122:2891:b0:59e:f727:4bb4 with SMTP id 71dfb90a1353d-59ef72781dbmr4688996e0c.1.1780351130483;
-        Mon, 01 Jun 2026 14:58:50 -0700 (PDT)
+        bh=UASa9mpT0bD++VSF/jT1m3AjO5qRPDaXwRcKsWmI5oU=;
+        b=DcEB66FkxuDLTj+PkEoQ7gg3edSSb1NRaf6gnxjanET30+iLh/go3ZOXRxC1hUjrIf
+         h7RI+mKgFEbf7s7KsOhL68Z/gAUJ1Y6Mu2yh+Rz0z6Y46GbHLWk2yFkrC4Bps8dovCHg
+         r1a43+2sm1ULfGgDsOe8ns9ScZGGJ1S6GkdvV4aMk+OjafMlrCDRQFd/vaD6ZpxU7X5E
+         zL7Bjn2sNoE1jtP5gNSf1t1EO+RC6FqGShUAUwqz+ZpfCDyXpjrRdJH5kt5WtvDTHE2z
+         RbD7U06sXJnaA5xwT7k7RceVBS9k5+lkbbTDCPH4allbim+M/ufSKHWc1+UGuqfUj6YW
+         /gIQ==
+X-Gm-Message-State: AOJu0YysYXwumbloWj/NBn2S3b/8+mfPpIvukM2Zz4UAfmurnGpmXmZa
+	AHbMqUrnQ+HwDdoJdM+vCYuGSOVDGz4j7DdYdNudBQY/T23BgTe4kmEz
+X-Gm-Gg: Acq92OEWWKpiX+YgMpXhvu9iAvNOZDf20xFD7ugumxucscie3t0niFMy2q7OdhtHSTS
+	/RB+8cqP5jtkByD5iuv3JbWJog/U+ixSmXkU1ZJqtqS2axP70hDudxPHxauAF//+KvQ+TGpQ8KD
+	Xfc4eZ5FKq+AGj5oQsE2EBSYIcdcsKRObE4UVLgFiGZv1NjU1Q7CifBU396lmO+R8yDC6ZWTsYl
+	p8eTaSRPSSTnidbYxQvyfn940urg7nDFfnEqcBshhr47Ae2pj4ITwRf4UTjJKqz1+yNft/X+nMr
+	sTMcFwFNBX5NxYjlC7BE5Es6MoCB60aIxt95uI+aILgnqwPhbkqTSAB0WtgxJwireDsws/pULDw
+	sX+nM8GrgG21S0Xqve1ZaqEZ7CUT+oIeZweplg7ARpy7J7T/AYlBYGMTekzVHhmMskXNSrrE5VD
+	AE/zI1qOyiUXn2vFF4X5WDjDjatn02iLL8J+A5IJv8j8LQyeXWH25Z5WYL2o+w/uo=
+X-Received: by 2002:a05:6102:32c7:b0:632:8eb6:7a1d with SMTP id ada2fe7eead31-6c6990c0f75mr5702072137.9.1780351471391;
+        Mon, 01 Jun 2026 15:04:31 -0700 (PDT)
 Received: from smtpclient.apple ([189.62.148.96])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-599d4754259sm8394393e0c.7.2026.06.01.14.58.47
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-963aba249f0sm7147132241.3.2026.06.01.15.04.28
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 Jun 2026 14:58:50 -0700 (PDT)
+        Mon, 01 Jun 2026 15:04:30 -0700 (PDT)
 Content-Type: text/plain;
 	charset=us-ascii
 Precedence: bulk
@@ -65,11 +65,10 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [GSoC][PATCH 4/4] repo: add path.commondir with absolute and
- relative suffix formatting
+Subject: Re: [GSoC][PATCH 0/4] teach git repo info to handle path keys
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20260601151950.30686-5-jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 1 Jun 2026 18:58:35 -0300
+In-Reply-To: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 1 Jun 2026 19:04:16 -0300
 Cc: git@vger.kernel.org,
  jltobler@gmail.com,
  gitster@pobox.com,
@@ -77,36 +76,15 @@ Cc: git@vger.kernel.org,
  sandals@crustytoothpaste.net,
  kumarayushjha123@gmail.com,
  a3205153416@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <81475C6C-3E0F-492D-BC20-45518BC00FE8@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <921ED129-FFFD-4F40-9232-EDD3621EBEF9@gmail.com>
 References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260601151950.30686-5-jayatheerthkulkarni2005@gmail.com>
 To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 X-Mailer: Apple Mail (2.3864.600.51.1.1)
 
+Nitpick: use [GSoC PATCH] instead of [GSoC][PATCH] as prefix.
+Use --subject-prefix='GSoC PATCH' in git-send-email or
+git-format-patch or set the configuration variable
+`format.subjectPrefix` to that until you finish your GSoC:
 
-> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-> index 7c7dfbb052..dd2706e1f7 100755
-> --- a/t/t1900-repo-info.sh
-> +++ b/t/t1900-repo-info.sh
-> @@ -184,6 +184,7 @@ test_expect_success 'setup test repository layout =
-for path fields' '
-> mkdir -p test-repo/sub
-> '
->=20
-> +test_repo_info_path 'commondir' '../.git'
-> test_repo_info_path 'gitdir' '../.git'
-
-I was thinking here, maybe you need to take a look at
-git-rev-parse's tests and check what are the corner cases.
-
-For example, `git rev-parse --git-common-dir` documentation
-says:
-
-    --git-common-dir:
-        Show $GIT_COMMON_DIR if defined, else $GIT_DIR
-
-This way, you should take a look on how git-rev-parse tests
-test those two cases (GIT_COMMON_DIR and GIT_DIR) and do
-something similar here.
-
+$ git config --local format.subjectPrefix 'GSoC PATCH'
