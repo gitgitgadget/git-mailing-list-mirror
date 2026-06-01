@@ -1,78 +1,80 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D733538838A
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 07:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869BE2F12AB
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 07:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780300567; cv=none; b=HnL7czL4DXgaqrilFiaGm6FCEclnJDCZCF5xfMkm1uECXFMC73+W/ssiUHjYBLybvlxbhSFW22/ZL+I1IJUw3yL4cwP7ng97xc2Ky0elTfQzDzp3caEKRn9xaNIx3HyDhLvkO40yFkUxHuvou4faEIXjjQtSBKTIEuQQHm5sndc=
+	t=1780300567; cv=none; b=SmAccVYmOGznrmjCM5qYUmuzE58vHovggkGjdhC1se/0phogLmeYGNRK+hHRenss6QELLnTtatd37MAYKtHG+hyOLoZ+PIJ+I18wB0wYxFT3NQvWtBnzNmZ9GkhhPBJhviaC8Xj6HOvuK9Efd5Nf/7xhqyovyNnNqEsbEOE6rAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780300567; c=relaxed/simple;
-	bh=WNRtes65jhA8FWY4CeWwHFo6duOSMy0W6Ym7QLKTOgU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=SEZLmnd3SyMofN8b5Kbvrhel6nuUJeNeGJwIIzcF7MRHaUWsJmOvLpeP9JyH+t1bYCV5GyJH8t2SWsqnrskAn47FirJgQDoHsUO/ajfpRCWvgGQkvznn/GddxvK+RrYmxNfbvjZFLkr03W3NTao+jFOzBM1U3W720yINC+ObFag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tKFRkkSu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IuF5tCxR; arc=none smtp.client-ip=103.168.172.157
+	bh=luNiln/onyFrXC3PoTJHltB3ztkLuH8KD6JhAncE9mI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=XDhNjUawbSUl+VUwgXxGLEg5AAK+vgw7KYEmu+ecy7g/ZtW+5D/eexg7PDw6a8ySKSx5irny+9Ykjg7xUPxaLsAXH6IAf128oTPrMpVp/zbJPnN7WryB+gxonVL3yKj7Go8d6lUyJppwCD/udiGD85Sfy5JZqG7OHc8tlZiPC9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rahxcDWR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PE731U2d; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tKFRkkSu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IuF5tCxR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rahxcDWR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PE731U2d"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 210B514000CF
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D394914000D0
 	for <git@vger.kernel.org>; Mon,  1 Jun 2026 03:56:05 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
   by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 03:56:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1780300565; x=1780386965; bh=XEN6hJsl5T
-	XyvSlpgAY1T2Y/Cw5ORZV+yPYS0H2XcdY=; b=tKFRkkSuTY0WfwQsouxDPsYM4N
-	9CCnsBEWE8hBPzfi/UkvSV75A/p7BmFFEUx3Sm128SIIKnmM3W80TxzfRMp+6YiF
-	HJ2Gw9IYMrvwTmivXX7YW3EQBNd56GR86RxMtfSc4utjg9AFccT3Iysy7Mloy4gQ
-	98p7YI7TCfn6n1uILBOhzZL6BUcuB1UahB0PAVGupoYC9J5qp5c6mobTi11bKAL7
-	YgMfTJJhE/bDvG+4pYyoNUhq529ARbHFQjFk8Ng9M/twuon168ecXytRzF/Gj9js
-	ZSyHj9xv3kRLXXs4R7i8/UCkGh79A5CKrQyQYtWLwJB9bb1PVTWoQnsPHSEA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780300565;
+	 x=1780386965; bh=q+YSE7orbKKzUmzSEKA2AKZsW1sMKAZ9SirdMSRlOL8=; b=
+	rahxcDWRHC7J+1K18XdJOfCgwONxaUPGugmQIY54HSNmY8SqFhp4L5IfMi7NGIEO
+	meeteOaTB3v02Y4dAFYw3EM5woBZBBLbwZLdMo4LPR8hMLHd8YWRTiVbBsq7KKo3
+	pMkOXrAGN+AXqit4NlhwQWotExPdMV3u6VYvozCTGXkc3Mg1Udt9YoAfotvUKTE/
+	vXfT9RLP9gKWVyPy9taLdCsBt9b/iOopFJX5PYwHd0rR9fsa9EUeRchMn+IZmOvY
+	XktVKZzKIukwYTg2VSXERMTvd5aVsxHwQSjRvrD1qgrw16eCXFqAw2SRV1pDD8i0
+	Dtz3pZlcbPDhEFC1q/iTRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1780300565; x=1780386965; bh=XEN6hJsl5TXyvSlpgAY1T2Y/Cw5O
-	RZV+yPYS0H2XcdY=; b=IuF5tCxRkO77D2AiBoIMZFqJ82nG5SWtxxXsrEmsd/V2
-	tW8GUjI3eQU+/DfF79TnZpsLky79GT/2yzS9qPOGegaTUdQmejFAQntxQMCIS+83
-	YrQTHiC2cxKvmsRCjla3RUIFxVaziz0Hf7EkPN1Wa1DJpZiSQncQfUMYFTJSqVMg
-	dFcoqTZGl6UhiUCADAnmn9iqtJn9QeFAfYeXHvVuIyF1aPbeE3aePROg8KSlcsKt
-	A03H1+2G0KgLvhiW7uISDFXQtsdOfz6EaiOkOU7u+R6DAYcA4HhSZ4QEyhfFTK+/
-	RlvYSIul3aGWfwrzJBLGY1St5FV8FNgdz1+NEZdhxg==
-X-ME-Sender: <xms:FTsdatUUiyy5HTOL-CV127jqcF-G6MMp4h_HuDbZZau-p91HbS4JUA>
-    <xme:FTsdakhR63wseaEZSb1ZfxuHtM5Eq8TuL7Rs2eB4D-zcPkzEphKfia-aUw0XLsR-c
-    uLD9wJHQQZUhmjXWW4D68wpXj_uzWgCWRFIztPlqC4OQonBDZXZig>
-X-ME-Received: <xmr:FTsdavC2unVQNp9ECZkT8bkoc_T2oTXeS3SwUbrXynMA8iu0PWbr-ukgmB4u6T50XHOhM-gN3UEctv2Etf3rBGczykc00FYSgLSabuYxm1zT>
-X-ME-Proxy-Cause: dmFkZTE5ljiuiek7x1YteN42RnVk+bpStIfYV9LngajjWAMtm8sNZU3BVrSsCGWNMCk5hA
-    Vet8KZJ6tUFjogEJiI3Vx9a39Kp663eXLtCjB6TwZzF2Mtc1tlu6ac7EWjT2Dy/Cwgr597
-    wNuKuLLGZOLpiq48wWvft8BIq57pScvNttloaQAnUjJOiB1IkSvSbZO5AqrB07Odkw9N1l
-    RjfhOLCNctFw4mjgyKbUwIqPJBo8f600zbx92jTdSr+Whw0hWW589u2x4tOAX1DLkinI6Q
-    QSSaBGxVuZLv5Nhu0+hxaC2+F9/xFBJ6tjjA+Vp8Qp6FV26TIuFG5EkvwFFVat62PDj6N5
-    GiiVzkSnGI5h/RI3c0asru4ZVbO52n1NfIooS61tHDLdrCzk0tgeNBxSto9iPLPIl/tN0S
-    G9WdqxTgY5DXazAqwlGmDUeKm5ud3uVnZ4P9aMKPS4X2anvyrwR82J8HhKZdOLmG9mLoNh
-    04GowUa5cG/gIpfhfxkcXL3Ks26yjFuiL5q311wopIMJMnKALyQidvzgfZo3JEKC7rzZHC
-    PUbjpNu9n7veBXdFEo22ndw8QeUskRlL9yJ8H0jMvbCjPsoHupLI3NByEErwDYekGp8+mg
-    ZJWjLPqNuVv1XECjyvnZdRdUO7BQHCqSztVk8WCWMhMEkZ1lTsTguEb58rWg
-X-ME-Proxy: <xmx:FTsdalcFkQ5Ej7ypq8i1r21NPPmx7EBrqMVKPDJC_jtduGJmMWH3HA>
-    <xmx:FTsdandl5H1EbAm87ZW71KCi5awWSb0PBUqFq9pNR3xVFAWkZ5jamQ>
-    <xmx:FTsdapgKx0rpSvCoL2TTjraSFXPEw_YvCwflqF80q1Cu8BQM90sBEA>
-    <xmx:FTsdajQcY02H819RcFZOWpgAIAjfndKxeQDwf6mK4HGJr-YnGtIrLQ>
-    <xmx:FTsdaolYPUJt4gk57e-ldZ7JQUh9J4FPkz8gYQdZVqNlCctfk_r9LYj5>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780300565; x=
+	1780386965; bh=q+YSE7orbKKzUmzSEKA2AKZsW1sMKAZ9SirdMSRlOL8=; b=P
+	E731U2ddZ/Mq+77e9VWhqrO47UrQP4RYIi3RcEH2AmMNTZfLwGouddbsw7zuncEh
+	hnbhwTQbAnBl7eTV84i/M7UjtGjyaMYulhUcs9PW/omlhJoTyrN4P3djgQwd1Amd
+	wPt7zW9sjXLhqVevSjQOC7vS7KHTsOUSvqaN6X7+4OkvzARx1nrhh1LAiD/+bL0D
+	fYsBUFkz7oI+SzZpUmgdDJ+IFCZDYO2U9BxmaS6wniANEHyBTn/3ECds0ksxiDfg
+	BlPlDcZnlQhV3U7iFCdH0BFoilTPo8wqOQ2HGzQDGOvBYHzWB79rj2zKIqXuhEQq
+	7O2pwalnZaMXBUXdtV5qw==
+X-ME-Sender: <xms:FTsdaqHB2IEnQnEcjd5TEwAuk4_e2pwvmluFJbXs5RSjx3nSD6aXrg>
+    <xme:FTsdaiQsTczbtnk8CznyvZfWAxO0mGU-PYonrX_dXoFl5_Lfhe9l3qGUDsRD96CJJ
+    SIQqoGVm1OuH0KVSo-67GslAfFSYZ3u9V0MTnQKbS7dJi_hw_lK5w>
+X-ME-Received: <xmr:FTsdapyO1rfBN6tqFa_p1LjULpbOsz9Uu2HYc08B1Uaov0FOXCWCcKZpSst5jw0uvcKFRdmmm1UjidY9aQBIqGidGRBjOAekGQxYMxMgRIOl>
+X-ME-Proxy-Cause: dmFkZTF6uj/IYYPzUFJnl4nqFgUTilnPbbuhpfNwnTch6Rw3kNDNwIUSCPRkTUrVx+97ut
+    Nh4mqMh0tc5/L5EFrIse4f5gNz/2WJe88uVk2S1gzZWw7UAuIilnO8glWqDstSEKZJDwFt
+    pJbC5Dh1rdbJ5N5dAo3YkfQLAk9sy0yR2kLtpi+6LbkYfgLL4tyVJ1k8WRoX7dGMPorar0
+    dVawh9ufGInx0PGd0I4P/eWth+Xu0Rrm/uRBI1iRBhecIbwuZDGLo2c/2YJpaToo18lYtI
+    7f2ulHtiMqKakf7/nGBhj51BVmttmFWl7RnLNDAPK16jri+WMsTzatSihBIlIHV4MgR6M4
+    dCdVfOO4fR7B10UvvHyp8lj/si0eHVqO/Y+UmCw3IKuGjJZxwTwxEQArEUIK9lg9hrVKo9
+    GqCoKDxgcoA+xfVkPR3QzSC9H8yMA47zz+exIV2xlnS+49wOfZzEj4d5o5ybMSzhrqh6ru
+    CZZn8yfLu3hc6VzA/qtvs1wHds6wpU/ZxDCBjSZNQqo7HH3akDFVEO5E/jSdGqogUicPSt
+    WldXkjlkHbMIdrmE1JFstFg1xO9moggSewnBPJuRF5rCYN6vB9HLHI2ZFtqQ4X7wFU00jH
+    TwDCj/rqXSavl9SBdia0hyk3ZCWpKcJHECGB23flxOD6D3JHKSM7zCmHms1Q
+X-ME-Proxy: <xmx:FTsdapNhwDJyGAmeO27eVE1emCt6Xlx22mQouyo9Nj4VEUwQv5ec5A>
+    <xmx:FTsdagOTPIJLoElRETV-JnkAszZZLhuZI_fOL02FMJue0lbBGqo5Eg>
+    <xmx:FTsdajQ3TsJqb_49lpAGkgzwnnZG59GWHvh386EFIFi8QBuBIKk6-w>
+    <xmx:FTsdaqBC1QtRGsvmKOywbbKMUBOjk1iJYqPJPelgbTNHx6d3djtYIw>
+    <xmx:FTsdasU7LBxA7MQVO5YhUyzPSjYEDzu13sNfY_ioq8p8xRgifCGF_4HC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 1 Jun 2026 03:56:04 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 1 Jun 2026 03:56:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 57f898bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 7d198d60 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 1 Jun 2026 07:56:02 +0000 (UTC)
+	Mon, 1 Jun 2026 07:56:04 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/2] Deprecate git-init-db(1) alias
-Date: Mon, 01 Jun 2026 09:55:58 +0200
-Message-Id: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
+Date: Mon, 01 Jun 2026 09:55:59 +0200
+Subject: [PATCH 1/2] builtin/init-db: rename to "builtin/init.c"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,41 +83,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAA47HWoC/yWM0QqCQBBFf0Xm2YFVwqxfCR/c3atNwSY7WwTiv
- zvZy4UD95yVFFmgdK1WyviIyisZNHVF4T6mGSzRmFrXdq5zDS9P5YglI4wFPEthSTbRc3Do43n
- q/eUEMt8+k3yP9m34s779A6H8grRtO0YbfKN9AAAA
-X-Change-ID: 20260601-pks-deprecate-git-init-db-c0e8d7f8b94e
+Message-Id: <20260601-pks-deprecate-git-init-db-v1-1-ea3e6eebe674@pks.im>
+References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
+In-Reply-To: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+Rename "builtin/init-db.c" to "builtin/init.c" to match the modern
+git-init(1) command name instead of its ancient alias git-init-db(1).
 
-this small patch series deprecates the git-init-db(1) alias in favor of
-git-init(1).
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      builtin/init-db: rename to "builtin/init.c"
-      builtin/init-db: deprecate alias for git-init(1)
+ Makefile                      | 4 ++--
+ builtin.h                     | 2 +-
+ builtin/{init-db.c => init.c} | 8 ++++----
+ git.c                         | 4 ++--
+ meson.build                   | 2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
- Documentation/BreakingChanges.adoc | 3 +++
- Documentation/Makefile             | 1 +
- Documentation/git-init-db.adoc     | 5 +++++
- Documentation/meson.build          | 2 +-
- Makefile                           | 4 ++--
- builtin.h                          | 2 +-
- builtin/{init-db.c => init.c}      | 8 ++++----
- git.c                              | 6 ++++--
- meson.build                        | 2 +-
- t/t5502-quickfetch.sh              | 4 ++--
- t/t5503-tagfollow.sh               | 2 +-
- 11 files changed, 25 insertions(+), 14 deletions(-)
+diff --git a/Makefile b/Makefile
+index b31ecb0756..b03f74ee8c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -894,7 +894,7 @@ BUILT_INS += git-cherry-pick$X
+ BUILT_INS += git-format-patch$X
+ BUILT_INS += git-format-rev$X
+ BUILT_INS += git-fsck-objects$X
+-BUILT_INS += git-init$X
++BUILT_INS += git-init-db$X
+ BUILT_INS += git-maintenance$X
+ BUILT_INS += git-merge-subtree$X
+ BUILT_INS += git-restore$X
+@@ -1428,7 +1428,7 @@ BUILTIN_OBJS += builtin/help.o
+ BUILTIN_OBJS += builtin/history.o
+ BUILTIN_OBJS += builtin/hook.o
+ BUILTIN_OBJS += builtin/index-pack.o
+-BUILTIN_OBJS += builtin/init-db.o
++BUILTIN_OBJS += builtin/init.o
+ BUILTIN_OBJS += builtin/interpret-trailers.o
+ BUILTIN_OBJS += builtin/last-modified.o
+ BUILTIN_OBJS += builtin/log.o
+diff --git a/builtin.h b/builtin.h
+index 4e47a4ebd3..bd072aa0e4 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -200,7 +200,7 @@ int cmd_help(int argc, const char **argv, const char *prefix, struct repository
+ int cmd_history(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_hook(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_index_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
+-int cmd_init_db(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_init(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_last_modified(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_log_reflog(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git a/builtin/init-db.c b/builtin/init.c
+similarity index 98%
+rename from builtin/init-db.c
+rename to builtin/init.c
+index c55517ad94..9184f2fc2c 100644
+--- a/builtin/init-db.c
++++ b/builtin/init.c
+@@ -69,10 +69,10 @@ static const char *const init_db_usage[] = {
+  * On the other hand, it might just make lookup slower and messier. You
+  * be the judge.  The default case is to have one DB per managed directory.
+  */
+-int cmd_init_db(int argc,
+-		const char **argv,
+-		const char *prefix,
+-		struct repository *repo UNUSED)
++int cmd_init(int argc,
++	     const char **argv,
++	     const char *prefix,
++	     struct repository *repo UNUSED)
+ {
+ 	char *git_dir;
+ 	const char *real_git_dir = NULL;
+diff --git a/git.c b/git.c
+index 36f08891ef..a72394b599 100644
+--- a/git.c
++++ b/git.c
+@@ -590,8 +590,8 @@ static struct cmd_struct commands[] = {
+ 	{ "history", cmd_history, RUN_SETUP },
+ 	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
+-	{ "init", cmd_init_db },
+-	{ "init-db", cmd_init_db },
++	{ "init", cmd_init },
++	{ "init-db", cmd_init },
+ 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+ 	{ "last-modified", cmd_last_modified, RUN_SETUP },
+ 	{ "log", cmd_log, RUN_SETUP },
+diff --git a/meson.build b/meson.build
+index 064fe2e2f1..682e46e7eb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -634,7 +634,7 @@ builtin_sources = [
+   'builtin/history.c',
+   'builtin/hook.c',
+   'builtin/index-pack.c',
+-  'builtin/init-db.c',
++  'builtin/init.c',
+   'builtin/interpret-trailers.c',
+   'builtin/last-modified.c',
+   'builtin/log.c',
 
-
----
-base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
-change-id: 20260601-pks-deprecate-git-init-db-c0e8d7f8b94e
+-- 
+2.54.0.926.g75ba10bac6.dirty
 
