@@ -1,178 +1,179 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEC8333442
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 06:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780294931; cv=pass; b=ZXrdh4Bue5FP2cKllRrSCLBP3mau5vO6sn49jJvzjG3g/agTRtQyT5efZGl4gbkAS2cAGusHo542VMLfEjVmYVFOLhSZOpOiY2XQaAcVTaPOvn/k814okuqVmb3pfGPf/67EhntT9QpXysZGPe7hjj6PFCQ9jnZVv7ceJTj/7mM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780294931; c=relaxed/simple;
-	bh=iHoA955OXkIByIQfGJd1HK5WmbwxLRUmfGKX83qVWTc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gsUab2OGpXM8rcjMp/ezVaqd3RxcGEM9QHLLkkwkb/yUXHpS4gLuAYhAZ1BYedjbqwz3TFJhG4rHt1hXSCt29aEftfcT1IOqo/e9dVcSU+iFuJj00MIymUpJ/QMZLz6ipcCtE4627S6prpqCkWedBr6hD09SpMACkP5C27cZPlQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=iS6nkLTL; arc=pass smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C27935F609
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 06:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780296198; cv=none; b=Y8anWPYFXwZ/g4AN1Wahgbl5ltjNP5DRkMuX86RYxRMm33iEEaQ/Xun0ZpGfMz41Nw389peCaLE39KzerHeQEiCqOFjeIUQUqJHPuYExTYlrmkNn3VCiBttSyf5gqy8BjxH6Xioe4YuEwegtRTwsWixJbCUnoj7gP6okamKr3kE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780296198; c=relaxed/simple;
+	bh=CzVDCbG5dmf/d7U5W4oo5ys7fByxKh8gxzAP8rj5Sg0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IuAcDtYe+yfSjmryX0mo+xL9NQStWaP+A5PrUGGOavggbLxWLq0WhGkiwY2W/Q3HjvyTw9ue8sLD/MR0ibWBEzzu2aunpmJyMHrds7g62zAQICppmzSaEE1JqXoGjtKI8gvjCRm337kFPeX2r6ql2rHo1uZvbRwYqxQM5j395UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QfPhw9BZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KVT3lPIq; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="iS6nkLTL"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7e0743942f8so15337327b3.3
-        for <git@vger.kernel.org>; Sun, 31 May 2026 23:22:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780294928; cv=none;
-        d=google.com; s=arc-20240605;
-        b=U1cVktgrtBWZbOaGaAGcSIc8Wx4GyZ7CsvcbKfcmJx+PwPAmQZ3pn6DcQhdGE7BLn4
-         fNLf2j38Di+ljM50SJqRDE99WjmbUNY8oK5VzkZYSbKiPgy5q4bIQIScTFHTU1QaYhI9
-         D3vgWeccNtWMbNcflm/GA3ztejVQI9d8zkwWyqaGWE5F0uLCqUxxOeYslkA+TLcRx6+L
-         P7xVb0liJppfv4rjwGw4VPqpZ73FwBsn9lPleNUFbyxqVpyqTSCGe70QMgVsKIVhGCWq
-         7M22TOqrvHYOuDtIxyZQSXF//apFAoG7kmwfnYQKetmTydlwTAGN23e8SRAuinK+Z03e
-         UUuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=LEhDTKt55baA3xXzMcwuC5gkMpkVMVG1jzqtdunYRSM=;
-        fh=TwUH4qqgl302VFr4cdaVc5BFXxUUsZGNnufZ99y2WJQ=;
-        b=id+cy8HccEjhU4ROJ/UoJiVaMb3X9ST5DLiJ9YxXzDMifYPpteBVT3lYEVdTSV0PFh
-         RP6W2khdHiZMudyFvjoOx/p4voI5GU1tPSojkzBBEJ8dKxkPOAydBX/VrxoNeTR/arlk
-         m3yNs8crNBUtfn/gebEMpH4lNuuNRL/pNPxbUqAQbn9bUTvfbgRY3+EZy30lK9Kugq71
-         GNjLeObJ5VYDpITDky86X/ceWrjbxW43RVRd5nlaDwI/QRoNLNBjkmBaXK9H9JJPZm/B
-         BVcAtO2l4Gg2U337fAsgIowp8fNc1DT//lz4tagZ6IIqiEksQw2OOsapZNW8E/6cK2Q4
-         DtDw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1780294928; x=1780899728; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LEhDTKt55baA3xXzMcwuC5gkMpkVMVG1jzqtdunYRSM=;
-        b=iS6nkLTL20Sjm/ujpka0q9TTrjeP3sP1+kU+yFzeula2hJM2BXTZaSmxtaJP/3nXcD
-         t59CqYVmE1XccLYGDmAEfz+wEBkL2ychlIejTqn7JbSdpAel1uzn0MVfDk0mstHiWi/F
-         cIprAUaRu8lvAjxtbvN+drmpfyk2xtNAV2jV0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780294928; x=1780899728;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LEhDTKt55baA3xXzMcwuC5gkMpkVMVG1jzqtdunYRSM=;
-        b=eUqHjk00wMKN3dahgl43pCbgvFfFhc8YOcERkNy4JLwkLRmJKAJy9f8PvQ/ykWwBMG
-         l3v2h5ZtIFA8wHziFWEAqWS5yQZglAk/E5PQlQVDLWRgfhRcRtvGKIP96AfQpT9zEit7
-         ft7eJSzkZUbHtv5MW9yWva2SU8Sji7ge2lec0W8JNHi1x+9z3XH/fGT4sfXMO4bTVu8U
-         HJ7GzJ8QKJF26lXQFtrjMgZTYk74uShmtsFwOhKIBZQigQsg15PYBlrPoWuKxB+X7QWy
-         6v6h8EzkhxLLmqf+Cb0+XH1TErziBKfECWRXewNG6sdFGnLdDB05WIpZXkFzMxpUpQte
-         xExw==
-X-Forwarded-Encrypted: i=1; AFNElJ8/Fq+IFhEQFRjnXukI86wdxznujMPfqBgaeIZm4AhTB+GMjQshxktCSEOcCeEDhEn1wpI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6SlnJSn3AyiAiB/MDd6oHiMScn/IlFE5LQrVZcFnYANCSfcmf
-	SFH8Jcque1B1hlAoKOK8vo237tcP2vgxG+/M+rrr+4zdwxJ822QIYiO8Knj5eyaUqYv9aPZ3Wdj
-	dsQlMkDqsjLCEK8loEm7qNi4HmmucOCnBoYGslWYywpU4JpGIH+gtnBAx9w==
-X-Gm-Gg: Acq92OF7wld30KN1uZDlTFRbgwRYuGyfGaEIFyp13F8enTAS6oXrxjtEpbYgfK2Nrqn
-	FiPbHZL7KNIcNsh3tlEaAYIX/pcZ3MN8QM3HotfMCU7uZGs5JV3K2hxIiw9MLWhS/ZlKSn40dhC
-	ZcMIG9fPzC66/6T0XRuvtIT/8BbrIQe5dx1hV9GOhQyMnetCXd77WyfRT9GrWhEgCgsKJgGiXCc
-	Om2TR6FSN1YhCymRsfzro2nuTYG2yaEo8btPiqLPi1nOl19rKfEqKLiiO/9eiY7syXcHL02JyI6
-	whBN1o0zqGnhdHTXhA==
-X-Received: by 2002:a05:690c:6c04:b0:7dd:26df:54e0 with SMTP id
- 00721157ae682-7e0586662bcmr80436117b3.6.1780294928287; Sun, 31 May 2026
- 23:22:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QfPhw9BZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KVT3lPIq"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1330A1D00268;
+	Mon,  1 Jun 2026 02:43:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 02:43:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780296194; x=1780382594; bh=ubti8wtZWe
+	znfNUZY1QdTlbeZNrBNZGH8mjyn6ZT360=; b=QfPhw9BZOTs8xpI11wjqh7/7E7
+	RDAUFiPX2+h5Z4TXdp2dwSDgB+XKnZVEkk2Jq6IYTd7RfhvbarRPzni8/ul0qHqZ
+	bxCK7fUwXz4QHIiCU5uGixuvLv/xk/HHxgfr1ZvjnilnWr63qjPhAIFm58pMjGvP
+	rCt4ypnwHmwhCP2I5lZ9oer9KniHMQTEhFMNBCxma1hALjeSUwRIGw5Ml6rC74WV
+	VAkox+CVj4gABPDUCUrbHhbczgDPqcjGWQAJtHiqDtB8MwrAZYKlIxOK6kJBxuRw
+	ACwFeBmsMxFEc43R7l9NJcXLkd9FL79oquNorNWlZdAgn4XwACEJyNBzPn3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780296194; x=1780382594; bh=ubti8wtZWeznfNUZY1QdTlbeZNrBNZGH8mj
+	yn6ZT360=; b=KVT3lPIqoM8pKKlZe443dM8wJC1RYli7cD0tc86WYuFNxZTgXDu
+	+wJ5Q3wgSirhAmu/sU5OzMPT5C2kF+1+Z+vtdtzR9b4EhAlbrOh/llzBcZHwY01A
+	Zllodq+IN/VB7+R08LXvxyVAkqRuT2RS3Ad1QHbeBORl1FkJ2tOOxsjaiphhzLDd
+	WnEK7lMFPYbFQTUd+p4z/vqbaIJt/eMVrxFXlBpNZWIAcgbhbLy908036dGbTxQA
+	MoubHKnd4vxXsaM7+ewmoG8GgkzLjwri/Q2MpiwB+UX/iOQ0d18+VtkxmsuGQTya
+	XzcGy+lY1bPxHz3NEfT+7kDdQbqWKrmW+ZA==
+X-ME-Sender: <xms:AiodainuOkjRuTMYK_5SGtTUFBgyYG-uLN24NH12E88ykmFtFK0WDA>
+    <xme:Aiodag3-CjIuIplbtxj9EHmbe2h6UQBxbmPQaxyXC7J2ZWNHQ_Y1FPrfkgA5cgVI5
+    PzEZY2QcqbXDswr-mE21L3Bz3Cv_fyAz5c3Az_2Zid4ukMUl7LN1Q>
+X-ME-Received: <xmr:Aiodalrn0xY_CuaJjQVgocYMDAfdnUtfOk2-Y0TKeWOslN6fuJQmQB51HAhmiYkyP9FGI_S_5pm6vxxXU41-73hX4F0DZepqNx9T>
+X-ME-Proxy-Cause: dmFkZTFtgnrwG50RKBJH/AFxO/K9pwxOUuWGW6DpoOY7N0uVYX1EPJOTzB8aKunuVgf6xL
+    Px4ZN2aELXxfj5+zXzZnvb47hQY2WcdM3ke3MJMemWxv9rkyLnoVzNIPWuWjIRc2ghs+fM
+    ++xrh0EC6vzvOBIejLQZTAjRzfm7RCEayUJfGcESzYxfKwx4/TINmnZFHoKpY2VBUk+/5J
+    o8zlMa0QJgJXcz+7Kpk7gnQSekYDCQ5rQzT1tMMUD5ciYFqsyw+Y6SV7xko9Acslt8cGNw
+    ykdRyjsaymeSPxvfnbe6IA4Hx+MC+dO/DVXyEoFbmGycJJ1Mf0ARfp3WoDPB+K9VFA68sf
+    Uwjh2aignydr9Sv8dzcBVEDRd9KdNE/uCDs1vcJeRwWqs5o8uIXKPBKGMZvkb2IeMxsTOv
+    3mUWa5N6Az4BSv+qpuC1P6MqRNj1Ho6KaZ8HyI8sMeiALxIX2w7TiHWq0bAOwk6VFKk86Z
+    OaCeOSt9bjDsb0Ser3mCfNye6C+YVOeb4AWhNwmM8iYmd9TzXVM2R2UO/AjlnP89bbwefE
+    2G3p0KUS7r+rEWE3Vs2brHki9Xe9L2bVC1s5+WMCJdzxV40B51PB5+BR5oJtVkKfG7SKLa
+    oDZOE85TjbS/9dSggACd+X5erK1Ep6dyekgoqAu8HB5tmJAWYFMCrXdXegyw
+X-ME-Proxy: <xmx:AiodaldrLEaTQ5Ahq5xVDRfejYZZe6Tqu3UJt9g2E1A5Xv68eeOAcQ>
+    <xmx:AiodasoTz9zLgBzzhDRSB52RDX_H-1unAcdubxKZl8ki8KKjCCW-LA>
+    <xmx:AiodauE2wci8vuJ8_Bi11eng7gUzlvcuCjNi20AvuaHkbguqrTfh6g>
+    <xmx:AiodakuX6U6vawh6vgyDVjK6tZ7V5J9ajT3NhPrjG8cRsgzLg0NUsQ>
+    <xmx:AiodahICBtdsb2OyOeSb5Mn_gYw2FXfS0gdg8oLWRoIvQvVSC9zdYodc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 1 Jun 2026 02:43:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>
+Subject: Re: [PATCH] sub-process: use gentle handshake to avoid die() on
+ startup failure
+In-Reply-To: <pull.2133.git.1780287309846.gitgitgadget@gmail.com> (Michael
+	Montalbo via GitGitGadget's message of "Mon, 01 Jun 2026 04:15:09
+	+0000")
+References: <pull.2133.git.1780287309846.gitgitgadget@gmail.com>
+Date: Mon, 01 Jun 2026 15:43:13 +0900
+Message-ID: <xmqqo6hu92wu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2132.git.1780250236304.gitgitgadget@gmail.com> <xmqq5x42aipu.fsf@gitster.g>
-In-Reply-To: <xmqq5x42aipu.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Mon, 1 Jun 2026 08:21:57 +0200
-X-Gm-Features: AVHnY4L1Gyb4j-I3HNb13FbzA3NWROcWcFc7ROOvjl8jw97DW_3UbkHAE9WLd3Y
-Message-ID: <CAL71e4PjZz-BLpRzXd9MXnoWzHHGHzTYyGw0xM9ntg+iRATN2Q@mail.gmail.com>
-Subject: Re: [PATCH] prio-queue: use cascade-down sift for faster extract-min
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Thanks for the quick and very valid feedback! I already started
-investigating - I think I was too quick (and wrong) when I reasoned
-about the replace operation.I will rework it a bit and come back with
-a patch version 2 soon that ensures that neither get and replace have
-regressed in any way.
+"Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-- Kristofer
+> diff --git a/sub-process.c b/sub-process.c
+> index 83bf0a0e82..22c68bd10d 100644
+> --- a/sub-process.c
+> +++ b/sub-process.c
+> @@ -132,18 +132,19 @@ static int handshake_version(struct child_process *process,
+>  	if (packet_flush_gently(process->in))
+>  		return error("Could not write flush packet");
+>  
+> -	if (!(line = packet_read_line(process->out, NULL)) ||
+> +	if (packet_read_line_gently(process->out, NULL, &line) <= 0 ||
+>  	    !skip_prefix(line, welcome_prefix, &p) ||
+>  	    strcmp(p, "-server"))
+>  		return error("Unexpected line '%s', expected %s-server",
+>  			     line ? line : "<flush packet>", welcome_prefix);
 
-On Mon, 1 Jun 2026 at 08:16, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > diff --git a/prio-queue.c b/prio-queue.c
-> > index 9748528ce6..18005c43c4 100644
-> > --- a/prio-queue.c
-> > +++ b/prio-queue.c
-> > @@ -62,17 +62,21 @@ static void sift_down_root(struct prio_queue *queue)
-> >  {
-> >       size_t ix, child;
-> >
-> > -     /* Push down the one at the root */
-> > -     for (ix = 0; ix * 2 + 1 < queue->nr; ix = child) {
-> > -             child = ix * 2 + 1; /* left */
-> > +     for (ix = 0; (child = ix * 2 + 1) < queue->nr; ix = child) {
-> >               if (child + 1 < queue->nr &&
-> >                   compare(queue, child, child + 1) >= 0)
-> >                       child++; /* use right child */
-> > +             queue->array[ix] = queue->array[child];
-> > +     }
-> >
-> > -             if (compare(queue, ix, child) <= 0)
-> > +     /* Place queue->array[queue->nr] (left by caller) and sift up. */
-> > +     queue->array[ix] = queue->array[queue->nr];
->
-> Here we always sift/bubble up the last element.
->
-> I am wondering if it makes sense to teach sift_down_root to take an
-> extra argument, "struct prio_queue_entry entry" (passed by value)
-> and sift/bubble it up, not always queue->array[queue->nr], and ...
->
-> > +     while (ix) {
-> > +             size_t parent = (ix - 1) / 2;
-> > +             if (compare(queue, parent, ix) <= 0)
-> >                       break;
-> > -
-> > -             swap(queue, child, ix);
-> > +             swap(queue, parent, ix);
-> > +             ix = parent;
-> >       }
-> >  }
-> >
-> > @@ -89,7 +93,6 @@ void *prio_queue_get(struct prio_queue *queue)
-> >       if (!--queue->nr)
-> >               return result;
-> >
-> > -     queue->array[0] = queue->array[queue->nr];
-> >       sift_down_root(queue);
-> >       return result;
-> >  }
-> > @@ -111,8 +114,7 @@ void prio_queue_replace(struct prio_queue *queue, void *thing)
-> >               queue->array[queue->nr - 1].ctr = queue->insertion_ctr++;
-> >               queue->array[queue->nr - 1].data = thing;
-> >       } else {
-> > -             queue->array[0].ctr = queue->insertion_ctr++;
-> > -             queue->array[0].data = thing;
-> > -             sift_down_root(queue);
-> > +             prio_queue_get(queue);
-> > +             prio_queue_put(queue, thing);
->
-> ... update this part in the else clause to do something like
->
->                 struct prio_queue_entry entry;
->                 entry.ctr = queue->insertion_ctr++;
->                 entry.data = thing;
->                 sift_down_root(queue, entry);
->
-> to retain the optimization?  It would perform a single cascade-down
-> sift, followed by a single sift-up, so it would save a comparison, a
-> copy, and a swap in the worset case compared to the get+put sequence?
->
-> Of course, the original sift_down_root() caller (i.e. prio_queue_get())
-> needs to pass queue->array[queue->nr] as the second parameter to match.
->
-> >       }
-> >  }
-> >
-> > base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+If `packet_read_line_gently()` returns `< 0` (due to an EOF or read
+error), `line` will be `NULL`.  The error message printed will be:
+
+    `Unexpected line '<flush packet>', expected filter-server`
+
+This is misleading when the remote process didn't send a flush
+packet; it hung up or crashed.
+
+
+
+> -	if (!(line = packet_read_line(process->out, NULL)) ||
+> +	if (packet_read_line_gently(process->out, NULL, &line) <= 0 ||
+>  	    !skip_prefix(line, "version=", &p) ||
+>  	    strtol_i(p, 10, chosen_version))
+>  		return error("Unexpected line '%s', expected version",
+>  			     line ? line : "<flush packet>");
+
+Ditto.
+
+> -	if ((line = packet_read_line(process->out, NULL)))
+> -		return error("Unexpected line '%s', expected flush", line);
+> +	if (packet_read_line_gently(process->out, NULL, &line) < 0 || line)
+> +		return error("Unexpected line '%s', expected flush",
+> +			     line ? line : "<read error>");
+
+We catch error return (< 0) or a line with payload (!!line) and
+report an error here, because we want to see <flush> here.  OK.
+
+
+> @@ -171,7 +172,7 @@ static int handshake_capabilities(struct child_process *process,
+>  	if (packet_flush_gently(process->in))
+>  		return error("Could not write flush packet");
+>  
+> -	while ((line = packet_read_line(process->out, NULL))) {
+> +	while (packet_read_line_gently(process->out, NULL, &line) > 0) {
+>  		const char *p;
+>  		if (!skip_prefix(line, "capability=", &p))
+>  			continue;
+
+While this correctly stops the loop if packet_read_line_gently()
+returns a non-positive value, doesn't it introduce a subtle bug?
+
+`packet_read_line_gently()` returns:
+
+  - `> 0` for a normal line (which keeps the loop running).
+
+  - `0` for a flush packet (which we expect as the normal terminator
+    of the capabilities list, stopping the loop).
+
+  - `< 0` for an EOF or read error (which also stops the loop).
+
+In the original code, an EOF or read error would have caused
+`packet_read_line()` to call `die()`, aborting the process.
+
+With the new code, if the child process dies or closes its pipe
+during the capabilities handshake, the loop will terminate, and the
+function will return `0` (success). The parent process will proceed
+as if the capabilities were successfully negotiated.  Any further
+communication with the child process would fail so the damage may
+not be huge, but somebody must check if the loop terminated because
+of a flush packet, or an error.
+
+	while (1) {
+	        const char *p;
+        	int len = packet_read_line_gently(process->out, NULL, &line);
+
+		if (len < 0)
+			return error(_("subprocess `%s` failed to give capabilities"),
+				process->args.v[0]);
+		if (!skip_prefix(line, "capability=", &p))
+			continue;
+		...
+
+or something, perhaps?
