@@ -1,282 +1,207 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4B43DBD49
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780328648; cv=none; b=ZnLXf1pw4YzRE95D71nUQV0cDR3JA8cJn85fdhSP+vAIeF318DcSXa16AmgAJGhUiPvH7pxk323FJS6fR/x8df4kLr/RrIjPwO4GncJaSv60sfuN3cotnvjqTnd4abWP+6edsn7yJcwgsf+OHOz+Mdm+Ot1ay1d3SLBABDtVF8Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780328648; c=relaxed/simple;
-	bh=/6c+dbeiUG3B+YUM0ZLJCPU2dmO4rHRaKXrNwisDGN4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EPMgJzrBw4oSB1B+KC5XjEnAh48SnlMUR9RCG/A6PF7hxMv4D69j1Rj9+u1x1m5VIzisZiQ2YJghob0N0KB1aQ0L0XFkbGKr+ASa/LrAFNB2tJRcSjpssf6bcP0ts0+z7Yx1bWjvp2aRgyoM1Pb9Dq8xEN6wfT2FymgwIeMLwsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K9KHlOSL; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71653DB329
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780329107; cv=pass; b=c3xMdVV8kNu/8i/G+K6uxvOzaA9TKYWkI813rT0tAUQRrGjWwNXXJhxdB3N2e5FVtOXuiNKHPkvkrJD6swg4Fu0ICAAXGZ2COgfQfLMwF9sqc/gPbag4FLWWh5oFtDVSmDUpJy1XWi80tZ872cpFHUJjMwqpfGDharcBH0Nfh9E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780329107; c=relaxed/simple;
+	bh=SrWT8PWT4/+6LYPhpmOGpbabOX9V0viU7OVAWvlJzTs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NadJMMPxFaZYi9A8eIx0YZCra3bSsaXAuPkJjO0qMT7w9h/gznk+N/d+vBEdpLhr0A/VYC1P0AnQ6UGB2ALl3B9ImNUqsedI097D+YvGE0ll4kHAromaP7KlO+Ri4/zX8mkxrOQmqgN3jIGNxC/7wWjHeziMm72zQsFiQ4uVr9g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2BA44m/; arc=pass smtp.client-ip=209.85.161.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9KHlOSL"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490a7629380so15591135e9.0
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:44:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2BA44m/"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-69dead44101so3173961eaf.3
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:51:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780329104; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ELb65ZGWvG2CwfjdVS/Vb4rm5K/77evNyTzDCvE5NCargeDISTT39S9mFxG606usya
+         x+OMIPaI9ucJKkwiGQnwlogecnjgVE5POBZwxZvgJaiowZEZXQ5K3m4jsTtjengQEheT
+         FLdldDeLl18eUwlPJcirm4UXxM3iVys7lCOd0koV1vwYP4NduzwMp9Q6BtiDVgvjlErX
+         s7vvIQhYu9Si64Fn1ThAlx3AaKE0Yi+T4aZ9t9X8DTIsUu5n7mopmb+O7E+wF4QwfSlz
+         zAqZRRAsoIS4383WPLocNFRexsIW8X85rXzUwFWua9PYIaIvI+hrCnRZJgyTecz2aMSy
+         ju+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Jy/EdiP4+4UCVPW+WPvV7UtfeKpduE9Qbiw9EnfDPmE=;
+        fh=JFjA0UzvMOzJ5oGmimro6ZcbDj40oQlFiOm0xznFf/s=;
+        b=jF/CMyKAMroPkGBxPgnOQeoWsf5zkoLQ7grljD5FDLrrO0ZRVbT0XmCqTSuCRzC2P/
+         dSSxDMXjiQa31NgR7OdWOYMXMmekFXYEtjy6Hl4RWQu4Et2HT4ZUNC8FuE7+d8An381V
+         ayXgJor3dbOwTty39GMkEpANmxv1DTqJWNJjFBk4UDuCYa+h1DNyDI1/0CxsYlGxO8Fj
+         NYRLeJvp8m3tf66e6qDinhR2hGJXspixzAg5/jMQiecInWcV+/mF8UPLJvn2XnM9pw8y
+         o/F2Q0M5zxQ733eGCV2ynOF+Xfr521LNA6a4KDsw9ndRVWL0rpeyqU213OoG6deNEk7D
+         1trw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780328645; x=1780933445; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780329104; x=1780933904; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=seC9EwPT85Hqc0mYP/zzdggodyJfK5UAqOgowPQ23y8=;
-        b=K9KHlOSL2LH1aIeZm3Is0zrnEFlNt0pyEET2I2Hq8G8LCZo9bvcdAhJzbL8BLue2bU
-         22LZJYQDhUYm7pdhHJUnIFDQXcqIYZJIzBOAzwdMtnmJ9CDfsr1vQ656tR+RODUMb3CZ
-         M/m9oytaBvRbumshfKPhdYya0coFwTyILXuLz3fhy8T+bvOoRCjPEebSeX93+UHhXrom
-         VVn9qZef5n/LcdxFuuARE3EFmruSxDfEej4ChSbs9ZOBlRrf1+S3qet/hZ8xquxUajbS
-         bOJy3Bc6qOCw4JiTLIOSLO1TQEAtWB8H01k6IJcifYM3vy3ialvGWRBqWPDiq6Oootnx
-         JZOw==
+        bh=Jy/EdiP4+4UCVPW+WPvV7UtfeKpduE9Qbiw9EnfDPmE=;
+        b=J2BA44m/8uu2QVKP+6uTIT0fsaJHypQc+rQyrgwmG5jQMtEdlY20jloxtgj5ZirGqz
+         ODbRJU4j/rfqgRPLPaZIWZdXKEtVqZpkmO23dwdsRn54BokyZR4HwJpmbaT/3GWhq1m5
+         EsB1OZRwuJm5O+iwJzA4ouV8KXAbK/DdjHpn81Vbr7QlzXXHvoGd9K658TCaymCSI6ns
+         x6wI4BtGdL6Be4sA8M0cllFubkHzH1/QyGaJVVEj5L3lGkr2edEHN4lZ9H6VYsByNUAB
+         EpSeM23aDVSy2IbKgfSN0BdcmOECLnU76mE7O8vJHLEwKw4XlmgyJwxexbnfHHogw4RL
+         xVTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780328645; x=1780933445;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1780329104; x=1780933904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=seC9EwPT85Hqc0mYP/zzdggodyJfK5UAqOgowPQ23y8=;
-        b=c+gmMApLOeN8XgxMtxQNhRMS4DB/dkpih2MfKhZYpig1Sh7OAcLGZAE4FTJ3ey2xN2
-         hi1mV1qg9/X4/dSXsmI2s+EViGvgEjhEofVzONSXBxdOV4WQW3C2DLK1zl4i12DZw0mE
-         2jQXi4Nl36MSgDuXeRbadfn/w1D88/jGd1OXPQEDmqc4BFm3vMg1TZtMjhGK8srVTnPR
-         nd/0NXuZm6D5CzWwn36jCVPk0GsOWfFaQI/W3wJ/rVsYnT4yLfdYsYFO0tDKB3jzAAow
-         zf11ru9qkPNXcZrueSCwaoXv+cTidWSRM1rIvVjSogtxGYDxdXf1QDDj3LS1vr23zE+7
-         UkEA==
-X-Gm-Message-State: AOJu0YzsHvdwGvMuql91yGSEiGIenJ/XMnBxsKg1g7/vLqpFONgcXbSj
-	C8Re8FSGL6i+yrdZl8XBaon0fp13jpzb6GsAPdJYbN0XfuMYE0hAsaUEm9CSw7l5
-X-Gm-Gg: Acq92OFvResYYFcnK2Eyt1DUUkdyaB0aALvfqK3MkAZ3TjNQYjTdy/kc7KiIXj74VJx
-	ODeRpJjUpq7cQA/XsuMhO0Hiw1Gsojo7hSbF533aNy+Snc9A3L4F5oRmFHHfDvE3qf5C4ot4sqS
-	z7otFR0KBpMDmOiGbLntoYSxzAphgasGmQIesyo/tdI3DMtnLOqmNDvwjYbunpvz/4Ui2AuHxm1
-	Jvr2jhXzqfmLKyUT7qEtAHjYHs6I4jNaZzDmK5cD0z4PMrtMuTGt13tBCcuatHtzOHn3yjAraHg
-	//eQlH8Foqp8gB3yHwSDFUQwneNymdaHgTA+KpySy5lY+gQXT0MOQI8wd7SOs9K+vpdGWDsUQcf
-	/AGUHQgoB5XouULfrMp3rjYjj016TZMreXNlC3+Hl3ktKbyUBPkf2JjERThHl4gknYYv4rlyiRp
-	oCs5dz+DRa31W4UDTo4bgTdJeHu4aiUxiUkB+q8G6iZD02SYek2vmln8CrGlUyfO3xXw==
-X-Received: by 2002:a05:600c:1d11:b0:48e:8741:fd42 with SMTP id 5b1f17b1804b1-490a291fa6fmr213787915e9.12.1780328645041;
-        Mon, 01 Jun 2026 08:44:05 -0700 (PDT)
-Received: from pop-os.lan ([2605:59c0:e07:e310:19bb:fe0b:a332:fe8a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e81ef4sm350485e9.12.2026.06.01.08.44.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 08:44:04 -0700 (PDT)
-From: Olamide Caleb Bello <belkid98@gmail.com>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	christian.couder@gmail.com,
-	usmanakinyemi202@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	me@ttaylorr.com,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v4 8/8] environment: move "warn_on_object_refname_ambiguity" into `struct repo_config_values`
-Date: Mon,  1 Jun 2026 16:42:11 +0100
-Message-ID: <20260601154211.82370-9-belkid98@gmail.com>
-X-Mailer: git-send-email 2.53.0.155.g9f36b15afa
-In-Reply-To: <20260601154211.82370-1-belkid98@gmail.com>
-References: <20260423160832.114816-1-belkid98@gmail.com>
- <20260601154211.82370-1-belkid98@gmail.com>
+        bh=Jy/EdiP4+4UCVPW+WPvV7UtfeKpduE9Qbiw9EnfDPmE=;
+        b=YoXa3ylaVlYUawYjSQKWO8a334opyLatvDFsZHtfH4XLsJql2ogS8TlLIWprCYRyuF
+         OnE4QiUS4gs1+QHImYpw1/D6DX4S8xZc12sqR09ceacPrSfd2xDzQ/fAaf/IUIygBkMr
+         tuJZF8VlT2tOGH/qE+uIkFTGgPZjMgucv143AwW4w1nub0eL6xP4E0cbGZHIlBiI6fwR
+         9NSRxfetTrlhmuMxJRlLxHMwXMoU8QpUVgwTNpN5tVdA/sYp2HbZz8rzKQrH9ToM0o9D
+         R8LQcoZk+blYaEuAS1cPxGh4/RDYGqEIn1/TNr8bMYLHCDrX3S6H8JfZGJhVJODGbhFd
+         IvIQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+UmB/dOE/8H8vcqUYgt3IwBsQCqqEo3QODZnxWwHUO4LMbARV7u/0l34qRD18Apnf1psc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6gcwiU1Lcpxks4moEsTBcZUc5PhAg5hJJPWxKAO25COsxOCP2
+	CIe9HAqguwXnYZhCSOAhskL8YBDgLN2AqxlBFfbq/kzdfq+oin6v7rprYE/ryh2kMGpPKBcmi7x
+	qvKRWbGW2LDewE37pMr8ybIZnVVT9I/5dnw==
+X-Gm-Gg: Acq92OFFbdOY1SKVlaARiDWDuA95gsXorBvWP/Z8FaAfKjWj/59+Nzt7M2unSc0a05y
+	gFsqdeY4L2SDrOwJOaWovUvIzydUXJW13GHfds1qIOmCdKQHS3KnyosOuKZNF94kTN7RaGflNKU
+	UYzuOzTm3Jnn86dBCp4c2zhWJG/h1bXVd0HxCVn5fgxj1mOv3Xs0g5pcFb4AF6/90Vfy8oi4a8y
+	IonWvGYr/Mk8aLVty+zRYo1dU4GZoYRBeYPUdDLL4PGyVR3a8cpv8+A0eXx9PLUnXNO2UKBe67X
+	quia8p1nxVvOLIJEI/+OoAIuePp0ubrFR632dU2ZZnGssLjGl1Q=
+X-Received: by 2002:a05:6820:1f06:b0:69d:f58b:8fbf with SMTP id
+ 006d021491bc7-69e10405affmr5271669eaf.8.1780329104340; Mon, 01 Jun 2026
+ 08:51:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.2133.git.1780287309846.gitgitgadget@gmail.com> <xmqqo6hu92wu.fsf@gitster.g>
+In-Reply-To: <xmqqo6hu92wu.fsf@gitster.g>
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Mon, 1 Jun 2026 08:51:33 -0700
+X-Gm-Features: AVHnY4IiaGS9isIsT-YCM7asqEH8Ut41HV1manzS-Xnl8ypS59DAA20f2ZjhPwo
+Message-ID: <CAC2Qwm+vhhuRzJ1uu-xBD8xrcuwvba+Ugs4iPGDNF7SPQPB8Fg@mail.gmail.com>
+Subject: Re: [PATCH] sub-process: use gentle handshake to avoid die() on
+ startup failure
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `core.warnAmbiguousRefs` configuration was previously stored in a
-global `int` variable, making it shared across repository instances
-and risking cross‑repository state leakage.
+On Sun, May 31, 2026 at 11:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > diff --git a/sub-process.c b/sub-process.c
+> > index 83bf0a0e82..22c68bd10d 100644
+> > --- a/sub-process.c
+> > +++ b/sub-process.c
+> > @@ -132,18 +132,19 @@ static int handshake_version(struct child_process=
+ *process,
+> >       if (packet_flush_gently(process->in))
+> >               return error("Could not write flush packet");
+> >
+> > -     if (!(line =3D packet_read_line(process->out, NULL)) ||
+> > +     if (packet_read_line_gently(process->out, NULL, &line) <=3D 0 ||
+> >           !skip_prefix(line, welcome_prefix, &p) ||
+> >           strcmp(p, "-server"))
+> >               return error("Unexpected line '%s', expected %s-server",
+> >                            line ? line : "<flush packet>", welcome_pref=
+ix);
+>
+> If `packet_read_line_gently()` returns `< 0` (due to an EOF or read
+> error), `line` will be `NULL`.  The error message printed will be:
+>
+>     `Unexpected line '<flush packet>', expected filter-server`
+>
+> This is misleading when the remote process didn't send a flush
+> packet; it hung up or crashed.
+>
 
-Store it instead in `repo_config_values`, where eagerly‑parsed
-repository configuration lives. This option is parsed eagerly because
-ambiguity warnings influence how users interpret object references in
-many commands; a lazy parse could cause these warnings to behave
-inconsistently or to appear for the wrong repository, confusing users
-and hindering libification. This preserves the existing behavior while
-tying the value to the repository from which it was read, avoiding
-cross‑repository state leakage and continuing the effort to reduce
-reliance on global configuration state.
+Makes sense. Will fix.
 
-Update all references to use `repo_config_values()`.
+>
+>
+> > -     if (!(line =3D packet_read_line(process->out, NULL)) ||
+> > +     if (packet_read_line_gently(process->out, NULL, &line) <=3D 0 ||
+> >           !skip_prefix(line, "version=3D", &p) ||
+> >           strtol_i(p, 10, chosen_version))
+> >               return error("Unexpected line '%s', expected version",
+> >                            line ? line : "<flush packet>");
+>
+> Ditto.
+>
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
----
- builtin/cat-file.c     | 7 ++++---
- builtin/pack-objects.c | 7 ++++---
- environment.c          | 2 +-
- environment.h          | 2 +-
- object-name.c          | 3 ++-
- revision.c             | 7 ++++---
- submodule.c            | 7 ++++---
- 7 files changed, 20 insertions(+), 15 deletions(-)
+Will fix.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d9fbad5358..cfc5430186 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -901,6 +901,7 @@ static int batch_objects(struct batch_options *opt)
- 	struct strbuf input = STRBUF_INIT;
- 	struct strbuf output = STRBUF_INIT;
- 	struct expand_data data = EXPAND_DATA_INIT;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	int save_warning;
- 	int retval = 0;
- 
-@@ -973,8 +974,8 @@ static int batch_objects(struct batch_options *opt)
- 	 * warn) ends up dwarfing the actual cost of the object lookups
- 	 * themselves. We can work around it by just turning off the warning.
- 	 */
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 
- 	if (opt->batch_mode == BATCH_MODE_QUEUE_AND_DISPATCH) {
- 		batch_objects_command(opt, &output, &data);
-@@ -1002,7 +1003,7 @@ static int batch_objects(struct batch_options *opt)
-  cleanup:
- 	strbuf_release(&input);
- 	strbuf_release(&output);
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- 	return retval;
- }
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8ccbe7e178..7df75fe91e 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4788,6 +4788,7 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
- 	struct setup_revision_opt s_r_opt = {
- 		.allow_exclude_promisor_objects = 1,
- 	};
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	char line[1000];
- 	int flags = 0;
- 	int save_warning;
-@@ -4798,8 +4799,8 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
- 	/* make sure shallows are read */
- 	is_repository_shallow(the_repository);
- 
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 
- 	while (fgets(line, sizeof(line), stdin) != NULL) {
- 		int len = strlen(line);
-@@ -4827,7 +4828,7 @@ static void get_object_list(struct rev_info *revs, struct strvec *argv)
- 			die(_("bad revision '%s'"), line);
- 	}
- 
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- 
- 	if (use_bitmap_index && !get_object_list_from_bitmap(revs))
- 		return;
-diff --git a/environment.c b/environment.c
-index 57587ede56..ba2c60103f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -47,7 +47,6 @@ int minimum_abbrev = 4, default_abbrev = -1;
- int ignore_case;
- int assume_unchanged;
- int is_bare_repository_cfg = -1; /* unspecified */
--int warn_on_object_refname_ambiguity = 1;
- char *git_commit_encoding;
- char *git_log_output_encoding;
- char *apply_default_whitespace;
-@@ -725,4 +724,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- 	cfg->core_sparse_checkout_cone = 0;
- 	cfg->sparse_expect_files_outside_of_patterns = 0;
-+	cfg->warn_on_object_refname_ambiguity = 1;
- }
-diff --git a/environment.h b/environment.h
-index 609cdaa07f..1ff0a7ba8b 100644
---- a/environment.h
-+++ b/environment.h
-@@ -97,6 +97,7 @@ struct repo_config_values {
- 	int pack_compression_level;
- 	int precomposed_unicode;
- 	int core_sparse_checkout_cone;
-+	int warn_on_object_refname_ambiguity;
- 
- 	/* section "sparse" config values */
- 	int sparse_expect_files_outside_of_patterns;
-@@ -174,7 +175,6 @@ extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
- extern int ignore_case;
- extern int assume_unchanged;
--extern int warn_on_object_refname_ambiguity;
- extern char *apply_default_whitespace;
- extern char *apply_default_ignorewhitespace;
- extern unsigned long pack_size_limit_cfg;
-diff --git a/object-name.c b/object-name.c
-index 21dcdc4a0e..319d3db01d 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -684,11 +684,12 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	int refs_found = 0;
- 	int at, reflog_len, nth_prior = 0;
- 	int fatal = !(flags & GET_OID_QUIETLY);
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
- 		if (!(flags & GET_OID_SKIP_AMBIGUITY_CHECK) &&
- 		    repo_settings_get_warn_ambiguous_refs(r) &&
--		    warn_on_object_refname_ambiguity) {
-+		    cfg->warn_on_object_refname_ambiguity) {
- 			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, 0);
- 			if (refs_found > 0) {
- 				warning(warn_msg, len, str);
-diff --git a/revision.c b/revision.c
-index 599b3a66c3..4e7faa7eb1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2922,9 +2922,10 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 	int seen_end_of_options = 0;
- 	int save_warning;
- 	int flags = 0;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 
- 	strbuf_init(&sb, 1000);
- 	while (strbuf_getline(&sb, stdin) != EOF) {
-@@ -2958,7 +2959,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
- 		read_pathspec_from_stdin(&sb, prune);
- 
- 	strbuf_release(&sb);
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- }
- 
- static void NORETURN diagnose_missing_default(const char *def)
-diff --git a/submodule.c b/submodule.c
-index b1a0363f9d..f26235bbb7 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -898,12 +898,13 @@ static void collect_changed_submodules(struct repository *r,
- 	struct setup_revision_opt s_r_opt = {
- 		.assume_dashdash = 1,
- 	};
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	save_warning = warn_on_object_refname_ambiguity;
--	warn_on_object_refname_ambiguity = 0;
-+	save_warning = cfg->warn_on_object_refname_ambiguity;
-+	cfg->warn_on_object_refname_ambiguity = 0;
- 	repo_init_revisions(r, &rev, NULL);
- 	setup_revisions_from_strvec(argv, &rev, &s_r_opt);
--	warn_on_object_refname_ambiguity = save_warning;
-+	cfg->warn_on_object_refname_ambiguity = save_warning;
- 	if (prepare_revision_walk(&rev))
- 		die(_("revision walk setup failed"));
- 
--- 
-2.53.0.155.g9f36b15afa
+> > -     if ((line =3D packet_read_line(process->out, NULL)))
+> > -             return error("Unexpected line '%s', expected flush", line=
+);
+> > +     if (packet_read_line_gently(process->out, NULL, &line) < 0 || lin=
+e)
+> > +             return error("Unexpected line '%s', expected flush",
+> > +                          line ? line : "<read error>");
+>
+> We catch error return (< 0) or a line with payload (!!line) and
+> report an error here, because we want to see <flush> here.  OK.
+>
+>
+> > @@ -171,7 +172,7 @@ static int handshake_capabilities(struct child_proc=
+ess *process,
+> >       if (packet_flush_gently(process->in))
+> >               return error("Could not write flush packet");
+> >
+> > -     while ((line =3D packet_read_line(process->out, NULL))) {
+> > +     while (packet_read_line_gently(process->out, NULL, &line) > 0) {
+> >               const char *p;
+> >               if (!skip_prefix(line, "capability=3D", &p))
+> >                       continue;
+>
+> While this correctly stops the loop if packet_read_line_gently()
+> returns a non-positive value, doesn't it introduce a subtle bug?
+>
+> `packet_read_line_gently()` returns:
+>
+>   - `> 0` for a normal line (which keeps the loop running).
+>
+>   - `0` for a flush packet (which we expect as the normal terminator
+>     of the capabilities list, stopping the loop).
+>
+>   - `< 0` for an EOF or read error (which also stops the loop).
+>
+> In the original code, an EOF or read error would have caused
+> `packet_read_line()` to call `die()`, aborting the process.
+>
+> With the new code, if the child process dies or closes its pipe
+> during the capabilities handshake, the loop will terminate, and the
+> function will return `0` (success). The parent process will proceed
+> as if the capabilities were successfully negotiated.  Any further
+> communication with the child process would fail so the damage may
+> not be huge, but somebody must check if the loop terminated because
+> of a flush packet, or an error.
+>
+>         while (1) {
+>                 const char *p;
+>                 int len =3D packet_read_line_gently(process->out, NULL, &=
+line);
+>
+>                 if (len < 0)
+>                         return error(_("subprocess `%s` failed to give ca=
+pabilities"),
+>                                 process->args.v[0]);
+>                 if (!skip_prefix(line, "capability=3D", &p))
+>                         continue;
+>                 ...
+>
+> or something, perhaps?
 
+Good catch, thank you. I will update the logic so a failure during
+capabilities handshake
+is correctly marked an error instead of silently succeeding.
