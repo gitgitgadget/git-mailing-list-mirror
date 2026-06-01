@@ -1,83 +1,83 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8556F3769E0
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 12:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE620374725
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 12:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780315995; cv=none; b=RpXxZjwCz+7WJSLQI5iQpoGHb2q3IHk+mTDk3AXJGCQa7xDDtizqhOtUxW9cfbS1SUaxiVc6JaoDM1sGLFjfsebw9+Z/WtCNNRhstFAAcS+b2/A3EbXvM1c7DIzUpBnz13ACn9RFAig3RXxRWj4dZoFRiWHgYQMxjBHosS9jxFA=
+	t=1780316594; cv=none; b=kKPwnvlB/pJERoeutG2liQDxIs75RLn1UMhQQJys4pyBATDA0+hGnvLHpaBjDBUJs8d3U6leK+tb3TN64KLvn6JzxtM7VIEVunDhSWrNDyZiI6pUfVvGT18LrTbi/lU6j/I5G3dOZiyY+yPabNno+74XoEY0/MrylTP7cdVbW04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780315995; c=relaxed/simple;
-	bh=ayMdNpx77AlF6ERloC7MNuUbADiyqMlSHYz1CNP9NkE=;
+	s=arc-20240116; t=1780316594; c=relaxed/simple;
+	bh=u7F9cPs6AjwSAB1aRisi0DZvlY4AaEhwZX1htjY5wZs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IK6g/HXTukT0jihI7IOju+72xO/Ma/L1OSFBvCoaH2rcKOnOBul08XnS+Qg4yKQciFw5FDQ+JmGIKbFXWtlhKUWGVOopIu1vd7amRyEbyqB4Hx5bNLbovPviUQr8M/XXR4V91DDUPIUbmLqsnsOmjDeks3t8C5gM//J6ztStRXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=By0Zf3Po; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cGeeCa1b; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=CuTa3MCKRyCgOGGQmJxwZi4rbczo1kDQP1bWNv8wBns2CP20ZyApw0g7Dl1E5Cl32Mbs2Ru8o/8zWNBJ293nijgbig/bDco4ixzI4GaA0LeQUffihBx00k29detbqPRYOBnDEm+NmKObv0N646pVjoYgkmz8ed1OQKPyzTsBHcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TUkhfM6x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N/MthF7t; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="By0Zf3Po";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cGeeCa1b"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id AE7C41D00284;
-	Mon,  1 Jun 2026 08:13:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TUkhfM6x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N/MthF7t"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1F14A1D00356;
+	Mon,  1 Jun 2026 08:23:12 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 01 Jun 2026 08:13:12 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 01 Jun 2026 08:23:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780315992; x=1780402392; bh=XtWXuU8YFz
-	zG6Z3nu/arWObjNMNNE1SEVJKKmml0De0=; b=By0Zf3PoEIyHGsFLiKW3VjSo7D
-	6rFaJLwI+P2TgrIM1HaQXGwqlyGd04mOUI/bg/iGsZlI2+m4l3XiaNAWzFbOX0uR
-	WgUVAV0v3uFWsUKnOr30I/2ADSHC7ihJlB454t3DAwmqHH9Vf8wNaXKziYIIe0+M
-	vcoyydRqQPUBZR80MxBQxtXd+LpzuwQL4Y+sWaFy/vkY+rxq4AE5dJmRvlNAOD5s
-	VOE+5ZiBe0r9HPjWgqC5Q/cTNPDr4u+uSH3swY+vyugZs80u4HnbMUvlzUy69SgI
-	c2k6yxLXHc7RrQxCF0FX98yiWN3fHES0BERFhh1izbe45CpcU+BY6QOFaQDw==
+	:subject:to:to; s=fm3; t=1780316591; x=1780402991; bh=ydgFesSSrL
+	zZsmpkH+XQkvNDz99ksLwkM81f4RFqqWw=; b=TUkhfM6xP3mQEMQ3NXx+8nX12+
+	fNV6Ho3SUE2TNsfainBL9gTZbtp39vjBiY/pGMl+aTLt0+2zmozMox3HcaT+GDVn
+	0/Y9fAjIoNtlh5tNrU4PJNCQ6NdQRXoUbQAV12BCJhIyzf9cqJ86uiibzJWok1NH
+	C+vuVrtN0t6Hfo3LC3nnAmKEez0o7yoNLLb9ZoVvk0VEBiaCCRXs/0i13eheS5EC
+	VP9JwAnfkp1RqWBEHiUN9BKLQzDPsPiiaxEx4Osn4OWIJuu4dnSedPM7uxBwEDNt
+	bMMqesK1NH0KxJAVpE5jmeCWryxvVKtF1qQHPXi/mh667kvlsjqyS2fhZAUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780315992; x=1780402392; bh=XtWXuU8YFzzG6Z3nu/arWObjNMNNE1SEVJK
-	Kmml0De0=; b=cGeeCa1bE5x0AhiyLcC9NcqOmFqOtpB4hUSpKcO6tV6Ewi+/ln0
-	nhgodRi8inzAjLqPhjSnKqIsecSqAEqwvD3dATVbdoT6tleX7NOiV6hEuC5rFRPZ
-	yF6Tg29RRiG3TfQhkkkf5XBFCJSDq/GPpJBKtZb/EIMb47ITk0AZYTcZ2p/k/yMw
-	FjFu1bFwWrELjvmKQyPflvHe6N4pzneiK/nLV1DaUiB/b0n6xAE6CKf60k1R9ktv
-	RiB8DhBCUyKyQutnmPpigux1A62PHnVjL/Uuch1ZPOhr4MJtt8hjIfuznt7RUMS1
-	knVm0Do+dH3n+CxdW8RiXq4ICCFgF6qorjA==
-X-ME-Sender: <xms:WHcdao7dDhBeFyJbaIUg-ymbCLZ0Bq_7L4cgj5__Lcaoms5n6JN2RA>
-    <xme:WHcdag6qePdwzkk1EhBllcEFjA8fdBzTnTam37jM2zrY2jiZznH9slUVn7Liy7BiY
-    os23uPou7YpFc7-2a-ZwCjvoP-60WzNMj-VK8NZglfyCPvte3bS1Q>
-X-ME-Received: <xmr:WHcdascJ-x2d1Du7s8Ja0iY_OBCgsg58vVKTje3C_2iNgxyuyDLmtXarQWonHtawJnAevt-m4BaHL45D8z75X58VT3IJKOewXIlj>
-X-ME-Proxy-Cause: dmFkZTEWuqhZpH8/UntuKwckz6UbC4Ici3sENfftLXxzMtC7HMqSo42CfWbS52gl7Risyt
-    OZjKMFW3IIaLoQ5dR7ydlMeV2bRVmgw/4Sk1T6i8SJAPCezCo6h8QrpwSLFmvtk4ty4mmp
-    yBZdGnBSJBJT/kMb7IbEa67hUXORAQkGvX4jEUE84JTZbb5IiyAKE9XH3aklzkW9/lyFKY
-    BNn0xLztMVT9ezKJJ5csaapXOe5M+298qIRqC0vHz94N6Uv34Bibrzyre5cQXmh5JryTnn
-    kCDel3MaM4mFrWKMwO/57Db7Kk3Q7U2gomnEQlVGlxscMgaU1b/6mQ9yxHfdbn1UXKgRhd
-    HG7/nCF5A79RezxZuX6phhxNsdJdtTZfZV/I3txG08Q4C4oI7aHuENJjTfK+QM3BRe2Ytu
-    Km+iBak76nTdaODba5rLr96gyADSSs3rh9j6thgEz7BZJ2DDldQ9MPuKfmU9tFGo+INyjz
-    OkUKLzXspmcrHQfrgn5rxomxIUgfvPXN2+A4RCERt956WWXQfgy4IGOqlC3sD0oHWEqDwz
-    9bOUSlEQr4qagOiNhL51iSbQ1KaKT4lTcXGyAo8uDm+IdBLlOqaL4W9Yh/E5mLqcwq024L
-    RB2jJMnOt9ZSkmza0kHW7S2BwrooVjylh8EQaCxA7WsJOjrTlWN5jTAYiwqQ
-X-ME-Proxy: <xmx:WHcdasABQL1ji7OfCWufe7v7KEImOEhhau9A1gPBdqszqM3gkunM0A>
-    <xmx:WHcdan90FOBxui37_8wMzBs0xSu_DFbiMYKnLcZ-L8eBcAefwz0kZQ>
-    <xmx:WHcdavIBCp82g2hg740P_RnWx5fH8tDjGS3ptDu5kHzFhATcGHWXiA>
-    <xmx:WHcdaohTBeT6ouKHQY8_9O_0YKLYoaavgnY0Cqr6MzIIpDKD44nvDQ>
-    <xmx:WHcdar-O-kgag__WU0m8-IyRIF7elycf5X6wuJDqz14t8djcZESOq-3F>
+	1780316591; x=1780402991; bh=ydgFesSSrLzZsmpkH+XQkvNDz99ksLwkM81
+	f4RFqqWw=; b=N/MthF7t8QlGcMUpNDt0srmATtApJjaIgu+uilOoKXWlTJ6BvTs
+	DWn5lg5pZJDL5IYyJo2RUE0ooIOyNhtZ7FSGoQZoONIR+cosJbYPUPUoXWfYt7vA
+	3+Jr3ElCTv3g+Ov0gozQd8Z+nDicy/Ho2/gSVUe9OdpZYtALLb6vtOlPv/PoYbRB
+	/U8v92zyhWhH1p7QhNejplgYVXA2qlp0jt/BK04mWneGfQYqbycJOteqm0rM5sxR
+	EBNuJ61EYv5ItR0ynV3lt435rkubATv2FUj/ChWD/tz8vY/iDB+NP9a8zpz1kOBn
+	0aw3msjLgFOmY89B6YM/L7ZfnYRhZNDvvHw==
+X-ME-Sender: <xms:r3kdahvvMj9XWfjV0QlCcW-OJDx1VGPs9XtFCge2fBK1HGoxFApDuQ>
+    <xme:r3kdahfRlOXljZ1Q79Qu8GiCe_Pc1X4RqC6OP8h4szG4I6vVG3lrDky5pzyQsSMPr
+    nA1t2bw55ZzpVozpOTFDJGHDVOpE_tUVlOMAYJ2cGs8M6uwzn1d>
+X-ME-Received: <xmr:r3kdapy-VZXZ-CrV8GnPxT4SQlYbq63o55OtryZiXwlG7N0ozl6Ohaaj-3KoPm4mX5KyDhLF0pfETWNw8f-T-aSpjeRrhnAJB067>
+X-ME-Proxy-Cause: dmFkZTFU0uNpxw5mXyXttPkI/3cwLj/YdmpiIWQkuyuaFozrhLvKIsOmm2wE89wP9ueWaw
+    YRXXIcPSJEvNc6saHzd3rZY29YsjhSjU05rS54/iS5nL1o4nREXSrTdueq/ndYp2hUPdiF
+    ine+G90HoqFP8Gwl+LoRcGG2RXZlE4bPghPDX+boYWPHg62KqDIcMafFG0hUkd/eNg3LT3
+    BC/1W7jET7pYmsXbB6FpGpSwIPEIbg+m5Hr9R9hdp2tlF6p4WJ3jow/LiltZ+XHOUxOHG/
+    gs6uFx6g6Lk0q/oOg5bcpC1sIS3m2bLkAsCtFaVTj935czNQwF0Df1POCzjZgCtSDr7NTM
+    cCLhI/AzGcBbuSaylFLJTVjxkfM/b2TxuBP5jkgqS6r1Q+pYUQabgLkcLX/H/VK/ycC+Ze
+    IAnOn9uf9PQTvE4EfHscUSbhsO/KSleYRydCgYq7Y3Y+DPinbXpavpn88ARmmhZ+XntLZE
+    AMqS8RXXw0b1A2mI+XgJrD9OMXXO8YLorYlB/p0inwncMeu2aTsWAZN/+HWXGbgLet/7Md
+    SBmdBY3FnWIdM2rf+KT3ibUSsithPOgOhMs66c1EfsbbZilD1iHxviaP2I/6dHMsJQ7fIJ
+    OBjRrffu9mg2fPyQQNF8uPTp1/MVtDFRX1GWaBhQ72V+LmhbLldBLNOMB0Ug
+X-ME-Proxy: <xmx:r3kdanFesne4HF9liYxwePV_1OC8fCHpOYSeN_0uUGaW9X2nJMDSkA>
+    <xmx:r3kdatzxOPMrh0keAm60xPnqxTUHYJDOu_Y42ll2qv_p-8TsM-xatQ>
+    <xmx:r3kdaovw8MWppmc3NnWyDnT7ON3qR5p2jRuhuCnTja2ICop5HEM51g>
+    <xmx:r3kdaq1gwpFk9tqVvENoHqXcnGd5riIbrRUG1OLpOg-qcdrba7v8Bw>
+    <xmx:r3kdatS_AjUKYso6dva5zSQTJDb6ZJzgTfCZkdwOIQvmJfmPKgSayjhy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 08:13:12 -0400 (EDT)
+ 1 Jun 2026 08:23:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/5] merge-ort: propagate callback errors from
- traverse_trees_wrapper()
-In-Reply-To: <282f906d1b4767d95e2a66072c280c2294a93a9f.1776731171.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 2/5] merge-ort: drop unnecessary show_all_errors from
+ collect_merge_info()
+In-Reply-To: <949b5d8e3f3aefd9497a7b85d860259b9d5db418.1776731171.git.gitgitgadget@gmail.com>
 	(Elijah Newren via GitGitGadget's message of "Tue, 21 Apr 2026
-	00:26:07 +0000")
+	00:26:08 +0000")
 References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
-	<282f906d1b4767d95e2a66072c280c2294a93a9f.1776731171.git.gitgitgadget@gmail.com>
-Date: Mon, 01 Jun 2026 21:13:10 +0900
-Message-ID: <xmqq33z65ui1.fsf@gitster.g>
+	<949b5d8e3f3aefd9497a7b85d860259b9d5db418.1776731171.git.gitgitgadget@gmail.com>
+Date: Mon, 01 Jun 2026 21:23:10 +0900
+Message-ID: <xmqqy0gy4fgx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,70 +91,38 @@ Content-Type: text/plain
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> traverse_trees_wrapper() saves entries from a first pass through
-> traverse_trees() and then replays them through the real callback
-> (collect_merge_info_callback).  However, the replay loop silently
-> discards the callback return value.  This means any error reported by
-> the callback during replay -- including a future check for malformed
-> trees -- would be ignored, allowing the merge to proceed with corrupt
-> state.
+> collect_merge_info() has set info.show_all_errors = 1 since
+> d2bc1994f363 (merge-ort: implement a very basic collect_merge_info(),
+> 2020-12-13).  This setting was copied from unpack-trees.c where it
+> controls batching of error messages for porcelain display, but
+> merge-ort has no such error-batching logic and never needed it.
 >
-> Capture the return value, stop the loop on negative (error) returns,
-> and propagate the error to the caller.  Note that the callback returns
-> a positive mask value on success, so we normalize non-negative returns
-> to 0 for the caller.
+> With show_all_errors set, traverse_trees() captures a negative callback
+> return but continues processing remaining entries rather than stopping
+> immediately.  Removing the setting restores the default behavior where
+> a negative return from collect_merge_info_callback() breaks out of the
+> traversal loop right away, allowing a future commit to exit early when
+> a corrupt tree is detected.
 
-All makes perfect sense.
+Nice spotting.  As the error handling eventually is to die without
+making any further damange, returning early without seeing "more
+errors" is a good change.
 
-How would the externally visible behaviour change at this step?
-
-Upon an error from the callback, we used to keep going and processed
-other callback data in the renames structure.  We now leave the rest
-unprocessed.
-
-The caller of this helper would never have seen a failure, but now
-they will.  Both callers, collect_merge_info_callback() and
-handle_deferred_entries(), are reacting to a negative "error" return
-well (perhaps because they sometimes call traverse_trees() in the
-same control flow, which does return an error already), so
-presumably there is no downside caused by aborting the innermost
-process upon the first error return.
-
-
-
+>
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  merge-ort.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+>  merge-ort.c | 1 -
+>  1 file changed, 1 deletion(-)
 >
 > diff --git a/merge-ort.c b/merge-ort.c
-> index 00923ce3cd..4b8e32209d 100644
+> index 4b8e32209d..74e9636020 100644
 > --- a/merge-ort.c
 > +++ b/merge-ort.c
-> @@ -1008,18 +1008,20 @@ static int traverse_trees_wrapper(struct index_state *istate,
->  	info->traverse_path = renames->callback_data_traverse_path;
->  	info->fn = old_fn;
->  	for (i = old_offset; i < renames->callback_data_nr; ++i) {
-> -		info->fn(n,
-> -			 renames->callback_data[i].mask,
-> -			 renames->callback_data[i].dirmask,
-> -			 renames->callback_data[i].names,
-> -			 info);
-> +		ret = info->fn(n,
-> +			       renames->callback_data[i].mask,
-> +			       renames->callback_data[i].dirmask,
-> +			       renames->callback_data[i].names,
-> +			       info);
-> +		if (ret < 0)
-> +			break;
->  	}
+> @@ -1740,7 +1740,6 @@ static int collect_merge_info(struct merge_options *opt,
+>  	setup_traverse_info(&info, opt->priv->toplevel_dir);
+>  	info.fn = collect_merge_info_callback;
+>  	info.data = opt;
+> -	info.show_all_errors = 1;
 >  
->  	renames->callback_data_nr = old_offset;
->  	free(renames->callback_data_traverse_path);
->  	renames->callback_data_traverse_path = old_callback_data_traverse_path;
->  	info->traverse_path = NULL;
-> -	return 0;
-> +	return ret < 0 ? ret : 0;
->  }
->  
->  static void setup_path_info(struct merge_options *opt,
+>  	if (repo_parse_tree(opt->repo, merge_base) < 0 ||
+>  	    repo_parse_tree(opt->repo, side1) < 0 ||
