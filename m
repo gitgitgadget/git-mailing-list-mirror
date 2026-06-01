@@ -1,178 +1,118 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFF13DCD80
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C0F1D798E
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780327387; cv=none; b=BlAEMx2al501uF3a5jwQGIHR9Q9OKM4u7lScsRcs6PxqkgGZmqpkEZEXm7eEaDZhtpbIu+i4AZOgrl5ka9196PyQ+UprXKgVinTNAXicy1mVkpPtSv7FFGY9vXHqtfGpy2n7da21o3u3NoAa9pYxJwKamR5WIoToru+xXZ+K/m0=
+	t=1780328184; cv=none; b=T2KtVcn13mwon/TsyJkEH9RKUTCGc201IZCMRxSKQcQaBETa0r38jmeelgxpvYeRLFbLkXs0flzJxCJ3eoy4UDefm2XvTz/FKBoWdaiuvFwru2tWqtHbKLYdXh/ZGbFt8a6spFR2NxGosLSu04seibEzm0kY+Q8bPXpk1zPR5LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780327387; c=relaxed/simple;
-	bh=rcV5aLsnvo4Z+fRh7B/5KMxxi0V4nP/QrtbfDJCxfKc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOviH3ZoBtT+MuJHLtUMIbiEfbdseO4PoTnnWWBsFSAghjUulAO9YaZsIN7Ogtn3tKJveGjQCAX1PbS9fBnitSYTnwrQG18+sR465/WRBZY1q0A37nFDt1cDfSwnRjPFs8Yj0poDSJk2i7G2v/EILVWxrLz6wspRtLvA/S6eAf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MN/TvIRq; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780328184; c=relaxed/simple;
+	bh=JzGzGB+Utq3vXvBno8Hg7Lqa2pFuvvahrjZyIwzWawA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=N+cWihtAMblxLMRPzwK5p9j0guwGe22noVVIcFBao2hE4OkC8lEIO8SdPk5YleGoTYa91Q7/Dw+2mlHQafEnjgn05/1DbbBZhCtH/ORT/qhqL6mUdOL0EQjw2T/T9a2xjfDUBDmwvfO98AZH/Bft71e3TfdzbRafoUX0lz4CnBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Mx9zzaj8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A4RM8N3s; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MN/TvIRq"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-842319576d5so782311b3a.1
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:23:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780327381; x=1780932181; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RBAIudYg5e8QxfMT5whiLM8UNdlS/+XTuMM7s9+V/7U=;
-        b=MN/TvIRqxG4LNyFkWOrX81TPyfntnuBbR5s9lHHU4h1Z1gAMFec+pp56X/gbV2VqEa
-         TrJVAfsS+Uh0qgrUrtw/KsLPWwkNlNhvStcWapW9p4p0pJjP6wLGFeuJhTir/AZw6Hji
-         UXBzY2UU+M09BCHEyZvX/nP+JHPl2zeiCTfiCmB+lje2DIPK2yAZpihXnxku1AudYqIu
-         ZE9YMHnhCkfhr7hq2Y9FwxtEjcavxhiBofLXuarAz7B9kJ4vuP7yLs/xkIBmjeGyRXzw
-         g0y5crPw8tknr257L9gIcu46S4/YBXknZb6ibhZXtRmF3ZmNOnG99b2FKss+8YfS+rPG
-         TM+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780327381; x=1780932181;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RBAIudYg5e8QxfMT5whiLM8UNdlS/+XTuMM7s9+V/7U=;
-        b=GUtiQfretp5tkqpDKLoMu3DlBCDfaroQkHdo83TGBHfyRHjSG2KGdGnFInQiEdME0E
-         bfAB4ENhLg3JwBMnjFGIh4vZ778+BBr3cYqD0S0XNT+se712wOtcnC5/Kuv62G2DMoC+
-         SO0WEx5Kf9Ap1CE1feVgQYU9F+hvAgVCYwoCB3C0fV61BdSGPAh5HWlDMhRnEQnSszym
-         otbYaPaf8ZGCATm9/2Z9EIMXibHfV63wnEB+HcNEUEFlkwafRCmEL90aQ5Msywdo7NFN
-         grthkG6mnvibhBeFbXUPh7mAkzaOGKXeOIdTBPNihjv3vuJRFFf87fy7z5+1riTwxzat
-         Kt0w==
-X-Gm-Message-State: AOJu0YxoYPrlMbErUbcuby/3O6NiY9XnU2N77rMfAcp8MdiqUUxS/bFn
-	AISRfU5p+dVlHQIua0d3GzVGoeghDqW68fmeiLzVzTGepo3f8xYqgN5rkmavag==
-X-Gm-Gg: Acq92OFR8kAcKpXljhydKlCVpE9iM4nWgyyGXJ8q9kwnX4lxYSX/YZ0EYvSxaj7SL83
-	ufdLJP/11hUh2NOt4W3D5Lp2n1JzrfCv5fnxu4htR2k5Al7jrjc32vngbin4lKw79W9PQyIJONC
-	oRF6zTM40JofzasRpoty1sZadnWQ1YvD+r/uolQGzgKAYibmgIOc9usET31cMlQjttCOimmufpX
-	BSDvXZZRugGf0w3Xy+pzHZsuZoC6Mt+miSLcOkgo3f0aPlaGzNtw5UUOAVwUi7uewqiIw1XNtfa
-	FdZz5VngU6YcBpBkJNPhVGq+mBZYpmUgd2jabTQ3rnYX6+eKFU0FLAkgnX8Uc8Lu65w63W/sasd
-	c62gnXo3ker8RelJ8fw78tDu/mIsFnyMudVRyH/Wl7BY5aqHPb8uFgtt6KSzvNiPGZTJB9J/HxG
-	DfMB50urI9/dZ5pK4xyJp2aPsCS41Kf+iMlsxfdW3MIwY0hizcVLFjafX2V6w1YsC4uqkNoe4xH
-	qer2xjyQw5krCckV30GpdVBVwPVGum5t1gBD+Ov4hqh
-X-Received: by 2002:a05:6a00:22d2:b0:842:614e:cc97 with SMTP id d2e1a72fcca58-842614ee43fmr2096039b3a.23.1780327380587;
-        Mon, 01 Jun 2026 08:23:00 -0700 (PDT)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84232ef8172sm7352779b3a.12.2026.06.01.08.22.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 08:23:00 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: jltobler@gmail.com,
-	lucasseikioshiro@gmail.com,
-	gitster@pobox.com,
-	phillip.wood@dunelm.org.uk,
-	sandals@crustytoothpaste.net,
-	kumarayushjha123@gmail.com,
-	a3205153416@gmail.com,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [GSoC][PATCH 4/4] repo: add path.commondir with absolute and relative suffix formatting
-Date: Mon,  1 Jun 2026 20:49:50 +0530
-Message-ID: <20260601151950.30686-5-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mx9zzaj8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A4RM8N3s"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A3DC1400106
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 11:36:22 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 01 Jun 2026 11:36:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1780328182; x=1780414582; bh=C7pM4CP0Lm
+	QvbYS4mcMCUnz46tG2yMWn60HlUNNAlFU=; b=Mx9zzaj8SzRUNQ6s9/ckwpAvSC
+	Ri86xSpmVxcRZrOlk4giffXKZc5sK5EM6+bz13KYYDlt6eQ3zoLz1iiGKoJcrmBM
+	5ZbYzckXO+iJIu30IL8JMHlrlgH1HA9aQI6ww1qyw5Zhodhkkdr9Q2TF1grzZfF/
+	N2SbZ05wmrSQamXiqniKMNWP70uJzyp3Q3qMyLu0GGe+iRDTD7ymnlo/Teaxhsv+
+	NyqNBZVQDbE1M6oMTRr0mMfqWZ9pIkEm9L78AIhX7UfMN9+FDTziS+Z8vFXCKlJi
+	pZm4MmcmZmTj+N7q5LRw5Z7z4VUZS/0GVzXgJPxb2AZE8O4lu08eYdhSbWCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1780328182; x=1780414582; bh=C7pM4CP0LmQvbYS4mcMCUnz46tG2
+	yMWn60HlUNNAlFU=; b=A4RM8N3srvJx4AKySJpxlrACvn4b5Y5FCuZwDNWxxctN
+	eTmUwd52sIa/yPsh8EjuwQROxHlY2GkCLVtmr3J1JR818BWITLis+5JDyRKRcOEL
+	GS5M3DfeisZIx6cs/Kbg6KpawBOwxyHBP79U8V6osp8PL9Tdi6g0awV/KO+H5P63
+	+ALRMpwQYnmjjhf4IU7c7WIyfGotEadJ5Td4UbRV0mBA2dqbLojwxdFsFQL75Dmx
+	Gd75U3JrEXyJh3N5dgBKPkUPT6L0tNjky8DQMnkzTPDDwTyWvGDWLwk6avKepSqg
+	YNSTF0if9Li3XZHvIRlvyiBiLnI+9mcnMUPlCxC0Hw==
+X-ME-Sender: <xms:9aYdavelw9wMpLaeFFDNtBHomGxnfora0otLPmF83LnC2C_1h6s4-Q>
+    <xme:9aYdasKovZ67DlsZIbDBaDBIZk36e4S64zTKH8Eg5YK8qHPtZZDY4081yEYkphC6C
+    HTv6I94HIuRIXt3MUq3VDyuqmiAKQ1I3XqDcOQprrxQLFNWnJty>
+X-ME-Received: <xmr:9aYdauKRWUe8Bp_KFfuED9ZpKxsBRNn2aR2nQSWD2gi_hU-KFAhkMJTSh7OEZIXjHCflAIoyQKQbJfDZj8Xm1M2MUELKDKWtmf1Yyz1YzhvL>
+X-ME-Proxy-Cause: dmFkZTEE5UY4AcoDeXKt9E0Hoi6TrXTwJJlMTcU79aVUTX+jhxWA6Xo8IjaQhg1BQk0aLu
+    l+ofzGl/HUxlNkEEL7yB3O3eHJfMxIK/mkcntnCg/7QBBPOq4PsZWRFaQ4RKuLSBVia73B
+    lRf7oRDvcL2spYzb7P8Sm4jnLyoRSdyJb7wL10seR0n5AZWh+7/ge81lvJCrSJPrHHQdz7
+    /ljN4InC2WAtllIEhSArg5Zqc/xG6la2Vlixk+6EBu9DtlVl3Sx41RiiuYPsDIpjqfp/xn
+    vTRg89o4u+oLvhi9DrGBz0i6HCK1UfZJdT+BaRBmtL6YHmzsuGU1uOp/10E2qRGq5lyXd2
+    r5VFMoPeHRlbjN0Hspc0ltxdlgq4x8UhaWclGYlr4tIV9+MpfxFP18AYVZOikzKrGyRWC8
+    1XPSglHUP97grsGHULUMV3iWJjTlSjizms/OT3WuOVK5cFWVRDZSLG08rFAYuLjCfZtKiZ
+    I8ozOrIQ+tk3cb+mXX6+gx+Nat/pQHbIjBGGeUZw4DvbxOk9+d84BVBQFPe+R1O1NauTLW
+    gijYsYH68JkrPW829BuOV5FzAhm2rnI9Xf53RHuQZnRW8zCnNxCJJI1SWpxzHibWeitvAr
+    g1eiCQ1zUEKqyWo/IXlhHFZZaU4Q4sp7QxJpD2l7ia3LLk68HZlB+RHSx4WA
+X-ME-Proxy: <xmx:9aYdamGqAbvRvgNco0PMeskKK-TZ6hUTbYoUN2lIIQ_x6_fx8GM3LQ>
+    <xmx:9aYdarmmWe-keaMED4oWjGEX0ttORWzzcAK_uFUDBms3lLTDfSwN0w>
+    <xmx:9aYdarIfLVdN_0Bz6sO6Oj5fh-3h88NYTcMFVamfYbK8oQdXECOBgQ>
+    <xmx:9aYdakZ0x0uK7Wo_MYYKvzX7FPYpnCR9Y9wyOQjNlKTmXHO-LTFXxw>
+    <xmx:9qYdahNUqXSHekcb_iKcPs5mpUQ6I_Vpmfz0dAsTmfALSl5YpS7iPbuz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 1 Jun 2026 11:36:21 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 44c2d2da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 1 Jun 2026 15:36:18 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] builtin/history: introduce "drop" subcommand
+Date: Mon, 01 Jun 2026 17:36:12 +0200
+Message-Id: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOymHWoC/yXMQQ6CMBBA0auQWTNJqaYIVyEuaBlgJKHNDBIN4
+ e5WXb7F/wcoCZNCWxwgtLNyXDOqsoAw9+tEyEM2WGOdcaZCf8W0KM6sW5Q3DhIT2tvogrs0DdU
+ ecpmERn79rt39b336B4Xtu4Lz/ADu7OdbdwAAAA==
+X-Change-ID: 20260601-b4-pks-history-drop-28f6c6399e7b
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.15.2
 
-Introduce `path.commondir.absolute` and `path.commondir.relative` keys
-to `git repo info`. These track the repository's common directory path,
-extending the path metadata engine alongside the existing `gitdir` fields.
+Hi,
 
-Update `repo_info_field` to store the new keys in proper lexicographical
-order to protect binary search operations, and expand the test matrix in
-`t/t1900-repo-info.sh` to validate separate queries, bulk dumps, and
-key listings.
+this small patch series introduces the new "drop" subcommand for
+git-history(1). As a reader might guess, the command does exactly that:
+given a commit, it will drop that commit from the commit history and
+replay descendant branches on top of it.
 
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Mentored-by: Justin Tobler <jltobler@gmail.com>
-Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Thanks!
+
+Patrick
+
 ---
- Documentation/git-repo.adoc |  9 +++++++++
- builtin/repo.c              | 24 ++++++++++++++++++++++++
- t/t1900-repo-info.sh        |  1 +
- 3 files changed, 34 insertions(+)
+Patrick Steinhardt (2):
+      builtin/history: split handling of ref updates into two phases
+      builtin/history: implement "drop" subcommand
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index a0dca7ce88..ed7d80c690 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -104,6 +104,15 @@ values that they return:
- `object.format`::
- 	The object format (hash algorithm) used in the repository.
- 
-+`path.commondir.absolute`::
-+	The canonical absolute path to the Git repository's common
-+	directory (the shared `.git` directory containing objects,
-+	refs, and global configuration).
-+
-+`path.commondir.relative`::
-+	The path to the Git repository's common directory relative to
-+	the current working directory.
-+
- `path.gitdir.absolute`::
- 	The canonical absolute path to the Git repository directory (the `.git` directory).
- 
-diff --git a/builtin/repo.c b/builtin/repo.c
-index c141ef892a..be24a5a8e8 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -77,6 +77,28 @@ static int get_object_format(struct repository *repo, struct strbuf *buf)
- 	return 0;
- }
- 
-+static int get_path_commondir_absolute(struct repository *repo, struct strbuf *buf)
-+{
-+	const char *common_dir = repo_get_common_dir(repo);
-+
-+	if (!common_dir)
-+		return error(_("unable to get common directory"));
-+
-+	strbuf_add_path(buf, common_dir, startup_info->prefix, PATH_FORMAT_CANONICAL, PATH_DEFAULT_UNMODIFIED);
-+	return 0;
-+}
-+
-+static int get_path_commondir_relative(struct repository *repo, struct strbuf *buf)
-+{
-+	const char *common_dir = repo_get_common_dir(repo);
-+
-+	if (!common_dir)
-+		return error(_("unable to get common directory"));
-+
-+	strbuf_add_path(buf, common_dir, startup_info->prefix, PATH_FORMAT_RELATIVE, PATH_DEFAULT_UNMODIFIED);
-+	return 0;
-+}
-+
- static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
- {
- 	const char *git_dir = repo_get_git_dir(repo);
-@@ -111,6 +133,8 @@ static const struct repo_info_field repo_info_field[] = {
- 	{ "layout.bare", get_layout_bare },
- 	{ "layout.shallow", get_layout_shallow },
- 	{ "object.format", get_object_format },
-+	{ "path.commondir.absolute", get_path_commondir_absolute },
-+	{ "path.commondir.relative", get_path_commondir_relative },
- 	{ "path.gitdir.absolute", get_path_gitdir_absolute },
- 	{ "path.gitdir.relative", get_path_gitdir_relative },
- 	{ "references.format", get_references_format },
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 7c7dfbb052..dd2706e1f7 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -184,6 +184,7 @@ test_expect_success 'setup test repository layout for path fields' '
- 	mkdir -p test-repo/sub
- '
- 
-+test_repo_info_path 'commondir' '../.git'
- test_repo_info_path 'gitdir' '../.git'
- 
- test_done
--- 
-2.54.0
+ Documentation/git-history.adoc |  38 ++-
+ builtin/history.c              | 333 +++++++++++++++++++++++---
+ t/meson.build                  |   1 +
+ t/t3454-history-drop.sh        | 513 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 846 insertions(+), 39 deletions(-)
+
+
+---
+base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
+change-id: 20260601-b4-pks-history-drop-28f6c6399e7b
+
