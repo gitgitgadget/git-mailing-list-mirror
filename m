@@ -1,191 +1,128 @@
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813C8283CBF
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 04:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780287313; cv=none; b=P6ZglAjt0a7wQchAuvyj3QQAn3gGKJi9/ZnEpCrdkx7BvKa77zMX9DkR8H7MR8lYg1ZAt0h0/Pw0pO1sL6wklabJmR8wzBJt7ELf7Z7BF73S1WYm4axpJ5FUjfpfAcaUktBff0pqcQ5W9sNOj/RGhVyP8W4pGzqI4dGH9tD9/j4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780287313; c=relaxed/simple;
-	bh=bLOKoEl7NMos28xVctyBjwZQLXc00Wjt4PmsJEwRyS8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=MkCuxSy8mmpVz/+2oBHGTMzAlc8I4eqB9NjnTJHXib8VbAkSE0a/2H1MpFdihdFO+iDMP9jXCK/OfaM+2txd95Nj9PeiGDnMF7OvQ1PIIt4l0CbzA4d/ij+l/wm+MzCLAy36pOC9foE57gEyoPbAw3OoHAko20/LdT6Gv3qsTLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQnXx/b6; arc=none smtp.client-ip=74.125.82.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655973093CB
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 04:28:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.41
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780288138; cv=pass; b=HbowumdRlACkToorq3zYzui03rM+dMRu4K6dFjMJhNrtCkm4qXbNE+wkHvvcSAB/A/vadgniVVRPb/Hsc/F0VwuchiApQU4/hsAaalBH5kJK3LA4UXcSHWFg8PH2riUKXGVnRCxAdbi6iIRVzqz1+NVmAh6R7mKUnPM+RJCbZsg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780288138; c=relaxed/simple;
+	bh=kEcsOLRbQIX5Ix5fRaLH+Q5UXdTnw7V2K/Mhn7gaQOU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ckTSMYHu/jXesJgVm4SZ8DEXu6jjp3smYn4B6xcbtMdCYpGWJ/2KlaIwBgqXpbN/JxZU1oQSYEsqTVZmDfgn01e1+IgahCiXN5NYaJNAFhr8UtphYjG99YCWLDDb1tGcnhyGLFst8uz3phYTBO/ixate6QRhXTYoTFWhWwmngrE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pF1FFm3A; arc=pass smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQnXx/b6"
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-306f36df4feso510982eec.0
-        for <git@vger.kernel.org>; Sun, 31 May 2026 21:15:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pF1FFm3A"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-43ccdf988beso645117fac.1
+        for <git@vger.kernel.org>; Sun, 31 May 2026 21:28:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780288136; cv=none;
+        d=google.com; s=arc-20240605;
+        b=FJxK/x7DTU/nZhVKYXwe6kzTGP9LW2QYrSrJSq0xRh8BWlX9QFFJTvFHqCdQwlYR+b
+         tpGB5Wqqr9ZtmWsOiV78vOtrQkDhEiEbYQRZEO/YkgHl+ErmOlDbf8TeQJDdqNqdAQjw
+         nsaTwfDNjn9qD7D/ZISIfcCRcYzDO9yjJYxFPSkaO7rRNagk3EpQebgJ6JC4vLNZ506Z
+         U+aCVhnPVlaOYBuC4ScmuM5Vx2hOnaVUnQrHusQs7tU9iPHY7NffyDD2caiRhtP4ezIk
+         jNyNGuVwsmmVKCmSzhCKVMupkYJO1eiCjiOtce91X33jE+BuF9d6aN9dPBXMdtVzwqmC
+         yXwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=WhHy8COOkfuRB+d3pvLUxx6PHrlW3/NH9zngsDwKV0s=;
+        fh=IGLTUFsofzQ1WTuhpXTgnniKjmViKKkyViJB8iCrzSQ=;
+        b=TPsvTmBnfs8cRrzk05s4ZzyHc4/GJzkn8Yvh6pWvY0H5xSba+M0hXkXSVmyh2fNERE
+         +LTuSYrtOjG64OWoAgg780fRmGcqPJHcVXhxTqEVAfa+JiTYJ86KbbIwOIgR76k15VT2
+         XlwSsFPUXvM+bIpACSLJ4jgksaknK65A9XYB4EUWezHoEQz913Jmop6YulNX7URFh0zH
+         UCUeOs99FtRHewGHY4vEof6S56W8CEHKlFw8cN+7c3Xy5BWLnA3USbsIMsh6fXHT7K93
+         obmrvyAzBPSoyGkgu3A5llTSfF9Oczv2WrFiD5dbN9JUQ/hMS/DFAgw7uTy5NkFRdkbv
+         x9lQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780287312; x=1780892112; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CKYw2Vad8pBg05LuHQ94ZXwnZI+vj30Rs9bXAgWkxE8=;
-        b=aQnXx/b69WjGBZASjPYu0kQyVReo5E8Mek90ZdIuNJITNtS1PpVpbKtIPMnO2sc5nL
-         Fc8ZRwQQUsvoHl1wcRJbuT9ykrj5iXY0ToOXO5Ou8/PUcwCX8v0llZhNsigaHyugkYck
-         x0ACB01ldkuUwrkNIGSRfJP79JXFaInLmtI3PZgUtYxSiw8hz6y4pBlcCUNEZzcc+B4s
-         k6Uc2zctw9RntCI3OtxYcsnfUmzNh8Ufa3RSOPwDimtmo4OEG7Rtv/JaH8O4xpYKtkAP
-         sdObZB8fW2wmfOUd9R8VTMOFBtNMicLlPgvx7s41sqfFlfhsAHcMStcDDMnRHykOzl0F
-         +MmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780287312; x=1780892112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780288136; x=1780892936; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CKYw2Vad8pBg05LuHQ94ZXwnZI+vj30Rs9bXAgWkxE8=;
-        b=TM2R4f0jtfEbH+4RyqNzw3Bu1tVlIhq5e29LeU9MGnoQoYyGppVd+GceUH1Ic45aHE
-         NdUa+D9k0Ke/+Xd96n7XNpRz86OJu9KYv1OxyGeVOZ4n2ajDn2/yxTLr2s4+DpEKjI4X
-         c4SOS8Z6VYEQSpJCmRXaS9KVJUYxX1lzeyWlFRZHwShRJQBztuKtJY58GE4dPpS7A/v7
-         NNQ864pPKuJKSJjuo9Ho2Paszd1Ya0FMHsWkIzvodUn1uxIaCGxffQ4WYLVpSk+CmLuA
-         VPslq4y2pi3nBLjjNBwiXgNffWelIPT06UtXNKyXESTXbzyaAMVCpXW9mo99l6jz8fXD
-         O5QQ==
-X-Gm-Message-State: AOJu0YyTUK536C7+UAfbFTkyG7nnuNIwibMXw6Rg4eD4Z7DulOAt7cu1
-	rt+vrwr/zymVcRZYGPW990kGDBAf7aRiB+x4G67hc2HGXqcF7ay3Wl0xGdqahQ==
-X-Gm-Gg: Acq92OE3MGdRGrjnEg4PNOVb4ReO49O0UKOz4i3vZPcXRP05MJCsMDyRDzqf/WmvlNf
-	XHP/4h9xlNLypAWYENG2W9r3x6cimJ3oqtHeuWoV0cyPCCDKCJr/+J/bt4rdWAlxjKJP07wg7yH
-	We6Cm6BynIg2Erv5B8Kw/0ShziG0P5XBCrRUnD7AtkCwyqM/63kuIbLzPGDmHcN2h13arc94weU
-	DMPnw46YyXjWh/qmUDykCx2/h0x2bRm/Pwa47PM2+Ai/8kkHTVL1Il2iaZSI0BBtTdl+2S31QHl
-	giV8S8ASrJLDpNhxN2w3fG8S6COdfYGLzgepbo7pr65h5QrpVhYpaC/b9XI5nztOFTiyYtc42GC
-	XlHkbXiJdQ52wOOjWyXnhQVbBYumNJoUPkeLWz2JeNKOSaxFA+hfUYmjX/KEj2xhYPm7WmzjO/X
-	dS7mhdVcJmlRwdSJHfKBggJruWgHyt/hbAdWLm
-X-Received: by 2002:a05:7300:7313:b0:304:13f3:ecdd with SMTP id 5a478bee46e88-304eaccee98mr4417266eec.0.1780287311314;
-        Sun, 31 May 2026 21:15:11 -0700 (PDT)
-Received: from [127.0.0.1] ([172.208.154.1])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-304ed130dafsm7615896eec.0.2026.05.31.21.15.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2026 21:15:10 -0700 (PDT)
-Message-Id: <pull.2133.git.1780287309846.gitgitgadget@gmail.com>
-From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 01 Jun 2026 04:15:09 +0000
-Subject: [PATCH] sub-process: use gentle handshake to avoid die() on startup
- failure
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=WhHy8COOkfuRB+d3pvLUxx6PHrlW3/NH9zngsDwKV0s=;
+        b=pF1FFm3A/++6dS2hRLg+A06gUqo7+6mzfuY/jUuQlyTDVy0f4FXo32XOhejqBTZXXS
+         wnlDQ79K8kRImEvy09eYsiHYKrTxZiM2b0LJyZDNY4WneJknrzTSebczIm1PBNKC27Q9
+         qWEBg5tZDxROU5+DlCZmpffOAT7gsw12KqmDa27BKdz2B4Ep4vSu0+hlDQSGNv3v40/x
+         cVvRNZG4xEH1mogYEJicq9Hu2SG5hvaLF8X+2NE/1tQoAM04x7dF+TkbRI3BNTGW6xhb
+         +vx3tKM5uaAHSfv42aEx8AWwXwCC1AYhQIWcEH6n1kmcBM1MpFmjf6flmX01SSYJVYY4
+         9DoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780288136; x=1780892936;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=WhHy8COOkfuRB+d3pvLUxx6PHrlW3/NH9zngsDwKV0s=;
+        b=Tse7X244OJPhT7y79vIMJEBZDzCBHcBvAV0Ta+VFzzSIyuwS+R4quhCtO4xUh4wdIw
+         JujRgRvGUGBgCKBZfygcfUTpg56yAtMh9md/A4a93AG4opcslz7BMbQ91Iri//cEJnaG
+         8WxpnlZPT8HaVkGqysKuaTZYok+tjDCozUeyvNw/qFPtIXfjf0+TavpvrBZR5/CcibQq
+         lKSy7P51cgq3Bhuw+hOgOrRdPVIQjNrCDLW5T9rkZPxksPz2m3TlIHdu30uJjECT7tf/
+         Ai3Hy/yd6zMRiqT3zD0djXtqu1WHOSvNFo/wHgNU1zMSQZwUdFPWWH51OZn+zXF9S/HH
+         DB2g==
+X-Forwarded-Encrypted: i=1; AFNElJ+P/e8i4I66axD+yL5OJ6SG1QPTxlgYgIzlVCd4ECld+7Dk5h2fIMRwYKT8A3+ETLnu2jc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxSaZOaZC6oqOHHf939F7tz8RX1x5A3gPBDovbOv8AeWMuUKFN
+	YjFLwiwK0KTwmwiAkhnesueSTPGCqrmnEz91M+q8iwsoBJdI9PlEBCD0eerXMR8HxLhiX8EgC96
+	Oc0//jGJm0T2ywkV7dEWcNlR5LM9FzGi8yju/
+X-Gm-Gg: Acq92OG/joXBAyPLo6EBnFn3ae/8qqY+rb0+lfN6wqdlgxZ3zi4n+8ZG+5ZB16GYWxg
+	fssam5gZx4+GP1b+NZZZzy8doG08hRWpTaw+9IGiDceVI+cd1m6z0YBRg21RBxblPf96+dLbkaW
+	JiGoELPtMmikL8A8tYEWrGq8oW6c8fQtIM+lvd4o5m7Lf0Ppv/jbZL4ULYhnf0LaEeJXYNRwb2U
+	C+viR1Z2lVGr+wYw0kdB7xdBONZmn8er7bTvydRcWQ6A/WyYEWC0qRUlYDJmX7FCG45FU2l1/hF
+	tFFlAdycaQ/tn30OvAZzbSQzRQSgdCQxkg8cAVLmstjpny+o30w=
+X-Received: by 2002:a05:6808:5387:b0:479:e869:5424 with SMTP id
+ 5614622812f47-485fb2a3b1cmr4781907b6e.19.1780288136334; Sun, 31 May 2026
+ 21:28:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>,
-    Michael Montalbo <mmontalbo@gmail.com>
-
+References: <pull.2120.v2.git.1779733799.gitgitgadget@gmail.com>
+ <pull.2120.v3.git.1780087700.gitgitgadget@gmail.com> <xmqq5x43dfk4.fsf@gitster.g>
+In-Reply-To: <xmqq5x43dfk4.fsf@gitster.g>
 From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Sun, 31 May 2026 21:28:43 -0700
+X-Gm-Features: AVHnY4J5TGM1vK4TZcPGu860Y9u4IBvj0hrs-Dsn24MvGdYL_vfPfQB62y-ZVFU
+Message-ID: <CAC2QwmJu=Ud_qQMB7T2zmjiGpxk0=s0T_ZEt4Ei+ssHF2DHZ6w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] [RFC] diff: add diff.<driver>.process for external
+ hunk providers
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When the configured subprocess command contains shell metacharacters
-(such as a space), prepare_shell_cmd() wraps it in "sh -c <cmd>".
-The shell itself always starts successfully, so start_command()
-returns zero even if the tool inside does not exist.  The subsequent
-handshake then reads from a dead pipe and calls die() via the
-non-gentle packet_read_line(), killing the parent process instead of
-letting it handle the error.
+On Sun, May 31, 2026 at 3:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Language-aware diff tools (e.g., Difftastic) and format-specific analyz=
+ers
+> > can produce better line matching than Git's builtin diff algorithm, but
+> > diff.<driver>.command replaces Git's output entirely, losing downstream
+> > features like word diff, function context, color, and blame.
+>
+> This seems to break CI on Windows; take a look at
+>
+>   https://github.com/git/git/actions/runs/26709491830/job/78717295153
+>
+> for an example.
+>
+> Thanks.
 
-Before this change, a missing filter process at a path containing
-spaces produces a confusing error:
+Thanks for the heads up. Interestingly, I think Windows exposed a latent is=
+sue
+with sub-process startup dying instead of erroring out when there is a spac=
+e in
+the path.
 
-    $ git -c filter.lfs.process="/path with space/tool" \
-          -c filter.lfs.required=true add file.txt
-    fatal: the remote end hung up unexpectedly
-
-After this change, the proper error is reported:
-
-    $ git ... add file.txt
-    error: initialization for subprocess '/path with space/tool' failed
-    fatal: file.txt: clean filter 'lfs' failed
-
-Switch the subprocess handshake from the dying packet_read_line()
-to packet_read_line_gently() so that a process that exits during
-startup produces an error return instead of killing the caller.
-
-This affects any subprocess consumer whose command path contains
-spaces.  On Windows this routinely happens because programs live
-under "C:/Program Files/...", and MSYS2 path conversion can rewrite
-absolute paths to include that prefix.  On POSIX it triggers
-whenever the configured path naturally contains a space or other
-metacharacter.  convert.c (filter.<driver>.process, used by git-lfs
-and custom clean/smudge filters) is the primary affected consumer.
-
-Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
----
-    sub-process: use gentle handshake to avoid die() on startup failure
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2133%2Fmmontalbo%2Fmm%2Fsubprocess-handshake-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2133/mmontalbo/mm/subprocess-handshake-fix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2133
-
- sub-process.c         | 11 ++++++-----
- t/t0021-conversion.sh | 17 +++++++++++++++++
- 2 files changed, 23 insertions(+), 5 deletions(-)
-
-diff --git a/sub-process.c b/sub-process.c
-index 83bf0a0e82..22c68bd10d 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -132,18 +132,19 @@ static int handshake_version(struct child_process *process,
- 	if (packet_flush_gently(process->in))
- 		return error("Could not write flush packet");
- 
--	if (!(line = packet_read_line(process->out, NULL)) ||
-+	if (packet_read_line_gently(process->out, NULL, &line) <= 0 ||
- 	    !skip_prefix(line, welcome_prefix, &p) ||
- 	    strcmp(p, "-server"))
- 		return error("Unexpected line '%s', expected %s-server",
- 			     line ? line : "<flush packet>", welcome_prefix);
--	if (!(line = packet_read_line(process->out, NULL)) ||
-+	if (packet_read_line_gently(process->out, NULL, &line) <= 0 ||
- 	    !skip_prefix(line, "version=", &p) ||
- 	    strtol_i(p, 10, chosen_version))
- 		return error("Unexpected line '%s', expected version",
- 			     line ? line : "<flush packet>");
--	if ((line = packet_read_line(process->out, NULL)))
--		return error("Unexpected line '%s', expected flush", line);
-+	if (packet_read_line_gently(process->out, NULL, &line) < 0 || line)
-+		return error("Unexpected line '%s', expected flush",
-+			     line ? line : "<read error>");
- 
- 	/* Check to make sure that the version received is supported */
- 	for (i = 0; versions[i]; i++) {
-@@ -171,7 +172,7 @@ static int handshake_capabilities(struct child_process *process,
- 	if (packet_flush_gently(process->in))
- 		return error("Could not write flush packet");
- 
--	while ((line = packet_read_line(process->out, NULL))) {
-+	while (packet_read_line_gently(process->out, NULL, &line) > 0) {
- 		const char *p;
- 		if (!skip_prefix(line, "capability=", &p))
- 			continue;
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index f0d50d769e..033b00a364 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -857,6 +857,23 @@ test_expect_success 'invalid process filter must fail (and not hang!)' '
- 	)
- '
- 
-+test_expect_success 'missing process filter with space in path does not die' '
-+	test_config_global filter.protocol.process "/non existent/tool" &&
-+	test_config_global filter.protocol.required true &&
-+	rm -rf repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+
-+		echo "*.r filter=protocol" >.gitattributes &&
-+
-+		cp "$TEST_ROOT/test.o" test.r &&
-+		test_must_fail git add . 2>git-stderr.log &&
-+		test_grep "clean filter.*protocol.*failed" git-stderr.log
-+	)
-+'
-+
- test_expect_success 'delayed checkout in process filter' '
- 	test_config_global filter.a.process "test-tool rot13-filter --log=a.log clean smudge delay" &&
- 	test_config_global filter.a.required true &&
-
-base-commit: 29bd7ed5127255713c1ac2f43b7c6f257d7b4594
--- 
-gitgitgadget
+I've submitted https://lore.kernel.org/git/pull.2133.git.1780287309846.gitg=
+itgadget@gmail.com/T/#u
+which I believe addresses the issue, however it seems like there are
+some potentially
+unrelated CI failures going on right now which is making verification
+a bit harder.
