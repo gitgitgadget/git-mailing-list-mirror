@@ -1,81 +1,80 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47E933E34E
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 08:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1526A389DE3
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 08:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780302033; cv=none; b=i9cuoVjKhFjKEeQ24bKgCXvDCx9NsXFGwyajtoMCPHOcuGyrvYeIkpdAj8EkcTujDgEViB4DX32cby1Xqw3GNoaYRFQGY5s+AVBE+9TsHEdRScXu5YZrIPS3sAYbD/WT6DEdTD0r80o38IIWk81MB7KbmHtCWqtcApHQXDlgq04=
+	t=1780302034; cv=none; b=kn5f1lExFs3kJlAnbZd/18/Hi84QAhO9Sr+vVd1tcyHCH6d4eWQfPMSmu/0IZ6ixL5xLAy4D1xzDKN075+mg5ArEq2Klf6gengWj+HUjnaIPxCYW6Q4WhSkOl8nyjHwsD7mJ+Q5my0Uonrr5BX2MNyia5BJd9wMRYeadbvJJC2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780302033; c=relaxed/simple;
-	bh=Y/er6sSgD2Bmby1JoYSuVAOepCR+loeJfYa8yqltHv8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=f52IRMVoUf/vOpvLhvplxWNDXO5yoVN+RjjolP4wTaQG6PaOswWuq091/gZUmfpPY4cNlOC1huJgUHmzMGTADKF182qHEjS+EtXbrEhn94T2ynBZe3yf2sly8ntsF+jV0TIg6jXD8hWbVk//6EuQgMNkNtrjvAdl4w9qzc1uWXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uOBwZctj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=By1aKSca; arc=none smtp.client-ip=103.168.172.157
+	s=arc-20240116; t=1780302034; c=relaxed/simple;
+	bh=qJi9FMGB9D3xPCRNpX16uMi7yxUmdnlcyEPykEr8wqY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PXtpTbYUONgRsckFO4slpraIe8TgxbUkb6zbQFCyRrzwUGpWAM4SDm6gMRmg8ATleNMUWBvgJuvydlN7jVi514+rcd8fhXSCxHKaXyHOvNhj+pcUb5VFMhkTIzGz7bnqJ75vXDADwLxfxgQU+G33gtqoDUeu6wsPmpmO24CX7U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M1fVKVNS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z0vqluFj; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uOBwZctj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="By1aKSca"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 232D11400083;
-	Mon,  1 Jun 2026 04:20:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M1fVKVNS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z0vqluFj"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 53C2AEC01B5;
+	Mon,  1 Jun 2026 04:20:32 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 01 Jun 2026 04:20:31 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 01 Jun 2026 04:20:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780302031;
-	 x=1780388431; bh=Ua3ayZIQisfxqZOyr96CvNodghVTKlen9EqDVulKJAM=; b=
-	uOBwZctjrLITpcoVlTbrVdw5VyN3W9O9EPJewe3plRMbt24l8Eafg7IBWH5iB51O
-	yNmrMBzXENGhqDLcygEHUv77GtszvV+FcCHKLW7dH2mzjKyAF0KeQNbm1ydGbC0x
-	lPpC5OsIXsssAw3P4U+CCF7p62aFLQcNcNEo4A5izveDD0QIqyF6KiE4f/RQV1Bu
-	QVquhaa2LdEPsvvLFo7IIOuESvbSmdhDuEuKjJAk5z6/lKlVbVzpiB3dzM1V6gNX
-	YSACC9Wa8N6Pdg66HE7FLfda0/XY1+wCWqsJ/tcBei7VOy1giX2Ft/LWwm+RFJMI
-	LqBf5EV4AKx2MZgi63ROuQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780302032;
+	 x=1780388432; bh=61PKOZT3JEp0trinZn19shQNIDjo/tR8KcVxFKu9hvc=; b=
+	M1fVKVNSzjGakpdD4R0L1Qbr+xrvQioelLMwWb6YzZJGaDehIH6kaXByQyLLcaVl
+	zAUPm3w6cU9G7jPBokUXrabn7ILe6wzx33Ba2CdrUPLps9tZ5m3E+79olS00lFm+
+	j9x0G9AhWIXH4R7grTCQOSNa4mg+3cskfT+mu2YikzDyLz30rAQCnjPI4VWH+Qa5
+	2qKaoe+faZlou6miYWT+sluef6P44wrh0PV4D2sdVCDhWnarDAwfkOq/3VVJ4Qk1
+	88rj3bbfGsoVTQXy4gAz14EE9bPQv0QIXjkTdw5Q4v0NzRxrtEo+LnsRVeu6j7Dl
+	cnO/NEwLbn0dopSmsMe+UQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780302031; x=
-	1780388431; bh=Ua3ayZIQisfxqZOyr96CvNodghVTKlen9EqDVulKJAM=; b=B
-	y1aKScaNfV3akhIRfpVymCAotbZXJI9lA+tc1ow9p4DDlY/K6nEKBRsG0Jg4uqDq
-	RNZiOVbsuBg7Y4a8/2zFsIKQUIGjpRubR3bme7T5gwGMacWJ3oT3QiSg5gU6qvPv
-	syGHqqjRnYwugutMXWohoEjt6IzhrrJsvAUj/UuXapVzh+9HgzuRgD4v4H/eFBY+
-	rvnhnjPX92RSCuWs/ucM6w26LtiBFvI7oWgQOze9zb6IGORNa2UMRnTXo62uk6ux
-	6T0l/HokjXwdbCYoh83kyUXY2TREh+mUOG1M89MIJMZUSU4c5XTV0wqJKz9ltjnW
-	IsQo/qJy3B7TS9UOuWi0w==
-X-ME-Sender: <xms:z0Adanh-LwO4ocHCl5F6CCEiRockSMMp-ErnNZSJlrrY0W0xjclzPw>
-    <xme:z0AdaqBIDIb1JRvlTsSFjRQuuyMKViSHmtBrm7xZ-gkGEEI0chfnP82is7jnIJ5-Q
-    mVaQSdi75SRrACMZG3X8dn69tTUTX04aDs0Lfj0TWtwUSZetYbDcw>
-X-ME-Received: <xmr:z0AdakuiQwRY1loHEHoWeFW0zD8uqcjYK_2ZjJS0XWnC4Um10QYfaqAV-l9WX91D-joCoMZApAxK6vBJ9vO1-Od9ptLd8N68qOewiHIFJmHJ>
-X-ME-Proxy-Cause: dmFkZTGhTLKBqCArw18o2teAVq/REBEi9flIJLQXc+2XzFd9aX3CWlmd2+bENirqkyuJXv
-    W3ZpKbZXZi6zNk/US128A9RQsCQGBZHXyBMSJ6KG8eO5ZANnqaAwH5R+VBliuE0wTuUgiF
-    P1kUdaX1slS9gtcuhf5GaU1z4KKuxOchEipTNHTWDP+c8kr5WIcgXnWYLbE8j5zm7Wy3uq
-    b6JrwjYXw8vCsxoiyxeh6xP6AWEujJsoCkBXXVkvmXiNH10SAOk3wSZo0TSI9bFQQqooCC
-    Pup8vc+PjTOeM1fIJvuposyE+nTkMf3DdTb7TO+EyLlT8DxFP0W9Ji8xYRE9Yz50MJCWhm
-    hen6rpRxAqhLBXgc/ndCbiHIznxOWyp+CoHdKl6u42m16goyrD0kVCde1dX9XVTgEkDdFX
-    +sHxNhpFpO0avyUyaeMVIDok2NGu0xCVuYtXKMalmbkS+pKQRnEXMG1oAfRZqIrV8MkRFH
-    ixvARymMis9JiBX0XyolkGjsjupxmDBXTcCKWLNupXAipss9BKXGR7VNDOkVVscfvhmNOC
-    ydYnR9k8WIIrT6juknhU1aJ5Z/8CSujVVwuiQMNT+Rpwdne13INOXYTVB1Em/OoD4rb4mO
-    Rn2ORp1gLfVDfHx2n/jy0svSe7nRZqI9MMXBVFZPdEKvRsIU5sFiAh2bMRmA
-X-ME-Proxy: <xmx:z0AdavbEmWN_MaKkd5rX2ICgXZ-YIqXe9QdzPB1zR53ANNycNjyLZg>
-    <xmx:z0AdanVe_F-9vaQd8bGKLu4dgAfOp7K4CAjuknvA1630bGY9T01sNg>
-    <xmx:z0Adaj5BxcIZqnWUE5T-bRf-qG2Qm1fF7OQjl6ImIjUjYinhQXpFzg>
-    <xmx:z0AdaiguV-uDNQTLrPfxiRurQKI9rHFDo_p734bdc2HqXSL2iFIUXg>
-    <xmx:z0Adaq4oPbxfgxHRIaaKuwJwfNdPzZ5Y9F1n93z8-JeFzsFBBFiqQtdr>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780302032; x=
+	1780388432; bh=61PKOZT3JEp0trinZn19shQNIDjo/tR8KcVxFKu9hvc=; b=Z
+	0vqluFjRrCFNr30H8iTl6iksSOgGQxsLb0y37TR3gXuqdyM2NBlj9kuS9A6FDGHS
+	nT9cvEHMWoLYDjFvQQAAjcZt0A2hmrZ+Cq0i1tdiWyM3rTAz9xFwtVQGv56bMRTb
+	YXUUnpKZ3A+Rm7dBLZFsQGwecrMg8tlvwrFdh5o3YyhYhuXJDvyFIiytjloi6BKp
+	PfKe0VUh6wZcDqrmtiqeNmMOlxSSBZeJ/G1DbYS44h71NG2lCiwm3gH8ibw9l0jW
+	XmBML4WgpvQ9SzRmKXl1nhCCnFi66YZlRhnZbM6mibpMP9ZZ0aN/xx19NQ9HvHau
+	8/XRzJ2OL0/cUTvGiCRWA==
+X-ME-Sender: <xms:z0Adam3K0IfZnLucnm643JpIptxNVn2y7Ky63Ci5PqFPieNu8e3hDA>
+    <xme:z0AdavG902TF1F8TjGBp2d0X-nmU6qxdB07PrbZg8XAwvl8B_rDjKUiwuuuVQ36gl
+    jNrvtTEPY1gsKTZ9W7WBx8oMRRv4Opq0wNQHUeWeTFM_mE7V8s>
+X-ME-Received: <xmr:z0AdashbQ3d9KFIGDvYQ1d0DSTT4tYEMe6vp6IfGyQ1-DG0j_v34hDQMdqvAi0GwdybSU_WfkVFrxpQWjj3ZCSNQCfZfpkV_we4atUktN0eF>
+X-ME-Proxy-Cause: dmFkZTGoVC3PWkC/M98GLpgwKSp8+X2EEbK9QrLPRCVzfq6z8mGb2cg1WSKI0P1YF6K99Q
+    xKY18KC2TzQ71gWxrLtHBcpqPwInMMILQwQmN+IaQps5jv2t4yhm/OcWnxr3PAuKdie/5H
+    xdZiEXHfq3CyGlKpLwv2vL5myW19uyY8AtAnQMD9jV84wJQFe0QGymylYpZQO++m8ND1Hj
+    j7fjS2tB+vIBobG7JpZXtzobTDeXEGy6yi7zeMBs162gs+xcsIodAA21pY4HTX/IAVCIU8
+    kOLzJFDG9r9Lr/xlbzdlHVCtb2SlM1MPmdQV95SWFIB7kaTFV8arUy82aX0eqGVCnq+Ehd
+    0kIC0cpKvVBm6FtLFC6QVAaVDX8lpfK197m7uHRRSi9DCW6cSqMxlavdjwuKYhsD292qHC
+    dP3EVNhd+bQRsdNZpKDjeXRJnZgLjtw9hENM51shqIyb67Tn2xWmhQVl2xdZA/lx8f+rfc
+    jUTqla10yfl1fjkEH8G3vPqpnVWA/vzxnPLvZmbuz0Tc4XdjfmkpSkBMf1vm/aT61/taj7
+    DeZ8l84XJAszed3ayYsyuak+jua8sVgoh338c+88vhn4IA2ifzLTb/9IWBI7JKmVohPTOZ
+    88Wfhm8K99iww5hF+yZhtdYqNJ/0Xinif/I2u4GDcZ7d4FpW9u8s4QJNV6gg
+X-ME-Proxy: <xmx:0EAdai8NXoAbwSvTZE-itN028_YawU1IqTHCYp_SEX7uealX2xn14A>
+    <xmx:0EAdarpU_voir6jjVHPwSRF170FaoODz1ZbDqnraBnewusd_jPAOeA>
+    <xmx:0EAdap8aeWMQ9HsqtXIEieraQslEtyVGVwDD9Wf1PS1mnn0MBXjb2A>
+    <xmx:0EAdanXio3D_ETIqtpKHPlz3tCGmzWauRexEHw_3q90OZSbC_Rw1lA>
+    <xmx:0EAdaiOTRM-93EarPTya_F2PxkbyckrBj3Y-SVjnMSrPOB8yvT1YQCBz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 04:20:30 -0400 (EDT)
+ 1 Jun 2026 04:20:31 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f8a14553 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 1 Jun 2026 08:20:28 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2729e2d8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 1 Jun 2026 08:20:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 00/18] odb: make loose object source a proper `struct
- odb_source`
-Date: Mon, 01 Jun 2026 10:20:23 +0200
-Message-Id: <20260601-b4-pks-odb-source-loose-v2-0-90ff159430af@pks.im>
+Date: Mon, 01 Jun 2026 10:20:24 +0200
+Subject: [PATCH v2 01/18] odb/source-loose: move loose source into "odb/"
+ subsystem
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,133 +83,172 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMdAHWoC/3WNyw6CMBBFf4XM2jFtecS68j8MC9qOUh+UdIBoC
- P9ugbXLk5x7zwxM0RPDOZsh0uTZhy6BOmRg26a7E3qXGJRQlShkjqbA/skYnEEOY7SErxCYsNB
- C2JNttHQG0rqPdPOf7fla78yjeZAd1rvVaD0PIX639CRXb6+USv6tTBIFVmWZm1xrQ8pdknb0b
- 6iXZfkBeS23jM0AAAA=
-X-Change-ID: 20260413-b4-pks-odb-source-loose-4900c8ca91db
-In-Reply-To: <20260521-b4-pks-odb-source-loose-v1-0-6553b399be2d@pks.im>
-References: <20260521-b4-pks-odb-source-loose-v1-0-6553b399be2d@pks.im>
+Message-Id: <20260601-b4-pks-odb-source-loose-v2-1-90ff159430af@pks.im>
+References: <20260601-b4-pks-odb-source-loose-v2-0-90ff159430af@pks.im>
+In-Reply-To: <20260601-b4-pks-odb-source-loose-v2-0-90ff159430af@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+In subsequent patches we'll be turning `struct odb_source_loose` into a
+proper `struct odb_source`. As a first step towards this goal, move its
+struct out of "object-file.c" and into "odb/source-loose.c".
 
-this patch series converts the loose object source into a proper `struct
-odb_source` so that it can be used via our generic interfaces.
+This detaches the implementation of the loose object source from the
+generic object file code, following the same convention already used by
+the "files" and "in-memory" sources.
 
-The patch series is relatively straight-forward, as the source basically
-already exists as such and the interfaces already match. So for most of
-the part we are just moving around some code and converting functions
-that were previously called directly into callbacks.
+No functional changes are intended.
 
-I guess the only part that needs some attention is that there is some
-confusion at first with the `struct odb_source_loose::source` parent
-pointer that initially points at the owning `struct odb_source_files`.
-This relationship doesn't make much sense, as a loose source can totally
-exist standalone without the files source.
-
-We're thus getting rid of this relationship in this series, too. I found
-it quite hard to reason about which pointer one is holding at any point
-in time though, doubly so because the parent pointer was named "source",
-which is rather generic. The second commit thus renames the pointer to
-`files` and converts it into `struct odb_source_files` to make the
-transition cleaner, but the whole pointer will be dropped at the end of
-this series.
-
-The series is built on top of aec3f58750 (Sync with 'maint', 2026-05-21)
-with ps/odb-in-memory at d2902a4549 (t/unit-tests: add tests for the
-in-memory object source, 2026-04-10) merged into it.
-
-Changes in v2:
-  - Some smaller typo fixes.
-  - Link to v1: https://patch.msgid.link/20260521-b4-pks-odb-source-loose-v1-0-6553b399be2d@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (18):
-      odb/source-loose: move loose source into "odb/" subsystem
-      odb/source-loose: store pointer to "files" instead of generic source
-      odb/source-loose: start converting to a proper `struct odb_source`
-      odb/source-loose: wire up `reprepare()` callback
-      odb/source-loose: wire up `close()` callback
-      odb/source-loose: wire up `read_object_info()` callback
-      odb/source-loose: wire up `read_object_stream()` callback
-      odb/source-loose: wire up `for_each_object()` callback
-      odb/source-loose: wire up `find_abbrev_len()` callback
-      odb/source-loose: wire up `count_objects()` callback
-      odb/source-loose: drop `odb_source_loose_has_object()`
-      odb/source-loose: wire up `freshen_object()` callback
-      loose: refactor object map to operate on `struct odb_source_loose`
-      odb/source-loose: wire up `write_object()` callback
-      object-file: refactor writing objects to use loose source
-      odb/source-loose: wire up `write_object_stream()` callback
-      odb/source-loose: stub out remaining callbacks
-      odb/source-loose: drop pointer to the "files" source
+ Makefile           |  1 +
+ meson.build        |  1 +
+ object-file.c      |  8 --------
+ object-file.h      | 21 +--------------------
+ odb/source-loose.c | 10 ++++++++++
+ odb/source-loose.h | 34 ++++++++++++++++++++++++++++++++++
+ 6 files changed, 47 insertions(+), 28 deletions(-)
 
- Makefile               |   1 +
- builtin/cat-file.c     |   5 +-
- builtin/gc.c           |   6 +-
- builtin/pack-objects.c |  12 +-
- http-walker.c          |   3 +-
- http.c                 |   6 +-
- loose.c                |  45 ++-
- loose.h                |   4 +-
- meson.build            |   1 +
- object-file.c          | 796 ++++---------------------------------------------
- object-file.h          | 149 ++++-----
- odb/source-files.c     |  28 +-
- odb/source-loose.c     | 736 +++++++++++++++++++++++++++++++++++++++++++++
- odb/source-loose.h     |  48 +++
- odb/source.h           |   3 +
- 15 files changed, 973 insertions(+), 870 deletions(-)
+diff --git a/Makefile b/Makefile
+index a43b8ee067..01356235c3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1217,6 +1217,7 @@ LIB_OBJS += odb.o
+ LIB_OBJS += odb/source.o
+ LIB_OBJS += odb/source-files.o
+ LIB_OBJS += odb/source-inmemory.o
++LIB_OBJS += odb/source-loose.o
+ LIB_OBJS += odb/streaming.o
+ LIB_OBJS += odb/transaction.o
+ LIB_OBJS += oid-array.o
+diff --git a/meson.build b/meson.build
+index 664d831329..c85e598835 100644
+--- a/meson.build
++++ b/meson.build
+@@ -405,6 +405,7 @@ libgit_sources = [
+   'odb/source.c',
+   'odb/source-files.c',
+   'odb/source-inmemory.c',
++  'odb/source-loose.c',
+   'odb/streaming.c',
+   'odb/transaction.c',
+   'oid-array.c',
+diff --git a/object-file.c b/object-file.c
+index 90f995d000..641bd9c079 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2205,14 +2205,6 @@ struct odb_transaction *odb_transaction_files_begin(struct odb_source *source)
+ 	return &transaction->base;
+ }
+ 
+-struct odb_source_loose *odb_source_loose_new(struct odb_source *source)
+-{
+-	struct odb_source_loose *loose;
+-	CALLOC_ARRAY(loose, 1);
+-	loose->source = source;
+-	return loose;
+-}
+-
+ void odb_source_loose_free(struct odb_source_loose *loose)
+ {
+ 	if (!loose)
+diff --git a/object-file.h b/object-file.h
+index 5241b8dd5c..1d8312cf7f 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -4,6 +4,7 @@
+ #include "git-zlib.h"
+ #include "object.h"
+ #include "odb.h"
++#include "odb/source-loose.h"
+ 
+ struct index_state;
+ 
+@@ -20,26 +21,6 @@ struct object_info;
+ struct odb_read_stream;
+ struct odb_source;
+ 
+-struct odb_source_loose {
+-	struct odb_source *source;
+-
+-	/*
+-	 * Used to store the results of readdir(3) calls when we are OK
+-	 * sacrificing accuracy due to races for speed. That includes
+-	 * object existence with OBJECT_INFO_QUICK, as well as
+-	 * our search for unique abbreviated hashes. Don't use it for tasks
+-	 * requiring greater accuracy!
+-	 *
+-	 * Be sure to call odb_load_loose_cache() before using.
+-	 */
+-	uint32_t subdir_seen[8]; /* 256 bits */
+-	struct oidtree *cache;
+-
+-	/* Map between object IDs for loose objects. */
+-	struct loose_object_map *map;
+-};
+-
+-struct odb_source_loose *odb_source_loose_new(struct odb_source *source);
+ void odb_source_loose_free(struct odb_source_loose *loose);
+ 
+ /* Reprepare the loose source by emptying the loose object cache. */
+diff --git a/odb/source-loose.c b/odb/source-loose.c
+new file mode 100644
+index 0000000000..b944d21813
+--- /dev/null
++++ b/odb/source-loose.c
+@@ -0,0 +1,10 @@
++#include "git-compat-util.h"
++#include "odb/source-loose.h"
++
++struct odb_source_loose *odb_source_loose_new(struct odb_source *source)
++{
++	struct odb_source_loose *loose;
++	CALLOC_ARRAY(loose, 1);
++	loose->source = source;
++	return loose;
++}
+diff --git a/odb/source-loose.h b/odb/source-loose.h
+new file mode 100644
+index 0000000000..8b4bac77ea
+--- /dev/null
++++ b/odb/source-loose.h
+@@ -0,0 +1,34 @@
++#ifndef ODB_SOURCE_LOOSE_H
++#define ODB_SOURCE_LOOSE_H
++
++#include "odb/source.h"
++
++struct object_database;
++struct oidtree;
++
++/*
++ * An object database source that stores its objects in loose format, one
++ * file per object. This source is part of the files source.
++ */
++struct odb_source_loose {
++	struct odb_source *source;
++
++	/*
++	 * Used to store the results of readdir(3) calls when we are OK
++	 * sacrificing accuracy due to races for speed. That includes
++	 * object existence with OBJECT_INFO_QUICK, as well as
++	 * our search for unique abbreviated hashes. Don't use it for tasks
++	 * requiring greater accuracy!
++	 *
++	 * Be sure to call odb_load_loose_cache() before using.
++	 */
++	uint32_t subdir_seen[8]; /* 256 bits */
++	struct oidtree *cache;
++
++	/* Map between object IDs for loose objects. */
++	struct loose_object_map *map;
++};
++
++struct odb_source_loose *odb_source_loose_new(struct odb_source *source);
++
++#endif
 
-Range-diff versus v1:
-
- 1:  f25aaf0889 =  1:  7c97c1687c odb/source-loose: move loose source into "odb/" subsystem
- 2:  0bfebeb0da =  2:  1e1e267b39 odb/source-loose: store pointer to "files" instead of generic source
- 3:  35787e6ca6 !  3:  847cb523ee odb/source-loose: start converting to a proper `struct odb_source`
-    @@ odb/source-loose.h: struct odb_source_loose {
-      
-     +/*
-     + * Cast the given object database source to the loose backend. This will cause
-    -+ * a BUG in case the source uses doesn't use this backend.
-    ++ * a BUG in case the source doesn't use this backend.
-     + */
-     +static inline struct odb_source_loose *odb_source_loose_downcast(struct odb_source *source)
-     +{
- 4:  392962c177 =  4:  af543598ee odb/source-loose: wire up `reprepare()` callback
- 5:  b4102668c3 =  5:  884f573f89 odb/source-loose: wire up `close()` callback
- 6:  63da6e4abb =  6:  de85ffb4a9 odb/source-loose: wire up `read_object_info()` callback
- 7:  12b0c5c32d =  7:  522aaa9c3d odb/source-loose: wire up `read_object_stream()` callback
- 8:  8df176e282 =  8:  75cf3f4428 odb/source-loose: wire up `for_each_object()` callback
- 9:  6199ae90e0 =  9:  87c1c9ae5e odb/source-loose: wire up `find_abbrev_len()` callback
-10:  d0b1ef48d4 = 10:  f6405c8070 odb/source-loose: wire up `count_objects()` callback
-11:  0476d8b0c4 = 11:  0e8d6b6487 odb/source-loose: drop `odb_source_loose_has_object()`
-12:  27bb7b0724 = 12:  58cc626dd1 odb/source-loose: wire up `freshen_object()` callback
-13:  f8ce6a169d = 13:  51a22e7400 loose: refactor object map to operate on `struct odb_source_loose`
-14:  7ab570b776 = 14:  a9a88d6200 odb/source-loose: wire up `write_object()` callback
-15:  8c9240aaa0 = 15:  9236d2fd26 object-file: refactor writing objects to use loose source
-16:  de69621fa1 ! 16:  6316efb890 odb/source-loose: wire up `write_object_stream()` callback
-    @@ object-file.h: int index_path(struct index_state *istate, struct object_id *oid,
-      
-     -int odb_source_loose_write_stream(struct odb_source_loose *loose,
-     +/*
-    -+ * Write the given stream into the loose object source. The only difference to
-    -+ * the generic implementation of this function is that we don't perform an
-    ++ * Write the given stream into the loose object source. The only difference
-    ++ * from the generic implementation of this function is that we don't perform an
-     + * object existence check here.
-     + *
-     + * TODO: We should stop exposing this function altogether and move it into
-17:  f2d45e1a56 = 17:  789ec50474 odb/source-loose: stub out remaining callbacks
-18:  070052fc22 = 18:  0a64d23377 odb/source-loose: drop pointer to the "files" source
-
----
-base-commit: 072edab49f312c80561b2899f03f361f74fc38e4
-change-id: 20260413-b4-pks-odb-source-loose-4900c8ca91db
+-- 
+2.54.0.926.g75ba10bac6.dirty
 
