@@ -1,223 +1,121 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14B0226D05
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 16:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479A33191D0
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 16:26:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780330406; cv=none; b=PbxgRmbevoF3m5gO9Ji4aUUblG2HjJKawK21IKeJpcN+gmGYtHTMQGkQP5tyP+sCfdTNjXdWiEwiTaVncSWFnEMY8grnV0r+ofHbBXsivSWCLvgPKa00LRg1H8qefBe6UTQpUAccj4ICbb4bNDgKzjFNwggQtaWeRAOctiN+gN0=
+	t=1780331193; cv=none; b=PCq29+TbrVKymo53NDEmohdjjvqa4YRTuE5EXnE/nAwHq8iYc0aERjEjGo2Mpa73MJ8JSoeDQJnV+2F+dcalhhIE9nfdFjO8KBkowhly0VkvY99gM9zrtJutRTYIPBw8QbBL/e1WbISTUtgqrF8OB7O5e0PalznF57UvB6y/ooQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780330406; c=relaxed/simple;
-	bh=FedJ5pRZXUGlgKZl2VThdWD3tF0EHsy6AzBNUF3kSvk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=C3ABm+9I+uK4ebic5cWKLgzAdJ2zgII5M8UITIb7CCEF+iVirLPEtgVPowFnZZX6/oON2qIaYorAKhHWDm1g+y+5T5QW169qEjQIfzmtMTPT5Npg1fXg7mCXyCY9oOKsOznPl2HtfRL86LeFFau/OmjSfgoy2o98XEeLYRH+IZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K8VVu0xr; arc=none smtp.client-ip=209.85.217.47
+	s=arc-20240116; t=1780331193; c=relaxed/simple;
+	bh=qx5CWUnSaxZzHWQUQaRZTA7wkL0gLElf2XzkYaFSGAg=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=L23vE67tx+UP2png8y8P2fIDWz60U5E7ddstVnMeu7xSNQLJ0QzWR8tzpwfZvb+jsAE+rhWPpAJ/yqKNPwgaAFAwaTYVBicc21qkTZW+IrLOXIYVnOG7St8y57ITjVYlQWEan9nRWyvtZqejQAVOx+phqMSK3Nt/zsVMYOIyBfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qeYaOBJS; arc=none smtp.client-ip=209.85.221.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8VVu0xr"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-6c25b040555so2250187137.1
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 09:13:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qeYaOBJS"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-59b24523cbeso2052326e0c.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 09:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780330404; x=1780935204; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780331191; x=1780935991; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ijtbdvqzL62/8i9TVVWikZMRCduJzMHQs/TmlonlArk=;
-        b=K8VVu0xrnPeP4w56qsFVWkp3e8KKIpswILpmHIrXk1Et+vryf6AjtQ4HgreybNSqmR
-         pFj882VW2yLw1iGbbmwTaL6QCCz6fCfDBle5+CM1JmxtqxSe55r5sNDoaG5v7/CPJFYq
-         pupMMjmuLaC+MpNTO+cTVKbl9plolx480xg8zMtwm6i7+XkUwiPNrZkQyoc0JcrMXbgu
-         3NsU/DUjXQfNWb5/2X8BTF5Fi00riW8rHbonA73+WKxgRHYyEc+t4XHAl2OeKG6XyjDn
-         kVYqi4b7/eNIYWJcn9+FNDWhcGxgRZIciRlf8xKePZPpN8p6KUwyMSIf7+1Ln8pY4sjU
-         1A0g==
+        bh=jQDHLAEc8Z+TDhO39V+bR9xiS9Fe/MRVl4Te6E/qbT4=;
+        b=qeYaOBJSZyJQfKjQpCQHZG3enC0zNplMNszEnRPACcBQQDDBQxB97bWXgT1/P6PAyg
+         6KTvr5UESAOpNkw9K9Ph/EFegY6N5R1SuuFUeNhTL51nSkX04H6UOSGVmBP46xcsMLqz
+         N+iDMSPmuyL7rifj521F2wml+Eh2cPp63Finr/QKG7J44H9hUpld0Uars+YRY9UYjBcZ
+         4jOk56HPDTgw/sLtiyfjEqpUgdBz8f8l6TtB19h1MfYJ6Pg0dgxBG2kzPoWNFQZXrkXa
+         ryM4T0DuZejT4eLTM4zuu1yq/sfnhNTFfQUIzQbgP+plKmP3YT/MYnLliPK+MAkYYIYQ
+         nOhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780330404; x=1780935204;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ijtbdvqzL62/8i9TVVWikZMRCduJzMHQs/TmlonlArk=;
-        b=VMYLWgpS7PxruQIgJTPCPqZx6xyhB9k4ADibbK9XFLWsH970fQAIPNlIuK5DUzDWZ9
-         rboE6ba1Txdd/HtkuX7iJ5dIB85XGVMK860qKXTPdi8Dhck0EEww90yGYLkY4qBS/wJ0
-         5+QJxTTSIluRGD+3Mw1TyJzlAL72nJyqehYxDD8SHiOOO9+iSNsifJh0GzMxM2q5Uq9G
-         Gh2oCuPLD6EceiMgol/Ezpxq0soSvD8VgH7Ph7KGTP/17yQTtH9Kkm+FbUKLPlvcjtP0
-         WgEoQ5kMp22jxwOl7opzIohhJVkc6apy4h6bmtQuf28bZ8UOS4VHjlceBhd7UjYMXuzk
-         zubw==
-X-Gm-Message-State: AOJu0YxE5ib9Y4fqakXoLcv5BZ+0W12DYWqVCb0Qg0v4cTSwytaQGcMz
-	YiN8iRI/rMjD2UF2ZUFIXib9tSRHE8zJBFD5O/x9AgbEDyXupAcVzL04GnKsRg==
-X-Gm-Gg: Acq92OFfYMY8gaJ7FO3o951XYivnYek4b3wbAia7a1hwTmv+1Fjpb6P1WZJ1Lu/Kz2q
-	fgOPuGEsbEV2ddFn3GQf+VNAzhOn4ys6cwpSZteyt45HVSdPyHyqdfFNaHgLG12sc0WjP3mK6S/
-	THGQ5nt2b6R1rf+kvfLw5ZqlPFzwkB+yq8hXGouvIFyTcerM2WH+Sadn3cw8uwe5e3qpe3gfoHJ
-	RtGUYBOU/Y9cfvI0LEMkJlUD3AQWJLxXXHbCyfFS6uReiga2p8vCS9zbJoMw+TmmnymzlM2GEG7
-	wX9wX7wERu245Tl1lXucxn67wYqC1YtuMI90y0g6Yw4BMMMvlAPjaCk2ktWHZlCdcsqlJRfEwAX
-	7iA97wLVfghyOb9gHE1NJjUQh4zIovtn5oI5OcAnHc5eFs4fccNqkBzsU30G6IQFsIskd6ilQLO
-	BGSd4l/vjBX9VCh2ye6MVBAIOoV4fx2zxCMWljHNMMhPaM6i0D
-X-Received: by 2002:a05:6102:9d0:b0:607:95f4:53b5 with SMTP id ada2fe7eead31-6c6771bb25cmr5323499137.4.1780330403504;
-        Mon, 01 Jun 2026 09:13:23 -0700 (PDT)
-Received: from [127.0.0.1] ([172.203.30.208])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9156f657240sm134663985a.22.2026.06.01.09.13.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 09:13:22 -0700 (PDT)
-Message-Id: <pull.2131.v2.git.1780330402264.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2131.git.1780070763044.gitgitgadget@gmail.com>
-References: <pull.2131.git.1780070763044.gitgitgadget@gmail.com>
-From: "Arijit Banerjee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 01 Jun 2026 16:13:21 +0000
-Subject: [PATCH v2] index-pack: retain child bases in delta cache
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1780331191; x=1780935991;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jQDHLAEc8Z+TDhO39V+bR9xiS9Fe/MRVl4Te6E/qbT4=;
+        b=rlFM9p374LF6KenBMyT4RIAgfW6/7t7OYKgM4tqmFvbeu1uBXC5uMkLnXGnIm5wbfa
+         H6zGZFARgaB7h4WqfA+BG9JCDgHtzw7vEFTMLWjKZ3aYafqX4bwLsYo9ZLlrdyQAFW4j
+         Qi0uz9YkW8GTLPNxWfEsbjDAa/78JarGwJVDxYBakDle2mbjFRFSlkV8gP3UdTc1GsRo
+         7FKA75VUmwhStW6DFTAUPH6EYl8y0iS2llJA3imNCBB0FRpzXSEpnBM7VDP0LLweTaXK
+         1L87ol9qzd3saK2xx+c1waWTxXdOcOFcS1ZT5w+DIIbsQgRCOMjZ4xarLh1/vSpQiuEU
+         X/zQ==
+X-Gm-Message-State: AOJu0YwjdZnODu8Xn1x3zJMn4yNeoWG8T1abVasqEC+A3Dc5QdCt7pA8
+	2Yl3jpSP1dmOpf+tx82WcoUafTP25SpZ7dAYS2toU31bUmJSgYu7M+ST
+X-Gm-Gg: Acq92OGu7Fmo7D4DX4bCmQTZTOw555jgKlxgvbB9bmmFmFlh9V44ZkyKH0PQ5ABWjPS
+	7pqbEvCaA9dC92zD2De/gOdR1OpEQp2hZduGow8qSMJF8JQpjRnmaOBC/WLM4htDyAO7V6FEJqL
+	ZKqZrb5hGIBT36OPXtsMKV48rIY5Wao0eP2xaZ/BZUkSQzev9Pabcb6Dvebn6y5IpzY0++qRvWz
+	nnPyqgrvM2G1xQS7Rm4ev1Pw/n6+mu30ua9sNZbneJ2qiiy2UUmbfmND3x4J+mn6pDhPkd3hOPA
+	YO1TaSjsEqQWZvZQGJEBvBg77wJwqvtWbm7gzSkfIFfbSiNIH/ejj8uhKXYArloPRJQ+CukD/M9
+	H78Q/yA8qMJLIzPnhQ3wcEjhABgxJzDFPmaGoprV6zSbOQ5JPE2cqCL5KO8XGpe+6/1PVPmOi5S
+	hV4UUPtaUuIC0Ou1oZvOGbXpDbkqWcemTF2vQZzPyHVEED66kiWUoO6Pkd486gpNNz0j3YPPvyr
+	A==
+X-Received: by 2002:a05:6122:514:b0:57f:a2f8:d2a with SMTP id 71dfb90a1353d-59bf57c28c6mr5921957e0c.11.1780331191385;
+        Mon, 01 Jun 2026 09:26:31 -0700 (PDT)
+Received: from smtpclient.apple ([189.62.148.96])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-59b7521675bsm7089233e0c.13.2026.06.01.09.26.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Jun 2026 09:26:31 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Arijit Banerjee <arijit91@gmail.com>,
-    Arijit Banerjee <arijit@effectiveailabs.com>
-
-From: Arijit Banerjee <arijit@effectiveailabs.com>
-
-When resolving a delta whose result has children of its own,
-index-pack adds the result to work_head, accounts its data in
-base_cache_used, and calls prune_base_data(). It then immediately frees
-that same data.
-
-This bypasses the existing delta base cache policy and can force later
-descendants to reconstruct the queued base again. Let the existing
-delta_base_cache_limit pruning policy decide whether to keep or evict
-the data instead.
-
-This does not add a new cache or increase the cache limit. The object
-data is already accounted in base_cache_used before prune_base_data()
-runs, and the existing pruning and base cleanup paths still release it.
-
-On a quiet Ubuntu 24.04 VM with 16 vCPUs, 32 GiB RAM, and local SSD,
-direct index-pack timings on single-pack Linux fixtures improved as
-follows:
-
-  linux blobless: 69.17s -> 57.98s (16.2% faster), RSS flat
-  linux full:     280.72s -> 236.32s (15.8% faster), RSS +1.9%
-
-Five-repeat medians on public repositories also improved:
-
-  git.git:  12.31s -> 10.70s (13.1% faster)
-  libgit2:   3.35s ->  2.88s (14.0% faster)
-  redis:     6.52s ->  5.64s (13.5% faster)
-  cpython:  33.02s -> 31.44s (4.8% faster)
-
-The standard p5302 perf test on a smaller git.git fixture was neutral:
-
-  5302.9 index-pack default threads:
-    11.21(38.07+1.33) -> 11.16(37.90+1.31), -0.4%
-
-t/t5302-pack-index.sh passed, and GitGitGadget's linux-leaks CI also
-exercised that test under SANITIZE=leak.
-
-Signed-off-by: Arijit Banerjee <arijit@effectiveailabs.com>
----
-    index-pack: retain child bases in delta cache
-    
-    Speed up the local pack indexing phase of clone/fetch for large
-    delta-compressed packs by keeping reconstructed delta bases available
-    for reuse when they are queued for later delta resolution.
-    
-    When index-pack reconstructs a child base and queues it for resolving
-    descendant deltas, it currently frees that data immediately. This can
-    force the same base to be reconstructed again. Instead, keep it in the
-    existing delta base cache and let the existing delta_base_cache_limit
-    policy decide whether to retain or evict it.
-    
-    This does not add a new cache or increase the cache limit. The object
-    data is already accounted in base_cache_used, and prune_base_data() is
-    already called at this point.
-    
-    Correctness:
-    
-     * t/t5302-pack-index.sh passed all 36 tests.
-    
-    Benchmarks on a quiet Ubuntu 24.04 VM, 16 vCPU, 32 GiB RAM, local SSD:
-    
-    pack baseline patched wall-time change RSS change linux blobless 69.17s
-    57.98s 16.2% faster -0.0% linux full 280.72s 236.32s 15.8% faster +1.9%
-    
-    Five-repeat public-repo medians also improved: git.git 13.1%, libgit2
-    14.0%, redis 13.5%, cpython 4.8%.
-    
-    Perf on the linux blobless pack showed the same direction under
-    profiling: 76.64s baseline vs 61.09s patched, with similar RSS.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2131%2Farijit91%2Findex-pack-retain-child-base-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2131/arijit91/index-pack-retain-child-base-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/2131
-
-Range-diff vs v1:
-
- 1:  cafb1700be ! 1:  42eca38f51 index-pack: retain child bases in delta cache
-     @@ Commit message
-      
-          When resolving a delta whose result has children of its own,
-          index-pack adds the result to work_head, accounts its data in
-     -    base_cache_used, and calls prune_base_data(). It then immediately
-     -    frees that same data.
-     +    base_cache_used, and calls prune_base_data(). It then immediately frees
-     +    that same data.
-      
-          This bypasses the existing delta base cache policy and can force later
-          descendants to reconstruct the queued base again. Let the existing
-          delta_base_cache_limit pruning policy decide whether to keep or evict
-          the data instead.
-      
-     +    This does not add a new cache or increase the cache limit. The object
-     +    data is already accounted in base_cache_used before prune_base_data()
-     +    runs, and the existing pruning and base cleanup paths still release it.
-     +
-     +    On a quiet Ubuntu 24.04 VM with 16 vCPUs, 32 GiB RAM, and local SSD,
-     +    direct index-pack timings on single-pack Linux fixtures improved as
-     +    follows:
-     +
-     +      linux blobless: 69.17s -> 57.98s (16.2% faster), RSS flat
-     +      linux full:     280.72s -> 236.32s (15.8% faster), RSS +1.9%
-     +
-     +    Five-repeat medians on public repositories also improved:
-     +
-     +      git.git:  12.31s -> 10.70s (13.1% faster)
-     +      libgit2:   3.35s ->  2.88s (14.0% faster)
-     +      redis:     6.52s ->  5.64s (13.5% faster)
-     +      cpython:  33.02s -> 31.44s (4.8% faster)
-     +
-     +    The standard p5302 perf test on a smaller git.git fixture was neutral:
-     +
-     +      5302.9 index-pack default threads:
-     +        11.21(38.07+1.33) -> 11.16(37.90+1.31), -0.4%
-     +
-     +    t/t5302-pack-index.sh passed, and GitGitGadget's linux-leaks CI also
-     +    exercised that test under SANITIZE=leak.
-     +
-          Signed-off-by: Arijit Banerjee <arijit@effectiveailabs.com>
-      
-       ## builtin/index-pack.c ##
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [GSoC][PATCH 0/4] teach git repo info to handle path keys
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 1 Jun 2026 13:25:16 -0300
+Cc: git@vger.kernel.org,
+ jltobler@gmail.com,
+ gitster@pobox.com,
+ phillip.wood@dunelm.org.uk,
+ sandals@crustytoothpaste.net,
+ kumarayushjha123@gmail.com,
+ a3205153416@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <289C2CFD-EE70-43E4-87D9-DA3393A572C6@gmail.com>
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
 
 
- builtin/index-pack.c | 1 -
- 1 file changed, 1 deletion(-)
+> 1. Should there still be a --path-format flag?
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index cf0bd8280d..027c64b522 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1212,7 +1212,6 @@ static void *threaded_second_pass(void *data)
- 			list_add(&child->list, &work_head);
- 			base_cache_used += child->size;
- 			prune_base_data(NULL);
--			free_base_data(child);
- 		} else if (child) {
- 			/*
- 			 * This child does not have its own children. It may be
+If you specify "absolute" and "relative" in the keys, it won't
+make sense to use it.
 
-base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
--- 
-gitgitgadget
+> 2. Should we consider a default option?
+
+Some pros and cons:
+
+- Pro: some values make more sense to be in absolute or relative
+  format
+- Pro: it's boring to always add `.(relative|absolute)` to the
+  paths
+- Con: it will be perpetuating what git-rev-parse does, and we
+  don't git-repo-info to be git-rev-parse with a different
+  interface. It's our chance to learn with [1] for example.
+- Con: the user will need if the value is relative or absolute
+
+> 3. Is printing both absolute and relative in a single call
+>   using --all acceptable?
+
+If you're providing both keys, I think it's not only acceptable
+but mandatory. `--all` should mean "all", not "all, but ...".
+
+> I have discussed these changes with both Justin and Lucas
+> internally. This series is presented to gather opinions from the
+> wider community before moving forward.
+
+I probably sent the same comments internally, but I'm sending
+here to share my opinions with the rest of the community ;-)
+
+[1] fac60b8925 (rev-parse: add option for absolute or relative path =
+formatting, 2020-12-13)
+
+
