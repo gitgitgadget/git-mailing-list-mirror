@@ -1,82 +1,85 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE37369D65
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 23:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1C83672B1
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 23:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780357432; cv=none; b=VtY2Jfrwo5na7edBoCevunD72AxWKj5gPQGNt8vX8wXS1D/umlBhZ16qlBefgWRw08pKLezwIXcsJB9BfW1CoR5niHj3jxTqnDQT54DsZuqoY8JYktwC+MM5XDQUei/cOTATJhG+1mzuc4mpuiAWGpwMmlFHFUHNPjM6yhjFFXQ=
+	t=1780357522; cv=none; b=R2vVkSqdrYnoFwLYGDToFOFOqBTx3gRTnHNhFx+WTZwNzOYPN5p6UaMSWX0G/rM41yBx/odmQdTF1O3axWaMzlwAsNVsW5dHXAxW/AMYKpFB+GJMABRMEDDEbM+BiCCScqvkQbuxTIvGsbPuoHBbx9+bfcH9jdUjC/eNwvSWD7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780357432; c=relaxed/simple;
-	bh=wZ2jmUkumkVqluAgklF+Br/xCWiDnMEJPTf4qANnnMw=;
+	s=arc-20240116; t=1780357522; c=relaxed/simple;
+	bh=A7ZNF5JS3LVkIlKtv9B1313/mquu2SJ1v9bn0Q4C/h4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tw/tHpPn/l/3MmO+G6ar6cNKx3S2GN2ApAa8VwsX/xk+eOQa/miLgOZg10/vMNQ6cYHE27Oay2dGsM/vRn9CvoFM9/NbbKo031Ao39bgXXnPzhopRRVw5NcurGIcRSc+lLNSgdzRo5UJ4+Ugx9EL6DZUJJsHsP5mw9KLzaPx20I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GubaYbR1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jzxn0tKN; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=EMxCA6S89tccaVA1ZFYz/0LkYEphpz2DqUrDYXq9dDb3eP6IXlKBawngmBy3E31W6JBxYGrvRIdH1GBqvH0KAauV01HG1OWJnXPikoZUnjYYOxU9Q8GYOS7bRK47YFnKRlKp9na85GW7p6eNznzm3LCGC+YTtBOfMh6RMU+R8xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LGoUXuNB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cyXz9od1; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GubaYbR1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jzxn0tKN"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8AD487A00C3;
-	Mon,  1 Jun 2026 19:43:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 01 Jun 2026 19:43:50 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LGoUXuNB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cyXz9od1"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CD1F87A010F;
+	Mon,  1 Jun 2026 19:45:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 01 Jun 2026 19:45:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780357430; x=1780443830; bh=Z6oa//91cJ
-	gFk+kPyrVfnzYO/KrYGkLYeBa1oN0UByY=; b=GubaYbR19a8nTmIJ+w9uPQnU/k
-	xRqPF3proOogVZJ1HeytlsFhNIb1e4LhTORcurQqcn0wvuhusRaM/Fkv+cnNAT4j
-	53Qk+yRIVG1qQrcUXWxabWD1cwNWwK9jRzoaovAwUM9AqaA534lGo/FGubOVmWSS
-	X2rOR8y4zGM/7MWRyzt42B5ixl40fIY/1qYipbHyDLRLUrnrZzg6zTRXV8w+K042
-	3pVaW7joD/+LhPVaXYELg0DBZey6K6+Hx5Go3jr+oLwG7twrz6jJTeHPJZW5oIRP
-	QV1N38CelITVv+PM+M+GMgaeoxMTRpeX9LBLYPmdvPl+ZoqjTk2KSIjcjctQ==
+	:subject:to:to; s=fm3; t=1780357520; x=1780443920; bh=Dla/WpeQMu
+	waqUd0VX2Krnf3XHgmtzrWjcdnqsSkC8w=; b=LGoUXuNBjZDbwMos5oHtsWdJeP
+	vU8qRlqzXROuEHRcVYssm13++7oAU7kEQU8GpoOjheZPVGTxgXm+iyxaKNV97S6c
+	zoYngzrsWDi6SNVZAH7iwshCtErAUV+lc2DqKVud85E3YVRZUhZsy+AL7wAaHjlF
+	1Rh5rqsG6DZ0uWlVnVRVCzXvQZw1uW+OrMxfHjZ68siQSOVbkLNluJirpxxg60Yd
+	tAqEKfUGMV7JM+mtVIn4ENhMGOQpBKRpL1X30fTH5sNnNiThGw5ck02948zz6+Nx
+	9VrOKdilLgXMX+swDb5GbiyTrCp3mo1Si6cgQAm2KILzUj17R/ByQ4opIL8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780357430; x=1780443830; bh=Z6oa//91cJgFk+kPyrVfnzYO/KrYGkLYeBa
-	1oN0UByY=; b=Jzxn0tKNpmDGk2evpbyEDu8KvceoryrTw4u3hIxG3+Brzv4f1pd
-	Wrx4XR63RWXZs0chrP1n+lskfeiyn9oHEXk116ao8dKnFyWccbfPgZvuObT4ELGV
-	XbYwAns4Rqn6/x8YSRzFYlSh6g8WHRwC+Un7vT/OglaUTgyaspGOB7lv+mKm1HXS
-	n9TdnA6q3Ov92zbMsuPTpqm0GTEiSBHVeF0qamUDDJywlMw93xMlcDMqGBeZdzNB
-	OcU/j0rkMLqvz+gxkIN440skygzEHmw6wLS/zIWOv4TL/iytJ+tmg3oYAFQmCg6a
-	krWP/BP6NsF0uBZ2VoirBlBzUVEvVXEpo+A==
-X-ME-Sender: <xms:Nhkeai50-MDzj2HZSUpPAqTzpWOTDRb5e-awiEs-XuSqA1_6TPhb8g>
-    <xme:NhkeajXDZBJeUDtCfKUdPF8CO5tceXeDKxvFU7P95ND_oboQ58LjCFsNwXMeW3Jj9
-    uPwSbEqcOaXMbsc8kp_n5LwqB9Qt90Rfl7BXx1nIGSH7syQ4qIHuQ>
-X-ME-Received: <xmr:Nhkeau3DonsW_ErS3b_48kdX27puYXLMT-ZO8MlRwgSlj4u193uMoVnlMXh-rIvdVFBUTdrGL2rxCb6yKEG6OqROyyXBAT37Q_Tx>
-X-ME-Proxy-Cause: dmFkZTFwk/sFl0comeeXUsOLDXynua7yNiQfZyIeH+s43ZwbP5McZoVzIMSlwym0iQ/+HG
-    wMpnTlg0C7Wa3vNdsaWlKmvgEWMt+FkZdus6t5BOVdXD9anLT3kxKoRmAJ8e5rVG1dqB2w
-    T/fmPuq3CAkNIgQSmw5jYfSiAtLPqRUxB8D4Xn1JIRawYtXZUER7TAhtc0+ornT5awElz0
-    yKDnyTpTvlTAr7B9G10MXks37HBARkj6OGz0fpTyizuP7rCKei3sECEzWNBBe3D4QpqB+1
-    GcaWq12LuWjrPMirWEukVZOFjI5jrwtO9FDqYaLf09gjCNzV/vB1rtG0N7S3Bdzv/uBxPq
-    LBpv09MG5yzJkZpEKP22xPX4vzTU+rKCWs10/+3MQIM2r29kRy0W5KVVlfGodk3/SBw0G7
-    LhTejw/ILvYxcKheQ+DcuZHr7TB0XwanpukgQ8OarbydtctQQzD/R/4xaDKsAFNC0uQfyd
-    okELXAgt/ptIhQDAq347UwbAZ308OABK2PvZ6x+Hh4fnrvbWpQsfds3p6KIdAQykI5jvY6
-    Z1FXK+9GrJ8BrFWYzN/cVixeK/6wESdVKOcHPEEdh7x8ky0L9kIcqusf16CSL1gtUACRYh
-    Oiwut5vdO9UlnTLLi7j8Na3c4Y2x7d6NOKlyUrgq556+4Ng4wtibdXLmXDlg
-X-ME-Proxy: <xmx:Nhkeao3dmu1onTz_-4DU9afqYmsvjyUnQNmc0RyKuqbVKAK7mZMlow>
-    <xmx:Nhkeap9-WjyGj_FwhUttoo1v-Gxf5NkjP_4LMJDKMrJaina4EY3XKQ>
-    <xmx:Nhkeat1EcKfHGsfyKcnGHkFTK5DBcj5em4CcPFStlU2zQzy3aPUk8w>
-    <xmx:Nhkeau_pOrgkOspZy6FjTa6M3sb0-KLc9oUpIsps3L1uf0-T4_AeeQ>
-    <xmx:NhkearfvUlJqzb48J8J05dHs6vr9MRAhdJhWaWPBsoNUadyEcL6wp1wK>
+	1780357520; x=1780443920; bh=Dla/WpeQMuwaqUd0VX2Krnf3XHgmtzrWjcd
+	nqsSkC8w=; b=cyXz9od1kvXEivs8oHyOBgriN/SKlI2frAIHtcICAar2FmNLTDA
+	dQp9JwTKKlTDxD49OfQ4qj+3Tgd1M9zfv5wFaFVTpf9cuXUMVG6HgPB5KawrOFVq
+	ZeByTtjRqD62IxvMKhDKR6719K8j4+8OF2cix3HT8Pnx90QbXLAvUcUlWX16SmRA
+	nAs/0U3wUXqpK8o6LQiClt3PirNQWaOehSb2lOkRp72ckIBCDZcmmSRSIuiIM7my
+	e1AdDZjSIBDwQA0ai8FK98DM0yIreTza0iExSn/rp4V5+7YIryDzRbeOubEwuKws
+	jB4zGdM6Tqq/ND8AYMZbbYaUmoUdcUza+EQ==
+X-ME-Sender: <xms:kBkeatKssOGKY56jK3XN2aRCYyPF7IElc69M_OGsjUTAvcAIkxNF_w>
+    <xme:kBkeagAoQ1ztKQ84FGe0kn8LnodozJyl5u30RsanVelVN3pSCMWia0MH6W5jVxDrm
+    P_3R9aFyUhovW9wVn7VVIiPvWCdwuYj7suRtFtiwzJVByuc5uQC>
+X-ME-Received: <xmr:kBkeauCamiEdWsZWh4B90J9MPQF1uPtJPxPM4sXNt_cw5d9ggLJJ3Dle_pUR4CdWIcRaImb_bseDyuw5gLNMG-zQq5OeuUzIYMNV>
+X-ME-Proxy-Cause: dmFkZTGMX0DjqJn8Rvk636BTh2fHfrPsHP60i2R+Uzhcndwd9BhweGpHPEb/T4cAjovg95
+    iNxBku02iEWie576EprXTfKIu1rjzerKFMuDdj3QxU7NIsq38WUTDOAM1DTkNuAN/s1zv0
+    URhNk9KFuFhJcp395t6kgyXL1u71tEVmRR1kztm/FJj1pjArGZHMbVxjjnDx56EOIfZKew
+    QzCLVXVHoZbH00AN2p0eUfZo9xZgKbAq33edFJj9gu/yz6PNbNjYGGx4cTFzh+oV6phAlI
+    eaFTjeMaBJ/wBT9q1PdvAs397X0xCldsN9SHWyZZsQQt2Fn/lYpWsNlkgKvQ+A1KH0D8CI
+    7DfhGX58jgwIj+RmlLBj9i6Ew0iA0La/Ww+PNSc5py54w7MltQcZ+TR+awn36XGyxnmdyx
+    vibxrSZvoKOV5eTgsxqeQSTl8u5O6abx2bFeFaDvoy3uqrzA1ereLLfKMuv8G4u8kiHdrl
+    wlZRyOEL2IsTBlXTvyRN1QoF3tLCa2M2DmAgpyDa6dnHaUssSQCvzQ450GsJQJa12oGk6N
+    nZMcQF+Xdmjsf0EUFUiE0YBo8uNiu7OeL4C1QVBoSOWnPOBpyF7lAh/FDf5Hvj+tw3GPr0
+    TSTH1M/i2PVUros8UlMQqnIcsZqcEspVN8RuWyr2T9Fwk06Y6n9gCQ8ZnqFg
+X-ME-Proxy: <xmx:kBkeaqBbGsKUnheJsztn2FT2AiBhgQ7B4dZRy1Ol0VL4SPjgnesnWA>
+    <xmx:kBkeahqAIMBzy3YMY0yFuoXwLjEgK2woYeLx2h8WQ8udM8RBbo_rVQ>
+    <xmx:kBkeaslA4qgGAdd68vCbZzKzZUHXcDv3wFUE_9dyyGTGDht8tD6mYw>
+    <xmx:kBkeapxzD4wJZmHXhoJw_WvCjPgLtCdrVPxvipVN9vxY6mELJc1Bhg>
+    <xmx:kBkeatSFw2Ofrq3HcxTjXiVoXjhSpd1xMbdYBzK55XIALt8fKwu2qhw2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 19:43:49 -0400 (EDT)
+ 1 Jun 2026 19:45:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/history: implement "drop" subcommand
-In-Reply-To: <20260601-b4-pks-history-drop-v1-2-643e32340d55@pks.im> (Patrick
-	Steinhardt's message of "Mon, 01 Jun 2026 17:36:14 +0200")
-References: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im>
-	<20260601-b4-pks-history-drop-v1-2-643e32340d55@pks.im>
-Date: Tue, 02 Jun 2026 08:43:48 +0900
-Message-ID: <xmqqbjdt25e3.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v4] config: improve diagnostic for "set" with missing value
+In-Reply-To: <pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Tue, 26 May 2026
+	19:21:27 +0000")
+References: <pull.2302.v3.git.git.1779697995418.gitgitgadget@gmail.com>
+	<pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Tue, 02 Jun 2026 08:45:18 +0900
+Message-ID: <xmqqa4td25bl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,59 +88,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> A common operation when editing the commit history is to drop a specific
-> commit from the history entirely, but this operation is not currently
-> covered by git-history(1).
->
-> A couple of noteworthy bits:
->
->   - This is the first git-history(1) command that will ultimately result
->     in changes to both the index and the working tree. We thus have to
->     add logic to merge resulting changes into those.
->
->   - It is still not possible to replay merge commits, so this limitation
->     is inherited for the new "drop" command.
->
->   - For now we refuse to drop root commits. While we _can_ indeed drop
->     root commits in the general case, there are edge cases where the
->     resulting history would become completely empty. This is thus left
->     to a subsequent patch series.
->
-> Other than that, most of the logic is rather straight-forward as we can
-> continue to build on the preexisting logic in git-history(1) for most of
-> the part.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> ...
-> +static int update_worktree(struct repository *repo,
-> +			   const struct commit *old_head,
-> +			   const struct commit *new_head,
-> +			   bool dry_run)
+> +static int is_valid_key(const char *key)
 > +{
-> +...
+> +	const char *last_dot = strrchr(key, '.');
 > +
-> +out:
-> +	clear_unpack_trees_porcelain(&opts);
-> +	rollback_lock_file(&lock);
-> +	release_index(&index);
-> +	free(desc_buf[0]);
-> +	free(desc_buf[1]);
-> +	return ret;
+> +	return last_dot && isalpha(last_dot[1]);
 > +}
 
-The function looks very familiar---anybody who wants to perform
-"checkout <other-commit>" needs to do exactly the above.  It is a
-bit surprising and disappointing that this topic needs to *invent*
-its own helper function and carry it as a file-scope static.
+None of these are valid configuration variable names, but this
+function would allow any of them, no?
 
-> +	if (head_moves && update_worktree(repo, old_head, new_head, false) < 0) {
-> +		ret = error(_("failed to update working tree; "
-> +			      "run `git checkout HEAD` to sync"));
-> +		goto out;
+    1foo.bar
+    1foo.some.bar
+    foo.b_r
+    foo.some.b_r
+
+or does the caller reject such "key" before calling us?
+
+> +static NORETURN void die_missing_set_value(const char *arg)
+> +{
+> +	const char *last_dot = strrchr(arg, '.');
+> +	const char *eq = last_dot ? strchr(last_dot + 1, '=') : NULL;
+
+OK, the intention is to see "foo.bar=baz" and guess that assinging
+to "foo.bar" might be what the user wanted.  eq here would point at
+that '='.  And ...
+
+> +	char *prefix = eq ? xstrndup(arg, eq - arg) : NULL;
+
+... prefix is our own copy of "foo.bar".
+
+> +	if (prefix && is_valid_key(prefix)) {
+> +		error(_("missing value to set to the variable '%s'"), arg);
+> +		advise(_("did you mean \"git config set %s %s\"?"),
+> +		       prefix, eq + 1);
+
+OK.  If is_valid_key() rejected invalid variable names correctly,
+this would catch $A=$B where $A is a plausible-looking name.
+
+> +	} else if (is_valid_key(arg)) {
+> +		error(_("missing value to set to the variable '%s'"), arg);
+> +	} else {
+> +		error(_("missing value to set to a variable with an invalid name '%s'"),
+> +		      arg);
 > +	}
 
-This is minor, but unlike in documentation pages written in AsciiDoc, we do
-not do backticks for literals in our error messages, I think.
+The distinction among these three messages does look reasonable,
+provided if is_valid_key() gives the correct result.
+
+I wonder if it is too hard to refactor existing logic (perhaps it is
+used in git_config_parse_key(), no?) to give us a less noisy version
+of it that we can use as is_valid_key() here?
+
+Other than that, the remainder of the code changes looked reasonable
+to me.  Thanks.
