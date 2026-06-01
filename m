@@ -1,140 +1,151 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE1A37B40A
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780322108; cv=none; b=mwIdTJsGSEYhiNNUOGTpGedpvCnvTefq/N+vNsnzcBobSG9VhSlSmCfcxQtBIfqLVVPR0aw3TqpKVumZOyKLqsVGnQU6hsKUeAQsIMhezWs9uSfku3grOw9traZBkx0pdp5eJnwp/4u7JBmDOy2SxNZibz1ARonkZBDKb2NGO6Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780322108; c=relaxed/simple;
-	bh=YHIATr2yD19PLo72vOM+ydMmV1ECYKWDhekU4a/mfKs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sDhLCqUXyo4j607HBdW6JZx5YLIkrkBe4/yVMgpufxBHoCAgs1kLNmQ2gil0UZdoR57G2K7KW6I0KLxZdG9H0nzXEE9HUS40ZkRVrFS/PD/7X+2YX0OkuftTTbucR/A+UpkKgVXUkhAzE6VuG9q8kvgPezRN9DhBRfU1BpptjZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JPUNvU9s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MFhQ04Am; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361EA3B3C1D
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 14:01:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780322511; cv=pass; b=G0fJQOiTRE49KnDvkwvCG3+pBIm1u97gWwGp9v67ku6xYqOmPHRMFBtpuziB77PPRCg7FFPPpeL5KLVxBgOvwV/Lj1Wg3gAvjsmbvThSKZLH4wwasgOt7Y77FAjbCNpoHcjQlp2vCz8VMMTUgaqaC8marOM0KO9HCPF3WmDKTeE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780322511; c=relaxed/simple;
+	bh=EaOqt+azPDKLQPff2fphfVznCaIJD856znb1mjSbcJk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MpmLvTMIJNzVF0n9gaA2VXD1AWiIoFBPCI3Mop4M54qc3eZW5rrR1D+SmniKiHJaGNpOCqZkLGrVEj6tejBF60HybpKIV51osbcWZSS8C35xsMeze0RUqQRJsIkGJ/7Dc5UGU4I3Mp7ldai8Em0Zmii0CfWrCbQhdaC3ducTSDQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JEJa47nH; arc=pass smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JPUNvU9s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MFhQ04Am"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 911F9EC00CA;
-	Mon,  1 Jun 2026 09:55:05 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Mon, 01 Jun 2026 09:55:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780322105; x=1780408505; bh=p6WyJ47mwp
-	8L0sIZ0yvYehYxv7VjEMXHdxyIJxDkwqk=; b=JPUNvU9s/JCXtmdW4FqyIQK8Uc
-	z9D1Hq9xmyAaK1G283O2BTe1bLC9Fppu/rYgVSRpVoxFMGxVksqIB1JVtMVR+NbG
-	RRSGC5kdQYPqAhDbS1zLQ92ne+xufZW3i8z3wEhTPHRhfLnfYJTXO7r9Dea+zFYv
-	wMf710JcQ2eI8qcjNTYWzo+pDvO4Ff7cpEpmcnCP7mEswqcmiL2CbDQhrJpYSp0k
-	ia6q5IwqAupCn/DMhDjJ96pMPPT/n+NqUFXXc4ImQWr7DobMgxJGfQFhQ4iwiAnP
-	QwI8rT0jo2y8+WiNZL8Ve9e5kDjl+d4HcHqmYYEbToFWrTqKgtNRUS9yciiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780322105; x=1780408505; bh=p6WyJ47mwp8L0sIZ0yvYehYxv7VjEMXHdxy
-	IJxDkwqk=; b=MFhQ04Amzh5jbDt3viOZ1q3V8ESyWXNDpW8OqDlfuzpJozfWsDl
-	jjTF5Y2DFGeEeiA46JXXhIIaPa3KcD1Te3jhS6e6eT5TwBrCq822H2zMlB6Q7PDu
-	KyJ92obJY5H9yYk6JvBfTddupr901KtTqpAKXaxlAy8mzMUwOXdxZmKY38F6mSIX
-	45myfESoFOllRJN1d+h0LhPbLwBEFOhl2BRBn1jCSNs08OpBSibN3wVQUnBR9MW/
-	CfDwk84shSbey+UHH1hm9YN/i1Bf14PSMHtZTwLKQPeu0OIqIs4tRhzbh4LkcF3Z
-	troU+JHsk7ntOWFtTK6Y+JVjLFooET07MZQ==
-X-ME-Sender: <xms:OY8daqd0TpgzPhD0tONhrV_d8FkeTgpacg7ABRRFRb9mJ4vDchqj9Q>
-    <xme:OY8darN1WBXa_wVJDcmPbKyPKXQABNcTpRT5Ep4N63nN9OxFpKPbmcXDYeh9qET5W
-    VNEGpL4Pe82GXZNat78i9C-WvhIBN_Fgip58lsCzkSed81zUlIHrg>
-X-ME-Received: <xmr:OY8dagj9VrmL-4-XchVt_MJHGT1aQh6gLQ0m2xlPZd_JeSWWXjFA-HjNtjaUnQ2uoyr1EAFSXUreFaUCrbmuU-8heatEA5hWM1KPapigzW9G>
-X-ME-Proxy-Cause: dmFkZTFxShnUas0qojzGMMQMx9looi+zsrN/taUUmMYaL+F9Qz4zyySuGdn2LoUDZBRw8A
-    tj2YBDSVfPJ4XMJ3222YaoqGbiGTiq1NT3iTBVVdGA02FsgecBa/dNwCKzSxRIDzr48Alu
-    QdUSkU89BVdVOWpnaPSqXbNem265zl41YhACcw8smqwWTdP5/9oPTz7CzYtGImi2idwZrM
-    qB1N0lu3OflAoPtJcws0C2jCchFuPTjLIppVNTFdMy7H7vvAOc3yn5IJxntyfWnKvLlRWo
-    CEpPo7Dw6rvtczTm6s36FKLIGZcWT1HIprMU5W948iV+OvPHafASg2t//3FiImSpnyPsXp
-    eocy9ZXgfKOMAhMOnjK0yWIC6havy2cA9F+Iq0zDtH73CslgE/8Wk7YDA9SjAt+aILB5EO
-    0XDl6RacbMnCdg4NTBMwQ4RT9Esounx21OeavdpWmuRASegb4FVRbDkmxy/SdmsZ7RkBEK
-    xy3eB4W3ryZAZOUKBlUIgwleaxzvsi48Bzac1udETGuXgta+lWN2/KL2DvJziVQTbpOYy9
-    gpMdx3IKmI52AStOImpv44W5istJIIGLhCkg/LLrMAH+c9j/DJE+20z1gjWne3rsQWc8mp
-    FRSo6Z5UW65aFeBxqdN8tgoFDkY9Fj5vVcoL9jTll+/AwmSukfvi2hHmpqNQ
-X-ME-Proxy: <xmx:OY8dam363h0x2uKiZTMZbCCpeCi6uUo3FQD8aEK0lYips0IjEpGVCg>
-    <xmx:OY8daijEqxwdsB5j-QoO4UnxvoKK3gYcPa075DdZcYkNi05y0PtPaA>
-    <xmx:OY8daufC1Fo8A7lmU1hDLHXjcV_3ZpD2cZ9L9spYvp3twMKUOvo3MQ>
-    <xmx:OY8datmZkVrRFTkoPP0vHTy4AHYYximVDfvZFx25jXO1t5BRFZO6pA>
-    <xmx:OY8dakC9rVWw0e_XfOJyWoNlHr6Zj-2lTGP54ArP1BQgryOmHfEDvU1A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 09:55:04 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e5be0791 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 1 Jun 2026 13:55:00 +0000 (UTC)
-Date: Mon, 1 Jun 2026 15:54:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 0/5] Duplicate entry hardening
-Message-ID: <ah2PLBluBFy44AQI@pks.im>
-References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
- <xmqqpl2a4f09.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JEJa47nH"
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-13721dfd471so9274768c88.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 07:01:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780322509; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bkx7uH9OqEfEvQczpxAYlaUotaLmaK0rBYYec6gnGAFtcF6QP32HaNaDJ18VRAqHAv
+         24oqf3/XG77irndrMW/EgEQArzXJxQOwZRLGW/Cuzqbsf5giGKVE42ijmkZiyHTepVX3
+         CMKULYy5JOF86kGRQ0oR7J838nRn6Zaj71uz0dOpcanL4HfanmbtiVn+WQICSe25lD/a
+         cfYXIbyoRi9yJAMQiyPiu2MeUdI0HZ4MADHGRN48Qac8oOJBLVH+JUx7Rv9WhYiJoXE9
+         3S3I5mPjf5RsraZRA5f6g3lPA4Ep9F5QS+Wvxdz41Rq96zhAFPKBji3fkDFQVwJb/10a
+         XFDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=5BvngHslubg2vj2rQQXNCFlzj/0/3cLOTNxDOX/4/qo=;
+        fh=XnHTUH2yi1hzI6R3ZXeCezx2UG/B0bdvFY82pGSmZ9o=;
+        b=F2RVku8dnh2HJEwOnd0dtkDUhCgf1ZizufQIaH4qmORMdfUjD5d92IiMYsxym5qqbk
+         MuX9AeftpvMWEyChM8Kv3BQ1Yd4Og1aFFhF9GAkSreJ+uxi00QRx0TTf4DrdNbNhBkvG
+         cQ9ZPr1FsgxjQIm/GzHUPUgGpDHerr/RkMUCavK3t6PfoliGzCNjkLwI/M2fKDKkG6SG
+         e3WNMkMGLq7aDvLW/I3rF4BAIRFkz0+R75NmK9QpFKYP1O6Pvwa8j8Supq2Mm8s1dJB1
+         8SiPtc/9wjchR1nIRAd6Io06fGtCaMbbuuUmWMqEnkkgV8yh5w2zUqg+a/mcQuDEBFiA
+         CcHg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780322509; x=1780927309; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5BvngHslubg2vj2rQQXNCFlzj/0/3cLOTNxDOX/4/qo=;
+        b=JEJa47nH06KGEYdHDG4BIB9d8hpiZn7Kjk420jD4+ye0D4hu1MIZzdGeJf0gM0pL/S
+         QAl2AfqzDp3djj7SEMf8gOycoFnsa7HVymFwf3+FnemPkg5h4s6GkcGG8Xl34006qBcK
+         tnKVHJfqFu9Ga2Y8rnka9WWHfl6YHHMOzanVaYdzHfQwUAaG46kp3giI256ffmNXDxQE
+         /MVew5/pG9Dnm9ANo13IwS5Q9Sp4ZxO2MjtHEg7xTwZJXH5xaMQEafrynkiu0LSpba7D
+         4KUecdfwxN2RHtrj0/f0UENdpxH7TRjpVDvCjLgQQqvXyL9jP+mzfAgknqA9hVai1DO/
+         zFQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780322509; x=1780927309;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=5BvngHslubg2vj2rQQXNCFlzj/0/3cLOTNxDOX/4/qo=;
+        b=Nt9VGN/quR5jGpa5PtenXBYefnHe/BibeK8MJmO7Ht9HRKsJFv+mi65zp8PMx0mXdR
+         cPAnepLZVN3ukyrYOyHF3PE+vdp+eeYOOWa4Ji6D4TPCAc8gbi94vbMrrZ4lF6Wt3Mz9
+         7Yo76Qrc97iY0FJPA3VziDWe1QYeniBbcHYc0eKxJXmpuGt0hRqem20ghM96J9b3ax3s
+         bJxJAXWKp3mdqu2bL4iZTygjuWzCie5ljXRb9OYhs6yKY+moEmatflHrngNXwGkUgkeq
+         Rolr7y2T262j1MshaisTR2s4uP1jE0QN564dH4HD3dr3wLA1NQMZ8VIceDEn48jZcn0e
+         ehEw==
+X-Gm-Message-State: AOJu0YxkDLXztjMext0pgMZL51FTmUo5sjvrB2HX3mUjuiJIHzU9uiFA
+	T6YYCCavnveHDkeabYZWhmk3R0A+8n5S34f2P0BTfHptdVYDdXjY0T65LHLDBL5t87ulFuJOABf
+	ZrH5ydCLeZvlO3UAwcLVDBCXMgCTAotE=
+X-Gm-Gg: Acq92OHltW3z/Bgv6nzlsEbA9APBuLqBe5Hy7GCw6t3xlzFlwxD4FeTdV5O1QwlGPEs
+	QEYXMboWmGRVLu8Iq4qbwY0//4k9PkXeju0G1sQdduEsu0ZL5b1dspStg5tVo+5pYPt+TXiE7ox
+	t2In/pNbemmeylw70BuzrDSIK0Gnhea2cbaHB24or+80KqCDKfHrIc7hlEuleUbNdTmVGp4YkEZ
+	oWwEjyJaRNAU6P9atzqNDZ+1GOTv+YwEJrMD1wfrJtZoO6H2aUaxNw/fLtR21PvWlK8p6L5A8pi
+	HbVG7AVn8t+yyy6UJe3VRxID2Bu0l+fs3cPXUxNiVdvFsDpBQVBhskYePvDkGOGLof0NbiiZG7z
+	hDsa9wRM=
+X-Received: by 2002:a05:7022:429:b0:132:fac:2fb2 with SMTP id
+ a92af1059eb24-137d3d09902mr4449652c88.8.1780322507029; Mon, 01 Jun 2026
+ 07:01:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpl2a4f09.fsf@gitster.g>
+References: <CAOLa=ZQDXn7181VfHpcWtNOSjTh9nzM3YnDTG_X1Vqh_v64bwg@mail.gmail.com>
+ <20260423165432.143598-1-belkid98@gmail.com> <20260423165432.143598-2-belkid98@gmail.com>
+ <08efcc49-0db8-49f6-8971-633aa55eb66c@malon.dev>
+In-Reply-To: <08efcc49-0db8-49f6-8971-633aa55eb66c@malon.dev>
+From: Bello Olamide <belkid98@gmail.com>
+Date: Mon, 1 Jun 2026 15:01:35 +0100
+X-Gm-Features: AVHnY4LihRcoXgBWT-QjK8Uw4YXM4IFXCPSkOOc0DOwtwqmtOF9Cem0u0lGyCNI
+Message-ID: <CAD=f0L_zoZebG039APOcgYysjXnJF0TXCMJXT9YE2XT5LwBwTA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/8] environment: move "trust_ctime" into `struct repo_config_values`
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Christain Couder <christian.couder@gmail.com>, 
+	Usman Akinyemi <usmanakinyemi202@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 01, 2026 at 09:33:10PM +0900, Junio C Hamano wrote:
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > We had some corrupt trees with duplicate entries in real world repositories,
-> > which triggered an assertion failure in merge-ort. Further, the corrupt tree
-> > creation in the third party tool would have been avoided had verify_cache()
-> > correctly checked for D/F conflicts. Provide fixes for both issues,
-> > including 3 preparatory changes for the merge-ort fix.
-> >
-> > Elijah Newren (5):
-> >   merge-ort: propagate callback errors from traverse_trees_wrapper()
-> >   merge-ort: drop unnecessary show_all_errors from collect_merge_info()
-> >   merge-ort: free diff pairs queue in clear_or_reinit_internal_opts()
-> >   merge-ort: abort merge when trees have duplicate entries
-> >   cache-tree: fix verify_cache() to catch non-adjacent D/F conflicts
-> 
-> This is a fix to an important corner of our system, but somehow left
-> in "Needs review" state for much longer than I would have liked, so
-> even though I am officially on vacation ;-), I took some time to
-> read these through (by the way it was a pleasant read, thank you).
+On Thu, May 21, 2026, 5:37=E2=80=AFPM Tian Yuchen <cat@malon.dev> wrote:
+>
+> Hi Bello!
+>
+> On 4/24/26 00:54, Olamide Caleb Bello wrote:
+>
+> The code itself looks great to me, but I have some reservations about
+> the description here (in terms of why trust_ctime is eagerly parsed):
+>
+>  > `core.trustctime` is parsed eagerly
+>  > because it is used in low=E2=80=91level stat=E2=80=91matching function=
+s
+>  > (`match_stat_data()`), where a lazy parse could cause unexpected
+>  > fatal errors and complicate libification efforts.
+>
+> It's true that if we use repo_config_get_bool() to parse trust_ctime,
+> following the call stack downwards, there is a die() call. The terminate
+> condition is that the configuration does not exist or contains invalid
+> characters.
+>
+> But I think there is another factor: match_stat_data() is called on a
+> hot path. The following code is implemented in read-cache.c,
+> refresh_index() function:
+>
+>         for (i =3D 0; i < istate->cache_nr; i++) {
+>                 ...
+>                 new_entry =3D refresh_cache_ent(istate, ce, options,
+>                                               &cache_errno, &changed,
+>                                               &t2_did_lstat, &t2_did_scan=
+);
+>                 t2_sum_lstat +=3D t2_did_lstat;
+>                 t2_sum_scan +=3D t2_did_scan;
+>                 if (new_entry =3D=3D ce)
+>                 ...
+>
+> The call chain: refresh_index() -> refresh_cache_ent() ->
+> ie_match_stat() -> ce_match_stat_basic() -> *match_stat_data()*
+>
+> Therefore, if the variable is lazily parsed, this means there will be a
+> performance regression whenever the index status needs to be checked,
+> e.g. 'git status'.
+>
+> So, I guess it would be better to extend a bit:
+>
+> '...where a lazy parse could cause unexpected fatal, and result in a
+> performance regression...'
+noted...
+>
+> Thanks, yuchen
 
-Honestly, I always shy away from the merge-related subsystems. It has a
-lot of subtleties that I don't have any experience with, so I never
-really consider my input to be helpful here.
-
-> I wonder if we create a rule like
-> 
->     Those of you who have more than 30 commits in our project are
->     expected to review one topic (or more) from other contributors
->     for every three patches you send and ask for reviews by others.
-
-Heh, that would make me condense patch series into fewer patches ;)
-
-> it would help balance the patch vs review ratio, perhaps?
-
-It's a good question. I typically try to aim for reviewing series on the
-mailing list at least every second day, and I always encourage other
-folks in my team to do the same. But recently I (well, rather we)
-haven't really been able to due to the current situation at GitLab,
-which forces us to put almost all of our focus towards a different
-project for a while.
-
-Overall I agree that everyone who is a core contributor should also make
-reviews part of their regular worflow. At least for corporate
-contributors that might also make it easier to communicate this to their
-respective employers. Regardless of that, my expectation is that there
-will be times where it works well, and other times where it works less
-well.
-
-Patrick
+Thank you, Yuchen.
