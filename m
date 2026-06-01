@@ -1,82 +1,81 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BFD86329
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 00:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975DE846F
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 01:16:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780274450; cv=none; b=mk3pFGl1r2B5F1lzXr982VxTtE+qA/vg97PiVRtcOEovCVHbFsvZ+b9i+W9kGlDcYEUrh9UUj+y4gWB/ZjQVR12Y2IfOcjAoVe8PWE575M1GhaPKJEkyFbqcAxG0QprgoHyqsGSM0ytGV2pDjRD3uHPNljpwX3me/3qyfMS9RcQ=
+	t=1780276576; cv=none; b=NzrlHIqd/8/N1etRB1yKFCG1F2W8LMMFOfIK4te86MNsdnU7huZhPLK0fyWJs7rAu367bjzzKmy10xqDYy80V3XeDuUtvzM1wVBk8UgeTUFatIdkumMU7roeuukFS/xgTodWbHyWYJTng/QXhx1ngBgvGFyNTfvZTprrmscGtxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780274450; c=relaxed/simple;
-	bh=QVlgGpC0LBF7HzVrNimIMLapljqt2OS/7XAWYOAAQsE=;
+	s=arc-20240116; t=1780276576; c=relaxed/simple;
+	bh=YrDynY4kEJObGJpOnITN11tY2R508fNEdYXk/OVyrU0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Cv5ZJN7sspqBCNnLcaXnl7gpFumJyVeFe6eKmIwJn2licWh+e8WwwYXI0FoCBqGydus5RFTl/mR0H2arsQ9D7egHuGgnA9mKg5Y2LQQIF0jrVI8mpl6mx8BBIMpAWXkUEgsLb24WAIiOyKBQNfl23Q4nfm2gCdonwXWdDIXbQI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IVCaC21j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aCoUxtny; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=ctH7QQOlGKQ2jrZiUzr/Eu4HEUZaeY0R+s8n+y7cn0RpkVeXRUi5UcPRnUQ1wTJ4f1o3/orvyJwjJyNrTsui+l+wMil9/QMCTf3wYFz+ztXRMaj7gp5d98MfPw/Q10nr8AMXEpNwfcBAych8ZsRczIHTThfnqkDavne60W9jGQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RMnBK2m5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ovDF7ipm; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IVCaC21j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aCoUxtny"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RMnBK2m5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ovDF7ipm"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 511C77A0086;
-	Sun, 31 May 2026 20:40:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sun, 31 May 2026 20:40:47 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id A62A11D00188;
+	Sun, 31 May 2026 21:16:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sun, 31 May 2026 21:16:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1780274447; x=1780360847; bh=x2aCoi0O38
-	B4ji7hn+sBrAgbi2K/+2aPJKiEiMbV4Ok=; b=IVCaC21jADgtMjyrG6KFnie/KC
-	z3upsXpNRrAC1NfW790GOosh2+niTk9aMgiyYwVXMIiChpIXwTAb9ZPFB8L0DQ/k
-	lUmU7nCW5w+G/6OhbieyjU/6IRt6eV67L0LMFs+RDfkugsVA5y8pdhmmWLbQ768o
-	4wjGWo/NISZvAIr5rZTkUlb6iVKufxfB60h1DZVolwC+4NoheOIEAkgjvK4NO8vK
-	hGSuuTaAQOrHHf5gX0zh9f2FHzGV+m9VsZnpA1QYDkVpaB69h/IZ9L2OGHS6fq4v
-	KqizUE9TWOKzvesLHUXUCZJedw/JPx/KKwAXMRP6JIW0z6qblJoUA8jSiBoA==
+	:subject:to:to; s=fm2; t=1780276573; x=1780362973; bh=9sYHotS7DU
+	5fCh9D69+evX9MoveG1uX0PPQJh/4hYl0=; b=RMnBK2m5KhlHC7JUnnJNfUKMmP
+	IJGpry+YfDHfzp6JtpPQiEDKorZlr3/WEg102Zl4IXOJQ5rrkC5hkAZYyYPtEmf8
+	GI62ivAKRhFRNhlLRmkJbe09cLoTB59EAOcsb5vyZW7A8WrZkD1mB4IDsruVk0rf
+	NWvDKHDjQdUXidh27scK5Zf1OcpDd9h4Vbo65Ao5nidVg5SIlEjHViTNGymBfevL
+	0xxgh02ORONw+67g1wakgGtTySPPIqRaxOW/D0byTcDwc+Cmu8buOkEXs2/k91ae
+	68XMJA1REGAjg9nbdP7zU23641crPCN8VItQvmDqHhcfMISd9Lo6GIQhoRtQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1780274447; x=1780360847; bh=x2aCoi0O38B4ji7hn+sBrAgbi2K/+2aPJKi
-	EiMbV4Ok=; b=aCoUxtnyHY5i7u5neO7cRukTEKQHDu80Wm0B7Xnjo9LLw2Vxlik
-	0tFT4ETHBwecKPOZwuVeFPth+8xmNIMGDaP/CA/LAxQSsWpNePki/kMkr/KNvl+C
-	yXd/4tDvhMzOvERmbnzI8xj0oA7Wzt/I932VxtHox8fsNDjT26H6i+capSI9bPSD
-	VDNUQ1II6WGNSBBbeLEybcTgdAKgji0nCBjIsbWfLtIfxYVvOai/aI0SLnDs34ZN
-	koMPYj4mfaaDQv5Ux7G13d3EBVXrFd/bHpZP8QedXVev6N72fmBPpfpacupJVcsb
-	pxYOfsx6yIoogzXCwYaa3+I+xb8ea4CExyg==
-X-ME-Sender: <xms:DtUcajN3oBwGJoX5ZVRBOVsw6SEKu9ZnOxPDACx144osf2dWgGabUA>
-    <xme:DtUcak15m5O0kcDmC2sHZ_6H0aCtYc84xnZq_lPpToC9F33nktyrEePWBRcsGJzUP
-    D2V-HGJbWNI6UlV-48qCsXnYPlFvdk1VM5jhwlt4bHHGGIiHUg>
-X-ME-Received: <xmr:DtUcaqlmPMRXEWUQp3EKq8XiPFwR5HGdHJsR8b7cKdF1VNCESqJyz9NJEbfrgASevRlTjKP0nHuKIwQgx8d0VtVZslexgKAfzIMr>
-X-ME-Proxy-Cause: dmFkZTF/BmBhnNyBPgk+mFDolZkW/wYtNJ+kmd6G9lWiwDAHceiS7NhAZTL9tXNwy75vdv
-    mHuJCPsQ4N7cyPUq6KGAwhRHztyxl4+rT3vZytILuXevjPSO06e4IiDpTsDqO5IwE1SC/l
-    r9NtEbUNX6Nsr4pA1IsfyE2sm/gCJZQ9IfG/rv1x+p5mtrWYB+aSXsgxEMiSQAD8Zxsi5G
-    AuEONOQsQvKyhXUHoPQXjOCtfD4oxYTy3JgjHmhDwrRVsDAHfToBKyQV5NWdKqLqy/vmux
-    Kx2E3BqSQ3YqKROoHBTcMOQzWlmJZC45tqlp1pB97JVtq3d5gaA82OfrrCsHbq1C19I2iR
-    eXypvaVXAISk8x69fXUd+dmZ3Q0D9WutD7zMIKYLXjss2Ei6iQc6QqRYafCQ43FByn3o3E
-    u87JhiY2qcP/jMxh1wiuIlbU86eVlSYGsZNhw8L4skJXHyOs8CWb52akqoAVaouAAyaJju
-    z4yXa9NIF+ihfp3VhRlmbip+FR2vYboW+mMkyhP8cwaQcQVkYHhsXWP5ExK9GxaGs9IUTL
-    m5yOE/KZOM7m6inhZHTCzipJe4HmUOeN9JFcvwFPITaMn2aWPKN/f/GYX1a73i2SR1riXf
-    CEtsLFwhrb7JyVRMqovBrCxJWaLoPsPGfafT5sxEHBdxCBJoeQbl1i897EhA
-X-ME-Proxy: <xmx:DtUcajW2YInsrBEwgcRwP3F9N8tTB79wFSivVKVEWyZcwjZFutxjeQ>
-    <xmx:DtUcaovv0oUmLe2qDOE8FEgl-U8YbKwmnX5ky7RbeTI8NCaUAw9xyw>
-    <xmx:DtUcauY5J-DwWTGWfrhfq6UsgjXKCsIqJgasBO8uWpTU6toPA9Cylg>
-    <xmx:DtUcavWS-dhkNBNEc7xOrP23l0ro52dnu6yeZk45Fi7KWrZvpybOyg>
-    <xmx:D9Ucatbw7X7zZ09mD0WC9i09chkOXBvBwi9FkGtnUC1cEtQHRWyvrr0m>
+	1780276573; x=1780362973; bh=9sYHotS7DU5fCh9D69+evX9MoveG1uX0PPQ
+	Jh/4hYl0=; b=ovDF7ipmxqdhBhf7bwu2iAeMe71GThXIlg2u1yVHvW97VlYkhDf
+	ppP5pIfKta7ctDxjjllrCBPrjv06LeIAzGZ+fjzpksp8o6MYvY6fXALSiOhwy0wO
+	MV4TA/huP8TrkCmZloCT5zXUsn3F3BBxUpJGwfOzuEAOcJ3015xTszq1QvyXm/9X
+	krIc+2X4hJwXnMsTwAgBciqWNWx5DJh5vH04LD/vRiWBwJwgT+39fLKLm3jMi0Qk
+	whFK9vD/djgyktxbz9ExvnxdII2erZMMuuNOTLaFRoBUZliGhB7g4irr9btar4kF
+	gARj+ianT4qZgAbkB6asv/yRIv8DUv3/glQ==
+X-ME-Sender: <xms:Xd0caoNjFRoET2p_UO0WlGSL5DZ_CjFo7coDFbby0WPlq7a96O22FA>
+    <xme:Xd0camYIGVs6BB56610WQBIGVm3BtZeaDQI_jzhyztx7XwxXEMjmwfHlz2wN8eHI8
+    xR49kJM3cO9cGM2qU0K74GdYqgRRewJv_cmQL4tCd2ECQSWYWYo>
+X-ME-Received: <xmr:Xd0caso_uq1kMqkDTX37AaTjQ_DBlkiDn3Y-stGg4pxuivILbSOKK7LNPEYB_VlqR2GTS0G9bMlULjobN3LMwbUw4_yd0N-UFkcN>
+X-ME-Proxy-Cause: dmFkZTFH44GGxyfAsaySNlSJxTXWRhoieNl18z+TTAR+btkug2eehvodBGpzx6n5TSlWCU
+    vqdgBjvsxjIsGctbzhdi9CgB5oZgjNkp2qUDjOk3ZfVoKQqKxKtDqYf/SXVfzycvSV4ODB
+    +MuX0elhVc1Jof9bKwcHSHfa0a+h1wjMeh8UvF8hu1BTILDDNwqT7MPNR0Vxkm3Mr8CkYG
+    h7C6v0M9hAC7yAfOCeIq7kkWVznU4mr5FY07LqjyklXWVrmOxkK1UlqHW+8A+QPt2hmZXY
+    fCWjRQ8s8qRzTfcn5/wsqT5vUR/HBwUNw9PWA8gXulpYiSQQqopJZbHGv9mj0JN5k1vibl
+    BCDQyxe76KpLhRY/ZnsRyS3Q7GBORh2ZpCJFK4a9LL+7oWUnc+p5gfi3GqgCmdzC+UrB4j
+    MwK3ZLXMnrHem8n/5AvveVpv1TcMGipOLyBQNXxLd4ijwbXyV65Ek7F0UP/ogP5Me1tuXp
+    uzX0enEN4blGoQfWS2tnlKMTD1DzIsDQ3q7rBZBVW/i0bZMhUzOEMmPhpdd2lZOg5VQjMc
+    ZcjdkPDXAhwll+O6Vn6w6+tPZ4T5cwfpuS1c90feNJHifuzRHDv8567VFyFXnfVvnYn9O7
+    4aag7oZZxdxjxDKHOEibC3WoQzh2xaGl39zlm70ZkqEuGgn9Gg6c2BIaI4ag
+X-ME-Proxy: <xmx:Xd0caqYonzBJ2m9DBh77Xsxo8M8oT3otZ4yDE9sSLbDVA1E4xYq-EA>
+    <xmx:Xd0cakTusomIJB1nMobE4-uORq_xySN-L6KqfCjXC9G8UZH7_VLqUw>
+    <xmx:Xd0cah4MggwU9scwtfLoBSbXJic7GCmZU-4Vs3MuMTeZ0juOsBm1cg>
+    <xmx:Xd0capwmvccaPGBzf81Gcdn2CZIO2Md7TXrOBIdg8-x124gLo63zqg>
+    <xmx:Xd0caibumE9S7COWsAJj977ig1WTNUm7rKjpidRk5sVp9BwKtXV_F1Z5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 31 May 2026 20:40:46 -0400 (EDT)
+ 31 May 2026 21:16:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,  <git@vger.kernel.org>,  Jacob
- Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] describe: fix --exclude, --match with --contains and --all
-In-Reply-To: <20260531234644.97LRl%taahol@utu.fi> (Tuomas Ahola's message of
-	"Mon, 1 Jun 2026 02:46:44 +0300")
-References: <20260528232950.187002-2-jacob.e.keller@intel.com>
-	<xmqqo6hwcves.fsf@gitster.g> <20260531234644.97LRl%taahol@utu.fi>
-Date: Mon, 01 Jun 2026 09:40:45 +0900
-Message-ID: <xmqq33z7ay9e.fsf@gitster.g>
+To: Andrew Kreimer <algonell@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] doc: fix typos via codespell
+In-Reply-To: <20260531184428.55905-1-algonell@gmail.com> (Andrew Kreimer's
+	message of "Sun, 31 May 2026 21:43:58 +0300")
+References: <20260506101631.18127-1-algonell@gmail.com>
+	<20260531184428.55905-1-algonell@gmail.com>
+Date: Mon, 01 Jun 2026 10:16:11 +0900
+Message-ID: <xmqqo6hv9i1w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,66 +85,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Tuomas Ahola <taahol@utu.fi> writes:
+Andrew Kreimer <algonell@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->
->> It is curious that this fails in some but not all CI jobs, and even
->> more curious that these failures look the same.
->> 
->> e.g., https://github.com/git/git/actions/runs/26671595367/job/78615760984#step:4:1984
->> 
->>   +++ diff -u expect actual
->>   --- expect	2026-05-30 02:21:23
->>   +++ actual	2026-05-30 02:21:23
->>   @@ -1 +1 @@
->>   -branch_A
->>   +remotes/origin/remote_branch_A
->>   error: last command exited with $?=1
->>   not ok 70 - describe --contains --all --exclude
->>   #	
->>   #		echo "branch_A" >expect &&
->>   #		tagged_commit=$(git rev-parse "refs/tags/A^0") &&
->>   #		git describe --contains --all --exclude="A" --exclude="c" --exclude="test*" $tagged_commit >actual &&
->>   #		test_cmp expect actual
->> 
->> Rings any bell?
->
-> That's way out of my wheelhouse but this seems to fix the failure
-> for Alpine at least:
->
-> -----8<-----
->
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index d6594ada53..1776ffab46 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -416,7 +416,7 @@ static void name_tips(struct mem_pool *string_pool)
->  	 * Try to set better names first, so that worse ones spread
->  	 * less.
->  	 */
-> -	QSORT(tip_table.table, tip_table.nr, cmp_by_tag_and_age);
-> +	STABLE_QSORT(tip_table.table, tip_table.nr, cmp_by_tag_and_age);
->  	for (i = 0; i < tip_table.nr; i++) {
->  		struct tip_table_entry *e = &tip_table.table[i];
->  		if (e->commit) {
+> diff --git a/midx-write.c b/midx-write.c
+> index 561e9eedc0..19e1cd10b7 100644
+> --- a/midx-write.c
+> +++ b/midx-write.c
+> @@ -1461,7 +1461,7 @@ static int write_midx_internal(struct write_midx_opts *opts)
+>  
+>  		/*
+>  		 * Attempt opening the pack index to populate num_objects.
+> -		 * Ignore failiures as they can be expected and are not
+> +		 * Ignore failures as they can be expected and are not
+>  		 * fatal during this selection time.
+>  		 */
+>  		open_pack_index(oldest);
 
-Ah, OK, when the test has multiple candidates with the same score,
-of course emitting any one of them as the answer is a valid and
-correctly working program.
+You seem to have lost the following hunk from the previous round
 
-So switching to stable-qsort here may "fix" the test breakage, but
-it makes the real-world use cases worse, doesn't it?  When any one
-of the solutions with the same "goodness" is acceptable, the change
-makes the code behave as if the elements in the table before they
-are sorted have an "if same score, earlier the better" kind of
-relationship between them.
+diff --git a/midx-write.c b/midx-write.c
+index a25cab75ab..6d6d29c6cd 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -1152,7 +1152,7 @@ static bool midx_needs_update(struct multi_pack_index *midx, struct write_midx_c
+ 
+ 	/*
+ 	 * Ensure that we have a valid checksum before consulting the
+-	 * exisiting MIDX in order to determine if we can avoid an
++	 * existing MIDX in order to determine if we can avoid an
+ 	 * update.
+ 	 *
+ 	 * This is necessary because the given MIDX is loaded directly
 
-I would have preferred to see a tweak on the test side to avoid
-having more than one answer of the same goodness, or perhaps list
-all the possible acceptable answers and instead of using test_cmp to
-check for the exact answer, take any of the acceptable ones, or
-something like that.
+but it is OK as the same fix appears in 'master' thanks to 22235136
+(midx-write: handle noop writes when converting incremental chains,
+2026-05-19).
+
+Other than that, I made sure that there is no other changes since
+the initial patch other than that the changes to po/ and git-gui/ no
+longer exist in the topic, which matches what the proposed commit
+log says.
+
+However, there are things that BREAK tests.
+
+> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+> index ac4a5b2734..869fb4a14e 100755
+> --- a/t/t1700-split-index.sh
+> +++ b/t/t1700-split-index.sh
+> @@ -502,7 +502,7 @@ test_expect_success 'do not refresh null base index' '
+>  		git checkout main &&
+>  		git update-index --split-index &&
+>  		test_commit more &&
+> -		# must not write a new shareindex, or we wont catch the problem
+> +		# must not write a new shareindex, or we won't catch the problem
+>  		git -c splitIndex.maxPercentChange=100 merge --no-edit side-branch 2>err &&
+>  		# i.e. do not expect warnings like
+>  		# could not freshen shared index .../shareindex.00000...
+
+The edit above is made to a STRING that is enclosed inside a pair of
+single quote.  If we want to use "won't", we would need to write "We
+won'\''t", but while it may be syntactically correct as a part of
+shell script, it is a pointless change, as the target audience wants
+to see this line as if it is just a plain text.
+
+"We will not" would be acceptable,
+
+> diff --git a/t/t3909-stash-pathspec-file.sh b/t/t3909-stash-pathspec-file.sh
+> index 73f2dbdeb0..3afa6bff3d 100755
+> --- a/t/t3909-stash-pathspec-file.sh
+> +++ b/t/t3909-stash-pathspec-file.sh
+> @@ -29,7 +29,7 @@ verify_expect () {
+>  test_expect_success 'simplest' '
+>  	restore_checkpoint &&
+>  
+> -	# More files are written to make sure that git didnt ignore
+> +	# More files are written to make sure that git didn't ignore
+
+Ditto.  "did not ignore".
+
+>  	# --pathspec-from-file, stashing everything
+>  	echo A >fileA.t &&
+>  	echo B >fileB.t &&
+> @@ -47,7 +47,7 @@ test_expect_success 'simplest' '
+>  test_expect_success '--pathspec-file-nul' '
+>  	restore_checkpoint &&
+>  
+> -	# More files are written to make sure that git didnt ignore
+> +	# More files are written to make sure that git didn't ignore
+
+Ditto.
+
+>  	# --pathspec-from-file, stashing everything
+>  	echo A >fileA.t &&
+>  	echo B >fileB.t &&
+> @@ -66,7 +66,7 @@ test_expect_success '--pathspec-file-nul' '
+>  test_expect_success 'only touches what was listed' '
+>  	restore_checkpoint &&
+>  
+> -	# More files are written to make sure that git didnt ignore
+> +	# More files are written to make sure that git didn't ignore
+
+Ditto.
+
+It is a bit disappointing that the changes were guided by a tool
+called Codespell, yet apparently the tool does not seem to
+understand the syntax rules of the language the files it is
+modifying is written in X-<.
 
 Thanks.
-
