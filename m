@@ -1,119 +1,91 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CE221146C
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE4C3A48ED
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:51:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780321690; cv=none; b=RoplYyYcDYSRnWri1zUqOyLzoOHKpLtjSY49nic5drmu48Xk4fErYtNiJv+x2Bz9VPuWuDNrEYTUtzcHM7YWzYiXIQUuCWNPqMb31hoRU9iKinkHzmDEIDthOawiBnD/DhCoKflFAanEMtA4ESrjZJ9ai4S8+nI2+EoLUeSKv6E=
+	t=1780321908; cv=none; b=s32Aw/+9MefHvpl6qpCOu99unAECaHVhd+1OAifFTGIQ598JcPHqt/b2Rkdss9ZBMuoOdqC96q/xqWSokVTqzAUgoP5pNIEzoUTlR4JYjewk9WFobMxVs6u/N7BUVhH2FagpsP0dhq63q24tghMAu5H+JQUN+ntsMHkKW+wOVuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780321690; c=relaxed/simple;
-	bh=XaCaZ2s8CgStStdXwElUJHyqmuxWgdZrOnoWy6Nidog=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TazeqmN4K7MSg2WVVfVy6LmcusQtGKALsEhkIHNdLK9BUrS4M7ZsHN63CAzjJ91GfGdmKxXR180R0uagH1Sk0HoMTNJeZY4AgavBoPvxNHI7nTP2TA1zMOdlxPx+HlV0TpkNlDulaiw3uPWloNsqRNEaxZ/adynGCMi2X8AHgi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mwofkLkk; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1780321908; c=relaxed/simple;
+	bh=OB8lM0i+CI2HnV3nSQbgufPnErC8O/dfCvo65GDWyQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aZubna+TdAbb8mI+ValTaF5YZEMP0avZpQ+ZPhGVzL6udlX8N6kbMSYwvhX4mipn2+WEzfeAdtSXB7LfWthAHUEqY6Ec7bhfoBbRVlcqRozw9IzyYItFTxUccFPhoGCZcK6whn7Ha6KhNhnKS57OtyNFApstkjmK7bhAj/HZtsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEM8OaLg; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mwofkLkk"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-45eee266c6cso2884200f8f.1
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 06:48:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEM8OaLg"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4906869f0cbso92899575e9.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 06:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780321687; x=1780926487; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=29HFkdVvnrLG2mRXHqdfZpGoW4vw1+fH0pbItGivqS8=;
-        b=mwofkLkkiQR3qhYnhNmPk+dIwO2bns27Kvt9bB2bn/hyg95CntDyghXqjGH75DmjGG
-         6R+cttSbuCB5b1rQFBHku4T/1xmWJZgYK5EfKMR6wx9vXK+NiWllFBUoBbaZFW/QN/HE
-         VhDHKjYvI/Idst0wOlmMbyEq4B1f+QyfX/ONRiSlAxS6AS0XuDwjxJy4dKP2qYRx+TT1
-         sSJQ5At5jGwdv2e1h1V8wG8eVbfxKQ/HwK7ESQJIpqNEZKR/bumlwdnETSVbofenuFkv
-         0IXP75JMeWvkJ8TatB7siH0ffZVUch/pJHH8pi+oglkhikLRDtsDlpY9YSHlrhbEUBZG
-         oepA==
+        d=gmail.com; s=20251104; t=1780321906; x=1780926706; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KVLqHRFApU3f+WAI/si/6sZDyWO6S0VzXaivDK163O4=;
+        b=BEM8OaLg34WI3UuCgEm5OiPn6kouL4efyFPp4TPs5eCt7f5HIQL1cmx3VovB5JOBf6
+         G0ZXomfkw7JS1pE3+5R+aVgYGwE2PBI9a0ZsN/jPv61dP0D1IiSe6UNYbegkpqPpkmsH
+         +bTiG9S+VIqssP6GZJM67UpHnkHtlKhJkF8IhMOOPgu3boPLQ+XHlnYHDPMVggDN1bsX
+         negLpa3hMy7g40WTzO9gAWtaLR2QyOVaJJe5krZfWpKZT+TNdzCPb/COGTW2IIv0+uva
+         +rZnSq1hPnMb8coBeBqzFQ6lmgzJGVQ9gNozZSEEHk9B6eRJ5R3bfSqRbRIfxk9PYXya
+         FpRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780321687; x=1780926487;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=29HFkdVvnrLG2mRXHqdfZpGoW4vw1+fH0pbItGivqS8=;
-        b=tPu9SidGrY1xssDQAp2OECE/HvrrLEgiQosqaztfFSIc7W79M/QJh10MRI4mTbGAtu
-         kR2sGKgzXQqHhgytX1YlgnLXm1aBHnLg+ALqHpPcKn3W9N/YO/LeTVNOjlug2H7BRm1A
-         pvt8T8nJKsB4jwZO05TMDQBU8kc8k9tdJ7DmqrFuRfgbsbZ4Mpz+t6SFXrOrLOj1oS0D
-         cNSr84L2HjRuW/nX8npoqhK+AT4othCNX+ELc+jFFEz+oad3ogKLPGmC/Te7nSy7SJ5d
-         4/M7msMFcizRxOWnZA+EfREC9ddM1zHkY1lxw12vkwaeYVpmoQjqFXGFBW2kIW0n9TJO
-         AnjQ==
-X-Gm-Message-State: AOJu0YwrCXlocSyNjCqGKKMTFIW7FqTvnAWRi+mrflpWcPfFgKx5H6kU
-	h7ilOpA0xkD4MFyGWK+3I+Fe6BfUog/MzI75mXLUd2JN4Pi3tZSCNwQ7BS/6/Q==
-X-Gm-Gg: Acq92OG3nAQKqr/i3NcFYKceN4YU8vmcklZwJqcKmj2Bje906jO97MAWaE7AUB6l2Ug
-	isZhfsUs8A6twetgbQCfKOF50CwB+riZWw2PLphT3JKQ7+H/qAy6KyatK0QVJuJbF3iPb2rNTk4
-	lRGhL+w1xsiLInb5B0IVArmUNhSc1Tkn1uZ9LMrO8pn7vRSfX88Wh9rGSbE+m4x146SwGLiXA4W
-	Ar/WIxdDgCtsthfQYpzCIVSFKBWromEKBcytk/4ETo8iI4E491OLpmvx8ysLrOZeb9PwJJppHbl
-	4dQixWQJ8wg4ddUvl0eZ76H9XKwD8LlZkBhU9utiWmbsX2Y2mrzoCO+Lza6fc/vpLC9sm7e6uAp
-	XBVlRZ3iqAhsrYIga9aKV1m4DeZtrIzPlqVouZCUii2dVxPbEYlvsjGnYBt6NTLgEDbxw0+4yVY
-	UFtLdbhSJQAjjxseMexVc2w2ZItcMugt2cZxqAB2/a33TANg715KbcZA0sNZazC4OMbsIOgtyzD
-	SY110b3Pt/ejg==
-X-Received: by 2002:a05:600c:4f08:b0:490:5149:a242 with SMTP id 5b1f17b1804b1-490a290d4f9mr170043625e9.5.1780321686781;
-        Mon, 01 Jun 2026 06:48:06 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c123406sm101906375e9.5.2026.06.01.06.48.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 06:48:06 -0700 (PDT)
-Message-ID: <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
-Date: Mon, 1 Jun 2026 14:48:05 +0100
+        d=1e100.net; s=20251104; t=1780321906; x=1780926706;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KVLqHRFApU3f+WAI/si/6sZDyWO6S0VzXaivDK163O4=;
+        b=b5pYrXDRpSheojoIii3f6NMBVK0TO+2ZEndRxyBXUwCKUxcMRc7+Eq0xdyfch56wqt
+         WSAZtCnkgzj+aX2unhsv8Eef/W3z9n+ukbUaJ3CUWoPPp5ZA9HEAIV2+SOA/gjGNVVrc
+         cJhWWDy4byrhQp1/6VvauF4vkoQ/kLiUPj2nNvw/wTXMsMn3p80XRlrsKYSekSKi+ZVP
+         8QmIeKfOfhW63qVaAQOUtqMzm08WdkY5ahm2tdwuQeogdNETkweEO7TWyHLej8rJRShg
+         eBkpqCI2qZgE18egLGMtCawd5sB7Cb4FtdWckpCPyem3k6MP9uJQ1NAltZqFQ9kT5vcy
+         fgAQ==
+X-Gm-Message-State: AOJu0YxdWSGJAe9vCTB3rGt+WFPlahbyf4CgLiXH8zRKDQeIZubUxpkT
+	Zh6SNEI4SqoAtUmVcpSnzbJ41mzeiWs4NSKGWthyLNBlcxe+lBCN5whh7GSzqQ==
+X-Gm-Gg: Acq92OGDXqSi+sWPgQ01b4FkZ+Q0v5hd1VGfDqPxlbpKp6uuX6H4SA+Ft0s4PwLzY+e
+	NJ7wAg5jzXSKTILuwGGaMal1g81h09aqZ6kGRxbjUyeYRvMpE+3yIEg2RIVgaR57B4qdJrlnjYq
+	pxi2HRPzCoEsfpysRQr+WNtCubBJ6AN4Yr2bDKXqyZtbaCaMdoPkuLjCRv4lL7bNlsP0LnAh8oC
+	spKT7mzE8rNFEVjWRs9dS8jsfuNoyTywf0TNdVv321niewTp2KTNSzYZa0vYzXhJpd+dLxiea5S
+	XpQyMm/JTRLzqR4ObLprsOArdRrmtGmI3exrr4QNEhDM3ebRJDTQpahcdf5NbtUXrX7L4WrqubF
+	TVGJiSTDlzY1VI9/+reo92ZNvWaJ71wZvd2xjF5baLxUvfYiKV/+TImj17DbnhjbtquHa/BPF7m
+	E16v5Icz7WVgo3B73uK2NunwOvPmbBRkWLbf8d3BYNMAPAI0vHCiYGi51L6RycGw5sjQ6aXdX3n
+	+OjwN4WN243MMYwPc3wsjxCS4FCQzmtQQ==
+X-Received: by 2002:a05:600c:1988:b0:490:44eb:c1dd with SMTP id 5b1f17b1804b1-490a294fe9cmr194695125e9.29.1780321905801;
+        Mon, 01 Jun 2026 06:51:45 -0700 (PDT)
+Received: from lorenzo-VM ([84.33.159.46])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c0495fcsm124114575e9.0.2026.06.01.06.51.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jun 2026 06:51:45 -0700 (PDT)
+Date: Mon, 1 Jun 2026 15:51:43 +0200
+From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>, fox <fox.gbr@townlong-yak.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v3 0/2] http: fix memory leak in fetch_and_setup_pack_index()
+Message-ID: <cover.1780321770.git.lorenzo.pegorari2002@gmail.com>
+References: <ahjUmMCKxREamQE-@lorenzo-VM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-To: Patrick Steinhardt <ps@pks.im>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
- <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
- <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
- <ah12uk7IFxS92OR1@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ah12uk7IFxS92OR1@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ahjUmMCKxREamQE-@lorenzo-VM>
 
+Patch series that does some cleanup and fixes a memory leak present
+inside the function `fetch_and_setup_pack_index()`.
 
+LorenzoPegorari (2):
+  http: cleanup function fetch_and_setup_pack_index()
+  http: fix memory leak in fetch_and_setup_pack_index()
 
-On 01/06/2026 13:10, Patrick Steinhardt wrote:
-> On Mon, Jun 01, 2026 at 11:31:46AM +0200, Kristoffer Haugsbakk wrote:
->> On Mon, Jun 1, 2026, at 09:56, Patrick Steinhardt wrote:
->>> diff --git a/git.c b/git.c
->>> index a72394b599..6bf6a60360 100644
->>> --- a/git.c
->>> +++ b/git.c
->>> @@ -591,7 +591,9 @@ static struct cmd_struct commands[] = {
->>>   	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
->>>   	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
->>>   	{ "init", cmd_init },
->>> +#ifndef WITH_BREAKING_CHANGES
->>>   	{ "init-db", cmd_init },
->>
->> This can be marked as deprecated.
->>
->> 	{ "init-db", cmd_init, DEPRECATED },
-> 
-> Ah, indeed! Added locally now, thanks.
+ http.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Deprecating this command seems very sensible to me. As well as marking 
-it deprecated, do we want to print a warning when it is run? I imagine 
-anyone who has this command in their muscle memory is unlikely to be 
-reading the man page on a regular basis so wont see the warning there.
-
-Thanks
-
-Phillip
-
-> Patrick
-> 
+-- 
+2.54.0.129.g2dffd77b94.dirty
 
