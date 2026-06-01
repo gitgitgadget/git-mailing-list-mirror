@@ -1,127 +1,194 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE79390C9A
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 09:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F76B397AEF
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 10:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780306330; cv=none; b=n3HWFkfFdkA7veltP7IXLOgFtWfuSDOtZYFMQ0mUrJubfKFKb5PHzHeAsDfRoCchsLcdiao+Ty5rgse3CaxQhkfsy+NlVPOmbOjscyIYeSnlTINHjUVb9aXpZFkPCpjJJts8lGdnlsoDssB2OEyRwECetByGX/XiNAbmSEntLes=
+	t=1780308629; cv=none; b=Ro3aCjTiI77XJyEXQ0rGVImxSc7zltH+0ncLDuR4lVvdwWtaACd1027paTlsgqcjgnGtfUfClkZ83X2pZ0yYyc28eoHuOThG87kNBKhmWdpMWJF3pg/SZnt5WQiKdWMzk52fWpX5JGZd/kpjDEojsGVW31g1ShWf5BVxUGcrsro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780306330; c=relaxed/simple;
-	bh=5wN77FPTsIIYnAAF4sOUoOqnUeJ1KhWttSieppf5lpE=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Vaq8vF85RFa1wpz8iqOfCfRES++V/X4kgP4uuTSP71sapFenwh66lSNVdQPTNi1NDM9eikOIlKoCP/4XJ8Ck+g45RGl0gXOhFwFyoJLyyz+lFI+Qt5PivtTrfkTmxXVj6/Yq3/ccKvqWN/YQE55weAnjcZsCVG2V6EGrmJKSSB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ia7ksS8s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IsUHo0Gd; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1780308629; c=relaxed/simple;
+	bh=fqnmEdNjVFIdE6ZvCCq12hrlhb67IEpqvhLTneWtemk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rUdtRWn+f9dtzmUDgE5BFujKp60JIQNgosgFH6j+A7IIMTKeSLQOlSpcuHn+5tHGCXG9nxvvqKzX0O469byiIBN3VOCTsTIIjsLGE//u3egngm9ft0ZsjqCPvoy+KJ65m0eJg9l9uRFEskOn6LXHykOM3bfMdUuHfoU68qJKkTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=jyVJ67xJ; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=kpxL2NkU; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ia7ksS8s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IsUHo0Gd"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6C73D1400054;
-	Mon,  1 Jun 2026 05:32:07 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 05:32:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780306327;
-	 x=1780392727; bh=Wn/Eh6HI58tkWBbMix6oiik987gsl7XBhjJdnJ3x9fk=; b=
-	ia7ksS8sN5DiLHXWda8QP/KNVJ/C29Q7CBErqhu5PJy3AH66LeGpDuoBRT9Gli/p
-	dJbRSxnj6AJmv6cEGeT4olgECzE226lqZeUdR0y0ORCGMUxmc1vR3pOYQR4LOtIr
-	r0mK+FF9c3twnZlxobaxucGQscehoNQsv89qcA+ihVNi5K1JKWzr+/98YRUWrQRS
-	fYGLTsoq2L9H5esYNyTUaRlcDjE05hHVBkaYnjJFZqc0FexqdAcVgYWz/MsafZ4N
-	YvyG7ne2DGi9WTIMifTZ/uaUg8QvpNXvMSG7yJSpv6aBU1akhMxd/UbM9qbFN+Aa
-	HZNNXeSU1gFfi5k0csL7wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1780306327; x=1780392727; bh=W
-	n/Eh6HI58tkWBbMix6oiik987gsl7XBhjJdnJ3x9fk=; b=IsUHo0Gdqw7WQy9bY
-	MUFoJ9nHB7fZLPabnRv5ewbnxHeWN1uxRHWPPPv20dOJz0LG8Mb4kmOQgJpDMFhV
-	1EmcQogV4NSFwgkIXEm5q9P4T9fQNJZKisLEfJEVT2nhiDtdyawyb/l+HeFBRwOK
-	wJlvyBKoTLBSKA7qsGLsy08wYKtyTfPC9fDwNxDgv1lxNpuCYyG1PXSMd5W1ErWc
-	hLVWXsBpHu+jW9Oz1JHxg9fLpGrNao7Eg01vfT06R3bJwaOOAD3zr9EgtmlZTiUT
-	JFrpBEO3e+2ollQXG5fhcOjFkMoPwM2cH7hQSCDjbnQo0NZ8N7juaZjJuss3xZQW
-	G7oWA==
-X-ME-Sender: <xms:l1EdavYs3oErYVKP6lzHEKB-0RvnJsB8NE1QNecWws1YJ_6PwAz0TgA>
-    <xme:l1EdapP8VIr70dnKDFuzMX5uQojHHsTiMouwph-nJeAWo7-ATVU_6Ngxg2JXagnuU
-    n4L_V_K290hWvr9YaRqLajoZRhfdnswvXEDhPuijTYjL5xucyI>
-X-ME-Proxy-Cause: dmFkZTFa2dxraGOOH5lyrxbu528VmYyRGtK1N7jbc8rF9LDKUyBRGT+XHKRKUP+lkSvv4q
-    TpSdpBlfCrbKotOg3eMyTVewogh7J8xac00m6J5eTV+hoVeMgdVhVw4zp2SIvU/3F86B8t
-    +AowiBr2mZAr1SPNAHZbjqSax9UGM6xV07yPpRgr3xfasY4AxcGwdrLBpv5DEg8RWiKJLt
-    kl/xR1fgoSsHjyeVnAFQogzEIr3B/ZFWvBYx44zfDHA4my7Xsi4gnQx9ix+uxgOj+3jbiv
-    /GZqFbL55SvA2ONdSUCnK10Ayfa1rIT/icTw2czqN4Ie1TGXg76Tsa9mKOfjug9UbujOrs
-    lHU/cDVrsHg8zTNIL2Y7V9hU2SnZ6MQ7KfWgBlJ72/vv6kocb9cb9RzeXhvf4JSRcSmSnO
-    EGa+Cx42NlKAvo6D7iJrf7DJ4Nm3NU4RGGpPNXtkkYj8/SJVfEgIRntMVM+6Tfg9gxm27m
-    RRlOd8h0UkX56K8uJzkpY9/jKaD/pMwOg4A79qOmQSrx0ttW6jhvntIwDdUKArwDuNXE88
-    mDbJ0nBEEfUgT/GEyHl8Il0BhW8QG5pNf3qLcQd+t4nqYHiNU07ibktWy5MNyUMUOUu32r
-    b+qV0ZZAcPqlkZn1a/+n53TA5ED/KNOWOzIlnW126pbJw6X/b1oNX5wDY86w
-X-ME-Proxy: <xmx:l1EdaqG9hVBOeN1sJU6IBah6PX-qY8bkIiuq2jytvw4vwPp1idpcow>
-    <xmx:l1EdapSslgc2MdVN17nQfPv2Fjvx9aZWBHhRKct92T-C-nZMzjozTg>
-    <xmx:l1EdarvwavSn1ZRBqqLU0ZyERn9Vn5mHGRjza530R4f70XSoZ5mebQ>
-    <xmx:l1EdagxtzNkz9PBIfXQePgkeYcKhDhtJ1f5AwghGJO3REhhVi05N7A>
-    <xmx:l1Edav-XE5VF6_yZIFK7hWqkHrGH48nFoOTnuYB06-GLHc8NzjS1nuCA>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0AB443020073; Mon,  1 Jun 2026 05:32:06 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="jyVJ67xJ";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="kpxL2NkU"
+DKIM-Signature: a=rsa-sha256; b=jyVJ67xJUvIeA+hy22E3tZ5sDc2sm/ycmvUWz06wOaPKhSVuFdPyNHo8X9UVg0K/McbuwzRg1J2IqkNTovOdVWpGoMLEswGZL/2FUy+OouVkKaD9qJztwRzV/s40fxueTHS6SiGBnf8878B2N3HCZXdUeCWs5yWO+cICT8OSOoWoTeEmG6KRWQJVd0OzCW07GI9bJSD7TyFgvUrsa84Kn8QvBa/1+/GFT+NJDT0TOM605CGazuLzDm7A8PZZYG0Z4GHHOQvzO24Y/m6/XvMZ5W7lNximLuD6F1FHaalO/izi8/0afw5pOZOqKzegbPyH4Ic9k3wDnOlsGx0OtTdcFg==; s=purelymail1; d=malon.dev; v=1; bh=fqnmEdNjVFIdE6ZvCCq12hrlhb67IEpqvhLTneWtemk=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=kpxL2NkUDo9n/a0rl/T0TUWMqTOMQnYWarYSfoI/2zkPYgHqvfpmEvJPYkYJJKBWcfbyUmdFreTWI1xgTSVxnsihOnLQ4RGivdfM7v3MDaMyFwzwQtJekXBfFbRlqWyVwVou6vZ49DFN/Ew9ANwsFWqZ4TBqOdZAfCI/p9hwGHROGUVXhZ7VN0cXnOO/eL9JxpeboVKymdLgqaUaejrSUpWLZDGwAS1RydJ4W8qN7SiAfytlxMssfH32Q9nlCCwL/PC7z20q/tqZs42qfaRHIA7t2QMTaRe4hrqYPjsXiWVvSEUxtB/k4upnR8na4jDikbhwZ65G2PfiTfnJ12SVFA==; s=purelymail1; d=purelymail.com; v=1; bh=fqnmEdNjVFIdE6ZvCCq12hrlhb67IEpqvhLTneWtemk=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -428462662;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Mon, 01 Jun 2026 10:10:13 +0000 (UTC)
+Message-ID: <e0d5b1af-b040-49e2-90f9-d8325682826b@malon.dev>
+Date: Mon, 1 Jun 2026 18:10:08 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AjWID8gagZ8N
-Date: Mon, 01 Jun 2026 11:31:46 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
-Message-Id: <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
-In-Reply-To: <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
-References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
- <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/4] environment: move 'trust_executable_bit' into
+ repo_config_values
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>
+References: <20260530160520.77859-1-cat@malon.dev>
+ <20260530160520.77859-4-cat@malon.dev> <xmqq7bokebct.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqq7bokebct.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 
-On Mon, Jun 1, 2026, at 09:56, Patrick Steinhardt wrote:
-> The git-init-db(1) command was initially only initializing the object
-> database of a Git repository. This has changed over time so that the
-> command also initializes all the other data structures, which is why we
-> have eventually introduced git-init(1) as a more aptly named replacement
-> for it.
->
-> This has all happened in 2007 already, and with 5c94f87e6b (use 'init'
-> instead of 'init-db' for shipped docs and tools, 2007-01-12) we have
-> also adapted all user-facing documentation to mention the replacement.
-> It is thus safe to assume that (almost) nobody uses git-init-db(1)
-> nowadays anymore.
->
-> Deprecate the command in favor of git-init(1) and wire up the removal
-> when compiling Git with breaking changes enabled.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->[snip]
-> diff --git a/git.c b/git.c
-> index a72394b599..6bf6a60360 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -591,7 +591,9 @@ static struct cmd_struct commands[] = {
->  	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
->  	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
->  	{ "init", cmd_init },
-> +#ifndef WITH_BREAKING_CHANGES
->  	{ "init-db", cmd_init },
+Hi Junio,
 
-This can be marked as deprecated.
+Thanks for the feedback!
 
-	{ "init-db", cmd_init, DEPRECATED },
+On 5/31/26 07:17, Junio C Hamano wrote:
+> Tian Yuchen <cat@malon.dev> writes:
+>=20
+>> diff --git a/apply.c b/apply.c
+>> index 249248d4f2..73ca9907f8 100644
+>> --- a/apply.c
+>> +++ b/apply.c
+>> @@ -3890,10 +3890,12 @@ static int check_preimage(struct apply_state *st=
+ate,
+>>   =09}
+>>  =20
+>>   =09if (!state->cached && !previous) {
+>> +=09=09struct repo_config_values *cfg =3D repo_config_values(the_reposit=
+ory);
+>> +
+>>   =09=09if (*ce && !(*ce)->ce_mode)
+>>   =09=09=09BUG("ce_mode =3D=3D 0 for path '%s'", old_name);
+>>  =20
+>> -=09=09if (trust_executable_bit || !S_ISREG(st->st_mode))
+>> +=09=09if (cfg->trust_executable_bit || !S_ISREG(st->st_mode))
+>>   =09=09=09st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
+>>   =09=09else if (*ce)
+>>   =09=09=09st_mode =3D (*ce)->ce_mode;
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 54150fe756..18af533649 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -204,10 +204,12 @@ void fill_stat_cache_info(struct index_state *ista=
+te, struct cache_entry *ce, st
+>>  =20
+>>   unsigned int ce_mode_from_stat(const struct cache_entry *ce, unsigned =
+int mode)
+>>   {
+>> +=09struct repo_config_values *cfg =3D repo_config_values(the_repository=
+);
+>> +
+>>   =09if (!has_symlinks && S_ISREG(mode) &&
+>>   =09    ce && S_ISLNK(ce->ce_mode))
+>>   =09=09return ce->ce_mode;
+>> -=09if (!trust_executable_bit && S_ISREG(mode)) {
+>> +=09if (!cfg->trust_executable_bit && S_ISREG(mode)) {
+>>   =09=09if (ce && S_ISREG(ce->ce_mode))
+>>   =09=09=09return ce->ce_mode;
+>>   =09=09return create_ce_mode(0666);
+>=20
+> How hot are the code paths that call into this helper function?  In
+> the original under some condition, it was possible to return without
+> even consulting the trust_executable_bit variable, but in the
+> updated code, the helper unconditionally makes a call to the
+> repo_config_values() helper function even before it knows it needs
+> to know the value of trust_executable_bit.
 
-> +#endif
->  	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
->  	{ "last-modified", cmd_last_modified, RUN_SETUP },
->  	{ "log", cmd_log, RUN_SETUP },
->[snip]
+That sounds reasonable to me. I=E2=80=99ll adjust the conditional logic in =
+some=20
+of the statements so that they short-circuit appropriately to avoid=20
+performance overhead.
+
+>=20
+>> @@ -217,11 +219,13 @@ unsigned int ce_mode_from_stat(const struct cache_=
+entry *ce, unsigned int mode)
+>>  =20
+>>   static unsigned int st_mode_from_ce(const struct cache_entry *ce)
+>>   {
+>> +=09struct repo_config_values *cfg =3D repo_config_values(the_repository=
+);
+>> +
+>>   =09switch (ce->ce_mode & S_IFMT) {
+>>   =09case S_IFLNK:
+>>   =09=09return has_symlinks ? S_IFLNK : (S_IFREG | 0644);
+>>   =09case S_IFREG:
+>> -=09=09return (ce->ce_mode & (trust_executable_bit ? 0755 : 0644)) | S_I=
+FREG;
+>> +=09=09return (ce->ce_mode & (cfg->trust_executable_bit ? 0755 : 0644)) =
+| S_IFREG;
+>>   =09case S_IFGITLINK:
+>>   =09=09return S_IFDIR | 0755;
+>>   =09case S_IFDIR:
+>=20
+> Ditto.
+>=20
+>> @@ -321,6 +325,7 @@ static int ce_modified_check_fs(struct index_state *=
+istate,
+>>   static int ce_match_stat_basic(const struct cache_entry *ce, struct st=
+at *st)
+>>   {
+>>   =09unsigned int changed =3D 0;
+>> +=09struct repo_config_values *cfg =3D repo_config_values(the_repository=
+);
+>>  =20
+>>   =09if (ce->ce_flags & CE_REMOVE)
+>>   =09=09return MODE_CHANGED | DATA_CHANGED | TYPE_CHANGED;
+>> @@ -331,7 +336,7 @@ static int ce_match_stat_basic(const struct cache_en=
+try *ce, struct stat *st)
+>>   =09=09/* We consider only the owner x bit to be relevant for
+>>   =09=09 * "mode changes"
+>>   =09=09 */
+>> -=09=09if (trust_executable_bit &&
+>> +=09=09if (cfg->trust_executable_bit &&
+>>   =09=09    (0100 & (ce->ce_mode ^ st->st_mode)))
+>>   =09=09=09changed |=3D MODE_CHANGED;
+>>   =09=09break;
+>=20
+> Ditto.
+>=20
+>> @@ -732,6 +737,8 @@ int add_to_index(struct index_state *istate, const c=
+har *path, struct stat *st,
+>>   =09=09=09  (intent_only ? ADD_CACHE_NEW_ONLY : 0));
+>>   =09unsigned hash_flags =3D pretend ? 0 : INDEX_WRITE_OBJECT;
+>>  =20
+>> +=09struct repo_config_values *cfg =3D repo_config_values(the_repository=
+);
+>> +
+>=20
+> Lose the excess blank line before the new declaration.
+>=20
+>>   =09if (flags & ADD_CACHE_RENORMALIZE)
+>>   =09=09hash_flags |=3D INDEX_RENORMALIZE;
+>>  =20
+>> @@ -752,7 +759,7 @@ int add_to_index(struct index_state *istate, const c=
+har *path, struct stat *st,
+>>   =09=09ce->ce_flags |=3D CE_INTENT_TO_ADD;
+>>  =20
+>>  =20
+>> -=09if (trust_executable_bit && has_symlinks) {
+>> +=09if (cfg->trust_executable_bit && has_symlinks) {
+>>   =09=09ce->ce_mode =3D create_ce_mode(st_mode);
+>>   =09} else {
+>>   =09=09/* If there is an existing entry, pick the mode bits and type
+>=20
+> Almost all of these places that care about trust_executable_bit also
+> cares about has_symlinks.  I wonder if they should be converted to
+> repo-local settings in the same series.
+
+That=E2=80=99s true: I had actually planned to start migrating has_symlinks=
+ as=20
+soon as this series was approved. Since you think it would be better to=20
+merge them into a single series, I=E2=80=99ll go ahead and do that ;)
+
+Thanks, yuchen
+
