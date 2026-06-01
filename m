@@ -1,70 +1,70 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324793ADB9B
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEC637C933
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 13:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780321927; cv=none; b=Aut56jTP6r6dInytTen8zpuMOB62JZFBG1VKm3Eb9W5Rrnc+HbWhgVX7MFPujnC3kBWoPY5z+GtJB2fQuh1ilEsLeSVB4sePol74Su9yxB2mryaDrIpmF36e4/xEfACSWLVehRPXFAZKzPL0sJNXgjmBb56LbY31Nsaiew2Mvk8=
+	t=1780321937; cv=none; b=f6JhU2ba/Z9Gw2Jh07rhRkvd6JGpwulIuhB9+mYieF3qT/ze++Mp9jfYVNJEIXF2fYsn0lLrafczr9dhAJmBdYn/xBDitXj6EImI5rCGwPRqhqo6f/6VsCAfwvE23nqQ/Lju3pHdbS83fRNYL55X/Vy7iuDpJCozV8ZOziaC8lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780321927; c=relaxed/simple;
-	bh=WFnkgr+3w+x0/dy1IKLrvw0dFUoQmqhx6Gdo33SBQaA=;
+	s=arc-20240116; t=1780321937; c=relaxed/simple;
+	bh=74IJSJ7MWBrWzai1KyBaG6lYMesQZDZGq4FNxmBh86U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jMCDR4aMsDkZDphoZGUKrNiQxXwdaUn9gyT9louS5MM0ZZzi8KG/qHajfnQjGZZo912Hwo04ul0MHMw22ODLRj8QRoTIQG0qJdRXmxkACfwNTSBchnc57n9j5CgD6mNYE75/p+fauqOUbUOu1B6OgbXsSj4BjShSdGwbS8IMy9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LwDCB/rW; arc=none smtp.client-ip=209.85.128.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=EBp8KvwtGAkIM3vfE/sDRDVj0tdn8BUCkQxClhQ7Ech1cGFJQ2FfyPzsnZ8EaPQE05BIUdyDX2EU0ZmJ1Qy1D2eb0wLxTelr1KhxkGmQ9JjqlXemyk6mdi60l55AcM64HH2oYEaXVQllWOZl3cKGQ90vN9ngFhDubjMcgwnPu3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RAXvyWbW; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LwDCB/rW"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4906869f0cbso92903665e9.1
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 06:52:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RAXvyWbW"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-45ebafde87cso6680964f8f.3
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 06:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780321925; x=1780926725; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780321935; x=1780926735; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=V3cxbjhqwQr/k79HUYAmg378Pb9YmuKi1j2kOUBGqxc=;
-        b=LwDCB/rWTq0GyF+TAWkAgKNFIxvRJNcm4gp4OfqC7mzXmmbBorDrz9DmPHgbZCrP9i
-         gKAaDy0SUXbbh/cgys8SPYrEJtS+v3eHyM4UB7+jc4QR/cweJgM9l1Qtq7dUiY63nMYs
-         O0mIk4gwb9HIAVo8jH8IE58dOaVB1sGwHG9+QkcSZJglHO4dB3qBT8AJEmW+UIZkjDDu
-         t7PyTBePIvQVZwtt0TvULjid/paHb9OyAKbct53mx4F4fTGUHDlt6bxfXUmx+FBijtvb
-         EZbeZo+z+/XlQLBXmFwilgpyOSXZCoZexocSqVSSGG9r/7lnKn34pgtdnE4/CRIsHfxK
-         srug==
+        bh=epFUyCtI18Pa6JvTWQfYBZfSZLUmJy8sUv4xXPYIu/s=;
+        b=RAXvyWbWcbnzGb2zW9K+EJrwwR/ESTdGhsixd6SytJ1uLeG6VL5D5P74yrqSZbf5KD
+         8SRPzqc5ukVuU1ieqDDgleZ8LT4NqPL8EPOqIvwXa1yQqGxZJrbPr9qtuTWua7ZaxKzp
+         nZuiqNy8ieUzTLD8gU+la8vhkfY000Q4HGh9jv4aMgzYZJ9amirFh2qe1UKPuc1AaXMp
+         oJVK3C1H1UgkV3W+r8+8QkKa3nLArr0kGfr5DJdc1XuXSF/tk1B4iLR5bQmUhQ0BUnHH
+         dRhTu8AvwYr1AWgsfmmrGFRJouEGAC5c+v9RJyVhy+NXbxykJpUaNKwjMTisBKiWqSRU
+         ayqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780321925; x=1780926725;
+        d=1e100.net; s=20251104; t=1780321935; x=1780926735;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V3cxbjhqwQr/k79HUYAmg378Pb9YmuKi1j2kOUBGqxc=;
-        b=Oxt41GH6MJFS64dDmU4xa6fa1Iz+2EnLJHUwhhG+jFOTReIr4TtByyRXobCouBdoX7
-         W1lupZbDrcSSt5YFDybsxFdT4cEi5LCvsjCgNi4fJRrZBWIRXap+Qd3x44Xv6FGlW1Y7
-         M0qbjJu/y1qZgKQI7rnA4xS99193TSXG3k8680vxNucNCOn1cIj4Je86zSKF4qWn6yvl
-         PIr3dR9j8wNC1Lxe7k3W5f5V3F1tCEo5N3XJv9trPTwvNv74ZSerIdck8DPd2x/X822E
-         6uVD9ISwJMrKHR6IfojQ8QuXI90UC+n023it0Uu4vtEe7Xw3vEHgYlBRDM6lvLLKKFJH
-         9GOQ==
-X-Gm-Message-State: AOJu0YzUZjPivFhR2vGybKdUNf6C2kG6f+se0SqOO+ik7b/Qz/7BsmZl
-	/CQgEVQIsy7pHemvaEKJxqybYYDyggD6uqIbeD/U9duF5XVyP71wmnd9No5yEQ==
-X-Gm-Gg: Acq92OGI5X7v/dlYA/vGJ76GnNLK0yQs6wI6AzvynAQig4BV1iw7GCeqegmTN8OAuZ2
-	Av4rO7TUuQE7DqsnXq4dSLYvlnRwvABmG8eOkx4TEtOJyNIgu1kRDrYow8CMsJ1wVCIVnMeYHlf
-	0g9MJbzyTC5hs79831ayXR3EkKqMI1K1Q+ztDGTUqvun1ukEUEGd4IRy44a2z9noDMN378+/JIF
-	uj8czvC5iTl5GQdZUSHbF936LYQit5RDjtGeAcW72FPJORTbcOFs7TOFpft+Gj8RWjWDpd2TPAH
-	iJHeMZdOlr760x4IW+VBA7OlKwxlyq7hpkMf7xckYXBwnjmeC/JwAcswnOnYiKk7OlG1YKawMSt
-	RYFxdTWGvYYOtrgYEicWY6mY9TBb5Kh/65RrWvrMoOO7fKNmhTIbFEJn7PiQValkND4mvR5MRfp
-	1D86gOJ4IUHmd0abp9jHUUIzWbR0kHY2x1DnJbGzSrLWgoIXjVd9txQbbj0N+SJxQcq0S5h4ViW
-	YV/dnOvzPMu5AxrSlmQMtAT0xg9qEXxcw==
-X-Received: by 2002:a05:600c:8508:b0:490:625e:bb68 with SMTP id 5b1f17b1804b1-490a290ec6cmr215766595e9.3.1780321924585;
-        Mon, 01 Jun 2026 06:52:04 -0700 (PDT)
+        bh=epFUyCtI18Pa6JvTWQfYBZfSZLUmJy8sUv4xXPYIu/s=;
+        b=Qc3R3INkdH659tGL7Ym85bH3MR/ksMr0uUZePy6Wfaj4a6DgfFLD1HAfXYpfVMi1Mm
+         c+IrJr4AHfXCJHdSBi3t2zu7euooHvvrje9v8SBBYdcQ5T6iZbYzZ2zaot6I1mQUlJ70
+         abZcByYsmAvvwpgXiEth0Ai9W6MwbD8G5rowp6yvSnZgKP2agbYLWyYI8jK8qzDGgxeF
+         iefsSHHbQyTi7OuMgXelGlf/2N+yDTdnplWSsoXUaLS42A3aqRbI2k9K1zjBZxP+K39a
+         4AfbQ2myLrR34ja4s4A9zfH6yk+/75NTnW2zY2W7C6IGCysDjtRIoyNBqXiciH6GrXmb
+         EZfg==
+X-Gm-Message-State: AOJu0YwWbhUNpvxZ61Pa9iqB7E3IlMk6uXJR3ikpgW0m/dCcRe4HFoQ+
+	05aNUKqCtlNvlUcj3VrXa1XDAdUECoagu2jKuiwD1AC48MtTxRJUyzCgp3EtRA==
+X-Gm-Gg: Acq92OFjJXWsBFVI30j/3sbDcqgqtKfnLV1xnZ2hEZGDbWlq8+gh6Y52WusbLoy4qyJ
+	SnoZ42ai2/A8pb+EtgRpwg9wFIkx1BxcCTvAxImgh3l0yW21ZreZ1S6rxX0SQUSLpFdHevAaejA
+	t16w0SASFrBY3ARmPMkOlbupcP6pfMJB2pCQnGuf3BmORygT+czQ4u8n8wwuToWhHMun+5qvvvF
+	HMzKQ/BcivOUY9UyYTCaXchFEfD3zHhkQnfSBS+YzrMRA+8laNiWvv0K2//5DuJUHdzb4NnSsiA
+	qQU6tK810YZ7znrYiLHPMoaKp1t1bxZw1c+niYTMZZ4pYqUg3ogUxUqlRaP0l6sEE/f2xMPg2LU
+	8z8bRfdD6drqPwRc7iZqyeVywJd0cOnaZXFiR8vVvAyzGdEphePVb8QprAYFIIFa/Lyuke0PcDj
+	bStIwsq2pZICbGOwWbfpgaeHVflFEM/s2RjS06U/7TPuE0O8yMs8Og3o2fIFtKe0aD39RDu0yTK
+	w0hsl/FG3xiVvLOLJ/3bZqJvKmSowzrfQ==
+X-Received: by 2002:a5d:6192:0:b0:43b:3b80:6776 with SMTP id ffacd0b85a97d-45ef6b88abemr16451535f8f.30.1780321934666;
+        Mon, 01 Jun 2026 06:52:14 -0700 (PDT)
 Received: from lorenzo-VM ([84.33.159.46])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c09ab80sm77878595e9.5.2026.06.01.06.52.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef358c07bsm26377008f8f.36.2026.06.01.06.52.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 06:52:03 -0700 (PDT)
-Date: Mon, 1 Jun 2026 15:52:01 +0200
+        Mon, 01 Jun 2026 06:52:14 -0700 (PDT)
+Date: Mon, 1 Jun 2026 15:52:12 +0200
 From: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>, fox <fox.gbr@townlong-yak.com>,
 	Jeff King <peff@peff.net>
-Subject: [PATCH v3 1/2] http: cleanup function fetch_and_setup_pack_index()
-Message-ID: <e87a270cc05266407d75c9bdfd4faf068fc6f4ba.1780321770.git.lorenzo.pegorari2002@gmail.com>
+Subject: [PATCH v3 2/2] http: fix memory leak in fetch_and_setup_pack_index()
+Message-ID: <e5b2347a4d48841e5dac33b6f36b6200d50a84c0.1780321770.git.lorenzo.pegorari2002@gmail.com>
 References: <ahjUmMCKxREamQE-@lorenzo-VM>
  <cover.1780321770.git.lorenzo.pegorari2002@gmail.com>
 Precedence: bulk
@@ -77,33 +77,42 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1780321770.git.lorenzo.pegorari2002@gmail.com>
 
-Cleanup the function `fetch_and_setup_pack_index()` by removing the
-useless call to the function `unlink()`.
+Inside the function `fetch_and_setup_pack_index()`, when the pack
+obtained using `parse_pack_index()` fails to be verified by
+`verify_pack_index()`, the function returns without closing and freeing
+said pack.
 
-This is not necessary anymore since 63aca3f7f1 (dumb-http: store
-downloaded pack idx as tempfile, 2024-10-25), when `fetch_pack_index()`
-started registering its return value (in this case `tmp_idx`) as a
-tempfile to be deleted at process exit.
+Fix this by calling `close_pack_index()` to munmap the index file for
+the leaking pack (which might have been mmapped by `fetch_pack_index()`
+or `verify_pack_index()`), and then free it, when the verification
+fails.
 
 Signed-off-by: LorenzoPegorari <lorenzo.pegorari2002@gmail.com>
 ---
- http.c | 2 --
- 1 file changed, 2 deletions(-)
+ http.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/http.c b/http.c
-index 67c9c6fc60..b8443b1ef4 100644
+index b8443b1ef4..99da4d7529 100644
 --- a/http.c
 +++ b/http.c
-@@ -2538,9 +2538,7 @@ static int fetch_and_setup_pack_index(struct packfile_list *packs,
- 
- 	new_pack = parse_pack_index(the_repository, sha1, tmp_idx);
- 	if (!new_pack) {
--		unlink(tmp_idx);
- 		free(tmp_idx);
--
- 		return -1; /* parse_pack_index() already issued error message */
+@@ -2543,11 +2543,13 @@ static int fetch_and_setup_pack_index(struct packfile_list *packs,
  	}
  
+ 	ret = verify_pack_index(new_pack);
+-	if (!ret)
+-		close_pack_index(new_pack);
++
++	close_pack_index(new_pack);
+ 	free(tmp_idx);
+-	if (ret)
++	if (ret) {
++		free(new_pack);
+ 		return -1;
++	}
+ 
+ 	packfile_list_prepend(packs, new_pack);
+ 	return 0;
 -- 
 2.54.0.129.g2dffd77b94.dirty
 
