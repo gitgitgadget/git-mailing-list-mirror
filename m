@@ -1,84 +1,85 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A06346A15
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 23:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0121E885A
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 23:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780357994; cv=none; b=FzwiyHdYRQ6K774BhwRvqrwS7xX2cOqoPFyAlj+ctXmCi+bEeY7i1+KiVh61B20y9HSFwjyJijuUcCa2WeK9yPXlpd1Ug1BwH3eB7kkR+fA/Wn3HplMWxXPCAC4gl35g9PL0WLg+mWJe3Su/HkEGbull9UdjFeoJ3VPy0vJMdlM=
+	t=1780358059; cv=none; b=LFn7y9jyesTovVt3FHUnXVE3BeIeIKAHcthrV7DyuCl0Kng8bHDXoFHMvyB/3Lh+mjuW2SSkUHsMIKjXkstZFnZ7u/TA9q3N9e1aDtAF//fxK+ufBv36PvIKq0JsBQjuZmoXPwbBTWQKBEM2ZPECwkYXUP6tpFyCtPsIdeTpG0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780357994; c=relaxed/simple;
-	bh=A7ZNF5JS3LVkIlKtv9B1313/mquu2SJ1v9bn0Q4C/h4=;
+	s=arc-20240116; t=1780358059; c=relaxed/simple;
+	bh=0VKTANh/8syPMvXkXQDRw6pL76yyyKXzGuGHtzBd1bw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BvJmBh7BrQOgJdxLIhsY/gtCeGsM/nJsdF/aao94DQMdC0bx2rHuRMGqeik9LBrKKFFj4l4UjjdveQAHxnlceCRvOxzTUPnlfD+vxDPRnkV54A1XSr+5EFrrSSgbsL+KF/RtT2ZZ4cwBIViw3zjsgjDa5ZfOKdJpK1kPIOLga7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lum8Ej86; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LpT7h3mi; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=or7k4UtaGEHQaCj/0DDLpA1iSmHl4Rb+FOo/dE5aXr4ANA0RrQ3cDQmUwE0zRfMP18zg8ozA2vMYt5P7ZZpep/DMXezFciFHk14xDl+ed3DzQQKaF2SNRUwK7aqTKElAcL4t+6Jfb24fxDorI7nkVBQgAs3mVKaA6CbLxCUi5YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nt96tnka; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WDYApIYa; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lum8Ej86";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LpT7h3mi"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0CF6E1D00085;
-	Mon,  1 Jun 2026 19:53:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 01 Jun 2026 19:53:12 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nt96tnka";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WDYApIYa"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id EF2EF1D000DB;
+	Mon,  1 Jun 2026 19:54:17 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 01 Jun 2026 19:54:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780357991; x=1780444391; bh=Dla/WpeQMu
-	waqUd0VX2Krnf3XHgmtzrWjcdnqsSkC8w=; b=Lum8Ej86mB+jlyQN9He9Er3XEF
-	6mSrZ+I1v5nDUh/sL4KTjkIe7HyMG82/GZhGLQPrxKg3Y05lCoJVVV99pnqyeXRi
-	p5BY0lSqwNcgeHg2tLkJEqXlbwzQtCtuSCajmiJKAH62yuhS4aWjMPAfqbI9DulF
-	RoDqNs5r4VHUsTxBuoz4fzX4icroC86UcwT7FGxImPl8CGlgqoats2cYpSUtcYmR
-	ShwcK0U6SVJfJMVLLued1o4ZukYTEeRczfmhwzRDyF/fCzmwOL84WEbX+UGzEUht
-	oFFvSHpG50fj+OH2D1ebx4nctOhmL6PqJE4go/cLXaTy9hBIIqqOl+ocLnWA==
+	:subject:to:to; s=fm3; t=1780358057; x=1780444457; bh=B65dfxZpi0
+	2rw8hS/VMYDvgSIoFxEQJAy+NxjL5Pk8Q=; b=nt96tnkaYuM1wFbAk0+kCIjszv
+	fYqh37666t4UKINrCwIwC5swCRZinDNveE3csux7QMst/gPo6Q+5mfta/CKsXcS2
+	1Jm/zTlEMJoEiuNelgbcdi8UDOyb86Vq/qhtbeLJqfOPvxf7fUSkAzRu8OSVtCKY
+	+IA+gegO23cLcfnouqFJNHYTXDcvocPJX3acoxsKeaOvTU8lW1qS9OVLDF0oKH5V
+	w0jlvxhB9CSr36t0fs0FwDqsavVdcf4LRNDgLX9pksbHUxjhtGHmOMjhPZAs5aLQ
+	8XdyIz0l5yGTIIv9Z1FoBFRUzPdkOCGUrsDD8uKXBtz5nR5FljVgFExfeY0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780357991; x=1780444391; bh=Dla/WpeQMuwaqUd0VX2Krnf3XHgmtzrWjcd
-	nqsSkC8w=; b=LpT7h3mih3BTkrY4dB4pz6N32NEzANryyvivbMpVqC8YQA8nQNX
-	0ms5W0nbtib/ewLLjyQkYsqyT2dPDOQfJq+x2QKfyL9b6rPubwbhc3I2Mk2oblmL
-	a939SKabSLnVibIgv30CQvRpAdF+Hj90JuhF3SfVfUjbWs0960d3Z0K6H8rJWJ5x
-	bcAJUro/VRoIEvabiSv4+LS8i5wrtGMJDjiuQx8yaiiSloacVHo8QbDtcfZAhCs1
-	y2YmMqCRiIBH0PicU0SiA7A2T9pzQkfUBrDvtZFxnKJXuRjl4zeh9pBmHYp4cBQo
-	PqF/K9QutnWBib6JyD2R3S8/giiZhCBA62g==
-X-ME-Sender: <xms:ZxseaieYiT4Arpu353n_4DiNbvoy98WAguAIg_mTb0ElxKSUbMWrHA>
-    <xme:ZxseajG5aXA_Bx_Okt5gT5i0KytmRnX3-qpDBuZriDr3K4Br-U5M5BZDmttkrzAXH
-    5ZkMxypIqAy8TUeqbB_3T3Rh7fzsg7cuCiiaxIb9kYCzXOR0iV_xw>
-X-ME-Received: <xmr:Zxsear1ypLMcG6g7BbiiI1ZLUFytyfL82inGjewV-JnLxKUFWpUfeGLhrysO73ahPlzJChgopUmcy4pRA3J9TX76P511ZqrUknny>
-X-ME-Proxy-Cause: dmFkZTGbV07Aqy/Tm6v8ArqDjwXkL5Nd7mBLKvW+L18cQywILbt1BwGEvYlvomnGPtJOsN
-    4VVFGDHEwWVnZBHWX3SD1+Df5J7y6Azv/ROs0WsK5/o1hO8reAplqZ9ujNeY6AQKyCXf8L
-    eQ5aCda50JyGzb6Ba7n+hNW+SGOzPX8KDrU+t1JQb8SDH6isq2Skkd/uNeSTSYhK6OLRDH
-    DuwmRKNn1cIPRRzDyXc0CWaO16MqOPHekrG1wHqLfkoWnez/Gxn8x9OUKHx7IHdPiFCQXN
-    KjwoojJKvYw4EHrhcJoFLzgtWAVPFUC+Be9qLW5W11xyljvJSJaUFpPVkzMnw7VpLCy1NR
-    jnlr0sLjqX3TxN7TlkgvPZUTBvVLJ/rs9WEJchMCAx126QJ1PBJaUNHfYBvBauZ5Lwdazr
-    XNSQA0OvmJj6M3JpUrqcK3d4m9WDiTMnASgYbic9HBZ1vWyT2F1ktxzAUnNGS1aRBwGmMD
-    0Z7e08e62LzzzQ22XmMaQrZTkut71ToS5A6Gttv4NsUhytFmV4pVT/TMCHnmP4RxSy82f9
-    J++wVrbua/zGLg2dOnqPKlMu1pGAy1sK5CFMdovEfi+KymajcHPbpuB4kxoZj22Pv/9OTI
-    O7WuEGgfERsrg2F9yMdEN3f9O6uxdLAwuphZsw26IKzTzbvJ09ADeOza9GmA
-X-ME-Proxy: <xmx:ZxsearnS922K_-8UnaCR4HhKOgwpptFeBZ8dMlQ0JBp1OrY6bmTCHw>
-    <xmx:Zxsear-reF_LW_N1JOOVU8vYsnNlP0RD6HY0VFVq7uob0E7_xyp8Ww>
-    <xmx:ZxseagoUvwp6tvgXwZOKmef83-ZXiv9gBvd30KthV_4J0ROrqAmSiQ>
-    <xmx:ZxseaknMzboJZfzFiWeciy2pZjZEyUC-kl4mcAEMt7I2MglBGX44_g>
-    <xmx:Zxseai12ugVZo54WmOXoiuEuxqLadjFWMbLe5cmYWIDq0TjbV-vbmrCH>
+	1780358057; x=1780444457; bh=B65dfxZpi02rw8hS/VMYDvgSIoFxEQJAy+N
+	xjL5Pk8Q=; b=WDYApIYazyeaQoZZc46ODEAhiadWLaEe3Xil//y94taJ1h7IEsa
+	iL+SKvmTFbhkpfyo+0+90dIqawwM7G6rxgEOeoBuSJHDZjpCynndg4VBx0AnKVRf
+	srIq/M9mpaBsnqqbgXi+/rKJOrCTK+ntgGgJHnE+DTzRVP238WNSOWQnGLjnIT7S
+	VLR/2EUE/AYrrjSIGRn4aeouYK98bPhM5e4JWLeN3Qp/v1NNuSkRdek5DH9DISrN
+	rYrtLgXbgUTSFLlzoNHpbCPdsWS21f+mzmPyGkHm80CDrQEYe2uLUDfKwE3UJmSV
+	EA8kKvMxKg7jeEeILnhxqG3apxhN09hSU8w==
+X-ME-Sender: <xms:qRsear07Fou0nuaAp7q6B2bkWKFDVOdDZ1SGc3WxWQp7wnTsxgpoeg>
+    <xme:qRseapI4yLghT9IBevA_T4VR-iGywe5RX5r9NyvTEqHLGmObzoC4JiwPX4_1t-6va
+    u-DZsTeDmmZsbbxikPmMTjKx1CdqAADJMexjT4PToz-Su-q5UmZ>
+X-ME-Received: <xmr:qRseaiEAOOYO7WjjguW5H9TxceWRZ3M4QrlwsjeqxM5aGYBXKDbGHFJb3oiNDd3DasH6Jv8zmOPOSPWDqU2QYD4-1E3gJo-8EmiA>
+X-ME-Proxy-Cause: dmFkZTEmlCliTcGmneNnAbLha7BLV8jIAfjZmtXw7hpyafp1DfMQLg6s3lYbMhba+IAVmG
+    E/o0fgwFYFTnEz235Mq8C6sd0gKD88fVXqaoO/b2kVn4OKFCnxS4bsPtSQ0slsEkxS5ZQz
+    0c7vjtJjokeLeJWgxGvFeXPMve4trVKPUfZxDOe5pt1kq9EodVpe+wpHEtbV/qwRD/GVKD
+    LQVlJsFu7y2sH75GHdQF42WDPE0r1t+C0zBgsf7tRDLesD4NyUMF0a8nFGYcJAscvu/xlc
+    qKt0gLtZ93wa8JMVuXUqLNwONDB8ZPW56uuaERdnSrODqSvVbkbBmMlWbYr0X5DVfCs3Mr
+    AOoW0MT2Pa1XsXLkSzyfp24B+/YTlTJBOWTvqzPthUDqWHeXzV+cwAVjbEWkhGI9xYMdid
+    XRhZ4/6Nw6qwcghAvL/vAQVEJaptr7PgjdLetWAHknVFKMqaruk6qyGwYB0c6IBgK2d6nP
+    bjpdUHvug1qo095T10T0aJhz3lwca6snc4lIPxVj8bC0CaTG0luDrQKNHpOfJI4PzspDci
+    mk9XL2yLoqbaSstSLv17QxhpQih4EnxX4843R0iWL2h71gYSgkG0XPIwvvl/c1wvBdgKFB
+    qLO4xJEvqNysTSwnWJh5jdAMQhGNZYFIqjUnZ4u2yr+ZLsQzxHKiYVlXMHmQ
+X-ME-Proxy: <xmx:qRseatXRSoeq0hQ-N0qNL1tXOSSPb_rroY9S5WmEdk48x0mukGSqhw>
+    <xmx:qRseaixE-yHD_CTUcQL-lpHbkawQR-wdPX5C08KrKwGPMbSX58KdSQ>
+    <xmx:qRseaqSMgxgohNFK1OQMggVfDAROoW0JsiC7ROC3L0jf_Lh1uDCVyg>
+    <xmx:qRseamiKUQKO1PrtEr9j_EYw22FWD8C9Pa_PigUlawYNmVfOz1F8gA>
+    <xmx:qRseaoHUS_bBKzIePaOnYUF44nachJuSHnjF9QcLRp7fwL14Bxhl-5SK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 19:53:11 -0400 (EDT)
+ 1 Jun 2026 19:54:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4] config: improve diagnostic for "set" with missing value
-In-Reply-To: <pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Tue, 26 May 2026
-	19:21:27 +0000")
-References: <pull.2302.v3.git.git.1779697995418.gitgitgadget@gmail.com>
-	<pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
-Date: Tue, 02 Jun 2026 08:53:10 +0900
-Message-ID: <xmqq33z524yh.fsf@gitster.g>
+To: Olamide Caleb Bello <belkid98@gmail.com>
+Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
+  christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
+  kaartic.sivaraam@gmail.com,  me@ttaylorr.com
+Subject: Re: [PATCH v4 5/8] environment: move "precomposed_unicode" into
+ `struct repo_config_values`
+In-Reply-To: <20260601154211.82370-6-belkid98@gmail.com> (Olamide Caleb
+	Bello's message of "Mon, 1 Jun 2026 16:42:08 +0100")
+References: <20260423160832.114816-1-belkid98@gmail.com>
+	<20260601154211.82370-1-belkid98@gmail.com>
+	<20260601154211.82370-6-belkid98@gmail.com>
+Date: Tue, 02 Jun 2026 08:54:16 +0900
+Message-ID: <xmqq1pep24wn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,59 +89,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-> +static int is_valid_key(const char *key)
-> +{
-> +	const char *last_dot = strrchr(key, '.');
-> +
-> +	return last_dot && isalpha(last_dot[1]);
-> +}
+> The `core.precomposeunicode` configuration is currently stored in the
+> global variable `precomposed_unicode`, which makes it shared across
+> repository instances within a single process.
+> ...
+> Change the type of the field from `int` to `bool` since it is parsed
+> as a boolean value.
 
-None of these are valid configuration variable names, but this
-function would allow any of them, no?
+Is it really?  The variable (or the structure member in the new
+code) needs to be initialized to -1, so in that sense it is tristate
+(unspecified -1, false 0, or true 1).
 
-    1foo.bar
-    1foo.some.bar
-    foo.b_r
-    foo.some.b_r
+> diff --git a/environment.h b/environment.h
+> index 514576b67a..508cb1afbc 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -95,6 +95,7 @@ struct repo_config_values {
+>  	int check_stat;
+>  	int zlib_compression_level;
+>  	int pack_compression_level;
+> +	int precomposed_unicode;
 
-or does the caller reject such "key" before calling us?
-
-> +static NORETURN void die_missing_set_value(const char *arg)
-> +{
-> +	const char *last_dot = strrchr(arg, '.');
-> +	const char *eq = last_dot ? strchr(last_dot + 1, '=') : NULL;
-
-OK, the intention is to see "foo.bar=baz" and guess that assinging
-to "foo.bar" might be what the user wanted.  eq here would point at
-that '='.  And ...
-
-> +	char *prefix = eq ? xstrndup(arg, eq - arg) : NULL;
-
-... prefix is our own copy of "foo.bar".
-
-> +	if (prefix && is_valid_key(prefix)) {
-> +		error(_("missing value to set to the variable '%s'"), arg);
-> +		advise(_("did you mean \"git config set %s %s\"?"),
-> +		       prefix, eq + 1);
-
-OK.  If is_valid_key() rejected invalid variable names correctly,
-this would catch $A=$B where $A is a plausible-looking name.
-
-> +	} else if (is_valid_key(arg)) {
-> +		error(_("missing value to set to the variable '%s'"), arg);
-> +	} else {
-> +		error(_("missing value to set to a variable with an invalid name '%s'"),
-> +		      arg);
-> +	}
-
-The distinction among these three messages does look reasonable,
-provided if is_valid_key() gives the correct result.
-
-I wonder if it is too hard to refactor existing logic (perhaps it is
-used in git_config_parse_key(), no?) to give us a less noisy version
-of it that we can use as is_valid_key() here?
-
-Other than that, the remainder of the code changes looked reasonable
-to me.  Thanks.
+And the code does not make such a type change.  Leaving it "int" is
+also the right thing to do for this topic, as its stated goal is to
+turn the process-wide global into a per-repository setting.
