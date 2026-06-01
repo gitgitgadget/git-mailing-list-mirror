@@ -1,86 +1,82 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5404C36A023
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 22:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F0135DA78
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 22:14:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780351996; cv=none; b=AkE6HmkWXnkfKmNQxK+MvByH2eOiIp6cfbvs4uBEi9Me4uAupClTPXnkV0alvmlQJT/9aIlgWjKrGNVoR1KiLTAOjJeVFfL2b3BtWmkhcfBaOqmLVH4RCD4BnzCU++HxlFM3cVDB3j6xNYj3SnkqsOyCCFmFpkCdUXhmXNCq9Qs=
+	t=1780352061; cv=none; b=gGrCye46eLQy4OhFsStQKW2gxDfcZ72idT95gGHjkATFkPwI/s9yI/93XvXAGVcTMTNSoNrSCng2IurQBzSqKwj3FrkEboGOC0V3T8hUT1WoaTltrbHrcLOGin+PZcvEdqu6caweRMLro95IBVDGl7m3HE7u8sBkBFnIinhWPBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780351996; c=relaxed/simple;
-	bh=eABMjOikkykqce+XMjO2DAoi3tBneUrHq5AUYxYZGgA=;
+	s=arc-20240116; t=1780352061; c=relaxed/simple;
+	bh=nuDMMZKIyuKmgFHg+2onOZqkStHkXpG1upuJS+zYCdc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gsH+OJgMYuc50NlsPp0NYWXfc7is9016pStE2p7a+4Dhh8f/aQG+m90u/iNL6pm0Tl7wWlD9/wCwsd98roCif64SiESbSBu2HIFvaNFGASE4nj5uEU1qHvhCP2qIOJhl1pIdsDlNjPOKeiQK+czdepKFAq1iFUNgw8KkmYlY79E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QaQQWM/K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VAExOkhE; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=QT+lx4Yyp7lrEdXRt2+KZS4cjxd2I1GA/cVlcKcP6ACl574oT2yWD3jHR+G4zv9gPDVI9ijWSupDrELWBC4XJgkYAH3QXe0NxkBeVQGSzCa/K6md9xF7YAx0r6XS9wrITkeVq6g6OEGohTwjcyEdGSlaVimCvUAX6p7HPeTvvz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d7JJFM7T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BY38iPSs; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QaQQWM/K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VAExOkhE"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id EE8ED1D000D0;
-	Mon,  1 Jun 2026 18:13:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d7JJFM7T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BY38iPSs"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 86E5A7A00CF;
+	Mon,  1 Jun 2026 18:14:19 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 18:13:14 -0400
+  by phl-compute-10.internal (MEProxy); Mon, 01 Jun 2026 18:14:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780351993; x=1780438393; bh=9nliETWsmV
-	I7H5FyfNpVSP/J9/6c3FOLDjljWJZWODI=; b=QaQQWM/KLztBg1FI3ZEnDOCaw/
-	8j8POKJIYLHPId+OAZmnOxrDOR6Qk3JDdfT+CVwqCePrkeGWPMYSFnMZAIW3wtKZ
-	ejQjuTIG/ZHLcKQL3BmvGYATays1akj0Fp9a+3qh3cxPgLDZYg86m3b7GLuD1frV
-	a6uCMDI+TAiPkdpgGnvVhaT7FG7haRQjyg5DLMCqaVVMWkFp23psWdgyxH8ZKuyB
-	mFUJrUmTIrdrhgjiNQEoXNpGWTuKlpGcU2ygogVR0WIiMQFbUVCNi4bwhFnYOxOh
-	nV2gVUXNqxgDa2kpdSWxog/g9YeFpAgyGq4G+bxpRIlBuSAkyWLflj86MN3w==
+	:subject:to:to; s=fm3; t=1780352059; x=1780438459; bh=jQ2/Cdwjl+
+	TtVMKKiBcoPHW8NqD/jdTtv96Vn6OPfvk=; b=d7JJFM7TBMUozBy+U7MLIHowWs
+	0vnZBl5RqSa6ErFyr6V+nkL3PhXllrPSd4RysZNa+qbYUQ4f8egu4zvw9SZoGSQC
+	mm/q+/yAoW+jrQP9u53E30WWOlytWmkHb0MQOXc7z2Cb6M2MUm1R0ZNStO7jt0zx
+	iDxjkgJ/4LX0kSZFp64CzoQE8I7t18L2eeO8/pRxk3dsH8N6FbSpFMjMyLWRpf1F
+	omrqdqrFhyRYwrydnbPXb+1KWA68b+CBybSiz2OYW6UiwrZ4adlHtKIlg7nVhEks
+	o2Q8lKUmyhviNexzfUzr2LpR0NwlVeNjrz5TBlLOERRPeuNrQDYFGx2Fcd3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780351993; x=1780438393; bh=9nliETWsmVI7H5FyfNpVSP/J9/6c3FOLDjl
-	jWJZWODI=; b=VAExOkhENGYivYdQoCb+N7ae3SElek3gty+LixpSbizupIo+jYZ
-	yWtRW95IP5Js7M/I57l0nr82a5QIfScE/skmVzHg7JzbzOdxeqfJMVKvm2i7OwWx
-	XtIZgtXomXdjoc3Z6E9FtyyUuU1G7uquG4GMsyUebiijb/qrdFqYpY5ZhLQbI8ZD
-	pPLlK9UUXVlLR0j6GgOJmegXuNTBuz0mcug4iHkTcj/VCyscN1I7H7UlqMlxjHAe
-	a5FSglYYwIXpLL0qm+oVQZnWVXCBy+xGbsiHkcNTASumLBoAElTOXxcCobPl8D85
-	ckSbUuBovbIrZbXNHNkEdsI47u1lv5UC0ZA==
-X-ME-Sender: <xms:-AMeaqMgHYLZHDrHyK74l8R2OQPsJATs0jiN3znFk0fBG5MZlGmnlQ>
-    <xme:-AMeat4Mig9-Y-dmLKtusI8LvtXVzxnGiCVyrkno96kw8zfAZKQvrPY2PLFogQ8Bc
-    O2M0-OHGI0jkO5Mv59V9S1YGqeBx5uyKKWBMr5Sl2OTdzkRGHXzOQ>
-X-ME-Received: <xmr:-AMealgef4fG4hPrDeXlSlXXjM4k7sO0Uii9Fe4rWaYjHp8nLgEXD0FLfiLOAdorXk5C5EX5Yk8PqygUWU9U08Znh4gAKvaSdDpt>
-X-ME-Proxy-Cause: dmFkZTFFFEpdpFsm4hDyd4z50odkEKWbfVGDmFam7Dp/MC1dtI3Wqa6t524wADOweGsi9A
-    7oAkdauHKzRBnIYBINs/HdHLXTvJdrcckhedHtBxeSsLzmlmkxYpQiY7LwFXFpWhrFIvHw
-    J0fgz0HR9G07jYnmIqApSnsNqx8t6gdaUpnoypUynCVbZ1xndeUoARMY4Sf1HlDU8Pr01Z
-    bo4iuDUwY5qIcJVZwvbNKwH4yBkvdPv/L8ZMbnL6ekpTnxq3fOhtSdUdYWNvbm55VLebSI
-    Q/3g0OCqtBucaQ9mRDnVSYf1BDxgUjhcMqHCsS2Z3SD4zjr3/J4QoYsT26Gm7Gxn5YcUNG
-    AgToKFUVEGTZY+H8U2O/Ls4ZOTFT/FWFtduhJLRula/hfUosVcRQjxsGQDDxjDP3b//OE6
-    Uk5CKMSdjj/wegQ73Tk3VNQ9M01RU6pacdp5q1zXtFkgOA5tMNepxkyCN3Ut/d+By2Ppot
-    J4zhGfPGJ+IGxR/Q3b8trRvYjaPmikppS76oRwI28fIQFHgXLpdDN3tzlXdsFN2rYjz0/4
-    BHmDmNnVr1Xbsia0bmTwaWX/l0AdYN+8+1+iK+OyMGoJSMyOz0JuRydZAyV3LW4Td5c7w4
-    nkwJC4Mw9piMQi+vJ/Avu1WbEUIDtcD9pH1fig7CWMz8lkYxgM0rfkRFNA4g
-X-ME-Proxy: <xmx:-AMeaqexJEHsvCARFxtmE2_-IDfiOUrTpofIKjKOb0rRFuG7DBh3fg>
-    <xmx:-AMealyqNhXjzUNm_EWhvSRgKeFpJA2Vav2dkJeEVKW2Lf2Acs8CzA>
-    <xmx:-AMeah0Y8XGqle0x9QuaD1WYYE7zPVveS2Z1vGwGk8ox5LqFhAepDg>
-    <xmx:-AMeajyLs_OKGqMpZlUuEmM5RXFz9lxHpAQB-IODPV3B0fgnIviR-A>
-    <xmx:-QMeaqCflajuOr8LLJRTiNw_gPgTdykqIl8GE0zFvUXcUFxl3JpaPIO1>
+	1780352059; x=1780438459; bh=jQ2/Cdwjl+TtVMKKiBcoPHW8NqD/jdTtv96
+	Vn6OPfvk=; b=BY38iPSspPx1VtEGYfjazFJ+xhTiULlZPFLgv+0x0eonjy72qVI
+	0KGdfTJgjbyxbWrRyOarTpC4BRGSc8k6nLDNAtQZRG1dw8VIW1NT1bN8xFK/e9Kn
+	ZF7drdioSo3y+OdvehUnRKNnCObb0jTqMbkKS7A0OBabHM2XKL6CJ2+rZ/r/8NvS
+	D7Uo1hSSs1+wR2/SK64Xlq8bi4YGmflKVrfytWlUizcvOFb0hYwk0NkssEA1lV8r
+	uPYF5hoQ80O1B6CFZxDTrzozKkm/jt8ItC0XWC8J7F8M7JW0aoSG8MbfvFyg4IfM
+	5s0Vvs/dr3hcK+BWhsOwOxkcxdHs056Ce7g==
+X-ME-Sender: <xms:OwQeakvazLX-qwWOQlNdNcw546PwRTrTed0vA7afvHs8TQym-ctnng>
+    <xme:OwQeao5LTm1ojMBdf6LEixdcKNRyixbf3sUK6tDG-t6ljPodo-uwuFWEALKWZxl2M
+    ehXrMK2mDWMhNa-60t9Rwn-_aDhcT7ABlStzSDZOgO1iC65fyc>
+X-ME-Received: <xmr:OwQeatLHneHIkLNbPo3M80wBc4e2VIKoc-5H_PMNDEvvGZ6ewEHvogNb61vCBJPWDcg1ee3Ce_s-_zr0O9Wjd5D8TNXcUb8RtAs2>
+X-ME-Proxy-Cause: dmFkZTF9+9qsieQrSH9C+x1jM+OPgjeu/xVLctTxl1SaMFtF1C5yO/VjKau9BCq4UAEaTk
+    jg+kRDreB7U6Tbocyk7FBeWAqBZWp5SU5wsGka/EORpW9kuIJgpYxCFJ0SLGvllGl9IndA
+    n/C2m1IBr2Hmm8pHUlp+iNosKyY4N0eIgPM/KR018CMT/i4osCbANea0kKZ7Y4LWyegp9r
+    fDe9olVFlwoycZ29Qy31rcuOcIHoO64VGv7H2oAS/ZeUdM1wmIDVb7LXRW997QiV1TZcih
+    px1vcRkiRPcfoZ0nuA8HxekIWptXfNLVwArygxP/E7TLBY/L+w8tkqnL590oL2hSpSszAn
+    lR0KJHmMMLaWkXUxiIEqC6ssz8g65ER5XLEFWVqDZVXhYocNbZYe6C6Yom9hmslidWU1jd
+    yENjS8lli3TIZWY2i9kpwP+ozA/6x1zljlwSQcBmT+fjRLUAZVM2JUrzStOBtQhWSeGPHQ
+    Nhp9+0CpR22CSB9P7tG+5RFHY6DaJAYkP3yWk63zQqL0dlgiWvYfRfslVMSt1VJ92b6+KW
+    gsKzBOo8aSZYNdM8DocI+nX196nPR41pv74hYqHw+pYl+cptYOOoyABBc+jhR+LpUBe8Bu
+    fG+xOk2kh5fJHyOcLH56doK4/FZKoB8ii74e2wsXCtLsl12A9MvQ4/CqgPzg
+X-ME-Proxy: <xmx:OwQeag5EFwxhyV6IhzHSN0kjhwRfWnzdzR1BVwctNvlaIfbgRIOHkQ>
+    <xmx:OwQeaowJVlhWjoGd6Oq0_8UEzZX2tcLPy9ZUzaLQA8Y-yxBB_hg9tA>
+    <xmx:OwQeasZZ1yi_QSQQnB4ozBVmVqJq1B_Ptqdh7bhnVrJjHfeqJXkndg>
+    <xmx:OwQeaiQntMK_doS7-PdUlgfveqYzHJB1lKgW_9KguRmqPqB-R3x0Eg>
+    <xmx:OwQeapCYDNWkWZ5eL4WOLEHHxCoFiNUlxZzQIVBq56hynFzqLa_8C3_A>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 18:13:11 -0400 (EDT)
+ 1 Jun 2026 18:14:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Colin Stagner <ask+git@howdoi.land>
-Cc: Ian Jackson <ijackson@chiark.greenend.org.uk>,  git@vger.kernel.org,
-  Christian Heusel <christian@heusel.eu>,  george@mail.dietrich.pub,
-  Christian Hesse <list@eworm.de>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
-In-Reply-To: <a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land> (Colin
-	Stagner's message of "Thu, 16 Apr 2026 23:50:21 -0500")
-References: <20260215201748.889866-1-ask+git@howdoi.land>
-	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
-	<27104.58166.993109.63505@chiark.greenend.org.uk>
-	<a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
-Date: Tue, 02 Jun 2026 07:13:10 +0900
-Message-ID: <xmqqv7c13o5l.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/18] odb: make loose object source a proper `struct
+ odb_source`
+In-Reply-To: <xmqqh5nm3q09.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	02 Jun 2026 06:33:10 +0900")
+References: <20260521-b4-pks-odb-source-loose-v1-0-6553b399be2d@pks.im>
+	<xmqqh5nm3q09.fsf@gitster.g>
+Date: Tue, 02 Jun 2026 07:14:17 +0900
+Message-ID: <xmqqqzmp3o3q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,53 +86,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Colin Stagner <ask+git@howdoi.land> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 4/16/26 08:25, Ian Jackson wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
->> FTR Debian supports multiple options for /bin/sh.  The shell in
->> question, with the limit that's troubling us, is dash.
+>> Hi,
+>>
+>> this patch series converts the loose object source into a proper `struct
+>> odb_source` so that it can be used via our generic interfaces.
+>>
+>> The patch series is relatively straight-forward, as the source basically
+>> already exists as such and the interfaces already match. So for most of
+>> the part we are just moving around some code and converting functions
+>> that were previously called directly into callbacks.
+>>
+>> I guess the only part that needs some attention is that there is some
+>> confusion at first with the `struct odb_source_loose::source` parent
+>> pointer that initially points at the owning `struct odb_source_files`.
+>> This relationship doesn't make much sense, as a loose source can totally
+>> exist standalone without the files source.
 >
-> Correct, I experience this behavior in dash.
->
->> Why not run the script under bash in non-POSIX mode instead?  I think
->> that would sidestep the problem. 
->
-> Our coding guidelines favor POSIX constructs over non-POSIX constructs, 
-> including for shell scripts [1]. POSIX helps us stay portable.
->
-> I'm not convinced that adding more shell interpreters to the mix would 
-> be a net win in terms of stability or consistency. This patch series 
-> addresses issues that arise from different implementations of sh. Adding 
-> bash vs sh to the mix will probably just make more bugs.
->
->
->> If it had been me I would probably have used Rust and libgit2.
->
-> git-subtree has been around since 2009, so you would have first needed 
-> to invent Rust. :-) That said, a native Rust version of 
-> git-subtree-split would be much faster and easier to read.
->
->
-> Thanks for looking at this,
->
-> Colin
->
-> [1]: https://git-scm.com/docs/CodingGuidelines
+> No significant comments came in the past week or so on these
+> patches.  Should we declare victory, and mark it for 'next'?  I can
+> locally amend a typo in [3/18] (<xmqqh5o0zrsr.fsf@gitster.g>).
 
-So after this message the thread went dark (except for a side
-discussion about rewriting subtree in Rust, which I do think it is a
-good direction to go in the longer term).  Are we still interested in
-polishing the original patch further?
-
-While I do agree that avoiding bash-isms in the main part of Git and
-sticking to vanilla POSIX has merit, this particular one seems more
-like an artificial limit imposed by dash than sticking to the POSIX
-as the common denoninator, at least to me.
-
-I am tempted to mark the topic as stalled, to be discarded for
-inaction, but thought I should ask first before doing so.
-
-Thanks.
-
-
+Ah, I see your reroll.  Perfect.  Let me mark the topic for 'next'
+then.
