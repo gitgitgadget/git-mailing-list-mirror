@@ -1,63 +1,63 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2D23DB33E
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F583DD862
+	for <git@vger.kernel.org>; Mon,  1 Jun 2026 15:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780327281; cv=none; b=FETO1L1wITY6RrOgPYrsmbJ0wJkFkDn8JDGM1gw/8s8OLbRX1JGhHqT9jcysJzUvSZ287iVs3tK77QP2JyAUw3s/QQG5bLaB7nCTKj1Z4VNIt4JuHtSOEGlr+ExGpm2V/+I0aMNEI6yLGMXPjT8P5TygAAvOCbH3BH5J01HroBQ=
+	t=1780327310; cv=none; b=nhZpD7t2Soo5FO7Uloh6srTxGRe7PYLqUdvbXUymXBPZAfgydpPx3uRohnK/TuOLPzu8NT41Wa6709z6kt6HS1uLbr0JKqTJsxh9TGdl3T6C26bO587Cj9BtSGtV7WX29xyKTzfuG5M7xQUpzOwCKQWia3tL1ih5HidO5UeSYV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780327281; c=relaxed/simple;
-	bh=tZsDoRhKawlQQGABFdKhEjTjF3n3g9SrSBvHOBlJMQI=;
+	s=arc-20240116; t=1780327310; c=relaxed/simple;
+	bh=sFbUFDV7qABcyftE7fVHSBefugqeM7x8hJww3wYRWTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MFcn2v43IS80jY+U78UFGpBZ2aK/oeIXG2jpbfVtYSyCy4iec2qOFAdVUquqDcoMQf1ev7Cxr9SxlIrtRnL6k9D9ooUWYDCKYj+6OcMErnY2rkuLjG9bFohNkjxOVckeHIO0NCKpoLSwkD0qyIrM+EDh/J23hoHoByjPT4MFi7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqOhwcEo; arc=none smtp.client-ip=209.85.210.170
+	 MIME-Version; b=c14grsTFo+xRGe1qqUUPi1KAzA7BvtiCqAQzlytWwgZ4ciU4eU+fLU6/eCiyjegBQRua2uWC1xf01TxW39GHwBHjDDdcDINPr2wn/l04cEZ489ls/qre1rER4yVxvlNf3Q9ArVGpBZ4jWTENvm4uQ9Xdpl+EbKh+eVOkH8H27Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NrM7uYuP; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqOhwcEo"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8423f869421so1018550b3a.3
-        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:21:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NrM7uYuP"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8424b6792efso310774b3a.3
+        for <git@vger.kernel.org>; Mon, 01 Jun 2026 08:21:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780327278; x=1780932078; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780327307; x=1780932107; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eDNeA3EXwzxjJn3DibzcoJE6AzBd5KKu2askkzBG05E=;
-        b=JqOhwcEoYabcCja/+Hkt41wc8sEpugZ4HAt1dJMFpLuHqAwwUpLbiWUzTLsdjbpIdd
-         Bmk0dFdo7duzqif4+UKkBQLsB44Z+wi8PyrzqlA23l0ilBNBYAFI2R7L+Q+6k0x5SJOm
-         POdLMVsd8xFID84+BpKSjDHUxDLoSbgX+vZalRAeCrm0tPY4bQVdsm94vAJMN1+yEZnP
-         Dmx7KVQ+ZOebyUEr7v2SgxmST8xdmzoVvPrqsdnqUDyFkeHQcoOp/IydekM09P7vmvX7
-         TaJSYf8dXgKaxeAQt/oZvQXwS9S30AhwPEQx05o0gitnoVtV6GZJ4jIJKYShl7/ZyypL
-         JOAA==
+        bh=tkn+3fRqgazSK/rcSVuIevinMtrJOlI0HVd9jaflYLI=;
+        b=NrM7uYuPXoP7YEFhz9dexKKv9Xb62zotHaL/MgA3dM67ZWpIm1edDDWbd81VfCKbeA
+         yBYaobAuXrzRqrGduyjvnn9wInX3i4nvF5zR66vImv9a0MhCOzULPKUaUiwC2ZasQQPp
+         ahc4kxysRJat5JZ2F7F7IWlhoVGtrFmrdVkaVG9gtfrwE/5+LPVvWoJXXzKdSA0EGAM6
+         meblykU5JSOWcRPPyttaRMpgzHoJnl9RA4ZaMdD7og5VVo0OJ605mnJ+Tiyzejm0qXjr
+         Yjw2RzUQ3mjrrRQpdVGAHEnsAvyp8w4NgAO8EtYH9IUiDilkxIQod2Omcu0FsLxDUC1X
+         WcLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780327278; x=1780932078;
+        d=1e100.net; s=20251104; t=1780327307; x=1780932107;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=eDNeA3EXwzxjJn3DibzcoJE6AzBd5KKu2askkzBG05E=;
-        b=Sf/gRFyER/x93+OgTRI5YXuvXx0rI6jZ96rmadPycrDHYG7t7Kgp5hO0u5SduRyt7Q
-         oqb50iZtYb1rUUhGgB2rWfZUgjTS5+L3sezz35uxxeWnT7k5jw05WxTS5ffU3L/1cqJB
-         E17LZqoC4/JIfYH07AiABsj3qZAQw2PrnUjpzy0UeD5UC2maqpOyGQrrfXBVDjhoa6gP
-         89pFoYvOydwSUy1CGwvsTCFCt7w0/2hruFYm2lQFsEu/Kv+oeCBNfXsPPHSqPIJnKjze
-         UiWb+PZYOZl6r1dke6gwavDKWK7XMxP3xQK6rDiGMqVWEvFfChGcBbplRRh8ySwkwaLQ
-         hv9A==
-X-Gm-Message-State: AOJu0YwgXhPYsMZW8Tza0mFqFDmB40seepsb1bLgB7RzBAGCyjeWsaax
-	iAoNLhdBnWsyNcdp5H66wCL0mA+frBWYza0KDHfQfUKnWbysEMhC8N4pZb/VBg==
-X-Gm-Gg: Acq92OEsIhCm3NM94ks3118aNGgZ0+QRwJjVzMxjRNeE4bulOty0QLiyIBXWsdPDXlr
-	PYOfSUiZZjJmypJFFZ3up04DJqhcKAJD3r6omdy5WTNvAAICs2p9f332CG4v4PPdc3eA8sR2ihb
-	YKZGTkd8OEbbF+UWbU3PKm0sy30OS+/txWkfsMd2BBUNld15GpZJ41NGmDqeg0PZniw1Wl7RnVh
-	mIZ2C5kTDhYmUA12W65OaeQ9B/0yRX37alspxqm+sMlPFec5kMkuOlVcPi4eEkUS30k1IF8DcPs
-	3ZK9brxX/jKf/bJ0FCZETTGZl7sy6thyumGzfe20v8HJzyNf7UGs5oNbjYUWwi8XazXgVaDfLlF
-	58aZF6H1okpcn563smWKYkS0gxGQLmapS5EmvyxKYK2gLodI/jpsBU0xFUtG5U5mxw20N9YWn7n
-	/0r2+lifcxCbc0FUlMeeZ4rfrgoNBc5SofrXU77MUJsRifd41X36wJamZR3cAB0iRE8mRyqBRSw
-	0Lp40t3MbRRrXnDmyiyT/kOLDqKp9tCk3LrVv8IgDhg
-X-Received: by 2002:a05:6a00:3a0e:b0:83f:250d:59c with SMTP id d2e1a72fcca58-842255b71bamr10655843b3a.39.1780327278403;
-        Mon, 01 Jun 2026 08:21:18 -0700 (PDT)
+        bh=tkn+3fRqgazSK/rcSVuIevinMtrJOlI0HVd9jaflYLI=;
+        b=bxMDkYgLbIEcbTjhYfZnMAo+H4+HWBHe3I6gXa51iV7fqQ5aIS+EYj4HsxnlLOAmfW
+         OFbsXGW0KUSAY9vEhcwzr+qiIEj32ymNVMvI3pk5svbEGNw8Xi4kuc8D4nibFMQFwsud
+         9dCyXBQ5s8z68YnqUrWE1d011p+6/2VLfQYCyMtO0evU3XuQH4YL2wqxymww2tF1+AQr
+         dRYW5u1JKAvO2rCyviIE3haX/QhjIuqSuK7nPZEbGgX6uuIylRRBpA3s2OSaIzjrDYvN
+         1lL6gKFUHrbn39JB/ol1gVfldVB9px7wzkI3ZCu8m8Z3c6RqamLpYRMOP5gEue04a66z
+         7f3A==
+X-Gm-Message-State: AOJu0YwPu7PCPkzvlJGepyoDGsEj5cGXiF0Nlo+9eFdM+arKclR5xE5a
+	DaWgA+9RzyqkqxoTU9is9SWoe5DgtMWA6loeg8Rc4DaNzWz6NXspFjtUrYZJ3g==
+X-Gm-Gg: Acq92OEYICZRSNUCPvdzZbEJ+6q8lgCgOiTxsPji5lOFKiDonhXPRFRR0B/GRXiquNV
+	LQEVQrUsrK3xS5JvfT/brMfGMox4QCCgUjCaGiffzoNUsaYFHJ7MVq0aAC8/HeKoimdM3/mo/kp
+	LscCCPVgXoAUfhc1IOYzAQtOPwK/S9cJnnJifUNbD/+BX7LeDa/QqqYINZF3A7pmf68+/uQhB+R
+	TgMk0+lugRwTNIpkzEOyoXpUzq4fslSj11wiuP0g4HijGFU4FYmfFYrGJviyB2MYQOmYbV4fiOu
+	g+2Tbvzz+7+hK8ldOv9AnJRFlPPNuIaXFwaCL6Yi3BnI6Is4DEpuiylRBGi/OU437Lt2X6Bjnpz
+	JqcBOab0eV8ZVQgDRV96CUAVk7ybxGNpsNKw8peJAYzmIqN1+7k1LgO3J1/n2R0f16CyZYLFF+0
+	8dzefLPc7R1xxD8/y0QY7K3y3MDZQIywbm/x1Q2R0j29gdz2U1OWVphXyMbQUYprj4oMYk9Exot
+	dowE9G0qoSVmEXrIz9unxvrf+lc9foPPbOFgKBvk8d1
+X-Received: by 2002:a05:6a00:429a:b0:831:7f71:c810 with SMTP id d2e1a72fcca58-84225760e14mr10857121b3a.35.1780327306645;
+        Mon, 01 Jun 2026 08:21:46 -0700 (PDT)
 Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84232ef8172sm7352779b3a.12.2026.06.01.08.21.04
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84232ef8172sm7352779b3a.12.2026.06.01.08.21.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 08:21:17 -0700 (PDT)
+        Mon, 01 Jun 2026 08:21:46 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: git@vger.kernel.org
 Cc: jltobler@gmail.com,
@@ -68,9 +68,9 @@ Cc: jltobler@gmail.com,
 	kumarayushjha123@gmail.com,
 	a3205153416@gmail.com,
 	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [GSoC][PATCH 1/4] path: add strbuf_add_path for formatting paths
-Date: Mon,  1 Jun 2026 20:49:47 +0530
-Message-ID: <20260601151950.30686-2-jayatheerthkulkarni2005@gmail.com>
+Subject: [GSoC][PATCH 2/4] rev-parse: use strbuf_add_path for path formatting
+Date: Mon,  1 Jun 2026 20:49:48 +0530
+Message-ID: <20260601151950.30686-3-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
 References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
@@ -82,123 +82,202 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `print_path()` function in `builtin/rev-parse.c` contains
-logic for formatting paths as either absolute or relative based on user
-preferences and default behaviors. However, this logic is currently
-locked inside `rev-parse` and writes directly to stdout using `puts()`.
+Now that the core path-formatting logic has been abstracted into
+strbuf_add_path() inside path.c, remove the duplicate localized
+implementation from builtin/rev-parse.c.
 
-To allow other builtins (such as the new `git repo` command) to utilize
-this same path-formatting logic, extract the core algorithm into a new
-string-builder function, `strbuf_add_path()`, in `path.c`.
-
-Additionally, extract the associated enums (`format_type` and
-`default_type`), and prefix them with `path_` (e.g., `path_format_type`)
-to safely expose them in `path.h` without polluting the global namespace.
+Drop the local format_type and default_type enums from the builtin, and
+update print_path() to act as a light wrapper around the new shared
+strbuf engine. Update cmd_rev_parse() to use the new path_ format and
+default enum types exposed via path.h.
 
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 Mentored-by: Justin Tobler <jltobler@gmail.com>
 Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- path.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- path.h | 16 ++++++++++++++++
- 2 files changed, 74 insertions(+)
+ builtin/rev-parse.c | 100 ++++++++++----------------------------------
+ 1 file changed, 21 insertions(+), 79 deletions(-)
 
-diff --git a/path.c b/path.c
-index d7e17bf174..914812320f 100644
---- a/path.c
-+++ b/path.c
-@@ -1579,6 +1579,64 @@ char *xdg_cache_home(const char *filename)
- 	return NULL;
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 218b5f34d6..812cfd55ad 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -632,73 +632,15 @@ static void handle_ref_opt(const char *pattern, const char *prefix)
+ 	clear_ref_exclusions(&ref_excludes);
  }
  
-+void strbuf_add_path(struct strbuf *sb, const char *path, const char *prefix,
-+		     enum path_format_type format, enum path_default_type def)
-+{
-+	char *cwd = NULL;
+-enum format_type {
+-	/* We would like a relative path. */
+-	FORMAT_RELATIVE,
+-	/* We would like a canonical absolute path. */
+-	FORMAT_CANONICAL,
+-	/* We would like the default behavior. */
+-	FORMAT_DEFAULT,
+-};
+-
+-enum default_type {
+-	/* Our default is a relative path. */
+-	DEFAULT_RELATIVE,
+-	/* Our default is a relative path if there's a shared root. */
+-	DEFAULT_RELATIVE_IF_SHARED,
+-	/* Our default is a canonical absolute path. */
+-	DEFAULT_CANONICAL,
+-	/* Our default is not to modify the item. */
+-	DEFAULT_UNMODIFIED,
+-};
+-
+-static void print_path(const char *path, const char *prefix, enum format_type format, enum default_type def)
++static void print_path(const char *path, const char *prefix,
++		       enum path_format_type format, enum path_default_type def)
+ {
+-	char *cwd = NULL;
+-	/*
+-	 * We don't ever produce a relative path if prefix is NULL, so set the
+-	 * prefix to the current directory so that we can produce a relative
+-	 * path whenever possible.  If we're using RELATIVE_IF_SHARED mode, then
+-	 * we want an absolute path unless the two share a common prefix, so don't
+-	 * set it in that case, since doing so causes a relative path to always
+-	 * be produced if possible.
+-	 */
+-	if (!prefix && (format != FORMAT_DEFAULT || def != DEFAULT_RELATIVE_IF_SHARED))
+-		prefix = cwd = xgetcwd();
+-	if (format == FORMAT_DEFAULT && def == DEFAULT_UNMODIFIED) {
+-		puts(path);
+-	} else if (format == FORMAT_RELATIVE ||
+-		  (format == FORMAT_DEFAULT && def == DEFAULT_RELATIVE)) {
+-		/*
+-		 * In order for relative_path to work as expected, we need to
+-		 * make sure that both paths are absolute paths.  If we don't,
+-		 * we can end up with an unexpected absolute path that the user
+-		 * didn't want.
+-		 */
+-		struct strbuf buf = STRBUF_INIT, realbuf = STRBUF_INIT, prefixbuf = STRBUF_INIT;
+-		if (!is_absolute_path(path)) {
+-			strbuf_realpath_forgiving(&realbuf, path,  1);
+-			path = realbuf.buf;
+-		}
+-		if (!is_absolute_path(prefix)) {
+-			strbuf_realpath_forgiving(&prefixbuf, prefix, 1);
+-			prefix = prefixbuf.buf;
+-		}
+-		puts(relative_path(path, prefix, &buf));
+-		strbuf_release(&buf);
+-		strbuf_release(&realbuf);
+-		strbuf_release(&prefixbuf);
+-	} else if (format == FORMAT_DEFAULT && def == DEFAULT_RELATIVE_IF_SHARED) {
+-		struct strbuf buf = STRBUF_INIT;
+-		puts(relative_path(path, prefix, &buf));
+-		strbuf_release(&buf);
+-	} else {
+-		struct strbuf buf = STRBUF_INIT;
+-		strbuf_realpath_forgiving(&buf, path, 1);
+-		puts(buf.buf);
+-		strbuf_release(&buf);
+-	}
+-	free(cwd);
++	struct strbuf sb = STRBUF_INIT;
 +
-+	/*
-+	 * We don't ever produce a relative path if prefix is NULL, so set the
-+	 * prefix to the current directory so that we can produce a relative
-+	 * path whenever possible. If we're using RELATIVE_IF_SHARED mode, then
-+	 * we want an absolute path unless the two share a common prefix, so don't
-+	 * set it in that case, since doing so causes a relative path to always
-+	 * be produced if possible.
-+	 */
-+	if (!prefix && (format != PATH_FORMAT_DEFAULT || def != PATH_DEFAULT_RELATIVE_IF_SHARED))
-+		prefix = cwd = xgetcwd();
++	strbuf_add_path(&sb, path, prefix, format, def);
++	puts(sb.buf);
 +
-+	if (format == PATH_FORMAT_DEFAULT && def == PATH_DEFAULT_UNMODIFIED) {
-+		/* Case 1: Return the path exactly as-is without modifications */
-+		strbuf_addstr(sb, path);
-+	} else if (format == PATH_FORMAT_RELATIVE ||
-+		   (format == PATH_FORMAT_DEFAULT && def == PATH_DEFAULT_RELATIVE)) {
-+		/*
-+		 * Case 2: Explicitly or implicitly relative.
-+		 * inside relative_path(), both targets must be absolute paths
-+		 * to compute a reliable relative tracking offset.
-+		 */
-+		struct strbuf buf = STRBUF_INIT, realbuf = STRBUF_INIT, prefixbuf = STRBUF_INIT;
-+
-+		if (!is_absolute_path(path)) {
-+			strbuf_realpath_forgiving(&realbuf, path, 1);
-+			path = realbuf.buf;
-+		}
-+		if (!is_absolute_path(prefix)) {
-+			strbuf_realpath_forgiving(&prefixbuf, prefix, 1);
-+			prefix = prefixbuf.buf;
-+		}
-+
-+		strbuf_addstr(sb, relative_path(path, prefix, &buf));
-+
-+		strbuf_release(&buf);
-+		strbuf_release(&realbuf);
-+		strbuf_release(&prefixbuf);
-+	} else if (format == PATH_FORMAT_DEFAULT && def == PATH_DEFAULT_RELATIVE_IF_SHARED) {
-+		/* Case 3: Relative format if they share a common root pathway */
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_addstr(sb, relative_path(path, prefix, &buf));
-+		strbuf_release(&buf);
-+	} else {
-+		/* Case 4: Forced absolute / canonical format optimization */
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_realpath_forgiving(&buf, path, 1);
-+		strbuf_addbuf(sb, &buf);
-+		strbuf_release(&buf);
-+	}
-+
-+	free(cwd);
-+}
-+
- REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
- REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
- REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
-diff --git a/path.h b/path.h
-index 0434ba5e07..b9b626ce4a 100644
---- a/path.h
-+++ b/path.h
-@@ -262,6 +262,22 @@ enum scld_error safe_create_leading_directories_no_share(char *path);
- int safe_create_file_with_leading_directories(struct repository *repo,
- 					      const char *path);
++	strbuf_release(&sb);
+ }
  
-+enum path_format_type {
-+	PATH_FORMAT_DEFAULT,
-+	PATH_FORMAT_RELATIVE,
-+	PATH_FORMAT_CANONICAL
-+};
-+
-+enum path_default_type {
-+	PATH_DEFAULT_RELATIVE,
-+	PATH_DEFAULT_RELATIVE_IF_SHARED,
-+	PATH_DEFAULT_CANONICAL,
-+	PATH_DEFAULT_UNMODIFIED
-+};
-+
-+void strbuf_add_path(struct strbuf *buf, const char *path, const char *prefix,
-+		     enum path_format_type format, enum path_default_type def);
-+
- # ifdef USE_THE_REPOSITORY_VARIABLE
- #  include "strbuf.h"
- #  include "repository.h"
+ int cmd_rev_parse(int argc,
+@@ -717,7 +659,7 @@ int cmd_rev_parse(int argc,
+ 	const char *name = NULL;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int seen_end_of_options = 0;
+-	enum format_type format = FORMAT_DEFAULT;
++	enum path_format_type format = PATH_FORMAT_DEFAULT;
+ 
+ 	show_usage_if_asked(argc, argv, builtin_rev_parse_usage);
+ 
+@@ -798,7 +740,7 @@ int cmd_rev_parse(int argc,
+ 				print_path(repo_git_path_replace(the_repository, &buf,
+ 								 "%s", argv[i + 1]), prefix,
+ 						format,
+-						DEFAULT_RELATIVE_IF_SHARED);
++						PATH_DEFAULT_RELATIVE_IF_SHARED);
+ 				i++;
+ 				continue;
+ 			}
+@@ -820,9 +762,9 @@ int cmd_rev_parse(int argc,
+ 				if (!arg)
+ 					die(_("--path-format requires an argument"));
+ 				if (!strcmp(arg, "absolute")) {
+-					format = FORMAT_CANONICAL;
++					format = PATH_FORMAT_CANONICAL;
+ 				} else if (!strcmp(arg, "relative")) {
+-					format = FORMAT_RELATIVE;
++					format = PATH_FORMAT_RELATIVE;
+ 				} else {
+ 					die(_("unknown argument to --path-format: %s"), arg);
+ 				}
+@@ -985,7 +927,7 @@ int cmd_rev_parse(int argc,
+ 			if (!strcmp(arg, "--show-toplevel")) {
+ 				const char *work_tree = repo_get_work_tree(the_repository);
+ 				if (work_tree)
+-					print_path(work_tree, prefix, format, DEFAULT_UNMODIFIED);
++					print_path(work_tree, prefix, format, PATH_DEFAULT_UNMODIFIED);
+ 				else
+ 					die(_("this operation must be run in a work tree"));
+ 				continue;
+@@ -993,7 +935,7 @@ int cmd_rev_parse(int argc,
+ 			if (!strcmp(arg, "--show-superproject-working-tree")) {
+ 				struct strbuf superproject = STRBUF_INIT;
+ 				if (get_superproject_working_tree(&superproject))
+-					print_path(superproject.buf, prefix, format, DEFAULT_UNMODIFIED);
++					print_path(superproject.buf, prefix, format, PATH_DEFAULT_UNMODIFIED);
+ 				strbuf_release(&superproject);
+ 				continue;
+ 			}
+@@ -1028,18 +970,18 @@ int cmd_rev_parse(int argc,
+ 				const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+ 				char *cwd;
+ 				int len;
+-				enum format_type wanted = format;
++				enum path_format_type wanted = format;
+ 				if (arg[2] == 'g') {	/* --git-dir */
+ 					if (gitdir) {
+-						print_path(gitdir, prefix, format, DEFAULT_UNMODIFIED);
++						print_path(gitdir, prefix, format, PATH_DEFAULT_UNMODIFIED);
+ 						continue;
+ 					}
+ 					if (!prefix) {
+-						print_path(".git", prefix, format, DEFAULT_UNMODIFIED);
++						print_path(".git", prefix, format, PATH_DEFAULT_UNMODIFIED);
+ 						continue;
+ 					}
+ 				} else {		/* --absolute-git-dir */
+-					wanted = FORMAT_CANONICAL;
++					wanted = PATH_FORMAT_CANONICAL;
+ 					if (!gitdir && !prefix)
+ 						gitdir = ".git";
+ 					if (gitdir) {
+@@ -1055,11 +997,11 @@ int cmd_rev_parse(int argc,
+ 				strbuf_reset(&buf);
+ 				strbuf_addf(&buf, "%s%s.git", cwd, len && cwd[len-1] != '/' ? "/" : "");
+ 				free(cwd);
+-				print_path(buf.buf, prefix, wanted, DEFAULT_CANONICAL);
++				print_path(buf.buf, prefix, wanted, PATH_DEFAULT_CANONICAL);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--git-common-dir")) {
+-				print_path(repo_get_common_dir(the_repository), prefix, format, DEFAULT_RELATIVE_IF_SHARED);
++				print_path(repo_get_common_dir(the_repository), prefix, format, PATH_DEFAULT_RELATIVE_IF_SHARED);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--is-inside-git-dir")) {
+@@ -1089,7 +1031,7 @@ int cmd_rev_parse(int argc,
+ 				if (the_repository->index->split_index) {
+ 					const struct object_id *oid = &the_repository->index->split_index->base_oid;
+ 					const char *path = repo_git_path_replace(the_repository, &buf, "sharedindex.%s", oid_to_hex(oid));
+-					print_path(path, prefix, format, DEFAULT_RELATIVE);
++					print_path(path, prefix, format, PATH_DEFAULT_RELATIVE);
+ 				}
+ 				continue;
+ 			}
 -- 
 2.54.0
 
