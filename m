@@ -1,138 +1,98 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0A73F787C
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 14:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5EB175A8A
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 14:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780411392; cv=none; b=tsDxpnm2IEIboVqNMqR8WuyycLmi8fkVoq4E8WkOf+3Rm9surh8jD7SktFBXIO0B7yMYAbFBKSEhlBnjtdI/Krw300huIpP12gfRBAslaBzytH5GRM1T+gvONqUzB3338g9SwNQ6jpDIs8JWWmTeUgi9pCu72tlB/gMcPBWj73E=
+	t=1780411589; cv=none; b=DoHie1k4TrR7AWWdtiSiUkjItxpnk+BCEWaz0oPTJHo1Emlzbv/1AnFUCrLkUojwaHFQZkWhFqxeZPtQpWZcalYgL48RVzeyjAJrfQ+0a9otEeLbqptmu+z6hVmyrAy9/BeKcWUiPyaIgccW2J/Fp1veSfRbwI5Y5KnZBMUMU+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780411392; c=relaxed/simple;
-	bh=Ugbnu4T6Wy8GGmz1qVhJq3hMxuri1bZx4pBFgoQa6kU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JuwMaHlPcsZXNGuozvbU76ohZorfIOBskQGr6G46o+c1FGK2Sr2Cj1HIX891b1qbCZrUSHd61QitaN6y89HGp7Jr2x1AAVDAXHU+NGKoLh4/Z9DOADwSehXi2uS6Q7cljLi7QG/c5GnsoqdqlvzNedi+9K2Facip2e3hGTURC0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PKVjBYyC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NJCHqxCT; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780411589; c=relaxed/simple;
+	bh=aL+VrGdmgcE1P+JF0LhWj/Nmx6XGlnha82/vZCtcdSM=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=J+HB/UWnYQvCe43d07WOuljKSF/InadQxquQSki4JIF6EdHAkvqLPUTtE8iMfZGhTbpFDnyiOuBz2bIS4Sn/d495YU8dvAsUQ6Kbre527iuAzo6wjfMQeBfsyZczcU+lwkMzlpyVQstrQnucf7m+M0TDOZmdi7onoVf0L97VVsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HXqwmYrr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ku1oKfV6; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PKVjBYyC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NJCHqxCT"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 260AE7A0189;
-	Tue,  2 Jun 2026 10:43:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 10:43:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1780411390; x=
-	1780497790; bh=mMRjxBcRym6NetjF72RaobcxCO8IWR0xPQtC0Cgvpio=; b=P
-	KVjBYyCJiWkvG+0ZLb1Jcj6PqdClIz7aTVTmktHMlulaIB8jf/sYTjcJ8ssQPpUF
-	llpttRYHdtcxdxZ7kR9ZZWklIEk35TipNAoh6ym2OkpE0p8dPnRN/+h+jFk1X+eP
-	E5+S8uLIxLi+IvscUaLforRvEZAVlTdHSz2h2HeEnAoDvCFORNafKfnkUTRLGyJf
-	JHYsn0ZxNRuibKzLTVCfP12UNBPEd941r6O4eT8WeYYxybXzLC9eijhLOSjRwBKQ
-	FUxfej+r2WFzkYGRaa7UX4l3tUmkkJKJ+/14eTbUmP6ch0/FutspxnD34CAy+PM8
-	cS8qsyMWPiz+sN/gouqAA==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HXqwmYrr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ku1oKfV6"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 787A77A018E;
+	Tue,  2 Jun 2026 10:46:27 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 02 Jun 2026 10:46:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780411587;
+	 x=1780497987; bh=E7MPuTEYZI1XsVdi7eCs62198oc599EPj+bf3gcmhkY=; b=
+	HXqwmYrrhe/YrNahVqd7AxJlHKad5DQnwGzMM+I+4aJq/jW44vHUIrxN7b/5jRvI
+	RPosFUGJdmjBd3ksE4SUIpHLoC8bWzk7nH5qBcpT9yOPySSvUw8VC4XmOGp4f8KL
+	UwwIsSJzRwI6kSoPIF933z8SNPczJmTJOTaCSo3U1C8JxgvIlAtumX18kQKWcAql
+	koLEsZAkN760x/YBd/Y4Ic6wy8DwfbsRpFPysgFxmuPTrUKCW8vt/FaAA6Cjw0YC
+	oIRNrxkE3Xthei3U7/N0QhGc/5HAJYpTHxLKBe6Zff+ocaViUFNflXX6ZBTNjkBu
+	lC6VK5hDuji2g9LKDXY5cA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1780411390; x=1780497790; bh=m
-	MRjxBcRym6NetjF72RaobcxCO8IWR0xPQtC0Cgvpio=; b=NJCHqxCTCw+rdnxpV
-	X1bfTHjSvmf0r4wLuqpXh4MEGoop9VV7rUjPoP+sb+0lkS9VrEJcW/i+DrjsS6O2
-	e2dzTHFms5/N4QH8hnS7qwkPpbd4wz6nuOYXS570TMHicE+G1yR1g4bSm9hYRGnM
-	er6GdP4/8ws7erivHOwHykDcZO6MOuhsJ71Fy9S6iLuNBfO/gNZOW1fFu0zd5hBG
-	K/bUdiZ1pkf7ppn46GwnH3ZGjShPPMrirlJoFSRzimlGNtTWfXQwQOAJZJatU+Ra
-	JcA1c1NlQih6Kx7q/kTr/ViBSeqSACGwcESN1JFcPaJiv2vyuLCUVVbAzI3+qZpl
-	dpQXQ==
-X-ME-Sender: <xms:_eseani_vaRGaGq7NiDlhvdp0tcMEzSYIsU-eO6w8VMczTV6A0jLsA>
-    <xme:_esearAWn5Tw_LS_gaq5hxXaQBc3nIdXi4C-VVlpEuRpDaK4NaEXePV_KPaK2O6tW
-    1QWqq73Tm3HHtoNhrfxE031bFJs5viMbIBg60KqFtYgvtnBv7pIEA>
-X-ME-Received: <xmr:_eseasHWSC4hUOIBkxkq9Iui0VyHFWL1rEWHN1JWF35BCTE5D3qo0rJHoGFEVtkwaZjloHTqs6fDbJMMiFDxTm-1cBKVreCv9nfg>
-X-ME-Proxy-Cause: dmFkZTFCQTx7T5KJLHvVUVUwImJiMQuCGl5MNtE7icRX/SZg1Bj+9HCWvTcznpdadd/Fk9
-    Erez+bQ5b2Lyy6tETx3JL+9w3oOEihwjatmnmyRG6/8smVRhsbJ1it3/DvBuN2Sbfnxnk3
-    b3SyMF/eS8zVbXcfdBIs8B6KRz4gJeiDhhWWxajsnS7liE1621iyIn41pCPykRdLau5asR
-    cg0sao8tR0OsJ8Mg9PkMUb5/9bzzp/5+TY7psVZXCiSucdc6qbIC8fiu9UwSMQNyWuxRC5
-    Xwckpz5zu9Rn7Nxk65mY2RglqOMHzY+d1qd5N4t+bO40tFwixzow8257TIcu/hcFq9T3Fz
-    eqZquLFibgXEQ/Jqpwbq7W/eRLLRbkEizZrOYt3eT6nU8ZmQg4G7mlZyRtJno/6Ji7oNDz
-    3OMBQ13QeHKWH5YKtMpRhB4705ld6kchDCy/zaRka+rjAhzvwnvLsT9E3GgBGaM+uN9LxP
-    OjFfq0kqYZUwuZDjVcBrVuuqmNFAu/pHYx7Egvw/Sbfo7l1RFBK4jBcBtfcFWxcfdjZsuo
-    lq1BaHd9UCyDAOQ9JmP6WQJydIuMGt9c7Zl/ne3D24nTXdNatFtcWPJgdO5TxNABIt4Fr7
-    AYX5cXJT4TZ7GNvl2yk/sZRBvvppaEQNK7UcfbVNV8joLLTboHD11DokOmRg
-X-ME-Proxy: <xmx:_eseajLkAFdJWHGK2BTfxZfvNT6dpDI-epx_vzLlcuLv43gNJCwhvA>
-    <xmx:_eseaglLvz_TwtrXyBQ7LiyeDH-W6AYufWTnYSSHnrg3_fFsmDE6dg>
-    <xmx:_esearRWv0rsc71XzxpGvU62JU-ok0kqRPusGmmU3zZ4monfLLBiqA>
-    <xmx:_eseaiK2OEkRDnt18hF9V33kVLU9NmbtAIlIRcTJlACoAT_zscLCrg>
-    <xmx:_useajmYcvrt0km97UilXeh6x4wP0SWH4BHkMTHGtCTFPupkWimyZbC9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 10:43:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH v2 2/2] SubmittingPatches: describe cover letter
-Date: Tue,  2 Jun 2026 23:43:04 +0900
-Message-ID: <20260602144304.3341000-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.54.0-591-g9032776dcc
-In-Reply-To: <20260602144304.3341000-1-gitster@pobox.com>
-References: <20260602090808.87837-1-gitster@pobox.com>
- <20260602144304.3341000-1-gitster@pobox.com>
+	:x-me-sender:x-sasl-enc; s=fm1; t=1780411587; x=1780497987; bh=E
+	7MPuTEYZI1XsVdi7eCs62198oc599EPj+bf3gcmhkY=; b=ku1oKfV6YBp1/s6vF
+	ApusxLFObKd839wvW2T4NodLeuooAi3vsQkZFsnKup2PWohn+nCoO5ZP+AZ9BOgx
+	Ydgmfn7rchpZQRJgctX28PHOcNMHZwN7sZJuVQBX1dYF3xTcpfVv+DPWM3qWN1T9
+	MVomZG6uDymfO4xV2AEA00LINUsRgqS/yaYCEzxx6sKfG3tR9qKaGmOj609s7+Vx
+	oNEzqR8iGwIB5tabKpTB3CKplSyEev3ogEhOTDmY5QcJNky9w3MwvC3lL9lAoYUH
+	3CWhyiHvud0SmrTzWBoj6v2cmZEgrWnxj5BZfGxq5Ay9c8IBMKusXQZYY95VtidG
+	QSKCQ==
+X-ME-Sender: <xms:w-weagnsqMymAimTRKLU2Eur8xM5jxstPJyPv_XRRZjJy6qLQmPaG_Q>
+    <xme:w-weaqpp1ynxAVhV92NPDPfh3tL9wMJoQFni260jWZT4qZjzw_slg_zR9rs7TQRIQ
+    FYvzuBEpsmaYu6gZ0LGOrFeQ8kzKSlkqJQwDIRG4DC61xdcE4--CA>
+X-ME-Proxy-Cause: dmFkZTEEMyfJ/TokG4TslS5WViyqBWiJLxNjoAkyElXdwtyl2H1ou+YXd8aWfCXFnTJawL
+    Tln2MAJSFg/+87yXQu5ibvHqyJIUpWE8lmxkrkuTUtRgdRX34+4OAoroYM6lsejq/+SB1R
+    VX+e+Y3mYJnSi4LSRh//IEI5+YPxslZe3qb2SI8gY92OXzky9to38sakGxjB9WR6fW/u8k
+    lDhCIBnyLTOJt1O6K00+11fmL8t2IV2YuZPIO7P6MXQgyhfugzd7UKTYOoSKpRbZxQfu0x
+    zh/4llf86kS6P259IYazPpatRAreLEl3OpdW/TQDdQeedU4PgQTfXobLV3PgfV0MUwNJa2
+    0QpSFguJ5MNb+XNVgzJOjtYJYSM+Kw1wgQuQMjX+VJ05pxhED4SeCr0dE2B/XNCQKblq70
+    x0cXd4CT9d4aZBOKXgpVrugHNOfu5G+mkKwfZ2AckgIn3+rd16Vmyz1ZGat6kwd5TO/1pZ
+    6QSeOVP+7gDJpaBfx3iKpBQwmtrkHtD4RjFQWIkG41t/3ehXaRdlORcZs72th9mMLG/GCp
+    Gg+N1cM4UydO7IgmK2BKDWT50Y+m7Bt1GUC6sjk5MYOEB5E0GTkTumVLTqF46Nf2lL0sLN
+    mzP4aKE46Yq5B6owX8n3i58ykbiVB5UXsF5WHOGOGD1aTOM71rTk6kEXTsYA
+X-ME-Proxy: <xmx:w-weanRnGpg7wGwL1aVtprlVhbTGCLSPjKul2Xu-oTq64I3l6kMqoA>
+    <xmx:w-weamuN-prfto4G9FTyfZ43n3emzav_ImXialeqn7FkW5c5S-Oqzw>
+    <xmx:w-weakbWJio5tVwTRbN0o9AQg6OYooc1nMoWBZQDeRvc5iUyTyKl_g>
+    <xmx:w-weajsLLLGQenn_vi2oPzxTs8BEyUBYHJS3wVHoG515gE_3Y6ZufQ>
+    <xmx:w-weauboNE3RExOgaDfMc65KsOjCi_gg8JxTwa6_bOmFdIjnRUCMXzE->
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2824E3020097; Tue,  2 Jun 2026 10:46:27 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-ThreadId: AVgREVly4glJ
+Date: Tue, 02 Jun 2026 16:46:05 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <c64bb761-a412-4ec5-a1b5-30f0893a3d1f@app.fastmail.com>
+In-Reply-To: <20260602090808.87837-2-gitster@pobox.com>
+References: <20260602090808.87837-1-gitster@pobox.com>
+ <20260602090808.87837-2-gitster@pobox.com>
+Subject: Re: [PATCH 1/2] SubmittingPatches: separate typofixes section
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-We talk about how a commit log message should look like, but do not
-give advice on writing the cover letter to sell a series to the
-widest possible audience.
+On Tue, Jun 2, 2026, at 11:08, Junio C Hamano wrote:
+> The existing text said something about tests (with [[tests]] to make
+> it easier to refer to it from elsewhere) and then flowed into a
+> different topic of typofixes, but it was unclear where the latter
+> started.  Add a similar [[typofies]] marker to the document.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Helped-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/SubmittingPatches | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index dec8aea4cb..df9f722bfe 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -472,6 +472,30 @@ highlighted above.
- Only capitalize the very first letter of the trailer, i.e. favor
- "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
- 
-+[[cover-letter]]
-+=== Cover Letter
-+
-+The purpose of your cover letter is to sell your changes, explain what
-+they are about, and get your target audience interested enough to read
-+the patches.
-+
-+. Every code change comes with risk of regression and maintenance cost.
-+  The cover letter should clearly communicate why the value of your
-+  proposed change is worth applying. You can also describe how the risk
-+  is reduced by the design choices you made while writing the patches.
-+
-+. Make sure your target audience can understand what the patches are
-+  about and why they are needed without prior context.
-+
-+. For a second or subsequent iteration of the same topic, make sure
-+  people who missed the earlier discussion can still understand what
-+  the patches are about, so they can judge if the topic is worth their
-+  time to read and comment on.
-+
-+. To help those who are familiar with earlier iterations, give a
-+  summary of changes since the previous rounds.
-+
-+
- [[ai]]
- === Use of Artificial Intelligence (AI)
- 
--- 
-2.54.0-591-g9032776dcc
-
+Imperative mood?
