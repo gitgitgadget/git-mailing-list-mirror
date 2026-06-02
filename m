@@ -1,78 +1,80 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBAA3C8C73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141B23C8C71
 	for <git@vger.kernel.org>; Tue,  2 Jun 2026 08:54:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780390480; cv=none; b=cIA6/qSMfQhIsUlXHbT14STaHulHK16PSAuypOoapsZ2I+ws2lpmzX4hRLm9pbyMbAHtalkCRTvAGk64zDCPrlKHSBXQirCcTJudMNBPuIERMdmfz2HrmTb421xEtORjIdgE6VjcSdpboPV+d9tQo2X7irbh0FNvfiBGkmzoXIs=
+	t=1780390481; cv=none; b=U8eCKnvU0PccHtl0q798hpCG7jgMDTyk+qSv87XH0egpVdAApANMsp6UoWeTbOixzShubr1D3cJnAHq3djtzGPMGTMIdguJ1uv+KagK5v+AMQS59x1jz7S7g6zQmRCEaKqLuK54H8N0VAc5+1bTMcUSKF60QH8dG2boVMWtgt20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780390480; c=relaxed/simple;
-	bh=BtYszPaUJGGMr0g2M8UFaqvfKf7V0siHw867qEt3+T8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=G6MYqL15MaAduWDmmXSFUEdaEsGY4LqvPIfrqZP5/3RsStikQQ3/67gBCfRDWR6gidMe6vd/WQDndQ1vJ1aBPu1r4gkuzt9Elg06Ch/f/1On2+tFsJzqlcW2u/oQmIryT8mTUzI6TeZz5gVuO1tDyGXwEGpVQp7L/VUwjaMPDDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HQeO3bgK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GS6pJ2FO; arc=none smtp.client-ip=202.12.124.152
+	s=arc-20240116; t=1780390481; c=relaxed/simple;
+	bh=Za0rpKbI5UnnydOnxLCS4/fIkmtX51xULZpg5+lBUDY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=gDQ3vLg84J9FaGJFD/3VR+2O0Z5lhIPQFYM7C7Q9ql8sHN3NYsdO7hPWfjiqn6ub1cQk1YaGdflslsPwy0f5rrUwUkbUk3SXuAzioMu5qBlabpy1UKzpQEfDyj/K2TRuF+9Ye7YdN2p9dyk5Pr/BQy/Ed+Ujo84EQ/4KwgNUm7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=leMJtrbP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bgtN2VdO; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HQeO3bgK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GS6pJ2FO"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 60FF57A009D
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 04:54:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="leMJtrbP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bgtN2VdO"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5AEEE1D00105
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 04:54:34 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 02 Jun 2026 04:54:33 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 04:54:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1780390473; x=1780476873; bh=tnqCGMGzmM
-	k0LedOwomSDdc1rKWmSNez2IgvC5EAtUA=; b=HQeO3bgKTx6xozHMsnDrz8NyZZ
-	MNOZPF4wgzIwpvk21wZz3ZdeDW+eG77UfObEnG7sOtxgmhL8YrWE1wUULRjJwk0B
-	JGeeVdEsSEeyKqxrkqUz9ljeR5iQ9Zo5G52SvhFfftrfOg8KJK/bzDXJELzHTjsX
-	Ppg0kZUV1uJFeMqNJ/r+t5lyuVETrUgAUJhHc8+0kZDohaQiWZBGphLHlZhaQg8U
-	Qt1qtc6hmsyPFQFKCzDg9vG98F/0xLxRRPYoIjY0jgg893ngSUCZbkF+DVmx4hJQ
-	wH+dMXMIg2ke6BE63KvSnAktd5vENNo/lDTXyi5drYDrzF9daRhmm5qhfZrQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780390474;
+	 x=1780476874; bh=QGAx4F6tne9nETImDhMq1D8rCxR8er16xDO8t/8ER10=; b=
+	leMJtrbPgFDm6j6N2RGoo0Wx2UIJ51S/JPtKSXijJvScawh7nn2Ea1lMpbju4nua
+	BLNTneEPRiG8wvVW8u+5dCOzZkhoRTjqwKZstHCXUYG7Wffs8/JBjxSUZq5BfRy7
+	/qM4CRZ0AJmNd1nrhPmLTmqZeHqhlvFRxakIZz0j4lccBlbHR8ieugdmPQmjTQJg
+	c4Q4HWG0ewHj69iVWCnnb+WouogAjoUN7ed16mmAl6SZRCqmC1kkkvfguF8eDkCc
+	7RB2hcQRwTHfO1yfgi+9yEDtQlBFeaAV/XWu2r9rX25r6ClP5uAm0jDBYlN6lJBg
+	Y70gNBlgPWaDYBBy7dRUcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1780390473; x=1780476873; bh=tnqCGMGzmMk0LedOwomSDdc1rKWm
-	SNez2IgvC5EAtUA=; b=GS6pJ2FOEr3z8Q7Z+V/FI/n/RrJDrI3IwKI2KkQ6cptb
-	ck1i7qItgIkdYIvMSX41BR7s/w0zy96vLPKVTuySERMh8QLRE+JFTqyUS/cjQ8JG
-	BThu6KthXP+s3TzjBEgrJ94RUluZzUqveTfA4jhEwo9k3r1dPN8IUDRcfwshzQ+5
-	xb4OrsBNHXnC1fjqm/RNc55X0vohU281OkORNSvQrcRccKP7BUd/DP5T8dYkW+r5
-	ob5GzCEXNBtkyp6ALovgoMLkgLPZ8DDuM5Jpsa2DWN5wh+/c7MhfCmEyaYrlSN7S
-	M7KrxEwgKN1aT5mqrZwXivpYAZ08PVOOfVBEhg++3A==
-X-ME-Sender: <xms:SZoeauvt6isRBb7ANh-NCDwo7882nCh4EtX2D2TTI3ytl_cLSrs3Xg>
-    <xme:SZoeaqaDDIoZpSE0u6x7VgVVr5P6Euy3ZH2vSEy-N8uNIv4ahaQwfR_g9sKTwoaDl
-    DkuZsKYYPT01JkpSO1IoxkAFI-qNBX6qvhG8z4rcCvzNheOJQAcxg>
-X-ME-Received: <xmr:SZoeavacxdL9vOPHFlP5KoK8Q4ekT4vC6FymLUFR3-d2HHQAHSL1gJNm3B7IjS0J8NX7Nu5dQ7PY6DifihFCAtWDUGmIepymSACZy98Niw>
-X-ME-Proxy-Cause: dmFkZTF8WfOfEmNjmhaz+xdbYFJ8KJtxALnPmtJ2ar2Y981nkrjsCdClEovm4Vw96pBs2n
-    hZlR1Jv9/fLmR8H18Jzi2Nt406Eer9MIcz8DHaqm+yBlq57PLg0nmglbVYcT7mnGepySkR
-    8VPtmbPGy7ASKYmpcJgcxL7zDEkdlivLzxKjmd7tqP6O5oJVdOt0O2pBOrWHCYfSxxmvYZ
-    ncsvT4aZft9s1wkNXypYE/w6NvN6l3I1d/oAGh1v5wzj0aij/evAmVgxGS0zOFeH3PuKx0
-    KXE61imSVEhLeDASOyoyBXsnK018Mr0Pu8+II97uzntXeYKf+weDqutLDjh2sQRw+D9un3
-    WR1QnKB+vKP/M9/z0uNYf8PTUW8GU/W5mYJs+RS1hU4IvZ6Tuep5jpR8gu/gE9rdJTER3i
-    lV03OO+AOilJllBijGqFAUu46NedcERXXLe0mxs+pwKni0An/la9XRAlkioN11rCCBgI2U
-    F/5Faaz7crELYaex7KH9TxjRYOxH128Kwr6nyVVeZYKMXSM2DGVzLvC2JOSI2RfD2BSOJY
-    6zFQlOj+IVcU5X1s07mRA8cor4T0wTOZYYRiepc5zE5B35hnNaJoTPhjtGLCkoZ8IPDNJh
-    ffH/3w+gCFmzFjxcWOH1uQ5b/cthj5PBMbW+mA+Qk14anFN8ZdVfWgEoia3Q
-X-ME-Proxy: <xmx:SZoeauVZZrhDmzWMP9F30E4fh9fnJyvqCxFSt2Kk6vn_YsyHHc14yw>
-    <xmx:SZoeau35mI4Y8FdWdq96g4OAXSz7eTqXBpttwailkegYV_MZwj4WoA>
-    <xmx:SZoeatZE1NVn3Nglf52lc6GOLzH1G2vXXVQcB1L7JUIAT7OeyVmVMg>
-    <xmx:SZoeapqcgNllOUxh5wLoiQVwCVXyowO7Eic_2brwqMwO8xioW9cPXA>
-    <xmx:SZoeapfsaJysxack7ePUclxsj9-Bah56QaIWwYEfknle9pO0QeAIVMjT>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780390474; x=
+	1780476874; bh=QGAx4F6tne9nETImDhMq1D8rCxR8er16xDO8t/8ER10=; b=b
+	gtN2VdO+SIoMopABhMxQHCJ6CvGLwSTivJhTDjExCzZPHjEmTiBphwsbgrRK5Cps
+	2PVwsMnoUTNSbvqX9xxRLUOeoWG6ir8/4TA6MYHWbzt67Gp/C0lZLEulGb/vsDdt
+	ekaz5ASUOhV8fNMSe3z6gGEV7z6k+ZJ2NUPUPYj9rMP8YOPY0MsGVcA8QExQc9Qm
+	AjJZwrSLjZkdEI+yaGb0eSlbCP3snq4gxvDG6FDpsocTgBIFlAjQoNjzaljDrOlx
+	8Wy+djVQXyOYhRl/i7zmPZ9A5D2efus9ETnSnMvhjEQ/MM3SnOKwOwK3CFcAa6IY
+	lZQ+p2XDvpEuATcWWcp8g==
+X-ME-Sender: <xms:SpoeaoGjWV_W7SirhXdKP3fWQ8M1j-HJX6M7wirLm7gfYihfRvCCgw>
+    <xme:SpoeaoSYnGE1u_pSigrDHnrghPl-LlxARjMKOQ_JhmUslIPm7CwpXjoFhjTz7gxZQ
+    b1hymqXNjuk43f7OnXc0OVzaTDuQTTEhDgOHpm5HXCvvlROUTfiiZM>
+X-ME-Received: <xmr:Spoeanzzhc7tI4a9mqgsefeKq9K8I3r80QFVFH0KT1dUwfPxFlT7YuAV8GiQhI9E4geZHGQ2K3PxrCsBBvaD-H97eAJpJi4shT14yaxIaA>
+X-ME-Proxy-Cause: dmFkZTFdQn6gsMGq1HJIsMmjFp22ncYSmQVrk8WevwfvWUwjkYP+l0EtrHNsIg01q1ff3X
+    E37NE+m178xRjRu99NbLGz5MKMtaeaBs0B6mKzawuRb7yJdBfg6fuvPHSMkn4rlU//Udo7
+    lp8Srj327b7nCrzI49ha0BbdGXquGgzds4UZi+QZU8nhaYv6aKiW+qweISXTpOIR99SLYl
+    6bkP5qdcDHEc7UjwNeTj0JN7845FSnbKTMtYI5JP2PexlEAE6vNqXu8B60KWNaxxE/knyZ
+    poiJyneUoC1Polw3xchqoNSCAebhWyxVCiDQRc09BAQYa6idF5WLfL3AFIUPsQVHQuBNGp
+    gcPNYYctI2fyieb9WC2gn40FgeQH4nE0Ph0iyYtauTDSOjA+1tytF9SlDuodwcrXjl5eXu
+    5jGn8MytA8CiT7/Bfi3dwUDDJNhzh4Sb6XPc2mdLrTdDASY8B0Sleea2LJlahTL6UWMcnO
+    aDx99g3AiumjTxtG08u5hPmp+NFdOjWIlP+wiuMGC1YGcjV+cmZls7/VpC/KYwOjZfTpue
+    Fn25iDp71RevZrJBiE7NvIzwpLDpSAo97gzXE4OQYXl04F39QGRO6RqFK8XSV1e/ZSmJ3t
+    PAmH5SNVeAY9VkGqauUewRG/i8FJ1gB1SuJqL+LZbo3nwE8mvuageal3X1sg
+X-ME-Proxy: <xmx:SpoeavOUj65ODE5q5DbszfDT1P6K3conlJktLHkWqPpwd37wXTgjFA>
+    <xmx:SpoeauOyHf4OgfRjP2GTAchu3h6mMbTZMpuY8QReP1GBkdZXNc8uUw>
+    <xmx:SpoeapQJTGbVygULBIVbor5_njRl7TF6SkR85z6yWz0dfb21IDkBKQ>
+    <xmx:SpoeaoAVahrHrBZJ8U7iKwY5x9KXnW1wcvqC4wkCN9VYnR0bOmOO-g>
+    <xmx:SpoeapJW98Gf_F81LVWMq5PWgdARudoNeQl1CjZ0nDWcOAAlCkhliRNC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 2 Jun 2026 04:54:32 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 2 Jun 2026 04:54:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 61247a90 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id e9ba4d54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 2 Jun 2026 08:54:30 +0000 (UTC)
+	Tue, 2 Jun 2026 08:54:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/4] t: fix broken TAP output
-Date: Tue, 02 Jun 2026 10:54:26 +0200
-Message-Id: <20260602-pks-t7527-fix-tap-output-v1-0-db3da2a1b137@pks.im>
+Date: Tue, 02 Jun 2026 10:54:27 +0200
+Subject: [PATCH 1/4] t7527: fix broken TAP output
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,43 +83,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEKaHmoC/yXM0QrCMAyF4VcZuTaQVraCryJe1DXTKGylSUUYe
- /d1evnBOf8KykVY4dKtUPgjKsvc4E4djM84PxglNYMnP9BADvNb0ULvA07yRYsZl2q5GjrqU3Q
- pnNNE0O65cFv80tfb31rvLx7t6MG27dfMvZp8AAAA
-X-Change-ID: 20260601-pks-t7527-fix-tap-output-105da1d73df0
+Message-Id: <20260602-pks-t7527-fix-tap-output-v1-1-db3da2a1b137@pks.im>
+References: <20260602-pks-t7527-fix-tap-output-v1-0-db3da2a1b137@pks.im>
+In-Reply-To: <20260602-pks-t7527-fix-tap-output-v1-0-db3da2a1b137@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Hi,
+Before running the tests in t7527 we first verify whether the fsmonitor
+even works, which seems to depend on the actual filesystem that is in
+use. The verification executes outside of any prerequisite or test body,
+so its stdout/stderr is not being redirected.
 
-this small patch series fixes another instance of broken TAP output that
-has landed via 4d11b9c218 (Merge branch 'pt/fsmonitor-linux', 2026-05-31).
+The consequence of this is that any command that prints to stdout/stderr
+may break the TAP specification by printing invalid lines. And in fact
+we already do that, as git-init(1) prints the path to the created Git
+repository by default.
 
-As this has happened multiple times by now I decided to have a look at
-whether we can fix this class of issues a bit more holistically. So this
-series also contains a change that makes prove bail out when it sees
-invalid TAP output, which uncovers a small set of preexisting issues in
-our test suite.
+Fix this issue by moving the logic into a lazy prerequisite.
 
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (4):
-      t7527: fix broken TAP output
-      t/test-lib: silence EBUSY errors on Windows during test cleanup
-      t/lib-git-p4: silence output when killing p4d and its watchdog
-      t: let prove fail when parsing invalid TAP output
+ t/t7527-builtin-fsmonitor.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
- t/lib-git-p4.sh              |  3 ++-
- t/t7527-builtin-fsmonitor.sh |  7 ++++---
- t/test-lib.sh                | 10 ++++++++--
- 3 files changed, 14 insertions(+), 6 deletions(-)
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index b63c162f9b..d881e27466 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -25,7 +25,8 @@ maybe_timeout () {
+ 		"$@"
+ 	fi
+ }
+-verify_fsmonitor_works () {
++
++test_lazy_prereq FSMONITOR_WORKS '
+ 	git init test_fsmonitor_smoke || return 1
+ 
+ 	GIT_TRACE_FSMONITOR="$PWD/smoke.trace" &&
+@@ -50,9 +51,9 @@ verify_fsmonitor_works () {
+ 	ret=$?
+ 	rm -rf test_fsmonitor_smoke smoke.trace
+ 	return $ret
+-}
++'
+ 
+-if ! verify_fsmonitor_works
++if ! test_have_prereq FSMONITOR_WORKS
+ then
+ 	skip_all="filesystem does not deliver fsmonitor events (container/overlayfs?)"
+ 	test_done
 
-
----
-base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
-change-id: 20260601-pks-t7527-fix-tap-output-105da1d73df0
+-- 
+2.54.0.1064.gd145956f57.dirty
 
