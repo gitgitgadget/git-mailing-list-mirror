@@ -1,43 +1,91 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67997377017
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 06:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66053314D1D
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 06:46:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780382722; cv=none; b=esIGVtI9H6l0mWTLFlag2zrPoBasaAlUNkcM5WjIkYt7y717sNhslGA5gPzjqiFzomEayeGBnrDQAcAzDGqtWJ2Z6yQq4IyfYQRrnKMHBHhXTeY2ORt3X0KLV6b5aEFil7KRkHE+MtS0bDCzfdkkPM6Cg3Cf4tQlif37zVEaT+k=
+	t=1780382762; cv=none; b=SbzXp1j7x3WcqSJGQI2o0NUT0tzJmBcWqv9XbLO1jaiQm28XbESL4mSzAQWpCsCVrChrhmaZElBkg+1hLWOmDij22lcNs11Q+gBlQcN6JHGkhTIqjlPlMSsBvlXG+mHYe10oAuCKxSAH86qnggC03VgpEdg07T2GIREAQQOj3PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780382722; c=relaxed/simple;
-	bh=iGCh8RFiF1hpYEI1oEvKDsEEjalJkHClk5+ANxaVZ6g=;
+	s=arc-20240116; t=1780382762; c=relaxed/simple;
+	bh=K9WrJeX3Q+N51UPKshpYuz2aPQUXtjZYxu2I/yrH4Fo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AXyctu2lQ73GRp0tpO8w57CxjrgnCkAZMjGiIPgs5DoZicAs1Kq9YQ9sPfhnWKY56q5cuA/3m8batWc5H2b79CfIrKmOxRrkJVOWFzFcoXEEInfBfbnsPc/5o+UL49P2HvRe6U2ohze8ERv4LCt/SfaJrGqbj74wql05S17OUdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=D1WCkgzT; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=P+sc/w84d1rAiw6Qk0E21oR/QbMsVbpyuUL8YxeCSc2qWI4FHNGqUXmnXEjGBam8nPtt0sUwOW2Yi1Grx8aYaQMA67KUw96PPfYjs8P/tV5FsdOJX7f3jfgs3J/ffKuA4pspx49yQMzRAvGGSmgSSS0dn/ngrdm9AZyaa+Rzq5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I5K146VW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C8TyIy+0; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="D1WCkgzT"
-Received: (qmail 30704 invoked by uid 106); 2 Jun 2026 06:45:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=iGCh8RFiF1hpYEI1oEvKDsEEjalJkHClk5+ANxaVZ6g=; b=D1WCkgzT+yAfkAK4/04V43Mr59cj2ZyTQT7xglJEeX79InI2ZTPso+nX4I5QCCu3VRZYbCV5DHGXfTE7n6XSgR5isH4mIbYfN9ii1q81miBnsYEaRpIhT7c/VezccI+NMVf/vQz4tITejhRWZuxO0U2GrbPzq+NYeu4Uc9Su6A/zChJioomKRbjZ1Snrl1Th0Ft4IoWkLtc6C+KJRp40ONvUzTyNccG2WUJsnHOA3QdAu5ox278cJ3XvLKHAkM19mE7RcX1i0gv0TRPT8h3lbWengvV8R4OnwLSHhUXtRsfGmUIZym3WKKISqAaMDpZeVEh+mY/wOO4EcuMsLOXyGw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Jun 2026 06:45:20 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 76122 invoked by uid 111); 2 Jun 2026 06:45:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Jun 2026 02:45:24 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 2 Jun 2026 02:45:19 -0400
-From: Jeff King <peff@peff.net>
-To: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Derrick Stolee <stolee@gmail.com>,
-	Arijit Banerjee <arijit91@gmail.com>,
-	Arijit Banerjee <arijit@effectiveailabs.com>
-Subject: Re: [PATCH v2] index-pack: retain child bases in delta cache
-Message-ID: <20260602064519.GD695568@coredump.intra.peff.net>
-References: <pull.2131.git.1780070763044.gitgitgadget@gmail.com>
- <pull.2131.v2.git.1780330402264.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I5K146VW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C8TyIy+0"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7848C1D000AC;
+	Tue,  2 Jun 2026 02:45:59 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Tue, 02 Jun 2026 02:45:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780382759;
+	 x=1780469159; bh=/WFlnzleiuAz2Ji1SUxmKY7UKZhQZKRQc8hIwKrsrWo=; b=
+	I5K146VWrB2Lns9Wq8xmNgQbLQvemK/3hB380fKPUqzfLwa80OSQdZlxJCPZZPsx
+	HJgVKsNEbcGRMI7zh9Gb/HhN5chNrlnTIMJ2cF4Za+zZtNidIc4EFbzAIAZwZj9P
+	/1RDR/tqGq6lsFCASSOQ//8YCbpNnxnAAj+LH40SVZlZ0OCGIS0Owh3uMq7nKVJH
+	qgRA8pMPzmEAMmmpQzirN4YJis6oIDvbI+vKvhGIMfH8s+FKTleA574b1KmpV+Bo
+	Zy6J5VBmHqraagbEqyEl+j/fOsqVztyTTk00iR5NcNV4/MxWbmXloFbost70Gh1l
+	bBJ8RPyEcy8rk5mZ+7xLRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780382759; x=
+	1780469159; bh=/WFlnzleiuAz2Ji1SUxmKY7UKZhQZKRQc8hIwKrsrWo=; b=C
+	8TyIy+0oK1QAjYG8UzWc+sfzkotSzy+EGOzYD64a8OA/wWXtnmK9l1kXPg5zGPn0
+	sFUXFWY0OkeYTJ2i7wBA7SmMXX9bO8I0W1EmL80rSzlHlVcbuEK6ODmWmSUl8D0d
+	fWrLkwYOM5IA/ITkQ2IMjHSGFCh3JOKquRGsjvdedF5QDEPUDHFL8yk//VzJINzb
+	qiUTHpHM+N1TpyuF0pF3O7C5lCkv41TLGDAe/vh4tZfqO3HLP1JxrbIyKe76DUEI
+	79sGkbEogUBqVrVrXW+ybsbqA7XUxVFVtT3rsEVqcFx72h50aYvpU1AGsRmH16De
+	afpOIyVw2Mkn8NxsR/vpA==
+X-ME-Sender: <xms:JnweagN0Q9qCRJhO-PXcvsPf2vWvXnrM13fMyP6b97Tv6j0MnJNf4Q>
+    <xme:Jnweakwl1-6CLKqZt1E-Lzq4-Rbvc9dUQ0TjwcfHfkfXhjDPB4ysAdrENpW7JpaHR
+    ZOQrSRckgVJRJDSFus75x_Mk9ZbJGs6p5pU2a1qneRVeORyOl1V>
+X-ME-Received: <xmr:JnweahtfbvQeYS4KqSY5yQkuKARkf033cjtWt8uKXaJss5pZO_ru5ak1C5gC_mlZ8luIERS0DO7dbiyS8zIIYD4mc4ddtnAsXH9sa8LKZw>
+X-ME-Proxy-Cause: dmFkZTFnw0GnJ4ajDcEPYFmjaytYUcdAABSDwDbMXoZZ26rFYpNc9Ou0pyUECqcnUtKMtk
+    yFFpnC5F9/nm/YvRS/9lkuZSvPkbQRC3qwObtimAITdvzAuJHXg9t8gB3wWGmzgjg+59fj
+    dLKG13KZ3sphwWVZYqzPyvSYE2Ia15EkAlLCCNxDjOcAn8qsoK1HkMnK9M3Wfv/R+/ng/r
+    WuhDQQbfWaK58rODoPjnoGMH+HuOKRiIE7RwRFu0UcRuRNhtLb1uEPn8XEZjNM6+SsgwtK
+    UDzcmh2z0XXQqQho5hLuH12cPXuQXXAgphJ6pSJVEJH+SJEvT2He4gaBki2Jjo996F/vaM
+    9vSH5AUt28ozzLoXi0WPL6TTixZeNb3pvKff1H8yYmrDZwWHWQqE5l9LT7UD2DDpC4j/yp
+    O+SEpDHP38FWYpYYv3SnxjiEcE9/K3+oFvKjnzwg3TdAGHKJA+lMCVPGD/f2SthMy/pCx7
+    XU4mOkvS1nFGkawKZs1r6eE0l3W+7b4R0IOLAwzQX2XBqCItUaa9tgxmE9XeaOPE80oHfY
+    wzx+SnDPv2HxWBou4FCtgL81cNY4j+F8tNjmGol7iq8VDlCiWig+/w+eBAlU6d2RyDQ557
+    i+Ss/jISKq65DzI36QmEOBVlRUpTG3yEqRUFJhpFGlMXH/W/pY8p7J0UYgew
+X-ME-Proxy: <xmx:Jnweal4O66FqvapltAV2Yc8GoYddYhdr5PllwpFBZdLKik-pemU8hA>
+    <xmx:JnweaoSlkGplCf31CSlUEItCmiYF1LiDDlKf1z9iFaMAmgm5ZUbmGg>
+    <xmx:Jnweasr3J32YSSUolkonvubq38bCd2fJVCI_xW-H1LiseDnovqm4yw>
+    <xmx:JnweauKP7m_L-WoWLEhh0P2GpN6jScE0wRWkcYqyl2chXyjCAVaYgg>
+    <xmx:J3weaiVXHoJ2F-59HvQfr43m-AFska0hXQf_TcgKFGnAyFSoP_vxeZq0>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Jun 2026 02:45:57 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 7ad23f66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Jun 2026 06:45:55 +0000 (UTC)
+Date: Tue, 2 Jun 2026 08:45:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
+Message-ID: <ah58IJ8DgSZYRjMM@pks.im>
+References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
+ <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
+ <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
+ <ah12uk7IFxS92OR1@pks.im>
+ <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
+ <ah2VL-ftCQelNoOc@pks.im>
+ <2e266786-4ccd-4300-9b53-6f13fbaa2933@app.fastmail.com>
+ <xmqqcxy93nph.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,42 +94,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.2131.v2.git.1780330402264.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqcxy93nph.fsf@gitster.g>
 
-On Mon, Jun 01, 2026 at 04:13:21PM +0000, Arijit Banerjee via GitGitGadget wrote:
-
-> When resolving a delta whose result has children of its own,
-> index-pack adds the result to work_head, accounts its data in
-> base_cache_used, and calls prune_base_data(). It then immediately frees
-> that same data.
+On Tue, Jun 02, 2026 at 07:22:50AM +0900, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 > 
-> This bypasses the existing delta base cache policy and can force later
-> descendants to reconstruct the queued base again. Let the existing
-> delta_base_cache_limit pruning policy decide whether to keep or evict
-> the data instead.
+> >> I found it to be a bit heavy-handed as it's so trivial to replace with
+> >> git-init(1), but on the other hand it's a trivial thing to do.
+> >
+> > I imagine that most potential git-init-db(1) uses will be buried in some
+> > scripts that haven’t been touched in years. Then the Git init might
+> > fail, you get errors about git-commit(1) or something not being a thing
+> > you can run without a repository, and it ends up being a headscratcher
+> > since the original failure gets lost.
+> >
+> > All to say I think a simple warning would be nice. ;)
 > 
-> This does not add a new cache or increase the cache limit. The object
-> data is already accounted in base_cache_used before prune_base_data()
-> runs, and the existing pruning and base cleanup paths still release it.
+> Or just leave it without deprecation.  It does not cost much to keep
+> "init-db", and because we expanded what "git database" means in
+> later versions of Git since its invention, the name still makes
+> sense.  Thank Linus for not naming it "init-odb"---that might have
+> been a valid excuse to rename it because it does not cover the ref
+> database and config database and others.
 
-That explanation makes sense, but I'm left with one question/concern.
-Dropping the data for a base makes sense when we are "done" with it,
-because we know we won't need it anymore and it leaves more room in the
-cache for things we do care about.
+I wouldn't mind that outcome much, either. What triggered this series is
+that I'm always annoyed that it's "builtin/init-db.c" instead of
+"builtin/init.c", and the same for `cmd_init_db()`. But I intentionally
+constructed the series in a way that the first commit can be picked
+as-is, so that we can adjust our code to the modern world while not
+doing the deprecation dance.
 
-The problem here is that the current notion of "done" is not correct.
-Imagine we have delta chains "A -> B -> C" and "A -> D -> F". We are
-totally done with A when we have resolved both B and D, but if I
-understand correctly, we currently throw it away after just resolving B.
+So I'd be equally happy if we just drop the second commit in this
+series.
 
-Your patch never throws it away, and just waits for it to get evicted
-from the cache due to memory pressure. But could we realize the moment
-when B and D have both finished using it, and evict it then? That makes
-it more likely for us to keep something useful in the cache when there
-is pressure.
-
-I'm not sure how hard that would be in practice, or how much it would
-help (the base cache works in list order, so I think it might naturally
-be a sort of LRU?).
-
--Peff
+Patrick
