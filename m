@@ -1,117 +1,115 @@
-Received: from mail.luna.gl (mail.luna.gl [141.147.12.19])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E18738C423
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 08:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.147.12.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E3D38757C
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 08:27:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780388389; cv=none; b=Io0qPwB3dbkk+mub8WV0fSSu4IxyPfQXrjRkxJqdAAkRduwJounnZfK+jiZzN3b8I7EbIDOQDwW8ayWqAbCtOCThBTpyDi6U8qARtkHktgEXrMOL5+L0OmWG9PTyE4q2EiLFD3IXSmAu3mjK5ulwR0L2zRduMKnwazQkfKgWn+8=
+	t=1780388866; cv=none; b=lrJBsGd0xg28bdoj7uyujYRTSM8/hLFEAfWphs2Da4NzovpY9hhmfAXIVTr8lXzt73E+P5vxfSqMJJ/K1lup/Od/ukxvLZ3fypuhtz4CMGwYeJTKsl9/4/rzdBUzrY+A9N/29gOobn944m2ds67Cpl6AS/kZ9woiYDuKdPK2N+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780388389; c=relaxed/simple;
-	bh=2LUuJPKBsP+leJQDrRVlvfFm63Q3wY3ro1TwietjLQ4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pQggSL5uS1GAi13nvjh3Ea6JZZKJWTu6zrOGdfviHIM84UMNTvcEcZV9x2xGS0aw2N72hVakwuFOtkGvt2O9INyEZSua3vCr+o/cM1y9A/u552Ut/2IV8fX92PORTRwabA4tR2MQs1iu/44mB5C3hf6pJnOuOC5rhdalGHRnPFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl; spf=pass smtp.mailfrom=luna.gl; dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b=h4dQXHAH; dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b=CMkqYgeb; arc=none smtp.client-ip=141.147.12.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=luna.gl
+	s=arc-20240116; t=1780388866; c=relaxed/simple;
+	bh=K/0KePRruqJax8Sn9/2e7rClOLIQ69zoRm8AGJVG9Gc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GzS2GR6KOCfw9BBo7wfJdluhoM88EdAzr1AcS6s8vcKVz4AEt1ldXCAJu8S975cntcsZcVD8roOuRvGdtpgLQPQ1xSH76WvKUsZNg0ON04H9yGYcOc2BDgVx8Nc26YrahfRVbaczow/l0IOytEPZao3bVg8oFFGrpD18GhHvUcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ww/ca57Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cE6yCNyP; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b="h4dQXHAH";
-	dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b="CMkqYgeb"
-DKIM-Signature: v=1; a=rsa-sha256; s=202405r; d=luna.gl; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1780388383; bh=btyRVEaFya2acp7Bhdjm178
-	Hp4sFaCisSdhSzT2ZDF4=; b=h4dQXHAHYZhOMLVg6aoVgMnBgVAzp0ys9dNuTWPykAPGHYw+5T
-	6tvObuMvqFpfFjig098qOvyOSZ+fuh98NllOG+LVL5CsOZxNPqHVrvErhBu0HodzwvXzEyXMBHB
-	1oqsNwci4Qrst89xfIWsh/ZHfdZ73yqW+QeH6G22m+5jKqa3CbzAZsP6Y4K77uNXDzRW3mTorCs
-	eBYgZeJEyHdQDJDv8M8eybYWnK5650+Be6MT7W9tjtdhzeGCSz00r55tWjG0MZ/C0BUcknWvcZG
-	/H+FeFmpGa7A67SqKM+lzOF2szqfYSaO8EBi+w4klbODOoNUCzoU+1LhPnoAYpDc6Ow==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202405e; d=luna.gl; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1780388383; bh=btyRVEaFya2acp7Bhdjm178
-	Hp4sFaCisSdhSzT2ZDF4=; b=CMkqYgebOP/zMS3yqCmkuXuvvUTHETgqQZoPxm9Vgt+gcQ7avZ
-	aeRGUGckZ/xUO5AsA6GagmL/gcciKq32jJBA==;
-From: Luna Schwalbe <dev@luna.gl>
-To: git@vger.kernel.org
-Cc: Luna Schwalbe <dev@luna.gl>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] doc: document and test `@` prefix for raw timestamps
-Date: Tue,  2 Jun 2026 10:17:36 +0200
-Message-ID: <20260602081924.673763-2-dev@luna.gl>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ww/ca57Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cE6yCNyP"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 384A5EC06B9;
+	Tue,  2 Jun 2026 04:27:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 04:27:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780388864; x=1780475264; bh=K/0KePRruq
+	Jax8Sn9/2e7rClOLIQ69zoRm8AGJVG9Gc=; b=Ww/ca57YebkKOA83im6eAKG+lW
+	iJfNSD0l1ieDbxKAsOMFKJzsMP5FzHoyLQe53m3U3tA0ekdORWOgCNPmr8Wvr5D7
+	5ETNkmvnSATA8jGIy0t+toYhQKSD7fW9Z1junhqfHPiIWqNWsXn8mc36kC9X4lPn
+	/YzmAvpOeJnzff7oH9eEum4ErxS0fEnR5Rai9+GJDilhS0NDRZV8S2BISVz8luWW
+	1puteFAq9pAk3DvhspKVKdbYvVF/YXy8HznTFPidWao0exjuur3lR/guzUuaQpOS
+	jsgKcIbsCbeAYi8fVJ07edaL0v1WhTzIKbU74e1Vz0vtQ1B7DlVIaBprCKsw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780388864; x=1780475264; bh=K/0KePRruqJax8Sn9/2e7rClOLIQ69zoRm8
+	AGJVG9Gc=; b=cE6yCNyP5/ZmG+ZXsiDjhPgRyPBJ38s4KxpzHxiycvFnEq9dM5E
+	8J5EloIQD3fehjPZL0ZMv7Jqlzn4ucZF/CLnSrYHztY+hGtUmNQqwu890uJWT7Bq
+	j1dDIYSoW6Kxk56GalYFC+L60eXcrHqJMJ5zymd47w/hiErD4UMhasAgyFUtp/OP
+	KRo8dLWWbtrZXHhmQ8Zu4yhSMi4KKWHYwS5v+HcnbRy4eKT7OYT5fp8ZA1JzQOKZ
+	vVxlA5a7zX6XcEi/oMKK25FkJG9ATPTKuX6eKr81oV8wOkUlrYGMWxtRxFmXUUSX
+	PjDBzWef6CHEYBU3sdm+DnAc0FGnHI1Db6Q==
+X-ME-Sender: <xms:_5MeajeN81xe9XlrdSfONeGKwf0ZDTqBDay7rb68qr6IPQkHQ4v2cg>
+    <xme:_5Meaqu058rPVco9yBFJRi5kAKLbBb-MO3Q1HB809F37GZQ2gd8TWQlXy7uPTY3M1
+    ECO09A5uzGMLxmYxJupnxw7o2cL7fh2zEtz0lMfMM2Msi7kFp3oqg>
+X-ME-Received: <xmr:_5MeaslLs52At9OKBB65wGDxiXb14mJMKVw4MRMhaCWttgePUDQbMDZvOt0jg1f_9O9Tw_CshAmokF52igAEVAihNXZIC-QrXh-R>
+X-ME-Proxy-Cause: dmFkZTECfMDUMzuViaeCn+L4XAmtojzT4DVET9jwSZ3EP5xCL9q6Y17Oe58aAtde7Q5iZ2
+    5oSCG7ma383fiAzlHm1iHWFyEkGtoU+hz6PI9KnoI+YG0TrNK8ozaqgMRUx3REeWdugOBz
+    WrTHFa8ApmPC93qA1b4u3U85QltfJ4v4nQuO6l/x8lh9f6KnfMATEHzoUDVhiepjixi1l2
+    mP1syIJr+VWvWfFGORy8+dFl6PLX1ogfCiGqCKK1bG7L1/rsxPHsfuQfxvj6doeS2jLloj
+    aexgd9uUGfTq+RoC2N0WKQQ2w3aU235+X7f9oGzoANpZ60so/SU8jgDK2SI+TqeEmnaxJH
+    tfNmIjDxADKNJl5atiDcp8ngteIIuuEFrUsn61EFUyS+wREUxCU9hKG5S4BdiY8Y6N0svP
+    xakzUpG84FoK1fHZSowbnZ01NwlprBhD5KyOI1kU0CX2/vK1swFSeUHGEZ2HayAAOtOS8X
+    xAC/chCGsJTt0g3i+0tuuTyzjcSto+sdcS3pbLZxleJGeXwFNvT/TzABKoLOlh4q8+5Ys2
+    NXaMQgk1ZCKWP6fAnFXlImoYYzlwYTU1G8iPDRwmF+YgGnNZ7NSARDR5dopHEnDGwyp6UZ
+    Vp87yIONNnRqYQG9z5//qGZgVJiCOgtRyLqk8Mtt5OCWq8tFvv+4W69lAfeg
+X-ME-Proxy: <xmx:_5Meakw0tmqrQydEocIq7rQef3_UGQtWHDZA2va1cZDt-YpY4cEZhA>
+    <xmx:_5MeamPU2ZYGpctqbz9Spaca9oIYzRHuKaR_ImtiQfInDOBtmG39IA>
+    <xmx:_5MeaoqhRYwyZH1o42BJnqu1NVPbKspj-0Z3p7jb5Z9cYbBL0fNCPQ>
+    <xmx:_5MeanEewyhsKo3ItQrdJw33G6m0-ybkRYoSemT9ekBo415aqLJSvA>
+    <xmx:AJQearwBIXidOGfy8WPmxD3ieZP-0Ftb-daMBTpqs-3WznErmNqN80Ty>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Jun 2026 04:27:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
+In-Reply-To: <ah58IJ8DgSZYRjMM@pks.im> (Patrick Steinhardt's message of "Tue,
+	2 Jun 2026 08:45:52 +0200")
+References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
+	<20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
+	<276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
+	<ah12uk7IFxS92OR1@pks.im>
+	<042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
+	<ah2VL-ftCQelNoOc@pks.im>
+	<2e266786-4ccd-4300-9b53-6f13fbaa2933@app.fastmail.com>
+	<xmqqcxy93nph.fsf@gitster.g> <ah58IJ8DgSZYRjMM@pks.im>
+Date: Tue, 02 Jun 2026 17:27:41 +0900
+Message-ID: <xmqqv7c1xs76.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The Git internal date format `<unix-timestamp> <time-zone-offset>`
-fails to parse when the timestamp is less than 100,000,000 (fewer than
-9 digits). This happens to avoid potential ambiguity with other date
-formats such as `YYYYMMDD`, especially when used with approxidate.
+Patrick Steinhardt <ps@pks.im> writes:
 
-To force the parser to interpret the value as a raw timestamp, it must
-be prefixed with `@` (e.g., `@0 +0000`). This behavior was introduced
-in 2c733fb24c10a9d7aacc51f956bf9b7881980870 (parse_date(): '@' prefix
-forces git-timestamp, 2012-02-02) but was never documented.
+> I wouldn't mind that outcome much, either. What triggered this series is
+> that I'm always annoyed that it's "builtin/init-db.c" instead of
+> "builtin/init.c", and the same for `cmd_init_db()`. But I intentionally
+> constructed the series in a way that the first commit can be picked
+> as-is, so that we can adjust our code to the modern world while not
+> doing the deprecation dance.
+>
+> So I'd be equally happy if we just drop the second commit in this
+> series.
 
-Document the `@` prefix in `Documentation/date-formats.adoc` to make
-this behavior explicit. Also add test cases to `t/t0006-date.sh` to
-verify and demonstrate the difference between prefixed and unprefixed
-small timestamps (e.g., `@2000` vs `2000`).
+I'd actually find myself annoyed by such a rename when looking for
+builtin/init-db.c only to find it gone---much like how a previous
+rename made ll-merge difficult to locate.
 
-Signed-off-by: Luna Schwalbe <dev@luna.gl>
-Co-authored-by: Junio C Hamano <gitster@pobox.com>
----
-Fixed the asciidoc formatting, removed parens around YYYYMMDD example.
+My point is that while static names may annoy some, renaming them
+does not resolve the annoyance; it merely shifts it to someone else.
 
- Documentation/date-formats.adoc |  5 +++++
- t/t0006-date.sh                 | 11 +++++++++++
- 2 files changed, 16 insertions(+)
-
-diff --git a/Documentation/date-formats.adoc b/Documentation/date-formats.adoc
-index e24517c49..330424b2b 100644
---- a/Documentation/date-formats.adoc
-+++ b/Documentation/date-formats.adoc
-@@ -9,6 +9,11 @@ Git internal format::
- 	`<unix-timestamp>` is the number of seconds since the UNIX epoch.
- 	`<time-zone-offset>` is a positive or negative offset from UTC.
- 	For example CET (which is 1 hour ahead of UTC) is `+0100`.
-++
-+It is safer to prepend the `<unix-timestamp>` with `@` (e.g.,
-+`@0 +0000`), which forces Git to interpret it as a raw timestamp. This
-+is required for values less than 100,000,000 (which have fewer than 9
-+digits) to avoid confusion with other date formats like `YYYYMMDD`.
- 
- RFC 2822::
- 	The standard date format as described by RFC 2822, for example
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 53ced36df..8b4e1870b 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -138,6 +138,13 @@ check_parse '1969-12-31 23:59:59 Z' bad
- check_parse '1969-12-31 23:59:59 +11' bad
- check_parse '1969-12-31 23:59:59 -11' bad
- 
-+# pathologically small timestamps requiring `@` prefix
-+check_parse '@0 +0000' '1970-01-01 00:00:00 +0000'
-+check_parse '@99999999 +0000' '1973-03-03 09:46:39 +0000'
-+check_parse '99999999 +0000' bad
-+check_parse '@100000000 +0000' '1973-03-03 09:46:40 +0000'
-+check_parse '100000000 +0000' '1973-03-03 09:46:40 +0000'
-+
- REQUIRE_64BIT_TIME=HAVE_64BIT_TIME
- check_parse '2099-12-31 23:59:59' '2099-12-31 23:59:59 +0000'
- check_parse '2099-12-31 23:59:59 +00' '2099-12-31 23:59:59 +0000'
-@@ -195,6 +202,10 @@ check_approxidate '6AM, June 7, 2009' '2009-06-07 06:00:00'
- check_approxidate '2008-12-01' '2008-12-01 19:20:00'
- check_approxidate '2009-12-01' '2009-12-01 19:20:00'
- 
-+# ambiguous raw timestamp
-+check_approxidate '2000 +0000' '2000-08-30 19:20:00'
-+check_approxidate '@2000 +0000' '1970-01-01 00:33:20'
-+
- check_date_format_human() {
- 	t=$(($GIT_TEST_DATE_NOW - $1))
- 	echo "$t -> $2" >expect
--- 
-2.53.0
-
+So, if the primary motivation is just the first patch, I would be
+less inclined to support this series.
