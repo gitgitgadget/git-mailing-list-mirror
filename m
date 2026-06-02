@@ -1,95 +1,79 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E20B3EEAC3
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 15:24:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023D2F3C3E
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 16:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780413891; cv=none; b=smYU4xCESMr+AVogeHb9i96Wi6TaEuQnO0V2eJl/zDUXOe0a+nepo1agLUpPGP+ze4Wr5bNs4wBzRN+1DErzSyUiZzd1lh4nt54HZAEZCjVEG9bOD+sQTBEX7V5Bw1DlCwuht6FtPMrCJnGxII9HRjUfCdyw+pG3l3dqrajTcSc=
+	t=1780416580; cv=none; b=Oz3VrzfO+eZXMwYdSMvucToyupibRwyzVAmSG/dEWDiQd/GVDy8mfWE5nu4q/8NWVi9xBgJ/I1uwmQnykB7okThNuDVzKMWmXCGai8mikctlrJFptcb1X4mf+cPJChzwRb1bC63mkxBQKDHtlYrZ0ZTgYmWDYnf9UnXosSugtzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780413891; c=relaxed/simple;
-	bh=cNWGTFZmPuWrEuWXPbNT/DkpTGTcU2hlJjNvG/LhLH8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=bJwLDxnYuWYqsMMpgErvbmRG9FO0OPgZrXCXrudcYBy96T9zEqryY8erPevxrHAP0Sj225urSp/Ev11cKRVwq5nzLHO+NjLQrKYPBK9RrcphdZxdmN2AnFzBz4mCEBfVVMaV0d59las5FoawGh5JrefTNU9oBi1EybIe6FNYTFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SP4WLhzA; arc=none smtp.client-ip=209.85.217.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780416580; c=relaxed/simple;
+	bh=YhVXF0MDn+xTqTxwyoHnJwEr1N7mAA+C+EdfkDSSCV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XzuE2uPlVmstFmM4fmzcxwera7jmOMeHkAwLO0CkxqTgIPUeJ+N2aLF1immrp9Zoeht7IIucoKv9WicOVs55i27RSnNErV12Q+i5CnlJP3ZIrgSefWT795b7F2QYqOluzu0WwtxVuqALyhy1vcAwf3QHfH47lp7GO9ZlMI4V9r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=MI49eQ+x; arc=none smtp.client-ip=95.215.58.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SP4WLhzA"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-6ca94e539f9so2076760137.2
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 08:24:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780413889; x=1781018689; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=siqxM+44YRxTLO5rCQhfHL/UO5QsLD+MipHOixUg4RI=;
-        b=SP4WLhzAEGalN1Jx5nG6MKvYXVnr8wpSRjGH7A27aHfiqQeEr535kGPbYv8x+may3k
-         9fIDtgNz6ldh/iOczqSsrLTUxFsbDfcTR+5TUDgEeAcQXYpjeCY/pSZ7IJYKZOzzRdbU
-         xq63OMZYQiRII08F5kMJQ/knc5oz1DRy1WGLAlNOFxy/9PPaTmTVtj60dZRQy8Wp57Eu
-         f5es+yMvfiRxpyBlMWLv62Pv/M54gqXTj5zSpGYhxiJUFw71TNxXAXbVAZA8rTAU9ppg
-         ANdtE/ecKEzD4fDtAkRZqtaRyrTOqS9qq/Wrm4Yx6EPJZvDXhUgu45EYL9FdcV8XIZ1j
-         ZBvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780413889; x=1781018689;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=siqxM+44YRxTLO5rCQhfHL/UO5QsLD+MipHOixUg4RI=;
-        b=iNINui7ns7OzQ5+6fvfiMTCJ8qw/3zwoiyOgrV2N8PmNRbRf+WBDmOdM1x7ohS9a0L
-         VOp9GbOEwjYZd5rv5mOlECn5uFbA51NnN5QSaEi59u3YT7Jaxre86fxfT5Q+dlNzJZUt
-         lmBi67Yj1+riwlrsWp5vg0XshdIrWE3IepwCdybYNt/2ZjbVF/MUC/+Em7COmt4yZPRC
-         sH9Vzjj2iDtPfbxu7SKa7N/Tmc78gNydLswphW6f1QZY7qmfdEztjivAo6t9/QMvY4Sz
-         ZP+Aoeg3Iw0/NyqRIyVSRW4vVLhuTspGHuClVg5o8x2SBKyWI6y0rbRyIyRz9YSqQug9
-         vf6w==
-X-Forwarded-Encrypted: i=1; AFNElJ9XdhkGNpc3qlu5W5GlEZr/4mS/v8fUc+4pCdrmhUrrLc/KDapPV9Jx9GuUoERGzIysmhM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIjg79Xdgel2923NbTYhM4c//JiHqTDpXE2S2oO9yaexarKEVA
-	a8fwS+WSq+Bf61UsaEg8Hgg5CZFz7HmpwFHgw8RkvtW8j1z9zMOl5xza
-X-Gm-Gg: Acq92OFzcPDZFlrQTCYFqSnv/IFb0SgWCzo2pG8JnJ1fugrD130MIt+HdJpVMKOPeSU
-	bKCwLOUiBBDdwNiT4PLD+dp7CPEjTVwiRdvGmjZSTniHVp6mTbZARgQQ97n+5uCHGfH8muUvBO4
-	kw6Uku6JH9/6OBozj+02vtuU6nlE5j77srekzbxl80cOlVrbotpoyOAfG03MY2ApLHfRY9wE2Zx
-	FdooZrm499zBk6tRiXUC1HegBex2LsHYl3H04DzxNDXdImm7fRCd0hD6RV/PAIVeMXY6UBt1EoK
-	EbDLus75zl1PeglleRYjOLfCZsVuGMplL5BapZV+j9C3F7lUcD3qJTwMrlKc0yGOJvn+YuXhMSh
-	Q5cgI73wcoJ5PkqJ0dcZxKmr1ZngX02r2qZSuHyDWqR5fIa4b5MB7ceTNwkt5v7Ck5O89G/4Vtx
-	Bu26+IVSRDQaYseAKUR6r3hoZmIMJiKMqzJ+62Kbyc6iFs75Quz5vD+UPgATmVFS/qSfUsDnl+I
-	8saYLyu
-X-Received: by 2002:a05:6102:160a:b0:631:5ef5:8324 with SMTP id ada2fe7eead31-6ea2f22a57dmr228564137.23.1780413889046;
-        Tue, 02 Jun 2026 08:24:49 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.121.155])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9157f038322sm139645685a.45.2026.06.02.08.24.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jun 2026 08:24:48 -0700 (PDT)
-Message-ID: <c54f3571-ff7b-4caa-b75d-a739ed87ec9d@gmail.com>
-Date: Tue, 2 Jun 2026 11:24:48 -0400
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="MI49eQ+x"
+Date: Wed, 3 Jun 2026 00:09:16 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1780416576;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YhVXF0MDn+xTqTxwyoHnJwEr1N7mAA+C+EdfkDSSCV4=;
+	b=MI49eQ+x0b4QuFnsGQlep9/6vpiUd0RsH518pWprAStXJJIO9Hz7yvZvVeF9Oy5EgkjeYi
+	/otiZ8DQ9rr5zQZCp+1OQMXh/5oFraO9im4/jE5qFHkfVOMrRcJ4qD5s4rDY6QD1Ji9dzV
+	azS3VpJSOP4VQMGwIearTUEPx75pPKnip6AidAn/a7VvsPoFxrMBU7/4ZRmsDqRc5+W9W/
+	v2URQeQGf+uAin5hWIZo7AKeQwqYhAff3U3/p84Vm/yS4Yh4DhmZS6r2mxiff89+48wsGy
+	e13ZXNkKy6eoGA/rnstmtqToTXHSxPDPboJLtr3opLYrqNSLAPj26c4J6OcFPg==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Documentation/MyFirstContribution: recommend the use
+ of b4
+Message-ID: <ah8ALHMDVA2Gzz10@wyuan.org>
+References: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
+ <20260602-pks-b4-v1-2-a7ae5a49e9cf@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Small updates to SubmittingPatches
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20260602090808.87837-1-gitster@pobox.com>
- <20260602144304.3341000-1-gitster@pobox.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260602144304.3341000-1-gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260602-pks-b4-v1-2-a7ae5a49e9cf@pks.im>
+X-Migadu-Flow: FLOW_OUT
 
-On 6/2/2026 10:43 AM, Junio C Hamano wrote:
-> Recently I gave some advice on how a cover letter should
-> try to sell the idea to widest possible audience, and then
-> I realized that we do not seem to teach how in our guides.
-> 
-> Here is a small series to do so.
-> 
-> In this round, a few typos have been corrected, and improvements are
-> made thanks to help from Christian, Stolee, and Patrick.
-This version LGTM.
+Hi Patrick and Junio,
 
-Thanks,
--Stolee
+Just so happens that I just submitted my first patch. At this point, I
+may or should be the target audience for this document.
 
+I personally watched Patrick's videos with Scott Chacon[1] first, and I
+reviewed them many times until I could do those "manual" git operations.
+
+> +Contributors are encouraged to use `b4`, which automates much of the
+> +bookkeeping that is otherwise done by hand.
+
+So for statement like this and with my personal experience, I would say
+b4 is a more suitable option for senior contributors, as they already
+know, for example, what Message-ID and range-diffs are. But apparently,
+whose who use forges may not know.
+
+Back to the patch, I think regarding b4 as a more advanced contribution
+way for those who had contributed via mailing lists for more than one
+time is a better expression or formulation. Here I mean "b4 prep", other
+usage like "b4 mbox" and "b4 am" are of course more basic, and be
+mentioned as tips when interacting with Git mailing list.
+
+A bit too wordy, in conclusion: Suggest that new contributors master
+classic git operations first. When they are familiar with those process,
+b4 might be a good option.
+
+Thanks!
+--
+[1] https://www.youtube.com/watch?v=mjYac9SwIK0&t=1s (Part 1)
