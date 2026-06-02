@@ -1,113 +1,91 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CFC3DC862
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 12:07:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694C03D9DD4
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 12:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780402029; cv=none; b=ex8im5yEhUqQqeqgSD1JCfXI/xgqyqKmKM59JqqCQQ1Nq+kOKbGpxuuf8rZfpNpafOx9TuxhIOCxHto04f8mhWhgD717skySIjdnoY6FgztdMtjwnMuBJF3pSEmZYblU5bgvmWW5GSxbAvJKTUUCnS/cbp/zLW/CgRx6y6zQPJs=
+	t=1780403355; cv=none; b=TCvlTt0jq43MBq/41m1VoLF/qDo9krsjaQLYL/+wUGRTPMQWz4WbjbrtOvbyHyd2wK/7aMUvbXD10v8ZXZKnQ4n7hQJNH2JSSqC2imjg3CZFPVO5CP6XAoEWp0Wawlu+r+qMB3Ulr3r26/D4ny4Xn8LVbizGqeF8O6czrvhKSEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780402029; c=relaxed/simple;
-	bh=ApsRsuqX+9/TwlpQyZ/e6933pIgzwVJ0LqecphVaxuE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jc4cmfjZOANvRcyetW6oBv0GegRpVqb1x363jdZyW6UeV1UjKYJVtLdXjZ1AQLaDx5A82AtrsbqBiNrSbPMboS56nSe5+U3jRuXozQv4y/HYz4c1V+fyMNMRB0dCfVFPUB9ii75pJxmLW80mIpAp1ZmM9IuIryWav/zAki9Hzhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bkv6XVgE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bbfMlDRw; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1780403355; c=relaxed/simple;
+	bh=FHb09Oe6l5ZXrkEQd9XAbs3UAtOWRiDpkNkSgSV1bJ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=G8sORGWa2dy6py/mVfW1bxFH2TJ5bCpONXTYGMwcKDmX3M0rYoeNbccOTZ6qfcCjehpyQbK4byue2fGU7a0+WYLF62Csa64CnOamZtyrjXLbPl5aL0KtbrPtiB5aEc4IN9lGaKCJE/AwFwtHkj7Wg0VJGwEoUBBW737Y7q4fzQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ReLOiRwz; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bkv6XVgE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bbfMlDRw"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id AA9901D00085;
-	Tue,  2 Jun 2026 08:07:07 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 08:07:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780402027; x=1780488427; bh=+CEhHPdZAW
-	LMP/AC7uwRGn5f/GxcZ1RQOdpsEhAPJl4=; b=bkv6XVgEPoF+JQa23IGpN5nlSQ
-	+EmrOm1hbLUYh7EXASYLDWjh7KidMCrKU6tM76whdW2xSwuwYFUZMtSSqapsK67J
-	k9YHOsx/WnX3G/gnen8anxS+Xw017SZvLNf1RChfFhEQY1ebbyvmNg7yoeTVSfGI
-	ODuatFRwwOT6caDpnmgbTYYTm01hAiTynjFrUnEMgDo4GwvCv39qjwHKBrT1tKMv
-	Uw3eDyoe35weVR+jRP70Wwi+IaZuIm9tv+1MeEXJL6yzriXj3ToqbIXIRIgzwRq+
-	myHMECFHlJoGxlCEOO+2oYJb37ruMoVe/83AsM9Ore31VcaczsDpUtMJmfqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780402027; x=1780488427; bh=+CEhHPdZAWLMP/AC7uwRGn5f/GxcZ1RQOdp
-	sEhAPJl4=; b=bbfMlDRwUEXU/zpU157LYjMkSSAqHSJgBUpWOAaqMotE0LhHwXw
-	ratpePxSd3kY161h4Qs0VtYti5esSx/aHGRhdEA5vKMSq+xfwlKB5PN/00lZBl3/
-	tfsuba5DfKZmWiQmtczkurBHaMklZgR2Mk230cehVtnAeBWrwL8Fchj+d8hrRk/k
-	b0z9MaPuX/pZUZ1oD5D6cJTzbGEaiXaiRXihMPvggALOTiznNWUcggQceCXvAYva
-	EeBL1gZH6pTGPCJUoYj8yJ8EBk/StlVwvZKoZanOs5PBffrG1B7/gNEUFrD/Jhwz
-	FtHJ0UgZhoTobHQeyX9dXavcOkPehgAFtMw==
-X-ME-Sender: <xms:a8ceaqNoKVVpr_7r7OV5JNWYNjnajKsifCLXGPBb34ToJda_vd_WYA>
-    <xme:a8ceau-eex9GmblyBOtJBSr7ayDuP9xOJ2II-eMOIQGYKlTz2bw42r9674vrF1jVW
-    37xTeYxJPrPwrePwHx39tC0TQjX70-0ys9NkmoWLeLVMI1Q0xwrog>
-X-ME-Received: <xmr:a8ceau5bCnNsBAMfMf6S2WqkA2ib21d4RNnqLA-VD0QSQAivPfJOyuXpNLh4R_zYJ_j9PWUetLzE4JPqaJaPK8KbZppiFNAicHip74XrgQ>
-X-ME-Proxy-Cause: dmFkZTFGnFC0w6xhfTicZS+mv1scS9qzzCF9/aRPBzLvnjDOOtzZpUrgkqlQhxeQWk8fc7
-    OXIQiQyD9si6ryTUmiQQ7mMSwArXM0k6u2VV99K4//Nqd6CKxmd689wfzE3eeOvTX+fD09
-    +9IayN/UzCfCwIRYtSMtUrun5gPpr39l76A9+DcScFPi04wiwfUw0AiTVM5lZyNJUVcO0v
-    qvkuk4gOzB7qNlJ6nrM+510KOLfwRFkjalB/FOWWmMCZVXDEs/AYxCLUiuDCyomftevUPr
-    b/A00KHFjLibpK00WVuSMvcKKMIUQlkR0TTgmiydtd7dkVS9xENu/8HvafihZwnEtwiKGA
-    5IsPmx41Ae7k2qAwxz3yf9WWYIERJMXkCB9PzKqwM4db2qwGDxTt4FQMJBGVFUR2MRXuqs
-    yNy5QB5JQzP7pO7m/LuZJxoPs6MDIdsA+M6fLaT7s4K361Xn+PoZMiM8C8N3PtQYIDISfr
-    8bQP1/a26mbmFbmw4D8DbhefYfQlpXFHtKC/EBL2g4yA6da3BWvusaaPxFmJyEfDb9dIfU
-    gbKbPx9/d9bmFN+Nt8igG2a/4JPpU+hZbIC7X7nelBVoWfezVpz/CrcDoPlFL6ygBithdR
-    2maNX6R5Fh27oNOfolMO8RhM/KhCviZj7izwIU7iKdVB3RlAA+/63xt1dMhQ
-X-ME-Proxy: <xmx:a8ceal1BQ5Vq3cG6JBsAce6Amhyr1OkF1aUb8_OAnXvIw74t_kcsEw>
-    <xmx:a8cealDg3ssWct9IZGcr1MC2o6dGhPomS35WPfIHUNvLLhEDdr3WvQ>
-    <xmx:a8cean1NxdJa_Xh4kB2RazWbxfNRXfWSxriD9l-YsYwKtfp3wS294Q>
-    <xmx:a8ceavv-cLJPfSuOzGiI6A1f7wQ1s6zR5qbQCcAZ9opuWCz8ie60ww>
-    <xmx:a8cealmERkn0Pf1w4Kl79dEKaeffVyp-xZuLYtNZNk9d_BPdJ2DJ8xZ8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 08:07:06 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f03e6e5f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Jun 2026 12:07:05 +0000 (UTC)
-Date: Tue, 2 Jun 2026 14:07:02 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] SubmittingPatches: describe cover letter
-Message-ID: <ah7HZuy_WRCD9ZZ-@pks.im>
-References: <20260602090808.87837-1-gitster@pobox.com>
- <20260602090808.87837-3-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ReLOiRwz"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-9154ca1aa1dso315668185a.0
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 05:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780403353; x=1781008153; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ujlcdB+khHuNOf5xrWL3cHrL1VQ3jlCO+n+SMa+zlRQ=;
+        b=ReLOiRwzJLsbWLIKID1K0Q7QG6OVdDstmut5EeFK0TYDXHxHnX/PAyz2rPPKD+dyvE
+         4RR0QJ6eKwjdUPr5GSl0dSQZzGVqg+WN66W7vb8cnrNzE5ygidTz7LCe6YNrhEUDDTM2
+         cEBiBxh5i3oKwgw919gZMYyvtHCuIPv6wlUf/LtJ49GqCTbsIbChdR32VyrthZsF1Hxx
+         Zl3xupuHHP81LIZ/xQ+1Hyzo9RzABklpMmmDB+CT67f7Izjo+BZwuvuZO8l0cqsL1cLa
+         vWPJM6tDKzCAuT8x3Xhda9vMpb/qwa+pr+0otFZynwq+MJmzr/43kb/PdQuMU5crvvp4
+         qqmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780403353; x=1781008153;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ujlcdB+khHuNOf5xrWL3cHrL1VQ3jlCO+n+SMa+zlRQ=;
+        b=M6cI+zxrgQ0GMUF9Iwx9X3X6QYRBQR9euVboGhzeHk6nYV6Qfqp5IGMbYdhgpoCaWY
+         Lt+pTbz2hRvIGUJyuuWCNel8wdQaciWkxIrffOda54j2hMCjfv4k4Vp0fdL5qR6aoyWK
+         NTbtehIT4I0jumlVnzISnfg59E9BWHg7IdgoLLsRTqPdttaMzmrIrV+Wd3Z6G1nuha/W
+         YEv5Ll6dtDO1laUAxwuhx+IBdDLjiJARAqJt9H0+pQD/EwsJ0BBwXDFxt5q0pMJYlc3e
+         Vx3xKni1ST4cGTPo3w8Zb0fi7+QrrEbHpmVrJ0jRQhfT37JoTyk7vjNssPmqGfapzGsT
+         bsFw==
+X-Forwarded-Encrypted: i=1; AFNElJ/9ek4mddVX+Id1RmyR4oW57WByF9G+Dd0nmIJNozyDInbpCBnYl/UetyXZoPC0HQHUS+o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDZC3RlZjsTiA2wCkeiyfa0B73ZQisSpwfRdK3h/BKPVZ6erXh
+	qCYp+MUmLWJNZWVXionOSWs0q/0JPcLQ5MEo/B+y/mInkki+SpW4723wsmgO1Q==
+X-Gm-Gg: Acq92OFLBxZx0k9yutq/WxtoVTyDlyuTgt57nhBuhCNs5Dr7QRKHzAhjfnEm28YCekb
+	J0CguKAhVxSf3Jj2jvmBaaUt3ZuSpgGu47oi/UwkmPZKogFo7BvldXOfXT0ccCfiN22t3VpkZRM
+	n948NlXsc/llDZfFIuWtPqKsq6cBH86kSGcz9IbRUYF1FSGlqKP8qBXvIVD3YfRtOAoDbkTuooE
+	99ODnQuS8QZL0Up0Vsu16MdPkGB1OosNcy7G4FDIpLkROqghLIl2Q85q35FdXghmfK6lchwBgkJ
+	jPVKsmaXE/PUjGPjCinwdGoXxdQTZ26kbs1f/jEANY+gIddwvPg3hVMkAHbldYKiEWRfxbfR/rK
+	uy7Zugx7tvYPV7rERHXRllaFexjFN63LqRUhTpeETRR9IQ9yIFefTvKAvR821IEToinpAHZ0R4Q
+	UAVJuFMGGwleSN9XoJscCuJIAuTPzJ8drQ95QEkkzcJHaT3QDGX7a2PMISyQQWNl6FQMSgna22h
+	dscACY2
+X-Received: by 2002:a05:620a:934b:b0:911:e11e:dc0d with SMTP id af79cd13be357-91577f2fc73mr400277085a.24.1780403353239;
+        Tue, 02 Jun 2026 05:29:13 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9157f054d30sm102142385a.47.2026.06.02.05.29.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jun 2026 05:29:12 -0700 (PDT)
+Message-ID: <fd588cff-be2b-4422-9c01-cef06b2ea5fd@gmail.com>
+Date: Tue, 2 Jun 2026 08:29:11 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] SubmittingPatches: describe cover letter
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20260602090808.87837-1-gitster@pobox.com>
+ <20260602090808.87837-3-gitster@pobox.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
 In-Reply-To: <20260602090808.87837-3-gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 02, 2026 at 06:08:08PM +0900, Junio C Hamano wrote:
+On 6/2/2026 5:08 AM, Junio C Hamano wrote:
 > We talk about how a commit log message should look like, but do not
 > give advice on writing the cover letter to sell a series to widest
-
-s/to widest/to the widest/?
-
 > possible audience.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/SubmittingPatches | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index dec8aea4cb..8ff1792b9b 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -472,6 +472,25 @@ highlighted above.
->  Only capitalize the very first letter of the trailer, i.e. favor
->  "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
->  
+
+This is a good thing to boost in the documentation.
+
 > +[[cover-letter]]
 > +=== Cover Letter
 > +
@@ -117,7 +95,18 @@ s/to widest/to the widest/?
 > +
 > +. Make sure your target audience can understand what the patches are
 > +  about and why they are needed without prior context.
-> +
+
+The thing that I like to say about the cover letter is that this is
+your opportunity to communicate why the value of your change is worth
+the risk of regressions and the cost of maintenance. Perhaps:
+
+. Every code change comes with risk of regression and maintenance cost.
+  The cover letter should clearly communicate why the value of your
+  proposed change is worth applying. You can also describe how the risk
+  is reduced by the design choices you made while writing the patches.
+
+Or something similar may be helpful? I may just be over explaining.
+
 > +. For a second or subsequent iteration of the same topic, make sure
 > +  people who missed the earlier discussion can still understand what
 > +  the patches are about, so they can judge if the topic is worth their
@@ -125,11 +114,9 @@ s/to widest/to the widest/?
 > +
 > +. To help those who are familiar with earlier iterations, give a
 > +  summary of changes since the previous rounds.
+I find these updates to be particularly helpful, even for GitGitGadget
+PRs that include a range-diff automatically. It's good to double-check
+the human description of the update against the computed diff.
 
-We might also recommend to include a range-diff in subsequent
-iterations. That being said though, I just sent a small series to the
-mailing list that recommends using b4, and there it get this for free.
-So no idea whether it's still worth it to then cover this here
-explicitly.
-
-Patrick
+Thanks,
+-Stolee
