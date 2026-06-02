@@ -1,85 +1,85 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0121E885A
-	for <git@vger.kernel.org>; Mon,  1 Jun 2026 23:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD27F9463
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 00:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780358059; cv=none; b=LFn7y9jyesTovVt3FHUnXVE3BeIeIKAHcthrV7DyuCl0Kng8bHDXoFHMvyB/3Lh+mjuW2SSkUHsMIKjXkstZFnZ7u/TA9q3N9e1aDtAF//fxK+ufBv36PvIKq0JsBQjuZmoXPwbBTWQKBEM2ZPECwkYXUP6tpFyCtPsIdeTpG0U=
+	t=1780358760; cv=none; b=q+F5OSh6uaipvox95SvXl6WX1cZPlsFTU6k/00LOAJ5JhFrZ2ng/t+zW7VkL7GnrSnXeiPdiASc15PXIZW6xwpSFSVkws4IBtNFMan9m5B4t8hAKpEzhIqFAkUad6AVvXokgMQ0PyY34zSOq1uRVteXdFPYw1ppkuYNSSEEIXBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780358059; c=relaxed/simple;
-	bh=0VKTANh/8syPMvXkXQDRw6pL76yyyKXzGuGHtzBd1bw=;
+	s=arc-20240116; t=1780358760; c=relaxed/simple;
+	bh=kVEO2VjI0/4Ws91E9PhZd7wuvLYXE9sSmvtdSZjdhgo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=or7k4UtaGEHQaCj/0DDLpA1iSmHl4Rb+FOo/dE5aXr4ANA0RrQ3cDQmUwE0zRfMP18zg8ozA2vMYt5P7ZZpep/DMXezFciFHk14xDl+ed3DzQQKaF2SNRUwK7aqTKElAcL4t+6Jfb24fxDorI7nkVBQgAs3mVKaA6CbLxCUi5YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nt96tnka; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WDYApIYa; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=rmaCX+Ba/iQEkJDd/tdIWtPB9MOvhY0XACxSHfdFlQeojvPiSvM25LPDh0i0zerPRNF8+7H8k4AK+rYytacqzDyLcxYqGtsoDVsvZJH83O6kBilZZFv5RaQV5UImKe3iBPezIxrwILY9C+5laDPFD5ZfMDFqLrI3HzuLpV+gLhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FHUs7op6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fly1tT/4; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nt96tnka";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WDYApIYa"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id EF2EF1D000DB;
-	Mon,  1 Jun 2026 19:54:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Mon, 01 Jun 2026 19:54:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FHUs7op6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fly1tT/4"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E6FDEEC06A4;
+	Mon,  1 Jun 2026 20:05:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 01 Jun 2026 20:05:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780358057; x=1780444457; bh=B65dfxZpi0
-	2rw8hS/VMYDvgSIoFxEQJAy+NxjL5Pk8Q=; b=nt96tnkaYuM1wFbAk0+kCIjszv
-	fYqh37666t4UKINrCwIwC5swCRZinDNveE3csux7QMst/gPo6Q+5mfta/CKsXcS2
-	1Jm/zTlEMJoEiuNelgbcdi8UDOyb86Vq/qhtbeLJqfOPvxf7fUSkAzRu8OSVtCKY
-	+IA+gegO23cLcfnouqFJNHYTXDcvocPJX3acoxsKeaOvTU8lW1qS9OVLDF0oKH5V
-	w0jlvxhB9CSr36t0fs0FwDqsavVdcf4LRNDgLX9pksbHUxjhtGHmOMjhPZAs5aLQ
-	8XdyIz0l5yGTIIv9Z1FoBFRUzPdkOCGUrsDD8uKXBtz5nR5FljVgFExfeY0A==
+	:subject:to:to; s=fm3; t=1780358758; x=1780445158; bh=18vON0X3jX
+	ocfkCHCwd/NMtjwQlQ37zQGCNxgRXOHOE=; b=FHUs7op6SINB8bPZl+lpOJyUzD
+	axjEjMAvQoDyb85ibEPh1L9Z2l++Y4IXUOAUfdFLDkWnI8T4HehcXQwF8sZ8ZdLO
+	Kenx65izp2JnPQJq4F2SJwnYJkETUmA66depCt7eyMwT2GMooU8cIFRfujT28ueY
+	AeOy8EXw+M6UPSHcEyz+q7bKM1dD+aetkxt9WNTz9VLfErr6OPcmWJgMBg+feDdQ
+	mgNeV2ZWVoKTL3TfEZxKuD6aah/6ZbV0KlfzJboJlYD/CFgFdiT7TCBuuhMrtyjM
+	Lx1Rp7wvG1jRaPyxVB1bnrtSfMUzgOz8plQKvklebZ4bxUEQvOHMjYUpeI6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780358057; x=1780444457; bh=B65dfxZpi02rw8hS/VMYDvgSIoFxEQJAy+N
-	xjL5Pk8Q=; b=WDYApIYazyeaQoZZc46ODEAhiadWLaEe3Xil//y94taJ1h7IEsa
-	iL+SKvmTFbhkpfyo+0+90dIqawwM7G6rxgEOeoBuSJHDZjpCynndg4VBx0AnKVRf
-	srIq/M9mpaBsnqqbgXi+/rKJOrCTK+ntgGgJHnE+DTzRVP238WNSOWQnGLjnIT7S
-	VLR/2EUE/AYrrjSIGRn4aeouYK98bPhM5e4JWLeN3Qp/v1NNuSkRdek5DH9DISrN
-	rYrtLgXbgUTSFLlzoNHpbCPdsWS21f+mzmPyGkHm80CDrQEYe2uLUDfKwE3UJmSV
-	EA8kKvMxKg7jeEeILnhxqG3apxhN09hSU8w==
-X-ME-Sender: <xms:qRsear07Fou0nuaAp7q6B2bkWKFDVOdDZ1SGc3WxWQp7wnTsxgpoeg>
-    <xme:qRseapI4yLghT9IBevA_T4VR-iGywe5RX5r9NyvTEqHLGmObzoC4JiwPX4_1t-6va
-    u-DZsTeDmmZsbbxikPmMTjKx1CdqAADJMexjT4PToz-Su-q5UmZ>
-X-ME-Received: <xmr:qRseaiEAOOYO7WjjguW5H9TxceWRZ3M4QrlwsjeqxM5aGYBXKDbGHFJb3oiNDd3DasH6Jv8zmOPOSPWDqU2QYD4-1E3gJo-8EmiA>
-X-ME-Proxy-Cause: dmFkZTEmlCliTcGmneNnAbLha7BLV8jIAfjZmtXw7hpyafp1DfMQLg6s3lYbMhba+IAVmG
-    E/o0fgwFYFTnEz235Mq8C6sd0gKD88fVXqaoO/b2kVn4OKFCnxS4bsPtSQ0slsEkxS5ZQz
-    0c7vjtJjokeLeJWgxGvFeXPMve4trVKPUfZxDOe5pt1kq9EodVpe+wpHEtbV/qwRD/GVKD
-    LQVlJsFu7y2sH75GHdQF42WDPE0r1t+C0zBgsf7tRDLesD4NyUMF0a8nFGYcJAscvu/xlc
-    qKt0gLtZ93wa8JMVuXUqLNwONDB8ZPW56uuaERdnSrODqSvVbkbBmMlWbYr0X5DVfCs3Mr
-    AOoW0MT2Pa1XsXLkSzyfp24B+/YTlTJBOWTvqzPthUDqWHeXzV+cwAVjbEWkhGI9xYMdid
-    XRhZ4/6Nw6qwcghAvL/vAQVEJaptr7PgjdLetWAHknVFKMqaruk6qyGwYB0c6IBgK2d6nP
-    bjpdUHvug1qo095T10T0aJhz3lwca6snc4lIPxVj8bC0CaTG0luDrQKNHpOfJI4PzspDci
-    mk9XL2yLoqbaSstSLv17QxhpQih4EnxX4843R0iWL2h71gYSgkG0XPIwvvl/c1wvBdgKFB
-    qLO4xJEvqNysTSwnWJh5jdAMQhGNZYFIqjUnZ4u2yr+ZLsQzxHKiYVlXMHmQ
-X-ME-Proxy: <xmx:qRseatXRSoeq0hQ-N0qNL1tXOSSPb_rroY9S5WmEdk48x0mukGSqhw>
-    <xmx:qRseaixE-yHD_CTUcQL-lpHbkawQR-wdPX5C08KrKwGPMbSX58KdSQ>
-    <xmx:qRseaqSMgxgohNFK1OQMggVfDAROoW0JsiC7ROC3L0jf_Lh1uDCVyg>
-    <xmx:qRseamiKUQKO1PrtEr9j_EYw22FWD8C9Pa_PigUlawYNmVfOz1F8gA>
-    <xmx:qRseaoHUS_bBKzIePaOnYUF44nachJuSHnjF9QcLRp7fwL14Bxhl-5SK>
+	1780358758; x=1780445158; bh=18vON0X3jXocfkCHCwd/NMtjwQlQ37zQGCN
+	xgRXOHOE=; b=Fly1tT/4oO2lWKlHQ9upxnxRfvbE4VeChlXQAbZj1imcbH0s0io
+	P0ESXjBjS8tXVKTdCvrEM0vHh4xd0ig2a7OMCkCy+SHzlOkC/CdxHZy/BYwS9flI
+	JQSevwmwlwsQRx9jqORj8kbQD9qeBb7Wk4n5gw+x0Z38vgSVy18V6q7YBVXFHsrB
+	SpFYOLT9ri6MKoIKr3xQ1qwSffczb8CFDkIoiNWj/CDrYsZmN5xRIJVE1BrM24Ok
+	eeacW2m1Wn0gS90CA/uFhqbECUaet+ccPO0axEzNvSpawfD9TnNshuHbARMI8OGZ
+	DFGcJ83BMacDQVru0bZdOOLxhiBHOD2NQYQ==
+X-ME-Sender: <xms:Zh4eah6AhutymD5BGnIkitlYNouCq8wS9Fb_Q0UoTjm1BjSuD-RcbQ>
+    <xme:Zh4eat97cM0HUW4ZKFmY15rI1W6tvM7JCIq3JQftQJobFr9J4lGYAI5SU7aw5V9ru
+    O7CrOW3KMbtLbWvIpcHP6b2gFiOvofm79eE9bu2onx5n9UfqqoVsg>
+X-ME-Received: <xmr:Zh4eaurVT69HEDkkrRc3KxwrjNU1ng2BFivUWbTddFfoomg-wRGLk6H02ukng3jsbowxQ_iU54uQajU2ccij_ZZTYBhPq5ep1KFp>
+X-ME-Proxy-Cause: dmFkZTElO2ptS5vm2/tmFhtMYIcdGYcDdsjZTbly2wiBNniGBzLkXMe5JaUETtFDY9FqvA
+    jZ8dKxHOlYFdcbnoH5PsZl5hhU9l5DxrcViqWszK6haCAR4xB+uopE4petTWPtg/szsvlc
+    +yBVIS9ZpJHsITTNVQ496nXOLGFBiyyzhOvTjl1Qp/fe/ghXZXSX3cNITkFmXNXH/vUqi0
+    +A2LFq9ZMZUNnT0inPrzenqDGF//3IYxabq3tFDGknRsHKjFmgqhoj2ADbMhC67/dlLaOT
+    umBd0xmh4S2saSSSU/8Kn9Sfjy4GdYtAzyVEBmgX57fY4Lzm9INDlcjNDkPZjnR4NhS/ja
+    puVkyNTbkDIwLd2iN/S3WpZ6qN0WO7Mlvx+0Pl3yFuW3n4CuELrX5eQgAxzR4XPgMKzXaO
+    XaNT/uEUZr06UQUzYAi7My9r/eAev3b63OArRWlyaI6w2bh4tRue7EpLRSqUn1avww2lKi
+    kXy5TESaOX6jz2dGvFQx3AO9mMSQhEOMExCwM3dAPWnNT2UeNwI6kuhXQpAoT0mIMBxf/V
+    +EIyS8/VkhActqZkSQHJxXQzy03JJxNodMDcHnkezzYmioXdLQ9FQ7BWBODJuqmGYvjVHm
+    FE7wv64qEH5c+byh7qO42nijLilSffCval95MtcNBOjEsaUruckSHjtONEFQ
+X-ME-Proxy: <xmx:Zh4eampuz_O7rxZsC3UJ8LCWZZiUN-iyxZIGtMdIhTqGPqWaA31RGQ>
+    <xmx:Zh4eap3Newqygvvhy5dpOqxIOUi4ed4DQkLPtMm0BFxO4rR9LLlk7w>
+    <xmx:Zh4easGX5UQ-r-JPoMEbyz4RH1BAxbxniwC69GPu27eiLi8i3Shkqg>
+    <xmx:Zh4easFTyGL79sElQNy3kSOZIr-dhZ8WwhsKTF6FfeX6nVd42DmRlw>
+    <xmx:Zh4earqRNxlJ5CLdIShXTwQmS2kmsAXJXUAZfc60mGx-MC1bA2kJPdpB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Jun 2026 19:54:17 -0400 (EDT)
+ 1 Jun 2026 20:05:58 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Olamide Caleb Bello <belkid98@gmail.com>
 Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
   christian.couder@gmail.com,  usmanakinyemi202@gmail.com,
   kaartic.sivaraam@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v4 5/8] environment: move "precomposed_unicode" into
- `struct repo_config_values`
-In-Reply-To: <20260601154211.82370-6-belkid98@gmail.com> (Olamide Caleb
-	Bello's message of "Mon, 1 Jun 2026 16:42:08 +0100")
+Subject: Re: [PATCH v4 8/8] environment: move
+ "warn_on_object_refname_ambiguity" into `struct repo_config_values`
+In-Reply-To: <20260601154211.82370-9-belkid98@gmail.com> (Olamide Caleb
+	Bello's message of "Mon, 1 Jun 2026 16:42:11 +0100")
 References: <20260423160832.114816-1-belkid98@gmail.com>
 	<20260601154211.82370-1-belkid98@gmail.com>
-	<20260601154211.82370-6-belkid98@gmail.com>
-Date: Tue, 02 Jun 2026 08:54:16 +0900
-Message-ID: <xmqq1pep24wn.fsf@gitster.g>
+	<20260601154211.82370-9-belkid98@gmail.com>
+Date: Tue, 02 Jun 2026 09:05:57 +0900
+Message-ID: <xmqqtsrlztzu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,27 +91,44 @@ Content-Type: text/plain
 
 Olamide Caleb Bello <belkid98@gmail.com> writes:
 
-> The `core.precomposeunicode` configuration is currently stored in the
-> global variable `precomposed_unicode`, which makes it shared across
-> repository instances within a single process.
-> ...
-> Change the type of the field from `int` to `bool` since it is parsed
-> as a boolean value.
+> @@ -684,11 +684,12 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+>  	int refs_found = 0;
+>  	int at, reflog_len, nth_prior = 0;
+>  	int fatal = !(flags & GET_OID_QUIETLY);
+> +	struct repo_config_values *cfg = repo_config_values(the_repository);
 
-Is it really?  The variable (or the structure member in the new
-code) needs to be initialized to -1, so in that sense it is tristate
-(unspecified -1, false 0, or true 1).
+The theme of this topic, however, is to turn the process-wide global
+into per-repository setting, so it may appear to be a bit unrelated
+change, but the function already takes a repository instance, which
+may be different from the_repository.  In the longer run, we
+definitely want to see this call pass 'r' instead of
+'the_repository', after making sure that repo-config-values for
+repository 'r' has already been properly initialized in the program
+flow that leads here.
 
-> diff --git a/environment.h b/environment.h
-> index 514576b67a..508cb1afbc 100644
-> --- a/environment.h
-> +++ b/environment.h
-> @@ -95,6 +95,7 @@ struct repo_config_values {
->  	int check_stat;
->  	int zlib_compression_level;
->  	int pack_compression_level;
-> +	int precomposed_unicode;
+If we want to be conservative, keep the call passing the_repository,
+but leave an in-code comment 
 
-And the code does not make such a type change.  Leaving it "int" is
-also the right thing to do for this topic, as its stated goal is to
-turn the process-wide global into a per-repository setting.
+	/*
+	 * NEEDSWORK: pass 'r' instead of the_repository after
+	 * making sure that repo_config_values for 'r' does have
+	 * the right value for the repository.
+	 */
+
+or something like that nearby.
+
+> diff --git a/submodule.c b/submodule.c
+> index b1a0363f9d..f26235bbb7 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -898,12 +898,13 @@ static void collect_changed_submodules(struct repository *r,
+>  	struct setup_revision_opt s_r_opt = {
+>  		.assume_dashdash = 1,
+>  	};
+> +	struct repo_config_values *cfg = repo_config_values(the_repository);
+
+Likewise.
+
+There may be other places with the same issue I may have missed.
+
+
