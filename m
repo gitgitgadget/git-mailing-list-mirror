@@ -1,158 +1,117 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988353438B0
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 11:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E809378D74
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 11:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780401524; cv=none; b=IPuo9OLS13XivLtet5UzaKK84/U42o/vU9wgqKmHJtxzRgCVLnrFJiVjlij7WtoJsiyqElMPfSZ3zYFPcEnDYWWGMnKIKu2UxNJM28hnC57mkoaBuEWmLwifAZqQuHQ5jiKcW9MycHccc1AqFXILekI8phjIq9ElWk0uTlWHS6c=
+	t=1780401575; cv=none; b=eAah4eMOa3/BdCuAqyijWFPozWbyWq/6r24pE51xKeWkhmI6m9DjGuxo7tOjWpJCH3JZpw7Knrm5GpOEKOuDosT0ak6LW4B7N+Gjm8J4nxqk6IpufxtGnvU0SjjcQ2JJlzji8DkAlxV/rX2k5KsBiIW7cnqKrAXVDF1KzvdkWI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780401524; c=relaxed/simple;
-	bh=mJHuXBCwE2QA9OL0EEJ0kczs0INIV9f7uGzoC17u72Y=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=hs22WcKsK9rauiASxaHvgQBZyb5M50HWrevcs1LAbBe4m1S13zbAqIcuNH5ElGCJQyoGRKtRMy9fHsw9rqQYZFjjNjyJNwKmrtnxsPHz16mzCedgb5B0vXoeTCUr4Gpsg3Yb3QJ3ndNWSqxgTh260bVdQB79R84IRTV9mv8adFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qfjjJDTl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=htTunsxL; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1780401575; c=relaxed/simple;
+	bh=oD3EnB303qIA0UrXj/mKkwuxUZg9BrxZn3o9w1JO6mg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fQRC265/V8slsyYktHBOy9XcZhd3uwHHeXtdGKadC4O4hHDW/bQyypaPlwK/19xpznNpuffv9+QhQOoRiis0xIXnb3Ff1bFnkTi3KVXiZj5Gk6XE4IoxZCRgNesWw2AtZYLY7bdFeJoAC3bazNYIZNMNgjg6mET1B8sZ774w+3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RPqAZpn8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NpG8Fr0N; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qfjjJDTl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="htTunsxL"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB588140023E;
-	Tue,  2 Jun 2026 07:58:42 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Jun 2026 07:58:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780401522;
-	 x=1780487922; bh=R2L5JhyoDtrult0mhU+/MbPS7drgNZr1O0SoeaGB18U=; b=
-	qfjjJDTlgPnMNlzZ68AQ/t0hxLj9BMUcha9b6adiWAm7ehb76w4lXp2RFvjjryZs
-	8FGpDW7NlTOy3p9v0ggfVQSLl9AWeZydHADd4X6JruokYoSq6dGnFqRalOuzY3g6
-	Ql0TtobRFhBNZ6crQjTvgdIQDvZzs21bw1NKUE7oLwNABWDQzrjiAqqbHITLkLNJ
-	l/XhOp11X5Yf/SBOBW/sFMn7KDE9hxMoUVDalsbsJ65UUsAe7CV9aYafTAZCJPV+
-	PhSVB1lAGhckKyPfVcF3Nn6MKFJO/Ygu7A3MNUmwX5ZCWyuSI5UtmaEJdPr3s1o3
-	5H6euakjEoHnWhh9QjdDJQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RPqAZpn8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NpG8Fr0N"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 23F721D00085;
+	Tue,  2 Jun 2026 07:59:31 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 02 Jun 2026 07:59:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1780401570; x=1780487970; bh=vBwy3fFt6+
+	VeIbTzeyfRhyLeRgBDDo4qD1MRNmV27us=; b=RPqAZpn8GTWFGfn9Sw44uLnQ8Q
+	wuxaly1u+nzt0nL3yiT3z9kAYjSBhVORFDEm1ogowGHj4HJxNNr6hwq1osvIcTs6
+	luiYLcaemBikJr/MyByTF0vmVJAZS41LJnvaniF2Vle8qr79A7g/llzipRvZe0A+
+	PKhRqNaNqNfkq4Duy1LDaE5jrjDSUOfonPEX06pdZMr/SPe8lyG+G0pj3cGEFOkj
+	sSZoUha1/qbEl/3TN7Al1/ir+fhlOyZF4uEbTbiu3qEzNzDlgeD/pFNdctD6dyfa
+	sP+GuTlK5EtiFuciwgpiLbRs4pf4iF5bZ8W874qDHZwJHrXQYlqu8wxCLFnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780401522; x=
-	1780487922; bh=R2L5JhyoDtrult0mhU+/MbPS7drgNZr1O0SoeaGB18U=; b=h
-	tTunsxLP+j7WQvuFW7C336Jed5xeTVbRg3NVawuGzv831cGpSYGnbdJGm2s1ber2
-	+1uLrGysxn8tPgDLKJD1nX2e2cNOjGy8ozyxqLQJ68Rrtlw8IvWGz1GbF6I4tWRO
-	cRWEcW4ySFS/jKm7tOsfSVXnDeTyayUd39UAgKls40m7JGTSL2nrMkmmw7lfaYLu
-	35eZtbUQnkaUmmuN3+OqoaNYCYwg3fxTX/CE9GuvlPcFoWq432/zW3V2iDY7BLhX
-	t52hBOoffupoGN3eJe0+H/4S4j3fNhOxHN0SX4+ulLfLEX27QqaOdtOpl0s3sXh/
-	/fS9zW+E5iyW4EFshzktw==
-X-ME-Sender: <xms:csUearCP4l92SE82k1_UL-Lbnd3n149bzYJfOkZCCdivndv_2ZxpCnQ>
-    <xme:csUeasUhXlIH36PsfsJARyLnEi1jtjHSjrgb4pNoBawUuRJ9sAJNfLAc9qDFctEuj
-    dQwRZpLQxcVYgZtYCvJvt35IebCYREX8vmR0yb-UDj-8XVytgbzrQ>
-X-ME-Proxy-Cause: dmFkZTFftFGBgOQ6SNOtV25uFmy0Y4nkRddGQINsHjbYPQQDvHWhS5oSGFT9tfFpCPmG31
-    QURwSlxCcecst/VHqhZeYSh1KTCdlAD1RRFPeb+DNxMHmq0Lan8ZmDt63RJBtsBrujbt2K
-    wi76hpcZ83OYoy2B3tzaeHBTKjzK7Bg4qD+0gDp9TnewYX1gwwFLfNMV+H7Lvtg4xKrFSp
-    dUNDtNUmVAXVXr1lr6r85bymygGOx86xgxwS8x7hiAkk0iQtLuvJy7POgUCwPc03w6TC/k
-    0fy515MRJ5fbF+iKnJUegDpaOAVmNdQQKKE/7SabT8IDXR7OlbTnAIePMLPFXOo9LGx8BY
-    a0cwAnpKNoazThquvdyddGpEOHLCjTcsF+GyncIcTFh7D1YnJbfapRdbYl3oS2fgmb6j73
-    oUqy+ga7aO1DRCG9kieGQZLSTQOadp+FvbhOCcVCbUp2Qy+YxHB2pOSoUZAqiTjo1lKTj7
-    apfbaK+VOHlLbyt9QJiJD/yWOETPPzmUQeTB09GxOZI/j8C1bO4GIX9LTe4YaB12XgcJgH
-    oe3ezXq1R3GPBXeGPiL6ERl9UpijuDNTIIZdIfxYpmdDMs3ZYQzWF7ILnVKi6lQHOq7/JP
-    qHxFgqCw2R8x8Lw852weS6OVLGYBT16uvnFEzIzClTiNLVdxTnSyg1mdRMDg
-X-ME-Proxy: <xmx:csUeaofr9sQtrIIHQ9tdsDVmYjLQ-cIc4sAJaoQw3PKKGGEhURYXuA>
-    <xmx:csUeah8W_M9CmywhgZ_yESk18R7pIXhfZIvnyGZPlxXjQQ3bMkUsGg>
-    <xmx:csUeasnAKrseJwifryk_4v_SQ0UL-FCA0iaUDfE75-X3fxE3O1ZtNQ>
-    <xmx:csUear8sRiz_MLsjh_RhOp8XGCgJrK7wOWe3PhUqr7B3UAnPfzftug>
-    <xmx:csUeau5BtimUzwIgDO-LDnU4pjRv-rnohpoBg2bEDJI3s7qvd137GMH1>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 94C043020094; Tue,  2 Jun 2026 07:58:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1780401570; x=1780487970; bh=vBwy3fFt6+VeIbTzeyfRhyLeRgBD
+	Do4qD1MRNmV27us=; b=NpG8Fr0NSA+nbnJAatMO+r3WA70TnRYsM0UJM+4vmPyR
+	4ChTQD1g/VOK/+h+o0ulvP8zZN2/rQrSSpDnuC0QeZfR3OspxXNMPSBbhxmyHbxm
+	VCZGzjEpbtSP7h6/zzVuK/Rf9fnT/yLJ0gNszIPA0Na7qcSyu5UlE6rpzgfirasX
+	i9q16FofVtKrOohKBQU6wjuYLa98DE8GmcXUlhBb8E+P/p2X3GoKC04etCGjs8Oo
+	+AIJjefkIBBPNkit0exiaEUTnrMASN9JR7ehTOH68T3uSVZAIDyXfQvhUXAfK7y7
+	fXuo2gh9X9a7+3mgBx8xc/CA/dGdabsN83eusihdhw==
+X-ME-Sender: <xms:osUeaqBB4YsZVG4EQ8heeScpWP6-Y-KoonEsrFr9NJACCcG6ttLZ3A>
+    <xme:osUeaqhQ8gf0mXqMeqTsBzwyKkgolAMH3uD9UNNh__6VPVY-XHrxpvyRUTZSIRCW0
+    LCRX1PyaChs6C4QUZsX2_ZY5OTlzCqBx-LZMw2GGWCzl1ib4o2EyQ>
+X-ME-Received: <xmr:osUearM9zFXWfY2A8cTc7Xn4RR5PB0kq_0CAqIiSnmMi923VZG-TiLNcXaCvZSuvEAwvDwhUMkT4N8DXKKYuSdap9wbL4qRvlC4yHAFX3g>
+X-ME-Proxy-Cause: dmFkZTGpEpaKOCWZHasi0qv2XLlfi00gp/3BtWa35Pw7Hj7zRKMtU5tb34L/3AykllMZnI
+    0tUHsKleYoVfweGTpz+n6N0CsiZsCScFuckv+zu60iR8egrQrRAF1Parup7HePdVON6Pnu
+    fkTxYowli78AXQ8ej63iuobKK+GJLsy6bTdMfyko+7pr3xLv1H4PFTbAyBiMOoe2MQOfEX
+    MACvuqDs+FpMD0VllQOQjwXbraOwnCmmV0VGmnA1OkLJsWVr86ljg6VNlH2l7mHiWgh6OE
+    SJwxn5T+i/+d9Moy6xpsGQQI1bi8Lp3h7AFjVkrXFqNWLTdV6qp0Dd31eQ/pTY2RUByqNw
+    85gfFZutJ/yRKltUYopxA6wNON9B+dtRkZg/iPjT32h0a+I/zju5Fspo6q8jYnUpGvuQbq
+    pKNIASwOaFlzh4Z3AN1z9dm5mJZk2gcxnpAOKdkBYmerZPmEPXKOvxwVap2nbiQnOljpJx
+    iI68OIXL+B/OQV81WhxpDmKhqyGnwkxVgdD33yIne8sMIQJtmaovGFZLJJAuMwbv/lejF+
+    gRFEkQZpU7DU2KbKma/td2nv95j3M8lK5RxZViB0Ryctk2Xff8MSfakbq1K+58uaUTyh1f
+    N3PUkvFrpdxOsHmC5+cwx7pV57oifPvu4GDvLjEDtE/+rTLD7K/huiypHcyw
+X-ME-Proxy: <xmx:osUeaj5gQ0rY-sxtqjJh43KTXs-r_5A4alLWEDCtwUmEUJqgsKQKZQ>
+    <xmx:osUeah0sFo5qfUHdti5SnaJ_cUyMJzn78WiXtSLoti4y0Z8akVCmhw>
+    <xmx:osUeasbBZtnfO826wrNVAR2ZorqIBxP-xbw7bWo6Rn6QcBLOF94Cgg>
+    <xmx:osUeahAY9RSKKZtROSJpu7GKFBh0lUuUVWUJJxL9MkkIH0bL9FUPQQ>
+    <xmx:osUeatafF71KuRt2cYj09_-6P1IwUB9daYzCLGi4NJ2fPtp-RFRFDtvr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Jun 2026 07:59:30 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 82b1f985 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 2 Jun 2026 11:59:27 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] Documentation: recommend the use of b4
+Date: Tue, 02 Jun 2026 13:59:08 +0200
+Message-Id: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AZ4b5WQY_xTJ
-Date: Tue, 02 Jun 2026 13:58:22 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Siddharth Asthana" <siddharthasthana31@gmail.com>
-Message-Id: <ace3922d-8f73-4a76-944c-f09dfe311db0@app.fastmail.com>
-In-Reply-To: <xmqqy0h0ed7h.fsf@gitster.g>
-References: <CV_doc_replay_config.709@msgid.xyz>
- <simplify_replay.refAction.70b@msgid.xyz> <xmqqy0h0ed7h.fsf@gitster.g>
-Subject: Re: [PATCH 2/4] doc: replay: simplify replay.refAction description
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIzFHmoC/yXM0QpAMBTG8VfRubaaWSOvIhc2B4dCO0gt7264/
+ NX/+wIwekKGKgng8SSmdYnI0gTc2C4DCuqiQUllpJFKbDMLq0WeOadkV/SlthDjzWNP13dUN7/
+ 5sBO6/V3DfT9TcCrDagAAAA==
+X-Change-ID: 20260602-pks-b4-31cc20d7f84b
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.15.2
 
-On Sun, May 31, 2026, at 00:37, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
->
->>  replay.refAction::
->> -	Specifies the default mode for handling reference updates in
->> -	`git replay`. The value can be:
->> -+
->> ---
->> -	* `update`: Update refs directly using an atomic transaction (defau=
-lt behavior).
->> -	* `print`: Output update-ref commands for pipeline use.
->> ---
->> -+
->> -This setting can be overridden with the `--ref-action` command-line =
-option.
->> -When not configured, `git replay` defaults to `update` mode.
->> +	Specifies the default mode for handling reference updates. Either `=
-update` or `print`.
->> +ifdef::git-replay[]
->> +See `--ref-action`.
->> +endif::git-replay[]
->> +ifndef::git-replay[]
->> +See `--ref-action` for linkgit:git-replay[1] for details.
->> +endif::git-replay[]
->
-> This makes it a bit roundabout for "git config --help" readers who
-> wanted to figure out what value to set to the configuration
-> variable, because the valid choices are no longer listed here.
+Hi,
 
-That=E2=80=99s a good point. My thought process at the time was
+this small patch series wires up b4 in Git and recommends the use
+thereof via "MyFirstContribution", as discussed in [1].
 
-=E2=80=A2 This description list needs to be changed
-=E2=80=A2 But I also need to change it on git-replay(1)...
-=E2=80=A2 So why not just gesture towards git-replay(1)?
+Thanks!
 
-But now I see that this does make it slightly worse. Which is not worth
-the saved effort.
+Patrick
 
-I was thinking that a shared file which is included in the config and
-git-replay(1) could be used. That file would just contain the definition
-list. I could also duplicate it manually and leave a comment about
-keeping them in synch. What do you think?
+[1]: <xmqqik81xpqx.fsf@gitster.g>
 
-Assuming that they should be equal, which I think right now although I
-haven=E2=80=99t started on the next version yet.
+---
+Patrick Steinhardt (2):
+      b4: introduce configuration for the Git project
+      Documentation/MyFirstContribution: recommend the use of b4
 
->
-> Finding `--ref-action=3D<mode>` and its description in the other page
-> is straight-forward, so it may not be too bad, though.
->
->> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay=
-.adoc
->> index f9ca2db2833..4de85088d6c 100644
->> --- a/Documentation/git-replay.adoc
->> +++ b/Documentation/git-replay.adoc
->> @@ -211,6 +211,7 @@ to use bare commit IDs instead of branch names.
->>
->>  CONFIGURATION
->>  -------------
->> +:git-replay: 1
->>  include::config/replay.adoc[]
->
-> The use of conditional attributes (`ifdef::git-replay[]`) is a neat
-> and standard way to tailor the description depending on whether it
-> is read as part of `git-config(1)` or `git-replay(1)`. It correctly
-> points the reader to `--ref-action` in the latter case, and provides
-> a full `linkgit` reference in the former. Clean and correct.
+ .b4-config                             |  3 ++
+ .b4-cover-template                     | 11 +++++
+ Documentation/MyFirstContribution.adoc | 81 ++++++++++++++++++++++++++++++++--
+ Documentation/SubmittingPatches        |  6 ++-
+ 4 files changed, 96 insertions(+), 5 deletions(-)
 
-Thanks for the thorough review.
+
+---
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+change-id: 20260602-pks-b4-31cc20d7f84b
+
