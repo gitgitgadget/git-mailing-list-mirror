@@ -1,133 +1,134 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9C630148A
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 12:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA69229D265
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:00:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780403691; cv=none; b=sc2hDslnRaQpCEY97Psdn7gI2MKskmPnSV6f4F5hosouf/NGPgK6vi3+tcXMdbstdeJKYwyM6AtJSRq/sa7YjutDA993z7uQUJZeAAeGKUaxvUePZfNuN2IUNIGu+9ngbQ3/kzaET1VDEyAgiEwobVOv1LpbfqLCv1RCW6HAwMI=
+	t=1780405246; cv=none; b=oQq6Qaykz1+T1bZu+qkMEUAVzZONgC8pLRCJUzXpSXqlKwnc0GDzRQrpyYF7nKCQRhjHjMd7fAZM5N6XcPmghzXLwGpBD7GdXH2HJZSAxH/ZuUK7lIhMRK53C2SjFWyNZZJ+RkHdMD1UWfaCA1XPOa4HXPCMsx+oQBVs9ZMHW4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780403691; c=relaxed/simple;
-	bh=tDewNAtPBjUWvhygOyYOiQWHIuIwsZpCPSn4Zxs8Zis=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=evFfzgaaVSe8HAurigfY6pHi8Y5+HW4bvu18R1ihqCWjJmvqfGY8G7exF/9AL2/Y2ieegwAZ619w8R5KVj60kbnoPwybGfYdCwbPw7wRxnIwm95NNk2HNX/zRrPuu3wU5am8qI3zpkxfZnNqvHIFVLOr8w9YRHd5w7WEAge6ryw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=drOsKuHU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QwzgYEV0; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1780405246; c=relaxed/simple;
+	bh=SKksDt5jzNRKh9dsESUCuXs/joQoGTSLGH9EGmW4ekk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Rv2CK6f3v3mGG1ItOgmm+MfFJbwiVreC7Sw+H7P4XQ2yD94G4nbaPYuwpcviHVj+zlNEDWleSUAAzHEg3oP4N730bHK5fvrUo0kfAzd4O7EE+Yh9lOgODpO+sKM8R4PfcvOBAVvKNkLnvpT70/HepQakn3e1DciaBCKkOmjaoHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fSRdzw5S; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="drOsKuHU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QwzgYEV0"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D7CEF7A0136;
-	Tue,  2 Jun 2026 08:34:49 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 02 Jun 2026 08:34:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780403689; x=1780490089; bh=qi9fUdyA8X
-	OEarH4SU5EKITQOod390UVOxh6msS4pt0=; b=drOsKuHUF9nZxtUaqUsaxjQTl9
-	9kTQ8kkpSMrEcdufLsoRLg/rfMdwRN/QOsIO1NGUfg5zUoBIsaNhALJvNe07zryP
-	tIvlh4miNwNoHW/0iLie8jKIWejS4eQyVvAc2lqI80hF5VjWy8oiJ/XOFkQ9750M
-	DHDKj93DTZiDdEftdPWojKfytLU7ilResQ8yaKcnWvwbjWa35WdoZRYmw0L9Jij5
-	mL/FOj04+8a+onLDxJ5n0FYiz4noEh3p9KdMkkY7mh3viYIUIukYH4KiRHeeJfQ/
-	a6oVkCKnqxqxUdZr2hdJ6KUbzObchriGy534y9ePq3ck4umpgPDrpU6/clPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780403689; x=1780490089; bh=qi9fUdyA8XOEarH4SU5EKITQOod390UVOxh
-	6msS4pt0=; b=QwzgYEV0BtbrfKpNS+QCGyUrI4m4RRnvVHbekc/SqR8bK/XVOvu
-	bgQBp6xl16BLLi5Nxrobpmaj1tOY30SlaGzy46s03dHdFCh7ogJxxptkVAkZqswO
-	e25sUXcb6nrPeTyp6wa9V3kAlLv9ahS3jKNrC+P5hyZ9QXjTsEdPje0inQ24A5HC
-	sxmhqcHUFPp3Boxnyv6MYx1wSuJpTSwnuTAU+/j/8F2U4SKEAIfbO0jbb/JTMRum
-	dX2VbRBWGmbfQk88zaMvwh+6/NV74icOwYBukgKE1q/6r1kDBV+xtDRTrkL4ediz
-	di4qrFRIsXKQlB/nMFUAU8T/vGgKAavgYbw==
-X-ME-Sender: <xms:6c0ear0Tsq-GOHYfV1BFXYIgGeslqON3q7dGVAwQGxxTO37iPyvrgg>
-    <xme:6c0ean5D6r3FiyF8Kt_fqOGDokVNsOtgt4zhg3I7_rg8AzDNyvreczzVkdOUYs0xu
-    tM_bc6T-Zp9m_nBZxdXKF8DPfxdl7i0FpZX1yNWmXBeNij6ZdZCIsM>
-X-ME-Received: <xmr:6c0eamUmy37DkLbYXPiyrPrfsECN0lsT7odubAqzWp-HhGqB16Awm5JQzzLTmGrC8WBKJrCAqFmJ5UgS9nH8u3Tl4t8mb-H9fCdh5i3yMQ>
-X-ME-Proxy-Cause: dmFkZTF+YNcjZsoyG3EwJ+F6yk4hRKmAHugNq3ZxGbHWmo2CoiP6nlorVlLhHiJlmmLjA3
-    VVZP9PYFsjJjbWWYRVgUqI++LwJqu6+zqglyIn7sCQXYKcFBg5h1NLXKdWSN6bZS9STX51
-    tqnIu1rdV1fVjAgDlUQUddyA2nEpC5+IhdlJ5NBMpSoOTB0uyjYI1rzLXF/JQ0gpwaOvK8
-    UTar1+Qc1/SSoVpeN5h4fnpM2TBSD1pn2Kn45V/to5imElB6cMdggJEQ0SNXF9WuLGlWxd
-    XXMVL/Tmc5Yi4L81QWfPLJsPRCCbig5Z6j2ay+XTwPXBOdNpoXUfxAJHmdBoKFVQRZZ0r0
-    tuyGuVkfcXrF7YoVfAdhQ6hNBadp9fSiZuprGzMD6qownuP11bBsQ0gghHDpeQqwaI4Y3M
-    AsdAbtrv57KUzN0c21VM1/tZjrTRC08j4MRgcB+GVSfwJf9bFxnztqwKIruRlDGHyDBp6i
-    zv2r4EKe3k4VW2ZoCalRWG6R6u1heQvDq+H6vKeD3YZMrgRSncXe5xdqs/6u2iTmffZo7t
-    VAsy82nT1ViSKFsYvufq6PQKX8q8gCgJGbloCiSTR0lJdwyZbfwI0rHCPE4nruBu7ytJak
-    LrQO2K2DE5PJ516a/oYbImXuwn3yWbJDFyvklvURzcvd2RVlJt64Oz/PZU/g
-X-ME-Proxy: <xmx:6c0eauBksMqqnITYw7xKs10xo4H60cJ2Mg21-ODN6fGHAMnwEQl_7g>
-    <xmx:6c0eat5GJ46-kN9uBPwdVqYAg3ncrZ3WVYCweAoxVgzM6jJJml9IVA>
-    <xmx:6c0eahyHOcRc3Pu0RpScziW796Kr8w1A-xVVKfO9-lzevRKyfmZVqA>
-    <xmx:6c0easxBxLTIwQvEkMMJgD8Aq0hoXr8OQVy6e8tXtmdSAklkvSudpA>
-    <xmx:6c0eao_U9noQTS4fJJWIWbNDBL5pdpd4VbehuFvFCmJzsOfWpRgiWIiR>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 08:34:48 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 14a4653f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Jun 2026 12:34:48 +0000 (UTC)
-Date: Tue, 2 Jun 2026 14:34:45 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-Message-ID: <ah7N5bKAiAORtNkp@pks.im>
-References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
- <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
- <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
- <ah12uk7IFxS92OR1@pks.im>
- <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
- <ah2VL-ftCQelNoOc@pks.im>
- <2e266786-4ccd-4300-9b53-6f13fbaa2933@app.fastmail.com>
- <xmqqcxy93nph.fsf@gitster.g>
- <ah58IJ8DgSZYRjMM@pks.im>
- <xmqqv7c1xs76.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fSRdzw5S"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-bebb72b845aso441274266b.3
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 06:00:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780405243; x=1781010043; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=umkfncTo8aWE01Riu+/TcIlkuPsFwURil7EgODXhBXk=;
+        b=fSRdzw5SfYH6Hr3pLMf3ttdcJP1mOBHMqTRNkeGlSFVM9Uddwzaqzrl8w5r3wtx15s
+         Wc0bPCAir+7iN/Zx4H0xlVGiod/2ws5F83bQm3GMmz2kO7K2NLZQBaOHo1WYnxYgTWbw
+         LPKe8jDCnszAb6iiIjPNG7c2y/5+8AXBg2LRul1iYtTgMmuoo0l9Lhb9okk94y+kuN+h
+         2KGCqqn8I40WLyCN0U+tbsCnOy3wg8uLGy2pkEiBwVc1puk6D+AwMzJrGILmN/SajFqJ
+         nZ3oRav4XVO8Eo97VMVuFMwu5+M9jTZc5yRiPW4nrPCGmf6vVH/x3oWO5hwAKjAD79us
+         Cv8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780405243; x=1781010043;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=umkfncTo8aWE01Riu+/TcIlkuPsFwURil7EgODXhBXk=;
+        b=IW95hDbTMTGf3mbjm0R7dRjcTgIyx400GkwgeE0M8tg1oSCXe63VyQN8M/eTYSrjxs
+         WvBvmW7WXoS/zHM5PCtCarmZn04t558t4zARFJ9qsxL84dXSEtDOG6Th3DJbfe7aij1X
+         oQ6BcHM+wrLOvUPeUMtzZaU3n6SeXTVbhKyo+g+i90ngpHOhZhn69EnMr4y6bP15LaBN
+         B8GQfSznPrhVZHAcA7lnmaSYXXo6S9Td23JWCyyN4dRsWsXGPCoLfmd7ZfXMv3ZxIKWj
+         0/ND1sLdbmG0AX0xnHa6sW63c462oBj/nyEwyhV2d8gWRl2jqctKFXiIY2Uv9tU0gg2k
+         QZjg==
+X-Forwarded-Encrypted: i=1; AFNElJ+PmFkyCJYA7hN+cf+RevvgUAHWRancHPShsNadXexkLoM5HPRgvnQSzVTntP3mrJ9v99g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZ8p4FAep10e01c0Ggg5kdQjHlJercwus2i1pO4Kew3akBb7f2
+	LuUEFB4MVESM5JWlpFKNJoc5MSXU2j/7vDhkHQkks25/ycQjVBSUuctU
+X-Gm-Gg: Acq92OHP6b72UK5dZM2ODvuYpnaf23cbjs8NdM4ZH/r62Q2l+GaNQt+irZs8O387Fn1
+	i0wdr5q3EG+ybTJLu00N7ZNernxwNgd25nF/qU2epTjnznYTOGWjRENhPvY6XJE09aAqiXoRTaB
+	2twpkEeL6AkwHctxyj8EYfJGF1sQzTbo4Qb9KXI2N0zr70ZvJu9EdYOTyM7OfEn+w4KNeKdidQP
+	e9Zfpft+vrytVvOeOaQKPEuZbfAMT5gmxCh5srpG1wZW6yhWjIjx46Dj6sLw5u/+YgYCsnjp1T8
+	eWLDjUPvbOGDERcaSN8y7IaNgiZv1YzxQo+DYu3wnfUuA/6lnZhrEQC5T4Ooeieq58hFC33LQjw
+	IM4s6cxzS9W6NHBcEGrYmXQd41KSWvv+GcFoa+x8LE2acEDpS9lYkR5K9rigKTh12tmh5NJF7FM
+	ueuBsIZxnoTc2KHbpj2cOUuufhlV1ulw2wr7IpPKsUtiDIUEN9de5olv8t0mMYL5ibjRX2Zu6Ej
+	AcvvI6ARqddrA==
+X-Received: by 2002:a17:907:c16:b0:bd5:7c2:7622 with SMTP id a640c23a62f3a-beab2e4c7c1mr945336766b.49.1780405242602;
+        Tue, 02 Jun 2026 06:00:42 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68ceb6f98f8sm3577287a12.0.2026.06.02.06.00.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jun 2026 06:00:41 -0700 (PDT)
+Message-ID: <73c1f6ee-9461-4cf3-8d51-33de05f6d070@gmail.com>
+Date: Tue, 2 Jun 2026 14:00:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv7c1xs76.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH 1/4] path: add strbuf_add_path for formatting paths
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, git@vger.kernel.org
+Cc: jltobler@gmail.com, lucasseikioshiro@gmail.com, gitster@pobox.com,
+ phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net,
+ kumarayushjha123@gmail.com, a3205153416@gmail.com
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260601151950.30686-2-jayatheerthkulkarni2005@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260601151950.30686-2-jayatheerthkulkarni2005@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 02, 2026 at 05:27:41PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On 01/06/2026 16:19, K Jayatheerth wrote:
 > 
-> > I wouldn't mind that outcome much, either. What triggered this series is
-> > that I'm always annoyed that it's "builtin/init-db.c" instead of
-> > "builtin/init.c", and the same for `cmd_init_db()`. But I intentionally
-> > constructed the series in a way that the first commit can be picked
-> > as-is, so that we can adjust our code to the modern world while not
-> > doing the deprecation dance.
-> >
-> > So I'd be equally happy if we just drop the second commit in this
-> > series.
-> 
-> I'd actually find myself annoyed by such a rename when looking for
-> builtin/init-db.c only to find it gone---much like how a previous
-> rename made ll-merge difficult to locate.
-> 
-> My point is that while static names may annoy some, renaming them
-> does not resolve the annoyance; it merely shifts it to someone else.
-> 
-> So, if the primary motivation is just the first patch, I would be
-> less inclined to support this series.
+> diff --git a/path.h b/path.h
+> index 0434ba5e07..b9b626ce4a 100644
+> --- a/path.h
+> +++ b/path.h
+> @@ -262,6 +262,22 @@ enum scld_error safe_create_leading_directories_no_share(char *path);
+>   int safe_create_file_with_leading_directories(struct repository *repo,
+>   					      const char *path);
+>   
+> +enum path_format_type {
+> +	PATH_FORMAT_DEFAULT,
+> +	PATH_FORMAT_RELATIVE,
+> +	PATH_FORMAT_CANONICAL
+> +};
+> +
+> +enum path_default_type {
+> +	PATH_DEFAULT_RELATIVE,
+> +	PATH_DEFAULT_RELATIVE_IF_SHARED,
+> +	PATH_DEFAULT_CANONICAL,
+> +	PATH_DEFAULT_UNMODIFIED
+> +};
+> +
+> +void strbuf_add_path(struct strbuf *buf, const char *path, const char *prefix,
+> +		     enum path_format_type format, enum path_default_type def);
 
-That's entirely fair. My take on this is a bit different, as I think
-it's beneficial to accept a short-term adjustment for core contributors
-in favor of making stuff easier to discover/maintain going forward.
+This API is very specific to rev-parse and to me at least it is hard to 
+understand. I think it would be clearer if we had a single enum 
+describing the desired format and let the rev-parse code worry about 
+passing the appropriate value based on the options the user passed.
 
-A new contributor would probably be quick to learn that every
-`cmd_foo()` entry point is named exactly the same as the subcommand
-name, but they will then eventually trip over the few exceptions like
-`cmd_init_db()` where that assumption doesn't hold.
+enum path_format {
+	PATH_FORMAT_ABSOLUTE,
+	PATH_FORMAT_CANONICAL,
+	PATH_FORMAT_RELATIVE,
+	PATH_FORMAT_RELATIVE_IF_SHARED	PATH_FORMAT_UNMODIFIED,
+};
 
-But I can see that this is not always clear-cut.
+void format_path(struct strbuf *buf, const char *path,
+		 const char *prefix, enum path_format format);
 
-Patrick
+We tend to avoid adding "strbuf_" to the beginning of functions these 
+days when they're adding things to a strbuf. This function also needs 
+some documentation explaining what the arguments are.
+
+Thanks
+
+Phillip
+
