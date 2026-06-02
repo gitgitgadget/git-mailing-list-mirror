@@ -1,62 +1,62 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043683876D0
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 17:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016303F58E5
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 17:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780420248; cv=none; b=iaMYwKJVLi54DbytzN+y4StFrEHdGJASIFXpCTk2Ymsv4L1khn/9TVACoV27GnIwMxU43zeDXLUwuAOwgoHRBGdlKd/65fpGUUmUG9jt5zUlE16getkKxhL4RbHqcMLorBzjrbdjxhp0HQ2WCXYxdsU5wMyU0N6IvCt39+TxxUU=
+	t=1780420250; cv=none; b=tDezVT+3PhkHEfI3JEen/aeGEhYrhertskcWc3HKykH1+NTPW+kTTKE/8JBY0bF+UmWhibDm80tGERa2vSTiUg8lJNGskYLwOiVNYMHx6sPuPvRAZW46NWcpkcVV/sFTpCimzjAX913uVi+o+amrsIvmQE/pxINeeGc3yFW5zug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780420248; c=relaxed/simple;
-	bh=HR+xqHWRE5rj3BiHiXvI8UKDsR593Ww6pa4KcuuUfxs=;
+	s=arc-20240116; t=1780420250; c=relaxed/simple;
+	bh=5KIWUcltrJf9e3rFqPneanZwKO/HHCtaDgLGetU9ZW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jUvHVcD5+dLTAZ3GTKDicRg/xgEmtMWFBRI2ZJic6Qxn+ZzkDrXWki51kPe1/VqORzsYOMK75lJfpWUG042eixn7GTXspDPT/eiMjKFTd40YCz7Or94nnJVbENBHkdiQD8K3WNUZam1gmHR5WXKDtaACn5zCYSkK5byhZGyK4Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oe4UTs29; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:Content-Type; b=ELeFAR5S2y0V5r+id5teVpOMlyohNRJ0BMj97w6j6z9UKsSe6hFkEcCfG2ZbptgaD3ftCDBPNfNxjd4liBltDCo60ZZ0AnsybDJY+liyMTQqu4sqbbJ2DVDpy0g1aJUJcNFDQ+0mn//MCagP0YOS/JsHiYai+PEb+bezNgoYuGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P+njAjeB; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oe4UTs29"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490ace40f4bso26164735e9.3
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 10:10:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+njAjeB"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490b2b037d2so7882835e9.3
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 10:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780420245; x=1781025045; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780420247; x=1781025047; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6prv0E/EHPtym5am2Lk9WhdrkVoL7mzT7PNTuQDEpv8=;
-        b=oe4UTs29iOFCDurUmptJdzYCrkP9aSPaZzwtxEF8yGN1ml/WG1Ybo6P2CIXQQ9nbNI
-         VsS4FdM/zpnNVlOm0A5zRIBMyaVDxO5XoijbsKL/v8ny5KlGiDSGA0UUWlNYSX3X8Smq
-         VVqFtJu4ZPsTGZGbyf75DeCCMbdMY/t9GTdMOraKxsXPXnnlcPsNChNe7yu38DA+kwUu
-         rDYuRLLVCADn+GyyhhNxljUO7026PptcLX00jwJ7k/xaidc2QYp0aJlL0f9tx826Xgd2
-         PArsvEkwYV5ckerA6wZ2joo3uZUOJIMNMzj1BXvvMtmH0qG0qGZMcWzJYsb2oFywHhX7
-         U9zA==
+        bh=x9Ppbw7Mvhw0n+LOtNbpZFhHe2Dg7zlX7Ra36EcUPpo=;
+        b=P+njAjeBkrmpft1nr3uJlebqKuS7MeH9xGuZXpEuJ1U++tPWEAMTFxyREB70zm3ki2
+         hRUmX5iNMIa3M9E8FhDt7JXj+onDSX3iX8uUfCO4IsehW0pp9XkE5bkGGWe4pkheuvnW
+         gFU/7od/4+/VlaXgQN7AqQ7f1GbSwwUsBK7k0zvYf488c2PBQPVJfcnBbRwPq6pE+hw9
+         bklWke+tzdFXEnSThEEOWlVUqBVXsoVTqRhUDw1z7x/uGvu6RMSbHg5r4c4nc3T6Ohsp
+         5LW/bA4SjsoqyKVS8qPnsWIVESCzaME+1YskPYEBirKRTsVC/4hYf3GMMCd4bWOTRMUb
+         A+kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780420245; x=1781025045;
+        d=1e100.net; s=20251104; t=1780420247; x=1781025047;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=6prv0E/EHPtym5am2Lk9WhdrkVoL7mzT7PNTuQDEpv8=;
-        b=bLSpwvdQm/1DJBJHOy+WD1WHzZ0qZ/57dwLcHFL1sBq9ggfe7o1+DxttD9voVw8xZt
-         eLADT1FRadLQHjlkq8E6i0IavKPaNYoeB3HKtRLAvrOg94qVEjGHzn50bbHZbb1QJVBC
-         W/rXfZ0mFzxccXwz7sMMomNIDM5GfQjoJYY0Xj1/p5gQRsJn4NE6tUcw1tXDicncunRx
-         jLWamwEbGZkp0E46ISMkmgFofgkiSV0s+qkxr+SDugIDOW+Sv3TlTz8PPMS5uckgsTs5
-         yi70UW3EqFfNyKI9/4bVdH9yB5bkp9PaTO5YFAdXX4gZKKr53hKQd0z5TA5DEROW+Djo
-         p1aA==
-X-Gm-Message-State: AOJu0YydKWhXpkuiZy20m9QH97btBdNGIbfr53NmiFBBjqoTWYzGhSzA
-	OljnI4xt5FGXQmX1vlKvC3gEE16h1WWgBeh123PFuFFRSQaidQPNujvNaYEnoOdW
-X-Gm-Gg: Acq92OEx0BNXpMlvfeudZbQg+dvEWn+bxbjp1eXewHOchlwnU4dIS6DPY5BCZ1sXGYB
-	0QyAM9bXF7+qyR8DMaHO29JE0WV/W6+hWinDcNJCGN97pjKHLA7jx5qj3c18JLFUkI2ZhP98KEn
-	X+BrTOqM2V4rkaVH1hvqEDTBju9HCYPAV6AMWG1wnm/0rupPnGRTWOyO/VKYU5ADBCoBXf+uJ3l
-	GEqbMWbFXVM+WOC43F+u3KMj3UekntWrSe1oQDLhZy1bM9YiecvohbjBz0Y8F9XDqFCFAo+Rq6/
-	WV2/3DZMEIrbRYpb+0vt/Yl45Mq5TY8ErjmX2oLVcb8ruNcnS8QsmrKUz5ukK4x58o1q4tLurBS
-	O2quj1A4gzaZdYEjYfXbZf9pANdOh3SFlRG12TggZd8v/hO4XTf1D3gjUVh3ZPBNW7eNS54RmIA
-	Xrec94pFUtNBhOSO4F/hVLvczfSB0oUpTw2oS9oytkdr8Qea4UwDJbrEweWCU3vkJF1ZqU/dw=
-X-Received: by 2002:a05:600c:5394:b0:490:548e:b854 with SMTP id 5b1f17b1804b1-490b50a9555mr10500515e9.26.1780420245154;
-        Tue, 02 Jun 2026 10:10:45 -0700 (PDT)
+        bh=x9Ppbw7Mvhw0n+LOtNbpZFhHe2Dg7zlX7Ra36EcUPpo=;
+        b=AlpJJITa8aPSdMGVm8LvKwf8DLvps0AcVGQ9DVky/w5s1GbpfqjPPvzQDz4/ujjqLG
+         vXLxOs+SpDrcbvDtLgPnZj4MJhD2nsVXNlc9GcjyYKUCGApnQpWawobMsRynp+53yiD6
+         7N3V/gwhDoXseEcEQiskxFrnukmssDrnNoqZ36lo1YOaEmZLbqVY4h18EaTWm7rC4N0q
+         e7mcCCMn+XmKbYvjqUxlgqqxtBqeXl25Ql/luU93vmi3E6BgDj2hQQN5BqCKi8dwIwQ5
+         LDe0MCmgWJZwKqlDsDSNf0j6SLZQr5S1LizE9BABSBV3LIGWKE8Itlf75GZlwVThTB4D
+         hn9A==
+X-Gm-Message-State: AOJu0Yx8toNIZoaU9ArZkH/8YgHGrv/ChxACLoTYwlwDE3EbegVJQvQe
+	feZZID3sEbswmhqTuFDYOs8dfbSMF9ZDTlymK+takyMsLOl+XvpCfD+Qx4iqXuaY
+X-Gm-Gg: Acq92OELet28Ka2L+EfQtczkFSfIj8DpoLd41l4Vp9cQRtVAFd6txHmfYiBQRBeqFj1
+	UAZAVXqBIm61G6O908Sx/Hs8ae3sb4w/U51vESx5Qj3fRlAO0HTVf9ORqPSqi011CRRqrVk+A+h
+	05DeUGIA6La8HGb/3luOU1Cm0I410JSAN8G2zgBxVFCEhnS9QZYVwuCa93N3XRnpO2lUtfrc3VB
+	JQgy6owrkM+i/oM/aUKJIRz41BLnZpi/H87O7XNiefnjmTF3LtVPJfVWrUx2jEKji4XCLgwZv6x
+	6NBxBriFThbpz5K6UqcVYfy6y+8vYXlFDpFTW26mokTnDsmQAIlFh++dA9m9DQ5ISfj0b96jW4Q
+	Tx8Z8YKYib71htWwwR7pvG0T5BfhAdclHFAXyUaoOv1MMA/MqQAAaRbeCXM+16LoV8eTqF9ouKP
+	oK7PbWVQhRbWA0HlQiYf5MatLOBeHc1V8J4FW4s258o5ZLJlcL0+27VDlwSUz7TS3mtx/M+Pw=
+X-Received: by 2002:a05:600c:81c5:b0:490:3d62:eb0 with SMTP id 5b1f17b1804b1-490b509a548mr9464185e9.24.1780420247285;
+        Tue, 02 Jun 2026 10:10:47 -0700 (PDT)
 Received: from pop-os.localdomain ([102.91.81.188])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e239f4sm122904265e9.7.2026.06.02.10.10.43
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e239f4sm122904265e9.7.2026.06.02.10.10.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 10:10:44 -0700 (PDT)
+        Tue, 02 Jun 2026 10:10:46 -0700 (PDT)
 From: Olamide Caleb Bello <belkid98@gmail.com>
 To: git@vger.kernel.org
 Cc: phillip.wood123@gmail.com,
@@ -64,12 +64,13 @@ Cc: phillip.wood123@gmail.com,
 	usmanakinyemi202@gmail.com,
 	kaartic.sivaraam@gmail.com,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v5 0/8] repo_config_values: migrate more globals variables
-Date: Tue,  2 Jun 2026 18:09:13 +0100
-Message-ID: <20260602170921.35869-1-belkid98@gmail.com>
+Subject: [PATCH v5 1/8] environment: move "trust_ctime" into `struct repo_config_values`
+Date: Tue,  2 Jun 2026 18:09:14 +0100
+Message-ID: <20260602170921.35869-2-belkid98@gmail.com>
 X-Mailer: git-send-email 2.53.0.155.g9f36b15afa
-In-Reply-To: <20260601154211.82370-1-belkid98@gmail.com>
+In-Reply-To: <20260602170921.35869-1-belkid98@gmail.com>
 References: <20260601154211.82370-1-belkid98@gmail.com>
+ <20260602170921.35869-1-belkid98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,51 +80,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Changes since v4:
+The `core.trustctime` configuration is currently stored in the global
+variable `trust_ctime`, which makes it shared across repository
+instances in a single process.
 
-- environment: move "precomposed_unicode" into `struct repo_config_values`:
-  remove incorrect mention of changing `int` to `bool`
+Store it instead in `repo_config_values`, where eagerly‑parsed
+repository configuration lives. `core.trustctime` is parsed eagerly
+because it is used in low‑level stat‑matching functions
+(`match_stat_data()`), where a lazy parse could cause unexpected
+fatal errors, result in a performance regression and complicate
+libification efforts. This preserves that behavior while tying the
+value to the repository from which it was read, avoiding cross‑repository
+state leakage and continuing the effort to reduce reliance on global
+configuration state.
 
+Update all references to use repo_config_values().
 
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
+---
+ environment.c | 4 ++--
+ environment.h | 2 +-
+ statinfo.c    | 6 ++++--
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-Olamide Caleb Bello (8):
-  environment: move "trust_ctime" into `struct repo_config_values`
-  environment: move "check_stat" into `struct repo_config_values`
-  environment: move `zlib_compression_level` into `struct
-    repo_config_values`
-  environment: move "pack_compression_level" into `struct
-    repo_config_values`
-  environment: move "precomposed_unicode" into `struct
-    repo_config_values`
-  environment: move "core_sparse_checkout_cone" into `struct
-    repo_config_values`
-  environment: move "sparse_expect_files_outside_of_patterns" into
-    `struct repo_config_values`
-  environment: move "warn_on_object_refname_ambiguity" into `struct
-    repo_config_values`
-
- builtin/cat-file.c        |  7 ++++---
- builtin/fast-import.c     |  8 +++++---
- builtin/index-pack.c      |  3 ++-
- builtin/mv.c              |  2 +-
- builtin/pack-objects.c    | 24 +++++++++++++----------
- builtin/sparse-checkout.c | 37 +++++++++++++++++++++---------------
- compat/precompose_utf8.c  | 20 +++++++++++++-------
- diff.c                    |  3 ++-
- dir.c                     |  3 ++-
- entry.c                   |  3 ++-
- environment.c             | 40 +++++++++++++++++++++------------------
- environment.h             | 19 ++++++++++---------
- http-push.c               |  3 ++-
- object-file.c             |  6 ++++--
- object-name.c             |  3 ++-
- revision.c                |  7 ++++---
- sparse-index.c            |  4 ++--
- statinfo.c                | 12 +++++++-----
- submodule.c               |  7 ++++---
- upload-pack.c             |  3 ++-
- 20 files changed, 126 insertions(+), 88 deletions(-)
-
+diff --git a/environment.c b/environment.c
+index fc3ed8bb1c..0a9067729e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -42,7 +42,6 @@ static int pack_compression_seen;
+ static int zlib_compression_seen;
+ 
+ int trust_executable_bit = 1;
+-int trust_ctime = 1;
+ int check_stat = 1;
+ int has_symlinks = 1;
+ int minimum_abbrev = 4, default_abbrev = -1;
+@@ -309,7 +308,7 @@ int git_default_core_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "core.trustctime")) {
+-		trust_ctime = git_config_bool(var, value);
++		cfg->trust_ctime = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "core.checkstat")) {
+@@ -721,4 +720,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
+ 	cfg->attributes_file = NULL;
+ 	cfg->apply_sparse_checkout = 0;
+ 	cfg->branch_track = BRANCH_TRACK_REMOTE;
++	cfg->trust_ctime = 1;
+ }
+diff --git a/environment.h b/environment.h
+index 123a71cdc8..64d537686e 100644
+--- a/environment.h
++++ b/environment.h
+@@ -91,6 +91,7 @@ struct repo_config_values {
+ 	/* section "core" config values */
+ 	char *attributes_file;
+ 	int apply_sparse_checkout;
++	int trust_ctime;
+ 
+ 	/* section "branch" config values */
+ 	enum branch_track branch_track;
+@@ -161,7 +162,6 @@ extern char *git_work_tree_cfg;
+ 
+ /* Environment bits from configuration mechanism */
+ extern int trust_executable_bit;
+-extern int trust_ctime;
+ extern int check_stat;
+ extern int has_symlinks;
+ extern int minimum_abbrev, default_abbrev;
+diff --git a/statinfo.c b/statinfo.c
+index 30a164b0e6..4fc12053f4 100644
+--- a/statinfo.c
++++ b/statinfo.c
+@@ -3,6 +3,7 @@
+ #include "git-compat-util.h"
+ #include "environment.h"
+ #include "statinfo.h"
++#include "repository.h"
+ 
+ /*
+  * Munge st_size into an unsigned int.
+@@ -63,17 +64,18 @@ void fake_lstat_data(const struct stat_data *sd, struct stat *st)
+ int match_stat_data(const struct stat_data *sd, struct stat *st)
+ {
+ 	int changed = 0;
++	struct repo_config_values *cfg = repo_config_values(the_repository);
+ 
+ 	if (sd->sd_mtime.sec != (unsigned int)st->st_mtime)
+ 		changed |= MTIME_CHANGED;
+-	if (trust_ctime && check_stat &&
++	if (cfg->trust_ctime && check_stat &&
+ 	    sd->sd_ctime.sec != (unsigned int)st->st_ctime)
+ 		changed |= CTIME_CHANGED;
+ 
+ #ifdef USE_NSEC
+ 	if (check_stat && sd->sd_mtime.nsec != ST_MTIME_NSEC(*st))
+ 		changed |= MTIME_CHANGED;
+-	if (trust_ctime && check_stat &&
++	if (cfg->trust_ctime && check_stat &&
+ 	    sd->sd_ctime.nsec != ST_CTIME_NSEC(*st))
+ 		changed |= CTIME_CHANGED;
+ #endif
 -- 
 2.53.0.155.g9f36b15afa
 
