@@ -1,127 +1,110 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A656F3CB8E9
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 09:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43C83D2FEC
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 09:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780391295; cv=none; b=kf3Bp393KbEEP73zlZKNBVA18TkwyoNz4XYOU6NnSzK8P/E4/GUVmV66JCR2lPMfcfcpCBwm2OlRA/ET0vFsXf3+gnlP1BvWvj18Yy1MHWw6lcOrrvhSgSexrAd0Z+2lPz72Gpw+e+ofuKseU3kRM4RehjwN5KfZx67v5uAkebc=
+	t=1780391439; cv=none; b=Ou74J9rW6zwDFc9mfmUqYswhDWCvoUFU0mw+zpwLpQwZEu+IkeRkqA+qd85IAkaJ2666DxSfP0RO7c0Y/Oj4xeQ9R+0lK3SrgKEQWLhaKUotNaKOTbmSbK+AGTVk7UFe0jtU7bLsc46z5XKTaQKX2foiO2ljV/v4DvJ4OkVopaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780391295; c=relaxed/simple;
-	bh=pl5d3uA6/adDNvUMl5hBEA92P0Ulpf0sjddxtUpbFmk=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzdO8zAeTDn9QfE1BXaFMd6vFRPJ+6RsKOhHMhhCOqnmGS277Vj1nQqIDyiIhvEUqpjjrW3FHlRs3QoUnhsA8WBmxh8MUkGEjUag+SuHK0e6MT6G2wB84GhbRwIugT+V6nDPQUtWWIPyo/9AKL0dtwl9xDQpizeSVg1NsEahXZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qm0p0WL1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MoYUB8h/; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1780391439; c=relaxed/simple;
+	bh=DR6UVd1dl5oy8PDAkWrZ6jwLR2gSr9FVUPfsFu8ICPs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DxyKmsl8Ih8x41bnXyVYiojiImECmGQaQqRJ3lPnv1tIH5xq57zxqFjAj1B6Lb3HWjHbixEP5oMV2Vh+QjrjnR+oGGA42FzwNlMdusyNI9h81rc2hHodaatQTVfaS3Z/8bPMC2Zdc3uX5Eh6gsn3c2SKYie1yYh18sVod47llA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kFwQpFVZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEH4O+TX; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qm0p0WL1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MoYUB8h/"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kFwQpFVZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEH4O+TX"
 Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id DA823EC06FA;
-	Tue,  2 Jun 2026 05:08:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Tue, 02 Jun 2026 05:08:13 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id E7E7DEC06FF;
+	Tue,  2 Jun 2026 05:10:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 02 Jun 2026 05:10:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1780391293; x=
-	1780477693; bh=84O9/fwTawOdea3ktbATVw2OoPcX0syJNYG0EyYg7Qk=; b=Q
-	m0p0WL1mF+ARgVsyPYXkYBTq3WvT1pu3I2fIAf2HpNDZU0C00ynF4kUOyakX+L5n
-	ocicqCOdXpYkV0FYj6HqfWpDeB+UfQ0HZuN9Pd1JFbZKRgd3PUoIM1b7yVsqTRxW
-	wiLRh4au6NAkap0UEwe1+9NBzcbWv1WLuZHIPqzFljt3MJSjzBz+yNXzgNiYzyx4
-	mAF5AodN0lEMyk6tiDdhtkrZtOUZrs9BBZm3ZZhibgCOcwwINXvHGpdUE1fkcwmo
-	PJygE2P9DG1vkplkyclVqitztq/nldWG8HX/+MDoZErWd81WS72T7ZdTbizVhfeZ
-	vV0K4rvazyGd9fYKSktcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1780391293; x=1780477693; bh=84O9/fwTawOdea3ktbATVw2OoPcX
-	0syJNYG0EyYg7Qk=; b=MoYUB8h/F5GBSuO7I5tabb9uN2fKWGLsNBlUD3qGdfh5
-	jWXuDhpkHaXcNyRVu9p9XI1OCAPHf4mG+4FtoWwMGs/Fm6Box30iFszRCGLpQPaQ
-	6eJ7LfeVAIZqR1jNBNhztHgliXiqQ/i+6BRDHh1iFiIGxT9g/iwlD7GB6NtfdYxm
-	9XO4J5556dfAQZSrWUTosis+jmZ/k7G63szYxELUImzvNzhBFQmoNx8vMXcr8XHl
-	4C/T26Ub3RxLKs3Ku8RPv+1TYfn0YtgzAFBRqug2UYkqqyJJocPiZzov2S4JVTCi
-	LdY0HZQ0zHGZuZHM1MjBs3eW8iB8+REH8MZ0ykJS/w==
-X-ME-Sender: <xms:fZ0eaqCFesEpNq-33KFHUntzd5mJM9YuBaupjgjF8MoELLLKAj1g8A>
-    <xme:fZ0eaqhETD2pNPGCRpvYF9G1sQ59fFQ5ivPi2AjT4OataeteJm2OwNVqDo2DGhKbb
-    nrc75940dpi7MUq9Hn58afM0OKxMKfx6CP4MAu0yzzio2DITEpT>
-X-ME-Received: <xmr:fZ0earMhUc6dtwwKzSx1LNp91_846sUwLhlh_9-DVCanSdqa87_Ik-n6XijQyVHC1cOJ0blzf4qWAfiMx-_Oxf78QRueCaykLQVv>
-X-ME-Proxy-Cause: dmFkZTEpe36oI+Cbp1T0TkrUjSRW/33NwbAOzOtRozTWOC2noerVlft8G+xb2CMkO5mgJN
-    1kqAiuQxacqefNwOID1ILUmni3IJyw0b2xdiGB+GWds3hyzRmnyP+tZaLF6N/TK55TURRb
-    4s+BZgZSUwFRKgT+j3sxZtO1KvSPXQZzPiboyeVi0vm56qKWNFJz9jTAJTok9hrxG8jxl5
-    +EmimNhtsOrQO7MMcOKwXgdVmVPyhZB9WXJ3i0AWag9M6r6bLLuSYpgsBzSTEplg8KCxhC
-    aSBvn/FBr1rFEfRk9T2IbirQhMCU6vRSo8yLR7RRdTcKH1DVV2iEH20j/4Jlfr3/o7gAas
-    DkfyWRbZp5jGzNBPZXO/CseYEWKaRZPQAJYMALVIzdHmVqWbBhAGy+0ttK7N1husa0DZvf
-    awBLB7MVh0EySuOdKq0mNRxp1YNEapqCj5fayUKUlB7c1YUP5MIs7CN3czzem9ivkONTUU
-    att4c66yAnPYT4TzsMk1BDR1BpOcJ22O0xH+CNlRqsuS749lidaO77VKnLPTblLzBZjDiJ
-    Ra5ZgNvBRqdqaU1Pg/uWD4BSkb092yLmBJJHAcRkjNV1KXwpTC7o+U2PP30pwBqok16tFw
-    tYXTN44Ubngb62WQ4XyF9NlKX9XGyHeNLLm9lnxDNGNaik5abya8WRtZbV7Q
-X-ME-Proxy: <xmx:fZ0eaj50sC8m8sRd0VQm1ZWUVWMBs063O6POjolNqQTBaQXwUTjHfw>
-    <xmx:fZ0eah2wf63V0nX-XOary72k5q09ADkfEezJWZ5GqbUIvY4VsMv4qQ>
-    <xmx:fZ0easb167URXDHbOY431ZMqT-7srnGs6flefy29tCIXHIoEn7nMOA>
-    <xmx:fZ0eahA8ZJYCCxcYoOgatho1VtwvNp4zI4gq2vBenn6LBjyRmMWebQ>
-    <xmx:fZ0eatbjoqzc-CWrdqZsBfnJq98XgJIudOtLeuE97sFpW1g75psDmBAm>
+	:subject:to:to; s=fm3; t=1780391436; x=1780477836; bh=JRznLrjyT8
+	nX6ROnpT/kGsxO01YP1WpM5RIEKOhMFNs=; b=kFwQpFVZPDXwP6h8PgNico//DN
+	MQOciY5rjktY1AyFKgAoP/Z0osx76nprgQypNZR/bgn+pO5KpW2Z1w+AtE0O9Ot3
+	3m5zoerNA02n0wWS/sOlyiEj8VtiMvMZhK8+rRauT/e3p4zOxyx9SGeWn0csOJXD
+	stfNQPfdwgHCBorlIz92jdqAkW9C77Kt7urDLhdBVEgu4CK9mgkeAsQpfCb3WRIs
+	MJ4jT9eXXmcxEJMJdpARy7vrHYdpTyCAyf0GupK9mQ0axp+0tc4KQAT9tAbOnf2Y
+	nYZEld0Ufrr6Qf+xILYsWSlBZhUHI/ujXGMuzLdo7J/1VAsU6X17AAQIFqAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780391436; x=1780477836; bh=JRznLrjyT8nX6ROnpT/kGsxO01YP1WpM5RI
+	EKOhMFNs=; b=LEH4O+TXc+luGvC6OprGCzUd27ShlvNXr7LhJrZZBNWP/gTD/IU
+	6i3BS+84otfGUi44+5/KWMNWFWfjM7dKUfr9qPMD7VfD2uNok/KEPTCIEsUNbGPx
+	i8F42G0+RdMWy2odqc5ejICl0BJbOzTLRKNtPP7ypRbom7lRH/s/fFMuDeIpt8rY
+	vM1wARmaBaRXyZTqKSVOHK3LHY1zHKQndc+ILW6l5h95z21knLYCmmX7aqarrLiu
+	2YUdnYybKEkCtn+415v4/lxJpullCZPmuC/gZxL1w9wPlzttpjFLMCk+rpirYO0B
+	AVsr86Sevro94I7jFTyqIZYD4+ibXqkNfmA==
+X-ME-Sender: <xms:DJ4eaqvIEaKsMWdSiedNLS4_Dhk0bHb6LSoKGs_saofezZZ7yTDTHg>
+    <xme:DJ4eam4KUvXi4HX5_heSqjqkvJWMX6cl3nhAFIgX3FUrTa8BCc-7WLJf_rsTyBCYz
+    8LT-gEyWtiqq-rHMd5nl8UEDQQaLZ-JN4WgOFsmldT5g8k-Kv7e_g>
+X-ME-Received: <xmr:DJ4eajJNM1-ZJA8-1B-i66t3RPeNlxIXsknSu0cG4jNjqK71XV0KtxBc8XneVUChoccjuUWjN65aTOtZXDgDLDIqStmUXkMciWES>
+X-ME-Proxy-Cause: dmFkZTFPxWD2g8O5j35/dfa4sBmJgOCCAzI0Jx1A/imeQgfJi0tuTzPezPpEopjnhCmMdw
+    aOUu1WHoTeXqMRAGPgnfEKwX56E/uVOsabnJIZlM7KDrl1P2CRWUsVxI8XM/5b0ygW+265
+    LEHSBcEX1W4wtO7sc1rJpmG6b6fDHjX8GQf6EfTq3O6ptRp6+SrN/XSQ1iRbHGwWhAVftz
+    z6fnM1pFL+o3HTttKYEn6HSQIgn5Rz03UFmjkPpJKKd+IL805p+JqGKrqpG5REEONrX9kW
+    X6cM8R5LfPD3L2F/oePRHyhLvEsbtq5npINUPO8woXxGczlIGdnAqTd/lt6oezG/ZT1nM6
+    ss48J5g03jv/zpVfj/wOXwSA4LKeHjhADeaoSVjRr8LFQdQUAXTavGkZitqTyZch9eHCCc
+    SYOIchgDwYdpGRrqvEO88cuh1SYt2fR168nZdCNjXS1mol/14SJVKcuGmzq/arl4CuWLTx
+    XiwF2n4oiqFFwRM5GHt2eBr5mzyCPfQ1b6ghtguk+0pvOsJ3A5sO+VgwK2gEwlWL7288JU
+    sfYY0y3FZrL7D+SRPbXVCRYlakuDOlB+pVxFQBymUceC5KNef0h8YRQrUXlduqf8CMjG43
+    1w8xuBxX5Z5WbU0DLkOG61dUZe62piVlr+4+vGHpuk4Ea7fgYL1+mRg9jEVA
+X-ME-Proxy: <xmx:DJ4eau5NFQ8DjWeF7xq3ouwr35HJpAxNhYbSMwwKhjMjAyViPzeXEg>
+    <xmx:DJ4eaux93zX84CdUCGpKTRiJWQWk9aQQPWAoXgOYfH83cTEGvh7rMg>
+    <xmx:DJ4eaqYmbIO-S1YpBQwMgxRcsAQKhK1D4ChdmEDBYTTVduigs0fVSQ>
+    <xmx:DJ4eaoSioCISnqDvZTn8wuE-lw6qemn3FV3c33_0INKQrKAHg-vZLw>
+    <xmx:DJ4earmN0VtiyJlWj9wXcD3vM_3O8jd3DVUOnHKuU5Tmr6E2Oc3rIXF0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 05:08:13 -0400 (EDT)
+ 2 Jun 2026 05:10:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 2/2] SubmittingPatches: describe cover letter
-Date: Tue,  2 Jun 2026 18:08:08 +0900
-Message-ID: <20260602090808.87837-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.54.0-567-gf25c749695
-In-Reply-To: <20260602090808.87837-1-gitster@pobox.com>
-References: <20260602090808.87837-1-gitster@pobox.com>
+To: Luna Schwalbe <dev@luna.gl>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] doc: document and test `@` prefix for raw timestamps
+In-Reply-To: <2194e42a-5c41-44e1-ba36-1599cbd41415@luna.gl> (Luna Schwalbe's
+	message of "Tue, 2 Jun 2026 10:15:15 +0200")
+References: <20260601213944.645731-2-dev@luna.gl> <xmqqfr35zt6h.fsf@gitster.g>
+	<2194e42a-5c41-44e1-ba36-1599cbd41415@luna.gl>
+Date: Tue, 02 Jun 2026 18:10:35 +0900
+Message-ID: <xmqqqzmpxq7o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-We talk about how a commit log message should look like, but do not
-give advice on writing the cover letter to sell a series to widest
-possible audience.
+Luna Schwalbe <dev@luna.gl> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/SubmittingPatches | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+>  > Does this "additional paragraph" format correctly, instead of
+>  > rendered as a literal block (typically typeset in typewriter font,
+>  > monospace)?  Don't you need to do something like what is done for
+>  > "ISO 8601::" that appears later in the same file?  I.e. lose the
+>  > four-space indent and replace the blank line before it with a single
+>  > '+' list continuation operator?
+>
+> Terribly sorry, you're right of course, I somehow forgot to actually 
+> build and check the docs. Will send an updated patch right away.
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index dec8aea4cb..8ff1792b9b 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -472,6 +472,25 @@ highlighted above.
- Only capitalize the very first letter of the trailer, i.e. favor
- "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
- 
-+[[cover-letter]]
-+=== Cover Letter
-+
-+The purpose of your cover letter is to sell your changes, explain what
-+they are about, and get your target audience interested enough to read
-+the patches.
-+
-+. Make sure your target audience can understand what the patches are
-+  about and why they are needed without prior context.
-+
-+. For a second or subsequent iteration of the same topic, make sure
-+  people who missed the earlier discussion can still understand what
-+  the patches are about, so they can judge if the topic is worth their
-+  time to read and comment on.
-+
-+. To help those who are familiar with earlier iterations, give a
-+  summary of changes since the previous rounds.
-+
-+
- [[ai]]
- === Use of Artificial Intelligence (AI)
- 
--- 
-2.54.0-567-gf25c749695
+No need to be sorry---we all make mistakes.
 
+> As far as I can tell the rule is technically not necessary at all (apart 
+> from some unusual approxidate interpretations like the `2000 +0000` 
+> example, which I honestly think are more confusing than useful), seeing 
+> that YYYYMMDD isn't a supported format anywhere.
+
+Sounds good.  In any case, that is totally outside the scope of this
+patch.
+
+Thanks.
