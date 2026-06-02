@@ -1,107 +1,86 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB063546D0
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 09:32:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4050E3D16F0
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 09:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780392780; cv=none; b=ctCvAgKmHr7XIeYjCO8Xnc8MVKhWl0mEvMYFqFYoEiaTtrtxJMGX4gU5lZolRXq1WqjQob/j7iOc3YugUnUPfMV4tIhUuZT/VMNXbO2VyJ+/rojhhDTNPrxL5GnRVW2nGnqHEZ+Lkj5vVHHYV7XJ5mLBI4agvKT4lAuHNpR5vfA=
+	t=1780393273; cv=none; b=bWZjFIa8jzJ0HcL9mQ9XEi6djHWoR/jGf5StKXfBOfRPb0oQ/sK23mViWAz4YtCuy87RNpbXycoyv9GV3QBSSNBZJOaedYU1dqEJn7i8s9uueysM0sF6T3Pwp4SgdbCdhyTgLt5cxSjGNIgU6r0eYfSlyQkDGcbbwNwXMkoelnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780392780; c=relaxed/simple;
-	bh=p7fsNA8VxbLBKA75YRs891mQaZC+U+xDKjta/5J4Eto=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kJCUMw1tNVQk5kUk4J73dsBCo+sTzPrPKIdRgHfPq3MC19gRZDHv6EXdJwWn2oHujflk1vRc+VIGaC2uK+BSx2G3vc6F82zj/9qLj0EE5iT3S7MrII3T3KCo8ih+0Ai+PR8dtmkewYset+znkAuPPT12fBdJXrhs/vRezx0vahE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=APWIuhoK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fxj090zY; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780393273; c=relaxed/simple;
+	bh=YeOgkMEm69K7V5KIxPm2cUVbbooWkNWuXUV7v8ZodBk=;
+	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
+	 In-Reply-To:References; b=dn6Ty0L/TPsOozRSVLuTUdRBCcIODHusgI0ti3+pon8LB2kPsFNsuhubk05Eud9+5NVy62dOgL7oKykG3kLBR6w/A7bGrZ2yxQ3XiGw6VyUC3E3v8mrjP+hPD501+3y7pSMUfPbVJgzM4McsiNsJC7dQ7zooViSdy7Ck4zN6V5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=dK0ZoZIM; arc=none smtp.client-ip=93.93.131.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="APWIuhoK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fxj090zY"
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 10CB6EC0215;
-	Tue,  2 Jun 2026 05:32:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Tue, 02 Jun 2026 05:32:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780392777; x=1780479177; bh=H7TB7ABetw
-	ytN2admxZY2nylyjEMybqj4SeIBKcXNQ4=; b=APWIuhoKdfpbHiG+XnHrmVFa4i
-	OmNke7UeQ6IfnFY7g/gH/rTa4lklrgu12TO/XeaE00DMvxBL+jLFHf7IF3sJG87Z
-	+HD0xwbSVx78Q5cpGhjj9T3mfoNp+cEYMw+76r+5LMFklEySP9bYajMliCizyzX9
-	BToC2L1jQNLI+z/TXSZJJaLr8b4MqWRzpuBHhYsym/+i1pnKHuTytAmTZQ5YrOKD
-	3klb5y9KS1GO16SEv47HQEKnqcBENmAUfuB8BEv5MQaQSG3CL6n54MrWmwjeu7mP
-	Vh+T+TjA0ZVXc890sLli0yJWj5OycyMM1sOhlwhNtQterIKMyLNAJX8j8ShQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780392777; x=1780479177; bh=H7TB7ABetwytN2admxZY2nylyjEMybqj4Se
-	IBKcXNQ4=; b=fxj090zY16GDvkkpFazzaDp8QbM3hzxOptUfMwgbnwyvkjYPiYr
-	5kKhIig54SVgqvVAEK6yhp7qM8jEtPnGJS8BSZlQh7gnSX+jBzLPqCWvFmcHVCFn
-	0ZfLVEOXiuBYYqoEUyyZ+WuRl5LSEvu+21o1T7pdt1GFZoFBw9QttLeLJKLrG4w1
-	jPLw0qSWA5ZCuOcrrCDexE2YNs3Bv43lfuZLQTVAMxslHf5nYQ7OZEJWe3oUbn7o
-	iP3UaaT90u7iO33FoVd1v6xqtKeVv7HrQumbFgMz/D6zjioxBL7AIbHQu8IsnOne
-	6glSakOvzezJ7YhrKQP1ymotKE0ysIRCbRg==
-X-ME-Sender: <xms:SKMeauEhpMsOM0PeP9ayl5jwQfn0VnrdweK38VcD-WBK0k-QwAF6_Q>
-    <xme:SKMeamyKkDYCk-4wAi6dWamsxdg4E2f6bR825rJkvrbGeb0tKfZvqgHa302gLxTpj
-    DZzc0QGefL1c9ENitYA7AJPN_joeKAIkxmiv3MExW2iHRbGv0V4>
-X-ME-Received: <xmr:SKMealgA9o9-bwfqWqx7Uar_08xbmAKs-y0rFhac7gocR86K-ZJmSQvMcxagcNl7TzMh9Kl-PETErHlQEyM4U-EkuHGQZe7GkNY8>
-X-ME-Proxy-Cause: dmFkZTFG5iwnH7/3r5rhm8ZJsTS3GIh6MCzlRPo4wBzjyGgdvnUJixrPxCbVbcZ9dBN5t6
-    XoSiW18u4Pji9SlxxuKzPoqjuS522CTL2QXAyoCy77Om8VEjAlJcWjxrXNpzhEkavCk59x
-    dZ7d0KcGgNVsk2p6p811ErRWo3sWB+VM8r6SCD9Pb7L3ySkQv6dnpMxX1TgLo7Qyobkl1b
-    ulRMSk5FgjanpmhTnKsuAzTYbXzsVidKSC2IyN+Zh0+RtbIRl2Ce6LaNjWgeaLexU3MUMq
-    gjwA8zd6Sb6AsKjcdMRn19g0lI95kISUVAIl8M+ulfxVaU+luwldHniFZJRGxiyOFeuQOJ
-    kjQsYwqU4swPkbBdkOd5ussOi1tJB7qCZj8FEHjnRgQVhHa6V6lS/YLbkJCZ566aMXmjMU
-    72vwzdm5ht0dcSVtjSYvkhiJ+ueLk4/FPpsrMg99IgHj30bPQKMQ7L72YTkePo3zb97t7j
-    vl99YoDZ7Ds26YZqqRIW677f4H5ahbGYnn1jMgsnkGrkmx1kM4ZnZXqS+79tuniqoiXOt3
-    UuBCZQgUNNRzuzAcrsWnzouJ0tWSMUiiYH9ExAHUIS4IG3A9smsSbRUVeLtOivXrso3wOb
-    sCahOGAJ49dS3pomxl4DdGz/K+EttSTnOUYb12zmP8gcDLzUAld/0UlwsZbQ
-X-ME-Proxy: <xmx:SKMeahy599mbuO_hQ3ClelQqOYd7fwvVHDw5pAzaehVtkU5guzW9wA>
-    <xmx:SKMeaoJ0-rYK3YJJHxSd41LNRM1GPMbdL96vlPzYmAEBsOLaSUC7-w>
-    <xmx:SKMeaoTouRuffrmUOmre0UEWAUinPkWxLNERuP1rUoRB2GqLlZdOdg>
-    <xmx:SKMeagqikRQkznAFThqBFLDQGkZ6ToPd6hXcu_mjrDfSjkOPzVr_Gg>
-    <xmx:SaMealHXWYNFP_lDCbAfJFjKqoghX8_95PHJycMPBnj0NKmHuVfs0m9j>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 05:32:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] t/lib-git-p4: silence output when killing p4d and
- its watchdog
-In-Reply-To: <20260602-pks-t7527-fix-tap-output-v1-3-db3da2a1b137@pks.im>
-	(Patrick Steinhardt's message of "Tue, 02 Jun 2026 10:54:29 +0200")
-References: <20260602-pks-t7527-fix-tap-output-v1-0-db3da2a1b137@pks.im>
-	<20260602-pks-t7527-fix-tap-output-v1-3-db3da2a1b137@pks.im>
-Date: Tue, 02 Jun 2026 18:32:55 +0900
-Message-ID: <xmqqecipxp6g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="dK0ZoZIM"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=chiark.greenend.org.uk; s=j.chiark; h=DKIM-Signature-Warning:References:
+	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
+	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=p8Jg4T+PoOrUpZ71N5Cs9+uJbsFKVO+MGBetFw7hZYw=; b=dK0ZoZIMqdJ7
+	RTdFVz8JgGi1g0M4hM8s7kvwrLN8mDJs3Q6ENtYT8UYZ4zQU8bEe1BxNef9KIIZCOCfVHhq1GqypK
+	nGVTFNTebeyg4lgMwjCtO9gQzQpOOScS6HQDNkHWWTesczdLoJo4fVzLL+S2fLrjoq1DOpOMsVv4V
+	jdhzn+pHj9uNMhjignsK+mWqOd+cksfdgngS2PNcGfDk79PupmxRn3wCvIU8NX74z/6K5QtGSMNWh
+	nMDyeOEcJMtL/XwERXMLnlV4E9esH/VJrOZS5wyM51n0CXcrjIPjbkHb/luB1fFVOsBUACduJJqR3
+	3CVMfYgnghpAYvGLlBJT6w==;
+Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
+	(return-path ijackson@chiark.greenend.org.uk)
+	id 1wUL4h-0005t7-3h; Tue, 02 Jun 2026 10:06:15 +0100
+From: Ian Jackson <ijackson@chiark.greenend.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-ID: <27166.40199.68450.953526@chiark.greenend.org.uk>
+Date: Tue, 2 Jun 2026 10:06:15 +0100
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Colin Stagner <ask+git@howdoi.land>,
+    git@vger.kernel.org,
+    Christian Heusel <christian@heusel.eu>,
+    george@mail.dietrich.pub,
+    Christian Hesse <list@eworm.de>,
+    Phillip Wood  <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
+In-Reply-To: <xmqqv7c13o5l.fsf@gitster.g>
+References: <20260215201748.889866-1-ask+git@howdoi.land>
+	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
+	<27104.58166.993109.63505@chiark.greenend.org.uk>
+	<a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
+	<xmqqv7c13o5l.fsf@gitster.g>
+X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
+DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/3a/3a90fe06810c445bcd1187f286aaae43.pem
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano writes ("Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split"):
+> So after this message the thread went dark (except for a side
+> discussion about rewriting subtree in Rust, which I do think it is a
+> good direction to go in the longer term).
 
->  stop_p4d_and_watchdog () {
->  	kill -9 $p4d_pid $watchdog_pid
-> +	wait $p4d $watchdog_pid 2>/dev/null
->  }
+I'm indeed still working on this.  Given other things on my plate it
+will be months rather than weeks before I have anything anyone one
+might want to use.
 
-Shoudln't we be waiting on $p4d_pid (not $p4d)...
+> While I do agree that avoiding bash-isms in the main part of Git and
+> sticking to vanilla POSIX has merit, this particular one seems more
+> like an artificial limit imposed by dash than sticking to the POSIX
+> as the common denoninator, at least to me.
 
-> @@ -175,7 +176,7 @@ retry_until_success () {
->  
->  stop_and_cleanup_p4d () {
->  	kill -9 $p4d_pid $watchdog_pid
-> -	wait $p4d_pid
-> +	wait $p4d_pid $watchdog_pid 2>/dev/null
->  	rm -rf "$db" "$cli" "$pidfile"
->  }
+I would be in favour of switching to bash, making bash a dependency
+for this script.  We could use the env trick to support platforms that
+don't have it in /bin.
 
-... like we do here?
+Ian.
+
+-- 
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
+
+Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
+that is a private address which bypasses my fierce spamfilter.
