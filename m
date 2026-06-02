@@ -1,138 +1,138 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56D03B530D
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 07:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C645369981
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 07:42:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780385884; cv=none; b=EWQP5YwzmeuJDMSbXD+ubisBBbD9syUKtvr/0FTxCXkH+6VIBov5l3dZV4PMuZ2/9cgXN8ZPEwMfX09H+RQijSXDiMeYehPYo0S2//OXhNcHobYkzitQ7vCrz2wNXE/6Icm65nMFHEYl1l+pj0qQ5VRvLFkWbphzZhjhvTGLwug=
+	t=1780386140; cv=none; b=J+x4xt76d5wSH48FL2t8qLDCTplmllVbZGz7rdHbUntSy2crFzzVwvmCnYcC0JRL132+5OEfoSAC5fZVxh9996+v0hzl0x0w2LfQLZ8rmWrewdIQazWProGaqPQMr2Ml6k1jP0cG+6biwmAY9m0VpCgqJQ+ViM54InIG2SgbKiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780385884; c=relaxed/simple;
-	bh=kPbjtEkPM+CaU8EITxzWN81WEXqT+P7Jy86h3bkPEmc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nIosJeCYygkoBBVD8MGAVJeBwUfKHxSnrqlQ3d58KW2YmQvaEWB+PNTBHktecRvH982p/AD1mrVAVqoaanxogJoFDaAMkvmqvxhTCPa6/V+dgfrRdCy41rrOmgy8r1p+t/a/QMZIciYcySE3Z09Zn35iP1w+CCN70Aeg9YDxCy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=adRs7G73; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780386140; c=relaxed/simple;
+	bh=MjCLCAFpHytZ6hzysdw2vVszHebWxgw1EWqFxQzNNrg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A0S2hEYA1n2LOnR59j6B1pSGTbCuYNMFe1Tg8LF4uYV0PLl8qTlzQmrGiUp8BWQXaq1jSQBvGBr0ofZR8XZpPwNXq1I4rvei7Cyp5tIaD0u3Qy5ZYvtAkU7cBIsTni8o5km+E0ISs/U/SK2xJQifhx+uJ6f6Tq6ESvijIrZYKYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QjA3nIpm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aBDGn/B5; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="adRs7G73"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-915660e5b8eso204776285a.3
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 00:38:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780385879; x=1780990679; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wYtaVDUl9C42lq9HGvoiBz1XrBStvEDnRc0BWbVuy0Q=;
-        b=adRs7G73D7R7N6s6iBHNstu+Pzvih2MUKe+VG3ciq+0Lg5HefmX5zdjGmZ5zUcoeZ9
-         GKWrDsUOnZkznbz6vhYbmAxTDHg5KtHZBPFye2r7mSGct4kc3LpdosTF0mQJ86pl4TML
-         SG+xuMiQikAISfD/1MVTOUASo2A1WPmmt6W/CcKmh/vshpC1GwRodTVwQQ7nQVU7FtTx
-         s5UpIdCBfOM55pXHoVUYRS9zYPN+bR63AWZQQtXPziclKRbYLyXKvDq1vA//MHu4kmdF
-         8hgsmckW2bG4VqTLbUbrINvbKn3Ln114n9xpII4PfwJRgohFjEW9H8WFkySboOqv4LBw
-         qZPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780385879; x=1780990679;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=wYtaVDUl9C42lq9HGvoiBz1XrBStvEDnRc0BWbVuy0Q=;
-        b=rKZR3t+3R2aCeWV9Vo8jvm0czzGiozzMa1CEMu1KvS6zsIVc9xI5d8jNnr9TUuz9b4
-         xTXf1h8deytdS5EM/cGaze3LAbQZPzVom+xNxwRS7PdYu7qqexUrNfQ/+589ArbYSNwE
-         0nkGE8y+a8xTFkpf2Aikv/Hxl1ERrHDvX4MCaVCJ7eXrvtSsm11s7eXzhxxKQ4KU1bmD
-         xatSwdmOX0f6lzPF7mWrsvWqIQgeE3weo1BjU2pW9CwvmEaUMLHRzwKzjAHircAbHcSi
-         peymVLP338bRTX92YMq+ZsXf3oAZpkUeL/SAjQWXO4yokZ71esFx3MGy9q1heC/F0YnA
-         Uo8A==
-X-Gm-Message-State: AOJu0Yw+rJBNcHK13aicI29IYRWv0RQYyE4wtAroS5K75lcJZi6R/vmO
-	z36OfvmFWPQsKG1EhCMoYGPXLrzLy48e57HtfS17I1tOE9bWYM1aF632PygPgg==
-X-Gm-Gg: Acq92OGq3+y72uosdNIloa/YN+0bbfqp2MQE5sL35iO++5l+kC7Dc6Nsono1hpdYZN5
-	c7Ob2WwNil8FWCFjRgkMMO72SVROVypfw4yWJjsqQtdAhK/iKk269vlKfzNGJ6E/NtvLPKjAbrA
-	uKhsV5GKQAcLgv6pTl1fvHCK+Fc3e1Wc2ZbHIaAs3c+4JDRJ3qEiclkJtxUOiXVCgsOMW9Fc17P
-	kCPEB0YYRd9k0pRL262hAh8pvz6E5E/8c4xk6x66kZ2bsIFnRbrmr/cR/WKtUaYHWBNxwzKyjXh
-	nlxGEuOjeEOGc4RAjyVyAvHEx3WYsTHdjBLgcbnX0yTWCKjXce1+yCYA+aakOQ1kqvSfsTTg5Sa
-	kjgOgY9r36YKR6hXrJoIussjAD2OAU/aq3wNiIoFt2JeA4OQc7Lxy4wmrYVsqVH7yyv8PxUJEYg
-	Y+V5hgR1zzcyVbtAv/B+QkLmvpA4FoDwJ4NL29yRU=
-X-Received: by 2002:a05:620a:284b:b0:915:7e22:6f2e with SMTP id af79cd13be357-9157e2279b1mr138570685a.24.1780385879561;
-        Tue, 02 Jun 2026 00:37:59 -0700 (PDT)
-Received: from [127.0.0.1] ([172.203.207.247])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9153244e114sm1255426085a.5.2026.06.02.00.37.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 00:37:59 -0700 (PDT)
-Message-Id: <pull.2313.v3.git.git.1780385878555.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2313.v2.git.git.1780065163866.gitgitgadget@gmail.com>
-References: <pull.2313.v2.git.git.1780065163866.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 02 Jun 2026 07:37:58 +0000
-Subject: [PATCH v3] config.mak.uname: avoid macOS linker warning on Xcode
- 16.3+
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QjA3nIpm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aBDGn/B5"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 31B4F140014F;
+	Tue,  2 Jun 2026 03:42:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 02 Jun 2026 03:42:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780386137; x=1780472537; bh=m6PVFkOb7c
+	r9htso/g2hnqpZeXUDhDGOHHrhLd4g03s=; b=QjA3nIpm0rKWZXkE9kJDSNhAUr
+	DjvLGWzOyn5JnbX0Qm6LtyRBKtk6h0ieaoA3IVUK9kPLeuSjtRXXnb6/qRrUbhLd
+	q3BRDQ7imregDwwkgK6N5KLHdkgM9WGt+t/a3yXr7cz2jl5oSsrGFbfHQlbKwET2
+	XAJq6dGtt9q4Xz9JiqWmSXP8hFtYw3Yy48mVEkrO/7MCFqunEGZBpa9Dl0Wb0JOB
+	geRpL5XK+lkTr94k04RRxLxIkxpiRjRp1Yj9C6Eb99qN6sR2GEShzouGA+gVg/Zc
+	xXFtXMa34faDvOSZVioWHieSVZ1ObWmweW3v3oKfAXA/q5raQhyxH1V+Rbug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780386137; x=1780472537; bh=m6PVFkOb7cr9htso/g2hnqpZeXUDhDGOHHr
+	hLd4g03s=; b=aBDGn/B5JxSWMI+VRnc+OwmV3XdDNg0r9UIV8qAqUX3NZS+1m/0
+	k7doRWzcBJgC4gg3Po9xvG7//4c8TeZO0+vmRq3z4DbwVC0LhWOnVe/Pz7jQESM+
+	BrBRjiri+nitjK9hHBAZkxKuvNx60vmqhy/NpBagjzbbi1eUB79rHZDBjxQuAT2j
+	IgXLnN9F0AKhBkndWHh/oOqOiMgQ8zFm8s984tnzG6N81wJ5eORKVkx1nNY48Zkx
+	PcuhjyWn8Jm5d1EqNTttgM+wDdsxcaRwfcDIfV/v2fJmF+aDJg5pcdGNvWNf0usN
+	VW3DqYlmrkRyUEA098c8Y2/Xljs5Jizn1Uw==
+X-ME-Sender: <xms:WYkeajOqwXa-PkI8nRG9MaF9XxsDKT9Jnr8H3JJE-X7dpkikJ79vNg>
+    <xme:WYkeak8KkhORjy4qE-J0pa10NsjslD3g8Kl0MpPTIjGuGK6MCN7VmbKfirNJGRMXg
+    Fgob-l5BWgzmFVpGGr9Ha9RgyEedPEEchoMr8QEFVTLgIC_duJTLA>
+X-ME-Received: <xmr:WYkeanRrL_sMT843jtBTza19FoGf8vz01u-Eh37tQfBvAXUCQ2hdzemlSC_nU19pIKR8CjrCKVsYAP5aHRAODX_JUZGqnwGPDd0->
+X-ME-Proxy-Cause: dmFkZTFg0Wou2h5eAgjORepHtGTu0eOAqsKGv0KxyNYIjJ4vO7f45iM7ID+XNqsasxqtRq
+    dQEvW73omD8S3QF9sM/t5x2fsE90kNzgP3lDoPD1qeSzrZJRD3/V91JSWLzZfs12arM/OM
+    qQX7g5XCSo0qtBiHTXG7zF1/4/zjL3g+qTlNFhoX/6A2lbVsmMFdTpb8/cb7yX90h66wQJ
+    naCyPME2LyDR4dCBKhlmzGNP8YB0sSQuSXQQwcrcuTB8fyQI/5d+WdBRfAuiPunEqJdmjz
+    hSF8y3Unjl44gMzhRMWHqUZvJRl4BDUSAyz538fDM2kyb9mVCBoPaMbZrauv0VIE4b9Lnv
+    hki93GMLvwSjf5j8O8SOMhApDUGY3FhFpFNRgAAD07+IV7g0FPl+9kJkfZAnYPPbdRqMPM
+    CSRHBNmQVYO1OT21uO16KX+m207j62iLEwZhXtKCSX9vhuIsoQ9tL3UbyJywios2Oye5HT
+    h/rAwe5tCq5P4Nbh72gjtwf6PdLiK+yCvvQQOEqRsLWYlU5jyGoSSotp98lFJu3ZcVGAs+
+    2GYczVe+b1eMESVceEFIKC146K6Kr99IAKVp0yJTD3DO7CVz5dNZE27RCXt6+2735opUqN
+    J374q4HHyjPtHG/MYCIm9EWXS15QwLie5UgpyW2Wfh/U16tJdQ36Vr/2g5wA
+X-ME-Proxy: <xmx:WYkeamkGyw1GJFdjhAP7-TJSl4_UY6bizb6Cyerxi_NNxsbZ9VsnjA>
+    <xmx:WYkeanRGQeuCAUVZMI9_BQo1JZSH0VDDA54vQ_H6l7iyezDbeh7zxw>
+    <xmx:WYkeakOFnalJFYDef3UBZyghF_KZJwNEQUmfc8j5zj237BShKwhIWQ>
+    <xmx:WYkeagUDeznYKLMkZ2giCm4cs07eVlhOdE1g02CknOQlH35KLw9dUg>
+    <xmx:WYkeasSL6Fze9fvAksIwjAgcCDWUDHA5WHKdctOHN36VFZ7hbuOo0xdm>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Jun 2026 03:42:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Tian Yuchen <cat@malon.dev>
+Subject: Re: [PATCH] read_gitfile_gently(): return non-repo path on error
+In-Reply-To: <20260602061159.GA693928@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 2 Jun 2026 02:11:59 -0400")
+References: <20260602061159.GA693928@coredump.intra.peff.net>
+Date: Tue, 02 Jun 2026 16:42:15 +0900
+Message-ID: <xmqq4ijlz8vc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-Building on macOS with Xcode 16.3 or newer emits:
+> I've tried to make the minimally-invasive fix here:
+>
+>   1. We only copy the string when we hit READ_GITFILE_ERR_NOT_A_REPO,
+>      so other error codes don't have to worry about freeing it.
+>
+>   2. We'll turn read_gitfile_gently() into a wrapper which passes NULL
+>      by default, leaving other callers unaffected.
 
-    ld: warning: reducing alignment of section __DATA,__common
-    from 0x8000 to 0x4000 because it exceeds segment maximum
-    alignment
+Nice, probably.  I do not know what to feel about the first point,
+though, as it burdens those who add new callers in the future more.
 
-Pass -fno-common when "ld -v" reports ld-1167 or newer, so tentative
-definitions of large arrays go into BSS instead of __DATA,__common.
+> The result is kind of gross. There's an extra layer of macro
+> indirection, and the validity of the string is subtly tied to the
+> NOT_A_REPO error. A cleaner solution might be an error struct that
+> couples the code and the output string together, along with a function
+> to free the error struct. But then all callers would have to be modified
+> to call the free function. Alternatively, we could perhaps put a
+> large-ish fixed-size buffer in the struct, though that means potential
+> truncation and a larger stack footprint in each caller (even when they
+> don't have see an error).
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
-    fix macOS linker warning
-    
-    Check for empty LD_MAJOR_VERSION.
+None of thoese are particularly appetizing ;-).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2313%2FHaraldNordgren%2Fpkt-line-init-buffer-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2313/HaraldNordgren/pkt-line-init-buffer-v3
-Pull-Request: https://github.com/git/git/pull/2313
+> So I've left that as possible work for the future, or maybe never. Some
+> of this gross-ness was already there. For example, the only other caller
+> of read_gitfile_error_die() is in submodule.c, and it also passes NULL
+> for the "dir" parameter. But it does so only when the code is not
+> NOT_A_REPO! So it is depending on the same subtle connection to avoid
+> triggering the bug.
 
-Range-diff vs v2:
+Yup.  I can agree with this.
 
- 1:  0e660a346e ! 1:  f864912c53 config.mak.uname: avoid macOS linker warning on Xcode 16.3+
-     @@ config.mak.uname: ifeq ($(uname_S),Darwin)
-       
-      +	# Silence Xcode 16.3+ linker warning about __DATA,__common alignment.
-      +	LD_MAJOR_VERSION = $(shell ld -v 2>&1 | sed -n 's/.*PROJECT:ld-\([0-9]*\).*/\1/p')
-     -+        ifeq ($(shell test "$(LD_MAJOR_VERSION)" -ge 1167 && echo 1),1)
-     ++        ifeq ($(shell test -n "$(LD_MAJOR_VERSION)" && test "$(LD_MAJOR_VERSION)" -ge 1167 && echo 1),1)
-      +		BASIC_CFLAGS += -fno-common
-      +        endif
-      +
+> ---
+> Two other points of interest.
+>
+> One, I'm not sure how useful printing the pointed-to directory is. We
+> _could_ just say:
+>
+>   fatal: gitfile does not point to a valid repository: /path/to/.git
+>
+> which is enough for somebody to investigate themselves. That would
+> certainly make the patch smaller.
 
+Thanks.  While reading the main explanation, it was the first thing
+that came to me.
 
- config.mak.uname | 6 ++++++
- 1 file changed, 6 insertions(+)
+The implementation and the test are as expected in patches from you
+and matches the intent explained in the log message exactly.
 
-diff --git a/config.mak.uname b/config.mak.uname
-index f9a5ad9720..8719e09f66 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -173,6 +173,12 @@ ifeq ($(uname_S),Darwin)
- 		NEEDS_GOOD_LIBICONV = UnfortunatelyYes
-         endif
- 
-+	# Silence Xcode 16.3+ linker warning about __DATA,__common alignment.
-+	LD_MAJOR_VERSION = $(shell ld -v 2>&1 | sed -n 's/.*PROJECT:ld-\([0-9]*\).*/\1/p')
-+        ifeq ($(shell test -n "$(LD_MAJOR_VERSION)" && test "$(LD_MAJOR_VERSION)" -ge 1167 && echo 1),1)
-+		BASIC_CFLAGS += -fno-common
-+        endif
-+
- 	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
- 	# Unix domain sockets and PThreads.
-         ifndef NO_PTHREADS
-
-base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
--- 
-gitgitgadget
+Thanks, will queue.
