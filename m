@@ -1,69 +1,70 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E53E5A3F
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:39:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BF03E277E
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780407562; cv=none; b=u9/9lNKJ0052cVoStp6XQQHoQmesmwgICa2zzKnR8Ju35Y9uBt2nAOvJsfjw7vVXUSfSAILWt1ts6KGFa3fyUuamRdiD19oxSIcVK1XTwFhhCnctTkKQfRFdTOpK1neif0gva9VWNMptZFhnXanU7GBnxNni0vS7S6A9okISG7g=
+	t=1780407563; cv=none; b=ZKGr7KNaL0HSA+kuEfZ1yhlDQ2Rq5nJ7sm9sC8xzOpbvyjOQQupO7czG9vWxFCBZ1OdMDqlY3B1SVDwg2HaZ73ZVNBA56IzK82WhxKBxY3G75QiBe04a68wG3x3N6h6tynq7fKNvDB2O6Lf89d2QfcpUpN6wsbS3KsT/JFLEyOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780407562; c=relaxed/simple;
-	bh=fHGMOoDw++CjDLWIafUwGriMuB1lJQBWmpefi8VSow0=;
+	s=arc-20240116; t=1780407563; c=relaxed/simple;
+	bh=Yhkm41s+NGhN4iQRpsSc5ZS6BHb3uTqQ+XxpxznteGg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Au3CXNH7LfU/k4t1X/wnzmnjAVluv8sI8vdcpjvRkyV1ya6Nu3vfKuZlTW/a9k7A1TsO2jK6dGG+LHaztyC3E3SNQWWjrpqCycIOgAkjFqYTZY7HxLxE5zDytCKEaI05KTA/tEFCMrAUMP7J7/Zv2XiFYduVwFYU/6STANBM27g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H5jea6/o; arc=none smtp.client-ip=209.85.160.174
+	 MIME-Version:To:Cc; b=LCB6eVucCMWuDtGJ8OO20i69q1PywV5fw4wfq+FBHl+XpSaW9u0LrIKDKPcc6V2F0zRN3b5t6God1n4ZEfm83w3cPb5uFJ/gXjF8QOSxNsQwc/PltDYv5lvcYLOfg52H7V+gLesinZEsMKA8FBU2zFTiXa6/jF22HAODpWC3Njo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OrpnkGlp; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H5jea6/o"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5174a1d78f8so23283121cf.2
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 06:39:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OrpnkGlp"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-91563abd6a9so101557285a.3
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 06:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780407560; x=1781012360; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780407561; x=1781012361; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w6kCO3AIxNtcZlKM2HaVjx1EtMusuxGJL2Oe24Wsut0=;
-        b=H5jea6/odUDfHT7mwATa/ETDPdUdP6dSxi5U2qQ+twKuLS5ymIge3byQ8Sk4avY5kf
-         ijr3uEyhwE3P/SovANLPVMimmwgCydH7D/bdV5ftdnwZvm6royn+inX3Ll1+rYYrTI2h
-         40hisH9brN4zc2dY0XlGXQV8zin24KEHMjiZ8zgMWrC0GuNHU4KW3lCKiST+NBh0xGlo
-         818rmn9xRxfdUyg/IFVgol7PrbgClWc35nymQv612lndKEtgQdehC5K9ECj4u3aICKDq
-         1beVbHiiCluGx/V+Dkn1ugSbef17dh21+QINBhB/NcKltllr6Ost1K5ahnyX6c22r319
-         WqUA==
+        bh=7DRXap3L+1j/bNAIio+5mV9Fo+kIm0DZ4u93AO10Gmg=;
+        b=OrpnkGlp6ELjYkYO2gvDzYAGlWwuF6cZ9yeU2jpObgC7lfw8nwq3oM5ja4NDVZL6Z8
+         XV7rH9joGCMOTb9kag0/q84F7pGclL4n+Ck8xX/QI5fSAfA137oiQkssjGAA0oiSZvGj
+         /jSwccYrvhSgDxQXQGXDvKvEsn96OcV5JOHzEmLfSKGUI3rMZTA0RvVMgUiY3hJTUue9
+         iYou+hkapg7IrltvsglcoOLIH78UVSQZ8GuVVXIWFU9fXAhPFVGXsIwMHpsnCcR92TsL
+         mXZPEyihgPAmNnBH5KnF75R7BrGxJ2RtD/ocZ1agvDwmNSTD4Z93saoKTq2RYFJZM9L/
+         MojA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780407560; x=1781012360;
+        d=1e100.net; s=20251104; t=1780407561; x=1781012361;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=w6kCO3AIxNtcZlKM2HaVjx1EtMusuxGJL2Oe24Wsut0=;
-        b=e7lbJFcfwSPBouKIW7EnpNinKiNT9HgLRcM2GgaIMKfVguc40X4eNyVOnPhcJUGWFj
-         I0I5OEBaYkmjQH2U6nxG1YdCekPjYqIt7OvC7i8GXyiDUVHQ2ecxWCGxEc8QxGKLhjFG
-         TYdu247bQ/D0qBwks4ioCtP15prXJ3z1GTfZU4RPf4K7uIU7OSXMcBI2EQuaXGXmtSdA
-         BHQU1RM6DbyrluT7Idj09WDVL7S69wAFc3au08H8epculk9Ej0hzlo6HKwTwjESEVHCD
-         I8Upnso16WPxHozgsmi8I4LRucgac2dTDCOeCIQUdeVfRRIsYCrH64KBpMR19p/Egk6N
-         w5VQ==
-X-Gm-Message-State: AOJu0YxElD2NFYtUdxPRiORBS1pZiJffOPkmFuIuEPtNm0NdaP5khrsj
-	tcHcGUJBCYIxgNjffy8k3vPYh32nIN+qtm16/aevO+iUfkN4ErAsbZnLZpMdBA==
-X-Gm-Gg: Acq92OHeNhd7KKAa8+DnddK6NV+l9CQ2F38HlM1CXvExiS7cC2cfa8lR4+4bbeGXjT5
-	l7pZHEjWeDN87XAVapOZ3ibipXmD6HPlOebiSLSG4QLPXJ8uGfJEypKuuwtv9KpdyeUpf1HY8h/
-	Fv9ogKHazzE5kkLFmgFUsERVRDLQssg63n4nMWOx3bYMOBy/9Q5TlK6JVTIa4NpqHZB9a47ak8b
-	SA6+231CJUBpuysH+DHSHXJh9nHQQWtyqW4pR9Ok5LZpBQOidLL2NEjsAAhM9J96ofnr3SiFA7N
-	uRCCJRoBSeue3L/z1qpLAwsUnAtq7iFOWeSz9OMJoZWgawx4cJTnWzbBnudFlOYkMlMkiwoc4vS
-	gZlL5n7OP327ieDP1CQmUZubRz4fZsLX65+QgtgHCpWQQ/chY6t798oRaAPnRR90Ozdq6mwvtgw
-	Cm8DGISivIxpkM5v04P3T9ahdDWycOG8UAPC0=
-X-Received: by 2002:a05:622a:1186:b0:50d:a1c4:e154 with SMTP id d75a77b69052e-5173a8f1eadmr212262641cf.36.1780407559713;
-        Tue, 02 Jun 2026 06:39:19 -0700 (PDT)
+        bh=7DRXap3L+1j/bNAIio+5mV9Fo+kIm0DZ4u93AO10Gmg=;
+        b=Jqfa9I3AsUrL58p+UB8lJ6fYggfmPv/ia6zm5Kwjntojj5jamKAFEJBankByuWXPv/
+         zddYBldw/skOpdvsCL3rtKilL3e2w5zQGHBEHOLGUTOFDzWEKzx1ZvqLh7iLN2mR3rHt
+         pYAzJxmO0BTLVuksX7RPbCPALLnaGoTHc+PwTINIuYugb3HvPuG4/ku3UufnI8ZXrDyk
+         FviWVbnoqBuyPQgC3h1YkTPojULjC49HgPgfkip0mxHZ73+eo1etI0K0rE3P93q6OY+K
+         +Fj1O1gHMw2VORLn1Vm5BYLLbGjScNa9mrKaxZBROCT9rdgq1m2K9XzjzhQxvwxDpQMD
+         T0ow==
+X-Gm-Message-State: AOJu0YybM9yboab2LZdBy+5WyerrG8k/QYlOGVALUGqWd+rR2mVuPIvJ
+	J/SlEMoi1VsJvRsLSb/4vnULpOJ1dESuqWBVLPsZaQOAIJKjt5zR106s3tquTA==
+X-Gm-Gg: Acq92OHlvTJjMssDDULhFJjJW1lR/tSatW+v1s0Ike9cMfB1nP7FrjWQS3HpgYn1pV6
+	8sFeEqShqQCrR7cv0K4cRq7aOOC3veq7zKGTQIQK3xgfNLWaEIF6UNIAgezlx4oW+187lzBzYvC
+	9l3ESRdeLszeiyWrTyPShWAGr/syWjAQRsHIA6CwEACkprRNrbmlnHce2bMK2EwlqZhngmLJXP7
+	pH9yVDfYldhvc9X9by9Zp4D7UdGnJjYnWc5Zv/n2aAmh5NCrQiSEO9yZA+62TEdt/cd03CDpDJp
+	H4/fTbbIx5X9zwelwceWyKgZlXteKpTFNZIaxgMq1H8/PwMssmUcKUH4WOztH9la6h6YDLArhWT
+	kkjauxqEORD35fpBNWOoxpuw27RGB/FPMk7LZ+bTWZ0DEYjQm/G03e1JLv+/vc9ucf8zR+vD/24
+	XaoVTGH3cUSGtRBncw59lQJWK9/QolCMebxyA=
+X-Received: by 2002:a05:620a:29c2:b0:915:83fa:b3e0 with SMTP id af79cd13be357-91583fabf36mr165648785a.5.1780407560969;
+        Tue, 02 Jun 2026 06:39:20 -0700 (PDT)
 Received: from [127.0.0.1] ([48.214.53.83])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ccea0425dfsm120943026d6.3.2026.06.02.06.39.19
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-91566f4abf3sm447963885a.27.2026.06.02.06.39.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 06:39:19 -0700 (PDT)
-Message-Id: <d938ebf95a817c00a415670c08b839747d711d29.1780407557.git.gitgitgadget@gmail.com>
+        Tue, 02 Jun 2026 06:39:20 -0700 (PDT)
+Message-Id: <e5a2070ee1598bc345556b4afd01ae6d40fab633.1780407557.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2302.v5.git.git.1780407557.gitgitgadget@gmail.com>
 References: <pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
 	<pull.2302.v5.git.git.1780407557.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 02 Jun 2026 13:39:16 +0000
-Subject: [PATCH v5 1/2] config: let git_config_parse_key() validate quietly
+Date: Tue, 02 Jun 2026 13:39:17 +0000
+Subject: [PATCH v5 2/2] config: improve diagnostic for "set" with missing
+ value
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,162 +81,172 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Add a "quiet" parameter that suppresses the error() calls, and let
-store_key be NULL to skip the canonical-copy allocation.  Existing
-callers pass 0 for quiet.
+"git config set pull.rebase=false" currently fails with "wrong
+number of arguments", and the implicit form "git config
+pull.rebase=false" fails with "invalid key". Neither points at
+the real problem: the value is missing.
+
+Report that directly, and when the argument has the shape
+"<valid-key>=<value>", also suggest the split form:
+
+    $ git config set pull.rebase=false
+    error: missing value to set to the variable 'pull.rebase=false'
+    hint: did you mean "git config set pull.rebase false"?
+
+When the prefix before "=" is not a valid key, drop the hint:
+
+    $ git config set foo=bar
+    error: missing value to set to a variable with an invalid name 'foo=bar'
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/config.c   |  2 +-
- config.c           | 34 ++++++++++++++++++++++------------
- config.h           |  2 +-
- submodule-config.c |  2 +-
- 4 files changed, 25 insertions(+), 15 deletions(-)
+ builtin/config.c  | 32 ++++++++++++++++++++++++++-
+ t/t1300-config.sh | 55 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index cf4ba0f7cc..b3188cd8d4 100644
+index b3188cd8d4..a2d46d0ce1 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -555,7 +555,7 @@ static int get_value(const struct config_location_options *opts,
- 			goto free_strings;
- 		}
- 	} else {
--		if (git_config_parse_key(key_, &key, NULL)) {
-+		if (git_config_parse_key(key_, &key, NULL, 0)) {
- 			ret = CONFIG_INVALID_KEY;
- 			goto free_strings;
- 		}
-diff --git a/config.c b/config.c
-index a1b92fe083..81b31c5155 100644
---- a/config.c
-+++ b/config.c
-@@ -536,11 +536,14 @@ static inline int iskeychar(int c)
-  * -2 if there is no section name in the key.
-  *
-  * store_key - pointer to char* which will hold a copy of the key with
-- *             lowercase section and variable name
-+ *             lowercase section and variable name, can be NULL to skip
-+ *             allocation when only validation is needed
-  * baselen - pointer to size_t which will hold the length of the
-  *           section + subsection part, can be NULL
-+ * quiet - when non-zero, suppress error() reports on rejection
-  */
--int git_config_parse_key(const char *key, char **store_key, size_t *baselen_)
-+int git_config_parse_key(const char *key, char **store_key, size_t *baselen_,
-+			 int quiet)
- {
- 	size_t i, baselen;
- 	int dot;
-@@ -552,12 +555,14 @@ int git_config_parse_key(const char *key, char **store_key, size_t *baselen_)
- 	 */
- 
- 	if (last_dot == NULL || last_dot == key) {
--		error(_("key does not contain a section: %s"), key);
-+		if (!quiet)
-+			error(_("key does not contain a section: %s"), key);
- 		return -CONFIG_NO_SECTION_OR_NAME;
- 	}
- 
- 	if (!last_dot[1]) {
--		error(_("key does not contain variable name: %s"), key);
-+		if (!quiet)
-+			error(_("key does not contain variable name: %s"), key);
- 		return -CONFIG_NO_SECTION_OR_NAME;
- 	}
- 
-@@ -568,7 +573,8 @@ int git_config_parse_key(const char *key, char **store_key, size_t *baselen_)
- 	/*
- 	 * Validate the key and while at it, lower case it for matching.
- 	 */
--	*store_key = xmallocz(strlen(key));
-+	if (store_key)
-+		*store_key = xmallocz(strlen(key));
- 
- 	dot = 0;
- 	for (i = 0; key[i]; i++) {
-@@ -579,21 +585,25 @@ int git_config_parse_key(const char *key, char **store_key, size_t *baselen_)
- 		if (!dot || i > baselen) {
- 			if (!iskeychar(c) ||
- 			    (i == baselen + 1 && !isalpha(c))) {
--				error(_("invalid key: %s"), key);
-+				if (!quiet)
-+					error(_("invalid key: %s"), key);
- 				goto out_free_ret_1;
- 			}
- 			c = tolower(c);
- 		} else if (c == '\n') {
--			error(_("invalid key (newline): %s"), key);
-+			if (!quiet)
-+				error(_("invalid key (newline): %s"), key);
- 			goto out_free_ret_1;
- 		}
--		(*store_key)[i] = c;
-+		if (store_key)
-+			(*store_key)[i] = c;
- 	}
- 
- 	return 0;
- 
- out_free_ret_1:
--	FREE_AND_NULL(*store_key);
-+	if (store_key)
-+		FREE_AND_NULL(*store_key);
- 	return -CONFIG_INVALID_KEY;
+@@ -1,6 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ #include "builtin.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "config.h"
+ #include "color.h"
+ #include "date.h"
+@@ -210,6 +211,26 @@ static void check_argc(int argc, int min, int max)
+ 	exit(129);
  }
  
-@@ -609,7 +619,7 @@ static int config_parse_pair(const char *key, const char *value,
++static NORETURN void die_missing_set_value(const char *arg)
++{
++	const char *last_dot = strrchr(arg, '.');
++	const char *eq = last_dot ? strchr(last_dot + 1, '=') : NULL;
++	char *prefix = eq ? xstrndup(arg, eq - arg) : NULL;
++
++	if (prefix && !git_config_parse_key(prefix, NULL, NULL, 1)) {
++		error(_("missing value to set to the variable '%s'"), arg);
++		advise(_("did you mean \"git config set %s %s\"?"),
++		       prefix, eq + 1);
++	} else if (!git_config_parse_key(arg, NULL, NULL, 1)) {
++		error(_("missing value to set to the variable '%s'"), arg);
++	} else {
++		error(_("missing value to set to a variable with an invalid name '%s'"),
++		      arg);
++	}
++	free(prefix);
++	exit(129);
++}
++
+ static void show_config_origin(const struct config_display_options *opts,
+ 			       const struct key_value_info *kvi,
+ 			       struct strbuf *buf)
+@@ -1133,6 +1154,8 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
  
- 	if (!strlen(key))
- 		return error(_("empty config key"));
--	if (git_config_parse_key(key, &canonical_name, NULL))
-+	if (git_config_parse_key(key, &canonical_name, NULL, 0))
- 		return -1;
+ 	argc = parse_options(argc, argv, prefix, opts, builtin_config_set_usage,
+ 			     PARSE_OPT_STOP_AT_NON_OPTION);
++	if (argc == 1)
++		die_missing_set_value(argv[0]);
+ 	check_argc(argc, 2, 2);
  
- 	ret = (fn(canonical_name, value, &ctx, data) < 0) ? -1 : 0;
-@@ -1708,7 +1718,7 @@ static int configset_find_element(struct config_set *set, const char *key,
- 	 * `key` may come from the user, so normalize it before using it
- 	 * for querying entries from the hashmap.
- 	 */
--	ret = git_config_parse_key(key, &normalized_key, NULL);
-+	ret = git_config_parse_key(key, &normalized_key, NULL, 0);
- 	if (ret)
- 		return ret;
+ 	if ((flags & CONFIG_FLAGS_FIXED_VALUE) && !value_pattern)
+@@ -1371,6 +1394,7 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 	};
+ 	char *value = NULL, *comment = NULL;
+ 	int ret = 0;
++	int actions_implicit;
+ 	struct key_value_info default_kvi = KVI_INIT;
  
-@@ -3001,7 +3011,7 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
- 	validate_comment_string(comment);
+ 	argc = parse_options(argc, argv, prefix, opts,
+@@ -1385,7 +1409,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 		exit(129);
+ 	}
  
- 	/* parse-key returns negative; flip the sign to feed exit(3) */
--	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
-+	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen, 0);
- 	if (ret)
- 		goto out_free;
+-	if (actions == 0)
++	actions_implicit = (actions == 0);
++	if (actions_implicit)
+ 		switch (argc) {
+ 		case 1: actions = ACTION_GET; break;
+ 		case 2: actions = ACTION_SET; break;
+@@ -1394,6 +1419,11 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 			error(_("no action specified"));
+ 			exit(129);
+ 		}
++	if (actions_implicit && argc == 1) {
++		const char *last_dot = strrchr(argv[0], '.');
++		if (last_dot && strchr(last_dot + 1, '='))
++			die_missing_set_value(argv[0]);
++	}
+ 	if (display_opts.omit_values &&
+ 	    !(actions == ACTION_LIST || actions == ACTION_GET_REGEXP)) {
+ 		error(_("--name-only is only applicable to --list or --get-regexp"));
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 11fc976f3a..ed122d1100 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -469,6 +469,61 @@ test_expect_success 'invalid key' '
+ 	test_must_fail git config inval.2key blabla
+ '
  
-diff --git a/config.h b/config.h
-index bf47fb3afc..2c66d334c1 100644
---- a/config.h
-+++ b/config.h
-@@ -341,7 +341,7 @@ int repo_config_set_worktree_gently(struct repository *, const char *, const cha
-  */
- void repo_config_set(struct repository *, const char *, const char *);
- 
--int git_config_parse_key(const char *, char **, size_t *);
-+int git_config_parse_key(const char *, char **, size_t *, int quiet);
- 
- /*
-  * The following macros specify flag bits that alter the behavior
-diff --git a/submodule-config.c b/submodule-config.c
-index a81897b4e0..a319956f7a 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -970,7 +970,7 @@ int print_config_from_gitmodules(struct repository *repo, const char *key)
- 	int ret;
- 	char *store_key;
- 
--	ret = git_config_parse_key(key, &store_key, NULL);
-+	ret = git_config_parse_key(key, &store_key, NULL, 0);
- 	if (ret < 0)
- 		return CONFIG_INVALID_KEY;
- 
++test_expect_success 'set with 1 arg of "key=value": valid key suggests split form' '
++	test_must_fail git config set pull.rebase=false 2>err &&
++	test_grep "missing value to set to the variable .pull\\.rebase=false." err &&
++	test_grep "did you mean .git config set pull\\.rebase false." err
++'
++
++test_expect_success 'set with 1 arg of "key=value": implicit form suggests split form' '
++	test_must_fail git config pull.rebase=false 2>err &&
++	test_grep "missing value to set to the variable .pull\\.rebase=false." err &&
++	test_grep "did you mean .git config set pull\\.rebase false." err
++'
++
++test_expect_success 'set with 1 arg of "key=value": invalid key does not suggest split form' '
++	test_must_fail git config set foo=bar 2>err &&
++	test_grep "missing value to set to a variable with an invalid name .foo=bar." err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'set with 1 arg: variable name starting with digit is invalid' '
++	test_must_fail git config set foo.1bar=baz 2>err &&
++	test_grep "missing value to set to a variable with an invalid name .foo\\.1bar=baz." err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'set with 1 arg: digit-led section name is valid' '
++	test_must_fail git config set 1foo.bar=baz 2>err &&
++	test_grep "missing value to set to the variable .1foo\\.bar=baz." err &&
++	test_grep "did you mean .git config set 1foo\\.bar baz." err
++'
++
++test_expect_success 'set with 1 arg: subsection plus invalid variable name' '
++	test_must_fail git config set foo.some.b_r=baz 2>err &&
++	test_grep "missing value to set to a variable with an invalid name .foo\\.some\\.b_r=baz." err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'set with 1 arg of valid key reports missing value' '
++	test_must_fail git config set pull.rebase 2>err &&
++	test_grep "missing value to set to the variable .pull\\.rebase." err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success 'set with 2 args including "=" in invalid key does not suggest' '
++	test_must_fail git config set pull.rebase=false true 2>err &&
++	test_grep ! "did you mean" err
++'
++
++test_expect_success '"=" inside subsection is valid' '
++	test_when_finished "rm -f subsection.cfg" &&
++	git config set -f subsection.cfg foo.bar=baz.boo qux &&
++	echo qux >expect &&
++	git config get -f subsection.cfg foo.bar=baz.boo >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'correct key' '
+ 	git config 123456.a123 987
+ '
 -- 
 gitgitgadget
-
