@@ -1,129 +1,156 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F337630146C
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FBD3DA5B1
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780407411; cv=none; b=pyeg6UopmPNyW66XivzjqxyivA+ORjAjBbTIeTSeSgAqq3GeuoPQq6z2PBCSRzhUjfEjQpGmhFm/k0C+/XZT0dS0/t2EHQNVQKIGrUSqF7SlXDpUXIj8dLB62pGQyAWIQ58S9YE5KDA/EpEcWnQ0HYIQM47iiCJM3aNck22GqtY=
+	t=1780407561; cv=none; b=iyPTF9hYg7aBx1xMr5PwMXx6xNl+GySsVVckzIK/J3ZaiLGcmDg3Lt6izENZryHFU1USmOKdPTY/amU+rtZFIc/4Xet9P8dPNNBTewVj845cG9VMJJc7XSkjl8T4FX3Jwpf7SHdiV6g5D1BmlKVBu36WexZm4GNvockgw/1DSI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780407411; c=relaxed/simple;
-	bh=Jhgk0y5GywYZeUMdr2mKMuoJPgwC01cCUlUL+j1BKKg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bN9HtSP0hSIeKJEK8/4nTaDJmyyhQCcg94ZNAPcWLKOKNQ9VwL7kT3kHvJZRY1hSIjHmUXyX7NwYiOvwBOmxYY2aNwcA0cQG94eECfpRJ8eDTeHC0HgDudWLD3MRC/HrF8f3jnr2Dl7mZy4uJxBZ9oLEZAzWe1jLsiISEYcH440=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Pw9bAGzc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4XNHdhz; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780407561; c=relaxed/simple;
+	bh=jSOUCn7i1YomPVPnFl3/AX0K3BcFKBCRa4Ic9kau3a8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ZYXYDze+pDa4cDeS4l/7ZDNIS03LE7FiFnNkYuR6B1RQsIWCMuduRySwbtlA7RkH1mGgHM85TzTfxf/soAQjw0MwkCVzaanHi58ByLoIrGVnwP9uB8q429i6IM9ePrfUCv/Dd0qALtt/JHseSMub/Y4MD03XgF4JgNWKnjAN9sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RN7F6m9M; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pw9bAGzc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4XNHdhz"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 03DB77A0100;
-	Tue,  2 Jun 2026 09:36:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 02 Jun 2026 09:36:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780407408; x=1780493808; bh=Vt0NADytKg
-	xa+k/Lz6Foo6D233bHWXXP69hcekxflW0=; b=Pw9bAGzc6TVGowLMLvadInQcKI
-	Ykx+xHkwessRge2J/+bWPL4U0+vMtDaBh1w6W6ZaeTl2IlNhnEHZzl28ELj+LwYO
-	Qt3dCyFTZj0xyH7S5McrVSRbU31I1gUieSzZVOjVLtE48+VYbH/SbB8s0C9XcpNt
-	sEFxeJb+XzS5vbBIU830gaSok1/GBthiuxIbe43IYThSSKp06/WJRVIZxXSfWrxb
-	7ysw2jdBL098+kg+0qrCkUWdiQTxOUQ8SPuVd3GSrm/aAkRPlPImFZAzoPVGVa5j
-	8yMGbTJRoWMM0nsQL5yubeU0rQqCKBZdJnTCYLzRCfaJmb+NXwagF5bNLzew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780407408; x=1780493808; bh=Vt0NADytKgxa+k/Lz6Foo6D233bHWXXP69h
-	cekxflW0=; b=g4XNHdhzfldVst3AfPjLNvD01ItKFWXk3CCuDFYi/oslVG9kT6h
-	bygH8jyNRlPJlgkX1pxwPp6YvD2USR9pqt1/5JSo4HlYMxNtzmVrFtA8AwHor0Kz
-	PBfKPgQDcaUko+2JKZ0+nXB32s/2dzWim+lBeexgjZgfUGZhzTQgvqYx+mXxFR1T
-	wAkcF4G7mPPJVswusa81E5irkfNMLM9xWo+iGolWKBnWgVGo1zN/XCbOqSVzY+S1
-	zT4K3tsv9piBm+xEsYRXaLHnECXkllQV3SdLo4D1Fh/6PB9+8ErrSo5zokuCnDVN
-	lJ03KifbBeAfivBWsg+Dl1kX/lAUKkLEdLg==
-X-ME-Sender: <xms:cNweasmuGXThedm_5B3VJJytUC4HKasVxkEkpUO5excdhBUe-o8DlQ>
-    <xme:cNweajT5FaMAW5Stbwk4kqKXztPKkDYmP5e4IgpKiLV3DEtvEQZgtpVMln1K8oVb9
-    uG51pkzaECm9awEfKN7bLyspT0y-QaeXAa-Xsi-AmQEVNjAgeqgLQ>
-X-ME-Received: <xmr:cNweaoDbrTbxuwKf7XjGumlBlk9JwyVvyylKgaP47VDsgBzWzX7ivJwHVAlLRH7w9ZSkKzKCqNHlaSWQVIEN9HZfP8tO_5Dvr2Kr>
-X-ME-Proxy-Cause: dmFkZTGH4aRFsH8WZkyTo9soUfM0j4oNy4QKJe5TP2hU5qTSl36xVyOqYndVej9n9i9CZx
-    F5VzrZl50KusmCDW7CiDynQJpMEOutcOeb9um4vRu6eFHJXC/VlJ42aJlMcgJD9Sw4G40n
-    09V8jAIvYu78TICAydxkJ7fXWQzcK1vpZZgP+K/HEVx1BZMLD+CAUm5YtN9yzzpTzRSgDl
-    bO77cEigyP5yyo+qRcCZQaUvqstR5vd2P2gxMOjjBeHdCa6RwujTaYnVCw+ITuPYZMke7T
-    +WenY4L2QALWzfR/s2JX5o4eaKIZmyf1tEzgeCfzNDa0h+STfGuiX/VXjAmbUkkjf9jrQF
-    8ZpWSfvm/hUyfsDDFsCUzO4ipXaaOOlXeUoH6eR1fp1/kA8LJJqUFln+ZFACze/fnJk70z
-    DyrLKeYvg6hAn+Uoh7e2AeMtGAKuN5HxG0ejO85K88IHEKhHk3QioZ5Ama5A3GUdKFE4dE
-    AxIAH2nuSz45TXX5k9y7asHvHPEJcwtcWd5fdGG1qM9s5I14xuI9zdURSbPBkhWFA0exYV
-    cB0STxTjJPQiq3uQTqLfNLKKNEZad2QuFj7C+S7K3sXC75eq5lgZ2ffXrxe+j8ES2g99m2
-    R34eRnA/XyNa8ZHrQfIsMSJjjJHP2ZHEvBpgUkDSYDAmmPDRvqMavrP0Rw2g
-X-ME-Proxy: <xmx:cNweaiT5Bb4XKraO87_5HSjmqR5oCLvAdX3OugzQBgEb9CI5mNaKBQ>
-    <xmx:cNweaurn8pWpbRg6x1GasA0v8g8W5sQz2gpxsoMzxKsUA6VkG_Nctg>
-    <xmx:cNweasx7EtdbYIn6MAUCXxHDLCY0WFJQTWpfp0dqZs8C2upvkmxI-g>
-    <xmx:cNwearIH-6O1NRAEnQwwYH-YA-Oq9n1XkoITvc4QFIWB3mw9iX_sXg>
-    <xmx:cNweajYR6kaUlyjoewdDCAQyU4bCnoTG7dLUsWApa_kQE5R46HBIl4Vj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 09:36:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] SubmittingPatches: describe cover letter
-In-Reply-To: <ah7HZuy_WRCD9ZZ-@pks.im> (Patrick Steinhardt's message of "Tue,
-	2 Jun 2026 14:07:02 +0200")
-References: <20260602090808.87837-1-gitster@pobox.com>
-	<20260602090808.87837-3-gitster@pobox.com> <ah7HZuy_WRCD9ZZ-@pks.im>
-Date: Tue, 02 Jun 2026 22:36:47 +0900
-Message-ID: <xmqqh5nlvzbk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RN7F6m9M"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-5176d4c14f5so4969351cf.0
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 06:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780407559; x=1781012359; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I3Zwto6MdMS6YtBkNjZ5fKWWFOILr2KNTg7LBFJ4izE=;
+        b=RN7F6m9MYQuPkLHm7uTt7C+iIXR+h1iOTMbwx7mm07iEjMvdaFuSBzwxyTpxPmSpKZ
+         3KL9Eu9L6F5Sdew0WF4XHDBHON1sLskQc0UZTnO+HLUaPL3EYOau+7JbmDLGXB2I2jXb
+         LPCxCmgp0ZtK1FmksvH6TtpnDmr/EfII2G2Pe9aCh6sk961cZ2N4wOYuw+eV0/xcIFQ2
+         V+x+oSx2iV3AvvALLDOOVB7AVM8T+ChYKx/nhFWx65d3wk8GN0mwEoNpEjyPNw5l5g5f
+         L8Y8LesZ0aqzvDBr8Krwzv2IM0ppU7Qqf/2XTAIAPMhtmS2GIRyqaGBNCccgX6t+KgMO
+         MsjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780407559; x=1781012359;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=I3Zwto6MdMS6YtBkNjZ5fKWWFOILr2KNTg7LBFJ4izE=;
+        b=eA7L4wSt67a6Hll1eEp3CyQIrR3QSXRzGcgU6oZ0Oa5MJC0eBg49RVcFikg/77GitX
+         haTToRuuKVtmMl2C1yrY+5xzrEv325I5NPYu/W9B9RQ5VmE/Dvd7aFtcuKLf32gWU6GT
+         oxfYZob37VZmP6PIk//dvhXQuF2WFwOxVy4WrOdJaxbf61DL1bFX2cdjuSdDVwcDx1OP
+         NLnvWXhwec/0nxbNKonbSD34uCkIZ0zT2XE4cw72XfD6BMegQAkytheN+tWzecz+qb2o
+         PYSsfj5GFFs6rlf3kskQjZDjeFaqL5xL9jvpPC8TCDLrh2+hpHuIV0ZtYjgQCaEu6dHa
+         dzRQ==
+X-Gm-Message-State: AOJu0YzSl8UInvLh7PLlw83SUepgkmVsDJd6Q0piNFmCvHoNzJiFSuFg
+	OixynXzWY5D/JUjHcxNxg68gRI22C2hnv9SulWJhp7Bn+Hmp11JfSR4fCxl9Yg==
+X-Gm-Gg: Acq92OFIlcaIf56ReHsqw+ykrnKe83TFSsfOZQpNb/sfosGYqj8NAjlDcn4bIwEJaEm
+	PzwS9WpbZXwWJmvRCpmxyVE1zEYzoIj5PTkzF4Kx6keUqFHBiS+OlxgGWaV2sLYT4qYr8lWU9IX
+	4Z70rHmB69cJkR3ozC2hvGAlgtSWGD5b2Tazfx8t5DRTpBG+x9KZrt/oJ0BFFFH1R/ibxpgBZZq
+	GtKB+CjxiKPyxQ23o0Oyi01QELwqBkmT5RbCwi12Ncgt0+xomOV5kzi1IXvBYD76mZIS6aazmUq
+	PiLSUrSuPQg6veh+m3/KmNYm9qRgtJOMGHS7HhujirVjQiFBOAWsqhs+dpLevE6ipCpPRatGRrm
+	7D/D80VH/FSM9DZNaX95KPU2NvVBAUm0EJZwUBv3rgag+JkoqC7WdKdT/E5dRzZbiq9eoD716e8
+	pyZrkdBfnOW3QISb/Vxv5R7WWo+pBObBAbHpU=
+X-Received: by 2002:a05:622a:14d1:b0:516:a471:dfc1 with SMTP id d75a77b69052e-5173a817bc3mr224481971cf.49.1780407558724;
+        Tue, 02 Jun 2026 06:39:18 -0700 (PDT)
+Received: from [127.0.0.1] ([48.214.53.83])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51741b2afd2sm79964171cf.10.2026.06.02.06.39.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jun 2026 06:39:18 -0700 (PDT)
+Message-Id: <pull.2302.v5.git.git.1780407557.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
+References: <pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 02 Jun 2026 13:39:15 +0000
+Subject: [PATCH v5 0/2] config: suggest the correct form when key contains "="
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+ * New commit config: let git_config_parse_key() validate quietly adds a
+   quiet parameter (and an optional store_key) so callers can validate
+   without writing to stderr.
+ * Validation in die_missing_set_value() now routes through
+   git_config_parse_key(key, NULL, NULL, 1) instead of the previous local
+   helper.
+ * Added tests for 1foo.bar=baz and foo.some.b_r=baz.
 
-> On Tue, Jun 02, 2026 at 06:08:08PM +0900, Junio C Hamano wrote:
->> We talk about how a commit log message should look like, but do not
->> give advice on writing the cover letter to sell a series to widest
->
-> s/to widest/to the widest/?
+Harald Nordgren (2):
+  config: let git_config_parse_key() validate quietly
+  config: improve diagnostic for "set" with missing value
 
-Thanks.
+ builtin/config.c   | 34 ++++++++++++++++++++++++++--
+ config.c           | 34 ++++++++++++++++++----------
+ config.h           |  2 +-
+ submodule-config.c |  2 +-
+ t/t1300-config.sh  | 55 ++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 111 insertions(+), 16 deletions(-)
 
->> +[[cover-letter]]
->> +=== Cover Letter
->> +
->> +The purpose of your cover letter is to sell your changes, explain what
->> +they are about, and get your target audience interested enough to read
->> +the patches.
->> +
->> +. Make sure your target audience can understand what the patches are
->> +  about and why they are needed without prior context.
->> +
->> +. For a second or subsequent iteration of the same topic, make sure
->> +  people who missed the earlier discussion can still understand what
->> +  the patches are about, so they can judge if the topic is worth their
->> +  time to read and comment on.
->> +
->> +. To help those who are familiar with earlier iterations, give a
->> +  summary of changes since the previous rounds.
->
-> We might also recommend to include a range-diff in subsequent
-> iterations. That being said though, I just sent a small series to the
-> mailing list that recommends using b4, and there it get this for free.
-> So no idea whether it's still worth it to then cover this here
-> explicitly.
 
-I think these are orthogonal.  What b4 helps you with is the shape
-of the letter, how it looks like.  This update is about the contents
-in the letter, what you convey to your readers.
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2302%2FHaraldNordgren%2Fconfig-hint-equals-key-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2302/HaraldNordgren/config-hint-equals-key-v5
+Pull-Request: https://github.com/git/git/pull/2302
 
-Of course, "format-patch --cover-letter" also lets you do range-diff
-or interdiff, so they come for free.  But the above description is
-not tied to any particular tool to prepare your cover letter.
+Range-diff vs v4:
 
+ -:  ---------- > 1:  d938ebf95a config: let git_config_parse_key() validate quietly
+ 1:  780b99409c ! 2:  e5a2070ee1 config: improve diagnostic for "set" with missing value
+     @@ builtin/config.c: static void check_argc(int argc, int min, int max)
+       	exit(129);
+       }
+       
+     -+static int is_valid_key(const char *key)
+     -+{
+     -+	const char *last_dot = strrchr(key, '.');
+     -+
+     -+	return last_dot && isalpha(last_dot[1]);
+     -+}
+     -+
+      +static NORETURN void die_missing_set_value(const char *arg)
+      +{
+      +	const char *last_dot = strrchr(arg, '.');
+      +	const char *eq = last_dot ? strchr(last_dot + 1, '=') : NULL;
+      +	char *prefix = eq ? xstrndup(arg, eq - arg) : NULL;
+      +
+     -+	if (prefix && is_valid_key(prefix)) {
+     ++	if (prefix && !git_config_parse_key(prefix, NULL, NULL, 1)) {
+      +		error(_("missing value to set to the variable '%s'"), arg);
+      +		advise(_("did you mean \"git config set %s %s\"?"),
+      +		       prefix, eq + 1);
+     -+	} else if (is_valid_key(arg)) {
+     ++	} else if (!git_config_parse_key(arg, NULL, NULL, 1)) {
+      +		error(_("missing value to set to the variable '%s'"), arg);
+      +	} else {
+      +		error(_("missing value to set to a variable with an invalid name '%s'"),
+     @@ t/t1300-config.sh: test_expect_success 'invalid key' '
+      +	test_grep ! "did you mean" err
+      +'
+      +
+     ++test_expect_success 'set with 1 arg: digit-led section name is valid' '
+     ++	test_must_fail git config set 1foo.bar=baz 2>err &&
+     ++	test_grep "missing value to set to the variable .1foo\\.bar=baz." err &&
+     ++	test_grep "did you mean .git config set 1foo\\.bar baz." err
+     ++'
+     ++
+     ++test_expect_success 'set with 1 arg: subsection plus invalid variable name' '
+     ++	test_must_fail git config set foo.some.b_r=baz 2>err &&
+     ++	test_grep "missing value to set to a variable with an invalid name .foo\\.some\\.b_r=baz." err &&
+     ++	test_grep ! "did you mean" err
+     ++'
+     ++
+      +test_expect_success 'set with 1 arg of valid key reports missing value' '
+      +	test_must_fail git config set pull.rebase 2>err &&
+      +	test_grep "missing value to set to the variable .pull\\.rebase." err &&
+
+-- 
+gitgitgadget
