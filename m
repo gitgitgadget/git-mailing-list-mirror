@@ -1,35 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143B23B83EC
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 07:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B943BB128
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 08:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780387009; cv=none; b=PP2cDgSzWfRLlCeVq5KZuE/prd2wU1d6lPELrJE3OSeHJkIm1GOsR2Tq8qDvv7KxDQikeXsOXkhNXOammxiDHkJasq07VjT8Hdi45g7Lqy/psDdg8YsiCC6Gn2ldUCtLcHoe5hJb75KB1A5wGlx5HduqyynyPdz1FCsHhxA1zrU=
+	t=1780387347; cv=none; b=QhzHbNAnFzDUErboyiZub5x0r3KaXQcfWuz5y5YM1/SCjf1C0W2dD0wyJGq/+5lnSsKAwkgwMo/rOO038MSe2aMPBrZbkUI1TBUmozFJ1Thj0yK6z8CxaExKsMfGZL4aoC7tPdU4FekBI9sVIPWsWjGBFsJp1dFVslhaNX4arnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780387009; c=relaxed/simple;
-	bh=CKOL/P3CAvjOpNYDURMCpy/Gew1sHfAzOYQbfPjsnf8=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=mFQRLReQcO+qxrupcLUfsZqA2FSmOh+1jvjoan5/vagecEjjP7YtfrfMw82Yj//DvNf6y/VKGgaFOf5ljCoAm8+u2zaC4KcUyuCfrz6nWwH2yHFi1FXh5wWCarn2wPY6neF9Qbi3gPZ+dWzwBVqjbNtHiKPWCy5JYdmeMcL9OS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VVzQH+gD; arc=none smtp.client-ip=217.216.95.84
+	s=arc-20240116; t=1780387347; c=relaxed/simple;
+	bh=bYSdpoBNVjiT/PFLm7KC5wKJS5xeqyN6lZXCx2JPw2I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jumifk93Wxja1JcqR0yhFUFXrIAs6Lw4xneA4QgQzESRT5Wwz26U09vTKjbyzFPXua992JyDDsIitwJQFt+vN3y6/6KWQeJbUBG7OWpQXC4oR+lqyEp5LiQppsg9foQseUzJvwE2qHTMlt3qTxEvdv+Yil06hkoEspPDOyhG70Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=baNGIeG5; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VVzQH+gD"
-Received: (qmail 31022 invoked by uid 106); 2 Jun 2026 07:56:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:mime-version:content-type; s=20240930; bh=CKOL/P3CAvjOpNYDURMCpy/Gew1sHfAzOYQbfPjsnf8=; b=VVzQH+gDZsBt6XxdbqcQqun2MfQzFTMqtJRndmzvobLNQbXDdufSYNRHzV/5tK7AhwEYSgLURoAjXyBrZqbD0nPjSe3NhBNiSKCv/cZQdyYH2DFcHhe40KOfTRGBlb0ali4SuiVAZICk6CqLPTrehVKFfnqhBa4bVIxtD/jmsFAAHfrmvgaIRBGJMz68Y+u2EyZNn82zKK87rsalBMGQ0FB9ITgosTqZunAWMU1sA8ZBW5SVihQo/SxvQ5GiBIsK1KKfszMJW4aYG2MHpiJmRQxuaUVQlxz4r6spobhCAjCjfM/K4dZ8cO1AJE2XDgV3y304CT5eg/ft1/C9cUqPVA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="baNGIeG5"
+Received: (qmail 31070 invoked by uid 106); 2 Jun 2026 08:02:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=bYSdpoBNVjiT/PFLm7KC5wKJS5xeqyN6lZXCx2JPw2I=; b=baNGIeG58PguB3smu5qepTLlFfnXRYNRTN4AOV5TLLF7mLVSq5T3iT306+qDc8mJ4+y9iw+HiG2hAbFibS7EJHPREeP6e2WSvzs/mriS0hjQ3cXHjC+JmYBi5R0jiN77JNB7EGRQTGFdq98ZN+GZVlvAgmbV1D0HJIJ8w0A3mQwD3fkU6SsCOOoDM/at9v6Pn3i0Xuviq+c3Ztbln6Duh9Fgxs6UJYLPizQuDm1FH+Jx4tdqeA/k7nGUfHOyG9b6EJQKd8kTj2zFUMwYQ0IUbd6miYIVTuJbsghjajvdVcPOhX/afcryelgxLb37t+EwgHg2tWZEEbv6wGmI3guTKg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Jun 2026 07:56:47 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Jun 2026 08:02:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 76887 invoked by uid 111); 2 Jun 2026 07:56:51 -0000
+Received: (qmail 76961 invoked by uid 111); 2 Jun 2026 08:02:28 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Jun 2026 03:56:51 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Jun 2026 04:02:28 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 2 Jun 2026 03:56:46 -0400
+Date: Tue, 2 Jun 2026 04:02:23 -0400
 From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [BUG] t/perf scripts lose GIT_PERF_* when used with --verbose-log
-Message-ID: <20260602075646.GA753532@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Tian Yuchen <cat@malon.dev>
+Subject: Re: [PATCH] read_gitfile_gently(): return non-repo path on error
+Message-ID: <20260602080223.GA763528@coredump.intra.peff.net>
+References: <20260602061159.GA693928@coredump.intra.peff.net>
+ <xmqq4ijlz8vc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,95 +41,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <xmqq4ijlz8vc.fsf@gitster.g>
 
-Imagine I have a perf script like this:
+On Tue, Jun 02, 2026 at 04:42:15PM +0900, Junio C Hamano wrote:
 
-  #!/bin/sh
-  test_description=foo
-  . ./perf-lib.sh
-  echo >&2 "large_repo = $GIT_PERF_LARGE_REPO"
-  test_perf_large_repo
-  [...some actual tests...]
+> > One, I'm not sure how useful printing the pointed-to directory is. We
+> > _could_ just say:
+> >
+> >   fatal: gitfile does not point to a valid repository: /path/to/.git
+> >
+> > which is enough for somebody to investigate themselves. That would
+> > certainly make the patch smaller.
+> 
+> Thanks.  While reading the main explanation, it was the first thing
+> that came to me.
 
-If I run the command below, I'd expect it to use linux.git as the test
-repo (and print to stderr telling me so). And it does:
+Here's what that looks like, for reference. It is nice and simple, if we
+think the change in error message is acceptable. I hate to change
+user-facing error messages because of internal code details, but I
+really do wonder if the existing message is the most useful thing to
+print in the first place.
 
-  $ GIT_PERF_LARGE_REPO=/path/to/linux.git ./p1234-foo.sh
-  large_repo = /path/to/linux.git
-  [...]
-
-This is courtesy of 32b74b9809 (perf: do allow `GIT_PERF_*` to be
-overridden again, 2025-04-04). But that breaks if we use --tee or any
-other option which implies it:
-
-  $ GIT_PERF_LARGE_REPO=/path/to/linux.git ./p1234-foo.sh --verbose-log
-  large_repo = /home/peff/compile/git/t/..
-  [...]
-
-What happens in the happy path is this:
-
-  0. The script sources perf-lib.sh.
-
-  1. perf-lib.sh stashes GIT_PERF_* in a variable to restore later.
-
-  2. perf-lib.sh sources GIT-BUILD-OPTIONS, which overwrites the
-     environment.
-
-  3. perf-lib.sh sources test-lib.sh.
-
-  4. test-lib.sh itself sources GIT-BUILD-OPTIONS.
-
-  5. Eventually test-lib.sh finishes, returning control to perf-lib.sh.
-
-  6. perf-lib.sh restores GIT_PERF_* from the stashed copy. All is well.
-
-But if --tee or --verbose-log is used, then step 5 never happens!
-Instead test-lib.sh re-executes a second copy of the script piped to
-tee. And that re-executed copy sees the environment we had after step 4,
-with all of GIT_PERF_* coming from GIT-BUILD-OPTIONS. So even though it
-tries to do the save/restore, its step 1 never sees the original
-environment (so it "saves" nothing useful).
-
-This is especially insidious if you use the "./run" program to compare
-versions. It reads GIT-BUILD-OPTIONS, too, and also knows how to
-preserve GIT_PERF_*, courtesy of 79d301c767 (t/perf/run: preserve
-GIT_PERF_* from environment, 2026-01-06). But it reads GIT_TEST_OPTS
-from the build-options file and runs each script with it. So while this
-may work:
-
-  $ GIT_PERF_LARGE_REPO=/path/to/linux.git ./run HEAD p1234-foo.sh
-  [...]
-  === Running 1 tests in /home/peff/compile/git/t/perf/build/1211f0ef99a75931f170bc2a838172a45300ad63/bin-wrappers ===
-  large_repo = /path/to/linux.git
-  [...]
-
-you may get spooky action at a distance from whenever you last ran make:
-
-  $ make -C ../.. GIT_TEST_OPTS=--verbose-log
-  $ GIT_PERF_LARGE_REPO=/path/to/linux.git ./run HEAD p1234-foo.sh
-  [...]
-  === Running 1 tests in /home/peff/compile/git/t/perf/build/1211f0ef99a75931f170bc2a838172a45300ad63/bin-wrappers ===
-  large_repo = /home/peff/compile/git/t/..
-
-Doubly confusing if that GIT_TEST_OPTS is in your config.mak (because
-you want normal "make test" to run under prove but still keep logs, and
-you put it in the file ages ago).
-
-I don't think this can be fixed by perf-lib.sh. The problem is internal
-to test-lib.sh, which is overwriting the environment when it sources
-GIT-BUILD-OPTIONS, without any opportunity for perf-lib to act before
-getting re-executed. It would require test-lib.sh itself to have some
-notion of "here are some stashed variables; restore them via eval".
-
-Which just feels like stacking band-aids upon band-aids. The original
-problem started with 4638e8806e (Makefile: use common template for
-GIT-BUILD-OPTIONS, 2024-12-06), though one could argue that even before
-then the precedence rules were kind of sketchy (it just made things much
-worse because now it crops up even if you don't set GIT_PERF_LARGE_REPO
-in your config.mak at all).
-
-So I dunno. I couldn't quite bring myself to write a patch, but I
-thought I'd at least write a warning to the list in case anybody else is
-bit by it.
-
--Peff
+diff --git a/setup.c b/setup.c
+index 075bf89fa9..ed86671d84 100644
+--- a/setup.c
++++ b/setup.c
+@@ -920,7 +920,7 @@ int verify_repository_format(const struct repository_format *format,
+ 	return 0;
+ }
+ 
+-void read_gitfile_error_die(int error_code, const char *path, const char *dir)
++void read_gitfile_error_die(int error_code, const char *path)
+ {
+ 	switch (error_code) {
+ 	case READ_GITFILE_ERR_NOT_A_FILE:
+@@ -940,7 +940,8 @@ void read_gitfile_error_die(int error_code, const char *path, const char *dir)
+ 	case READ_GITFILE_ERR_NO_PATH:
+ 		die(_("no path in gitfile: %s"), path);
+ 	case READ_GITFILE_ERR_NOT_A_REPO:
+-		die(_("not a git repository: %s"), dir);
++		die(_("gitfile does not point to a valid repository: %s"),
++		    path);
+ 	default:
+ 		BUG("unknown error code");
+ 	}
+@@ -1031,7 +1032,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ 	if (return_error_code)
+ 		*return_error_code = error_code;
+ 	else if (error_code)
+-		read_gitfile_error_die(error_code, path, dir);
++		read_gitfile_error_die(error_code, path);
+ 
+ 	free(buf);
+ 	return error_code ? NULL : path;
+@@ -1641,7 +1642,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 					return GIT_DIR_INVALID_GITFILE;
+ 			default:
+ 				if (die_on_error)
+-					read_gitfile_error_die(error_code, dir->buf, NULL);
++					read_gitfile_error_die(error_code, dir->buf);
+ 				else
+ 					return GIT_DIR_INVALID_GITFILE;
+ 			}
+diff --git a/setup.h b/setup.h
+index 7878c9d267..436aaa22c1 100644
+--- a/setup.h
++++ b/setup.h
+@@ -38,7 +38,7 @@ int is_nonbare_repository_dir(struct strbuf *path);
+ #define READ_GITFILE_ERR_TOO_LARGE 8
+ #define READ_GITFILE_ERR_MISSING 9
+ #define READ_GITFILE_ERR_IS_A_DIR 10
+-void read_gitfile_error_die(int error_code, const char *path, const char *dir);
++void read_gitfile_error_die(int error_code, const char *path);
+ const char *read_gitfile_gently(const char *path, int *return_error_code);
+ #define read_gitfile(path) read_gitfile_gently((path), NULL)
+ const char *resolve_gitdir_gently(const char *suspect, int *return_error_code);
+diff --git a/submodule.c b/submodule.c
+index a939ff5072..c36732ca0b 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2578,7 +2578,7 @@ void absorb_git_dir_into_superproject(const char *path,
+ 
+ 		if (err_code != READ_GITFILE_ERR_NOT_A_REPO)
+ 			/* We don't know what broke here. */
+-			read_gitfile_error_die(err_code, path, NULL);
++			read_gitfile_error_die(err_code, path);
+ 
+ 		/*
+ 		* Maybe populated, but no git directory was found?
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index dfbcdddbcc..6356e9ec72 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -27,7 +27,7 @@ test_expect_success 'bad setup: invalid .git file format' '
+ test_expect_success 'bad setup: invalid .git file path' '
+ 	echo "gitdir: $REAL.not" >.git &&
+ 	test_must_fail git rev-parse 2>.err &&
+-	test_grep "not a git repository" .err
++	test_grep "gitfile does not point to a valid repository" .err
+ '
+ 
+ test_expect_success 'final setup + check rev-parse --git-dir' '
