@@ -1,81 +1,85 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09CA378D96
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FA03E172E
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 14:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780408623; cv=none; b=lxYzUVrtR2oyYf2nkCA3lxwfYTiCN8RiiuhGL+aKj9uMJzbXl2Abb8ely5PN79D0wNCkRbqmkWfNltNOUBYwGnOMt5ExXAvn7w2AzBU/mE+E/9DgPQL/C+81AdDwU0tHTbDh3gGV5MP3842iyVyKR1VzTg4SauJIlHdeJARxQyA=
+	t=1780409307; cv=none; b=qd1HZwBcTJ2GoobGGmGy2ftDTdsg58S/D4kbFuClgxJtWDrQGkmU9M9iBPakbpMkfMIPdK1UrmDbKRupTxz+jKrTitfGTifZaqXqLtg85LUE70vyUEfrsnrzre5kWyjoGdLtaLWbGuMUiwq+VRitFYcUqB78gTwNSSgfS8lemlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780408623; c=relaxed/simple;
-	bh=rarWuSzh+kRjkTgmXR5Bv7L2nxt77B/jTCs8VW4LOZ4=;
+	s=arc-20240116; t=1780409307; c=relaxed/simple;
+	bh=DTBsV05jvMQ+JSswLXXTVZRji9fMSyVSn2FK84E/d7k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bs+WpMsZ97Qxgr6kZnim/evIjWf6L21F5AlkdMn0gFjCg6vApsQ796Frio2vKqdnmS3O9KaIdtlYBJun2CAdGD7gq9e1cc5B+ZcmEuIq9hwh+kjbPjMrRXEyot3VQ9InG8NOwmr3uiNorB+jAhKlMGMdzbRiVTNuOF2lNSprCbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=USdaTXak; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OcqJAGJW; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=nN4HZHMzwcW0fBVjQHqzSZcJ7p4XIHw3C+JeO6PZ1UXb6pFoPfKas8nZW0XuN1+QSKsJjSFfUyhTi4bG4+NceK9ldr3CNRhr8RpfX9RFyD3a2ZUg9Cyuzt2iz1T+phtrP7aGykwwd26Mqxu61a0SirRPFKRGyVno/8qqyFZLU7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=foELp8Sd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LLy1x+px; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="USdaTXak";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OcqJAGJW"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="foELp8Sd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LLy1x+px"
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2490E7A0032;
-	Tue,  2 Jun 2026 09:57:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 02 Jun 2026 09:57:02 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 17AFE7A00C4;
+	Tue,  2 Jun 2026 10:08:24 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 02 Jun 2026 10:08:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780408622; x=1780495022; bh=EvVVeo/hIy
-	1MrFMeAgilMtxIlzUQ8oHEXWA2+nIp7kk=; b=USdaTXakxezKjqxaEWtpT8V8u4
-	TrVpqWgbySpR0Y8CQbvZZBG9bE2A1i22S7nrHzL9ie9Sy3QGaO3dE2gR0ckS2vd9
-	k0IKifp5BjtNLbgihZxpeDbnSHrRc+d1J2LxrYuWuNIz38fGTwT791ptAXJ5v3ix
-	ED3yLdC1tCPXySLblt8OLa7oxbLHaaP4MVhYHi6CUV519BXwJcZMbrn5tQs5REfp
-	Rlot5FnIxXQOtka6e0WKLejOsig+9RY6t9n/hmIXELEk3uxLYje91zMoY4KH2js9
-	VH56VLED5EfVFiDnp9bKgkk/4G78+mi+51oCBZ7RZ5Y8riZ9vmVCSJjiW+2A==
+	:subject:to:to; s=fm3; t=1780409303; x=1780495703; bh=WWwOr5FG23
+	RnApm8hFyNV+XQAW8XL8LeBO7DmpbSD1U=; b=foELp8Sdvq6YT+O3vcInz51ajW
+	n8KwfLab1N6zdn9tQcJyeEfGERaNzhK6ituoA7Zn3wl7LqZlyIPEkv2Q5AcORHzo
+	BepH+Hcg2TtIe9is8yjF0VV7NO4sZYloWPbHqw+TACifKIqDAmoTQl1JkLRRLWVS
+	Lezc9yl75Xo9JNr5IKnYEV6XaOnciGw6z1U66oM9te2UYe+yCz3tKLMwzNHO3Hdz
+	DqjRWbO+fVo3rGyvVhXdXopThhERnOkgy6zJ8a+QxUdMuIs1RdMFJp3L7He2YrQ3
+	6grvXLGOOdUxSGJWuEOqjrCheNuTlwyxXAd/RMC7OUYFrMhAS9nxmRhtkiDQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780408622; x=1780495022; bh=EvVVeo/hIy1MrFMeAgilMtxIlzUQ8oHEXWA
-	2+nIp7kk=; b=OcqJAGJWXZt49YAVvz63N7ku/nKc2v00/0BY8zqDqyEf9n8M2sz
-	aYjXiN9PbNn90QVALh7P24gI78bQ3zXOh/D8a8dYi9cFTtQCR4dU3Oy9lgw0LcAr
-	ZgrSaFvhWXtHDO422Nh3hfLEYnMnATYvFIDTdPyKdRl6SUB9YxUfgrio7gOsUJxG
-	k/bdSYv4B8VpRTy9xKb4df6nxw5y9wnB/GVozqx1ZpuzQgVXmKhpcSia5/L9PjpW
-	jJXuCRp+EZYeT+x9hJJD8o6BP8DdswjGYZTnqMv/IJE0NZ1+XphXQc8sJpbXbi0G
-	/kukK1P9aALs7wRDL1tZKCOSsbo4Haulvgg==
-X-ME-Sender: <xms:LeEealsmdRBIzxXFDJ_Dck9vMLr1wk0dHMNnO_mSCnLnpvP9rJCkyQ>
-    <xme:LeEeal4ODTpYQ7Eq0LsVyt6HBFBs3ehb-Qt6he2KIK18JNvuIfyziI45FuvgqSGZX
-    2Z1SSBQ2PRMECIQU3M4FS6XAkUcATSb1KxPXMr9awZR-4Hww-htEyU>
-X-ME-Received: <xmr:LeEeamKanWnN1vRHKc1X8JXNPr-SxY5PnvojC3M5N04NlZZ4OHcg983THSHKdkuy5QceIdHKAPE4zhIr9zOXSSKCqovLB-SP6aYc>
-X-ME-Proxy-Cause: dmFkZTGkvze+Rou+Het1E/szF1BUU1cFA3nXYfijOlQtem2n32PBLbv2ATzVu4orKaiLPf
-    wcvXNU2qGqds3Mo5hod06teoWLejVbwiagpcwPt1RgS6qfcV1hXmy9mMbcNo1yePT7kg7v
-    9yUgiz9wAFxdd2VNRLgKCvcQcCCYzg71RUWbXSk1YR+lUEVf80SCks5GiKnqkxOqMBzQDf
-    Pw9LLqLjQWNqJ3BXQPVz7XjNpKaGC+OteJ+VtLJ63q+cAb5kQQEmMpWDYGXeMIY/ROACXz
-    zh2kYiX9QQb1B3FMiHx4G2ZeFC7BNSwPMpR/OumD7HKN51/J6LotwN1y99Pxhyxlh+dAlQ
-    HzUSdfmN/FC1PTqHRpzOlrJvt3yyiG0fQqLSBA5cdminN/8gItOPano0B1R/27Aj9Ouacq
-    fVMAGEK6zU2Qr+ntgCKg4A5XHe0SjVnYjLNIwVd3gNk52MMYUFMS+6Ve842CSS5IZpyfGt
-    Ze94tm2dJhRBGb2XpnZbHn49BDB2IrlQodMmfS4etNywFRtsD+51DuVLy3M4beO/BqAC0E
-    KOivlM21daUNVHPYbXbtg9sBMhxsnq+GJQ2xOvnUsXTulfl6pYAgJkxjmZ41FyV15sTC7r
-    KtgfmpsSWtN4GMDWUuqrytxM9DW27hguyfxLL0p4e2NzJyGUYUgcnLhPCnhw
-X-ME-Proxy: <xmx:LeEeal5L8cfJWT8qVpdnIY5byR2nH8EJQ9NpeXWUW2ECCeRJmKZ86A>
-    <xmx:LeEeapwGfVTW6ty2zrsPlNoxUawUy26MIryHAJZNBupB-cI5f7yVOA>
-    <xmx:LeEeapZ5jbdMCWCeRKbycg8t_boKw7v6fHNbqtT0yqvalLvK7UooNw>
-    <xmx:LeEearSSlNpNPQtKfHUs177pJfhgqJgSthj719dKkvLbtHJ3ZccNEg>
-    <xmx:LuEeah4amzQbZGnLfbYVcXLxfPU8AseTlDwRtDPfu-h9_lUgKPPtvFhO>
+	1780409303; x=1780495703; bh=WWwOr5FG23RnApm8hFyNV+XQAW8XL8LeBO7
+	DmpbSD1U=; b=LLy1x+pxMnRRk5oSOyVEkA1BKk74R/jsEzzaxmrQ5HNUjoUMCGy
+	+0EHqiLozogy/DHDsDyghzDQsWuuxDcdgIAKav0h+lsWgzwt85K4B12LmOxDlb21
+	czWTmlti7DXMBxh4t3PLPga9Z1xAZmAFLcKMzAPCAK/y4Oa6omAjoN57MndczrWg
+	kBDtmvZeLI9NsOFCZDrA8qr8VCPCU4y+/mU5JfJLU/hu9VmyYPAGIJUbRQRcQZh9
+	b4dQiHhpOlbccD1HcsfuTraEI1bGdOBG/YuB8a3kls2hl7tV5IbU5AS8Su0BsG6t
+	A1hLX1Ni4qnj7qrn3lfn2yxD7FVSWObpKVA==
+X-ME-Sender: <xms:1-MeasO-JuhD290v9gWIRJ51QvYGZQPPexyjyLzqRBkxgx5oNRqZXg>
+    <xme:1-Meap1R07gE9WQBVsstMpjW5XCQsrsAdpJWm4fMOhdNP6w-n7DmYapuDGN7lpxcJ
+    4Jz5IJwsG7eyVMUcHSMK3HViuCmzdbYowpdx7Z0-tGg2548eZuo4dE>
+X-ME-Received: <xmr:1-MearlgG5M7voajSwjhZBhldWii-W6JQ6a0len26VBLZkpx8DfGJoeHKI7e2DfWTXKmJq4Hm5PT6tyJqNNpqnnGVpOEk0ZL5sZN>
+X-ME-Proxy-Cause: dmFkZTFTF63MTYuvjv0BkVnfnukI0Pr5maYWN8l9+IyHf/rLR2CjwHuvbB/nNP2cQtcSM4
+    oJg+73aGQkxDgmIY5QzbX2t6X2ypU8ZNwlE5+IREybXlsMJ9MAUgXF0JBGJqyikyeW6fCS
+    zj3mF5wDKM6650QpItCMOWuwrj3wwF46QucFlQEolwL0XMOqWmB/8+K4FVkN51uDN/UXTm
+    1nEIhTOGxsF7941dTq2pJCmsFCoDFnTkGPq9/X91CwkARJkbaxh+ikwvuGmVnNUYjjacAv
+    gOvHWVAi7AVR1LAGVhV9Tb9c+jZjmVURE2CP+U3w6ANrRxaMgHrqKCqvewZ8IP+JHNNsBk
+    JCaA1seIdypjnYeq/NrpMN9PAtI0NK1gfWisfdXPB5yqkI2cRApcpIvvqmfPk1oI+XQ/h7
+    XQGE5dmVUw1MUXsQJTR2iRLCYzv9yBAY4wb9eVz7hReuQ9seCMfMiTDtyh1Wk+OfZEgFWF
+    yzxa69UbibcYhvdZf0ioWxK54vv6RWJFspCczliXL/6rEw73TADkhWEHJcshQs0BebUzUA
+    CvpK/7C1bJ2e4j+pk0bCaVynkSpXl9LG2I5KZiIaUfuvKBS0BJsxFsiBodg/UL5/iJjCiV
+    Xu8Cbg489J6mqhYZNgTFr036i+UGW+++1KUnw7CDPgWy3mw6BzE9ZQy9HaSA
+X-ME-Proxy: <xmx:1-MeagWPu1nZFadlgYD2BNH8MJ14i_YrzXfFy8cbPHliFs_j_kjjsA>
+    <xmx:1-MeahsgDBsNgrp8agaIwqk72jlcaMtUJg0KsPPxba6atGruWV4URg>
+    <xmx:1-MeajZH4m-FFfrRXry26WOsl2f62aiFgCEbtkpXV5j0Y3qgYcAPpw>
+    <xmx:1-MeagUeVL8h6xLLrQdaX4wZ14qoFN8H5U9aBcAaDJ_i6sFC4wUjOQ>
+    <xmx:1-MeankJHGGbQcHWVqUOvRSCivbO5wOSNOpd7cc-kDOKdbIk5hon98Y8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 09:57:01 -0400 (EDT)
+ 2 Jun 2026 10:08:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Andrew Kreimer <algonell@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] doc: fix typos via codespell
-In-Reply-To: <20260602111552.6084-1-algonell@gmail.com> (Andrew Kreimer's
-	message of "Tue, 2 Jun 2026 14:15:18 +0300")
-References: <20260506101631.18127-1-algonell@gmail.com>
-	<20260602111552.6084-1-algonell@gmail.com>
-Date: Tue, 02 Jun 2026 22:57:00 +0900
-Message-ID: <xmqqzf1dujtf.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v5 1/2] config: let git_config_parse_key() validate quietly
+In-Reply-To: <d938ebf95a817c00a415670c08b839747d711d29.1780407557.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Tue, 02 Jun 2026
+	13:39:16 +0000")
+References: <pull.2302.v4.git.git.1779823288005.gitgitgadget@gmail.com>
+	<pull.2302.v5.git.git.1780407557.gitgitgadget@gmail.com>
+	<d938ebf95a817c00a415670c08b839747d711d29.1780407557.git.gitgitgadget@gmail.com>
+Date: Tue, 02 Jun 2026 23:08:22 +0900
+Message-ID: <xmqqtsrlujah.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,74 +89,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Andrew Kreimer <algonell@gmail.com> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> There are some typos in the documentation, comments, etc.
-> Fix them via codespell.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
-> ---
-> v3:
->   - Address test breaking changes (strings bounded by single quotes).
->   - Thank you for your patience (extreme noise/gain ratio).
+> Add a "quiet" parameter that suppresses the error() calls, and let
+> store_key be NULL to skip the canonical-copy allocation.  Existing
+> callers pass 0 for quiet.
 
-Thanks, but this is wrong.
->
->  t/t1700-split-index.sh         | 2 +-
->  t/t3909-stash-pathspec-file.sh | 6 +++---
->  2 files changed, 4 insertions(+), 4 deletions(-)
+Hmph.
 
+The way this patch did this may have been easier to implement, but
+is a bit different from what I had in mind when I suggested to
+"refactor" the existing logic.
 
-[v3] should not be "on top of" [v2], but the above shows that
-apparently this is vastly different from [v2], which had
+Perhaps the updated "git_config_parse_key()" in this patch should be
+renamed to be a file-scape static internal helper, and the existing
+"git_config_parse_key()" should become a thin wrapper around that
+new helper function, retaining the current external interface,
+requiring no changes to existing callers.
 
- Documentation/SubmittingPatches            |  2 +-
- Documentation/git-sparse-checkout.adoc     |  2 +-
- Documentation/technical/build-systems.adoc |  6 +++---
- builtin/pack-objects.c                     |  2 +-
- commit-graph.h                             |  2 +-
- compat/precompose_utf8.c                   |  2 +-
- hook.h                                     |  2 +-
- meson_options.txt                          |  2 +-
- midx-write.c                               |  2 +-
- odb/source.h                               |  2 +-
- packfile.h                                 |  2 +-
- path.h                                     |  2 +-
- reftable/system.h                          |  2 +-
- t/README                                   |  2 +-
- t/chainlint.pl                             |  2 +-
- t/chainlint/chain-break-false.expect       |  2 +-
- t/chainlint/chain-break-false.test         |  2 +-
- t/t1700-split-index.sh                     |  2 +-
- t/t3909-stash-pathspec-file.sh             |  6 +++---
- t/t4052-stat-output.sh                     |  2 +-
- t/t4067-diff-partial-clone.sh              |  2 +-
- t/t9150/svk-merge.dump                     | 10 +++++-----
- t/t9151/svn-mergeinfo.dump                 | 18 +++++++++---------
- t/unit-tests/clar/README.md                |  2 +-
- 24 files changed, 40 insertions(+), 40 deletions(-)
-
-Until the topic is merged to 'next', a new iteration of patch(es)
-should cleanly apply to the base that [v2] was meant to apply, but
-should pretend as if [v2] never existed.
-
-> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-> index 869fb4a14e..887e72a5fa 100755
-> --- a/t/t1700-split-index.sh
-> +++ b/t/t1700-split-index.sh
-> @@ -502,7 +502,7 @@ test_expect_success 'do not refresh null base index' '
->  		git checkout main &&
->  		git update-index --split-index &&
->  		test_commit more &&
-> -		# must not write a new shareindex, or we won't catch the problem
-> +		# must not write a new shareindex, or we will not catch the problem
-
-The committed code never had "we won't" (what was in 'seen' does not
-count), and this patch clearly shows that this is to fix-up the
-breakage the previous round caused.  We do not want that.
-
-I'll squash the fix-up I already had into [v2] that I have queued,
-which should be sufficient to get to the state this [v3] should have
-been, I think.
+Then in the next step, config.[ch] can add a new entry point that
+serves the purpose of is_valid_key() in the previous iteration,
+perhaps call it is_valid_git_config_key() or something like that
+(Patrick or others may want to suggest a better word order in its
+name).  That way, we do not have to sprinkle many calls into
+this (rather ugly) version of git_config_parse_key() with overly
+wide interface that repeats meaningless NULL/0/1 parameters that no
+callers want to use (other than for the purpose of differenciating
+the real git_config_parse_key() calls from the new calls made to the
+same function to ask "is this a valid key or not, yes/no?".
 
 Thanks.
