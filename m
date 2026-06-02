@@ -1,81 +1,117 @@
 Received: from mail.luna.gl (mail.luna.gl [141.147.12.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82303A4508
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 08:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E18738C423
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 08:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.147.12.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780388120; cv=none; b=TLlfN/93thCXGAAPmjT6E3Mxe+KVguOQRJTUU7XFUg0k5HBhOvub7GlMf4mveX8MdmgRxu86lhKJnopRYitlrh9z5Tf8BWinn7hWQfHzk0BZnM9Yfre/ig0EeNLRY+6Ky7OUtw6cW/nGSl+thDy5gEiSjAzX6iRRZ92PaJJh9cM=
+	t=1780388389; cv=none; b=Io0qPwB3dbkk+mub8WV0fSSu4IxyPfQXrjRkxJqdAAkRduwJounnZfK+jiZzN3b8I7EbIDOQDwW8ayWqAbCtOCThBTpyDi6U8qARtkHktgEXrMOL5+L0OmWG9PTyE4q2EiLFD3IXSmAu3mjK5ulwR0L2zRduMKnwazQkfKgWn+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780388120; c=relaxed/simple;
-	bh=W3hx+emmdU19WIi1zxcdqVcohYjmXbjuSl6mfH/0Hgs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UESRz25kNfMW86tmJMbonEG+YQ+NtzueJEgYjCKsmDBzulLWGFBM/94WZhy2GuQa54xMiq5vqdcVBY5oqfCL0BVeBbfrDwU2wDjcFLRi4ep/OsQKOTUKMvnm8FdqshOeO5Qs2RW9T5JmgWyEGI+XJ8v2sbebBOLxf20Ca8Rz7bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl; spf=pass smtp.mailfrom=luna.gl; dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b=RgFU8gcH; dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b=d5MK+yut; arc=none smtp.client-ip=141.147.12.19
+	s=arc-20240116; t=1780388389; c=relaxed/simple;
+	bh=2LUuJPKBsP+leJQDrRVlvfFm63Q3wY3ro1TwietjLQ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pQggSL5uS1GAi13nvjh3Ea6JZZKJWTu6zrOGdfviHIM84UMNTvcEcZV9x2xGS0aw2N72hVakwuFOtkGvt2O9INyEZSua3vCr+o/cM1y9A/u552Ut/2IV8fX92PORTRwabA4tR2MQs1iu/44mB5C3hf6pJnOuOC5rhdalGHRnPFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl; spf=pass smtp.mailfrom=luna.gl; dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b=h4dQXHAH; dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b=CMkqYgeb; arc=none smtp.client-ip=141.147.12.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=luna.gl
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=luna.gl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b="RgFU8gcH";
-	dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b="d5MK+yut"
+	dkim=pass (2048-bit key) header.d=luna.gl header.i=@luna.gl header.b="h4dQXHAH";
+	dkim=permerror (0-bit key) header.d=luna.gl header.i=@luna.gl header.b="CMkqYgeb"
 DKIM-Signature: v=1; a=rsa-sha256; s=202405r; d=luna.gl; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1780388115; bh=vY0812oE2bLpcO3HoqRYedM
-	eLSg0Pq7wSIGAWfmTLa8=; b=RgFU8gcHFlG15Lzz1PAmWKgwoqL2RFAg11lpuxo7zqnngK2ndk
-	Xh37PogPJN3LfmIISLQBv4yuphu/rWzCsq+dlOaHRUpK9eLQ7I/bGEN/lb5QGYfgG7ZeOrVhK/r
-	UmK+7xvliUbZ32z4c+4NFQjMb8LFCRsn/vef+Yqh52grIJoPTiGKPfUKP/5bg5vyhjeCYv7meKG
-	wmdyzenOCmmNIoVWYCTPrtT3A6ej4nT+SagSisNtJFjvd5AcPq0yCuypuAQFvfsx68YLln92Qt1
-	Wjq7x2YFy1EmuEJcJm81EFlzqg+CzLB7+0mQ17cG+lPg4iTGotw+UpQlcsl1yeCqcKw==;
+	h=Message-ID:Date:Subject:To:From; t=1780388383; bh=btyRVEaFya2acp7Bhdjm178
+	Hp4sFaCisSdhSzT2ZDF4=; b=h4dQXHAHYZhOMLVg6aoVgMnBgVAzp0ys9dNuTWPykAPGHYw+5T
+	6tvObuMvqFpfFjig098qOvyOSZ+fuh98NllOG+LVL5CsOZxNPqHVrvErhBu0HodzwvXzEyXMBHB
+	1oqsNwci4Qrst89xfIWsh/ZHfdZ73yqW+QeH6G22m+5jKqa3CbzAZsP6Y4K77uNXDzRW3mTorCs
+	eBYgZeJEyHdQDJDv8M8eybYWnK5650+Be6MT7W9tjtdhzeGCSz00r55tWjG0MZ/C0BUcknWvcZG
+	/H+FeFmpGa7A67SqKM+lzOF2szqfYSaO8EBi+w4klbODOoNUCzoU+1LhPnoAYpDc6Ow==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202405e; d=luna.gl; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1780388115; bh=vY0812oE2bLpcO3HoqRYedM
-	eLSg0Pq7wSIGAWfmTLa8=; b=d5MK+yut5ECH4Vx1ADNZ5eq593FqaVXXLMHD7cQjgzq6ut3Ef0
-	EiFzJgf79pP6t3CJpvWwPYSXvNVNDVXXCqDQ==;
-Message-ID: <2194e42a-5c41-44e1-ba36-1599cbd41415@luna.gl>
-Date: Tue, 2 Jun 2026 10:15:15 +0200
+	h=Message-ID:Date:Subject:To:From; t=1780388383; bh=btyRVEaFya2acp7Bhdjm178
+	Hp4sFaCisSdhSzT2ZDF4=; b=CMkqYgebOP/zMS3yqCmkuXuvvUTHETgqQZoPxm9Vgt+gcQ7avZ
+	aeRGUGckZ/xUO5AsA6GagmL/gcciKq32jJBA==;
+From: Luna Schwalbe <dev@luna.gl>
+To: git@vger.kernel.org
+Cc: Luna Schwalbe <dev@luna.gl>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] doc: document and test `@` prefix for raw timestamps
+Date: Tue,  2 Jun 2026 10:17:36 +0200
+Message-ID: <20260602081924.673763-2-dev@luna.gl>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: document and test `@` prefix for raw timestamps
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20260601213944.645731-2-dev@luna.gl> <xmqqfr35zt6h.fsf@gitster.g>
-Content-Language: en-US
-From: Luna Schwalbe <dev@luna.gl>
-In-Reply-To: <xmqqfr35zt6h.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
- > Does this "additional paragraph" format correctly, instead of
- > rendered as a literal block (typically typeset in typewriter font,
- > monospace)?  Don't you need to do something like what is done for
- > "ISO 8601::" that appears later in the same file?  I.e. lose the
- > four-space indent and replace the blank line before it with a single
- > '+' list continuation operator?
+The Git internal date format `<unix-timestamp> <time-zone-offset>`
+fails to parse when the timestamp is less than 100,000,000 (fewer than
+9 digits). This happens to avoid potential ambiguity with other date
+formats such as `YYYYMMDD`, especially when used with approxidate.
 
-Terribly sorry, you're right of course, I somehow forgot to actually 
-build and check the docs. Will send an updated patch right away.
+To force the parser to interpret the value as a raw timestamp, it must
+be prefixed with `@` (e.g., `@0 +0000`). This behavior was introduced
+in 2c733fb24c10a9d7aacc51f956bf9b7881980870 (parse_date(): '@' prefix
+forces git-timestamp, 2012-02-02) but was never documented.
 
- > This is totally outside the scope of this topic, but we might want
- > to enhance the rule a bit to declare this is *not* ambigous.  As
- > there is no 99th month or 99th day, this cannot be in the YYYYMMDD
- > date format.
+Document the `@` prefix in `Documentation/date-formats.adoc` to make
+this behavior explicit. Also add test cases to `t/t0006-date.sh` to
+verify and demonstrate the difference between prefixed and unprefixed
+small timestamps (e.g., `@2000` vs `2000`).
 
-I agree there is room for change with this rule, although I'm not sure 
-how sensible it is to start allowing certain values based on whether 
-they are also a valid calendar date or not (we'd end up trying to parse 
-YYYYMMDD first, and only afterwards do the actual timestamp parsing; I 
-feel like this might just make the system less predictable for users in 
-practice).
+Signed-off-by: Luna Schwalbe <dev@luna.gl>
+Co-authored-by: Junio C Hamano <gitster@pobox.com>
+---
+Fixed the asciidoc formatting, removed parens around YYYYMMDD example.
 
-As far as I can tell the rule is technically not necessary at all (apart 
-from some unusual approxidate interpretations like the `2000 +0000` 
-example, which I honestly think are more confusing than useful), seeing 
-that YYYYMMDD isn't a supported format anywhere.
+ Documentation/date-formats.adoc |  5 +++++
+ t/t0006-date.sh                 | 11 +++++++++++
+ 2 files changed, 16 insertions(+)
 
-If we want to have it as a safeguard tho, better documentation is 
-probably the most important aspect. As a user, ideally I'd love to get a 
-"ambiguous date format, prefix with @ if you intend to specify a raw 
-timestamp" kind of error message, but I suspect that might be difficult 
-to implement.
+diff --git a/Documentation/date-formats.adoc b/Documentation/date-formats.adoc
+index e24517c49..330424b2b 100644
+--- a/Documentation/date-formats.adoc
++++ b/Documentation/date-formats.adoc
+@@ -9,6 +9,11 @@ Git internal format::
+ 	`<unix-timestamp>` is the number of seconds since the UNIX epoch.
+ 	`<time-zone-offset>` is a positive or negative offset from UTC.
+ 	For example CET (which is 1 hour ahead of UTC) is `+0100`.
+++
++It is safer to prepend the `<unix-timestamp>` with `@` (e.g.,
++`@0 +0000`), which forces Git to interpret it as a raw timestamp. This
++is required for values less than 100,000,000 (which have fewer than 9
++digits) to avoid confusion with other date formats like `YYYYMMDD`.
+ 
+ RFC 2822::
+ 	The standard date format as described by RFC 2822, for example
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 53ced36df..8b4e1870b 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -138,6 +138,13 @@ check_parse '1969-12-31 23:59:59 Z' bad
+ check_parse '1969-12-31 23:59:59 +11' bad
+ check_parse '1969-12-31 23:59:59 -11' bad
+ 
++# pathologically small timestamps requiring `@` prefix
++check_parse '@0 +0000' '1970-01-01 00:00:00 +0000'
++check_parse '@99999999 +0000' '1973-03-03 09:46:39 +0000'
++check_parse '99999999 +0000' bad
++check_parse '@100000000 +0000' '1973-03-03 09:46:40 +0000'
++check_parse '100000000 +0000' '1973-03-03 09:46:40 +0000'
++
+ REQUIRE_64BIT_TIME=HAVE_64BIT_TIME
+ check_parse '2099-12-31 23:59:59' '2099-12-31 23:59:59 +0000'
+ check_parse '2099-12-31 23:59:59 +00' '2099-12-31 23:59:59 +0000'
+@@ -195,6 +202,10 @@ check_approxidate '6AM, June 7, 2009' '2009-06-07 06:00:00'
+ check_approxidate '2008-12-01' '2008-12-01 19:20:00'
+ check_approxidate '2009-12-01' '2009-12-01 19:20:00'
+ 
++# ambiguous raw timestamp
++check_approxidate '2000 +0000' '2000-08-30 19:20:00'
++check_approxidate '@2000 +0000' '1970-01-01 00:33:20'
++
+ check_date_format_human() {
+ 	t=$(($GIT_TEST_DATE_NOW - $1))
+ 	echo "$t -> $2" >expect
+-- 
+2.53.0
+
