@@ -1,62 +1,62 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD1F3F6614
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 17:10:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A1A3F5BEF
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 17:10:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780420259; cv=none; b=R+evlQ3KBM2DF/m40csRaiKR/Lk7Wf6DoODdMyAhtvpti0YQOVQ31LWMx1h96zO4v1fHW+cgtebowwDNi9IOO8aNdfo8OWcDoq2l8rKSChK0brGxHizuomj7RndzsPBF22T8JPfgxcDUoJ2VUimyOBdlFXaxPpXyGvRDl+eUEtQ=
+	t=1780420261; cv=none; b=mApi9y0I/PV17EBjIYVaI2slPPYxnOCXDtzKvXj/M4uf6OvhRViVt5IjH6YqYBPEdrhffkKc6fZllJg6TQPTPvr6DKnr4OizWpZgc3o9TmYn32GwAzRulp3zRaOh3Uhj2RgjPAM2mVS8hWNtyNnSwHe3ozcGdRgpxP8VvHD+GrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780420259; c=relaxed/simple;
-	bh=23nR3R05VC9NGVtrS6IFRiL4Y6Ve6VlZj2xDnwPXLdo=;
+	s=arc-20240116; t=1780420261; c=relaxed/simple;
+	bh=JrEjBXahUGJzjWZQfUf3Y4tuat9rteeXG7ywSEpu4EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N3H6nAiaeyZ4tGwxfCYmLsNo6D6CXhVUCVm6Q5m+CaDQtlg+waR+b8HAM/RdfxOn6CDuajWRL5M32r1G1iPoMtfNOB75Xvlmx+rFmH30Sf3bv61esLlsr4NaL/cotcogwJXfycnBRB0j3T5sDhAoxHa4pBs6NJ6EJL3x18WKIJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=faivMuqG; arc=none smtp.client-ip=209.85.221.46
+	 MIME-Version:Content-Type; b=bgocfk3NW9YM1xqBHz7rRKivLdBqVmi0YrsxY27VykbNX4pJcXNmvWUXhVn4zQoFcqbjPPflLVjKQ/8aLetum1gcrtkgMhtgSVH2F3EtEtWqw9aZKXe8tpK9gF2pktztYhkNNHLry4s/3Xr2m2t60kPvhRKKNjJFkAUpwY6YF90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EdnztQwz; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="faivMuqG"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-45ef29c5561so2538430f8f.0
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 10:10:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EdnztQwz"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-490b1bbcf3aso9359065e9.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 10:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780420256; x=1781025056; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780420258; x=1781025058; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RQdz8OzE9HTCsMAo40059iOYVs3OsJHDGb5DCGfSdoU=;
-        b=faivMuqGCuWhN8iUqW8OJSj1RMBvvcgobNhHZpwTzM/FXDuFYVBXeWN1GHANUenk4e
-         iuK88RCKTJ7GSHP7I2DTMAh3NPyi8SRgm1XnIw598lxD0955D9uREA83vWiiQaXoKC1Q
-         bmiCzoplCOaWb3mHLE+KD/8D/LXPNryY812vONCuvMzhtg0gV7ZEEtApnirG6GJQq2uI
-         ePN3e91nImQhRj0LUCXDFnZf8BpK6MnKy7i5l39lxWWerHmYzWK+wYiAY2ygrRfWsph6
-         a7nuJ1fpkh3GpTyV+2TfrrcUX7szeVyCP8uoeiWCtMJI/V/PVehb4On+Rvnj2avIdexS
-         ceFA==
+        bh=vtcsazlIjBq/JVO+JdysopsCsILHEXZFRRCmUBSHna8=;
+        b=EdnztQwz/MMSHHJNAHGMF9lsbnfLy3as8KA4PNsfoFHlRigU0hEItjGZ8KqgvmABb5
+         Uu46mFTd9p+GkbPWNBP019XVxY3Sox9QWOR+oS+vhXb3g6ey8nX0PGlNBPu7ystM82vn
+         GKxYOlNN/yLD8O9ScLZj68pZpzavdoLWtEQn1iVzfzqaH0BLNs9tQGhpOU2ohBfC0gnM
+         QLAMY//e4h1/1cLdKAZDXtNA1snw+kQTbr4j8VdKtwReEwBMtBHTuxe6zKve8jq8NDbo
+         22CSgD0fGLZrcAKrcdcmyfS5nekhaRfPcva8V9wOTt9FRGzkyrJWEVQuuTga5XVPfYpw
+         iI0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780420256; x=1781025056;
+        d=1e100.net; s=20251104; t=1780420258; x=1781025058;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=RQdz8OzE9HTCsMAo40059iOYVs3OsJHDGb5DCGfSdoU=;
-        b=jS+wgiOHFz78DTqQFZZ5YoXkG/FXSzJ9U/AJf7IM94LcYk/UmoC/V6yZpe3PWL/gUD
-         dWslJIoVcaElr7yzv9dRjLjNP9NTqF46W+8AaGbgcCwfQccT82JNPT/nUpfqe2caMnqN
-         c0+u/j2u37MtAiXmx61ePvFX3ufHhyn9RHZpKaRgo0xuAh3YvV0d3fgLOXEXJ7s/Qmt1
-         OeL5KBn3zS+ck6wZNEfSbQ7eNh1/QgW3zQgIHvN+smabtXLhWAC5khR6CU6j/lS1Y2QJ
-         75gMfKL6BRqKUXkP0U8M+z3u+x7NB95PyynJpM5bssCu8Wcy6aMJJuu+tu2/p6gf3A6t
-         IYNQ==
-X-Gm-Message-State: AOJu0Yw/Zioh/AFAPJIMhEMubnweCM5B7EKynnePj5Y8fNngF6sQ0U1n
-	+kCjiZ1K/EwfG9ak1cKLXZBNEmYI94izanblG1N41EQal+PGYkWg9UmhD8RiQAQh
-X-Gm-Gg: Acq92OH+JmVzvVABhPiBqlKk6oF7QQUmE8+MqmdKHTOcg/u3EINJyqyHpReGKcdH3PH
-	Rcabw2lAti7jfrsy0eQ2lkKsocr4+FKDdZQulezAar8F/UXG77f1UkxXdZG0d/odNGtiTOECVhl
-	VhS5fAf2I2LDcxT3/jTMtbU6Z5M/voqN9NJkVHTsd4Iah0EUY437FAzv2sV10HeOTBwV/901uWo
-	i2ApUR7XvbbvaE3d+M3LmEITDKJiGumVS3G1YO6A98uoqAqPdRFFAjnczR3S6ahcTu9yQI20bob
-	rnQWKDtxf0Fe11hxIarB2T2N/JCiNbesaFO9JLfkmsmsEanUuOoorvTeQmwcwRXHMnbZQ5CiW3E
-	90D3I0WnoPzHufQT3TMl4DsXvynMsWXKELpLmcOzSe4k03XAr42nBeGRkhtdjO9ehB+OHyHgCKj
-	tLgwULPax84zn89UwxdDZe49HK8lqFEgBhgQLp5RRBhrscxcIqzw04uiyvTDwBJ6ZhrLgG7FY=
-X-Received: by 2002:a05:600c:4e52:b0:490:9d1b:f086 with SMTP id 5b1f17b1804b1-490b50801b0mr10827635e9.14.1780420256068;
-        Tue, 02 Jun 2026 10:10:56 -0700 (PDT)
+        bh=vtcsazlIjBq/JVO+JdysopsCsILHEXZFRRCmUBSHna8=;
+        b=SXVUjVG4DuXHo1FaZa5YX1TZQBz60Y4Mdf35Y/IWuyd+whDLhxwnI4P8Dxf3v7yrpw
+         Is0PNBNRS38ReYHvufxjKAYtyLyjcJRVdDnbYTEJanXGFQoL5e5DWr9fw5luc0AOG5Pu
+         go2vxCdmj0L5kZ72osJaKcs8D09sL1FdT4T1FkQFAgTLGeOR1xHaGDJ01gc/eIxIcLwf
+         ZyV+fyZd6X90E+KWqplesZmKaLDC+XXpRhDJJsyTCcv2bHEPZgsG9/kg09PPndW0QKl/
+         CWcOjRsv8Z+pbSrKId8Ftu5L1yD2nfFsuADCn8EWmVtTz2KcBM9joFT8w5tmr4UHkEW4
+         Eizg==
+X-Gm-Message-State: AOJu0YyJKu2HrPlqBt9I47yiDJZqoYUk5ITyHy8zzP+H6/BhOafl8ou4
+	R9c2McA7bGMeTd07Q+8on9NBrSu704WFifANyKj72pz4R2J7LgRca3+3sSIWZUuz
+X-Gm-Gg: Acq92OG4EihU8beQVo4eh/JAVLB2cYK5YrrCi4oq5bxVoEU/m95aOmA9LWM0JZTsjkd
+	s25VqE0u2l+AsDuI2NswKFCe7rAZYLJh+3BSH/EUEm3clyDrzC2rUiugqf/Be9OTDgvF4rNUnJl
+	CO7N74Ykr+7dn8Iwm/pfmm1OnxWZHLLK0PBTX0lcNflBiD5SDBj4F6Qt40vl2H63gU7S3dunVpk
+	AgcN4sxPcL9YIrKN6IZ6q6y+3jcqxgRvNZW5AbygUriOwrWyp/io3PSRB8I+OTDwNsODFWc/5ds
+	rwrBgleKanORWFqataJB1LMktqKm4Z93g17dbLs4yheiH67OYqFUuU1OSu3jwePxuloiPNaBgAj
+	7fLltX9Nv+tybV64SghfhgGiXSNoY3Xlk/mBLP/Iai4ocj/unOtgjsoSTC1Vvawp7m/1nWM1Q39
+	TlMlCK0DBY3iM8WOnOpPaP85IAktmJcaD8EHGTMksVrIvNL0mmf+JAjCW6AXGkYi3OTdURthY=
+X-Received: by 2002:a05:600c:4508:b0:48e:5d91:cfe3 with SMTP id 5b1f17b1804b1-490b503f5d2mr10839745e9.1.1780420258271;
+        Tue, 02 Jun 2026 10:10:58 -0700 (PDT)
 Received: from pop-os.localdomain ([102.91.81.188])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e239f4sm122904265e9.7.2026.06.02.10.10.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e239f4sm122904265e9.7.2026.06.02.10.10.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 10:10:55 -0700 (PDT)
+        Tue, 02 Jun 2026 10:10:57 -0700 (PDT)
 From: Olamide Caleb Bello <belkid98@gmail.com>
 To: git@vger.kernel.org
 Cc: phillip.wood123@gmail.com,
@@ -64,9 +64,9 @@ Cc: phillip.wood123@gmail.com,
 	usmanakinyemi202@gmail.com,
 	kaartic.sivaraam@gmail.com,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v5 4/8] environment: move "pack_compression_level" into `struct repo_config_values`
-Date: Tue,  2 Jun 2026 18:09:17 +0100
-Message-ID: <20260602170921.35869-5-belkid98@gmail.com>
+Subject: [PATCH v5 5/8] environment: move "precomposed_unicode" into `struct repo_config_values`
+Date: Tue,  2 Jun 2026 18:09:18 +0100
+Message-ID: <20260602170921.35869-6-belkid98@gmail.com>
 X-Mailer: git-send-email 2.53.0.155.g9f36b15afa
 In-Reply-To: <20260602170921.35869-1-belkid98@gmail.com>
 References: <20260601154211.82370-1-belkid98@gmail.com>
@@ -80,18 +80,19 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The `pack_compression_level` configuration is currently stored in the
-global variable `pack_compression_level`, which makes it shared across
+The `core.precomposeunicode` configuration is currently stored in the
+global variable `precomposed_unicode`, which makes it shared across
 repository instances within a single process.
 
 Store it instead in `repo_config_values`, where eagerly‑parsed
-repository configuration lives. `pack_compression_level` is parsed
-eagerly because it influences packfile compression, a core operation
-where a lazy parse could cause inconsistent behavior and hamper
-libification. This preserves the existing eager‑parsing behavior while
-tying the value to the repository from which it was read, avoiding
-cross‑repository state leakage and continuing the effort to reduce
-reliance on global configuration state.
+repository configuration lives. `core.precomposeunicode` is parsed
+eagerly because it controls Unicode path normalization on macOS,
+a fundamental filesystem‑level behavior that many operations depend
+on; a lazy parse could lead to inconsistent results and hamper
+libification. This preserves the existing behavior while tying the
+value to the repository from which it was read, avoiding cross‑
+repository state leakage and continuing the effort to reduce reliance
+on global configuration state.
 
 Update all references to use `repo_config_values()`.
 
@@ -99,198 +100,145 @@ Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 Signed-off-by: Olamide Caleb Bello <belkid98@gmail.com>
 ---
- builtin/fast-import.c  |  8 +++++---
- builtin/pack-objects.c | 17 ++++++++++-------
- environment.c          |  8 +++++---
- environment.h          |  2 +-
- object-file.c          |  3 ++-
- 5 files changed, 23 insertions(+), 15 deletions(-)
+ compat/precompose_utf8.c | 20 +++++++++++++-------
+ environment.c            |  4 ++--
+ environment.h            |  2 +-
+ upload-pack.c            |  3 ++-
+ 4 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 82bc6dcc00..070a5af3e4 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -965,6 +965,7 @@ static int store_object(
- 	unsigned long hdrlen, deltalen;
- 	struct git_hash_ctx c;
- 	git_zstream s;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	hdrlen = format_object_header((char *)hdr, sizeof(hdr), type,
- 				      dat->len);
-@@ -1005,7 +1006,7 @@ static int store_object(
- 	} else
- 		delta = NULL;
- 
--	git_deflate_init(&s, pack_compression_level);
-+	git_deflate_init(&s, cfg->pack_compression_level);
- 	if (delta) {
- 		s.next_in = delta;
- 		s.avail_in = deltalen;
-@@ -1032,7 +1033,7 @@ static int store_object(
- 		if (delta) {
- 			FREE_AND_NULL(delta);
- 
--			git_deflate_init(&s, pack_compression_level);
-+			git_deflate_init(&s, cfg->pack_compression_level);
- 			s.next_in = (void *)dat->buf;
- 			s.avail_in = dat->len;
- 			s.avail_out = git_deflate_bound(&s, s.avail_in);
-@@ -1115,6 +1116,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
- 	struct git_hash_ctx c;
- 	git_zstream s;
- 	struct hashfile_checkpoint checkpoint;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 	int status = Z_OK;
- 
- 	/* Determine if we should auto-checkpoint. */
-@@ -1134,7 +1136,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
- 
- 	crc32_begin(pack_file);
- 
--	git_deflate_init(&s, pack_compression_level);
-+	git_deflate_init(&s, cfg->pack_compression_level);
- 
- 	hdrlen = encode_in_pack_object_header(out_buf, out_sz, OBJ_BLOB, len);
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index dd2480a73d..8ccbe7e178 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -386,8 +386,9 @@ static unsigned long do_compress(void **pptr, unsigned long size)
- 	git_zstream stream;
- 	void *in, *out;
- 	unsigned long maxsize;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	git_deflate_init(&stream, pack_compression_level);
-+	git_deflate_init(&stream, cfg->pack_compression_level);
- 	maxsize = git_deflate_bound(&stream, size);
- 
- 	in = *pptr;
-@@ -413,8 +414,9 @@ static unsigned long write_large_blob_data(struct odb_read_stream *st, struct ha
- 	unsigned char ibuf[1024 * 16];
- 	unsigned char obuf[1024 * 16];
- 	unsigned long olen = 0;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
--	git_deflate_init(&stream, pack_compression_level);
-+	git_deflate_init(&stream, cfg->pack_compression_level);
- 
- 	for (;;) {
- 		ssize_t readlen;
-@@ -5003,6 +5005,7 @@ int cmd_pack_objects(int argc,
- 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
- 	struct list_objects_filter_options filter_options =
- 		LIST_OBJECTS_FILTER_INIT;
-+	struct repo_config_values *cfg = repo_config_values(the_repository);
- 
- 	struct option pack_objects_options[] = {
- 		OPT_CALLBACK_F('q', "quiet", &progress, NULL,
-@@ -5084,7 +5087,7 @@ int cmd_pack_objects(int argc,
- 			 N_("ignore packs that have companion .keep file")),
- 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
- 				N_("ignore this pack")),
--		OPT_INTEGER(0, "compression", &pack_compression_level,
-+		OPT_INTEGER(0, "compression", &cfg->pack_compression_level,
- 			    N_("pack compression level")),
- 		OPT_BOOL(0, "keep-true-parents", &grafts_keep_true_parents,
- 			 N_("do not hide commits by grafts")),
-@@ -5243,10 +5246,10 @@ int cmd_pack_objects(int argc,
- 
- 	if (!reuse_object)
- 		reuse_delta = 0;
--	if (pack_compression_level == -1)
--		pack_compression_level = Z_DEFAULT_COMPRESSION;
--	else if (pack_compression_level < 0 || pack_compression_level > Z_BEST_COMPRESSION)
--		die(_("bad pack compression level %d"), pack_compression_level);
-+	if (cfg->pack_compression_level == -1)
-+		cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
-+	else if (cfg->pack_compression_level < 0 || cfg->pack_compression_level > Z_BEST_COMPRESSION)
-+		die(_("bad pack compression level %d"), cfg->pack_compression_level);
- 
- 	if (!delta_search_threads)	/* --threads=0 means autodetect */
- 		delta_search_threads = online_cpus();
-diff --git a/environment.c b/environment.c
-index 5b0e88b65c..d0d3a4b7d2 100644
---- a/environment.c
-+++ b/environment.c
-@@ -52,7 +52,6 @@ char *git_commit_encoding;
- char *git_log_output_encoding;
- char *apply_default_whitespace;
- char *apply_default_ignorewhitespace;
--int pack_compression_level = Z_DEFAULT_COMPRESSION;
- int fsync_object_files = -1;
- int use_fsync = -1;
- enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
-@@ -390,7 +389,7 @@ int git_default_core_config(const char *var, const char *value,
- 		if (!zlib_compression_seen)
- 			cfg->zlib_compression_level = level;
- 		if (!pack_compression_seen)
--			pack_compression_level = level;
-+			cfg->pack_compression_level = level;
- 		return 0;
- 	}
- 
-@@ -662,6 +661,8 @@ static int git_default_attr_config(const char *var, const char *value)
- int git_default_config(const char *var, const char *value,
- 		       const struct config_context *ctx, void *cb)
- {
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index 43b3be0114..0e94dbd862 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -48,16 +48,18 @@ void probe_utf8_pathname_composition(void)
+ 	static const char *auml_nfc = "\xc3\xa4";
+ 	static const char *auml_nfd = "\x61\xcc\x88";
+ 	int output_fd;
+-	if (precomposed_unicode != -1)
 +	struct repo_config_values *cfg = repo_config_values(the_repository);
 +
- 	if (starts_with(var, "core."))
- 		return git_default_core_config(var, value, ctx, cb);
++	if (cfg->precomposed_unicode != -1)
+ 		return; /* We found it defined in the global config, respect it */
+ 	repo_git_path_replace(the_repository, &path, "%s", auml_nfc);
+ 	output_fd = open(path.buf, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 	if (output_fd >= 0) {
+ 		close(output_fd);
+ 		repo_git_path_replace(the_repository, &path, "%s", auml_nfd);
+-		precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
++		cfg->precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
+ 		repo_config_set(the_repository, "core.precomposeunicode",
+-				precomposed_unicode ? "true" : "false");
++				cfg->precomposed_unicode ? "true" : "false");
+ 		repo_git_path_replace(the_repository, &path, "%s", auml_nfc);
+ 		if (unlink(path.buf))
+ 			die_errno(_("failed to unlink '%s'"), path.buf);
+@@ -69,14 +71,16 @@ const char *precompose_string_if_needed(const char *in)
+ {
+ 	size_t inlen;
+ 	size_t outlen;
++	struct repo_config_values *cfg = repo_config_values(the_repository);
++
+ 	if (!in)
+ 		return NULL;
+ 	if (has_non_ascii(in, (size_t)-1, &inlen)) {
+ 		iconv_t ic_prec;
+ 		char *out;
+-		if (precomposed_unicode < 0)
+-			repo_config_get_bool(the_repository, "core.precomposeunicode", &precomposed_unicode);
+-		if (precomposed_unicode != 1)
++		if (cfg->precomposed_unicode < 0)
++			repo_config_get_bool(the_repository, "core.precomposeunicode", &cfg->precomposed_unicode);
++		if (cfg->precomposed_unicode != 1)
+ 			return in;
+ 		ic_prec = iconv_open(repo_encoding, path_encoding);
+ 		if (ic_prec == (iconv_t) -1)
+@@ -130,7 +134,9 @@ PREC_DIR *precompose_utf8_opendir(const char *dirname)
  
-@@ -701,7 +702,7 @@ int git_default_config(const char *var, const char *value,
- 			level = Z_DEFAULT_COMPRESSION;
- 		else if (level < 0 || level > Z_BEST_COMPRESSION)
- 			die(_("bad pack compression level %d"), level);
--		pack_compression_level = level;
-+		cfg->pack_compression_level = level;
- 		pack_compression_seen = 1;
+ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+ {
++	struct repo_config_values *cfg = repo_config_values(the_repository);
+ 	struct dirent *res;
++
+ 	res = readdir(prec_dir->dirp);
+ 	if (res) {
+ 		size_t namelenz = strlen(res->d_name) + 1; /* \0 */
+@@ -149,7 +155,7 @@ struct dirent_prec_psx *precompose_utf8_readdir(PREC_DIR *prec_dir)
+ 		prec_dir->dirent_nfc->d_ino  = res->d_ino;
+ 		prec_dir->dirent_nfc->d_type = res->d_type;
+ 
+-		if ((precomposed_unicode == 1) && has_non_ascii(res->d_name, (size_t)-1, NULL)) {
++		if ((cfg->precomposed_unicode == 1) && has_non_ascii(res->d_name, (size_t)-1, NULL)) {
+ 			if (prec_dir->ic_precompose == (iconv_t)-1) {
+ 				die("iconv_open(%s,%s) failed, but needed:\n"
+ 						"    precomposed unicode is not supported.\n"
+diff --git a/environment.c b/environment.c
+index d0d3a4b7d2..739b647ebe 100644
+--- a/environment.c
++++ b/environment.c
+@@ -72,7 +72,6 @@ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+ int grafts_keep_true_parents;
+ int core_sparse_checkout_cone;
+ int sparse_expect_files_outside_of_patterns;
+-int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+ 
+ #ifndef PROTECT_HFS_DEFAULT
+@@ -532,7 +531,7 @@ int git_default_core_config(const char *var, const char *value,
+ 	}
+ 
+ 	if (!strcmp(var, "core.precomposeunicode")) {
+-		precomposed_unicode = git_config_bool(var, value);
++		cfg->precomposed_unicode = git_config_bool(var, value);
  		return 0;
  	}
-@@ -721,4 +722,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
- 	cfg->trust_ctime = 1;
+ 
+@@ -723,4 +722,5 @@ void repo_config_values_init(struct repo_config_values *cfg)
  	cfg->check_stat = 1;
  	cfg->zlib_compression_level = Z_BEST_SPEED;
-+	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
+ 	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
++	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
  }
 diff --git a/environment.h b/environment.h
-index 93201620af..514576b67a 100644
+index 514576b67a..508cb1afbc 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -94,6 +94,7 @@ struct repo_config_values {
- 	int trust_ctime;
+@@ -95,6 +95,7 @@ struct repo_config_values {
  	int check_stat;
  	int zlib_compression_level;
-+	int pack_compression_level;
+ 	int pack_compression_level;
++	int precomposed_unicode;
  
  	/* section "branch" config values */
  	enum branch_track branch_track;
-@@ -171,7 +172,6 @@ extern int assume_unchanged;
- extern int warn_on_object_refname_ambiguity;
- extern char *apply_default_whitespace;
+@@ -174,7 +175,6 @@ extern char *apply_default_whitespace;
  extern char *apply_default_ignorewhitespace;
--extern int pack_compression_level;
  extern unsigned long pack_size_limit_cfg;
  
- extern int precomposed_unicode;
-diff --git a/object-file.c b/object-file.c
-index 7c122ac419..37def5cc59 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1437,8 +1437,9 @@ static int stream_blob_to_pack(struct transaction_packfile *state,
- 	int status = Z_OK;
- 	int write_object = (flags & INDEX_WRITE_OBJECT);
- 	off_t offset = 0;
+-extern int precomposed_unicode;
+ extern int protect_hfs;
+ extern int protect_ntfs;
+ 
+diff --git a/upload-pack.c b/upload-pack.c
+index 9f6d6fe48c..3a52237134 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1336,6 +1336,7 @@ static int upload_pack_config(const char *var, const char *value,
+ 			      void *cb_data)
+ {
+ 	struct upload_pack_data *data = cb_data;
 +	struct repo_config_values *cfg = repo_config_values(the_repository);
  
--	git_deflate_init(&s, pack_compression_level);
-+	git_deflate_init(&s, cfg->pack_compression_level);
- 
- 	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), OBJ_BLOB, size);
- 	s.next_out = obuf + hdrlen;
+ 	if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
+ 		if (git_config_bool(var, value))
+@@ -1366,7 +1367,7 @@ static int upload_pack_config(const char *var, const char *value,
+ 		if (value)
+ 			data->allow_packfile_uris = 1;
+ 	} else if (!strcmp("core.precomposeunicode", var)) {
+-		precomposed_unicode = git_config_bool(var, value);
++		cfg->precomposed_unicode = git_config_bool(var, value);
+ 	} else if (!strcmp("transfer.advertisesid", var)) {
+ 		data->advertise_sid = git_config_bool(var, value);
+ 	}
 -- 
 2.53.0.155.g9f36b15afa
 
