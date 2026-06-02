@@ -1,73 +1,73 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF80A31F985
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 22:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D4431F985
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 22:21:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780438905; cv=none; b=teVivhiQTlrNctS2RHldUHJTunLaZPMUH6T4kM2GVKwoSmzFc8Tv+9F3Drl1HSYQR59AiNcfLQpWIIgEPtKcTttASf6X+U08wW96nPh1PRRdK/BlS2uTWLClXAWjYDFrjzCTAIjsbYMCciDYzMCi5Bl15dS6kKaBS5Drp/Ie6Zg=
+	t=1780438908; cv=none; b=cyzSVlA9OupOGKLH0ntbb+Npj3B4KNPXUoNq48jyMkWsd+K6o616peb/SIgrFMwIukYxvonBJftpQiW1ItC1NuLO0B6pMYfbLOKzL/dK/Ay/22gAf8le13xeQLoI+uAzOpxIntnaes9Uj1BN3yPlWS2xrJzNu1Vw+eavUg/Fr7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780438905; c=relaxed/simple;
-	bh=m5+JYpTlW6RO28/vVzpB3FniXFwO643VxNshlvC96PY=;
+	s=arc-20240116; t=1780438908; c=relaxed/simple;
+	bh=ut15PhX545dPvsBwERiGHTIqBYq6uUaNrtb7pneyqd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=blCkN4JOs8iFSHWTzYS23YpfsKAjZ5U0/TJ5LL1Q4+R/bugpqx1Wsr41HOpLNxzuqvvbs9wBUqjOKw3euYJxKvdAkYVWz374cxXKCMMFzN6WTQ3Hr3m+2C0hOHjFjMKGSHYZnoVMx8tvOLCtUH3kLffZAuTXEVq/qFB/hbFs6mU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=UtbH8gSs; arc=none smtp.client-ip=209.85.128.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=ngD1k/72r/Q/thoh81tx4IYIqeXodQb4+wUyYPVDNylctQ7/tQCux45ZpbEpbZEIOKdvHzCas6o61hCt68ZTNm0EkFgHzAjbFY7B+ALgkdu8ybBXDRhEA8iAUTlpesFKX7kEV5UWBn449B+qq/qTUBUwKfkRdfH8ECTetU1iKmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=i7UME09K; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="UtbH8gSs"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7e1916922b9so38884497b3.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 15:21:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="i7UME09K"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7ded779a345so39797517b3.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 15:21:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1780438903; x=1781043703; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1780438906; x=1781043706; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sidx1D0+Roh2zFD8A9tNiQCxOD8EvWoerRE0PvFZ278=;
-        b=UtbH8gSsPP0SNiljJfq0V2eLL957TOOw9NHzw5I9DuWSb5BAETd1BQVO+uEYbo8MMR
-         oeXce62zV8GwG4NQ505cMJTBl09IbjO7hMqz+Ayaw/1y7L/hrKmWFPCBpxKtE8ggpvOP
-         qH1lDzbh1jpNF6DUlTFrYgR0UQxBJKp/tBkLfbmMdj1A+kgs7svDQNl8AwMr7gEAbQN2
-         ViYB8ITAK6K/tb9PgUL5X9SJU2c611AdiK5axH04to0AbEisTNQFJdTZMgyMvlwy5DEq
-         aCou9oNQxQSl7iCNjTn1iwdp1vkspb/jD2QsFlwouzPTejp5ppqYn0rrfvEZ/bzCuIbO
-         O26Q==
+        bh=4+RSymkSou5w6oezE3HlBEnhDrLBfxWA2uiUG080tk8=;
+        b=i7UME09KLfN9eo7DynCxPPqbxz7+c+z+tDDghmdj0AewmoDKagDpyo15MPSsalktoo
+         JdietH7kR1ZN4zCSd+crR8zYzk3cs2EZQ2b4VyLXrjxJp7GhIuXO2jQ/QIjNIES6hvzJ
+         Nmmk8lApnfak+Bhu8hnXCABdrZ03VjKxmoLssaLFccsN3i1wF75C6jAvn/HJxB03Vis/
+         QyLBYb2KwfKkrbb7KW1xfpHndoqwVLcbxxrFhLgCypbCyybt1k694L95pqy3n4QG+eKn
+         7Z4h55MuUdFmJ0H3IEu2cLfgcKK8lGsjYRJtXWqmBNHXlb+li47XDT8nMQu/YrJCB7bf
+         7X0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780438903; x=1781043703;
+        d=1e100.net; s=20251104; t=1780438906; x=1781043706;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sidx1D0+Roh2zFD8A9tNiQCxOD8EvWoerRE0PvFZ278=;
-        b=dz1jvgk6cigpiebsuTY/NhsrQT4GjipKyPLr/pEUrN/dCltNhgVdDNkms7B9a9qQxi
-         6Ea3sqKtBedIIwG2z4N2+FPyeZcBXTTnqjwDxXIEkQ0d7HPm/nEFz3ijvL+DSz8hYNaV
-         drfQQu7ZIud+gp1/Hhu57rGOGlSs/4OixmECXpJjtqk9i0l+XU2tMkJcFnEtVaSnR1KE
-         3pHXU51LlePjCXgvHYvkQxX+69/W128SaYIE6LohZNQzQT/7pXOUnIqz1OFd9Lu89nbh
-         v8jR5hPttv0efgcjx5GF9HpvIh2iW3IyE9QF1GxQ0LDgAwcI7RtavQA3jvmgxfxunImw
-         hBMg==
-X-Gm-Message-State: AOJu0Yw3UYr1fuIvIK7fy/ANc5AwWy2CnaAG/X9MxwLCX8slBgjTBHkx
-	LQXF3uiqIqYHP/x9YMacsKjie1L4IiUsitNUqKC8lPMKwON8Nbcfg1NcFlKPuuGc6WNuMk2geox
-	ne1x/pDM=
-X-Gm-Gg: Acq92OGOnZg7eorcQf43zr7p+n+0OZ/iMHfQ2Y4N76w8Ozyd/9h4sasNwc6w+DAE8SF
-	N5wjk/TfvtxyKbCCOwLUj/mps47W2l09mcNPY6jUAwfZevgXTv4SJDqFZf5eZYziajfzDX+DYr8
-	CMspv1cBwYX7jskFH6AYpxGmYptWYikQK2aGVmBwizA4XhHvvZX6iiEmh8KSNtwSFYL3jlsHH2a
-	Swiotyhd8TA9xR+CBGf37Or3vtIBZx7B2BHUS+wER67k13+xp3jx9OaeETnVUs7L8cVZSCnsID2
-	F4DTR3tElI+LlOiq1pVx3jjIHzA++vDph7Xpue8jDgz4v6hE3Rj9NBTgluIOf7dU4T79eiRcfe5
-	i9v8WMEuppaCx+pAzedDROQOLIC9xKe6zaOfUCtRn4uKoVwD76LOq36hYaJffefakH+tw1cMOhe
-	MHt76DvnnL4JghsQEiUp0lsYZtbixzVkJlQkunBCeahqdj1HOQLlzfqf90CkxzyYkfvZy5BU4bq
-	SVEDsXaU4G0WxPZaYDsDoT/+3HR71Sd39/ho3lY+qzLUmPvsGk6YYWeqolqDkqOGKK3/kpNxt5X
-	OOaryYmVNOrgxAVTr0ddEaWj0k0ADxNH/OX2Dg==
-X-Received: by 2002:a05:690c:3349:b0:7cf:d8e1:76af with SMTP id 00721157ae682-7ea47dd5626mr9466707b3.16.1780438902692;
-        Tue, 02 Jun 2026 15:21:42 -0700 (PDT)
+        bh=4+RSymkSou5w6oezE3HlBEnhDrLBfxWA2uiUG080tk8=;
+        b=OU1Mh/1k+1WK+fdZdmB830HRkehcS5ZCdV4QgHJQ3d+WwwBNxXQQbettt2Golisb5Z
+         ufQMKd0dM0WmjXD3ljACbgXJPS+cqpR9GEav4/WWUt+kjbaHRhjV1KQuutmrGmwgS2w/
+         7ASEbUbp9Ld7JrbF3VmVEip6f3n+sTLQGBB0Eyb61bxeSUA2Z5KoS1vGNgl4r/1ZN70M
+         7HYYskZPyYyO2173a9deEI8B0JpwhM+d8Gf9hFCqOU87uEdAgTUB1RN9uIoFwJhyxWMC
+         BYdGF81SVXY/SzOUL9XYmQaR0M807u5ytJU5+a4AO0KK9VUlhL0XfqaK7xxf+Ucoam/9
+         NGzg==
+X-Gm-Message-State: AOJu0Yw5h5KyId2s9lNpGGZhpTO/hhlAQYo1w31oZCEX31HksejTQODC
+	64mpXNHGSRRkAkBXdaRh5VhYw5xVZF8LIdiu1YUFWNuEJS2mzK1lAf1MsMn/gNmN/zGmDGa2ewy
+	ecTGkQjk=
+X-Gm-Gg: Acq92OE2ihmaWPNlc200Uz6UT0hTer+L2nM1v8OcG6OlZR9FtYbdEildS4MQsJKapPj
+	JEION3/z+VQRG1tW7Odo9Nng8YSLCQO2PFiek+Tuo0gvqZPN1SbvByCGfi6lzPfLL4Z0AFoP8OE
+	+s7zkXxSc2Pme5UDY/XNjDesvEEaUpRXECIUKrCRYsVkahAVa/eo281Ml8CTa3YwiS9aVsEjVvx
+	iyItUNx5aRuZ8whWT9m1OCsWy29/IOrSKh5ZPWnNe93ruOgFi0/5C+aYXMaK7b1n+gjQeFo7lWF
+	jR68rN+E9Vg2RlS8sypj4a4pLEqOfgtzwX1WPgpnOdYKrGbJt9+dJJM7+EtQATKsG7xQn3NFNJk
+	OS++5zKtONvVn1YIw8diePtsByGD7pYGPI+C34SpUXHMmNgKSvm/feL7ElSq6OonGlyECNoJaQN
+	Oi6Ug0VXHOX4kI+Zswi7yc4LHikOyJ8DiKDao0Aq+MPfkeClypvNGixm4pILvGB47qN+Tmlngsa
+	gnlrMsS3yI186ZzD22RCeK3tPmixydKo9ZvX8AOZZ8HqqxTb+qHDgQinEEQ3hLKbK/d+cS6FZgv
+	Ohp33UfKbZnlR6XI74CcIEetNwyPP24Mwn/F4w==
+X-Received: by 2002:a05:690c:2610:b0:7bf:107b:f85b with SMTP id 00721157ae682-7ea491a1c02mr8692117b3.13.1780438905986;
+        Tue, 02 Jun 2026 15:21:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7ea23592beasm6386777b3.32.2026.06.02.15.21.41
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7ea21a621c3sm6321397b3.22.2026.06.02.15.21.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 15:21:41 -0700 (PDT)
-Date: Tue, 2 Jun 2026 18:21:40 -0400
+        Tue, 02 Jun 2026 15:21:45 -0700 (PDT)
+Date: Tue, 2 Jun 2026 18:21:44 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 0/4] pack-objects: support bitmaps and delta-islands with
- `--path-walk`
-Message-ID: <cover.1780438896.git.me@ttaylorr.com>
+Subject: [PATCH v2 1/4] t/perf: drop p5311's lookup-table permutation
+Message-ID: <52d63e8910e4ca716405713d48cedeb26026a3b3.1780438896.git.me@ttaylorr.com>
 References: <cover.1779923907.git.me@ttaylorr.com>
+ <cover.1780438896.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,159 +76,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1779923907.git.me@ttaylorr.com>
+In-Reply-To: <cover.1780438896.git.me@ttaylorr.com>
 
-Note to the maintainer:
+p5311 measures the cost of serving a fetch from a bitmapped pack and
+indexing the resulting pack on the client. Since 761416ef91d
+(bitmap-lookup-table: add performance tests for lookup table,
+2022-08-14), p5311 effectively runs itself twice: once with the bitmap's
+lookup table extension enabled, and again with it disabled.
 
- * This series is based on 'ds/path-walk-filters' with Patrick's
-   'ps/clang-w-glibc-2.43-and-_Generic' merged in. The former has since
-   graduated. These are the three remaining patches from my earlier RFC
-   after Stolee's series incorporated the filter-related pieces.
+This comparison has served its useful purpose, as the lookup table is
+almost four years old, and the de-facto default in server-side Git
+deployments.
 
-Here is a very small reroll of my series to make `--path-walk` work with
-reachability bitmaps and delta-islands.
+A following commit will want to test a different combination (repacking
+with and without '--path-walk' instead of the lookup table). Instead of
+multiplying the current test count by two again to produce four
+variations of `test_fetch_bitmaps()`, drop the lookup table option to
+reduce the number of perf tests we run. Retain `test_fetch_bitmaps()`
+itself, since we will use this in the future for the new
+parameterization.
 
-Since the previous round, the only changes are:
+(As an aside, a future commit outside of this series will adjust the
+default value of 'pack.writeBitmapLookupTable' to "true", matching the
+de-facto norm for deployments where the existence of bitmap lookup
+tables is meaningful. Punt on that to a later series and instead make
+the minimal change for now.)
 
- * A new commit making some adjustments to p5311 to facilitate
-   performance testing bitmaps in repositories repacked with
-   '--path-walk'.
+Suggested-by: Derrick Stolee <stolee@gmail.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/perf/p5311-pack-bitmaps-fetch.sh | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
- * Updates to (what is now) the second commit's message, including
-   performance results based on the aforementioned changes.
-
-Outside of the above, the series is otherwise unchanged.
-
-Thanks in advance for your review!
-
-Taylor Blau (4):
-  t/perf: drop p5311's lookup-table permutation
-  pack-objects: support reachability bitmaps with `--path-walk`
-  pack-objects: extract `record_tree_depth()` helper
-  pack-objects: support `--delta-islands` with `--path-walk`
-
- Documentation/git-pack-objects.adoc | 12 ++---
- builtin/pack-objects.c              | 68 +++++++++++++++++++++--------
- t/perf/p5311-pack-bitmaps-fetch.sh  | 20 +++++----
- t/t5310-pack-bitmaps.sh             | 36 +++++++++++++++
- t/t5320-delta-islands.sh            | 29 ++++++++++++
- 5 files changed, 134 insertions(+), 31 deletions(-)
-
-Range-diff against v1:
--:  ----------- > 1:  52d63e8910e t/perf: drop p5311's lookup-table permutation
-1:  3fa8bfbfd59 ! 2:  ffad584a43e pack-objects: support reachability bitmaps with `--path-walk`
-    @@ Commit message
-            bitmap can answer the request, use it; otherwise fall back to
-            path-walk's own enumeration.
-     
-    +    As a result, we can see significantly reduced pack sizes from p5311
-    +    before this commit:
-    +
-    +        Test                                      HEAD^             HEAD
-    +        ----------------------------------------------------------------------------------
-    +        5311.38: server (1 days, --path-walk)     2.56(2.52+0.03)   0.01(0.01+0.00) -99.6%
-    +        5311.39: size   (1 days, --path-walk)              123.9K            123.9K +0.0%
-    +        5311.40: client (1 days, --path-walk)     0.00(0.01+0.00)   0.00(0.00+0.00) =
-    +        5311.42: server (2 days, --path-walk)     2.57(2.52+0.05)   0.01(0.01+0.00) -99.6%
-    +        5311.43: size   (2 days, --path-walk)              123.9K            123.9K +0.0%
-    +        5311.44: client (2 days, --path-walk)     0.00(0.00+0.00)   0.00(0.00+0.00) =
-    +        5311.46: server (4 days, --path-walk)     2.58(2.51+0.07)   0.01(0.01+0.00) -99.6%
-    +        5311.47: size   (4 days, --path-walk)              123.9K            123.9K +0.0%
-    +        5311.48: client (4 days, --path-walk)     0.00(0.00+0.00)   0.00(0.00+0.00) =
-    +        5311.50: server (8 days, --path-walk)     2.58(2.53+0.04)   0.02(0.02+0.00) -99.2%
-    +        5311.51: size   (8 days, --path-walk)              152.4K            152.4K +0.0%
-    +        5311.52: client (8 days, --path-walk)     0.00(0.01+0.00)   0.00(0.01+0.00) =
-    +        5311.54: server (16 days, --path-walk)    2.58(2.52+0.05)   0.03(0.02+0.00) -98.8%
-    +        5311.55: size   (16 days, --path-walk)             205.3K            205.3K +0.0%
-    +        5311.56: client (16 days, --path-walk)    0.01(0.01+0.00)   0.01(0.01+0.00) +0.0%
-    +        5311.58: server (32 days, --path-walk)    2.59(2.53+0.06)   0.03(0.03+0.00) -98.8%
-    +        5311.59: size   (32 days, --path-walk)             209.3K            209.3K +0.0%
-    +        5311.60: client (32 days, --path-walk)    0.01(0.02+0.00)   0.01(0.02+0.00) +0.0%
-    +        5311.62: server (64 days, --path-walk)    2.70(2.76+0.06)   0.16(0.24+0.04) -94.1%
-    +        5311.63: size   (64 days, --path-walk)               4.1M              4.1M +0.0%
-    +        5311.64: client (64 days, --path-walk)    0.44(0.50+0.02)   0.44(0.51+0.02) +0.0%
-    +        5311.66: server (128 days, --path-walk)   2.88(3.20+0.05)   0.34(0.65+0.05) -88.2%
-    +        5311.67: size   (128 days, --path-walk)              9.0M              9.0M -0.0%
-    +        5311.68: client (128 days, --path-walk)   0.93(1.22+0.07)   0.93(1.20+0.08) +0.0%
-    +
-    +    We get the same size of output pack, but this commit allows us to do so
-    +    in a significantly shorter amount of time. Intuitively, we're generating
-    +    the same pack (hence the unchanged 'test_size' output from run to run),
-    +    but varying how we get there. Before this commit, pack-objects prefers
-    +    '--path-walk' to '--use-bitmap-index', so we generate the output pack by
-    +    performing a normal '--path-walk' traversal. With this commit, we are
-    +    operating over a *repacked* state (that itself was done with a
-    +    '--path-walk' traversal), but are able to perform pack-reuse on that
-    +    repacked state via bitmaps.
-    +
-         There is one wrinkle when it comes to '--boundary', which we must not
-         pass into the bitmap walk in the presence of both '--path-walk' and
-         '--use-bitmap-index'. Path-walk needs boundary commits when it performs
-         its own traversal, in order to discover bases for thin packs, but the
-    -    bitmap traversal expects the usual non-boundary state. Work around this
-    -    by setting `revs->boundary` as late as possible within
-    -    `get_object_list_path_walk()`, after any bitmap attempt has either
-    -    succeeded or declined to answer the request.
-    +    bitmap traversal does not expect this. Work around this by setting
-    +    `revs->boundary` as late as possible within the '--path-walk' traversal,
-    +    after any bitmap attempt has either succeeded or declined to answer the
-    +    request.
-     
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-     
-    @@ builtin/pack-objects.c: int cmd_pack_objects(int argc,
-      		use_internal_rev_list = 1;
-      		strvec_push(&rp, shallow
-     
-    + ## t/perf/p5311-pack-bitmaps-fetch.sh ##
-    +@@ t/perf/p5311-pack-bitmaps-fetch.sh: test_description='performance of fetches from bitmapped packs'
-    + . ./perf-lib.sh
-    + 
-    + test_fetch_bitmaps () {
-    ++	argv=$1
-    ++	export argv
-    ++
-    + 	test_expect_success 'setup test directory' '
-    + 		rm -fr * .git
-    + 	'
-    + 
-    + 	test_perf_default_repo
-    + 
-    +-	test_expect_success 'create bitmapped server repo' '
-    ++	test_expect_success "create bitmapped server repo ${argv:+($argv)}" '
-    + 		git config pack.writebitmaps true &&
-    +-		git repack -ad
-    ++		git repack -ad $argv
-    + 	'
-    + 
-    + 	# simulate a fetch from a repository that last fetched N days ago, for
-    +@@ t/perf/p5311-pack-bitmaps-fetch.sh: test_fetch_bitmaps () {
-    + 	# and assume the first entry in the chain that is N days older than the current
-    + 	# HEAD is where the HEAD would have been then.
-    + 	for days in 1 2 4 8 16 32 64 128; do
-    +-		title=$(printf '%10s' "($days days)")
-    ++		title=$(printf '%10s' "($days days${argv:+, $argv})")
-    + 		test_expect_success "setup revs from $days days ago" '
-    + 			now=$(git log -1 --format=%ct HEAD) &&
-    + 			then=$(($now - ($days * 86400))) &&
-    +@@ t/perf/p5311-pack-bitmaps-fetch.sh: test_fetch_bitmaps () {
-    + 	done
-    + }
-    + 
-    +-test_fetch_bitmaps
-    ++for argv in '' --path-walk
-    ++do
-    ++	test_fetch_bitmaps $argv || return 1
-    ++done
-    + 
-    + test_done
-    +
-      ## t/t5310-pack-bitmaps.sh ##
-     @@ t/t5310-pack-bitmaps.sh: test_bitmap_cases
-      
-2:  bdae873eaab = 3:  069c50d3370 pack-objects: extract `record_tree_depth()` helper
-3:  a642305e3c9 = 4:  ae57607b57f pack-objects: support `--delta-islands` with `--path-walk`
-
-base-commit: 45a9ecee26839cc880fdd5e704339dd3cf4ffc26
+diff --git a/t/perf/p5311-pack-bitmaps-fetch.sh b/t/perf/p5311-pack-bitmaps-fetch.sh
+index 047efb995d6..5bea5c64e7b 100755
+--- a/t/perf/p5311-pack-bitmaps-fetch.sh
++++ b/t/perf/p5311-pack-bitmaps-fetch.sh
+@@ -12,7 +12,6 @@ test_fetch_bitmaps () {
+ 
+ 	test_expect_success 'create bitmapped server repo' '
+ 		git config pack.writebitmaps true &&
+-		git config pack.writeBitmapLookupTable '"$1"' &&
+ 		git repack -ad
+ 	'
+ 
+@@ -32,7 +31,7 @@ test_fetch_bitmaps () {
+ 			} >revs
+ 		'
+ 
+-		test_perf "server $title (lookup=$1)" '
++		test_perf "server $title" '
+ 			git pack-objects --stdout --revs \
+ 					--thin --delta-base-offset \
+ 					<revs >tmp.pack
+@@ -42,13 +41,12 @@ test_fetch_bitmaps () {
+ 			test_file_size tmp.pack
+ 		'
+ 
+-		test_perf "client $title (lookup=$1)" '
++		test_perf "client $title" '
+ 			git index-pack --stdin --fix-thin <tmp.pack
+ 		'
+ 	done
+ }
+ 
+-test_fetch_bitmaps true
+-test_fetch_bitmaps false
++test_fetch_bitmaps
+ 
+ test_done
 -- 
 2.54.0.23.gae57607b57f
+
