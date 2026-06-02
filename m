@@ -1,167 +1,102 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5295436A34F
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 22:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780440069; cv=pass; b=Y5YtX9FkeceCQM1BLPMyTOg+Is/kXH1QEYrOkz1nSEW3I6nYUjvcvMMYc4v3InP80exhGrLv2/8OQc0EwZvWhX+nokaP0AxlQ1uD7Wq0PpqfRE2rpthA67UaCWWOEMAjC8l9+I9Li0ZzX3fFDu95kgkmyHiNiEJm+kvrWi0mVQE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780440069; c=relaxed/simple;
-	bh=CkB0R9jRy/l8UlzqR1BCuAWoEEZuv+UdLBT+ut19bhM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FlfwQgvQJZsDRmX4UkpEvXUGdtdzXOxsZNzkzPBLrsjifjFUN6K6OtlnRNLbp5e9prROYLwkExYA1mbJCg8cjUBkFrVSm8TC0DgoygOQjQtBP20b5nlFNGRCQvIt5pKNmsyom95PltIuIJMRwTGuHyRwWtn0aWS/qxGzizor+j8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=kIEVW+lF; arc=pass smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D722C326D
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 23:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780444333; cv=none; b=bqa0UcGisNvNcJHP/o4At6OM82Xp/OFj6nctbeA8/kAYPTQxqjQOR4b2GlGdbHPOw4uQ2QGwj9yWbC0idBIoCs7dnSd1uPpiBcRl5psEl6YdtirTlUXu/wC5t6XSxpvO5Ao5zftEzd5UFnkv8KeBnezX78xRpH3Tlb9pHqExzEk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780444333; c=relaxed/simple;
+	bh=1dqdRkbhSngp2PtyQlvDnozJg+3hPZ4OT7C2sR3cYgw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EiJ6zS7BjTsKwQPXiaHU48HELkerguvbHZ9iPmcSOOHas4uEY/Oy7tylRr6ApcFeXl94YstE67FDB+WYzT6pvL4V5LnJzmtNURuQAvKMD327tOM33ZkYkS3AdeziiV0oI/XgVmdZgFob43AKdPYZvhRKNVmJvxrGZeylcy7pccQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KdNRkKnt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FhlDQ1nr; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="kIEVW+lF"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7dd3f176f84so64674507b3.0
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 15:41:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780440066; cv=none;
-        d=google.com; s=arc-20240605;
-        b=OU37/vVXki38FXXH2l0/5XMoCOIAn/rIQQjZEPSscpow9HYD7EDClTQH7YWTCiShgL
-         2IH9RrzOTGWzXexOzjAntsTFGz19qsBWV8YundV74DEZK6spE+oerZi3XHBf0msph0Ey
-         +Pz51T4JFacmlZo+cDPqBIFrdXSZzq3Re3c15HQEPodMU4WRNJM98YMUyj6TThd9NqeV
-         j4GunMVMYNXnsbeMXo0g5if25V4xPkabFCq/AsoSyYfot97a02rWEQ6UjXrIFKoTxadv
-         D4nFzeYa7xpcWCRQH96jOq8v46JN2xkorHEWYEApzvWw62225BPCUelQt5xTTTJ+YT8u
-         L1iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=IldYUj01AFaMMh5ztFkqHQrub9ZrObm+YgH3dwisz3M=;
-        fh=7RTGiOwoW5V8op/YPgdCvVaFX9YK9sELIp5UquRmV6E=;
-        b=lZgrFUoam1prTpOBE4i5Vk3SljfXy9XcyHdN7wSFnUZDNKR/L2IdS+kO+MmwL0H1Q4
-         Ztjlhw+6Ct4LA+8pj8jL94G/xlDz6JX7GfGDvR+BTJf55+bGvA60ZaUXEJ21F0FfLq9O
-         jg1dypcN+NXChVWjui1doJI4WN8bEcjO/FB15GXuUcHziVUB22lupFRwwe+5STSF75/I
-         wZCcYaGcgecXwSVfvwWyCWXh0x5N0fUWbUc1hOpZRfpDw6QL+5BxGiZs+2MHtSOfvO5t
-         FAv2yGV1TvKfaRY9ARzD1979B/yiCvPFiZBKMcvGfXZBSlHOScswZFhINtdUdw3n2B3g
-         QDeA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1780440066; x=1781044866; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IldYUj01AFaMMh5ztFkqHQrub9ZrObm+YgH3dwisz3M=;
-        b=kIEVW+lFizUrEnaP2sEHB004l5dYwxkHocseEnh/E+H01H+ZFFVrKqE9xfoXrJTmb+
-         HXyIDbRgchTx55A4vUE8iMxwht6C57nOhJT+JansMMQEulT33cBEFxcCNBDNwbUS+hHG
-         DM+d77rPobSMGpK4EyEFMd1fIDJjmfwdcdn0c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780440066; x=1781044866;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IldYUj01AFaMMh5ztFkqHQrub9ZrObm+YgH3dwisz3M=;
-        b=R8JaUDL2a71wjZsExv/e8AFj6VgCAK9y1kouwlhbGtvAc0DpmOpfVP6GoDbDKCdjqv
-         RuD+2Oz0IXc1hG2ao9HsiDxCwDU1IArqARRKwhtbp44murqqEAoH+Ar11SveTgk0Jpeq
-         SLvQJ+zNR0ph9b8oPO2Kunm4ysq9fV3zovvn7ctpMel6eEnHgKQNo6gXUCmZ6LsdhdHC
-         ZtXFlua238gaRSxcA11GDBRYGvfuuxlNfEBqLS1Bcfq/6vthwXIKKcT4CQt33d/qSqgp
-         aplznG+T1cFglMKftB1IviUV2fzwlmPmTJwtXhKb/FyUDVgKGAD6LLkfNJW8oYi8s0mJ
-         Mgiw==
-X-Forwarded-Encrypted: i=1; AFNElJ9j+G7JWrwrHCik0FATh+zTmIqV+I+m6wnSz0P8nePcxWyKqYLNHHhiUU0yRJXtbGZvxtE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjjAUv6CBshbBo2Jd/+I2TljHMNTPOIX+3tZw0UPiC7YF+x9QN
-	inVWy9JeDIQKCGYuNiwSttWsz7HAx+04la6vdTb2QgoVj5O0ZIEnLzBV+lIgSDcyIip1Y5dLZJ4
-	QfoxcOA7lWGx6gq7CaUcvpU9+HTuFtVsqIJdeFkFocKz7MUbePBfsOf5fcg==
-X-Gm-Gg: Acq92OHTAms4sx4VuOPA/X27QtTighRPoDBR8cV0mw24h13ldNJPCLsyI5b9nb7yvCF
-	6a+wKAUoYh0hl7wYfdovzi148j4b9R1j7TwYKsU+W4NZbDj4/Pv7XgNYN5N3rQC/owv5cjYsBXv
-	ufIEL3kgp817gfS2CH2ZGWOI72SuLnwWrpAJmlUzoXtC+VVya0JtBXaQPTgVOZ6yf/cK3dZzh2U
-	0u1rSv7eMJZ4on33LfZ1EW+J7a7xsekleUKwsXub6hRxFXleA15gJL3ZfWkyNZor9vfK8GhsXF+
-	EAeTdAYmvvJXD7bNEG1NpzJXROo=
-X-Received: by 2002:a05:690c:3349:b0:7cf:f14e:bf5a with SMTP id
- 00721157ae682-7ea483ce278mr9226227b3.20.1780440066306; Tue, 02 Jun 2026
- 15:41:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KdNRkKnt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FhlDQ1nr"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 474E37A00E7;
+	Tue,  2 Jun 2026 19:52:11 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 19:52:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780444331; x=1780530731; bh=LJBAXbEw1p
+	fNe0IKjsYtb/LDnCDGTjWImeY9RWuyzXs=; b=KdNRkKnt703n3VXOhqQ4JttGpq
+	Cu0atrG73X3VqT33aqx5lyG1hwA0iUsjdw8IwtEw8zhuwMXUaPvTWUQOFdRjYqNZ
+	9uyTmz0BgZncnnbbcbG9MnuzlqQBiyCyVZr3ZDPyZkGAs5aujseoKKQRrgNk8hVz
+	nk4fvt84z4PBUUHHLNDOJJplPKw+VsDyNqoTLQa1ettM5OkOF5AZXoIsq9jQL0Qz
+	rcqMhRYrg3LJRPLWvQezs3YrGPtIuftiPTChAgLFagk/X8U64vsyvm9DYJrFxTQ4
+	jNV0wkASHgpdquQ0ItJd722g5E464+0kzfop3+zWhyrEWFlmK5CshSH3hRfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780444331; x=1780530731; bh=LJBAXbEw1pfNe0IKjsYtb/LDnCDGTjWImeY
+	9RWuyzXs=; b=FhlDQ1nrtIPHGh8Flt8ehOFHsAD81U/BNNugSnxtl1FQy+Tq3Yz
+	RiecvMkRNrSmXSQOJJA4OEdPSXk6uB6ZFxS62GPP4GyuLt0WJU+9NhDGcqHMmB5k
+	5BdCmzUna/px81UhpjOxVReeXJ7Eh9kJBXzUcEplGthVFs1jGLtzXj0KqpOmbzT5
+	o5cgWC4oN0q40wHXq7pksFyRswDJzCw2O/dpp7U23abyggk7GSGoWVOWrWCaIsA+
+	gh1HKdJir9NWpGdYNrl9bf37KVOkalWhKh131cczjjtvQXg1Ghq1ay3Q8L7sqjCC
+	IKZSha3EyE6x4i2PM6AESYjU3Cyudw6BNOw==
+X-ME-Sender: <xms:qmwfatlCUrmO0ym2xd2BHNn-OKMgN2b9cp4nXe-p9T9TNhQABDPEXg>
+    <xme:qmwfagRk808R0GNZcnm15xLo7iARtapWpD-0DAURra5il7_dN9-ZnUmNitBRXYr6r
+    IvrfY7axyMvcVbJCOHtlyWsCryZV2bX5UhiVlbQo4zYqW1S7rJLmkM>
+X-ME-Received: <xmr:qmwfahA2q5YZYjZ9ja-aCwMGHWKZnnf-9eS2J5P2CHqGzodOXk03yVVsF1re_ToHJVOElZFpx-ByQ54Ep4vUKEqTvp4aa1DhQlUz>
+X-ME-Proxy-Cause: dmFkZTEBoN51t6UV7+Wdu9xf6NfQmPT+wESzKbveJiIDH0zSYRND7HJo96Tukide+0G0xV
+    6FQLV25SrPhVfRGboGZYR5OFGg/pIZdHgfCg3xWQTzdzZtXLSvxBsL6XjWSbsFbh8oLLKY
+    pCXOGpElY/0kHOTJGZl0CMiAU1DU0mNEmTGXwcEXF8LWJipF1kjoK8fDcI1+VkT+uJvEU/
+    2Tqvp9JxUZKfgAqn1wXg8eVlHD8BPlENYPiIS0tYqgNb92MexWbsB36wlQLt/PPtRDS2Ge
+    OgTFmc2tTOLJEF7fTyf5b1yBgRGeEQy2jBJ+7sytNzetUBhGjGZHo7+UwW48ILv+whcSQH
+    bR+JNOcsmR7Yx+V7fUjgwNKekV4o+sqM6e1K+6c1vetAk7HdYWbjVkacVY7A16Rl+/RK2I
+    Gg23upD2ND6i9UMdIQg8nNP3rXXcWu3Ul/ErOigFm7zKG0Hcpm3nFO+S0SeHdZlBI3226d
+    HjqkBeBlhuS+0d0UDF3BzwZ0PoS19lTQNTjE+iyOisN74seZr8ffktulA5BEJCMJd8R1mD
+    g5YSF61Rf1PzYTxyvCjGjJ9IqLyjN4dpr+knB3PcGTXhyOsPlx3o9jYAKg0YLP7VRZL4yk
+    iz4RXoqkrPMEJ0Bq+ea9rqqtWSDupW21ObM1M/d7pn9AVTaLQs3Ku2PeUiig
+X-ME-Proxy: <xmx:qmwfanToApn4qCzASKid3I3aKvvWz6xIePwFBS16ik9yKReG_Nrkjw>
+    <xmx:qmwfavqsZhD6cYYzEm5QIv8gRsE1geKb_goiUnxd2RltHV1s2kcS4w>
+    <xmx:qmwfapzDKYgXc-ZrurAsFZDon3R0YgkhHWey4gx1igVvOkCWxQmt0A>
+    <xmx:qmwfakJ7KYlTYqDrtOBoK0hYs2F7oWEj_sXtbxb5XfuAbrgNdXAKzw>
+    <xmx:q2wfaiY9ccyd1LVQ43LfXfv0y8LAOYV0Eg5t2KaPRbszEwDcIUr65nGh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Jun 2026 19:52:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kiesel, Norbert" <norbert.kiesel@creditkarma.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] worktree: record creation time and free-form note
+In-Reply-To: <CAPGaHku+RAV+FA3C0md0xHiavfdB_anoqcMM06MAiU1VyMAdLA@mail.gmail.com>
+	(Norbert Kiesel's message of "Tue, 2 Jun 2026 14:40:44 -0700")
+References: <CAPGaHku+RAV+FA3C0md0xHiavfdB_anoqcMM06MAiU1VyMAdLA@mail.gmail.com>
+Date: Wed, 03 Jun 2026 08:52:09 +0900
+Message-ID: <xmqq1peots9i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2132.git.1780250236304.gitgitgadget@gmail.com>
- <pull.2132.v2.git.1780301856444.gitgitgadget@gmail.com> <90270818-c52b-4611-8da2-6cee20628fc2@web.de>
-In-Reply-To: <90270818-c52b-4611-8da2-6cee20628fc2@web.de>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 3 Jun 2026 00:40:55 +0200
-X-Gm-Features: AVHnY4L8vpr2EJTMqyB1OKhIi3-18jiCMHMm8ATqJ9C7i9j_dGhC4NRMRzgCBME
-Message-ID: <CAL71e4Ob-B5MJ5DPY+_tzpj6nyrbQ5WutxED2T93SWJV6kJGPA@mail.gmail.com>
-Subject: Re: [PATCH v2] prio-queue: use cascade-down for faster extract-min
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, 2 Jun 2026 at 18:37, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+"Kiesel, Norbert" <norbert.kiesel@creditkarma.com> writes:
+
+> From 130cd5e4a25e6672b2a97268e1100b6ef03fa552 Mon Sep 17 00:00:00 2001
+> From: Norbert Kiesel <norbert.kiesel@creditkarma.com>
+> Date: Mon, 1 Jun 2026 17:03:39 -0700
+> Subject: [PATCH] worktree: record creation time and free-form note
 >
-> Would you be interested in benchmarking the following patch for making
-> prio_queue_replace() unnecessary by doing its optimization
-> automatically?  I get a 1% performance hit for the describe command
-> that I can't explain.  And it leaves the heap unbalanced after a
-> prio_queue_get(), which complicates things, so I found it lacking.
-> But I wonder how it stacks up against your cascade approach for your
-> use case and if there's anything to salvage.
->
-> Ren=C3=A9
+> Add per-worktree metadata so users can answer "what is this worktree
+> for, and when did I make it?" without resorting to external notes.
 
-Thank you for the detailed feedback and the patch! It was very
-helpful to have a concrete alternative to compare against.
-
-I spent some time benchmarking the different approaches on a
-large monorepo with a wide DAG.
-
-All measurements include the nonstale O(1) tracking from my other
-series as a common base, since that dominates the merge-base path.
-
-The approaches I compared:
-
-  1. cascade-only: the sift_up_rebalance from this patch (v2)
-  2. rene-lazy: your deferred sift_down_root patch
-  3. cascade+lazy: cascade for unfused gets, lazy fusion for
-     get+put pairs
-
-Results (10 runs, 1 warmup, CPU pinned to performance):
-
-  merge-base --all master master~1000 (~4s workload):
-
-    cascade-only   4.18s (median)
-    rene-lazy      4.25s
-    cascade+lazy   4.24s
-
-  rev-list --count master~1000..master (~3.8s workload):
-
-    cascade-only   3.86s
-    rene-lazy      3.75s
-    cascade+lazy   3.74s
-
-The lazy approaches show a small win on rev-list (~3%) where get+put
-pairs are common in limit_list. On merge-base --all, everything is
-within noise, the prio_queue is a small fraction of total runtime
-there. Combining cascade with lazy fusion didn't produce additional
-gains beyond what each gives individually.
-
-Looking at your patch, I think the deferred sift-down logic is
-essentially the same optimization as the lazy_queue wrapper you
-wrote for describe.c - both defer the work from get and fuse it
-with a following put. So I'd be hesitant to add a second form of
-that deferral directly into prio_queue when lazy_queue already
-"owns" that responsibility as a wrapper.
-
-That said, I think it would make sense to fold lazy_queue entirely
-into prio_queue. It's an optimization that never hurts as far as I can
-tell, and it would simplify several callers. pop_most_recent_commit
-and show-branch both independently re-implement the same
-peek+replace pattern that lazy_queue formalizes. Making it automatic
-in prio_queue would clean up all of them.
-
-I have a local branch exploring that direction. Maybe it makes more
-sense to do the lazy_queue fold first, and then see if the cascade
-change is still worth adding on top?
-
-Either way, I think the two directions are complementary - cascade
-reduces comparisons per sift, while lazy fusion can eliminate full
-rebalance cycles.
-
-I'm on a company offsite now so I may be slow to answer, but I will
-definitely resume this when I get back home.
-
-- Kristofer
+Although I am not personally interested in this topic all that much,
+let me point out that we have $GIT_DIR/description file that may be
+useful for something like this.  It has been the canonical place for
+the main repository to identify itself long before secondary worktrees
+were invented and $GIT_COMMON_DIR/worktrees/$worktree/description would
+be a natural extension of the concept, I'd presume.
