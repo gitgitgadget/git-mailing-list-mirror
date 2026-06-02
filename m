@@ -1,86 +1,116 @@
-Received: from chiark.greenend.org.uk (permutation-city.chiark.greenend.org.uk [93.93.131.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4050E3D16F0
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 09:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.93.131.194
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780393273; cv=none; b=bWZjFIa8jzJ0HcL9mQ9XEi6djHWoR/jGf5StKXfBOfRPb0oQ/sK23mViWAz4YtCuy87RNpbXycoyv9GV3QBSSNBZJOaedYU1dqEJn7i8s9uueysM0sF6T3Pwp4SgdbCdhyTgLt5cxSjGNIgU6r0eYfSlyQkDGcbbwNwXMkoelnA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780393273; c=relaxed/simple;
-	bh=YeOgkMEm69K7V5KIxPm2cUVbbooWkNWuXUV7v8ZodBk=;
-	h=From:MIME-Version:Content-Type:Message-ID:Date:To:Cc:Subject:
-	 In-Reply-To:References; b=dn6Ty0L/TPsOozRSVLuTUdRBCcIODHusgI0ti3+pon8LB2kPsFNsuhubk05Eud9+5NVy62dOgL7oKykG3kLBR6w/A7bGrZ2yxQ3XiGw6VyUC3E3v8mrjP+hPD501+3y7pSMUfPbVJgzM4McsiNsJC7dQ7zooViSdy7Ck4zN6V5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk; spf=none smtp.mailfrom=chiark.greenend.org.uk; dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b=dK0ZoZIM; arc=none smtp.client-ip=93.93.131.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=chiark.greenend.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=chiark.greenend.org.uk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E533D410B
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 10:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780394938; cv=pass; b=QgXLnvYzl9n5Xd2hP1Twkb9oG049tLUuAoCQOVU8bmC5A5XrrW6p4XAlSKwARzgGzkTwMINXLsZ0hOuOV2W+2m/lOKoOe7QRg9ZxtdQSYcohot67EEhD3A6ZikrS1GobF1aGctFphTrgKddcDf47dDL1jsczRQnW1t8WD0SEuck=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780394938; c=relaxed/simple;
+	bh=jZ347DOspHlrSzQwc+sUspvodJ+DS/yaaB7+XklVIBA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lBCIC1ju0nlMaE7sjCt9QTc0HU9/ACpGz7w5sHfrcgQ9mMchgDUjACVWYBGanO07W0XLe2v5MlFYbOD7bMsrKIZ6UHMwJqtSlJfLPsM9c32xIUUbKt28lskOrH9rS2CpKX7IWx2nwwjEekOxbqOBnYgVNdovuDqg2Frl+ole+8I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHcftuvA; arc=pass smtp.client-ip=74.125.82.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=chiark.greenend.org.uk header.i=@chiark.greenend.org.uk header.b="dK0ZoZIM"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=chiark.greenend.org.uk; s=j.chiark; h=DKIM-Signature-Warning:References:
-	In-Reply-To:Subject:Cc:To:Date:Message-ID:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:From:Sender:Reply-To:Content-ID:Content-Description
-	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=p8Jg4T+PoOrUpZ71N5Cs9+uJbsFKVO+MGBetFw7hZYw=; b=dK0ZoZIMqdJ7
-	RTdFVz8JgGi1g0M4hM8s7kvwrLN8mDJs3Q6ENtYT8UYZ4zQU8bEe1BxNef9KIIZCOCfVHhq1GqypK
-	nGVTFNTebeyg4lgMwjCtO9gQzQpOOScS6HQDNkHWWTesczdLoJo4fVzLL+S2fLrjoq1DOpOMsVv4V
-	jdhzn+pHj9uNMhjignsK+mWqOd+cksfdgngS2PNcGfDk79PupmxRn3wCvIU8NX74z/6K5QtGSMNWh
-	nMDyeOEcJMtL/XwERXMLnlV4E9esH/VJrOZS5wyM51n0CXcrjIPjbkHb/luB1fFVOsBUACduJJqR3
-	3CVMfYgnghpAYvGLlBJT6w==;
-Received: by chiark.greenend.org.uk (Debian Exim 4.94.2 #2) with local
-	(return-path ijackson@chiark.greenend.org.uk)
-	id 1wUL4h-0005t7-3h; Tue, 02 Jun 2026 10:06:15 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHcftuvA"
+Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-137f27712fdso40065c88.0
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 03:08:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780394936; cv=none;
+        d=google.com; s=arc-20240605;
+        b=eqRZm3wWSvc57+6JWhYm4gblQ3QO7RmlMNRcEd+C8C5LznjLSmNG7/DJCWvJP6phgN
+         QwMpwY259ZujxlTm4rFmXg6OwYakBb4ibw/uwgAX7Nw1RfDbUHFhZ6hpOAU1yzUk+Hsv
+         Z38PIXSArRScVTyUoHomMysy6RHbepxHpLTl92B/KB2tQmHVKmJeZQGQAjxJAldzg5VR
+         89tD1XlNOMqlCPUOmyiTv0fu0BVr/9VIWwSSh0a2Adyfr5LCgNd7nfvXZNDk8PJ386qx
+         qp7vha6FGaINZ5I0OQZJh+qqZF58/40acA3ONGctNnS7210moFBlR0dyJCQjCaMFZwjf
+         bWkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=jZ347DOspHlrSzQwc+sUspvodJ+DS/yaaB7+XklVIBA=;
+        fh=WEVyCi/rJ3lsXR2sgWRZ3jRmR3XJT8ZWJ5WIGpeYs84=;
+        b=b/qTLHFyx3Rnf9s3ZVFi0rVWmZLBdQb0nv7VeEy4QPI/+QRv0RH2S4tD0Zrs2RonAw
+         mVj9X4001fq+9qojSxKKHdy04SI3sQccH5A+mti9AQRzkiMWfMmVoGNXtLfOxzLU7VQD
+         S2JC84LK4jSfLjwEzB2qUmyjWahHu8zgiozoBD3VQAnZUjKmq4af/IEjLP9EW5p/aNlR
+         /XIlIT1H4Oa7iLYEoBeImMp5HqCD6dimx73texU2fZfCvL5BkE9tOZZzv87dwG5m7Qpo
+         xv2FF5G1e0yONJzGKXr9wXyo1AVMtPqF/5AtcV/XLObSB5jmKnN5iLnnwqcd3FRKA92o
+         b30w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780394936; x=1780999736; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jZ347DOspHlrSzQwc+sUspvodJ+DS/yaaB7+XklVIBA=;
+        b=mHcftuvAHN7zNEqkdzSZNsPahYKOMQWVIuwr2pVNIjO3TOQH7Mgt1VCdvtETCJgV7v
+         dnOtWIaGawGx3R8gw5INXmSyh/hSg8vi87junZqkzkMopkRwLdEdwmTPuVqj15ofZWVj
+         6BuZzmbIs280+51blO3XYplwUFor3yOYvyUKEDhiT7dwz0iXGATxI56qMPTHrWbN0QBF
+         7EwtJyLGfl6mQidvmUG4Kbs/bZsqPRwNLgcB9R4y3kPzBqYL/GEfNS42OES40X5pn97h
+         swmfKwJvvWoCPU03mbpirb4mSTErzdYWNX2TNEERLPzCQPLAan9Od2q1pgpPbTuYjYMA
+         TIyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780394936; x=1780999736;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jZ347DOspHlrSzQwc+sUspvodJ+DS/yaaB7+XklVIBA=;
+        b=qps1cXbwwB98vrqZSgJTWZ2jCh4YUHMCacCHw9ZUdgS53JAMoAcVsax0Pl+s0T0bLL
+         /lOY8T4zOcO/xtpnTAye4z2O8+VJPjGzgSIXO2SzMbb3mxXQ825gEEkKvYMsOEcirJyW
+         xH390mI4WU2trrFiAH/DqN0bGc6V6POy5vUrf+AfWe+mhHPgmg07OmTSEapPtOPeFcK7
+         Xn61I5SwyY1RZedCKMvL5FFllsQxzQecbZgZvQhEWJCCF19Z29dOEpJGUNHJl/0s2get
+         lQA1Cu1+Q4fM2yXfD/rHMa/OJXVzp3jxe9RuTBWXCpuOQoc4MJ9nGpeIrPxmaG7qLhzP
+         rqMw==
+X-Forwarded-Encrypted: i=1; AFNElJ+3PAmoopI8Zg2Snt1wMT8cpjuiGO3lyAeJITviudu1AuDcxSKe6XRXB4WtyjV1T4j8RTc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUTq4J6yYlx48K7ANnjjmexxAbHPoMQsTRY1EoPfrWiHQVUGbh
+	qWF6EXsiRaxeY+FseuO7TZxzzj02Pw2V1B+4gf45TAZ250QyOU/WqWN1v2TkxeTGFbdoQHl71Az
+	/k2MtkTij85fpmmrs/+AaG2YlCURwPPw=
+X-Gm-Gg: Acq92OFEGAf9b/s5yEAPTSGYW3MNNzRsbiRc2wp0o0ibXL+5ogWaDJRxDZykj5ta9X4
+	O02CR365XHwAgkhgbavMUN6p/D/IhSeEO+/Lrjxild+Heq6HuKiqWa83D5BTb1Ohny83Pe8592k
+	0l/pGUCllyF0YGIU43L5RzpKBNC/LWrSKvmda5MhptQqO1vB3IFR6sKDJqgpMivbIx3GhJeHDHI
+	ngq4f8keBGY100R7QVGarEbwPDzVsJRZ38Ib2eULj5xt9cXR9oujSMP9sBgRjGxxBDO98n/l02H
+	QAVuLQO0XyZp4lSC2HCoUMlshKEknjvmG10s7m01ojD16MnkMZv2mSYJFhK8ndIlCqAg1jtMWeT
+	gh7bx06LMvS0RbA==
+X-Received: by 2002:a05:7022:21e:b0:137:1ae1:bc19 with SMTP id
+ a92af1059eb24-137d3c10d2amr7107111c88.5.1780394936464; Tue, 02 Jun 2026
+ 03:08:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <27166.40199.68450.953526@chiark.greenend.org.uk>
-Date: Tue, 2 Jun 2026 10:06:15 +0100
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Colin Stagner <ask+git@howdoi.land>,
-    git@vger.kernel.org,
-    Christian Heusel <christian@heusel.eu>,
-    george@mail.dietrich.pub,
-    Christian Hesse <list@eworm.de>,
-    Phillip Wood  <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split
-In-Reply-To: <xmqqv7c13o5l.fsf@gitster.g>
-References: <20260215201748.889866-1-ask+git@howdoi.land>
-	<20260305-cs-subtree-split-recursion-v2-0-7266be870ba9@howdoi.land>
-	<27104.58166.993109.63505@chiark.greenend.org.uk>
-	<a1a07433-224e-4477-ae8a-3875fa98faf8@howdoi.land>
-	<xmqqv7c13o5l.fsf@gitster.g>
-X-Mailer: VM 8.2.0b under 27.1 (x86_64-pc-linux-gnu)
-DKIM-Signature-Warning: NOTE REGARDING DKIM KEY COMPROMISE https://www.chiark.greenend.org.uk/dkim-rotate/README.txt https://www.chiark.greenend.org.uk/dkim-rotate/3a/3a90fe06810c445bcd1187f286aaae43.pem
+References: <20260423160832.114816-1-belkid98@gmail.com> <20260601154211.82370-1-belkid98@gmail.com>
+ <20260601154211.82370-4-belkid98@gmail.com> <xmqqpl29ztx7.fsf@gitster.g> <ah6QgwfK_TykIiBp@pks.im>
+In-Reply-To: <ah6QgwfK_TykIiBp@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 2 Jun 2026 12:08:44 +0200
+X-Gm-Features: AVHnY4IUOPt6y9TGFF6GBnL2eLN-GMUjf5LUvUvK41nqXcu4L9KXQ9ygSp3wg4I
+Message-ID: <CAP8UFD2J_482vT3J3hYpSeqG+of_ZDjO3a-paGocRyRgn0=FDQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/8] environment: move `zlib_compression_level` into
+ `struct repo_config_values`
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Olamide Caleb Bello <belkid98@gmail.com>, git@vger.kernel.org, 
+	phillip.wood123@gmail.com, usmanakinyemi202@gmail.com, 
+	kaartic.sivaraam@gmail.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano writes ("Re: [PATCH v2 0/3] contrib/subtree: reduce recursion during split"):
-> So after this message the thread went dark (except for a side
-> discussion about rewriting subtree in Rust, which I do think it is a
-> good direction to go in the longer term).
+On Tue, Jun 2, 2026 at 10:13=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 
-I'm indeed still working on this.  Given other things on my plate it
-will be months rather than weeks before I have anything anyone one
-might want to use.
+> Overall, I think it's sensible to always use `the_repository` at the
+> callsites in a patch series like this so that it's obvious that there is
+> no change in behaviour. So every patch series that gets rid of global
+> state in a subsystem X will basically bubble up the global state into
+> the next-higher level, and it's then the duty of the next patch series
+> to address that next-higher level.
+>
+> The only exception of course is subsystems that already got rid of
+> `the_repository` -- we really shouldn't reintroduce the use there.
 
-> While I do agree that avoiding bash-isms in the main part of Git and
-> sticking to vanilla POSIX has merit, this particular one seems more
-> like an artificial limit imposed by dash than sticking to the POSIX
-> as the common denoninator, at least to me.
-
-I would be in favour of switching to bash, making bash a dependency
-for this script.  We could use the env trick to support platforms that
-don't have it in /bin.
-
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
-
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
+I agree that it should be fine to proceed like this. It limits the
+complexity of the patches when we separate getting rid of
+`the_repository` from getting rid of other global state.
