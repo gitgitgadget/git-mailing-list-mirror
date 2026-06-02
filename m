@@ -1,122 +1,185 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3290357D1D
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 10:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACDB3D649C
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 11:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780395991; cv=none; b=fQ5gYBPCWEuWD5McK1mw9B0YY4drgczhdjdJEZl5HbIm1VvJbYwcHBYxCWM8LUpuyZhxajHZQOq+dVhArLMM9sQk3ORwxmEkUBsNUiCy7G7gLcUQVIilFbXpV+DOSdgYFYTkbTd3YAdGBUE78ctdjjlnKTAIRrRjqRLvSak1WA4=
+	t=1780398966; cv=none; b=n9jigie7dySc1qaVitHUNL8wtPzhbFQ9qja/rHJ188f1aDzbkDY56SFJNa/dJSqt85vk8bUkJkvcfGPkys6lAUyvNnw4fNkWLKoBnansSEBYxVRsOcR5lvdieUfsOdpIfDCjOAXTa91vh6F203GbbeyrJqE31a4YVc+ig08g4bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780395991; c=relaxed/simple;
-	bh=qwfbk175Pr+XoLVswUHzPnS3Y8542Pnt4MdnqCWXS9M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bT2KEF5SUEeqh7yzCL4Qcpm3gIu++iGX4zWC8tBvL/Bpsyxqrw/08oJu/ymFewbyIMqwc1B6ttQlM9R2BKBlYEOjXfrkG3OT716P/fXYnuWKp/LJ6KCl/KLnaT4BJvvil7OTjs37JI82BWYz8k6YHGb+W/jiQUMYuSc2kHU3cSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cE3GLdyk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PhKTvcTO; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780398966; c=relaxed/simple;
+	bh=8YNUyTYd5gtUwON3uI68ZrmaKmDNnUwsXfc7iaJtVSw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=twAKsLziBJVoa45BY7GdJOL2zN16qU6J7ZVlrANXGPaYHC4lypjnT/iXxFa02VACnQhh4SuFC0LUSslYDSdem+2SKlhgwJSB57TYLkjij5C9Ov9NLP9OwXT9IRY04YN11LmwlAfg3a7ee0Zfp+xCS2naEOyt5NUvmVFgfyxbvBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EqK/G9hq; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cE3GLdyk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PhKTvcTO"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0B82DEC070F;
-	Tue,  2 Jun 2026 06:26:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 02 Jun 2026 06:26:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1780395989;
-	 x=1780482389; bh=jG9K6aT63q96PL7jysnxnMdADOFgfuWb4Dr4TK8cXV0=; b=
-	cE3GLdyk2VdtNJmnW0V8JBMzDVSeLkRQ1xaeaDgWLRfWTJrUnbtw0UKv2dETApK8
-	LN5syMBbGmr5VUQjSpngE+cPg1wjhJohuBeGR3Y43/EjxHqwI4K8Wkayvhn6lFFL
-	C1XUP0b05A82j9b+Da2J9Kk6N10e9PyjATafw0ZOBraOmngN4/lk0apDZtP6kmTi
-	b4sfxSimQJ+iuMGURNHcOCspzDwwfThsvvju78TvGh6HR9D1f3xjjpc4mAkgQugL
-	bKoA/mv4henlihBmBQwRAbgWeIWr3iJi26XfPdhRmkQsm2ITQO43gsxaf40fJW7o
-	7VxcYNoG66tALfH2hdOFCA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780395989; x=
-	1780482389; bh=jG9K6aT63q96PL7jysnxnMdADOFgfuWb4Dr4TK8cXV0=; b=P
-	hKTvcTOJu+gIahasBK3vq+yUktdGc6emiaLmARbUDixQs2i0qpdsxtykKtNGGqP8
-	oGBBKZ5XFz7OzrJ5pAV/xwzP40jLSwbHa5+LcZpAQftBtNvUKmb2wOiH+pX5+v5R
-	aZgzPGT6k7hoM/1Nb8YF3tFNTEipGqvYRl5AH0h+9ZVrOffRC9cehnG7OFozJHRd
-	gwhCiKuRCW1toWsEiMrE/p1fUowlhkTBgKSyVxyTGffPXADD3K2FPxAtDGpnwhZa
-	Hp+nrItpv3t+ptppDx44klS8Vpt9UaWv2LdlTDztGKlhWx5O6i3w3RSJWFWMBOAW
-	SVRzYYtihZIg4wG2p0rZQ==
-X-ME-Sender: <xms:1K8earubuFxfctTnYk8YOnZRHxD0Ni5-1kidPT0dWjd0_rWrkS2Ayg>
-    <xme:1K8eavAwnEMMgqIcvkQg5yvh-ix3AMxmPJAhOadrfFtphjdGua0dhdsbuYj2O7S2G
-    Xqdzk3keIhXBbihbUtNfIX91Qa6M2WP-n5F9Hj7haEy87zBvHHj1pA>
-X-ME-Received: <xmr:1K8eaiZL1uH6AufLN3cblWmczL9gWdmABboqEI98w-vs5PmhzUqzPA5kQBCC9b1K_Fgo17_RJ52DHDB9MEZ-Nlvx6kc6SM5LzVi2>
-X-ME-Proxy-Cause: dmFkZTEIJPxFR6iHsUb16GzBEKec4Ef9DOZZWCynK9zGg/CaZSjwePLHjSI+HMgGgGoj8w
-    LXyGwIy1Dht0EedJmv4nRRlvgJYtVNM7YJ5/0P8EfsDtyfaF2BQPszCrId4yE2oxZp6i/c
-    LQJa99Nw/EkpS1J2B3lDgaVaqIyaEDfcGmSFXR0vwLn6szOr0WgH8axviKgaOnWbCj0HgF
-    buwz8ZHQdSOX4E6aVYn3XrMQPSHoFFtDMfm5E75k/XtC4LPzt9pqHj/fcGF/rK+SL9nXfu
-    YoG1h3N//+koF9eHuhIPJb8ZJzJdkVpWYdnAV7UqcdwJJtpydJEViOB50XCsRJkKr2pYGt
-    KCM7JEwUsDmS28/MfJqIGAc49t9l24lGKpKpQoVUjILihNSP/Q834xxYprGBU4SewZR5QM
-    aWruyyJW3qu3Uo7pFd/rt4APs94YePHiShs4QdaMiPVxuuwl6x1I0F/azom7zLqQswHX/h
-    nVZgOHySYkvt3+vuA5aNtc3rZCTrcK3asDEnQc9uHfE0TsGrpYCuszvXcSKBBRhTvrG36R
-    lP0AZM5IYCiO1oXGQbnNRy6YC5t3ulN4XRL+gOGqn5DBefWNKbG8Dk9LZ2RvGXnV1XIKs+
-    lOnzSwMCnioV8yLy47ShYpgShx/aU/TEOEgrbT3CNxIowfSc1P+qtRWNKAwQ
-X-ME-Proxy: <xmx:1K8eaqXYVviU6z5Y_2JwBZJahsFeRsPU_0bUX3TZSOz5DkJXPMrfdA>
-    <xmx:1K8eahOsOhN0_Xe3EC4mX-3IqoFeYJUQSqRy-1N4KBArxbCMabpZOQ>
-    <xmx:1K8eakYMuhOyC6O2F-ZvdqhaJs2QauIt-uIrNWJnSbjbtV5PFrec-A>
-    <xmx:1K8eag8azVrR0MmnkBGce7NUVV_NL6NN9nXhF2ncraMarzrL4dWb_Q>
-    <xmx:1a8eas-Ic8sgsId3qwygO9a3YAUlb3w6DXIhjokXFi_yeybaFdfvQxCd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 06:26:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Olamide Caleb Bello
- <belkid98@gmail.com>,  git@vger.kernel.org,  phillip.wood123@gmail.com,
-  usmanakinyemi202@gmail.com,  kaartic.sivaraam@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v4 3/8] environment: move `zlib_compression_level` into
- `struct repo_config_values`
-In-Reply-To: <CAP8UFD2J_482vT3J3hYpSeqG+of_ZDjO3a-paGocRyRgn0=FDQ@mail.gmail.com>
-	(Christian Couder's message of "Tue, 2 Jun 2026 12:08:44 +0200")
-References: <20260423160832.114816-1-belkid98@gmail.com>
-	<20260601154211.82370-1-belkid98@gmail.com>
-	<20260601154211.82370-4-belkid98@gmail.com>
-	<xmqqpl29ztx7.fsf@gitster.g> <ah6QgwfK_TykIiBp@pks.im>
-	<CAP8UFD2J_482vT3J3hYpSeqG+of_ZDjO3a-paGocRyRgn0=FDQ@mail.gmail.com>
-Date: Tue, 02 Jun 2026 19:26:27 +0900
-Message-ID: <xmqq33z5xmp8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EqK/G9hq"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490b2b037d2so3824685e9.3
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 04:15:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780398957; x=1781003757; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UnAx4LCGIUiWpO4o9fmFO0YdFsjOtiiW88f8+WhGm1E=;
+        b=EqK/G9hqILbDJrYtyyLoZzz6VWBHDUd96VT+h0kRk+giPfCDMJ7iI4gz4tso+YNPfJ
+         k7OhR6acC/3phPKp71+5BsxIfu+EEauZJCC9ZfC4uD7EAIxlvtIhZ98mnWZBXSjnDw9f
+         NWTXiewjqFCDPv3br50uL0OvoMUho4b+xuNkuCasf8eEW3TW6aUZUadzPSFUgWTEqk5h
+         a3AFT5d4cEEQocfQptvA85hS83KH8vUiQ3A8/1MMwMEq1fq5COzLu84aU7tiaO1IVTUZ
+         3kH5X9hUhH2tsClApW3Tgsb0t9o/fm4yVE4f1ZPv/10F4mDisGhEJ+NDQIgkA0iM25Wt
+         6oCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780398957; x=1781003757;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UnAx4LCGIUiWpO4o9fmFO0YdFsjOtiiW88f8+WhGm1E=;
+        b=D886amkwnmu22RlBV2lrL+3yvjlmGd3q1huQHVQAEsTXnypBdiQrjxbPdkrhg3D/bT
+         8mwxA35Z1thbHGAiwt86ekdHoJOazTEp4cW0I82RgnnahsUesd7B5RjYWRlZppznpRsU
+         B1Ajol4TLaWgv7yntcywtNHUTDHRAUbbp16Ahlr6hYM9ove2dAKDGyWfyBnKuRPHAkNp
+         zW8s0+AIpFjZPgycycAGk6jTJlnFXJNUdFhQ4VXLJnu4LaTjfO5mdQrcNB6M///oBueR
+         J3p8uKoiDFuo99eyKCFErz0VwX0wEZNI5RWEuXM1pzJZpxTf0MpEdSmt1EVb2essblt+
+         E8oQ==
+X-Gm-Message-State: AOJu0Yy12qbEDP4WCc8gVPfXKYuD5+vdw1/v2HRr/OLIy9ekGOw+1R24
+	9dAOuLedMtJFqY8gxQ2Ox922MQWXlJRq/JSw22OaryxIaLEvc3Py5d4KcR5K3w==
+X-Gm-Gg: Acq92OHjyNcyYQ41KP9RWSHmFxdlUmvx+UuytOagfpLS1KMM9vllcygURbe3FtHi13X
+	yI91FV66dpnJ8W1crdUm7obAydskAkMqpyNIu+0J3Qo8sPc6FNJSRAFk8PyrduA8ARvpQnL6iqd
+	Xr50Kjvr3Mx09V3opydVquEu26Z/WyhFf37bqVNKh6G2le4HEcmZimng2ZiAzfFCkIXX3UmoHCI
+	ieFG0L+ZTe0k2ZeZmijHQexqUAbs+/QUQKD1M/T1CstJHV3vfSsd+S4fIcbUd9zdmYpnLKMzV1K
+	OB21/JgPa7F8TGZkhxRE9tj+X3WE0s1pjU7s4Z7iihDLwd05ft0xhoAyKzbTN3ok2OZJU+iJZk6
+	ekmRS0tAgEz62h1I55wZ+SDBl9q+dJ1T/G+a0J4OQhgy1Z6BqTR1kfid0pjuvRScusQqWRsTC2d
+	a9yipIWDR+8jMTWcNey/JrHYYb87gM8THSCXBw
+X-Received: by 2002:a05:600c:6592:b0:490:a1dc:e542 with SMTP id 5b1f17b1804b1-490a2904ab0mr295979885e9.6.1780398957167;
+        Tue, 02 Jun 2026 04:15:57 -0700 (PDT)
+Received: from void ([2a00:a041:e53b:8a00:5d8c:bf27:3f6:529f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e823f7sm66370635e9.13.2026.06.02.04.15.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jun 2026 04:15:56 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
+To: git@vger.kernel.org
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH v3] doc: fix typos via codespell
+Date: Tue,  2 Jun 2026 14:15:18 +0300
+Message-ID: <20260602111552.6084-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260506101631.18127-1-algonell@gmail.com>
+References: <20260506101631.18127-1-algonell@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+There are some typos in the documentation, comments, etc.
+Fix them via codespell.
 
-> On Tue, Jun 2, 2026 at 10:13 AM Patrick Steinhardt <ps@pks.im> wrote:
->
->> Overall, I think it's sensible to always use `the_repository` at the
->> callsites in a patch series like this so that it's obvious that there is
->> no change in behaviour. So every patch series that gets rid of global
->> state in a subsystem X will basically bubble up the global state into
->> the next-higher level, and it's then the duty of the next patch series
->> to address that next-higher level.
->>
->> The only exception of course is subsystems that already got rid of
->> `the_repository` -- we really shouldn't reintroduce the use there.
->
-> I agree that it should be fine to proceed like this. It limits the
-> complexity of the patches when we separate getting rid of
-> `the_repository` from getting rid of other global state.
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+---
+v3:
+  - Address test breaking changes (strings bounded by single quotes).
+  - Thank you for your patience (extreme noise/gain ratio).
 
-I guess we are all in agreement that what was posted stops at a good
-point, leaving some for later updates.  Unless there are any other
-outstanding issues, it may be a good time to declare victory.  The
-"bool" in the log message for [5/8] must be corrected, though, so
-perhaps this topic is expecting a (hopefully small and final)
-reroll?
+ t/t1700-split-index.sh         | 2 +-
+ t/t3909-stash-pathspec-file.sh | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-Thanks.
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 869fb4a14e..887e72a5fa 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -502,7 +502,7 @@ test_expect_success 'do not refresh null base index' '
+ 		git checkout main &&
+ 		git update-index --split-index &&
+ 		test_commit more &&
+-		# must not write a new shareindex, or we won't catch the problem
++		# must not write a new shareindex, or we will not catch the problem
+ 		git -c splitIndex.maxPercentChange=100 merge --no-edit side-branch 2>err &&
+ 		# i.e. do not expect warnings like
+ 		# could not freshen shared index .../shareindex.00000...
+diff --git a/t/t3909-stash-pathspec-file.sh b/t/t3909-stash-pathspec-file.sh
+index 3afa6bff3d..e34cea6ce1 100755
+--- a/t/t3909-stash-pathspec-file.sh
++++ b/t/t3909-stash-pathspec-file.sh
+@@ -29,7 +29,7 @@ verify_expect () {
+ test_expect_success 'simplest' '
+ 	restore_checkpoint &&
+ 
+-	# More files are written to make sure that git didn't ignore
++	# More files are written to make sure that git did not ignore
+ 	# --pathspec-from-file, stashing everything
+ 	echo A >fileA.t &&
+ 	echo B >fileB.t &&
+@@ -47,7 +47,7 @@ test_expect_success 'simplest' '
+ test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	# More files are written to make sure that git didn't ignore
++	# More files are written to make sure that git did not ignore
+ 	# --pathspec-from-file, stashing everything
+ 	echo A >fileA.t &&
+ 	echo B >fileB.t &&
+@@ -66,7 +66,7 @@ test_expect_success '--pathspec-file-nul' '
+ test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
+ 
+-	# More files are written to make sure that git didn't ignore
++	# More files are written to make sure that git did not ignore
+ 	# --pathspec-from-file, stashing everything
+ 	echo A >fileA.t &&
+ 	echo B >fileB.t &&
+
+Interdiff against v2:
+  diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+  index 869fb4a14e..887e72a5fa 100755
+  --- a/t/t1700-split-index.sh
+  +++ b/t/t1700-split-index.sh
+  @@ -502,7 +502,7 @@ test_expect_success 'do not refresh null base index' '
+   		git checkout main &&
+   		git update-index --split-index &&
+   		test_commit more &&
+  -		# must not write a new shareindex, or we won't catch the problem
+  +		# must not write a new shareindex, or we will not catch the problem
+   		git -c splitIndex.maxPercentChange=100 merge --no-edit side-branch 2>err &&
+   		# i.e. do not expect warnings like
+   		# could not freshen shared index .../shareindex.00000...
+  diff --git a/t/t3909-stash-pathspec-file.sh b/t/t3909-stash-pathspec-file.sh
+  index 3afa6bff3d..e34cea6ce1 100755
+  --- a/t/t3909-stash-pathspec-file.sh
+  +++ b/t/t3909-stash-pathspec-file.sh
+  @@ -29,7 +29,7 @@ verify_expect () {
+   test_expect_success 'simplest' '
+   	restore_checkpoint &&
+   
+  -	# More files are written to make sure that git didn't ignore
+  +	# More files are written to make sure that git did not ignore
+   	# --pathspec-from-file, stashing everything
+   	echo A >fileA.t &&
+   	echo B >fileB.t &&
+  @@ -47,7 +47,7 @@ test_expect_success 'simplest' '
+   test_expect_success '--pathspec-file-nul' '
+   	restore_checkpoint &&
+   
+  -	# More files are written to make sure that git didn't ignore
+  +	# More files are written to make sure that git did not ignore
+   	# --pathspec-from-file, stashing everything
+   	echo A >fileA.t &&
+   	echo B >fileB.t &&
+  @@ -66,7 +66,7 @@ test_expect_success '--pathspec-file-nul' '
+   test_expect_success 'only touches what was listed' '
+   	restore_checkpoint &&
+   
+  -	# More files are written to make sure that git didn't ignore
+  +	# More files are written to make sure that git did not ignore
+   	# --pathspec-from-file, stashing everything
+   	echo A >fileA.t &&
+   	echo B >fileB.t &&
+
+Range-diff against v2:
+-:  ---------- > 1:  bcbd09129a doc: fix typos via codespell
+-- 
+2.54.0
+
