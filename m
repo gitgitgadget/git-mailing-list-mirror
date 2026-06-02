@@ -1,119 +1,95 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CD23E6DF4
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 15:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E20B3EEAC3
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 15:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780413888; cv=none; b=g7n3HtSRA/J9pll98GRmmZ8VW7ILbiMkl35fPMM7Za3g8J41m0SQfOhvdwfEFnqeByAmYElGB1TZEpOWRnDuIB9bC8HLVrBxMWeQ5xOFZjmNVHCTq4LjWYofGsrabw4Sz6cUltKiEl+2bmtbmkpdPcO6Gw0hipyYEUkKOLWzbj4=
+	t=1780413891; cv=none; b=smYU4xCESMr+AVogeHb9i96Wi6TaEuQnO0V2eJl/zDUXOe0a+nepo1agLUpPGP+ze4Wr5bNs4wBzRN+1DErzSyUiZzd1lh4nt54HZAEZCjVEG9bOD+sQTBEX7V5Bw1DlCwuht6FtPMrCJnGxII9HRjUfCdyw+pG3l3dqrajTcSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780413888; c=relaxed/simple;
-	bh=Mf405nyeS2frNgLbVuBr7m3BM9YfNhKVx/IrofrDn60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZIKZaN/j3E7Pd2WZz52DdzzyQ4RZui/qllJb1O6m+M+8Z8kNrCOZ7rYSDE+QyfCU6NU2fz0GEwzs3l2181Dl0xW4J+5UPQeizogFuc6DkNl+8O34hbEFM5qt40ULawrX9VCQCEun6c1esLJsIfgo1PrSoTB92UCJxqKI2wC+RyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mkmyCHQh; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1780413891; c=relaxed/simple;
+	bh=cNWGTFZmPuWrEuWXPbNT/DkpTGTcU2hlJjNvG/LhLH8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=bJwLDxnYuWYqsMMpgErvbmRG9FO0OPgZrXCXrudcYBy96T9zEqryY8erPevxrHAP0Sj225urSp/Ev11cKRVwq5nzLHO+NjLQrKYPBK9RrcphdZxdmN2AnFzBz4mCEBfVVMaV0d59las5FoawGh5JrefTNU9oBi1EybIe6FNYTFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SP4WLhzA; arc=none smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mkmyCHQh"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-45eee266c6cso4062774f8f.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 08:24:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SP4WLhzA"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-6ca94e539f9so2076760137.2
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 08:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780413885; x=1781018685; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TQOBdPvxn2LTwo3CeCYha6DJCRjAoCSLp4wrgAlUYkY=;
-        b=mkmyCHQhVO9tfzA7h5bEu1/WfmjDvTX17mQHuR+aoptRrpkn4Gj7aMkZCfFxMLDPbm
-         9Wy75D3LER4YjDNxDxpu1zXwWgHgAJ1/e0PRM35QinbGEQXij8kxSwqSm9qqO0N/9vW6
-         UyQd+rimFHydAm/4XQD8N9aFLxA3I3SKKbtWFL24xhhPDc25DrqSJQd6IyxD/OkmgI9a
-         ojbOFGmO2mwebr1PiouDlFwOI05L2CzVHGYAEzJZbG4QU4rVfEk3vOzKNBqra0KjPn7f
-         Wt84pasYt31h3SWq/RYl4euc5zec81yJ346+J03eS1ULRegsm/TDtaZNisu0c/bQ01th
-         O6dA==
+        d=gmail.com; s=20251104; t=1780413889; x=1781018689; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=siqxM+44YRxTLO5rCQhfHL/UO5QsLD+MipHOixUg4RI=;
+        b=SP4WLhzAEGalN1Jx5nG6MKvYXVnr8wpSRjGH7A27aHfiqQeEr535kGPbYv8x+may3k
+         9fIDtgNz6ldh/iOczqSsrLTUxFsbDfcTR+5TUDgEeAcQXYpjeCY/pSZ7IJYKZOzzRdbU
+         xq63OMZYQiRII08F5kMJQ/knc5oz1DRy1WGLAlNOFxy/9PPaTmTVtj60dZRQy8Wp57Eu
+         f5es+yMvfiRxpyBlMWLv62Pv/M54gqXTj5zSpGYhxiJUFw71TNxXAXbVAZA8rTAU9ppg
+         ANdtE/ecKEzD4fDtAkRZqtaRyrTOqS9qq/Wrm4Yx6EPJZvDXhUgu45EYL9FdcV8XIZ1j
+         ZBvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780413885; x=1781018685;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TQOBdPvxn2LTwo3CeCYha6DJCRjAoCSLp4wrgAlUYkY=;
-        b=ikl526Ie/PCwA9ii1TO9eUVkWFIrsz/mqc0Y7z2vIcALgqCBLThLl/PSFZnw5ypxr4
-         acv6drFwbm/Ut0dMAftj3l+aX3Nlxew3z7xvl764cTuy69ccmdO7lzc2en0Rv9eYjgCe
-         bVb1B3Er/NRNUMb0RqUquzwLRLwtpB8xKevBzopvaP5uePD/9EGzdpVWoVQ9MC6lPGm2
-         8ExjtiaL8msOXQJZeXG1YKrDK7RlAK2LqBBktiaJJ1FRLhiRWBAI5z43AC1O1FAAOXhK
-         1A1EOSufpUtzvoI7Ye4ZE7Opj6i2D9VAOgfO+qGrN9Bb1U0dZDE0jyK8rFhzZ+VxTG6s
-         O3NA==
-X-Forwarded-Encrypted: i=1; AFNElJ94abJ9ApoE1XgDYTpJn3USY6+lDK0d5lRrYaKW/dKBMab1WVOjG+8fkTHynYg+y8GQmY8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxuksQ0N4D+8k3AzZwf3h9MOv0JcQuVHGINgWVy9j0wOS8KNLV7
-	UBJS3LngmF/QmUAg0HqGg0p9CdxwIr/xbF95JGuPQxRSciA2Hq30+CXu
-X-Gm-Gg: Acq92OGGJKf9gDQP8LlfGDnPs4g1TKbsgI2XT7MH3+NHvUhHs3CYRzjVYIxNqHrUAWD
-	3+T7cHo3eC9slmQ10GgTI84GUEJiDjQq7/iC8wDyiLSgsbhzS5nNtENPjRXOIQJn9YzmDbQAu5j
-	TY8yiu7qr4MAJsrP3JqXTaMXMeW2chXPxk3ZMbrkdnfGLE05SUbmGHmG28ww5tOyaHEZgT8iU+v
-	oWzdjV3YHLzY9SgmcYONYmRorcxFaTSxz3uNDNey5fHTBBJ5NN85lEOqV4pi2mrUthY0QdfnTiw
-	nIe/ezX5jRZTh/w9Rn2FkY1ztNWd6Uo9pR/iShj5Vax+bh0uJXcQDl3qXnAd9xRkQCBF5/fFnYp
-	MqRDHI6jsvHuUvMA7Vq5xMLj11kTeHVkqsmbkS2vbP8V1D9QC4GBXRqGhx4SbCnLKKS53iylso/
-	SSl4hegFjsXmCM3LG1W44fz2b3S+aCbKL2AY+/4fvK/h0r5EwBKzLN/yeni+ro
-X-Received: by 2002:a05:6000:18ab:b0:460:c9f:8747 with SMTP id ffacd0b85a97d-4600c9f897fmr21729490f8f.33.1780413885144;
-        Tue, 02 Jun 2026 08:24:45 -0700 (PDT)
-Received: from localhost (62-165-238-1.pool.digikabel.hu. [62.165.238.1])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dc412sm39098f8f.4.2026.06.02.08.24.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 08:24:44 -0700 (PDT)
-Date: Tue, 2 Jun 2026 17:24:43 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-Message-ID: <ah71u8f8L/uN7O1Q@szeder.dev>
-References: <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
- <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
- <ah12uk7IFxS92OR1@pks.im>
- <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
- <ah2VL-ftCQelNoOc@pks.im>
- <2e266786-4ccd-4300-9b53-6f13fbaa2933@app.fastmail.com>
- <xmqqcxy93nph.fsf@gitster.g>
- <ah58IJ8DgSZYRjMM@pks.im>
- <xmqqv7c1xs76.fsf@gitster.g>
- <ah7N5bKAiAORtNkp@pks.im>
+        d=1e100.net; s=20251104; t=1780413889; x=1781018689;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=siqxM+44YRxTLO5rCQhfHL/UO5QsLD+MipHOixUg4RI=;
+        b=iNINui7ns7OzQ5+6fvfiMTCJ8qw/3zwoiyOgrV2N8PmNRbRf+WBDmOdM1x7ohS9a0L
+         VOp9GbOEwjYZd5rv5mOlECn5uFbA51NnN5QSaEi59u3YT7Jaxre86fxfT5Q+dlNzJZUt
+         lmBi67Yj1+riwlrsWp5vg0XshdIrWE3IepwCdybYNt/2ZjbVF/MUC/+Em7COmt4yZPRC
+         sH9Vzjj2iDtPfbxu7SKa7N/Tmc78gNydLswphW6f1QZY7qmfdEztjivAo6t9/QMvY4Sz
+         ZP+Aoeg3Iw0/NyqRIyVSRW4vVLhuTspGHuClVg5o8x2SBKyWI6y0rbRyIyRz9YSqQug9
+         vf6w==
+X-Forwarded-Encrypted: i=1; AFNElJ9XdhkGNpc3qlu5W5GlEZr/4mS/v8fUc+4pCdrmhUrrLc/KDapPV9Jx9GuUoERGzIysmhM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIjg79Xdgel2923NbTYhM4c//JiHqTDpXE2S2oO9yaexarKEVA
+	a8fwS+WSq+Bf61UsaEg8Hgg5CZFz7HmpwFHgw8RkvtW8j1z9zMOl5xza
+X-Gm-Gg: Acq92OFzcPDZFlrQTCYFqSnv/IFb0SgWCzo2pG8JnJ1fugrD130MIt+HdJpVMKOPeSU
+	bKCwLOUiBBDdwNiT4PLD+dp7CPEjTVwiRdvGmjZSTniHVp6mTbZARgQQ97n+5uCHGfH8muUvBO4
+	kw6Uku6JH9/6OBozj+02vtuU6nlE5j77srekzbxl80cOlVrbotpoyOAfG03MY2ApLHfRY9wE2Zx
+	FdooZrm499zBk6tRiXUC1HegBex2LsHYl3H04DzxNDXdImm7fRCd0hD6RV/PAIVeMXY6UBt1EoK
+	EbDLus75zl1PeglleRYjOLfCZsVuGMplL5BapZV+j9C3F7lUcD3qJTwMrlKc0yGOJvn+YuXhMSh
+	Q5cgI73wcoJ5PkqJ0dcZxKmr1ZngX02r2qZSuHyDWqR5fIa4b5MB7ceTNwkt5v7Ck5O89G/4Vtx
+	Bu26+IVSRDQaYseAKUR6r3hoZmIMJiKMqzJ+62Kbyc6iFs75Quz5vD+UPgATmVFS/qSfUsDnl+I
+	8saYLyu
+X-Received: by 2002:a05:6102:160a:b0:631:5ef5:8324 with SMTP id ada2fe7eead31-6ea2f22a57dmr228564137.23.1780413889046;
+        Tue, 02 Jun 2026 08:24:49 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9157f038322sm139645685a.45.2026.06.02.08.24.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jun 2026 08:24:48 -0700 (PDT)
+Message-ID: <c54f3571-ff7b-4caa-b75d-a739ed87ec9d@gmail.com>
+Date: Tue, 2 Jun 2026 11:24:48 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ah7N5bKAiAORtNkp@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Small updates to SubmittingPatches
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20260602090808.87837-1-gitster@pobox.com>
+ <20260602144304.3341000-1-gitster@pobox.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20260602144304.3341000-1-gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 02, 2026 at 02:34:45PM +0200, Patrick Steinhardt wrote:
-> On Tue, Jun 02, 2026 at 05:27:41PM +0900, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> > 
-> > > I wouldn't mind that outcome much, either. What triggered this series is
-> > > that I'm always annoyed that it's "builtin/init-db.c" instead of
-> > > "builtin/init.c", and the same for `cmd_init_db()`. But I intentionally
-> > > constructed the series in a way that the first commit can be picked
-> > > as-is, so that we can adjust our code to the modern world while not
-> > > doing the deprecation dance.
-> > >
-> > > So I'd be equally happy if we just drop the second commit in this
-> > > series.
-> > 
-> > I'd actually find myself annoyed by such a rename when looking for
-> > builtin/init-db.c only to find it gone---much like how a previous
-> > rename made ll-merge difficult to locate.
-> > 
-> > My point is that while static names may annoy some, renaming them
-> > does not resolve the annoyance; it merely shifts it to someone else.
-> > 
-> > So, if the primary motivation is just the first patch, I would be
-> > less inclined to support this series.
+On 6/2/2026 10:43 AM, Junio C Hamano wrote:
+> Recently I gave some advice on how a cover letter should
+> try to sell the idea to widest possible audience, and then
+> I realized that we do not seem to teach how in our guides.
 > 
-> That's entirely fair. My take on this is a bit different, as I think
-> it's beneficial to accept a short-term adjustment for core contributors
-> in favor of making stuff easier to discover/maintain going forward.
+> Here is a small series to do so.
+> 
+> In this round, a few typos have been corrected, and improvements are
+> made thanks to help from Christian, Stolee, and Patrick.
+This version LGTM.
 
-That's not a short-term adjustment, but it will be an ongoing
-annoyance, because 'git log builtin/init.c' will cut off at the rename
-barrier.
+Thanks,
+-Stolee
 
