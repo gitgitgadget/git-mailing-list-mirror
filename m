@@ -1,113 +1,119 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE70E368291
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 15:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780413380; cv=pass; b=o4rEQAkdAdW5HPPfk3ZY7KpDucCeLkKwhPHvJNb9qMllcZfExqo4iYfsBgSTRl9OOGVAP/pI68rUiBEU+aonA22ycKM0q2+xKTeqPskezhEi5vcAnSwaZ1Tn/nJJEFLDHsyeRoZ/BwrrtrgpZbBunQxPCm/L94/omEKxMDFdd/g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780413380; c=relaxed/simple;
-	bh=wylFy7fO4jlgMOt5wlJkyGYx4IgMKJYfd9Z5jNflZkw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nqx5STeUsBIS7nDo0cNp/uMPtKYcaa7y3nBYE92PB7pyInIfpxKUD2rBxzyo7+wrbEGsYyJnwZ2RdSF4JlGrH9sAeA4lzDNNuuiqaqn1zZjtF+puatS9qwOrI9Ib5gVcikEouocKiOVLimazKMA2sksfnN3lJZO3gbTt7jRHKn8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tHSN2egY; arc=pass smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CD23E6DF4
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 15:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780413888; cv=none; b=g7n3HtSRA/J9pll98GRmmZ8VW7ILbiMkl35fPMM7Za3g8J41m0SQfOhvdwfEFnqeByAmYElGB1TZEpOWRnDuIB9bC8HLVrBxMWeQ5xOFZjmNVHCTq4LjWYofGsrabw4Sz6cUltKiEl+2bmtbmkpdPcO6Gw0hipyYEUkKOLWzbj4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780413888; c=relaxed/simple;
+	bh=Mf405nyeS2frNgLbVuBr7m3BM9YfNhKVx/IrofrDn60=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZIKZaN/j3E7Pd2WZz52DdzzyQ4RZui/qllJb1O6m+M+8Z8kNrCOZ7rYSDE+QyfCU6NU2fz0GEwzs3l2181Dl0xW4J+5UPQeizogFuc6DkNl+8O34hbEFM5qt40ULawrX9VCQCEun6c1esLJsIfgo1PrSoTB92UCJxqKI2wC+RyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mkmyCHQh; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tHSN2egY"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-7e6cfdc92bfso606611a34.2
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 08:16:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780413377; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GAODYvrx7FSDSIPywPa2E+V1AroSDXDnSCM47aVjYVf0csARmTyM8HTz38Zuu0UCZ5
-         LLodUcTcotA5qNK2r2YsKSSu7cdxaFd3yhTfM659+raVeGbufgNo8+QHvUPfXpvZn7YH
-         ixKFywWreHrlZdt0AEtxS4eIYxpwqnkc1/t9wXh6amzoISYNoag+se4psVR1gI5IfyZq
-         HKq4nisFkB+5uXM7fAVSZt70RgissSFfv4H9zI9LHgIo0qFOzvnrCs51Hd8BQd6rmum3
-         GwmeE6oN64xlj7N95ks3T1oEfI/im/UF0tm/H1V8WNgMV68PeR+taXpyWkaPaRbjJSW+
-         U0rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Sekwh1XrX16OyqGcGbys9pl9Kn+8/9ebI/vd63SJkqI=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=IaonSAuMrigstODuaYyvs6SUf/TFgO4Nu9RVa6KHb5HfLb+kyEIAkIVrVLVbMel986
-         DYy3RMmFwe1jWjVOvexih80fqEgyTmpnPlYhu5EQw1wCn7zxI95cZu5drriUaCK3lnAl
-         qEJ0IxFKAFxHB6miJEpd/qC+h1fXMWy5bd5A7/dBlSA7SvYRhpe4hffCaU9np9bmGBeY
-         IQUCFkTDe6iBaFuCUXFBnJABm89pEgaerGNoIK9JeaMX5Ov6G8vrwRDSpI4zDaR7S5ra
-         E3uZcqAvR0sOjMewEuezKZJvdXnPWH1PMU4H7z89bhBmYQctU3k8+XQIsCaYq8KBHAd4
-         sHOg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mkmyCHQh"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-45eee266c6cso4062774f8f.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 08:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780413377; x=1781018177; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Sekwh1XrX16OyqGcGbys9pl9Kn+8/9ebI/vd63SJkqI=;
-        b=tHSN2egYKB1bkP7+HpQpplvxFtnmYQC21LP9EN4pj9E6P1w5nE4cqQ4E1iBCqfs+Ax
-         +L55FOBXN0LxqYrDwWQ8UaObLtt4a/V/S4PltjOz4djDKdVsXcsSZuxpk4BHn7/9K/gU
-         aTjcXDdxCPpEbmdxl5H4MH9S0pc2y6FbwvfJ+J4WOq3Cn/a/u8GmLkDUPXPDfzPegE8O
-         mkJsogutcPMmYnWnVOJY2VSqfFFlolyxW8r8XRC7Yv2OH9YWmDrlby8buxC5RGunukvE
-         4d2M+TvN7moGFs/OMWHiR4AnBRCdRCNWZPPQZNQ1RfHxzs9g0zoX5HVr5i5owe5J3pNb
-         oJBg==
+        d=gmail.com; s=20251104; t=1780413885; x=1781018685; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TQOBdPvxn2LTwo3CeCYha6DJCRjAoCSLp4wrgAlUYkY=;
+        b=mkmyCHQhVO9tfzA7h5bEu1/WfmjDvTX17mQHuR+aoptRrpkn4Gj7aMkZCfFxMLDPbm
+         9Wy75D3LER4YjDNxDxpu1zXwWgHgAJ1/e0PRM35QinbGEQXij8kxSwqSm9qqO0N/9vW6
+         UyQd+rimFHydAm/4XQD8N9aFLxA3I3SKKbtWFL24xhhPDc25DrqSJQd6IyxD/OkmgI9a
+         ojbOFGmO2mwebr1PiouDlFwOI05L2CzVHGYAEzJZbG4QU4rVfEk3vOzKNBqra0KjPn7f
+         Wt84pasYt31h3SWq/RYl4euc5zec81yJ346+J03eS1ULRegsm/TDtaZNisu0c/bQ01th
+         O6dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780413377; x=1781018177;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Sekwh1XrX16OyqGcGbys9pl9Kn+8/9ebI/vd63SJkqI=;
-        b=GVeMDHGYhEKkhgwea0ljz7G3zVqU3QfehzWgTOJglsptcTZ4Y+0huxtMlyAGUYlKrx
-         3iSIU90y+RLhiV5qGOyH5VCW10mw/UlesrugTD7P6oneWJq1c7N6pNrcFQ649P+x6Vy5
-         rnnSr31hzqeq6X3WwpdRADibmdN8aojQcrrmvrvrwD6M4tgqSnPTGVBsLy5kHdJHT8ZS
-         gINv0bZlZcew6iLTR2IP3bYpseFh7WhUAcu6oMR4l1zbKtENoKlAuyZcMh7sZ0qLkvEL
-         mhrD+rsKiTc0v3bDaTWRF/BQOWnh9CisbQAQvartDTmyiqqX2AyAZXr7S5UHlvIwnOZE
-         kCCA==
-X-Gm-Message-State: AOJu0YwZXsR3wZbXEaB/gIkFJHySUxLnGyW9I4zMLv2xd5gtIClqxBAE
-	hvvjJSPfS5aqP+FBmtD4MT9wLqFUj7vqxcqT1yUR92wul7F/6r2D2Bl0BAO4C6aX8VDFSZdNfWx
-	K0ndw9rlP0suBGRmU7sLjqpTLWWcNvnw=
-X-Gm-Gg: Acq92OFSWW4PSllJvow3WYLIClhgohr0X3AjcpCo6yOm8gMsEksJNy1rq9pnL61aaNs
-	BWtNWEmITioZgkMKfFC9YIC1Y6oH5QPn24yB+nN6SxrTMl7dUB+OxeqNxb6yNOjviz2AHEw9VtJ
-	VvBOgOKUPyqiuyHReXFxazyuB2FJtur2qZbiDMjY1RdWRQVhQi2koZm6mjZ33pkDNFplYI9vwPr
-	9SrrNti/uYRNp16NxVI2syoVam2Q38lKEqlulpdKMi35mHy0Yw0FFV5LRDiT0t10VInnaTmTLhV
-	w/V4kEvDEfmFgaExnQiEj/ta+h2ubfSTGDVIYby+MrdEVb60vNswLiA8ogPNT+LIIYS1gBflsL4
-	jtnQ=
-X-Received: by 2002:a05:6830:3812:b0:7e6:e349:539a with SMTP id
- 46e09a7af769-7e6e3495b28mr342201a34.21.1780413375980; Tue, 02 Jun 2026
- 08:16:15 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780413885; x=1781018685;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TQOBdPvxn2LTwo3CeCYha6DJCRjAoCSLp4wrgAlUYkY=;
+        b=ikl526Ie/PCwA9ii1TO9eUVkWFIrsz/mqc0Y7z2vIcALgqCBLThLl/PSFZnw5ypxr4
+         acv6drFwbm/Ut0dMAftj3l+aX3Nlxew3z7xvl764cTuy69ccmdO7lzc2en0Rv9eYjgCe
+         bVb1B3Er/NRNUMb0RqUquzwLRLwtpB8xKevBzopvaP5uePD/9EGzdpVWoVQ9MC6lPGm2
+         8ExjtiaL8msOXQJZeXG1YKrDK7RlAK2LqBBktiaJJ1FRLhiRWBAI5z43AC1O1FAAOXhK
+         1A1EOSufpUtzvoI7Ye4ZE7Opj6i2D9VAOgfO+qGrN9Bb1U0dZDE0jyK8rFhzZ+VxTG6s
+         O3NA==
+X-Forwarded-Encrypted: i=1; AFNElJ94abJ9ApoE1XgDYTpJn3USY6+lDK0d5lRrYaKW/dKBMab1WVOjG+8fkTHynYg+y8GQmY8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuksQ0N4D+8k3AzZwf3h9MOv0JcQuVHGINgWVy9j0wOS8KNLV7
+	UBJS3LngmF/QmUAg0HqGg0p9CdxwIr/xbF95JGuPQxRSciA2Hq30+CXu
+X-Gm-Gg: Acq92OGGJKf9gDQP8LlfGDnPs4g1TKbsgI2XT7MH3+NHvUhHs3CYRzjVYIxNqHrUAWD
+	3+T7cHo3eC9slmQ10GgTI84GUEJiDjQq7/iC8wDyiLSgsbhzS5nNtENPjRXOIQJn9YzmDbQAu5j
+	TY8yiu7qr4MAJsrP3JqXTaMXMeW2chXPxk3ZMbrkdnfGLE05SUbmGHmG28ww5tOyaHEZgT8iU+v
+	oWzdjV3YHLzY9SgmcYONYmRorcxFaTSxz3uNDNey5fHTBBJ5NN85lEOqV4pi2mrUthY0QdfnTiw
+	nIe/ezX5jRZTh/w9Rn2FkY1ztNWd6Uo9pR/iShj5Vax+bh0uJXcQDl3qXnAd9xRkQCBF5/fFnYp
+	MqRDHI6jsvHuUvMA7Vq5xMLj11kTeHVkqsmbkS2vbP8V1D9QC4GBXRqGhx4SbCnLKKS53iylso/
+	SSl4hegFjsXmCM3LG1W44fz2b3S+aCbKL2AY+/4fvK/h0r5EwBKzLN/yeni+ro
+X-Received: by 2002:a05:6000:18ab:b0:460:c9f:8747 with SMTP id ffacd0b85a97d-4600c9f897fmr21729490f8f.33.1780413885144;
+        Tue, 02 Jun 2026 08:24:45 -0700 (PDT)
+Received: from localhost (62-165-238-1.pool.digikabel.hu. [62.165.238.1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2dc412sm39098f8f.4.2026.06.02.08.24.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jun 2026 08:24:44 -0700 (PDT)
+Date: Tue, 2 Jun 2026 17:24:43 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
+Message-ID: <ah71u8f8L/uN7O1Q@szeder.dev>
+References: <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
+ <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
+ <ah12uk7IFxS92OR1@pks.im>
+ <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
+ <ah2VL-ftCQelNoOc@pks.im>
+ <2e266786-4ccd-4300-9b53-6f13fbaa2933@app.fastmail.com>
+ <xmqqcxy93nph.fsf@gitster.g>
+ <ah58IJ8DgSZYRjMM@pks.im>
+ <xmqqv7c1xs76.fsf@gitster.g>
+ <ah7N5bKAiAORtNkp@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260602090808.87837-1-gitster@pobox.com> <20260602090808.87837-2-gitster@pobox.com>
- <CAP8UFD0ij4BTVTie1dXwTC8M_9gAvroXebFLmQuY7eUCgHrJhA@mail.gmail.com> <xmqqbjdtuidp.fsf@gitster.g>
-In-Reply-To: <xmqqbjdtuidp.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 2 Jun 2026 17:16:03 +0200
-X-Gm-Features: AVHnY4IYKLxltAxxVGsxhPQUPgMVF20I9i4b4qGhi-w7MLkWTwXPiyt1AXuieAE
-Message-ID: <CAP8UFD1Kp_bex9E4t_1Jj9bnKeUn4=fOgEHemGyqJNfWydpEYA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] SubmittingPatches: separate typofixes section
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ah7N5bKAiAORtNkp@pks.im>
 
-On Tue, Jun 2, 2026 at 4:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
+On Tue, Jun 02, 2026 at 02:34:45PM +0200, Patrick Steinhardt wrote:
+> On Tue, Jun 02, 2026 at 05:27:41PM +0900, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> > > I wouldn't mind that outcome much, either. What triggered this series is
+> > > that I'm always annoyed that it's "builtin/init-db.c" instead of
+> > > "builtin/init.c", and the same for `cmd_init_db()`. But I intentionally
+> > > constructed the series in a way that the first commit can be picked
+> > > as-is, so that we can adjust our code to the modern world while not
+> > > doing the deprecation dance.
+> > >
+> > > So I'd be equally happy if we just drop the second commit in this
+> > > series.
+> > 
+> > I'd actually find myself annoyed by such a rename when looking for
+> > builtin/init-db.c only to find it gone---much like how a previous
+> > rename made ll-merge difficult to locate.
+> > 
+> > My point is that while static names may annoy some, renaming them
+> > does not resolve the annoyance; it merely shifts it to someone else.
+> > 
+> > So, if the primary motivation is just the first patch, I would be
+> > less inclined to support this series.
+> 
+> That's entirely fair. My take on this is a bit different, as I think
+> it's beneficial to accept a short-term adjustment for core contributors
+> in favor of making stuff easier to discover/maintain going forward.
 
-> > s/typofies/typofixes/
-> >
-> > Thanks.
->
-> Thanks.  It is amusing to see I cannot say typofixes when I talk
-> about them ;-)
+That's not a short-term adjustment, but it will be an ongoing
+annoyance, because 'git log builtin/init.c' will cut off at the rename
+barrier.
 
-I wondered a bit if it was a case of satiric or ironical misspelling,
-but it looks like in English the usual words for them are "grammer"
-and "speling", like in:
-
-"I am an expert in English grammer and speling." ;-)
