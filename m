@@ -1,82 +1,87 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71E3DD51A
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F52227BB5
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780407831; cv=none; b=OJHoMkNI2E7uvf0DGz6ryTa7OWjlKsxB3F18Gcs+4JI35tgl01lZ1Xlqq/ptkoiElA3OffSDbjAVod49hG3GH0HfHg0ADNIJGJrO4XPnhv/U1020EmYYNow9zXDGwLR0daZDv5+oASivaYEkloc/WK+D7Q86pZFoqidlCCXcZ4M=
+	t=1780408210; cv=none; b=Qvn2tPxrt8laI5asWbRJgWeBvfbzxpn5MIKjjihYID1ZhWmoQkpFgK4D+2usM9J1beqER4qtxngSTtt9iuadCCU13OxkxYJUmBMlcf/6CoedNkiZj7/USaGi/GN71/7oMOCnUy+SyyiJ9OAoWK2O+zGZDPQA6bxPo3GCcitYumM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780407831; c=relaxed/simple;
-	bh=DcjWlnFzDMQe418VWbfPzkH1dtSi0QL1a/2nIZtLD2U=;
+	s=arc-20240116; t=1780408210; c=relaxed/simple;
+	bh=80/+KjNTfCEzFmRU/Mz79o7UHXILO1LFA/PlzAE8acs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iL6Mt8gP/scvG2jldDzdZ/KKPhrkwqz1FUeQiBembziV7e+Dl9YX/3OiB1lwvXIXBYlGnxuXbo9qbvBA/9AlynQaJcG2oUtRYyGhsspcw15q/DcyTZrIXaVUlQx/2d3PNCbyjTgn4MB6w8VMyYZbdSI8KpTnsYBUoPIZFXfU57Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h+N3ghuQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IoEz1p6l; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=Bp/+s/ZLWqnegUdcijV3nprGG1l0PNmVetMfv8qeWFXHJv2KIQGAH64G0LzRWYM2nKSzmkaQt9gwiMQp3LmdJ8ur1UT10CHu8ZZo12FLnpk/YujEN9TTMpIhUAbOeJ7EzZCYfAF2ZKildUcmAmUUdKuwERYP+zj/axieMdwecdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XsM34bII; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gS2cM+vx; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h+N3ghuQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IoEz1p6l"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id DE44E1D00071;
-	Tue,  2 Jun 2026 09:43:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 02 Jun 2026 09:43:49 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XsM34bII";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gS2cM+vx"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id A781D1D0010C;
+	Tue,  2 Jun 2026 09:50:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 09:50:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780407829; x=1780494229; bh=Rgk8ODBwFr
-	m9c3oecHqfn9wSbNXYZRSRvrLZPKin1p0=; b=h+N3ghuQiZMvlozEQ8tOZ2YWlS
-	N9GuD1K027GXFpeMNZprM1V5H8OZoU3dRBwYjISWbHnwPX6YE12N2afbH1IhNuzV
-	yp/NiqIILyOhmEq0LsJmUv66V/oAGrScso/Nl6aquedDlWGfeqrJjUkWBGEaMDNL
-	K5seR/za7aLz7JJq2GSV9602IsLlaA6GGY76vxj6y4t3pEf6Vz8/V3tLp+m3LHKM
-	siS9LqWJkUEJISqMKjb8ewRO+G79LD3Sf4EAKTrxlQ/MyjuOIUAkGQuMpgA/CAQO
-	Ba+cjzr6r65/IRxjrYztda/ZAi6N81datRL/nIzD44vOiLjwuuyjo6MqUigg==
+	:subject:to:to; s=fm3; t=1780408207; x=1780494607; bh=4+HnQ532xW
+	B8YPytWT3GUnwe+EvAFMiaYD2mf3aivmk=; b=XsM34bIICgN9+/WiK+3FNGub6A
+	T79QNdkrKxuEB9cH3Wq+wRt19CqaYIFDo2hLc+PVfhX7KSSaDrVIHj5bIoWOFaM9
+	r6nTQ/8pnSXVvNLK7CQQ+F2nAJ+EW42ibBeB3Usc6nOtEKWl4wSa8kIX2dCs4QnM
+	1zxLM5EFcWqn30gRMHqwUNRdz35WAMPf3rvvP2irFt8+dng3SVamzwum9g82JZml
+	w02qnQnG42TN5Xbe7LtAH06uNPilMEHQzorA2A8cUT8Z5BrdAUqLg9vdCQu/SZXL
+	F/bGRbtMBcUVMYSXQLg7woJbYTSGHqRR/xqosuyRGV5j5CBbDTXWdVzektrg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780407829; x=1780494229; bh=Rgk8ODBwFrm9c3oecHqfn9wSbNXYZRSRvrL
-	ZPKin1p0=; b=IoEz1p6lRaxMC6gGjLgF8+3I5TNKHdjhZf6YBXnVtu7HwhuuwlS
-	8tV6SkD/BTC6WHTv7ozW5woGPEcWT0p78Fqq5GUISQQ3119ZnpsD6EJrCBqKOBs0
-	QXW6bOwktoGB5SV79SDH1UwAle3aOO1Fzn2XouNtKRaXNP/QYfr6H9hVO9B86Td4
-	jXbrAklce1lJ1pOWN6ttHxWJ9nJHN59O6UjAdYQVfLRo+lW4wEP9LFi8Zb0x8Ie8
-	yv/6SVsC6Ski7edeXCHlBYLq83NGqWrmwra/dpEh3y6sGGnEq1ztoOKc3TwGF/tv
-	b71M6qA9IwlL8TEOR/TR8cXw01UjmE2G7jw==
-X-ME-Sender: <xms:Fd4eauDJoVmDzQvJ10uZZEBFS3CYIX2LVIBydNUBH0KmbGtRK1rOZA>
-    <xme:Fd4eav8rlJHjhJPGKbTvHubJ_b7g0y_K2CHeA6ENHOajLVqdm_UU96WFnDUXhyGLc
-    m3p--JPvmhKSeyZ4_OL2-auQaKvmXIlPSIlB7g9CjVPuh_UWh11-q4>
-X-ME-Received: <xmr:Fd4eau_dLwEtHCkXgTSC8herwif4P0NCbbkYSJ_cOa_zJah86v098W1snbmr7HgnEawtbCVNrvX0sZChbSyUOZmIz-aeOBMJl1_i>
-X-ME-Proxy-Cause: dmFkZTGhn54uc6wCeo7GjJcRkDygjKav8dWbgLPYN4E+0f5m063dk56mYtn3nywY24yPmW
-    5ZNQ6OwmCJYAKMzIepzzuk3pJ8R02snPjpkhFsaEiuH3Dp+GRgA7tT0nlLNRxj/oPVYzQM
-    uBZ7jprHXGXPoK0VyrK4r/Xo08C9k9nKD9cHo2ooDueHFloFKPOTC0A1WJSNAR6YPDz9wo
-    sphORIuXEwPAFwwiouCiAUCtdiNGYsQ4RrZZ9cbXYYF5Qio7aX9SvtZ60Uzxf5dA8P/MiU
-    0cD1vH/41NkgyQUhLdvHXRCQwudrJI1SQXsHeIXV91suLel8bSSg07kBTJN28hxHVs0fhL
-    N47IwPeuAdp8/1u9uKL0aoqmoeKjvZZiJY3NYFoMnNvvvNB8W4EUMzG/0oHDaUSaMpoY+L
-    K1QP1pIDLkOkCVMKfBiKG2Q3Zr/vsuXt5s+kdQyKAIroVhl249FrJz8gO0tfZa8ch7CS6l
-    NLmYwQ+Pz7M92G2gmik164K2ToV03U4FoTYqyhM0hbsY2QCWoes4di5HUUcmaK3jbvYxH/
-    XV3fWbAj0pkWwyEJknNcPhVp9uk1Xyk9oPcNc7beJU6Dz9Zp8jm72xOfJsWw0DM++6FwGh
-    YqMpeyT/+0Bl/JoeYWtdkgaE57T8KADKz2ZdB+6MaT5wKljcMQbUJfz8A3xw
-X-ME-Proxy: <xmx:Fd4eame85EXV3p-DGLbD1oY4jICq6WWgIMdUGf-pplHrsAo9YQFALQ>
-    <xmx:Fd4eanE9_q6sYVzlBe2GwAs49m6Qms7m07BFgwekjYfqqbF4FEBxeA>
-    <xmx:Fd4eakcwMZr8fb6_D5DmbvFTMRIOAcylMPdaNzprZJHd4DCivpzoMg>
-    <xmx:Fd4eahFimFm1cmVIOU2G0K9hcXoF7IpQoNN0RyEXcrzAPSuNHukuLg>
-    <xmx:Fd4eav8q0kygARIYP40TjLfsvSlVSSYympkUCSV30ci4-Y-dXluD3yrO>
+	1780408207; x=1780494607; bh=4+HnQ532xWB8YPytWT3GUnwe+EvAFMiaYD2
+	mf3aivmk=; b=gS2cM+vxb9b6JQXDMEELRyMXtHf8IEG8HbyOlmDFeyMIy9YJikm
+	u6X7341bg7ydxXTQKJsYRcWbOGVz6gmpeKP+CxIBAt+SN14PoSXrX2A5j+SeTErO
+	mCMwTZjmTr8WR7KpWo3s5jnGSKeGzJfAHK0e2FgmkDhJYlgq2FJnM4fAjVysveEq
+	4J+s8eammjr7Rsbw/OhtZ++NLwWflMEUDbd8CVBq0CsAq9QaMszmD37izmH1whbB
+	onyhmzujlO7oGI9v40XTlBsewUIF+GpsQf39C5hYbRRe1YjIZypPn/kF7aGk7gGb
+	SUnWTm3LAhCyYLwTY2gCHWD5qbVgD6GOEAw==
+X-ME-Sender: <xms:j98eas11oXgplVISD9NdubT6x9BEjsGxK7E6T9bcSYmOMQ0ydxg3cQ>
+    <xme:j98eagbGfq_hZQym-rIrc41fVS6sQ_22WunaJ_j2xnMiYjBsJBHlvYnjW9c_qhBCB
+    koMi8lacD5XhaLt1OgoSEE8_b_eQpGclX5XaeNKngv7GAL19Lm5aNk>
+X-ME-Received: <xmr:j98easKD4cb29WOdGbFXjT032ERDvkP4eCWFFsMHYfBNtvZAlJwJCCgeNUZrPJVGpE-IldLdwlebqbUomfz2d0EIwrHBoRg7lWkq>
+X-ME-Proxy-Cause: dmFkZTF8iSTggn2d8TVCIGYWV00WQfTvHG9qxEKz/o6l1LbjSetoqmkUt6+D3SUHwM2h0J
+    LSX2s+jel9+woKMaS6rEEs7/3IrqiBMZLg5Zsb1BflsrkmVC0pfPPF9xdWPUPfMv/8ym6W
+    vMzVWSem3wc+T5oReih5smR1OP1X8mfoW3S8bTMyAuWtybTbDkTj7x+jWHonKLdTWeTf4A
+    B1MwjvTSI3slEksp60Snd8B1dlKPdQwrQVXaZBgvQ2m3C4eXAt8KFXDrflnGadhUwC1a+a
+    WF0ZL0A++cOyt82TCe0kLk6pU/s66D8+RHv18ZsMxEe12sZ+BccFJ4t4StegJ3Yaq+lclQ
+    dwpbSZi3FrXs5zMNHpi6QJQ84ytQQLGrGU1JO2uPlOLJMjHlMXCsRkZI2X8fUK9E8XJ2rJ
+    JYn4l4J3AibIhTEFryF8ewv2QZLbUgzJkkEj6+a2tBVdevv/wl1pglAYjAaX/L/IPTrhSm
+    6cK/plPeU79rnEObZcBawVBWcI82mUgjbCFFOToUHZCArxBVQrQw595W07ZVNNYOZTHXm7
+    pRAm1uuVKpXO2BYLUt8gfvP/2/bAjfGoTFHGL6UDV+k4jKB+gmXVKdZxn510SH588067XH
+    AVSb3Az8wvVpmx6fnKjYmvjzCeSEMgBzA4rGI5H9ufMd3qH5uxSFurzJkXaw
+X-ME-Proxy: <xmx:j98eanGEbYydzr15FVGXLnO5Tt59FrmSfpCp_BTLyErkqHLfuckVUw>
+    <xmx:j98eartg01OjQDyF_mwx3PFwMr1De3pGEmsm-rYyVW5u94CbKazWyg>
+    <xmx:j98eaus1Gu9W7LR3MWc-Vm5Ixm645x1TR8n2Ql3ORq08z19kWjnsoA>
+    <xmx:j98eahDzgcT549JeOxFpTip318NI04IyifcYK0aDKXk_VYDzcyEfeQ>
+    <xmx:j98eah8Y4xwaN3cT3RDcEjmUgXLq1ArZCR1TrOyFhn79PN90-Wqp_57B>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 09:43:49 -0400 (EDT)
+ 2 Jun 2026 09:50:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] SubmittingPatches: describe cover letter
-In-Reply-To: <fd588cff-be2b-4422-9c01-cef06b2ea5fd@gmail.com> (Derrick
-	Stolee's message of "Tue, 2 Jun 2026 08:29:11 -0400")
-References: <20260602090808.87837-1-gitster@pobox.com>
-	<20260602090808.87837-3-gitster@pobox.com>
-	<fd588cff-be2b-4422-9c01-cef06b2ea5fd@gmail.com>
-Date: Tue, 02 Jun 2026 22:43:48 +0900
-Message-ID: <xmqqa4tdvyzv.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  phillip.wood@dunelm.org.uk,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
+In-Reply-To: <336a4202-a55f-4223-b654-985d47233653@gmail.com> (Phillip Wood's
+	message of "Tue, 2 Jun 2026 14:09:39 +0100")
+References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
+	<20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
+	<276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
+	<ah12uk7IFxS92OR1@pks.im>
+	<042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
+	<ah2VL-ftCQelNoOc@pks.im>
+	<336a4202-a55f-4223-b654-985d47233653@gmail.com>
+Date: Tue, 02 Jun 2026 22:50:03 +0900
+Message-ID: <xmqq5x41vypg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,46 +91,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> +. Make sure your target audience can understand what the patches are
->> +  about and why they are needed without prior context.
+>> I was wondering whether we want to call `you_still_use_that()` here. I
+>> found it to be a bit heavy-handed as it's so trivial to replace with
+>> git-init(1), but on the other hand it's a trivial thing to do.
 >
-> The thing that I like to say about the cover letter is that this is
-> your opportunity to communicate why the value of your change is worth
-> the risk of regressions and the cost of maintenance. Perhaps:
+> I agree you_still_use_that() is too heavy handed, I was thinking of 
+> something like
 >
-> . Every code change comes with risk of regression and maintenance cost.
->   The cover letter should clearly communicate why the value of your
->   proposed change is worth applying. You can also describe how the risk
->   is reduced by the design choices you made while writing the patches.
+> 	warning(_("this command is deprecated, please use \"git init\""
+> 		  "instead");
 >
-> Or something similar may be helpful? I may just be over explaining.
+> but that would mean we need to add a separate cmd_init_db() function 
+> that prints the warning and then calls cmd_init().
 
-Yeah, it may be a bit on the heavy side, but complements what I
-wanted to achieve with this update very well.  I wanted to encourage
-writing for wider audience, without leaving those "not in the know"
-behind.  What you wrote above is more about what to write, which is
-very much appreciated.  I think it fits well as the 0th item before
-the three-bullet list.
+If we do plan to remove it in the future, then something like that
+may be needed.
 
->> +. For a second or subsequent iteration of the same topic, make sure
->> +  people who missed the earlier discussion can still understand what
->> +  the patches are about, so they can judge if the topic is worth their
->> +  time to read and comment on.
->> +
->> +. To help those who are familiar with earlier iterations, give a
->> +  summary of changes since the previous rounds.
->
-> I find these updates to be particularly helpful, even for GitGitGadget
-> PRs that include a range-diff automatically. It's good to double-check
-> the human description of the update against the computed diff.
+But it is not like having "init-db" hidden but accessible in the
+command table is hurting anything.  Other than that those who want
+to create their own
 
-Oh, absolutely.
+    [alias "init-db"] command = foo
 
-A GitGitGadget generated cover letter that lack any human input but
-just range-diff dump is often very hard to read, and the receiving
-end is better off pretending there was no useful information in the
-cover letter.  "git diff @{-1}..." after applying the patches to the
-same base is sadly a lot easier to read than "git range-diff @{-1}..."
-for many series.
+that is, and I'd see it a bit crazy.
+
+The "init-db" form is hidden from "git help" listing, and we know
+whenever we suggest to run "git init" we do not say "git init-db",
+so if we do not have to remove it in the future, I do not think we
+even need such a warning().
+
