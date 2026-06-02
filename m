@@ -1,131 +1,206 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66053314D1D
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 06:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780382762; cv=none; b=SbzXp1j7x3WcqSJGQI2o0NUT0tzJmBcWqv9XbLO1jaiQm28XbESL4mSzAQWpCsCVrChrhmaZElBkg+1hLWOmDij22lcNs11Q+gBlQcN6JHGkhTIqjlPlMSsBvlXG+mHYe10oAuCKxSAH86qnggC03VgpEdg07T2GIREAQQOj3PE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780382762; c=relaxed/simple;
-	bh=K9WrJeX3Q+N51UPKshpYuz2aPQUXtjZYxu2I/yrH4Fo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P+sc/w84d1rAiw6Qk0E21oR/QbMsVbpyuUL8YxeCSc2qWI4FHNGqUXmnXEjGBam8nPtt0sUwOW2Yi1Grx8aYaQMA67KUw96PPfYjs8P/tV5FsdOJX7f3jfgs3J/ffKuA4pspx49yQMzRAvGGSmgSSS0dn/ngrdm9AZyaa+Rzq5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I5K146VW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C8TyIy+0; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429E630FF2A
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 07:31:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780385493; cv=pass; b=pwy+xE5CnOT0dIexeqqoh3t11DMpXrCasfnJOR86u+Z/N+mMHiyAmMyEtILvmZpn90EYRwAAq/HUpoDWGOfmhMvvy0A95faEfbVysN2CO08bL68RWadwAUnPhLoMFTNZmQtmB8lyHz1QK1vpbj+hz1lYiC7zxuN10U3ohLSpyQw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780385493; c=relaxed/simple;
+	bh=Dc3WBjy2Z5l/vuxqHwiSQtfm4MMYOt2OLYfGjGZe9Bw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TTBPV5dxhog4zywrV4e7GKEKLtum3ZB6VIp7amuP4zQ2vl+gF+q8RcZoDnJbSyjEZvUIumrNHfTtt7MC0In0dvFs5U3kFKZIyrQBgOgROW874xzNLk8wPsSAQMt1Rk2v2b3sf8lb9ZufCnCClTqgekxBNIOeanaYds3mUfnfD3M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ggA44r22; arc=pass smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I5K146VW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C8TyIy+0"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7848C1D000AC;
-	Tue,  2 Jun 2026 02:45:59 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 02 Jun 2026 02:45:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780382759;
-	 x=1780469159; bh=/WFlnzleiuAz2Ji1SUxmKY7UKZhQZKRQc8hIwKrsrWo=; b=
-	I5K146VWrB2Lns9Wq8xmNgQbLQvemK/3hB380fKPUqzfLwa80OSQdZlxJCPZZPsx
-	HJgVKsNEbcGRMI7zh9Gb/HhN5chNrlnTIMJ2cF4Za+zZtNidIc4EFbzAIAZwZj9P
-	/1RDR/tqGq6lsFCASSOQ//8YCbpNnxnAAj+LH40SVZlZ0OCGIS0Owh3uMq7nKVJH
-	qgRA8pMPzmEAMmmpQzirN4YJis6oIDvbI+vKvhGIMfH8s+FKTleA574b1KmpV+Bo
-	Zy6J5VBmHqraagbEqyEl+j/fOsqVztyTTk00iR5NcNV4/MxWbmXloFbost70Gh1l
-	bBJ8RPyEcy8rk5mZ+7xLRQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780382759; x=
-	1780469159; bh=/WFlnzleiuAz2Ji1SUxmKY7UKZhQZKRQc8hIwKrsrWo=; b=C
-	8TyIy+0oK1QAjYG8UzWc+sfzkotSzy+EGOzYD64a8OA/wWXtnmK9l1kXPg5zGPn0
-	sFUXFWY0OkeYTJ2i7wBA7SmMXX9bO8I0W1EmL80rSzlHlVcbuEK6ODmWmSUl8D0d
-	fWrLkwYOM5IA/ITkQ2IMjHSGFCh3JOKquRGsjvdedF5QDEPUDHFL8yk//VzJINzb
-	qiUTHpHM+N1TpyuF0pF3O7C5lCkv41TLGDAe/vh4tZfqO3HLP1JxrbIyKe76DUEI
-	79sGkbEogUBqVrVrXW+ybsbqA7XUxVFVtT3rsEVqcFx72h50aYvpU1AGsRmH16De
-	afpOIyVw2Mkn8NxsR/vpA==
-X-ME-Sender: <xms:JnweagN0Q9qCRJhO-PXcvsPf2vWvXnrM13fMyP6b97Tv6j0MnJNf4Q>
-    <xme:Jnweakwl1-6CLKqZt1E-Lzq4-Rbvc9dUQ0TjwcfHfkfXhjDPB4ysAdrENpW7JpaHR
-    ZOQrSRckgVJRJDSFus75x_Mk9ZbJGs6p5pU2a1qneRVeORyOl1V>
-X-ME-Received: <xmr:JnweahtfbvQeYS4KqSY5yQkuKARkf033cjtWt8uKXaJss5pZO_ru5ak1C5gC_mlZ8luIERS0DO7dbiyS8zIIYD4mc4ddtnAsXH9sa8LKZw>
-X-ME-Proxy-Cause: dmFkZTFnw0GnJ4ajDcEPYFmjaytYUcdAABSDwDbMXoZZ26rFYpNc9Ou0pyUECqcnUtKMtk
-    yFFpnC5F9/nm/YvRS/9lkuZSvPkbQRC3qwObtimAITdvzAuJHXg9t8gB3wWGmzgjg+59fj
-    dLKG13KZ3sphwWVZYqzPyvSYE2Ia15EkAlLCCNxDjOcAn8qsoK1HkMnK9M3Wfv/R+/ng/r
-    WuhDQQbfWaK58rODoPjnoGMH+HuOKRiIE7RwRFu0UcRuRNhtLb1uEPn8XEZjNM6+SsgwtK
-    UDzcmh2z0XXQqQho5hLuH12cPXuQXXAgphJ6pSJVEJH+SJEvT2He4gaBki2Jjo996F/vaM
-    9vSH5AUt28ozzLoXi0WPL6TTixZeNb3pvKff1H8yYmrDZwWHWQqE5l9LT7UD2DDpC4j/yp
-    O+SEpDHP38FWYpYYv3SnxjiEcE9/K3+oFvKjnzwg3TdAGHKJA+lMCVPGD/f2SthMy/pCx7
-    XU4mOkvS1nFGkawKZs1r6eE0l3W+7b4R0IOLAwzQX2XBqCItUaa9tgxmE9XeaOPE80oHfY
-    wzx+SnDPv2HxWBou4FCtgL81cNY4j+F8tNjmGol7iq8VDlCiWig+/w+eBAlU6d2RyDQ557
-    i+Ss/jISKq65DzI36QmEOBVlRUpTG3yEqRUFJhpFGlMXH/W/pY8p7J0UYgew
-X-ME-Proxy: <xmx:Jnweal4O66FqvapltAV2Yc8GoYddYhdr5PllwpFBZdLKik-pemU8hA>
-    <xmx:JnweaoSlkGplCf31CSlUEItCmiYF1LiDDlKf1z9iFaMAmgm5ZUbmGg>
-    <xmx:Jnweasr3J32YSSUolkonvubq38bCd2fJVCI_xW-H1LiseDnovqm4yw>
-    <xmx:JnweauKP7m_L-WoWLEhh0P2GpN6jScE0wRWkcYqyl2chXyjCAVaYgg>
-    <xmx:J3weaiVXHoJ2F-59HvQfr43m-AFska0hXQf_TcgKFGnAyFSoP_vxeZq0>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 02:45:57 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7ad23f66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 2 Jun 2026 06:45:55 +0000 (UTC)
-Date: Tue, 2 Jun 2026 08:45:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-Message-ID: <ah58IJ8DgSZYRjMM@pks.im>
-References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
- <20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
- <276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
- <ah12uk7IFxS92OR1@pks.im>
- <042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
- <ah2VL-ftCQelNoOc@pks.im>
- <2e266786-4ccd-4300-9b53-6f13fbaa2933@app.fastmail.com>
- <xmqqcxy93nph.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ggA44r22"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7e3b2a435ecso20965827b3.1
+        for <git@vger.kernel.org>; Tue, 02 Jun 2026 00:31:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780385489; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PZezEzfrXP9p24uR833HSIN9BoUYPEfUCdghxQVS/F5RH2nCjUVpVADogN1LGTyRt7
+         8FEdlbUkLwjmaHBS4pjjLEZXbZBFlpwK9+PqAvSJ+Gp2l5VHKoj1VENvFy0VH2728GA2
+         sWAPIL5sMPT/iffLQjs5kw22+FiwunLlISGhBsshCQ5HfhqOw+b+T+eHf4wFR/togpCx
+         HyDsvAdRTtaWEP4DvFs/KMgP1EjG+gTcYmdCQhGUOfYFLYuXIbJH/p3ldy0wq+pX0uWH
+         YCAZfegIR1NJ29oIAZq5s/Qnkqj9KiEu88HfgIYcdyC8WHb3B3JxZDyWZ7Hqz7o9ZOEF
+         HnQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=cW9/Ots5yVYW2XT+iWzfLzDBplbh+qc6IwK7czNZZHc=;
+        fh=4hRD6dug9K2dA8/Qy44rHfFMnlFofhUgf7dxeZXl9E8=;
+        b=G2PyUMv5HxaY46LPeSHulUhZARrZPpTOAjL8wu/vcK4FzKhdY8LJFW5BGXnueqsTk/
+         oxpf2p3A4BBqLmAAC/3eCNH6NiaBmXM8W9bpxKyMpFxLu6CiAH9xYBsx33z7NAhYboGs
+         Q111LMpbcNs5feC/ozoCe3ZIqO/jyRqm7vVYnY2Y9bW5C27Bjzl3H79urczsbT60lRYo
+         pqA3AT4RQYth8xAd6FbLQ1q1YZaeFi4i5Lz/j48gve6Jx0YRHIgU12WOv0oMpz4Sqx5v
+         LahaPUykq6j8y913fNrYyRi1i5wKxxZ9yPlsFqtSGjufLVGGQR+6QyRcBOV8RWHHu0ry
+         eY9g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780385489; x=1780990289; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cW9/Ots5yVYW2XT+iWzfLzDBplbh+qc6IwK7czNZZHc=;
+        b=ggA44r22nd7+PGkg6Mfpf4Je5X/YFJsFCf1Xtd8sRF5vkHLm6VkxtF9KFroMQxSYwv
+         qgEoNva3NeRJM0PV0BsePNQP4htNMOKEGnBg9rB94rB6K9Z2nWCp0pyT2hP/h3M8Pyhw
+         CJZZomO9rKTDeBrl2dAWtruMnwZzg6PveYlpuhBmtCWEW7NRvzB6H/OhtrsdmuEBJkMJ
+         njZ48WO+bqbsK5MmfC+3l4UUdDN/mZDlUJULj6t5Rx/6uO2K7as02IZmO3aaHBpYLp7j
+         GUIYlKSA2LEGjtrpLBhITyuzQOft9Zm4HwBmfJKaOfOiYPVYKdJqiUJzMcR+XhiuQurP
+         qyMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780385489; x=1780990289;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=cW9/Ots5yVYW2XT+iWzfLzDBplbh+qc6IwK7czNZZHc=;
+        b=W3byvUPdMGg7wTgUowvBAzjZ/kMfumL5hIlQ9B5mH6SC6OFJR0t1QNZKwgNVd7DgV1
+         IWMCsJR4/TGx4ZhNENmtJbtfL3XwyIutQ55OLIwtP/piuw1FB8nVgXy+9bpLVM5yk/H2
+         2j47touZwRfa3ZgKsmfW1H/VqE00ABpDUQkSLsTNSo4yjpwndFdDGKB2YNLlxFuSMJNY
+         l8tjStSEWXA2bBuLtvQvseo3PMIhIZ9rucrf9UZL+l/CwEfdKcETw+V0WIid5+Sc8ldj
+         jHK7/eg4dh1N3zuEDFvdi5K6QUBQxx0hmsUCf7BVYoU9PRA0gjnCInbbYB1AF3Pu+ot8
+         37GQ==
+X-Gm-Message-State: AOJu0YyvSrziOoCK1JWmTtP0lhmjjTecjJw1E+r7UvJyY8XipehPdeN4
+	kvNMBlS0XVIzgauHVhFge4MF8X/y2raGsOkX9dF8QhFuDmWaBStQQlsRs1eRZrDrfAGVcIzGN18
+	VQvlSkrMKXd13p65FpHndeQA91A5UFm7JJI6gDho=
+X-Gm-Gg: Acq92OEEYBQoWdI0EaQgnQuX+XCjpuDvk4yt0WBZhHY+EOS5dQJiGuuN8h1GlVMKuy7
+	ajTT1DP91ZmB42ozz5kZn7Ydna/oNRDqwgAmouakoRQocjHi80YGuzFIyG7XdJWdaBf7DurhoWB
+	Pyri+kqgOhbg+keoTVqk5cOljkbXTIjzRCSzzGoxpnzbrvqySkucSnYBlbFO9eCg5IFJdcgHGEt
+	A6PFH07iqaA36Y3hwbGZw0p4HQrBcudu7Jx2M+tBFvauBzqYUaZM7JpIhQtFU6z2jmh4dPPmpw1
+	hTuh3S9HdrDLVe1R8R4Sw3UJoX7eLnV5Ff8QK986C5dFtg3Swo/G4Nhek41iMaTLBU1rqU/vR+1
+	Kw5MWLAAtXxwZbrTz7z6wj0wHOGJgAqIwcTiJ9XyIuBfgFcq533fyxrwLtmJzM8JDXvbAk0JF/l
+	I1TGgfXMO5Azc1lQk=
+X-Received: by 2002:a05:690c:e34b:b0:7d0:261a:6bd with SMTP id
+ 00721157ae682-7e05f11c4ffmr130997617b3.44.1780385488986; Tue, 02 Jun 2026
+ 00:31:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqcxy93nph.fsf@gitster.g>
+References: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im> <20260601-b4-pks-history-drop-v1-2-643e32340d55@pks.im>
+In-Reply-To: <20260601-b4-pks-history-drop-v1-2-643e32340d55@pks.im>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Tue, 2 Jun 2026 09:31:17 +0200
+X-Gm-Features: AVHnY4JdQCc2yIUHpiJNGhH3ibiGizg_jdMkg9jnhAipfFs4A1UCvfd1__1M4a8
+Message-ID: <CAN5EUNQbSN7+SDWcrh3jTD7SXrnD=e-fQ9Qj9778R7cy2q4b1g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] builtin/history: implement "drop" subcommand
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 02, 2026 at 07:22:50AM +0900, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
-> 
-> >> I found it to be a bit heavy-handed as it's so trivial to replace with
-> >> git-init(1), but on the other hand it's a trivial thing to do.
-> >
-> > I imagine that most potential git-init-db(1) uses will be buried in some
-> > scripts that haven’t been touched in years. Then the Git init might
-> > fail, you get errors about git-commit(1) or something not being a thing
-> > you can run without a repository, and it ends up being a headscratcher
-> > since the original failure gets lost.
-> >
-> > All to say I think a simple warning would be nice. ;)
-> 
-> Or just leave it without deprecation.  It does not cost much to keep
-> "init-db", and because we expanded what "git database" means in
-> later versions of Git since its invention, the name still makes
-> sense.  Thank Linus for not naming it "init-odb"---that might have
-> been a valid excuse to rename it because it does not cover the ref
-> database and config database and others.
+Hi!
 
-I wouldn't mind that outcome much, either. What triggered this series is
-that I'm always annoyed that it's "builtin/init-db.c" instead of
-"builtin/init.c", and the same for `cmd_init_db()`. But I intentionally
-constructed the series in a way that the first commit can be picked
-as-is, so that we can adjust our code to the modern world while not
-doing the deprecation dance.
+El mar, 2 jun 2026 a las 8:16, Patrick Steinhardt (<ps@pks.im>) escribi=C3=
+=B3:
 
-So I'd be equally happy if we just drop the second commit in this
-series.
+> +
+> +static int cmd_history_drop(int argc,
+> +                           const char **argv,
+> +                           const char *prefix,
+> +                           struct repository *repo)
+> +{
+> +       const char * const usage[] =3D {
+> +               GIT_HISTORY_DROP_USAGE,
+> +               NULL,
+> +       };
+> +       enum replay_empty_commit_action empty =3D REPLAY_EMPTY_COMMIT_DRO=
+P;
+> +       enum ref_action action =3D REF_ACTION_DEFAULT;
+> +       int dry_run =3D 0;
+> +       struct option options[] =3D {
+> +               OPT_CALLBACK_F(0, "update-refs", &action, "(branches|head=
+)",
+> +                              N_("control which refs should be updated")=
+,
+> +                              PARSE_OPT_NONEG, parse_ref_action),
+> +               OPT_BOOL('n', "dry-run", &dry_run,
+> +                        N_("perform a dry-run without updating any refs"=
+)),
+> +               OPT_CALLBACK_F(0, "empty", &empty, "(drop|keep|abort)",
+> +                              N_("how to handle descendants that become =
+empty"),
+> +                              PARSE_OPT_NONEG, parse_opt_empty),
+> +               OPT_END(),
+> +       };
+> +       struct strbuf reflog_msg =3D STRBUF_INIT;
+> +       struct commit *original, *rewritten;
+> +       struct rev_info revs =3D { 0 };
+> +       struct replay_result result =3D { 0 };
+> +       struct commit *old_head, *new_head;
+> +       bool head_moves =3D false;
+> +       int ret;
+> +
+> +       argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+> +       if (argc !=3D 1) {
+> +               ret =3D error(_("command expects a single revision"));
+> +               goto out;
+> +       }
+> +       repo_config(repo, git_default_config, NULL);
+> +
+> +       if (action =3D=3D REF_ACTION_DEFAULT)
+> +               action =3D REF_ACTION_BRANCHES;
+> +
+> +       original =3D lookup_commit_reference_by_name(argv[0]);
+> +       if (!original) {
+> +               ret =3D error(_("commit cannot be found: %s"), argv[0]);
+> +               goto out;
+> +       }
+> +
+> +       if (!original->parents) {
+> +               ret =3D error(_("cannot drop root commit %s: "
+> +                             "it has no parent to replay onto"),
+> +                           argv[0]);
+> +               goto out;
+> +       } else if (original->parents->next) {
+> +               ret =3D error(_("cannot drop merge commit"));
 
-Patrick
+Why the if block adds which commit context, but not on the else if block?
+
+> +               goto out;
+> +       }
+
+> diff --git a/t/t3454-history-drop.sh b/t/t3454-history-drop.sh
+> new file mode 100755
+> index 0000000000..b320ff09b3
+> --- /dev/null
+> +++ b/t/t3454-history-drop.sh
+> @@ -0,0 +1,513 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'tests for git-history drop subcommand'
+> +
+> +. ./test-lib.sh
+> +. "$TEST_DIRECTORY/lib-log-graph.sh"
+> +
+> +expect_graph () {
+> +       cat >expect &&
+> +       lib_test_cmp_graph --graph --format=3D%s "$@"
+> +}
+
+This function appears exactly the same at t6016 and t4215 but named as
+check_graph. I was gonna do a cleanup for a commit series I'm working
+on to bring that function to `lib-log-graph.sh` because all these test
+files share that they import graph functions from `lib-log-graph.c`,
+maybe you could do it?
+
+Also:
+
+lib_test_cmp_graph () {
+        git log --graph "$@" >output &&
+        sed 's/ *$//' >output.sanitized <output &&
+        test_cmp expect output.sanitized
+}
+
+Already uses `--graph` you can drop it from expect_graph()
+
+I can't say much more, from what I tested it worked fine but I haven't
+tested very exhaustively tho,
+
+--
+Pablo
