@@ -1,87 +1,81 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F52227BB5
-	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09CA378D96
+	for <git@vger.kernel.org>; Tue,  2 Jun 2026 13:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780408210; cv=none; b=Qvn2tPxrt8laI5asWbRJgWeBvfbzxpn5MIKjjihYID1ZhWmoQkpFgK4D+2usM9J1beqER4qtxngSTtt9iuadCCU13OxkxYJUmBMlcf/6CoedNkiZj7/USaGi/GN71/7oMOCnUy+SyyiJ9OAoWK2O+zGZDPQA6bxPo3GCcitYumM=
+	t=1780408623; cv=none; b=lxYzUVrtR2oyYf2nkCA3lxwfYTiCN8RiiuhGL+aKj9uMJzbXl2Abb8ely5PN79D0wNCkRbqmkWfNltNOUBYwGnOMt5ExXAvn7w2AzBU/mE+E/9DgPQL/C+81AdDwU0tHTbDh3gGV5MP3842iyVyKR1VzTg4SauJIlHdeJARxQyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780408210; c=relaxed/simple;
-	bh=80/+KjNTfCEzFmRU/Mz79o7UHXILO1LFA/PlzAE8acs=;
+	s=arc-20240116; t=1780408623; c=relaxed/simple;
+	bh=rarWuSzh+kRjkTgmXR5Bv7L2nxt77B/jTCs8VW4LOZ4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bp/+s/ZLWqnegUdcijV3nprGG1l0PNmVetMfv8qeWFXHJv2KIQGAH64G0LzRWYM2nKSzmkaQt9gwiMQp3LmdJ8ur1UT10CHu8ZZo12FLnpk/YujEN9TTMpIhUAbOeJ7EzZCYfAF2ZKildUcmAmUUdKuwERYP+zj/axieMdwecdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XsM34bII; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gS2cM+vx; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=Bs+WpMsZ97Qxgr6kZnim/evIjWf6L21F5AlkdMn0gFjCg6vApsQ796Frio2vKqdnmS3O9KaIdtlYBJun2CAdGD7gq9e1cc5B+ZcmEuIq9hwh+kjbPjMrRXEyot3VQ9InG8NOwmr3uiNorB+jAhKlMGMdzbRiVTNuOF2lNSprCbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=USdaTXak; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OcqJAGJW; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XsM34bII";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gS2cM+vx"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A781D1D0010C;
-	Tue,  2 Jun 2026 09:50:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="USdaTXak";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OcqJAGJW"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2490E7A0032;
+	Tue,  2 Jun 2026 09:57:02 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 02 Jun 2026 09:50:08 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 02 Jun 2026 09:57:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780408207; x=1780494607; bh=4+HnQ532xW
-	B8YPytWT3GUnwe+EvAFMiaYD2mf3aivmk=; b=XsM34bIICgN9+/WiK+3FNGub6A
-	T79QNdkrKxuEB9cH3Wq+wRt19CqaYIFDo2hLc+PVfhX7KSSaDrVIHj5bIoWOFaM9
-	r6nTQ/8pnSXVvNLK7CQQ+F2nAJ+EW42ibBeB3Usc6nOtEKWl4wSa8kIX2dCs4QnM
-	1zxLM5EFcWqn30gRMHqwUNRdz35WAMPf3rvvP2irFt8+dng3SVamzwum9g82JZml
-	w02qnQnG42TN5Xbe7LtAH06uNPilMEHQzorA2A8cUT8Z5BrdAUqLg9vdCQu/SZXL
-	F/bGRbtMBcUVMYSXQLg7woJbYTSGHqRR/xqosuyRGV5j5CBbDTXWdVzektrg==
+	:subject:to:to; s=fm3; t=1780408622; x=1780495022; bh=EvVVeo/hIy
+	1MrFMeAgilMtxIlzUQ8oHEXWA2+nIp7kk=; b=USdaTXakxezKjqxaEWtpT8V8u4
+	TrVpqWgbySpR0Y8CQbvZZBG9bE2A1i22S7nrHzL9ie9Sy3QGaO3dE2gR0ckS2vd9
+	k0IKifp5BjtNLbgihZxpeDbnSHrRc+d1J2LxrYuWuNIz38fGTwT791ptAXJ5v3ix
+	ED3yLdC1tCPXySLblt8OLa7oxbLHaaP4MVhYHi6CUV519BXwJcZMbrn5tQs5REfp
+	Rlot5FnIxXQOtka6e0WKLejOsig+9RY6t9n/hmIXELEk3uxLYje91zMoY4KH2js9
+	VH56VLED5EfVFiDnp9bKgkk/4G78+mi+51oCBZ7RZ5Y8riZ9vmVCSJjiW+2A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780408207; x=1780494607; bh=4+HnQ532xWB8YPytWT3GUnwe+EvAFMiaYD2
-	mf3aivmk=; b=gS2cM+vxb9b6JQXDMEELRyMXtHf8IEG8HbyOlmDFeyMIy9YJikm
-	u6X7341bg7ydxXTQKJsYRcWbOGVz6gmpeKP+CxIBAt+SN14PoSXrX2A5j+SeTErO
-	mCMwTZjmTr8WR7KpWo3s5jnGSKeGzJfAHK0e2FgmkDhJYlgq2FJnM4fAjVysveEq
-	4J+s8eammjr7Rsbw/OhtZ++NLwWflMEUDbd8CVBq0CsAq9QaMszmD37izmH1whbB
-	onyhmzujlO7oGI9v40XTlBsewUIF+GpsQf39C5hYbRRe1YjIZypPn/kF7aGk7gGb
-	SUnWTm3LAhCyYLwTY2gCHWD5qbVgD6GOEAw==
-X-ME-Sender: <xms:j98eas11oXgplVISD9NdubT6x9BEjsGxK7E6T9bcSYmOMQ0ydxg3cQ>
-    <xme:j98eagbGfq_hZQym-rIrc41fVS6sQ_22WunaJ_j2xnMiYjBsJBHlvYnjW9c_qhBCB
-    koMi8lacD5XhaLt1OgoSEE8_b_eQpGclX5XaeNKngv7GAL19Lm5aNk>
-X-ME-Received: <xmr:j98easKD4cb29WOdGbFXjT032ERDvkP4eCWFFsMHYfBNtvZAlJwJCCgeNUZrPJVGpE-IldLdwlebqbUomfz2d0EIwrHBoRg7lWkq>
-X-ME-Proxy-Cause: dmFkZTF8iSTggn2d8TVCIGYWV00WQfTvHG9qxEKz/o6l1LbjSetoqmkUt6+D3SUHwM2h0J
-    LSX2s+jel9+woKMaS6rEEs7/3IrqiBMZLg5Zsb1BflsrkmVC0pfPPF9xdWPUPfMv/8ym6W
-    vMzVWSem3wc+T5oReih5smR1OP1X8mfoW3S8bTMyAuWtybTbDkTj7x+jWHonKLdTWeTf4A
-    B1MwjvTSI3slEksp60Snd8B1dlKPdQwrQVXaZBgvQ2m3C4eXAt8KFXDrflnGadhUwC1a+a
-    WF0ZL0A++cOyt82TCe0kLk6pU/s66D8+RHv18ZsMxEe12sZ+BccFJ4t4StegJ3Yaq+lclQ
-    dwpbSZi3FrXs5zMNHpi6QJQ84ytQQLGrGU1JO2uPlOLJMjHlMXCsRkZI2X8fUK9E8XJ2rJ
-    JYn4l4J3AibIhTEFryF8ewv2QZLbUgzJkkEj6+a2tBVdevv/wl1pglAYjAaX/L/IPTrhSm
-    6cK/plPeU79rnEObZcBawVBWcI82mUgjbCFFOToUHZCArxBVQrQw595W07ZVNNYOZTHXm7
-    pRAm1uuVKpXO2BYLUt8gfvP/2/bAjfGoTFHGL6UDV+k4jKB+gmXVKdZxn510SH588067XH
-    AVSb3Az8wvVpmx6fnKjYmvjzCeSEMgBzA4rGI5H9ufMd3qH5uxSFurzJkXaw
-X-ME-Proxy: <xmx:j98eanGEbYydzr15FVGXLnO5Tt59FrmSfpCp_BTLyErkqHLfuckVUw>
-    <xmx:j98eartg01OjQDyF_mwx3PFwMr1De3pGEmsm-rYyVW5u94CbKazWyg>
-    <xmx:j98eaus1Gu9W7LR3MWc-Vm5Ixm645x1TR8n2Ql3ORq08z19kWjnsoA>
-    <xmx:j98eahDzgcT549JeOxFpTip318NI04IyifcYK0aDKXk_VYDzcyEfeQ>
-    <xmx:j98eah8Y4xwaN3cT3RDcEjmUgXLq1ArZCR1TrOyFhn79PN90-Wqp_57B>
+	1780408622; x=1780495022; bh=EvVVeo/hIy1MrFMeAgilMtxIlzUQ8oHEXWA
+	2+nIp7kk=; b=OcqJAGJWXZt49YAVvz63N7ku/nKc2v00/0BY8zqDqyEf9n8M2sz
+	aYjXiN9PbNn90QVALh7P24gI78bQ3zXOh/D8a8dYi9cFTtQCR4dU3Oy9lgw0LcAr
+	ZgrSaFvhWXtHDO422Nh3hfLEYnMnATYvFIDTdPyKdRl6SUB9YxUfgrio7gOsUJxG
+	k/bdSYv4B8VpRTy9xKb4df6nxw5y9wnB/GVozqx1ZpuzQgVXmKhpcSia5/L9PjpW
+	jJXuCRp+EZYeT+x9hJJD8o6BP8DdswjGYZTnqMv/IJE0NZ1+XphXQc8sJpbXbi0G
+	/kukK1P9aALs7wRDL1tZKCOSsbo4Haulvgg==
+X-ME-Sender: <xms:LeEealsmdRBIzxXFDJ_Dck9vMLr1wk0dHMNnO_mSCnLnpvP9rJCkyQ>
+    <xme:LeEeal4ODTpYQ7Eq0LsVyt6HBFBs3ehb-Qt6he2KIK18JNvuIfyziI45FuvgqSGZX
+    2Z1SSBQ2PRMECIQU3M4FS6XAkUcATSb1KxPXMr9awZR-4Hww-htEyU>
+X-ME-Received: <xmr:LeEeamKanWnN1vRHKc1X8JXNPr-SxY5PnvojC3M5N04NlZZ4OHcg983THSHKdkuy5QceIdHKAPE4zhIr9zOXSSKCqovLB-SP6aYc>
+X-ME-Proxy-Cause: dmFkZTGkvze+Rou+Het1E/szF1BUU1cFA3nXYfijOlQtem2n32PBLbv2ATzVu4orKaiLPf
+    wcvXNU2qGqds3Mo5hod06teoWLejVbwiagpcwPt1RgS6qfcV1hXmy9mMbcNo1yePT7kg7v
+    9yUgiz9wAFxdd2VNRLgKCvcQcCCYzg71RUWbXSk1YR+lUEVf80SCks5GiKnqkxOqMBzQDf
+    Pw9LLqLjQWNqJ3BXQPVz7XjNpKaGC+OteJ+VtLJ63q+cAb5kQQEmMpWDYGXeMIY/ROACXz
+    zh2kYiX9QQb1B3FMiHx4G2ZeFC7BNSwPMpR/OumD7HKN51/J6LotwN1y99Pxhyxlh+dAlQ
+    HzUSdfmN/FC1PTqHRpzOlrJvt3yyiG0fQqLSBA5cdminN/8gItOPano0B1R/27Aj9Ouacq
+    fVMAGEK6zU2Qr+ntgCKg4A5XHe0SjVnYjLNIwVd3gNk52MMYUFMS+6Ve842CSS5IZpyfGt
+    Ze94tm2dJhRBGb2XpnZbHn49BDB2IrlQodMmfS4etNywFRtsD+51DuVLy3M4beO/BqAC0E
+    KOivlM21daUNVHPYbXbtg9sBMhxsnq+GJQ2xOvnUsXTulfl6pYAgJkxjmZ41FyV15sTC7r
+    KtgfmpsSWtN4GMDWUuqrytxM9DW27hguyfxLL0p4e2NzJyGUYUgcnLhPCnhw
+X-ME-Proxy: <xmx:LeEeal5L8cfJWT8qVpdnIY5byR2nH8EJQ9NpeXWUW2ECCeRJmKZ86A>
+    <xmx:LeEeapwGfVTW6ty2zrsPlNoxUawUy26MIryHAJZNBupB-cI5f7yVOA>
+    <xmx:LeEeapZ5jbdMCWCeRKbycg8t_boKw7v6fHNbqtT0yqvalLvK7UooNw>
+    <xmx:LeEearSSlNpNPQtKfHUs177pJfhgqJgSthj719dKkvLbtHJ3ZccNEg>
+    <xmx:LuEeah4amzQbZGnLfbYVcXLxfPU8AseTlDwRtDPfu-h9_lUgKPPtvFhO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jun 2026 09:50:06 -0400 (EDT)
+ 2 Jun 2026 09:57:01 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  phillip.wood@dunelm.org.uk,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/2] builtin/init-db: deprecate alias for git-init(1)
-In-Reply-To: <336a4202-a55f-4223-b654-985d47233653@gmail.com> (Phillip Wood's
-	message of "Tue, 2 Jun 2026 14:09:39 +0100")
-References: <20260601-pks-deprecate-git-init-db-v1-0-ea3e6eebe674@pks.im>
-	<20260601-pks-deprecate-git-init-db-v1-2-ea3e6eebe674@pks.im>
-	<276a92ac-b2cb-4a89-96d0-9071ab6200be@app.fastmail.com>
-	<ah12uk7IFxS92OR1@pks.im>
-	<042e66b5-122b-4c86-a9a9-f75f763666a7@gmail.com>
-	<ah2VL-ftCQelNoOc@pks.im>
-	<336a4202-a55f-4223-b654-985d47233653@gmail.com>
-Date: Tue, 02 Jun 2026 22:50:03 +0900
-Message-ID: <xmqq5x41vypg.fsf@gitster.g>
+To: Andrew Kreimer <algonell@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] doc: fix typos via codespell
+In-Reply-To: <20260602111552.6084-1-algonell@gmail.com> (Andrew Kreimer's
+	message of "Tue, 2 Jun 2026 14:15:18 +0300")
+References: <20260506101631.18127-1-algonell@gmail.com>
+	<20260602111552.6084-1-algonell@gmail.com>
+Date: Tue, 02 Jun 2026 22:57:00 +0900
+Message-ID: <xmqqzf1dujtf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,34 +85,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Andrew Kreimer <algonell@gmail.com> writes:
 
->> I was wondering whether we want to call `you_still_use_that()` here. I
->> found it to be a bit heavy-handed as it's so trivial to replace with
->> git-init(1), but on the other hand it's a trivial thing to do.
+> There are some typos in the documentation, comments, etc.
+> Fix them via codespell.
 >
-> I agree you_still_use_that() is too heavy handed, I was thinking of 
-> something like
+> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+> ---
+> v3:
+>   - Address test breaking changes (strings bounded by single quotes).
+>   - Thank you for your patience (extreme noise/gain ratio).
+
+Thanks, but this is wrong.
 >
-> 	warning(_("this command is deprecated, please use \"git init\""
-> 		  "instead");
->
-> but that would mean we need to add a separate cmd_init_db() function 
-> that prints the warning and then calls cmd_init().
+>  t/t1700-split-index.sh         | 2 +-
+>  t/t3909-stash-pathspec-file.sh | 6 +++---
+>  2 files changed, 4 insertions(+), 4 deletions(-)
 
-If we do plan to remove it in the future, then something like that
-may be needed.
 
-But it is not like having "init-db" hidden but accessible in the
-command table is hurting anything.  Other than that those who want
-to create their own
+[v3] should not be "on top of" [v2], but the above shows that
+apparently this is vastly different from [v2], which had
 
-    [alias "init-db"] command = foo
+ Documentation/SubmittingPatches            |  2 +-
+ Documentation/git-sparse-checkout.adoc     |  2 +-
+ Documentation/technical/build-systems.adoc |  6 +++---
+ builtin/pack-objects.c                     |  2 +-
+ commit-graph.h                             |  2 +-
+ compat/precompose_utf8.c                   |  2 +-
+ hook.h                                     |  2 +-
+ meson_options.txt                          |  2 +-
+ midx-write.c                               |  2 +-
+ odb/source.h                               |  2 +-
+ packfile.h                                 |  2 +-
+ path.h                                     |  2 +-
+ reftable/system.h                          |  2 +-
+ t/README                                   |  2 +-
+ t/chainlint.pl                             |  2 +-
+ t/chainlint/chain-break-false.expect       |  2 +-
+ t/chainlint/chain-break-false.test         |  2 +-
+ t/t1700-split-index.sh                     |  2 +-
+ t/t3909-stash-pathspec-file.sh             |  6 +++---
+ t/t4052-stat-output.sh                     |  2 +-
+ t/t4067-diff-partial-clone.sh              |  2 +-
+ t/t9150/svk-merge.dump                     | 10 +++++-----
+ t/t9151/svn-mergeinfo.dump                 | 18 +++++++++---------
+ t/unit-tests/clar/README.md                |  2 +-
+ 24 files changed, 40 insertions(+), 40 deletions(-)
 
-that is, and I'd see it a bit crazy.
+Until the topic is merged to 'next', a new iteration of patch(es)
+should cleanly apply to the base that [v2] was meant to apply, but
+should pretend as if [v2] never existed.
 
-The "init-db" form is hidden from "git help" listing, and we know
-whenever we suggest to run "git init" we do not say "git init-db",
-so if we do not have to remove it in the future, I do not think we
-even need such a warning().
+> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+> index 869fb4a14e..887e72a5fa 100755
+> --- a/t/t1700-split-index.sh
+> +++ b/t/t1700-split-index.sh
+> @@ -502,7 +502,7 @@ test_expect_success 'do not refresh null base index' '
+>  		git checkout main &&
+>  		git update-index --split-index &&
+>  		test_commit more &&
+> -		# must not write a new shareindex, or we won't catch the problem
+> +		# must not write a new shareindex, or we will not catch the problem
 
+The committed code never had "we won't" (what was in 'seen' does not
+count), and this patch clearly shows that this is to fix-up the
+breakage the previous round caused.  We do not want that.
+
+I'll squash the fix-up I already had into [v2] that I have queued,
+which should be sufficient to get to the state this [v3] should have
+been, I think.
+
+Thanks.
