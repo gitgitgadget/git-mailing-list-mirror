@@ -1,162 +1,114 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7FC38C401
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 05:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5A338F252
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 06:52:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780465209; cv=none; b=Tm0x/wPjE9kzeSxGYcbS+piWfH2aTDS//p9Q/FUztlvov5y3tzghuWLvXBvFv6Az2gK5xB1PQ0V9YMSe2ZapMUtRavcUGKrSvToolHozlP3iyMVJQQwk1rErtyxCUfzy2SQd6EoaJQKv//crZ3X7Cm/20zr4qyuYN/UvtiTDyBc=
+	t=1780469579; cv=none; b=QFBJ1K876KJMO+mBeOBHHFq5XlrTwj69w/BaIrjJ7WAoKVG69ZRfM32Un9txt7MffwQGumw3FWMPh+DyhUKhTucvFbgNvnTYcU/OKGFP7hynIFUEuUXEg6q+cAgsy4G17dr3XLWwDwYwQfGV8HGduoMBqf0ayMtk6sKSBowIr94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780465209; c=relaxed/simple;
-	bh=R1bvVu7Gcv4nxqxRQPKh75MSpzpkJ06hNIBGTJO9W7g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KCDvwYWgk4U9RnjC9JYCW1HIgLVszToTPVezAnwLJknOMkfZH/f/gEBiJDm1THsxS02KZ5foBUUyWqeJPUz/Gm44ecyNIIUEuouIw5vKkUFgtj8R3Rs0XiF+klkutyE2bgbL2IL1tc5z1xkGG1yBoUIWtGFBmVCLp0yb6ecEoDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O/Kg1scx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ljr+zTeh; arc=none smtp.client-ip=202.12.124.154
+	s=arc-20240116; t=1780469579; c=relaxed/simple;
+	bh=U6saRb3vuITQ6GEN1YN4DOIRFCwUhvNP5BrQN6X85Qg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nwjhsGVGqrHo9eXj0HXYJKQRHQxkEzKAds5LtcqLQx6+KYwTyIAf+ni+nsvSYYzgPoHdSHoJw9vaOEH7Yrn8vu2f0DfomljGBEdVSTEPmXCI12p1bAmOBuLFq2PywEDlsaV0q7dDJz425ZglSGdcoRrH8jQqeP7JGeT49ftCBks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JxNhmFvh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UGyMU42l; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O/Kg1scx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ljr+zTeh"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DD34E7A00CB;
-	Wed,  3 Jun 2026 01:40:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JxNhmFvh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UGyMU42l"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8916A7A00CB;
+	Wed,  3 Jun 2026 02:52:57 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 03 Jun 2026 01:40:06 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 03 Jun 2026 02:52:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780465206;
-	 x=1780551606; bh=zxG8UBm2SAFJT0t/UvTPOEauJkAxh7EAF0/EnOA0Uko=; b=
-	O/Kg1scxWGkfXpBg6y4qZhmFuJbt6cTViFdFrSHl9Q7pbnkDHMGZovStskfzhml5
-	CP5Ve3Jw92y9vjPmAKTNNrBv/2qXoUh2kZp2ddUa87dfeZakoPbw46hQaBfjQZJc
-	3oTMhdeiiS5kX7UGL4NWG9gtJ7Ja6m3jwo4yVihmEqFrhz8x1zU8s4p/IJSG+RE9
-	POh1Pdl1Rlr5zkzvKFzu8nsiv3uTwt0UtMCwXG87w1a1KG1Z18XmaqYKMpbwTmCk
-	13zDq09/sKwQUgGNcDS4bi59e00QEzt+5psMORr59v5nM+ep66dOaKKrhR1AVzgL
-	zPSoY2RksB1rzBMYStr7kA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1780469577; x=1780555977; bh=n1uLwm9vJQ
+	Z42Q1gilRyQO8Gi0ijzMR3gU6pU7UJ+qw=; b=JxNhmFvhJ7lw/FOlHh+g/hBCzn
+	pVy9na3ZQEnGyvpjKXja8zHkYswlL1LwUbHV/AzseWBKqrFWvgQ6g75FNCR8plKx
+	xq+TxfHmPEA9eY3JsOcNI54B/A5IHPO6B3JEr6EGbW23VNUarxogYXIpnkilGsQi
+	1ienXOmuNmjm9zj4+ZDXQucqEKQKYYYzrKLBDTNepUkNVzFZNpsPiRi71ZuydQoV
+	jULMGpRbXt1b79M5KEq/6Ackw77MZhYqWhl3i414BGmvizzI/tR0cUxFLtWt0z6A
+	9zjDQ63iy4/+GhsnZPHB+75lZW0IdkUEm8JMZLTfHY+Nw/nJzhE7ssGN+2Vw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780465206; x=
-	1780551606; bh=zxG8UBm2SAFJT0t/UvTPOEauJkAxh7EAF0/EnOA0Uko=; b=L
-	jr+zTehZ1OxJTX3Vb0FEGSKH29gigg9QFL/LmO2Wr0rjml6AsavrXr3a1pTW3SJI
-	bNdvsq77oUNmq6jkY3veVVlXGCw0gzjw7BvvnyLv2KVaqgnX3zDwXhqDHTJMJtwx
-	48BRlMJpN/VJRDGzL3cCrWFel1VJ9PtLCYYi3TuX9obuGpRdmWyrgjpWeU+OfuFr
-	146PpUvpPKZUKU2CALXg/dBR1kBV7QnLE48FdIdaahst6IaD8aGk2onAy4X8Nto9
-	zvkpKYzdHgSbEW9hwic7LAi3k3oe/9jG4JmtlvsgFqWYLEpH6uiRRai4fCjt14YU
-	VzRySNNcXMsIWnmRll1Nw==
-X-ME-Sender: <xms:Nr4fakgG5rU13TgTQ1rIWlBQa52OW07wg9ewoHs7n-Ym98wi099Gxg>
-    <xme:Nr4fajD8iC8fPr2zMMJlP5-TFM-ukwDLKkiLCFyWfHXw72GV4EIW6Cc-6lnOZG6sQ
-    rN2wLJsPLUfttB-Hq0rXYzi4Ww_yQTGV_1h8kfA2Yml8WqX359xSw>
-X-ME-Received: <xmr:Nr4fapt2b6BUZPKHMTPdCkVlzVbr_Jaam4OWHJVPGydEIT5TC9b_srsVfOX1yrMKWdkQR88mhauPFwpYjKFh7eLBU_bNcywbe8UDK3-P5n_e>
-X-ME-Proxy-Cause: dmFkZTGrzJjPUIO2NsjW9q+5peeonH880scV9FOwhilzaab+1LfhkAPwBnkrMwRIuUbz5U
-    +LFYbPLgv1t9z3xYVoPZqQCANWbAn6dNOhLOqMLvkTYH4NGpC2/4VXq116frN/7U2UiL3X
-    FNqwOHtvAyZWy5QK3mB9oFxj9mimN69S68JTbcR+0jmsBSt9VsSYceza+JvrHAfa17hbrJ
-    qPeLlkQrbj+kzq0dpWBfv2Zb8+smTByit0nlFJgiKOFfTTd/lgjGLqrmXBIahvqi+x4kES
-    OPOiOF30oDhR7cCn51miGT5BBhXmaMVzueivIFWud02qrGXtLDHKJdEpKsJTn7BAeXReUX
-    euq+yyhG+5pP77lc5oEsXd5GI4VN2jPzf30BZ+d7dzz68y3WHC3kYwIJpEFcJRnmdpRwTk
-    S+Kt1kes9DVmtw3G1bsYCP+aIc8r9XFdsD4VNttbVP5HOShDoVdcb2bhYOk3OcGLWCTnJT
-    qbssLvAQcfYNOCE318N7fNnHm7pISJ2MGIoh1LbebT48GGpDzA/+MI4wuRRWS5ylJjeEg4
-    C4Y+01x+KVvfXsX6DqRDLYvFDYW7Bv6YEx5ZCIEZPPpr84AGGbxWeIUPvlIAzori6ulzG2
-    s6LXRXVbBElXOVIUhPP5zvX6N2YLQx2+8X35KmZUIC27yGNRxSvoTYZ5GyZg
-X-ME-Proxy: <xmx:Nr4fagYLw1xoB1cXWTVaDKf0oJUonRjgGliPvVbwqQbBFj5t0ejVrA>
-    <xmx:Nr4fakWTQQI7WVff8EK4qwTMSoIZD-tpkrRzMY7dczbAcWl7b6x1Yw>
-    <xmx:Nr4fas6dbxe3cw_PZ5NFVMe2VK9Cx4lx8AUQIfsiVpOey0C4lxLN8g>
-    <xmx:Nr4fanj3yTseyfN98qvDrp_qMXiaOIfIvlwU6UMijbJhPcjrfYp7uQ>
-    <xmx:Nr4fan7YY-jyp7CDVkPKytEi84WTxQO_zTZYTXbFGpCaoeWKb9-uEuRd>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780469577; x=1780555977; bh=n1uLwm9vJQZ42Q1gilRyQO8Gi0ijzMR3gU6
+	pU7UJ+qw=; b=UGyMU42l6kPYX4dpBA0mBY/mByCy+jhoruZcXhlPkXEnv+jeUjv
+	qLMtejiYfM453sJuuIuyDefPR3VUm+I7ToQ0WwoeEBCMWs7dP20fhGYjKkDR2mIG
+	cjNlnaDyz9EhqXIUjz65x5f4sZxD6wZtafU014d+Nyy95cBL2VmUEKWVe3TJpFai
+	kJMV8946RvD1JI9PYtToitMJcmt4DOQtswNlEp44DqLkUamLIoX3kLL6qnCIKLgn
+	qax2CLXEoP5agAdpAQVHrH464kvsn2ekPwQ7v8D5HI7NDyLp0i/6qvB50pcxYj35
+	dVSrm/JMURihPNaFq//CqjTfTG4mGb6bkYA==
+X-ME-Sender: <xms:SM8fanErN5niCYWb-Uf5h7d7uLD8sCRo5pKxmiK7AssXnPSVlevlpA>
+    <xme:SM8fasGIe8Cky4QQH6dyK1IKWT6i71hXIT8hZda2yTkQN7jcmun3ms80T3fTVtbtw
+    LrN3YewAQs1J3QEaECogEp6eggthLg9cHUhV_D8359H2nx8Xc0fIho>
+X-ME-Received: <xmr:SM8fasMbxMtLmpCgOoCHLaokJXu3ej-m_l9a6sY67CfrulNrpRxxLACmHG4-KCXHfibPzxMF0NlIO3fHS5gXRcn4QDV7IDLeB08a-2vCzrm_>
+X-ME-Proxy-Cause: dmFkZTET5OL9Xsptbv0MDgR/8xzv+rmteGe02aCu9Z8qOo/ruPjyBzOikHZNOjWWsaOPiz
+    CAHr5bz3C/EqTnR7hK1jC1VnaNKEVRAi8JLWfsWPHoXChb0BSFLjwNStO/z8aReO6rytPp
+    zdJbN5mjDTm0lGaAdkNrPwJ+46c0pGZLpiic6F/gfoTGgJklSOZOn9YPOAHewGXQNk1R0I
+    NDVNkXtqh+e7tXM/KaZWHHnjKjFswUhplEpaxZZKW+qj4SkUYyquCAQpX66GdLEEBFDG2o
+    tYsZD+psaIMlEfVIsC1iI7aT+p2Y7c4/NXHzTJImlcNUqzI2o76w4MuUtEoufedZzRCARY
+    gXFRF/HgfxGuBGU8HJN1vyYf3JEgtOqdgSYFA2kYf1liddErPJB1wANQS4XL9gVebUOWE6
+    AqqSy83js2e13oANvw+O/LqSELuFXR9oK/QmlhSaeMbz+8tyzBu1fwQeI8Byca5dj/sS7v
+    QHSgKbaEvH901mIDS3AK3hcmBKzAzcB0buHVHhp1q0v6hl1t7MvRvQx1dXnmokbrR1jSls
+    6y0JYcvq3xfYLYbAY/AtcrP5MDvftRXDV0bqzGWkSV7pAHBecbJIX1xi7ppknWh8EXY4O5
+    zhcTR03oJzgDC8Wgnmo4vhhC0be6OxXNIaTnKc1MKLlo4AUHvsN2BtA1yHTg
+X-ME-Proxy: <xmx:SM8fajGFxq9pBs3vZ1onQBLXY1oYeUliFG_D1VfFmKJO0Vjbadq97g>
+    <xmx:SM8farPFL-gArzKauSyJuaTGQpRQZW6BGiEYpO2MPruPlvRPdVMhUg>
+    <xmx:SM8fas-_KKYOh-uM2x7UUN9ifvk9JapcvPYUp7mEVybSd-kbuyxy8A>
+    <xmx:SM8favSyax4nWwc4HUM2mEvbPPtpLnM-Ek60Xlk7NKD2PwpNigjvVw>
+    <xmx:Sc8fajWvXO61OGabdiQcA7atHZJWJbKrwPZ4RnuLixFFoyEKT5D7tdo9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jun 2026 01:40:05 -0400 (EDT)
+ 3 Jun 2026 02:52:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e0552a1f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jun 2026 05:40:04 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id f0d385f3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Jun 2026 06:52:52 +0000 (UTC)
+Date: Wed, 3 Jun 2026 08:52:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 03 Jun 2026 07:39:47 +0200
-Subject: [PATCH v2 4/4] t: let prove fail when parsing invalid TAP output
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] b4: introduce configuration for the Git project
+Message-ID: <ah_PPuX1aVc4CtWb@pks.im>
+References: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
+ <20260602-pks-b4-v1-1-a7ae5a49e9cf@pks.im>
+ <xmqqldcxvziw.fsf@gitster.g>
+ <8dbdb553-9633-46bb-8a51-040d06d0d10e@ramsayjones.plus.com>
+ <871peopbvf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260603-pks-t7527-fix-tap-output-v2-4-cf3af5694e20@pks.im>
-References: <20260603-pks-t7527-fix-tap-output-v2-0-cf3af5694e20@pks.im>
-In-Reply-To: <20260603-pks-t7527-fix-tap-output-v2-0-cf3af5694e20@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <871peopbvf.fsf@gitster.g>
 
-To make the result of our tests accessible we use the TAP protocol. This
-protocol is parsed by either prove or by Meson. Unfortunately, these two
-tools differ when it comes to their strictness when parsing the
-protocol:
+On Wed, Jun 03, 2026 at 11:59:48AM +0900, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+> > On 02/06/2026 2:32 pm, Junio C Hamano wrote:
+> >> Patrick Steinhardt <ps@pks.im> writes:
+> >> 
+> >>> We're about to extend our documentation to recommend b4 for sending
+> >>> patch series ot the mailing list. Prepare for this by introducing a b4
+> >>> configuration so that the tool knows to honor our preferences. For now,
+> >>> this configuration does two things:
+> >>> ...
+> >> (hence making the tree dirty).
+> >
+> > Hmm, for those of us not in the know, perhaps mention the b4 documentation
+> > at 'b4.docs.kernel.org' (which includes how to install b4 ... ;) ).
+> 
+> Thanks for raising an excellent point.
 
-  - Prove by default happily accepts lines not specified by the
-    protocol.
+I already refer to the docs in the second commit. Let me maybe reorder
+them so that we first show how it's used before tweaking it.
 
-  - Meson will also accept such lines, but prints a big and ugly warning
-    message.
-
-We have fixed our test suite in the past to not print invalid TAP lines
-anymore via b1dc2e796e (Merge branch 'ps/meson-tap-parse', 2025-06-17).
-But as none of our tools perform a strict check it's still possible for
-broken tests to sneak back in, like for example in 362f69547f (Merge
-branch 'ps/t1006-tap-fix', 2025-07-16). This doesn't hurt at all when
-using prove, but it's quite annoying when using Meson due to the
-generated warnings.
-
-Unfortunately, there doesn't seem to be a portable way to make all tools
-complain about violations of the TAP format. The TAP 14 specification
-has added pragmas to the protocol that would allow us to say `pragma
-+strict`, and the effect of that would be to treat invalid TAP lines as
-a test failure. But the release of TAP 14 is still rather recent, and
-Test-Harness for example only gained support for it in version 3.48,
-which was released in 2023.
-
-In fact though, this pragma was already introduced as an inofficial
-extension of the TAP protocol with Test-Harness 3.10, released in 2008.
-So while not all tools understand the pragma, at least prove does for a
-long time.
-
-Unconditionally enable the pragma when using prove so that we'll detect
-tests that emit broken TAP output right away. This would have detected
-the issues fixed in preceding commits:
-
-    $ prove t7527-builtin-fsmonitor.sh
-    t7527-builtin-fsmonitor.sh .. All 69 subtests passed
-            (less 6 skipped subtests: 63 okay)
-
-    Test Summary Report
-    -------------------
-    t7527-builtin-fsmonitor.sh (Wstat: 0 Tests: 69 Failed: 0)
-      Parse errors: Unknown TAP token: "Initialized empty Git repository in /tmp/git/test_fsmonitor_smoke/.git/"
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/test-lib.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index d1d24c4124..ceefb99bff 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1532,6 +1532,12 @@ then
- 	BAIL_OUT 'You need to build test-tool; Run "make t/helper/test-tool" in the source (toplevel) directory'
- fi
- 
-+if test -n "$HARNESS_ACTIVE"
-+then
-+	say "TAP version 13"
-+	say "pragma +strict"
-+fi
-+
- # Are we running this test at all?
- remove_trash=
- this_test=${0##*/}
-
--- 
-2.54.0.1064.gd145956f57.dirty
-
+Patrick
