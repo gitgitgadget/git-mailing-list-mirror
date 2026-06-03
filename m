@@ -1,81 +1,81 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5DF3B19BA
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 23:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457334534A8
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 23:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780530579; cv=none; b=XDkkHyCb/Y1NCJk1JfkNoJgIoV/xid3QmXYjVI97/ZRpemwVJcn7/CKZGKrKXZtVrTp0ACbpilosZmf2e+jQBVAusrBKcd5us/BB+CHrQwPowSszFZ+Hum3xkY+1265sdfeq73Z9m0Fb+LwSqPIZkpvMJNrGvAmh0v5yVkHwSNU=
+	t=1780530711; cv=none; b=RJCrHjjZynGDF3vc0VoHeILVEoEDaN7ZVaPCE5evcSSMIZMBl61hmmtMIgptVIIyh/4DzMPSp6Yd/RoRK+L2DY/KwfCGl+hY4gWgYdG8pA92wnhUYyJwdPsY2Qtzlzl1+S805hTu0k5E0xoHm1ZJR4ZwxsFRi+XwLO4C4M1rZHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780530579; c=relaxed/simple;
-	bh=iZPWLn84+d9X9+K2Gxpb50hHmTGYglvJqUSFdsvVE6c=;
+	s=arc-20240116; t=1780530711; c=relaxed/simple;
+	bh=hTrun6kAERIux+WVr9BsPOVuE5pgwYTNB4zX1WntaKY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sMd0O+0CEx7z6rJpsGrssoZlMriHKpOd3usLzfotIwMdNiUr/kXIHhFapNFlUSVFBqQRBLdGwndP0PNZd+5PXYvPykJM9HE5zIe27SBpk15zSKr8tOM09PuskUmCAMzW0Wh56/G8Fym+YHSRH4ub4HblgTaNSDYe5x5YCCIbg3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zcpms8OI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ObyRKNI/; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=ckAnhIfSwxuTKkZZx0KX5Y5E8Kf8jo0PW85cj0wUksi15QKR6/QTx1Up16ayNQ38eaaagPy0Tm1dZjQ7/eMQhIWZrLgSgM0sBFTGgWNUl405RLS36HIEQUoo9w4hgwJDZ2lfYHdDIQASkqm3NDh5ZnNrWXgxYraCGHSQklBYrTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=APxbt0I1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qe+J4Nug; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zcpms8OI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ObyRKNI/"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="APxbt0I1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qe+J4Nug"
 Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B1B2714000B1;
-	Wed,  3 Jun 2026 19:49:36 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3504B1400081;
+	Wed,  3 Jun 2026 19:51:49 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Wed, 03 Jun 2026 19:49:36 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 03 Jun 2026 19:51:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780530576; x=1780616976; bh=7Z5Wlz6r6v
-	PrIHvpjeVwab31Gf3Z1lEbg1l73AsWXnE=; b=Zcpms8OIn9PlmDqbHzfJEUxy8n
-	BCRJ2XYt/wyjLwE8JzFwHNk/Vo0+JtYKYxuFOnqbjXuAX4vQnNP27sbW4CNoR6cU
-	0w3TeuJPSJ/QTwKjjHNX0eZYLyAMul5XK7kZrQXkd3Orb5UeOPVTnH+ZMUfCYQig
-	UcbtDGO4HwmEGFn/UnDUZ4woohS0mtN7pMcH6Fj5GRj5IgXFvk6cWyuSdqmoL2/i
-	m7/s4mIt44WFWTpPHjwzr6loq6bb3GBNtVXwUI9/3yQLPWTgGnbIHYzz/iIoMxbJ
-	aIIorEXZsp3nea/B3kLhxdMQY09ajSHWh4sTuqx79Lh1Rcgxhih+h+va7+BQ==
+	:subject:to:to; s=fm3; t=1780530709; x=1780617109; bh=bRchz19ubF
+	z0PnXLVnCtfWk+kSZi8xO9I2dNVQYT9p0=; b=APxbt0I1YRjGv9YZuSZxhl6moZ
+	TnBFFlcCX0pVHnpLLyhsidLGkrP968vDvNC8OX2o0A+rPI5OsgzpHnQr79Onx/fl
+	1XSR+iCucOKqzfebJZmPaRhew8AtlIDmJwJBl7GSr69UfFUXCGAFIvixrmvWGiMw
+	Ma7kavpbxYVPC5/S+syXf96sHc+QRI/NQFHm9LKO1ktSyX3qwuwOVkpkPKJyJFOa
+	3iQQx6eK6EKtuEF+5RPjM+j9lbMTJ6+M88URUeTrt/2qTd9bgo624a7mmUnFnha7
+	QwN3hLvk5unJQQqn093L0W0J89jC54Fx5F4zYIMRX2YPgBXmv8GGcEUrzaPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780530576; x=1780616976; bh=7Z5Wlz6r6vPrIHvpjeVwab31Gf3Z1lEbg1l
-	73AsWXnE=; b=ObyRKNI/AzetN1ap0d5lcIY/6Mw04i9ZDRDftRYT31bM7AlE9Vw
-	CQQ7GCDf/eHYy1LsMfUfWV3YgI5hZo08hK954rO39uHUA4+TGRT1KSQYfWTm8wyq
-	wc28oFCLJt1ihXUVu9Udt5gVQrKYiegt5PweqBjqxymHmMAOLczXsZDnLiruFbMk
-	0gxaRtUKdk0Lbpv0iwVOEc1X0ocfHarHOY2AhcDUyuJ1uhhXbjYLWjBc4gwhE1dA
-	nK7gAL7ht/0I6kHAf1dQ+33eDBJKcj9JSy75rN3TAwxjvLTdA5bRdxG4oZHZ+h3r
-	1H2uBsqQjakL2Tkt1yXuvXiBO8/SuFVYpKQ==
-X-ME-Sender: <xms:kL0garpfQ5zDGAMu66-iUy1S2gVl-zSD1IEocDaIOXdOPP8OaZp8DA>
-    <xme:kL0gasqeV_-jd5y1VILN1v7JlJwGsuHUuGDMvHlVadXhd0NAzmAjXSaA-gbcw1spf
-    UwSDmdI-OtHC9TGP-c0Yf7NpQXLDfLNH82I0fBBEIpbZvx95ztk>
-X-ME-Received: <xmr:kL0gatMlGm2R8y9RYJLNHiY07Uab7Vr7QHvrG8vNy0xv3wNyOuxIJIuNQUN_Ia5AHmS7vqrVq82ORSObkwRYpG9SHXEYBfgWakzu>
-X-ME-Proxy-Cause: dmFkZTEo3oohiXXS0o0OZBUJphzm4JrBPpwO/8smT8Fssj32V2Gm2qgcs1vbVtr4LtjGjB
-    rrRYsrUK4z5WhsQaWYrLjU6ZpvvrxF/i8pcBNco7Z3XaO43gFsjMals6xTFQtDOLDZ4Vht
-    w8l6rjkPLsi/rZ3BtwViJD/esz0rLv1kemb1KCOhFJh33D9BULmHmgKvdf2J300f1GafZU
-    uHDAYv3jorQj0Cec0SioNDebQbApuo+tPA/1Ahek1ynC9MxEmh9Un8VnIL5+ttcdMlJd8y
-    qE76oP+DDkxxTInTxHmqjrl87ndCiFlUYCI07ZQz9AasBKjdptqdjIpVyBBoSvf++7acFu
-    HEXtB6o8YUt32MTCvXWTzlCk59Cuo0ypyY5Ac+kIGp3vDFb9OeCo/QB63F5fjByg6nrEYQ
-    gmHS3SbhN6nTPJlCzytYR+7knUYQ2L/Qg4vFPOaYS8lcDvv6l7blBF8lhFmqA0UQxacJDq
-    wTBMYBl6Jt7xNiZIT7EDfxrwVIMsiADUlX3h7ASI0YIxaioFleXa5jt9m1nr4lk5D58Jx4
-    sl73AnVvNm2Fk/TGqJK6PiagSsUOKkI3DV5tvxbIxlvuw+x8zywXxSDnPpecN5Ru70KB2E
-    YNjQvLWnZTIw7+Cc1aaq3ZkD/5h17hC5BpRfi3+FsExW3kXaHcCVS3gKQ4Eg
-X-ME-Proxy: <xmx:kL0gaty6waNdDo_3Db1BJ5hZOr3oKuG4N7A9uq_tOtevfOmyZZMC5w>
-    <xmx:kL0gamttb38WcngSWEniJlJRnTUWrwwcqDgops76js3Kw31Fx00J2g>
-    <xmx:kL0gam4G-lUZUBaZ04HuZkoriFFgXYHQ1iwhJsUwW2MvJ-5vOuQrYw>
-    <xmx:kL0galSkjhZU9vrJiGKvKbmASDF6IGbFaDC4pSOdothUE4dt06Zdcg>
-    <xmx:kL0gasuxBNB2wnvW6qWqYNUzHZDQ0XEsm9L5gqqkz80X827y42TNMjAq>
+	1780530709; x=1780617109; bh=bRchz19ubFz0PnXLVnCtfWk+kSZi8xO9I2d
+	NVQYT9p0=; b=Qe+J4NugjIAO8jdIt81P3JrlVH8YZKLqFwKeLkXSgFWRCQKW0j8
+	48eF4gxnCrXQyP4osigZ95uwovc22sDeWbA+8wA5JZ9zuOeMsvZUaW/DuYjwavC4
+	qji+lEjfeqNRkLzBIwxLHepywnsPSgXXh6ScJs2QyqZANjDXPBPoLQgHDck+kiMH
+	AaDOls72z24XUzxB/pe35zlDoelsURXOPdohwdp0WeA2nL+uygiwGqrOlFRf2PY0
+	ib+faQKi/K4QXiS00wDlr5CcElP0ezSgrGQVCqevyskytKnIOnQ947ODwmnxkU1S
+	4CO7tdIhkpumY0dEL1edh5iel17sZzkVFMA==
+X-ME-Sender: <xms:Fb4gagz2yL1EezVYjY1h_LX4hupXhx8BaF7LkykIrajr6WjGETeXsQ>
+    <xme:Fb4garRL3vluvhh_RVh-NwCm6yXDqsa6MMcWNqjPp-h5X_aPGyr9z5dXhgys4OPv4
+    BQa7Rgjkm7-RyasqyTEgoxHRG_2jMeP74gjm4wJ-bWC7OtmAUWX>
+X-ME-Received: <xmr:Fb4ganUBhGtsJRkRoANycTUQJuushQaKdsMsShvWXWFUbFLB-OmrQaTlCfZm-RzllwNhIOSSKSCSTPyhwJyHnRZKdoY_D4Qk5sgv>
+X-ME-Proxy-Cause: dmFkZTEENh5I+wCfdrA//SwVbV6qKyyPCHQ0OxK4fBCyUAMtOLkAB/SNE+UgJfhqncA7L4
+    UxO/4XnKD9fm1hQvnBwjNZ0h8kgb+h3vtROW5jNRKTwC+SXWgNh8tQqfQWrgbTGzYM/7FZ
+    E+DLgzn9VeA18kCLZUQriBty5ps9ZAZwon/GFhmGfh8d277ATotKPtkAtzMQLawNZb17N6
+    Wm00E9VU6euyQA6jzaxf4Bt9AvIOxCUZ1/DcS6v+NZmw44V25FK2FeqAbYD9a0Nje4EVcv
+    7db2HF8f0woCn42p70Gz3pkQWfnQ1yhl5a+P2sKGFwYyTADxyGm4N/B1FSoeJsVdLmBXTN
+    B9H1Xs6Vg3+cnB8Bhq/sQG8Z5VgzVY8NcNHIaGnDDYTGXO/OwydjE03v/rwPRGbQIgu4BU
+    Fm5sOfv6+eN5+Vtz6r3kPHvZ0akvHAapKx1G9qwKVX6KFbdG71KX5A32mcICi6nnh3dacY
+    yTL4Yeu7OaN+ZPQWy5XPro5rNFixfbWzOvfXz3VouG21vF8dlOK+OyKQN9hffDBwuxyPa7
+    QDN/dfasUPcL1uxfs/hR6uFXz8QwGEM5UHyjQkUiD/g/sPZ+fWPVp+0tryFcLCcZKvwBKl
+    0b/qWrBxnBZVWL3aV5MTebSfAWJIxNxpnN2qE4QLq/077l95oC0ByY3bKoWA
+X-ME-Proxy: <xmx:Fb4gatbKfwciW7OTdNrBluQoHWNMM4zFcbeLJT6Hr3njfHLAEdnugw>
+    <xmx:Fb4gat3WLkCn9wXAx9cppXc10XwsHoocvrfsV-WRLqaLtgcqZCKuyQ>
+    <xmx:Fb4gavhXTnH6irVNJyXJz8NZSWpVWv8u2mHR3oyu4b73G19GD_hVUw>
+    <xmx:Fb4gahZY71Hz5l5TKCyYWTi8_cBDy6OzKuk-yan55-tC-8-5VgQidA>
+    <xmx:Fb4gau2rFh4NVRHx-g69ZylQQzls26UK7lvGi8F4n2xls_aBTrc9YGdD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jun 2026 19:49:35 -0400 (EDT)
+ 3 Jun 2026 19:51:48 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: Re: [PATCH v2 4/9] reset: introduce dry-run mode
-In-Reply-To: <20260603-b4-pks-history-drop-v2-4-742cb5b5176d@pks.im> (Patrick
-	Steinhardt's message of "Wed, 03 Jun 2026 18:14:03 +0200")
+Subject: Re: [PATCH v2 5/9] reset: introduce ability to skip reference updates
+In-Reply-To: <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im> (Patrick
+	Steinhardt's message of "Wed, 03 Jun 2026 18:14:04 +0200")
 References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
-	<20260603-b4-pks-history-drop-v2-4-742cb5b5176d@pks.im>
-Date: Thu, 04 Jun 2026 08:49:34 +0900
-Message-ID: <xmqqv7bzqj5d.fsf@gitster.g>
+	<20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
+Date: Thu, 04 Jun 2026 08:51:47 +0900
+Message-ID: <xmqqqzmnqj1o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,137 +87,42 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> In a subsequent commit we'll add add another caller to `reset_head()`
-
-add add?
-
-> that wants to perform a dry-run check of whether it would be possible to
-> udpate the index and working tree when moving to a new commit. Introduce
-
-udpate?
-
-> a new flag that lets the caller perform this operation.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reset.c | 44 +++++++++++++++++++++++++++++++++-----------
->  reset.h |  6 ++++++
->  2 files changed, 39 insertions(+), 11 deletions(-)
->
-> diff --git a/reset.c b/reset.c
-> index 9ff14f5ed1..a8d7eea4d6 100644
-> --- a/reset.c
-> +++ b/reset.c
-> @@ -92,11 +92,14 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
->  	unsigned reset_hard = opts->flags & RESET_HEAD_HARD;
->  	unsigned refs_only = opts->flags & RESET_HEAD_REFS_ONLY;
->  	unsigned update_orig_head = opts->flags & RESET_HEAD_ORIG_HEAD;
-> +	unsigned dry_run = opts->flags & RESET_HEAD_DRY_RUN;
->  	struct object_id *head = NULL, head_oid;
->  	struct tree_desc desc[2] = { { NULL }, { NULL } };
->  	struct lock_file lock = LOCK_INIT;
->  	struct unpack_trees_options unpack_tree_opts = { 0 };
->  	struct tree *tree;
-> +	struct index_state scratch_index = INDEX_STATE_INIT(r);
-> +	struct index_state *istate;
->  	const char *action;
->  	int ret = 0, nr = 0;
->  
-> @@ -109,7 +112,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+> @@ -112,6 +113,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
 >  	if (opts->branch_msg && !opts->branch)
 >  		BUG("branch reflog message given without a branch");
 >  
-> -	if (!refs_only && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
-> +	if (!refs_only && !dry_run && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
+> +	if (skip_ref_updates && (opts->branch || refs_only))
+> +		BUG("asked to perform ref updates and skip them at the same time");
+
+;-)  That's certainly a careful safety valve.
+
+Would we also want to catch skip_ref_updates && update_orig_head
+being both set as a bogus request?
+
+>  	if (!refs_only && !dry_run && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
 >  		ret = -1;
 >  		goto leave_reset_head;
->  	}
-> @@ -124,16 +127,36 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
->  	if (!oid)
->  		oid = &head_oid;
->  
-> -	if (refs_only)
-> -		return update_refs(r, opts, oid, head);
-> +	if (refs_only) {
-> +		if (!dry_run)
-> +			return update_refs(r, opts, oid, head);
-> +		return 0;
-> +	}
-> +
-> +	if (dry_run) {
-> +		if (read_index_from(&scratch_index, r->index_file, r->gitdir) < 0 ||
-> +		    index_state_unmerged_to_stage0(&scratch_index) < 0) {
-> +			ret = error(_("could not read index"));
-> +			goto leave_reset_head;
-> +		}
-> +
-> +		istate = &scratch_index;
-> +	} else {
-> +		if (repo_read_index_unmerged(r) < 0) {
-> +			ret = error(_("could not read index"));
-> +			goto leave_reset_head;
-> +		}
-> +		istate = r->index;
-> +	}
->  
->  	action = reset_hard ? "reset" : "checkout";
->  	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
->  	unpack_tree_opts.head_idx = 1;
-> -	unpack_tree_opts.src_index = r->index;
-> -	unpack_tree_opts.dst_index = r->index;
-> +	unpack_tree_opts.src_index = istate;
-> +	unpack_tree_opts.dst_index = istate;
->  	unpack_tree_opts.fn = reset_hard ? oneway_merge : twoway_merge;
-> -	unpack_tree_opts.update = 1;
-> +	unpack_tree_opts.update = !dry_run;
-> +	unpack_tree_opts.dry_run = dry_run;
->  	unpack_tree_opts.merge = 1;
->  	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
->  	unpack_tree_opts.skip_cache_tree_update = 1;
-> @@ -141,11 +164,6 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
->  	if (reset_hard)
->  		unpack_tree_opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
->  
-> -	if (repo_read_index_unmerged(r) < 0) {
-> -		ret = error(_("could not read index"));
-> -		goto leave_reset_head;
-> -	}
-> -
->  	if (!reset_hard && !fill_tree_descriptor(r, &desc[nr++], &head_oid)) {
->  		ret = error(_("failed to find tree of %s"),
->  			    oid_to_hex(&head_oid));
-> @@ -162,6 +180,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+> @@ -196,7 +200,8 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
 >  		goto leave_reset_head;
 >  	}
 >  
-> +	if (dry_run)
-> +		goto leave_reset_head;
-> +
->  	tree = repo_parse_tree_indirect(r, oid);
->  	if (!tree) {
->  		ret = error(_("unable to read tree (%s)"), oid_to_hex(oid));
-> @@ -181,6 +202,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+> -	if (oid != &head_oid || update_orig_head || switch_to_branch)
+> +	if (!skip_ref_updates &&
+> +	    (oid != &head_oid || update_orig_head || switch_to_branch))
+>  		ret = update_refs(r, opts, oid, head);
+>  
 >  leave_reset_head:
->  	rollback_lock_file(&lock);
->  	clear_unpack_trees_porcelain(&unpack_tree_opts);
-> +	release_index(&scratch_index);
->  	while (nr)
->  		free((void *)desc[--nr].buffer);
->  	return ret;
 > diff --git a/reset.h b/reset.h
-> index 97ced2601e..9f696382c1 100644
+> index 9f696382c1..cb0700ffa7 100644
 > --- a/reset.h
 > +++ b/reset.h
-> @@ -21,6 +21,12 @@ enum reset_head_flags {
->  
->  	/* Update ORIG_HEAD as well as HEAD */
->  	RESET_HEAD_ORIG_HEAD = (1 << 4),
+> @@ -27,6 +27,9 @@ enum reset_head_flags {
+>  	 * any user-visible state.
+>  	 */
+>  	RESET_HEAD_DRY_RUN = (1 << 5),
 > +
-> +	/*
-> +	 * Perform a dry-run by performing the operation without updating
-> +	 * any user-visible state.
-> +	 */
-> +	RESET_HEAD_DRY_RUN = (1 << 5),
+> +	/* Skip updating any references, only update the worktree and index. */
+> +	RESET_HEAD_SKIP_REF_UPDATES = (1 << 6),
 >  };
 >  
 >  struct reset_head_opts {
