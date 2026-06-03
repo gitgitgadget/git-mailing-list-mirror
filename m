@@ -1,84 +1,85 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB02D22424C
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 06:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD7D22424C
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 06:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780469703; cv=none; b=BGRN9KqqvMI6tny7mvIU0xPezj+Z69N3mWnwYpY9iznek7/lYvpjFBSFbxPk4kq4wfqanDDo2mwrrr0DKPn6SGTIsjKKJ+qhd8m8Kkp8ujnvn09EmLcjlob2yv+sBNP7XwkXfXUOnbGz0TXJRMljJrvxfZx31WHqCSuiBzgRQgQ=
+	t=1780469710; cv=none; b=i4gsoWmSRzxJodkzdTXkuMMHye1qB9O9ww64D5ZylXGW3Be+g/zdpMlZX6mqNwUAlEnAK8wdaC5VjIgn9U1AhEF9XokgxxSy7s3y8leo58zQCEqr3tmYJUbyZVqYM2yzdesq3JCb4r3t3fOaP0exfDRQaqIIPHfPMBLVtxwWlts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780469703; c=relaxed/simple;
-	bh=FnhI81R6nxkd+JdUdUbw/pnJNZT16SyXR3mi7P6R8aQ=;
+	s=arc-20240116; t=1780469710; c=relaxed/simple;
+	bh=XV/lkF4ZsRKwdVPU/QNK556gJWxjbNA1VhMedvLJF0o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fEBb4B2p8OlfahF4OeLrXG2Tkpeg7gtzpGRoOcW2HnsIMrV9eiqTEqOQuib3kGYjkXsEk1DE+HfBk31b4txEtYSB1ZgAKNiSf2It4KsdLwPnQVItN1C/n5162FOlct+eafNzEqqiyxjrlC3PDovhVrREoQ/v8tUIRiX337xcmC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E7H9bJCF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a6VkxpmL; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=OtgfcRIX2NXXPZFMqnUBgptshe/sPG/vsz9VjYuX0jQsW6B4fj9ll7w+ltpFReLx1//5RkakUi1mS3eI8aIqwG8/Xhm2UC/MfeVwHJuIsTrVdIVumen4dA458m6D4oVl82sGRJaLeKQrgohR7OVCQF3/iac0npB5iZhm6NOCd0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=btfr5NBx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AOWmORYC; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E7H9bJCF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a6VkxpmL"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 349D21D000F0;
-	Wed,  3 Jun 2026 02:55:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="btfr5NBx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AOWmORYC"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id DE7EA1D0010A;
+	Wed,  3 Jun 2026 02:55:08 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 03 Jun 2026 02:55:01 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 03 Jun 2026 02:55:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780469701; x=1780556101; bh=5sQ5Mt1iqQ
-	KIvesHtZ0lT6U4kfPhiN/ypBU35KzzjRU=; b=E7H9bJCFMlPu4DvuLxbO42+l12
-	LOwevw7E6qT5W27OUJHwRSrCqa9/Yj6pxylmGY89kOl9rP6WtdgUoDkDjxMoBgIQ
-	lZS/mQP26OLg4aHRXxZlT03S0yWSKRT9pFiiXWzU5q0jIiUXzEdUcNI8fIDiGju0
-	4sG05tPTg2hGxeoE6K23EvSj1wQqAuGfoyHnhNwzlj0Fu+/48CA+nLuKrALwkZNP
-	X4o08wQ4ieHaiBQib6LPKC7CAkJBeLuOlLondwdtocPNcVxTZZ2YthZdw4kEogvU
-	c9ScJUOAA5E4679HAEH4rdLfORQVqSFCA8SPUWkSfl3U6xO4s7Ehp6enwaWw==
+	:subject:to:to; s=fm1; t=1780469708; x=1780556108; bh=VsyPUKU8u+
+	MegO3S7SmATYajk+VoSUlPmtu3eOfYcjI=; b=btfr5NBx6blXHnP7bkk8s0N92N
+	99Ak4rfE/+CjIbGJn9Hfzck3rn/HrkKcGI4bx3lBqLbqkmtXnJHOuKFBTvK/E7Fh
+	k28DdneNyQakdhkHNgacYK4UTzMbxuDi05cj0JhwlNr2iMx2zeTXbtboM1L9EXbc
+	693NMs4Tt9KIcCV1oJ7UddH874P+lqa4l/Nebs9H7lqaqUKjeginI9cdNjtZmlEQ
+	H6NneAefCoVXJwtNGCTXBRxC3hLOqJ4zt0K6gS2ilOWnrnZipIYySbKkZ5EY02uZ
+	7rIQe2BtXV5Cyie3QGnbCZ07CwQdDazDZeV55n40xvQM/g2KyuAmBR7llSnw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780469701; x=1780556101; bh=5sQ5Mt1iqQKIvesHtZ0lT6U4kfPhiN/ypBU
-	35KzzjRU=; b=a6VkxpmL9QKdBg602sYouqdo7kvSyhR81RZ/mrgoLmJJZHBRmhh
-	M4dxYRnRN+bn+x4G5COVGp2rSiafgWGjtfR8LM6c+76ehxOiMGKQbKbNWMawVRU+
-	eJfr5CDkHtVzzy37tFAeen15D5r1Irlkicdk3fg0r54v0c64kK8meUP/3dd3oRkh
-	jxcZmSGlXZUiLo/d8OuWirtl4aV0pk8qOaLOSrqdJq/YJgyAQ2uiCGN/oBTBuFv7
-	lmUr3HEIrNyHwXgM/lak53kr7xhI4aJWI8zjCmnhSq89t5s9TtMvd3Kj5N0AeCzm
-	4+EBhZE4vJcdTIZy+5NeAs1vQrwja18HgVg==
-X-ME-Sender: <xms:xM8fagR4-pQFePYiYkUE4MT1ncmXnOeri_o7ractjqGASL2mxzyk-Q>
-    <xme:xM8falOp-kPgUgljtr2ShZgykEyQu6-FKYrzRa3g55IYQLkx8yExt_2D_pP5J-zq9
-    zvCedekryBWJtE0cLZbCvRCZ6ZkBxOkbKyfhdWZ6IC99OuBbD6XSgY>
-X-ME-Received: <xmr:xM8farOy3GwPYHKagJoWvXZqg-zOGSTY0CKiwzcJhNO3gr13y8bpJfmMaQ7PWxsT9VshdW3uSDTJsG_ZzphIWHE-k6xgYEKwKYJ8D8Y3Qkxa>
+	1780469708; x=1780556108; bh=VsyPUKU8u+MegO3S7SmATYajk+VoSUlPmtu
+	3eOfYcjI=; b=AOWmORYCbPTbhm8jPDzaba9fzZAFT3GS2lOb/DMb6dRwYhvVNc/
+	UQRDYdZ2taQXLO1W7eN1zpzKu/E9bSIk9i8mCqIFC+U3m2mgoq8ke+U++/vCfZY0
+	P15jRlt95auF42Q7cTg5oFmCJIeFNXXOKe97v8GklwM6Go8q8gMlkI8Z6cXRQYjc
+	LG8R9db/XoOqAreBTPpKOciPUpqlT3HO3YWebK/uK6bqmPICIkKaDAanxj227LPI
+	uqMiG1r/qoWXVvglDR6gvgDZDOXkF2/v5K58fLBzUwqnCgsab5ibBJBF/WkY49Zj
+	g5w6nMw5mI6f9m7XFmCwSnQyODOd10EkDIA==
+X-ME-Sender: <xms:zM8famd5ty9FTo19-cg44ttcqQpq7p0Fhywu6dBLTJI-N2O5dz2Nag>
+    <xme:zM8fanP7U8iMeZrJwLnD1Bztlqjs7oMAVBg7d_Wdpr06F-OSF40u4znKo5dnEkodg
+    V__qW79ZiGHWKSV9GaM186z9c4AlorXfxQ4A_tpCZt4PxgPmScv>
+X-ME-Received: <xmr:zM8fashvmbUyB5QgY59ihGCOiEtxWKAkEUdOGv24yYrxjgUHi72pcNi3DJOUXimkAGO85YNQ-hoB1W_gYKeAuOuqG8XjL9Mb6vwQ6E9iCXxl>
 X-ME-Proxy-Cause: dmFkZTGcpigh/uNOhM7tiwbNS/U6CLwQ18pZVYfOi4JKZRwWAgo0yynhr/0zbbh0nSgUMJ
     gsBICm2psKxEQ4fkNca9QXuZ3a/zON5JXSDyYmSOChILjDNOdFxv/hve6+sCO83uVihX2e
     CMuHjAndDXeuBWudYKmDLBB4fqfMy+ojPZPvLTDftcxUVgPQlndYGeCohDrp/0HWI9scXU
     YrxOLtP4E74IgwIJ7BpfbYjdWrWFRx5x0Bs3BjwqN8Gdc8SMe0jLJWCN2lXugZRdE5WZCp
-    yhxBtt1XzGLDbqp7w1XS3KNnAQuJK4OwP9K/VGINM/N8lBvbYI/ASztqhGYzetMA7f5jUq
-    VTQ3nDA5uEbBStQoTRn/f/Lh/luwVuhG27Jvb9lSMYC0QvzkyM778FvuFTd47KINmVlCX9
-    iMSG9FXRabuFS3ZjyUY4eAjPzasukjgF1+etMz2EifO0N4spVE23MNV32xWg+ZohUVuYgx
-    FHKdi+hPP8qTWJhnzFJX+eEepmgbvNCg/fqDISW2KAvY6Sl/Z3ok702Pfz2ZEoAqZNaHKs
-    8gFGKMSlfMApeXSWcAKiIZy1P5dSSgVqUqmOh6BeSB49cTVJEgsBy8xgajM53SBSTFrbnw
-    5BBBvbnaIB/dPiD0Z0I5pQui8UGR3suc255IBflIlP102SOc+5+tmq1KnP6A
-X-ME-Proxy: <xmx:xM8fattrU4JHhPNArtn3_55saYxdN8s2unpT08I55X4qCBFD0aOddA>
-    <xmx:xM8fatUpsTJPy9zlkZ_0IsgT-77l2BVBNihJZHcGT0wsvQzY10ydpQ>
-    <xmx:xM8fatuu8RFr-k4A-BEA8M2plBLZxzcFDt9xAaD26OJ0TIPZZgxDCg>
-    <xmx:xM8fahU_t1Axh5D7eSiJ_cL57MgJMfjOEF3EbC7utkEz92kUyloPsQ>
-    <xmx:xc8faj1syDP6MXP_0S2pkJeWnswWb6L4Oo-GjJCTZpAZL1W1ORBRSNIF>
+    yhxBtt1XzGLDbqp7w1XS3KNnAQuJK4OwP9K/VGINM/N8lBvbYI/ASztqhGYzetMA7f5jhN
+    cQrHGsrX72P4jEjirhXhzz0cate5gnaeoGridI4MreQpAL/WvKAYxxF6+vxCfAQRl+9RNP
+    PnjWkJips0wIpDdcgWyy9EzdOJ/dRs65lhNoCAYjVWBD5w+Tsv13Crr8K95bb9WiIdt130
+    XMMk4FzKgizIh8zlGhzo4wfT3i3vlFq5pPb5h6m9b8DX+Ttvr+KYjlcwNDucztk/qIHUVh
+    7l0J4T5LLVAkFHxoKKNhYN1s0ifKXgdRJkPv1sb5h7ppLiZgxPxoeMxgtjcq1egS5ZcBR8
+    wy6lJMpqGOjvovFk8LC4O9UWo3t0QJDk3NXzTgm1i8oYVbLxCkBOFNPgpfNA
+X-ME-Proxy: <xmx:zM8fai1WQoJErfjTJAgYDlHJzXLrv42NSqN_gAY7BjI7NolyoKeWtg>
+    <xmx:zM8fauhUaDScDLc06zJWUReQIbq0OtZAZj8UJ4vtPL53hIMGruioXw>
+    <xmx:zM8faqfkKtHcVXwhKnZKn8-i16Wwh1DjhZohtoRIYSOuTb-fDx9POA>
+    <xmx:zM8fapl4kLwe6nl87Q5z4yereWuNpXBawvKDfu0IuLSIwy6hvOEPvA>
+    <xmx:zM8faqw0gX5UbBk511bhRm-7OUh82zdIjyEhQzDetpbJOVxf-xQvLNsg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jun 2026 02:55:00 -0400 (EDT)
+ 3 Jun 2026 02:55:07 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4e175fff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jun 2026 06:54:59 +0000 (UTC)
-Date: Wed, 3 Jun 2026 08:54:56 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 9b198350 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Jun 2026 06:55:07 +0000 (UTC)
+Date: Wed, 3 Jun 2026 08:55:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Weijie Yuan <wy@wyuan.org>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Documentation/MyFirstContribution: recommend the use
- of b4
-Message-ID: <ah_PwOsbYfDCx0H2@pks.im>
+Cc: Tuomas Ahola <taahol@utu.fi>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] b4: introduce configuration for the Git project
+Message-ID: <ah_PyDwO1Sffr5yq@pks.im>
 References: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
- <20260602-pks-b4-v1-2-a7ae5a49e9cf@pks.im>
- <ah8ALHMDVA2Gzz10@wyuan.org>
+ <20260602-pks-b4-v1-1-a7ae5a49e9cf@pks.im>
+ <20260602170955.Z4b7y%taahol@utu.fi>
+ <ah-Nhr2PboWUq6eU@wyuan.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,47 +88,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ah8ALHMDVA2Gzz10@wyuan.org>
+In-Reply-To: <ah-Nhr2PboWUq6eU@wyuan.org>
 
-On Wed, Jun 03, 2026 at 12:09:16AM +0800, Weijie Yuan wrote:
-> > +Contributors are encouraged to use `b4`, which automates much of the
-> > +bookkeeping that is otherwise done by hand.
+On Wed, Jun 03, 2026 at 10:12:22AM +0800, Weijie Yuan wrote:
+> On Tue, Jun 02, 2026 at 08:09:55PM +0300, Tuomas Ahola wrote:
+> > Huh?  Doesn't MyFirstContribution speak *against* shallow threading?
+> >
+> > 	        [...]  make sure to replace it with the correct Message-ID for your
+> > 	**previous cover letter** - that is, if you're sending v2, use the Message-ID
+> > 	from v1; if you're sending v3, use the Message-ID from v2.
 > 
-> So for statement like this and with my personal experience, I would say
-> b4 is a more suitable option for senior contributors, as they already
-> know, for example, what Message-ID and range-diffs are. But apparently,
-> whose who use forges may not know.
+> I don't get it. Doesn't shallow threading means every following patches
+> are replying to the cover letter? Replying to the previous one is
+> --chain-reply-to, if I'm not mistaken.
 
-I think it's perfectly suitable for newcomers, too. It automates so many
-of the concepts that a contributor has to learn way less about mailing
-list specific concepts, which reduces the learning curve.
+Shallow threading basically means that all patches are sent as a
+response to the current cover letter, and the current cover letter is
+always attached to the cover letter of the _first_ version.
 
-> Back to the patch, I think regarding b4 as a more advanced contribution
-> way for those who had contributed via mailing lists for more than one
-> time is a better expression or formulation. Here I mean "b4 prep", other
-> usage like "b4 mbox" and "b4 am" are of course more basic, and be
-> mentioned as tips when interacting with Git mailing list.
-> 
-> A bit too wordy, in conclusion: Suggest that new contributors master
-> classic git operations first. When they are familiar with those process,
-> b4 might be a good option.
+So this quote is definitely at odds with the configuration I have
+proposed. It's actually quite surprising to me that we recommend deep
+threading -- I personally find it extremely hard to navigate as the
+nesting eventually gets way too deep.
 
-Ah, that's what you're hinting at. So you mean to say that folks should
-first understand the basics before basically automating all of the parts
-for them?
+You know -- I'll include a patch that changes the wording there to also
+use shallow nesting, mostly to kick off a discussion and arrive at a
+decision there.
 
-I guess I can see where you're coming from, but I'm not sure I agree
-with this a 100%. My main goal is to make it easier for new community
-members to contribute to Git, and that means that we should automate all
-the hard parts as far as possible. This saves those new contributors
-from frustration, and it means that reviewers on the mailing list won't
-have to teach every single new contributor about how they should thread
-the mails, generate range-diffs and the like.
-
-So in the end, it saves both their and our time, but the learning
-opportunity is of course a bit diminished. I'd gladly accept that
-tradeoff though.
-
-Thanks for your input!
+Thanks!
 
 Patrick
