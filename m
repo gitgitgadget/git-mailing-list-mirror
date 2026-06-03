@@ -1,39 +1,41 @@
-Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D014C30C17D
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 13:44:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B8247F2F6
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 13:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780494271; cv=none; b=b5BeMzhoHCG7n5iJtOBiy0UJw/815uqyTC2+OONu3XDfyblrdlSRaQ4b9t6MyH1S60vB9Dk1zd5H9TfUq0z9uc0pFKy2vw4q2g+/1UcIvI0zRche1nUeG9KHO9ts+PkUDMN3ocGx4zqDbTStliilG87N6EJgCB3vbDDMna8hnIo=
+	t=1780495161; cv=none; b=WxnJ+e3kACH5AO9dU1TR1k9bPcds4WnklflZLk4J7Ih2SIIvwVWB4aC+8/YVjGVTnTpii96GfejA/qNdsgdHLgQmir6ZBRrwHoV8SImtqA8key0sogXEfkemOn1HP7cbHOF6sq/i269u+wXzpLt0i4tz7sFX6v7m/8UFak4WCgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780494271; c=relaxed/simple;
-	bh=WJC9Alii8tzD1YC1D5aoEAq2Lep4q7YXTJMZLfODuiM=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fbuKsyhAZzSISzuF55aOh9M0McqhXHvhB6cJ/BNH76NRkdrIn/Rcx4AJFFWhkF1qJrRCMUGk4idX1Sw8pwKO9p7s8UAj5SJG2ShGFrPNVijHQ2Xo67ETBaGe8QmEYJfzw1yuNc3QadgUG+9JLRNlr2tTRw0BuIG1P9AnGJ23wPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=gNGPFuD8; arc=none smtp.client-ip=95.215.58.187
+	s=arc-20240116; t=1780495161; c=relaxed/simple;
+	bh=AHxXeYD5gDTcTST42lKMmw5j9eceImKyRyBZ/VKtC8o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Uwa67ztgBWsrYdocbPuvKaBG5kHV38XoVF1fO89i2IFHBmzRNByUe8UtqGLIqiZUEteK8hBl7z05oYHHlwDl1GTYZVQewD2TR7aGU5Y2iEhGcNRfeXHUWl+ZouxEr5nCuwGuHLs3CJJ/c8Bcr9M0upuaJFCzBodMqoKwJgZ3+eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Y+AKLF4X; arc=none smtp.client-ip=95.215.58.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="gNGPFuD8"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Y+AKLF4X"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1780494265;
+	t=1780495149;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=6gjwfTDXkEffENfusv2Z+hWOrxdxee3C1KRLTupBqNE=;
-	b=gNGPFuD8SFiPcke10gfZTiPyos4PWu1c+HQz4qA8MRuP/Ricsh9iL91TE2Ot1OsOBds0qB
-	+HimS9a3g5dG6Eyb/m4qZrtzkJh0IAMyFazOhDQ8SIBrsr4JFOvB9qfZBWmPOdcjlQFIws
-	tMXdZ2tE61QN+1bbK8g/yvRiDBUc5vI=
+	bh=9/ijaZgFEZo0/qRq3gaFhGSvFGc453MsLH3JkttXQFg=;
+	b=Y+AKLF4XBDSheZi18O2PRuDfJJOUOZ4r0CvT1ORv5fgeRuBEOwhKdyYLnG9hz7xtgma9lN
+	CJfJKrGhMFJ3qtYwxXwNtMt/sMAhJeV6s8SnROpQg/oCeUlhKuwfAizgAeXRl06uYyw6hX
+	fPkXHt4+bRhmr0slWdj22N71/Gktn0A=
 From: Toon Claes <toon@iotcl.com>
-To: Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
-Subject: Re: Suggetsions for collaboration workflows in large repos
-In-Reply-To: <ahnUeESE1x802Z9N@desktop>
-References: <20260529163117.z2auhbg4sdxxgmis@archP14s>
- <ahnUeESE1x802Z9N@desktop>
-Date: Wed, 03 Jun 2026 15:44:11 +0200
-Message-ID: <87tsrj20yc.fsf@emacs.iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>, Weijie
+ Yuan <wy@wyuan.org>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 3/3] b4: introduce configuration for the Git project
+In-Reply-To: <20260603-pks-b4-v2-3-a8aea0aa2c23@pks.im>
+References: <20260603-pks-b4-v2-0-a8aea0aa2c23@pks.im>
+ <20260603-pks-b4-v2-3-a8aea0aa2c23@pks.im>
+Date: Wed, 03 Jun 2026 15:58:38 +0200
+Message-ID: <87qzmn20a9.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,135 +45,87 @@ MIME-Version: 1.0
 Content-Type: text/plain
 X-Migadu-Flow: FLOW_OUT
 
-Matthew Hughes <matthewhughes934@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, May 29, 2026 at 05:31:17PM +0100, Matthew Hughes wrote:
->> I thought about doing something like tracking
->> `refs/heads*/some-colleague-branch` from the remote, since with the wildcard
->> `*` I at least won't the fatal error on the missing reference during fetch, but
->> that risks my config containing an ever growing list of such wildcards, or a
->> bunch of manual work occasionally cleaning up old ones (or maybe that could be
->> automated).
+> We're about to extend our documentation to recommend b4 for sending
+> patch series to the mailing list. Prepare for this by introducing a b4
+> configuration so that the tool knows to honor our preferences. For now,
+> this configuration does two things:
+>
+>   - It configures "send-same-thread = shallow", which tells b4 to always
+>     send subsequent versions of the same patch series as a reply to the
+>     cover letter of the first version.
+>
+>   - It configures "prep-cover-template", which tells b4 to use a custom
+>     template for the cover letter. The most important change compared to
+>     the default template is that our custom template also includes a
+>     range-diff.
+>
+> There's potentially more things that we may want to configure going
+> forward, like for example auto-configuration of folks to Cc on certain
+> patches. But these two tweaks feel like a good place to start.
+>
+> Note that these values only serve as defaults, and users may want to
+> tweak those defaults based on their own preference. Luckily, users can
+> do that without having to touch `.b4-config` at all, as b4 allows them
+> to override values via Git configuration:
+>
+>     ```
+>     $ git config set b4.prep-cover-template /does/not/exist
+>     $ b4 send --dry-run
+>     ERROR: prep-cover-template says to use x, but it does not exist
+>     ```
+>
+> So this gives users an easy way to override our defaults without having
+> to touch ".b4-config", which would dirty the tree.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  .b4-config         |  6 ++++++
+>  .b4-cover-template | 11 +++++++++++
+>  2 files changed, 17 insertions(+)
+>
+> diff --git a/.b4-config b/.b4-config
+> new file mode 100644
+> index 0000000000..fd4fb56b6d
+> --- /dev/null
+> +++ b/.b4-config
+> @@ -0,0 +1,6 @@
+> +# Note that these are default values that you can tweak via the typical
+> +# git-config(1) machinery. You thus shouldn't ever have to change this file.
+> +# See also https://b4.docs.kernel.org/en/latest/config.html.
+> +[b4]
+> +send-same-thread = shallow
 
-I feel your problem, although a lot less in the project I'm working on
-lately. I have these refspecs by the way:
+Is it worth to note this requires v0.15 or higher?
 
-	fetch = +refs/heads/master:refs/remotes/origin/master
-	fetch = +refs/heads/toon-*:refs/remotes/origin/toon-*
+That version was released only 2 months ago, I can imagine many distros
+still ship an older version, what happens if a version doesn't support
+this setting yet?
 
-
-> I hacked some scripts to automate this. Firstly, one for fetching:
+> +prep-cover-template = ./.b4-cover-template
+> diff --git a/.b4-cover-template b/.b4-cover-template
+> new file mode 100644
+> index 0000000000..ab864933b5
+> --- /dev/null
+> +++ b/.b4-cover-template
+> @@ -0,0 +1,11 @@
+> +${cover}
+> +
+> +---
+> +${shortlog}
+> +
+> +${diffstat}
+> +
+> +${range_diff}
+> +---
+> +base-commit: ${base_commit}
+> +${prerequisites}
 >
-> 1. Fetches the branch
-> 2. Adds a fetch config with wildcard hacks so `git fetch` brings in updates for
->   that branch (the refspec should match _exactly_ that branch and never
->   anything more)
-> 3. Adds a separate ref to record that we're tracking this branch (so something
->   knows to clean it up later)
+> -- 
+> 2.54.0.1064.gd145956f57.dirty
 >
->     #!/usr/bin/env bash
 >
->     set -o errexit -o pipefail -o nounset
->
->     # save command as e.g. git-fetch-other
->     CMD_NAME="$(basename "$0" | sed 's/git-//g')"
->     if [ $# -lt 1 ]
->     then
->         echo "usage: git $CMD_NAME branch-name [ remote-name ]" >&2
->         exit 1
->     fi
->
->     BRANCH_NAME="$1"
->     REMOTE_NAME="${2:-origin}"
->     FETCH_CONFIG_NAME="remote.$REMOTE_NAME.fetch"
->
->     git fetch "$REMOTE_NAME" "$BRANCH_NAME"
->     git checkout -b "$BRANCH_NAME"
->
->     # we want to record that we are tracking this branch, to do this create
->     # a new ref whose name tells us what we're tracking, but whose value is
->     # unimportant. So as a placeholder value just use the hash of an empty tree
->     # taken from https://git.kernel.org/pub/scm/git/git.git/commit/?id=9c8a294a1ae1335511475db9c0eb8841c0ec9738
->     EMPTY_TREE_REF="$(git hash-object -t tree /dev/null)"
->
->     # refspec used to track the branch: we expect branches to be deleted from the
->     # upstream when merged so tracking exactly:
->     # "+refs/heads/$BRANCH_NAME:refs/remotes/$REMOTE_NAME/$BRANCH_NAME" will error
->     # when we go to fetch that exact ref after its removed upstream.
->     # so HACK around this: add wildcards that we still expect to only ever match
->     # this exact branch (but doesn't have the issue of git complaining when it
->     # tries to fetch an _exact_ ref)
->     TRACKING_REFSPEC="+refs/heads*/$BRANCH_NAME:refs/remotes*/$REMOTE_NAME/$BRANCH_NAME"
->
->     # record that we're tracking this branch. First check we've not already
->     # recorded this, then ...
->     if ! git config get --local --fixed-value --value "$TRACKING_REFSPEC" "$FETCH_CONFIG_NAME" >/dev/null
->     then
->         # ... set the config to track it for fetching, and ...
->         git config set --comment "$CMD_NAME: tracking at $(date -I)"  --local --append "$FETCH_CONFIG_NAME" "$TRACKING_REFSPEC"
->         # ... record that we have special cased this tracking
->         git update-ref "refs/tracked/$REMOTE_NAME/$BRANCH_NAME" "$EMPTY_TREE_REF"
->     fi
-
-It seems to be a bit more advanced than the alias I have:
-
-    cofetch = !sh -c 'git fetch $1 $2:remotes/$1/$2 && git switch -c $2 remotes/$1/$2' -
-
-You need to pass it the remote and the branch name (in reverse order of
-yours, which makes sense if you want the remote to be optional).
-
-> And the cleanup script (needs to be run periodically):
->
-> 1. Collects all the remote branches we know about
-> 2. Checks all the references from step 3. above and checks if any branches
-> defined there are missing remotes (I have fetch.prune=true to keep the remote
-> tracking references up-to-date)
-> 3. If they are, drops the tracking config for that branch
->
->     #!/usr/bin/env bash
->
->     set -o errexit -o pipefail -o nounset
->
->     REMOTE_NAME="${1:-origin}"
->     TRACKED_REF_PREFIX="refs/tracked/$REMOTE_NAME"
->     REMOTE_REF_PREFIX="refs/remotes/$REMOTE_NAME"
->
->     declare -A remote_branch_lookup
->     while read -r remote_ref
->     do
->         # strip prefix, e.g. 'refs/remotes/origin/some-branch' -> 'some-branch'
->         branch_name="${remote_ref#$REMOTE_REF_PREFIX/}"
->         remote_branch_lookup["$branch_name"]=1
->     done < <(git for-each-ref --format='%(refname)' "$REMOTE_REF_PREFIX/")
->
->     while read -r tracking_info
->     do
->         tracked_branch="${tracking_info#$TRACKED_REF_PREFIX/}"
->         if ! [[ -v "remote_branch_lookup[$tracked_branch]" ]]
->         then
->             echo "branch $tracked_branch has been removed from the remote, untracking it"
->             git update-ref -d "$TRACKED_REF_PREFIX/$tracked_branch"
->
->             tracking_refspec="+refs/heads*/$tracked_branch:refs/remotes*/$REMOTE_NAME/$tracked_branch"
->             git config unset --local --fixed-value --value "$tracking_refspec" "remote.$REMOTE_NAME.fetch"
->         fi
->     done < <(git for-each-ref --format='%(refname)' "$TRACKED_REF_PREFIX/")
->
-> So functionally I think this allows for the workflow I want, but does feel like
-> a big ol' hack :>
-
-I agree it feels hacky, but I don't really see how we can generalize it
-more so it will become a standard feature in git?
-
-I was thinking you can already pass `-c remote.origin.fetch=<refspec>`
-(multiple times) to git-clone(1), but in practice it doesn't seem to
-work because that config is additive, so it adds the refspec, instead of
-overwriting, so you're getting:
-
-  fatal: multiple updates for ref 'refs/remotes/origin/main' not allowed
-
-And you cannot combine it with `--single-branch`, although you could do
-a single branch clone and then add additional refspecs later.
 
 -- 
 Cheers,
