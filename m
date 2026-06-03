@@ -1,128 +1,173 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF54418F2
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 11:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780485106; cv=none; b=JS4ZsPs5IRQlbY4RSYiVYgHYwFqHD3LsSPh6Z5pS8h45UZ2WfGd9CqlG3QKSjf/3axvtTyyZwkKQebvpYLGHzpaNHZN+U8WRbdhne640CnHyjqPT0DFcubMQeftIY/OsIqz4QagmMy1fZiSCY0Q2oRehWmIUZ9q0CKDva52j/ek=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780485106; c=relaxed/simple;
-	bh=dKqJRa01/QEjg5/OLXcqg6OsJxSZFnGGXZd/amdbMPA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+RGqobtzujSd9wdsfIzb3T0CHzerrS6XcZA8EmHG6ERF/L5mHPWy6oxYvY78NQuyKrdzxBjxAWMEanfUgKcRkoNmgUd9i5pUj/2lX34U/AcGNSs5pWBm+Tox0U1DMTT7hj93hXLp2yLhJskVHVuPXBlx65bZsIO6CJ7FrGnYmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b0tz+U1R; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082481EA84
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 12:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780489374; cv=pass; b=MCqyin02U+Vg0zMx2PZ20AHLLK6Nj/QOBjE/5ClJUsK8HvBcGOlvtjAThsQDx6/MhV3rfo4CI9XFfBOZ075eOtJy9w7c90NqPOF+WRychYlAZ35haj01dyY0aPwBJKdaKEYs46mdG+EQHBbCYDmAxYnT4CA1Je1DrGectIKIqPw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780489374; c=relaxed/simple;
+	bh=WSRPhQMCS6/vUJ7sJT7nHe3CyNiwgPNZlMEwmFBkTFQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V2bMFY7VUd1EPkAe2RjLCUDHU2q9u5L7vBKdUuTKk+8quKXkjQeUGRHz5K/wLzbYYLMCtcRUdHnjVidAjashjwlJFmG/4lwdUgv+EfMaEquKk0RqfOv1pjZ6riD9sRMrlXtPvSUyP8JEvX94yJ4Sp7+lpaVbP+fliPS4DX05BcU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXwf7BR5; arc=pass smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b0tz+U1R"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c8589498839so1825302a12.2
-        for <git@vger.kernel.org>; Wed, 03 Jun 2026 04:11:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXwf7BR5"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-59d6e44e5c8so2649784e0c.2
+        for <git@vger.kernel.org>; Wed, 03 Jun 2026 05:22:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780489372; cv=none;
+        d=google.com; s=arc-20240605;
+        b=P9ThveR4Xd/l2ljHchdW5UEPBn4M/hfIAHW7MfKbFBQzIbKEwZTUi5BUBd62vP3RPk
+         3HGlBzfxFSJhopb4W1sqZkiAi0RBNyq73Ah3CIhlO7o5RDg95cYqnSoB+4Nu47slSmwM
+         ghofiwLmlXbAm/tKNGTMR5vw0At4tuRRU229OuHV9L4aIfbp1EWh9osqe3jLfhTESG+4
+         jKejOMdjh7o57jszkzDw1pVq02viHGO2EEayJtVojiOUiqiPozwZzF7jhAUJgEh5d+jU
+         8smKIEjsv3QyTYe2vFa6bh3v05p4uRlna7pBJPhWOSNKy9YHCst22JHgPSvVtD+cVlsm
+         nIcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=+6tntfowzE2R+6COKaXtMonFaapYYS9Wrj2EGnfS8SM=;
+        fh=RWlTl3jndEVGP0dtkyQh2C9dNlmcwYxB9b5YUodo8RE=;
+        b=BMq3Z2yqlkhGzhQ/dGeSiTijlQDzdcnFG57/LKBeX2tcZA8BfGJWKWMkxLISDcOz9I
+         L7BisLdGjl946lzOEznzJYYyd9cFLyTOo9NBfn5poSS6eC8p0RlBsiiopJjR9HttTJZm
+         gxKNR8u16d/XVYbCUnEvmfctoP8D6XMAMWA8cBekaAulNcMSQVow9DimD6Ev0l/ghXqe
+         R7FyAGPobluV+Z6FX/wKctuOYUOXg+P60B12HukAELDwcwkdxzL5qaCLua+ZcvhHzCw8
+         ygeNQmI2gssdWQ8wL0Y+rKOn/lySFb+rEkr14Z504tASgjEmc7d9iAovjTv++FqDG9Jf
+         l9Eg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780485104; x=1781089904; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AJFXLQpjifbfaKRsx+eFlj2y1LohHP5y8q+QuY/5yoA=;
-        b=b0tz+U1RudshY0fYzPPA6EklHkXMGe0FuVaTS8JOKR0u7bmLqyZvDQSJThQgXGXnNC
-         0uloApOjoCuUF6awO91JayYYuEGE0Y3jx8tcIyemXJRQ0lZ6PaUenNNNmVV4iZ0NJiRx
-         +andFZGdkjQxM55mSqAbXHWzKkR86nVZ9fEp41f3XqcRLzTiS+ox2WKNcldNDbQSHn+3
-         USpWKgECjTQEezAkgNUigTrsOK31mXCKOPLnVQYTJfyAeF5YGjpOiWdyRk8g/GV1INkS
-         b6w7JY+Kp1xAqtW2sY0shkvIxHNQkR6FhDClPOjMnQR7a2N5MpH2qSoBmid49qAf5l7T
-         ycgA==
+        d=gmail.com; s=20251104; t=1780489372; x=1781094172; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+6tntfowzE2R+6COKaXtMonFaapYYS9Wrj2EGnfS8SM=;
+        b=MXwf7BR5RqcQbzfzndxBL2iv9qMiBifP620NaQ0z9v44prWEzEcuaYz8uwRoLvML/W
+         IGY3l7cvt4+Kd1T/mWWouM1BtU44+g/FohUrDdOHd0wYzu+hHxsVSU3ywTbbu7opPAac
+         MPf4BMqKFD7c6+37lfRpulkxh2s6w3TzW0FM1q6YVnAeR+PeXmKU/eNoXvfxtSP9290S
+         +Hnc1c3Y73PaMinjQZH9KslhFc4psRzIsG5ib4jcah+735rUXe9u/PWsyDUBjRGKYvgy
+         mvXKiMkyPM932w7C0VVwGNuIYiiP2lgk+eBJp2fROzqduF3DH6PCOvPmtoO1PvXVQqQk
+         vvcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780485104; x=1781089904;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=AJFXLQpjifbfaKRsx+eFlj2y1LohHP5y8q+QuY/5yoA=;
-        b=MknmsgdVv6dTB+QZoM2wrDi3s6Cp2FpFkeAF8JeDwNV466XGhpRF8AgD/gzQjPN56n
-         btk4aUHLG5ek6Ehe9VEeYahtLygu9eHBI/JWE7cqF17iX5OiJ9jgI5WJOiVisJZ78v8M
-         x8PpyApLjRvweSX/li0S7CxadIA7rFe6dX8PTVNY4VvYDhivExEVvz+6kjorCo3V92M/
-         iZEMo21voPxk2zWyWXtNuQU3QGjknN3cDpPPDzXUOJAyHslLHOF5FNDI8OpP8DttWHe/
-         A3iy24a8Yt9B3ZiFvfqRGGw6kKHGdD785GXCr+TdwqWMPMfLAU/W/WxY3tEbDrf5zIv7
-         H73g==
-X-Gm-Message-State: AOJu0YxzirvI60FTFYcxVGVvfZLNAj4+ukcU6skkhxGR3lxEoky8i8VE
-	yQXDC2dfoxxYAPkG4rVy2GrnLMcXuO5LKcO/Ly/wqVRAJXrqvuI4Flv2EgzHdQ==
-X-Gm-Gg: Acq92OHSbmTXxrpq/EebRjsH7bXCku0gHyz9uLI0f+zYMZe9CbsaffsjyQ8LIFob7KR
-	/3X001sSl1GK4RSVhm6xuJTf1CPYmcpMjhSEOpZJhSdXbBTDLT6ERzAUUXYFdlR/MO2guyqY4Ah
-	cJ+mX0ixd+D+gWXSt5RhEl0kauXWB+K/JPFiDIhQ0u2T+iRR9zzsfg/SOuHAYexUA+CgjPQfEV0
-	BJoJmALDs7XMqxH2gwhJkBVJ0QzVXpmtatpZcfnlHMat9dxu2hk3k097sR2/Uyg8LqXLxKfCYDJ
-	e2F1ap9iO2TGAuwt4n366joKtnBFm9XhCaJB4vqKcyLvYyMle+1qGar38ovtaLA1vYD4gUAaQqn
-	Ub/WAtdA5znBytVWqb0OnkYeqAU/pvC6W6vfxSPvjCUFvSAwYcv754YecPrRzl8Mql8L/3zMyjA
-	vJaIa0bT7FBSLYFjc5gPgWUMy04ntaContR9ZvtujGXAiwbDRIpUTb5nh0Po1DhBNV9yYWh/bEK
-	l8+S/3cW22Y3DexAwsKXAZovb3UzK7I30z6ilfwJG0+l9z6NTU/bJR91EtnBMIh7HMC+t0=
-X-Received: by 2002:a05:6a21:6e03:b0:3b4:913c:296a with SMTP id adf61e73a8af0-3b49758695fmr3623120637.21.1780485104359;
-        Wed, 03 Jun 2026 04:11:44 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:88fa:8837:5c6c:ee92:51c2:81c6])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282372502sm2972578b3a.16.2026.06.03.04.11.41
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 03 Jun 2026 04:11:44 -0700 (PDT)
-From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	christian.couder@gmail.com,
-	toon@iotcl.com,
-	jn.avila@free.fr,
-	r.siddharth.shrimali@gmail.com
-Subject: [PATCH 2/2] builtin/add: use die_for_required_opt() helper
-Date: Wed,  3 Jun 2026 16:40:44 +0530
-Message-ID: <20260603111044.39116-3-r.siddharth.shrimali@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
-References: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
+        d=1e100.net; s=20251104; t=1780489372; x=1781094172;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+6tntfowzE2R+6COKaXtMonFaapYYS9Wrj2EGnfS8SM=;
+        b=pXDdsXpqlPnsnKyY0Dqm8A3oVJBKBdXVBOj3W06Ey9e40T8FZNfbB+U8DBKhC+Xmwq
+         pv+/ffli6IZrhZwrQ5+OpPurjHXNUdPLg8lgXsPaa+jxCOrdKsPdYM/DJUFnn/I1Ia1a
+         blsSpQDeMgkcaTFQEOdGRrpaTTTPSjxIdK1Y04RcC4MkJkQ/cM1RsWSzjZTwY+0nQsLC
+         PG7nQZA7omxgeTmAnYP+ub57zQh2KVKaI3CtTUW+3iqjZA+Y9Srb/6p90oClPSPvKzV0
+         a/y/jMs3rTBr3CHGxc5+6/UBu03pAB1TXy9TQwLTt9ViIUag2qDCJ1+OyC6V2FyEKCtn
+         38fg==
+X-Forwarded-Encrypted: i=1; AFNElJ+4yIu1LT9yrZj23SxctUBleDODfl4MG7qXZQuGXnFX0IBwajj0IThAK0QcVmjVIyknmdE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9203hhAujmD7NUrhNnazUfWVzQNiby73Ob3Lrw3xcBBPtiW/j
+	7cIsaeLLsFg0FgWPRs4d0E1cXRccSwaEGQINesUQBcS8/m+8AyN/XS/gSrMFEwQxJnc999LvCqT
+	nhnChbc1jtTPZY9+B9APdXk2oZrHdYiDHZw==
+X-Gm-Gg: Acq92OHoz532FAEOoPkCRAhJoIgcusuMMnaMWtmbuLazgBt5+PD6gfzyKt/XHmn3hv9
+	KoNBT7s3hvlObjR24Z/Q+Otb+feCKuFK6AK5Bg5q14RIudpSSsU6X5A0fMEZLMX7dUuPLAwKQ1b
+	vd31dt+uivwYnZPbyRxnIK94MEUqdimWmpYETNySab+kcpQ//9ZlJTzTN+RHiYsB0rYdc8lXK0k
+	13KCSjRAUyPShX8r/+QTqDHNX88aJQvulWBxpl3DXPI/CFWpfWiQLgcQKPO3zGYuk5A5UXrToK8
+	onSq2rwey9Us4tppDpzQAoKX2RmmxocnhVJunEvCBYsiXBW6c8RbooyYLkHL3FaJY7sH7no1/Re
+	3r8MCK39r
+X-Received: by 2002:a05:6122:e227:b0:55b:d85:5073 with SMTP id
+ 71dfb90a1353d-5a6e541ab53mr1768950e0c.4.1780489371952; Wed, 03 Jun 2026
+ 05:22:51 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Jun 2026 05:22:49 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 3 Jun 2026 05:22:49 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260526-b4-pks-setup-centralize-odb-creation-v2-1-2fa5b385c13e@pks.im>
+References: <20260526-b4-pks-setup-centralize-odb-creation-v2-0-2fa5b385c13e@pks.im>
+ <20260526-b4-pks-setup-centralize-odb-creation-v2-1-2fa5b385c13e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Wed, 3 Jun 2026 05:22:49 -0700
+X-Gm-Features: AVHnY4L6M94nhuIfQn67BS0FRfISH_PqXdgVHeN-NkvaBFYuKtzDArrYx1I0VhU
+Message-ID: <CAOLa=ZSeZrL7W_Q-qz0nn+pQATpaJ+8XP6L3rSWRwfWaoUjeXg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] t0001: plug test gaps for git-init(1) with GIT_OBJECT_DIRECTORY
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="0000000000008ad5f10653587c77"
 
-Clean up manual option dependency checks by replacing explicit conditional
-blocks with the newly introduced die_for_required_opt() helper function.
+--0000000000008ad5f10653587c77
+Content-Type: text/plain; charset="UTF-8"
 
-Specifically, simplify the prerequisite check logic for both
-'--ignore-missing' (which requires '--dry-run') and '--pathspec-file-nul'
-(which requires '--pathspec-from-file').
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
----
- builtin/add.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+> In subsequent commits we'll rework how we set up the repository. This is
+> a somewhat intricate and thus fragile sequence; there's many things that
+> can go subtly wrong, and there are lots of interesting interactions that
+> one can discover.
+>
+> One such discovered edge case was the interaction between git-init(1)
+> and the "GIT_OBJECT_DIRECTORY" environment variable. When set, the
+> behaviour is that the object directory should be created at the path
+> that the variable points to. This behaviour is documented as such in
+> its man page:
+>
+>   If the object storage directory is specified via the
+>   GIT_OBJECT_DIRECTORY environment variable then the sha1 directories
+>   are created underneath; otherwise, the default $GIT_DIR/objects
+>   directory is used.
+>
+> Curiously enough though we don't seem to have any tests that exercise
+> this directly, and thus a subsequent commit inadvertently would have
+> broken this expectation.
+>
+> Plug this test gap.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t0001-init.sh | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index e4d32bb4d2..e89feca544 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -980,4 +980,14 @@ test_expect_success 're-init reads matching includeIf.onbranch' '
+>  	test_cmp expect err
+>  '
+>
+> +test_expect_success 'init honors GIT_OBJECT_DIRECTORY' '
+> +	test_when_finished "rm -rf init-objdir custom-odb" &&
+> +	mkdir custom-odb &&
+> +	env GIT_OBJECT_DIRECTORY="$(pwd)/custom-odb" \
+> +		git init init-objdir &&
+> +	test_path_is_missing init-objdir/.git/objects/pack &&
+> +	test_path_is_dir custom-odb/pack &&
+> +	test_path_is_dir custom-odb/info
+> +'
+> +
 
-diff --git a/builtin/add.c b/builtin/add.c
-index c859f66519..a5c91c6dcf 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -441,8 +441,7 @@ int cmd_add(int argc,
- 	if (addremove && take_worktree_changes)
- 		die(_("options '%s' and '%s' cannot be used together"), "-A", "-u");
- 
--	if (!show_only && ignore_missing)
--		die(_("the option '%s' requires '%s'"), "--ignore-missing", "--dry-run");
-+	die_for_required_opt(ignore_missing, "--ignore-missing", show_only, "--dry-run");
- 
- 	if (chmod_arg && ((chmod_arg[0] != '-' && chmod_arg[0] != '+') ||
- 			  chmod_arg[1] != 'x' || chmod_arg[2]))
-@@ -462,6 +461,8 @@ int cmd_add(int argc,
- 		       PATHSPEC_SYMLINK_LEADING_PATH,
- 		       prefix, argv);
- 
-+	die_for_required_opt(pathspec_file_nul, "--pathspec-file-nul",
-+				!!pathspec_from_file, "--pathspec-from-file");
- 	if (pathspec_from_file) {
- 		if (pathspec.nr)
- 			die(_("'%s' and pathspec arguments cannot be used together"), "--pathspec-from-file");
-@@ -470,8 +471,6 @@ int cmd_add(int argc,
- 				    PATHSPEC_PREFER_FULL |
- 				    PATHSPEC_SYMLINK_LEADING_PATH,
- 				    prefix, pathspec_from_file, pathspec_file_nul);
--	} else if (pathspec_file_nul) {
--		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
- 	}
- 
- 	if (require_pathspec && pathspec.nr == 0) {
--- 
-2.54.0
+I was surprised to find that such a small number of tests ever use
+GIT_OBJECT_DIRECTORY. This looks good.
 
+--0000000000008ad5f10653587c77
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: adec3d35722412b5_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vZ0hKY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNm1XQy80eXN4ZkprTU1PQjBJSUE4anNRWHg3MGhNcQp4VE9vazkwOWJi
+RWkxNU1LWFIyZWs1QlFzVHB3NGltWm0rSDdtOTVORVE5Z0pxa05yS3VRVzU0VHE0MjZ0UUUzCkJz
+Y003TEg5VTREaVd1L0hUL3AvazFKRFRSOWNwT1RjVUMzRVdRWkZZLy8zVHRXNi9DT3dDMW1weUNs
+MGY3b1QKdXMxTVRIVHBFTUZaV2gyK2NPUjRqMnR3eUFNSi93VlB2d2R2cndEOUVoYlVqcnJsbDFw
+VCs2NG5KS2hNa054aQpJdHpubFplQnU0NE9WU3B6NTNsOTBlYkE0RnIralJsdkkzaEdSQWZQQWc4
+L0VhZ2lGY0lNSDljVnMxNTdReGdrCmtmYlovYnpoVzhBL1BPdFJDbW1DRkNkZFo0M1hPcE9hcjZU
+RzRTYmg3UkZ5eVlkYmxtWUR0US9zVWtva1Uxbk0KUU1EOVJiQ1NZQVhOWU1FQXdCR0QzblhWQ0wv
+K0xKeFArbkphNG9YZTgxci9VekxSQ2lrWVVWYnVYdnp0R0xuUQpRZm1zaFdWaG45OHdXNW5WSCts
+UHZQVHFYZ3RUb09DTHFwVC9YM2h3cnZEWUNGMnpNN2xGWEp3WXBGcHIwZzdqCi9maXFyS3BZRXFU
+cDEzZ2JyTkt0SWNQUklqUXg1dDJrbUtqditmUT0KPWs1Rk8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008ad5f10653587c77--
