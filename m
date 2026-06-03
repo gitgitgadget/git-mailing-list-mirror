@@ -1,123 +1,178 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254BF2EBB86
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 13:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D014C30C17D
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 13:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780493431; cv=none; b=PeXKRqOBiP2ngRbBlZJe7rYRV93PfjP1ULaSK8ZLrTbURP4SeQFBUHCD8NdfhuA+m63Blu6WJlJzzfw1gs50pZIHvZbKxztbkb40H99712P34PnHof5KLZhDOMnaUvnfc6M7EaKpwCYufvCWkRAYw4KtPNRHZRkJEVMrZ4MoGGM=
+	t=1780494271; cv=none; b=b5BeMzhoHCG7n5iJtOBiy0UJw/815uqyTC2+OONu3XDfyblrdlSRaQ4b9t6MyH1S60vB9Dk1zd5H9TfUq0z9uc0pFKy2vw4q2g+/1UcIvI0zRche1nUeG9KHO9ts+PkUDMN3ocGx4zqDbTStliilG87N6EJgCB3vbDDMna8hnIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780493431; c=relaxed/simple;
-	bh=T/tPQpTAtTpRyMMdmQjeIC2tp+v3hZhNbihID5i/RS8=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r0verNAjEvo62xZQoa1TdAWCP1DPLORlc2PXLBouQYiCvmw7yjWBuYQTSkHqedYUIQZO00uKm1H1Rp02gfEfWI1M6Fp88l9J5Iz0ep7RTB0Go64KGg95jwoWtsvBjBGOz1WkLsNgftuvAucjyZAlS9KuRA3ickzMrX2J3rI9Pyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=HnIZQwV5; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1780494271; c=relaxed/simple;
+	bh=WJC9Alii8tzD1YC1D5aoEAq2Lep4q7YXTJMZLfODuiM=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fbuKsyhAZzSISzuF55aOh9M0McqhXHvhB6cJ/BNH76NRkdrIn/Rcx4AJFFWhkF1qJrRCMUGk4idX1Sw8pwKO9p7s8UAj5SJG2ShGFrPNVijHQ2Xo67ETBaGe8QmEYJfzw1yuNc3QadgUG+9JLRNlr2tTRw0BuIG1P9AnGJ23wPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=gNGPFuD8; arc=none smtp.client-ip=95.215.58.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="HnIZQwV5"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 653DUI0M030659-653DUI0O030659
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Wed, 3 Jun 2026 16:30:18 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wUlfm-000joV-7Y;
-	Wed, 03 Jun 2026 16:30:18 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 3 Jun
- 2026 16:30:17 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 6b04aac9;
-	Wed, 3 Jun 2026 13:30:17 +0000 (UTC)
-Date: Wed, 3 Jun 2026 16:30:17 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-CC: Patrick Steinhardt <ps@pks.im>, Weijie Yuan <wy@wyuan.org>,
-	<git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] b4: introduce configuration for the Git project
-Message-ID: <20260603133017.XkcQR%taahol@utu.fi>
-In-Reply-To: <aiAK9eLvew+mgWt+@szeder.dev>
-References: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
- <20260602-pks-b4-v1-1-a7ae5a49e9cf@pks.im>
- <20260602170955.Z4b7y%taahol@utu.fi> <ah-Nhr2PboWUq6eU@wyuan.org>
- <ah_PyDwO1Sffr5yq@pks.im> <aiAK9eLvew+mgWt+@szeder.dev>
-User-Agent: s-nail v14.9.22
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="gNGPFuD8"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1780494265;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6gjwfTDXkEffENfusv2Z+hWOrxdxee3C1KRLTupBqNE=;
+	b=gNGPFuD8SFiPcke10gfZTiPyos4PWu1c+HQz4qA8MRuP/Ricsh9iL91TE2Ot1OsOBds0qB
+	+HimS9a3g5dG6Eyb/m4qZrtzkJh0IAMyFazOhDQ8SIBrsr4JFOvB9qfZBWmPOdcjlQFIws
+	tMXdZ2tE61QN+1bbK8g/yvRiDBUc5vI=
+From: Toon Claes <toon@iotcl.com>
+To: Matthew Hughes <matthewhughes934@gmail.com>, git@vger.kernel.org
+Subject: Re: Suggetsions for collaboration workflows in large repos
+In-Reply-To: <ahnUeESE1x802Z9N@desktop>
+References: <20260529163117.z2auhbg4sdxxgmis@archP14s>
+ <ahnUeESE1x802Z9N@desktop>
+Date: Wed, 03 Jun 2026 15:44:11 +0200
+Message-ID: <87tsrj20yc.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: ex19-06.utu.fi (130.232.247.46) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
- BUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIXUhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWV9IDwEcGxwNGigYBwoHEEYLBwVIWEhRSBgbKBgDG0YB
- BUhYSFpYSBsSDQwNGkYMDR4oDwUJAQRGCwcFSFhIWVpIHxEoHxEdCQZGBxoPSFg=
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=GhW4r3vSySoMuTpxnRt5qR5lXiyp34YiT+YP7SBl6Ng=;
- b=HnIZQwV5IkJ4+WR9EbatIQUor1BPMWfonj374bAhNSBvn6ny75h8SdM6I286RhEYBNkNpGioLvuv
-	Bf3gSknTG2RvY2FmPuggQK5OMn3BUJZS31G28qAT860avr0+eMpBsMm+5EnFpAc7ttyp4ZRrdBU2
-	pOMTnzhGhuyAeJEzlEc028x6XunaIR0ElGd5u/eJN8fkfI60XrnYCCuqaE24qgAYqKlrWGp54UDa
-	xiULJLbSiKCOu5lgY8m7S41/xjNnwwKPvgv3pGU6sSim0B75c1pcPXr2kHMcyUkMFs8YwdXBFrNb
-	C3DZGSOEkiBzyefQRkaPYqi84LhiUAxRgbn1vw==
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote:
-> On Wed, Jun 03, 2026 at 08:55:04AM +0200, Patrick Steinhardt wrote:
-> > On Wed, Jun 03, 2026 at 10:12:22AM +0800, Weijie Yuan wrote:
-> > > On Tue, Jun 02, 2026 at 08:09:55PM +0300, Tuomas Ahola wrote:
-> > > > Huh?  Doesn't MyFirstContribution speak *against* shallow threading?
-> > > >
-> > > > 	        [...]  make sure to replace it with the correct Message-ID=
- for your
-> > > > 	**previous cover letter** - that is, if you're sending v2, use the=
- Message-ID
-> > > > 	from v1; if you're sending v3, use the Message-ID from v2.
-> > >=20
-> > > I don't get it. Doesn't shallow threading means every following patch=
-es
-> > > are replying to the cover letter? Replying to the previous one is
-> > > --chain-reply-to, if I'm not mistaken.
-> >=20
-> > Shallow threading basically means that all patches are sent as a
-> > response to the current cover letter, and the current cover letter is
-> > always attached to the cover letter of the _first_ version.
->=20
-> No, in Git shallow threading means that all patches are sent as a
-> respose to the current cover letter, period.  It has nothing to do
-> with whether the current cover letter is sent as a reply to the cover
-> letter of the first or the previous version.
->=20
+Matthew Hughes <matthewhughes934@gmail.com> writes:
 
-That seems to be the established meaning of shallow threading, e.g. in
-`git format-patch --thread=3Dshallow`.  Unfortunately there is a slight
-terminology clash here.
+> On Fri, May 29, 2026 at 05:31:17PM +0100, Matthew Hughes wrote:
+>> I thought about doing something like tracking
+>> `refs/heads*/some-colleague-branch` from the remote, since with the wildcard
+>> `*` I at least won't the fatal error on the missing reference during fetch, but
+>> that risks my config containing an ever growing list of such wildcards, or a
+>> bunch of manual work occasionally cleaning up old ones (or maybe that could be
+>> automated).
 
-Indeed, in B4 the config option `b4.send-same-thread =3D shallow` *is*
-about whether the cover letter is a reply to v1 or v(n-1).
+I feel your problem, although a lot less in the project I'm working on
+lately. I have these refspecs by the way:
 
-> > So this quote is definitely at odds with the configuration I have
-> > proposed. It's actually quite surprising to me that we recommend deep
-> > threading -- I personally find it extremely hard to navigate as the
-> > nesting eventually gets way too deep.
->=20
-> Deep threading means that every mail is a reply to the previous one.
-> Again, it has nothing to do with the relation of the current cover
-> letter and the previous cover letters.
->=20
-> Therefore, we do not recommend deep threading.
->=20
+	fetch = +refs/heads/master:refs/remotes/origin/master
+	fetch = +refs/heads/toon-*:refs/remotes/origin/toon-*
 
-In the usual meaning of the word that is the case.  Most certainly
-we don't recommend that kind of deep threading, but that wasn't the
-question we were discussing here.
+
+> I hacked some scripts to automate this. Firstly, one for fetching:
+>
+> 1. Fetches the branch
+> 2. Adds a fetch config with wildcard hacks so `git fetch` brings in updates for
+>   that branch (the refspec should match _exactly_ that branch and never
+>   anything more)
+> 3. Adds a separate ref to record that we're tracking this branch (so something
+>   knows to clean it up later)
+>
+>     #!/usr/bin/env bash
+>
+>     set -o errexit -o pipefail -o nounset
+>
+>     # save command as e.g. git-fetch-other
+>     CMD_NAME="$(basename "$0" | sed 's/git-//g')"
+>     if [ $# -lt 1 ]
+>     then
+>         echo "usage: git $CMD_NAME branch-name [ remote-name ]" >&2
+>         exit 1
+>     fi
+>
+>     BRANCH_NAME="$1"
+>     REMOTE_NAME="${2:-origin}"
+>     FETCH_CONFIG_NAME="remote.$REMOTE_NAME.fetch"
+>
+>     git fetch "$REMOTE_NAME" "$BRANCH_NAME"
+>     git checkout -b "$BRANCH_NAME"
+>
+>     # we want to record that we are tracking this branch, to do this create
+>     # a new ref whose name tells us what we're tracking, but whose value is
+>     # unimportant. So as a placeholder value just use the hash of an empty tree
+>     # taken from https://git.kernel.org/pub/scm/git/git.git/commit/?id=9c8a294a1ae1335511475db9c0eb8841c0ec9738
+>     EMPTY_TREE_REF="$(git hash-object -t tree /dev/null)"
+>
+>     # refspec used to track the branch: we expect branches to be deleted from the
+>     # upstream when merged so tracking exactly:
+>     # "+refs/heads/$BRANCH_NAME:refs/remotes/$REMOTE_NAME/$BRANCH_NAME" will error
+>     # when we go to fetch that exact ref after its removed upstream.
+>     # so HACK around this: add wildcards that we still expect to only ever match
+>     # this exact branch (but doesn't have the issue of git complaining when it
+>     # tries to fetch an _exact_ ref)
+>     TRACKING_REFSPEC="+refs/heads*/$BRANCH_NAME:refs/remotes*/$REMOTE_NAME/$BRANCH_NAME"
+>
+>     # record that we're tracking this branch. First check we've not already
+>     # recorded this, then ...
+>     if ! git config get --local --fixed-value --value "$TRACKING_REFSPEC" "$FETCH_CONFIG_NAME" >/dev/null
+>     then
+>         # ... set the config to track it for fetching, and ...
+>         git config set --comment "$CMD_NAME: tracking at $(date -I)"  --local --append "$FETCH_CONFIG_NAME" "$TRACKING_REFSPEC"
+>         # ... record that we have special cased this tracking
+>         git update-ref "refs/tracked/$REMOTE_NAME/$BRANCH_NAME" "$EMPTY_TREE_REF"
+>     fi
+
+It seems to be a bit more advanced than the alias I have:
+
+    cofetch = !sh -c 'git fetch $1 $2:remotes/$1/$2 && git switch -c $2 remotes/$1/$2' -
+
+You need to pass it the remote and the branch name (in reverse order of
+yours, which makes sense if you want the remote to be optional).
+
+> And the cleanup script (needs to be run periodically):
+>
+> 1. Collects all the remote branches we know about
+> 2. Checks all the references from step 3. above and checks if any branches
+> defined there are missing remotes (I have fetch.prune=true to keep the remote
+> tracking references up-to-date)
+> 3. If they are, drops the tracking config for that branch
+>
+>     #!/usr/bin/env bash
+>
+>     set -o errexit -o pipefail -o nounset
+>
+>     REMOTE_NAME="${1:-origin}"
+>     TRACKED_REF_PREFIX="refs/tracked/$REMOTE_NAME"
+>     REMOTE_REF_PREFIX="refs/remotes/$REMOTE_NAME"
+>
+>     declare -A remote_branch_lookup
+>     while read -r remote_ref
+>     do
+>         # strip prefix, e.g. 'refs/remotes/origin/some-branch' -> 'some-branch'
+>         branch_name="${remote_ref#$REMOTE_REF_PREFIX/}"
+>         remote_branch_lookup["$branch_name"]=1
+>     done < <(git for-each-ref --format='%(refname)' "$REMOTE_REF_PREFIX/")
+>
+>     while read -r tracking_info
+>     do
+>         tracked_branch="${tracking_info#$TRACKED_REF_PREFIX/}"
+>         if ! [[ -v "remote_branch_lookup[$tracked_branch]" ]]
+>         then
+>             echo "branch $tracked_branch has been removed from the remote, untracking it"
+>             git update-ref -d "$TRACKED_REF_PREFIX/$tracked_branch"
+>
+>             tracking_refspec="+refs/heads*/$tracked_branch:refs/remotes*/$REMOTE_NAME/$tracked_branch"
+>             git config unset --local --fixed-value --value "$tracking_refspec" "remote.$REMOTE_NAME.fetch"
+>         fi
+>     done < <(git for-each-ref --format='%(refname)' "$TRACKED_REF_PREFIX/")
+>
+> So functionally I think this allows for the workflow I want, but does feel like
+> a big ol' hack :>
+
+I agree it feels hacky, but I don't really see how we can generalize it
+more so it will become a standard feature in git?
+
+I was thinking you can already pass `-c remote.origin.fetch=<refspec>`
+(multiple times) to git-clone(1), but in practice it doesn't seem to
+work because that config is additive, so it adds the refspec, instead of
+overwriting, so you're getting:
+
+  fatal: multiple updates for ref 'refs/remotes/origin/main' not allowed
+
+And you cannot combine it with `--single-branch`, although you could do
+a single branch clone and then add additional refspecs later.
+
+-- 
+Cheers,
+Toon
