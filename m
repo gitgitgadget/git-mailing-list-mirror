@@ -1,81 +1,81 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457334534A8
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 23:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78371426EB7
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 23:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780530711; cv=none; b=RJCrHjjZynGDF3vc0VoHeILVEoEDaN7ZVaPCE5evcSSMIZMBl61hmmtMIgptVIIyh/4DzMPSp6Yd/RoRK+L2DY/KwfCGl+hY4gWgYdG8pA92wnhUYyJwdPsY2Qtzlzl1+S805hTu0k5E0xoHm1ZJR4ZwxsFRi+XwLO4C4M1rZHk=
+	t=1780531090; cv=none; b=ZLDoILUhbdghvslqr6neKOuI2k6bSy/BEHACUoyVUSFbdUitP/c4kGRt9mFxz/BAS+9AohAVFow019GYoKitWU/W+4hZBnapuM4ooa4XGyXzRx+/GSZvjM6OTRnWaIS7P+JgD7ebMz5/0owpqXespC/qDD+L0o2M2jGx4xMfsSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780530711; c=relaxed/simple;
-	bh=hTrun6kAERIux+WVr9BsPOVuE5pgwYTNB4zX1WntaKY=;
+	s=arc-20240116; t=1780531090; c=relaxed/simple;
+	bh=qR8q5I1qNoYhWEQb9+u9MpeWGX2vaz+TdP4bxuyhALk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ckAnhIfSwxuTKkZZx0KX5Y5E8Kf8jo0PW85cj0wUksi15QKR6/QTx1Up16ayNQ38eaaagPy0Tm1dZjQ7/eMQhIWZrLgSgM0sBFTGgWNUl405RLS36HIEQUoo9w4hgwJDZ2lfYHdDIQASkqm3NDh5ZnNrWXgxYraCGHSQklBYrTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=APxbt0I1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qe+J4Nug; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=lEk+mi7dG+YihWBruvNMjuHfs68sda4Z8QK5sTnb9FdF7xckTp5s/N1grwUc4VGq3+HVvv4cAjoSG4TMvUDb2h3B0nVmmNYj60fT93ezmRXN3iXJk0MsWyo7brpjn9MacgZ6hM9/IUy11uH234mUyT6lvhB4rXj+d2iV20bd+7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=klL6nPW8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BU7O8cgo; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="APxbt0I1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qe+J4Nug"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3504B1400081;
-	Wed,  3 Jun 2026 19:51:49 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Wed, 03 Jun 2026 19:51:49 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="klL6nPW8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BU7O8cgo"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AEAFF14000B8;
+	Wed,  3 Jun 2026 19:58:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 03 Jun 2026 19:58:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780530709; x=1780617109; bh=bRchz19ubF
-	z0PnXLVnCtfWk+kSZi8xO9I2dNVQYT9p0=; b=APxbt0I1YRjGv9YZuSZxhl6moZ
-	TnBFFlcCX0pVHnpLLyhsidLGkrP968vDvNC8OX2o0A+rPI5OsgzpHnQr79Onx/fl
-	1XSR+iCucOKqzfebJZmPaRhew8AtlIDmJwJBl7GSr69UfFUXCGAFIvixrmvWGiMw
-	Ma7kavpbxYVPC5/S+syXf96sHc+QRI/NQFHm9LKO1ktSyX3qwuwOVkpkPKJyJFOa
-	3iQQx6eK6EKtuEF+5RPjM+j9lbMTJ6+M88URUeTrt/2qTd9bgo624a7mmUnFnha7
-	QwN3hLvk5unJQQqn093L0W0J89jC54Fx5F4zYIMRX2YPgBXmv8GGcEUrzaPA==
+	:subject:to:to; s=fm3; t=1780531088; x=1780617488; bh=aAPJexXTJQ
+	BhWcgTbcP4qBeSRppBHEM4RsRY8du+odw=; b=klL6nPW81pSC4f6xilXyTWf9pK
+	zCofRBv8/K1v9IPHwzW64p6w7p4HBWbpvwctZX5OJH0Apj2Q+U8iGtxwCNh9LKlT
+	FVrPb4Oy/ZUjnwODhUmz2Ni+a7e6tdXjI8IpRxGY8WSNI4rD6dOh1+D+ZMKs7aY8
+	w9oKz5iEzLueNpUa9OftLIs7sM6/EzMzK3Tjbz3T7ZuNOzd0sUta6YHZu+xbkBv5
+	F/tGo3kG3q1zW70uRsJcwBF8LsmhrBTa5Oxjn4Yawa9/8Omz+Mj/X9HWlN/wEVvX
+	se2YR+7GRtZzHd+LCK1yA75SrlOBQ2c8gm005vWlJq5CJi8s9anma4vv1FnA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780530709; x=1780617109; bh=bRchz19ubFz0PnXLVnCtfWk+kSZi8xO9I2d
-	NVQYT9p0=; b=Qe+J4NugjIAO8jdIt81P3JrlVH8YZKLqFwKeLkXSgFWRCQKW0j8
-	48eF4gxnCrXQyP4osigZ95uwovc22sDeWbA+8wA5JZ9zuOeMsvZUaW/DuYjwavC4
-	qji+lEjfeqNRkLzBIwxLHepywnsPSgXXh6ScJs2QyqZANjDXPBPoLQgHDck+kiMH
-	AaDOls72z24XUzxB/pe35zlDoelsURXOPdohwdp0WeA2nL+uygiwGqrOlFRf2PY0
-	ib+faQKi/K4QXiS00wDlr5CcElP0ezSgrGQVCqevyskytKnIOnQ947ODwmnxkU1S
-	4CO7tdIhkpumY0dEL1edh5iel17sZzkVFMA==
-X-ME-Sender: <xms:Fb4gagz2yL1EezVYjY1h_LX4hupXhx8BaF7LkykIrajr6WjGETeXsQ>
-    <xme:Fb4garRL3vluvhh_RVh-NwCm6yXDqsa6MMcWNqjPp-h5X_aPGyr9z5dXhgys4OPv4
-    BQa7Rgjkm7-RyasqyTEgoxHRG_2jMeP74gjm4wJ-bWC7OtmAUWX>
-X-ME-Received: <xmr:Fb4ganUBhGtsJRkRoANycTUQJuushQaKdsMsShvWXWFUbFLB-OmrQaTlCfZm-RzllwNhIOSSKSCSTPyhwJyHnRZKdoY_D4Qk5sgv>
-X-ME-Proxy-Cause: dmFkZTEENh5I+wCfdrA//SwVbV6qKyyPCHQ0OxK4fBCyUAMtOLkAB/SNE+UgJfhqncA7L4
-    UxO/4XnKD9fm1hQvnBwjNZ0h8kgb+h3vtROW5jNRKTwC+SXWgNh8tQqfQWrgbTGzYM/7FZ
-    E+DLgzn9VeA18kCLZUQriBty5ps9ZAZwon/GFhmGfh8d277ATotKPtkAtzMQLawNZb17N6
-    Wm00E9VU6euyQA6jzaxf4Bt9AvIOxCUZ1/DcS6v+NZmw44V25FK2FeqAbYD9a0Nje4EVcv
-    7db2HF8f0woCn42p70Gz3pkQWfnQ1yhl5a+P2sKGFwYyTADxyGm4N/B1FSoeJsVdLmBXTN
-    B9H1Xs6Vg3+cnB8Bhq/sQG8Z5VgzVY8NcNHIaGnDDYTGXO/OwydjE03v/rwPRGbQIgu4BU
-    Fm5sOfv6+eN5+Vtz6r3kPHvZ0akvHAapKx1G9qwKVX6KFbdG71KX5A32mcICi6nnh3dacY
-    yTL4Yeu7OaN+ZPQWy5XPro5rNFixfbWzOvfXz3VouG21vF8dlOK+OyKQN9hffDBwuxyPa7
-    QDN/dfasUPcL1uxfs/hR6uFXz8QwGEM5UHyjQkUiD/g/sPZ+fWPVp+0tryFcLCcZKvwBKl
-    0b/qWrBxnBZVWL3aV5MTebSfAWJIxNxpnN2qE4QLq/077l95oC0ByY3bKoWA
-X-ME-Proxy: <xmx:Fb4gatbKfwciW7OTdNrBluQoHWNMM4zFcbeLJT6Hr3njfHLAEdnugw>
-    <xmx:Fb4gat3WLkCn9wXAx9cppXc10XwsHoocvrfsV-WRLqaLtgcqZCKuyQ>
-    <xmx:Fb4gavhXTnH6irVNJyXJz8NZSWpVWv8u2mHR3oyu4b73G19GD_hVUw>
-    <xmx:Fb4gahZY71Hz5l5TKCyYWTi8_cBDy6OzKuk-yan55-tC-8-5VgQidA>
-    <xmx:Fb4gau2rFh4NVRHx-g69ZylQQzls26UK7lvGi8F4n2xls_aBTrc9YGdD>
+	1780531088; x=1780617488; bh=aAPJexXTJQBhWcgTbcP4qBeSRppBHEM4RsR
+	Y8du+odw=; b=BU7O8cgoozOnHPfN011bNIVsM6B+SlEFlRAAJiQvRxvg8jhwmdL
+	xRBurh2rcPpH/MbxeFKHO/azwDff2sh1vaOjZxd/6KYBGhPXPx6kE3aqiBZvmUGd
+	teDr9UCqezJV4iqcfXe/nh5uA7oSEnVUY2VwinNcTuIInSFwqvy6S7mUYJxeXTim
+	BqQC7/hAtdr3HJgIFWLk5TMRIrVcTuornC0YaIARemSFrJBBTRukHK2St0CS+4Gc
+	ysIFtU6wwMW9R0XpZ2t9cQAp4UJwMWSD7oOHebrDNyomY3sygGKl+HWyKikQL8Jn
+	UGgddzxp2T9RAZtsjTBZ3yPgIiIRS7um00w==
+X-ME-Sender: <xms:kL8gaqyGb3oPgI0VkufyN3orcCrKjYxNWHmy22FDLtXcZHtK8CEgVw>
+    <xme:kL8gatSfOQbypvVYQ6OGbKFH5M0Rv2nJaJlKpB4e3Wq1XaZBFNXMkzPtV9qTbaUwI
+    ZavjlsyT1HI8JKM9-TkWqseYHD04sREXIeaNd35Ol5C3D1pvK9s9w>
+X-ME-Received: <xmr:kL8gahWTewlMz8iPwzAqY8VUmJy0CHO43XFM3Wd4vA2aODEzusDHq5GY0eqILHZBMXp5TYKpBtezllli0WH4oNNVexmEorPvXaOE>
+X-ME-Proxy-Cause: dmFkZTG3XbMQ/dMoymAjwTlWpb22rBj80ve5h1ZgNocJNjL9vTLH5Ufn5uOlHPhH46Fa++
+    8UCTHVl4KBX7+e0YkzITc5zP9bmAz7O1FJdRa1lAeFO6NVa/uhQiC0al9SxLD6lDtYFBD3
+    w9rlzUMPxUmXJYJkBZrxn5cKuQCvWhmSWPePSAz2uJl7hKzqVinInodgBgp9do0aDVcQGg
+    AtwezUifclvLRWqrKjW5+CLMsN1qMFYZgex7Ohtl3QFOC5rHaftHe8/A69Fv6v8OOGnlN7
+    OT6ijLHzXw6EXnxcQqCwDrsace8a0+QRpr+D25dhq96S5JX38DOabH2y5JalzjNtL/H1jO
+    VqTVbiaMSXGGyG4bN/Umy8rsg2c6vQkatsTvYJ4FjN3Sn/iEj0sxLfdZkKVdL6pPVXPyJC
+    6pjpwre9JkBLnGYdNcLIAkvjVZUtJrC4R5GgcwAncgpVrQT/qldZlljYXVwiN+fivwL2x4
+    9bkJUeeZAND8QY9KUPRD9y7M6EKUw+3kn2jB5lTaGj3HyXYKkty5tEC9pCMzaWrJTHLIEe
+    A1t+EoJdL+wcJMhJJ3AZpzPIqjctbVEkrcBUQ4J41LbZM6ETkAkExOMjNQT30ijhLZQyVz
+    GPQpP9T4DumkyyjtDxrhlyjd8V0oH0yXyXI4QE7VKC3fHBtbjQwN5M0hqOdQ
+X-ME-Proxy: <xmx:kL8gavaLPrZYKfCCzSWkvdwGNnl0Ir7oqSb2IYx1avyx3kKkBffstw>
+    <xmx:kL8gan3RadKnHjPHBW9cQButIwWA8fKOzNT9PjlRZk5YNp0fudB2dw>
+    <xmx:kL8gahjOFn2ywy2-f82-Uq9ZkLFO5E3C514FBvbjkrUqvCVu5ZeWPg>
+    <xmx:kL8garZj6hVfBuelwW6lWvR1pOps_li_ZxSMt6IKoW_YZ7A297SgoQ>
+    <xmx:kL8gakAJAsKkbxzBM-F_JE_Cv1SzD5a_82TN9IsO7xLi42MLFPnqlo9H>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jun 2026 19:51:48 -0400 (EDT)
+ 3 Jun 2026 19:58:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org,  Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: Re: [PATCH v2 5/9] reset: introduce ability to skip reference updates
-In-Reply-To: <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im> (Patrick
-	Steinhardt's message of "Wed, 03 Jun 2026 18:14:04 +0200")
+Subject: Re: [PATCH v2 9/9] builtin/history: implement "drop" subcommand
+In-Reply-To: <20260603-b4-pks-history-drop-v2-9-742cb5b5176d@pks.im> (Patrick
+	Steinhardt's message of "Wed, 03 Jun 2026 18:14:08 +0200")
 References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
-	<20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
-Date: Thu, 04 Jun 2026 08:51:47 +0900
-Message-ID: <xmqqqzmnqj1o.fsf@gitster.g>
+	<20260603-b4-pks-history-drop-v2-9-742cb5b5176d@pks.im>
+Date: Thu, 04 Jun 2026 08:58:07 +0900
+Message-ID: <xmqqmrxbqir4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,42 +87,49 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> @@ -112,6 +113,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
->  	if (opts->branch_msg && !opts->branch)
->  		BUG("branch reflog message given without a branch");
->  
-> +	if (skip_ref_updates && (opts->branch || refs_only))
-> +		BUG("asked to perform ref updates and skip them at the same time");
-
-;-)  That's certainly a careful safety valve.
-
-Would we also want to catch skip_ref_updates && update_orig_head
-being both set as a bogus request?
-
->  	if (!refs_only && !dry_run && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
->  		ret = -1;
->  		goto leave_reset_head;
-> @@ -196,7 +200,8 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
->  		goto leave_reset_head;
->  	}
->  
-> -	if (oid != &head_oid || update_orig_head || switch_to_branch)
-> +	if (!skip_ref_updates &&
-> +	    (oid != &head_oid || update_orig_head || switch_to_branch))
->  		ret = update_refs(r, opts, oid, head);
->  
->  leave_reset_head:
-> diff --git a/reset.h b/reset.h
-> index 9f696382c1..cb0700ffa7 100644
-> --- a/reset.h
-> +++ b/reset.h
-> @@ -27,6 +27,9 @@ enum reset_head_flags {
->  	 * any user-visible state.
->  	 */
->  	RESET_HEAD_DRY_RUN = (1 << 5),
+> +static int update_worktree(struct repository *repo,
+> +			   const struct commit *old_head,
+> +			   const struct commit *new_head,
+> +			   bool dry_run)
+> +{
+> +	struct reset_head_opts opts = {
+> +		.oid_from = &old_head->object.oid,
+> +		.oid = &new_head->object.oid,
+> +		.flags = RESET_HEAD_SKIP_REF_UPDATES,
+> +	};
+> +	if (dry_run)
+> +		opts.flags |= RESET_HEAD_DRY_RUN;
+> +	return reset_head(repo, &opts);
+> +}
+> + ...
+> +	/*
+> +	 * If HEAD will move as a result of the rewrite then we'll have to
+> +	 * merge in the changes into the worktree and index. This merge can of
+> +	 * course conflict, which will cause the whole operation to abort.
+> +	 *
+> +	 * If we had already updated the refs at that point then we'd have an
+> +	 * inconsistent repository state. So we first perform a dry-run merge
+> +	 * here before updating refs.
+> +	 */
+> +	if (!dry_run && !is_bare_repository()) {
+> +		ret = find_head_tree_change(repo, &result, &old_head,
+> +					    &new_head, &head_moves);
+> +		if (ret < 0)
+> +			goto out;
 > +
-> +	/* Skip updating any references, only update the worktree and index. */
-> +	RESET_HEAD_SKIP_REF_UPDATES = (1 << 6),
->  };
->  
->  struct reset_head_opts {
+> +		if (head_moves && update_worktree(repo, old_head, new_head, true) < 0) {
+> +			ret = error(_("dropping this commit would "
+> +				      "overwrite local changes; aborting"));
+> +			goto out;
+> +		}
+> +	}
+
+This block is skipped under --dry-run, but update_worktree is
+equipped to (and indeed run unconditionally here) run in the dry-run
+mode.  Does it mean that "git history drop --dry-run" that user runs
+to see which refs may be updated will not get warned about possible
+worktree conflicts that would prevent the real run from happening?
+Unless there is a compelling reason not to, I think --dry-run should
+be a close simulation of what would happen without it.
+
+Thanks.
