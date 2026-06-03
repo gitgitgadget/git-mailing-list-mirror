@@ -1,61 +1,63 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547CD449EA4
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 11:11:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715B73AA500
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 11:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780485091; cv=none; b=Qf3phyxaPcCcF6ksO94+Iw9oXGD5VHZi43IHwjRBjir5IZJsha57x/nRCGZF2C4yQekt7mWYOi5fuUHLqmpBPq2RF8QuBYE6/EynmOIq31b/1ViPKhfHs+zKRq+dyr5uGCCg5EuKCLBfDG9aY9xtOl40STyGD7wmnmAko3+B3ww=
+	t=1780485099; cv=none; b=RtNIF3HvrfdlskIQKfJ1nCBjgNYiPutxatn4nvsEfBr3wttexLOAY+1S6GZZs0xTfaCWZ8Y3XWsb95akyf39igNdQxLZpN4XWaRoPUWlgXvoCj1nMj/o0EujqFKT4V3IHLG3O58OHE4A50XpHhdrNP1A/bI8cJnvEllBOOP8t8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780485091; c=relaxed/simple;
-	bh=ykDIQCrVX/qXvywUqdVdUs/9idBaA+qC2MSMJSRCMvM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Dzvd7bE0Lvmd+GKhXHgWybwESpEXNL8FAx6neBGtdT84LKWXAa9W0lTC4lAWt5Zlr7cScCpVwnuAdFfUdyquaiA9gAvffANEpiwHfXEIA9gntQr3KwbCBZ7/sdvGgxVJLrKoT0dc7QJmBC9+2MrgvE8u8OvPAzhIJvJ6hdD2C0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hY+PbMKM; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1780485099; c=relaxed/simple;
+	bh=RrutHIW7X3zwarboUO7/ag/XMfzt44UlxI5lJTkgrqk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HG5iZFOTk5ApQLEM1Hzvg1HbMpweoZerqQkuSnEvw458/1dmeQNiVEqe9Fz2ztvztQUP3ogs/fnBTTQVNECwU4gEb5w3BK1hdSnxKThcxUYhbHKFzcerkYFtJZnfCf3+rxtbfFQPD/zJQOsk8QZoeUIe7ibctmZQfNfj3nxBgmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TFwuXcXW; arc=none smtp.client-ip=209.85.210.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hY+PbMKM"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-842273a2c4dso2963237b3a.3
-        for <git@vger.kernel.org>; Wed, 03 Jun 2026 04:11:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFwuXcXW"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8423efd76c8so2240429b3a.0
+        for <git@vger.kernel.org>; Wed, 03 Jun 2026 04:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780485089; x=1781089889; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GbVzViarSxJY8pa/SBXvqjJZvbUHdLtHAg1SR24dEog=;
-        b=hY+PbMKMNaZfkmp61/Yr6FjFlEVwBDHwBn1B96n7okxq59QZPB4pX5nt5nzgqW51Ix
-         F5x5OH3HdWCPWXLFgZ3PPjjlIbuDl3ezbxUsrZFVPrKICi/G4utjbrick2WwqYnvWcLU
-         6yAYmAMRAI2/c0UOQs1ll3dcoI6VVZdgCqI7qGIFYz/0gVKI2Lk7z3Am5ZPb4Wf+sNLE
-         1UklwK+V1aaojOAKI34g0U/OASqGtQE7t62QelCqv1v3ozJ4Aycn3JsPossFi4D5DCQQ
-         quCL16p5oY7mpFZ0btC7Vw+qU7qMDBJIcmqGUwWb/NM3WCbTh9YmhZRgfIcUcAZCblqM
-         ql9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780485089; x=1781089889;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780485097; x=1781089897; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GbVzViarSxJY8pa/SBXvqjJZvbUHdLtHAg1SR24dEog=;
-        b=FNwvuL6gZ4Iw3Oigtg1iU3IoEdKG7YH7Kc5kvLzyRuz0y7HkTgTLJHOhhnKRwZhDAL
-         uSvCNWsG1LbsA3A3J1py60LJrUIENGBx/dRIHL/KN2geBzGY50uCQFgO33LI4uWo6AYs
-         LdLQzvqWgTs/vBqO0hgGjCBk+afJkK5FwhYrtK8w7wyxdltt/3l+UXvmA1ZCbco5zx9T
-         z4XA9LbwaDbGP5WZl4me2cTsqeIipgycBeZ5+9Mn+lWvdrsOnr6ZJeVUd/stCp4E+ZK/
-         4c47qqIugyGE9xqIeS6sV0FpEmXSIuDsVSlqRcrZCi8BQIe4bIDjJRLKcJPUkgrjyhvR
-         SDAA==
-X-Gm-Message-State: AOJu0Yw9EBYkFCBMza4l6KHAsqwIPeswhVknrg9AYiMfLQARlOpkVDAL
-	2VopNTP25INYMC9ghS5DHzAsd/wZBJv02xR5IFdrl1IDnyb0YskJOLo7+aizSA==
-X-Gm-Gg: Acq92OEHPxoPPh4MK/hXiO59QmaNjVmz/Kgx4YhoKcSVRZxXufysiCV61SIhCxzuTIL
-	SrmEDVfBtrLVgxQKITYLnMm88/Dd43jfQ0kjyNGdbn2DjxuJw7ctkctL16Qw1TyQ1csxGMVj8rM
-	Mrm5sefwLh4miBwy1FBNoQOlxspoc3+0PC7/JjnojCEvpsBJCB0ATvMrJafpchuU3xLg3Cc5hd9
-	QAzUGjQ7FxPtswCjT50TbOouvtZKgFczW62wTL3Y9uR2RUzBEZF/8bO1Khm05n5l5m7CJf7OQ1U
-	z1H6qzYmUt2MST90Yq4hxAqkTaPhqwZOuXQ7BRHzzT4EFkPYSRYSCLQ8TfXA5jKmDvnrXU/91vl
-	eIDMvg0x1IQOW82IaUS1VWM6W9r1VaK1myEjaAEsrf14TluMBdkaU2IFauGctK//RHERjWgkQ2f
-	eudQFbIrcOWzNgljEIEkysfkQ+V0GDO0GQdT+52BegwNwRBnAoeaL+M8sY76JbBG0RovNN3CDp9
-	4P959yEyUhsSuBHn2UAkpJHcJQZN8Mb3kREm9lqrNGQIim17vrR8W7e6TEmzWGOZ27s4b4=
-X-Received: by 2002:a05:6a00:928d:b0:842:6004:3fce with SMTP id d2e1a72fcca58-84284ee92a7mr2777697b3a.26.1780485089415;
-        Wed, 03 Jun 2026 04:11:29 -0700 (PDT)
+        bh=y/KTnMAnh/QvBHkM2lRCKdG7KXSCpDVnRwszeN4NDPQ=;
+        b=TFwuXcXWlQWrYm8lEsuFtKs3fYQdF348Uz+CWF2zfxsMaFAZLsx9ccX6f24EyTIfKh
+         xLydMxj+1tODA2fhjwrX4IABNzhmO+64ta8RrubEpH1AyKOCLfPHKozrApHceaZC9juW
+         F3E/XleINJlMEY3HWz/Api5YIO1j/94QsVG9TWYHvErDbOH0RzsMl4Aur42We3roWhKJ
+         ISGOXfSbpHPHLnrW+aojE6gTXPoZkgL1c5Cp8g7HaX9Orppx8877U2LWM7qzWVTu2jrN
+         vQNGIBv/7/GaGrbMuyIHDHop7IflUEtY+mIML8MYtAKPosMdES07XoYEKEGkcZa44ebo
+         +6Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780485097; x=1781089897;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=y/KTnMAnh/QvBHkM2lRCKdG7KXSCpDVnRwszeN4NDPQ=;
+        b=lNg1iPVzHfZY5HhWwr7i3ZJysYVQbSxHk141o4li6CRNOCQxBPNG07nIkLhac4/F6U
+         y8BhK1w/USaJb2+6TLHGSIVop9xyzqbfX0jR+LC+iXHqosJ4Tbq9D0/kQGXJ2Wdg7/Qo
+         Cm5FhAZGRaxZUxo6YlihYkOccZbz/bGFzQRhV3W8HlCMvcIdBfO7HhPVlCjss1lmIjSS
+         Tkhn5r3f8pgktv1yyhlGteJOryDCbql2xlhDsGRpAvsPb3K9GoD7VfzF1bkW+F8sH+B6
+         8qmd6L1FT3USEp1I+V8DQkHFmKQCiZ+bFH+z0vk5ZKeCRlH6OHO5C+4bQ4TtkWER2u6y
+         +b6w==
+X-Gm-Message-State: AOJu0YxKQFAHezOonpDp+RrsX8N5/7I/7SHDzez2+xN+byhRM3D2bR9L
+	/w4fN0k49NQZFlFOhsXOaN+Xu582pfTlCmItpuP9N1EQdit9HS69HBWmC9gLaA==
+X-Gm-Gg: Acq92OEcbV5jA1wBGHce+7avZHaA0PByzg9z7HWvpdjL6ng65moLaYqzGCnBqvnGSY4
+	ZoAxEIt5tDsytTe8fezQSKQ6OAJCqNTT9ItGlzxmc6mCxokmN0qtGkKqkHokuRMgMFBHPJMGzIr
+	e7ONnAHyF8HF8Q8pgpOHRdQfmMvtENNf+GjORGllSO/IAnIGJAaXYSB6ux2/HChXAEsL1crY6ic
+	3u1NrnEWfTEbqV3CPHitrcTyzwzMDrBwJ0fDv91AFThwv5evqLsKVNnxyPjQk+Cbvuo0tepXVcc
+	ZMwNjcN8Gby3FLj/Gv5tLqlI2weE7PmnMLGGOse1j4vwoY0QN4dfxgb9d/eP2EqoefPBqt3J62k
+	yAqpTqF5uy/gBASWv7LQ+O/7F4Udh4UlnIGsiHKAlGOruQH9MQUruvyBoHDg2I0gM1lbD8bU2b3
+	U9+ADm9xteuf4t0eSUAGDjVciuCwGIFCiX7PaHFEA6pyTGwiObtljTRkvvBw6Wr77MLEKQdfqhA
+	Jb/JNrzkjhkJSqd72cxbHQJkBG1+t3m5Bt5ulyBwe/f4aBI0/R12NWS6/XIxvKMAuWqdtM=
+X-Received: by 2002:a05:6a00:21d6:b0:842:4387:34b7 with SMTP id d2e1a72fcca58-84284d5abbamr2737400b3a.10.1780485097477;
+        Wed, 03 Jun 2026 04:11:37 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:88fa:8837:5c6c:ee92:51c2:81c6])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282372502sm2972578b3a.16.2026.06.03.04.11.26
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282372502sm2972578b3a.16.2026.06.03.04.11.34
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 03 Jun 2026 04:11:28 -0700 (PDT)
+        Wed, 03 Jun 2026 04:11:37 -0700 (PDT)
 From: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
@@ -63,10 +65,12 @@ Cc: gitster@pobox.com,
 	toon@iotcl.com,
 	jn.avila@free.fr,
 	r.siddharth.shrimali@gmail.com
-Subject: [PATCH 0/2] parse-options: introduce die_for_required_opt() helper
-Date: Wed,  3 Jun 2026 16:40:42 +0530
-Message-ID: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
+Subject: [PATCH 1/2] parse-options: introduce die_for_required_opt()
+Date: Wed,  3 Jun 2026 16:40:43 +0530
+Message-ID: <20260603111044.39116-2-r.siddharth.shrimali@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
+References: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,34 +79,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Many built-in commands in Git manually check for option prerequisites 
-(i.e., option X relies on option Y being present) using explicit 
-conditional blocks and duplicated error message strings.
+Introduce a new helper function die_for_required_opt() to check if a
+given option is present without its required prerequisite option.
 
-This short series comes out of a discussion with Christian about 
-localization and code duplication. To address these issues, it 
-introduces a centralized API helper that handles simple option 
-prerequisites safely.
+This provides a centralized API for handling simple option dependencies
+(i.e., X requires Y), matching the style of the existing mutual-exclusion
+helpers like die_for_incompatible_opt{2,3,4}().
 
-- Patch 1 introduces the `die_for_required_opt()` helper function 
-  inside parse-options.
-  
-- Patch 2 cleans up `builtin/add.c` as a proof-of-concept by migrating 
-  its manual prerequisite checks for '--ignore-missing' and 
-  '--pathspec-file-nul' over to the new helper.
-
-If this initial approach looks good, we can later extend the helper 
-to handle more complex multi-option dependencies.
-
-Siddharth Shrimali (2):
-  parse-options: introduce die_for_required_opt()
-  builtin/add: use die_for_required_opt() helper
-
- builtin/add.c   | 7 +++----
+Suggested-by: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+---
  parse-options.c | 7 +++++++
  parse-options.h | 3 +++
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ 2 files changed, 10 insertions(+)
 
+diff --git a/parse-options.c b/parse-options.c
+index a676da86f5..e100f9a0c1 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1558,3 +1558,10 @@ void die_for_incompatible_opt4(int opt1, const char *opt1_name,
+ 		break;
+ 	}
+ }
++
++void die_for_required_opt(int opt1, const char *opt1_name,
++			  int opt2, const char *opt2_name)
++{
++	if (opt1 && !opt2)
++		die(_("the option '%s' requires '%s'"), opt1_name, opt2_name);
++}
+diff --git a/parse-options.h b/parse-options.h
+index 0d1f738f8d..99dc53325d 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -460,6 +460,9 @@ static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
+ 				  0, "");
+ }
+ 
++void die_for_required_opt(int opt1, const char *opt1_name,
++			  int opt2, const char *opt2_name);
++
+ /*
+  * Use these assertions for callbacks that expect to be called with NONEG and
+  * NOARG respectively, and do not otherwise handle the "unset" and "arg"
 -- 
 2.54.0
 
