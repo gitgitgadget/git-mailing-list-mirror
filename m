@@ -1,108 +1,108 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF58A3A9611
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 16:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EC837CD2B
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 18:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780503342; cv=none; b=adUXLdEbzOTBXkfyWe899Es/TYv7H5CNfhKl4UZ59XTlICOGESusOVAcKIHPXdNGux+ADlMa+2bTVVK6TR6BQnEvy3yaArqNH39CKO3vY92lT5QoM1vIc3mqKOgBK5qDAj+Nn+Kq08kfp/0UAzouBJDwndRj0UXilE2lD7BY4EA=
+	t=1780509727; cv=none; b=rI2/ur9BG1DQk9lfdbhoOQIFveebxfGSOBvGh1EUYb8yCMnGhsC7//hVdU2/cae1QDSm+iIzsm3CY+mKigwmNQ7b6B2axC3p2c7JTGqlx9huYUcFKcB7v4hnDsyBfc9ykMKPYPfIQLK1aAOsx0TkDLSz3bNJ31lWlA8iZf6vjz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780503342; c=relaxed/simple;
-	bh=eFJqJshwezFGae9hPbrVh5gcxixCTk63szLURhk5W74=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HPnKuBYFtCimS91b/GlPD5DBXK8pGf5nn0dfS37yfodffColqKVbrIL2BbjScT2cXTsjWJJeBlhT67kE/5l2ByyJAejTCspuHwIAiMTihs8M7kvcCceVAzFP/CrZsymirbCpyRnPhYpqgJZLGHG3dEpTBIMpdVGOSWQv/WUuvDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lvFLoPby; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VrHtfeFt; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1780509727; c=relaxed/simple;
+	bh=Hdle9pcns7/pP1dLU6vcrmlsMuGGjN5t8YjbrLNGeGo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nDrMP9KFMcG2lDu1AIWoLEllOoM+VBGTQHU/pE1Qw+F1eFzfBazseLOBjisDtANN4c1gu2ZKN2eplcfilKVp4rW57fbNHGAwJWnt4zYf0eYdA5pOJTyXCHBghokGRr0S4V5OiY/2B8qipdp1FICFJRlBDHStTDpl0JwU5tZSX6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=S1ZO2VDI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kk9ADRnn; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lvFLoPby";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VrHtfeFt"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 06A491D000C3;
-	Wed,  3 Jun 2026 12:15:41 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 03 Jun 2026 12:15:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780503340; x=1780589740; bh=zOFRUvOrH3
-	G45lnPu0ILqPI1NY77X3KZ3/AmvBW0Q5w=; b=lvFLoPbyROm1pgJ2LKrzGPVZW5
-	m7GjOxHhVSTnYtzv23trJGuMoxYgySlMvAq0UXVotvdnQynXFamEvHJ04AI2jq8F
-	PhGWXb90CfpUem71zTZUbEgQhNXRC4vVrivk4WaFK/qzr/0QQsZnhyr3smXVbrMG
-	cYhzqIJXdfSyIXi1TR/QFiS03YkfkdOHNEqonfPHHJRQ92bOZsNiACHmz0YZOOvQ
-	DJAoxxm30+YlEEtIHB/5vzjqkj+a0zdo+s3/1v9H/498QWWV/3xQhEGB43k2PqKu
-	wiZgk19pTcUtxOab7E0DV5O/BA5GCMuw3qOTBQIsMFunbztiGTC8nyRxZ7Aw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="S1ZO2VDI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kk9ADRnn"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E3A1A7A0130;
+	Wed,  3 Jun 2026 14:02:04 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 03 Jun 2026 14:02:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780509724;
+	 x=1780596124; bh=HSC960soWDfqrHgRV08YftydaQfu5gwBOxcuJ2wT7wo=; b=
+	S1ZO2VDIXUmIHZrOfG4o5wWeqy3lXhfIPVoHTn3TRfdf+SFBeYFcjgGK2wQhvqeN
+	5fNqJGPeKn187t4sd+FN+zmkbf7Mxyh2+An/Wg0rhhLFjgOmS6QXwNQRr/T6n9W1
+	Mb3dVwx1Sb/vhUkeyAq07euZ8RRGFM1bVwCMNQdqXOnMJGWNfZRDmt0Kou1eqN+1
+	qJLYConb34KErf7CIWEZTa+gZU6OX8sQ4hPLMqeVUrr1hkBnD05Cisjerfp7pB+B
+	vMHuOJ6XFPu/XBuDLvMh1nyrXe6VBoHI0tjA7qhfuhDgJ9yBsdGW2jMRnd1mbR7L
+	5HdhBOZ4APA5PBh5p9mwZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780503340; x=1780589740; bh=zOFRUvOrH3G45lnPu0ILqPI1NY77X3KZ3/A
-	mvBW0Q5w=; b=VrHtfeFtbxw55NwL1BgjCX18nK2cr/reE0e0N5uxrR23/TEh/wd
-	Nv3m1BjUtnj7QkjfthNyK2quh9yVhkX4gDH1Tbk6Yg33TQ3hkSR/lMhH7T1HnxHa
-	hbuc7NnUtJ1Xiu+esav3l2wa7M2oYSD01nwZfWGu9ZGpkVHsWnT9YIRo20PwNHBM
-	p5hOBCo8vXz6QEGR1MFgRrt/yEW1/BpXyhdfa/iz/qBJakhxwSL4RuyW/EiuQlwV
-	hRA2PXzFUM8+T4NFJyCaWzpevaZW787hNJBuqLSnSECv6KoZVFJ6Ba43Og0LOSo8
-	H0AUketM5lWVO+e5KKSmn+LoIJ9SOJIeEUg==
-X-ME-Sender: <xms:LFMgao1mTAS-Socmoc5QTFj0Za5rqSGndqehfjwi1UxNFTQkSkty4w>
-    <xme:LFMgaqhPePoxHmoJBT9LgCK4GYkq4jteLXopGd14_kcwv7Mj8KMbbm3E0XiwmJY3G
-    c9YLjB2TUlqpU__pEWg6obHyBl4nBc4Zo7WLkef5cVLwLGvNBOKUg>
-X-ME-Received: <xmr:LFMgauTiKBDhKfpsmupggr97XJkImYYFG0vvy5HuPGuEktCOlW-KsGb01vTGJ226iH11alEflF78urSGCykIeLDAdjS6sDvkFBol43sT5AHQ>
-X-ME-Proxy-Cause: dmFkZTGNFeSpRgPJrAZKSV7ES+czF3xXqSNbdU614Q0P/l5aq4m7+vl0Trd4X70AShanQY
-    JXDbZbv2Jk9EXs3jnrVZNW98AMeBvnVrXNjv5evHDaQnvtvWdpc/vvwEI8PFZs1yK1+RGK
-    0zd6VWuzony8zMWQdWwn8QP1o/v51hGj+ZXR/D2LVRCgN5qeVjOLGJtTKV0gotqn94kySP
-    dyBEv2AH+eUPyOk1BX7rrHIAN4YFgtVDl6Px+Og+o6/uZpRv1oI06xOxYaCDLbtrgzTOql
-    XF2luEoB2EfNhveBzljSwMNtTRMyrrQ88ubiQFls+mv+zHbQ2RBjaoFd4bl111aEgGA8sm
-    a2Rq829K4/WY+3YmCpfmR7XiD9QJTY7XzmRj6TWf6AI8O+IsY+gHRx5nAh6Fa6C1MF/aR9
-    b5KyYQhW2ckdcGELya+dufUVIgff8NFjLNtPJ/koqDLpz91GKtG5klzbrzlwv73kpS9TD0
-    3WqTXwjF1PfeE9g5QcVC3rWXqyBStkSHyVustJi1Z7SCBX2iN3rw7hvrRqn1s7LYjkXXDa
-    5lSWvZJ567mR5wEeLXpUFMkxICmU2J9psXeAnuVRu+OXtenVyMCPh7Bn7y/T+slvpNaD+u
-    Dnnec2UoGOAdbPnoLBI/5jGJyqZ9aAn+Piz7i8M13TGc4v8+6PsP/HzGiolw
-X-ME-Proxy: <xmx:LFMgarj2O2iJYSVmfCJ3CW844m9inPVgW0bfc7yb8XUGdUAUWhD0bQ>
-    <xmx:LFMgau7XMq29QNXP7oZFVwHD89PHq3pIkBL3EWqy4LODfsOtSEkd_w>
-    <xmx:LFMgaoBFn-phVhAoKuB5jMsEFC2xArEp566HwPObXzDiH8Av7eCFzQ>
-    <xmx:LFMgalahFH7fmRTIr5MWVhO6aYk9SLyI4N1Z5ug2FsDAo5mObWd8rQ>
-    <xmx:LFMgaugbnw93KNvQbScYVKwU2RDtLyfqfQjtY_25VEQS3NTDKoYNnXSj>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jun 2026 12:15:40 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2d2001b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jun 2026 16:15:38 +0000 (UTC)
-Date: Wed, 3 Jun 2026 18:15:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/18] odb/source-loose: move loose source into "odb/"
- subsystem
-Message-ID: <aiBTKKtj-evY4Xzx@pks.im>
-References: <20260601-b4-pks-odb-source-loose-v2-0-90ff159430af@pks.im>
- <20260601-b4-pks-odb-source-loose-v2-1-90ff159430af@pks.im>
- <CAOLa=ZSRQpAMGDwfP8vAiJi+G=WPW=YPrrs21pVt1O4j2Uh-zQ@mail.gmail.com>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780509724; x=
+	1780596124; bh=HSC960soWDfqrHgRV08YftydaQfu5gwBOxcuJ2wT7wo=; b=K
+	k9ADRnnmsZJxq1GWnrZHVe8ntZObiTvs9trDqQBX70Iugp+t8biu1RI+zxf5accZ
+	DZdtVSNi9lCfY9zgquyBhcV/EFwaZistPvFOp3kiEffAkasiZOgIfmCNcIFnxF59
+	IZZDysd6dzFXSGKqF6eTgUZerrPK9P2N4ap5/kmA253yhxg72VLZXk/uRp2CdVQU
+	o6nlxqKuNYRXQuU6c/ngQJTSIhd1Md/lFXo5+C85Ugh7NACSPHsgC88Hme5ryQ6O
+	WAPQb8Gq5z5DH6RK6mKZ95/Hasteb7Urru4HJWbiLfRKFAQIfTVjH6YNVMOKXy4q
+	XVh2E4jvb0EpyvXWATPag==
+X-ME-Sender: <xms:HGwgaqNMef2gMedkad3aWgsGtrpY28Z5d1FVtHADFIrfLBxSGoELe5w>
+    <xme:HGwgajznUsNu4W20TyOQIZmDQZ4rIyCsU3zB8ME2QvZ0Uis8ojA6_2gkbJOL_ozfw
+    t12aeqXAGTwGXNsLf8crLwgo-kxbmwLSxfg0JpRypTbW1o4-YzCVdo>
+X-ME-Proxy-Cause: dmFkZTFQszOuht6WJtLIMKNpmKDlM87xW+DgblmO60iYNbiv6ieFCnxMxkOy8o6LYqYfCe
+    qYGHDDEZ0PaiQg+fYd0+fnhSk2OJqbeWAp16F37Ck/eiIAi56RhPy3T1eZpY8DKZz36ZuW
+    hShp/xzNWk3QaKGK4UaQFtVsQeKHkSMzOio2np4fZmuQD0uieQRP4wMPoJ6UpV703riH4x
+    NfiRJ90KHbG7lxIQ3OxLmUVL3mgywkM4PbOFldlJByP/k8i6rRQXo1ouYtwG3lnSIOyJVN
+    fy4mZcl11qoLexnIuLRipP3Z73ReGmTy3AjuW0A5Lv+j4Dwids/ZSD/AeJa/hyRvdepSsC
+    Rs0PkYnDvfCKZX3IfTwuOpjM2Eos6+36Bh+ldJq0ToTOetuxOMSlPNU0OZk2IT0nWGGEbH
+    ACtYuYsO2sUL4H9zh3sVk+hpxeYvOj/CIxNmUMCEiauaSxjn4z8JC0pKW2VJtsuBQfoKgm
+    OsXhWbTBTwS1HiJJe1sMvoZLUoENGGmi+bj3zJxdmWcSpIRIDhhK1s9JZsIlBMKt6BVcvb
+    dAeBdKog5vp7/FYyHt3C8PsXgF3L/Kf2RZwRoi1TlCIcpibQPthBRiKFcklgMqX7XxA9xI
+    1czeYDKDtXGcxJjM2wsRbp8MsZxy0Wb5QFcgVhp1q27gQ9vtYL0G8QxIS2+A
+X-ME-Proxy: <xmx:HGwgap0jgbfhHRQUz0hYoxrEEgO6c7UiNSiG8ZexLNbw1RkEsIMzLQ>
+    <xmx:HGwgat5F1_sH4BADzU808h5chLVkkRwqIVCu7kl8gLKVm73Bsj1LsQ>
+    <xmx:HGwgakVpVz3zoiQdQz3mxQMCgDDMCzUgePGMBYM3GdgZIF_-51yNcw>
+    <xmx:HGwgakAe_tZF4FqmsVKmNVS3RqRcVn_r1nghsK8xsDd5dcHwcAG55Q>
+    <xmx:HGwgauI-HEUXHLSEE7mwvdN6mqEHqZYZFny9QBufGqcc2mxhlq7r6QI3>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9C7343020094; Wed,  3 Jun 2026 14:02:04 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSRQpAMGDwfP8vAiJi+G=WPW=YPrrs21pVt1O4j2Uh-zQ@mail.gmail.com>
+X-ThreadId: AjE3DpF8P9Dg
+Date: Wed, 03 Jun 2026 20:01:04 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
+Cc: "Pablo Sabater" <pabloosabaterr@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <28af58ac-4299-4510-937d-8326b71422d8@app.fastmail.com>
+In-Reply-To: <20260603-b4-pks-history-drop-v2-3-742cb5b5176d@pks.im>
+References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
+ <20260603-b4-pks-history-drop-v2-3-742cb5b5176d@pks.im>
+Subject: Re: [PATCH v2 3/9] reset: modernize flags passed to `reset_head()`
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 03, 2026 at 06:07:14AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > In subsequent patches we'll be turning `struct odb_source_loose` into a
-> > proper `struct odb_source`. As a first step towards this goal, move its
-> 
-> s/its/this?
-> 
-> > struct out of "object-file.c" and into "odb/source-loose.c".
+On Wed, Jun 3, 2026, at 18:14, Patrick Steinhardt wrote:
+> The flags passed to `reset_head()` are declared as defines. This has
+> fallen a bit out of practice nowadays, where we instead prefer to use
+> enums.
+>
+> Modernize the code accordingly.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
 
-Hm. I agree it would read more naturally with "this" instead of "its",
-but I'm not even sure whether it's wrong. In any case, I'd prefer to not
-reroll this topic for this one nit, if that's alright with you.
+This seems to refer to this from CodingGuidelines (quoting
+for reference):
 
-Thanks!
+    When a function `F` accepts flags, those flags should be
 
-Patrick
+So this goal makes sense.
+
+>[snip]
