@@ -1,139 +1,175 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31A2480DC4
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 13:07:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D7648094D
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 13:07:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780492038; cv=pass; b=m8g7OHAc/Sc2jnLScBpzGjq/cYR/rZJnrg3FP3jzoJxv/wmBW7UTxdS/v9NmxUg0Dy+Sg0ufgWHDz8fXATob6CrdQHTjOMnAxCS7+4ZBgZ+HEp8RmXJiFqkWErSpkVW2RHBaooUSLaFxAZ0vBqbOCMicuq/NbPtxpOhXjSqGqac=
+	t=1780492061; cv=pass; b=Vx2y+8aSDybrxsI9Yo7HVFR7RUJiP7SX39w8pyZV3/uAxt4w07CsVM83SZfpn6B1Xi54/CyC8xVR5lqKfBNTyMmbFP2Ct4xiHwPLkWUVYK4STQMjiVQWvADa5YkFKQICURxdvBMWXwxPf7b9q+tn24fr3g3sn+l1GbP0ufxU8PU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780492038; c=relaxed/simple;
-	bh=6kK42NhIPbvRguWldoa5ZicEz5iIJW6m5cThr9N9Mn0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ilbOIGJUySTBGIPqStwvESPEH+Y2Tqj6YAxnMsRIygCrIyweV73qL6M+6znTL6x6G6H82nnRrJ7cs/p4NGmmUiFGhiQ9xREa/7w3ZWruTYK9X/4Sq0KtcLAuo6ITcMRkFNaMk59c4rlz+ZpcnodGS9T7kDT69vJ9H01rywkNVYI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bVhSeiFG; arc=pass smtp.client-ip=209.85.222.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780492061; c=relaxed/simple;
+	bh=y1zcayi5/r30HdIOWO+AT2KXbvjeG+b40CKTCMyV/Yg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uNc1itWzMDbzkl/FC43rvonh7WLUWaN/mPPVbdvxfuPmpQQvLPqYIt2cZdho14o3tXlY1JfLBUQJ7KYtNq3y/qjuxEjY2P1l7JHfxlZMpc1vKEZi1V+s/9hqa9ac+XEtWuURztAfaCXVzP25V7dLdaAQSm1wlMTt7ZsK4Y5lQcE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b=b3hbHgcQ; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVhSeiFG"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-963849a4611so2204863241.3
-        for <git@vger.kernel.org>; Wed, 03 Jun 2026 06:07:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780492035; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jeL7KDo0ZCAACo+AWamtl8ZyrRoFDPQwTjAFSyNcQSEqfQ7UAojVkaZVIlJYaE/Zsm
-         n98/qk0oTsJduVTxnCsvBaMgaUpPOAB9B2TdzF0N/E15uzwTsUCSqANKRxRQkCBZh5Zs
-         Vjtqpt5JrCHhDmRFUDz18mA86hRteH+vJIbIXLwtNsDbEOJuKKOQdeQFwPmsNUt+SOnw
-         O9n0ruTGKajKIBeTCNyG+PVXGIjw9QLZuIL2Hh5ywxwKVeW8HP+91Q5Jqaw1Vs+Qq8mQ
-         O/erzvQ/m8tINyCz4isxBD7Bv3ZpYfoUNJLOx2q61CzEfsmeMcyme6cDAhw8Q9HOlthN
-         X8Iw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=6kK42NhIPbvRguWldoa5ZicEz5iIJW6m5cThr9N9Mn0=;
-        fh=2kQVON5Zo8LEbYHVHKXcw3RbBeu+Sk+bOOjTNxzr6bo=;
-        b=ekX+VsqyisP2PtA8WgSiAZR4+KpUL74bHmd3iSiMLGOFx47ze4OiieUh7aDaDxVKjm
-         ndWZMr6B/AUBH/m+NPoLMajwnHnrPyPWVrz7/UyknDN0PLqSuWWGMAL2hbtm4nF47xFH
-         7MXC44UDSzjNAOrL8sqdh+u76DXt+0htnXSrNGjcMoG9Wli8LFM33DwNZv5N7lalytgf
-         4RaBYLZkkiHVn4j9QKHftZhXPG9AjZi/U6L63A6Y2yjqSAfo2M5hadZDYiOY8/aJUZfP
-         Fp8vDO9fOWlVT3eGoT9xYdLZApqjDjFmf8NGoQaj6ZDkGmDHwAj6YUfR57qTpABGCFXo
-         n95Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780492035; x=1781096835; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6kK42NhIPbvRguWldoa5ZicEz5iIJW6m5cThr9N9Mn0=;
-        b=bVhSeiFGQ77lqMMu+Qm15TwiFHyY4HYmfCeRyuG8T18YkMUONixcRX8EZ2i+cidf7l
-         qmJAoH7XTxjF5itutfesADfGw/wUOyBz+DD4rjrdItRT2QFls8uLswVRWP10hPauloHe
-         GtVHnER6/W6CFQbyg8MnWrbzTJ2N2F90ihh0exe/kZ0eUQQnvtXMbjysccVARkOBNW5S
-         xFxo6gGh02Q/VCLyDNSqwwLhtO+trbzlY0u+9V8Dq+CvXV6A36VOl1beP8aZZEPkUHfJ
-         mKGnEW4dLX1O1GHYEZaWEjJJMFn4HHfDlc0juLwpiNm68FvcYK5BiNiTTbzzGeRZiSiD
-         fA+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780492035; x=1781096835;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6kK42NhIPbvRguWldoa5ZicEz5iIJW6m5cThr9N9Mn0=;
-        b=gSK4VMRckCj67wQYn/aq/caouE6KezNAIfoAA1PGWvg0LWvM5FZWbY620uUI5T1iHm
-         Pv2fuJPP05qJraw8YtTIysioU9SzE4qAFXYuKXdG8hk2z9K4C+Z1nCTealmqAS+KMkY3
-         yjmrwJz6qFX2HH1GbuSm+NE1e6PmDCBqaLYD3dfCvl3yn34ymJnp3ve1DmFUUpf/jUdO
-         N+2BJ3XvKhZ6N9E4O8gSnXcK2wqD7fe6IbORrPEJbIst265ov3ZACMTMlCcIRiPrphk6
-         bY9txjlEqisaWtYIJYptjPEoP562sZSLLbi6m9+o+Cv0rgllE606fGzIBJs1qJ4q8d+l
-         L2+A==
-X-Forwarded-Encrypted: i=1; AFNElJ89mvDUgN1q8vYDUmk9DOGK0/SXtKPaT7HCoqxw2f858uIN2eZR6OT9XVTWp8UELu5zPdI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzkmE9EoDfV0lNmE3X3q9UuvAS/6aYxUmzzK2rFxRwVRf4qxE1
-	5BTT2BzpQHJPA+1n6/oRw9qAfOLzX3W5X3Rpk1bGufdJyLPyW92IGq/twfUWmqhDbjStc94O5wY
-	m024iQuXnPVQFZE6PRKJdlbLDom5xtKFHjA==
-X-Gm-Gg: Acq92OG2+pOobg+fpRMY9IPAMT+8WH4huWn03KeNqkf+7WO4GGKbWXJi/FIBLBla4Ck
-	0yATDOBin9sbo5dUbnVisrq9ynCQp1BROraGWuYOpd+DGjGKsW3SIXu7YxckLDLG9Wqd66wpZLw
-	fIw9Zg19Hhk6HXdTSuBVQ4mAGrhz3YlgSLxG7pyidc/AOdGlxCRkwvIwQZFWCZ0x0gEDAMZvLW+
-	N9Tee15IKmDMGfExnBYCFsLM3EsrHREIPxcZIBnrt/t5ZNU4SZk/gPB8CBpxNpZ5rDdTeM8iiZK
-	0gmjMa4YbaOm5u7HUkIg/j/h/3FJyZFEdNUIdzCejvlBcfI8FJmjqTVPyAios8iKssXNS4mcuR2
-	kuYepdvPR
-X-Received: by 2002:a05:6102:d89:b0:611:61d3:819c with SMTP id
- ada2fe7eead31-6ec2d7ff257mr1261442137.10.1780492035416; Wed, 03 Jun 2026
- 06:07:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jun 2026 06:07:14 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jun 2026 06:07:14 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260601-b4-pks-odb-source-loose-v2-1-90ff159430af@pks.im>
-References: <20260601-b4-pks-odb-source-loose-v2-0-90ff159430af@pks.im> <20260601-b4-pks-odb-source-loose-v2-1-90ff159430af@pks.im>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.ratiu@collabora.com header.b="b3hbHgcQ"
+ARC-Seal: i=1; a=rsa-sha256; t=1780492042; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ecKFGlmgvX6r4ftUB+D722DnUPZQQa/OP4R6KsUoHdHQEKUcuObfWHbM762o6K1r5iBnqgC029mQuiQlUVRCBMnhF9EYhrDYY242aL2JoGKKY6Z7Y7FGoFbGCp/tHS0vk4utociiTBRvYwl1FkqDdlbHGMdjQeTaG4x+i4jVHdc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1780492042; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=W+XixBxV3clB7sGtgw6rrm0AsXyzXZUqELftek0EOS4=; 
+	b=ntBMemCXBP7xWa+uyAYibQUOqLi8wfDvc8o9FW6jhgdxNlv7O8FnQWMl5fZtUGpZGlGUJaEXZh5bw/FyUmHvt3E1vEkocxWXJ5II1ulk8apfhDtk1TeRwU17PfbrsrSxWPTEHCG1z+pfwcl9P4zVR/ZkD0HsADiENZa4I1ee8BM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.ratiu@collabora.com;
+	dmarc=pass header.from=<adrian.ratiu@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1780492042;
+	s=zohomail; d=collabora.com; i=adrian.ratiu@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:References:Date:Date:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To;
+	bh=W+XixBxV3clB7sGtgw6rrm0AsXyzXZUqELftek0EOS4=;
+	b=b3hbHgcQ0T5RXBtSJm3L+h0yTM/e1HasMqrl+sEff66XJ5h4zI6Aw/HLViuh8yyx
+	efalhYG+3+t9T45OKR+md6ozGQmzrkCWvM1vS3V+3+waBof23c+YC4duYk8R9zYqxI5
+	R5aYGmRxekVehr4dPi4Cimhg9fxAJ4KV66L1zf54=
+Received: by mx.zohomail.com with SMTPS id 1780492039412575.2582618941453;
+	Wed, 3 Jun 2026 06:07:19 -0700 (PDT)
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
+To: Jeff King <peff@peff.net>, Wesley Schwengle <wesleys@opperschaap.net>
+Cc: git@vger.kernel.org
+Subject: Re: git hook question
+In-Reply-To: <20260529210049.GC2628906@coredump.intra.peff.net>
+References: <cc9fda14-d8e8-4982-9a3d-9aa816c0b90c@opperschaap.net>
+ <20260529052141.GA1099450@coredump.intra.peff.net>
+ <c5527d8c-9147-4355-a07d-153d3977108e@opperschaap.net>
+ <20260529192350.GB1711766@coredump.intra.peff.net>
+ <4d938e1e-fdd3-42d6-a879-4d394ee8c00d@opperschaap.net>
+ <20260529210049.GC2628906@coredump.intra.peff.net>
+Date: Wed, 03 Jun 2026 16:07:15 +0300
+Message-ID: <874ijjojr0.fsf@gentoo.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 3 Jun 2026 06:07:14 -0700
-X-Gm-Features: AVHnY4LXJaZrAjOCNe55cf_SJvMbgetR6Qd0d2sPdGF8nPzTaYO8yNFai0urbvY
-Message-ID: <CAOLa=ZSRQpAMGDwfP8vAiJi+G=WPW=YPrrs21pVt1O4j2Uh-zQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/18] odb/source-loose: move loose source into "odb/" subsystem
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000004c06af0653591bdb"
+Content-Type: text/plain
+X-ZohoMailClient: External
 
---0000000000004c06af0653591bdb
-Content-Type: text/plain; charset="UTF-8"
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> In subsequent patches we'll be turning `struct odb_source_loose` into a
-> proper `struct odb_source`. As a first step towards this goal, move its
-
-s/its/this?
-
-> struct out of "object-file.c" and into "odb/source-loose.c".
+On Fri, 29 May 2026, Jeff King <peff@peff.net> wrote:
+> [re-adding list cc; let's let everyone benefit from the discussion]
 >
-> This detaches the implementation of the loose object source from the
-> generic object file code, following the same convention already used by
-> the "files" and "in-memory" sources.
+> On Fri, May 29, 2026 at 04:14:33PM -0400, Wesley Schwengle wrote:
 >
-> No functional changes are intended.
+>> > I don't think the hooks themselves should need to be aware. If somebody
+>> > is calling "git hook run pre-push" without providing arguments, they are
+>> > breaking the contract to the hooks. You can get away with it if you know
+>> > your particular hooks do not care about those arguments, but in the
+>> > general case, what should a pre-push hook that _does_ care about the
+>> > remote name do when it doesn't get any arguments? It's an error.
+>> 
+>> Are they? The manual says this:
+>> 
+>> git hook run has been designed to make it easy for tools which wrap Git to
+>> configure and execute hooks using the Git hook infrastructure.  It is
+>> possible to provide arguments and stdin via the command line, as well as
+>> specifying parallel or series execution if the user has provided multiple
+>> hooks.
+>> 
+>>      Assuming your wrapper wants to support a hook named
+>> "mywrapper-start-tests", you can have your users specify their hooks like
+>> so:
+>> 
+>>          [hook "setup-test-dashboard"]
+>>            event = mywrapper-start-tests
+>>            command = ~/mywrapper/setup-dashboard.py --tap
+>> 
+>>      Then, in your mywrapper tool, you can invoke any users' configured
+>> hooks by running:
+>> 
+>>          git hook run --allow-unknown-hook-name mywrapper-start-tests \
+>>            # providing something to stdin
+>>            --stdin some-tempfile-123 \
+>>            # execute multiple hooks in parallel
+>>            --jobs 3 \
+>>            # plus some arguments of your own...
+>>            -- \
+>>            --testname bar \
+>>            baz
+>> 
+>> There is nothing about the contract of the hook, in fact, the way it is
+>> written there isn't really a contract.
 >
+> This is a made-up hook, so it is up to the person defining
+> mywrapper-start-tests to define that contract. And in this example,
+> implicitly it takes whatever is in some-tempfile-123 on stdin, and
+> --testname as an argument. What those mean would need to be communicated
+> between the script invoking "git hook" and whoever is configuring hooks.
+>
+> I agree that is not made very clear in the documentation, though.
+>
+>> > So whether you are getting input as arguments or over stdin, it's
+>> > probably something the hook needs to deal with (or at least think
+>> > about).
+>> 
+>> Right. I see where this is going. That means I think the examples in the
+>> manual are incorrect, no, that's harsh, it could be stated more clearly in
+>> git-hook(1).
+>> 
+>> Examples like this:
+>> 
+>> > [hook "linter"]
+>> >   event = pre-commit
+>> >   command = ~/bin/linter --cpp20
+>> 
+>> seem to indicate: Any script can be run as a hook, the fact it needs to
+>> respect the native hook structure isn't mentioned. This is mentioned:
+>
+> That example is OK-ish, in the sense that pre-commit does not take any
+> arguments or receive anything on stdin. So you really can invoke
+> whatever program you like (though it needs to understand how to use Git
+> commands to look at what is staged in the index). So the details of
+> "~/bin/linter" are doing a lot of the heavy lifting here, which is left
+> unsaid.
+>
+> But the later example that adds "event = pre-push" is actively
+> misleading. How does the ~/bin/linter script even know in which context
+> it's being run? In the real world you are more likely to invoke a script
+> that is aware it is a Git hook and can react accordingly.
+>
+> So I suspect there is a lot of room for expanding the documentation and
+> explaining some of these gotchas. +cc Adrian, who wrote these docs, for
+> visibility.
 
-[snip]
+Yes, there is a lot of room for improvements everywhere, especially in
+the documentation.
 
---0000000000004c06af0653591bdb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 494a9cec184b4df7_0.1
+Patches are very much welcome to expand on or correct hook-related
+issues. :) 
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vZ0p3RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMDJYQy8wWDVFS0VEbk92Sk9VV25zZWo2TkVxcHNXTwoyL2kwV01tdC9X
-RnR1Y2E2b1dXSTRpMmZYYWlYcGhkWWdWeDc5Q052L0tDdGNid09kZG5EeU5NdlRWNnpCaEMxCkM4
-UU1NeDhidlFqR1J0M2JuQjVPQWMzQXZNY2NMdVNZZXU3SFNKcUJxTXpvTWhnci9uNlZuS3JKMURj
-UFdmT0YKaFppU1BKNklCaW9adllCYkIvVGw1TW42TmpNVnpLZVZacUtxeU9MTTg4aFk0dFJER1Zl
-OXdxN1pmNXY2TDk1TApnU0F2NXdXMXlNR3ZGaEs4STB6bnBZWm8xWnBZTGpRSkpNKzVjckR6U3Fz
-cUFKb21uRDgwaEhlbzFWODZJWnhVClIzRTg5RndZMkw0cHpad2todmd3MDkvcUc2VnRwcms1dHNk
-bm1oNzBDWk8yWFZyaCtOV2d4dnhiUFJOMzF2TFoKRkNTaGxSZS96cjRwYTM4L1FCRnBZNzdiTlpr
-NFRNUWFOQjdNUmJoN0NZcEpSSjU2b2lYQ1JVR1ZySUJxdG1XRwpOQjNxdWRSb2NOb2pCbVc1TldL
-NFRSeStoaGFzaGlUSWVLMVJQa21UUDkrOXh2YVAwUjU0WE9oOTkyTXA4b2pjCkhONC90enc1aXUw
-WmRuTlo3VVhHSVUranVVSy9ZRDB2djNDNit5ST0KPXMrbEMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004c06af0653591bdb--
+BTW the git hook command is also just a very basic tool for testing, it
+needs much attention and more additions. It is obviously not
+feature-complete or bug-free.
+
+Some historical context for the curious:
+
+This area of work was blocked for almost a decade because people tried to
+find a perfect/complete solution in one go, with complex patch series
+reaching even 36-38 review iterations for a single series which went
+nowhere, was regressing, was hard to review, you get the idea. 
+
+So I tried to enable a simplified incremental development approach,
+reusing existing APIs & mechanisms, to allow more people to contribute
+smaller patches which are also easier to review, test and so on.
+
+P.S:
+This also reminds me, I don't think it's documented anywhere that the
+proc-receive hook is not using hook.[ch], so it cannot be specified via
+configs yet like pre-receive and other similar server hooks.
+
+I actually have a collegue at Collabora working on converting
+proc-receive so we can remove some deprecated APIs and also clean up
+some external hook_exists() calls which are now redundant because they
+are handled by the unified hook.c implementation.
