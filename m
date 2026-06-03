@@ -1,328 +1,176 @@
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B012328E0
-	for <git@vger.kernel.org>; Wed,  3 Jun 2026 00:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2F82236EB
+	for <git@vger.kernel.org>; Wed,  3 Jun 2026 00:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780445123; cv=none; b=KW3L4GkDI/Q6runom50r3ORIIop+c1xAuVSEYzZsBZkC6iXSL9peiu8Ph34K/e45FY06xPbG70NyPKUkCCoVUK9Cq4a/t011N+XUxprMhFBdmpcUQmpRcCCHQU7wIGDihd3qe+PkkDLu+xNPIat2SGDaWYMXq1N/u/MuhKgPanE=
+	t=1780445754; cv=none; b=Pwq2HyYqrD6cXR6CGKefR6SWUZ5em7OmV3hdfxwfh3n9xDobDrtXGQGG4zj92/0GxWLiAVQZPS0TOlhS1t+dVHrB7Ztyh8MA/I+1b+yUSZiqDEZygArO97ut+ClFX5jztTIo+ng+dPpJgICGelZ0WSsxM1R85dzUcrr846xqEcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780445123; c=relaxed/simple;
-	bh=r/Ofs9xAWQ7ejgfLl8KPS6M3VZzxmsVzj257eXuTgzg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=qy/8vDtotMMbr6qDripQcxX5Z8EswzOI7gzDoQs4XkmAaBqujOhHOAgz2OOubm2APImszbp5PeGn/PVc+Ljtg19dNY3KJgKuGGgJMYi07HSC4IiDAJ9WDKk7ICDr+b7MoIfWfooOmmgj6h8cqkG35aFWUbKkcaheEK+jMLw9JcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSBGJTo4; arc=none smtp.client-ip=74.125.82.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780445754; c=relaxed/simple;
+	bh=ofrQxV6i0RgX2lJtz5EPJuUnWWYKLlBLyOgRgg9Qh5M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aJCr5SSyBW9LHeQD14/fYhUctaFoM6uo39LG9eZO+yE9YFdcSTYa/9gP0xYVgXlaxhtdAd76+8XgUe+KImuEo3boBTfDFYOMTErj/VyhzCKjOZ+7w2jg7zbszggJjEeHkQllO6PZTVq9HpP1bK7B9KhBGYz+JZ4VVReW06HpZjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o0vO943S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WLcxnJ8h; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSBGJTo4"
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-304d7f31215so5892906eec.1
-        for <git@vger.kernel.org>; Tue, 02 Jun 2026 17:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780445121; x=1781049921; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a7NVOFVFcluB/oqnuSao8moXbiI9IAz7C7277dagefU=;
-        b=VSBGJTo4XPSkolHKyYQqjAV8b1ZL+JWDJ9nm/Krl38yjuWiMBjZv2jKWoh2CZwCB5S
-         lTFAJqVTCZlRBATqlbvO7pOe/R9sH/5hZDgcAigBqv+gx2zuenLEjZOkr0e+p3ILHkcI
-         Y2aOvxGYoJUl7gaaG2g7CQQ7dFGaGMI+sGRur9s03FOsfYslJU+Yc/j7ueKwCKavzdPF
-         i06sfbYBqh1SJub6TmjYZNZNak/kH/fujXIBNsO7ly9dIsgUfMy00/9uV0inuxYGwAft
-         fQs1gsFlBMtoQ5gnVMUd2d/PdjbFsQGVewVJeXBZPID3vivdhCUGBX9XGmZWesrcGMJD
-         Wgsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780445121; x=1781049921;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=a7NVOFVFcluB/oqnuSao8moXbiI9IAz7C7277dagefU=;
-        b=qrz8RTHTNXMitDp3iVPnALBDACy2/eSiE/GTXip+36wEOyM8VSWNkd284rs7RL9Fmx
-         nTqSom5PE9QiK95Im3O0AJgNcVmcceEuphb+gillcIbW+nWhOrfqWcnkivMpztSMQg/b
-         roDtVrjmL/P4XCuIXUxdlhZJYt+WUGDcjUUmi8N4W2FqYOy7N/bqecK6oHQ1IFYdEXko
-         XqMv1+K84dkWwX3Ct1sL5oTJZNPvqr9FPbbNvyDBz7idHSYfCR9HSTV0TMohoWSgk5gZ
-         5fly0ytw99lAcyWY50Ld3SDM2TeWxLCUJnvjm+Cr/SwdyB8RTw6F5dDAMr9Q3TeUt+cA
-         cPDA==
-X-Gm-Message-State: AOJu0Yx+Odq8ZGE7jIjYsf86uvsAiAExV/I+l73eP51sMgHPbm9jY1ob
-	rIs4fdYbAm0kr07jKisyxQbuJiL4iE7u0smJo1Hz0I58rot8VMVtR6DAV545ew==
-X-Gm-Gg: Acq92OHK8o+WsoE03KlOnnqHKAPl7yESQim5XN6m7bWXnP57eRNkOnLpxr3PqxsAZiE
-	m0keufvKoJ+8dVc/zsgahTM7HQfajx6ylZZ+5T2s6FeZXMykXnxFujGRo7ECsj5fKCUNNYG42Pv
-	4hnnv1xqknc2qDXFX+4gHmGEdwTZLsrS+Sap3/ODyLDBShZUM24lwfBWoGrJQrsT29SF6yZs1y0
-	VmvLi77659m1SzrYDWDRSP2ZoIpfCl03wda2AH7j6PtQgVRyORCu1Zj76R2G1U91ofNi30KHTqa
-	xOwfUVi3lokflzgvCCjZ1VXHGpg4i3rkwLwBcmDUMQ+/fHUFYRdYoH4qh5PeUdV4BFxIMlhISxF
-	/afH/jhdNVD4I/sPR4cC5bV5Ojv+rroGyNmJb4pfNehWvh4P8WbsHKJGzYElB6RtAISVfP/KXDZ
-	v56A9MuppCIgpCtEL9cS/mkL8bkJFLCrDJql30lA==
-X-Received: by 2002:a05:7301:4b18:b0:2f5:5907:3a48 with SMTP id 5a478bee46e88-3074fa65f4dmr550516eec.1.1780445120588;
-        Tue, 02 Jun 2026 17:05:20 -0700 (PDT)
-Received: from [127.0.0.1] ([52.159.247.163])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074db5610esm875244eec.4.2026.06.02.17.05.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 17:05:19 -0700 (PDT)
-Message-Id: <pull.2131.v3.git.1780445118653.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2131.v2.git.1780330402264.gitgitgadget@gmail.com>
-References: <pull.2131.v2.git.1780330402264.gitgitgadget@gmail.com>
-From: "Arijit Banerjee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 03 Jun 2026 00:05:17 +0000
-Subject: [PATCH v3] index-pack: retain child bases in delta cache
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o0vO943S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WLcxnJ8h"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0B1BDEC00AB;
+	Tue,  2 Jun 2026 20:15:52 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 02 Jun 2026 20:15:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780445752; x=1780532152; bh=WLY4LkfEUf
+	RkJNDCaOMKLrDD2qxhq1B0TTLxB3SliDs=; b=o0vO943Se+52Jkv+L8ct+Xv88s
+	SMWiKreq7HY4OgZYxoBEo27xQ3oDXLNO1I4IzqyWRUX/m5E+1364Pu4pK3C26j/n
+	tLsSLMcLbvsAaFOIMSL6OJsfUsPSvtSz975c+2ZDm8HcGv1VuzkDPfO0SPPM5S4g
+	6z1313I4tm8iZ+SvIkt9FKKtYSObl2TWtHpWOR1LmEwYD5DMqqNzfWwID9hkTyg/
+	EeLAK4RoMw4dKF4RZsPpDQN7r5TaQpLIpPeH5896a/hGXG8jtiEcq8HGufRQc0ht
+	f3oyrcmS29GoxiATJ7Tc70zN99vCxFSuh/X78Ii5g7r0GKe7kuCWKii72q9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780445752; x=1780532152; bh=WLY4LkfEUfRkJNDCaOMKLrDD2qxhq1B0TTL
+	xB3SliDs=; b=WLcxnJ8h1uDyC34hXE5U+P0GCwwbKNwX+QfQnogdhf+V8Uc/a0b
+	1WIbxxcp4DU6ZYqf+Kyf1dn7gEkG/Dg3yTTT0Lfk85r5Eq3/sbE8M5j8zXh5mTiz
+	TXE8Vb/azIP0K0LpYVrapwaNHgHV9wf7YH/DH2ejVfkAheqBzbBiHJtw2W/VXJkO
+	zco1dnATF8Tu5015DIZuAdzhldf3C3V379KP050ZitNhGcInB89rzt8Igi+z2sQY
+	SIrihKorfEyE85rq8mN0sKud8PgaHku8UX+elBi5n2LuBx/7Fm/GnbjUJ5vRlR4I
+	WvWRmV2170Zdb+CoyU00KXRBfXZzsCCHyWA==
+X-ME-Sender: <xms:N3IfagYUfJqWEsLVxPAznT229bxxdW_CXtZp71375ef-zuWUSrXmTg>
+    <xme:N3IfaiariE3iHNRM5ycvp9QZT423kxVLhTyRYBvjZP5VpY8ERb8ZW98l2jwVInY_4
+    LAm-WLDmm2y1sTGJGNOdvptMsP-O-I78MXcCmzHF8PIykTpfFxomQ>
+X-ME-Received: <xmr:N3Ifav8Q5_XyYTLcZHaEh9Hkn0QnART3_nECqJ-5363aHcKuvjmFwDuefd72NQDxT--Qh9v9qD76YsQKYRTUCazUqskoNJcCskb6>
+X-ME-Proxy-Cause: dmFkZTFYWVkPJfFj8Xwe6aIhRJ0Q9jjsddcZvoZ9xs0iFInbXSAgCdUO69RBDcOHBN7LJ5
+    Qbmhyz0nGB9slkbEoxzfSPBxtHbCkKEW0QKteoyFsV1fCSlYA9AJxle1nsxWO3HOaMIvhM
+    ux9p+WlB16r95P9eqb7lG05LxfJLoDBajsdQPU8J2J1nKxrwBhmq6kAaVRmGcn3SD4eDyO
+    lUfvIT+rxU+weLjv9/8elwjn09WrFcmXbU71Uv8eiimQNmPOwrBEwCF9h0mVl92JMBDxiU
+    uJvfRStHCWjZcAj99bhvgd7/EkMW+3Fnjy89FRo3gMYlD1+/gLBdAmhJthSEXfXan68Blk
+    Cz+Im64JlRiTdoYN4dp7gYmp1Fsw6R77bHQFv1AYWDfbtkafeYS99NwuPEjRc9YYzfSB/1
+    a8jDSZuEi38YS7YLUFprcceUQUtueZK71nASo4I4CloOwHFnXr2wNZFRX7kVUvkUNJyCvm
+    yyl7u7uXFhMEyz5JLWsot/RgrWTzBX1k/2QjcpUEaTZE/Zk2MljuQoXlHmU9SiCiO1rsY8
+    FtuLQNvoIk3eHqfuChUo0YeXTdsjVv3rs8yCsWCB7QCBe/BuXuC+e/TY5diGxaT3Dna8GZ
+    ES97ct2oDfRCKdcZtvj9MaKjxovErUYbq4LkYpxKwRe/p0MXYZVKL0lR394w
+X-ME-Proxy: <xmx:N3Ifaphk2_IM2pSHwHGApNPSCsZwZB3br1mhXo6aQLXwQ-YetFy2qg>
+    <xmx:N3IfaneaK73VvmpUZGIXTO5WGBIFcSY3K8GtwnyyQazPRBFmUPb3WA>
+    <xmx:N3Ifaor8oZ4jgA3KfNTEH_REsD99kGup1BZJtpuXmsfljocmsgy0Lg>
+    <xmx:N3IfakCW_xZSGWh70Nu2XdvSC2Mj9ldZLGi8CfNoLrfF0nnKnGjZZQ>
+    <xmx:OHIfalB3OVpHOuC2NzZ4yuSw71yeDdaU8kWADrqlIwrSfvAzTu6wEaNz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 2 Jun 2026 20:15:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aaron Plattner <aplattner@nvidia.com>
+Cc: <git@vger.kernel.org>,  Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Subject: Re: [PATCH] http: preserve wwwauth_headers across redirects
+In-Reply-To: <20260602161150.1527493-1-aplattner@nvidia.com> (Aaron Plattner's
+	message of "Tue, 2 Jun 2026 09:11:48 -0700")
+References: <20260602161150.1527493-1-aplattner@nvidia.com>
+Date: Wed, 03 Jun 2026 09:15:50 +0900
+Message-ID: <xmqqpl28scll.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Jeff King <peff@peff.net>,
-    Arijit Banerjee <arijit91@gmail.com>,
-    Arijit Banerjee <arijit@effectiveailabs.com>
+Content-Type: text/plain
 
-From: Arijit Banerjee <arijit@effectiveailabs.com>
+Aaron Plattner <aplattner@nvidia.com> writes:
 
-When resolving a delta whose result has children of its own,
-index-pack adds the result to work_head, accounts its data in
-base_cache_used, and calls prune_base_data(). It then immediately frees
-that same data.
+> diff --git a/http.c b/http.c
+> index ea9b16861b..cac8c9bfc9 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2425,7 +2425,21 @@ static int http_request_recoverable(const char *url,
+>  	if (options->effective_url && options->base_url) {
+>  		if (update_url_from_redirect(options->base_url,
+>  					     url, options->effective_url)) {
+> +			struct strvec wwwauth_headers = STRVEC_INIT;
+> +
+> +			/*
+> +			 * Preserve wwwauth_headers across the call to
+> +			 * credential_from_url(): if the effective URL doesn't
+> +			 * specify its own credentials, a credential helper
+> +			 * might need the wwwauth[] array from the server's
+> +			 * redirect response in order to authenticate.
+> +			 */
+> +			strvec_pushv(&wwwauth_headers,
+> +				     http_auth.wwwauth_headers.v);
+>  			credential_from_url(&http_auth, options->base_url->buf);
+> +			strvec_pushv(&http_auth.wwwauth_headers,
+> +				     wwwauth_headers.v);
+> +			strvec_clear(&wwwauth_headers);
+>  			url = options->effective_url->buf;
+>  		}
+>  	}
 
-This bypasses the existing delta base cache policy and can force later
-descendants to reconstruct the queued base again. Let the existing
-delta_base_cache_limit pruning policy decide whether to keep or evict
-the data instead.
+As strvec_pushv() makes copies of the strings contained in .v[]
+array, the above will
 
-This does not add a new cache or increase the cache limit. The object
-data is already accounted in base_cache_used before prune_base_data()
-runs. Once all direct children of a base have been dispatched, and no
-thread is actively retaining that base for patch_delta(), release the
-cached bytes. The base_data struct itself remains alive until the
-existing children_remaining bookkeeping says the whole subtree is done.
+ - make a deep copy of http_auth.wwwauth_headers.v[] and store it away
+   in wwwauth_headers.v[];
 
-On a quiet Ubuntu 24.04 VM with 16 vCPUs, 32 GiB RAM, and local SSD,
-standard p5302-pack-index.sh runs improved as follows:
+ - let credential_from_url() get rid of
+   http_auth.wwwauth_headers.v[] (the original is freed here, but we
+   have a deep copy stashed away safely), and perhaps add some of
+   its own there; then
 
-  libgit2:  3.17(11.49+0.60)  ->   2.69(10.52+0.28), 15.1% faster
-  redis:    5.84(15.56+0.63)  ->   4.95(14.05+0.32), 15.2% faster
-  git.git: 11.17(38.04+1.29)  ->   9.67(35.29+0.60), 13.4% faster
-  cpython: 32.69(117.85+4.37) ->  28.60(109.25+1.91), 12.5% faster
-  linux:  279.22(797.69+40.86) -> 236.34(723.13+19.02), 15.4% faster
+ - add what we stashed away back to http_auth.wwwauth_headers.v[].
 
-The linux p5302 number is from a single repeat; the others are from the
-default three repeats.
+So it does not leak and it does not have use-after-free, either,
+which is good, even though it may be a bit inefficient having to
+copy these strings so many times.
 
-End-to-end local full-clone spot checks also improved:
+I briefly wondered if it is unconditionally adding back the original
+wwwauth_headers always the right thing to do, but I think this is
+good.  In the context of http_request_recovorable(), the redirect
+has already happened, and the request to the redirect target has
+failed with a 401. The wwwauth_headers currently in http_auth were
+populated from this 401 response from the redirect target. Since we
+are updating http_auth's URL to match this redirect target (in order
+to query the helper for the correct host), the headers we currently
+have are the active challenges for this new URL. Thus, they must be
+preserved and passed to the helper.
 
-  libgit2:  5.00s ->   4.54s, 9.2% faster
-  redis:    8.75s ->   7.92s, 9.5% faster
-  git.git: 25.04s ->  23.71s, 5.3% faster
-  cpython: 56.72s ->  55.94s, 1.4% faster
-  linux:  556.17s -> 523.83s, 5.8% faster
+A few design questions that came to my mind are:
 
-t/t5302-pack-index.sh passed, and GitGitGadget's linux-leaks CI also
-exercised that test under SANITIZE=leak.
+ - Is wwwauth_headers the _only_ thing that needs to be preserved in
+   the existing credential in http_auth?  Will it stay to be the
+   only thing, or will we need to rethink what this patch did in the
+   future when we add such a new member to "struct credential"?
 
-Signed-off-by: Arijit Banerjee <arijit@effectiveailabs.com>
----
-    index-pack: retain child bases in delta cache
-    
-    Speed up the local index-pack phase used by clone/fetch for large
-    delta-compressed packs.
-    
-    When index-pack reconstructs a child base and queues it for resolving
-    descendant deltas, it currently frees that data immediately. This can
-    force the same base to be reconstructed again. This patch keeps the data
-    in the existing delta base cache instead of immediately freeing it.
-    
-    This does not add a new cache or increase the cache limit. The object
-    data is already accounted in base_cache_used, and prune_base_data() is
-    already called at this point.
-    
-    To keep the retained data lifetime precise, the patch also releases
-    cached bytes once all direct children of a base have been dispatched and
-    no thread is actively retaining that base for patch_delta(). The
-    base_data struct itself still stays alive until the existing
-    children_remaining bookkeeping says the whole subtree is done.
-    
-    Changes since v2:
-    
-     * Addressed Jeff King's review question by releasing cached base data
-       after all direct children have been dispatched, while keeping the
-       existing subtree bookkeeping intact.
-     * Re-ran t/t5302-pack-index.sh, p5302-pack-index.sh, and end-to-end
-       full clone spot checks with the precise-release version.
-    
-    Changes since v1:
-    
-     * Added benchmark results and leak-safety context to the commit
-       message.
-     * Included standard p5302-pack-index.sh perf-suite results.
-    
-    Correctness:
-    
-     * t/t5302-pack-index.sh passed.
-     * GitGitGadget's linux-leaks CI exercises t5302-pack-index.sh under
-       SANITIZE=leak.
-    
-    Benchmarks on a quiet Ubuntu 24.04 VM, 16 vCPU, 32 GiB RAM, local SSD:
-    
-    Standard p5302-pack-index.sh perf-suite results using
-    GIT_PERF_LARGE_REPO=<repo> ./run HEAD~1 HEAD -- p5302-pack-index.sh:
-    
-    repo HEAD~1 HEAD wall-time change libgit2 3.17(11.49+0.60)
-    2.69(10.52+0.28) 15.1% faster redis 5.84(15.56+0.63) 4.95(14.05+0.32)
-    15.2% faster git.git 11.17(38.04+1.29) 9.67(35.29+0.60) 13.4% faster
-    cpython 32.69(117.85+4.37) 28.60(109.25+1.91) 12.5% faster linux
-    279.22(797.69+40.86) 236.34(723.13+19.02) 15.4% faster
-    
-    The linux p5302 row is from a single repeat; the others use the default
-    three repeats. These timings isolate the index-pack phase affected by
-    this patch.
-    
-    End-to-end local full-clone spot checks also showed wins, though these
-    timings include both server-side pack-objects and client-side index-pack
-    running concurrently over a local file:// transport, so they are not
-    isolated index-pack timings.
-    
-    These runs used git clone --bare --no-local, dropped page cache before
-    each clone, and used the matching build's bin-wrappers/git as the client
-    plus the matching bin-wrappers/git-upload-pack via --upload-pack.
-    
-    repo baseline patched wall-time change libgit2 5.00s 4.54s 9.2% faster
-    redis 8.75s 7.92s 9.5% faster git.git 25.04s 23.71s 5.3% faster cpython
-    56.72s 55.94s 1.4% faster linux 556.17s 523.83s 5.8% faster
+ - If we need to preserve some other members in "struct credential",
+   or if we add such members to the struct in the future, what would
+   be the recommended way to extend what this patch does to cover?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2131%2Farijit91%2Findex-pack-retain-child-base-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2131/arijit91/index-pack-retain-child-base-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/2131
+If we add new members in the future to store other transient
+response-based authentication state (e.g. Authentication-Info
+headers, or proxy authentication states), they will be wiped by
+credential_from_url() and will need to be preserved the same way,
+no?  This observation and thought experiment may hint that the
+manual save-and-restore approach is not robust against future
+extensions of struct credential.
 
-Range-diff vs v2:
+The current approach of manually saving and restoring
+wwwauth_headers in http.c creates a tight coupling between the HTTP
+layer and the internals of struct credential. If new transient
+fields are added in the future, developers must remember to update
+http.c to preserve them, which may be error-prone.
 
- 1:  42eca38f51 ! 1:  51967f9edf index-pack: retain child bases in delta cache
-     @@ Commit message
-      
-          This does not add a new cache or increase the cache limit. The object
-          data is already accounted in base_cache_used before prune_base_data()
-     -    runs, and the existing pruning and base cleanup paths still release it.
-     +    runs. Once all direct children of a base have been dispatched, and no
-     +    thread is actively retaining that base for patch_delta(), release the
-     +    cached bytes. The base_data struct itself remains alive until the
-     +    existing children_remaining bookkeeping says the whole subtree is done.
-      
-          On a quiet Ubuntu 24.04 VM with 16 vCPUs, 32 GiB RAM, and local SSD,
-     -    direct index-pack timings on single-pack Linux fixtures improved as
-     -    follows:
-     +    standard p5302-pack-index.sh runs improved as follows:
-      
-     -      linux blobless: 69.17s -> 57.98s (16.2% faster), RSS flat
-     -      linux full:     280.72s -> 236.32s (15.8% faster), RSS +1.9%
-     +      libgit2:  3.17(11.49+0.60)  ->   2.69(10.52+0.28), 15.1% faster
-     +      redis:    5.84(15.56+0.63)  ->   4.95(14.05+0.32), 15.2% faster
-     +      git.git: 11.17(38.04+1.29)  ->   9.67(35.29+0.60), 13.4% faster
-     +      cpython: 32.69(117.85+4.37) ->  28.60(109.25+1.91), 12.5% faster
-     +      linux:  279.22(797.69+40.86) -> 236.34(723.13+19.02), 15.4% faster
-      
-     -    Five-repeat medians on public repositories also improved:
-     +    The linux p5302 number is from a single repeat; the others are from the
-     +    default three repeats.
-      
-     -      git.git:  12.31s -> 10.70s (13.1% faster)
-     -      libgit2:   3.35s ->  2.88s (14.0% faster)
-     -      redis:     6.52s ->  5.64s (13.5% faster)
-     -      cpython:  33.02s -> 31.44s (4.8% faster)
-     +    End-to-end local full-clone spot checks also improved:
-      
-     -    The standard p5302 perf test on a smaller git.git fixture was neutral:
-     -
-     -      5302.9 index-pack default threads:
-     -        11.21(38.07+1.33) -> 11.16(37.90+1.31), -0.4%
-     +      libgit2:  5.00s ->   4.54s, 9.2% faster
-     +      redis:    8.75s ->   7.92s, 9.5% faster
-     +      git.git: 25.04s ->  23.71s, 5.3% faster
-     +      cpython: 56.72s ->  55.94s, 1.4% faster
-     +      linux:  556.17s -> 523.83s, 5.8% faster
-      
-          t/t5302-pack-index.sh passed, and GitGitGadget's linux-leaks CI also
-          exercised that test under SANITIZE=leak.
-     @@ Commit message
-          Signed-off-by: Arijit Banerjee <arijit@effectiveailabs.com>
-      
-       ## builtin/index-pack.c ##
-     +@@ builtin/index-pack.c: static void free_base_data(struct base_data *c)
-     + 	}
-     + }
-     + 
-     ++static int base_data_has_remaining_direct_children(struct base_data *c)
-     ++{
-     ++	return c->ref_first <= c->ref_last ||
-     ++	       c->ofs_first <= c->ofs_last;
-     ++}
-     ++
-     + static void prune_base_data(struct base_data *retain)
-     + {
-     + 	struct list_head *pos;
-     +@@ builtin/index-pack.c: static void *threaded_second_pass(void *data)
-     + 		}
-     + 
-     + 		work_lock();
-     +-		if (parent)
-     ++		if (parent) {
-     + 			parent->retain_data--;
-     ++			if (!parent->retain_data &&
-     ++			    !base_data_has_remaining_direct_children(parent))
-     ++				free_base_data(parent);
-     ++		}
-     + 
-     + 		if (child && child->data) {
-     + 			/*
-      @@ builtin/index-pack.c: static void *threaded_second_pass(void *data)
-       			list_add(&child->list, &work_head);
-       			base_cache_used += child->size;
+I wonder if it would make the design more robust and future-proof to
+encapsulate this logic in credential.c instead.  For example, we
+could introduce a helper function:
 
+    void credential_update_url(struct credential *c, const char *url)
 
- builtin/index-pack.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index cf0bd8280d..00b4dff419 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -433,6 +433,12 @@ static void free_base_data(struct base_data *c)
- 	}
- }
- 
-+static int base_data_has_remaining_direct_children(struct base_data *c)
-+{
-+	return c->ref_first <= c->ref_last ||
-+	       c->ofs_first <= c->ofs_last;
-+}
-+
- static void prune_base_data(struct base_data *retain)
- {
- 	struct list_head *pos;
-@@ -1201,8 +1207,12 @@ static void *threaded_second_pass(void *data)
- 		}
- 
- 		work_lock();
--		if (parent)
-+		if (parent) {
- 			parent->retain_data--;
-+			if (!parent->retain_data &&
-+			    !base_data_has_remaining_direct_children(parent))
-+				free_base_data(parent);
-+		}
- 
- 		if (child && child->data) {
- 			/*
-@@ -1212,7 +1222,6 @@ static void *threaded_second_pass(void *data)
- 			list_add(&child->list, &work_head);
- 			base_cache_used += child->size;
- 			prune_base_data(NULL);
--			free_base_data(child);
- 		} else if (child) {
- 			/*
- 			 * This child does not have its own children. It may be
-
-base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
--- 
-gitgitgadget
+that does what the new code added around credential_from_url() by
+this patch does, perhaps?
