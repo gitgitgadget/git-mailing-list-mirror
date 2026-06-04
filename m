@@ -1,45 +1,73 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E03321FF23
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 13:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A629421EF6
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 13:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780578947; cv=none; b=byzXw8b4FHQ/wNHdn3oUnX7XJg0SVUyLr7+uxndpLqfvpjqNG0QNmQKkxZp4K/9HM0tKsjzSd7iVYvs6uJjCzWw1Wsy66Dy0RUckOU/sujrs/DCxtnVtjKM8yamnSol3kyizgTdEWgp5LA79e93s87dVLYUSKGdYClB7Gz7947E=
+	t=1780579553; cv=none; b=h4zVxoQ0uJyv6Am3r+I0JSI3w64ayRf/0iKRasxnD8aP6QmFxbIQ8cjhOmOgUs6ewhl1GHUficGI42AHDH1NNHkJ5Yy+Ls5tyLEiQzx1aRVerepaBAJHL9bNnh05ndy3p6QMEuJWowfzUgixomayMnQtfntDnxXBsuGlLS3JBms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780578947; c=relaxed/simple;
-	bh=x8GeLR6WqWtqHddDjoIoLE6EHG0IXq5948BhSciFeXo=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GdZt+quK+E7K0qocLn1ti/pYY8dRbTIBu04p1EPfAsRou8HSuZLisiB254GCyqMmli/sAOeez9YjOJKu5aIvOPk+Rc1WBwgS/KbFzCX7/v88GRlbh3EDnrpi2/DDPzAVpfFXOyuywtzQvXDp8ZT60eXOdd6pzQoLzv4pug5XQqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=jZS7sGVH; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1780579553; c=relaxed/simple;
+	bh=znAnEW0O3eLkJVtw5H/WnekHn647qJSevVEVMPwh444=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VakFpo8N2AnFJJkopNPnwnULao61PVBPeqDUJSalD9k4sVjkZf4KevFotUH9AbPDQYlY8uOl04pdc9HplJ7jmnnqpqdnL9FNM2qkExP2k/XjSCSP0mpuSGWjZTSM2Tp0JSjL6iwYykzRQ2yWx2nlVAr13AJge5sv2hq+YiUX4RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpVv/Av8; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="jZS7sGVH"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 654DFZKO027914-654DFZKQ027914
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 4 Jun 2026 16:15:36 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wV7v5-002n95-OG
-	for git@vger.kernel.org;
-	Thu, 04 Jun 2026 16:15:35 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 4 Jun
- 2026 16:15:35 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 9de21626;
-	Thu, 4 Jun 2026 13:15:35 +0000 (UTC)
-From: Tuomas Ahola <taahol@utu.fi>
-To: <git@vger.kernel.org>
-CC: Tuomas Ahola <taahol@utu.fi>
-Subject: [PATCH] docs: fix typos
-Date: Thu, 4 Jun 2026 16:14:57 +0300
-Message-ID: <20260604131457.19215-1-taahol@utu.fi>
-X-Mailer: git-send-email 2.30.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpVv/Av8"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c132ac5ec2so7114725ad.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 06:25:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780579551; x=1781184351; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NciXSAjQ4NJhKDby4v/3MvN4AS+mXtcT1/X5+VRXHHU=;
+        b=ZpVv/Av8AmHZTIURdH8kqrwZK+8mn13HqmUkTRIL6uJ5I/Wx+MzRPlXNqKpoeRa3tZ
+         IEBp7i1EFEQevOFttLOCLyC7JnYCHo10VjrfL1nieX3i7qyK2n3IKrkiWcKI0XPolR4y
+         mUawdhKyuc0oh1U27i77IiVKT/fCp/Mb5OqtV77Il+aympN1Nigqa+zVTOU5UaR8MxxZ
+         LDrnRvjr3WBUMQKKJcJVa1aB+3GLYS80XZmjMg4ReCMBa/2/GOpgUq/RvhWH5sjU5Q3K
+         jNabU996TDJsuCQW46CD4gYoIbNZ7U6oKR8d2LoQeYTyaKkFa5BIKYmhwjw2I/rub8bj
+         yblQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780579551; x=1781184351;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NciXSAjQ4NJhKDby4v/3MvN4AS+mXtcT1/X5+VRXHHU=;
+        b=hEoqFNgrKmYrfg9cXi5N2ZX8rNwY/tuTjkNEy/LQwDrtMjcJj5B7/EgTOExGGAbZUh
+         nmIRr2OeRCC0hqV3dTIAvNjKfJ/uYixEuBMTHa0oPgBirlfviHAbHBTutmQC6PZCcZ7F
+         bEQdoE+0jWboxxCUd5VfFBmeKYGo5VS9D1Y5S8UMKvGqcGKi7Q3m4fhGK8OViDgHQqsg
+         Hyx714xppkG455aqSuO5lfEziPUwBir3ZFA7o8TOIItAd087h/EIw5h2mEAxgity2TAD
+         JlF+1hPIqAAwuy+GnP4N37rFhLcsEZPzhFTlk/3U8F1iMmbhHxQLL/Q8/sLmVEsU9PA2
+         fpyQ==
+X-Gm-Message-State: AOJu0YzygnVBcn+md5Sl/DSFVbsQ7H8rxyp/Cmxjgcu4nP5z+U/DOaJa
+	ou4J1+OiXlqALWCseQBSdKe2b9YDz386hFigYABlGUKBaLyeT+NET5TN
+X-Gm-Gg: Acq92OGd8W5gSbT5z41GpxbZdbsXSYBVGxf1ybBhhDrJysN+WmJt+E1AXsMkWRAeR3F
+	PIUOq7ML6bjt/31J/pYiOpxwEDT0YvsF/H0B2DR61R2Ao64O5vFcwNP4+9Ske6nyaRiqhOZgWAT
+	ArsZXxem2JncXHGXC8CP+PJQcHroLSwMOll+fFxZ5X/mW0jEbpDKNOjSFuveQltzNI69KIjgyjs
+	k3fcOapYJL7FnES7PWi7O7bW4TjEqeOOf34lgMC0ubWTt7Zy92NG5cc87UXkSvPv3ZfU0L+gzQh
+	EL3WthYUOv/YqInVfaNOw4UvY9xo5TaCIgt8LpopRQaTnlf3oZlbV6mnnoRwhLdIQ+ytEaMQehT
+	ZijSOo1ve9tWEmNwAU8lKHmhIIe2Xkqw6OSLDxRPJFXRzlsl4/IbX2ZCScXM41EY3UbpnCp+76L
+	KsqI6nnjEOIO/SfBBAk/kptbnrAuqJMXDFxqpzdb7ssF+ObWfCcP1BV/67Kg==
+X-Received: by 2002:a17:902:d2c2:b0:2bf:21e6:baee with SMTP id d9443c01a7336-2c1641be20dmr89457445ad.28.1780579551154;
+        Thu, 04 Jun 2026 06:25:51 -0700 (PDT)
+Received: from Pushkar.localdomain ([49.37.115.206])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d37esm87381515ad.9.2026.06.04.06.25.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jun 2026 06:25:50 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: pushkarkumarsingh1970@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	peff@peff.net
+Subject: [PATCH v2] transport-helper: fix TSAN race in transfer_debug()
+Date: Thu,  4 Jun 2026 13:23:29 +0000
+Message-ID: <20260604132327.277693-3-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
+In-Reply-To: <20260602201309.38434-2-pushkarkumarsingh1970@gmail.com>
+References: <20260602201309.38434-2-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,133 +75,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-11.utu.fi (130.232.247.51) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
- BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:mime-version:content-type;
- bh=7OmwAQuuR3hfSxsinb1RWOUCHVnkgb/hAtBvxusUf6Q=;
- b=jZS7sGVHebB68eg/YD/lugpvMOdBRLqqMAK0Rgog9F0SmgDgjsLJdA5wK5tFROf8IvwuWF0Nwc8n
-	6o8J0bsJKMuNE4tKPyFe0xWhKzskmQ/PRhbMr9QUNGr27p6VmR5sSIQtUX/OIxjm38r2f33v6bmr
-	tO1eBO0Mquvl2+6h1lcFzS4dSOkzjpCfMFgyVylgHFZNF1PcXKEgcnrs5g9DLiJBf2JnIM05fWXV
-	ksgmeU46Cr7e9ju42Yddu5yvbJlq7R7RD6sD5k3H8yT7+SDpsOFyYTZqNNGeasGMgmXxMEKVa0Q7
-	I1uxAOglMaEKdKC2wEMwcC1IJ3L2BPM51Cuqtw==
 
-Fix some typos and grammar errors in comments and documentation files.
+Currently, transfer_debug() lazily initializes a static variable based
+on GIT_TRANSLOOP_DEBUG. Since the function may be called from multiple
+worker threads, this initialization is racy and is therefore suppressed
+in .tsan-suppressions.
 
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+Initialize the variable in bidirectional_transfer_loop() before any
+worker threads or processes are created. This patch removes the race and
+allows dropping the corresponding TSAN suppression.
+
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
 ---
+Changes since v1:
+- Treat negative values as disabled by using transfer_debug_enabled <= 0
 
-Notes:
-    Written mostly as an exercise on how to submit patches that depend
-    on other topics.
-    
-    $ git log --oneline --first-parent v2.54.0..
-    d19e9182ab (HEAD -> ta/typofixes) docs: fix typos
-    5a7e9cc03d Merge branch 'ta/approxidate-noon-fix'
-    f03649d802 Merge branch 'kh/name-rev-custom-format'
-    023a226b4b Merge branch 'jc/neuter-sideband-fixup'
-    
-    As can be seen, these topics have already graduated to master:
-    
-    $ git cherry master
-    + d19e9182ab097a722e32d459a9a58c8985831e3b
+ .tsan-suppressions |  1 -
+ transport-helper.c | 17 ++++++-----------
+ 2 files changed, 6 insertions(+), 12 deletions(-)
 
- Documentation/config/sideband.adoc | 2 +-
- Documentation/git-format-rev.adoc  | 2 +-
- date.c                             | 2 +-
- replay.h                           | 2 +-
- t/t9902-completion.sh              | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
-index 96fade7f5f..ff007aeb73 100644
---- a/Documentation/config/sideband.adoc
-+++ b/Documentation/config/sideband.adoc
-@@ -13,7 +13,7 @@ sideband.allowControlCharacters::
- 		Allow control sequences that move the cursor. This is
- 		disabled by default.
- 	`erase`::
--		Allow control sequences that erase charactrs. This is
-+		Allow control sequences that erase characters. This is
- 		disabled by default.
- 	`false`::
- 		Mask all control characters other than line feeds and
-diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
-index c40d52e9f6..505a52fecc 100644
---- a/Documentation/git-format-rev.adoc
-+++ b/Documentation/git-format-rev.adoc
-@@ -33,7 +33,7 @@ OPTIONS
- The argument `rev` is also accepted.
+diff --git a/.tsan-suppressions b/.tsan-suppressions
+index 5ba86d6845..d84883bd90 100644
+--- a/.tsan-suppressions
++++ b/.tsan-suppressions
+@@ -7,7 +7,6 @@
+ # A static variable is written to racily, but we always write the same value, so
+ # in practice it (hopefully!) doesn't matter.
+ race:^want_color$
+-race:^transfer_debug$
  
- `text`;; Formats all commit object names found in freeform text. These
--	must the full object names, i.e. abbreviated hexidecimal object
-+	must be full object names, i.e. abbreviated hexadecimal object
- 	names will not be interpreted.
- +
- Anything that is parsed as an object name but that is not found to be a
-diff --git a/date.c b/date.c
-index 05b78d852f..014065b419 100644
---- a/date.c
-+++ b/date.c
-@@ -1074,7 +1074,7 @@ void datestamp(struct strbuf *out)
-  *
-  * The tm->tm_mday field has an additional logic of using negative values
-  * for date adjustments: -2 means yesterday and -3 the day before that,
-- * and so on.  The idea is to deref such adjustments until we are sure
-+ * and so on.  The idea is to defer such adjustments until we are sure
-  * there's no explicit mday specification in the approxidate string.
-  */
- static time_t update_tm(struct tm *tm, struct tm *now, time_t sec)
-diff --git a/replay.h b/replay.h
-index 0ab74b9805..90ed299ff0 100644
---- a/replay.h
-+++ b/replay.h
-@@ -19,7 +19,7 @@ struct replay_revisions_options {
+ # A boolean value, which tells whether the replace_map has been initialized or
+ # not, is read racily with an update. As this variable is written to only once,
+diff --git a/transport-helper.c b/transport-helper.c
+index 04d55572a9..9e69c67cde 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1361,24 +1361,16 @@ int transport_helper_init(struct transport *transport, const char *name)
+ /* This should be enough to hold debugging message. */
+ #define PBUFFERSIZE 8192
  
- 	/*
- 	 * Starting point at which to create the new commits; must be a
--	 * committish. References pointing at decendants of `onto` will be
-+	 * committish. References pointing at descendants of `onto` will be
- 	 * updated to point to the new commits.
- 	 */
- 	const char *onto;
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 2f9a597ec7..7c6db76c9d 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2446,7 +2446,7 @@ test_expect_success FUNNYNAMES \
- 	>repeated-quoted/2-file &&
- 	>repeated-quoted/3\"file &&   # ... and here, too.
++static int transfer_debug_enabled = -1;
++
+ /* Print bidirectional transfer loop debug message. */
+ __attribute__((format (printf, 1, 2)))
+ static void transfer_debug(const char *fmt, ...)
+ {
+-	/*
+-	 * NEEDSWORK: This function is sometimes used from multiple threads, and
+-	 * we end up using debug_enabled racily. That "should not matter" since
+-	 * we always write the same value, but it's still wrong. This function
+-	 * is listed in .tsan-suppressions for the time being.
+-	 */
+-
+ 	va_list args;
+ 	char msgbuf[PBUFFERSIZE];
+-	static int debug_enabled = -1;
  
--	# Still, we shold only list the directory name only once.
-+	# Still, we should list the directory name only once.
- 	test_path_completion repeated repeated-quoted
- '
+-	if (debug_enabled < 0)
+-		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
+-	if (!debug_enabled)
++	if (transfer_debug_enabled <= 0)
+ 		return;
  
-
-base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-prerequisite-patch-id: f827362e061e199150f149dd36c67664c77406bc
-prerequisite-patch-id: e5b32f0b916ec86eab6631b9bd9bafd639191765
-prerequisite-patch-id: 567a1832a220b2dbf095796cc8093b526d6a076c
-prerequisite-patch-id: aafa4bd4ceb7836a92d28d4c89b57032f74332e9
-prerequisite-patch-id: 2e073762fc9dceafcc6f16711bba425384a24305
-prerequisite-patch-id: 0aa605f0acdb71aa2eb173fdf3c57713c9561fe2
-prerequisite-patch-id: 5163040262c89eed4bcb04228b445d76497c9d58
-prerequisite-patch-id: c06c0461bf75ed638214ce98a54bba6578941c10
-prerequisite-patch-id: 571fdf3570f30fd41f6d681e99acc37df94d09a3
-prerequisite-patch-id: 54e7102e880d24a6b2d22bef9aa90a3078086d4d
-prerequisite-patch-id: d829fff1fcc8b6d086fcb6a40c62f835226ae32f
-prerequisite-patch-id: d1d8e2f2e274565e1d7437aa5ccfe44c3f3d8355
-prerequisite-patch-id: c79ebac6894b9a206f5699e9811e0348e111753d
-prerequisite-patch-id: a7750d7d2ec637d906f975f27ba3d03b33a4a34f
-prerequisite-patch-id: 083f554bc5e09ae54c6b545628196e11a9e90cea
+ 	va_start(args, fmt);
+@@ -1648,6 +1640,9 @@ int bidirectional_transfer_loop(int input, int output)
+ {
+ 	struct bidirectional_transfer_state state;
+ 
++	if (transfer_debug_enabled < 0)
++		transfer_debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
++
+ 	/* Fill the state fields. */
+ 	state.ptg.src = input;
+ 	state.ptg.dest = 1;
 -- 
-2.30.2
+2.53.0.582.gca1db8a0f7
 
