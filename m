@@ -1,122 +1,90 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-106113.protonmail.ch (mail-106113.protonmail.ch [79.135.106.113])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6C338A734
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 08:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780560672; cv=pass; b=qOWcRCYoB9ZPXremqwTcgTBFiD6UQhoSsNWiAtpvEO5FrdKH4wXxURfk/q3ZJbPGxhLdizoQ33mVdh0/RGRLY9W2xV4Fg/sbS6X7KonGsiDEymAVxg0mYf2pNq6TkbBZaxl6Oy5kiPg9G8VJJTG8Rs/h4rG6NHVFR7n+X8AVUEs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780560672; c=relaxed/simple;
-	bh=Vj1dy26P/QGgtQ/8b0kKRkncA/0zYSKskVkuf6PbPtU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jkPLnFwUjgSRKCmN6+LyrUTE7hXXA8GtHWoF73yo5VdtuF1dFvaUURl/2V7OFanXjBkPpzEidu+7NNpfEGDxp36e3QJQbdNhjZzbvSNeGjQ+w8USfQFCUplA6EApzjJUh2Un7C654vK8Zab7NUUIzNlinr0Uma4DFs9hBoneK7g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IB5DjOQF; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1EC393DE3
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 08:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.113
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780561042; cv=none; b=JPemGlmQDJvYDK68JBbommwFHTmgGIwkjleTxMN5VCN60wTH77wwkf0bjvy6l6Lu+jHKQHbvA9LiV5STq6xZMsSSDmZdAAR2BJCK8lX8TwCK+bocPsA9iWDE6QTsQOuPC/FWRbpKd5m09LPFVPiMPE+jBf1iwb1jXqRtpWfTKM8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780561042; c=relaxed/simple;
+	bh=trgLJePvvu+rkebMk8i/K4eeE1eDlLX3ddJnJ1ZDjoA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WmHMIvEH1ABz134l/Xqe6QjCzt68zf4W9HGEXkqXMhr3GL4pxls3fa1y397CjGdVfoDd6NWKQqvUrBE8e0rP5Guh2mtft+yPeTPcNpwoVuDoQSwZFMFbDnCYM+SYqAHT06egqvUSZtkcOW5JDnrbBACJImDXqg2RpASK25xKDBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rasmusvillemoes.dk; spf=pass smtp.mailfrom=rasmusvillemoes.dk; dkim=pass (2048-bit key) header.d=rasmusvillemoes.dk header.i=@rasmusvillemoes.dk header.b=PSIRT3M3; arc=none smtp.client-ip=79.135.106.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rasmusvillemoes.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rasmusvillemoes.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IB5DjOQF"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-137335bc3caso517985c88.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 01:11:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780560670; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lQrGnlCMFeu489uykVDI0K3Q8nhnrGaLCGU0FdJn72LZyLGkrbBRsxI8LvFM//wDzB
-         gvZqcSjp0JSB/9BQYUWWhvEBYBHnnMCsJh0dEzoAtywfbIIo10/p7RK+PvlmJYkFfwHS
-         hdhGOVl2w971Zx2X8bK5q4xYdCQvyvXMiM0ChOM/U7xrDEvRoc5VoPxnoWqKTwE5DOPQ
-         LcVaN/mQ8rb5ZRClPPLP8NAXQelhtHbpMyVU+EO4TG7xEEDzNslk6hwVVcaQxQiWS4Dc
-         uToVXM+F5i/bkxbTkvQ3c+KhzvBNQ5QefyrSQl0IWmX5qO8QqRLxkfptqvJ/HFOoaSRb
-         r9KQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BQkdgw2ijhHEmW5qEg0XGyFDepMBWV7spFf1npyljBI=;
-        fh=Y/d59sITq5949WwvU3zYdo8lHPNrZ3W0dZRkIOr+ZHY=;
-        b=h/kPTzM02x7Oj69y/ilc+RTwm6g8M2SDtgho9PinHe5+3184YfrXtDzzCZzEzcrz6L
-         Gj67aBhsSc4QvZIR+9BFNpCu8PREiJWASJ4baEIp7WpsbTUnjgDin77fEuofcr7CcfNd
-         Igi6FBdmSCPI4q/e4Q9ywLaK+e2/jg+5vc7FWUVcjbMV2vnV2XTY9l/NYh0d6GsmoOJf
-         GEc/8K9b4o4bGWBh9kXECGlNslEfY3/himsYTPTzOWQA1FLJv11KNi2w6PxMLUpftlz+
-         WHvZcM/4s5m4HL2JFc7gOElcNVZIcn8cz4jKzXK1pKEbp+MUIVDNb8F8HxGKLF1KjwRF
-         SCAQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780560670; x=1781165470; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BQkdgw2ijhHEmW5qEg0XGyFDepMBWV7spFf1npyljBI=;
-        b=IB5DjOQFh7gPVCKsMIgudMIyYCh8c735MdtN8TC7ltqlp1OyzfH+yDTYkvovh+Jzc3
-         LqMSmAkpGQm7CjN0cdVLjnGSmmUSoNto7btsjbuCtZ8vUSlsIce66PWJRCZGdVYwqFK9
-         f3OBjzIVObvUH3Ddu8O2ZXx0/oj531hFnJThJQ5cYorFPP8EhRrCJkKTn7GjMCeTDN4p
-         Cj8ZhzpDaZffu7lM4wiCeTaWFlpl3VZq43u5VoQnLXKIUaHHnqZObFWZ+u6YzVuSm9rD
-         +ow4cpZWBVLWtbDvP7BaZz7P9lNzIW7joGIwtEDdaPjfLZpr5xfuulelLU3u3Rx+smKf
-         HiAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780560670; x=1781165470;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BQkdgw2ijhHEmW5qEg0XGyFDepMBWV7spFf1npyljBI=;
-        b=spJMMtQvZne4zleScRUFyuAc2viIT6oL/Q6ibFqTsh4+NL/bRFNjirRzT9sxnknPg2
-         nV/rGFaAeZ94pxwsWW5OYD+zaBuXqzRNaavwNSukmWGBGvBeoUcb2PwcYeJ4/Bz8eyZ+
-         Mh9BxEOSwesEtKXiQluk/l3SEGcNE6nrE++RtXsRgqtMMAsoBHBzeCIiJ6qMt7ERvhC7
-         zgjFXXWspR5co8GmXfGNpTXEWVj+07PiavezzbFX0mpZ0PeqmycUnBqeqwx4YSj7e1jm
-         P6AsNLGBNEKvGyzUTMgshhaL166WgMtzjiHYnJAEX/LGrQ+4Dg9QOcuoPfHCjVSSlGfA
-         rr7g==
-X-Gm-Message-State: AOJu0YxpmsKPEJOeH2U85jCtU6iQsOqrWBXsag8xdfUAhj18apvdIUzN
-	s6798vc8WsLxX8g5bD/VXBtcg+Ut4Cu5nG6lfL7QRAMA7SIKKNzxwzKE/5zTRQAznX7Ydhhj1wn
-	+De+ZQrKhjwrA5oID2EiqAMEmevdOYOU=
-X-Gm-Gg: Acq92OFTVdd0Xew1pCs7qs8CZRiM3/ZPIUU8bXYz3Nhtwi5xm3Y0Y7+0SPh2Fd7L2kp
-	1kzsLmXvEXpudya+5iumEgIQbdzLcyT3satBnk+w7bnzShtZvHh/4SQq+RQ0I03LptQIVqieboW
-	66Uh59vDu178qB5JH0k4Jy89ldG5XQwpiWQ8o2o5MftQo4EEtPfRmBzxcAMgSODEdwkrF1gsK5X
-	BUf8YHgNRaimvMmo/sjDOZCewxR5lua6Y65XtIwLjuXcKdGoinU6/wdQH8DRMPw36wBt47QQDR4
-	fe68koNSbhz2JMQ2QsZ6RjbV02O0i4qE+cpjwOPv5IvtGYNj/hPIO8+2QYx0aXppgUmZZ6aEzHP
-	McV0=
-X-Received: by 2002:a05:7022:628f:b0:136:c443:80e5 with SMTP id
- a92af1059eb24-137f6a4b208mr2489104c88.6.1780560670425; Thu, 04 Jun 2026
- 01:11:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=rasmusvillemoes.dk header.i=@rasmusvillemoes.dk header.b="PSIRT3M3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rasmusvillemoes.dk;
+	s=protonmail; t=1780561029; x=1780820229;
+	bh=trgLJePvvu+rkebMk8i/K4eeE1eDlLX3ddJnJ1ZDjoA=;
+	h=From:To:Cc:Subject:Date:Message-ID:From:To:Cc:Date:Subject:
+	 Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=PSIRT3M3H3AowBJ7+VSlF5R4Awl7XXY2GA112REsbx8dSZOYOzCeD0BKn7EyCOHz2
+	 +Ucv2Bf1mZNDo5UOebmxaEXSfIrHPKZ+CLLcPGz8m7+RkDriYxn7AfXt4pJcey82Ki
+	 ke/JkhyS+hFSDUBkprXpVuyfDNwibbWdL3h4eh6TDq+QmmXCjUf8hoojELbpKlPYHD
+	 SrZydvbZSh1x996mboEK/3MWGydtGWjX5CDIK5r6a0uSpqRZfbbSXA0gDfqBEK36Wm
+	 5iTLN66GSk4u7xU+BfbK9cXba2ffZ1iEsHoMLKsjBmh2beYpxl54b6eAjLjb/iTHrc
+	 5pf80wTZDGlCQ==
+X-Pm-Submission-Id: 4gWHVD0Jr7z2ScPL
+From: Rasmus Villemoes <rv@rasmusvillemoes.dk>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: git history feedback
+Date: Thu, 04 Jun 2026 10:17:07 +0200
+Message-ID: <87ecimhg8s.fsf@rasmusvillemoes.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com> <20260603111044.39116-2-r.siddharth.shrimali@gmail.com>
-In-Reply-To: <20260603111044.39116-2-r.siddharth.shrimali@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 4 Jun 2026 10:10:58 +0200
-X-Gm-Features: AVHnY4K9xMNzqZgeqEqiWw_d5_BInIBQoqSKeopTlT1b_FD3N_TdEXBXwVlD3MM
-Message-ID: <CAP8UFD39G1CQXyxPVEmQSrdnHZ9BxPCH=QLmYBEFMcCnL8hjgg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] parse-options: introduce die_for_required_opt()
-To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, toon@iotcl.com, jn.avila@free.fr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Jun 3, 2026 at 1:11=E2=80=AFPM Siddharth Shrimali
-<r.siddharth.shrimali@gmail.com> wrote:
->
-> Introduce a new helper function die_for_required_opt() to check if a
-> given option is present without its required prerequisite option.
->
-> This provides a centralized API for handling simple option dependencies
-> (i.e., X requires Y), matching the style of the existing mutual-exclusion
-> helpers like die_for_incompatible_opt{2,3,4}().
->
-> Suggested-by: Christian Couder <christian.couder@gmail.com>
+Hi
 
-In general it's simpler for GSoC contributors to mention all your
-mentors in "Mentored-by: ..." trailers in all your patches during your
-GSoC, rather than keeping track of who helped you with each patch.
+As soon as I saw the announcement of 'git history', I knew that was
+something I was gonna use a lot. Especially the split functionality has
+always been somewhat of a hassle (at least for me) to do via an
+interactive rebase. I've played around with it a little, and it seems to
+work as it says on the tin.
 
-> Signed-off-by: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
-> ---
->  parse-options.c | 7 +++++++
->  parse-options.h | 3 +++
->  2 files changed, 10 insertions(+)
+So today I had occasion to put it to real use, and then I found two
+things I'd like to be able to do with it:
 
-I think it would be nice if the new function could actually be used in
-a single *.c file. It would be even nicer if there was an existing
-test that already checked that the dependent option needs the required
-option. This way we would also already ensure that the new helper is
-working properly.
+When a commit needs to be split into three or more commits, it is a
+little cumbersome to do iteratively, since the new commit to split
+obviously has a new sha, so one first has to figure out what that new id
+is and then do another "git history split". For higher values of "three"
+that becomes rather tedious. So it would be nice if there was an
+iterative mode, which after splitting off the first commit would
+automatically start again with the new child commit.
+
+If "git add -p" had an answer meaning "yes to this hunk and all
+following in this file and all remaining files as well", this could
+probably even be the default behaviour of "git history split", as it
+would just require that one extra answer to be given after the first
+commit is split off in order to keep the current behaviour. Otherwise,
+I'd also be happy to have "git history iter-split" or "git history split
+--iter" or any other spelling.
+
+The other thing I'd like is a sort of ultimate version of the above:
+What I needed in the concrete case at hand was actually to split two
+commit into n individual hunks each, then do an interactive rebase to combine
+those 2n commits to n commits (I had done changes "row-wise", but needed
+to change them to "column-wise"). For that, I would like to have had a
+completely automatic "git history atomize" that would split a commit
+into individual hunks, prefixing the commit subject with
+e.g. "[<filename> -- hunk #nn]". A subsequent 'git rebase -i' could then easily
+rearrange those and squash the related hunks.
+
+Aside: are experimental commands eligible for teaching the completion
+logic about them? I.e., can we add a __git_history() to
+git-completion.bash? Aside from the obvious "let it know about existing
+subcommands", I'd love for "git history split <TAB>" to show the most
+recent ~20 (or something) commits in one-line format, stopping if
+there's a merge commit.
+
+Thanks,
+Rasmus
