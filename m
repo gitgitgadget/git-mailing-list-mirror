@@ -1,81 +1,83 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF1D3E2AD7
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 08:39:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5714C3EDAA7
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 09:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780562383; cv=none; b=bSzpD8JEfxQE1XsO9vAiwJSuMyfH12cGy1HeWF1qhUcJfLNYlgsEKiVU2j2akPucGhVzp+wjv1kq1jyCtmHU3Ro5ZQC0gTXBpIl71Pp8pCh9TA9N2CX6WC5zygWqBV8LIr5z5sX1FBFgs2CsZnM09tFBHQxY86LgXkV8ylL5xf0=
+	t=1780563724; cv=none; b=AOSsncbGgvpyhxKP4fgnLN3D79hxU2DxRG83q+Wi8BOBqY9ZZEmjD9tCrNg0Yho9/F4d69Es9DhWc+q91DTWdHSVE/KHuDOyJsUKG6uwCoCwtvudavR9bL2mFwu8iBOwI+6nPnCNO/VJClR8P5rl1ihLIaEwhp1aS54L9Tgo8MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780562383; c=relaxed/simple;
-	bh=gLwbKFT/QqLCXH6B4X5fZzMGXN0ZldKU73+NNN08XSI=;
+	s=arc-20240116; t=1780563724; c=relaxed/simple;
+	bh=/y2M3qoy8iTXp6vgCRUtY6yOp/kMBOzvJjE5szWOxWE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mPcx3se26PW5RNzx59pn71aFIC/CCAZV+nIT7cqGy83tknw8RlOlkeM0oEHPxB5T3FnnPRq5A2TkXJhriRbq7DlLc87VaxLsO5XlB45OZwETg2msPb51EGr2Le5AQAr6x7Gr1Mo/E2y1/fD4NV57dbHc8D3O5Ozi1baU1rHqlzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ANIMyT/7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B4KcGQXT; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=IB/tPtSTnt388eKfwCW9KXor2+Z20wT8rVQqqKKxFDDm5fB588VqtStCHFjhuvDSv2A/R2TUuupdCiMTMx4Ok0ry4q1kIaUm9jxaU0WICxsg4nZ/RL1ws4iolOmHBX9zOhP8HC3Y6uJ7Pj7B5zeHsrTx2A3WoB8AnEuZPCuW2N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IvMeLQ7d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J9cCaeIw; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ANIMyT/7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B4KcGQXT"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 608E4EC0081;
-	Thu,  4 Jun 2026 04:39:38 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 04 Jun 2026 04:39:38 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IvMeLQ7d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J9cCaeIw"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7CE5E1400078;
+	Thu,  4 Jun 2026 05:02:02 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Thu, 04 Jun 2026 05:02:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780562378; x=1780648778; bh=wzrJLUJbdm
-	61pC9S+Yf8Rkal6XdK/N88tsP8NWd4NNQ=; b=ANIMyT/7TOx7K79xGnxX79CK1I
-	If/MtqgnYC3e08d3TaqMajN6GoSSFHsdPRjxKOGiofflSb+b1SSFCsYcBTsR4hgs
-	tTBh2otZ5IG8X/WbhxvQ9eV0uvuRY7+ZsIxjZ845XVbguzwhikoBOvniN+ArRcf8
-	Lh4mcxEkn37bWBFjnA5QD1nNLynOahcx7SxzV7xczXYHyRzXK0IV0UiCoxQD0nVd
-	i/t/Xt9ggNdler4Tj8ywXLCvLsg32/GgTRErXedRdZIx3KA4a/isNzUZEXKMjKBh
-	0Nqj+r8cWChMd2cK3YzUOhMQOKExGTbwifrlNwzPJZvW5JTA/iiUQmWPNXPQ==
+	:subject:to:to; s=fm1; t=1780563722; x=1780650122; bh=DDnEU5xdla
+	N12xUelCZ73VvocCckl0rbYsT/MJuUPuw=; b=IvMeLQ7dMpK64lHw3PIrA6ZSSt
+	GOYwYtq7sMdS/tPgRLcZEPOUTTWsAsSTaFQ6DbR9lN8V3u9P/MNvc5khbZEhFpyJ
+	ZR2n4rVVqmQ4LcGNxzEyKeBo1zK0HfrCg/B8hJA2mxOacpURum/sfS9ejIqS8okv
+	0kFcZtk9FrXnsfj+Q902SW2GGXvk/9JnHTrnTo8w9+oY4RyOOk/A7rXniP/lZl1l
+	bMA4PjhMfy1+notTBPJQYsWibDB8atIWl5BY8hbj5RX1EzVifFAnMdAn//T7hhai
+	ZX6An6QoiksPz+RMw9z2GRM1CaHGf3w6GiqeJlITcJGeHHCPlMFd+1z7vKNg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780562378; x=1780648778; bh=wzrJLUJbdm61pC9S+Yf8Rkal6XdK/N88tsP
-	8NWd4NNQ=; b=B4KcGQXT9JMIaVoHwSd3XOBNDEA+RxdG5tuuvgTPPiBpl1w/NM2
-	FI9FaOsfJ3jZ7iOUOH/rgggY/xAt/PtyrpNY8gfeoqzh34NVqYLypk9kJQQNou0Q
-	aPs929dTZPXrH4zonimtzehzLAbVofn8kx2H2VKTIem7wOYvH9qr6XYRrzAtdELK
-	Z5vWF4NUL25TImxlT9J9RnY5aMReb/2un2YgmF4TQwg3SW3laNmdBu2lVeCX9sxp
-	d91z5OXKBmx3D8iKwQg72Ryb5/zaPF8lNJO4S8EGaMYkFQ5mD5LQUOC5IXe3/Bdy
-	3iD791fakJkzRgK1UHuNx4YiA+vGIZnBmmA==
-X-ME-Sender: <xms:yjkhahb6i9d4bGY6NUFvbkL4c51ffsU5V8MCwJaTmz2tyFoo4PK0Lw>
-    <xme:yjkhaubeJAK8wWFXWno_CQnPHdspnRvgXRHsH4dtZ7kh4PcLUVf8wSn75H21T9dxA
-    aWnfV82SCEoPMCVb-72p0BSnmMNZ3MNoc4D34MovmsPZpjjUafx8No>
-X-ME-Received: <xmr:yjkhahmCRi6rGG_QJFkoGbun2KU45vVVJaWKi7wMkiBM57J4Qv8CDIyuGXSrv9-WPMoOsU4vidnBOkHwlOeqgDPZn5ARlFBITPtsp4e2d1s>
-X-ME-Proxy-Cause: dmFkZTGR2rPpL8XoLfNkJ4iLamM+M56+uTdvtD1xTN5vcVVJdCk0zXQpEDaCyAAPzf8fHx
-    XdZKT58OKpquBGKsosTv8Mbg0o4mMyB0vjOuZXb9Mg/gf5Snp0ET7IT/sKFv24pqfKrTpW
-    R+YFqmt7KGWFx8Ls6mR5UowiX/Cb/fTRTgWI/44rhg8ONFuJiOXbzLHJJ1VohX+Bl+/5jk
-    9dvbo46NhaSPPs/Es6BE50na7Ljbzs6LUT+Fu+siv3AwaOgXYkpOADymIMPyyYgiKNncQA
-    xCGrAqTX/BcHmszEsmufZ9tL6o65PcQ2gEtPDJPayzJ6jTBsMuyJaCzNEZaoqSK94nGcOg
-    eDX53ssa7JCsyfH29rVXouA3XkUcp622qW5OEjTyUYDMoRSklwf6+J1pLRGjXZIhXyudRX
-    IWYTTHx6tM5gtk2UiT+J5cCkb4coEpQL0P0NgV12DO2dFssCBHDGnNd0aoG+YfPQbwqzT+
-    qE6C7uEKSnPnuBUQcVvigD+iUiS8TZ9XxPD8hBXTXQ3LJqpVYbbXfu3l6DpOYtZz1G1NQ5
-    3sLG8Oqck1jFCzp1/zhiUwPFODdE+B1/eUFrQchU4su7U/CPaPcxs1DzfHwctGt+RjGfNo
-    04yKfZlZrK4WhxP+Li/9ddO6lsr2YD7VJHaGYbYIKvRkJCWV3Zlo2B8Qc/wQ
-X-ME-Proxy: <xmx:yjkhaqwjztG3ILToS4FOfa8IkDqhmxpnH92lEC4isJ0GCWUfW41Wiw>
-    <xmx:yjkhavM1KH1IQRbDV31PZeameWyNLw3yHSpnft-ChQDauKSW-7uY9Q>
-    <xmx:yjkhauQ1M371rpdEwfq61n-BOeJc_Od0tcHK49ObXLeZHpl6DGvkAQ>
-    <xmx:yjkhatZ8_f-_7XEu6CoUdRvtK1PFeb9p4WLfvavWHqkvImGMCrffVg>
-    <xmx:yjkhakzLxRW2ZcWuB1ka8NsMPSvCZyhnjcLq-OTNSs2QfDI3Is2yhEOF>
+	1780563722; x=1780650122; bh=DDnEU5xdlaN12xUelCZ73VvocCckl0rbYsT
+	/MJuUPuw=; b=J9cCaeIwT7b74yyHgBSHFgPT+LjTtEaofn0oBpZx0nSyuTxh+Y1
+	qcLJXYYI4pDLRgyaiPNulSou1PO1rRUZRUdrecmD2W3pGqeYYwHuZCloD0o39khT
+	lRVAS9KaVtUMjlStxNr34gfrqK2dks6vfgEk1NLETkhMBRPR4qJgAf34WedqFB6P
+	o7WZ5zbb66Z6G6ZkZ0h8KvR7z1w9GqRmeHi1ZY2zJOa0Mx+Q2WBVTJyGLupJpJJv
+	FbMuUMtpntZdArJLOVE9xz+z8JRoJzdykpzwC9w0EnV0FdhwJ8I62JMrGma49g0H
+	dnjOK81EZGGG/GrJ8VuT7u2ivUbN+FY0CJw==
+X-ME-Sender: <xms:Cj8hanu1j6OQfsSu_Lo2FgzFsd2qxGPbVWK1qWkOxX6HvGuSZBZsmw>
+    <xme:Cj8hav6-cmqoIRJLS3irUx5YPC34heT49trvYjT3B-sBGaHaJoJVN2C0F5SgBlAxa
+    KGGMJGGuAydf74f_-JsC8GUHqXyFRpbI2L1jzx32GForP43x5tI4A>
+X-ME-Received: <xmr:Cj8haoKOGfW2hQWP9Q-Hcq-3t594iNEnaHVZcfEOhBjx02Mn4iDm7WsHTnpMZSTiawsk9fW0Tvc-KJ_SICyZPCkVkjU8Opn5ThFBQq18oDw>
+X-ME-Proxy-Cause: dmFkZTGFLCKX/vggYM5jwwyMt8rt+EypqxrXadveFJWkzsKpDa8asC0zOR5+W2LIpwzuJl
+    72XDLeBCaVV9maRLOWkDKQW3QdgJowIlVHQ9mpvFMc8hryZYsx9kBUqOl29D59daArvypx
+    F7gLSH3A3Vuw9NoAruQjW72IDZAQKJllvycfambcNbPQevxREaJI2vkYBrf6PmflEfXRx/
+    LF+Cv3A+bMmu4nDsa0fbKATZHXNlBt/OlNAVCwbvhVwjU5g5yAWC3X+9R4wngkzdzcIGSc
+    swrDKmHcbZcNjt83IdcBtlQl4ZUuMa0xcSF10ZDF5kQCU0KOhgzn4Orn0FX4SR8cw4Xon2
+    F3dxHjlsn3MiGCI6Xl/E1EKw6E8egTtgrbOjpFm8Wj7yGIMgS7/ygIAVFZ35jkb2gumObu
+    dY+3Qhi6s1ztSG4nC42JgeelnWo5OhRpWzw/BvVjo1ZXc7a+JML9qG3HZ00cHyHGbd5Wkg
+    fcYBC61KUbt7BgpH3FIbQxhMjjt/1TWUSPVI/F4H9hj24NLreSXmDXsxH9rrDTHPQSu3an
+    kDYbscKbw0dZlPj3JiGwCP6IZjDhrlYk36pFdj3dPUeUyr1tqSJyD9/5Fu5cjrFPqzIsp1
+    8NbejVBbMAQoPC82bErc/7IMVETGJeZuXUa7fO6GArzNP7AXUSIs1zKix+Rw
+X-ME-Proxy: <xmx:Cj8hav78jFZr0liI7o0KFQgL0jdTpfUv3q8rF3WX5zZkVj_D286WMg>
+    <xmx:Cj8harxn3W0kPn5r5R1aEwyeiDcE8PDz69y2gV6PW39_Y_jQcHDwwg>
+    <xmx:Cj8hajaUWWZd-C7wjqpgZHvH9Gkee9OCHdwJ1FZ4u7oxd7BEZU0u_Q>
+    <xmx:Cj8hatSo5_IW4VKUbL2s1tIwrWo3IxNiCCec0_BNsVDkqPzd7KRz5A>
+    <xmx:Cj8har7SJ2Zd4DOusl6_UQRJO0ayE8UjDVrEaoB8ScPlfJ2xWoPAv3gF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 04:39:37 -0400 (EDT)
+ 4 Jun 2026 05:02:01 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 653fa267 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 08:39:34 +0000 (UTC)
-Date: Thu, 4 Jun 2026 10:39:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a294999e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Jun 2026 09:01:59 +0000 (UTC)
+Date: Thu, 4 Jun 2026 11:01:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc: git@vger.kernel.org
-Subject: Re: git history feedback
-Message-ID: <aiE5w_8Oxv-I54zy@pks.im>
-References: <87ecimhg8s.fsf@rasmusvillemoes.dk>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: Re: [PATCH v2 5/9] reset: introduce ability to skip reference updates
+Message-ID: <aiE_Bcup5RTfcQD8@pks.im>
+References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
+ <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
+ <xmqqqzmnqj1o.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,82 +86,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87ecimhg8s.fsf@rasmusvillemoes.dk>
+In-Reply-To: <xmqqqzmnqj1o.fsf@gitster.g>
 
-On Thu, Jun 04, 2026 at 10:17:07AM +0200, Rasmus Villemoes wrote:
-> Hi
+On Thu, Jun 04, 2026 at 08:51:47AM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> As soon as I saw the announcement of 'git history', I knew that was
-> something I was gonna use a lot. Especially the split functionality has
-> always been somewhat of a hassle (at least for me) to do via an
-> interactive rebase. I've played around with it a little, and it seems to
-> work as it says on the tin.
-
-Happy to hear!
-
-> So today I had occasion to put it to real use, and then I found two
-> things I'd like to be able to do with it:
+> > @@ -112,6 +113,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+> >  	if (opts->branch_msg && !opts->branch)
+> >  		BUG("branch reflog message given without a branch");
+> >  
+> > +	if (skip_ref_updates && (opts->branch || refs_only))
+> > +		BUG("asked to perform ref updates and skip them at the same time");
 > 
-> When a commit needs to be split into three or more commits, it is a
-> little cumbersome to do iteratively, since the new commit to split
-> obviously has a new sha, so one first has to figure out what that new id
-> is and then do another "git history split". For higher values of "three"
-> that becomes rather tedious. So it would be nice if there was an
-> iterative mode, which after splitting off the first commit would
-> automatically start again with the new child commit.
+> ;-)  That's certainly a careful safety valve.
+> 
+> Would we also want to catch skip_ref_updates && update_orig_head
+> being both set as a bogus request?
 
-That's fair, and also something that was discussed when initially
-introducing the "split" subcommand. We don't have that mode right now,
-but I think it would make sense to maybe add a new option that makes us
-split repeatedly until all chunks have been exploded into separate
-commits.
-
-> If "git add -p" had an answer meaning "yes to this hunk and all
-> following in this file and all remaining files as well", this could
-> probably even be the default behaviour of "git history split", as it
-> would just require that one extra answer to be given after the first
-> commit is split off in order to keep the current behaviour. Otherwise,
-> I'd also be happy to have "git history iter-split" or "git history split
-> --iter" or any other spelling.
-
-Yeah. From my perspective, having this available as an option would be
-the best path forward. But I'm also open to alternatives as you suggest.
-
-> The other thing I'd like is a sort of ultimate version of the above:
-> What I needed in the concrete case at hand was actually to split two
-> commit into n individual hunks each, then do an interactive rebase to combine
-> those 2n commits to n commits (I had done changes "row-wise", but needed
-> to change them to "column-wise"). For that, I would like to have had a
-> completely automatic "git history atomize" that would split a commit
-> into individual hunks, prefixing the commit subject with
-> e.g. "[<filename> -- hunk #nn]". A subsequent 'git rebase -i' could then easily
-> rearrange those and squash the related hunks.
-
-It could easily be another option: `git history split --explode` for
-example, which seems to be a common term for such an operation.
-
-Regarding the subsequent rebase: I have one more patch series cooking
-locally that implements `git history move` to move around commits, and I
-did have the plan to eventually also implement `git history squash` to
-squash commit A into commit B. But when handling many commits it might
-even be easier to use interactive rebases instead.
-
-Well, unless we eventually maybe even get something like a graphical
-interface. I was playing around with a TUI interface for git-history(1)
-that lets you move commits around without the hassle of the command
-line. But that's certainly something that's still going to take a while
-to materialize, if it ever does.
-
-> Aside: are experimental commands eligible for teaching the completion
-> logic about them? I.e., can we add a __git_history() to
-> git-completion.bash? Aside from the obvious "let it know about existing
-> subcommands", I'd love for "git history split <TAB>" to show the most
-> recent ~20 (or something) commits in one-line format, stopping if
-> there's a merge commit.
-
-I just haven't gotten around to it yet. I'd certainly welcome the
-addition of command line completion.
-
-Thanks for your feedback!
+Yeah, I think that's a good idea.
 
 Patrick
