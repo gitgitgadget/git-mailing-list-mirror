@@ -1,68 +1,68 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3084BC036
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 17:15:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8864BCAC0
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 17:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780593321; cv=none; b=h/DneOMg5Td3Rm/QqchuRBemp8TmftbI+uBronoJ6Mh3CovtXNwhsByfSlBK22i1XqZFbr/6ZJU8u0iee5HObCwWPMcoi8NS7zR9mgk8Gy0g6DAJDuPNmSEXloH0rP3Rp3gQxxLFEAwkBo+Fz9dCm31DQhz2i6HlGoVr4cV3Px0=
+	t=1780593324; cv=none; b=AW7c5b8JCjRaG0KRt4fsepnNhscvfwfs32tgDnKB0lk/nvHcG4sb5C7Z88/8tOhz4IipkURygEACqOxk7K0uHJbFwaoJ7uJuCCcltnF8mEQ7iUV6V3SXBgr8OwFCHDVTd74eeNVn9MQNRaKemjm3aGZ4F3dOO6aWZx07jDqcdxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780593321; c=relaxed/simple;
-	bh=NkC+pKOb4grZ+3v5rXoBARnmebrJo+cryj+gCQVFZRo=;
+	s=arc-20240116; t=1780593324; c=relaxed/simple;
+	bh=elBQurlBzwIKRSJaRn7klJLuDA0WgxFs8k+vgfzD41g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gCsU9cZ7b9t6YU2a/b9gFZD9RGOAGTW+bCUa5xYc2chDUw8RZ5IVWift11PRNjNw7vxz/2yTBNmAPBbd8w7bfGsjVvhyg8PzrF89XgNoT/il8J3hosx3sckVHtuPgFcHaiJ1apTDRq/wCHoSWuUKFVCTim1yfA2lu0lYnvYv7P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aKx1Ep5L; arc=none smtp.client-ip=74.125.82.47
+	 MIME-Version:To:Cc; b=oFFkpG75sPmVFNhqwnFQ0EGXYhvhcZ4GanzxITZqB2GK95cDmsTrwFddm6+YKUCQ6gp4s6hXtMRDEkebFh2m1dCrue/28GOx5Ood+m5uy3RBuwfeqS3XCXu2B1xciv8vpupiMBy2rcbZDW2d+m5ehkWP7rg7OwUkLdng9ktYkr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GQP4VW1B; arc=none smtp.client-ip=74.125.82.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aKx1Ep5L"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1363fe80fe8so1459411c88.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 10:15:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GQP4VW1B"
+Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-137dd51129bso1634685c88.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 10:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780593319; x=1781198119; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780593321; x=1781198121; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=geppmrt1N/jF7ZRXnkYzronuzEANpzjVP5bYRhBCa/8=;
-        b=aKx1Ep5LssjMf2IP3W47UvCg4NaSi3x1TGreZUOA/X8HfCUddSZ9LVyV4yk97n5Gmm
-         BSYypTz99Zt//0GywTbMZ7ELRuK8tGYyfiNI+pqNu2iaxIlffEUoB01G+iLLpcdonNLP
-         ErY51M7BaFhwzQtIhXQ/AJsr0e9W1aV89h5IF96VD3c1i41SgqWikTpqVMnBVy5ldFfs
-         GEPObu4dxb/01cfP8iREptD0NBmrQgsnX0yt8IIvBoLZPZB6VuBTSmj505Ka0g6njfFs
-         a/wCkrAOci3LxOWbvvsN1Koi3DmouVDygwsOoAZTTxMnQL4o0d3BfDLqBveZc5udRvWL
-         8qsQ==
+        bh=tdRL7fDKwcLg5aM07dCj4pxlHnvAk9TkisA0lU5V7wk=;
+        b=GQP4VW1Bm3oDCy2yWDPhUF7sqcCkx1ZiUEjAjDY9DbBmRZ9zZ5Zek3iyLMZqTtNlnE
+         KVUa4x0ruSI5EbNiaOBMmVJlab7IjfkEnK/3rZ5B0EuGoza0FpsC98+jO8NEwkbtpO5x
+         oqo6lvdbIs9r6MxtuMLVFMq/5FfCT71Oh5dc0Q4HVkY/q2hm+RTvbormi0Qa0AtSmtCc
+         gtmPG12hBRbD45BxnlYC+boEdIO8+I3rcney+a0mKNysF8zgPVdFMMYenEtEt4ct945s
+         A5Cc26aHDrWFMLbeTjLJ8YcVs6BNrh5fJyQOPGk7bYq154phAsqTgwr7rHoU9JAf/ea2
+         lpBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780593319; x=1781198119;
+        d=1e100.net; s=20251104; t=1780593321; x=1781198121;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=geppmrt1N/jF7ZRXnkYzronuzEANpzjVP5bYRhBCa/8=;
-        b=TW+b+SE74uGapl4b/l4Rxhfk59APvuuyhnEhW7BuiO2vDE8JbZc32urZygxach66Oz
-         wtb5hzFH3n1jrqMjUqA6i86y9e8H3B3dD9jnMGbRUrXPBz1/eX+ZT4DWIkAl2ZiDRqlS
-         YiAsvJwTJnpuk5sHbDi/xclxTFp8+r4N8h4oj11rA/IZWH8tDo+Aek7OmygfvCyHu3n5
-         lzbpYAgwq6rZw35CYCM0ZEttZ5lMmbd23NzI1MxHxv3ZKJ9LuUUIcFPcKCmSTeLSTeyt
-         1i2yneFlid7J1foqQFw6mtLqB4RlqCrww/gJ+EKbPk4bsQzrQs8uXdG0CNsXG/228vox
-         A8tg==
-X-Gm-Message-State: AOJu0YxaYMwZfSBXnutg07n/sEYCp/EC9nXc30pJz5wmrOBrboorFBKj
-	dYDOch5m5+XRYZQCsKnBZ0hAMzSqNhEYnS+X9K4bSnaxep12k6q81dW/4PxyTg==
-X-Gm-Gg: Acq92OENXtygxqCOrUNk7AU6UwDMJ+905I+CDj2Sq+miZg+Cj6ZNNDSbql2luRD6FHC
-	kkXJ+Yb6QATSOPa0exIOGo9oacKTCroqGeCPY99q7lTyvXNkrJIm2vdh4cn61w9wIjwSHe174KO
-	bKsvrNG8tUNFuCvj5F/RhcSMYL1Bb6ldEtLBm47ip2L21cBNrGxTyx7lXM0GMoBDU9eZsqRs91J
-	sNpVPDJvLXtNy/bZ4oHbgtvObLvjzSHT4+EUhmSvQSYLk+FvegwnGwGAAwBIdm52X5XkSWBa4b+
-	NcoN+umlo/Et1EuwdNsDEMLoTtVqhxZSQoJvFacr8onjsw7L/4i28GvRuTzLe9uOc7AeA2FOxJg
-	EqZXZP2u+o0QCWLD2N17drN6QefKO0xlaRpCSFBGdFuwbEyCVMOtI5fccbnKUnWOqxrHYUpdF2J
-	bbpyPyPyVG2QCEVKzb0OerY/TIl3XPvNuH9v1Yc6cCyDog9Zq0
-X-Received: by 2002:a05:7022:6898:b0:132:6877:eea with SMTP id a92af1059eb24-138066a5982mr7938c88.12.1780593319004;
-        Thu, 04 Jun 2026 10:15:19 -0700 (PDT)
+        bh=tdRL7fDKwcLg5aM07dCj4pxlHnvAk9TkisA0lU5V7wk=;
+        b=mVeijOLqtYNuE+sWYA/PDv+I5QdbC/u+4S1b3nblv27E7ZKAiUERyAHYKhbxGuf/hD
+         QHyMCWdI//mrf+dkMqR793pfhgFS6e838OD9QszEyPAJ+E9lspPSTv4znYdwTjxf8GFe
+         k9vnyjzxKWYJb8m0JGYJGezrC3F6ciM3WC2OOs20mMe9UN/je3+dMqCPrSJEmbWvg1eZ
+         e2rDipQd9JBDAC8MMYraC8QaLmUco49dW8+opJoAfVw03vM2oss5moDxTyeJM0ciiBTp
+         IqcMRM1I3S08gW8ZEdOi0VKUI/xuXZYgX8KsNv1zVpowA8QMEgZmQ1l9z8MFt3joXbj9
+         UIGg==
+X-Gm-Message-State: AOJu0YxXBbNp4RQnKz8OVQepyW2RSKYvEYRpil64jx6m4YvgSX1CSyS0
+	K/tU6RCqGFkmo2viKeIBqV9Z2gzHV2T0bzw1zLMtSm4hS6HjJ4saDDkuw6D9Qw==
+X-Gm-Gg: Acq92OHg+uTs64EG5pLP4L3+BWsxURlHGMe/erD6Qz7qo+/JmQt0kHIlWZc4S/zH2if
+	z5dwlTaf/JZjoC4Hi1h1UNh56B4YJaxkLP5SsT03QH0UKIK1vER7jTw4Bbg63MGR1q3R7foa9oS
+	JktAJgeeMmKZENDSDpCGyO4NThbcGVpPIoVI+26A2X/fhZ3Pr+EJyP8mKsYj+ok9v8q/Ga69vsO
+	yQOUv2j1pCHRDktRFqowrn4aQTQwa747M3q29W/YiiV5irucSizqUUwdjoN5RNUGFLZbsI173yC
+	UupE9cXYHKjt6AYAAwTWg3YIIxKoG2IC7oyNEDPdwmaaj5a1rlq752vD2XGKUw6p+28E91ADVFZ
+	fVtnGCPUTbRIct13MuXePX6ST61oNdcpiUVFFu3oeJqUyx5Q1MkT9mUlfv0tbbXVYfKDsXMvbo1
+	DNAKZa9Pp3fv3Eso+9XIZ8GBUQdNMbEYjEzLjrfA==
+X-Received: by 2002:a05:7300:8622:b0:2c0:c5e4:605f with SMTP id 5a478bee46e88-3074fbd5514mr4139499eec.24.1780593320515;
+        Thu, 04 Jun 2026 10:15:20 -0700 (PDT)
 Received: from [127.0.0.1] ([57.151.128.196])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-137f548ade9sm3918635c88.2.2026.06.04.10.15.18
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074db528dcsm6547414eec.3.2026.06.04.10.15.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 10:15:18 -0700 (PDT)
-Message-Id: <253d6f8004e710d05b5de1f8279d67d2220f83de.1780593313.git.gitgitgadget@gmail.com>
+        Thu, 04 Jun 2026 10:15:19 -0700 (PDT)
+Message-Id: <ba629a3f03d59b6d20f1199ec86c140b0db63308.1780593313.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
 References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
 From: "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 04 Jun 2026 17:15:09 +0000
-Subject: [PATCH 3/6] hash algorithms: use size_t for section lengths
+Date: Thu, 04 Jun 2026 17:15:10 +0000
+Subject: [PATCH 4/6] hash-object --stdin: verify that it works with >4GB/LLP64
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,108 +78,41 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Philip Oakley <philipoakley@iee.email>
 
-Continue walking the code path for the >4GB `hash-object --literally`
-test to the hash algorithm step for LLP64 systems.
+Just like the `hash-object --literally` code path, the `--stdin` code
+path also needs to use `size_t` instead of `unsigned long` to represent
+memory sizes, otherwise it would cause problems on platforms using the
+LLP64 data model (such as Windows).
 
-This patch lets the SHA1DC code use `size_t`, making it compatible with
-LLP64 data models (as used e.g. by Windows).
+To limit the scope of the test case, the object is explicitly not
+written to the object store, nor are any filters applied.
 
-The interested reader of this patch will note that we adjust the
-signature of the `git_SHA1DCUpdate()` function without updating _any_
-call site. This certainly puzzled at least one reviewer already, so here
-is an explanation:
-
-This function is never called directly, but always via the macro
-`platform_SHA1_Update`, which is usually called via the macro
-`git_SHA1_Update`. However, we never call `git_SHA1_Update()` directly
-in `struct git_hash_algo`. Instead, we call `git_hash_sha1_update()`,
-which is defined thusly:
-
-    static void git_hash_sha1_update(git_hash_ctx *ctx,
-                                     const void *data, size_t len)
-    {
-        git_SHA1_Update(&ctx->sha1, data, len);
-    }
-
-i.e. it contains an implicit downcast from `size_t` to `unsigned long`
-(before this here patch). With this patch, there is no downcast anymore.
-
-With this patch, finally, the t1007-hash-object.sh "files over 4GB hash
-literally" test case is fixed.
+The `big` file from the previous test case is reused to save setup time;
+To avoid relying on that side effect, it is generated if it does not
+exist (e.g. when running via `sh t1007-*.sh --long --run=1,41`).
 
 Signed-off-by: Philip Oakley <philipoakley@iee.email>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- object-file.c          | 4 ++--
- sha1dc_git.c           | 3 +--
- sha1dc_git.h           | 2 +-
- t/t1007-hash-object.sh | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
+ t/t1007-hash-object.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/object-file.c b/object-file.c
-index 1f5f9daf24..c648cecd80 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -561,7 +561,7 @@ int odb_source_loose_read_object_info(struct odb_source *source,
- }
- 
- static void hash_object_body(const struct git_hash_algo *algo, struct git_hash_ctx *c,
--			     const void *buf, unsigned long len,
-+			     const void *buf, size_t len,
- 			     struct object_id *oid,
- 			     char *hdr, size_t *hdrlen)
- {
-@@ -581,7 +581,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
- 	/* Generate the header */
- 	*hdrlen = format_object_header(hdr, *hdrlen, type, len);
- 
--	/* Sha1.. */
-+	/* Hash (function pointers) computation */
- 	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
- }
- 
-diff --git a/sha1dc_git.c b/sha1dc_git.c
-index 9b675a046e..fe58d7962a 100644
---- a/sha1dc_git.c
-+++ b/sha1dc_git.c
-@@ -27,10 +27,9 @@ void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
- /*
-  * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
-  */
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, size_t len)
- {
- 	const char *data = vdata;
--	/* We expect an unsigned long, but sha1dc only takes an int */
- 	while (len > INT_MAX) {
- 		SHA1DCUpdate(ctx, data, INT_MAX);
- 		data += INT_MAX;
-diff --git a/sha1dc_git.h b/sha1dc_git.h
-index f6f880cabe..0bcf1aa84b 100644
---- a/sha1dc_git.h
-+++ b/sha1dc_git.h
-@@ -15,7 +15,7 @@ void git_SHA1DCInit(SHA1_CTX *);
- #endif
- 
- void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, size_t len);
- 
- #define platform_SHA_IS_SHA1DC /* used by "test-tool sha1-is-sha1dc" */
- 
 diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index 7867fd1dbf..10382a815e 100755
+index 10382a815e..59efee3aff 100755
 --- a/t/t1007-hash-object.sh
 +++ b/t/t1007-hash-object.sh
-@@ -261,7 +261,7 @@ test_expect_success '--stdin outside of repository (uses default hash)' '
+@@ -269,4 +269,12 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
  	test_cmp expect actual
  '
  
--test_expect_failure EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
 +test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
- 		'files over 4GB hash literally' '
- 	test-tool genzeros $((5*1024*1024*1024)) >big &&
- 	test_oid large5GB >expect &&
++		'files over 4GB hash correctly via --stdin' '
++	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
++	test_oid large5GB >expect &&
++	git hash-object --stdin <big >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
 
