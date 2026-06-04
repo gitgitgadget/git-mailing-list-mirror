@@ -1,162 +1,118 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB933A5439
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 10:07:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780567681; cv=none; b=F7TMBsoSSwxrIsp75ScNc5tbFCtGOfSlQT6p0KdHIcW54uiQ7IZUU6gl4DiYkle1L/c71RYh3JoTe4XWsbiXyrmGH77XIlvIKm+0E3Gcl8N+/yHXCHlo47TNlyvqzHe0/qIX/oB9q/55/x0ZLGLMbvLTNmDIxPw46Gjj10MJopM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780567681; c=relaxed/simple;
-	bh=R1bvVu7Gcv4nxqxRQPKh75MSpzpkJ06hNIBGTJO9W7g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Qqf4tsXoee4HqU4g7z3Yaj7OzVhhs8ooEHu7YLP5rfAojJwTWHjdEITn5EnKcHCU++ezCRpwk0kLiaPjHjT7OHLAillJJiNOP8KC1suHIM32fI5qNrH0Kd8qrfLF4hhgLrd7GFTrEzLxDBJ5Ui6n1RHJTtZkp+m3+ngYhPtDFcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tElTbyPP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gD087K80; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F3E372B5A
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 10:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780568379; cv=pass; b=ILbWNHhoX2NlNlkbXLLr77xpJFEbCDVidUR9AZoKAiDKei4pSP2xrCqvmsBecL3X+SHNfW4cwUvIBun0qMiFzi6ZICrzwd94iwl2rK09IG2k7jbO7myPBOEttIxknj/me6VxFw0BSkfYgoBbAFXOT/d+OdxKdbl1jvF1JjQ2kxk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780568379; c=relaxed/simple;
+	bh=vDsizsc7GG5x3u29/NbTnWagansiBd9Y90NO5mg1Egg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AoFsQQkYt85yJMl2NJFr9JyZ612Y1jGWX7OFAFpq8dg0KTLR95EU0vntVGby1ddnmuUY0QcxGk56goviS7iLfwoe1kPdUmB0Q8jt7x4RbQGaustvlccgHthmdEosULhI6qN61DZkLcJ0oYWWju9JNfM7+0La9fZprhHLy9PbYpE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jkbC7AeT; arc=pass smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tElTbyPP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gD087K80"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6C04614000F1;
-	Thu,  4 Jun 2026 06:07:56 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 04 Jun 2026 06:07:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780567676;
-	 x=1780654076; bh=zxG8UBm2SAFJT0t/UvTPOEauJkAxh7EAF0/EnOA0Uko=; b=
-	tElTbyPPF0Mct2nawDZJKlrgX1wtEDn/k2O6hkpY6/99P2sBkopBwhikct/jTpsm
-	g3VPUwhWSkZqDH7FUZlmOVBYnoLy79R85WXe4nsGFdiSzEaP3xE4lVRlC7sDk4dc
-	BbshjQcO7U9aqIUjutX2eC+lCz35+TH5meayrGG523TicM5ITkNUrhN8MOj3HeYn
-	LSb/uL2KjFyw9ChQIfhVA1zrdJhASCl+TvlW3Z2hZ5ZZt9PdjLkr/Lp0QPzAnxBO
-	2iaKmBb92rko+KxUvwPX5aY4lbAi1M3afTqbZv4xNyev4OLWEKL4nfe3sv32U3X3
-	OQDXvQSx9205iTiDxDpz/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780567676; x=
-	1780654076; bh=zxG8UBm2SAFJT0t/UvTPOEauJkAxh7EAF0/EnOA0Uko=; b=g
-	D087K807JXJg1B94NqeIKdGZWMzuldlJVKMv/KRgTmmMO/gQeOXaQXFZaqVOM6OL
-	MrUT4WsBLEvZT1BXvZeUOwMaTjIAhv8PZTIpp8S4eaiiP/5xczraM0YjotSe4Oql
-	YG5nrurcrrQss4S8NJB2HdX2FsNKFexCk7+XzCoomXbwTJQs5JglOe+yIQBLitPr
-	CreD22YZyYA+8NmOfnxn7DCMAd4Uj1YcM6Br3JjcgjnJLEwMIkNEnrwyfNYZ1apb
-	b8hLUjwI0MXJ3P8oLvh/otLb7CuT1OcQqxI6f/Kc9KI8Ai6Lhaoqy3jy3ylHCuoT
-	9qMKMY4ILSLJOak/DYN4g==
-X-ME-Sender: <xms:fE4hapjIvb1u1jVMvP_9YmGogaSQq5HlYZjkZTJGGrgWNxkl9JTJoQ>
-    <xme:fE4halfw-LkvBLhOljAnEfA9RdktfXKS-68rsWK4P3PRVs3-_C_JU3AgHQU5JGUc-
-    2El9HSb8ZuCWyO1Cm5uFUddu6nLCJdlo7uEiCRfJefdsuznLOItxw>
-X-ME-Received: <xmr:fE4hameHng2-FT_3kWiqWSphSFLDwVLridStelvpSNKRBRI1r4Rfzk0Lj-ezl-Pqf0P7kObw_mq7m4yqGt7V8is5AdlLAPvX-VS6TmGnXfc>
-X-ME-Proxy-Cause: dmFkZTF97uXIgYi2XOVONy3OSnAk1KnYayqV+MuWi/V7XF4ljE2olCYVOAFXzrzYCEA0Nf
-    N90RNO8k6i6TKJ+3a5Iu3O2BdPv1FHvho+8i3yIq15qVJDJfCGrPva8qJcXlkJf0nk5EXC
-    CX/C0VRPpQUNcHD1NbLZLz+davAp6J/hinNSXl/sb2YfnaYUJgibYWWepM39TFCGNMSyE0
-    DcMEW0njie5NEET8/nM16xahWCiia4dQs9pgiSrdrhf/Ir/dn10/PI6Y8QXwhR8neProFE
-    Skwe2zbfptTB8vwwBLFZMP5eh6yOWeZe05fCZkJ+GNa3qJXTeCVO4ZK48d3rPA+let/mSM
-    kC9Vp/F6igXk/uIKIP11sfOc4ZDN2Ru3QwNaMGDeTfhuJNuH6082wndSmpNnThy39zoS3f
-    6Q655EmYoo6idhhQdFtijRapN2OHmE90RZYcn4hTJy1s6RLVgiiw6OiBtZj2Oc4U6t3wy0
-    18wQdxVrOS0KBwdJZG4WhG7ryWula2cSQGM7/ZLuUrn1JFb+BYCjOxRe6axZk+dq5f8IX2
-    0s+L+T5ebBL5TSLvd1DokKIVAK4DOHBOKtdZ0YTviB4VeJ2hxTh6ITpM8dgTbqUV1p6Rj1
-    +ZtKglo62qbSxjN/nl/9yyHAWIMOjrUyC9VJCv5kVFVOl/DNh2SmYusJRTMA
-X-ME-Proxy: <xmx:fE4han-05Ed5aS87wZY6nZlTR_cCJJ2lVE_jxV5ISfbFWsH5HHUHzg>
-    <xmx:fE4haqlvAAheSZaoSTw2q571GfPGzRiORe3ueKC1pIohw8JmhEDtjQ>
-    <xmx:fE4hah_i3lQtoTank3KMwLbhMvC7jbcH4DLa2jOaxn-gAF_GkdEcmA>
-    <xmx:fE4hagkrdSb-88C1RV7VPxCpXFL-jNPOFXfKevMoBPL1-IhGzPQFKA>
-    <xmx:fE4hagMsKMHpNQjmBSVg1vVuKHi-XSQT1XT7Yy60_XygqslX6CS5y1Bo>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 06:07:55 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8ee6deb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 10:07:55 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Jun 2026 12:07:38 +0200
-Subject: [PATCH v3 8/8] t: let prove fail when parsing invalid TAP output
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jkbC7AeT"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7dca5a81be2so5069767b3.2
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 03:19:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780568374; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Nwn7nU7x8r4atzYHnjcqXADz9XprG/XvrRHxafbd7g2Wy/QTL5DMyShFNgwUxRqhXi
+         +tj5lbbC9JygKTZnF83sHuaj9UBATh8xyUk9dzpXGDNGyPlWG5vNhb5lZ1NYNOavBWBt
+         ltUaJelJEdjZZloBAkwN6/+ai/jluaJhAnsPbK4tiBTOlbc/StrxKsIT2pMU7bJuS2rO
+         JS4i8rmoYd7OXzsgrchZVME2QsQ4MB7PB3Gix1xPHfSd376rencfMVlT7mVxBWHrZwWz
+         xzwC25LxKV3Bx5CIO/I1K0jOMc7otHQpnQ47JQd1twK9Oq0FkdHiGqOrY0d9O8HnSZB2
+         v5jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=MTU2gEVK5/xf2hdb7u9/VLDUaOp1t/OzXgx63NwYHkw=;
+        fh=XTFQAjE4S06Zz7iPh/eli7Q0QXL3PXw7ZSjG99UtJEU=;
+        b=SPfDHZjGEN57EVMdcuZ7JeZfGw/7QmbbZScCYw8niYmAyjw/1tCuSA9e8tGl1ffPNA
+         PgJDd8/GGDpdnkFY0lkUxX7QwfKBcb7cPNjtFJSAY8zY4/HjGpeNWnVjxlSDF/AXbFJ6
+         cyEsEufbWipCyhuVSwe0Lmbaf+N9IkjEEMF0m85p9rZ6KQ97h1HlApBSAhoeDiFgDI+D
+         e3MWHLes4McGrV3J7nNm4dXj6FsO1H6tkjSMYo/h9Hnzac55OTrivXVHW3tgu5D/TlR3
+         /k+CgyiEw/31wZvIfxEANbzyyxgkWbXggbdP7ofv8360aRf7NcnW24snBS9/3dkoEy2W
+         /A0Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780568374; x=1781173174; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MTU2gEVK5/xf2hdb7u9/VLDUaOp1t/OzXgx63NwYHkw=;
+        b=jkbC7AeTSMF2a2w5SOR0TAJ6Ol1NtPbDhED2ezrYUIHZec5jrs/So+FsytG/c8R3t6
+         im2s5vUs8wd6UpecXVrKe4/iynjzjp4D6majBLYIORxD4Ci99ySURuYAnlyOqwx/NEjQ
+         oNfohnTj6vdG5cPFttk2mXG2o8k+BTBBLKGqzPcjVJglsaquyUsn3ROwrtxetrPKQLZV
+         yiOFMJ2FVtrIh1XiyMeeG0Qur723vUme7FS0t9JNO1APiHfRE0fBthIh+02VlWhi/1MB
+         W+rRizyS31bFEvqrqLqDDyAHHPRK5B1pYq8Ybp+r/VCeBRiBorO/F7ANXxXEU3oOVQyM
+         r5Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780568374; x=1781173174;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=MTU2gEVK5/xf2hdb7u9/VLDUaOp1t/OzXgx63NwYHkw=;
+        b=PXUuG70WRQJxUnWcULZG7hH446hn19mKizAfZmaB5QR2VAHVz2cYUKG+UmV6rYkait
+         56m71jt68SfN6l9r0LYIP+d45g7taNIBGrNM7bFi5WoaNhJpbxzxXdEbsBvLKDkFM5MB
+         wFVPuLFcVc+Vbdk8H/EhXZb2YCxoNGquHGuGUWVu5p1oUmqqZKHt19nmw661Rla+7QUL
+         9KH18AH4WnT/00jzd78cfyrpW4rMNU9twvuYSPXvhbkchbSdmzVLHUtZLSDA9DKAQPpA
+         RBZIt+5+oD+Tf+E1eJuH1QJsmxxKRApT5UaheSvtZ/tjpKJCMF24XuA2ouf9WZJ98rnH
+         /hNw==
+X-Gm-Message-State: AOJu0Yys942mrHFPAuF4ZcFVaSFSh+s9/uTRSEBS+9n0ZMc4c2sX1PH6
+	fhboaIb8nAt8mtnNRqwvrZT+hqWik1Y2FsylljJxi23dFLEsywl3rddApXlktgIzFeh8l1ul4HY
+	WJs4nA7ewM4Z53SNRbLlTVIoRdYIPo+E=
+X-Gm-Gg: Acq92OEFR1B4ohq6DzWOWcsRIyH/AIgjGMStj6i0tlsUSQHk/2Tmdtt/zSGGxPEo8oe
+	a3x20XxbSNT4rWmY4i17rkgfYnbHxusgWJuF/0WY1K4CwRFqlcOKZrTTzvtmPulPjY2WR0XHhKe
+	UxUVRRC/y9Fhfl0L3vNGsYDfkFDe9/rYlT0b8HfafzV5uqHbK8L0bPwSEicWppeAzaeVXuVh8V/
+	D0mOEc6PsSGHBcTtWVxwFI72aoBV8AyVIGDniw0CvcWWDymuhW0kXmWq1pJrGYMxH28pfqXnZao
+	5XboCX4Ani8f2OItXdiffVgxahXE
+X-Received: by 2002:a05:690c:6001:b0:7bd:73f3:7a8d with SMTP id
+ 00721157ae682-7ea4c1bb51cmr59504707b3.42.1780568373992; Thu, 04 Jun 2026
+ 03:19:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-pks-t7527-fix-tap-output-v3-8-7d766ed481e4@pks.im>
-References: <20260604-pks-t7527-fix-tap-output-v3-0-7d766ed481e4@pks.im>
-In-Reply-To: <20260604-pks-t7527-fix-tap-output-v3-0-7d766ed481e4@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-Mailer: b4 0.15.2
+References: <20260602201309.38434-2-pushkarkumarsingh1970@gmail.com> <xmqqv7bzp0vc.fsf@gitster.g>
+In-Reply-To: <xmqqv7bzp0vc.fsf@gitster.g>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Thu, 4 Jun 2026 15:49:21 +0530
+X-Gm-Features: AVHnY4IVVckFL1LFU1Ftf0LZvh0p3a5koB0-B0boedPdzJiQTPU9fZ8U68dE5cU
+Message-ID: <CALE2CrTF_HexShFLdh-Z0zJHcyeB3jOrTxLieZS++1GVqTesjg@mail.gmail.com>
+Subject: Re: [PATCH] transport-helper: fix TSAN race in transfer_debug()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-To make the result of our tests accessible we use the TAP protocol. This
-protocol is parsed by either prove or by Meson. Unfortunately, these two
-tools differ when it comes to their strictness when parsing the
-protocol:
+Hi Junio,
 
-  - Prove by default happily accepts lines not specified by the
-    protocol.
+On Thu, Jun 4, 2026 at 6:39=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
 
-  - Meson will also accept such lines, but prints a big and ugly warning
-    message.
+> Would it be possible that transfer_debug_enabled is still -1 at this
+> point?  We would proceed in such a case, which is a bit different from
+> what would have happened in the original.
+>
+> Perhaps
+>
+>         if (transfer_debug_enabled <=3D 0)
+>                 return;
+>
+> is what you want?  I dunno.
 
-We have fixed our test suite in the past to not print invalid TAP lines
-anymore via b1dc2e796e (Merge branch 'ps/meson-tap-parse', 2025-06-17).
-But as none of our tools perform a strict check it's still possible for
-broken tests to sneak back in, like for example in 362f69547f (Merge
-branch 'ps/t1006-tap-fix', 2025-07-16). This doesn't hurt at all when
-using prove, but it's quite annoying when using Meson due to the
-generated warnings.
+You're right. The original code would never proceed while the value was sti=
+ll
+negative, whereas my change would.
 
-Unfortunately, there doesn't seem to be a portable way to make all tools
-complain about violations of the TAP format. The TAP 14 specification
-has added pragmas to the protocol that would allow us to say `pragma
-+strict`, and the effect of that would be to treat invalid TAP lines as
-a test failure. But the release of TAP 14 is still rather recent, and
-Test-Harness for example only gained support for it in version 3.48,
-which was released in 2023.
+I'll update it to use <=3D 0 and send a v2.
 
-In fact though, this pragma was already introduced as an inofficial
-extension of the TAP protocol with Test-Harness 3.10, released in 2008.
-So while not all tools understand the pragma, at least prove does for a
-long time.
-
-Unconditionally enable the pragma when using prove so that we'll detect
-tests that emit broken TAP output right away. This would have detected
-the issues fixed in preceding commits:
-
-    $ prove t7527-builtin-fsmonitor.sh
-    t7527-builtin-fsmonitor.sh .. All 69 subtests passed
-            (less 6 skipped subtests: 63 okay)
-
-    Test Summary Report
-    -------------------
-    t7527-builtin-fsmonitor.sh (Wstat: 0 Tests: 69 Failed: 0)
-      Parse errors: Unknown TAP token: "Initialized empty Git repository in /tmp/git/test_fsmonitor_smoke/.git/"
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/test-lib.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index d1d24c4124..ceefb99bff 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1532,6 +1532,12 @@ then
- 	BAIL_OUT 'You need to build test-tool; Run "make t/helper/test-tool" in the source (toplevel) directory'
- fi
- 
-+if test -n "$HARNESS_ACTIVE"
-+then
-+	say "TAP version 13"
-+	say "pragma +strict"
-+fi
-+
- # Are we running this test at all?
- remove_trash=
- this_test=${0##*/}
-
--- 
-2.54.0.1064.gd145956f57.dirty
-
+Thanks,
+Pushkar
