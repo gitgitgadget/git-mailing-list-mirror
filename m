@@ -1,86 +1,86 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378BF3C81B6
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 06:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5312E3D3333
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 06:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780553323; cv=none; b=hWrdKYgoAKq72AqADgxhPB4uM6afEd/nNFMw4NfUorbqnlDlVbxn2UH86ZGwzMyA5Vmj9/vAqCNfR+R6UCKa8JL3KFOWU6keeIRP9sl7ScpopMMMKntft4zj8P4EMhpyibOPN/8VN9tUDhl8yLtefyrkMKF5hFT7NtZOUGKee58=
+	t=1780553324; cv=none; b=ubTgSW7ni+Fr6iaGHPaxHPHij4qgPnn0I1ybTHLbb3FpxXaIlOrzhdhNXHwLcEZLkiuWVQu6HidJa4I4Qp1v3i8ph8Tm5ew2TYsji2pw74NIV9xNB5iQ7rKr0nq/4nZXxqk4FFx//zDtOx2WXGeDC4ibRbkFA+I6HNDBOZooBOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780553323; c=relaxed/simple;
-	bh=E4hm4imPAxumbZKSKbAbPsP56ZHUhpGHvWs2cY6ldoQ=;
+	s=arc-20240116; t=1780553324; c=relaxed/simple;
+	bh=51mhESjatpssLqXMtjXA83Naynfc9h1t2qAyi3Qk+s8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TsWgvuKHlSjINdhDCqrZZ2LY9+UyNwumiN9/bwwD/uKxaZm4fkZ/y+1LanPKmfRPwmuagnYbVF0YxkFfqxp6bffv1WZN9CgVJm/VG+QjJnx0n+8xatjXeCvh9Mu8gwMJn6AhtdPT99IhdojSRtHcEnwfVsQ8eP7Xe4CN7MPfnMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nnVwK4HA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UsAN5IC4; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=T2PqUXuOoAqwZFDI9i3wEbwD82B/0Rhh2121nTdX6aNGZ6voJ6wZe9Sdqi3myUCYZUtrp0Eh4rO657r0hi5ccM3hFt2+BNUFc+FBb1/PLX2sBhepClEQQmzdsBuTnswEwlUouPIrFzekdHezQ0iIjwSOlg/mOGAvGh0dsLOqbKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K6toexqF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IVNpdsbm; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nnVwK4HA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UsAN5IC4"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 48BB3EC00DA;
-	Thu,  4 Jun 2026 02:08:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K6toexqF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IVNpdsbm"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6C8C6EC00BD;
+	Thu,  4 Jun 2026 02:08:42 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Thu, 04 Jun 2026 02:08:40 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 04 Jun 2026 02:08:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780553320; x=1780639720; bh=QWaMrYbclF
-	UscuQ6cwqnlUIqgWta2lK78ttbpx8AUVA=; b=nnVwK4HApZHvtct92OP336oYxw
-	t6C3ngtodqwqOtQRSvZtRL3kRuHXeLKmoYaNoZ8Or8pBEgvEXS+uifaYefkUm5eA
-	t6AmuiqYI1W5m4RnL6rdcvPj8gMlYp0tol5B4qmMnNSArLIw3nqyEEsyJ7ZDgZMv
-	UAoaQjHezwlBYKZkwgl8AEcg3s+Wj/GyohSJqkIkJ+Cb5j8vyVRe/aG4lOECWyCF
-	fsrM7wlyHZQzOHsXDqwy5yoKpiA8qhmR/dJrjdRl05z+rZwtnZ9R+nbHX4YebuXo
-	H3t+/pUnGGGhF6fuOBEJWTF3FkvIoQRgs+PA+wJ5GlSMJySr5LWF//Afjo7g==
+	:subject:to:to; s=fm1; t=1780553322; x=1780639722; bh=wH/EEMakPJ
+	6ZnNKp/+HKwayXkxp3qj+p2XMa+ylv2rM=; b=K6toexqF3vB4g/zvROtMg0fkIz
+	UUgiVbfHm3TI+GyZFXrBhYMADuFSQAKSNRn72gzrsMiwpBwP58qXeNvOT8TLIpCD
+	WqIvYANMWOY0RUrlM/9wA2F6mGEf5989vpSDJsPqu60zn5Gv7WCJZSePiyUcnSwt
+	SZAcFDs6F7NTxIqh+cWfCqrgwyMnw+1B9LyKPbVZB9DQCBjEDJpBQBsZJmFBDQPI
+	FIGw8FNGWPjsDFokGpvBtYhnWTCxuEttvtFK0eeQKHNfmzEWX3Hd3pakmXeatuWp
+	D/TEyoQ70z5texpfFeGBc5bOEaoKL/4ks/+9cbVZUiAaQjCO+mIL3MmzpVGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780553320; x=1780639720; bh=QWaMrYbclFUscuQ6cwqnlUIqgWta2lK78tt
-	bpx8AUVA=; b=UsAN5IC4Vpoz8VQsIz2HmXySXKmniVFhWKD5+P0LKmbdBujaBZw
-	Lv7tx8exby4xh7ZD7QSuiBJJSH9surJhriHH5BjO9HweBWgE0gzLO/vdYv6Zu+Cd
-	uiBmxbdBps6NM08lvovZDztr9kXqSyn/004UxVNrH9Pb9pZjnMUc/1ZsZBrURT4p
-	vB+8e1AeHGNFyF17p0RqTuStCNoixoP489ZZc0R++c16blhlWHGjWCD+OO3WPJ1j
-	2+tVSCl+Xam4K27l2Sc6Top2tllbHJfiI1zc3dv7HuINuJA/SwfG+QWgkaaKFBx8
-	p22FCNJU+4rT1B/JEv3+TNoopIdL+j1rfLQ==
-X-ME-Sender: <xms:aBYhavp8sqR9-E3yY9gzo_b_Do1MEu7Lzhnlc4eiJCAEqRA_B9Ax2A>
-    <xme:aBYhagqT7uGQBXXtT-HW--b_5ie7sxjD7gI0mT8Zzh0oh34-4gZK6enIgRedwsf1F
-    bGujhMt2IF6VQlNOFFEtZlgu8JO_d4KqCa4f6Wa0BVXkRwCjp-A>
-X-ME-Received: <xmr:aBYhahOl0TETFxcTL6kxQX1M3i8xkvu9IpmKobnRRC_zgQK79qlsEPeLSstYXtAui7LE_zhu3cQSQqPm9IbQSGoWFm4v4IWnyap-x5MsUqA>
-X-ME-Proxy-Cause: dmFkZTEG5O1Ig8a25MsMeyCVGG0EMh3QAYq/eAFTv9iCEU2piC5DJIpW+h5/KrOiHaZ9PY
-    OulqVCVMxstih3CLqyyajL/rBLl+YPsknYXL3vSkHc83bwN/xhwXek2Rtia1KQ2IkCXJph
-    4BcnYVfE2kf/jJrDyGYMtgdwtCx3L0RMGrQqLF4ossO3C/pXqayIGOzwTUKc0JzV9CiIEe
-    up6rd7eAsHn2Gc3jPmKsb6DMRHX1iHD0jgW97MKhu9MVFBgV+7qTajHTmNHF7nhIY6Y71g
-    atYQzQOYDJdPLs8mhlzZQm6iZaiJLeMDrfKlglHb83P/uFGrMEOzbvYY5nJnMJkLEXLpDx
-    d+QWRS6s5l7SLHO61iTYYHyJ8xIm35imxaAnX/9ev+zHfyYPwZttLJrI70yXUL12oSIdZD
-    s3hZPrclsLyXFIy/4Ub45Mw+6npqQCmXjlT1ZMxuIxzakKZqtnGzva7wh71WOUMpfRsD30
-    l3yK3ayD1fitNKnzNGBYpg6tBprW9ud7ryDhek6lR3Fk9VsUFDZAcJ9SSDR3wVFuuFxjob
-    aoZaBMGf+5XP3UjwuMG0LdGO0vGtLfQ3/SVwtFPIzHRBceGN7zfUYOsbas9osZGyimM+e9
-    esbD61s3Ld8aq2/19RGER40XU+WpK8GpqBbBRWLUaDRI5CQfvvdgtmldyqHw
-X-ME-Proxy: <xmx:aBYhahxpNhHylmedKeRcH-oZkBrYRwAf-gBy5Mi70drDcGderK-76A>
-    <xmx:aBYhaqseqxEhf6MCr_Pj1YuvYf7yOwDDh7_5lxWcBscQHwK-Jaz0EA>
-    <xmx:aBYhaq7-oyFpXADjRWZ_G-AgiC47muoUYZxyJnkBLRNg4zqtKxxEdg>
-    <xmx:aBYhapTX9t1eiBtx7HwIU4phcdRLV46u-TY5fleGsRuZhh5ICdRrCA>
-    <xmx:aBYhagvBG04khNs-g1S0hLOEaGK38mzg8RMGndZc1Qct93-o45qF-SiM>
+	1780553322; x=1780639722; bh=wH/EEMakPJ6ZnNKp/+HKwayXkxp3qj+p2XM
+	a+ylv2rM=; b=IVNpdsbmpbZFyeS/xPbtnwkXWSAPFAmn+GJCbtSYANtxosqoIFI
+	IUHol1e/JONNKF9L6uW6bmGHtfxNvsSeE98+u6H+wb6wE1M0FadWPolhRQ009OrV
+	YATSlsrim7pRMbdZEJbY820a5lwlrCId3ADpyNpH/b/g7sFiVJP3ryizipBFOJQ+
+	lC65vMIj8nzWofNga9ACd3oZlfHJrVrItPkQlyzFLzT4kvxT+MDqo8DgfinMn7T7
+	mFib6vxqN6I8LXNzxsr7gBzfwSBU+7MIQ6JGK0U6Byg/5N0mpmHAe0wXNSziqbSJ
+	UqMgqlFVWoYoyXEAJj62T4jAhK6V1wyZdKw==
+X-ME-Sender: <xms:ahYhakQEjEoGxMZ0LZMWtj395YS2Gh65D1JKEcWgAHeQkB-RcumTbQ>
+    <xme:ahYhaoypUdPnQ4amwFpjj9HEwbXfcpvmU-wUDl1SG1f6I8tbbr8MhrhCUacU1ryD1
+    khmohBP-9bL1Og3RCnXmuQYdJE5C1GeEhZ87pOBK42GC8yyCdk>
+X-ME-Received: <xmr:ahYham0GE3u9tBRoRKgOOGEv2vc5xcByPAI5Fheq70XR_NLmHFq0qugquyx6Be5JGyu87rj2msWCTSZKErqWYDNP_y9a7fZVqVI3RJFcxO4>
+X-ME-Proxy-Cause: dmFkZTEWa4bkDooe2fPCI9HdwP6T79yj9fzYT46vmRc/PDlPgyVxd1UkTGYdvnQU6rbNfT
+    DoXsufeKSFObrnNvAes453ZwcYFDcLtIqJACThi/3B6xAkAz9VoaCfK3jSg+uAoL9Z7OIo
+    6nfPY9VwpMq7Q6YZlgOtx/uZ1JiEt2JthLf9LB2VE6wYfI9FOYLcc+qa552nI8aZlwuT92
+    MYBiXtq0oc9TrlqsTX6VQEPfuxAb51FHRww0cgXw5DUElTNtS/YCleMBnFywlvoYyHfJdp
+    1YJVFVI8ouHtkrMU7hJ9G3D8mhWb1FjHXBDr/2WPopvnVPz4RtlQfxIbYLoDiFlu84Knct
+    CMGyE9lmoj5XPYkMUU+gOIRC/7haY1hJI/pu4aveP/nd3iPRfSNHDoUQDhcEfjcNQNQDzA
+    vsVAIL3r1TQYWB9MNxH3VuYFiQPWdviLeRKK1j0gGURw6pgxmGuqOsGIgydHzv0p/sRAQV
+    +6KOXVqyq7PBllyCWDP4fwE90VkbWjHtPayoa7KRe6QKrByoUF6dGcdWMf9lbFApR+D/3J
+    clL9i9BKScX6YLK+NiW6sAWtWU/0P7UX9Kj8jwxuLkFnsDbjrtU5uo0qDwG2/h/EV1IZll
+    /NejCxUcIFhQ/4ioXGKBLVihESI3LLj+6CdIEFrC+EP519OXCs1K643F3cqw
+X-ME-Proxy: <xmx:ahYham64e8obfkWFO_wgPsaB8ouVVIt97oY_aVAADQFgjjEnan-yIg>
+    <xmx:ahYhapWQCXXGZIzzYyZ4SY9w2i8fafl9IVPbmbZWlhHRb1vyxa7i5g>
+    <xmx:ahYhalC76jokLPK2QdhPum4xk0sDdrrQyAL43e145ecDvjeB72o9uw>
+    <xmx:ahYhao605o-4b5Tz3Uy9goMcChh1ecmy4WHcgFbwdplyVwlR2tTp5g>
+    <xmx:ahYhauWWyIR1uAN-PSYlIxJGL8wTFVqYEnxTV57to99AGnE1aKOMQ1JM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 02:08:39 -0400 (EDT)
+ 4 Jun 2026 02:08:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 312d0b01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 06:08:36 +0000 (UTC)
-Date: Thu, 4 Jun 2026 08:08:33 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ff71dc8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Jun 2026 06:08:41 +0000 (UTC)
+Date: Thu, 4 Jun 2026 08:08:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/8] setup: deduplicate logic to apply repository
- format
-Message-ID: <aiEWYUzLHLCRfSKC@pks.im>
+Subject: Re: [PATCH v2 4/8] repository: stop initializing the object database
+ in `repo_set_gitdir()`
+Message-ID: <aiEWZo7Y-UXK4N3x@pks.im>
 References: <20260526-b4-pks-setup-centralize-odb-creation-v2-0-2fa5b385c13e@pks.im>
- <20260526-b4-pks-setup-centralize-odb-creation-v2-3-2fa5b385c13e@pks.im>
- <CAOLa=ZSnDz1+C8y7ozFDdv68vqLFk-E+FsXhAnhwbm2D6a1Fng@mail.gmail.com>
+ <20260526-b4-pks-setup-centralize-odb-creation-v2-4-2fa5b385c13e@pks.im>
+ <CAOLa=ZQ5u+J-f=xS7RDym0cwt+=R2dzMFo5P34cp-CBbza7NRg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,101 +89,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSnDz1+C8y7ozFDdv68vqLFk-E+FsXhAnhwbm2D6a1Fng@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQ5u+J-f=xS7RDym0cwt+=R2dzMFo5P34cp-CBbza7NRg@mail.gmail.com>
 
-On Wed, Jun 03, 2026 at 05:43:34AM -0700, Karthik Nayak wrote:
+On Wed, Jun 03, 2026 at 05:49:50AM -0700, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > > diff --git a/repository.c b/repository.c
-> > index db57b8308b..58a13f7c4f 100644
+> > index 58a13f7c4f..2c2395105f 100644
 > > --- a/repository.c
 > > +++ b/repository.c
-> > @@ -262,8 +262,8 @@ void repo_set_worktree(struct repository *repo, const char *path)
-> >  	trace2_def_repo(repo);
-> >  }
+> > @@ -181,12 +181,6 @@ void repo_set_gitdir(struct repository *repo,
+> >  	free(old_gitdir);
 > >
-> > -static int read_and_verify_repository_format(struct repository_format *format,
-> > -					     const char *commondir)
-> > +static int read_repository_format_from_commondir(struct repository_format *format,
-> > +						 const char *commondir)
-> 
-> Nit: The commit explicitly calls out one rename, but this one wasn't.
-
-Fair. I'll add a sentence or two about this.
-
-> > @@ -272,11 +272,6 @@ static int read_and_verify_repository_format(struct repository_format *format,
-> >  	read_repository_format(format, sb.buf);
-> >  	strbuf_reset(&sb);
-> >
-> > -	if (verify_repository_format(format, &sb) < 0) {
-> > -		warning("%s", sb.buf);
-> > -		ret = -1;
-> > -	}
+> >  	repo_set_commondir(repo, o->commondir);
+> > -
+> > -	if (!repo->objects)
+> > -		repo->objects = odb_new(repo, o->object_dir, o->alternate_db);
+> > -	else if (!o->skip_initializing_odb)
+> > -		BUG("cannot reinitialize an already-initialized object directory");
 > > -
 > 
-> So we remove this, so that the callee would independently verify the
-> format I assume.
-> 
-> Edit: seems like we call verify_repository_format() within
-> apply_repository_format() and the latter is called by the callee.
-> 
-> >  	strbuf_release(&sb);
-> >  	return ret;
-> >  }
+> This always confuses me, so we were creating the odb even if
+> `o->skip_initializing_odb` was set to true, if `repo->objects` didn't
+> exist. Weird.
 
-Yeah. I guess this could be explained a bit better.
-
-> > @@ -290,6 +285,8 @@ int repo_init(struct repository *repo,
-> >  	      const char *worktree)
-> >  {
-> >  	struct repository_format format = REPOSITORY_FORMAT_INIT;
-> > +	struct strbuf err = STRBUF_INIT;
-> > +
-> >  	memset(repo, 0, sizeof(*repo));
-> >
-> >  	initialize_repository(repo);
-> > @@ -297,21 +294,13 @@ int repo_init(struct repository *repo,
-> >  	if (repo_init_gitdir(repo, gitdir))
-> >  		goto error;
-> >
-> > -	if (read_and_verify_repository_format(&format, repo->commondir))
-> > +	if (read_repository_format_from_commondir(&format, repo->commondir))
-> >  		goto error;
-> >
-> > -	repo_set_hash_algo(repo, format.hash_algo);
-> > -	repo_set_compat_hash_algo(repo, format.compat_hash_algo);
-> > -	repo_set_ref_storage_format(repo, format.ref_storage_format,
-> > -				    format.ref_storage_payload);
-> > -	repo->repository_format_worktree_config = format.worktree_config;
-> > -	repo->repository_format_relative_worktrees = format.relative_worktrees;
-> > -	repo->repository_format_precious_objects = format.precious_objects;
-> > -	repo->repository_format_submodule_path_cfg = format.submodule_path_cfg;
-> > -
-> > -	/* take ownership of format.partial_clone */
-> 
-> I see that we now do an xstrdup for format.partial_clone, meaning we
-> have our own memory segment to care about. Do we have to worry about
-> format.partial_clone not being free'd?
-
-No, `clear_repository_format()` already releases the memory for us. It
-also did beforehand, but there we did the dance of just moving ownership
-over. So we already had to free the string before.
-
-> > diff --git a/setup.h b/setup.h
-> > index 9409326fe4..5ed92f53fa 100644
-> > --- a/setup.h
-> > +++ b/setup.h
-> > @@ -221,6 +221,15 @@ void clear_repository_format(struct repository_format *format);
-> >  int verify_repository_format(const struct repository_format *format,
-> >  			     struct strbuf *err);
-> >
-> > +/*
-> > + * Apply the given repository format to the repo. This initializes extensions
-> > + * and basic data structures required for normal operation. Returns 0 on
-> > + * success, a negative error code otherwise.
-> > + */
-> 
-> Nit: perhaps we should also mention that we verify the format?
-
-Will do.
+Agreed, it was weird. It was my first iteration towards centralizing
+`odb_new()`: before we had the above logic we were basically recreating
+the ODB multiple times, which was even more weird. At least things are
+getting somewhat sensible with this patch now.
 
 Patrick
