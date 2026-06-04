@@ -1,81 +1,80 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617433D6CB1
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 11:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF8E413D96
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 11:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780572345; cv=none; b=YrIkTezMSc8rFDi9FhIS74j6C5JLdMbcypQB26b4RM6t/zAkaoNKyO7kQ5WoctSY+Goi25NOFrbcj0lXQdMeEA8Jd/IlpHfB3nnpKej+Mk/Bi/b7X9EX8b5snP0A0azi67SA+7/17efYagpfut/K7dwMPGNpowWK2VqoEUba9TE=
+	t=1780572347; cv=none; b=G0s1RWgyHjr0vPDQ62Nrf4JR4iRFyWssd1L3lUO/izr4v+efE3iktx8Ibke/GrVaBtaVeSHvcmPLXXh2n6vHuKl3JHtf7M7a5t/cuyY+VUJnAn1dhzRQgo1hASNQ0DdRLwlpr/Iik/xAZANXat+df/wM+EVB3L4X4owi+rhc8A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780572345; c=relaxed/simple;
-	bh=7csg79iI+R/FoeliuG477kbtvuDjGUTRUBOPEwstCuA=;
+	s=arc-20240116; t=1780572347; c=relaxed/simple;
+	bh=5iYkzR6EQrxltxGBB9TGjJ6fidJkoglgRXdorMn75x4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YDjewqYkf7pKgL7Vaq206712g2p/g24tZIG1J1VG6Geszmt0U09cB5BCfIGLuFXLNkO8y9RsngHfnP4SuZtx+EauSjPhhBjuW019J5KXsT8xw4qH582uCSluhTA8yFzzOdo5RuwaPKb1w/GRfq1ZV8+7/b4EWo2k3yzThy5sKfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZR58Bp7B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M7bZGYkr; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=dOM+00vWV6JNdDJHKJFTNAd0h+vmBGB9m3ND/H0/cWXSwYC3YSApCHHaSOjrhW2lOk6IOXWtNAHRK8cNAadXzBfzb8Dfo5SSs2v97rW5aCunjKiy6zRmBzKOHnYMbf6amHQFzdIpv2J88RwLhAVBJueAJNj6cuzakuRpV84kmog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oGwEjcXu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OAmu75wf; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZR58Bp7B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M7bZGYkr"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A7C13EC00CE
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:25:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oGwEjcXu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OAmu75wf"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 62649EC00DB
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:25:45 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 04 Jun 2026 07:25:42 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 04 Jun 2026 07:25:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780572342;
-	 x=1780658742; bh=I7IFRgb7EG5KUsSH9FzdDu5A9lq1iUiMH1W1lWNlkR0=; b=
-	ZR58Bp7BhRg1bn294DrIF8bGWwxSsnQShWDmnEQF2i/SSz+WpfmxW1bUkFYZm7C9
-	x3Ck6tjPcUz/zsN5Tah4gw3ySlShHcOvJ6VbLPejTnPahipPdEwz19b0tXgJlehR
-	vYbRHuWeNw3Bn0WgBQzoVuIKkhRYoPWN/Uk4xIm7f3Q+sp3t0WTChuWlqKxyO4jP
-	R6BrfjHdR2YHbtorOG2o2CvIWbgef4deEShC6xFc0xBvM7xkjbD1MnHxRIA+X5cx
-	1FCyQgJk8reRAg3b8CJiWINT2zHp6aWWPx/AWwnp1bTEaOMOQW2NDVuqiyyvTMYQ
-	drdSOpW9bkE4zZdnuNLFJg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780572345;
+	 x=1780658745; bh=rVJCZmaIqVlG7yB4XwN5sg4oyNnetAqGZkBnfrmvZBQ=; b=
+	oGwEjcXuPtW6bUDnmiM80WNah5GWwUarHfCmeCtwtK+1LfEZY427McL6l+smNGTR
+	jste0G5vaNCJCd8uSqcETMm8aMwXNlnCCORxx3bqqZgl/S4o747g5lanzmKUJr7i
+	uKpeB02HC8qWbFYg+aWsAMt9Sbf/+jSOZHSRO7GQ/338faAj+3QaiB6UAKDa+vk2
+	gJW01xR7e4s5+bUb3Uuu8Y2hbqTGGp5bqxpBAjiVAknzTo7x06/YjjfJcFvp9K2C
+	USqO3CM3UQUfIDXo8h5e5u/Tg3reVqGiY642+5/HvnHEJeiYjN49ewXZqQHQIEEk
+	goDHIu6eZaLRz3/JYUeocA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780572342; x=
-	1780658742; bh=I7IFRgb7EG5KUsSH9FzdDu5A9lq1iUiMH1W1lWNlkR0=; b=M
-	7bZGYkrPrCRUdXoDxHuG3gEJo0xQ5yUiXfyG242Wzox9LYCjMXExg7GgDlGlIFfk
-	a/fWUYGyceSRuZjDsp2QTn79awo25I0WrtVYtJkLniv81vlHj0gurCTSic6DNuG/
-	3PIM9UvGpgDlNBXTh5v7JkAnP+jjYnzMuivgnUlTfhBkv/nPkO/XSqqNrIXgW4ne
-	YZNOarxJG4KJJhUDlmk2p1g/T09XzRiuROZY38Zd1oEVUvhSqxAClCk77UCHdSD7
-	KLJzSUHHZ/8/SNquZmNjtpDL4/r0rfsxtH1BJdUCzWSM0tSeg6QlEw84kNkkH9uY
-	10wpEUw3PP9wU4GINFjGw==
-X-ME-Sender: <xms:tmAhalCEia63OWIHZuDia981_XnRgV6NJ2b1Yw7BhlXlA3dXHxfFrA>
-    <xme:tmAhaqdKzd3gYLNJgKZfO30nw8msguH_PaozjbcP3j-_aqXNRD8r5Y2_UALFlF8GV
-    qT77GZpzgcft3-3j096YgImeDpk0Vur0P-5fGG7tEnK3QB_vW8YJkY>
-X-ME-Received: <xmr:tmAhamM-kQFyETsOfUUoATK6UUE5FWr-fN-tVT3Kg4LFElffnUzRXuJa1ScsSxCYspy0a0_fwwniP36XWTD4jcaD2CygW21tsaPoiXgulto>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780572345; x=
+	1780658745; bh=rVJCZmaIqVlG7yB4XwN5sg4oyNnetAqGZkBnfrmvZBQ=; b=O
+	Amu75wfrAV2cdz5MlzazEfDbZPieXADbeNCB3QzO0W+xObsmjyEwMEtYDSHSYkrt
+	mcLWtamOFbkwOwN0Zg1jk71UzcQ02mEF+YCMxIUqFwgPBnoaCNfgBsiWZnkyoJfy
+	sasZI1WN8Py8EswGNj4YHPdOr6mWSo7/yD0CASPkO44Ncv2L8BpaDTR+y2P6fUj8
+	H0YV6SNqlNC+pKMRUsf0oIK6jfMYj1sN9YXPdMaMjS9vLV+e90L4MYqARoZ8M3dZ
+	ne4/QTlmWtc+fff6Rq6mlbbHbbY9Qto2p765uJQpKetVP1Be/ICxnHdOJfV564ml
+	ibUPwFFQRv9Uh+PoP/QZA==
+X-ME-Sender: <xms:uWAhaiPeGBPBRWKe-f5OaB2cI6TxWwOFqtv0BL1_lRDh0Yy2pQFQBw>
+    <xme:uWAhan4bDkLN7U0MrGFHwocmGyJaEmzemn75Ji6waG-N0yYVIF-cM3udJRdqAxcEO
+    HLcF8QqIzIDH-HLUiZZ5pTj-nqD81C5sf937dEeAm5evmyw59TShKU>
+X-ME-Received: <xmr:uWAhau5T_-RLvr2OHCUedSbcZSKCa5kzE4CAMFuRVzBgUuWKFI0EK0g6rSoRQ7eyJR1VySFnpmQVpwQd_w-5bqP7MrUYba2XAWYLIEurqd8>
 X-ME-Proxy-Cause: dmFkZTG1ZbTSTCt+QGOBx/ozxIEQhARBqr0/SlqS3JC3+zb5glHSVG1aoMYIj9aqeIu0zy
     sFSu/10DzZ9FxuAnUcFX6wAMbP9bcQrm5ozYikXKxnDFDplVWXkO3AcE+a89ybngC3lrIz
     /GVY5rm27PVrHphkJl/OHdHOPrCII5MKB9fWDnt3CbmEK2TBDSFR2xtzwFeqzHWM4uomo5
     7XY5VmmSTadEWmtllR1d1OawV3IdNUcjNTdgTRjA6Zegw5qOpq6fI/Dca+wbibUmVoNStb
-    renMzkGmdPq7kqvux3p6g6SuTVtljNZSpQco4BML6yeKWNkQha+6iZyZlP37J3M3wliocm
-    ZjJ7UmFm1bulNLyHM8aXPDuEc7U6C4Fb7UfwR+k62k6sR+syTG1nH8b+8QnOvx4N1xOzRX
-    kvNiEmyq4HupfDJNdEjRrBetWM54rwegFVD/pi0Sc9cxDTK1pS9mhJ5zrDOX/n/nh8KsxC
-    +k7Ri3pv3Kd5ISAN6I0RwdnNCp17cgvoIZNP/2Ukk1oivmDrHAHv6oHYBe2Y2LU64YpjoL
-    SIQH8CsJOQ+fJbtrqGX3OjWE9Xw3Qp3FmACId82FruWBFndQFC98NcsFeKjLXU8A9lh6Kf
-    O6fhIDaqocdI7VZkFBc6GkvxtRwUDPV+QF2tjTpGstKND3p3fDvrzuEdE1VQ
-X-ME-Proxy: <xmx:tmAhak4Dnu5GzYJQxK_73WCFKaK1kkZBhfDKNgsX2YvpVUOnOLD3Zg>
-    <xmx:tmAhaqJxTOEch4njDFj68oCYrYazIRX1o_MuaYxiAWHzn2YmKTbzmQ>
-    <xmx:tmAhaufappoNE68rHuv9qkyOlRpJiXrSJWXVM0zRhy2R8eZxErKwYA>
-    <xmx:tmAhatfHqe-Iuq2MQn3WBbrvNP1hFo9VM6pWsbKlDYrJDeFHui3n_Q>
-    <xmx:tmAhakDCcfOTw8S7TZwp4lHFjbSS4TEfT2YQuVEfhhuTELXTdeu0CuWL>
+    renMzkGmdPq7kqvux3p6g6SuTVtljNZSpQco4BML6yeKWNkQha+6iZyZlP37J3M3wliomO
+    8ZmU9rYD4FuJBbbutOdsdqhvsP42sKpxMluiLutNMW76nrvO8hQxmci4uAkqwwU4l/cXzl
+    44Y/j+O11hiBwkozidJb7RCcZn6n954q7HZI30Q8OW7onJnGB3fDZ0nENVWrL9nCEq9ByR
+    7zlMZlDP2peP5GhwGAWo63JsxCK3PE+wODidICvU2ujRQa8I138chjAC/HlBkwRfqI10lI
+    DN4McaBNbobAND4fO97J8v0ZAuwdnBxvWpFa/w7oGZcpfbz+9vAUd69//2eNP/oc0PTxLN
+    +GOE1iNhsjFwRjxEbM12LcKNILSIPqDVk90WcPplaMAGm2XhvxTh4w5m8bVg
+X-ME-Proxy: <xmx:uWAhan0R_BHflW7M1hNZhF-lvHJz2XtVjm7e07zFgcFY--I8MD6oRw>
+    <xmx:uWAhaqW1akaBhWdtgTidVFkkAsAED2MRYq0mwyHkc0ZS5jBDiTAJQg>
+    <xmx:uWAhai6CaCbhWyga-URPbYY2gD5TjXYX7tczDP9R84R570IcWcCJTg>
+    <xmx:uWAhahLL2zRPw5nwiSj1Dcoy9-_uU9EVpGBvByjWVX1cSKLJ1aKJ-w>
+    <xmx:uWAhai-6u7e4KydoC6N_NO7PvvMCzxpokcAZyeeQ32ZyU4pCaSRy-PSe>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 4 Jun 2026 07:25:42 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 4 Jun 2026 07:25:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cbcf63b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id d5ae73af (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 4 Jun 2026 11:25:41 +0000 (UTC)
+	Thu, 4 Jun 2026 11:25:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Jun 2026 13:25:28 +0200
-Subject: [PATCH 01/16] packfile: rename `struct packfile_store` to
- `odb_source_packed`
+Date: Thu, 04 Jun 2026 13:25:29 +0200
+Subject: [PATCH 02/16] packfile: move packed source into "odb/" subsystem
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,416 +83,294 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-pks-odb-source-packed-v1-1-2e7ab31b4b5c@pks.im>
+Message-Id: <20260604-pks-odb-source-packed-v1-2-2e7ab31b4b5c@pks.im>
 References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
 In-Reply-To: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Not too long ago, we have introduced the packfile store in b7983adb51
-(packfile: introduce a new `struct packfile_store`, 2025-09-23). This
-struct is responsible for managing all of our access to packfiles and is
-used as one of the two sources of objects for the "files" source.
+In subsequent patches we'll be turning `struct odb_source_packed` into a
+proper `struct odb_source`. As a first step towards this goal, move its
+struct out of "packfile.{c,h}" and into "odb/source-packed.{c,h}".
 
-Back when I introduced this structure I didn't have the clear vision yet
-that it will eventually also turn into a proper object database source,
-and how exactly that infrastructure will look like. Now though it's
-becoming increasingly clear that it does make sense to treat it just the
-same as any of our other ODB sources.
-
-The consequence is that the naming is now a bit out-of-date: it's just
-another source and will be turned into a proper `struct odb_source` over
-the next couple of commits, but it's not named accordingly.
-
-Rename the structure to `odb_source_packed` to align it with this goal
-and to bring it in line with the other sources we already have.
+This detaches the implementation of the packfile object source from the
+generic packfile code, following the same convention already used by the
+"files" and "in-memory" sources.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-files.h |  4 ++--
- packfile.c         | 56 +++++++++++++++++++++++++++---------------------------
- packfile.h         | 32 +++++++++++++++----------------
- 3 files changed, 46 insertions(+), 46 deletions(-)
+ Makefile            |  1 +
+ meson.build         |  1 +
+ odb/source-files.c  |  2 +-
+ odb/source-packed.c | 11 ++++++++
+ odb/source-packed.h | 80 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ packfile.c          |  9 ------
+ packfile.h          | 75 +------------------------------------------------
+ 7 files changed, 95 insertions(+), 84 deletions(-)
 
-diff --git a/odb/source-files.h b/odb/source-files.h
-index 23a3b4e04b..d7ac3c1c81 100644
---- a/odb/source-files.h
-+++ b/odb/source-files.h
-@@ -4,7 +4,7 @@
- #include "odb/source.h"
+diff --git a/Makefile b/Makefile
+index 0976a69b4c..e3381b8857 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1218,6 +1218,7 @@ LIB_OBJS += odb/source.o
+ LIB_OBJS += odb/source-files.o
+ LIB_OBJS += odb/source-inmemory.o
+ LIB_OBJS += odb/source-loose.o
++LIB_OBJS += odb/source-packed.o
+ LIB_OBJS += odb/streaming.o
+ LIB_OBJS += odb/transaction.o
+ LIB_OBJS += oid-array.o
+diff --git a/meson.build b/meson.build
+index 3247697f74..1976024008 100644
+--- a/meson.build
++++ b/meson.build
+@@ -406,6 +406,7 @@ libgit_sources = [
+   'odb/source-files.c',
+   'odb/source-inmemory.c',
+   'odb/source-loose.c',
++  'odb/source-packed.c',
+   'odb/streaming.c',
+   'odb/transaction.c',
+   'oid-array.c',
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 5bdd042922..191562f316 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -269,7 +269,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
+ 	CALLOC_ARRAY(files, 1);
+ 	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, path, local);
+ 	files->loose = odb_source_loose_new(odb, path, local);
+-	files->packed = packfile_store_new(&files->base);
++	files->packed = odb_source_packed_new(&files->base);
  
- struct odb_source_loose;
--struct packfile_store;
-+struct odb_source_packed;
- 
- /*
-  * The files object database source uses a combination of loose objects and
-@@ -13,7 +13,7 @@ struct packfile_store;
- struct odb_source_files {
- 	struct odb_source base;
- 	struct odb_source_loose *loose;
--	struct packfile_store *packed;
-+	struct odb_source_packed *packed;
- };
- 
- /* Allocate and initialize a new object source. */
+ 	files->base.free = odb_source_files_free;
+ 	files->base.close = odb_source_files_close;
+diff --git a/odb/source-packed.c b/odb/source-packed.c
+new file mode 100644
+index 0000000000..1e94b47ea0
+--- /dev/null
++++ b/odb/source-packed.c
+@@ -0,0 +1,11 @@
++#include "git-compat-util.h"
++#include "odb/source-packed.h"
++
++struct odb_source_packed *odb_source_packed_new(struct odb_source *source)
++{
++	struct odb_source_packed *store;
++	CALLOC_ARRAY(store, 1);
++	store->source = source;
++	strmap_init(&store->packs_by_path);
++	return store;
++}
+diff --git a/odb/source-packed.h b/odb/source-packed.h
+new file mode 100644
+index 0000000000..c17068a4f1
+--- /dev/null
++++ b/odb/source-packed.h
+@@ -0,0 +1,80 @@
++#ifndef ODB_SOURCE_PACKED_H
++#define ODB_SOURCE_PACKED_H
++
++#include "odb/source.h"
++#include "strmap.h"
++
++struct packfile_list {
++	struct packfile_list_entry *head, *tail;
++};
++
++struct packfile_list_entry {
++	struct packfile_list_entry *next;
++	struct packed_git *pack;
++};
++
++/*
++ * A store that manages packfiles for a given object database.
++ */
++struct odb_source_packed {
++	struct odb_source *source;
++
++	/*
++	 * The list of packfiles in the order in which they have been most
++	 * recently used.
++	 */
++	struct packfile_list packs;
++
++	/*
++	 * Cache of packfiles which are marked as "kept", either because there
++	 * is an on-disk ".keep" file or because they are marked as "kept" in
++	 * memory.
++	 *
++	 * Should not be accessed directly, but via
++	 * `packfile_store_get_kept_pack_cache()`. The list of packs gets
++	 * invalidated when the stored flags and the flags passed to
++	 * `packfile_store_get_kept_pack_cache()` mismatch.
++	 */
++	struct {
++		struct packed_git **packs;
++		unsigned flags;
++	} kept_cache;
++
++	/* The multi-pack index that belongs to this specific packfile store. */
++	struct multi_pack_index *midx;
++
++	/*
++	 * A map of packfile names to packed_git structs for tracking which
++	 * packs have been loaded already.
++	 */
++	struct strmap packs_by_path;
++
++	/*
++	 * Whether packfiles have already been populated with this store's
++	 * packs.
++	 */
++	bool initialized;
++
++	/*
++	 * Usually, packfiles will be reordered to the front of the `packs`
++	 * list whenever an object is looked up via them. This has the effect
++	 * that packs that contain a lot of accessed objects will be located
++	 * towards the front.
++	 *
++	 * This is usually desireable, but there are exceptions. One exception
++	 * is when the looking up multiple objects in a loop for each packfile.
++	 * In that case, we may easily end up with an infinite loop as the
++	 * packfiles get reordered to the front repeatedly.
++	 *
++	 * Setting this field to `true` thus disables these reorderings.
++	 */
++	bool skip_mru_updates;
++};
++
++/*
++ * Allocate and initialize a new empty packfile store for the given object
++ * database source.
++ */
++struct odb_source_packed *odb_source_packed_new(struct odb_source *source);
++
++#endif
 diff --git a/packfile.c b/packfile.c
-index 89366abfe3..a2d768d0ae 100644
+index a2d768d0ae..f2b27df66e 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -859,7 +859,7 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
- 	return p;
- }
- 
--void packfile_store_add_pack(struct packfile_store *store,
-+void packfile_store_add_pack(struct odb_source_packed *store,
- 			     struct packed_git *pack)
- {
- 	if (pack->pack_fd != -1)
-@@ -869,7 +869,7 @@ void packfile_store_add_pack(struct packfile_store *store,
- 	strmap_put(&store->packs_by_path, pack->pack_name, pack);
- }
- 
--struct packed_git *packfile_store_load_pack(struct packfile_store *store,
-+struct packed_git *packfile_store_load_pack(struct odb_source_packed *store,
- 					    const char *idx_path, int local)
- {
- 	struct strbuf key = STRBUF_INIT;
-@@ -1068,7 +1068,7 @@ static int sort_pack(const struct packfile_list_entry *a,
- 	return -1;
- }
- 
--void packfile_store_prepare(struct packfile_store *store)
-+void packfile_store_prepare(struct odb_source_packed *store)
- {
- 	if (store->initialized)
- 		return;
-@@ -1084,13 +1084,13 @@ void packfile_store_prepare(struct packfile_store *store)
- 	store->initialized = true;
- }
- 
--void packfile_store_reprepare(struct packfile_store *store)
-+void packfile_store_reprepare(struct odb_source_packed *store)
- {
- 	store->initialized = false;
- 	packfile_store_prepare(store);
- }
- 
--struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *store)
-+struct packfile_list_entry *packfile_store_get_packs(struct odb_source_packed *store)
- {
- 	packfile_store_prepare(store);
- 
-@@ -1103,7 +1103,7 @@ struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *stor
- 	return store->packs.head;
- }
- 
--int packfile_store_count_objects(struct packfile_store *store,
-+int packfile_store_count_objects(struct odb_source_packed *store,
- 				 enum odb_count_objects_flags flags UNUSED,
- 				 unsigned long *out)
- {
-@@ -2160,7 +2160,7 @@ static int fill_pack_entry(const struct object_id *oid,
- 	return 1;
- }
- 
--static int find_pack_entry(struct packfile_store *store,
-+static int find_pack_entry(struct odb_source_packed *store,
- 			   const struct object_id *oid,
- 			   struct pack_entry *e)
- {
-@@ -2183,7 +2183,7 @@ static int find_pack_entry(struct packfile_store *store,
+@@ -2832,15 +2832,6 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
  	return 0;
  }
  
--int packfile_store_freshen_object(struct packfile_store *store,
-+int packfile_store_freshen_object(struct odb_source_packed *store,
- 				  const struct object_id *oid)
- {
- 	struct pack_entry e;
-@@ -2199,7 +2199,7 @@ int packfile_store_freshen_object(struct packfile_store *store,
- 	return 1;
- }
- 
--int packfile_store_read_object_info(struct packfile_store *store,
-+int packfile_store_read_object_info(struct odb_source_packed *store,
- 				    const struct object_id *oid,
- 				    struct object_info *oi,
- 				    enum object_info_flags flags)
-@@ -2234,7 +2234,7 @@ int packfile_store_read_object_info(struct packfile_store *store,
- 	return 0;
- }
- 
--static void maybe_invalidate_kept_pack_cache(struct packfile_store *store,
-+static void maybe_invalidate_kept_pack_cache(struct odb_source_packed *store,
- 					     unsigned flags)
- {
- 	if (!store->kept_cache.packs)
-@@ -2245,7 +2245,7 @@ static void maybe_invalidate_kept_pack_cache(struct packfile_store *store,
- 	store->kept_cache.flags = 0;
- }
- 
--struct packed_git **packfile_store_get_kept_pack_cache(struct packfile_store *store,
-+struct packed_git **packfile_store_get_kept_pack_cache(struct odb_source_packed *store,
- 						       unsigned flags)
- {
- 	maybe_invalidate_kept_pack_cache(store, flags);
-@@ -2365,8 +2365,8 @@ int for_each_object_in_pack(struct packed_git *p,
- 	return r;
- }
- 
--struct packfile_store_for_each_object_wrapper_data {
--	struct packfile_store *store;
-+struct odb_source_packed_for_each_object_wrapper_data {
-+	struct odb_source_packed *store;
- 	const struct object_info *request;
- 	odb_for_each_object_cb cb;
- 	void *cb_data;
-@@ -2377,7 +2377,7 @@ static int packfile_store_for_each_object_wrapper(const struct object_id *oid,
- 						  uint32_t index_pos,
- 						  void *cb_data)
- {
--	struct packfile_store_for_each_object_wrapper_data *data = cb_data;
-+	struct odb_source_packed_for_each_object_wrapper_data *data = cb_data;
- 
- 	if (data->request) {
- 		off_t offset = nth_packed_object_offset(pack, index_pos);
-@@ -2411,10 +2411,10 @@ static int match_hash(unsigned len, const unsigned char *a, const unsigned char
- }
- 
- static int for_each_prefixed_object_in_midx(
--	struct packfile_store *store,
-+	struct odb_source_packed *store,
- 	struct multi_pack_index *m,
- 	const struct odb_for_each_object_options *opts,
--	struct packfile_store_for_each_object_wrapper_data *data)
-+	struct odb_source_packed_for_each_object_wrapper_data *data)
- {
- 	int ret;
- 
-@@ -2470,10 +2470,10 @@ static int for_each_prefixed_object_in_midx(
- }
- 
- static int for_each_prefixed_object_in_pack(
--	struct packfile_store *store,
-+	struct odb_source_packed *store,
- 	struct packed_git *p,
- 	const struct odb_for_each_object_options *opts,
--	struct packfile_store_for_each_object_wrapper_data *data)
-+	struct odb_source_packed_for_each_object_wrapper_data *data)
- {
- 	uint32_t num, i, first = 0;
- 	int len = opts->prefix_hex_len > p->repo->hash_algo->hexsz ?
-@@ -2519,9 +2519,9 @@ static int for_each_prefixed_object_in_pack(
- }
- 
- static int packfile_store_for_each_prefixed_object(
--	struct packfile_store *store,
-+	struct odb_source_packed *store,
- 	const struct odb_for_each_object_options *opts,
--	struct packfile_store_for_each_object_wrapper_data *data)
-+	struct odb_source_packed_for_each_object_wrapper_data *data)
- {
- 	struct packfile_list_entry *e;
- 	struct multi_pack_index *m;
-@@ -2566,13 +2566,13 @@ static int packfile_store_for_each_prefixed_object(
- 	return ret;
- }
- 
--int packfile_store_for_each_object(struct packfile_store *store,
-+int packfile_store_for_each_object(struct odb_source_packed *store,
- 				   const struct object_info *request,
- 				   odb_for_each_object_cb cb,
- 				   void *cb_data,
- 				   const struct odb_for_each_object_options *opts)
- {
--	struct packfile_store_for_each_object_wrapper_data data = {
-+	struct odb_source_packed_for_each_object_wrapper_data data = {
- 		.store = store,
- 		.request = request,
- 		.cb = cb,
-@@ -2707,7 +2707,7 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
- 	*out = len;
- }
- 
--int packfile_store_find_abbrev_len(struct packfile_store *store,
-+int packfile_store_find_abbrev_len(struct odb_source_packed *store,
- 				   const struct object_id *oid,
- 				   unsigned min_len,
- 				   unsigned *out)
-@@ -2832,16 +2832,16 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
- 	return 0;
- }
- 
--struct packfile_store *packfile_store_new(struct odb_source *source)
-+struct odb_source_packed *packfile_store_new(struct odb_source *source)
- {
--	struct packfile_store *store;
-+	struct odb_source_packed *store;
- 	CALLOC_ARRAY(store, 1);
- 	store->source = source;
- 	strmap_init(&store->packs_by_path);
- 	return store;
- }
- 
--void packfile_store_free(struct packfile_store *store)
-+void packfile_store_free(struct odb_source_packed *store)
+-struct odb_source_packed *packfile_store_new(struct odb_source *source)
+-{
+-	struct odb_source_packed *store;
+-	CALLOC_ARRAY(store, 1);
+-	store->source = source;
+-	strmap_init(&store->packs_by_path);
+-	return store;
+-}
+-
+ void packfile_store_free(struct odb_source_packed *store)
  {
  	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next)
- 		free(e->pack);
-@@ -2851,7 +2851,7 @@ void packfile_store_free(struct packfile_store *store)
- 	free(store);
- }
- 
--void packfile_store_close(struct packfile_store *store)
-+void packfile_store_close(struct odb_source_packed *store)
- {
- 	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next) {
- 		if (e->pack->do_not_close)
-@@ -2988,7 +2988,7 @@ int packfile_read_object_stream(struct odb_read_stream **out,
- }
- 
- int packfile_store_read_object_stream(struct odb_read_stream **out,
--				      struct packfile_store *store,
-+				      struct odb_source_packed *store,
- 				      const struct object_id *oid)
- {
- 	struct pack_entry e;
 diff --git a/packfile.h b/packfile.h
-index 49d6bdecf6..9cec15bc50 100644
+index 9cec15bc50..6f76df3589 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -79,7 +79,7 @@ struct packed_git *packfile_list_find_oid(struct packfile_list_entry *packs,
- /*
-  * A store that manages packfiles for a given object database.
-  */
--struct packfile_store {
-+struct odb_source_packed {
- 	struct odb_source *source;
+@@ -5,9 +5,9 @@
+ #include "object.h"
+ #include "odb.h"
+ #include "odb/source-files.h"
++#include "odb/source-packed.h"
+ #include "oidset.h"
+ #include "repository.h"
+-#include "strmap.h"
  
- 	/*
-@@ -138,19 +138,19 @@ struct packfile_store {
-  * Allocate and initialize a new empty packfile store for the given object
-  * database source.
-  */
--struct packfile_store *packfile_store_new(struct odb_source *source);
-+struct odb_source_packed *packfile_store_new(struct odb_source *source);
+ /* in odb.h */
+ struct object_info;
+@@ -54,15 +54,6 @@ struct packed_git {
+ 	char pack_name[FLEX_ARRAY]; /* more */
+ };
  
+-struct packfile_list {
+-	struct packfile_list_entry *head, *tail;
+-};
+-
+-struct packfile_list_entry {
+-	struct packfile_list_entry *next;
+-	struct packed_git *pack;
+-};
+-
+ void packfile_list_clear(struct packfile_list *list);
+ void packfile_list_remove(struct packfile_list *list, struct packed_git *pack);
+ void packfile_list_prepend(struct packfile_list *list, struct packed_git *pack);
+@@ -76,70 +67,6 @@ void packfile_list_append(struct packfile_list *list, struct packed_git *pack);
+ struct packed_git *packfile_list_find_oid(struct packfile_list_entry *packs,
+ 					  const struct object_id *oid);
+ 
+-/*
+- * A store that manages packfiles for a given object database.
+- */
+-struct odb_source_packed {
+-	struct odb_source *source;
+-
+-	/*
+-	 * The list of packfiles in the order in which they have been most
+-	 * recently used.
+-	 */
+-	struct packfile_list packs;
+-
+-	/*
+-	 * Cache of packfiles which are marked as "kept", either because there
+-	 * is an on-disk ".keep" file or because they are marked as "kept" in
+-	 * memory.
+-	 *
+-	 * Should not be accessed directly, but via
+-	 * `packfile_store_get_kept_pack_cache()`. The list of packs gets
+-	 * invalidated when the stored flags and the flags passed to
+-	 * `packfile_store_get_kept_pack_cache()` mismatch.
+-	 */
+-	struct {
+-		struct packed_git **packs;
+-		unsigned flags;
+-	} kept_cache;
+-
+-	/* The multi-pack index that belongs to this specific packfile store. */
+-	struct multi_pack_index *midx;
+-
+-	/*
+-	 * A map of packfile names to packed_git structs for tracking which
+-	 * packs have been loaded already.
+-	 */
+-	struct strmap packs_by_path;
+-
+-	/*
+-	 * Whether packfiles have already been populated with this store's
+-	 * packs.
+-	 */
+-	bool initialized;
+-
+-	/*
+-	 * Usually, packfiles will be reordered to the front of the `packs`
+-	 * list whenever an object is looked up via them. This has the effect
+-	 * that packs that contain a lot of accessed objects will be located
+-	 * towards the front.
+-	 *
+-	 * This is usually desireable, but there are exceptions. One exception
+-	 * is when the looking up multiple objects in a loop for each packfile.
+-	 * In that case, we may easily end up with an infinite loop as the
+-	 * packfiles get reordered to the front repeatedly.
+-	 *
+-	 * Setting this field to `true` thus disables these reorderings.
+-	 */
+-	bool skip_mru_updates;
+-};
+-
+-/*
+- * Allocate and initialize a new empty packfile store for the given object
+- * database source.
+- */
+-struct odb_source_packed *packfile_store_new(struct odb_source *source);
+-
  /*
   * Free the packfile store and all its associated state. All packfiles
   * tracked by the store will be closed.
-  */
--void packfile_store_free(struct packfile_store *store);
-+void packfile_store_free(struct odb_source_packed *store);
- 
- /*
-  * Close all packfiles associated with this store. The packfiles won't be
-  * free'd, so they can be re-opened at a later point in time.
-  */
--void packfile_store_close(struct packfile_store *store);
-+void packfile_store_close(struct odb_source_packed *store);
- 
- /*
-  * Prepare the packfile store by loading packfiles and multi-pack indices for
-@@ -159,7 +159,7 @@ void packfile_store_close(struct packfile_store *store);
-  * It shouldn't typically be necessary to call this function directly, as
-  * functions that access the store know to prepare it.
-  */
--void packfile_store_prepare(struct packfile_store *store);
-+void packfile_store_prepare(struct odb_source_packed *store);
- 
- /*
-  * Clear the packfile caches and try to look up any new packfiles that have
-@@ -167,20 +167,20 @@ void packfile_store_prepare(struct packfile_store *store);
-  *
-  * This function must be called under the `odb_read_lock()`.
-  */
--void packfile_store_reprepare(struct packfile_store *store);
-+void packfile_store_reprepare(struct odb_source_packed *store);
- 
- /*
-  * Add the pack to the store so that contained objects become accessible via
-  * the store. This moves ownership into the store.
-  */
--void packfile_store_add_pack(struct packfile_store *store,
-+void packfile_store_add_pack(struct odb_source_packed *store,
- 			     struct packed_git *pack);
- 
- /*
-  * Get all packs managed by the given store, including packfiles that are
-  * referenced by multi-pack indices.
-  */
--struct packfile_list_entry *packfile_store_get_packs(struct packfile_store *store);
-+struct packfile_list_entry *packfile_store_get_packs(struct odb_source_packed *store);
- 
- struct repo_for_each_pack_data {
- 	struct odb_source *source;
-@@ -239,7 +239,7 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
- 	     repo_for_each_pack_data_next(&eack_pack_data))
- 
- int packfile_store_read_object_stream(struct odb_read_stream **out,
--				      struct packfile_store *store,
-+				      struct odb_source_packed *store,
- 				      const struct object_id *oid);
- 
- /*
-@@ -248,7 +248,7 @@ int packfile_store_read_object_stream(struct odb_read_stream **out,
-  * not found, 0 if it was and read successfully, and a negative error code in
-  * case the object was corrupted.
-  */
--int packfile_store_read_object_info(struct packfile_store *store,
-+int packfile_store_read_object_info(struct odb_source_packed *store,
- 				    const struct object_id *oid,
- 				    struct object_info *oi,
- 				    enum object_info_flags flags);
-@@ -258,10 +258,10 @@ int packfile_store_read_object_info(struct packfile_store *store,
-  * either the newly opened packfile or the preexisting packfile. Returns a
-  * `NULL` pointer in case the packfile could not be opened.
-  */
--struct packed_git *packfile_store_load_pack(struct packfile_store *store,
-+struct packed_git *packfile_store_load_pack(struct odb_source_packed *store,
- 					    const char *idx_path, int local);
- 
--int packfile_store_freshen_object(struct packfile_store *store,
-+int packfile_store_freshen_object(struct odb_source_packed *store,
- 				  const struct object_id *oid);
- 
- enum kept_pack_type {
-@@ -276,7 +276,7 @@ enum kept_pack_type {
-  *
-  * Return 0 on success, a negative error code otherwise.
-  */
--int packfile_store_count_objects(struct packfile_store *store,
-+int packfile_store_count_objects(struct odb_source_packed *store,
- 				 enum odb_count_objects_flags flags,
- 				 unsigned long *out);
- 
-@@ -285,7 +285,7 @@ int packfile_store_count_objects(struct packfile_store *store,
-  * combination of `kept_pack_type` flags. The cache is computed on demand and
-  * will be recomputed whenever the flags change.
-  */
--struct packed_git **packfile_store_get_kept_pack_cache(struct packfile_store *store,
-+struct packed_git **packfile_store_get_kept_pack_cache(struct odb_source_packed *store,
- 						       unsigned flags);
- 
- struct pack_window {
-@@ -365,13 +365,13 @@ int for_each_object_in_pack(struct packed_git *p,
-  *
-  * The flags parameter is a combination of `odb_for_each_object_flags`.
-  */
--int packfile_store_for_each_object(struct packfile_store *store,
-+int packfile_store_for_each_object(struct odb_source_packed *store,
- 				   const struct object_info *request,
- 				   odb_for_each_object_cb cb,
- 				   void *cb_data,
- 				   const struct odb_for_each_object_options *opts);
- 
--int packfile_store_find_abbrev_len(struct packfile_store *store,
-+int packfile_store_find_abbrev_len(struct odb_source_packed *store,
- 				   const struct object_id *oid,
- 				   unsigned min_len,
- 				   unsigned *out);
 
 -- 
 2.54.0.1064.gd145956f57.dirty
