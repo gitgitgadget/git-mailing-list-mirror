@@ -1,94 +1,110 @@
-Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB72B33D51A
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 09:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.187.169.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E485138F25E
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 09:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780565265; cv=none; b=YwWbsp941jl59u//3n4bYX2mnzREIFby1iHdZ0Bf66ZNVVbM7qdRLxtzAhhlFxMe8Ylf8ZZVwF17FRUO4186UGSIJ3j/XYgplf7BG3IRUJnZHqKafV/9E3UblxNU77WeDHtvC0H4SAlIlYJxar7WDGYedYZlHNYiIubajOEC/fE=
+	t=1780565698; cv=none; b=rIQguwoOz7QuYEd2htlkoE4eaUGxI1ivi4oGhf/BccdHed1oPJ3M0M4fxPVatW7NlHxabBQDJzJ3wtruTIbLXjM1cOwVAWKBykjhHAyus85RyXW6E2rCZzXcIxhrYlco3ccnkAoepf8NbKHWSNgmvFLf4dVwGl+9tDzY7gZTT9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780565265; c=relaxed/simple;
-	bh=q7+xGXCocjaGNSiSNiz5CA+M/gxkm5fakydv5Cu/oRI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mYEdeMjkqcUeO8qk79aX944ynmPMk12VwBC3WLnUhhZKZNQppC/9ItrMpsRhMaUuEHqul5xu1pTXlLE+sLzyYZiiOnXI30YyYQ41AmopGrazU4bvzB2xgKX1ThJou4MzKjR+LT1px6FdrCaiNpkUSM0EF+YrooKKAiB4MzDd9+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de; spf=pass smtp.mailfrom=hogyros.de; arc=none smtp.client-ip=185.187.169.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
-Received: from [192.168.1.28] (unknown [103.52.208.35])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by psionic.psi5.com (Postfix) with ESMTPSA id CCAE83F202;
-	Thu,  4 Jun 2026 11:27:39 +0200 (CEST)
-Message-ID: <fa075b7a-96f6-4fd9-ae94-30ddf323f759@hogyros.de>
-Date: Thu, 4 Jun 2026 18:27:31 +0900
+	s=arc-20240116; t=1780565698; c=relaxed/simple;
+	bh=IEwQsMY33iXBPmFrMLbu2FZOq5f3wLppO8aERuwMOME=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=qfdRpz03IXkifxIGLIvSjhdVrvnaxO2s9apKgqeALtz0XYdLOvK6tYBIwc68XprzVQYZRFWywVrxU6To4rzircN/HlKUCYghNuTz7og6/879Un5yd2lA8XtOjGu8Ie8lt6nbGc6BLYoIESGq9PTZvHWVfWvvrgP6S+OH4OMTmBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XR3lBHgL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MPd5+DCp; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XR3lBHgL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MPd5+DCp"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0659F7A00C1;
+	Thu,  4 Jun 2026 05:34:55 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 04 Jun 2026 05:34:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780565695;
+	 x=1780652095; bh=Oe4ivv4WATtiDGx+Ha1HcWYl0t0tP7ctCTTXuqJM6UI=; b=
+	XR3lBHgLCtO5Aat+6GMHJtp9CJEo6Vf6z/oMeEZz01ZYkHZF3RgksT7i/fGJxPiy
+	5diXcvJf4i+2PEcq2+NRIxa9xvO0vUnWuW3TO8zECXvKRtkXK9b0kMGHKSI8DD7V
+	pLCNo3OuHmLf1S9WWq2NCCTSJmG73bHRqunWbNRSauk35jA5jjo73q/aReocuYfL
+	Ot8jwD8g6Rb1p/11Ec2bV9dXgHCx9UimZkBGNDkjyGwaGj0j/51lcy6opHvdk+Cf
+	AMHobOa1j/1+IbiG3/AQkvEtF1lYe4uYqcL4QGqOFDnqPQ/HzXZorP+0U1G17fR3
+	ZmhuWWyygK3ejh2PBJA5sA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780565695; x=
+	1780652095; bh=Oe4ivv4WATtiDGx+Ha1HcWYl0t0tP7ctCTTXuqJM6UI=; b=M
+	Pd5+DCpcvR63vc7YPOTlCRILRiwkepKxwcAefW8DtdEiIjIg5e0F6nmk8wRx0Mef
+	5YA8hgpXTRcX9eM4+iiA9Oag0gejF3CxXJk9zrVU/Hj1VUVHnK2tJkpTxN0pgNUL
+	1rKh9VEwLZ1Il2pOpDMUXWjaIaRQEaYZmtyrmB8gxsmeZcE8CUZYlsQfWMSTsgvH
+	AIGUWviKnHq6u92h40pW+HQDlP50zY4CgTJJJXXGjg3/vph1HQbcqWjxVp5CwxlC
+	fzylJ7AVF01DUsRzGwYQHj2s6m02biVFB3/QbFj9HzbGrxtIdtrMF8eNvtfKSKrU
+	6T+GTmsBKWu5wSPD7kl7Q==
+X-ME-Sender: <xms:v0YhavurSYRBs87X-mbAOiJJw6v45JBCSQG_FixL4E9ZPdDQBBUZLk8>
+    <xme:v0YharSP1JSGltzeceLYfDw8-O3yF_a3itTtgifs4d9xhE2clheXg_69P3OcXRi7v
+    4sVN4tn1AqrEdwMiduvCkNds7lJlU1ephTiTXOkII7N5m4xf5mrJIE>
+X-ME-Proxy-Cause: dmFkZTFxUyYRtLNBR+jjhWGkJlYKDghNVE+GPBa8TDWLfYD+swgPZqSUvkkEwDZO/yvIM2
+    /fE/pV1w2fhuTtWqx/+1YZva1NtOPuDQo8TXWaWLmPD4ZQkkiDfLEJybQbUgO12VzNv8kN
+    905y0SQdmfZC2bYsmqie7WDJUb6fmV/AJjmD5zAs+ney6Wv/1OwqEt7zoCmtko5Ub5cBNg
+    +L0osgdGuAFGk43FYZ1VBBcqMUudcKD2cNj2HnDenigRlJJottyG4PP+2Z1R/7cUTd5ZgI
+    2RYA6nHfTZSeCyh41g0ad5kAsa0oHBV2WLykOJvJ6IGzd05XcSko2bZRctUHET18/gmBkT
+    WNPiQOexcNr8ARPPmHD+oKbzleHuZXPgpfJzjRskRLGp9aHD2dPho034zINt8KNmqsfw+/
+    GS8KfLDBrrMD8ER7Kdd/0aGnOO5JBJKA7GUNfdz0i7ZUkoMFr9gpOxKDEHJrKsojWVoPbO
+    QVB4nTQCjgU5QIWTzmrjnyBl0rR0B8T4+Z+rvN9DkkyZCRm0dL//koBCVgi5CCcyzB/z6n
+    FvusTGEjM3J9nd1y33dTJPM8sCjdgSrhJzo2/HX3hIRc5DBMxwzcX2hCp0LLsjzsyvksnu
+    jwuxdTP7ltOVQUML8AhrO8wxC9qDmL1G3rnXxOWjsHesWKaG6r+NO83sqhlQ
+X-ME-Proxy: <xmx:v0YhajrAtS5iRh3VoPijpAp4vKm610f-mu91vs9888g-2rLUkqylIw>
+    <xmx:v0YhalZ4WZjWrpOUeadVSiJ7rLHRAhTOrMmqE7fw2dZjqrpyBdCfsw>
+    <xmx:v0YhajT83i1tvLgB6FnS4Aj0VeUcEPzP3LNHdAzdPNT1PIpQEE7NnQ>
+    <xmx:v0Yhak6bCYEatMrCMNPyEfNeHlhSl4BSgmai7iy67FqRbc6hCpaU3A>
+    <xmx:v0YharPCw8oolEkWuoS42PnLDsz_6N5Jb7R89zoXRMI3c02vSZ2_uW-U>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6E5E0302008E; Thu,  4 Jun 2026 05:34:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Mirror repositories for submodules
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Benson Muite <benson_muite@emailplus.org>, git@vger.kernel.org
-References: <875x42vlgv.fsf@emailplus.org> <xmqqcxy7qfgk.fsf@gitster.g>
- <d64e7f31-4e00-478c-ab31-b671242865fb@hogyros.de>
- <20260604061605.GA3194609@coredump.intra.peff.net>
-Content-Language: en-US
-From: Simon Richter <Simon.Richter@hogyros.de>
-In-Reply-To: <20260604061605.GA3194609@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: AFuxotP96EDs
+Date: Thu, 04 Jun 2026 11:34:35 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Rasmus Villemoes" <rv@rasmusvillemoes.dk>, git@vger.kernel.org
+Cc: "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <0299ea0d-a042-4457-bd7e-0904b38a219b@app.fastmail.com>
+In-Reply-To: <87ecimhg8s.fsf@rasmusvillemoes.dk>
+References: <87ecimhg8s.fsf@rasmusvillemoes.dk>
+Subject: Re: git history feedback
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-Hi,
+On Thu, Jun 4, 2026, at 10:17, Rasmus Villemoes wrote:
+>[snip]
+>
+> So today I had occasion to put it to real use, and then I found two
+> things I'd like to be able to do with it:
+>
+> When a commit needs to be split into three or more commits, it is a
+> little cumbersome to do iteratively, since the new commit to split
+> obviously has a new sha, so one first has to figure out what that new id
+> is and then do another "git history split". For higher values of "three"
+> that becomes rather tedious. So it would be nice if there was an
+> iterative mode, which after splitting off the first commit would
+> automatically start again with the new child commit.
 
-On 6/4/26 3:16 PM, Jeff King wrote:
+For commit subject `anchor` I would do something like this.
 
-> Here's a thought experiment. What if you put the UUID into a URL, like:
->    repoid://123456789.git
+1. `git history split :/anchor`
+2. Split out the first commit with a new message; keep the `anchor`
+   subject of the original
+3. Repeat (1)
 
-Yes, that's the idea, except I would want to use a relative URL, like
-
-     ../123456789.git
-
-This could solve the "naive cloning" problem, because it creates an 
-expectation that the submodules can be found on the same server, or in a 
-nearby path.
-
-I'm aware that this is *also* bad for decentralization, because it makes 
-it easier to use one of the big forges where the repositories for 
-often-used submodules are are already likely to be present, but it plays 
-into our use case, where we want to share the repositories for 
-often-used subprojects.
-
-> Now, all of that said, do we still need uuids at all? If the canonical
-> submodule name is https://github.com/git/git.git, then anybody can just
-> rewrite that locally in the same way using url.*.insteadOf config.
-
-Yes, but we'd then need a mechanism for a server to indicate "for 
-cloning, you should use these 'insteadOf' settings, which is a massive 
-can of worms from a security standpoint.
-
-I also don't think these canonical URLs can ever be stable if they refer 
-to infrastructure that is not under the control of the maintainer -- it 
-would tie the project identity to the hosting provider, and increase the 
-inertia to overcome for moves (such as the current exodus from github 
-and gitlab towards codeberg).
-
-> Which makes me wonder if I am missing something about the original
-> request that started this thread. But it sounds to me like it is just
-> asking for the existing URL-rewriting feature.
-
-The original mail has a similar problem as we do in Debian, and as my 
-employer has: CI jobs should exclusively talk to in-house 
-infrastructure, because continuously cloning repositories for each build 
-is bad for the environment.
-
-The common goal is that a naive clone should get submodules from a local 
-server, ideally without us having to write some tool to make an initial 
-checkout, enumerate submodules, create insteadOf settings, clone first 
-layer of submodules, enumerate second layer, ...
-
-    Simon
+>[snip]
