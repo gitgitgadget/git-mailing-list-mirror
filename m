@@ -1,244 +1,187 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAC22D8364
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 14:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B1134C83C
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 15:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780584359; cv=none; b=Faz2qBRvvoOmGT92nftrYl9FHoo9jo4Py43dU4r3EpZwFVCrHi8vQQN+FDEfjh9s3esMvt/h6pT1XBl1X2L6r3L/cGv7UUAi6yX7wgTP4evL1YNUvZqHlLHUx/4XNw/81Pok3PnRwu0LtzoZhRaVzJNkX5wyC98AzmjkmnvyXbA=
+	t=1780587474; cv=none; b=iAVQ4zcbY5aUg9/REjedb1qrEQpY5rSpgRxq6y2VBx0r+LGmfg5xrtaJgd1CD68Q+De0mRcJx0+5NLevt4s6uQMBUOvhsO7+VK6Sa9eOmTRpo3fWIm4j2uUWys/F/KRnyqQ0b0NcoMrUPUVX7u4kPvb0CuiPoAAPDjJcH0qH1+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780584359; c=relaxed/simple;
-	bh=bZXYQuCass1OmTRf5YHQL679rJEUVRmP+HwPfTPstqs=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=JzwabF4R266Zoyq4RqGCJVAVvLxrSFnXS4YbQfDvL+Q0l3s8oskBEj/ZAtOQ+sjPVT2pEmIbAp4Q58MicdNEo64X1kYz14834o/4a6Wxp5sRlVe81cOExp3Gj3FGTq6hCaxzap4MbZf87THiKGZblgZqj4r6oZf0X3QGPxXpGrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Fw5IOg2v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GHihwx3m; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1780587474; c=relaxed/simple;
+	bh=uQnjibjOlO0eSoYewBH69aX67zlGUQVDDPjP17KPJZM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XdWuRg64+dbdgIb1vXaF/IAT5O40Sg4OCBGWwddvkKClZv7C0YJuIq1xqNjICP966CP/sKJqDSgSSCJ+gbMKO2hPQVvD7kuflbvzwjsT31HYd1htGESNkdIWMe1h2527os9AoQHEbXrGT+FWbFa40eD+Vk71keW+rZuQVhGgNT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pDoaPCtn; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Fw5IOg2v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GHihwx3m"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7FF131D00155;
-	Thu,  4 Jun 2026 10:45:56 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 04 Jun 2026 10:45:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780584356;
-	 x=1780670756; bh=vDgA9tsJxQOkM+BeuXRNZgzK8gmM03NQQfsIpsueuKo=; b=
-	Fw5IOg2vy6v2sjwdNVT8l/yyy5ZMDvxqzS9b2aeYyM6k8sQY8suZuFYYLel4SM2G
-	MwexTFgp/WIPG8hyBZFbxC4yv962UWMU/gNVN+h8/wFMolATmkCpHBerrT9Vl9t5
-	K4qLSxwIGZphLqpWqweRfpp9stbRYp66QYl6E5oBs0o+1W+ILgCUTq1vfW4xuzaI
-	4wf5LcPOePH3tA5HN7rjt3Pk5HPxoeeUejBDzCrephldFFZR/g49HD7HbTWANYBd
-	OcmPbQdePrOfLnCsi7FSheiVDLwK5IsHx0mFSZy2d4aMWHmCFBeVLCfBoqhjrCFw
-	2O3+926J94nRKDfjvM/ChA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1780584356; x=1780670756; bh=v
-	DgA9tsJxQOkM+BeuXRNZgzK8gmM03NQQfsIpsueuKo=; b=GHihwx3m5qkLM0CcE
-	tDFYdGTTCE/uBFqMYmycT1QwycOOcAcmvBnZkbcr4OyLVSgGERbXbqCzVyWEWctg
-	DeK+WARiTFjVG57AOC1xck1Wz5MiX6thDqYjlbPgWlLXtHGAr49slyNpXmaK5G7F
-	T1Ie4rmrZ3jGH928bNiXerrz/h3yu617ZzvE7XpBN8+hunhmoecty9hO3cxUe8rf
-	ogjUvgBxeHkmhbrlW9koiT0dc70DEm9uZtyO2/y9pA/nUbOZQQ/LDcYI0kBjHXY2
-	ZYVy/bhpzwuZiZKgLxZqKzs52YncIY6+maUo46y84iqbVchF2pKlJ+UxwuUxogWy
-	VP49w==
-X-ME-Sender: <xms:pI8hasTTikNjojhtKrThKagw-gt3Y9N5LA_8QvZwRXxB3Q78SrNjljI>
-    <xme:pI8hakkWnYjIt56bxmDSCg_55b6_bNEJxsqyKfZbMIGITEz7_d54kJDOHA3_sJBpY
-    OJNaXNN-CYpBn0eJjFOvYHQiwfQDHnIPlpnPpCweeXLjhcyMDdC>
-X-ME-Proxy-Cause: dmFkZTGUgCkR9q4m4rR371MFu+0V3oKutnCnBWHfORYI7LwRpZ1SFvNDfmC3Q3GVgRTewf
-    0GyKJr9T9Fj4BUAMEbg8WJVSoFL//DdZ8IsyWJUJjS9Obb2h40p1gc+HXwLpqw5tc33wzJ
-    kEzZMKz1WhBIzizp/oGggPdqs0zDgwqW1IS+nPxligwu7UkawhYaB8VlHhLkMSB77glhHU
-    vMH+vEjFVKGKiB6T+dwfmkqqml0ORFuI7AkKMS6sjFJB22OIbG2CE1rAi6R4RRysz6YmzS
-    MqOYuHdxYOH5UClXzeZCgkihpD0W/HDT5LgoNZ8sPTRIIAhC6rUdM4Fz3aa1awgkfBWUEm
-    ec4WUHj5vXkQr5uPE3iraNE1dyg0CJdgzxPDtZ7vyyIr+3W6te8aSCsiyj6pQHxQySBZTN
-    q38/aIiOmC1I/z+ttSM4eMtbUxVHtzQbzWFnjRG+Msn0RIr6oUZ0592tBVTEYqHIqRINbo
-    thuVuAlmmr9LiBojdvebPdN4ZrMjUlbS/GttvuRDHvNo/uXJVWeWycnCp6NAgF/YI+Dkm+
-    IL5pDd5guEVCFn/AcHm+Ga9bKjN9lQrFr6Q89m9QC4wLqHHByzJRLMoHHfS3AWJRhTC/lW
-    J9m5NgacNhoglz7yJqalPrG7VGB3bcjgwrGfrU2dO/Cic7QwulGHuWsobOTQ
-X-ME-Proxy: <xmx:pI8hau-zAay1fGKfEgj8PRGxYkEDsUamKwupzex2R3i7eQCNahhJwg>
-    <xmx:pI8hasqfkA5T_XBIf09FpzrcUz96Fb2xcwUSTX4jEAvtPn1dkkSCLg>
-    <xmx:pI8harkCIodeEMfyp9__RwZ1uxE2Xqub1U1Yzp0S-hp0p-2tMZ-_2Q>
-    <xmx:pI8hajJKEaYtTj7iACXB5fmwFZUCFx-Wt6lIb2CoFwdybU3SiOXgDA>
-    <xmx:pI8hapBjuCxlQAyFHkgwII4j3UP0I5Ba90okw7Y1sJXBYAL1XIpAy3-L>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id EA118302008E; Thu,  4 Jun 2026 10:45:55 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pDoaPCtn"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490bc6a7958so9829575e9.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 08:37:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780587471; x=1781192271; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/aqZuaK1x0dyFRBAHQt3X3cgF7Nvi3DMnuDUbUgaq/g=;
+        b=pDoaPCtnE4AovTUEzaF0qkGPCpBXGPBw9JIqrErqP0vBI3wcC5BnTuXlRW4QKKcs0+
+         54CqXNn8eKeXaLKULyHj5FanhfEVVvfNIY8bhAk7DU6bREIcZmp44Xf9gK+YYZH2teZG
+         BXhcHi420q3+kgobv1/195LG1xopwJia/biIEDLRbXvjwzAiUHxOo9b4HSt+FRX48PTh
+         2ihSjq/EDaTwrSJQGOZx/MoDq6EjdqkDkbLsiaIT9duvr9aAdp2YTZAkSV3Qvkb3Yau9
+         2/Y+mKOKbnQF4ymUMOsbKFQoOAtYDfQy8k8AIAbigtNexCoOQe/EIO+6Lh8LqTBgb8ca
+         5dcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780587471; x=1781192271;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/aqZuaK1x0dyFRBAHQt3X3cgF7Nvi3DMnuDUbUgaq/g=;
+        b=bb96zyRvrTD2pyoxuHrdffH5L8tR4b6Haj5tpgOS8IMYRw4SGIYzaJL9tNNMqrvRY1
+         jLxh8JGigIZzTeUNbSG4//WezQDavClIZ0SLJG6GRRlWYCrqy63v6eAVBFICkA4ELirt
+         mkFBfKSi2wwX+CbQ5SCNMbrGL1Ks2Os2jdezfMjGRSQdE/snF2HinJyX4MTvPFS0khHW
+         cheLU/L1VA4E0Man+Ou9fNla0aEUHSfRUe+FKDgq9VmbwocGPbB1ZOEDNLvEiKj12XbW
+         8DOuslOjaUKdpWBS22mYEubYMUA6G11dpzSMt272MXUxyK5SBsCo1AIpiGZW5l3hrx0H
+         IWLg==
+X-Forwarded-Encrypted: i=1; AFNElJ8vzxY7PTYovuSCIBIe/u93+l+HQrI4JcHl0LncqqyrzX7WWxLkuaddmHmgTR/v9YBSH7k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdUO3fsCgm6h/qxWZYunMpFgSEAqfhuim3fn9RwKngtra74C+2
+	EF4f9Hc2hoYjdIDLnn+Muw/9qg8YPN2p2BtYIu1BH4YqoAzP0WgEU7cv
+X-Gm-Gg: Acq92OFKx/SRC8MYvrkeOUcopAc9ky0IASYW6I/q97s4aw5P0SO4vTP/oKGUOHQ/VnY
+	qLcCF+Hb2yIYVBXN/vI/16cCgx0cE6hC16dsUFVpskO7Fo9l9bpmC2iqTqsEjpxdk61n0XkocBK
+	Hf96aCKIHzYL2+nS0zl+P2z0tHajQJDD6OdTvHnWsYHkGKrNRF40lj39ikXTr/gNq7hMoJQ8pW0
+	X1/Q5KB7Ar5gY9mS3NGyf0WvvSfNAgZXw7sqPPfNBhFemdyznD5GKWzy25hKK9iChmMIwoDByvq
+	j1tXlgoQIp/wZ/01wRgjeyreOWQUJ+ESymVRA9cv3TmBQ6hS3j8JybEfFC0/kFBDSA5W7B2fj5H
+	cESlIJApj5lNf6I+nZWienVI6/3i9tJXgo4Ue9s/5uVaE60lmLZ555Rgm1CDBv7oUvaurPKPSt7
+	vXoIrAvnLWhJdMNg10nf5aIb5F1uvv1NUyQY0aDF76xqhtSui9TLQQfuW4P4shGQDbn8wEOhm+e
+	a1EY6yE+t1I8A==
+X-Received: by 2002:a05:600c:1c05:b0:490:7df7:9190 with SMTP id 5b1f17b1804b1-490bc4e034fmr75791115e9.8.1780587470707;
+        Thu, 04 Jun 2026 08:37:50 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b7c6b966sm137251555e9.2.2026.06.04.08.37.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 08:37:50 -0700 (PDT)
+Message-ID: <f982c386-e329-4ab0-b695-e540bcb9de3d@gmail.com>
+Date: Thu, 4 Jun 2026 16:37:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A4zrN4FnEVLN
-Date: Thu, 04 Jun 2026 16:45:35 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Tuomas Ahola" <taahol@utu.fi>, git@vger.kernel.org
-Message-Id: <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
-In-Reply-To: <20260604131457.19215-1-taahol@utu.fi>
-References: <20260604131457.19215-1-taahol@utu.fi>
-Subject: Re: [PATCH] docs: fix typos
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] rebase: skip branch symref aliases
+To: Son Luong Ngoc via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Son Luong Ngoc <sluongng@gmail.com>
+References: <pull.2126.git.1779946921.gitgitgadget@gmail.com>
+ <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2126.v2.git.1780482436865.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 4, 2026, at 15:14, Tuomas Ahola wrote:
-> [PATCH] docs: fix typos
+On 03/06/2026 11:27, Son Luong Ngoc via GitGitGadget wrote:
+> From: Son Luong Ngoc <sluongng@gmail.com>
+> 
+> git rebase --update-refs can fail after the normal rebase path has
+> updated the current branch when another local branch is a symref to it.
+> This can happen during a default-branch rename where refs/heads/main
+> points at refs/heads/master while users migrate.
+> 
+> The sequencer queues update-ref commands from local branch decorations.
+> Commit 106b6885c7 (rebase: ignore non-branch update-refs) filters out
+> decorations that are not local branches, such as HEAD and tags. A branch
+> symref is different: it is still a local branch decoration, but if it
+> resolves to another branch then that target branch is itself present in
+> the decoration list and will be updated as a concrete branch.
+> 
+> Skip branch decorations whose symrefs resolve to refs/heads/*, because
+> those targets are already represented by concrete branch decorations.
+> This prevents aliases from scheduling a second update for the same
+> branch. Keep symrefs to non-branch targets on the existing path.
 
-The area `docs` isn=E2=80=99t correct since you are also changing commen=
-ts in
-source files.
+Makes sense
 
-`*` could be used (as in a wildcard). Other people have used other
-things for =E2=80=9Ctreewide=E2=80=9D changes.
+> Preserve the existing checked-out branch handling before applying these
+> skips. Such refs still need a todo-list comment instead of an update-ref
+> command, even when the checked-out ref is the branch being rebased or a
+> branch symref alias. Use a copy of the resolved HEAD ref so later ref
+> resolution does not overwrite it.
 
-> Fix some typos and grammar errors in comments and documentation files.
->
-> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-> ---
->
-> Notes:
->     Written mostly as an exercise on how to submit patches that depend
->     on other topics.
->
->     $ git log --oneline --first-parent v2.54.0..
->     d19e9182ab (HEAD -> ta/typofixes) docs: fix typos
->     5a7e9cc03d Merge branch 'ta/approxidate-noon-fix'
->     f03649d802 Merge branch 'kh/name-rev-custom-format'
->     023a226b4b Merge branch 'jc/neuter-sideband-fixup'
->
->     As can be seen, these topics have already graduated to master:
->
->     $ git cherry master
->     + d19e9182ab097a722e32d459a9a58c8985831e3b
+I don't quite understand this. A symref that points to another branch 
+should always be skipped. When we look up which branches are checked out 
+(see worktree.c:add_head_info()) we use
 
-Okay, so you ran this from your branch and git-cherry(1) only found one
-non-merge commit that was not already in `master`. Makes sense.
+  	refs_resolve_ref_unsafe(get_worktree_ref_store(wt),
+				 "HEAD",
+				 0,
+				 &wt->head_oid, &flags);
 
->
->  Documentation/config/sideband.adoc | 2 +-
->  Documentation/git-format-rev.adoc  | 2 +-
->  date.c                             | 2 +-
->  replay.h                           | 2 +-
->  t/t9902-completion.sh              | 2 +-
->  5 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/config/sideband.adoc
-> b/Documentation/config/sideband.adoc
-> index 96fade7f5f..ff007aeb73 100644
-> --- a/Documentation/config/sideband.adoc
-> +++ b/Documentation/config/sideband.adoc
-> @@ -13,7 +13,7 @@ sideband.allowControlCharacters::
->  		Allow control sequences that move the cursor. This is
->  		disabled by default.
->  	`erase`::
-> -		Allow control sequences that erase charactrs. This is
-> +		Allow control sequences that erase characters. This is
+so it will never report a symref as being checked out - it always 
+resolves any symrefs first.
 
-Correction is correct.
+If we have a symref pointing somewhere outside of "refs/heads" then we 
+need to check whether the target is checked out, not the symref itself. 
+I'm not sure how likely that is to happen in practice.
 
->  		disabled by default.
->  	`false`::
->  		Mask all control characters other than line feeds and
-> diff --git a/Documentation/git-format-rev.adoc
-> b/Documentation/git-format-rev.adoc
-> index c40d52e9f6..505a52fecc 100644
-> --- a/Documentation/git-format-rev.adoc
-> +++ b/Documentation/git-format-rev.adoc
-> @@ -33,7 +33,7 @@ OPTIONS
->  The argument `rev` is also accepted.
->
->  `text`;; Formats all commit object names found in freeform text. These
-> -	must the full object names, i.e. abbreviated hexidecimal object
-> +	must be full object names, i.e. abbreviated hexadecimal object
+> diff --git a/sequencer.c b/sequencer.c
+> index 1ee4b2875b..6ab8b47108 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -6445,28 +6445,46 @@ static int add_decorations_to_list(const struct commit *commit,
+>   				   struct todo_add_branch_context *ctx)
+>   {
+>   	const struct name_decoration *decoration = get_name_decoration(&commit->object);
+> -	const char *head_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+> -						       "HEAD",
+> -						       RESOLVE_REF_READING,
+> -						       NULL,
+> -						       NULL);
+> +	struct ref_store *refs = get_main_ref_store(the_repository);
+> +	char *head_ref = refs_resolve_refdup(refs, "HEAD",
+> +					     RESOLVE_REF_READING,
+> +					     NULL, NULL);
 
-Correct. It should have been =E2=80=9Chexadecimal=E2=80=9D.
+This part and the test look good now
+>   	while (decoration) {
+>   		struct todo_item *item;
+>   		const char *path;
+> +		const char *resolved_ref;
+> +		int flags = 0;
+>   		size_t base_offset = ctx->buf->len;
+>   
+>   		/*
+> -		 * If the branch is the current HEAD, then it will be
+> -		 * updated by the default rebase behavior.
+> -		 * Exclude it from the list of refs to update,
+> -		 * as well as any non-branch decorations.
+>   		 * Non-branch decorations may be present if the pretty format
+>   		 * includes "%d", which would have loaded all refs
+>   		 * into the global decoration table.
+>   		 */
+> -		if ((head_ref && !strcmp(head_ref, decoration->name)) ||
+> -		    (decoration->type != DECORATION_REF_LOCAL)) {
+> +		if (decoration->type != DECORATION_REF_LOCAL) {
+> +			decoration = decoration->next;
+> +			continue;
+> +		}
 
-This also corrects a bewildering =E2=80=9Cthe=E2=80=9D where =E2=80=9Cbe=
-=E2=80=9D should have been.
+If a decoration matches the current branch why don't we just skip it 
+like we used to? (As an aside the existing code in wrong because if the 
+user runs "git rebase --update-refs <upstream> <branch>" HEAD does not 
+point to "<branch>" but lets not worry about that now)
 
->  	names will not be interpreted.
->  +
->  Anything that is parsed as an object name but that is not found to be=
- a
-> diff --git a/date.c b/date.c
-> index 05b78d852f..014065b419 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -1074,7 +1074,7 @@ void datestamp(struct strbuf *out)
->   *
->   * The tm->tm_mday field has an additional logic of using negative va=
-lues
->   * for date adjustments: -2 means yesterday and -3 the day before tha=
-t,
-> - * and so on.  The idea is to deref such adjustments until we are sure
-> + * and so on.  The idea is to defer such adjustments until we are sure
+> +		path = branch_checked_out(decoration->name);
 
-=E2=80=9Cderef=E2=80=9D could have been =E2=80=9Cdereference=E2=80=9D bu=
-t this must indeed mean
-=E2=80=9Cdefer=E2=80=9D. We are putting off a decision until later.
+As I said above if the symref target is anther branch we should skip it 
+and if the target is not a branch then we need to check if the target is 
+checked out so we need to resolve the ref before calling 
+branch_checked_out().
 
->   * there's no explicit mday specification in the approxidate string.
->   */
->  static time_t update_tm(struct tm *tm, struct tm *now, time_t sec)
-> diff --git a/replay.h b/replay.h
-> index 0ab74b9805..90ed299ff0 100644
-> --- a/replay.h
-> +++ b/replay.h
-> @@ -19,7 +19,7 @@ struct replay_revisions_options {
->
->  	/*
->  	 * Starting point at which to create the new commits; must be a
-> -	 * committish. References pointing at decendants of `onto` will be
-> +	 * committish. References pointing at descendants of `onto` will be
+Thanks
 
-Correct.
+Phillip
 
->  	 * updated to point to the new commits.
->  	 */
->  	const char *onto;
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 2f9a597ec7..7c6db76c9d 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2446,7 +2446,7 @@ test_expect_success FUNNYNAMES \
->  	>repeated-quoted/2-file &&
->  	>repeated-quoted/3\"file &&   # ... and here, too.
->
-> -	# Still, we shold only list the directory name only once.
-> +	# Still, we should list the directory name only once.
-
-Correct, that=E2=80=99s a =E2=80=9Cshold=E2=80=9D typo.
-
-Second time looking it over I see that you also drop the doubled =E2=80=9C=
-only=E2=80=9D.
-
->  	test_path_completion repeated repeated-quoted
->  '
->
->
-> base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-> prerequisite-patch-id: f827362e061e199150f149dd36c67664c77406bc
-> prerequisite-patch-id: e5b32f0b916ec86eab6631b9bd9bafd639191765
-> prerequisite-patch-id: 567a1832a220b2dbf095796cc8093b526d6a076c
-> prerequisite-patch-id: aafa4bd4ceb7836a92d28d4c89b57032f74332e9
-> prerequisite-patch-id: 2e073762fc9dceafcc6f16711bba425384a24305
-> prerequisite-patch-id: 0aa605f0acdb71aa2eb173fdf3c57713c9561fe2
-> prerequisite-patch-id: 5163040262c89eed4bcb04228b445d76497c9d58
-> prerequisite-patch-id: c06c0461bf75ed638214ce98a54bba6578941c10
-> prerequisite-patch-id: 571fdf3570f30fd41f6d681e99acc37df94d09a3
-> prerequisite-patch-id: 54e7102e880d24a6b2d22bef9aa90a3078086d4d
-> prerequisite-patch-id: d829fff1fcc8b6d086fcb6a40c62f835226ae32f
-> prerequisite-patch-id: d1d8e2f2e274565e1d7437aa5ccfe44c3f3d8355
-> prerequisite-patch-id: c79ebac6894b9a206f5699e9811e0348e111753d
-> prerequisite-patch-id: a7750d7d2ec637d906f975f27ba3d03b33a4a34f
-> prerequisite-patch-id: 083f554bc5e09ae54c6b545628196e11a9e90cea
-
-Okay, these must be all the non-merge commits from the topics you
-merged in.
-
-> --
-> 2.30.2
