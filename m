@@ -1,97 +1,97 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F133BF689
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 05:23:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780550605; cv=pass; b=jICvVdpTwhvNvTmqhJSm8JAT9f+lB9aMnDJ2VgwIkL04/hKeAqmSBFkd/ktEY5CLR+0NHOybFzc8v30NfR5FN9mHkrmk7rKwp4eCPGCEjr+oOH/iyHp4AIcHnDVA46npNKqGHHM9o5WkbuR5Ljmq/M70OQ1UbWsleu8kykaePzo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780550605; c=relaxed/simple;
-	bh=MU161OtGK2mYPAZv/cA1b6+ITAf7AGEEpiZDQ//p6fg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XTrxtUHHmhXxJfZWYRJaxgZi0g03DAwVy0bs8OHBW2viGzWZn1ym8WrjM4w85AzBzMiiUV4Z64M2FUua6Mi5VZ47yjcXC5NRM6iD1xCaOQtA+jJ+j/ubHfJfp8UIt96Xuf0gbmdh6Ytkqlvfo0hOYdCuGRdbELxNTTP2vyA2lqY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJYWQEJR; arc=pass smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A883BE65F
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 05:25:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780550748; cv=none; b=R9kk2IyPho8y1bvHWcGpbLLebnJ2gqnnC5uAu/gh0QZcBhEa4RXK+pCqORYK2YbBAW+olfbws8nYtdzdr+WdAcmyRKu/F9+DnNNNcz5OcUF7TywCOzJCgbzqPg+/RcHKiM8w0XeYV/V+aQyPg8MTZ7v741dGNvF0tbseYDfZGe4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780550748; c=relaxed/simple;
+	bh=O5kMrFtXNDXONsThEw9SGrC/fuMNJRozzpykGsqW/vM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=E4Jij8EWyNAFVSlfz3sBj1xwWLFNUjKrxxe2XESuN01PcHtIyN0gwyvkX3r2MJCZlJVQVBPoVXxlWjc+Fhn3IOwEeJKnP605MfTLczQm1wH0EtKtmscPrTZuErXTcLrw3XcPozoZhyvjmpj6dAqtMYOEaBZrYo8nc9Id5R3GBcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=iOswX/x5; arc=none smtp.client-ip=91.218.175.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJYWQEJR"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5aa68e66128so258735e87.2
-        for <git@vger.kernel.org>; Wed, 03 Jun 2026 22:23:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780550603; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BcxD6SDIO/BX/gHz6eXZdd6rZ78rlL8LVI2Xxrwlirops/z/HkQjTNbrju7LGNAK9d
-         Sa3o1QmvGYyICqkWKT7e3YO0MF92CkfyVsr58d9DasYS7FZiQf9ixHwiYS3TMrP4nFuD
-         polLDbi8okgLsOry8HDPiD3SpAg8gzDeOxINqvce5x1l7W3LWdZ0AkmlMCO0znwWkZ1w
-         iM1O6q2xl3XWNKGxp8LiFH5vh5MRy/e1GJ47/cYV0p1qj3SFfYtuJ6IJNVsXfbAQueVx
-         5fFGV4/4ffISi3epQ3H17O/a0RDvTenNTIDLfyePsDZMJD7o4mCA+VDROV+bKGSZbf7Q
-         /9+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=MU161OtGK2mYPAZv/cA1b6+ITAf7AGEEpiZDQ//p6fg=;
-        fh=DJHZ7itWveYVdfezJsKgr6XLEjDMbfeXEew73fqN9oM=;
-        b=JWIyEqVDgi4HV7si3nUoHcwOprMnQN3/ra4/BxJepFmQ4DfPCGrAwwUzGcUyjMDE7K
-         j2q8AOoM8kAPAJBMAnbZRgMi5Y6zKwZKEENeTik5WGB94B1jsXDfOvPs+KGT18h+K0oS
-         dbIzXvhPmbZ+B8hpSGDJS2AeTfrwYwSdYUlAL1ZEr9uPVyObFUMlbpR60FoAd4rVVlLZ
-         5XhhEea0ztDjyAH0qpcDIKBeCM5pP7xrfq+aRtGsHQOYnc8w8SfGNQg2rOEJ54i7bA0y
-         XQ1Z54Khyhkg8Jl/sEGqk6KXfrsZ6lhy8DL9yn1NYlUdG9E+peSNGW9lCNC8fX4bqUYf
-         2LFg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780550603; x=1781155403; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MU161OtGK2mYPAZv/cA1b6+ITAf7AGEEpiZDQ//p6fg=;
-        b=BJYWQEJR2YxGgNZttF+U+qiRjxsvDij6n+ie0mX06uNyEiY8ctrsE+tnnBj9ncSMbD
-         B3bjWYlzChdJCks5HmdpovdquRdLpX5mEJ90tLpnCN/kcFGWqFOrXJWmGVoRHJHQuioK
-         EMMxYlZ6znNs/6Nk4TqMPASZYsaWZ7jNhMIu91/Dcsl+6KzdaiSL2oHcrChbSksxl+bz
-         HjMywM2Phd3szE0WG8T5Sq0B7ACYmR24AM2n1zpgNF0ZbcshjDldkdmYP4SWAobm58wV
-         J4qXHtg37NeGIP+X9aXjORywhvu3cSZ5KRhcFS1R2pp1RR2BGgA9MiZfEHc4spznqbLB
-         AMcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780550603; x=1781155403;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MU161OtGK2mYPAZv/cA1b6+ITAf7AGEEpiZDQ//p6fg=;
-        b=XD7E88ecz/ryEpaLJ9QbLB1P91J+qYPhmbesmwV6z8BsKl+Mwpr00g2vQ9LChzvaHe
-         1cLd6KvKeSUD6515gm1vrqNlgb0rWTTHRc71JS2W5/rkIIxz+AbYADZUFhTjqr8Zha6j
-         juoMsK5xeXnNqS4idweACkGYgclvSrv9RUwcZR4XfrJQv8xcZqN9oY7aSs8360bK4L26
-         ibnGWYKK2h+Wv9su15mhxZ8EDKLFEd5TDY5YxMwOUjZ9KD4/g+8oq+o24ck0ZDlRUgRN
-         FwOUn3A/klQTWwen7V/VuTtHkOqvMWQoY0gO6JvK2HoOi7muvGxLUylc5cUAVN6TAajt
-         INjQ==
-X-Gm-Message-State: AOJu0Yx+YTzYI5tMrzWhWz+/go2s+iVE0fAU2UuUZXrKvBAk3Y+ZxN6L
-	b87UWLE8l2CGrOa3xnSghGFFdMN9rK/9SgPoy3PLRXm/v+Yt69p1gfrarWtn0XAtvEtUc9Esi/O
-	bhqAyXgvkAckbm6J0x2+7ZEALybxbb4CmaraM
-X-Gm-Gg: Acq92OFRr+hcAxVgkrWHcWCCIlDfE857NK2L62QLJONAu8zZB3qyLv1sDb8cgh0Kp8d
-	fDxwLROzqJOi+99vYamsotag+xW4f0jtsKFVYev8MbIKJo4DkiPfXJ9qK9HPNU30lDgQf/hYUdR
-	kaw4BdiBuMARaYvSmYi6ZnAI8hKl1kUx5IEh1BQ3uV3+Inrusj5E3UJV/EmZpiJyrq88ttmNySY
-	nMht9rqKhjFOtldfUDkKF+TK3ycDLHXqEjDRCi2EX+47K0i4yDD5+TVkVaUa/eXpPJil8r8LgBb
-	eIQuyTkH+hDGF/36LqYVfY22mJgBAOvNhW3xWRwBNxPdXeKsJMts4i6DGmVvVt/D0SjMyQ19wEl
-	rP5/l2lQdIMl+KOeRUvCwztcNFqJxXl4pN/g4sFoemAlgx7k=
-X-Received: by 2002:a05:6512:1286:b0:5a2:c0ab:b57f with SMTP id
- 2adb3069b0e04-5aa7c065a33mr2052341e87.14.1780550602314; Wed, 03 Jun 2026
- 22:23:22 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="iOswX/x5"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1780550742;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=w4h1OGXlfz9tZarWPu6/aluJrhmMcwUHaDQ5iml/2QI=;
+	b=iOswX/x5tyeSNZXkHJSuzhmd2fhcj2nl0JuPf711Y/Ym1iTCYzJrsS8FZn3fZxJS/6dIgk
+	xOEP0PqAo15PED18hfuOYsjjUnwvQqOdLASSr5rRFVEDA4mGvMUi9nKspTrlDm+CdL2G0L
+	xD14ac+DTL6qyj8Hq3o9Qzy4GkirCXk=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>, Weijie
+ Yuan <wy@wyuan.org>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 2/3] Documentation/MyFirstContribution: recommend the
+ use of b4
+In-Reply-To: <20260603-pks-b4-v2-2-a8aea0aa2c23@pks.im>
+References: <20260603-pks-b4-v2-0-a8aea0aa2c23@pks.im>
+ <20260603-pks-b4-v2-2-a8aea0aa2c23@pks.im>
+Date: Thu, 04 Jun 2026 07:25:37 +0200
+Message-ID: <87mrxa27xq.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Thu, 4 Jun 2026 10:53:09 +0530
-X-Gm-Features: AVHnY4JCvqOYV6tZ8vQSH_ByptBB_Gt_seJXwSWQfsLxqaWNpM45lTrikKXf0HM
-Message-ID: <CA+rGoLee083Whzi3b9CP3Hxrq_cz58enN67ZQq5r0koczKeU1A@mail.gmail.com>
-Subject: [GSoC] [Blog] week 1: Improving the new git repo command
-To: GIT Mailing-list <git@vger.kernel.org>, Justin Tobler <jltobler@gmail.com>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Hey everyone,
+Patrick Steinhardt <ps@pks.im> writes:
 
-My Week 1 GSoC blog is live!
-https://jayatheerth.com/blogs/gsoc/week-1-path-foundation
+> The b4 tool originates from the Linux kernel community and is intended
+> to help mailing-list based workflows. It automates a lot of the annoying
+> bookkeeping tasks that contributors typically need to do: tracking the
+> list of recipients, Message-IDs, range-diffs and the like. In addition
+> to that, b4 also has many other subcommands that help the maintainer and
+> reviewers.
+>
+> The Git project uses the same infrastructure as the kernel, so this tool
+> is also a very good fit for us. Adapt "MyFirstContribution" to
+> explicitly recommend its use.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/MyFirstContribution.adoc | 92 ++++++++++++++++++++++++++++++++--
+>  Documentation/SubmittingPatches        |  6 ++-
+>  2 files changed, 93 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+> index 069020196c..fc0b06ae67 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -833,7 +833,7 @@ This patchset is part of the MyFirstContribution tutorial and should not
+>  be merged.
+>  ----
+>  
+> -At this point the tutorial diverges, in order to demonstrate two
+> +At this point the tutorial diverges, in order to demonstrate three
+>  different methods of formatting your patchset and getting it reviewed.
+>  
+>  The first method to be covered is GitGitGadget, which is useful for those
+> @@ -845,9 +845,14 @@ more fine-grained control over the emails to be sent. This method requires some
+>  setup which can change depending on your system and will not be covered in this
+>  tutorial.
+>  
+> +The third method to be covered is `b4`, which builds on top of `git
+> +format-patch` and `git send-email`. This method is the recommended way to
+> +submit patches via mail as it automates a lot of the bookkeeping required by
+> +`git send-email`.
 
-Feel free to give it a read and share any feedback ; )
+The GitGitGadget method includes Running CI, maybe that's worth
+mentioning the user is responsible themselves to run the whole test
+suite? Or is this outside the scope of this series, since `git
+send-email` doesn't include that too.
 
-Regards,
-- K Jayatheerth
+-- 
+Cheers,
+Toon
