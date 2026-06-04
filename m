@@ -1,122 +1,157 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70781385D63
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 06:47:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9F53CBE7D
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 06:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780555672; cv=none; b=RJg3kxZkpXtcM8lZ7Q91x9hG7XMdLy5YYmsTRWeE+IP9kL3IO5/1l/YaIHfiIMhXWHhfjXawa12+0TED4AQ8nP2wWuQ1CqrqhdVntWWkQKJ0UJDqGWthgnf5/nF5bbQG0zS7JpEGpowmDz6dXWIOc/jBWXM062XUNWdDCLjtfuc=
+	t=1780555734; cv=none; b=hLVV3rLGj28A3NG/ppYM5IxVXfKqIrjc62HlD19Hdr2g1q0W+ufqNI96S72s1cY8OuZPN17YA4h2XUZ3gOv46KrQ/kuYLcMhDhmc4AxV+mMHCZz9XpPl0OyTnxgrKkFcjkjvwqhG4Bs+RfzoNO1ye34Ls2K7jhcLK2gc936QNQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780555672; c=relaxed/simple;
-	bh=wPXRBtn32S5yf58pozOR6q25uSTpW5ftz3vzN7BZtgE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aYKOWM+KnMwkQXKuJy08hYOWXaNBZ9MFC0LMeasK+QeARFJwHivtRkRZ3729TZAStUKzil3cHeIM8MuGn4oXxsNg7qeUroYDe8gu88wtjp8yNh5GynNiZBlHeHPUUL9RoVvrzwITG4dhsnVo+HY/jPKUGgDrjINKLehufVuoZmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J3mm2DQj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ReOvJ5Wy; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1780555734; c=relaxed/simple;
+	bh=XOqb1TPDCgPAL8PSvFnvlItBDXDH/7LHxhOuwgKtb/4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=VocAHj9gAKjY6GUewUVSi9JFxMcdEjjJIhvCFC/o4fk5Znxo2DbugxZgvFXa5Ips1UHLoep/ZrZ4n+46VAfMI5P7C/1GMPbSVwcXc1S/hCO+DYXmvE969KYcTzoNEKgXnVEP6IOjtUn8fQZhbgW26wTrOntKPxWnu7O/P4L5/sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R+jaJxTv; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J3mm2DQj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ReOvJ5Wy"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A0331140004E;
-	Thu,  4 Jun 2026 02:47:50 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 04 Jun 2026 02:47:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780555670; x=1780642070; bh=/9TgK4uD/A
-	fmWScKshkzU1iMhei15izPBVkZu7A4KYw=; b=J3mm2DQjaadhrJvc1xKws09Hic
-	9EOX20LB/v6hYghwOf8CNVK7a1W2ojztPaHZ2MfQfsJAzlV+mJFOxOHndI8yBv4D
-	sRzqxH5V7QFDI274sZ6tYrBA/ZnuUqq5mo2T6rMw9thTzVwJpya0t38B2dxSuKGs
-	f/+pyO0+p5ztiuK8efBdSxKyj+2y+dDtzWlgDVsH6ijuxA9lDyywGagMmr4QPnzU
-	jPUIDo/HRKnBNq/XITuvQprd9/HB3DE+CZzr40vexyTGfnQkor4j3Pr2kVxR0Zi5
-	w4I7/SqKEVM0jDPez7MmHSE1AIZpwn0iPnVcT5aSAi4+/UczQKaJDi841FEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780555670; x=1780642070; bh=/9TgK4uD/AfmWScKshkzU1iMhei15izPBVk
-	Zu7A4KYw=; b=ReOvJ5WyCNnWTcPELylckUJqiEUpIEM1yYiBEC2To1C2eCxIc2R
-	ft4vBIWbYAwG+QIAnOvOpcWuhY0bURPrLSyoMSiMBuHf0h3EvkITPtkA0BuPXdv6
-	OMMtjLGlD7AWdRzGOF0WLqT8oi7B7zSEHuVXSrOznjXIcykiz26jGRgXtGe0ynIy
-	d4Q2/ZwpbOPhdwscHAFL9VHSBhVMsczqa+WaW8GAM1v9mItmu2sX3UFrtGqcvniH
-	aXNBVxh/FXFEvqVpO6oUh2h6Jan9Im5rkuvIi8lVaK6cOK1i5Q0oNL0eEo8goTUB
-	QsAjjgA33yJr8zk2C6jE5gT5dl/IuzgBDxg==
-X-ME-Sender: <xms:lh8haolHmEWeKEVJyuBgySoIQF-wnc3FpqSWbkryw_FOEiJgvX7ing>
-    <xme:lh8hautxlE1R-Gb-qQF9GeR_MVvlxPQ75CrtMxmBsS3k4PeBSObImiE-1BsUvi1qp
-    cTzvlZtpcytn97hFY1AdhTs20qDr7m2Lfw9E-v5JhFb-ZPEcpV4NH8>
-X-ME-Received: <xmr:lh8hau81RNj2XTp-e_GaiZuifxHeqRS6jZVRB0dEFa3Jg1DxGH7iXSpWxoulBtfF58c7vxPH7qgmIy_Mw_8sQcRMANmKEtUMJZbVBmMN9us>
-X-ME-Proxy-Cause: dmFkZTFWxuOfrOovBY5uNnKZ366tfUJnIdhWa6RNDiywGEuzW6afYsTjpaWiiNvp5Y0APf
-    xNW5m1iW0qIp6xOK2Bkl+6CVwyDU7R4s/+bPyTO/145DH6GuQLZVXytN/epos1mw9rXDhH
-    qoXYjHUp9IW0EruJaM1TCUfvf4eAeE98vbraXf3FMxzuYQ6PhwPoN3RB28WvR5uD44/isJ
-    cni2PUFP7e15SY08GsqrdiqLnO0SrZ8rjXqgxo1jT8bPzqCXS1GT02NHvhogXj8QJTczPH
-    FC0a0Twu369CCVl0zNfPvolwBPdzkO/L7FzUt8jyrgAipV7QMMwCCpUUM/wiNIadiV7KIR
-    olDl1KW2Gxdko2gRq1HJRtBEa2+Q/DynkePLpmyj1CEpGSHOHhyX7b0KO/Qx75hkkMVyDn
-    10Vk6ndDbhMLnYkjrvXFa1tt2NgkDGpx4+nbC2fD1+jppJPvUN8UhiGszJe/X+a2G1oN5X
-    Wp6eC76VDQhVJjFRP+Fldd60GF22rfXkbQnFTqDK0ksb4NrNDszz0PRVYq9o40+kYKShHK
-    aES/+BRn9jdZnUybCh4lpQkzFwrAMwlhWJdZcdXcYA2VKFGysR1nH6k+LaFfARtftPa9IC
-    WiOXnlNa0ui6yJv+iPsYfva8gXdihB9mqM7P1Ef+RKlKcdvTdbwvpl2iQ+Bw
-X-ME-Proxy: <xmx:lh8hagPbdN2euLVVQjsVEdTiPokh9mJK8GKzoJ5pcyp_reLioYHFTg>
-    <xmx:lh8hakGvX_2fLUfZc5AmdNu-nTe3vkmroHCHrod91EjIR1hDCXgAiQ>
-    <xmx:lh8hamReGsvsDCKhmZK4F1J-M2vEPwfe6n9izX5LfiR8R3R7mcBfrw>
-    <xmx:lh8haptQcT059mK1sj9A8x4YhYO8ixyK-qg69d3Xe5esW97xRU0iQA>
-    <xmx:lh8hamfTpl-ckM3fc0r-qR032OVZq-S0YLuTub023mx9Nr29nTVbr34I>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 02:47:49 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ab2f8a18 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 06:47:47 +0000 (UTC)
-Date: Thu, 4 Jun 2026 08:47:44 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v1 2/4] read-cache: move 'ce_mode_from_stat()' to
- 'read-cache.c'
-Message-ID: <aiEfkOtlnemkWgXV@pks.im>
-References: <20260530160520.77859-1-cat@malon.dev>
- <20260530160520.77859-3-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R+jaJxTv"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-304d7f31215so267270eec.1
+        for <git@vger.kernel.org>; Wed, 03 Jun 2026 23:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780555732; x=1781160532; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8rZZn5o1mgNB6/67jafgvzbYkZU6C3ZmpXgEy46Yl2c=;
+        b=R+jaJxTvtaWQ063dgBgyrdFnZjiIFDwAh8XKJtZBtupksMmcgcnFzUA0RWRUUUYnkP
+         gLuMJ7FNFNzYDCAd2khEd5hYNl3nWagkp8h3zA7v6/5UbSO3Sg7p5tt1ZRyxEa2btLZ8
+         dziNH7NmVoRyyInbe4dfygEVM2tHFZLd/NAWpnx1yovq+BgMdvLjoi7mAisZH76IOpQE
+         B8KQ0Cgrnfwq9TdTaetxyLjQ5JLDPTl6bWvwwH9hOhgB+u2Dcn+IRnKRE+akDRF3ABK2
+         Ks8G4OoaoCiR5PSTy+Uo++oKfbe0enoycIISD4jiqHmomt1ElmGV3oWlTIud/6hlt9zn
+         18aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780555732; x=1781160532;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8rZZn5o1mgNB6/67jafgvzbYkZU6C3ZmpXgEy46Yl2c=;
+        b=E6aeShvwsvwk4y8G3GJjxx3xMhI7n4wiU0QiuqlP2wjgHhjL8S0cV/AdpLwxkoxo+N
+         oaQ5CXNngiGnykgULMR+CivDBZbDFsU4nbOhUMrc7A5klgV6+oCK/QsUGPY/E+8l0Jkj
+         gkEDQFkoIAiU8F7yLSx2bsPyrfblvH6qfNcinXdDutv6FLXCDeW37ukGTIkbPt7jYztb
+         H663wcQD0C5a5d6jTKyGkOaf9iU4rRhU6a9SJMhVMLCPWSgXDjApHztgcUyrldbuVclM
+         iWb1CpY2f5x0MmDACyabYbG3njB9ttdHCz0RZeY7in4XXASkfQvcNNM3kVhvNXCJl0t7
+         MwPw==
+X-Gm-Message-State: AOJu0YzrgVdB+1hyv7dPkkqQPrlLzQ4z9ZnfC0fabgEsvgLD1pgLdb2f
+	CLTunhLrGEFS6xVFK9tDOKntAiEBiKPjtrIIkn+Ibhlch/7A3auH4NBmpCILcw==
+X-Gm-Gg: Acq92OGDGUDq1lola3Rrfk+J4pgYMuMaxo3gtoQi8oOxLC3TvUZDTzuJZhsWm7xPFzX
+	TTJQ3ssaZQu8GvzLEfhMpNATaATDxmqPbWNSZGmqpUNuf3OTGGNWKwcYiXz/hRgwBMQ5KknqO0+
+	wzY40XFAMjV+sC++qIjevn3zJamUMn6oxDL0DSnuNwbySayD87MsfXnc7LIcaZaLiwtxYT2yXsg
+	xIfTN4bR+fvm0TB8Bhor1yZ1hmQ/L7YGOARsNTjrnKRtOLkG3nf+SqyPkd3+0jgKdVPIvfTapX7
+	Mks6OpOWYqGk7XrAQroxYV+LKbUdV9t0mp9qSQcM0iNk5toFRlFILdzBnt7YDqK8lz2LybWC1Cd
+	eszcE1uYqWOdPYTfsrb2iT+yUMII890FLRMlAz3s3ilCq35QL5aQ6Vq4i//D+4aR0oOwZ7eKktw
+	kwCUOWxYoX1INFXwXH4mt7GCPk5Tpy8W3f3aoNLA==
+X-Received: by 2002:a05:7301:19ad:b0:304:5b0d:489b with SMTP id 5a478bee46e88-3074fc2be91mr3938985eec.27.1780555731707;
+        Wed, 03 Jun 2026 23:48:51 -0700 (PDT)
+Received: from [127.0.0.1] ([57.151.128.101])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074dea89easm4437407eec.14.2026.06.03.23.48.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jun 2026 23:48:51 -0700 (PDT)
+Message-Id: <pull.2318.v3.git.git.1780555730228.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2318.v2.git.git.1780510415838.gitgitgadget@gmail.com>
+References: <pull.2318.v2.git.git.1780510415838.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 04 Jun 2026 06:48:50 +0000
+Subject: [PATCH v3] git-gui: silence install recipes under "make -s"
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260530160520.77859-3-cat@malon.dev>
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-On Sun, May 31, 2026 at 12:05:17AM +0800, Tian Yuchen wrote:
-> diff --git a/read-cache.h b/read-cache.h
-> index 043da1f1aa..3c4af2faeb 100644
-> --- a/read-cache.h
-> +++ b/read-cache.h
-> @@ -5,20 +5,8 @@
->  #include "object.h"
->  #include "pathspec.h"
->  
-> -static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
-> -					     unsigned int mode)
-> -{
-> -	extern int trust_executable_bit, has_symlinks;
-> -	if (!has_symlinks && S_ISREG(mode) &&
-> -	    ce && S_ISLNK(ce->ce_mode))
-> -		return ce->ce_mode;
-> -	if (!trust_executable_bit && S_ISREG(mode)) {
-> -		if (ce && S_ISREG(ce->ce_mode))
-> -			return ce->ce_mode;
-> -		return create_ce_mode(0666);
-> -	}
-> -	return create_ce_mode(mode);
-> -}
-> +unsigned int ce_mode_from_stat(const struct cache_entry *ce,
-> +				unsigned int mode);
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-This is moving goalposts a bit, so please feel free to ignore: should we
-maybe add a small comment what the function does while at it?
+Several install and uninstall recipes embed "echo" calls that fire as
+part of the recipe itself, so the install banners (DEST, INSTALL,
+LINK, REMOVE) were visible whenever the variables expand non-empty.
 
-Patrick
+Guard the whole "ifndef V" block on "-s" so the loud variants are
+selected only when "-s" is absent and V=1 is unset. The existing
+"-s" check also had its findstring arguments in the wrong order
+(needle "-s" never fit in haystack "s"), so swap them while moving
+the check to wrap the block.
+
+Signed-off-by: Harald Nordgren <harald.nordgren@kostdoktorn.se>
+---
+    git-gui: silence install recipes under "make -s"
+    
+    Added sentences to the commit message noting that the old findstring arg
+    order was broken (needle never fit haystack).
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2318%2FHaraldNordgren%2Fgit-gui-respect-silent-flag-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2318/HaraldNordgren/git-gui-respect-silent-flag-v3
+Pull-Request: https://github.com/git/git/pull/2318
+
+Range-diff vs v2:
+
+ 1:  4e4029c8e8 ! 1:  1375fdc1aa git-gui: silence install recipes under "make -s"
+     @@ Commit message
+          LINK, REMOVE) were visible whenever the variables expand non-empty.
+      
+          Guard the whole "ifndef V" block on "-s" so the loud variants are
+     -    selected only when "-s" is absent and V=1 is unset.
+     +    selected only when "-s" is absent and V=1 is unset. The existing
+     +    "-s" check also had its findstring arguments in the wrong order
+     +    (needle "-s" never fit in haystack "s"), so swap them while moving
+     +    the check to wrap the block.
+      
+          Signed-off-by: Harald Nordgren <harald.nordgren@kostdoktorn.se>
+      
+
+
+ git-gui/Makefile | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index ca01068810..d33204e875 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -64,6 +64,7 @@ REMOVE_F0  = $(RM_RF) # space is required here
+ REMOVE_F1  =
+ CLEAN_DST  = true
+ 
++ifneq ($(findstring s,$(firstword -$(MAKEFLAGS))),s)
+ ifndef V
+ 	QUIET          = @
+ 	QUIET_GEN      = $(QUIET)echo '   ' GEN '$@' &&
+@@ -89,6 +90,7 @@ ifndef V
+ 	REMOVE_F0 = dst=
+ 	REMOVE_F1 = && echo '   ' REMOVE `basename "$$dst"` && $(RM_RF) "$$dst"
+ endif
++endif
+ 
+ TCLTK_PATH ?= wish
+ ifeq (./,$(dir $(TCLTK_PATH)))
+@@ -97,10 +99,6 @@ else
+ 	TCL_PATH ?= $(dir $(TCLTK_PATH))$(notdir $(subst wish,tclsh,$(TCLTK_PATH)))
+ endif
+ 
+-ifeq ($(findstring $(firstword -$(MAKEFLAGS)),s),s)
+-QUIET_GEN =
+-endif
+-
+ -include config.mak
+ 
+ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+-- 
+gitgitgadget
