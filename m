@@ -1,135 +1,85 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2D83DD869
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37763D6CAB
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:12:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780556939; cv=none; b=t4P2xC3gqd/bMb+XpbEf+gzV3V5GEIofd1B6B23X91hsl98Z67/JCEYSIx/Nq2Nwk+r0tesfDVH0BC05Ce93022mpg1LHRdPO6pWnqEdAfbE3U/hibpuRL9YubYG+jWG7ktPfN/ERbbOByhclCOxsMa8J0+SPBS+T15MMAyGX/Y=
+	t=1780557127; cv=none; b=gGDLopEPB1zkJoBAuJ8s/1tVeMJNrVjZH9Y54ZreIAq6Bc2NHgMOAQDaV2Vj3Uk14Fre+NGpkB7obp59je2bwfewSjlI9pul2lzAoXVqQTo5o80K7rEv19gnSsIMedRmSpcH4IxDJthRB/A+JQV09RRXU9kZdh+V9S0o1Y1nyyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780556939; c=relaxed/simple;
-	bh=ZZyph9q+h2SyWux6O8dFBrAnTqVEoKRqU9bDUu4hEns=;
+	s=arc-20240116; t=1780557127; c=relaxed/simple;
+	bh=Q2qHN4Lkk3x1irflW6JAfcb5Ew018C2KiZhjJwwYxyI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fe60MvX4+JDLq3pNCqFk4vK+lxYdxPJkxU2NtObof49sIHhWUYlDFlLIw85MoVCgm0UIC1QjOx3fzEgtELeEwA/nGax+yss6H6+s8tcXwAbA7uzX1Fcab8c3tUBzBbkHhmGS0BgNsw4ydfn9hKCIWqYVU/b+3PfsBF0U608rUkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LTyD4pOb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B4HmurZG; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=eoJAgLovNegdMG8hGNMpzPV29qljgwkbKiQceYxOkI9upf7ShdkyI+oLiiXA2JpjNLe1Rp6s5Kmv+6wRF4WEM1l2gdbOH3bP0hikwoCjJLOPhbtw4xduyYoYB2L4BYNIEHLhZIu1gCpkFw5DGLuQ90Mzys9vDw6VZ2Ee1bI95og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=G0BoPYBQ; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LTyD4pOb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B4HmurZG"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 04C2714000FB;
-	Thu,  4 Jun 2026 03:08:57 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 04 Jun 2026 03:08:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780556936; x=1780643336; bh=Cg69XsqKuP
-	bPNzTj9gnFaMo4+CX+c/Z8aJhb6kxQF9Q=; b=LTyD4pOb+zbYV2QXKl3uL4nu1P
-	veoC/PMO8mKQdsOM/3SO5L6Zi6k9bW83Ks6ks+3Z9TgHqzrgj+45NZ1jzk+B12as
-	47rN7bIZiDaEA62WldiLP5pDqVTLXBXOhOW3VE7lS4cczy++UGFq7Dg5+2kCpg4I
-	pchF13WFXS52osyxCjltqCumQvxk3GaXJxRv2SEq6EOjgSrS58cFRiejT3RKGSHo
-	ghkg8Gl814XofG2nHfI8s0+sJSAcqMqtHFj8lUxEfpkQaI3q+Pk3hQVqGVOIyvkZ
-	/OADfNHdy0XwnWxCJLkOxjQ58Y76KWijwlpbGvCpwqrNeAu1wqRQkuZWgryg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780556936; x=1780643336; bh=Cg69XsqKuPbPNzTj9gnFaMo4+CX+c/Z8aJh
-	b6kxQF9Q=; b=B4HmurZGDY5iZd7zgJ3s1vO93WBv2BodHpt8R3Ahqs4NPTA18tD
-	Ds4TLDkN2IqVnkqUBUPB0j6mXcmYxUep8rxJeRqJHmqPWHHxTmUNCBXXzCSqGmwQ
-	B6vQYfgolt55fL3Uxnsd3VTbjwS/Mg2qaqyWeK6BH/azUNzvi1ZzZPme8ukPP4kN
-	OUfXawiFKlMJjidrTgKXTeTY6zPwRi8mxROrMc9e2YXM5orX1VCTN8CPLce3X5Op
-	0QsjtjMdHKu8j+qQDYU7DgoGcIpYpbEXfhPJxcmTTxv7fCBASuHONNi7qBSMIaTU
-	ndvI5D/qs0VnH/D2NWuQzoPhn9ddws+ak2w==
-X-ME-Sender: <xms:iCQhasVFZJ2cEKDvLprmrhkyJM9Emj_A6bJV7vtK0Ahu-wkiL6qU7w>
-    <xme:iCQhaj27enbP6cN12efXMbd37TsrF7GWyNillUKwDuH3yYIrzXeM5qV48LAe7ls_H
-    AtOz5CDvR3s3IUP8_AZXVgI4BZU4UdLWQ6Dd8RiTzbjxNYUkXnNnQ>
-X-ME-Received: <xmr:iCQhap0KgSGx8ysaIWtpAIGdcvOAShZs4rEEvg9OzUEC15xIUMvLCDl3-qbyNQcdG_76Lr-mjg6FBpw9PMLb-jxEzHdo9F6fzTVMlulWCAk>
-X-ME-Proxy-Cause: dmFkZTEHaSfKmQgBJPXSEHIXKmTUWg1QowTrUWXfy3xeUgkayzw63VEbl7a1W9J62O/F98
-    G12omABK/aqTMWDJyLkIZaiGW8oApac4toRpWui+5OqMwNyBqk64g7w9fAS8e3x23P6eJS
-    yjemKa/gf/I8rl1vbxXcC1v1BUNOD8zmOefivRLgmpdRoaaUDuwzAU2t7aWxFkKULlYRCj
-    TgOwHtkWFYYja4Y+X4PwRTaiGk6MwUV3FFkDMD7/Y77NbkuW/nn6ST5p4vovo3whm3c+ZE
-    dr/xyD3UrVAR47JPHvSola7//JuLYs0wltXXqIu0PKYE/lPxK+hYUENiBQcsF9tW0vlmIp
-    kg8GKeb3B/jZbdUUIjC2SjEzRZW2Gn5/yYjUsYTqxdxQs4k7KcM7cb3PUGgHOxzRCIk8ky
-    2G+/+KnliIaYILqawK4R1VRqVvoCLeIfiIrTvm5+j9QQqXQHK/Hl0bca4/DS56mz6lCOPf
-    J1BDPVsCwo9MtA+na9ul7gGy92lFkTLLmkAjPX88ucKsE/Fx2u9UC2j3FB1x0BwHPpA+is
-    VacPmrQA7O29Ilge3XhoF6+WBr6dEi1jdpzIT1GWvgRDo2EggyXYa1PbtpwIy4Of0lOer3
-    OeymXHx3G062wfVg/nB49zL9UeBWeDiPLKVJAuc43spF+/QkRSzGICRl6oOQ
-X-ME-Proxy: <xmx:iCQham8OmIzbSLd67DcDWjCFwo9srrhKLVsXz7aR2NqjaVagojDM6A>
-    <xmx:iCQham1gmxQnIROvHJbkxv5iA2HfvGwCS-d-vZCbbYh0Wly-QYqEyw>
-    <xmx:iCQhaj8GGTdch4LNWmn1ZKyb_hX5LksdZA8f0Pu_8j_qBf6hrMy8dA>
-    <xmx:iCQhamsDh7hGTHfNa64qPF_6H-kgX1u23TBE4RCFVSK1C-Jp2LuWPg>
-    <xmx:iCQhagJrlUxsAAG1HDuktENu0gG1GRmGLzbpsLH0QukMyLr3vNczB7-1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 03:08:56 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a833cdd4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 07:08:53 +0000 (UTC)
-Date: Thu, 4 Jun 2026 09:08:48 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Tian Yuchen <cat@malon.dev>
-Subject: Re: [PATCH] read_gitfile_gently(): return non-repo path on error
-Message-ID: <aiEkgBZJjmntRdNt@pks.im>
-References: <20260602061159.GA693928@coredump.intra.peff.net>
- <ah6WEtk2pXyViEQA@pks.im>
- <20260604062720.GA3195904@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="G0BoPYBQ"
+Received: (qmail 43494 invoked by uid 106); 4 Jun 2026 07:12:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Q2qHN4Lkk3x1irflW6JAfcb5Ew018C2KiZhjJwwYxyI=; b=G0BoPYBQHqAhyz07c32gpeR6dMgE15KX2jH1lONkR6gheeoY4N5jwmP1edvHwN64Ulsh5yZkhxJeBdSeRaY2FN9y/3GQN+JqdkJS396Ll15E/MSjSEg1Pa+pvVbzMyj0KwMcLK1g3lYo9zlDI7z4IeNFxzrTwNRQE3SC+7bWsjpi7Yli4tH15J/Ce+1H5m+8Cs1IyUxFLLcGBj4NAoGlrTgHbCdSUB3UeQeFpsNJULXPS2QfwuQ2+In9LB/1XAHFWOS30PHwEwwRoMHrznB3dbNLA5OVXYykPTm7I0tqTmZFFF2kl+VGNAwBsFnl0cgrzftrr3vU/+iY8glfAgqj8Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Jun 2026 07:12:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 111085 invoked by uid 111); 4 Jun 2026 07:12:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Jun 2026 03:12:08 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 4 Jun 2026 03:12:04 -0400
+From: Jeff King <peff@peff.net>
+To: Arijit Banerjee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	Arijit Banerjee <arijit91@gmail.com>,
+	Arijit Banerjee <arijit@effectiveailabs.com>
+Subject: Re: [PATCH v3] index-pack: retain child bases in delta cache
+Message-ID: <20260604071204.GA3196596@coredump.intra.peff.net>
+References: <pull.2131.v2.git.1780330402264.gitgitgadget@gmail.com>
+ <pull.2131.v3.git.1780445118653.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260604062720.GA3195904@coredump.intra.peff.net>
+In-Reply-To: <pull.2131.v3.git.1780445118653.gitgitgadget@gmail.com>
 
-On Thu, Jun 04, 2026 at 02:27:20AM -0400, Jeff King wrote:
-> On Tue, Jun 02, 2026 at 10:36:34AM +0200, Patrick Steinhardt wrote:
-> 
-> > > The correct output (which this patch produces) is:
-> > > 
-> > >   fatal: not a git repository: /home/peff/compile/git/.git/worktrees/worktree3
-> > > 
-> > > And indeed, that path is missing. But why? I feel like I've run into
-> > > this same problem occasionally over the last year or so, but never
-> > > before. Did we get more aggressive about removing worktrees at some
-> > > point? I haven't been able to reproduce whatever is killing off the
-> > > worktree directory, and by the time I see the error it is long gone.
-> > 
-> > Both git-gc(1) and git-maintenance(1) prune orphaned worktrees that are
-> > older than three months by default, which can be configured via
-> > "gc.worktreePruneExpire". That logic has changed in 4dda60c9df (Merge
-> > branch 'ps/maintenance-missing-tasks', 2025-05-15), which would kind of
-> > match your timeline.
-> > 
-> > But rereading that patch series I cannot really see how it could result
-> > in more aggressive pruning of worktrees. We used `git worktree prune
-> > --expire <expiry>` before that series, and we still use that logic now.
-> 
-> Yeah, but this .git/worktrees/ directory shouldn't be pruned _at all_.
-> The worktree itself is still there (which is why I'm getting the error).
-> So perhaps there's a bug in checking that things are still there, or
-> perhaps something is corrupting .git/worktrees/*/gitdir.
+On Wed, Jun 03, 2026 at 12:05:17AM +0000, Arijit Banerjee via GitGitGadget wrote:
 
-Oh, that sounds somewhat scary.
+>      * Addressed Jeff King's review question by releasing cached base data
+>        after all direct children have been dispatched, while keeping the
+>        existing subtree bookkeeping intact.
+>      * Re-ran t/t5302-pack-index.sh, p5302-pack-index.sh, and end-to-end
+>        full clone spot checks with the precise-release version.
 
-> Another option is "I moved my git checkout and the worktree prune
-> couldn't find the directory as an absolute path", but I'm sure I didn't
-> do that.
-> 
-> An even more exotic option is that I run Git's test suite a lot, and
-> very occasionally bugs in the test suite cause the script to escape the
-> trash directory. And some scripts do run "rm -r .git/worktrees". I find
-> it pretty unlikely for that to be the culprit though.
-> 
-> Oh well. I don't have any good leads, so I guess I'll see if it happens
-> again. But maybe now if somebody else sees it we can commiserate. :)
+Thanks for humoring me. I fully expected the answer to be "it is hard to
+do and doesn't show much improvement, so let's not bother". ;)
 
-I'll certainly be on the watchout.
+It was hard to see the difference between v2 and v3 performance (which I
+tried to dig out from the range-diff below), but it looks like it was
+basically none. I did my own run of p5302 between the two versions using
+both git.git and linux.git, and likewise didn't find anything.
 
-Patrick
+I guess it would make a difference only if we were routinely expiring
+useful items out of the cache due to the limit. And even though
+linux.git is a "large" repo compared to git.git, cache locality here is
+mostly based on how wide the delta tree for a file gets (that is, how
+often we go down one chain, caching bases, while still finding it useful
+to keep earlier parts of the chain to go down a parallel path).
+
+And that probably has less to do with overall repo size rather than with
+how we tend to pack things. Though I guess a repo with a lot of large
+files might see more cache pressure (just because each single entry
+"costs" more). We could simulate that by dropping the cache size in
+p5302, but I still couldn't find any effect even with a tiny cache.
+
+(Actually, with a tiny cache it looked like things got ~1% slower; maybe
+noise, but maybe extra thread contention due to the release code?).
+
+So I am happy with either v2 or v3.
+
+-Peff
