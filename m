@@ -1,126 +1,179 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9DB47CC63
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 12:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E03321FF23
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 13:15:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780577396; cv=none; b=CKGfL3LSXFMuKRi/iHgv/TsgxQH2ec1f+F75AreNHP/7QuiMof7BSg09HoLT9lws3ujY8fPHicFM7v8vCgX7ijVdnLVw8f0GarhoY6g7lEIxOG3qJOwWT2M2JFf2iRoRKhFC2ERI+QTqkIdQOzgBUaqWSAxy/9M8WrDvXAj7cjE=
+	t=1780578947; cv=none; b=byzXw8b4FHQ/wNHdn3oUnX7XJg0SVUyLr7+uxndpLqfvpjqNG0QNmQKkxZp4K/9HM0tKsjzSd7iVYvs6uJjCzWw1Wsy66Dy0RUckOU/sujrs/DCxtnVtjKM8yamnSol3kyizgTdEWgp5LA79e93s87dVLYUSKGdYClB7Gz7947E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780577396; c=relaxed/simple;
-	bh=nvLl39ilpvZBg2nnOPyCoba/06gTrAFB5xT6TCHmZ2E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rmh9Us4+5FDqXUvgo1VxpcG86MpHKMLH+htb/btUieT4z1gljV2X3oJb7bxFYe2Bw6t1R8/kAJcfJAFWwP+1orkdOu20DqHZbWG6K2qIHekjB6Kd7kuvff+Jz61onHjh2bbM15i9DQdyqtU93tO4SUvHScb38LfMbKaRhfARAiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MSS1QM8p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MXIZpjnO; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1780578947; c=relaxed/simple;
+	bh=x8GeLR6WqWtqHddDjoIoLE6EHG0IXq5948BhSciFeXo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GdZt+quK+E7K0qocLn1ti/pYY8dRbTIBu04p1EPfAsRou8HSuZLisiB254GCyqMmli/sAOeez9YjOJKu5aIvOPk+Rc1WBwgS/KbFzCX7/v88GRlbh3EDnrpi2/DDPzAVpfFXOyuywtzQvXDp8ZT60eXOdd6pzQoLzv4pug5XQqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=jZS7sGVH; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MSS1QM8p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MXIZpjnO"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 45CC41400135;
-	Thu,  4 Jun 2026 08:49:51 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 04 Jun 2026 08:49:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780577391; x=1780663791; bh=nvLl39ilpv
-	ZBg2nnOPyCoba/06gTrAFB5xT6TCHmZ2E=; b=MSS1QM8pc0O5T9Dx3fDThT19tz
-	rmZOrD37uyOwxlFFT3KhFk275BhHTq6U8OqhPWTL78npr1RHdJMkMn0UHC0kprVx
-	2HE5lbJ/u4PrRlCZ8LC5xUBes/lQjiKKGvrONnUGNC8k/rIIoofV2F4rnRh8KpGR
-	cN4x7cbR9A8V+XcxMuv1qge1kDmlavngFX4s9rMZUGbFRcSGD5cB3EEMSGmIyu0z
-	ACqI4lpUI+kJ13qTMPokelqnO1+fTOpQ2LP2/i0eg/uMEe5YdtMbeglmzwZK4hUc
-	A+lNvZsHZNd/kuFlLHUkhhBX0/lm9441esT76lvUhdEMkFzT9hTKE0YSfAoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780577391; x=1780663791; bh=nvLl39ilpvZBg2nnOPyCoba/06gTrAFB5xT
-	6TCHmZ2E=; b=MXIZpjnO+AcFM7UpsTqj2xh9cghlaezmxw4gvzZ5fEVbLRMqs8y
-	19xRfNfgMyCCe0i40QiFMelZq3PZG83m4kAA0LtmsL7aJPeRgpJydAQhNHerengT
-	nCKdjYzQf+Y13EV3f8URMML1sa1A46lRX+K/wdGW03tvZNn0qAJJksUtjBzn3bpf
-	6D7KG26qVouvT8vQajOzTmwTDUpZvgtHACveU87t7XPF6iNN259xhvxpc0LjVM4x
-	wKckF/RMVq9CqidF+brN5wFWUagpa+Tm6nY86MV3s0RAbqzASpl9MjOtGBECIxDB
-	Ab8lBEkVOxUFVFTURfeifQ1b4lieIyI1Gzg==
-X-ME-Sender: <xms:b3QhahHqdcGDEJLxB-f33HdbOm7EdeOeveIZjhGWGm8hiX9kzDHbHA>
-    <xme:b3QhasWOv62E4ppbDFOjfXmr49tS3i-du3C2HQ5izZd-lSkrjFVX3Kxsi9uEb2uxP
-    HPSyuJZPrpoWmMtEkzKYTggToakkaljLAGZXysSfRgJuNb7WD1e>
-X-ME-Received: <xmr:b3Qhagy-ubwc819DUbdcGYaqdOSw-2vfdxNCufXlr0_ax-JKH1F6xryvQapcHiTdc2Wghf_GokUq6ILSBckX0nSJw_cRDvYrzV7OFhII9vM>
-X-ME-Proxy-Cause: dmFkZTFTdPjtT7ahdr4g20pwf3YdciMM2L17Uzc3ji351JTtKZ34XjM8r9xS7Qr8dsBchO
-    HBJEox+MM4jznMECUQ3fIi36ji735ij9cJ1JwYAVRbqtKFTuloJGr3pmwEoGhL/dscXWTe
-    EIqSrzNuwZcWExsHmHmy9SWONmQDyus9aqKozZ2lA/SQqvdsVWbl9cUmL/KsUmE4jvR3JM
-    znf+qlxTz/A1zXjTRzsfZdSK3yPIjbxPEujLUgIGLDOn7wqyFOtlfR1P1r4HNdVrFzL3cf
-    UI1ETWAjOzTraGeIMGCjxwsuiULQEKPaXIGfdGQEMcCWl+lphS6qSu5YlLMcCvE0vUgeZu
-    Q3yNrDIhy0Ecvj3QfvkKSUPff4QA0+2xnzk4B+Qx0IxnrFIYr/LBfs45GmdSOc77sWkZwe
-    HeI9LsVjEflExvkN4a/EnbT0v/J/PApcumsUY79RjQY5QcQxFbTZ3X1h8tYdvyQ4l4tcRy
-    oJdZ4pJUSQBzBN1SaTP/YpPcK++LuUvTJHxhHa7fj00i8nWIJMpcAFeY8EzttszXBu/kqC
-    /zUucIywtTCZ0G9CruTLkK7AmnFqWdBJ63V6avY/H+mtjeTFzcR6/DmV4dryAoSmYjI7xv
-    y4Bxm8dO9+xaNe8G7zoJnjuIrpcA1jo4oiSD9ij9lv2/yZ/bQUcQcve3bdaw
-X-ME-Proxy: <xmx:b3QhaiP8vv6crT-_MBEPYk7Cq-7Iq44SLjSozlLXvwT2W_MYK0OxhA>
-    <xmx:b3Qhap5K48GDls1Zl1Y3JDc-QzJ2Jf41W4FdKoV7gV8rJ7JX16OdEw>
-    <xmx:b3QharOkEC7yO7_jt16uL0gbRi8UdaNk7XfL0eGxS5EEOUlaGuo8NA>
-    <xmx:b3Qhavmkp3sdUlAewgt28Y1fyuvVzMd_n2esL3TgjeRNZuC6l3mypg>
-    <xmx:b3QhasdUxnTUCYSiTFhHgR8S88mZ8aTrOX2sZrVMVoBO3n4Zjl9ozPEM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 08:49:50 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d62e8b8f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 12:49:47 +0000 (UTC)
-Date: Thu, 4 Jun 2026 14:49:44 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Tomasz Konojacki <me@xenu.pl>
-Cc: git@vger.kernel.org
-Subject: Re: Is it intended behaviour that 'git gc' ignores the
- 'commitGraph.changedPaths' setting?
-Message-ID: <aiF0aN9BwBvQffGL@pks.im>
-References: <20260604132419.F2FA.5C4F47F8@xenu.pl>
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="jZS7sGVH"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 654DFZKO027914-654DFZKQ027914
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 4 Jun 2026 16:15:36 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1wV7v5-002n95-OG
+	for git@vger.kernel.org;
+	Thu, 04 Jun 2026 16:15:35 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 4 Jun
+ 2026 16:15:35 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 9de21626;
+	Thu, 4 Jun 2026 13:15:35 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Tuomas Ahola <taahol@utu.fi>
+Subject: [PATCH] docs: fix typos
+Date: Thu, 4 Jun 2026 16:14:57 +0300
+Message-ID: <20260604131457.19215-1-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260604132419.F2FA.5C4F47F8@xenu.pl>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-11.utu.fi (130.232.247.51) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
+ BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:mime-version:content-type;
+ bh=7OmwAQuuR3hfSxsinb1RWOUCHVnkgb/hAtBvxusUf6Q=;
+ b=jZS7sGVHebB68eg/YD/lugpvMOdBRLqqMAK0Rgog9F0SmgDgjsLJdA5wK5tFROf8IvwuWF0Nwc8n
+	6o8J0bsJKMuNE4tKPyFe0xWhKzskmQ/PRhbMr9QUNGr27p6VmR5sSIQtUX/OIxjm38r2f33v6bmr
+	tO1eBO0Mquvl2+6h1lcFzS4dSOkzjpCfMFgyVylgHFZNF1PcXKEgcnrs5g9DLiJBf2JnIM05fWXV
+	ksgmeU46Cr7e9ju42Yddu5yvbJlq7R7RD6sD5k3H8yT7+SDpsOFyYTZqNNGeasGMgmXxMEKVa0Q7
+	I1uxAOglMaEKdKC2wEMwcC1IJ3L2BPM51Cuqtw==
 
-Hi,
+Fix some typos and grammar errors in comments and documentation files.
 
-On Thu, Jun 04, 2026 at 01:24:20PM +0200, Tomasz Konojacki wrote:
-> It seems that 'git gc' (and also 'fetch' with 'fetch.writeCommitGraph'
-> enabled) ignore the 'commitGraph.changedPaths' setting.
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+---
 
-I think this is a bug -- it really should write the bloom filters when
-you've enabled the above config option.
+Notes:
+    Written mostly as an exercise on how to submit patches that depend
+    on other topics.
+    
+    $ git log --oneline --first-parent v2.54.0..
+    d19e9182ab (HEAD -> ta/typofixes) docs: fix typos
+    5a7e9cc03d Merge branch 'ta/approxidate-noon-fix'
+    f03649d802 Merge branch 'kh/name-rev-custom-format'
+    023a226b4b Merge branch 'jc/neuter-sideband-fixup'
+    
+    As can be seen, these topics have already graduated to master:
+    
+    $ git cherry master
+    + d19e9182ab097a722e32d459a9a58c8985831e3b
 
-The root cause of this seems to be that we call
-`write_commit_graph_reachable()` directly, and that basically means that
-it becomes git-gc(1)'s responsibility to set all the correct flags. And
-as we don't pay attention to "commitGraph.changedPaths" at all we simply
-ignore it.
+ Documentation/config/sideband.adoc | 2 +-
+ Documentation/git-format-rev.adoc  | 2 +-
+ date.c                             | 2 +-
+ replay.h                           | 2 +-
+ t/t9902-completion.sh              | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-In Git 2.54, the default housekeeping strategy used by git-maintenance(1)
-has changed from using git-gc(1) to use individual tasks for more
-flexibility. One of these tasks is responsible for writing commit
-graphs, and that task doesn't call `write_commit_graph_reachable()` but
-instead executes git-commit-graph(1) directly. And because we do this
-infrastructure works correctly.
+diff --git a/Documentation/config/sideband.adoc b/Documentation/config/sideband.adoc
+index 96fade7f5f..ff007aeb73 100644
+--- a/Documentation/config/sideband.adoc
++++ b/Documentation/config/sideband.adoc
+@@ -13,7 +13,7 @@ sideband.allowControlCharacters::
+ 		Allow control sequences that move the cursor. This is
+ 		disabled by default.
+ 	`erase`::
+-		Allow control sequences that erase charactrs. This is
++		Allow control sequences that erase characters. This is
+ 		disabled by default.
+ 	`false`::
+ 		Mask all control characters other than line feeds and
+diff --git a/Documentation/git-format-rev.adoc b/Documentation/git-format-rev.adoc
+index c40d52e9f6..505a52fecc 100644
+--- a/Documentation/git-format-rev.adoc
++++ b/Documentation/git-format-rev.adoc
+@@ -33,7 +33,7 @@ OPTIONS
+ The argument `rev` is also accepted.
+ 
+ `text`;; Formats all commit object names found in freeform text. These
+-	must the full object names, i.e. abbreviated hexidecimal object
++	must be full object names, i.e. abbreviated hexadecimal object
+ 	names will not be interpreted.
+ +
+ Anything that is parsed as an object name but that is not found to be a
+diff --git a/date.c b/date.c
+index 05b78d852f..014065b419 100644
+--- a/date.c
++++ b/date.c
+@@ -1074,7 +1074,7 @@ void datestamp(struct strbuf *out)
+  *
+  * The tm->tm_mday field has an additional logic of using negative values
+  * for date adjustments: -2 means yesterday and -3 the day before that,
+- * and so on.  The idea is to deref such adjustments until we are sure
++ * and so on.  The idea is to defer such adjustments until we are sure
+  * there's no explicit mday specification in the approxidate string.
+  */
+ static time_t update_tm(struct tm *tm, struct tm *now, time_t sec)
+diff --git a/replay.h b/replay.h
+index 0ab74b9805..90ed299ff0 100644
+--- a/replay.h
++++ b/replay.h
+@@ -19,7 +19,7 @@ struct replay_revisions_options {
+ 
+ 	/*
+ 	 * Starting point at which to create the new commits; must be a
+-	 * committish. References pointing at decendants of `onto` will be
++	 * committish. References pointing at descendants of `onto` will be
+ 	 * updated to point to the new commits.
+ 	 */
+ 	const char *onto;
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 2f9a597ec7..7c6db76c9d 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2446,7 +2446,7 @@ test_expect_success FUNNYNAMES \
+ 	>repeated-quoted/2-file &&
+ 	>repeated-quoted/3\"file &&   # ... and here, too.
+ 
+-	# Still, we shold only list the directory name only once.
++	# Still, we should list the directory name only once.
+ 	test_path_completion repeated repeated-quoted
+ '
+ 
 
-So my recommendation would be to stop using git-gc(1) altogether -- I am
-biased as I have helped implementing the new maintenance strategy, but I
-would say that git-gc(1) is nowadays a legacy tool that inches closer
-towards the end of its life. Git's default maintenance nowadays uses
-git-maintenance(1) without using git-gc(1) at all anymore.
+base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+prerequisite-patch-id: f827362e061e199150f149dd36c67664c77406bc
+prerequisite-patch-id: e5b32f0b916ec86eab6631b9bd9bafd639191765
+prerequisite-patch-id: 567a1832a220b2dbf095796cc8093b526d6a076c
+prerequisite-patch-id: aafa4bd4ceb7836a92d28d4c89b57032f74332e9
+prerequisite-patch-id: 2e073762fc9dceafcc6f16711bba425384a24305
+prerequisite-patch-id: 0aa605f0acdb71aa2eb173fdf3c57713c9561fe2
+prerequisite-patch-id: 5163040262c89eed4bcb04228b445d76497c9d58
+prerequisite-patch-id: c06c0461bf75ed638214ce98a54bba6578941c10
+prerequisite-patch-id: 571fdf3570f30fd41f6d681e99acc37df94d09a3
+prerequisite-patch-id: 54e7102e880d24a6b2d22bef9aa90a3078086d4d
+prerequisite-patch-id: d829fff1fcc8b6d086fcb6a40c62f835226ae32f
+prerequisite-patch-id: d1d8e2f2e274565e1d7437aa5ccfe44c3f3d8355
+prerequisite-patch-id: c79ebac6894b9a206f5699e9811e0348e111753d
+prerequisite-patch-id: a7750d7d2ec637d906f975f27ba3d03b33a4a34f
+prerequisite-patch-id: 083f554bc5e09ae54c6b545628196e11a9e90cea
+-- 
+2.30.2
 
-We could of course fix this, and it shouldn't be all that hard to do.
-We'd either start using `run_write_commit_graph()` directly in git-gc(1)
-or we'd start respecting the config option to pass the additional flag.
-I myself probably don't care enough about git-gc(1) to do that anymore,
-but if anybody else feels like it I'm happy to review.
-
-Thanks!
-
-Patrick
