@@ -1,80 +1,80 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334AA3AF64E
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 10:07:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8091A383C63
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 10:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780567676; cv=none; b=UZO32S0+DNp8cIoPdXQUd5Lafs9XBp2J3cbQclVqLJHVmsPjTSN3sCKwGUmKHSVtpogHQGw956T7RYWZlqIeqR78Hx0MRzkuzay+57oBOrkkddDQp43FOChCQbXcL2eE9EDom4lT16/sKlcjqFIVeTkGyBeAyNyJsDzqfcGqG2E=
+	t=1780567678; cv=none; b=QWyf+fzuB5nIxX4UiZP7/ffQTxeyprPqxX1Jyx1IbBUt5BPBMLyaPWDgxG2j8ASGvITs54pcEm43UMv1RzSEosZcBnrHaZW1v2Xg7Pi+pbQvtVQRS9P5uA3TmJcU1ImVgEFSlcNVBeMWV512ln2TFPE6zFQYHJlch6HWv20w3p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780567676; c=relaxed/simple;
-	bh=7IRyQsElUpfWeCShIAnp7rpNMP92OwY7P0BtA9mLwA4=;
+	s=arc-20240116; t=1780567678; c=relaxed/simple;
+	bh=WF3dz+iauiP5tk13RvG+ekwY2IsrPvTK7NsnVugdb3k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZPoUF6Iy0bP29LMpdGV0qxb/Usp2qZMj+iTeplzlCnhfZxM3Puc53eG8tLvdgEAvnG+ZrXAXipk0YVtbq6NJBhIbGhoZJnz3AXbTg1HgElbSALd70Scwu6xARUjXtnN99f0C3EgVf4zYT6X+trwuB6Lv6cZo14ynBTgXnOVLRfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=swBaN5OD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GnR4S0Np; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=kI/eD9lGfGJh1Vb26XTS6vea92mJ6wx+dX8DTIELKie80+LbwPuv4TGng7FqsSBaBIpQUcP24uvmmMSa3sCP9xZduzWY05Ax/3xElkwdq5y46isltooVE/zpN9B4CfD8Av/b+C4WwgzkV1pwROkwnd4izPGdGKUZgbG3BPmu21E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qrog0qhn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QN6WceCH; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="swBaN5OD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GnR4S0Np"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6A35914000FC;
-	Thu,  4 Jun 2026 06:07:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qrog0qhn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QN6WceCH"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 71D2DEC01B5;
+	Thu,  4 Jun 2026 06:07:54 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 04 Jun 2026 06:07:52 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 04 Jun 2026 06:07:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780567672;
-	 x=1780654072; bh=xyxM2r/QLJOPpD918GEsmHm34QgUdABliGQqbtQP/IA=; b=
-	swBaN5ODZ/3Tw6ThAg2Va/r/QNUIpvbFvTsssHkklQYJ5sgSjxvhzlwLe2USKRy8
-	zKBwsVa6LRfFRcWGW7GTTyFi30nk11kvL8SgzztsHlltFU3zmRCcrDSeQRBsRrk4
-	aXqL55x4HLLj8sF8KPhrlUPGj6D6ge1iq+Vkq0ZK6vtA+35c4qiPwjME9gRlLDrV
-	rQcV1vk9PooFRyKL+p7OyFF8vWviLNfsjxzf7+KyREl/nwAloeboDyr22h1F8gc7
-	mEqAmTP7j+Qix3BXZSK3n4ia5P4V2lVP2E0vm66n/gVT37C/Vd7Vn+J3kC1fGhk+
-	dSAeHSDk53F2U/BX5iLg+Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780567674;
+	 x=1780654074; bh=ar0DSp9nUAoLCWG+Y4b0YWGyqcsMnxlWvpYqcVM4ZRc=; b=
+	qrog0qhnevkNLJI/T2p16iddZo/A9XI13mBXz5MnFxNEVCupOV+7Yv5DXBctkFzm
+	vGgiayEZT7H5uTYqTFSSEeb4ZJuMpIYBf3czCpN3aGCB6AQSbiWhRQQpmhGJOMTe
+	jKGRNESGLRvdAuBFGZcN1SFtldl4fG6UYG1X+0sxNhgMASzqqfQHjqVqTbalyBJL
+	cgViJDUqBPw5mq/d+yVddvOqcO1KH62vArqE0/5eWzdaHCAjd7iSsTP/HCF2iE50
+	GIXNGdEygDIEak129rhm3bgFGApxLuL0RZjChpDJJpWZISr37iNwpFqS/pJabEq+
+	L1pz0Sxvbir8uiHdPMQaKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780567672; x=
-	1780654072; bh=xyxM2r/QLJOPpD918GEsmHm34QgUdABliGQqbtQP/IA=; b=G
-	nR4S0NpBYz8ZZx2FURH6VH17+1/YHqXq6Nr8qGEF4/0n2Vph0isoVEzf/iGtv6PC
-	QA5mxl0XbsUDNXMsdQjKEHjpnDFu9VNgrtHOAORe332ULnE7gyXU2OcSSFFiqTE/
-	+XRAVw2eSrbUe/KD4Hb/01VYb46z5uuNGQInkeo2nhvHEcmolzQY0CJwvdXxedEi
-	Nxx0qdVwcmRZ40qrlQQCS3TP5julo1tWQITXufzgzRszlV2MI1JgYOPy+lWtxCsc
-	HhWZNPdW70UtmW1OsauPRKhf14RxsazUWVV5+3NjjOx3nWngLDfbOnqRMYpWboc6
-	nnRtWndl8vktun5JkT73w==
-X-ME-Sender: <xms:eE4haraFreWxh3ucng1S7qHYMvvN_Lj4kzNSEA8BBnqdqFnmt5yarA>
-    <xme:eE4hatp6Sf1Ia0zb98_uHDIGiJ4Bw-_1_XGH3C0qPX8F4Krsw__3nTP29oo3-pRXR
-    7qH_5pP32x7cbh3B7J2i9g29PzBDBzn1wtu1crg9jP5I_XeAnahjA>
-X-ME-Received: <xmr:eE4hanauaxKINut07FZUjyT3xqzyMhtXyHh2-Alh4QzcfoDk2-jPug2rlWkgY7IiVDFjxv4mQEWPbmghk398ha1yFIA7fbN_ANxgvLdHb8c>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780567674; x=
+	1780654074; bh=ar0DSp9nUAoLCWG+Y4b0YWGyqcsMnxlWvpYqcVM4ZRc=; b=Q
+	N6WceCHmybYvzxmfaN05BN8L1Q9pbN96DfNmr0Tq4womewpAFk2GiqEnjDev1Ips
+	CkDI2Dk0oAK/Ba5Yye8bziWaCW0AnYNm5B0wTj8Ntoiq8Esav7ixERFA7VQJ0XGZ
+	5Cu0lDnmEN7cSgLAo++EEOYYPEqHCaHfTZzjOTS2hvF4juEy0HGVomIbxfeGzL68
+	WQDlyLRAUHIqIXBKeV+4hIFgVMqZctDjsnnadddmcX2Ftso5fXzy5IQfcCe/kc3s
+	lb8o9KqIfMZurZZSUWAsiuK4jrdACfI8LuX1Z++7yTzq195wzag4QpsdituE9hwS
+	yUMiDN1+RreIsE/t4QWrw==
+X-ME-Sender: <xms:ek4havNkTJBErDpX-vAgoJZCxq1PqKmrKMV9R_qUGw5Cu_RGjO0tZQ>
+    <xme:ek4hahZFD4-YJ3udy8KpqRArELiHYaVNWnF8AKEEVZLWrYzEy9ggjrN_dDOoTiysJ
+    rLbMkfKRKtChUiKY0pY7zkg0OQH1O7k6xBdV4HL5XKAkePJoXyX>
+X-ME-Received: <xmr:ek4haro2WJpSERvs7BueEmiXFqTfZwTHiQiT6vosg7ZbQ4DC9M6ZLqP8dK4yKMe36yK0nMc8mTQu8jy1XKB7SOlLs2IsW9ImrT324llkbYk>
 X-ME-Proxy-Cause: dmFkZTGMbu7/w/ZaywpulTbV6q029k+4CRvBefE38zDB+oDDpe7/ZuzFboKkGddDMpC6H8
     Q65cMH2hqNVIApiwywAi1d3oCMuupua5C6XrHnnITffKfmMRVwTdI5GHkudmJ7ZKEZrrYX
     CKOmv9t1NwRbtoOICGlQGTcGJ1FFYgaEdOYRqLfZqhIlP1ZWNMKv3dVVS2jOfp6CH85ck+
     X+GJZjSuAt4gnXgZR2jlgA8pvi0autxCCmFsaQ4hwO4cz1AmajGgQcBQ3nWLBS5d6EXh4c
-    RYSw2h7nb13kcCW4tZMqTZU+tBdbJ81eaW33xVcSzp0LPE+7+IuXs8Di5knqCnrNht8gSd
-    9Cw43u2syeGV+Rr7AtLy3dNIyxUevf95yeIn0eF6PqrSpvPDbo9sIbt6L5TUPhMgZdrddL
-    8KuKv7zzeaWbtcFQciplOyWBJISVPiRcmerdlNraeSGk7UvLSLx29zdXs2mi6Ux84XTR7i
-    VPbz9AYbEcaU2hZESfufRVB8KYyNwx0zrL45NgiAJsfvNcuNVQZ/jeQlIfyBgYZTGtgqKe
-    u13zvqrqI7R+JGvSJsusgffmcq7W4QvE/bLtYKIK4Sha5KpSiQ1qNWyLCKAFmhAzYQizF3
-    B3f2uyGdVBPQFLPVLz9zWK5VcR8Y/Kb8EPd4K+3PlNqaMYJ0+G8J32XQZfeg
-X-ME-Proxy: <xmx:eE4hatTHwCn7gVqc_Uehs5EbglGRzinlVEPmoSkOKrnYqFj-P2FJ8w>
-    <xmx:eE4ham4OnxTvuI5quoG_-hT2VHzlurbGIbWGcteDgJTc-ivJyeiBNQ>
-    <xmx:eE4haqwC680N_F6Sh4zpWMRJZOgTcOzmFtaYh49Ef4O_BI-SOUCr4Q>
-    <xmx:eE4hatRrNdMPj487tTWPlK-NaJmgUQlg9wGa2VGtjOrW5sSRGsbdZg>
-    <xmx:eE4hatsfNKCdPrGzL_v3CLdBViBADIldzdYhaFKvi7o_JznZSN7l79QP>
+    RYSw2h7nb13kcCW4tZMqTZU+tBdbJ81eaW33xVcSzp0LPE+7+IuXs8Di5knqCnrNht8gcc
+    sXFm7xl/JRe38IjUC48jsM2bPh3OTcDFDCQ4JsLvKkGHQM6NrKa0i9YnMlmvCXgqX8r+sJ
+    q9aTzuX31C+tmUZQ850tLytRPhXm4Q9KmBibeb8nSrKsPeXq9L4ijSOm71u4iWYDCEo/j6
+    TfhqyCwv5XdNtwTnCoGRkcji5smzXEg/L1q92EkZ1IMxBn6B9NkEhYV3OMhkL9mpALWdrA
+    ZrDfb6Fxp06XEEHePnTfPvMqYOSYZuswSrbowM8wS4oku4BOALcxOqhmjAKLPMFxq8i8c0
+    lhoPIVGKBVhJWx0SGI0mReqq0LB70W8lcaKZyRwTaIbgyrpGWejr4+Ntqh5g
+X-ME-Proxy: <xmx:ek4hatbs_KDSBFB3ea8r8mAPqTz0jk6WkutQrpzxP0VMnLZQtdLDDg>
+    <xmx:ek4harSWIhzmiiBpAqWu6yKvzsebpmQmwonf8am9K8BCrAR2UeRGWg>
+    <xmx:ek4has5joR76GACHkEC6RN-GjRLLZZN1kxTlSPRTnMZC2rOg8YH6Lg>
+    <xmx:ek4haoycHR6ne_FjTDdDwxZIs6Rq-n6ZgelyCnftwjqfE4mjwKMmiA>
+    <xmx:ek4haiL10HyDahrGgMm6fBkt24U0ElQFwhE-tapfnE7W-LlDqGQdPLLp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 06:07:51 -0400 (EDT)
+ 4 Jun 2026 06:07:53 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eb990782 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 10:07:50 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3fd5447f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Jun 2026 10:07:53 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Jun 2026 12:07:36 +0200
-Subject: [PATCH v3 6/8] t/test-lib: silence EBUSY errors on Windows during
- test cleanup
+Date: Thu, 04 Jun 2026 12:07:37 +0200
+Subject: [PATCH v3 7/8] t/lib-git-p4: silence output when killing p4d and
+ its watchdog
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,51 +83,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-pks-t7527-fix-tap-output-v3-6-7d766ed481e4@pks.im>
+Message-Id: <20260604-pks-t7527-fix-tap-output-v3-7-7d766ed481e4@pks.im>
 References: <20260604-pks-t7527-fix-tap-output-v3-0-7d766ed481e4@pks.im>
 In-Reply-To: <20260604-pks-t7527-fix-tap-output-v3-0-7d766ed481e4@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.15.2
 
-When tests have finished we clean up the trash directory via `rm -rf`.
-On Windows this can fail with EBUSY in cases where a process still holds
-some of the files open, for example when we have spawned a daemonized
-process that wasn't properly terminated. We thus retry several times,
-but every failure will result in error messages being printed, and that
-in turn breaks the TAP output format.
+When stopping the p4d watchdog process via "kill -9", the shell may
+print a job-control notification like:
 
-One such case where this is causing issues is in t921x, which contains
-tests related to Scalar. Some tests spawn the fsmonitor daemon, and we
-never properly terminate it.
+  ./test-lib.sh: line 1269: 57960 Killed: 9               while true; do
+      if test $nr_tries_left -eq 0; then
+          kill -9 $p4d_pid; exit 1;
+      fi; sleep 1; nr_tries_left=$(($nr_tries_left - 1));
+  done 2> /dev/null 4>&2  (wd: ~)
 
-The obvious fix would be to ensure that we never leak any processes, but
-that gets ugly fast. Instead, let's work around the issue by silencing
-error messages printed by the `rm -rf` calls. We already know to print
-an error when the retry loop fails, so we don't loose much.
+This message is printed asynchronously by the shell when it reaps the
+process. While harmless right now, this will cause breakage once we
+enable strict parsing of the TAP protocol in a subsequent commit.
+
+Fix this by using `wait` so that we can synchronously reap the watchdog
+process and swallow the diagnostic.
+
+While at it, deduplicate the logic we have in `stop_p4d_and_watchdog ()`
+and `stop_and_cleanup_p4d ()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/test-lib.sh | 4 ++--
+ t/lib-git-p4.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4a7357b547..d1d24c4124 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1299,10 +1299,10 @@ test_done () {
- 			error "Tests passed but trash directory already removed before test cleanup; aborting"
+diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
+index d22e9c684a..9108868187 100644
+--- a/t/lib-git-p4.sh
++++ b/t/lib-git-p4.sh
+@@ -65,6 +65,7 @@ pidfile="$TRASH_DIRECTORY/p4d.pid"
  
- 			cd "$TRASH_DIRECTORY/.." &&
--			rm -fr "$TRASH_DIRECTORY" || {
-+			rm -fr "$TRASH_DIRECTORY" 2>/dev/null || {
- 				# try again in a bit
- 				sleep 5;
--				rm -fr "$TRASH_DIRECTORY"
-+				rm -fr "$TRASH_DIRECTORY" 2>/dev/null
- 			} ||
- 			error "Tests passed but test cleanup failed; aborting"
- 		fi
+ stop_p4d_and_watchdog () {
+ 	kill -9 $p4d_pid $watchdog_pid
++	wait $p4d_pid $watchdog_pid 2>/dev/null
+ }
+ 
+ # git p4 submit generates a temp file, which will
+@@ -174,8 +175,7 @@ retry_until_success () {
+ }
+ 
+ stop_and_cleanup_p4d () {
+-	kill -9 $p4d_pid $watchdog_pid
+-	wait $p4d_pid
++	stop_p4d_and_watchdog
+ 	rm -rf "$db" "$cli" "$pidfile"
+ }
+ 
 
 -- 
 2.54.0.1064.gd145956f57.dirty
