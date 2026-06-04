@@ -1,127 +1,135 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1CA3B8D5C
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:07:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780556850; cv=pass; b=esUzJEjlSe55EttnIuH8S0HPFJMSYQ1aglK4FAA3GOWkZVgD9Vce9A1Xi4oGhEqpY+gz3yu2SKMCIUUA28WZw5ynLuU+zhnLkWtyVrZciFLdzueZ1TgbPjIZiBWbcY4fiV27Bfvz3pl0DrJug7yOy2WdXPBpeJ5EWZoOpI9/7SM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780556850; c=relaxed/simple;
-	bh=nThxfXP8YvwDHpkLu31BgA7xOzHaxu/ASiK0Xgf/Gss=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QjI2oT+aix6PHX0VuwrmZDf8PT6/asj+H7+ODICm4dtxHTkCCSryAPaeQQhQPyaB06J53TZI40Bd727eH7A7sDbzZEsFtNSXeMpfr8q93NS49v/dsapN7VUmhT3NF2hz6YQvt8MCORJh26Ge7UObEGFwRts3XnwFaDpw0+s60c8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rWV6ZA1i; arc=pass smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2D83DD869
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780556939; cv=none; b=t4P2xC3gqd/bMb+XpbEf+gzV3V5GEIofd1B6B23X91hsl98Z67/JCEYSIx/Nq2Nwk+r0tesfDVH0BC05Ce93022mpg1LHRdPO6pWnqEdAfbE3U/hibpuRL9YubYG+jWG7ktPfN/ERbbOByhclCOxsMa8J0+SPBS+T15MMAyGX/Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780556939; c=relaxed/simple;
+	bh=ZZyph9q+h2SyWux6O8dFBrAnTqVEoKRqU9bDUu4hEns=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fe60MvX4+JDLq3pNCqFk4vK+lxYdxPJkxU2NtObof49sIHhWUYlDFlLIw85MoVCgm0UIC1QjOx3fzEgtELeEwA/nGax+yss6H6+s8tcXwAbA7uzX1Fcab8c3tUBzBbkHhmGS0BgNsw4ydfn9hKCIWqYVU/b+3PfsBF0U608rUkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LTyD4pOb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B4HmurZG; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rWV6ZA1i"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-68b482888c3so2168526a12.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 00:07:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780556848; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VUiaJjm4u/x91qZPTwvDPNvKMK9x0MKSHqkDvtGnWc8Y6VZ3RHN1RCzSahRG65pjc7
-         9FfYCuoLBJjc2BQlRvKqq0FKqtQXx+hxUbWQvjtcetav2TFvuryTN2H6O3nmypmM2M+L
-         NY82wIUDDZtKs5MlTdIQ85leXg3dBe+ovdn0DlZVcoiGKMIYjcd4VAWWUY7MEUcRMzTS
-         /+gfkpWeGqoxp0S2FOArKLI/RhoCvK5t3GFtFszAm7PrNNtnSwwjUsqxV+8PhpYGJmIV
-         fuOOgM4MO4qigpvmFFtPqZLWXJVQRUjov4Or7V6wIgbLHQJI4e+0X0lqNvixAhRX3EYP
-         BH9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=l72vxynMqWgqiAiYb13ZKixEv5PoxYZ5GB0VNpjOl28=;
-        fh=4hUh9JY7xezPqTKOGUMx2v/2MYQM9QnRXBzY4g+0uOI=;
-        b=DCUSFOH26uh8q2IJfpgGy7oUsH8KNc+gHThIdUOWgwKC/+861u0+Xw34OF71dWmssr
-         6lk3YRxV4MB+izbhUidEnB54cEXVN2is+m86ES92qN1c+rSbqN4e1yWZe8lWykTydb0t
-         zPcuAMhIbSIs2h6wP5GQLOzp3YLgMyN2c/CBspIG9q7eOjqmF0jR7h/nm/OIW/lowj3F
-         8TH+oHa7tl+Za6ljBgI0S/D2oWRjgjToJvIEt4uYjbBZG7lFuZ5rAoSoinNMwOKkNX8m
-         DX8cOCuU9vhYwbGZVaYfTk7c0LzcWwjhE2JpxZAZVuJ/9QY38Q18YBLhAcRAznSHZ2gI
-         g0Hg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780556848; x=1781161648; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l72vxynMqWgqiAiYb13ZKixEv5PoxYZ5GB0VNpjOl28=;
-        b=rWV6ZA1iTJFaC6d8YOChPJGchYIo3h2I7G1+WtYW7DC599Hy3Dgdc9AXXwXTuZQdwe
-         axgy8M00VjIdsK145V+nMJ73JqlqURrzLxgXDGTb4OECFr5JgVKaPXnAnbdO7O+dS0z7
-         eHWvgd+4AJqE8XWStgRUPf0g5h6HaOHRTZTps4qz5RyWS6PmSm5hQK2zMvi3ji7rwG4e
-         lpU08gej9XJAs1pIv5ffm2mVWmOvUg28VNUbgUGGb/lpJ77plhjpCEDb7iy1CNTa6YBe
-         v8/A8MZMRkRn3i88T0me6DvA6UgQ7DohOH0CGBMPhhxHE2z1fISvLsniSUdqQF15KL0K
-         uepA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780556848; x=1781161648;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=l72vxynMqWgqiAiYb13ZKixEv5PoxYZ5GB0VNpjOl28=;
-        b=gOVeoUJfl0WJgHnsOXWqKCoL9NG4x3U9tTtWjcVb7iF7lro3xgbEAYX73T1wgY3Msm
-         9H5JIheZS/y16wjJcBfal15PRnd5gZrnC59FxzDQqK6ioHSEZoA80lVDEjs6EEI4QwLi
-         Ba4UtOfaxKD8cCu3o3HM8PrcGP2si0xSP8RSP7Q8ISZ2gEihuCorxOZsQXEhue+8F/Y8
-         paDWFOTx/eQ3Lv1tbDGS1ZAjjGqMaY2+A9mYpZdq4fQKpMqza/H+ivgbfmSn6NwCngLw
-         AA0BRVdMAjaVb1WFkJEf8wMylnnBo9NTckwtzgBSGyuwhJbxGrpHTxDtLplfpI0sODqN
-         EB6A==
-X-Forwarded-Encrypted: i=1; AFNElJ9c6sEK2piw92LTGcS3/UVTKKqUzGmrOPRkJtDkHvHFqi8jSRlJ3K0Q9yezjWEdoQAogIg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsoQh9v2GNhOUO2MVfVN65nFrs+RKsCMic3NmRZ7m+vcqtaq9k
-	RS9g08ih37uXDGfUGDOpmTf1Sj5d8ES22sVCXW9M/pIZ1PN+vCwH2lYbRkUnTFYXtqp1j52rE9K
-	RTFDLjTQRfnkMwU6HwjkP0/HW0K5CGvI=
-X-Gm-Gg: Acq92OEQWR465C0aTAVdm0vR2XxhuouRORTvwFvYZ4iEuVoTFUX6D4DRzr3dvojgL17
-	p889h+tgyW01TP0/tJujDGhRs+NLx1deIx0eXEtCyr/9ArhQknBJlvLiVJdwnpwTCkChxQ3/mjp
-	oT643O9agp60Y7nZ3LTgsrIs0eZ4BmLI/1Pyhx4wpUlx4Wu0yzf+fHbaE6j1hv6f3uYuKdNliV8
-	wBn+ZxFGPjBIh1VDHJiiwgnX9ghhOh0ICw7JjyNLDNAg8uUqYSO+d72v2s9cy++ZbrH6ofiZ782
-	7rlAW9kpPdnHPkFCRA==
-X-Received: by 2002:a17:907:180d:b0:bd5:1605:e1c3 with SMTP id
- a640c23a62f3a-bf1d159be66mr120387966b.1.1780556847613; Thu, 04 Jun 2026
- 00:07:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LTyD4pOb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B4HmurZG"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 04C2714000FB;
+	Thu,  4 Jun 2026 03:08:57 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Thu, 04 Jun 2026 03:08:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1780556936; x=1780643336; bh=Cg69XsqKuP
+	bPNzTj9gnFaMo4+CX+c/Z8aJhb6kxQF9Q=; b=LTyD4pOb+zbYV2QXKl3uL4nu1P
+	veoC/PMO8mKQdsOM/3SO5L6Zi6k9bW83Ks6ks+3Z9TgHqzrgj+45NZ1jzk+B12as
+	47rN7bIZiDaEA62WldiLP5pDqVTLXBXOhOW3VE7lS4cczy++UGFq7Dg5+2kCpg4I
+	pchF13WFXS52osyxCjltqCumQvxk3GaXJxRv2SEq6EOjgSrS58cFRiejT3RKGSHo
+	ghkg8Gl814XofG2nHfI8s0+sJSAcqMqtHFj8lUxEfpkQaI3q+Pk3hQVqGVOIyvkZ
+	/OADfNHdy0XwnWxCJLkOxjQ58Y76KWijwlpbGvCpwqrNeAu1wqRQkuZWgryg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780556936; x=1780643336; bh=Cg69XsqKuPbPNzTj9gnFaMo4+CX+c/Z8aJh
+	b6kxQF9Q=; b=B4HmurZGDY5iZd7zgJ3s1vO93WBv2BodHpt8R3Ahqs4NPTA18tD
+	Ds4TLDkN2IqVnkqUBUPB0j6mXcmYxUep8rxJeRqJHmqPWHHxTmUNCBXXzCSqGmwQ
+	B6vQYfgolt55fL3Uxnsd3VTbjwS/Mg2qaqyWeK6BH/azUNzvi1ZzZPme8ukPP4kN
+	OUfXawiFKlMJjidrTgKXTeTY6zPwRi8mxROrMc9e2YXM5orX1VCTN8CPLce3X5Op
+	0QsjtjMdHKu8j+qQDYU7DgoGcIpYpbEXfhPJxcmTTxv7fCBASuHONNi7qBSMIaTU
+	ndvI5D/qs0VnH/D2NWuQzoPhn9ddws+ak2w==
+X-ME-Sender: <xms:iCQhasVFZJ2cEKDvLprmrhkyJM9Emj_A6bJV7vtK0Ahu-wkiL6qU7w>
+    <xme:iCQhaj27enbP6cN12efXMbd37TsrF7GWyNillUKwDuH3yYIrzXeM5qV48LAe7ls_H
+    AtOz5CDvR3s3IUP8_AZXVgI4BZU4UdLWQ6Dd8RiTzbjxNYUkXnNnQ>
+X-ME-Received: <xmr:iCQhap0KgSGx8ysaIWtpAIGdcvOAShZs4rEEvg9OzUEC15xIUMvLCDl3-qbyNQcdG_76Lr-mjg6FBpw9PMLb-jxEzHdo9F6fzTVMlulWCAk>
+X-ME-Proxy-Cause: dmFkZTEHaSfKmQgBJPXSEHIXKmTUWg1QowTrUWXfy3xeUgkayzw63VEbl7a1W9J62O/F98
+    G12omABK/aqTMWDJyLkIZaiGW8oApac4toRpWui+5OqMwNyBqk64g7w9fAS8e3x23P6eJS
+    yjemKa/gf/I8rl1vbxXcC1v1BUNOD8zmOefivRLgmpdRoaaUDuwzAU2t7aWxFkKULlYRCj
+    TgOwHtkWFYYja4Y+X4PwRTaiGk6MwUV3FFkDMD7/Y77NbkuW/nn6ST5p4vovo3whm3c+ZE
+    dr/xyD3UrVAR47JPHvSola7//JuLYs0wltXXqIu0PKYE/lPxK+hYUENiBQcsF9tW0vlmIp
+    kg8GKeb3B/jZbdUUIjC2SjEzRZW2Gn5/yYjUsYTqxdxQs4k7KcM7cb3PUGgHOxzRCIk8ky
+    2G+/+KnliIaYILqawK4R1VRqVvoCLeIfiIrTvm5+j9QQqXQHK/Hl0bca4/DS56mz6lCOPf
+    J1BDPVsCwo9MtA+na9ul7gGy92lFkTLLmkAjPX88ucKsE/Fx2u9UC2j3FB1x0BwHPpA+is
+    VacPmrQA7O29Ilge3XhoF6+WBr6dEi1jdpzIT1GWvgRDo2EggyXYa1PbtpwIy4Of0lOer3
+    OeymXHx3G062wfVg/nB49zL9UeBWeDiPLKVJAuc43spF+/QkRSzGICRl6oOQ
+X-ME-Proxy: <xmx:iCQham8OmIzbSLd67DcDWjCFwo9srrhKLVsXz7aR2NqjaVagojDM6A>
+    <xmx:iCQham1gmxQnIROvHJbkxv5iA2HfvGwCS-d-vZCbbYh0Wly-QYqEyw>
+    <xmx:iCQhaj8GGTdch4LNWmn1ZKyb_hX5LksdZA8f0Pu_8j_qBf6hrMy8dA>
+    <xmx:iCQhamsDh7hGTHfNa64qPF_6H-kgX1u23TBE4RCFVSK1C-Jp2LuWPg>
+    <xmx:iCQhagJrlUxsAAG1HDuktENu0gG1GRmGLzbpsLH0QukMyLr3vNczB7-1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 4 Jun 2026 03:08:56 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a833cdd4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 4 Jun 2026 07:08:53 +0000 (UTC)
+Date: Thu, 4 Jun 2026 09:08:48 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Tian Yuchen <cat@malon.dev>
+Subject: Re: [PATCH] read_gitfile_gently(): return non-repo path on error
+Message-ID: <aiEkgBZJjmntRdNt@pks.im>
+References: <20260602061159.GA693928@coredump.intra.peff.net>
+ <ah6WEtk2pXyViEQA@pks.im>
+ <20260604062720.GA3195904@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2314.git.git.1780269406949.gitgitgadget@gmail.com> <xmqqik7zqh4p.fsf@gitster.g>
-In-Reply-To: <xmqqik7zqh4p.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 4 Jun 2026 09:06:49 +0200
-X-Gm-Features: AVHnY4IOtpVnJpl3Mke1pEKLEmIopAcA9m13hFntZYvHyUiyX9MLo9b3E1Oq3CE
-Message-ID: <CAHwyqnV6uh_yyO9FcUiXKfKPt15ojR3GOmRC06pW55f=KRu=Zw@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: drop duplicate %.a from link recipes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260604062720.GA3195904@coredump.intra.peff.net>
 
-On Thu, Jun 4, 2026 at 2:33=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >  t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
-> > -     $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.=
-o,$^) $(filter %.a,$^) $(LIBS)
-> > +     $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.=
-o,$^) $(LIBS)
->
-> I think the reason why the pattern to use only the .o files among
-> the prerequisites and then use only the .a files among the same
-> prerequisites (both filters $^) is used here is to make sure that the
-> linker sees object files first before library archives, so that by
-> the time its left-to-right scan sees the first library archive, all
-> the missing symbols in the object files are known.  The above change
-> depends on LIBS being a strict superset of all the library archive
-> files ($GITLIBS in the current code, but that can be updated in the
-> future) listed as prerequisites for the rule, but there is nothing to
-> guarantee that, so it looks brittle.
->
-> Exact same comment applies to the other two rules touched by this patch.
+On Thu, Jun 04, 2026 at 02:27:20AM -0400, Jeff King wrote:
+> On Tue, Jun 02, 2026 at 10:36:34AM +0200, Patrick Steinhardt wrote:
+> 
+> > > The correct output (which this patch produces) is:
+> > > 
+> > >   fatal: not a git repository: /home/peff/compile/git/.git/worktrees/worktree3
+> > > 
+> > > And indeed, that path is missing. But why? I feel like I've run into
+> > > this same problem occasionally over the last year or so, but never
+> > > before. Did we get more aggressive about removing worktrees at some
+> > > point? I haven't been able to reproduce whatever is killing off the
+> > > worktree directory, and by the time I see the error it is long gone.
+> > 
+> > Both git-gc(1) and git-maintenance(1) prune orphaned worktrees that are
+> > older than three months by default, which can be configured via
+> > "gc.worktreePruneExpire". That logic has changed in 4dda60c9df (Merge
+> > branch 'ps/maintenance-missing-tasks', 2025-05-15), which would kind of
+> > match your timeline.
+> > 
+> > But rereading that patch series I cannot really see how it could result
+> > in more aggressive pruning of worktrees. We used `git worktree prune
+> > --expire <expiry>` before that series, and we still use that logic now.
+> 
+> Yeah, but this .git/worktrees/ directory shouldn't be pruned _at all_.
+> The worktree itself is still there (which is why I'm getting the error).
+> So perhaps there's a bug in checking that things are still there, or
+> perhaps something is corrupting .git/worktrees/*/gitdir.
 
-Hmm, there are other constructs like this that rely on $(LIBS) being a
-superset of the archives, so the three rules changed here align with
-the trend rather than introduce a new trend.
+Oh, that sounds somewhat scary.
 
-Not saying we shouldn't find a way to handle the overall brittleness.
+> Another option is "I moved my git checkout and the worktree prune
+> couldn't find the directory as an absolute path", but I'm sure I didn't
+> do that.
+> 
+> An even more exotic option is that I run Git's test suite a lot, and
+> very occasionally bugs in the test suite cause the script to escape the
+> trash directory. And some scripts do run "rm -r .git/worktrees". I find
+> it pretty unlikely for that to be the culprit though.
+> 
+> Oh well. I don't have any good leads, so I guess I'll see if it happens
+> again. But maybe now if somebody else sees it we can commiserate. :)
 
+I'll certainly be on the watchout.
 
-Harald
+Patrick
