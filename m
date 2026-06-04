@@ -1,68 +1,68 @@
-Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32A648A2AB
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 16:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AB28A3FA
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 16:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780590270; cv=none; b=rcEOwNSBaGoCGpIlGA0uT1anumQ8vtnLDDctCM8tNHbdWIdnx1Kr1keKroxvJ3gMbV+FqVY3DBj7jzRhtXboioxgkUx2lamp9MAlTU6KF9Hyt4gL7bFRddk3+nNnWPLJmeFkkJ3umHJiUZt8SFqxVkzRobMF+NsrX0e1ZwdoiC4=
+	t=1780590270; cv=none; b=Yc1EXdUSTLrFoerN3M7JHlzYgilHu1OVPRuoUb6ZMCJhvGHQN55mMg5WZxskSrIbyjgr/jPthACsi35MjAg9vCFZ5zGlLaxkGgY/2FTdR4IKqfwEqhaCsXuQWigmphlwZtSUif4HYAOnoD0PDifRE/iwy5vekrZ1jOf0HWwmE78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780590270; c=relaxed/simple;
-	bh=NfbJ+TGx6plFOSm0tB46lZi+mspKO6MNzhm5E6DOoBE=;
+	bh=Aeg7uO2vgPTvccPFN3PI/KaGdE+RJwiqS6KP4FtNoYw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HWJOJD5vh3GIlDcgYoyGjR6cnELIU9b96W3SluJWQh5MWPs5n3MpA/BgkOuO5t5si5gQfiBZuCIm1Cbr0F+EKM6rRwGrv3PgU41yRpGoK2eP8cH0LuaorOWx9M3hrGusWG/BdLEPCVZFo5jmHyzp4chm6XRvIYe6E7YlgYXBc5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aMpnv3u4; arc=none smtp.client-ip=74.125.82.43
+	 MIME-Version:To:Cc; b=VBRM+veNTKedYqk0Ssj2GcJUPZykWnpofsrJRUk200qa33grOhpCfh/B3VhjamoOcXFJYdSLSnyKKoPcvgUfHH2FyLlbqRooCbpaYlrpE7wU4YB7GCWr+VwGTQojr5LEppPyQMEuta5m1ohBiucy5UnM+vDuY2np55YCb6RoBd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jwmE7T55; arc=none smtp.client-ip=74.125.82.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMpnv3u4"
-Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1363fe80fe8so1356034c88.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 09:24:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwmE7T55"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-30759632453so1365477eec.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 09:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780590264; x=1781195064; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780590266; x=1781195066; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HXN6BtH3w8PInWcITKkOKZ2ji7qxyYavdXlsJERJLFs=;
-        b=aMpnv3u4trY5qtWl78iELeZsk9KAZLN4gV7qocX+IHktyRA2h70b3DFV+TlVPZQmyC
-         CsjNFidugyxpdesrjkDmdj1QJZxIZTFWsDYBdoL00kdbax6Oso14icAzijnxb0rELTUI
-         VoKkGG8LCkYnIKL66MDpvQYuOUO9XBstK5JHzjALo2PAef0EKdjLmTWObZKwGldUKmWx
-         aDhhcV/B1lfNe+4VtaEi31oDytGBksJpwANJ006aRcA60G80M7nE8lBcQ8/Mu7hDK+f5
-         nnsbL/LBBPIlF2HvW+CBLuhIDvnwOQKJM55sH5DuE4B7emAesJDQgXDvEKe22fCGgH3Q
-         IHoA==
+        bh=eLoZqEWiFWMKhCt1BddIDD/KAc+IGWRrLEoFtnqGoB4=;
+        b=jwmE7T55RKSa+iV1lv3WWSnLZ4POMAl1P1H6KASP75XSS4hNAmx3sp04btPgy3tPFd
+         FK/dqgfJbk7+q9FfR007Rij/LV6IOSshJUSIrQgVn5reVzh7+bHCv5pj3REZcDKrR280
+         4WcIB3CXY7S/j56B4s1mYU+no3CNmWc8HtFU1MWletRNoj/y6r5QTk95chGTj9VE3/a+
+         +stSYiOj9JW4OvV0FrTHSr8L5ibhglIN1EGDWiKF0+25Z9K3JHGEk9AB2MHYIfTaYUqY
+         LtJkNiXDx2Rvwb/c3VwUDNJo6f/bAWkIm64svIsoa0lmTVRRBBPJd1yMbvgkdnYi+fz1
+         Ot3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780590264; x=1781195064;
+        d=1e100.net; s=20251104; t=1780590266; x=1781195066;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=HXN6BtH3w8PInWcITKkOKZ2ji7qxyYavdXlsJERJLFs=;
-        b=YjaLfXh3BD1qZ5BJGXAwURou+irNIKbjzxRbm2zg+21j35EdkmJTSiPAfrMlYoceVy
-         w6qT/ixfca0nozcrNiqSmkDeGeUNVfRE7Jlryy9OhvolL0bI03LfcmaETegwCA9TcFEf
-         Nu+jSgBa6Z5kU6t2W288thuFqy+lN4/NzUSAXXPCvCh6B7+iRGjKoPOUVBIS1blUl6s4
-         bKu4TU3F7U7KrJqzSHTSZlS37g8/Inj5Is+ybV4RzBHK/Co2k3lDP4r5IVyajdmhGm4j
-         29aPvwTTDX1uQ7Lf95w0TSDKHNuYgff34aGCP0sjMCCkYGqg0/0DkY1+NIU32L3M0fbK
-         Suhw==
-X-Gm-Message-State: AOJu0YwuWeFU9C/rbyTDvP/YXExHSYyFtG3ll9I80Fd46e9K57P4W95Q
-	chqwLu83EIFCHG9SruQx2aXkuaehpyj7Hs4pDyN2m8d/l6r7YhbvOiVwaQyTiw==
-X-Gm-Gg: Acq92OEObt3Ci73/9PMNfHgeubkWiQl50KCnPu9a5CvqHwSpRsP/8f/fDd2CdnmpEXf
-	Ig+r01BAgDZP/ywfLYS4kUJCCzav+bEHhSqrPqtKGRkqnYk0Gi/CEb/vuThGo+GhM8KXuqQ8F4J
-	hSTGKQGgiyb+L5HcQgaDSrIJ2v3olm6I4X0ePHyABgi7hAqVRpolXVctG+a5KwyNhChIAp52qxQ
-	LhdmqIEo3iwAI7kXek6ufuQYC9onrtxabIZB+oiAk+ZnMMyyXEJ8CrbLA/2Q1YqGwRb/vM6bM95
-	cR9PVx4TJPnEm9TuGfglVXk92Bxc8BrNdJo+CEqcqhddDxcuh2j/F4Wpar5pvTrl9qIuSBrb6kr
-	Entnntkrqo2V/wQDdsENhaT6CLxSo/1arn8/jdpSuSNjoRn9pifONj9PTHgl47I0eEQvdh1WyLk
-	EGSW3CVy3psVTgApVreJEWmh+onSqvSvL8r7Ka
-X-Received: by 2002:a05:693c:68ca:b0:304:5db8:da95 with SMTP id 5a478bee46e88-3074fb8754bmr2321105eec.23.1780590264271;
-        Thu, 04 Jun 2026 09:24:24 -0700 (PDT)
+        bh=eLoZqEWiFWMKhCt1BddIDD/KAc+IGWRrLEoFtnqGoB4=;
+        b=shftsMP1llXtJkT2IhV0l5SJ/ZAFNtAabBupG5hMeUkp5Z23tmUl8IojTW5ec/ZUxV
+         VeYbHuWJFkO4V68GKopE+xcsjG9GH39XdVxtVu9zIWmFmXJ9YhlaX+8dgG/SmDUKcYNb
+         R9Kv1cBIOr1BHyLTkQBKvGY1fVxpjGg9ApNLz5+65ZaCISorTJUEULf9+z00vnnxVMRI
+         mg4CTBi3KRgxueQT6esLe1TVk8glaF1m7co1v9wEHwCoeRHp51epyDayA+vaZ7OqnWuT
+         9iTHLgm7ZFGp1vHNJPvSkmELmUJnhfn/KOC7mE4WfYr6Spj6UFmFpnsc0PwsI19GzfaX
+         8UWA==
+X-Gm-Message-State: AOJu0Yxj5lQTlKUfCR9aRhSPetbGp2nMRf2v8BfPv/unEvVuCFRJNBUU
+	jPWLh4QWkYu2iIWMh21EYyn+Ni/QoolFv8Fip+GqQgkU8aIZRpmP8CFbUWTrw7m8
+X-Gm-Gg: Acq92OF0iC5dwsgjneVhlYKcHTDkw9mFNgolxzO/uX6cr5ao+pKrr5I1XFOHj9BKIx3
+	dZZnbaFHq7juCUcmJuxE5c+4f2r2/YEBkwL+DWbV/espbYfja7jNiukEdj0oH5VN5gVedazzuCo
+	2PxDCaa32gnB/hUlzu1PUNcUegfP1vkUjpw0DWIi5985cCQcfDVeK+p5tO/uXEV5byu7WnSD0Ci
+	ayM0S/OjMQrhsEAxdv8V8mGQmY5YlGzBIiuy8ngUAEv7f8zUuFfZBj+7fJTGeoXDOQWpf0fN+UN
+	I541hZQr7N0KtV+pi7inRpy1IMyIhNt5y7FNDJBclV7cx3lqFrizmiXHb7pCNmo1IdsCA2w6S77
+	vw8ag2E7YjTKo0/ecHW5BelpOTnc6fCEg9rVoLI0VIsyoayLP1wo5JqZNy3xiVzsI6IfVpQ5JRo
+	9ipIcTN9ETSZxdCRPLKR24kWEK3TIwMTYlQiSi
+X-Received: by 2002:a05:7300:dc03:b0:2ef:8b91:212 with SMTP id 5a478bee46e88-3074faa0516mr4738126eec.14.1780590265694;
+        Thu, 04 Jun 2026 09:24:25 -0700 (PDT)
 Received: from [127.0.0.1] ([13.83.233.101])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074db85f60sm7265145eec.8.2026.06.04.09.24.23
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df3b234sm6966907eec.23.2026.06.04.09.24.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 09:24:23 -0700 (PDT)
-Message-Id: <8d6f16406415ab08aa3b188ae67ec03159928bfa.1780590261.git.gitgitgadget@gmail.com>
+        Thu, 04 Jun 2026 09:24:25 -0700 (PDT)
+Message-Id: <297cc921fb8c12d85f8bf4c1e05edfbab9609191.1780590261.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2130.git.1780590261.gitgitgadget@gmail.com>
 References: <pull.2130.git.1780590261.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 04 Jun 2026 16:24:19 +0000
-Subject: [PATCH 1/2] mingw: kill child processes in a gentler way
+Date: Thu, 04 Jun 2026 16:24:20 +0000
+Subject: [PATCH 2/2] mingw: really handle SIGINT
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,262 +78,46 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The TerminateProcess() function does not actually leave the child
-processes any chance to perform any cleanup operations. This is bad
-insofar as Git itself expects its signal handlers to run.
+Previously, we did not install any handler for Ctrl+C, but now we really
+want to because the MSYS2 runtime learned the trick to call the
+ConsoleCtrlHandler when Ctrl+C was pressed.
 
-A symptom is e.g. a left-behind .lock file that would not be left behind
-if the same operation was run, say, on Linux.
-
-To remedy this situation, we use an obscure trick: we inject a thread
-into the process that needs to be killed and to let that thread run the
-ExitProcess() function with the desired exit status. Thanks J Wyman for
-describing this trick.
-
-The advantage is that the ExitProcess() function lets the atexit
-handlers run. While this is still different from what Git expects (i.e.
-running a signal handler), in practice Git sets up signal handlers and
-atexit handlers that call the same code to clean up after itself.
-
-In case that the gentle method to terminate the process failed, we still
-fall back to calling TerminateProcess(), but in that case we now also
-make sure that processes spawned by the spawned process are terminated;
-TerminateProcess() does not give the spawned process a chance to do so
-itself.
-
-Please note that this change only affects how Git for Windows tries to
-terminate processes spawned by Git's own executables. Third-party
-software that *calls* Git and wants to terminate it *still* need to make
-sure to imitate this gentle method, otherwise this patch will not have
-any effect.
+With this, hitting Ctrl+C while `git log` is running will only terminate
+the Git process, but not the pager. This finally matches the behavior on
+Linux and on macOS.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c              |  29 +++++--
- compat/win32/exit-process.h | 165 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 186 insertions(+), 8 deletions(-)
- create mode 100644 compat/win32/exit-process.h
+ compat/mingw.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 2023c16db6..973049ffe3 100644
+index 973049ffe3..f2b6c51f98 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -13,6 +13,7 @@
- #include "symlinks.h"
- #include "trace2.h"
- #include "win32.h"
-+#include "win32/exit-process.h"
- #include "win32/lazyload.h"
- #include "wrapper.h"
- #include <aclapi.h>
-@@ -2208,16 +2209,28 @@ int mingw_execvp(const char *cmd, char *const *argv)
- int mingw_kill(pid_t pid, int sig)
- {
- 	if (pid > 0 && sig == SIGTERM) {
--		HANDLE h = OpenProcess(PROCESS_TERMINATE, FALSE, pid);
--
--		if (TerminateProcess(h, -1)) {
-+		HANDLE h = OpenProcess(PROCESS_CREATE_THREAD |
-+				       PROCESS_QUERY_INFORMATION |
-+				       PROCESS_VM_OPERATION | PROCESS_VM_WRITE |
-+				       PROCESS_VM_READ | PROCESS_TERMINATE,
-+				       FALSE, pid);
-+		int ret;
-+
-+		if (h)
-+			ret = exit_process(h, 128 + sig);
-+		else {
-+			h = OpenProcess(PROCESS_TERMINATE, FALSE, pid);
-+			if (!h) {
-+				errno = err_win_to_posix(GetLastError());
-+				return -1;
-+			}
-+			ret = terminate_process_tree(h, 128 + sig);
-+		}
-+		if (ret) {
-+			errno = err_win_to_posix(GetLastError());
- 			CloseHandle(h);
--			return 0;
- 		}
--
--		errno = err_win_to_posix(GetLastError());
--		CloseHandle(h);
--		return -1;
-+		return ret;
- 	} else if (pid > 0 && sig == 0) {
- 		HANDLE h = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, pid);
- 		if (h) {
-diff --git a/compat/win32/exit-process.h b/compat/win32/exit-process.h
-new file mode 100644
-index 0000000000..d53989884c
---- /dev/null
-+++ b/compat/win32/exit-process.h
-@@ -0,0 +1,165 @@
-+#ifndef EXIT_PROCESS_H
-+#define EXIT_PROCESS_H
-+
-+/*
-+ * This file contains functions to terminate a Win32 process, as gently as
-+ * possible.
-+ *
-+ * At first, we will attempt to inject a thread that calls ExitProcess(). If
-+ * that fails, we will fall back to terminating the entire process tree.
-+ *
-+ * For simplicity, these functions are marked as file-local.
-+ */
-+
-+#include <tlhelp32.h>
-+
-+/*
-+ * Terminates the process corresponding to the process ID and all of its
-+ * directly and indirectly spawned subprocesses.
-+ *
-+ * This way of terminating the processes is not gentle: the processes get
-+ * no chance of cleaning up after themselves (closing file handles, removing
-+ * .lock files, terminating spawned processes (if any), etc).
-+ */
-+static int terminate_process_tree(HANDLE main_process, int exit_status)
-+{
-+	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-+	PROCESSENTRY32 entry;
-+	DWORD pids[16384];
-+	int max_len = sizeof(pids) / sizeof(*pids), i, len, ret = 0;
-+	pid_t pid = GetProcessId(main_process);
-+
-+	pids[0] = (DWORD)pid;
-+	len = 1;
-+
-+	/*
-+	 * Even if Process32First()/Process32Next() seem to traverse the
-+	 * processes in topological order (i.e. parent processes before
-+	 * child processes), there is nothing in the Win32 API documentation
-+	 * suggesting that this is guaranteed.
-+	 *
-+	 * Therefore, run through them at least twice and stop when no more
-+	 * process IDs were added to the list.
-+	 */
-+	for (;;) {
-+		int orig_len = len;
-+
-+		memset(&entry, 0, sizeof(entry));
-+		entry.dwSize = sizeof(entry);
-+
-+		if (!Process32First(snapshot, &entry))
-+			break;
-+
-+		do {
-+			for (i = len - 1; i >= 0; i--) {
-+				if (pids[i] == entry.th32ProcessID)
-+					break;
-+				if (pids[i] == entry.th32ParentProcessID)
-+					pids[len++] = entry.th32ProcessID;
-+			}
-+		} while (len < max_len && Process32Next(snapshot, &entry));
-+
-+		if (orig_len == len || len >= max_len)
-+			break;
-+	}
-+
-+	for (i = len - 1; i > 0; i--) {
-+		HANDLE process = OpenProcess(PROCESS_TERMINATE, FALSE, pids[i]);
-+
-+		if (process) {
-+			if (!TerminateProcess(process, exit_status))
-+				ret = -1;
-+			CloseHandle(process);
-+		}
-+	}
-+	if (!TerminateProcess(main_process, exit_status))
-+		ret = -1;
-+	CloseHandle(main_process);
-+
-+	return ret;
+@@ -3580,7 +3580,14 @@ static void adjust_symlink_flags(void)
+ 		symlink_file_flags |= 2;
+ 		symlink_directory_flags |= 2;
+ 	}
 +}
-+
-+/**
-+ * Determine whether a process runs in the same architecture as the current
-+ * one. That test is required before we assume that GetProcAddress() returns
-+ * a valid address *for the target process*.
-+ */
-+static inline int process_architecture_matches_current(HANDLE process)
+ 
++static BOOL WINAPI handle_ctrl_c(DWORD ctrl_type)
 +{
-+	static BOOL current_is_wow = -1;
-+	BOOL is_wow;
++	if (ctrl_type != CTRL_C_EVENT)
++		return FALSE; /* we did not handle this */
++	mingw_raise(SIGINT);
++	return TRUE; /* we did handle this */
+ }
+ 
+ #ifdef _MSC_VER
+@@ -3617,6 +3624,8 @@ int wmain(int argc, const wchar_t **wargv)
+ #endif
+ #endif
+ 
++	SetConsoleCtrlHandler(handle_ctrl_c, TRUE);
 +
-+	if (current_is_wow == -1 &&
-+	    !IsWow64Process (GetCurrentProcess(), &current_is_wow))
-+		current_is_wow = -2;
-+	if (current_is_wow == -2)
-+		return 0; /* could not determine current process' WoW-ness */
-+	if (!IsWow64Process (process, &is_wow))
-+		return 0; /* cannot determine */
-+	return is_wow == current_is_wow;
-+}
-+
-+/**
-+ * Inject a thread into the given process that runs ExitProcess().
-+ *
-+ * Note: as kernel32.dll is loaded before any process, the other process and
-+ * this process will have ExitProcess() at the same address.
-+ *
-+ * This function expects the process handle to have the access rights for
-+ * CreateRemoteThread(): PROCESS_CREATE_THREAD, PROCESS_QUERY_INFORMATION,
-+ * PROCESS_VM_OPERATION, PROCESS_VM_WRITE, and PROCESS_VM_READ.
-+ *
-+ * The idea comes from the Dr Dobb's article "A Safer Alternative to
-+ * TerminateProcess()" by Andrew Tucker (July 1, 1999),
-+ * http://www.drdobbs.com/a-safer-alternative-to-terminateprocess/184416547
-+ *
-+ * If this method fails, we fall back to running terminate_process_tree().
-+ */
-+static int exit_process(HANDLE process, int exit_code)
-+{
-+	DWORD code;
-+
-+	if (GetExitCodeProcess(process, &code) && code == STILL_ACTIVE) {
-+		static int initialized;
-+		static LPTHREAD_START_ROUTINE exit_process_address;
-+		PVOID arg = (PVOID)(intptr_t)exit_code;
-+		DWORD thread_id;
-+		HANDLE thread = NULL;
-+
-+		if (!initialized) {
-+			HINSTANCE kernel32 = GetModuleHandleA("kernel32");
-+			if (!kernel32)
-+				die("BUG: cannot find kernel32");
-+			exit_process_address =
-+				(LPTHREAD_START_ROUTINE)(void (*)(void))
-+				GetProcAddress(kernel32, "ExitProcess");
-+			initialized = 1;
-+		}
-+		if (!exit_process_address ||
-+		    !process_architecture_matches_current(process))
-+			return terminate_process_tree(process, exit_code);
-+
-+		thread = CreateRemoteThread(process, NULL, 0,
-+					    exit_process_address,
-+					    arg, 0, &thread_id);
-+		if (thread) {
-+			CloseHandle(thread);
-+			/*
-+			 * If the process survives for 10 seconds (a completely
-+			 * arbitrary value picked from thin air), fall back to
-+			 * killing the process tree via TerminateProcess().
-+			 */
-+			if (WaitForSingleObject(process, 10000) ==
-+			    WAIT_OBJECT_0) {
-+				CloseHandle(process);
-+				return 0;
-+			}
-+		}
-+
-+		return terminate_process_tree(process, exit_code);
-+	}
-+
-+	return 0;
-+}
-+
-+#endif
+ 	maybe_redirect_std_handles();
+ 	adjust_symlink_flags();
+ 
 -- 
 gitgitgadget
-
