@@ -1,127 +1,115 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB74231A41
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 01:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B809231A41
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 01:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780535501; cv=none; b=SZM596bU8nhNj38REpSw093YScL3fD0f5vamJmB9EwlKYgzElMH2dNKodvBA5V5gJPJ/MxKQ6W2wNAImx64HMwa1JQXjs1SB0X9OTjDl1GHDcIF6c1RkoHgOK69cMJ9OnVrieTLl/tFRF1hdypHyUgNtZBXhUmPwt1SqNqylm24=
+	t=1780535688; cv=none; b=SZkX0kLC0VtcZ7bIhMCrv5CTCSsl2w30jVj5KbkIpLG3FiLZ60dn/GAW8CxDOZqCf0v2ifCNboxxOyqUESe+LOC+2Hh2qKgQaVeGmL+9EtbBIsnslO15Y0pU9HW69rgiKwZ+1IVNuK5Ete+5jWd5WdP2r05p6LwZXs0YJ/zw6bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780535501; c=relaxed/simple;
-	bh=JprT60Y9tPh/noQDhvdaEJbqrZ7utj2ZTTEyjCL9yCE=;
+	s=arc-20240116; t=1780535688; c=relaxed/simple;
+	bh=px+CwKV+VcNRoQr5hDXPRZWIYhdAmyqrcib7mpevAXQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fIBk4bj2Ytx9AATq6CBaTt/zJElQcdMTMCbvOqWDxD8irJuKE5LASvwRj514U7XY2CGN1IagSqodIcnUiA1nyREYMpqKSDf8irxiV6la1T7lOsOu7yt2Yq5qLDbDmxbcTZtjxmlPM86gehmjMbXT7SYepyR5AXK0/wMTTIVyQcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OKaQZfb7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G0PK5FjQ; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=u7E1Nvqy1qoT/Oj+k4hUdO4obQ07LUfGOocAEisTgeZ0tDdrWE69gJP18CWp+f0W7SwKrqPRAh4H8gQpzpbYUkhCiYU2bSpzGXPy9Cac3NE4mfE/CjejpF6rCzPBa8UeiCXIxgUL8IlIUMwTMS/xZjSxHhHomDw3i8BxzB9+Qwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g467Q3+4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ai4c3T0S; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OKaQZfb7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G0PK5FjQ"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AF5501400057;
-	Wed,  3 Jun 2026 21:11:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 03 Jun 2026 21:11:39 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g467Q3+4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ai4c3T0S"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C34F140008A;
+	Wed,  3 Jun 2026 21:14:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 03 Jun 2026 21:14:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1780535499;
-	 x=1780621899; bh=5VndDb/DM07Iv/WfqbARZaRlH3oXum2O/FrG1QxL8f4=; b=
-	OKaQZfb7eozcJS1GFhDpWY+I2HrF+hEqQ3pw4EbS+29Rx/mCqIPk1fBnjG0McDt4
-	rhJEQfYESBaPO3dvRc9acIcR3iRPam/Yd1IHR7OH7/hWmEj833WLAWrr843MfGV8
-	2UWj4SGXewbEXj9S3AWArjVNuyjj4DDMwNV56FqKKSfE7ZuMB2LCkCIKMfvl3bM0
-	d1xieqDgLICtakEdn+Y3SgWrtn3jl6JGjQeJWxPhp8FzyoEqFiDmS6MDuS5QtPX0
-	y6NNrxUGCCg5+f3sgjJRcuzzvZYOSYTjYlVnAOa3n+JZ7ML9Kw9XsmOgeqMD4wp5
-	pZnhD5pDMtSQFf30YfLq9w==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780535686; x=1780622086; bh=WwgfFZ7TOx
+	2vnOTQO1ryudKodrbW+fz59L+0EFn+1jo=; b=g467Q3+4W7j6dZgZwVEBHI0x+K
+	tkZXZiyXK2va20IDXoi4X/7qYjc1aXhICgG6vrkZz0X024hACEZIignRW/HUTlW8
+	V20n8GV3iucZke2o9khSJrzNqnwJpU/mopY+LWe7QYdNTkyCgl7mnaXbx+u7oTiD
+	Pn+vVlu3W6DnA9oAks0dMiOIkqdpJw14lMMk9/22huO6SPaDWqsLtQwIsKDDupMS
+	fDPmoaHoQZ89Clc15H8TBPCCFbNuXhfL4U1CAPjejh5EHU8/lpXOBCkiZetz6Iqw
+	xe6CHaQq+Ji8CckDQSRrapiKBO+W8y1Lc5qF2Dc22yO2CzD2wGSQGJEhWqzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780535499; x=
-	1780621899; bh=5VndDb/DM07Iv/WfqbARZaRlH3oXum2O/FrG1QxL8f4=; b=G
-	0PK5FjQk5CbgLxd7SUcy5iV03mDFglxOErVe4NPuB6yUuhhMOIIZMHa9GxNJXr4I
-	87TsjweNTmCsDdNzrG/uvO4flK0eeInuiFmQd9vmaxuoi3voemKq0LbZgJWfZRFf
-	Fuk2RSG3FEwzBFCHErQepQkfT8pxnZXv/WPPlYPZsz4TXOktA/8iMt1Tz56SZ9sk
-	TGPtQRPwHeW2o6K5nfauDsnFgtkny7aCqbwo8bkXKzuTPns6kC8oNmkVRzCqPQHp
-	VUXTiFPx4UOhiQeoRCn1jkSblWjyayt8cHjKrqmK/uHEYyC87PrErvSm+ptquFAl
-	tBvHRyJNhVEfxr1rvBMbA==
-X-ME-Sender: <xms:y9Agaj5NZlxuMnrZXsudP5bfvygiJDX5ii2RtVaucg9ff_iss18n4Q>
-    <xme:y9AgasnYjTHzg68UE-uWjTtsAci1MGrziXkPYNj3AS0dh2fIiACDZd59BErkw4WQM
-    pGhMi1koL9tn8Pb-4JgIdog1X3Zn8kqH5SfQwbZ_O2uwKpCAphVsg>
-X-ME-Received: <xmr:y9AgakQ-Ofq14q1LqykDlP_yjpv6gCw2dqKBmqUQfQmW9mImr0G47e9gkQfqsDqEWr_W4MbrssP-iPsDikI8CuCkwJjAFAQsKi0W>
-X-ME-Proxy-Cause: dmFkZTETFEaA7C/yFs0ET5Oi+qEKG0QTAwNYtb2sNMggIrLGhjyABHn/Po56sPqttu96jw
-    7JPWUPO0r5wfx46iUo991q9plfhGPV8eeNVfgfxLH6XRDawB7IGpa96rpLbDBBg6FbLMwd
-    AfwMn2b4XRdR8WTMzz9AajtysZ5I5kybwvHa6DIE58rPqNE9j1Vex+JHoCXUIyAH8urwSG
-    ebu/M/OU51K1RWe1hC+YZesqedSLRhbnt9Gif48D/wQY5C1XXVVOE4VZh509N/Ibe22zYD
-    dBI9K4pZrBrFZoNy5GkaMcIgh5yG90+fl8y0yEp/rrmG1ayEwLHdrZX3pU+j6bTJ25nii0
-    081ADfO1fT09fkxvj7y4mttpj7a7I/a4C+RFe1VWSvugyJqSI54t6tItPpna5Cfk4AeVy5
-    gWdHxcRBKj1rMRjYNSxML7JvYXz4LNB+aReQdUhl1ghLOkHC0Gt33t2776NtaRS2yY+wCW
-    ed58lVs2qFAfkR8vP5sBYFtJwYHMAcoWLJ8za2BKXhJzeMFZClN7fGKA+4LOpYYGNPxvtu
-    fiEEfZe6teq5/cdlrHwMlfQHVZg0xfgrFBkOHktkHlOdOy6TejYAQRaYTtiSPalAv7iNAo
-    mqe82Cg0BEDuAARD5ghyS/71N+n/1Fme23ZSmqL0yrxNpicyBDBvzBzgQ8yg
-X-ME-Proxy: <xmx:y9AgarEK7jqGm04kytQrwxcEJpHvuXxZ11gT6XmmOowj8zBnbykcdQ>
-    <xmx:y9AgapFil7QJXgGZ7UuO8Qo9w31USPSwSh4QEtYP7YM8J_sLipuxBA>
-    <xmx:y9AgapRc3xGFi3kW959GeO1QPEtKH9dYofZa8ZC2-MmNSOgp2nmYVA>
-    <xmx:y9AgaqLZvwdXrLbnb86hXSdhqYZmiuqjpXLBBnyhSG-C00AFsD_x7g>
-    <xmx:y9AgahWokx423_mb9l6OwH98xWstfSp325eoBgqTXBPo-ris6H8yEl6n>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780535686; x=1780622086; bh=WwgfFZ7TOx2vnOTQO1ryudKodrbW+fz59L+
+	0EFn+1jo=; b=ai4c3T0SiXUNfW0rq9120+VsMpFQCXv14aclPGxdrs53pXvyYxN
+	ERxDbgMaktR+q1QT00XSG/zaRIIkKy1imTdDLsr6xd3m9yv9/72srFGQ0Sz9iPaY
+	JgY+V+QTgD0aWsy6e02IIZrChJLTYkrmebdRTBTqLIA85+oGYCUPY4hSn0ujnu0Q
+	gV40xTQ1l782vy6sllufbiW4pUPDRMg3bxk/svdLH5rCxCclSoRdd0cmDayUj/o4
+	OHnQ22AtnWmroDIV+1RKw9qtZGEPMKbo6MxvvilIf2j718XABJztPjTfwoCeF7as
+	yTV4CpGDCtumFlElIBOnZil+yDgrlRGc3gg==
+X-ME-Sender: <xms:htEgavIgnXb818MbRK4UrWR8dgOwjU4paw6L45Bxc-b2puy-F4Pbpg>
+    <xme:htEgaqlqapkeT2Zvn7Xt2vYblPCLmj5Z-qSUYnLpD39CExo3gHW4TGNFQ7spcTni8
+    i4CVYbh9ZAvEdlcB41omRlGfTIjxKnYzIDIhDEo6cuhG5byzS5AHA>
+X-ME-Received: <xmr:htEgalFIbQSxcNcCfd_RAelcJTewIzzd0jKRwIUgV6x-TLrfsNtcFLUA9mXbeWaFjR9mWf2d_IEElOgYr--oiP9N0j2UyaHiHdDK>
+X-ME-Proxy-Cause: dmFkZTG0bg5CLHXYfYAkT6GBYQERMy3gfdZgblcgZES/kRiJM89Iof5ZtKpSwEzy44Stut
+    uEaNE/eFnBaGcxQmpxqGOl8yaWN3s09vwuL/6Fr1/gDxoztXku/CevHqtMSFFM8NQr5XK5
+    713zPu5XR1mCuDdl76col9hns8Te/ADdKqJJbdfusSeeKRu6o9Fl7AgXr6lFYGF7lj7LAF
+    nj/JJBcuaFnNXQHYB7KcHn8jCRcDXBT8X20YwjEH97RvlIhaqET4ri4eldgcj1nYlX1QAm
+    soziGnIrD9m0NdkXVzY+1utWLLUtjlAGPZUOYtJlylA1JMi28iP7GmQODPpmbgkDpjtbXc
+    2ru5I1NFBrXNK6Hj6UdvSagZQgc5zIfxbntrjw4mOwAU65uZn0KcW5jBlNHE56Kxs0Ezol
+    MA7mp3n0nlz+g7njM5gmoPyXxoIwPmDAK1tz86J1NFDy7DgjILmFXB/ExUG8XxPWsjvmZu
+    JSMJ7DLPPwnUzqnDfwWNk40pqMBH3YU7lhr03aRplf2kpwwcieJUJLEiGjBFIkNcGVx/5I
+    T2fjYvvD8G9cfyNZJ8YcQeOL55Qxj+qnsDIPzqtxFIBDz0kwkbG3GA9Nl7HyRImW7sa6Hf
+    wWNuxm3+jkkNawHMckEOaxGizJG1bZX7F2c1tp9doK/tnI8fwk/qiznnJtPg
+X-ME-Proxy: <xmx:htEgaiEU9-LizqHkVWpj_RrANFKK7v1e8BDfhJxX9HQZf8lBlRJpIg>
+    <xmx:htEgaqOzFjbFMA-fZo8iwTrRFr5EIyZk5fTzDbaeFjZfDVx_N77_ag>
+    <xmx:htEgapFv5Gu4ApWU6hNTqZSm7FvIRUVkNbFhDI7OqoK8VNghgEsTEw>
+    <xmx:htEgapPQ_jEkk7BF2k4ZrjFmm7TplXPbzX5A0754kVkD-7CO_jrfDg>
+    <xmx:htEgakun-yMJCR8g7py6U2xquUCAVm71REZVnvoZN12SuRSjBRkrD42s>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jun 2026 21:11:38 -0400 (EDT)
+ 3 Jun 2026 21:14:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Weijie Yuan <wy@wyuan.org>,  Tuomas
- Ahola <taahol@utu.fi>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/2] b4: introduce configuration for the Git project
-In-Reply-To: <aiAK9eLvew+mgWt+@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Wed,
-	3 Jun 2026 13:07:33 +0200")
-References: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
-	<20260602-pks-b4-v1-1-a7ae5a49e9cf@pks.im>
-	<20260602170955.Z4b7y%taahol@utu.fi> <ah-Nhr2PboWUq6eU@wyuan.org>
-	<ah_PyDwO1Sffr5yq@pks.im> <aiAK9eLvew+mgWt+@szeder.dev>
-Date: Thu, 04 Jun 2026 10:11:37 +0900
-Message-ID: <xmqqmrxbp0s6.fsf@gitster.g>
+To: "Kiesel, Norbert" <norbert.kiesel@creditkarma.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] worktree: record creation time and free-form note
+In-Reply-To: <CAPGaHktHLPUeSuhETwyBo+jE2fMu40jHW284PN+2oY1YJ2j0Yw@mail.gmail.com>
+	(Norbert Kiesel's message of "Wed, 3 Jun 2026 15:51:23 -0700")
+References: <CAPGaHku+RAV+FA3C0md0xHiavfdB_anoqcMM06MAiU1VyMAdLA@mail.gmail.com>
+	<xmqq1peots9i.fsf@gitster.g>
+	<CAPGaHksjsSefYmGPBxKLw8DDADR5AwTiHTbHq0UyBBtg3CKq9Q@mail.gmail.com>
+	<CAPGaHktHLPUeSuhETwyBo+jE2fMu40jHW284PN+2oY1YJ2j0Yw@mail.gmail.com>
+Date: Thu, 04 Jun 2026 10:14:44 +0900
+Message-ID: <xmqqik7zp0mz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+"Kiesel, Norbert" <norbert.kiesel@creditkarma.com> writes:
 
-> No, in Git shallow threading means that all patches are sent as a
-> respose to the current cover letter, period.  It has nothing to do
-> with whether the current cover letter is sent as a reply to the cover
-> letter of the first or the previous version.
-> ...
-> Deep threading means that every mail is a reply to the previous one.
-> Again, it has nothing to do with the relation of the current cover
-> letter and the previous cover letters.
+> Hi Junio,
 >
-> Therefore, we do not recommend deep threading.
+> I looked at the usage of `.git/description` and I could not find any
+> usage.  We do have
+> Git branch descriptions which are stored in .git/config, but that does
+> not seem to be
+> usable to store the worktree description or the worktree creation timestamp.
+>
+> So are you ok if I send the PR again, just using "description" instead
+> of "note"?
 
-The above exactly matches my understanding of the current best
-practice.  Inside an iteration of a series, we want a cover letter
-with everybody else responding to it.  We do not have a word to
-describe how the latest iteration refers to its previous iteration
-via In-reply-to: or References: headers, but our preference is to
-make the cover letter of iteration N+1 to be a response to the cover
-letter of iteration N.
+Not really.  Not adding "note" and reusing "description" merely
+removes one smaller problem I immediately see.
 
-For a single-patch topic (without a cover letter) with multiple
-iterations, each iteration would be response to its previous
-iteration, which may make it look like "deep threading", but as you
-pointed out, the "deep threading" concept does not go across
-iterations.
+As I said a few times, I do not get why such a "feature" is needed.
+Also, be it a "note" or "description", people notice typoes in the
+message and go in to edit with their editor, which would update the
+mtime of the file, so if that is the timestamp you are using for
+anything real, I am not sure how well it would work in practice.
 
-Having said that, I've seen a cover letter of iteration N (for any
-value of N > 1) that respondes to the cover letter of the initial
-iteration.  While it seems not to break "br" and the lore archive
-does not seem unhappy about it, I am not sure if tooling used by
-other people are also happy with it.
+I'll let the others to figure out the merit of the feature and will
+come back next week to see what concensus they reached.
 
 Thanks.
