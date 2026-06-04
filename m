@@ -1,153 +1,77 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A629421EF6
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 13:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D3F13B293
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 14:28:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780579553; cv=none; b=h4zVxoQ0uJyv6Am3r+I0JSI3w64ayRf/0iKRasxnD8aP6QmFxbIQ8cjhOmOgUs6ewhl1GHUficGI42AHDH1NNHkJ5Yy+Ls5tyLEiQzx1aRVerepaBAJHL9bNnh05ndy3p6QMEuJWowfzUgixomayMnQtfntDnxXBsuGlLS3JBms=
+	t=1780583296; cv=none; b=ceJCMpKZjNjuerPlesQaGUVI6ho797ok+JaTHFvdchU8FAI+K7NyJHwKBwUHZun1jjGgCNaWFGVwCT8crnjNydfv91/GfOMnOHC5BicW37Lf1fL3DhwROS9asib9CUjuRO/eKCJu6DJcL9F+GO/uYXTBWrNSVN8+4yg1Sv1guok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780579553; c=relaxed/simple;
-	bh=znAnEW0O3eLkJVtw5H/WnekHn647qJSevVEVMPwh444=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VakFpo8N2AnFJJkopNPnwnULao61PVBPeqDUJSalD9k4sVjkZf4KevFotUH9AbPDQYlY8uOl04pdc9HplJ7jmnnqpqdnL9FNM2qkExP2k/XjSCSP0mpuSGWjZTSM2Tp0JSjL6iwYykzRQ2yWx2nlVAr13AJge5sv2hq+YiUX4RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpVv/Av8; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780583296; c=relaxed/simple;
+	bh=aDs+mzyWVJBL5bsqvOvuh9J3EEaQxRM/hDubVZWDdT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jAUmtKVU27xWyGeRkSPti5danRU4r6AaUylIOfmlPDqQ0EZQrrxGuVEwA/EVyI1ii6bp8iConbs+eaZ71G29xAls6bybr1PbhLkoilXSOQDoGclSBnqdROu7aby2foAWqLfWLomF++K7YU5NG60Y31YaPdoW8iTn2TEUmkXqAKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=YJ1BuOgP; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpVv/Av8"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c132ac5ec2so7114725ad.1
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 06:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780579551; x=1781184351; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NciXSAjQ4NJhKDby4v/3MvN4AS+mXtcT1/X5+VRXHHU=;
-        b=ZpVv/Av8AmHZTIURdH8kqrwZK+8mn13HqmUkTRIL6uJ5I/Wx+MzRPlXNqKpoeRa3tZ
-         IEBp7i1EFEQevOFttLOCLyC7JnYCHo10VjrfL1nieX3i7qyK2n3IKrkiWcKI0XPolR4y
-         mUawdhKyuc0oh1U27i77IiVKT/fCp/Mb5OqtV77Il+aympN1Nigqa+zVTOU5UaR8MxxZ
-         LDrnRvjr3WBUMQKKJcJVa1aB+3GLYS80XZmjMg4ReCMBa/2/GOpgUq/RvhWH5sjU5Q3K
-         jNabU996TDJsuCQW46CD4gYoIbNZ7U6oKR8d2LoQeYTyaKkFa5BIKYmhwjw2I/rub8bj
-         yblQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780579551; x=1781184351;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NciXSAjQ4NJhKDby4v/3MvN4AS+mXtcT1/X5+VRXHHU=;
-        b=hEoqFNgrKmYrfg9cXi5N2ZX8rNwY/tuTjkNEy/LQwDrtMjcJj5B7/EgTOExGGAbZUh
-         nmIRr2OeRCC0hqV3dTIAvNjKfJ/uYixEuBMTHa0oPgBirlfviHAbHBTutmQC6PZCcZ7F
-         bEQdoE+0jWboxxCUd5VfFBmeKYGo5VS9D1Y5S8UMKvGqcGKi7Q3m4fhGK8OViDgHQqsg
-         Hyx714xppkG455aqSuO5lfEziPUwBir3ZFA7o8TOIItAd087h/EIw5h2mEAxgity2TAD
-         JlF+1hPIqAAwuy+GnP4N37rFhLcsEZPzhFTlk/3U8F1iMmbhHxQLL/Q8/sLmVEsU9PA2
-         fpyQ==
-X-Gm-Message-State: AOJu0YzygnVBcn+md5Sl/DSFVbsQ7H8rxyp/Cmxjgcu4nP5z+U/DOaJa
-	ou4J1+OiXlqALWCseQBSdKe2b9YDz386hFigYABlGUKBaLyeT+NET5TN
-X-Gm-Gg: Acq92OGd8W5gSbT5z41GpxbZdbsXSYBVGxf1ybBhhDrJysN+WmJt+E1AXsMkWRAeR3F
-	PIUOq7ML6bjt/31J/pYiOpxwEDT0YvsF/H0B2DR61R2Ao64O5vFcwNP4+9Ske6nyaRiqhOZgWAT
-	ArsZXxem2JncXHGXC8CP+PJQcHroLSwMOll+fFxZ5X/mW0jEbpDKNOjSFuveQltzNI69KIjgyjs
-	k3fcOapYJL7FnES7PWi7O7bW4TjEqeOOf34lgMC0ubWTt7Zy92NG5cc87UXkSvPv3ZfU0L+gzQh
-	EL3WthYUOv/YqInVfaNOw4UvY9xo5TaCIgt8LpopRQaTnlf3oZlbV6mnnoRwhLdIQ+ytEaMQehT
-	ZijSOo1ve9tWEmNwAU8lKHmhIIe2Xkqw6OSLDxRPJFXRzlsl4/IbX2ZCScXM41EY3UbpnCp+76L
-	KsqI6nnjEOIO/SfBBAk/kptbnrAuqJMXDFxqpzdb7ssF+ObWfCcP1BV/67Kg==
-X-Received: by 2002:a17:902:d2c2:b0:2bf:21e6:baee with SMTP id d9443c01a7336-2c1641be20dmr89457445ad.28.1780579551154;
-        Thu, 04 Jun 2026 06:25:51 -0700 (PDT)
-Received: from Pushkar.localdomain ([49.37.115.206])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d37esm87381515ad.9.2026.06.04.06.25.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 06:25:50 -0700 (PDT)
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-To: pushkarkumarsingh1970@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	peff@peff.net
-Subject: [PATCH v2] transport-helper: fix TSAN race in transfer_debug()
-Date: Thu,  4 Jun 2026 13:23:29 +0000
-Message-ID: <20260604132327.277693-3-pushkarkumarsingh1970@gmail.com>
-X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
-In-Reply-To: <20260602201309.38434-2-pushkarkumarsingh1970@gmail.com>
-References: <20260602201309.38434-2-pushkarkumarsingh1970@gmail.com>
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="YJ1BuOgP"
+Received: from macsyma.thunk.org (pool-173-48-113-247.bstnma.fios.verizon.net [173.48.113.247])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 654ES5QX003922
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 4 Jun 2026 10:28:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1780583290; bh=Qhm8xcaT226HRVOrDTYho446bWdv4HzI36DxylBwlnk=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=YJ1BuOgPKTc8xKYXWH0bD0fh9OcYcPthjq1t25ZPCEVrwGG90EPlpyX/D47/gbIsF
+	 BRl/x3NmeSSSWL9w0v9ZqJy53ofXd0sQBWXjxvMB4mrv5yK1P3C64AeAAo1K4h7KoU
+	 b65QM59m9BrEQcAz/b58imgjEJrI4JVZ8CK2PmC/FQzYgeDrkUoGzlj7/+yEPQ8xJp
+	 0xTgR0r4md62QWPj4B55pRUXWrNwRcJd/zlCmr840hk+Bz2JhDbxf9ue0ITUlrbNR3
+	 WdUX7sp7ZBSr6GS14S6RMmba8lvlkXCkfflVIQV/c+K/jIfxi81jG3c0KmL6lkQDfz
+	 Rs8GsxMh4mJQA==
+Received: by macsyma.thunk.org (Postfix, from userid 15806)
+	id 9006E37D39C; Thu,  4 Jun 2026 10:27:05 -0400 (EDT)
+Date: Thu, 4 Jun 2026 10:27:05 -0400
+From: "Theodore Tso" <tytso@mit.edu>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Tomasz Konojacki <me@xenu.pl>, git@vger.kernel.org
+Subject: Re: Is it intended behaviour that 'git gc' ignores the
+ 'commitGraph.changedPaths' setting?
+Message-ID: <zzxyeseps5rflyldmdlx54dkjlyu4v267wbpfb4xlrh4lahogf@3woimupgfm7v>
+References: <20260604132419.F2FA.5C4F47F8@xenu.pl>
+ <aiF0aN9BwBvQffGL@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aiF0aN9BwBvQffGL@pks.im>
 
-Currently, transfer_debug() lazily initializes a static variable based
-on GIT_TRANSLOOP_DEBUG. Since the function may be called from multiple
-worker threads, this initialization is racy and is therefore suppressed
-in .tsan-suppressions.
+On Thu, Jun 04, 2026 at 02:49:44PM +0200, Patrick Steinhardt wrote:
+> So my recommendation would be to stop using git-gc(1) altogether -- I am
+> biased as I have helped implementing the new maintenance strategy, but I
+> would say that git-gc(1) is nowadays a legacy tool that inches closer
+> towards the end of its life. Git's default maintenance nowadays uses
+> git-maintenance(1) without using git-gc(1) at all anymore.
 
-Initialize the variable in bidirectional_transfer_loop() before any
-worker threads or processes are created. This patch removes the race and
-allows dropping the corresponding TSAN suppression.
+I wonder if we should add a tunable that makes "git gc" redirect to
+"git maintenance run" or some such.  For those of us who like to
+launch maintenance tasks at specific times (for example, before I
+disconnect from the AC mains and get on a plane), "git gc" has a major
+advantage --- it has fewer characters to type, and I'm lazy.  :-)
 
-Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
----
-Changes since v1:
-- Treat negative values as disabled by using transfer_debug_enabled <= 0
+The other things to perhaps suggest is ways that developers can set up
+rules like disabling git maintenace running while on battery, etc.
+This might require OS-specific mechanisms for determining whether the
+laptop is running on battery --- but I note that git-maintenance is
+already hooked into systemd and launchctl for Linux and MacOS,
+respectively, so there's precedent for that sort of thing.
 
- .tsan-suppressions |  1 -
- transport-helper.c | 17 ++++++-----------
- 2 files changed, 6 insertions(+), 12 deletions(-)
+Cheers,
 
-diff --git a/.tsan-suppressions b/.tsan-suppressions
-index 5ba86d6845..d84883bd90 100644
---- a/.tsan-suppressions
-+++ b/.tsan-suppressions
-@@ -7,7 +7,6 @@
- # A static variable is written to racily, but we always write the same value, so
- # in practice it (hopefully!) doesn't matter.
- race:^want_color$
--race:^transfer_debug$
- 
- # A boolean value, which tells whether the replace_map has been initialized or
- # not, is read racily with an update. As this variable is written to only once,
-diff --git a/transport-helper.c b/transport-helper.c
-index 04d55572a9..9e69c67cde 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1361,24 +1361,16 @@ int transport_helper_init(struct transport *transport, const char *name)
- /* This should be enough to hold debugging message. */
- #define PBUFFERSIZE 8192
- 
-+static int transfer_debug_enabled = -1;
-+
- /* Print bidirectional transfer loop debug message. */
- __attribute__((format (printf, 1, 2)))
- static void transfer_debug(const char *fmt, ...)
- {
--	/*
--	 * NEEDSWORK: This function is sometimes used from multiple threads, and
--	 * we end up using debug_enabled racily. That "should not matter" since
--	 * we always write the same value, but it's still wrong. This function
--	 * is listed in .tsan-suppressions for the time being.
--	 */
--
- 	va_list args;
- 	char msgbuf[PBUFFERSIZE];
--	static int debug_enabled = -1;
- 
--	if (debug_enabled < 0)
--		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
--	if (!debug_enabled)
-+	if (transfer_debug_enabled <= 0)
- 		return;
- 
- 	va_start(args, fmt);
-@@ -1648,6 +1640,9 @@ int bidirectional_transfer_loop(int input, int output)
- {
- 	struct bidirectional_transfer_state state;
- 
-+	if (transfer_debug_enabled < 0)
-+		transfer_debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
-+
- 	/* Fill the state fields. */
- 	state.ptg.src = input;
- 	state.ptg.dest = 1;
--- 
-2.53.0.582.gca1db8a0f7
-
+					- Ted
