@@ -1,104 +1,110 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693893932E9
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 16:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BED176238
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 16:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780591013; cv=none; b=ntRNfxu3wh8W6ibNOkV/v+pyr6nF1BD9c3OaqG4FHxazsonkzKUa98d4G2ey9HBeaDGFcYVxO+/eRfiYiGoONWCE47tZhR4IPDxkg4yy0AcUtd0hMuiUFbuGjk02PfZRj2mFc2UsQqo9aZvZSP4dHmNwudBUOgSkSIoou23VxkE=
+	t=1780592166; cv=none; b=jbyAQ/ycr+u7pvUc7JLqYahxO/sHfaU4Ijw0vMW3A+KArdbqFInx/qbJZnxmZ3Lsqp6gNxmpCcaEdKB5GvPasI3NfSNOnsfIouXJR0TsVE6n+wbg12f8bMsQ2+wfkVSQCWnj4WCu7JtCYJ68ukMSIJXbKVhi1dwcZw6QMaXWLqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780591013; c=relaxed/simple;
-	bh=wj2OT8D2MbdZYUTda5l3HE9yB0yi4LQGkOXJrNxc4NU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dhGmTPQdRzVpso++iZRWd/BptE+3Viro08I6nN55yS6tppS/GLgnaS7BjgW2p91WywrbrE7SdDqkKfrXdGNm4DmU1VJkRss3nCTbu5Fogk3Y2ERw1KWc3CGPviegZJwyzUDWFT0hgnW+nDWS5lA/6U0VXzc+pmEElcBYrIGj5qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M/sqeRsn; arc=none smtp.client-ip=209.85.221.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780592166; c=relaxed/simple;
+	bh=jqMhnvtK0XSYe04VXklj79koDAToZ9fe+tE5Ik3ia5U=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Zugubw+yNnEyyn1GDIE6A1cCzIcpTrz/+oni6MkwccsfW6MDeKLKZPbSh3aq05lI5EJhxcQmLrZ8n86ah8ozz1cwLJuDT11sxEgHYCm022BNIMxZAlv6LOaG2/70BN3f5IevGFirjUsUPGw6rgvncmxJz9FwtPHS8ELPbRqjT4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=S5fLehYk; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M/sqeRsn"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-59ebcbfb2b0so309739e0c.2
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 09:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780591011; x=1781195811; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yfH5SMop/FYDwQrBY5N0zEOPyZ6DF4e02tcMNSYtPP4=;
-        b=M/sqeRsn/aNxkFLBQRk6oQ1O2Tu6toKb14hHfxIqTzvmB+qWMBo3x+Fdv7RCUeP5vv
-         d1CyXYKe2CDoJPO7/BZJu58vEN25G2irc22drq3y1mzzLlvz9PeGgzQYhBJo3TYcga4N
-         i3yzrOBn06QSfrs3vZCm78Hae0k4FFuZf2b8TuzM/eT+fKlEI/EUXQguInfeO0t1J4ra
-         1fZtszuwrZVYe+b4XeaEc2ls/Dxc47cWV10c9rBMVBROhNAv+8d8LKeMKqlAy6HMVRfE
-         qyhrGNKoSBaWXcsCjv6ZDpxwPwl3EjCbZiADhvTaLFG28AVUuhZfOEyhII7K3IvMaDG0
-         ua1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780591011; x=1781195811;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yfH5SMop/FYDwQrBY5N0zEOPyZ6DF4e02tcMNSYtPP4=;
-        b=Rt74o7+D0yZAIH4+xJfL/99AtKWEjbqlaRACUMQA9eLAa5noo+B0ZPSRPbSI75nGgx
-         2nLDtRACfqf2LJTHOK6CjqEct/VyNIraSiYprB5w9O2Ww/k6sc7CiB0NhkB1qwBjV+Ji
-         v8ia2eS5frMoJR0olR+hQBT8L/51jkl3hKF/AaTfLoywNQgSBuMBnrHBJlZCYOwKiwpu
-         JXrv208GN1ceGcVYxHNdJvXvEXk7UDRWN9eRMWHNTdyILB8FXUunuSmY+nVyDJHwT+L3
-         E84e9TGD1mquSjfoUG6V+yQHZi1/TNJ8u5QHikW0GQW8M+I008iNwNKgvSTDucKDDGF1
-         yg/A==
-X-Gm-Message-State: AOJu0Yzy4053fO3fYsvsj4WZFZCPdTyIqsOz9HxkmBJkOvdMfLEwWW8c
-	pwzf22gEhKLoDPeRgeI6D6rgALb+fUBSsM+me1G12xZ8fCtpCs2o5EwzESMSFg==
-X-Gm-Gg: Acq92OFAK4Uq++Dyiq6xFgIF76zbD9QGiQscpG2Sgat9f6REJQ7siNeo49+NhM3HhIy
-	OjLOxN8YcsmtePnDnWz3D2M8sIbgRhKoFPaEvPEcMHX1ua3mmPOHct9fr3gD03qs6lDCzHJ0tD5
-	NDVTbWAjbi9iPjF2B0ORDdw+svHyz25J/NGkRxWGIDbMQvBPL/8qIygLOhu86RKDwyBJ68PHBlu
-	dr2L9HMI6ypLIdvUlGEZOVXGLDvEPfhrjGpUymAl1H9vsBzu1UmWGfj/osfBVhKm7PPhiicUEg8
-	HFxaxrJO/HfdNAFCtuU3ReEkcpg3tgEJT8Hn+LPPM8GqGANHwJTtW9SYsXVYq7AvC9Hs5SSYC6t
-	c3NlOhwHQ36up6VZPYZbku6eD2K0mfmGOOMFMyLnoTcOGeDtcQFDGMT+DTj9zcWagby5zCv+FUl
-	8D4Q4oiF/MY6GqECP1jXqSVqzVid66zu8nkoO6IhoUzOWJgEd1LQphv6Ebo6Jau/VIcBbgJg==
-X-Received: by 2002:a05:6122:608a:b0:575:29ef:7e13 with SMTP id 71dfb90a1353d-5a6e4470317mr5037589e0c.3.1780591011330;
-        Thu, 04 Jun 2026 09:36:51 -0700 (PDT)
-Received: from localhost.localdomain ([189.62.148.96])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-96413f91f2esm4801469241.4.2026.06.04.09.36.49
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 04 Jun 2026 09:36:51 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [PATCH] Documentation: remove redundant 'instead' in --subject-prefix
-Date: Thu,  4 Jun 2026 13:34:42 -0300
-Message-ID: <20260604163510.36687-2-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="S5fLehYk"
+Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
+	by fortymile.utu.fi  with ESMTPS id 654Gtwmo017251-654Gtwmq017251
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Thu, 4 Jun 2026 19:55:58 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1wVBMM-0036Fn-2Z;
+	Thu, 04 Jun 2026 19:55:58 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 4 Jun
+ 2026 19:55:57 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 32dbd3aa;
+	Thu, 4 Jun 2026 16:55:57 +0000 (UTC)
+Date: Thu, 4 Jun 2026 19:55:57 +0300
+From: Tuomas Ahola <taahol@utu.fi>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+CC: <git@vger.kernel.org>
+Subject: Re: [PATCH] docs: fix typos
+Message-ID: <20260604165557.MWQuu%taahol@utu.fi>
+In-Reply-To: <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
+References: <20260604131457.19215-1-taahol@utu.fi>
+ <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
+User-Agent: s-nail v14.9.22
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: ex19-04.utu.fi (130.232.247.44) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhbWkgDGgEbHAcODg0aAAkdDxsK
+ CQMDKA4JGxwFCQEERgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GW1hIUEhYSFhIWkhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIW1pIAxoBGxwHDg4NGgAJHQ8b
+ CgkDAygOCRscBQkBBEYLBwVIWA==
+X-FEAS-Client-IP: 130.232.207.30
+X-FE-Last-Public-Client-IP: 130.232.207.30
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
+ bh=CyEnJgVNW5xQF41XLyZIigQnvWtFpot9MFhMr/wM/fk=;
+ b=S5fLehYki3aTXx+IRY469EWgHSxf6yHnmmHi2OAb9+lGLzJpURwKeuFGcHT1uQr1cIknaBH+ZqhK
+	sMcbmEMf/5RAacj+YeRVUWMu1HrjANKCfFkgZoYYwqOo6Ms+nLJdnm9pn1JnS/6cOyFcaWtt7IHp
+	4mUp0CEOMOZsCEWQjhUGA1xUmstXwhldHiJerlx0smei4DQW/4R9KGyfgjcV8a8bHHdQzkJnHoLU
+	JZSy47iWXVjs0B2kgtCNdhixVmq+JD6mUOuUFjcliDEht3560Dlb5xpNCJU9ge0KIAvsQN9vkYfU
+	0ruL7vKtmGzn/M5EzGsZIpGqAYjMpU7QlaaJDg==
 
-The documentation for --subject-prefix has two words "instead" in
-the same sentence, making it a little bit confusing to read.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> wrote:
 
-Change the order of the phrase to a more natural "Use [...]
-instead of [...]" structure.
+> On Thu, Jun 4, 2026, at 15:14, Tuomas Ahola wrote:
+> > [PATCH] docs: fix typos
+> 
+> The area `docs` isn’t correct since you are also changing comments in
+> source files.
+> 
+> `*` could be used (as in a wildcard). Other people have used other
+> things for “treewide” changes.
+> 
 
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-format-patch.adoc | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+Hmm, I took that from the other typofix patches we have currently in `seen`.
 
-diff --git a/Documentation/git-format-patch.adoc b/Documentation/git-format-patch.adoc
-index 5662382450..f7905c0f7c 100644
---- a/Documentation/git-format-patch.adoc
-+++ b/Documentation/git-format-patch.adoc
-@@ -221,10 +221,9 @@ populated with placeholder text.
- 	for generating the cover letter.
- 
- --subject-prefix=<subject-prefix>::
--	Instead of the standard '[PATCH]' prefix in the subject
--	line, instead use '[<subject-prefix>]'. This can be used
--	to name a patch series, and can be combined with the
--	`--numbered` option.
-+	Use '[<subject-prefix>]' instead of the standard '[PATCH]'
-+	prefix in the subject line. This can be used to name a patch
-+	series, and can be combined with the `--numbered` option.
- +
- The configuration variable `format.subjectPrefix` may also be used
- to configure a subject prefix to apply to a given repository for
--- 
-2.50.1 (Apple Git-155)
+> >   * The tm->tm_mday field has an additional logic of using negative values
+> >   * for date adjustments: -2 means yesterday and -3 the day before that,
+> > - * and so on.  The idea is to deref such adjustments until we are sure
+> > + * and so on.  The idea is to defer such adjustments until we are sure
+> 
+> “deref” could have been “dereference” but this must indeed mean
+> “defer”. We are putting off a decision until later.
+> 
 
+Yes, that was my own typo.  I always meant "defer".
+
+> >
+> > base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
+> > prerequisite-patch-id: f827362e061e199150f149dd36c67664c77406bc
+> > prerequisite-patch-id: e5b32f0b916ec86eab6631b9bd9bafd639191765
+> >   [...]
+> > prerequisite-patch-id: 083f554bc5e09ae54c6b545628196e11a9e90cea
+> 
+> Okay, these must be all the non-merge commits from the topics you
+> merged in.
+> 
+
+That's true.  Quite a list though.
+
+Thanks for review!
