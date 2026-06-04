@@ -1,120 +1,94 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from psionic.psi5.com (psionic.psi5.com [185.187.169.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FFE3EDE67
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 09:05:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB72B33D51A
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 09:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.187.169.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780563918; cv=none; b=HYAf3fq8ubKHCoFgFazdhQChItmdaHkWX1kil1kqZSqNfsWkN3MsEL++QHS8xw35OakGW+etvez2K1WgUPOz5DAV/kRSAwPqanBU6I0dVYqHM41wXIfSLqj0AX/noMWIfUFXvK42mkJDemrmG1lWsU8W1YZj5bYCpUi7GS8dqak=
+	t=1780565265; cv=none; b=YwWbsp941jl59u//3n4bYX2mnzREIFby1iHdZ0Bf66ZNVVbM7qdRLxtzAhhlFxMe8Ylf8ZZVwF17FRUO4186UGSIJ3j/XYgplf7BG3IRUJnZHqKafV/9E3UblxNU77WeDHtvC0H4SAlIlYJxar7WDGYedYZlHNYiIubajOEC/fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780563918; c=relaxed/simple;
-	bh=bnOxHyi7N7kxAzHqS8Xr5UcxEM7clcaWp2eza4/DrrA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OlicfHuZhNeWguh+ux23h6sK77v5VHlo7l6lNZPhHxUL7R1io6l/eCc6fQruhIG3sr6Q9qI1dPS58tp741b3qZt5L9svAgMgvPKtldV5mbAIU6Zu7RUXhzkJ1cOq9kINMYzU3phHdQhiSFeTNM/gu2yRbUmry4euR1TXdfa64Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vqFwwUAj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EhAUeNq6; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vqFwwUAj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EhAUeNq6"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C40F5140011F;
-	Thu,  4 Jun 2026 05:05:16 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 04 Jun 2026 05:05:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780563916; x=1780650316; bh=ZN2AxtRm+5
-	iTlwkSrKu7eD97DHqwSF+V+VSd0xI7isk=; b=vqFwwUAjPDHwTqPzdRWWvP1aRt
-	9pRFo5QtJoiNW2vmPABi8SaOalvqn8t0vj8g33qOczyWB6CAlhbt6SrIkjgX0Bsc
-	2SLyJCbsHY1BjnDrSOsxwPXLgRm+D/V7mE/OmQvcuOt8sni+7ANwtskuQcZ94PGQ
-	tVhQbeJjfsHHq5ZYXyCoc0cvdOCKxmx0focKHHUVu+hNEacP6xTyFw/lVOgRjohh
-	m8gIK3SsHXq18JKFsD/Wpcb2I8lG/digABFB/QgIf7t7Dv2VQtujHILeujrStzcO
-	YRf0h/q/iEza3mcxEbYWdEPtcKk09rFRuS/JXICvJtdBhurKNKGxwza07yDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780563916; x=1780650316; bh=ZN2AxtRm+5iTlwkSrKu7eD97DHqwSF+V+VS
-	d0xI7isk=; b=EhAUeNq6vl0v0t3ogfByfHWb036OBj4udnB+Z76KQE+6iyY1MYk
-	AfNTVMpKgcrkBltpW8HQRN8YcNk8ECNZtTc0o2TCamxvhYIH0Fw0qjPXdUWCADTL
-	QYeQRdJ892U+1dOuVvA+EPvJbhsABDF2fAUj48iIhiwHaKnt1x9efYEJjIpGhpJp
-	8ZVVxUyQPgjDoWtn74yCNf6c2SEze6J2YD4DCzZoIsTDJro7x3SL0U+J/g4aNDBl
-	rfhYf/2p+FcpB80bSoPi7uGUb1ER0WaWzlDqTSUC371euo/yEnh96KdTSdAzgZ/H
-	gmS9ZKUNj7u/JUM5S+l4ciuww9P1iPRTPYw==
-X-ME-Sender: <xms:zD8halbD0_HPJpJLhJWGdCq0vb2tI9T4SVdlMfEATKEKazETUaHDTg>
-    <xme:zD8hajYwIENKql4heg7R3R920E60K_QsGDGf6HaOv864LzyKSCWvo6MIxvjtsvjX8
-    HwiX8C1tdgvebtcUo2m-wxabbIQdFkA6yvyRj9ijM5FItvYtdlM>
-X-ME-Received: <xmr:zD8has8YtzOMrHWLnfEGQsTjMyWuPth8_ImM5jJFP9YGcfo8z9oMsFqqxGTI3_UX-alwexgrSdw-WBGUfVm4OeGIzNsybwfEKMLZdTlqqP0>
-X-ME-Proxy-Cause: dmFkZTEvkLzGHAZJgZFOjNbdHF5R9wyg9G8yBpvHjhcKCO+x6ER46TQe039xFnGi3JLVUn
-    ApjJYYS9M80Cb0yiGTucablerUGmYy1TGEQpFCQwnnfm0+hSjsuQsyfK9BSq3mBNckNKh5
-    sLP3QpdIzlHmoxvpIKctkUHbFTBovpYkQsR2ZBtzFoR2cWMdFFjL4KHjw6EfXRiUU7ibuO
-    ZVg3SqT5rtoaxSozCEj7HW8u2i2PcjNr04Yl2BGweICIdFy+aLLCp9yEarQ4iDo05bMWjx
-    cQXKLMYc6NyE1bnk491Fnn8kXcSQ3Kcn5HixFeTAmM+R2g4kd0ATc7FA5OftEAhoHVKQtZ
-    F51eBPTF1ZLOmwG5I1I99tIhcGuCXVsCbcEeKoijeXs7rHQfXqV7Yx/14ESdD2X/0J/JCq
-    7d2DgCWULVepkeIyrEN52k6NKfv1AIIPgjfgjtAJ2G3eHkSfh/cTxofiE1evfrTNJg5SWF
-    WYe+vp/bnHP+0VkWAz4pKDVMK/QdI/ckRZtamnvzIfdU5sDjwB/MqQQTrmshPDPh1gPVaR
-    B8EQDD6SnasYM5lQOWdVz39s+LIsIG31rjV4r9Tl0wKF7dkE+XvGVrFg49thjjE6zSbs2P
-    50Cn9n+z58DTjHfdHN3fqASuQNfof0S0P7FYnrDpS//Sx9se0RXNnbdWZBfg
-X-ME-Proxy: <xmx:zD8haiiYM78X-fVWxArvOtOCpbjpHr7BbwQK0IUGV61Saa76DgQ4vg>
-    <xmx:zD8hasfuzGVFfpJjm_F1BMHs0IMbqn5QUPAr57x3eZ2r7scisqwddg>
-    <xmx:zD8haprC0napxehsGmQppd7yIINaHw1azh8VJR9K-xoEwkgyZntrkQ>
-    <xmx:zD8hahBLdmwiI4q7mbVbkpzvwW3u_dIPyTuSTyWtrtExuGjJ0dvDPg>
-    <xmx:zD8hase3tNhktSiMqBP4GtUDh-xeRUdODGCpn9KIKBEIGb80tP9Ev6RA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jun 2026 05:05:15 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2a1f6045 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jun 2026 09:05:14 +0000 (UTC)
-Date: Thu, 4 Jun 2026 11:05:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] doc: replay: improve config description
-Message-ID: <aiE_yGhjXuTmVHZf@pks.im>
-References: <CV_doc_replay_config.709@msgid.xyz>
- <V2_CV_doc_replay_config.767@msgid.xyz>
- <V2_doc_replay_improve_config.769@msgid.xyz>
- <aiEa5EWeAaaMsqRR@pks.im>
- <fcc2cf52-cb10-4799-a4c9-eb5916187075@app.fastmail.com>
+	s=arc-20240116; t=1780565265; c=relaxed/simple;
+	bh=q7+xGXCocjaGNSiSNiz5CA+M/gxkm5fakydv5Cu/oRI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mYEdeMjkqcUeO8qk79aX944ynmPMk12VwBC3WLnUhhZKZNQppC/9ItrMpsRhMaUuEHqul5xu1pTXlLE+sLzyYZiiOnXI30YyYQ41AmopGrazU4bvzB2xgKX1ThJou4MzKjR+LT1px6FdrCaiNpkUSM0EF+YrooKKAiB4MzDd9+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de; spf=pass smtp.mailfrom=hogyros.de; arc=none smtp.client-ip=185.187.169.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hogyros.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hogyros.de
+Received: from [192.168.1.28] (unknown [103.52.208.35])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by psionic.psi5.com (Postfix) with ESMTPSA id CCAE83F202;
+	Thu,  4 Jun 2026 11:27:39 +0200 (CEST)
+Message-ID: <fa075b7a-96f6-4fd9-ae94-30ddf323f759@hogyros.de>
+Date: Thu, 4 Jun 2026 18:27:31 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fcc2cf52-cb10-4799-a4c9-eb5916187075@app.fastmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Mirror repositories for submodules
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Benson Muite <benson_muite@emailplus.org>, git@vger.kernel.org
+References: <875x42vlgv.fsf@emailplus.org> <xmqqcxy7qfgk.fsf@gitster.g>
+ <d64e7f31-4e00-478c-ab31-b671242865fb@hogyros.de>
+ <20260604061605.GA3194609@coredump.intra.peff.net>
+Content-Language: en-US
+From: Simon Richter <Simon.Richter@hogyros.de>
+In-Reply-To: <20260604061605.GA3194609@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 04, 2026 at 08:31:57AM +0200, Kristoffer Haugsbakk wrote:
-> On Thu, Jun 4, 2026, at 08:27, Patrick Steinhardt wrote:
-> > On Wed, Jun 03, 2026 at 06:04:23PM +0200,
-> > kristofferhaugsbakk@fastmail.com wrote:
-> >> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-> >> index f9ca2db2833..4de85088d6c 100644
-> >> --- a/Documentation/git-replay.adoc
-> >> +++ b/Documentation/git-replay.adoc
-> >> @@ -211,6 +211,7 @@ to use bare commit IDs instead of branch names.
-> >>
-> >>  CONFIGURATION
-> >>  -------------
-> >> +:git-replay: 1
-> >>  include::config/replay.adoc[]
-> >
-> > Not quite sure, but was this change supposed to be part of the preceding
-> > commit, where you also added the include?
-> 
-> No, because the conditional is only being put to use now. That was the
-> intention anyway. Maybe there is some reason to put it in the first
-> commit?
+Hi,
 
-Probably not. It just read funny, but I guess that it's my ignorance
-about the adoc format that was also at play here.
+On 6/4/26 3:16 PM, Jeff King wrote:
 
-Patrick
+> Here's a thought experiment. What if you put the UUID into a URL, like:
+>    repoid://123456789.git
+
+Yes, that's the idea, except I would want to use a relative URL, like
+
+     ../123456789.git
+
+This could solve the "naive cloning" problem, because it creates an 
+expectation that the submodules can be found on the same server, or in a 
+nearby path.
+
+I'm aware that this is *also* bad for decentralization, because it makes 
+it easier to use one of the big forges where the repositories for 
+often-used submodules are are already likely to be present, but it plays 
+into our use case, where we want to share the repositories for 
+often-used subprojects.
+
+> Now, all of that said, do we still need uuids at all? If the canonical
+> submodule name is https://github.com/git/git.git, then anybody can just
+> rewrite that locally in the same way using url.*.insteadOf config.
+
+Yes, but we'd then need a mechanism for a server to indicate "for 
+cloning, you should use these 'insteadOf' settings, which is a massive 
+can of worms from a security standpoint.
+
+I also don't think these canonical URLs can ever be stable if they refer 
+to infrastructure that is not under the control of the maintainer -- it 
+would tie the project identity to the hosting provider, and increase the 
+inertia to overcome for moves (such as the current exodus from github 
+and gitlab towards codeberg).
+
+> Which makes me wonder if I am missing something about the original
+> request that started this thread. But it sounds to me like it is just
+> asking for the existing URL-rewriting feature.
+
+The original mail has a similar problem as we do in Debian, and as my 
+employer has: CI jobs should exclusively talk to in-house 
+infrastructure, because continuously cloning repositories for each build 
+is bad for the environment.
+
+The common goal is that a naive clone should get submodules from a local 
+server, ideally without us having to write some tool to make an initial 
+checkout, enumerate submodules, create insteadOf settings, clone first 
+layer of submodules, enumerate second layer, ...
+
+    Simon
