@@ -1,80 +1,80 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9F841C302
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 11:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56FB410D1A
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 11:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780572354; cv=none; b=gM2AMD5zbFI7rKV7CahIHGbDOqicTbAYw6R9aQlc6Gn7jTqfUdui23ubbkNk80l4bu3HyfjoDygPEy9ErMGAmdcW+fIi4uJ/5ZLdLB7VFZggwvUVC8iSwLBWrSFTBxEJsYLNOkp/vUJ/Cn4jSgX//OdRwV45HxcsUKrV5C3zVOY=
+	t=1780572357; cv=none; b=PQ0DlaaG44CE2cbwEDkSMZscS/ngIh9RnaeHWY3X+UziBpAZH1GSmpiHPGYV4L4i4c5OJv64YnpC1jiKphZo8NeSH8nFX7Yt180Vra+Ejx8tn2NdJHDBhr6G2spiqoei89Qja7QJ1cV30uTMvnFUZPGpb2n5nE4SwYic4dkD2Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780572354; c=relaxed/simple;
-	bh=rGRnqbHu/ROOSPoZl2J2KNnO/3KxceShLIDLR7Gfy2c=;
+	s=arc-20240116; t=1780572357; c=relaxed/simple;
+	bh=IbGUSsPmk3tOC4yHKuuwIACtHI/zPX7Z9kVVb+tuNXQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F79LPQOP14gcTwip4B3h57fMgO24C/r92jKEQIC52dJ7Mbw/cxR6apqHvsp2tMatGyi9uZ13p65pRDjw5/YLpwT99LX2NReixOyNISzRQ0JBBhUI3azqVkwy32XRPcFAtOxFNY4JWT4RNzDtO5g22GXOMX34Vj8t1e5V1nf9lNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DBc+kEsc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gjGv1kW7; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=ZtVrOISysjwY/r0cCgUvLX0xgsrtYkashY/L68iAtkchyZNg0eL1EyizXNZ3CtlIqkT7E/s49eO6mofGMWgcyBsS0rP62XA9n1OuRMHfwLKZ8PXVjvxVlVy0/MCt9s6w8H8O/5wAwi7mNDaMQg2pF9IaFft+MhZ3j+ykj2D9AhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nsrGs+Qk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FK82FePu; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DBc+kEsc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gjGv1kW7"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 765C7EC00CA
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:25:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nsrGs+Qk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FK82FePu"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 303961400130
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:25:55 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Thu, 04 Jun 2026 07:25:52 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 04 Jun 2026 07:25:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780572352;
-	 x=1780658752; bh=iQfUdaX+I86mbG6Tl6sfIclMd4x8k/ojMvRzSVbfbxw=; b=
-	DBc+kEscv4/jVVwQ//3qOi8X1toc3Awboa0WxKKlv7599iQ+fEUlmwdygttOh6Uu
-	u4mWRDCZm362onCxDyTRZ5wVFsXz81/G/SNic4PNTCkKlY3fixh1ECQegMA5r+xl
-	lUYqxXw2Q6vC3QQdUEUEgU4fm59T9WaoPiF05X3I81Jevwx6F2EvpPkpBtqho92I
-	yt9xVJYPTF98SgMY1rUUI6wwJJIEk5CGIls8cOxafyWIhGTzU2iMeq1tRrHsq4Mj
-	Mwurrl3WWv0mZA+jFBpEVFm55/ItwzJoioTKkqFAWL2sD9acfwG0M0e0znMNU6dx
-	6CNQNNRWfu6K/efZm/naPg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780572355;
+	 x=1780658755; bh=1RWazb2HBrU1bYUIxznczkF1G7yt9idrVOjuVpdTNpA=; b=
+	nsrGs+QkqpFordmKr3mdVA4kfqgSTFTdU22tEU+abrkfZvfxfMbR5Lbwf4JWrTO7
+	08S8YvSNlGgEMaT5c95a+Hkla5PmHlPYI4mxeNpSS/wzKuGIGrfVnnAFsG4QB3H1
+	qzyrDW7OGZRkGzPPZLdsD8yTZTxEwltI3UGlRlwHGcqe786K+cGAXTe4L7hVi/ga
+	ahdbvOXPYcGbZnyxJUEGvVxv9tQDn7fB2KyC4qJ5YSFd2jpMuRxJlsfJUyhY5FDe
+	wP4tToftQEk1Xo3ME8zkHvCq5wdWHrTCnCDuGKmpCL9lpcPgKYx4iNj9UM4PZbkC
+	2BdXz/Mqn74x6dRopGQ8Sw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780572352; x=
-	1780658752; bh=iQfUdaX+I86mbG6Tl6sfIclMd4x8k/ojMvRzSVbfbxw=; b=g
-	jGv1kW7Oy0G7E+ZicZX/RjChdyX/aZpCASJRt0uWGSOHPZ6erwVagsDP5yzBCd4r
-	aM0JjjKs86RwJmU4bfJrEYVPddlo10UKr2XRp/pCYy7lvNVS/GYsit/FFg01TTEI
-	zoFcr4SZKdvePJguDMEwo5T/o+4zopKl/XGqdHesOJHGCEfSdJPN7IUBonTxW0hN
-	MGWrhot3dRuUt9Yfeytgov0CpCStkCOB1ME7sGAvAB/45PRrLQdQtaawO5Y/rVVA
-	ku3Vrguky7srK5p64eU7pSLW5h/oHG3AR1qd81ElDY4VYgMZnBCj1MkosGH4WtCK
-	ddCt0B240vWTpBPq24zPQ==
-X-ME-Sender: <xms:wGAhajCmf24byXXM580BtZazbspdysHKBFR9MvjTecbsno7DCoN5jw>
-    <xme:wGAhagf3iDYID8rMxAQaSyaMI_RWvcq_iphvJpP994Kj-L904C_ZKw5YQUTi8RMWR
-    947u-pf9d6voMYAUj8KUr4Ye0LjVzxUIZtT7eLj44J3jtD3uiw>
-X-ME-Received: <xmr:wGAhakPj144xMzrdHJXpfFWZbrCqENyInXRfTX0NXhknE-ItcwRSHVNpBNftEfTIUVmLGfhZl8MZ-lkaSdFN-gRZgzhbmjVm-visjmfMkc0>
-X-ME-Proxy-Cause: dmFkZTEgCyScvAHJZtwScmArpd3MPVD65pRFEMle7OxDyvGrBgzCBJpJZt/i/e/55qfMB2
-    OZ+A4mOijyyVR7BQZ8gApb6Lys3WwA/DRBZO1Z6gq18/NjHv9k/YmqxGulaGbdjpGbGIe8
-    TR7oy8jORNRJjZkYPAiPkwIOcJg76HwsAVLzInKh/aA4zWo5I7a3yFoBSrwplR1bXvqyzb
-    7cwWjx66LW0j/HaZcKLdC3JWI1rUB6+uoj5Ia8HwsvfkXaZepnJEy9rr0yADWxKwm6t/hJ
-    h4TWvBlU4kw/rB+rZbM4p/EdiFJ50OcReCBplYqL1Hq7W/DA0KsY8Jaj3WslUYFsjaCmlf
-    wbxhK8YbQ54KNJF5x8PTymzsRIQQGOMBioaYdWhksOvnMtz1F04qTv4Z3NUOQ1ifhM46iV
-    1odM6zRTHbDXNHEaIsR3eKv0PMWY44jn/92yDNdL4+F4zjkvNppWhlwefB/BdLSjrl0HEZ
-    oQMGLBa9HRWtHJSbZZdXEi5SW8XAGrXLeHqASJzj2GVn8wPh432f89qXJYW0qKlTzCu0v+
-    HxqLMMXoKBn+kUv5iKdiMBornRA92CULjTaZAojzIvV542y/e9YfJnrht5Nk4zdQdfoikK
-    lPCRXMTH3z8pQNYDMA71qxuk5lA2vypNmMYQLCYv7Oexgq5DudeMFE0g0DUw
-X-ME-Proxy: <xmx:wGAhaq52U8wOcGD2BvDQLVOibtbJt5Fi-ljTrhLkNquwbJ4hZUwzKw>
-    <xmx:wGAhaoLRtukHtUdCtRQ7k1AeB7C71uWX3Fqv95p8Zzbxb7Lq3xIWMg>
-    <xmx:wGAhakftlGS3pKeN67xTKv3f-5Za77CRBctQ_U8jCE1BgqOJAU5iQw>
-    <xmx:wGAharfaCf_iXLR9MSBRdWBNbYav44yIz956U2baogN1ZJmIbt9Pbg>
-    <xmx:wGAhaqDN6vCpZFfzmF4OTPLEbrq7wCCeiRvLzm6NPedPrzN7RnNB4UHn>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780572355; x=
+	1780658755; bh=1RWazb2HBrU1bYUIxznczkF1G7yt9idrVOjuVpdTNpA=; b=F
+	K82FePuJXcmNtxfDksgyBGFuTQ9Zg2IY2fL1kCIR/6eVQyGRyU/2PiNVD3Yp6gMJ
+	63BvB9/1j0rsngAxOvEtkRu+7LopyPtBeMYCaHygDSG7dDgctYCrtvviZZ28CQ45
+	CQYKYHyRhUOUFFg8E/cWuA57JzDTrDi9U7nIuF4UdsQGG1yBcEeqjgeOABUFj5Z/
+	mLd6wWB8n1TOjIyOUEytgqAsYy0nzTC9MAO2nu4+5K9Gh0QuTRsZySfomqI44b1I
+	RkUxpUwQdMMSQ/yh2VynNrzV43ctAN8uIjjwW+Y7UMKrT2Nz95Wy+hKVM/Ydh/xB
+	PccZVmvw/kVxHRc4AfNjA==
+X-ME-Sender: <xms:w2AhauiapA4S01WzN45oBVLiIe6Ztsh4yc4b9e5u_w4nmsIfXyNPuA>
+    <xme:w2Ahal95wsM4srEtkJGk404Ktmwlh_OKrFocPEuzs-gIHzL8-BYQpssAQH9Avojql
+    RNgtqnc-486MiB57vMDyrWqqDCRF1zerZDP4Jpjdz-uKHlnhyl->
+X-ME-Received: <xmr:w2Ahartyj9Snx70-aY_WyhD0AhOJtMa9U_ce3LTsQepvKbp-eSc1bcFDxr2vFjeCr1knaufyngHJPCQqzSItZf2nqTms8lDxcnrdoZ7D0U4>
+X-ME-Proxy-Cause: dmFkZTEmGWARoCyzud8xzE0g35eoeT8iVzZcqNzyh76hBPDsk1XT7fi32HajLAYCMyqedq
+    kpiZOaoaKLVYYq5y283GKNrwOMV8/l+OQmvtcd3OCJrM5bPeHOVPInri8XVflQOHqldpqr
+    Hs5wmK2PEpQ/tEwf/5L66TF5OYQN3YNhPutdiDYEgFD0j27cV8BNrtE6XbpAlmwKqiHNqr
+    fciJ22YYTa7SFmP0xFaiWptGCk+dakegRYWTno8RfyFjgFYe3lgkkaKAaaut13m9fHCENc
+    YalDZIslCbs1fn6dPmAs3DPQJF6hnisFJLVIhW1WPHRduGjpvu/+HVPxngjIcIAleuU6M2
+    eXRkkDbuvNXaJvF1hI91H18N/9W25Az0KeXrwPq+BTJWihbkreXz3cGH29PhLGMIKmuDAD
+    PO8MNbpm6all2DJLf4CdYFj6mV5yUtaKIIT4Yixq94VScyvXr8BmpLSXPIyJsbzD1StI4R
+    ArbVdykonssqmQllS2dw17e6kgJRr4ok7Y02OZ+BuOpIoKpRENaG9JUNiIhRGDVHpBVeAK
+    lTq17ZN0vhmwuF3+vxFSjhE1bZbxbKalmsarVYDNDDjlkGFDt/nZAf4njY9XDbjEhf7VHo
+    1AUTnGzhVOHVihminkkmBF9iRR+D+ek+MoIHBucjWOUCOZQKF14FSApoS5lQ
+X-ME-Proxy: <xmx:w2AhasZcAbkyYRCa9EYQSXtUKhIdoe5feKwZPcn-ZaOwX-29wghiiw>
+    <xmx:w2AharpZm9ocLcypkluoVnIlY6JMLC6r8S72D_tJwkuMS-eJ6yeUaQ>
+    <xmx:w2Ahah895Wttuh52XKnBAEFOP6p6Yyyah18LMKVZvOWBu3skpvmITg>
+    <xmx:w2Ahaq_pFy-qH3xL6jj_gL7y0fziugdrcYSEP6-xJP4TXCIaeKwjbQ>
+    <xmx:w2AharhpvqeFxzXcw4EVKaPrQtzNXTpBLQy-XXhKyS_4O9APn1QbniIl>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 4 Jun 2026 07:25:51 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 4 Jun 2026 07:25:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3a3019dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 25e52cae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 4 Jun 2026 11:25:51 +0000 (UTC)
+	Thu, 4 Jun 2026 11:25:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 04 Jun 2026 13:25:32 +0200
-Subject: [PATCH 05/16] odb/source-packed: wire up `close()` callback
+Date: Thu, 04 Jun 2026 13:25:33 +0200
+Subject: [PATCH 06/16] odb/source-packed: wire up `reprepare()` callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,118 +83,497 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-pks-odb-source-packed-v1-5-2e7ab31b4b5c@pks.im>
+Message-Id: <20260604-pks-odb-source-packed-v1-6-2e7ab31b4b5c@pks.im>
 References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
 In-Reply-To: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.15.2
 
-Wire up a new `close()` callback for the packed source and call it from
-the "files" source via the generic `odb_source_close()` interface.
+Move the logic to prepare and reprepare the "packed" source into
+"odb/source-packed.c" and wire it up as the `reprepare()` callback.
+
+Note that "preparing" a source is not yet generic. Eventually, it would
+probably make sense to turn the existing `reprepare()` callback into a
+`prepare()` callback with an optional flag to force re-preparing. But
+this step will be handled in a separate patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-files.c  |  2 +-
- odb/source-packed.c | 16 ++++++++++++++++
- packfile.c          | 12 ------------
- packfile.h          |  6 ------
- 4 files changed, 17 insertions(+), 19 deletions(-)
+ builtin/grep.c      |   2 +-
+ midx.c              |   2 +-
+ odb/source-files.c  |   2 +-
+ odb/source-packed.c | 157 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ odb/source-packed.h |   9 +++
+ packfile.c          | 160 +---------------------------------------------------
+ packfile.h          |  17 ------
+ 7 files changed, 172 insertions(+), 177 deletions(-)
 
-diff --git a/odb/source-files.c b/odb/source-files.c
-index 3608808e7c..9b0fa9ccdc 100644
---- a/odb/source-files.c
-+++ b/odb/source-files.c
-@@ -38,7 +38,7 @@ static void odb_source_files_close(struct odb_source *source)
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 6a09571903..8080d1bf5e 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1363,7 +1363,7 @@ int cmd_grep(int argc,
+ 			odb_prepare_alternates(the_repository->objects);
+ 			for (source = the_repository->objects->sources; source; source = source->next) {
+ 				struct odb_source_files *files = odb_source_files_downcast(source);
+-				packfile_store_prepare(files->packed);
++				odb_source_packed_prepare(files->packed);
+ 			}
+ 		}
+ 
+diff --git a/midx.c b/midx.c
+index efbfbb13f4..00bbd137b2 100644
+--- a/midx.c
++++ b/midx.c
+@@ -102,7 +102,7 @@ static int midx_read_object_offsets(const unsigned char *chunk_start,
+ struct multi_pack_index *get_multi_pack_index(struct odb_source *source)
  {
  	struct odb_source_files *files = odb_source_files_downcast(source);
- 	odb_source_close(&files->loose->base);
--	packfile_store_close(files->packed);
-+	odb_source_close(&files->packed->base);
+-	packfile_store_prepare(files->packed);
++	odb_source_packed_prepare(files->packed);
+ 	return files->packed->midx;
  }
  
- static void odb_source_files_reprepare(struct odb_source *source)
+diff --git a/odb/source-files.c b/odb/source-files.c
+index 9b0fa9ccdc..7b1e0ac565 100644
+--- a/odb/source-files.c
++++ b/odb/source-files.c
+@@ -45,7 +45,7 @@ static void odb_source_files_reprepare(struct odb_source *source)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+ 	odb_source_reprepare(&files->loose->base);
+-	packfile_store_reprepare(files->packed);
++	odb_source_reprepare(&files->packed->base);
+ }
+ 
+ static int odb_source_files_read_object_info(struct odb_source *source,
 diff --git a/odb/source-packed.c b/odb/source-packed.c
-index f81a990cbd..74805be1dd 100644
+index 74805be1dd..e8e2e5bb48 100644
 --- a/odb/source-packed.c
 +++ b/odb/source-packed.c
-@@ -1,6 +1,7 @@
+@@ -1,10 +1,166 @@
  #include "git-compat-util.h"
  #include "abspath.h"
  #include "chdir-notify.h"
-+#include "midx.h"
++#include "dir.h"
++#include "mergesort.h"
+ #include "midx.h"
  #include "odb/source-packed.h"
  #include "packfile.h"
  
-@@ -16,6 +17,20 @@ static void odb_source_packed_reparent(const char *name UNUSED,
- 	packed->base.path = path;
- }
- 
-+static void odb_source_packed_close(struct odb_source *source)
-+{
-+	struct odb_source_packed *packed = odb_source_packed_downcast(source);
++void (*report_garbage)(unsigned seen_bits, const char *path);
 +
-+	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next) {
-+		if (e->pack->do_not_close)
-+			BUG("want to close pack marked 'do-not-close'");
-+		close_pack(e->pack);
-+	}
-+	if (packed->midx)
-+		close_midx(packed->midx);
-+	packed->midx = NULL;
++static void report_helper(const struct string_list *list,
++			  int seen_bits, int first, int last)
++{
++	if (seen_bits == (PACKDIR_FILE_PACK|PACKDIR_FILE_IDX))
++		return;
++
++	for (; first < last; first++)
++		report_garbage(seen_bits, list->items[first].string);
 +}
 +
- static void odb_source_packed_free(struct odb_source *source)
- {
- 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
-@@ -42,6 +57,7 @@ struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
- 	strmap_init(&packed->packs_by_path);
++static void report_pack_garbage(struct string_list *list)
++{
++	int baselen = -1, first = 0, seen_bits = 0;
++
++	if (!report_garbage)
++		return;
++
++	string_list_sort(list);
++
++	for (size_t i = 0; i < list->nr; i++) {
++		const char *path = list->items[i].string;
++		if (baselen != -1 &&
++		    strncmp(path, list->items[first].string, baselen)) {
++			report_helper(list, seen_bits, first, i);
++			baselen = -1;
++			seen_bits = 0;
++		}
++		if (baselen == -1) {
++			const char *dot = strrchr(path, '.');
++			if (!dot) {
++				report_garbage(PACKDIR_FILE_GARBAGE, path);
++				continue;
++			}
++			baselen = dot - path + 1;
++			first = i;
++		}
++		if (!strcmp(path + baselen, "pack"))
++			seen_bits |= 1;
++		else if (!strcmp(path + baselen, "idx"))
++			seen_bits |= 2;
++	}
++	report_helper(list, seen_bits, first, list->nr);
++}
++
++struct prepare_pack_data {
++	struct odb_source *source;
++	struct string_list *garbage;
++};
++
++static void prepare_pack(const char *full_name, size_t full_name_len,
++			 const char *file_name, void *_data)
++{
++	struct prepare_pack_data *data = (struct prepare_pack_data *)_data;
++	struct odb_source_files *files = odb_source_files_downcast(data->source);
++	size_t base_len = full_name_len;
++
++	if (strip_suffix_mem(full_name, &base_len, ".idx") &&
++	    !(files->packed->midx &&
++	      midx_contains_pack(files->packed->midx, file_name))) {
++		char *trimmed_path = xstrndup(full_name, full_name_len);
++		packfile_store_load_pack(files->packed,
++					 trimmed_path, data->source->local);
++		free(trimmed_path);
++	}
++
++	if (!report_garbage)
++		return;
++
++	if (!strcmp(file_name, "multi-pack-index") ||
++	    !strcmp(file_name, "multi-pack-index.d"))
++		return;
++	if (starts_with(file_name, "multi-pack-index") &&
++	    (ends_with(file_name, ".bitmap") || ends_with(file_name, ".rev")))
++		return;
++	if (ends_with(file_name, ".idx") ||
++	    ends_with(file_name, ".rev") ||
++	    ends_with(file_name, ".pack") ||
++	    ends_with(file_name, ".bitmap") ||
++	    ends_with(file_name, ".keep") ||
++	    ends_with(file_name, ".promisor") ||
++	    ends_with(file_name, ".mtimes"))
++		string_list_append(data->garbage, full_name);
++	else
++		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
++}
++
++static void prepare_packed_git_one(struct odb_source *source)
++{
++	struct string_list garbage = STRING_LIST_INIT_DUP;
++	struct prepare_pack_data data = {
++		.source = source,
++		.garbage = &garbage,
++	};
++
++	for_each_file_in_pack_dir(source->path, prepare_pack, &data);
++
++	report_pack_garbage(data.garbage);
++	string_list_clear(data.garbage, 0);
++}
++
++DEFINE_LIST_SORT(static, sort_packs, struct packfile_list_entry, next);
++
++static int sort_pack(const struct packfile_list_entry *a,
++		     const struct packfile_list_entry *b)
++{
++	int st;
++
++	/*
++	 * Local packs tend to contain objects specific to our
++	 * variant of the project than remote ones.  In addition,
++	 * remote ones could be on a network mounted filesystem.
++	 * Favor local ones for these reasons.
++	 */
++	st = a->pack->pack_local - b->pack->pack_local;
++	if (st)
++		return -st;
++
++	/*
++	 * Younger packs tend to contain more recent objects,
++	 * and more recent objects tend to get accessed more
++	 * often.
++	 */
++	if (a->pack->mtime < b->pack->mtime)
++		return 1;
++	else if (a->pack->mtime == b->pack->mtime)
++		return 0;
++	return -1;
++}
++
++void odb_source_packed_prepare(struct odb_source_packed *source)
++{
++	if (source->initialized)
++		return;
++
++	prepare_multi_pack_index_one(&source->files->base);
++	prepare_packed_git_one(&source->files->base);
++
++	sort_packs(&source->packs.head, sort_pack);
++	for (struct packfile_list_entry *e = source->packs.head; e; e = e->next)
++		if (!e->next)
++			source->packs.tail = e;
++
++	source->initialized = true;
++}
++
++static void odb_source_packed_reprepare(struct odb_source *source)
++{
++	struct odb_source_packed *packed = odb_source_packed_downcast(source);
++	packed->initialized = false;
++	odb_source_packed_prepare(packed);
++}
++
+ static void odb_source_packed_reparent(const char *name UNUSED,
+ 				       const char *old_cwd,
+ 				       const char *new_cwd,
+@@ -58,6 +214,7 @@ struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
  
  	packed->base.free = odb_source_packed_free;
-+	packed->base.close = odb_source_packed_close;
+ 	packed->base.close = odb_source_packed_close;
++	packed->base.reprepare = odb_source_packed_reprepare;
  
  	if (!is_absolute_path(parent->base.path))
  		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
-diff --git a/packfile.c b/packfile.c
-index 8fefc4358e..3cff3b8ffa 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2832,18 +2832,6 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
- 	return 0;
+diff --git a/odb/source-packed.h b/odb/source-packed.h
+index abe3310069..6645f4f943 100644
+--- a/odb/source-packed.h
++++ b/odb/source-packed.h
+@@ -89,4 +89,13 @@ static inline struct odb_source_packed *odb_source_packed_downcast(struct odb_so
+ 	return container_of(source, struct odb_source_packed, base);
  }
  
--void packfile_store_close(struct odb_source_packed *store)
++/*
++ * Prepare the source by loading packfiles and multi-pack indices for
++ * all alternates. This becomes a no-op if the source is already prepared.
++ *
++ * It shouldn't typically be necessary to call this function directly, as
++ * functions that access the source know to prepare it.
++ */
++void odb_source_packed_prepare(struct odb_source_packed *source);
++
+ #endif
+diff --git a/packfile.c b/packfile.c
+index 3cff3b8ffa..902b7f70f2 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -8,7 +8,6 @@
+ #include "pack.h"
+ #include "repository.h"
+ #include "dir.h"
+-#include "mergesort.h"
+ #include "packfile.h"
+ #include "delta.h"
+ #include "hash-lookup.h"
+@@ -895,52 +894,6 @@ struct packed_git *packfile_store_load_pack(struct odb_source_packed *store,
+ 	return p;
+ }
+ 
+-void (*report_garbage)(unsigned seen_bits, const char *path);
+-
+-static void report_helper(const struct string_list *list,
+-			  int seen_bits, int first, int last)
 -{
--	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next) {
--		if (e->pack->do_not_close)
--			BUG("want to close pack marked 'do-not-close'");
--		close_pack(e->pack);
--	}
--	if (store->midx)
--		close_midx(store->midx);
--	store->midx = NULL;
+-	if (seen_bits == (PACKDIR_FILE_PACK|PACKDIR_FILE_IDX))
+-		return;
+-
+-	for (; first < last; first++)
+-		report_garbage(seen_bits, list->items[first].string);
 -}
 -
- struct odb_packed_read_stream {
- 	struct odb_read_stream base;
- 	struct packed_git *pack;
+-static void report_pack_garbage(struct string_list *list)
+-{
+-	int i, baselen = -1, first = 0, seen_bits = 0;
+-
+-	if (!report_garbage)
+-		return;
+-
+-	string_list_sort(list);
+-
+-	for (i = 0; i < list->nr; i++) {
+-		const char *path = list->items[i].string;
+-		if (baselen != -1 &&
+-		    strncmp(path, list->items[first].string, baselen)) {
+-			report_helper(list, seen_bits, first, i);
+-			baselen = -1;
+-			seen_bits = 0;
+-		}
+-		if (baselen == -1) {
+-			const char *dot = strrchr(path, '.');
+-			if (!dot) {
+-				report_garbage(PACKDIR_FILE_GARBAGE, path);
+-				continue;
+-			}
+-			baselen = dot - path + 1;
+-			first = i;
+-		}
+-		if (!strcmp(path + baselen, "pack"))
+-			seen_bits |= 1;
+-		else if (!strcmp(path + baselen, "idx"))
+-			seen_bits |= 2;
+-	}
+-	report_helper(list, seen_bits, first, list->nr);
+-}
+-
+ void for_each_file_in_pack_subdir(const char *objdir,
+ 				  const char *subdir,
+ 				  each_file_in_pack_dir_fn fn,
+@@ -983,116 +936,9 @@ void for_each_file_in_pack_dir(const char *objdir,
+ 	for_each_file_in_pack_subdir(objdir, NULL, fn, data);
+ }
+ 
+-struct prepare_pack_data {
+-	struct odb_source *source;
+-	struct string_list *garbage;
+-};
+-
+-static void prepare_pack(const char *full_name, size_t full_name_len,
+-			 const char *file_name, void *_data)
+-{
+-	struct prepare_pack_data *data = (struct prepare_pack_data *)_data;
+-	struct odb_source_files *files = odb_source_files_downcast(data->source);
+-	size_t base_len = full_name_len;
+-
+-	if (strip_suffix_mem(full_name, &base_len, ".idx") &&
+-	    !(files->packed->midx &&
+-	      midx_contains_pack(files->packed->midx, file_name))) {
+-		char *trimmed_path = xstrndup(full_name, full_name_len);
+-		packfile_store_load_pack(files->packed,
+-					 trimmed_path, data->source->local);
+-		free(trimmed_path);
+-	}
+-
+-	if (!report_garbage)
+-		return;
+-
+-	if (!strcmp(file_name, "multi-pack-index") ||
+-	    !strcmp(file_name, "multi-pack-index.d"))
+-		return;
+-	if (starts_with(file_name, "multi-pack-index") &&
+-	    (ends_with(file_name, ".bitmap") || ends_with(file_name, ".rev")))
+-		return;
+-	if (ends_with(file_name, ".idx") ||
+-	    ends_with(file_name, ".rev") ||
+-	    ends_with(file_name, ".pack") ||
+-	    ends_with(file_name, ".bitmap") ||
+-	    ends_with(file_name, ".keep") ||
+-	    ends_with(file_name, ".promisor") ||
+-	    ends_with(file_name, ".mtimes"))
+-		string_list_append(data->garbage, full_name);
+-	else
+-		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
+-}
+-
+-static void prepare_packed_git_one(struct odb_source *source)
+-{
+-	struct string_list garbage = STRING_LIST_INIT_DUP;
+-	struct prepare_pack_data data = {
+-		.source = source,
+-		.garbage = &garbage,
+-	};
+-
+-	for_each_file_in_pack_dir(source->path, prepare_pack, &data);
+-
+-	report_pack_garbage(data.garbage);
+-	string_list_clear(data.garbage, 0);
+-}
+-
+-DEFINE_LIST_SORT(static, sort_packs, struct packfile_list_entry, next);
+-
+-static int sort_pack(const struct packfile_list_entry *a,
+-		     const struct packfile_list_entry *b)
+-{
+-	int st;
+-
+-	/*
+-	 * Local packs tend to contain objects specific to our
+-	 * variant of the project than remote ones.  In addition,
+-	 * remote ones could be on a network mounted filesystem.
+-	 * Favor local ones for these reasons.
+-	 */
+-	st = a->pack->pack_local - b->pack->pack_local;
+-	if (st)
+-		return -st;
+-
+-	/*
+-	 * Younger packs tend to contain more recent objects,
+-	 * and more recent objects tend to get accessed more
+-	 * often.
+-	 */
+-	if (a->pack->mtime < b->pack->mtime)
+-		return 1;
+-	else if (a->pack->mtime == b->pack->mtime)
+-		return 0;
+-	return -1;
+-}
+-
+-void packfile_store_prepare(struct odb_source_packed *store)
+-{
+-	if (store->initialized)
+-		return;
+-
+-	prepare_multi_pack_index_one(&store->files->base);
+-	prepare_packed_git_one(&store->files->base);
+-
+-	sort_packs(&store->packs.head, sort_pack);
+-	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next)
+-		if (!e->next)
+-			store->packs.tail = e;
+-
+-	store->initialized = true;
+-}
+-
+-void packfile_store_reprepare(struct odb_source_packed *store)
+-{
+-	store->initialized = false;
+-	packfile_store_prepare(store);
+-}
+-
+ struct packfile_list_entry *packfile_store_get_packs(struct odb_source_packed *store)
+ {
+-	packfile_store_prepare(store);
++	odb_source_packed_prepare(store);
+ 
+ 	if (store->midx) {
+ 		struct multi_pack_index *m = store->midx;
+@@ -2166,7 +2012,7 @@ static int find_pack_entry(struct odb_source_packed *store,
+ {
+ 	struct packfile_list_entry *l;
+ 
+-	packfile_store_prepare(store);
++	odb_source_packed_prepare(store);
+ 	if (store->midx && fill_midx_entry(store->midx, oid, e))
+ 		return 1;
+ 
+@@ -2213,7 +2059,7 @@ int packfile_store_read_object_info(struct odb_source_packed *store,
+ 	 * been added since the last time we have prepared the packfile store.
+ 	 */
+ 	if (flags & OBJECT_INFO_SECOND_READ)
+-		packfile_store_reprepare(store);
++		odb_source_reprepare(&store->base);
+ 
+ 	if (!find_pack_entry(store, oid, &e))
+ 		return 1;
 diff --git a/packfile.h b/packfile.h
-index d6814b564e..23af47f0c1 100644
+index 23af47f0c1..1bce805f74 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -67,12 +67,6 @@ void packfile_list_append(struct packfile_list *list, struct packed_git *pack);
+@@ -67,23 +67,6 @@ void packfile_list_append(struct packfile_list *list, struct packed_git *pack);
  struct packed_git *packfile_list_find_oid(struct packfile_list_entry *packs,
  					  const struct object_id *oid);
  
 -/*
-- * Close all packfiles associated with this store. The packfiles won't be
-- * free'd, so they can be re-opened at a later point in time.
+- * Prepare the packfile store by loading packfiles and multi-pack indices for
+- * all alternates. This becomes a no-op if the store is already prepared.
+- *
+- * It shouldn't typically be necessary to call this function directly, as
+- * functions that access the store know to prepare it.
 - */
--void packfile_store_close(struct odb_source_packed *store);
+-void packfile_store_prepare(struct odb_source_packed *store);
+-
+-/*
+- * Clear the packfile caches and try to look up any new packfiles that have
+- * appeared since last preparing the packfiles store.
+- *
+- * This function must be called under the `odb_read_lock()`.
+- */
+-void packfile_store_reprepare(struct odb_source_packed *store);
 -
  /*
-  * Prepare the packfile store by loading packfiles and multi-pack indices for
-  * all alternates. This becomes a no-op if the store is already prepared.
+  * Add the pack to the store so that contained objects become accessible via
+  * the store. This moves ownership into the store.
 
 -- 
 2.54.0.1064.gd145956f57.dirty
