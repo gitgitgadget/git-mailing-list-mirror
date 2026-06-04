@@ -1,175 +1,124 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0622223707
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC8E3CC9E8
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 07:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780557370; cv=pass; b=auGltfJzjM+6gsVK5pIpKnz9wXiPquT400jxFPWSp47ai1hT4+e62b06xJMY8eRuOkI6bUxn4E3bBN8VJX1FFu/I9BqNX/6Oo7nTlADOBBYNaOCFM8kHZeM20o0q/gIoPCGmNO5FKriAcgDnrhxyMFWU0OLPlEa9jhEiI4EVWTo=
+	t=1780559137; cv=pass; b=Lt6d1sd3jCOSC5sjlls/4XRvPXe1leEOwp9kn+zhWQpLDAzNMRCsxGLsD9TmVLfAZILgWzQAnblDj+3SziqLiVBhF78lTosNQCXLgusnqnhVS2jdnetBFWvyua3O7+r1tW/304orL8QmPoEmU8GeAsb3Z3PZH1byOT6vdrGjUEo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780557370; c=relaxed/simple;
-	bh=1zCzfYnQ9ZGsMqT0Ywy3jthJ5fKaP8U8fHuDHc0AkJg=;
+	s=arc-20240116; t=1780559137; c=relaxed/simple;
+	bh=XifwBJJCAm1HhJlBQpvEaLJNNjXwTeEPIKfKCRKo8No=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ji0ku0ZDK0qz9gXQnJ/Qr8ieUzdsiwuSIlkmAVEwM5roOaBVLrRnBGZk6xM9z8C2+Y5fxn50I0gl1ZJF1Hm9DrtPnpNtWNHPwWe7igkF0vKuAZWjSXGlKTw7u1O9xdt6/4BeXp8+8jQJikSwFowDzc2f2gLxMb2wldet9gJk7Ds=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oWofECrr; arc=pass smtp.client-ip=209.85.218.48
+	 To:Cc:Content-Type; b=G+jh1gikosQfuPsHfkxmUUMFY5/bZBF6g4U6k91nKh4gCxewDAikvTyHqZmrwfdLXaQ0x8l4G24M1o3VsEOWy28PNNthE/DnyNcoYxCUPvCd4f4wg7/kexIh6h6PFxshPMGCgRG8ETirpROQ7gqgCLt6hQphWHriOe558xM8byU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sfUHTgzd; arc=pass smtp.client-ip=74.125.82.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oWofECrr"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-bec423a5265so53415366b.1
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 00:16:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780557367; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sfUHTgzd"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-137f3cb3f46so135851c88.0
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 00:45:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780559136; cv=none;
         d=google.com; s=arc-20240605;
-        b=ObitKGxLeKc0XQ2G5FMnz0aj15nzvFU6GMY7KCxmsG5pG8FscpBHqk0Xf2PzXmLusl
-         4vhQdPpXH4sqkvyVv8gNbPI8PsBbV2LcekIZuWle1h801LepheAhIuQh24UholgDh3Sj
-         tWme2ovqKYCoN7NGlIBrLww2mWEF+3xACCaSW2h8s+dUE0dNUmYFzapwLWJxdDyi+8/g
-         4fxM4qCvHk4U5PUBALzrHRHtb40kEhgjFFWs8/3IIPoy0247StSZZlmF6VlHe3gHFffH
-         fl4NeDXFOqbovkG/hnZaUrX2JAiXvlFMQG7g7IcYHm2voXLYUVaX1ciKhZBDX3A+lf7Q
-         ONlQ==
+        b=eygU6P8Z9Nph4CpM7Ckxpu4ULM90RzJ2aofmdss5y49o3WY3Sy1KxuWndX1zAf8gKX
+         zn1uxw3/dplVe6S8DGLStZsmx5r1Nm8yc3c1hWhUC8OhmF+s/au8YZw5SRuYr4OZVitt
+         zWAC9q1DcYBanOTjMGkixuV/rHaF+J7i/IXli/ydPMosR5XU6veh80tCG+JAsjy4/Ht8
+         uR2v7nySDOWUUt4f4uVBYagOn4kxiqoAxWEoZkTXEFGUc6F6h5eilTKimPULKaGXvCNU
+         T2ccYIS1aDyJKPBX6F8grRImHmvx5ZFGHIvYjjcfSGhnXU9O2t7zY0m+VzWIKrU85I8M
+         1Ojw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=DJvZra+h35SUC9rjQ2onRE+RGu5O5vzHKncjxoF/ZlE=;
-        fh=hqPUdSkFaPLeuhPdomw2XoNMtAcumK7PuHsfM0tI7aQ=;
-        b=UDlfQW22tSjo0wD1QynLZh8eblkVZmI3gbLgjEVF8RFxzqjmclp5ANO0tRp1vqiFGt
-         dYNZboe9MU+UpAnkYJUiTlbRaLkuAltV7RE5cNRUuspagUqQQfF2pu27w9KXiHID2KRW
-         yAjOgwUrJqkiL6jT2do72aRlYTUUWGWf+KzmvrrAR6/S4xcnYAiXgiQk7cB1uKbBWZB8
-         fHDMKDYS174+FioLO+y+9IyUCZbXHyu+P0f/kPVFolQygYE0Ks7/KWqY32kbYFMGbs9k
-         S+DzkvqRlPBcXLmc/rVnOh4WnZre1fTUC3KV8U+jPdBmquMOTdcW1sStYKbMJU9imEQ9
-         mdHQ==;
+        bh=w+3pZWho3zpkcIvRPWzTPkh+1QiyLKtr++6FuTu+1HE=;
+        fh=Y/d59sITq5949WwvU3zYdo8lHPNrZ3W0dZRkIOr+ZHY=;
+        b=NTeP39qhWEGmaCPEIo1h7nhwFZVI2nj7xMNcru5rXeVs2mxqWCbbRpYHmjY8mdiA37
+         lvndxBjajCbfDoMzC3G/Sd6uut0ymIjFVEvXlxHEIEM9sXxS2MGnT9qDImkRMkJ34PsO
+         kGjx2KePOcQUyls45NOxrtHFVJDOxQDYiqZPhvdFJ+vTQSBhSoi2L97iPr5G/hBdihi0
+         ZiPiNvBdvkdo0A0qq9uTh3szFwU0eerlq2p5z91f4nyg58K8rhW5HK/h4cWBKZfsjWMR
+         WxJ02w6pctF7oL0oK2cC3WHGRAp18dbdMEaJsSrdYn5kf5KDaAQKr0glOY25mH7r1/dP
+         LDkA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780557367; x=1781162167; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780559136; x=1781163936; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DJvZra+h35SUC9rjQ2onRE+RGu5O5vzHKncjxoF/ZlE=;
-        b=oWofECrrGQunXjuJTs7TLX3kzRRe6yBLiUvRKLOwZfmhJxGyjwCMYigzl3JWl45mCW
-         CxhHIqNKZ9sBXXj0zU/h2UNbWn30hgFojqvaUlUE7TyoRRy82NIzJbqBCIlsGYRmxZqd
-         Mw8qmWHEN5VYauxb0zg/0AqUUmLV/zvGFCoLlmf74K1k8RRwArGgxtgayguGtpnR0ZbS
-         3PcdA/hmJ9KBmvM4XJccrCdxYDnZHWjaU4cQ8/6NZvIz8+6G/JrcEjNnU7bunsCm4MKv
-         +OnQMQ++01TYuRqJrUZvBwf9HEimUh1CxBjulHAQNkynnljXjWYK9ZYjTOwJdBPLcbFM
-         0k+A==
+        bh=w+3pZWho3zpkcIvRPWzTPkh+1QiyLKtr++6FuTu+1HE=;
+        b=sfUHTgzdp1LYMTvJ8KBx13MAUvCVfZDlZv8nVl9cyVy3xv043birpvBbMkfSIxKA+/
+         EwDUg6mFCeH9bmengU8/4VynkEh2xJpmyMwD5SjlpvXePugdse5BJj19SH7gQGR1Uabb
+         f3C9bLApBU+ZOm1hZMaQb5reY/VCnqLEf8l4+okVI+AezCpPYJsZODDElOr3OK55Y6WW
+         UQObfaoGgxOvtPegcpnlQg+fLYOwUUDGNULAS0QVhB8t1PZMm67m7LsmBIsmXo56gtUp
+         zT1v2ugSN0navVqvjtlQ1/ozxD9ATxhZit6Rj+r/MXyBJWZBKWs2BsCKOq1pemF1H9gr
+         gfVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780557367; x=1781162167;
+        d=1e100.net; s=20251104; t=1780559136; x=1781163936;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DJvZra+h35SUC9rjQ2onRE+RGu5O5vzHKncjxoF/ZlE=;
-        b=kMQj3odkYWw7li5B20KQLqZrJ3CvZmyqS9ePVz1ZJUEZ0gGM2XpOUmuwOFEEJyJCvV
-         E3RQQB5BQZwE1AITkLH0RPjxFsiFns5Jeq4/NYEy6/TxxfNiMOdBpJ5QBpq9HF5K40rx
-         ozsEXd2kOT//0V4RdWIzdAIx/JCUhy6dgr6SM4A7cLDLZ7se0zFvDLq7907L+ngUToV6
-         riYiVzk8J/U1wjoMnh/G6FnlcGAD0UEd/42m0wS6+b4Xn8gejLhA/iYB5jlmHFmKw+CB
-         U6rwVitHdjLyI7JgRUp65ks2UJbxKIwBdq7ZxJjGhimAJ/SHiGP1zc1gmkmCdAayDMWt
-         o3yQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/dg0ZWOa6V8EldfX/YMU5/Noe/Fkf2BSgTteblnL5ORrOGXGjklcGowyd7/3//fULhf5s=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyxz58a6dkikd1HmZnJHAW6GrB2i49POGBAzvTC95+sw7b4MTDO
-	ZFxW0qtwoZj4dExK/KcI4I0pYzqx8OjB9fyCCSfRmUySyIMb+fLJzV/Tv++AVmmaQBYpf686dUj
-	s+yX7vHhMT5jIwdadSc5z5+w3PdsDg380505CoYQ=
-X-Gm-Gg: Acq92OF56xwjOBhiJAPYPJHj1xHU+8bTMIVS6x/+lMSipNHbZQYQXezUVXwapXd4Elo
-	Ze+/z+qopYudKFLZq8y21IbqxwOmTkkTPEaipqIPtG7qAeWvTpmy5lXxRSizgjn/9HZiTCOQ9sv
-	wpskyraJWsPCmA8aBmJCCckb5zfp6w9+VVANedjy3DMnJHDiIXeTQd3IwWT19HiXXRDKBDYKYHp
-	efqLCufUxIYBvwdzN7oTFMujrwMd+5ATXDTvfhcqJOeudFM5FikZo36Sd6bfFJ4yZTMAs6tjTlO
-	qt4VLhtYv4x2dSDsiA==
-X-Received: by 2002:a17:907:2807:b0:bed:83ee:922a with SMTP id
- a640c23a62f3a-bf0a89335abmr230609266b.16.1780557366716; Thu, 04 Jun 2026
- 00:16:06 -0700 (PDT)
+        bh=w+3pZWho3zpkcIvRPWzTPkh+1QiyLKtr++6FuTu+1HE=;
+        b=nB9IUTF8WoU2Z57SsD55PIj4ZXrmZX7QyZvCmWy3sbg7i6ZUv+ZL9js4evHhAedXDT
+         vDO+eDpNKbHlTKs6KsbKPotK5vqIdoKipAnT91TOFOM58aaNr6cK0ftZlbmKQ3X6j4uw
+         lxbBoWDtfne2VgkhLAVOxpLRkIdn24geseLCrD4qDaeE0kR1brdTzlVI3jTlviKeCwaV
+         afm6QnUgqOfWd3uANS5ymiIKZYthGMwAnue3/qWXlm4SRYX6x47cBY2Mu8OEQRYUIeqC
+         uUMiSpVtJ0oX6JJ/39GF0bbkkh1G7DzUimsN483yUr1Gf1hCzaGS6ecdENVjJj/tSJ3/
+         kriA==
+X-Gm-Message-State: AOJu0YwHXpsulZqd5vEfpkC8K++u6YyFZR+sA65e+RxO7cYbjYoUZ/nc
+	Z5/erZ6HE6G8w/KUDRxzU5s4k5E6siDYqIJDUhbH+aKf9AKqQ/+9vOHt/u7K5IMLJCmFG5/D7eN
+	E7qLqDXNexK0UWMaDe4Xha9FF0oFs07o=
+X-Gm-Gg: Acq92OGLugRdl715uFBFXKMiAswavHByF6xdS8fcJTRDqcgHxh043fJ+WGf5tNkuc3d
+	c0McOd598s1LlfCUqwsRL2Jnt+H/69i9hAmqbZcBapf7SL3ZAEHFAlCN/2c8RlILwYFtkxJGpXH
+	V04ccWyTHGBLOy/c6wMI9YZAmspBhIfxA5fJh6MPmjMhc9OgqpyIxvXoDvZQy+eazktFIgUJUYd
+	bqrcgpiFI3OvV8cb9KwG9BL7u8SqwE8wiyUSztjaYfm4A9q4Ylvk8Xr9VlzGATPJVRmqLHCqLLE
+	waCIpHU/BbxMUs+h9zefm6Nc5pzfx+SMP/TdxTjMLexNsqc+EpfH6HMYtWmemh2PHIjXPXvTN6o
+	U28c=
+X-Received: by 2002:a05:7022:2390:b0:137:e45d:7c4a with SMTP id
+ a92af1059eb24-137f6c13abfmr2812404c88.29.1780559135462; Thu, 04 Jun 2026
+ 00:45:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2314.git.git.1780269406949.gitgitgadget@gmail.com>
- <xmqqik7zqh4p.fsf@gitster.g> <CAHwyqnV6uh_yyO9FcUiXKfKPt15ojR3GOmRC06pW55f=KRu=Zw@mail.gmail.com>
-In-Reply-To: <CAHwyqnV6uh_yyO9FcUiXKfKPt15ojR3GOmRC06pW55f=KRu=Zw@mail.gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 4 Jun 2026 09:15:29 +0200
-X-Gm-Features: AVHnY4JrFPJSx73wpi0e7ui-IIwJva9z9vs4CwyGntgvVm5V3YgAtiVUIbhwtl4
-Message-ID: <CAHwyqnXScbCONOGcP1RY3Ho7t7Y3smOfOMOOVf7eNsrQRnSLJw@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: drop duplicate %.a from link recipes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
+In-Reply-To: <20260603111044.39116-1-r.siddharth.shrimali@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 4 Jun 2026 09:45:23 +0200
+X-Gm-Features: AVHnY4KMtiGE-DLDeWrlIQNtOkiJwpkZdhJEvayEGut9IFzICsLtg4EhxApTJhI
+Message-ID: <CAP8UFD2=3V6wRRJU0c1KJ-tGdz_F1DtjNd1aV9dWoO8LK5oeSQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] parse-options: introduce die_for_required_opt() helper
+To: Siddharth Shrimali <r.siddharth.shrimali@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, toon@iotcl.com, jn.avila@free.fr
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Maybe we can do this to get around the brittleness for all ~10 places:
-
-```
--LIBS =3D $(filter-out %.o, $(GITLIBS)) $(EXTLIBS)
-+LIBS =3D $(filter %.a,$^) $(filter-out $(filter %.a,$^),$(filter-out
-%.o,$(GITLIBS)) $(EXTLIBS))
-
- BASIC_CFLAGS +=3D $(COMPAT_CFLAGS)
- LIB_OBJS +=3D $(COMPAT_OBJS)
-@@ -3392,7 +3395,7 @@ perf: all
- t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
-$(UNIT_TEST_DIR)/test-lib.o
-
- t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
-- $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter
-%.o,$^) $(filter %.a,$^) $(LIBS)
-+ $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(=
-LIBS)
-
- check-sha1:: t/helper/test-tool$X
-  t/helper/test-sha1.sh
-@@ -4015,13 +4018,13 @@ fuzz-all: $(FUZZ_PROGRAMS)
- $(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
-  $(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
-  -Wl,--allow-multiple-definition \
-- $(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
-+ $(filter %.o,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
-
- $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o
-$(UNIT_TEST_OBJS) \
-  $(GITLIBS) GIT-LDFLAGS
-  $(call mkdir_p_parent_template)
-  $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
-- $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
-+ $(filter %.o,$^) $(LIBS)
-
- GIT-TEST-SUITES: FORCE
-  @FLAGS=3D'$(CLAR_TEST_SUITES)'; \
-```
-
-
-Harald
-
-On Thu, Jun 4, 2026 at 9:06=E2=80=AFAM Harald Nordgren <haraldnordgren@gmai=
-l.com> wrote:
+On Wed, Jun 3, 2026 at 1:11=E2=80=AFPM Siddharth Shrimali
+<r.siddharth.shrimali@gmail.com> wrote:
 >
-> On Thu, Jun 4, 2026 at 2:33=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> >
-> > "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > >  t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
-> > > -     $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter =
-%.o,$^) $(filter %.a,$^) $(LIBS)
-> > > +     $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter =
-%.o,$^) $(LIBS)
-> >
-> > I think the reason why the pattern to use only the .o files among
-> > the prerequisites and then use only the .a files among the same
-> > prerequisites (both filters $^) is used here is to make sure that the
-> > linker sees object files first before library archives, so that by
-> > the time its left-to-right scan sees the first library archive, all
-> > the missing symbols in the object files are known.  The above change
-> > depends on LIBS being a strict superset of all the library archive
-> > files ($GITLIBS in the current code, but that can be updated in the
-> > future) listed as prerequisites for the rule, but there is nothing to
-> > guarantee that, so it looks brittle.
-> >
-> > Exact same comment applies to the other two rules touched by this patch=
-.
+> Many built-in commands in Git manually check for option prerequisites
+> (i.e., option X relies on option Y being present) using explicit
+> conditional blocks and duplicated error message strings.
 >
-> Hmm, there are other constructs like this that rely on $(LIBS) being a
-> superset of the archives, so the three rules changed here align with
-> the trend rather than introduce a new trend.
+> This short series comes out of a discussion with Christian about
+> localization and code duplication. To address these issues, it
+> introduces a centralized API helper that handles simple option
+> prerequisites safely.
+
+I think it would be nice to mention around here that the new function
+was inspired by die_for_incompatible_opt2() and similar functions.
+
+> - Patch 1 introduces the `die_for_required_opt()` helper function
+>   inside parse-options.
 >
-> Not saying we shouldn't find a way to handle the overall brittleness.
+> - Patch 2 cleans up `builtin/add.c` as a proof-of-concept by migrating
+>   its manual prerequisite checks for '--ignore-missing' and
+>   '--pathspec-file-nul' over to the new helper.
 >
->
-> Harald
+> If this initial approach looks good, we can later extend the helper
+> to handle more complex multi-option dependencies.
+
+Yeah, for functions with more arguments to address cases like "option
+X requires both options Y and Z" or "option X requires either option Y
+or option Z", I think it's not clear yet what would be the most useful
+and what's the best name for such functions.
