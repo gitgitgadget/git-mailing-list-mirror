@@ -1,64 +1,68 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B495A399007
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 10:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094BD404894
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 10:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780570278; cv=none; b=hgwQRqaF0fBwMekIW5Xq274PhS45mvr+bWsjU6iVW9NwwaC8VGhMhkoyhM1r3yIpAkZYJ8aLf3CzIsbx0mVA5D5uuM6lE4TZK/n4XDo7AfcX48Qh8vJhK6c5lOFOAsogJgMpalrB78F8IvH6zACTL+SwAKDgt/166+hak0k0/sg=
+	t=1780570279; cv=none; b=cR1hLwZArfH4M4eb4GCUPQTaQi1oshWXsVYzwe801o3X4NDt6hgzvUYTumdELNiUQGnGpIVlFynCA5bf85FkMySs3SlBPuA+uf0WoxdK/QKbMPbQxPntFdjfZaAZZQ6ukK/EeO6oUcclu0XoSaAJC3kF7G35eM/lQED4D9NlN9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780570278; c=relaxed/simple;
-	bh=W6xOTXl2bFVirq8ugHFT/75EHhLK/GfxMKbnRXNDvzg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=URR4asuaZf94zTtmWSP/CeJyuHWUAuTzJCEAO6U9gDsM8BV/KsTTz9cQYhI+lU7IFREt2cUGa4Yxm6wk+7D6nK3PGSMbQ/6BU4okud18xcyaJV7RacOCdIXoz1Zg6J2sJf450+l+Fm5/AazuP0hmVxDWfJiphM1gDKIXnySD0cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g8MyXvhY; arc=none smtp.client-ip=74.125.82.176
+	s=arc-20240116; t=1780570279; c=relaxed/simple;
+	bh=WnEoVhKdHQ/cE6WTUBWLfIbkKPKNNLfYd2kXKsbH+Os=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=LR5w45tm+wZWT+6qou8QyLBaFlR2tDLQdWNFyKeOYMrKSNJybptFTmd1PVZhkjxR8lmC+6Im1MesdRxiNSNbtcv4tlb33+GxmZfD/SGqh9asuY2odomoV5W4Xar6uHSgdnWVM4EMe77YcV5IXa+pijC6JCbQfVvTs56WIRV7pxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dCOW7XQj; arc=none smtp.client-ip=74.125.82.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g8MyXvhY"
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-304545f5206so644955eec.0
-        for <git@vger.kernel.org>; Thu, 04 Jun 2026 03:51:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dCOW7XQj"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-137dd4cc208so293154c88.1
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 03:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780570276; x=1781175076; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780570277; x=1781175077; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Mtb08vPN8Q7D2/Glhku1lXRDYaYjPSPMSCkQoYTOAs=;
-        b=g8MyXvhYlCJBMpra7dOkpNPlRcPtOt1ZnXnCqY746NhvyHS46iF1Q5BX0V0Y4u44et
-         DAggf0fKS/nXfhff3NwuzdmiRoRPygNl/+2XYDkhOsaUWXnD1JA2hrcUGFynWVUQFeWh
-         Q0/CgJscEIUU7F2PENzP+Axd3I2Y1xUPr40gF5vOyKKO/xsEgd9wHr3AueOrL3Q4+Mmf
-         oN5j8nFr978hL2JodIeqKyDLIsraXxKulBfRnHsMiB39EZu4juhGi9opH1CsmN84lYC3
-         ysd/q73l9eVdYgNs5uHeNw6w4nx/N8tk995+SNFbV/jFnMpnOpDwgPw9BpUj92DDSSWO
-         +cEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780570276; x=1781175076;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4Mtb08vPN8Q7D2/Glhku1lXRDYaYjPSPMSCkQoYTOAs=;
-        b=PZZ6DfYhsm0iJefu7iw8A8a4vjIcomTVS3ROxKirZ6Z1LhHjT8gMctbQTX2FhT9uaL
-         6FGDBi6cxUU+LbJUOCfyfkf5w3HdqkeOJ5rFelRiUC0+LJ9+oKITTJGWJwZv+UAZV5ei
-         5wawqMHuoHXclCoHGExqb95u0AqDyVt9dNugIGiCCtoKULiSu5eGxA6QSY/MaXwpBcru
-         3IJwlVakvTs+9EmBYpiCSn33qV6AR+1SbEq8zUdcd8pr5LBgeCOJhxvkuD1Kr7qzPvGb
-         4QFg43fEOlSENhhsSaF9MtpLfPsvwvBDiQHlk6UHOLa5WrNiNhTQiNvpSAt/q+3cww2K
-         3oFQ==
-X-Gm-Message-State: AOJu0YzcFrweaDEQG0MOIdlRAZ9HEcicGzsVZSSe4irU2SdHG/wueFrI
-	eBA19bw09UkonyUNm4QzgpTCKI3RQKsXLH/8kpO2erhkMeKVUxcMU8RG//s2qg==
-X-Gm-Gg: Acq92OFYldZleqvWgBZG2bBiTjEV2EKUBjX98HEbEFw6xyPoHIcuYvsA6ujYGMqbfcA
-	XRqx+7T5uTl68vusbo0hL10czqw3JidX3peZm4qzHTOjEdMJD+OkUlUQWW/M1zKB01UZ3srMlCs
-	nBDLJ6v+7yzQn5tubqmnVgUcRLkU/iYlgafiAiXnXAGdm5WhXLUJLsTxbsfVOtUxkagk0mKtDGi
-	UdNd/TgEPe7HUgGnh2c/MBgtUCYrdytou7dxqL6WB7U8aAQlXNkwYVI3ay1Bi4Sf0egvapA9gSQ
-	Ofl+QOCuoZkas8xgxLizPy8Lb8mKQVt5uHKXZMrpm+rMx1+eJlWQwDosJ4KNQAezeR/hVSkmzqv
-	i3e5rzXwRZtHHudw4Gcihn4zwqQ+ukB/8XOC0Bug5TTusUQqrUPWIBVJKpUGBp0FdZR1P+64N3w
-	K7ncLSZrerOTLLwYdQpzAhi857x5NqDugntroviKQYMvfQUXLg
-X-Received: by 2002:a05:7300:dc92:b0:304:b93a:511a with SMTP id 5a478bee46e88-3074fbd5411mr2991720eec.28.1780570275636;
-        Thu, 04 Jun 2026 03:51:15 -0700 (PDT)
+        bh=R5tb55NGXEaGd7UOI8fS5Axn6KcOse7pomwuDp6jXLk=;
+        b=dCOW7XQj9yPUoqTwC5cz9EKJfcKsDp7/jyvgqBGS6rf5RiuQ1UEcEMsnW9+Z2TzN0U
+         pF4SLiNoJfv8iuiwu+9QM1DQcJgjWLXIwV1NonvN7BxUJgGiR9JkZAOb2ycExPP4UhOA
+         DZW0ZSplFzUOKjp4b8OH0AhUmu0At7Hjjqmj4UQn9YG4BnurBn80M+Pm/lK73c4XIwNy
+         4x8rMn58OouFGlrYIu3MTiNpVZ8omwz4jHPr4DKRX9YKcCfNLhyJr8/kwSpzvzkdudsQ
+         D9k+7GVSGRSoj/kKOvvvMAl9KOpVsgmLybLm7fKUiferx6/D8qgUKqKazHFFVIImPEPq
+         w5yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780570277; x=1781175077;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=R5tb55NGXEaGd7UOI8fS5Axn6KcOse7pomwuDp6jXLk=;
+        b=O1j31NnROIa4t6L40lGZ2zeBasjSdn6Eng6BNojN7Z3mMQ7s/SF1tXmBLNlDW0oRdd
+         2lN2knDgoOvN8FfNY0PYbEhG0JPpYtqna+1d3BL5iJrmzylp/oRKKT2M3MBV1mrCsDNO
+         73RrQLYeoz6Ts55qmW3eHxpcyN1oR2oXsol1dsKWH1T7VVUuiDAA21D4ZO6GdSMJo7cV
+         2HutqPrSi6EEHlN6k5bSrwaYu4kXpZcRkTt4tkJaePIxptqCbm8xmVXzcHYhQTUhLBmW
+         NQEWRVcl+t9HkKbureu/aNHc4NyCmj0R2euA6bzd7fBWkfksdzHM6hegvKLPRDmKE/XD
+         3tiQ==
+X-Gm-Message-State: AOJu0YwEgsMNLLlDbNtDPnTAEN8GCdIA6XXAc482N2G3Po6xCV+Yr+0f
+	rJ61SGf7VWEdBH/J2CJLML31UCbrn+owu8tTE4+u8eJJGLVa7uQOwLNBtqqwxA==
+X-Gm-Gg: Acq92OG3nw7VvQLZFfgFbZt6LniyqT8Yygg3xO6xj2kLfzPZvajVk82F5geVNbEZ5yw
+	vCXJwN+i6b+Rqn+cmTn6rrvgwOKo9E8KoXelD77pQRqjqS8SqBneOsDRfPGwwo8kBRvc05/GQXS
+	s1/xUmrgjlgs65bW9G0IR7N8TqMqHAtuFMGDsk9+mrmJw+FiCO78VdHUMutdg0CCuLl4r7qsytR
+	9tjZwni7Gnw+v81PG+tVsSbVQRSOnoWkN6gj1U7EZDJuVV4BA7f8xvjmnGVKvhaDwfRAdDpIpRP
+	vPSQPTFRjYY529MG04Y2nNw66tw3BVpORR/WUxhknWexaVYvPcCqh9VsLJcmp/pUbuEOST+7qkS
+	aGc7fQzmRPqlG3XItEFWLIlFkcJmSqozDw+oZDrnhQ2vL9bC8uLmSY/g0cz4vKrqqzdE1sXywwJ
+	3YxIPCEX39qSI9304IECbEoElwbFHBbuMwRRYZZt82MJIcWT0s
+X-Received: by 2002:a05:7022:b883:b0:138:e4:c4b5 with SMTP id a92af1059eb24-13800e4cd5cmr393184c88.17.1780570276921;
+        Thu, 04 Jun 2026 03:51:16 -0700 (PDT)
 Received: from [127.0.0.1] ([172.182.209.49])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074dba9d43sm4403453eec.10.2026.06.04.03.51.13
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df349d8sm4761135eec.22.2026.06.04.03.51.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 03:51:14 -0700 (PDT)
-Message-Id: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
+        Thu, 04 Jun 2026 03:51:16 -0700 (PDT)
+Message-Id: <de9fc5c4556609ed1a8d61ce5207dc1ebcfbfecf.1780570273.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
+References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 04 Jun 2026 10:51:05 +0000
-Subject: [PATCH 0/7] More work supporting objects larger than 4GB on Windows
+Date: Thu, 04 Jun 2026 10:51:06 +0000
+Subject: [PATCH 1/7] compat/msvc: use _chsize_s for ftruncate
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,240 +74,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Kristofer Karlsson <krka@spotify.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
     Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch series tries to address the problems pointed out by the expensive
-tests that now run in CI: t5608 and t7508 verify various aspects about
-objects larger than 4GB, which Git does not currently handle correctly when
-run on a platform where size_t is 64-bit and unsigned long is 32-bit.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Unfortunately, this conflicts heavily with ps/odb-source-loose. I rebased
-the branch onto seen and pushed the result to
-https://github.com/dscho/git/tree/refs/heads/objects-larger-than-4gb-on-windows-pt2-seen,
-to make it easier to resolve merge conflicts. Here is the relevant
-range-diff:
+On Windows, `unsigned long` and `long` are 32 bits even on 64-bit
+builds. The MSVC compatibility header has shimmed `ftruncate()` with
 
-1:  f3aeae983a ! 1:  62adeb9818 odb: use size_t for object_info.sizep and the size APIs
-    @@ builtin/log.c: static int show_blob_object(const struct object_id *oid, struct r
-     
-      ## builtin/ls-files.c ##
-     @@ builtin/ls-files.c: static void expand_objectsize(struct repository *repo, struct strbuf *line,
-    - 			      const enum object_type type, unsigned int padded)
-    - {
-    + 	size_t len;
-    + 
-      	if (type == OBJ_BLOB) {
-     -		unsigned long size;
-     +		size_t size;
-    @@ builtin/ls-files.c: static void expand_objectsize(struct repository *repo, struc
-     
-      ## builtin/ls-tree.c ##
-     @@ builtin/ls-tree.c: static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
-    - 			      const enum object_type type, unsigned int padded)
-    - {
-    + 	size_t len;
-    + 
-      	if (type == OBJ_BLOB) {
-     -		unsigned long size;
-     +		size_t size;
-    @@ notes.c: static void format_note(struct notes_tree *t, const struct object_id *o
-      	if (!t)
-     
-      ## object-file.c ##
-    -@@ object-file.c: static int parse_loose_header(const char *hdr, struct object_info *oi)
-    +@@ object-file.c: int parse_loose_header(const char *hdr, struct object_info *oi)
-      	}
-      
-      	if (oi->sizep)
-    @@ object-file.c: static int parse_loose_header(const char *hdr, struct object_info
-      
-      	/*
-      	 * The length must be followed by a zero byte
-    -@@ object-file.c: static int read_object_info_from_path(struct odb_source *source,
-    - 	void *map = NULL;
-    - 	git_zstream stream, *stream_to_end = NULL;
-    - 	char hdr[MAX_HEADER_LEN];
-    --	unsigned long size_scratch;
-    -+	size_t size_scratch;
-    - 	enum object_type type_scratch;
-    - 	struct stat st;
-    - 
-     @@ object-file.c: int force_object_loose(struct odb_source *source,
-    - {
-    + 	struct odb_source_files *files = odb_source_files_downcast(source);
-      	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
-      	void *buf;
-     -	unsigned long len;
-    @@ object-file.c: int read_loose_object(struct repository *repo,
-      
-      	fd = git_open(path);
-      	if (fd >= 0)
-    -@@ object-file.c: int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-    - 	struct object_info oi = OBJECT_INFO_INIT;
-    - 	struct odb_loose_read_stream *st;
-    - 	unsigned long mapsize;
-    --	unsigned long size_ul;
-    - 	void *mapped;
-    - 
-    - 	mapped = odb_source_loose_map_object(source, oid, &mapsize);
-    -@@ object-file.c: int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-    - 		goto error;
-    - 	}
-    - 
-    --	/*
-    --	 * object_info.sizep is unsigned long* (32-bit on Windows), but
-    --	 * st->base.size is size_t (64-bit). Use temporary variable.
-    --	 * Note: loose objects >4GB would still truncate here, but such
-    --	 * large loose objects are uncommon (they'd normally be packed).
-    --	 */
-    --	oi.sizep = &size_ul;
-    -+	oi.sizep = &st->base.size;
-    - 	oi.typep = &st->base.type;
-    - 
-    - 	if (parse_loose_header(st->hdr, &oi) < 0 || st->base.type < 0)
-    - 		goto error;
-    --	st->base.size = size_ul;
-    - 
-    - 	st->mapped = mapped;
-    - 	st->mapsize = mapsize;
-     
-      ## object.c ##
-     @@ object.c: struct object *parse_object_with_flags(struct repository *r,
-    @@ odb.h: int odb_read_object_info_extended(struct object_database *odb,
-      enum odb_has_object_flags {
-      	/* Retry packed storage after checking packed and loose storage */
-     
-    + ## odb/source-loose.c ##
-    +@@ odb/source-loose.c: static int read_object_info_from_path(struct odb_source_loose *loose,
-    + 	void *map = NULL;
-    + 	git_zstream stream, *stream_to_end = NULL;
-    + 	char hdr[MAX_HEADER_LEN];
-    +-	unsigned long size_scratch;
-    ++	size_t size_scratch;
-    + 	enum object_type type_scratch;
-    + 	struct stat st;
-    + 
-    +@@ odb/source-loose.c: static int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-    + 	struct object_info oi = OBJECT_INFO_INIT;
-    + 	struct odb_loose_read_stream *st;
-    + 	unsigned long mapsize;
-    +-	unsigned long size_ul;
-    + 	void *mapped;
-    + 
-    + 	mapped = odb_source_loose_map_object(loose, oid, &mapsize);
-    +@@ odb/source-loose.c: static int odb_source_loose_read_object_stream(struct odb_read_stream **out,
-    + 		goto error;
-    + 	}
-    + 
-    +-	/*
-    +-	 * object_info.sizep is unsigned long* (32-bit on Windows), but
-    +-	 * st->base.size is size_t (64-bit). Use temporary variable.
-    +-	 * Note: loose objects >4GB would still truncate here, but such
-    +-	 * large loose objects are uncommon (they'd normally be packed).
-    +-	 */
-    +-	oi.sizep = &size_ul;
-    ++	oi.sizep = &st->base.size;
-    + 	oi.typep = &st->base.type;
-    + 
-    + 	if (parse_loose_header(st->hdr, &oi) < 0 || st->base.type < 0)
-    + 		goto error;
-    +-	st->base.size = size_ul;
-    + 
-    + 	st->mapped = mapped;
-    + 	st->mapsize = mapsize;
-    +
-      ## odb/streaming.c ##
-     @@ odb/streaming.c: static int open_istream_incore(struct odb_read_stream **out,
-      		.base.read = read_istream_incore,
+	#define ftruncate _chsize
 
+ever since `compat/msvc-posix.h` was introduced. `_chsize()` takes a
+32-bit `long` for the new length, which silently truncates files (and
+the requested size) to 2 GiB. That is enough to make t7508 test 126
+"git add fails gracefully with 4 GiB and 8 GiB files" fail under
+MSVC: `test-tool truncate` creates a sparse 4 GiB or 8 GiB file via
+the shimmed `ftruncate()`, and the test never gets off the ground.
 
-Johannes Schindelin (7):
-  compat/msvc: use _chsize_s for ftruncate
-  patch-delta: use size_t for sizes
-  pack-objects(check_pack_inflate()): use size_t instead of unsigned
-    long
-  packfile: widen unpack_entry()'s size out-parameter to size_t
-  pack-objects: use size_t for in-core object sizes
-  packfile,delta: drop the `cast_size_t_to_ulong()` wrappers
-  odb: use size_t for object_info.sizep and the size APIs
+`_chsize_s()` is the modern replacement, accepts a 64-bit `__int64`
+length, and is the only sensible target on Windows. The catch is that
+it does not follow the POSIX `-1` + `errno` convention: it returns
+`0` on success and an errno value (a small positive integer) on
+failure. A plain `#define ftruncate _chsize_s` would therefore
+silently break callers that test the return value as `< 0` or against
+`-1`, of which there are several: `http.c`, `parallel-checkout.c`,
+and `t/helper/test-truncate.c` among them.
 
- apply.c                       |  8 ++--
- archive.c                     |  4 +-
- attr.c                        |  2 +-
- bisect.c                      |  2 +-
- blame.c                       | 15 +++++--
- builtin/cat-file.c            | 39 ++++++++++++-------
- builtin/difftool.c            |  2 +-
- builtin/fast-export.c         |  7 +++-
- builtin/fast-import.c         | 29 ++++++++++----
- builtin/fsck.c                |  2 +-
- builtin/grep.c                | 12 +++---
- builtin/index-pack.c          | 10 ++---
- builtin/log.c                 |  2 +-
- builtin/ls-files.c            |  2 +-
- builtin/ls-tree.c             |  4 +-
- builtin/merge-tree.c          |  6 +--
- builtin/mktag.c               |  2 +-
- builtin/notes.c               |  6 +--
- builtin/pack-objects.c        | 73 +++++++++++++++++++++--------------
- builtin/repo.c                |  4 +-
- builtin/tag.c                 |  4 +-
- builtin/unpack-file.c         |  2 +-
- builtin/unpack-objects.c      |  8 ++--
- bundle.c                      |  2 +-
- combine-diff.c                |  4 +-
- commit.c                      | 10 ++---
- compat/msvc-posix.h           | 24 +++++++++++-
- config.c                      |  2 +-
- delta.h                       | 20 +++-------
- diff.c                        |  5 ++-
- dir.c                         |  2 +-
- entry.c                       |  4 +-
- fmt-merge-msg.c               |  4 +-
- fsck.c                        |  2 +-
- grep.c                        |  4 +-
- http-push.c                   |  2 +-
- list-objects-filter.c         |  2 +-
- mailmap.c                     |  2 +-
- match-trees.c                 |  4 +-
- merge-blobs.c                 |  6 +--
- merge-blobs.h                 |  2 +-
- merge-ort.c                   |  2 +-
- notes-cache.c                 |  2 +-
- notes-merge.c                 |  2 +-
- notes.c                       |  8 ++--
- object-file.c                 | 18 +++------
- object.c                      |  2 +-
- odb.c                         | 12 +++---
- odb.h                         | 10 ++---
- odb/streaming.c               | 13 +------
- pack-bitmap.c                 |  4 +-
- pack-check.c                  |  5 +--
- pack-objects.h                |  2 +-
- packfile.c                    | 54 ++++++++++----------------
- packfile.h                    |  5 ++-
- patch-delta.c                 |  8 ++--
- path-walk.c                   |  2 +-
- protocol-caps.c               |  5 ++-
- read-cache.c                  |  6 +--
- ref-filter.c                  |  2 +-
- reflog.c                      |  2 +-
- rerere.c                      |  2 +-
- submodule-config.c            |  2 +-
- t/helper/test-delta.c         | 10 +++--
- t/helper/test-pack-deltas.c   |  3 +-
- t/helper/test-partial-clone.c |  2 +-
- t/unit-tests/u-odb-inmemory.c |  2 +-
- tag.c                         |  4 +-
- tree-walk.c                   | 10 +++--
- tree.c                        |  2 +-
- xdiff-interface.c             |  2 +-
- 71 files changed, 296 insertions(+), 253 deletions(-)
+Introduce a `static inline` wrapper that calls `_chsize_s()`, copies
+its errno return into `errno`, and translates the result to the
+familiar `-1` / `0` convention, then point `ftruncate` at the
+wrapper. Place the wrapper after `#include "mingw-posix.h"` so the
+`off_t` parameter resolves to the already-widened `off64_t` rather
+than the 32-bit `_off_t` from `compat/vcbuild/include/unistd.h`.
 
+MinGW is unaffected: its `ftruncate()` already takes `off_t` and
+routes through `ftruncate64()` when `_FILE_OFFSET_BITS=64`, which is
+the default in our build.
 
-base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2137%2Fdscho%2Fobjects-larger-than-4gb-on-windows-pt2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2137/dscho/objects-larger-than-4gb-on-windows-pt2-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2137
+Assisted-by: Opus 4.7
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/msvc-posix.h | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/compat/msvc-posix.h b/compat/msvc-posix.h
+index c500b8b4aa..7ce39b8d3f 100644
+--- a/compat/msvc-posix.h
++++ b/compat/msvc-posix.h
+@@ -16,7 +16,6 @@
+ #define __attribute__(x)
+ #define strcasecmp   _stricmp
+ #define strncasecmp  _strnicmp
+-#define ftruncate    _chsize
+ #define strtoull     _strtoui64
+ #define strtoll      _strtoi64
+ 
+@@ -30,4 +29,27 @@ typedef int sigset_t;
+ 
+ #include "mingw-posix.h"
+ 
++/*
++ * MSVC's `_chsize()` takes a 32-bit `long` and silently truncates files
++ * to 2 GiB. `_chsize_s()` accepts a 64-bit length but returns 0 on
++ * success or an errno value on failure, rather than the -1/errno
++ * convention POSIX `ftruncate()` callers expect. Wrap it so callers
++ * that test the return value as `< 0` or against `-1` keep working.
++ *
++ * Note: this declaration must follow `#include "mingw-posix.h"` so
++ * `off_t` resolves to `off64_t` and the parameter type matches the
++ * underlying `_chsize_s()` width.
++ */
++static inline int msvc_ftruncate(int fd, off_t length)
++{
++	int err = _chsize_s(fd, length);
++
++	if (err) {
++		errno = err;
++		return -1;
++	}
++	return 0;
++}
++#define ftruncate msvc_ftruncate
++
+ #endif /* COMPAT_MSVC_POSIX_H */
 -- 
 gitgitgadget
+
