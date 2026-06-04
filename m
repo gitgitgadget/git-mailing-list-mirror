@@ -1,110 +1,103 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BED176238
-	for <git@vger.kernel.org>; Thu,  4 Jun 2026 16:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35914B8DE9
+	for <git@vger.kernel.org>; Thu,  4 Jun 2026 17:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780592166; cv=none; b=jbyAQ/ycr+u7pvUc7JLqYahxO/sHfaU4Ijw0vMW3A+KArdbqFInx/qbJZnxmZ3Lsqp6gNxmpCcaEdKB5GvPasI3NfSNOnsfIouXJR0TsVE6n+wbg12f8bMsQ2+wfkVSQCWnj4WCu7JtCYJ68ukMSIJXbKVhi1dwcZw6QMaXWLqs=
+	t=1780593316; cv=none; b=VMK+OUMCmRa+QwtNXsUK09kbXUIDpzKPSezkCULZ+MdDLTymRjyG8oktODC6YUWzsBzZdZdxkgzjyRDuLOnXZx6TlTpkVarmLPtJPKKulvbRLQdRylrCRCX3lYnu4OYiQ9kYxS16+86SNZR1OlEaxnPHrH7f10cuRTGKi7rWK8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780592166; c=relaxed/simple;
-	bh=jqMhnvtK0XSYe04VXklj79koDAToZ9fe+tE5Ik3ia5U=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zugubw+yNnEyyn1GDIE6A1cCzIcpTrz/+oni6MkwccsfW6MDeKLKZPbSh3aq05lI5EJhxcQmLrZ8n86ah8ozz1cwLJuDT11sxEgHYCm022BNIMxZAlv6LOaG2/70BN3f5IevGFirjUsUPGw6rgvncmxJz9FwtPHS8ELPbRqjT4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=S5fLehYk; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1780593316; c=relaxed/simple;
+	bh=2sHqsJkinbfMXjYoUkpAy1sJ+1CbWZV9DUOV004nkVU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=SPM2IGlioT6BcQ4AuBhU1Hbc01UMcH91jVhLveFljhdK/VwSFUzrXMjNf2t0gjrrfmnYygguomAoCL0ujQFYltilS/nH6G72Cz6oVpO/S9i9icUTG6lMFLDy2o5YR565tyJs7yuRhPR0N76suZt7A9jnIlwKh4DaD616OlYpud8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pqRkjHSG; arc=none smtp.client-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="S5fLehYk"
-Received: from smtp-03.utu.fi (smtp-03.utu.fi [130.232.207.30])
-	by fortymile.utu.fi  with ESMTPS id 654Gtwmo017251-654Gtwmq017251
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 4 Jun 2026 19:55:58 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-03.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wVBMM-0036Fn-2Z;
-	Thu, 04 Jun 2026 19:55:58 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 4 Jun
- 2026 19:55:57 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 32dbd3aa;
-	Thu, 4 Jun 2026 16:55:57 +0000 (UTC)
-Date: Thu, 4 Jun 2026 19:55:57 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-CC: <git@vger.kernel.org>
-Subject: Re: [PATCH] docs: fix typos
-Message-ID: <20260604165557.MWQuu%taahol@utu.fi>
-In-Reply-To: <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
-References: <20260604131457.19215-1-taahol@utu.fi>
- <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pqRkjHSG"
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-304ddfcf72cso1017608eec.0
+        for <git@vger.kernel.org>; Thu, 04 Jun 2026 10:15:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780593315; x=1781198115; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UhpzL3WT17mFlrK1z9Olna0IafaVycfEXZup1rxxTIM=;
+        b=pqRkjHSGaeFUqFLUQs9H+6M942tek6pL4Bk5Bf2AAzMty5MHU+4bo/Mjv7un+/TyVK
+         IFZ6FnJcKOD0+ivt+2yuuL42Q+yUyD309Fnz7kAsr2zQsdwoXEy3lGS1vUou2N2KufxY
+         qhymqD1RlcDL8knH7F13NwkY36gBOqHiAMkZqqalwLSpHsJvCDxdo37JOVYi1wXw/Vf9
+         k+0KykTqmNSelJG4ksmlkJaJiSlvNFoGkS3+W2qtrWlwD2XiX3gbdz+gm+hPv2MlYf4K
+         85nDZ9PbaHonEaqzn7dRVDJMduUTx3qGKEkZk7ABbwrpArKJ+PeUtkRjIjf6Cf82ZtNc
+         EyGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780593315; x=1781198115;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UhpzL3WT17mFlrK1z9Olna0IafaVycfEXZup1rxxTIM=;
+        b=BXAt7UrwvkrSokL/EIchfMnK77lK8J54wkjcZuSyG0pUOBgr4+b0Zp2Zg/2yJ7a5iW
+         peFm965Ym/198/iX922i6vFmn90QMXYyqqa3XyQEBabGc69k8X/yG/ZR0NWcIH1cEDzo
+         s3Eb/Yalg10e2ucf6TBbIOVX5E/hNgQSSs7OSE6GmnvTOJ0+rootIpPDy4ebkm0o7Gw0
+         s9aKLojg5B1pziYRUeAE2HXm/G1iCdrHhUCb7lKxbEk5L97C163S06tnwsuP6Ax1IFJA
+         dTlxXLkNAGn4bYariGbbMS+gSH748QVGnqSKKsAVId/dRRHPDSSQRVSl8z1xwoK9MNuE
+         anxw==
+X-Gm-Message-State: AOJu0Yw6g1kAsG7WmIXEBjDbtO9DJeEcG3a2xCx5Y1A6Zy9HcELDbCMX
+	6JgWwyS8KCzG8J9cRoaziATpzgxpDNoJyIke+k1ZwSiPMvFjCReq7hJWhnrKng==
+X-Gm-Gg: Acq92OGwLwAeaZ8X3Q+oXQRLyKxE6aOffFrH5F9lgWZblWSLOnkY46CByyYQF5wQogD
+	awH4Zl6LhQEmO6N+LxlLYxPQdbWIXfnZPJ1ZovdugrTqZHwqu1AjOgLcQ1mdg72KSYpKAxHQUyR
+	CNuU+whfcmKgNNjUiE9Pzl8bt7pRf8sUT1LRn1M9t+jQ0KIdqpQe+951e7zinoUCUYOPpUF56dN
+	Hzw8Bp9e9nWGAAa+BRg00AYINokvai+ooa8CRmaCoYu/KUGyC2yYcp9LJOhjQoieW35AR7nzMvK
+	Eqe6c7RQfFobfn5i+7npX45qvuXiGosiF8dBAcDJK17/EAtegwWCvTdoSAhJ/o5tawedTFba99o
+	GhJIpiyIgQlElXTfHk8Sb1qQxTr8ZNKseTkmhyCvIbOYmxU7P/UHEQn2QuQPpkjCKvwCv6mAqUr
+	HYloKz9IMH9Fds9hg/kEbdPt7Kn/D4zm1KRqkXgQ==
+X-Received: by 2002:a05:7300:320c:b0:2ea:5057:a331 with SMTP id 5a478bee46e88-3074fb67399mr5112812eec.21.1780593314637;
+        Thu, 04 Jun 2026 10:15:14 -0700 (PDT)
+Received: from [127.0.0.1] ([57.151.128.196])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074dcb98aasm5206864eec.12.2026.06.04.10.15.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jun 2026 10:15:14 -0700 (PDT)
+Message-Id: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 04 Jun 2026 17:15:06 +0000
+Subject: [PATCH 0/6] Support hashing objects larger than 4GB on Windows
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: ex19-04.utu.fi (130.232.247.44) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhbWkgDGgEbHAcODg0aAAkdDxsK
- CQMDKA4JGxwFCQEERgsHBUhYSFpIWVxIWVtYRlpbWkZaWF9GW1hIUEhYSFhIWkhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIW1pIAxoBGxwHDg4NGgAJHQ8b
- CgkDAygOCRscBQkBBEYLBwVIWA==
-X-FEAS-Client-IP: 130.232.207.30
-X-FE-Last-Public-Client-IP: 130.232.207.30
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=CyEnJgVNW5xQF41XLyZIigQnvWtFpot9MFhMr/wM/fk=;
- b=S5fLehYki3aTXx+IRY469EWgHSxf6yHnmmHi2OAb9+lGLzJpURwKeuFGcHT1uQr1cIknaBH+ZqhK
-	sMcbmEMf/5RAacj+YeRVUWMu1HrjANKCfFkgZoYYwqOo6Ms+nLJdnm9pn1JnS/6cOyFcaWtt7IHp
-	4mUp0CEOMOZsCEWQjhUGA1xUmstXwhldHiJerlx0smei4DQW/4R9KGyfgjcV8a8bHHdQzkJnHoLU
-	JZSy47iWXVjs0B2kgtCNdhixVmq+JD6mUOuUFjcliDEht3560Dlb5xpNCJU9ge0KIAvsQN9vkYfU
-	0ruL7vKtmGzn/M5EzGsZIpGqAYjMpU7QlaaJDg==
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> wrote:
+Philip Oakley has contributed these patches ~4.5 years ago, and they have
+been carried in Git for Windows ever since.
 
-> On Thu, Jun 4, 2026, at 15:14, Tuomas Ahola wrote:
-> > [PATCH] docs: fix typos
-> 
-> The area `docs` isn’t correct since you are also changing comments in
-> source files.
-> 
-> `*` could be used (as in a wildcard). Other people have used other
-> things for “treewide” changes.
-> 
+Now that there are already other patch series flying around that try to
+address various aspects about >4GB objects (which aren't handled well by Git
+until it stops forcing unsigned long to do size_t's job), it seems a good
+time to upstream these patches, too, at long last.
 
-Hmm, I took that from the other typofix patches we have currently in `seen`.
+Philip Oakley (6):
+  hash-object: demonstrate a >4GB/LLP64 problem
+  object-file.c: use size_t for header lengths
+  hash algorithms: use size_t for section lengths
+  hash-object --stdin: verify that it works with >4GB/LLP64
+  hash-object: add another >4GB/LLP64 test case
+  hash-object: add a >4GB/LLP64 test case using filtered input
 
-> >   * The tm->tm_mday field has an additional logic of using negative values
-> >   * for date adjustments: -2 means yesterday and -3 the day before that,
-> > - * and so on.  The idea is to deref such adjustments until we are sure
-> > + * and so on.  The idea is to defer such adjustments until we are sure
-> 
-> “deref” could have been “dereference” but this must indeed mean
-> “defer”. We are putting off a decision until later.
-> 
+ object-file.c          | 18 +++++++++---------
+ object-file.h          |  4 ++--
+ sha1dc_git.c           |  3 +--
+ sha1dc_git.h           |  2 +-
+ t/t1007-hash-object.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 52 insertions(+), 14 deletions(-)
 
-Yes, that was my own typo.  I always meant "defer".
 
-> >
-> > base-commit: 94f057755b7941b321fd11fec1b2e3ca5313a4e0
-> > prerequisite-patch-id: f827362e061e199150f149dd36c67664c77406bc
-> > prerequisite-patch-id: e5b32f0b916ec86eab6631b9bd9bafd639191765
-> >   [...]
-> > prerequisite-patch-id: 083f554bc5e09ae54c6b545628196e11a9e90cea
-> 
-> Okay, these must be all the non-merge commits from the topics you
-> merged in.
-> 
-
-That's true.  Quite a list though.
-
-Thanks for review!
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2138%2Fdscho%2FPhilipOakley%2Fhashliteral_t-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2138/dscho/PhilipOakley/hashliteral_t-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2138
+-- 
+gitgitgadget
