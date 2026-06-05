@@ -1,163 +1,223 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015F42ECE93
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 13:57:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780667855; cv=none; b=pXnDgENpm1AC1H9/AZaR0gOm6BTuGjPue0sHlDINYVTOXEX0EedMn5YFZOCStTkOqFGMaEsDV2IKAY73y4ewEM+ue9yybLFHNjeTAgniqGtWFQdqLsWe0Lkt/EhyaSTuJCYPs1dG0+mbgeK8CpdzKLPmHrIGv7T3M1pZirGkU/8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780667855; c=relaxed/simple;
-	bh=gqnqWksUTxbbkmgZ1A0L6yDRpZQYOEUxG04AXeNvA5I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B3oNlmztfvmiBP1QuujhOLpshiROCDsVDsjx1oPd+0ze1FrS7QsaGSzNWWzHQNl0gosfCBNfvWTcfkC0raYqJeCEQ/CwwF5g+rfqo2dUCae725nO3MuVP0Jp9JiH5q6NsLwU6sSTLqwzUy/kAWbbHTyD/zGhPR4EoLM1kWrEAGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FDVvIKWm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GPjzfzLF; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F8040E8DC
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 14:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780668965; cv=pass; b=EGhrcXu836tkAfSxlihPPtCjZOPHa+5BhtvzC25ryy4MjLj8p1ZqzvZJDGXHyogoJSMblFhJesWWV9daojqQlDPBRrvWT3g9cBLM1QeseTw5ikqXwHfGXJ4cspm+a2HW+rUvZjhjpRk1BIMc86GVULk0gTJclAXFQXwWWaUcOG0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780668965; c=relaxed/simple;
+	bh=kdJOOx/EHNO57URLLDLHWm0vQkLN8Cp1LLpxMnIXVY4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q9l8Vt/wkX104DqZOFlAIffUWYS9bRoxvB0v4zXkBJ6EvSp8W/10EfSAEoTtNLDKsyOmTKKMol8ABUvRm/W7rIi3IYH9SS6DNZuf8ZN9W/JPitWphUE60ulDExqoI89Hgv0YIWm/8EZ3DHCAJ0EyoV35rYiAkbwm77zEPywSMD8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ki5mSifl; arc=pass smtp.client-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FDVvIKWm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GPjzfzLF"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 38442140011F;
-	Fri,  5 Jun 2026 09:57:33 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 05 Jun 2026 09:57:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780667853;
-	 x=1780754253; bh=9yXI5w98j3dTf/cEth9a2EdzEygqf69l/kmbx9QvRH8=; b=
-	FDVvIKWmhD4/CTr9EUzQMQGVlX5mxMcjWSJIdOgtKfqb5fF3yUx9zeR0Q994OZyV
-	jXDEKmsuWJnN7IyTmZ40a+Y/El27Nn9a7tq9A6XRvJf/gwNwjWPIK3Tzt4r9fwES
-	Ucb1dUS/CwK4J3Rpg6o57P2czK+esOW4exuCMeMhGh9RCp83rS5crAtbI3UBeKAn
-	dxb/kMKL3gI3Y3TKZq1MozlxswJ15OCUHZBghwmKnruRe4NN0Oz42jmSDsb4muW/
-	zlkZS/Q/7yNGLns8kblgQVMKPKZEKrlztBUczF0OVJV0h52/I3KlXqDFPs7LxEDy
-	1x61mxqNwduyTWpi+yYkCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780667853; x=
-	1780754253; bh=9yXI5w98j3dTf/cEth9a2EdzEygqf69l/kmbx9QvRH8=; b=G
-	PjzfzLFy34bKUC7/eHSLmiyYOSpvhJjjqXpGe9hxwvWKOUZ/X3ERxbKRtHyeIVbI
-	PAKFqwx1DRiiUBNr7ayKN7fsPeY9W7RfVNdm4CzeqT/1xSdJcbi3OfGYel6nzv/K
-	atl8eB+4TpbCMryPvDGROpQryldwhjrHYfk0O8C/ghqLdF0u9Jvll47zDr0M+3Ke
-	sdVacMJtv7Wu7phd6B/LCV4s/S+6arqQyipcj4cFTJTG2SCogO910SlXj5inaWkh
-	n9D+63al/5bUGmTUTwg6YBLwclDdqRKtpg8k3Cchc0EWMNuVbHW1ZOn+HZ3adkWy
-	JrRAJ7HmV4HPaWKQCM6bw==
-X-ME-Sender: <xms:zdUiarEdClM3Hdh_bXGSWCwwWbSRY99XJSZDd5RLyIDNDMyLVYd_hn8>
-    <xme:zdUiavOQVGrVq1COnenuvaikTjvnqLheB00Z0l06O7pzVeFE-bgrQvEQzmMBLwdtJ
-    cqU9Vl-Bq6T1PV1eTyTXictx7bmI8E3YZj7WgfLOLtBES5RtnzQYC0>
-X-ME-Received: <xmr:zdUialecUj1AV6sYfAR8brKy0WyePv338HiInYdB-wNVB-yNArYVzuWeRoFfb-DbjeNKC2ku5J-uR8XzpFQYNBPEU2Gq0QFOQhPNhCs>
-X-ME-Proxy-Cause: dmFkZTEshTDB0xHp2F/Uq366/w5rJjOI6K/MSiArZyQ776hH8HQuBnE8eGT1XosVjEiTY0
-    AiDyhWWgcaToJHp0jIVFiI3F7ZqdvH4x26UsKue1/KAAjMT5WKDq7sVOUS8/Z8elTCGSwY
-    EDQ0SOxQkhavbUwjS7NYzr5JolA4hraiYGV2fd/kKoQ1JHYkt/duWvSFP3yzTBmSS+GLWP
-    LMNy5w1Tg2On0SvtmjZWUtVJZ6JM5yn+/FGO1iSPS9hoBIE7HTFxBf/+sBdjBvhwzx/S5T
-    GaL0n45+/JqlMZUBOe8xSp07imubQwj3TANMg+fPiiHxLg9AjNw/AgdKZAepbw3EbcxNAh
-    kq1xaF136rXtOvPGWdExqtgnrMWcBy+k/qjHfD/Ph4vCgtst12icglUOWnFB0xzdNzuCy8
-    P4kgbA0c1C1ZS2kht5TEA2OrY8DqTfWlhBYsIwa4uf5e5C5ugga30s4YaSXRH7MPUNvl7c
-    1YpQxAmMdJWoDoesynAoObsCzL8rhj9dMeT583chBNIT1WI1bHwzPRQ4hiHv1XzCAF4/9V
-    I1NUqi8m9QCXYMRazLui1oKnsxwX/kCXTjmqrypn8MIdrq+gw+ThCB4a57ltdDANa3GUHL
-    Q5RlVSZ4UPjA+DzPBlTQ60zSyAptkOKgST42Gt95ShuMeLk7mmT5qfDd2e0g
-X-ME-Proxy: <xmx:zdUiakvld2zoBTbN68JZySwaFje0h_0iABQNVSzG4y9r53oVD4zMFg>
-    <xmx:zdUiaum_R4cR0nLPffzbMCbftCuQszhenHLshw6n0tH-pVbqwyIveQ>
-    <xmx:zdUiauxlwAwSxLikOC7yf7BkPQ4wtFAF09ZAOYVtmCvME59B9K_-Dg>
-    <xmx:zdUiaoO1Rj07Mq2J5QunV9kVW-MUhKJoUkCBmuASX5L7i8ygJDs67g>
-    <xmx:zdUiaj-zQoyo5W8uwPc3KosZ6qKxjr0Qq31ohCmu1N9dl0RWmvE_gK_M>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Jun 2026 09:57:31 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Siddharth Asthana <siddharthasthana31@gmail.com>,
-	git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 4/4] =?UTF-8?q?doc:=20replay:=20move=20=E2=80=9Cdefault?= =?UTF-8?q?=E2=80=9D=20to=20the=20right-hand=20side?=
-Date: Fri,  5 Jun 2026 15:56:02 +0200
-Message-ID: <V3_default_RHS.784@msgid.xyz>
-X-Mailer: git-send-email 2.54.0.22.g9e26862b904
-In-Reply-To: <V3_CV_doc_replay_config.780@msgid.xyz>
-References: <V2_CV_doc_replay_config.767@msgid.xyz> <V3_CV_doc_replay_config.780@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ki5mSifl"
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-304545f5206so2322968eec.0
+        for <git@vger.kernel.org>; Fri, 05 Jun 2026 07:16:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780668963; cv=none;
+        d=google.com; s=arc-20240605;
+        b=T2eYOIcpzePuAHCgt2mF/LteigyFNcpvsuznwzEgCBL1nOGghsn0vgXfDmsJq2Hd8A
+         3ukx8l61scm+50TqnqXl6dArCO4D8VSy1zCimIYnCD5bgT9u4DhxKsIa96/2qI1LP1zm
+         DJsEZMX3nVw4PaMDmhxvB35QhKasiDwtBP9mABw6LCuy2ouuH6Evte4nZjqje1Ij/K0y
+         AIJbjsF/9bzZeSQGgEKIy2bX+EFuTz5/JEfTNJcCeiYVXjB1TJm4Px+x9GtoDdRJGR8m
+         uuIENq4hFM/wYYDtii/+ia5LqZBIl559A3oHtMFbXLUfczMRGk1unHr/kcVHkucyRKr2
+         sxOQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=EArTwNnYdQwvS39C3eGUe5ID34hvojzGf19mkWvddfs=;
+        fh=0iMh800H4eMw0x2zG5Ehmvxfig0jJuD+QdYLthhaIsA=;
+        b=e3QFo90DdciGQp1o+nZM1ZaiVBrgWtw5AnPclizZ169pcaiVMarBthDG1Dn/D3FEqF
+         /mwfuxdsT+S3ONEAT7irdxIX/x/XKHxp1P3l7sLN2Sb9P6rQDAm1ep1gEbe1ASk2SLAN
+         kkDxfe69tqHN4CsEa2oDhqc0VgM+QIuBM1Gt5i8Imw2LWCJ2nhWWTb/V1nA1wzXrYJ6J
+         fLuCd01kZeadnwS4m505ho3FaWPozx8OcqpdxLfmi8OzekmSIEZw9kqRUXG7MRUNLnp5
+         aF47rTu1gJd3W49xlJh4vuYMc0jmxbBsnQiPdxY6qnLX+usV1iIvh2LjuAJxxVMLiLEQ
+         kdnA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780668963; x=1781273763; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EArTwNnYdQwvS39C3eGUe5ID34hvojzGf19mkWvddfs=;
+        b=ki5mSiflDdPnTY89n66MQuzBd3ie7uSjg7DJXYVDQUxKlQE1ohxyepyc8N2b9RdSh0
+         UsOE3Oe/qWM68HOGeGEecR6ZFdwtnlhdTTtRtAINWR8TQq4iVS/vvdhxxjE7zAgUBqyk
+         a87NU6KdcO0yUqdO2RS+WjnmwGVk/fiDj8rpNfesC6Jsw6umuenNFPKZpDEAZgibzrkx
+         LuTLpDrMRsfFGqZ0CPhwK5oHXUMaY0txF4aagSOUWeI/AF48G2K1MSLHpGZyBpdF785T
+         3XeUbupUNWudNznZdebOJXIsg2Fv2fOIiT5J4JZTHHQC/+xiGqyvQtWA4IldlqB8WN6r
+         OOwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780668963; x=1781273763;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EArTwNnYdQwvS39C3eGUe5ID34hvojzGf19mkWvddfs=;
+        b=V6ybNvsYtfb6t4uCnQf97cTaoJAXIbfhEzHkim1CYB76kbSCFl2axwKf4eT/WwANLm
+         78vzWJ3kXG2BLpHZNg3HRk/U3I9OoM18RfLyQmqhfegoZDm6cuCArt1h/ZwunMCmZDdN
+         O8/3PDIlSPf7v9haw1eznBswGrp1OZK38Ks1Ehif1ecoD1w1nL/yGIfG9xZlQs13gqGb
+         caJ9Pgb7TqEdBwi8goq6zucx/m7gT1eQSK2ju79LbKV9q2a1rN+tBXvLP5mW/VJcHV1f
+         90Z08wN8LxZBSFmo12W22nQRkUylZuY+scDHm2n3YUaFPEY8DRdDeCbTe+K1OuAecGIK
+         XJLA==
+X-Forwarded-Encrypted: i=1; AFNElJ9yfKyn2OG1LPKbvQp0OQ3PthFmRUC2zzi0UrqQHVjW3ONSH5WSlm4LG/3vG22lla1PvPo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxB0Gr4wjX+PXid7g2L8mduh8rZlJOEm/YHWH6vgTyHfNZv85hx
+	9X2Wx5ktmTAwbjl4MCE6gx1pt6txPgDo9SKiq8vG1B523e46BR+2RE73Fgd98GX7Ghl++QqjHr6
+	ymtqBdRLUVuztKq2dUv/BAtwHLDucebIOFA==
+X-Gm-Gg: Acq92OH2bkK1IBpANiv5k8UNPF3nZIX7J5JIfbQFkNsi8BO5L1VO0J8xD08dkALPKeu
+	AYjTlf3A/KB0U5W9+vnU/0pBTZ3lDKiY2eal0wXFpsSvY22q5KlyWrQ18uku2altTZ301mu5qfH
+	LMSwQG5ugLvlptZ6rqLsparBS6r7UJG4vCfxUe5QXYJza6UmmxYAg3b9/Z/GerlGjCBDjpsPTfv
+	jn9eEI185OBiu5onz4g314hxU49b0Py8OjEscAWPGeSUMpiHMuxskpXljz/WvyDD+NNR91A0Pwv
+	iLVKv7ku2NsdP/stQ0tEExCnmTraTw2wugZzdm4jlLSQBnUFkp1WOpc8uhbIjGi4Pz1LWVWtzmN
+	phQBrNg==
+X-Received: by 2002:a05:7300:2152:b0:304:3c33:7ad6 with SMTP id
+ 5a478bee46e88-3077b080e0bmr1933024eec.11.1780668962692; Fri, 05 Jun 2026
+ 07:16:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 5 Jun 2026 09:16:00 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 5 Jun 2026 09:16:00 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260604-b4-pks-setup-centralize-odb-creation-v3-0-0691834f318a@pks.im>
+References: <20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im>
+ <20260604-b4-pks-setup-centralize-odb-creation-v3-0-0691834f318a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Fri, 5 Jun 2026 09:16:00 -0500
+X-Gm-Features: AVHnY4LyEHiOkGbcK7VlLg8tKctbNsOJ2pYK3tgfGC1KX8nDGE_fgd1L0J0WwPo
+Message-ID: <CAOLa=ZQwVbLsOcajaxQwtkTPm=4St7EiGEEyL6_B0o3Tt1v1pw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/8] setup: centralize object database creation
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000fc64e70653824c76"
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+--000000000000fc64e70653824c76
+Content-Type: text/plain; charset="UTF-8"
 
-This is now a description list (see previous commit) and parentheticals
-like this do not go on the left-hand side. Moving it to the other side
-makes it stand out just as much and is also more consistent with the
-rest of the documentation.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Let’s also do the same for the `replay.refAction` description list.
-That makes the two desc. lists identical in the first sentence. Let’s
-add a comment about that for future editors.
+> Hi,
+>
+> this small patch series refactors the logic for how we discover and
+> configure repositories. Most importantly, this involves the following
+> two steps:
+>
+>   1. We unify the logic to apply the repository format, which is
+>      currently open-coded across multiple sites. These sites have
+>      already diverged, where some repository extensions are not
+>      consistently applied.
+>
+>   2. We then centralize creation of the object database to happen at the
+>      same time we apply the repository format.
+>
+> The end result is that we apply the repository format exactly once, and
+> that's also the point in time where we can finalize the setup of the
+> repo's data structures as we know about all details of the repo at that
+> time. Ultimately, this makes it trivial to introduce the "objectStorage"
+> extension, even though that's not part of this patch series.
+>
+> The series is built on top of aec3f58750 (Sync with 'maint', 2026-05-21)
+> with ps/setup-wo-the-repository at df69f40c34 (setup: stop using
+> `the_repository` in `init_db()`, 2026-05-19) merged into it.
+>
+> Changes in v3:
+>   - Explain the move of `verify_repository_format()` better.
+>   - Document that `apply_repository_format()` also verifies the format.
+>   - Link to v2: https://patch.msgid.link/20260526-b4-pks-setup-centralize-odb-creation-v2-0-2fa5b385c13e@pks.im
+>
+> Changes in v2:
+>   - Commit message improvements.
+>   - Link to v1: https://patch.msgid.link/20260521-b4-pks-setup-centralize-odb-creation-v1-0-f130d2a7e8ae@pks.im
+>
+> Thanks!
+>
+> Patrick
+>
+> ---
+> Patrick Steinhardt (8):
+>       t0001: plug test gaps for git-init(1) with GIT_OBJECT_DIRECTORY
+>       setup: drop `setup_git_env()`
+>       setup: deduplicate logic to apply repository format
+>       repository: stop initializing the object database in `repo_set_gitdir()`
+>       setup: stop creating the object database in `setup_git_env()`
+>       setup: stop initializing object database without repository
+>       repository: stop reading loose object map twice on repo init
+>       setup: construct object database in `apply_repository_format()`
+>
+>  commit-graph.c  |   4 +-
+>  environment.h   |   8 +---
+>  refs.c          |   3 +-
+>  repository.c    |  40 +++++------------
+>  repository.h    |   3 --
+>  setup.c         | 130 +++++++++++++++++++++++++++++++-------------------------
+>  setup.h         |  20 +++++++++
+>  t/t0001-init.sh |  10 +++++
+>  8 files changed, 118 insertions(+), 100 deletions(-)
+>
+> Range-diff versus v2:
+>
+> 1:  50224c1a12 = 1:  a6f452b947 t0001: plug test gaps for git-init(1) with GIT_OBJECT_DIRECTORY
+> 2:  6d655e00e3 = 2:  905e618dc6 setup: drop `setup_git_env()`
+> 3:  2e7e9bb052 ! 3:  e11f16333d setup: deduplicate logic to apply repository format
+>     @@ Commit message
+>
+>          Introduce a new function `apply_repository_format()` that takes a repo
+>          and applies a given format to it and adapt all callsites to use it.
+>     -    While at it, rename `check_repository_format()` to clarify that it
+>     -    doesn't only _check_ the format, but that it also applies it.
+>     +    This function is also the new caller of `verify_repository_format()` so
+>     +    that we can ensure that we never apply an invalid repository format.
+>     +    The verification we have in `read_and_verify_repository_format()` is
+>     +    thus redundant now and dropped.
+>     +
+>     +    Rename `read_and_verify_repository_format()` accordingly. While at it,
+>     +    also rename `check_repository_format()` to clarify that it doesn't only
+>     +    _check_ the format, but that it also applies it.
+>
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+>     @@ setup.h: void clear_repository_format(struct repository_format *format);
+>      +/*
+>      + * Apply the given repository format to the repo. This initializes extensions
+>      + * and basic data structures required for normal operation. Returns 0 on
+>     -+ * success, a negative error code otherwise.
+>     ++ * success, a negative error code when the format is not valid as determined by
+>     ++ * `verify_repository_format()`.
+>      + */
+>      +int apply_repository_format(struct repository *repo,
+>      +			    const struct repository_format *format,
+> 4:  81b92bca7f = 4:  b0d7c11fe6 repository: stop initializing the object database in `repo_set_gitdir()`
+> 5:  807fc56353 = 5:  d0af56fdae setup: stop creating the object database in `setup_git_env()`
+> 6:  96563ff99f = 6:  3e75c5b0a6 setup: stop initializing object database without repository
+> 7:  c14f45169c = 7:  50fa2fdb3c repository: stop reading loose object map twice on repo init
+> 8:  e67c6e66d6 = 8:  4dff9d1794 setup: construct object database in `apply_repository_format()`
+>
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+The range-diff looks good and as expected. Thanks!
 
-Notes (series):
-    v2:
-    • It’s “description list”, not “definition list”
-      • (Same mistake I have done for “line continuation” (it’s “list”))
-    • It’s e.g. “right-hand side” (drop “-side” hyphen)
-    • Change `replay.refAction` “default” placement
-    • Now that these two description lists are so similar, add an
-      AsciiDoc comment about it for future editors. Note that I
-      outright deleted this list in the previous version because I
-      didn’t want to keep them in synch. But we can remain aware of
-      these with two comments.
-    
-    ---
-    
-    v1:
-    > do not go on the left-hand-side.
-    
-    At least I haven’t seen it.
+--000000000000fc64e70653824c76
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d8fc1798dbba6255_0.1
 
- Documentation/config/replay.adoc | 5 ++++-
- Documentation/git-replay.adoc    | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config/replay.adoc b/Documentation/config/replay.adoc
-index 7328da9537d..40d1695782a 100644
---- a/Documentation/config/replay.adoc
-+++ b/Documentation/config/replay.adoc
-@@ -3,7 +3,10 @@ replay.refAction::
- 	The value can be:
- +
- --
--`update`;; Update refs directly using an atomic transaction (default behavior).
-+////
-+These use the first sentences from the description list in git-replay(1).
-+////
-+`update`;; (default) Update refs directly using an atomic transaction.
- `print`;; Output update-ref commands for pipeline use.
- --
- +
-diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-index b4fe43ec687..ea4d14baddb 100644
---- a/Documentation/git-replay.adoc
-+++ b/Documentation/git-replay.adoc
-@@ -80,7 +80,10 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
- 	Control how references are updated. The mode can be:
- +
- --
--`update` (default);; Update refs directly using an atomic transaction.
-+////
-+Expanded description list compared to 'replay.refAction'.
-+////
-+`update`;; (default) Update refs directly using an atomic transaction.
- 	All refs are updated or none are (all-or-nothing behavior).
- `print`;; Output update-ref commands for pipeline use. This is the
- 	traditional behavior where output can be piped to `git update-ref --stdin`.
--- 
-2.54.0.22.g9e26862b904
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vaTJob1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meHhTQy85UHI2SVl2WVUwTjdTbk1RRWljUHRyaDJjagpNei8rL0ZIS2NH
+M2IyL0tHUEZZdUxtZ1FFNklSQ2QrOVlRSjhDclBWVFhNa2pIa3JQYm5zK3p1ZDBUNnZZaGRMClVN
+dnB4Y2ZyOGxOeUtvcHo3Rm9rUEoxOU9Tc2xPYkN4L0xMYTJJY09hVEtPN1VJS2ovMFlZbFdDcWlH
+UmF2RHcKaXdrYkxkYjR2Z0ROOE9sMisxNDdrcGhvR3RHUVFSaTIwWTNIQnBRWTBONWRmd1NFajd6
+WG85VlZKanhUMFF6Ngp6VDRXQmZWTlpOdzFxOWpDQ0NqemRwUFI4dG9hcUZSZU5wSWFxV0R1MVZF
+VUhqNmlJWnNqZCtyTGU0T0VDU293Cm1LOEp6anVmZ1lqSGdLMkxVY1hTdnhqbkZtWjFSc0s4MFdm
+Zk9sdDdSUE1aNVY0RXVTWjMzdEV5QkV3dVZxYUYKSEw1V05zbnRsNmtpYXYrVlFQZTl4N1puamQ4
+Y0RTaVpTemFQdEdwcnJTTC9aVlZxNUg2ZUZrT2kxRm9udHEvTgpLdmtnWWVKQU9hNUZPbWJhR1RN
+dzFEMUhIODdBQVJSZXRXNVR1VkRzOWtvLzI5U3h5aEJ4c2JiVmNLMGR6RTBwClk1aXdqMnJhMHNV
+SFpwR1VudGY3MzhZWlBsZ1V5dFBOZnhjMlVZZz0KPUIxSTQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000fc64e70653824c76--
