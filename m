@@ -1,67 +1,67 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEDE3FFFB5
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 15:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B6D40E8C7
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 15:12:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780672156; cv=none; b=Mt6/3byPwhAUbgXfNzB/M0uSTCcawehH2PuXJnjiPRGirhKUTJdm5AvGSfbzWh4DpqqPhWTNp6W3IkRiH5YKyi0fO+Yo6WknQNl8eLN7tvdA3zniO1Vnbu3WcoheMtp9IRtueWGZSMRpTo7lsP78VjiF8x1Ki7euYWDipn4Z6Do=
+	t=1780672379; cv=none; b=dim8KTu5s5BI0RVClIUU/lZka1zEtlts1tTMYLpo10UA5nVXZi2J67Tq+dEOypMqbOI7mKR8jMFkB9g69Imq89TbGbigq5J4+TP0hxO52Ba/yhhFWsdpIa3BbTxaPhCpBuiyP8wdE4MFjGQco2T0lqFJbrg+RAsouo2Lcqmfg4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780672156; c=relaxed/simple;
-	bh=C3oniZ/yKIJ6cNJImdMMT063om+pdsco2LX8NoQUgAU=;
+	s=arc-20240116; t=1780672379; c=relaxed/simple;
+	bh=kHJZdTdfMrtzSZl3CFB4ZM0ddwAtlO++CrUsoQu1QpU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hy3tTyjGSwq3sfpjgODvIUS27cSG2C2Xv4+OgJbYp4FvNokSEjIooiJcn9l/DcbsOQgvczNJfwXP0V9EWWEFVBxVq5vYz826PJBJ6nPS1j5SramFsLzfkQougdqLQr+FYfySTl1VJXXsqsqLjIxLO/RcGQlC+JCs70E1nktjbfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rqqjjwZQ; arc=none smtp.client-ip=209.85.218.48
+	 In-Reply-To:Content-Type; b=cIh9xblct6hb7MZ1jk4VmpdVz7pr1jSAFLKzSoMj5x3c99srte1/0xHZSMwQ/HQSFX3SoXdApjx+Jon8JWjspqKUQ+g51gpt7wrBZNQKOspa9WyhxFpLZBJ8alf5vVAzCEfVbSUCCajYh5V+Ap3XM615TD63j+AzLOTGmrBMdsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQ3Ra5bc; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rqqjjwZQ"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-befee9e5ef7so217061866b.0
-        for <git@vger.kernel.org>; Fri, 05 Jun 2026 08:09:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQ3Ra5bc"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-beb2a97cc9aso360980466b.2
+        for <git@vger.kernel.org>; Fri, 05 Jun 2026 08:12:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780672153; x=1781276953; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780672376; x=1781277176; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xEMGXyzVIXlgdq2fJ4TaNPHfqMQqYSaothi6X4m5oPo=;
-        b=rqqjjwZQDEk5Lib3054bNEvQxYEpdtJcZVq2SyqduEUtlUqKRB6WM2u0ZfoK1OzQit
-         tikh1kWGsvbyIZeTUofv48a8VPOKNyWjvWNhwak5cNRP+MvPPYHu3cjsibnKjLHgVR1J
-         ay69z2t3Kiiby9h6aGQXJTQbWU8tNMZ7AbmO7DQMt4bbQbZpfQ5iSr4Asg0PQxygxMh0
-         hkkkLpJziOzFIkqayO52EaAKamkmEPOxvLHauCnPnaKUUEZCDXV5rX6hXsOwx4mwVqbn
-         cn7Tr+hXFMMPd96NhxmF+2oRVLC+nSXorxnoB4/ABxO6HSxwV+mZZQvNTX8I/wnp8xQe
-         JRHQ==
+        bh=dULl0arOOCpMbauzScp+9sXEMWvAB22CBr27Si50iwc=;
+        b=LQ3Ra5bcSNR4Xxo/BDyUWH2uATmobb1BBfahOuw6zBCtCHbfLWL7LWEuojo+PS+scg
+         lnDMph64lUgX6/sGRfgsr47GNIkvpv/OKZz8WMN7xJfhbwEEzmsjXEHGa9Wew7kmOKh+
+         C6EJ7mFyKZU+u3XV/NGXij7O7zhxZM6traOdqXzcVIRyZzx7Q1AokCQdvUVlLZNYMElS
+         Xbe9avi85yCFFHBB5xfA4B6I85CsA4EBCmeAeLkJs1HH5viBulCPu4Dh1ToIiZt2ye4K
+         QCvd2lN8JZgOGxTfMRonUl1SPqHawPAwpuT1xiDBZOLlbJgtZVEUw2hRU+gDQwQ0q/QW
+         97Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780672153; x=1781276953;
+        d=1e100.net; s=20251104; t=1780672376; x=1781277176;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xEMGXyzVIXlgdq2fJ4TaNPHfqMQqYSaothi6X4m5oPo=;
-        b=MXKND0DPNE/DbKunlAQk6oBW3kvflsj6v5qq8NUX0e7GmIsHdohaMbmJp/qbt5msAg
-         5W0epJBiJpfzZQSDmg8mt2Pg7HokzVJeEaIgj+i6e2tCgWAfAb3dfR8YdmkTuIWpqAMg
-         rXHXkuEjGHA+N2YTfEqipJjkl9iB5U0TnlgG3nQfsehaQ9Ah1+g2PXB3pj3NJM3/6zC1
-         RoDnMU4khUneqN6EA6fPl3TRipMO6q0D3Mwd+KISaD8vK9CnQg0/Z9B5v/wPfcvdZHrW
-         SUV7oVCIfgG4CRduWqwW9JKA448YPeO9dMt6RdQ/GOp4Wiy8a+X/ks5HauC0b9AIGlRZ
-         +PMg==
-X-Forwarded-Encrypted: i=1; AFNElJ+CF4VyIiemMwxWWzdnv2TGojfEN0ztx6j41xJ7b0Gd9EvSGSMk9w79uBaIJln5vE1mJcs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+O2OhyNA3XCPWmOgxlF66hDz8Ac2WD9pH+tBkvkeiEXOcS8W5
-	N18vVLRC/x5RBeG+W4ycCmyIF34fEf2/0Hv1aUrsqu4hu9SxcKWsvfsd1dyb2Q==
-X-Gm-Gg: Acq92OEULhuQZzQ7doXe7o2J0dn/bjxfJVRL+thmXIhknpxyTznHa8oQLbkSw1JYcep
-	HBG/MCiGLYWRnbbVaImqR+xtvo8IjtLSwZ48JZKzsvOKBdbCZmvxkm7kZrIFi3OFnYI6/atYM06
-	3HuQbS5bdK3On9s00kSX3h/oJ1eTeP6KtLUmlenZAD7vX5aAhlVApfIEg0NSRpflGQ1CNFHT+Ay
-	1R0ppGTuMq7fHO3prH0etSKEntqWkOFY7R/NlN5wqVKG0QcdP1AGac30hvKvrGXM500/MW/UIVx
-	6Xkn7yXQbTTJYcZSywchqBBZ5q4dgU9I5AeoDlnSFz6URVJ+DfMWPCRCr2UwzFUJlNzdBxVJ1SH
-	J7u6PXc9WHTt/ATqPtYSqFU+tT9BuFab30BLYVRSlW6Zdxvs8pmCbMtDgrStSzh8r19xjVyXqMz
-	4qbBl5E0ujUztuRtYNSK5VFrNKsu1VRsyXHUSVeWWSWT0bswYtkTEaD0YrasftiJzXyZy9vrZCo
-	/hMjwwTPaL5fg==
-X-Received: by 2002:a17:906:4fcd:b0:bec:436f:1857 with SMTP id a640c23a62f3a-bf3702817e4mr211633766b.7.1780672151229;
-        Fri, 05 Jun 2026 08:09:11 -0700 (PDT)
+        bh=dULl0arOOCpMbauzScp+9sXEMWvAB22CBr27Si50iwc=;
+        b=ZJgUnII807No+e3v7ARcL4U+K58ujpcyc25fJeI/MmUeRdANMa3nn1lMq5v0fLkPd6
+         G0ddxIHOGXXZ3H51p8tf8ml4dMMpWQhe8TRzbXVu0eFlrH4FGmD6mVQcdqRaKB3Sitab
+         c9+a7x+jbkaVPYeX8Ad2mHjjSlNPS3NdFoHoiTUM8MDIfmScwAoRr8tBPThA9hfXJHgw
+         r52F4Z2QEDHp3HZF5Zj4Kx5D7jjWOiP8eWxO1uL3lzLYctptYz2uMJDVqnVD1A3nVanL
+         4Fjr5bvsRBgJGgUCvX0N9VzUyjVetC+8agrVYszEdtdwkFTlaR+MSO02mgvudYLia5kL
+         /H9g==
+X-Forwarded-Encrypted: i=1; AFNElJ//w8kL/NFyH50eDuP03QBOa5mKV0t5pQqdaMW0p8nmcDDXX96JHD22WU+diQYu2H8Dn1A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YweiAJZSmVSma9U/g3ZxBKWTwX+wslxfOnSAeqLFmxvaneMF/t/
+	c84r03Pa1MY0ebaTNU94ftGxRgBJgoqrqqVUo3xtNZkAeiperrKuPKEP
+X-Gm-Gg: Acq92OHCA2fVtb2N92sNcYCnUQx1L0uWb7fZH3ZEilwybRCK6HI0gpDa80CotXVpqvt
+	mGmQIW9B+gGKzVVLdmwca9VobumaGShbMu7XaIJJJ/HytlXENvlIn4ArE10ahJPYsv8clDO8cAe
+	y5TficCukiRhXiXJIHOCCOVmqcjpCKIAD/Hf5fdgCCLlZh1BNDjuA3u9i+YrYnU0ci/rasN9mX6
+	uHl+lWnGqqrX3TMbbktynp0Ls92hPvsapvFG8xpZze1Z8EOUJNzQ7GcK7X6sYGv1LjRXnBH9Pa4
+	gxm+GIk2xadDScO6FW2UyAAvGYZjqZPK4956yVYAJzLRYwSnwN1CrVvS7oNydsHmZ0iyeihhlpq
+	5qmo3jU6Abtv+nEvls9RPSuOS5jiCHjsB3K9zwKusiS0ZgTE4+NdYqVXso8WH69WMDf102K+/DX
+	2c5q77Lsz0Gt8Db0sU8pQZdyXH+U5WP87wGXV0TA5zqvruQ7hGxXuEH8D0cFwPy5M+/7MtLeGkU
+	6y35bHgN3yhuA==
+X-Received: by 2002:a17:907:7b8b:b0:bed:83ee:9223 with SMTP id a640c23a62f3a-bf372f1ee4fmr218979366b.45.1780672376294;
+        Fri, 05 Jun 2026 08:12:56 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:638:c001:a103:efc2:6ce:f580? ([2a0a:ef40:638:c001:a103:efc2:6ce:f580])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf054e03709sm466049466b.30.2026.06.05.08.09.10
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf054dfe3aesm471262866b.37.2026.06.05.08.12.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jun 2026 08:09:10 -0700 (PDT)
-Message-ID: <9e2cb34b-97f6-44f4-be44-60f44760e601@gmail.com>
-Date: Fri, 5 Jun 2026 16:08:57 +0100
+        Fri, 05 Jun 2026 08:12:55 -0700 (PDT)
+Message-ID: <0fdaeec8-99cd-4dc9-9549-8a08133deebf@gmail.com>
+Date: Fri, 5 Jun 2026 16:12:42 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,69 +70,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/9] reset: modernize flags passed to `reset_head()`
+Subject: Re: [PATCH v2 5/9] reset: introduce ability to skip reference updates
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
- <20260603-b4-pks-history-drop-v2-3-742cb5b5176d@pks.im>
+ <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260603-b4-pks-history-drop-v2-3-742cb5b5176d@pks.im>
+In-Reply-To: <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Patrick
 
 On 03/06/2026 17:14, Patrick Steinhardt wrote:
+> In a subsequent commit we'll introduce a new caller to `reset_head()`
+> that really only wants to update the index and working tree, without
+> updating any references. Introduce a new flag that lets the caller
+> perform this operation.
 
-> -/* Update ORIG_HEAD as well as HEAD */
-> -#define RESET_ORIG_HEAD (1<<4)
- > [...]> +	/* Update ORIG_HEAD as well as HEAD */
-> +	RESET_HEAD_ORIG_HEAD = (1 << 4),
+We already have a flag to update ORIG_HEAD so would it make more sense 
+to have a flag to update HEAD, rather than adding a flag to disable the 
+updates? It would mean updating the existing callers but I think it is a 
+clearer api and it avoids the pitfall of
 
-I'm having a hard time parsing this new name, if we must have a 
-"RESET_HEAD_" prefix can we call it something like 
-RESET_HEAD_UPDATE_ORIG_HEAD?
+	RESET_HEAD_ORIG_HEAD | RESET_HEAD_SKIP_REF_UPDATES
+
+I wonder about the function name as well if we make updating HEAD 
+optional then what does reset_head() mean? Maybe we should rename it 
+something along the lines of reset_worktree() or update_working_copy()? 
+I'm not really sure what a good name would be.
 
 Thanks
 
 Phillip
 
-> +};
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>   reset.c | 7 ++++++-
+>   reset.h | 3 +++
+>   2 files changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/reset.c b/reset.c
+> index a8d7eea4d6..ed9df6ca5c 100644
+> --- a/reset.c
+> +++ b/reset.c
+> @@ -93,6 +93,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+>   	unsigned refs_only = opts->flags & RESET_HEAD_REFS_ONLY;
+>   	unsigned update_orig_head = opts->flags & RESET_HEAD_ORIG_HEAD;
+>   	unsigned dry_run = opts->flags & RESET_HEAD_DRY_RUN;
+> +	unsigned skip_ref_updates = opts->flags & RESET_HEAD_SKIP_REF_UPDATES;
+>   	struct object_id *head = NULL, head_oid;
+>   	struct tree_desc desc[2] = { { NULL }, { NULL } };
+>   	struct lock_file lock = LOCK_INIT;
+> @@ -112,6 +113,9 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+>   	if (opts->branch_msg && !opts->branch)
+>   		BUG("branch reflog message given without a branch");
+>   
+> +	if (skip_ref_updates && (opts->branch || refs_only))
+> +		BUG("asked to perform ref updates and skip them at the same time");
+> +
+>   	if (!refs_only && !dry_run && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
+>   		ret = -1;
+>   		goto leave_reset_head;
+> @@ -196,7 +200,8 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+>   		goto leave_reset_head;
+>   	}
+>   
+> -	if (oid != &head_oid || update_orig_head || switch_to_branch)
+> +	if (!skip_ref_updates &&
+> +	    (oid != &head_oid || update_orig_head || switch_to_branch))
+>   		ret = update_refs(r, opts, oid, head);
+>   
+>   leave_reset_head:
+> diff --git a/reset.h b/reset.h
+> index 9f696382c1..cb0700ffa7 100644
+> --- a/reset.h
+> +++ b/reset.h
+> @@ -27,6 +27,9 @@ enum reset_head_flags {
+>   	 * any user-visible state.
+>   	 */
+>   	RESET_HEAD_DRY_RUN = (1 << 5),
+> +
+> +	/* Skip updating any references, only update the worktree and index. */
+> +	RESET_HEAD_SKIP_REF_UPDATES = (1 << 6),
+>   };
 >   
 >   struct reset_head_opts {
->   	/*
-> @@ -33,7 +39,7 @@ struct reset_head_opts {
->   	/*
->   	 * Flags defined above.
->   	 */
-> -	unsigned flags;
-> +	enum reset_head_flags flags;
->   	/*
->   	 * Optional reflog message for branch, defaults to head_msg.
->   	 */
-> @@ -45,7 +51,7 @@ struct reset_head_opts {
->   	const char *head_msg;
->   	/*
->   	 * Optional reflog message for ORIG_HEAD, if this omitted and flags
-> -	 * contains RESET_ORIG_HEAD then default_reflog_action must be given.
-> +	 * contains RESET_HEAD_ORIG_HEAD then default_reflog_action must be given.
->   	 */
->   	const char *orig_head_msg;
->   	/*
-> diff --git a/sequencer.c b/sequencer.c
-> index 1ee4b2875b..0b89a977b0 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4870,7 +4870,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
->   	struct reset_head_opts ropts = {
->   		.oid = onto,
->   		.orig_head = orig_head,
-> -		.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
-> +		.flags = RESET_HEAD_DETACH | RESET_HEAD_ORIG_HEAD |
->   				RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
->   		.head_msg = reflog_message(opts, "start", "checkout %s",
->   					   onto_name),
 > 
 
