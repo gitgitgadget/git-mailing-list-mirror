@@ -1,84 +1,55 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from grace.univie.ac.at (grace.univie.ac.at [131.130.3.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7B93FAE0D
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 10:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FBA1A6810
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 11:50:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=131.130.3.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780656052; cv=none; b=asGREoOox2XWa7nYxZqPlswWulqrd9HEQBab0Erj4alPCDrHx5nIct9F5gqaczrWXijPZwWRHP0LbEW0vLYCTh71xsYhXSLBOneAg5IuIenVIPNrXtF3QBfNtzqZ7jWaA96pK9LgxEQuM6VNjeZLhXOye8lnzNXb1Y8zO/KfEus=
+	t=1780660245; cv=none; b=rSRXV2y1V6drGPIi8XOpUkf5z5vnyJMSpUCFbaEQQfTDvtoGaGEQ+Y/Uoo472UqbHJD6Fu63/XA6tJHg5Tm1H6G/6xk6Vmr45p2bkZn1+CeowZiW4ZVypVbDp5sWxy3K0D6pGn3Dtb2tM+4u/gywkpmjI/n5NrTPz+9/7F5LB2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780656052; c=relaxed/simple;
-	bh=Rk18qkpNVmNk3VYeto9rjaitJfxAOjw5Lf7LpJXIxzk=;
+	s=arc-20240116; t=1780660245; c=relaxed/simple;
+	bh=qDqvdA6CyE2HhZhvkDmPPPfe3EuzEvYo/W2pxp6TFhU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rN3dWeQ8nx+HReB7awFxDmz/IPc654meDYT/c9fspEC39X/THlzhxUIBbEl6U4SluJIceATDW9eL0Y9D5g9lxtTsxg/G17IV0eelgQb7eyy+cdTmStskJAdAwQyVC70N3BXMwndpo8TMR5S4Olh+p+KiQMKrmF+S7zx9s1JD+jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l2MojRgb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TMC1TdPh; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=kUXOf52UgdEU5QlaXHzwtJRnStg0bH3lrIUDRjiKr+DbY40c052RnkOtmJlVRwPtDnUE26Z7+eNn2gBSDZT90BOZ6KytEMmRoZiy/ycYxIwHZPRWSw1XC3fsAdQlVgy8s/wXS+QBmg7/11Xmk9hypMmeTuHIjdehNOYAPOfyupk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=univie.ac.at; spf=pass smtp.mailfrom=univie.ac.at; dkim=pass (2048-bit key) header.d=univie.ac.at header.i=@univie.ac.at header.b=IWO2zhZZ; arc=none smtp.client-ip=131.130.3.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=univie.ac.at
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=univie.ac.at
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l2MojRgb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TMC1TdPh"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B13D214000FF;
-	Fri,  5 Jun 2026 06:40:49 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 05 Jun 2026 06:40:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780656049; x=1780742449; bh=rSKS1+EjWX
-	zzsXldfpkMbQNxa9GewV0Tf9tMr0hwKIk=; b=l2MojRgbiM0pyWuDxmJ8MgIy3N
-	3I0ioZkjqY5VxN5OSTwd2t3beIkm99Q2CwAC5WeZr/hZFtI5RYOC90RByeZz7HMo
-	bUimCpblz/5YgadfL5thV46OttN2tRHY+B8UGkumQGuKrSOWphJS4xv/BXojXj8y
-	gD0vv2VWAwRaU4w2W6kGWqeROTqzQnfQnaAWX3LC7bLGG/zgkhZOujZSKaPUsKX+
-	Ww6XmTyxGapCaBXFCSKiCX6WGTThzv/SI+AJbAkNljKzOHeLOJSCyUC7oIAEX67E
-	TZHF276EqjMG1JBJGGbSW5wPDYxDjYNCBQS5CUAVtGbkBYNrs9/E5n1qNDoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780656049; x=1780742449; bh=rSKS1+EjWXzzsXldfpkMbQNxa9GewV0Tf9t
-	Mr0hwKIk=; b=TMC1TdPhmx46IY6Lt1tOw9wSCcEDf7ep70tkysDG/ibjAtRd77x
-	y3lKcjHSkq55il9070OoCw8OEyggi0GD24YrOU5YdUNGyDITALQfFjt8kKYL7pU4
-	i91pyuuKbOB9HfchpmLEJbc5WJfYyg5EVCox4wMwPcqZ60jX/45ZUyKt4Y2jqopi
-	VDMKIva/RvikMVpoT0oJoUy/Gz5WtdBUAFhaLYsoCI2qNaJazFIqvJt9Api1wWoe
-	gbp8DDjs0iOsD2M47BGDDgEiEcEpuhDcMHO8GOwdaY0Gwm78R4Uyik2X2Hm2P4fi
-	NdZly5omhoyKBLluB0cYQ+B9kgiUB3oyVUw==
-X-ME-Sender: <xms:saciaiaRvQy8FjCQKKVui8oPrcSHdJko_zDdXN9ZQIP3mtf5gTO98A>
-    <xme:saciautgFGRJY8Il-Zkaae2sZtjryQkXL0y692_3rLx7UPHfbgJ0moBGKWkNi4xW3
-    UwaAO-3cSD3Bn_ROZfV8TsbXxZtw_ULO_Xr923AyxRSkGEGeic55A>
-X-ME-Received: <xmr:saciakM12nQZQUG8SQ3qe47vpNCxj0srAUnVLksvABnhQMp7rD7sfzI6u3rN-DN6UZcVD-gDkQ3Ccgrwps4Mn5f4f9H7Vj1SC584T_RJ6Q>
-X-ME-Proxy-Cause: dmFkZTFmsFmqpy5L3fj8z3WEDOI04G/sV7POg53RL01uykaGXdh4dC4xydPdFxMfQxsUjd
-    FMG0hddbruYPKbEmTufb5Co358BtIxP/Tp/dZLeiRLM8Kkd76/kI099ZP+FVWSJkJLBA/c
-    AxEzXFVnxKjp8eqzhtbgwQiCX/dT+Tp59BfKtRV3RDWkVBLDONAeiS37Yk0vyBlCw43jLa
-    fbUvJYmKpmf/0xwWtX0cjTQq4U2PCG1e1fyNzZPZVz20uIr8rKV6gZnUwZ9oaW5DzGBA67
-    FUB06h9sjPVJKy1IOxU8wCnILAmJJNQJsFzN6fyfwD8Wq3NzOSjLQHIj1MLndDsKejtLAw
-    MbLqKpppwVIJOziakrLQA+GJGaQ/6YUEABjPHSDcxzgr2a6Xbqd/64TyD2BrnqAB4uGli2
-    DJz6hp4g4rmu41m9Kl7aVLH5fihAnY4pRx0cG/GhNe6Eh5fY7il7ZzUbBXWKup7KeTpRmM
-    2FrHsmbrH5vqEsDE9uCcsQpNo33ItMWgUTkDEgv3s6MZiZzZHbL6COqm156L3HLaJxGqKP
-    nkGUMHuPcQihizZgSYYNh89C4eC6wtvThIHwKUH0WRgFr3h1HpI6vxRffhZImIOJwNRR4I
-    hqN3Ml/2dtQ4sXVxVcPcIOmu3uBazw1btqQ5d/fLV5oVJ5GOr9Hr6673/B6Q
-X-ME-Proxy: <xmx:sacial7-to9m_aFAO7djW44xnphORtXRBxEJ6-Dc3aavqK77jqzvdQ>
-    <xmx:saciaqQ4I6pf0c0C14pNSgtFh4TVdYSP8GNlw_VA2cZd_WFDtN_FMw>
-    <xmx:saciaiB64IMoxHv0TUjJ7tVLItpDEZyJBaZMea1DBeA8GPjid71tfQ>
-    <xmx:saciaqGbEBWDYR-sIxz7e53HhnUECmsqFxROHMzJXZSAkgLgnMhipQ>
-    <xmx:sacialvBx75cpEQLAYSMZIOMfRFl6EnDPEXGn9sJ1ah0yuz7HTOM06zv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Jun 2026 06:40:47 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 58f39e18 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 5 Jun 2026 10:40:45 +0000 (UTC)
-Date: Fri, 5 Jun 2026 12:40:42 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Dominik Loidolt <dominik.loidolt@univie.ac.at>
-Cc: gitster@pobox.com, git@vger.kernel.org, asedeno@MIT.EDU,
+	dkim=pass (2048-bit key) header.d=univie.ac.at header.i=@univie.ac.at header.b="IWO2zhZZ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=univie.ac.at; s=rev4; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=vajcZuj59F3mYjSpVPH9tigZum7CBKol8pkH3hcmDCM=; b=IWO2zhZZkI/vI/1HIAL37OTmjB
+	uxhYuxaxqkvTwcmiuriZTF2ZZ37J1D5aaTGzm1IG1nevL0bwpUIj3IRCKW+cICpUYoL8Hx8aw67aY
+	BGSFlFEgCFE2XhOR+Twq8aM0gc9pouc2X0l0hnRP/q0Tv51YWesczZZuXIfZgd9AuhhhT/1IewLfj
+	I7svDSFOUN1ILjt/+cmUfXu1XTgLiyTwH15WdX1vw0Lr4+7tHy845vIsbiV6+fvVGImMXwhgDzZD3
+	7apicyr8WvyLQWTUQ8suUt3DUCKJNwOMvzLDJgxa/Z2bUU6ZYdAKf7Xf4D7jqOELOtp/1wWtWHmtr
+	gJ1xzSBQ==;
+Received: from justin.univie.ac.at ([131.130.3.111] helo=justin.univie.ac.at)
+	by grace.univie.ac.at with esmtps (TLS1.3:TLS_AES_256_GCM_SHA384:256:X25519MLKEM768)
+	(Exim 4.99.4)
+	(envelope-from <dominik.loidolt@univie.ac.at>)
+	id 1wVT4S-00000007bOf-0FYE;
+	Fri, 05 Jun 2026 13:50:40 +0200
+Received: from 84-115-215-81.cable.dynamic.surfer.at ([84.115.215.81] helo=four.local)
+	by justin.univie.ac.at with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256:X25519MLKEM768)
+	(Exim 4.99.4)
+	(envelope-from <dominik.loidolt@univie.ac.at>)
+	id 1wVT4R-00000004kIe-3Wfl;
+	Fri, 05 Jun 2026 13:50:40 +0200
+Date: Fri, 5 Jun 2026 13:50:29 +0200
+From: Dominik Loidolt <dominik.loidolt@univie.ac.at>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: gitster@pobox.com, git@vger.kernel.org, asedeno@mit.edu,
 	asedeno@google.com, avarab@gmail.com
 Subject: Re: [PATCH v2] compat/posix.h: enable UNUSED warning messages for
  Clang
-Message-ID: <aiKnqlI7WdcskDAs@pks.im>
+Message-ID: <aiK4BR86cuq5bmCe@four.local>
 References: <20260503151210.36036-1-dominik.loidolt@univie.ac.at>
  <20260605094647.94805-1-dominik.loidolt@univie.ac.at>
+ <aiKnqlI7WdcskDAs@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,64 +58,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260605094647.94805-1-dominik.loidolt@univie.ac.at>
+In-Reply-To: <aiKnqlI7WdcskDAs@pks.im>
+X-Univie-Virus-Scan: scanned by ClamAV on justin.univie.ac.at
 
-On Fri, Jun 05, 2026 at 11:46:47AM +0200, Dominik Loidolt wrote:
-> Use a dedicated Clang version check for the UNUSED macro.
-> 
-> Commit 7c07f36ad2 (git-compat-util.h: GCC deprecated message arg only in
-> GCC 4.5+, 2022-10-05) restricted use of the deprecated attribute's
-> message argument in the UNUSED macro to GCC 4.5 or newer.
+Thanks for the review!
 
-Ah. I was briefly wondering about this because the UNUSED macro already
-works. But the important part here is that it's really only about better
-diagnostics via the attribute message.
+I noticed that the version-check style now differs between GCC and the newly
+introduced Clang checks, would it make sense to make them consistent? Like:
 
-> Clang identifies itself as GNUC 4.2.1 for compatibility, so
-> GIT_GNUC_PREREQ(4, 5) does not detect whether Clang supports the
-> deprecated("...") form. Add GIT_CLANG_PREREQ() macro and use it to
-> enable the UNUSED warning message for Clang 2.9 and newer.
+diff --git a/compat/posix.h b/compat/posix.h
+index faaae1b655..e20f8ec61e 100644
+--- a/compat/posix.h
++++ b/compat/posix.h
+@@ -17,7 +17,8 @@
+ */
+ #if defined(__GNUC__) && defined(__GNUC_MINOR__)
+ # define GIT_GNUC_PREREQ(maj, min) \
+-	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
++	((__GNUC__ > (maj)) || \
++	(__GNUC__ == (maj) && (__GNUC_MINOR__ >= (min))))
+ #else
+  #define GIT_GNUC_PREREQ(maj, min) 0
+ #endif
 
-There's a second user of `GIT_GNUC_PREREQ` in "git-compat-util.h", but
-that user checks for GCC 3.1. And as Clang identifies as a newer version
-we don't have to adapt any other callsites.
+I think the current GCC bit-shift check is harder to read.
+If you agree, I could send a 2-patch v3 series, which would also clean up the
+comment style nit.
 
-> diff --git a/compat/posix.h b/compat/posix.h
-> index faaae1b655..88ad29d74b 100644
-> --- a/compat/posix.h
-> +++ b/compat/posix.h
-> @@ -22,6 +22,17 @@
->   #define GIT_GNUC_PREREQ(maj, min) 0
->  #endif
-> 
-> +/*
-> + * Similar for Clang
-> + */
+ Dominik
 
-Micronit, not worth rerolling over: this could have easily been a single
-line: `/* Similar for Clang. */`
-
-> +#if defined(__clang__) && defined(__clang_minor__) && defined(__clang_major__)
-> +# define GIT_CLANG_PREREQ(maj, min) \
-> +	((__clang_major__ > (maj)) || \
-> +	 (__clang_major__ == (maj) && (__clang_minor__ >= (min))))
-> +#else
-> +# define GIT_CLANG_PREREQ(maj, min) 0
-> +#endif
-> +
->  /*
->   * UNUSED marks a function parameter that is always unused.  It also
->   * can be used to annotate a function, a variable, or a type that is
-> @@ -35,7 +46,7 @@
->   * When a parameter may be used or unused, depending on conditional
->   * compilation, consider using MAYBE_UNUSED instead.
->   */
-> -#if GIT_GNUC_PREREQ(4, 5)
-> +#if GIT_GNUC_PREREQ(4, 5) || GIT_CLANG_PREREQ(2, 9)
->  #define UNUSED __attribute__((unused)) \
->  	__attribute__((deprecated ("parameter declared as UNUSED")))
->  #elif defined(__GNUC__)
-
-Makes sense, thanks!
-
-Patrick
