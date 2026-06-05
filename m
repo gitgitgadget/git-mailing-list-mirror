@@ -1,117 +1,94 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87E437B00E
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 17:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780681879; cv=pass; b=SboIn1hCoa44p4elLt4nex5UTvmnJp3m1J0uS4Z2bLCrORSuQ8EntdIwITpH0ahIwGeZ+TdjB2LxlhcU6NMCfD9x3GI3oMsdhjtWbHD4DvK4IhTfugRcVB6f54HbQU4LsgWa5Mi9sBO+pT06KutbBJXycjPB34WCc3RSCdl0rnw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780681879; c=relaxed/simple;
-	bh=F17OD3WfZWgttl6EMj4Ewa2f1ZirpsfWZVuwav8Z5bY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KTOWMS3wfF0DikVKMCGuxT8lrt8h7asGT/1KvhWRJg5jz35W+niM4BFuKj6YtaOItjp13zVleYUD77c7Vb9D+1zTtwUBUFAY4PKs38orS1bIbd93Z2iQoqrjzcqGZYMGdluxvZ2TydcxsUAe2uGZ5Zkl4qkeYJ5igiCxiov37xY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j0kSW5Ve; arc=pass smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135EE416CEA
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 18:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780683991; cv=none; b=mSRpyfBa0LPwOFHnfti62JAbfLh7NZazUy94EBHSxx1pY7b6dhskk7EpLWVKHCwz13+swMoBvRArKvvA/Ua2SHXT+JKxlQGezZhIgnaQo3ZZuuwEquoiTk7ULClwq/SKKSDUrYuNFJoghiSqQn23KlRMWStGrso8M4H3WpapqPo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780683991; c=relaxed/simple;
+	bh=Z+lhQ/ht8CwyJZt3IuCoacKbCv/h0MK09OozSXLImmE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ldp9uTTq+S6tvObyDVhxzao5R+IGexavDqlCuaFJmEp2EiANHz6bl9Y3Q2JbX0sJajwKVkt1NA2mdNFA1VHqsg3O3XJOe7XtxNKbNPBw0Q3REvvoHjzZvx+uVlDwFBuOdUc7G8h8dMVlyZSVGRCmCJ5J57m7mSOM/VQaSif2nxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=M0Y8eUgP; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j0kSW5Ve"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-68b90fc6a1dso4017252a12.1
-        for <git@vger.kernel.org>; Fri, 05 Jun 2026 10:51:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780681875; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VhJ9LH6wcZl9jVSUewDrWgcIXQwVc50zvR0DhY1OjEhuhD9keLm6IVfGQmO8enczQ6
-         kpvmOKQPVO2zGsUj0F7JtbYztgX/vJSnzjNCMac81Vvm98yaJyc1dPT7RMpAoR9i6tvy
-         Y5NWK9j31Ds9EbFUQV8m3qNvIhOEt7cYm1RiVny4d9Xl7JaYYpI6Q6XC67t20E3rG8qN
-         MpUNHXLm+I/o60XLAn/il2/oqaBSDvduSHqYdSe90QaR+USDQD4W+54l5jutlmyohZMz
-         3ar3Sgr2pd6Alj6nGhHljNbOWFcqxEeLpv+I39QlNPqQgTo9fh7brcSmJzWWhfcmj5Bl
-         cKFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=F17OD3WfZWgttl6EMj4Ewa2f1ZirpsfWZVuwav8Z5bY=;
-        fh=CGJkoTbX4bMFeWf/xqzMBL8S0jlQtCU60oR9DBGDQHo=;
-        b=cFV3uNg2PbIxHH4abN5Bncg0R+Ix+J/4ANnwRjMWf34yhFC0U1IJx5dvSTNuScZdlT
-         oTXi4ekZQ0Pv5ZwGwpC1J9RX6iSTzNM+RY4Z9VblBbRotXtUh/7p7O/XMZDWMvad+4wS
-         6l0O4+nCvZm1f6KPslgb5hsPhC7qXuz6t9JR+hrkMbkaNE3pCSx4AB/f255j7GYigtxR
-         djc1NElgQRs/135S6SGHowxtnEXQPGxyfCvYEpRnu91dctqAYkXhmOkftUFQcyf9Xqoa
-         PgRMFQ4H3uVJsfRPPBM5o2Sj6L8UkZ8lJWKNGDoGuOsYgrhgyv0F7/XRDYaKlrxXUM9K
-         CYgw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780681875; x=1781286675; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=F17OD3WfZWgttl6EMj4Ewa2f1ZirpsfWZVuwav8Z5bY=;
-        b=j0kSW5VerSxg6ZjsEPqMpbhj/LRqeua43fT3MB1vOWBPm5ltzUVDZztmS8hLEyzV5p
-         sk/wHxJa2hVr2avgFE4S6guUIPjH0dfKwELi84T49L7gcuEGofuboIMT5L5SeZjSu9td
-         kwplKrbbb1up6Qahhd3CaAGxXZmcWc+k2O0Ripeusl7H8INWGXjryNNf2j8a0RY3S4o6
-         mHBNyWTaV5uGlIVc451IWCEMc+HkP/b5k0vX9Qvj5KQnIShZsaOvIqwKKuLXEdikjJ1o
-         WldANIHffoIlFsRDscn2LL97iFUARmk952YqSgEV0na27oVu89OhAQbAvzQJBYpGQ7hg
-         hmlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780681875; x=1781286675;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F17OD3WfZWgttl6EMj4Ewa2f1ZirpsfWZVuwav8Z5bY=;
-        b=Bab73609foDYRp6aRY1jpbvvAYJi5g0YnYLf7v1N+6jTCgRptm/JYY3Sqt1OV4kNOm
-         vW7umQCIjeIWuubV4KBR9BGYrMwAAzBe30OReItkcO18c4T7fEH9tdASd6xrTYAtcV0V
-         pR+CLe/CCmcunAKVpOPYVHn1ynaZKbCy/dTUSOOekpmpr9gVp5GIG9F6+My+MPTA/d9n
-         0UUX9ZYRypMi2nbwOBpsDMgvZhInC1LazayVTK0GUMcAGLHH/82N6q+idBBuS6bnKwN5
-         7EcXfJGVSOXlomx2kE6MwTFNCSiPjrmabhqVJmb9Jq0YEdaWg2GV7SZzDd8nnEPgmHUh
-         4VyA==
-X-Forwarded-Encrypted: i=1; AFNElJ+RFn8BDliqy77VL48smqHYGMOlxSc1q0nqHijkdRvRpLfhSDzfW3RvuPwWtCGZfr4wGxw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxv9RuLCdepAPQmbzI3C/rhx0zqhOIah5VIWIH+WU/oB3fBD8uB
-	g2kgfna2Jn6cl13RZ+ZqWE7YNmtqtEm+mc5D3JQfX0AqJG0ia6n8WqNkomCxzNJtP4JZJniG5gl
-	lzmr+asA05fCAPlQfsO1LKP+zd3QjYHI=
-X-Gm-Gg: Acq92OEZFQz1SAVnG3abQrcvhbWIBHxqurK5H/dbQwH01scUjwHGAe96gC0zaipVaOc
-	UY0dS8G31AZoO5m1KT3NQN2TOF6vwCPVN8HErps0n+pQ25SUNJiOX+4FVEkaE+1sxC611nIl/Lj
-	xOXja1Q2r6NqAT30LDL4D4b17eA0FO8GpbAnaMuzJc/xxelhuulUvawJPhdioo+G7ziBVJjPc6w
-	fL5Aq2h8UDJAt2DPa0Hx8skCwfVwfvAwz7llFfnhQJHCMRmBPMSFI2BjnjRk2yfxxzkcEnLI24h
-	sik/1VwxfeLxDjp4OA==
-X-Received: by 2002:a05:6402:3901:b0:683:9a51:306b with SMTP id
- 4fb4d7f45d1cf-68ff1f6b02emr1897189a12.9.1780681874888; Fri, 05 Jun 2026
- 10:51:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="M0Y8eUgP"
+Date: Sat, 6 Jun 2026 02:26:08 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1780683986;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Jotq10JqYqOlSn7ZZV198HaQOk/Ndu6uXBHe6E8NKKE=;
+	b=M0Y8eUgPY3Ejk0FLA/P2nnOomZJnVlNaW8z/LYTJSc0nix/xjgemWU3iqEXnpn8IxWRFyg
+	qCh20ihyb6saqI4SBlFr0o+HbNUUF91kctCCUjGd/yCiMKYeAv6B9/sSWsGepjURF0IAkG
+	FPn2KAWKpJ/IIIwv5SMGU+16X+JoILl7JRg76/nMZCjbEH4tHFjUoArPWxyMm5OqJJp/EA
+	yZpYiIqUyQ+gzy1ONvlJoWMN3nXaGpcHp/h1srNES8638Lx3+80hVZCzae0CH4goU1RZxh
+	fjLk95em1Jgg2wK+MoZHp9XWBPLV2aQF5pUNZSZrhoJl5YGc5dMjeAFTbS9xKQ==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: Tuomas Ahola <taahol@utu.fi>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] docs: fix typos
+Message-ID: <aiMT-U9YhMNzXEkB@wyuan.org>
+References: <20260604131457.19215-1-taahol@utu.fi>
+ <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
+ <20260604165557.MWQuu%taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v11.git.git.1779449498.gitgitgadget@gmail.com>
- <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com> <8834c424fbd27800636fe21ae73e9cdce75b558a.1780477479.git.gitgitgadget@gmail.com>
- <9f5c36a9-a3b8-403d-9c59-40367eb895bd@gmail.com>
-In-Reply-To: <9f5c36a9-a3b8-403d-9c59-40367eb895bd@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Fri, 5 Jun 2026 19:50:38 +0200
-X-Gm-Features: AVVi8Cc5rTGIiWqf76yUnfPLJpY2TBWAoALLP3CY_LxyV0KSRUqsRhWyVfsp07Q
-Message-ID: <CAHwyqnXqPxaSnzqn0=t8ErWW-Nh_cVHAG6KYRROz-M55t16YSw@mail.gmail.com>
-Subject: Re: [PATCH v12 1/6] branch: add --forked filter for --list mode
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260604165557.MWQuu%taahol@utu.fi>
+X-Migadu-Flow: FLOW_OUT
 
-Hi Phillip!
+On Thu, Jun 04, 2026 at 07:55:57PM +0300, Tuomas Ahola wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> wrote:
+> 
+> > On Thu, Jun 4, 2026, at 15:14, Tuomas Ahola wrote:
+> > > [PATCH] docs: fix typos
+> > 
+> > The area `docs` isn´t correct since you are also changing comments in
+> > source files.
+> > 
+> > `*` could be used (as in a wildcard). Other people have used other
+> > things for "treewide" changes.
+> > 
+> 
+> Hmm, I took that from the other typofix patches we have currently in `seen`.
 
-Great points all around, I will take a look at implementing them. I'll
-respond here instead of for each specific message, and then include
-comments as part of the next version.
+Hi all,
 
-> > Add a --forked option to "git branch" list mode that keeps only
-> > branches whose configured upstream matches <branch>. The argument
-> > can be a ref (e.g. "origin/main", "master") or a shell-style
-> > glob (e.g. "origin/*"). The option can be repeated to widen the
-> > filter.
->
-> Do we want to support a remote name as an alias for $remote/HEAD to
-> match "git checkout -b $remote"?
+Yup, my patch 8570d9ba31 (Merge branch 'wy/docs-typofixes' into seen, 2026-06-04)
+used "docs" as the scope of the commit message.
 
-I have been going back and forth on this, and while I like the bare
-remote, it made the implementation a lot easier after it was removed,
-as the arguments from some of the others made sense to me.
+I thought for a while what would be the preferred scope for a typofixes
+commit that touches a quite wide range of the tree. And I didn't know we
+could use "*".
 
+On the one hand, I would rather let the typofix thing be simple and easy
+in one commit, since the actual changes were sort of logically unified.
+On the other hand, splitting them apart makes it easier to name the
+scope of each commit, while it would make much "meaningless" noise. So I
+was torn at that time.
 
-Harald
+"Luckily", Junio didn't say something about that, and my topic is
+waiting for more comments. So it just happens when I am struggling with
+re-roll it or not, I saw this thread. Therefore, could you please also
+raise it again in my topic in order to  give it a final decision? (Or
+start a new thread as my patch is actually in Andrew's thread, really
+sorry Andrew)
+
+Message-ID of my previous patch:
+<7b502e20e9495cd4720496bd6738a1fbeb453410.1780041658.git.wy@wyuan.org>
+
+Thanks!
