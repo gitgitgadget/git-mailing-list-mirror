@@ -1,69 +1,64 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A1D3ED5CD
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 18:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765433F0AB7
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 18:49:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780684566; cv=none; b=Z4LdhFYLneft/XjAKSa12M8pUfGULCPntGmgGmVcbQbAKFU7jxlqDUVsK9kaMroK8Rldt6snE9cgVZwQn4g2SNp/eLD8UVv/xg0yMl5LSaX+SzRIguVT8xR3g36p6s21KXORl6SyZHzmxv+zdO1zaZJH26dIDoIKtIXAlfer5hU=
+	t=1780685374; cv=none; b=e6uvNE3PdqiL/7lR/K9yyKN7r9WuE7saAF5dDiVOa4RGy2aV6gD00y9QBq7gRtXo5nD5LAIv+y1aXbhQFtzTGP/AfrS/mo6uE+8q/NbtBhHn4DyGFfMfNs/kn4H3aiyA9azS+IvD57m4ox34DW5SRa9SakS+rhiPH0UxRyHkD5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780684566; c=relaxed/simple;
-	bh=S08OU5uDcavPkT7FR4K7n/Zj5COcVrcHpBuPxXbJnHg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=laPtF19uaZo7R92g+DkI7lh3b8aSVtETfDzv92sd/Tiu+E/yZDtquoknxkXuDxnUK6MJ3ilyJ9ag9lHrufpi1bNArA6cF4t+9ZkkB0zTsQHBNULez+wcOsdkZbKYYvXMgPijAfgZbHAzbs7xMcP8uzNY2wn2VbuhUpzvXorTBcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KkPMjx81; arc=none smtp.client-ip=74.125.82.50
+	s=arc-20240116; t=1780685374; c=relaxed/simple;
+	bh=MF+0MBt6+XVGE1DjxCOw4bbhbcS36pRWQlwX0Kaoe7s=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=tBIzHYyzTl4nawa1P3+W//mYUeIO1TD1YoilgjGXB1kAJsm4LNWpRlF1U1HlXqtY3hPzlPGq2vFLG+yqTugqXB50YdBfjzJ9yEJq43vFioMzdxA/7OigapCTKaMdFL8G3kvsKmL41ZR1uBZMku9VBbPnB9IV2S6bd8VkpCbE+r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dXLNHfol; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KkPMjx81"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-13721dfd471so3046951c88.1
-        for <git@vger.kernel.org>; Fri, 05 Jun 2026 11:36:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXLNHfol"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8ced8f44da0so23560096d6.2
+        for <git@vger.kernel.org>; Fri, 05 Jun 2026 11:49:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780684564; x=1781289364; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780685369; x=1781290169; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DSBK12ieg1oeTUtcJjhB+RSAbeTA06/dXwUEJXA9yjs=;
-        b=KkPMjx81vCEpeJmoCitplHqkbrcmj87Y2oyep61XK4rEYSrZ4PRYW5t9xoW/3IEaRp
-         7PUfW6ULmSCHjcNKLHnp4EEzUIo+1kZWdThLloy1gdw3XjcNUjI3TEbG2YzaBtdojPN8
-         l1Po9Xdr6PcyJO5PBZiP9AGeKSAswFp0+/g7OTyjkXN+/pzB3cddbR//ZBn2ac9gnMnB
-         2U6ZMc3kwUCRE6hg2CF7VHuDUO837SJEorjQ5FJIXPISjxUQxFfzKAoIJyUV9veqmj7n
-         I9vSQJj8xOTmJ8U07Gcsv6XzNq6vrVRfBxChepyYoTNwS+3mzCzGAMwBDGOB9M6IOrzs
-         9qJQ==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4qVO2Lb1IruPPuvNogcIdRlaxpDr5RNABY0mEqzSW9s=;
+        b=dXLNHfolehtE/YD0JD9JM7wnQJEmcVwZbBcOQtx8eq9rGsxEvfaMzOOPI1sCEi207k
+         tbvlZOhJMr5kZ2vWfaDlGy9XTeodDZv6jTRVorG5MGwh5fbqianwPIHG0NJWrn4r6N8u
+         xxz2N1sVnzZBXzilqtVzAPY63ZJaIIJRAcXUhYVMhSWorT8RqgQogsthHRPLofH92W1A
+         yAfkzSZ3wc1OP5NtD6DKYlDdF4ywYNtHWetfM+mUsdAYi6YHvnQ6Ou9rr6oIt7mjNWqo
+         f8epkp2RzCNnSduer6twDSNI+wIaZPx7qwFScRiNnt8+z8B3tVN3wZesZp4JdPIOTvi4
+         PYdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780684564; x=1781289364;
+        d=1e100.net; s=20251104; t=1780685369; x=1781290169;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=DSBK12ieg1oeTUtcJjhB+RSAbeTA06/dXwUEJXA9yjs=;
-        b=ZbaMH02n+gtI4BFQfn4UGVZMBdWjET6gccvvzpvqxomSrIY6+okmYXtPyc6wCm5tGf
-         O5OyIrGBJTmW7eV5QTg4w/5EvqG6xmcKyvTvNmayZw5v5ZdL/NYnef5frFE/NCTsCVPq
-         +65wMKxTFxfzGPNipVGQfwMvOSnkObVY37aQxwY9et2mwUCh2HkRGOZNgOJCtr0Mcj8m
-         Cmg7v507x9aYJ+2tyb4158UtkyS0S6bFKnaqbVtnbwHr/rp12XMhF+3I6g/Peutj2Sea
-         Zj8cxiHgTJixK6igPOaTdnl9kdNnnoNFoese2B/PE3B+25yhKVdGG051le3hs7MGXVca
-         lk+A==
-X-Gm-Message-State: AOJu0YzeiuedRuVQm02ajfE3PEtVzoCkEOd10Q6wC6TBn+cxzreEaKKk
-	Gmp2NX9zlYbMQ2k+aQek/5Pmf8rBVIoe95CPHLQ7hX13MANpP0dXFqitvR1Sg5/s
-X-Gm-Gg: Acq92OEUaaOC0CXxAcrOkAHwJ/9R9d6jnH95/IFdimFrLuxLDH2/mDKmJe0BohEkBH2
-	QDHPQ5JqUAURP0NDFLIFXktAsBIdfIZPUnXevg12EkXIvlQi/Kuw8qE/9NBMoP6uXu2sZBFfQ/k
-	3HjJM3S5YBoWnQckiwN8EQGn7ys36PYWTuCi5DF7L5HkI7NI6JsvwtI3gFPAMLvM2e3LmEN6bsl
-	+E4xsBuKL81hj9c9sddYL1UYOBUErWYoaj4Yf5DTmVt39nnePK/VT+9WpZLtF/0QYNE4AfLB8vF
-	Sirt4rfRQP0ofEFtOrt8RpAM8PIyMKJy3C8I06IL8j3vl8Hl7n1I3Sjyb7BW8DjTGNulOmYHSrw
-	NTq6PhV7DYlB2fQLjtDDozfrH7Pr5Vj/xTXE9dT3YD/Vk+LcSb7rSd9xwu4zPDMyGOweC9jxOLJ
-	+/Fl56zWsahFVgfcASHM8dxSnaOkFy74J8ELA=
-X-Received: by 2002:a05:7022:6b99:b0:136:b370:64de with SMTP id a92af1059eb24-1380671273bmr2355392c88.32.1780684563940;
-        Fri, 05 Jun 2026 11:36:03 -0700 (PDT)
-Received: from [127.0.0.1] ([20.169.53.54])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-137f53f06c4sm6206663c88.0.2026.06.05.11.36.03
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4qVO2Lb1IruPPuvNogcIdRlaxpDr5RNABY0mEqzSW9s=;
+        b=mA5JcfTZGqJFumfEwls9qLqRRfJiJboy3S66rxNdHOWp6cNt/3kFMIF96FidL6Abm3
+         AFsiIi+HLAOM7wFuXRRqLTXyCo22PEOp8DnwWOadRdEzFzT+g1PpCcDwFKmqughTV5zq
+         oBhG+uXPjk/3MCOMhUQR/FKfUkdYRyzUTcASCOnE9zzA7I7Nw5z1LGPwbK7LFf5Q6K1I
+         rzXWjdnP4tfQp3jbmNtxKlV1h4Ygw8vrFKtb2C750mD6gYn4rds6owI2kcmQf8uiXjLF
+         HmNkJR31xcIAwKXGsw+AGNhS7wJV+s3Aq62IxETrOHuxwoX0AoZ8HQIDalI29Leu+FMY
+         dkmw==
+X-Gm-Message-State: AOJu0YwWx0Mm/Du5u4pFWWoEIt/fZ+PiDBtoATkzMUYJdC94OINOz496
+	hYUfJBSJ0wn7yJCOra1P7o5lQzGEAIFPqARpFkRUjmb8Qrl8gW24PHuzK8uAVw==
+X-Gm-Gg: Acq92OEUFajeyK6zaHxyHPMPmH6pOKXdConV61GY5T7LyeBXbS0NbK6tRmPizH+Klon
+	X2hhKcAfF+1IhJZzfsp16ISDG2IHlguCQWqQMNA7q293pOX4PplSBavpuz58iUkq33nLQ9TzTHf
+	nayET1pWOJ8wXfb893RhzEkvcNxJhYoFZY2kxReMdLf01UZrG0tqQqY56Qvf8uVIhP2qqXGzLy0
+	n2X4go4eAKlZE4kWlRRg0Mm99+gO5t8W5UAtjHa8r2AJg3M5AuyNRsce81vbwgyFIMSlQdnLWvE
+	aBXhOo5/zIF4e9VifOJVjoOBW9ziw73C55SgUuxuTC65COjR/O81OocZgE3vIE4lg2iAStFsegE
+	qkP5HqpPY/w6g6Z9/6ibm46ouoJ8qAcuFtGLN2dPrpqEYVGBYR83n1ZtcTu22I/0hFlCojgtQ0D
+	+nuagqZrQMegW8ij1C4RIkTiqoZM4YC+YoYwBf
+X-Received: by 2002:a05:620a:7083:b0:915:9125:e65b with SMTP id af79cd13be357-915a9dce7b6mr854886185a.49.1780685369264;
+        Fri, 05 Jun 2026 11:49:29 -0700 (PDT)
+Received: from [127.0.0.1] ([74.235.126.66])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9158a381febsm943957685a.23.2026.06.05.11.49.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2026 11:36:03 -0700 (PDT)
-Message-Id: <511de4788ed4589b5e63db15cb1b75d5eb4b5c59.1780684553.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
-References: <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com>
-	<pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 05 Jun 2026 18:35:53 +0000
-Subject: [PATCH v13 6/6] branch: add --dry-run for --prune-merged
+        Fri, 05 Jun 2026 11:49:28 -0700 (PDT)
+Message-Id: <pull.2317.git.git.1780685368.gitgitgadget@gmail.com>
+From: "Jason Newton via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 05 Jun 2026 18:49:26 +0000
+Subject: [PATCH 0/2] worktree: copy-on-write creation and shared-branch worktrees
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,166 +69,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Jason Newton <nevion@gmail.com>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+When many worktrees share one repository -- e .g. a fleet of agents each
+needing an isolated checkout -- "git worktree add" is costly at scale.
+Objects are shared via the common dir, but the working tree is not: each add
+rewrites every tracked file, so N worktrees cost N full checkouts of disk
+and I/O. And a branch can only be checked out in one worktree.
 
-With --dry-run, --prune-merged prints the local branches it would
-delete, one "Would delete branch <name>" line each, and exits
-without touching any ref. The same filtering applies, so the output
-is exactly the set that the real run would delete.
+Patch 1 adds "git worktree add --reflink": on a copy-on-write filesystem it
+populates the new worktree by reflinking the current worktree's files and
+index, then "git reset --hard" rewrites only the paths that differ from . A
+reflink_file() helper in copy.c uses FICLONE (Linux) and clonefile()
+(macOS); elsewhere (other filesystems, Windows) it is probed up front and
+falls back to a normal checkout. Defaulting is via the worktree.reflink
+config (true/false/auto); --no-reflink overrides.
 
---dry-run is only meaningful together with --prune-merged and is
-rejected otherwise.
+Patch 2 lets a branch be checked out in several worktrees, for parallel work
+on one checkout. A branch mid-rebase or mid-bisect elsewhere is still
+refused.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-branch.adoc |  8 ++++++-
- builtin/branch.c              | 13 ++++++++---
- t/t3200-branch.sh             | 44 +++++++++++++++++++++++++++++++++++
- 3 files changed, 61 insertions(+), 4 deletions(-)
+Benchmark (Linux-kernel fork, 93k files, ~33 GB tree incl. build output,
+btrfs): a normal add allocates ~0.9 GB of real disk per worktree (~5.3 GB
+for four, linear); --reflink allocates ~0 at any count and also carries the
+untracked build tree. ("Real disk" = btrfs exclusive bytes.)
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 5c43dc55a8..1f49a831fd 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -25,7 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
- git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] <branch-name>...
- git branch --edit-description [<branch-name>]
--git branch --prune-merged <branch>...
-+git branch [--dry-run] --prune-merged <branch>...
- 
- DESCRIPTION
- -----------
-@@ -226,6 +226,12 @@ Branches refused by the "fully merged" safety check are listed as
- warnings and skipped; pass them to `git branch -D` explicitly if
- you want them gone.
- 
-+`--dry-run`::
-+	With `--prune-merged`, print which branches would be
-+	deleted and exit without touching any ref.  Useful for
-+	sanity-checking a wide pattern like `'origin/*'` before
-+	committing to the deletion.
-+
- `-v`::
- `-vv`::
- `--verbose`::
-diff --git a/builtin/branch.c b/builtin/branch.c
-index be4218ded3..98e56d4ff8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -715,7 +715,7 @@ static int parse_opt_forked(const struct option *opt, const char *arg, int unset
- }
- 
- static int prune_merged_branches(int argc, const char **argv,
--				 int quiet)
-+				 int quiet, int dry_run)
- {
- 	struct ref_store *refs = get_main_ref_store(the_repository);
- 	struct ref_filter filter = REF_FILTER_INIT;
-@@ -775,7 +775,8 @@ static int prune_merged_branches(int argc, const char **argv,
- 				      FILTER_REFS_BRANCHES,
- 				      DELETE_BRANCH_WARN_ONLY |
- 				      DELETE_BRANCH_NO_HEAD_FALLBACK |
--				      (quiet ? DELETE_BRANCH_QUIET : 0));
-+				      (quiet ? DELETE_BRANCH_QUIET : 0) |
-+				      (dry_run ? DELETE_BRANCH_DRY_RUN : 0));
- 
- 	strvec_clear(&deletable);
- 	ref_array_clear(&candidates);
-@@ -825,6 +826,7 @@ int cmd_branch(int argc,
- 	int delete = 0, rename = 0, copy = 0, list = 0,
- 	    unset_upstream = 0, show_current = 0, edit_description = 0;
- 	int prune_merged = 0;
-+	int dry_run = 0;
- 	const char *new_upstream = NULL;
- 	int noncreate_actions = 0;
- 	/* possible options */
-@@ -880,6 +882,8 @@ int cmd_branch(int argc,
- 			 N_("edit the description for the branch")),
- 		OPT_BOOL(0, "prune-merged", &prune_merged,
- 			N_("delete local branches whose upstream matches <branch> and is merged")),
-+		OPT_BOOL(0, "dry-run", &dry_run,
-+			N_("with --prune-merged, only print which branches would be deleted")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
-@@ -942,6 +946,9 @@ int cmd_branch(int argc,
- 	if (noncreate_actions > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
-+	if (dry_run && !prune_merged)
-+		die(_("--dry-run requires --prune-merged"));
-+
- 	if (recurse_submodules_explicit) {
- 		if (!submodule_propagate_branches)
- 			die(_("branch with --recurse-submodules can only be used if submodule.propagateBranches is enabled"));
-@@ -981,7 +988,7 @@ int cmd_branch(int argc,
- 				      (quiet ? DELETE_BRANCH_QUIET : 0));
- 		goto out;
- 	} else if (prune_merged) {
--		ret = prune_merged_branches(argc, argv, quiet);
-+		ret = prune_merged_branches(argc, argv, quiet, dry_run);
- 		goto out;
- 	} else if (show_current) {
- 		print_current_branch_name();
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 3f7b1fc3d6..305c0141fc 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -2040,4 +2040,48 @@ test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
- 	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
- '
- 
-+test_expect_success '--prune-merged --dry-run lists but does not delete' '
-+	test_when_finished "rm -rf pm-dry" &&
-+	git clone pm-upstream pm-dry &&
-+	git -C pm-dry remote add fork ../pm-fork &&
-+	test_config -C pm-dry remote.pushDefault fork &&
-+	test_config -C pm-dry push.default current &&
-+	git -C pm-dry branch one one-commit &&
-+	git -C pm-dry branch --set-upstream-to=origin/next one &&
-+	git -C pm-dry branch two two-commit &&
-+	git -C pm-dry branch --set-upstream-to=origin/next two &&
-+
-+	git -C pm-dry branch --dry-run --prune-merged "origin/*" >actual &&
-+	test_grep "Would delete branch one " actual &&
-+	test_grep "Would delete branch two " actual &&
-+
-+	git -C pm-dry rev-parse --verify refs/heads/one &&
-+	git -C pm-dry rev-parse --verify refs/heads/two
-+'
-+
-+test_expect_success '--prune-merged --dry-run only lists branches the live run would delete' '
-+	test_when_finished "rm -rf pm-dry-mixed" &&
-+	git clone pm-upstream pm-dry-mixed &&
-+	git -C pm-dry-mixed remote add fork ../pm-fork &&
-+	test_config -C pm-dry-mixed remote.pushDefault fork &&
-+	test_config -C pm-dry-mixed push.default current &&
-+	git -C pm-dry-mixed checkout -b wip origin/next &&
-+	git -C pm-dry-mixed branch --set-upstream-to=origin/next wip &&
-+	test_commit -C pm-dry-mixed local-only &&
-+	git -C pm-dry-mixed checkout - &&
-+	git -C pm-dry-mixed branch merged one-commit &&
-+	git -C pm-dry-mixed branch --set-upstream-to=origin/next merged &&
-+
-+	git -C pm-dry-mixed branch --dry-run --prune-merged "origin/*" >out &&
-+	test_grep "Would delete branch merged" out &&
-+	test_grep ! "Would delete branch wip" out &&
-+	git -C pm-dry-mixed rev-parse --verify refs/heads/wip &&
-+	git -C pm-dry-mixed rev-parse --verify refs/heads/merged
-+'
-+
-+test_expect_success '--dry-run without --prune-merged is rejected' '
-+	test_must_fail git -C forked branch --dry-run 2>err &&
-+	test_grep "requires --prune-merged" err
-+'
-+
- test_done
+worktree-reflink-bench
+[https://github.com/user-attachments/assets/e3e721c8-2206-4b78-ad08-21677ef30753]
+
+Note: patch 2 changes a default (same-branch checkout now allowed); two
+t2400 assertions were updated accordingly.
+
+Jason Newton (2):
+  worktree: add --reflink for copy-on-write worktree creation
+  worktree: allow sharing a checked-out branch across worktrees
+
+ Documentation/config/worktree.adoc |  10 ++
+ Documentation/git-worktree.adoc    |  47 +++++-
+ builtin/worktree.c                 | 257 ++++++++++++++++++++++++++++-
+ copy.c                             |  65 ++++++++
+ copy.h                             |  13 ++
+ t/t2400-worktree-add.sh            | 119 ++++++++++++-
+ 6 files changed, 493 insertions(+), 18 deletions(-)
+
+
+base-commit: c69baaf57ba26cf117c2b6793802877f19738b0d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2317%2Fnevion%2Fworktree-reflink-cow-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2317/nevion/worktree-reflink-cow-v1
+Pull-Request: https://github.com/git/git/pull/2317
 -- 
 gitgitgadget
