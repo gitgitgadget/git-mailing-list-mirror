@@ -1,94 +1,427 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135EE416CEA
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 18:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479F53F660D
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 18:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780683991; cv=none; b=mSRpyfBa0LPwOFHnfti62JAbfLh7NZazUy94EBHSxx1pY7b6dhskk7EpLWVKHCwz13+swMoBvRArKvvA/Ua2SHXT+JKxlQGezZhIgnaQo3ZZuuwEquoiTk7ULClwq/SKKSDUrYuNFJoghiSqQn23KlRMWStGrso8M4H3WpapqPo=
+	t=1780684559; cv=none; b=WF0EdrLEkfRhIJQfjkLWZVVoHeFrwCxsF5/HNUZXvcl3WMmZljJNteBRqKRQbbjXLlSNWz/1OTZque8rvkIuwvehf83AM//cjjKDRwdEMlUtWsj05D651KHujteUl+42A1SzSVPwir0B3vHuKgpHipYR+oTYWAdc2bO/xOFYY7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780683991; c=relaxed/simple;
-	bh=Z+lhQ/ht8CwyJZt3IuCoacKbCv/h0MK09OozSXLImmE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ldp9uTTq+S6tvObyDVhxzao5R+IGexavDqlCuaFJmEp2EiANHz6bl9Y3Q2JbX0sJajwKVkt1NA2mdNFA1VHqsg3O3XJOe7XtxNKbNPBw0Q3REvvoHjzZvx+uVlDwFBuOdUc7G8h8dMVlyZSVGRCmCJ5J57m7mSOM/VQaSif2nxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=M0Y8eUgP; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	s=arc-20240116; t=1780684559; c=relaxed/simple;
+	bh=ANSemZI6k0QJ39E/l/4qMQgeNSJrgQgnZ2WV6E+d6zM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=GyFZXMVFNEXGMHFI+6PY/HJPQYGzh+8nDxVF8wMoQ2wAg4l1WPWPPnrFr0uVDmQeJe9FvaUEPwfWEQNWUKQNtI3/HhBLtbLgOG9o7mLj9eedbj2NnluIGVs0sYngtyLWlHQ+15j71TRnCASnmTVe+shNRtNATOwfg6DJ9z5E2kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AUfdTEwN; arc=none smtp.client-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="M0Y8eUgP"
-Date: Sat, 6 Jun 2026 02:26:08 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1780683986;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Jotq10JqYqOlSn7ZZV198HaQOk/Ndu6uXBHe6E8NKKE=;
-	b=M0Y8eUgPY3Ejk0FLA/P2nnOomZJnVlNaW8z/LYTJSc0nix/xjgemWU3iqEXnpn8IxWRFyg
-	qCh20ihyb6saqI4SBlFr0o+HbNUUF91kctCCUjGd/yCiMKYeAv6B9/sSWsGepjURF0IAkG
-	FPn2KAWKpJ/IIIwv5SMGU+16X+JoILl7JRg76/nMZCjbEH4tHFjUoArPWxyMm5OqJJp/EA
-	yZpYiIqUyQ+gzy1ONvlJoWMN3nXaGpcHp/h1srNES8638Lx3+80hVZCzae0CH4goU1RZxh
-	fjLk95em1Jgg2wK+MoZHp9XWBPLV2aQF5pUNZSZrhoJl5YGc5dMjeAFTbS9xKQ==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: Tuomas Ahola <taahol@utu.fi>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] docs: fix typos
-Message-ID: <aiMT-U9YhMNzXEkB@wyuan.org>
-References: <20260604131457.19215-1-taahol@utu.fi>
- <92fe3db2-83bd-4aa9-a1f4-bec01dfaf8ca@app.fastmail.com>
- <20260604165557.MWQuu%taahol@utu.fi>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AUfdTEwN"
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-135e7f4a295so1329787c88.0
+        for <git@vger.kernel.org>; Fri, 05 Jun 2026 11:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780684556; x=1781289356; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UbcscQ46XIbbG6kC0aXa6J/L91ZclIuUSlGU76W/TQQ=;
+        b=AUfdTEwNgoDAe1uXqeSEGt7eMl9/ynV8VtxT0cAvu9Tv5Caoeapz/Z97cjYVpZOQjY
+         KfLj/LEiAhBfduUSVrKjmia71wpH8qqcTVp5XhbL/PXuhID8MZm2TV8CAfQj/brLrDn2
+         f7DXAOxbyAmxTO5GBtS8FwaZAivwjBgzFeKb/9tyEgDJW4sZ25dBrklYjUjO9FiVFD/t
+         XPrwNAfef359d/ctcrJmMYJ5ik27Pw4FCh6itlKtm1MnnV/YnH7iycyfyIjOD5+xYf19
+         TtUhdq9m9wmWIymEsYXfqdhrbNuEtfeI5rJMPCI/z8dOkIFTybMdh8/l3JwRW7lIWIb1
+         ejhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780684556; x=1781289356;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UbcscQ46XIbbG6kC0aXa6J/L91ZclIuUSlGU76W/TQQ=;
+        b=Rm1z0rbOrivP6+ST3YIRASxzNW2CNTzTu5+mZoMEMWksFtK9OE+WjmNwwO2RfJa5th
+         VMnbuKaFr5nJorXCxoIShAqOAP/ysbEIu3+b/u3K4sL+DAzbO04STIPK+ig4t82rzmgs
+         GQK0bJp5nEtqNrkEQLNFyoAACvciZbYsJmr0lZn2awi7vYqTx5fhlYfBSk1QyVBJeDmd
+         lUEtb+dO7gT7EGVVWU+IdD9ZO63HENnURwE/G7MKBskI5NQj5DscZcdv+gmCmhcMGPgz
+         VlCPGpTDk6100uIj8uuG0b0HGjkFye1FskRdGkO+g65DdW056MsHYlQlxlsUXpq2lhys
+         awgw==
+X-Gm-Message-State: AOJu0YwDGoOwqe+PS7ZvIE4iMcbhk9NiJq5HrPZMnlvUjYyIXJcfxcHs
+	KeWR7ZEzTk+QwcsxGrBK8EqNu5SBVMmW8LEPm0DzgCsgb9VbRGAQ1AUYZKe7Bg==
+X-Gm-Gg: Acq92OFs0Lf5jJ1WQE6rorD/UdE3XxX++6AIddeJEhrhyvhbc+ST2mOxhyy2vra2MpB
+	9POQfEYzKXhGys3vY+BtGpV0njXnuK4OrXrzFi8sve+lL24ld0yRqUhQL9+1QGF3AUG3w5/9AbG
+	NxiTADxSorg3q1PEXSgwZJssSp4wStauQU+/K9KU+TBw5l5zOL9F3a3DBugGaDX90gaPYuxHk5l
+	BGNICh5IvGPn1X/SC8GdLr4MhpVIb7loxd2Nadxu2EtEn/pUWO4q999IwCJ2RRZ/CKiHFLIFoFk
+	FSX7K2fuX1YRVQXtCmfsiP37Y3UI/eQmDNR0fp3AOstb/+KDBK3rH5HUjxu3CePG+U7JeislSQn
+	9SLPn41OegwjnJcFKtOyKOW8NGLSwZDbVFUTyswj/qw5cgSBRJW85jXx/yq/Uqj94IIvsHxMDKs
+	YSsHr9I6E33ChSr4VAYCvASwdxCkIvyRA/xAEFw03awS3w0w==
+X-Received: by 2002:a05:7022:6ba6:b0:136:aebc:24f5 with SMTP id a92af1059eb24-13807d7e4f0mr1645592c88.15.1780684556325;
+        Fri, 05 Jun 2026 11:35:56 -0700 (PDT)
+Received: from [127.0.0.1] ([20.169.53.54])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-137f549bbefsm6580050c88.4.2026.06.05.11.35.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2026 11:35:55 -0700 (PDT)
+Message-Id: <ccd07cff250d7b422f1b6a915ff0200e50e55e30.1780684553.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+References: <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com>
+	<pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 05 Jun 2026 18:35:48 +0000
+Subject: [PATCH v13 1/6] branch: add --forked filter for --list mode
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260604165557.MWQuu%taahol@utu.fi>
-X-Migadu-Flow: FLOW_OUT
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-On Thu, Jun 04, 2026 at 07:55:57PM +0300, Tuomas Ahola wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> wrote:
-> 
-> > On Thu, Jun 4, 2026, at 15:14, Tuomas Ahola wrote:
-> > > [PATCH] docs: fix typos
-> > 
-> > The area `docs` isn´t correct since you are also changing comments in
-> > source files.
-> > 
-> > `*` could be used (as in a wildcard). Other people have used other
-> > things for "treewide" changes.
-> > 
-> 
-> Hmm, I took that from the other typofix patches we have currently in `seen`.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Hi all,
+Add a --forked option to "git branch" list mode that lists only
+branches whose configured upstream matches <branch>. The argument
+can be a ref (e.g. "origin/main", "master") or a shell glob
+(e.g. "origin/*"), and may be repeated to widen the filter.
 
-Yup, my patch 8570d9ba31 (Merge branch 'wy/docs-typofixes' into seen, 2026-06-04)
-used "docs" as the scope of the commit message.
+It is an ordinary list filter, so it combines with the others:
 
-I thought for a while what would be the preferred scope for a typofixes
-commit that touches a quite wide range of the tree. And I didn't know we
-could use "*".
+    git branch --merged origin/main --forked 'origin/*'
 
-On the one hand, I would rather let the typofix thing be simple and easy
-in one commit, since the actual changes were sort of logically unified.
-On the other hand, splitting them apart makes it easier to name the
-scope of each commit, while it would make much "meaningless" noise. So I
-was torn at that time.
+lists branches forked from origin that are already merged into
+origin/main, and --no-merged inverts the question.
 
-"Luckily", Junio didn't say something about that, and my topic is
-waiting for more comments. So it just happens when I am struggling with
-re-roll it or not, I saw this thread. Therefore, could you please also
-raise it again in my topic in order to  give it a final decision? (Or
-start a new thread as my patch is actually in Andrew's thread, really
-sorry Andrew)
+This is the building block for --prune-merged, which deletes the
+listed branches once they have landed on their upstream.
 
-Message-ID of my previous patch:
-<7b502e20e9495cd4720496bd6738a1fbeb453410.1780041658.git.wy@wyuan.org>
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ Documentation/git-branch.adoc | 10 +++-
+ builtin/branch.c              | 18 ++++++-
+ ref-filter.c                  | 70 ++++++++++++++++++++++++++
+ ref-filter.h                  | 10 ++++
+ t/t3200-branch.sh             | 92 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 197 insertions(+), 3 deletions(-)
 
-Thanks!
+diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
+index c0afddc424..62ebab6051 100644
+--- a/Documentation/git-branch.adoc
++++ b/Documentation/git-branch.adoc
+@@ -13,6 +13,7 @@ git branch [--color[=<when>] | --no-color] [--show-current]
+ 	   [--column[=<options>] | --no-column] [--sort=<key>]
+ 	   [--merged [<commit>]] [--no-merged [<commit>]]
+ 	   [--contains [<commit>]] [--no-contains [<commit>]]
++	   [(--forked <branch>)...]
+ 	   [--points-at <object>] [--format=<format>]
+ 	   [(-r|--remotes) | (-a|--all)]
+ 	   [--list] [<pattern>...]
+@@ -51,7 +52,8 @@ merged into the named commit (i.e. the branches whose tip commits are
+ reachable from the named commit) will be listed.  With `--no-merged` only
+ branches not merged into the named commit will be listed.  If the _<commit>_
+ argument is missing it defaults to `HEAD` (i.e. the tip of the current
+-branch).
++branch).  With `--forked`, only branches whose configured upstream matches
++the given branch or pattern will be listed.
+ 
+ The command's second form creates a new branch head named _<branch-name>_
+ which points to the current `HEAD`, or _<start-point>_ if given. As a
+@@ -311,6 +313,12 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
+ 	Only list branches whose tips are not reachable from
+ 	_<commit>_ (`HEAD` if not specified). Implies `--list`.
+ 
++`--forked <branch>`::
++	Only list branches whose configured upstream matches
++	_<branch>_. The argument can be a ref (e.g. `origin/main`,
++	`master`) or a shell-style glob (e.g. `'origin/*'`). The
++	option can be repeated to widen the filter. Implies `--list`.
++
+ `--points-at <object>`::
+ 	Only list branches of _<object>_.
+ 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 1572a4f9ef..c159f45b4c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -30,7 +30,7 @@
+ #include "commit-reach.h"
+ 
+ static const char * const builtin_branch_usage[] = {
+-	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
++	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged] [(--forked <branch>)...]"),
+ 	N_("git branch [<options>] [-f] [--recurse-submodules] <branch-name> [<start-point>]"),
+ 	N_("git branch [<options>] [-l] [<pattern>...]"),
+ 	N_("git branch [<options>] [-r] (-d | -D) <branch-name>..."),
+@@ -673,6 +673,16 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	free_worktrees(worktrees);
+ }
+ 
++static int parse_opt_forked(const struct option *opt, const char *arg, int unset)
++{
++	struct ref_filter *filter = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	if (ref_filter_forked_add(filter, arg) < 0)
++		die(_("'%s' is not a valid branch or pattern"), arg);
++	return 0;
++}
++
+ static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
+ 
+ static int edit_branch_description(const char *branch_name)
+@@ -770,6 +780,9 @@ int cmd_branch(int argc,
+ 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_MERGED(&filter, N_("print only branches that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
++		OPT_CALLBACK_F(0, "forked", &filter, N_("branch"),
++			N_("print only branches whose upstream matches <branch> (repeatable)"),
++			PARSE_OPT_NONEG, parse_opt_forked),
+ 		OPT_COLUMN(0, "column", &colopts, N_("list branches in columns")),
+ 		OPT_REF_SORT(&sorting_options),
+ 		OPT_CALLBACK(0, "points-at", &filter.points_at, N_("object"),
+@@ -815,7 +828,8 @@ int cmd_branch(int argc,
+ 		list = 1;
+ 
+ 	if (filter.with_commit || filter.no_commit ||
+-	    filter.reachable_from || filter.unreachable_from || filter.points_at.nr)
++	    filter.reachable_from || filter.unreachable_from ||
++	    filter.points_at.nr || filter.forked.nr)
+ 		list = 1;
+ 
+ 	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
+diff --git a/ref-filter.c b/ref-filter.c
+index 1da4c0e60d..1ddd5a3f6d 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2744,6 +2744,72 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+ 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
+ }
+ 
++static const char *short_upstream_name(const char *full_ref)
++{
++	const char *short_name = full_ref;
++	(void)(skip_prefix(short_name, "refs/heads/", &short_name) ||
++	       skip_prefix(short_name, "refs/remotes/", &short_name));
++	return short_name;
++}
++
++/*
++ * Match the configured upstream of a branch against the registered
++ * --forked patterns. Exact patterns are compared against the full
++ * upstream refname so they are unambiguous; glob patterns are matched
++ * against the abbreviated upstream so that a glob such as origin/...
++ * works as typed.
++ */
++static int filter_forked_match(struct ref_filter *filter, const char *refname)
++{
++	const char *short_name;
++	struct branch *branch;
++	const char *upstream;
++	int i;
++
++	if (!skip_prefix(refname, "refs/heads/", &short_name))
++		return 0;
++	branch = branch_get(short_name);
++	if (!branch)
++		return 0;
++	upstream = branch_get_upstream(branch, NULL);
++	if (!upstream)
++		return 0;
++
++	for (i = 0; i < filter->forked.nr; i++) {
++		const char *pattern = filter->forked.v[i];
++		if (has_glob_specials(pattern)) {
++			if (!wildmatch(pattern, short_upstream_name(upstream),
++				       WM_PATHNAME))
++				return 1;
++		} else if (!strcmp(pattern, upstream)) {
++			return 1;
++		}
++	}
++	return 0;
++}
++
++int ref_filter_forked_add(struct ref_filter *filter, const char *arg)
++{
++	struct object_id oid;
++	char *full_ref = NULL;
++
++	if (has_glob_specials(arg)) {
++		strvec_push(&filter->forked, arg);
++		return 0;
++	}
++
++	if (repo_dwim_ref(the_repository, arg, strlen(arg), &oid,
++			  &full_ref, 0) == 1 &&
++	    (starts_with(full_ref, "refs/heads/") ||
++	     starts_with(full_ref, "refs/remotes/"))) {
++		strvec_push(&filter->forked, full_ref);
++		free(full_ref);
++		return 0;
++	}
++	free(full_ref);
++	return -1;
++}
++
+ /*
+  * We need to seek to the reference right after a given marker but excluding any
+  * matching references. So we seek to the lexicographically next reference.
+@@ -2979,6 +3045,9 @@ static struct ref_array_item *apply_ref_filter(const struct reference *ref,
+ 	if (filter->points_at.nr && !match_points_at(&filter->points_at, ref->oid, ref->name))
+ 		return NULL;
+ 
++	if (filter->forked.nr && !filter_forked_match(filter, ref->name))
++		return NULL;
++
+ 	/*
+ 	 * A merge filter is applied on refs pointing to commits. Hence
+ 	 * obtain the commit using the 'oid' available and discard all
+@@ -3765,6 +3834,7 @@ void ref_filter_init(struct ref_filter *filter)
+ void ref_filter_clear(struct ref_filter *filter)
+ {
+ 	strvec_clear(&filter->exclude);
++	strvec_clear(&filter->forked);
+ 	oid_array_clear(&filter->points_at);
+ 	commit_list_free(filter->with_commit);
+ 	commit_list_free(filter->no_commit);
+diff --git a/ref-filter.h b/ref-filter.h
+index 120221b47f..9361296e2a 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -67,6 +67,7 @@ struct ref_filter {
+ 	const char **name_patterns;
+ 	const char *start_after;
+ 	struct strvec exclude;
++	struct strvec forked;
+ 	struct oid_array points_at;
+ 	struct commit_list *with_commit;
+ 	struct commit_list *no_commit;
+@@ -110,6 +111,7 @@ struct ref_format {
+ #define REF_FILTER_INIT { \
+ 	.points_at = OID_ARRAY_INIT, \
+ 	.exclude = STRVEC_INIT, \
++	.forked = STRVEC_INIT, \
+ }
+ #define REF_FORMAT_INIT {             \
+ 	.use_color = GIT_COLOR_UNKNOWN, \
+@@ -172,6 +174,14 @@ void ref_sorting_release(struct ref_sorting *);
+ struct ref_sorting *ref_sorting_options(struct string_list *);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
++/*
++ * Register a --forked <branch> pattern on the filter. The argument is
++ * either a ref, which is resolved to its full refname, or a shell-style
++ * glob. Branches are kept only when their configured upstream matches
++ * one of the registered patterns. Returns -1 if the argument is not a
++ * valid ref or pattern.
++ */
++int ref_filter_forked_add(struct ref_filter *filter, const char *arg);
+ /*  Get the current HEAD's description */
+ char *get_head_description(void);
+ /*  Set up translated strings in the output. */
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index e7829c2c4b..4e7deddc04 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1717,4 +1717,96 @@ test_expect_success 'errors if given a bad branch name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--forked: setup' '
++	test_create_repo forked-upstream &&
++	test_commit -C forked-upstream base &&
++	git -C forked-upstream branch one base &&
++	git -C forked-upstream branch two base &&
++
++	test_create_repo forked-other &&
++	test_commit -C forked-other other-base &&
++	git -C forked-other branch foreign other-base &&
++
++	git clone forked-upstream forked &&
++	git -C forked remote add other ../forked-other &&
++	git -C forked fetch other &&
++	git -C forked branch local-base &&
++	git -C forked branch --track local-one origin/one &&
++	git -C forked branch --track local-two origin/two &&
++	git -C forked branch --track local-foreign other/foreign &&
++	git -C forked branch detached &&
++	git -C forked branch --track local-trunk local-base
++'
++
++test_expect_success '--forked <upstream-tracking-branch> filters by upstream' '
++	git -C forked branch --forked origin/one --format="%(refname:short)" >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <glob> filters by wildmatch' '
++	git -C forked branch --forked "origin/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked <local-branch> matches branches with local upstream' '
++	git -C forked branch --forked local-base --format="%(refname:short)" >actual &&
++	echo local-trunk >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked can be repeated to widen the filter' '
++	git -C forked branch --forked origin/one --forked other/foreign --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked combines literal and glob arguments' '
++	git -C forked branch --forked local-base --forked "other/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-trunk
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked "*/*" covers every remote-tracking upstream' '
++	git -C forked branch --forked "*/*" --format="%(refname:short)" >actual &&
++	cat >expect <<-\EOF &&
++	local-foreign
++	local-one
++	local-two
++	main
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success '--forked composes with --no-merged' '
++	test_when_finished "git -C forked checkout detached" &&
++	git -C forked checkout local-one &&
++	test_commit -C forked local-only &&
++	git -C forked branch --forked "origin/*" --no-merged origin/one \
++		--format="%(refname:short)" >actual &&
++	echo local-one >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--forked rejects unknown branch/pattern' '
++	test_must_fail git -C forked branch --forked nope 2>err &&
++	test_grep "not a valid branch or pattern" err
++'
++
++test_expect_success '--forked requires a value' '
++	test_must_fail git -C forked branch --forked 2>err &&
++	test_grep "requires a value" err
++'
++
+ test_done
+-- 
+gitgitgadget
+
