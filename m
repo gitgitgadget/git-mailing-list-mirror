@@ -1,41 +1,56 @@
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from grace.univie.ac.at (grace.univie.ac.at [131.130.3.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A9B40313D
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 06:43:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F3C42EEB0
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 08:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=131.130.3.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780641833; cv=none; b=OxiPgEikKnnt8QcbLSu1uoMLgGZxW0WoSLPhiiMoqT3fbjWIJrnUEXJGG2BRxZwY671Ml8XdMOemmatbTr7R0wKkl2CDAzqiRvO1iATbOp5SHrcKzhOKgeYCiqF0M7h+eJSdUZ76o+LvhVkFjBw1mEhQIWRwSZZkS5Zwxgdpfus=
+	t=1780649720; cv=none; b=CZrGylGAfRNGFqKrLpZNTxK8Vr61pM0dWIDqFEfYaLKc5CMSBtxMLqHWB2FkLRaYiVbvi0/4ifaVc/STzTxFeIGKT0KJpnaWUc7wepBWgphH1aD9oeHYLlboDoagLx0Xj5LfcWZ7I0o639LE8gmkf91E3n0ZGGKi2a8XsGZEFOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780641833; c=relaxed/simple;
-	bh=B7a7ifP7B1UJ8qSMxXPatTEREOTu/uc0q0VdMWNBr3A=;
+	s=arc-20240116; t=1780649720; c=relaxed/simple;
+	bh=RiP7x0fhI+ry+stlhlDN2p0SgBPR8gvbPTILDJ5GBx8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B/odC/iHUb5EuuivUgbnc+oNaqeVrpZNToBz0bnVo66NTCKj09dgLjj3APqDCDl0BtOWoYv7sLR3nLDq55f2v/4nzBaCLYv2qFXnQdF7FeVW1z4wea4GzyWbxIWGNYBIIJ5K/STMWpQTAI7biU/3xdZiyxyLJ8f2Foxm4lekFus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=HH4XRKsA; arc=none smtp.client-ip=95.215.58.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=u24TM7btSygI0YqXMcYGrxPc24kHb1wJluptxYuyqIi270LBtVt9Ro2s1llnZsDmC5tyi9pavUVu1aeGs83jN7v1Giq5rySt+u2dZAZVIr/7VukVXcgYxhP6r+Z1KVYZ+uHNvGtZEHm7zXKyxslr+ph7msq4WtmmarJUajZzWtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=univie.ac.at; spf=pass smtp.mailfrom=univie.ac.at; dkim=pass (2048-bit key) header.d=univie.ac.at header.i=@univie.ac.at header.b=Wgi6TewI; arc=none smtp.client-ip=131.130.3.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=univie.ac.at
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=univie.ac.at
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="HH4XRKsA"
-Date: Fri, 5 Jun 2026 14:43:27 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1780641829;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=B7a7ifP7B1UJ8qSMxXPatTEREOTu/uc0q0VdMWNBr3A=;
-	b=HH4XRKsA6H3NtfNCkYNbw8ZGPOMZtA58wLOm9oPPaoYzmgd1sh6IlEawO+qXFxEsHcbttq
-	9O5/qU8E4967A+7+oQzyI/IpUdPft7Du+R9Vt+CfS1KMS/++taDIVcM/BIq428wBeWO8FB
-	8iWJd4C7gK7in6Oz1hXiSt23qs6XVOctc8Fl40sOW9RGkAwPc4yCnL4j1gPHUSf6cDIDPC
-	nKhXpDSCofw6k0oAvkxdDoNsFwoc1z374xuOQGZBiq6Chmktm2JL6hvu50gRIDCB7+hZ+Z
-	i89q+qnV/kt416VWIrdfUbkEMihFpBVL1HgnAbtF2tbCcBskBYpfOkYa6+bJXQ==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: Debaashish Nandi <debaashish@mailo.com>
-Cc: git@vger.kernel.org
-Subject: Re: Message from Debaashish Nandi
-Message-ID: <aiJwD6xBtzx7clM_@wyuan.org>
-References: <fcb34925-f10c-4fc4-826d-a55217101ec8@localhost>
- <fcb34925-f10c-4fc4-826d-a55217101ec8@localhost>
+	dkim=pass (2048-bit key) header.d=univie.ac.at header.i=@univie.ac.at header.b="Wgi6TewI"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=univie.ac.at; s=rev4; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=9l7ugq4hoLlLO+p69Tgy/KOTOB11z/mRZuD1/RWtlxw=; b=Wgi6TewI8kDPjHFzrSiV4ZGMLs
+	9yGuloVm1/4m4rZwDH8Tnk9b/t/YFCOUgc21OiCnxEDMnUry8J0xTlyLApEyj8z4i+tBLt2zHGZNq
+	W8gyDCr/pN9fYmuhJET3HHoM6ey5uYXvLs85/p5TQtWSAkS2jHcyv7z2JHSXA7KdjSzuPpNXjTG1V
+	j/FgRNjxmTcv0aHyMf5OG7BVWh+zhnJZfR43IfkgHDUc4oOr+P8LG3sRsIx0xWuPpAtQeoo8BGVeq
+	E/oqT+ZwzzORdS8hbGR+qM2LZFNsP9M94yja49EpOnydCLGbhRHAWdPWFpxWRK5ZmyK7Isc0Ijal2
+	h0sRilzw==;
+Received: from justin.univie.ac.at ([131.130.3.111] helo=justin.univie.ac.at)
+	by grace.univie.ac.at with esmtps (TLS1.3:TLS_AES_256_GCM_SHA384:256:X25519MLKEM768)
+	(Exim 4.99.4)
+	(envelope-from <dominik.loidolt@univie.ac.at>)
+	id 1wVQAu-00000007Clv-0NYn;
+	Fri, 05 Jun 2026 10:45:08 +0200
+Received: from 84-115-215-81.cable.dynamic.surfer.at ([84.115.215.81] helo=four.local)
+	by justin.univie.ac.at with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256:X25519MLKEM768)
+	(Exim 4.99.4)
+	(envelope-from <dominik.loidolt@univie.ac.at>)
+	id 1wVQAt-00000003p0V-3yF8;
+	Fri, 05 Jun 2026 10:45:08 +0200
+Date: Fri, 5 Jun 2026 10:44:40 +0200
+From: Dominik Loidolt <dominik.loidolt@univie.ac.at>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Alejandro R =?iso-8859-1?Q?Sede=F1o?= <asedeno@google.com>,
+	Alejandro =?iso-8859-1?B?Ui4gU2VkZfFv?= <asedeno@mit.edu>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] compat/posix.h: enable UNUSED warning messages for Clang
+Message-ID: <aiKMeHXOCulPAaXq@four.local>
+References: <20260503151210.36036-1-dominik.loidolt@univie.ac.at>
+ <xmqq1pfsq8sd.fsf@gitster.g>
+ <xmqqqznsossj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,15 +59,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fcb34925-f10c-4fc4-826d-a55217101ec8@localhost>
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <xmqqqznsossj.fsf@gitster.g>
+X-Univie-Virus-Scan: scanned by ClamAV on justin.univie.ac.at
 
-On Thu, Jun 04, 2026 at 06:37:12PM +0000, Debaashish Nandi wrote:
-> Hello, is there any game playing which l can understand how git works ?
+On Mon, May 04, 2026 at 10:41:16AM +0900, Junio C Hamano wrote:
+> > Does this "drop support" because you force _all_ versions of Clang
+> > to use the "deprecated" attribute, even though you _know_ some older
+> > versions do not understand it?  Don't these versions identify
+> > themselves so that you can do
+> >
+> > 	#if defined(__clang__) && CLANG_VERSION >= 2.9
+>
+> IOW, something like this, perhaps?
 
-You may try this:
+Yes, you're right. My original patch breaks older Clang versions for no
+good reason.
 
-https://learngitbranching.js.org/
+I'll send a v2 with an explicit Clang version check, as you suggested.
 
-source code:
-https://github.com/pcottle/learnGitBranching
+Thanks,
+ Dominik
