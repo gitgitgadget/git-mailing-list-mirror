@@ -1,81 +1,83 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE56361DC1
-	for <git@vger.kernel.org>; Fri,  5 Jun 2026 04:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F802773D3
+	for <git@vger.kernel.org>; Fri,  5 Jun 2026 04:47:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780634237; cv=none; b=Wsh/CrkR8RcDPQULEHz/9ugx1IijG+Vz8mXdKGjQ03vKhL94JHPB8r91SKVwzWNc3XEOElVlmWpgKaJw9MnyR8Bf6wZ3EzcgVW0ZmI+izfIOwH/UUJbZLAsgOmjS7kQbsU5IfhJeNBobr/LoP0T0vc8Yzxv4TBs8ZjTQmFS2iCg=
+	t=1780634848; cv=none; b=mmyoruNpg/G6Zco2d22KCood2qayOLDkRslTvO7xO7uPZF39trEvRHikyFZe1S+qPw5+4jD5NEiyUfnEPV3+ZwEIQXnisoitI7+B/NLbi9peV536CnHHyv8lyHyXsy/SHPfaPME97bZoDArFjTRzcfH9y5eZviVA37BcHGQy9f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780634237; c=relaxed/simple;
-	bh=wp7tQvtXhzmZXlCCCtxvUz3iIc+BHFumm5slSIMx5e0=;
+	s=arc-20240116; t=1780634848; c=relaxed/simple;
+	bh=AyaKEs6NyqSGV3Ci1M+CrCbGuVEaL2PoUNNw7YIZ7xY=;
 	h=From:To:Cc:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L09bgj86Ug4ZphmxyLK/n+g+1G/cnpZj+F0B6o3I94G8OzKF3UUMEL+188piLQS/1Q58URPpqx4t7RSx8Yh2wr+GHT1i1iQabT/oJgVAClWNI1zJDoFvBtAVMtfMnZm33FLe3EMP+29UJCVS7KdjMtGYldc2epGizpIwLttrvZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=emailplus.org; spf=pass smtp.mailfrom=emailplus.org; dkim=pass (2048-bit key) header.d=emailplus.org header.i=@emailplus.org header.b=fGie7pig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U6mpMGRp; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=qWNcPzpeCDS7IcYPWM3WYpmoSTVG/ty19az4oWUn+C/kAMAREnFrZ6YKilhdlNid5jwsHgWsdqDVvOotScM0dsuKvlAFTJdBy5ROYp1xBw+iMIMiExYvzcyVvByPrIJOJIzUQl3NuveKNYah/gg0AIOqkLEtrl+MAOtBvJA3xU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=emailplus.org; spf=pass smtp.mailfrom=emailplus.org; dkim=pass (2048-bit key) header.d=emailplus.org header.i=@emailplus.org header.b=jWQj9GzN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WcqU5gt3; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=emailplus.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=emailplus.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=emailplus.org header.i=@emailplus.org header.b="fGie7pig";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U6mpMGRp"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 32FC3EC0099;
-	Fri,  5 Jun 2026 00:37:14 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 05 Jun 2026 00:37:14 -0400
+	dkim=pass (2048-bit key) header.d=emailplus.org header.i=@emailplus.org header.b="jWQj9GzN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WcqU5gt3"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1D0E3140013C;
+	Fri,  5 Jun 2026 00:47:26 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Fri, 05 Jun 2026 00:47:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emailplus.org;
 	 h=cc:cc:cc:content-type:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1780634234; x=
-	1780720634; bh=xpe7y37hBuNDRfD57Az0ux+DkSKaEDmPnfFE9LQ2V+A=; b=f
-	Gie7pigKypeAaX/IR1bEvr6RZyzq44yLWQ7U+XmiFzipP8vLU7uxoP4uvTBi+4gU
-	HCvfF7tzWVdgxWF7AAIE46nPX7Sgr7EeLqfrytMjTrQI0V+v0/v/Qe0YTotVPXM1
-	ixXqr6NDfD6daT0KetR9LIE5pWT1s9NhbM7ZO7+B0Unuea3KXKUO9TnIMwyVR4bp
-	r/krXDw31r3ohZwpNjTBYejPiz4GtTdSMwTj0hl4IvjhYnqVfrgxSg8cbnsXiRwK
-	XQ2Z7I/YOMfeo2ys0LS0PB6Cu4NruBMFVckl84CyQM4qEFpC1+5X6OSniqvt08+a
-	h5U7Eaq9Mts4l7UKegCdA==
+	:reply-to:subject:subject:to:to; s=fm1; t=1780634846; x=
+	1780721246; bh=jC6nEojnUkhY6/FBLfSBhtvc7DRRde1ch3soLgJrLMU=; b=j
+	WQj9GzNGTZ8poeLvufz4mRxT+WoqwEGCGWoiOTWTk0Hot2RKOwt2Nf8Hq5rflFFV
+	NSlgvCMTPfHFAjIeTFE8bXJ6GGTZJUWDPb+2V46AK1PqloY1bXCaAwdlBIWEITqO
+	hQJanrKMr+yStFAbFUgnuqU7apcXwsaHf8UUkdjnBecFfRNAOksuYVQpMYR7C5jf
+	B59bS8lsoFcKgyp2V6gZyFeD0l4rz9gfPcOw+qMjQLoQSmj38WzOAJK+cqRslzjY
+	joEdUw7PwVktu/mvzrBTqw4hqbX0u3hvWAQGhUfFVuzKTVpZAExgqI4CITINKYW2
+	LDSia0TmpGdNoxc7v9mvA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:cc:content-type:content-type:date
 	:date:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780634234; x=1780720634; bh=xpe7y37hBuNDRfD57Az0ux+DkSKaEDmPnfF
-	E9LQ2V+A=; b=U6mpMGRpZIyI6IeaKQrrFyFfcWU9Eu0SJJQrkoZQChBNcjXZVLp
-	taTWFsBwPrNLHGO8mvXosmZ4m9e60uNjmkEUCLy/RE/gl9KHTHNobYoDPh5QMM3U
-	u8+GLi5e2rGos5Ed0NGZXdoJ4+p+m62fj4ARwXnjUOomi78tTL5HHxwXm1xisJfy
-	+cO6wFItJqed56IhkaqE0lrLisAbWq4vXGCV7YaoHEcluJhbXd9piCWDdTAl4CbE
-	gDcy0mkfCGpOErLWOvqS5lLIYlBrw/SMEYjmFix3yfS5pPIchhSU5VXJWyB+iu7G
-	zScPH3Hw5EbBIeX7LYdiCR0TA8VWBVrvgbQ==
-X-ME-Sender: <xms:elIiagrnjQ2pra-Gxoh2RTlHAMBPZLRM0nVGAuzu7RWLk_7ju52ZPQ>
-    <xme:elIiasr6ycR7e3V3Eonec-ZSoUTOCknX65hXAGb39P_VGmIaOCZWTClPLcykSgGz0
-    g9k1jHdfXQXMPpHrlmOpMU-9LUvnQ65gb8C-WLeIqILwOyx3yek>
-X-ME-Received: <xmr:elIiai060tMKTzXsFgVHw8k7MB0jVVBUuykrNGYg9m0nl5f1NMxFykU>
-X-ME-Proxy-Cause: dmFkZTGVZfn+tHVa1q7yGoRqknWnVwM7nSv07V5rxel4dRnvF6LaJe0dchmsl+kAv4BHBr
-    QtNCP1wtwmF3OZpjHw8pR8FiNgBk637iGq+16kaionvfrLUMppappGNwIwIqF7Ju2BGbPa
-    kt8IeywlKK2U4tBxpsBpnQ24RUt2xVCiXz/E7AxraF4RkSojwZaPuA3jg+KFVRL4cDlk3X
-    vfMUxzrGItp4w70S7t09+Te8Rl24xS2LH3g/RMUOcNDK4fHM1FOsi7OLmyRWwCQkmP+kH4
-    Zz6aFz+LapxghpM2LNqK2Tzk8NdstJqT2VhgL7U+VMberrLYgD5L5DnZnEQEHnk800DFEW
-    /D31/rLVGWAlti4fnvcU05L26D2SaLe7W/GwSn/vFNxFrOF76vKMfJL1x0OfwYsdLXww+H
-    Z2urz3h8Q1arIq2Z38xJpN2vocm545G150d0iAyKxEKtkz9NIKbOEojzlE6NsejmyFG44+
-    0oeHvJiAtaiAaqkJSIz469/s/T0DXAWRqvG9K8oB/WJEclnVl+LJYf7gRY1fWlmZtjUf0D
-    lenEUrbFeKhRNz5Bp5bCy0h7qxQYGJIFYHd7iy1e0Aqrf01u0lnOzCpWWj2ahyvsVUuHKp
-    phB3Z8sM1As9HPcMW/dbVvo05b44D0Uuat45J2WhBQYqO0hBMxueywkmDbtQ
-X-ME-Proxy: <xmx:elIiajB8HeCMwXwkZk9TtcMzOWt7awddXMW7ATX-oJGaiSSY5n6svA>
-    <xmx:elIiaid-J_Ca26QSUxvN9H3iIKzM_8Md41Mo3MadOQS6EUYuf8-26A>
-    <xmx:elIiagiss3dG7zi0Vfki-pK8xhd5NxXCg82lHf7N99AW4SaGYflM-Q>
-    <xmx:elIiaioiBMfR5fOMDXIiY6ZfDWX6UQsh3tR6nFn_A3CK0VYfUM7QVA>
-    <xmx:elIiakBCJVltMqW77rSinpik_JbXN0dLb89ocpZ5AcmR6vCm5aWNbvf3>
+	1780634846; x=1780721246; bh=jC6nEojnUkhY6/FBLfSBhtvc7DRRde1ch3s
+	oLgJrLMU=; b=WcqU5gt3z9w4bQ7KiPXyk2JeP5GAFOJy4xg590Ghf6tkQjdofy4
+	MawRQzS6rkSCIoLfvFSZcCn50ne+YvjGGfjCi9CVKxIbwnFlvYONLfzGqokK7428
+	aBKlcuHiMLv+0ACVaMaUxJn49wWzxAzhmYGGssePzLsSjsZry8LKQFoy+qq7v+Pd
+	jYUL1ziHi9hPnGUodXhGI2LzPg8iQNTnIg8r1lL6okT3GtWDDnPUfUpnhnCZYov7
+	nlaO6SkDgOFS8wIp9wl1yUuOJm6k+pRkaRmq7rPzD5xO30J06eNFyTjgHRbV83Ai
+	s+LJKdSAfddd9h2ZBKM+fX9ip8n1SX7I7Ew==
+X-ME-Sender: <xms:3VQiapFBbVCjdvkuWr0osiJwNXvBys4qoAvS30Pq7nKZ7aeCREfmWA>
+    <xme:3VQialwo60jvDVPv64lXAnQP7vWs8aEHDXbMssA5VMbdsVc7hw5Sw9LP07DqekRRD
+    dBQBbvNnChQQMWNBEGe785kONto3EZ4TldLb60C8tuuLAUz-O13>
+X-ME-Received: <xmr:3VQiaojfsIMzcfyZHSebToSBzqZkleelPU_BwWuxZzI2On9PiBfzrkM>
+X-ME-Proxy-Cause: dmFkZTFH2Xbgw5u7gNKHNlynG8QwY6T6qqAQSpFYBfnNEjz/N3t9gIX56nf9c44FTCLVnu
+    NllY7vbeBlez0Ut29v7aG2ShVsP7mtBmhAwM0BppVQ2Mx8pTcmGb9eOn1AeElQEPaK2c2I
+    +yWfFx6yl0Yox+EFjw/GFrsyMxiBGTxXTtKEd+OBS6nVtHQXnL7k8c72yDAFEo6FUHZSNf
+    tSCBnOz8kCiOEpQOPnKRLrF1e5vkSJnHF2mVuoxtpYWH8ryywxAZbOOeLAyWeHEeXCffdF
+    394FnxIIU0lePi/qGV4+rhGK4wCD2au9ONNItzGmxit7b1aCXUiGOdFfiqLuHRspxKH0TG
+    JByaCNBZfL3M4SKPrJOn/zcW/0qjTs8MW2SE2+idwTwPBjQqhaoMBANIdFz3KRCy+5UHFD
+    mVoLkNiVHSCEukDWpOhtUmT/kd7HJc6UFRnaD6HtBCQIkx3sKEWriv/lGX7FjCvYs8F+CX
+    XWqYKq5NG2aIeYm0PEgL4vHHg7rXQi169ZYyFNO+Nfp7i0whQ3JxiLrAE7+TUabkTxm5uA
+    fnPcuvaDq53btpDh8lG8sxK3pOe94Dur/VKYENdMDUJVIWsup/JP9FKVCWsCn/OLZdhBZ4
+    B43CWQoMcb2dDpWvbeRPu5aqM9hATmDAS6nEgiO12BChklC8ikA+ux+s5BmA
+X-ME-Proxy: <xmx:3VQiaozgTeVHo8L9H9rIo_nDAMVWIq8cDasCIeb5K8AD8nPKfRnZXQ>
+    <xmx:3VQiajLfV22DbB4q-HhCHTk7yW7zwwL-QyzF0cz-roGpJrFK4BElIQ>
+    <xmx:3VQianR1mqlB_4DmVo8P84lIUmnFam0GWtVu6i219yS8_r9Ec9uz7g>
+    <xmx:3VQiajpEDUmJ93wgpwMgkNma_o8KSN4RZSVBO2M0HXQpRkQN0YGidQ>
+    <xmx:3lQiajcDWzjRhULt6I6awUj-_t55XMRZjY0Gy3LBOCHfvG2MiRg6F9KW>
 Feedback-ID: ic1e8415a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Jun 2026 00:37:12 -0400 (EDT)
+ 5 Jun 2026 00:47:23 -0400 (EDT)
 From: Benson Muite <benson_muite@emailplus.org>
-To: Junio C Hamano <gitster@pobox.com>
+To: Simon Richter <Simon.Richter@hogyros.de>, Junio C Hamano
+ <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Cc: 
 Subject: Re: Mirror repositories for submodules
-In-Reply-To: <xmqqcxy7qfgk.fsf@gitster.g>
+In-Reply-To: <d64e7f31-4e00-478c-ab31-b671242865fb@hogyros.de>
 References: <875x42vlgv.fsf@emailplus.org> <xmqqcxy7qfgk.fsf@gitster.g>
-Date: Fri, 05 Jun 2026 07:37:10 +0300
-Message-ID: <87se71r4ax.fsf@emailplus.org>
+ <d64e7f31-4e00-478c-ab31-b671242865fb@hogyros.de>
+Date: Fri, 05 Jun 2026 07:47:20 +0300
+Message-ID: <87pl25r3tz.fsf@emailplus.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,28 +86,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Simon Richter <Simon.Richter@hogyros.de> writes:
 
-> Benson Muite <benson_muite@emailplus.org> writes:
+> Hi,
 >
->> Would a contribution to add mirror repositories as alternate submodule
->> sources be considered for inclusion?  Some projects have mirror
->> repositories on other hosting services, and may have bandwidth limits on
->> their primary hosting service.  Being able to indicate mirror
->> repositories for where to check for updates and sources for submodules
->> when doing `git clone --recurse-submodules https://my.repo ` or `git
->> submodule update --init --recursive` would be helpful when there is a
->> timeout.
+> On 6/4/26 10:09 AM, Junio C Hamano wrote:
 >
-> I do not see why such a "oh, the repository at $URL1 seems to be
-> down, but we know $URL2 serves the equivalent information, so let's
-> go there instead" feature has to be limited to submodule use case.
+>> So, no, I do not think a contribution to add mirror repositories as
+>> alternate submodule sources should be considered for inclusion, as
+>> it artificially limits usefulness of the feature.  A feature to add
+>> mirror repositories as alternate sources might be worth considering,
+>> though.
 >
-> So, no, I do not think a contribution to add mirror repositories as
-> alternate submodule sources should be considered for inclusion, as
-> it artificially limits usefulness of the feature.  A feature to add
-> mirror repositories as alternate sources might be worth considering,
-> though.
+> This is relevant to the Debian use case: we run a git server that 
+> archives git trees for Debian packages, and ideally the objects on this 
+> server should be identical to what you get from upstream projects.
+>
+> This is a big problem for archiving projects that use submodules, 
+> because we cannot alter the reference URLs.
+>
+> Cloning from our server will, depending on what upstream uses, either a 
+> relative URL (which will go to our server, but we have little control 
+> over what the name part of the repository base URL is going to be), or 
+> an absolute URL that instructs clients to pull from another place, which 
+> conflicts with our goal to have a self-contained archive.
+>
+> The idea posited earlier, to have a "repository identity" that remains 
+> the same across forks and clones, is somewhat appealing, but the best 
+> idea I can come up with is generating some kind of repository UUID, and 
+> adding a symlink -- not a great design because it pollutes outside the repo:
+>
+>      $ mkdir myproject
+>      $ cd myproject
+>      $ git init
+>      $ ls -l ..
+>      lrwxrwxrwx 1 simon simon   9 Jun  4 14:05 
+> 12345678-9abc-def0-1234-56789abcdef0.git -> myproject
+>      drwxrwxr-x 2 simon simon  40 Jun  4 14:04 myproject
+>
+> On the other hand, this can be used to construct a stable relative 
+> submodule URL.
+>
+> Making the symlinks optional would require keeping a list of local 
+> clones and their UUIDs, and resolving them.
+>
+> I don't like that design, but as I said it's the best idea I have for now.
+>
+> I also fully expect that Debian's servers will be used by a lot of 
+> people outside the project as soon as it becomes a convenient fallback, 
+> in the same way people are pulling .orig.tar.gz archives from Debian 
+> mirrors, so we need to make it easy to set up a mirror, to allow this to 
+> scale.
+>
 
-Thanks for the feedback. This was motivated by problems when trying to
-recursively clone, but a more general solution is also fine.
+For submodules, the metadata consists of the url of the repository to
+clone from.  One could have a list of absolute URLs.  The default would
+be to assume that the URLs are tried in order, and if a URL times out,
+the next one would be tried.  One may want to change the default
+ordering as a user setting, or do a ping test to get obtain content from
+the closest repository.
+
+As an example, for linphone-desktop, the first part of the .gitmodules
+file contains:
+
+[submodule "linphone-sdk"]
+path = external/linphone-sdk
+	url = https://gitlab.linphone.org/BC/public/linphone-sdk.git
+[submodule "external/google/gn"]
+
+This could be updated to
+
+[submodule "linphone-sdk"]
+path = external/linphone-sdk
+	url = https://gitlab.linphone.org/BC/public/linphone-sdk.git
+        url = https://github.com/BelledonneCommunications/linphone-sdk.git
+[submodule "external/google/gn"]
+        
+
