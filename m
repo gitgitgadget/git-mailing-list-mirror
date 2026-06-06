@@ -1,117 +1,124 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C642192FA
-	for <git@vger.kernel.org>; Sat,  6 Jun 2026 16:31:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780763520; cv=none; b=Jq+sCzJ0ZOrvQ8yR60R3So5AnEXP/7rXCx5BZYKUf11TmnvTXYvbYXBtedtRozP1Yosdnie+Gjfy3VwWdaOSxSFGIErPX1K4fwTg8/WWMaQVC34StE40sMhBxaUM9mFcCZWOxc3CaBaQ/7Vw4k/eRfPY605FNeLLRgEdM6pvZmM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780763520; c=relaxed/simple;
-	bh=EdGZCte+q0yxIySKe1RzU9y+eAp6m+BL5S0JLMMl4oQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KaEb+ZOcodiTBAlwcxh9Vkp/xMSi4pgQI8VloNYQHfvFp6MEN8103s9AlZ69kSAXb4uAMoCU96WM4oMhxBMnO/1oSailDeECzJapovsdAdXCEXD0xDvI8oZYAHH/Pj4nxFUpAud5EjUaQ4HoGTrW2onmtY7qrtvffpAn1Jan6bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NaitgajA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eXDAdIqu; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2618E246781
+	for <git@vger.kernel.org>; Sat,  6 Jun 2026 17:24:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780766662; cv=pass; b=f/iKPRE2CIDxMZuTbUJcLtxwD5hIKmEwmcFnl53Sty0rm+hGRo+bAXgHxwfLGIvyBXF0Yuz9l5fPWzKB7/m3jbDUV5D7pPbaQiOhXo6SVOvXppvDkkqap6NMiSmFeBQu6misddB80o4GAyFurvBZCPg3m5t0iV870nDO9j7s2D4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780766662; c=relaxed/simple;
+	bh=mJbNHVGqt5WPpZwJy9rLsf+48r7/eSfSmzMbQykJyTU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=m3FWKA7WwyvY9zfDglxXbBzAthoqM59C4xdmxrwwr/jxNRPW7uI3tsnbezyqaPJWbafyheVxmq6ufI/YIwU0ZQri7/G2npFWE5baQyYlDePqViveNEbPGPdal1flFoyUGen0dTk93rZFIIhElYrexNZwk0p6mPLz/Lv7nmQQFYM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Jf+zgftm; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NaitgajA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eXDAdIqu"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D9B177A0082;
-	Sat,  6 Jun 2026 12:31:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Sat, 06 Jun 2026 12:31:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780763516; x=1780849916; bh=dVkPM2Fr7L
-	/mVrftujuVM8h6ZMqqqG6UVxIoHHesnkc=; b=NaitgajA41SBFkQNE8piT/erBb
-	LmHgMSgPXAOaGoqIeDI/0sm9tVNwzQi46u4gBjlgNWx/8ZGA5mpeidcaQSKpQgnD
-	DjBIChu4mO90BCJSPF94KSjuspQlQXJimzIrdFKL5nyxlZu6rOBf6qdEP9GN9mIA
-	9o/CmtORyo262zc+19Pis1xagB/+LhFYeUmpqmx/raR1QfTEo+mGsguUtbEwNuWk
-	rQhzv/PfTAIAlHig6wEqnpi38NikTNoAhOWr5yxep4qFGWNqaUosaQOfwBSU1XrI
-	ge3wNc4DV92Ubm9rm9xJvZsne1YAKea1y1jtpm8ZNsEHvV84kL64buBCt+pw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780763516; x=1780849916; bh=dVkPM2Fr7L/mVrftujuVM8h6ZMqqqG6UVxI
-	oHHesnkc=; b=eXDAdIquyujX+j1zuu+kENEl0ADBqmx+HecqylvZfY7NOoOc3nO
-	buWNo0rMt1mFmS8Iw+jwnSj3bWaDuILiF07G0OA37jP89FtFpnzqSzcIgMMoA+CA
-	ly9/zxUzo7KM8eZTFL8h3L4LhydtqMywgbho9ACSdOLwFrM2Ml87PpTrw59VQWEe
-	OdAOdh31b47EmTS/Z3xVDBuOYL84WTtjqMUK+Lya/f+lNbGF3VFvkhqDMDkTd2om
-	8L//Cpc9gmvbmq7ee20KzsX5SUubWGN5Far1Ypuy5XCqxEX5C04vUiMyWrYTgHDL
-	S0crROc6Lv4k9wtAZQCrHGBKFgcdjxQAfyQ==
-X-ME-Sender: <xms:fEskaqX7zAVX2Jj2-5PQtW9W8-m67Dlv_8PzA9wIAvxcSvlXw59cnA>
-    <xme:fEskatdJps-mxihsJsB-KxUZPe0c_wPpv0NflEKpCePlL7EVlFxsu_mVkFCLMubuI
-    lliJvG6tVPnbv6m-KobxweqwhktLGqOLTM9WCoTozuAW8kf0fCx4eQ>
-X-ME-Received: <xmr:fEskamsta_dsYX5Lsnw-aq6bh8z2aqSVBvimuoSSYWB-iv0JvswVO3j8UbteRajFEnYRQIAiZp4BgGRJkuVEf4pxNijncB4EklfP>
-X-ME-Proxy-Cause: dmFkZTGbpQmAFOIcziiFI49hy9Lrw4WnIQKRMkLVmZSRrZfkxLrlKjMYNGJ69VzZJHed+k
-    yXP/Pq1ShR3Ii6k96zVJ3SIPxav7EdBcdPMWWe+xPDHbzb6IftBsaZd+fEvFgRPFQsOuSW
-    YBqzxsL2raJhTVKSZWYcbbVYOe9rNg4l5DdQ39zfY/pWWIfBSe/VxK2OOrHjNnWRLgjXJL
-    TV4+wWcOhjVGqcem4h3baIRpcUDLDt5uJAbdiV4C5c72HJRWG2MrVQJfQtvtNXC7osz+I7
-    4DqYxVUW9WlNK9XOdWNtqNG4aoJKpZid29onxfPPUqNR5jpTBWqFnzcJpUuAarpWTbTrhz
-    VeyCizwrVtnQwqVIIaoWlS1ZkmxgHbyNM5u2MnvW5uo7qe+5ZJUW9amopmng7hdMrhADd2
-    Xx2fAGmxxi/+XHWt6vA1/r3LOxaEWSGVAbN7GwrbLp9HMP2XVr/Usd9jYm1Zxe4mv7cVA+
-    DL8PIWyOThJi/mutkVWtgTF2xzYIr+eklcJxR6iMOhSfDH0IUbdTasXrnM/+fIcdRT2jrk
-    o1wJLfP6VFu3RHh7e5TVl5Tj/dAoYQTGCCXFQVc4NpKxFEbWJ34OpL452eVxk8TkPeu0Ct
-    r5vU67jj00BTfPqlykBZjcnTs8V+mvBGFqvRKM2PknESWlS7V/ScNjJ7ykvA
-X-ME-Proxy: <xmx:fEskas-itdE58RzBZ3LikS9tomzXLQNnWDNRf0BAmIJQcQs5Ooh5nA>
-    <xmx:fEskah0JhkiAr7c-X8ePvbVZy8G0S6ifay9RptwUUw8ql5Obo1yc6w>
-    <xmx:fEskahBJ-t07_shOyxP5KrrXqLR8DbqHxoL2Z800ugPihk9kh8b_Qw>
-    <xmx:fEskatfDLvKpeKF8ZFmTKMxRA4vSuJn8Q5SAXYtWvTxT9jEVhqSkbw>
-    <xmx:fEskaqhLw_p6nmWYHlC2nevchDVrFxu3lXtyVKD4DzeUXqgty27CaFM->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 6 Jun 2026 12:31:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Kristofer Karlsson
- <krka@spotify.com>
-Subject: Re: [PATCH] prio-queue: fold lazy_queue into prio_queue for
- automatic get+put fusion
-In-Reply-To: <pull.2140.git.1780757885582.gitgitgadget@gmail.com> (Kristofer
-	Karlsson via GitGitGadget's message of "Sat, 06 Jun 2026 14:58:04
-	+0000")
-References: <pull.2140.git.1780757885582.gitgitgadget@gmail.com>
-Date: Sat, 06 Jun 2026 09:31:54 -0700
-Message-ID: <xmqqqzmjbpfp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Jf+zgftm"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7dc6fbf3e86so32576967b3.3
+        for <git@vger.kernel.org>; Sat, 06 Jun 2026 10:24:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780766659; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MvOKDth+K0C4Gqqp1Z6gBUNX/Spufh9Im4mhKfHJ+UwqLQhH+T/v8AmISmLBuBqQxG
+         qJZOhAvlkqU8ZxPZcwxmgwyxt6Z07+qoSQ4lDGt2xfL1YpxDqrMkoyttt7F6JA6CN09n
+         q2Lx3bcHt8R9INsMbhwVrM+ipxt6cKOlifNEafwbIJHW3UN8Co9ZvSvh8xoW7q9kYGKM
+         vSJIcvtrimFcUu+BVNCO/71AnXQl1y6LVTiyGcG3M14r36uJSppBrdeSmja9DN84vpsC
+         2zJrJqMjW8saoxVHeMzGjybroOkZvLi/pbSf8Ik+TXJBzMPSyjjx18IdcaXtVNtYRoN/
+         5Bdw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=BcOZq7BCNTLDT/GWKpKcFA5SlnOL2p2juf8dQXSXjGk=;
+        fh=9tYIKYd26xL2tp09b3yUjf6UOyydo+kcdaqJp4XJb1c=;
+        b=F3sq9GNEVjkCHI5Reiwv/YEstHSAzojNzv2mWUCrRtOc0o7AG/AVIjO7iNQb4Nw8zN
+         unmm3gs6VnugVf3kFIaJOihBZz4ASR9usKj7OxgYEupsqWXxGxroj7l7Uj7B1Ib7HA/k
+         T2hFTjpj1d8akVkFvtoZ25AqAcoUD0m+gWRQYVp37+e5DNONGeIg0zKgV4cS0YRXGiHc
+         PL9mH5eoaCCrbTR8CLOJXmgGQfDFPxytSl3E27zZ4gyHPOmaTp0r3RVJkwiX4AI6wMsx
+         XcfoL2BkcoQJjwnQAfGIHhfvTC30ZdplqTMYCrseKmXxIyx4klOCzDG00rva+jbbExlm
+         a1ow==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1780766659; x=1781371459; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BcOZq7BCNTLDT/GWKpKcFA5SlnOL2p2juf8dQXSXjGk=;
+        b=Jf+zgftmzM7JVZSy8vskN3anGohAkSRC6x2dz47g1d9RKH9AJxtQ7hQT5fDUqpxtp+
+         xiZ+lAG2mAWXsX9ICuxfcLZHfCgTXKp0lxc8uhXywGFRE+yDY8qsm0ZIvb6TIdQGOssY
+         4vyOaPy6ccDnmTB93MrkNbzw3Z4B0b/XsFaCs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780766659; x=1781371459;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BcOZq7BCNTLDT/GWKpKcFA5SlnOL2p2juf8dQXSXjGk=;
+        b=kYNoWYnQZATB7RLL4vhGd8gUpZk2qSzCjMzafvsY3mvJ0FHxE0LvjevraWEZWpONcz
+         WGynPK6FTFD6fPuZbfGOs8eFyaSTR4UjKIl4Qm/5TVVCIf95+kx3MGaE112+hyh1Ara7
+         UdUjJb4bya3D0n54BzfGjU8Q8m7tB4sZVYu5biHxRjRn/NxnzIWJRZ9XO1xQfAy9cbRn
+         uxoBOUUHBoCieTn37TrRlYhDOHk62lBalMs55tvVHC3h/qY6NUFbuR9dBSGPRbiAdATc
+         3c08OJT3IrTm3Yh9iKVxtkhiQWBhrIfSkzV10mfUh/luILCTeTMtxRUufclF0AJzKGRw
+         PKYA==
+X-Forwarded-Encrypted: i=1; AFNElJ/d7NKuXN9Tzf4bPR7TDDdHXXOoa/tt/6eLdKLqQSQxYmXfnzcw4bgPHHdhMP0LNkQlmqs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+fiM//Prhc68G71S3WCKNe+KU/MZ5YIvCUUAP1Ar56qnP/Bg1
+	XXh8YqvqCIyZVXc7ROIcBIqh4jUG+3EfaRyUyUguz4M98j0AfebiapM01Ch+Q4eqWNlEHdNpHGx
+	JgWvHyw17clne8w90d8Y3S8p7e3ilLuCGanIUBVgfvw==
+X-Gm-Gg: Acq92OGLV+CVa8DDi09RXtDM2bPtx5MbRfdU2BZV9glTr6WCn+rBK18TctKQcl3VkNp
+	bet++vxYtHnCyY1IzZyuwlb8zbSIJJyghU+ARNV0UWSQwlQdC9STqpC66odXkRiZCq7mqcoVRNw
+	C2Rgx3py9suYJVMSvDm7Oo1eE/kDzdY7OxhJ0h3b9ti/nTIDzRliw36EWB/OdEsoUVkXIT74DKg
+	dtyJBEMKA+TRP99TQEUZu+3xIz1WSHl9PBPUAMXdd/q/d78AXW2Pf0BTWY5oN8FOLx72RRAuwUl
+	Urz/PzS2enklZBwSQg==
+X-Received: by 2002:a05:690c:c155:b0:7ef:afa9:7d1d with SMTP id
+ 00721157ae682-7efafa990b6mr1627667b3.11.1780766659035; Sat, 06 Jun 2026
+ 10:24:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2140.git.1780757885582.gitgitgadget@gmail.com> <xmqqqzmjbpfp.fsf@gitster.g>
+In-Reply-To: <xmqqqzmjbpfp.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Sat, 6 Jun 2026 19:24:07 +0200
+X-Gm-Features: AVVi8CdmgO0MM-l1CwsFOt76DUpXrudhc1dXqUWotNElPUviXokOKNCh822CXHw
+Message-ID: <CAL71e4MbC+tdTuN6p1HiHtE1XYuS1gBM-KSejFZJ1wbftxNveg@mail.gmail.com>
+Subject: Re: [PATCH] prio-queue: fold lazy_queue into prio_queue for automatic
+ get+put fusion
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 
-"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Add prio_queue_size() for callers that need the logical element
-> count, since the physical nr may temporarily include a
-> pending-removal element.
+> How can we be sure that all such users of prio_queue has been
+> converted?  Are direct references to .nr member, outside of the
+> prio-queue.c implementation, all now suspect?
 
-Many code paths used to learn how many elements it logically has by
-directly peeking into .nr member of the prio_queue struct.  Now they
-should call this new helper function, and you converted some in this
-patch.
+You're right, and the patch is thus broken in its current state.
 
-How can we be sure that all such users of prio_queue has been
-converted?  Are direct references to .nr member, outside of the
-prio-queue.c implementation, all now suspect?
+I did a rename of .nr to ._nr on the branch and rebuilt -- that
+immediately found several callers I missed:
 
-For example, object-name.c:get_oid_oneline() uses a prio-queue
-"copy", and loops "while (copy.nr)".  In the loop, it calls
-pop_most_recent_commit(), which does a get followed by put of its
-parents.  If the get become hanging (e.g., root commit, causing no
-_put() performed in pop_most_recent_commit()), would copy.nr still
-remain 1 but logically no elements remain in the queue.
+ - object-name.c: get_oid_oneline()
+   (like you also found)
+ - fetch-pack.c: mark_recent_complete_commits()
+ - builtin/last-modified.c: last_modified_run()
+ - path-walk.c: walk_objects_by_path()
+ - commit-reach.c: queue_has_nonstale()
 
-There seem to be other direct peeking of .nr member remaining in the
-code.  Perhaps the member should be renamed to catch in-flight
-topics that add more users of prio-queue that peek into the .nr
-member, or something like that.
+The describe.c and show-branch.c callers already compensate for
+get_pending in their iteration bounds, but they still reach into
+.nr directly.
+
+> Perhaps the member should be renamed to catch in-flight topics
+> that add more users of prio-queue that peek into the .nr member,
+> or something like that.
+
+Agreed, that's the right fix. I looked for existing ways of marking
+fields as private, internal or hidden but the only thing I found was
+the convention of using a code comment: /* for internal use only */
+
+I will apply a rename and submit a v2. Perhaps something like
+nr_internal to make it look less like a public API.
