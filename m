@@ -1,124 +1,152 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2618E246781
-	for <git@vger.kernel.org>; Sat,  6 Jun 2026 17:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780766662; cv=pass; b=f/iKPRE2CIDxMZuTbUJcLtxwD5hIKmEwmcFnl53Sty0rm+hGRo+bAXgHxwfLGIvyBXF0Yuz9l5fPWzKB7/m3jbDUV5D7pPbaQiOhXo6SVOvXppvDkkqap6NMiSmFeBQu6misddB80o4GAyFurvBZCPg3m5t0iV870nDO9j7s2D4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780766662; c=relaxed/simple;
-	bh=mJbNHVGqt5WPpZwJy9rLsf+48r7/eSfSmzMbQykJyTU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m3FWKA7WwyvY9zfDglxXbBzAthoqM59C4xdmxrwwr/jxNRPW7uI3tsnbezyqaPJWbafyheVxmq6ufI/YIwU0ZQri7/G2npFWE5baQyYlDePqViveNEbPGPdal1flFoyUGen0dTk93rZFIIhElYrexNZwk0p6mPLz/Lv7nmQQFYM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=Jf+zgftm; arc=pass smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234B63BB4A
+	for <git@vger.kernel.org>; Sat,  6 Jun 2026 19:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780772481; cv=none; b=d71grw44GeHIGMRLfAv8nYrque8c41e6ixpPyCqNtubgonj8l+ToFc/p7yV24h5QEXnmzVKhLrMY5nbkb3Jur/ahhBaU41YAYKTiDdcmfgzhDyhX+T/7q8U7vFDTPOP0Mnz3sI+eVhQAUsieG+A8psw6DohDmuFDIZV/e9XnER8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780772481; c=relaxed/simple;
+	bh=hoOYwwOCxOvl9n3pkS4YCtOJCLD73t/Ywsy+FOX/aoM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=BZAMBa4UwcTa/m1mLdGL4yONNRD6KH1YGBf8LyzwoaO2ZuRrZzaVKiGV3PZJsVQARYRSXDoXl+lx7oW2XUSJjnDsuaNa7YkmFyF1VlPUtkxnJugOwSqGmlCg+y+pL1dUvWungv3t85QazIH/w7zcP5uuOHrnqDPmjMkpK0QtVOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bugsGRqq; arc=none smtp.client-ip=74.125.82.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="Jf+zgftm"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7dc6fbf3e86so32576967b3.3
-        for <git@vger.kernel.org>; Sat, 06 Jun 2026 10:24:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780766659; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MvOKDth+K0C4Gqqp1Z6gBUNX/Spufh9Im4mhKfHJ+UwqLQhH+T/v8AmISmLBuBqQxG
-         qJZOhAvlkqU8ZxPZcwxmgwyxt6Z07+qoSQ4lDGt2xfL1YpxDqrMkoyttt7F6JA6CN09n
-         q2Lx3bcHt8R9INsMbhwVrM+ipxt6cKOlifNEafwbIJHW3UN8Co9ZvSvh8xoW7q9kYGKM
-         vSJIcvtrimFcUu+BVNCO/71AnXQl1y6LVTiyGcG3M14r36uJSppBrdeSmja9DN84vpsC
-         2zJrJqMjW8saoxVHeMzGjybroOkZvLi/pbSf8Ik+TXJBzMPSyjjx18IdcaXtVNtYRoN/
-         5Bdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=BcOZq7BCNTLDT/GWKpKcFA5SlnOL2p2juf8dQXSXjGk=;
-        fh=9tYIKYd26xL2tp09b3yUjf6UOyydo+kcdaqJp4XJb1c=;
-        b=F3sq9GNEVjkCHI5Reiwv/YEstHSAzojNzv2mWUCrRtOc0o7AG/AVIjO7iNQb4Nw8zN
-         unmm3gs6VnugVf3kFIaJOihBZz4ASR9usKj7OxgYEupsqWXxGxroj7l7Uj7B1Ib7HA/k
-         T2hFTjpj1d8akVkFvtoZ25AqAcoUD0m+gWRQYVp37+e5DNONGeIg0zKgV4cS0YRXGiHc
-         PL9mH5eoaCCrbTR8CLOJXmgGQfDFPxytSl3E27zZ4gyHPOmaTp0r3RVJkwiX4AI6wMsx
-         XcfoL2BkcoQJjwnQAfGIHhfvTC30ZdplqTMYCrseKmXxIyx4klOCzDG00rva+jbbExlm
-         a1ow==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bugsGRqq"
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-3074adb8fcaso3838391eec.0
+        for <git@vger.kernel.org>; Sat, 06 Jun 2026 12:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1780766659; x=1781371459; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BcOZq7BCNTLDT/GWKpKcFA5SlnOL2p2juf8dQXSXjGk=;
-        b=Jf+zgftmzM7JVZSy8vskN3anGohAkSRC6x2dz47g1d9RKH9AJxtQ7hQT5fDUqpxtp+
-         xiZ+lAG2mAWXsX9ICuxfcLZHfCgTXKp0lxc8uhXywGFRE+yDY8qsm0ZIvb6TIdQGOssY
-         4vyOaPy6ccDnmTB93MrkNbzw3Z4B0b/XsFaCs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780766659; x=1781371459;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780772479; x=1781377279; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BcOZq7BCNTLDT/GWKpKcFA5SlnOL2p2juf8dQXSXjGk=;
-        b=kYNoWYnQZATB7RLL4vhGd8gUpZk2qSzCjMzafvsY3mvJ0FHxE0LvjevraWEZWpONcz
-         WGynPK6FTFD6fPuZbfGOs8eFyaSTR4UjKIl4Qm/5TVVCIf95+kx3MGaE112+hyh1Ara7
-         UdUjJb4bya3D0n54BzfGjU8Q8m7tB4sZVYu5biHxRjRn/NxnzIWJRZ9XO1xQfAy9cbRn
-         uxoBOUUHBoCieTn37TrRlYhDOHk62lBalMs55tvVHC3h/qY6NUFbuR9dBSGPRbiAdATc
-         3c08OJT3IrTm3Yh9iKVxtkhiQWBhrIfSkzV10mfUh/luILCTeTMtxRUufclF0AJzKGRw
-         PKYA==
-X-Forwarded-Encrypted: i=1; AFNElJ/d7NKuXN9Tzf4bPR7TDDdHXXOoa/tt/6eLdKLqQSQxYmXfnzcw4bgPHHdhMP0LNkQlmqs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+fiM//Prhc68G71S3WCKNe+KU/MZ5YIvCUUAP1Ar56qnP/Bg1
-	XXh8YqvqCIyZVXc7ROIcBIqh4jUG+3EfaRyUyUguz4M98j0AfebiapM01Ch+Q4eqWNlEHdNpHGx
-	JgWvHyw17clne8w90d8Y3S8p7e3ilLuCGanIUBVgfvw==
-X-Gm-Gg: Acq92OGLV+CVa8DDi09RXtDM2bPtx5MbRfdU2BZV9glTr6WCn+rBK18TctKQcl3VkNp
-	bet++vxYtHnCyY1IzZyuwlb8zbSIJJyghU+ARNV0UWSQwlQdC9STqpC66odXkRiZCq7mqcoVRNw
-	C2Rgx3py9suYJVMSvDm7Oo1eE/kDzdY7OxhJ0h3b9ti/nTIDzRliw36EWB/OdEsoUVkXIT74DKg
-	dtyJBEMKA+TRP99TQEUZu+3xIz1WSHl9PBPUAMXdd/q/d78AXW2Pf0BTWY5oN8FOLx72RRAuwUl
-	Urz/PzS2enklZBwSQg==
-X-Received: by 2002:a05:690c:c155:b0:7ef:afa9:7d1d with SMTP id
- 00721157ae682-7efafa990b6mr1627667b3.11.1780766659035; Sat, 06 Jun 2026
- 10:24:19 -0700 (PDT)
+        bh=rmEHueG1DJlgwpNrt3Fpjq0uLNGFV8S7SRbvd+hyqHI=;
+        b=bugsGRqqohJuQIxhgI3FPpvtlEUJIpSGl5TZAEFR/t34ZajXwnlxANnGGX6v0I8oiQ
+         g8GToolgkJNEk7lhPzjcr3ICXBeTI3ocF9GmZ4eJP5Q5nlWFJEdsjNfZKd0nb8XyWaN2
+         sTO29U2D50ozQpPUF30RlsC3EMlqBHaeQ+loXSKx2GhO5mdVZ5Js6+VQugCkcp7CY6Q+
+         IqpwzgeLL27s+CfFQ0ggnGMVLNhH2WwgSBtHXVFngXtvpcpWI7AA7NPVWneOjoZucv1v
+         k23czv2AriQQt0NdsIzMbCwaNmxfkW9ybL3QpnKUpLZ3e5zlE1p0rmQJJ7sVwI9bz9Ry
+         1pUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780772479; x=1781377279;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rmEHueG1DJlgwpNrt3Fpjq0uLNGFV8S7SRbvd+hyqHI=;
+        b=aH7ZMwEf7ftAgpnF/J6sUv4sHefUV6Cjj1w1Zufvtn5fCzOym3yDZ1zXe+mG570Ygn
+         wKB8lR9BcYOCMfpW7i6axCRPvlftEK+S0c3+RvbmplnyXFWS1ymPbiOJ1s9f1v0ZcJPp
+         iEe4KyOhCR4SY42PPVCKMURqLOhMdrsjAZwaQutDr+VQu95eQ2MSOKOEg/o5V/Tboi1K
+         f1eQplQuG9IJvi5RJhta59MqbM6j/69+Qb1hEQPRSAqbwqIpbgyDXU4peq2yPT9ILkTv
+         jxsodM7ZV41hLDdtCnswKqzK5R/53tv1PIc0GHQSjpwjvKKhpGkkJIcOYy9Cd2XBagOF
+         M+2A==
+X-Gm-Message-State: AOJu0Yz44DyrKOECviAf/vYKG5+GexqYNna5dGngFk2fld5eEgUQlt46
+	u0AKfE4uIJMFNtvA5NiidKsBf81gFYNdpAcTnBtRJFkSbYOumRuohVK9n0eP1w==
+X-Gm-Gg: Acq92OHsX9m3cN4Ma2ChVM/pOPP4bCt+i5E2qsTsJae7TK9DS+jT6tMq5D9vEravCyP
+	XQDkBBPdger4y7SajPrLiBUJur7Aqqmm+WE3lUr6M+sNr6slihr336Vy4NE/1eG7jkXmggjg2jc
+	sqSrjzw7Kd4iVU3fMXp6MVA9Qmfn53+8QP5xPWGib/dJr/nQ5og3yaSEqWZQ0Y1NztxdqCG/lN+
+	6/8JiHA4RMiI1Ho8/jT1h8ostdNOAgCuZYEv7V/uENvkGZzlysX9q/Gb5vvtbdWZfQCOmPdgqOh
+	1but1cG+jaRjA7RZ7XMLGH0RgK5qVOg3h7p4LxthT3XQPzLtDPI7lBuh4uFzpnxhYKWK15ZnBhf
+	a7b+/JvP1mHTkNCaE1NwmvTJ0DFlmgv1uCM4dhd0oe7LgU9UBY4S6y18NFbzaXT+zsJucfZ9ORX
+	hphDjO4F9otLcKUp49aemsVfxVbgV7iOpXr2ciYg==
+X-Received: by 2002:a05:7300:7314:b0:304:641b:12fd with SMTP id 5a478bee46e88-3077b22b54cmr5935127eec.27.1780772479102;
+        Sat, 06 Jun 2026 12:01:19 -0700 (PDT)
+Received: from [127.0.0.1] ([20.168.117.154])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074dea9226sm11461793eec.19.2026.06.06.12.01.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Jun 2026 12:01:18 -0700 (PDT)
+Message-Id: <pull.2140.v2.git.1780772477.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2140.git.1780757885582.gitgitgadget@gmail.com>
+References: <pull.2140.git.1780757885582.gitgitgadget@gmail.com>
+From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 06 Jun 2026 19:01:14 +0000
+Subject: [PATCH v2 0/2] prio-queue: fold lazy_queue into prio_queue for automatic get+put fusion
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2140.git.1780757885582.gitgitgadget@gmail.com> <xmqqqzmjbpfp.fsf@gitster.g>
-In-Reply-To: <xmqqqzmjbpfp.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Sat, 6 Jun 2026 19:24:07 +0200
-X-Gm-Features: AVVi8CdmgO0MM-l1CwsFOt76DUpXrudhc1dXqUWotNElPUviXokOKNCh822CXHw
-Message-ID: <CAL71e4MbC+tdTuN6p1HiHtE1XYuS1gBM-KSejFZJ1wbftxNveg@mail.gmail.com>
-Subject: Re: [PATCH] prio-queue: fold lazy_queue into prio_queue for automatic
- get+put fusion
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+    Kristofer Karlsson <krka@spotify.com>,
+    Kristofer Karlsson <krka@spotify.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Rene's lazy_queue wrapper in describe.c was a clever optimization -- by
+deferring the get, a following put becomes a simple replace, avoiding a full
+remove-rebalance-insert cycle.
 
-> How can we be sure that all such users of prio_queue has been
-> converted?  Are direct references to .nr member, outside of the
-> prio-queue.c implementation, all now suspect?
+It turns out this pattern is so common in git's traversal code that it makes
+sense to fold it into prio_queue itself. Gets and puts are interleaved in
+virtually every commit walk, so the fusion is essentially always a win.
 
-You're right, and the patch is thus broken in its current state.
+This is mostly a code simplification -- three callers had independently
+reimplemented the same optimization, and they all collapse to plain get+put
+now. The 3-6% speedup on traversal-heavy workloads is a nice bonus.
 
-I did a rename of .nr to ._nr on the branch and rebuilt -- that
-immediately found several callers I missed:
+More details and benchmark numbers in the commit message. Benchmarks were
+run on next which includes kk/commit-reach-optim -- those results represent
+the more realistic end state.
 
- - object-name.c: get_oid_oneline()
-   (like you also found)
- - fetch-pack.c: mark_recent_complete_commits()
- - builtin/last-modified.c: last_modified_run()
- - path-walk.c: walk_objects_by_path()
- - commit-reach.c: queue_has_nonstale()
+Related to but independent of the cascade sift-down work in
+kk/prio-queue-cascade-sift -- the two can land in either order.
 
-The describe.c and show-branch.c callers already compensate for
-get_pending in their iteration bounds, but they still reach into
-.nr directly.
+Changes since v1:
 
-> Perhaps the member should be renamed to catch in-flight topics
-> that add more users of prio-queue that peek into the .nr member,
-> or something like that.
+ * Added a second commit that renames .nr to .nr_internal so that direct
+   access from outside prio-queue.c is a compile error. Verified that after
+   the rename, only prio-queue.c references nr_internal.
 
-Agreed, that's the right fix. I looked for existing ways of marking
-fields as private, internal or hidden but the only thing I found was
-the convention of using a code comment: /* for internal use only */
+ * Added prio_queue_for_each() macro for callers that need to walk all
+   elements (describe.c, show-branch.c, commit-reach.c, revision.c,
+   negotiator/skipping.c).
 
-I will apply a rename and submit a v2. Perhaps something like
-nr_internal to make it look less like a public API.
+ * Converted remaining .nr loop conditions to use
+   prio_queue_get()/prio_queue_peek() as the loop condition, or
+   prio_queue_size() where get/peek isn't suitable.
+
+ * Fixed several callers missed in v1 (object-name.c, fetch-pack.c,
+   path-walk.c, pack-bitmap-write.c, negotiator/default.c,
+   negotiator/skipping.c, revision.c, builtin/last-modified.c).
+
+Kristofer Karlsson (2):
+  prio-queue: fold lazy_queue into prio_queue for automatic get+put
+    fusion
+  prio-queue: rename .nr to .nr_internal to prevent direct access
+
+ builtin/describe.c          | 70 ++++++++-------------------------
+ builtin/last-modified.c     |  7 ++--
+ builtin/show-branch.c       | 24 +++++-------
+ commit-reach.c              | 24 ++++++------
+ commit.c                    | 11 +-----
+ fetch-pack.c                |  4 +-
+ negotiator/default.c        |  4 +-
+ negotiator/skipping.c       | 12 +++---
+ object-name.c               |  2 +-
+ pack-bitmap-write.c         | 10 ++---
+ path-walk.c                 |  8 ++--
+ prio-queue.c                | 77 ++++++++++++++++++++-----------------
+ prio-queue.h                | 19 +++++----
+ revision.c                  | 16 ++++----
+ t/unit-tests/u-prio-queue.c |  6 +--
+ walker.c                    |  4 +-
+ 16 files changed, 129 insertions(+), 169 deletions(-)
+
+
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2140%2Fspkrka%2Flazy-prio-queue-pr-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2140/spkrka/lazy-prio-queue-pr-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/2140
+
+Range-diff vs v1:
+
+ 1:  29af24445e = 1:  29af24445e prio-queue: fold lazy_queue into prio_queue for automatic get+put fusion
+ -:  ---------- > 2:  bb8b0f78f1 prio-queue: rename .nr to .nr_internal to prevent direct access
+
+-- 
+gitgitgadget
