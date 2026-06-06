@@ -1,540 +1,390 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05853BB4A
-	for <git@vger.kernel.org>; Sat,  6 Jun 2026 19:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36764175A77
+	for <git@vger.kernel.org>; Sat,  6 Jun 2026 20:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780772484; cv=none; b=RlJuDTjD+52fV72DKeDC0yLuhtG1J+P5tXSHfwv4Axt3bJqxDgVhzmE2+vyJM8svz3pCa3IxuOuUPyjqVKJPzGczUHcDcN903Z81v39ERM7HkdDg16BaEyUvnugmREkpomQC0azt83tqyy2oGi1MYChLZbPl84a9rwESIJbDmoY=
+	t=1780777418; cv=none; b=tpwA0yGwMM/ENbO/RIZ5MW/0FRDHhuo9A9u0lk7FpENUqQyEzfNGDWbDGqgWQdX4Bb0fuAmrxmR5YNyjAv2WxrhbIJLOLRwH5sbQyZP7MS5UXCuG76SDIR3PCqz4mlaZQktXvZBXApfpE7bduskY2dn34xr2e1ea+HmdiKfA5aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780772484; c=relaxed/simple;
-	bh=+FGaSNEVMN70iO22nJFyNNP/mlbrQHYLzUyYrrdKPko=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gMrTBVCkTJCnpgUsO/XIypXp56uRtUY/rkJ+OzHqDqdz+/hHe3deeHPfUTcRJ67h9aWSHv7s4+xOtf+qXJI2sgyV3VVNk5BQ6TpW4Nbs/rebdA4rJ4Ieo2UDRrtWLgKJ8EXMTZ71n2DL/pNXgIhxfL+Q1WNSIxUmvbFO6pfUgtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UPBYqX0I; arc=none smtp.client-ip=74.125.82.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780777418; c=relaxed/simple;
+	bh=xjOn5P64+Gzvvutl1yHLrtQEUKM/bKXbgJCerYqeWBg=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=hZ+5nV0a+TXnOEvN0hpONEmh6HQuSJcbEoemaDHHE53rJv4zfGG4JbY77Rb9qqOXDOBEPdWaBch25B3zRFEeAm9+1VcHot0FvDR+SSoDtRluDXlGqUpMbWNcJBPNDvzcvPQZEkTkWeMET6XngX3PWyvIGPoIQ2jO2+IKPlvbBSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=YlK+Bma7; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UPBYqX0I"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-13807d2f898so1761107c88.0
-        for <git@vger.kernel.org>; Sat, 06 Jun 2026 12:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780772482; x=1781377282; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vEfcxOH1xQY7/4AZX8zh7oRhTo70ii827IRf2W7VXcw=;
-        b=UPBYqX0Ici2a+s465VSVFtsbfYt55AY7oAWCzjOAkSId0Ij8y9txdF1d4rZGk+wIzb
-         T7yUTRYt7GiZ1bgp45ArzyLI6qymNk7zuBJmur3uH3KzpObxz34sAQ8Ju6oX98QMyW3+
-         o2Lsg7amwFkcGUQJ+/mpC/s4IGFH0a85Q1vjrV3+bjlzsu/kafdgYdLFn9uvMnEVcWWa
-         ck0ioTPnme1VoMS/0qkOZyPLGwpoN8mEgtFxSygR+MmZ66k9Y4DgAicoI3E4H1gVEOx4
-         9bavuUWs0jrwgeXahVkSkadyGYNjD8JEjU9csfIwj2AxA+s8TVfKpmcOO4sKEOZDWr1a
-         45JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780772482; x=1781377282;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vEfcxOH1xQY7/4AZX8zh7oRhTo70ii827IRf2W7VXcw=;
-        b=RVFsRu8w+fWIvssf5pO7FxoXpb7xkmx899qSSO/NLEgu+EsRyCa7G1gXNBhNC7RQ1q
-         PlmRb0t6OR1ZpgufBDpKbTQ0oOR3DL5MvPnLoU+ADdMj5CXvt08fMrMf/C/c6B47BIdv
-         k45a9hOkaF1E54sDewxER8qk3vnX4oXHEIS3htvQqtr77Ybxwk99CKDjwa88SS+GxSYD
-         BGMpVyOxj+TtQgscxrqqNpt8jRpDBvXnD0VOPenIs6OAwUtMGC31FTVG9qZHsYYiiA8B
-         jFliO0RpbxXKb7ZcbOCvzdl4UyIIv6pIkyahG+4YRsmFA7PKbOXduH3N95bnzfpIOnQ4
-         I6nw==
-X-Gm-Message-State: AOJu0YyNimqZjAdvCxf0aA4Z0zTAd/zj1zQyNLfjMpsr/pat9VyR7/wN
-	e4Jyk7XU5lOfog5kPOgmu0lx7IB01A+YpqVlQaJddnDfz8B9GJtky15N2eca+w==
-X-Gm-Gg: Acq92OHKjBRGSHtsrwCRF3iPVGNDUNfS4ffQcclIK+LVHo9cIPPFA//Ja68ljUnTHiw
-	V9ht9K9FCb5Ja2Nvd2M0iydEvT+3gJb8VF9iKkq9HOjvfUhcFBXCav7eeawKxR3ZNlfRjZ0v2L5
-	W4DK7Y6vl3/LagZ4N/7wYyI2jFgKma3PVgNjSKfkejlY29kM+A3Gk+9QB2FqVGiiZe46ntXRc+o
-	X8geJ2pW4Tv3GN/AWB0wyV3sTcP5RFKdf1IPr2rWBy/X3I+h5FmwguBSS4sw6QE2mBdvu87nZq1
-	8rrLehW2A1CGuGDn49OdMvRADvx4lDjlIOSUwtdEWIJDRYL8zR4I4A6ybR2YLFvlzScfcpOrxVg
-	2nOT+Jb5u3koyc74fiJpn3Jzf2CpMPKm4cKELlNfgKqkyTg7IG9rEDL+thWwLPTU60m0qJlJZJP
-	QNS+rv4C26PGLkHC4CsE1xujIpG+T3SmX+nLUkow==
-X-Received: by 2002:a05:693c:2288:b0:304:8881:b82 with SMTP id 5a478bee46e88-3077af0de10mr5350620eec.1.1780772481689;
-        Sat, 06 Jun 2026 12:01:21 -0700 (PDT)
-Received: from [127.0.0.1] ([20.168.117.154])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df3b234sm14986294eec.23.2026.06.06.12.01.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Jun 2026 12:01:21 -0700 (PDT)
-Message-Id: <bb8b0f78f192398a3233df104849880e4058d53b.1780772477.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2140.v2.git.1780772477.gitgitgadget@gmail.com>
-References: <pull.2140.git.1780757885582.gitgitgadget@gmail.com>
-	<pull.2140.v2.git.1780772477.gitgitgadget@gmail.com>
-From: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 06 Jun 2026 19:01:16 +0000
-Subject: [PATCH v2 2/2] prio-queue: rename .nr to .nr_internal to prevent
- direct access
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="YlK+Bma7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1780777411; x=1781382211;
+	i=johannes.schindelin@gmx.de;
+	bh=8o6cQKGUb4NqyNCiPYCvWO++6ERG16cP1R1GKchrfOw=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=YlK+Bma7ygru2OKDUVmhHFcQ1RfV8Jxhsa27incejcdrcLg6KEyQw90qVrvqkfhv
+	 67t1UeKQJz6FsdlMWxFRR83ElUWMFeYc4Mhqu/1VsxIMBEIPBYKjyY2lz5lnhVbqM
+	 Tcdv6X+aHixvrta3QB2wW85NtjhjxthT8eZ4VeXfioqgy5GMl5CorSCz00rgX4blv
+	 rZVJzUwnQYgwVpWfQZ5QtMCkHe9fbiwi5AJfzB0c0711vlKvFJdl5nnIZ6Q5vWxfY
+	 JipfxKgGWq+/ZvRLHUSHTrqDHK9X99E+R7m34jWuSe1A33iSGZoAzDcpMWUJ1Zsal
+	 RdJpCeevjCp0lsEABg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCbIn-1wO1L61Df9-00Gmf1; Sat, 06
+ Jun 2026 22:23:31 +0200
+Date: Sat, 6 Jun 2026 22:23:29 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Andrew Kreimer <algonell@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3] doc: fix typos via codespell
+In-Reply-To: <xmqqzf1dujtf.fsf@gitster.g>
+Message-ID: <3398ef40-1547-4324-2cfc-97b9e2b24854@gmx.de>
+References: <20260506101631.18127-1-algonell@gmail.com> <20260602111552.6084-1-algonell@gmail.com> <xmqqzf1dujtf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>,
-    Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:4AnO9eOenbLEXiSUl8jZ7QmYxlng0CGjlJ5avFFbo8Q4Ae15N6A
+ r75nzzi0d8BsVgb/QiE+yXclxL3+tQi2iiRf1bi3YJXm1LyQvsG0pwb8SyuhMp1SAih/iIN
+ ihQD/9ZjPww4ZnP0bT5XZvMzflnhNO+FqFF4Gc3/jNgBN/HXyvB+W5pCjQgHnwXCmNdMOpv
+ Sj/OQoRh/wZyafR2yZbXg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:0IYCxpLsOn4=;PQ3ZcYDUp59euJGFvt3pLELehkv
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristofer Karlsson <krka@spotify.com>
+Hi Junio,
 
-Rename the .nr member to .nr_internal so that callers outside
-prio-queue.c that directly reference .nr get a compilation error.
-This catches both existing misuse and future in-flight topics.
+On Sat, 6 Jun 2026, Junio C Hamano wrote:
 
-Add prio_queue_for_each() macro for callers that need to walk all
-elements in the queue, accounting for the get_pending offset.
+> Andrew Kreimer <algonell@gmail.com> writes:
+>=20
+> > There are some typos in the documentation, comments, etc.
+> > Fix them via codespell.
+>
+> [...]
+>=20
+> I'll squash the fix-up I already had into [v2] that I have queued,
+> which should be sufficient to get to the state this [v3] should have
+> been, I think.
 
-Convert all external .nr users:
- - Loop conditions: use prio_queue_size(), prio_queue_get(), or
-   prio_queue_peek() as the loop condition
- - Array iterations: use prio_queue_for_each()
+The mechanical nature of these fixes explains another issue: One typo fix
+touched two test fixtures which might seem harmless at first, but those
+fixtures are littered with checksums that relied on the original
+(misspelled) form.
 
-Signed-off-by: Kristofer Karlsson <krka@spotify.com>
----
- builtin/describe.c      |  7 +++----
- builtin/last-modified.c |  5 ++---
- builtin/show-branch.c   |  9 ++++-----
- commit-reach.c          | 19 +++++++++++--------
- fetch-pack.c            |  4 ++--
- negotiator/default.c    |  4 +++-
- negotiator/skipping.c   | 12 +++++++-----
- object-name.c           |  2 +-
- pack-bitmap-write.c     |  6 +++---
- path-walk.c             |  8 ++++----
- prio-queue.c            | 32 ++++++++++++++++----------------
- prio-queue.h            |  9 +++++++--
- revision.c              | 11 +++++------
- 13 files changed, 68 insertions(+), 60 deletions(-)
+Please adopt this follow-up into ak/typofixes:
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 85564f3487..64424543ef 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -258,10 +258,9 @@ static unsigned long finish_depth_computation(struct prio_queue *queue,
- 	struct oidset unflagged = OIDSET_INIT;
- 	struct commit *c;
- 
--	for (size_t i = queue->get_pending; i < queue->nr; i++) {
--		struct commit *commit = queue->array[i].data;
--		if (!(commit->object.flags & best->flag_within))
--			oidset_insert(&unflagged, &commit->object.oid);
-+	prio_queue_for_each(queue, c) {
-+		if (!(c->object.flags & best->flag_within))
-+			oidset_insert(&unflagged, &c->object.oid);
- 	}
- 
- 	while ((c = prio_queue_get(queue))) {
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index df2a508244..5478182f2e 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -344,7 +344,7 @@ static void process_parent(struct last_modified *lm,
- static int last_modified_run(struct last_modified *lm)
- {
- 	int max_count, queue_popped = 0;
--	struct commit *c;
-+	struct commit *c, *n;
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	struct prio_queue not_queue = { compare_commits_by_gen_then_commit_date };
- 	struct commit_list *list;
-@@ -416,9 +416,8 @@ static int last_modified_run(struct last_modified *lm)
- 		 */
- 		repo_parse_commit(lm->rev.repo, c);
- 
--		while (not_queue.nr) {
-+		while ((n = prio_queue_get(&not_queue))) {
- 			struct commit_list *np;
--			struct commit *n = prio_queue_get(&not_queue);
- 
- 			repo_parse_commit(lm->rev.repo, n);
- 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index 9f7f28f339..2435e8aeda 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -62,11 +62,10 @@ static const char *get_color_reset_code(void)
- 
- static struct commit *interesting(struct prio_queue *queue)
- {
--	for (size_t i = queue->get_pending; i < queue->nr; i++) {
--		struct commit *commit = queue->array[i].data;
--		if (commit->object.flags & UNINTERESTING)
--			continue;
--		return commit;
-+	struct commit *commit;
-+	prio_queue_for_each(queue, commit) {
-+		if (!(commit->object.flags & UNINTERESTING))
-+			return commit;
- 	}
- 	return NULL;
- }
-diff --git a/commit-reach.c b/commit-reach.c
-index 0fec2f00be..dfe6016cb2 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -41,8 +41,8 @@ static int compare_commits_by_gen(const void *_a, const void *_b)
- 
- static int queue_has_nonstale(struct prio_queue *queue)
- {
--	for (size_t i = 0; i < queue->nr; i++) {
--		struct commit *commit = queue->array[i].data;
-+	struct commit *commit;
-+	prio_queue_for_each(queue, commit) {
- 		if (!(commit->object.flags & STALE))
- 			return 1;
- 	}
-@@ -1069,6 +1069,7 @@ void ahead_behind(struct repository *r,
- 		  struct commit **commits, size_t commits_nr,
- 		  struct ahead_behind_count *counts, size_t counts_nr)
- {
-+	struct commit *c;
- 	struct prio_queue queue = { .compare = compare_commits_by_gen_then_commit_date };
- 	size_t width = DIV_ROUND_UP(commits_nr, BITS_IN_EWORD);
- 
-@@ -1085,17 +1086,19 @@ void ahead_behind(struct repository *r,
- 	init_bit_arrays(&bit_arrays);
- 
- 	for (size_t i = 0; i < commits_nr; i++) {
--		struct commit *c = commits[i];
--		struct bitmap *bitmap = get_bit_array(c, width);
-+		struct bitmap *bitmap;
-+		c = commits[i];
-+		bitmap = get_bit_array(c, width);
- 
- 		bitmap_set(bitmap, i);
- 		insert_no_dup(&queue, c);
- 	}
- 
- 	while (queue_has_nonstale(&queue)) {
--		struct commit *c = prio_queue_get(&queue);
- 		struct commit_list *p;
--		struct bitmap *bitmap_c = get_bit_array(c, width);
-+		struct bitmap *bitmap_c;
-+		c = prio_queue_get(&queue);
-+		bitmap_c = get_bit_array(c, width);
- 
- 		for (size_t i = 0; i < counts_nr; i++) {
- 			int reach_from_tip = !!bitmap_get(bitmap_c, counts[i].tip_index);
-@@ -1135,8 +1138,8 @@ void ahead_behind(struct repository *r,
- 
- 	/* STALE is used here, PARENT2 is used by insert_no_dup(). */
- 	repo_clear_commit_marks(r, PARENT2 | STALE);
--	for (size_t i = 0; i < queue.nr; i++)
--		free_bit_array(queue.array[i].data);
-+	prio_queue_for_each(&queue, c)
-+		free_bit_array(c);
- 	clear_bit_arrays(&bit_arrays);
- 	clear_prio_queue(&queue);
- }
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 120e01f3cf..29c41132ee 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -662,8 +662,8 @@ static int mark_complete_oid(const struct reference *ref, void *cb_data UNUSED)
- static void mark_recent_complete_commits(struct fetch_pack_args *args,
- 					 timestamp_t cutoff)
- {
--	while (complete.nr) {
--		struct commit *item = prio_queue_peek(&complete);
-+	struct commit *item;
-+	while ((item = prio_queue_peek(&complete))) {
- 		if (item->date < cutoff)
- 			break;
- 		print_verbose(args, _("Marking %s as complete"),
-diff --git a/negotiator/default.c b/negotiator/default.c
-index 78d58d57ce..19cdf3808c 100644
---- a/negotiator/default.c
-+++ b/negotiator/default.c
-@@ -113,10 +113,12 @@ static const struct object_id *get_rev(struct negotiation_state *ns)
- 		unsigned int mark;
- 		struct commit_list *parents;
- 
--		if (ns->rev_list.nr == 0 || ns->non_common_revs == 0)
-+		if (ns->non_common_revs == 0)
- 			return NULL;
- 
- 		commit = prio_queue_get(&ns->rev_list);
-+		if (!commit)
-+			return NULL;
- 		repo_parse_commit(the_repository, commit);
- 		parents = commit->parents;
- 
-diff --git a/negotiator/skipping.c b/negotiator/skipping.c
-index 68c9b3b997..db90fa77b5 100644
---- a/negotiator/skipping.c
-+++ b/negotiator/skipping.c
-@@ -143,8 +143,7 @@ static int push_parent(struct data *data, struct entry *entry,
- 		/*
- 		 * Find the existing entry and use it.
- 		 */
--		for (size_t i = 0; i < data->rev_list.nr; i++) {
--			parent_entry = data->rev_list.array[i].data;
-+		prio_queue_for_each(&data->rev_list, parent_entry) {
- 			if (parent_entry->commit == to_push)
- 				goto parent_found;
- 		}
-@@ -181,10 +180,12 @@ static const struct object_id *get_rev(struct data *data)
- 		struct commit_list *p;
- 		int parent_pushed = 0;
- 
--		if (data->rev_list.nr == 0 || data->non_common_revs == 0)
-+		if (data->non_common_revs == 0)
- 			return NULL;
- 
- 		entry = prio_queue_get(&data->rev_list);
-+		if (!entry)
-+			return NULL;
- 		commit = entry->commit;
- 		commit->object.flags |= POPPED;
- 		if (!(commit->object.flags & COMMON))
-@@ -253,8 +254,9 @@ static void have_sent(struct fetch_negotiator *n, struct commit *c)
- static void release(struct fetch_negotiator *n)
- {
- 	struct data *data = n->data;
--	for (size_t i = 0; i < data->rev_list.nr; i++)
--		free(data->rev_list.array[i].data);
-+	void *entry;
-+	prio_queue_for_each(&data->rev_list, entry)
-+		free(entry);
- 	clear_prio_queue(&data->rev_list);
- 	FREE_AND_NULL(data);
- }
-diff --git a/object-name.c b/object-name.c
-index 9ac86f19c7..2fedfe1761 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1208,7 +1208,7 @@ static int get_oid_oneline(struct repository *r,
- 		l->item->object.flags |= ONELINE_SEEN;
- 		prio_queue_put(&copy, l->item);
- 	}
--	while (copy.nr) {
-+	while (prio_queue_size(&copy)) {
- 		const char *p, *buf;
- 		struct commit *commit;
- 		int matches;
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index f7c63e3027..ed9714b135 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -514,6 +514,7 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 			      const uint32_t *mapping)
- {
- 	struct commit *c;
-+	struct tree *tree;
- 	int found;
- 	uint32_t pos;
- 	if (!ent->bitmap)
-@@ -574,9 +575,8 @@ static int fill_bitmap_commit(struct bitmap_writer *writer,
- 		}
- 	}
- 
--	while (tree_queue->nr) {
--		if (fill_bitmap_tree(writer, ent->bitmap,
--				     prio_queue_get(tree_queue)) < 0)
-+	while ((tree = prio_queue_get(tree_queue))) {
-+		if (fill_bitmap_tree(writer, ent->bitmap, tree) < 0)
- 			return -1;
- 	}
- 	return 0;
-diff --git a/path-walk.c b/path-walk.c
-index 94ff90bd15..cf3b2d0765 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -699,6 +699,7 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	int ret;
- 	size_t commits_nr = 0, paths_nr = 0;
- 	struct commit *c;
-+	char *path;
- 	struct type_and_oid_list *root_tree_list;
- 	struct type_and_oid_list *commit_list;
- 	struct path_walk_context ctx = {
-@@ -808,8 +809,7 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	free(commit_list);
- 
- 	trace2_region_enter("path-walk", "path-walk", info->revs->repo);
--	while (!ret && ctx.path_stack.nr) {
--		char *path = prio_queue_get(&ctx.path_stack);
-+	while (!ret && (path = prio_queue_get(&ctx.path_stack))) {
- 		paths_nr++;
- 
- 		ret = walk_path(&ctx, path);
-@@ -821,12 +821,12 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	if (!strmap_empty(&ctx.paths_to_lists)) {
- 		struct hashmap_iter iter;
- 		struct strmap_entry *entry;
-+		char *path;
- 
- 		strmap_for_each_entry(&ctx.paths_to_lists, &iter, entry)
- 			push_to_stack(&ctx, entry->key);
- 
--		while (!ret && ctx.path_stack.nr) {
--			char *path = prio_queue_get(&ctx.path_stack);
-+		while (!ret && (path = prio_queue_get(&ctx.path_stack))) {
- 			paths_nr++;
- 
- 			ret = walk_path(&ctx, path);
-diff --git a/prio-queue.c b/prio-queue.c
-index 1407f2f801..d11ca6ac36 100644
---- a/prio-queue.c
-+++ b/prio-queue.c
-@@ -22,16 +22,16 @@ void prio_queue_reverse(struct prio_queue *queue)
- 
- 	if (queue->compare)
- 		BUG("prio_queue_reverse() on non-LIFO queue");
--	if (!queue->nr)
-+	if (!queue->nr_internal)
- 		return;
--	for (i = 0; i < (j = (queue->nr - 1) - i); i++)
-+	for (i = 0; i < (j = (queue->nr_internal - 1) - i); i++)
- 		swap(queue, i, j);
- }
- 
- void clear_prio_queue(struct prio_queue *queue)
- {
- 	FREE_AND_NULL(queue->array);
--	queue->nr = 0;
-+	queue->nr_internal = 0;
- 	queue->alloc = 0;
- 	queue->insertion_ctr = 0;
- 	queue->get_pending = 0;
-@@ -44,9 +44,9 @@ static inline void flush_get(struct prio_queue *queue)
- 	if (!queue->get_pending)
- 		return;
- 	queue->get_pending = 0;
--	if (!--queue->nr)
-+	if (!--queue->nr_internal)
- 		return;
--	queue->array[0] = queue->array[queue->nr];
-+	queue->array[0] = queue->array[queue->nr_internal];
- 	sift_down_root(queue);
- }
- 
-@@ -63,15 +63,15 @@ void prio_queue_put(struct prio_queue *queue, void *thing)
- 	}
- 
- 	/* Append at the end */
--	ALLOC_GROW(queue->array, queue->nr + 1, queue->alloc);
--	queue->array[queue->nr].ctr = queue->insertion_ctr++;
--	queue->array[queue->nr].data = thing;
--	queue->nr++;
-+	ALLOC_GROW(queue->array, queue->nr_internal + 1, queue->alloc);
-+	queue->array[queue->nr_internal].ctr = queue->insertion_ctr++;
-+	queue->array[queue->nr_internal].data = thing;
-+	queue->nr_internal++;
- 	if (!queue->compare)
- 		return; /* LIFO */
- 
- 	/* Bubble up the new one */
--	for (ix = queue->nr - 1; ix; ix = parent) {
-+	for (ix = queue->nr_internal - 1; ix; ix = parent) {
- 		parent = (ix - 1) / 2;
- 		if (compare(queue, parent, ix) <= 0)
- 			break;
-@@ -85,9 +85,9 @@ static void sift_down_root(struct prio_queue *queue)
- 	size_t ix, child;
- 
- 	/* Push down the one at the root */
--	for (ix = 0; ix * 2 + 1 < queue->nr; ix = child) {
-+	for (ix = 0; ix * 2 + 1 < queue->nr_internal; ix = child) {
- 		child = ix * 2 + 1; /* left */
--		if (child + 1 < queue->nr &&
-+		if (child + 1 < queue->nr_internal &&
- 		    compare(queue, child, child + 1) >= 0)
- 			child++; /* use right child */
- 
-@@ -102,10 +102,10 @@ void *prio_queue_get(struct prio_queue *queue)
- {
- 	flush_get(queue);
- 
--	if (!queue->nr)
-+	if (!queue->nr_internal)
- 		return NULL;
- 	if (!queue->compare)
--		return queue->array[--queue->nr].data; /* LIFO */
-+		return queue->array[--queue->nr_internal].data; /* LIFO */
- 
- 	queue->get_pending = 1;
- 	return queue->array[0].data;
-@@ -115,9 +115,9 @@ void *prio_queue_peek(struct prio_queue *queue)
- {
- 	flush_get(queue);
- 
--	if (!queue->nr)
-+	if (!queue->nr_internal)
- 		return NULL;
- 	if (!queue->compare)
--		return queue->array[queue->nr - 1].data;
-+		return queue->array[queue->nr_internal - 1].data;
- 	return queue->array[0].data;
- }
-diff --git a/prio-queue.h b/prio-queue.h
-index 482ab5e71d..f08ab87691 100644
---- a/prio-queue.h
-+++ b/prio-queue.h
-@@ -30,7 +30,7 @@ struct prio_queue {
- 	prio_queue_compare_fn compare;
- 	size_t insertion_ctr;
- 	void *cb_data;
--	size_t alloc, nr;
-+	size_t alloc, nr_internal; /* use prio_queue_size() for logical count */
- 	struct prio_queue_entry *array;
- 	unsigned get_pending;
- };
-@@ -55,9 +55,14 @@ void *prio_queue_peek(struct prio_queue *);
- 
- static inline size_t prio_queue_size(struct prio_queue *queue)
- {
--	return queue->nr - queue->get_pending;
-+	return queue->nr_internal - queue->get_pending;
- }
- 
-+#define prio_queue_for_each(queue, it) \
-+	for (size_t pq_ix_ = (queue)->get_pending; \
-+	     pq_ix_ < (queue)->nr_internal && ((it) = (queue)->array[pq_ix_].data, 1); \
-+	     pq_ix_++)
-+
- void clear_prio_queue(struct prio_queue *);
- 
- /* Reverse the LIFO elements */
-diff --git a/revision.c b/revision.c
-index 8ce8ffa43d..34e2d146f4 100644
---- a/revision.c
-+++ b/revision.c
-@@ -476,16 +476,15 @@ static struct commit *handle_commit(struct rev_info *revs,
- static int everybody_uninteresting(struct prio_queue *orig,
- 				   struct commit **interesting_cache)
- {
--	size_t i;
-+	struct commit *commit;
- 
- 	if (*interesting_cache) {
--		struct commit *commit = *interesting_cache;
-+		commit = *interesting_cache;
- 		if (!(commit->object.flags & UNINTERESTING))
- 			return 0;
- 	}
- 
--	for (i = 0; i < orig->nr; i++) {
--		struct commit *commit = orig->array[i].data;
-+	prio_queue_for_each(orig, commit) {
- 		if (commit->object.flags & UNINTERESTING)
- 			continue;
- 
-@@ -4027,8 +4026,8 @@ static enum rewrite_result rewrite_one_1(struct rev_info *revs,
- 
- static void merge_queue_into_list(struct prio_queue *q, struct commit_list **list)
- {
--	while (q->nr) {
--		struct commit *item = prio_queue_peek(q);
-+	struct commit *item;
-+	while ((item = prio_queue_peek(q))) {
- 		struct commit_list *p = *list;
- 
- 		if (p && p->item->date >= item->date)
--- 
-gitgitgadget
+=2D- snipsnap --
+=46rom 54aa4f7f7adf0c0e02b5463b5f7f64547e80cbce Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Sat, 6 Jun 2026 22:09:04 +0200
+Subject: [PATCH] svn-test-dumps: restore checksums after the `hapenning` t=
+ypo
+ fix
+
+b8b38eee85 (doc: fix typos via codespell, 2026-05-31) ran codespell
+against the entire tree and rewrote `hapenning` to `happening`
+inside the body of `t/t9150/svk-merge.dump` and
+`t/t9151/svn-mergeinfo.dump`. Both files are Subversion dump
+files: each `Node-path:` block embeds `Text-content-md5` /
+`Text-content-sha1` for the new content and, on copy operations,
+`Text-copy-source-md5` / `Text-copy-source-sha1` for the source
+content as observed at the cited revision. None of those
+checksums were updated, so loading the dumps with svnadmin 1.14.5
+(present in `ubuntu:rolling`'s CI image) fails immediately with
+`E200014: Checksum mismatch for '/trunk/Makefile'` and the two
+tests stop before any of the assertions they actually exercise can
+run. The CI failure has been visible on every `seen`-based
+linux-sha256 / linux-reftable build since 2026-06-02 (the first
+run that picked up b8b38eee85).
+
+Because `happening` and `hapenning` have the same length, no
+header byte counts need updating; only the embedded checksums do.
+Recompute the MD5 and SHA1 of every text body in the two dumps,
+and for every `Node-copyfrom-path` consult the path's most
+recently defined content to refresh the corresponding
+`Text-copy-source-md5` / `Text-copy-source-sha1`. After this,
+`svnadmin load -q` accepts both dumps cleanly and t9150 and t9151
+get past their setup steps.
+
+This commit only touches the two dump files; the typo correction
+in their surrounding human-readable comment is preserved.
+
+Assisted-by: Opus 4.7
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ t/t9150/svk-merge.dump     | 10 ++++----
+ t/t9151/svn-mergeinfo.dump | 48 +++++++++++++++++++-------------------
+ 2 files changed, 29 insertions(+), 29 deletions(-)
+
+diff --git a/t/t9150/svk-merge.dump b/t/t9150/svk-merge.dump
+index 6a8ac81b11e6..3c46afc18a65 100644
+=2D-- a/t/t9150/svk-merge.dump
++++ b/t/t9150/svk-merge.dump
+@@ -71,7 +71,7 @@ Node-kind: file
+ Node-action: add
+ Prop-content-length: 10
+ Text-content-length: 2401
+-Text-content-md5: bfd8ff778d1492dc6758567373176a89
++Text-content-md5: d6a3917748b0c09ad85c2783f1d4dac1
+ Content-length: 2411
+=20
+ PROPS-END
+@@ -201,7 +201,7 @@ Node-path: branches/left/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2465
+-Text-content-md5: 16e38d9753b061731650561ce01b1195
++Text-content-md5: 3f413450a7a26596d9e512ee385a9b19
+ Content-length: 2465
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -305,7 +305,7 @@ Node-path: trunk/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2521
+-Text-content-md5: 0668418a621333f4aa8b6632cd63e2a0
++Text-content-md5: 89788781014278d76ff23648b8b08b2d
+ Content-length: 2521
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -412,7 +412,7 @@ Node-path: branches/left/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2593
+-Text-content-md5: 5ccff689fb290e00b85fe18ee50c54ba
++Text-content-md5: 706d73919e6f319a0e624aa50c8b8b38
+ Content-length: 2593
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -529,7 +529,7 @@ Node-path: trunk/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2713
+-Text-content-md5: 0afbe34f244cd662b1f97d708c687f90
++Text-content-md5: 1c05266da99e8f01a5ccf816be47a484
+ Content-length: 2713
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+diff --git a/t/t9151/svn-mergeinfo.dump b/t/t9151/svn-mergeinfo.dump
+index d5e169563745..ad741400104e 100644
+=2D-- a/t/t9151/svn-mergeinfo.dump
++++ b/t/t9151/svn-mergeinfo.dump
+@@ -80,8 +80,8 @@ Node-kind: file
+ Node-action: add
+ Prop-content-length: 10
+ Text-content-length: 2401
+-Text-content-md5: bfd8ff778d1492dc6758567373176a89
+-Text-content-sha1: 103205ce331f7d64086dba497574734f78439590
++Text-content-md5: d6a3917748b0c09ad85c2783f1d4dac1
++Text-content-sha1: 9ffe895eb95d4a7c2ee2712dcf7a13637edee6a9
+ Content-length: 2411
+=20
+ PROPS-END
+@@ -194,8 +194,8 @@ Node-kind: file
+ Node-action: add
+ Node-copyfrom-rev: 2
+ Node-copyfrom-path: trunk/Makefile
+-Text-copy-source-md5: bfd8ff778d1492dc6758567373176a89
+-Text-copy-source-sha1: 103205ce331f7d64086dba497574734f78439590
++Text-copy-source-md5: d6a3917748b0c09ad85c2783f1d4dac1
++Text-copy-source-sha1: 9ffe895eb95d4a7c2ee2712dcf7a13637edee6a9
+=20
+=20
+ Revision-number: 4
+@@ -228,8 +228,8 @@ Node-kind: file
+ Node-action: add
+ Node-copyfrom-rev: 2
+ Node-copyfrom-path: trunk/Makefile
+-Text-copy-source-md5: bfd8ff778d1492dc6758567373176a89
+-Text-copy-source-sha1: 103205ce331f7d64086dba497574734f78439590
++Text-copy-source-md5: d6a3917748b0c09ad85c2783f1d4dac1
++Text-copy-source-sha1: 9ffe895eb95d4a7c2ee2712dcf7a13637edee6a9
+=20
+=20
+ Revision-number: 5
+@@ -254,8 +254,8 @@ Node-path: branches/left/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2465
+-Text-content-md5: 16e38d9753b061731650561ce01b1195
+-Text-content-sha1: 36da4b84ea9b64218ab48171dfc5c48ae025f38b
++Text-content-md5: 3f413450a7a26596d9e512ee385a9b19
++Text-content-sha1: b3cd389d63c5e3af4fe22b7464cf97968662ad1a
+ Content-length: 2465
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -359,8 +359,8 @@ Node-path: branches/right/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2521
+-Text-content-md5: 0668418a621333f4aa8b6632cd63e2a0
+-Text-content-sha1: 4f29afd038e52f45acb5ef8c41acfc70062a741a
++Text-content-md5: 89788781014278d76ff23648b8b08b2d
++Text-content-sha1: f52afb2d6230e5a418416b77c3c9ad610edfd202
+ Content-length: 2521
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -467,8 +467,8 @@ Node-path: branches/left/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2529
+-Text-content-md5: f6b197cc3f2e89a83e545d4bb003de73
+-Text-content-sha1: 2f656677cfec0bceec85e53036ffb63e25126f8e
++Text-content-md5: abcac8d04eb061b0a3053e359e44a2a0
++Text-content-sha1: 866caf95e04809a5ed897aea41075b24833612ea
+ Content-length: 2529
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -572,8 +572,8 @@ Node-path: branches/left/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2593
+-Text-content-md5: 5ccff689fb290e00b85fe18ee50c54ba
+-Text-content-sha1: a13de8e23f1483efca3e57b2b64b0ae6f740ce10
++Text-content-md5: 706d73919e6f319a0e624aa50c8b8b38
++Text-content-sha1: 9992d5a9aea960c7856ef6a9364aedd5b710ef53
+ Content-length: 2593
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -689,8 +689,8 @@ Node-kind: file
+ Node-action: add
+ Node-copyfrom-rev: 8
+ Node-copyfrom-path: branches/left/Makefile
+-Text-copy-source-md5: 5ccff689fb290e00b85fe18ee50c54ba
+-Text-copy-source-sha1: a13de8e23f1483efca3e57b2b64b0ae6f740ce10
++Text-copy-source-md5: 706d73919e6f319a0e624aa50c8b8b38
++Text-copy-source-sha1: 9992d5a9aea960c7856ef6a9364aedd5b710ef53
+=20
+=20
+=20
+@@ -761,8 +761,8 @@ Node-path: trunk/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2593
+-Text-content-md5: 5ccff689fb290e00b85fe18ee50c54ba
+-Text-content-sha1: a13de8e23f1483efca3e57b2b64b0ae6f740ce10
++Text-content-md5: 706d73919e6f319a0e624aa50c8b8b38
++Text-content-sha1: 9992d5a9aea960c7856ef6a9364aedd5b710ef53
+ Content-length: 2593
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -942,8 +942,8 @@ Node-path: trunk/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2713
+-Text-content-md5: 0afbe34f244cd662b1f97d708c687f90
+-Text-content-sha1: 46d9377d783e67a9b581da110352e799517c8a14
++Text-content-md5: 1c05266da99e8f01a5ccf816be47a484
++Text-content-sha1: 0cba212974e2b288389d73317f3220be11158e00
+ Content-length: 2713
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -1166,8 +1166,8 @@ Node-path: branches/left-sub/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2713
+-Text-content-md5: 0afbe34f244cd662b1f97d708c687f90
+-Text-content-sha1: 46d9377d783e67a9b581da110352e799517c8a14
++Text-content-md5: 1c05266da99e8f01a5ccf816be47a484
++Text-content-sha1: 0cba212974e2b288389d73317f3220be11158e00
+ Content-length: 2713
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+@@ -1408,8 +1408,8 @@ Node-path: branches/left/Makefile
+ Node-kind: file
+ Node-action: change
+ Text-content-length: 2713
+-Text-content-md5: 0afbe34f244cd662b1f97d708c687f90
+-Text-content-sha1: 46d9377d783e67a9b581da110352e799517c8a14
++Text-content-md5: 1c05266da99e8f01a5ccf816be47a484
++Text-content-sha1: 0cba212974e2b288389d73317f3220be11158e00
+ Content-length: 2713
+=20
+ # -DCOLLISION_CHECK if you believe that SHA1's
+=2D-=20
+2.54.0.windows.1.10.gd5b8d9bb7af0
+
