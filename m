@@ -1,897 +1,187 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB192F39B4
-	for <git@vger.kernel.org>; Sun,  7 Jun 2026 20:36:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780864607; cv=pass; b=OYSV3oIDrt6Dg6NIGQpePhW9sOP9skPfMbjd9vDxcGpsUQ6H1HIuHeOgQ6IZKBCpyTG1Z5qcmaxDH6HS3wW8w+DHu7VH6TGwE8Dxp1HI5NbM+1wOUy37KKs/OvK2Av8NPyGwc+6/4cqYBnNvlDXFUpXxxl2rSrX/SS4+/T8X1TY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780864607; c=relaxed/simple;
-	bh=1MJ1/O4vzsmT76Wnl+eSJXgs0cHkZRaRskLLGXVZ7PI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I0/7m8Y3QXeDIQQPuGk9Sm3BD3iapZFe1vPj80uiDqqY+zNuShUdeM/40Yka258NmJLrQj4Ie6fIzclAuZPEATQqmYaGOYM/mtNsE8Jq5BWi+gcpOjhilF+UWQfKi2G4mi93cAL8uKQV/q35KRRMQyItqgkIAHnHmJAuc54JXzg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gPHEKpi7; arc=pass smtp.client-ip=209.85.210.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEDB1DE8AD
+	for <git@vger.kernel.org>; Sun,  7 Jun 2026 20:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780865820; cv=none; b=fHdEtRvY2sHbZ4njv84vBoRECFhKEGSjzIQjWaXQXZxsElvLMMJ08DnPVl1HzXZwmN4juxHoBW6aIPdD/BEpTwGnAfCZ6JLJIBLMLABqZyo48RhfOUvoHsDWqQ16a6l5JN7EDRMQamnhzxI6ywWIxJJPfA5mh9kM9RtEha/eeuE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780865820; c=relaxed/simple;
+	bh=51CG+xoriPW2aODibvIHCW0x72P7ADIzkFMwiwTYxM8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YbL1ASQUY/ExEWrwie8/sr1uH2NDH0P9M+1cYio3/XLBkYm07GbWK0//d0jdmt+7QO0TQDjilXn5bmmDX/urZ/EX1oKEr1mYJkNP5Qve/PkgeUd+cGzyBx+CsGCz+WFPCOojvmc9J4D8DaESDS7wwxZT2fxfvLJ5TgnVt8K2T/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fLZO46Jc; arc=none smtp.client-ip=74.125.82.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gPHEKpi7"
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7e71b2d527dso635492a34.1
-        for <git@vger.kernel.org>; Sun, 07 Jun 2026 13:36:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780864604; cv=none;
-        d=google.com; s=arc-20240605;
-        b=cd4Qlx8HYLqWlz3AqqNVm9FzOBh+jbCIqKLnjpnWh17pkWg6JxVny8+mfvJvsO9zoD
-         7UXwtTZaCjLbA9k7JVanTalDsUN27jNlF/VkKxgRUE6LRX5+Bkt+UAuMPognvJy9Ctyv
-         NsgZYFlkcAP3MNVFUmtBrBsWXCNCoqRlGwbHzqfv7dreNK8bkIPUdYH/AkGac3Iwhc5A
-         FqppC4GQw/Fux2/l/6QsERCEHstB2Vm85x5TSgDurcjy2gu/IhpRTGVXqZ10swiGL3Sb
-         fqhcQyJ0Sum6LeqR/6rskEEKFF9poIYDd5ylBiBUGK9+NK8J0ktBU/fSvneJNtxlaZlP
-         6uLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vKnBWjsgb+jIc2cjjxQZ01Zin695M4VrIbASFEdEJpI=;
-        fh=Haw1smCNaQaTniwhxCxkBYVHZYUh64ZgTt9yfcSvMgM=;
-        b=MT1INNtqU20Kx5plAXLFVth5w7XzwSVQ/J95GUdUKVzdIYXK/Yos+UT3mUoWdIYNJe
-         kGFYWgVhiYmCu3w4nuPQzJ3ePPezQqfVWDSVaHqxm8O8Vbn1yJ3m3R93eyWJyVsDM4NE
-         3hEDwvfIeBHevqu0ykw0SLJ+5c4LezvYSsAo2/tqC2MEovq5RTPRQ0hm0NnjsNbDYzGF
-         rkY0YC3aoL6f8DOFKF79RErM/BriMK6ueQfi7t4fAvLKazxswD8IifwEkc/Q6vAcccyi
-         w44XMZQ3cr1mRKa6muFUMg7LivTiCLwv/s7+Gfx0EmAa+u8ZwelmcqmVlKJ2IoUVc2N4
-         u3ag==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fLZO46Jc"
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-30759632453so4755689eec.1
+        for <git@vger.kernel.org>; Sun, 07 Jun 2026 13:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780864604; x=1781469404; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vKnBWjsgb+jIc2cjjxQZ01Zin695M4VrIbASFEdEJpI=;
-        b=gPHEKpi7oWf3X7jFFaDwUEdePBIQt8JpXYa9czCsRcyGzJ6ysZMFb69yWoSkvC6evl
-         12+ej49+nxv/V3w3h+UOpVDEQ0qbkXC72ZxX0h0eNrLmJFc7sWRh0ldVpH0jLO51D9oJ
-         vcI2snS2kBVeDN177KyKNznkz5iX/3A0yWZ8yUmXb1a24nShQyAQg8JlV1n4qS1++R/m
-         bxM5N3AvWuPMCABPmrpg8QFBBDhQJIBOHDhzdnO/rfSuVvchOQEoBLb1LPELjXgX+W6t
-         WY7Y7pjtR0eFd6GUj0qa47OWLZa8zEXuKLvEuyvaTaJ4lBKIIx0p+rKnMyWRkQVqzIrJ
-         5eGw==
+        d=gmail.com; s=20251104; t=1780865818; x=1781470618; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W0rvZ2A+IaQcsVUwJBREeJE5iAGPe68oCSWjnY5m06U=;
+        b=fLZO46JcsIaSeJQMeoSx46KEo/3H227d2wzYE1CluXR47T1fWprGudVofsJmBJltOk
+         puB3tGm4B+eMVK5nFlPAVk0uR/HIdG304wh6DlzCvpsX0dGl4EjGnX09fQKd0GtdO+QU
+         LgQzJpBdgSJ0bv64Dwh9XuUIk6NplqQE0ipowbaKqyYpTMXQrcxjYOtTgk74SzeC76ts
+         RPGJCqC8hYi7uj+SGwofgdfR2z3BSFyTMlzLwwS8S+IgoRQlAXB3ZWLetnv/ZgoBwqgU
+         a0Zi/STy2plBAXkGpcJ+aX+ZTvTtzGORiMdJRs29/vRObT0KTIwxylx6MtgsrIk8ArYa
+         1xnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780864604; x=1781469404;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vKnBWjsgb+jIc2cjjxQZ01Zin695M4VrIbASFEdEJpI=;
-        b=hj2qQO1Ipi6M91ai++KDwtzwHycgf2pWgA+Nfa3A4h0cCPILx38Lqbs9QTl9AxshUL
-         9FcDebZM5Kzp6rEPlvlBQ74Gx3b0t1MtBhXAo/ubNbx5LKl+6+AEBjnlSzZ/olCTMh3p
-         RdG8n97lHCK+DLLtHZA4lsanyhjvmVmGA0mbnq/L/XDFm2iRggPIfWluyh/5YGicoLvG
-         M+mWwx+c2ci0yMCY40soa7rFZ2o0EpGjPfgfK/kle7wvRCz8qcad/Bh6ImWrkiOcVrNO
-         1j+SHV3g48eEcYYzwnpHOUWHRiHzzjGjo2+hf8VUmwqkl2E/PxDGT+MGmuEiKshUIrJ2
-         dWoA==
-X-Forwarded-Encrypted: i=1; AFNElJ+RWYJcItQgU7wdy2W6JLLgUlvMQv0QvPFXoKcYrGjnGix29GuFce63+ZrgQs9GzldhhZg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy588eKwt+cVxqLiL3nPXEMxS4SfvXpNg0ujby819xpC2G2cfbu
-	tr5pjbzM6QvMSRIWfSlB+ePrutj98nd0tzmz30h/G5nRdPM+49cuYXEKa3tsdttV08MSae1CuWD
-	6AEqNYFMvFWWJyGJNfpjn9H8iOTDSdJY=
-X-Gm-Gg: Acq92OGUwvDZs2fjZwMIYGiDga/Dk2MQ/UAmqHVfTaPD7XmLL9YMtzboiJbPYDtxhOD
-	PiduWHmAa61rDO9w2wyy4gLAxX0u9oO2WHtd3aBbam5DCxsuz5j/H56LEffaqJc1gGbMDwMhFsR
-	crMMoJ7mzPpqUuZcYlqGdwQ2DQGYsDvNSPfVijZSCyhzS/zijXQZrZ+wQJUa/F5zL13D75JW8wP
-	9C05jbi+jsEGohca7WzEeR/3LTy6YImEurrvSa/jKSdNHTLTaTaAswKY6OEeOvdHMurKrDjn1AK
-	LHSy1zC7HNTRya44HJhzLnlyCFyj8h2Mg84f8bDaTRRKHzBUqU4=
-X-Received: by 2002:a05:6820:168d:b0:69e:8929:13cd with SMTP id
- 006d021491bc7-69e892917femr2468829eaf.54.1780864603960; Sun, 07 Jun 2026
- 13:36:43 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780865818; x=1781470618;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W0rvZ2A+IaQcsVUwJBREeJE5iAGPe68oCSWjnY5m06U=;
+        b=kdEkCMsP/OjOkmfdPEIpwTjQCacEgazNvoZNui0jGKwdkumfwF+m68MkHFBWqd+RlS
+         OUVDrgbXvIB1xs4uEZP5fFbUKeZVqJtM+ZdLPbJlRxp2UsKdxh0FvGcMLT08Lo26UtiB
+         n9e8P+J8zcTa3lGedA2B0IItriLxdvXJ55mZd2+Uekm/JTY0OaX4qqIsI5OwvTU68CWR
+         cQ83UrY4Hr4j9BD2/XqtDl5GI5RJB1/YWYQ8+q6lfBjcA02D/mSQLopxcY5xGzHljkk+
+         qmVkqSCG/m5eqw9erC+q/nkuOtWFDXYZkgQ+Z0zGk5hR6uHDJwMLeBcmr7FtcDK5GULZ
+         hMRQ==
+X-Gm-Message-State: AOJu0YzM3Ge7bn0UcQyoJ+UzFrxAXMJoC1GApFlQ6gQ18+3yfOvauQOy
+	3vLT7TqCiOl++GMzEgKlSZGWeqtQkx+7WyhByuLWFx4UM8Q+ccbZjv2d
+X-Gm-Gg: Acq92OGBTyGzIjA0UK/Is7x7z8frhmcuwVxwzRW3zBS5Hvfb108ZOPtKoDZBN2jF0hd
+	+e7JQzJbNb2Wb/skxwvFaf5TANzXvrfXIlufyN6RyUU+4r2QAXkMIcKbWXCFiJjSz9BHI33WGCA
+	sLKxYMctagikgUaOyiHK6uVhC49nd/LtiGxPrZdqARlJsOzf6aRRlwl5gydRgexDFNJjUAGjTVS
+	EFXn7WK2b1eu1PltnVGdJobVZIhPkKejmj2RgvroR52PCEVDiskd6G1G+OUeoAf+XqGNbcp+foS
+	/BuA+0adXsksMhC82KbV5rqrR//jSt2tkMhfsbf4C/0mV+W6VEGtC+C9ydyBVQWSs0lvExlOxjA
+	dB+sFXMTOz/KWOZNm2GFWm/H0PYKo0SqtTtL11E/pt38tFizISYv/nBSnUnvWwoqYp4RYfCe4eH
+	cCliiDwSYlXFziac/djve6iwjzCKpZg7mW5TfYnZfE4uLsIVzq9xNodN0CeokLko4PA6effIzTQ
+	QQM//30tdIYqSszMoLFur59sW47dVKlZdhA/HN4Uu7UuqRqYlnBpXunNeLOURqip3F0i9A+FhQX
+	PVx9e3NZVr/1R31mb+ip3Nj7Ru45XA==
+X-Received: by 2002:a05:7300:4347:b0:2ed:7e1:975 with SMTP id 5a478bee46e88-3077ae6fe7cmr7178873eec.1.1780865817846;
+        Sun, 07 Jun 2026 13:56:57 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([99.196.128.205])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df191d0sm21796310eec.21.2026.06.07.13.52.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2026 13:56:57 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Sun, 07 Jun 2026 16:51:53 -0400
+Subject: [PATCH] describe: limit default ref iteration to tags
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2120.v2.git.1779733799.gitgitgadget@gmail.com>
- <pull.2120.v3.git.1780087700.gitgitgadget@gmail.com> <d044fa0ee5c9cda7dfe4f663f34443103521ef43.1780087700.git.gitgitgadget@gmail.com>
- <c7987f11-9181-3975-552c-14e74abb2c97@gmx.de>
-In-Reply-To: <c7987f11-9181-3975-552c-14e74abb2c97@gmx.de>
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Sun, 7 Jun 2026 13:36:32 -0700
-X-Gm-Features: AVVi8CcpMZ-6ZHt8oy_uuGewtzC1ysUcM6zVDGfTPhnalnyyIOSScYD7s7wv08E
-Message-ID: <CAC2QwmKNA6wv-jG07fgJj7Xj2J+dzzWEiqV5Q+8HJpjA_GtkFw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] diff: add long-running diff process via diff.<driver>.process
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Michael Montalbo via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260607-describe-tag-ref-scope-v1-1-653d232b86b5@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDQBBE0atIr21oJWrwKuJinKmYzkJlWkNAv
+ HtGXT6K+jsZosKozXaK+KrpPCUUeUb+7aYRrCGZSilrqaXhAPNRB/DqRo54sfl5ATdBxKF4iKu
+ elM5LmvR3hbv+tm3DB349a3Qcf0Cea/96AAAA
+X-Change-ID: 20260607-describe-tag-ref-scope-7d00ae140a58
+To: git@vger.kernel.org
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, 
+ Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Patrick Steinhardt <ps@pks.im>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1780865530; l=3164;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=51CG+xoriPW2aODibvIHCW0x72P7ADIzkFMwiwTYxM8=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QG0JKdk/FSfjwaE/IQAuRCYjpsCS78mKQfrU6A0PzY+Lh+d7lWuq+VAkZzASdu+tkczipkm8/jR
+ 12/VhpF8hTgY=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-On Sun, Jun 7, 2026 at 7:36=E2=80=AFAM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Michael,
->
-> I stumbled about this patch when it broke CI in Git for Windows, where we
-> do _not_ use `NO_PYTHON`, even though Python is unavailable in the
-> build/test CI jobs. The existing tests handle this situation gracefully,
-> this here patch does not:
->
-> On Sun, 7 Jun 2026, Michael Montalbo via GitGitGadget wrote:
->
-> > diff --git a/t/t4080-diff-process.sh b/t/t4080-diff-process.sh
-> > new file mode 100755
-> > index 0000000000..f159cd86d8
-> > --- /dev/null
-> > +++ b/t/t4080-diff-process.sh
-> > @@ -0,0 +1,538 @@
-> > +#!/bin/sh
-> > +
-> > +test_description=3D'diff process via long-running process'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +if test_have_prereq PYTHON
-> > +then
-> > +     PYTHON_PATH=3D$(command -v python3) || PYTHON_PATH=3D$(command -v=
- python)
->
-> When neither `python3` nor `python` are available (which is the case in
-> the minimal Git for Windows SDK used in Git's CI runs), this fails under
-> `set -e`. Before even running the first test case. Resulting in an
-> unexpected TAP format error.
->
-> Now, we could "fix" this by imitating what `lib-p4` does (see
-> https://github.com/dscho/git/commit/bd0b5570c744f678911a67a62da63f30655f2=
-0d8
-> which demonstrates that it is indeed a work-around on Windows):
->
-> -- snip --
-> diff --git a/t/t4080-diff-process.sh b/t/t4080-diff-process.sh
-> index fdf6da1c341e67..bd22c247ff3856 100755
-> --- a/t/t4080-diff-process.sh
-> +++ b/t/t4080-diff-process.sh
-> @@ -4,9 +4,10 @@ test_description=3D'diff process via long-running proces=
-s'
->
->  . ./test-lib.sh
->
-> -if test_have_prereq PYTHON
-> +if ! test_have_prereq PYTHON || ! test -x "$PYTHON_PATH"
->  then
-> -       PYTHON_PATH=3D$(command -v python3) || PYTHON_PATH=3D$(command -v=
- python)
-> +       skip_all=3D'python interpreter not available'
-> +       test_done
->  fi
->
->  #
-> -- snap --
->
-> Of course, this uncovers _another_ problem with the Python script: It use=
-s
-> Python3-only `f"..."` format strings, which cannot be handled by the
-> Python2 to which the `PYTHON_PATH` variable in `linux-TEST-vars` points.
-> So this requires _another follow-up (see also
-> https://github.com/dscho/git/commit/c12a9f4c80e5ce8db0fe370fac46fb45be2b7=
-75f):
->
-> -- snip --
-> diff --git a/t/t4080-diff-process.sh b/t/t4080-diff-process.sh
-> index bd22c247ff3856..ba14682a9086e4 100755
-> --- a/t/t4080-diff-process.sh
-> +++ b/t/t4080-diff-process.sh
-> @@ -39,7 +39,8 @@ setup_backend () {
->
->         def write_pkt(line):
->             data =3D (line + "\n").encode()
-> -           sys.stdout.buffer.write(f"{len(data)+4:04x}".encode() + data)
-> +           hdr =3D "{:04x}".format(len(data) + 4).encode()
-> +           sys.stdout.buffer.write(hdr + data)
->             sys.stdout.buffer.flush()
->
->         def write_flush():
-> @@ -98,7 +99,8 @@ setup_backend () {
->             new =3D read_content()
->             old_first =3D old.split(b"\n")[0].decode(errors=3D"replace") =
-if old else ""
->             new_first =3D new.split(b"\n")[0].decode(errors=3D"replace") =
-if new else ""
-> -           log(f"command=3D{cmd} pathname=3D{pathname} old=3D{old_first}=
- new=3D{new_first}")
-> +           log("command=3D{} pathname=3D{} old=3D{} new=3D{}".format(
-> +               cmd, pathname, old_first, new_first))
->
->             if mode =3D=3D "error":
->                 write_flush()
-> @@ -130,7 +132,7 @@ setup_backend () {
->                 else:
->                     ol =3D old.count(b"\n")
->                     nl =3D new.count(b"\n")
-> -                   write_pkt(f"hunk 1 {ol} 1 {nl}")
-> +                   write_pkt("hunk 1 {} 1 {}".format(ol, nl))
->                 write_flush()
->                 write_pkt("status=3Dsuccess")
->                 write_flush()
-> -- snap --
->
-> And this is still not enough to make it work with Python2, see
-> https://github.com/dscho/git/actions/runs/27091523842/job/79955895737:
->
-> -- snip --
-> [...]
-> + git -c diff.cdiff.process=3D./diff-process-backend --mode=3Dfixed-hunk =
-diff boundary.c
->   Traceback (most recent call last):
->     File "/__w/git/git/t/trash directory.t4080-diff-process/diff-process-=
-backend.py", line 45, in <module>
->       assert read_pkt() =3D=3D "git-diff-client"
->     File "/__w/git/git/t/trash directory.t4080-diff-process/diff-process-=
-backend.py", line 4, in read_pkt
->       hdr =3D sys.stdin.buffer.read(4)
->   AttributeError: 'file' object has no attribute 'buffer'
-> -- snap --
->
-> I have experienced similar patterns in my career, where a single decision
-> required multiple follow-up fixes _just_ to avoid having to revert that
-> decision. This kind of doubling down has never ended well.
->
-> Therefore I would like to take a step back, and ask: Is it _really_ a goo=
-d
-> idea to use Python here? Are we certain that we want to _require_ Python
-> to run this test and skip it if Python isn't available (as is the case in
-> the Windows-related parts of Git's very own CI) even if Python has nothin=
-g
-> at all to do with the feature that is being tested?
->
-> I don't want to be doomed to repeat history, and we can very well learn
-> e.g. from prior art in this very project, where the tests for the
-> clean/smudge filters (which _also_ want to speak pkt-line over stdio)
-> needlessly incurred Perl as a requirement to run the tests. It was
-> Matheus's heroic work in 52917a998ef3a (t0021: implementation the
-> rot13-filter.pl script in C, 2022-08-14) and 4d1d843be7a15 (tests: use th=
-e
-> new C rot13-filter helper to avoid PERL prereq, 2022-08-14) that avoided
-> that unnecessary prerequisite.
->
-> Likewise, there is `test-tool pkt-line` intended for driving the pkt-line
-> protocol via simple shell scripts.
->
-> So the conscious project direction has been: fold pkt-line test backends
-> into `test-tool` and drop the scripting-language prereq. Reintroducing th=
-e
-> same shape in Python would walk this back.
->
-> Patrick's careful effort in 27bd8ee311719 (Merge branch 'ps/fewer-perl',
-> 2025-04-29) has been another clear sign that the Git project is actively
-> _removing_ scripting-language dependencies from the build and test
-> infrastructure, not adding new ones.
->
+Unless --all is given, get_name() rejects every ref outside refs/tags/.
+The rejection happens only after the ref backend has enumerated the ref,
+so repositories with many other refs spend most of a simple describe
+invocation visiting refs which cannot affect its result.
 
-Now I wonder if the extension / addition of more Perl test infra with my ot=
-her
-series:
+Commit 8a5a1884e9 (Avoid accessing non-tag refs in git-describe unless
+--all is requested, 2008-02-24) moved this rejection before object
+lookup, but left iteration unscoped. Pass the existing refs/tags/
+restriction to the iterator unless --all is given so the backend can
+avoid unrelated refs.
 
-https://lore.kernel.org/git/pull.2135.git.1780559158.gitgitgadget@gmail.com=
-/T/
+On a checkout with 124,357 refs, of which 330 were tags, I ran the
+following command with the parent and patched binaries:
 
-also goes against the project direction w.r.t. removing scripting languages=
-.
-Maybe I should also re-evaluate the usage of Perl there. I am leveraging
-existing shell parsing logic written in Perl, but maybe the preference for
-Perl-based lint rules is a mistake and should be avoided.
+    hyperfine --warmup 3 --runs 15 \
+        'git describe --always --long --abbrev=40 HEAD'
 
-> The clear prior art in Git's own tests for what t4080 wants to do, as of
-> today, is `t/helper/test-rot13-filter.c`, which could be imitated here
-> instead of (re-)introducing a dependency on a scripting language other
-> than Unix shell in Git's test suite.
->
-> The `PYTHON` prereq exists in exactly five files today, all `git p4`
-> related (where Python is an intrinsic prerequisite given that `git-p4.py`
-> _is_ written in Python): `t/lib-git-p4.sh`, `t/t9802-git-p4-filetype.sh`,
-> `t/t9810-git-p4-rcs.sh`, `t/t9835-git-p4-metadata-encoding-python2.sh`,
-> and `t/t9836-git-p4-metadata-encoding-python3.sh`.
->
-> After 7cdbff14d482 (remove merge-recursive-old, 2006-11-20), this here
-> patch would be the first one, after almost 20 years, to re-introduce
-> Python as a dependency outside `git p4`.
->
-> And it would also be the first ever to embed a Python script as a heredoc=
-:
->
-> > +fi
-> > +
-> > +#
-> > +# A single parametric diff process.
-> > +# Usage: diff-process-backend --mode=3D<mode> [--log=3D<path>]
-> > +#
-> > +# Modes:
-> > +#   whole-file  - report all lines as changed (default)
-> > +#   fixed-hunk  - always report hunk 5 2 5 2
-> > +#   bad-hunk    - report out-of-bounds hunk 999 1 999 1
-> > +#   bad-sync    - report hunk with mismatched unchanged totals
-> > +#   overlap     - report two overlapping hunks
-> > +#   no-hunks   - return no hunks (files considered equivalent)
-> > +#   error       - return status=3Derror for every request
-> > +#   abort       - return status=3Dabort for every request
-> > +#   crash       - read one request then exit without responding
-> > +#
-> > +setup_backend () {
-> > +     cat >"$TRASH_DIRECTORY/diff-process-backend.py" <<-\PYEOF
-> > +     import sys, os
-> > +
-> > +     def read_pkt():
-> > +         hdr =3D sys.stdin.buffer.read(4)
-> > +         if len(hdr) < 4: return None
-> > +         length =3D int(hdr, 16)
-> > +         if length =3D=3D 0: return ""
-> > +         data =3D sys.stdin.buffer.read(length - 4)
-> > +         return data.decode().rstrip("\n")
-> > +
-> > +     def write_pkt(line):
-> > +         data =3D (line + "\n").encode()
-> > +         sys.stdout.buffer.write(f"{len(data)+4:04x}".encode() + data)
-> > +         sys.stdout.buffer.flush()
-> > +
-> > +     def write_flush():
-> > +         sys.stdout.buffer.write(b"0000")
-> > +         sys.stdout.buffer.flush()
-> > +
-> > +     def read_content():
-> > +         chunks =3D []
-> > +         while True:
-> > +             hdr =3D sys.stdin.buffer.read(4)
-> > +             if len(hdr) < 4: break
-> > +             length =3D int(hdr, 16)
-> > +             if length =3D=3D 0: break
-> > +             chunks.append(sys.stdin.buffer.read(length - 4))
-> > +         return b"".join(chunks)
-> > +
-> > +     mode =3D "whole-file"
-> > +     logfile =3D None
-> > +     for arg in sys.argv[1:]:
-> > +         if arg.startswith("--mode=3D"):
-> > +             mode =3D arg[7:]
-> > +         elif arg.startswith("--log=3D"):
-> > +             logfile =3D open(arg[6:], "a")
-> > +
-> > +     def log(msg):
-> > +         if logfile:
-> > +             logfile.write(msg + "\n")
-> > +             logfile.flush()
-> > +
-> > +     # Handshake
-> > +     assert read_pkt() =3D=3D "git-diff-client"
-> > +     assert read_pkt() =3D=3D "version=3D1"
-> > +     read_pkt()
-> > +     write_pkt("git-diff-server")
-> > +     write_pkt("version=3D1")
-> > +     write_flush()
-> > +     while True:
-> > +         p =3D read_pkt()
-> > +         if p =3D=3D "": break
-> > +     write_pkt("capability=3Dhunks")
-> > +     write_flush()
-> > +
-> > +     log("ready")
-> > +
-> > +     while True:
-> > +         cmd =3D None
-> > +         pathname =3D None
-> > +         while True:
-> > +             p =3D read_pkt()
-> > +             if p is None: sys.exit(0)
-> > +             if p =3D=3D "": break
-> > +             if p.startswith("command=3D"): cmd =3D p.split("=3D",1)[1=
-]
-> > +             if p.startswith("pathname=3D"): pathname =3D p.split("=3D=
-",1)[1]
-> > +         if cmd is None: sys.exit(0)
-> > +         old =3D read_content()
-> > +         new =3D read_content()
-> > +         old_first =3D old.split(b"\n")[0].decode(errors=3D"replace") =
-if old else ""
-> > +         new_first =3D new.split(b"\n")[0].decode(errors=3D"replace") =
-if new else ""
-> > +         log(f"command=3D{cmd} pathname=3D{pathname} old=3D{old_first}=
- new=3D{new_first}")
-> > +
-> > +         if mode =3D=3D "error":
-> > +             write_flush()
-> > +             write_pkt("status=3Derror")
-> > +             write_flush()
-> > +             continue
-> > +
-> > +         if mode =3D=3D "abort":
-> > +             write_flush()
-> > +             write_pkt("status=3Dabort")
-> > +             write_flush()
-> > +             continue
-> > +
-> > +         if mode =3D=3D "crash":
-> > +             sys.exit(1)
-> > +
-> > +         if cmd =3D=3D "hunks":
-> > +             if mode =3D=3D "fixed-hunk":
-> > +                 write_pkt("hunk 5 2 5 2")
-> > +             elif mode =3D=3D "bad-hunk":
-> > +                 write_pkt("hunk 999 1 999 1")
-> > +             elif mode =3D=3D "bad-sync":
-> > +                 write_pkt("hunk 1 2 1 1")
-> > +             elif mode =3D=3D "overlap":
-> > +                 write_pkt("hunk 1 5 1 5")
-> > +                 write_pkt("hunk 3 2 3 2")
-> > +             elif mode =3D=3D "no-hunks":
-> > +                 pass
-> > +             else:
-> > +                 ol =3D old.count(b"\n")
-> > +                 nl =3D new.count(b"\n")
-> > +                 write_pkt(f"hunk 1 {ol} 1 {nl}")
-> > +             write_flush()
-> > +             write_pkt("status=3Dsuccess")
-> > +             write_flush()
-> > +         else:
-> > +             write_flush()
-> > +             write_pkt("status=3Derror")
-> > +             write_flush()
-> > +     PYEOF
->
-> The existing pattern is to provide larger scripts as fixtures in
-> associated `t/tNNNN/` directories, not as heredoc, see e.g.
-> `t/t1509/prepare-chroot.sh`. Writing scripts, especially lengthy ones, in
-> heredoc strings makes it virtually impossible to use static code analysis
-> or syntax highlighting to fend off banal errors.
->
-> Given the complexity of what t4080 tries to test (error, abort, crash,
-> bad-sync, no-hunks, multiple files in one session, capability
-> negotiation), it would unfortunately be infeasible to use `test-tool
-> pkt-line` from a shell script implementing that `diff.*.process` protocol=
-.
->
-> So I've spiked a demo how the `test-tool diff-process-backend` could look
-> like (letting Opus do the menial typing, so that I can enjoy at least par=
-t
-> of a sunny Sunday outside), which also passes the CI build and test:
-> https://github.com/dscho/git/commit/b6e3c93381b00929476c3a00155f7cf7334a2=
-2e6
->
-> That commit is of course not intended to be used as-is; Feel free to pick
-> code parts of it and integrate them into your topic branch. Or write your
-> own test-tool helper from scratch if that's more your jam.
->
-> Ciao,
-> Johannes
->
-> > +     write_script diff-process-backend <<-SHEOF
-> > +     exec "$PYTHON_PATH" "$TRASH_DIRECTORY/diff-process-backend.py" "\=
-$@"
-> > +     SHEOF
-> > +}
-> > +
-> > +BACKEND=3D"./diff-process-backend"
-> > +
-> > +test_expect_success PYTHON 'setup' '
-> > +     setup_backend &&
-> > +     echo "*.c diff=3Dcdiff" >.gitattributes &&
-> > +     git add .gitattributes &&
-> > +
-> > +     # boundary.c: 10 lines, changes at 5-6 and 9-10.
-> > +     # Used by: hunk boundaries, error fallback, crash, bad hunks, ove=
-rlap.
-> > +     cat >boundary.c <<-\EOF &&
-> > +     line1
-> > +     line2
-> > +     line3
-> > +     line4
-> > +     OLD5
-> > +     OLD6
-> > +     line7
-> > +     line8
-> > +     OLD9
-> > +     OLD10
-> > +     EOF
-> > +     git add boundary.c &&
-> > +
-> > +     # worddiff.c: single-line function, value changes 1 -> 999.
-> > +     # Used by: word-diff, --diff-algorithm, --no-ext-diff, --stat.
-> > +     cat >worddiff.c <<-\EOF &&
-> > +     int value(void) { return 1; }
-> > +     EOF
-> > +     git add worddiff.c &&
-> > +
-> > +     # newfile.c: single-line function, value changes 42 -> 99.
-> > +     # Used by: new file, --exit-code, multiple drivers.
-> > +     cat >newfile.c <<-\EOF &&
-> > +     int new_func(void) { return 42; }
-> > +     EOF
-> > +     git add newfile.c &&
-> > +
-> > +     # logtest.c: single-line function for log/format-patch tests.
-> > +     # Needs two commits so log -1 has a diff.
-> > +     cat >logtest.c <<-\EOF &&
-> > +     int logfunc(void) { return 1; }
-> > +     EOF
-> > +     git add logtest.c &&
-> > +
-> > +     # two.c/one.c: two-file pair for error/abort/startup-failure test=
-s.
-> > +     cat >one.c <<-\EOF &&
-> > +     int first(void) { return 1; }
-> > +     EOF
-> > +     cat >two.c <<-\EOF &&
-> > +     int second(void) { return 2; }
-> > +     EOF
-> > +     git add one.c two.c &&
-> > +
-> > +     git commit -m "initial" &&
-> > +
-> > +     # Second commit for logtest.c (so log -1 has something to show).
-> > +     cat >logtest.c <<-\EOF &&
-> > +     int logfunc(void) { return 2; }
-> > +     EOF
-> > +     git add logtest.c &&
-> > +     git commit -m "change logtest.c" &&
-> > +
-> > +     # Working tree modifications (not committed).
-> > +     cat >boundary.c <<-\EOF &&
-> > +     line1
-> > +     line2
-> > +     line3
-> > +     line4
-> > +     NEW5
-> > +     NEW6
-> > +     line7
-> > +     line8
-> > +     NEW9
-> > +     NEW10
-> > +     EOF
-> > +
-> > +     cat >worddiff.c <<-\EOF &&
-> > +     int value(void) { return 999; }
-> > +     EOF
-> > +
-> > +     cat >newfile.c <<-\EOF &&
-> > +     int new_func(void) { return 99; }
-> > +     EOF
-> > +
-> > +     cat >one.c <<-\EOF &&
-> > +     int first(void) { return 10; }
-> > +     EOF
-> > +
-> > +     cat >two.c <<-\EOF
-> > +     int second(void) { return 20; }
-> > +     EOF
-> > +'
-> > +
-> > +#
-> > +# Core behavior: the tool controls which lines are marked as changed.
-> > +#
-> > +
-> > +test_expect_success PYTHON 'diff process hunk boundaries affect output=
-' '
-> > +     # The file has changes at lines 5-6 and 9-10, but fixed-hunk
-> > +     # only reports lines 5-6 as changed.  Lines 9-10 should not
-> > +     # appear as changed in the output.
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dfixed-hunk" \
-> > +             diff boundary.c >actual &&
-> > +     test_grep "^-OLD5" actual &&
-> > +     test_grep "^-OLD6" actual &&
-> > +     test_grep "^+NEW5" actual &&
-> > +     test_grep "^+NEW6" actual &&
-> > +     test_grep ! "^-OLD9" actual &&
-> > +     test_grep ! "^-OLD10" actual &&
-> > +     test_grep ! "^+NEW9" actual &&
-> > +     test_grep ! "^+NEW10" actual
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process works with new file' '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff -- newfile.c >actual 2>stderr &&
-> > +     test_grep "return 99" actual &&
-> > +     test_grep "pathname=3Dnewfile.c" backend.log &&
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process works with added file (empty =
-old side)' '
-> > +     cat >added.c <<-\EOF &&
-> > +     int added(void) { return 1; }
-> > +     EOF
-> > +     git add added.c &&
-> > +
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff --cached -- added.c >actual 2>stderr &&
-> > +     test_grep "added" actual &&
-> > +     test_grep "pathname=3Dadded.c" backend.log &&
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process skipped for binary files' '
-> > +     printf "\\0binary" >binary.c &&
-> > +     git add binary.c &&
-> > +     git commit -m "add binary" &&
-> > +     printf "\\0changed" >binary.c &&
-> > +
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff -- binary.c >actual &&
-> > +     test_grep "Binary files" actual &&
-> > +     test_path_is_missing backend.log
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process not consulted for unmatched d=
-river' '
-> > +     echo "not tracked by cdiff" >unmatched.txt &&
-> > +     git add unmatched.txt &&
-> > +     git commit -m "add unmatched.txt" &&
-> > +
-> > +     echo "modified" >unmatched.txt &&
-> > +
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff -- unmatched.txt >actual &&
-> > +     test_grep "modified" actual &&
-> > +     test_path_is_missing backend.log
-> > +'
-> > +
-> > +test_expect_success PYTHON 'multiple drivers use separate processes' '
-> > +     echo "*.h diff=3Dhdiff" >>.gitattributes &&
-> > +     git add .gitattributes &&
-> > +
-> > +     cat >multi.h <<-\EOF &&
-> > +     int header(void) { return 1; }
-> > +     EOF
-> > +     git add multi.h &&
-> > +     git commit -m "add multi.h" &&
-> > +
-> > +     cat >multi.h <<-\EOF &&
-> > +     int header(void) { return 2; }
-> > +     EOF
-> > +
-> > +     rm -f backend-c.log backend-h.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend-c.log" \
-> > +         -c diff.hdiff.process=3D"$BACKEND --log=3Dbackend-h.log" \
-> > +             diff -- newfile.c multi.h >actual 2>stderr &&
-> > +     test_grep "pathname=3Dnewfile.c" backend-c.log &&
-> > +     test_grep "pathname=3Dmulti.h" backend-h.log &&
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process works alongside textconv' '
-> > +     write_script uppercase-filter <<-\EOF &&
-> > +     tr "a-z" "A-Z" <"$1"
-> > +     EOF
-> > +
-> > +     cat >textconv.c <<-\EOF &&
-> > +     hello world
-> > +     EOF
-> > +     git add textconv.c &&
-> > +     git commit -m "add textconv.c" &&
-> > +
-> > +     cat >textconv.c <<-\EOF &&
-> > +     goodbye world
-> > +     EOF
-> > +
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.textconv=3D"./uppercase-filter" \
-> > +         -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff -- textconv.c >actual 2>stderr &&
-> > +     # The diff process receives textconv-transformed (uppercase) cont=
-ent.
-> > +     test_grep "pathname=3Dtextconv.c" backend.log &&
-> > +     test_grep "old=3DHELLO WORLD" backend.log &&
-> > +     test_grep "new=3DGOODBYE WORLD" backend.log &&
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +#
-> > +# Downstream features: word diff, log, equivalent files, exit code.
-> > +#
-> > +
-> > +test_expect_success PYTHON 'diff process with --word-diff' '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff --word-diff worddiff.c >actual 2>stderr &&
-> > +     test_grep "\[-1;-\]" actual &&
-> > +     test_grep "{+999;+}" actual &&
-> > +     test_grep "pathname=3Dworddiff.c" backend.log &&
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process works with git log -p' '
-> > +     # With no-hunks mode, the tool says the files are equivalent,
-> > +     # so log -p should show the commit but no diff content.
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dno-hunks --log=3Db=
-ackend.log" \
-> > +             log -1 -p -- logtest.c >actual 2>stderr &&
-> > +     test_grep "change logtest.c" actual &&
-> > +     test_grep ! "return 2" actual &&
-> > +     test_grep "command=3Dhunks pathname=3Dlogtest.c" backend.log &&
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process no hunks suppresses diff outp=
-ut' '
-> > +     cat >nohunks.c <<-\EOF &&
-> > +     int zero(void) { return 0; }
-> > +     EOF
-> > +     git add nohunks.c &&
-> > +     git commit -m "add nohunks.c" &&
-> > +
-> > +     cat >nohunks.c <<-\EOF &&
-> > +     int zero(void) { return 999; }
-> > +     EOF
-> > +
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dno-hunks" \
-> > +             diff nohunks.c >actual &&
-> > +     test_must_be_empty actual
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process no hunks with --exit-code ret=
-urns success' '
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dno-hunks" \
-> > +             diff --exit-code nohunks.c
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process with --exit-code and hunks re=
-turns failure' '
-> > +     test_expect_code 1 git -c diff.cdiff.process=3D"$BACKEND" \
-> > +             diff --exit-code newfile.c
-> > +'
-> > +
-> > +#
-> > +# Bypass mechanisms: flags and commands that skip the diff process.
-> > +#
-> > +
-> > +test_expect_success PYTHON 'diff process bypassed by --diff-algorithm'=
+The results were:
+
+             parent       this commit
+  elapsed    196.2 ms      63.3 ms
+  user        69.5 ms      48.0 ms
+  system     123.0 ms      12.0 ms
+
+The wall-time standard deviations were 13.2 ms and 2.6 ms, respectively,
+for a 3.10x speedup.
+
+Both revisions were built with -O3, -mcpu=native, and ThinLTO using
+Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
+(Mac16,6) with a 16-core Apple M4 Max (12 performance and four
+efficiency cores) and 128 GB RAM.
+
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+ builtin/describe.c       |  3 +++
+ t/perf/p6100-describe.sh | 20 ++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 1c47d7c0b7..3532c8ff22 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -740,6 +740,9 @@ int cmd_describe(int argc,
+ 		return ret;
+ 	}
+ 
++	if (!all)
++		for_each_ref_opts.prefix = "refs/tags/";
++
+ 	hashmap_init(&names, commit_name_neq, NULL, 0);
+ 	refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 			      get_name, NULL, &for_each_ref_opts);
+diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
+index 069f91ce49..dfcaf59e90 100755
+--- a/t/perf/p6100-describe.sh
++++ b/t/perf/p6100-describe.sh
+@@ -5,6 +5,12 @@ test_description='performance of git-describe'
+ 
+ test_perf_default_repo
+ 
++test_lazy_prereq PERF_REFFILES '
++	test "$(git rev-parse --show-ref-format)" = files
++'
++
++ref_count=10000
++
+ # clear out old tags and give us a known state
+ test_expect_success 'set up tags' '
+ 	git for-each-ref --format="delete %(refname)" refs/tags >to-delete &&
+@@ -27,4 +33,18 @@ test_perf 'describe HEAD with one tag' '
+ 	git describe --match=new HEAD
  '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff --diff-algorithm=3Dpatience worddiff.c >actual &&
-> > +     test_grep "return 999" actual &&
-> > +     test_path_is_missing backend.log
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process not used by --stat' '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --log=3Dbackend.log" \
-> > +             diff --stat worddiff.c >actual &&
-> > +     test_grep "worddiff.c" actual &&
-> > +     test_path_is_missing backend.log
-> > +'
-> > +
-> > +#
-> > +# Error handling and fallback.
-> > +#
-> > +
-> > +test_expect_success PYTHON 'diff process fallback on tool error status=
-' '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Derror --log=3Dback=
-end.log" \
-> > +             diff boundary.c >actual 2>stderr &&
-> > +     # Fallback produces the full builtin diff (both change regions).
-> > +     test_grep "^-OLD5" actual &&
-> > +     test_grep "^+NEW5" actual &&
-> > +     test_grep "^-OLD9" actual &&
-> > +     test_grep "^+NEW9" actual &&
-> > +     # Tool was contacted (it replied with error, not crash).
-> > +     test_grep "command=3Dhunks pathname=3Dboundary.c" backend.log &&
-> > +     test_grep "diff process.*failed" stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process error keeps tool available fo=
-r next file' '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Derror --log=3Dback=
-end.log" \
-> > +             diff -- one.c two.c >actual 2>stderr &&
-> > +     # Unlike abort, error keeps the tool available: both files
-> > +     # are sent to the tool (and both fall back).
-> > +     test_grep "pathname=3Done.c" backend.log &&
-> > +     test_grep "pathname=3Dtwo.c" backend.log &&
-> > +     test_grep "return 10" actual &&
-> > +     test_grep "return 20" actual
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process abort disables for session' '
-> > +     rm -f backend.log &&
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dabort --log=3Dback=
-end.log" \
-> > +             diff -- one.c two.c >actual &&
-> > +     # Both files should still produce diff output via fallback.
-> > +     test_grep "return 10" actual &&
-> > +     test_grep "return 20" actual &&
-> > +     # The tool aborts on the first file and git clears its
-> > +     # capability.  The second file never contacts the tool.
-> > +     test_grep "pathname=3Done.c" backend.log &&
-> > +     test_grep ! "pathname=3Dtwo.c" backend.log
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process fallback on tool crash' '
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dcrash" \
-> > +             diff boundary.c >actual 2>stderr &&
-> > +     test_grep "^-OLD5" actual &&
-> > +     test_grep "^+NEW5" actual &&
-> > +     test_grep "^-OLD9" actual &&
-> > +     test_grep "^+NEW9" actual &&
-> > +     # Crash is a communication failure, so a warning is emitted.
-> > +     test_grep "diff process.*failed" stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process startup failure only warns on=
-ce' '
-> > +     git -c diff.cdiff.process=3D"/nonexistent/tool" \
-> > +             diff -- one.c two.c >actual 2>stderr &&
-> > +     # Both files produce diff output via fallback.
-> > +     test_grep "return 10" actual &&
-> > +     test_grep "return 20" actual &&
-> > +     # Sentinel prevents repeated warnings: only one, not one per file=
-.
-> > +     test_grep "diff process.*failed" stderr >warnings &&
-> > +     test_line_count =3D 1 warnings
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process fallback on bad hunks' '
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dbad-hunk" \
-> > +             diff boundary.c >actual 2>stderr &&
-> > +     test_grep "^-OLD5" actual &&
-> > +     test_grep "^+NEW5" actual &&
-> > +     test_grep "^-OLD9" actual &&
-> > +     test_grep "^+NEW9" actual &&
-> > +     # Invalid hunks are caught by xdiff validation, not the
-> > +     # protocol layer, so no warning is emitted.
-> > +     test_must_be_empty stderr
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process fallback on mismatched unchan=
-ged totals' '
-> > +     cat >synctest.c <<-\EOF &&
-> > +     line1
-> > +     line2
-> > +     line3
-> > +     EOF
-> > +     git add synctest.c &&
-> > +     git commit -m "add synctest.c" &&
-> > +
-> > +     cat >synctest.c <<-\EOF &&
-> > +     line1
-> > +     changed
-> > +     line3
-> > +     EOF
-> > +
-> > +     # bad-sync reports hunk 1 2 1 1: marks 2 old lines and 1 new
-> > +     # line as changed, leaving 1 unchanged old vs 2 unchanged new.
-> > +     # The synchronization invariant fails and git falls back.
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Dbad-sync" \
-> > +             diff synctest.c >actual 2>stderr &&
-> > +     test_grep "changed" actual
-> > +'
-> > +
-> > +test_expect_success PYTHON 'diff process fallback on overlapping hunks=
-' '
-> > +     # boundary.c has 10 lines, so both hunks are in bounds
-> > +     # but they overlap at lines 3-5, triggering the ordering check.
-> > +     git -c diff.cdiff.process=3D"$BACKEND --mode=3Doverlap" \
-> > +             diff boundary.c >actual 2>stderr &&
-> > +     test_grep "NEW5" actual
-> > +'
-> > +
-> > +test_done
-> > diff --git a/userdiff.h b/userdiff.h
-> > index 51c26e0d41..a98eabe377 100644
-> > --- a/userdiff.h
-> > +++ b/userdiff.h
-> > @@ -3,6 +3,7 @@
-> >
-> >  #include "notes-cache.h"
-> >
-> > +struct diff_subprocess;
-> >  struct index_state;
-> >  struct repository;
-> >
-> > @@ -33,6 +34,8 @@ struct userdiff_driver {
-> >       int textconv_want_cache;
-> >       const char *process;
-> >       char *process_owned;
-> > +     struct diff_subprocess *diff_subprocess;
-> > +     unsigned diff_process_failed : 1;
-> >  };
-> >  enum userdiff_driver_type {
-> >       USERDIFF_DRIVER_TYPE_BUILTIN =3D 1<<0,
-> > --
-> > gitgitgadget
-> >
-> >
-> >
+ 
++test_expect_success PERF_REFFILES 'set up many unrelated refs' '
++	git tag -m tip tip HEAD &&
++	for i in $(test_seq $ref_count)
++	do
++		printf "create refs/heads/describe-perf/%05d HEAD\n" $i ||
++		return 1
++	done >instructions &&
++	git update-ref --stdin <instructions
++'
++
++test_perf 'describe exact tag with many loose refs' --prereq PERF_REFFILES '
++	git describe --exact-match HEAD
++'
++
+ test_done
+
+---
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+change-id: 20260607-describe-tag-ref-scope-7d00ae140a58
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
+
