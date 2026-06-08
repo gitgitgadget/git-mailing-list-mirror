@@ -1,37 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7215123D291
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 23:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB1D22423A
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 23:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780962589; cv=none; b=MVhJEXJWz+6CVh3iYsAtLD36bL3zPfjOgR2NUSHiV/2Lqg+6+myZsUUo6R1YBinjgYLaut4rbj8XLfi3cKYlFQlsLErU7J/7+flNqnsbYNlEvut/oCAzIw1NLtyRk3BlyOYNA2MNhhfUkNQthoGtMwRCWljFiiFstf65dnAmi0A=
+	t=1780962737; cv=none; b=Ob+m1fJHXd+f/+RSfgAIZpMHHRD1moB38zup+Ze3WFfFOf5n4Tt9dSIZsqMxmN/8io5DGD7CDbaGkHasAlDo1cwbA9mz5SpIclJGZDgII9N30aic4pByn8hVIhwEkxtAOAB+kUnSoIG4DW8tUxQSYdpbpd53MuA+tsoebYeymiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780962589; c=relaxed/simple;
-	bh=xafuzdLwmA1eS6p3LQNl8fz5IQR/pwNG4PEFzGATAT0=;
+	s=arc-20240116; t=1780962737; c=relaxed/simple;
+	bh=VscX5df4kyaPxodKjZzUKZl1c5DDWOv/0aLJtk/XkYQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rb0Iap5rCDsiA8piFF2p1oQCBjDMyDLzlQHv6THxM/6p7NUY1zw8+qOXEbs1lkYwUgQjQSGFlueq82otzAil07cfAHv+9yam1qVvqWB4xpYl0cSRlWyApKYKu79OnB9oD+cu8E1sFN1HN6KiKrKiqDSbnqO50M/ySo7/n0YpQWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DOmgMX8Q; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=SkJWbXmLfML2/tNAPKODSs9KMEZOtv1edsKq1sxH83/j0yPsLTwBLA5TSzMb2/wiGYIBAnE62KYvSAz9CUBBDY3rhEplwBtqunRDVgiJotb5UOR0A0RFmssAbhKbYlkw9289x8EpDtMW1Q16z5Qa6LAe8sa09/V6fL8QPvstGhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OVRwkRdW; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DOmgMX8Q"
-Received: (qmail 83894 invoked by uid 106); 8 Jun 2026 23:49:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xafuzdLwmA1eS6p3LQNl8fz5IQR/pwNG4PEFzGATAT0=; b=DOmgMX8QKVqCGFVnUIZRmEpRe1tDtMPfvI0IuqGOvH3c9LndvcKgc1lpqr5pcbcUlZzpHRmrGZXUEXIYom3HAhiF4CP2iWbi657wZ6HdfgusOcwjEsBMSzlZbXc53gLMSwqpNVkhq48A50uT7lve5pUZJybzlxO7f4PcutPFXXJOP35aaQMZQ4s81EeWdvwlMv/5w9TK+IqzwHVeJ83qSbuslwmNzz5PW44pUCzVV46Ouzmxh/MuIc3msDu6pzsHpI98pypR54TGgPS/zyD0KthnnQ6JfofZ2xch1K2E8NnPYX+b8ipPX6aiz+TCHkg/d+4K+AgeoTCLqkZuI9RV7w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OVRwkRdW"
+Received: (qmail 83919 invoked by uid 106); 8 Jun 2026 23:52:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=VscX5df4kyaPxodKjZzUKZl1c5DDWOv/0aLJtk/XkYQ=; b=OVRwkRdWkYwAwTEe9gbEV5ho7bbaNwqE1XK8bNWcurQ8gPPYU6DfEfhX6sUCP/mggfmYlFx5uoEmM4vDeb6uSSZt06V97F8P3rRqeOe+NLVJDCdN8m/GnWT5TfSUAB//og4TE1WJhrGMCHiXlLGpgONU1uBAow0BuKP+OiecQ2F9soIA1y7FnX9ZPv2xJgTd3+SzfoD6iH0L7NFM6qdZnEbCRIUYBpg4Wyq3m7ryWyRWI21boX7idrj05vHmtuoXV1AvUV+6hNo9EuOH+6q+FWfoAo7hNxm8PPerevhy1tPQAf31HXk7Zu8T8YsF3c1MW+obAT6jO9M61VsgcIQmag==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Jun 2026 23:49:47 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Jun 2026 23:52:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 245551 invoked by uid 111); 8 Jun 2026 23:49:49 -0000
+Received: (qmail 245633 invoked by uid 111); 8 Jun 2026 23:52:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Jun 2026 19:49:49 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Jun 2026 19:52:18 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 8 Jun 2026 19:49:46 -0400
+Date: Mon, 8 Jun 2026 19:52:14 -0400
 From: Jeff King <peff@peff.net>
-To: Matt Hunter <m@lfurio.us>
-Cc: git@vger.kernel.org, Bence Ferdinandy <bence@ferdinandy.com>
-Subject: Re: followRemoteHEAD management question
-Message-ID: <20260608234946.GB358144@coredump.intra.peff.net>
-References: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>,
+	Kristofer Karlsson <krka@spotify.com>
+Subject: Re: [PATCH] ref-filter: reuse --contains traversal results
+Message-ID: <20260608235214.GC358144@coredump.intra.peff.net>
+References: <20260607-ref-filter-memoized-contains-v1-1-a1972dde9c76@gmail.com>
+ <20260608223430.GA340696@coredump.intra.peff.net>
+ <CAJ-ks9ng3Obv8jydYiBD4kxmTSZCJX8xNb0YihNeSW8_8WL5Ew@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,59 +45,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
+In-Reply-To: <CAJ-ks9ng3Obv8jydYiBD4kxmTSZCJX8xNb0YihNeSW8_8WL5Ew@mail.gmail.com>
 
-On Fri, Jun 05, 2026 at 12:31:30PM -0400, Matt Hunter wrote:
+On Mon, Jun 08, 2026 at 07:35:57PM -0400, Tamir Duberstein wrote:
 
-> In the past, I've preferred to run 'git remote set-head <name> -d' when
-> setting up a new repository, since I generally have an awareness of what
-> the remote default branch is, and I don't like seeing them in branch
-> listings or git-log annotations.  They are especially noisy to me if I
-> have multiple remotes.  It's possible this config is ill-advised - I
-> would love to be educated if so...
-
-No, it's perfectly reasonable. Being able to refer to "origin" to mean
-"origin/HEAD" is sometimes handy, but if you don't use it, there's no
-reason to set up the symref in the first place.
-
-> However, since b7f7d16562c3 (fetch: add configuration for set_head
-> behaviour), these changes are undone by every 'git fetch'.
+> > So I think a better rule here is to tweak the selection in
+> > commit_contains() to select the depth-first algorithm when we have
+> > generation numbers enabled. There's a patch in an old thread, which was
+> > revived a week or two ago by Kristofer (cc'd):
+> >
+> >   https://lore.kernel.org/git/20260527070510.3510836-1-krka@spotify.com/
 > 
-> The topic mentioned above (merged in a1f34d595503) adds a new
-> configuration key 'remote.<name>.followRemoteHEAD'.  I'm assuming that
-> the intended use for followRemoteHEAD is really only in local /
-> per-repository config, since trying to apply it to my personal
-> .gitconfig has some odd behavior.
-
-I think this is a gap in the new feature's implementation. It added
-per-remote config, but there is no global config to fall back to (e.g.,
-the way that remote.*.prune falls back to fetch.prune). There should be
-a fetch.followRemoteHEAD option (or perhaps remote.followRemoteHEAD).
-
-> The <name> in the key template does not accept a wildcard, so I must
-> list out each of the common remote names I use across different
-> repositories.  Since many of my repos don't actually have remotes
-> established for all of these names, they pick up a kind of half-baked
-> definition for each of them as git performs its config parsing.  For
-> instance, a name will appear under 'git remote -v', but it won't
-> have any actual properties configured.
-
-Yes, this is a common problem with the remote-config namespace. Defining
-_any_ key makes the remote "exist", even without a defined url, but that
-isn't usually the intent.  But we can't distinguish that from the case
-where you really do want to define a remote without a url (in which case
-the url is the name of the remote).
-
-> Is there another solution in place I've missed?  If not, would there be
-> any opposition to a new key like 'remote.followRemoteHEAD' which serves
-> to provide a default value for any remote that doesn't have its own
-> 'remote.<name>.followRemoteHEAD' key?
+> Very good catch, thank you. I reproduced the regression with a
+> 100,000-commit history and generation numbers disabled. The parent
+> took 13.0 ms, the unconditional depth-first version took 238.4 ms, and
+> the generation-aware version took 9.1 ms.
 > 
-> I've started scouting out changes to make for such a patch.  It's not
-> ready yet, but I figured I would throw this question out in case an easy
-> answer can save the effort.
+> I didn't find a patch in that thread, so I will reroll using the
+> memoized walk for tags or when generation numbers are enabled, while
+> retaining the breadth-first walk otherwise. If someone else would
+> prefer to send that patch, that is fine by me as well.
 
-I think you are on the right track. I can see arguments for or against
-putting it in fetch.* or remote.*, so you'll have to pick one. ;)
+It's just this:
+
+diff --git a/commit-reach.c b/commit-reach.c
+index 9b3ea46d6f..cdea0030b8 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -799,7 +799,8 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
+ int commit_contains(struct ref_filter *filter, struct commit *commit,
+ 		    struct commit_list *list, struct contains_cache *cache)
+ {
+-	if (filter->with_commit_tag_algo)
++	if (filter->with_commit_tag_algo ||
++	    generation_numbers_enabled(the_repository))
+ 		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
+ 	return repo_is_descendant_of(the_repository, commit, list);
+ }
+
+from:
+
+  https://lore.kernel.org/git/20230324191009.GA536967@coredump.intra.peff.net/
+
+But I won't be surprised if you recreated the identical patch yourself. ;)
 
 -Peff
