@@ -1,84 +1,85 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E772E62B4
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 09:14:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B3E24293C
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 09:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780910069; cv=none; b=vD2ors6WLUsINSjNDd+hazM3qb1Dn8TR9UV1FwqNmvoh2qDfSRFWxVB+MSYhnDZN4MZP/EeIAbzQmf10PJrZvyGlOZvn0rpMo7n1UqBV97aBUCsceuufCIWxQbnuxHlxv4Rt0vepuvlhGHov3/ffZgmGGVGw24tmFbmJpp9JGX8=
+	t=1780910321; cv=none; b=szh4/XepF3mokTfClqQe8Q2cwMKoZqW2ibfuXJAgjx2wS0h4Tg+pXxHKQhfU7uI6SNLRE688CQ1U6wRpIVlFey7EfBcctByrAo9TAAscgv68/iS3z4xaIghLRiLng5FrI2Ray+im4I4PQgPU3csKessU7pJAj0er7H+oW+JOn74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780910069; c=relaxed/simple;
-	bh=sHpVizjGa8D/fwatQt2XTb2MESGhhrFWm7Pw9B6RsjA=;
+	s=arc-20240116; t=1780910321; c=relaxed/simple;
+	bh=O3TOYRLwMRBh0jrFVRpRPaB4SG+a4jBBlujsE7pEIPc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=haAwkkZZBinu9dg0K3Bd8A+4H4Vr8mnpQFqwVsMhvGBbJR6OVbOoElJW8mE7i5LUku2ofzBUvFmzCYVbaOy3BIvs1nnD9zZNHDOxngwvjcx0ZM6LV0q9HKH/VVgeiqog/NkxPOz/DYEVXfAbj8jJE55tP+x9zYXG73rFxTBYnFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GcNBzIFw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FaC9yy/l; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=SCMsPWhS08k6GXh37xAGv5b6O4b+J8WT6sIFU75roYXvQXRkYn3seiDk92bRNydvXNDiQFLv0nQwVM4Y1RFgyKItcGVnZBxHIC4hYqXaN8y2wwlK6iXOrrwDFRC1jnj9h8hufpllbmh6mC9vNzirrQCsMOtwsLu8W5XIl3BN/FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V2MbWeb6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BthxT6qM; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GcNBzIFw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FaC9yy/l"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V2MbWeb6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BthxT6qM"
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1EB531D000E7;
-	Mon,  8 Jun 2026 05:14:27 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0742C7A0109;
+	Mon,  8 Jun 2026 05:18:39 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 08 Jun 2026 05:14:27 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 08 Jun 2026 05:18:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780910066; x=1780996466; bh=u2qkqVXqkj
-	Lgek/t1FWDXpLbO9HnE/PZwwmC2AahvgQ=; b=GcNBzIFw73YXr5Whr2Vfc/R5sY
-	TjoUTs5UxOGpPpdNEZ91z9VZlCR/ddU3nFMIoOmimeJyS/Yw0WDUUOf7K3GckC4u
-	VsmncsO8Lp61OnH8HmsQvVmWQXm37s0FEgaXic8Y5vhna1Lx1uag0BD78uevf5gm
-	CE1n3YuWwlsc7gy7tqPIuxXnKgpq9ah6T9LaBxmdLi3oAD/urenAGJKjczY0iYWd
-	Jj1uBdd+f96BWGDMWGwqvB7u9NJDyha6escM2hdsI3M6tzODGb/MZ1LbJMdjPDgN
-	994AA4u3pGYeXMkuBX+D09zjCgz3GBXB/AjneWYVCsnjDM2LHrqgRb+tRJ9w==
+	:subject:to:to; s=fm1; t=1780910318; x=1780996718; bh=4yWxtadZxq
+	3QvUwRsm6SJjT3lIAZc9m/FXLIAASbJqk=; b=V2MbWeb6WsGNLdPjddpihhmhiD
+	HvW2O3psSNjfQRJfy8gjGze8m3TSDhzDmXralYi5+NTv8QX5siAwHWCW9fqFDAIP
+	y2tcS/VCC2iFVRUTMBZ8oFhvs2BTNPPuSTP5vC5O+MUfvMZsVOkAgVMzmeIG6go7
+	OGsJyPnRB/2PC23Tn6jYUTby8ocudI6sWST9L/4KXMcbJeKHO6szSKjDnXL1l1mQ
+	lZt0ToWaCzqkoewbwptI8Dpiq6ooMY+Ghdr36w3CC4kAtXyTc//D9M5sB4PLxkcf
+	fHILqOGb5Jyf9msmDnB6aeXyliwDEL938KvjID75zO9BwVu3BXEXiptL1Uvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780910066; x=1780996466; bh=u2qkqVXqkjLgek/t1FWDXpLbO9HnE/PZwwm
-	C2AahvgQ=; b=FaC9yy/lgkNgM/2IMzGJHbUBilXzUVcQ+oNiq3JMql+D3Ei4iBw
-	3Q2wFhtkkrQrp6AsaqwV6OxQdmBr6qZ0Xs6sS6/LZbJoQcH89vVKX1oFrpW04O09
-	iqLldHj2rYxLBDFQLsRYHZ1t8SUWZyZH/ZRHANpLmWMM8RWOEHtkhTiqz6TAj/bT
-	GJkSj3BgYi1TL/I87cPXH8sQbFs4UioOASTZHvXJln/1zZDG0Ohu+SWF/2KYQFeJ
-	LY+PDWKeotoMr6IrrQrC6u8cNNuF8X7aX0+x2ao56x5qUxrDfSQJZX+Zpmv8MXb8
-	kObxPMtWEE0RPS+lS+Xvrzu/H8ocLyRoaKg==
-X-ME-Sender: <xms:8ocmahPotsb6BM-fDHUPeHa9vhHEKsiwzu6Ndm3XcXH0YhJybLwqhQ>
-    <xme:8ocmahzwBTULVidObfI2IAeh2qGwvBG9JXAKAOEQt-2pV0RsNNDNOtrDMVyamE9jV
-    lseH8UoGj0Wc4Z9eGh2DyTBWjM-NAr_1egEVqKSoL7gOEq6arhw7Q>
-X-ME-Received: <xmr:8ocmaquZUTgG9qQrdQmABfNGWA9kcbj3SRW-w3YbSoE-k9PFT33E-RMfy1ffW6Epr2HWnealpdE9N2alBYS9os0Lt04w-SCnbErpQ9y2mw>
-X-ME-Proxy-Cause: dmFkZTGTM3U4ptcEJKQkwsgBfB16Wne/YXTN0gy9AQtWQh4/B8HfWz+QxhQqvLDL4b3T7y
-    hg3x76ab9HIYpXBEEf4+kajJZQJ9aHsRVWA44M6gxHNUtf5ODCqe3qAwBJnT1EVkcz4Zfk
-    ZNurcSo78iuC1YyMJtSbn10bsUHUBWZkmlvXgb1BkhLXN5+7c8LoqBuYz2EykbQa01cHsH
-    /AG2MmPBkY35yPwWEpV2HlRU70R9f46TdQr8X1KJDqVHBRcbSguBDppT7stLtoQY8/cAHm
-    zUEjXhUcDSLuxLb+uFZ64lh3UcyJltb39W/MmX86hc3hOKWCrRZ3Awl1mJhSgxHERYfBcS
-    89HiBnX3EOBfew7jcXLZjtNTcXUASRrHEY04rdpcKs65eBt7kODRM/0aCUnf/jFhmyv0zS
-    Rf/BDvLIEqsVVCTnnxu992Bk43QtL1sgT9I7+HgR+IlnnL4Ym7uqM1RVKfN3vc0i4KXVp5
-    pwMnA24XHMDCWQXXOiMu6+y8dG5UElfU1d4waivmbLEVFUQ3asieGEPhdDzHPxqrC2ChEW
-    OJqDOxh1g7bthH8VkkY0HzLRfA4mEEDuq2qOjq/e2eat9nWQYGchxO1k9a7uqf8U6OYlNR
-    HncPyI+hibytKkC3G9cv6P0nN0IKfR8bNew4BK/3DP8LAy3f/tYq2DIOUwig
-X-ME-Proxy: <xmx:8ocmaq5dCI3zCqWZcWJzcZKmLwglwmJUdE3Ou3v0UbP0DWsVnY7r7A>
-    <xmx:8ocmapRKDVnokfF82Ryv4mApL3ePaOy8TEsiLGvmDmBCaRJbVQpJVw>
-    <xmx:8ocmapqfRg8EQcwXTImxhcU-tQJKbZrf2lSGysYnHYrwNVbTWTBenA>
-    <xmx:8ocmanLjgEV2g4WB6t4yyFU8KcC0P2-qQFCtT8Nw64n0cz5mkb9LWw>
-    <xmx:8ocmamo8jGPkh91o9pwgZ7fk2qYudLkKZaQV_xor4xItPPFJGWCs90dV>
+	1780910318; x=1780996718; bh=4yWxtadZxq3QvUwRsm6SJjT3lIAZc9m/FXL
+	IAASbJqk=; b=BthxT6qMfGxityaJ0hm/wA1zQO36WYLqfuZONA1m/X0BIGDEzdN
+	aQSC50EW/Je6O1vt85Sk5EVI3qa9NWkAGNvboM4V+/uFbpk9ycRbRdGJzskoQvFO
+	nbWzFJ4D8haQsQ3GnrWrV+wnVZeejQ2tXobcqQCajxm7CLf/A5OQ8nxkaM61jnLB
+	mLv379YJx2MTKdagnuHlB4J80qDF+MDJtoBCSuuCHoGblxBb+FwMUlwOqamjCByI
+	Ydz9FrologZ6XaZADZjF4OzRcYvicU9ZU/FhxhOggUCD3gtO/rQOhRm+bQyKTBUt
+	E9LLmK0IwArfnGsPeZ5PuH4gsQPai2/IHrg==
+X-ME-Sender: <xms:7ogmar14js4fbcrV03AyvA2A5Uy9Mfci0HwbO5jNbMsUk5Y15Cya3Q>
+    <xme:7ogman5EfwD-HIuLRiBp-d6GWgxYJWkGmCeorWTyCjUu2A5ag4oyOdO-z0YcB1aDI
+    cTb2Jr30WRJIiNCrhEykT3IfzVFHnC6ckIosSQ-8awXsQkV4xGg7A>
+X-ME-Received: <xmr:7ogmamWTIqOp52RJG3In1E614qvXrZcQ_s7wQj0FS6IwgLxcPCYljURqlknAmk-ESwNP1unedtJIuXbBc2YaK4ePAxCk0cMknlEltO_Q2w>
+X-ME-Proxy-Cause: dmFkZTEdJ7oGit7gc7RtQdPGDzhWG/I2Y+E4tSxTs30Zmy/8wonaAgC5O/lPp33YHsKM9F
+    yz9m2rVVO11WXzMQHt5Lt50Sv6Hq7uhnqikKykGCNAyWS9LemmNAeCV363GvpDhe2onvqy
+    ktQS0LoItHqPyhcDBWQF6Vo/O/2zNgt/wEZYoIMWEloveX+qXpoMoaLfzFHJvhuHZV0bjM
+    EyK+1NFeeeHeXD7ihHcGlDDN566v9Vhs5tBd7pVbKw7CZvHMXNvn6EelwmocWRQmutivp/
+    xNzQI9MwdfgbPYgfaIn+mH4c1TgF9dgmURh5T2Fv0k5vJx+vkDb6wbOIzHsvqXOtRg7pdT
+    ckpbHqoJoqhVJHcVcredtnztShYmeFo/7B6KWMo5XTZkIidnSqlTrybYcKud/Y+QJ7d8xC
+    7Rc4mH4YCWHMwYyR+fRasDq1QGojkpdAB9pPu0eboB4faKjtJB0qjmEgFAVjkQRfrBVB/F
+    SjLT1bVLNgOk5QARJfX3Itp0koZrAy87vDLf96ehdS95ArCoCb6Z0vDu7vFzlkCbsmiE90
+    twPvlf2hZ44ISTplZR+PB701dG+zpr6hY5g8TuuUPmQd5qglenkSuIEqfzyjy6OFdeCA+x
+    TlAbZSWKZufNl8y+3jD0nbrKUO5S8gTFARvGLSgkglk6EFWCbRN3lOpxVyRQ
+X-ME-Proxy: <xmx:7ogmauDN10vgEiY4oj2oXPED5NmZ5ccNisDe8RfozX2kD2nuRoMCEg>
+    <xmx:7ogmat77RMCiHFwXNau8jHhCot5rjqdZaSML90gwH6TwXlDiwiYJdw>
+    <xmx:7ogmahyYfaf_bwV8zWzOjVLuKsZhLOLVFF_bfPBUCZ4XRxG4jEdATw>
+    <xmx:7ogmasx-BUwILIgNalSM3e5jBh08VdGE7GWP8VcLwUi_2vBebWI8IQ>
+    <xmx:7ogmasR2FOM_KQMb7ZA_ijtqZqjqvLZMdHcQHwLphWCVBjt86U30aOPc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 05:14:26 -0400 (EDT)
+ 8 Jun 2026 05:18:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f4362adb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jun 2026 09:14:24 +0000 (UTC)
-Date: Mon, 8 Jun 2026 11:14:22 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 95ae95f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 09:18:36 +0000 (UTC)
+Date: Mon, 8 Jun 2026 11:18:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/9] reset: modernize flags passed to `reset_head()`
-Message-ID: <aiaH7pMleQmnzmTc@pks.im>
+Subject: Re: [PATCH v2 5/9] reset: introduce ability to skip reference updates
+Message-ID: <aiaI6thDj8y_EekG@pks.im>
 References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
- <20260603-b4-pks-history-drop-v2-3-742cb5b5176d@pks.im>
- <9e2cb34b-97f6-44f4-be44-60f44760e601@gmail.com>
+ <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
+ <0fdaeec8-99cd-4dc9-9549-8a08133deebf@gmail.com>
+ <aiaH3ZmFZfmWYwr7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,22 +88,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9e2cb34b-97f6-44f4-be44-60f44760e601@gmail.com>
+In-Reply-To: <aiaH3ZmFZfmWYwr7@pks.im>
 
-On Fri, Jun 05, 2026 at 04:08:57PM +0100, Phillip Wood wrote:
-> Hi Patrick
+On Mon, Jun 08, 2026 at 11:14:08AM +0200, Patrick Steinhardt wrote:
+> On Fri, Jun 05, 2026 at 04:12:42PM +0100, Phillip Wood wrote:
+> > Hi Patrick
+> > 
+> > On 03/06/2026 17:14, Patrick Steinhardt wrote:
+> > > In a subsequent commit we'll introduce a new caller to `reset_head()`
+> > > that really only wants to update the index and working tree, without
+> > > updating any references. Introduce a new flag that lets the caller
+> > > perform this operation.
+> > 
+> > We already have a flag to update ORIG_HEAD so would it make more sense to
+> > have a flag to update HEAD, rather than adding a flag to disable the
+> > updates? It would mean updating the existing callers but I think it is a
+> > clearer api and it avoids the pitfall of
+> > 
+> > 	RESET_HEAD_ORIG_HEAD | RESET_HEAD_SKIP_REF_UPDATES
 > 
-> On 03/06/2026 17:14, Patrick Steinhardt wrote:
+> Hm. The question is whether it's sensible to have
+> `!RESET_HEAD_UPDATE_HEAD && RESET_HEAD_UPDATE_ORIG_HEAD`. That feels
+> like a somewhat weird request, too, and we'd have to introduce extra
+> logic to make that combination work.
 > 
-> > -/* Update ORIG_HEAD as well as HEAD */
-> > -#define RESET_ORIG_HEAD (1<<4)
-> > [...]> +	/* Update ORIG_HEAD as well as HEAD */
-> > +	RESET_HEAD_ORIG_HEAD = (1 << 4),
+> > I wonder about the function name as well if we make updating HEAD optional
+> > then what does reset_head() mean? Maybe we should rename it something along
+> > the lines of reset_worktree() or update_working_copy()? I'm not really sure
+> > what a good name would be.
 > 
-> I'm having a hard time parsing this new name, if we must have a
-> "RESET_HEAD_" prefix can we call it something like
-> RESET_HEAD_UPDATE_ORIG_HEAD?
+> That's a good point, the name does get somewhat awkward. I think we
+> should keep "reset" in there, but `reset_worktree()` to me reads as it
+> if was rather related to git-worktree(1) than anything else. Maybe
+> `reset_working_tree()`?
 
-Yeah, that reads better indeed. Amended locally, thanks!
+I think I'll skip these changes for the next iteration for now. The
+patch series has already exploded quite a bit in its scope due to the
+refactorings of `reset_head()`, so I'd prefer to maybe do such changes
+as a follow up.
+
+Let me know in case you feel strongly about this though. Thanks!
 
 Patrick
