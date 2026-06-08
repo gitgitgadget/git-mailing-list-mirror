@@ -1,82 +1,87 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BD9283FDD
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 23:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F352EA75E
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 23:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780962997; cv=none; b=SGwierb5Ff3lh9Kc7sv1C+yFzfabxW7Bw4LA6XCRN+a73Qn5ihqZcQlLdYrwZgRTCwvZs6SiQd+FKH1Wg5D2DhvXoXWNA+9boGai2B2sNL4zb1zI9w/PBN1U0OrEbnjj2KtwCGnUadPCGGhuLUilPCGUR+0m5K6DVi/usDDXxOE=
+	t=1780962999; cv=none; b=gpVBtpYJGVl2OWqCqRmhOh/7rRaC0pdgxqxVumlx6Qyql/EgGglrZFZpoIJ+fmM8pVx4VC0PssvFRCGzIX1OKr/3xiP7EXgvCTKZvwYI25RgPKBd8jSahCBrH59TkSD1oCsV5EEGVTTGD33qw9pWa81qS3lJ9LMo9HnNKMNelgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780962997; c=relaxed/simple;
-	bh=Q2kJQpCVcYHP1UkpUlTlE8sKv9P5tKBKEdB89Y+wRic=;
+	s=arc-20240116; t=1780962999; c=relaxed/simple;
+	bh=jhF0lDlzeX1hLqpfDj5pgAuhV2na/6imK34n9HMBv/U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dMC6sBVFIpnbuUCjrqlkVOO96c8bWXIWdrYuV8eUg/SikcbJ57VMGNMdOFHMKaVUKVHT8uezBXHRMatJ2GKhD0WjloPsIcz3Z9nv0EvVIdyfxxu9fusIvLOwgZouUN9ddq2skSGolflqbx4yXgHwZm2qoZ3uMkO3oqUFPUMWB0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LtFDgXAi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VMJdVQvN; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=WQOnwDKE/CdmCNgyaeI3jQINPn6he5TAO6y9FQCsXUYQE5EXw8o7kuVspXXljDUVmZjVa5sjoP1PqQhX4H1kj2OqTr9OTH7I7jF0GX8a+i6JnMWomn1+QmtTyAShDx7iQ8KVWIX+1cDwj4f6/naYYxgGKStgC3P/UR1DJLdRHwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eYJnsDcG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RIgJX9YD; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LtFDgXAi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VMJdVQvN"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eYJnsDcG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RIgJX9YD"
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 75A881D0011C;
-	Mon,  8 Jun 2026 19:56:35 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 69AB37A0197;
+	Mon,  8 Jun 2026 19:56:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 19:56:35 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 19:56:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780962995; x=1781049395; bh=i10amax7IE
-	IeHvP7BmGH9CfBhXXbl/k3eCdYhZDBWTo=; b=LtFDgXAiiRcB9AArkt5xmT3CkY
-	9zFEUyOac/lR+jrTaezbbhllFGPQpjpDovvB/+FCDQtjRsbx3eveAvcsVlhTpmBP
-	QUWX0Pkg/lslQmTv8Yh5spmolHLNka+NddtWtgYjLAsOX52lIDpfuUhmnVX+zImD
-	3Qu6ndCx3b1CPJslwQ5faADjcDtcJ5BjRhe2bGRS19Ei9s5hWNYBvsQcxn8tmi4M
-	B2yyLQeus+WXwHWsTq95o/G8f3RLpZxDro+tzhYm+xESIcMw5ryshAEzaasEoVyt
-	iUh3sKAx5n+L49w7Tsp6HNpx4kxVx8IIlSUtwQdowozHTWuzQla9tP1TvrKw==
+	:subject:to:to; s=fm3; t=1780962997; x=1781049397; bh=8QX1nBPKwG
+	bEL/lSGETL9DOdvFlP5p/SK9IEEWTxpM8=; b=eYJnsDcGas07lbF4wxPS+0zPB8
+	OcMT+ZFvU42iob0FzE+wAdnct7DS8SdIrCqE2km+QKmC8pWiytVAsse5FieIgw1c
+	ILCwM4CBUxxTWoPU4dxXxzrlE9XSSgyQ+UMzmzNqTTZ9ssHTbYzWEEwPcE2hqrkf
+	Uux/nXY84dYbT9BQMgnHvl94c/89Ju6uSFyCOI7oFotWQqqhiSCqMJKhLcga6h3/
+	OrPG/0vkMDNoeUxN+UOmnA556k1vamanGoSvN5A7TZzSsO0cD02/w8dLV6NenXgo
+	qsLEVvt1gSg8aIK3R3keub9xSSdHKbLgJSLGVmtg9XXCbXpZTMyvNZ0/lbog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780962995; x=1781049395; bh=i10amax7IEIeHvP7BmGH9CfBhXXbl/k3eCd
-	YhZDBWTo=; b=VMJdVQvN3PTCgxdWs9coji7eI2F7+KXH5czGu+2V36WvrBdoDd5
-	FHfX3W5m+/DbgjJFHqTP4FDHe7vPmFlmyPS9jAZgOESCllUS5k52YFD6kf1pCoH3
-	VSYywfhfHvZHP7UmbeJrCuCcpBgwAFYoj0bqVSzw2Tbx2IAoS8BLizIWpi1QsD7E
-	6liYvB4ROU8Y0f0ABVgUcNFKUKCmt1GcBu+ionS1W45C8Oor42Dh5JUGwLb1/DuQ
-	qiBDuErV+84LE/WdcJblx+7tuWB2BJyTWLsYLBHTCbJD5a6vKqOw4lC4RR6bJAQz
-	VTT5Z7KWX8BrLGoORmMv4QnSlC+rKscjbLg==
-X-ME-Sender: <xms:slYnasqk-J51G_zh4PWthS1p2wRDiAt_DAXiWWaorsOFTZVDYboiLA>
-    <xme:slYnapiMUEW2gWzBIHvC7n3_37fR6VESxfYO73dxYBhBIF273y_sLxicm-WHgO1yi
-    BwllTWzXvbVTFvGEzBTSM3yUHgRMzO-rpkLItShMDV9NmbBH9vOzQ>
-X-ME-Received: <xmr:slYnapj_zvAdDaJTLHGXWjuD0Gt-6ZYw5OcxI8gdrMey38mvrDgwan2UTo8SMGoAMnXrACS1K6abqVlYPAvfpitP9obvZX326VDk>
-X-ME-Proxy-Cause: dmFkZTGjv4a/Bgu7uX9d3S9mVkzojJW24OpzCdHA7Y6Ip7GcNUpA6+or4rNIDW2XaYwslF
-    RTdn385za49JyFN8aJ2AL7m8l19/+ykeCLDbsEba1NRnpQKTfU48EytBmgrXLMQY7psJ+a
-    fBNrLHvVo1QcJmAwii2eWRWscs0t1+X/gcjwVm21/gsOOBZt1FQk2o1OW+Pyr0PKvNQjZX
-    1xdJ25rsG41Gd9gR1dyAxyr2boK36miTn1CTIEQHue+jETvcDsvOEdy2d5BsXSor2zn+ob
-    FF0TyHCX3HuOYyvXvxKJdqJtiACjwkourP2KOY66L8fABDvTrXrt9n7RV+INx6uK7carGQ
-    ILoQQ4mQtMDw9HIWeERzf1ORaMXHXdI33Cx33xJpbmF8mF38wFSrVu5YZTf7St8tLNRTcc
-    3TEkoK30YeAvOwn38EV/oRzgcYICKFjGUmG8oM3IUQtpyNB1mQduhQM1SOpD9Eh16kgZmt
-    Ew3hq6X2QXzREY+z/crXJ6dsN3av5u/5jANnmYiijWXuQYmEWn/Tpy0Dk+8ju7i2Aue/mX
-    UW8B5u8zPgKCjsBBBNI2yNj5SGJRwZ/kRGKK9PTfBCN2UyNjdenyUDtxazMF4Dx9mCEmcg
-    vGsq5EKyzksl1AP/8mE9GV/oORBF7ZE+atTiPntPVuAgCWsmGpJHHhle0pdg
-X-ME-Proxy: <xmx:slYnaviNhnckN-T1FTKQZ2AuQ5zQugBfXq0bDmhAsl1WySbcbEBcQw>
-    <xmx:slYnapL_jO3Rtf0O_U5N3m0W1rKg7sWvC6SNjLOfb8IWDmuEQsBhBA>
-    <xmx:slYnauFWOg2Y39BFir8Ci3e-1rJbb1pLrgqYK8ubi0omQP6NcR5ztw>
-    <xmx:slYnatRripeLousrVbbcII45H9Kw713MVnbvAxq9yC32suZ6KBt5tQ>
-    <xmx:s1Ynaj8DIkT5sKcM-jP-b4bI_qg6X-RQ-I_Xtttqd6swHjmIhYvY-27m>
+	1780962997; x=1781049397; bh=8QX1nBPKwGbEL/lSGETL9DOdvFlP5p/SK9I
+	EEWTxpM8=; b=RIgJX9YDD2jNHF/uE7efRsNJ1TB98ZCX1jvCisw66g2lSS1SqRl
+	pxrbhg3TPkOdcc5HqAs4CpZSfeWGRs4OI6QpcMs89NAaJAIWZnSHZZZQjV8CY1ks
+	veqcJOs7DzLMXeeWNVuEziNJk2+btDvHleWZqPIqmcVBCqDVB76sLg3LD26iD3sq
+	xlUpH2T5MFjK9/WVnS268cvUMxXpGUsqYlB8A+CxWvr7HFTx0dh7eJ1j36aGhuce
+	csEiZ0/6eTaPk6uWFaAKlZj/uhkMMRae1IKyUdq2ttfLAJ5pdRlZEQbnnQKvgwsJ
+	55dYLbNSkf4eMNhVi5dmNtrBFZ9tx6AvXAg==
+X-ME-Sender: <xms:tVYnatEkcQeMs2zq7VLTwT4O09Ocieukig0nSJ2GNqAizzirclVzgQ>
+    <xme:tVYnakl3uv98h1WSiWQNW0b896OqojRu0SJA70wKWqw4iJJpu7TA0pXMcMwbxTuv_
+    vXHNghXOXjydc3_AHyyNEDyXcGoeXhjNPNym-S-UdX8PR2Iq3AeLg>
+X-ME-Received: <xmr:tVYnahY8IJodW3ZGEqwrYyhzHVGNFv_pDbY397LRgQfFwZnLzDFZTo30Yjm2ivH3YBYPUKkzO339-uiXqGTLN4631XC1VYy5Hsgv>
+X-ME-Proxy-Cause: dmFkZTF+DAaEbxd00Sx2jsE9xcBI7Z4r2eSakzPmyI24viPDiOSfa92n0x6L24CBlLZdiL
+    9he1bZgKoMV/uTG7nOQWpyRKn1/wVFj5QP5VTNGkinB5sGZMdu86j5Wot9df4wOcMUlMhb
+    31CcTORKgdz42qktyrS5tR6sEoDqLus6Sg+yXwJNzAog30t/yig2kQlp+a2jnRwb2KhA7Z
+    ZTuqZtTUIunDnZBAgIcLJb4m7A2kvQC89g+Z9kMGzuG3ofLMKbAV0KMQzEZt/UilGFo8CH
+    sMHtqmCJRlVrQIrys9I8uwtmDE1rMY4ya/FlsKc3/TUae/tuutz80FgFJ2GS0eE+zR2Eg6
+    53aBGyNg9tAZq9j+uZUC734WgP1TPrz0y222DxIycPEkusCH6U6ZDi/oKMPPAZdGYdPNxp
+    110yNAM54faUeOPovC2Y9AX5xwEbZto6kdiZ9eBe+FrNUfNYXj9epwNytg6338IgyyKS+Q
+    rZoOvrr5MfuJpGoyHJEb97KQdgIl6wtQ/VDGO6GUlJeF9Nm2RJM2gn8GCicWLFvRm3yK0Y
+    xzMpOyuHiM8nOy4e1VHC9WM4UItqNeI+FYqs/FG6ja8Ty3fScnmP8DRJR+hAAbDOQu4hkq
+    KnygEhMU8eGwGRjQ7AyVBNg+mIuBNWv9PUtqiUHSk00k9Nfuhod3zMAIcgoA
+X-ME-Proxy: <xmx:tVYnapHHrJxTdA1Ot4Ld55oYElUl518Gb5SedmY0icjIRec_uqVEHA>
+    <xmx:tVYnaiITPvDl_WUzzCqxW8Gc8o5AeeBvJfy9Mo9Xuo12p_XzzIvCxg>
+    <xmx:tVYnakMRRIGbDbTdx8il0Ss_P9J7BKDUWfgIe8lJwcJn4-0mbnsZ_Q>
+    <xmx:tVYnainnG6nvngtp5F_rsW9Deu7RqWunILffm_2eTBCEWPaCn-YkvA>
+    <xmx:tVYnaqxn9C6ylt_yU7seikI9hqz3H-Y7inybHwPUsXSTpvM3bGmcnAB5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 19:56:34 -0400 (EDT)
+ 8 Jun 2026 19:56:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.email>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/6] Support hashing objects larger than 4GB on Windows
-In-Reply-To: <4e3430a1-e8ee-47de-b6f0-25abafe3c45b@iee.email> (Philip Oakley's
-	message of "Thu, 4 Jun 2026 22:56:04 +0100")
-References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
-	<4e3430a1-e8ee-47de-b6f0-25abafe3c45b@iee.email>
-Date: Mon, 08 Jun 2026 16:56:33 -0700
-Message-ID: <xmqq8q8ovb66.fsf@gitster.g>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v13 2/6] branch: let delete_branches warn instead of
+ error on bulk refusal
+In-Reply-To: <a7672713f67d6a44992c0f0cf989770c7e9ca38b.1780684553.git.gitgitgadget@gmail.com>
+	(Harald Nordgren via GitGitGadget's message of "Fri, 05 Jun 2026
+	18:35:49 +0000")
+References: <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com>
+	<pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+	<a7672713f67d6a44992c0f0cf989770c7e9ca38b.1780684553.git.gitgitgadget@gmail.com>
+Date: Mon, 08 Jun 2026 16:56:35 -0700
+Message-ID: <xmqq4ijcvb64.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,26 +91,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Philip Oakley <philipoakley@iee.email> writes:
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 04/06/2026 18:15, Johannes Schindelin via GitGitGadget wrote:
->> Philip Oakley has contributed these patches ~4.5 years ago, and they have
->> been carried in Git for Windows ever since.
->> 
->> Now that there are already other patch series flying around that try to
->> address various aspects about >4GB objects (which aren't handled well by Git
->> until it stops forcing unsigned long to do size_t's job), it seems a good
->> time to upstream these patches, too, at long last.
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 >
-> Yay. I approve this message ;-)
+> Add a warn-only mode to delete_branches() and check_branch_commit()
+> so a bulk caller can report branches that are not fully merged as a
+> short warning and carry on, rather than erroring with the longer
+> "use 'git branch -D'" advice that the plain "git branch -d" path
+> emits. Existing callers are unaffected.
+>
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> ---
+>  builtin/branch.c | 50 ++++++++++++++++++++++++++++++++----------------
+>  1 file changed, 34 insertions(+), 16 deletions(-)
 
-While I very much appreciate the effort to switch to size_t where
-appropriate (and the places we historically used ulong for size of
-in-core memory region are the most appropriate places), such an old
-series crashes with in-flight topics big time.  Can we get an update
-on a more recent base?
+This breaks t5404, t5514, and t5505, which contradicts with
+"Existing callers are unaffected".
 
-No need to rush, as I'll be slowly processing the backlog to catch
-up with the list traffic for a few days.
+What's going on?  It is troubling that the breakage happens without
+even getting merged with other topics in-flight, which means that
+the environment you are developing in and testing on and the
+environment that I apply patches on, integrate and test (something
+based on Debian testing) are somehow behaving differently.
 
-Thanks.
+"cd t && sh t5404-*.sh -i -v" ends like so:
+
+expecting success of 5404.7 'already deleted tracking branches ignored':
+        git branch -d -r origin/b3 &&
+        git push origin :b3 >output 2>&1 &&
+        ! grep "^error: " output
+
+error: the branch 'origin/b3' is not fully merged
+hint: If you are sure you want to delete it, run 'git branch -D origin/b3'
+hint: Disable this message with "git config set advice.forceDeleteBranch false"
+not ok 7 - already deleted tracking branches ignored
+#
+#               git branch -d -r origin/b3 &&
+#               git push origin :b3 >output 2>&1 &&
+#               ! grep "^error: " output
+#
+1..7
+
+but it may be possible that earlier steps are behaving differently
+with the patches applied.  I didn't dig further but I think the CI
+in the recent past have been affected by the same breakage.
+
