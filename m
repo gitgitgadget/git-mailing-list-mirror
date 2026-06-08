@@ -1,135 +1,163 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ED2426EBB
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780931160; cv=none; b=QXlHmYaA+OJp2TgHkOsoIRJq/bvBs//ZRjYuBppoMxCuOK/D/j02hWCXPI6BuNAsCbFg822QDEjJ7clUiQbuDBb9VhT33VwoQ7TY2Ykk1Ds2nv1eMpol0wvchcJh1Q3LzG5kcS0NQHc3Yky7qHjtIPxPKn1cLrB6P0CS1YoYHGE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780931160; c=relaxed/simple;
-	bh=Yyj1jPW9N0nie/5ygfelZ6J40ze9Dsbxf0Fbm+b9X0o=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=o6mjAWbpI9PRRskobn+s/f+tqp8Nrkz6cICsVelEbicHxfTPj7tA5ik1KVZTd/oRgPXuboJadbgOcUNaS8rRnEch/jqTK3lmVZVUvB3M0vsBtXdojFNAGQRbH+YQ/q9X8YVMfFRpuPtg/LQMmgR1C+lKPxHdkq4BEH8X64yPRrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OlC2HMTv; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43282609DC
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780931351; cv=pass; b=mdaxGIhRfbQ1CV6z5GiCYZ1Kc8oTewFxaqDAJ9Elxt/qgpn2HHiTQbRA+JpJObNzGFwyCseLixag7cWRozR+wgi7Lzpdk9pn8baJvpFO4rN+fyeHx1J5z9ELJeTaUoYLDXRKynhT/FLX7TXA4ITXp7yCr8WM1vXukYTeLKCExig=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780931351; c=relaxed/simple;
+	bh=yoa4TCPoSOkKydwD2+rDvtAuQ/mSPycndbDdnsFyg9s=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=cZPeDhc0FDmrUOKQYGXy0N5U/aI9cS41Vq/69E7nU0DBQGzvity4vudRrkt4U6tmxCQzlBSvP7TEpjTKp497jfwPCXtrYKQ1vFcv4109IBGkeh61b1ZMvEwWKImjmmkH31PSF6K14DBJeZPd6i6NhirHhPADncVTBlDBtatUu1Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OmQL4a5B; arc=pass smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OlC2HMTv"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-59ccf81e6feso1386831e0c.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 08:05:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmQL4a5B"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-6c25b040554so2460879137.0
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 08:09:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780931349; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VA7TuQHC1e+yZDlMpsM6Bd5guZzVaMpwXAPm2ptj+9PKWMLupJTx8ISy9haSVIETLy
+         km3PRkIR0OZlo3o1qVJ24r5v2wcaF3Ij0BpBvOzmv9gPAHkwSDhY5kfI2RO3O34C/Tlt
+         ysUUB0V1JViLT7VGv83ZLb2w4BQY+Pd6yKuncIUo42L5KSRxGR3KAQdPilxQhyFglFlH
+         AVqbWPPTT+eDImnwchmV3ZsbePDxg8C+FiRK0Wy2AA+VUP09ZtSiwnP5EQiV+ZVA0crD
+         WXOdwCPALrWOLiV3yphHfwFg+Edsr0TVA8zI3Pqjfe1/NBTG3nJ+i7dkDvh7D94wtWqU
+         KiBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :dkim-signature;
+        bh=d5HRuJC2FQN+OaF1Q8i99mSo+aRkHB4r0ZZzKcSdpdw=;
+        fh=5lJFebYbVoPTPqtpHTGAscSIHy0y+1Pzj9xFNDN/G78=;
+        b=Ubtu7UkXiwJgQd4V0J0XAyfS29fuB3O3GicT4nao6L4JUZoRA/oJ8opCcgp1xHhqw8
+         1ryKD6Q30f++P9d/T+aIpUe1zYZwcd313DYAgAy4AqLBPtBlfucj7FXYm/MWVvo4w7tS
+         qN37G2/1JVw2UPkjh9zSJXW9jsOJnpq1edA+J846Q+MwLcamI065d+FvP60IzBMJWrnE
+         KvpLlowKSPMmZMrl28ntbdFfCTa0U3gZ/Y5+UUyP7k8QqYdsKvDTsP1i7uMYHtCQMgTW
+         oXFnWgC3SiLVHJS1aWpeEUBMfKztMS/pV66sRFGQFbBwr6oBU+sQeXTGBm3cTk/HWGJu
+         b6ZA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780931156; x=1781535956; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U8UQ+eoLe93cnRt13kYVDs2z+fgLlmFTSg1T2AkUpAA=;
-        b=OlC2HMTv+oewTLuNzNFKY1F0SzOvixLwOQEbj3nmLlS1HHRcUA/8kPZ4b7FAylipwA
-         /sWYH6CzuQ4jBE/4nmZGl1bPp4JeV48CEfAFe9tvPUrJFqbr9HxivRkHoidKKYnpowEB
-         /ZTThIuK67unQGjtlPB3yptGmSrjr1+XeH3Zo1SSmiULC1ZVcRCyvKkyDGbSwHtKd3Ml
-         ggoS8C5BmrTCP+RsX+NQPQtP6KVqW68IRF53s3WNNEepojOWL+pEdVAxPmkMKYWOfPNv
-         BNGwHdcbXOgQfOEye4iax/yYOSTdhbtyeYlqvdAtzatSkdrCTJr7tlC3xLgT+vMtDqL7
-         /sTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780931156; x=1781535956;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+        d=gmail.com; s=20251104; t=1780931349; x=1781536149; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=U8UQ+eoLe93cnRt13kYVDs2z+fgLlmFTSg1T2AkUpAA=;
-        b=Th7Qc5PavoM2GFXPAar2ii6MPpFfff4PyWgVQwwS4nT2PmzuKM2vTUz7sgXq/h7dDY
-         n7mQxD9nCot2Pojo5bBUdyTMXA7OEvzblpnx0jSgzpl5ytQWm89Q136VM+McQRIw+ktU
-         RA7f5hnON8CSHeS5KmaCN09f7piy2ZH3YsISCcM+UT1/W86mGBWEumlNLEmhvGMOk4k+
-         My/Gt8FinJ2ZzZevZ8oYsUjc9+ZEPLGXMRRO4AXpoDLhRx92N+E+Yd8EBJIADsIeSNvw
-         7lU1ONIqUtyi3QSgjjkZwi242cnUrMZLwSfgAg8Njxk4fJtnsme2qnk4wBZVqlmuV6BM
-         eIKw==
-X-Gm-Message-State: AOJu0YyBa8c6KHQAl+drDKARGdGVzhXa4c2lmz+9L3AlGe9IiIL8wrIn
-	FlMyvRsfF+kg+o7qlhypz2J/pf0Qd0YfabkDhttfgk3C+yNzmChBd3NT
-X-Gm-Gg: Acq92OE7MGrHCHqonbQ5ogboHw0mJBK4uTN8VmcZGCxve18IQZ/3SpvkoVixF1YcMgE
-	z4OulyyFtOjWGQ6zOLRo56IpxY1+fJAnD3eHndXhDr4bK/SW8vjTDK8xfJO9M7gYXupLcHDt+hX
-	Za2JcgPPPZ6GdY1ekh5vUJkukKQKmJOXecAxgvNONc9oVmzStK7X+les3PtCGowQ3EN9EiwtqkM
-	ZFBmvv99Ml9vXADMgru1Pc8Pe3n/4V/WLWSs9/9bmB5Voc/JuUfEzp5eeoZSotpBUB6QWk1s9uS
-	bfvc7zbEoPbxUWDP2IMPCguPwKl2JmbX3Zy5AB02n+ERq8B3l7KH48Dv7gZOvGm3/CyEXzmlx8z
-	zCke+vh/HcdUlJX23Mz3Os2CM23sv61P2nnaTIVTRi8KkdzYWVXQVIhpcMAsfaUZzHBxr1Dxynj
-	8kmBMzwbjBWeGaFzClNCSCCcq8d8z5H08u09U0DkUsXUShar9m7dqTDE7UPSJIKkc=
-X-Received: by 2002:a05:6122:3d12:b0:59f:4c56:9d0e with SMTP id 71dfb90a1353d-5ac4ec9396bmr7300830e0c.5.1780931156256;
-        Mon, 08 Jun 2026 08:05:56 -0700 (PDT)
-Received: from smtpclient.apple ([189.62.148.96])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5a6dcc2ecbesm13838417e0c.13.2026.06.08.08.05.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jun 2026 08:05:55 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=d5HRuJC2FQN+OaF1Q8i99mSo+aRkHB4r0ZZzKcSdpdw=;
+        b=OmQL4a5BAuDEO5uzyWexPtyWlzJkwlX8o0+aEYgCTE87Wnqv/YG6sgjRT8bn2fEhYT
+         XiznPfOOYj50nQN3dVhRK2lI9RX5wxaFYrJyD+kmt0pfRrLowwzcZ5GzHqhLrG3KK8RD
+         ubPt3td/v0H+tjgi+ESf53RMOp3/DSASCooxcd+Z6rlWfRsOMmWmgys+ekQS30aKoxih
+         HkvZIKGBN2pwrEa9waa08iLwuPqZaPKIyiLOAbyPkTbq6eXlejQupY7R+ZiDOK1EXGnq
+         6L+KFBgmtJol/AOdfVzcRZBv+TT99C2Z+USjbd1uQrfR0+uA2SuVeKSMtiai9g4IpmRG
+         9CdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780931349; x=1781536149;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d5HRuJC2FQN+OaF1Q8i99mSo+aRkHB4r0ZZzKcSdpdw=;
+        b=XoA4UdqlKQmDPvJWeAznLQSQprClT/aaCf0NLNu9rezE8V31nkHz+YJhRiGqglSxdL
+         kq/jGszD0OaMva2O2/sBalZi/YhhO3LkhRvgjMgqq8SuaskY4feMd2D9sXxP5NvRJh2Z
+         maiSppYLyVKO5cI3gD9hrzI9Fw9clOjWptUkf4H7LG4vQ3j256tX4JibxzraHqgRJ2AK
+         iqvJKhZj8/GK6vD4802sqE552DpTnEjWdmIAU8cE0Vot3oGKMIUgwVhX3lLXZiISSgfS
+         cWzLB6at3Se+CYDQyCVV2+NE2O0/5x6fu5ysj8RpRSmaXrQRokojqTYjWQPQIdr9hvhf
+         OnKQ==
+X-Forwarded-Encrypted: i=1; AFNElJ91HIX45UchuWgSjdQlLmlLTy/oZs8O+CNxQf73FYsfaFAY+bKeNmYJAEZugkmThuY0obc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7R15dSS2MHx+zqxASbTG38ChEv4QoNy5PWNfzORbrSki574X/
+	XJU6lKsY8LiNm1+e8ZFg6qLc0LWeE7RDKaF9KKREvp7G89AtWghQSYBYz2bP3XV2v2zX/H0dsYD
+	EPxHwvyYaK62Cyx9SOryHPf9bk8UYpSQnRA==
+X-Gm-Gg: Acq92OEMceryoDADjQY4DPSxeK5VfRZ5/UpLwkdE5C1iBjsQ45YSQqfD3ZIjf2yo7pb
+	khcRQBO4UrvWkg26nmqWwCVtD/PgmVE3cIlgwNHPblq6IKiQObhrtFnI1hK5YGNVcMuGXy8UJsN
+	fRnY+evayfc3z9umjJ7kuppJlE2l3U4wmYyEqbCi2jpaJXfJIEH2eKDDeIE0ywRYHNzrHPLTehI
+	n8kBEvOHbWDJTMtPNW4OHLC/pDYI9GSf6hWeIMOnGz+8qhI750UhpMayo+DVEopHBGoYx136xBr
+	WuTEWgt9gbU8lisOBkJSPnsW2AIGOF5O8TDA5nZUAK/yQDQ4VkC3j4SSYWO/tkteY56wOPzbz5a
+	F9ACkKQG9
+X-Received: by 2002:a05:6102:149c:b0:631:d586:893e with SMTP id
+ ada2fe7eead31-6fefa60b89cmr7867842137.5.1780931348732; Mon, 08 Jun 2026
+ 08:09:08 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Jun 2026 08:09:06 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 8 Jun 2026 08:09:06 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260604-pks-odb-source-packed-v1-2-2e7ab31b4b5c@pks.im>
+References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im> <20260604-pks-odb-source-packed-v1-2-2e7ab31b4b5c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [GSoC PATCH v2 1/4] path: introduce format_path() for centralized
- path formatting
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 8 Jun 2026 12:05:40 -0300
-Cc: git@vger.kernel.org,
- a3205153416@gmail.com,
- gitster@pobox.com,
- jltobler@gmail.com,
- kumarayushjha123@gmail.com,
- phillip.wood@dunelm.org.uk,
- sandals@crustytoothpaste.net
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <22E79E77-BCC3-4622-BD39-F4ED7DDA9511@gmail.com>
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260605163012.181089-1-jayatheerthkulkarni2005@gmail.com>
- <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
+MIME-Version: 1.0
+Date: Mon, 8 Jun 2026 08:09:06 -0700
+X-Gm-Features: AVVi8CfEWPyvvaQC76FqTAYTVkwjlNabfGkIo5zyGFOcECrByIyuBMNlytRVPU8
+Message-ID: <CAOLa=ZQ8K53yyopSOp4_Gc-Gpq6ULA0xW6gH5OCWdWNHEyRysw@mail.gmail.com>
+Subject: Re: [PATCH 02/16] packfile: move packed source into "odb/" subsystem
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000693d510653bf6447"
 
+--000000000000693d510653bf6447
+Content-Type: text/plain; charset="UTF-8"
 
-> +++ b/path.h
-> @@ -262,6 +262,36 @@ enum scld_error =
-safe_create_leading_directories_no_share(char *path);
-> int safe_create_file_with_leading_directories(struct repository *repo,
->      const char *path);
->=20
-> +/**
-> + * The formatting strategy to apply when writing a path into a =
-buffer.
-> + */
-> +enum path_format {
-> + /* Output the path exactly as-is without any modifications. */
-> + PATH_FORMAT_UNMODIFIED,
+Patrick Steinhardt <ps@pks.im> writes:
+
+> In subsequent patches we'll be turning `struct odb_source_packed` into a
+> proper `struct odb_source`. As a first step towards this goal, move its
+> struct out of "packfile.{c,h}" and into "odb/source-packed.{c,h}".
+>
+> This detaches the implementation of the packfile object source from the
+> generic packfile code, following the same convention already used by the
+> "files" and "in-memory" sources.
+>
+
+[snip]
+
+> diff --git a/odb/source-packed.h b/odb/source-packed.h
+> new file mode 100644
+> index 0000000000..c17068a4f1
+> --- /dev/null
+> +++ b/odb/source-packed.h
+> @@ -0,0 +1,80 @@
+> +#ifndef ODB_SOURCE_PACKED_H
+> +#define ODB_SOURCE_PACKED_H
 > +
-> + /* Output a path relative to the provided directory prefix. */
-> + PATH_FORMAT_RELATIVE,
+> +#include "odb/source.h"
+> +#include "strmap.h"
 > +
-> + /* Output a relative path only if the path shares a root with the =
-prefix. */
-> + PATH_FORMAT_RELATIVE_IF_SHARED,
-> +
-> + /* Output a fully resolved, absolute canonical path. */
-> + PATH_FORMAT_CANONICAL
+> +struct packfile_list {
+> +	struct packfile_list_entry *head, *tail;
 > +};
 > +
-> +/**
-> + * Format a path according to the specified formatting strategy and =
-append
-> + * the result to the given strbuf.
-> + *
-> + * `buf`    : The string buffer to append the formatted path to.
-> + * `path`   : The path string that needs to be formatted.
-> + * `prefix` : The directory prefix to calculate relative offsets =
-against.
-> + * Pass NULL to default to the current working directory where =
-applicable.
-> + * `format` : The formatting behavior rule to execute.
-> + */
-> +void format_path(struct strbuf *buf, const char *path,
-> + const char *prefix, enum path_format format);
+> +struct packfile_list_entry {
+> +	struct packfile_list_entry *next;
+> +	struct packed_git *pack;
+> +};
+> +
 
-Nitpick: the documentation is clear to me, but maybe the function name
-"format" and the parameter name "buf" can mislead the user to think
-that it only formats the path without appending to the existing string
-in `buf`. My suggestion is to rename them to something like=20
-`append_formatted_path` and `dest`, respectively.
+So this is exposed, because outside of the odb, we also use packfiles in
+the transport layer. That makes me wonder if these two structures are
+better kept alonsigde `struct packed_git` in 'packfile.h'.
 
+[snip]
+
+The rest of the patch looks good.
+
+--000000000000693d510653bf6447
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 5c3b482d7cd718fd_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vbTJ4QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mejk4REFDTUw2NG5VZEc5TjNSL3BNZ3JxdC9TMWtVVgpoUkRPS3V3QUNR
+d0IrWVpmVmZaNzh1MCt4TEhvR0JSMUZDUEdUVjNqNis0Mmp5dkI0Uy90SE1tdmh6THp6MnY2Cmsv
+MGY3clM3UjdVVE1sV2JJQ3dGcTlWS2VVa2tIMW55a28vWU9XSW5XTzV1Vk4wTDRaZ1NVeHpjOER1
+WFQ4cjEKQjJKaS9NUnBoUkZiUllpRjBqWmcwb0VkRXBWRis1dEVuK2VOekZmL2JIc0ZPOWNXK05s
+NitWcHRXT0t0SWduQQpQMGdYUkE1TFdsQWFlWmNIRElCTWppTmVyMkVpRmwrOGs2YTkwMFZMSjlQ
+N2lzYzZ0VGtTK2lVd1V4clBSVlB5CmxtaHc5NEE1eDRSR1dZMjRSWmM2V2JCUUxVcE1nNjFrTlA5
+ajdSdVMwcjRkMzlqSGtVOHd5YWsxY0xkOHpMbG4KbkszckRMbENmcTZaRGMvZUMvcDBuYUx2c3pJ
+MnZUaTE1VURwdlNVMXF2SUROK2N6aXVDRzN6ZFZkYjV1Ym9yMgpvNDVMQzN2MG1uWGNRVG5yeWtL
+aTI3aW9uY056b3dGODg5VytMOGY5dWpsc0ZqNFBJamwrcDMrbEhZVGVRMlZvCnY1TFRFOXFxN1BH
+RjA1VXhvWC81WnZITk82ODF0TXZYT2FOUHpHRT0KPUJqTW8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000693d510653bf6447--
