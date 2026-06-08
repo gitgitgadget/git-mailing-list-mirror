@@ -1,163 +1,131 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43282609DC
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780931351; cv=pass; b=mdaxGIhRfbQ1CV6z5GiCYZ1Kc8oTewFxaqDAJ9Elxt/qgpn2HHiTQbRA+JpJObNzGFwyCseLixag7cWRozR+wgi7Lzpdk9pn8baJvpFO4rN+fyeHx1J5z9ELJeTaUoYLDXRKynhT/FLX7TXA4ITXp7yCr8WM1vXukYTeLKCExig=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780931351; c=relaxed/simple;
-	bh=yoa4TCPoSOkKydwD2+rDvtAuQ/mSPycndbDdnsFyg9s=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=cZPeDhc0FDmrUOKQYGXy0N5U/aI9cS41Vq/69E7nU0DBQGzvity4vudRrkt4U6tmxCQzlBSvP7TEpjTKp497jfwPCXtrYKQ1vFcv4109IBGkeh61b1ZMvEwWKImjmmkH31PSF6K14DBJeZPd6i6NhirHhPADncVTBlDBtatUu1Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OmQL4a5B; arc=pass smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9073E51D6
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780931429; cv=none; b=JPQq78UM1M4n6xmi+ZmHdPnfgknIJISRxYnlbHi5RhsOhdgj++6KLZb9xse3GGuqOZqp2rkAYCSBkKBMX1gc2v0ucZaEgc8NO4lFMuV/xZ8AH5F3A6jvUHHucWmXjEyl5zBXq52CkV1x4yxr8BhZIPNZ7fHxtmGDz53hhqFJNzc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780931429; c=relaxed/simple;
+	bh=rZNuBuixRFjmYd8yPPS0P19z05DfRzMnnsp2owfvqtI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rm4KN8Wp9ljWOdJo5Vdnw533+QHqsGkD6db0wWfPEM7xvtUaGA1Zm5cXCPASxCL6w7AhPUOsJjvqvfY5m5QuaRlc+Xi3oNF08wqThjTtB3QKrEzfuIGimnSfj88bPYg8UnG63uKb/JpU8kvipKIn63LpxovAZvB6b7SszxyJm8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VjFhyk1+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QuWjssEx; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmQL4a5B"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-6c25b040554so2460879137.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 08:09:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780931349; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VA7TuQHC1e+yZDlMpsM6Bd5guZzVaMpwXAPm2ptj+9PKWMLupJTx8ISy9haSVIETLy
-         km3PRkIR0OZlo3o1qVJ24r5v2wcaF3Ij0BpBvOzmv9gPAHkwSDhY5kfI2RO3O34C/Tlt
-         ysUUB0V1JViLT7VGv83ZLb2w4BQY+Pd6yKuncIUo42L5KSRxGR3KAQdPilxQhyFglFlH
-         AVqbWPPTT+eDImnwchmV3ZsbePDxg8C+FiRK0Wy2AA+VUP09ZtSiwnP5EQiV+ZVA0crD
-         WXOdwCPALrWOLiV3yphHfwFg+Edsr0TVA8zI3Pqjfe1/NBTG3nJ+i7dkDvh7D94wtWqU
-         KiBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=d5HRuJC2FQN+OaF1Q8i99mSo+aRkHB4r0ZZzKcSdpdw=;
-        fh=5lJFebYbVoPTPqtpHTGAscSIHy0y+1Pzj9xFNDN/G78=;
-        b=Ubtu7UkXiwJgQd4V0J0XAyfS29fuB3O3GicT4nao6L4JUZoRA/oJ8opCcgp1xHhqw8
-         1ryKD6Q30f++P9d/T+aIpUe1zYZwcd313DYAgAy4AqLBPtBlfucj7FXYm/MWVvo4w7tS
-         qN37G2/1JVw2UPkjh9zSJXW9jsOJnpq1edA+J846Q+MwLcamI065d+FvP60IzBMJWrnE
-         KvpLlowKSPMmZMrl28ntbdFfCTa0U3gZ/Y5+UUyP7k8QqYdsKvDTsP1i7uMYHtCQMgTW
-         oXFnWgC3SiLVHJS1aWpeEUBMfKztMS/pV66sRFGQFbBwr6oBU+sQeXTGBm3cTk/HWGJu
-         b6ZA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780931349; x=1781536149; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d5HRuJC2FQN+OaF1Q8i99mSo+aRkHB4r0ZZzKcSdpdw=;
-        b=OmQL4a5BAuDEO5uzyWexPtyWlzJkwlX8o0+aEYgCTE87Wnqv/YG6sgjRT8bn2fEhYT
-         XiznPfOOYj50nQN3dVhRK2lI9RX5wxaFYrJyD+kmt0pfRrLowwzcZ5GzHqhLrG3KK8RD
-         ubPt3td/v0H+tjgi+ESf53RMOp3/DSASCooxcd+Z6rlWfRsOMmWmgys+ekQS30aKoxih
-         HkvZIKGBN2pwrEa9waa08iLwuPqZaPKIyiLOAbyPkTbq6eXlejQupY7R+ZiDOK1EXGnq
-         6L+KFBgmtJol/AOdfVzcRZBv+TT99C2Z+USjbd1uQrfR0+uA2SuVeKSMtiai9g4IpmRG
-         9CdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780931349; x=1781536149;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d5HRuJC2FQN+OaF1Q8i99mSo+aRkHB4r0ZZzKcSdpdw=;
-        b=XoA4UdqlKQmDPvJWeAznLQSQprClT/aaCf0NLNu9rezE8V31nkHz+YJhRiGqglSxdL
-         kq/jGszD0OaMva2O2/sBalZi/YhhO3LkhRvgjMgqq8SuaskY4feMd2D9sXxP5NvRJh2Z
-         maiSppYLyVKO5cI3gD9hrzI9Fw9clOjWptUkf4H7LG4vQ3j256tX4JibxzraHqgRJ2AK
-         iqvJKhZj8/GK6vD4802sqE552DpTnEjWdmIAU8cE0Vot3oGKMIUgwVhX3lLXZiISSgfS
-         cWzLB6at3Se+CYDQyCVV2+NE2O0/5x6fu5ysj8RpRSmaXrQRokojqTYjWQPQIdr9hvhf
-         OnKQ==
-X-Forwarded-Encrypted: i=1; AFNElJ91HIX45UchuWgSjdQlLmlLTy/oZs8O+CNxQf73FYsfaFAY+bKeNmYJAEZugkmThuY0obc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7R15dSS2MHx+zqxASbTG38ChEv4QoNy5PWNfzORbrSki574X/
-	XJU6lKsY8LiNm1+e8ZFg6qLc0LWeE7RDKaF9KKREvp7G89AtWghQSYBYz2bP3XV2v2zX/H0dsYD
-	EPxHwvyYaK62Cyx9SOryHPf9bk8UYpSQnRA==
-X-Gm-Gg: Acq92OEMceryoDADjQY4DPSxeK5VfRZ5/UpLwkdE5C1iBjsQ45YSQqfD3ZIjf2yo7pb
-	khcRQBO4UrvWkg26nmqWwCVtD/PgmVE3cIlgwNHPblq6IKiQObhrtFnI1hK5YGNVcMuGXy8UJsN
-	fRnY+evayfc3z9umjJ7kuppJlE2l3U4wmYyEqbCi2jpaJXfJIEH2eKDDeIE0ywRYHNzrHPLTehI
-	n8kBEvOHbWDJTMtPNW4OHLC/pDYI9GSf6hWeIMOnGz+8qhI750UhpMayo+DVEopHBGoYx136xBr
-	WuTEWgt9gbU8lisOBkJSPnsW2AIGOF5O8TDA5nZUAK/yQDQ4VkC3j4SSYWO/tkteY56wOPzbz5a
-	F9ACkKQG9
-X-Received: by 2002:a05:6102:149c:b0:631:d586:893e with SMTP id
- ada2fe7eead31-6fefa60b89cmr7867842137.5.1780931348732; Mon, 08 Jun 2026
- 08:09:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 8 Jun 2026 08:09:06 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 8 Jun 2026 08:09:06 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260604-pks-odb-source-packed-v1-2-2e7ab31b4b5c@pks.im>
-References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im> <20260604-pks-odb-source-packed-v1-2-2e7ab31b4b5c@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VjFhyk1+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QuWjssEx"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 707CC14000EC;
+	Mon,  8 Jun 2026 11:10:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 11:10:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780931427; x=1781017827; bh=9yTYbpkcIE
+	WVRIO45s+OA5mozkjbzDBSEPA2ui2b3Aw=; b=VjFhyk1+sbdojotHcUmDIxOcIj
+	co4GDLvheh5K3bYQThDk+Sr+BOY5HoV3QBeYW7JzfYVQ4JvU2E2QMsnJcPrbNeUw
+	J8i/LdeM7+b2dcp1pNSScOHqZmdWsa3LwtpJYmu0wCmH+C+nIneeeqtNW4dLIoqU
+	M1kMJZI5ZAMHX9Wsxnie5CLxabExcVK3QP6/7TwerJ+NK8J5vW5+D8EiWeGQO8Aa
+	n96p2AE6EFszrW2glE+Yx0IuhK8gSlZoN4plJzxvc5XcXQhohl0CcMBzvn84RG00
+	rv+UTwDB7S296oo2T5wZxlpojrxiaOAMmgA8DM9ruXjIWBSv+WjiOEboS6+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780931427; x=1781017827; bh=9yTYbpkcIEWVRIO45s+OA5mozkjbzDBSEPA
+	2ui2b3Aw=; b=QuWjssExehgCBACgZHjAy7oVSem2/JiKMOriFjugWwrJNo9DL5c
+	TOzE+jypXI7cMahrNRbn4U1gswskCPAfNEZ34ZUKuCxh7javwAQ4/dP0M7AB0o4y
+	VklUClJBvh6yxvZL1aEf+n9NDv0opeMkFD0b5kFw9LKdDfZ2BqC+DQpcfgs23L8V
+	pKBm79v/1Cinkr3bOG2IO65nU5l7UeJ8RUn8c68NQKanRCYkG9kSRQhZIsO3BunI
+	OE+pIc1+5FdGpV/HKRUel5VMB10Ji3NIXXABPRo2h1RsmtNzkPzbkJ/gJW4lorFb
+	kh/MV/nwbH2XAHdV3xb7KlILX0XxjKXXhGQ==
+X-ME-Sender: <xms:Y9smalzb6QCBKtKsVopQYz3LVzwiVtjYp94-iph8HearxN0rXJUzaw>
+    <xme:Y9smasTOpeL8-UbZClUR6CU2cM87PpiqFvdw9depEaT9HHCPea1UtRNdRzFV6JCJv
+    hdEXiDfws4D5QieOUDZpq7IF_8PoEeZhivOiAWO6vqNrsInd6LbmcE>
+X-ME-Received: <xmr:Y9smakUv93pvQlmbmkmPubODNsZX6MTBAOmvUjJu6sprpvd3w2k9pDO-C_WoXk5YwYYwnRhKUD49uRzDMv8aeVXHOiSYUUbVEBAm>
+X-ME-Proxy-Cause: dmFkZTEfheXr+rZ8fDiS0fwGsyqd2ZhNita6dbwM6H6N872TtWMCWHiIX42IXyOXEoRl+l
+    uKxUA2bGS8TfDsWzhvRcEPSAbkBXx6DElTmiIdy2vcbTVfY2yDK4WQYz3R4k5hWjWw+IOo
+    fuxukg6Iq59YBiAHdBSS9/QwW22Xd5Svzk17zDwpuc20W4m8Txzq+0Ez7itbhgLlBt27HL
+    HfyKsea0dakTAN7DIFC7TUmNRvoe1kNwNKvQYNjA03xnNFIMS945QJZqOT9lSIqjV459mS
+    fGLfX4DpnKLj+l3ckVfq3AGnNbFR7uMCyNbEnmOUl4m9rLWLuL97HIF26hLCRcYHufo9QU
+    hWTqo+IzR4p2oZLDS5XarI+yXhcl2UW0ZZ5i6Fcy/JYt0Mwo3Zxyx8ZsnSVvuWsImS7468
+    jWntI0nt+fk1hEWqp4pKu1qhojx4Jy+Cv7AnnpRLvKT0Uqb10+WeOsLNE0txCrBYePyta1
+    obVMoIZVrZTOhIxl0EPpZeBQhnr9lXEIY4kccKsmJyfdctJFiwHyX3P3V7/VnUcJRdh7m9
+    FaWcOtyIPlm95MLIiOf4uqZkunxnl7eVx1xe+If8Da4NvFRQdENLGqEPTzpOMfeJZGh7uM
+    +j3yXO/Fkr0QqjKyE7G2G9rkyjjj/f3ja+kigbTF7IoYQAOQZjD4swoV6fnw
+X-ME-Proxy: <xmx:Y9smamYsc7J-9u0ZX-ZAywFMXjlCauf9az__40ttqe3KvGdjNjBRZw>
+    <xmx:Y9smai3BNoTVxiuoeJhhdIebQjpL_boTlEGObglwj0T-v_sHY90tsQ>
+    <xmx:Y9smagj88OZti1HDuBxuFtABXl-DueFnNK8CN2oacBrUI-u1DTzfeQ>
+    <xmx:Y9smauaSVaYzesIaBd_zden2_lAOohgVDsgvhsmoR5V4aXYinH1LIA>
+    <xmx:Y9smav9CXu4JT_1AnyjA9iiYByxA_MC15rvSSUfu3q6wIMjnRv9TXip_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 11:10:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Miklos Vajna <vmiklos@collabora.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH] log: improve --follow following renames for non-linear
+ history
+In-Reply-To: <aiZipugmA7z8oBcd@collabora.com> (Miklos Vajna's message of "Mon,
+	8 Jun 2026 08:35:18 +0200")
+References: <aiZipugmA7z8oBcd@collabora.com>
+Date: Mon, 08 Jun 2026 08:10:25 -0700
+Message-ID: <xmqqpl21vzj2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 8 Jun 2026 08:09:06 -0700
-X-Gm-Features: AVVi8CfEWPyvvaQC76FqTAYTVkwjlNabfGkIo5zyGFOcECrByIyuBMNlytRVPU8
-Message-ID: <CAOLa=ZQ8K53yyopSOp4_Gc-Gpq6ULA0xW6gH5OCWdWNHEyRysw@mail.gmail.com>
-Subject: Re: [PATCH 02/16] packfile: move packed source into "odb/" subsystem
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000693d510653bf6447"
+Content-Type: text/plain
 
---000000000000693d510653bf6447
-Content-Type: text/plain; charset="UTF-8"
+Miklos Vajna <vmiklos@collabora.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> In subsequent patches we'll be turning `struct odb_source_packed` into a
-> proper `struct odb_source`. As a first step towards this goal, move its
-> struct out of "packfile.{c,h}" and into "odb/source-packed.{c,h}".
+> Have a repo with a subtree merge, do a 'git log --follow prefix/test.c',
+> the output only contains history in the outer repo, not commits that
+> were merged via a subtree merge.
 >
-> This detaches the implementation of the packfile object source from the
-> generic packfile code, following the same convention already used by the
-> "files" and "in-memory" sources.
->
+> What happened is that 'git log --follow' used to store the followed path
+> only in opt->diffopt.pathspec, so in case the commit history is
+> non-linear, and multiple parents had renames to the followed path, then
+> the end result wasn't really defined: the first commit that happened to
+> be visited in one of the parents updated opt->diffopt.pathspec, and from
+> that point, only that updated path was visited.
 
-[snip]
+When describing a problematic symptom you are trying to improve, you
+should talk about the current state of the system in the present
+tense.  "used to store" makes it sound like in ancient times back
+when Linus wrote the first version of this feature it was so, but a
+few years ago that changed, but that is not what you want to say, is
+it?
 
-> diff --git a/odb/source-packed.h b/odb/source-packed.h
-> new file mode 100644
-> index 0000000000..c17068a4f1
-> --- /dev/null
-> +++ b/odb/source-packed.h
-> @@ -0,0 +1,80 @@
-> +#ifndef ODB_SOURCE_PACKED_H
-> +#define ODB_SOURCE_PACKED_H
-> +
-> +#include "odb/source.h"
-> +#include "strmap.h"
-> +
-> +struct packfile_list {
-> +	struct packfile_list_entry *head, *tail;
-> +};
-> +
-> +struct packfile_list_entry {
-> +	struct packfile_list_entry *next;
-> +	struct packed_git *pack;
-> +};
-> +
+The above may sound picky, but using the consistent style of
+description makes it easier to follow the thought process,
+especially when you need to read many commits to understand what is
+going on.
 
-So this is exposed, because outside of the odb, we also use packfiles in
-the transport layer. That makes me wonder if these two structures are
-better kept alonsigde `struct packed_git` in 'packfile.h'.
+> Fix the problem by introducing a commit -> path map
+> (follow_pathspec_slab) that stores that will be path to follow when
+> visiting that parent. At the top of log_tree_commit(), if the slab has
+> an entry for this commit, we replace opt->diffopt.pathspec with it, so
+> the correct path is followed, even if an unrelated sub-tree changed the
+> path to be followed to something else.
 
-[snip]
+Can a "map" cut it?
 
-The rest of the patch looks good.
-
---000000000000693d510653bf6447
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5c3b482d7cd718fd_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vbTJ4QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mejk4REFDTUw2NG5VZEc5TjNSL3BNZ3JxdC9TMWtVVgpoUkRPS3V3QUNR
-d0IrWVpmVmZaNzh1MCt4TEhvR0JSMUZDUEdUVjNqNis0Mmp5dkI0Uy90SE1tdmh6THp6MnY2Cmsv
-MGY3clM3UjdVVE1sV2JJQ3dGcTlWS2VVa2tIMW55a28vWU9XSW5XTzV1Vk4wTDRaZ1NVeHpjOER1
-WFQ4cjEKQjJKaS9NUnBoUkZiUllpRjBqWmcwb0VkRXBWRis1dEVuK2VOekZmL2JIc0ZPOWNXK05s
-NitWcHRXT0t0SWduQQpQMGdYUkE1TFdsQWFlWmNIRElCTWppTmVyMkVpRmwrOGs2YTkwMFZMSjlQ
-N2lzYzZ0VGtTK2lVd1V4clBSVlB5CmxtaHc5NEE1eDRSR1dZMjRSWmM2V2JCUUxVcE1nNjFrTlA5
-ajdSdVMwcjRkMzlqSGtVOHd5YWsxY0xkOHpMbG4KbkszckRMbENmcTZaRGMvZUMvcDBuYUx2c3pJ
-MnZUaTE1VURwdlNVMXF2SUROK2N6aXVDRzN6ZFZkYjV1Ym9yMgpvNDVMQzN2MG1uWGNRVG5yeWtL
-aTI3aW9uY056b3dGODg5VytMOGY5dWpsc0ZqNFBJamwrcDMrbEhZVGVRMlZvCnY1TFRFOXFxN1BH
-RjA1VXhvWC81WnZITk82ODF0TXZYT2FOUHpHRT0KPUJqTW8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000693d510653bf6447--
+If a history forked at commit A, with two children commit B and
+commit C, and you started traversing the history from a much later
+descendant M that merges these two lines of history (i.e., M^1
+contains B, M^2 contains C, and A==B^1==C^1), while traversing down
+from M to B you may find that you need to follow path1 and similarly
+somewhere between M down to C the path you are following may be
+path2.  And the traversal meets at A.  The slab records path1 for B
+and path2 for C.  Wouldn't you need to be able to store both path1
+and path2 for commit A?  What path do you need to pay attention to
+when traversing past A to its ancestors?
