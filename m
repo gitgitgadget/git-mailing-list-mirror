@@ -1,150 +1,126 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484243D1A82
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 17:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6E53C98AE
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 17:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780941263; cv=none; b=GZvoHO8YB7vSdJT31Vx6vHxHj4J0Il7uUFtvpogtryfD+2DU8gtqZRh25IoXMZjHQ0a+jcfYt0myRBGC+mDibttx3aEIhwEUS4EFO1ro07NzQahOEW5sKeLhDcbYTpmp6lewVCWpfbWsUI3SotCgcW5a8PNWc/cWflGMQZynpaw=
+	t=1780941397; cv=none; b=aMDCVCKr436boxdgkqrc4rrIimbi2p30kKlMTtmzGtoK6NWEFU15xWOqj5S2LoGz/s/LQIIkzE+LcH/BYm1/MX4lJbN1pAnFs0K/JNtScI5vIzprPRRXOHAxIQnD6OYFBYVY0TkMNMGv9gh9P0zSeVTNZ20h9VmG2oMUEVQiS6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780941263; c=relaxed/simple;
-	bh=0CNr85EbKmrjQGlMm/4I7ErBnEI/V4jx7teAS+JybmY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bWTf2sPuG5tZTGZB3jsnVLORbPwgyI088lgC37ZswfpzU4eYH5Rb9iO1OZLRyYdW/9V2wW/d63VnpiRDK7TsL335afoXfkYIyQ21b/IHEDGFnqbRTjdh82Lrlm82Oe06Some9p69/9Ux9bj/d83dnwXqT8oy82IHEj4NkBtu/5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VysEpbX7; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780941397; c=relaxed/simple;
+	bh=TqlrOEY8QZr5Rnoj2wYjlJkyfykyIqVaj8gK93evYrI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mIxqrscQdwYYqraOyo13d9trbl5cr60ur9PSop9rG49JHTYvKUuf8KIcMFNgH1TMDz78BiYsqIPw8oYV7LpO1rqYA0ITQs5fIOn7eCt6mH9rmjX+3K33b91vRqmKAUt7JWXBxN9ytbTzJr/B9N0zv+7POcz1yiLHFeiNazk+o2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QW6OTCFh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M1aSJsEc; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VysEpbX7"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7e615efd7d7so4099415a34.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 10:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780941261; x=1781546061; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c1av7VhXB2Y12zPdc3WfsPp4hwuoACF/WM3OdA6ho8o=;
-        b=VysEpbX7uGZtIbmW5GZQPPCCvjBQ/QiZRo/kudp5WpJ0Otk025VHIMCIFeRAcYByOt
-         AxCFm+jExQuUM5d5dn/099toBUpk3XbfeiHQVpbbSTD5DwZXcpKHMdGQ1CiWhzvT6+85
-         0co3ai+0Y9mSXqcwHEEgz4chkV/LSY4IwDNZndpCLVbcR2NPaSNqfKC+My0/pP0v0vi8
-         x6YimcX3rkkRGwdt3uptFS8c9o2Itg0MM8WHOwbQXb2NNOEnI38HXs4zTS8JUt9RaEgw
-         ulHnkN6hKE8h42Y0MWStR3DllL9lb/a9NXL4bs0d64VMoUqfADc491zQ0hrXFY+mOMaG
-         xSNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780941261; x=1781546061;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c1av7VhXB2Y12zPdc3WfsPp4hwuoACF/WM3OdA6ho8o=;
-        b=Cf+dMBPHLOEyaZdy9b086996Wb85aDBXbtKpgfOqSoyHkGe336C7bbl7QZ2LSBx+es
-         Aec93vNw0T3WA5sOj7uK/aVdOVvvoZOhI2YO42edgidim5QvXFFxCbtaTstv06boEHXi
-         hOKJm20Ocxuo82twlak4xAZebK5cDuGMkH6LwYKE50T3epV3LPePN+kvStozKzKcFK0S
-         E3w4trQkx0udyUu2RikpeXg0ZoYEZjVSYuV4xKAyMDP/aeezdTGG9BjAEwSUCKDALjbz
-         i+pAT/4tn0sO7NWYXp/o9ePx9lirDuajLhCXSNGMjFKxLNqh/Sikp53WnG9DLBZAEpVY
-         nbtA==
-X-Gm-Message-State: AOJu0YyQ292DTvDFfrISx5l5ac67D8cET/jwL5Kjo2msD4ezX5ITNEER
-	jLYf8wXSjidre5+LjkR3R/XPTRzXs9cOReozyGUghefF39SMbzPTkGyW
-X-Gm-Gg: Acq92OGMhP7ny3IlrhI6tWUmVc1G0vr8dnk//tMtrn3BoUOSPLBlbzc2qsaV6YsdvBV
-	j/i3gXa2VOK4xOZTCz9nXPACVA5WUW2IDkFmgBY2tBaDzoLeedBSrGJID4OHAeCAHr4Y3ng1kbh
-	Lq+8Tsais2naS+Oa6Okh1e57aZAasqcp6HufjyHth0y0wAulsOxV/tT/4/9E9NCv8zCNq9z5rTd
-	AnzgdFHpxq42PMnK69+8hCzMv5g6DGG6YE/VB7zrdz4EjIa9q9eOvCB+uSJSOj67/6kw6s1bki1
-	QYVQuh/YugAKkRi9rzju5ngeU65KNWDBp5zoUmJQH+0p89vT8NzjYscCzHARFKt/S26s2W31vBz
-	//IlOQVXBo5KfvQpuLVL+wmcjBR1gebY6uUUsRzQ2gtygjibZB5MXxmGrDanxYkhRCJhKTlchyH
-	N8cWcqTV2dzZhcryofGQEz4CesJ7g=
-X-Received: by 2002:a05:6830:381b:b0:7d7:ed69:81b2 with SMTP id 46e09a7af769-7e70c5c16efmr10010682a34.5.1780941260999;
-        Mon, 08 Jun 2026 10:54:20 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e6e75b2017sm11920158a34.8.2026.06.08.10.54.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 10:54:20 -0700 (PDT)
-Date: Mon, 8 Jun 2026 12:54:17 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org, a3205153416@gmail.com, gitster@pobox.com, 
-	kumarayushjha123@gmail.com, lucasseikioshiro@gmail.com, phillip.wood@dunelm.org.uk, 
-	sandals@crustytoothpaste.net
-Subject: Re: [GSoC PATCH v2 2/4] rev-parse: use format_path for path
- formatting
-Message-ID: <aib73oQtXYOOQqmW@denethor>
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260605163012.181089-1-jayatheerthkulkarni2005@gmail.com>
- <20260605163012.181089-3-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QW6OTCFh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M1aSJsEc"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DAEC814000F9;
+	Mon,  8 Jun 2026 13:56:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 08 Jun 2026 13:56:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780941394; x=1781027794; bh=3VKxCw7W6t
+	uYLB3G8ry3CmozuI7hX45qYA3ZH+AkOrM=; b=QW6OTCFhic3epR5FWP1CQt6WqN
+	3P8Y61ZVRTDNpT85pgxeNOvyGc8D7n293rBN4qRwHuIdcN9Us3D5HQZQsuDMVpSr
+	y1uDfGYHbdmIl9nLX5oQne0yomQj+5XlnSg0jfStl1KHBAa+oGRbXuh/SnCnSoQw
+	ltAPiT9yMOYZDdOKRrbaqzzh0dd8QNUqdo/9N45EerGsM329yuduW26s9nBLjJ7Z
+	iMV4sn1aX1YXfCwnm9K2Qyb27NdpJ85Wk4zzsE/CVbcYKuj2tGLqZ1zouYHPQntu
+	0LdqhAhvBDDWQ7OE+jOeazIDmOlwC2sEGR359+0GPMW6e/fyvVM4lu+wa8Dw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780941394; x=1781027794; bh=3VKxCw7W6tuYLB3G8ry3CmozuI7hX45qYA3
+	ZH+AkOrM=; b=M1aSJsEcq96j7dhXp0kW45N0muSZplNfqCQlLyqqfUORtE/CC5l
+	51sAeiXckuH2sOtYc+m4QtdW/XD19iWcKyYtkAuZhrIFxPGyEb6HlhRoCWdNPkvK
+	DbbeZP7Pgj+jmGOY+K91ilbszDa1GWCbxOsQsHZgh8K1dFJhAaOnLWfYd/r4NmPu
+	9G3DvMDo16DnlliG7GcuLq+msAGUxd8Lo0uFpWTRB8Nx95zrV9CF+4RelrpwXV7h
+	+nZd8stzcJM5Ba2hM+nD+D3jIQknrk+4Zm8WjgVT4/KDbNpL8oBwo/nxJl/laOn3
+	bWDfhgwKf7UyNyrT9Z5YVLynpNRsszIvzHw==
+X-ME-Sender: <xms:UgInat3TJ5QI0eSLjdZT71hqgWyu3xHBqUv7fThMpfGaICuJy7LY-A>
+    <xme:UgInari624Tu_M7hT04fxjve-2kH_Nn78r-md9wxZUINjaFpQdHSrDv7-fX5XioMQ
+    6US6SiSil46okdP99kTl6wMKshYq8ZlL9Gl061R2Y7cx6EZow4b>
+X-ME-Received: <xmr:UgInarTYbeGd5l8rRXvSgHhpCM0q8Dh7Pj0fQ59CGyvXdhsh27TunOsi732SecORU4WXwcmZJheW7qVi6xx4cb7TASsSXLDjajOi>
+X-ME-Proxy-Cause: dmFkZTFrGXhZdhIWwmuoJLkdHOQBL6H+CIbh823ded4rt1Vd19b+vpQX5A1Q5z2omXtcPV
+    58EnemDTinm6x3cjkBQn9QrT5iLOQBs1L41bxWlR4kP6SI83ipytZWL1IFGNpr9lwMNl0R
+    vffkG7B8tqfLJtWKZ08RYokSfDpgShq2hCsFZq401LORHetK02n0TwSLcNM9ucl12I2hzp
+    wWwjK0Bd2+NTPdB3PtSvJ4bTcMnRfu/v87dKboQBvPiVyVPKVW/cGnlr3zHnuuBWUajHvl
+    sIxoA8I5ZhhroJMipGNhR8SelYE2Xz41azgyIJWwL9qo8HAcohM4EOb8ynMR7p/TpZnvbF
+    aDRudwVhyv1AnY9v3/UPZdVs4M2HQsd5rFRS0uTJxk/1DTFLFLRJhAUtYOSzpLZuXwhZEp
+    aFA5QS09eWhAR+KaZpvcsA3r3hFwtFOxPvK+0hhU1U5m5KM/ablyAG/tubrBQd5ayhM8Oy
+    b7PnN7Q0Dh4S+OT+XkaH1IAOCaHjIZxkQTNkceowmrhIlgfr7LsWWa8C/eYGmpz3VFoZAQ
+    yNkbt5c7kIx6K/+wNXAUv/iKlp9KTtJMx0i6O3HsjgxluGwZfoRNWZHzoQqBV+muDInKiK
+    OvuUNEpDP+sfYGpTkvljN8sQMV0f7QJwjvmL0Dpu7MOQDew9fdBcXBtIzwOg
+X-ME-Proxy: <xmx:UgInakiAMXMCmomRLcdGQVWOrJN3m9x7C95DyUO4XDKeI2el5nPdvg>
+    <xmx:UgInaj7KFaJXko57pLiG6hVQz1GysLWgvLnkm2DGADHblNDJhdLivg>
+    <xmx:UgInapBRtNbY-4Bm_oL9wi_8QJIIKxd7pWa9JvgLP-yfClwD6sQ5AA>
+    <xmx:UgInaiYkoerwiPUHAmZbWlerR12Y1HDMgHs2GwR9dqqJJ_pOgW1YcA>
+    <xmx:UgInarPQgKSw5qM8YbPghKB2u9CTvhlIQwMlC5IJvPcmH0ZVvUqo2S_i>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 13:56:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Vincent Lefevre <vincent@vinc17.net>
+Cc: git@vger.kernel.org
+Subject: Re: inconsistent order of --diff-algorithm variants in man pages
+In-Reply-To: <20260608112656.GI1082778@cventin.lip.ens-lyon.fr> (Vincent
+	Lefevre's message of "Mon, 8 Jun 2026 13:26:56 +0200")
+References: <20260608112656.GI1082778@cventin.lip.ens-lyon.fr>
+Date: Mon, 08 Jun 2026 10:56:33 -0700
+Message-ID: <xmqq5x3sx6em.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260605163012.181089-3-jayatheerthkulkarni2005@gmail.com>
+Content-Type: text/plain
 
-On 26/06/05 10:00PM, K Jayatheerth wrote:
-> Now that the core path-formatting logic has been abstracted into
-> format_path() inside path.c, remove the localized duplicate formatting
-> mechanics from builtin/rev-parse.c.
-> 
-> Drop the usage of the old local format_type and default_type enums,
-> and update print_path() to act as a light wrapper around the new shared
-> engine. Resolve user-provided formatting flags directly within rev-parse
-> to pass the final determined path_format to format_path().
+Vincent Lefevre <vincent@vinc17.net> writes:
 
-So if the format isn't explicitly set by the user via the
-`--path-format` option, the default formatting strategy used depends on
-the path being printed. IOW, there is no consistent default path format
-here.
+> In Documentation/diff-algorithm-option.adoc, which is used by the
+> git-blame(1) and git-diff(1) man pages:
+>
+> `--diff-algorithm=(patience|minimal|histogram|myers)`::
+>         Choose a diff algorithm. The variants are as follows:
+> +
+> --
+>    `default`;;
+>    `myers`;;
+>         The basic greedy diff algorithm. Currently, this is the default.
+>    `minimal`;;
+>         Spend extra time to make sure the smallest possible diff is
+>         produced.
+>    `patience`;;
+>         Use "patience diff" algorithm when generating patches.
+>    `histogram`;;
+>         This algorithm extends the patience algorithm to "support
+>         low-occurrence common elements".
+> --
+>
+> I think that using the same order in the --diff-algorithm line and
+> in the description that follows would be better, i.e.
+>
+>   --diff-algorithm=(myers|minimal|patience|histogram)
+>
+> FYI, the text was added in 07924d4d50e5304fb53eb60aaba8aef31d4c4e5e
+> in 2013, but without any explanation on this difference.
 
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-> Mentored-by: Justin Tobler <jltobler@gmail.com>
-> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> ---
->  builtin/rev-parse.c | 103 ++++++++++----------------------------------
->  1 file changed, 23 insertions(+), 80 deletions(-)
-> 
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 218b5f34d6..c78bdc04c1 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -632,73 +632,16 @@ static void handle_ref_opt(const char *pattern, const char *prefix)
->  	clear_ref_exclusions(&ref_excludes);
->  }
->  
-> -enum format_type {
-> -	/* We would like a relative path. */
-> -	FORMAT_RELATIVE,
-> -	/* We would like a canonical absolute path. */
-> -	FORMAT_CANONICAL,
-> -	/* We would like the default behavior. */
-> -	FORMAT_DEFAULT,
-> -};
-> -
-> -enum default_type {
-> -	/* Our default is a relative path. */
-> -	DEFAULT_RELATIVE,
-> -	/* Our default is a relative path if there's a shared root. */
-> -	DEFAULT_RELATIVE_IF_SHARED,
-> -	/* Our default is a canonical absolute path. */
-> -	DEFAULT_CANONICAL,
-> -	/* Our default is not to modify the item. */
-> -	DEFAULT_UNMODIFIED,
-> -};
-> -
-> -static void print_path(const char *path, const char *prefix, enum format_type format, enum default_type def)
-> +static void print_path(const char *path, const char *prefix,
-> +		       int arg_path_format, enum path_format def_format)
->  {
-[snip]
-> +	struct strbuf sb = STRBUF_INIT;
-> +	enum path_format fmt = (arg_path_format != -1) ? arg_path_format : def_format;
+I think this is meant to list them as equals without any precedence
+or preference order, so it is understandable that nobody paid much
+attention.  Until now, that is.
 
-hmmm, so `arg_path_format` specifies what the user-provided format and
-acts as a sentinel to signal there is no value provided and the fallback
-format needs to be used. This feels a tad bit awkward to me.
-
-I wonder if we should introduce a PATH_FORMAT_DEFAULT to the
-`path_format` enum that maps to one of the existing enum values in
-`path.c:format_path()`. Here in `print_path()`, we could then intercept
-a PATH_FORMAT_DEFAULT value and override it to the specified
-`def_format`. I'm not sure if this is ultimately that much better
-though.
-
--Justin
+I agree that being consistent between these two places makes tons of
+sense.  I just do not know what the right ordering should be.  When
+listing a set of equals without any precedence or preference order,
+the most easy to see to new readers is alphabetical, except that the
+built-in default (myers) is a head above among other equals, so it
+does make sense to present it first.
