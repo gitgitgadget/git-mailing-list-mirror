@@ -1,117 +1,232 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD663D47CF
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 17:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6023D8915
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 17:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780939150; cv=none; b=Ahg2CxqF9Esnp0nho30VTy1cgBz7mVjdVtaZRC44tGwYWs1T+/Ch1BB4rQy9s0Q586MU5wWW3+6MooCyyvND4uptZYxzPM0JB73MBfWJKmv94ygIZ8WwnKh72zl5S8dqj9pqSLafPUZeL4SkN02V+pjxbY2CgX/fsu7hJ120ZRQ=
+	t=1780939735; cv=none; b=iEGonCwF0QOAwQyf9bMmTfkJEjHcvTD5FJV8PQmtd0UEmvMBqRPFNRcEZw79T20Su0i0c11KYdJeS0uwVXujlnp4YwyD+Mbk3/mykYvy5r3/LR/nqUf5SaQKHuSuqeave4J77dfXGKqt3pGy37u3IqS+tYkwvPO8ojhThwqUbZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780939150; c=relaxed/simple;
-	bh=Y6DO/xDisHMpC2nURlsIiMjSK5xaSOQ1jYLPT6ytXds=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OMEWom4wWzNsBen14d5Yodu0aazTWkgCEZCd40+qo3qbma97pUqtGkdUQ/jIn8w94+WUmM/0LZq6blFBYS71wPYyAvHaLcgdqXzUu0A/HHyjl7/HKWTw/f9RojXSL2yUy57j2BAtev1Wje64PSZvLe7aN4BugQQZf+gkO7Xm/6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bl+wCMyO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CZ4Uobmr; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780939735; c=relaxed/simple;
+	bh=sPd2L6tHgdPtdA50Vic2LCvJswp9c2x3zTO2oFJ3i6U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QWsgrnrXHxrN8k91m7iQ8nLMlONKCPOPtlkDXzAHnuYywmVLQB3pL4pWei8nWTuOYHTWRc2+XsstkVBQ6YC4HyFLveaWgstwJnk7UdwFkBWqwyF7KOG5qIxtfj0K8pDMiL2aJYOkLEsIM90zONlMcmKoVtNG9Ppg0r0FvNXm9rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r9QGi5fE; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bl+wCMyO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CZ4Uobmr"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4D604EC0190;
-	Mon,  8 Jun 2026 13:19:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 13:19:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780939148; x=1781025548; bh=Y6DO/xDisH
-	MpC2nURlsIiMjSK5xaSOQ1jYLPT6ytXds=; b=bl+wCMyOJecDr4ZJPOAdT5yK+9
-	gI1M71x6troooCSPL5D4thA2AOQwVc3h4PrxPYlRzKd0T0gwMK4ndYdxQyyBXVsk
-	xO/cpICI7YIZRp3eA14Lu6E9alXMosos8cjDsSmJcGTKmI3mKE7qQX3x/uukw2rT
-	SMizaMxhCDAo/bBcALuVqCnFhKmeHDhf8180CrLmwyZHHbFOCo3V6/lREHPiWIK9
-	Tve5hDeO4xm3iMf+q+OqNqXQM+0VTis5yv4XoQbpTBCUbRHqDjHEdcBwLjVuH1FU
-	eT26Ze9t8IdmFPE/6Mf8uC43ftYuDQjPn60b9SGkrosIsd2fe4QJQ70cEMsw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780939148; x=1781025548; bh=Y6DO/xDisHMpC2nURlsIiMjSK5xaSOQ1jYL
-	PT6ytXds=; b=CZ4UobmrDEPh2JbHqI4UG1rL8/g5fZqT2OWmTLVCt2Hm7C461Zx
-	SsHkSopeJuJH50Op7U9sGojQ55LCL6xba9QlgZzZQcBbxrRrGECpWA4ZY8GLgqNm
-	cwXAhCIkuh7QrxeXdB61OXFy4VeBfMoJov9hvzfpBhGZxi8xGAkeGnJgReOi14a7
-	EB5cuX5cYXa+RyKv4A21I1JhoicYvkGz+wiNcLbYaO/BnaqLTtg226+JOSfKOWsq
-	kv2DDb1LLLPGjoejNtcMuFlge4d6fm/HNxMVsE7SkqMfBiLSg7CUti/leQ5YvMaj
-	Aepymp/ODznjHCzMuWm61qm14PrGuwTR4sg==
-X-ME-Sender: <xms:jPkmavirrnVCI-A_jvHvb6b9RJtC3PJ0IhBrMQl8rJ5tHHG3YyE29w>
-    <xme:jPkmai7vrL0IzNSUpxI7Fy9_1TjvptauqJfy_xn9z6kdWhVjYjuGRN5n_Y_mGNJp3
-    VpVX6WSNh_nw9QDpWDy6rH7PpevJyy02O_WyXXL5NWg8wQbLlqgs3c>
-X-ME-Received: <xmr:jPkmana9_yYNbtNEjifo18HIsmiceWpqmjUB9iBt8o44lvVFsOmowuplwW9iaTUVQ4IoMeWmY_kMt6ohJVj7-t44dO8WGsn2Sr_u>
-X-ME-Proxy-Cause: dmFkZTEv1A0+DXVvKVCT1/KJg8nxeirTxpAMDxGgdUCUx3M32dH9o93umjvT+d4rrFFV+a
-    Z5ur4pi+PtjlsvlKnbZ6xxLni2gFCvG+OXc4QxrJTjmmK11wH5srqMPCIGe+BV6ouxKqBw
-    +FaNCVaKcN6JIoUUBmS+GwC2IuzocGZod73LnyKpvYRXpoDulrzXQNReu4vncjVO+d1mU1
-    GkYKfEF2T/TAkU8zxFMV/+n3++onkSrY83pEw96GFrxW3EjRMpOQ7aEGIlVA5HtREe4sKQ
-    4lyHg5vzXBQDz8MsaAw91eo2aHBqBw3RTjodTlISVA+6dCrl611J75rHrSmenqMKiuy/Ga
-    Pojht+y0eFMgmdOnW5YpN9jm4XYDMMAXLvrG+NLPy50dMT3Z+2034G1ePeSomVJhY4rTbT
-    /7bENjBHVG9ZtcgHc3ZU9rNBlORhBLJzMvXi76oryfDi5dybqtrnECVEuyhoK2njjf9CtM
-    mP7LWcu4tqfqLqyIQSAR4e/ugqzGbTwwNXs27iroBtxvuDHk747tYmIxc+s1XW2YAEHnv0
-    5Jkl7ul1RM5MMkdDhHsZqPQhmruJJk9RaORjSXxtLoJ65KfU1FM/wZubdfcu0TN87EhPks
-    ukiuVk1aZRztLB4OCY7w48wjMzVWWeZiiioz2WeKvj0s6Q5zdi5fPBgs7BXw
-X-ME-Proxy: <xmx:jPkman7ZhOH9IxsivswxCiJWN4f1l_-_5GNOCmCp2LC8iquD8bcyTQ>
-    <xmx:jPkmaqCLNVoajf9unzrsmxupDQgb5W18X5EzkQeR9Tt7rzNZV4YUaw>
-    <xmx:jPkmateMuv8X4GN2sosodz7jBeS8iiistY5_c5pml4W9cmcOe-wexw>
-    <xmx:jPkmapJpZBuWGcUvVpRZxh4zYZ3DWS6tEZN6XqufbUEUspMKCA4-iA>
-    <xmx:jPkmauQIvb9sSsg73qQ6C6FocP4JFxiBl_Bl7WBa_Beh_EmRTTJvW-7O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 13:19:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Michael Montalbo via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 4/6] diff: add long-running diff process via
- diff.<driver>.process
-In-Reply-To: <CAC2QwmKNA6wv-jG07fgJj7Xj2J+dzzWEiqV5Q+8HJpjA_GtkFw@mail.gmail.com>
-	(Michael Montalbo's message of "Sun, 7 Jun 2026 13:36:32 -0700")
-References: <pull.2120.v2.git.1779733799.gitgitgadget@gmail.com>
-	<pull.2120.v3.git.1780087700.gitgitgadget@gmail.com>
-	<d044fa0ee5c9cda7dfe4f663f34443103521ef43.1780087700.git.gitgitgadget@gmail.com>
-	<c7987f11-9181-3975-552c-14e74abb2c97@gmx.de>
-	<CAC2QwmKNA6wv-jG07fgJj7Xj2J+dzzWEiqV5Q+8HJpjA_GtkFw@mail.gmail.com>
-Date: Mon, 08 Jun 2026 10:19:06 -0700
-Message-ID: <xmqqa4t5vtkl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r9QGi5fE"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-48657fc84a3so4052779b6e.3
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 10:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780939732; x=1781544532; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fTI3zym0KmkfFwJzeUvHvR+rM90BCGf/VGtDiCSR4sc=;
+        b=r9QGi5fE4/JIYPdfIlNVYTMFZjbagL94CH6gANI6+6/06c4Z66c24qaP5LdW+AioB7
+         hUEYdG0bEnlOC3LgxTHNl4NFmukpU9Mf5qKINSd0rQF6KFcW/jTpkTctzerNAhrscqpB
+         wKl+OZiiQhcZ6Mr0tzHq+D/g7GowUzDw9oUU7q0EOkgAyYDrfNHIb+nBSk/dj01P4GwZ
+         MlKqfNuEKQQ7rTJInZ5e2b3f46EYbFMMGHroXim1pdUmcf9uIRT7SbiBK7xhQZT7HA1O
+         SAbm70FR/zcv7zJWwg0DUxJvibBFvMU/Cp3vn1IbEuYekUoYB075f5peZVakMgavGvk2
+         16pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780939732; x=1781544532;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fTI3zym0KmkfFwJzeUvHvR+rM90BCGf/VGtDiCSR4sc=;
+        b=qrgxdetBLLS0L1fgxBAIJsQQF3MZj0rjeZpaJLGHQUXklkyVvigJRnsuWuf1QHPNp2
+         EaE9gqtF27beRjGMVfziu4qfeSPoHrxM/E6mKc1a1twyFZ113Soy98EgwQm6QgNVLivs
+         0OFd8yN2RUgDXY/eGJseJ8YaKJDTxqZ/g0T5XTnu7N0WwdWKQLtkFNxR0byg8h6QxUjQ
+         0lEnX2pNYYzDzCknNxj/tkwteKjWoQR0JaLKSVzWltJVz7FvrVUA2NOWNEBjdsnfmtvy
+         WrNcKQ6F4tEV+pKEJtu5k3I+ehKKyIGsnk/xoufPNVJllwy71AqZ4+YqrbKVI+Hk6f3b
+         zcgQ==
+X-Gm-Message-State: AOJu0YxE6pkPtthw6ZR9f2OgRbQyEUopkSSbbsNn0XSrcHg6t4XEW+FW
+	L6NchvTOJ+H49UzLb+5PQ7IWd8qtuE9IfTaA3BsZApSvz06ehekLJT75
+X-Gm-Gg: Acq92OEZ47nv/g7zmMJBsGExyUKuVFG3q0rETtyvbvQtmu5TY60qspclMWKR6JuzKfc
+	dsk074Q2zfz/TzI0yb5nBftriVocBl4pQcDmjFHEQIPYLFoL+hBgO3TLyN8YM9aIXEKv6FIln8A
+	mT+OJ1vrEFD4HSbg0/qAouH/Q8ToWsTdq3aHr4a5JQe2+8OmejbSw1oEOaKPP8H8jWXRtSVIfwP
+	i4cNFGj1FesvLCBy4sESTKn5NqdZkytWrpJZQFW7t2/6M2SfjxezgGiN00Tv1lKdY24HhUJNWUa
+	B13C3rXyUyT7cgns4AHoI/4mR3xEmW9I7+G2i0c+BQZLih+ywY7Lj81I2RIcPRDS+51j8UrJqM4
+	TNFKGnSI1KEG4pROq/jXi3vrCAIz6GsdFafjgNp8SxPwvjNDUSYKbzJNSMLIBWKeMy789sCKkXb
+	XhHhlIncdMcUtgnAP5g8mjaGNjLCI=
+X-Received: by 2002:a05:6808:2223:b0:485:403d:9b8d with SMTP id 5614622812f47-4868ddc4157mr9983259b6e.11.1780939732485;
+        Mon, 08 Jun 2026 10:28:52 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b6ec694sm13935681b6e.5.2026.06.08.10.28.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jun 2026 10:28:52 -0700 (PDT)
+Date: Mon, 8 Jun 2026 12:28:49 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org, a3205153416@gmail.com, gitster@pobox.com, 
+	kumarayushjha123@gmail.com, lucasseikioshiro@gmail.com, phillip.wood@dunelm.org.uk, 
+	sandals@crustytoothpaste.net
+Subject: Re: [GSoC PATCH v2 1/4] path: introduce format_path() for
+ centralized path formatting
+Message-ID: <aib2DuP7uS3YF5VD@denethor>
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260605163012.181089-1-jayatheerthkulkarni2005@gmail.com>
+ <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com>
 
-Michael Montalbo <mmontalbo@gmail.com> writes:
+On 26/06/05 10:00PM, K Jayatheerth wrote:
+> The path-formatting logic inside `builtin/rev-parse.c` handles absolute,
+> canonical, and relative formatting rules based on user-supplied options.
+> However, this logic is tightly coupled to `rev-parse` and writes directly
+> to stdout.
+> 
+> To allow other builtins (such as the upcoming `git repo` path keys) to
+> re-use this logic, extract the core path-formatting algorithm into a centralized
+> helper function, `format_path()`, in `path.c`.
 
->> So the conscious project direction has been: fold pkt-line test backends
->> into `test-tool` and drop the scripting-language prereq. Reintroducing the
->> same shape in Python would walk this back.
->>
->> Patrick's careful effort in 27bd8ee311719 (Merge branch 'ps/fewer-perl',
->> 2025-04-29) has been another clear sign that the Git project is actively
->> _removing_ scripting-language dependencies from the build and test
->> infrastructure, not adding new ones.
->
-> Now I wonder if the extension / addition of more Perl test infra with my other
-> series:
->
-> https://lore.kernel.org/git/pull.2135.git.1780559158.gitgitgadget@gmail.com/T/
->
-> also goes against the project direction w.r.t. removing scripting languages.
-> Maybe I should also re-evaluate the usage of Perl there. I am leveraging
-> existing shell parsing logic written in Perl, but maybe the preference for
-> Perl-based lint rules is a mistake and should be avoided.
+Makes sense.
 
-That sounds prudent (even though it is outside the scope of _this_
-topic, of course).
+> Expose a single, streamlined `path_format` enum in `path.h` to let callers
+> explicitly declare their formatting strategy (UNMODIFIED, RELATIVE,
+> RELATIVE_IF_SHARED, or CANONICAL). This decouples the core algorithm from
+> the localized fallback mechanics specific to `rev-parse`.
 
-Thanks.
+Ok, so rev-parse has its own logic to select the formatting strategy
+used when printing paths that either relies on what the user provides or
+a designated fallback format that is specific to the type of path. Since
+that is specific to rev-parse, it makes to factor it out of the generic
+helper function here.
+
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> Mentored-by: Justin Tobler <jltobler@gmail.com>
+> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> ---
+>  path.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  path.h | 30 ++++++++++++++++++++++++++++++
+>  2 files changed, 88 insertions(+)
+> 
+> diff --git a/path.c b/path.c
+> index d7e17bf174..2fcd24c5eb 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -1579,6 +1579,64 @@ char *xdg_cache_home(const char *filename)
+>  	return NULL;
+>  }
+>  
+> +void format_path(struct strbuf *buf, const char *path,
+> +		 const char *prefix, enum path_format format)
+> +{
+> +	if (format == PATH_FORMAT_UNMODIFIED) {
+> +		strbuf_addstr(buf, path);
+> +		return;
+> +	}
+> +
+> +	if (format == PATH_FORMAT_RELATIVE) {
+
+nit: we could just continue the "else if" chain here instead of
+restarting it.
+
+> +		struct strbuf relative_buf = STRBUF_INIT;
+> +		struct strbuf real_path = STRBUF_INIT;
+> +		struct strbuf real_prefix = STRBUF_INIT;
+> +		char *cwd = NULL;
+> +
+> +		/*
+> +		 * We don't ever produce a relative path if prefix is NULL,
+> +		 * so set the prefix to the current directory so that we can
+> +		 * produce a relative path whenever possible.
+> +		 */
+> +		if (!prefix)
+> +			prefix = cwd = xgetcwd();
+> +
+> +		if (!is_absolute_path(path)) {
+> +			strbuf_realpath_forgiving(&real_path, path, 1);
+> +			path = real_path.buf;
+> +		}
+> +		if (!is_absolute_path(prefix)) {
+> +			strbuf_realpath_forgiving(&real_prefix, prefix, 1);
+> +			prefix = real_prefix.buf;
+> +		}
+> +
+> +		strbuf_addstr(buf, relative_path(path, prefix, &relative_buf));
+> +
+> +		strbuf_release(&relative_buf);
+> +		strbuf_release(&real_path);
+> +		strbuf_release(&real_prefix);
+> +		free(cwd);
+> +	} else if (format == PATH_FORMAT_RELATIVE_IF_SHARED) {
+> +		struct strbuf relative_buf = STRBUF_INIT;
+> +
+> +		/*
+> +		 * If we're using RELATIVE_IF_SHARED mode, then we want an
+> +		 * absolute path unless the two share a common prefix, so don't
+> +		 * default the prefix to the current working directory. Doing so
+> +		 * would cause a relative path to always be produced if possible.
+> +		 */
+> +		strbuf_addstr(buf, relative_path(path, prefix, &relative_buf));
+> +		strbuf_release(&relative_buf);
+> +	} else if (format == PATH_FORMAT_CANONICAL) {
+> +		struct strbuf canonical_buf = STRBUF_INIT;
+> +
+> +		strbuf_realpath_forgiving(&canonical_buf, path, 1);
+> +		strbuf_addbuf(buf, &canonical_buf);
+
+Do we need `canonical_buf` here? Can we just add the path to `buf`
+directly?
+
+> +
+> +		strbuf_release(&canonical_buf);
+> +	}
+> +}
+> +
+>  REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
+>  REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
+>  REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+> diff --git a/path.h b/path.h
+> index 0434ba5e07..a78e0fc141 100644
+> --- a/path.h
+> +++ b/path.h
+> @@ -262,6 +262,36 @@ enum scld_error safe_create_leading_directories_no_share(char *path);
+>  int safe_create_file_with_leading_directories(struct repository *repo,
+>  					      const char *path);
+>  
+> +/**
+> + * The formatting strategy to apply when writing a path into a buffer.
+> + */
+> +enum path_format {
+> +	/* Output the path exactly as-is without any modifications. */
+> +	PATH_FORMAT_UNMODIFIED,
+> +
+> +	/* Output a path relative to the provided directory prefix. */
+> +	PATH_FORMAT_RELATIVE,
+> +
+> +	/* Output a relative path only if the path shares a root with the prefix. */
+> +	PATH_FORMAT_RELATIVE_IF_SHARED,
+> +
+> +	/* Output a fully resolved, absolute canonical path. */
+> +	PATH_FORMAT_CANONICAL
+> +};
+> +
+> +/**
+> + * Format a path according to the specified formatting strategy and append
+> + * the result to the given strbuf.
+> + *
+> + * `buf`    : The string buffer to append the formatted path to.
+> + * `path`   : The path string that needs to be formatted.
+> + * `prefix` : The directory prefix to calculate relative offsets against.
+> + * Pass NULL to default to the current working directory where applicable.
+> + * `format` : The formatting behavior rule to execute.
+> + */
+> +void format_path(struct strbuf *buf, const char *path,
+> +		 const char *prefix, enum path_format format);
+> +
+
+Ok so in this patch we are just adding the new path formatting
+interface and will integrate it in the next one. Overall the direction
+of this patch looks good to me.
+
+-Justin
