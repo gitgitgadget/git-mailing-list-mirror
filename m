@@ -1,139 +1,156 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F352EA75E
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 23:56:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780962999; cv=none; b=gpVBtpYJGVl2OWqCqRmhOh/7rRaC0pdgxqxVumlx6Qyql/EgGglrZFZpoIJ+fmM8pVx4VC0PssvFRCGzIX1OKr/3xiP7EXgvCTKZvwYI25RgPKBd8jSahCBrH59TkSD1oCsV5EEGVTTGD33qw9pWa81qS3lJ9LMo9HnNKMNelgE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780962999; c=relaxed/simple;
-	bh=jhF0lDlzeX1hLqpfDj5pgAuhV2na/6imK34n9HMBv/U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WQOnwDKE/CdmCNgyaeI3jQINPn6he5TAO6y9FQCsXUYQE5EXw8o7kuVspXXljDUVmZjVa5sjoP1PqQhX4H1kj2OqTr9OTH7I7jF0GX8a+i6JnMWomn1+QmtTyAShDx7iQ8KVWIX+1cDwj4f6/naYYxgGKStgC3P/UR1DJLdRHwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eYJnsDcG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RIgJX9YD; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81ABD283FDD
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 23:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780963003; cv=pass; b=TGILxEy6JbQNzO0ZWVJP3qp+DgzINjKZxK0hA0aC/QqI7ACBPQ89Gg0x3Y+Rk+FBmTIUv7nTi5fS4HXhFNSzdigk2B6Y+7F5oID3AX2cS1muadOsFbzCNebRbua01z+IoxyGyviKfhaKtJrjmqhSP6FMgLaF9GuISfQNXi6KwTs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780963003; c=relaxed/simple;
+	bh=toPpYKJOOOblghSe8k+NhrLlnDLfW2DBHMr5lWLse9I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=genhvsmsi7fmz2xbfrQcwcwrZkA0H5gDlcNQwutedJxCZPIJmmiQDb/tzIOzE6DK54heCUpk1LKA+BTfN0gtQHiX6tneJOsY8hEv5GJkCURyPzySS4SqUYzAPuP/pK6/t+c1RuzoP9XCuwJM/0jWs3fOeRcFU5mvYNvJDkiUtKg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gen1xXvP; arc=pass smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eYJnsDcG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RIgJX9YD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 69AB37A0197;
-	Mon,  8 Jun 2026 19:56:37 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 19:56:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780962997; x=1781049397; bh=8QX1nBPKwG
-	bEL/lSGETL9DOdvFlP5p/SK9IEEWTxpM8=; b=eYJnsDcGas07lbF4wxPS+0zPB8
-	OcMT+ZFvU42iob0FzE+wAdnct7DS8SdIrCqE2km+QKmC8pWiytVAsse5FieIgw1c
-	ILCwM4CBUxxTWoPU4dxXxzrlE9XSSgyQ+UMzmzNqTTZ9ssHTbYzWEEwPcE2hqrkf
-	Uux/nXY84dYbT9BQMgnHvl94c/89Ju6uSFyCOI7oFotWQqqhiSCqMJKhLcga6h3/
-	OrPG/0vkMDNoeUxN+UOmnA556k1vamanGoSvN5A7TZzSsO0cD02/w8dLV6NenXgo
-	qsLEVvt1gSg8aIK3R3keub9xSSdHKbLgJSLGVmtg9XXCbXpZTMyvNZ0/lbog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780962997; x=1781049397; bh=8QX1nBPKwGbEL/lSGETL9DOdvFlP5p/SK9I
-	EEWTxpM8=; b=RIgJX9YDD2jNHF/uE7efRsNJ1TB98ZCX1jvCisw66g2lSS1SqRl
-	pxrbhg3TPkOdcc5HqAs4CpZSfeWGRs4OI6QpcMs89NAaJAIWZnSHZZZQjV8CY1ks
-	veqcJOs7DzLMXeeWNVuEziNJk2+btDvHleWZqPIqmcVBCqDVB76sLg3LD26iD3sq
-	xlUpH2T5MFjK9/WVnS268cvUMxXpGUsqYlB8A+CxWvr7HFTx0dh7eJ1j36aGhuce
-	csEiZ0/6eTaPk6uWFaAKlZj/uhkMMRae1IKyUdq2ttfLAJ5pdRlZEQbnnQKvgwsJ
-	55dYLbNSkf4eMNhVi5dmNtrBFZ9tx6AvXAg==
-X-ME-Sender: <xms:tVYnatEkcQeMs2zq7VLTwT4O09Ocieukig0nSJ2GNqAizzirclVzgQ>
-    <xme:tVYnakl3uv98h1WSiWQNW0b896OqojRu0SJA70wKWqw4iJJpu7TA0pXMcMwbxTuv_
-    vXHNghXOXjydc3_AHyyNEDyXcGoeXhjNPNym-S-UdX8PR2Iq3AeLg>
-X-ME-Received: <xmr:tVYnahY8IJodW3ZGEqwrYyhzHVGNFv_pDbY397LRgQfFwZnLzDFZTo30Yjm2ivH3YBYPUKkzO339-uiXqGTLN4631XC1VYy5Hsgv>
-X-ME-Proxy-Cause: dmFkZTF+DAaEbxd00Sx2jsE9xcBI7Z4r2eSakzPmyI24viPDiOSfa92n0x6L24CBlLZdiL
-    9he1bZgKoMV/uTG7nOQWpyRKn1/wVFj5QP5VTNGkinB5sGZMdu86j5Wot9df4wOcMUlMhb
-    31CcTORKgdz42qktyrS5tR6sEoDqLus6Sg+yXwJNzAog30t/yig2kQlp+a2jnRwb2KhA7Z
-    ZTuqZtTUIunDnZBAgIcLJb4m7A2kvQC89g+Z9kMGzuG3ofLMKbAV0KMQzEZt/UilGFo8CH
-    sMHtqmCJRlVrQIrys9I8uwtmDE1rMY4ya/FlsKc3/TUae/tuutz80FgFJ2GS0eE+zR2Eg6
-    53aBGyNg9tAZq9j+uZUC734WgP1TPrz0y222DxIycPEkusCH6U6ZDi/oKMPPAZdGYdPNxp
-    110yNAM54faUeOPovC2Y9AX5xwEbZto6kdiZ9eBe+FrNUfNYXj9epwNytg6338IgyyKS+Q
-    rZoOvrr5MfuJpGoyHJEb97KQdgIl6wtQ/VDGO6GUlJeF9Nm2RJM2gn8GCicWLFvRm3yK0Y
-    xzMpOyuHiM8nOy4e1VHC9WM4UItqNeI+FYqs/FG6ja8Ty3fScnmP8DRJR+hAAbDOQu4hkq
-    KnygEhMU8eGwGRjQ7AyVBNg+mIuBNWv9PUtqiUHSk00k9Nfuhod3zMAIcgoA
-X-ME-Proxy: <xmx:tVYnapHHrJxTdA1Ot4Ld55oYElUl518Gb5SedmY0icjIRec_uqVEHA>
-    <xmx:tVYnaiITPvDl_WUzzCqxW8Gc8o5AeeBvJfy9Mo9Xuo12p_XzzIvCxg>
-    <xmx:tVYnakMRRIGbDbTdx8il0Ss_P9J7BKDUWfgIe8lJwcJn4-0mbnsZ_Q>
-    <xmx:tVYnainnG6nvngtp5F_rsW9Deu7RqWunILffm_2eTBCEWPaCn-YkvA>
-    <xmx:tVYnaqxn9C6ylt_yU7seikI9hqz3H-Y7inybHwPUsXSTpvM3bGmcnAB5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 19:56:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt <j6t@kdbg.org>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
- <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v13 2/6] branch: let delete_branches warn instead of
- error on bulk refusal
-In-Reply-To: <a7672713f67d6a44992c0f0cf989770c7e9ca38b.1780684553.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 05 Jun 2026
-	18:35:49 +0000")
-References: <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com>
-	<pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
-	<a7672713f67d6a44992c0f0cf989770c7e9ca38b.1780684553.git.gitgitgadget@gmail.com>
-Date: Mon, 08 Jun 2026 16:56:35 -0700
-Message-ID: <xmqq4ijcvb64.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gen1xXvP"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-396775c2720so45090541fa.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 16:56:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780963001; cv=none;
+        d=google.com; s=arc-20240605;
+        b=fGDv+1qE2hsjaEBS2QxClW43G/3jXwzR50ZEFyeRTAUU3CmEk781aT5tA40s2KaXNP
+         clmn++NoPIBT55wZz9gKR4nPh4fSRGuDjyMswtwnMHTNDZG5FsAxNK1ARnoTvSlwFkGp
+         vJrjRl6Er96tE5meMLacdpXhQdgpkf6NsmeRMqpVcF+hKjSzZEkuBhhbBGlesM6wbR8d
+         sg4rQgwDDEb2XcchLt8iYLnCbOER4/NXrC728d+Q2Ap6scdkI6oSj99KsAdCd42FQy5R
+         DZm/0wy9Y6duub0X6f985LbWAim98DgKzRXnyVPBBeEabWlqHkQL2OM9DFRfwLPBPCA6
+         anMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=bpfkN/8D+CY8wLy4hmQ5TtxIRH/WD5cVjXzeR1QQIdM=;
+        fh=0sP8vNBMoPrJt4N+8lv1KhHoaXZSY+AKtnt49/tLkeE=;
+        b=FQFd5IsW5nq1lBEkqKNG2d+RW22s9xQTByCwEDsxHaT+taQrWVqVk5ynbPgiX+8Skr
+         p/w1oL1SbrkpY5aF9LEbXlQ1Q8snli+HNI4QQovdejTCKErB9e9RykDj413vMltXQsz7
+         da5SN8+Y7znBq1AD9WdzZ0mQO7XrmGKIAZEdZKoqT6iTatMwlGS1FBZc8O3LMyi2kNhj
+         fZpSYzM6uiYuxzuKAPImrNSlSo786yJbxq0tj5sdEooornVKnBzLMpelwv9GqDes62EL
+         LBO0IrrWCUuH6WITktYVr23KIAAy01p+qSe0jaD1fT2yksw3oP6DPE/N0Bju1+keVwQZ
+         bjcA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780963001; x=1781567801; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bpfkN/8D+CY8wLy4hmQ5TtxIRH/WD5cVjXzeR1QQIdM=;
+        b=gen1xXvPeEM575ZpYoKHGrx/nyIJ1sBDe6znDrLBY9dMFh2JCX0ONKi2Q/HZg47Iww
+         bBNN71Ba1MX8+aXwTOVqklxRtxUIgMjt2DkuvKsfrjvouxjsPerHaGCv75UeOpTZrKiX
+         r1PbfLAdvTlQMNsiVF67YAmuh4QGVdySxb2U9bb6p2QNYDUkqZEJXhXnp3oCME+QU9rK
+         7ZPfGUB1EeT68ay8bPtaCA+rMwwY3PCnM1WwVyE73R1N0IntQq/VsmzsYtbK0XHhVqAB
+         LaEA4TCzvhCwCl1HvOXp9xmjK3GWnst/5pdWE0LQfMXU6G1//kGeW98ySws0vDoUItTH
+         wL+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780963001; x=1781567801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=bpfkN/8D+CY8wLy4hmQ5TtxIRH/WD5cVjXzeR1QQIdM=;
+        b=l7w81L/qJ0X4tANUIi7tkc+6IbWj62y6XyIfsMX9RQZst/rkYSA23jUmLpPfwYJE0H
+         ipHIfURtcXLRo+rw5ql9WJCxpYVaRmwh61eCOWK70diXgddUacSlvYypRY3UVQ5fqLrh
+         yYhXTTk2Sxfo2ORpxk6ZtulDYQe3NRh0rEuFFYYnSOdiUKDrVfaEKhrGwcUiBMGaFlKs
+         bmNPQSYfbBNLv1cGERG4tA1LRuhhVAyAGTe8doTNyZfj6Mg9L8MuASR+1wVYEq51+8Fi
+         m9bsWjJIFIpeWQjVLPbYsVEgyVYV7aLfzfV1ab4G3Cdb1uGY+5UMDHtCKXFfvPiV+mVf
+         IwIQ==
+X-Gm-Message-State: AOJu0Ywuo4uPFi7Y9dMB6jaMnQx9QBNQ9RysqvCKJ8IAoa+WKEW7bly+
+	6d4NUKTPIai1TeqDzm5czs0NOboeaJU633XFf5YNquc3mFYFfkw0MqgNu6Iaw5oey5jXRyaKQQS
+	RIc2d2iR6/yq+ebsHPCNM92NeWdQQqEA=
+X-Gm-Gg: Acq92OEu9vnJrqvDPZDv6HvrM+RYGhJfgHTd33Ccmyspyzc6bcCOaKmsU68GTgp7Xb1
+	ghfnQgGaNdEPxLw1Q4mXi9ABWQUiKCrNCC9Upx9JFJVwSiIiFWXtnc7sAvlS/yAUQ3iVHyx8qv/
+	Ua9WmkIXuUHWcPFNg1MXgzLyOcVh7YO+8rFUb4E+qspOoVD8nYNkcTKgPEiSu+v94pFcvhOYq1B
+	SI28jD88RhMdDlLBK4RDy3B8anXhqKnjSePtPMuenUWjYd2d6un1vlf+IxMdu5x4+r7a6Uou9Ii
+	BjUWenatYixmrzwNejbJfqf8d5WYZT0zL6gUZ7bu4rft/uhBZE+HHE7OPTh0s5uhVHhuIYmtNyB
+	vgZHGPXecT3r9Px+mQSHQWKZ2BScZ7V0G7iqfvGvbvQ==
+X-Received: by 2002:a05:6512:2398:b0:5aa:6bd0:b1e3 with SMTP id
+ 2adb3069b0e04-5aa87b400b9mr5006035e87.8.1780963000487; Mon, 08 Jun 2026
+ 16:56:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260607-ref-filter-memoized-contains-v1-1-a1972dde9c76@gmail.com>
+ <20260608223430.GA340696@coredump.intra.peff.net> <CAJ-ks9ng3Obv8jydYiBD4kxmTSZCJX8xNb0YihNeSW8_8WL5Ew@mail.gmail.com>
+ <20260608235214.GC358144@coredump.intra.peff.net>
+In-Reply-To: <20260608235214.GC358144@coredump.intra.peff.net>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Mon, 8 Jun 2026 19:56:03 -0400
+X-Gm-Features: AVVi8CdyXB0SnmR04kY6GxPF1R5zrdoVfJrz4r4nxtnEak955Ib20xXmPsDSeRo
+Message-ID: <CAJ-ks9m1BKPswrc+f3JDf5x-APfgZ2ycggxi-tJgr12GONb0jg@mail.gmail.com>
+Subject: Re: [PATCH] ref-filter: reuse --contains traversal results
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Kristofer Karlsson <krka@spotify.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+On Mon, Jun 8, 2026 at 4:52=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
-> Add a warn-only mode to delete_branches() and check_branch_commit()
-> so a bulk caller can report branches that are not fully merged as a
-> short warning and carry on, rather than erroring with the longer
-> "use 'git branch -D'" advice that the plain "git branch -d" path
-> emits. Existing callers are unaffected.
+> On Mon, Jun 08, 2026 at 07:35:57PM -0400, Tamir Duberstein wrote:
 >
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->  builtin/branch.c | 50 ++++++++++++++++++++++++++++++++----------------
->  1 file changed, 34 insertions(+), 16 deletions(-)
+> > > So I think a better rule here is to tweak the selection in
+> > > commit_contains() to select the depth-first algorithm when we have
+> > > generation numbers enabled. There's a patch in an old thread, which w=
+as
+> > > revived a week or two ago by Kristofer (cc'd):
+> > >
+> > >   https://lore.kernel.org/git/20260527070510.3510836-1-krka@spotify.c=
+om/
+> >
+> > Very good catch, thank you. I reproduced the regression with a
+> > 100,000-commit history and generation numbers disabled. The parent
+> > took 13.0 ms, the unconditional depth-first version took 238.4 ms, and
+> > the generation-aware version took 9.1 ms.
+> >
+> > I didn't find a patch in that thread, so I will reroll using the
+> > memoized walk for tags or when generation numbers are enabled, while
+> > retaining the breadth-first walk otherwise. If someone else would
+> > prefer to send that patch, that is fine by me as well.
+>
+> It's just this:
+>
+> diff --git a/commit-reach.c b/commit-reach.c
+> index 9b3ea46d6f..cdea0030b8 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -799,7 +799,8 @@ static enum contains_result contains_tag_algo(struct =
+commit *candidate,
+>  int commit_contains(struct ref_filter *filter, struct commit *commit,
+>                     struct commit_list *list, struct contains_cache *cach=
+e)
+>  {
+> -       if (filter->with_commit_tag_algo)
+> +       if (filter->with_commit_tag_algo ||
+> +           generation_numbers_enabled(the_repository))
+>                 return contains_tag_algo(commit, list, cache) =3D=3D CONT=
+AINS_YES;
+>         return repo_is_descendant_of(the_repository, commit, list);
+>  }
+>
+> from:
+>
+>   https://lore.kernel.org/git/20230324191009.GA536967@coredump.intra.peff=
+.net/
+>
+> But I won't be surprised if you recreated the identical patch yourself. ;=
+)
 
-This breaks t5404, t5514, and t5505, which contradicts with
-"Existing callers are unaffected".
+Yep, that's what happened!
 
-What's going on?  It is troubling that the breakage happens without
-even getting merged with other topics in-flight, which means that
-the environment you are developing in and testing on and the
-environment that I apply patches on, integrate and test (something
-based on Debian testing) are somehow behaving differently.
+>
+> -Peff
 
-"cd t && sh t5404-*.sh -i -v" ends like so:
-
-expecting success of 5404.7 'already deleted tracking branches ignored':
-        git branch -d -r origin/b3 &&
-        git push origin :b3 >output 2>&1 &&
-        ! grep "^error: " output
-
-error: the branch 'origin/b3' is not fully merged
-hint: If you are sure you want to delete it, run 'git branch -D origin/b3'
-hint: Disable this message with "git config set advice.forceDeleteBranch false"
-not ok 7 - already deleted tracking branches ignored
-#
-#               git branch -d -r origin/b3 &&
-#               git push origin :b3 >output 2>&1 &&
-#               ! grep "^error: " output
-#
-1..7
-
-but it may be possible that earlier steps are behaving differently
-with the patches applied.  I didn't dig further but I think the CI
-in the recent past have been affected by the same breakage.
-
+Thanks again for all the reviews, v2 of all the patches coming shortly.
