@@ -1,212 +1,131 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11AF3E63AA
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 19:29:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F8F2BE034
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 19:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780946953; cv=none; b=f3F8XC+4g/HePwjTeq6UeQ7aBqO3fP56mSXzzIl2KNC8PXUod0YOnV0SSpt4soT6acJJSdI4wnhRos8lLh3ScSPNqeDqdjN7INdAP53aHvsRpi0JykaFEJCftPtnNHph90ccNlb6c+JCQ+6RwuFy1c815Rlj4N0pjb5Xwuro3js=
+	t=1780947538; cv=none; b=fmpJAvvtShiUO7zuCPrRnzzfbPLH9Zm5zQENhE3BZ0u4sNwNX9fy5+Mzqhe7b7NEy1jJiLpewAD+Vf4ylC/ENEHQyiYLT82WrZSQKQPMFOu/7HmtKGkSuy8ipytmR5WuIphIlhkXA5PbvDHSCucvv16OCLeLYqbEKOeWZX6MfCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780946953; c=relaxed/simple;
-	bh=Kc6MP63y/BvGm2Q124zJCVEqsk0WsL8AeYTnB9cCDl0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JJWbTZLhdnOoURm/B7IKGRVuo+oZBSv7Rx2KUknMwdeOORrrUwFMREXnExi7f3KXhwdLvMoOKziIYfPYx+cALflofA8zN4jAvjTwBc6o7oOHp4Yp3V7Z6WjID3N72gXo6ZF3b/jNstNjUsEZSu5YxF252gWsoc8g1XkfLy3p4vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ndoPDFmS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jivyvmp4; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780947538; c=relaxed/simple;
+	bh=QDjxT0FyejakIp8iXrvHQsmINTrVefsDt57gdS3n+J4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mJpd8/XosW+PupaC4ptDEMDzi/GKqErh1Su5C14NunbgpDYmhy1QciMaNizIlNjmWi4qYx66xBEHJfa9xRLWst80Ds0fOqEaj7gwaEOwsU5D41anbiPgEYNcEZzM7Rx693Jl5eRNEHLTpQ75taOVrqMZP0yZg8rxlTRaXgjV7iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sXpyhGDw; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ndoPDFmS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jivyvmp4"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id E6DF61D000D7;
-	Mon,  8 Jun 2026 15:29:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 08 Jun 2026 15:29:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780946949; x=1781033349; bh=liMOvs/eXT
-	NXMRLmtX5ObCyinCDWD7QOvTa3Qkw3rxs=; b=ndoPDFmSDr6AiLVXm8V6x99w0W
-	jxm2lda7UzxmqaUk74e8FBn0akgaRkJe6mIl0bGlNDchoGMhYtYvJlT58cFxsXCF
-	LxVP0uxx+312WSz1HMFOx5cxXIfSxZMEs1mVYuOjCFVXaJchTFL0MpJOny4OJ0Ju
-	xWzKpeqZSL4Gp50iEaqkm6ydkFzYUYABU3a38ndJOscLIKCrS0zcR6FFESZFLBpi
-	d6dr3WVV5sgikBcnDts5Q0Gb5nxG8cIQrtpaPv5++YTgA39VGO7aWoCu05JRHTYv
-	NY+X+1ORAJLxQsdEmkrZP17rk4Yrtpfc5z90LzhBhzc6J1BeQdgbnLAiA+6A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780946949; x=1781033349; bh=liMOvs/eXTNXMRLmtX5ObCyinCDWD7QOvTa
-	3Qkw3rxs=; b=Jivyvmp45GIca9XvsdriV4MnRnqhNYHsPn9DDZEgeLW7wgkREoa
-	iAyeqN0e7lz0qrGOPYv09wiaLZJMUzVOUb1mN5RbLmyh4YagmZ4DnROCyLTD04M/
-	FTztKUPuqjKaIZFhhL4XbUf9myUGh7LZmtMVMQBMJC0/QelZ89fcFVvlGBkBaOGS
-	T7y/yaStvyf34lHT4L/Xbn/KOSY7uIgyugv7r9YXb1FOyiisega/JVQqmnb0uKZK
-	Jj7Jc3TwlvVolbFX9L3emLXKADwQh8Sb7rjwZkqqIxsofSbbUNxU7xgLXNDT/qK0
-	k8vQ0GeLJNgPRpZNP4o3HC15eLRwNM/N/Qg==
-X-ME-Sender: <xms:BRgnapW_5UvK2-czZcKlAu_OSn07Oa1wMib3ZTV_QilIJriid-whsQ>
-    <xme:BRgnagkxffEulYbSRCZReKSIwI2pmaTa8grM7oaBn6zw3z7vgvPdt922K82r-2BF-
-    j3iN8Q85ISf8xU0SgPSbCm3MIEEcnwdC6mrWW27EEidw_OLysym-g8>
-X-ME-Received: <xmr:BRgnaqYEkrwDZl7PoYVDoMgRvSHyozLS8eey3IsAIZLobGjxbOis5nb1KOk9c5q4xjHxTnBO_PfOa_bZ2thhUe8PqfwxMr3LG9BF>
-X-ME-Proxy-Cause: dmFkZTFzfjnxbyFliBcTjE4Ue2Ku4vZwRA4+RtG/BbJVf5aCUNtx9JFVoHKU7OEJQmm/oQ
-    TtZWT25X0yd/zCGfDJAl/kEMI9pMU5s4X2Kr5/vwt78k8m1Di5BTp8lIjN56DzmCzfkLXR
-    1HPw66s8nz3ZIauw/rXJd2IXYQNPzV6fN+9PdQxvMA3Egc+OUUZaWAD0HANS0Iklp7i8kg
-    6abXGK4/sO6nKkyqsvCeCj9rVgeoukvZEkKm4xytd2wMN1oSU7J2Jspp3UalvItLsyGxPc
-    zjn5HKbL84kaM+FVX/vxpBcggH9E2Ev4XU1j7BIMaMhLBEbShZVE8DqQdZRe5hpK3S00Zs
-    qQ1r2ClifGtfe31APDPO6SQwlH+dLkoNo1GlTLmdKu6pi+GfRFm2YdOmSAiWfIroWvsvBK
-    VGnoDxYZLKwdMY6Em9TxL8tIZkuCanKRaNk3dGXgO0PtyRukelMEhb3htmAGw2V95ZODBv
-    +ueyrEDuIq+dG7eg08aqfoD7GTow5pZ8tswJwFsHoexDpD8NHbcF7ANlRTlS+1OdAlFnhB
-    /PkTfugR15FJPIJLbuUPn4m0ldnhYBqPdtNjhQmqDHRMfF7M49E9KYS320k9vKdwZ4kZWn
-    WT1jB7d21/DfM7nBAmEDyr0lap4mpx0avaTk5dGmHqPEalYHfVp1LgZZ234Q
-X-ME-Proxy: <xmx:BRgnarMsgZDYOEWdp-s7MXNxhaflbT_zPDdkCET-93qPcXRMftBeuQ>
-    <xmx:BRgnavYPbrFxuMUHNl23BiGN11sq1R75dojXBDg9YmfEhNo0axhoUQ>
-    <xmx:BRgnap0dksdww-dIangSyC8rjN78A-CG48hhKpG1rCygoT9znAVP-w>
-    <xmx:BRgnale9eDrM7i9A4uiJxCcczbrIrArTPDJaTbrb36Z_TZO677egsg>
-    <xmx:BRgnaqs7pWNanY1vOSbCl4_-2p2aXGIfrpnOVyUINRkMUyMowFMa6cvb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 15:29:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] replay: offer an option to linearize the commit
- topology
-In-Reply-To: <20260608-toon-git-replay-drop-merges-v1-3-e3ee71fce7b4@iotcl.com>
-	(Toon Claes's message of "Mon, 08 Jun 2026 20:37:21 +0200")
-References: <20260608-toon-git-replay-drop-merges-v1-0-e3ee71fce7b4@iotcl.com>
-	<20260608-toon-git-replay-drop-merges-v1-3-e3ee71fce7b4@iotcl.com>
-Date: Mon, 08 Jun 2026 12:29:07 -0700
-Message-ID: <xmqqtsrcvnjw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sXpyhGDw"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-91591f19c30so734738285a.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 12:38:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780947536; x=1781552336; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gfdeQhtmIQC+ES7D+JpyzQEpqxbjVjQOeAblewyhrFY=;
+        b=sXpyhGDw6yqt6xf18/FN48IlnP9DWJ8wZsITvkc//xt6INxDk4BeC/qaSe7Dz6iPIB
+         Gbra6f+qp5c2nc3UJJavvYBaGeilloj/VnW3j7VcL6Z+3S13Ci8crfld8FAyehmZzu+e
+         o9E8ovLxU5apjN92O7e0MXjSRcPQOPJCyNrKEY8TYiwFP9gdoMvny5GDEIWnLwlGbb1i
+         QZaQUTJL0WNwtmrktQjLyQ5wkeMEoqI3JFYvPpfWdXlpbCbo2tOfw2RvTb+pMJkzzFoW
+         lGhQCLd1n3MDJtoGO69ISh1wQUXXVuofiTJu1+zVI2EOi1Juw3WbsLFaQ9qRZFPAIEBn
+         eGuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780947536; x=1781552336;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gfdeQhtmIQC+ES7D+JpyzQEpqxbjVjQOeAblewyhrFY=;
+        b=A9lTe7uL4vOYJldmz9S/lDefKo4Bf8wr39z+PaaonRjqE/OY/dNq+7lqf19wXYUVd9
+         ltnxwT801D/ymWwelxuP1c8hpqpYwecll+YtmfOAP3GKuK+nCgW5F32Q0CdqpYYL+4bY
+         dQOjcOvYg8DJaErGeSYI2A3CGONk+YTLnGzvbOhMxWrRSe4rvziHBIwZv3evU1Yabrfm
+         sflzHIkhrVodq9F5WPV8MvcsmnZU/AJUprywfxNVyP99585V3B0gfTOSIQoQqXP7sVc6
+         a2tylwSzE0mh6Ku+Uq05TKR1jInF/EDuRzpRIl6RQIrRukRr34Y5RehRrsIPwcqrWTHH
+         3pKw==
+X-Gm-Message-State: AOJu0YzplNtX0VRv/dW76BQ/E4/tQgV9+UvHIom3oib8owNkKfPzT+n2
+	Q1WvnvQ82sXOc+Iv0XsBFdsRgG19yM2joAwptVL5AdWIVH+wzfTq++nwYL6lig==
+X-Gm-Gg: Acq92OEzBMgvaABEHRSq6Ci966oRsL2uzLPKbcj53hgiI9QVKrZwdtE5ZiHLg8U9CyB
+	2bXevCnUBQBT3LljnHr9eMrLGvcX1gwZIOtM7ze+LqIlzlT2S+35ITWfcXKRl7nr4bdYulB3i77
+	L9NVaaOK5x60oKbPBzmoz9XYj2aJV+BRE765qhIs+2X1UgD/k837olgULBRp1rfhc083yrrTYGY
+	gPMsjjha/B2KGZrRWmPDIUEUqBOr/+6ePLt0fJ0VQBPlfROpitgBcTX4OhnJ5ibuT724LA2rg8H
+	HLVpC1Z6X5NnycOnlvskPwk+RZBaI7n706qX+Hm/hNXjtAUznU2T6+ISoid2HbyRIBLQA7s2WsS
+	i6tSwUowx8cQ1RvSnI60R5xU76ZEf4ld8R9sM9nBuqp/OIw3r9QSpciyMI2lmgxgk1+DOdLMPVs
+	m7w9wZpjajf0g5nGIpjq4wcutL7Vyt+p0aBSYWELA2WbN6FpKDapLqG6VnkGnh3HbeAf/I2MPtX
+	NY3TkFB
+X-Received: by 2002:a05:620a:2305:10b0:915:a4c1:8c34 with SMTP id af79cd13be357-915a9d7657amr1993304485a.38.1780947536169;
+        Mon, 08 Jun 2026 12:38:56 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.121.155])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9158a243f24sm1851075585a.20.2026.06.08.12.38.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2026 12:38:55 -0700 (PDT)
+Message-ID: <dd971b9e-2c13-4521-b991-b9bee1c5bf5b@gmail.com>
+Date: Mon, 8 Jun 2026 15:38:55 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] config: add GIT_CONFIG_INCLUDES
+To: Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+References: <pull.2139.git.1780927027.gitgitgadget@gmail.com>
+ <b48fe9f7abe794864ac4470c2620048c2e5e6b53.1780927027.git.gitgitgadget@gmail.com>
+ <aibTAOrcSvTOtv78@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <aibTAOrcSvTOtv78@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Toon Claes <toon@iotcl.com> writes:
+On 6/8/2026 10:34 AM, Patrick Steinhardt wrote:
+> On Mon, Jun 08, 2026 at 01:57:05PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> The config keys 'include.path' and 'includeIf.*' allow users to specify
+>> config stored in a location outside of the typical list of config files
+>> (system, global, local, etc.). For example, users who accept the risk
+>> can specify helpful aliases via a file checked into the repo by pointing
+>> 'include.path' to the position of that file in the working directory.
+>> This is dangerous, but people do it.
+> 
+> Huh, I never even considered this use case. But of course, this is
+> possible, even though it's quite scary.
+> 
+>> What becomes tricky is that this modifies all Git behavior, including
+>> operations that are intended to be limited in activity or sandboxed in
+>> some way. These include directives can provide surprising changes to
+>> behavior, especially when expecting a specific list of allowed file
+>> accesses. This could lead to failed builds, for instance.
+>>
+>> To allow for these user-desired features when they are running commands,
+>> add a new GIT_CONFIG_INCLUDES environment variable that disables these
+>> redirections of config when set to zero. This variable can be set by
+>> automation, such as build tooling, to avoid these strange behaviors.
+>> This could be considered a recommended option for tools executing Git
+>> commands, the same as GIT_ADVICE=0.
+> 
+> I don't know about this part though. I could see use cases where the
+> tools _should_ read the project-relative configuration. It might also be
+> the case that the user may want to evaluate some includes, but not all
+> of them.
 
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> One of the stated goals of git-replay(1) is to allow implementing the
-> git-rebase(1) functionality on the server side.
->
-> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
-> was given. This mode drops merge commits instead of replaying them, and
-> linearized the commit history into a sequence of the
-> regular (single-parent) commits.
+True. I'm not confident that we should recommend this environment in all
+cases.
 
-"linearized" -> "linearizes"?
+> That raises the question whether we can introduce the configuration in a
+> way that it allows a bit more flexibility than just "yes"/"no", like for
+> example an allow-list of locations that should be evaluated. But maybe
+> I'm overthinking this.
+I see. So we can say "avoid including into the repository worktree" but
+that will probably be incomplete.
 
->
-> Add option `--linearize` to git-replay(1) do the same.
+There is room for nuance in future expansions, if we can find a creative
+way to handle that nuance. For now, I think I would still want an ability
+to turn the entire feature off, at least for certain tools that care.
 
-"do the same" -> "to do the same"?
-
-> Co-authored-by: Toon Claes <toon@iotcl.com>
-
-There is no sign-off by any of the authors?
-
-> @@ -430,12 +435,20 @@ int replay_revisions(struct rev_info *revs,
->  	while ((commit = get_revision(revs))) {
->  		const struct name_decoration *decoration;
->  
-> -		if (commit->parents && commit->parents->next)
-> +		if (opts->linearize && (!commit->parents || commit->parents->next))
-> +			; /* map current commit to the same as the previous commit */
-
-This uses the same treatment on either root commits or merge
-commits?  If this were a mistake and this wants to handle merges but
-not roots, shouldn't it be more like
-
-		if (opts->linearize && (commit->parents && commit->parents->next))
-			; /* map the merge to the previous */
-
-> +		else if (commit->parents && commit->parents->next)
->  			die(_("replaying merge commits is not supported yet!"));
-
-And because the next one is also about merges, perhaps the early
-part of this if/else if cascade can be written
-
-		if (commit->parents && commit->parents->next) {
-			/* We have a merge */
-			if (!opts->linearize)
-				die(_("can't replay a merge (yet)"));
-			; /* map current to the previous */
-		} else {
-			...
-
-wouldn't it?
-
-If the "map current to prev" is applicable to root, any root are
-mapped to the last_commit in the above, and if we saw a root as the
-first thing in the loop, last_commit is NULL, we do not do anything
-here, and after the if/else if/else cascade, we see last_commit is
-NULL and break out of the loop.
-
-> +		else {
-> +			struct commit *to_pick = reverse ? last_commit : onto;
-> +			last_commit =
-> +				pick_regular_commit(revs->repo, commit,
-> +						    replayed_commits, to_pick,
-> +						    &merge_opt, &result,
-> +						    opts->linearize ? last_commit : NULL,
-> +						    reverse, opts->empty);
-> +		}
->  
-> -		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
-> -						  reverse ? last_commit : onto,
-> -						  &merge_opt, &result, reverse, opts->empty);
->  		if (!last_commit)
->  			break;
-
-> diff --git a/replay.h b/replay.h
-> index 1851a07705..07e6fdcca3 100644
-> --- a/replay.h
-> +++ b/replay.h
-> @@ -62,6 +62,11 @@ struct replay_revisions_options {
->  	 * Defaults to REPLAY_EMPTY_COMMIT_DROP.
->  	 */
->  	enum replay_empty_commit_action empty;
-> +
-> +	/*
-> +	 * Whether to linearize the commits (i.e. drop merge commits).
-> +	 */
-> +	int linearize;
->  };
->  
->  /* This struct is used as an out-parameter by `replay_revisions()`. */
-> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-> index 3353bc4a4d..c781a3bb1b 100755
-> --- a/t/t3650-replay-basics.sh
-> +++ b/t/t3650-replay-basics.sh
-> @@ -565,4 +565,26 @@ test_expect_success '--onto with --ref rejects multiple revision ranges' '
->  	test_grep "cannot be used with multiple revision ranges" err
->  '
->  
-> +test_expect_success 'linearize the commit topology' '
-> +	test_tick &&
-> +	N=$(git commit-tree -m N -p L -p I L:) &&
-> +	N=$(git commit-tree -m N-child -p $N L:) &&
-> +	git update-ref refs/heads/N $N &&
-> +
-> +	git replay --ref-action=print --linearize \
-> +		--onto A B..refs/heads/N >out &&
-> +
-> +	test_line_count = 1 out &&
-> +	read N1 N2 N3 N4 <out &&
-> +
-> +	cat >expect <<-EOF &&
-> +	* N-child
-> +	* I
-> +	* L
-> +	o A
-> +	EOF
-> +	git log --format=%s --graph --boundary A...$N3 >actual &&
-> +	test_cmp expect actual
-> +'
-
-Perhaps we would want to have a test that replays all the way down
-to the root commit?
+Thanks,
+-Stolee
