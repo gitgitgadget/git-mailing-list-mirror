@@ -1,136 +1,135 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D60738B7BD
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 06:48:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC34738BF7F
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 06:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780901328; cv=none; b=hxVeD5cgHY6ibqJeic8h8uIG7EPgaVGEEFURK3X27nzYYLyiM/sBxBCQyhY5i4mkigR2CgC98Tkd1OIxhTJMug5+MrGxWuZzN1cNoMtfwVD94AaKcfZYFyu+GJgbtHW5iWu8qai4gH+ps0YPAQMXvPf77JbaBR/JbMHG1SWhWVk=
+	t=1780901332; cv=none; b=YLEyDvhKxE6U7cb/TTzErFQT6XFtJ63dzJ00fYmlaiNaSESt/MJxfMhAio8jdTru3YZikdlrbBfLKr9LKGTMGTcb5Ve2DvCR5YYq0SxEnA6M0K/zgzqJwegJ3pZOt/hBQTJnwHet+zjTD+gp7jPJx89VzrdItvZ2qZZkW/j7YFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780901328; c=relaxed/simple;
-	bh=OwTfvs8IF/5S97b/l8BsvM7Mvlhk7/ctKcm4sAlyCPE=;
+	s=arc-20240116; t=1780901332; c=relaxed/simple;
+	bh=mh8tAFKOA1BOqNS2UmVu1kDhy8Wn7cg8MjWGIeKOsnY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FgHzzP8sipRDbhY3eJ2N070gfqtrY3bqNtHLLB0zx0xEs2YNSWlMzDPZUsY1UB8fTNpYMsKGh6bY1ZrE7UbUhUapFT0FUaOik6dtV3oGq8mG7+bGFy3BFsyspAPQ5yo4I3bHCSVablG6VCIkPStCzYUz1jVhyGiuDkbAw6FD6/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HRoTJztp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BJiMp3Nb; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jv/ryylexLh/vVAfEkXw30EUHnBw9ossUntebHYGAzzjy7BVsq9ctwGsIjPxLxsakOJVA0hUMNkHRiGdHQdf63YZpuqvGygCHmDik7IQyw6m25GEor922Bi9XT9gUlEK7oaay65vJ9QwTnCkUWBSKWzzbRScqxi9R8YHpflBoCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uQOGtrRC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnBJx2Z9; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HRoTJztp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BJiMp3Nb"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 360141D000B0;
-	Mon,  8 Jun 2026 02:48:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uQOGtrRC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnBJx2Z9"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DE63E7A003F;
+	Mon,  8 Jun 2026 02:48:48 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 08 Jun 2026 02:48:44 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 08 Jun 2026 02:48:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780901324; x=1780987724; bh=yn6vXmj5Iz
-	9eiwTAO94doOwg5zdUWxwvjOiNYEdRFcE=; b=HRoTJztplz1I3RcXLmyNNZDnDe
-	ssLHj5fzUKjgyA9csr0+zUUcUsm5vg1py8giTPUQZjftho0UA5ZErFVojgK24T+D
-	RUpuFOLadWWzYUlUmgiXn94fYBcg5EP7IGKXb5bcxQ0elKGwGfRoYJGdvW5Kl2/e
-	jhqM3846Ru3jZ9RLIuU+Kvrzqos5m8JQew4Y9J3D8k6h9pFHRG4lMcXQrPhYbys3
-	jsIl9ghmuM/qOSliF0EZiVvEk9DydndFiEF+7TIJ4ifErd4BAjWf6ZSMrj2647l6
-	0J/b8Uj3rL+R5wJINWZQBvUZUhqZVd8fc/jJVYqvO74tvsIgxM6Emj0IfEVA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780901328;
+	 x=1780987728; bh=ebIsKI3h+oNPxHfMECHB+PIHF6Rr7z2ReyhVwttJW7k=; b=
+	uQOGtrRCY/jEe3BmsX0KGISviU3s446AMx098uv89E1oBTdgosiGWUKD/oFwludW
+	9Cimwv5nV7SAJ3j9YsZu2cjQv9vKoHR8azYmf/e/aw6/Eet5I2hDKeOzBM+5M+s6
+	yQbz65PaamM1ZnMA9xoU96K167c1AvxQeKnSV6iCnCvT8d1ElgEPw2M2C+5h93d7
+	lyqbx7+L1On0DJoUF6ff3vOQJlIXBFe57LoVZQNAUwf63liwnYSWu0EJwuDTXS6g
+	Df2+WthbodGQlCNnnnKaSPta4vRrdTClJwLmzUf5uS/E6j/33JMAibjIXDpIoerE
+	/UHJc1f2keXg5Kwl6/uCZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780901324; x=1780987724; bh=yn6vXmj5Iz9eiwTAO94doOwg5zdUWxwvjOi
-	NYEdRFcE=; b=BJiMp3NbdmDSpNtQnpnqOq3O/VlOQs/k/bfMULjLLFo4T3SA+x9
-	sEWiKff2o4w4onDG+/RZYn/hyhubNWJJNVqaD2dxSn0e/eH5ykiutAz6K7sLJXkB
-	hU71fDMGP/LcpXGGFk8UyJ0OFOCVNQUHYE4yFnBTQluOBEmUncEdtVjh8EH84dvU
-	/s7M9Ja3K0NWlPbh+csLoPtRtDfMjCxYDaHkZSFfyzBSk6u7+oO1k1YBUj+JbMln
-	PP9Zx5dOQVTa7nXLAZbN08eeVjjUkGIhUgDp3d+74IYRk+Y7Atk6Md8QV9Xxkj9/
-	nBKOPbFr8OOTZ8AkqnuGvC1JZXPE1b1nGow==
-X-ME-Sender: <xms:y2UmajY30p3aE3HB-LqWqGeMXV3p7kDzFL60jYjiw4bg3YGfOIdxKg>
-    <xme:y2Umart10a08xUgEn9GpoePshQMudENQwtaQdU2mpwVntQlf1d_fKG5ZQ0iwdDNV7
-    5aHXQZ-1Kc1IVdtRTlj93J7PopohgNG5Wey5g5IpF-a7-yw6VlngA>
-X-ME-Received: <xmr:y2UmatPxzkpaH2voXhoWZvlM7G9TBIkUQd7En1AzixVGbrVbwVvcAsjD6xULqo02OZSB3h1wPmfWrD4m6gDr1kSrSsxc2coVHai0KKrisg>
-X-ME-Proxy-Cause: dmFkZTFaiulkSclKmK9XQBNhpL1XptUG5Mj/wgUWgbxLjPc44MKlrxjw4wVnTKEE2F0Ake
-    Vq6xR17hI9nE2zlBpItPc2q3JJ2MJDprVPav0VnhUXKTAp91iTJ6dl83PcbSsOBCq03n0M
-    QRRKwJ1epVRgv/CPAJ7qNVjU/iuL2Jd9kXJ49BpMizFA0I2TZL7vI8DHX71JwwHyc+el2X
-    EKfZnViqza/GfOBwdBy/YgFWSLslVNbkI7vlVpe3Ln4L+pcPWzYPTYkqWtqW0KJ5Jzwkfw
-    pJ0icGJKrUqnguMGQ740kdOyDl1+KDSnRgFJL1fyPvmCMEtXqylC5iuw0ZjC5yASaDSXGI
-    09TQJVO3vc5ebNAjMQzLI6VzUvcIF2mpJ1GMKa17D3a4A4F26m+4UndkYVdKP6mmBAIDVe
-    ruyP/nys/VjBJg47nSwj/3x3ww3+u/afgA2Tedir2m1zQmesMuNXLcz4ZyM/14HWy7BsQN
-    SieDk0IPya1IHq+2AUFCIP3KPpriDJDgcAslLu+lo4YopWgYAyhrqAaRWUMXOrj9aAxPMe
-    HxqcRlcUFiEWcceQjDUB17FaTVuszBGOErLduwT4ZrITO7N12B9KbBNNAcsYCLXiIuGuSO
-    U/aRC6Nz79FqES/OKC3+K730fN7uk1ZO3Oyw9GSxiWwDf7kj9fXgRKnKTOuQ
-X-ME-Proxy: <xmx:y2Umaq6nFD-NJuFgKFJzgdJu7mvH-vNTYBo_6RCaKrd8zLI_7oCqbg>
-    <xmx:y2UmarQv4vD--8U5aA_7laq08Ss86pwIMH2DpvhjAkwo3J19hzFsFw>
-    <xmx:y2UmavAL6NeMr1HrtGwB8IkfEy8ooA1lpESZfNrsy_H_et2zP92AZw>
-    <xmx:y2UmajGRCnXl-FYoSfrMOB1bsQCXHfVGijmXUMxB8BhD766n-fmWjw>
-    <xmx:zGUmagmTXE_X-4mvYXEr4ySqd6XjdWYLUtJLRfv43OTsUha-MnGQ1I5I>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780901328; x=
+	1780987728; bh=ebIsKI3h+oNPxHfMECHB+PIHF6Rr7z2ReyhVwttJW7k=; b=d
+	nBJx2Z9kzOHYLgEuFFVltXn7pmfndQj0zsL/LltLGQhZVqs+sEMw5Dl+Vb59Zlnl
+	WQ0xYxcHe/C19cJHEIkX4SFncig9ErpeXLthSHk04b1sbUtGXV7pvJvLK4IQoWL3
+	V4OZpyf5YIjOFX6KJ1O2LDEyc7/A+zAENFb7/rUwfWW39rlW/gk1Fnnl2/NGh8/i
+	H62xglPK+Jtl2qy4eNmHcd1V1O+FtRvt8sSUPfizlxL5UNuvwUOqKnNl4J6sZqFF
+	q5zRlu2tBEhnSX8aK0zwSDcHTMw7jHFr4HUlcsi8O5hUfXrvwV3h/iQUBXRyVoQF
+	cu8EhQHYFX0+85/424w8Q==
+X-ME-Sender: <xms:0GUmajrppMeQD0WP3OY9Bp3lswQzbOesCu_fHubMl0C2Gk-k86kSyw>
+    <xme:0GUmakhQZpMtt4AJm0XaZP-be7Rwy1M3vo-5zwSxyfX5x2pLT9f_hwC_hfsnYR7gq
+    3T3Ar8mcHLICnoJnQsd9sWAAYmDCB5BF-HJOaQ6P3-RmAGuR433yuw>
+X-ME-Received: <xmr:0GUmaohxI8TvkqmC2XKXPd1k1Y3x5_A0a53d2UxEK_4LmR8HpJnWzgswYr8vXKbMmyx8e_gZAUx_nmHhSHaLJ2tMioUMSiPeepqAJcKXwg>
+X-ME-Proxy-Cause: dmFkZTFCzZXEsCXzswTR0nytCXdJZxtgceGD63V8KNkus82bs0gFbi4DTfVOIwIfG0PqjF
+    0MagCdNvz75p+ttwc4AwxFcoP0xy/hHEYIsZzUWCB1Y5nj3DrtP5CR6/IxNSAxmXnH2NtW
+    JW5FhrH+aE8Fs3pjCmutFliNk3jJP4JrwhNS5ZiCuPslotpnimBvTyzTSAR1p0OOvmTBFm
+    Dm7BZu7Uv2vCiAhUsWZakZ7Nx1Zj8iQZ4UMzTn8t8l1PV2SjnY/qnOO/J3WGl4Ptnrrm+U
+    6KKbR5jdeU20dR6iwVY7fU3XhtSpJdk0hvG9bzVYnMfbdpL8VAz1DQOG/xCCfFKr0hnqOd
+    ZdGDNv2Il+HZtd1i72ggZ4Hw+VupSlAG1ds7kHJLcj/w7K2NQCCM7F2pjgzW1cFvORiCMB
+    XHhOtoZL99eu2Um9hd2CKzKVR/WLPi7c9jQwDfObpedyL1a4/ogw51eXCrBFiECBay+afm
+    9E0uyH23qCDMhjY3G2Wv79N84i6zM6FMpuuEnq6PrZhbi+9OkwXyGRiBxZ/S4gVm4UBTR7
+    4g7osX/qipKELTH0vbluPlNQ9ZTJrmbk6T0DF+jZHhTpmHNjqh1jgyR/GNG1QLHRPkM7FT
+    DoKI2z+gHpVr9H9PP4gu7PIPIksarJ36MTUe7bL5DoIxpAqmc9D2zZ6hJZMA
+X-ME-Proxy: <xmx:0GUmaiixGHpj1qg1-JCyvo6Vb3vhX_Ufd5mbcAHu52LhHjymScfQYQ>
+    <xmx:0GUmagIbo2Fmg7lWXNnFsyu985HatPhWQ4usJqD2yZA44Id1wJ0zFw>
+    <xmx:0GUmapGlisLO51DUCDh5r8hHegB7YyGp_f-Kj9vGQLZ8bSH50ONkfQ>
+    <xmx:0GUmasQMrhvXx1WoZzAizx0GqrPJBFh3EkTbE3j64Kmwg-zzvfxNng>
+    <xmx:0GUmah7kMV0f3eF2AWdR8IzYOxECoT9nJcmykyJaLfvzD35W8CbvQ2z2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 02:48:42 -0400 (EDT)
+ 8 Jun 2026 02:48:47 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 431ec72b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jun 2026 06:48:41 +0000 (UTC)
-Date: Mon, 8 Jun 2026 08:48:39 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 66c9477f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 06:48:46 +0000 (UTC)
+Date: Mon, 8 Jun 2026 08:48:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Tuomas Ahola <taahol@utu.fi>, Weijie Yuan <wy@wyuan.org>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH v2 2/3] Documentation/MyFirstContribution: recommend the
- use of b4
-Message-ID: <aiZlx-ue6N8gCIMr@pks.im>
-References: <20260603-pks-b4-v2-0-a8aea0aa2c23@pks.im>
- <20260603-pks-b4-v2-2-a8aea0aa2c23@pks.im>
- <87mrxa27xq.fsf@emacs.iotcl.com>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: Weijie Yuan <wy@wyuan.org>, Tuomas Ahola <taahol@utu.fi>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] b4: introduce configuration for the Git project
+Message-ID: <aiZlzBEB_AnQ4mVK@pks.im>
+References: <20260602-pks-b4-v1-0-a7ae5a49e9cf@pks.im>
+ <20260602-pks-b4-v1-1-a7ae5a49e9cf@pks.im>
+ <20260602170955.Z4b7y%taahol@utu.fi>
+ <ah-Nhr2PboWUq6eU@wyuan.org>
+ <ah_PyDwO1Sffr5yq@pks.im>
+ <aiAK9eLvew+mgWt+@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87mrxa27xq.fsf@emacs.iotcl.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiAK9eLvew+mgWt+@szeder.dev>
 
-On Thu, Jun 04, 2026 at 07:25:37AM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> > index 069020196c..fc0b06ae67 100644
-> > --- a/Documentation/MyFirstContribution.adoc
-> > +++ b/Documentation/MyFirstContribution.adoc
-> > @@ -833,7 +833,7 @@ This patchset is part of the MyFirstContribution tutorial and should not
-> >  be merged.
-> >  ----
-> >  
-> > -At this point the tutorial diverges, in order to demonstrate two
-> > +At this point the tutorial diverges, in order to demonstrate three
-> >  different methods of formatting your patchset and getting it reviewed.
-> >  
-> >  The first method to be covered is GitGitGadget, which is useful for those
-> > @@ -845,9 +845,14 @@ more fine-grained control over the emails to be sent. This method requires some
-> >  setup which can change depending on your system and will not be covered in this
-> >  tutorial.
-> >  
-> > +The third method to be covered is `b4`, which builds on top of `git
-> > +format-patch` and `git send-email`. This method is the recommended way to
-> > +submit patches via mail as it automates a lot of the bookkeeping required by
-> > +`git send-email`.
+On Wed, Jun 03, 2026 at 01:07:33PM +0200, SZEDER Gábor wrote:
+> On Wed, Jun 03, 2026 at 08:55:04AM +0200, Patrick Steinhardt wrote:
+> > On Wed, Jun 03, 2026 at 10:12:22AM +0800, Weijie Yuan wrote:
+> > > On Tue, Jun 02, 2026 at 08:09:55PM +0300, Tuomas Ahola wrote:
+> > > > Huh?  Doesn't MyFirstContribution speak *against* shallow threading?
+> > > >
+> > > > 	        [...]  make sure to replace it with the correct Message-ID for your
+> > > > 	**previous cover letter** - that is, if you're sending v2, use the Message-ID
+> > > > 	from v1; if you're sending v3, use the Message-ID from v2.
+> > > 
+> > > I don't get it. Doesn't shallow threading means every following patches
+> > > are replying to the cover letter? Replying to the previous one is
+> > > --chain-reply-to, if I'm not mistaken.
+> > 
+> > Shallow threading basically means that all patches are sent as a
+> > response to the current cover letter, and the current cover letter is
+> > always attached to the cover letter of the _first_ version.
 > 
-> The GitGitGadget method includes Running CI, maybe that's worth
-> mentioning the user is responsible themselves to run the whole test
-> suite? Or is this outside the scope of this series, since `git
-> send-email` doesn't include that too.
+> No, in Git shallow threading means that all patches are sent as a
+> respose to the current cover letter, period.  It has nothing to do
+> with whether the current cover letter is sent as a reply to the cover
+> letter of the first or the previous version.
+> 
+> > So this quote is definitely at odds with the configuration I have
+> > proposed. It's actually quite surprising to me that we recommend deep
+> > threading -- I personally find it extremely hard to navigate as the
+> > nesting eventually gets way too deep.
+> 
+> Deep threading means that every mail is a reply to the previous one.
+> Again, it has nothing to do with the relation of the current cover
+> letter and the previous cover letters.
+> 
+> Therefore, we do not recommend deep threading.
 
-I'd say it's out-of-scope for this patch series.
-
-That being said, I have been wondering last week whether we can automate
-running CI in some fashion to shorten feedback cycles, bridge the gap
-between the mailing list and CI and ultimately help both reviewers and
-Junio. Some subsystems in the Linux kernel for example have tooling that
-picks up patch series from the mailing list, runs it through CI and then
-reports results to the mailing list (for example [1]).
-
-Having something like that might be valuable for us, too.
+Oh, you're right of course. I totally forgot that we even had this
+style.
 
 Patrick
-
-[1]: https://github.com/linux-netdev/nipa
