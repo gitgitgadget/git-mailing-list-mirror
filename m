@@ -1,84 +1,84 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A226F35C19D
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 13:53:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5171370AFD
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 13:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780926818; cv=none; b=sZBXRggjQ2F44SyMZTqYMpcYnWhsBQHqi/8pLWU/sLOrdAxkwObD/hQU4nprNuzMacZ/Ju0rpQXaabii0vWxzL9zNlyfgCWj5HEOBtWUGLIT9riaN13Wq1NoMRYPyAlKhB++4sTLpKhmH0VGxf7YV9KbwQUdV6KfCySaFPCdVsQ=
+	t=1780926819; cv=none; b=kvNFHmeu7xu1uaxpORtHY+PUVkRrnABgPNqwREZrMBwfPbwvChnUCKzsHsYj4YeqXtMA8+B2ASdKGjRG0gJZmQ884/qD370WDd8ZV93ihgXljfNTTCFyfemGEBNauiwN1Ej0X+hLQL2wuVXvVDeLSNNt0GE7TjQcRb/FDffGN4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780926818; c=relaxed/simple;
-	bh=4O87XM50x5ZR/QWeaDV1EijVMPC97ywmFRMDTqjjCBc=;
+	s=arc-20240116; t=1780926819; c=relaxed/simple;
+	bh=p0Y3B5AjQCPp2bTdH8S1aWUdl2RbraMn6S5QL0I2lP8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iQSsUW/nT1APQRjnOBm694WzDsq6Stvfahmwv7wOhf4I20zJYLVEjai1Uw6cBGV/BhnEeHo98ixvTxjq2bQUCHd6PSsW7gKnMi1bTNnWcV+w2a9YeE4lROHqW1sevIp0sjSOtM747tHKy0lbRTm4bchrcWezhvGwke3s4u16qRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iCv+kmgY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c9csgIVB; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=J1LMPW8TzdzJHANUsfZKpGEUIv6UHNX3xp6m8p9lhO4TLLLfvukdNgtz1yEdFPKiO6UbHhf7TyKv4wGkI04T+Ct5Rh5zCkhsWOtHAh78fpsCG5UWuCfqB1+PZDj0URrvo1x+zlO+02ZnldsKzLfLb85LeQtGTpvrU99Ae6W9SlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oLmas4/y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=af5LAe5x; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iCv+kmgY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c9csgIVB"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id DB3D5EC0244;
-	Mon,  8 Jun 2026 09:53:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oLmas4/y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="af5LAe5x"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F160514001C2;
+	Mon,  8 Jun 2026 09:53:37 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 08 Jun 2026 09:53:36 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 09:53:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780926816; x=1781013216; bh=FXCMoIT6KO
-	bn71Cl+mpqFIYpHd5VYxwki6qccHrch6M=; b=iCv+kmgY99e6F6iZJo21kd9U+w
-	60C/On13JrZTMUn8svQyshnmh+JFWkwKyOquOUedI/D/ZULsYeiz6Iovo+2nzuOF
-	AeLOyVKCy+JKd9ip3dGFI8BykAz874nElQivnLt2OAO9Ex+lAGYksEHrNvuZxzDL
-	jUFkPuz7WS4jhigFNCmzwsfjhfZiTEK25lWp9ZsSsIUbiGTVO04UrIgEM1F+h8or
-	+81q3lUrDGgVtjaOk+KzHHVzvxj6lWsX7mykNCNot9mcOJFS3HyJKOMJ+3Fhvt4E
-	6nBNc7QhE+ucbBspUpWBMSn4b3UKwUc+Ny3vbadahI3PhUMkoH2koodNkTgQ==
+	:subject:to:to; s=fm1; t=1780926817; x=1781013217; bh=EBC1YKVPZ4
+	fPNpMEGTykG6hD9g0tZUfl7ahyCBvOhqE=; b=oLmas4/yNHcGJeeBo5ePDWU+k8
+	x7frJpzSrbfhcgfcdAgzJ1b1Ch7VI7LNYUMqx3fi0O+6XNKrceACVS/nJdvMDGNk
+	uxKSIscuRWzh1lU/kmlyeBO4IN/VZF6l+J5HFRkBYjTVROHKs5ZORLRK6oShemNc
+	E2Sgq/FZnQZmTdj8qhAqarFguftq0CP7oyOEGl45c8rh8IOf0tKYJVzGQKoi4YSq
+	jAXRxXUWFilRD2km9uqsAgECXUyqp7EIsNN6NcOkQH2lmBTB+81TBBPj0IKSC/RQ
+	It/ahbv9WqNkqVK64aDTTyGg7LplLqDheJxwRiVxxO4phPZNvsvVZSlsClew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780926816; x=1781013216; bh=FXCMoIT6KObn71Cl+mpqFIYpHd5VYxwki6q
-	ccHrch6M=; b=c9csgIVBht5///rQkAoeUliRJBQ2K5G5y9cdb/SWHQP4WUVsZ6U
-	6UGQP7z8+ZiEBun03OIs4fR03UAW8pobAWt9CzkaQzoEayVWTd5HX/5jfUA3FdzH
-	gHIHICH1hdeV6//UQFiLb1Q8gXy0ERUxRIyjVY3+qd1qwoH7/PiwSxy8GiO5+Tsu
-	//zJKz/ZeqXFxRFkM5GDmHi7pjtRjrs2VQvjVaO1TfWUKYrbnFIidZW4Kq1dtrlJ
-	cGKyHUx/bKv5QW9yvQMwwERo9bkdCODY6sCKeIF5h612GMB5EuTaUxgg3Kuv9+DH
-	P+VzvSJbQdiqulikY44L9erRy29jpogaQRw==
-X-ME-Sender: <xms:YMkmarcID9vZI-CAMpx7GLHhgREKQUhC517dl6oJWhFOQ9yb5sdM8Q>
-    <xme:YMkmaoPgHeVmYO5pQgiQ34V5LGAevuxtQ6xmTeu_4OaAwh22hOoZ182_Or0srei6c
-    tPDyd78mTnB5pLD8iViINJjlP7NLpUgMJJCIjgBtb5PRQ6MjSI>
-X-ME-Received: <xmr:YMkmaphXHGau4Ir0dLzx12z5kAhdWecqvhrKMM96R-IFTFuj2jBoq99lBL4RPGI94qtRjE5INo07ApLEsN80xr43zyyq0Owbx4mOxN0PGg>
-X-ME-Proxy-Cause: dmFkZTEGNy6bVM09haIyqX2KIYn/ergfrMZA2n/ttSf9FJ8t6Qlu0XEMZqRnf0UkauDWNb
-    kV5MFqeyA8BnyPx4AOKlpz8Y8eIpyCpmcnUa7/1TyJ1Ixb2kHotdY7k9AhGOzBLmWudNH/
-    Q8HnzyNK9OaSEJsaBt72oqAV24+e09kd9sHDdkn9CKb48m+tNtvAevZ+75p7c2SnYMkfoa
-    C4X8N98/KsKhLLix+k9BuGmr1a3zsZ2uZE+wKT4MGM4780tYIEqtZaPXTAb3oe2PwVn3s3
-    FdyIi1olLDbzdYRViV6istwz/PrMTPgmLX3e1o24pTO4MHN+ArWHUd4iC07bIqKSiz/gPB
-    JpojUO9PjK445o+ouM1YWcpth5sVxnHKi6A+EEuEQtRSJ++vYoz32t/e/goOuNzaZbyw5a
-    98HxsuB1r6Z8D8qDaavSlulG7obrAH2/8J886dSDPDktElrwG9+8FcrX0bVnXJASMYfVm0
-    YJVWGdU/cXSYKVexn7qa1EQTXkz97NI9Nm8ZvSzQGF8r4M/9YfgFcmL44clZsGik2ths/1
-    DRsJ3b+tX0x5w3LwoybuZNzCokNxw4nFzWOzvXGkLlDw2fUHXEWAV5G09FuCelzWEtrvm0
-    G5pTJsVpoKbEcMQYLqxOy6XGKfHJyQu4gdXSdXrLn7msRV6XAVNC2sKkPDNw
-X-ME-Proxy: <xmx:YMkmar3pA1ohbh09yYSIRnC548_eKhRwMKjITyIugf6vhP_NHFa8wQ>
-    <xmx:YMkmajiJJ-UIVzFXT5kdkRTXqpddiAqnmwP4K4eyehoneANteyH1XA>
-    <xmx:YMkmarcKVHXD_A_t7hK3u1Hcg5NcXUTKyUMWyxTWLLML2YAWjVwlzw>
-    <xmx:YMkmamkNCJHE0EcvABBOF_RJI01-KQY7KIj2p4Iqcux3awJrfF6P7w>
-    <xmx:YMkmalTHRQo8498AGVcPrmNW5oXIn9yivoEIdisB2WG9CnxdTl3EagXy>
+	1780926817; x=1781013217; bh=EBC1YKVPZ4fPNpMEGTykG6hD9g0tZUfl7ah
+	yCBvOhqE=; b=af5LAe5xTdk/zVpnkooZ/xuVCjSLU2xzjBAgCoOhkM3EcK2MB0T
+	P7KQ7AeuHKtdk3LiKkqXhq/UWUN7x3iXDGDEiycRHq+Qg7Nr0ZYRMPg8QpV/iQ58
+	u25FQRqcid+hhFwxICX4kh/AsBHQTykVHaIdUJwqJGfzYDiR9yW23FmhLxsaLV8G
+	GVS6QKJYnecG3UpGULx1OZaH0NRTgpyA8Y2gSkfNn4TKHFCy0YHuLuUK2+pLCX/Q
+	7SbTmAO+Gze46rjrvp0ACAH0dz+D2bYhT6NvUjshcvIg0W0FGUI5g2TfXWqRvVQH
+	OMJfJAQQCjN3Nsi/6akePMxspwhTqwh9NBg==
+X-ME-Sender: <xms:YckmatfL58icXeeoKPK9SFqs0-EvphwKd8MhvK6jrm1IYnkAEFTPDQ>
+    <xme:YckmaiO1N4tWXThj1QAZ2rgDmXihzlGLU2BkH92gydKEYjMxTLfiVOWPKaAtIj8xS
+    Kik9mM1-XmviMj6a1NRIZB5Y7m1xUbnVARGBxPcVyTJCzRH7eCsHgQ>
+X-ME-Received: <xmr:Yckmarifoxclo1fLCDUiyIpA8YM3SksSI9j3u9eDDFZrsmU6wMscut8PXoSJmtnICcE3zA6n4a8E9xtpdSCCtSvFVn_1m67-hK_3UA-NrQ>
+X-ME-Proxy-Cause: dmFkZTF61W8YYYM5DXrsUif1Rh0WHUkmXoR6PEdvmekQE5kgFkLNW8ieBBAQ54V45ST88A
+    +/YrA0u8a+IqPQClJAYwkn6r2XNz+1twq0c+BaniCgsiXW9uEk4maTGHS4pPI2VqXp3uGi
+    p5UTXiVWR74wgoW++R1kKlci8Gzhv8tVVORMydjjxe1gtb0mXX8QvNGzijCPEKTjDfW+Yi
+    SYcvrtPBZsmU5AnRqYAhft7MjgIAHqKrFTvfjSS+YmlC6eaKfJBxqv7h55nIYJVq36Swrj
+    Nh2ZReCiDzVVNfq2anW9gZC8vZ+6jaRnklXA/tjM8q71SKGlqSoOWrZ8QkNWkIFZOhCFkd
+    58O1u5yOcs/gAsyh6AB8nXRYZ/iNLxa5Um04koVdXqscpEvsNGAnthj0d9gkrY1KzdXRVY
+    UjHEcQB06PjLc8f8EEqwI5RK3W6a+jUxRIzUPl/sNORbNsB7paIJd1c/SV42cTeeVtao6v
+    WFZ4tMjXy4pH0lHRY/SdXAW6gsm8RsIVhjnBYrYoge/UvNkMO6U98rZwpgmTFaKt2JEQ51
+    niVmJ+82SbYWmGbx3dYaJ+xu9wTq30458ZQHAJT72GK3AuJ+iRDcJWL+8PuzsBRtAlMysB
+    R0hB5NIrAqE8d9r223855rP6kaVUKWq0vq/a3S8MEKqTQb/0kl+qB8/xYSKQ
+X-ME-Proxy: <xmx:Yckmal1f6rjbMuaJuTANIt-PHMrXYeOM2AN8nUjoMTZw8ucK0ZmRHA>
+    <xmx:YckmalhedYoopTf0Wj3uv3xk2pOVQ8CE1W7xF1Maw8iRim78AHdLAg>
+    <xmx:YckmaleJcv6em9AxR_0RxsHj70Ue6THnumj3Baa2p6bKT0pwOlKKsw>
+    <xmx:Yckmaom3R9TsKkwgiWePHkpbknO4DgcTLOJKTiNxqpJaFhc-Aft2yQ>
+    <xmx:YckmanQz9BigGy6mTYMA17L1HbWlvFWtaJg0UHfoBCJzGTpKMcIdtaee>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 09:53:35 -0400 (EDT)
+ 8 Jun 2026 09:53:37 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 81829935 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jun 2026 13:53:28 +0000 (UTC)
-Date: Mon, 8 Jun 2026 15:53:25 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a27b7323 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 13:53:34 +0000 (UTC)
+Date: Mon, 8 Jun 2026 15:53:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/7] pack-objects(check_pack_inflate()): use size_t
- instead of unsigned long
-Message-ID: <aibJVSrKPCfDVXw7@pks.im>
+Subject: Re: [PATCH 4/7] packfile: widen unpack_entry()'s size out-parameter
+ to size_t
+Message-ID: <aibJW3h4PaYhOqFb@pks.im>
 References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
- <ddb75326cde9695f1eb7bbbe77175424e6b77004.1780570273.git.gitgitgadget@gmail.com>
+ <bdebc36f21d1e2a13bc91d72a3ada1db3f7e184e.1780570273.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,31 +87,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ddb75326cde9695f1eb7bbbe77175424e6b77004.1780570273.git.gitgitgadget@gmail.com>
+In-Reply-To: <bdebc36f21d1e2a13bc91d72a3ada1db3f7e184e.1780570273.git.gitgitgadget@gmail.com>
 
-On Thu, Jun 04, 2026 at 10:51:08AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> `write_reuse_object()` learned to track its packed-object size as
-> `size_t` in 606c192380 (odb, packfile: use size_t for streaming
-> object sizes, 2026-05-08), but the comparison sink it feeds,
-> `check_pack_inflate()`, still takes the expected decompressed size
-> as `unsigned long`. The call site bridges the mismatch with
-> `cast_size_t_to_ulong()`, which on Windows turns a >4 GiB object
-> into an immediate die().
-> 
-> That function only uses `expect` once: as the right-hand side of a
-> `stream.total_out == expect` equality test against zlib's counter.
-> zlib's own `total_out` counter is `uLong` and is therefore still
-> 32-bit-bound on Windows. Widening `expect` to `size_t` cannot fix that,
-> but it is a strict improvement nonetheless: instead of dying outright,
-> an oversized object now simply makes the equality fail and lets
-> `write_reuse_object()` fall back to `write_no_reuse_object()`, which
-> decompresses and re-deflates the content (and which the larger
-> pack-objects widening series targets separately).
+On Thu, Jun 04, 2026 at 10:51:09AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index 82bc6dcc00..3dff898c43 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -1239,6 +1239,8 @@ static void *gfi_unpack_entry(
+>  	unsigned long *sizep)
+>  {
+>  	enum object_type type;
+> +	size_t size_st = 0;
+> +	void *data;
+>  	struct packed_git *p = all_packs[oe->pack_id];
+>  	if (p == pack_data && p->pack_size < (pack_size + the_hash_algo->rawsz)) {
+>  		/* The object is stored in the packfile we are writing to
+> @@ -1260,7 +1262,10 @@ static void *gfi_unpack_entry(
+>  		 */
+>  		p->pack_size = pack_size + the_hash_algo->rawsz;
+>  	}
+> -	return unpack_entry(the_repository, p, oe->idx.offset, &type, sizep);
+> +	data = unpack_entry(the_repository, p, oe->idx.offset, &type, &size_st);
+> +	if (sizep)
+> +		*sizep = cast_size_t_to_ulong(size_st);
+> +	return data;
+>  }
 
-Hm. I wonder whether it's possible to reset `stream.total_out` on every
-iteration and instead have a local `size_t` variable that we use to
-track the total number of inflated bytes?
+Nit, please feel free to ignore: do we want to add a NEEDSWORK comment
+here?
 
 Patrick
