@@ -1,206 +1,195 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD0E4028CA
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:29:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC2D3CFF4C
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780932547; cv=pass; b=AbBJ1Kg4s1IB8IdRFGk/FdUIlh15/cTQKYzvYwMqW16zkjy1kmcMRUZbGpkPjbpJWENgsiqi141trXV88Sa25si1SyyP892DOY7omPUreXy48ehLA93gw94IZfii573aJtWZhrq0w4l1hG3MDWYufHhz3HGbpHMno0SRfVx6fl8=
+	t=1780932685; cv=pass; b=YdAsygtWuvMAgWa8mU+bZAOcIWFNLgbEor0SP7tlFA2vjiCIWobJiZv08v7NZt+JNQwn5lV1n9yw4LXOf35RZbwX51HiDM6/6SI5qpit1HV0ZpwG5cdIGt5qfnvIc4idcwpFlBRWQ+Bpd8Ac0TqqIwgHdqZ+/ePu/U2QZBxyfmM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780932547; c=relaxed/simple;
-	bh=zekpV34rDuZP0YI/ApVbvG25QMl1eDoDNJr+d+hUYno=;
+	s=arc-20240116; t=1780932685; c=relaxed/simple;
+	bh=AZb3nt/ikqqAhkj9uHIk2cJWyRl9ICcbwndO6At2bZA=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=fNro6jravG6cfn6F/8uRPbTSE1c+hy/1N2+4OuCPVLWmppZ4vQ7m8fhfZv6FafcpMMyeir14JRaI44hVd3t7fONjNoExRSOptyXKpjE8BcqT3qED+y4OM5CAbuQZ3AqzYZe7m3H2BK8vZVUsCWzEf67Wu5mrlAkM9f1nCnQbf/M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oWqI+QB0; arc=pass smtp.client-ip=209.85.217.49
+	 To:Content-Type; b=e2LM2EQiB8OzUECWzdAE50A4XpQfUaWUYSOc0nmp2C2EGej1m9Dh2aGz2Q6vdbdOSTDSuQXOTvVuKhZ/Ued+NGb50YW95OrK4Bie2THyR/2mlqGS8c6jKNM6DUlc1GHx0PYMmS7P699QWzq/EZn5SAgEChUF6pzA+TEcYrsSCWU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YD7erUH1; arc=pass smtp.client-ip=209.85.221.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oWqI+QB0"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-6cfb0a137c9so2813893137.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 08:29:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780932545; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YD7erUH1"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-5b22b023e1dso879218e0c.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 08:31:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780932683; cv=none;
         d=google.com; s=arc-20240605;
-        b=Ye08HbU2Ih57xQByvfNDSHMJ7N8yK8w0IL+/vIN08sqBJ2hSHy6/qQHCmJQYC5uB+5
-         /wgVDYQgLDveeE96c5K+vWe5AfgoF2JsHHATCM1swsONT69EGeRE4U9bIobrYXF62QFT
-         JkUHv1THeoizt65Eq1iwNT6NGDJQSvEUc1urK3HaC3UdMGexhS4RxsoET2eDfZvJRJwX
-         Knd7aUSgh9U+yeRrFCtbEWg2k/5Y2z9DoBcCDYAB1AFUI9p7uYxACAaIBfECObmytIea
-         XWDmjfVmd2aaFUe/enVV19IX5lZa3WoIBEdN+gpUkgpWuMLQKNmqofxejxCFKI2JMKxu
-         PGyA==
+        b=jjgao35ezbswwuGY3kLAytWDHgsb+X0sKhe1QHEIX3ePfGrWFLNqDDc5WdjQ7KZaM1
+         kyWVTZ0VnPEq2MZJLb7V5SMMo/GnHrMoQdo5SSv6tA8CNRXGMWx/hSBe9KUfE2u3RPic
+         fl2C2P0h3zawWZuIHXoWxloSlAOA/TpAHZeLA94p5+WUtiSg1KPgx74S5HPts+WOlqfi
+         0J4dPmxFvcSR2VIajKTSd3dqfviaQij2XasazoaNXWvD3V50aJuU4npdXeakIUTZZ1kZ
+         +HO8It/P1j2QePNFl86MsHbmBlb1fGMuPmpD0pS0qEe9aUWoR9wX7J687JYL6DfwRe0I
+         6o+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :dkim-signature;
-        bh=KtfoSj6o508bUBl6/RVp9UJDB5VbFGgkceclzMIrq4E=;
-        fh=StcappRMgSS7FI0UROnQoGjmRf63qM9dwyvSHeUEnAo=;
-        b=LXQlJCNxzRBG17ZA0ljgWpiXuI5VcR63c6WNtq33yAycnAdB/C2CMn1gTCqLLmreNS
-         4GDrw1qUs3PNEwL0urLUqAnRx4JYAxTd6ofhI48d1i69IcsLppBWd5IicKRv3VWjVgqi
-         XKZMxFKUus2xfjDki88unWCec0FlwV+zlkh3NrQn74sSOCqZ/xA3ptyKovGXOFCCvZaf
-         bd+CVmBi7Mv5WXzo6LD1jLBtWKj/do24qwEm8DduFp0GFDg7oLlUZnXSACjUXdRcv5FU
-         9T18bUO4y9ms7stqGSvSoAbx7DE+rGyE9RL8Erssda/AY4pIQTcpKnexGLDL3OkTiLyH
-         N24w==;
+        bh=U+OA1d+vLymH6mQhxdoW3haHlXXsKD2cp+AokUm6uk8=;
+        fh=zrFdScivYUA1CUYWQ1bQcnFVHKjWJbFxQ6iWuhLZ62k=;
+        b=RtrxvL4JC4KqE2G0il0ouGK/5AlE5s2naGG3upGVvROxW8WUn/e/ulVsomMRMurnMd
+         ensKiXFKNnTi8D4Cp2z+30duqAKJesfZs0gQqV3ag19pVSNJl1wJ9lq0J9hw+NpfrAjh
+         pufmIy9AFpvXJFTb7XzkjBxJDP2HzpnoKcPnltNJfLyFjkRmBvx3R25xohYLLw/mfYWi
+         jMER40luaMtP5r2sGrcLJvLOLxDJJRc5uQVc+1fpqj7/c6/BaF9SBHQQzT+3IR2dvRe1
+         qOjzNxH06za2kN+pGhi8sAvCyt25pYy+EqU2b+Ujj/sS1SyrOWnsvRvacqUjmCIToodu
+         Ipqg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780932545; x=1781537345; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780932683; x=1781537483; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KtfoSj6o508bUBl6/RVp9UJDB5VbFGgkceclzMIrq4E=;
-        b=oWqI+QB01YPy9VX34dSwA1bf4lNZjWkiq5dLIPH2pOlNzApcF4x3I3aLTuk8U4VPG+
-         Gi+GNVoFteE3o/qS9NmzL4F2yQRgKzehnCVSF26JxkOVlZcZcHaEm4ov3jcFHRORDcIR
-         +vZiE8yAzJl63DebrlenEQ5cUhHb1Zk6v9uUsF+dWn09zetfNX5LXDvekFqBU72Bnez2
-         htDVsclkYTnTAgcWByk0pvGsS7KtVuOZ0YrcdPDcjoiOnBRcHSnUbC9rMUDHV9dYNpCg
-         yaZeGlw/vMPJoYPw7OdFBf3wiuF04hw1UisZhxVJBBgwIrJOgSBa4Gvk/xrfRG9Q7/wo
-         CIqQ==
+        bh=U+OA1d+vLymH6mQhxdoW3haHlXXsKD2cp+AokUm6uk8=;
+        b=YD7erUH1z64DYZ0DwEUVkSXKS6axgT/+9r8cxSNb7k8nD/ybsWt0JkHeQZPVaeF3Ml
+         enOExvL+cZ5NhYZYdAdvnv+Qy+u5PmZybkCm6P5jNQZFA8Ga7PfDCHLYjA1+7OR6oKUV
+         1aFYsLvSGivti5VxnXRKqDLZ1feO5FXYusDqNbszykrQ3DqgM0FnuuXPCcetpFz+32uE
+         2JpCMqDNpPBmNeGxR6njrQjZMU0JMG5+AgKsbbnOmDosiBFkCZdcGjO/QZTGyOwQWJ6U
+         HHAyjjeoPXcPjnLTU8rs+afiS9GbbsEOa8stdBwHfqrLf01BlYv6ixMKWyWNCjbtM1u6
+         nyGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780932545; x=1781537345;
+        d=1e100.net; s=20251104; t=1780932683; x=1781537483;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KtfoSj6o508bUBl6/RVp9UJDB5VbFGgkceclzMIrq4E=;
-        b=WhEfq/vWdRFcf7MdaM0i8HPKnEQFVnm4e+gx5Hf5d6ipsjcx+C1nM75j6kjO6eftPH
-         wvif6m38VFuvWvlBQr9/x8z4Iy0LSTPJxIoDVtfQVh/hv8eb7nS5EmA6L/dyn+hOKDih
-         uqZUXuvw+53wyY3jObC5R0ZspdwNR6vHafw3YkclCl9Kr4/V8nHDmw8Xkx+RuBg/bYr/
-         8a5hSDMZ6CGUzbI68xfgHrRh6+gH+qwfjOIZ2WlTs7nCHyLwat97zhoX+DZEx9SFXoUm
-         gmFCEc30pjtyh7zdl9Bfyg6zf/6YFoxGrFOS+5WXeGcFpVs0O2mKifu4EGlutwCrbeLR
-         8Z+g==
-X-Forwarded-Encrypted: i=1; AFNElJ+14RnTRH5IufeHPGdDPi8OAcOcvnyrcFqDpmhf84v3patyjWwJ+HxfFJsZhaGR7Uey3Zs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwI0rxN5bZtlfgLZc7tygX+MPr5osCO4Uze8tZ6qTUNzqVhjnUB
-	fNUfO618f8R5ZbjmN//M2AWZoUwHLQIKcRyDHYOIOL5gy2PwYHYCP4QH8ceNmTV1Y6cooPIa4+C
-	QkIy8oN5xwMh9AEvl2DIpcGYIvnucK8o=
-X-Gm-Gg: Acq92OGcTOVyAQUgR7q198VpqaTJVhRRoPjwCFZBO0BsQtQpHezi9mWC/PzUNO8UOv1
-	aO1peb5QgHvW5M4d4ZDSx27RAlXedAV5azMjNP1jaU4gD/soPPHDPVUUI8fW5ldbuoZ8rzafVRQ
-	DH07urZyfILA6Yf0cu1oXcoP5XyI+HgZu27+h7KV34shR1IG7dT00NLqyUTGqGZNzpnmnZzmulJ
-	G/MynOegVtWnVlPmgLpGtDJ+gSdRIMZ/wTNbxweTACRk2Fz+IQXrUqhhXGoEbhJuk5hvg1NQIsV
-	Di3HuVah/w11X2Z+FV5wGX41R/C9ONcCe1DVROSeAGjj78X8itXxjZRtYjhC4AuR8OvfrWgSwX6
-	Qn3STiwMT
-X-Received: by 2002:a05:6102:548c:b0:639:1e8b:ecd9 with SMTP id
- ada2fe7eead31-6fefa23308cmr7835084137.20.1780932545427; Mon, 08 Jun 2026
- 08:29:05 -0700 (PDT)
+        bh=U+OA1d+vLymH6mQhxdoW3haHlXXsKD2cp+AokUm6uk8=;
+        b=MdbZMRJvvG3qSjja7YJrP32Lp6TAv7Y5VfemOOWzXMcc1BnzoAIDmlVnKps5FEYAOX
+         PBr0exNF0fl8RA79vYjoIjhwb3utc6x7CVHkMVGy95rvBCwFnjyUyJtIEJIZIYfaWLc4
+         uac0L5PROUt6X1fgMRmcJEa4Bp3WmAJ95oChuX97z9dMVMROCupaEaxOMmMJWOuJgBCF
+         eKyDzavNdaVwBxFEXxWGXQUyoyFexgfS789BHFmuurWd+R+bPZ34Nxmop+K36XhpJfC+
+         DCzQrzWrGnr4XCo3+ZevRPyJ/y8Ccfx2X2PZdoKHE/hUm4mDd+gc4Pjhk5L9ieWCqiMu
+         0CDg==
+X-Forwarded-Encrypted: i=1; AFNElJ+rWn/fzyxCWvFqM1K0elnF2eEL8EJwqfw5u3E//KIQcw2wiJOmhHsat1t665EtMPqlCoE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVUX1o0j7J1oeK1R1WDedwEMq4X2AoZ6YtqmtKOYLlpQYxIC5f
+	ZKANkotVCpS91Hx1u/VF2cyibGsC8vUvnQfWy++L7Fg2kMcNmCA/wRHNVvCgLt0W/HZbhVWsg1H
+	eFnvEMCq4uppmvCiYMkLM4eyNpsua+hLWdw==
+X-Gm-Gg: Acq92OGg0HlVYDXjIZEI2uPPQMApROvY6J+LidmQxlXOr4rNyGHr2pgQQyV/97jEZy7
+	/o1cGDcZCg2dwOlPh+3Z/r8Q8JArxINxOuxeIgHt2wPsR//i5T6GIxllmk6+5kaiqpp+F+D4O1k
+	+G2tvB7lp4jBgYNjg4GG8w189sFj9VqHb4N0Raj5nZEvMYqOn5d0Og4sX2/SHEDWVG/VU5ZDHFM
+	T81rMWmlecLbN3d4tlwoE7tK7OBsJWDcsxwJwsrZi0TzWrSAGhJFaQT0cBVhTD099HuiSx0sl3l
+	uExeHB+dwTEaygvNOvRJSrhRfyhyDg/P+I0/nihWWNgz8PtzKrF7oZ+veA1Rc0bJd8lJMVTjnRL
+	QOfXhbRvX
+X-Received: by 2002:a05:6122:6e0e:b0:575:2072:54d1 with SMTP id
+ 71dfb90a1353d-5ac50ccc252mr7899799e0c.8.1780932683476; Mon, 08 Jun 2026
+ 08:31:23 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 8 Jun 2026 08:29:04 -0700
+ HTTPREST; Mon, 8 Jun 2026 08:31:22 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 8 Jun 2026 08:29:04 -0700
+ HTTPREST; Mon, 8 Jun 2026 08:31:22 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260604-pks-odb-source-packed-v1-4-2e7ab31b4b5c@pks.im>
-References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im> <20260604-pks-odb-source-packed-v1-4-2e7ab31b4b5c@pks.im>
+In-Reply-To: <20260604-pks-odb-source-packed-v1-5-2e7ab31b4b5c@pks.im>
+References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im> <20260604-pks-odb-source-packed-v1-5-2e7ab31b4b5c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 8 Jun 2026 08:29:04 -0700
-X-Gm-Features: AVVi8Ce6FFzOqvUAgfionk9cElQEZJvsBbK1Ip-Fvw-ugTjJ0ft9wzDO7juOJ9w
-Message-ID: <CAOLa=ZQst6ucwvtVOfXC6g1ZcP9_UZAwRyAXfQdjL7WcJ6ZzxQ@mail.gmail.com>
-Subject: Re: [PATCH 04/16] odb/source-packed: start converting to a proper
- `struct odb_source`
+Date: Mon, 8 Jun 2026 08:31:22 -0700
+X-Gm-Features: AVVi8CfdWEnz-nQduUIQ2SZ_1kztqo3Y4YKyaBOeHQU2lmtbEZhNuZmbYS20Sok
+Message-ID: <CAOLa=ZTJf2x8AJ-oOOO5j3mSMbd2uTttoVCnSikNq37F_mKT=A@mail.gmail.com>
+Subject: Re: [PATCH 05/16] odb/source-packed: wire up `close()` callback
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000bd736d0653bfab93"
+Content-Type: multipart/mixed; boundary="000000000000f7ed970653bfb36c"
 
---000000000000bd736d0653bfab93
+--000000000000f7ed970653bfb36c
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Start converting `struct odb_source_packed` into a proper pluggable
-> `struct odb_source` by embedding the base struct and assigning it the
-> new `ODB_SOURCE_PACKED` type. Furthermore, wire up lifecycle management
-> of this source by implementing the `free` callback and taking ownership
-> of the chdir notifications.
+> Wire up a new `close()` callback for the packed source and call it from
+> the "files" source via the generic `odb_source_close()` interface.
 >
-> Note that the packed source is not yet functional as a standalone `struct
-> odb_source`, as it's missing all of the callback implementations. These
-> will be wired up in subsequent commits.
-
-Okay, so individual commits going on will implement the callbacks.
-
-[snip]
-
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  odb/source-files.c  |  2 +-
+>  odb/source-packed.c | 16 ++++++++++++++++
+>  packfile.c          | 12 ------------
+>  packfile.h          |  6 ------
+>  4 files changed, 17 insertions(+), 19 deletions(-)
+>
+> diff --git a/odb/source-files.c b/odb/source-files.c
+> index 3608808e7c..9b0fa9ccdc 100644
+> --- a/odb/source-files.c
+> +++ b/odb/source-files.c
+> @@ -38,7 +38,7 @@ static void odb_source_files_close(struct odb_source *source)
+>  {
+>  	struct odb_source_files *files = odb_source_files_downcast(source);
+>  	odb_source_close(&files->loose->base);
+> -	packfile_store_close(files->packed);
+> +	odb_source_close(&files->packed->base);
+>  }
+>
+>  static void odb_source_files_reprepare(struct odb_source *source)
 > diff --git a/odb/source-packed.c b/odb/source-packed.c
-> index 12e785be48..f81a990cbd 100644
+> index f81a990cbd..74805be1dd 100644
 > --- a/odb/source-packed.c
 > +++ b/odb/source-packed.c
-> @@ -1,11 +1,50 @@
+> @@ -1,6 +1,7 @@
 >  #include "git-compat-util.h"
-> +#include "abspath.h"
-> +#include "chdir-notify.h"
+>  #include "abspath.h"
+>  #include "chdir-notify.h"
+> +#include "midx.h"
 >  #include "odb/source-packed.h"
-> +#include "packfile.h"
-> +
-> +static void odb_source_packed_reparent(const char *name UNUSED,
-> +				       const char *old_cwd,
-> +				       const char *new_cwd,
-> +				       void *cb_data)
-> +{
-> +	struct odb_source_packed *packed = cb_data;
-> +	char *path = reparent_relative_path(old_cwd, new_cwd,
-> +					    packed->base.path);
-> +	free(packed->base.path);
-> +	packed->base.path = path;
-> +}
-> +
-> +static void odb_source_packed_free(struct odb_source *source)
+>  #include "packfile.h"
+>
+> @@ -16,6 +17,20 @@ static void odb_source_packed_reparent(const char *name UNUSED,
+>  	packed->base.path = path;
+>  }
+>
+> +static void odb_source_packed_close(struct odb_source *source)
 > +{
 > +	struct odb_source_packed *packed = odb_source_packed_downcast(source);
 > +
-> +	chdir_notify_unregister(NULL, odb_source_packed_reparent, packed);
-> +
-> +	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next)
-> +		free(e->pack);
-> +	packfile_list_clear(&packed->packs);
-> +
-> +	strmap_clear(&packed->packs_by_path, 0);
-> +	odb_source_release(&packed->base);
-> +	free(packed);
+> +	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next) {
+> +		if (e->pack->do_not_close)
+> +			BUG("want to close pack marked 'do-not-close'");
+> +		close_pack(e->pack);
+> +	}
+> +	if (packed->midx)
+> +		close_midx(packed->midx);
+> +	packed->midx = NULL;
 > +}
+> +
 >
->  struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
+
+Most of my ODB understandings is coming from reviewing your patches. But
+I really like how we can map the current workings to the ODB interface.
+
+>  static void odb_source_packed_free(struct odb_source *source)
 >  {
-> -	struct odb_source_packed *store;
-> -	CALLOC_ARRAY(store, 1);
-> -	store->files = parent;
-> -	strmap_init(&store->packs_by_path);
-> -	return store;
-> +	struct odb_source_packed *packed;
-> +
+>  	struct odb_source_packed *packed = odb_source_packed_downcast(source);
+> @@ -42,6 +57,7 @@ struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
+>  	strmap_init(&packed->packs_by_path);
+>
+>  	packed->base.free = odb_source_packed_free;
+> +	packed->base.close = odb_source_packed_close;
+>
 
-Nit: we could've had a better diff if we used `struct odb_source_packed
-*packed` from the start. But its tiny and doesn't bother me.
-
-> +	CALLOC_ARRAY(packed, 1);
-> +	odb_source_init(&packed->base, parent->base.odb, ODB_SOURCE_PACKED,
-> +			parent->base.path, parent->base.local);
-> +	packed->files = parent;
-> +	strmap_init(&packed->packs_by_path);
-> +
-> +	packed->base.free = odb_source_packed_free;
-> +
-> +	if (!is_absolute_path(parent->base.path))
-> +		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
-> +
-
-Tangent: seems like no one sets the 'name' field within
-`chdir_notify_register()`. It is meant for tracing purposes, but if no
-one is using it, we might as well remove it...? Perhaps #leftoverbits
+This is what I mean :)
 
 [snip]
 
---000000000000bd736d0653bfab93
+--000000000000f7ed970653bfb36c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 91d73da30cad28e5_0.1
+X-Attachment-Id: 19f60c5f7f5697f0_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vbTM3NFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOGFYQy85M2dqVnJXM2R6ZlgyU0NGeVlodG0rbTlGZgpxU3dLMzc0NXpi
-S0JoQlhnYUlpNm5LdUZFTVdqMnAzQitBcmNST1pUMW9oWnkvbDlFSGxKRjdzV0FyTlVHYVRDCmRT
-bHpEZXkvVEhDNldKcGhvY1YwZmc1KzdCQytISFI1K2F4dWQwQkhsYS82TXM3bmRpSmlVZkpIb3lv
-ejhIN2EKVFcyVXBacjBJOUIxdUphOXpiUjJiVlFPdktmN1Vrc200VmpOTm15ZjBHVGxxNkFWLzVs
-Y2xCdXdrajNpMFJ0dgpOekhxSHA5OGxEWEFuSTY1V011bXVoL0dHY01EcnFYbndhZWNMQ1lsSDI1
-ZDNzamtFdk9RVnRXZHgrdm1BWHpUCkxJV015VFp6dFZmdEJPMEFVQm1LeDRndFZXak0rS3A1T3lJ
-YWpWQmJXb1AzN3J1NE91UFB6aFkrYXd4MENhUkQKZXo1TFh0cllUaGRybnA5UTZwcmRYL0xRa29u
-cGdHT3BzdFkzWm5rb0lieWVGN3RhMkdCY0NiV1pmM2VBcWRjWApKRTZEUHhHMEpqTi91WDV6NGlL
-M3hYeUZNSVdsOXgxbGV0N1F6cFovMXN2Y3FBV3hXaXp3aUd5alcrbVdONTFoCnlscDZqZERzWitV
-dDVCbENHL2t4ZlJXVExOaXZiaDlmdVBuMWVqTT0KPXgycXEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vbTRFZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meS9aREFDVjE2L3FYaE9ybG9HMW1VL3RnY3FPUkx4ZwpNQlFOWmc3VzZ3
+cTBlZmhLVGJjb2JQSHp3MlBEcGpwMFRIN1hQNWUxdjArQlRCVG1OR2lIb1JWSkdCQXFSbzFjClFt
+T0hJWGMxTmJUaEFFTXFVenNDRlUrc0hmdlQrVi9wQjRDYk81OGxLemhKYjNQcG9Pck9oVDRYV3FF
+dlVrU2kKaVUzS013VzdrMzhqOVE4RXZDeGtHMUpWZWxOaXZuWFNqQm01TWEzbTBQMGRVeVVVSjlr
+NndPbldWMHNjTHQ5VQp5Wm5lSmtOc3hNak1sdkhDZVMyUmxkVS8xN08zMGxONHhpd3JiK05vOHNz
+OHBKZ0JTNXhmenJDR1ZEa2RQam4wClRReFdsR0ZBaGNlVjhoZ3Z3QmlOVmJNUkNXdGRCbzRaSVdU
+dVpYZmJEVHNyUnZySUNUR0F4cmZnM05FdjFGcXEKNDZJUE9LN2pNalc0NURGazV0Z2ZPRG0zQTBC
+QW5sOVdDOCtsL2J1WjR4Ty9CV2VyWUdyc3B4MFlKR050TlBZRgpXdEpKRzJ4YjIzZzhJOWREOVJY
+UHVzalIvT0EyK0tqdjZZdWY0UWpRajBqR3M4OUxKNis0YXJOWVJmeFYrTEtKCjl0VkVPOFNrZUps
+QjVOSFo4bzRaQXA0cE9GdnRHOVBSbnlBMm92dz0KPVJ5SVMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000bd736d0653bfab93--
+--000000000000f7ed970653bfb36c--
