@@ -1,83 +1,80 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBEF3CFF44
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 10:15:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A53313550
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 10:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780913704; cv=none; b=LPNUY7TFsAGsQJhOt9x73bK9Xlxux2/whI0QBDm7C3p5hSXKgJq0KVpb4WmLCaTMV5k4DBY56i0ReaITWfPq0He1X6E5PVv3XmPW7tof550+/ctTP1gOP1N+T6PKRSfBvMD1avaTlZ0n++/hMx3Xgrap+LjF9s72bcoWopyxv3M=
+	t=1780914217; cv=none; b=KQoHNpY7p5oJuMJNocVB/PJhnDuyQdAR5QgNtZ2bsKkyyPnmYlrENSLjhTxkKduJ/m1Fzy1H00rznwOst5Ze2R3c3JbFj4+CQMitrzlmP4m5TFlAm2yvPVJLeIOFX9KWhHyLCVb3PbfWf7iluBfTNbScOaHGsL51I1nTtjhgQ1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780913704; c=relaxed/simple;
-	bh=hwHKCzkopXkwBXiKcCEZhMaRKz1n027kIOVnajDkXHU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PWPMYTXyrzYIeyXeVgzFVFWaG7hUscYi/6bQTR9Q6g/x4784dtXHPTyTdq4MNCsA9QSVYT4GsynpIToMIrsZi9HPyYyAol8W4eA4cQyzvpFMveul/5lxj4dv1Wy0F8tTlyr5D1KXGBfjLcFcezU3EwOApM8kuBBq7nFQ0q/06dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUgUikaB; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780914217; c=relaxed/simple;
+	bh=OI00JqLYx6fbHl6QK1XmaR01HnIsh3brd/yrf2s3kcg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=fRXJj8alQOTv6JFVa+IF//en+O4LLzw5EzMhNEoa3JE8xxEfFecezMRpxwWYL9E8PvQkYKer2PhF3B+KSvA2J+ynBoWpgFyIDxPmMUGnVth6/6MJf9oyn8g5fmJj4G8VgxQw9NSvFAQmbMKnImxElfQPhKSPurx3d377DeMR++c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=g/NvO22j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dX4SiDFv; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUgUikaB"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-45ef779c1c2so2772782f8f.1
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 03:15:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780913702; x=1781518502; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tmVCfQ+h11GNh7kARyuzWGaUqCSuxC+AhetrFaWKIw0=;
-        b=cUgUikaB3IRC+Q1B0/vvuQ1ZO4gk1uPklNNnj42ivmietjIm/KFL26X8Sope0evtNA
-         tqDW+uFpcC8XPtaGlDsdGwyKjRbX2Fvp/oi8HKrpP2XpqJleT3M0O/I9HIeg8q5TVUgb
-         9B/BuVTqH4v8+f8t68Myio9zOeCgGwKaN1yO/s1Ymc2UQj5amOeCSKQ+FOHTsIELnrbd
-         KGpkJUdEDJyfJawAtBaGq1P04IO3Ru/TAahHWolE5VQ5P6+5swmmVuqFwZRK+p38gGD1
-         GII+mBfU6f6iboNOx3Vzq0zGOOHY9REN8pV/16DSh5+T8w48sVik8n0FjOOK7bc0IrMj
-         MFcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780913702; x=1781518502;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tmVCfQ+h11GNh7kARyuzWGaUqCSuxC+AhetrFaWKIw0=;
-        b=dGKGhuV4reHfM0nz4+UKuNiht5UfcMJYmKX/7Fs4b0d998Pv/vVgx9OLhhhrg6xpfy
-         Qr2OZIWSV+PoSlxOq5vF7Dgq4ELXz2aiSYOc22u0r3aWDMdJWOZp5iOA8hMIQURoYJF+
-         69GOHP66dLGq4MTwYW/WryAFWofKId15HeLi0rYcB+dzGVOPIuqpvLZj3GkbFMIYHzB5
-         FIjsbY/ly9Xn72Cn5+UfUahMSenCx7+RAHR5UgM9Tq6OIVVL10lk/0dizc5xy1mQk4AV
-         groOBqWbcAed5I8xNzKmJFEro/ImNdH/6pz3q+yaOrusa3mmBvkeAt7I2RBQNDQv683m
-         bN/w==
-X-Forwarded-Encrypted: i=1; AFNElJ8cZR7jwI9DkviJ1vy0VC9V73smPILrWp5q1bOnpdXVEnavU2zxp0pql8uMXKfhbRyEpiM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YweAKjrPwc1itOVjiJUKPhL3vwvAONtU4FN04mHevujyvwPk8vB
-	3LcQz+8OFyXtaRC660W61v4tbxft28V/8lTt1z0TFiX1JiBZvL8nhr6Y
-X-Gm-Gg: Acq92OGuPvXxD2Jh8re2Xb+geuK4roIBarEmWMzVdB9ufi8X3IHjyHypymE1aI0rW75
-	mtR9gQZBXko2eAIsj+b0KOWAmzKxo9lIZBSGiCVuGI8YTOEI15MgbKwdATJODr9HUx7nc5GCn4h
-	CH2TsZeHKSMOB1dTuhrmjcc1RtAIM64DOG68m0FAnOI3YkG+0UAVEBnSL1WitTG65PM3int/1WT
-	CAa8ocKmsChp4XruvK/h22mTwAOQNzzNwxWn25+kD3ZzCleVJ9I/rRauj+/ZIQZRNKlQfOffE/4
-	qclRKAJgZpX834yJUFrVE3RCl1yc80rbse7ZGrgLh/CYDErW2SRkovNldaz7T9y6/Ss3rhsDRDm
-	cghY90mRfjGlhsj+hj89wn7inouq1p1QGCnw7mt3Da9iXF7yOOy5gLxBeebfyLjQ3GGSGDP0t7v
-	EhynEEvkY/MyMZ2vs6ql+9a6rGfHRvdu8pjh7XEP+Y8bC462zVxKyz9uDQcsQeBuymsxtTIp82d
-	IIiRWIKeJ6nPj0SDDCOcdFPWWDcf5HS/Z9r6vNnz2I5VzYB/wpzKTnmXNlbsqTlghaHmgobDbkf
-	QD6SWYklKs6QFt+Jr6K9jnGMv6KUcjwavIhdy4FnCkSWih2ZYeU1hAPbzmoC33HF/A==
-X-Received: by 2002:a5d:6190:0:b0:45e:f5bf:6c25 with SMTP id ffacd0b85a97d-46030758ab7mr16651116f8f.32.1780913701609;
-        Mon, 08 Jun 2026 03:15:01 -0700 (PDT)
-Received: from localhost.localdomain ([188.87.4.21])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f0a43e9sm51131949f8f.0.2026.06.08.03.15.00
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 08 Jun 2026 03:15:01 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: eric.peijian@gmail.com
-Cc: calvinwan@google.com,
-	chriscool@tuxfamily.org,
-	git@vger.kernel.org,
-	jltobler@gmail.com,
-	jonathantanmy@google.com,
-	karthik.188@gmail.com,
-	toon@iotcl.com,
-	chandrapratap3519@gmail.com,
-	Pablo Sabater <pabloosabaterr@gmail.com>
-Subject: [PATCH GSoC RFC v12 12/12] cat-file: make remote-object-info allow-list dynamic
-Date: Mon,  8 Jun 2026 12:14:35 +0200
-Message-ID: <20260608-ps-eric-work-rebase-v12-12-5338b766e658@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
-References: <20250221190451.12536-1-eric.peijian@gmail.com>
- <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="g/NvO22j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dX4SiDFv"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD3EC7A0106;
+	Mon,  8 Jun 2026 06:23:34 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 08 Jun 2026 06:23:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780914214;
+	 x=1781000614; bh=nuuy38jRmVN2nyd57XcYdAsmUNqIc+qCH9AfiDfkIkA=; b=
+	g/NvO22j2NPqJ6nYWMppCw69eDKhBun3iDJkfy2o9RYSIX9gD0XSZ5jMCEr/+dH5
+	enmdip9AZK9z/4m7gTLXl696ZsztzZ5efimaZ711JbB58E178ivrTmu9stmUFXGr
+	+ZHTifTDW5H/HcOVRq7e9XWx8svJy/lPwYFlDCXgv5S4MoR8hextvj7tuf380uQL
+	G0MhXUtc7C7bEt6FRoBE7hAekFyossHfDBYj/3fqS55Xf45nGiy82E1fe0j89mUY
+	gVggM7z48k6jrRRt0knMpqdtozG4aohqOI3dg4sKQEkNhEwtS5JtoQYmzjMNJYti
+	96qGNO+s515JhWMdTHhnEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780914214; x=
+	1781000614; bh=nuuy38jRmVN2nyd57XcYdAsmUNqIc+qCH9AfiDfkIkA=; b=d
+	X4SiDFvC2CslWIXYhRUVBOUpiJei3jiL+pxvKXpwDFjgDprvEDz7ECT1vb6k0WMK
+	GO3swR4RLitRKHLvb/mwxP43koWEl516z8s4i++za9wcq7yi5ZFZfSMe3BKxG5Ep
+	AV4lFB+BbxSeSSOEvDXZIWaLkYSIeGKzLnpb6cLn7AZ+PeJL/Zy7ZsVW196566k0
+	JOO5+Xh7ktUqS0fbEzvBdE/zEE5TO2vhcTcaJL7+HcqvgG3SIpidlm9jzxlPovNI
+	PmV2O7SdLyNlRbaHaSENdTa1T/ReI5swkfeKRt650yGDBZ1Il0WS0eEpw3L76pWF
+	uGzq18mGqhCeDwSSi3s0w==
+X-ME-Sender: <xms:Jpgmar6Kd1Tn1AOLlVasiSWMUaZtu-fHs6Hdc_soju1baBOwt9VQTw>
+    <xme:JpgmaibxVY6rLQkn0511Z_pduDa_yiNOx1kFQrpV886_aIdag9r6MHZnEH-GiWDHj
+    VzFqmvZFpkwzEy8zVFtoHjs15KG5LB9fWzqsxEpxaQhDE_SMPy9Xg>
+X-ME-Received: <xmr:JpgmaiiOXUnK7HeDY3gQfDGdiWix5tNUmDwlgmHlvwV2jXR3k4IHUiXvCqT03pPZCLZHLWCOMv4NSLIMKCruGugpYh3mNDmNtg6UmLzCfQ>
+X-ME-Proxy-Cause: dmFkZTGJ1hEv6Wg0ozSQ9izmBZjnxB959KiNwZppI1keFykmT9WaontBQ+AyuZ72fz5wXu
+    7D4jIRZCHCZbfIPG/ljY7ZOOqmjnCh1ip/iu18aCRlVEqASiXM3ASQ2Rb7YWTqAhItFWhU
+    uDu6c8+MIfPUB3uw+q8YUBXMQLTqXBzmDuHwJxTSQ17d4wUT8OxtY9KaLWpasyaK8TBesY
+    NNkXNfaNrBH5T8r8zSa/xRRpWUYUDU1M9gEXz/YJqsPzUWZ8b9OzNsbppPJB3zbu7CZ+nL
+    K6NsAOdWaarLCbFEChTAaaduR55ZZ41qKhRKsqrcui3/W2Jd3XTVoQv9cEVrej4n+h9nRP
+    fAphJgGKmWURJYoiKgHj0SPJz4uh8ppMhjqTengVZFX9X/glA/Yvm3LSXD6n9i16oY4U3n
+    PMzy/NvsB2fVFBkg0EZ2B4mo23hZo4K3JxQaDyTvg7TY3+G7pcct4ZWhvBVM58jjQsE95d
+    v+BSuwK285vA2pgxdVJmPXRf3ZO2NS3ZS1i5vMuxmkc6Ynb+q51VyUFprTfCjwSf1RNzDG
+    Ee6xh9H2fd0SEo5V/GB22FG4rvBYk6YWQl/S4M57ga3BxUuNo51ILQszE2yubLzs4yGuVX
+    lVI6u2TsojEGIIQa9oYF+ghhavQ2HAVMWwdqWyfm2FpooH8MdV4nYpaoFy/g
+X-ME-Proxy: <xmx:Jpgmar_QaQsq7HR5r7zrRUpQ3FLSiGR55jETHxKkAGEFq7He38R_Vw>
+    <xmx:JpgmalrD5lVVtSISuSK16CfpS2JNxe6ROnGRvfy5-s6bIYq6-lvDtA>
+    <xmx:JpgmarVKLQGEnc8QkHe3TnhdwOdXz75niwMWi_a7Ajq17JRp4Yu4bg>
+    <xmx:JpgmasDHBk9VaW-8IppI7JvIwPtN7AsqFxFXBFd3d-drigjpkPZtMQ>
+    <xmx:JpgmalMjWFdJUvEwDj2eZ8QpUW0EsX6A5nnD8dIw7G0Mz3x8OzRDWibr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 06:23:33 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id edd1ff66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 10:23:30 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/9] builtin/history: introduce "drop" subcommand
+Date: Mon, 08 Jun 2026 12:23:24 +0200
+Message-Id: <20260608-b4-pks-history-drop-v3-0-84ca8e43e937@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,235 +82,266 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAByYJmoC/33NTQ6CMBQE4KuQrn2m9A9x5T2MC9s+pBqBtNhoC
+ He3RWNcGJeTzHwzkYDeYSDbYiIeowuu71Lgq4KY9tidEJxNmTDKFFW0BC1guARoXRh7/wDr+wH
+ YplFG8brGSpO0HDw27r6o+8Mrh5s+oxkzlRvv+XIby9z7/xBLoKAER864oFbKXaqs3ZVkPrJvg
+ P8GWAIqwYyWWpaVsh9gnucnzz96gAYBAAA=
+X-Change-ID: 20260601-b4-pks-history-drop-28f6c6399e7b
+In-Reply-To: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im>
+References: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im>
+To: git@vger.kernel.org
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, 
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+X-Mailer: b4 0.15.2
 
-The static allow-list in expand_atom() is hardcoded to only allow
-"objectname" and "objectsize" for remote queries. This works because
-up to this point all servers will either support object-info with name
-and size or they do not support them at all, but we cannot expect that
-in a future different servers with different git versions to have the
-same object-info capabilities. Therefore, the allow_list needs to be
-dynamic depending on what does the server advertise.
+Hi,
 
-The client will now:
+this small patch series introduces the new "drop" subcommand for
+git-history(1). As a reader might guess, the command does exactly that:
+given a commit, it will drop that commit from the commit history and
+replay descendant branches on top of it.
 
-1. Request the protocol option that the placeholder refers to (i.e.
-   "size" when "%(objectsize)").
+Changes in v3:
+  - Fix commit message typos.
+  - Make `update_orig_head` and `skip_ref_updates` mutually exclusive.
+  - Use fancy revisions to specify the commit to drop in the example
+    section.
+  - Detect conflicting changes in the index/working tree in dry-run
+    mode.
+  - Consistently use a subshell.
+  - Rename `RESET_HEAD_ORIG_HEAD` to `RESET_HEAD_UPDATE_ORIG_HEAD`.
+  - 
+  - Link to v2: https://patch.msgid.link/20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im
 
-2. Filters the request in fetch_object_info() dropping any option that
-   the server does not advertise.
+Changes in v2:
+  - Reworked `update_worktree()` to use `reset_head()`, which required a
+    bunch of changes to `reset_head()`.
+  - Consistently mention the commit that cannot be dropped as part of
+    error messages.
+  - Adapt error message to not use backticks anymore.
+  - Drop redundant "--graph" flag in a test helper.
+  - Link to v1: https://patch.msgid.link/20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im
 
-3. After the fetching, the options that haven't been dropped are the ones
-   fetched and supported by the server, these supported options are
-   mapped and remote_allowed_atoms is populated with the placeholders.
+Thanks!
 
-4. expand_atom() checks remote_allowed_atoms with the same behaviour as
-   the static allow_list had.
+Patrick
 
-Move object_info_options out of get_remote_info so the caller which has
-data can select what options will be requested instead of requesting
-always size.
-Move batch_object_write() out so there will always be an output even if
-all the placeholders are not supported by the server (returns an empty
-line).
-
-Include "type" in the object_info_options so once the server supports
-it, the clients know already how to request it.
-
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
- builtin/cat-file.c  | 85 ++++++++++++++++++++++++++++++++---------------------
- fetch-object-info.c |  6 ++++
- 2 files changed, 58 insertions(+), 33 deletions(-)
+Patrick Steinhardt (9):
+      read-cache: split out function to drop unmerged entries to stage 0
+      reset: drop `USE_THE_REPOSITORY_VARIABLE`
+      reset: modernize flags passed to `reset_head()`
+      reset: introduce dry-run mode
+      reset: introduce ability to skip reference updates
+      reset: allow the caller to specify the current HEAD object
+      reset: stop assuming that the caller passes in a clean index
+      builtin/history: split handling of ref updates into two phases
+      builtin/history: implement "drop" subcommand
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1166a046b4..055991b5af 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -341,13 +341,10 @@ struct expand_data {
- 	 * Flags about when an object info is being fetched from remote.
- 	 */
- 	unsigned is_remote:1;
--};
--#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD }
- 
--static const char *remote_object_info_atoms[] = {
--	"objectname",
--	"objectsize",
-+	struct string_list remote_allowed_atoms;
- };
-+#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD, .remote_allowed_atoms = STRING_LIST_INIT_NODUP }
- 
- static int is_atom(const char *atom, const char *s, int slen)
- {
-@@ -359,17 +356,11 @@ static int expand_atom(struct strbuf *sb, const char *atom, int len,
- 		       struct expand_data *data)
- {
- 	if (data->is_remote) {
--		size_t i, allowed_nr = ARRAY_SIZE(remote_object_info_atoms);
--		for (i = 0; i < allowed_nr; i++)
--			if (is_atom(remote_object_info_atoms[i], atom, len))
-+		size_t i;
-+		for (i = 0; i < data->remote_allowed_atoms.nr; i++)
-+			if (is_atom(data->remote_allowed_atoms.items[i].string, atom, len))
- 				break;
--
--		/*
--		 * On remote, skip unsupported atoms returning an empty sb,
--		 * honoring how for-each-ref handles known but inapplicable
--		 * atoms (e.g. %(tagger)).
--		 */
--		if (i == allowed_nr)
-+		if (i == data->remote_allowed_atoms.nr)
- 			return 1;
- 	}
- 
-@@ -686,12 +677,12 @@ static int get_remote_info(struct batch_options *opt,
- 			   int argc,
- 			   const char **argv,
- 			   struct object_info **remote_object_info,
--			   struct oid_array *object_info_oids)
-+			   struct oid_array *object_info_oids,
-+			   struct string_list *object_info_options)
- {
- 	int retval = 0;
- 	struct remote *remote = NULL;
- 	struct object_id oid;
--	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
- 	static struct transport *gtransport;
- 
- 	/*
-@@ -726,15 +717,12 @@ static int get_remote_info(struct batch_options *opt,
- 	gtransport->smart_options->object_info = 1;
- 	gtransport->smart_options->object_info_oids = object_info_oids;
- 
--	string_list_append(&object_info_options, "size");
--
--	if (object_info_options.nr > 0) {
--		gtransport->smart_options->object_info_options = &object_info_options;
-+	if (object_info_options->nr > 0) {
-+		gtransport->smart_options->object_info_options = object_info_options;
- 		gtransport->smart_options->object_info_data = *remote_object_info;
- 		retval = transport_fetch_refs(gtransport, NULL);
- 	}
- cleanup:
--	string_list_clear(&object_info_options, 0);
- 	transport_disconnect(gtransport);
- 	return retval;
- }
-@@ -820,6 +808,21 @@ static void parse_cmd_mailmap(struct batch_options *opt UNUSED,
- 		load_mailmap();
- }
- 
-+struct protocol_placeholder_entry {
-+	const char *option;
-+	const char *atom;
-+};
-+
-+static const struct protocol_placeholder_entry remote_atom_map[] = {
-+	{"size", "objectsize"},
-+	{"type", "objecttype"},
-+	/*
-+	 * Add new protocol options here. Even if the server doesn't support
-+	 * them the allow_list will drop them if the server doesn't advertise
-+	 * them.
-+	 */
-+};
-+
- static void parse_cmd_remote_object_info(struct batch_options *opt,
- 					 const char *line, struct strbuf *output,
- 					 struct expand_data *data)
-@@ -829,6 +832,7 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 	char *line_to_split;
- 	static struct object_info *remote_object_info;
- 	static struct oid_array object_info_oids = OID_ARRAY_INIT;
-+	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
- 
- 	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
- 		die(_("remote-object-info command too long"));
-@@ -841,30 +845,44 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
- 		die(_("remote-object-info supports at most %d objects"),
- 		    MAX_ALLOWED_OBJ_LIMIT);
- 
-+	if (data->info.sizep)
-+		string_list_append(&object_info_options, "size");
-+	if (data->info.typep)
-+		string_list_append(&object_info_options, "type");
-+
- 	if (get_remote_info(opt, count, argv, &remote_object_info,
--			    &object_info_oids))
-+			    &object_info_oids, &object_info_options))
- 		goto cleanup;
- 
-+	string_list_clear(&data->remote_allowed_atoms, 0);
-+	string_list_append(&data->remote_allowed_atoms, "objectname");
-+	for (size_t i = 0; i < ARRAY_SIZE(remote_atom_map); i++)
-+		if (unsorted_string_list_has_string(&object_info_options, remote_atom_map[i].option))
-+			string_list_append(&data->remote_allowed_atoms,
-+					   remote_atom_map[i].atom);
-+
- 	data->skip_object_info = 1;
- 	for (size_t i = 0; i < object_info_oids.nr; i++) {
- 		data->oid = object_info_oids.oid[i];
--		if (remote_object_info[i].sizep) {
--			/*
--			 * When reaching here, it means remote-object-info can retrieve
--			 * information from server without downloading them.
--			 */
-+		/*
-+		 * When reaching here, it means remote-object-info can retrieve
-+		 * information from server without downloading them.
-+		 */
-+		if (remote_object_info[i].sizep)
- 			data->size = *remote_object_info[i].sizep;
--			opt->batch_mode = BATCH_MODE_INFO;
--			data->is_remote = 1;
--			batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
--			data->is_remote = 0;
--		}
-+		if (remote_object_info[i].typep)
-+			data->type = *remote_object_info[i].typep;
-+		opt->batch_mode = BATCH_MODE_INFO;
-+		data->is_remote = 1;
-+		batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
-+		data->is_remote = 0;
- 	}
- 	data->skip_object_info = 0;
- 
- cleanup:
- 	for (size_t i = 0; i < object_info_oids.nr; i++)
- 		free_object_info_contents(&remote_object_info[i]);
-+	string_list_clear(&object_info_options, 0);
- 	free(line_to_split);
- 	free(argv);
- 	free(remote_object_info);
-@@ -1177,6 +1195,7 @@ static int batch_objects(struct batch_options *opt)
-  cleanup:
- 	strbuf_release(&input);
- 	strbuf_release(&output);
-+	string_list_clear(&data.remote_allowed_atoms, 0);
- 	warn_on_object_refname_ambiguity = save_warning;
- 	return retval;
- }
-diff --git a/fetch-object-info.c b/fetch-object-info.c
-index 51a898430d..425929a269 100644
---- a/fetch-object-info.c
-+++ b/fetch-object-info.c
-@@ -39,6 +39,12 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
- 	case protocol_v2:
- 		if (!server_supports_v2("object-info"))
- 			die(_("object-info capability is not enabled on the server"));
-+
-+		for (int i = args->object_info_options->nr - 1; i >= 0; i--)
-+			if (!server_supports_feature("object-info",
-+						     args->object_info_options->items[i].string, 0))
-+				unsorted_string_list_delete_item(args->object_info_options, i, 0);
-+
- 		send_object_info_request(fd_out, args);
- 		break;
- 	case protocol_v1:
+ Documentation/git-history.adoc |  38 ++-
+ builtin/history.c              | 289 +++++++++++++++++++---
+ builtin/rebase.c               |   2 +-
+ read-cache-ll.h                |   1 +
+ read-cache.c                   |  12 +-
+ reset.c                        |  91 ++++---
+ reset.h                        |  44 +++-
+ sequencer.c                    |   2 +-
+ t/meson.build                  |   1 +
+ t/t3454-history-drop.sh        | 537 +++++++++++++++++++++++++++++++++++++++++
+ 10 files changed, 929 insertions(+), 88 deletions(-)
 
--- 
-2.54.0
+Range-diff versus v2:
+
+ 1:  a93e804936 =  1:  41a723b3d0 read-cache: split out function to drop unmerged entries to stage 0
+ 2:  d8f39e7dc4 =  2:  db850730ef reset: drop `USE_THE_REPOSITORY_VARIABLE`
+ 3:  fdec5a57b4 !  3:  bd18736141 reset: modernize flags passed to `reset_head()`
+    @@ builtin/rebase.c: int cmd_rebase(int argc,
+      	ropts.oid = &options.onto->object.oid;
+      	ropts.orig_head = &options.orig_head->object.oid;
+     -	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
+    -+	ropts.flags = RESET_HEAD_DETACH | RESET_HEAD_ORIG_HEAD |
+    ++	ropts.flags = RESET_HEAD_DETACH | RESET_HEAD_UPDATE_ORIG_HEAD |
+      			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+      	ropts.head_msg = msg.buf;
+      	ropts.default_reflog_action = options.reflog_action;
+    @@ reset.c: static int update_refs(struct repository *repo,
+      	unsigned detach_head = opts->flags & RESET_HEAD_DETACH;
+      	unsigned run_hook = opts->flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+     -	unsigned update_orig_head = opts->flags & RESET_ORIG_HEAD;
+    -+	unsigned update_orig_head = opts->flags & RESET_HEAD_ORIG_HEAD;
+    ++	unsigned update_orig_head = opts->flags & RESET_HEAD_UPDATE_ORIG_HEAD;
+      	const struct object_id *orig_head = opts->orig_head;
+      	const char *switch_to_branch = opts->branch;
+      	const char *reflog_branch = opts->branch_msg;
+    @@ reset.c: int reset_head(struct repository *r, const struct reset_head_opts *opts
+      	unsigned reset_hard = opts->flags & RESET_HEAD_HARD;
+      	unsigned refs_only = opts->flags & RESET_HEAD_REFS_ONLY;
+     -	unsigned update_orig_head = opts->flags & RESET_ORIG_HEAD;
+    -+	unsigned update_orig_head = opts->flags & RESET_HEAD_ORIG_HEAD;
+    ++	unsigned update_orig_head = opts->flags & RESET_HEAD_UPDATE_ORIG_HEAD;
+      	struct object_id *head = NULL, head_oid;
+      	struct tree_desc desc[2] = { { NULL }, { NULL } };
+      	struct lock_file lock = LOCK_INIT;
+    @@ reset.h
+     +	RESET_HEAD_REFS_ONLY = (1 << 3),
+     +
+     +	/* Update ORIG_HEAD as well as HEAD */
+    -+	RESET_HEAD_ORIG_HEAD = (1 << 4),
+    ++	RESET_HEAD_UPDATE_ORIG_HEAD = (1 << 4),
+     +};
+      
+      struct reset_head_opts {
+    @@ reset.h: struct reset_head_opts {
+      	/*
+      	 * Optional reflog message for ORIG_HEAD, if this omitted and flags
+     -	 * contains RESET_ORIG_HEAD then default_reflog_action must be given.
+    -+	 * contains RESET_HEAD_ORIG_HEAD then default_reflog_action must be given.
+    ++	 * contains RESET_HEAD_UPDATE_ORIG_HEAD then default_reflog_action must be given.
+      	 */
+      	const char *orig_head_msg;
+      	/*
+    @@ sequencer.c: static int checkout_onto(struct repository *r, struct replay_opts *
+      		.oid = onto,
+      		.orig_head = orig_head,
+     -		.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
+    -+		.flags = RESET_HEAD_DETACH | RESET_HEAD_ORIG_HEAD |
+    ++		.flags = RESET_HEAD_DETACH | RESET_HEAD_UPDATE_ORIG_HEAD |
+      				RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
+      		.head_msg = reflog_message(opts, "start", "checkout %s",
+      					   onto_name),
+ 4:  3af7c9a4fd !  4:  8c79e56076 reset: introduce dry-run mode
+    @@ Metadata
+      ## Commit message ##
+         reset: introduce dry-run mode
+     
+    -    In a subsequent commit we'll add add another caller to `reset_head()`
+    -    that wants to perform a dry-run check of whether it would be possible to
+    -    udpate the index and working tree when moving to a new commit. Introduce
+    +    In a subsequent commit we'll add another caller to `reset_head()` that
+    +    wants to perform a dry-run check of whether it would be possible to
+    +    update the index and working tree when moving to a new commit. Introduce
+         a new flag that lets the caller perform this operation.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    @@ reset.c
+     @@ reset.c: int reset_head(struct repository *r, const struct reset_head_opts *opts)
+      	unsigned reset_hard = opts->flags & RESET_HEAD_HARD;
+      	unsigned refs_only = opts->flags & RESET_HEAD_REFS_ONLY;
+    - 	unsigned update_orig_head = opts->flags & RESET_HEAD_ORIG_HEAD;
+    + 	unsigned update_orig_head = opts->flags & RESET_HEAD_UPDATE_ORIG_HEAD;
+     +	unsigned dry_run = opts->flags & RESET_HEAD_DRY_RUN;
+      	struct object_id *head = NULL, head_oid;
+      	struct tree_desc desc[2] = { { NULL }, { NULL } };
+    @@ reset.h
+     @@ reset.h: enum reset_head_flags {
+      
+      	/* Update ORIG_HEAD as well as HEAD */
+    - 	RESET_HEAD_ORIG_HEAD = (1 << 4),
+    + 	RESET_HEAD_UPDATE_ORIG_HEAD = (1 << 4),
+     +
+     +	/*
+     +	 * Perform a dry-run by performing the operation without updating
+ 5:  31d1ff1d4c !  5:  c112fbbd14 reset: introduce ability to skip reference updates
+    @@ Commit message
+      ## reset.c ##
+     @@ reset.c: int reset_head(struct repository *r, const struct reset_head_opts *opts)
+      	unsigned refs_only = opts->flags & RESET_HEAD_REFS_ONLY;
+    - 	unsigned update_orig_head = opts->flags & RESET_HEAD_ORIG_HEAD;
+    + 	unsigned update_orig_head = opts->flags & RESET_HEAD_UPDATE_ORIG_HEAD;
+      	unsigned dry_run = opts->flags & RESET_HEAD_DRY_RUN;
+     +	unsigned skip_ref_updates = opts->flags & RESET_HEAD_SKIP_REF_UPDATES;
+      	struct object_id *head = NULL, head_oid;
+    @@ reset.c: int reset_head(struct repository *r, const struct reset_head_opts *opts
+      	if (opts->branch_msg && !opts->branch)
+      		BUG("branch reflog message given without a branch");
+      
+    -+	if (skip_ref_updates && (opts->branch || refs_only))
+    ++	if (skip_ref_updates && (opts->branch || refs_only || update_orig_head))
+     +		BUG("asked to perform ref updates and skip them at the same time");
+     +
+      	if (!refs_only && !dry_run && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
+ 6:  21b2d4d281 =  6:  9550257dd1 reset: allow the caller to specify the current HEAD object
+ 7:  7c032ca1e3 =  7:  8a3d517020 reset: stop assuming that the caller passes in a clean index
+ 8:  fcd4479178 =  8:  a09be2ffc0 builtin/history: split handling of ref updates into two phases
+ 9:  6b1c17a8df !  9:  682b11af93 builtin/history: implement "drop" subcommand
+    @@ Documentation/git-history.adoc: The staged addition of `unrelated.txt` has been
+     +def5678 second
+     +ghi9012 first
+     +
+    -+$ git history drop def5678
+    ++$ git history drop 'main^{/second}'
+     +
+     +$ git log --oneline
+     +jkl3456 (HEAD -> main) third
+    @@ builtin/history.c: static int cmd_history_split(int argc,
+     +	 * inconsistent repository state. So we first perform a dry-run merge
+     +	 * here before updating refs.
+     +	 */
+    -+	if (!dry_run && !is_bare_repository()) {
+    ++	if (!is_bare_repository()) {
+     +		ret = find_head_tree_change(repo, &result, &old_head,
+     +					    &new_head, &head_moves);
+     +		if (ret < 0)
+    @@ builtin/history.c: static int cmd_history_split(int argc,
+     +		goto out;
+     +	}
+     +
+    -+	if (head_moves && update_worktree(repo, old_head, new_head, false) < 0) {
+    ++	if (!dry_run && head_moves && update_worktree(repo, old_head, new_head, false) < 0) {
+     +		ret = error(_("could not update working tree to new commit %s"),
+     +			    oid_to_hex(&new_head->object.oid));
+     +		goto out;
+    @@ t/t3454-history-drop.sh (new)
+     +test_expect_success 'errors with invalid --empty= value' '
+     +	test_when_finished "rm -rf repo" &&
+     +	git init repo &&
+    -+	test_commit -C repo initial &&
+    -+	test_commit -C repo second &&
+    -+	test_must_fail git -C repo history drop --empty=bogus HEAD 2>err &&
+    -+	test_grep "unrecognized.*--empty.*bogus" err
+    ++	(
+    ++		cd repo &&
+    ++		test_commit initial &&
+    ++		test_commit second &&
+    ++		test_must_fail git history drop --empty=bogus HEAD 2>err &&
+    ++		test_grep "unrecognized.*--empty.*bogus" err
+    ++	)
+     +'
+     +
+     +test_expect_success 'drops a commit in the middle and replays descendants' '
+    @@ t/t3454-history-drop.sh (new)
+     +	)
+     +'
+     +
+    ++test_expect_success '--dry-run detects conflicts with modified working tree' '
+    ++	test_when_finished "rm -rf repo" &&
+    ++	git init repo --initial-branch=main &&
+    ++	(
+    ++		cd repo &&
+    ++		test_commit first &&
+    ++		test_commit second modify-me &&
+    ++		echo modified >modify-me &&
+    ++
+    ++		git refs list >refs-expect &&
+    ++		git diff >diff-expect &&
+    ++		test_must_fail git history drop --dry-run HEAD 2>err &&
+    ++		test_grep "dropping this commit would overwrite local changes" err &&
+    ++		git diff >diff-actual &&
+    ++		git refs list >refs-actual &&
+    ++
+    ++		test_cmp diff-expect diff-actual &&
+    ++		test_cmp refs-expect refs-actual
+    ++	)
+    ++'
+    ++
+     +test_expect_success '--update-refs=head updates only HEAD' '
+     +	test_when_finished "rm -rf repo" &&
+     +	git init repo --initial-branch=main &&
+
+---
+base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
+change-id: 20260601-b4-pks-history-drop-28f6c6399e7b
+
