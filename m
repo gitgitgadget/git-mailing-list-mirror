@@ -1,63 +1,64 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CD432D0E3
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 16:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF243CE083
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 16:44:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780936681; cv=none; b=b9Hi9osz42SYUh0LN22jGsM/lb5j6P6SbrCmLE7vPGYzf+mLzcn1mrTetOnVcwxiVfYo9g40ci03sjHzYPRnOaSAYC66Smm3fTAYVemMGcCwqCbMA+aK13TAogQqspWXYM77JUbfQgAmIRUYfB13RpR4LnmscCd6an6e09aciaQ=
+	t=1780937098; cv=none; b=F5LQ1Y3I59o4JUIXQFabj1AFefoLjz/E5rM2HeINSCC2HKYnb+0RfbgC3DvcHrnOyIkMjrKkx/UQdpIy11QXvSHQ91qPJMpMggkmupjPr50YeZPDBneEf36SECXDsPM70E84NqPwa7mw8iQxXA/uYJFpHTKGRHEge/Q4UmL7CRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780936681; c=relaxed/simple;
-	bh=6ciWjsnOGBMOBm+j2y74cOCPPpoD3x05OIw6aQFYl2A=;
+	s=arc-20240116; t=1780937098; c=relaxed/simple;
+	bh=le21AweH/rfFpy3DhJdsFXZQHS2qM5BjXNBJ3k+0goU=;
 	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=ZU8X2STGRsA+yiTTfz3Wa3hd741dz9eauGt1mCsVVlzXelVe8iZ42B5JaNHNNoCsdebwaazhLC48NbaYadalm+OishJ+0WPQWv8NialjZj+EU++wsIpaQ/NIBjzTG31a35Ja5hjYnwZpM2auPAPfM9DnA4MENtXi9hrgU0jv/uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XmmRV4RW; arc=none smtp.client-ip=209.85.128.182
+	 Cc:In-Reply-To:To; b=ZSVCPn1BkQAx5gOknGTktcQsz+CH04Png59pBuHy6UqyWSLgkhYFHTni3iMPkP4vk0QiG4Wze+UfE2gl1kVHekwfeMSUXE5r1ZWeN0V1XFRc0s/NCwuGkOVh3pO7tTJhHkrcs+hD/XGIX5WWeB0wChdtOhszGF7l4cMdWGIEsdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IptEpeEj; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmmRV4RW"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7e0fc8ead7eso50419207b3.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 09:37:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IptEpeEj"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7e16f05fd79so47942647b3.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 09:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780936678; x=1781541478; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780937095; x=1781541895; darn=vger.kernel.org;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/VzUgF9wytohvxSxKzH8uqJFGY2q0C+xxumMjfrNTes=;
-        b=XmmRV4RWm+MM+Db7I5weXSD2E9OAgSG4SAbWg1Fpiw8bUbd+LFQLfw5iT3dAMO5u7a
-         VjevoL8cHygXAwP0qgjoeiNBgogE4jfLJBiu5f1tTUmOoBhbguZ0nZuZVUvq2KULGvPu
-         d2Gs/CLK+Ta6cmYivdEQqsPUijzdlgXqgCHXSYw6xtndF+hdolWHE9ZK/3iGy5FvXm39
-         IcaqWodBvSEOWCDtM2OBH4GV4zw/K6R5Qmb3pW48M4vtN+DGCI4lT8uNWHGNIsD+wCvt
-         6RxH5yAHPvE9GaVAIus8dVe0DMDxmVvvuStzUJD/Nurqok4TE9wyIg1Umzrd+vY/P/kQ
-         Oamw==
+        bh=0l2AeNuj9RoJPc8WHepB0gQDfqAH8lmaKKVnscoK0Is=;
+        b=IptEpeEjdmW9uCo31ULvKH+KKlJZVV+TDw4QEP7Aik3ANBtllohTyFxLgbwe50BXPd
+         kUpXdrShspiMg57nHoq8tDLcjabjcKv3eujxJlvQ4EnSMhN6LZtJ9Rwyir+cBDz2/zCM
+         wibmxyn7uoTuknZq4kVVcys82Jf312Z8D+lp280SF65a4vFZ524e6nW+H3N1HUhb2l+f
+         aJMIONBAGTQU7ZynhPKJ/O2wM5MtK1wBiUE3SFEJZW3yN/dZZx6bNXnwZYdoJoErFimW
+         m/5sPYB5pzP/rQU/w9YDvyZpkQknAm85H6u1OIbSqHAprnqdYf1lqossEHTToX7/veHv
+         xzPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780936678; x=1781541478;
+        d=1e100.net; s=20251104; t=1780937095; x=1781541895;
         h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
          :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=/VzUgF9wytohvxSxKzH8uqJFGY2q0C+xxumMjfrNTes=;
-        b=Lk3BLY82DSF5j++G4u+TxTkGew19BbnF0e1mRWv0+UKRgchw+F1LIPguKkU3m8wy/H
-         4Jt5I9cE9Wxehi8yY8q7KdnwssWGvPOeJhrjhTmBGOpCOe/Rx3a3rUrHQEOtekjNqzEg
-         dJ83OeBcbJpn7FDIRf+tW7V/Mx1T7+ZBZJYBKsbj/WTIF+UJBxb3Hoa9h7dM4cksQQIx
-         0c1GjAHK7ufFGGiI+OyoHZ8HvoLUfhbntxQNVyClRyhb5gkwLUnbGvCa9qZAXsnc+CUf
-         +kYCqBxKmjDWbhp8jDKdhQtAq3jK+iS1pRRMsDrJIfTMG69ScVn9kPzfdRpwViec87lc
-         1CAQ==
-X-Gm-Message-State: AOJu0YxsSVVhSc9LGWMlUhTw4e5zp1FRRcjNZRxORCb2aX8tH/DQypWY
-	jeHlUnfYGWKfhvnftmUesT5P6qBZETr0noCd8vyO7FxKuwjUeAjBtCgq
-X-Gm-Gg: Acq92OEt8WkpOC78xOl2ekTvzCiKdbXc3XgDpL/ruKY0sEL9cISt4c26+P8eciFV2cE
-	gZ6zHcvFAG140y1+U7ZihqAebgc/qpB2NR/R7wxXuu37LwA9MGWqTpWcjlPW9xOhLUWKcc9BiZ5
-	Xpz1x4zCODph1ZzFVGc45FE18PRmR2gBf1e4pzPI0cR0ipx6qgkmdCoK65yqDOe8TEZSGMj/zEy
-	LostMFb2b0UUzke1BOLU5pxy6qXJqD/BxQu33Kkheq1KquDK+lc+bxIJKddo9MvIe7YSUsv5RDx
-	aVmL9wuEGTVYMQMhvJHQWCCMHGLykEpttHgZZYgx+JmgqbrEWnylkb5Fa1xyz5TN/V57AkIro7r
-	tjaq2pOXF5iC/7Dc4DFlrBSVhfghf3SAoPz+wNFqBtqLz/a5eP1pfp2fRfFikibdC18fBP3Lhyl
-	S/b2QkNMcx3lG2hApz8xKatn0HfRKSD3mVnwqJG7td7C0SLhfbLsxf51gTMNJTHHgUxaZzlgeMT
-	TXgCeIa42wnT7LJcYU6sZlMeA+UmecxD9lWUba9GUFlKX2/41lfUi+V
-X-Received: by 2002:a05:690c:4807:b0:7d0:6660:160e with SMTP id 00721157ae682-7ed0b87282dmr160159247b3.3.1780936678220;
-        Mon, 08 Jun 2026 09:37:58 -0700 (PDT)
+        bh=0l2AeNuj9RoJPc8WHepB0gQDfqAH8lmaKKVnscoK0Is=;
+        b=aBddCy+NK3A7L1V56nUnxlwBP1EAdiSN4Wta5a2Y2/W0t/IEZAbdgYGE/yfLDP549e
+         Dano8f1Rd486Lq6EzSLjHMo1jZVYuxWLCfnRLbJeLG9BI8AaAw+plgIa2QKcnVfdJkVb
+         Nf+U7Nt7qf2LpCF1Se2wg8YEd5A9o6OXF2+2sHl2T3DWo/JFjMExVN9zVYvsiKt0cW/y
+         V9u5T3ETWn+UrZGpEV1ZwhwyY/kqhZp3uPzimJ2ppsSdG2wRk2mOU2brYzIm43uLtHzh
+         KWx+EUcwr7XpzqRXvfJ5atURFrNheOS2PegTLNsnleDO10xlOVDHmfZ1Ab6w6DMwM9tQ
+         SDhg==
+X-Forwarded-Encrypted: i=1; AFNElJ8Wvs4DvHep5tmuVJ6tgvv8LsER1TjuwBLy9kj+GCj78/58RKI+rcUtZhLFvj+FmKV+z0E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/qmJcmOZKig//p9J7SUXVku4raarMmtPS9XNqiGIx0Yi0Ijel
+	jTC7ZJ4FX/Cu4rVr3l8c60toZlPCzEMWKGULquCRpUsBJY+GkEWwfyI87tBA/g==
+X-Gm-Gg: Acq92OFriZYi0GklOWwEnWdcS7KuJ//0+BA19zFuTQVdKTmueIxs8xXVk4wQsBQRgKz
+	vm8YwtSbEqUQXva+BRWrzmC94QCPA3abkVSwtqHyoSwgE0/I9qORGQGsd0/ZA8KOmImP2qhCTKg
+	JJrlytqlhWCUVU/zc2CKJv2/nkhbhhk7nmyipiZoOL5O4ZkJXa/YmIio9wicPoxruMdIv7gD9as
+	fsZ9Da1o7nTxvR0e38KdG/xe+JDnUabr5k6/GHwS4H+u8rtNQ4GwsBPtKB2L9j9lw3NqXTZddBF
+	PoELx1FQf8BxR4tzicqwJpRhM0XN/scGnADKH1zmXaAz8DLD8fA6dNh+D9XH/0y5r9IPXVGiXNh
+	Ay9QmxNP5rqTPjg/ejZLdihEwQVyk0BCDBX7JDLphAJkMZQn1aiXOF6P8zSwBgENaVBiWkbJRhz
+	n6Xm32cSgo+WdgHclwibkvlzhX5bW1V2+/8Tg4XuIxjifvb19KK2TaHMpba4b/kCzhXMSno/qFP
+	RPV9hSUVJtGo3KTjxgsbwEuF8Debo9wB2jdqVgO2Qhj55gnobqvUhS0
+X-Received: by 2002:a05:690c:6993:b0:7bd:a4dc:c25b with SMTP id 00721157ae682-7ed1147f07bmr158180387b3.40.1780937094858;
+        Mon, 08 Jun 2026 09:44:54 -0700 (PDT)
 Received: from smtpclient.apple ([2605:a601:90fb:c300:4dd7:1401:a55e:b40d])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7ea2148b48fsm85290217b3.12.2026.06.08.09.37.57
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7ea20ea9878sm85794547b3.3.2026.06.08.09.44.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 09:37:57 -0700 (PDT)
+        Mon, 08 Jun 2026 09:44:54 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -68,114 +69,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
 Subject: Re: [PATCH RFC 1/2] builtin/history: abort reword on unchanged message
-Date: Mon, 8 Jun 2026 12:37:47 -0400
-Message-Id: <9A2F74F1-66D0-4015-B387-35B107ED6F7A@gmail.com>
-References: <20260607-ps-history-reword-v1-1-ba43a3cbb81b@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
- Pablo Sabater <pabloosabaterr@gmail.com>
-In-Reply-To: <20260607-ps-history-reword-v1-1-ba43a3cbb81b@gmail.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Mon, 8 Jun 2026 12:44:43 -0400
+Message-Id: <3D9034D8-C38F-48A1-B637-4342BE4954AC@gmail.com>
+References: <xmqqmrx5z0po.fsf@gitster.g>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <xmqqmrx5z0po.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
 X-Mailer: iPhone Mail (23D8133)
 
-I don=E2=80=99t have any strong opinions on the rest=E2=80=A6
 
-> Le 7 juin 2026 =C3=A0 16:08, Pablo Sabater <pabloosabaterr@gmail.com> a =C3=
-=A9crit :
+> Le 8 juin 2026 =C3=A0 08:23, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
+it :
 >=20
-> =EF=BB=BFWhen using `git history reword` if the new message is the same as=
- the
-> original it continues anyway creating a new commit with the same
-> message and updates its descendants, modifying the history after this
-> 'reworded' commit even though there was no actual change.
->=20
-> `git commit --amend` and `git rebase -i` + reword share this behavior,
-> however `git history reword` is different:
-> 1. Works in-memory without touching the index or the worktree [1], so
->   there are no side effects like staged files that could justify
->   rewriting the history when the commit message is the same.
-> 2. `git history` by default updates all the branches [2] that contain the
->   original commit making it more costly than `git rebase -i` that only
->   updates the current branch.
->=20
-> Add a check if the original commit message is the same as the new one
-> and abort if so.
->=20
-> [1]: https://lore.kernel.org/git/20260113-b4-pks-history-builtin-v11-8-e74=
-ebfa2652d@pks.im/
-> [2]: https://git-scm.com/docs/git-history#_description
->=20
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
-> builtin/history.c         | 10 ++++++++++
-> t/t3451-history-reword.sh | 20 ++++++++++++++++++++
-> 2 files changed, 30 insertions(+)
->=20
-> diff --git a/builtin/history.c b/builtin/history.c
-> index 0fc06fb204..51a22a9a1c 100644
-> --- a/builtin/history.c
-> +++ b/builtin/history.c
-> @@ -135,6 +135,13 @@ static int commit_tree_ext(struct repository *repo,
->                      original_body, action, &commit_message);
->        if (ret < 0)
->            goto out;
-> +
-> +        if (!strcmp(original_body, commit_message.buf)) {
-> +            fprintf(stderr, _("Message unchanged,"
-> +                      " aborting reword.\n"));
-> +            ret =3D 1;
-> +            goto out;
-> +        }
->    } else {
->        strbuf_addstr(&commit_message, original_body);
->    }
-> @@ -718,6 +725,9 @@ static int cmd_history_reword(int argc,
->    if (ret < 0) {
->        ret =3D error(_("failed writing reworded commit"));
->        goto out;
-> +    } else if (ret =3D=3D 1) {
-> +        ret =3D 0;
-> +        goto out;
->    }
->=20
->    strbuf_addf(&reflog_msg, "reword: updating %s", argv[0]);
-> diff --git a/t/t3451-history-reword.sh b/t/t3451-history-reword.sh
-> index de7b357685..54ea8a7207 100755
-> --- a/t/t3451-history-reword.sh
-> +++ b/t/t3451-history-reword.sh
-> @@ -396,4 +396,24 @@ test_expect_success 'retains changes in the worktree a=
-nd index' '
->    )
-> '
->=20
-> +test_expect_success 'aborts if the commit message is the same' '
-> +    test_when_finished "rm -rf repo" &&
-> +    git init repo &&
-> +    (
-> +        cd repo &&
-> +        test_commit first &&
-> +        test_commit second &&
-> +
-> +        git rev-parse HEAD >oid-before &&
-> +        write_script fake-editor.sh <<-\EOF &&
-> +        true
-> +        EOF
-> +        test_set_editor "$(pwd)"/fake-editor.sh &&
-> +        git history reword HEAD 2>err &&
-> +        git rev-parse HEAD >oid-after &&
-> +        test_cmp oid-before oid-after &&
-> +        test_grep "Message unchanged" err
-> +    )
+[snip]
 
-=E2=80=A6but I think this test case could do something like "GIT_EDITOR=3Dtr=
-ue git history reword HEAD" and avoid the script?
-
-> +'
-> +
-> test_done
+> Having said that, I personally think that the current behaviour of
+> `commit --amend` and `history reword` are both _wrong_ [*2*].
 >=20
-> --
-> 2.54.0
+> You may start `git commit --amend`, and after staring at the
+> existing commit log message for some time in your editor, it is
+> quite natural for you to decide that leaving the commit as-is is the
+> right thing [*3*] in your situation.  It may have been a better
+> design for the system to notice this situation and leave the commit
+> as-is, with an override option `--force` to allow users to forcibly
+> update the committer ident and timestamp in the commit header.  I am
+> not a `history reword` user (yet), but from the motivation you
+> described for this patch, I sense that the story is the same there.
 
-Best,
-Ben=
+FWIW, in this situation I abort my editor (:cquit in Vim) so that the amend g=
+ets an error-valued exit code from the subprocess and aborts itself.=20
+
+Perhaps there could/should be a better side-channel for communicating that, t=
+hough? I do not know how easy it is to tell other editors to =C2=AB quit wit=
+h errors =C2=BB.
+
+> [Footnote]
+>=20
+> *1* Besides, doesn't "--update-refs" in "rebase -i" allow you to
+>     adjust the branches?
+>=20
+> *2* But it is an established behaviour people _rely_ on, so even
+>     though it may have been better if these commands behaved
+>     differently, it probably is a bit too late to change it now.
+>=20
+> *3* This includes the case where the original author is especially
+>     difficult to work with and would complain any change to their
+>     commits, even if the only change you made for them is a
+>     typofix.  Fixing a small typo/grammo may not be worth your time
+>     and unpleasant exchanges with them after touching their commit.
