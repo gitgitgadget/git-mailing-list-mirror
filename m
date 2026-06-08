@@ -1,172 +1,95 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4233B2DC767
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 16:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EAD3CCA19
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 16:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780937274; cv=none; b=i120Na6OosKYjZUp6+OjChK2rlL3weRgrF6/nftJozPBcuPU49jPmgVGKUAaiLCXMr44a2gNutUQghk0Jjgq6UNcN/SGeK3abjFPey2u+rgVgbP0jsEZ0/bnmxaaArghfm5De2BiSvA1CckaAr9juecRg4799mJDjpq8paC2GIc=
+	t=1780937980; cv=none; b=qlT06tZyrMuV1chqdCRj/OIEjg28XdByj+X37zyW4QHUc261X0dn/BcyVho6UXa+jpebMqexhlq+GSyJ1aFyV+wx+4NcComL1XTz7nN4rXbRtKXECXPiNM/GeA9oczf6eMBD+ed8xM5giXxco2j0XUy5IFCVZryK3kvYrZZZycg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780937274; c=relaxed/simple;
-	bh=U1S9HnTRTVnVrGqY1gB7r9yvXq6LV3RZJSJGQ+zsnPM=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=GETMiIqB5EhwgyqGvJYsrb0H6N6a6IlubBBungsCJ+W5EdXcJeyI4IshBh9yYbF/KJ2t783OOLtiX1shjWyBKSQ+cfgB9KgVowmiRp5MzlVbP1SL60wbyvzgdsUq14viwNkAV6SEgyiFcxz6tHZMLx89gA85kxRdGjhrvo1a4Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TcUcCvSr; arc=none smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780937980; c=relaxed/simple;
+	bh=DoQFYlQgKYHvs4HdiR99g25WquMHeYaQ6+kiG99Pbx4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=vANaaKHIJmtuKXCVbXuqvojBhy3M28zm5ZcK11RCUtfR8lDX3i9emhy9quPc79THoodTxKOg0v0TTOrBKc/OasMFhkM40/fBEsgH7xPnsBkZqWjYv/8jugwj+lLf+GCWgyQArWFU6lbiHW3nIL+PiNRzP1nctYvzcIRcgrq5+Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E8CvugrE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SI9GOrCB; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TcUcCvSr"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-6604df9ba4eso3775769d50.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 09:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780937272; x=1781542072; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HJvMIyCVQ9yXeyx/nNh0BI//Oyjy8jKEqu6Xx8J87hg=;
-        b=TcUcCvSrLCUcFVW1HdfvEnVA0MjfvKbi7J/mYle3Ol14bJyQKf24ch9XyUbxWio/cP
-         XqVvmK0SMKdyMHt5NbfI4+cEnzpol0QKH2TBbyz5xUg8fNGAVF4pN2v9lWZLJ7he4TRI
-         UL+wn+WGT7j62f4PImQ595dqB2ToK6Al3awkJGZZ2lFX06S6BMurAmvw7xXy3Ik5DLpF
-         0NBtqtJ2PzrJw4Lg+2ZwSwNVdUt3ONqHKxHXJF4fJRjhG8C/2qe7ljssJZ+CL62D8F6/
-         fF/fJfssd82fYwGGvgCIfN2yqDYPDTHdi+GNX84lnmIYCiFO0/A6Wb65pz7FDI3Q+XQY
-         uVWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780937272; x=1781542072;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HJvMIyCVQ9yXeyx/nNh0BI//Oyjy8jKEqu6Xx8J87hg=;
-        b=oN+bgonKcwHQA85OsNp1j209a9T1EJxPom98CCirhOnXiyyfb0n0Rbw/fzXxMJ6q12
-         hSeHrxSx6wQ4BxFX/PmPJFduF7naZks3YX7k7lPb/gIx7Mxg9mVjfL3wP3VjglFcoh2F
-         WnSHQGcS29Z+Isrwdo77tzP7H/L9E2mkYveKXiTJ3wz0QE3fygpJgHGExpu6YA5sUrzP
-         dTRYxPGIRMSYvOexlM+QcZJVvCgcBIK2O32Fx12bhQnA+kDy/nR4t9SnotgFKahgILqn
-         VU9ogqrcv7wcU9/jPlfdiJs+hSZzjw9F4LUzXZBBtKzAk0VDgtRKHTF8L8iRrZ3Ck31h
-         3awQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9ItFpgpwRmwAhcbSx6gqiax6Gh3f+LNPQ5U+HpVN7vyQ7aq9Omn/y0gGqjf6vfVnuZPl8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWb0o6fbji10cJsB2ax7Mki7OzG8wT2+gar309y+eF915/seiH
-	+Y2t4waTn1CZjauMbgZlmNU+RleskxqAPTxuLT/5WoCf4HtCGWc7hJNO
-X-Gm-Gg: Acq92OGLwlGos4aJKQ67I3JqDeFlnMX6qMAO8s54mo+PzlbUYA4lO/jw2QxKbMEZ2md
-	FGilLWry41/O1IiuyQ1+a1BvNW6L7TV5+Dkt2xwTjyWYFWxMQxnHQuCJc2zDlWyut5zNVjCIB0g
-	rynmServIQVWufLi9P/H0mXZ5PGh0jyJ3A8XI2Qd+OhZ9uYaeQDLUS75XtH8hBKGIh1E7JM/MzY
-	WSi7Uw81gRrU/Vt1R/G9VMK9ku/Ahnr1pJdhVMZH6He9WV1CxI01mIi/uhRcxpK1ub5ETcGPkn6
-	tuE6xUeAROkJupGwifaBAwLfi7JBfSwJ+cotyQ55Ujso0rTOuNqrrXcpG0WjiRiwEJNHvgxM268
-	YDAyYrD02EcZqMn2pQs7q627tYKz3Qp4PkIFHpWTH6xrSTUzLOV6bQwkXR9YFO0db1mKWO61aGH
-	o2dknD/94wnHMly7FTxuIdq0SlGs0vn+bXyZ3U20TYhbMgpcz4urBZpdu3zvxAvbAQUh1/IBCUr
-	fsb6gYWj6L5njwnsDwqgQL7vDxam+e3oFwqWWpM6cU0+bbb5BGVJHid
-X-Received: by 2002:a05:690e:1242:b0:660:431b:8a5c with SMTP id 956f58d0204a3-6610a624fa8mr10283675d50.4.1780937272220;
-        Mon, 08 Jun 2026 09:47:52 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90fb:c300:4dd7:1401:a55e:b40d])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7ea20ea986bsm86611337b3.9.2026.06.08.09.47.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 09:47:51 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E8CvugrE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SI9GOrCB"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8547C14000FF;
+	Mon,  8 Jun 2026 12:59:38 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 08 Jun 2026 12:59:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780937978; x=1781024378; bh=DoQFYlQgKY
+	Hvs4HdiR99g25WquMHeYaQ6+kiG99Pbx4=; b=E8CvugrEq7eOqKoZzIkm1RtrbK
+	lfIxyubfMQlV/y3b4v0cm/Qvv0h+sx8xKjTEaAy4YXkJTdDYmtAlAuL+/JH7cRsX
+	xePMS2zSoIEpzsOWfxh6P2lcKlurtkrFfO8AUrJrzRz46j1knIt5hpwfEl9klYj/
+	ieAw49+Wp/IDQeN71Upooz/zlVkaknRvECprrhiQnrFtBPnlpFPkpenlXs5qgLt+
+	bYfdW2qz/gr5S6yQxsi7LKJi+qXbtIhhN7jxBtv0Cy5rhIzjzdG9CAhOfcb3UBo7
+	eJSBFxbbnTLirSfdCe+8oSPF5MZIu+lKLsPVcv8Jz2BVKe3ci6ryMrYa0jkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780937978; x=1781024378; bh=DoQFYlQgKYHvs4HdiR99g25WquMHeYaQ6+k
+	iG99Pbx4=; b=SI9GOrCBJ//y64pADZ9r2vbEQOxzDhf38z7bFbh9Inoo5Q3bHbs
+	Hyz6mEpIrmfSHZHDKuywjOz5MFscIbOX4/6gcfhjFbtELcFZIC7K5ZJLk/xulDVh
+	lRx4yf45xrxpTsrYUq6iKyQWDD0MCilqeTePZ+6lM+hnnm8OJ0N8XRmd4iwmL2GV
+	wthddA+efpyv9M4fVErWeefhV5wr+I+36JmdPr3nOR6nqEwPbELwouZ1G9NXVB4Z
+	sF0mqNKA+NnwkqvJxxiiSS4pQBwI6OURLfUSaU0x2GhfWcpWiyjzrbWHuGg0aEnE
+	m+KwQeJE4lT7SmWP7AEc6ukX+/e2BLYTkmA==
+X-ME-Sender: <xms:-vQmasv2657IIOfYuDW0vyXP1twue1GzeQaq67IE2gGHhLXZII-yGg>
+    <xme:-vQmag5uKOnz_Muvm9EIb8_Di70jt5xhrRoqi1ehzZUtVQuN6G4k3HqZikiqPKgnA
+    9nXn9lXFumTVY95mjDP608SSZG26XFP6Wu5NFRQ8QlqWVQ5ZAVwTQ>
+X-ME-Received: <xmr:-vQmalJ4fWZmFTTTOuva5SbTzEZH4n64hB8EKWDg0YE6B5yblQ_QZH5UXs33TgUG-To-5hayFvr89f-7SdK_W-CuA91TowDjhSGQ>
+X-ME-Proxy-Cause: dmFkZTG1tYeBvRq4DHsCqir+xJE8wE2KZ2EClMchBklfO3RfaNqSe/KhW6bzjmG8lIhhuv
+    z+tT+lUxFo122cLgpSdppjzyYzNDkalnSIEfTLTp5tABKjLT8rhMCKtFekoEzqCrLvlAJC
+    gc06Z7D+6PWD2rGm+J/ZD/B+LvSD+Me/UUH+UnyMCSvN8OHRnFXUivNzpZJcOG4D35L8yB
+    wkgfUgmKLj3HPKpvEjNR3j+Z9RHemRvH3/Gz1UELAKHdRglCU49rScdg3z2C/Iw9vB6vje
+    07iE9P085ia3KxjSSKOrUhCZzBuyBdY+2svjqCrXhYhrwYQK4mZFnnLg/Ti1zo4IL/NsF/
+    9hxLxkyBsP27wmiYSO54tw9EQsNTnkn1Drm3JwyKHcu1OYHxIpwkiuQ4GEAN6maUSJH90E
+    PuIpz+4ltCSjviWYVYKrI/MuH28aJT74VAlMAXSnxBjgqzod7KohoB27hD7SGbWQgoWI8m
+    SFluqepeK+E4P+ZFt5wE0f57PwHeGrtekGV8w5mtMde60zYC1MWZJKwNsJPlUwkHCwZYlQ
+    722uf2s6q9bFYiAesPnmIkNE2+GRgEe4ossHNXlO3pmY4PmyoTa37ncjt4UESLwBC/C8FE
+    8QtQvc2YnkYKtzxTZM+EVifBS0kPmo+A4uinIeWM4bFNI1o4qDF2Nbzj3PJw
+X-ME-Proxy: <xmx:-vQmao5q6E1TTGQ8zfnspSel6ytpL7MAAtQAFPeCAB_OtNvZWBdhZQ>
+    <xmx:-vQmagxu-sRUfeOGTSrfFTT-zp68VQRMKJwBC3kUozBgKKgmWmuywg>
+    <xmx:-vQmakYkIcN3pQehL7mIXHF1ovcaz8i28EJ3HbmtWxUR92e0OmI09Q>
+    <xmx:-vQmaqRfDm6WR3T0IUx1zbHgMhO4hLxKEaVEYBvhBOFvVlx8MuhmKg>
+    <xmx:-vQmajAuVV8PIls6ETcR0Xi4eD_ZjbY7eLTL4aqcwIw1Ai3KvGGl6TAS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 12:59:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kiesel, Norbert" <norbert.kiesel@creditkarma.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] worktree: record creation time and free-form note
+In-Reply-To: <CAPGaHktHLPUeSuhETwyBo+jE2fMu40jHW284PN+2oY1YJ2j0Yw@mail.gmail.com>
+	(Norbert Kiesel's message of "Wed, 3 Jun 2026 15:51:23 -0700")
+References: <CAPGaHku+RAV+FA3C0md0xHiavfdB_anoqcMM06MAiU1VyMAdLA@mail.gmail.com>
+	<xmqq1peots9i.fsf@gitster.g>
+	<CAPGaHksjsSefYmGPBxKLw8DDADR5AwTiHTbHq0UyBBtg3CKq9Q@mail.gmail.com>
+	<CAPGaHktHLPUeSuhETwyBo+jE2fMu40jHW284PN+2oY1YJ2j0Yw@mail.gmail.com>
+Date: Mon, 08 Jun 2026 09:59:36 -0700
+Message-ID: <xmqqjys9vuh3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH RFC 2/2] builtin/history: print feedback after successful reword
-Date: Mon, 8 Jun 2026 12:47:41 -0400
-Message-Id: <9C91B027-C24A-4D7B-A3BC-5CF3B04D990C@gmail.com>
-References: <CAN5EUNQNj86Q+hi6PouOZNWo1T4QTQ6sE5Hs9USZXWpkTedTcw@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>,
- Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <CAN5EUNQNj86Q+hi6PouOZNWo1T4QTQ6sE5Hs9USZXWpkTedTcw@mail.gmail.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-X-Mailer: iPhone Mail (23D8133)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+"Kiesel, Norbert" <norbert.kiesel@creditkarma.com> writes:
 
-> Le 8 juin 2026 =C3=A0 09:29, Pablo Sabater <pabloosabaterr@gmail.com> a =C3=
-=A9crit :
->=20
-> =EF=BB=BFEl lun, 8 jun 2026 a las 14:16, Junio C Hamano (<gitster@pobox.co=
-m>) escribi=C3=B3:
->>=20
->> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->>=20
->>> Unlike `git commit --amend` and `git rebase -i`, `git history reword`
->>> doesn't print anything, this makes it feel empty for a porcelain command=
+> I looked at the usage of `.git/description` and I could not find any
+> usage.
 
->>> and hard to tell if the command did anything without using other
->>> commands like `git log <commit>` to check if the reword was done.
->>>=20
->>> Print a message on successful rewords so the user has feedback about it.=
-
->>>=20
->>> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
->>> ---
->>> builtin/history.c         |  4 ++++
->>> t/t3451-history-reword.sh | 14 ++++++++++++++
->>> 2 files changed, 18 insertions(+)
->>>=20
->>> diff --git a/builtin/history.c b/builtin/history.c
->>> index 51a22a9a1c..0f1ba3b531 100644
->>> --- a/builtin/history.c
->>> +++ b/builtin/history.c
->>> @@ -739,6 +739,10 @@ static int cmd_history_reword(int argc,
->>>              goto out;
->>>      }
->>>=20
->>> +     fprintf(stderr, _("Successfully reworded commit %s to %s\n"),
->>> +             repo_find_unique_abbrev(repo, &original->object.oid, DEFAU=
-LT_ABBREV),
->>> +             repo_find_unique_abbrev(repo, &rewritten->object.oid, DEFA=
-ULT_ABBREV));
->>> +
->>>      ret =3D 0;
->>>=20
->>> out:
->>=20
->> Do other commands in "git history" (split is in 'master', drop and
->> fixup are cooking) behave with similar verbosity?  Consistency within
->> the same "history" umbrella matters more than being similar with
->> other commands that can be used for similar purposes.
->=20
-> They do not, they are thought with the rule of silence in mind.
-> However I think that this output is valuable information I might have
-> explained myself better at [1] but my thought is:
->=20
-> git history reword aabb
->=20
-> Now that I have my commit aabb rewritten I want to check it again just
-> to make sure I did what I wanted correctly,
-
-Some thoughts:
-
-- If the rewritten commit is an ancestor of HEAD, look at the log of HEAD@{1=
-} or the log between HEAD and the aforementioned reflog entry. (git-range-di=
-ff may also be helpful there.)
-- Similarly, if the rewritten commit is reachable from some ref R, check R@{=
-1} etc.=20
-
-> but git log aabb is still
-> the old commit, the rewritten one has a different hash which I do not
-> know unless I search for it, if it's far from HEAD I'd have to git log
-> --oneline, get the hash and then git log new_hash. I think that git
-> history reword that does have the information about the new hash
-> should print it to avoid this search.
-> What I want is something like:
->=20
-> git history reword aabb
-> Successfully reworded aabb to ccdd
->=20
-> So I can just git log ccdd without having to search.
->=20
-> I want to say I haven't looked as much as I'd like to split, drop and
-> fixup, but I think it would be a good addition for them also. On [1]
-> Patrick wrote about a --verbose for git history, I think that the
-> basic information i.e. at reword which is the new hash should be
-> always printed but if it's preferred it could go there.
->=20
-> For split it can print the hashes of the new commits like:
-> "...split into ccdd and eeff."
-> For fixup the commit hash also changes, so the same as reword.
-> The one that will have more friction would be drop is the one that
-> doesn't end up with new commits.
->=20
-> [1]: https://lore.kernel.org/git/CAN5EUNSAOMRvmLGVfzQiwWoOn9VGNVU5rVMZizOr=
-yn_q2fbCNA@mail.gmail.com/
+GitWeb shows it.
