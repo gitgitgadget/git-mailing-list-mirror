@@ -1,198 +1,135 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF2F3E5566
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 14:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ED2426EBB
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 15:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780930352; cv=none; b=qhEMysqx4SRL687+TpiXbRk/YIW0bu7YmdsYi5W9oRm6g/ySRy5LbG/51eFpoMqxeLzGK7veTRnf5KMz8Cd/oKQr6oCHT6o8glveEy9rgdxnbRaExXVoXciE3xnYBkvO0u2rMzYGkmifFAgV5QwoY8evcOWI4Xc6o1MDPYq0JkQ=
+	t=1780931160; cv=none; b=QXlHmYaA+OJp2TgHkOsoIRJq/bvBs//ZRjYuBppoMxCuOK/D/j02hWCXPI6BuNAsCbFg822QDEjJ7clUiQbuDBb9VhT33VwoQ7TY2Ykk1Ds2nv1eMpol0wvchcJh1Q3LzG5kcS0NQHc3Yky7qHjtIPxPKn1cLrB6P0CS1YoYHGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780930352; c=relaxed/simple;
-	bh=IHUzOnELCI8FW9mCVxxr9rRNSMHYkT9CFhzzpE/T6Y8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kCj6Z2+7FXRXT29uc3ZBtGT/CbzfaDIPg2oxx9M0WDaWqOMI/HJ4yaknnAJQMGO4UMVw8a5kmvJka53DCZ8pUjllVgsYBGnmWlg0Kybr4w64W++mR4+4bYC40nZyN6fPny4gP8G30HDSVPaQ7mbHw6VP/h3KWPpgikLTeHnNF6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OH+xzHqK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b1X4W8Mt; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780931160; c=relaxed/simple;
+	bh=Yyj1jPW9N0nie/5ygfelZ6J40ze9Dsbxf0Fbm+b9X0o=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=o6mjAWbpI9PRRskobn+s/f+tqp8Nrkz6cICsVelEbicHxfTPj7tA5ik1KVZTd/oRgPXuboJadbgOcUNaS8rRnEch/jqTK3lmVZVUvB3M0vsBtXdojFNAGQRbH+YQ/q9X8YVMfFRpuPtg/LQMmgR1C+lKPxHdkq4BEH8X64yPRrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OlC2HMTv; arc=none smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OH+xzHqK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b1X4W8Mt"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5CF2F14000FF;
-	Mon,  8 Jun 2026 10:52:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 10:52:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780930350; x=1781016750; bh=I8u2gIIAkq
-	ltL8XgKsJgtom5nn/+6nEKRDDPqxcyhfs=; b=OH+xzHqK54PsRQBEUTqnApIwO+
-	/5HtQoZBik8mD74z4+V2d1NkqMM2vaEYYMpssN0iKJvBMXcfnuvQaziuN8XXRHj3
-	oQ5PZaKSeYaM6CrkKWa9T3xdNUYwi6ab5IRVNwjruUk8Sh7swPRgC0YAZzNUG5Ny
-	wzgXrGILVB3tiSmk9W7AtyV29/mMFo9YrIoBeGL8y0bjZysC1jh3YsZ7SRg7AUqi
-	Qli4ZfyYsm7TfwShdcxqMbwyFVL/TISaW5oRals1goSD2Tik+YrVtZli0E8m8Rpx
-	/yM+YWyThWa3OaD2JJyxIpVXmU+55vzbPzzVPNgK1WBGNVAwAcNqo0GAqDEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780930350; x=1781016750; bh=I8u2gIIAkqltL8XgKsJgtom5nn/+6nEKRDD
-	Pqxcyhfs=; b=b1X4W8MtkVTQ8OMrhFDxZTjJeqbWo2nfZrChkqJCoNlMcoB6jAT
-	PJzyw7VfyQ0MXxVTU41n55DN3Wm27Swr0pLgj0C6Kh3/uANV8aafLVQhVtiS0Jza
-	ZMV7vOv5SlPo4igz3xllLp6jN1/BVz6tIh30b0H8Fs68eZINF8OOLMRYV9RRr2Xe
-	aHAw7ca9mtckdSFhdCQraing4whewU35Uo2PN/nN8WFJSa1nhvB/Brc2Ww24/bF9
-	TBWWmACDUXq38XAtwO43Cvxuua650c8TJGEAzGWW0eHje73YBZLVEE4UDOJKpK1H
-	Q7ZARzjyofe2+gfebGHdMCGxPPOEo1XAfcQ==
-X-ME-Sender: <xms:Ldcmag9tDv32ZXNOmSrML-aMAZ9ZPK7qoEk8_1BmwWMfryKe3hxq6A>
-    <xme:Ldcmag76ZQOEqstM0e_rRa2ngYYFSRWKE0Wm7HRPHQcXcdNzfGCRKK7kOov80UVaM
-    AwrPcXd3fBw8OFZGmFnCLFfYprfFjf6Ay2huV4GrL6qZEFQ1vxkhg>
-X-ME-Received: <xmr:LdcmahnOdkP9yeVyhuNPWN1O7bnbNvLSHB_6HMtG4fIFYtQtOVC5ZISvTTWEuBf8R27ZhC55SLAOVlwSGu3lv_FjjbB7w98fbxbO>
-X-ME-Proxy-Cause: dmFkZTEtLkhZJ1xMQsvj7a/W9/kqdFM3XCox159ah2ntOmH7qFjdpd4xJ9DlR/wnjOAOgF
-    +NzGwtjPXBuzlczAJJNZXhRkRxSVVKpRAkjMbNZ4rxa3GfqfuTp1xBLehFQSeDjSLwkBky
-    qeyI5hH6NzCNR6j+7m0td7/3r45NvSIy4YLYr7ZILrwCyEz23lLKmm6CHYBQIqbBXXQSky
-    XV1LnY9Cd/yMBFdBtcYkBvEVYuPwl6h/PtDuidfljOE0sYFK95mv1KdfIPpCfDe3W+o0V2
-    5eKozJ6uV4XsHAraJy5uDrurVsXcjp9j+8V2klZXDBnv6kiDm26yDoHfoxbyqZeEX/9RYO
-    DdGJiz8Pie6W20tn5sO2eNzawWXyUI14CsxyFtJdx+xs7OgHuHV4sr1QvGTJ97T20eZ3cE
-    3YZgAXcbT7ymdVf9XkYoG5PN5njaewFj/KvLG+3QmTio+P+b+dDKMK612sFZD5KJ3gv/YJ
-    gRxQQDGLuXDxCaReMDwJQf0QrypSN4nb9+aHI4f6RtzzpM2JtbrR9syAjUJ5UbWrCa5yXz
-    FyTQimcO9XN/wa6mF7fJGO+lboO/tWq1Eoj3U84jRMDiSMH5Y9AD6NooR6ckHQGWXjm/Mw
-    QPePbHnefBhb6SXBm+qNKZE0ykvrMLut+W2bg+DlfikddTuiM8GVPGP2Nzkg
-X-ME-Proxy: <xmx:LtcmarG8RIYxQ6kYv-oj9N_vksudiMJAxtuddF9FX8sx7tYvBa1uog>
-    <xmx:Ltcmag-hRVWgfjJqu5ccHV8_4oGXinLnLr06PERcgIQ_EgSTtTBVaQ>
-    <xmx:LtcmakngEVBwEWSICxNebPQAe4c9sblgTaYFw7D6PLvIjFqmPoCK3g>
-    <xmx:LtcmajAwNQgHOjgc2DdKzaYlY2lZQBToFX0DJKOHMNn3r5Jtl4-RzA>
-    <xmx:LtcmatDsAUWigVZlQiBT4o-yuPOoDR0HzOX1zV76qmd6N-nWfLjh49od>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 10:52:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: eric.peijian@gmail.com,  calvinwan@google.com,  chriscool@tuxfamily.org,
-  git@vger.kernel.org,  jltobler@gmail.com,  jonathantanmy@google.com,
-  karthik.188@gmail.com,  toon@iotcl.com,  chandrapratap3519@gmail.com
-Subject: Re: [PATCH GSoC RFC v12 03/12] cat-file: add declaration of
- variable i inside its for loop
-In-Reply-To: <20260608-ps-eric-work-rebase-v12-3-5338b766e658@gmail.com>
-	(Pablo Sabater's message of "Mon, 8 Jun 2026 12:14:26 +0200")
-References: <20250221190451.12536-1-eric.peijian@gmail.com>
-	<20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
-	<20260608-ps-eric-work-rebase-v12-3-5338b766e658@gmail.com>
-Date: Mon, 08 Jun 2026 07:52:28 -0700
-Message-ID: <xmqqzf15w0cz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OlC2HMTv"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-59ccf81e6feso1386831e0c.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 08:05:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780931156; x=1781535956; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U8UQ+eoLe93cnRt13kYVDs2z+fgLlmFTSg1T2AkUpAA=;
+        b=OlC2HMTv+oewTLuNzNFKY1F0SzOvixLwOQEbj3nmLlS1HHRcUA/8kPZ4b7FAylipwA
+         /sWYH6CzuQ4jBE/4nmZGl1bPp4JeV48CEfAFe9tvPUrJFqbr9HxivRkHoidKKYnpowEB
+         /ZTThIuK67unQGjtlPB3yptGmSrjr1+XeH3Zo1SSmiULC1ZVcRCyvKkyDGbSwHtKd3Ml
+         ggoS8C5BmrTCP+RsX+NQPQtP6KVqW68IRF53s3WNNEepojOWL+pEdVAxPmkMKYWOfPNv
+         BNGwHdcbXOgQfOEye4iax/yYOSTdhbtyeYlqvdAtzatSkdrCTJr7tlC3xLgT+vMtDqL7
+         /sTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780931156; x=1781535956;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U8UQ+eoLe93cnRt13kYVDs2z+fgLlmFTSg1T2AkUpAA=;
+        b=Th7Qc5PavoM2GFXPAar2ii6MPpFfff4PyWgVQwwS4nT2PmzuKM2vTUz7sgXq/h7dDY
+         n7mQxD9nCot2Pojo5bBUdyTMXA7OEvzblpnx0jSgzpl5ytQWm89Q136VM+McQRIw+ktU
+         RA7f5hnON8CSHeS5KmaCN09f7piy2ZH3YsISCcM+UT1/W86mGBWEumlNLEmhvGMOk4k+
+         My/Gt8FinJ2ZzZevZ8oYsUjc9+ZEPLGXMRRO4AXpoDLhRx92N+E+Yd8EBJIADsIeSNvw
+         7lU1ONIqUtyi3QSgjjkZwi242cnUrMZLwSfgAg8Njxk4fJtnsme2qnk4wBZVqlmuV6BM
+         eIKw==
+X-Gm-Message-State: AOJu0YyBa8c6KHQAl+drDKARGdGVzhXa4c2lmz+9L3AlGe9IiIL8wrIn
+	FlMyvRsfF+kg+o7qlhypz2J/pf0Qd0YfabkDhttfgk3C+yNzmChBd3NT
+X-Gm-Gg: Acq92OE7MGrHCHqonbQ5ogboHw0mJBK4uTN8VmcZGCxve18IQZ/3SpvkoVixF1YcMgE
+	z4OulyyFtOjWGQ6zOLRo56IpxY1+fJAnD3eHndXhDr4bK/SW8vjTDK8xfJO9M7gYXupLcHDt+hX
+	Za2JcgPPPZ6GdY1ekh5vUJkukKQKmJOXecAxgvNONc9oVmzStK7X+les3PtCGowQ3EN9EiwtqkM
+	ZFBmvv99Ml9vXADMgru1Pc8Pe3n/4V/WLWSs9/9bmB5Voc/JuUfEzp5eeoZSotpBUB6QWk1s9uS
+	bfvc7zbEoPbxUWDP2IMPCguPwKl2JmbX3Zy5AB02n+ERq8B3l7KH48Dv7gZOvGm3/CyEXzmlx8z
+	zCke+vh/HcdUlJX23Mz3Os2CM23sv61P2nnaTIVTRi8KkdzYWVXQVIhpcMAsfaUZzHBxr1Dxynj
+	8kmBMzwbjBWeGaFzClNCSCCcq8d8z5H08u09U0DkUsXUShar9m7dqTDE7UPSJIKkc=
+X-Received: by 2002:a05:6122:3d12:b0:59f:4c56:9d0e with SMTP id 71dfb90a1353d-5ac4ec9396bmr7300830e0c.5.1780931156256;
+        Mon, 08 Jun 2026 08:05:56 -0700 (PDT)
+Received: from smtpclient.apple ([189.62.148.96])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5a6dcc2ecbesm13838417e0c.13.2026.06.08.08.05.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jun 2026 08:05:55 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [GSoC PATCH v2 1/4] path: introduce format_path() for centralized
+ path formatting
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 8 Jun 2026 12:05:40 -0300
+Cc: git@vger.kernel.org,
+ a3205153416@gmail.com,
+ gitster@pobox.com,
+ jltobler@gmail.com,
+ kumarayushjha123@gmail.com,
+ phillip.wood@dunelm.org.uk,
+ sandals@crustytoothpaste.net
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <22E79E77-BCC3-4622-BD39-F4ED7DDA9511@gmail.com>
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260605163012.181089-1-jayatheerthkulkarni2005@gmail.com>
+ <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> From: Eric Ju <eric.peijian@gmail.com>
-> Subject: Re: [PATCH GSoC RFC v12 03/12] cat-file: add declaration of variable i inside its for loop
+> +++ b/path.h
+> @@ -262,6 +262,36 @@ enum scld_error =
+safe_create_leading_directories_no_share(char *path);
+> int safe_create_file_with_leading_directories(struct repository *repo,
+>      const char *path);
+>=20
+> +/**
+> + * The formatting strategy to apply when writing a path into a =
+buffer.
+> + */
+> +enum path_format {
+> + /* Output the path exactly as-is without any modifications. */
+> + PATH_FORMAT_UNMODIFIED,
+> +
+> + /* Output a path relative to the provided directory prefix. */
+> + PATH_FORMAT_RELATIVE,
+> +
+> + /* Output a relative path only if the path shares a root with the =
+prefix. */
+> + PATH_FORMAT_RELATIVE_IF_SHARED,
+> +
+> + /* Output a fully resolved, absolute canonical path. */
+> + PATH_FORMAT_CANONICAL
+> +};
+> +
+> +/**
+> + * Format a path according to the specified formatting strategy and =
+append
+> + * the result to the given strbuf.
+> + *
+> + * `buf`    : The string buffer to append the formatted path to.
+> + * `path`   : The path string that needs to be formatted.
+> + * `prefix` : The directory prefix to calculate relative offsets =
+against.
+> + * Pass NULL to default to the current working directory where =
+applicable.
+> + * `format` : The formatting behavior rule to execute.
+> + */
+> +void format_path(struct strbuf *buf, const char *path,
+> + const char *prefix, enum path_format format);
 
-"add" sounds a bit strange, as the existing code wouldn't have
-compiled if the variable were never declared.  What the patch did
-was to move (not add) the declaration of a function scope variable
-that is used to control for() loops.  Would any of these work?
+Nitpick: the documentation is clear to me, but maybe the function name
+"format" and the parameter name "buf" can mislead the user to think
+that it only formats the path without appending to the existing string
+in `buf`. My suggestion is to rename them to something like=20
+`append_formatted_path` and `dest`, respectively.
 
-Subject: [PATCH GSOC v12 03/12] cat-file: narrow scope of loop counter
-Subject: [PATCH GSOC v12 03/12] cat-file: declare loop counter inside for()
-
-> Some code used in this series declares variable i and only uses it
-> in a for loop, not in any other logic outside the loop.
->
-> Change the declaration of i to be inside the for loop for readability.
-> While at it, we also change its type from "int" to "size_t" where the latter makes more sense.
-
-Curious single line that is overly long?
-
-> Helped-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Eric Ju <eric.peijian@gmail.com>
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
->  builtin/cat-file.c | 11 +++--------
->  fetch-pack.c       |  3 +--
->  2 files changed, 4 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index fa45f774d7..c060fd4800 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -726,12 +726,10 @@ static void dispatch_calls(struct batch_options *opt,
->  		struct queued_cmd *cmd,
->  		int nr)
->  {
-> -	int i;
-> -
->  	if (!opt->buffer_output)
->  		die(_("flush is only for --buffer mode"));
->  
-> -	for (i = 0; i < nr; i++)
-> +	for (size_t i = 0; i < nr; i++)
->  		cmd[i].fn(opt, cmd[i].line, output, data);
-
-The loop limit "nr" will not become as large as size_t because the
-caller passes a platform natural "int" to the function.  Wouldn't a
-stupid compiler give us warning on comparing unsigned size_t with
-signed int here?
-
-> @@ -739,9 +737,7 @@ static void dispatch_calls(struct batch_options *opt,
->  
->  static void free_cmds(struct queued_cmd *cmd, size_t *nr)
->  {
-> -	size_t i;
-> -
-> -	for (i = 0; i < *nr; i++)
-> +	for (size_t i = 0; i < *nr; i++)
->  		FREE_AND_NULL(cmd[i].line);
-
-No type change, so the result is as safe as the original.
-
-> @@ -768,7 +764,6 @@ static void batch_objects_command(struct batch_options *opt,
->  	size_t alloc = 0, nr = 0;
->  
->  	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) != EOF) {
-> -		int i;
->  		const struct parse_cmd *cmd = NULL;
->  		const char *p = NULL, *cmd_end;
->  		struct queued_cmd call = {0};
-> @@ -778,7 +773,7 @@ static void batch_objects_command(struct batch_options *opt,
->  		if (isspace(*input.buf))
->  			die(_("whitespace before command: '%s'"), input.buf);
->  
-> -		for (i = 0; i < ARRAY_SIZE(commands); i++) {
-> +		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
->  			if (!skip_prefix(input.buf, commands[i].name, &cmd_end))
->  				continue;
-
-ARRAY_SIZE() is some arithmetic over sizeof(*commands) and
-sizeof(commands), which is of type size_t, so this is better than
-the original.  Use of size_t i of course is a natural way to index
-into commands[] array, so the result is just fine.
-
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 120e01f3cf..f13951d154 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1388,9 +1388,8 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
->  	if (advertise_sid && server_supports_v2("session-id"))
->  		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
->  	if (server_options && server_options->nr) {
-> -		int i;
->  		ensure_server_supports_v2("server-option");
-> -		for (i = 0; i < server_options->nr; i++)
-> +		for (size_t i = 0; i < server_options->nr; i++)
->  			packet_buf_write(req_buf, "server-option=%s",
->  					 server_options->items[i].string);
-
-server_options is a string_list whose .nr member is of type size_t,
-so this comparison is perfectly fine.  Ditto for ->items[i].string
-that is a natural way to index into an array.
-
->  	}
-
-v
