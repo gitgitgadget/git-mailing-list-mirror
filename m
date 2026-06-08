@@ -1,88 +1,84 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB0D1DF74F
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 06:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B238386C17
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 06:24:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780899627; cv=none; b=ex0dc1HlwuHtK+UGNIneVoLX5t5/zcxVIeJKIFbjVTaJp9oFHNlmkOtbpKOA6hIpkHSZs1hAmqKN5ZTNbrfJC+KvlaYqa70Cn+v4SvHAxMW6WUhGJM2o15CqdBKR1p/SG9hprM0BME+1ZekrQT4UfNyGIP4dysOfLwSyuQ1puMA=
+	t=1780899842; cv=none; b=M38ui33EE8jwYfsX6wwSH2ujF4RlsxMtCZ8Gh98VPRTIpEdhLsUHd9UM7vXzYAJn2veeEEjCPxG2dZZ41y38cGXoTJri1lEL6H8dnQ+q5uj/xlt7jeM19HTZIe2yMMOdZKx+J6IN02nzYopWnuku+HTaCgBFpLk1PXJBJtF2LgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780899627; c=relaxed/simple;
-	bh=7MYUcA9L94Ro16oeDZGWt5EN7nJzUO2GjK8Cnm196EE=;
+	s=arc-20240116; t=1780899842; c=relaxed/simple;
+	bh=C0ffHfWyWYw32NA3omEp7Rv1IJNRO/qCpvBa+DzCcPU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U1ICD5WLdzofnYKHcmrXrjwx0bt8K9hWH+K73z8t1U9YdwPRVJee5TEaTldxbD+bWhPUnvqZ4bnoJcHFRig3zGJ80GQ0zxEu00RG+XfqlT3chEljBOL2OfcnzPvvSVAC6gAtLI+OkeSj0k2uGv17R1TnTV7cf6UowDxFV6lrHqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QfVpg7rX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lDQR22qM; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=eUO9PUtOMCGyTfN+tyvIs3n/0dNw+KwULshjFCqgHFaKj5C1nG6eQh7VmuCgHAryhAscrHMrpa9EKn8hfiwytTbaHtx9Nc8VLtyxV09blsIqwnpcEJ/9KqW46ZEzmLlx5xA8VcxolqtLj6ukGA021MK57SXtmk8EyJ71Ysmlmac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NJJe+duc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fvbZbUho; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QfVpg7rX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lDQR22qM"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 667481D000D0;
-	Mon,  8 Jun 2026 02:20:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NJJe+duc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fvbZbUho"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8FBD57A0068;
+	Mon,  8 Jun 2026 02:24:00 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 08 Jun 2026 02:20:24 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 02:24:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1780899624; x=1780986024; bh=QXkjJTR67B
-	6ytcibG3HDsrAAJNihUSMc6dyCesUEYXY=; b=QfVpg7rXaoKK7hhDwhCg/nsBCb
-	XAU+B35ksTYIxr0BUb1WcoDfEvlbNCCG5lvfPLIPeClgzr1wEF26dao+M5l3W5FU
-	pUnTcSn52oFtnkcWeGhOTpBYuMKpSabN68qmQfaOTr3eOx8SlxeEuJea/PXUK0d5
-	H7b8YGVBQqULa1GVSLljnmOu96WqHnHeVtC8eyzUjp+evKEIRB4iAqXOjQfFlPyv
-	sJh4X8siU8b+7C1MahxnWiEKkYiTopPJFqo7xznw6jUU1nQKB2WGgXgmjUa0BzFL
-	tYfOyrfa8G7fS2YHyfJ72DhPgqGcoe5Fb4IJur2KEFI4pRvoo5NRVWqCIdFQ==
+	:subject:to:to; s=fm1; t=1780899840; x=1780986240; bh=3v6OUaISb8
+	NvbcENCPmZxnmf4AM0L14c7BQengOiTEc=; b=NJJe+ducjQdpdX5vCtUSde/Zbd
+	zCxvmyHPPBv+qlGwx8TOLlMF4sWoIj20f4PMlkueCHlrt9Yau81yolTHp0MaxyS9
+	4s5sMDZUfvErs4mdILuRp/k9pMzt1j6sFxSBAdyxAHikWrI4FmrH7MbuhmAueMip
+	RCdVvq/M6sGNP/NoUhRFHdyJvb9UDplnPNmAiDZ+Bf2ETy0DgsdO2UEMHwZ1a74S
+	F3MMIG+kKDsHIBZsYT/XBwJRm3TpbIl26u5d1J+i7OTi/8PAflRSLSXueEXNGv0B
+	Zx/4MoU/VvB+4+ovLiBMk015jXEZBF7pYd0rIv8GgZDCCu9Kftpol0pfc7hg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780899624; x=1780986024; bh=QXkjJTR67B6ytcibG3HDsrAAJNihUSMc6dy
-	CesUEYXY=; b=lDQR22qMxww6OcNO6yBVJy1gYC+5HLOSkYg+6LvwKi2+cyrx65F
-	PFXjyFPZqzmsO928le94g1zoRAEcq1QWhYfXVlzX9HBYrXXtFnJv2Ni3i3mYu40R
-	hc45uyf2CLwQQyg5WjzWwqNtEvA8G/TSkpxpuJkR22K5XP1N8Gs1Klse+8QXoQVZ
-	f4SSAMPH6AhgLj57m5JLgVq46ETE7jeFBBEK8mUBZvDjmYj7FCo6u3ko9Ce6gDLJ
-	ZA/VUDoGVQ57YfCP4yRFiGG0j2Yevc8O76JClqooxaRNLXsVljoA1eMibSdZNaRZ
-	gceuMNMi7xOVhKlzxKWaoxoP/Q44gWr5t2g==
-X-ME-Sender: <xms:J18maotYBEk6TyQWAAE7f9S6t4jHQpxwq9l3S6ej_9TO0cZZE5myMA>
-    <xme:J18mauwEeAw5NEaSjOebASCadaCx794LYcjGAsklP3-UFGZNnrEZmE_f1MuBC4VWl
-    CL3VbCaGCUjbhKxaqMpW9G1wc-ehWeQXZ6xNM3hZrYbGdPIhdPzYg>
-X-ME-Received: <xmr:J18marDvi7uRUzIiwHaPiJkfDYP7J9SA0ybTfvGnaD92unLNayBF4JaGJFSXpPO3V9obTL-7SndaeEsIcJOFFV9PzJNu-LvJe6qtFqxntA>
-X-ME-Proxy-Cause: dmFkZTFx1bCSbcq9VNmT4W9f1ZGPp6Z6v0RpbZK0gHHO0xIxVekfIYi7qoxi6lDK6h7hXL
-    kqBdk1BpMB1wjBt1Xq8CgpghJ9wVeH9qCpscQXv+gIfB+oP0n4k392+dkXewCUQLY5VATe
-    lkt8vNwWfYkR36ABEPRxGEa2hQMNsnGD4hgDYN6mCg19ZVykn7/xuKe4wfN7d/Tb66MUze
-    /Qdglrog/tKMOESIKo1YZoLTZ6PzULsLu5iy3nJVgbp8PuemEA2RHO7T7c5Zogwz8mVXOO
-    /HZIpWbVAAobPmltMX2TAilokmmsScaNpx0qMitsHzRBuJ4l277MOj2sahfAnWihg/geXy
-    iRII/l3PswqP8pHKDFsZiGSu8Skhvm+yPERsRxTvDMBedXlcdIDU53aOOvMKWMHon3IIYQ
-    UEP88oyVYtBCqdnRM/iZG2CdzdSSnxs8eJwfputM9A9Xa/nnkWmn0C0xP2U3z+R5yf/myH
-    NdYy/KlyhwK9jP3h2QozztVbY3byhYYoz/GzFsAIRwGA701VwekIdXotoKQ2N4n8jBCP6k
-    /Tge+sZTggyKOP+NvS8uYvzQu13hTfcyrt1EGVxp+Yxkwd1XoyuaN3Lwt4MwZO23driNHN
-    bvnVk0hBWRuMAzhHixmnOip0kxhEUFElnNaJJPaCziFsfXxuSB/Qfd+EqV6w
-X-ME-Proxy: <xmx:J18masdMXbk69A6IZFs60fAgjD1T5NHyThZxkNZExqBQYQ-KXOFoRA>
-    <xmx:J18malnxMCeoobSmAidRDcNF19d7D-UH7NuUABpGFlQ8rbjI_0kqvg>
-    <xmx:J18majG9hlOjTDskwZho5WJJu34_X-cUPzlYQ8fFsVxypVgAi57Tdg>
-    <xmx:J18mat5vyHBRGAtpwmFLnk_uR7ptutofrxz6DCgDOKXaf8HHlp5xtA>
-    <xmx:KF8mahD0iv4JSFZGaOobBJ3PkaamArX-SqghMUCD3ErPj6kQx6yT5MNn>
+	1780899840; x=1780986240; bh=3v6OUaISb8NvbcENCPmZxnmf4AM0L14c7BQ
+	engOiTEc=; b=fvbZbUhobWX8aefvA3SXo0WdbI/7FbVEDmLlxAUzzGvdzXsqQ2g
+	dA8TOHQwSl1saqa0uHrgagpoKt6Fk4rdeDqgRe8RF4dgpUsErf6uHf8zENQ3FQ8D
+	B31/CbcqLU3yD6+l3/GWt8OrAUH09aw5withOaSbWzb2zZunWt0MXUdk9aBFYsIn
+	jBvqb/0p5kj3YY8SsDsfE47Z0YAlJ1VFSyL9KrT1VuV4Hnw7ZH4l8vxSNyvI6AuK
+	HfABJFygAFC0SvUCIE8facwOAmj8e4wnBdHuUCrHvNmucLRuxYWQkTqilrCokDNj
+	9L5/37u9qxEYH5wXjz0DM3wBXn25qYXTyIA==
+X-ME-Sender: <xms:AGAmalbS4hMAXZ2U1bH-NLFegZ8Zxayp4otsU1RdsoAwvizqXVJEPg>
+    <xme:AGAmaiZyaJS9IaHIOuAnzXdNPnerVA2VM2_-5t_StJ4R2OrnNIVY2s8U-Tv7eT-lh
+    SIxmu6rT7VWCu-gKckYMXaVQnXvg3i-jX1uVcYhYXt9VUUxlTfF>
+X-ME-Received: <xmr:AGAmalm0V2q4xuhiLV545X68bb3KnJU-fB0xO28ivluN-drcVMeZl5b4ET2i9jo2Eg7LyXyOdyq1P58IC-qPs8_J__Iyjg6aTQR9r6n0VA>
+X-ME-Proxy-Cause: dmFkZTFF2EYtR10Kdrm6C+4KAgMG9mhYuNko9VLXTQztmvZjgcD9mTlMdtC8oyoMpzcx7x
+    eToxXSieRBdBHrWKcE97iNpbP/cQaMX410/ZOc5PQwCjIlVcYKJQWqUrbnlFFcwjgdTZRg
+    TxEo2TIf+BA/wwwK5omYghnA45FHccomZlNL+2cmY2G8MAEwbhs7poie0Gq2ZSbeYTAEZI
+    tKtLDL8dBKg2A/wzlBseDqTsPakDQhequxDoj2IeIVsyLYY/aa5XsWskkbUNI6E8VNXLDl
+    enXCb9mqjASSCx3Ljrp5Lp89bKWPlvU9O2/RMyYw9n9OMsF8rkyKWr1YzXQvjSw8hHPXeJ
+    2unJMQmQlmJAozdk9vBejeyaLlAoYuAxaxOvcutfONi2rbBUPypR78Y3EUiKwH1K+YomIY
+    1fjWd5XdagkmYLLE2VPigjkXF0pA/CRlrIDmCL1cRgDI4/DYZPdjCzfaoVxMyANTPXGnQA
+    iIHqho0kcSR/50INqZLo7aFx7hHdJZYH8ysxH19jdGmIv1Ow+J/Hu5rxLrLASGR3WyclOV
+    s/9M++dD2VjmHwFLQ7f55FO1+QDQSiJIBt4qPXS1ncvi7/3tpfsrNaxNJCe7zZRuXY+L5L
+    end4Uk2QORvEC9fMqPpCju+7lO/RV98+gfprHL2B6wuWQk4USaPg1BGk974A
+X-ME-Proxy: <xmx:AGAmauwIRqvcHuhxHPWkIAuajexTHC9DfJ-Zr1mdJ1gZrYVthGUPNg>
+    <xmx:AGAmajNSLKRIAeTA2L7bhmVBaMjDImCk5-y5kwBbmwYVe_zm9YTavA>
+    <xmx:AGAmaiS9VFcw0E37ENDLGRJpL5zsIaqOwujzq418e1paqg3GdNQHJg>
+    <xmx:AGAmahaTx8E4xReHix2P2dbpYcja-HQm_KBZkEvIT1SyqUFw7gOXHQ>
+    <xmx:AGAmarKCJJOIy5S8k3O7qEwg541CDtBFrksgFyvBu38BYB-HYJda9Q-x>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 02:20:22 -0400 (EDT)
+ 8 Jun 2026 02:23:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 161739b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jun 2026 06:20:20 +0000 (UTC)
-Date: Mon, 8 Jun 2026 08:20:17 +0200
+	by mail (OpenSMTPD) with ESMTPSA id ef7c8acc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 06:23:58 +0000 (UTC)
+Date: Mon, 8 Jun 2026 08:23:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Dominik Loidolt <dominik.loidolt@univie.ac.at>
-Cc: gitster@pobox.com, git@vger.kernel.org, asedeno@mit.edu,
-	asedeno@google.com, avarab@gmail.com
-Subject: Re: [PATCH v2] compat/posix.h: enable UNUSED warning messages for
- Clang
-Message-ID: <aiZfIc8k-9Et25g6@pks.im>
-References: <20260503151210.36036-1-dominik.loidolt@univie.ac.at>
- <20260605094647.94805-1-dominik.loidolt@univie.ac.at>
- <aiKnqlI7WdcskDAs@pks.im>
- <aiK4BR86cuq5bmCe@four.local>
- <aiLNqQgiQPlviB5X@pks.im>
- <aiLxCWp8Bv-KQoLf@four.local>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/16] packfile: rename `struct packfile_store` to
+ `odb_source_packed`
+Message-ID: <aiZf-_o9bH_EOtwe@pks.im>
+References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
+ <20260604-pks-odb-source-packed-v1-1-2e7ab31b4b5c@pks.im>
+ <CAOLa=ZQhGbjFbn_cpOmhYYN0xNjp1K8_Pj2mi34WzS25DG4ZEA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,37 +87,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aiLxCWp8Bv-KQoLf@four.local>
+In-Reply-To: <CAOLa=ZQhGbjFbn_cpOmhYYN0xNjp1K8_Pj2mi34WzS25DG4ZEA@mail.gmail.com>
 
-On Fri, Jun 05, 2026 at 05:53:45PM +0200, Dominik Loidolt wrote:
-> On Fri, Jun 05, 2026 at 03:22:49PM +0200, Patrick Steinhardt wrote:
-> > I was wondering about that, too. The question that I have is whether
-> > there's any particular reason why the check was written that way. So in
-> > the best case we'd do some digging into the history to figure out why
-> > this looks the way it looks like.
+On Fri, Jun 05, 2026 at 07:25:31AM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> I think the current bit-shift style introduced by 89c855ed3c (git-compat-util.h:
-> implement a different ARRAY_SIZE macro for for safely deriving the size of
-> array, 2015-04-30) was inherited from glibc [0].
+> > Not too long ago, we have introduced the packfile store in b7983adb51
+> > (packfile: introduce a new `struct packfile_store`, 2025-09-23). This
+> > struct is responsible for managing all of our access to packfiles and is
+> > used as one of the two sources of objects for the "files" source.
+> >
+> > Back when I introduced this structure I didn't have the clear vision yet
+> > that it will eventually also turn into a proper object database source,
+> > and how exactly that infrastructure will look like. Now though it's
+> > becoming increasingly clear that it does make sense to treat it just the
+> > same as any of our other ODB sources.
+> >
+> > The consequence is that the naming is now a bit out-of-date: it's just
+> > another source and will be turned into a proper `struct odb_source` over
+> > the next couple of commits, but it's not named accordingly.
+> >
+> > Rename the structure to `odb_source_packed` to align it with this goal
+> > and to bring it in line with the other sources we already have.
+> >
 > 
-> I found that NetBSD [1] has long used the more explicit comparison form instead
-> of the bit-shift style, and other BSDs seem to do the same. So there is at
-> least established precedent for writing the version check that way. :-)
-> 
-> I see no obvious reason to prefer the bit-shift style today.
+> Looks good, I'm assuming we'll also rename drop some of the
+> `packfile_store_*` functions as things get cleaned up in the following
+> commits.
 
-Thanks for digging!
-
-I don't really see a reason to keep the bitshift style, either. It could
-make a difference if it was ever evaluated at runtime, as we would
-evaluate the arguments multiple times with youur version. But all of the
-instances we have are evaluated at compile time anwyay, so that doesn't
-matter much to us.
-
-I'll leave it up to you whether you want to send another iteration of
-this patch series that also adapts the preexisting callsite to use the
-new style.
-
-Thanks!
+In fact not all of them, mostly because I wanted to not make the patch
+series even bigger than it already is. I'll clean up stragglers in a
+subsequent patch series though.
 
 Patrick
