@@ -1,183 +1,212 @@
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402AB2BDC1C
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 19:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780946192; cv=pass; b=AVUzPXHrLyVXzaGKLRmWmphX390DbTy7J+rWOLqtQ6U6Tdm/8C4uF+osEfCKPpcnWsuAEksFRFtNDRCz6TLb2hX78g7tgYPNVzL0G4dYw1NBWQ2PxpGnUtnQzybO73q3KpcNcqf/ZJSu9xh8bBYtHXItVXCCq53/R3oHeiVTAlM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780946192; c=relaxed/simple;
-	bh=ONIU2cTz/Nz6HBBGFYLHUnBN+Y3tAWrISdwCxPfrsuU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Kn96mdGcsNjyH4k52QUPewsYpkWx5l3x5kbroReS9LSpCKLX6TvT0SInclY4SWZPHuq5s2eOCMZ3Ph5oweAkTq6moHTqBxbZa0jg/KzX61aZ0fzYOAF2v8ZMMP8qC2YcWIwWMHMQ33gf2V5xgA/8DTtDQQsJvf6em5EC1H0/AJ8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CKOHTLLC; arc=pass smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11AF3E63AA
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 19:29:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780946953; cv=none; b=f3F8XC+4g/HePwjTeq6UeQ7aBqO3fP56mSXzzIl2KNC8PXUod0YOnV0SSpt4soT6acJJSdI4wnhRos8lLh3ScSPNqeDqdjN7INdAP53aHvsRpi0JykaFEJCftPtnNHph90ccNlb6c+JCQ+6RwuFy1c815Rlj4N0pjb5Xwuro3js=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780946953; c=relaxed/simple;
+	bh=Kc6MP63y/BvGm2Q124zJCVEqsk0WsL8AeYTnB9cCDl0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JJWbTZLhdnOoURm/B7IKGRVuo+oZBSv7Rx2KUknMwdeOORrrUwFMREXnExi7f3KXhwdLvMoOKziIYfPYx+cALflofA8zN4jAvjTwBc6o7oOHp4Yp3V7Z6WjID3N72gXo6ZF3b/jNstNjUsEZSu5YxF252gWsoc8g1XkfLy3p4vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ndoPDFmS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jivyvmp4; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKOHTLLC"
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-39677c434efso48746221fa.3
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 12:16:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780946189; cv=none;
-        d=google.com; s=arc-20240605;
-        b=IfEj1crfsk/NouaR4GT/4fEDE2N7nuZaBnulNGt+os5bbEEZoG+ZHiFUrP8jN47SQZ
-         2H5BzFH7ABwU72k4/N0medQmx0l+D9MnFCpZE25IFyl8361C3I5kteTHzS6G4cQQ36Kz
-         mbDHHpKL3h3EDZuq84EjBJHdGRQz+aQsT7SGw6u4F4AVh5OBIFyYTzaeE5E7RwVWHaNz
-         WICWTv/uswFQ2KdHGUh3SnN2aePz15d35A6DEL50JUoIKdsv/ROwOpYtPXZMuKodMxxO
-         8iEoz+0Oi3WwHGgXXv3HvOyLc2trKeaEYwUlyuxz7AvdlsdPZ6teLzSqI+ZABg7MvMnn
-         9JGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Qw0/0XkRMmfxw5FAtIer1mkazdNIgEtObNK04f3nudw=;
-        fh=QF2T06WfIjsmCPAE/ZTVcX58jMfEr6zdBGNX73WiwaQ=;
-        b=ZvMxGT0yg5/jacdISaRgP2gRNofWFt5baYYwaCHet7M3sJeD089UhCIztORS1SyMLf
-         6uaU1DuNpKh9jTTCdjiPvPH/xbMpZuBOynVAMNLTxquInzM7r7Izjtvc3WQ3hCr4grAF
-         PkPHgmuTJTyqtgpV0fCiMk7nS7k1Nmf1O/HW9D1xPT43DJSwY6+5h0l3okWM4Ka7pqmT
-         G1ruvlrypyH1qES8UgD1CVTyGCI/8R4fhJ0jFYo36MBHZ7n3TEmn9rUVVzh/3kQySVwT
-         TWA1NCpvJYKOFJECdaId9F9fc7Yeb9I54WNy7jp0e/d4vRzSEBFx6Nf/loXZMfgUwG+s
-         cIOw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780946189; x=1781550989; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qw0/0XkRMmfxw5FAtIer1mkazdNIgEtObNK04f3nudw=;
-        b=CKOHTLLCXFeDtXF1x8XBl1fzh+sWdrEo7Ie8ne7cXzPn7//YefwBYoWhasV2G8rTV2
-         cgt0xtjKkddiTOux0R5H/NU4GYGkc4JqRAMLkRzTGwaAwWD3opK2yf8eLJ9kghz0Ktwd
-         lkeG9sCK2gfqakeYy8Bq5Lzb0it7gatvGUl0Acqo+bwPCyQjFeZwkQNgt5ZAS/d+z7O0
-         lgPvGh/OM7RophHIP1ykhTZ+l2REg8VGUnU7NoX4EnUNvjGcSmVpnKSt2dQSypTrlQeQ
-         /ItQ2+DLStmlkZXvNmMODkvVqZM11XThCnx/kRoNsMMZd2pqJOJU5I6sGt6/qlM/2ZRj
-         uP2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780946189; x=1781550989;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Qw0/0XkRMmfxw5FAtIer1mkazdNIgEtObNK04f3nudw=;
-        b=jpD2n7pvg4iwBw9KI09nNbwvLkmLeIkecHitT0cPay3xMdKqqksFR/umZ9xCwuqFAf
-         5tr2p6gDKxzMFApa5rksqACxbUhu9z2QIaIB1UfR4bQVCnGTZwtjfgebM9e5CVt139qP
-         yrl8CEzgmUeGNnX2/j7PrwcjpHY85SdOdR390Q0jeDtTxtqkG1yUqAben9OqGs3+dbfP
-         MUDJDHAeJInwoTBDDilI0NM0tjxfwITZ4bSU5mxegCtDFOM4br0SiXakIxiav0grsFzq
-         VnQgxVDDEO7ALrjflL+PdTtHHaSUPxzQZTBanJtegEtykllcuhbd9akU9Rx3t0amIucL
-         fzHw==
-X-Gm-Message-State: AOJu0YwCcOLa214Vu+ys85aU7/a5QB37c1fXprZSkfzCqyAVtyNkF87+
-	WdtMS/9RJNSc8Gocbo7pDnupYtrhIWCPkbkfigP9rDSgSZmBGgZvKbBu/gtvgVx6hk5DGJ6XzPH
-	P2nWuEpN1Sy8z73EIfxXZALMF6o9/GLCzkE2avRw=
-X-Gm-Gg: Acq92OGfk2xiv6amu/Rl1FA2x362mlUCGOXK2Ts5/IZ96cKCO8qip2ZCia1Au2BNmOz
-	y1E33akh8D44Oa9OaOgUF8aDjYyZC9TESwZFAcQfb8zikmrK7MrMNLGwtu7XV+jz23bflCezlpc
-	09ozY4urnMGncs+L4WG1/IlJXorJQHIcoDRgbCvM0urtA/QFdeMRaBCgH6FXksRI+iaaJjzbPnl
-	Tdr24WRh9gOTSriQ4Zgs6sMGXy0KwLzSe+946xRZ6rKcLol8inCLvbK8KJ+7KkJXTEgpt/GQUAJ
-	5mw0NbPysCc7KeG5nd7dBiDZhEyogh+4stdBbxRM/4fk3Icm0OLJ7xr7VjlaRr5dLztLV+8+//v
-	UG+G2asUrhNHAN1h6V4m18C0MyxegSBeJU4c+9xaaYQ==
-X-Received: by 2002:a2e:2242:0:b0:393:a31a:ab3c with SMTP id
- 38308e7fff4ca-396d0a41913mr33402571fa.25.1780946189434; Mon, 08 Jun 2026
- 12:16:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ndoPDFmS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jivyvmp4"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id E6DF61D000D7;
+	Mon,  8 Jun 2026 15:29:09 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 08 Jun 2026 15:29:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1780946949; x=1781033349; bh=liMOvs/eXT
+	NXMRLmtX5ObCyinCDWD7QOvTa3Qkw3rxs=; b=ndoPDFmSDr6AiLVXm8V6x99w0W
+	jxm2lda7UzxmqaUk74e8FBn0akgaRkJe6mIl0bGlNDchoGMhYtYvJlT58cFxsXCF
+	LxVP0uxx+312WSz1HMFOx5cxXIfSxZMEs1mVYuOjCFVXaJchTFL0MpJOny4OJ0Ju
+	xWzKpeqZSL4Gp50iEaqkm6ydkFzYUYABU3a38ndJOscLIKCrS0zcR6FFESZFLBpi
+	d6dr3WVV5sgikBcnDts5Q0Gb5nxG8cIQrtpaPv5++YTgA39VGO7aWoCu05JRHTYv
+	NY+X+1ORAJLxQsdEmkrZP17rk4Yrtpfc5z90LzhBhzc6J1BeQdgbnLAiA+6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780946949; x=1781033349; bh=liMOvs/eXTNXMRLmtX5ObCyinCDWD7QOvTa
+	3Qkw3rxs=; b=Jivyvmp45GIca9XvsdriV4MnRnqhNYHsPn9DDZEgeLW7wgkREoa
+	iAyeqN0e7lz0qrGOPYv09wiaLZJMUzVOUb1mN5RbLmyh4YagmZ4DnROCyLTD04M/
+	FTztKUPuqjKaIZFhhL4XbUf9myUGh7LZmtMVMQBMJC0/QelZ89fcFVvlGBkBaOGS
+	T7y/yaStvyf34lHT4L/Xbn/KOSY7uIgyugv7r9YXb1FOyiisega/JVQqmnb0uKZK
+	Jj7Jc3TwlvVolbFX9L3emLXKADwQh8Sb7rjwZkqqIxsofSbbUNxU7xgLXNDT/qK0
+	k8vQ0GeLJNgPRpZNP4o3HC15eLRwNM/N/Qg==
+X-ME-Sender: <xms:BRgnapW_5UvK2-czZcKlAu_OSn07Oa1wMib3ZTV_QilIJriid-whsQ>
+    <xme:BRgnagkxffEulYbSRCZReKSIwI2pmaTa8grM7oaBn6zw3z7vgvPdt922K82r-2BF-
+    j3iN8Q85ISf8xU0SgPSbCm3MIEEcnwdC6mrWW27EEidw_OLysym-g8>
+X-ME-Received: <xmr:BRgnaqYEkrwDZl7PoYVDoMgRvSHyozLS8eey3IsAIZLobGjxbOis5nb1KOk9c5q4xjHxTnBO_PfOa_bZ2thhUe8PqfwxMr3LG9BF>
+X-ME-Proxy-Cause: dmFkZTFzfjnxbyFliBcTjE4Ue2Ku4vZwRA4+RtG/BbJVf5aCUNtx9JFVoHKU7OEJQmm/oQ
+    TtZWT25X0yd/zCGfDJAl/kEMI9pMU5s4X2Kr5/vwt78k8m1Di5BTp8lIjN56DzmCzfkLXR
+    1HPw66s8nz3ZIauw/rXJd2IXYQNPzV6fN+9PdQxvMA3Egc+OUUZaWAD0HANS0Iklp7i8kg
+    6abXGK4/sO6nKkyqsvCeCj9rVgeoukvZEkKm4xytd2wMN1oSU7J2Jspp3UalvItLsyGxPc
+    zjn5HKbL84kaM+FVX/vxpBcggH9E2Ev4XU1j7BIMaMhLBEbShZVE8DqQdZRe5hpK3S00Zs
+    qQ1r2ClifGtfe31APDPO6SQwlH+dLkoNo1GlTLmdKu6pi+GfRFm2YdOmSAiWfIroWvsvBK
+    VGnoDxYZLKwdMY6Em9TxL8tIZkuCanKRaNk3dGXgO0PtyRukelMEhb3htmAGw2V95ZODBv
+    +ueyrEDuIq+dG7eg08aqfoD7GTow5pZ8tswJwFsHoexDpD8NHbcF7ANlRTlS+1OdAlFnhB
+    /PkTfugR15FJPIJLbuUPn4m0ldnhYBqPdtNjhQmqDHRMfF7M49E9KYS320k9vKdwZ4kZWn
+    WT1jB7d21/DfM7nBAmEDyr0lap4mpx0avaTk5dGmHqPEalYHfVp1LgZZ234Q
+X-ME-Proxy: <xmx:BRgnarMsgZDYOEWdp-s7MXNxhaflbT_zPDdkCET-93qPcXRMftBeuQ>
+    <xmx:BRgnavYPbrFxuMUHNl23BiGN11sq1R75dojXBDg9YmfEhNo0axhoUQ>
+    <xmx:BRgnap0dksdww-dIangSyC8rjN78A-CG48hhKpG1rCygoT9znAVP-w>
+    <xmx:BRgnale9eDrM7i9A4uiJxCcczbrIrArTPDJaTbrb36Z_TZO677egsg>
+    <xmx:BRgnaqs7pWNanY1vOSbCl4_-2p2aXGIfrpnOVyUINRkMUyMowFMa6cvb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 15:29:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] replay: offer an option to linearize the commit
+ topology
+In-Reply-To: <20260608-toon-git-replay-drop-merges-v1-3-e3ee71fce7b4@iotcl.com>
+	(Toon Claes's message of "Mon, 08 Jun 2026 20:37:21 +0200")
+References: <20260608-toon-git-replay-drop-merges-v1-0-e3ee71fce7b4@iotcl.com>
+	<20260608-toon-git-replay-drop-merges-v1-3-e3ee71fce7b4@iotcl.com>
+Date: Mon, 08 Jun 2026 12:29:07 -0700
+Message-ID: <xmqqtsrcvnjw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260607-ls-files-pathspec-lstat-v1-1-8cf40b730146@gmail.com> <xmqqa4t5yyee.fsf@gitster.g>
-In-Reply-To: <xmqqa4t5yyee.fsf@gitster.g>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Mon, 8 Jun 2026 15:15:53 -0400
-X-Gm-Features: AVVi8CdyiuZ8jwFBmSYc5yEda1z83zVdNoKvGEI2A0gHDO4VY2N6iYVul3hyOt4
-Message-ID: <CAJ-ks9njUM4TqHd=3H+aY8TCk6yG4o1yAhiSn2Tfz6oDnML20A@mail.gmail.com>
-Subject: Re: [PATCH] ls-files: filter pathspec before lstat
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Jun 8, 2026 at 6:06=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
+Toon Claes <toon@iotcl.com> writes:
+
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 >
-> On Sun, Jun 7, 2026 at 11:40, Tamir Duberstein wrote:
-> > show_files() checks whether each index entry is deleted or modified
-> > before show_ce() applies the pathspec. prune_index() avoids most of thi=
-s
-> > work for pathspecs with a common directory prefix, but a top-level name
-> > or leading wildcard leaves every entry to be checked.
-> >
-> > Match the pathspec before lstat() for the deleted and modified modes.
-> > Keep the later match in show_ce() so --error-unmatch is satisfied only
-> > by entries that are actually shown.
+> One of the stated goals of git-replay(1) is to allow implementing the
+> git-rebase(1) functionality on the server side.
 >
-> Adding an extra early `match_pathspec()` check before making slow
-> system calls like `lstat()` makes sense, especially when most of the
-> index entries need to be skipped.  But if most of them would match,
-> then we would end up doing the same match_pathspec() calls twice for
-> each path, and run lstat() anyway, so you may also be able to
-> construct a perf test that demonstrates a case where this approach
-> is not a clear win (or even degradation), perhaps?
+> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
+> was given. This mode drops merge commits instead of replaying them, and
+> linearized the commit history into a sequence of the
+> regular (single-parent) commits.
 
-Yes. I added an all-matching pathspec case to p3010 and ran:
-
-    hyperfine --warmup 0 --runs 3 \
-        'git -c core.fsmonitor=3Dfalse ls-files --deleted -- "*"'
-
-On a checkout with 859,940 index entries, I ran the parent and patched
-binaries in both orders:
-
-                         parent          this commit
-  parent first elapsed    56.807 s        64.618 s
-               user        1.256 s         1.270 s
-               system     10.633 s        11.068 s
-  patched first elapsed   63.361 s        64.316 s
-                user       1.238 s         1.280 s
-                system    10.296 s        11.864 s
-
-The added match costs 14-42 ms of user time in this case. Elapsed time
-varies by several seconds with command order, obscuring that CPU cost.
-
-The later match in show_ce() is reached only for entries actually found
-deleted or modified. This case therefore exercises the extra match for
-every index entry while still performing every lstat().
+"linearized" -> "linearizes"?
 
 >
-> > diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> > index e1a22b41b9..702c607183 100644
-> > --- a/builtin/ls-files.c
-> > +++ b/builtin/ls-files.c
-> > @@ -450,6 +450,13 @@ static void show_files(struct repository *repo, st=
-ruct dir_struct *dir)
-> >                       continue;
-> >               if (ce_skip_worktree(ce))
-> >                       continue;
-> > +             /* Only entries shown by show_ce() satisfy --error-unmatc=
-h. */
-> > +             if (pathspec.nr &&
-> > +                 !match_pathspec(repo->index, &pathspec, fullname.buf,
-> > +                                 fullname.len, max_prefix_len, NULL,
-> > +                                 S_ISDIR(ce->ce_mode) ||
-> > +                                 S_ISGITLINK(ce->ce_mode)))
-> > +                     continue;
-> >               stat_err =3D lstat(fullname.buf, &st);
-> >               if (stat_err && (errno !=3D ENOENT && errno !=3D ENOTDIR)=
-)
-> >                       error_errno("cannot lstat '%s'", fullname.buf);
->
-> Hmph.  In the current code, because there is no such pre-filtering,
-> show_ce() would unconditionally recurse into active submodules when
-> told to with the "--recurse-submodules" flag, even if your pathspec
-> coes not match the submodule.  With this change, such a submodule
-> whose path does not match the pathspec would not even be seen by
-> show_ce().  Would it cause a change in behaviour?
+> Add option `--linearize` to git-replay(1) do the same.
 
-This path cannot affect --recurse-submodules. cmd_ls_files() rejects
---recurse-submodules together with either --deleted or --modified before
-calling show_files(), and the new check is reached only for those two
-modes. Cached and stage output continue to call show_ce() before the new
-check. t3007 already verifies that both combinations are rejected.
+"do the same" -> "to do the same"?
 
-Given the 60.742 s to 1.061 s improvement for a selective pathspec, I
-think this small CPU cost for an all-matching pathspec is a worthwhile
-tradeoff. What do you think?
+> Co-authored-by: Toon Claes <toon@iotcl.com>
 
-Thanks for the review!
-Tamir
+There is no sign-off by any of the authors?
+
+> @@ -430,12 +435,20 @@ int replay_revisions(struct rev_info *revs,
+>  	while ((commit = get_revision(revs))) {
+>  		const struct name_decoration *decoration;
+>  
+> -		if (commit->parents && commit->parents->next)
+> +		if (opts->linearize && (!commit->parents || commit->parents->next))
+> +			; /* map current commit to the same as the previous commit */
+
+This uses the same treatment on either root commits or merge
+commits?  If this were a mistake and this wants to handle merges but
+not roots, shouldn't it be more like
+
+		if (opts->linearize && (commit->parents && commit->parents->next))
+			; /* map the merge to the previous */
+
+> +		else if (commit->parents && commit->parents->next)
+>  			die(_("replaying merge commits is not supported yet!"));
+
+And because the next one is also about merges, perhaps the early
+part of this if/else if cascade can be written
+
+		if (commit->parents && commit->parents->next) {
+			/* We have a merge */
+			if (!opts->linearize)
+				die(_("can't replay a merge (yet)"));
+			; /* map current to the previous */
+		} else {
+			...
+
+wouldn't it?
+
+If the "map current to prev" is applicable to root, any root are
+mapped to the last_commit in the above, and if we saw a root as the
+first thing in the loop, last_commit is NULL, we do not do anything
+here, and after the if/else if/else cascade, we see last_commit is
+NULL and break out of the loop.
+
+> +		else {
+> +			struct commit *to_pick = reverse ? last_commit : onto;
+> +			last_commit =
+> +				pick_regular_commit(revs->repo, commit,
+> +						    replayed_commits, to_pick,
+> +						    &merge_opt, &result,
+> +						    opts->linearize ? last_commit : NULL,
+> +						    reverse, opts->empty);
+> +		}
+>  
+> -		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
+> -						  reverse ? last_commit : onto,
+> -						  &merge_opt, &result, reverse, opts->empty);
+>  		if (!last_commit)
+>  			break;
+
+> diff --git a/replay.h b/replay.h
+> index 1851a07705..07e6fdcca3 100644
+> --- a/replay.h
+> +++ b/replay.h
+> @@ -62,6 +62,11 @@ struct replay_revisions_options {
+>  	 * Defaults to REPLAY_EMPTY_COMMIT_DROP.
+>  	 */
+>  	enum replay_empty_commit_action empty;
+> +
+> +	/*
+> +	 * Whether to linearize the commits (i.e. drop merge commits).
+> +	 */
+> +	int linearize;
+>  };
+>  
+>  /* This struct is used as an out-parameter by `replay_revisions()`. */
+> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+> index 3353bc4a4d..c781a3bb1b 100755
+> --- a/t/t3650-replay-basics.sh
+> +++ b/t/t3650-replay-basics.sh
+> @@ -565,4 +565,26 @@ test_expect_success '--onto with --ref rejects multiple revision ranges' '
+>  	test_grep "cannot be used with multiple revision ranges" err
+>  '
+>  
+> +test_expect_success 'linearize the commit topology' '
+> +	test_tick &&
+> +	N=$(git commit-tree -m N -p L -p I L:) &&
+> +	N=$(git commit-tree -m N-child -p $N L:) &&
+> +	git update-ref refs/heads/N $N &&
+> +
+> +	git replay --ref-action=print --linearize \
+> +		--onto A B..refs/heads/N >out &&
+> +
+> +	test_line_count = 1 out &&
+> +	read N1 N2 N3 N4 <out &&
+> +
+> +	cat >expect <<-EOF &&
+> +	* N-child
+> +	* I
+> +	* L
+> +	o A
+> +	EOF
+> +	git log --format=%s --graph --boundary A...$N3 >actual &&
+> +	test_cmp expect actual
+> +'
+
+Perhaps we would want to have a test that replays all the way down
+to the root commit?
