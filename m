@@ -1,79 +1,79 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E60383326
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 10:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C823B5DED
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 10:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780914219; cv=none; b=uXlZ8KNErOn0Bv9umff2a23YD8JZnzVXSUKe4RNm6msmEe61y0bfQdsEr2ivLH46vtdtgVz4MPtzW+UuBYF6dZhf+DKR74j7YM6EhGhTkbqi4WoLHrXvJopKvdYD87MJAgiFK9aGYadaVK93uvqlc2styEqsmnyIiq5POO33oW0=
+	t=1780914222; cv=none; b=VNnuzsd3eCacdgT2NQ50bEHHi07VnoMbzRGQI6nkvpv31s8akR4rwqsIqSOa51qlm8nldrdMfpZFNk7PR5xZVq37ZjDGm5pwmZBf2zcPu9LhxPSoM7qTuouBLT2ip/ZidUWB6fDp8HYdd2aZiyGF0ttUFpPJevx5R71LQae+KQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780914219; c=relaxed/simple;
-	bh=9P0s8K9/Hmd73RbGJT41lEXabgHZBjbF5GB1otvvtAQ=;
+	s=arc-20240116; t=1780914222; c=relaxed/simple;
+	bh=DfIUlQq1ho/tqBV5EqpMrB0N+7WohDSiA9nLpjCiOdg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=noYoQLFye0UpyZpzaMiIM9E31ja0WrZU01EEJIF018gpbWQvQDVqGXP2X5M8VuiAyZGnsdEVwfUrN40uBm9BBoy0e1+dbtMTLcTOM/py/N4r4eynqxFqlkQlhMB79W1M6fmjIXagO8bVelI+rGsYZIGRzMcGuZEhG/TcDdlr6vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eTC07Yhm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LVKPCtgu; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=YzGQptjG2hNOTOSbYylut8pxO0Dov3lPmJIPLPNcwonBBnW0XfdEPXOiDpWA1r7bP7t/I8ols6veSt39Mw6Xe8mIGdP42p9fUHpaY8RRSz9zzM7OwgkMnwOnFNEdTV5rppjPBFCLVDkoFwZYM63Hcg4BhwfHGYhL7bSohzZjcFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a0HpAx97; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K+uukClS; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eTC07Yhm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LVKPCtgu"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3E42D7A011B;
-	Mon,  8 Jun 2026 06:23:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a0HpAx97";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K+uukClS"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id C23221D00095;
+	Mon,  8 Jun 2026 06:23:39 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 08 Jun 2026 06:23:37 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 08 Jun 2026 06:23:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780914217;
-	 x=1781000617; bh=DrMCb3uPGPGsZN/8p4ddGkTA4RR04oGz9hhYKeWuW1k=; b=
-	eTC07YhmL0rllLHS2tgLJ17at+246tdUL93E6qkihh3K9NosxjhzJhYcAtFDfOU4
-	L30WqpaJC3RNhewLIZXCiFUzXags8GmcZo+TQ8XFK/bR1BAwu+z99SiQdQEKVCnU
-	Sr1aYZ81rfs84vLNB9qKnq5phwU503oTEyfZlYG1Nn43Dzpjzi827RLCBGAeU2A2
-	d1pknXia4cA8Mb38twe0qS61txiIl0wVghYTgK/4ANlgWgJKgyULAnf9kwK26ByL
-	eEaKaaNdW9OUBy3TlydgoidU3+6OkRbYqDNE/S+9CeXB++jXyvtw1X/529iyXwk6
-	WtBis9DIYd6GiAqjWMVpog==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780914219;
+	 x=1781000619; bh=lgzwSYPubM1kcxeu+7O2nWUHGUs3Tr60ubq0oUrypuQ=; b=
+	a0HpAx976xkuos3ETiqLnuhGLFoUw+91XzC3K1kYCv3Xxn8m85sFUNk2SE+N14Os
+	2bB857DHN+BkhaRIs6qdaHGUYkh48MQ6xoIsfvPE0kq0vqx9fUvocWzlXwukNrNp
+	5mA2LJNmBsu9V7HaSakUvj3UZl6/hEhswfW1HiLU/9OS1RsNmLP196vIn66JGeZA
+	hriRXLYG1wEUcddvogyfmy+6HH33t9MTNVpvtCCtsLVAOTHjyWXGKUkwoGrfDOGJ
+	qfhyv1yOtO8PSASP0ftsinfJVmU/UVA2MXqmH6J91e72GcXkZjWzTClpCTT+4xom
+	z8Z5qRnewl1F97vDUlRD1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780914217; x=
-	1781000617; bh=DrMCb3uPGPGsZN/8p4ddGkTA4RR04oGz9hhYKeWuW1k=; b=L
-	VKPCtgubQc3ZsLxiXJzUPNKKels5dWBtHr1f6A6PRskVBhsWGN/AsITZWwbpZ4Kn
-	5RJjezW4olcvn2fOWzmCC48v/6+4zQ7tO9YvWZwkAj4kAx2wik0/8e6Bp0A3UO2n
-	2chyJhXS2AboDvkLF+GZnqQY3mXOWkKloK2JNf8IKF5NNoZgjWRipYtRz37jEyWB
-	blCNQKO5h2WqVZPeeFhU/DTp4t0veHbIm8mTsf9xw5v5GjWwnySEf2b/CQ4cmmcV
-	4LCmLheCK33JE3vDzMwEtncA+gxAw29JeK40vdtxcOv4Wco7h4H/0ZwGdbggiYIt
-	Ja6oR9bFJKn1sLbrmHvFg==
-X-ME-Sender: <xms:KZgmandECvixb5uabdTa9MlEyewIyM1aSULgWotGMtM4Wm_qc1aAYg>
-    <xme:KZgmaus6N6sW2724LCc7vqArrdZVAizFpgAMB5JiBG3OX5zBY1XR_WrAetI3KNcyl
-    yRQrq7JCJBXkhxpy2-rT3C8P0iXCSK_hW3EIRjO4lcVjCdfVQQ>
-X-ME-Received: <xmr:KZgmagn1LNULd-9GW9DCC2JJbvDQgUVSe4r8oyumC0YwwZCXgaC5gAR3M6OsOA0RRkXvrt3r1PnQWNSSq3uzs91SD_zoWJVVqHFKW9MbuQ>
-X-ME-Proxy-Cause: dmFkZTEU6CGo3vgRKOUy0NKAJj0qncnb+S3chfDNaeW9f7h5ictXCkTMmbzsA1bg+OqO5t
-    VoN4gZ8DE2bMSNg0gKHlrcoGOrBSILyou8tacVmnF15zr8wO47F34BCKbOUToGnhrJDCke
-    BuycNX2jBRY83y6KuU872VYl4KFCFPuj4/RU5I0flJJm7GMsjxxfUH7pW5x8WevI6FajEy
-    HqZr4ietzymr2hvqu2TTKDUNt+8cx4slMtibdFncynERefQ9+isUR9VbS9B73SaPMRa3pu
-    z4dSFOzBZjFAGJnsuuWgnRAVgiZUR1gYZTCdZoQ3btYVnBCPL1PuUzpm1MvOIGiJMY3uH7
-    /asVHbv1THKc8yo1NZPLNwksUqiskkqCE9Ue2hIcy2myQm3Wcq+gSN0UsI6p8g9Af9IkYH
-    nBjx5BJp7AZ5rTzcrKvNpZ81DC9namXydM3iwY7Nb4JDCwu+in3uTz98GGTzjMBXyvftuH
-    aC72hStebnALDO8hDyi7/wam/LbJ3T/UUuY+EZhntNK4eXzFMdLD6LhJMO4ZxnFzC0m/+q
-    3zfbUci4rza79wsfIFg/YAnSspyIPUZVm/bGbDwkqcjLv4c0LFh45t5INiZQPCt8uBx43D
-    HWoc9I5+mc6YoodhlGTuP4MlLYU9D7c3HpWmwCoIquFS1qpOGifbhjemdI5w
-X-ME-Proxy: <xmx:KZgmaozEkt5eTY3FknkNs4hmtgg3L87DzZR13Htet1vWCByRfxeAcw>
-    <xmx:KZgmaqO_XJCU5veON1DaKkjCiHh5Kez4jSgLRqeA-PEqMesVN0fYBw>
-    <xmx:KZgmaspLX8cBIV3-ff9U87cw3dTw04b75hpPDJ84FVRzXXwMZLU4PA>
-    <xmx:KZgmarEbptQo3uD7ROJ6iyB33Hy-pKbwb271SL2n067eGJKoh_jCjw>
-    <xmx:KZgmanBeoI2ZM0aJWfKJoUOLWUct6NG3t7rgzBIOfp8LVg8gsPL8spsu>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780914219; x=
+	1781000619; bh=lgzwSYPubM1kcxeu+7O2nWUHGUs3Tr60ubq0oUrypuQ=; b=K
+	+uukClSD/WxE7kai03UEbF9Tht8Q6yYCRpzBKcn07SDPikh5LnOrJbThYd5jy+SW
+	VX4m8U8A6hc+iZPBTpBscW8OcNzT+c/eo079D5Vfhng4Stmzf4sbL+EkR7+eBBxd
+	Z5+/hxOAEOcAIQGinLOMst9pHib8agVurgXN6xi9ft1mXkGuy+TBr9//Y9yoje7b
+	rhUJ8QzXy1qRW/IfNFHgZ6/OvxDDedVHlVZmVyjSjF8XnzAo4lWYr6zPRSzZUuZ6
+	+L92Ys3A7lXiSN4KihCepcPPknJy9WuNpYc3se4q897E1C6bF39+RYHn53eu6TXL
+	J8wgzxDr5Y3limr3qkGPw==
+X-ME-Sender: <xms:K5gmaqCDPTY3CQtIGNSChUROtgiR-LxUydIqs33yy8kPAtYalJYA-A>
+    <xme:K5gmamD1k_n6Nxsk1Zh6YHYlHn2p5kV1v54g-b42OWGc9_VbIivWzJrz9bdoArdmA
+    JcySd_gVC7NRQIFWdu8HMF4gzSTpgTsfOb1ilcRzGqXG8vg6FBk>
+X-ME-Received: <xmr:K5gmatp2CdzDng0MeBPPJEX5L-2DJsNTa8-em2ohy2sp76yontMDfTlGuBX3cT3WSK2SfiaDshIdahF-Ov5PWCIcud54A04SaobbkLgDIA>
+X-ME-Proxy-Cause: dmFkZTF/E0B6+8HbVI0EuzBQ3dK8cHD9k7zZhvtR4eGQVqhd3W4HTcOnifeC1qzKI3nsbE
+    Nr9VNWSWcSFtS/UIV6gQwbKHmcbCLZQ5dEmWkSWzkCkUK8vkxjfNEdIFScQfFAYP5zawV8
+    kuJkxbizX3zEJsOqszq2+IudRIc8Uq86mQ36+9qMWm2f62cSt69oypV8UuhbQr8RL6FlHi
+    jgxr7RInSbFRodGxO7WuQWF/WG7dKUmnfBX95+D9IjM+5QwCHTGkAMls42CUbLZrRvniUT
+    3lub+E8UcsLzA9W1abr8Tskkr7igIbaHvXdizdHbApsrCDDZaJOZp69gRz16mo276cOsT7
+    oqpqcr0IClwWTKe+d8v/baGOmMzGqDumkd+xrrwvlM2cawCdwuZY+yThsV4ZHCnCm7vTRT
+    fFTTrsOjQQ7725h3CeD4YMhJhc12o5K13cI/h3zRn2QBQs94+/GrZaINMkeAfIuC5YHI6D
+    +aFEnJG8HB514uR0cv/0fGb/PsQT+YaQyKf8ECy2B/zrWaCQfYvvKpL44M5JE2AFf7BHIV
+    BbFzB8sep2763MCCMufrhnQ4d5Xs0Enqhc/CqJBrICU6ejr+g0JnErhdxaaYhU9Duyr/9/
+    BL9Ym8obMk0qcMtGNQWqkU5SPpWFZu/fjpTM2q9FscwnAFBzoxFHyrZCP5Sw
+X-ME-Proxy: <xmx:K5gmaonQw9FR4xVEXqkv8r0rxA2ynb4yU1kU0F-HPvItWhd7NzHCcw>
+    <xmx:K5gmalwoQKAnRLU811_DPFQ0D0b-YaZYiagD4NhaUwR-pIwdl3xMlA>
+    <xmx:K5gmao8Y1dO0F1wT5osZQgAlPcI77g0jBe02tQ4Rn_--_kkBgIhR_w>
+    <xmx:K5gmapJJY5ShA-g0_bMEmgyaGdtIUcvqP0aBf__QpZeAGLOS02NEcA>
+    <xmx:K5gmar0M4MgeZ_9rNzmcVJy_Mh60BFiLeTs3GfwxLh8kMPusExFgCSVK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 06:23:35 -0400 (EDT)
+ 8 Jun 2026 06:23:38 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8a8228e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jun 2026 10:23:35 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id e118c3d8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 10:23:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 08 Jun 2026 12:23:26 +0200
-Subject: [PATCH v3 2/9] reset: drop `USE_THE_REPOSITORY_VARIABLE`
+Date: Mon, 08 Jun 2026 12:23:27 +0200
+Subject: [PATCH v3 3/9] reset: modernize flags passed to `reset_head()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260608-b4-pks-history-drop-v3-2-84ca8e43e937@pks.im>
+Message-Id: <20260608-b4-pks-history-drop-v3-3-84ca8e43e937@pks.im>
 References: <20260608-b4-pks-history-drop-v3-0-84ca8e43e937@pks.im>
 In-Reply-To: <20260608-b4-pks-history-drop-v3-0-84ca8e43e937@pks.im>
 To: git@vger.kernel.org
@@ -92,117 +92,123 @@ Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-In "reset.c" we still have references to `the_repository`, even though
-the only entry point into the file already receives a repository as
-parameter.
+The flags passed to `reset_head()` are declared as defines. This has
+fallen a bit out of practice nowadays, where we instead prefer to use
+enums.
 
-Update all uses of `the_repository` to instead use the passed-in repo
-and drop `USE_THE_REPOSITORY_VARIABLE`.
+Modernize the code accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reset.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ builtin/rebase.c |  2 +-
+ reset.c          |  4 ++--
+ reset.h          | 30 ++++++++++++++++++------------
+ sequencer.c      |  2 +-
+ 4 files changed, 22 insertions(+), 16 deletions(-)
 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index fa4f5d9306..4c20bd50cb 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1876,7 +1876,7 @@ int cmd_rebase(int argc,
+ 		    options.reflog_action, options.onto_name);
+ 	ropts.oid = &options.onto->object.oid;
+ 	ropts.orig_head = &options.orig_head->object.oid;
+-	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
++	ropts.flags = RESET_HEAD_DETACH | RESET_HEAD_UPDATE_ORIG_HEAD |
+ 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+ 	ropts.head_msg = msg.buf;
+ 	ropts.default_reflog_action = options.reflog_action;
 diff --git a/reset.c b/reset.c
-index 46e30e6394..3b3cb74dab 100644
+index 3b3cb74dab..228cad5f42 100644
 --- a/reset.c
 +++ b/reset.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "cache-tree.h"
- #include "gettext.h"
-@@ -13,7 +11,8 @@
- #include "unpack-trees.h"
- #include "hook.h"
- 
--static int update_refs(const struct reset_head_opts *opts,
-+static int update_refs(struct repository *repo,
-+		       const struct reset_head_opts *opts,
- 		       const struct object_id *oid,
- 		       const struct object_id *head)
+@@ -18,7 +18,7 @@ static int update_refs(struct repository *repo,
  {
-@@ -42,19 +41,19 @@ static int update_refs(const struct reset_head_opts *opts,
- 	prefix_len = msg.len;
+ 	unsigned detach_head = opts->flags & RESET_HEAD_DETACH;
+ 	unsigned run_hook = opts->flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+-	unsigned update_orig_head = opts->flags & RESET_ORIG_HEAD;
++	unsigned update_orig_head = opts->flags & RESET_HEAD_UPDATE_ORIG_HEAD;
+ 	const struct object_id *orig_head = opts->orig_head;
+ 	const char *switch_to_branch = opts->branch;
+ 	const char *reflog_branch = opts->branch_msg;
+@@ -91,7 +91,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+ 	const char *switch_to_branch = opts->branch;
+ 	unsigned reset_hard = opts->flags & RESET_HEAD_HARD;
+ 	unsigned refs_only = opts->flags & RESET_HEAD_REFS_ONLY;
+-	unsigned update_orig_head = opts->flags & RESET_ORIG_HEAD;
++	unsigned update_orig_head = opts->flags & RESET_HEAD_UPDATE_ORIG_HEAD;
+ 	struct object_id *head = NULL, head_oid;
+ 	struct tree_desc desc[2] = { { NULL }, { NULL } };
+ 	struct lock_file lock = LOCK_INIT;
+diff --git a/reset.h b/reset.h
+index a28f81829d..0bf25c51de 100644
+--- a/reset.h
++++ b/reset.h
+@@ -6,16 +6,22 @@
  
- 	if (update_orig_head) {
--		if (!repo_get_oid(the_repository, "ORIG_HEAD", &oid_old_orig))
-+		if (!repo_get_oid(repo, "ORIG_HEAD", &oid_old_orig))
- 			old_orig = &oid_old_orig;
- 		if (head) {
- 			if (!reflog_orig_head) {
- 				strbuf_addstr(&msg, "updating ORIG_HEAD");
- 				reflog_orig_head = msg.buf;
- 			}
--			refs_update_ref(get_main_ref_store(the_repository),
-+			refs_update_ref(get_main_ref_store(repo),
- 					reflog_orig_head, "ORIG_HEAD",
- 					orig_head ? orig_head : head,
- 					old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
- 		} else if (old_orig)
--			refs_delete_ref(get_main_ref_store(the_repository),
-+			refs_delete_ref(get_main_ref_store(repo),
- 					NULL, "ORIG_HEAD", old_orig, 0);
- 	}
+ #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
  
-@@ -64,23 +63,23 @@ static int update_refs(const struct reset_head_opts *opts,
- 		reflog_head = msg.buf;
- 	}
- 	if (!switch_to_branch)
--		ret = refs_update_ref(get_main_ref_store(the_repository),
-+		ret = refs_update_ref(get_main_ref_store(repo),
- 				      reflog_head, "HEAD", oid, head,
- 				      detach_head ? REF_NO_DEREF : 0,
- 				      UPDATE_REFS_MSG_ON_ERR);
- 	else {
--		ret = refs_update_ref(get_main_ref_store(the_repository),
-+		ret = refs_update_ref(get_main_ref_store(repo),
- 				      reflog_branch ? reflog_branch : reflog_head,
- 				      switch_to_branch, oid, NULL, 0,
- 				      UPDATE_REFS_MSG_ON_ERR);
- 		if (!ret)
--			ret = refs_update_symref(get_main_ref_store(the_repository),
-+			ret = refs_update_symref(get_main_ref_store(repo),
- 						 "HEAD", switch_to_branch,
- 						 reflog_head);
- 	}
- 	if (!ret && run_hook)
--		run_hooks_l(the_repository, "post-checkout",
--			    oid_to_hex(head ? head : null_oid(the_hash_algo)),
-+		run_hooks_l(repo, "post-checkout",
-+			    oid_to_hex(head ? head : null_oid(repo->hash_algo)),
- 			    oid_to_hex(oid), "1", NULL);
- 	strbuf_release(&msg);
- 	return ret;
-@@ -126,7 +125,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 		oid = &head_oid;
+-/* Request a detached checkout */
+-#define RESET_HEAD_DETACH (1<<0)
+-/* Request a reset rather than a checkout */
+-#define RESET_HEAD_HARD (1<<1)
+-/* Run the post-checkout hook */
+-#define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
+-/* Only update refs, do not touch the worktree */
+-#define RESET_HEAD_REFS_ONLY (1<<3)
+-/* Update ORIG_HEAD as well as HEAD */
+-#define RESET_ORIG_HEAD (1<<4)
++enum reset_head_flags {
++	/* Request a detached checkout */
++	RESET_HEAD_DETACH = (1 << 0),
++
++	/* Request a reset rather than a checkout */
++	RESET_HEAD_HARD = (1 << 1),
++
++	/* Run the post-checkout hook */
++	RESET_HEAD_RUN_POST_CHECKOUT_HOOK = (1 << 2),
++
++	/* Only update refs, do not touch the worktree */
++	RESET_HEAD_REFS_ONLY = (1 << 3),
++
++	/* Update ORIG_HEAD as well as HEAD */
++	RESET_HEAD_UPDATE_ORIG_HEAD = (1 << 4),
++};
  
- 	if (refs_only)
--		return update_refs(opts, oid, head);
-+		return update_refs(r, opts, oid, head);
- 
- 	action = reset_hard ? "reset" : "checkout";
- 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-@@ -163,7 +162,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 		goto leave_reset_head;
- 	}
- 
--	tree = repo_parse_tree_indirect(the_repository, oid);
-+	tree = repo_parse_tree_indirect(r, oid);
- 	if (!tree) {
- 		ret = error(_("unable to read tree (%s)"), oid_to_hex(oid));
- 		goto leave_reset_head;
-@@ -177,7 +176,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 	}
- 
- 	if (oid != &head_oid || update_orig_head || switch_to_branch)
--		ret = update_refs(opts, oid, head);
-+		ret = update_refs(r, opts, oid, head);
- 
- leave_reset_head:
- 	rollback_lock_file(&lock);
+ struct reset_head_opts {
+ 	/*
+@@ -33,7 +39,7 @@ struct reset_head_opts {
+ 	/*
+ 	 * Flags defined above.
+ 	 */
+-	unsigned flags;
++	enum reset_head_flags flags;
+ 	/*
+ 	 * Optional reflog message for branch, defaults to head_msg.
+ 	 */
+@@ -45,7 +51,7 @@ struct reset_head_opts {
+ 	const char *head_msg;
+ 	/*
+ 	 * Optional reflog message for ORIG_HEAD, if this omitted and flags
+-	 * contains RESET_ORIG_HEAD then default_reflog_action must be given.
++	 * contains RESET_HEAD_UPDATE_ORIG_HEAD then default_reflog_action must be given.
+ 	 */
+ 	const char *orig_head_msg;
+ 	/*
+diff --git a/sequencer.c b/sequencer.c
+index 1ee4b2875b..c46c606b3e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4870,7 +4870,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 	struct reset_head_opts ropts = {
+ 		.oid = onto,
+ 		.orig_head = orig_head,
+-		.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
++		.flags = RESET_HEAD_DETACH | RESET_HEAD_UPDATE_ORIG_HEAD |
+ 				RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
+ 		.head_msg = reflog_message(opts, "start", "checkout %s",
+ 					   onto_name),
 
 -- 
 2.54.0.1136.gdb2ca164c4.dirty
