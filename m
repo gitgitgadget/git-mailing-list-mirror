@@ -1,126 +1,94 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6E53C98AE
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 17:56:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4E03264E7
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 18:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780941397; cv=none; b=aMDCVCKr436boxdgkqrc4rrIimbi2p30kKlMTtmzGtoK6NWEFU15xWOqj5S2LoGz/s/LQIIkzE+LcH/BYm1/MX4lJbN1pAnFs0K/JNtScI5vIzprPRRXOHAxIQnD6OYFBYVY0TkMNMGv9gh9P0zSeVTNZ20h9VmG2oMUEVQiS6U=
+	t=1780943869; cv=none; b=pFwDzd4tD03xuBJKSLndXkYc+/6IGGfe38Lx3sTI7RJjTQjfoVum9Ue6ZAciMOmtcOABN0m5X91LiV3xp4M9YgtYCooEqGOIxRv4x4RFd7QqnamVghMXdHy5xC8Kh5n8S+IuVjKyiwZgE6uoInLGS07gEG95vstFNg+dGQyHXxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780941397; c=relaxed/simple;
-	bh=TqlrOEY8QZr5Rnoj2wYjlJkyfykyIqVaj8gK93evYrI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mIxqrscQdwYYqraOyo13d9trbl5cr60ur9PSop9rG49JHTYvKUuf8KIcMFNgH1TMDz78BiYsqIPw8oYV7LpO1rqYA0ITQs5fIOn7eCt6mH9rmjX+3K33b91vRqmKAUt7JWXBxN9ytbTzJr/B9N0zv+7POcz1yiLHFeiNazk+o2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QW6OTCFh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M1aSJsEc; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1780943869; c=relaxed/simple;
+	bh=Ri3QY9zDIMN13FlwSUb1PJ8BmRq70B2ILakQQ/1u5tE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=G3HUlUI+EfeCvR2ZlaUXJxjkMN6nN77DLZgQ4iQmleQ8uzX9ymQdU97KwgrKEmEKjakBj1BOFRP4+Z+/+ZLJ/W411dsOlqw8ia5tKt9HGZk7PQNv9YnOS6tz0w5mbFR7Pmcu7LrKH5HN4+3JWudEUhJTOluv6+NIw/6HpqzjG1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=mVRgMLKd; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QW6OTCFh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M1aSJsEc"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DAEC814000F9;
-	Mon,  8 Jun 2026 13:56:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 08 Jun 2026 13:56:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1780941394; x=1781027794; bh=3VKxCw7W6t
-	uYLB3G8ry3CmozuI7hX45qYA3ZH+AkOrM=; b=QW6OTCFhic3epR5FWP1CQt6WqN
-	3P8Y61ZVRTDNpT85pgxeNOvyGc8D7n293rBN4qRwHuIdcN9Us3D5HQZQsuDMVpSr
-	y1uDfGYHbdmIl9nLX5oQne0yomQj+5XlnSg0jfStl1KHBAa+oGRbXuh/SnCnSoQw
-	ltAPiT9yMOYZDdOKRrbaqzzh0dd8QNUqdo/9N45EerGsM329yuduW26s9nBLjJ7Z
-	iMV4sn1aX1YXfCwnm9K2Qyb27NdpJ85Wk4zzsE/CVbcYKuj2tGLqZ1zouYHPQntu
-	0LdqhAhvBDDWQ7OE+jOeazIDmOlwC2sEGR359+0GPMW6e/fyvVM4lu+wa8Dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1780941394; x=1781027794; bh=3VKxCw7W6tuYLB3G8ry3CmozuI7hX45qYA3
-	ZH+AkOrM=; b=M1aSJsEcq96j7dhXp0kW45N0muSZplNfqCQlLyqqfUORtE/CC5l
-	51sAeiXckuH2sOtYc+m4QtdW/XD19iWcKyYtkAuZhrIFxPGyEb6HlhRoCWdNPkvK
-	DbbeZP7Pgj+jmGOY+K91ilbszDa1GWCbxOsQsHZgh8K1dFJhAaOnLWfYd/r4NmPu
-	9G3DvMDo16DnlliG7GcuLq+msAGUxd8Lo0uFpWTRB8Nx95zrV9CF+4RelrpwXV7h
-	+nZd8stzcJM5Ba2hM+nD+D3jIQknrk+4Zm8WjgVT4/KDbNpL8oBwo/nxJl/laOn3
-	bWDfhgwKf7UyNyrT9Z5YVLynpNRsszIvzHw==
-X-ME-Sender: <xms:UgInat3TJ5QI0eSLjdZT71hqgWyu3xHBqUv7fThMpfGaICuJy7LY-A>
-    <xme:UgInari624Tu_M7hT04fxjve-2kH_Nn78r-md9wxZUINjaFpQdHSrDv7-fX5XioMQ
-    6US6SiSil46okdP99kTl6wMKshYq8ZlL9Gl061R2Y7cx6EZow4b>
-X-ME-Received: <xmr:UgInarTYbeGd5l8rRXvSgHhpCM0q8Dh7Pj0fQ59CGyvXdhsh27TunOsi732SecORU4WXwcmZJheW7qVi6xx4cb7TASsSXLDjajOi>
-X-ME-Proxy-Cause: dmFkZTFrGXhZdhIWwmuoJLkdHOQBL6H+CIbh823ded4rt1Vd19b+vpQX5A1Q5z2omXtcPV
-    58EnemDTinm6x3cjkBQn9QrT5iLOQBs1L41bxWlR4kP6SI83ipytZWL1IFGNpr9lwMNl0R
-    vffkG7B8tqfLJtWKZ08RYokSfDpgShq2hCsFZq401LORHetK02n0TwSLcNM9ucl12I2hzp
-    wWwjK0Bd2+NTPdB3PtSvJ4bTcMnRfu/v87dKboQBvPiVyVPKVW/cGnlr3zHnuuBWUajHvl
-    sIxoA8I5ZhhroJMipGNhR8SelYE2Xz41azgyIJWwL9qo8HAcohM4EOb8ynMR7p/TpZnvbF
-    aDRudwVhyv1AnY9v3/UPZdVs4M2HQsd5rFRS0uTJxk/1DTFLFLRJhAUtYOSzpLZuXwhZEp
-    aFA5QS09eWhAR+KaZpvcsA3r3hFwtFOxPvK+0hhU1U5m5KM/ablyAG/tubrBQd5ayhM8Oy
-    b7PnN7Q0Dh4S+OT+XkaH1IAOCaHjIZxkQTNkceowmrhIlgfr7LsWWa8C/eYGmpz3VFoZAQ
-    yNkbt5c7kIx6K/+wNXAUv/iKlp9KTtJMx0i6O3HsjgxluGwZfoRNWZHzoQqBV+muDInKiK
-    OvuUNEpDP+sfYGpTkvljN8sQMV0f7QJwjvmL0Dpu7MOQDew9fdBcXBtIzwOg
-X-ME-Proxy: <xmx:UgInakiAMXMCmomRLcdGQVWOrJN3m9x7C95DyUO4XDKeI2el5nPdvg>
-    <xmx:UgInaj7KFaJXko57pLiG6hVQz1GysLWgvLnkm2DGADHblNDJhdLivg>
-    <xmx:UgInapBRtNbY-4Bm_oL9wi_8QJIIKxd7pWa9JvgLP-yfClwD6sQ5AA>
-    <xmx:UgInaiYkoerwiPUHAmZbWlerR12Y1HDMgHs2GwR9dqqJJ_pOgW1YcA>
-    <xmx:UgInarPQgKSw5qM8YbPghKB2u9CTvhlIQwMlC5IJvPcmH0ZVvUqo2S_i>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jun 2026 13:56:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Vincent Lefevre <vincent@vinc17.net>
-Cc: git@vger.kernel.org
-Subject: Re: inconsistent order of --diff-algorithm variants in man pages
-In-Reply-To: <20260608112656.GI1082778@cventin.lip.ens-lyon.fr> (Vincent
-	Lefevre's message of "Mon, 8 Jun 2026 13:26:56 +0200")
-References: <20260608112656.GI1082778@cventin.lip.ens-lyon.fr>
-Date: Mon, 08 Jun 2026 10:56:33 -0700
-Message-ID: <xmqq5x3sx6em.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="mVRgMLKd"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1780943863;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4SASK+3R3PxYXzC1yTRvqqnj9Ecqj876aquaJfQMudo=;
+	b=mVRgMLKdHIw3xJ9pw+OId8rN9mMCnkK4iTXsU94RbykDGq37o2zuHGaO89Pu0ggtEfNRae
+	g0XtYsmXDKzmsn+NS9augKXlhr3HAjL64iwmHklWCL/6NZzAjPMC7x6kytahWw8//7h+o6
+	dQkVX/lEpCiIAPO/XOu4mjKxkjK3hPg=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH 0/3] Teach git-replay(1) to linearize merge commits
+Date: Mon, 08 Jun 2026 20:37:18 +0200
+Message-Id: <20260608-toon-git-replay-drop-merges-v1-0-e3ee71fce7b4@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMMQ7CMAwAwK9UnrFkCpTCVyqG0LjBCJLIDghU9
+ e8EGG+5GYxV2ODYzKD8FJMUK9arBsaLi4FRfDW01HbU0RZLShGDFFTON/dGrynjnTWwYU/7yRH
+ 1fnPYQR2y8iSv3z6c/rbH+cpj+ZawLB/cDQ9GfwAAAA==
+X-Change-ID: 20260604-toon-git-replay-drop-merges-807fa008d395
+To: git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Migadu-Flow: FLOW_OUT
 
-Vincent Lefevre <vincent@vinc17.net> writes:
+As an alternative to dscho's patch series to replay merges[1], add
+option to git-replay(1) to linearize merges. This mimics wath
+git-rebase(1) does too with --no-rebase-merges (the default).
 
-> In Documentation/diff-algorithm-option.adoc, which is used by the
-> git-blame(1) and git-diff(1) man pages:
->
-> `--diff-algorithm=(patience|minimal|histogram|myers)`::
->         Choose a diff algorithm. The variants are as follows:
-> +
-> --
->    `default`;;
->    `myers`;;
->         The basic greedy diff algorithm. Currently, this is the default.
->    `minimal`;;
->         Spend extra time to make sure the smallest possible diff is
->         produced.
->    `patience`;;
->         Use "patience diff" algorithm when generating patches.
->    `histogram`;;
->         This algorithm extends the patience algorithm to "support
->         low-occurrence common elements".
-> --
->
-> I think that using the same order in the --diff-algorithm line and
-> in the description that follows would be better, i.e.
->
->   --diff-algorithm=(myers|minimal|patience|histogram)
->
-> FYI, the text was added in 07924d4d50e5304fb53eb60aaba8aef31d4c4e5e
-> in 2013, but without any explanation on this difference.
+The first two patches do some refactoring. The third patch implements
+the actual change. I was kindly helped by dscho to implement this
+change.
 
-I think this is meant to list them as equals without any precedence
-or preference order, so it is understandable that nobody paid much
-attention.  Until now, that is.
+The --linearize option is only added to git-replay(1) and not to
+git-history(1) because in my opinion doesn't make much sense to do so,
+but I'm happy to hear if anyone disagrees.
 
-I agree that being consistent between these two places makes tons of
-sense.  I just do not know what the right ordering should be.  When
-listing a set of equals without any precedence or preference order,
-the most easy to see to new readers is alphabetical, except that the
-built-in default (myers) is a head above among other equals, so it
-does make sense to present it first.
+This series might conflict with Kristoffer's series to make
+documentation changes[2], but should be trivial to resolve. And I don't
+think there's a conflict with Patrick's series on adding "drop" to
+git-history(1)[3].
+
+dscho's series to replay merges[1] need a bit of rework to fit on top of
+this, but I'm happy to help figuring that out.
+
+[1]: <pull.2106.git.1778107405.gitgitgadget@gmail.com>
+[2]: <V2_CV_doc_replay_config.767@msgid.xyz>
+[3]: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
+
+Signed-off-by: Toon Claes <toon@iotcl.com>
+---
+Johannes Schindelin (1):
+      replay: offer an option to linearize the commit topology
+
+Toon Claes (2):
+      replay: refactor enum replay_mode into a bool
+      replay: add helper to put entry into mapped_commits
+
+ Documentation/git-replay.adoc |   5 ++
+ builtin/replay.c              |   4 ++
+ replay.c                      | 109 +++++++++++++++++++++++-------------------
+ replay.h                      |   5 ++
+ t/t3650-replay-basics.sh      |  22 +++++++++
+ 5 files changed, 97 insertions(+), 48 deletions(-)
+
+
+
+---
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+change-id: 20260604-toon-git-replay-drop-merges-807fa008d395
+
