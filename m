@@ -1,431 +1,138 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D51306768
-	for <git@vger.kernel.org>; Mon,  8 Jun 2026 06:35:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780900535; cv=pass; b=H86fHKU8mJ0rOKH2P6Qjn7gVlyJNWkLfFT+s/x8lZOMfMq0korw8PZpFweTb3+psz5Wk3P6MV5eCbHN6rU8NuO2piosti/snQ4LUnwEiAFm4AwBMgPHt23mOw+EeTzkPXVNSjh4Vl6HREnTBJcuSiD/jieMJnWdWK3OT+6Oxklg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780900535; c=relaxed/simple;
-	bh=Xi3H/sbyVE+KrKMHuKiJ/Evug7tkFWT+KNts8WrYV+k=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=MKuPPu5IImuDDn4/SFa/pyeUl5zNI0Z7NsR1WmCEux3JDi8rdsYeS+r9xW+NizslFAbA5JvU3uLOCnPUB6zPPmb6Gjjm9Q/HI3d4un2kZaXBVBXAdURRm3AGT7ZPHgzOPUQ2nuVay+iFJHyNj4xQkTdUyD5RQ/IiIaqcXiT9C5o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=kkRRtBXp; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FACE38B7D9
+	for <git@vger.kernel.org>; Mon,  8 Jun 2026 06:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780901312; cv=none; b=aTHExvstMbWZcbcR1wpGRJLy3ZQa+NWdt8pQAcQotna+k+CZM0L3hf1D5YrIFG7s0AXwUE7sH/bo5G6smONvPwOXALYGP+vKQAi/lWynyAuDBb+k5D1q4gqwnNxKOHxkZKmS5cC+R/aDzUQJWJsRIzmhPw1UE9wGS/QNAyFeg5s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780901312; c=relaxed/simple;
+	bh=l3oNtnZ0ZIBFf2X6nKWtodNoLFg+/p702sZM/Nj6YUI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TLdibEBEmfO+yWw3O1P4HIr4O7IQoAz3xqOPvgNuO5azNmfbmKV4oolZUr/8mvHASLzIP315x1Cvoy8LxLsmSBSQ6fdMPAws3sK/okgw74LUN0wqA/tlhjXMT4tcfq2f2ZkT6oSFK+RLtAbMAD4oJuBMVYTDylpZPUKpDlaVI3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VAf843DU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q1RHotKm; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="kkRRtBXp"
-ARC-Seal: i=1; a=rsa-sha256; t=1780900524; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=CzLB8hvDvrAm4/dszlO1oRyxo+Cmp+L7rmq7op2X+jL0OQG1BKpW5mXgivsx8UkaNrzWdx6M+ZPtJCsMsj/qQF9/VBtgEKYvXp201pDL9OlrV/UyM5cGqlbIEhydKWb1pJxN0aFTz1moVs5B30KSls2acPj5lBdz7wmVKMTeJgQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1780900524; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=iQKtpYc/ZvN7mZ7JoxXJ6Gctk25gIOxQR//FdWvuKes=; 
-	b=BuHd42eUn0IOnmiGgCMjHzZVahnwS5r2OwZ1WpncF9HeQVhCd5GWbWkmIinBSGQuGWVnsp6YWjvIKFRRgkgdbXysKq2RXLmNdlzlnsBX/cwlBwn8/royU+ifv4VNkfCpWV5uZ9ukV3FpF4kd+XMdl/U0ZwKNusFyU1TfitckskA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1780900524;
-	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=iQKtpYc/ZvN7mZ7JoxXJ6Gctk25gIOxQR//FdWvuKes=;
-	b=kkRRtBXpZXudgJ4dnY2sXSr6sASR3TNdrHVXjtCc4MNsViXqln8N1KeXh94XB4I0
-	R5yTndombu/f0AEb37mYPru8MF+CpnWApWd0lp9Fr/kSN6x3eER3adMmJurvTOSZmUc
-	vYnaiAUMDNIAezTCC4oHkGdltjCaCaVy9p+3GKaE=
-Received: by mx.zohomail.com with SMTPS id 1780900522874484.18435005947117;
-	Sun, 7 Jun 2026 23:35:22 -0700 (PDT)
-Date: Mon, 8 Jun 2026 08:35:18 +0200
-From: Miklos Vajna <vmiklos@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: [PATCH] log: improve --follow following renames for non-linear
- history
-Message-ID: <aiZipugmA7z8oBcd@collabora.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VAf843DU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q1RHotKm"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3A7EF7A0050;
+	Mon,  8 Jun 2026 02:48:28 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 08 Jun 2026 02:48:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1780901308; x=1780987708; bh=ZfJzd8RJui
+	BJTjIzckgytO/zZccEW/A7KoRfyYTy8GI=; b=VAf843DUND9OyL0T+dU83KrC4u
+	qFTBSA5lVchira1wCNTgD+zPql16deH4QFDij8JM1dt1vKamOY/mcRCIjRGgFzmk
+	McmFFED5FfxYw5f8wXua5OeygQY97jQF6nH9t8ABMEDs7CzLnlIGF9Diahh8XIo8
+	YTQsj44GQIoOj6CrHPj6gJJW8fj8SmD3m5sNMuFGiEbN0TfOhVctbULqFPdz/yq3
+	lLAub6rIw8hgrkSWue4jQImpEdo/vqjUnrxJ7jQ5NJZoQlDeRCoUT3XxCs40xMjU
+	7f6YdEc4OcVIfI5Hu3pcs0BtnbTLrs7TeWmYig0g9olHqAhfnX9NBp7WfeNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780901308; x=1780987708; bh=ZfJzd8RJuiBJTjIzckgytO/zZccEW/A7KoR
+	fyYTy8GI=; b=Q1RHotKmOCFDd/EBNbvcaRDIuHDODlSpGf7/RJOuXLk5SWtzUda
+	OGaC8VtYvxCeGjd7Wtn2gPr+MtrWfolTQeHJN2xtmnuspmP0Juwf5y7GBNC+6TSj
+	WTkw3bB7b+LKraJ22hy2eCqPtAuySYwWPOyIBiiCpxaCDjP1zqvqfrRqBNqgSeL5
+	S2FUDdFMCfWki7re3Z+EtvyCp4ZVB8egzbRQDpbJWK9ES/qGhbNRzkWPtQ4o/Ltf
+	5b9IkcGyHRHBARFhnvLj7k2Cis9KNlVaHJeJOPd6aHg/yxaygzgFPzX1c7wt+Mqq
+	loHc9NZE+tA3+Af2AEbnTsqpaZILybfYoSA==
+X-ME-Sender: <xms:u2UmahSDWyDS9gZ-wefs5s450EBedwZqKzNEU3KJMc7Y88YUJCaQGw>
+    <xme:u2UmasTxy7Jp4AJD8Hd8A_4S9tac0lbE4brBEwtJgfiZcQxqm40vYlwF9EDMK1cAA
+    U65xO_OXxEw07K3jzA5C8Pqv1C7LG1iZUShEGaMLZgXowU4e19D-30>
+X-ME-Received: <xmr:u2Umam7F0Wmmx2ZKnX3bTkc7FbljyhgWZk_1bk01y21ID7zkEnvNF9qrOYB3M1ZCbC2Pdv8eWqj9EqE8cTzS8DNQg2Hrr8Ic-ajFL4akKw>
+X-ME-Proxy-Cause: dmFkZTEV+p9vbX0g54NnYL/7SD4L+BlH2Z+jPlwwu7gtbo5CA37pTT7Y0dA87aYYQOXfAE
+    Xle6wJni/r9LGxZKp67HRSeseP/RRLA50sXf5NCe69FHcAYEcjSLbp5cP3Q3WZuO5C5q5/
+    KQn2qHxXYZZvrMtVSMTEVm0sb70uox0f/ErCXG0Q9+tFZ27ZekO/S4xERS4JJDDrzEqGLU
+    famCGUFdK3kKE+qZknZ0x0uflXmojS44Yh9EAIckiXTB4TzSMtH1o9+yI0TPjnU8nBUBEh
+    94zimER3k4aKHxNGAPflnF7SG5EFHin4NTg7GVw34m79iwrQ2HMzuwgehSdCl0GFyXgPkS
+    OWujRGObqDzwV24+K3t8sdPK8y+kHLxr2lzHi1QaIm5tOm2auf9o9ESD6r+r8VCWwn0Mxi
+    QcoEzu/pKj48hdDCLwi+FuJ7M8dWNwUBUu3fG4Yez1zY3/Em5LXOf+sJ+SAC1PkVRNhlRM
+    Aw5wcm2Pu0WBfv1/UEznNo4XRE9hi7pyoxj4v8i0uzrqdpYRea2C85v2SHrGABN3+wgEsc
+    6a0B7KqNhjzdguRjA/DnwQ3zZsOiUuk1BpR8QlDyChMNjVV8KNd7YnFNwopIMZX6crzilV
+    A3kcWjJ01bwgeMFM71gWd9N5w+u1fiZJmbY7PHIN8H7QXnQS3pQRREnbELaQ
+X-ME-Proxy: <xmx:u2Umao09Fu8BBe8tl3rUvedSRAhl-vaE0rS1VHjhAthlWOh0zIEnEg>
+    <xmx:u2UmahAr-iEeJYwU5IkmdqIStbeHfb7kg4nhFMKIaUtgqtm05I3osA>
+    <xmx:u2UmajP3ZcS1TA4x_HgUGmdwGSLGsvY5oAGM3fwel8t2R57dTyJ8Mg>
+    <xmx:u2UmamZtSaFVkWZQo8L93cv8NdgXv012o-BG0QmO7x4ts-mgRPmQRQ>
+    <xmx:vGUmaoGfOh-P2NuLcf7qCYDwBCVBUiVI74rG_SSK72-D0oPsYVjLAIUg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 02:48:26 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f338947f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jun 2026 06:48:25 +0000 (UTC)
+Date: Mon, 8 Jun 2026 08:48:22 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Tuomas Ahola <taahol@utu.fi>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Weijie Yuan <wy@wyuan.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v2 1/3] Documentation/MyFirstContribution: recommend
+ shallow threading
+Message-ID: <aiZltnUUt2Z_6VR-@pks.im>
+References: <20260603-pks-b4-v2-0-a8aea0aa2c23@pks.im>
+ <20260603-pks-b4-v2-1-a8aea0aa2c23@pks.im>
+ <20260603100145.7iym5%taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqjysz7r41.fsf@gitster.g>
-X-ZohoMailClient: External
+In-Reply-To: <20260603100145.7iym5%taahol@utu.fi>
 
-Have a repo with a subtree merge, do a 'git log --follow prefix/test.c',
-the output only contains history in the outer repo, not commits that
-were merged via a subtree merge.
+On Wed, Jun 03, 2026 at 01:01:45PM +0300, Tuomas Ahola wrote:
+> Patrick Steinhardt <ps@pks.im> wrote:
+> 
+> > The "MyFirstContribution" document recommends the use of deep threading:
+> > every cover letter of subsequent iterations shall be linked to the cover
+> > letter of the preceding version. The result of this is that eventually,
+> > threads with many versions are getting nested so deep that it becomes
+> > hard to follow.
+> > 
+> > Adapt the recommendation to instead propose shallow threading: instead
+> > of linking the cover letter to the previous cover letter, the user is
+> > supposed to always link it to the first cover letter. This still makes
+> > it easy to follow the iterations, but has the benefit of nesting to a
+> > much shallower level.
+> > 
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  Documentation/MyFirstContribution.adoc | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+> > index b9fdefce02..069020196c 100644
+> > --- a/Documentation/MyFirstContribution.adoc
+> > +++ b/Documentation/MyFirstContribution.adoc
+> > @@ -1227,8 +1227,8 @@ Message-ID: <foo.12345.author@example.com>
+> >  
+> >  Your Message-ID is `<foo.12345.author@example.com>`. This example will be used
+> >  below as well; make sure to replace it with the correct Message-ID for your
+> > -**previous cover letter** - that is, if you're sending v2, use the Message-ID
+> > -from v1; if you're sending v3, use the Message-ID from v2.
+> > +**first cover letter** - that is, for any subsequent version that you send,
+> > +always use the Message-ID from v1.
+> >  
+> >  While you're looking at the email, you should also note who is CC'd, as it's
+> >  common practice in the mailing list to keep all CCs on a thread. You can add
+> > 
+> > -- 
+> > 2.54.0.1064.gd145956f57.dirty
+> 
+> If we adapt this change to the guidance, let's fix also other places of the
+> document that talk about replying to the previous cover letter.
 
-What happened is that 'git log --follow' used to store the followed path
-only in opt->diffopt.pathspec, so in case the commit history is
-non-linear, and multiple parents had renames to the followed path, then
-the end result wasn't really defined: the first commit that happened to
-be visited in one of the parents updated opt->diffopt.pathspec, and from
-that point, only that updated path was visited.
+Good catch, thanks!
 
-Fix the problem by introducing a commit -> path map
-(follow_pathspec_slab) that stores that will be path to follow when
-visiting that parent. At the top of log_tree_commit(), if the slab has
-an entry for this commit, we replace opt->diffopt.pathspec with it, so
-the correct path is followed, even if an unrelated sub-tree changed the
-path to be followed to something else. After log_tree_diff() runs, we
-record each parent's path in the slab: for a non-merge commit,
-try_to_follow_renames() inside diff_tree_oid() has already updated
-opt->diffopt.pathspec to the parent's name, so we just record it. For a
-merge, log_tree_diff() is a no-op; we run a separate
-diff_tree_oid(parent, commit, ...) with follow_renames=1 for each parent
-and record the path it finds. As a result, the walk order doesn't
-matter, which was exactly the source of problems previously.
-
-This helps with subtree merges (rename happens inside the merge commit),
-but also the general case when the rename happens in the history of
-parents, not in the merge commit itself.
----
-
-Hi Junio, Jeff,
-
-On Tue, May 19, 2026 at 05:14:54PM +0900, Junio C Hamano <gitster@pobox.com> wrote:
-> A minor "tweak" that does not solve this inherent design issue does
-> not interest me, so...
-
-Here is a patch that attempts to actually solve the problem you point
-out here, by tracking what path should be followed for multiple branches
-of the history.
-
-It obsoletes the previous two "tweak" patches in this thread.
-
-Hopefully this one is more interesting. :-)
-
-Thanks,
-
-Miklos
-
- Documentation/config/log.adoc |   3 +-
- log-tree.c                    | 116 ++++++++++++++++++++++++++++++++++
- log-tree.h                    |   1 +
- revision.c                    |   2 +
- revision.h                    |   4 ++
- t/meson.build                 |   1 +
- t/t4218-log-follow-merge.sh   |  80 +++++++++++++++++++++++
- 7 files changed, 205 insertions(+), 2 deletions(-)
- create mode 100755 t/t4218-log-follow-merge.sh
-
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index f20cc25cd7..757a7be196 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -53,8 +53,7 @@ This is the same as the `--decorate` option of the `git log`.
- `log.follow`::
- 	If `true`, `git log` will act as if the `--follow` option was used when
- 	a single <path> is given.  This has the same limitations as `--follow`,
--	i.e. it cannot be used to follow multiple files and does not work well
--	on non-linear history.
-+	i.e. it cannot be used to follow multiple files.
- 
- `log.graphColors`::
- 	A list of colors, separated by commas, that can be used to draw
-diff --git a/log-tree.c b/log-tree.c
-index 7e048701d0..e7f098e571 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -3,6 +3,7 @@
- 
- #include "git-compat-util.h"
- #include "commit-reach.h"
-+#include "commit-slab.h"
- #include "config.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -1089,6 +1090,96 @@ static int do_remerge_diff(struct rev_info *opt,
- 	return !opt->loginfo;
- }
- 
-+/* Per-commit pathspec storage for --follow across merges */
-+define_commit_slab(follow_pathspec_slab, char *);
-+
-+static const char *pathspec_single_path(const struct pathspec *ps)
-+{
-+	if (ps->nr != 1)
-+		return NULL;
-+	return ps->items[0].match;
-+}
-+
-+static void set_pathspec_to_single_path(struct pathspec *ps, const char *path)
-+{
-+	const char *paths[2] = { path, NULL };
-+
-+	clear_pathspec(ps);
-+	parse_pathspec(ps,
-+		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
-+		       PATHSPEC_LITERAL_PATH, "", paths);
-+}
-+
-+static void remember_follow_pathspec(struct rev_info *opt,
-+				     struct commit *c, const char *path)
-+{
-+	char **slot;
-+
-+	if (!path)
-+		return;
-+	if (!opt->follow_pathspec_slab) {
-+		opt->follow_pathspec_slab = xmalloc(sizeof(*opt->follow_pathspec_slab));
-+		init_follow_pathspec_slab(opt->follow_pathspec_slab);
-+	}
-+	slot = follow_pathspec_slab_at(opt->follow_pathspec_slab, c);
-+	if (*slot && !strcmp(*slot, path))
-+		return;
-+	free(*slot);
-+	*slot = xstrdup(path);
-+}
-+
-+static const char *recall_follow_pathspec(struct rev_info *opt,
-+					  struct commit *c)
-+{
-+	char **slot;
-+
-+	if (!opt->follow_pathspec_slab)
-+		return NULL;
-+	slot = follow_pathspec_slab_peek(opt->follow_pathspec_slab, c);
-+	return slot ? *slot : NULL;
-+}
-+
-+static void free_follow_pathspec_slot(char **slot)
-+{
-+	FREE_AND_NULL(*slot);
-+}
-+
-+void release_follow_pathspec_slab(struct rev_info *opt)
-+{
-+	if (!opt->follow_pathspec_slab)
-+		return;
-+	deep_clear_follow_pathspec_slab(opt->follow_pathspec_slab,
-+					free_follow_pathspec_slot);
-+	FREE_AND_NULL(opt->follow_pathspec_slab);
-+}
-+
-+/* Compute the followed pathspec that should apply to parent. */
-+static void propagate_follow_pathspec_to_parent(struct rev_info *opt,
-+						struct commit *commit,
-+						struct commit *parent)
-+{
-+	struct diff_options diff_opts;
-+	const char *path;
-+
-+	parse_commit_or_die(parent);
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	copy_pathspec(&diff_opts.pathspec, &opt->diffopt.pathspec);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.flags.follow_renames = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(parent),
-+		      get_commit_tree_oid(commit),
-+		      "", &diff_opts);
-+
-+	path = pathspec_single_path(&diff_opts.pathspec);
-+	if (path)
-+		remember_follow_pathspec(opt, parent, path);
-+
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+}
-+
- /*
-  * Show the diff of a commit.
-  *
-@@ -1179,6 +1270,16 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 	opt->loginfo = &log;
- 	opt->diffopt.no_free = 1;
- 
-+	/* Any recorded pathspec for this commit? If so, restore it. */
-+	if (opt->diffopt.flags.follow_renames) {
-+		const char *stored = recall_follow_pathspec(opt, commit);
-+		if (stored) {
-+			const char *current = pathspec_single_path(&opt->diffopt.pathspec);
-+			if (!current || strcmp(current, stored))
-+				set_pathspec_to_single_path(&opt->diffopt.pathspec, stored);
-+		}
-+	}
-+
- 	/* NEEDSWORK: no restoring of no_free?  Why? */
- 	if (opt->line_level_traverse)
- 		return line_log_print(opt, commit);
-@@ -1195,6 +1296,21 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
- 	if (shown)
- 		show_diff_of_diff(opt);
-+
-+	/* Record what pathspec each parent of this commit should use */
-+	if (opt->diffopt.flags.follow_renames) {
-+		struct commit_list *parents = get_saved_parents(opt, commit);
-+		if (parents && parents->next) {
-+			struct commit_list *p;
-+			for (p = parents; p; p = p->next)
-+				propagate_follow_pathspec_to_parent(opt, commit,
-+								    p->item);
-+		} else if (parents) {
-+			remember_follow_pathspec(opt, parents->item,
-+				pathspec_single_path(&opt->diffopt.pathspec));
-+		}
-+	}
-+
- 	opt->loginfo = NULL;
- 	maybe_flush_or_die(opt->diffopt.file, "stdout");
- 	opt->diffopt.no_free = no_free;
-diff --git a/log-tree.h b/log-tree.h
-index 07924be8bc..e8679b6c4a 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -26,6 +26,7 @@ struct decoration_options {
- int parse_decorate_color_config(const char *var, const char *slot_name, const char *value);
- int log_tree_diff_flush(struct rev_info *);
- int log_tree_commit(struct rev_info *, struct commit *);
-+void release_follow_pathspec_slab(struct rev_info *);
- void show_log(struct rev_info *opt);
- void format_decorations(struct strbuf *sb, const struct commit *commit,
- 			enum git_colorbool use_color, const struct decoration_options *opts);
-diff --git a/revision.c b/revision.c
-index 5693618be4..caa85fb4c6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -26,6 +26,7 @@
- #include "decorate.h"
- #include "string-list.h"
- #include "line-log.h"
-+#include "log-tree.h"
- #include "mailmap.h"
- #include "commit-slab.h"
- #include "cache-tree.h"
-@@ -3284,6 +3285,7 @@ void release_revisions(struct rev_info *revs)
- 	line_log_free(revs);
- 	oidset_clear(&revs->missing_commits);
- 	release_revisions_bloom_keyvecs(revs);
-+	release_follow_pathspec_slab(revs);
- }
- 
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-diff --git a/revision.h b/revision.h
-index c9a11827cc..607113ca74 100644
---- a/revision.h
-+++ b/revision.h
-@@ -65,6 +65,7 @@ struct repository;
- struct rev_info;
- struct string_list;
- struct saved_parents;
-+struct follow_pathspec_slab;
- struct bloom_keyvec;
- struct bloom_filter_settings;
- struct option;
-@@ -354,6 +355,9 @@ struct rev_info {
- 	/* copies of the parent lists, for --full-diff display */
- 	struct saved_parents *saved_parents_slab;
- 
-+	/* per-commit pathspec for --follow across merges */
-+	struct follow_pathspec_slab *follow_pathspec_slab;
-+
- 	struct commit_list *previous_parents;
- 	struct commit_list *ancestry_path_bottoms;
- 	const char *break_bar;
-diff --git a/t/meson.build b/t/meson.build
-index 2af8d01279..cd43e0609a 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -576,6 +576,7 @@ integration_tests = [
-   't4215-log-skewed-merges.sh',
-   't4216-log-bloom.sh',
-   't4217-log-limit.sh',
-+  't4218-log-follow-merge.sh',
-   't4252-am-options.sh',
-   't4253-am-keep-cr-dos.sh',
-   't4254-am-corrupt.sh',
-diff --git a/t/t4218-log-follow-merge.sh b/t/t4218-log-follow-merge.sh
-new file mode 100755
-index 0000000000..7a1b6fcb84
---- /dev/null
-+++ b/t/t4218-log-follow-merge.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+
-+test_description='Test --follow follows renames across merges'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup subtree-merged repository' '
-+	git init inner &&
-+	echo inner >inner/inner.txt &&
-+	git -C inner add inner.txt &&
-+	git -C inner commit -m "inner init" &&
-+
-+	git init outer &&
-+	echo outer >outer/outer.txt &&
-+	git -C outer add outer.txt &&
-+	git -C outer commit -m "outer init" &&
-+
-+	git -C outer fetch ../inner master &&
-+	git -C outer merge -s ours --no-commit --allow-unrelated-histories \
-+		FETCH_HEAD &&
-+	git -C outer read-tree --prefix=inner/ -u FETCH_HEAD &&
-+	git -C outer commit -m "Merge inner repo into inner/ subdirectory"
-+'
-+
-+test_expect_success '--follow finds the pre-merge commit through a subtree merge' '
-+	git -C outer log --follow --pretty=tformat:%s inner/inner.txt >actual &&
-+	echo "inner init" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup merge of two branches that both renamed a file to README' '
-+	git init foo &&
-+	mkdir foo/foo &&
-+	echo "foo readme" >foo/foo/README &&
-+	git -C foo add foo/README &&
-+	git -C foo commit -m "add foo README" &&
-+
-+	git -C foo mv foo/README README &&
-+	git -C foo commit -m "promote foo README to toplevel" &&
-+
-+	echo "foo c" >foo/foo.c &&
-+	git -C foo add foo.c &&
-+	git -C foo commit -m "add foo C impl" &&
-+
-+	git init bar &&
-+	mkdir bar/bar &&
-+	echo "bar readme" >bar/bar/README &&
-+	git -C bar add bar/README &&
-+	git -C bar commit -m "add bar README" &&
-+
-+	git -C bar mv bar/README README &&
-+	git -C bar commit -m "promote bar README to toplevel" &&
-+
-+	echo "bar c" >bar/bar.c &&
-+	git -C bar add bar.c &&
-+	git -C bar commit -m "add bar C impl" &&
-+
-+	git -C foo fetch ../bar master &&
-+	git -C foo merge -s ours --no-commit --allow-unrelated-histories \
-+		FETCH_HEAD &&
-+	git -C foo checkout FETCH_HEAD -- bar.c &&
-+	git -C foo commit -m "merge bar into foo"
-+'
-+
-+test_expect_success '--follow follows renames across both sides of a merge' '
-+	git -C foo log --follow --pretty=tformat:%s README >actual &&
-+	sort actual >actual.sorted &&
-+	cat >expect <<-\EOF &&
-+	add bar README
-+	add foo README
-+	promote bar README to toplevel
-+	promote foo README to toplevel
-+	EOF
-+	test_cmp expect actual.sorted
-+'
-+
-+test_done
--- 
-2.51.0
-
+Patrick
