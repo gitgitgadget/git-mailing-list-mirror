@@ -1,79 +1,79 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0F03F1AA6
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 08:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FE03E9C0E
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 08:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780995102; cv=none; b=L+PZQVjpzadfpUogEABUixj6Bv2lwVopUH8KNEZcpxqZN+WTjAeO3qam4/UDf1GjhBcxiFHuQcI59698YHM+K0VgmSUgIJMxbbUyJgyq1hUwiSH1MI98tEBl5SkyG5xMov6eznKvkGCse8iS8P1M/l7KEtopV6nm8VKKovj89Go=
+	t=1780995105; cv=none; b=Izi+7wPbNvDLEI3Ws+n1JfAO0ToP8TzPHl2048v5filo1Qsssw29cR3REhZXPdy4PX5pdo2K37g1CYWKxM2RdXLyLeiXBFLXyGjEVxbZG/jzXxDoNvLM+IkuCrU9H6cjMTw9/X4Y4qArBWhsCu/M8pLox3YWnZwzVzPCv+0H6xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780995102; c=relaxed/simple;
-	bh=NbVwKnzHOxsfdMEMgOVvuRyvu+0oMwNoPVJfh4J2fmw=;
+	s=arc-20240116; t=1780995105; c=relaxed/simple;
+	bh=DM4hTY4bY2Mpjw1uu+MH/BgmS6/vKly0uERJVUAEunA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EX66ZR2F4wkSIPB7+Nu7dkHyIh82NekWeJUpZ6ipraAO8qLefe13iH0Xa2h1EG3CXcbhnygn/kDR+qkPTjv6oLERSebmHZ8QgnT7HUKN9XVt8TzVRUS2qoDxZB7g5VqrskD4idp6bG/FQEZ1E00mBUta4SI15bHyP5EDo6hXBws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cPvMc+s6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jmbQs6Pe; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=uoBQusOA/91O5AECf35yC519xOHS7Qj5X+eYL+4aL56g8QNdlkQ+P8sHXon3JTurXvehK3wtnlEQwAjWRBQ8jq3kHBDfBU0npInoap8mr17AYxYk+Z+c0AQYqqx1b8hyRd/SgpORxi/mfmbRIt/Z2GVHm7knksALjWg72K+GHMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RxK5A0qm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eylq8uKt; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cPvMc+s6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jmbQs6Pe"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id AEB461D00016;
-	Tue,  9 Jun 2026 04:51:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RxK5A0qm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eylq8uKt"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CCDB37A0184;
+	Tue,  9 Jun 2026 04:51:43 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 09 Jun 2026 04:51:40 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 09 Jun 2026 04:51:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780995100;
-	 x=1781081500; bh=Gc6A2RuGUhEW/SGkTRDqDt+KEOaHAMKfcJdu3p81RZU=; b=
-	cPvMc+s6BXcN7U8IFkP28g/YfrdxhVyfObfQ8vr4P94VQf5gGntLXQKlvlR6ODZP
-	ECXP0BARfEFlnlsC6j+WXi05bDTu/GlpAdI9nd1W7kNy1B8HCCXWKO8venDB/sZ9
-	PYKFNzrTf6u/87yjAgQX9VgV9fPgK/dgpBRro01XGXPW2GxxDLU4N5NAgIEcsN0V
-	jzDnGGW+USDc20IgOLYXNkeYMKd5yHjgUB1XUVvrGAaZChTfmdXfkzi4Olr4b1Ps
-	Rm9xMmlrOb0AVDkRP9I0iUYqS7iwFslTVtMHwucVlG7UoNJxtdpVCldkI03VOpBP
-	o3fum3IT0A5obyNSGNyUmQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1780995103;
+	 x=1781081503; bh=mTPSJ9omNSkouLSHgjbuBLpntGayRDNT3IcC6KHk1rM=; b=
+	RxK5A0qmRt2IbTuAlTVPyTm93UMm/Br+fUR3gd1e9ZnZ8PWzKANYee8b8P8x81n1
+	INAGL/evUTTe6BjJGlQz/jwxRG8m5lKOvGcj2mRGhjKDEMv0I8hziHlzyHUG8IOY
+	UU9+36r4KfOXEtr/2GSax/4HXBHzB/8DH/hmh4eh158Un01bK69/mBGPWrz/vmlG
+	7VuilEhp14uOJkXhr7fCWjus3zWgx4ziKJQYPG/iVvJTHM2fohur+zmHQ+b/6oV9
+	9kdsCgkmDW3jXetUTyQzouRP0nmizxXcz7gIP7n9xq3YPiBmjgKRpEDx97BAxD3C
+	KiqR6vFmLn8sW1eSMlyI0w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780995100; x=
-	1781081500; bh=Gc6A2RuGUhEW/SGkTRDqDt+KEOaHAMKfcJdu3p81RZU=; b=j
-	mbQs6Pe0WH3sdk9LFhc86mWyiM+jrc1NznsJVIkO6UvIkrU8ikSGYAQCgA3nHNbg
-	LtuE7+1Uxanfp4o2xCMXG3t6hU/LUX7o4wL/5hI3SM3SQo+MEV76t5VWtAwoATtb
-	G/3kr+4ihPAydg62Rw4u0HZTfMUY3GXGKAhjk+kOysauKWUrS6quN0T82O5fiTcD
-	RGGJgWI2Ju9VNrpCgC3A2gdY0GN94GcFGU5qXhGZGryg+dBQ30Z77Vt7hyMZk1Qx
-	yM/pOWr5cDpVPHPbtUFx/xS9RN1R/hyyhm+adrc3HDvxsLoISna9p4ruZ6/4GcKB
-	fCvzRk97uQrVhOpc34CaQ==
-X-ME-Sender: <xms:HNQnahuUtXbMsO1O9ijQc7dkj9-ylPFoYE6oUx903mEB0_0QlTx29w>
-    <xme:HNQnagfx13mCZ66GhJoyLeJXQpd_Ygv5Yr9Nq90-s_7NEgHlUJjk_GG9PgeHTSyJ_
-    6GpNBJiqzb78Eg0S1P2SlznEjjzUxUEiKOGHqIfV3-cpnypA2wa0w>
-X-ME-Received: <xmr:HNQnaibgOlwE979bxNCUxltdyu3aTAeJzoEBdpDyUfXuRARDW57ZgnbBUu7ZM9Qo4WbdOeK_9gV8F5kOm1rI7DQ9-pveVUR_s9IZq-BcT4A>
-X-ME-Proxy-Cause: dmFkZTFScmXmBNtXOl4rqVqM8DAc19fyHinqrfJGsNjV/CE2oHckwvnGyvDfLnNUuwKybL
-    TXXNE7zDSLzm9sqK7QnFjZefXQ77hB0yUpUORZINqHtbw80x5HeASQHzHrphN1o87wLUDo
-    o+b2Dx90Cc3HLmwbZsks1v5Qe3wgVjPUMwX4Epw71mRv/T8ItHrE8RkWZrv81HY9CRlc3Z
-    /OiNXFOpQwrN765XqADbyILD80acXbo1GJdpcquKP94bmw57TBOmknCC1tOk25qwSfgaav
-    egwmPIOD8ZPaE7+A6cnzDiyYUxaYdFHC73rr/JrclTuz03BNq0lnxnglgQ3GRx5+ugY1OJ
-    zn4PR6v5N1Cw8r+7UKxAj6J+KHCT9FaVH2z5mm2nn8qecFj7F3p79Pts10nd3o4QLeMZlV
-    2nkExYR8yO+Evj94AjBQgwjOBZxnGdc0H9x6hoWaw2AK9XusrEmqy/U855UnB40WLXY+Hp
-    jYSZM1WXh/AsxLmBE9O5fOEjica29FLkdrnaO065j0QQVA5WvMeeyweto4253kH/aFs+NP
-    tgC6dtKfYc8i0/vClEvbwoD6/b2HmyOaeQTlPHLgk+3vwI/ii0MWnWUWgcl3gRcdkqFxgx
-    BvFCjbOAagKJEpKbhwSHy1eTe3ipdHrSWQNAs4w8GncmD8nhETU3+NOCw3Vw
-X-ME-Proxy: <xmx:HNQnajXdVekq9jKV-tkhxFpt9eX4RCBYm1kjHmHkc69aIb1vNLGn-A>
-    <xmx:HNQnakhL70rYH3p9k93oPTJEVBDyw-EQdMSrKQtQHGpZ78ZyPyR6Pw>
-    <xmx:HNQnahWpfVlLKnjxhAEut6sUnUCHIm0RcdvMjoGVBqbZDX0oduHQiw>
-    <xmx:HNQnarOOWvHHf3klb4MzM5GNVX4gOgepZobfV1EY6hMFVf1ZBUNGTw>
-    <xmx:HNQnascYZ0asGlC6C0qCYPkQypr-8EAnBQ5HmR7u25TuXUzjWxMN6tow>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780995103; x=
+	1781081503; bh=mTPSJ9omNSkouLSHgjbuBLpntGayRDNT3IcC6KHk1rM=; b=e
+	ylq8uKtahXxa6Ct/T4JgbiFB5CUENJA1+egz5JEY3/t2MZyMHtFJC62uwvzo73ML
+	3Hp+xrq3vEQrn0GLNwXih3UCkQXRcnssVCl3Zd5pfLqaP3e/NbWHf4mIbDRaXF/1
+	TZwYNoxnqWrrPLqWbYwi7d7LObU/PnH720E9+ufqVtveNkCWEs/rmnNSC7z93bxq
+	0a/ndD5zvmc115XfMwgjxnXEYmpfBO4hdtZL2gk5n+CDU/fk8y7EWgeDBgSjFldx
+	DWQPTAWOE7B1PcfiDUYOQgQHv6boi9Z+c39LEW/PNuSYjA8K5dNbJHzJb9ZN17rC
+	6GOWb4U2NRXYfsXAbySCw==
+X-ME-Sender: <xms:H9QnahXkoG0nb7yge9gyMGUtxfeG5oRPaunerwXQV8wNpfIAWD6DSw>
+    <xme:H9QnanmaW4xSQdRjVsAFbR-ArFlzWhzkIf0Icc_Ksh3uPZDapmIHwK5A5rb7foePh
+    sF39JuAbkBr3tpxk3xauCfo1zzh2HkucHDjENj1JuvXu2wUyt7xyQ>
+X-ME-Received: <xmr:H9QnarBxnpl2N5wIAOFD-hkNnItGi4BsuFdq_BGtoLwqQxBZ4QVy6j8SuOTwXZ24nm4tdos4Zh7vxTfNv0nLsDEa2viu2prLdzBaNOaYmbg>
+X-ME-Proxy-Cause: dmFkZTGj8XdmJ5+YFOKcKCr/PQjtoS31kmVFBcBBMXBn9g4dcT2itNqRFQ6tT26fp0L/ke
+    L9jBWAKPmiaTtvSIqZvkXdlrjGPnZvkli/ene235VDRC/kBepsTNypTdxTRg3BOgMrsFsE
+    SA2a/4pN2q/LfCqjRK0o3V8NU2YESK7s1bQGdvxXT3Lbw9/qDIa+X9cU8dYVFtyp2Zdm/m
+    XLuCPCGsOmwQjLX7tELpb0BgcO3xN3L3fIClRiuTpZ+VuiaRApj/QQfCUe9C4LoCAMlta1
+    6XWv5B1t/eLDY9+IJLZ9mddbnJZu+dqgh1ffXXwbYjC7tEFPumTSnfkClxYn/WcG0GknMz
+    uG9qaqpn7g/OT+8n65T05Dxf9NdL3ymBHqrY4xmgLZeRkPsGelH0JtVYzGcAev4kVxcOoP
+    +5zcmNwYxqyoKs4OV162x9UwM5aF2kBkKsAiZKx1HFf1L5isXNCNdq7luB26/mKbSzOsVo
+    HCH/EN3L5AeMPj700g8itrUeacw2T2d1NRXvKjij7hfG8R3rU8R3oRg6VpbgNbXEZawOFm
+    JqygShctaQ6WXPcEM0G9Q7Vvp4i4qVvMel+ulLLzveyKG35W5p0dDFRn6ITeWSBNINjid9
+    HEW7h9aBZr79Vm/EM38JfR7MnjIITXVWNIqjXuM1vqKOrJgIXW2GpgjOyllQ
+X-ME-Proxy: <xmx:H9QnavfQtFhxQq65hOKJLzAI3haB8zyNVU_eauY0eAiloL2cWcdA9g>
+    <xmx:H9QnauJgNfir4JnUgIn00TlUwd1dnEnUOeZ1qQCK2q22W3KHi7K36w>
+    <xmx:H9Qnaqc3tY0iznXljIZ-T15dgk47E0SCvO68vvjF0xu_nN10-icfjA>
+    <xmx:H9Qnat1usSHkDtftG4xt-W6Am4jz4SZO3wLt582BRxLuce-vqM0lrA>
+    <xmx:H9Qnat1ml2oNR56Kp0g3lQEhnW9V2NgjLo4C0tXe5t5BjjdPtgkuB9BI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 04:51:39 -0400 (EDT)
+ 9 Jun 2026 04:51:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 21a9c5e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 9 Jun 2026 08:51:39 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id b678a414 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Jun 2026 08:51:42 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 09 Jun 2026 10:51:06 +0200
-Subject: [PATCH v2 13/17] odb/source-packed: wire up `find_abbrev_len()`
+Date: Tue, 09 Jun 2026 10:51:07 +0200
+Subject: [PATCH v2 14/17] odb/source-packed: wire up `freshen_object()`
  callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,307 +83,150 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260609-pks-odb-source-packed-v2-13-839089132c8b@pks.im>
+Message-Id: <20260609-pks-odb-source-packed-v2-14-839089132c8b@pks.im>
 References: <20260609-pks-odb-source-packed-v2-0-839089132c8b@pks.im>
 In-Reply-To: <20260609-pks-odb-source-packed-v2-0-839089132c8b@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-Move `packfile_store_find_abbrev_len()` and its associated helpers from
-"packfile.c" into "odb/source-packed.c" and wire it up as the
-`find_abbrev_len()` callback of the "packed" source.
+Move `packfile_store_freshen_object()` and from "packfile.c" into
+"odb/source-packed.c" and wire it up as the `freshen_object()` callback
+of the "packed" source.
+
+Note that this removes the last external caller of `find_pack_entry()`
+from "packfile.c", which means that we can now make this function
+static.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb/source-files.c  |   2 +-
- odb/source-packed.c | 113 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- packfile.c          | 111 ---------------------------------------------------
- packfile.h          |   5 ---
- 4 files changed, 114 insertions(+), 117 deletions(-)
+ odb/source-files.c  |  2 +-
+ odb/source-packed.c | 26 +++++++++++++++++++++++---
+ odb/source-packed.h |  6 ------
+ packfile.c          | 16 ----------------
+ packfile.h          |  3 ---
+ 5 files changed, 24 insertions(+), 29 deletions(-)
 
 diff --git a/odb/source-files.c b/odb/source-files.c
-index 274923e0ba..8ad782dc7b 100644
+index 8ad782dc7b..fa2e18e71b 100644
 --- a/odb/source-files.c
 +++ b/odb/source-files.c
-@@ -133,7 +133,7 @@ static int odb_source_files_find_abbrev_len(struct odb_source *source,
- 	unsigned len = min_len;
- 	int ret;
- 
--	ret = packfile_store_find_abbrev_len(files->packed, oid, len, &len);
-+	ret = odb_source_find_abbrev_len(&files->packed->base, oid, len, &len);
- 	if (ret < 0)
- 		goto out;
- 
+@@ -152,7 +152,7 @@ static int odb_source_files_freshen_object(struct odb_source *source,
+ 					   const struct object_id *oid)
+ {
+ 	struct odb_source_files *files = odb_source_files_downcast(source);
+-	if (packfile_store_freshen_object(files->packed, oid) ||
++	if (odb_source_freshen_object(&files->packed->base, oid) ||
+ 	    odb_source_freshen_object(&files->loose->base, oid))
+ 		return 1;
+ 	return 0;
 diff --git a/odb/source-packed.c b/odb/source-packed.c
-index 070a4e3958..b801b62023 100644
+index b801b62023..e40b52e445 100644
 --- a/odb/source-packed.c
 +++ b/odb/source-packed.c
-@@ -370,6 +370,118 @@ static int odb_source_packed_count_objects(struct odb_source *source,
- 	return ret;
+@@ -9,9 +9,9 @@
+ #include "odb/streaming.h"
+ #include "packfile.h"
+ 
+-int find_pack_entry(struct odb_source_packed *store,
+-		    const struct object_id *oid,
+-		    struct pack_entry *e)
++static int find_pack_entry(struct odb_source_packed *store,
++			   const struct object_id *oid,
++			   struct pack_entry *e)
+ {
+ 	struct packfile_list_entry *l;
+ 
+@@ -482,6 +482,25 @@ static int odb_source_packed_find_abbrev_len(struct odb_source *source,
+ 	return 0;
  }
  
-+static int extend_abbrev_len(const struct object_id *a,
-+			     const struct object_id *b,
-+			     unsigned *out)
-+{
-+	unsigned len = oid_common_prefix_hexlen(a, b);
-+	if (len != hash_algos[a->algo].hexsz && len >= *out)
-+		*out = len + 1;
-+	return 0;
-+}
-+
-+static void find_abbrev_len_for_midx(struct multi_pack_index *m,
-+				     const struct object_id *oid,
-+				     unsigned min_len,
-+				     unsigned *out)
-+{
-+	unsigned len = min_len;
-+
-+	for (; m; m = m->base_midx) {
-+		int match = 0;
-+		uint32_t num, first = 0;
-+		struct object_id found_oid;
-+
-+		if (!m->num_objects)
-+			continue;
-+
-+		num = m->num_objects + m->num_objects_in_base;
-+		match = bsearch_one_midx(oid, m, &first);
-+
-+		/*
-+		 * first is now the position in the packfile where we
-+		 * would insert the object ID if it does not exist (or the
-+		 * position of the object ID if it does exist). Hence, we
-+		 * consider a maximum of two objects nearby for the
-+		 * abbreviation length.
-+		 */
-+
-+		if (!match) {
-+			if (nth_midxed_object_oid(&found_oid, m, first))
-+				extend_abbrev_len(&found_oid, oid, &len);
-+		} else if (first < num - 1) {
-+			if (nth_midxed_object_oid(&found_oid, m, first + 1))
-+				extend_abbrev_len(&found_oid, oid, &len);
-+		}
-+		if (first > 0) {
-+			if (nth_midxed_object_oid(&found_oid, m, first - 1))
-+				extend_abbrev_len(&found_oid, oid, &len);
-+		}
-+	}
-+
-+	*out = len;
-+}
-+
-+static void find_abbrev_len_for_pack(struct packed_git *p,
-+				     const struct object_id *oid,
-+				     unsigned min_len,
-+				     unsigned *out)
-+{
-+	int match;
-+	uint32_t num, first = 0;
-+	struct object_id found_oid;
-+	unsigned len = min_len;
-+
-+	num = p->num_objects;
-+	match = bsearch_pack(oid, p, &first);
-+
-+	/*
-+	 * first is now the position in the packfile where we would insert
-+	 * the object ID if it does not exist (or the position of mad->hash if
-+	 * it does exist). Hence, we consider a maximum of two objects
-+	 * nearby for the abbreviation length.
-+	 */
-+	if (!match) {
-+		if (!nth_packed_object_id(&found_oid, p, first))
-+			extend_abbrev_len(&found_oid, oid, &len);
-+	} else if (first < num - 1) {
-+		if (!nth_packed_object_id(&found_oid, p, first + 1))
-+			extend_abbrev_len(&found_oid, oid, &len);
-+	}
-+	if (first > 0) {
-+		if (!nth_packed_object_id(&found_oid, p, first - 1))
-+			extend_abbrev_len(&found_oid, oid, &len);
-+	}
-+
-+	*out = len;
-+}
-+
-+static int odb_source_packed_find_abbrev_len(struct odb_source *source,
-+					     const struct object_id *oid,
-+					     unsigned min_len,
-+					     unsigned *out)
++static int odb_source_packed_freshen_object(struct odb_source *source,
++					    const struct object_id *oid)
 +{
 +	struct odb_source_packed *packed = odb_source_packed_downcast(source);
-+	struct packfile_list_entry *e;
-+	struct multi_pack_index *m;
++	struct pack_entry e;
 +
-+	m = get_multi_pack_index(&packed->files->base);
-+	if (m)
-+		find_abbrev_len_for_midx(m, oid, min_len, &min_len);
++	if (!find_pack_entry(packed, oid, &e))
++		return 0;
++	if (e.p->is_cruft)
++		return 0;
++	if (e.p->freshened)
++		return 1;
++	if (utime(e.p->pack_name, NULL))
++		return 0;
++	e.p->freshened = 1;
 +
-+	for (e = packfile_store_get_packs(packed); e; e = e->next) {
-+		if (e->pack->multi_pack_index)
-+			continue;
-+		if (open_pack_index(e->pack) || !e->pack->num_objects)
-+			continue;
-+
-+		find_abbrev_len_for_pack(e->pack, oid, min_len, &min_len);
-+	}
-+
-+	*out = min_len;
-+	return 0;
++	return 1;
 +}
 +
  void (*report_garbage)(unsigned seen_bits, const char *path);
  
  static void report_helper(const struct string_list *list,
-@@ -582,6 +694,7 @@ struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
- 	packed->base.read_object_stream = odb_source_packed_read_object_stream;
+@@ -695,6 +714,7 @@ struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
  	packed->base.for_each_object = odb_source_packed_for_each_object;
  	packed->base.count_objects = odb_source_packed_count_objects;
-+	packed->base.find_abbrev_len = odb_source_packed_find_abbrev_len;
+ 	packed->base.find_abbrev_len = odb_source_packed_find_abbrev_len;
++	packed->base.freshen_object = odb_source_packed_freshen_object;
  
  	if (!is_absolute_path(parent->base.path))
  		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
+diff --git a/odb/source-packed.h b/odb/source-packed.h
+index f430ee0b94..9d4796261a 100644
+--- a/odb/source-packed.h
++++ b/odb/source-packed.h
+@@ -90,10 +90,4 @@ static inline struct odb_source_packed *odb_source_packed_downcast(struct odb_so
+  */
+ void odb_source_packed_prepare(struct odb_source_packed *source);
+ 
+-struct pack_entry;
+-
+-int find_pack_entry(struct odb_source_packed *store,
+-		    const struct object_id *oid,
+-		    struct pack_entry *e);
+-
+ #endif
 diff --git a/packfile.c b/packfile.c
-index 2da6bbe2b5..7f84094e53 100644
+index 7f84094e53..a577275d4f 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -2037,117 +2037,6 @@ int for_each_object_in_pack(struct packed_git *p,
- 	return r;
+@@ -1892,22 +1892,6 @@ int packfile_fill_entry(struct packed_git *p,
+ 	return 1;
  }
  
--static int extend_abbrev_len(const struct object_id *a,
--			     const struct object_id *b,
--			     unsigned *out)
+-int packfile_store_freshen_object(struct odb_source_packed *store,
+-				  const struct object_id *oid)
 -{
--	unsigned len = oid_common_prefix_hexlen(a, b);
--	if (len != hash_algos[a->algo].hexsz && len >= *out)
--		*out = len + 1;
--	return 0;
+-	struct pack_entry e;
+-	if (!find_pack_entry(store, oid, &e))
+-		return 0;
+-	if (e.p->is_cruft)
+-		return 0;
+-	if (e.p->freshened)
+-		return 1;
+-	if (utime(e.p->pack_name, NULL))
+-		return 0;
+-	e.p->freshened = 1;
+-	return 1;
 -}
 -
--static void find_abbrev_len_for_midx(struct multi_pack_index *m,
--				     const struct object_id *oid,
--				     unsigned min_len,
--				     unsigned *out)
--{
--	unsigned len = min_len;
--
--	for (; m; m = m->base_midx) {
--		int match = 0;
--		uint32_t num, first = 0;
--		struct object_id found_oid;
--
--		if (!m->num_objects)
--			continue;
--
--		num = m->num_objects + m->num_objects_in_base;
--		match = bsearch_one_midx(oid, m, &first);
--
--		/*
--		 * first is now the position in the packfile where we
--		 * would insert the object ID if it does not exist (or the
--		 * position of the object ID if it does exist). Hence, we
--		 * consider a maximum of two objects nearby for the
--		 * abbreviation length.
--		 */
--
--		if (!match) {
--			if (nth_midxed_object_oid(&found_oid, m, first))
--				extend_abbrev_len(&found_oid, oid, &len);
--		} else if (first < num - 1) {
--			if (nth_midxed_object_oid(&found_oid, m, first + 1))
--				extend_abbrev_len(&found_oid, oid, &len);
--		}
--		if (first > 0) {
--			if (nth_midxed_object_oid(&found_oid, m, first - 1))
--				extend_abbrev_len(&found_oid, oid, &len);
--		}
--	}
--
--	*out = len;
--}
--
--static void find_abbrev_len_for_pack(struct packed_git *p,
--				     const struct object_id *oid,
--				     unsigned min_len,
--				     unsigned *out)
--{
--	int match;
--	uint32_t num, first = 0;
--	struct object_id found_oid;
--	unsigned len = min_len;
--
--	num = p->num_objects;
--	match = bsearch_pack(oid, p, &first);
--
--	/*
--	 * first is now the position in the packfile where we would insert
--	 * the object ID if it does not exist (or the position of mad->hash if
--	 * it does exist). Hence, we consider a maximum of two objects
--	 * nearby for the abbreviation length.
--	 */
--	if (!match) {
--		if (!nth_packed_object_id(&found_oid, p, first))
--			extend_abbrev_len(&found_oid, oid, &len);
--	} else if (first < num - 1) {
--		if (!nth_packed_object_id(&found_oid, p, first + 1))
--			extend_abbrev_len(&found_oid, oid, &len);
--	}
--	if (first > 0) {
--		if (!nth_packed_object_id(&found_oid, p, first - 1))
--			extend_abbrev_len(&found_oid, oid, &len);
--	}
--
--	*out = len;
--}
--
--int packfile_store_find_abbrev_len(struct odb_source_packed *store,
--				   const struct object_id *oid,
--				   unsigned min_len,
--				   unsigned *out)
--{
--	struct packfile_list_entry *e;
--	struct multi_pack_index *m;
--
--	m = get_multi_pack_index(&store->files->base);
--	if (m)
--		find_abbrev_len_for_midx(m, oid, min_len, &min_len);
--
--	for (e = packfile_store_get_packs(store); e; e = e->next) {
--		if (e->pack->multi_pack_index)
--			continue;
--		if (open_pack_index(e->pack) || !e->pack->num_objects)
--			continue;
--
--		find_abbrev_len_for_pack(e->pack, oid, min_len, &min_len);
--	}
--
--	*out = min_len;
--	return 0;
--}
--
- struct add_promisor_object_data {
- 	struct repository *repo;
- 	struct oidset *set;
+ static void maybe_invalidate_kept_pack_cache(struct odb_source_packed *store,
+ 					     unsigned flags)
+ {
 diff --git a/packfile.h b/packfile.h
-index 0613fd3c63..79324e4010 100644
+index 79324e4010..71a71017ee 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -217,11 +217,6 @@ int for_each_object_in_pack(struct packed_git *p,
- 			    each_packed_object_fn, void *data,
- 			    enum odb_for_each_object_flags flags);
+@@ -132,9 +132,6 @@ static inline void repo_for_each_pack_data_next(struct repo_for_each_pack_data *
+ struct packed_git *packfile_store_load_pack(struct odb_source_packed *store,
+ 					    const char *idx_path, int local);
  
--int packfile_store_find_abbrev_len(struct odb_source_packed *store,
--				   const struct object_id *oid,
--				   unsigned min_len,
--				   unsigned *out);
+-int packfile_store_freshen_object(struct odb_source_packed *store,
+-				  const struct object_id *oid);
 -
- /* A hook to report invalid files in pack directory */
- #define PACKDIR_FILE_PACK 1
- #define PACKDIR_FILE_IDX 2
+ enum kept_pack_type {
+ 	KEPT_PACK_ON_DISK = (1 << 0),
+ 	KEPT_PACK_IN_CORE = (1 << 1),
 
 -- 
 2.54.0.1136.gdb2ca164c4.dirty
