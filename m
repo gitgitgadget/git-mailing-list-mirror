@@ -1,246 +1,115 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5722280A56
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3635C275AE4
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:23:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781011292; cv=none; b=Kb42RfRXncjZfnbZmxG14i0Iku4J0yuzutqD17AKD8+4Ue7GFtwoGrFlW75kfupYJPjYZgLIDA6Lc7ZzNEnOgdj+dOfr41KGgLzpr9G5nuXE08B+1O3QTrW0KjxhFpr5mvboNqpu367z5oVyqHDqhfnSPWq73yncrQPLo6flhJk=
+	t=1781011415; cv=none; b=IrP6ITlDH/oX1XYDGzJ6iPY8/L41xH1lSsTHXg8BgXaABg9TJE2JWQcSxgu95x1SlYi5bwJewOvxGihInbI62i79vQPUnoilT/t028i44gl/xdC4UZZqNTrycmZxXRDxvDIjwYl8pHCQD8ySHfjFZvYBHM3C+cau4k0VWIIy260=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781011292; c=relaxed/simple;
-	bh=ifzr0j52/xqvhikPztrertfTdbSV88tWtmlS0n3iqaU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JgdEmWFfPdfLUVeSwefrU/pocsuWq+FWVNvYuP2VsF3PvaDxVWkfbsgzYgsRpuWe/awm7LdRUTAT1DRyqFo5fHVfYUHCc89D+BHJ/GY9VPQWXGrJq/6zxpypDetlIa0H2LvOGZ7LkJAJinbe4kzcifo+7axIbCYs9iJruY0G+wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=St2qjtiD; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781011415; c=relaxed/simple;
+	bh=XwOYV6Weu+/iq/d9W7ThSb7cWrlk4S7DiS1mTA3D9Zs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OrLpTbtUlDJxMXtGNesIGK0X3lFjKrZcIzf3kRylXxIj3ByuGeUyJpCt3xHgISIKln9IhzqjajOxbu15wSZnyfCs8b1wg/4TIExcFJL25V+3PkT648K41xxONwyEWf8MXzk/Qh7YurMRw2QNQjB8FaBG7dQCnGBiGgfDxGAH8QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bBQnhjDN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DyC4bS3V; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="St2qjtiD"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-68bfcf11050so10100372a12.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 06:21:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781011289; x=1781616089; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vuRshexJTUaHLq/enTCZ4yxq0npqHRzCCXVd+84c5rY=;
-        b=St2qjtiDBi7zkp146Lu3+tDZzFPvMHmdz2GQ7wX2vR2syiT2lpP8gSqep6gydEdFEj
-         3wGPOfkZTZtbk+3fSZZrEZ07p0YirfCsRYZOG22wVOuiajzfln46PeNB4+p7DP6vFwc2
-         g6QEwuqhjxdIea/Jid/KgypU68QDogt/ycGqaYTK9UmH487m4RkVtdqqAwr0duCemfk6
-         5NreBmvL7WnMYE2+Pn9tjfUidE5VFoZ0C2IGtP85usrToFO1BZcNMatdTatZ40EPUXm7
-         t0tm69UzjFFkB3iVY1+1CfKy0i+jOndRNHHub2iFLoiLqjg5FWT4e+WMm4ksEwD7LG7t
-         +F6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781011289; x=1781616089;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vuRshexJTUaHLq/enTCZ4yxq0npqHRzCCXVd+84c5rY=;
-        b=BmlshDA3bmLILvAV35EWoYrjOBCu1P4vGJoOmkVUrx1FLVM0XmUn5M41ReeUlIdrqD
-         jLNHLUKSI4iMSoOyxnT+Os0zaLMDE4CR01A6t34uWkOL5HTdYEV5HD8+/P0SovTSqjK/
-         kqZhshTMxSOPKSr28ct5ZC++6Jhuov36g7Jw1JkDcX24Gy5VEHo9+NkEvJbjVShm/FLL
-         MJfXVOAnmNmHfr0W+fnunR4WJMUc5btBRJmusqC0E8qkES8IpXRBMH3gjJFpJefd6Ve1
-         rYMF43aIbZUFBUe2EouGn8bVZkSCYmY4rGo2M+Cx2QnVnnk6g1qjTLBVeyNGgAiE7AFP
-         bd3A==
-X-Forwarded-Encrypted: i=1; AFNElJ/wEQDHv5hcRyFAEB6Oz6Uj6SGKu577sJZ64wVdGe2lDdRsSLM3vq17llfvv74HJBWwzIs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3lhwqhLpxhZra/UIyECJ6SixETyNOK5ZN41zqE5iGYheAfGeF
-	kMoUXIJkP07bjyOg+PS0o1mewIhgDRFdFsqnNEFs7bny2r+ceF9MaER+
-X-Gm-Gg: Acq92OEp1tz1hX9zm+wJZORxk2qAOtpe9MCNKfbFXMTOwRDA69SRUqFOj6h3bXE20cw
-	ZLfMP5EHJLlZdjR8tda2TEvqQxGo27GJ7JszI0xw2dG2K/wC9MBNcVKrqBjaZdvi37CbHCucxeK
-	TtnTNEiULvRTS/06i1RaJGHz+6OKGRny9eA3klzR1nfsVMPXhXnLHNE6EJnKznIDkP1Cpm8NmPs
-	ayDDuUfgQn1Dj9Fqww8+2CdwaaxKtEFWy+wS5GY0ZbFEQEU6pYu8h/OAg9CsfVpqiMXfZCGQtpH
-	CC36DbI1HS+5nooAFf9Y/n5LU0+53LBK6qoNI50wR1RgvTzVoc48oZpixv96a3BQnssAfsCUoOK
-	kLUI10W7XJ1Mb8uW2IMTivx7+kFWtj0nAUXqH/5GQlPMLe/6heLeRpvehMtdvWF7fKkXWjmnJ2P
-	E+fFV5b17SXabQcRJ459P4DIgvyttWNKztoGNgObYe5JBIWEusmipJcbjxyJHiW0IhKiyESqh3X
-	0Pse3kS2VTm4X/CjfWG+yeTiCg=
-X-Received: by 2002:a17:906:4fcf:b0:bce:80db:77ef with SMTP id a640c23a62f3a-bf939b01f48mr140485466b.43.1781011288416;
-        Tue, 09 Jun 2026 06:21:28 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf0559f1464sm1057628266b.55.2026.06.09.06.21.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 06:21:27 -0700 (PDT)
-Message-ID: <1c56bf9c-8273-4499-87c8-16ddf0112dca@gmail.com>
-Date: Tue, 9 Jun 2026 14:21:27 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bBQnhjDN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DyC4bS3V"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 60C5E1D00093;
+	Tue,  9 Jun 2026 09:23:33 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 09:23:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781011413; x=1781097813; bh=OQelTvycXI
+	K9Dyp6rS943kQfH1Mold0wo2SwgNJKHK4=; b=bBQnhjDNy0qGxFdjdayjvUfpxC
+	oBrdfa90fqHVzZ7jn/TmZnls6arp2vIpL6FjsSqc8dDiBW5PJumALZA5IkGGIfIE
+	C41oklcyr++2gi4JCpGIDMl66x46Z6gYRGA5HaZxb+w15wvhUnrfgl20ywIhkyni
+	vNrSa9s/gbIInzzGDgQ5iJEo85NTc8U3Qf3Fvlsi7e1+snCTZ0vnMgSmd5eMtQY9
+	fHy58k7ZULtd9mGlCXNUxeQ//tywNVeEedNjeaFcbGTPkDZ2Db7SXhxUU9B+PxGz
+	xN+NZueaKfl7SOslKYNPupbX9n9/hfP/0AKgFHxQewznmkM99XHsqVvPLBmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781011413; x=1781097813; bh=OQelTvycXIK9Dyp6rS943kQfH1Mold0wo2S
+	wgNJKHK4=; b=DyC4bS3VWAWfqNpZ+aSYdleJl4oO+x6bBBvNHcFCAMIvh5NvZog
+	Mebu6y/GvxHO8kV+f6j0ztM8CGg2NxXb2UdmfWqkl91UlE1/5Di44dtVO0xsAk8N
+	VQrjFQcXcEqKpFecOSopQp7MeAYZaNZq1MViTIEcCF33OXAmHANZwOTpKNvhdm4U
+	SJOQVT1l88fzUuU5KK4xNW7zY9sZYP76nJI3BwZWJvfVhAJ9oGsQjnjcrVc1Qj6n
+	7IZMv1qe9EiNwdL1vvd3pzuzna0sFWEIm/YuABgAfMF2qON01yDla2W+kFEvR9rE
+	Fpo+RhBiLEPx05NKutJPcWiVCRt4YFuKIZA==
+X-ME-Sender: <xms:1RMoauxmKsMxEccrGDuj9O7zdg2yBFipJFShh4GnTHzOPDPTsZxgwg>
+    <xme:1RMoahLBQtZOaWQDVhLx29GTF4zjZSsoJQ3aGUytmMnMNfD2N5efkpRogBd4XTICH
+    n5V4iaY0ODUyLKdCah_LGqk2dOA25TLnyt7UHISa4G-iY38XNlcAA>
+X-ME-Received: <xmr:1RMoaorzjG84bQejArN_-pEGx8oQ6F9LTnc3ZQUIApJnnXML4CFkgfcVKSM_wyN005wPcOi9uHS8odDf2OV0xra_B0OkUNglBQ9J>
+X-ME-Proxy-Cause: dmFkZTE9GwDoh5MN6c2eDgX1nsGjR8iq4tlWoj71OEwQKRe6CfqBSM24fVmdljkS31lFdt
+    LTyu16Gm7++SZc1TI6mc+drbq7I4bot/2i6su9ra3QZGOn3Z1QWPg2wp8KXjWJ6RKpgqG5
+    vu5InqwZvZ3FSTNhxQVT7QPYO6+/mQtol0LIdISBzEgA7YRmSMEg8U40J4+/qQ9LEZbpU+
+    NdZu6jukKoZKOAL3w69bXa1NokqIGe9THiFS+5Z3RhAG2Pf26YnYRbhvD9H3dJv9WdktHX
+    k4ao6dGFqplXukgaNU8vg5Vrme07Kdtg/3/ya1jIkwkz7SvRdk6fG6zCt8iteherEFSlgV
+    EjTVyvfODuuyCF0QxcLUSdSopAtXe3ovvULf7uYgqvm7TAwMi6CXN04/VlpLcEi8KFwiv1
+    XbbglZsXrh0lxYGh+UHR/hcEaogc5aZ2EXN3GXmun4C2Vz7atMVZN4t/uK6s1aWl0S+Ozi
+    aqGA/Em0Yf2VeeS0ofYhPpfFOyv4JoXulyjdYzcZNdV7Y7EbEe5opJHXd7YZDWVQbGJg4r
+    Vvxd0hcHD5kRbX2h9p6DC6J9AsEMO2Ox+aijX667mqMfJXRZoEy0XIVx23UIYR6SGjGz09
+    V+ZPg3k0k6Y1QqMwgmepRtinZq8zZQ8ZC7wgBFbpGKIl5quFj+eRJZUYiRFg
+X-ME-Proxy: <xmx:1RMoagLYqtaJzUFJ6HYANdCs1JXU_0URI7KlrC-q4KDKlhd38Niu7A>
+    <xmx:1RMoatSBvfdrhy39hDZdkGFXjdEFlcEjK-XWQvGKZ4YKiuV8lc0lYA>
+    <xmx:1RMoavsYwUkdMa4afA8z9dY_PH8r0V9BCsdrnJsNuuXWpjCSO7vyYA>
+    <xmx:1RMoauZsRutOqhcDH5qh9PFtiQ3HA6YJD92iqq_I3bCA_XTFyGXRgw>
+    <xmx:1RMoakHi6WUeXjQ8UfW2i0dYH9Hy0uk3sDctBMBFy8YM6Xcg-mHA9LLo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 09:23:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Tamir Duberstein <tamird@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] describe: limit default ref iteration to tags
+In-Reply-To: <20260609110957.GB1509396@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 9 Jun 2026 07:09:57 -0400")
+References: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
+	<20260609110957.GB1509396@coredump.intra.peff.net>
+Date: Tue, 09 Jun 2026 06:23:31 -0700
+Message-ID: <xmqqpl1zsv8s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v14 2/6] branch: let delete_branches warn instead of error
- on bulk refusal
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
- <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
- <7ef9502e01055fd5442550cf34d491fd21a9b971.1780999917.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <7ef9502e01055fd5442550cf34d491fd21a9b971.1780999917.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Harald
+Jeff King <peff@peff.net> writes:
 
-On 09/06/2026 11:11, Harald Nordgren via GitGitGadget wrote:
-> From: Harald Nordgren <haraldnordgren@gmail.com>
-> 
-> Add a warn-only mode to delete_branches() and check_branch_commit()
-> so a bulk caller can report branches that are not fully merged as a
-> short warning and carry on, rather than erroring with the longer
-> "use 'git branch -D'" advice that the plain "git branch -d" path
-> emits. Existing callers are unaffected.
+> So while it is perhaps reasonable to document every detail in case
+> somebody later wants to verify or reproduce timings, it is a little
+> overwhelming when trying to tell a story, the core of which is:
+>
+>   In a repo with ~120k refs, ~300 of which were tags, running:
+>
+>     git describe --exact-match $some_tag
+>
+>   went from ~170ms to ~10ms, since we no longer needed to iterate all of
+>   those other refs.
+>
+> That has _way_ less detail, but makes the point succinctly.
+>
+> I dunno. I am not trying to pick apart your commit in particular, but am
+> more interested in the broader use of AI commit messages going forward.
+> This kind of verbosity is quite common in the output (from my limited
+> experience), and I think creates more work for reviewers. Should we be
+> expecting contributors to make things more concise before submitting
+> (either manually or through prompting)? Or do people even agree that the
+> shorter version is preferable? I could be the only one.
 
-There is no mention here of the conversion to use a flags argument which 
-should be a separate preparatory commit
-  > @@ -189,20 +189,33 @@ static int branch_merged(int kind, const char 
-*name,
->   	return merged;
->   }
->   
-> +enum delete_branch_flags {
-> +	DELETE_BRANCH_FORCE = (1 << 0),
-> +	DELETE_BRANCH_QUIET = (1 << 1),
-> +	DELETE_BRANCH_WARN_ONLY = (1 << 2),
-> +};
-> +
->   static int check_branch_commit(const char *branchname, const char *refname,
->   			       const struct object_id *oid, struct commit *head_rev,
-> -			       int kinds, int force)
-> +			       int kinds, unsigned int flags)
->   {
-> +	int force = flags & DELETE_BRANCH_FORCE;
-
-This is missing "!!" to keep the value the same (alternatively we could 
-perhaps convert "force" to a bool, though I haven't looked too closely 
-at how it is used in the rest of the function). Apart from that this 
-good, unlike the conversion below it means the rest of the function sees 
-the same variables in the same state as it did before the conversion. It 
-would be a good idea to follow this pattern for the new flag.
-
-	bool warn = flags & DELETE_BRANCH_WARN_ONLY;
-
-and then just use "warn" later. It is a common pattern in our code to 
-take a flags argument and split it out into various boolean variables at 
-the start of the function to avoid a lot of awkward bit masks in the 
-main body of the function.
-
-> @@ -217,8 +230,8 @@ static void delete_branch_config(const char *branchname)
->   	strbuf_release(&buf);
->   }
->   
-> -static int delete_branches(int argc, const char **argv, int force, int kinds,
-> -			   int quiet)
-> +static int delete_branches(int argc, const char **argv, int kinds,
-> +			   unsigned int flags)
->   {
->   	struct commit *head_rev = NULL;
->   	struct object_id oid;
-> @@ -227,6 +240,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->   	int i;
->   	int ret = 0;
->   	int remote_branch = 0;
-> +	int force, quiet;
-
-We should initialize these here using flags so that the rest of the code 
-sees the same variables and values as it did before the conversion.
-
->   	struct strbuf bname = STRBUF_INIT;
->   	enum interpret_branch_kind allowed_interpret;
->   	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
-> @@ -241,7 +255,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->   		remote_branch = 1;
->   		allowed_interpret = INTERPRET_BRANCH_REMOTE;
->   
-> -		force = 1;
-> +		flags |= DELETE_BRANCH_FORCE;
->   		break;
->   	case FILTER_REFS_BRANCHES:
->   		fmt = "refs/heads/%s";
-> @@ -252,12 +266,15 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->   	}
->   	branch_name_pos = strcspn(fmt, "%");
->   
-> +	force = flags & DELETE_BRANCH_FORCE;
-> +	quiet = flags & DELETE_BRANCH_QUIET;
-> +
->   	if (!force)
->   		head_rev = lookup_commit_reference(the_repository, &head_oid);
->   
->   	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
->   		char *target = NULL;
-> -		int flags = 0;
-> +		int ref_flags = 0;
-
-This is sensible so we don't shadow the new function argument but this 
-added complexity is a good reason to split the flags change into its own 
-commit before adding the warning flag.
-
-I'll take a look at the other patches later this week - there is no need 
-to send a new version before I've commented on the rest of the series.
-
-Thanks
-
-Phillip
-
->   
->   		copy_branchname(&bname, argv[i], allowed_interpret);
->   		free(name);
-> @@ -279,7 +296,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->   					     RESOLVE_REF_READING
->   					     | RESOLVE_REF_NO_RECURSE
->   					     | RESOLVE_REF_ALLOW_BAD_NAME,
-> -					     &oid, &flags);
-> +					     &oid, &ref_flags);
->   		if (!target) {
->   			if (remote_branch) {
->   				error(_("remote-tracking branch '%s' not found"), bname.buf);
-> @@ -291,7 +308,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->   									   | RESOLVE_REF_NO_RECURSE
->   									   | RESOLVE_REF_ALLOW_BAD_NAME,
->   									   &oid,
-> -									   &flags);
-> +									   &ref_flags);
->   				FREE_AND_NULL(virtual_name);
->   
->   				if (virtual_target)
-> @@ -306,16 +323,17 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->   			continue;
->   		}
->   
-> -		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
-> +		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
->   		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
-> -					force)) {
-> -			ret = 1;
-> +					flags)) {
-> +			if (!(flags & DELETE_BRANCH_WARN_ONLY))
-> +				ret = 1;
->   			goto next;
->   		}
->   
->   		item = string_list_append(&refs_to_delete, name);
-> -		item->util = xstrdup((flags & REF_ISBROKEN) ? "broken"
-> -				    : (flags & REF_ISSYMREF) ? target
-> +		item->util = xstrdup((ref_flags & REF_ISBROKEN) ? "broken"
-> +				    : (ref_flags & REF_ISSYMREF) ? target
->   				    : repo_find_unique_abbrev(the_repository, &oid, DEFAULT_ABBREV));
->   
->   	next:
-> @@ -872,7 +890,9 @@ int cmd_branch(int argc,
->   	if (delete) {
->   		if (!argc)
->   			die(_("branch name required"));
-> -		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
-> +		ret = delete_branches(argc, argv, filter.kind,
-> +				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
-> +				      (quiet ? DELETE_BRANCH_QUIET : 0));
->   		goto out;
->   	} else if (show_current) {
->   		print_current_branch_name();
-
+Count me in.  You are the one who often gives us a patch with 60
+lines that explains a single line change, but I haven't found these
+60 lines are _overly verbose_ in the same way as AI generated log
+messages.
