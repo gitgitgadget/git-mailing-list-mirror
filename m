@@ -1,158 +1,194 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588EE4ADD90
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 17:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233733859C
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 17:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781025152; cv=pass; b=M3A59wfMvK9qoVjYJluUR9I2u6VoPSmtjF1EPjiMtxE1Cr8Yzd6ekFOmibsxlIlY6byzOgPkvVfN9wDdADklSuRKYKnXMfY3W3/GUqrEZZKl8zAtViOFTtz8m5vcjAwm/YE8pQP5eNqGlTjIFoeyLh9pLHpK19QUZoz2wxIODh0=
+	t=1781025324; cv=pass; b=t2CeaKagXJxkoQdJlybIHgQmjxTE8c83lFJuGbqbv+mRQT7rxHPbIlcaTLflc5sPZJpxnaki5OlGsqL/7jBEEDZfYI9LmRrRwYUDWnolwGdW8T+vkNeenDn/j7rA5csrRmF+VeN0yhZZdAtHt2tijGXNNRaqI6qUPPy8fqKdUGA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781025152; c=relaxed/simple;
-	bh=mEBlybAC/4E3VZATHwyuh5dPKfa1M71McXBrhwmTLuQ=;
+	s=arc-20240116; t=1781025324; c=relaxed/simple;
+	bh=Bcx8AHbM8Xe+4jTNK1g8MUG5BHrGNomiDFtFwkg8qOc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VaVrVFiloUmGnvggG4L7lqWWcVt4mZOgBF3yJhID3cxUm+lhfV8vzvhZJYbruJzgf6ZBlySwnN3+gCfCu0UstaWHNFq93HRifyoMgIUAHa+r/4KuAax0sVoPn/CXbnFiedsgEr4JEEF4MAQ6HcHZbdfLvtB1edTvAc2MzHgrPqw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SByc3lqG; arc=pass smtp.client-ip=74.125.224.43
+	 To:Cc:Content-Type; b=AS6vrj5z8Nbp30IkGQHWm41uy3DFfnk2aBy56NSCn7Qm5jBZH1jHN0S6H334xiZRDj0kvgrpFnPitM7VaJ6NzgIxawzTIpBloZHUpRJbFH2fRawdlpp15NEIZ0JHEQm8a27HFgPUhjbHKA19sD3jPZ2hS0WCAFVoXbpIoYm0SzI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s9FJ1YGP; arc=pass smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SByc3lqG"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6611669cd16so3346700d50.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 10:12:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781025148; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s9FJ1YGP"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-36ba285e98bso5770951a91.2
+        for <git@vger.kernel.org>; Tue, 09 Jun 2026 10:15:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781025323; cv=none;
         d=google.com; s=arc-20240605;
-        b=F/PHrtzbhTKqyCvA6r5Wu2SmuT5LfazBDw03Agl3JPgi36a7lwLEft8mn93mydd4jB
-         lgpQqIb0DYXAgVe6+T6mE6Ek2m0lKdK+WLKDb2YOokjXZOgc3oCrwLNTw4Y4QhnilSYq
-         ZlIfz+3kEFKZiq5HsQkyRvfdyAVx6p9E6skAQ1hmNQE4P01Feu7fsahD37ny4VCVBdn2
-         EkJwhZq6hIRINwx9Z49QkLg0LYmvMOyVdv2gxSPICAukSGkNF/JXf71YDHZyeyVkcwPc
-         tnxf2NF4S6ufmMQnzWw0SBpjbNRsJwSWY6RIO8A43xDGctPs49qSEeEMMIAXraf2+Vam
-         zXng==
+        b=NqV+IDzXoHGvYgdRDmJCnyu8d7oAVRoZjCW5Ppsw1xw9QbB0OMO3KqA/ZOnuNMDF3X
+         zZ2l4mHzU85hAI1RTzgP5tdvebdsT1A4oWFC43UqqWKwyZnvlrM8Se27Py+tvYgWuzqR
+         zE43OiXFVpHfSqlGmxFGfwlL7ZUDoBNpmG22wMMYIyGkIubovGBK4HkmCwLJ8ksXQcvH
+         tRc9rjvlWCVnxwcGkCPFTbu6gVfwOscfw//AfKfro25NNyc2ESARXI8d6t5UTvPrO24E
+         R3IGpP9Aag1gqSt6uyBTQ9zNNPIe/rnx9AP6UxN0JsILjMaSJC/eekvfpZ9iq6YsQXaU
+         Jldg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Ud+Y38jUnB09uwYjDdG+R3Jr16dvcjily0rZLvTrXZQ=;
-        fh=NiZXQXm7NXgXE6CrjAMqUjtbDpueHeh0V9rm7ssVZcw=;
-        b=I7/rJ7U/7enWcOYZf+X8rgINuqi2Mp6rVtuXpUxmoDe3AvtMWZRsxntlxAPJFQ+nBs
-         P6qoU5Gb+Pi6n//IDOV5NGjH8NAcp51NS6GcPwn0jIm0AeTyzJlfM2qpBG8uOqPKwcKm
-         yIgxaPa50DeMXCu24JhDm/ha9oOjQT/lcindkwHQ6WO3aikLw8irmEV/4mly38UFWM95
-         Fc1+M+mmZhB3dvrxxNmRs+CBPO5g6B5+/A2iTxTOb0YnCXaMrPE8vD5qowOZYAxN4dim
-         ynCztGCClEh3bpJeBTdx/1Ttx280NE+NGH3hpIYg1XJb/TbzFzlurccEolEGRhuoHvlc
-         /jeA==;
+        bh=hdxZkrnwbpIaYeEXvxDcO0LJjIp5KM7TjJbTawM/4Mw=;
+        fh=JXEs40DwwsDIICretIR6AhTxI8iOgnQYnwvLmc7A5fs=;
+        b=O8ltHqv7lOx7s57+iG8Znz8DFB+WhDmihnFMzsIwReibQ8JxZddclMI1GRHAYD12ai
+         4sUzxK0kXUuqBeA+JNwUvN+Tq4WLxqBXzSECRS7npDnJ9qhZG2DjWz2W2xtnR4MZoO7K
+         cSKU7JyEnHnq5QBBQ+LTsVFqaJx6OtkSTbadwWr0Aa7ydkqzAstAugPht9crgEwHjuXn
+         InO51Hq1/z2nanGfmBRm43itgmnm0dkyAacjPXjoMn55Wx7sdz0xEAsUgY6eiBkHSe8A
+         2dCfm1/shQ+cHaDYzKIbkiEpgAGpI9QJC9P1pHV9Nakko8RfR2QQiS7+ZtOAbRahdP3l
+         Ls3A==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781025148; x=1781629948; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781025323; x=1781630123; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ud+Y38jUnB09uwYjDdG+R3Jr16dvcjily0rZLvTrXZQ=;
-        b=SByc3lqG/7yA9CBVFzYL6UAaC2wesVBjWkRFKQX+SsQWiUEDjpnKhWuEgeTQXHy2Z6
-         AU8AkB3+5DxvnPp+kbtrwqoCPgh+x+4b3Eayc/RK+m8hd3hEnO6mpy+bcNvMFHyZFyUg
-         H/wOgeVqzTlXSTWFbUli5tMV9XKZb9jJ+9jlbDoyr4NHxByriowZn2noH2T15BNO0zti
-         hSbCHc6sDVlRExXPujU1Zjr+ZEOG/4GGX64GlEFk33/xjsjxy/jX0+rYyOXNTjQK5F+y
-         F0ZQTg6SC/GduBZ0edjJKEZzwbqk5cmZegweRV0sQbeAEx6EUX5dUZDkpS6ffmpDXh9u
-         XAjA==
+        bh=hdxZkrnwbpIaYeEXvxDcO0LJjIp5KM7TjJbTawM/4Mw=;
+        b=s9FJ1YGPFVsro2ixi0AxpbhIAthxmMZz43yms9WcA3Mm/LSmN91aUKpZ40xt7OGKR7
+         7WS/PsN2SELIs5W9CDRQjUW5dqJDbZOlU3bJJSquV0+rgv4qSM9CtLdK/80X17e8DKIx
+         DgfzHLn4w4n08SodAVEsN2ztDVzSZ9yCF+FZMHao3Luq52RwAoDnRL/8akokbMLEQJlv
+         oz/Cb87kgwG8UwpXUda3QUMgL2JR7RkkaNSxyByvLiOeXWK2eG6Bi1CIJPcSdtiXW2FN
+         C6gb4BILMj+rd9EsgM3/NZfuLO6IWStTnLwQ9RPjTOatCRb0/CpHhh1Wsx57rlAb5hMT
+         Ys0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781025148; x=1781629948;
+        d=1e100.net; s=20251104; t=1781025323; x=1781630123;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Ud+Y38jUnB09uwYjDdG+R3Jr16dvcjily0rZLvTrXZQ=;
-        b=c6nUhZe9rvy82ZOCxVJ8N5XAfE2LE+HN4O7dpLpqgVnpeC2pJg2Ey41XTjvwnQRty7
-         avUV3/Kpt5TFvKfQOMvSh/rG9sXk7yOQeGY80MokYiiVMMSjsvNCvqOEER/CnZzUdZIg
-         iARaavM+drJkQHjzDvqD6t6k5ivp0csEa1owLzaqlef2tUl3ZjUm57rYi/6tdyIeVf7Z
-         cN2OARhRDWADBY08dGF0qN2xhda0+dB5RICsALisNI0UnpNlseIFfSv3hc85PW6oF9tV
-         rpaGi1e+YR/O/GflRH82nLi0GcUgaq0pK2u5F5IxPCwPKyEfrv+gtA2a4C6nRJdu8/Wr
-         smYw==
-X-Forwarded-Encrypted: i=1; AFNElJ9YLd/h5ssVj0Q1SFjsCSax23UqDfdXJpolU6F6hMMhkNjbnQ60HY8g/pIFB4w1oktr2gE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNK1WmYqsIE/1pVXjhCgo4NZKlrb93c5DkVexcuHS1MEbGDkOd
-	4PKAujcoG0nYlFHS0i5j1KiKJDWo6BitgJb6wF6xC3tIaF3htWcA2tlV8I6fdPeCHKPr+PLiZBv
-	xwpn2n2PIVIUMfnh9GdCCbzDZ1EIMLjc=
-X-Gm-Gg: Acq92OHgFYiTxgx4zhOrGUqQu9qL3VTm4xsPDTokW6p3+oDoed5vRkEFjj4c3mdZyEP
-	bycOvRVlZefu++/6JlC/tFhgQHRaOX5gjsMif0YRsuczXCsDajhVDLvEuOzxo+m9fCjTP7FO/d5
-	osBPb+xSZjXNsPVBaBU29w51RVbJIuXNw5BTe8VUXnndx99N476QAcqtlqf3gaSDLLaOdaKQSkG
-	zTAKFlenGo5CyT5dd1TceQe0Fq/fiGLdPpjDrMAA9B9LY2ex5JIEeKymyGQCxY8yDcODVSkeRT2
-	YNaSUfouJuoE9E0sLuQBx/IC8oIhbw+W1gWcAiOOSpDmuJ3sdfkBYgb5l62evssVAX+/HY/MMaR
-	s8O53fw6bGb7fIH0A+wpbDxPew1cyQGX9v2qtC7ze0FXtLxeIthMrzpclbK9kDW+Zf2HjhbVvjp
-	yBzZSTB/NIqKjJ2wtEfgxPIiM=
-X-Received: by 2002:a53:ac8c:0:b0:65e:1bf6:1386 with SMTP id
- 956f58d0204a3-66106e4dbd5mr18590293d50.17.1781025148023; Tue, 09 Jun 2026
- 10:12:28 -0700 (PDT)
+        bh=hdxZkrnwbpIaYeEXvxDcO0LJjIp5KM7TjJbTawM/4Mw=;
+        b=KusDadAiE5D0SuL+KEQP3n6RUy5BngLWuubo+zohJx8nFWHat26MnjCDMLBNBJnkRD
+         /hhZvh/VcVZbliNpvIjCpEoXF6gLl0/0pRN7jsEbMd0tSQFo/R5/JNq0jrh0Wop1xw5H
+         P3zdQwasNyxejvM1FBAsH34hhGp8Trn4ESqdAnaVfzOPnkCcWEY6K1f/MpYKkQkT/XZf
+         g5gT9f6zlqLdk2n3klKwN2nSBu7pDZkOZPItCzdodoJaEQG//LiBOkgkAkc0qDpPvMDj
+         tjv8VdVNacIR9FmcZ+7VazuLLCjPZJYjj+AeRO4buPLVJNG51nY6a6MyWOp05zyBbWzu
+         k2Dg==
+X-Gm-Message-State: AOJu0YyGsIarpFwLe7gugXDDeUWA9qfWwJPvu3fMOesIxUbhXlCo3Vit
+	YofUjKOhsx8zfpmM4lpG47JGhCgZummRuDKkY+jgAg0MUCr+SD6mDCk2x3jGtHTihPlH4xVcVjF
+	9g0OvqiHer34lUjqaHK0jcFX4Q8Meo6g=
+X-Gm-Gg: Acq92OGymw5cHDu3FFwlPrWTyhnCoygJwhzgCD2n/4b3zrPkMWixnLnDxqzB823qCFy
+	E2ahCeXWSkHwKrNMI8uR/SqJcS+vC3eDua5W2Kx927PvyfCpAn3NdWrOywZwdCYeh8pvXj/l2CS
+	teP0LhXL3dpH5+aUk0Tr0Vbk5PxZs1YC9nWYBO/9Dt14Pry9EYUqjTWbDhqzGANrn6eIRIStsIe
+	m77e89SkGdbSWc78BwIOPyYXE0YWBnjgr0jL5sr0eE7kULL1o1raCrdVdmI5iYH/5Luqllun/w9
+	cBlmczuk61jwYrse7voKBXlVRxoyUgFW4BVTjEqJsl4q6sqzDKW7ReOPbTmUn1JGBXdwbK07wf4
+	UrwS1MBk8s9nBF+jynhftdULxZB/rpQzFvJHnYQ==
+X-Received: by 2002:a17:90b:2d4e:b0:369:7421:75c3 with SMTP id
+ 98e67ed59e1d1-370f096ab5emr20964974a91.16.1781025322618; Tue, 09 Jun 2026
+ 10:15:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
- <20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com> <20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
- <54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com> <xmqq4ijbsn2m.fsf@gitster.g>
-In-Reply-To: <xmqq4ijbsn2m.fsf@gitster.g>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Tue, 9 Jun 2026 19:12:17 +0200
-X-Gm-Features: AVVi8CfmmoJnPgHQYwPavlGhvA9FnEpn3uxHgxg2f0fT9HCevcRbF3Ru3bkMjlM
-Message-ID: <CAN5EUNRz9F+njb_O=Q4DzVMec-q+rDf83Ow+MPJE4yLCBq9qww@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, cat@malon.dev, 
-	ps@pks.im, kaartic.sivaraam@gmail.com, ben.knoble@gmail.com
+References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+ <20260609001134.GD358144@coredump.intra.peff.net>
+In-Reply-To: <20260609001134.GD358144@coredump.intra.peff.net>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 9 Jun 2026 13:15:11 -0400
+X-Gm-Features: AVVi8CdXTdqLOG2C6OpwePuJHtHMtrsMmU-tl70K5Ujjr9HuMhNi9wEv7aO_y5k
+Message-ID: <CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
+Subject: Re: git-diff in a worktree is an order of magnitude slower?
+To: Jeff King <peff@peff.net>
+Cc: Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-El mar, 9 jun 2026 a las 18:20, Junio C Hamano (<gitster@pobox.com>) escrib=
-i=C3=B3:
+On Mon, Jun 8, 2026 at 8:11=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+> On Mon, Jun 08, 2026 at 07:36:45PM -0400, D. Ben Knoble wrote:
 >
-> > Hi Pablo
+> > I'd like to report and offer to help fix what I view as a serious perfo=
+rmance
+> > bug:
 > >
-> > On 09/06/2026 11:42, Pablo Sabater wrote:
-> >>   static int commit_tree_ext(struct repository *repo,
-> >> @@ -135,6 +136,13 @@ static int commit_tree_ext(struct repository *rep=
-o,
-> >>                                        original_body, action, &commit_=
-message);
-> >>              if (ret < 0)
-> >>                      goto out;
-> >> +
-> >> +            if (flags & COMMIT_TREE_ABORT_ON_SAME_MESSAGE &&
-> >> +                !strcmp(original_body, commit_message.buf)) {
-> >> +                    fprintf(stderr, _("Message unchanged, aborting re=
-word.\n"));
-> >> +                    ret =3D 1;
-> >> +                    goto out;
-> >> +            }
-> >
-> > I wonder if we should check that the committer identity is unchanged as
-> > well in case anyone is using this to fix commits after committing with
-> > the wrong identity.
-
-I think that if you reword a commit committed by someone else but end
-up with no changes I want it to be kept as it was.
-
-> >
-> > Aborting when the message and committer identity are unchanged seems
-> > like a good idea.
+> >     "git diff --no-ext-diff --quiet" performs about ~10x slower in a se=
+condary
+> >     worktree than in the main worktree.
 >
-> I am not sure why it would be a good idea.  The user wanted to make
-> the commit have this message, and the commit ended up having the
-> same message as the user gave.  That message may have been identical
-> to what the commit originally had, or it may be different.  Why is
-> the former an abort-worthy event?  A simple note, I may understand,
-> but aborting with an error message?
-
-With what you said at [1], having this in an
-"--avoid-unnecessary-rewrite" I think that the abort might be too much
-as with the flag the user already expects this to happen and silent
-might be better.
-
-By the way, I feel that "--avoid-unnecessary-rewrite" is too long,
-could it be something shorter? If not it could be set "-r" as the
-short and leave the long as it is.
-
+> Hmm, I get the opposite effect: it is much faster in the worktree!
 >
-> Thanks.
+> I did:
+>
+>   git clone /path/to/linux.git
+>   git -C linux worktree add --detach ../wt
+>   hyperfine -L dir linux,wt 'git -C {dir} diff'
+>
+> which yielded:
+>
+>   Benchmark 1: git -C linux diff
+>     Time (mean =C2=B1 =CF=83):     188.9 ms =C2=B1   2.5 ms    [User: 166=
+.4 ms, System: 130.7 ms]
+>     Range (min =E2=80=A6 max):   185.5 ms =E2=80=A6 194.8 ms    16 runs
+>
+>   Benchmark 2: git -C wt diff
+>     Time (mean =C2=B1 =CF=83):      20.0 ms =C2=B1   1.5 ms    [User: 23.=
+4 ms, System: 103.5 ms]
+>     Range (min =E2=80=A6 max):    17.2 ms =E2=80=A6  24.6 ms    132 runs
+>
+>   Summary
+>     git -C wt diff ran
+>       9.43 =C2=B1 0.71 times faster than git -C linux diff
+>
+> Running:
+>
+>   perf record -g git -C wt --no-pager diff
+>   perf record -g git -C linux --no-pager diff
+>   perf diff
+>
+> implies that the slow case is spending a lot more time computing sha1s.
+> Which implies that the entries are stat dirty. And indeed, if I run:
+>
+>   git -C linux update-index --refresh
+>
+> now they both take ~20ms.
 
-[1]: https://lore.kernel.org/git/xmqqtsrbsvcm.fsf@gitster.g/
+Ah, TIL about --refresh. I suppose it could be nice if "git diff"
+updated the index in this way, but that sounds like a band-aid. Maybe
+creating a fresh worktree should do the equivalent to make sure it's
+considered "fresh"?
 
-Thanks,
-Pablo
+(This also dropped my timings down to normal.)
+
+At $DAYJOB, I _think_ some version of "git restore <stuff>" ended up
+also updating the index.
+
+> I wonder if it's just a racy-git problem? Many files are written in the
+> same second as the index, so they end up with the same mtimes, and we
+> have to err on the side of checking the contents.
+>
+> See Documentation/technical/racy-git.adoc for a larger discussion.
+>
+> So it is not really about worktrees at all, but just "bad luck" in
+> generating that initial index (that goes away next time you actually
+> make an index update that rewrites the whole thing).
+
+Ah, that makes sense! I'm familiar with the raciness but didn't expect it h=
+ere.
+
+> I'd have thought USE_NSEC was the default these days, but looks like it
+> isn't? Try building with that and I'll bet it goes away entirely.
+
+Thanks, I'll take a look.
+
+I can see on my Macbook that at least Meson does automatically set
+either USE_ST_TIMESPEC or NO_NSEC automatically, but has no option to
+enabled USE_NSEC and try that. I can probably write that patch (which
+I'll do to test), and I can send it along with the "worktree add
+should refresh the index" if you think that's an appropriate thing to
+do.
+
+> > PS I almost CC'd Peff and Patrick, whose names stood out in "git
+> > shortlog builtin/{worktree,diff}* object-file* | sort -t\( -k2 -g",
+> > but decided they'd be their own best judge of whether they can
+> > understand what's going on? :)
+>
+> You might be interested in "git shortlog -ns". :)
+>
+> -Peff
+
+Phew! Yeah, that's much nicer. Thanks! (When typing this out for
+email, I even left out the "grep '^[^[:space:]]' |" filter :P)
+
+--=20
+D. Ben Knoble
