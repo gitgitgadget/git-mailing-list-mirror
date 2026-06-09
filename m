@@ -1,141 +1,149 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248BF3AF646
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 10:03:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780999409; cv=none; b=U3KtTd/2bIHssHNSzq3audrm9cFybIdXnFBg6dsYTi31HeU5Gsz4TGzZxUR6G1+JDvUTHRTiPldxZMm78jEUu6mx61MgURwn9QngtqVFTqhH7A4YFi1cm7xpwzdhvQXer1Kj6vl1R3bjr3AC5uZSUDK3JRzvvLfJRcMzUE3z6yo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780999409; c=relaxed/simple;
-	bh=91YPKahbhnhp/hUGhefc00apSkZePLVNQ2rFmqC/pMk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pp7s5af+7pUu83lqVrPsO90nynD5JZPgND4dkAF9gE8qcwkH/A8yky7eYBlaPLinvN9A0NT2YOC43kreVvntxY7dwfsgo8gyPDKrYm9Ci/6gdmgBU885AFJ+WI2oIZmv0FePYlkxNGNqL/JoxpNEgMdE9Oi+09KrjnYjtTKeFhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABB/9773; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0823A38F646
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 10:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780999413; cv=pass; b=mBFNl3zwJd5/6xy+I8JWjcOQvvsLsuflSg6a3bPwI5/D/wtttR0SsT6y/+kUDyHSygyEo7oQS3Yf6OMxPnvdKfFZAGywqWvkof36YVnxhgEkouoRDMSPavka2Ps1cjIo2anVpC8ETkyKQdQV91UCwucD1PpFz/lIzvTmtzy1YHQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780999413; c=relaxed/simple;
+	bh=dVZ7HzhqFhb7Uo5wiyhT7gFZ98XlHKrT7P9DF++GRH4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RQgW/Cy5JdByY37Tx11+XEkKdor99z6FvCtsQG/msdG7ANuJcJTDxxt6Fr3dQdniDCBpHdxk+IvRlyfJg5uk3t0zkHFr5Lft5RYM303Zu6FLdSOzrMH7W/Ku1OAbh0GVFnDx406JhDYQKBC3lCGWPgA+eS+n8ZYkruMDyt15y9g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s7SaiPKu; arc=pass smtp.client-ip=74.125.224.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABB/9773"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-bec43ee8ff0so761795566b.1
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 03:03:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s7SaiPKu"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-660323f7b27so5602497d50.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2026 03:03:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780999411; cv=none;
+        d=google.com; s=arc-20240605;
+        b=YugF/JD5Mjx+eXoFSQ6bci4RMsHEFBcr0JMfZz5ADD3HIGamkq5tfXvc3tDj16tkiP
+         x4+j4ecwvy9+onajkBfi89T0tuph5wWSifZBMgaZqDgZ/1xK7GvveSxywam4/pqK7eUT
+         aqNyj/RlH9IoMCIpdppzx4ZUGEfSIdCJgDM7mP3cAiQyMr+22pNSZA5tc3JXUrzdFP0F
+         a3064nTnUdeXlvchhEr8xRNGtufqAE3dao0+alUYs/hEPF0GjLM9k5kefJn6O3MVUSjH
+         XWvWtJawLkESqIGxydMUkfwrldYxQDRHPf+ch3ojMKmfK/0eHCNdWAAw0i1VYJuQ4Td8
+         RZ8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/M/tf9BM2+QHfrBfXwyodDsglUEzOSk2Z+i3o7j2aHA=;
+        fh=Du+9amIMHXW2phzfBfcQzxENYwbtgwJa8BRZEHy/jlA=;
+        b=GiAkK31MR0lhhFa40fMr60XwzpXNoZGWid4upOgbN3ag6RKSij0Z8RSNTpXC8UknuE
+         Lp8DJ9dqeYKKM19DMDFB0F/+GMHL5oJkJ6siMyzqHRLec+lSPO1acOL0yUwoNsPu82vt
+         eY6zgWfFVKQkDtHCa9Ndv+aRY2CNMgeyIqxD5B57AQ1y6+aqeLv1N0Yj5QcxscAynCP6
+         Py2V0GMXD08L23bE0WdoItuYBCtq18O7rl6HQ2yrt/b1P5uqdGlc21B+hZ4zkD6qDN72
+         XCe9P2/nOo3KVrVhCyYIR2BCkUUjQeLr4wZ8cLfQazFsoCD66PmD9acE/oVFqHuI1C+H
+         zDYA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780999406; x=1781604206; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RSqrQCXt2kMb6okwiJlT16ujXPsa2ZOq47RxXcOeZDk=;
-        b=ABB/9773/APeewx40nPbblUfXG3Ffm21JXY1x9a/6ffmW5xF5hEXGU0O8dSImwkMva
-         XQL1taECSPAEnswviYpEK8PtpabpGYeCKEeU0gAw+jIioLs+Ty+A7CyIdJJr+rutuio8
-         Eif3L/CtHg2Ho78WGjdA2/7ohXllwGyf+tx2U78f3MI1cyNaiwGoidlp3RI/7nMNoLcD
-         Un2Oh0Yfhr7fuuW3pDPti7O9W13Nb9sbghSICo2ogxFd2ghzF8ykv9FBJ0JLVTh66X8j
-         sNF92DKKu8dKde3vbUVCNqtAMX/tGkElpI8P6OjtW9zU4+rT1jfdEyjGkAI0/H6B7V4t
-         cZWw==
+        d=gmail.com; s=20251104; t=1780999411; x=1781604211; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/M/tf9BM2+QHfrBfXwyodDsglUEzOSk2Z+i3o7j2aHA=;
+        b=s7SaiPKu3SHtvElURkdhmbg9Uj3BZ+32V3LN42aF4VoD32sGAQpGNDKQ3yRCmvU5TK
+         5s9utFYiYVE4UjnXPLBPxiHgv0hO3SNrRPHBJgC991kz/H8Av57/g7SrT17cb8U2ozjT
+         DANtmS5ci/hG4+xKd1dL0kCBos2hpxwkQhLvY1jeYPvrPMyfy7p93y5MN5x5XAxR9nlE
+         Lb5IpNbmHr9N2+IbCn8SxHQXlYHjsiyjScRtF5wD6OtCmrVgT3ZR2N8xFnDAM4HFvOlm
+         l4qNZsa1dwJOeVC/hR5FlpWSasyVM5A2X109OVt+D4fFfsp75+4X8e/LL1TfLNJa7wr9
+         W5Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780999406; x=1781604206;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RSqrQCXt2kMb6okwiJlT16ujXPsa2ZOq47RxXcOeZDk=;
-        b=Inl1gVOLIklTjO8cvkEamwDXV/N86JRaYE2TTA9EyszWuAGeZt0K17rbs6GDMZnrXG
-         xBj1im7isPBAxOW6NJH6N+QSKf0YCF5Xfz1rdnC4nTe0oiPJeE4xITmnyOeMBoG/E7bF
-         ezWfyzlTy1WZBnlrdCQQy0CRv7xpRPSPsaQ8awn0n3HZuhgAS5TdP7+vFgTk/Oes5+8R
-         /rEn1zuSkTqrYGCEwviGjHWHiIPMklgiMVAVu6bz/62KyIC8/aCXcih+h/OOZM3ZzL3o
-         gKYd6du3q0tTt6oBkFItdaKFPKvC2BS8SeojWaZa+XxwptN1pjaZGBxIxprlly8bDy5A
-         hgnw==
-X-Gm-Message-State: AOJu0YzJImTEonr62jqiki8ck4hxdIBOFgyqrb5mOrAsmp0a/bAUH5A8
-	abdW/7vjv+PKNjdD1rKM5nMOEMeC4YydlXSjG+6hCoJwbaojkpniqMUr
-X-Gm-Gg: Acq92OGSqJ9BUqMvnH3wtmoLbpVprlnwPIR4/5K5Jt6fWA3nJzt5kNCQ0sf8mIp/Tto
-	5zCSAACuDKNv1+0CiFXq/RtVHZXfWSEMp5blQZH8O4hExoMBIJi7Lo00WWexGmMZCrm4MrKK0hi
-	gUosKoy8nDvLlZejCAApzG6xeSoBOo9nfmeQkFEIvQzYORTe9g7JmGPP4FpOgW28eG3xn4bT9zn
-	BUKbnMEhssB2HJfN0hzL2Qrf1Y0S+b4CxVj3YOEp+e52SSPHhyHIk8SflFiDq0wOqi6N0pHNd/K
-	fPdmLofrwRiL4wcXtPNRYF5b3H3kXC+gv7FjGDFiYSa/g3YQfsA6ALXk8z4yVpwCVjL4yvx53On
-	zMRxx5GSHJqayc3ptTvE05j+Iv4/unFNKYEP1q/8iEx5q3NfOTc/Ow2IBF2Fy9ttJ0sZBTIoywH
-	YwtRoANPm9xO3czwtDS6+i5zQvZYuAXSnrOfSvdoo0pqu4dKMg5Saw2WU9N7Zh/slCio4hENkbl
-	sMPSYqui5lg0dsR43zXp1NV1UM=
-X-Received: by 2002:a17:906:c104:b0:bee:7c9b:fbcb with SMTP id a640c23a62f3a-bf3a68ee6c9mr849703366b.5.1780999405807;
-        Tue, 09 Jun 2026 03:03:25 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:56bf:64ff:fe70:f122? ([2a0a:ef40:69a:b801:56bf:64ff:fe70:f122])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf054e051b0sm1007054866b.31.2026.06.09.03.03.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 03:03:25 -0700 (PDT)
-Message-ID: <b9055227-f6e8-452d-928c-d944ad840f31@gmail.com>
-Date: Tue, 9 Jun 2026 11:03:24 +0100
+        d=1e100.net; s=20251104; t=1780999411; x=1781604211;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/M/tf9BM2+QHfrBfXwyodDsglUEzOSk2Z+i3o7j2aHA=;
+        b=QZxBGlpidZa3aQ/cskkt2VHAizugNjr59pCWPszGw11WN2xphicpes4BY7oKvdJ4E0
+         /3HS2VSSkEO8DnooDKV7cM9E4yJrZPPB2SOpgRG/J5Kkyyv3ah1tIl11S+8pVSmwMzcy
+         H138Z1+qCqGEeomNhsVSTd+by12+eNpJDLUL+zdvlBsBBn6aUbKn1Pm53cEvy0j3ySMf
+         O5EDpckqaJE1lEgRabSj7u1ylBRLZjKrE9SmfdxL7h8JxMbLVBVNHi6K0NALGOIm9v+9
+         7pmNnubKO7M+j1Ihy4kpCvfF0rPrQcyCVpEO4H42m5SR79nRnsX1JFcYh3eVuLJKT9I8
+         P4XQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+XTkQ4WAaB10UKRzZvnr+ZUSxnTp+V+09Hk5+/OVOBl1fLoIeG4Bu39isCStZrgF3J8XY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtxuaxXGDgl1Tstl/KPQnwqLTUBmSiTlR/97JulbgJVBMeSbde
+	8xUKEJpSTYvErWqGPV1c0xKJk447ruq5COPwClIvqeE0kzHwA08aM80JXr9EvlmWy34g6vsnVG9
+	fc/FcmMPJDpohLgDT7YZUQOGof0c7GAE=
+X-Gm-Gg: Acq92OG7vHiRdcQjWllqC0VSE46jOqoQx8HsW9D+uWpwlWJOvgmCy6hKCjAMjC2ktBz
+	G1Vhc8GmZsaWYBhsX1Y2TO1fO4r0OIJRELNBz1NwTIVlPzz5lqGvHPvpV9MYOdyrqnj4rTOw+ht
+	m+73RNv7LI+aBApsUP2ES/XtzgfdUeCVBfGrrMrlHxLyx+124ZBQbcoD1appS8503CC+tJpnlVn
+	CIDqvfv6CopiJGq1T5jwzbe8D8ulAWWQzRnVGQlRF02wnRjz2IhA6u7m4hnOyfMS+4K1+H772bC
+	XjnW8ijApePsXjoh0DSRgKASPD7HwUhcZTt4EdIyfh2kb697EgvSx495HbAbDkYuxDzh7B/8t9H
+	x+Ug6vY6BeEjBPiMMtmJg11n3fWSe1COyn19Qwtd/gq8blaVEhAYxiIG6x7qNaZ4jOFx+qUv7nJ
+	6hoSyKcdbF3PrQ
+X-Received: by 2002:a05:690e:d50:b0:65d:8f98:6bb4 with SMTP id
+ 956f58d0204a3-66106e64201mr14679745d50.29.1780999410774; Tue, 09 Jun 2026
+ 03:03:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 5/9] reset: introduce ability to skip reference updates
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im>
- <20260603-b4-pks-history-drop-v2-5-742cb5b5176d@pks.im>
- <0fdaeec8-99cd-4dc9-9549-8a08133deebf@gmail.com> <aiaH3ZmFZfmWYwr7@pks.im>
- <aiaI6thDj8y_EekG@pks.im>
-Content-Language: en-US
-In-Reply-To: <aiaI6thDj8y_EekG@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <xmqqmrx5z0po.fsf@gitster.g> <3D9034D8-C38F-48A1-B637-4342BE4954AC@gmail.com>
+In-Reply-To: <3D9034D8-C38F-48A1-B637-4342BE4954AC@gmail.com>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Tue, 9 Jun 2026 12:03:18 +0200
+X-Gm-Features: AVVi8CelssaLq2xHvt_EpnW0HY2781_fMLaVBl5JnVyuqQ_gh5mKc--Sk3XHdWs
+Message-ID: <CAN5EUNS98DYTKNCYjSFRSLvQv-UgewyV4PnafcDVROd0MvdmBQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/2] builtin/history: abort reword on unchanged message
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick
+El lun, 8 jun 2026 a las 18:44, Ben Knoble (<ben.knoble@gmail.com>) escribi=
+=C3=B3:
+>
+>
+> > Le 8 juin 2026 =C3=A0 08:23, Junio C Hamano <gitster@pobox.com> a =C3=
+=A9crit :
+> >
+> [snip]
+>
+> > Having said that, I personally think that the current behaviour of
+> > `commit --amend` and `history reword` are both _wrong_ [*2*].
+> >
+> > You may start `git commit --amend`, and after staring at the
+> > existing commit log message for some time in your editor, it is
+> > quite natural for you to decide that leaving the commit as-is is the
+> > right thing [*3*] in your situation.  It may have been a better
+> > design for the system to notice this situation and leave the commit
+> > as-is, with an override option `--force` to allow users to forcibly
+> > update the committer ident and timestamp in the commit header.  I am
+> > not a `history reword` user (yet), but from the motivation you
+> > described for this patch, I sense that the story is the same there.
+>
+> FWIW, in this situation I abort my editor (:cquit in Vim) so that the ame=
+nd gets an error-valued exit code from the subprocess and aborts itself.
+>
+> Perhaps there could/should be a better side-channel for communicating tha=
+t, though? I do not know how easy it is to tell other editors to =C2=AB qui=
+t with errors =C2=BB.
 
-On 08/06/2026 10:18, Patrick Steinhardt wrote:
-> On Mon, Jun 08, 2026 at 11:14:08AM +0200, Patrick Steinhardt wrote:
->> On Fri, Jun 05, 2026 at 04:12:42PM +0100, Phillip Wood wrote:
->>> Hi Patrick
->>>
->>> On 03/06/2026 17:14, Patrick Steinhardt wrote:
->>>> In a subsequent commit we'll introduce a new caller to `reset_head()`
->>>> that really only wants to update the index and working tree, without
->>>> updating any references. Introduce a new flag that lets the caller
->>>> perform this operation.
->>>
->>> We already have a flag to update ORIG_HEAD so would it make more sense to
->>> have a flag to update HEAD, rather than adding a flag to disable the
->>> updates? It would mean updating the existing callers but I think it is a
->>> clearer api and it avoids the pitfall of
->>>
->>> 	RESET_HEAD_ORIG_HEAD | RESET_HEAD_SKIP_REF_UPDATES
->>
->> Hm. The question is whether it's sensible to have
->> `!RESET_HEAD_UPDATE_HEAD && RESET_HEAD_UPDATE_ORIG_HEAD`. That feels
->> like a somewhat weird request, too, and we'd have to introduce extra
->> logic to make that combination work.
+Well, I didn't know that I could exit with errors (:cq in NeoVim),
+can't say much about other editors, but It would be better to abort if
+the messages are the same and forget about editors.
 
-As there are no users at the moment we could make that a BUG() and 
-implement it later if required. At least that way we're not introducing 
-conflicting flags, we're just not implementing setting a certain 
-combination of refs.
+>
+> > [Footnote]
+> >
+> > *1* Besides, doesn't "--update-refs" in "rebase -i" allow you to
+> >     adjust the branches?
+> >
+> > *2* But it is an established behaviour people _rely_ on, so even
+> >     though it may have been better if these commands behaved
+> >     differently, it probably is a bit too late to change it now.
+> >
+> > *3* This includes the case where the original author is especially
+> >     difficult to work with and would complain any change to their
+> >     commits, even if the only change you made for them is a
+> >     typofix.  Fixing a small typo/grammo may not be worth your time
+> >     and unpleasant exchanges with them after touching their commit.
 
->>> I wonder about the function name as well if we make updating HEAD optional
->>> then what does reset_head() mean? Maybe we should rename it something along
->>> the lines of reset_worktree() or update_working_copy()? I'm not really sure
->>> what a good name would be.
->>
->> That's a good point, the name does get somewhat awkward. I think we
->> should keep "reset" in there, but `reset_worktree()` to me reads as it
->> if was rather related to git-worktree(1) than anything else. Maybe
->> `reset_working_tree()`?
-> 
-> I think I'll skip these changes for the next iteration for now. The
-> patch series has already exploded quite a bit in its scope due to the
-> refactorings of `reset_head()`, so I'd prefer to maybe do such changes
-> as a follow up.
-
-Renaming the function can certainly wait. I'd quite like to sort out the 
-flags though as the new flag is being added in this series.
-
-Thanks
-
-Phillip
-> 
-> Let me know in case you feel strongly about this though. Thanks!
-> 
-> Patrick
-
+Thanks,
+Pablo
