@@ -1,131 +1,134 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423BD5B21A
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 06:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0F83DDDA7
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 07:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780986867; cv=none; b=I31boTv03HOWs0V/DiqCHrEjcE+ryZxW+PVTxnctyPDrDiij2CvpEog/clr3CYdUsY15S/ypXG/WIX8/ahozH9BAKGKa+egfqS0dtikH5J866iKugaVUOCZOyVyA8fSQNDEgXpyRTgnjpiErbTtIpH8+iqxxy1NEyefEon76+9o=
+	t=1780990052; cv=none; b=fjTz/27tos/Em0hv6rs1dpJHBTa31Yv7wlkpJ8i4MB2JZ6h3Kxe6TL5HSDKD0i3NKShLUByNPrjiEm+qJXWy9Q+CcFB07MuZNadCVNUib9a4Jp49BVIXZfT+kc6iYezLVyzJOjHA7pE9eT553fqfO40XbXFFfTk0oZ4b/hBT3oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780986867; c=relaxed/simple;
-	bh=+HdLbm3PrvO/qugC79n8hollNYvqIrSWrspqHKYt/pg=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=bKGDKgL8nCD291VriP9REXvJPgoe70xCnugEBLgUAjYJzZeN4tCiMtnQgQnfmwZtFi3/x57L3pqyu0JKqAaAAAltHSaLg6BgJVN03uSVOGNmo6yXJcxXQRqUYtmtsv1RPhVRjS4lQi4MP06u6XjTF6d0rZCvzVZpWTUpK5MGLyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pleceCzJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q08lLkJo; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1780990052; c=relaxed/simple;
+	bh=BlGqJn39EOAPwrYm5TIjFeJ6FDQ5mO3SAyNFpDMBcck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FFHbq6AHRWPgVSDip9aOjWTfTle0yUaTHVAu1BeNFIkQwJWWmIkswwLuvW6Xi6+xuKydmtPrqdTRp4OBi/X2/94g2YbAtB7VFMwlPQTKgz74//2yIGX/b9eCRv39rOgqT/H8FECLeWC/SKTV3To/E7c2qSFd7pAT4rQ7vTMHPoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E09XYu7p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Io57DXBz; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pleceCzJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q08lLkJo"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 69D877A01A9;
-	Tue,  9 Jun 2026 02:34:24 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 09 Jun 2026 02:34:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1780986864;
-	 x=1781073264; bh=70ilj7nqaJtilRw+zHjk90daM43u046LecBxbRRwBaM=; b=
-	pleceCzJ3tasy2/EMwwvgY7z93Jvqf6SoAw9nDbT8SY0d86RmK/9ziFpZi5xsUfD
-	ycUEtFlyyZ7hD1+VepyJLPejCbSKzYBri5aS2wlx/14V1OpmSGKCaB4wjgTBLPDd
-	JFr7riG9Hn/J8Y737n2FrQv9wiHVRzqF0ZwJfVqvyduxYR08KyEVzSO+BWFvbq3L
-	PzIJ4efWrAnL/ohdGm3IdKDFshzCkFbKPKvZ5VlYugMm0GRsctVXl1/qeSlU1kpK
-	91WIeC/PfNdoBz1G7G5PTeWUB4OU6QkzNWk/lEB1Vk6PHPqyO/tVcW14oVmFebsC
-	GaXbDvs+5380DWbRpNVhnQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E09XYu7p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Io57DXBz"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 038AC7A0166;
+	Tue,  9 Jun 2026 03:27:28 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 03:27:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1780990048; x=1781076448; bh=LEXcTf5bfi
+	1s77Z2N+jCuzBq5j7y6fGXij+iVtT28Gs=; b=E09XYu7py2PJogWk1h84XDAYya
+	dKSRvdWceNCF+z5JR+bqkK/Z4fv2nyOtmj91gPeRQlQM2+/JA9pYjRXyguEQrTBH
+	pa/C5t4lWau9YZrytsm+2F6qosMKY64PxLsto5RfAl9aAlgn6PFQdynyPmENC7Eh
+	kolLWqw+zfhbynRwH725K7Dw7KdFgdMRTL1pQyoOkp1chBn9Yi7C+oLKW0IFicjP
+	B4zcsAc1yMRdNQoaayIBlVbgAdoBXFLNWlNThmnf3wNRsPavLTvFjJ4OkJKxk3mV
+	Thr7t2aRcivuVT5ys7clPC8RcRfo5t3Rv2fWdbM9UUkiH5IEce7iP39t6XFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1780986864; x=1781073264; bh=7
-	0ilj7nqaJtilRw+zHjk90daM43u046LecBxbRRwBaM=; b=Q08lLkJo1NWPJveax
-	1oQVUY4C4y2oI7a4cBty0exwD/y5oMCuyDei5KXQcoU0l4Y8pHXRMDi4207WByki
-	ewIg4F+jlMixCi1b2kVWkca5r1JSsvQLe6x78enN+ZEugazR/oM9dUoRdOW00a49
-	4kD+4tZ9/rtJVuMKGshdwIyzj65quF+krX/qQg+25LRFJKFCeBLoclldsT/u707p
-	wZ+abvyckSyVPqTTKT8yMXlJitT8tchQJBS+KlbdJ2P2h/it9/84pEmPLgJFtsbI
-	2oAANafIeTZDhycSnrEaLd6bfdrMj3fonfCPT97JMce7y2NlsMsovjeyui+U/sdn
-	jX6HA==
-X-ME-Sender: <xms:8LMnai9mE1JqESTWu7wt8veN0J9w4HKWwUr8j45B85tGcVKT2UXlBDE>
-    <xme:8LMnatiP8zA9DFtiwqLNuS-zoQ9AH8zAsDiS1MTPu_hvXPPvyRwh5OnS8SiX74x1w
-    3fwhtL3XA-Zo9u_eJxFyGPpNlfE5CiPWdn3KDjJt3f1tXs-nsA-iw>
-X-ME-Proxy-Cause: dmFkZTEwtdm5OWnMNILoC1EW/UPDKzwGM7E/aLrQJrsRyUMGETN7+V/7kpaHIfNc2gjk15
-    OancAUB7kwMIUQlozYr2yxSVC5hpjW6eLYBIs5xKyL10lPu1j1UwFfsxMu5ryrfvDxrGZc
-    vBBg67nSwCNOUvDWBoQpgwcevgMSG4nH90xq+qul9JkB2wr3MdHtdC2apSCMuJUdGy1inL
-    DNP6P5l5mgFaLveGN/Jxv7ryUofthDQEcCjQR9YbuMhgjcQa0BFX3wVfQc1OXPCJC1S/V5
-    yxWg0wT5WAv/n9q36Nu8HIVHaT8cS89dd7xNOGZiHJxavOli0SAr5Yt5JzTKba8+ctwHk+
-    DK9x72hi1q0GAwIByrHbbm8e7r9K9DITK6gRS3QWzoZQbRff+482ZvpsVP5MtZuWUkDH92
-    l+4WXdokWLUoabyvIWv34sBjUQ7aCVyelm/A9nZiY7zzE6X1Xy3a8wNBpCA4NyGP2NTEhK
-    PP+LwWp+xkMOGSEIFtvXQYPW0A9Qv7SWsrDir102X9M9SeEtxomHiaUstoxcr/+XeZkKXU
-    GUEoUgGfYxyLlCXVwbiHY+l01hccKP8kbBP+k+OuR+L5BkCQvG783kA+kcQ2QST8XH2189
-    ocUWDHjeAV1xpBaCIMvMeIcoeUBZ/HUdXxXSWMyJFgIAF5SyocMyRTQ8uRIg
-X-ME-Proxy: <xmx:8LMnahq3T-YIlQ27iYI8KxCECQx0KGWX81PP0PtN8QepyB0PhzXFXQ>
-    <xmx:8LMnahmbRC4QaObSWTK3AVgcPMATAzMU0glPJ9i6ZbMfeBHqGLhcHw>
-    <xmx:8LMnalz9YOkHzCYWtDeXgdXYeZm0Cg9STpdnKSALMpLPYUtbGM82-A>
-    <xmx:8LMnaplzVHiJS4Ibqh938fcG-pLKNFj_rCOKQqJObwBrrnXmwha6Wg>
-    <xmx:8LMnaidAW9_9xrWkYtG6aoLEafLMbJH1I8AKObhSxDUVz22u7v1F_Hem>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 0334530201A3; Tue,  9 Jun 2026 02:34:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1780990048; x=1781076448; bh=LEXcTf5bfi1s77Z2N+jCuzBq5j7y6fGXij+
+	iVtT28Gs=; b=Io57DXBzF9VN59VlC7++w+gccpo7xSQpsf3RRPdsbv3sqkz85n3
+	WSHMfYXuxHCN8jdAbXMV6peimuJU6SbhkdsIu1S92ie7x7ttaqjWg6scBHveCDrO
+	RB5BC8O3q5AfojehB8R0AmqKAvuYLk4zmgT7pQco7yjqwFLzdOkAv5C/YjYr395k
+	HSw5yk3sPmUYtavI9coVPtSs/cINatcsEnTTmKEjdWq3Ue5hZyu5mqOfxJTTxpXE
+	C668yxLdDStpOk4u6LWzAzCS9vkmtDDfB6x/g0cawzHrMca84J9kYTMl0htU+X3u
+	XEB8q78g5NZnmUmIHWqR+8mShsMvZRuNUHQ==
+X-ME-Sender: <xms:YMAnamnx96UiGiekK3sJGUuVsmTVRfxeFoRyIBPRU9du7UvZv3Q5hQ>
+    <xme:YMAnaj2_1eD6w4OjdbI9lBvAdTemtbHavtUEn3szitvz9hxzXFU1sKEHlmZVi2F1i
+    RsNynC8qxG5KQuegkiFNqVQ5L0Kxp9mJak--01C3Ia0pbmBUOyazw>
+X-ME-Received: <xmr:YMAnaiQxWCtdzYg7OUezrXcwntALaOxMp3GqDCnjDN2DSGH9nx1mtv4rC8o3K71fVwEnsCnj2JbcKMahDf4OWo4adRGjHGF6j3uAlk6LmY0>
+X-ME-Proxy-Cause: dmFkZTE+WiGn93e6aTjpyM1udZTIsILEIP+SMuzxLvAFU5zzzpYSehhDJVkVTdq/uU+Iwg
+    avpPTWXyukFYrwMIGwhMWsiePNkRF7jj2GHrDkLERwpQT7lIfyYgfBAi8WaTZv0bNcUALb
+    YB4/odYLUPOjvJHTn8qTZlJroTnzCUJzjPoYgO0w6e8gHtJ2RGvVg95G8ZiFsM9YcXyXkB
+    mDNnAPmbvXfakYAAOA3rIxcQ991eEt6JQlzG0EK5SKNrIUMkfFgThoHb/MY/iaf8aeZvbH
+    bn0vxksPxmNVeyb43q8Sfdq/nO2Sq5OWrHYw9pUt3q+V0+gHL1XGxiYoTTJBl5EC7LiPLL
+    5vmni74+iRlaAMq17Wd9xawt8orI5IDi2YpNfy3APDc3fpAYg4tBaJ43w9sAqq2zyYyRdS
+    wt3mAy1cM+5MhtTve6tpigv/1gucCPNVqAM8jeCCfJNEx1T7LVlfay838HSySjL8WXuO1L
+    ktDVgq0F4cyxuIgJ6BmYcEi95BJDo7avn92TuzIOzyLDdktA7jfW++iyrNtGr8JJdl1Ez9
+    XSDn4B9rCNM/ZEAp1MUOXbw6h1iOZ0+nLckhHTtGwHNjaJgYSY55vOfV1g62gGSwHWdnXR
+    r+wMRoyGTU8LNQ2TDCNSXhKPfN8cuO06ZnYUnEBv+nMMkqqmC4VlC9aAzvhg
+X-ME-Proxy: <xmx:YMAnaluNvV3mSkzMKNR399PQncyY7GFPC51IsQ-jnowVLMzPURp97Q>
+    <xmx:YMAnanZvX1qqaA-HP-XEY1VWafQfKXL0IB6tSgPYfMD81iXIUvyoRg>
+    <xmx:YMAnaqtkJuu7TeqCGj1ymukKCgE_pxhTGW9YIZ6A85lfPv3vAJT3Hw>
+    <xmx:YMAnapExA5EKo3mRpOgFAlXvNyzIFGtzKJtqoloyvzAxN3AtYLoHRg>
+    <xmx:YMAnavUaUktql50klniMnaW5mtTR0H9e7zKHgv8lD7iZcyH2ng9-iPSN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 03:27:27 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8a1d3989 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Jun 2026 07:27:25 +0000 (UTC)
+Date: Tue, 9 Jun 2026 09:27:18 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 04/16] odb/source-packed: start converting to a proper
+ `struct odb_source`
+Message-ID: <aifAVpxanV31KUpC@pks.im>
+References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
+ <20260604-pks-odb-source-packed-v1-4-2e7ab31b4b5c@pks.im>
+ <CAOLa=ZQst6ucwvtVOfXC6g1ZcP9_UZAwRyAXfQdjL7WcJ6ZzxQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A4zrN4FnEVLN
-Date: Tue, 09 Jun 2026 08:34:03 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Tuomas Ahola" <taahol@utu.fi>, git@vger.kernel.org
-Message-Id: <ef91b8fe-c794-4230-a298-43cebbf85e18@app.fastmail.com>
-In-Reply-To: <20260604131457.19215-1-taahol@utu.fi>
-References: <20260604131457.19215-1-taahol@utu.fi>
-Subject: Re: [PATCH] docs: fix typos
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQst6ucwvtVOfXC6g1ZcP9_UZAwRyAXfQdjL7WcJ6ZzxQ@mail.gmail.com>
 
-On Thu, Jun 4, 2026, at 15:14, Tuomas Ahola wrote:
-> Fix some typos and grammar errors in comments and documentation files.
->
-> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
-> ---
->
-> Notes:
->     Written mostly as an exercise on how to submit patches that depend
->     on other topics.
+On Mon, Jun 08, 2026 at 08:29:04AM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/odb/source-packed.c b/odb/source-packed.c
+> > index 12e785be48..f81a990cbd 100644
+> > --- a/odb/source-packed.c
+> > +++ b/odb/source-packed.c
+> > +	CALLOC_ARRAY(packed, 1);
+> > +	odb_source_init(&packed->base, parent->base.odb, ODB_SOURCE_PACKED,
+> > +			parent->base.path, parent->base.local);
+> > +	packed->files = parent;
+> > +	strmap_init(&packed->packs_by_path);
+> > +
+> > +	packed->base.free = odb_source_packed_free;
+> > +
+> > +	if (!is_absolute_path(parent->base.path))
+> > +		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
+> > +
+> 
+> Tangent: seems like no one sets the 'name' field within
+> `chdir_notify_register()`. It is meant for tracing purposes, but if no
+> one is using it, we might as well remove it...? Perhaps #leftoverbits
 
-I=E2=80=99ve been thinking of how to handle typos for a few days now. ;)=
- The
-following does not apply to this submission since the maintainer said
-that he will apply it.
+There are some callers: `chdir_notify_reparent()` calls
+`chdir_notify_register()` with a name, and the reference backends call
+that function with names.
 
-Anyway, it struck me that you might sometimes want to apply the typofix
-on top of the original branch *if* the branch is scheduled to be merged
-to more than just `master`.
+Ultimately though I think that this infrastructure is somewhat misguided
+overall: we use this to update relative paths after chdir(3p), but if we
+stored absolute paths in the first place then we wouldn't have to care
+about the paths changing at all.
 
-So e.g. this does *not* apply to topic kh/name-rev-custom-format since
-that topic is not scheduled for a maintenance branch (`maint`). But:
+I plan to revisit this infra for the object database going forward: we
+expose and use `struct odb_source::path` in various other subsystems,
+including user-facing ones. This is inherently wrong though, as there
+may be sources that don't even have an on-disk path. So there's a need
+to drop that field and make it an internal implementation detail of the
+source's backend. And once we've done that, we can just as well start to
+store absolute paths.
 
->
->     $ git log --oneline --first-parent v2.54.0..
->     d19e9182ab (HEAD -> ta/typofixes) docs: fix typos
->     5a7e9cc03d Merge branch 'ta/approxidate-noon-fix'
+For the reference backends we can already do that refactoring now-ish.
+I'll send a patch series later today.
 
-Your topic is. See `RelNotes`:
-
-    (merge b809304101 ta/approxidate-noon-fix later to maint).
-
-So it might make sense in such cases to post a patch to
-be applied on top of the topic.
-
-Just a thought for later.
-
->     f03649d802 Merge branch 'kh/name-rev-custom-format'
->     023a226b4b Merge branch 'jc/neuter-sideband-fixup'
->
->     As can be seen, these topics have already graduated to master:
->
->     $ git cherry master
->     + d19e9182ab097a722e32d459a9a58c8985831e3b
->[snip]
+Patrick
