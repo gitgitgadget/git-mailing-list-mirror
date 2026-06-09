@@ -1,294 +1,344 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CFD34F247
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 14:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC58378D96
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 15:32:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781016293; cv=pass; b=PtpP3y8UvbcnoOrQEdfhzC9D2b0xYk8t/dAjt2+myrKS9ELXGKmTVxCLaPvTJH4Ty+taQ7vhSqQWDlBmO/pmS1DHdRplivGgxdOVmqgEszz1y6t2uCEDOgr4Mq/hLyokgTds7EBk2MObVUJ9jhXqjLFlFe+hzqi6qU8fbhaH8tA=
+	t=1781019164; cv=pass; b=PHOlMl8e9godk4lzhDo1jYrDlW3i808Q2dhHwSa7pjRtuD/SQ3q6xH9qnGrwrIn8fwAOxdRgQFzF57NABsYgiSQSuvcnjILbXr//yU7coDUviSdTi3NR9gUP5YSsDzVkPU6DJ9Usp86AtZn585NRA8B60QIkAaG5QfRUKQGoHZo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781016293; c=relaxed/simple;
-	bh=3XsrhgadncTKMTCN/1cvIbfu3N5WpfSffKRIVfPdres=;
+	s=arc-20240116; t=1781019164; c=relaxed/simple;
+	bh=7+orbme5bdAZQEL6Hzb0wPMFZ6o6obiP3+OCE0VSd4g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jWJtwX6T6lPcOwOlQCYtMJMSHzBvsclH+431jx6hgpniXrzqJMck5/oet8x1X9mq85LQRjKTQReCjQQOGIbDfWWMXczgeJTvcMydyPGiCmG/f2+a4nioZpXnhtvh7QyOHRaAKHIRcqJa2wWwRsdD+uh8doCgag1P1Ml79PIPvmk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iyAGbK9Y; arc=pass smtp.client-ip=209.85.167.51
+	 To:Cc:Content-Type; b=cRZRqHbsnPuobCeBf2DPp5nleeW9PQpoafbYzwSA0nci/0XhKtMhFLg1azt+Pw+kiZanhkR1SJQhnV/eCmjh4FMfHU1of9CAIz9O1LlTKcqnFAjTesYqInvEhJvsCnudIvVSPLdKv2Aq/4wScnJjBEc87hQ0N1D8HL0Nix1s71M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ltw/DmwT; arc=pass smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iyAGbK9Y"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5aa68dbd44fso5785340e87.2
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 07:44:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781016290; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ltw/DmwT"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-691c5776f35so3204194a12.3
+        for <git@vger.kernel.org>; Tue, 09 Jun 2026 08:32:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781019161; cv=none;
         d=google.com; s=arc-20240605;
-        b=OQB8rGXoUftbApdBjkoO0xbmUPZPm7oEM0oF7eht13XYoHIFtportR75OBJskvlFuO
-         Pt8cPDdKMMRRXUJxPqHL6hJ+kjuOb4ve2mBZ9noflUO1o7Z5+Z/fYec6KTCTsL0kkq8g
-         1MxidZlhI9Rr9G7VMk/G0J4ltjJyk6Dq9TgcYxThcC6PuIWI/RdfYDMpwu9dn2hObuff
-         K4k7fKEdf/4eqqqpmHr1G/4Uq0tyFZBx9L/dr/jtEYhFD+30w7GTmtlXuAn/3BCa/H6G
-         /FCHxZMRC4XocwPXcjyiF+i7yp5fnMus57TAvlhmgA+NRWPIYj8Kf26jG/KFKcRg8JmA
-         yZCA==
+        b=bXNFdObouRTpqwg78Ut7KStNlmMxPowoGLl3Z+UPnL+1Ua9h52/Tp/oFmu/p6hpHwr
+         u5vWtTOcMEQXfTzN9qqTRwywcuNvbSzvnw9OnqcqjO5j+iz7FmbPdfw3apytKnFzZyM1
+         Ed2DKoDGaMjZVvPMtLtm+H4aLx4NGa/Zb1hk8YEKBFGhhAXqmllsLfi8CDqzrlTHC/XO
+         PM6PHaSIvPpcs8zOJxsGeg9umZPhstHmIJJZLZ+DrNaoLSmO3zLumj+fJnif5uplzNM7
+         SrgUOruHOJ69HSVuuLCXYhzeNv+NKOSuvA4sVFQ4iG2z3k7pclKKDoC5J5xt38RyoT/j
+         t0/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=IT4EEy/yZpXnJsnw0H05vQVlkzbr4lQmyCBBwF8Vlms=;
-        fh=sy+DerBYfta3W3SETWwiVkc7siwvmgNWaIJCXrSBo+Q=;
-        b=dxQ0j1gi0NqWngcaxiIa+6h4BA51OMO+i4/cpIFPlGa1MZAXxcQVoRjMcVoDIUk/zn
-         60igK4RD6hHYPD70Vk4ZYeS37sB54IzfW53pDiYM9A/1M/WwsZVCx/vKJjxlLU5JIJTk
-         LSVNizxfKgW7ZURU2NrSBcnYccy88klFN8zCOk/oKEF378LxwGYD1IQnHORYgISuCQAA
-         2NWo6hez/JJ7MrHC5LYyPViRc9QqKlPLyjyCRlfirp2Jqk09/mdEZ02sE9GKaLbxAZ28
-         yg+ghwr8G9mcAgp1A0BPvTkY+vP70guhYnlTPEvkHqwYb9+I1iez3oegA9kpKudQQNES
-         SGHA==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Tq1zfh3jh6/8Y+u3qAznEIGIRoFPiUlJO7mtMFuLFOY=;
+        fh=GHtdeWn6luo+P/JBwRnxu26cjJrl11aPT+E2FcLb5oE=;
+        b=dZz9iP7L3OuBy/GxkSxR1gQXCL4vk/vU5S0Fw9X+/F5Vn2CZSztjdptHnP1p4ImwbP
+         jUebsBNpjuWkv4Ln8K4MtZsxwzU08lflZieoLM94a4NCChCjmrUzE+BUYx3aoebATasO
+         eGswDiheaJeO3VPtA9hSXESlMZVoFD5bm8eGeXalhHVZtLHVLB5k9wu8Bm8kXnCpuDMp
+         UPt/3/RfCfpXOqEQBJrTduECh61pM71AT/3vBqvKsRJLDr7WfD7McxTBAG4oReHb07yj
+         R7exnDfclfjC5/+q4iaGfZSSdCn2DoNRZhhloKVAsK79O5oVlKF8oZfccVhHY7pZ3tgF
+         8TWQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781016290; x=1781621090; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IT4EEy/yZpXnJsnw0H05vQVlkzbr4lQmyCBBwF8Vlms=;
-        b=iyAGbK9YYV3dgrVcg60U9I1/pmV09tloNR9Nw2ouAe5UzWKDpqsy+ck0c43UodCfYh
-         gjO9uTk9KVLek1M8s1Ltnyq27dKssgXO14rEXMfJBdOlHdB9nllb0AKssGjnwncj734a
-         jzCnsCFx6t0XLtnzJpoPhspbxgWS5vSNu8+ouNLsnGe50OSRWb6ugKwkTNA3jIxEJFxj
-         LHALhXiK9opF8Hx4bozzkWRwTqhSNa1nWEIux4RnnROCVtB6UKcir77joWS+U1y7Hdt/
-         slEFUeDe4Oepu8eaVx1TEnme25Phsug84MQel0HIgduM30l6bHdx7wIPk52/46ES4r0G
-         XN5g==
+        d=gmail.com; s=20251104; t=1781019161; x=1781623961; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tq1zfh3jh6/8Y+u3qAznEIGIRoFPiUlJO7mtMFuLFOY=;
+        b=Ltw/DmwTakGNQ23Kdw4hFBobTc27mBqxz8u6dGLy8IE6J0++EofFM5Ujh1DMmVgbjv
+         vmPcipq6dDo4SIito6W0rff3wzhnQv5M8Ihh181Jf0hTgCixkqdjSfQ3IYi3eGDzBHI2
+         VE9qt1KGuEpSSbWNx3N4vIv0mCV0sJbGbQyJF7QjmMYnk+C8ssIYYzAXmgo6IO8he9hZ
+         Y9VudBoqzAOCILT4IFy4g/x9ElVepenehV9hDh6g9CCAd0RDq1ycn5ccEb/Npytz9VCI
+         BFyzJsreUZMjX/3rDoBVLbUFN+VhTWL2uOjd7rsDKsnG+HtPEHfXSPc7H+gMSHI3Rc2y
+         lQCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781016290; x=1781621090;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IT4EEy/yZpXnJsnw0H05vQVlkzbr4lQmyCBBwF8Vlms=;
-        b=cShc+PGcP/EOdF8ZEzsK9SDTr2y1SSLtvQImFhflkwo6P3jYzu8BvEk/3d79hZPw8s
-         YIjPcS6vqlUyYaI+yMJw9u4l1lDU0RSHBNgzaRA0WW2Uyb7X0NgMlb1NyFPqVJnB2jXU
-         rtqmgSEJ/BZIUsc8oqd8a2SIDTa5AmlsB8OYuLXwy0gBU1kretb9sXkXiRJ/Rdg3gAeZ
-         xKY0yIyCQC6DFZJL7WWR5d19nB6eQZj8xr8j1KzTLYLgud54A0rjjvmWjuFYS1DKKN2n
-         W8stskyTJZ/uqOT6IddNlxUKJ7gKHfkPUmTKwqHTH0tZnIw/l5yJZJ5GorrM6z/Ys7d/
-         sVfg==
-X-Gm-Message-State: AOJu0YxKFBA+iAHP6C6AmcuwbWAX3HuO9Xd+OWU53pRn8BuXvL6txmK1
-	7W70T3uy98p1YiiXIgpcda+IDnBjB24yfyg2dH64wXL2xzjuDI7K2+uyTlF9+RtjpIigqcTlEpY
-	9MG3HJSCS7jPrSDIeGUi7c+zr7zXpayU=
-X-Gm-Gg: Acq92OEXFeqMYtRUmGa/N8sCEfb4NjuZALv2FrRXH6sbjmOt+sm7+/40adBIwE8VbKa
-	16rI8uONydXEmrHuf71F2umz1BVL968nGQ9QECrtoQYkblH1s17kZhDnq7wVdqq4TOlV0pRrWpW
-	6+zI3y4N6fPWN7hlj/kwYL79oDSfwoe0I2mAiM9v/UVDomrsSwm88oh3DAPScG6j5Ne+KKmr1l+
-	Kn0x/1JFXcQk+OTlG4H+lDF6Q09xpeM0bNWHvjk9GhtRwJ8Iw73oh14hNHW7gglg3ku7qDfDpKt
-	405EQCHjMXy/f/NH5CKU6SuBI1mKkF1tsGzDCpBPWIF6mDFMvoX7o0BScmZnvSAlFOQb+gx2UgU
-	igbptWEAQVCfTVA8v71is3ZXk2swRZl7OGUXo5g==
-X-Received: by 2002:a05:6512:124c:b0:5a8:f03b:a406 with SMTP id
- 2adb3069b0e04-5aa87b5b614mr6040211e87.16.1781016289442; Tue, 09 Jun 2026
- 07:44:49 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781019161; x=1781623961;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tq1zfh3jh6/8Y+u3qAznEIGIRoFPiUlJO7mtMFuLFOY=;
+        b=M5lq1zVTPDfnfmZkTYfHTz57N5VBnFqjRzejwN2T8q/SfhiWnri3u/p5MpqxBkGVqu
+         1jFVToBjP5Csz6uS0IYLRgRrGv3esGJSBF07ls4aWkK0VY0tcESFZLCCnD7L8ZTO9Oey
+         woURRuP100gaWJUXWkX8omdGZ9pz8S+yiWdhra/D6mJbcUGAPOtH0yaSfheXlGjraim4
+         dUcZdyH/VoslnpOjop2m2/jAGhmCILcsLZ78wv7iS4E++WozZ38cNN5CqxzAX1Fm7fGc
+         Cwa2v+V/RF1IFxkUpTSe4OMYbArmKeqbJb/UIZcBiKjkQHQHSYRb5fV9bnEDUEkCAysN
+         XxMg==
+X-Forwarded-Encrypted: i=1; AFNElJ+BVNXIJCuXv1M67PFDTUdvo/qrKHldNcSRW1dd6AD8YPRjzGDAvIYk6YbeDwsxqZI9a+Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrCQXdehOgX9NmI49T/m3ySnmFYzIRIUR/8dev3hLAD8Dy12qh
+	u2Hnupqyq4hzHYD4EcKBOn08N9uWZPB0lKCJ1qBlKUuSqE2T27MQIR+wVurF8u7daxbiPFOGQ5u
+	/snOSLJyx6vG/At+GmNs4/yhZpSqqqac=
+X-Gm-Gg: Acq92OGbIYaeRnjMsgu8eQ4Z1i8HTWk6Nu9TZRZyQYE2zQ2skVbVFHbqg9L0cXlstbv
+	VxX5xuH7Q4tRVqt2h4Trag1++Wo7piubLegijrNznHfPM7+uEpfoOfrYIp3KiQ1jueSRW/iL296
+	WcTIyMCM4RRQTWJ9ne3RnVNbpH4rmY+ZLExI0seLIyM5KYEPUx/Gx9n6PZX/KWwXOg4hpmuy44Q
+	s0XFFht5L4MdaOEohvvv2tY5ezobnwXcARnlPDPaK/9B8Chh1oxCsUD8lOSwz8k1NLRi5q63DxJ
+	gnDOGwX1zK0Y0pdkxCMz2NFriLiX91GlZQKN4cxHFsn76v/bORh4eA5vCAl13KiSWN+vxTVs36m
+	r20WgUlWkpk7jErmU74Z/S/x+JGGKrMUP
+X-Received: by 2002:a05:6402:528c:b0:68d:623a:bc77 with SMTP id
+ 4fb4d7f45d1cf-68fa4c250c9mr9229040a12.8.1781019161155; Tue, 09 Jun 2026
+ 08:32:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com> <20260609110957.GB1509396@coredump.intra.peff.net>
-In-Reply-To: <20260609110957.GB1509396@coredump.intra.peff.net>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Tue, 9 Jun 2026 10:44:12 -0400
-X-Gm-Features: AVVi8Ce6DL2Exfci7-03jYa3Spw7IE9bnEP3UG3TDV8muVlOVTomGrxirUiPz6g
-Message-ID: <CAJ-ks9kz5JGFSF21aOhuXfgsJ+5aa5xE69RPT2Vhn-CRGyHZ6A@mail.gmail.com>
-Subject: Re: [PATCH v2] describe: limit default ref iteration to tags
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+References: <20250221190451.12536-1-eric.peijian@gmail.com>
+ <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com> <20260608-ps-eric-work-rebase-v12-12-5338b766e658@gmail.com>
+In-Reply-To: <20260608-ps-eric-work-rebase-v12-12-5338b766e658@gmail.com>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Tue, 9 Jun 2026 21:02:13 +0530
+X-Gm-Features: AVVi8CfKbWC1ifCtSeKTUMey6SDZFuGAI6GTGIWoYGjcDYAvP6XW3pBroIn7sKc
+Message-ID: <CA+J6zkQ22en2HgH03EedKOfC+jLcHH2UbwpH0h_bDEAHR6B2pg@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v12 12/12] cat-file: make remote-object-info
+ allow-list dynamic
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: eric.peijian@gmail.com, calvinwan@google.com, chriscool@tuxfamily.org, 
+	git@vger.kernel.org, jltobler@gmail.com, jonathantanmy@google.com, 
+	karthik.188@gmail.com, toon@iotcl.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 9, 2026 at 4:09=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+On Mon, 8 Jun 2026 at 15:45, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
 >
-> On Mon, Jun 08, 2026 at 07:32:14PM -0700, Tamir Duberstein wrote:
+> The static allow-list in expand_atom() is hardcoded to only allow
+> "objectname" and "objectsize" for remote queries. This works because
+> up to this point all servers will either support object-info with name
+> and size or they do not support them at all, but we cannot expect that
+> in a future different servers with different git versions to have the
+> same object-info capabilities. Therefore, the allow_list needs to be
+> dynamic depending on what does the server advertise.
 >
-> > The benchmark checkout had 120,532 refs, of which 330 were tags. With
-> > `$repo` naming the checkout, `$commit` an exactly tagged commit, and
-> > `$parent` and `$this` the two binaries, I ran:
-> >
-> >     hyperfine --warmup 3 --runs 15 \
-> >         --command-name parent \
-> >         '$parent -C $repo describe --exact-match $commit' \
-> >         --command-name 'this commit' \
-> >         '$this -C $repo describe --exact-match $commit'
-> >
-> > The results were:
-> >
-> >     Benchmark 1: parent
-> >       Time (mean =C2=B1 =CF=83):     171.7 ms =C2=B1  18.5 ms    [User:=
- 23.9 ms, System: 133.6 ms]
-> >       Range (min =E2=80=A6 max):   142.3 ms =E2=80=A6 198.3 ms    15 ru=
-ns
-> >
-> >     Benchmark 2: this commit
-> >       Time (mean =C2=B1 =CF=83):       9.9 ms =C2=B1   1.1 ms    [User:=
- 3.3 ms, System: 4.7 ms]
-> >       Range (min =E2=80=A6 max):     8.8 ms =E2=80=A6  13.1 ms    15 ru=
-ns
-> >
-> >     Summary
-> >       this commit ran
-> >        17.35 =C2=B1 2.63 times faster than parent
-> >
-> > Both revisions were built with -O3, -mcpu=3Dnative, and ThinLTO using
-> > Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
-> > (Mac16,6) with a 16-core Apple M4 Max (12 performance and four
-> > efficiency cores) and 128 GB RAM.
+> The client will now:
 >
-> This patch looks fine to me, but let me pick a nit for a minute, because
-> I think there is a broader conversation to be had.
+> 1. Request the protocol option that the placeholder refers to (i.e.
+>    "size" when "%(objectsize)").
+>
+> 2. Filters the request in fetch_object_info() dropping any option that
+>    the server does not advertise.
+>
+> 3. After the fetching, the options that haven't been dropped are the ones
+>    fetched and supported by the server, these supported options are
+>    mapped and remote_allowed_atoms is populated with the placeholders.
+>
+> 4. expand_atom() checks remote_allowed_atoms with the same behaviour as
+>    the static allow_list had.
+>
+> Move object_info_options out of get_remote_info so the caller which has
+> data can select what options will be requested instead of requesting
+> always size.
+> Move batch_object_write() out so there will always be an output even if
+> all the placeholders are not supported by the server (returns an empty
+> line).
+>
+> Include "type" in the object_info_options so once the server supports
+> it, the clients know already how to request it.
+>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+>  builtin/cat-file.c  | 85 ++++++++++++++++++++++++++++++++---------------------
+>  fetch-object-info.c |  6 ++++
+>  2 files changed, 58 insertions(+), 33 deletions(-)
+>
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 1166a046b4..055991b5af 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -341,13 +341,10 @@ struct expand_data {
+>          * Flags about when an object info is being fetched from remote.
+>          */
+>         unsigned is_remote:1;
+> -};
+> -#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD }
+>
+> -static const char *remote_object_info_atoms[] = {
+> -       "objectname",
+> -       "objectsize",
+> +       struct string_list remote_allowed_atoms;
+>  };
+> +#define EXPAND_DATA_INIT  { .mode = S_IFINVALID, .type = OBJ_BAD, .remote_allowed_atoms = STRING_LIST_INIT_NODUP }
+>
+>  static int is_atom(const char *atom, const char *s, int slen)
+>  {
+> @@ -359,17 +356,11 @@ static int expand_atom(struct strbuf *sb, const char *atom, int len,
+>                        struct expand_data *data)
+>  {
+>         if (data->is_remote) {
+> -               size_t i, allowed_nr = ARRAY_SIZE(remote_object_info_atoms);
+> -               for (i = 0; i < allowed_nr; i++)
+> -                       if (is_atom(remote_object_info_atoms[i], atom, len))
+> +               size_t i;
+> +               for (i = 0; i < data->remote_allowed_atoms.nr; i++)
+> +                       if (is_atom(data->remote_allowed_atoms.items[i].string, atom, len))
+>                                 break;
+> -
+> -               /*
+> -                * On remote, skip unsupported atoms returning an empty sb,
+> -                * honoring how for-each-ref handles known but inapplicable
+> -                * atoms (e.g. %(tagger)).
+> -                */
+> -               if (i == allowed_nr)
+> +               if (i == data->remote_allowed_atoms.nr)
+>                         return 1;
+>         }
+>
+> @@ -686,12 +677,12 @@ static int get_remote_info(struct batch_options *opt,
+>                            int argc,
+>                            const char **argv,
+>                            struct object_info **remote_object_info,
+> -                          struct oid_array *object_info_oids)
+> +                          struct oid_array *object_info_oids,
+> +                          struct string_list *object_info_options)
+>  {
+>         int retval = 0;
+>         struct remote *remote = NULL;
+>         struct object_id oid;
+> -       struct string_list object_info_options = STRING_LIST_INIT_NODUP;
+>         static struct transport *gtransport;
+>
+>         /*
+> @@ -726,15 +717,12 @@ static int get_remote_info(struct batch_options *opt,
+>         gtransport->smart_options->object_info = 1;
+>         gtransport->smart_options->object_info_oids = object_info_oids;
+>
+> -       string_list_append(&object_info_options, "size");
+> -
+> -       if (object_info_options.nr > 0) {
+> -               gtransport->smart_options->object_info_options = &object_info_options;
+> +       if (object_info_options->nr > 0) {
+> +               gtransport->smart_options->object_info_options = object_info_options;
+>                 gtransport->smart_options->object_info_data = *remote_object_info;
+>                 retval = transport_fetch_refs(gtransport, NULL);
+>         }
+>  cleanup:
+> -       string_list_clear(&object_info_options, 0);
+>         transport_disconnect(gtransport);
+>         return retval;
+>  }
+> @@ -820,6 +808,21 @@ static void parse_cmd_mailmap(struct batch_options *opt UNUSED,
+>                 load_mailmap();
+>  }
+>
+> +struct protocol_placeholder_entry {
+> +       const char *option;
+> +       const char *atom;
+> +};
+> +
+> +static const struct protocol_placeholder_entry remote_atom_map[] = {
+> +       {"size", "objectsize"},
+> +       {"type", "objecttype"},
+> +       /*
+> +        * Add new protocol options here. Even if the server doesn't support
+> +        * them the allow_list will drop them if the server doesn't advertise
+> +        * them.
+> +        */
+> +};
+> +
+>  static void parse_cmd_remote_object_info(struct batch_options *opt,
+>                                          const char *line, struct strbuf *output,
+>                                          struct expand_data *data)
+> @@ -829,6 +832,7 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+>         char *line_to_split;
+>         static struct object_info *remote_object_info;
+>         static struct oid_array object_info_oids = OID_ARRAY_INIT;
+> +       struct string_list object_info_options = STRING_LIST_INIT_NODUP;
+>
+>         if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
+>                 die(_("remote-object-info command too long"));
+> @@ -841,30 +845,44 @@ static void parse_cmd_remote_object_info(struct batch_options *opt,
+>                 die(_("remote-object-info supports at most %d objects"),
+>                     MAX_ALLOWED_OBJ_LIMIT);
+>
+> +       if (data->info.sizep)
+> +               string_list_append(&object_info_options, "size");
+> +       if (data->info.typep)
+> +               string_list_append(&object_info_options, "type");
+> +
+>         if (get_remote_info(opt, count, argv, &remote_object_info,
+> -                           &object_info_oids))
+> +                           &object_info_oids, &object_info_options))
+>                 goto cleanup;
+>
+> +       string_list_clear(&data->remote_allowed_atoms, 0);
+> +       string_list_append(&data->remote_allowed_atoms, "objectname");
+> +       for (size_t i = 0; i < ARRAY_SIZE(remote_atom_map); i++)
+> +               if (unsorted_string_list_has_string(&object_info_options, remote_atom_map[i].option))
+> +                       string_list_append(&data->remote_allowed_atoms,
+> +                                          remote_atom_map[i].atom);
+> +
+>         data->skip_object_info = 1;
+>         for (size_t i = 0; i < object_info_oids.nr; i++) {
+>                 data->oid = object_info_oids.oid[i];
+> -               if (remote_object_info[i].sizep) {
+> -                       /*
+> -                        * When reaching here, it means remote-object-info can retrieve
+> -                        * information from server without downloading them.
+> -                        */
+> +               /*
+> +                * When reaching here, it means remote-object-info can retrieve
+> +                * information from server without downloading them.
+> +                */
+> +               if (remote_object_info[i].sizep)
+>                         data->size = *remote_object_info[i].sizep;
+> -                       opt->batch_mode = BATCH_MODE_INFO;
+> -                       data->is_remote = 1;
+> -                       batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
+> -                       data->is_remote = 0;
+> -               }
+> +               if (remote_object_info[i].typep)
+> +                       data->type = *remote_object_info[i].typep;
+> +               opt->batch_mode = BATCH_MODE_INFO;
+> +               data->is_remote = 1;
+> +               batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
+> +               data->is_remote = 0;
+>         }
+>         data->skip_object_info = 0;
+>
+>  cleanup:
+>         for (size_t i = 0; i < object_info_oids.nr; i++)
+>                 free_object_info_contents(&remote_object_info[i]);
+> +       string_list_clear(&object_info_options, 0);
+>         free(line_to_split);
+>         free(argv);
+>         free(remote_object_info);
+> @@ -1177,6 +1195,7 @@ static int batch_objects(struct batch_options *opt)
+>   cleanup:
+>         strbuf_release(&input);
+>         strbuf_release(&output);
+> +       string_list_clear(&data.remote_allowed_atoms, 0);
+>         warn_on_object_refname_ambiguity = save_warning;
+>         return retval;
+>  }
+> diff --git a/fetch-object-info.c b/fetch-object-info.c
+> index 51a898430d..425929a269 100644
+> --- a/fetch-object-info.c
+> +++ b/fetch-object-info.c
+> @@ -39,6 +39,12 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
+>         case protocol_v2:
+>                 if (!server_supports_v2("object-info"))
+>                         die(_("object-info capability is not enabled on the server"));
+> +
+> +               for (int i = args->object_info_options->nr - 1; i >= 0; i--)
 
-Just to say from the start: I appreciate you taking the time to discuss thi=
-s.
+Isn't args->object_info_options->nr of type size_t? We should probably
+do something
+like:
 
->
-> Given the discussion in earlier rounds and sibling topics, I assume the
-> commit message here was AI-generated. And it's OK in the sense that it
-> is describing what happened and I assume is entirely accurate. But as a
-> human reader, it feels so much more verbose than what I'd expect, as it
-> is full of semi-irrelevant details. Why set --warmup and --runs? Why
-> bother with --command-name, which just means you have to show the
-> commands separately anyway? Is the amount of RAM in the machine
-> important for this test? Surely it could be if it was absurdly tiny, but
-> in general, no, I would not expect it to be.
+for (size_t i = 0; i < args->args->object_info_options->nr; i++)
 
-Well, the details matter in case some human reader knows something I
-don't, or wants to reproduce the findings and observes something
-completely different - they aught to be able to reconstruct my
-environment.
+instead.
 
-The command-name flag is needed; without it the output of the
-hyperfine would include local paths and would require post-processing
-to include in the message.
+> +                       if (!server_supports_feature("object-info",
+> +                                                    args->object_info_options->items[i].string, 0))
+> +                               unsorted_string_list_delete_item(args->object_info_options, i, 0);
+> +
+>                 send_object_info_request(fd_out, args);
+>                 break;
+>         case protocol_v1:
+>
+> --
+> 2.54.0
 
->
-> So while it is perhaps reasonable to document every detail in case
-> somebody later wants to verify or reproduce timings, it is a little
-> overwhelming when trying to tell a story, the core of which is:
->
->   In a repo with ~120k refs, ~300 of which were tags, running:
->
->     git describe --exact-match $some_tag
->
->   went from ~170ms to ~10ms, since we no longer needed to iterate all of
->   those other refs.
->
-> That has _way_ less detail, but makes the point succinctly.
+Other than these, the patch series LGTM for now.
 
-I don't disagree. Ultimately, it is a matter of maintainer preference,
-and I'm happy to follow (and instruct the AI to follow) the
-preferences described in this thread.
-
->
-> I dunno. I am not trying to pick apart your commit in particular, but am
-> more interested in the broader use of AI commit messages going forward.
-> This kind of verbosity is quite common in the output (from my limited
-> experience), and I think creates more work for reviewers. Should we be
-> expecting contributors to make things more concise before submitting
-> (either manually or through prompting)? Or do people even agree that the
-> shorter version is preferable? I could be the only one.
-
-The AI does what you tell it; in this case I was telling it to follow
-the precedent in the repo and to ensure its claims are always cited.
-I'll tune it for succinct output going forward.
-
->
-> I have a few other comments on the patch itself below.
->
-> > diff --git a/builtin/describe.c b/builtin/describe.c
-> > index 1c47d7c0b7..3532c8ff22 100644
-> > --- a/builtin/describe.c
-> > +++ b/builtin/describe.c
-> > @@ -740,6 +740,9 @@ int cmd_describe(int argc,
-> >               return ret;
-> >       }
-> >
-> > +     if (!all)
-> > +             for_each_ref_opts.prefix =3D "refs/tags/";
-> > +
-> >       hashmap_init(&names, commit_name_neq, NULL, 0);
-> >       refs_for_each_ref_ext(get_main_ref_store(the_repository),
-> >                             get_name, NULL, &for_each_ref_opts);
->
-> The code change looks fine. It creates a bit of a subtle dependency
-> between what's happening here, and the filtering inside get_name(). But
-> I think that's OK for the scope of a single command. It _might_ be
-> possible to simplify the top of get_name(), since we'd no longer see
-> non-tag refs in the input. But it also may not, since we have to strip
-> out the prefix anyway. It can certainly come on top as a cleanup later
-> if we want.
->
-> > diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
->
-> It is a little curious that we add a perf test here, but the commit
-> message does not even show it off. ;)
->
-> I ran it myself here and had trouble showing improvement, simply because
-> it is already quite fast! I guess that's because I'm on Linux, where
-> warm-cache filesystem operations are pretty fast. Bumping $ref_count by
-> a factor of 10 made the "before" case 30ms, and after is still sub-1ms.
->
-> > +test_expect_success 'set up many unrelated refs' '
-> > +     ref_count=3D10000 &&
-> > +     git tag -m tip tip HEAD &&
-> > +     for i in $(test_seq $ref_count)
-> > +     do
-> > +             printf "create refs/heads/describe-perf/%05d HEAD\n" $i |=
-|
-> > +             return 1
-> > +     done >instructions &&
-> > +     git update-ref --stdin <instructions
-> > +'
->
-> A few things come to mind on reading this.
->
-> I have mixed feelings on sticking synthetic constructions in the t/perf
-> suite. Part of the original point was that we'd run it against real
-> repos to see how they perform. But that implies that people running it
-> have some clue about which tests may be interesting on which repos,
-> which is hopeful at best. So we've turned to this kind of synthetic
-> construction at times (and this is certainly not the first). It's
-> probably a reasonable tactic here.
->
-> I suspect the resulting state is not all that realistic, though. If you
-> have 10,000 refs, you probably didn't make them all at once. And so in
-> practice the majority of them would be packed. Sticking "git pack-refs
-> --all" at the end might give more realistic numbers.
->
-> Bumping to a larger number of refs shows the effect more clearly, but at
-> the cost of making the setup take a long time (since we have to take a
-> lockfile on each ref!). We could sneak around it by generating a
-> packed-refs file directly, but now the test really would be
-> backend-specific. Probably better not to go there.
->
-> And finally, the loop can be written a bit more succinctly these days
-> as:
->
-> diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
-> index ed9f1abe18..b365dc67ee 100755
-> --- a/t/perf/p6100-describe.sh
-> +++ b/t/perf/p6100-describe.sh
-> @@ -30,12 +30,8 @@ test_perf 'describe HEAD with one tag' '
->  test_expect_success 'set up many unrelated refs' '
->         ref_count=3D10000 &&
->         git tag -m tip tip HEAD &&
-> -       for i in $(test_seq $ref_count)
-> -       do
-> -               printf "create refs/heads/describe-perf/%05d HEAD\n" $i |=
-|
-> -               return 1
-> -       done >instructions &&
-> -       git update-ref --stdin <instructions
-> +       test_seq -f "create refs/heads/describe-perf/%05d HEAD" $ref_coun=
-t |
-> +       git update-ref --stdin
->  '
->
->  test_perf 'describe exact tag with many unrelated refs' '
->
->
-> Probably not worth re-rolling on its own, though.
-
-The suggested changes seem reasonable to me. Certainly I am happy to
-make them, and re-rolls are cheap. Do let me know explicitly if you'd
-like that done.
-
->
-> -Peff
-
-Thanks for your time! I really appreciate it.
+Thanks,
+Chandra.
