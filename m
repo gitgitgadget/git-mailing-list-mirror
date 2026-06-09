@@ -1,148 +1,137 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CD54192FE
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 12:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781009983; cv=none; b=hI35CslD1Zb/KPEhqtPS5ZioGmSnAC/NezkvxxBddvuNGHg+IZ9JHcyR4T04uhLF7wt/UJ6UeMYIbXvsFJM6dutkEff+B7GZdidmmwGfxadno2I3NqHaTbCp7z1kw2FcG6LrdBI7y9q/r85g44LvgSZ9KZKc+rdh/BRHbB4y8Hk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781009983; c=relaxed/simple;
-	bh=xdPRO9D4Y9vPNl6C+5YurgAruk4bovMJ/TZ0nvhq5vg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LWVJlERsSbRrcNUS1/+mDIZzWpFv5TW6GJMXV65uNlfp415/Z8CJC0pzxoEz8ECIz1BJR7l4T2eRjyz1Uh+YUNC4TqbNd59ENhEkHuxJGI2a1Y6TpZtieoD+5r7WXfyi88Sy2NugYEsR/97y/Oeh5KOwgsaz4AvAJNnl/i8x+3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EdLNztlj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d7s1yt8K; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F932652B0
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781011244; cv=pass; b=WEmmelP6Y4TC1oaYNp5ufW/yHakMYYxPwSpcTYx8JDXcP9C67CVp/lV+5PA1UiDkxYkma3D0E5nYGv5GACuacJYP8MBKDnM/rq37tqchYyqOX2VB37vILsgIJ6D1Kzfmws7Z+KiHsKUUtjXDJp6JkxNIZK7iuaGYQYaXdBmwbQ8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781011244; c=relaxed/simple;
+	bh=2LsxMAcZ3L6VwRDGj2BmiOzTzycSK+gNz0crRr39EAs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Mtda8qjLK6J4G/TAecJAjTaru81d5Yw+dbJYpECHdXwSok/7fYPpNfy0aa1x+cLKqSxarvSAdAFB8xAklW4WUMHGaPhM5+4uD8xGj2coHLr2XkbO6J6TnxHPyU/OpSZgSuI0Fb4bT0wSnHGfQ5qf3NYB09I6/sT5QtTQQyeWTh8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DKA9jItg; arc=pass smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EdLNztlj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d7s1yt8K"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1092F7A00D2;
-	Tue,  9 Jun 2026 08:59:41 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 09 Jun 2026 08:59:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781009980; x=1781096380; bh=79+rbMMFyV
-	YctjXonWBgomaaVsr1Py+BDYheyIF5aOc=; b=EdLNztljEofeQzDK/2tQ7QikR4
-	Cs7xuIY7MGETqwbAWUlzHUm4Hy31B5kwOPuW8T9nElY1hJoktxx+Df5Y3kDh3gsB
-	4Rwl0VKQPQkM61e5j6fb1ThlbBldU5leL6m8C0utDtbkLU0zWEjkpdn9wJbzTzoE
-	pax54hppU242Kdgjb7UFZ383MsWUoFT4LIDU5OBnfrS0tPwLdMA+jbPdE4OIzoq1
-	Ad/+P2B4rmBnRGtKZ2cFfSri9Qs4Vp/ZC3CDL9d3YfTJawclIV3L5bVPypfkDoFS
-	fxTLOYnmlun20MuUHbBHy7zqqE3G6YHU2tFsws2alE6Y6SLEUgv81bzs8NVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781009980; x=1781096380; bh=79+rbMMFyVYctjXonWBgomaaVsr1Py+BDYh
-	eyIF5aOc=; b=d7s1yt8K2Bf562cNDITlLN0SU5caA7hFvkf0yHoLIqeezpqMDX8
-	fSmax5A+jUd8l5yniZcvV+WXDuW4He4jsVrs6diG5JXeuG9w/aI40ot9oSjg+e7i
-	XmnrMYo+PcS+yMMmOfGugktOfm8G8ux69AcXRUZiMY4TtNxVOZS8vhw4GBvZAJ9W
-	bRMXt4c2lM2o11HWcBkbFoMMVJ0ah5uz235U/2TR31MaDOjBHVlumcM8c+ikBQCP
-	yUpUzDNy4+2w6PVtw01w90eq/RFi/eusSApQRB83q2bazKqYCBppz492biiyh31O
-	zV0UkJBfububpJELYAJ8GhFMYFLp0xsz3ew==
-X-ME-Sender: <xms:PA4oarAIV5KY7AWwrZhB-6brSMStz8XtH1zcf6C91Zj8lw7v1u-J2A>
-    <xme:PA4oaoiTS4bxGYa9bR1MP7aQLSNjGVcMkAJ_UPoF-43uc66elQgq7gR4uZ7FRRF9D
-    9GSDMGsSprcMdYNVZHBlLa-BcBE8QDNODuNFxmBw8Bm4mZO42LIlg>
-X-ME-Received: <xmr:PA4oarkOBHQhP3O8ShccMFcgA23AzR-micl2K-s2mEzVbwbnHXeCiqyL77NlsktxXsXP8seVRo4Jjv4_6g4d801QmbumGFfAvph6>
-X-ME-Proxy-Cause: dmFkZTEdWw2JJAirDr6uq8+LsDn2QB2VuSuRonGAilr/VP2qjmmU0Q3qLQONQcctARDGnt
-    7kLxxHgQM161aNFbyjET5z89DIbcCUO2vK3uL3cqOepO6O8KRRQtzOJgd/fu1L1XISv7lO
-    SaLXwx2WmxriBdcYhyL3Q4Q3qz5nWMi5UEIKumog9yK9fvG5Aii0KRsfJ6rehoieUTOX38
-    NN5r7G+dRf/t5YqjkUKhC4S2njDP1uGKL511EPj5NvylLPG1VIT0BICrA5BzKLj8oCLX+5
-    c77whJjWiJGdRXIg2bAkBSnW3Fy91nqKSBdXQx4ZQ8aqYmHUEVulXyUDe/0/OuRCt2XAoa
-    R82bgxSGKKqaN8+TVKgP1txhuGMfzRQTIOQwJexYlDZewgPbwmXL+PxEprJgrpO1K0oxVq
-    by3Ds8pbYsSjtbirkGyx0tVGcyyTeX1LS4GpCClOuNb2tzPMe2/YXMmseYqAwUtmMfDhs+
-    X3y8gLCus6WjHl7xyVkXo1riYkNthh8MVpYvXktPSPX9ct94oszwbf+GvxmTaJoOqwqaYE
-    qTOg9h/F7g4RVxNPgBZ53gzjqKYaBiiR5yiTMwprGkI2isTBUYnhn42kR7PqAZG+YS4xCo
-    o89JvMxJnptqWDXTVyGKDXZtAbdUVGiI790wg8i5gOcFCuJyO+gDqFAwsfUg
-X-ME-Proxy: <xmx:PA4oasqIoOS7QTZ1EpVjdZL9PGx9T1y92llROLD3ZUdsQmblMpIpYw>
-    <xmx:PA4oasHvuIZtEbfzODvvpktmUH3P37RMRIz5QlSMOrk9gtbqO1jiSQ>
-    <xmx:PA4oagzJpzYiatw1G6Al_6u0rNEPis1Oo6LHEOi0_5TcbDoA5UX6FQ>
-    <xmx:PA4oapp1DEsdjkzrMINp25Jc68tmNZvrPZoOnf9rjYGAkkBCv3hL8Q>
-    <xmx:PA4oajF2bmIu8lsKlK7Zwb1pzI-JoH0Sio3fEBFPHAlO1PH132ZhodoF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 08:59:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Lei Zhu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Lei Zhu <korov9.c@gmail.com>
-Subject: Re: [PATCH] switch: add --ensure option
-In-Reply-To: <pull.2324.git.git.1780997009796.gitgitgadget@gmail.com> (Lei Zhu
-	via GitGitGadget's message of "Tue, 09 Jun 2026 09:23:29 +0000")
-References: <pull.2324.git.git.1780997009796.gitgitgadget@gmail.com>
-Date: Tue, 09 Jun 2026 05:59:39 -0700
-Message-ID: <xmqq33yvuax0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DKA9jItg"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6877c719cb0so7036882a12.2
+        for <git@vger.kernel.org>; Tue, 09 Jun 2026 06:20:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781011241; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PWyyHu2bwVIFOWPetOZYbRx8/hP8Qwd/jzlDZxuA+rMHSw5+cDTlAhIOKLelrGs8Jq
+         7vusblPWS+Iid/hrS+tBu2QPlSWwVK2wo7yb8fjBrHnpx5ZjhJmMND8aVgVdo+gWBYP6
+         EerYdYDYFl/2mD3bwHCerrUIoMoCLoS2ix7Df3F2zaYrC3iSl6mrZVCDR4ifQe+FThZy
+         V129UQIuzw24Hg6621+I42flhlBp2EXgcYwa67e6G4W5I6xIUx5mZj/EazZ6jon3icAa
+         ER+F8jOhri8WsusOObGBJyQo3+ZyuUPmn1854MwCwRK3tJ7OyIX1c7Ca42Kjr2G9NCJb
+         Um8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=LmNuQqzTwnQQMqRRX35my4pBTFNDnlfTZeuIn/V+t50=;
+        fh=XNrnnaEltYM+EQh9HKHNyEpL8r0DhJfj9mnINyKB9GI=;
+        b=kcL6Z4ue6zLUYHOGGsNvCfd+XAKteIC/060wtgSU4LoPWqSxGtf1bFZmdgWPwlACRH
+         Is06MBnEKxp4ElA7oueRwykOTVEKLsJ3/oRyzwpUQPgXJasqlq4akOPNILslekXEI6dI
+         hrZPxwT1SPQ13C/eKPeYGfMQs65CmWSPQN47NbjEfHZpbp06kbC+JYj8JczI0fhPtsul
+         qalyJLrHAO5q2eXdAMiPA/4p4XcEZSn4Tf03xyaEUtvnaniqrXjpwOND0ScT5PWm3KcV
+         vra/OdfNIWg2TBf3/OR5svf1uBejhmIt7N3Hy94VdLq03oD5ffiU7mxs81m0JYXGqiUe
+         MgZA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781011241; x=1781616041; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LmNuQqzTwnQQMqRRX35my4pBTFNDnlfTZeuIn/V+t50=;
+        b=DKA9jItgTrJjmv2wDqrhAaIjh7pv9o25x5yw5l6Oeivn435Oa2Vh77dqdpldhxJp52
+         3DiI/nfPRpmZlhoIc7dOrQtLTMRjVJvbGoA4Laa1Vxco/Tge8V9+uofbhwYXqwY21Y10
+         wysP2ZL7TaHxT9WJbO8CYj1E85nNiB8oLTmyksYSZi4FBXiw2oqupWuV7EtFSxgGBsac
+         +MollRJ/v1W7fp+lHAmjuz2njGC97+lZbv4cWBi21uBPvGa915LpMIhMwVn00Th1mcqu
+         X1kmLsVy5IzG6NNTBoJ4UIGaqW7EHj0m4QRXO11NTG9REl20XMqPzInJ3HM2gEvLv0Ke
+         eMBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781011241; x=1781616041;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=LmNuQqzTwnQQMqRRX35my4pBTFNDnlfTZeuIn/V+t50=;
+        b=IwKHxbpuVc0/oyy1deHwIoN01cSODn0m2ghuT3BeeLb50zbl/G5iQWmFvKwrEfE2Mp
+         I8ls//wG4U61PY5wGwW8yKtqFf2GjH7D5H4XgXdHiAKFc5jdAdTNEVh+SQ0iq8I4W/Ls
+         KqytOQJnR/oRAHqQHfVKWgai3QzB/AXF74PWZJ8sL2AjV9HGV/OYdijvKf/YxCnIXM/s
+         6PHkn0YuSOvb6DV9oN4Momh8RhvbabNM5LwYS/j0ZNi6zEazz0ryRHzZLc7CPH1P7Fj1
+         LEnNhQCi0So3jeU7wSlbsgt8b63++fCr2idjeayDjMJKBxigYSsFdBhUbaVtSuYcmHzP
+         EhLg==
+X-Forwarded-Encrypted: i=1; AFNElJ+42Q0fnee7wo8tQvpm6TiYVfkrlyGXAv+Tr7L7ZjQVl+TJjXdsQ++kqZbWpkqu2RQTKGo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXPcsCM0V7ztFGPqv/7/fzJSrreXI+5mRGB8v0ZcPn4mK1fIl4
+	xG5/wKz7DsbTkSCNWJ7vDHhK24zZfrjrrbsDapZ4pyuLFWK+X+0d/WP50wsxBomARqa23uuslaA
+	g6n6pjq9BxsVAjYHp2yt+DHhcGcRhuaY=
+X-Gm-Gg: Acq92OFaqPOUJII9AbDpE3KvfekuNQRtG/BA+1H7Q0sid+wzu+H4/5jJIbPz/CXI9ZB
+	2iGECJ9GWnVhnE3evutcby2tl2PWboJDIok5XHnAZigMg1btnqapzR6CJWeW6YUwAxuhl0iYvwc
+	Z5YeZDqvGizih1JDN+nh4IdEhr69epsKD4bJegIAtVgEV6RnBb8KS6CEJH6iJZyHKpTdG2fZwti
+	MhgKXabc1ayQqpeA5UOwUoKSvkETbMGi+mkyHK4iRelAlUzrXXE2t/CmQnc6luJ2F8N8hI+6o+s
+	eSFj01zkK8TgjgomQw==
+X-Received: by 2002:a05:6402:a504:10b0:68f:cc95:8c11 with SMTP id
+ 4fb4d7f45d1cf-68fcc958d5cmr5555658a12.28.1781011240985; Tue, 09 Jun 2026
+ 06:20:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com>
+ <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com> <a7672713f67d6a44992c0f0cf989770c7e9ca38b.1780684553.git.gitgitgadget@gmail.com>
+ <xmqq4ijcvb64.fsf@gitster.g> <CAHwyqnWpkF-8czt8+G4GJpMTb1qXG6FtN1HKrT5H+OcfAjQL=Q@mail.gmail.com>
+ <xmqqa4t3ubwj.fsf@gitster.g>
+In-Reply-To: <xmqqa4t3ubwj.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 9 Jun 2026 15:20:04 +0200
+X-Gm-Features: AVVi8CeFZdnA_pfDPItg9iaozoFRdc1l5qL2DW4dEsxUwly9md2DSwGFOUJrjXw
+Message-ID: <CAHwyqnVBL9F8tYgDL7B-auFKHVXT3g=R=PQ-W1hp38P3qtqyEg@mail.gmail.com>
+Subject: Re: [PATCH v13 2/6] branch: let delete_branches warn instead of error
+ on bulk refusal
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Lei Zhu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Jun 9, 2026 at 2:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Harald Nordgren <haraldnordgren@gmail.com> writes:
+>
+> > The GitHub CI has been broken for some time, maybe I should have told
+> > you about this earlier, but it coincided with a period where other
+> > open source projects I worked on also had mass CI failures, so I
+> > chalked it up to upstream issues (GitHub, Linux, etc). But it seems to
+> > have not gone away.
+> >
+> > All of my GitHub pull requests have broken tests (see e.g. which a
+> > quite minimal change: https://github.com/git/git/pull/2313). This
+> > makes it harder to detect actual issues. But of course it's not an
+> > excuse.
+>
+> FWIW, the breakage was observed in my local testing, and that is why
+> I found it so disturbing.  Apparently you didn't see such breakages
+> that can be detected so easily during your local testing (otherwise
+> you wouldn't have pushed it out to update your GitHub pull request),
+> which may mean something in the test are platform dependent?
 
-> Users who often switch between topic branches may not know whether the
-> local branch already exists. Without this option, they need to check
-> for the branch first and then choose between `git switch <branch>` and
-> `git switch -c <branch>`. The new option folds that workflow into a
-> single command.
+No, it was broken on my local machine as well. I was sloppy when I
+pushed out v13 and didn't run tests locally.
 
-Quite honestly, I am not sure if the use case should be supported
-with a new option, or we should actively discourage it by rejecting
-any patch that takes us in this direction, as the actions the user
-would take after seeing the result of "git checkout -b" or "git
-switch -c" are quite different among (just off the top of my head):
+Usually I will push to my GitHub PR incrementally as I work on a new
+version. I don=E2=80=99t necessarily keep the GitHub PR clean between
+submitting versions. I will diff against my latest version tag to see
+my own progress, and if I mess it up I can always hard reset to the
+latest version tag to start over from there.
 
- (1) Ah we already had the branch created exactly to work on this;
-     instead of forking a new effort, switch to the existing branch
-     and build on the effort we made previously, as it forks from an
-     acceptable base, which might have been different from where we
-     wanted to start at when we said "git switch -c <branch> <base>".
+Normally, I would never push out a new version unless the GitHub CI
+passes. But it=E2=80=99s been broken for a month.
 
- (2) Ah we already had the branch created exactly to work on this.
-     Unfortunately, it was forked from way too new base before we
-     realized that this is also an important bugfix that needs to be
-     mergeable to the maintenance track.  Let's create a new branch
-     that is a copy of the existing one with "-maint" in its name,
-     rebase it on the maintenance track, and work there.
 
- (3) Ah we already had a branch that happened to have the same name,
-     but created for totally different reasons.  We do want to fork
-     a new branch but need to give it a different name.
-
- (4) There wasn't a branch with the given name, so we created a new
-     branch at the right starting point we just picked when we ran
-     "git checkout -b"/"git switch -c".  Let's start working on the
-     topic.
-
-You cover *only* case (4) perfectly.  When your "-c <branch>" picks
-an existing branch, the user still needs to figure out which among
-situations (1)-(3) (of course, there may be others) they are in, and
-act accordingly.  "git checkout -b" and "git switch -c" that fails,
-reminding that there is an existing branch with the same name, gives
-users a stronger form of reminder than switching blindly to the
-existing branch, which may (in case (1)) or may not (in cases (2)
-and (3)) be where the user wants to be when taking the next action.
-
-Having said that.
-
- * The option name "-e" would make all users expect that this has
-   something to do with "--editor".  Start with a longer name,
-   perhaps "--create-if-missing" or something, and then see if
-   others can come up with a better short-hand.  Obviously whoever
-   chooses "-e" is not equipped well to do so (yet), and the
-   reviewer who pointed out "-e" is not a good idea without being
-   able to offer a better alternative is not, either ;-).
-
- * Adding a new flag only to "switch" without "checkout" will
-   unnecessary confuse users.  This is because, even though
-   "switch/restore" started as an experiment to _supersede_
-   "checkout", they were not successful, not in the sense that
-   "switch/restore" were harder to use than the original, but in the
-   sense that the userbase and teaching materials are already used
-   to the original and removing it is practically infeasible.
+Harald
