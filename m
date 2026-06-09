@@ -1,174 +1,205 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770083FB072
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 10:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781002481; cv=pass; b=GKS5C/ZvVvixgPC/mnOxBAcW32DxAEy/jmloOUIq1sMlYxdobgqD9KeuooenQsRRJu7w11xC3PDYI8PXfory5GUE0WY359MAowaaZfWkkvdN2MLMNahugQoLhHDabHczhJ+rt1rzf2VEkTqnI6DKm34oijBgaVyoQfdLFPnr8Sg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781002481; c=relaxed/simple;
-	bh=jyM9rRI6b6uvz7sUcsE2j+Gr1eyf9ZIVs3uk3vJSTfI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HfX7L+23Uqcz6yTF4zx6Kd7WdhVOjoUAsOk+VkVUIdWz76hQQiUvbY69rONLpscYZzROjbu7w0m/2fAeEDr+0eAv++1n7XqUCP4FpKMXttk6nLoFj2Q6LqJUVdLM68c2uNttY3kLSlL3rSZbaFHC1GXhHjjs0yNkxpcom1H5jvM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ryw40xhZ; arc=pass smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B93E3FD121
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 11:09:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781003400; cv=none; b=HL8imc42IsXFofEipEZ5ZKwfkeozmzowDTsMbjImAAjIVgQISrRD9QxpzePPhRklqyKr+Ij5hul/+GvWxilCoMyaCAQ19xOCpOtDRgmpgUecxNlXcBUJ0I4fd2/vCZlOWbolHl7UfTTnJWhlbEIzIWxgipIRCHY2A52uTdwoRVY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781003400; c=relaxed/simple;
+	bh=kNbVNwqWxsR4I5YUMKJBtbsm4A3TVIT5vyZV7hJ59ys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kaHUDkDD6FPbK9YzMTFhFtickyampQbID/P6tn3BzKXr4KfK8SXCOc//K/hzHAI4xxM4Mp3WrwSS/wnJyZPylBE6vjnA9Hj2jmk4Ycg3iKIF80Euu80jGVvpbv81sm4oDyAcw6Wrew528v8v9FboXF5xXjT5vsxEUuTvo280hxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YuHfPYaP; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ryw40xhZ"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-441080fd7b9so3366159fac.3
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 03:54:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781002478; cv=none;
-        d=google.com; s=arc-20240605;
-        b=cGCf+J/BVm37CmLdM7P5kHkw4EJ+H0gXkUM9HuYZkUfxJ2YjkpTNSUA5FvIpv311MB
-         XU5imTA1EKdnINZY14KEAfMZhxKroRIEuQRPzyRuAzMG3kM8rrql3XxYFMAiR5WsnCdp
-         SXdFEPYN4+XzIRJ3pnQlALwgFRDyVL9K2pPGVakEPOtWzXfxMiWGx0OvtSB7jzTe0yDL
-         5mCvgmX9mkzNl5qNJDOfWI/JS2EaUAYUCftdH0Zf3EWbR8+lV6E64ePVufiX2in6+VwY
-         4JXSHsUjpzRSzAmvF/d+jX7D2Dq/0hAaZ2EzZqamM/ncoUb2Pg6kMjP2/N6THenQq5gt
-         PE2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=7zpc8M+R6CDVSKKvKsIFCa579CYQ3QjUmhMtoeGgIak=;
-        fh=rHIRI8tvNIazrMhntkidDQGrAFHYVLuXLalOS3XgdyY=;
-        b=gciiKXyLM0sK+TRH/qOx7pY8nw4bpRLViTIXwEHdXS0E93GOZOvvM39uiOsKjCiytt
-         /d1u5kNZ4GVaZjyy4I5ZC265dLqjHrh2qdI2T6fc3l+WPKTU73dywyghIbFW3xc1b9xG
-         WoAI3ixrHXiTb0IGmVOHS/VEqMrUBjP531TxI/LbGKvSUqRhMc92VaMvOeXZU4O7bLRM
-         tYrmESk6NeyfHx1u6oLtskaS9iT0+CE2CTRdZbFg90Ao5y4g/OuSV2aiBRvRAis6Q7aY
-         WaCkg4s+bF+mQzGHTAqRwi/YVYRJgPAwrKzU0cI13nRwtVpzi8swej+lCy4NCor+KD5c
-         PDFw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781002478; x=1781607278; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7zpc8M+R6CDVSKKvKsIFCa579CYQ3QjUmhMtoeGgIak=;
-        b=ryw40xhZHNQrgAnQ+gfy07EGiVNr8l6NVRX/VhslOpFMJWDG6SJpQAx7dGUsEYWm72
-         xwNDc+2Vbg0QPp5yREdZuLT+3A9a5d0ORyj4kusa7a5hpZ59KClfmQYdcFJpTcVs/iOw
-         mEWOgxGPjyJLhsQxSxXWf4UyXAgqYOQs+SjYkForJAV12CMX+Tz45wf8//tb379IQO9g
-         tUrsu2Z9Oe6k9xTSzjS0HCyZhn5VSBYUvR0YwqcvvUAdzALKAGfo5hcFX5FzRPS2suz9
-         M2WW9e/v1nCbAfRzWBAoN9/kIUzMAITWmEZFU9iGPpVV1vKEis8rXA/eMiP3IBZAHORf
-         nTYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781002478; x=1781607278;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7zpc8M+R6CDVSKKvKsIFCa579CYQ3QjUmhMtoeGgIak=;
-        b=D+OBSG4VvKPqmuCNxzwT1PGOXTni+4b3FAS/qzWH8n8w/4gDdXgBuEwSq7Tj/YY9ox
-         Ca0Mlm+m9bY9chEFbUsLL/lVpNzyVSTxHXj6VWNk9vMpzujWOf1r/xTcAKDoCuv9eIIM
-         0TOK2jznLeOeeSQbmArSYcS9YGR9SNAaCy0MbEHApcz5QUePyQM6/lfoxLmc+N+q+TJG
-         +NtksLISLu7vby9HMXIkZj8U1M9mIg9SSVqGpNyl5OlOkBljxJxAhNcy6KwyaY+1Od0a
-         yd9PW6kXfpnBeOumTrY3R2uS0OMlYISJyZs8IxtPZqO1RuXWPd2fpzzOZ2MDo4AAHebk
-         yfjA==
-X-Gm-Message-State: AOJu0YwjbCK65PKFFD70JdPxORSGTes7GTYVESwuAjOGfxF5WCtIfZU1
-	rbiaHs2NQ8I8KB8O5PwZBYMdyCge4SbsrHJDt0naxrCiNBrP5nK0WTPINg4PWCs9BdsUcK0Lwhh
-	xMN1Yo/O6ISkZO1SKC2a+W5/kH6Q8iPE=
-X-Gm-Gg: Acq92OGM1MQYsEYIGNyZ0m3rQEUw02LT3wVJl/v1Vw+V/bB0bpZPsLvMe4ytM2aIvkX
-	LSPOB9DkFcO+KWLB8A+V2HHbH9X38p2sad2SRWVQ/9FuDoztsr1/zTotI3BEIbL5xpFCBHkbeMf
-	maOgBKfLqufOCiFPCVSki+16R19qOj3S26wRRrvXoeY9zNC0mNhKxXy7ai2AkoqO4teR7UuSDvZ
-	4GJNMUkFAM+ivqYIcT7vwWovg+SwjiapzcW+L9ediHxvqVUlgKjFdQF1AOAIKlZZ6v1gTbRO2J0
-	q82RzhzHIcWPiCMP+tja0556b8iGWwayqriL+ndUt+YuzgiQyvWAa+ucqcVTv7jBzsepJrrDbz5
-	rPxw=
-X-Received: by 2002:a05:6870:8326:b0:43c:4740:54aa with SMTP id
- 586e51a60fabf-4413da3029bmr10354101fac.9.1781002478203; Tue, 09 Jun 2026
- 03:54:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YuHfPYaP"
+Received: (qmail 87365 invoked by uid 106); 9 Jun 2026 11:09:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=kNbVNwqWxsR4I5YUMKJBtbsm4A3TVIT5vyZV7hJ59ys=; b=YuHfPYaP5KR0zhHPNqTKzFKiAb0dLQTlv0ENh1t6yBNwHHcmbaCrBLf+wjZNyKj2Mp5cOsuiPVKRsk3eejr+DYZz08M6KUhtJ2HSuw9DfkUehiWysUsyCFflaxQci8AkIqr9rb4hLj9YeBxR0dGq+CVrOzsztbf+4KqN3nE6iu5wcrp06tBLHwMyapgNKfXgbBrX3NgB/XTQAb0qql9+yuztVJ/abK9uZAA/Rw5axh/pY3SS2iJ+oCAXNPT4WlI2vlyZPdPQjaraR2BOR2qIQtJ4clBTFCbsZuVURoMLV4m8QbiujKiu74aFRhK0TQVOsm2AW4b8CLeq+P0WrGz89Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 09 Jun 2026 11:09:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 262828 invoked by uid 111); 9 Jun 2026 11:09:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 09 Jun 2026 07:09:58 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 9 Jun 2026 07:09:57 -0400
+From: Jeff King <peff@peff.net>
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] describe: limit default ref iteration to tags
+Message-ID: <20260609110957.GB1509396@coredump.intra.peff.net>
+References: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260606143412.15443-1-cat@malon.dev> <20260606143412.15443-2-cat@malon.dev>
-In-Reply-To: <20260606143412.15443-2-cat@malon.dev>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 9 Jun 2026 12:54:26 +0200
-X-Gm-Features: AVVi8CdyrtYXLCwfnTDK_DOmEgq8KPgGSp851bzarLb2gA-V8D_3_D05UkJmpJ4
-Message-ID: <CAP8UFD35Tiy1_fqpjq8P-z=ZhzR3MTiThqfCs977652umRoSEQ@mail.gmail.com>
-Subject: Re: [PATCH v1 0/1] environment: move protect_hfs and protect_ntfs
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org, christian@gitlab.com, phillip.wood123@gmail.com, 
-	Ayush Chandekar <ayu.chandekar@gmail.com>, Olamide Caleb Bello <belkid98@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
 
-On Sat, Jun 6, 2026 at 4:35=E2=80=AFPM Tian Yuchen <cat@malon.dev> wrote:
->
-> Hi everyone,
->
-> This series continues the ongoing libification effort by moving the
-> global **filesystem** variables, protect_hfs and protect_ntfs, into
-> struct repo_config_values.
->
-> Place them within the **per-repository** configuration structure
-> aligns with our goal of removing global states.
->
-> RFC Questions:
->
-> 1. Should we keep PROTECT_HFS_DEFAULT and PROTECT_NTFS_DEFAULT
-> in repo_config_values_init()?
->
->         void repo_config_values_init(struct repo_config_values *cfg)
->                 {
->                         cfg->attributes_file =3D NULL;
->                         cfg->apply_sparse_checkout =3D 0;
->                         cfg->protect_hfs =3D PROTECT_HFS_DEFAULT;
->                         cfg->protect_ntfs =3D PROTECT_NTFS_DEFAULT;
->                         cfg->branch_track =3D BRANCH_TRACK_REMOTE;
->                 }
->
-> Or is it better if they are used anywhere other than in environment.c?
+On Mon, Jun 08, 2026 at 07:32:14PM -0700, Tamir Duberstein wrote:
 
-I think it's better to keep them in "environment.c". The
-repo_protect_ntfs() and repo_protect_hfs() function I suggest adding
-to "environment.c" in my reply to the patch should help with keeping
-the macros in "environment.c".
+> The benchmark checkout had 120,532 refs, of which 330 were tags. With
+> `$repo` naming the checkout, `$commit` an exactly tagged commit, and
+> `$parent` and `$this` the two binaries, I ran:
+> 
+>     hyperfine --warmup 3 --runs 15 \
+>         --command-name parent \
+>         '$parent -C $repo describe --exact-match $commit' \
+>         --command-name 'this commit' \
+>         '$this -C $repo describe --exact-match $commit'
+> 
+> The results were:
+> 
+>     Benchmark 1: parent
+>       Time (mean ± σ):     171.7 ms ±  18.5 ms    [User: 23.9 ms, System: 133.6 ms]
+>       Range (min … max):   142.3 ms … 198.3 ms    15 runs
+> 
+>     Benchmark 2: this commit
+>       Time (mean ± σ):       9.9 ms ±   1.1 ms    [User: 3.3 ms, System: 4.7 ms]
+>       Range (min … max):     8.8 ms …  13.1 ms    15 runs
+> 
+>     Summary
+>       this commit ran
+>        17.35 ± 2.63 times faster than parent
+> 
+> Both revisions were built with -O3, -mcpu=native, and ThinLTO using
+> Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
+> (Mac16,6) with a 16-core Apple M4 Max (12 performance and four
+> efficiency cores) and 128 GB RAM.
 
-> If so...
-> 2. Is it worth introducing a Macro or Getter for safe access?
->
->         ((the_repository->gitdir ? repo_config_values(the_repository)->pr=
-otect_hfs : 0))
+This patch looks fine to me, but let me pick a nit for a minute, because
+I think there is a broader conversation to be had.
 
-Yes, it seems to me that a getter is enough.
+Given the discussion in earlier rounds and sibling topics, I assume the
+commit message here was AI-generated. And it's OK in the sense that it
+is describing what happened and I assume is entirely accurate. But as a
+human reader, it feels so much more verbose than what I'd expect, as it
+is full of semi-irrelevant details. Why set --warmup and --runs? Why
+bother with --command-name, which just means you have to show the
+commands separately anyway? Is the amount of RAM in the machine
+important for this test? Surely it could be if it was absurdly tiny, but
+in general, no, I would not expect it to be.
 
-> The current approach looks verbose and lacks readability, and
-> hard-coded 0 and 1 are used as fallback values. I wonder if a macro or a
-> getter could be introduced, for example...
->
->         #define SAFE_PROTECT_HFS(repo) \
->                 (((repo) && (repo)->gitdir && (repo) =3D=3D the_repositor=
-y) ? \
->                 repo_config_values(repo)->protect_hfs : PROTECT_HFS_DEFAU=
-LT)
->
-> ...to improve the coding style a bit. Although I am aware that introducin=
-g
-> new macros is generally frowned upon, I would still like to know which
-> parts this might make difficult to maintain.
+So while it is perhaps reasonable to document every detail in case
+somebody later wants to verify or reproduce timings, it is a little
+overwhelming when trying to tell a story, the core of which is:
 
-Unless there are features that we really want which a function can't
-provide, a function is better as it provides type safety and is
-usually easier to maintain.
+  In a repo with ~120k refs, ~300 of which were tags, running:
 
-> 3. Note that Derrick attempted to use get_int_config_global to wrap
-> this kind of Filesystem Level global variables. This approach bypassed
-> struct repository, did not actually eliminate global state, and the
-> reviewer politely rejected it. Nevertheless, I am still curious as
-> to whether this approach might still be inspiring today.
->
-> https://lore.kernel.org/git/a42dd9397d07b2dc4a0d7e75bfe1af2e46cad262.1685=
-716420.git.gitgitgadget@gmail.com/
+    git describe --exact-match $some_tag
 
-To help your reviewers, it might be interesting if you could already
-tell why this was rejected by Glen Choo (who reviewed Derrick Stolee's
-work then). It seems to me that Glen said that using plain fields in a
-struct should be better as long as the fields are always initialized
-during the setup process.
+  went from ~170ms to ~10ms, since we no longer needed to iterate all of
+  those other refs.
 
-And it seems to me that our patch follows the direction that Glen suggested=
-.
+That has _way_ less detail, but makes the point succinctly.
 
-Thanks.
+I dunno. I am not trying to pick apart your commit in particular, but am
+more interested in the broader use of AI commit messages going forward.
+This kind of verbosity is quite common in the output (from my limited
+experience), and I think creates more work for reviewers. Should we be
+expecting contributors to make things more concise before submitting
+(either manually or through prompting)? Or do people even agree that the
+shorter version is preferable? I could be the only one.
+
+I have a few other comments on the patch itself below.
+
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index 1c47d7c0b7..3532c8ff22 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -740,6 +740,9 @@ int cmd_describe(int argc,
+>  		return ret;
+>  	}
+>  
+> +	if (!all)
+> +		for_each_ref_opts.prefix = "refs/tags/";
+> +
+>  	hashmap_init(&names, commit_name_neq, NULL, 0);
+>  	refs_for_each_ref_ext(get_main_ref_store(the_repository),
+>  			      get_name, NULL, &for_each_ref_opts);
+
+The code change looks fine. It creates a bit of a subtle dependency
+between what's happening here, and the filtering inside get_name(). But
+I think that's OK for the scope of a single command. It _might_ be
+possible to simplify the top of get_name(), since we'd no longer see
+non-tag refs in the input. But it also may not, since we have to strip
+out the prefix anyway. It can certainly come on top as a cleanup later
+if we want.
+
+> diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
+
+It is a little curious that we add a perf test here, but the commit
+message does not even show it off. ;)
+
+I ran it myself here and had trouble showing improvement, simply because
+it is already quite fast! I guess that's because I'm on Linux, where
+warm-cache filesystem operations are pretty fast. Bumping $ref_count by
+a factor of 10 made the "before" case 30ms, and after is still sub-1ms.
+
+> +test_expect_success 'set up many unrelated refs' '
+> +	ref_count=10000 &&
+> +	git tag -m tip tip HEAD &&
+> +	for i in $(test_seq $ref_count)
+> +	do
+> +		printf "create refs/heads/describe-perf/%05d HEAD\n" $i ||
+> +		return 1
+> +	done >instructions &&
+> +	git update-ref --stdin <instructions
+> +'
+
+A few things come to mind on reading this.
+
+I have mixed feelings on sticking synthetic constructions in the t/perf
+suite. Part of the original point was that we'd run it against real
+repos to see how they perform. But that implies that people running it
+have some clue about which tests may be interesting on which repos,
+which is hopeful at best. So we've turned to this kind of synthetic
+construction at times (and this is certainly not the first). It's
+probably a reasonable tactic here.
+
+I suspect the resulting state is not all that realistic, though. If you
+have 10,000 refs, you probably didn't make them all at once. And so in
+practice the majority of them would be packed. Sticking "git pack-refs
+--all" at the end might give more realistic numbers.
+
+Bumping to a larger number of refs shows the effect more clearly, but at
+the cost of making the setup take a long time (since we have to take a
+lockfile on each ref!). We could sneak around it by generating a
+packed-refs file directly, but now the test really would be
+backend-specific. Probably better not to go there.
+
+And finally, the loop can be written a bit more succinctly these days
+as:
+
+diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
+index ed9f1abe18..b365dc67ee 100755
+--- a/t/perf/p6100-describe.sh
++++ b/t/perf/p6100-describe.sh
+@@ -30,12 +30,8 @@ test_perf 'describe HEAD with one tag' '
+ test_expect_success 'set up many unrelated refs' '
+ 	ref_count=10000 &&
+ 	git tag -m tip tip HEAD &&
+-	for i in $(test_seq $ref_count)
+-	do
+-		printf "create refs/heads/describe-perf/%05d HEAD\n" $i ||
+-		return 1
+-	done >instructions &&
+-	git update-ref --stdin <instructions
++	test_seq -f "create refs/heads/describe-perf/%05d HEAD" $ref_count |
++	git update-ref --stdin
+ '
+ 
+ test_perf 'describe exact tag with many unrelated refs' '
+
+
+Probably not worth re-rolling on its own, though.
+
+-Peff
