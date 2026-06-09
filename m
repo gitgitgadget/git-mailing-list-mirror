@@ -1,186 +1,124 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731D942882C
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 15:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781020324; cv=pass; b=sSHl/08BvmHJmyOrRXwhEY2E8qWMVt2Wdy3CLJyClRVzm9IybAbQvUN1qilgXMKqFiA4YUxeO2q2jHM2ZlX+myqrk6tQ2coKu3mQjcSJeQZYl9qGpmuiKzygw2sRAobzZgnx+KDPMaotasWO0D1XqMGLyUWQEbXp2sy/WCOMjcs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781020324; c=relaxed/simple;
-	bh=+oYp1+0iGE82ZFF9uXNBZ5xT4Y3wXuc2uLXagSdKncw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sq9xRSnoFkgX+QbQDuN7sgPShKDxmTXH7/k+oNH7Z8vzTrnEh8s/bB7UC61JPmhzLvrrriQTItMkIOh3HUraTMxMKEJJWBFBIxTLdr37z1llsOeluPJ7aGq9Ue8NxU3LKI9DLAOJ54ZfyBDAmg7wQtkRjRzAsQn1eYs4bxjENWg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kVTu78vU; arc=pass smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BDC3B6BEB
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 16:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781022010; cv=none; b=NNWvD54HV3Loxzirptpx5k00ivdHxCs6YLSLzA2tGTTn4lVSYsk6KXkMkQo7CZ859Zzm5P3bPEsJSJJcDOpSpXZiG1sZ9UItl3UnrSBB/CySWtIXjSpoSl5bxBVxC0FXsYGqtcbuQ3QhryN1vc8gB+IN3JIEFcUi7ItlghegsnI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781022010; c=relaxed/simple;
+	bh=IUTPdX4SHO7fADMbsPRPYbmWQEX0pGqBqvyHCLa6EZw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Y+yzZe0G0+cbF+J26mJvEMKb0/6aTR3LnXOCoTNvVm0z5s8kjxE/UpDMkjpevSf6V+4mf9sVMQJz17uQrVLireXti3TgPHTn5kjjgcTuaLgwMZLKP4/gl6vW6t8953DnfQFtswehv3dzrlz+H6b68dIcr4uWB6QH2jZ8PU75nRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iLA+7EM3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b96FQkqW; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kVTu78vU"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7ea16f090b4so72389417b3.2
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 08:52:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781020322; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZtNFW+Y+cA7NRt8XqD4UBKhxPd318twOGyF0MXTtork30ck0IWrPjwioYWOZxXVtyB
-         Hn6aV89r7jfe21ssgKTmOVqno2KwXwFXFfDaU9yTDdBD7dkiEzD2TizGRS4u2fPKwA7o
-         dSm1LFnxGClS82bPiNPUQGSNDhGV1rRGVeXHoG0a+CJVeW2eS2Rq4p3PITGODOsztVMG
-         nnoMhFe297+bV5gQIpLudKpHpv91w5a226E0MdcCQpSI1Q+Em/i+TFAiJq2ZSsnzcYqG
-         i6UTQHLhy4xhwRhqgIbZUq3Db+E79fYDurKetKDO4bhci09qwkiywFWTs2cvg5OMfvlV
-         3Nag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BG8zX6+gptRKDOGqSlVhZ4cl0qS9cuCptoOQtEw0q+Y=;
-        fh=m8B/XNuaTqYsNUOoywnyMFBQHQdEKktYU2HE5XqewuY=;
-        b=lSNGVIj1ApHk1vh9b9WcpPm9PgDjQg0P1Yrq89o8rpb09Cxa50RKPsodWE3oyD6SBk
-         Pe6QE986ZcSDsCZbfVMQl1gc2WIqEygUA2B+rYq3b0BwhwhmlGcOK2oGd0iy8MSrh8Xu
-         RceA41cERUbuJTQFMCKS0b3oZpnISooxSmRTNQwr5grJsZ9Qy0KWJRAwuBvXIDqqGtBe
-         jnRYSGts3/7iXOSJLKgkPPRTgsqrEZVxi1pp8Api0MnLLEvpfRKXR+O4e4uaU2ua8VxR
-         O34uXDSEiW7ZPFEDxPAgWDP9/sEeHCj/Ny6YMW6vnlTWKozgrfbdc2xxE2n1zalFbwIG
-         AlyQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781020322; x=1781625122; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BG8zX6+gptRKDOGqSlVhZ4cl0qS9cuCptoOQtEw0q+Y=;
-        b=kVTu78vUOumUecma0tnPT0e8ByvWU4S0XWXe+MymBI2U+PoMqIGOO2OjVVx5TOq6Md
-         yVQrXqJJINbu3RAkGCYxaDzzmFU4QemTm2DZ+Gtm45t59MKo/VvP72Ceq3JJQ2obsTr5
-         QlhCdzviJ7krFkLKO0aLctmecb+ue2IFII1K3OUVd9zCgs6pLaSrcDWxrvvUxPypudWo
-         BuMjseugAWr3sBCnIA8TdWe5uW3ykesbOHwiWln+X/6wwFgPCJtjuZ8k2ZwnzmqdfYfH
-         di85ndJY2c/0EJPnyrWNoGPlOxAkGILkAR7z7DysRiDEHnww6Dv6+mLxObrl5srVjiVn
-         L1XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781020322; x=1781625122;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BG8zX6+gptRKDOGqSlVhZ4cl0qS9cuCptoOQtEw0q+Y=;
-        b=XOJyZU6NRurEjvoFdN28XWcGdOYlSzAKz2Urb28MTaw8XL9ZdfapQgB9Mze6NEUZPF
-         UCjqSo9eHTExXwTrBjQQigpzkvrSXZ1SDD2QYqRpI7HAiqIiGbYsP24FoBlfz1Kd92Dz
-         dSmTS5FRS+BDt4jAmlE/ziO64xLoRQAyfhfX3UqGL2G/SsNGnYKEOllhofcCIBbphTdf
-         DiVPHBuKcjimunCyBH2CQtAdR10JdlGKHXaJ0l4yPvjxmfh1aK+I+BDj2Q7NJzYh3C6n
-         MmO3uwDNMkOeAzNvGab3qGOMyPTD1/5qDAqnE8Lwo2LSm0gT91M5Yn7newhJCstLhS19
-         Wqgw==
-X-Gm-Message-State: AOJu0YxEliQX3ybELjE+Fe4wHDWgigroZmb2Y64NHTGI/oU5TEGRB9Zk
-	CuNvMYFRiRXREWgS7+9WolEG/Y+swK21gUwX5nsZSw9R73OEt03B7P00utsPZe981QBMdBuwq6S
-	bhj4E/ozmtOuduBHSBic2jVgrABee/dg=
-X-Gm-Gg: Acq92OGRmtA3YWyXzbNxMbzjhwpiEkAwtEpFm9/azXY5QRHD2BNz0EQaS6/Ykbp4eHd
-	Cq8FAEfNgCGYlP/B8OxUO+lvYwANW9/6uHc1h4tY6eJ43ETe8AfUm2OpjYASiiozXIQ/p//b7kA
-	UeIgcq51UmR6HbMa+Bvov446vtsusBiJ/18+hgsOk5XCt2CY7SOwoc0gvbXiLBZvW3uNFwgZ1C9
-	bSM8Y7Tr07cmQmi8k//vnqcz8irzF2iJpZoVUKQsF08fNsHvHSmru4TyXRhSUgssTQ2dYMdfRcK
-	RKEGrycgENSwwPHv89FgziGi9kjfrt1N1TBq8U8ZV0JP286N05/E4YWkur4PnybZICK1uW6U3il
-	wHu6DqS5Rs0KzPxL4Bh4tk+1FNj+WZQsu7tRz9D1f10yJlrvFd98+8MHs3Rl3YsocJLt70PlcyU
-	QjBuuKP8e6GHUt
-X-Received: by 2002:a05:690e:4191:b0:660:4886:9230 with SMTP id
- 956f58d0204a3-66106e42b96mr17728145d50.23.1781020322270; Tue, 09 Jun 2026
- 08:52:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iLA+7EM3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b96FQkqW"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 603297A01A2;
+	Tue,  9 Jun 2026 12:20:07 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 09 Jun 2026 12:20:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781022007; x=1781108407; bh=BpXBquj7RU
+	OU35xJ6PmqesiztvUXPbOcJFl93I+SQ/E=; b=iLA+7EM3J64zxOGj8QYICexwdx
+	cBC1oJRq5xzrcQG83AJpixN57NDXL0tfQswcxA47pDvbdPHoe5xzPiZo8iYrYa9v
+	rnUa9gveRkGtsvixrdjuO+rERv91Fegp4ZSVXfNXr7PwEpds94TH0aHSAWviH+ok
+	PtZqZXzDcJcGjeEizEgz+D0GTd0qcMoV0rFSe9YRzbRYQo915fxbBJhHqu3/K7cm
+	3AhB3RWn/PY6UWk47ML+OQ0ZyQhCQgldVJIHPQST5Uo+0hlZKwubxtXNFfahOTJS
+	DQkxTF8lCJRSZe3v1TT8Lvwy94dhA907doSFMqxoPEFxohK83l6L9tH5CLbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781022007; x=1781108407; bh=BpXBquj7RUOU35xJ6PmqesiztvUXPbOcJFl
+	93I+SQ/E=; b=b96FQkqWBlOUXp/6rBMk42/sN1Etk7M6nafIGHueNWP2p0XK9KU
+	H9oeyrISKECfCRASBuDPCVT9xeJ+tbWgwp0HgUs9e3coYaqM7C9ir+RA3Xbu/fkV
+	RXOqhQW3T15k5P6Agl11AYFg4MLpvTSc+rzaJApz3oaOOitvmf18a8BDCvZ6w94B
+	LnwsA8OqE2qakZ+/NxnoxcTw3Ecxreb2AKwZQNOA79i10Gq5YDWU4oXG+/YwC6VM
+	fR2O6MxddzBqx4MvTp0abwSWrFHN9dF1zoDNanXeOJvhtJrHSajcBFCUipnihjYK
+	qogAXF6e0GwkNpXWEZyo1thn7LGi6yJik7w==
+X-ME-Sender: <xms:Nz0oag-N62f9TxULgkUbbTtEhTul632lKUhJ1cWHqfKvgleJq8BKcQ>
+    <xme:Nz0oanyEQ3pyhdqG10NUuM_s6O9IH96sRir8kz8YjwApq3MaHPgmCCiO8xuuyOSnE
+    6aOKeG88q79AZ4sHa-ffs24Fm8EERA1BNG2B5D9ju_l9WOj24aXUw>
+X-ME-Received: <xmr:Nz0oasOOo_VJmCWzzcI3g7OHWAWBau9kybo8X5i_B0Omhafzfw4NbcgHgvu5j70r6E4iadAScOnOY-otDGXKmdqTFIS5hJ-8NChY>
+X-ME-Proxy-Cause: dmFkZTEyJ9le1UFK+2+K/KR9U6EZXENyzu788bohEpg7+oWDsVoAHuR7B43xwiMO2QPVPu
+    DJfoqXMYg2TEPNUyARXM0CZwQ7ELOqNtaSgue6x4TE2cL85iIsui7RyQSM2vrxIWKmArzh
+    LmodR8+oKDUdUNoOZVaQaShECM6fjynjIH6kKdelwAHHWY7JLraMSh9OFQtlULOZUCDsa4
+    3DlbrPIAPdZZyKtrIhPVZVti1hk06tELSiMITnDT5mSIHRf5+1BKfyAZuKKlh3swY9qSdd
+    bp1GGqLmqFL9o6JHb7fTKbLrCabifUSHygWxYw/nN2xdDOR6qXNJa4DAEZOCT6dmhkQ6Hg
+    UjGaYWhdsyaTF/6ZcATV6xslKQG5se9/JBHIX8F99eKdSJ1Q6Uepns0GQXrOsxQs1115yR
+    d27mr6RqHMdhmeodvtsNlr96QfK+ewS0UUqMOpM3KUo4KsN/ZQdtleBw3/0Ry5KuF5Euzm
+    ZKt1tEbEFAe0Lb2BsLgD+PUs5zgej7BftmasBqZizNCkIn4GCdJOLqjmBma4umFtNIR8xT
+    IajXzBRNf3oTJFF6uUTY7aEFlb5bxPiqeETTqHhf/Siv1hYeG1CihJKuHU/gUsb+EYw2Bj
+    7wxpLsWPz5IZPUlkTarmOZS1n1lIyh52Oxf5wc+CPqFwvZeYPbUIJOJdtHsA
+X-ME-Proxy: <xmx:Nz0oas8YlLNzMNHFGAwhAfdiYcByP8Wzhrg4DNFcbNXcXQQves7Lcg>
+    <xmx:Nz0oap4Yaw2bvDD3G2d8TWc3xKTBH4sXavaTJ83GUEosEMjoiafM2w>
+    <xmx:Nz0oai5tF4WZPRUrqbqZobVZmPy8U_Ic6O8FbU15Whx71LwqTU6GuQ>
+    <xmx:Nz0oaiohPMTNXrBpsupsTI832nbRTloaeHmmY5hP-dBFwLR_T84kfA>
+    <xmx:Nz0oanruQeJHK12McPIXqq44WrYP6VS8H9W2A-BlV-SByl0Is2M6gWVP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 12:20:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  git@vger.kernel.org,
+  cat@malon.dev,  ps@pks.im,  kaartic.sivaraam@gmail.com,
+  ben.knoble@gmail.com
+Subject: Re: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
+In-Reply-To: <54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com> (Phillip Wood's
+	message of "Tue, 9 Jun 2026 14:25:39 +0100")
+References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
+	<20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
+	<20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
+	<54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com>
+Date: Tue, 09 Jun 2026 09:20:01 -0700
+Message-ID: <xmqq4ijbsn2m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
- <20260607-ps-history-reword-v1-1-ba43a3cbb81b@gmail.com> <xmqqmrx5z0po.fsf@gitster.g>
- <CAN5EUNRW3gyLKGC7x5BBMTNKtunoQks9AaXJse4PHvCziRF87A@mail.gmail.com> <xmqqtsrbsvcm.fsf@gitster.g>
-In-Reply-To: <xmqqtsrbsvcm.fsf@gitster.g>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Tue, 9 Jun 2026 17:51:51 +0200
-X-Gm-Features: AVVi8CcihtaiP_ShLCNtvbG9v6BTmb6IkKiX1Ki4zqhyVWwajjfK2ZpMlD7Cv44
-Message-ID: <CAN5EUNSuuz61pxEk1ZK8RAr0HOtt1f-_mCRpm7RBwoHAcgVAOA@mail.gmail.com>
-Subject: Re: [PATCH RFC 1/2] builtin/history: abort reword on unchanged message
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-El mar, 9 jun 2026 a las 15:21, Junio C Hamano (<gitster@pobox.com>) escrib=
-i=C3=B3:
->
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
-> > True, after reading it, history being more costly or the in memory are
-> > not good args.
->
-> And no argument, including that history is new, is a good excuse to
-> make these three things inconsistent, period.
->
-> One of the patches in your updated iteration claims
->
->     When using `git history reword <commit>` if the new message is the sa=
-me
->     as the original, it continues and rewrites the history when nothing
->     changed.
->
->     `git commit --amend` and `git rebase -i` with reword share this behav=
-ior
->     and it is wrong as well, but changing them breaks what people are use=
-d
->     to. Take the opportunity of `git history` being a new command and han=
-dle
->     it correctly from the start.
->
-> and I think this is a totally wrong attitude to go about this.
->
-> I may have said that it may have been a better default to try hard
-> to avoid making a change that is a no-op, other than that it changes
-> committer timestamp, while making the current "always create a new
-> commit object" behaviour optionally available, for these three
-> commands, and cited that the behaviour of 'pick' in 'rebase -i' that
-> avoids unnecessary rewrite as an example of a good practice.
->
-> But I do not think the existing behaviour to always rewrite is
-> *wrong* at all.  It may be wrong not to offer the other choice of
-> pretending no content change means no commit object change, but that
-> is a different story.
->
-> I also do not think *aborting* only when the message happens to be
-> the same is a valid mode of operation at all.
->
-> The most sensible first step, I think, is to add a new command line
-> option to "git history" (which will gain more history editing
-> subcommands) that tells the command to leave the original history
-> as-is when the only change rewriting commits would make would be to
-> the committer ident or timestamp information.  If in a future a new
-> replace-tree subcommand is added, e.g. if
->
->     $ git history replace-tree HEAD~20 HEAD~27^{tree}
->
-> were a command to rewrite the history in such a way that 20th direct
-> ancestor of the current HEAD had a tree object HEAD~27^{tree}, by
-> derfault the command _should_ rewrite HEAD~10 and everything that
-> has it as an ancestor.  With the "--avoid-unnecsssary-rewrite"
-> optimization feature on, however, it may silently become a no-op
-> when HEAD~27^{tree} happened to be the same tree as HEAD~20^{tree}
-> so the only difference between rewritten and original HEAD~20 would
-> be when that commit object was created and by whom.
->
-> And give the same option to "rebase -i" or "commit --amend".  We can
-> discuss, educate the users, and flip the default at a major version
-> boundary, if the "avoid unnecessary rewrite" truly turns out to be a
-> better default (right now it is merely our speculation, and we do
-> not even know if the current behaviour is a worse default).
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Hi Junio,
+> Hi Pablo
+>
+> On 09/06/2026 11:42, Pablo Sabater wrote:
+>>   static int commit_tree_ext(struct repository *repo,
+>> @@ -135,6 +136,13 @@ static int commit_tree_ext(struct repository *repo,
+>>   					  original_body, action, &commit_message);
+>>   		if (ret < 0)
+>>   			goto out;
+>> +
+>> +		if (flags & COMMIT_TREE_ABORT_ON_SAME_MESSAGE &&
+>> +		    !strcmp(original_body, commit_message.buf)) {
+>> +			fprintf(stderr, _("Message unchanged, aborting reword.\n"));
+>> +			ret = 1;
+>> +			goto out;
+>> +		}
+>
+> I wonder if we should check that the committer identity is unchanged as 
+> well in case anyone is using this to fix commits after committing with 
+> the wrong identity.
+>
+> Aborting when the message and committer identity are unchanged seems 
+> like a good idea.
 
-Sorry about how I expressed myself. I didn't mean by wrong to be bad
-or anything similar, I just noticed this when testing `git history
-reword` and thought that I would like it this other way.
+I am not sure why it would be a good idea.  The user wanted to make
+the commit have this message, and the commit ended up having the
+same message as the user gave.  That message may have been identical
+to what the commit originally had, or it may be different.  Why is
+the former an abort-worthy event?  A simple note, I may understand,
+but aborting with an error message?
 
-Saying that git history is new or I would like this to be different
-are not good arguments to have `git history` inconsistent with other
-commands.
-
-My idea was more of a defensive thing, where you would need a
-"--force-rewrite" opt to explicitly change timestamps. But I see the
-point of having it in an `--avoid-unnecessary-rewrite` so without
-options it has the same behavior as other commands.
-
-I'll try to express myself better in the next version and go with the
-opt direction.
-
-Sorry again,
-Pablo
+Thanks.
