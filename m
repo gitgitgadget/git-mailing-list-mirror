@@ -1,68 +1,65 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CB2352C2C
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 02:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DB923BCF7
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 02:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780972607; cv=none; b=t67Ib9S6v040XzBxMtZ0zTxK/lUPgLRuMsrhuR922JdoypLiGzgvo/Pqu297Fio8ZlbbvRPMMkiB4NiV2PZvZUY9u1WTMKGS0Iqo0GxihZfqSj3/hFq1OQTLZG62kscrxQkMJbezel7aWhlTmY4EQtU9XeoWi5SGQ3nnKU5O30I=
+	t=1780972645; cv=none; b=YcnHieCH/dSgMMNQODHlfQ+nbCwaC7O3oeHEXfFiyopHLkZ2i8mEg5At07GLlwMlWiYpJL5zM9/io8QSG4ezHCX0VLaCKOR55OuRaOVJ0094Qz1P7/kk9skpWyN6jtEWsbDfLT2pn0UZJNt/cJDpyLTXp/CrWdFuKNAILuj/7sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780972607; c=relaxed/simple;
-	bh=v3E8Gdem4ItflX8Xg3IjsLM39xpifB65HVU/bFg4wOM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rMRMy459gDwcKzs9unZvxproILg92kwesrikuJAELpunyRo5gALBnqWD7+tB6tjDno9Seuedv0d+d8d6Sk3DWREXmGh1untWUp/x1K5s65Lk0/+sITMkEnM0dSDmOYNO4RrzkzoVk3YYrNFliMTmVp7ijmZFEJPOoo7cap65Ra0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nS9t1xe+; arc=none smtp.client-ip=209.85.160.169
+	s=arc-20240116; t=1780972645; c=relaxed/simple;
+	bh=/OwglieMgxTozS7yhxJdhB6/SoRLsyaRL45jmkWJVP4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XFwKjnFis3HM54cNgkXokPVk0M7RZx3Sgr81cTSYvilSmtkbaKZ3UeXkiw2X+Lt+ZUSShtcuOHbgUFmNOumTtdMw8foWAbR38hlwy13i/Ret+vv9+j1Yyw+gcvpfekm7ON9Vqp8XiV/UbU8S/ysIShh22K1DoxYlfpzDjA165H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFAqa3Bk; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nS9t1xe+"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-51758478240so24549791cf.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 19:36:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFAqa3Bk"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-51784eb2ba0so38033531cf.2
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 19:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780972605; x=1781577405; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KHvRzEacZrPdtMvfNBOMQrKnshRVIn7Cy0xT+dG/t5c=;
-        b=nS9t1xe+IsSxqsEq+Wg6W1f8XeOCaXxCPfBZszXQ1EdTY7rKfJY8SgdNprTKguDkz5
-         9g5q9f8TWx0bWug2qhlFLU+IE1tuQzV6+hapyfmEa2XiW5Mf4+KvWhaYbPNTSrhzjts5
-         aa8c7Lq1gIY2+H2BRL4JQ5/0Lr6WeRMHt6HVB39qRILQx7T14JlxvTq6S/G1NDzw/xhA
-         YTWq6jJisOx3Y+ekcEQ+1Ew3jjVC24tl9ya5Bygj6r2vi/CM09LGmQounMjTHNMnt5oI
-         cervZ0qK+8bQRX1Tk165+WBGoCSfK1JIcCoCuCVccP6Gbu5q51qTOafDRdywkSLnAH2n
-         1Ijg==
+        d=gmail.com; s=20251104; t=1780972643; x=1781577443; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iv7jCkqGTyaTLDCh8e1ahEGawV7GTJpyd49v5UlIhYM=;
+        b=mFAqa3BkmEPMjY3O4RrCOSVCcKNTXSrXh7YK8slY8wOV7H+06/WJwR1tsQD8PZb34+
+         7uYsgO9ffWlw3pEy7u+GD/FUK3ruUb8ZtSwSgAtl5GKTbQcf6EK9+0T6zc2mKz5NTVWP
+         CHTE3SWebZelYUPHS3VS91Q0fJkMeTGsAhQ6EGpD/1FLIVWEWKwQisIta93b0xa5jOTh
+         OeZ8mM5BPf7thOKdmaVAvtJfHA0tm10r+PLN8QDfJtOKwXePF4x5eoSfoZkRPvMNeeiC
+         DGZcy8Qzk+pOQVoqal1DWkNtDEQZLhV5Eg/BzMG2BbMhSAv86+0CPtYjABjH6XfJRSzO
+         8v4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780972605; x=1781577405;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KHvRzEacZrPdtMvfNBOMQrKnshRVIn7Cy0xT+dG/t5c=;
-        b=XGd5jY4DN/MgJEJ7EjCDtPvkfO9Wh4StUrXBMWMVWkpt7ui02VA5GWTTMSdn/Qf8UP
-         BK4xqnml/nEOyPRJ5mx9/yYP9DuNLMqb8DVpyBEBBBMASMIK3MyTHgLbOVHReXbJ3xvk
-         CLwkNghFtkRyaGCJq8CiGrSb9SO8VTJE2LVqEV5lp/iUzPekTTEFCHkji5t038HIza6Z
-         HRSbyj8yAi3IZJELfy7jtQtK99sADR+veilaUci6IdzcGk2dooQSP6CahT+6c6OHBaYE
-         N0lVJGgU1k2Xw7GkBHJHBKaBrPgYTX9ObHPX1fck6Bf7jaWJjSl3U7xmchlPIz4IjPF0
-         PAHg==
-X-Gm-Message-State: AOJu0YzfK5UnOHOiYFbgDbEzEEaqwEjFbjJuCFf6tmY4CBheWZ3e8+lE
-	71tYKDIWKtdb/czUsYstYHOM+bvTty0A28ONr++TmYD+Te8TIG7Mjfkw
-X-Gm-Gg: Acq92OF+I4bXh8zjwQI62Zk3tHMghJb/aCSlX+BP+OJveJXzelkt56XGpn7zudADetS
-	Je08MHWKNOZci/buTC/552EUZHBadE9jR6mFno7DF0p2ZqQULGozh+ErrFsW/ROV8UtgStQpoqe
-	TmIoGdRNIMCEvIt4uw7O6v+lf/v0ntmrBHezg6prd+oIDdChvt57yRiNbrSWQWMg0a3cj/tsslu
-	AfkD1HKtJnUxtpNwZ5FlH3V8ylZywVIEDEv2XP83VUk800aHMzhiDE8qBSvburICCpnDlu0K0I7
-	Mch2GVD8m5sK+3h0DU85/rBODxHlVIh5SbSz4Knkim2WlS1T8wdyTG4HtfMojQd9DLvR2ubA6Yi
-	QEwl/gfT3wwT04ZJwqQiObY4tpnguFANJJZbpIzcWzRQTKe4OIJ0gkwNYU3qurp/XA9JZm6Zv9o
-	mwz1Sz9YO0xfkSqoChutd8Dg2TIvlU0fUSrR9/otWl86p2cgGfqXySd6HZdyxipJtaFF2sYFB/Q
-	2zCAZyFRrYCYGSOlCcKXZZFPPYLMZDjQVSIeLdH8PVhzgget1OMd1tNNRyY/Cg1ME+2PWu7CY56
-	nAPeOpf8pkewbdavFlAdRtMu3v/Q7RX01yq36H6Mb4DREdBXT4aYvZWa0hggVdfF3V+2FcdmFUl
-	c
-X-Received: by 2002:a05:622a:4108:b0:50d:83a4:2995 with SMTP id d75a77b69052e-51795b1d1c5mr273291421cf.21.1780972605088;
-        Mon, 08 Jun 2026 19:36:45 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780972643; x=1781577443;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iv7jCkqGTyaTLDCh8e1ahEGawV7GTJpyd49v5UlIhYM=;
+        b=aJtaFP5k+xE+5dmQiPJf+9WEJf1W7iABEtGVqW0EQUwFqdVNWr3z5GiUx8pewZFjU9
+         4ph1PEVy4svAlECCGocRFkxFhYMkYIs5Gvg/NKt/T41Wsk1Qm34fKK/v5bycs8r2j3O3
+         KtnnldD3jNA8rvP5sNBDgaQqkAx8mJc0wz+6P7apb0u5MaavJGx2lMV70JrFwguoEJ1W
+         /dSp43nhtK/ZbnLrYdqkiFdNa/5PecABqUWNdrOehc9zHAbcGJ80dw/71guJ3eTJln47
+         wBR3P5j4a3jr2K5v3mW03wip7nR96Yncd2PMjNKnKlZ1o+B6noWn2pDU2io9LRkACUje
+         sozQ==
+X-Gm-Message-State: AOJu0YxBxZX9x8MWg0p/dK4TA95Gh4JIv3K+QN6CZWhhh4dA+ozZf48u
+	6KruIdmgGT/miz+j64RrWVMEgeyc1Tyy9urQ4R8huUPbOqGlI5Cixm7yNLqcAonn
+X-Gm-Gg: Acq92OFoZ+Z0Fajn5tU6t+P3OOh0TAInN6iXtWKhSo4W8P/5gizt/+EFXqN9R2CKh+l
+	vMgsDJOtlj92rqjku73jNsC5BKflcvgdBQWBvlKvKPdxMiy8zR1QJW1qC2n8rp9XBmOeAtChWj8
+	FywJf0MJxs4orbWWrY4opQRHKLrE1oImvBCCbWhoDCOj1VZEHO+Llfia0gfbKvSyP+Q1X9EcO9B
+	efWFA7SflLTowzT5zxdSX8hnlOKwp+0kDVKgzWmI7c5x/wpjgufUx+F9KoEfyobkXuateFKk1at
+	o1elY+BtZIZpqP6E+atgP67bI4e7QOsRxPvbkkY1p9+YAeQiKW/kEDbuHKpXYTZtpqUcHF14puR
+	tAgM+30Q3kF7KPuLrYiAmg5LVOayUsXUVgCawLeDS9tJLJ6YM5h2y+YDFmrySEa/CjCgxOrEdnx
+	fCLHX+asjreVN17ATXA/R4RQN59Q9C9xj03DcNUf/YOd7F0nYQ+JoLqN8o7jOLnr/tP1xP9m7se
+	bacDw9tOH0uhXaqRkvGK9ORxiZE9tljbZ3JYKaex3J0SujBQ0QuSeQn6vx0+HG5zlZ20HhX/p/m
+	4SdIL4wHi4Fc+QzzZ5gIH4XKzbWUR8WZgBx8IaEHujXtfnQb2/bWLcgwUBiv
+X-Received: by 2002:ac8:7f01:0:b0:517:82a1:351f with SMTP id d75a77b69052e-51795ad2ae6mr261214611cf.16.1780972642817;
+        Mon, 08 Jun 2026 19:37:22 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([209.249.37.132])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51775c08234sm172718611cf.6.2026.06.08.19.36.43
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51775c4d7absm169108881cf.11.2026.06.08.19.37.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 19:36:44 -0700 (PDT)
+        Mon, 08 Jun 2026 19:37:22 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Mon, 08 Jun 2026 19:36:35 -0700
-Subject: [PATCH v2 2/2] ref-filter: memoize --contains with generations
+Date: Mon, 08 Jun 2026 19:37:15 -0700
+Subject: [PATCH v2] ls-files: filter pathspec before lstat
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,244 +68,237 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260608-ref-filter-memoized-contains-v2-2-e72720344a7c@gmail.com>
-References: <20260608-ref-filter-memoized-contains-v2-0-e72720344a7c@gmail.com>
-In-Reply-To: <20260608-ref-filter-memoized-contains-v2-0-e72720344a7c@gmail.com>
+Message-Id: <20260608-ls-files-pathspec-lstat-v2-1-fb734b28422e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0K6dkxbSyGuvIdhUcoAY0BIpxIN4
+ e4WPIDL9/P/f6tgDIQsrtkqAi7END0T6FMmfO+eHQI1iYWW2korCxgYWhqQYXax5xl9SqKLUJa
+ 50rnLG2uMSOs5YEvv4/le/Zhf9QN93O/2Rk8cp/A51Ivae/8tiwIFpW+NrIuLVMbeutHRcPbTK
+ Kpt277sJjxD0AAAAA==
+X-Change-ID: 20260607-ls-files-pathspec-lstat-885125a5d644
 To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
- Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>, 
- Tamir Duberstein <tamird@gmail.com>
+Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+ Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+ Jeff King <peff@peff.net>, Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1780972600; l=8337;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1780972641; l=7961;
  i=tamird@gmail.com; h=from:subject:message-id;
- bh=v3E8Gdem4ItflX8Xg3IjsLM39xpifB65HVU/bFg4wOM=;
+ bh=/OwglieMgxTozS7yhxJdhB6/SoRLsyaRL45jmkWJVP4=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
  MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QPWapVFKgz2HGDTpuh7WH99Llh3Xyi+8SoiyAUXKQTtDF8wBs9f91AcNfOKYw5RWZp9HKowfBW6
- tp7qkt7aHww0=
+ QLeb/RIDoMlQtAczctRzBvzTPUhjr8OYnKC2lHQil3NS4DXoW+Y/4dHQnSZgK5Cv8aEmmOQew3b
+ C4cFtBBM7EQI=
 X-Developer-Key: i=tamird@gmail.com; a=openssh;
  fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-git branch and git for-each-ref call repo_is_descendant_of() for
-each candidate selected by --contains or --no-contains. Each call
-starts a new graph walk, so refs with shared history repeatedly
-traverse the same commits.
+show_files() checks whether each index entry is deleted or modified
+before show_ce() applies the pathspec. prune_index() avoids most of this
+work for pathspecs with a common directory prefix, but a top-level name
+or leading wildcard leaves every entry to be checked.
 
-ffc4b8012d (tag: speed up --contains calculation, 2011-06-11)
-introduced a depth-first walk for git tag that caches positive and
-negative answers across candidates. ee2bd06b0f (ref-filter: implement
-'--contains' option, 2015-07-07) preserved both implementations when
-ref-filter learned --contains.
+For a single pathspec, match it before lstat() in the deleted and
+modified modes. Keep the later match in show_ce() so --error-unmatch is
+satisfied only by entries that are actually shown.
 
-The memoized walk is not always faster. Without generation numbers,
-a negative check can walk to the root even when the breadth-first
-merge-base walk finds a nearby divergence. With generation numbers,
-the depth-first walk can stop below the oldest target while still
-reusing answers across candidates.
+match_pathspec() is linear in the number of pathspec items. Applying it
+early for every item can therefore multiply the work for commands with
+many pathspecs, especially when lstat() shows that no entries are
+modified. Restrict the early check to one pathspec. Callers with
+multiple pathspecs retain the existing lstat()-first order.
 
-Keep the existing memoized selection for git tag. Select it for other
-ref-filter callers when generation numbers are enabled, and retain
-the breadth-first walk otherwise.
-
-When generation numbers are unavailable, repo_is_descendant_of() can
-return -1 if ancestry cannot be read. The ref-filter Boolean interface
-treated that error as a match. Check it and exit instead. The memoized
-path already dies on the same parse failure, so both selected paths now
-fail rather than return a result.
-
-Add p1500 cases for up to 8,192 packed refs along one first-parent
-history and for sibling refs near the tip with generation numbers
-forced off.
-
-On a checkout with 62,174 remote-tracking refs and generation numbers
-enabled, I ran:
+On a repository with 859,211 index entries, a 19,931,862-byte index,
+and 25,303,439 packed objects occupying 21.13 GiB, I exported $parent
+and $this to binaries built from the parent and this commit, then ran:
 
     hyperfine --warmup 0 --runs 3 \
         --command-name parent \
-        '"$parent" branch -r --contains c78ae85f3ce7e >/dev/null' \
-        --command-name this-commit \
-        '"$this" branch -r --contains c78ae85f3ce7e >/dev/null'
+        '$parent -c core.fsmonitor=false ls-files --deleted -- README.md' \
+        --command-name 'this commit' \
+        '$this -c core.fsmonitor=false ls-files --deleted -- README.md'
 
 The results were:
 
              parent       this commit
-  elapsed    104.365 s     467.7 ms
-  user        93.702 s     220.2 ms
-  system       0.723 s     182.7 ms
+  elapsed    60.742 s     1.061 s
+  user        1.117 s     0.963 s
+  system     10.740 s     0.042 s
 
-The wall-time standard deviations were 11.356 seconds and 133.8
-milliseconds, respectively. Separate runs without redirection produced
-the same output with SHA-256
-2466f6e2b72aa16b1a2126eddb81c8a1b2764ee251204ac034c191a925aa896f.
+For an all-matching pathspec, I used a checkout with 859,940 index
+entries and ran:
 
-Both revisions were built with the default -O2 flags using Apple
-clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro (Mac16,6)
-with a 16-core Apple M4 Max (12 performance and four efficiency
-cores) and 128 GB RAM.
+    hyperfine --warmup 0 --runs 3 \
+        --command-name parent \
+        '$parent -c core.fsmonitor=false ls-files --deleted -- "*"' \
+        --command-name 'this commit' \
+        '$this -c core.fsmonitor=false ls-files --deleted -- "*"'
 
-Link: https://lore.kernel.org/git/1445163904-24611-1-git-send-email-Karthik.188@gmail.com/
-Link: https://lore.kernel.org/r/20230324191009.GA536967@coredump.intra.peff.net
-Link: https://lore.kernel.org/git/20260527070510.3510836-1-krka@spotify.com/
-Link: https://lore.kernel.org/r/20260608223430.GA340696@coredump.intra.peff.net
-Suggested-by: Jeff King <peff@peff.net>
+I repeated the benchmark with the commands reversed. The results were:
+
+                         parent          this commit
+  parent first elapsed    56.807 s        64.618 s
+               user        1.256 s         1.270 s
+               system     10.633 s        11.068 s
+  patched first elapsed   63.361 s        64.316 s
+                user       1.238 s         1.280 s
+                system    10.296 s        11.864 s
+
+The patched user-time means were 14 ms and 42 ms higher in the two
+orderings. Elapsed time changed by several seconds when the order was
+reversed, so those results do not show a stable wall-time ordering.
+
+Jeff King pointed out that a preliminary match for each of many literal
+pathspecs can be much more expensive. On a generated repository with
+10,000 clean files, I recorded the paths with "git ls-files >paths".
+With $v1 exported to a binary built from the implementation sent in v1,
+I ran:
+
+    hyperfine --warmup 2 --runs 10 \
+        --command-name parent \
+        '$parent ls-files -m -- $(cat paths) >/dev/null' \
+        --command-name 'this commit' \
+        '$this ls-files -m -- $(cat paths) >/dev/null'
+
+I replaced $this with $v1 in a second invocation. The wall-clock means
+and standard deviations were:
+
+                         mean          standard deviation
+  parent, final run     110.1 ms              4.1 ms
+  this commit           104.9 ms              2.2 ms
+  parent, v1 run        112.5 ms              6.6 ms
+  unguarded v1          494.1 ms             17.2 ms
+
+The guarded result matches the parent within the observed variation,
+while avoiding the regression in v1.
+
+All three revisions were built with -O3, -mcpu=native, and ThinLTO
+using Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
+(Mac16,6) with a 16-core Apple M4 Max (12 performance and four
+efficiency cores) and 128 GB RAM.
+
+Link: https://lore.kernel.org/r/20260607-ls-files-pathspec-lstat-v1-1-8cf40b730146@gmail.com
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- commit-reach.c                 | 13 +++++++++--
- commit-reach.h                 |  7 ++++++
- t/perf/p1500-graph-walks.sh    | 49 +++++++++++++++++++++++++++++++++++++++++-
- t/t6301-for-each-ref-errors.sh | 22 +++++++++++++++++++
- 4 files changed, 88 insertions(+), 3 deletions(-)
+A selective pathspec should let ls-files --deleted and --modified avoid
+statting entries that cannot be shown. Match a single pathspec before
+accessing the worktree, while preserving the existing lstat-first order
+for multiple pathspecs whose matching cost grows linearly.
+---
+Changes in v2:
+- Restrict early matching to one pathspec, avoiding the regression Jeff
+  demonstrated with many pathspecs.
+- Add all-matching and many-pathspec performance results.
+- Drop the Assisted-by trailer.
+- Link to v1: https://patch.msgid.link/20260607-ls-files-pathspec-lstat-v1-1-8cf40b730146@gmail.com
+---
+ builtin/ls-files.c                  | 11 +++++++++++
+ t/meson.build                       |  1 +
+ t/perf/p3010-ls-files.sh            | 31 +++++++++++++++++++++++++++++++
+ t/t3010-ls-files-killed-modified.sh | 18 ++++++++++++++++++
+ 4 files changed, 61 insertions(+)
 
-diff --git a/commit-reach.c b/commit-reach.c
-index 65b618959b..83a48004ef 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -821,9 +821,18 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
- int commit_contains(struct ref_filter *filter, struct commit *commit,
- 		    struct commit_list *list, struct contains_cache *cache)
- {
--	if (filter->with_commit_tag_algo)
-+	int result;
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index e1a22b41b9..8d7158652b 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -450,6 +450,17 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 			continue;
+ 		if (ce_skip_worktree(ce))
+ 			continue;
++		/*
++		 * match_pathspec() is linear in pathspec.nr, so prefilter only
++		 * the single-pathspec case. Only entries shown by show_ce()
++		 * satisfy --error-unmatch.
++		 */
++		if (pathspec.nr == 1 &&
++		    !match_pathspec(repo->index, &pathspec, fullname.buf,
++				    fullname.len, max_prefix_len, NULL,
++				    S_ISDIR(ce->ce_mode) ||
++				    S_ISGITLINK(ce->ce_mode)))
++			continue;
+ 		stat_err = lstat(fullname.buf, &st);
+ 		if (stat_err && (errno != ENOENT && errno != ENOTDIR))
+ 			error_errno("cannot lstat '%s'", fullname.buf);
+diff --git a/t/meson.build b/t/meson.build
+index 2af8d01279..ee8086e6ef 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -1140,6 +1140,7 @@ benchmarks = [
+   'perf/p1500-graph-walks.sh',
+   'perf/p1501-rev-parse-oneline.sh',
+   'perf/p2000-sparse-operations.sh',
++  'perf/p3010-ls-files.sh',
+   'perf/p3400-rebase.sh',
+   'perf/p3404-rebase-interactive.sh',
+   'perf/p4000-diff-algorithms.sh',
+diff --git a/t/perf/p3010-ls-files.sh b/t/perf/p3010-ls-files.sh
+new file mode 100755
+index 0000000000..ae14449432
+--- /dev/null
++++ b/t/perf/p3010-ls-files.sh
+@@ -0,0 +1,31 @@
++#!/bin/sh
 +
-+	if (!list)
-+		return 1;
-+	if (filter->with_commit_tag_algo ||
-+	    generation_numbers_enabled(the_repository))
- 		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
--	return repo_is_descendant_of(the_repository, commit, list);
++test_description='Tests ls-files worktree performance'
 +
-+	result = repo_is_descendant_of(the_repository, commit, list);
-+	if (result < 0)
-+		exit(128);
-+	return result;
- }
- 
- int can_all_from_reach_with_flag(struct object_array *from,
-diff --git a/commit-reach.h b/commit-reach.h
-index f908d305b1..da6796a354 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -79,6 +79,13 @@ enum contains_result {
- 
- define_commit_slab(contains_cache, enum contains_result);
- 
-+/*
-+ * Return whether "commit" is a descendant of any commit in "list". An empty
-+ * list matches.
-+ *
-+ * The memoized traversal records answers in "cache" for one fixed "list".
-+ * Clear it before changing the list.
-+ */
- int commit_contains(struct ref_filter *filter, struct commit *commit,
- 		    struct commit_list *list, struct contains_cache *cache);
- 
-diff --git a/t/perf/p1500-graph-walks.sh b/t/perf/p1500-graph-walks.sh
-index 5b23ce5db9..99b54e274b 100755
---- a/t/perf/p1500-graph-walks.sh
-+++ b/t/perf/p1500-graph-walks.sh
-@@ -32,12 +32,47 @@ test_expect_success 'setup' '
- 		echo "X:$line" >>test-tool-tags || return 1
- 	done &&
- 
--	commit=$(git commit-tree $(git rev-parse HEAD^{tree})) &&
-+	git rev-list --first-parent --max-count=8192 HEAD >contains-commits &&
-+	test_file_not_empty contains-commits &&
-+	git update-ref refs/contains-perf-base "$(tail -n 1 contains-commits)" &&
-+	awk "{
-+		printf \"update refs/contains-perf/%04d %s\\n\", NR, \$1
-+	}" contains-commits |
-+		git update-ref --stdin &&
-+	git pack-refs --include "refs/contains-perf/*" &&
++. ./perf-lib.sh
 +
-+	tree=$(git rev-parse HEAD^{tree}) &&
-+	base=$(git rev-parse HEAD) &&
-+	target=$(echo target | git commit-tree "$tree" -p "$base") &&
-+	git update-ref refs/contains-diverged/target "$target" &&
-+	for i in $(test_seq 1 4)
-+	do
-+		commit=$(echo candidate-$i |
-+			git commit-tree "$tree" -p "$base") &&
-+		git update-ref refs/contains-diverged/candidate-$i "$commit" ||
-+		return 1
-+	done &&
++test_perf_large_repo
++test_checkout_worktree
 +
-+	commit=$(git commit-tree "$tree") &&
- 	git update-ref refs/heads/disjoint-base $commit &&
- 
- 	git commit-graph write --reachable
- '
- 
-+test_expect_success 'verify contains results' '
-+	git for-each-ref --contains=refs/contains-perf-base \
-+		refs/contains-perf/ >actual &&
-+	test_line_count = $(wc -l <contains-commits) actual &&
-+
-+	echo refs/contains-diverged/target >expect &&
-+	GIT_TEST_COMMIT_GRAPH=0 \
-+		git -c core.commitGraph=false for-each-ref \
-+			--format="%(refname)" \
-+			--contains=refs/contains-diverged/target \
-+			refs/contains-diverged/ >actual &&
-+	test_cmp expect actual
++test_expect_success 'select a zero-prefix pathspec' '
++	tracked_file=$(git ls-files | sed -n 1p) &&
++	test -n "$tracked_file" &&
++	pathspec="?${tracked_file#?}" &&
++	test_export pathspec
 +'
 +
- test_perf 'ahead-behind counts: git for-each-ref' '
- 	git for-each-ref --format="%(ahead-behind:HEAD)" --stdin <refs
- '
-@@ -62,6 +97,18 @@ test_perf 'contains: git tag --merged' '
- 	xargs git tag --merged=HEAD <tags
++test_perf 'ls-files --deleted with pathspec' '
++	git -c core.fsmonitor=false ls-files --deleted \
++		-- "$pathspec" >/dev/null
++'
++
++test_perf 'ls-files --deleted with all-matching pathspec' '
++	git -c core.fsmonitor=false ls-files --deleted -- "*" >/dev/null
++'
++
++test_perf 'ls-files --modified with pathspec' '
++	git -c core.fsmonitor=false ls-files --modified \
++		-- "$pathspec" >/dev/null
++'
++
++test_done
+diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
+index 7af4532cd1..6e38e10219 100755
+--- a/t/t3010-ls-files-killed-modified.sh
++++ b/t/t3010-ls-files-killed-modified.sh
+@@ -124,4 +124,22 @@ test_expect_success 'validate git ls-files -m output.' '
+ 	test_cmp .expected .output
  '
  
-+test_perf 'contains: git for-each-ref --contains' '
-+	git for-each-ref --contains=refs/contains-perf-base \
-+		refs/contains-perf/ >/dev/null
++test_expect_success 'worktree modes honor wildcard pathspecs' '
++	cat >.expected <<-\EOF &&
++	path2/file2
++	path3/file3
++	EOF
++	git ls-files --deleted -- "path?/file?" >.output &&
++	test_cmp .expected .output &&
++
++	cat >.expected <<-\EOF &&
++	path7
++	path8
++	EOF
++	git ls-files --modified --error-unmatch -- "path[78]" >.output &&
++	test_cmp .expected .output &&
++
++	test_must_fail git ls-files --modified --error-unmatch -- path10
 +'
 +
-+test_perf 'contains without generations: divergent refs' '
-+	GIT_TEST_COMMIT_GRAPH=0 \
-+		git -c core.commitGraph=false for-each-ref \
-+			--contains=refs/contains-diverged/target \
-+			refs/contains-diverged/ >/dev/null
-+'
-+
- test_perf 'is-base check: test-tool reach (refs)' '
- 	test-tool reach get_branch_base_for_tip <test-tool-refs
- '
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index e06feb06e9..72b27c8be3 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -52,6 +52,28 @@ test_expect_success 'Missing objects are reported correctly' '
- 	test_must_be_empty brief-err
- '
- 
-+test_expect_success 'missing ancestors are reported by contains filters' '
-+	test_when_finished "git update-ref -d refs/heads/missing-parent" &&
-+	{
-+		echo "tree $(git rev-parse HEAD^{tree})" &&
-+		echo "parent $MISSING" &&
-+		git cat-file commit HEAD |
-+			sed -n -e "/^author /p" -e "/^committer /p" &&
-+		echo &&
-+		echo "missing parent"
-+	} >commit &&
-+	broken=$(git hash-object -t commit -w commit) &&
-+	git update-ref refs/heads/missing-parent "$broken" &&
-+	for option in --contains --no-contains
-+	do
-+		test_must_fail git for-each-ref "$option=HEAD" \
-+			refs/heads/missing-parent >out 2>err &&
-+		test_must_be_empty out &&
-+		test_grep "parse commit $MISSING" err ||
-+		return 1
-+	done
-+'
-+
- test_expect_success 'ahead-behind requires an argument' '
- 	test_must_fail git for-each-ref \
- 		--format="%(ahead-behind)" 2>err &&
+ test_done
 
--- 
-2.54.0.501.g0fb508de08
+---
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+change-id: 20260607-ls-files-pathspec-lstat-885125a5d644
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
 
