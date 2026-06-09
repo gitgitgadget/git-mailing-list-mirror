@@ -1,163 +1,148 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFF7419303
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 12:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CD54192FE
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 12:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781009969; cv=none; b=Vxklan5I3vPrSHojm7dFSiZWHRGmtslYA4qMIhi6e0KSqmDXG0z4IOdNGAWF1sZ0Aq0WAtTL4NZhx0TEjODQVmYfVmWzV0D0YQKAxMe35N66Zj4WW23SAGBvG+9aWzD8AXTJGIVJrgC/d7NnnRdS76HdUW/SD2P5c2hYiX69A24=
+	t=1781009983; cv=none; b=hI35CslD1Zb/KPEhqtPS5ZioGmSnAC/NezkvxxBddvuNGHg+IZ9JHcyR4T04uhLF7wt/UJ6UeMYIbXvsFJM6dutkEff+B7GZdidmmwGfxadno2I3NqHaTbCp7z1kw2FcG6LrdBI7y9q/r85g44LvgSZ9KZKc+rdh/BRHbB4y8Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781009969; c=relaxed/simple;
-	bh=qfuNdjEZs4mswJxFDH1FcRCtj6d54A6MBzDLFckl0Ts=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mCoe6uj81mswJEOyzcPM74nStf1Eh8mWXBxYxUTjxGeO1VVwPfYeqTRiUewtOVpdWtLwIv7pm5P7kYt568oAK0FKFvORLTaRKc4nqzPBkcm8yKb7IcZStwGYyzI8MEfhKrKxMmMZR2yxlWrc+SVxer0FTRGs0nmuM9Ygg4F2/M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMKzVxjf; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781009983; c=relaxed/simple;
+	bh=xdPRO9D4Y9vPNl6C+5YurgAruk4bovMJ/TZ0nvhq5vg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LWVJlERsSbRrcNUS1/+mDIZzWpFv5TW6GJMXV65uNlfp415/Z8CJC0pzxoEz8ECIz1BJR7l4T2eRjyz1Uh+YUNC4TqbNd59ENhEkHuxJGI2a1Y6TpZtieoD+5r7WXfyi88Sy2NugYEsR/97y/Oeh5KOwgsaz4AvAJNnl/i8x+3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EdLNztlj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d7s1yt8K; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMKzVxjf"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5aa61503fdaso5643236e87.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 05:59:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781009966; x=1781614766; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C9Ax3d80IJtcOUGikZ66xp6r71HVJgR6qpH1n5j4Sh4=;
-        b=lMKzVxjfviuLqDroZvZmBKJUzYH/LgXmBG+Js+2qXKYSj0tFVtZkV9gf7DxPRgrTHb
-         CZyiKgRI25HIPGgX2fACK/ldC7AbSVzPfFFe+Xn8T6BTj/fo6QMmDathi2/718wCUQk7
-         e1HZRqHNyWpcRTHgXdAMehRXWA6zal/L37TyfJeAFUaboeWh07m3mKGOEh5p5K+WXPgB
-         vod/3PU01fNYIXYeoONV9qIDrYqptdS3eg6lKhddFmzgODFrikoL88wMn2gMmD5byHby
-         SAWB887IZKIUHsXwSYB9lmxEQSH6gJB/Qn82OY8P7IlfZb/z02FH2sbUE9NGFrAfpDun
-         e2Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781009966; x=1781614766;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C9Ax3d80IJtcOUGikZ66xp6r71HVJgR6qpH1n5j4Sh4=;
-        b=m0oHJzKzvL8phBIjuqQAm8UNOOtJQJqXI48RAoC80+QYe4LsH+vwJInzP/klHMzXiO
-         x39KsihFLbk+c0E8uIbDoWBmotvoclF8yImAM0mQsCFkCWxwRVhGot6MDHErHzSGIUUq
-         n9gNlPOCZIIkBE+w2n8W3d3QdGcbYUDDaRp827tTSS4GOD8S9nP2kV1t3isb5MQ99iPX
-         cUDSyYHbYH8lVOde0CUg2LwSqqsD0/Ff7HEMpmNAMsv0o2fgtA5SAgyrz4cXvuXW/9Iq
-         7ZN+KZzthQ+tzD8KJLabD4PeMyuFwMU1DjTEIK18Uri7bZ2CW4msyxjXlM5Dlq94/cYV
-         Jv4A==
-X-Gm-Message-State: AOJu0Yxhkpt2P+dudBcilINMbf3K6QnJp4bxD0kUFQGvAIsB3jQiMggi
-	kF3rtBuQzKfMQ8Lz1MZXcUKA+qITxkKyzP5lHaFetnH3nQLUkESyVlfEJv3RBQ==
-X-Gm-Gg: Acq92OHAJHYgwJ1I/Yb9rVWFaQdRt5V+bdyAYYVvZmIT/DoaiwhUd+59ZgBqxapzwTg
-	Th4QJDCPHduqAWg9HgQFidfcAtr0kkbx+RUxKhN9zOo6PaCioIyP0XVA8kb66aQfsyRISf7NeOY
-	y8Pnydte1dgC3y2wHylBWC8MtnEJdYr5pqdySKUTIz7suGBeQSyDW6qo5YhvJ+1e7s0TdhNyYX0
-	9g3QcvjJQR6aaPSufOHrEyVTv4DF5+96LfeCbiXslQ1V5AII9ihUFLDRkn62C9rvLys2+3ZpsVk
-	SwS26zux78JM+2Lu2pxo4oBVQIxF++gXfgm5m4x8gqkJrFy7pFXlXLbwacQL2XYamD0XuDiRg6K
-	kksZZjSPjdnv0UDnKke46zQQYBXP+sAirh4GWwfB6Sh0hI8lYrCuan66JP9MquRMB+JukSF92jm
-	j71orln7A2ikA030INva+5HIaQVHjQznvMFPj1FEJ8d7m7vNtjJMB/RDP0fWMmN5f/uyVK/r1Ea
-	yl7BQ4=
-X-Received: by 2002:ac2:568d:0:b0:5aa:71e1:edab with SMTP id 2adb3069b0e04-5aa886fee66mr4744968e87.23.1781009965699;
-        Tue, 09 Jun 2026 05:59:25 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa7b97ac3fsm4589186e87.42.2026.06.09.05.59.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 05:59:24 -0700 (PDT)
-Message-ID: <4d7834c0-d8ab-4dcd-8a7f-ed62c30cbe43@gmail.com>
-Date: Tue, 9 Jun 2026 08:59:22 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EdLNztlj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d7s1yt8K"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1092F7A00D2;
+	Tue,  9 Jun 2026 08:59:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 09 Jun 2026 08:59:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781009980; x=1781096380; bh=79+rbMMFyV
+	YctjXonWBgomaaVsr1Py+BDYheyIF5aOc=; b=EdLNztljEofeQzDK/2tQ7QikR4
+	Cs7xuIY7MGETqwbAWUlzHUm4Hy31B5kwOPuW8T9nElY1hJoktxx+Df5Y3kDh3gsB
+	4Rwl0VKQPQkM61e5j6fb1ThlbBldU5leL6m8C0utDtbkLU0zWEjkpdn9wJbzTzoE
+	pax54hppU242Kdgjb7UFZ383MsWUoFT4LIDU5OBnfrS0tPwLdMA+jbPdE4OIzoq1
+	Ad/+P2B4rmBnRGtKZ2cFfSri9Qs4Vp/ZC3CDL9d3YfTJawclIV3L5bVPypfkDoFS
+	fxTLOYnmlun20MuUHbBHy7zqqE3G6YHU2tFsws2alE6Y6SLEUgv81bzs8NVQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781009980; x=1781096380; bh=79+rbMMFyVYctjXonWBgomaaVsr1Py+BDYh
+	eyIF5aOc=; b=d7s1yt8K2Bf562cNDITlLN0SU5caA7hFvkf0yHoLIqeezpqMDX8
+	fSmax5A+jUd8l5yniZcvV+WXDuW4He4jsVrs6diG5JXeuG9w/aI40ot9oSjg+e7i
+	XmnrMYo+PcS+yMMmOfGugktOfm8G8ux69AcXRUZiMY4TtNxVOZS8vhw4GBvZAJ9W
+	bRMXt4c2lM2o11HWcBkbFoMMVJ0ah5uz235U/2TR31MaDOjBHVlumcM8c+ikBQCP
+	yUpUzDNy4+2w6PVtw01w90eq/RFi/eusSApQRB83q2bazKqYCBppz492biiyh31O
+	zV0UkJBfububpJELYAJ8GhFMYFLp0xsz3ew==
+X-ME-Sender: <xms:PA4oarAIV5KY7AWwrZhB-6brSMStz8XtH1zcf6C91Zj8lw7v1u-J2A>
+    <xme:PA4oaoiTS4bxGYa9bR1MP7aQLSNjGVcMkAJ_UPoF-43uc66elQgq7gR4uZ7FRRF9D
+    9GSDMGsSprcMdYNVZHBlLa-BcBE8QDNODuNFxmBw8Bm4mZO42LIlg>
+X-ME-Received: <xmr:PA4oarkOBHQhP3O8ShccMFcgA23AzR-micl2K-s2mEzVbwbnHXeCiqyL77NlsktxXsXP8seVRo4Jjv4_6g4d801QmbumGFfAvph6>
+X-ME-Proxy-Cause: dmFkZTEdWw2JJAirDr6uq8+LsDn2QB2VuSuRonGAilr/VP2qjmmU0Q3qLQONQcctARDGnt
+    7kLxxHgQM161aNFbyjET5z89DIbcCUO2vK3uL3cqOepO6O8KRRQtzOJgd/fu1L1XISv7lO
+    SaLXwx2WmxriBdcYhyL3Q4Q3qz5nWMi5UEIKumog9yK9fvG5Aii0KRsfJ6rehoieUTOX38
+    NN5r7G+dRf/t5YqjkUKhC4S2njDP1uGKL511EPj5NvylLPG1VIT0BICrA5BzKLj8oCLX+5
+    c77whJjWiJGdRXIg2bAkBSnW3Fy91nqKSBdXQx4ZQ8aqYmHUEVulXyUDe/0/OuRCt2XAoa
+    R82bgxSGKKqaN8+TVKgP1txhuGMfzRQTIOQwJexYlDZewgPbwmXL+PxEprJgrpO1K0oxVq
+    by3Ds8pbYsSjtbirkGyx0tVGcyyTeX1LS4GpCClOuNb2tzPMe2/YXMmseYqAwUtmMfDhs+
+    X3y8gLCus6WjHl7xyVkXo1riYkNthh8MVpYvXktPSPX9ct94oszwbf+GvxmTaJoOqwqaYE
+    qTOg9h/F7g4RVxNPgBZ53gzjqKYaBiiR5yiTMwprGkI2isTBUYnhn42kR7PqAZG+YS4xCo
+    o89JvMxJnptqWDXTVyGKDXZtAbdUVGiI790wg8i5gOcFCuJyO+gDqFAwsfUg
+X-ME-Proxy: <xmx:PA4oasqIoOS7QTZ1EpVjdZL9PGx9T1y92llROLD3ZUdsQmblMpIpYw>
+    <xmx:PA4oasHvuIZtEbfzODvvpktmUH3P37RMRIz5QlSMOrk9gtbqO1jiSQ>
+    <xmx:PA4oagzJpzYiatw1G6Al_6u0rNEPis1Oo6LHEOi0_5TcbDoA5UX6FQ>
+    <xmx:PA4oapp1DEsdjkzrMINp25Jc68tmNZvrPZoOnf9rjYGAkkBCv3hL8Q>
+    <xmx:PA4oajF2bmIu8lsKlK7Zwb1pzI-JoH0Sio3fEBFPHAlO1PH132ZhodoF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 08:59:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Lei Zhu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Lei Zhu <korov9.c@gmail.com>
+Subject: Re: [PATCH] switch: add --ensure option
+In-Reply-To: <pull.2324.git.git.1780997009796.gitgitgadget@gmail.com> (Lei Zhu
+	via GitGitGadget's message of "Tue, 09 Jun 2026 09:23:29 +0000")
+References: <pull.2324.git.git.1780997009796.gitgitgadget@gmail.com>
+Date: Tue, 09 Jun 2026 05:59:39 -0700
+Message-ID: <xmqq33yvuax0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] config: allow disabling config includes
-To: Jeff King <peff@peff.net>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-References: <pull.2139.git.1780927027.gitgitgadget@gmail.com>
- <20260608225149.GB340696@coredump.intra.peff.net>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20260608225149.GB340696@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 6/8/2026 6:51 PM, Jeff King wrote:
-> On Mon, Jun 08, 2026 at 01:57:03PM +0000, Derrick Stolee via GitGitGadget wrote:
-> 
->> This series introduces a new way to ignore config include directives via two
->> mechanisms:
->>
->>  * GIT_CONFIG_INCLUDES=0 in the environment.
->>  * git --no-includes ... in the command line.
->>
->> My motivation is from a tricky situation where users want to do the risky
->> thing and include a repo-tracked file for sharing aliases and other
->> recommended config. They are then struggling in a later build step that is
->> running Git commands (under a tool we don't control and can't change) that
->> then cause filesystem accesses outside of the build system's sandbox.
-> 
-> I'm not opposed to global control of includes, but this is just one way
-> in which config can escape the sandbox. They can always point to files
-> (e.g., core.attributesFile) or even commands that totally leave the
-> sandbox (e.g., ext diff or textconv commands). Fundamentally git config
-> is equivalent to arbitrary code execution, so pointing an include at a
-> repo-tracked file carries the risk of confusion both malicious and
-> accidental.
-> 
-> So I dunno. From the described motivation, this feels like a band-aid
-> that fixes only one narrow instance of a greater problem.
-> 
-> The notion of enabling/disabling includes per-command is itself a
-> flexible building block. So it's possible that it has other uses in
-> general. But it's also a fairly broad hammer that covers more than your
-> use case. If you're planning to use "git --no-includes" in some script,
-> then it breaks the config of anybody who uses includes in their
-> user-level ~/.gitconfig file.
-> 
-> So you may need some more directed limiting.
+"Lei Zhu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Are you suggesting some kind of internal sandbox to limit Git from
-accessing repository paths from config includes and other config-set keys?
-That would be a more complete solution, but I'm not sure how we could plug
-all of those holes at once. I'll think on it, though.
+> Users who often switch between topic branches may not know whether the
+> local branch already exists. Without this option, they need to check
+> for the branch first and then choose between `git switch <branch>` and
+> `git switch -c <branch>`. The new option folds that workflow into a
+> single command.
 
->> One thing I do worry about is whether or not this would cause a significant
->> break in behavior, or if this is a relatively safe thing to allow.
-> 
-> Yeah. Consider something like:
-> 
->   $ cat ~/.gitconfig
->   [user]
->   name = My Name
->   email = me@personal.example.com
->   [includeIf "gitdir:/path/to/work/stuff"]
->   path = .gitconfig-work
-> 
->   $ cat ~/.gitconfig-work
->   [user]
->   email = me@work.example.com
-> 
-> Using "git --no-include" will silently use the wrong user.email value.
-> That's OK if the user is asking for it, but if you are planning to
-> sprinkle "--no-include" inside scripts, that's likely to cause
-> confusion.
+Quite honestly, I am not sure if the use case should be supported
+with a new option, or we should actively discourage it by rejecting
+any patch that takes us in this direction, as the actions the user
+would take after seeing the result of "git checkout -b" or "git
+switch -c" are quite different among (just off the top of my head):
 
-This is exactly the kind of case I was worried about. This specific case
-only impacts write operations, but some tools do those things. And this
-email case is a common one that users do in their global config to isolate
-personal and professional identities.
+ (1) Ah we already had the branch created exactly to work on this;
+     instead of forking a new effort, switch to the existing branch
+     and build on the effort we made previously, as it forks from an
+     acceptable base, which might have been different from where we
+     wanted to start at when we said "git switch -c <branch> <base>".
 
-I'm trying to think if there's a place where we'd have some config that is
-critical to the repo functioning not in its local config (like the repo
-format version or extensions). Perhaps borrowing from your work/personal
-example, a user could use a different credential helper for work than they
-use for personal repositories.
+ (2) Ah we already had the branch created exactly to work on this.
+     Unfortunately, it was forked from way too new base before we
+     realized that this is also an important bugfix that needs to be
+     mergeable to the maintenance track.  Let's create a new branch
+     that is a copy of the existing one with "-maint" in its name,
+     rebase it on the maintenance track, and work there.
 
-Perhaps we need to be very careful to warn users of this option or
-environment variable that behavior can change from typical use.
+ (3) Ah we already had a branch that happened to have the same name,
+     but created for totally different reasons.  We do want to fork
+     a new branch but need to give it a different name.
 
-Or: are we venturing into territory where we don't even want to create a
-new foot-gun? If there were another way to solve the situation that I'm
-facing without these risks, then I'd be open to it. Any ideas?
+ (4) There wasn't a branch with the given name, so we created a new
+     branch at the right starting point we just picked when we ran
+     "git checkout -b"/"git switch -c".  Let's start working on the
+     topic.
 
-Thanks,
--Stolee
+You cover *only* case (4) perfectly.  When your "-c <branch>" picks
+an existing branch, the user still needs to figure out which among
+situations (1)-(3) (of course, there may be others) they are in, and
+act accordingly.  "git checkout -b" and "git switch -c" that fails,
+reminding that there is an existing branch with the same name, gives
+users a stronger form of reminder than switching blindly to the
+existing branch, which may (in case (1)) or may not (in cases (2)
+and (3)) be where the user wants to be when taking the next action.
+
+Having said that.
+
+ * The option name "-e" would make all users expect that this has
+   something to do with "--editor".  Start with a longer name,
+   perhaps "--create-if-missing" or something, and then see if
+   others can come up with a better short-hand.  Obviously whoever
+   chooses "-e" is not equipped well to do so (yet), and the
+   reviewer who pointed out "-e" is not a good idea without being
+   able to offer a better alternative is not, either ;-).
+
+ * Adding a new flag only to "switch" without "checkout" will
+   unnecessary confuse users.  This is because, even though
+   "switch/restore" started as an experiment to _supersede_
+   "checkout", they were not successful, not in the sense that
+   "switch/restore" were harder to use than the original, but in the
+   sense that the userbase and teaching materials are already used
+   to the original and removing it is practically infeasible.
