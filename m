@@ -1,117 +1,190 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36103FFD
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 02:30:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780972258; cv=pass; b=UwNfI01JUdtmAolTIrNNmebroQajVxyyXHJGfBuyMmSf0FYdTFcND7OZXXM8KOwbBJpulT4B4RQBtzcZzpToa+8nnZMonfOl4GnEUr/6om1NRCIZk/XpmgtMIt0CcfzyXCVlEmRxpUcIvgBSkQMTsZFz/eyVIZ9hyJ7vap+dFPo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780972258; c=relaxed/simple;
-	bh=8q03VdoavhVRhtgZQ3JbguJd3hWOqyCzHN8KeH99lWk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tccwP9h2OVMzpKmu4SFm25p7ENfx1RM+iA2juLJVNFt9iAz+57Le2cJ5NbKw80pq9gHFtjGh4QJnQErIXGLoRVr6UHr727xOxbYx+9FunLt2Hgjdg1Fze4ndm+GT9ZF1sSKXOXeBwrCdBkaO91edbIhxy5mtjKP5pMfniUQaF58=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vzc5saYf; arc=pass smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DCA233942
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 02:32:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780972345; cv=none; b=TXSlwpvIhOm/W5q4QCg8MvfyTkqF+FXn4d8j2RkzPZF0PVmAxd0S7BLx/peBfmT/3hZsFADz5lXNLp877dLZObeph0na9diKdLqDapxsHAJjKSXXHNTSu1fS1YbfbvieO9HKXnyl1F/qroZGVLbCWUZwmNgV1txKb3r5IJsviz4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780972345; c=relaxed/simple;
+	bh=HsjULw8/EMFGrz+vXDu4JGlwoYGVmFhirPyaYE7t8wo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=a8su8kS5GZIfqX5xmmlGSt4qjzWdBjZcVr/uonuoJzxfV2QPeP9OkCRs3jvBYBwl/lVq4OKLNdGv8kU3zzjB7Ejd0Z7957Gha9rQxwuKY4jm9vYQOYACPxiW+kR4KDhvd7Ue9RJdFim0Sw4EIaGITHNrjZ0M82cesCgvP36dDWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XNumOjax; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vzc5saYf"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5aa68cf03bfso5291723e87.0
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 19:30:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780972255; cv=none;
-        d=google.com; s=arc-20240605;
-        b=H/b7dLIMsRg4JEcBhe10Uq6ue1dmXgCYNdbtxd4/8kaRj09JEmFDAQ/V1TbbjbC1gt
-         V0KeXgdtfoomF3YwiQHhZGk6yKQPduOKcWn01KD1C/zKcQZmojHbge1Ii1ih75aU+/70
-         7LIhURKd/Exe9P88/CzsVWc+sbL8bY6tmDxY+P529ZB/ScwfANRjaBvPfah0fIPo0XFD
-         Gyaj+l/s5pkVdMDQ6L1YMSymV8ZFpvwflmLYWWgyCzeH9dOHaKICyt0EfTPd061SHFYJ
-         /PEl73RZLL89tRIsVJoTlU+vzBzLP9o/v2xE1gAmmuQdRD6muj9SCJ32fP2CoiaaD9e1
-         grPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=8q03VdoavhVRhtgZQ3JbguJd3hWOqyCzHN8KeH99lWk=;
-        fh=II5UFWVA2YVGzjMzHotJOpZ2kHzaEAQlHI0yuZYNT4o=;
-        b=Wbj808+KUCtFQR3qQcK5YjfgxUfX3LLZDBYXdF8k83SA2sJJz/pxMP9DQPsniKM8E4
-         DQdMPdyOk7Vt8ibkUnn1g53fZ4QdQZna7Ia9/nfFn41O1tlQpXv9ZSIrSrb++vj3U5hm
-         HJ0NbEDNdfjL+q3ZDHeVo8z1IjPTdE/PmHtKyv0WucAwTxSrok+csbBWyBaAqcjfE3O+
-         8jcAL1YybsadtS3SPSbZl3NE2QdHY5aDeQaI6WMfG3Kf2mKYO3Pei9rO9GQC2EixEQAO
-         X2yIBdDdMv2UnbkmB/gOwpcRjeWS1TJU0dyUfPME70yPcDIjJAQi5mq+6zTFgadvWroW
-         0JfA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XNumOjax"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8ce9df4732cso52735646d6.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 19:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780972255; x=1781577055; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8q03VdoavhVRhtgZQ3JbguJd3hWOqyCzHN8KeH99lWk=;
-        b=Vzc5saYfQ9+nBCkFlN0Fu1j6icsCVsPNIehiH5WxWv526uhrQQ+tB3B2kTRkNb28Ys
-         cWJtiS8YNy1mBhW2mR1/1iv/sDFLsCcHJTxndvEkXYS5HL9DaggXDpZfacnmfOL/tjaU
-         XXAC/2Xs29+1vIw6934B92f6xyZRm3PjlqBlts4h6QO9RNKxCRMaNSP/R8oUoRDs3Ccr
-         d2XsyRg9ieoWdfY1L2yQYIhHajzkT2jE2i1cXWUtHfrdaD2QyOUMVZShw0bRjtF+n03f
-         ehaRSIFtemzBsVdxd8IPVk7/2PFTS1zgWm0y625Cfc1VgLcYTNh3ThOJKOoMQW/7CG1F
-         JHKg==
+        d=gmail.com; s=20251104; t=1780972343; x=1781577143; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TfNMWF7tJbhVj/IYr5cDCAosnp1qCT5daHavwJqg6r4=;
+        b=XNumOjaxgCvYRhHjjCWcyUaA2Qr3t8TDAS5d1J2SPR5xoTBlplKQXoYf6/v/ao2DZ4
+         l4inggm3dXjmgz2GUo9/et6qI1luhmAusImDrMWlN8y3ytmLHWEasLFB9xwrxAfGPaow
+         W7h9xF39KD4/ECqP5bFmu3a5ClYD3QOWL3eaRRK3FangSFhg8ScnyOi3p9p9LtYpSRg4
+         EM7PsbjgLCPby6knWQMmIM31LzCjRq3g/Owh87P/RCdea5WdxdpwRZ099y4fu0YmQOL3
+         02vTSTgaeRZ/g3uLFf/SJAZ9aHNwsLmAl24qmt5yqPPlZ1Susm2B78c/wQpZdRMSm8fN
+         r0oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780972255; x=1781577055;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1780972343; x=1781577143;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8q03VdoavhVRhtgZQ3JbguJd3hWOqyCzHN8KeH99lWk=;
-        b=YXtx+iUatp/IfZQaKXmYEg0Iz6EnCzcn0qqSt0Evng36EVLWPtsXq4kw4n8UNycAW4
-         9Dyj5BtOrZA5UNvBy7H9+xr0uwR/ID2LYgVOy5DoJhcrmqBqoBbGmijQONbFF0gHBFcN
-         Up9KeJWa6e0lOru2tkEiXZKl/5JeWAZBj07ubZd6pawIuS/wCFnTy0AltYwbajDnB6jR
-         JyXGvYQRgddlYCzQr9QOdqa0MZS9tSaKYLo+T7CqkGxOH/HEoo5hWkUxI8Ja1o7LPHSR
-         PyTaHo88XI6T7hFTvEiX8T/5b2QbW/CQ8VF1MQATnKiXHsI0DBLIqJwptEAcxIFxe3kh
-         s3Hg==
-X-Gm-Message-State: AOJu0YzkCinF9DlaefPOS6nQ1AxsLJCuO2GwlJr+uIHWeGszGHKwTP4P
-	tzqOkBVbulLYaFcgiZqSQ/l1wdq7ps3/voCNfC0tLuR1AVMmy1NJ3NNczkV0Lyd9xC8Z0Nj2uTd
-	SrkjBkN+EEw0SK38wSLwX4rmkZEZCOvtPQA==
-X-Gm-Gg: Acq92OHyOBMX/DSfDxdo8z2vbl2dFsB9FP3jZYug4STJyGwvVIHlk3x0qo3hmV83u+4
-	luUr6tvdC3HuN2UPSxJFu2yQHQHj3vnl3VNqSdN3VhPJGiKWPuvjfyt096gMEHEIBXU6FPD6xaw
-	3jX6pf2S+zPIeyZznkVSsAMfmlu5QeN7Wg5slsutCLh8k4tq6YOxNmOPqOBGoraegrdUIPWBB9X
-	MlCLkjI6Hd7cUguFjr977XvcxOxPA/ceUwM0HU1VD31OoovbZdQrc12PUowJYy1Jk4pK8b6BGX9
-	r8WzvIUqgnabxJDh0uPhZ4ZEO+w4eYZl0aKrAzY9Nfk4Tphs46QRx3DV5SGUKqdUpk85oYB0b4S
-	sPlbIkOHKGW2fBCnrsWChpUYag/OtsIhJHWub
-X-Received: by 2002:ac2:4c55:0:b0:5aa:7770:8fc2 with SMTP id
- 2adb3069b0e04-5acf81f94ccmr86162e87.32.1780972254669; Mon, 08 Jun 2026
- 19:30:54 -0700 (PDT)
+        bh=TfNMWF7tJbhVj/IYr5cDCAosnp1qCT5daHavwJqg6r4=;
+        b=hHhrsqh4GBFuD9oZN06ty9vl3JIFbu3Kcxs5zhHXvyoSwrMqLh9CjkROASecCgWAz8
+         pwR7itikjZ9qpDUYegaq/T5RILyeuoN3u+priPNdGr0v1LhvmyQE4dv2whvljBdOP1yb
+         88OXS4jQfdCg0vWBMU783FhXjR7x/2Y+mPBbe26FwUbAzPkOhwYic2PQCKBehzoQfY3c
+         lDq3XTVEBJXoywsQ2/Fl6pe4fa5Dipxcw4LrAtxdLnUuIZtiEU5kSDRverHg9gSidbkv
+         5F3QvsB+zRVeFQruoWFw5ul0tsRIQp4b+U/NH7hTm3Pi4MHAAMrvSISbJlucXZEw5/Md
+         Pt8Q==
+X-Gm-Message-State: AOJu0YywZnyYxG1I37j/AMJfMLzGhGV8jSXN2MdPaoIytgzOVEAPSpXh
+	Z//7fwUZ6R2q660ijrdUde2rtXQ+JZ73GO99NWXs0v7osKBZWCQOHggk
+X-Gm-Gg: Acq92OFytaMNjKqxnI40Lpxsf3U5OF5S30500UY9Juiwb/m8tLpNguiB1dn5aQyUNtD
+	PS3r3/7MvOZdGhO6hxgswa7bvfOGtdf+OLpV+f/g/dTmnTruNsLm0SD0WFzJ/OvmvoElJ/ItqQZ
+	YV5J/emjfazsOWJ9hv7w+AR7VGanMTmsH2/nzIJvGqctbCK5iNGxV12XJhhjyCwyMHL9+OWToBb
+	UN8bSE0G+wtrW1CnObWvWAq/lE+A54XCLVixnSffs+Ym7o/EjtfFR74NCI0zSTSuGWJR8RUAGj+
+	52G3WMMBtj99r+0vgxCHtcB0vSYlK6np6xZAOoS/cI1FZ5H8bAsUIvj2NcjVkEFr5CfpT3H8LR+
+	VOjE7k0GBOlvs4c0LIiJ0sHnpChX7fMSma1VhuLgHy/Zu9mfpSSqOObqYwDF8cl7ts+hK2Na32Y
+	bhIidwLGQZzroWddTdBsq9JxEAT8SSqfnWPYIkyWfko3AvA2FUL3gYwyOqRxk3stQcayZzhZ6Km
+	+SB14DbuTogCBsKc9UraD+kcqxdtQ3CRiR9MDB9Sl5x0Y6IflkZs+ktKHJqhJrrqP57yAm4CK+r
+	bToVIfG3xbCg2m3XjAv7EHzUPyfS6gS2F8RdHzv+3gcduZnE/0klq7zCIN/NNLxHnyW6SjW82g/
+	j
+X-Received: by 2002:a05:6214:1242:b0:8cc:ebc0:6ebf with SMTP id 6a1803df08f44-8cee613caa7mr307361616d6.29.1780972342892;
+        Mon, 08 Jun 2026 19:32:22 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([209.249.37.132])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ceccdb915csm188078706d6.14.2026.06.08.19.32.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jun 2026 19:32:22 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Mon, 08 Jun 2026 19:32:14 -0700
+Subject: [PATCH v2] describe: limit default ref iteration to tags
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260605163012.181089-1-jayatheerthkulkarni2005@gmail.com> <A67C8C8B-2600-41D2-9E61-0923BFDDD06B@gmail.com>
-In-Reply-To: <A67C8C8B-2600-41D2-9E61-0923BFDDD06B@gmail.com>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 9 Jun 2026 08:00:42 +0530
-X-Gm-Features: AVVi8CcE0ZApOKdlbwzvQr25-8Vv9FbL1bZ9P4_hZEu4sVjd-r7aaA1PleBToOA
-Message-ID: <CA+rGoLeRfJXmYRhOTkE=R5JUJBp3LmbACwdt2sezQHqo=1LQtg@mail.gmail.com>
-Subject: Re: [GSoC PATCH v2 0/4] teach git repo info to handle path keys
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, a3205153416@gmail.com, gitster@pobox.com, 
-	jltobler@gmail.com, kumarayushjha123@gmail.com, phillip.wood@dunelm.org.uk, 
-	sandals@crustytoothpaste.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNSw6CMBCGr0Jm7Zi2SCGuvIdh0ccIY8SSFomGc
+ HcLHsDll//xLZAoMiU4FwtEmjlxeGZQhwJcb54dIfvMoITSQosaPSUX2RJOpsNIN0wujIS1F8K
+ QPAlTNZDHY474vR9f2x+nl72Tm7a3rdFzmkL87OZZbr2/klmiRF2VXpXKNtpWl24w/Di6MEC7r
+ usXNMejg84AAAA=
+X-Change-ID: 20260607-describe-tag-ref-scope-7d00ae140a58
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Patrick Steinhardt <ps@pks.im>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1780972338; l=3454;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=HsjULw8/EMFGrz+vXDu4JGlwoYGVmFhirPyaYE7t8wo=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QAD9DI6xYoAETtpSsiYEJD57D3isDmgIjcPaAW2CAnxxTVJkJ8IcwSydsUMj6qBQdpYpHKSzcQP
+ FuxuJ/0NaEQE=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
->
-> I prefer `.(absolute|relative)` at the end. `path.gitdir.relative`
-> means that we have a collection of paths, in those collections we
-> have gitdir that can be relative or absolute, and we want the
-> relative. `path.relative.gitdir` means that we have a collection
-> of relative paths and from those we're picking gitdir. The first
-> feels more natural.
->
+Unless --all is given, get_name() rejects every ref outside refs/tags/.
+The rejection happens only after the ref backend has enumerated the ref,
+so repositories with many other refs spend most of a simple describe
+invocation visiting refs which cannot affect its result.
 
-Yes, I believe the same.
+Commit 8a5a1884e9 (Avoid accessing non-tag refs in git-describe unless
+--all is requested, 2008-02-24) moved this rejection before object
+lookup, but left iteration unscoped. Pass the existing refs/tags/
+restriction to the iterator unless --all is given so the backend can
+avoid unrelated refs.
 
+The benchmark checkout had 120,532 refs, of which 330 were tags. With
+`$repo` naming the checkout, `$commit` an exactly tagged commit, and
+`$parent` and `$this` the two binaries, I ran:
 
-> PS: this is a nitpick, but it would be really helpful if you provide
-> a range-diff in the cover letter. Check the usage of `--range-diff`
-> in git-format-patch documentation (this flag also works for
-> git-send-email). Or, if you prefer, you can generate it by running
-> `git range-diff` and copying the output.
+    hyperfine --warmup 3 --runs 15 \
+        --command-name parent \
+        '$parent -C $repo describe --exact-match $commit' \
+        --command-name 'this commit' \
+        '$this -C $repo describe --exact-match $commit'
 
-Alright, I will add that as well in the next series.
+The results were:
 
-Thank you!
+    Benchmark 1: parent
+      Time (mean ± σ):     171.7 ms ±  18.5 ms    [User: 23.9 ms, System: 133.6 ms]
+      Range (min … max):   142.3 ms … 198.3 ms    15 runs
+
+    Benchmark 2: this commit
+      Time (mean ± σ):       9.9 ms ±   1.1 ms    [User: 3.3 ms, System: 4.7 ms]
+      Range (min … max):     8.8 ms …  13.1 ms    15 runs
+
+    Summary
+      this commit ran
+       17.35 ± 2.63 times faster than parent
+
+Both revisions were built with -O3, -mcpu=native, and ThinLTO using
+Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
+(Mac16,6) with a 16-core Apple M4 Max (12 performance and four
+efficiency cores) and 128 GB RAM.
+
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Changes in v2:
+- Exercise the performance test with both ref backends.
+- Keep the ref count local to its setup test.
+- Report native hyperfine output for an exact-tag lookup.
+- Link to v1: https://patch.msgid.link/20260607-describe-tag-ref-scope-v1-1-653d232b86b5@gmail.com
+---
+ builtin/describe.c       |  3 +++
+ t/perf/p6100-describe.sh | 15 +++++++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 1c47d7c0b7..3532c8ff22 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -740,6 +740,9 @@ int cmd_describe(int argc,
+ 		return ret;
+ 	}
+ 
++	if (!all)
++		for_each_ref_opts.prefix = "refs/tags/";
++
+ 	hashmap_init(&names, commit_name_neq, NULL, 0);
+ 	refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 			      get_name, NULL, &for_each_ref_opts);
+diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
+index 069f91ce49..ed9f1abe18 100755
+--- a/t/perf/p6100-describe.sh
++++ b/t/perf/p6100-describe.sh
+@@ -27,4 +27,19 @@ test_perf 'describe HEAD with one tag' '
+ 	git describe --match=new HEAD
+ '
+ 
++test_expect_success 'set up many unrelated refs' '
++	ref_count=10000 &&
++	git tag -m tip tip HEAD &&
++	for i in $(test_seq $ref_count)
++	do
++		printf "create refs/heads/describe-perf/%05d HEAD\n" $i ||
++		return 1
++	done >instructions &&
++	git update-ref --stdin <instructions
++'
++
++test_perf 'describe exact tag with many unrelated refs' '
++	git describe --exact-match HEAD
++'
++
+ test_done
+
+---
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+change-id: 20260607-describe-tag-ref-scope-7d00ae140a58
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
+
