@@ -1,144 +1,116 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B314E38237B
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 07:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780991590; cv=pass; b=BGFk4lYHtByH5jwhaeI1+7WuDPnVKlxe8IhcJmwiDQsBJx77Dm+vQwW1h/8b7y5A7Wm06nyyB+CNkEothL4vaQHi9Y82noruFGALhRRc2osX+0OAmmlHwD9D/OMr4sSeynwQuBAMO1FNuuK3E/+w5iKXJuRUQWxhFV3GwJ6Zwl4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780991590; c=relaxed/simple;
-	bh=AAcVwhHUflCrKHPruBK114++lVnEyrMLeDITzvjS7zw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rK3RbCzDLBUzXRQmohYgmnGo4fQa+Syf13f9tSJF3wWs7n+7Rj49LTBhrCO1aL7IqH/Q039PaUdTMThkLjk9VXENNt6bjrEPxLYxdRTCkDWgMrgyCOaQcVOUjjurbJSi8nn1znASQoySDE3ZiEYhpU1avxoEsKGLreh74y0KlAM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=avdZ4Z8C; arc=pass smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBE3384233
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 08:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780992118; cv=none; b=uUblSqO2407WacRxI3zh7g9AiuiLgQoAoV48LHNt62/oQ0VT2CEMbXrOoTy0J7yruqR3OXUzxt1VJ3RoSNmQd+EC7MIXTd+3b8C46FKsdDSQofo0vmO94vS1AV+KNcrU5jKqAk2QmAy0zNGAcCvJgqr6TMwSJiwpJRtYlZnnvWI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780992118; c=relaxed/simple;
+	bh=bLOTRc0ebBX7hByPp/Gx6uAUAcTQOcfOGye+x4jDjfc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=j1aOzWp6uhF7mzMyYyp+i/tvdtLeefAr6jt+Zocm+clSwuy/i45gZBUJ8S7YzZqZkkgNx78G3M+EfeayvOoawThMibj5UEjow/A5oI5fM8O5YU9ApB53qWhFiy3UCQfbQvuugCgLFM3Z2J8c6PPGZxNSQdo6h99tRRZ/41o1KgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=4y9SN43d; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="avdZ4Z8C"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-68f36e1663cso9213338a12.3
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 00:53:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780991587; cv=none;
-        d=google.com; s=arc-20240605;
-        b=KeGnhF71VKoVxF/NWF3l/8/kzk+XmPXJzOYg/j9kFXA7oC0iR/iUdA5YstIUINV8iA
-         PcD+ay8sp+4nIfSgVybNIZDYLx7yD7pmnMCk0UJXcMxoHbvRZCO2Raki14EUpDJmjRUv
-         pBoyH0EZOA7900IDgMpSdi05qXCx4JixvirDVp4nc+BBtDdlhpoLcp4cbPK9PwVeCYKV
-         EfaK58Lzv0CCIJjZBzM8vyjJYwVKNVOCRm+Hl/fSeGiQJBXxY7dOIC1T0ZEI8yK6fX5D
-         WtuQFIIwoM8AZybLk98H0PDwBxELuHL/WunrcoUt6CQuiFJbfKl9VEaETqwD1XQL6RZC
-         2yHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=SOFfagY97XJ6l1chUZjcuG4G2mOmRfvKS6jAdVO0kcU=;
-        fh=GxCi/N/wk4cw9ZCzo8l68wHwAPFcZpqdoAF0g1K9y4E=;
-        b=CDj3gLGJ78dMTTJTYGxxenlVdKQ3Qr36GJ0YvGIDJDvxjGii2gJrsDZ0DAFLfUGjW7
-         5ZGO/4D5UOrmiuEcdQQkahaH+6/E73JDMZbC27yk3dI42lNbbDsGs4WrndR2SP8F1tNw
-         4HUcnTy/nyiW+agZwwzbnv4Y15AJsQJ9TuIZ6kJHymF8fkjDrpQI9guY7moFHXr2zIl1
-         /RJoJB/ef2oJE06Dtb4oaM21wVvwTj6UwD236Y85kUcJgtZRI2FLLIUGn1M3K8tzHYDT
-         EQGKYrBRaASGuSFnKhKXCZ9cK0fleVnOtE5YTv9nUXuRp1ppx7s8moBQ8EnfbMEbGbBd
-         MHWw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780991587; x=1781596387; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SOFfagY97XJ6l1chUZjcuG4G2mOmRfvKS6jAdVO0kcU=;
-        b=avdZ4Z8CgU+J9qEYcmuSMu5nx8NyA8X89BV1/B/jIxwIEHH7nytD1CU8CMBx59uXGo
-         xKa1DfsOsZvA18cLl+1UF5g3DM7I9k6ZVVYGiHS0pws6TTQJyWsKgmjTpT0IHIOwTF/4
-         Gad6lxrbHAgsNarSgKOEx4T3zLz0ZrSya41UmT6yVOuFV8Z4SHtxIds7/DkQE9ov89dd
-         WkGE5jKgtdyiMScwAH9CWsYo7fKh78Xl0EhCIUTCp92nDUAhHOu92E4uFm7E/GlJOrXk
-         eRsVit9HEzJTJDVISzJhoDzBKJrnGp4DH0yz7oPvX28Zvi1iBL6lEum3KuHN8WWlz3CI
-         dncw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780991587; x=1781596387;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SOFfagY97XJ6l1chUZjcuG4G2mOmRfvKS6jAdVO0kcU=;
-        b=jys9rfH86gZi/EqAPB0oRHZ9kSfX1biTajlOUrc8rYSdJ0kpqBT55c2TEddhHEVWT1
-         1VeAngq72E1vOl3b1zWWsxT9uWpsYu7j34LOY2td+eXB6p0fp86ihqegLXZw0mzI7bov
-         uXlkQ2G49Dbyopu1uMnVQRZRNVLnI2AKSkoFbHVaChydJNhxRdSg46f+bLddxW8h0srQ
-         q5G7X/2g2etPuJseU+KHSrU4zO2wRujZpQ7KVjUptxGzeba/rNwGjoHrkrb40jBgEtU4
-         RiAyEFBm/LFE2PaOsadXUUoMuzG1HSHRbkfXa7BX3b40tgm59CN+Na+ojVCD5E73wS0y
-         xdlg==
-X-Forwarded-Encrypted: i=1; AFNElJ9kdzYn0I1VLvzHvK8WGz5SfWmcdiTtkd+YY+uie1WwJnQZx2BRSi6a/LO0mkYySAgtbjY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywwa7xHP693pENHkGJ+c/VpgIg2J9Yt3o7su9pHM6JXJJwhCSn8
-	mZnb55d2K2SxF1rsaC3kujOvrpW5DZ2qOBzkoGBPoKktCr3UvGBbxXacp3ebHQyOAhCLa+CUAIc
-	++JlCIs6tKxWcyMgVplhcUYKkm8P9xmAyz8bdlAc=
-X-Gm-Gg: Acq92OFAZJFEgqTbDfU41Y8FDuvfcfev9HA0ZrIDwsdvqrCa3E2Ll4df/BKQcO+9b7Z
-	a6IQHvXpXQHt3gCGPDMc6U8CDDOVtRIwDV+Y7Opr30Y0ilyNmHel2CLjbTMOLmgeaAIhdQWBdMo
-	TgbXJ7niMJRsOO7/RwfbwVQazlpa00hlOWpwsXvbcAfdGcz9/K/sP0f1WxOnUykR8X05FcnoaDr
-	vVZ6y3hbl4/aMmHhwEgc4zCUIO6ImS7MMYnaZ3zaziNrbhQfGWV6GPoQhAfvliAwaZNQjRc0+C9
-	0Wyzs/sBpd8Tzx/V4Q==
-X-Received: by 2002:a05:6402:3905:b0:68a:c316:34fc with SMTP id
- 4fb4d7f45d1cf-68fa4e27b23mr7904280a12.9.1780991586571; Tue, 09 Jun 2026
- 00:53:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="4y9SN43d"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1780992107;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XcqRyFHS2yyMLRqgkDxAPT4Mx8wGASHt6eCabOge9d4=;
+	b=4y9SN43drsFCyvecZpPUdZMz7T/0IfKrAZstGemI3e6N97jvL0jreQuyon15rsPVIAEo9Y
+	VqV2w8LO00YkWvctcWa+KDV5iwzn19Ce7GortqYLkooE9vXu9ICun9DJNVqabIQNJ0JLhT
+	zcBCjQBj2EvInGT9uh0KHePLRhNOuqA=
+From: Toon Claes <toon@iotcl.com>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>,
+ Elijah Newren <newren@gmail.com>, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Christian Couder
+ <christian.couder@gmail.com>
+Subject: Re: [PATCH v4 0/8] Auto-configure advertised remotes via URL allowlist
+In-Reply-To: <20260527140820.1438165-1-christian.couder@gmail.com>
+References: <20260519153808.494105-1-christian.couder@gmail.com>
+ <20260527140820.1438165-1-christian.couder@gmail.com>
+Date: Tue, 09 Jun 2026 10:01:35 +0200
+Message-ID: <87ik7s16sg.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v12.git.git.1780477479.gitgitgadget@gmail.com>
- <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com> <a7672713f67d6a44992c0f0cf989770c7e9ca38b.1780684553.git.gitgitgadget@gmail.com>
- <xmqq4ijcvb64.fsf@gitster.g>
-In-Reply-To: <xmqq4ijcvb64.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Tue, 9 Jun 2026 09:52:30 +0200
-X-Gm-Features: AVVi8CdEakulpZ9xsQHJXh0iXo_2FmQXDQeU8fA_a7PIDADwgDp6ykVn3c06vw0
-Message-ID: <CAHwyqnWpkF-8czt8+G4GJpMTb1qXG6FtN1HKrT5H+OcfAjQL=Q@mail.gmail.com>
-Subject: Re: [PATCH v13 2/6] branch: let delete_branches warn instead of error
- on bulk refusal
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>, 
-	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-> This breaks t5404, t5514, and t5505, which contradicts with
-> "Existing callers are unaffected".
+_(resend because it seems I accidentally didn't reply-all)_
+
+Christian Couder <christian.couder@gmail.com> writes:
+
+> Changes compared to v3
+> ======================
 >
-> What's going on?  It is troubling that the breakage happens without
-> even getting merged with other topics in-flight, which means that
-> the environment you are developing in and testing on and the
-> environment that I apply patches on, integrate and test (something
-> based on Debian testing) are somehow behaving differently.
+> Thanks to Toon, Kristoffer, Patrick and Junio for reviewing the
+> previous versions of this series and of the preparatory series.
 >
-> "cd t && sh t5404-*.sh -i -v" ends like so:
+> This has been rebased onto master @ 56a4f3c3a2 (The 8th batch,
+> 2026-05-25) to avoid a trivial conflict in "urlmatch.c".
 >
-> expecting success of 5404.7 'already deleted tracking branches ignored':
->         git branch -d -r origin/b3 &&
->         git push origin :b3 >output 2>&1 &&
->         ! grep "^error: " output
+> Only minor changes have been made since v3, in the following patches:
 >
-> error: the branch 'origin/b3' is not fully merged
-> hint: If you are sure you want to delete it, run 'git branch -D origin/b3'
-> hint: Disable this message with "git config set advice.forceDeleteBranch false"
-> not ok 7 - already deleted tracking branches ignored
-> #
-> #               git branch -d -r origin/b3 &&
-> #               git push origin :b3 >output 2>&1 &&
-> #               ! grep "^error: " output
-> #
-> 1..7
+>  - Patch 4/8 ("promisor-remote: add 'local_name' to 'struct
+>    promisor_info'"):
 >
-> but it may be possible that earlier steps are behaving differently
-> with the patches applied.  I didn't dig further but I think the CI
-> in the recent past have been affected by the same breakage.
+>    - The promisor_info_internal_name() function has been renamed
+>      promisor_info_local_name() for clarity.
+>
+>    - A `const char *local` local variable has been renamed
+>      `remote_name` for consistency with another similar variable.
 
-Thanks for directing my attention to this.
+I can really appreciate these two changes. Both make things more
+consistent and cleaner.
 
-The GitHub CI has been broken for some time, maybe I should have told
-you about this earlier, but it coincided with a period where other
-open source projects I worked on also had mass CI failures, so I
-chalked it up to upstream issues (GitHub, Linux, etc). But it seems to
-have not gone away.
+>  - Patch 6/8 ("promisor-remote: trust known remotes matching
+>    acceptFromServerUrl"):
 
-All of my GitHub pull requests have broken tests (see e.g. which a
-quite minimal change: https://github.com/git/git/pull/2313). This
-makes it harder to detect actual issues. But of course it's not an
-excuse.
+I previously reviewed v2 and compared to that I like the changes you've
+made toward being clear about precedence. And this consistency carries
+through in PATCH 7/8.
 
+And thanks for mentioning username and password components are ignored
+intentionally.
 
-Harald
+But I previously mentioned I felt the naming of 'acceptFromServer' and
+'acceptFromServerUrl' are a bit confusing. So I'm wondering whether we
+can consider another proposal:
+
+What if 'acceptFromServer' would configure if 'acceptFromServerUrl'
+should be used? I mean, imagine we put this in the config:
+
+    [promisor]
+        acceptFromServer = Match
+        acceptFromServerUrl = https://my-org.com/*
+
+(we can still argue over naming, but to get the idea)
+
+So the value "Match" for 'acceptFromServer' would inform Git to use
+'acceptFromServerUrl'. This way precedence isn't a concern no more,
+because every value for 'acceptFromServer' is mutually exclusive.
+
+This has one downside though, you can no longer combine
+acceptFromServer=KnownUrl with a 'acceptFromServerUrl'. So URLs
+advertised by the server can no longer fall-through to
+'acceptFromServer' if they don't match 'acceptFromServerUrl'. You can
+argue whether that's a good thing or not.
+
+What do you think? If you disagree, I'm fine with the current approach
+and I think this version looks good.
+
+-- 
+Cheers,
+Toon
