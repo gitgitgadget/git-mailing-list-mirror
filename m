@@ -1,216 +1,151 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F403C3F825B
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 10:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886673EEAEC
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 10:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781001744; cv=none; b=IbfN9cyEptcHcwb/e2eyddTG0uob6aIRUAX87zrb6WjQSEDr4CSCyU1Db4MoF3jGt4soDFgvu16k0qaxRBkOq4Ih1LIqwjLaE+cMZy0mFGKZhuLp6UIg9OS5NKAueLtau7ug10RAikJf3OK4z8k7WqxBTLivY+U3Rwh3wQqGFNE=
+	t=1781002071; cv=none; b=sQJRX9wS5mEVsjUU4r4OJKvTUWU3D/8kXkzxEWxfjNnjkohGfIyobc4JY/uiS0sAAA7iHAZRuv7hPsDaRYBUFiS/bPEpLmKwazC1CX8pCrxnOGsuU2QSSf+7O8NKyHgGD4HGlD+349uz9jNwNne1FNimgM5nA4uAMfPwEUZTbeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781001744; c=relaxed/simple;
-	bh=csHS5hIl6EavpLv+72xT0B4jNkmTaquoXHolVsCQY3Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QE5tMzqspj1ear+/xWIdVEnd+xzzXdRzPyDIJtfPIBH/P0PaqsqL4v0WRTsW2VVyXWKs0W1+bsSoZYO7sthOzkQHROxjz9I3jTUBCZ7o70gbCgdTkCBpNPKi9fRSEzM2t/Nsxw6D3e2IrivUDD51NAzjy+m8bPJaEBTB4Mm71oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ipNIuGlq; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781002071; c=relaxed/simple;
+	bh=X7LeAwzkd6n7eLn9O7IrNBswRFx7XXLQZuvQnFf1QRo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M0K/9rilE/aOp1kFQP9xryQPkXn/roXzJCABQJjNDSYZmRX8i+J3V8yI22YtuvYcl22HDuRZRM+mdfX8xBGQdCwY6n33pznmqirMbqx6hAgtcIi0sy06oGOYWg4mB88eYhZ7cc6NJibiv9FpaRk44oY3+T/lvNePDyHAINVDc3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CClkyHQ8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZqJkt8go; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ipNIuGlq"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490b43e2b95so44109175e9.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 03:42:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781001739; x=1781606539; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8mvpxn84t8srS185PD35OLOjva8Hp85fa/FzUHseXDs=;
-        b=ipNIuGlquNIGaTxb7k3QAFPXSIqg+eIn+5zhdjClFTh2nW19j67CTwDLh9AI3zPCkg
-         ta0J2sTX3hCt1efu93ukyueDUo9oi36dUVKROsVOw7aMXyyu8F66ocPgQZZ/L5N9tvgQ
-         4UoRRvP78LQEgnGaszDte7yXj31vAZwjPy6IdQpnQghKaPnt7hlLitW/xm0OyE70g5Lo
-         ihFu9nB5neG88SGS25Z/b0edULozgFvS7KQfoNd7e/7N2/+zySJHkWlSRyisoFs7U0Ug
-         aZWpmMMv0pcvn/CYvOpft+1Dl50N4akln8bAD2TxeU2A/R+06tDa5eXc6tw+ZTacp+4w
-         sfuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781001739; x=1781606539;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8mvpxn84t8srS185PD35OLOjva8Hp85fa/FzUHseXDs=;
-        b=p9/LUsmZBa90eT35xoVTJLBNAs03SVwfcvHZukhn9LI/UkW8vjI3AjoP47oBvXeHxI
-         +WoFZfP6h+YgsGliE4jwFqrHliqEwmF+5NvAE6DILkfGE20P13mSdC1pJrro0ixiQUcD
-         hf6RQUTKHOL/+EbNQqXn7dtG2HYObMjLxjd9W7rDBZWHsbKEDSFTKeyBpg6j02hKo4p4
-         ZufoZFb78pA7rRMKmUFUraGwI0jsLH7lb3ag9oWAU+TkkDRHKDre+6vhyzx8GBAeexCT
-         MPsv7dEHXd4QPgwD/ARcqWbGY3RlDWLjl2dBf92hVzvy/98lJ/fjjzN4aTpngGzIP4y0
-         li2g==
-X-Gm-Message-State: AOJu0YzzOz9tB5X9ENRS8KSfsbRlgXwfTjami6nCl5KHNZMzMzJYS8xp
-	qWc0opjz0FpGRTQnv0hzeRjogFo28zX6LFiq/0YxjJB61wUJfJKK++SJdsm83Yc/
-X-Gm-Gg: Acq92OGrI60L8wJKNJyg4iM8bK3Pk0nRv4o1KFm5htWbtc4e/4LmZTu5BwP4aIAzCeH
-	aKTQ5EH0yLrUoYTLXDX/xA5pvwtBDZjsTV9rENrq59EXhugqIbdSb+qa5e+56odpofsTq6DXwiw
-	MXhCPWcYbExHlSvE6qs9EDRrpOEkFowaqTnRew3k2p1nY4zXCzUt97n047N9kzlr/EhgvcsEnIv
-	1myeSmZFYEYgqqGyFgqO8Sqs1AUvNhwS71GsN358LRz64qk4233D6P3UOy+Y75NS4UudI53sef9
-	yoleU7/pyCAzy/Ym8p7H5eaf2/GLtRZ6gO4b8JqESdBoLK/PwmKExmy90S5qCqd1SxD4xhi5Cu/
-	mE4TfRFwylkmyuorftJap/B6cDuTpHSYUukeoIJNwYgNIrDWvQw/bVfy7HDk4tmqSpMhd+5hfKb
-	QOOYtt/Fw1JdYrUnj5lzJ6Ji6c4LT47v3/Jno0sTd9i6i8Q4eZQ2eQDjQLxdQGx79RG+sGvwx7J
-	8uERgVD41g+shLwN/HoCsODb3DVHT0MIRCaBi5y5swcGIUrcv+JCZlPJoYS7d2BSAtPrPgn5ssZ
-	9m3luXsGTMt15eCREK5HrE56yEMSqiH8v47rELetXNU3XT5fB1nq+RPjYyYeSdj2s7DGtGFAHeQ
-	gl0+HZHIyCbxllnJWPJ8feoifpJpYTWjI
-X-Received: by 2002:a05:600c:82c3:b0:490:9782:3eb8 with SMTP id 5b1f17b1804b1-490c25f4963mr306797075e9.25.1781001739087;
-        Tue, 09 Jun 2026 03:42:19 -0700 (PDT)
-Received: from localhost.localdomain (static-21-4-87-188.ipcom.comunitel.net. [188.87.4.21])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3e59f5sm499692345e9.14.2026.06.09.03.42.18
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 09 Jun 2026 03:42:18 -0700 (PDT)
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-To: git@vger.kernel.org
-Cc: cat@malon.dev,
-	ps@pks.im,
-	kaartic.sivaraam@gmail.com,
-	pabloosabaterr@gmail.com,
-	ben.knoble@gmail.com,
-	gitster@pobox.com
-Subject: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
-Date: Tue,  9 Jun 2026 12:42:08 +0200
-Message-ID: <20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
-References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
- <20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CClkyHQ8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZqJkt8go"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A7BB91D000B4;
+	Tue,  9 Jun 2026 06:47:48 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 09 Jun 2026 06:47:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781002068; x=1781088468; bh=BHCbk/HhSa
+	LmiLAp0Yrs1x3Od84dtHlBKtP5AbWWAVg=; b=CClkyHQ8l3F8zAlyxf4Oqnr99l
+	MVEMh9OKTV2afyKzrClZu28c3hqOQZh/DJy2KcCIRPCHuz/huIFQ4axDjEiqo2t0
+	mu4ifOzAFphzbsdFWHk7bOstRKkkkJnLHONrYPccy3MMRU0EMg4EPeCT3giyiWaV
+	Jv4emfdqLXIJdDuVsfGyRaiqtS27u+6iuIgpr++Q67R5HS3QWPgRGjYtRIHCTFCR
+	WpG/gpfyDto5QfSWskhnq1zu9e18qLHrjHWR9NE73vLItEK/rWYKfgLE7+HwDVrC
+	LJXYMOANiGjSkfEN6qLE83hZCkPYLZWwZ74qJpUsIxQJFy/7GUTwDnMilIMg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781002068; x=1781088468; bh=BHCbk/HhSaLmiLAp0Yrs1x3Od84dtHlBKtP
+	5AbWWAVg=; b=ZqJkt8gouzWXHO5hY1crmNIbXxzMp7N1xZGgvuwL7CfP6M45c7x
+	eqxJWP5zwK1JhIbZwlJJoGbZCd33lbliEEvwQz4Hm3e6XfCKGVvfDKNmB/+ERGGm
+	TY8wjOF2v93ROQOLjGQDNLVbHeY/XOTWWvez4NA8PqaluB+rxn38xt2Ap38BTE5M
+	dBN3CuYqYmM+8twTuhc5hoIrFvuCHz4AwvvUrgoBpeZ0Za3atlnukvyklxJtF/V6
+	r8sPwrofQQkomBZAcksNRlqzq2qvbkniPXzYJN+xsW3vCx21DOzepHQt+05Q4kxj
+	WETGSW1kr+VJHuNS2CX9VPJi9KhEFYnvJ+Q==
+X-ME-Sender: <xms:VO8nai4LVtH52k4RN7BTIXTHsPeGe4Qhi0w7JQTXXOB9rmEf8XTXWg>
+    <xme:VO8nah62qXqlp3K7QkmJNGuAKtit9IVWLghVL2yUyoqSKRys6zXEYXStYOwSgmcxZ
+    AmEz6krkBTi03thkM6fJIYDCuTf8y4VCPG-Nr9mYj6AdfISJCKhBA>
+X-ME-Received: <xmr:VO8navF00s-WdXbRh00VOHne8K9kf5MsbCEn0dtdFKA4YUEGKel3OVPWLc71YuJKszqRd17urRZyh_LOjduNHbHrqx8YLzE6KN-Q4hgsSXc>
+X-ME-Proxy-Cause: dmFkZTG4Nqld7C+NNTajL+JMlJ80rf2YOPB0Wa7HF+jv8RPUfyvxidyGx0QtLKcPj2l32B
+    5ox320IhoJ3/wjzVFKfCry5+Clh/oipNDUdkJsyRCktKAk2gWkGjRMtTyI8OIvyVZr6sBd
+    YN7YM3gXO6d3SamWa/EJ9Gy5Aj6IJUdNQecfn0DI96/HjAv4hb/DXDV7nWLimmcMtA+We9
+    siQS9tUNpLeWQtfdlpRsQcVZuB63c+UdqGB2C9F125uFn8ivIVO3e8Zx2ySRX2Gw+1pSzD
+    WmwcRZO5O3vTO/UJInwr9HmSGXXPFwL7D75iQUQ54nt4Pl0g7XfNPawlYLX5qXhO75GnlZ
+    PGfD3m4bKIFanotG/2jruBPJ3VhFBVrtKJmnN2WoPw1GYt/OCIJ9ppymMSgz5foi9Xt2pJ
+    JH1tzhn1DkrqxSN0Ay3zRiF4975nXTxl0rNbhvlhDPVAiNihKiYLUkkq0OaZAe04jyyuhe
+    eC1LEcHOf+MhxXznPcbbJ4M3lCbYSxtz4tZDHiuhw0K9ceo6J0cPhys9+TfEwmZEPI1CyI
+    wTcR4RaVQ1dTmmvez1xi9BMKRXs42ND1ogkflqc3nCYkpxsME1cnMv/fv0omEGAB+3CaL/
+    99f9CVwm0mrmhCAA6z5c0w4mkSHs0/4T9we2AIl/4cwX79icG4bRec7T4Ogw
+X-ME-Proxy: <xmx:VO8naqSZsoWYb0Kg3EdF_ngFf6JGzmeoPQROnydCXg8ppeDbF8-bqg>
+    <xmx:VO8naotACyiY7yd0dflJHcS4Iapec79NNcm36qG9Tq9_7QaTHxE-uA>
+    <xmx:VO8napxIg9BXPJ5BuWUZraOqldl4z-OXOrdikA7zc5E7C9_KM5Fcxw>
+    <xmx:VO8nai7Fhs4P8OHHYW5JULjLyhNNozcklpTvzN8yKX6nzMVtu6JvKw>
+    <xmx:VO8nagqJFfaietHtGKJstWQFwf9OVlzNG-ET-MuMMHDJkXZHf7MKIqGX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 06:47:47 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 78c36667 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 9 Jun 2026 10:47:45 +0000 (UTC)
+Date: Tue, 9 Jun 2026 12:47:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 04/16] odb/source-packed: start converting to a proper
+ `struct odb_source`
+Message-ID: <aifvTmsPzaVdC8Yq@pks.im>
+References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
+ <20260604-pks-odb-source-packed-v1-4-2e7ab31b4b5c@pks.im>
+ <CAOLa=ZQst6ucwvtVOfXC6g1ZcP9_UZAwRyAXfQdjL7WcJ6ZzxQ@mail.gmail.com>
+ <aifAVpxanV31KUpC@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aifAVpxanV31KUpC@pks.im>
 
-When using `git history reword <commit>` if the new message is the same
-as the original, it continues and rewrites the history when nothing
-changed.
+On Tue, Jun 09, 2026 at 09:27:25AM +0200, Patrick Steinhardt wrote:
+> On Mon, Jun 08, 2026 at 08:29:04AM -0700, Karthik Nayak wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > > diff --git a/odb/source-packed.c b/odb/source-packed.c
+> > > index 12e785be48..f81a990cbd 100644
+> > > --- a/odb/source-packed.c
+> > > +++ b/odb/source-packed.c
+> > > +	CALLOC_ARRAY(packed, 1);
+> > > +	odb_source_init(&packed->base, parent->base.odb, ODB_SOURCE_PACKED,
+> > > +			parent->base.path, parent->base.local);
+> > > +	packed->files = parent;
+> > > +	strmap_init(&packed->packs_by_path);
+> > > +
+> > > +	packed->base.free = odb_source_packed_free;
+> > > +
+> > > +	if (!is_absolute_path(parent->base.path))
+> > > +		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
+> > > +
+> > 
+> > Tangent: seems like no one sets the 'name' field within
+> > `chdir_notify_register()`. It is meant for tracing purposes, but if no
+> > one is using it, we might as well remove it...? Perhaps #leftoverbits
+> 
+> There are some callers: `chdir_notify_reparent()` calls
+> `chdir_notify_register()` with a name, and the reference backends call
+> that function with names.
+> 
+> Ultimately though I think that this infrastructure is somewhat misguided
+> overall: we use this to update relative paths after chdir(3p), but if we
+> stored absolute paths in the first place then we wouldn't have to care
+> about the paths changing at all.
+> 
+> I plan to revisit this infra for the object database going forward: we
+> expose and use `struct odb_source::path` in various other subsystems,
+> including user-facing ones. This is inherently wrong though, as there
+> may be sources that don't even have an on-disk path. So there's a need
+> to drop that field and make it an internal implementation detail of the
+> source's backend. And once we've done that, we can just as well start to
+> store absolute paths.
+> 
+> For the reference backends we can already do that refactoring now-ish.
+> I'll send a patch series later today.
 
-`git commit --amend` and `git rebase -i` with reword share this behavior
-and it is wrong as well, but changing them breaks what people are used
-to. Take the opportunity of `git history` being a new command and handle
-it correctly from the start.
+Well, as ever so often I went down the rabbit hole and discovered way
+more than I wanted:
 
-Create COMMIT_TREE_ABORT_ON_SAME_MESSAGE and make a check for if the
-messages are the same and the flag is set so other subcommands like
-fixup that do not want this behavior just don't send the abort flag.
+  - We never free the `struct repository::refs_private` field.
 
-Make commit_tree_ext() return 1 when facing the same message so its
-callers can choose what to do.
+  - We create the refdb multiple times in case we have "onbranch"
+    conditionals and never free them.
 
-Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
----
- builtin/history.c         | 14 +++++++++++++-
- t/t3451-history-reword.sh | 16 ++++++++++++++++
- t/t3453-history-fixup.sh  | 22 ++++++++++++++++++++++
- 3 files changed, 51 insertions(+), 1 deletion(-)
+  - The chicken-and-egg problem we have with "onbranch" and refdb
+    creation is awkward.
 
-diff --git a/builtin/history.c b/builtin/history.c
-index b3e2e5270d..be07690da4 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -96,6 +96,7 @@ static int fill_commit_message(struct repository *repo,
- 
- enum commit_tree_flags {
- 	COMMIT_TREE_EDIT_MESSAGE = (1 << 0),
-+	COMMIT_TREE_ABORT_ON_SAME_MESSAGE = (1 << 1),
- };
- 
- static int commit_tree_ext(struct repository *repo,
-@@ -135,6 +136,13 @@ static int commit_tree_ext(struct repository *repo,
- 					  original_body, action, &commit_message);
- 		if (ret < 0)
- 			goto out;
-+
-+		if (flags & COMMIT_TREE_ABORT_ON_SAME_MESSAGE &&
-+		    !strcmp(original_body, commit_message.buf)) {
-+			fprintf(stderr, _("Message unchanged, aborting reword.\n"));
-+			ret = 1;
-+			goto out;
-+		}
- 	} else {
- 		strbuf_addstr(&commit_message, original_body);
- 	}
-@@ -693,7 +701,8 @@ static int cmd_history_reword(int argc,
- 	struct strbuf reflog_msg = STRBUF_INIT;
- 	struct commit *original, *rewritten;
- 	struct rev_info revs = { 0 };
--	enum commit_tree_flags flags = COMMIT_TREE_EDIT_MESSAGE;
-+	enum commit_tree_flags flags = COMMIT_TREE_EDIT_MESSAGE |
-+				       COMMIT_TREE_ABORT_ON_SAME_MESSAGE;
- 	int ret;
- 
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
-@@ -721,6 +730,9 @@ static int cmd_history_reword(int argc,
- 	if (ret < 0) {
- 		ret = error(_("failed writing reworded commit"));
- 		goto out;
-+	} else if (ret == 1) {
-+		ret = 0;
-+		goto out;
- 	}
- 
- 	strbuf_addf(&reflog_msg, "reword: updating %s", argv[0]);
-diff --git a/t/t3451-history-reword.sh b/t/t3451-history-reword.sh
-index de7b357685..6e0e278c42 100755
---- a/t/t3451-history-reword.sh
-+++ b/t/t3451-history-reword.sh
-@@ -396,4 +396,20 @@ test_expect_success 'retains changes in the worktree and index' '
- 	)
- '
- 
-+test_expect_success 'aborts if the commit message is the same' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit first &&
-+		test_commit second &&
-+
-+		git rev-parse HEAD >oid-before &&
-+		GIT_EDITOR=true git history reword HEAD 2>err &&
-+		git rev-parse HEAD >oid-after &&
-+		test_cmp oid-before oid-after &&
-+		test_grep "Message unchanged" err
-+	)
-+'
-+
- test_done
-diff --git a/t/t3453-history-fixup.sh b/t/t3453-history-fixup.sh
-index 868298e248..9f9a3c93de 100755
---- a/t/t3453-history-fixup.sh
-+++ b/t/t3453-history-fixup.sh
-@@ -443,6 +443,28 @@ test_expect_success '--reedit-message opens editor for the commit message' '
- 	)
- '
- 
-+test_expect_success 'fixup --reedit-message does not abort with the same commit message' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		echo content > file.txt &&
-+		git add file.txt &&
-+		git commit -m "add file" &&
-+
-+		echo fix >>file.txt &&
-+		git add file.txt &&
-+		GIT_EDITOR=true git history fixup --reedit-message HEAD &&
-+		expect_changes --branches <<-\EOF
-+		add file
-+		2	0	file.txt
-+		initial
-+		1	0	initial.t
-+		EOF
-+	)
-+'
-+
- test_expect_success 'retains unstaged working tree changes after fixup' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
+So I'm now sitting at 11 patches to fix all of those bugs, and I'll also
+have to make changes to "setup.c" to fix them. So I'll first have to
+wait for ps/setup-centralize-odb-creation to land.
 
--- 
-2.54.0
+Patrick
