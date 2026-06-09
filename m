@@ -1,113 +1,158 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43754425CEB
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:45:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844D5428499
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781012750; cv=none; b=XP67bzKmCHHgz6UhqOM9G1Gnll1f8cdeIY4oeYLTSTZ73lLDAa6mn/nm8PTcldkb3l3fDrzrJiW/eLZsDw5BJcAz7ICmwrpDgvJBG681DpsETOuA2EhNrfK0aGY5v07+iwynCZX8cBztZoiXYBN/EVf5RhavjXCN4bz4z3zGV3k=
+	t=1781012983; cv=none; b=cB50TNkQR7PJraeHNuOHoH2ZE4Ydl4AiRijBhQ2DUT3milHQs2hVaHxxizXIaews+d2oEpx3MB4qMM1JeyY6//0eD4iFMRgI91UxHM5Z3HH6UBRcv+ZagUUiC5+sgycu3kp/sP5b1tWXJb6xBlGboB+52I7mGgmXbve151WOiLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781012750; c=relaxed/simple;
-	bh=qg6KR9BPqriIidiDz1DEAWAB0neEeTTmwNYVt3mzOYE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ttktOx7uhyaPgsUVP9DryZFabYaneHlZcYA4oXAF5Nn2Q56P9vdKmNvVPDxslP9UJdA3+MFNp1UQAzcPnnNIH9ldtyUdlD2sHhY5xmWtbvw5NzBH0iid/C70RlB9S/s9zI3rOA7sT9FAtHa6kWPQk5w0mzrTwsOYR4CqA2q/a+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZnFoL8+g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ExcurEYs; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781012983; c=relaxed/simple;
+	bh=HtiG3/Ed16rFda6XGed7smw9DRfsL3aWbCG9eAoR160=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=n9uwb/S4+ca4SNJGSXu8oycPoJnw5iZPJptBrihVCLuISwe/vIXxL+BC6zRLIarx5OiOaNhxcrbtqmhiIee3F4v6X44GeEC3mm+uPgz635rwZmEN8Ot0EHtrrakHiU87KZeibYiSxVNSA7ZgVd5+4OyCfKApTkKXRERT5a/lga4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TjK/U8T2; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZnFoL8+g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ExcurEYs"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 127F97A00CF;
-	Tue,  9 Jun 2026 09:45:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 09:45:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781012747;
-	 x=1781099147; bh=8RQ3KBhPBUlgr4BvjUTvMaiVtHp6NOQHt/wqETO2TiM=; b=
-	ZnFoL8+go7gUsPM3rYVvrBYG+r3AOgy9zcRpDROXZg77hO6QBCBsC9ZJdat7wtpg
-	GnTGbX7JSbOiUlSvCiEkMmLWVcA8wrwKosmPD9iaa/8RIAE5353ePN3i25i5Y/gm
-	Beiry1l+o5NfGc+sm+Tbl6pINJtqicWWF7a50QcUWLGVu4lH8PN3mzZB2ZxIkCDC
-	VzismVS8l7E3zve+fv+kP5BimpqNaQoc5+NByZsBSPrHakoEYaP6sH9z4pop6lN2
-	T4PfCJ4nUaFqYj64+AzBySEBj8XsQAuSTxhVCJyRCPqVC4jVw/25aYQ2mLf+fRW4
-	8R2JEGE24SdSy4GJwF+oSw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781012747; x=
-	1781099147; bh=8RQ3KBhPBUlgr4BvjUTvMaiVtHp6NOQHt/wqETO2TiM=; b=E
-	xcurEYsFLhHs3/XsMlsPBde8BrjOCejX440gFwLON6lpuXf8Gl1pwW9I3cv5A06Y
-	U7eP347FkaK2NgImVkiNoggVusJ1vqbcNsPqwkbjk0GdMyKs1vuKVl6LTgUwPGh2
-	VUd8cJbN/72FZNrx74nH5fG0Nh6en0qlbVN9+PyuDC27t5h6QEdzgX6J2N1bQhwW
-	S1YzQdGUO0rSn3ecCEXe0bPx7Dy98sOHUws4uCYnEpyqppP0FWTVzfEGQoMsddJS
-	pX86F31HXpmav5v8GwjAszvRVgSQKwbD4IsU5cs5jbr2AeqMfMu7vhMIG/mTCskG
-	prrimQabLCAM1x8hC0SGg==
-X-ME-Sender: <xms:CxkoanZRXQagEqWb_GjRn-fz3elV9svembSPORRccquT0QBrLaXYNw>
-    <xme:Cxkoaoq3gfgEdo9HjEcMavRjoYVZtZhkuvW3pRcaida94XU8jPgcatP2wbY2FsEl4
-    dfWUnzzGUjcitTCNpSRgqJl2kxRWFdP6iDrLgaOpHmppf0qLh7hIg>
-X-ME-Received: <xmr:CxkoasP9nCQZh3N9jogReZybaD4EIwbT62ko4jI9CwKU4QnyW99OTH-u0Zp-YrDgexm06ueuwVOqYXznnpF-qbQbg5PfoVI1XTUu>
-X-ME-Proxy-Cause: dmFkZTGpNn/+eNgd91ogFC1BO3sxqEJJ5m1ib/ghiIK7G0fMg9YNe5jLUBEU3mO5CDXUlQ
-    crI5Qfm6OklI8hUyqGxAb7EfCATRh3481WwDe7KtKGVwyS1yvnRg8webLTOWJC8RGQMU4G
-    bamSMVbj2PWbjSZPSrUb07A9j7ObA2azzPjH8XIg724zxU8vSuzR9XVBX0OgBaZByV9O7r
-    3nG59lDiNlTycYfgets2F+IOYy3mjKB84g3xfIMWirx9skE3/C3BEKGByalEJRgdUEltj7
-    bzhnaKexWi5VJOiVRdBUSJbJP0O54usPfFT4n4r63FeD9dlMVYBAEtTBqDOdYtvyeUsjAO
-    hPMkg7O7/WPxrMTx2soroh9lc9iq+dKzMOboj1A14T52H1LznzpfgSNtYnoT8Gam2mAAIo
-    OTmEw4SXPACF9vMu/h3In/M//Ie1yZp7Rw7qT94XQDxowCZ/8m5Il4HcgueRBIOWmIAlsz
-    0xXxxE+SfIyJKgfbo8cHgBYzqiqMOzNSK1gflTLnlsqOpf2OaU9+XRYUDVslZLpb/v/8RU
-    hjU7SToKS4mhqSRYi9zcyZY+1bY+nR8zmh4TXXNzq0h3NxjreUBxn4UWgATJ3KnfdvCG6I
-    uEZBOYGOACfOtyWhtDqYzZ/HjkJyk3OCICb6JhkJMvMgMG8wFpsnp6kQYq4Q
-X-ME-Proxy: <xmx:CxkoajqsSDvBpMPHnomLAnY52P8dTc4iNs6j642dDK4ME48dGOeRBQ>
-    <xmx:CxkoahdF2uGFl2a09xFpcdmyaaMWWHoodt0wfR8IUgVskaAJ3vDEZQ>
-    <xmx:CxkoapR0gzkSiIrYq6SDmg6xX2kwYGu6WSf43-q1vQGyzqeJKnjy8A>
-    <xmx:Cxkoaqb2_9vSe-sMY94s9OF2yWLKQ5hYRFhHR3MZWZZz_sBckNAD8g>
-    <xmx:CxkoarVNP8JDCswbQLhlHVdKcnfg721W1WHdjIivBfCECQP-KKu1Mv16>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 09:45:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,  Ayush
- Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
- <belkid98@gmail.com>
-Subject: Re: [PATCH v1 3/4] environment: move 'trust_executable_bit' into
- repo_config_values
-In-Reply-To: <8083b217-4a56-48ee-b34d-b4596d45e382@malon.dev> (Tian Yuchen's
-	message of "Tue, 2 Jun 2026 02:03:15 +0800")
-References: <20260530160520.77859-1-cat@malon.dev>
-	<20260530160520.77859-4-cat@malon.dev> <xmqq7bokebct.fsf@gitster.g>
-	<e0d5b1af-b040-49e2-90f9-d8325682826b@malon.dev>
-	<8083b217-4a56-48ee-b34d-b4596d45e382@malon.dev>
-Date: Tue, 09 Jun 2026 06:45:46 -0700
-Message-ID: <xmqqcxxzsu7p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TjK/U8T2"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8423f1e2f8eso4221514b3a.1
+        for <git@vger.kernel.org>; Tue, 09 Jun 2026 06:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781012982; x=1781617782; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DJhOFOTu12azIINBQoyUoaJNJdafF713exVCxJ+uHJ4=;
+        b=TjK/U8T2vIATDVcU/c+YXp1Lr7ej4lwaJxSKZiE4/1nhYCYny7LpYKMLvjD9SGHph8
+         A91GfAktAy4tETHNQDb7BgAaNSqECGFpQUNAhdHWkyFEN/Ib/6Jf+h5wjQWB7J/Xk7zL
+         lNWcuceljObeym3mRHCv369ySIHEknTj8BANzCKUr/2MTzn3O8nCQE5YtvVz4NGriCMl
+         ZMZJY57D1AwMekXDOMjaGg6q25/co6I7LN2t7BrksIuuO78idG2CpMg6yPyhvPHQLp4M
+         +PIqZxGijVzieQISS+cDxbbyL29dICCoGbtiDJ58pNPvM9b1spEea9Tf0sor6ycvgcgU
+         B0Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781012982; x=1781617782;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=DJhOFOTu12azIINBQoyUoaJNJdafF713exVCxJ+uHJ4=;
+        b=nkQU1NzdRF6KALIa4PJT/CAoDKEv2VH/pogt5dPhQzV9oMm46DFOeUsd0gLr8USRK7
+         MLrXV0a0s5UrbfcoRHbx3CTHoKNu49wwtmG/KCcjghS8KeHzf1XF1brLi97sBLYRRbuF
+         gki/hehn/7/L7Q57DU1TqhhxzGadu2Saphih+nXFlsPh7yjioS41pXHAax0LdHUHjHj0
+         LK1LbArOKeX/owAbiDM1L+SrYbx0tJCEcwKGlTssLp+iCU+curc+dxEFDhgjqjOvrP/9
+         ZJESLuIyGt9xMr9eo5hILdRjPfL88Ggg61ekDhUx+RLBXcSiGMv7P1FcEYHTxiA7uB4j
+         1PoA==
+X-Gm-Message-State: AOJu0YzPcCAoTPTKlT3tZjf8rvz9Cm0HIXmT8GwA7zG2hNu5AH/1RCRa
+	H+IJTKA0rkL/aIEZGB6QhPmWllTao7hfrpFq9HUFTKJug0m+vCnv8SKr/vCQJQ==
+X-Gm-Gg: Acq92OHWiN7DBy6OcMkGsX+1nPyjQFYRsO/noAMEQGm9/SxEqAATIN28HkSalutmtN7
+	ALQhONidjrjbCpfQsmAzHnmKkDhHLRNRvn4xSILqF97RiQ4kLP5YghFhuUDioOMh7sRUtanPohM
+	LVxkzrj+9VBXU4ppRvcPIy9YCvuxyXEq9Ms36TX6Y8e60VRDrECJBQceUr/vQSYfHY6btFqjus7
+	CKt1tAuncxJ26rVNjSVlqUxQGVWrXCy8Opm49W51p5oNq+yRQebGzIfezyerHkMIvTzwJ2ib9qD
+	d83rBQFJrfb13wY1kVyLHgQQPFqQosZAUDNXsxfKzu+pDNnmuYgVbuBiA5G9C+oGtlAvRjzTuuY
+	xC1iFNEynRVi+BhfcWvYBpcu345RH3/j2GMvQbxJ37JE9lt5lDqfoif/+/oVKjNoT0l/5Commew
+	BvjpU4HSDzDM1DgErX35MWtkqCIYsTVMjLZeLYae9fV0oxG5CHLYd63d0Q
+X-Received: by 2002:a05:6a00:3e07:b0:842:6419:3ed2 with SMTP id d2e1a72fcca58-842b0eecc85mr20876172b3a.33.1781012981731;
+        Tue, 09 Jun 2026 06:49:41 -0700 (PDT)
+Received: from Pushkar.localdomain ([49.37.115.98])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428291ed20sm26521690b3a.61.2026.06.09.06.49.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jun 2026 06:49:41 -0700 (PDT)
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+To: pushkarkumarsingh1970@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	peff@peff.net
+Subject: [PATCH v3] transport-helper: fix TSAN race in transfer_debug()
+Date: Tue,  9 Jun 2026 13:47:42 +0000
+Message-ID: <20260609134741.4727-2-pushkarkumarsingh1970@gmail.com>
+X-Mailer: git-send-email 2.53.0.582.gca1db8a0f7
+In-Reply-To: <20260604132327.277693-3-pushkarkumarsingh1970@gmail.com>
+References: <20260604132327.277693-3-pushkarkumarsingh1970@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Tian Yuchen <cat@malon.dev> writes:
+Currently, transfer_debug() lazily initializes a static variable based
+on GIT_TRANSLOOP_DEBUG. Since the function may be called from multiple
+worker threads, this initialization is racy and is therefore suppressed
+in .tsan-suppressions.
 
-> On 6/1/26 18:10, Tian Yuchen wrote:
->
->> That’s true: I had actually planned to start migrating has_symlinks as 
->> soon as this series was approved. Since you think it would be better to 
->> merge them into a single series, I’ll go ahead and do that ;)
->> 
->
-> I’ve found that migrating has_symlinks seems to be quite a tricky 
-> business. Some callers in certain files pass very few parameters, and 
-> the call stack is quite deep, if I am correct. so I feel that adding a 
-> repo for this purpose might be overkill. Perhaps it would be better to 
-> focus on trust_executable_bit for now?
->
-> Regards, yuchen
+Initialize the variable in bidirectional_transfer_loop() before any
+worker threads or processes are created. This patch removes the race and
+allows dropping the corresponding TSAN suppression.
 
-Sounds fine.  Thanks for digging.
+Signed-off-by: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+---
+Changes since v2:
+- Treat an uninitialized transfer_debug_enabled as a BUG()
+  instead of silently treating it as disabled.
+- Follow Jeff King's suggestion to distinguish an
+  uninitialized state from a disabled state.
+
+ .tsan-suppressions |  1 -
+ transport-helper.c | 19 ++++++++-----------
+ 2 files changed, 8 insertions(+), 12 deletions(-)
+
+diff --git a/.tsan-suppressions b/.tsan-suppressions
+index 5ba86d6845..d84883bd90 100644
+--- a/.tsan-suppressions
++++ b/.tsan-suppressions
+@@ -7,7 +7,6 @@
+ # A static variable is written to racily, but we always write the same value, so
+ # in practice it (hopefully!) doesn't matter.
+ race:^want_color$
+-race:^transfer_debug$
+ 
+ # A boolean value, which tells whether the replace_map has been initialized or
+ # not, is read racily with an update. As this variable is written to only once,
+diff --git a/transport-helper.c b/transport-helper.c
+index 04d55572a9..5b639bff3d 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1361,24 +1361,18 @@ int transport_helper_init(struct transport *transport, const char *name)
+ /* This should be enough to hold debugging message. */
+ #define PBUFFERSIZE 8192
+ 
++static int transfer_debug_enabled = -1;
++
+ /* Print bidirectional transfer loop debug message. */
+ __attribute__((format (printf, 1, 2)))
+ static void transfer_debug(const char *fmt, ...)
+ {
+-	/*
+-	 * NEEDSWORK: This function is sometimes used from multiple threads, and
+-	 * we end up using debug_enabled racily. That "should not matter" since
+-	 * we always write the same value, but it's still wrong. This function
+-	 * is listed in .tsan-suppressions for the time being.
+-	 */
+-
+ 	va_list args;
+ 	char msgbuf[PBUFFERSIZE];
+-	static int debug_enabled = -1;
+ 
+-	if (debug_enabled < 0)
+-		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
+-	if (!debug_enabled)
++	if (transfer_debug_enabled < 0)
++		BUG("somebody forgot to check GIT_TRANSLOOP_DEBUG!");
++	if (!transfer_debug_enabled)
+ 		return;
+ 
+ 	va_start(args, fmt);
+@@ -1648,6 +1642,9 @@ int bidirectional_transfer_loop(int input, int output)
+ {
+ 	struct bidirectional_transfer_state state;
+ 
++	if (transfer_debug_enabled < 0)
++		transfer_debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
++
+ 	/* Fill the state fields. */
+ 	state.ptg.src = input;
+ 	state.ptg.dest = 1;
+-- 
+2.53.0.582.gca1db8a0f7
+
