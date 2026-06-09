@@ -1,304 +1,163 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DB923BCF7
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 02:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780972645; cv=none; b=YcnHieCH/dSgMMNQODHlfQ+nbCwaC7O3oeHEXfFiyopHLkZ2i8mEg5At07GLlwMlWiYpJL5zM9/io8QSG4ezHCX0VLaCKOR55OuRaOVJ0094Qz1P7/kk9skpWyN6jtEWsbDfLT2pn0UZJNt/cJDpyLTXp/CrWdFuKNAILuj/7sY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780972645; c=relaxed/simple;
-	bh=/OwglieMgxTozS7yhxJdhB6/SoRLsyaRL45jmkWJVP4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XFwKjnFis3HM54cNgkXokPVk0M7RZx3Sgr81cTSYvilSmtkbaKZ3UeXkiw2X+Lt+ZUSShtcuOHbgUFmNOumTtdMw8foWAbR38hlwy13i/Ret+vv9+j1Yyw+gcvpfekm7ON9Vqp8XiV/UbU8S/ysIShh22K1DoxYlfpzDjA165H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFAqa3Bk; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C3D14F112
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 02:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780973246; cv=pass; b=ZlXZ8Oe0TN7/rwoGhHY9zqABgJW9auNWL3DmTAaQ/dGfSMV1wn4xWf3/UB7HT0nvMgjcSy0PmpiRCpVw14pL3JHALFKcUK+kAh84IZMP5+77wdxTa0W0AJWWkTYltmH6nnr85RCXHCtiZUiESsYKn+hpWYo2nZNNfADvectCif4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780973246; c=relaxed/simple;
+	bh=oYo8H1kDtvvJ3E10eeD6YyZMY1gHALw6EGOmfhp1grY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RNwAppEZpSxp8k42zqIeAalO3krxoanQ7VIeXaHV6cAinfJ+zgvUCkdYxIiOVp5SDa0cS/umF9og2NeUud6QIXT9lw7Poo3di13N5xwdxX4dsWQ8iQpTnFCchQ/c6m7PpWYET6wl+Vka6UCMaPRrjHlIiZXKnqLddnWw+nFhhaA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lmJsNrMy; arc=pass smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFAqa3Bk"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-51784eb2ba0so38033531cf.2
-        for <git@vger.kernel.org>; Mon, 08 Jun 2026 19:37:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lmJsNrMy"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3967717c951so52073361fa.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2026 19:47:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780973243; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Cx8guXkPq/u4JGK4pDxlrn/KEdFHVVmqMdQp1lLzsALV/sAHQs8FhzV+W1e6yoUFwQ
+         o35VqJA65kWRvrAjiCVYjD50RiXylVPcZI3EDq8v7ddt2c1KWhq1dHX9QhKppmYMQ8rp
+         33drkf0GQbrD4l55ZclgEYsvezL6uFV+ulzi+jkEgQSUVhNFo8odgF2ir4Oo8LOwBG9y
+         +V1bj3cj/L6M0SXmuJpyLBKiFiNfiJqCpGGWVD6tImp3aQvuEQjm36dmQqiiSxeE09DH
+         Xcp8p2CUUVoVQ9xPUoNTalH7+Jz74j72BRX0Gdh70ILvGFo1yOKAQGvrRr9FqyvPeYXe
+         4koA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=WfQVTiPEyG3ZTnlWv1SfOG/uM2e/9acNmuCahjmqwEQ=;
+        fh=II5UFWVA2YVGzjMzHotJOpZ2kHzaEAQlHI0yuZYNT4o=;
+        b=OoNPqvzkgL4q+mWmN0gedSvQ38Xrp+AMRIqIZYKv2u0076yO3p4wn9GfFL+n7qm7TM
+         Obwva+ypH5QveVKZ0qXL08TFTebON0UN874IHs0UTdVJgJW8qoCXYd3Bx/1EiVmCkJpq
+         f20P9tDSQxQG2r/F+qjmvI1kvN+/E9WdjLBZYT4k2PN08EflBlGHrDMTu1Rd5mDzQKk+
+         TRsSiqzfMeCMaGXyGeMcIFJ1NSq2r11ilpmDt3M0Fm9Z2/JXEuuLG/wMeZEOQuDA/eG+
+         9skiuS+mufTWH1cS1MdpMwLT4MlhMFAscepLzsBCpTuEcbfx4asejj4PtGPL+LscnSsv
+         zbKg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780972643; x=1781577443; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iv7jCkqGTyaTLDCh8e1ahEGawV7GTJpyd49v5UlIhYM=;
-        b=mFAqa3BkmEPMjY3O4RrCOSVCcKNTXSrXh7YK8slY8wOV7H+06/WJwR1tsQD8PZb34+
-         7uYsgO9ffWlw3pEy7u+GD/FUK3ruUb8ZtSwSgAtl5GKTbQcf6EK9+0T6zc2mKz5NTVWP
-         CHTE3SWebZelYUPHS3VS91Q0fJkMeTGsAhQ6EGpD/1FLIVWEWKwQisIta93b0xa5jOTh
-         OeZ8mM5BPf7thOKdmaVAvtJfHA0tm10r+PLN8QDfJtOKwXePF4x5eoSfoZkRPvMNeeiC
-         DGZcy8Qzk+pOQVoqal1DWkNtDEQZLhV5Eg/BzMG2BbMhSAv86+0CPtYjABjH6XfJRSzO
-         8v4A==
+        d=gmail.com; s=20251104; t=1780973243; x=1781578043; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WfQVTiPEyG3ZTnlWv1SfOG/uM2e/9acNmuCahjmqwEQ=;
+        b=lmJsNrMyvrWfHiofvwHZBh8nCTbm609Dtv8WneD8TKVDnBvqx+fQjiJHM5LglQ/k/+
+         OE2CciM1p9qIF2UqT+mSPK6TnriFywS8szHNugrzqWJF4EPVi5DS4GK6Rr54lABRIxBZ
+         BeEpFbthELjA5KdCwvyY+DH9SjNMuyg031B+HVn3ikLU+qAwXfiTVPV2mIfC1FGaC9Io
+         UUBL/uTwaEZi5BNZnUyKvvFSZ+epioW94tWiP+K0qWlCc+6PfVknMmdjmYybvjbNjco0
+         YYexyUBn3USKXy0liMVQ77NPENu0Ukumv5rJDQbBEsbbgGr4oj+TN43vUebLpAIXS17N
+         Itpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780972643; x=1781577443;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1780973243; x=1781578043;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iv7jCkqGTyaTLDCh8e1ahEGawV7GTJpyd49v5UlIhYM=;
-        b=aJtaFP5k+xE+5dmQiPJf+9WEJf1W7iABEtGVqW0EQUwFqdVNWr3z5GiUx8pewZFjU9
-         4ph1PEVy4svAlECCGocRFkxFhYMkYIs5Gvg/NKt/T41Wsk1Qm34fKK/v5bycs8r2j3O3
-         KtnnldD3jNA8rvP5sNBDgaQqkAx8mJc0wz+6P7apb0u5MaavJGx2lMV70JrFwguoEJ1W
-         /dSp43nhtK/ZbnLrYdqkiFdNa/5PecABqUWNdrOehc9zHAbcGJ80dw/71guJ3eTJln47
-         wBR3P5j4a3jr2K5v3mW03wip7nR96Yncd2PMjNKnKlZ1o+B6noWn2pDU2io9LRkACUje
-         sozQ==
-X-Gm-Message-State: AOJu0YxBxZX9x8MWg0p/dK4TA95Gh4JIv3K+QN6CZWhhh4dA+ozZf48u
-	6KruIdmgGT/miz+j64RrWVMEgeyc1Tyy9urQ4R8huUPbOqGlI5Cixm7yNLqcAonn
-X-Gm-Gg: Acq92OFoZ+Z0Fajn5tU6t+P3OOh0TAInN6iXtWKhSo4W8P/5gizt/+EFXqN9R2CKh+l
-	vMgsDJOtlj92rqjku73jNsC5BKflcvgdBQWBvlKvKPdxMiy8zR1QJW1qC2n8rp9XBmOeAtChWj8
-	FywJf0MJxs4orbWWrY4opQRHKLrE1oImvBCCbWhoDCOj1VZEHO+Llfia0gfbKvSyP+Q1X9EcO9B
-	efWFA7SflLTowzT5zxdSX8hnlOKwp+0kDVKgzWmI7c5x/wpjgufUx+F9KoEfyobkXuateFKk1at
-	o1elY+BtZIZpqP6E+atgP67bI4e7QOsRxPvbkkY1p9+YAeQiKW/kEDbuHKpXYTZtpqUcHF14puR
-	tAgM+30Q3kF7KPuLrYiAmg5LVOayUsXUVgCawLeDS9tJLJ6YM5h2y+YDFmrySEa/CjCgxOrEdnx
-	fCLHX+asjreVN17ATXA/R4RQN59Q9C9xj03DcNUf/YOd7F0nYQ+JoLqN8o7jOLnr/tP1xP9m7se
-	bacDw9tOH0uhXaqRkvGK9ORxiZE9tljbZ3JYKaex3J0SujBQ0QuSeQn6vx0+HG5zlZ20HhX/p/m
-	4SdIL4wHi4Fc+QzzZ5gIH4XKzbWUR8WZgBx8IaEHujXtfnQb2/bWLcgwUBiv
-X-Received: by 2002:ac8:7f01:0:b0:517:82a1:351f with SMTP id d75a77b69052e-51795ad2ae6mr261214611cf.16.1780972642817;
-        Mon, 08 Jun 2026 19:37:22 -0700 (PDT)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([209.249.37.132])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51775c4d7absm169108881cf.11.2026.06.08.19.37.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 19:37:22 -0700 (PDT)
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Mon, 08 Jun 2026 19:37:15 -0700
-Subject: [PATCH v2] ls-files: filter pathspec before lstat
+        bh=WfQVTiPEyG3ZTnlWv1SfOG/uM2e/9acNmuCahjmqwEQ=;
+        b=W9i4vkbI+pmdASFK/fBsL7MKzHCZN3M3TfSy4CQAt3S24MZS8CITGDK6on22KcfzEj
+         EBErvFiFQwlL/G1uSNqK8RNTvj0yuIBYrTXR6RYyU/TneGESKagcUWQJBykfxAhtURQc
+         GsOqi31TyJyqmVxnR1Mnru7+Xr1+x2Hf99YJ58/PssaXWPu7ao2QIr6OKT6qEvo0yPIB
+         M9ndY77VsM+wMZr06iwGt+gEIt7/io1P9TsfIQGoiSkY4FQc/CD+3SxcOE5X2DBRj2rE
+         Uh/kVRKIg6RYd+9+fnaXPJySZmME6ZuLddFcI8oy4JCcRE34D+sTirDMf1SJR8fK9DOy
+         P0hg==
+X-Gm-Message-State: AOJu0YzA+/XLm2ympU9c7wrrBco5JSQdJcdM8kM5C2RS+/FL8p168KZc
+	YSlxnhza9havI5ddfA0NNn0ihmKOVc29EsZBmc2wdsehXZ68+vvBt8y7R0yKOdBkRkUgjjxN4Kr
+	kShqPT2ps9diLDIEnBMqiq/yaqNcaAXc=
+X-Gm-Gg: Acq92OGdVWXn2gfx/M7nO4idMfmRDFeGneei2A51N5XtfaK13fdVl64/qqtzGq+MteR
+	cyx4IDvceaWKK+hjO4vTSGiUXqKR2PZXjqrCPDcN2Oi6Sy9tuCs0aPUOcC4eNe6x7PGMFnnr/bD
+	qdUosGKGV96gyIyRjmKA+RJ23E68alavT/eJucaFiDoMO9W/c3gSIKzM6RS0/H0cX726VlJJEQ7
+	i+8kyaZMkTlqh5hpq+afL5Z0ptai2fIGR5bRXXr5no3dBneehgzAoShred4eyIOOW9xNpegAzOY
+	QdTGuZXXI7X1RAmy1Rb5YzzNxaxYW4AzvwRhxyYvgJSFdtLNQ7z91JttwVEWe9K/ws5ij3dEfEV
+	5sTBbCtPUj/JfCDC4agk9Tszm0ISM1xl0G4Mb
+X-Received: by 2002:a05:6512:3184:b0:5aa:68ca:7b1e with SMTP id
+ 2adb3069b0e04-5aa87b8c16cmr5868536e87.9.1780973242576; Mon, 08 Jun 2026
+ 19:47:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260608-ls-files-pathspec-lstat-v2-1-fb734b28422e@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr0K6dkxbSyGuvIdhUcoAY0BIpxIN4
- e4WPIDL9/P/f6tgDIQsrtkqAi7END0T6FMmfO+eHQI1iYWW2korCxgYWhqQYXax5xl9SqKLUJa
- 50rnLG2uMSOs5YEvv4/le/Zhf9QN93O/2Rk8cp/A51Ivae/8tiwIFpW+NrIuLVMbeutHRcPbTK
- Kpt277sJjxD0AAAAA==
-X-Change-ID: 20260607-ls-files-pathspec-lstat-885125a5d644
-To: git@vger.kernel.org
-Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
- Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
- Jeff King <peff@peff.net>, Tamir Duberstein <tamird@gmail.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1780972641; l=7961;
- i=tamird@gmail.com; h=from:subject:message-id;
- bh=/OwglieMgxTozS7yhxJdhB6/SoRLsyaRL45jmkWJVP4=;
- b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
- MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QLeb/RIDoMlQtAczctRzBvzTPUhjr8OYnKC2lHQil3NS4DXoW+Y/4dHQnSZgK5Cv8aEmmOQew3b
- C4cFtBBM7EQI=
-X-Developer-Key: i=tamird@gmail.com; a=openssh;
- fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260605163012.181089-1-jayatheerthkulkarni2005@gmail.com>
+ <20260605163012.181089-2-jayatheerthkulkarni2005@gmail.com> <22E79E77-BCC3-4622-BD39-F4ED7DDA9511@gmail.com>
+In-Reply-To: <22E79E77-BCC3-4622-BD39-F4ED7DDA9511@gmail.com>
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 9 Jun 2026 08:17:11 +0530
+X-Gm-Features: AVVi8Ce6gxxZPK8n4lwIcBKZOElh1ArtYnWwAPf7Zf2Ks532CWSGzGk6Qv1ph2Y
+Message-ID: <CA+rGoLdJY7d=331c_DyG9WXJbFxmaabag3yJpbts22uFWTjYPg@mail.gmail.com>
+Subject: Re: [GSoC PATCH v2 1/4] path: introduce format_path() for centralized
+ path formatting
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, a3205153416@gmail.com, gitster@pobox.com, 
+	jltobler@gmail.com, kumarayushjha123@gmail.com, phillip.wood@dunelm.org.uk, 
+	sandals@crustytoothpaste.net
+Content-Type: text/plain; charset="UTF-8"
 
-show_files() checks whether each index entry is deleted or modified
-before show_ce() applies the pathspec. prune_index() avoids most of this
-work for pathspecs with a common directory prefix, but a top-level name
-or leading wildcard leaves every entry to be checked.
+>
+> Nitpick: the documentation is clear to me, but maybe the function name
+> "format" and the parameter name "buf" can mislead the user to think
+> that it only formats the path without appending to the existing string
+> in `buf`. My suggestion is to rename them to something like
+> `append_formatted_path` and `dest`, respectively.
+>
 
-For a single pathspec, match it before lstat() in the deleted and
-modified modes. Keep the later match in show_ce() so --error-unmatch is
-satisfied only by entries that are actually shown.
+Ok, that's a good point!
+I will add this in the next series!
 
-match_pathspec() is linear in the number of pathspec items. Applying it
-early for every item can therefore multiply the work for commands with
-many pathspecs, especially when lstat() shows that no entries are
-modified. Restrict the early check to one pathspec. Callers with
-multiple pathspecs retain the existing lstat()-first order.
 
-On a repository with 859,211 index entries, a 19,931,862-byte index,
-and 25,303,439 packed objects occupying 21.13 GiB, I exported $parent
-and $this to binaries built from the parent and this commit, then ran:
+>
+> > +test_repo_info_path () {
+> > + field_name=$1
+> > + expect_absolute_eval=$2
+> > + expect_relative=$3
+> > + env_prefix=$4
+>
+> This helper function needs a documentation.
+>
 
-    hyperfine --warmup 0 --runs 3 \
-        --command-name parent \
-        '$parent -c core.fsmonitor=false ls-files --deleted -- README.md' \
-        --command-name 'this commit' \
-        '$this -c core.fsmonitor=false ls-files --deleted -- README.md'
+Alright, I will add that.
 
-The results were:
+> > + test_expect_success "query individual key: path.$field_name.absolute${env_prefix:+ ($env_prefix)}" '
+>
+> This makes the output polluted. What about changing it by something like:
+>
+>         test_expect_success "absolute: $label' '...'
+>         test_expect_success "relative: $label' '...'
+>
+> with a custom label?
+>
 
-             parent       this commit
-  elapsed    60.742 s     1.061 s
-  user        1.117 s     0.963 s
-  system     10.740 s     0.042 s
+Ahh, interesting.
+I agree, I will look into this!
 
-For an all-matching pathspec, I used a checkout with 859,940 index
-entries and ran:
+> > +
+> > +test_expect_success 'setup test repository layout for path fields' '
+> > + git init test-repo &&
+> > + mkdir -p test-repo/sub
+> > +'
+>
+> The helper function `test_repo_info_path` is relying too much on the
+> existence of the `test-repo`. I think it would be better to add a new
+> parameter `repo_name` (or similar) because
+>
+> 1. You could move this creation to the helper function and
+>    you won't need to place the test after that creation
+>
+> 2. You could use different for each (test_repo_info_path call, path format)
+>    pair. Currently, if more than one test fails, its result is overwritten
+>    and the `expect` and `actual` files from the trash directory will be
+>    the last of the broken tests.
+>
+> 3. You won't need to use the hacky 'echo "$(cd .. && pwd)'
+>
+> This applies my suggestions (feel free to use, adapt or discard it):
+>
 
-    hyperfine --warmup 0 --runs 3 \
-        --command-name parent \
-        '$parent -c core.fsmonitor=false ls-files --deleted -- "*"' \
-        --command-name 'this commit' \
-        '$this -c core.fsmonitor=false ls-files --deleted -- "*"'
+Thanks!
+That is helpful.
 
-I repeated the benchmark with the commands reversed. The results were:
-
-                         parent          this commit
-  parent first elapsed    56.807 s        64.618 s
-               user        1.256 s         1.270 s
-               system     10.633 s        11.068 s
-  patched first elapsed   63.361 s        64.316 s
-                user       1.238 s         1.280 s
-                system    10.296 s        11.864 s
-
-The patched user-time means were 14 ms and 42 ms higher in the two
-orderings. Elapsed time changed by several seconds when the order was
-reversed, so those results do not show a stable wall-time ordering.
-
-Jeff King pointed out that a preliminary match for each of many literal
-pathspecs can be much more expensive. On a generated repository with
-10,000 clean files, I recorded the paths with "git ls-files >paths".
-With $v1 exported to a binary built from the implementation sent in v1,
-I ran:
-
-    hyperfine --warmup 2 --runs 10 \
-        --command-name parent \
-        '$parent ls-files -m -- $(cat paths) >/dev/null' \
-        --command-name 'this commit' \
-        '$this ls-files -m -- $(cat paths) >/dev/null'
-
-I replaced $this with $v1 in a second invocation. The wall-clock means
-and standard deviations were:
-
-                         mean          standard deviation
-  parent, final run     110.1 ms              4.1 ms
-  this commit           104.9 ms              2.2 ms
-  parent, v1 run        112.5 ms              6.6 ms
-  unguarded v1          494.1 ms             17.2 ms
-
-The guarded result matches the parent within the observed variation,
-while avoiding the regression in v1.
-
-All three revisions were built with -O3, -mcpu=native, and ThinLTO
-using Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
-(Mac16,6) with a 16-core Apple M4 Max (12 performance and four
-efficiency cores) and 128 GB RAM.
-
-Link: https://lore.kernel.org/r/20260607-ls-files-pathspec-lstat-v1-1-8cf40b730146@gmail.com
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
----
-A selective pathspec should let ls-files --deleted and --modified avoid
-statting entries that cannot be shown. Match a single pathspec before
-accessing the worktree, while preserving the existing lstat-first order
-for multiple pathspecs whose matching cost grows linearly.
----
-Changes in v2:
-- Restrict early matching to one pathspec, avoiding the regression Jeff
-  demonstrated with many pathspecs.
-- Add all-matching and many-pathspec performance results.
-- Drop the Assisted-by trailer.
-- Link to v1: https://patch.msgid.link/20260607-ls-files-pathspec-lstat-v1-1-8cf40b730146@gmail.com
----
- builtin/ls-files.c                  | 11 +++++++++++
- t/meson.build                       |  1 +
- t/perf/p3010-ls-files.sh            | 31 +++++++++++++++++++++++++++++++
- t/t3010-ls-files-killed-modified.sh | 18 ++++++++++++++++++
- 4 files changed, 61 insertions(+)
-
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index e1a22b41b9..8d7158652b 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -450,6 +450,17 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- 			continue;
- 		if (ce_skip_worktree(ce))
- 			continue;
-+		/*
-+		 * match_pathspec() is linear in pathspec.nr, so prefilter only
-+		 * the single-pathspec case. Only entries shown by show_ce()
-+		 * satisfy --error-unmatch.
-+		 */
-+		if (pathspec.nr == 1 &&
-+		    !match_pathspec(repo->index, &pathspec, fullname.buf,
-+				    fullname.len, max_prefix_len, NULL,
-+				    S_ISDIR(ce->ce_mode) ||
-+				    S_ISGITLINK(ce->ce_mode)))
-+			continue;
- 		stat_err = lstat(fullname.buf, &st);
- 		if (stat_err && (errno != ENOENT && errno != ENOTDIR))
- 			error_errno("cannot lstat '%s'", fullname.buf);
-diff --git a/t/meson.build b/t/meson.build
-index 2af8d01279..ee8086e6ef 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -1140,6 +1140,7 @@ benchmarks = [
-   'perf/p1500-graph-walks.sh',
-   'perf/p1501-rev-parse-oneline.sh',
-   'perf/p2000-sparse-operations.sh',
-+  'perf/p3010-ls-files.sh',
-   'perf/p3400-rebase.sh',
-   'perf/p3404-rebase-interactive.sh',
-   'perf/p4000-diff-algorithms.sh',
-diff --git a/t/perf/p3010-ls-files.sh b/t/perf/p3010-ls-files.sh
-new file mode 100755
-index 0000000000..ae14449432
---- /dev/null
-+++ b/t/perf/p3010-ls-files.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+
-+test_description='Tests ls-files worktree performance'
-+
-+. ./perf-lib.sh
-+
-+test_perf_large_repo
-+test_checkout_worktree
-+
-+test_expect_success 'select a zero-prefix pathspec' '
-+	tracked_file=$(git ls-files | sed -n 1p) &&
-+	test -n "$tracked_file" &&
-+	pathspec="?${tracked_file#?}" &&
-+	test_export pathspec
-+'
-+
-+test_perf 'ls-files --deleted with pathspec' '
-+	git -c core.fsmonitor=false ls-files --deleted \
-+		-- "$pathspec" >/dev/null
-+'
-+
-+test_perf 'ls-files --deleted with all-matching pathspec' '
-+	git -c core.fsmonitor=false ls-files --deleted -- "*" >/dev/null
-+'
-+
-+test_perf 'ls-files --modified with pathspec' '
-+	git -c core.fsmonitor=false ls-files --modified \
-+		-- "$pathspec" >/dev/null
-+'
-+
-+test_done
-diff --git a/t/t3010-ls-files-killed-modified.sh b/t/t3010-ls-files-killed-modified.sh
-index 7af4532cd1..6e38e10219 100755
---- a/t/t3010-ls-files-killed-modified.sh
-+++ b/t/t3010-ls-files-killed-modified.sh
-@@ -124,4 +124,22 @@ test_expect_success 'validate git ls-files -m output.' '
- 	test_cmp .expected .output
- '
- 
-+test_expect_success 'worktree modes honor wildcard pathspecs' '
-+	cat >.expected <<-\EOF &&
-+	path2/file2
-+	path3/file3
-+	EOF
-+	git ls-files --deleted -- "path?/file?" >.output &&
-+	test_cmp .expected .output &&
-+
-+	cat >.expected <<-\EOF &&
-+	path7
-+	path8
-+	EOF
-+	git ls-files --modified --error-unmatch -- "path[78]" >.output &&
-+	test_cmp .expected .output &&
-+
-+	test_must_fail git ls-files --modified --error-unmatch -- path10
-+'
-+
- test_done
-
----
-base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
-change-id: 20260607-ls-files-pathspec-lstat-885125a5d644
-
-Best regards,
---  
-Tamir Duberstein <tamird@gmail.com>
-
+Regards,
+- K Jayatheerth
