@@ -1,87 +1,87 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234DC43CED8
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 18:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAA140ADA6
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 19:17:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781031279; cv=none; b=i5DHrKUtv222TQEsmlWpNYbpGMMeckPPTkE2z2rr4v6VyD4CScDHBOLKQyEG+jiB84efqYB2vm2kJVc/ybzwdhx1/gDTrHHDV5gDp8Tx2govIVin9EEeu3KGHfz96fbQemAUOaDj2Ccn1CL2HSlYBQ/Sefsrpy6VXIMt3hUMTOk=
+	t=1781032675; cv=none; b=MMxGHwzPiCoGfKxY3B1ipCErUU+7nIJH7uCVVSDTp+dnVVAKivlzuiNeDcJXie2q8jcvSn+WxQuBFkU64240CzFE0W67AE8r1bj/EKGsiHVifKnLqvQRX1jtIGlgBayyZzoZPKMVGNgjAqHbNLhkrExcjZnA6ZI2vbJDeYJUKaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781031279; c=relaxed/simple;
-	bh=n4oDNVbl53wIuSsaVB1HWG56tugigoBM0kO8x2GK5oQ=;
+	s=arc-20240116; t=1781032675; c=relaxed/simple;
+	bh=MBSzjmsoRszqmwmO9OnYVRpPtzr90+ZJc/qjiNE1mRA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kP/jk4Qicl8XvQ5rlbIeTwrU1wcyNa4jPnixsb6B+AKYYJcpkqMj0YLPbhl5hUP8kYlneucvgBx9cCAuBcf6b2xlA8PedFLKf1mQC0XkrE+ES0XoUvSMTWAd7qv5rn3qXuSn+ESxJVFbjEFz6ENIwX8ARaVhs8JsxNzgBh19m9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d0Z/z3/G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SQuZ+754; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=W5y1XDnKORkEI04z4T+kYSlxy43HOMlwcjSqrmt9ta4OcpvXW3wPG8XXyCFHGnTkQodgnJsXhwqYODcyBny50fKQRfF5LHqAGarVo8ijK5yYQmptrH19QX1CJWbGkg6wnnTyLMYgH5YNnkP2K1iVPn5nZ9soKPJATHsVB1AQ02w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gMpB68++; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CE5pjad7; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d0Z/z3/G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SQuZ+754"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0D1C27A0128;
-	Tue,  9 Jun 2026 14:54:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gMpB68++";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CE5pjad7"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2809D7A00C5;
+	Tue,  9 Jun 2026 15:17:53 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 09 Jun 2026 14:54:37 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 15:17:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781031276; x=1781117676; bh=lqH8xqKK5a
-	+h6DIuhXclqXkghiInqV+2W2O6QGmngNQ=; b=d0Z/z3/GQEVBZtgT1/jE1Qb+xO
-	bn9XZpDnemVq/+jow3uKGFgNax4Vc5O9n6X9jYGngBHXWjjmx14IlhZILtVX7qOS
-	kJYJsJTzX6Gaw/O4gSCYYgdHx4IQTYEbcIsQpRdiBKpZIiW/ZW0hJ22EtB6yfJlw
-	4MdXe6pXqTwmoSJJ3Djw1SD3/BjF6ef0NKU09xsm3jP/yWprpFnhi7e++555cyMr
-	zc3x5Bee3FYWsF2qnjFv/o16Yke19NOjTKjmZK1OOMxKqofAWMt16P44sh+TqMsv
-	uLG+tuB7GtOMs3LPvCY/yFXaI1bU9eNSroMmPFiYmwQEdj927mqYNI/1UJpg==
+	:subject:to:to; s=fm3; t=1781032673; x=1781119073; bh=3l9BVYQEEm
+	g98xcmZYKaFsGB8iDjQWkA/8A6ObkS6+4=; b=gMpB68++E2vYOqihLuPvGwq/9K
+	huuNqrUIDheBernqXO1c+tvHSB8xsCxXEQe+g1lA8t8rMpz1/5jis+Mce2xsV8eS
+	5jaXuvnQVvum0k8s7DjDJduGfOcq5nnWk727uLn9cRMT9cFU9uXS2eyDO6b4nXKL
+	RayNZWf1AY8D8CAY0XK4+xPdzfhNbQ70eIUO7sdRQ6wjsWjolEKk4jgoG47MVmY0
+	kPYVuufalL2tpar5ngYC6/kwqKqheXtCz5uoA3FBI349Nt6Yls7EnhUy3Jt6K6ph
+	u5jCmysJrdkWeyNgNzZGS4hZXA0B8/jVxh+x4+wKiCmgQ2VVEMAfT4rgKRwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781031276; x=1781117676; bh=lqH8xqKK5a+h6DIuhXclqXkghiInqV+2W2O
-	6QGmngNQ=; b=SQuZ+7542GLWUkFdH+AoNxt0GEC19OzWAa4rFQe4UvYnjlBfI+y
-	6azCk5KvCoeDB+RVhWYRQFhSrbzBr9A6h0VEh+dyuPHNEMLdpG4ZnezABcyS7LZI
-	hqRioJPp2xcbnSfVdatCqCFHGZLJNYGu2HJu0YTlfE/x2HF/BxK+VEin2KWdNYYW
-	43ws/oTnbR/U9dgBdBnAwwNxk1btns3ehyhEBd/IQ1dvGb0M3HjjN0orLBWE+IEU
-	Uazm+06yukIrALawpb3WW94D8PFiJTLipicDSlO2kJRqI3fuenaN9yHLV2EYXxVs
-	BQOTMtgxVx3eiECQ3StwSF9W0WrbLSeTJ+A==
-X-ME-Sender: <xms:bGEoagVbpkkaekvGbDDTrYQJzRYu0MK1Pe3x4Lm_-nAY7GnSN84nEg>
-    <xme:bGEoasxPqdL2ZxqcxxYZIFjmbMGL05gLaePSpbMum8LGlsQhyJe_RMfLsKfguQJWV
-    vFMgb2YRyjMb83Ukjsbw-LTpACqCxp_PSkCYZZQstryVEpUWfV0WQ>
-X-ME-Received: <xmr:bGEoav8DU9GRi8haLc0g-kBhqgHb0Bv4BhV1KD_IL208PtvB3cmWrWpzUUDoM1hlqzekl5AikH7UirtgboNOk6iJ26yOposwhSnp>
-X-ME-Proxy-Cause: dmFkZTE0vwkE/58cjRn7bErEVF6TcpuA+ZbpprBNiloV5SvedogoN1DbftpgszRg+Ayt6d
-    jzbSv/TEfVR56dpNtjKXnee37mw+jO45VKQBrcFhqtJ5tvkL5Y5BZ3mTH9KeuZrOLXdhRV
-    0gbNoDlLyX+GK1LPYhaHPljTLptiSk65B3Ec2EkGd0BLHyZhpwyYTJju+v2UnBWsBMz0f8
-    naPi6tUJJkFEVWllYVFzl9nB3znFXiVHh1g7U+pdfu7TRF3/OrNi7urGNBManR0PGeDvqi
-    nt1ZnEifEgEF4LfwYCpxEsesgoCrx1wYw92VKFXM04B9My+24bvoSDtTCqOKaiSLlM54bf
-    u78DteN17BP63NTOWf7FJfeL40Y3L5JpydiDdT197/v4DNxTdvBMc93dglp3eA17EuiXbC
-    Flp49kKR7+ipbxFl9VAyZ2B0IXFbc7T+GjMup6wFWlW8xjTOsxPF51LtvZdqfJ4T0fhdlv
-    nwXHllvyRcsTtzMTM3BL5nvhlu1dlFHYUwv1AVa52CEyV1iiRXPLXoHOaHy3+Blripgodc
-    BTbvGVDjH0t6cZpJqzlrwZihhI/yU2ag3gn2dthq0dw+oLFT+UE2WJEMwNNnCWr5/Fbdmb
-    cGw2nDl2OTATZ/zdPL07mFqEQaJ93uPZSuHY0wt7n3WCqYfN9bCOvYoZyrXQ
-X-ME-Proxy: <xmx:bGEoap9TfOlemiTEb0bcLJLlbdSqsZ-sP6GQwOytpL8B_9yUquyH4g>
-    <xmx:bGEoamW48gzO-l1a0lb9SjJ0st0W0H6yE5MY5C-HWUg2xKbPY5Ti8A>
-    <xmx:bGEoaucTBB-j0_LoVRXia_z8YKgd5TadKprH6Ql4zPGiOeB8Nz0LIA>
-    <xmx:bGEoanYeXVkzHUVzlHLWWKnCz2E3YeakulmYi4htep7x_3CUL2RNxw>
-    <xmx:bGEoah6R0O5tPyLkDqMyRj_tLDI0QtUBtlI-_kPlshevdJScTAfz_-ch>
+	1781032673; x=1781119073; bh=3l9BVYQEEmg98xcmZYKaFsGB8iDjQWkA/8A
+	6ObkS6+4=; b=CE5pjad7LmhdyLN6JewpKuV1dN8kN20+Vjx7J8bQFvKmOz6jCY2
+	6fp0wi03gVKY1EerNMQh6uCmUl6hPBGuC87cbe1g9i5Gt452MJitO+Tjk9XwZNpH
+	4iDReFXmOStGACtC0J9Y3XNDAoxjs8q8ys0lSDTm8kL2NLidWO5h9fMGlKA8AxUZ
+	/lhsf4BVxxCTEPJmwGU8yhccQTq5oWL3uIZXAi4+h4UQJrSvaIbI78kIf1aQj3+m
+	K9FaatgagVfyKlEXZ2WgqEjoblfRv2FsObhPFqce1Dt68IITdKBJooMqYkdlPaOA
+	IMbBue0f0O+LzmsydA2wqiBolVV4CzWQjrA==
+X-ME-Sender: <xms:4GYoajWj6JqQ5Y140Mgy2nZF58jYWI_3ijaTcFhJqsgNOQYZEHLUkg>
+    <xme:4GYoaqoW9PBYpMIxEg8b2ZPHjyB0bZTsFweflSHzdXMqgr1OsK3vwYfd3Zatgpufp
+    b4Ld6fQpy5PeCVnAHR3xLUmcOvJGnu9CbRyUs3Bg9QUhZiw9_JLMXI>
+X-ME-Received: <xmr:4GYoalkgj8jYiiM3a2TDpsZ-TyjqHElfxwF9VXBKcfJnHgwFk9QlB80XG1eh9-Eeds1LNUh8v8S9TWra0OkTGiehn9_b09Ub_fSX>
+X-ME-Proxy-Cause: dmFkZTGZn5byMUCzAHxjHpsKRcgaGA9XrAPYk3kAFuiugFp2bILmjR2CTG65vIC18P50sI
+    CUKPbYTDLCbWcvP8gg/EG8Ycmu+SkapqOVTE/uPqtR8icdHcR1pS1WSxP8MntE/8pqavTq
+    gD683QVaqo12l4Ff/u/Qhwe2HKagOW6aYmDzr14tprjdy72rWrC27qtcSJDGUc5JpsrMo8
+    238hu3T2wJm2IOlO78Zzgg8hv0mRmlKbK34Bh4Djgd+4B1darCW6g9Y87+Kx89oPal4xK5
+    Pmb0ScsLNKJYNd+Sp097v3ZILdHVkgugjp8z3k2WHMprP9uCnEQEszAt1EE6ezyqT5g4fU
+    dFNw4PQUucffX+WfbU08JJniVbWLlA0+J8NA82UE0gNEbuaPupA7aXE1nFsI/5jLOvuxKx
+    nO8nSlYNJBR/26v9BaN4lf/dJyXq1Lvd1JjwNF+bGgDufvscOdXtcQ2AUZV0DzYQCqBv3P
+    /cf/cwP4d7haX/QMw/sqV8R/Nv0vVlCBvp95dgLFPTOoXxJXqHzjLB0vnbSwRWmQ99I4h5
+    ASwbUU68yO12h5ia3Szuke8zz7Q2XlHbNtZGJAyFURweOJP3Xh8CP07lCN78UbcIxT9TBL
+    QN4zylSnYWoG9VYJqykHW20pvWT41px2mcTr5iE27vHDPORp/nXkMJjoO6dA
+X-ME-Proxy: <xmx:4GYoaq3Z9XCB3vwUttfNJoC8C97ffgGT42-67X_B9LVt9KzyYgpENQ>
+    <xmx:4GYoaiSr-dOAs0h5ovKlxlquzFrfKF3egB-RDrJ666CWm4ePd7lJeA>
+    <xmx:4GYoajw0-G5JnNvHATEiruSS171TMxHJ6zGMNpZHJVEEQh7QEOjK8w>
+    <xmx:4GYoaiB2r_AwZ537-LiNQuYZAbbA61iKPWfdHFz4mhICrDLTztTWfg>
+    <xmx:4WYoakAfS6BRe1SEid-z8ySu4Ssy0u3RvJwVRia7Ya1RXoZqQG9Sik5u>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 14:54:36 -0400 (EDT)
+ 9 Jun 2026 15:17:52 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  eric.peijian@gmail.com,
-  calvinwan@google.com,  chriscool@tuxfamily.org,  git@vger.kernel.org,
-  jltobler@gmail.com,  jonathantanmy@google.com,  karthik.188@gmail.com,
-  toon@iotcl.com
-Subject: Re: [PATCH GSoC RFC v12 12/12] cat-file: make remote-object-info
- allow-list dynamic
-In-Reply-To: <CA+J6zkQ22en2HgH03EedKOfC+jLcHH2UbwpH0h_bDEAHR6B2pg@mail.gmail.com>
-	(Chandra Pratap's message of "Tue, 9 Jun 2026 21:02:13 +0530")
-References: <20250221190451.12536-1-eric.peijian@gmail.com>
-	<20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
-	<20260608-ps-eric-work-rebase-v12-12-5338b766e658@gmail.com>
-	<CA+J6zkQ22en2HgH03EedKOfC+jLcHH2UbwpH0h_bDEAHR6B2pg@mail.gmail.com>
-Date: Tue, 09 Jun 2026 11:54:34 -0700
-Message-ID: <xmqqfr2v1r4l.fsf@gitster.g>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
+  cat@malon.dev,  ps@pks.im,  kaartic.sivaraam@gmail.com,
+  ben.knoble@gmail.com
+Subject: Re: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
+In-Reply-To: <CAN5EUNRz9F+njb_O=Q4DzVMec-q+rDf83Ow+MPJE4yLCBq9qww@mail.gmail.com>
+	(Pablo Sabater's message of "Tue, 9 Jun 2026 19:12:17 +0200")
+References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
+	<20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
+	<20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
+	<54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com>
+	<xmqq4ijbsn2m.fsf@gitster.g>
+	<CAN5EUNRz9F+njb_O=Q4DzVMec-q+rDf83Ow+MPJE4yLCBq9qww@mail.gmail.com>
+Date: Tue, 09 Jun 2026 12:17:51 -0700
+Message-ID: <xmqqbjdj1q1s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,57 +91,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-> On Mon, 8 Jun 2026 at 15:45, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
->>
->> The static allow-list in expand_atom() is hardcoded to only allow
->> "objectname" and "objectsize" for remote queries. This works because
->>  ...
->>  }
-
-You just forced readers to skip over 200+ lines of quoted material,
-looking for something interesting you have said in response to
-comment on the patch in vain.
-
->> diff --git a/fetch-object-info.c b/fetch-object-info.c
->> index 51a898430d..425929a269 100644
->> --- a/fetch-object-info.c
->> +++ b/fetch-object-info.c
->> @@ -39,6 +39,12 @@ int fetch_object_info(const enum protocol_version version, struct object_info_ar
->>         case protocol_v2:
->>                 if (!server_supports_v2("object-info"))
->>                         die(_("object-info capability is not enabled on the server"));
->> +
->> +               for (int i = args->object_info_options->nr - 1; i >= 0; i--)
+>> > I wonder if we should check that the committer identity is unchanged as
+>> > well in case anyone is using this to fix commits after committing with
+>> > the wrong identity.
 >
-> Isn't args->object_info_options->nr of type size_t? We should probably
-> do something
-> like:
->
-> for (size_t i = 0; i < args->args->object_info_options->nr; i++)
->
-> instead.
+> I think that if you reword a commit committed by someone else but end
+> up with no changes I want it to be kept as it was.
 
-This is a valid observation and a careful reading like this is very
-much appreciated.  It is unfortunate that it was buried by 200+
-lines of irrelevant material before we find it.
+That depends on the reason why the feature to "reword" the commit is
+being used, and the use case Phillip is talking about is a bit
+different.
 
-Thanks.
+A very common mistake a new user makes when starting a repository is
+to make commits before they realize that they used a wrong identity
+to create them.  They are happy with what they committed, except
+that they want these commits to be attributed to user.{name,email}
+they corrected.
+
+Also, people often use multiple identities (e.g., corp vs personal),
+and when making commits to the project for their employer they do
+not want to use their personal identity (and vice versa).  After
+making a mistake to create commits under wrong identity, they want
+to fix these commits.
+
+In such situations, there is no room for leaving the committer name
+as "someone else".  The user wants to get rid of the "someone else"s
+identity out of these commits.
 
 
->> +                       if (!server_supports_feature("object-info",
->> +                                                    args->object_info_options->items[i].string, 0))
->> +                               unsorted_string_list_delete_item(args->object_info_options, i, 0);
->> +
->>                 send_object_info_request(fd_out, args);
->>                 break;
->>         case protocol_v1:
->>
->> --
->> 2.54.0
->
-> Other than these, the patch series LGTM for now.
->
-> Thanks,
-> Chandra.
