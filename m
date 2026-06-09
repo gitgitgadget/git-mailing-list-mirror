@@ -1,167 +1,113 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4FE40E8C7
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781012439; cv=pass; b=s+2WieUxreJVvPJrU/n+ynO/a/T7gD8GUdES5GQeuNzrrC9W/g9FwJO783U2ONumfpkqDTqkAglB2JOplnAckugsohELQ4gbqjqc8D1ir6OfaeHPux8iWgv79HQ2HRQn/9jAx1o4knudVfy4XiVdDIPb/EhZDxQG4H08uA+XGAc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781012439; c=relaxed/simple;
-	bh=O17XpNvFlLhKuQATNfm+erEw81NBhfxrDw/c002O0O0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RSsZsam2rfi8eu2n1znwl4IjILhFpMEemsecK3SYnExRynYbYWJE3hz02gm74jiUavoqsYic/0T5OWcP9OoHJUhkeHCDYUbmMjZ6JlQaLbSw9VT/QZS1n6f7OIAlNPO/RfQaiJvjVs+wS8Qg1xfeuyL2lq14RJ8sYefCXj1ClxE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gUnSXeUt; arc=pass smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43754425CEB
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781012750; cv=none; b=XP67bzKmCHHgz6UhqOM9G1Gnll1f8cdeIY4oeYLTSTZ73lLDAa6mn/nm8PTcldkb3l3fDrzrJiW/eLZsDw5BJcAz7ICmwrpDgvJBG681DpsETOuA2EhNrfK0aGY5v07+iwynCZX8cBztZoiXYBN/EVf5RhavjXCN4bz4z3zGV3k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781012750; c=relaxed/simple;
+	bh=qg6KR9BPqriIidiDz1DEAWAB0neEeTTmwNYVt3mzOYE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ttktOx7uhyaPgsUVP9DryZFabYaneHlZcYA4oXAF5Nn2Q56P9vdKmNvVPDxslP9UJdA3+MFNp1UQAzcPnnNIH9ldtyUdlD2sHhY5xmWtbvw5NzBH0iid/C70RlB9S/s9zI3rOA7sT9FAtHa6kWPQk5w0mzrTwsOYR4CqA2q/a+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZnFoL8+g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ExcurEYs; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gUnSXeUt"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2c0a5354da1so45207805ad.0
-        for <git@vger.kernel.org>; Tue, 09 Jun 2026 06:40:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781012437; cv=none;
-        d=google.com; s=arc-20240605;
-        b=D5XNbFs0wHi8WoEEYXKOhdF99nUv5RJhavE5NAgi9rLnOApbdGje1EoWHPW6Fnk2o9
-         hwB4AxUK+jOHXsTPN+PQDCZzQSndfRSEQuILPr+500T0yaMJPmB0kKGqCckxocD8e+w1
-         1PAUWs5NnJDsrFtp9QN1qB+YzSg/xLs74IAIEcAaSVeK3pxI8Rxl2uLmrtlivLMImzvH
-         nyYDXN3iHNxr47lab/blkl408SL9vF2NpWR6DAEINqug0ZI4d4++4BsrMUGei1SvvfiV
-         4fWV5y1wwgi6WGcZqpknEyZG50xiueGTLol5zqA+FRPeZSXr/ym3ebpwfiI21XzzhkJL
-         CfYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xLq6WwQUncSh7BuuXAmslfmdXebJjteY7L29XupZ9ME=;
-        fh=vpX6dGd0DGtpCDUvNN26/bWuOlASen2kK7WkZ6OCW74=;
-        b=ZVM/hld4sO8TJYUwfbBeI2TXuFEcXOn4RNQozay4eshStJG7wbxqHpZk0auwiwEvj0
-         wkEifkJJPIwcwJViIeeHmXGb3DydGBjgmcNtAZlO4Z1AGpVCzFKoT6jqwqVFObRiHr2P
-         c/vwaVPhMNVw0Xu2J1KexxkSvoZ5DQEDiJToEwi9JiJ1vswPMr8V3Zxn3rlDa6HPJYPP
-         SbTRAqQMhXaQ/rJJTv/iOoT3ANjHZR42MuR0bAQ0r4PSaKpOX5Q3OvgerPIT6WwiU+lj
-         68yWpkyuqXQs2hey8kYqOqdcSTFsEBL8UBTN8NMfgG2t7xI5mczr/MeRjs4peA8PpmPN
-         T5VA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781012437; x=1781617237; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xLq6WwQUncSh7BuuXAmslfmdXebJjteY7L29XupZ9ME=;
-        b=gUnSXeUtnw5GaV9f93nxJsXeW1juLwaZ22fOOtbfk6zRRiXdif1MNMBHGr09ZvZV1c
-         V4UBBl+rGXHy0IBT6p8hCn4WqcfAqr2LmiFPhG1VikC/jg4sWmNwN3+FRUBjCpREddSL
-         CwRA7wl6R2Z95z3irg4usat7AsFeFq4OcKnxOPQdAu5lkq/QCPs2X3zZ2POJxPTnehed
-         arHw0BC2JHRIKAhgGj//QTOEijWIbXwNdp6WU0FQI69UWw2Ew0BOhQYzUYXPX2sViMG7
-         vXlLrLFMKTGBsUV4of66VFk5abOrrVcm1nna6pl++cvHBMxWN0MWUxAHkXtFKXipcsQE
-         9euQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781012437; x=1781617237;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xLq6WwQUncSh7BuuXAmslfmdXebJjteY7L29XupZ9ME=;
-        b=FSj9RrdTExTWBMYDeI2yqMmWCRG9Fay91XWfHyFhTh8M9LNNvYI0qgHEydZcwJZOBr
-         KDZSqMJBS7IrvyMLHiHDd0slbuxGlLmh4S3GKrxkwZwSqDRCILcP7SdcMvoueL0ksjAy
-         3gjSyCPb0T792frYG36lfAno2ki67B1IADqP8HXAwltjr+zUg6Ym9p+b1Vc8dT8A5Lpi
-         bPcXZvg1jl8Tp7vFkcYSSo175GA/PFQZEGw6tdU/JZGyp1NkxvHYTLpvpXi4iMy5q9Bj
-         dWzKef2SXQm3vUVxPG9YWlyI2mRcLtVDGZUkYAAai3PQbDDm4g3s2Ou488lPAZQyytEg
-         VUSg==
-X-Forwarded-Encrypted: i=1; AFNElJ8viIbb5vl1sHNxbpWEaH0YbslMngQTV0F3DmpGVhBb4iN6QTy1wHL3B3X6J5haYugXkiY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNo0ZPipqAjv472FWx7ngW3yTcF6PHHjhZwd3ZR4/hFp6vdjTY
-	Uh69nLwNJfQRvzOIpB5MgD68dNwvhH1ARHHpj6RQk8q4pZrrSUPtTrxhRtTQ1Mcb5csNBUgqpPB
-	BrcISdZqZyXv2g4DMtHYKv2R89q0Lodw=
-X-Gm-Gg: Acq92OG7miDKfqex0SWzXnwMUDFf1Ds5S8zfSP2vh2YdAWG1oLPG0/LOiUwTr2ctMSW
-	Qhna1gLchaizRr+4YNTTbgfIUki6tW9AMspecj4wo8A39iik3Jj4+bTW8ZGRY0nRXwZ8Syq2QBT
-	yz0GL40hZKjEOPK69TnXtKGi//W84qmqBx2Z+ut5MzX9WJsoUKzMKumiXzY8C5gnTOsVIxoiAVr
-	qtrhHMpXGhZPIcW8vftVyjrpUzO43OadOVrx647OFXr6LpJNUm9UgqusKyMkwx/OW2bvB6Nl8rO
-	DwXlg5aDj1aAGWWpgNTItd18DXRpCEA9I6WjumSrNRlYS2OD8ELchYZFjLvA3XGw5cXeTSvGBbK
-	NVBoAXGlDQx79jY1lEFXgQjJKYwRZyWGfInh1Ww==
-X-Received: by 2002:a17:902:d2cd:b0:2c0:b74f:a58c with SMTP id
- d9443c01a7336-2c1ec7972e4mr169860485ad.16.1781012437482; Tue, 09 Jun 2026
- 06:40:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZnFoL8+g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ExcurEYs"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 127F97A00CF;
+	Tue,  9 Jun 2026 09:45:48 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 09:45:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781012747;
+	 x=1781099147; bh=8RQ3KBhPBUlgr4BvjUTvMaiVtHp6NOQHt/wqETO2TiM=; b=
+	ZnFoL8+go7gUsPM3rYVvrBYG+r3AOgy9zcRpDROXZg77hO6QBCBsC9ZJdat7wtpg
+	GnTGbX7JSbOiUlSvCiEkMmLWVcA8wrwKosmPD9iaa/8RIAE5353ePN3i25i5Y/gm
+	Beiry1l+o5NfGc+sm+Tbl6pINJtqicWWF7a50QcUWLGVu4lH8PN3mzZB2ZxIkCDC
+	VzismVS8l7E3zve+fv+kP5BimpqNaQoc5+NByZsBSPrHakoEYaP6sH9z4pop6lN2
+	T4PfCJ4nUaFqYj64+AzBySEBj8XsQAuSTxhVCJyRCPqVC4jVw/25aYQ2mLf+fRW4
+	8R2JEGE24SdSy4GJwF+oSw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781012747; x=
+	1781099147; bh=8RQ3KBhPBUlgr4BvjUTvMaiVtHp6NOQHt/wqETO2TiM=; b=E
+	xcurEYsFLhHs3/XsMlsPBde8BrjOCejX440gFwLON6lpuXf8Gl1pwW9I3cv5A06Y
+	U7eP347FkaK2NgImVkiNoggVusJ1vqbcNsPqwkbjk0GdMyKs1vuKVl6LTgUwPGh2
+	VUd8cJbN/72FZNrx74nH5fG0Nh6en0qlbVN9+PyuDC27t5h6QEdzgX6J2N1bQhwW
+	S1YzQdGUO0rSn3ecCEXe0bPx7Dy98sOHUws4uCYnEpyqppP0FWTVzfEGQoMsddJS
+	pX86F31HXpmav5v8GwjAszvRVgSQKwbD4IsU5cs5jbr2AeqMfMu7vhMIG/mTCskG
+	prrimQabLCAM1x8hC0SGg==
+X-ME-Sender: <xms:CxkoanZRXQagEqWb_GjRn-fz3elV9svembSPORRccquT0QBrLaXYNw>
+    <xme:Cxkoaoq3gfgEdo9HjEcMavRjoYVZtZhkuvW3pRcaida94XU8jPgcatP2wbY2FsEl4
+    dfWUnzzGUjcitTCNpSRgqJl2kxRWFdP6iDrLgaOpHmppf0qLh7hIg>
+X-ME-Received: <xmr:CxkoasP9nCQZh3N9jogReZybaD4EIwbT62ko4jI9CwKU4QnyW99OTH-u0Zp-YrDgexm06ueuwVOqYXznnpF-qbQbg5PfoVI1XTUu>
+X-ME-Proxy-Cause: dmFkZTGpNn/+eNgd91ogFC1BO3sxqEJJ5m1ib/ghiIK7G0fMg9YNe5jLUBEU3mO5CDXUlQ
+    crI5Qfm6OklI8hUyqGxAb7EfCATRh3481WwDe7KtKGVwyS1yvnRg8webLTOWJC8RGQMU4G
+    bamSMVbj2PWbjSZPSrUb07A9j7ObA2azzPjH8XIg724zxU8vSuzR9XVBX0OgBaZByV9O7r
+    3nG59lDiNlTycYfgets2F+IOYy3mjKB84g3xfIMWirx9skE3/C3BEKGByalEJRgdUEltj7
+    bzhnaKexWi5VJOiVRdBUSJbJP0O54usPfFT4n4r63FeD9dlMVYBAEtTBqDOdYtvyeUsjAO
+    hPMkg7O7/WPxrMTx2soroh9lc9iq+dKzMOboj1A14T52H1LznzpfgSNtYnoT8Gam2mAAIo
+    OTmEw4SXPACF9vMu/h3In/M//Ie1yZp7Rw7qT94XQDxowCZ/8m5Il4HcgueRBIOWmIAlsz
+    0xXxxE+SfIyJKgfbo8cHgBYzqiqMOzNSK1gflTLnlsqOpf2OaU9+XRYUDVslZLpb/v/8RU
+    hjU7SToKS4mhqSRYi9zcyZY+1bY+nR8zmh4TXXNzq0h3NxjreUBxn4UWgATJ3KnfdvCG6I
+    uEZBOYGOACfOtyWhtDqYzZ/HjkJyk3OCICb6JhkJMvMgMG8wFpsnp6kQYq4Q
+X-ME-Proxy: <xmx:CxkoajqsSDvBpMPHnomLAnY52P8dTc4iNs6j642dDK4ME48dGOeRBQ>
+    <xmx:CxkoahdF2uGFl2a09xFpcdmyaaMWWHoodt0wfR8IUgVskaAJ3vDEZQ>
+    <xmx:CxkoapR0gzkSiIrYq6SDmg6xX2kwYGu6WSf43-q1vQGyzqeJKnjy8A>
+    <xmx:Cxkoaqb2_9vSe-sMY94s9OF2yWLKQ5hYRFhHR3MZWZZz_sBckNAD8g>
+    <xmx:CxkoarVNP8JDCswbQLhlHVdKcnfg721W1WHdjIivBfCECQP-KKu1Mv16>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 09:45:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,  Ayush
+ Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
+ <belkid98@gmail.com>
+Subject: Re: [PATCH v1 3/4] environment: move 'trust_executable_bit' into
+ repo_config_values
+In-Reply-To: <8083b217-4a56-48ee-b34d-b4596d45e382@malon.dev> (Tian Yuchen's
+	message of "Tue, 2 Jun 2026 02:03:15 +0800")
+References: <20260530160520.77859-1-cat@malon.dev>
+	<20260530160520.77859-4-cat@malon.dev> <xmqq7bokebct.fsf@gitster.g>
+	<e0d5b1af-b040-49e2-90f9-d8325682826b@malon.dev>
+	<8083b217-4a56-48ee-b34d-b4596d45e382@malon.dev>
+Date: Tue, 09 Jun 2026 06:45:46 -0700
+Message-ID: <xmqqcxxzsu7p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com> <20260609110957.GB1509396@coredump.intra.peff.net>
-In-Reply-To: <20260609110957.GB1509396@coredump.intra.peff.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 9 Jun 2026 09:40:25 -0400
-X-Gm-Features: AVVi8CcGA97kFv7nggxFJEId5cBXQ1Dc5GiWxIhvw06bW2Uqs7lXH7r2YaELOo4
-Message-ID: <CALnO6CB-9a=P4Os90978YzEH=3iYEHwSbG2oLv9sxVBjBfchMA@mail.gmail.com>
-Subject: Re: [PATCH v2] describe: limit default ref iteration to tags
-To: Jeff King <peff@peff.net>
-Cc: Tamir Duberstein <tamird@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 9, 2026 at 7:10=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+Tian Yuchen <cat@malon.dev> writes:
+
+> On 6/1/26 18:10, Tian Yuchen wrote:
 >
-> On Mon, Jun 08, 2026 at 07:32:14PM -0700, Tamir Duberstein wrote:
+>> That’s true: I had actually planned to start migrating has_symlinks as 
+>> soon as this series was approved. Since you think it would be better to 
+>> merge them into a single series, I’ll go ahead and do that ;)
+>> 
 >
-> > The benchmark checkout had 120,532 refs, of which 330 were tags. With
-> > `$repo` naming the checkout, `$commit` an exactly tagged commit, and
-> > `$parent` and `$this` the two binaries, I ran:
-> >
-> >     hyperfine --warmup 3 --runs 15 \
-> >         --command-name parent \
-> >         '$parent -C $repo describe --exact-match $commit' \
-> >         --command-name 'this commit' \
-> >         '$this -C $repo describe --exact-match $commit'
-> >
-> > The results were:
-> >
-> >     Benchmark 1: parent
-> >       Time (mean =C2=B1 =CF=83):     171.7 ms =C2=B1  18.5 ms    [User:=
- 23.9 ms, System: 133.6 ms]
-> >       Range (min =E2=80=A6 max):   142.3 ms =E2=80=A6 198.3 ms    15 ru=
-ns
-> >
-> >     Benchmark 2: this commit
-> >       Time (mean =C2=B1 =CF=83):       9.9 ms =C2=B1   1.1 ms    [User:=
- 3.3 ms, System: 4.7 ms]
-> >       Range (min =E2=80=A6 max):     8.8 ms =E2=80=A6  13.1 ms    15 ru=
-ns
-> >
-> >     Summary
-> >       this commit ran
-> >        17.35 =C2=B1 2.63 times faster than parent
-> >
-> > Both revisions were built with -O3, -mcpu=3Dnative, and ThinLTO using
-> > Apple clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro
-> > (Mac16,6) with a 16-core Apple M4 Max (12 performance and four
-> > efficiency cores) and 128 GB RAM.
+> I’ve found that migrating has_symlinks seems to be quite a tricky 
+> business. Some callers in certain files pass very few parameters, and 
+> the call stack is quite deep, if I am correct. so I feel that adding a 
+> repo for this purpose might be overkill. Perhaps it would be better to 
+> focus on trust_executable_bit for now?
 >
-> This patch looks fine to me, but let me pick a nit for a minute, because
-> I think there is a broader conversation to be had.
->
-> Given the discussion in earlier rounds and sibling topics, I assume the
-> commit message here was AI-generated. And it's OK in the sense that it
-> is describing what happened and I assume is entirely accurate. But as a
-> human reader, it feels so much more verbose than what I'd expect, as it
-> is full of semi-irrelevant details. Why set --warmup and --runs? Why
-> bother with --command-name, which just means you have to show the
-> commands separately anyway? Is the amount of RAM in the machine
-> important for this test? Surely it could be if it was absurdly tiny, but
-> in general, no, I would not expect it to be.
+> Regards, yuchen
 
-[You probably know this] It is common in academic papers to report
-benchmarks with details about the hardware and how they were run to
-contextualize the results and help with reproducibility.
-
-Of course, Git's commits do not form an academic paper=E2=80=A6 so I have n=
-o
-real opinion on what to see here. But I've seen a few other mails
-where having perf test outputs or similar was suggested (maybe that
-was to be reserved for the cover letter? idk).
-
-_If_ we show all the hyperfine details, I think it's reasonable to use
---command-name to make distinguishing the versions easy, unless it's
-obvious from the path/to/git in each benchmark (which I think I've
-seen from Peff's benchmark reports before?).
-
-Someone with better lore skills can probably dig up a few exemplars of
-how to write about performance in a commit message?
-
---=20
-D. Ben Knoble
+Sounds fine.  Thanks for digging.
