@@ -1,149 +1,246 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEC3263F44
-	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5722280A56
+	for <git@vger.kernel.org>; Tue,  9 Jun 2026 13:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781011278; cv=none; b=UUWTUZB8uDr9eHfrx+N57+dHH+VwJZ9c6Eq64IyBvg92qGyX6ekr5B06SLjL0zE+vquOXREoXPaq4Sg21uYvF1uPr22CqnVgs500wvJdtfwLDb5Jmwhxt1OeMYrumfJLhDaZVSK+8hoN8iw4nQaRj+VFQH/gvQX2A4ucK98+Nck=
+	t=1781011292; cv=none; b=Kb42RfRXncjZfnbZmxG14i0Iku4J0yuzutqD17AKD8+4Ue7GFtwoGrFlW75kfupYJPjYZgLIDA6Lc7ZzNEnOgdj+dOfr41KGgLzpr9G5nuXE08B+1O3QTrW0KjxhFpr5mvboNqpu367z5oVyqHDqhfnSPWq73yncrQPLo6flhJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781011278; c=relaxed/simple;
-	bh=SC2YJRqqFeyF0W412s81gH+IWo0cpeUu70HV5/yiKbA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VH3cMNwDxQjmjEGE2NERHTD3cV6ztBefxEY4hX2Vf2xh4wI/Tmbc4w+91mKs/Tpc5b63peN0fe6Fdydo2nkUX8mx6gEA3uyR/HEI+GZla+CKYY7XFwNtQOpnA9pwpYq3As63DgMzH8ENyFW2TraBrP5PAdjfbusOoPeOpPMHrBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IBC69ebk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZQKGKvqe; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781011292; c=relaxed/simple;
+	bh=ifzr0j52/xqvhikPztrertfTdbSV88tWtmlS0n3iqaU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=JgdEmWFfPdfLUVeSwefrU/pocsuWq+FWVNvYuP2VsF3PvaDxVWkfbsgzYgsRpuWe/awm7LdRUTAT1DRyqFo5fHVfYUHCc89D+BHJ/GY9VPQWXGrJq/6zxpypDetlIa0H2LvOGZ7LkJAJinbe4kzcifo+7axIbCYs9iJruY0G+wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=St2qjtiD; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IBC69ebk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZQKGKvqe"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1F4D51D000C3;
-	Tue,  9 Jun 2026 09:21:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 09 Jun 2026 09:21:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781011275; x=1781097675; bh=1WZ/s0u9VS
-	d0cPwFfRsfysa/7Of8kBxCjxYt1RoRAs8=; b=IBC69ebkqEseUjPIARoFQXNcyz
-	iKBlBnApLUg7gLWOStpDnv3q3gupL97tiRmVQUYZPnwtSE7jeM25yZknvSipFA5g
-	6+9yT5FpLFT5dMbwp+ZopHSz843tk1CG0yL3FjqLw/r2S9YT52v9t3xTeKBivp4b
-	/+HGd8da9ONqXjkW0X6jmev2O/mB4ylt+tPa9/Ho22KjLLDe9c1QFOAXTeKsryG7
-	q+yxe1Xfy2yiP2kxGvp7A6j5da85TiK8ocEsYWWtmhiahMlz+f1x+zvy3RPvenkB
-	MgKW5982SEx8WzltszGd0hjUX11/kp/plBgwXUf/6NYLiQYycVUlTWcrBTRw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781011275; x=1781097675; bh=1WZ/s0u9VSd0cPwFfRsfysa/7Of8kBxCjxY
-	t1RoRAs8=; b=ZQKGKvqeakk5COQ9649f4lLB5vp9hxiYPcaDm3/bPkDXs1428p8
-	+sYFESKKydCw94WGhj4jEZwBSGQRHemqJuH2M5G9s3NExiqHJdB5+MeXmFAySmyL
-	bMPYFbEJjRgRlL/Y4Qu+S9RRGSqfYylmyfQcgA6esDj1+Yj1s3JY9Y+RyUBltVfq
-	NB2NGYiVexwUqqScXMih7FLK2PX3DpsedG309ePgf0tjYHW1ODG1QCP8bCAIaV90
-	9fQ5uI8fgd+nFuvj5Tth95gy5STYj46u6kFDJ2ct8sO+S7Hmb+jc6zVZrZ3m0my4
-	1Dd5dv+FQHAUiEMNnuT0FPMxeEtS0XPuH3Q==
-X-ME-Sender: <xms:SxMoashJwbXEWk2UYgmcwTBMVxJ6efO5-nGg28fRTGPJMAfML00MtA>
-    <xme:SxMoar4AI5tcduLxZbrCDw5kGsAWE7-VWFCNt5zpCWCIZTI6mEE5VMwfLVfBRl0AQ
-    D5MWAsNkrZJ7bP3r_dGoH8gf8KuLvFVsP_P0jI0VQ6qpgENgr-DPA>
-X-ME-Received: <xmr:SxMoasaXzJYSjB56ItTWKFi_qm_ryNrjW9_fxiI_lV7fNOKpE-LrCV-7bEHd0wH8O8EcP-jwAsBtZMAw99U-RCfdy3VNWYQs9zYd>
-X-ME-Proxy-Cause: dmFkZTFF2lK9bP2EuU7T/KbdHpZhEweg1OoWN+QT9StaRG3DRzfXpzcOrojhBzfZ2bxvkc
-    /C5+a3toiuAlhYTvlSwXHcBNcaTiKrXi4c8uRj/3iWvXAfNBEVkZsKwZXp4DjQxB038WYf
-    WX5nPKjS79P8utxU4hxJEQEYyaIVBUmpkLJvdDfquwmT3R20lvKPeh3oc8uLgwg/4932hH
-    pR6tvGuGz2T8hty10gV6mDZPhtL8T3g62v96N8qq+NLB+65sN2FMTWMUyat0kekemEgbaB
-    4mSeC0Z1c+FVDyz0+DKApuw82lSvt79MC7FmWvKSfISGsRaaEHJbe3v4wHv04EYZDns3Ss
-    QGGZc0v0rC+fu9v8vg5LKfcYvpeOEcHZtN5ac73qiqvPXFynCK0UBosMpRvgYS6Ga4vx0d
-    3c+kgBzbxGnsS+haLv7ktPB/CMmGDhCjSOZQYtsgvGZQEbjOijAeY4KJh51ueu/CJ4hoIa
-    d+c7sviZzhu525zaaVkw9zepxwsxZcmB/KrCueBfmxDZy+G9l3yUsnZOB6ah6fm6t6B3ux
-    HHG+7BWMwhqAIG+YZZZM/Lt5+1t+O+w4AsMdfMGHJLAYAERSIFoMcK1Phb0QbOa2v5qv6h
-    K5cgekZF7d8ZqLH5fRV8rZYDXCMmR4jwvxDH/8ZAcD5PXG0B02W7yx+8t4aA
-X-ME-Proxy: <xmx:SxMoao6toSlDkshlFopTeUi2g7ODXtFgy5sKaUXMHWGUqfMKmPNKZw>
-    <xmx:SxMoanA2wlMyqU9hbljLvoKsu21EYklxBLAWkOrOL_Tzd_sAStzM7g>
-    <xmx:SxMoamcn1nkzjn-XNv1Im792OFrd10s4JbF3_ZK_wwuQEKxccvWjSQ>
-    <xmx:SxMoauKYwkKZpOadmbxiD_TpJF6r4GqMi3RXcISQmC-DjelUJRXcVw>
-    <xmx:SxMoakJNPRw0RFL53VFg0vxRm5wg53vR4MNd-erTNEyOY-IT4oApM_lu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 09:21:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Kaartic Sivaraam
- <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH RFC 1/2] builtin/history: abort reword on unchanged message
-In-Reply-To: <CAN5EUNRW3gyLKGC7x5BBMTNKtunoQks9AaXJse4PHvCziRF87A@mail.gmail.com>
-	(Pablo Sabater's message of "Tue, 9 Jun 2026 12:14:05 +0200")
-References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
-	<20260607-ps-history-reword-v1-1-ba43a3cbb81b@gmail.com>
-	<xmqqmrx5z0po.fsf@gitster.g>
-	<CAN5EUNRW3gyLKGC7x5BBMTNKtunoQks9AaXJse4PHvCziRF87A@mail.gmail.com>
-Date: Tue, 09 Jun 2026 06:21:13 -0700
-Message-ID: <xmqqtsrbsvcm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="St2qjtiD"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-68bfcf11050so10100372a12.0
+        for <git@vger.kernel.org>; Tue, 09 Jun 2026 06:21:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781011289; x=1781616089; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vuRshexJTUaHLq/enTCZ4yxq0npqHRzCCXVd+84c5rY=;
+        b=St2qjtiDBi7zkp146Lu3+tDZzFPvMHmdz2GQ7wX2vR2syiT2lpP8gSqep6gydEdFEj
+         3wGPOfkZTZtbk+3fSZZrEZ07p0YirfCsRYZOG22wVOuiajzfln46PeNB4+p7DP6vFwc2
+         g6QEwuqhjxdIea/Jid/KgypU68QDogt/ycGqaYTK9UmH487m4RkVtdqqAwr0duCemfk6
+         5NreBmvL7WnMYE2+Pn9tjfUidE5VFoZ0C2IGtP85usrToFO1BZcNMatdTatZ40EPUXm7
+         t0tm69UzjFFkB3iVY1+1CfKy0i+jOndRNHHub2iFLoiLqjg5FWT4e+WMm4ksEwD7LG7t
+         +F6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781011289; x=1781616089;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vuRshexJTUaHLq/enTCZ4yxq0npqHRzCCXVd+84c5rY=;
+        b=BmlshDA3bmLILvAV35EWoYrjOBCu1P4vGJoOmkVUrx1FLVM0XmUn5M41ReeUlIdrqD
+         jLNHLUKSI4iMSoOyxnT+Os0zaLMDE4CR01A6t34uWkOL5HTdYEV5HD8+/P0SovTSqjK/
+         kqZhshTMxSOPKSr28ct5ZC++6Jhuov36g7Jw1JkDcX24Gy5VEHo9+NkEvJbjVShm/FLL
+         MJfXVOAnmNmHfr0W+fnunR4WJMUc5btBRJmusqC0E8qkES8IpXRBMH3gjJFpJefd6Ve1
+         rYMF43aIbZUFBUe2EouGn8bVZkSCYmY4rGo2M+Cx2QnVnnk6g1qjTLBVeyNGgAiE7AFP
+         bd3A==
+X-Forwarded-Encrypted: i=1; AFNElJ/wEQDHv5hcRyFAEB6Oz6Uj6SGKu577sJZ64wVdGe2lDdRsSLM3vq17llfvv74HJBWwzIs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3lhwqhLpxhZra/UIyECJ6SixETyNOK5ZN41zqE5iGYheAfGeF
+	kMoUXIJkP07bjyOg+PS0o1mewIhgDRFdFsqnNEFs7bny2r+ceF9MaER+
+X-Gm-Gg: Acq92OEp1tz1hX9zm+wJZORxk2qAOtpe9MCNKfbFXMTOwRDA69SRUqFOj6h3bXE20cw
+	ZLfMP5EHJLlZdjR8tda2TEvqQxGo27GJ7JszI0xw2dG2K/wC9MBNcVKrqBjaZdvi37CbHCucxeK
+	TtnTNEiULvRTS/06i1RaJGHz+6OKGRny9eA3klzR1nfsVMPXhXnLHNE6EJnKznIDkP1Cpm8NmPs
+	ayDDuUfgQn1Dj9Fqww8+2CdwaaxKtEFWy+wS5GY0ZbFEQEU6pYu8h/OAg9CsfVpqiMXfZCGQtpH
+	CC36DbI1HS+5nooAFf9Y/n5LU0+53LBK6qoNI50wR1RgvTzVoc48oZpixv96a3BQnssAfsCUoOK
+	kLUI10W7XJ1Mb8uW2IMTivx7+kFWtj0nAUXqH/5GQlPMLe/6heLeRpvehMtdvWF7fKkXWjmnJ2P
+	E+fFV5b17SXabQcRJ459P4DIgvyttWNKztoGNgObYe5JBIWEusmipJcbjxyJHiW0IhKiyESqh3X
+	0Pse3kS2VTm4X/CjfWG+yeTiCg=
+X-Received: by 2002:a17:906:4fcf:b0:bce:80db:77ef with SMTP id a640c23a62f3a-bf939b01f48mr140485466b.43.1781011288416;
+        Tue, 09 Jun 2026 06:21:28 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf0559f1464sm1057628266b.55.2026.06.09.06.21.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Jun 2026 06:21:27 -0700 (PDT)
+Message-ID: <1c56bf9c-8273-4499-87c8-16ddf0112dca@gmail.com>
+Date: Tue, 9 Jun 2026 14:21:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v14 2/6] branch: let delete_branches warn instead of error
+ on bulk refusal
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+ <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+ <7ef9502e01055fd5442550cf34d491fd21a9b971.1780999917.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <7ef9502e01055fd5442550cf34d491fd21a9b971.1780999917.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Hi Harald
 
-> True, after reading it, history being more costly or the in memory are
-> not good args.
+On 09/06/2026 11:11, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> Add a warn-only mode to delete_branches() and check_branch_commit()
+> so a bulk caller can report branches that are not fully merged as a
+> short warning and carry on, rather than erroring with the longer
+> "use 'git branch -D'" advice that the plain "git branch -d" path
+> emits. Existing callers are unaffected.
 
-And no argument, including that history is new, is a good excuse to
-make these three things inconsistent, period.
+There is no mention here of the conversion to use a flags argument which 
+should be a separate preparatory commit
+  > @@ -189,20 +189,33 @@ static int branch_merged(int kind, const char 
+*name,
+>   	return merged;
+>   }
+>   
+> +enum delete_branch_flags {
+> +	DELETE_BRANCH_FORCE = (1 << 0),
+> +	DELETE_BRANCH_QUIET = (1 << 1),
+> +	DELETE_BRANCH_WARN_ONLY = (1 << 2),
+> +};
+> +
+>   static int check_branch_commit(const char *branchname, const char *refname,
+>   			       const struct object_id *oid, struct commit *head_rev,
+> -			       int kinds, int force)
+> +			       int kinds, unsigned int flags)
+>   {
+> +	int force = flags & DELETE_BRANCH_FORCE;
 
-One of the patches in your updated iteration claims
+This is missing "!!" to keep the value the same (alternatively we could 
+perhaps convert "force" to a bool, though I haven't looked too closely 
+at how it is used in the rest of the function). Apart from that this 
+good, unlike the conversion below it means the rest of the function sees 
+the same variables in the same state as it did before the conversion. It 
+would be a good idea to follow this pattern for the new flag.
 
-    When using `git history reword <commit>` if the new message is the same
-    as the original, it continues and rewrites the history when nothing
-    changed.
+	bool warn = flags & DELETE_BRANCH_WARN_ONLY;
 
-    `git commit --amend` and `git rebase -i` with reword share this behavior
-    and it is wrong as well, but changing them breaks what people are used
-    to. Take the opportunity of `git history` being a new command and handle
-    it correctly from the start.
+and then just use "warn" later. It is a common pattern in our code to 
+take a flags argument and split it out into various boolean variables at 
+the start of the function to avoid a lot of awkward bit masks in the 
+main body of the function.
 
-and I think this is a totally wrong attitude to go about this.
+> @@ -217,8 +230,8 @@ static void delete_branch_config(const char *branchname)
+>   	strbuf_release(&buf);
+>   }
+>   
+> -static int delete_branches(int argc, const char **argv, int force, int kinds,
+> -			   int quiet)
+> +static int delete_branches(int argc, const char **argv, int kinds,
+> +			   unsigned int flags)
+>   {
+>   	struct commit *head_rev = NULL;
+>   	struct object_id oid;
+> @@ -227,6 +240,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   	int i;
+>   	int ret = 0;
+>   	int remote_branch = 0;
+> +	int force, quiet;
 
-I may have said that it may have been a better default to try hard
-to avoid making a change that is a no-op, other than that it changes
-committer timestamp, while making the current "always create a new
-commit object" behaviour optionally available, for these three
-commands, and cited that the behaviour of 'pick' in 'rebase -i' that
-avoids unnecessary rewrite as an example of a good practice.
+We should initialize these here using flags so that the rest of the code 
+sees the same variables and values as it did before the conversion.
 
-But I do not think the existing behaviour to always rewrite is
-*wrong* at all.  It may be wrong not to offer the other choice of
-pretending no content change means no commit object change, but that
-is a different story.
+>   	struct strbuf bname = STRBUF_INIT;
+>   	enum interpret_branch_kind allowed_interpret;
+>   	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+> @@ -241,7 +255,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   		remote_branch = 1;
+>   		allowed_interpret = INTERPRET_BRANCH_REMOTE;
+>   
+> -		force = 1;
+> +		flags |= DELETE_BRANCH_FORCE;
+>   		break;
+>   	case FILTER_REFS_BRANCHES:
+>   		fmt = "refs/heads/%s";
+> @@ -252,12 +266,15 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   	}
+>   	branch_name_pos = strcspn(fmt, "%");
+>   
+> +	force = flags & DELETE_BRANCH_FORCE;
+> +	quiet = flags & DELETE_BRANCH_QUIET;
+> +
+>   	if (!force)
+>   		head_rev = lookup_commit_reference(the_repository, &head_oid);
+>   
+>   	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+>   		char *target = NULL;
+> -		int flags = 0;
+> +		int ref_flags = 0;
 
-I also do not think *aborting* only when the message happens to be
-the same is a valid mode of operation at all.
+This is sensible so we don't shadow the new function argument but this 
+added complexity is a good reason to split the flags change into its own 
+commit before adding the warning flag.
 
-The most sensible first step, I think, is to add a new command line
-option to "git history" (which will gain more history editing
-subcommands) that tells the command to leave the original history
-as-is when the only change rewriting commits would make would be to
-the committer ident or timestamp information.  If in a future a new
-replace-tree subcommand is added, e.g. if
+I'll take a look at the other patches later this week - there is no need 
+to send a new version before I've commented on the rest of the series.
 
-    $ git history replace-tree HEAD~20 HEAD~27^{tree}
+Thanks
 
-were a command to rewrite the history in such a way that 20th direct
-ancestor of the current HEAD had a tree object HEAD~27^{tree}, by
-derfault the command _should_ rewrite HEAD~10 and everything that
-has it as an ancestor.  With the "--avoid-unnecsssary-rewrite"
-optimization feature on, however, it may silently become a no-op
-when HEAD~27^{tree} happened to be the same tree as HEAD~20^{tree}
-so the only difference between rewritten and original HEAD~20 would
-be when that commit object was created and by whom.
+Phillip
 
-And give the same option to "rebase -i" or "commit --amend".  We can
-discuss, educate the users, and flip the default at a major version
-boundary, if the "avoid unnecessary rewrite" truly turns out to be a
-better default (right now it is merely our speculation, and we do
-not even know if the current behaviour is a worse default).
+>   
+>   		copy_branchname(&bname, argv[i], allowed_interpret);
+>   		free(name);
+> @@ -279,7 +296,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   					     RESOLVE_REF_READING
+>   					     | RESOLVE_REF_NO_RECURSE
+>   					     | RESOLVE_REF_ALLOW_BAD_NAME,
+> -					     &oid, &flags);
+> +					     &oid, &ref_flags);
+>   		if (!target) {
+>   			if (remote_branch) {
+>   				error(_("remote-tracking branch '%s' not found"), bname.buf);
+> @@ -291,7 +308,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   									   | RESOLVE_REF_NO_RECURSE
+>   									   | RESOLVE_REF_ALLOW_BAD_NAME,
+>   									   &oid,
+> -									   &flags);
+> +									   &ref_flags);
+>   				FREE_AND_NULL(virtual_name);
+>   
+>   				if (virtual_target)
+> @@ -306,16 +323,17 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>   			continue;
+>   		}
+>   
+> -		if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+> +		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+>   		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
+> -					force)) {
+> -			ret = 1;
+> +					flags)) {
+> +			if (!(flags & DELETE_BRANCH_WARN_ONLY))
+> +				ret = 1;
+>   			goto next;
+>   		}
+>   
+>   		item = string_list_append(&refs_to_delete, name);
+> -		item->util = xstrdup((flags & REF_ISBROKEN) ? "broken"
+> -				    : (flags & REF_ISSYMREF) ? target
+> +		item->util = xstrdup((ref_flags & REF_ISBROKEN) ? "broken"
+> +				    : (ref_flags & REF_ISSYMREF) ? target
+>   				    : repo_find_unique_abbrev(the_repository, &oid, DEFAULT_ABBREV));
+>   
+>   	next:
+> @@ -872,7 +890,9 @@ int cmd_branch(int argc,
+>   	if (delete) {
+>   		if (!argc)
+>   			die(_("branch name required"));
+> -		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+> +		ret = delete_branches(argc, argv, filter.kind,
+> +				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
+> +				      (quiet ? DELETE_BRANCH_QUIET : 0));
+>   		goto out;
+>   	} else if (show_current) {
+>   		print_current_branch_name();
+
