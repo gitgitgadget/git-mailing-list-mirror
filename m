@@ -1,128 +1,120 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8157A383999
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 20:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72249213E9C
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 20:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781122052; cv=none; b=SpxW5Xy1EJm8ZTGONR4IZM65+MEVhz5mVoeo+G/wC5+ibh7U+pXu6UOHf0P6gDXm9K/s+xcCR0PUzXJv8sdEiRC09Ff2O2Wz3tD+1Ld7TxgRNqFq0gn1uPPJIt38gB68Pgl3jQwPwWaXL/jGluplWBP/riNu2VRyX/NrKiN25Nw=
+	t=1781122416; cv=none; b=D/SmFJjHk62mumg250e6ODM5U8SNYZ2V6ccomO522dtYLaySUEw2wLcZhujPVypC6acjSGfgE1yoq+hRsGKKsFG6xhudR/jlQM6GBNijvwqU8wGsJTPPdnsuL2baCDrW8sRr6hnvd3QSoSMQcgMrf4U/vw3dM3h5xATEGpmb5BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781122052; c=relaxed/simple;
-	bh=57gugp/ef7LVa/d13ZVQFPx8ghmvohsR6/hB/JJS6fI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jSY2vu2emWvRShuaIx7xb3L2Os6+6QrLCAWigeCJToB2sfOGv0SKS9/Im6ZI/oJ2LOuKNJ83MZRt16S1o8IVgGacToAgJUazgzL0stNvKkG6RTRVF8ULfUqy1ERj1OqAkLGa3pB4ZwPkH8qTt3dIzZv+rBHH+CHzx+rcLbOTKfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZrjbCDHS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XF96wK7+; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781122416; c=relaxed/simple;
+	bh=9bluI4fUrqEP7/GnqBqwQsfkyKFsDQnAy6XBNLut/RQ=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=SWA4XpqB9n2sspiBEAHbC74Ak+042fr5u91gMRdD+77/s8nnONvSbZHjbAuGTXPhKANCne4b9chD9Ay8a5mboJQ5Yuic3S2cQoa5ehY3UrOnjD+P928kToxZTahKrKqdV46bnR3FLsDRH7fG+FQCBJTRp0RnnY8XbygBg4BZ+iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MhbRRcue; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GEaeQbC9; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZrjbCDHS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XF96wK7+"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B0AC414000C1;
-	Wed, 10 Jun 2026 16:07:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 10 Jun 2026 16:07:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781122044; x=1781208444; bh=xJzaU4/fee
-	PBsaCowAVI5gnObt8LK0yZGcvW2ZEpr0w=; b=ZrjbCDHSdViSFTClVvK9pnwAiW
-	ozAE0g0PUDMXKPRtLpBt5NIerCsU5QfOOUDkM8kVgLTDsN2+UFfOwj65FwNz24hI
-	kspPa3ACa4su6LDj6mXpq9G6LAqIqMsW2Bknr8XSZNcreclePOpX13+rFhQAvLXp
-	BU3/848qq1mzMhuzyaxu5+dXGJxHqHBB/If8lgI4nOZ+D4xOogHvPNWnkxixgwhf
-	IkvktSuOetCywQ3SY4nga4DUzfBHvB6BbiXSrzl8afuLfu7OIV92t6zcFR3t3z2h
-	gBdlpvMgYQZ7HrnRLKub8V7rh87TSmriW9ROTeu9lYyAYdBeqZjIkabUpujw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MhbRRcue";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GEaeQbC9"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7F7537A015D;
+	Wed, 10 Jun 2026 16:13:29 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 10 Jun 2026 16:13:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781122409;
+	 x=1781208809; bh=JTbPbsagPuHUZJB0AQk/NAD/eGRklAiu8oXTVUWVvKQ=; b=
+	MhbRRcuecgEsKypKfPNkUiwAFJyBdh2jOOf96We/q6RoyDQ+o4NFI45BRyYtKcm3
+	OIuM8DHWTb6TwK3khpiRKfMmq5TRpiyXbn6ETiQEp1L9m19gBAKddj1M2cLDaatX
+	GBSYz9dBqDLiRAqrSd1taXxqELjol66eIMdKlAZev59BheaLKK/r+8tfqWQNii8A
+	7lX3x/Bb6GBAcG4KH2/tgnGYoVQkqqPq4c8dw9q2L+vM6Qs6OOSLvrn8Df7513gz
+	Y3dlUwbI9qDL/7VrtBZJSsZ+BCZ+8b/zZOsnL0I+Wb5WiRPLV+0V1/maG7wCv2TP
+	wOV7BFeeaWthWC53WBNjSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781122044; x=1781208444; bh=xJzaU4/feePBsaCowAVI5gnObt8LK0yZGcv
-	W2ZEpr0w=; b=XF96wK7+zxxtoKJDgL4aDVlL51NDSmWYvkEWhr1gAVDFgAxN7sL
-	mTcoeTkUVtQv1F/j32InPj1G/C3D075r9cfChb+fDriOB+LLnpkmgmjN8gZ4ntBL
-	16pwEiwTM/UoQRxvUzo1g8fSH0FDlY9+fkusc3Remnj8VSzE6WnMzMWFTcPbl6+B
-	PTDnQKyI8HJoKKCH5NhFGLJU2OZf2DkF2OrKl7kAMdQP+dlhyN5Qh8b59NGc6AlV
-	mvwDzEuOzavPM+Cp9NCE5eNwM2dDR9dW375Tgd++zhGZeZ7EQv0SMoBYTt2lpdIS
-	IBaIUDvHwuIk4dFFTq6PPFGrwbH7ehGpi2w==
-X-ME-Sender: <xms:_MMpaqNBavXRZLIqoEbLjjDbu0gtq2rR3qliV-0oHUCgoQ1DcAy_qg>
-    <xme:_MMpagZcTINjwa3nkxGlI0ULruRtkRiEaaqoUuyr53FggDM8owNcE5wwkGGPtHFsi
-    _CbxfcEFKc2T1FOQw63aMVu3_xJ2Sy9VHjWHpAOizEqWEc3ajnS>
-X-ME-Received: <xmr:_MMpauqaNsAdjnSZaWunJE4xC6l3AeFzq3OOY-D0-MP8GeukpLLJma6estaBxpj0sAGchChBjOGEMSHVbA3PgIDFeGbGXEAXh1NY>
-X-ME-Proxy-Cause: dmFkZTGjSglPJWTbv//jYldenc38djQXPRHMEUjIam3qxrlGKMiklzvbhQbGl2q33CrAJF
-    Z2YMrER//2AIxEzagAegIjIiVG0M4VP2phAGqKz2VOa3bYsnmPMVPqlAghGWq0vjZlN+4/
-    fMYzoxNJ/Y6T98KUrLgKy4mGPFNk+Rjuv0jgMCr/5mmBfAprv4Ykg4Ag6oXIi350SH3fQE
-    P+ix805UWpqw7ZzrkWEXSo0v4j+w4aCu6jpMOMjZXSF7EqJylOdiItD4qiVdqOhEiFjjT4
-    xN27eJyEZI8cBrFQoDxxdp7cPKEQEAM97QFHfhD0TJ47HbhA/h1kF7q9H9dOVi1OV9SLpL
-    Abhv0RQQhqHzSOzT7h7eiz4xqk32SIvPAugXFBFQFb04cw9W2b+ierSCiOyTEXEAfDtsID
-    OUyYKlBau1Yq/aID6Cy7CKpf1hWOch3CQr+d3WPHcAhKNCvlFDC4D6gROWiq/W8Ng0c6lU
-    oHvB8IZgfDS6XabRI+eYD4Q5BSL5TWgkWYB5EqoabTTZKUuJAMtrjronosORlYLKuH6Y9V
-    G3BR8lKy2vl0h93fq/ozcnKnC1oZTEqQC/6JHzgq2h9CgdvRwu3Mq1MrLueqYpINPU1Tq6
-    dIPDEY6whm6l9x0FQwou4Oh2I5+0CPz3leN8oB8c5o+OW73bAyK5V20RsX3g
-X-ME-Proxy: <xmx:_MMpaka18Ip1F54rbiTNVmnAQcGCnl_arbSt-x0Xt_pIEjqR_wVsaw>
-    <xmx:_MMpamSOQ6Yh74sTSet20nem_NPuXz3W2t8lNk1ovvKoYVce5TtY3w>
-    <xmx:_MMpar75coOPsusrmjTwhrju6heg3RL7GPr-LNC1EPYQ7BOoo_FsaA>
-    <xmx:_MMparwTULHJU7CmPjtRQbY8vAccuMluqqLwDW8CQrmXo3bbfmQXng>
-    <xmx:_MMpapFe-AOVYzlUsSW2WQ1So4x0RphTCTsMkuR36H3eUliHok09HjJ5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jun 2026 16:07:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tuomas Ahola <taahol@utu.fi>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] doc: git-config: escape erroneous adoc markup
-In-Reply-To: <xmqqecieuqdm.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	10 Jun 2026 12:50:13 -0700")
-References: <20260610185148.23920-1-taahol@utu.fi>
-	<20260610185148.23920-4-taahol@utu.fi> <xmqqecieuqdm.fsf@gitster.g>
-Date: Wed, 10 Jun 2026 13:07:22 -0700
-Message-ID: <xmqqa4t2upl1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1781122409; x=1781208809; bh=J
+	TbPbsagPuHUZJB0AQk/NAD/eGRklAiu8oXTVUWVvKQ=; b=GEaeQbC9WyG0F2RoA
+	mhbg6T+fAotUS+XGT0hqisdIAlaZxmNQXNp9kkRo8ZAEKlkTyg8TMJzSQcq13YF2
+	BjszJLik4mOjWGZmAX9QHuY5F5jjiDZ6xnglMJe28bZPpVMOFLZ/CWPJGbjrNNgs
+	IPeIFz431VfZyTd2Soxtp4+8MZxlfbs8tveOWTWumdv7hNrhQKFMsxazyPNwJ7Va
+	xGOE9BKrpmtLteBipxuILiEChzgdj3ArMErP+PoV8/9u0j8iCm4L0NQ3xjuAsmMb
+	o6QXwCh5E9FtOBAYlTewI6OI+gGaX4Gm4iuG6G6Vs6I/B+2WDDv17j3T9xevgDup
+	nWcBg==
+X-ME-Sender: <xms:acUpap22vsbja2MmoJKRvXE2a2G5kSPZziO8muHOhFTlYv2yarHH5vo>
+    <xme:acUpaq6ij1GaLYYKqSdk_MStEu9ZKKM3SWqqu3G2Y9Uz0X2FXiaGfBQY6_mwTFWz1
+    8s1ATeDyOf4UPXKGR9PbKpCJxBEtlNgqQNBfrEtLK7KyDoSSHQZsg>
+X-ME-Proxy-Cause: dmFkZTGJ+3h300yBEl44x3amAsc9l2CivwegKDP0xffu7ed9ed5Q524VZWkLllUnoFgYan
+    d55mCcaNhtRSsjqmqF003IlRXOKsdCyEPRpsx2fXmzIO4Tt78FmnRsg/eP3rBcAlXriGfQ
+    XcIeU9C+zkeSsboXV/T7sgrY/Xj1QTMon8/XPjFlTKV47nWPLkRocL5Rx0P+Oqpw5BJFco
+    Zr4RG6iFf4PCVpBnpnGCrA51Dl0ejvnW+vYugypAMoH1mnjMZxhHzOxs1k0MWMWZyvSzzr
+    BMDK3v3ipAWz6bRDjtp0bNr1wqXTJR+hvgsF03VohmZvl085duIaQdYwNCIv9PLoTqwmRG
+    txn0LINZnCAp3GaXbb/57Npl+pDypV0woSE4qo13q5hKi1OkwrT3fYlURazGpHrdhnCQwV
+    ltTYl2We1J2CxjUACGGYM6rVuJ+PSQIW7TxIVDnMGWibxCw9N6OQCNp1MtbzEwuIgTOWwv
+    Bj16MykS4+XwQBt7YsWKY00IqLtinI1du+8Dq2qy+dGL3qnpTC42tERlsz7JrDLbVJbLL9
+    sw/OaYLOC8SIgEP3ualSIzaNGxdSY/FsYn3wQbhp28N6tyu18XHuSTKn7eSSLEJ3KlvrDj
+    wXWJYi6DJ3VwDIeu2bvQ09ZmC0bu7p937iNHkusDdMCRxTP/3akLGxyQp0ow
+X-ME-Proxy: <xmx:acUpam8PA3d31nVnlbkeuzsWDC97oIQRGUExjDwRULf8H5-TuxqEkw>
+    <xmx:acUpavrJRdLrzRwz-DYJLqH7_ODacRFFaEjI_L2Db7fkBVGI_VwUnQ>
+    <xmx:acUpat-GPdePkUrt3a5opczAaJxqRMJIZqIeUpaEm1R-2j5fjtZTsQ>
+    <xmx:acUparV5h3-QSGLjZL8-d0eZKan_-QanI_VM64YrAZ9EUBiNHHtDzQ>
+    <xmx:acUpangUVk9_z7mgl-xRY3jbyH506G_x5YBtL4VZWh-prJG0y5kKkoYB>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2C2C530201A7; Wed, 10 Jun 2026 16:13:29 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: Adt-cs7GleO-
+Date: Wed, 10 Jun 2026 22:13:08 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Tuomas Ahola" <taahol@utu.fi>, git@vger.kernel.org
+Message-Id: <0ddf1907-66fa-4cc4-84b5-b873e0e60939@app.fastmail.com>
+In-Reply-To: <20260610185148.23920-3-taahol@utu.fi>
+References: <20260610185148.23920-1-taahol@utu.fi>
+ <20260610185148.23920-3-taahol@utu.fi>
+Subject: Re: [PATCH 2/3] doc: config/sideband: fix typo in adoc markup
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+> doc: config/sideband: fix typo in adoc markup
 
-> Thanks.  
+You might be able to be more precise while using the same amount of
+words or less. Like:
+
+   _: fix description list delimiter
+
+On Wed, Jun 10, 2026, at 20:51, Tuomas Ahola wrote:
+> Fix a simple typo in AsciiDoc markup.
+
+The subject of the commit might be enough here.
+
 >
-> What we see in
-> https://git-scm.com/docs/git-config#Documentation/git-config.txt---commentmessage
-> is rather embarrasing.  This would be a vast improvement ;-)
->
->> diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
->> index 8439ce97df..708e88cdeb 100644
->> --- a/Documentation/git-config.adoc
->> +++ b/Documentation/git-config.adoc
->> @@ -119,10 +119,10 @@ OPTIONS
->>  	Append a comment at the end of new or modified lines.
->>  +
->>  If _<message>_ begins with one or more whitespaces followed
->> -by "#", it is used as-is.  If it begins with "#", a space is
->> +by "\#", it is used as-is.  If it begins with "#", a space is
->>  prepended before it is used.  Otherwise, a string " # " (a
+> Signed-off-by: Tuomas Ahola <taahol@utu.fi>
+> ---
+>  Documentation/config/sideband.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>[snip]
+> @@ -9,7 +9,7 @@ sideband.allowControlCharacters::
+>  	`color`::
+>  		Allow ANSI color sequences, line feeds and horizontal tabs,
+>  		but mask all other control characters. This is the default.
+> -	`cursor:`:
+> +	`cursor`::
 
-With this change, I wonder if this '#' on the next line gets paired
-as the closing element that corresponds to the second one on the
-previous line, which is not quoted hence can be taken as the opening
-element?  Even if the one on the second line does not get taken as a
-closing element now, if a future change adds some word with '#' that
-does, the second "#" on the line left unquoted by this patch would
-then require quoting, no?  IOW, would it be better to do this
+Nice find!
 
->> -by "#", it is used as-is.  If it begins with "#", a space is
->> +by "\#", it is used as-is.  If it begins with "\#", a space is
-
-so that we do not have to worry about "special cases" where it
-becomes unnecessary to quote "#"s?
-
-
->>  space followed by a hash followed by a space) is prepended
->> -to it.  And the resulting string is placed immediately after
->> +to it.  The resulting string is placed immediately after
->>  the value defined for the variable.  The _<message>_ must
->>  not contain linefeed characters (no multi-line comments are
->>  permitted).
+>  		Allow control sequences that move the cursor. This is
+>  		disabled by default.
+>  	`erase`::
+> --
+> 2.30.2
