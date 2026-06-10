@@ -1,79 +1,79 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C17C26FD9B
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 22:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5312E2DFB
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 22:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781130251; cv=none; b=tT1a89G/Ipp1crfZH580g6e3z822+RQAcCkDXGH59JKgawqscATteNcMhAfdWWnKZYELMgLT2kjxKKmR86j43pp0A5QMcjw9tEcauFZolcEwdCPnqXGlH0jJLvUBLKmqbrHzJdM9713U7FIuiDjxz6/V2LnZzPyD0rh3XWLgJA8=
+	t=1781130269; cv=none; b=ohD6zE5qzEJqCaey8Umu5+E7xbDgVUz1eVW4Z7fJCfaz2cuv/uvlv5IpmF6a+3hVuGjuGOD0A86vTPLTFxHvtPwDMh7al8re7qAo0uaSS8I1F+4wY14KXKOD8Px98iEiDVmM6efE587qYci/Xw1O4yZh6ihAEGYfuHDki2UDoGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781130251; c=relaxed/simple;
-	bh=tBoANFTE3NvzuAGeByPRcfi7DpSF56B4yifQ0mAysaE=;
+	s=arc-20240116; t=1781130269; c=relaxed/simple;
+	bh=6t5hHsR+dcFMdrmHJ6/QDg8H/VHdCw41vQY8ifUnnV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ew3Ig8IOlUi0OSf1yMtRrdIYduY3yy05IPRJBP3qTYpbjXOpkOFe8j1U1CtYgpr0j4D93L98P1jbWeS+AMKEyzIOqPz9DZ+eLcNpajQZUPDNbM/cZz2FTxy690qVf6kG7+53/QpG2SQR0oZkDEsUbx5IUteBWrYXm+vkqQwtoSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lLYgxX8W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CmkGKAL1; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=iNrcHif0TpL5JIfsLGwHaTkyGWpmub55p2B3a+yfo1ZzT9dLrhoHH+Gq9bnzcqMLsK6ddaOyA2/1mU0X4tVHUEuntFjOuqHf0vZztpU8GQssueZfCspWA1ZOu4tAkBgMDPF4c/5LomRkofgynozmTivtWE54gNdqd/lIrA4Xw0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=YzDpHhc6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FV/Vm2CQ; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lLYgxX8W";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CmkGKAL1"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id EE9E61D00081;
-	Wed, 10 Jun 2026 18:24:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="YzDpHhc6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FV/Vm2CQ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 416931D00078;
+	Wed, 10 Jun 2026 18:24:28 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 10 Jun 2026 18:24:10 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 10 Jun 2026 18:24:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781130249;
-	 x=1781216649; bh=Inyfmc159wrCYauRjPSa3eo+7mkWxxkYZbcIWkxkRaE=; b=
-	lLYgxX8WMV8/kiAZyJTyJw9AqJ/Ps7r/4LTXPhebgVFpuftJ3POQ/mcrDWBz/iFE
-	L/flXwLgXUmPTBiuzaZi5OjfHxwjuQbDRGS1HAmIXkJV9SGbGJlZgnO2H42iB2wB
-	XcqWEx7vjoa5ieLQeEQCIkiV1yWrlYVICH0fYKUa2FGABcu7V/ar2HI0ZXdN7Jdb
-	zzJhCDZXY5tYx3FvtmB3f+Ex6VlRia/pjnXKODsVDm/+5gwpIqfh7KJMmyutKtKl
-	VjJ3BXfI8c9Wl/fyGpapxu9w/PL3CmMrNYAvGnTPFHJAGMMNVJVQFwn6lVBlHKrP
-	r1F19hhC0SsE8Tpuns2oDw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781130268;
+	 x=1781216668; bh=ne1QFl8nT1hvYBxYdu5ObxXtw9PIuwLSbrlTO2wP6F4=; b=
+	YzDpHhc6TulYKfh89CqVWecDb+okGlej0Spm3K33LKZZuvrY43AAJ/oSQ7YUBzbP
+	WuLxyBiq7d4q17ezejWnN4eVEY6O/WabxLFVK26aOZCDZfdBYHSED7N0miq8QVAl
+	Fc4jDWeQC2UssS2+0kmlUU2NB0wZoM8Ullal54c0v3PCj0VFSEXnBPgPfGEb8V/q
+	04+5aWbclD9XTERe/xd9crkaJC6YveW1z960Ow/dyyMNZOaJx9kIlfUQ2A9iLJxb
+	o/pg6ADRrk6X+5big8Hn+eiQxaoTBl/S2NLiI8DuyVxAvnOtiusfR7wjo861RKaZ
+	6ml6IcLGp1z0rrgXePmKIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781130249; x=
-	1781216649; bh=Inyfmc159wrCYauRjPSa3eo+7mkWxxkYZbcIWkxkRaE=; b=C
-	mkGKAL1iyziDxskR/EKsBCWLju/boE++iOXVDZUYOTazM3/q+6SqnPsRj0P8/3Nq
-	EhzLvMfGKdaHdsLZmSCQTpvLieWDB07xQXT4uc4Tl9Y1MVs+3Slj774/5IgiE3Qk
-	+2/ngEcyDg/kITpoEqVERgP0gJBKW00aTht0gJsNYjN6vdR/mfcwR4xuo0fm2PTv
-	w9NgTM6CmbNKK1oMogczdbBk6lQZPlz2xbpZx8pKYmdDTmoPPAGPXPQ4SqHK9VCi
-	TYMwCWyee7n5ebRglqJ95KK8xHzovqYs8zRmyszipSz8JvXxhWiUoOfZlt8WMyrN
-	zJ2j/+hL0jYtbxFkbYlwQ==
-X-ME-Sender: <xms:CeQpaifyknRQ9PjM-8v2td4EXUzKljPFoXsthf8hXaN6U9zmv6xdVbc>
-    <xme:CeQpaiPEp464xCq9O3DGDa_QcOdmX8gnkvZ8viyeTRXVlDxUCCc7blbYcEr880CI7
-    Fe2j76JXVWjBYJyryOm5KZ9SHwgLyLnylXPakMebN4XgZ2J9XFHTQ>
-X-ME-Received: <xmr:CeQpahLrMtajtaKZpOAhpWqU12E8VTciK7tYs4ZPzNsXj6vUiHd9VRyQQSJWh9jCrwwfAbfs01cqYri5bzNj77bn1Rr-sSCrPiaz_dThSWugTJolpGO8KM2Yow>
-X-ME-Proxy-Cause: dmFkZTEuzp3KKBn7AMpNkiUqx7nkmzpOcQnlZKh+EjhB0tl2hcQWLy/Vp41mo1Uy0mK2OC
-    saFPiNrE/21c3YyBIP8u6dc9vQQGza6H/29w5f3nyKbgA1rsGQsG5sDcuFQeWxO6SEacGf
-    SUd544wv1Z7K/AfH/15jIj5T8TBXnTX01CztV+3qCw/WC+tftNgIHB0U5FUHNOUXAixbkK
-    5E4pn5FkC9EzMPz/heteaHmUDvhWlMI7PdmSZQx+ktMZdvimnyepM/Ku/ivY4VKQSq4FYI
-    JXOlW79tVbM4aor6rIneEz77lvoEhjSVUG0VhHehozL9cQSgZaF4nqqYWWwsmMWXr8IGCb
-    35E80ZbbxQ9TvPztJBub7/yJG8QIX4XltxFq22ZsDB29gDj1SGhhovhDuq4jmJqf5VFUvP
-    WJ7DbzJqtIvRPtn+VHNBW3+EYtkJ2R/e5KNb2vk2LXFov/VSI/6ROp36gnt9Y8ypZ11kPM
-    SQK7Mrgaww7rIWdqQfVpDLTbvGxw9CD00hQBJ439P1S8111mkz7w7y3Iml51p/dUxVRMUv
-    scaY2PdeQFLWrxIjzjXO9Cqr/y7wuq1nGiCY7WnOqROSUuvajRX5xE2ZeWTKlYwaGWBcG5
-    B7wPpeGrdgDSDbTlqtZR7p95MfusGLlRLNmYSYmmSLHq4r3d2kzoXFyoTLMw
-X-ME-Proxy: <xmx:CeQparGLUmsLSFvXcDFpsRWN0pF9NDygW8r9krowUc0pmOfNFWohmA>
-    <xmx:CeQpahT-mApSIzGoiZLp8_qKU6R-9dVkIZeqbdCqAG4awwxUzFSTRw>
-    <xmx:CeQpavERcicFmdr-IEVPNkSBL68AVCRa4zZbAzf_n2kJQXK6nY7sFQ>
-    <xmx:CeQpal_ccKvEp3WcuXL_VPKo95hbzCtjvY9KswZQMdrShGOsHZttAg>
-    <xmx:CeQpat0fZ9MRy0xQzNzmQ3z45lX7J6c3CGxSFWqYy8uYGQgBM96zmSgJ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781130268; x=
+	1781216668; bh=ne1QFl8nT1hvYBxYdu5ObxXtw9PIuwLSbrlTO2wP6F4=; b=F
+	V/Vm2CQNRI260CHK1/c84h1GXN0JtcGCI7ksHRccLbygYzVPib0u9wDnko33P8wN
+	pQfh0lP/M1eDMT0wT5DuxBebNhavFAUCInglVnmLpqAj9hrWoJs94/6d6Zk2ugA6
+	iHhiERazVCKS1JU/GlvwBZnhrKOMjhwCgesWSjiWw4i3a3CdyzQAW/YoeDDU0tE5
+	jaG8hBwiAgy03lN085oPwsxyXPF5apqYNpi0fXW14AY8wGE5xiV8PHlMZGGYLILb
+	r4T3r1LnqnbQyyi4bflfWSOflrCrWySj9GqiYbdI0Y0VaCvGRqQ9LYzygoqUCicU
+	AqcZjFnOkLDWrLEM0VpmA==
+X-ME-Sender: <xms:HOQpagnxl3EetFv8EgsXO0o9vt1pa2rDh5_S4NUs-ufSxBqSNbk0JR8>
+    <xme:HOQpal1WH7tX-Gh7xyVXLhXrVPZjqngqGnfFWue0LL0AymcpBde2oOW_ZdadjIhjt
+    kDBIyIVBXfZyZNu6IzFl4N6zaREJPLpBWGIqJDrhVPvh8TZoX2VXg>
+X-ME-Received: <xmr:HOQpasRJ9EviPbWqH8LGCZ0LD910A5qecANmHLcxqm8omtgkumkwaQfINk47rVqeX3hK6nOeKQzQjRHVO2CDPTUbA6QvTXtD35zbBgOAkZwZgHZyyAeso6eKkg>
+X-ME-Proxy-Cause: dmFkZTGrSoxKMDviHz/3NXLyuxJgY3r0nCaXhrF+/SCsk+7E7K1d05Eg3FWgUDWheCGCcs
+    SmbzL9uLRg7xf5+luXp4UKYxIubETIDCKenZt/rSaFsCKuykQ/nyeEqbHdsy7SNmqD76Dk
+    cUC6r/Wc3LE2upfleP1fLWYRlSIrzDMSaUU/QWutbTUSJJEAFWs9opYZlVMVQklM2OmRxk
+    eppMF/3DUDlBz6ou/7v9RHDJfP1QePc0IVV+XI1W6aGjl/TAFtwUhZE4t8NZ9BVkJsWr0E
+    CEYr1dC11yG4TOMmKsN3h7V07zcuAv4fXfeJFrx6NNtxUXjJo7s2qE3Y+M/JY7EUdCybfo
+    nzQ622GNXD5auGYwooCslmVuIxMpIU2/cG+i2jznbfnUdC4/OFQuBnnfHjvAaz+d5kDxEE
+    +Xk/9bHD4mKGSOPFXOtXyxDgqVpleIH27zWL0Jwk3pyfiV/CUEiENz7Nidnnk8TnLOfvsa
+    stIQbBudfk3dUw/kusxgrnyBLPe/fjxzEqA1PqKvKvC6gnSmbs1L29LMTDHSp0hxUqEzpT
+    P8cj7k1ElcfrEijuVq04VCM867HOvimXhkS8bipcmgfdZTHvQQha4gL60UAqVy+47AnP6n
+    R3I/qXiduREIAwVkGngWHwoJ7j6mgOFj2vMNL1HpptgT3PY6LxlnvCcaeTyw
+X-ME-Proxy: <xmx:HOQpanvJ0_HEi3GoK1WJ1G2G2Q_tKesWDNv0_75V6gSA0eIGqPUnqA>
+    <xmx:HOQpahbJW4-qGSSV0mTY6y0CGV4I_TnL0p71QQh-hM6524iEKHKcGg>
+    <xmx:HOQpastNnpL6_WFLlmAMulT_bPHzG_9DQiabwQKh2Tm2B7AEmMYMlQ>
+    <xmx:HOQpajE0BEQwH91rdkGMyqfNxWfUV3mXgqQmdNZLgxGEX4xhsRBz3w>
+    <xmx:HOQpar83DwI1GMm98xyfdjvfRnkWoYFat_gPvbnKxmAoPY39NhPtoc2X>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jun 2026 18:24:09 -0400 (EDT)
+ 10 Jun 2026 18:24:27 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH 3/6] SubmittingPatches: discourage common Linux trailers
-Date: Thu, 11 Jun 2026 00:22:46 +0200
-Message-ID: <discourage_Linux.8f6@msgid.xyz>
+Subject: [PATCH 4/6] SubmittingPatches: document Based-on-patch-by trailer
+Date: Thu, 11 Jun 2026 00:22:47 +0200
+Message-ID: <Based-on-patch-by.8f7@msgid.xyz>
 X-Mailer: git-send-email 2.54.0.22.g9e26862b904
 In-Reply-To: <CV_SubPatches_trailers.8f3@msgid.xyz>
 References: <CV_SubPatches_trailers.8f3@msgid.xyz>
@@ -88,62 +88,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-The Linux Kernel regularly uses trailers (or “tags”) `Fixes` and
-`Link`. Sometimes people submit patches to this project with them.
-They have their use in that project but it is not clear what purpose
-they would serve here.
+This trailer comes up often enough and the use case is not fully covered
+by the other trailers here. For example, it is sometimes better to use
+this trailer instead of `Co-authored-by:`.
 
-For `Fixes`: Linux has many trees, and applying patches with
-cherry-picks is common. A `Fixes` trailer in commit C2 pointing to
-commit C1 helps the cherry-picker figure out that she probably needs
-C2 if she wants to apply C1. See linux/d5d6281a (checkpatch: check for
-missing Fixes tags, 2024-06-11):[1]
-
-    Why are stable patches encouraged to have a fixes tag?  Some people
-    mark their stable patches as "# 5.10" etc.  This is useful but a
-    Fixes tag is still a good idea.  For example, the Fixes tag helps in
-    review.  It helps people to not cherry-pick buggy patches without
-    also cherry-picking the fix.
-
-In contrast the Git project has few trees (to my knowledge), and there
-is much less need to cherry-pick fixes as opposed to either using
-backmerges or rebasing all of the downstream tree’s commits on top of
-git.git `master` from time to time.
-
-This project does regularly mention what commits a patch/commit fixes,
-but that is done inline in the commit message proper (c.f. the trailer
-block of the message).
-
-For `Link`: These are used both to link back to the patch submission as
-well as with footnotes. In contrast this project has `refs/notes/amlog`
-for linking back to the patch submissions, and footnotes are only used
-in the commit message proper.
-
-† 1: Commit linux/d5d6281a has “linux” in front of it since this commit
-     is from the Linux Kernel, not Git. Example of a Linux tree—as well
-     as an example of `Link`—is [2].
-
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/ [2]
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
+
+Notes (series):
+    Note: “*can be* used”. Not “is”. Based on practical usage, I think
+    it would be wrong to claim that someone sending a literal patch
+    snippet via email means that this is the tag that you ought to
+    use. I think e.g. `Helped-by` might be used instead.
+    
+    I also think that the “is” for `Helped-by` is too strongly worded
+    for the same reasons.
+
  Documentation/SubmittingPatches | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 51c308a89a8..5dc32128883 100644
+index 5dc32128883..c1d12e38b28 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -479,6 +479,10 @@ to be accepted since these are the most common ones. But another kind of
- trailer might be relevant, for example to link to an issue tracker
- belonging to a downstream project that is affected by a bug in Git.
- 
-+Other projects might regularly refer to other kinds of data, like
-+`Fixes:` and `Link:` in the Linux Kernel project, but these ones in
-+particular are not used in this project.
-+
- Only capitalize the very first letter of the trailer, i.e. favor
- "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
- 
+@@ -465,6 +465,10 @@ These are the common trailers in use:
+   and found it to have the desired effect.
+ . `Co-authored-by:` is used to indicate that people exchanged drafts
+    of a patch before submitting it.
++. `Based-on-patch-by:` can be used when someone else authored parts of
++  the patch that you are submitting. This might be relevant if someone
++  sent a patch to the mailing list without a commit message or a
++  `Signed-off-by:` and you have picked it up.
+ . `Helped-by:` is used to credit someone who suggested ideas for
+   changes without providing the precise changes in patch form.
+ . `Mentored-by:` is used to credit someone with helping develop a
 -- 
 2.54.0.22.g9e26862b904
 
