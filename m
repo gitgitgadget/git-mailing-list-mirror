@@ -1,153 +1,173 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE3D349CE7
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 18:25:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781115931; cv=pass; b=AaUjqFDbsnFLJIoNv+aAoHufY10gQsearLisNB32yDmwUj+pbE6yr8LUpWZp1daRetXPWMYEOb8NgGLrB8KIC37w5yuwf+6JFtS4hmVTNtWMKKrMoYas4bMn+29ipyrEHBi6IfKqBMgSGu0t5TYie0basUryDwZC04BPG7JIXPU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781115931; c=relaxed/simple;
-	bh=3ftBre7ysxIdmCCtQ2YezJVSEoBLLVQNbE9bbph2+nk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ovi+pdPHefUSjovOtJ27R0cZR7CsnVC9KMTiJQ7scHAOtk6mRNiW65wACJflzNj6A9DV4pRYcCN9XVF3jJAEqFDPpr97o0KET5A4+/SGudMR27u+H60TLJ1IL/pYOSq880DsyQH88r7EuPKeovBGye5sOVMKlyv+K66glE5yw8Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=S0rKYYNZ; arc=pass smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA562D7DC6
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 18:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781117409; cv=none; b=EMiF11LX9kvdnA67IkGKEdXvAFiGxFL6IRRm73Pd1eYNS9Uv5GCwTt+k1pDMkksitAp7mPAbcKqaHJrJngelzpUlFbyvnFZqBMkqPyofkOU1z8yx/UkdRyKVLZzTu0htOthc8d81I1hj8qNhlFY8I+XGxuWG+KXXhu02KABepM8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781117409; c=relaxed/simple;
+	bh=Un2XdVG3XK/eU2hQm+EZcIkKBiLaI3yBCHM46QqOjDU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=A1C2VQEnhcmW5ypoi7LBQokuLo5P44de0MpkQvh9S+kIsnvLm6fVgrPEzRY4jHDbr0hZr2DAibFhaa2Oi8J+fo9q7ZKoD4DKiLd9cUkjaVV3H5HhD7tfz6AmvRKqqbbw0AH4s5dPYNpNlTJmhnMMSDhx+4WILX4EBS/WSRrFdM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+NrgIvk; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="S0rKYYNZ"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7defee656dcso49259687b3.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:25:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781115929; cv=none;
-        d=google.com; s=arc-20240605;
-        b=fFMzi+cTgV4ihKa32DIvjb3qjUGPiaTL06dlPaYD7YS60tau6hjWp5C27k1xf9RTH6
-         P79JMWkKUrAym1KR5gE6L6U9OTtGJeqekVX7g4LxKVNShWiGn1FuhhLs43y1R10fkLL/
-         QwNlCusjGAs5mPkpdtzGMJXYRtk6a14KNuIBkmkdkevN7JPs6DYjD5K8vdKksm/zHfOz
-         zYn9z41DBEkRI785+UerRbO+w56rj5ZGFV7cTuqlTJPHULrgV2/v7wO7aZdBnejYCn7G
-         Xukmj3xcDYXPi61hMGq53Y8g1G4Mp9WHWyWJD0kGfcB/m9oOELipIdlfRouYgzKRgJRq
-         9CQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=3ftBre7ysxIdmCCtQ2YezJVSEoBLLVQNbE9bbph2+nk=;
-        fh=Q6Kqe/NXyXs2eZy4dcroH19GNMCJfrr7bMH/Yr7508A=;
-        b=HzS6iD/vDRO9ZJ/f/5KyimtTcq5cE4QB9BMVL36wtjuoB7XYnHU27RLTyyt2B6duDT
-         zjTslyfJuCek/KUUsdWz5YTx7mG3OMinG8TiX+2ieau8fcVRA+XhS5Zf3AiJrEl2Q+Ou
-         jnj8HXQfBrFGnYCM70rP3leeWC228XobyUNpkrZXf2W1v9vXpcE9So4ZHagtljLI2Sy0
-         hiBDRgKu44asoCrFpBPvFlTNho33WC0EN7vIpdyGSF53DeVC5Ov1PF/7XUngoMKgSIsY
-         zJZgAO8GxJmUTWOAloSXmlvgu5ODqFMFY9vsbPfpKbCYLeeGE0afwuU2a02jBWKrsB3J
-         JyTw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+NrgIvk"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8cceb2ecc03so59949296d6.3
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1781115929; x=1781720729; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ftBre7ysxIdmCCtQ2YezJVSEoBLLVQNbE9bbph2+nk=;
-        b=S0rKYYNZLw7Mb9R6jekQ+hBZll9lz2cbXiNR8xIMBjbTd7T7uB5JusNz43Yl5TyLfp
-         e+T0hHVpPE6U5wIBAR8YQyhfrssVi8ZWywwaB+nodJYBVzKNVNBavoJTfli8D4zH1opp
-         4y3ZLLyFh0BvThD1zo20mzCbMj8HWWKJmKMrM=
+        d=gmail.com; s=20251104; t=1781117407; x=1781722207; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=I7b2wxjG4mebC/iUNMJvohIHuacsDgIDp1ztvd6NU2g=;
+        b=k+NrgIvk0LzUNKfkEsaJRYiBcIKC86szKfbmvNFaYS5YM4Np8GcmohElO8+Oe5y+/1
+         Uo7boKQnjYGE4swdbd7HwO48cETCLIyOkW/08rXEeY8c7PjM9OII1BrZbfNHhHjNUL+Q
+         weuCpddn6ew4qhM1fzR/WlR89GA4RRd40/pzM7uIL2j7fAUUeKEeRE1enE2Ad6Dg+Umx
+         gtwiXY/WXlCsGMeQzQ4W0ElrdPqXX5pg1wbiGh2hwYi5z2KdbixniLu70sq6K37+vfUB
+         EFqntX4fx0u0BUF7Dl4ggQGL7QAAVoJYNmEfqcu6LjKmaumfrM4QIMKBeGl1SRhac9QA
+         YUNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781115929; x=1781720729;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3ftBre7ysxIdmCCtQ2YezJVSEoBLLVQNbE9bbph2+nk=;
-        b=VauxPM+N+yCc69gjj5qXDXCkeLMo/CdsNrj/hHlnumbxBP7ybstMudSeFIqkL37JXf
-         uSfx9mhMaHmz088UYwhkCZWrU3GLoK+nzjPA+P0hKRm6K2imCkYE9dxZwyudquBMGgOw
-         TsBdS12COaL8kYHiH7ULo1MwI2hIRYNCFIDQurmjtN3/wcN+I+l2A7S/+PQbeDNKwd0D
-         RoXfZZHZE3zWUJpPmoTJK1+CcGCy22Qw2hrnPR56PcA0TeWnMyPJBF6Kj33ek5Bown3W
-         E1dF+T6DUHDXBJb2ChELEBfun8/lbnlYYex3xkxFLOId8ti1099aWheea/02YUYFhkAe
-         nYUw==
-X-Forwarded-Encrypted: i=1; AFNElJ+BWPViL7TFU65BUcqUOYrQnm6PgWQPGSCQ0N9+Zas6o+yMzr3xfJo8ZGNQMAU19Iz0hM8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmEYNG2VYyP2GvFRuTni4iiHey+HR6X6IPO7ygq1McV/yTnZDU
-	qdr20dnqfSmldj6kMo8rdFx34bP9o1qbORuop1k2oPK5Nm2mJp4s+UhfpYt2psDMy6g20bgpuZE
-	uTzmeIL4c/ygM6+AFJVxC1VKb+Y53bgdBApaWXepAFysIVcyBoHI+K9A=
-X-Gm-Gg: Acq92OFMa2abDjPuWpEu8jTSMPMxYBGibiscY3gwFtm/AbCWTVeJbM1ME0/5Zy9v25i
-	u5bQ/u5q4fyy+L+s+XmFTOipc5ThQDnkx3rIDKBOD1AwXrdaFhJLpRKqx7FF8v5OrPgzvShBfgH
-	c1Zo+idEuRpkSzn7IkTkVcAKX3+9oOQlhjhyY+T30j/o0eVFbmi6YZkzIg/Uem14gIJbR/cBVAl
-	fnQL0HhdquwYq3h90IQVBJrG2yWS+v+eu3GfHUtVmz+870svGLLvoeTWLkcb2LDsWaBDnOK3zZ4
-	t7svXgBhh6ZNn0do9g==
-X-Received: by 2002:a05:690c:45c5:b0:7d1:9c6a:d60c with SMTP id
- 00721157ae682-7ed0d1d6ea5mr272833837b3.18.1781115928559; Wed, 10 Jun 2026
- 11:25:28 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781117407; x=1781722207;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=I7b2wxjG4mebC/iUNMJvohIHuacsDgIDp1ztvd6NU2g=;
+        b=s1S5Ne5IFvXsTBWKxd/94UACUIic2qByDfXt855x9f6XwIv3EDwW7Mhdnm7D/sq6XJ
+         JTd+VlzGSgrm6pPgMX94hTYNdSrBUBXf29x8UjSGT+X6joNjS3HMKj6Ro234pgvHtb4H
+         0qJvQEfiDrXWxbRryupF/bWUHg5kbJt3etZCdjlCYd8ZUsCQfqFcl4vqqYLIz9FnaHmE
+         42vfDsTluc6IS+gjTI9fjh0AhxNVGazjHbOT7wlhrV6C+zomw7orC2etER6z1BctXgQc
+         9RXPO0fi8zaj1xXr7tLSCQWSnyPZBvvpidaf9zWKx1iT17ve7d7W3WSM1r2Sqim4WPSm
+         uiag==
+X-Gm-Message-State: AOJu0YyYBXHhaY874pdmnRbNxWhUruW5tQpDMFJGF8m1GK7ZcuydGE6A
+	mdpLOCfBO3C521s1Tt9sJbQjv/USh/oCyJwV3VtvOs/1M/yFIh1fOTqNhze71tTT
+X-Gm-Gg: Acq92OGWe0MO76nUZbeUmaHESWcvyMW/lPB5Dza7/aEzyqxsbhxgLUJz+LNtuvdcfMu
+	Eu8PptW/X9JtUzUVanwmkbyFYXPP9kmwea2XHQ0wftlcvq9xez9AJZvZSeG2mA4JdcEgBDJuG4z
+	UeRNlkFDZePSGvyoGGmlWFXVvBXt2U3rFLewqdpnNON2SKbUsP3TG1DdRvGuP+2bRXz2o+hQNUM
+	GuvpgFXy4GmQLmO5C4BNteWtEuuJtO+vnwSZql87g+C2VkoI54Moft78u2BXRL3cNG1iMs37Kpw
+	WOFJzRNMpb4Tf2vn8AulkQqNMSFmZRwtb9wW4ToaO18EIDhr4giBrYjLmXl0tFzWZyOxM7yiv0i
+	F3kf4QPJafWjPLaLukpDjr3avDOcMsS9YB+kUaO5/ETLNXLSdWJeWXiyrk5ju5kW1T+8EBypuQh
+	NNSLx8kaGPjSE6NXBq6jTGPdXmnI6xcMPWv2VvRZUwMP4DNUgTQY7A8CDzP/717EljIDTwISeKa
+	KLudO0bkMiaDDPpv+whZJLn7ZxSQrkaYWvPw2xdHTfJ0bdYWCeyDVaJ7sZuGEQVQ4/0CU0AHDYi
+	+4QUj+VIqFoCetSUQpzltgRZE1BhpoPrmUjeulbsWL4Kb31olhpzj+RyERyQi4jouA==
+X-Received: by 2002:a05:6214:5f10:b0:8ce:e651:5d63 with SMTP id 6a1803df08f44-8cee6515fbcmr468943236d6.31.1781117406193;
+        Wed, 10 Jun 2026 11:50:06 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([209.249.37.133])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cecc8222bcsm245972286d6.0.2026.06.10.11.50.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2026 11:50:05 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Wed, 10 Jun 2026 11:50:01 -0700
+Subject: [PATCH v3] describe: limit default ref iteration to tags
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com> <xmqqbjdixupc.fsf@gitster.g>
-In-Reply-To: <xmqqbjdixupc.fsf@gitster.g>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Wed, 10 Jun 2026 20:25:17 +0200
-X-Gm-Features: AVVi8CfOh-79kdkDpgejNruK-B9rBCEcwcw7i6l5lh4CodFJyKg4k3cZfkSy4nE
-Message-ID: <CAL71e4NqCD0P_=qnT2R9ThNHEQx6qo27i_7Wj3Xnb9Xg0kcM2A@mail.gmail.com>
-Subject: Re: [PATCH] commit-reach: remove get_reachable_subset()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260610-describe-tag-ref-scope-v3-1-5aa63ab279f7@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNyw6CMBBFf4V0bU0fthBX/odx0ccANUJJi42G8
+ O+2uGFjXJ7MnXMWFCE4iOhcLShActH5MQM/VMj0auwAO5sZMcIkkaTGFqIJTgOeVYcDtDgaPwG
+ uLSEK6Iko0aD8POWTe23i6+3L8anvYOZiK4vexdmH91ZOtOz+RhLFFEvBLeNMN1KLSzco9zgaP
+ 6ASSWyvaX5qWNYwIVvLpTWKs71mXdcP51laABUBAAA=
+X-Change-ID: 20260607-describe-tag-ref-scope-7d00ae140a58
+In-Reply-To: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
+References: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Patrick Steinhardt <ps@pks.im>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1781117404; l=2707;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=Un2XdVG3XK/eU2hQm+EZcIkKBiLaI3yBCHM46QqOjDU=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QKS9hpQ1uWeaCKjhlQyoFWHjFeficMtoTs/vNvciCM+rSI93B8N1sT1NAWXCt/aaIRLq4Vl8VR2
+ ihYok5xXMMA8=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-Junio C Hamano <gitster@pobox.com> writes:
+Without --all, git describe ignores refs outside refs/tags/. Commit
+8a5a1884e9 (Avoid accessing non-tag refs in git-describe unless --all is
+requested, 2008-02-24) moved this check ahead of object lookup. That
+avoided loading objects for irrelevant refs, but the backend still has
+to yield every ref before get_name() can reject it.
 
-> "should not matter in practice" because...?
->
-> And of course the worst case scenario is by definition not a typical
-> case that appear in practice, so it does not make a good explanation
-> for "should not matter in practice".
+Pass refs/tags/ to the iterator so the backend can avoid visiting those
+refs in the first place.
 
-You are right, that was hand-wavy. I started with writing a somewhat
-long analysis but after finding a clean way of supporting both DFS
-and priority queue modes it feels somewhat unnecessary - I will
-still include it here, but the short summary is that it's fixable.
+The new perf test creates 10,000 unrelated packed refs. It measures:
 
-Since the prio_queue struct supports both LIFO and heap mode,
-it's actually quite easy to plug this into
-tips_reachable_from_bases. I just need to switch away from using
-the stack structure and pass a mode to choose between LIFO
-and heap. This preserves the old behavior while still reducing
-the code size and unifying the code more.
+    git describe --exact-match HEAD
 
-I will submit a v2 of the patch shortly.
+The runtime drops from 0.03(0.01+0.01) to 0.02(0.00+0.00). In a
+repository with 120,532 refs but only 330 tags, the same command went
+from 171.7 ms to 9.9 ms.
 
-I will also include the original analysis I wrote before finding
-the simple fix.
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+Changes in v3:
+- Pack the synthetic refs to better match repositories with many refs.
+- Generate update-ref input with test_seq -f.
+- Shorten the commit message and report the p6100.6 result.
+- Link to v2: https://patch.msgid.link/20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com
 
-Thanks for the review!
-Kristofer
+Changes in v2:
+- Exercise the performance test with both ref backends.
+- Keep the ref count local to its setup test.
+- Report native hyperfine output for an exact-tag lookup.
+- Link to v1: https://patch.msgid.link/20260607-describe-tag-ref-scope-v1-1-653d232b86b5@gmail.com
+---
+ builtin/describe.c       |  3 +++
+ t/perf/p6100-describe.sh | 12 ++++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 1c47d7c0b7..3532c8ff22 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -740,6 +740,9 @@ int cmd_describe(int argc,
+ 		return ret;
+ 	}
+ 
++	if (!all)
++		for_each_ref_opts.prefix = "refs/tags/";
++
+ 	hashmap_init(&names, commit_name_neq, NULL, 0);
+ 	refs_for_each_ref_ext(get_main_ref_store(the_repository),
+ 			      get_name, NULL, &for_each_ref_opts);
+diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
+index 069f91ce49..b1c61529bb 100755
+--- a/t/perf/p6100-describe.sh
++++ b/t/perf/p6100-describe.sh
+@@ -27,4 +27,16 @@ test_perf 'describe HEAD with one tag' '
+ 	git describe --match=new HEAD
+ '
+ 
++test_expect_success 'set up many unrelated refs' '
++	ref_count=10000 &&
++	git tag -m tip tip HEAD &&
++	test_seq -f "create refs/heads/describe-perf/%05d HEAD" $ref_count |
++	git update-ref --stdin &&
++	git pack-refs --all
++'
++
++test_perf 'describe exact tag with many unrelated refs' '
++	git describe --exact-match HEAD
++'
++
+ test_done
 
 ---
-I will refer to the prio_queue approach in get_reachable_subset
-as PQ for brevity, and the DFS in tips_reachable_from_bases as
-simply DFS.
+base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
+change-id: 20260607-describe-tag-ref-scope-7d00ae140a58
 
-tips_reachable_from_bases() was designed for --merged queries where
-the targets (branches/tags) can be deep ancestors of the base. DFS
-is a natural fit there: it dives deep along first-parent quickly,
-and with generation numbers the dynamic floor raising prunes
-aggressively.
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
 
-add_missing_tags() has the opposite shape: the bases are branch
-tips being pushed (near the top) and the targets are tag commits
-the remote does not have yet, which tend to be relatively close
-to those tips. PQ ordered by commit date is a better fit here
-because it sweeps down from the top and finds nearby targets early,
-while DFS might take a long detour down a side branch before
-coming back.
-
-With a commit-graph this difference mostly disappears since the
-generation floor keeps DFS from going too far off track. Without a
-commit-graph, neither approach prunes anything (generation is
-GENERATION_NUMBER_INFINITY for all commits) so the traversal order
-is the only thing that matters, and PQ has the edge for shallow
-targets.
-
-So the current code actually has each caller matched to the
-traversal strategy that fits its typical workload. My patch traded
-that away for code reduction.
-
-That said, in practice the difference is limited: repositories
-large enough for this to matter typically have a commit-graph,
-and small repositories are fast either way.
----
