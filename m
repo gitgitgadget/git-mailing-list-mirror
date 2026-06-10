@@ -1,298 +1,133 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD61407CF0
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 12:44:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BD476025
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 13:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781095447; cv=none; b=b3Mb6Fg+980tdNm9twMwgslY/sG936Ok2peIHQKA036cY+v+/CFN0OFE8gDI8KjAXWOMRRZ9Mxc09RH6Fm9cuFvsFDfQ7YFEXcivOYOu/PePOdjuzRR9IhhKEbcEFx2cOGy5TIdP05gPeszRpf+03Mn4Pa0IdmqACRQAV7iaVTw=
+	t=1781096468; cv=none; b=lvcT5qQDoxsTnqn1WEi6mT7BbXxljrsCniWW5xpXHcbJCJxo8O1ZGQ/H8Vx+qkAml3A7EzcPWXwtUYVU+RckMVhtShZBiZE8eG9Nf+CMfu9MdQjvs+IIX1B+nfmPAUmWr3hR/rLf8gjshqsrBFifkFJDRVZ68eZJysGBXwm18bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781095447; c=relaxed/simple;
-	bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G4iQoBrjzGe3zEnyYoEbCGNCrdyzbw3Tbu9U5+PUvQQZ5DOFMk5G+J4Dq/3uKh3p1K4FHmBjXO++ykxneRjiFYsH9+FmonYVONg6UL2vn/7eYfIekZFKHKvo01mY3u1Zk2z345zuA+q0FtrVDCpZxWbBh4oiDzPXvVN/vXfGKdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=WCPSrhDL; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=Q50zchve; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1781096468; c=relaxed/simple;
+	bh=DYtaIGVqBTryCTi7LEgR+B7rkQlSg/g3TGwWxGj/Yfo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LF9pGFsUE7qxM8fFip3UdSiStfYXuN8BnXxayZujLOl2g+VlYfrwNhpZjq0ymvDeNc7jyIj05junUA91el6mtQgxMxiEMzhu4ifkvQvsnN1D1zuo2ZPejly9DEW1Ef+8oiDEY9plqr9AL0gFi3+laZuFWaF5gbRtiSIdSQnqlTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KusH/X5G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lB8wE2a8; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="WCPSrhDL";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="Q50zchve"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=WCPSrhDLv8znQeoNk/SRASUxhmmiY33FWny4oFBTclalyASx/j2JfrERm9ElN1Lht16t2eHTlLZp2PMSwaCxsMxvoDrVjRyf7Wl9N3MgUnbEoY1RuPelSHZBuHLzZbI3jp1UZTSICBBXRhhx0w4kqWaQ2tmupSWDyDBQXZHmBpTtCSHxuqP7Tnd2YXfvLnxZ24zzi8rnwd1NFRlhNPH2ueOqRDM3S9sNGa/P7hpMa1Aw+dRVh0JEmkU7eQ00+N5DsGHKecyCGrNoCZZvmVXVzlupfO/fhgxoL/K25uZxLcq6KkPn0rPh/2JDBVLoIegWuCkiEbEKju6Q4PQFtlio6Q==; s=purelymail2; d=malon.dev; v=1; bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=Q50zchvezozz3FRgyTDV6X1rWaSLZKMOYTHlI2jmLRyHwzBcmkfQOuqTMdAJQaJrEJJkVPeO4ijtqu/KWKaaWR+OwvpIkBH6bw+ZnHesD17T/6fRwoY2sPmK2tNgwtuFxAcKfw/GflBFU2yAkoEJNivfXV6G/T0aWk8Io9G+m50YgO85Nh7By3WMEKtu398D9XgmtOmldxz6Z/qP0fD6MyHrYWoUicMzaZY81mh2B9UxZaV035TQtj+TjQ/FnDd45iMjy90dZqP+/w3GYYlQnosZSGOR1n57QTPPlwQJEL4lTW9ZtwAzy4XZAH/KnmO+RyJJCz2G3jrZ49OYwk2LNw==; s=purelymail2; d=purelymail.com; v=1; bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1900269065;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 10 Jun 2026 12:44:03 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v2 1/1] environment.c: move 'protect_hfs' and 'protect_ntfs' into 'repo_config_values'
-Date: Wed, 10 Jun 2026 20:43:52 +0800
-Message-ID: <20260610124353.149874-2-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260610124353.149874-1-cat@malon.dev>
-References: <20260606143412.15443-1-cat@malon.dev>
- <20260610124353.149874-1-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KusH/X5G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lB8wE2a8"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id DA979EC0223;
+	Wed, 10 Jun 2026 09:01:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 10 Jun 2026 09:01:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781096465; x=1781182865; bh=TdtaN5kAkw
+	+c4aNkGcqxgbYK9dv6e+qwPbaHWhYDWSk=; b=KusH/X5GI34h2b0nfKkpg7mU/t
+	feOotnSqh8z/EB1DC0ajQ6cZxfLuvSLQAqEFOeTzkf4z9GzSbT1aHQic3Nrnfhl2
+	ZAUaBcUs4wDvBffeZ7SplE3pdmFLSHHJnx4bTnqfMdEk0AvD9ewmWFKDQ2WntCUR
+	O6TlYzwe35n69mhpRJMZYGk8k9EiGx7DWEs2GkMGVLhADvMgNGx6u/UsxzIwFU9u
+	En+vJEp+NMv94XYfrmhz2hlLJdVSf6brhcfx1XBmJdJ0Z3ziYuaATm5wT0KaC0+i
+	xeosoKgFl31LA6TabOzFalhaJRwjUwlqQRdkzlX6rMKQyKz3BhgGzDzLWVaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781096465; x=1781182865; bh=TdtaN5kAkw+c4aNkGcqxgbYK9dv6e+qwPba
+	HWhYDWSk=; b=lB8wE2a8LTd/2vP7b5t/UT/PxX+zO1U4g9frrKhnFJXSmowI/xt
+	vRQXbSE3FDhCZb3O4EhVo0I7pr2AqrWBKZ5JL4TGxtbyOq0U1Q1stsbzjCw6nVHR
+	kGhnqL+5mVflQrOCVYJBjqcjX8Ihsy77j7vYQJ6cJ64apndmlFQ23MerBaKsCv+g
+	BONJhsb8nQ7WsH2GP5fkKyNrMvDFhyRnfVbs+5yH4B+jb0pW5/xbG66Qyf2KnZSo
+	KTNEAZTlAHM9jYgkF1hKzBWkyfZ6NkKkk3VNjQHnbIpx/j4W7OiaqqiOdFX17TJx
+	mMlyhKYjOSj2OMq1NwKl0R4w9sSKd9QoKvQ==
+X-ME-Sender: <xms:EWApaoTvWCXHjnCwkZgJk4rQNyY46dRxmDdtzm0bopiDH63pbg_7Dw>
+    <xme:EWApasp56y7TrcANhdSqTD6j_UKNq5yRC85yIQt2P6Ot9VcOUwWChEmtfY7aZRZFa
+    lKSJMJAIoI3JFfKGNwTtCNjxDY40q5dUhS4fVXwDJPttJtbfQ2ktA>
+X-ME-Received: <xmr:EWApauLp-J78w5WXzNPf7TdBbIVreq0xkq6_nu3jwQVkDZaxhsen86QCe73k_lCF6WxOWZG8kqQl1x7yzHuOLX3UaqwbhSpWXy4F>
+X-ME-Proxy-Cause: dmFkZTEtBklZa/JLal1w0fEU3/Rw0/UKcv+Yo/yJYxUa4t/AVknsfJ7y53yvU15UFKQe5r
+    Nb4ADV6wkKgK1eqjmN2PDSUkOEmzIA+s8tHS5zmyPM14NYtf1vehajLyh6+cQCgiO1pU0P
+    lpa53hE9u09mUBOCDJ74hlzWrpxKQp+SLk7XuZz3nsqlFJupsAKjUYbcbk/YhhtpZATCXu
+    AtXb/OfU+KFfiIz3j/nRph5HXYbgXeLxbtCwGZkAXjCvhZ83O/8uOBe3hJFLOH+l5Omz/Q
+    XAr5AcLb0lDpMZmG/ZxVek1+t7VstvJRv4W/sCsSrCdtY8Iqsp+F40JmjdhkV6uQT5Lms4
+    smYLZ1E0nQtoOD4K7g2uya+kaKwmrQ+IfISAZyO4UNGdbS8nR2GDvbzs/hqEB+2ebhDs8s
+    2eKF5NmM6O4ASlmaARGL8PG+ovgu1h2kEtzfy4cE+L5jvUTbZ+AqLyWgEiD2TPoRDscE06
+    o1WWR0eVjseOAWWM7meF+YYj6WbmuA5aAY2zQQHMC6cQBySlrkIkfk0JSxvEQNwhC5HK1m
+    lu1CfNy/VSlJvvbwi8J+y3gHg9sjTtVqgOOqZDU6Nl/1jhGQwG6hj4egwnYT47+XBk51XO
+    WMcgE70WHY/eZbFUEKEJqzbXhziDxQkFyWRVJE7hhzDcgI+86QdGgJEdqSdg
+X-ME-Proxy: <xmx:EWApanrLFXB9eKe_aSDNm9nIPOr4E0Mtnp0DWPLWBv2iYkYVw8bUYg>
+    <xmx:EWApauz7pOPMX14WEsELTtggfSrvPByXHWqqBgleM6U4L_JU7BKhCg>
+    <xmx:EWApajOlIRETnk1NGrqmYCxiqbz-CPPpMKRAI2veVOoWR52fU-nR4g>
+    <xmx:EWApar5w_GBsgEVsaYIvZ8XmUnqZv1XP73sJUSdCT1hrq-i01jV0Nw>
+    <xmx:EWApalbjUIeAMV2oeijmlxCMUNE2puRow8Pw_3DmCHEjji7-bk2GqnlP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Jun 2026 09:01:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Tian Yuchen
+ <cat@malon.dev>
+Subject: Re: [PATCH] read_gitfile_gently(): return non-repo path on error
+In-Reply-To: <ah6WEtk2pXyViEQA@pks.im> (Patrick Steinhardt's message of "Tue,
+	2 Jun 2026 10:36:34 +0200")
+References: <20260602061159.GA693928@coredump.intra.peff.net>
+	<ah6WEtk2pXyViEQA@pks.im>
+Date: Wed, 10 Jun 2026 06:01:03 -0700
+Message-ID: <xmqqeciezh0w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 
-Move the global 'protect_hfs' and 'protect_ntfs' configurations
-into the repository-specific 'repo_config_values' struct.
-This will help with the elimination of 'the_repository'
+Patrick Steinhardt <ps@pks.im> writes:
 
-To ensure code readability, the getter functions
-'repo_protect_hfs()' and 'repo_protect_ntfs()'
-have been introduced.
+> On Tue, Jun 02, 2026 at 02:11:59AM -0400, Jeff King wrote:
+> [snip]
+>> Two other points of interest.
+>> 
+>> One, I'm not sure how useful printing the pointed-to directory is. We
+>> _could_ just say:
+>> 
+>>   fatal: gitfile does not point to a valid repository: /path/to/.git
+>> 
+>> which is enough for somebody to investigate themselves. That would
+>> certainly make the patch smaller.
+>
+> I have to agree that the patch is somewhat gross, and I myself don't
+> really see much of an issue to move to an error message like the above
+> if it ends up simplifying the logic.
 
-For now, associated functions access this configuration by
-explicitly falling back to 'the_repository', which needs to
-be addressed in the future.
+So we are in agreement among three of us that simplifying the code
+to lose error message with dubious value would be a good way
+forward.
 
-Note: In 't/helper/test-path-utils.c', there is a function
-'protect_ntfs_hfs_benchmark()' where these two global
-variables are used as loop iterators. New local variables
-have been created to replace them.
+Peff, can we have a formal [v2] then?
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
- compat/mingw.c             |  2 +-
- environment.c              | 22 ++++++++++++++++++----
- environment.h              | 12 ++++++++++--
- read-cache.c               |  7 ++++---
- t/helper/test-path-utils.c | 24 +++++++++++++++---------
- 5 files changed, 48 insertions(+), 19 deletions(-)
+>> diff --git a/setup.c b/setup.c
+>> index 075bf89fa9..2df6fbf595 100644
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -1641,9 +1650,11 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>>  					return GIT_DIR_INVALID_GITFILE;
+>>  			default:
+>>  				if (die_on_error)
+>> -					read_gitfile_error_die(error_code, dir->buf, NULL);
+>> -				else
+>> +					read_gitfile_error_die(error_code, dir->buf, error_dst);
+>> +				else {
+>> +					free(error_dst);
+>>  					return GIT_DIR_INVALID_GITFILE;
+>> +				}
+>
+> The `if` branch should also gain some curly braces here.
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index aa7525f419..af87df77fd 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -3392,7 +3392,7 @@ int is_valid_win32_path(const char *path, int allow_l=
-iteral_nul)
- =09const char *p =3D path;
- =09int preceding_space_or_period =3D 0, i =3D 0, periods =3D 0;
-=20
--=09if (!protect_ntfs)
-+=09if (!repo_protect_ntfs(the_repository))
- =09=09return 1;
-=20
- =09skip_dos_drive_prefix((char **)&path);
-diff --git a/environment.c b/environment.c
-index fc3ed8bb1c..683fe1b4d3 100644
---- a/environment.c
-+++ b/environment.c
-@@ -82,12 +82,10 @@ unsigned long pack_size_limit_cfg;
- #ifndef PROTECT_HFS_DEFAULT
- #define PROTECT_HFS_DEFAULT 0
- #endif
--int protect_hfs =3D PROTECT_HFS_DEFAULT;
-=20
- #ifndef PROTECT_NTFS_DEFAULT
- #define PROTECT_NTFS_DEFAULT 1
- #endif
--int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
-=20
- /*
-  * The character that begins a commented line in user-editable file
-@@ -142,6 +140,20 @@ int is_bare_repository(void)
- =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
- }
-=20
-+int repo_protect_ntfs(struct repository *repo)
-+{
-+=09return repo->gitdir ?
-+=09=09repo_config_values(repo)->protect_ntfs :
-+=09=09PROTECT_NTFS_DEFAULT;
-+}
-+
-+int repo_protect_hfs(struct repository *repo)
-+{
-+=09return repo->gitdir ?
-+=09=09repo_config_values(repo)->protect_hfs :
-+=09=09PROTECT_HFS_DEFAULT;
-+}
-+
- int have_git_dir(void)
- {
- =09return startup_info->have_repository
-@@ -541,12 +553,12 @@ int git_default_core_config(const char *var, const ch=
-ar *value,
- =09}
-=20
- =09if (!strcmp(var, "core.protecthfs")) {
--=09=09protect_hfs =3D git_config_bool(var, value);
-+=09=09cfg->protect_hfs =3D git_config_bool(var, value);
- =09=09return 0;
- =09}
-=20
- =09if (!strcmp(var, "core.protectntfs")) {
--=09=09protect_ntfs =3D git_config_bool(var, value);
-+=09=09cfg->protect_ntfs =3D git_config_bool(var, value);
- =09=09return 0;
- =09}
-=20
-@@ -720,5 +732,7 @@ void repo_config_values_init(struct repo_config_values =
-*cfg)
- {
- =09cfg->attributes_file =3D NULL;
- =09cfg->apply_sparse_checkout =3D 0;
-+=09cfg->protect_hfs =3D PROTECT_HFS_DEFAULT;
-+=09cfg->protect_ntfs =3D PROTECT_NTFS_DEFAULT;
- =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
- }
-diff --git a/environment.h b/environment.h
-index 9eb97b3869..fdd9775900 100644
---- a/environment.h
-+++ b/environment.h
-@@ -91,6 +91,8 @@ struct repo_config_values {
- =09/* section "core" config values */
- =09char *attributes_file;
- =09int apply_sparse_checkout;
-+=09int protect_hfs;
-+=09int protect_ntfs;
-=20
- =09/* section "branch" config values */
- =09enum branch_track branch_track;
-@@ -123,6 +125,14 @@ int git_default_config(const char *, const char *,
- int git_default_core_config(const char *var, const char *value,
- =09=09=09    const struct config_context *ctx, void *cb);
-=20
-+/*
-+ * Getters for the `protect_hfs` and `protect_ntfs` fields of `struct repo=
-_config_values`.
-+ * They check `repo->gitdir` to prevent calling repo_config_values()
-+ * before the configuration is loaded or in bare environments.
-+ */
-+int repo_protect_hfs(struct repository *repo);
-+int repo_protect_ntfs(struct repository *repo);
-+
- void repo_config_values_init(struct repo_config_values *cfg);
-=20
- /*
-@@ -173,8 +183,6 @@ extern int pack_compression_level;
- extern unsigned long pack_size_limit_cfg;
-=20
- extern int precomposed_unicode;
--extern int protect_hfs;
--extern int protect_ntfs;
-=20
- extern int core_sparse_checkout_cone;
- extern int sparse_expect_files_outside_of_patterns;
-diff --git a/read-cache.c b/read-cache.c
-index 21829102ae..2c6a60c756 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1002,7 +1002,7 @@ static enum verify_path_result verify_path_internal(c=
-onst char *path,
- =09=09=09return PATH_OK;
- =09=09if (is_dir_sep(c)) {
- inside:
--=09=09=09if (protect_hfs) {
-+=09=09=09if (repo_protect_hfs(the_repository)) {
-=20
- =09=09=09=09if (is_hfs_dotgit(path))
- =09=09=09=09=09return PATH_INVALID;
-@@ -1011,7 +1011,7 @@ static enum verify_path_result verify_path_internal(c=
-onst char *path,
- =09=09=09=09=09=09return PATH_INVALID;
- =09=09=09=09}
- =09=09=09}
--=09=09=09if (protect_ntfs) {
-+=09=09=09if (repo_protect_ntfs(the_repository)) {
- #if defined GIT_WINDOWS_NATIVE || defined __CYGWIN__
- =09=09=09=09if (c =3D=3D '\\')
- =09=09=09=09=09return PATH_INVALID;
-@@ -1035,7 +1035,8 @@ static enum verify_path_result verify_path_internal(c=
-onst char *path,
- =09=09=09if (c =3D=3D '\0')
- =09=09=09=09return S_ISDIR(mode) ? PATH_DIR_WITH_SEP :
- =09=09=09=09=09=09       PATH_INVALID;
--=09=09} else if (c =3D=3D '\\' && protect_ntfs) {
-+=09=09} else if (c =3D=3D '\\' &&
-+=09=09=09   repo_protect_ntfs(the_repository)) {
- =09=09=09if (is_ntfs_dotgit(path))
- =09=09=09=09return PATH_INVALID;
- =09=09=09if (S_ISLNK(mode)) {
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 15eb44485c..f77b3f9d70 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -250,6 +250,7 @@ static int protect_ntfs_hfs_benchmark(int argc, const c=
-har **argv)
- =09double m[3][2], v[3][2];
- =09uint64_t cumul;
- =09double cumul2;
-+=09int ntfs, hfs;
-=20
- =09if (argc > 1 && !strcmp(argv[1], "--with-symlink-mode")) {
- =09=09file_mode =3D 0120000;
-@@ -276,8 +277,13 @@ static int protect_ntfs_hfs_benchmark(int argc, const =
-char **argv)
- =09=09=09names[i][--len] =3D (char)(' ' + (my_random() % ('\x7f' - ' ')));
- =09}
-=20
--=09for (protect_ntfs =3D 0; protect_ntfs < 2; protect_ntfs++)
--=09=09for (protect_hfs =3D 0; protect_hfs < 2; protect_hfs++) {
-+=09if (!the_repository->gitdir)
-+=09=09the_repository->gitdir =3D xstrdup(".git");
-+
-+=09for (ntfs =3D 0; ntfs < 2; ntfs++)
-+=09=09for (hfs =3D 0; hfs < 2; hfs++) {
-+=09=09=09repo_config_values(the_repository)->protect_ntfs =3D ntfs;
-+=09=09=09repo_config_values(the_repository)->protect_hfs =3D hfs;
- =09=09=09cumul =3D 0;
- =09=09=09cumul2 =3D 0;
- =09=09=09for (i =3D 0; i < repetitions; i++) {
-@@ -285,18 +291,18 @@ static int protect_ntfs_hfs_benchmark(int argc, const=
- char **argv)
- =09=09=09=09for (j =3D 0; j < nr; j++)
- =09=09=09=09=09verify_path(names[j], file_mode);
- =09=09=09=09end =3D getnanotime();
--=09=09=09=09printf("protect_ntfs =3D %d, protect_hfs =3D %d: %lfms\n", pro=
-tect_ntfs, protect_hfs, (end-begin) / (double)1e6);
-+=09=09=09=09printf("protect_ntfs =3D %d, protect_hfs =3D %d: %lfms\n", ntf=
-s, hfs, (end-begin) / (double)1e6);
- =09=09=09=09cumul +=3D end - begin;
- =09=09=09=09cumul2 +=3D (end - begin) * (end - begin);
- =09=09=09}
--=09=09=09m[protect_ntfs][protect_hfs] =3D cumul / (double)repetitions;
--=09=09=09v[protect_ntfs][protect_hfs] =3D my_sqrt(cumul2 / (double)repetit=
-ions - m[protect_ntfs][protect_hfs] * m[protect_ntfs][protect_hfs]);
--=09=09=09printf("mean: %lfms, stddev: %lfms\n", m[protect_ntfs][protect_hf=
-s] / (double)1e6, v[protect_ntfs][protect_hfs] / (double)1e6);
-+=09=09=09m[ntfs][hfs] =3D cumul / (double)repetitions;
-+=09=09=09v[ntfs][hfs] =3D my_sqrt(cumul2 / (double)repetitions - m[ntfs][h=
-fs] * m[ntfs][hfs]);
-+=09=09=09printf("mean: %lfms, stddev: %lfms\n", m[ntfs][hfs] / (double)1e6=
-, v[ntfs][hfs] / (double)1e6);
- =09=09}
-=20
--=09for (protect_ntfs =3D 0; protect_ntfs < 2; protect_ntfs++)
--=09=09for (protect_hfs =3D 0; protect_hfs < 2; protect_hfs++)
--=09=09=09printf("ntfs=3D%d/hfs=3D%d: %lf%% slower\n", protect_ntfs, protec=
-t_hfs, (m[protect_ntfs][protect_hfs] - m[0][0]) * 100 / m[0][0]);
-+=09for (ntfs =3D 0; ntfs < 2; ntfs++)
-+=09=09for (hfs =3D 0; hfs < 2; hfs++)
-+=09=09=09printf("ntfs=3D%d/hfs=3D%d: %lf%% slower\n", ntfs, hfs, (m[ntfs][=
-hfs] - m[0][0]) * 100 / m[0][0]);
-=20
- =09return 0;
- }
---=20
-2.43.0
+True.
 
+Thanks.
