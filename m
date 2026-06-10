@@ -1,83 +1,88 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1443DA7F7
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2AB413609
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 16:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781106542; cv=none; b=kprKe9S7dj+a++wQkweYhDmC2cldHpqwudsyYTpGqNkwZOHKLaXXuoheLquWyepiy0KTR4ceeiTD30RyRHCnrqL2JEcN/jXt0ImLSa5/jX3WfinMMi2XAwetJdWhihsEdyt5M5lrhNN9hRr8Ri4AAu3mn4iUL4Ff2/0Jeg2AXzo=
+	t=1781107359; cv=none; b=feM/jQqCY7TFXt+d9n0nx8lBlzoyloKbuSMNx2YtbKUg+iAwfbDNeLIgsWw4/U3U3aZqsN9rWRLpRU+h0F/n+0sPuF+5aewol4HmKhw3Mqdx84qE01mVMXASj9O4XzzqcxoJ0kO9HTIVK1gzZoqoWvGoN+NyJ8YzvC24ZhZ6JxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781106542; c=relaxed/simple;
-	bh=6Bd1h2lzaYcHBp+eT0C0/5ufVijria+5mC63vcOthOk=;
+	s=arc-20240116; t=1781107359; c=relaxed/simple;
+	bh=F01b8+I2qOI+3BzrxVVpTO2CXHFdt4WJzADD1aXIEVo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OI7MeOCgVvUIdnjyNm2BIYKvH8U5AcZ5bSYceyytuxIN/w8mFRRINBRRfnk0ebKW+JZ9kOYXwydd5tfteSXGSyMbXF+cER/ZooDMoWodtGTabJ6GCbQOsRNy320hL78VeNicSj3SVYWVl9VHYprID770QvSa9uhVOpdnykPC1uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kRazSPzx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xt/vV0zX; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=AGCy5EMpyoUxti6JJZC5AIuGOvcWb1E3HZNKTy0VzKwTEQR9xNn9CY3wts+tty2SjcaZ8HjYtkY23JwfLDRaKgcxEDzFJ4cDKTp8d9YLEk6kwVj9FDpmOmRlfwEzfie1e1griiB7wJ1mfk2il9rCCZPbhpQFc0A/sao2q673Hwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SJRiFuF0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gov+a+ht; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kRazSPzx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xt/vV0zX"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id BD9A1EC0053;
-	Wed, 10 Jun 2026 11:49:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SJRiFuF0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gov+a+ht"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 13E56EC0095;
+	Wed, 10 Jun 2026 12:02:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 10 Jun 2026 11:49:00 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 10 Jun 2026 12:02:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781106540; x=1781192940; bh=Wxww8MJzHh
-	z0mtojnM73vRZu5vxvH5t5nmAgCm+n9zs=; b=kRazSPzxxE103SoUibiyHDUQWK
-	yDJdMzh3F389yLN2tuILm0/v7EQC4JTrseCkzNCOIUobLJHA5TVj7ESpFAaMYHsQ
-	SdqCVooH5uCBebBxINVbpj+1MS4POS6uFRmqW+rn2SUtK3LgV5MicUGnufRpCiXr
-	WORR2zotqozWU4WATryzkHIKfjjZdg4V14Hq4yUJLpKlwSkjWaRaHff3MyJfYSWO
-	hoKP/R+g6tlTWkQZ5JsDCsL5X5Uovf2V5RY5nn6MuqpmyLUmxdu9rAJ19XAa9cFt
-	/HKxD4Dn7NJuBfiGAJl/A5gizJK5h7fEx1DhIkbPPIz1e/G4opFEOX5dvcRg==
+	:subject:to:to; s=fm3; t=1781107357; x=1781193757; bh=gghLH0IA03
+	yrLmoS+LmpQH0S5X5CpvP+EZZkbQz52FY=; b=SJRiFuF0L80xqQ5g0g+NwH79je
+	SVBqmiKl+nfoDHHkAV2d9/GlVTpE1Aoao3tuJoQ3mBzYuooG1HLxfqYS6VBsvm3s
+	rDYja0XvUDWGGHNwyATX8E5YBy7/+x6MoEWFzXZq9kPfkFdOLBrn8qhdwG4IzHha
+	5WeP4OXZgY6dA8xfZni0M/Rh/oG4BgFQdqfR3k/xESnYEat9orzda6wezdVJfve1
+	QBa5UGoearyNRG8EBL+2kQADBlWchBRSgs4wgNr3hL4lm3W9cflacJJkTNphYF2S
+	T0UsSBH20vcV+0CERLlEt/0D1W+Lhn69olyGjGX811Leflw11H85kwwRZRZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781106540; x=1781192940; bh=Wxww8MJzHhz0mtojnM73vRZu5vxvH5t5nmA
-	gCm+n9zs=; b=Xt/vV0zXZK6f/Om9KA+ac/x5XyEmF4XUCRKwsWZcRiaMqHFfsuX
-	JRQ398ZxikkNDmzDEZq7hgS7GgzdG78QEIY5erq+VWSba6udOSKRmdRXKW+mKbyi
-	auv7heupndMnlEZPOXIj/UyyEWGJNDYiVvPOh9g91/UtumjezWB18ySE+5qtQDbi
-	ahXM2qaNyFl9ZWIYnxEFhDjKIs1GAolao1Ic6H96rLJ0Uj5pD0zO+F64+xVqk6OA
-	UZjJBoNggtpiWOHrrka75iWKHx6MKNsm4W9/VztzLZHv9dQOojERi7mGNAjfQz9o
-	oo14k6Hw40BivYQd0/BmHrDNmqlsgiV2MYg==
-X-ME-Sender: <xms:bIcpakqr8k81QjBs888sPVFMcMVCmfoWgd-BCoZWN0O46IEjqBV68Q>
-    <xme:bIcpahornofyETzglNNeAngnRYuXYcyjsWnr3k4i3depDwOSNc0tCTP3dconCXH7A
-    WS-YqhfUNW3OigXfL7OEH1NE1AwgY5-Y0711hXuBhvz2EO9WNP2KQ>
-X-ME-Received: <xmr:bIcpauPD844NWs94HGttuaXV1d23oag-DvzjP_hDJjcghLe4kdpgurfAmVHobXKYo9uuehpBG-bQLmcDHuVLgna_pFHOYfM7y_p_>
-X-ME-Proxy-Cause: dmFkZTFP47rlsiL45RsDDUFIHp0aLgoyzAivDzd+Kj4R+Rb5a/MOfzIXUlKwxPIB1/PV+Y
-    qs8vArq4Z8hE8ULoEBvmdzAufnOkK35IvKHRafDZs29d5miiOO+PdqrvhvO6Lk6r/qrN7b
-    eaC7d0+jIaooGmvQ5vEP0ttGKXRxBdMMc0Cj7jdJ+i30rRce6B+2ZgM1/o8faskxnE14y8
-    ZoyRCxVe/Lb3kfTzXzFXEGFs9RN+hGKQ7kLuMS+0vmJB5CP1VfKjOQGpGvg2UnlPiVj1vl
-    0CPRcY+GqJ0r1QwyiQ4nSj0I3evt2lo60kSZ3bdh71v1O8+srDIqzOX3n1XdN+QpjfM3ov
-    pL3/kL57eNa0hqU4SQTvPklUYbuhEG9h6Q7C/dCORLhNzdbS5feg3OqOwicfR3+hxks55A
-    zc3cidm3R6jUtY5Vq5U+hhn8SNI/sICrbo89DwR4JlUKvrFVTYaqj5jGwKqLYkyM8iHKje
-    QGZnH/O5bgEg85ot6kuL9PpAU+3zZjOTPoPSyjpfvhq+uxdXP1vUn4GT0oNGOb+YA3EyYO
-    Hgjix3t7I6DMV5aEvVTCo7S7+OdtgnIMEr8bjpmUlKPquTzMVVxWqNA14G6OMRHajvM/vc
-    +ZG7pLNngKF5Tckl2GtTKD3pR0rSstyUA434Wr8tolsqKQ74RFM/REj8jefg
-X-ME-Proxy: <xmx:bIcpaqxnLCh5Zdt4JRTb2wu8k9dr6KApU9O-Ja4P39Zjc_a5_u1lag>
-    <xmx:bIcpavvh3Wd-ZFaQoAG5OARISSR6EIcB6xQXxEBSM7RkIGoUdYMf3g>
-    <xmx:bIcpar4He96fXAqAuwHf8_pCNs8sWixnBszqSiG6l-VrdJWUgkAjuw>
-    <xmx:bIcpamQTarIUGXLyIVdT_q2opusff9fEGJccv4QT-grQOH5sANpXKA>
-    <xmx:bIcpatuDup5_jGcqBHmRy1KQ9AF0zLwuRIflzyc21W9dN2U9J9rCzG7z>
+	1781107357; x=1781193757; bh=gghLH0IA03yrLmoS+LmpQH0S5X5CpvP+EZZ
+	kbQz52FY=; b=gov+a+htOP6owGdRxyTCY37OKuPL5RAyloqTY1D15uiohlhjWEF
+	tNMJWdOrtDGVDaVyydnA2v6Yqu9uvDypTx9SOveKasx2xFUv+gfVmDIO466zKn/A
+	diPnfbmTGy5vtEe2+KweFNPsDf5gCNH3tEf/4RQQxQDqgH8KycAslfJjAh0kImes
+	2aXrbDycWmwVc37x9OeqXKUm3oF2++iosFKwNluAcsWyYSAMJfQAgdNxjXxFQ55j
+	6roJ/YgXFvA1pxnP0CnEaz9JN5laXo4P71bbqMC3YWvo7QI7k3o51hD0/AoGjmyc
+	pHHNdpixsSEkxHTVC8rSJjBeTUoJdNM45Mw==
+X-ME-Sender: <xms:nIopaveFdYpfo610ZQ7-Qjw8KQpMC7Yuz6sde9Z2kDgtvW2Da9naSg>
+    <xme:nIopaiKyps_z6gF_mXXZhJ8G8sP5DI0ldjh__zwuzwd2OldCnJ1T-s-Lcc9RFaesJ
+    LOD2swHmMeXLh5KhemCevVLrvzVEwyFzuBpHXTs6jEVHX9YB5dGasc>
+X-ME-Received: <xmr:nIopakKCRVboQhpnKByYrO0AOaNxGWwn3UWfwuCMay0jEieEK9Vr9UygZOOZsMi0MGx5MGA1iBWT_OLTBz8xTI250Ahu2fbpiUg0>
+X-ME-Proxy-Cause: dmFkZTGYL5afcmQUIWRoZEGztLSKqqkCQ4Vm39vXJZMbbAYAYUtynCGWJNI8Mi7w+VWx8q
+    Yq8vKIY3Yj3LG/NHQ0+w5wDjg8WEs3S4yChTr9KTdLhENx1R04bEuVRv7B/4sE0GPft+w1
+    6O7zYy5c4ohD1htWnBapzyYqbfBMvTUw1xwqChmI+AI6KD+bEZNTU5hc+ImNufyJnOZ7gu
+    XzPYXYyDG7KGPPSUnqyhIZe5Qd5Mso1BLEWnPsLnX3sXb/mZW14lQrcGXdEjsGKMRw+kKu
+    5JIkfy7RBdnD9Gcl7IyXd3IZSNfVK2lDYaGJkrGQVOULDlhDsloaVwhRSjYJ6BpmpjljNk
+    IdOD3mFYn18j//xTT9L6LKcGqSSbPrwbvKrcgmt/ih82TjziUfVfUfpc7DCGUdw9ABw37l
+    F55gPzCeP6fDqq0/qQVpWqz/ti5O3kbvuZrGZJsxe2jk1XDEmvQQR0DTt6HwuwhtRn2PpH
+    EJIjVFj6zCNsA4o+Ml25ApCGamimqlEFhpjs8datNaACENNJJZ9RJawxFZXlO3u7T3jhHD
+    8FtfiZjqegAhiSxHTdlMNhSZl5vQ6ypJsmUEZ6zOqC1Cwhmn+wJRZzBpEfDNEgN80rTHrJ
+    KE3cD2sAMyFXhIU6gvjWg+6oOvpGwceNF1bKFWNtDfkFqcwJBWQT1/5inYGA
+X-ME-Proxy: <xmx:nIopapVQtqeHmvs8H0wovPbnGlYmhPDylCGZDcfS3q_Tt-719bFgMA>
+    <xmx:nIopalkrGpXmpZ1zlYC7Ve5yOhbPBBLuqsoShRk-wHdjC3g0ygUSzQ>
+    <xmx:nIopanm75aWWw9jD3b7ZkoG4sPI1J_KjWAUZWwJrWi_CYvkqeqOmUQ>
+    <xmx:nIopatZof_2_Ro9k1dBqC2SowKag3tbPQB4l_tTd13g7oAZcQGvwtQ>
+    <xmx:nYopano9PteL06Di9X7oSORNAajBdjWY8lubRBDb5hycD1z4v5w8U7mY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jun 2026 11:49:00 -0400 (EDT)
+ 10 Jun 2026 12:02:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v4] remote: qualify "git pull" advice for non-upstream
- compareBranches
-In-Reply-To: <pull.2301.v4.git.git.1779372367317.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Thu, 21 May 2026
-	14:06:07 +0000")
-References: <pull.2301.v3.git.git.1779282625696.gitgitgadget@gmail.com>
-	<pull.2301.v4.git.git.1779372367317.gitgitgadget@gmail.com>
-Date: Wed, 10 Jun 2026 08:48:59 -0700
-Message-ID: <xmqq7bo6xuok.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  git@vger.kernel.org,  cat@malon.dev,
+  kaartic.sivaraam@gmail.com,  ben.knoble@gmail.com
+Subject: Re: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
+In-Reply-To: <aikMLBCC9Rc7q9S7@pks.im> (Patrick Steinhardt's message of "Wed,
+	10 Jun 2026 09:03:08 +0200")
+References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
+	<20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
+	<20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
+	<54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com>
+	<xmqq4ijbsn2m.fsf@gitster.g>
+	<CAN5EUNRz9F+njb_O=Q4DzVMec-q+rDf83Ow+MPJE4yLCBq9qww@mail.gmail.com>
+	<xmqqbjdj1q1s.fsf@gitster.g> <aikMLBCC9Rc7q9S7@pks.im>
+Date: Wed, 10 Jun 2026 09:02:34 -0700
+Message-ID: <xmqq33yuxu1x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,94 +92,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
+> On Tue, Jun 09, 2026 at 12:17:51PM -0700, Junio C Hamano wrote:
+>> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>> 
+>> >> > I wonder if we should check that the committer identity is unchanged as
+>> >> > well in case anyone is using this to fix commits after committing with
+>> >> > the wrong identity.
+>> >
+>> > I think that if you reword a commit committed by someone else but end
+>> > up with no changes I want it to be kept as it was.
+>> 
+>> That depends on the reason why the feature to "reword" the commit is
+>> being used, and the use case Phillip is talking about is a bit
+>> different.
 >
-> Enable ENABLE_ADVICE_PULL for push-branch comparisons too, not just
-> the upstream entry, so the "use git pull" hint prints when the local
-> branch is behind its push branch.
->
-> Spell out "git pull <remote> <branch>" so running the suggested
-> command actually pulls the ref the user was told about; plain
-> "git pull" would fetch the upstream instead.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
->     remote: qualify "git pull" advice for non-upstream branches
->     
->      * Don't suggest git pull when we have no good command to suggest.
->      * New test for this. Asserts the behind line shows with no follow-up
->        advice.
+> So the answer is "it depends". Maybe we should do handle this the same
+> as git-commit(1) does with its "--reset-author" flag?
 
-Very well written.  
+Interesting.  I was mostly focusing on the committer identity, but
+the same argument of courese also applies to the author identity.
 
-What does not happen in the "punt" case (the first bullet point
-above) may deserve to be given in the commit log message, but
-otherwise it is very clear what the change wanted to do to the
-future readers of "git log".  
+Having said that, if the user who used to commit others' patches
+under a wrong identity (i.e., the only thing incorrect about these
+commits is the committer identity, and author identity of them are
+not to be updated), "--reset-author" would not be usable, as they
+want to keep the authorship information recorded.  I think 
 
->  remote.c                 |  48 +++++++++++++++----
->  t/t6040-tracking-info.sh | 100 +++++++++++++++++++++++++++++++++++++++
->  2 files changed, 140 insertions(+), 8 deletions(-)
+ (1) in the shorter term, always create a new commit by default even
+     if the only difference were the committer timestamp.  But add a
+     mechanism to allow users to tell the tool to skip the update
+     in such a case.
 
-The code changes look correct, and the new tests checks the new
-suggestion as well as the "punt" case, which is good.
+ (2) at a big version bump, flip the default, making the "always
+     create a new commit" an optional feature.
 
-Shall we mark it for 'next' now?
+would be the way to go, and the way to trigger that mechanism needs
+to be separate from "--reset-author".
 
-Thanks for working on this.
-
->> diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-> index 0242b5bf7a..91cbb8775d 100755
-> --- a/t/t6040-tracking-info.sh
-> +++ b/t/t6040-tracking-info.sh
-> @@ -646,4 +646,104 @@ test_expect_success 'status.compareBranches with remapped push and upstream remo
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'status.compareBranches behind both upstream and push' '
-> +	test_config -C test push.default current &&
-> +	test_config -C test remote.pushDefault origin &&
-> +	test_config -C test status.compareBranches "@{upstream} @{push}" &&
-> +	git -C test checkout -b feature13 upstream/main &&
-> +	(cd test && advance work13) &&
-> +	git -C test push origin &&
-> +	git -C test branch --set-upstream-to upstream/ahead &&
-> +	git -C test reset --hard HEAD^ &&
-> +	git -C test status >actual &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature13
-> +	Your branch is behind ${SQ}upstream/ahead${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull" to update your local branch)
-> +
-> +	Your branch is behind ${SQ}origin/feature13${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull origin feature13" to update your local branch)
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-
-A good test that clearly shows how @{push} is described ;-)
-
-> +test_expect_success 'status.compareBranches with remapped push and behind push branch' '
-> +	test_config -C test remote.pushDefault origin &&
-> +	test_config -C test remote.origin.push refs/heads/feature14:refs/heads/remapped14 &&
-> +	test_config -C test status.compareBranches "@{push}" &&
-> +	git -C test checkout -b feature14 upstream/main &&
-> +	(cd test && advance work14) &&
-> +	git -C test push &&
-> +	git -C test reset --hard HEAD^ &&
-> +	git -C test status >actual &&
-> +	cat >expect <<-EOF &&
-> +	On branch feature14
-> +	Your branch is behind ${SQ}origin/remapped14${SQ} by 1 commit, and can be fast-forwarded.
-> +	  (use "git pull origin remapped14" to update your local branch)
-> +
-> +	nothing to commit, working tree clean
-> +	EOF
-> +	test_cmp expect actual
-> +'
-
-OK.
+Thanks.
