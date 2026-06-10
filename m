@@ -1,30 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B343F7AAD
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 12:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD61407CF0
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 12:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781095444; cv=none; b=LmzuUkd0uyd3PNrGKhI+P/HCfQDzxY8wVkoj/kAP2zoJYo6YTFyQkEKU3IteZYaV1Qatqtria8OfE5FzjUYLaDKCKVxvLTHf3xJgRx3kJ/yBEpVqf/wTLQ6zmkjx7B8UtRCRJPImcU0cI6ej89nZbhr+LOCnKPsM9N5OslXqEk0=
+	t=1781095447; cv=none; b=b3Mb6Fg+980tdNm9twMwgslY/sG936Ok2peIHQKA036cY+v+/CFN0OFE8gDI8KjAXWOMRRZ9Mxc09RH6Fm9cuFvsFDfQ7YFEXcivOYOu/PePOdjuzRR9IhhKEbcEFx2cOGy5TIdP05gPeszRpf+03Mn4Pa0IdmqACRQAV7iaVTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781095444; c=relaxed/simple;
-	bh=csQbB7RdedliIscqQ7j5jFzkiq6Bo9IBxozMEW39atk=;
+	s=arc-20240116; t=1781095447; c=relaxed/simple;
+	bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PCIzChxqs7w2mU8FEIz97rWce52Bnm3CN/Mh4mL5jSb5NtaH0RhqUlZ2lmHPt6ScjR2/14AOoXuWCg/aaFWeRIvujYPy0Zt/93SpNkcJ4UWbyGr0lcw53d7zyy0YgKmkbGDZjNbRLXdWagikZGZG8cmxSmiThIYxO8Q9RI/QUmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=MrXRldWh; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=ViZtPYRR; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=G4iQoBrjzGe3zEnyYoEbCGNCrdyzbw3Tbu9U5+PUvQQZ5DOFMk5G+J4Dq/3uKh3p1K4FHmBjXO++ykxneRjiFYsH9+FmonYVONg6UL2vn/7eYfIekZFKHKvo01mY3u1Zk2z345zuA+q0FtrVDCpZxWbBh4oiDzPXvVN/vXfGKdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=WCPSrhDL; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=Q50zchve; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="MrXRldWh";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="ViZtPYRR"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="WCPSrhDL";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="Q50zchve"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=MrXRldWhjM0uuwcQUtism2leRuMFX6KzSw2jDJHb8iYx+H9/ZJQSqvNhhFGNJilcgjtf4oQ+MwMjFefxuQHWaf945bntKUCFxXB95W/6ZC4M4c0im1jL+cyuCSKc0cFyesh5XZ68aMpTGHmwf6nqTIDRCj5RKR8oHifpSbjti473CloLVrdkAZdfWs4GUO7LoiJn6EK5E7LpibKSn/G4uSyk1LaFKY/n4RHxa3J0UQtslNCPH9RquA+2bzQ0UwAADWE8Ymqaom5pVF2Cgj9XWdcyKhenTEp9PWemA4aWcn4uhKKfBzXtUGniha+g1ouic0/UnEKXnqQZEuW8uldIJA==; s=purelymail2; d=malon.dev; v=1; bh=csQbB7RdedliIscqQ7j5jFzkiq6Bo9IBxozMEW39atk=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=ViZtPYRR7/o1remzhFy4Y7fk/GwflDbIRS83eaj/mmkAy4pxeDjMXntrNz7FzuPdLNovyNUdRDGrVCZ9PEsnRfzOfW825dQqT7W9wb1Df4q6iR8QcjZo2Y0YpSPPpabHVkbeiH6ENClEQFU0+nNL2xZL22CuEuXlztekE+nCj51QWwIRFUoiNSthpYfxrT0lgg6uigWha8OELQrDMNNMZPT7ox38tj24qObawtHOUZ+SNweJHDMoh5V9roVNpMTkQeSZXKkaeAB/q3p0DI0W9TjcTKBYjB7UlEQcFei2mu477Rm4PRvmZa7c56OBwRwTkK4zp4LGRZfOc4Y6LPyhxA==; s=purelymail2; d=purelymail.com; v=1; bh=csQbB7RdedliIscqQ7j5jFzkiq6Bo9IBxozMEW39atk=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=WCPSrhDLv8znQeoNk/SRASUxhmmiY33FWny4oFBTclalyASx/j2JfrERm9ElN1Lht16t2eHTlLZp2PMSwaCxsMxvoDrVjRyf7Wl9N3MgUnbEoY1RuPelSHZBuHLzZbI3jp1UZTSICBBXRhhx0w4kqWaQ2tmupSWDyDBQXZHmBpTtCSHxuqP7Tnd2YXfvLnxZ24zzi8rnwd1NFRlhNPH2ueOqRDM3S9sNGa/P7hpMa1Aw+dRVh0JEmkU7eQ00+N5DsGHKecyCGrNoCZZvmVXVzlupfO/fhgxoL/K25uZxLcq6KkPn0rPh/2JDBVLoIegWuCkiEbEKju6Q4PQFtlio6Q==; s=purelymail2; d=malon.dev; v=1; bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=Q50zchvezozz3FRgyTDV6X1rWaSLZKMOYTHlI2jmLRyHwzBcmkfQOuqTMdAJQaJrEJJkVPeO4ijtqu/KWKaaWR+OwvpIkBH6bw+ZnHesD17T/6fRwoY2sPmK2tNgwtuFxAcKfw/GflBFU2yAkoEJNivfXV6G/T0aWk8Io9G+m50YgO85Nh7By3WMEKtu398D9XgmtOmldxz6Z/qP0fD6MyHrYWoUicMzaZY81mh2B9UxZaV035TQtj+TjQ/FnDd45iMjy90dZqP+/w3GYYlQnosZSGOR1n57QTPPlwQJEL4lTW9ZtwAzy4XZAH/KnmO+RyJJCz2G3jrZ49OYwk2LNw==; s=purelymail2; d=purelymail.com; v=1; bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1900269065;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 10 Jun 2026 12:44:00 +0000 (UTC)
+          Wed, 10 Jun 2026 12:44:03 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: phillip.wood123@gmail.com,
@@ -32,12 +32,13 @@ Cc: phillip.wood123@gmail.com,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v2 0/1] environment: move protect_hfs and protect_ntfs into repo_config_values
-Date: Wed, 10 Jun 2026 20:43:51 +0800
-Message-ID: <20260610124353.149874-1-cat@malon.dev>
+Subject: [PATCH v2 1/1] environment.c: move 'protect_hfs' and 'protect_ntfs' into 'repo_config_values'
+Date: Wed, 10 Jun 2026 20:43:52 +0800
+Message-ID: <20260610124353.149874-2-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260606143412.15443-1-cat@malon.dev>
+In-Reply-To: <20260610124353.149874-1-cat@malon.dev>
 References: <20260606143412.15443-1-cat@malon.dev>
+ <20260610124353.149874-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,49 +49,28 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-Hi everyone,
+Move the global 'protect_hfs' and 'protect_ntfs' configurations
+into the repository-specific 'repo_config_values' struct.
+This will help with the elimination of 'the_repository'
 
-This series continues the ongoing libification effort by moving the
-global filesystem variables, 'protect_hfs' and 'protect_ntfs', into
-'struct repo_config_values'.
+To ensure code readability, the getter functions
+'repo_protect_hfs()' and 'repo_protect_ntfs()'
+have been introduced.
 
-Place them within the per-repository configuration structure
-aligns with our goal of removing global states.
+For now, associated functions access this configuration by
+explicitly falling back to 'the_repository', which needs to
+be addressed in the future.
 
-For reviewers familiar with previous libification efforts, Derrick Stolee
-attempted to wrap this kind of filesystem-level variable using a
-lazy-loaded global accessor get_int_config_global() [1].
-
-However, as Glen Choo pointed out in his review of that series [2],
-it is strongly preferred to use plain fields in a repository-scoped
-struct over global lazy-loaders, provided those fields are properly
-initialized during the setup process.
-
-By moving these variables into repo_config_values and parsing
-them eagerly, we successfully tie the filesystem security flags
-to the specific repository instance without altering the timing
-of configuration warnings or introducing new global states.
-
-Thanks!
-
-Recent related patch (environment.c: migrate 'trust_executable_bit' into 'r=
-epo_config_values'): [3]
-
-[1] https://lore.kernel.org/git/a42dd9397d07b2dc4a0d7e75bfe1af2e46cad262.16=
-85716420.git.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/kl6lbkhpzujf.fsf@chooglen-macbookpro.roam.c=
-orp.google.com/
-[3] https://lore.kernel.org/git/20260610093635.139719-1-cat@malon.dev/
+Note: In 't/helper/test-path-utils.c', there is a function
+'protect_ntfs_hfs_benchmark()' where these two global
+variables are used as loop iterators. New local variables
+have been created to replace them.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
-
-Tian Yuchen (1):
-  environment.c: move 'protect_hfs' and 'protect_ntfs' into
-    'repo_config_values'
-
+---
  compat/mingw.c             |  2 +-
  environment.c              | 22 ++++++++++++++++++----
  environment.h              | 12 ++++++++++--
@@ -98,6 +78,221 @@ Tian Yuchen (1):
  t/helper/test-path-utils.c | 24 +++++++++++++++---------
  5 files changed, 48 insertions(+), 19 deletions(-)
 
+diff --git a/compat/mingw.c b/compat/mingw.c
+index aa7525f419..af87df77fd 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -3392,7 +3392,7 @@ int is_valid_win32_path(const char *path, int allow_l=
+iteral_nul)
+ =09const char *p =3D path;
+ =09int preceding_space_or_period =3D 0, i =3D 0, periods =3D 0;
+=20
+-=09if (!protect_ntfs)
++=09if (!repo_protect_ntfs(the_repository))
+ =09=09return 1;
+=20
+ =09skip_dos_drive_prefix((char **)&path);
+diff --git a/environment.c b/environment.c
+index fc3ed8bb1c..683fe1b4d3 100644
+--- a/environment.c
++++ b/environment.c
+@@ -82,12 +82,10 @@ unsigned long pack_size_limit_cfg;
+ #ifndef PROTECT_HFS_DEFAULT
+ #define PROTECT_HFS_DEFAULT 0
+ #endif
+-int protect_hfs =3D PROTECT_HFS_DEFAULT;
+=20
+ #ifndef PROTECT_NTFS_DEFAULT
+ #define PROTECT_NTFS_DEFAULT 1
+ #endif
+-int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
+=20
+ /*
+  * The character that begins a commented line in user-editable file
+@@ -142,6 +140,20 @@ int is_bare_repository(void)
+ =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
+ }
+=20
++int repo_protect_ntfs(struct repository *repo)
++{
++=09return repo->gitdir ?
++=09=09repo_config_values(repo)->protect_ntfs :
++=09=09PROTECT_NTFS_DEFAULT;
++}
++
++int repo_protect_hfs(struct repository *repo)
++{
++=09return repo->gitdir ?
++=09=09repo_config_values(repo)->protect_hfs :
++=09=09PROTECT_HFS_DEFAULT;
++}
++
+ int have_git_dir(void)
+ {
+ =09return startup_info->have_repository
+@@ -541,12 +553,12 @@ int git_default_core_config(const char *var, const ch=
+ar *value,
+ =09}
+=20
+ =09if (!strcmp(var, "core.protecthfs")) {
+-=09=09protect_hfs =3D git_config_bool(var, value);
++=09=09cfg->protect_hfs =3D git_config_bool(var, value);
+ =09=09return 0;
+ =09}
+=20
+ =09if (!strcmp(var, "core.protectntfs")) {
+-=09=09protect_ntfs =3D git_config_bool(var, value);
++=09=09cfg->protect_ntfs =3D git_config_bool(var, value);
+ =09=09return 0;
+ =09}
+=20
+@@ -720,5 +732,7 @@ void repo_config_values_init(struct repo_config_values =
+*cfg)
+ {
+ =09cfg->attributes_file =3D NULL;
+ =09cfg->apply_sparse_checkout =3D 0;
++=09cfg->protect_hfs =3D PROTECT_HFS_DEFAULT;
++=09cfg->protect_ntfs =3D PROTECT_NTFS_DEFAULT;
+ =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+ }
+diff --git a/environment.h b/environment.h
+index 9eb97b3869..fdd9775900 100644
+--- a/environment.h
++++ b/environment.h
+@@ -91,6 +91,8 @@ struct repo_config_values {
+ =09/* section "core" config values */
+ =09char *attributes_file;
+ =09int apply_sparse_checkout;
++=09int protect_hfs;
++=09int protect_ntfs;
+=20
+ =09/* section "branch" config values */
+ =09enum branch_track branch_track;
+@@ -123,6 +125,14 @@ int git_default_config(const char *, const char *,
+ int git_default_core_config(const char *var, const char *value,
+ =09=09=09    const struct config_context *ctx, void *cb);
+=20
++/*
++ * Getters for the `protect_hfs` and `protect_ntfs` fields of `struct repo=
+_config_values`.
++ * They check `repo->gitdir` to prevent calling repo_config_values()
++ * before the configuration is loaded or in bare environments.
++ */
++int repo_protect_hfs(struct repository *repo);
++int repo_protect_ntfs(struct repository *repo);
++
+ void repo_config_values_init(struct repo_config_values *cfg);
+=20
+ /*
+@@ -173,8 +183,6 @@ extern int pack_compression_level;
+ extern unsigned long pack_size_limit_cfg;
+=20
+ extern int precomposed_unicode;
+-extern int protect_hfs;
+-extern int protect_ntfs;
+=20
+ extern int core_sparse_checkout_cone;
+ extern int sparse_expect_files_outside_of_patterns;
+diff --git a/read-cache.c b/read-cache.c
+index 21829102ae..2c6a60c756 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1002,7 +1002,7 @@ static enum verify_path_result verify_path_internal(c=
+onst char *path,
+ =09=09=09return PATH_OK;
+ =09=09if (is_dir_sep(c)) {
+ inside:
+-=09=09=09if (protect_hfs) {
++=09=09=09if (repo_protect_hfs(the_repository)) {
+=20
+ =09=09=09=09if (is_hfs_dotgit(path))
+ =09=09=09=09=09return PATH_INVALID;
+@@ -1011,7 +1011,7 @@ static enum verify_path_result verify_path_internal(c=
+onst char *path,
+ =09=09=09=09=09=09return PATH_INVALID;
+ =09=09=09=09}
+ =09=09=09}
+-=09=09=09if (protect_ntfs) {
++=09=09=09if (repo_protect_ntfs(the_repository)) {
+ #if defined GIT_WINDOWS_NATIVE || defined __CYGWIN__
+ =09=09=09=09if (c =3D=3D '\\')
+ =09=09=09=09=09return PATH_INVALID;
+@@ -1035,7 +1035,8 @@ static enum verify_path_result verify_path_internal(c=
+onst char *path,
+ =09=09=09if (c =3D=3D '\0')
+ =09=09=09=09return S_ISDIR(mode) ? PATH_DIR_WITH_SEP :
+ =09=09=09=09=09=09       PATH_INVALID;
+-=09=09} else if (c =3D=3D '\\' && protect_ntfs) {
++=09=09} else if (c =3D=3D '\\' &&
++=09=09=09   repo_protect_ntfs(the_repository)) {
+ =09=09=09if (is_ntfs_dotgit(path))
+ =09=09=09=09return PATH_INVALID;
+ =09=09=09if (S_ISLNK(mode)) {
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 15eb44485c..f77b3f9d70 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -250,6 +250,7 @@ static int protect_ntfs_hfs_benchmark(int argc, const c=
+har **argv)
+ =09double m[3][2], v[3][2];
+ =09uint64_t cumul;
+ =09double cumul2;
++=09int ntfs, hfs;
+=20
+ =09if (argc > 1 && !strcmp(argv[1], "--with-symlink-mode")) {
+ =09=09file_mode =3D 0120000;
+@@ -276,8 +277,13 @@ static int protect_ntfs_hfs_benchmark(int argc, const =
+char **argv)
+ =09=09=09names[i][--len] =3D (char)(' ' + (my_random() % ('\x7f' - ' ')));
+ =09}
+=20
+-=09for (protect_ntfs =3D 0; protect_ntfs < 2; protect_ntfs++)
+-=09=09for (protect_hfs =3D 0; protect_hfs < 2; protect_hfs++) {
++=09if (!the_repository->gitdir)
++=09=09the_repository->gitdir =3D xstrdup(".git");
++
++=09for (ntfs =3D 0; ntfs < 2; ntfs++)
++=09=09for (hfs =3D 0; hfs < 2; hfs++) {
++=09=09=09repo_config_values(the_repository)->protect_ntfs =3D ntfs;
++=09=09=09repo_config_values(the_repository)->protect_hfs =3D hfs;
+ =09=09=09cumul =3D 0;
+ =09=09=09cumul2 =3D 0;
+ =09=09=09for (i =3D 0; i < repetitions; i++) {
+@@ -285,18 +291,18 @@ static int protect_ntfs_hfs_benchmark(int argc, const=
+ char **argv)
+ =09=09=09=09for (j =3D 0; j < nr; j++)
+ =09=09=09=09=09verify_path(names[j], file_mode);
+ =09=09=09=09end =3D getnanotime();
+-=09=09=09=09printf("protect_ntfs =3D %d, protect_hfs =3D %d: %lfms\n", pro=
+tect_ntfs, protect_hfs, (end-begin) / (double)1e6);
++=09=09=09=09printf("protect_ntfs =3D %d, protect_hfs =3D %d: %lfms\n", ntf=
+s, hfs, (end-begin) / (double)1e6);
+ =09=09=09=09cumul +=3D end - begin;
+ =09=09=09=09cumul2 +=3D (end - begin) * (end - begin);
+ =09=09=09}
+-=09=09=09m[protect_ntfs][protect_hfs] =3D cumul / (double)repetitions;
+-=09=09=09v[protect_ntfs][protect_hfs] =3D my_sqrt(cumul2 / (double)repetit=
+ions - m[protect_ntfs][protect_hfs] * m[protect_ntfs][protect_hfs]);
+-=09=09=09printf("mean: %lfms, stddev: %lfms\n", m[protect_ntfs][protect_hf=
+s] / (double)1e6, v[protect_ntfs][protect_hfs] / (double)1e6);
++=09=09=09m[ntfs][hfs] =3D cumul / (double)repetitions;
++=09=09=09v[ntfs][hfs] =3D my_sqrt(cumul2 / (double)repetitions - m[ntfs][h=
+fs] * m[ntfs][hfs]);
++=09=09=09printf("mean: %lfms, stddev: %lfms\n", m[ntfs][hfs] / (double)1e6=
+, v[ntfs][hfs] / (double)1e6);
+ =09=09}
+=20
+-=09for (protect_ntfs =3D 0; protect_ntfs < 2; protect_ntfs++)
+-=09=09for (protect_hfs =3D 0; protect_hfs < 2; protect_hfs++)
+-=09=09=09printf("ntfs=3D%d/hfs=3D%d: %lf%% slower\n", protect_ntfs, protec=
+t_hfs, (m[protect_ntfs][protect_hfs] - m[0][0]) * 100 / m[0][0]);
++=09for (ntfs =3D 0; ntfs < 2; ntfs++)
++=09=09for (hfs =3D 0; hfs < 2; hfs++)
++=09=09=09printf("ntfs=3D%d/hfs=3D%d: %lf%% slower\n", ntfs, hfs, (m[ntfs][=
+hfs] - m[0][0]) * 100 / m[0][0]);
+=20
+ =09return 0;
+ }
 --=20
 2.43.0
 
