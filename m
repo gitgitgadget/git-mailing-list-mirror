@@ -1,67 +1,67 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE453B14B1
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 09:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633202264B0
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 09:34:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781083449; cv=none; b=hvQog8ARUH013ZpglWV4gxWnOGf9+3JWwoPPcWLFAmXBMWkZfMlpNerofqdNRcG01MzaURyT7A8Ftl/El5qwYRaJHYfTeZM6rQ/lET6B9Lji6TJrYNssHatpk00G8zWYELZs1Y1wblEyLHaBe0u9MvfrTRDBqIQBcbRikTxipkQ=
+	t=1781084043; cv=none; b=qmuO/cDkf59AYasNwSs8u+d0ieI8cXaLNnv5SBOkthjuy5822eO3/G8Qdr+QGi969jgb5ixSxOA/Zc71B5RLGIqsFCExk9T65oFPLZRIzbjOcivbKN0C4Dufp4cWF9EgBSBbQ5u+y0SZGpxr5EdL9VlJwUSjJF7GGTmnb/uhefA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781083449; c=relaxed/simple;
-	bh=UtF4qJuuhPC1OYfncZ5TwF7+blBAu6wcX8b7o2BeLCE=;
+	s=arc-20240116; t=1781084043; c=relaxed/simple;
+	bh=e8AhWeGXWsrxSj41Wru9hOrIbzgryUa1+qOqf9NwL3w=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=k5MOXBQJGDkd95OrewfVfigCcymn/hfJkeOXlQ/F1GTds0dSZcAZ4rBf3kUwGp772m2Cp/3OMPThGNHwvvN7mwpuV3nzBHJCrp9bo92MX1O97aHW4oHeJplFIK8U86T1+kO/KCBWgyCNYixHwPJ5BqSoEbgWffEhrcgkw8Ho2ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eyiCprOS; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:Content-Type; b=s6k7n6VKOVyY55JiDaBIZeIw53K0inXGkpkVTvOL8WGfQSxVz0o/xTLwT6eaJ1UJ4dW+e1wH+MdFGsWsghG3T5DYmsLSiKHcUpbFyPHwJMZcYEY8VVoH2b/gaFzolGhHktvnE+D4d9uP4kzu7/S3QXeFG3ql0kLeUdJ3tWJks2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IwXJSW8n; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyiCprOS"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490acbb0f89so44364955e9.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 02:24:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IwXJSW8n"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-691c5776f95so5583158a12.3
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 02:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781083446; x=1781688246; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781084041; x=1781688841; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O/O1EYGPs9o5EttXUoxrH02HR7eRu7hW/tlrWq2K0s0=;
-        b=eyiCprOSWoMw68jSHzr+baVcz2C7ncVLaQL+TFnEs0r0uY9z8UsKnCGohOqSAMJNBg
-         Yj5qJFqSnldyOON/7+tAY6oJoLzc1kU5lv3zc6/Gc4fpt+7KcUdQ1sQRn1rguBKt/Bxb
-         wjidYyFqEkbK/0teJV17KXgSEEmFH0hcovO4VmE60XC00ygZr2j2zsdMb5b0kTBEtRlC
-         MEtcnvvYLWUdZ7vf2S44nBONQ/czMUiJp/3ixoT1UVapQNmvWCnXJ6TKl9/5tJjwnw58
-         QHivm5cFM/GGxHvomFzcnrivt5Zk3S0dtw8jOIUEgyUu4iLnuDf+LqKjmCwjESxBGpcJ
-         /jIw==
+        bh=E663UeBiGJEr20yGssKT7W6A/zV8nsiAE0hvFWq+Y2Q=;
+        b=IwXJSW8nOpV3fHQWnifUibKtKfIQTUjihzz1Y2gi6E93CHyHIDEECbMCHUglJmvkJu
+         EaXabNOaLqThF4xSAWqiHw+qIywiLHflz5ypJiKq43NN2WEhd2Uo+8vHk8XG4zOWdvBq
+         kRqSuviZXXjc7S6/Ljo9kQCsfXU9EeySz5XFBGmLz/r1IldZiEBFHz03BrvPpIcCsvOs
+         wJoBT5rWNWEKzKo3jL852iY0GDz+2sIzKVY8quhbOnu3QxxvtwqZ2HzbidsqJd25EfKO
+         s1VlczCNc8MAsMh/CtAzXKr2yh+CVNc91ACuby2fGw/6KALuCt3YDWSlKFvJvC/ZiaBN
+         ZxuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781083446; x=1781688246;
+        d=1e100.net; s=20251104; t=1781084041; x=1781688841;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=O/O1EYGPs9o5EttXUoxrH02HR7eRu7hW/tlrWq2K0s0=;
-        b=ep62JibhuWdx0zJa28zQrYG5NZyzmCZ6xt4902XsXVk234lv15c5/Hdcbou0wyE0n5
-         58xYl194Mi1uujK8pJNtVKw54Vynk3HAR+xYiJYUz/1i6x0gZ0Nv4aJW6CxVwsnKVT1l
-         +JpyriPzI4zRiQZRI9TgkJLZovOVl7VdvW8UhEoYQ8KJ8pplMWCbfVIE8cevnjog3Yhd
-         /73fVzKC4VGHJxj7dcznPaP+Vet4VArn4jV2IKizVrWLGQ7DG5lFLk+yERC2Eqs2W1hx
-         R5yyTEX4y/LCA7uhl+nqeA3YHJcqnO0AywP0W7gBtyt+0Si4s0RYMAGyIel5AbUf9uWa
-         CBUQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+r1NT69W/96Z91/TkO0R6/jbUrMRFJftraDq1gEx91HLqvBW+KAKeu5rh+Y1+vn8+27Bk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHkQJtcqRErX8vhG8eB386T0B8elX52fXE4uKblANpcTqoa1NU
-	H44YFUGMNyKuz2dNS8cFF19TdPkDCtjzuclYgiInesZBwH+H56iPbbaj
-X-Gm-Gg: Acq92OE9wTlwHK+NeiR9qApAGxPHksuG/ocQ2q6zFEShZwwYNZcE0wNcpMSDNvDV9gG
-	SXueJRZpcXkPatBkkPE49el7423UVrAey09PDjOXVlnZxU+KC5ZumwC0wLcvCTXqMWIWOEFqdLL
-	Np/NKcG72Km5GYjnZptLWZgfi1sxfShYgCgeUo/a+ib6XTC7XV70GeRqEyQEGI9Z7m5Wt5J7ayA
-	cqftK05fPfSRdFaM4FrDuWjzPwDvU8Qdk1dJvFYFXqnHfLNx59lXZA4Tp8LWLqJACAUr83SeqPU
-	Wr7hRhxYAwyhxg6SUHYg17SqEItKneEe3j2vSQWiS4nhq4AyLvCm+/oeInYe3mmS8K1ef8usVdM
-	BcED3wiCVPw7Vgl9Wq33cvqii71WGje/30A7OMT0W85fRLqLNy2uXzJolYo6ktYYEvHpMRJ0iXs
-	uNLYHdW5jXTJUahpBlcSnrRtWHtYXoxTOZzK3i19fUQqRRihGUfmbj+031xOsEKd5D5L0fOlGXK
-	77Feqz0RbhyXxaw
-X-Received: by 2002:a05:600c:46d2:b0:490:b645:3213 with SMTP id 5b1f17b1804b1-490c25f17ecmr409608045e9.19.1781083446233;
-        Wed, 10 Jun 2026 02:24:06 -0700 (PDT)
+        bh=E663UeBiGJEr20yGssKT7W6A/zV8nsiAE0hvFWq+Y2Q=;
+        b=WviCFJj4Wp2PNacQ2CVy+lKqcYtcCRoO9eVGJp66b3x5jrvw1VLjFGjJoYhzWpZ/dP
+         WQnCGu+MUqwk+cf6RL5T+hzQYujEXPAyFML82+m8+u9Qsy/ZQt9rRSYQQDHH/erfdDPW
+         DRdAdAhLcf3TNhaOfFEz/D5UkF+FAQWAcBVwQKXh+7Oex9mAtm5jv9dDxRXjbFVyCy35
+         7o82MD0sqOdvHoPO90WscgrcyaVyKgECdSjQ0qbNvDkaUMPDtnMFDagKXnrlJQC64Lnz
+         V9ICe8itYOR6bYmGP3Uc4uQBn9cIzxeQjtJMUDdEtCHDFdqZYZnyPjQ0vpYx0EXlYvVw
+         0imA==
+X-Forwarded-Encrypted: i=1; AFNElJ++db7j7fK7Tzqkj/KZL2QCsDV6Fmcb/barPThuq+KJZMlBlFaSovep4gUbd9WcPipIz44=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWpr42nzh90oJd98unnF8ppifRCX+42VWDsb1M7PR1sK0WzqEG
+	vr0sXLqPatTydarqZWXE77CYNGQgiBV3FR8iT1A8mjEPde3tlPfXjjIH
+X-Gm-Gg: Acq92OHzSvCU8JUt0As9jl+g7wfD0ZjUvYOh85kN83ySeesUtNhygfhF906JZd3D1z7
+	thM5ksBxIA6K+Nb/Dg5tN4MA6P+KrY55VRrMoRpXN9JhmzTMrzaYnPtOOjtwMcH5BKurAa/Lhu5
+	uyPkmbPIg+Km1D24yhGp1XRjPpgn8zsPWo19ZekZ88zPekcHpk7LxLZQaNMNVmMOZlFHPgSBLtt
+	IVM3I8KKXLAc1w51Nb8x8ug0a1gu5SsYU15ysR8EmQEGNHmKQDbykLL6Q9y8cc8Jr5xE+/zPutt
+	heeTUQyMPkGSMngCvZXFZh24UEv2byBfu6YXHW+IcBjmlA0vtJf1XzRCDFWqRm8zGAJzVV0XyYs
+	N6uM/CGSQQua2IICCbe+PJ4BokRs4lWqXBIQAcfh2suJN/J4fdtSWUjOowfO/SS+2WLSlPRrQby
+	5GTnpTYWk6jUPB8GVno/VqvYPflVo9RFIv0QTOcsEFI3wimnOR4As4JbLxTXUOIUqvZOj3uFLQV
+	7+NrSqj/oiIoasg
+X-Received: by 2002:a17:906:8a57:b0:bc3:7b0f:91ea with SMTP id a640c23a62f3a-bf370e585a8mr767415566b.19.1781084040374;
+        Wed, 10 Jun 2026 02:34:00 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3b5b82sm580690445e9.1.2026.06.10.02.24.05
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf051c85e76sm1184197366b.15.2026.06.10.02.33.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jun 2026 02:24:05 -0700 (PDT)
-Message-ID: <56beb82a-9d6b-45d9-b795-c66e945c03db@gmail.com>
-Date: Wed, 10 Jun 2026 10:24:02 +0100
+        Wed, 10 Jun 2026 02:33:59 -0700 (PDT)
+Message-ID: <e033b216-d8e7-4c16-8fb5-0455125b71a3@gmail.com>
+Date: Wed, 10 Jun 2026 10:33:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,54 +72,44 @@ User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
-To: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
 Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org,
- cat@malon.dev, ps@pks.im, kaartic.sivaraam@gmail.com, ben.knoble@gmail.com
+ cat@malon.dev, kaartic.sivaraam@gmail.com, ben.knoble@gmail.com
 References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
  <20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
  <20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
  <54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com> <xmqq4ijbsn2m.fsf@gitster.g>
+ <CAN5EUNRz9F+njb_O=Q4DzVMec-q+rDf83Ow+MPJE4yLCBq9qww@mail.gmail.com>
+ <xmqqbjdj1q1s.fsf@gitster.g> <aikMLBCC9Rc7q9S7@pks.im>
 Content-Language: en-US
-In-Reply-To: <xmqq4ijbsn2m.fsf@gitster.g>
+In-Reply-To: <aikMLBCC9Rc7q9S7@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 09/06/2026 17:20, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> Hi Pablo
->>
->> On 09/06/2026 11:42, Pablo Sabater wrote:
->>>    static int commit_tree_ext(struct repository *repo,
->>> @@ -135,6 +136,13 @@ static int commit_tree_ext(struct repository *repo,
->>>    					  original_body, action, &commit_message);
->>>    		if (ret < 0)
->>>    			goto out;
->>> +
->>> +		if (flags & COMMIT_TREE_ABORT_ON_SAME_MESSAGE &&
->>> +		    !strcmp(original_body, commit_message.buf)) {
->>> +			fprintf(stderr, _("Message unchanged, aborting reword.\n"));
->>> +			ret = 1;
->>> +			goto out;
->>> +		}
->>
->> I wonder if we should check that the committer identity is unchanged as
->> well in case anyone is using this to fix commits after committing with
->> the wrong identity.
->>
->> Aborting when the message and committer identity are unchanged seems
->> like a good idea.
-> 
-> I am not sure why it would be a good idea.  The user wanted to make
-> the commit have this message, and the commit ended up having the
-> same message as the user gave.  That message may have been identical
-> to what the commit originally had, or it may be different.  Why is
-> the former an abort-worthy event?  A simple note, I may understand,
-> but aborting with an error message?
+Hi Patrick
 
-What I really meant was skipping rewriting history makes sense, I don't 
-have a strong opinion on the exit code. My feeling is that some kind of 
-message saying we haven't rewritten anything probably a good idea.
+On 10/06/2026 08:03, Patrick Steinhardt wrote:
+> On Tue, Jun 09, 2026 at 12:17:51PM -0700, Junio C Hamano wrote:
+>> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>>
+>>>>> I wonder if we should check that the committer identity is unchanged as
+>>>>> well in case anyone is using this to fix commits after committing with
+>>>>> the wrong identity.
+>>>
+>>> I think that if you reword a commit committed by someone else but end
+>>> up with no changes I want it to be kept as it was.
+>>
+>> That depends on the reason why the feature to "reword" the commit is
+>> being used, and the use case Phillip is talking about is a bit
+>> different.
+> 
+> So the answer is "it depends". Maybe we should do handle this the same
+> as git-commit(1) does with its "--reset-author" flag?
+
+For the case I was talking about we'd want to reset the committer but I 
+agree that making "reset the committer" explicit and just comparing the 
+old and new messages when deciding whether to skip rewriting is a good 
+way forward.
 
 Thanks
 
