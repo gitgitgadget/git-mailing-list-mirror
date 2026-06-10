@@ -1,212 +1,361 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77C43E1714
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 09:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781084231; cv=none; b=ga8RDKlJ2ldnBQ8Z4hF7NHuyWujvvZp98o184Xr51JFpXoPN4tYIsSYAxp8eCEtctbPlXUzycyeVs6DouQ7Xn2Uq8sPF3vh8o8UzaEP1sAPzNzKx6Xk4BkuQ7h/L1RuM8RpVL24ckOIaoAHadkHAsVuJgbIyIKwu6BVrlgLIFJI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781084231; c=relaxed/simple;
-	bh=0DiqL3bfgXYXjhE4f2fg8E28R/AFNwHJKYseUve9dx4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cIFYvVF0rWEOTnvcu6lYFjhTrfMzMGM8Al1cb4g9q3DlIWf+cJAUGj/j2vKXgjFU79yyZAXYMj6bLPJl/5bZrU1ErvCfvs3tPOCJ8I2qoEOeY3ZR7jOHzkgCx0oQj7ldcL1frJCXqjsxsIUFl2+eqRpIEtyviRa7H6cQDppRW7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=EV44yBIA; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=UKlvigGk; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B039B2F7AC1
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 10:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781088620; cv=pass; b=uBw3NmnkAnat9ACxfvLJ6nNQd/wwIOb8BEDG0KBqeviFv7Uejz7WjK5Cp54muSgLmL1bQCKNVdGz9FZOaoHbs4paYy/lBzgwtfFhPgH8UiruRVhpkoIeTC90vKrtUjJtHLbHrw4fojp6M5Su9VrqkLNYNbumcCjphAwfMJu8JF0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781088620; c=relaxed/simple;
+	bh=uACO4GmWH3m9HolK31uXSmcgYqLD6YRLkEuBYfzHNTA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=InPBdr0pc5IHQzlbCzoUVUX3d61jS2kdtV7SNPL/Ty6WS1L++51DqTJ83S8I0WAM/D782WtK/keQp5TZM3w+WKZi9Okt7neQGaTCm+WOGNMczvih5bH5rdMIZ0OuwuaaYmG117xU06YAV7D9eQ571TorhT6Nec5rPhFqYt13jSM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XfhrxsI0; arc=pass smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="EV44yBIA";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="UKlvigGk"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=EV44yBIAnIckRwT2vWms3AErJxyMnDOfYd2vUFdsZNiRwAo2RPhAw77pKOu4xfNMvSyGAtXoWNL/xAnuMzK7KkMKWeJQ0CWf4UaImiQeXL8GOtag6UW8TEVChcF4qaHBmJflDV8khrL4brZBPJRnOMvdVAzFrG+Dq2EpJE+jH6DS4uK1iyUOh1BKUvDmyW3zVvYoaAbWFYNgHYEyQV8+pPr6jgqs0uIZeL0j3rngv6TF+smRKPi2HxdfeNeciUzXpOsVNJzIGLAp2gKZSMwx+8nsnhYKaA1yvrKTPR+tbsyfr5gZTgxu/SX3PwRGAC6NM9zQrNP6GN64cYAtF1bSsg==; s=purelymail2; d=malon.dev; v=1; bh=0DiqL3bfgXYXjhE4f2fg8E28R/AFNwHJKYseUve9dx4=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=UKlvigGkn7s1qPBUXR61BnXoSqJ4bBFf8LlLjIAlLS3TwVsgbU+ddywTdbtMAmd9VexAg+rc3WAlGpsWAtYiI04Ih2XexYTkbixKTYWo0eV4ihoMVlZ86nlOYwqQ0fQ4EbPOG+zT4rd2juQ1AEO73kyLURX7OgZPNZGZFn3ImUsajre14z4WGWkyXgDEu6R34tRo9K/fhybGdX0vMGo+oxjPWrb9QsPw+Ba0PImLn23kfxeVZZ+XynQ04NeeZSUFqjMHwSCF3gu7IvYRoUQjLeugK7P7xrMiCrUWtzYZSRp7Tzh+zorzBUBPVJhK2cqOxgYitTnPKkI0rg3nt+NMGQ==; s=purelymail2; d=purelymail.com; v=1; bh=0DiqL3bfgXYXjhE4f2fg8E28R/AFNwHJKYseUve9dx4=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1035819346;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Wed, 10 Jun 2026 09:37:00 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v2 3/3] environment: move trust_executable_bit into repo_config_values
-Date: Wed, 10 Jun 2026 17:36:34 +0800
-Message-ID: <20260610093635.139719-4-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260610093635.139719-1-cat@malon.dev>
-References: <20260530160520.77859-1-cat@malon.dev>
- <20260610093635.139719-1-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XfhrxsI0"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-59cfbfe64baso2372912e0c.2
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 03:50:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781088617; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WIbetzjF8A78L3XccODlFcv1rdMA18O2byZBwpyZOot5IKeFzltzoereerpZAto0Xl
+         MkfAmWcNU5rkpDN5Rl/gc5eB7lHZ9iCpj+otJFLXcnToLOAmuTm7CjUw7SRqtoXW8lwm
+         z/DNBncPhSzCBkBLUPCYq3qViZaYR8hg/P46tcBvaW9wv3eDKp4MsGCRd6TCfLev5ugu
+         TiRQB0BxztVbQPkN3VDWOLJK60UpKU2wHc+q47IBXDVp83Abp1/sDfVqi/OptyrKG4GA
+         HO0mmojLekrRhQdv2AImlymnMy3a1JEPU8W5Nwp7thtRdXeWlxIVsAY6u+SN6W5zuWpY
+         LSbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=FyG226joSnYh3+KJrAYD4wtAMUPEnahf5hcgSw+eY8g=;
+        fh=Vskekxu6Igb/R78wkyr0owq/IrsrmeG9At1lS+oNkbw=;
+        b=UZcOp+hJBKg2u9wlerlWoSMzMIwZZEWekLbnGs6UjHZY728gqqVAjMX/9oMQhX9yI8
+         ze0/19P2jODJIbIN0uuIYnN2HyuJG+WDbkwCULOkBGTmunJPjcB2TH3TB7ex8E/dj5Rl
+         IRys69WZR9sg4PJbI75qSqot3qrKhvomnrxyI9UW5+JxjAVRkubcM/Gsc7X6yr934TOZ
+         EokN2eQT6eNV4ohMgXLROW1iiaXyHYB0UEbLLjQSQ1/G4vKDDQI4RV/chBj04Os2Igcx
+         ku1ohwkUbxYtHHTEEj/uqqNYDlUucO/gEfaxZcobZublxvYno5dNWbnO+yYrkSJLyHBp
+         1hRg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781088617; x=1781693417; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FyG226joSnYh3+KJrAYD4wtAMUPEnahf5hcgSw+eY8g=;
+        b=XfhrxsI0YTQqiKTEkm1frCHDbIJQCtH5VtqGvgG1a0LRQkpRfZu3LMffoepTdUW1L8
+         euuCuoFTLQppLmQKH93s6ZtFROucKiww6ke3TWeSLI38oTY6p/JAKVqSpzUVQ7o37An6
+         DokwnF4L1z/yR9CWI+VVhNyAJUdxNrgmjkhhlu3Wu/hQJyi13P5L2sg6KJWesgjLyOV4
+         aTzoUATvwmqPB7VTRMQEcS0ewuDMESagRMfeI/81FA+EU8fmxcxNhbkKs/WUnAaynJtW
+         jYzjxRPi3/1XXDDb77VGrrvHN7nMSeu+ZIy4hBkB3IfaF40ic2PxKeDqA46de6Fj05qC
+         z20Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781088617; x=1781693417;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FyG226joSnYh3+KJrAYD4wtAMUPEnahf5hcgSw+eY8g=;
+        b=gbtnkPDTPkhVwRo2O2ioer5yvpkxwdkV9R1+jbmLNUSDJzxl6I9YTjZRuO3Ioq6xKC
+         hOa30yxLdYNWdw8kwDoOvmXHMsfVJuiG2mVovV2YU4CS0QB2rp+/VzmXKZ24mff6DL6D
+         dLyjeNAuzgKcaM8m1yLxNuVwrwDEmSSQHh7VqYgeR0gPkB6Efe4M+T36qocbifGIjhDo
+         M+XVP3lluAy0xmipYa4CzUwNDV7TkSfZ+PFvExA/od5MCWSRt8XRz0hhRpQtBmIg402g
+         mjKfuTdeLWbjN2iMo27CeeacHW2EgcylsonWRJ4SDcbUnL9/TlcvrFFgknclnaL+ZExv
+         aDFA==
+X-Forwarded-Encrypted: i=1; AFNElJ/SDjL/e5Ij5dvJLylyRV5YBL5DNQs91Dc9WI4v3K1IERWMHReOz11kwkKWc53f64uJ/zk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDUs4eTuYxSqLAeRlofBiRYGR+vsfvbYut7a1RwTvE4vcMr070
+	rmr4nzp4Ga5kZhwDXWN0nlNch0qf/IztvUD1IwEy2AuMvLsfYjiPyYJx9M0FBzDfw0l1hiaUKPb
+	q/FfhvOqcpMxP65O+WkuIINZF4bw/Pu8=
+X-Gm-Gg: Acq92OFxZJF/6nVV5p0mqVPBa5J/BvNXHIJIt2n5Ud19u0+mz3szEta4uG9RQovPnNO
+	3J5qZEvT6jHkgKxQDXsIISJqoXu3rxcljqK3VyOch048Rh5bp/ZF5bXxzYzXu1lwom1DjvTCQbn
+	JtO/i0JcKz23plhW+0Q9E3LTeigYJo7zZMJwOn1shMzAUvm/qXCIRQUGQCF5weCH8xCo/T1BPkY
+	jHanPiCgcuuDY9DW6f8Gw2AAHyobdWgL2HNuUz68aedDmU1mao4Q7/d70D4LT6zigsGRr/7i9RC
+	IaZM0d3AUca+Hm/l0SOFtALLbF07WcLrMvqcn2sQFjn7FtRaI26+qkllvV0rcE+5j7/JZ15sRGa
+	+2V+wU5yh
+X-Received: by 2002:a05:6122:134f:b0:575:e9eb:d879 with SMTP id
+ 71dfb90a1353d-5ac48699ccdmr12658621e0c.0.1781088617529; Wed, 10 Jun 2026
+ 03:50:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jun 2026 06:50:16 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jun 2026 06:50:16 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com>
+References: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Date: Wed, 10 Jun 2026 06:50:16 -0400
+X-Gm-Features: AVVi8CdU-_HhJKovBOSu-UkEHNzAYxR_5_WuS6PUkE74KkXOfZoz39jhChHLgdc
+Message-ID: <CAOLa=ZRHKNNymXGk31YgECjUmF9nZ8GsPUdQb7aKBH5DKMz7=w@mail.gmail.com>
+Subject: Re: [PATCH v2] ref-filter: restore prefix-scoped iteration
+To: Tamir Duberstein <tamird@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
+	ZheNing Hu <adlternative@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000005ca8c50653e402ad"
 
-Move the global 'trust_executable_bit' configurations
-into the repository-specific 'repo_config_values'
-struct. To ensure code readability, the getter functions
-'repo_trust_executable_bit()' has been introduced.
+--0000000000005ca8c50653e402ad
+Content-Type: text/plain; charset="UTF-8"
 
-For now, associated functions access this configuration by
-explicitly falling back to 'the_repository'.
+Tamir Duberstein <tamird@gmail.com> writes:
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
- apply.c       |  2 +-
- environment.c | 11 +++++++++--
- environment.h |  9 ++++++++-
- read-cache.c  |  8 ++++----
- 4 files changed, 22 insertions(+), 8 deletions(-)
+> Commit dabecb9db2 (for-each-ref: introduce a '--start-after' option,
+> 2025-07-15) changed single-kind branch, remote-tracking branch, and tag
+> enumeration in do_filter_refs() from constructing an iterator with the
+> namespace prefix to constructing an unscoped iterator and applying the
+> prefix with ref_iterator_seek().
+>
+> Before that change, refs_for_each_fullref_in() passed the namespace
+> prefix during iterator construction. That helper has since been
+> replaced by refs_for_each_ref_ext().
+>
+> The files backend primes its loose-ref cache for the construction
+> prefix before it opens packed refs. An empty construction prefix
+> therefore reads every loose ref, and a later seek cannot undo that I/O.
+> Consequently, git branch, git branch --remotes, and git tag scale with
+> unrelated loose refs.
+>
 
-diff --git a/apply.c b/apply.c
-index 249248d4f2..fbb907d3c0 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3893,7 +3893,7 @@ static int check_preimage(struct apply_state *state,
- =09=09if (*ce && !(*ce)->ce_mode)
- =09=09=09BUG("ce_mode =3D=3D 0 for path '%s'", old_name);
-=20
--=09=09if (trust_executable_bit || !S_ISREG(st->st_mode))
-+=09=09if (repo_trust_executable_bit(the_repository) || !S_ISREG(st->st_mod=
-e))
- =09=09=09st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
- =09=09else if (*ce)
- =09=09=09st_mode =3D (*ce)->ce_mode;
-diff --git a/environment.c b/environment.c
-index fc3ed8bb1c..75069a884d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -41,7 +41,6 @@
- static int pack_compression_seen;
- static int zlib_compression_seen;
-=20
--int trust_executable_bit =3D 1;
- int trust_ctime =3D 1;
- int check_stat =3D 1;
- int has_symlinks =3D 1;
-@@ -142,6 +141,13 @@ int is_bare_repository(void)
- =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
- }
-=20
-+int repo_trust_executable_bit(struct repository *repo)
-+{
-+=09return repo->gitdir?
-+=09=09repo_config_values(repo)->trust_executable_bit :
-+=09=091;
-+}
-+
- int have_git_dir(void)
- {
- =09return startup_info->have_repository
-@@ -305,7 +311,7 @@ int git_default_core_config(const char *var, const char=
- *value,
-=20
- =09/* This needs a better name */
- =09if (!strcmp(var, "core.filemode")) {
--=09=09trust_executable_bit =3D git_config_bool(var, value);
-+=09=09cfg->trust_executable_bit =3D git_config_bool(var, value);
- =09=09return 0;
- =09}
- =09if (!strcmp(var, "core.trustctime")) {
-@@ -720,5 +726,6 @@ void repo_config_values_init(struct repo_config_values =
-*cfg)
- {
- =09cfg->attributes_file =3D NULL;
- =09cfg->apply_sparse_checkout =3D 0;
-+=09cfg->trust_executable_bit =3D 1;
- =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
- }
-diff --git a/environment.h b/environment.h
-index 123a71cdc8..44b97be654 100644
---- a/environment.h
-+++ b/environment.h
-@@ -91,6 +91,7 @@ struct repo_config_values {
- =09/* section "core" config values */
- =09char *attributes_file;
- =09int apply_sparse_checkout;
-+=09int trust_executable_bit;
-=20
- =09/* section "branch" config values */
- =09enum branch_track branch_track;
-@@ -123,6 +124,13 @@ int git_default_config(const char *, const char *,
- int git_default_core_config(const char *var, const char *value,
- =09=09=09    const struct config_context *ctx, void *cb);
-=20
-+/*
-+ * Getters for the `repo_trust_executable_bit` fields of `struct repo_conf=
-ig_values`.
-+ * They check `repo->gitdir` to prevent calling repo_config_values()
-+ * before the configuration is loaded or in bare environments.
-+ */
-+int repo_trust_executable_bit(struct repository *repo);
-+
- void repo_config_values_init(struct repo_config_values *cfg);
-=20
- /*
-@@ -160,7 +168,6 @@ int is_bare_repository(void);
- extern char *git_work_tree_cfg;
-=20
- /* Environment bits from configuration mechanism */
--extern int trust_executable_bit;
- extern int trust_ctime;
- extern int check_stat;
- extern int has_symlinks;
-diff --git a/read-cache.c b/read-cache.c
-index cb4f4878c8..89f5c88c58 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -214,7 +214,7 @@ unsigned int ce_mode_from_stat(const struct cache_entry=
- *ce, unsigned int mode)
- =09if (!has_symlinks && S_ISREG(mode) &&
- =09    ce && S_ISLNK(ce->ce_mode))
- =09=09return ce->ce_mode;
--=09if (!trust_executable_bit && S_ISREG(mode)) {
-+=09if (!repo_trust_executable_bit(the_repository) && S_ISREG(mode)) {
- =09=09if (ce && S_ISREG(ce->ce_mode))
- =09=09=09return ce->ce_mode;
- =09=09return create_ce_mode(0666);
-@@ -228,7 +228,7 @@ static unsigned int st_mode_from_ce(const struct cache_=
-entry *ce)
- =09case S_IFLNK:
- =09=09return has_symlinks ? S_IFLNK : (S_IFREG | 0644);
- =09case S_IFREG:
--=09=09return (ce->ce_mode & (trust_executable_bit ? 0755 : 0644)) | S_IFRE=
-G;
-+=09=09return (ce->ce_mode & (repo_trust_executable_bit(the_repository) ? 0=
-755 : 0644)) | S_IFREG;
- =09case S_IFGITLINK:
- =09=09return S_IFDIR | 0755;
- =09case S_IFDIR:
-@@ -338,7 +338,7 @@ static int ce_match_stat_basic(const struct cache_entry=
- *ce, struct stat *st)
- =09=09/* We consider only the owner x bit to be relevant for
- =09=09 * "mode changes"
- =09=09 */
--=09=09if (trust_executable_bit &&
-+=09=09if (repo_trust_executable_bit(the_repository) &&
- =09=09    (0100 & (ce->ce_mode ^ st->st_mode)))
- =09=09=09changed |=3D MODE_CHANGED;
- =09=09break;
-@@ -759,7 +759,7 @@ int add_to_index(struct index_state *istate, const char=
- *path, struct stat *st,
- =09=09ce->ce_flags |=3D CE_INTENT_TO_ADD;
-=20
-=20
--=09if (trust_executable_bit && has_symlinks) {
-+=09if (repo_trust_executable_bit(the_repository) && has_symlinks) {
- =09=09ce->ce_mode =3D create_ce_mode(st_mode);
- =09} else {
- =09=09/* If there is an existing entry, pick the mode bits and type
---=20
-2.43.0
+And this is the crux of the issue. Currently we do
 
+- refs_ref_iterator_begin()
+  - ref_iterator_seek()
+
+And between the two `cache_ref_iterator_set_prefix()` is already called
+which caches all the loose refs. This is the IO intensive operation this
+patch tries to avoid.
+
+I think it would be worthwhile to add this information in the commit
+message.
+
+>
+> Patrick Steinhardt observed during review that iterator construction
+> and seeking accepted similar strings but assigned them different state
+> semantics. Junio C Hamano then pointed out that no current command can
+> combine start_after with this single-kind path, but future branch or
+> tag support would need to keep the namespace while moving the cursor.
+>
+> Keep the existing start_after path unchanged. The iterator API cannot
+> currently seek to one string while retaining another as its prefix:
+> an unflagged seek clears the prefix, while REF_ITERATOR_SEEK_SET_PREFIX
+> replaces it with the seek string.
+>
+> For the commands affected by this regression, which do not set
+> start_after, pass the namespace prefix during iterator construction so
+> that loose refs are scoped before the packed-refs snapshot is opened.
+> This fixes the current regression without deleting the ref-filter state
+> discussed during review or changing its dormant behavior.
+>
+> Add REFFILES-gated performance cases with one branch, one
+> remote-tracking branch, one tag, and 10,000 unrelated loose refs. The
+> benchmarks were run with:
+>
+>     GIT_PERF_REPEAT_COUNT=5 GIT_PERF_MAKE_OPTS=-j8 \
+>         t/perf/run a89346e34a . -- p6300-for-each-ref.sh
+>
+> The following are the best of five runs, with each run invoking the
+> command ten times. Times are elapsed seconds with user and system CPU
+> seconds in parentheses:
+>
+>                                   a89346e34a       this commit
+>   branch                       2.74(0.13+2.56)   0.11(0.04+0.04)
+>   branch --remotes             2.81(0.13+2.62)   0.12(0.04+0.04)
+>   tag                          3.01(0.14+2.82)   0.11(0.04+0.04)
+>
+> Both revisions used the default -O2 build flags and a config.mak
+> containing only "NO_REGEX = NeedsStartEnd". They were built with Apple
+> clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro (Mac16,6)
+> with a 16-core Apple M4 Max (12 performance and four efficiency cores)
+> and 128 GB RAM.
+>
+> Link: https://lore.kernel.org/git/aGZidwwlToWThkn8@pks.im/
+> Link: https://lore.kernel.org/git/xmqqikjq7s16.fsf@gitster.g/
+> Fixes: dabecb9db2b2 ("for-each-ref: introduce a '--start-after' option")
+> Assisted-by: Codex gpt-5.5
+> Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+> ---
+> The series is based on a89346e34a (maint) because the regression has
+> been present in released versions since Git 2.51.0.
+> ---
+> Changes in v2:
+> - Extract local variable `store`.
+> - Link to v1: https://patch.msgid.link/20260605-fix-git-branch-regression-v1-1-02f40ad40929@gmail.com
+> ---
+>  ref-filter.c                 | 28 +++++++++++++++++++---------
+>  t/perf/p6300-for-each-ref.sh | 39 ++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 57 insertions(+), 10 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 1da4c0e60d..5cbc007d64 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -3315,19 +3315,29 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, refs_for
+>  		prefix = "refs/tags/";
+>
+>  	if (prefix) {
+> -		struct ref_iterator *iter;
+> +		struct ref_store *store = get_main_ref_store(the_repository);
+>
+> -		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+> -					       "", NULL, 0, 0);
+> +		if (filter->start_after) {
+> +			struct ref_iterator *iter;
+> +
+> +			iter = refs_ref_iterator_begin(store, "", NULL, 0, 0);
+>
+> -		if (filter->start_after)
+>  			ret = start_ref_iterator_after(iter, filter->start_after);
+> -		else
+> -			ret = ref_iterator_seek(iter, prefix,
+> -						REF_ITERATOR_SEEK_SET_PREFIX);
+> +			if (!ret)
+> +				ret = do_for_each_ref_iterator(iter, fn,
+> +							       cb_data);
+> +		} else {
+> +			/*
+> +			 * Pass the prefix during construction because the files
+> +			 * backend primes loose refs before a later seek can
+> +			 * narrow the iterator.
+> +			 */
+> +			struct refs_for_each_ref_options opts = {
+> +				.prefix = prefix,
+> +			};
+>
+> -		if (!ret)
+> -			ret = do_for_each_ref_iterator(iter, fn, cb_data);
+> +			ret = refs_for_each_ref_ext(store, fn, cb_data, &opts);
+> +		}
+
+This would work, as now we separate out the regular path to use
+`do_for_each_ref_iterator()` instead.
+
+But this causes a bit of confusion, why do we need to use
+`do_for_each_ref_iterator()` and why not simply provide the prefix to
+`refs_ref_iterator_begin()`, like before?
+
+On top of master, the below diff seems to fix the issue and works with
+the benchmarks provided in this patch. (I haven't tested it with out
+test suite though).
+
+modified   ref-filter.c
+@@ -3316,15 +3316,16 @@ static int do_filter_refs(struct ref_filter
+*filter, unsigned int type, refs_for
+
+ 	if (prefix) {
+ 		struct ref_iterator *iter;
++		struct ref_store *store;
+
+-		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+-					       "", NULL, 0, 0);
++		store = get_main_ref_store(the_repository);
+
+-		if (filter->start_after)
++		if (filter->start_after) {
++			iter = refs_ref_iterator_begin(store, "", NULL, 0, 0);
+ 			ret = start_ref_iterator_after(iter, filter->start_after);
+-		else
+-			ret = ref_iterator_seek(iter, prefix,
+-						REF_ITERATOR_SEEK_SET_PREFIX);
++		} else {
++			iter = refs_ref_iterator_begin(store, prefix, NULL, 0, 0);
++		}
+
+ 		if (!ret)
+ 			ret = do_for_each_ref_iterator(iter, fn, cb_data);
+
+
+I would say something like this would make more sense, since it still
+keeps the current structure without introducing a new command.
+
+>  	} else if (filter->kind & FILTER_REFS_REGULAR) {
+>  		ret = for_each_fullref_in_pattern(filter, fn, cb_data);
+>  	}
+> diff --git a/t/perf/p6300-for-each-ref.sh b/t/perf/p6300-for-each-ref.sh
+> index fa7289c752..ed9c1c6a19 100755
+> --- a/t/perf/p6300-for-each-ref.sh
+> +++ b/t/perf/p6300-for-each-ref.sh
+> @@ -1,6 +1,6 @@
+>  #!/bin/sh
+>
+> -test_description='performance of for-each-ref'
+> +test_description='performance of ref-filter users'
+>  . ./perf-lib.sh
+>
+>  test_perf_fresh_repo
+> @@ -84,4 +84,41 @@ test_expect_success 'pack refs' '
+>  '
+>  run_tests "packed"
+>
+> +test_expect_success REFFILES 'setup many unrelated loose refs' '
+> +	git init scoped &&
+> +	test_commit -C scoped --no-tag base &&
+> +	test_seq $ref_count_per_type |
+> +		sed "s,.*,update refs/custom/unrelated_& HEAD," |
+> +		git -C scoped update-ref --stdin &&
+> +	git -C scoped update-ref refs/remotes/origin/main HEAD &&
+> +	git -C scoped update-ref refs/tags/only HEAD
+> +'
+> +
+> +test_perf "branch (many unrelated loose refs)" --prereq REFFILES "
+> +	(
+> +		cd scoped &&
+> +		for i in \$(test_seq $test_iteration_count); do
+> +			git branch --format='%(refname)' >/dev/null
+> +		done
+> +	)
+> +"
+> +
+> +test_perf "branch --remotes (many unrelated loose refs)" --prereq REFFILES "
+> +	(
+> +		cd scoped &&
+> +		for i in \$(test_seq $test_iteration_count); do
+> +			git branch --remotes --format='%(refname)' >/dev/null
+> +		done
+> +	)
+> +"
+> +
+> +test_perf "tag (many unrelated loose refs)" --prereq REFFILES "
+> +	(
+> +		cd scoped &&
+> +		for i in \$(test_seq $test_iteration_count); do
+> +			git tag --format='%(refname)' >/dev/null
+> +		done
+> +	)
+> +"
+> +
+>  test_done
+>
+> ---
+> base-commit: a89346e34a937f001e5d397ee62224e3e9852040
+> change-id: 20260605-fix-git-branch-regression-9e4236f18091
+>
+> Best regards,
+> --
+> Tamir Duberstein <tamird@gmail.com>
+
+Thanks for the patch, this is indeed a regression we must fix and the
+benchmarks are a clear indication of it.
+
+--0000000000005ca8c50653e402ad
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9468da1884dcaba9_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vcFFXWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL25DQy85ZEttWnBybldWR1h4RW0wZ2xESzE3Q3hiSgpRZmEvR1pEbjNl
+b3lGVEQ2U0s4TXlaWlRiV2NjbnJIRTZtajdKUExGdnJ1L1pxbTBrQTNidkQ3cUIyTkY2Y3JiClVQ
+Vi8vdW8yZmluWlErYXlNajlFNGlFNWhKNDMva0NCM0duUDR5ckxlVXE2d3R2b2lYRG5PanF5VkVo
+RzcvOUIKd0FOK2k2SlRnaXk1ZkdKYjRoZWxYWk4wR2dDd1BLU1UzaFlKQkxrcWFsa0FuSTFHMGdw
+RitZMktRUDEzbUhmWQpZRDIxSURZN3p1VnQ3TkVVSlhkNzQ0UnJkN0VuVXBuc295bHZZOENRR1h4
+eEM0cGZXMnc1MEF1S2VIVEk1cktDClNscmhDeG5QRDNxMXFiV1V3QUtjR1liOWx6dE5JNG9CUzNQ
+N0U1YllZM1k1OVF6a0JzZFg5T1pGcGRibm41cEQKT0toN25ORy9ucngzU1hpUWcvVEJ5N1Q5Yi9s
+azBLSkwwSHJpeEZvNTluT2sxUG83QndRTWpjVkM4SXVZSmYyNgp2Vk1BZUdiTEFCa3Z0MzNvaHNB
+Z2pVZnhNZzJTeURsRTNiZHFOakxNbnRKdnVzVDFjbTdlbWdDcVlSRlVXMkE0Ck0yUkdhbTJINmlH
+MVpGdkNyQWtxSWU2Vmo5ZlhDbisrYXV1eTNyMD0KPVR4dFcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005ca8c50653e402ad--
