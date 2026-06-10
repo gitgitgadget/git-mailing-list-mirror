@@ -1,88 +1,84 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2AB413609
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 16:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1330342538
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 16:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781107359; cv=none; b=feM/jQqCY7TFXt+d9n0nx8lBlzoyloKbuSMNx2YtbKUg+iAwfbDNeLIgsWw4/U3U3aZqsN9rWRLpRU+h0F/n+0sPuF+5aewol4HmKhw3Mqdx84qE01mVMXASj9O4XzzqcxoJ0kO9HTIVK1gzZoqoWvGoN+NyJ8YzvC24ZhZ6JxM=
+	t=1781108746; cv=none; b=r7z/ihpW1f8HYv0ytyODHtWhkoP13OAraU/hpgwXr5UtbX4sFxPhqOqXyilSaP4hRuRNiV7C8lSCj/evtYggZ4Apuy/KouuR9Toq7HDemPTVHFnt7NJfjvpSuS3C9t2keLo1NnXZVCnTt3au0FFeTplbqtInoniVrya0GMg/puM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781107359; c=relaxed/simple;
-	bh=F01b8+I2qOI+3BzrxVVpTO2CXHFdt4WJzADD1aXIEVo=;
+	s=arc-20240116; t=1781108746; c=relaxed/simple;
+	bh=mnPDVdWrPAsDDbDRXpTAbaW3GZdj1dxKAnhKiF5+MPc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AGCy5EMpyoUxti6JJZC5AIuGOvcWb1E3HZNKTy0VzKwTEQR9xNn9CY3wts+tty2SjcaZ8HjYtkY23JwfLDRaKgcxEDzFJ4cDKTp8d9YLEk6kwVj9FDpmOmRlfwEzfie1e1griiB7wJ1mfk2il9rCCZPbhpQFc0A/sao2q673Hwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SJRiFuF0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gov+a+ht; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=KEQ/isHmcrBEgwbRfymH7QFn7hl14+E1TVc1TwFQgzGt0RVa0jE3YPEEd9yeSI09npEGcY0Mb8KJl4MQXsPC7yorM/hy8tW9woLBVklAWiJ1xahlPXDYWn6nUK9qMBUzxvyESB0EmTWeIRIgGld6uNP1gw1e6Merd7fhvm59OpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QJegD9F8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UbwcdU3r; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SJRiFuF0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gov+a+ht"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 13E56EC0095;
-	Wed, 10 Jun 2026 12:02:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QJegD9F8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UbwcdU3r"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 218061400108;
+	Wed, 10 Jun 2026 12:25:44 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 10 Jun 2026 12:02:37 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 10 Jun 2026 12:25:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781107357; x=1781193757; bh=gghLH0IA03
-	yrLmoS+LmpQH0S5X5CpvP+EZZkbQz52FY=; b=SJRiFuF0L80xqQ5g0g+NwH79je
-	SVBqmiKl+nfoDHHkAV2d9/GlVTpE1Aoao3tuJoQ3mBzYuooG1HLxfqYS6VBsvm3s
-	rDYja0XvUDWGGHNwyATX8E5YBy7/+x6MoEWFzXZq9kPfkFdOLBrn8qhdwG4IzHha
-	5WeP4OXZgY6dA8xfZni0M/Rh/oG4BgFQdqfR3k/xESnYEat9orzda6wezdVJfve1
-	QBa5UGoearyNRG8EBL+2kQADBlWchBRSgs4wgNr3hL4lm3W9cflacJJkTNphYF2S
-	T0UsSBH20vcV+0CERLlEt/0D1W+Lhn69olyGjGX811Leflw11H85kwwRZRZQ==
+	:subject:to:to; s=fm3; t=1781108744; x=1781195144; bh=wyOyypWo9l
+	xiq45lYOF3tAUXxSKhUAX7EAER2d1ZHy4=; b=QJegD9F8NwLpsxQ5MkCq2RN7op
+	n+/0jJqiBO2pED9X+rhYT+nJCg+wr++mte09pSKh0CxmKeMV6cpt6Z139gLzm4QV
+	XWaZSYObVRbQ8Qx/IFW6pY/n6MB+Gr2GmB3D7sKTU9+tpY4HUvynnD98LYaSRtOH
+	CFgpGUP3JFi0X1dMVJpSHZDkJhOjHWtG8iywFUc42c3PNWpfrX7yLGPyX4JzdpcX
+	qXmAG9lDQdGTJ8Vkej3W3ggN7Cgq9p1UEDZ4vY2sV4/IXoway++F15UPKe0BQTqE
+	809JNoHTtDYkOut1HYcPl5QRklTMjisUKLlWkDSyQ9DS1fwWeKQgOEdz31ZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781107357; x=1781193757; bh=gghLH0IA03yrLmoS+LmpQH0S5X5CpvP+EZZ
-	kbQz52FY=; b=gov+a+htOP6owGdRxyTCY37OKuPL5RAyloqTY1D15uiohlhjWEF
-	tNMJWdOrtDGVDaVyydnA2v6Yqu9uvDypTx9SOveKasx2xFUv+gfVmDIO466zKn/A
-	diPnfbmTGy5vtEe2+KweFNPsDf5gCNH3tEf/4RQQxQDqgH8KycAslfJjAh0kImes
-	2aXrbDycWmwVc37x9OeqXKUm3oF2++iosFKwNluAcsWyYSAMJfQAgdNxjXxFQ55j
-	6roJ/YgXFvA1pxnP0CnEaz9JN5laXo4P71bbqMC3YWvo7QI7k3o51hD0/AoGjmyc
-	pHHNdpixsSEkxHTVC8rSJjBeTUoJdNM45Mw==
-X-ME-Sender: <xms:nIopaveFdYpfo610ZQ7-Qjw8KQpMC7Yuz6sde9Z2kDgtvW2Da9naSg>
-    <xme:nIopaiKyps_z6gF_mXXZhJ8G8sP5DI0ldjh__zwuzwd2OldCnJ1T-s-Lcc9RFaesJ
-    LOD2swHmMeXLh5KhemCevVLrvzVEwyFzuBpHXTs6jEVHX9YB5dGasc>
-X-ME-Received: <xmr:nIopakKCRVboQhpnKByYrO0AOaNxGWwn3UWfwuCMay0jEieEK9Vr9UygZOOZsMi0MGx5MGA1iBWT_OLTBz8xTI250Ahu2fbpiUg0>
-X-ME-Proxy-Cause: dmFkZTGYL5afcmQUIWRoZEGztLSKqqkCQ4Vm39vXJZMbbAYAYUtynCGWJNI8Mi7w+VWx8q
-    Yq8vKIY3Yj3LG/NHQ0+w5wDjg8WEs3S4yChTr9KTdLhENx1R04bEuVRv7B/4sE0GPft+w1
-    6O7zYy5c4ohD1htWnBapzyYqbfBMvTUw1xwqChmI+AI6KD+bEZNTU5hc+ImNufyJnOZ7gu
-    XzPYXYyDG7KGPPSUnqyhIZe5Qd5Mso1BLEWnPsLnX3sXb/mZW14lQrcGXdEjsGKMRw+kKu
-    5JIkfy7RBdnD9Gcl7IyXd3IZSNfVK2lDYaGJkrGQVOULDlhDsloaVwhRSjYJ6BpmpjljNk
-    IdOD3mFYn18j//xTT9L6LKcGqSSbPrwbvKrcgmt/ih82TjziUfVfUfpc7DCGUdw9ABw37l
-    F55gPzCeP6fDqq0/qQVpWqz/ti5O3kbvuZrGZJsxe2jk1XDEmvQQR0DTt6HwuwhtRn2PpH
-    EJIjVFj6zCNsA4o+Ml25ApCGamimqlEFhpjs8datNaACENNJJZ9RJawxFZXlO3u7T3jhHD
-    8FtfiZjqegAhiSxHTdlMNhSZl5vQ6ypJsmUEZ6zOqC1Cwhmn+wJRZzBpEfDNEgN80rTHrJ
-    KE3cD2sAMyFXhIU6gvjWg+6oOvpGwceNF1bKFWNtDfkFqcwJBWQT1/5inYGA
-X-ME-Proxy: <xmx:nIopapVQtqeHmvs8H0wovPbnGlYmhPDylCGZDcfS3q_Tt-719bFgMA>
-    <xmx:nIopalkrGpXmpZ1zlYC7Ve5yOhbPBBLuqsoShRk-wHdjC3g0ygUSzQ>
-    <xmx:nIopanm75aWWw9jD3b7ZkoG4sPI1J_KjWAUZWwJrWi_CYvkqeqOmUQ>
-    <xmx:nIopatZof_2_Ro9k1dBqC2SowKag3tbPQB4l_tTd13g7oAZcQGvwtQ>
-    <xmx:nYopano9PteL06Di9X7oSORNAajBdjWY8lubRBDb5hycD1z4v5w8U7mY>
+	1781108744; x=1781195144; bh=wyOyypWo9lxiq45lYOF3tAUXxSKhUAX7EAE
+	R2d1ZHy4=; b=UbwcdU3rHHCEK3MmyjlSJq7sFzD5UezM6iRAWUYpZpnbapotjTf
+	4ELtQ5yEpBv9V5QD+OZk2pofNnZVxbnj9AO4RVXNbD11c6nZbR28Z9JEBPfaDW+J
+	SnOccGbMOIgq3zs9vJzO8kSyclduAOVrApuxKODSRtuIM7GfgTYTAYwkoQxo0WVJ
+	yV+Rf2krDDb4sbO3chguHk4ai+6ra/v1Fz6ACwK1vK0+OV632wFWUnvz3WfXW78A
+	ZPhvMxu99hhog933z3f+//31fLoNg2Gj7IyexJ+DWRoTc9kCl9FOTuHzK+HBIoSE
+	B3HO1sQNnOy5pFY2K5Y7jKaSLmYSfZukSxQ==
+X-ME-Sender: <xms:B5ApajidR_p7HiAez6lCKL4f6e7II6kI19hncSxNzZLgzWLlVbBHRw>
+    <xme:B5ApapWwS0thAwkS8gW05wpKLmnJbvtKE9QfhdgS9BfKeMp0-MQFd5KkGh5nI263a
+    eXLn1-R6HigtV-C-9JoOBKQ5qg7Rr9b7ZtoKFi9sqmhC9nCj8Gm-g>
+X-ME-Received: <xmr:B5ApaqXcsXXSnZ5881vpHXKTA0ORDzCagy7h7McSOxf6cnbbMgR_iYu-dg9dBKm_do1GsfUsSEDmj5SJLlwo0FKLBYGtoX9mFFC->
+X-ME-Proxy-Cause: dmFkZTGNxSbFm+15P7cu+IevIqd8pwiTruqzX4AvLdW+AU6knWAibg9YnIHOF4R3uyK8Py
+    s8+LwAWa28cAK7YnjNfRgtgSnWTV5hidNkFQJMR+a+H3OpoyXBX8eCLT97IvchSJAy/WAY
+    LuOQ97sAtV58LS6QVF7uCgVBffKSXu84LB1UGFWxrSlHFJpoFfc77AOYN8fQmpsZRP3uss
+    1qOF33/GqMRiyYhj4aRcWhmorC2l2u+Z6zmJcx3vjibNKs4pKOI0ZfW4izs90Qq27RO7vj
+    p8LCIugtTe0G/r4qDDEznPNJP7sTYeaJvYMZAkiq8P5BFRFs9lv0BBvwZQtzkn2LIs3gSJ
+    GaxWwFDszSE0fqINLKoPe0p9Llc+6Py8ief+U9h8BljXbD35J0boh7apse4ofL6zituVgS
+    FaX0za76uTgTw7+C8AyTDhu8PsKTrXkx76n1+UX2L+77l5uPTxw9Vt+wGMJxS9+2klNzKt
+    x1CkyMDfQAokUJia+owJoafAR9W5B4yreIgCl88Yweku1TvZz++9d0eBPlTJ9WjHee6aak
+    AzuauXC8pbFHMNqfImkkpRPhQLonFihgzDV2Zyd5im3aED5MDYvmLiYh+I1pN7IPlUyrQd
+    JW41rGj/ECwd5sLl9D757UctI4spkQKy+L0SQRk11HASz/Bf7ex0g/+OF4Zg
+X-ME-Proxy: <xmx:B5ApahhPQ_bL9vFKjolimubSa2d-Bzn0zABpgYK13Er8XpZmtIAUFQ>
+    <xmx:B5Apataz4BulNl2w-kwmfAf7hO_7f4B8V-dXPlxWMYEG0U1gWUTJ0A>
+    <xmx:B5ApamraVBw1Njtohk4S5a8sqWPtetRYLKoswCjapED57CPyrRW4ZA>
+    <xmx:B5ApaiMXWH1sBOAtLu0JE11MzSQK8zblQeIG8vXLdNkb-Y_Z8Vibow>
+    <xmx:CJApamomhPgcktiFDLml5jwCELIghfuqcABpRoaAnz57b2bKY3tslrap>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jun 2026 12:02:36 -0400 (EDT)
+ 10 Jun 2026 12:25:42 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  git@vger.kernel.org,  cat@malon.dev,
-  kaartic.sivaraam@gmail.com,  ben.knoble@gmail.com
-Subject: Re: [PATCH RFC v2 2/2] builtin/history: abort reword on same message
-In-Reply-To: <aikMLBCC9Rc7q9S7@pks.im> (Patrick Steinhardt's message of "Wed,
-	10 Jun 2026 09:03:08 +0200")
-References: <20260607-ps-history-reword-v1-0-ba43a3cbb81b@gmail.com>
-	<20260609-ps-history-reword-v2-0-a0e6028ca9b4@gmail.com>
-	<20260609-ps-history-reword-v2-2-a0e6028ca9b4@gmail.com>
-	<54bd36e9-3d21-4f83-86d6-2882a14779de@gmail.com>
-	<xmqq4ijbsn2m.fsf@gitster.g>
-	<CAN5EUNRz9F+njb_O=Q4DzVMec-q+rDf83Ow+MPJE4yLCBq9qww@mail.gmail.com>
-	<xmqqbjdj1q1s.fsf@gitster.g> <aikMLBCC9Rc7q9S7@pks.im>
-Date: Wed, 10 Jun 2026 09:02:34 -0700
-Message-ID: <xmqq33yuxu1x.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Pablo Sabater <pabloosabaterr@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 09/10] builtin/history: split handling of ref updates
+ into two phases
+In-Reply-To: <20260610-b4-pks-history-drop-v4-9-70d5f0ae8c25@pks.im> (Patrick
+	Steinhardt's message of "Wed, 10 Jun 2026 10:52:29 +0200")
+References: <20260610-b4-pks-history-drop-v4-0-70d5f0ae8c25@pks.im>
+	<20260610-b4-pks-history-drop-v4-9-70d5f0ae8c25@pks.im>
+Date: Wed, 10 Jun 2026 09:25:41 -0700
+Message-ID: <xmqqwlw6weey.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,41 +90,55 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Tue, Jun 09, 2026 at 12:17:51PM -0700, Junio C Hamano wrote:
->> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->> 
->> >> > I wonder if we should check that the committer identity is unchanged as
->> >> > well in case anyone is using this to fix commits after committing with
->> >> > the wrong identity.
->> >
->> > I think that if you reword a commit committed by someone else but end
->> > up with no changes I want it to be kept as it was.
->> 
->> That depends on the reason why the feature to "reword" the commit is
->> being used, and the use case Phillip is talking about is a bit
->> different.
+> The function `handle_reference_updates()` is used by git-history(1) to
+> update all references that refer to commits that have been rewritten. As
+> such, it performs two steps:
 >
-> So the answer is "it depends". Maybe we should do handle this the same
-> as git-commit(1) does with its "--reset-author" flag?
+>   - It gathers the references that need to be updated in the first
+>     place.
+>
+>   - It prepares and commits the reference transaction.
+>
+> In a subsequent commit we'll want to handle those two steps separately.
+> Prepare for this by splitting up the function into two.
 
-Interesting.  I was mostly focusing on the committer identity, but
-the same argument of courese also applies to the author identity.
+OK.  I can sees how this will help doing a dry-run mode.
 
-Having said that, if the user who used to commit others' patches
-under a wrong identity (i.e., the only thing incorrect about these
-commits is the committer identity, and author identity of them are
-not to be updated), "--reset-author" would not be usable, as they
-want to keep the authorship information recorded.  I think 
+> +static int apply_pending_ref_updates(struct repository *repo,
+> +				     const struct replay_result *result,
+> +				     const char *reflog_msg,
+> +				     int dry_run)
+> +{
+> +	struct ref_transaction *transaction = NULL;
+> +	struct strbuf err = STRBUF_INIT;
+> +	int ret;
+> +
+> +	if (!dry_run) {
+> +		transaction = ref_store_transaction_begin(get_main_ref_store(repo),
+> +							  0, &err);
+> +		if (!transaction) {
+> +			ret = error(_("failed to begin ref transaction: %s"), err.buf);
+> +			goto out;
+> +		}
+> +	}
+> +
+> +	for (size_t i = 0; i < result->updates_nr; i++) {
+>  		ret = handle_ref_update(transaction,
+> -					decoration->name,
+> -					&rewritten->object.oid,
+> -					&original->object.oid,
+> +					result->updates[i].refname,
+> +					&result->updates[i].new_oid,
+> +					&result->updates[i].old_oid,
+>  					reflog_msg, &err);
 
- (1) in the shorter term, always create a new commit by default even
-     if the only difference were the committer timestamp.  But add a
-     mechanism to allow users to tell the tool to skip the update
-     in such a case.
+Cute.
 
- (2) at a big version bump, flip the default, making the "always
-     create a new commit" an optional feature.
+handle_ref_update() uses transaction==NULL not as a signal to update
+each ref as request comes (i.e., non-transactional updates) but as a
+singal to perform a dry-run, which was unexpected to my taste but it
+has been that way since at least February this year ;-)
 
-would be the way to go, and the way to trigger that mechanism needs
-to be separate from "--reset-author".
+Looking good.
 
 Thanks.
