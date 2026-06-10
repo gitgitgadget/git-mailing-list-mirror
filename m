@@ -1,196 +1,202 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53943D7D90
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABF53D7D90
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:13:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781089718; cv=pass; b=AA2S5w1vARxypop2mjhZxaFtK6OLdpz0otMPOXvzAHQgAc89zzUl8inbTX5PwkzklvHTXPPTEp6W0Na6HojU/TZe0aWU1VXgE6XA+Owr0M4S7gEhV0YBCFJCJlA0U1PBmGOr32Wfxn4CYJuvnPBbBI9Bl2JBO/OFDzNuoGoK6LM=
+	t=1781090018; cv=pass; b=Wrt3zmHSkO9C6reQoab7DMnmUG7r/vkfhGoerHT/AX2mkObjh12BrW5FfpeBP1eOVWnExkE2neqjQ7hGz6nt/AneUJJwygyaiVUBXVp2L3JPEngWB4Ptxe82uy2FDen7GzlC38YkjS/l9feqgLDrVAnEX8U3+WTEDLbXvDlhJCI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781089718; c=relaxed/simple;
-	bh=opUcNrTelRUxrRmVxsBHF5ps3jQe0xY1z1Z8WQjcYj4=;
+	s=arc-20240116; t=1781090018; c=relaxed/simple;
+	bh=0jl7k0GVuCXXZVVK9Oj0IXUMiR7MtFf7V8QcA+OGMm8=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mjRa669Lej3hAWjv7A5hTN8Lg2JjVIR+6kromY7PGJTolsMj8pbi21ytG5X7wN9Z6owoHViu5b1QFYACl7+oMEFQ/t1Gz+QYpiwRHhf6QzvOtRbgbT9p4hnyEc8JgEH7OcJP6dj6Do9ZX56Xw7G1YwD2J2vNVnMRaPm0khR9kaU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HbfVHHyE; arc=pass smtp.client-ip=209.85.217.52
+	 To:Cc:Content-Type; b=RuGcIYSWTjPQY0Fn3lFrsx5PvmlsMB+aWWPZeyMMVn0/giGn1KiZqMkgGZvuSDqKAdRsUgQo5Yz3mRI5d3Wl2lYzxbM5OUBFnnoo7ad9QnOtSfpMhO8BD/+orbh4v7VOw9ytOQztOXWL4lRZkE6PneHU4UntoEhkmVuvfj0wpo4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Izgmj8Rn; arc=pass smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbfVHHyE"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-6c6507549c3so4670696137.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 04:08:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781089714; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Izgmj8Rn"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-6c4a2458683so2525399137.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 04:13:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781090014; cv=none;
         d=google.com; s=arc-20240605;
-        b=gB1gIUtmsDl3+8nx8l5GaW6ZosnqW2pnUOUZEPwNLhUSu99bcseU58jcpYxSPErLjb
-         LqYLBPsO1bMM3r8jeBqvH755beZOrdmTK4CKxSgD61b/6txoGPQOxHep4viuzrw+YiAI
-         RA595FY5XMShHOhlM9DCecMwRqEVHKAAYZH53+vb0daLKbN3a9ep5cl9TpPZhMh2Kh7V
-         Ew/wtOqZC38pnruZ22wz9RMqF/B7th/bM7C6Iw1xZ3U8mqhsQrDWh39Lo0L5525VZk8r
-         aJj/dTF1E4mOK/5kJp3lsK3YmKKzlW0gf1FySCA05d01+lzvfmyJ1E/B5haEg3L/7Gsv
-         F8OA==
+        b=YJkxTIbaW3pNwr63Jt4Su9vspYcTcJKqU4a4pGsYxRbviRS19oAvbdX0PRLbHdhhRy
+         4c8K6Xt1o2u0zL9qXDK/DCDGv4ADiplh19FP4cq9e8qMaoVHhW592a2JXmNlWPkhScuM
+         g1Wf2SSL3W1RyeCUPWElu74pCnf291gJXY/lzz11QI+JRNY9myDwroA5t5gn4uv5qT8u
+         ioLUnWVgaayZK0IEUtLZevQZHepvty3qlstAyZMpQesIMGHLoVKxTj5L7XR5u9Ugcfnf
+         lowXuv5q/5agFJttjScdwKc8fUNrc6ZQ3EsXYdftNY1+eYDYT7l3xuk+hSaMzVZbltBU
+         /bhA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:dkim-signature;
-        bh=BgGQb2tZNCaoJw55UnFNKUoU7BI4jl4Re7vl4CA/tio=;
-        fh=3QWKyY+ogq/0u0yZByDTBS0Ubo92BfsKkqnbcyEf3jQ=;
-        b=cijkPVA9hRf7XUoLTeYSzOpVWwHYiN5+YXkXPP/+65WWE4wxom8TLCMqgcDLwBQPQL
-         leP3n9l0HSBAk9yqlZK++kp/OmA5EHq3t3G3mOybNJ3hXA4D/jjClUmo3dgxWlXa/i10
-         2KvXP+6scwtXYFq8TKBozaNV5OQ9TBKLLr53X4SOP3GLAM+hfujBM/EDzdHMn1uNa6Rc
-         T3UGXLKc3IUNyJNT2GGzrPBm0twGs6vpQUax1Gmck0SyHh5dr1+U62pVRZJZAbOjBo7F
-         zA2pWhgGpfLI4tmGD414B8pZEO8RCu9Oie983zCxb07+7L6/iqah2uqzxCrznh2Tx0CG
-         CIrw==;
+        bh=RiueRF/E0leyiNIphJ7XcGO0R5FWeQ4DFxFreZBdVLA=;
+        fh=JP4ZKmb9D/uO/jQatKqh14R6bWrYWauYFwpNs5/71q8=;
+        b=EW41PKEmvfoRsluh83ActmMARR+/jeCU+LUokgpqDlkEBehrjXA3RSjI1HncOyzFov
+         UJCiy82l5UKJjaplT5WwG2MadExctEtKlds9Bb+wdGTITUakhoLu4mXq5WS7IaczmAv5
+         i/gWtFJPtUmZeSHNoa0b0mkh2GmyAve7pDOsr+ufXUP9KPayMcc0RaRXvxLYQfYYwhRZ
+         moSW5SgvRIsRuNnaYZf2W7r+t6FA8iQdzFLngRcZXkThNHELGiQl16dyz4A+N17/ONs7
+         FtJBTeHOFM/Q1UQfuUn+znAeCl+YZ2v/UHJDqHVjxV7SR6JNmsn3XGW9SJv0m/T//qRy
+         S/hg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781089714; x=1781694514; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781090014; x=1781694814; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BgGQb2tZNCaoJw55UnFNKUoU7BI4jl4Re7vl4CA/tio=;
-        b=HbfVHHyEewT9yNeHZiLwAqRFAxcQOo8kVZtemlrt8wG4uch3b6hov+L3No2N9rUL9x
-         JN6uQftUgNo8SzpN1YbTDtacvbl3XabIYlvxzuRjugFTQLrQ2Kt4psIxSdJfRv79LTmh
-         +6qCl+JYttxfOq7Oq8mHbO9MJX1bnsFlwrdLUtp/Twvx97Y6X9GZNp8K3H5QYGx5ZDba
-         3n6aO9IGDC8DFew+uSD8yU6N5nyClnhSZrCYQs3ThKkQQ+jv5I3ULhMe0fiVgaCic3pd
-         ofCVF9Vxk5WOf85V9bC1SmsAQUG1w/sKCRgixRcm7dcH/I8183Q/peQmpPQhpV6SLWNy
-         guVw==
+        bh=RiueRF/E0leyiNIphJ7XcGO0R5FWeQ4DFxFreZBdVLA=;
+        b=Izgmj8RnYUYLC3oS7M70RkWRH9H1C7PNGNA31JTvtCZVJkCcBoxLsn0sJbq/Nxec6h
+         xpTSdiPC+OJRdJzEl9u4ymnTzN6g9YLZDzIDGPpof7Ld6lGEwJKG/ksp4oGy7yl9ayMh
+         fv/UxoTAhBOS3OlmojHHaVnkr8bCHInlVJewM55E8VzieEwA037c0nnx2cq14WtmlTYi
+         r5tzu5N9zY8opHyR1DaUwGHX8DBMLvQwKZIcoAHnQzXGhkdR5Sbo8maZ1SSGR03qI8sa
+         2bSUzXh/wA6nscWw6l75cWD+NEuHdxBVk9UZIBhWvu8okyKNfo2C45O1U0Vzt+vlN1Oe
+         Xulg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781089714; x=1781694514;
+        d=1e100.net; s=20251104; t=1781090014; x=1781694814;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BgGQb2tZNCaoJw55UnFNKUoU7BI4jl4Re7vl4CA/tio=;
-        b=bYuvObIO8GMdg6lIp5itt2hX/h4mE5JJdGgcWOVybr8kcz48eKTuwpJZoMkRS+McAW
-         DaYrPrTMF7w6CCW7z4DwRa8mwyMT6KoPQoJJ8XXleL6LIH0uM9njU+XtiDIhLslrA9LS
-         mOro/TXjTARTVWH2EYujZGTLQYmzRzChEm5ns19pFg03uRFwu4jn/5hHVzEnHseNnuhR
-         /WmnHDLCSQwLLyyhXYNDaR3MrtQt8Vn4KbG/ioVUvKUBkoz9jknESFOs/YC+le34fjLG
-         cgaXipUqtcEgJk14wzOydIZzyNE7leRw1KdamMKYmVjFApTyne8MeMJ6v9KQeidkHZGs
-         E6BQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+/55cAjyOMJbZLmEoYNpJgNRcicdJN1k1ZUfK4JrQF0JVQ5JfHJU+pu31u5rgLUmnKBeY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjCl/JpZcowMBxNcwv4401T3Ae/UwFz0FGaIBabvssJjEy18k7
-	ebSxAThp5CXNfNg1NxUWsbL/9zfDABzm303CFVPcc6d466Aajryl70mI79Ob9j8EEmaAIMlim7U
-	zdsQiigffHbTIsnJ25L7+cpVNsVN741c=
-X-Gm-Gg: Acq92OFNBvU+CN3VbjKVPi+YilEXcPvGXJess1DDRFqK4GzgwqxPmibshkj1C24Y5z8
-	8OetdnkEwvMkGSubA4T5KmMVOZjAXEGnGDl9MnKoWczjcn4Mnk6Lho1MMP/k7i7LrXVEEVD+YO1
-	VvB8rdD6XIcmufsvDKl8mtkzIEUUBRzIPaVuKn751Yf1IoIlYHLhwrX36sUc2CyClBGKvBBiQQ8
-	4v87DToy/07uIC/QzwnWCyDuEj9mBIVH0g6QY8duVhw6XZaAK8v2qBdwQXOqIhnnhW+yY8pi3rt
-	/NbRz5hLJD+Oy2VQfgylSTUzP2RhOK8QuV2b2xBd0RTd96wXh2//+w0cUScdPCPE3qJ+9qzLBvE
-	Ia8xEmjWT
-X-Received: by 2002:a05:6102:6a8c:b0:650:94b2:b214 with SMTP id
- ada2fe7eead31-7003a93041emr9146083137.12.1781089714338; Wed, 10 Jun 2026
- 04:08:34 -0700 (PDT)
+        bh=RiueRF/E0leyiNIphJ7XcGO0R5FWeQ4DFxFreZBdVLA=;
+        b=DJBnVdMWXVA2G5pnH5SwYDH3P/QcaLvJkKxfJvZBFqzlNBdK0K2jfDCfa2xNg9WZyI
+         T07ZHKDwTPw8UWK6XTIa8z/m60Tphc1d+qD7hpLif6bWlUA8T6j6++NrKtGPD0qY/q+5
+         dfet6cxoHE90VYkFuzusVCPC2wAuH3BXaLEQvQwWsUaDBOw9kWTZEAmBmyKNpYVjlGBm
+         uV6hRlcSKI04a+JIQBASuqo9uw94BVopGVtzkx7ZiA2y02uZulbbmf0omaEE6LcYKn4k
+         6WVAzQ1VMB1Udgllh/2gZfCPWqCT5hdX65lF98Ex/sz8iw5M6v8HDW5w6vqQyI7p2RPE
+         IMUg==
+X-Forwarded-Encrypted: i=1; AFNElJ956L8MWBjk4TIhWzoktQPRsYEWAwqAQVNf195+Dxv/+tNPM7FD1cobHmaAMIaL4fgoQzg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YziaGiLm0pIeGrlBM8kQRkV7kT5P3tIX1gKzaQG+5rd1gFx52yD
+	oaki97aIk/s83PiMxiW53MK9FzNLDm4LuktEI0m1hZF2+VS9z+Ys4ZtMgP4o75xJyFPUf+ADD55
+	wge8WB0+R6VPt8kFM9sVVwcAC0rqi7ls=
+X-Gm-Gg: Acq92OEXYEmOWEq+YcSUefWjgvN69cXwbGFsbxImqh+8RqK91TvvfGe0BTSjim1s87w
+	+VVQtiF5Q1vsOEYzbnTrQSchxfSDRKbRu54VZ1eQX+r3gpMndyogw4ss38SRP8NAdkVmml8FQqB
+	O3CsK499kBzgrfg6ps4LYtewoZhKjfs7MIGRumEIQCYbwa2a/UQ1KqCFKke4BF14/n7UEm0pyBm
+	LH4akGShoStdsCC2JL+U7Cn665L5/c7icxAwGa0CmhsuNujiFFv4ll0v35lt+RqMag4O1++l7vW
+	I2MX2J2sVq4/yeM74w6WyYufIUUQJ545E3COah4dmY+pzODnNUtXtHo+bUDIB1mD/3KmjC3Z9/x
+	HlaOmWvpz
+X-Received: by 2002:a05:6102:6447:b0:632:29a5:2b27 with SMTP id
+ ada2fe7eead31-6ff0294a3f2mr13384512137.3.1781090014413; Wed, 10 Jun 2026
+ 04:13:34 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jun 2026 07:08:33 -0400
+ HTTPREST; Wed, 10 Jun 2026 07:13:33 -0400
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jun 2026 07:08:33 -0400
+ HTTPREST; Wed, 10 Jun 2026 07:13:33 -0400
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260608-pks-b4-v3-1-f5e497d10c56@pks.im>
-References: <20260608-pks-b4-v3-0-f5e497d10c56@pks.im> <20260608-pks-b4-v3-1-f5e497d10c56@pks.im>
+In-Reply-To: <20260608-pks-b4-v3-3-f5e497d10c56@pks.im>
+References: <20260608-pks-b4-v3-0-f5e497d10c56@pks.im> <20260608-pks-b4-v3-3-f5e497d10c56@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 10 Jun 2026 07:08:33 -0400
-X-Gm-Features: AVVi8CdhmKzZpZkTnogwFylY-hQD80ziGUoFqbGVb9Mh6T-symif8_UcfKePmvM
-Message-ID: <CAOLa=ZQE-kkpSX=pP2A6SXdbp_O6AHzRmbUDOtKCsvz2Yz66Ng@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] MyFirstContribution: recommend shallow threading
- of cover letters
+Date: Wed, 10 Jun 2026 07:13:33 -0400
+X-Gm-Features: AVVi8CeaWZl2lhpFASJP3TMIZThr71K1pp8unidc03ky5C_R024YEczcXDT13NE
+Message-ID: <CAOLa=ZQxA52p+9DcZZ=gVTqZ66ETQvZRQYjZNFjzdbsPwTW2iQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] b4: introduce configuration for the Git project
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>, Weijie Yuan <wy@wyuan.org>, 
 	Ramsay Jones <ramsay@ramsayjones.plus.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Toon Claes <toon@iotcl.com>
-Content-Type: multipart/mixed; boundary="000000000000bc8f410653e44383"
+Content-Type: multipart/mixed; boundary="0000000000009f97f40653e45568"
 
---000000000000bc8f410653e44383
+--0000000000009f97f40653e45568
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The "MyFirstContribution" document recommends the use of deep threading
-> of cover letters: every cover letter of subsequent iterations shall be
-> linked to the cover letter of the preceding version. The result of this
-> is that eventually, threads with many versions are getting nested so
-> deep that it becomes hard to follow.
+> We're about to extend our documentation to recommend b4 for sending
+
+Nit: This is in the past now
+
+> patch series to the mailing list. Prepare for this by introducing a b4
+> configuration so that the tool knows to honor our preferences. For now,
+> this configuration does two things:
 >
-> Adapt the recommendation to instead propose shallow threading of cover
-> letters: instead of linking the cover letter to the previous cover
-> letter, the user is supposed to always link it to the first cover
-> letter. This still makes it easy to follow the iterations, but has the
-> benefit of nesting to a much shallower level.
-
-Should we also modify 'Documentation/SubmittingPatches'? Which states:
-
-  All subsequent versions of a patch series and other related patches
-  should be grouped into their own e-mail thread to help readers find
-  all parts of the series.  To that end, send them as replies to either
-  an additional "cover letter" message (see below), the first patch, or
-  the respective preceding patch. Here is a
-  link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
-  how to submit updated versions of a patch series.
-
-Personally, I find it a bit awkward when new versions are sent as a new
-separate thread, especially when the subject is changed over versions.
-
+>   - It configures "send-same-thread = shallow", which tells b4 to always
+>     send subsequent versions of the same patch series as a reply to the
+>     cover letter of the first version.
+>
+>   - It configures "prep-cover-template", which tells b4 to use a custom
+>     template for the cover letter. The most important change compared to
+>     the default template is that our custom template also includes a
+>     range-diff.
+>
+> There's potentially more things that we may want to configure going
+> forward, like for example auto-configuration of folks to Cc on certain
+> patches. But these two tweaks feel like a good place to start.
+>
+> Note that these values only serve as defaults, and users may want to
+> tweak those defaults based on their own preference. Luckily, users can
+> do that without having to touch `.b4-config` at all, as b4 allows them
+> to override values via Git configuration:
+>
+>     ```
+>     $ git config set b4.prep-cover-template /does/not/exist
+>     $ b4 send --dry-run
+>     ERROR: prep-cover-template says to use x, but it does not exist
+>     ```
+>
+> So this gives users an easy way to override our defaults without having
+> to touch ".b4-config", which would dirty the tree.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  Documentation/MyFirstContribution.adoc | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  .b4-config         |  6 ++++++
+>  .b4-cover-template | 11 +++++++++++
+>  2 files changed, 17 insertions(+)
 >
-> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-> index b9fdefce02..984b7f5aa8 100644
-> --- a/Documentation/MyFirstContribution.adoc
-> +++ b/Documentation/MyFirstContribution.adoc
-> @@ -790,7 +790,7 @@ We can note a few things:
->    v3", etc. in place of "PATCH". For example, "[PATCH v2 1/3]" would be the first of
->    three patches in the second iteration. Each iteration is sent with a new cover
->    letter (like "[PATCH v2 0/3]" above), itself a reply to the cover letter of the
-> -  previous iteration (more on that below).
-> +  first iteration (more on that below).
+> diff --git a/.b4-config b/.b4-config
+> new file mode 100644
+> index 0000000000..fd4fb56b6d
+> --- /dev/null
+> +++ b/.b4-config
+> @@ -0,0 +1,6 @@
+> +# Note that these are default values that you can tweak via the typical
+> +# git-config(1) machinery. You thus shouldn't ever have to change this file.
+> +# See also https://b4.docs.kernel.org/en/latest/config.html.
+> +[b4]
+> +send-same-thread = shallow
+> +prep-cover-template = ./.b4-cover-template
+> diff --git a/.b4-cover-template b/.b4-cover-template
+> new file mode 100644
+> index 0000000000..ab864933b5
+> --- /dev/null
+> +++ b/.b4-cover-template
+> @@ -0,0 +1,11 @@
+> +${cover}
+> +
+> +---
+> +${shortlog}
+> +
+> +${diffstat}
+> +
+> +${range_diff}
+> +---
+> +base-commit: ${base_commit}
+> +${prerequisites}
 >
->  NOTE: A single-patch topic is sent with "[PATCH]", "[PATCH v2]", etc. without
->  _i_/_n_ numbering (in the above thread overview, no single-patch topic appears,
-> @@ -1214,7 +1214,7 @@ between your last version and now, if it's something significant. You do not
->  need the exact same body in your second cover letter; focus on explaining to
->  reviewers the changes you've made that may not be as visible.
->
-> -You will also need to go and find the Message-ID of your previous cover letter.
-> +You will also need to go and find the Message-ID of your first cover letter.
->  You can either note it when you send the first series, from the output of `git
->  send-email`, or you can look it up on the
->  https://lore.kernel.org/git[mailing list]. Find your cover letter in the
-> @@ -1227,8 +1227,8 @@ Message-ID: <foo.12345.author@example.com>
->
->  Your Message-ID is `<foo.12345.author@example.com>`. This example will be used
->  below as well; make sure to replace it with the correct Message-ID for your
-> -**previous cover letter** - that is, if you're sending v2, use the Message-ID
-> -from v1; if you're sending v3, use the Message-ID from v2.
-> +**first cover letter** - that is, for any subsequent version that you send,
-> +always use the Message-ID from v1.
->
->  While you're looking at the email, you should also note who is CC'd, as it's
->  common practice in the mailing list to keep all CCs on a thread. You can add
->
+
+This looks similar to what I have locally too, happy to see this land.
+
 > --
 > 2.54.0.1136.gdb2ca164c4.dirty
 
-The patch looks good.
-
---000000000000bc8f410653e44383
+--0000000000009f97f40653e45568
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 55ae3385c0abc4a4_0.1
+X-Attachment-Id: c31887fc61fb4224_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vcFJhOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNWVCREFDTlBKVnF4TkM1YlJZdVVCYTJVREJFME5IdwpvZlh6YmR4dlh3
-NmJxOHhtUUxlcXVHZGVOYnl4MTJDa0RRM1JQT21sNnN1SENUWERrcEEyVWkwUGp1TXdOdStuClZZ
-b2l4MHJrUmk3aXVvaHZlMDZxZk10aEVnUENkT0d0N2h1R1FQQTZCUlhXdW1Ga08reStzRm9xU2Vz
-VE94cTIKaHR0dDdPVTZVMEN5T2wrWEdPSXFVLzQyWHhOZU5rT0tEcVl4Q3l1RXlsUXJxaDdZYjl5
-a05XWEFXdi9nc1lxcQpFSlJ5aEozeFYxNVlvaVRIK2VwQzBicGZ3S2dyVlpEMkJOcnhpUHFpcFk2
-Rm8wMWExVEs1SFNvZmhIbmFvMlZSCjREQ3IrdmZEZjNZSHM2SW0zdlZCTzRFUjZaV3E0NG5DVWtx
-RjJYYmxrMFZTYUVZMzdMU0pPcndrMjZSN0dabm4KOHF3OVJwVzFKSHVNL0RrY1A3RjNxQXF0RFJ6
-MUIra0kzejFXL0NrQVA1ZHJVRXRSZE9qdk1wZ3MvTDcyMmJYUQpXdm5XK0FWcTZYTFlkQUJMVW1m
-MS9DQWJYNmtaUkFZSUpPQ01JQXRiN2VHZDQ4MEhRR0V0NUk2RllSVGIzYm5sClV6VGY5WFl4UkNq
-ZEFObCtIYmFIb1V1dlg2dkhhUVF5OEJwdFR5Zz0KPVd6VHIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vcFJ0d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meE9xQy80bURSaUEwRkFwZjViemJxcjZWVEZnQ0JudworaWFkdTRBcjAv
+RGtSVTZtY1l3WEw5QmQ0bFUxUG8rUE4rbEhLQzlQdmd5VjFDUGN3WnB5YWZCanJxOFNtVlFkCnpl
+ZEZTT01rSVJOREtCaEpGdzlSd1BhTEZIVkFzK1ZXeUpvZi8wQ1UzVFc5ZnNZekV4ZWpOUVV5bnJZ
+NmxWOUgKR3dabzI5Q1E0ZmRIbWpFbnpjMHdEeUJaMG9QTkU4NWNuYS9xVi9SenQyYVpKMVhKVTQ1
+TnJIcUJHTDJiNFFJTwp0Z2VweWlyd3Nyc2IyZXN5ajlIZENBTkcyTTNwSzdWcmRaeVIxeVoyWGtI
+dDMzOU9EQytFbXBocG5acURtbzZGCmNoZzRtQVdMTk9jTStDMVJFdTJoVHpRL3dCcWR0VHRpSWNB
+SDZ0NEZZSzVwYXRUZlFGNERzTzlFdnFaQWJ3ZjMKZ2hlMFgrNTNmNmVEVXdaaXJKZEJwRUY1eXh2
+d0Y5ekE0RVR2RjBnMmRySzRTWHBWT2lUSXlxQ3FFemgveXJtWQpqVHlVemxrTUU1Y2JNeE8yNjA4
+TmhKV0NvS2s0bW1NSDVOSk9nandTaWhxUThWRGVqOUdQUGErM1R0OVpQQW5FCmlwVXpzMmpqUGZn
+SDd5VzhqZ1pDSFFTT21TVEJIZE11eWJ4THBuST0KPTFnaTcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000bc8f410653e44383--
+--0000000000009f97f40653e45568--
