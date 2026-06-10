@@ -1,264 +1,232 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880FF4028C5
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 12:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781094343; cv=pass; b=GwliegaZc0fI7d0KdxqAHktie/50ieeGtb0k4AONWqXAeRNoZd1uExpAFqxiYC/RE9fRxz1Tax/KlHIlbwtHtVzMT8mp45i0AEQHT1sccXhYCxSTK8PAFeMrnFKL8DCjJ6Niy34ypE+i2fVNZKxfVIY6wbjrghg3PgWR3aGrVJg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781094343; c=relaxed/simple;
-	bh=5Nc84zxOcxxvNywepzy+dFDtuo94ftEB5UIlLDI57CM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R7d+u9518ViRAb6wiAXlkIy6lvcftx6mmrseLFvGQnJFE76TJyk7/gLhTyMiKErLqxk/teICIXrdmyKY8H0steoaf530U0jCkpTt/zy/GANwVv67laly5eaTazrV0K0Ihs69nEny3nI3O88y67NenrO67tfAOHjjjdrAUPoYy2E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YaP3YIKQ; arc=pass smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073AE406823
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 12:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781094603; cv=none; b=gXjQOEc3aZEmVF078ww/8B8pPdaU1dBajiYrUkXeR65X7uypqbwhh/KZekpa+SxOqShWFVBxrXtftNBPykfrzSi46t4ToUHT71iuB1Y3aET0fZPRqIEQDnuv+8iCEI4dqlDcOIsW6oZmM5RT+o6Nqw7Qt/503q2zfjBpbgU0WaE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781094603; c=relaxed/simple;
+	bh=L9Hij3xY8lbJFOZ/NqRlap6wCVTZKtXGulmSAPbtooc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=lUvDranlmp/xG4Yq+ddg/fIQSts9MDGX6PEUc+cbOCv6kc5ukqakYI39YSgl7Ta2Pe55XaNlGFoMXj5PlSmzKjcxoYqpPtOb/l8WrxZAIu0mKLO228sMa9qAPobTCE4OLGupJAqZaPSlIN4ujYX/OJtUjmHwvT5IfdqT7F4fc9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qB8Y814+; arc=none smtp.client-ip=74.125.82.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YaP3YIKQ"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3965eab14cfso50731161fa.0
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 05:25:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781094340; cv=none;
-        d=google.com; s=arc-20240605;
-        b=l3ml2H6V/b2uTGUTSS+cw68p4ukt43Ea9f2iZ5kxnHs/hEqAc/WMiYDMAHaT/LUb6+
-         GWzOr13kjZPZqzODO1/GAxj/W2ZUHQiicgWzrRqeyKnmMFmQlJMEkxfOIcNKJo4y7atX
-         DnLLGIEF/X9nNdn065HgONVSW9DNFXWVetvIa4zZAGvykwawyRGZkZdD/9FIRAp6LPED
-         axEuNd+XMRj2d6zcfIMZNdrSAMEKcy1Jiy546QnUt8d7k+A83/0D5zLD3exCEN8+TWPR
-         rv6kHJpz7CFVu79sGkNteLw3E2Iaxx+0yGyxnSHglmAEG6EDQ/rzpgbnGhIT5uMc0jHx
-         srtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZRmXdZS6VyK3ko4Dc51gwSqQNStBtZ23B7OK5Rt1CQ8=;
-        fh=GLdoyvgAouSz9QyuektsHb08Fmuu37yo1mkYZWDqesI=;
-        b=XjWXfldNFidr2WMl/S9T8Wl/EynvNkAPkSbQFnLM2et3nbkBNbrirxa7ov4MlJQFDL
-         lyE0gmc6WD6JASe7RDJTEZBw06Ro9Pb4IUI+NTwGR0pSkVV8fuIXJgRxkX1vfy8SfCv6
-         suPLgvOxHcFy16WnJvxhkhbXvl/r7xSWP89rCfJoxwTq1SZIyQ5J2+BJMGsI97eafY/3
-         wkb9/ioEERh4QSvLyhd/TOSxaW7RsU1UCRnvJK+W+XEoJpcIGeV7l43mruM0Ap7jvwWq
-         CDuVaLMOtjsDCv493hNNO1U63gLdc+KeohqQ7Ug1TIc6K+KwIGFnbldIDa9qlQzczEve
-         VwgQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qB8Y814+"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-1370417c01cso8762714c88.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 05:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781094340; x=1781699140; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZRmXdZS6VyK3ko4Dc51gwSqQNStBtZ23B7OK5Rt1CQ8=;
-        b=YaP3YIKQNvaIWYKNA6CGcQoAy1Pixw2CiOBG4/3vo/3119w9fpG278k6y+w6qrw51s
-         vXu1A1Lc0GhVI+hAqKzvz1K4tR6dVJ9c6ZWnmNiubipvFU/Y1dyRReG/pTGmOgfiLxpj
-         8a7b0D+0w8NBx9yhTYaYfIICYjCUuKKbyfRB4+P477zAbINQ7Q/6pHfYn+HLzr++3MUl
-         iDZywls76/4GGlP4HlYaDP+lJ1LCMxxUOdM5+slA9iqAuHOJpzifWEC0VSri9w69W5ZL
-         vziv5/D6FZPabqTSHnwKU+5go/CSNJrp21TxSaAD/bF0ulx83b5jSNYXRLxCCoL4vv5D
-         dhMw==
+        d=gmail.com; s=20251104; t=1781094601; x=1781699401; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4f/bngPTNIeps+1TjQvGBJc3xKhAUD5/7A7R+8HLlss=;
+        b=qB8Y814+NPuAQzMmJTPOfPOneNrzf2TGkLqn9ASQ3bchXVMVGG8yduGWVeV5bTYipG
+         a31dLyYbN03H1k7bWI04QGzAfxAT4zF21XKdnFV5zz9BFkja34Csd5nBLvwdG/qi0fq/
+         TMkkH421nE98q3jm1+hWD1Wd0NRe8XOQZvtCforycWsZP3fGfEuW7HZ3rjJ4FQj0Lp3g
+         FFdYFISdWrRyxeWGRsTYNEwnu05T7BHzZrpZgiPIriMRg0nNx5dKjQa7IPEEumgsg2Ib
+         ABHpUe/M4auxVdMXCfoqDrGGLa4ClDaMYOtINq+DYiBl6get9lC3Jgo8I8HlwWKeYqbw
+         DpjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781094340; x=1781699140;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZRmXdZS6VyK3ko4Dc51gwSqQNStBtZ23B7OK5Rt1CQ8=;
-        b=kSX7wt4ZetsSGuAXF/Jma/oZZeJ1kV+j8ZAM8us/udL1Sd52l2acNQs9teCZz4A6qa
-         7SjaheRj0H/kK5I1U6USxae9ZJVw7qhEP0PskIDmvduHepXF9zYm69K0F/Iy/hnoJnz6
-         pfhP6sftURCbMl5bs5LhJ9ALViSc/DEf1cXOleTYS+G/9IYub8kKvzCBQ8hS6VmB0+6x
-         RZZsfE1ZfxtkACjhb2AKp06n7kkPxByc4JqK1pPDOpeFToM1XNBj1kRJy0DfSzLl9VcN
-         UhkhqttWIrngPAnCmpO7jzRoOf4DX6FzGVWGHHjimGUVGyQs1NJIr+tqvRhtOL9JgU+J
-         9RDg==
-X-Gm-Message-State: AOJu0YxAsVPd6Ebw7M2Ydmmi0ewyW4TTA/TgpGAY+9RyNDatoW8bOFeC
-	UQ76ZFTLm/mAUt0HD0r7j7HADVgR0xay6iqrO3MXAns2UgPE0gPcO+hLmAcDf37eEhKp34ZJeN4
-	o6YBMviiRZLDQAUv5pGoyVY7OIG+04iQ=
-X-Gm-Gg: Acq92OHYVZvNSONNeIg5/t3lQ4451VS3EUkuLIGxY+PV0eyEk53mUlmcSHU2lxcOV9w
-	Cavq5OB7Ku6wSNc07pDTZV/+fVQKUaGNbqis1ysXw1g1QRj5uoDEYd5ssOv7u7Qb345dNrCUoeV
-	VR1XDrUVJCbYiy6TvNhTdT0ExsDbtXz0MDqa/iwkXcFK1mY0wb7C551iNtxm3pQnH+pw/ER6Av6
-	aeZ+l6yBEvJkVb2vK2av5AOc8un6rgdigQQqu+ZrRnuQJknW8gVH6lWeCi2jgaQVt7JHa+n0oAw
-	fiRAu2pLEuuXM05hUzQ6cGGWLtRLtpwIHSYhZWDpHYb7npK/Qb1RPZ63ZpHfDDrw8buSGwjLEqG
-	FpuWPWpvQVBYs69WLOyV1naeqggo=
-X-Received: by 2002:a05:651c:2119:b0:396:73ed:695d with SMTP id
- 38308e7fff4ca-397f76fc642mr19230961fa.11.1781094339532; Wed, 10 Jun 2026
- 05:25:39 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781094601; x=1781699401;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4f/bngPTNIeps+1TjQvGBJc3xKhAUD5/7A7R+8HLlss=;
+        b=kZXgoPBAD3cHBFqyqv9W9U3ZQmsphKqAQHZ3PSJLMSBT55vsPl96wcC/uOlPRZWVWH
+         G/24ZKElHHNG3yxA6A4j8Xh95RHqUgieKoF5Vhaln4y8t/b0sbCdB8i9OK1zbHKo0TOx
+         hnhVcxuL3n4hwEn3gZ2Ih3mXCzEOqYSiXpMW+Pi5DIusmZsLkJjsuczFnSYeotoEh3ao
+         ZFDpdO9HTOCSeHcgUm/v1eQwQY9J1TL6zmH48HU+yD6y/7zvv3Oz/pS8SidemTGXHUW4
+         R/uI+8RDZhaYknxorDPgfmhjmHMKYMJOjXvGE6WmpTFR+Wd/RNXq4QPG756L5M+lIgRD
+         i3MQ==
+X-Gm-Message-State: AOJu0Yz2z050FBitUwLHfqnZKoy2oiCgLjL0Yuy0wuozJREeMVkc8l4I
+	AV/k5nx7Vyv9xZLQSA7Iwuj+NIL5mURROtkcqLy8gSVPLm7ljDUfXvgYiiqeuGaf
+X-Gm-Gg: Acq92OE1URrQp5r3729CApV8GPLIiL56NFlcB+5Zs3XJMhb2iJGIDP+HHGONP0HvE0p
+	qJikFr6Sv7mMn9PpRvOh7CJMvGBlYWUDQi0eN/wwWboWQh4SElddDTkUde8U+ZMVupV4BESxqVp
+	Mi4RMOlONG/8NqXrNfve7FsOkggPaib1a3VtJdjP5D/W8Dldazjw+q7Z2BK3w70q8GbAwGBWggQ
+	uqk2g66V/Oiv8sgQr9YjEQuhcOmIdHyL3YHc6P0v5n/LRv8UqIGzyNECxMqTvj3eFAf43lKewpc
+	duAiOkrSfUU8LUnq8inVF1fIQyj9wIT1GW0q0kj6cpsZGMn7e4X+ApwPFstBEiMuQTTvEiApzMm
+	6huCykt3LQrB4PxqgUcxdERXrKF0fyvxwPujGWiMYoEzUG/KMVPXKaMXTSdwF6ciO6MnM17I82g
+	3NgsDCtTe4k+FrMM5XRyMUXRiJgaaIGQkwa8t/Ir/e8U44YffhsEg9GTm7EFw6I0iFcGOKQSk19
+	fSl9KFVijHG4wl0vEJXe/mS6BxEb9cxmasKEaG6vYRxo0IboTrs+PPyIf3oZKNFt68zF1WuCxuK
+	vmemeAw6oYKQrRE=
+X-Received: by 2002:a05:701b:270e:b0:138:6ef:45c6 with SMTP id a92af1059eb24-13806ef469amr9828576c88.11.1781094600884;
+        Wed, 10 Jun 2026 05:30:00 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([12.6.219.21])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-137f5550bcdsm18972422c88.14.2026.06.10.05.29.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2026 05:30:00 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Wed, 10 Jun 2026 05:29:49 -0700
+Subject: [PATCH v3] ref-filter: restore prefix-scoped iteration
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com> <CAOLa=ZRHKNNymXGk31YgECjUmF9nZ8GsPUdQb7aKBH5DKMz7=w@mail.gmail.com>
-In-Reply-To: <CAOLa=ZRHKNNymXGk31YgECjUmF9nZ8GsPUdQb7aKBH5DKMz7=w@mail.gmail.com>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 10 Jun 2026 05:25:03 -0700
-X-Gm-Features: AVVi8Ce3U3I-RNwYq4uA95uDNQjhd98gDgEW2WwMvFEhvlaE1Hp190TtD2Xiu1A
-Message-ID: <CAJ-ks9n=27u+Ujz0CBWRS+9ePNpqiiP+jkDfUrk4viMPR8qDww@mail.gmail.com>
-Subject: Re: [PATCH v2] ref-filter: restore prefix-scoped iteration
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
-	Victoria Dye <vdye@github.com>, ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42Nyw6CMBBFf4V0bc10eEhd+R/GRYEpjFEwLRIN4
+ d9tccPKuDzJuefOwpNj8uKYzMLRxJ6HPkC6S0Tdmb4lyU1ggYAFFJBLyy/Z8igrZ/q6k45aRz6
+ upKYM08KqErQSYf9wFOS1fb582T+rK9VjDEajYz8O7r2eTyp6//xMSioJaDMwTQYa9am9G77t6
+ +Eu4s+E21L5q4ShZJsS4ZCbMkfYlpZl+QCdOHP/HgEAAA==
+X-Change-ID: 20260605-fix-git-branch-regression-9e4236f18091
+In-Reply-To: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com>
+References: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+ Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
+ ZheNing Hu <adlternative@gmail.com>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1781094599; l=4832;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=L9Hij3xY8lbJFOZ/NqRlap6wCVTZKtXGulmSAPbtooc=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QGB8MHIDOlANfgtpIFR03n3KAVz+xhl0ScKkNsYLx8Wf0XvfEoirMmqDjMXZOAshIcin5HRXn5Z
+ L20vGivyLMAY=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-On Wed, Jun 10, 2026 at 3:50=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Tamir Duberstein <tamird@gmail.com> writes:
->
-> > Commit dabecb9db2 (for-each-ref: introduce a '--start-after' option,
-> > 2025-07-15) changed single-kind branch, remote-tracking branch, and tag
-> > enumeration in do_filter_refs() from constructing an iterator with the
-> > namespace prefix to constructing an unscoped iterator and applying the
-> > prefix with ref_iterator_seek().
-> >
-> > Before that change, refs_for_each_fullref_in() passed the namespace
-> > prefix during iterator construction. That helper has since been
-> > replaced by refs_for_each_ref_ext().
-> >
-> > The files backend primes its loose-ref cache for the construction
-> > prefix before it opens packed refs. An empty construction prefix
-> > therefore reads every loose ref, and a later seek cannot undo that I/O.
-> > Consequently, git branch, git branch --remotes, and git tag scale with
-> > unrelated loose refs.
-> >
->
-> And this is the crux of the issue. Currently we do
->
-> - refs_ref_iterator_begin()
->   - ref_iterator_seek()
->
-> And between the two `cache_ref_iterator_set_prefix()` is already called
-> which caches all the loose refs. This is the IO intensive operation this
-> patch tries to avoid.
->
-> I think it would be worthwhile to add this information in the commit
-> message.
+dabecb9db2 (for-each-ref: introduce a '--start-after' option,
+2025-07-15) changed branch, remote-tracking branch, and tag enumeration
+from constructing an iterator with the namespace prefix to constructing
+an unscoped iterator and seeking to the prefix.
 
-Agreed. I will explain that `cache_ref_iterator_set_prefix()` primes
-the loose-ref cache during iterator construction, before the later
-seek can narrow it.
+The files backend constructs its loose-ref iterator with cache priming
+enabled. cache_ref_iterator_begin() immediately applies the construction
+prefix through cache_ref_iterator_set_prefix(), reading loose refs
+beneath it before packed refs are opened. An empty prefix therefore
+reads every loose ref, and a later seek cannot undo that I/O.
 
->
-> >
-> > Patrick Steinhardt observed during review that iterator construction
-> > and seeking accepted similar strings but assigned them different state
-> > semantics. Junio C Hamano then pointed out that no current command can
-> > combine start_after with this single-kind path, but future branch or
-> > tag support would need to keep the namespace while moving the cursor.
-> >
-> > Keep the existing start_after path unchanged. The iterator API cannot
-> > currently seek to one string while retaining another as its prefix:
-> > an unflagged seek clears the prefix, while REF_ITERATOR_SEEK_SET_PREFIX
-> > replaces it with the seek string.
-> >
-> > For the commands affected by this regression, which do not set
-> > start_after, pass the namespace prefix during iterator construction so
-> > that loose refs are scoped before the packed-refs snapshot is opened.
-> > This fixes the current regression without deleting the ref-filter state
-> > discussed during review or changing its dormant behavior.
-> >
-> > Add REFFILES-gated performance cases with one branch, one
-> > remote-tracking branch, one tag, and 10,000 unrelated loose refs. The
-> > benchmarks were run with:
-> >
-> >     GIT_PERF_REPEAT_COUNT=3D5 GIT_PERF_MAKE_OPTS=3D-j8 \
-> >         t/perf/run a89346e34a . -- p6300-for-each-ref.sh
-> >
-> > The following are the best of five runs, with each run invoking the
-> > command ten times. Times are elapsed seconds with user and system CPU
-> > seconds in parentheses:
-> >
-> >                                   a89346e34a       this commit
-> >   branch                       2.74(0.13+2.56)   0.11(0.04+0.04)
-> >   branch --remotes             2.81(0.13+2.62)   0.12(0.04+0.04)
-> >   tag                          3.01(0.14+2.82)   0.11(0.04+0.04)
-> >
-> > Both revisions used the default -O2 build flags and a config.mak
-> > containing only "NO_REGEX =3D NeedsStartEnd". They were built with Appl=
-e
-> > clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro (Mac16,6)
-> > with a 16-core Apple M4 Max (12 performance and four efficiency cores)
-> > and 128 GB RAM.
-> >
-> > Link: https://lore.kernel.org/git/aGZidwwlToWThkn8@pks.im/
-> > Link: https://lore.kernel.org/git/xmqqikjq7s16.fsf@gitster.g/
-> > Fixes: dabecb9db2b2 ("for-each-ref: introduce a '--start-after' option"=
-)
-> > Assisted-by: Codex gpt-5.5
-> > Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-> > ---
-> > The series is based on a89346e34a (maint) because the regression has
-> > been present in released versions since Git 2.51.0.
-> > ---
-> > Changes in v2:
-> > - Extract local variable `store`.
-> > - Link to v1: https://patch.msgid.link/20260605-fix-git-branch-regressi=
-on-v1-1-02f40ad40929@gmail.com
-> > ---
-> >  ref-filter.c                 | 28 +++++++++++++++++++---------
-> >  t/perf/p6300-for-each-ref.sh | 39 ++++++++++++++++++++++++++++++++++++=
-++-
-> >  2 files changed, 57 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/ref-filter.c b/ref-filter.c
-> > index 1da4c0e60d..5cbc007d64 100644
-> > --- a/ref-filter.c
-> > +++ b/ref-filter.c
-> > @@ -3315,19 +3315,29 @@ static int do_filter_refs(struct ref_filter *fi=
-lter, unsigned int type, refs_for
-> >               prefix =3D "refs/tags/";
-> >
-> >       if (prefix) {
-> > -             struct ref_iterator *iter;
-> > +             struct ref_store *store =3D get_main_ref_store(the_reposi=
-tory);
-> >
-> > -             iter =3D refs_ref_iterator_begin(get_main_ref_store(the_r=
-epository),
-> > -                                            "", NULL, 0, 0);
-> > +             if (filter->start_after) {
-> > +                     struct ref_iterator *iter;
-> > +
-> > +                     iter =3D refs_ref_iterator_begin(store, "", NULL,=
- 0, 0);
-> >
-> > -             if (filter->start_after)
-> >                       ret =3D start_ref_iterator_after(iter, filter->st=
-art_after);
-> > -             else
-> > -                     ret =3D ref_iterator_seek(iter, prefix,
-> > -                                             REF_ITERATOR_SEEK_SET_PRE=
-FIX);
-> > +                     if (!ret)
-> > +                             ret =3D do_for_each_ref_iterator(iter, fn=
-,
-> > +                                                            cb_data);
-> > +             } else {
-> > +                     /*
-> > +                      * Pass the prefix during construction because th=
-e files
-> > +                      * backend primes loose refs before a later seek =
-can
-> > +                      * narrow the iterator.
-> > +                      */
-> > +                     struct refs_for_each_ref_options opts =3D {
-> > +                             .prefix =3D prefix,
-> > +                     };
-> >
-> > -             if (!ret)
-> > -                     ret =3D do_for_each_ref_iterator(iter, fn, cb_dat=
-a);
-> > +                     ret =3D refs_for_each_ref_ext(store, fn, cb_data,=
- &opts);
-> > +             }
->
-> This would work, as now we separate out the regular path to use
-> `do_for_each_ref_iterator()` instead.
->
-> But this causes a bit of confusion, why do we need to use
-> `do_for_each_ref_iterator()` and why not simply provide the prefix to
-> `refs_ref_iterator_begin()`, like before?
+For these single-kind filters, construct the iterator with the namespace
+prefix when start_after is not set. Keep the existing unscoped
+construction for start_after, whose seek position may differ from the
+namespace prefix.
 
-We do not. Your version is simpler and preserves the existing iterator
-flow. I have adopted it for v3. Thanks!
+With 10,000 unrelated loose refs, the p6300 tests improve as follows:
 
-> [...]
->
-> Thanks for the patch, this is indeed a regression we must fix and the
-> benchmarks are a clear indication of it.
+                         before   after
+  branch                  2.74 s   0.11 s
+  branch --remotes        2.81 s   0.12 s
+  tag                     3.01 s   0.11 s
 
-Thank you! I'll try not to break threading on the next roll.
+Link: https://lore.kernel.org/git/aGZidwwlToWThkn8@pks.im/
+Link: https://lore.kernel.org/git/xmqqikjq7s16.fsf@gitster.g/
+Link: https://lore.kernel.org/r/CAOLa=ZRHKNNymXGk31YgECjUmF9nZ8GsPUdQb7aKBH5DKMz7=w@mail.gmail.com
+Fixes: dabecb9db2b2 ("for-each-ref: introduce a '--start-after' option")
+Suggested-by: Karthik Nayak <karthik.188@gmail.com>
+Assisted-by: Codex gpt-5.5
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+The series is based on a89346e34a (maint) because the regression has
+been present in released versions since Git 2.51.0.
+---
+Changes in v3:
+- Construct the iterator directly with the namespace prefix.
+- Explain when the files backend primes its loose-ref cache.
+- Condense the commit message and performance results.
+- Link to v2: https://patch.msgid.link/20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com
+
+Changes in v2:
+- Extract local variable `store`.
+- Link to v1: https://patch.msgid.link/20260605-fix-git-branch-regression-v1-1-02f40ad40929@gmail.com
+---
+ ref-filter.c                 | 13 ++++++-------
+ t/perf/p6300-for-each-ref.sh | 39 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 44 insertions(+), 8 deletions(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 1da4c0e60d..9b04e3af85 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -3316,15 +3316,14 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, refs_for
+ 
+ 	if (prefix) {
+ 		struct ref_iterator *iter;
++		struct ref_store *store = get_main_ref_store(the_repository);
+ 
+-		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+-					       "", NULL, 0, 0);
+-
+-		if (filter->start_after)
++		if (filter->start_after) {
++			iter = refs_ref_iterator_begin(store, "", NULL, 0, 0);
+ 			ret = start_ref_iterator_after(iter, filter->start_after);
+-		else
+-			ret = ref_iterator_seek(iter, prefix,
+-						REF_ITERATOR_SEEK_SET_PREFIX);
++		} else {
++			iter = refs_ref_iterator_begin(store, prefix, NULL, 0, 0);
++		}
+ 
+ 		if (!ret)
+ 			ret = do_for_each_ref_iterator(iter, fn, cb_data);
+diff --git a/t/perf/p6300-for-each-ref.sh b/t/perf/p6300-for-each-ref.sh
+index fa7289c752..ed9c1c6a19 100755
+--- a/t/perf/p6300-for-each-ref.sh
++++ b/t/perf/p6300-for-each-ref.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='performance of for-each-ref'
++test_description='performance of ref-filter users'
+ . ./perf-lib.sh
+ 
+ test_perf_fresh_repo
+@@ -84,4 +84,41 @@ test_expect_success 'pack refs' '
+ '
+ run_tests "packed"
+ 
++test_expect_success REFFILES 'setup many unrelated loose refs' '
++	git init scoped &&
++	test_commit -C scoped --no-tag base &&
++	test_seq $ref_count_per_type |
++		sed "s,.*,update refs/custom/unrelated_& HEAD," |
++		git -C scoped update-ref --stdin &&
++	git -C scoped update-ref refs/remotes/origin/main HEAD &&
++	git -C scoped update-ref refs/tags/only HEAD
++'
++
++test_perf "branch (many unrelated loose refs)" --prereq REFFILES "
++	(
++		cd scoped &&
++		for i in \$(test_seq $test_iteration_count); do
++			git branch --format='%(refname)' >/dev/null
++		done
++	)
++"
++
++test_perf "branch --remotes (many unrelated loose refs)" --prereq REFFILES "
++	(
++		cd scoped &&
++		for i in \$(test_seq $test_iteration_count); do
++			git branch --remotes --format='%(refname)' >/dev/null
++		done
++	)
++"
++
++test_perf "tag (many unrelated loose refs)" --prereq REFFILES "
++	(
++		cd scoped &&
++		for i in \$(test_seq $test_iteration_count); do
++			git tag --format='%(refname)' >/dev/null
++		done
++	)
++"
++
+ test_done
+
+---
+base-commit: a89346e34a937f001e5d397ee62224e3e9852040
+change-id: 20260605-fix-git-branch-regression-9e4236f18091
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
+
