@@ -1,173 +1,103 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA562D7DC6
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 18:50:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF68C34BA24
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 18:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781117409; cv=none; b=EMiF11LX9kvdnA67IkGKEdXvAFiGxFL6IRRm73Pd1eYNS9Uv5GCwTt+k1pDMkksitAp7mPAbcKqaHJrJngelzpUlFbyvnFZqBMkqPyofkOU1z8yx/UkdRyKVLZzTu0htOthc8d81I1hj8qNhlFY8I+XGxuWG+KXXhu02KABepM8=
+	t=1781117533; cv=none; b=GXq34lMpuxgb1uEXluMirmrRbaEBUkifEx/xGc2ooxhhuYqH58uI1gDXvr270jv8DLoD1wlYHYW1CVRUULXKYYrPC339eNkQRMBOyh5PMCwRypPgivtF4DQavTjDJoth3f4lzcwKInPbCLLXC19ru4JLx/iE75q59PWf2GMc6Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781117409; c=relaxed/simple;
-	bh=Un2XdVG3XK/eU2hQm+EZcIkKBiLaI3yBCHM46QqOjDU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=A1C2VQEnhcmW5ypoi7LBQokuLo5P44de0MpkQvh9S+kIsnvLm6fVgrPEzRY4jHDbr0hZr2DAibFhaa2Oi8J+fo9q7ZKoD4DKiLd9cUkjaVV3H5HhD7tfz6AmvRKqqbbw0AH4s5dPYNpNlTJmhnMMSDhx+4WILX4EBS/WSRrFdM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+NrgIvk; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781117533; c=relaxed/simple;
+	bh=ufKoTgS+TTLELRPoBAQh0QBdA1++FZbMEOB+tgD7lZk=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Sr8bM8e8mt0efVPMtZ6RezIlq830CPz5/pgJhLnqxR2dDmCWMMnv6OIHxXzfX0GQp5/bK1jglF4tSnNyhza3eNHY0QbRwYfuPyn4TAQO0FGoaD4nQzUvC+rQEssPxfLbhiRKVLnoLjW635H/icfMrWOEAmCVkqCZsklYozYDEos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=MuCuyKQ9; arc=none smtp.client-ip=130.232.247.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+NrgIvk"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8cceb2ecc03so59949296d6.3
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:50:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781117407; x=1781722207; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I7b2wxjG4mebC/iUNMJvohIHuacsDgIDp1ztvd6NU2g=;
-        b=k+NrgIvk0LzUNKfkEsaJRYiBcIKC86szKfbmvNFaYS5YM4Np8GcmohElO8+Oe5y+/1
-         Uo7boKQnjYGE4swdbd7HwO48cETCLIyOkW/08rXEeY8c7PjM9OII1BrZbfNHhHjNUL+Q
-         weuCpddn6ew4qhM1fzR/WlR89GA4RRd40/pzM7uIL2j7fAUUeKEeRE1enE2Ad6Dg+Umx
-         gtwiXY/WXlCsGMeQzQ4W0ElrdPqXX5pg1wbiGh2hwYi5z2KdbixniLu70sq6K37+vfUB
-         EFqntX4fx0u0BUF7Dl4ggQGL7QAAVoJYNmEfqcu6LjKmaumfrM4QIMKBeGl1SRhac9QA
-         YUNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781117407; x=1781722207;
-        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=I7b2wxjG4mebC/iUNMJvohIHuacsDgIDp1ztvd6NU2g=;
-        b=s1S5Ne5IFvXsTBWKxd/94UACUIic2qByDfXt855x9f6XwIv3EDwW7Mhdnm7D/sq6XJ
-         JTd+VlzGSgrm6pPgMX94hTYNdSrBUBXf29x8UjSGT+X6joNjS3HMKj6Ro234pgvHtb4H
-         0qJvQEfiDrXWxbRryupF/bWUHg5kbJt3etZCdjlCYd8ZUsCQfqFcl4vqqYLIz9FnaHmE
-         42vfDsTluc6IS+gjTI9fjh0AhxNVGazjHbOT7wlhrV6C+zomw7orC2etER6z1BctXgQc
-         9RXPO0fi8zaj1xXr7tLSCQWSnyPZBvvpidaf9zWKx1iT17ve7d7W3WSM1r2Sqim4WPSm
-         uiag==
-X-Gm-Message-State: AOJu0YyYBXHhaY874pdmnRbNxWhUruW5tQpDMFJGF8m1GK7ZcuydGE6A
-	mdpLOCfBO3C521s1Tt9sJbQjv/USh/oCyJwV3VtvOs/1M/yFIh1fOTqNhze71tTT
-X-Gm-Gg: Acq92OGWe0MO76nUZbeUmaHESWcvyMW/lPB5Dza7/aEzyqxsbhxgLUJz+LNtuvdcfMu
-	Eu8PptW/X9JtUzUVanwmkbyFYXPP9kmwea2XHQ0wftlcvq9xez9AJZvZSeG2mA4JdcEgBDJuG4z
-	UeRNlkFDZePSGvyoGGmlWFXVvBXt2U3rFLewqdpnNON2SKbUsP3TG1DdRvGuP+2bRXz2o+hQNUM
-	GuvpgFXy4GmQLmO5C4BNteWtEuuJtO+vnwSZql87g+C2VkoI54Moft78u2BXRL3cNG1iMs37Kpw
-	WOFJzRNMpb4Tf2vn8AulkQqNMSFmZRwtb9wW4ToaO18EIDhr4giBrYjLmXl0tFzWZyOxM7yiv0i
-	F3kf4QPJafWjPLaLukpDjr3avDOcMsS9YB+kUaO5/ETLNXLSdWJeWXiyrk5ju5kW1T+8EBypuQh
-	NNSLx8kaGPjSE6NXBq6jTGPdXmnI6xcMPWv2VvRZUwMP4DNUgTQY7A8CDzP/717EljIDTwISeKa
-	KLudO0bkMiaDDPpv+whZJLn7ZxSQrkaYWvPw2xdHTfJ0bdYWCeyDVaJ7sZuGEQVQ4/0CU0AHDYi
-	+4QUj+VIqFoCetSUQpzltgRZE1BhpoPrmUjeulbsWL4Kb31olhpzj+RyERyQi4jouA==
-X-Received: by 2002:a05:6214:5f10:b0:8ce:e651:5d63 with SMTP id 6a1803df08f44-8cee6515fbcmr468943236d6.31.1781117406193;
-        Wed, 10 Jun 2026 11:50:06 -0700 (PDT)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([209.249.37.133])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cecc8222bcsm245972286d6.0.2026.06.10.11.50.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 11:50:05 -0700 (PDT)
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Wed, 10 Jun 2026 11:50:01 -0700
-Subject: [PATCH v3] describe: limit default ref iteration to tags
+	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="MuCuyKQ9"
+Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
+	by fortymile.utu.fi  with ESMTPS id 65AIq2H0012525-65AIq2H2012525
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 21:52:02 +0300
+Received: from ex19-06.utu.fi ([130.232.247.46])
+	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <taahol@utu.fi>)
+	id 1wXO1y-00EeLg-7Z
+	for git@vger.kernel.org;
+	Wed, 10 Jun 2026 21:52:02 +0300
+Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 10 Jun
+ 2026 21:52:01 +0300
+Received: from localhost (localhost [local])
+	by localhost (OpenSMTPD) with ESMTPA id 60d1f681;
+	Wed, 10 Jun 2026 18:52:01 +0000 (UTC)
+From: Tuomas Ahola <taahol@utu.fi>
+To: <git@vger.kernel.org>
+CC: Tuomas Ahola <taahol@utu.fi>
+Subject: [PATCH 3/3] doc: git-config: escape erroneous adoc markup
+Date: Wed, 10 Jun 2026 21:51:48 +0300
+Message-ID: <20260610185148.23920-4-taahol@utu.fi>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260610185148.23920-1-taahol@utu.fi>
+References: <20260610185148.23920-1-taahol@utu.fi>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-describe-tag-ref-scope-v3-1-5aa63ab279f7@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNyw6CMBBFf4V0bU0fthBX/odx0ccANUJJi42G8
- O+2uGFjXJ7MnXMWFCE4iOhcLShActH5MQM/VMj0auwAO5sZMcIkkaTGFqIJTgOeVYcDtDgaPwG
- uLSEK6Iko0aD8POWTe23i6+3L8anvYOZiK4vexdmH91ZOtOz+RhLFFEvBLeNMN1KLSzco9zgaP
- 6ASSWyvaX5qWNYwIVvLpTWKs71mXdcP51laABUBAAA=
-X-Change-ID: 20260607-describe-tag-ref-scope-7d00ae140a58
-In-Reply-To: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
-References: <20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Patrick Steinhardt <ps@pks.im>, Tamir Duberstein <tamird@gmail.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1781117404; l=2707;
- i=tamird@gmail.com; h=from:subject:message-id;
- bh=Un2XdVG3XK/eU2hQm+EZcIkKBiLaI3yBCHM46QqOjDU=;
- b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
- MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QKS9hpQ1uWeaCKjhlQyoFWHjFeficMtoTs/vNvciCM+rSI93B8N1sT1NAWXCt/aaIRLq4Vl8VR2
- ihYok5xXMMA8=
-X-Developer-Key: i=tamird@gmail.com; a=openssh;
- fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ex19-08.utu.fi (130.232.247.48) To ex19-06.utu.fi
+ (130.232.247.46)
+X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
+ BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
+X-FEAS-Client-IP: 130.232.207.47
+X-FE-Last-Public-Client-IP: 130.232.207.47
+X-FE-Policy-ID: 3:5:2:SYSTEM
+X-FE-Hostname: fortymile.utu.fi
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
+ h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
+ bh=fSAb3Rlp/rwFYblOCxYcLIyVPIplVmUP2qCwSxRWvcU=;
+ b=MuCuyKQ9f4gilSRAvG5TzoTyzUf3MW4nMkjDi66YqikTHld2ZDG083UeTvznO32d/I8JkNvcVlob
+	pmGQ2HLqf/vhEtSgZFdnGVYl6agcsf5LcPljwNX1vA99raMCwVWiCnFr/0gOUaVezolOTgoRz2xJ
+	NkoKtL3A+IvrQAFcQFBIGmyF26finG6S+t55pfB7iATcKaFUxM/GBKTx7oAfJ0+6hWDNKhr5Vgjj
+	mr4WX9GgSiGRH6b/TE0NXi18F4ZZlXT3ERnzx2sxnHn27CmDnsgoOZjM0iX/qvhlqbXg8Fo7Y89q
+	2HEQcChQJour7unnhI8V7lLxPXRX1AD69GG4Pg==
 
-Without --all, git describe ignores refs outside refs/tags/. Commit
-8a5a1884e9 (Avoid accessing non-tag refs in git-describe unless --all is
-requested, 2008-02-24) moved this check ahead of object lookup. That
-avoided loading objects for irrelevant refs, but the backend still has
-to yield every ref before get_name() can reject it.
+Paired octothorpes are used in AsciiDoc to mark highlighted text,
+<mark> being the equivalent HTML tag.  To use the symbol as a literal
+character, it can be escaped with a backslash.
 
-Pass refs/tags/ to the iterator so the backend can avoid visiting those
-refs in the first place.
+Do so in git-config.adoc.
 
-The new perf test creates 10,000 unrelated packed refs. It measures:
+While at it, tweak the text slightly to make it scan better.
 
-    git describe --exact-match HEAD
-
-The runtime drops from 0.03(0.01+0.01) to 0.02(0.00+0.00). In a
-repository with 120,532 refs but only 330 tags, the same command went
-from 171.7 ms to 9.9 ms.
-
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+Signed-off-by: Tuomas Ahola <taahol@utu.fi>
 ---
-Changes in v3:
-- Pack the synthetic refs to better match repositories with many refs.
-- Generate update-ref input with test_seq -f.
-- Shorten the commit message and report the p6100.6 result.
-- Link to v2: https://patch.msgid.link/20260608-describe-tag-ref-scope-v2-1-256fd36dca32@gmail.com
+ Documentation/git-config.adoc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Changes in v2:
-- Exercise the performance test with both ref backends.
-- Keep the ref count local to its setup test.
-- Report native hyperfine output for an exact-tag lookup.
-- Link to v1: https://patch.msgid.link/20260607-describe-tag-ref-scope-v1-1-653d232b86b5@gmail.com
----
- builtin/describe.c       |  3 +++
- t/perf/p6100-describe.sh | 12 ++++++++++++
- 2 files changed, 15 insertions(+)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 1c47d7c0b7..3532c8ff22 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -740,6 +740,9 @@ int cmd_describe(int argc,
- 		return ret;
- 	}
- 
-+	if (!all)
-+		for_each_ref_opts.prefix = "refs/tags/";
-+
- 	hashmap_init(&names, commit_name_neq, NULL, 0);
- 	refs_for_each_ref_ext(get_main_ref_store(the_repository),
- 			      get_name, NULL, &for_each_ref_opts);
-diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
-index 069f91ce49..b1c61529bb 100755
---- a/t/perf/p6100-describe.sh
-+++ b/t/perf/p6100-describe.sh
-@@ -27,4 +27,16 @@ test_perf 'describe HEAD with one tag' '
- 	git describe --match=new HEAD
- '
- 
-+test_expect_success 'set up many unrelated refs' '
-+	ref_count=10000 &&
-+	git tag -m tip tip HEAD &&
-+	test_seq -f "create refs/heads/describe-perf/%05d HEAD" $ref_count |
-+	git update-ref --stdin &&
-+	git pack-refs --all
-+'
-+
-+test_perf 'describe exact tag with many unrelated refs' '
-+	git describe --exact-match HEAD
-+'
-+
- test_done
-
----
-base-commit: 9ac3f193c05c2237e2b14ebaa1149e9fc8a1abe0
-change-id: 20260607-describe-tag-ref-scope-7d00ae140a58
-
-Best regards,
---  
-Tamir Duberstein <tamird@gmail.com>
+diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
+index 8439ce97df..708e88cdeb 100644
+--- a/Documentation/git-config.adoc
++++ b/Documentation/git-config.adoc
+@@ -119,10 +119,10 @@ OPTIONS
+ 	Append a comment at the end of new or modified lines.
+ +
+ If _<message>_ begins with one or more whitespaces followed
+-by "#", it is used as-is.  If it begins with "#", a space is
++by "\#", it is used as-is.  If it begins with "#", a space is
+ prepended before it is used.  Otherwise, a string " # " (a
+ space followed by a hash followed by a space) is prepended
+-to it.  And the resulting string is placed immediately after
++to it.  The resulting string is placed immediately after
+ the value defined for the variable.  The _<message>_ must
+ not contain linefeed characters (no multi-line comments are
+ permitted).
+-- 
+2.30.2
 
