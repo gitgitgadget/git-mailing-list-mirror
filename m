@@ -1,135 +1,77 @@
-Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
+Received: from mail.delayed.space (delayed.space [195.231.85.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159D73264EF
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1BA411695
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.231.85.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781101592; cv=none; b=XdSnXmPEexeeWuGziPhrPnqn/9OqksHSdM+kdCTUsttmbpBIZxZdycaY2YL78jgIU/uVuRl8nXcsDNdHYwoig7QUS23f0vM2Rbzox3nHavO6ajDl4y5aDXbhkyGWi3LuiZU5ysI0oP8X2TxINMReCWkuZy4s2NGh/lt4ao4UklM=
+	t=1781102803; cv=none; b=q+GML80JsgHZDQhtVCtdnuotrPOtDQvWTJSnAF58z99Al9+wvaotQTZ8gt4dsL82BvRPXBd7QhkeAsvKrXxMaiHyJhswtKkgd9tgU6p4LipihaSNhWEDRNZ70sHjeHiD+iaBO1W/GlB0CJy5v4UIutXNs1k23/mf2dZY7HkhUpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781101592; c=relaxed/simple;
-	bh=huN6o1+kUU+rVfuri8SIUORdbBBhP2RkKLvFaRNhulU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ukMI0dIVb4r2N5GYusE/tBkq22NnqIfc7dCqxEVcx/7w6VRIoqWUck2PIm8XVzsvgs6CaJqdzVg52UrbX0zPRgFoYS4XMPRUtFlXmWTNy0meT5roiMS3MvVTpoH21teywTpf2vqDDw3fCjM5VndP9mg8kM+iD0bOmuIzrP6eVbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=gbVwDNSc; arc=none smtp.client-ip=95.215.58.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1781102803; c=relaxed/simple;
+	bh=SOcauk/9griPtWaBBQQFAUIzdHiRx4NbcPCcZm6LgLw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=svUUs3bPs5LLAg12k694dPFBVCeOfrzyGQOK5efnk1p79zRjVoptjECOWbFyNuhBlGYj7tlpqd8e7wn9Ff1ZcBFDamVr1mYXxDxfobshKDt9OMGOtFpVvvu3FkyFmzdmdfrV5N1XY3PQDhu+Vtl3uxhOrDBVGzN5vwFSSQ/Q6tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space; spf=pass smtp.mailfrom=delayed.space; dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b=C634rOma; arc=none smtp.client-ip=195.231.85.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=delayed.space
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delayed.space
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="gbVwDNSc"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1781101586;
+	dkim=pass (2048-bit key) header.d=delayed.space header.i=@delayed.space header.b="C634rOma"
+From: Mirko Faina <mroik@delayed.space>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=delayed.space;
+	s=dkim; t=1781102309;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KkcJTSnJpIdhC9/15lTJZ4a1N6xVPsC4tkGTqV9zVJQ=;
-	b=gbVwDNScoKSxwTKcZ8OcltwAR+eI6L4fxP2Ob/CiVWlGncTnKCzK5wYAuxsDCvsoHwlZVm
-	5o04dmYQNtURFlD1lO/1BHcAi1TJWzYKa39HG2cJSuU1dMdUWOv0tAF60cCMdREMEEfRnb
-	9ZUeLoqoInu/HZ1pIRZH7nsbHVDUzqU=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>, Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] replay: offer an option to linearize the commit
- topology
-In-Reply-To: <xmqqtsrcvnjw.fsf@gitster.g>
-References: <20260608-toon-git-replay-drop-merges-v1-0-e3ee71fce7b4@iotcl.com>
- <20260608-toon-git-replay-drop-merges-v1-3-e3ee71fce7b4@iotcl.com>
- <xmqqtsrcvnjw.fsf@gitster.g>
-Date: Wed, 10 Jun 2026 16:26:08 +0200
-Message-ID: <87zf12zd33.fsf@emacs.iotcl.com>
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=399Y+7MWFVJDq1pi7Nsbe9lSX1Elq88H+TGmiRgX2Pk=;
+	b=C634rOmal4ddE32/ndEE7M8F47M0csFXG4EZdSi7saN87IhPQ78VDszM1lfxTFF604T3ZA
+	cp6zL+mjHzE/YRyw9YTDYIWsO/og87FJQeVD2ayMRtSdpnDEr4uzP9AzlF8dZE73YiQdvK
+	KfPJItwEcYNOPsNyGGBX6V41rIAzYX61OChUOhAedxgzJN+/RoNk8Hp91SCdBcT69MuP9S
+	52LiedCMxX2WLTsOsogzBXC9vqUbovcOo78S3meeuWETw8T36EHbAuNe+6iI9O80G4BjaI
+	9oriLjTvOlTe5gbOF0VxQ1NVBs/X7bWKY+SJ0qYGE9QPeRq8a0KlG/4dUTrRlg==
+Authentication-Results: mail.delayed.space;
+	auth=pass smtp.mailfrom=mroik@delayed.space
+To: git@vger.kernel.org
+Cc: Mirko Faina <mroik@delayed.space>
+Subject: [PATCH] bash-completions: add --max-count-oldest
+Date: Wed, 10 Jun 2026 16:38:17 +0200
+Message-ID: <a804828a046d8f12ef0d03eaf014807b079bb707.1781102091.git.mroik@delayed.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+X-Developer-Signature: v=1; a=openpgp-sha256; l=982; i=mroik@delayed.space; h=from:subject:message-id; bh=SOcauk/9griPtWaBBQQFAUIzdHiRx4NbcPCcZm6LgLw=; b=owEBbQKS/ZANAwAKAUh5fqGcGb7RAcsmYgBqKXbaWxDMt/IczOb7nJW6k2keZ28Mlt6XMT5Yw bZDCosq8vCJAjMEAAEKAB0WIQT/Ky37K0pSwmwsybZIeX6hnBm+0QUCail22gAKCRBIeX6hnBm+ 0QroD/9R0JXHSIQUshsCKPld77PabQXWabQPqgUI3wmvZFjBxdQNphG+nk0wCALjNDMib+SIAyP aVOl1oQXZmaoDwb7ocKgLy5iAIUa6i0dsB6Yd7yNgAFbI5acQ1QxPSEXJS8vy+UB+G7aku3Lihe wvlRJXUXiA9VYiNzDea59XObMVylEgp184V1E3FnYEki2OlF1/q46NmUDAN6e7lPs9epM3UiJYu D0kGakQbdWxvUE37DYX5XZtL7qPEU7PRMAnGifbGdPdpVyWv8Jf2iHOINjprXg6vVPHxkc4ukPH e+c6SRmxsyWhym48vEGsXNU0Ua5EvUqY+3G3hexA//s1Ia89nIbYwPdQv72uCoRWTb8tDDlnXKd w3PdQrmDuS2hCFkb/+xq6zu9af2YpyRlhGwMWCnO04qklvzeWn06PNfjGa4A2imgXYBehJlmuit OLKH/O80YJqoNf7WvY/1PONiatRvAChp0B90bKyCmvMTvuTUtT/e/6QZeenpFKBI+YFhvmK6NVV bf5UtNvqOUqIvPAbD6uciaRJwJwjWorJ5hAi5PxaGoROI+XLcWG+H8jFNcne9aTkfWiyOWGeHLT K1sxPfMmlgcHnZr3W7eTG078lImtc1Bvnhuuf5U+fqEcahQixpQnWTXw3e7AcgtnKAhx3aF0GRt /5qajBSna3
+ 3Thsw==
+X-Developer-Key: i=mroik@delayed.space; a=openpgp; fpr=FF2B2DFB2B4A52C26C2CC9B648797EA19C19BED1
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: -
 
-Junio C Hamano <gitster@pobox.com> writes:
+Add missing completion for log --max-count-oldest
 
-> Toon Claes <toon@iotcl.com> writes:
->
->> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->>
->> One of the stated goals of git-replay(1) is to allow implementing the
->> git-rebase(1) functionality on the server side.
->>
->> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
->> was given. This mode drops merge commits instead of replaying them, and
->> linearized the commit history into a sequence of the
->> regular (single-parent) commits.
->
-> "linearized" -> "linearizes"?
+Signed-off-by: Mirko Faina <mroik@delayed.space>
+---
+ Unfortunately I forgot to add bash completions.
 
-Thanks.
+ This is built upon 1ff279f340 (The 13th batch, 2026-06-09) with
+ jch/mf/revision-max-count-oldest bb4ce23284 (revision.c: implement
+ --max-count-oldest, 2026-05-19) merged into it.
 
->>
->> Add option `--linearize` to git-replay(1) do the same.
->
-> "do the same" -> "to do the same"?
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Ack.
-
->> Co-authored-by: Toon Claes <toon@iotcl.com>
->
-> There is no sign-off by any of the authors?
-
-My bad. I'll add mine.
-
-@Johannes, can I re-add yours? I've removed it because I've made some
-changes on top of the patch you wrote, but if you agree, I'll add your
-Sign-off back.
-
->> @@ -430,12 +435,20 @@ int replay_revisions(struct rev_info *revs,
->>  	while ((commit = get_revision(revs))) {
->>  		const struct name_decoration *decoration;
->>  
->> -		if (commit->parents && commit->parents->next)
->> +		if (opts->linearize && (!commit->parents || commit->parents->next))
->> +			; /* map current commit to the same as the previous commit */
->
-> This uses the same treatment on either root commits or merge
-> commits?  If this were a mistake and this wants to handle merges but
-> not roots, shouldn't it be more like
->
-> 		if (opts->linearize && (commit->parents && commit->parents->next))
-> 			; /* map the merge to the previous */
->
->> +		else if (commit->parents && commit->parents->next)
->>  			die(_("replaying merge commits is not supported yet!"));
->
-> And because the next one is also about merges, perhaps the early
-> part of this if/else if cascade can be written
->
-> 		if (commit->parents && commit->parents->next) {
-> 			/* We have a merge */
-> 			if (!opts->linearize)
-> 				die(_("can't replay a merge (yet)"));
-> 			; /* map current to the previous */
-> 		} else {
-> 			...
->
-> wouldn't it?
-
-The way it was written in v1 was maybe a bit too smart and hard to
-follow. I agree with your suggestion and will adopt this (with some
-tweaks) in the next version.
-
-> If the "map current to prev" is applicable to root, any root are
-> mapped to the last_commit in the above, and if we saw a root as the
-> first thing in the loop, last_commit is NULL, we do not do anything
-> here, and after the if/else if/else cascade, we see last_commit is
-> NULL and break out of the loop.
-
-Yes, good observation. I did not test this.
-
-> Perhaps we would want to have a test that replays all the way down
-> to the root commit?
-
-I'll add it.
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index a8e7c6ddbf..e875787710 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2195,7 +2195,7 @@ __git_log_common_options="
+ 	--not --all
+ 	--branches --tags --remotes
+ 	--first-parent --merges --no-merges
+-	--max-count=
++	--max-count= --max-count-oldest=
+ 	--max-age= --since= --after=
+ 	--min-age= --until= --before=
+ 	--min-parents= --max-parents=
 -- 
-Cheers,
-Toon
+2.54.0.505.ga804828a04
+
