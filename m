@@ -1,165 +1,199 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7AE3BB114
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:39:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8854429837
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781105968; cv=none; b=LCPyCK0DoW4CCo/538Yq/wXjtNwI+CVx1JDpCKDiAlxDZNehM1wnETrhLnMH0U1HMP9e01k23prrD0z/eHRSofSqawHgPMRUrI1qNoNK+fyz8PiCcMMKfV74td/6JSIs5IBYRzn5YL7eabBhyhCGxD+srZyRWK33A4rM5RdzfXA=
+	t=1781106515; cv=none; b=ecnCewC71yxkjkwEMn/B0Qg3FeLxBVqQVPVSVLlFTFBtYNWwSGAyc4JXU5io8zu/ftiILRlukQudwroIWLiVd6M22nb6arM1WChW/dUw+7+kM7uX7vTf7VD1BWN1tTMsYPetDCdRXxntfrE4BsFWrtl3Y7Ybmai3Bzzu8KLU3YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781105968; c=relaxed/simple;
-	bh=tynOfWbz7bn1HYYu8ZZsYvfXijT/7yglcvJoNrIdepU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=hwZyBKQ++U0GXy+JLJcXqu9slsashPaR4jyFHUZBeFOnsWMpgME0On5KOPPevyNrW79K/2j6g+3CDeaeaxMAQj0vkpT8HglnCIU7uROf3s11CxqMjFjbENlDhoo+moEAoKYNQ/M645BMO24pEiJezv0oyFarUglLb+yLPeJWVQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ihjxTFyo; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781106515; c=relaxed/simple;
+	bh=TOwwbk6CDI1vTtFqhhbZmDLbOd/ciOQGwnczLI1IoF0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Tc/VFLAx/LaFvONNzG4urYw7/LO1+COxpGd5ABWZItoQhicYd2qwqT73MIrDJHzmt9aHPBuK4AIDcQCyJ5vvmO/n5cRpHO1flsBukP4j0Nwwff/lBdBHZKPOtl6Um8MKbbSgmsr6BhkzB4clsp9ORzjJW2nBzjC86HqTv0ZYvao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kfVe0EvQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W4EeKVez; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ihjxTFyo"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-490d1e54b3bso32219765e9.1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 08:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781105965; x=1781710765; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zz42vgvtq2qif+glhDd/p3AaCsjZpvrVJlnRDAUy24Y=;
-        b=ihjxTFyoPRlvcQnqX3XoX/5aTnED/NnaqjtwyNLAVyk81wmvrfEULCdZqSaiZRBMQj
-         KVxFbiEPypElnBd83WbM/FlUAvmTLZ1gj2LaOVoqkpnp2iHDGc4WkxjnfgFH96Mg6s5W
-         ugRQD4rIrJlSr91FfqI9xXXOdcFcfOjE4Ttl8jaikqLMzzQIKycPzfDzUivziUMQRU76
-         RRGqeOvHCEKYILK0uGmnHQP6nhAdKzwtge70Jrm9QQAHzfF7nS2o/qGpMKxpL2OYkKsI
-         qVmykoJ5cGi/9ZQNVLdd7O8VGDq4KL990WSMWIjrI53Q78fWTGpee874AeWfpqpt59jS
-         5HPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781105965; x=1781710765;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zz42vgvtq2qif+glhDd/p3AaCsjZpvrVJlnRDAUy24Y=;
-        b=PxKHtif8dHhA9CGcjO9ZnWqWnls0Me44RtQtFfFah20kiU64br9v7o89rpUv/xw02o
-         YuJ1a/c/KiT91hDF9DIaBblz3rWKfufhZshkAulmAlC/9hM57uz32R3g2CcFjLYMh8ri
-         vdYO+yBspYfACAL3uAeXEkt8aawmD0KE30xgCiDqZU2GSe7iAYMf3aVHpCxyMj/PwjLx
-         IuFO6fh8Cj+FPWLtcZxJA/L2I58UzRb9wh5GlvgyMA3yfWMgYYgcjnlNHcXHrCHcFrg3
-         xEB44uAg+IdhcY37z7B61CpUzCAB2E5wizkh4huuHi+t+K3sys0JDyZ0P7v4seYRLnR5
-         bBIw==
-X-Forwarded-Encrypted: i=1; AFNElJ/yfdz2u4GihmeTltbuXV3rP6fikep7xMaBke3GtcUo2Uam0dGif33oV0r6p6cFjMsfNkU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSoo0Y/oFshQJXebsFo77iyA/M6hHQ3/FINjtouDQHgMpU83nc
-	QCOH6vw3FgTC0UY9BQkE+G1p5qEY3EV68LOtL4v1TN0xQa/AO/sXTEJSFLllKg==
-X-Gm-Gg: Acq92OHtDuBhMU/yD3Dj9oABluZjWtlStrPA3obIux5cd2R1jIg1P4Xc4qRV04xv4Kg
-	f5iU59uFWO96LiNuP8Qb12Lq1ZAnH4C18JdLbfAujC3VITMpiIxrmJhd+4UUxFDGdXJ0NNuVHlA
-	x2xslMEkeNDk9i/36WcX/P7LiXEejHg1Ki+FRg8MAMJRT/kUzpi2ZtaHSO4eAKbRjEZeiaBDYjf
-	nAH/R7jP91ige69IPepj0Z2WUxPqzV8ILmyqTpDmsb909dcMrm//bSaI1yn4PAKoO0WVDrh7mJ6
-	fUODFGTSZ68ES7oSPb0St/DKZJzuzt65RTN4V4WfL25hiDpYghdiumzmdLh56S/dzEpW+Q0KAtp
-	JJamzL2YzOftMN8zyEcVsm+/jRmMxJx3PSB2mor41UrHU1FWW+ZgPZd3REdWbt2lx7b0bcr3OsL
-	2GxMk23Q35S2vt/GtrXz1sCemIi1Um3RS7ZGGLBNqPpYtKmV/euDvWrLQ0RspiZs5g7/tRp5iHO
-	0dayYc/DEAw8gg0
-X-Received: by 2002:a05:600c:3551:b0:490:6237:521b with SMTP id 5b1f17b1804b1-490c25cc5c2mr403835205e9.27.1781105964885;
-        Wed, 10 Jun 2026 08:39:24 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc39eb04sm574986175e9.6.2026.06.10.08.39.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jun 2026 08:39:24 -0700 (PDT)
-Message-ID: <c9918880-31f8-42a2-83a2-8175dbffd07d@gmail.com>
-Date: Wed, 10 Jun 2026 16:39:19 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kfVe0EvQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W4EeKVez"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3CE8CEC00AF;
+	Wed, 10 Jun 2026 11:48:33 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 10 Jun 2026 11:48:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781106513; x=1781192913; bh=rX/t+rvFT9
+	WZOLLvb4Fa21EmABx07LRbZHNHWq1S2AQ=; b=kfVe0EvQqzE8bKcy8G01jC0+zv
+	JULYz7/NZZs/+RLXKy2kidhwFHmXzHOBH5qz4FFmB+DhqTgQYcrdvpHGEWlfOb+g
+	sw2p3UKFYr41xn2LxNe9um0FuqVRXTQBJz1FniXdRmpLrllNVcPS2/B6pbNfrSw2
+	96DJQ7IEIsKPkdYYiBiuQ0D95pv/1+9TiOwuaJaP9tsLtibGiguamxSmV/uUSn0+
+	qjuEymSfeRcKfdF4+7ue78ongVzWjCwMRIftwYvzTInyYmRDHVX3qIbUqWmz4F1E
+	MbOUkbk2WG0AXnvS5DUotR5dtTDI1t4zzWeTR6VGE4uEYBrOV2tufM6Qn2ug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781106513; x=1781192913; bh=rX/t+rvFT9WZOLLvb4Fa21EmABx07LRbZHN
+	HWq1S2AQ=; b=W4EeKVeze2N7Q/J5fNp9vi50dhTRwAaHtE3RECFe7SEj1LyjNW4
+	RRFhygeXXcV8EeFbY94kPMLf6fUjReMVYYGgf6LBYW/DlWgmpryWoUIKyZ0/leGd
+	D0muUNe6KNifx/tGrZuYD1+g7cUi1PTwsmf2Yz+wg+YhkA3M0JTumBEpKv/o0qSN
+	7lf2Yd0cLupWNVLAz9crkYnrARNzIIvUq0HXPpOff7AK4tD5htSoJNUF+S1q11vj
+	gujwx08o0P4XJuFg92/Yh6VjnGSpYDmTO+agC/761EoiKe89NalgJU3T2N+A1qbZ
+	tQbrx0WS0s4vDW9uGQxhFBd6sNyEquOA63w==
+X-ME-Sender: <xms:UYcpaiEstTxMfip8XBt0e82TBdGQt3XhBAS2LzRNtpotDIUSL73z7A>
+    <xme:UYcpaqNWYgZkXDBboq3b1WftyGHpDyR8ReZSi9QBm9KKp-714MaLdFbaNaVcUK-KM
+    vsw9AHEmm81zT0vMUT4dFkjbQjzQj-H6qbOwcC7mBZpQahkwt-xhig>
+X-ME-Received: <xmr:UYcpakfoC-0kfhoMGiHdz7AH9JUCh4L-KGsEYkNWT_LA_4pfWoEf7_kLfvs0uWGsmjPkXJpYAUADuxpQtd9VapFjEGPSNKn4f62v>
+X-ME-Proxy-Cause: dmFkZTFGTZjDwLbiFLBVnOywVCGUNW0WB/jQ3eN6AZKWHN6fhHsbCD6jnC9OLCA/m0KOOZ
+    HwR55SOfhuvziee8pHnX7ffSr+RtQSfu4pTrwAMlFJjTGgJSJ86OfN/vC74gfsGvUOPKc5
+    uADUgjrVna+5AMQLEo9f4qPOK33kBeBXaN/wcbrO28FjVyWEmet8dKv6rf5HsvO1MyTbXb
+    et598wklWVPAZLacAGxQaUxEoYLwE4xJ93/cfTmtVpPoLO4JTfoXKC0u1XPxp1mUObmcXi
+    h+VutoHuP4MhS1Gaae4WD3ztplWcswd0YlEO9/sCDEwDen+BCeujV69b2HYTOXUJ/AAPZw
+    LrLGoK4Ixk+rsyVQC9/wfLtGBl8A32D/nmjzN3NemG/KJyN4cCGP27S/Qufkp6QmYNvd12
+    w0xDTLXrQVXgkGNl1m9mgeADzU3gp598EOnIrPXv1oQGazTUFAIqUpT6ZXMLc7Dd1Z86sB
+    YvDyIanM0VqMqLkgDbWG+wgWU/rHVShE6UBM/uKjJdEjQkRWXzJSgoi5sQjTkCS3R9QO20
+    xLvr9V9g4VKzD7HdHITZi7+npA/uGsGDZVXb1MH9qcVApYhwBE+s3B67TK4m8TyiS7cj/N
+    GkAUC6kSPnkTPAz1b38aSCau3mDdhuVA4vs9m1DMzlUAkg1bgg4t44Uk7ExQ
+X-ME-Proxy: <xmx:UYcpanva1tlGdjCro8Vgc11Syn1eH2LRHcoVxQ8XSURiUvclSiyZFA>
+    <xmx:UYcpallFPxHXRiotNwerB3DE23JhL9tBWccsGUjn0r10PiOfuN54GA>
+    <xmx:UYcpapzWRlDIclw30UdKbCQPlVdZIUQXuokviAGeqlbjDXMHhbjIMA>
+    <xmx:UYcpanPQAklhdXu6g6NhUAee5lnsKtz6ng5kH1W23cttolT5kTgeCw>
+    <xmx:UYcpait3HY0oaJ5tgsn9vaXBzWbeHBnBWcGHml7z275CusVDvVH9J2pj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Jun 2026 11:48:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Kristofer
+ Karlsson <krka@spotify.com>
+Subject: Re: [PATCH] commit-reach: remove get_reachable_subset()
+In-Reply-To: <pull.2144.git.1781033285419.gitgitgadget@gmail.com> (Kristofer
+	Karlsson via GitGitGadget's message of "Tue, 09 Jun 2026 19:28:04
+	+0000")
+References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com>
+Date: Wed, 10 Jun 2026 08:48:31 -0700
+Message-ID: <xmqqbjdixupc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [BUG] rebase --update-refs emits unqualified "update-ref HEAD"
- into the todo
-To: betel_taxis4h@icloud.com, git@vger.kernel.org
-References: <35A368B8-9B8A-44A9-96DA-65ED16D7D564@icloud.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <35A368B8-9B8A-44A9-96DA-65ED16D7D564@icloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 10/06/2026 12:00, betel_taxis4h@icloud.com wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
-> With rebase.updateRefs=true, an interactive rebase of the checked-out branch generates a todo containing the literal line "update-ref HEAD”, which git's own todo parser then rejects.
-> 
-> Minimal reproduction (plain repo, no worktrees, no remotes required):
-> 
->    git init -b main repro && cd repro
->    git -c user.email=t@t.t -c user.name=t commit --allow-empty -m base
->    git checkout -b feat
->    git -c user.email=t@t.t -c user.name=t commit --allow-empty -m c1
->    git -c user.email=t@t.t -c user.name=t commit --allow-empty -m c2
->    git -c rebase.updateRefs=true rebase -i feat~2
-> 
-> The generated todo contains:
-> 
->    pick <c1> c1
->    pick <c2> c2
->    update-ref HEAD                <-- emitted for HEAD, a symref to the branch being rebased
->    update-ref refs/heads/feat     (correctly placed; this one is fine)
+"Kristofer Karlsson via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I'm unable to reproduce this with the script above and I do not see any 
-update-ref commands added to the todo list (which is expected as feat is 
-being rebased so should not appear in the todo list). Do you have 
-rebase.instructionFormat set? We recently had a bug report and fix[1] 
-for "update-ref HEAD" being added when rebase.instructionFormat includes 
-"%d".
+> get_reachable_subset() was introduced in fcb2c0769d (2018-11-02)
+> for add_missing_tags() in remote.c. tips_reachable_from_bases()
+> was added in cbfe360b14 (2023-03-20) as part of the ahead-behind
+> series. The two were never consolidated.
 
-Thanks
+Good finding.  It is curious to see that these were from the same
+author.
 
-Phillip
+> ... Without generation numbers, some edge cases
+> may be slower with DFS instead of BFS since the date-ordered
+> prio_queue naturally stays near the top of the graph, but this
+> should not matter in practice
 
-[1] https://lore.kernel.org/git/20260510224111.64467-1-mail@abhinavg.net/
+"should not matter in practice" because...?
 
-> Letting the editor save the auto-generated todo verbatim (or running `git rebase --continue`) fails immediately with:
-> 
->    error: update-ref requires a fully qualified refname e.g. refs/heads/HEAD
->    error: invalid line 3: update-ref HEAD
->    You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> --update-refs should not emit an "update-ref HEAD" line. HEAD is a symbolic alias of the branch being rebased; the branch ref itself is (correctly) excluded from the update-ref set, so its HEAD alias should be excluded too. The todo should contain only fully-qualified refs/heads/... lines.
-> 
-> What happened instead? (Actual behavior)
-> 
-> git emits a todo line ("update-ref HEAD") that its own sequencer parser rejects as not fully qualified, breaking the rebase. The only recovery is `git rebase --edit-todo` to manually delete the line.
-> 
-> What's different between what you expected and what actually happened?
-> 
-> git generated a todo command it refuses to execute. The unqualified "HEAD" should either be expanded to its target ref or omitted entirely.
-> 
-> Anything else you want to add:
-> 
-> - Reproduces identically in a plain single-worktree repo and in a bare-repo + linked-worktree layout, so it is not worktree-specific.
-> - An in-sync remote-tracking ref (origin/feat) on the tip adds a second, valid "update-ref refs/remotes/origin/feat" line but is not required to trigger the fatal "update-ref HEAD".
-> - Workaround: unset rebase.updateRefs (or pass -c rebase.updateRefs=false), or delete the "update-ref HEAD" line via `git rebase --edit-todo`.
-> 
-> 
-> [System Info]
-> git version:
-> git version 2.54.0
-> cpu: aarch64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> rust: disabled
-> gettext: enabled
-> libcurl: 8.14.1
-> OpenSSL: OpenSSL 3.5.6 7 Apr 2026
-> zlib: 1.3.1
-> SHA-1: SHA1_DC
-> SHA-256: SHA256_BLK
-> default-ref-format: files
-> default-hash: sha1
-> uname: Linux 7.0.11-orbstack-00360-gc9bc4d96ac70 #1 SMP PREEMPT Thu Jun  4 16:40:25 UTC 2026 aarch64
-> compiler info: gnuc: 14.2
-> libc info: glibc: 2.41
-> $SHELL (typically, interactive shell): /usr/bin/zsh
-> 
-> 
+> -- worst case both visit the full
+> graph down from the bases.
 
+And of course the worst case scenario is by definition not a typical
+case that appear in practice, so it does not make a good explanation
+for "should not matter in practice".
+
+> The flag in remote.c changes from 1 (bit 0) to TMP_MARK (bit 4)
+> because tips_reachable_from_bases() uses SEEN (bit 0) internally.
+> TMP_MARK is already used for deduplication earlier in the same
+> function and is cleared before the reachability check.
+
+And tips_reachable_from_bases() clears SEEN at the end as expected.
+
+>  commit-reach.c        | 73 -------------------------------------------
+>  commit-reach.h        | 13 --------
+>  remote.c              | 19 ++++++-----
+>  t/helper/test-reach.c | 39 +++++++++++------------
+>  t/t6600-test-reach.sh | 18 +++++------
+>  5 files changed, 36 insertions(+), 126 deletions(-)
+
+Yay, a lot of deletions ;-)
+
+> diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+> index b5b314e570..51b140a539 100755
+> --- a/t/t6600-test-reach.sh
+> +++ b/t/t6600-test-reach.sh
+> @@ -391,7 +391,7 @@ test_expect_success 'rev-list: symmetric difference topo-order' '
+>  	run_all_modes git rev-list --topo-order commit-3-8...commit-6-6
+>  '
+>  
+> -test_expect_success 'get_reachable_subset:all' '
+> +test_expect_success 'tips_reachable_from_bases:all' '
+>  	cat >input <<-\EOF &&
+>  	X:commit-9-1
+>  	X:commit-8-3
+> @@ -403,15 +403,15 @@ test_expect_success 'get_reachable_subset:all' '
+>  	Y:commit-5-6
+>  	EOF
+>  	(
+> -		echo "get_reachable_subset(X,Y)" &&
+> +		echo "tips_reachable_from_bases(X,Y)" &&
+>  		git rev-parse commit-3-3 \
+>  			      commit-1-7 \
+>  			      commit-5-6 | sort
+>  	) >expect &&
+> -	test_all_modes get_reachable_subset
+> +	test_all_modes tips_reachable_from_bases
+>  '
+>  
+> -test_expect_success 'get_reachable_subset:some' '
+> +test_expect_success 'tips_reachable_from_bases:some' '
+>  	cat >input <<-\EOF &&
+>  	X:commit-9-1
+>  	X:commit-8-3
+> @@ -422,14 +422,14 @@ test_expect_success 'get_reachable_subset:some' '
+>  	Y:commit-5-6
+>  	EOF
+>  	(
+> -		echo "get_reachable_subset(X,Y)" &&
+> +		echo "tips_reachable_from_bases(X,Y)" &&
+>  		git rev-parse commit-3-3 \
+>  			      commit-1-7 | sort
+>  	) >expect &&
+> -	test_all_modes get_reachable_subset
+> +	test_all_modes tips_reachable_from_bases
+>  '
+>  
+> -test_expect_success 'get_reachable_subset:none' '
+> +test_expect_success 'tips_reachable_from_bases:none' '
+>  	cat >input <<-\EOF &&
+>  	X:commit-9-1
+>  	X:commit-8-3
+> @@ -439,8 +439,8 @@ test_expect_success 'get_reachable_subset:none' '
+>  	Y:commit-7-6
+>  	Y:commit-2-8
+>  	EOF
+> -	echo "get_reachable_subset(X,Y)" >expect &&
+> -	test_all_modes get_reachable_subset
+> +	echo "tips_reachable_from_bases(X,Y)" >expect &&
+> +	test_all_modes tips_reachable_from_bases
+>  '
+>  
+>  test_expect_success 'for-each-ref ahead-behind:linear' '
+>
+> base-commit: 600fe743028cbfb640855f659e9851522214bc0b
+
+Initially I feared that changes to the test script were a sign of
+need to adjuist to behaviour changes, but as the proposed log
+message explained, all of the above changes are about the name of
+the function being used and tested, which makes sense.
+
+Thanks.
