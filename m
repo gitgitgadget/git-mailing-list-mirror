@@ -1,82 +1,80 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F46F345CAE
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 17:02:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569DE2DAFBD
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 17:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781110952; cv=none; b=nzZ8FNXm5cQMSJnOeLB+PyiEEFvD21FQwrh8oAOcehHPOO9LijnwTy0D0/mfwGcmpShK25TNGRC6u4rdZRNlPPsnuvA6/g7eMrzpkl2i651qiEssTk3bZOh0WVUV5DC4BveCltTJ6xwckpTVk0kRbjONiXIyvjGpxDFrEuuBmm0=
+	t=1781111291; cv=none; b=m6rYATJGHq0XyO9O2flig3U0Xurfk0ReWE7b/+0fHOLBb5LtABBBzw7AcY8JRkQBEfg1vuS27m8E70oDstUOb1u9IWbggG2nOt5xk7vT/amg6hBr56Imj9532otrjoBp2r2FP8H1XcKCruH5wpIDUazcavZf46MVPe78eiMBLw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781110952; c=relaxed/simple;
-	bh=eKpjTLLNQre7xhpIFpKMu2LgW2RqEFliSCKeMcCIcW8=;
+	s=arc-20240116; t=1781111291; c=relaxed/simple;
+	bh=vLwXWKGNp9Hc3U93kGm4TSZ5F+++c1ncadkvjfTli9k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r+awRb4J99Fhg/PfjE+KoCR4vP5y1NGjGXH0C0M9q2PiupRVW9T/Ll+TPKp/yvrP5e2pdI1kIMqFEPNZ9z9QuTxAtjezQ5ilelCKlV18k0R2YQLViWSwh9v6NHyVw2Detv1deTCe8Lp7pN+/NC6iXxSffoyARQQKbbXbb+Vu4KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OQH/q35F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZDfOJjZ; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=JuYpedRQ573Toqs/iLSV2nMzT1qo/YL00C4Ahpo5JoccDdrGgLtNebKck6i6jkbrZ7ToOIRU8ZsFDNY2tFj5/WntYTaPKgCLBhhi4Sb7wlhBbPffD3L4sg69sxBby6veU1eTrYofj7JuwscMHQ2NF8WQoJcZZZYnaNXyC/PPlyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NryFSvA4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WcTpDtfn; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OQH/q35F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZDfOJjZ"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 513BA1400077;
-	Wed, 10 Jun 2026 13:02:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NryFSvA4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WcTpDtfn"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 74114EC019D;
+	Wed, 10 Jun 2026 13:08:09 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 10 Jun 2026 13:02:29 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 10 Jun 2026 13:08:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781110949; x=1781197349; bh=z49e8D1sMI
-	C3w7wqH9FJRD52po09vM+iD8bXzpfGyko=; b=OQH/q35Fqt6B8PUVs9DTPR/c54
-	5tuA+hrpVCyquKO1c7syoY2vRJhft4T1Pbwf2RFIRNBPsYMV6OF2yZYg1DbJAOb+
-	utSOCjckthwQUR8ZdhYNUPNMV9KsMNH4Ki4d0tChGOpPyjer/5H6c2tK8AaWwfqa
-	TK8NL8t86uPJUbVy9sV3+ThflkReRys2YKQfUSwfSaC2f4nkReFoSpjsgV6NTgSh
-	LXh1plxDnSdA2Yp5wnK9MAy4bir3YLT5RxgjfdJl4jbXyFO0PNuCP7dCFj8OkqVv
-	QveU8FrLcQSmgWys3XX1XGye7FWtm271rA8uJKCdaokZvpx5jPqnRdTdAiIg==
+	:subject:to:to; s=fm3; t=1781111289; x=1781197689; bh=ymwaPL+UiF
+	1WskDx2Byd54USY/3sRhaM3W4p+a4xgUU=; b=NryFSvA43WHKAdfuxwaqlZaIK/
+	BlOgaKfJl7aNDWC4nxUkAIqvbdcAobrgwFMBiYIZ+kkfAAyNhiMSL9JkzeU1c+2h
+	t5AaQLr4OPvis7V6Wk5jVHXlDP+NZqlij3SaWKxx0D1WXCdDnuLc6Qna+WFoJuif
+	j4iNQXgTTQdpMdfZB9HdWiquyhmEsUTtHUCRfnLtxhg6EmLXojbyiDqx/eYQLKYf
+	PWslGVdLpQyxZLYRLOTbmINaazCRYw3qgULeFtnQXhArQ3V8W/iccizdmZP47se3
+	suocYUpF+zGzE0vrrJhJr59c7xCU+DgugCqzh2XeFFXmNnJIeS12+b5yS2Gg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781110949; x=1781197349; bh=z49e8D1sMIC3w7wqH9FJRD52po09vM+iD8b
-	XzpfGyko=; b=PZDfOJjZCnOdJStl1J15prMgy3sE6PmWfmSYQkMoEeusY8rj/PM
-	N28Dfcw9gENnbTWHxLmqeYH8xkXhBFKbb5TbKENOxWLzKLHdovnUyju8/ZTz9lNO
-	5RIDSK/ft+PbM7R+uxL8Wb4zYIcL/WeA5GLB32DrEs7Z0wyjDfeknIaVvfbGRG6l
-	2NIkJmplte7JdRFdIqVsdqopCTW5BfUUfJIM5xTsJVkfaMEabjkcbMd8HazxDsyI
-	HhhgW3wloMLHR+OShNBG1acmdI4MmFxjtloYbLsGpFi1znwP17Rf4nbvFfpl7BGm
-	azD9dZ48dLqwLY0D/yRvcZjV6l5T+GzDY+Q==
-X-ME-Sender: <xms:pJgpajESmD7_YIoXTSLlKL6FtVNIE4xzLM2EVyQtNSlLDixny_VsNQ>
-    <xme:pJgpanWFcu2L2hlH7HWS6DwD8p7eWQFAFa8dm5y67tILBCpbavFf2USALK7BQ8K5Y
-    5BdSEe1uwKowbWQiEoYrjhiMa_7xpDCwTpd6h-7JbUumA3JhAkgSg>
-X-ME-Received: <xmr:pJgpaqL-b-kracIqKzQR5WjTaLqlyTd4d51yRPx1Hx92ahwRLI9avWtZEtlyI1ISkfKG0PlvI-uLgMqLMI6qMwSxck0QjEjLdIew>
-X-ME-Proxy-Cause: dmFkZTFSiwfnUhmOhBwJRNKwYlheXQT8fOsFOQ3AUD/gLATmWcSEY7h86ILxSOSSHVdG0h
-    RWG6ksIhEH+y1UIZP3zpRpwxAuNW45PUWBIwsuI43A51u01eZEVq3U6eMHyy6HI8Y7VugS
-    Vysjm+7HPpAErKmAu+dRNIiec7VvJYYYoesx/JYPY+zEejdxscjoZ/JFiok7jgW5hvpfZg
-    11KvhNfyw6J3hHltIPTZolnpf4Ih0PUZAauxqY7i8XnO4zZM4Y5eWqPqPN4t8VfiNKyVPu
-    nD82FCTT1t8INWlDFeN07Du7ECCOv4srY549QsusCuvOQ1RhBdh5PX4gSBnxK5Lkd3CHoW
-    r8pcXjGmpv4w99gvTlgsZlep9XjHYrgCzz84jrROkJC/Xzyfy7t7GOtHYCcMF5wa/rK11t
-    f1D8dvNv1dDFJ5YXYvGoNNTc+um7GXwhviEYq3yVTQ3aTL2IhF6dbYymkDcsj/1K0GEWu+
-    /zpMFwoGXoKpQuWM+MY6Us2GIyeN+XoCjiG5l+vna6ex0BVRS5kLo9ojTXeYWVyisqETV8
-    eus+iueD03BFq/KqwCWpUjPcvcyDxT5YnkMgt2AA2SplJrM9/IDlJNN7mh3cPVVs/BcQ5I
-    28XLIQecaxukWomU+3WW54Hiq4SZMKQVhibeZG4X4d6a3ycg3QVjuYr6FXSQ
-X-ME-Proxy: <xmx:pJgpav8E7RXzUTvS3gsVDsK2Izi1wkOjvQ5PbL-uL1cGSBHFczWh7g>
-    <xmx:pJgpalJwvbI57tLBWA5JiRUzWzJmvdBC-MhughXmVV7J7xeDZ20ANw>
-    <xmx:pJgpasnMwEOYTtkCPhdqC-iGpZX-z1EK3EyTOLuhY2Ihg5ped5Bb3A>
-    <xmx:pJgpahPbSrDqtClm693SZukTqO2K2VhHnx_m1_nztNtbhC5ONA1sCg>
-    <xmx:pZgpaudpaBXF5L6z-1_5MNo0g225nVV1O0fptRvR0suVpK2_VE3a5O5U>
+	1781111289; x=1781197689; bh=ymwaPL+UiF1WskDx2Byd54USY/3sRhaM3W4
+	p+a4xgUU=; b=WcTpDtfnYHEOY0datS5KgbOA4yw8ELxkQnwP3raOIHA5KBd2Ghk
+	/xTh78vPxvpWF/YhDp6+5GPDSKaUUkm9xC0NkJoI9cEdTck99cRQguaxLrF/WHGs
+	0T02ggwqjC+bHj99sgC1CjhpvoinW36SVpHbY5LOITkVPIpoDgF4OiPawV66U34B
+	ufYfOi8AmYyoc47GsLBofpkdm/YcT8+YSncvu9SuZjZhUIp4L+Jw94dULfJ23DF0
+	4x779H1/J6WtPK8w5m0ExaukyDeBuFhe+jS35X7CFD5F/CdHLNQW1FFhQh3hOHkM
+	1iE13z5U5dyIhnduV/brMDMyk8+epHb/kDg==
+X-ME-Sender: <xms:-Zkpanuev6bjJjDy-7NobCyywjV9bApA7GnvvDItBaEUnOrwyvUm_A>
+    <xme:-Zkpav7zLp229pBTNPXg-yD4zJLLkyEw8vK-P1E1sMd6SlFfoKfjF97Z3rZOiub38
+    8uS8qYx62XtD_7VUeMsemIIRaBGXhptd31FP4iONydjOR4fDFvpdA>
+X-ME-Received: <xmr:-ZkpaoIf2oInb-uAqW5gr2vTsbBFxdUo32tgEWRE0p6hB94x-wQ4uaea6ocZdPC7a-TfJxW8ZDdIpsZzRYkuEK8c8V9NTnY-4qvE>
+X-ME-Proxy-Cause: dmFkZTGI0p5XHOiOb+DEwreVyNm+G153wxiQ/AWRy+S8Zl9DTJbiNOA0C4CNf2WNH3BGhF
+    h6bukNYfD+GZ7AJH8U17u3kkcTqXV6tJq+9JhzhxSw2HOU2r8JAsG5zwjoYeXHlHAFHglx
+    H8aUFeiLlwI72+JEyJHPMM7TKiJlP7eL1tYWqXnSLtj92U5yeBuLN5RWu16aKKmfgw9MFi
+    DzG7YcpOhk/WuKMPq6lJYwbur/ZSoXlARtBaMacjawUaxCHGf41dEQpAgLQlKXrCnyN0X/
+    jYKJo5VENMbfV0Nu7p8nAySQWXOqXSdq4gLE47mtKIOYXTvUCxaUyp+5b4zwvZfiEN7dFg
+    Tr0QrrDEqv7la2ERuwII0Hd/QIngnCQ+zWu3m6G6hjaXrcEsGIrOyDlUeqTqdgE5j3w9CS
+    h3O4bqpU+8JlGb0IxE5OTD1BwryYd/5eueBIh2t/wC2NQtuckmufZbC93w4fGaKlTiF6pY
+    7z4VlibPLue6NZdMScvyATDN7sazJeJYjtJzL3YcNTdNe0BRxaOKtUVDbYBC1PlLy4JpIG
+    uBun7R2aYmrR8tQeyyKTYLmuHES9ws1FXNljlul4gE82tlZe7/bnmK5GRGoLnXhFnc/IQf
+    dvwrpxwIfV9lWyHxi23QqQtcQxr/smMA3f7XnbIE+q41agF5Vf9K3cfZxKcw
+X-ME-Proxy: <xmx:-Zkpav650F9pgkFYv_UlO2x_rDtq62pwN6p84MRFPGCCPquaFH-doA>
+    <xmx:-ZkparzggneHAQlfBcesjP2vALpjJYTKLqGOIxV_ZECXqVJYSiHGQw>
+    <xmx:-ZkpajYZhLikbliZXAU5RomqeYR-XkAUj5Ey6AyOqa94ePN_QWuWhQ>
+    <xmx:-ZkpatRJgL6BR_q6tHchx-OAX5JppRHsvEZjpUaL66XPSLETZNXwxA>
+    <xmx:-ZkpaslyQeg3ah7HjExvv7HWkND_M0-_fepsD1azyzulKvUoTHZxbVc8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jun 2026 13:02:28 -0400 (EDT)
+ 10 Jun 2026 13:08:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/3] replay: offer an option to linearize the commit
- topology
-In-Reply-To: <20260610-toon-git-replay-drop-merges-v2-3-5714a71c6d83@iotcl.com>
-	(Toon Claes's message of "Wed, 10 Jun 2026 16:49:14 +0200")
-References: <20260610-toon-git-replay-drop-merges-v2-0-5714a71c6d83@iotcl.com>
-	<20260610-toon-git-replay-drop-merges-v2-3-5714a71c6d83@iotcl.com>
-Date: Wed, 10 Jun 2026 10:02:27 -0700
-Message-ID: <xmqqjys6wcpo.fsf@gitster.g>
+To: Mirko Faina <mroik@delayed.space>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] bash-completions: add --max-count-oldest
+In-Reply-To: <a804828a046d8f12ef0d03eaf014807b079bb707.1781102091.git.mroik@delayed.space>
+	(Mirko Faina's message of "Wed, 10 Jun 2026 16:38:17 +0200")
+References: <a804828a046d8f12ef0d03eaf014807b079bb707.1781102091.git.mroik@delayed.space>
+Date: Wed, 10 Jun 2026 10:08:07 -0700
+Message-ID: <xmqqfr2uwcg8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,117 +84,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Mirko Faina <mroik@delayed.space> writes:
 
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Add missing completion for log --max-count-oldest
 >
-> One of the stated goals of git-replay(1) is to allow implementing the
-> git-rebase(1) functionality on the server side.
->
-> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
-> was given. This mode drops merge commits instead of replaying them, and
-> linearizes the commit history into a sequence of the
-> regular (single-parent) commits.
->
-> Add option `--linearize` to git-replay(1) to do the same.
->
-> Co-authored-by: Toon Claes <toon@iotcl.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Toon Claes <toon@iotcl.com>
+> Signed-off-by: Mirko Faina <mroik@delayed.space>
 > ---
->  Documentation/git-replay.adoc |  5 +++++
->  builtin/replay.c              |  4 ++++
->  replay.c                      | 30 +++++++++++++++++++++++-------
->  replay.h                      |  5 +++++
->  t/t3650-replay-basics.sh      | 26 ++++++++++++++++++++++++++
->  5 files changed, 63 insertions(+), 7 deletions(-)
->
-> @@ -430,12 +435,23 @@ int replay_revisions(struct rev_info *revs,
->  	while ((commit = get_revision(revs))) {
->  		const struct name_decoration *decoration;
->  
-> -		if (commit->parents && commit->parents->next)
-> -			die(_("replaying merge commits is not supported yet!"));
-> +		if (commit->parents && commit->parents->next) {
-> +			if (!opts->linearize)
-> +				die(_("replaying merge commits is not supported yet!"));
-> +			/*
-> +			 * When linearizing, a merge commit itself is not picked,
-> +			 * but refs that point to it might need updating.
-> +			 */
+>  Unfortunately I forgot to add bash completions.
 
-In the review response during the previous iteration, I commented
-that (1) the original excluded only merges, but (2) your version
-excluded both merges and the root commits the same way.  Your
-response was:
-
-    The way it was written in v1 was maybe a bit too smart and hard to
-    follow. I agree with your suggestion and will adopt this (with some
-    tweaks) in the next version.
-
-which I took as saying "it may be confusing, but it correctly
-expresses what we want to do", meaning "yes, roots and merges should
-be handled the same way".  But the above no longer treats roots the
-same way as merges.  I think that is intended, but just wanted to
-double check.
-
-> diff --git a/replay.h b/replay.h
-> index 1851a07705..07e6fdcca3 100644
-> --- a/replay.h
-> +++ b/replay.h
-> @@ -62,6 +62,11 @@ struct replay_revisions_options {
->  	 * Defaults to REPLAY_EMPTY_COMMIT_DROP.
->  	 */
->  	enum replay_empty_commit_action empty;
-> +
-> +	/*
-> +	 * Whether to linearize the commits (i.e. drop merge commits).
-> +	 */
-> +	int linearize;
->  };
-
-OK.
-
-> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-> index 3353bc4a4d..64e0731188 100755
-> --- a/t/t3650-replay-basics.sh
-> +++ b/t/t3650-replay-basics.sh
-> @@ -565,4 +565,30 @@ test_expect_success '--onto with --ref rejects multiple revision ranges' '
->  	test_grep "cannot be used with multiple revision ranges" err
->  '
->  
-> +test_expect_success 'replay merge commit fails' '
-> +	echo "fatal: replaying merge commits is not supported yet!" >expect &&
-> +	test_must_fail git replay --ref-action=print --onto main I..P 2>actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'replay to rebase merge commit with --linearize' '
-> +	git replay --ref-action=print --linearize --onto main I..topic-with-merge >result &&
-> +
-> +	test_line_count = 1 result &&
-> +
-> +	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-> +	test_write_lines O N J M L B A >expect &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'replay to rebase merge commit with --linearize down to root commit' '
-> +	git replay --ref-action=print --linearize --onto main A..topic-with-merge >result &&
-
-As with other test pieces, this "git replay" command line is overly
-long and hides the important bit which is that the range being
-replayed is *not* actually down to the root, which is A (it excludes
-A).  Intended?
-
-> +
-> +	test_line_count = 1 result &&
-> +
-> +	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-> +	test_write_lines O N J I M L B A >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
-
-Thanks.
+That's fine.  I think it is OK to add a new patch on top of that
+series.
