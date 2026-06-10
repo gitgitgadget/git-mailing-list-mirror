@@ -1,361 +1,155 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outbound.st.icloud.com (p-east2-cluster3-host7-snip4-5.eps.apple.com [57.103.77.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B039B2F7AC1
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 10:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781088620; cv=pass; b=uBw3NmnkAnat9ACxfvLJ6nNQd/wwIOb8BEDG0KBqeviFv7Uejz7WjK5Cp54muSgLmL1bQCKNVdGz9FZOaoHbs4paYy/lBzgwtfFhPgH8UiruRVhpkoIeTC90vKrtUjJtHLbHrw4fojp6M5Su9VrqkLNYNbumcCjphAwfMJu8JF0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781088620; c=relaxed/simple;
-	bh=uACO4GmWH3m9HolK31uXSmcgYqLD6YRLkEuBYfzHNTA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=InPBdr0pc5IHQzlbCzoUVUX3d61jS2kdtV7SNPL/Ty6WS1L++51DqTJ83S8I0WAM/D782WtK/keQp5TZM3w+WKZi9Okt7neQGaTCm+WOGNMczvih5bH5rdMIZ0OuwuaaYmG117xU06YAV7D9eQ571TorhT6Nec5rPhFqYt13jSM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XfhrxsI0; arc=pass smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7B43FBEB3
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:01:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.77.236
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781089283; cv=none; b=mOk03MXUaxtfYo2l6/h/8ldiD4/qClPqaZOi1JfPnl54+PDnig9Lhd0Irp4/tFweK5J0JEs4XOXYUvF6wpaa8X5r1kAC7RbFFOaQTVNltBpXxyXkTPO2bAybRoy98ofz0re5q1cH0cUV1bwNXFcP/cOp1jRNYNh68AU+jMVp6XU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781089283; c=relaxed/simple;
+	bh=lj9RLFYyjsLXugSkZza3TXmlhY246Q8m5NPknkxOtsQ=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:To:Date; b=e2wgb1H933z9O9B/BCFC4s9WOjryZQlx5PsECtYWE2236XK2tvmo933Mtmg8TXzAViNdwY8XVfeo7B3L2RC8XKKxDDOF6A1whrBLW0mNhPygTVOMDHr98BctZbfEsvLUkxE0RU+Z8PAPD1O4mI6l903u9wBQEzOj8VaGU5Lrj9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=sWqM7D+e; arc=none smtp.client-ip=57.103.77.236
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XfhrxsI0"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-59cfbfe64baso2372912e0c.2
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 03:50:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781088617; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WIbetzjF8A78L3XccODlFcv1rdMA18O2byZBwpyZOot5IKeFzltzoereerpZAto0Xl
-         MkfAmWcNU5rkpDN5Rl/gc5eB7lHZ9iCpj+otJFLXcnToLOAmuTm7CjUw7SRqtoXW8lwm
-         z/DNBncPhSzCBkBLUPCYq3qViZaYR8hg/P46tcBvaW9wv3eDKp4MsGCRd6TCfLev5ugu
-         TiRQB0BxztVbQPkN3VDWOLJK60UpKU2wHc+q47IBXDVp83Abp1/sDfVqi/OptyrKG4GA
-         HO0mmojLekrRhQdv2AImlymnMy3a1JEPU8W5Nwp7thtRdXeWlxIVsAY6u+SN6W5zuWpY
-         LSbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=FyG226joSnYh3+KJrAYD4wtAMUPEnahf5hcgSw+eY8g=;
-        fh=Vskekxu6Igb/R78wkyr0owq/IrsrmeG9At1lS+oNkbw=;
-        b=UZcOp+hJBKg2u9wlerlWoSMzMIwZZEWekLbnGs6UjHZY728gqqVAjMX/9oMQhX9yI8
-         ze0/19P2jODJIbIN0uuIYnN2HyuJG+WDbkwCULOkBGTmunJPjcB2TH3TB7ex8E/dj5Rl
-         IRys69WZR9sg4PJbI75qSqot3qrKhvomnrxyI9UW5+JxjAVRkubcM/Gsc7X6yr934TOZ
-         EokN2eQT6eNV4ohMgXLROW1iiaXyHYB0UEbLLjQSQ1/G4vKDDQI4RV/chBj04Os2Igcx
-         ku1ohwkUbxYtHHTEEj/uqqNYDlUucO/gEfaxZcobZublxvYno5dNWbnO+yYrkSJLyHBp
-         1hRg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781088617; x=1781693417; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FyG226joSnYh3+KJrAYD4wtAMUPEnahf5hcgSw+eY8g=;
-        b=XfhrxsI0YTQqiKTEkm1frCHDbIJQCtH5VtqGvgG1a0LRQkpRfZu3LMffoepTdUW1L8
-         euuCuoFTLQppLmQKH93s6ZtFROucKiww6ke3TWeSLI38oTY6p/JAKVqSpzUVQ7o37An6
-         DokwnF4L1z/yR9CWI+VVhNyAJUdxNrgmjkhhlu3Wu/hQJyi13P5L2sg6KJWesgjLyOV4
-         aTzoUATvwmqPB7VTRMQEcS0ewuDMESagRMfeI/81FA+EU8fmxcxNhbkKs/WUnAaynJtW
-         jYzjxRPi3/1XXDDb77VGrrvHN7nMSeu+ZIy4hBkB3IfaF40ic2PxKeDqA46de6Fj05qC
-         z20Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781088617; x=1781693417;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FyG226joSnYh3+KJrAYD4wtAMUPEnahf5hcgSw+eY8g=;
-        b=gbtnkPDTPkhVwRo2O2ioer5yvpkxwdkV9R1+jbmLNUSDJzxl6I9YTjZRuO3Ioq6xKC
-         hOa30yxLdYNWdw8kwDoOvmXHMsfVJuiG2mVovV2YU4CS0QB2rp+/VzmXKZ24mff6DL6D
-         dLyjeNAuzgKcaM8m1yLxNuVwrwDEmSSQHh7VqYgeR0gPkB6Efe4M+T36qocbifGIjhDo
-         M+XVP3lluAy0xmipYa4CzUwNDV7TkSfZ+PFvExA/od5MCWSRt8XRz0hhRpQtBmIg402g
-         mjKfuTdeLWbjN2iMo27CeeacHW2EgcylsonWRJ4SDcbUnL9/TlcvrFFgknclnaL+ZExv
-         aDFA==
-X-Forwarded-Encrypted: i=1; AFNElJ/SDjL/e5Ij5dvJLylyRV5YBL5DNQs91Dc9WI4v3K1IERWMHReOz11kwkKWc53f64uJ/zk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDUs4eTuYxSqLAeRlofBiRYGR+vsfvbYut7a1RwTvE4vcMr070
-	rmr4nzp4Ga5kZhwDXWN0nlNch0qf/IztvUD1IwEy2AuMvLsfYjiPyYJx9M0FBzDfw0l1hiaUKPb
-	q/FfhvOqcpMxP65O+WkuIINZF4bw/Pu8=
-X-Gm-Gg: Acq92OFxZJF/6nVV5p0mqVPBa5J/BvNXHIJIt2n5Ud19u0+mz3szEta4uG9RQovPnNO
-	3J5qZEvT6jHkgKxQDXsIISJqoXu3rxcljqK3VyOch048Rh5bp/ZF5bXxzYzXu1lwom1DjvTCQbn
-	JtO/i0JcKz23plhW+0Q9E3LTeigYJo7zZMJwOn1shMzAUvm/qXCIRQUGQCF5weCH8xCo/T1BPkY
-	jHanPiCgcuuDY9DW6f8Gw2AAHyobdWgL2HNuUz68aedDmU1mao4Q7/d70D4LT6zigsGRr/7i9RC
-	IaZM0d3AUca+Hm/l0SOFtALLbF07WcLrMvqcn2sQFjn7FtRaI26+qkllvV0rcE+5j7/JZ15sRGa
-	+2V+wU5yh
-X-Received: by 2002:a05:6122:134f:b0:575:e9eb:d879 with SMTP id
- 71dfb90a1353d-5ac48699ccdmr12658621e0c.0.1781088617529; Wed, 10 Jun 2026
- 03:50:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jun 2026 06:50:16 -0400
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 10 Jun 2026 06:50:16 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com>
-References: <20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="sWqM7D+e"
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPS id BF61D1800A19
+	for <git_at_vger_kernel_org_zrn2851626f813_a09p4603@icloud.com>; Wed, 10 Jun 2026 11:01:12 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMEWwJACksBTUQeDx5WFlZNRAJCTQtWC18ZWgRBF0oDVRcOVk1YHlwDRAQcF0sZUAx3BldeWhdeTVEPDxlaFFwYU0VRH1RYQQ4KWhIYXBRcUFgeRhJWDV0JGRhGXlAbXwJCDxwTVhUTHUMZDysISgRDB0UCXgslEwlTVlsTVRdGCRkIXR0ZFVoJClcBRXhLBVV1Ux9Je0ByQANfc0kUQQUpdkYERXw8AltzXHZFD0xzBFQHXQVdVlACWlUSBEAIVlBeCF4fTBw=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1781089275; x=1783681275; bh=QqQiRwSHIOYjpS6pTf0TxJvsgyAqy99egqyMooGJkUw=; h=From:Content-Type:Mime-Version:Subject:Message-Id:To:Date:x-icloud-hme; b=sWqM7D+ey2xQo62ANIfR6UNaThNQPvv6lPut3zIFUDU1JcuI99A3VJq9/4ISS3xmYwVpsrTAYs8Gp3NEseCZFW86LKdCUKwhQlF6PnoW26QtshhUAiT4PR9+V4c188sYhW9eBiO/5JvCVwZLm5zv/LGtrdaOc3CP7Otm4wy5Wh58/DLm5CDQz0R8M+KmWS6cPn3QkB6gLIW4DvZWcsC/XVA1qjhZ/+SINnyxF5SzvD1R9iWe+rONueG/WCEImNEjOBDVG+7cuZxjqZxKvwsL0LUyCNyMv27qMqxc0HqVjGP+w0DCu3hXwVOB2VKlB1cKliPTtFTpMkDmPgiLWWNgGQ==
+Received: from smtpclient.apple (unknown [17.42.251.67])
+	by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPSA id 963C018005F6
+	for <git_at_vger_kernel_org_zrn2851626f813_a09p4603@icloud.com>; Wed, 10 Jun 2026 11:01:07 +0000 (UTC)
+From: betel_taxis4h@icloud.com
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Wed, 10 Jun 2026 06:50:16 -0400
-X-Gm-Features: AVVi8CdU-_HhJKovBOSu-UkEHNzAYxR_5_WuS6PUkE74KkXOfZoz39jhChHLgdc
-Message-ID: <CAOLa=ZRHKNNymXGk31YgECjUmF9nZ8GsPUdQb7aKBH5DKMz7=w@mail.gmail.com>
-Subject: Re: [PATCH v2] ref-filter: restore prefix-scoped iteration
-To: Tamir Duberstein <tamird@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
-	ZheNing Hu <adlternative@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000005ca8c50653e402ad"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: [BUG] rebase --update-refs emits unqualified "update-ref HEAD" into
+ the todo
+Message-Id: <35A368B8-9B8A-44A9-96DA-65ED16D7D564@icloud.com>
+To: git@vger.kernel.org
+Date: Wed, 10 Jun 2026 12:00:54 +0100
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+X-CLX-UShades: None
+X-CLX-UnSpecialScore: None
+X-CLX-Spam: false
+X-MANTSH: 1TFkXHxoRCllEF2wBa2cfRVh4HwFNEQpZTRdkRURPEQpZSRcacRoQGncGGRpxGRA
+ bdwYYGgYaEQpZXhdobnkRCkNOF1JyRmtgbGV1T3odYU96RklCSH0TTGYeQxoYQHhjE0xYEQpYX
+ BcZBBoEHxIFGxoaBB0aBBsTEgQbGRAbHhofGhEKXlkXQnJfQ38RCkxaF2hDa2trEQpFWRdva2s
+ RCkNaFxsdBB4YBBgfGwQcHREKQl4XGxEKRF4XGBEKXk4XGxEKQkUXYBpsZRh4GmttRHkRCkJOF
+ 2xwYHlAHWJSaRpiEQpCTBdgGmxlGHgaa21EeREKQm4Xb1xiG2NnTH5IHhsRCkJsF2AabGUYeBp
+ rbUR5EQpCQBdoem1lZkBCGhJPbxEKQlgXYVpwGW0Tem1+ThwRCk1eFxsRCkVDFxsRCnBnF2x4X
+ UZPHmx9YwV7EBkaEQpwaBdpT0hMfmxzWF9GTRAZGhEKcGgXa2hrU0McZBJCGm0QGRoRCnBoF2J
+ yXE5NRQVjU1ppEBkaEQpwaBdlEht+SWFBZ1lSbxAZGhEKcGgXZFJrHF4STF9BQ3IQGRoRCnBoF
+ 29nXW5AUF4TS1ITEBkaEQpwaBdgZG15QH5/aWZ8HxAZGhEKcGgXYmhDAV5MXn5weEQQGRoRCnB
+ MF2x8X2YZbFtBUENBEBkaEQptfhcbEQpYTRdLEQ==
+X-Authority-Info-Out: v=2.4 cv=W9k1lBWk c=1 sm=1 tr=0 ts=6a2943f9
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=x7bEGLp0ZPQA:10 a=07kmp8Wwd-MA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=sgalKznxOHDm0tBmlUsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: xXlAJFO_eP7KePlchbW9fL4i02jRI9fr
+X-Proofpoint-GUID: xXlAJFO_eP7KePlchbW9fL4i02jRI9fr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDEwNSBTYWx0ZWRfX8ukVEA6B8sE5
+ flsX7a7uRqdoLlAzpeBs9P0STgbBdkDsVZMFxv5mt+GdD4r3SYG6c2pkorLWgaTnUQXwqm1hfKy
+ JwI6mqj5e2Bx2kpX2ohcUEdArkjCU647M6j0t8YpJmH3XQltvkHyFoSkyeiLbfnRHZJQBYrfG0M
+ rCx2vhSByuKjBM1NH2s9DFzfgMYsvVq1PMq8LzqWmTGpB+0p5wy7SUPv9BeKcWDS8/13bXAKdEd
+ W4do0Dc3S1b4rycjB+Fl7NiBsiYqUgB3i0Um9jhwWgpqAtE6MdjgSLEVaOH+7JmbJJ5aqIqhTbt
+ SGLEQA0uGQQlc2FVxSWRUjR53ILbv8wz2ERiOHpjohG3UhcuQcWjqm1RJMsCeg=
 
---0000000000005ca8c50653e402ad
-Content-Type: text/plain; charset="UTF-8"
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Tamir Duberstein <tamird@gmail.com> writes:
+With rebase.updateRefs=3Dtrue, an interactive rebase of the checked-out =
+branch generates a todo containing the literal line "update-ref HEAD=E2=80=
+=9D, which git's own todo parser then rejects.
 
-> Commit dabecb9db2 (for-each-ref: introduce a '--start-after' option,
-> 2025-07-15) changed single-kind branch, remote-tracking branch, and tag
-> enumeration in do_filter_refs() from constructing an iterator with the
-> namespace prefix to constructing an unscoped iterator and applying the
-> prefix with ref_iterator_seek().
->
-> Before that change, refs_for_each_fullref_in() passed the namespace
-> prefix during iterator construction. That helper has since been
-> replaced by refs_for_each_ref_ext().
->
-> The files backend primes its loose-ref cache for the construction
-> prefix before it opens packed refs. An empty construction prefix
-> therefore reads every loose ref, and a later seek cannot undo that I/O.
-> Consequently, git branch, git branch --remotes, and git tag scale with
-> unrelated loose refs.
->
+Minimal reproduction (plain repo, no worktrees, no remotes required):
 
-And this is the crux of the issue. Currently we do
+  git init -b main repro && cd repro
+  git -c user.email=3Dt@t.t -c user.name=3Dt commit --allow-empty -m =
+base
+  git checkout -b feat
+  git -c user.email=3Dt@t.t -c user.name=3Dt commit --allow-empty -m c1
+  git -c user.email=3Dt@t.t -c user.name=3Dt commit --allow-empty -m c2
+  git -c rebase.updateRefs=3Dtrue rebase -i feat~2
 
-- refs_ref_iterator_begin()
-  - ref_iterator_seek()
+The generated todo contains:
 
-And between the two `cache_ref_iterator_set_prefix()` is already called
-which caches all the loose refs. This is the IO intensive operation this
-patch tries to avoid.
+  pick <c1> c1
+  pick <c2> c2
+  update-ref HEAD                <-- emitted for HEAD, a symref to the =
+branch being rebased
+  update-ref refs/heads/feat     (correctly placed; this one is fine)
 
-I think it would be worthwhile to add this information in the commit
-message.
+Letting the editor save the auto-generated todo verbatim (or running =
+`git rebase --continue`) fails immediately with:
 
->
-> Patrick Steinhardt observed during review that iterator construction
-> and seeking accepted similar strings but assigned them different state
-> semantics. Junio C Hamano then pointed out that no current command can
-> combine start_after with this single-kind path, but future branch or
-> tag support would need to keep the namespace while moving the cursor.
->
-> Keep the existing start_after path unchanged. The iterator API cannot
-> currently seek to one string while retaining another as its prefix:
-> an unflagged seek clears the prefix, while REF_ITERATOR_SEEK_SET_PREFIX
-> replaces it with the seek string.
->
-> For the commands affected by this regression, which do not set
-> start_after, pass the namespace prefix during iterator construction so
-> that loose refs are scoped before the packed-refs snapshot is opened.
-> This fixes the current regression without deleting the ref-filter state
-> discussed during review or changing its dormant behavior.
->
-> Add REFFILES-gated performance cases with one branch, one
-> remote-tracking branch, one tag, and 10,000 unrelated loose refs. The
-> benchmarks were run with:
->
->     GIT_PERF_REPEAT_COUNT=5 GIT_PERF_MAKE_OPTS=-j8 \
->         t/perf/run a89346e34a . -- p6300-for-each-ref.sh
->
-> The following are the best of five runs, with each run invoking the
-> command ten times. Times are elapsed seconds with user and system CPU
-> seconds in parentheses:
->
->                                   a89346e34a       this commit
->   branch                       2.74(0.13+2.56)   0.11(0.04+0.04)
->   branch --remotes             2.81(0.13+2.62)   0.12(0.04+0.04)
->   tag                          3.01(0.14+2.82)   0.11(0.04+0.04)
->
-> Both revisions used the default -O2 build flags and a config.mak
-> containing only "NO_REGEX = NeedsStartEnd". They were built with Apple
-> clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro (Mac16,6)
-> with a 16-core Apple M4 Max (12 performance and four efficiency cores)
-> and 128 GB RAM.
->
-> Link: https://lore.kernel.org/git/aGZidwwlToWThkn8@pks.im/
-> Link: https://lore.kernel.org/git/xmqqikjq7s16.fsf@gitster.g/
-> Fixes: dabecb9db2b2 ("for-each-ref: introduce a '--start-after' option")
-> Assisted-by: Codex gpt-5.5
-> Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-> ---
-> The series is based on a89346e34a (maint) because the regression has
-> been present in released versions since Git 2.51.0.
-> ---
-> Changes in v2:
-> - Extract local variable `store`.
-> - Link to v1: https://patch.msgid.link/20260605-fix-git-branch-regression-v1-1-02f40ad40929@gmail.com
-> ---
->  ref-filter.c                 | 28 +++++++++++++++++++---------
->  t/perf/p6300-for-each-ref.sh | 39 ++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 57 insertions(+), 10 deletions(-)
->
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 1da4c0e60d..5cbc007d64 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -3315,19 +3315,29 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, refs_for
->  		prefix = "refs/tags/";
->
->  	if (prefix) {
-> -		struct ref_iterator *iter;
-> +		struct ref_store *store = get_main_ref_store(the_repository);
->
-> -		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
-> -					       "", NULL, 0, 0);
-> +		if (filter->start_after) {
-> +			struct ref_iterator *iter;
-> +
-> +			iter = refs_ref_iterator_begin(store, "", NULL, 0, 0);
->
-> -		if (filter->start_after)
->  			ret = start_ref_iterator_after(iter, filter->start_after);
-> -		else
-> -			ret = ref_iterator_seek(iter, prefix,
-> -						REF_ITERATOR_SEEK_SET_PREFIX);
-> +			if (!ret)
-> +				ret = do_for_each_ref_iterator(iter, fn,
-> +							       cb_data);
-> +		} else {
-> +			/*
-> +			 * Pass the prefix during construction because the files
-> +			 * backend primes loose refs before a later seek can
-> +			 * narrow the iterator.
-> +			 */
-> +			struct refs_for_each_ref_options opts = {
-> +				.prefix = prefix,
-> +			};
->
-> -		if (!ret)
-> -			ret = do_for_each_ref_iterator(iter, fn, cb_data);
-> +			ret = refs_for_each_ref_ext(store, fn, cb_data, &opts);
-> +		}
+  error: update-ref requires a fully qualified refname e.g. =
+refs/heads/HEAD
+  error: invalid line 3: update-ref HEAD
+  You can fix this with 'git rebase --edit-todo' and then run 'git =
+rebase --continue'.
 
-This would work, as now we separate out the regular path to use
-`do_for_each_ref_iterator()` instead.
+What did you expect to happen? (Expected behavior)
 
-But this causes a bit of confusion, why do we need to use
-`do_for_each_ref_iterator()` and why not simply provide the prefix to
-`refs_ref_iterator_begin()`, like before?
+--update-refs should not emit an "update-ref HEAD" line. HEAD is a =
+symbolic alias of the branch being rebased; the branch ref itself is =
+(correctly) excluded from the update-ref set, so its HEAD alias should =
+be excluded too. The todo should contain only fully-qualified =
+refs/heads/... lines.
 
-On top of master, the below diff seems to fix the issue and works with
-the benchmarks provided in this patch. (I haven't tested it with out
-test suite though).
+What happened instead? (Actual behavior)
 
-modified   ref-filter.c
-@@ -3316,15 +3316,16 @@ static int do_filter_refs(struct ref_filter
-*filter, unsigned int type, refs_for
+git emits a todo line ("update-ref HEAD") that its own sequencer parser =
+rejects as not fully qualified, breaking the rebase. The only recovery =
+is `git rebase --edit-todo` to manually delete the line.
 
- 	if (prefix) {
- 		struct ref_iterator *iter;
-+		struct ref_store *store;
+What's different between what you expected and what actually happened?
 
--		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
--					       "", NULL, 0, 0);
-+		store = get_main_ref_store(the_repository);
+git generated a todo command it refuses to execute. The unqualified =
+"HEAD" should either be expanded to its target ref or omitted entirely.
 
--		if (filter->start_after)
-+		if (filter->start_after) {
-+			iter = refs_ref_iterator_begin(store, "", NULL, 0, 0);
- 			ret = start_ref_iterator_after(iter, filter->start_after);
--		else
--			ret = ref_iterator_seek(iter, prefix,
--						REF_ITERATOR_SEEK_SET_PREFIX);
-+		} else {
-+			iter = refs_ref_iterator_begin(store, prefix, NULL, 0, 0);
-+		}
+Anything else you want to add:
 
- 		if (!ret)
- 			ret = do_for_each_ref_iterator(iter, fn, cb_data);
+- Reproduces identically in a plain single-worktree repo and in a =
+bare-repo + linked-worktree layout, so it is not worktree-specific.
+- An in-sync remote-tracking ref (origin/feat) on the tip adds a second, =
+valid "update-ref refs/remotes/origin/feat" line but is not required to =
+trigger the fatal "update-ref HEAD".
+- Workaround: unset rebase.updateRefs (or pass -c =
+rebase.updateRefs=3Dfalse), or delete the "update-ref HEAD" line via =
+`git rebase --edit-todo`.
 
 
-I would say something like this would make more sense, since it still
-keeps the current structure without introducing a new command.
+[System Info]
+git version:
+git version 2.54.0
+cpu: aarch64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+rust: disabled
+gettext: enabled
+libcurl: 8.14.1
+OpenSSL: OpenSSL 3.5.6 7 Apr 2026
+zlib: 1.3.1
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+default-ref-format: files
+default-hash: sha1
+uname: Linux 7.0.11-orbstack-00360-gc9bc4d96ac70 #1 SMP PREEMPT Thu Jun  =
+4 16:40:25 UTC 2026 aarch64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.41
+$SHELL (typically, interactive shell): /usr/bin/zsh
 
->  	} else if (filter->kind & FILTER_REFS_REGULAR) {
->  		ret = for_each_fullref_in_pattern(filter, fn, cb_data);
->  	}
-> diff --git a/t/perf/p6300-for-each-ref.sh b/t/perf/p6300-for-each-ref.sh
-> index fa7289c752..ed9c1c6a19 100755
-> --- a/t/perf/p6300-for-each-ref.sh
-> +++ b/t/perf/p6300-for-each-ref.sh
-> @@ -1,6 +1,6 @@
->  #!/bin/sh
->
-> -test_description='performance of for-each-ref'
-> +test_description='performance of ref-filter users'
->  . ./perf-lib.sh
->
->  test_perf_fresh_repo
-> @@ -84,4 +84,41 @@ test_expect_success 'pack refs' '
->  '
->  run_tests "packed"
->
-> +test_expect_success REFFILES 'setup many unrelated loose refs' '
-> +	git init scoped &&
-> +	test_commit -C scoped --no-tag base &&
-> +	test_seq $ref_count_per_type |
-> +		sed "s,.*,update refs/custom/unrelated_& HEAD," |
-> +		git -C scoped update-ref --stdin &&
-> +	git -C scoped update-ref refs/remotes/origin/main HEAD &&
-> +	git -C scoped update-ref refs/tags/only HEAD
-> +'
-> +
-> +test_perf "branch (many unrelated loose refs)" --prereq REFFILES "
-> +	(
-> +		cd scoped &&
-> +		for i in \$(test_seq $test_iteration_count); do
-> +			git branch --format='%(refname)' >/dev/null
-> +		done
-> +	)
-> +"
-> +
-> +test_perf "branch --remotes (many unrelated loose refs)" --prereq REFFILES "
-> +	(
-> +		cd scoped &&
-> +		for i in \$(test_seq $test_iteration_count); do
-> +			git branch --remotes --format='%(refname)' >/dev/null
-> +		done
-> +	)
-> +"
-> +
-> +test_perf "tag (many unrelated loose refs)" --prereq REFFILES "
-> +	(
-> +		cd scoped &&
-> +		for i in \$(test_seq $test_iteration_count); do
-> +			git tag --format='%(refname)' >/dev/null
-> +		done
-> +	)
-> +"
-> +
->  test_done
->
-> ---
-> base-commit: a89346e34a937f001e5d397ee62224e3e9852040
-> change-id: 20260605-fix-git-branch-regression-9e4236f18091
->
-> Best regards,
-> --
-> Tamir Duberstein <tamird@gmail.com>
-
-Thanks for the patch, this is indeed a regression we must fix and the
-benchmarks are a clear indication of it.
-
---0000000000005ca8c50653e402ad
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9468da1884dcaba9_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vcFFXWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL25DQy85ZEttWnBybldWR1h4RW0wZ2xESzE3Q3hiSgpRZmEvR1pEbjNl
-b3lGVEQ2U0s4TXlaWlRiV2NjbnJIRTZtajdKUExGdnJ1L1pxbTBrQTNidkQ3cUIyTkY2Y3JiClVQ
-Vi8vdW8yZmluWlErYXlNajlFNGlFNWhKNDMva0NCM0duUDR5ckxlVXE2d3R2b2lYRG5PanF5VkVo
-RzcvOUIKd0FOK2k2SlRnaXk1ZkdKYjRoZWxYWk4wR2dDd1BLU1UzaFlKQkxrcWFsa0FuSTFHMGdw
-RitZMktRUDEzbUhmWQpZRDIxSURZN3p1VnQ3TkVVSlhkNzQ0UnJkN0VuVXBuc295bHZZOENRR1h4
-eEM0cGZXMnc1MEF1S2VIVEk1cktDClNscmhDeG5QRDNxMXFiV1V3QUtjR1liOWx6dE5JNG9CUzNQ
-N0U1YllZM1k1OVF6a0JzZFg5T1pGcGRibm41cEQKT0toN25ORy9ucngzU1hpUWcvVEJ5N1Q5Yi9s
-azBLSkwwSHJpeEZvNTluT2sxUG83QndRTWpjVkM4SXVZSmYyNgp2Vk1BZUdiTEFCa3Z0MzNvaHNB
-Z2pVZnhNZzJTeURsRTNiZHFOakxNbnRKdnVzVDFjbTdlbWdDcVlSRlVXMkE0Ck0yUkdhbTJINmlH
-MVpGdkNyQWtxSWU2Vmo5ZlhDbisrYXV1eTNyMD0KPVR4dFcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000005ca8c50653e402ad--
