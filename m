@@ -1,155 +1,196 @@
-Received: from outbound.st.icloud.com (p-east2-cluster3-host7-snip4-5.eps.apple.com [57.103.77.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7B43FBEB3
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:01:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.77.236
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781089283; cv=none; b=mOk03MXUaxtfYo2l6/h/8ldiD4/qClPqaZOi1JfPnl54+PDnig9Lhd0Irp4/tFweK5J0JEs4XOXYUvF6wpaa8X5r1kAC7RbFFOaQTVNltBpXxyXkTPO2bAybRoy98ofz0re5q1cH0cUV1bwNXFcP/cOp1jRNYNh68AU+jMVp6XU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781089283; c=relaxed/simple;
-	bh=lj9RLFYyjsLXugSkZza3TXmlhY246Q8m5NPknkxOtsQ=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:To:Date; b=e2wgb1H933z9O9B/BCFC4s9WOjryZQlx5PsECtYWE2236XK2tvmo933Mtmg8TXzAViNdwY8XVfeo7B3L2RC8XKKxDDOF6A1whrBLW0mNhPygTVOMDHr98BctZbfEsvLUkxE0RU+Z8PAPD1O4mI6l903u9wBQEzOj8VaGU5Lrj9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=sWqM7D+e; arc=none smtp.client-ip=57.103.77.236
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53943D7D90
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 11:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781089718; cv=pass; b=AA2S5w1vARxypop2mjhZxaFtK6OLdpz0otMPOXvzAHQgAc89zzUl8inbTX5PwkzklvHTXPPTEp6W0Na6HojU/TZe0aWU1VXgE6XA+Owr0M4S7gEhV0YBCFJCJlA0U1PBmGOr32Wfxn4CYJuvnPBbBI9Bl2JBO/OFDzNuoGoK6LM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781089718; c=relaxed/simple;
+	bh=opUcNrTelRUxrRmVxsBHF5ps3jQe0xY1z1Z8WQjcYj4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mjRa669Lej3hAWjv7A5hTN8Lg2JjVIR+6kromY7PGJTolsMj8pbi21ytG5X7wN9Z6owoHViu5b1QFYACl7+oMEFQ/t1Gz+QYpiwRHhf6QzvOtRbgbT9p4hnyEc8JgEH7OcJP6dj6Do9ZX56Xw7G1YwD2J2vNVnMRaPm0khR9kaU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HbfVHHyE; arc=pass smtp.client-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="sWqM7D+e"
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPS id BF61D1800A19
-	for <git_at_vger_kernel_org_zrn2851626f813_a09p4603@icloud.com>; Wed, 10 Jun 2026 11:01:12 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMEWwJACksBTUQeDx5WFlZNRAJCTQtWC18ZWgRBF0oDVRcOVk1YHlwDRAQcF0sZUAx3BldeWhdeTVEPDxlaFFwYU0VRH1RYQQ4KWhIYXBRcUFgeRhJWDV0JGRhGXlAbXwJCDxwTVhUTHUMZDysISgRDB0UCXgslEwlTVlsTVRdGCRkIXR0ZFVoJClcBRXhLBVV1Ux9Je0ByQANfc0kUQQUpdkYERXw8AltzXHZFD0xzBFQHXQVdVlACWlUSBEAIVlBeCF4fTBw=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1781089275; x=1783681275; bh=QqQiRwSHIOYjpS6pTf0TxJvsgyAqy99egqyMooGJkUw=; h=From:Content-Type:Mime-Version:Subject:Message-Id:To:Date:x-icloud-hme; b=sWqM7D+ey2xQo62ANIfR6UNaThNQPvv6lPut3zIFUDU1JcuI99A3VJq9/4ISS3xmYwVpsrTAYs8Gp3NEseCZFW86LKdCUKwhQlF6PnoW26QtshhUAiT4PR9+V4c188sYhW9eBiO/5JvCVwZLm5zv/LGtrdaOc3CP7Otm4wy5Wh58/DLm5CDQz0R8M+KmWS6cPn3QkB6gLIW4DvZWcsC/XVA1qjhZ/+SINnyxF5SzvD1R9iWe+rONueG/WCEImNEjOBDVG+7cuZxjqZxKvwsL0LUyCNyMv27qMqxc0HqVjGP+w0DCu3hXwVOB2VKlB1cKliPTtFTpMkDmPgiLWWNgGQ==
-Received: from smtpclient.apple (unknown [17.42.251.67])
-	by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPSA id 963C018005F6
-	for <git_at_vger_kernel_org_zrn2851626f813_a09p4603@icloud.com>; Wed, 10 Jun 2026 11:01:07 +0000 (UTC)
-From: betel_taxis4h@icloud.com
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbfVHHyE"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-6c6507549c3so4670696137.0
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 04:08:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781089714; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gB1gIUtmsDl3+8nx8l5GaW6ZosnqW2pnUOUZEPwNLhUSu99bcseU58jcpYxSPErLjb
+         LqYLBPsO1bMM3r8jeBqvH755beZOrdmTK4CKxSgD61b/6txoGPQOxHep4viuzrw+YiAI
+         RA595FY5XMShHOhlM9DCecMwRqEVHKAAYZH53+vb0daLKbN3a9ep5cl9TpPZhMh2Kh7V
+         Ew/wtOqZC38pnruZ22wz9RMqF/B7th/bM7C6Iw1xZ3U8mqhsQrDWh39Lo0L5525VZk8r
+         aJj/dTF1E4mOK/5kJp3lsK3YmKKzlW0gf1FySCA05d01+lzvfmyJ1E/B5haEg3L/7Gsv
+         F8OA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=BgGQb2tZNCaoJw55UnFNKUoU7BI4jl4Re7vl4CA/tio=;
+        fh=3QWKyY+ogq/0u0yZByDTBS0Ubo92BfsKkqnbcyEf3jQ=;
+        b=cijkPVA9hRf7XUoLTeYSzOpVWwHYiN5+YXkXPP/+65WWE4wxom8TLCMqgcDLwBQPQL
+         leP3n9l0HSBAk9yqlZK++kp/OmA5EHq3t3G3mOybNJ3hXA4D/jjClUmo3dgxWlXa/i10
+         2KvXP+6scwtXYFq8TKBozaNV5OQ9TBKLLr53X4SOP3GLAM+hfujBM/EDzdHMn1uNa6Rc
+         T3UGXLKc3IUNyJNT2GGzrPBm0twGs6vpQUax1Gmck0SyHh5dr1+U62pVRZJZAbOjBo7F
+         zA2pWhgGpfLI4tmGD414B8pZEO8RCu9Oie983zCxb07+7L6/iqah2uqzxCrznh2Tx0CG
+         CIrw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781089714; x=1781694514; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BgGQb2tZNCaoJw55UnFNKUoU7BI4jl4Re7vl4CA/tio=;
+        b=HbfVHHyEewT9yNeHZiLwAqRFAxcQOo8kVZtemlrt8wG4uch3b6hov+L3No2N9rUL9x
+         JN6uQftUgNo8SzpN1YbTDtacvbl3XabIYlvxzuRjugFTQLrQ2Kt4psIxSdJfRv79LTmh
+         +6qCl+JYttxfOq7Oq8mHbO9MJX1bnsFlwrdLUtp/Twvx97Y6X9GZNp8K3H5QYGx5ZDba
+         3n6aO9IGDC8DFew+uSD8yU6N5nyClnhSZrCYQs3ThKkQQ+jv5I3ULhMe0fiVgaCic3pd
+         ofCVF9Vxk5WOf85V9bC1SmsAQUG1w/sKCRgixRcm7dcH/I8183Q/peQmpPQhpV6SLWNy
+         guVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781089714; x=1781694514;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BgGQb2tZNCaoJw55UnFNKUoU7BI4jl4Re7vl4CA/tio=;
+        b=bYuvObIO8GMdg6lIp5itt2hX/h4mE5JJdGgcWOVybr8kcz48eKTuwpJZoMkRS+McAW
+         DaYrPrTMF7w6CCW7z4DwRa8mwyMT6KoPQoJJ8XXleL6LIH0uM9njU+XtiDIhLslrA9LS
+         mOro/TXjTARTVWH2EYujZGTLQYmzRzChEm5ns19pFg03uRFwu4jn/5hHVzEnHseNnuhR
+         /WmnHDLCSQwLLyyhXYNDaR3MrtQt8Vn4KbG/ioVUvKUBkoz9jknESFOs/YC+le34fjLG
+         cgaXipUqtcEgJk14wzOydIZzyNE7leRw1KdamMKYmVjFApTyne8MeMJ6v9KQeidkHZGs
+         E6BQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+/55cAjyOMJbZLmEoYNpJgNRcicdJN1k1ZUfK4JrQF0JVQ5JfHJU+pu31u5rgLUmnKBeY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjCl/JpZcowMBxNcwv4401T3Ae/UwFz0FGaIBabvssJjEy18k7
+	ebSxAThp5CXNfNg1NxUWsbL/9zfDABzm303CFVPcc6d466Aajryl70mI79Ob9j8EEmaAIMlim7U
+	zdsQiigffHbTIsnJ25L7+cpVNsVN741c=
+X-Gm-Gg: Acq92OFNBvU+CN3VbjKVPi+YilEXcPvGXJess1DDRFqK4GzgwqxPmibshkj1C24Y5z8
+	8OetdnkEwvMkGSubA4T5KmMVOZjAXEGnGDl9MnKoWczjcn4Mnk6Lho1MMP/k7i7LrXVEEVD+YO1
+	VvB8rdD6XIcmufsvDKl8mtkzIEUUBRzIPaVuKn751Yf1IoIlYHLhwrX36sUc2CyClBGKvBBiQQ8
+	4v87DToy/07uIC/QzwnWCyDuEj9mBIVH0g6QY8duVhw6XZaAK8v2qBdwQXOqIhnnhW+yY8pi3rt
+	/NbRz5hLJD+Oy2VQfgylSTUzP2RhOK8QuV2b2xBd0RTd96wXh2//+w0cUScdPCPE3qJ+9qzLBvE
+	Ia8xEmjWT
+X-Received: by 2002:a05:6102:6a8c:b0:650:94b2:b214 with SMTP id
+ ada2fe7eead31-7003a93041emr9146083137.12.1781089714338; Wed, 10 Jun 2026
+ 04:08:34 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jun 2026 07:08:33 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 10 Jun 2026 07:08:33 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20260608-pks-b4-v3-1-f5e497d10c56@pks.im>
+References: <20260608-pks-b4-v3-0-f5e497d10c56@pks.im> <20260608-pks-b4-v3-1-f5e497d10c56@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: [BUG] rebase --update-refs emits unqualified "update-ref HEAD" into
- the todo
-Message-Id: <35A368B8-9B8A-44A9-96DA-65ED16D7D564@icloud.com>
-To: git@vger.kernel.org
-Date: Wed, 10 Jun 2026 12:00:54 +0100
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-X-CLX-UShades: None
-X-CLX-UnSpecialScore: None
-X-CLX-Spam: false
-X-MANTSH: 1TFkXHxoRCllEF2wBa2cfRVh4HwFNEQpZTRdkRURPEQpZSRcacRoQGncGGRpxGRA
- bdwYYGgYaEQpZXhdobnkRCkNOF1JyRmtgbGV1T3odYU96RklCSH0TTGYeQxoYQHhjE0xYEQpYX
- BcZBBoEHxIFGxoaBB0aBBsTEgQbGRAbHhofGhEKXlkXQnJfQ38RCkxaF2hDa2trEQpFWRdva2s
- RCkNaFxsdBB4YBBgfGwQcHREKQl4XGxEKRF4XGBEKXk4XGxEKQkUXYBpsZRh4GmttRHkRCkJOF
- 2xwYHlAHWJSaRpiEQpCTBdgGmxlGHgaa21EeREKQm4Xb1xiG2NnTH5IHhsRCkJsF2AabGUYeBp
- rbUR5EQpCQBdoem1lZkBCGhJPbxEKQlgXYVpwGW0Tem1+ThwRCk1eFxsRCkVDFxsRCnBnF2x4X
- UZPHmx9YwV7EBkaEQpwaBdpT0hMfmxzWF9GTRAZGhEKcGgXa2hrU0McZBJCGm0QGRoRCnBoF2J
- yXE5NRQVjU1ppEBkaEQpwaBdlEht+SWFBZ1lSbxAZGhEKcGgXZFJrHF4STF9BQ3IQGRoRCnBoF
- 29nXW5AUF4TS1ITEBkaEQpwaBdgZG15QH5/aWZ8HxAZGhEKcGgXYmhDAV5MXn5weEQQGRoRCnB
- MF2x8X2YZbFtBUENBEBkaEQptfhcbEQpYTRdLEQ==
-X-Authority-Info-Out: v=2.4 cv=W9k1lBWk c=1 sm=1 tr=0 ts=6a2943f9
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=x7bEGLp0ZPQA:10 a=07kmp8Wwd-MA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=sgalKznxOHDm0tBmlUsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: xXlAJFO_eP7KePlchbW9fL4i02jRI9fr
-X-Proofpoint-GUID: xXlAJFO_eP7KePlchbW9fL4i02jRI9fr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDEwNSBTYWx0ZWRfX8ukVEA6B8sE5
- flsX7a7uRqdoLlAzpeBs9P0STgbBdkDsVZMFxv5mt+GdD4r3SYG6c2pkorLWgaTnUQXwqm1hfKy
- JwI6mqj5e2Bx2kpX2ohcUEdArkjCU647M6j0t8YpJmH3XQltvkHyFoSkyeiLbfnRHZJQBYrfG0M
- rCx2vhSByuKjBM1NH2s9DFzfgMYsvVq1PMq8LzqWmTGpB+0p5wy7SUPv9BeKcWDS8/13bXAKdEd
- W4do0Dc3S1b4rycjB+Fl7NiBsiYqUgB3i0Um9jhwWgpqAtE6MdjgSLEVaOH+7JmbJJ5aqIqhTbt
- SGLEQA0uGQQlc2FVxSWRUjR53ILbv8wz2ERiOHpjohG3UhcuQcWjqm1RJMsCeg=
+MIME-Version: 1.0
+Date: Wed, 10 Jun 2026 07:08:33 -0400
+X-Gm-Features: AVVi8CdhmKzZpZkTnogwFylY-hQD80ziGUoFqbGVb9Mh6T-symif8_UcfKePmvM
+Message-ID: <CAOLa=ZQE-kkpSX=pP2A6SXdbp_O6AHzRmbUDOtKCsvz2Yz66Ng@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] MyFirstContribution: recommend shallow threading
+ of cover letters
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>, Weijie Yuan <wy@wyuan.org>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Toon Claes <toon@iotcl.com>
+Content-Type: multipart/mixed; boundary="000000000000bc8f410653e44383"
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+--000000000000bc8f410653e44383
+Content-Type: text/plain; charset="UTF-8"
 
-With rebase.updateRefs=3Dtrue, an interactive rebase of the checked-out =
-branch generates a todo containing the literal line "update-ref HEAD=E2=80=
-=9D, which git's own todo parser then rejects.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Minimal reproduction (plain repo, no worktrees, no remotes required):
+> The "MyFirstContribution" document recommends the use of deep threading
+> of cover letters: every cover letter of subsequent iterations shall be
+> linked to the cover letter of the preceding version. The result of this
+> is that eventually, threads with many versions are getting nested so
+> deep that it becomes hard to follow.
+>
+> Adapt the recommendation to instead propose shallow threading of cover
+> letters: instead of linking the cover letter to the previous cover
+> letter, the user is supposed to always link it to the first cover
+> letter. This still makes it easy to follow the iterations, but has the
+> benefit of nesting to a much shallower level.
 
-  git init -b main repro && cd repro
-  git -c user.email=3Dt@t.t -c user.name=3Dt commit --allow-empty -m =
-base
-  git checkout -b feat
-  git -c user.email=3Dt@t.t -c user.name=3Dt commit --allow-empty -m c1
-  git -c user.email=3Dt@t.t -c user.name=3Dt commit --allow-empty -m c2
-  git -c rebase.updateRefs=3Dtrue rebase -i feat~2
+Should we also modify 'Documentation/SubmittingPatches'? Which states:
 
-The generated todo contains:
+  All subsequent versions of a patch series and other related patches
+  should be grouped into their own e-mail thread to help readers find
+  all parts of the series.  To that end, send them as replies to either
+  an additional "cover letter" message (see below), the first patch, or
+  the respective preceding patch. Here is a
+  link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
+  how to submit updated versions of a patch series.
 
-  pick <c1> c1
-  pick <c2> c2
-  update-ref HEAD                <-- emitted for HEAD, a symref to the =
-branch being rebased
-  update-ref refs/heads/feat     (correctly placed; this one is fine)
+Personally, I find it a bit awkward when new versions are sent as a new
+separate thread, especially when the subject is changed over versions.
 
-Letting the editor save the auto-generated todo verbatim (or running =
-`git rebase --continue`) fails immediately with:
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/MyFirstContribution.adoc | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+> index b9fdefce02..984b7f5aa8 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -790,7 +790,7 @@ We can note a few things:
+>    v3", etc. in place of "PATCH". For example, "[PATCH v2 1/3]" would be the first of
+>    three patches in the second iteration. Each iteration is sent with a new cover
+>    letter (like "[PATCH v2 0/3]" above), itself a reply to the cover letter of the
+> -  previous iteration (more on that below).
+> +  first iteration (more on that below).
+>
+>  NOTE: A single-patch topic is sent with "[PATCH]", "[PATCH v2]", etc. without
+>  _i_/_n_ numbering (in the above thread overview, no single-patch topic appears,
+> @@ -1214,7 +1214,7 @@ between your last version and now, if it's something significant. You do not
+>  need the exact same body in your second cover letter; focus on explaining to
+>  reviewers the changes you've made that may not be as visible.
+>
+> -You will also need to go and find the Message-ID of your previous cover letter.
+> +You will also need to go and find the Message-ID of your first cover letter.
+>  You can either note it when you send the first series, from the output of `git
+>  send-email`, or you can look it up on the
+>  https://lore.kernel.org/git[mailing list]. Find your cover letter in the
+> @@ -1227,8 +1227,8 @@ Message-ID: <foo.12345.author@example.com>
+>
+>  Your Message-ID is `<foo.12345.author@example.com>`. This example will be used
+>  below as well; make sure to replace it with the correct Message-ID for your
+> -**previous cover letter** - that is, if you're sending v2, use the Message-ID
+> -from v1; if you're sending v3, use the Message-ID from v2.
+> +**first cover letter** - that is, for any subsequent version that you send,
+> +always use the Message-ID from v1.
+>
+>  While you're looking at the email, you should also note who is CC'd, as it's
+>  common practice in the mailing list to keep all CCs on a thread. You can add
+>
+> --
+> 2.54.0.1136.gdb2ca164c4.dirty
 
-  error: update-ref requires a fully qualified refname e.g. =
-refs/heads/HEAD
-  error: invalid line 3: update-ref HEAD
-  You can fix this with 'git rebase --edit-todo' and then run 'git =
-rebase --continue'.
+The patch looks good.
 
-What did you expect to happen? (Expected behavior)
+--000000000000bc8f410653e44383
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 55ae3385c0abc4a4_0.1
 
---update-refs should not emit an "update-ref HEAD" line. HEAD is a =
-symbolic alias of the branch being rebased; the branch ref itself is =
-(correctly) excluded from the update-ref set, so its HEAD alias should =
-be excluded too. The todo should contain only fully-qualified =
-refs/heads/... lines.
-
-What happened instead? (Actual behavior)
-
-git emits a todo line ("update-ref HEAD") that its own sequencer parser =
-rejects as not fully qualified, breaking the rebase. The only recovery =
-is `git rebase --edit-todo` to manually delete the line.
-
-What's different between what you expected and what actually happened?
-
-git generated a todo command it refuses to execute. The unqualified =
-"HEAD" should either be expanded to its target ref or omitted entirely.
-
-Anything else you want to add:
-
-- Reproduces identically in a plain single-worktree repo and in a =
-bare-repo + linked-worktree layout, so it is not worktree-specific.
-- An in-sync remote-tracking ref (origin/feat) on the tip adds a second, =
-valid "update-ref refs/remotes/origin/feat" line but is not required to =
-trigger the fatal "update-ref HEAD".
-- Workaround: unset rebase.updateRefs (or pass -c =
-rebase.updateRefs=3Dfalse), or delete the "update-ref HEAD" line via =
-`git rebase --edit-todo`.
-
-
-[System Info]
-git version:
-git version 2.54.0
-cpu: aarch64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-rust: disabled
-gettext: enabled
-libcurl: 8.14.1
-OpenSSL: OpenSSL 3.5.6 7 Apr 2026
-zlib: 1.3.1
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-default-ref-format: files
-default-hash: sha1
-uname: Linux 7.0.11-orbstack-00360-gc9bc4d96ac70 #1 SMP PREEMPT Thu Jun  =
-4 16:40:25 UTC 2026 aarch64
-compiler info: gnuc: 14.2
-libc info: glibc: 2.41
-$SHELL (typically, interactive shell): /usr/bin/zsh
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1vcFJhOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWVCREFDTlBKVnF4TkM1YlJZdVVCYTJVREJFME5IdwpvZlh6YmR4dlh3
+NmJxOHhtUUxlcXVHZGVOYnl4MTJDa0RRM1JQT21sNnN1SENUWERrcEEyVWkwUGp1TXdOdStuClZZ
+b2l4MHJrUmk3aXVvaHZlMDZxZk10aEVnUENkT0d0N2h1R1FQQTZCUlhXdW1Ga08reStzRm9xU2Vz
+VE94cTIKaHR0dDdPVTZVMEN5T2wrWEdPSXFVLzQyWHhOZU5rT0tEcVl4Q3l1RXlsUXJxaDdZYjl5
+a05XWEFXdi9nc1lxcQpFSlJ5aEozeFYxNVlvaVRIK2VwQzBicGZ3S2dyVlpEMkJOcnhpUHFpcFk2
+Rm8wMWExVEs1SFNvZmhIbmFvMlZSCjREQ3IrdmZEZjNZSHM2SW0zdlZCTzRFUjZaV3E0NG5DVWtx
+RjJYYmxrMFZTYUVZMzdMU0pPcndrMjZSN0dabm4KOHF3OVJwVzFKSHVNL0RrY1A3RjNxQXF0RFJ6
+MUIra0kzejFXL0NrQVA1ZHJVRXRSZE9qdk1wZ3MvTDcyMmJYUQpXdm5XK0FWcTZYTFlkQUJMVW1m
+MS9DQWJYNmtaUkFZSUpPQ01JQXRiN2VHZDQ4MEhRR0V0NUk2RllSVGIzYm5sClV6VGY5WFl4UkNq
+ZEFObCtIYmFIb1V1dlg2dkhhUVF5OEJwdFR5Zz0KPVd6VHIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000bc8f410653e44383--
