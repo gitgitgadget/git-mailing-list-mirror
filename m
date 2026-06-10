@@ -1,140 +1,116 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A613C2D0C97
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 21:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781128338; cv=none; b=KitSdI469YFXSDkmxX8QhyH/ymRzDEjN1rm4DFiHeEf9GBGDUf+imoJI/eTj7xhYCg1VIf6T2da14hm09Ox16KBmp5iNSvmk5UA3SlUZxDYM9eOOU2+JU/uCgPjMUa1CWfXnURtLD+305ZTcZgSZL49c7pOIt8zr8n+z8foJ4AY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781128338; c=relaxed/simple;
-	bh=9OMrn38YeuG5CtXiStfJsZiNNNBeNrqNnU3HBEBoarE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EJhgU60fyOWZi1C6L/g0wMEmum1hEgqwLimHbKF5CMwPD8ZNhAg1vDC1uEMirAMyE2CE0Oauo1qO/arZBKOTCgvwDRHI+pyubLIvlpN8dIFe+Z8+pgn9iL6O8XBHz9jXnnPGXEP2IrlP7nPz1HIidatrNKPEpJFtr4MmSLl6wMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fSv+oYSw; arc=none smtp.client-ip=209.85.167.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC481DE4EF
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 22:00:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781128825; cv=pass; b=rEXVRUeRSwFQujdJE7r5FqsNegFZyNZif/6zRQOQEHJYG5UX15R6sOJ5q0FeTfOYYRxitSmlKwgCmAErpK/5Ni+SQebsSwYAqfpH9N3j7Br+2TrFWwq0cjTpfbXHuEZx+aw61k7eS06siRCEipE3NWxqUoc83H0r+JelLNMgkEQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781128825; c=relaxed/simple;
+	bh=t6sGtCHsP9NXKZgppFxUVq1Xyv4NEcDswNx3HQQIHck=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U9j+yYdS6sbfPbHpP+dv1vEcdoEdoOlR/JWhQhv6fGvnW9BHyQdGsGXWK57Mdjya3rnUsPWJA07hJDOXz9yX84FNVZxfldKROQH2ah5D+jAlZeHHc6Pt2zcHZpVEl3om4ixISv/fDxeWsrMUAHZAm7Yqh/89528mQ1R2YppEMfY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lMZDRQGj; arc=pass smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fSv+oYSw"
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-487167d083bso197382b6e.3
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:52:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lMZDRQGj"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c0c20f0c0aso56318135ad.0
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:00:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781128824; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bf5J+Qgh/bjR4F7+oPCqCxufk4oW9seNnesjpN88AtPFp5P0m/jn2wiEJ/gn+ZkuD2
+         8Y5ajIcRuRaFZjg3S+/8LgLoZKeXKgsmXxGBsc1uRFsjh6ZB+M7BDfYR/HeKadOj092B
+         hdYVekUmbIrKHL3sNJSWDZbmJp4lbcPokfn8ICSqG+sQ6X7J4QXhMrN9ndQo8yKBReCx
+         2ehdk0pjekQijV36ac8W3xSJ0LTgVfGgGK4SQSgO4k9ZmfJLUurL+EuFUQciMMyHU/+Y
+         v8svRPGI7lwF1KMcFTc22TwWuL40xZpo6+F07gqRWdnv+k2lZ7xfsWBowWr0iJ9LqQao
+         YZ0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=t6sGtCHsP9NXKZgppFxUVq1Xyv4NEcDswNx3HQQIHck=;
+        fh=2ZqOkygQPiLG09KuaUBLmelfP4NyTv45iJ/X4ZTyW7k=;
+        b=HNDsGyzBJm65D22VLKclHex9QYfu6L9obgCeLAkXLoapNnc/Yyqx0+MMySxvvbpV1V
+         TZMHrRXW1bvrtRBya9eWZb6ex3JplmV7aM496uIP0NWDNneb9odKXXj6wLv1LvH93wQH
+         B553QAFiRT6rAqThJT8u6l6Ggo3ufbMcoJvEkI6uOGD/TYUa/6zMK8CE8ZYcIf/W+tIw
+         cyGQD3MOGoXw+QkNRB+B4aehs1BJFDBiBnwfbmfvF+yJ9yqqF+wxGSTBH5dmdRRSC+ut
+         I20HfDo5X2iCy4mDS7zxpLQaLyhnlhhqOXDKOivD1cLx6+b13Yq/nMNo8UqM/k5UTiGZ
+         xB3g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781128336; x=1781733136; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aZacks5wKwH5Bi5jU92Jsa0wWy/piajWBpwjvsTRlrA=;
-        b=fSv+oYSwgbATNd6efMmGB6FiGGybpJxVv68ZuWoXOsxBLAtkiSu0dvkWsIFXJ0LwqT
-         W7RjLFUn8RhyYvx+PPiIkqFRFr7KWpAz9gndB8RU1XOkPbz2hY/rIGJffC2oBw7rKxA7
-         ZamPI+1abWzrB8fGc2JA6eI0rDNCdHbFB0wbMpyyf0AyBM93Q+pyWREROYTPszN0uuWs
-         L+k1LGLxuWO+RLOjWARV2QBar0eaAuLC14EHuOLnrZ+kmG1GHgGYwkxtpmJGOyNJw3Ss
-         oE2aH8GvhBgkodc+6+juGNNG4vHH0eUY+zcqkMvqPOp9yCZeLjCtq3p5x9OBjVWS6+vW
-         YR9Q==
+        d=gmail.com; s=20251104; t=1781128824; x=1781733624; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t6sGtCHsP9NXKZgppFxUVq1Xyv4NEcDswNx3HQQIHck=;
+        b=lMZDRQGjbh6xnl3CyKwr4HC8Sf2GcfEsaNfVj3Cao69+x2jI6RvYuJBvvj+Bz51tW+
+         vbYTk7F38+CzKBbSvADTAYTtkMPNuWerxBqyx0FOFaQSBArQB0BY9dAmjcreQeu63+yU
+         c6cP8pCJnSvl3Asu5/LV5AYgQsagXu0b7wICEZNMPBvU8NCNFU/C53+bNwYCds2pN1VZ
+         4wbNQwMJJZrWchyHx8ca2WfbyOzWcRh67bIMFdp25nA/IyeefEbkDXvhLCGLk3aRjAj6
+         VIQBmNMR4tA+ozthXwAaOIV4l59IbQx9rjuc4GqJ3Jej5TcfQiu7bgwP7z0+3Algw4FT
+         m3sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781128336; x=1781733136;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aZacks5wKwH5Bi5jU92Jsa0wWy/piajWBpwjvsTRlrA=;
-        b=WwSWdeE+04Xz4UkTjjXIvNUxcIHjNadOmtsfEozdAyl6j/QJBA64ErTfFuhpv5UyMX
-         1iAzdZtdRYazC6RvO7JiT7t9a+o1amXvsHDDq4gA1zzvjMkHXzW9Sk8ZDaQ/tuOJGKbg
-         Y6GwxdI9ttjX6FTCNkCh427tR/lw1fXsaGDQV8loQrAbYQKyvDxE+miEOpGKcGsCdVP9
-         tPqdbuMNH32zG1oKyfz+cRXJRKikCGCMvKFnhOrutShGK42c+trDe0K5Jb+gHqCZVxfn
-         ESp/+Qgw5fvye8xa/OnyoSIoT7jvLJSPZqqxMXuu0FIOpkqH0Qq639LOFWkrwAwzPp+S
-         ROog==
-X-Gm-Message-State: AOJu0Yzi+6CWbR2hCupSjlHFUrWE/RcRrNsUJIyGgO5hjjz711ypXMcE
-	gfEpg/eeSe/RmIz4gHgU7+P90PuOHObI6poEjRoPB5AK+Wf8s7Y+x2Q7
-X-Gm-Gg: Acq92OGir7mdWpxzcqh3uQ2nghaydu2P0FxPaqXksavs/eXfFVckL4Zvc5dfdRA9yPf
-	W5XFlC0jsseXWwGvPvZwQQ3FtESdyp45QfjDje9NLQOUT61OYkiXseYdfgw8eK5DbZJp24V4/wq
-	XN/0p9lkHpD08X2Pn//Q8Ce+oy3gIRumipVRRWh5+MTEKHz/JkTXr8xc6Pdy5kvzN4hKp7g+NjG
-	nafiNCG4YFX9mXqhOxO1BsmwGLuJbLY+6j9/SEnHO6boGPfPaD6pmOQoQHpdv3BR5NqPIf1IJ50
-	uYRFFeoMIi82HvagCOWgIG7fWIFCejX+FZYUQunyi7XBQVf1WrHHZVHk5u14PjFyURBxyM9BGDQ
-	/VMr01FQtZqnvdY5lv3yJ8d79deTpElJs1Bqi+SYlo0oouC6V60O+/cDtVlX54BKs4E7ARsrmfJ
-	bEu/QcxpDsnt+qU8zVIzy2rYARPxw=
-X-Received: by 2002:a05:6808:4f68:b0:486:3537:218b with SMTP id 5614622812f47-4868dceec5emr17858787b6e.11.1781128336129;
-        Wed, 10 Jun 2026 14:52:16 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b91eaffsm19210782b6e.11.2026.06.10.14.52.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 14:52:15 -0700 (PDT)
-Date: Wed, 10 Jun 2026 16:52:12 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/7] setup: remove global `git_work_tree_cfg` variable
-Message-ID: <ainXM84fGggtEZzM@denethor>
-References: <20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im>
- <20260610-b4-pks-setup-drop-global-state-v1-3-5dff3eec8f06@pks.im>
+        d=1e100.net; s=20251104; t=1781128824; x=1781733624;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=t6sGtCHsP9NXKZgppFxUVq1Xyv4NEcDswNx3HQQIHck=;
+        b=HEezyDwKXwF4cttvRL4SFbEVvFMqYD48qnAhddwpIEBl6H+PSRZn3Dh+yRoTa64dg1
+         HZFnULXFnFnfy01g6plSctkdvBiRgEgv9kLeFAZRdHNLq+ruGmiV6t8TlT07MdbDh2d9
+         J379OMis3jHYZRc0L2LFMg1so7flF1by2yGZOm2MGkDM8ZZcPtXtlCbmpNRzTSgQoTfO
+         QfOaGTwlZzhUviqfKAa6D1YgnDWv9bAUSd8bxCCCUjhiLLprL+DoLQGPXqX1bgKwjpLE
+         qS94oIHCHB/iyZAoXcQdQA+lOt6U5p2JTrfZOqb3hfDOpVQ+5c9DPqIOXZdCieoxKF86
+         Ic7g==
+X-Gm-Message-State: AOJu0Yz26muheDpRqFA1RGpZjJf7i2riWxF43Bd2T8MvmFITZJ0uynkF
+	LtEIUemYBDflyISTzHYiqCPMxsDUR9+MZdJXkM6CehNj6b+jTd4Dl/+VklOBLln4YQ+qxColzGf
+	rIkG6I4MttGWIb7jR7CIh+kVQeFFOWBg=
+X-Gm-Gg: Acq92OGXRx8Wsbx+HlTALPcqbtX3+EWGbmCglfHzDBH0Qo5yPOIo+Jq1oERtshn8/h2
+	wcUDKXg4U9YgEC36PsymNXdIecOL9ZFdUuosQJrG/A+vU3EGKCXI8o12NBbomG9wtfICs0Fw6Lc
+	h4vzSJRxrjzdFJj5CsLJFoIuiNFoPJUPzuLj9DhWVaSoTr1JI8RX+87RfJCW48drHPaIHAFR4Ij
+	43zQTeo+egWDLmZ2ihpeAvAG1g+95sQqK7eEf5sT9LsEhMNGN4QMQRdyCyGG1UtlBo0/AxAzGTK
+	i5V4gU+c38xsv7eoY8I9ZtcUTPpdOQlg4UAZzuk6zWiaRPOP5g6zuj55XoyfqgQYk4OszZb6XkQ
+	pyA1YEwj+WaRrIw0=
+X-Received: by 2002:a17:903:fad:b0:2b2:ebed:7af5 with SMTP id
+ d9443c01a7336-2c1e7b13addmr302756925ad.13.1781128820473; Wed, 10 Jun 2026
+ 15:00:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260610-b4-pks-setup-drop-global-state-v1-3-5dff3eec8f06@pks.im>
+References: <CV_doc_int-tr_key_format.533@msgid.xyz> <V3_CV_doc_int-tr_key_format.8a3@msgid.xyz>
+ <V3_join_paragraphs.8ab@msgid.xyz>
+In-Reply-To: <V3_join_paragraphs.8ab@msgid.xyz>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 10 Jun 2026 18:00:09 -0400
+X-Gm-Features: AVVi8CfyEjlcUszTh9SQzdj3ftlbtxQz_ZBNqOc8iB-kqZlm_1qrL41EoGt8z90
+Message-ID: <CALnO6CCg4ubVz_VJuFjn7tvXqADR40AdjCFJ6xfRcms9a+GQWA@mail.gmail.com>
+Subject: Re: [PATCH v3 08/11] doc: interpret-trailers: join new-trailers again
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, christian.couder@gmail.com, 
+	jackmanb@google.com, Linus Arver <linus@ucla.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 26/06/10 08:56AM, Patrick Steinhardt wrote:
-> The global `git_work_tree_cfg` variable used to be modified by both
-> "setup.c" and by "builtin/init-db.c". We have refactored the latter user
-> to not use that variable at all anymore in a preceding commit, which
-> makes "setup.c" the only remaining user.
-> 
-> Even for "setup.c" it is unnecessary though, as we only ever set it to
-> the value we have stored in the discovered repository format. The
-> consequence is that we only ever set it in case we already have it set
-> to the same value in our discovered repository format, which makes it
-> redundant.
+On Wed, Jun 10, 2026 at 5:24=E2=80=AFPM <kristofferhaugsbakk@fastmail.com> =
+wrote:
+>
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> There are three trailers that talk about how a new trailer is added.
 
-Nice. I was wondering in the first patch if there would really be any
-need to keep `git_work_tree_cfg` around here at all. Makes sense to me
-to just set the repository worktree directly.
+3 "paragraphs"? :)
 
-> Refactor the code so that we instead use the worktree configuration as
-> discovered via the repository format. Drop the global variable.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  setup.c | 28 +++++++++++-----------------
->  1 file changed, 11 insertions(+), 17 deletions(-)
-> 
-> diff --git a/setup.c b/setup.c
-> index 52228b42a1..71fc6b33da 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -31,9 +31,6 @@ enum allowed_bare_repo {
->  	ALLOWED_BARE_REPO_ALL,
->  };
->  
-> -/* This is set by setup_git_directory_gently() and/or git_default_config() */
-> -static char *git_work_tree_cfg;
-> -
->  static struct startup_info the_startup_info;
->  struct startup_info *startup_info = &the_startup_info;
->  const char *tmp_original_cwd;
-> @@ -799,13 +796,10 @@ static int check_repository_format_gently(const char *gitdir,
->  	}
->  
->  	if (!has_common) {
-> -		if (candidate->is_bare != -1) {
-> +		if (candidate->is_bare != -1)
->  			is_bare_repository_cfg = candidate->is_bare;
-> -		}
-> -		if (candidate->work_tree) {
-> -			free(git_work_tree_cfg);
-> -			git_work_tree_cfg = xstrdup(candidate->work_tree);
 
-Ok, we no longer set `git_work_tree_cfg` in favor of just relying on the
-worktree specified in the repository format.
+> But the first one is separated from the other two by two paragraphs
+> about how `key-alias` can make using `--trailer` more convenient. This
+> short how-to does not follow thematically from the previous paragraph,
+> and can wait until we have fully described how a new trailer is
+> added. So let=E2=80=99s move the three paragraphs about the new-trailer t=
+opic
+> together and move the how-to paragraphs after that.
 
-> -		}
-> +	} else {
-> +		FREE_AND_NULL(candidate->work_tree);
-
-Huh, we were not previously freeing the worktree here, but I assume this
-to avoid a resource leak?
-
-The remainder of this patch replaces `git_work_tree_cfg` usage with the
-repository format worktree and looks good.
-
--Justin
+[snip]
