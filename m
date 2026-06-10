@@ -1,80 +1,80 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5B9423A7C
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9240423A65
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781103462; cv=none; b=nX2YwdB5bW6Cb0RgKWO1n0busdghVT30o2teqfHnCEDEa3YsQb26Uo8gf35Faj+6sDR274C3FMZVfeCepJC5S9Sv8aKRC9JnCRlNafoxLOG/DXUpJrleGJn7dUV6jYu0q1l6Gk96BDIc5522j2f0SJ417lfPWjnLZhbJP3aI3fU=
+	t=1781103464; cv=none; b=uEY/G9VveGmCsNq80MiFDpedbuVb6CO9Fdl+WJzvmhpXooyWjHvGWsD8/qtorTnsvPgIeMAgd/RR8eZnIVq0TwTA4TKZzLS6HKjm/vgfCNRLme4s0oE4IQHF1HPDgXnKwW7B43KfQxK6qlbxUEgwREBI1Uf7yfMsLikuYnm25Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781103462; c=relaxed/simple;
-	bh=gQnoBbKE6H152qBKPWvelT1WncsZqv/NQ6rs+FpMMHM=;
+	s=arc-20240116; t=1781103464; c=relaxed/simple;
+	bh=iLfqKNiMcDMFgoLIRYd00nuTMtmufsp6dcO5cdNZUOQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XOlP3NU3aS29MBy+uaEwoumo9LOVRe/nX1jaY5oO3dK4LImHhDYNn+ALpZMhXRckp/Z4hfPUFK3vX2R94yfH7Hbs8yQ+0x6htHaYYvboIzjUXhvjS4GNcTafGfiEuA8IVoZHtR5lDAtIoqbte8LvSfeyBwqPqPWrKrP1+oMoyiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dEsbhhZE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UffMVkgp; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=HEa1M/wTf94aKgg/0s1LF2AHHM3SpWlmGay+wKfq1dHXD17mR1ggxBLcvn9xIWzcanYhV6TTCoMpDaywIhk0RoqWp/oX+FVY4O7wPUbu0L0ykoICyejj+Z9KWqhi3tM1kn4ioz+RCxZirIo2KYHjfdU24Udo7ZpDwgmzUE2Nr9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BK0pDa9s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FazMuVLA; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dEsbhhZE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UffMVkgp"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 58AACEC0086;
-	Wed, 10 Jun 2026 10:57:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BK0pDa9s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FazMuVLA"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 305721400089;
+	Wed, 10 Jun 2026 10:57:42 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 10 Jun 2026 10:57:39 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 10 Jun 2026 10:57:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781103459;
-	 x=1781189859; bh=lWFOjVLYgX4glUVv+Qts0wrj9vZio9DcTRiXAqA/1Ac=; b=
-	dEsbhhZEGlVH44s0HLnTX6IZNVc6OiIAxIVauxi+k2W3Cd6OakSTgENsEyWwtwiX
-	AlgzhiWYbePKZHbwibeI7w/ygY+NqAAQig7ltqlwon/wFRTjyr4RiT3V17LDYANQ
-	Gp8z1thzX3z0AzrlYRw2FUnnbMiDrBS8UowuelV/zLECZAn0z8TG38/Nph9+nNqA
-	MLJaGdKufLedWqax/Q6BN+tMZSUbIkJtlkc+Rzc0zdtmoLX89dO1grIofAwBNb9j
-	MCz17HYQfbS4fjR5ARrJmyuO9E0fRiLb+jkC55PX4ZXLZLVwuWWs8ZVnUikmBWxA
-	GmAlhzciT1WTPlOQPZZ7dQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781103462;
+	 x=1781189862; bh=ZZ9fxFf5Qy63bJHcRtf0pg1nuvfiVulmPcTNi8Aa9Sg=; b=
+	BK0pDa9sz6W1xhB7eG3vHC/q5CL7w3CSeJ2dw6tWYG+vYobqf6eg26SUXhHcSLLs
+	IKtpi+VUzM17CtNyAbwwmZkd7gJI6NlS+ywNq0S33tX+c2E43F3x5nHYnFBu/VQJ
+	y2mb02r8jw8mXE61f3cQcFOBKZTbglAVelljPILOCurH9jUArMLWiXPcbbuz0UGN
+	PjIb8B7X3U13zCJvUemffudyWRxvCj/m414lJUrvt1uiF3GVzJTzS1zNQtlR6Zbj
+	O+4S/B7ZOXaxkOXZdi3SKUQfktn0NdF2lfniPgn0rx9RmyFIIPNmKPT+Gy8CpK9B
+	46AgG92oH2Z7Yam5z+Ldlg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781103459; x=
-	1781189859; bh=lWFOjVLYgX4glUVv+Qts0wrj9vZio9DcTRiXAqA/1Ac=; b=U
-	ffMVkgpfleNrUMmX914i82SzyVJBT/jGZVXD/yV+/hf8cV4PlQc7IywuIeUs+3Eb
-	okdgbbHQj0DEcig9eyVG/fEBeDONaAM/QwhpRWEJd9vlSqTPpmXkHBKfzVJKfXGY
-	b/urfm6aeuOGV8ss82NldQdeqoPzczpSE0u7JTPAqcH4xdsffPVPikQyC95j39/Y
-	jXwztzEeEk9ImjV60DbmBrIaj5sHvm21dMMgo+Hsl8664Dn2p9adsZY0qPsKQZil
-	TAst+/P+DhEwoz5obB4x+zCDnsYUDeZMs8ZAigVCcDNdyW/KLt2BYzeCY1AFgOxQ
-	t25l2wURNuqR+CsKwsoaQ==
-X-ME-Sender: <xms:Y3spaq7ZW5b_ykSEgANXe-XZ-C-tifYhm6qULXjYtqZmrp4Ba81oHQ>
-    <xme:Y3spap6iqfPgEr2raZgSNmA4vA-YBpryPf5-wAeODdPel4DDyZKdJOAhSnFF9gyoa
-    kN2eJuMQQA879EVcXG_K5mxMxTJnP2SCG7or_SIw7xPWvqwZjnoO5g>
-X-ME-Received: <xmr:Y3spanEnRUnZMi-oh7l0-VNANQ-kXoSbMvnjY3MxdFDTlrtoFGMwBWc556tJQoXvEd1PSZ9siqd9yhd1fNuJOlI9fTk1PnhAMftc0OQvuQ>
-X-ME-Proxy-Cause: dmFkZTGGDIv7UKfdrq0F0Y5ZMusWd3/oSa4L2w5TcrIRi+/tkHyPCKVbzpUd2iWFjE/Vxx
-    8WD2y1OL2rZyV87G9Xs/4n79Z5KP5ybBR9lyrra1wdYkKeo6qYpWIMpPWZ/dVSPeuzNjMS
-    RdJV9Y1b7bZN0S55WKRUXOFfaWFHeouFPDRlVd9kchWJx2sIaCWwQ4VXGT9dn5u1weO2yB
-    qb92gmlCdwx3/C42nJk6sVaQZtpKIjLhjMofqbVbxvg7BRG64J14ZdFG/AgP7hQ2xfAWQB
-    Kp3n+P8W5YJbiW1FKaTRqeY8F7INWwtx94q40Vy4NbNFSQ1Im54FdRY5O7LjZt3pYnEkfg
-    2rxIMskbUlgqsV8KVRjG9cP0Gh2gSQWZFGtuIr8mp2stuN89vOOu53hxiTq50jyEBMs3kZ
-    hG34UHogF7Y8OzmfmyXAYYkYhoTDFny8dfR6JcmfZP3kI/TaQPJbxnX9wz2OaGLNBeoFEU
-    uyToE5xEgHc2xRywlKimgvvAbDs89mcLi8aN3sqJDjJO5yFPjfx695an8VaD3FQeTZl4Ei
-    k9sJ2vTOl8JjODfW3p53d+Ln2MJuB9dLnFdj+Mx5TqB6JnLao6WjzIUqI6xGoF4H3sVX/f
-    jth8xt/sfKcGUNRfzr9o24qeFgW3bkiHjQI4q5QCXF79zw9T6XLGmQE3pF3Q
-X-ME-Proxy: <xmx:Y3spaiSa59ULoH8NM4Phb5x3nHXldVq7kUikpJQVHnpZZyM7sGM-Sw>
-    <xmx:Y3spagt3D2PludRb0NHS2u1UxChQjWX-Ed38ejKoyXXk_iWv5yd8nQ>
-    <xmx:Y3spahx9RfhhF2qqlG5-2ipT4pC0238_TJk_cI1EHNMX72Jubq01bQ>
-    <xmx:Y3spaq4fYp0BckMXRzWA74xoPRx7133a0ZzYH-JD9h_rG1lk1ecJnA>
-    <xmx:Y3spaoo_dL6e1EM175EX9ws2sFFXqj2e2PMc5sHou7yRmEtXQ4IDW-WR>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781103462; x=
+	1781189862; bh=ZZ9fxFf5Qy63bJHcRtf0pg1nuvfiVulmPcTNi8Aa9Sg=; b=F
+	azMuVLAR8QOcckn+MgyNX6fi1C3ucW2ylTeqVAojNf8l6kUn/wNUIt5dEfG+vSZA
+	IWvoeiCr1tFMqMFkaSEMEMQRKObakw2knQwcMnk+/xrcrfx0ghwLowQoIQ834lWL
+	drHtuvZqK6OCYArjuX3fTxoScqSHcDfZ7H690PVLDLefPtGbUgST10DPfTPvBkwL
+	KnmVYxuVKDHCvVbt+WvDHj8Anz5u9ZaTgAiRJhZkWD/no1Dwj+TuiBd4oObSbUCx
+	csIrXtj+KNYyEmtjzhtXPoVXpmeI8xef+Kr7zm0fbJIkMnhlJrv9aWFHU65/Z947
+	G+9oWpSePMHRbnhUtFJ8Q==
+X-ME-Sender: <xms:ZnspaoCQbNhnY4u_MdeKVpsxh5k6FjWLm0gYv-Lk76tHDt-iVWI0rA>
+    <xme:ZnspaggmoL6pD-laeapaK8rTM9uyYsmboJT4xgnKKFyKqBwY5LPWNoa5k25emS3cv
+    yu0284vYQ7DYkCyp8mjRma80dBFXEvlYE839M8m9qExZgiF4gTgZA>
+X-ME-Received: <xmr:ZnspapNXBEBMBpouA_jF0luET_VO6TniTGBeNwZ4lfESVGQbyvAkHw9g7cgaIrQe6dmA6B3Ga_w6KkRy-_yLnFrYDciJ0Np7iOFiohMT_g>
+X-ME-Proxy-Cause: dmFkZTFV1kQoQzh3f7iPJ7/YFd/m8dJe9AD9Yq6T8MbjiQKW6XEQnBF6koS/FikyXKJrju
+    ACddczotc6v184tuD9hxB3VQCkcckp3iYYC5NIvAW2aNg1PiHj/Cmc6/VcZVl1scCsxkTb
+    vwm0doE4PoD5qg8Q7OJz4225C4O4it9K4xT8VDLuPDz5hPTqTjyGsPln3FZGvO+j9ynugO
+    u5a4tmf9ncQi06NsesfmrGiqUSW/ynByjWqiZyO9bZJLx0LJg/5M+1HWEGE0jE5rrqNis8
+    Vsu5Yelh3VQwpbFCg0FGW3I/h32jtqrGhkCVyo7l8ARwj1CIhXyA/Phu6Atg+fGO6l+OK4
+    1cKxp2+COI3/3SKIWtC8QYPjKTBdOJ/P87HMxXPdE+hhoL953HiKucebMWvivKGF88Shtb
+    1zvu/cJKXYzRmf7EQA5dFVtgBl7hsFBgPvsIRw6ACsnktuUTb3zt4MWn7+ZfK/8k49dqII
+    nunVct9bxy7X3oDlyVikp6IBVBqeho/K1FTJUY9D7V/ckTaiijr9deR2LWCKd0Lj0AIhwa
+    V7I72zZUOtPw6BorTe+ifQ9TdRyREJGPVPuA00bBe+ErALnlNuwsQ6OqwxpzSOGFjQore2
+    6hH0nyLmjqLRY01GnI7jIZHC8lBm9/fsp6XfYXt8WThTGTLbjt3cC11je8vg
+X-ME-Proxy: <xmx:Znspap6k5YXF4GKrOqWdz_czLA77cpgHB9nby2pH4_AzmkEu91kWQA>
+    <xmx:Znspav2IGwT73pLABMpEQXYi35enuCtq1uyV9SBfaopK0S-bVMrAkw>
+    <xmx:ZnspaiaNoMmyKh3okj5gFgJ7GiflY7LHveNc2u3Xa8o8FVrbWI5XoA>
+    <xmx:ZnspavDvyAaCvppyvprO0UWZ5AAa_csf4eCZC8ge9SfUMfj8FjAkJA>
+    <xmx:ZnspanyT-H-WW2SPXxL46I20dqimA2eSfoJ6RLV3scuQx3BolaF9pti9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jun 2026 10:57:38 -0400 (EDT)
+ 10 Jun 2026 10:57:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 541dafd3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 10 Jun 2026 14:57:38 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 86370395 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Jun 2026 14:57:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 10 Jun 2026 16:57:13 +0200
-Subject: [PATCH 7/9] refs: fix recursing `get_main_ref_store()` with
- "onbranch" config
+Date: Wed, 10 Jun 2026 16:57:14 +0200
+Subject: [PATCH 8/9] refs: drop local buffer in
+ `refs_compute_filesystem_location()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,104 +83,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-7-56c864b01c43@pks.im>
+Message-Id: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-8-56c864b01c43@pks.im>
 References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
 In-Reply-To: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-When we have an "onbranch" condition we need to ask the reference
-database whether HEAD currently points at the configured branch. This
-unfortunately creates a chicken-and-egg problem:
+We're using a local buffer in `refs_compute_filesystem_location()` that
+is only used so that we can fill it and then call `strbuf_realpath()` on
+its result. This roundtrip isn't necessary though: `strbuf_realpath()`
+already knows to use a single buffer as both input and output at the
+same time. So all this does is to add a bit of confusion and an extra
+memory allocation.
 
-  - The reference database needs to read the configuration so that it
-    can configure itself.
-
-  - The configuration needs to construct a reference database to fully
-    parse all of its conditionals.
-
-The way we handle this is by simply excluding "onbranch" conditionals
-when we haven't yet configured the reference database.
-
-The mechanism for this is broken though: to verify whether or not we
-have configured the reference database we check whether its format is
-set to `REF_STORAGE_UNKNOWN` in `include_by_branch()`. But typically,
-the format _is_ already known at that time because we set it up during
-repository discovery in "setup.c".
-
-The consequence is that we have recursion:
-
-  1. We call `get_main_ref_store()`.
-
-  2. We don't yet have a reference store, so we call `ref_store_init()`.
-
-  3. We parse the configuration required for the reference store.
-
-  4. We eventually end up in `include_by_branch()`.
-
-  5. We have already configured the reference storage format, so we end
-     up calling `get_main_ref_store()` again.
-
-We still haven't finished (1) though, so `get_main_ref_store()` will now
-call `ref_store_init()` a second time. The end result is that we have
-constructed the same reference store twice.
-
-Of course, as both reference stores would be assigned to `refs_private`,
-we leak one of those two instances. This never surfaced as an actual
-leak though because the pointer is kept alive by the "chdir_notify"
-subsystem.
-
-For now, we can fix the issue by explicitly unsetting the reference
-storage format before constructing it. This makes the mentioned check
-trigger as expected, and consequently we won't end up constructing a
-second reference database at all. Ultimately, this means that we
-consistently stop evaluating "onbranch" conditions when constructing the
-main reference database.
+Drop the local buffer.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ refs.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index d3caa9a633..e69b9b8ac8 100644
+index e69b9b8ac8..4912510590 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2351,15 +2351,31 @@ void ref_store_release(struct ref_store *ref_store)
- 
- struct ref_store *get_main_ref_store(struct repository *r)
+@@ -3571,8 +3571,6 @@ void refs_compute_filesystem_location(const char *gitdir, const char *payload,
+ 				      bool *is_worktree, struct strbuf *refdir,
+ 				      struct strbuf *ref_common_dir)
  {
-+	enum ref_storage_format format;
-+
- 	if (r->refs_private)
- 		return r->refs_private;
+-	struct strbuf sb = STRBUF_INIT;
+-
+ 	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
  
- 	if (!r->gitdir)
- 		BUG("attempting to get main_ref_store outside of repository");
+ 	if (!payload) {
+@@ -3586,8 +3584,8 @@ void refs_compute_filesystem_location(const char *gitdir, const char *payload,
+ 	}
  
--	r->refs_private = ref_store_init(r, r->ref_storage_format,
--					 r->gitdir, REF_STORE_ALL_CAPS);
-+	/*
-+	 * When constructing the reference backend we'll end up reading the Git
-+	 * configuration. This means we'll also try to evaluate "onbranch"
-+	 * conditions.
-+	 *
-+	 * We cannot read branches when constructing the refdb, so it is not
-+	 * possible to evaluate those conditions in the first place. To gate
-+	 * their evaluation we check whether or not the reference storage
-+	 * format has been configured -- we thus have to temporarily set it to
-+	 * UNKNOWN here so that we don't end up recursing.
-+	 */
-+	format = r->ref_storage_format;
-+	r->ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
-+	r->refs_private = ref_store_init(r, format, r->gitdir, REF_STORE_ALL_CAPS);
- 	r->refs_private = maybe_debug_wrap_ref_store(r->gitdir, r->refs_private);
-+	r->ref_storage_format = format;
-+
- 	return r->refs_private;
+ 	if (!is_absolute_path(payload)) {
+-		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
+-		strbuf_realpath(ref_common_dir, sb.buf, 1);
++		strbuf_addf(ref_common_dir, "/%s", payload);
++		strbuf_realpath(ref_common_dir, ref_common_dir->buf, 1);
+ 	} else {
+ 		strbuf_realpath(ref_common_dir, payload, 1);
+ 	}
+@@ -3600,6 +3598,4 @@ void refs_compute_filesystem_location(const char *gitdir, const char *payload,
+ 			BUG("worktree path does not contain slash");
+ 		strbuf_addf(refdir, "/worktrees/%s", wt_id + 1);
+ 	}
+-
+-	strbuf_release(&sb);
  }
- 
 
 -- 
 2.54.0.1189.g8c84645362.dirty
