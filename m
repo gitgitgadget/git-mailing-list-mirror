@@ -1,168 +1,135 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741F831A575
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159D73264EF
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 14:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781101313; cv=none; b=RGc4/lG4exEb8XVnAKtz6He3lRRHYN+wF+YMKXvf4gj/uYZYspkDuCjDWw1v9XtDWJbG2IpyRnxvwlRDe75iZjqDTFjnsk8k2AWVOWDxY/0+nynffSmNpOVUD3lrfOSlLgF5wD8S8SjjZjIO/4SvBrvHXZytzexg1rmJKZLx4kk=
+	t=1781101592; cv=none; b=XdSnXmPEexeeWuGziPhrPnqn/9OqksHSdM+kdCTUsttmbpBIZxZdycaY2YL78jgIU/uVuRl8nXcsDNdHYwoig7QUS23f0vM2Rbzox3nHavO6ajDl4y5aDXbhkyGWi3LuiZU5ysI0oP8X2TxINMReCWkuZy4s2NGh/lt4ao4UklM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781101313; c=relaxed/simple;
-	bh=nNHG9QHcRTZqV6JRl9R82UgwZIK0O8gY01BuJbc+X7E=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=fzBRURZpoc8titNBWdR6w4mz4W8PjoStWofSs/wJn1UIdN7FPihNRSwMUggqi61FJNy75CqkiaiqR93VUfsie6JLIppmQRrZNqYS3Japz0iysmp0CHYyOcftXROOUQ2AgvMjAGRTePGwmm6GY8pIrkGc9WlDkzxfH6lfy0MYQiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=W0NRCDYH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e8zzDSKI; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1781101592; c=relaxed/simple;
+	bh=huN6o1+kUU+rVfuri8SIUORdbBBhP2RkKLvFaRNhulU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ukMI0dIVb4r2N5GYusE/tBkq22NnqIfc7dCqxEVcx/7w6VRIoqWUck2PIm8XVzsvgs6CaJqdzVg52UrbX0zPRgFoYS4XMPRUtFlXmWTNy0meT5roiMS3MvVTpoH21teywTpf2vqDDw3fCjM5VndP9mg8kM+iD0bOmuIzrP6eVbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=gbVwDNSc; arc=none smtp.client-ip=95.215.58.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="W0NRCDYH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e8zzDSKI"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id C4F831D00131;
-	Wed, 10 Jun 2026 10:21:50 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 10 Jun 2026 10:21:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781101310;
-	 x=1781187710; bh=n/RI5wlj13gw8KCcLnuc9vdps9bDXM4Juk3tzOv/568=; b=
-	W0NRCDYHdC+g6B4dnSnhlCC/AYT1GFR5DaTnj2uoLEIdgKkNTUeTGX+EZUhZz1xw
-	3GBMS9AD3B9pTV0sXPj4nygGCszivyGPbcF+vb40onWtTn3OsYI6LdR/5xM6JAdG
-	hWLcOerqtlSjWU1u8tFACzmAK1qrcN/Wae9iKGgwc/rHQiNOKtOYK5O7yEeTOqE4
-	xj+Nimu8eoA99Iw3jbohDUo1SAdwp0evX14EQ9Njmb9g7aI9jWH2LO6cXdmexFbe
-	wxClvywdHtxjr3mOc4WxFjUJO9Cz0sY477lQAYr8n68sxv6IgF9HTKxbmQKbRPDL
-	HwN7wo/vg4HDVrAt1XCnIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781101310; x=
-	1781187710; bh=n/RI5wlj13gw8KCcLnuc9vdps9bDXM4Juk3tzOv/568=; b=e
-	8zzDSKILWt3EKdvLuQCmbM+XcKDFNR7YkWBPv4SbcMnCiZMceRWzn25o6JNxbUHh
-	A9o6YI6zOsYXd1ZcCj0ttoQ2tVaWmG51UJa2ZvTWJy+WE+zJ+7elCJoVBCa7ZSWd
-	6Hfu7VLd7jX3X8CAn9nYtbzut6KppX87yYVhGwvmOjroTP/JBp1ZxMgskUVajOCi
-	qDK4ZQ1zkgMAxD8giBz4Woo+r4FBaULKhDMsu+ykUondJycSk7YS1nY9UeYDekA/
-	aegS2N4YgY/ybO3HbW/C0TnqZVajETQySHaVF8IjUMpmhXyliif9s53yMVlqoyql
-	xye+1mKHCahApsod/LB+A==
-X-ME-Sender: <xms:_nIpaimTDArjWOuGzftwoYaaGSEYAIHuZSWead7nka5_W7zwUKe0F4M>
-    <xme:_nIpakpS7KaeO2oGIMgxczJVGZ2Cc7pVWWg6xA59hGytO58ZhrVt2WBgmwB2zXOMm
-    E6ucKkWElWeegLs-53EZ8QrQ7DGm-bDrE-iJugnFovl39vznuh2Jw>
-X-ME-Proxy-Cause: dmFkZTEcLodTMtOFykV18D2GbuYPdMDHRKSnPy5B5RNX3jlaa3/8dm4DAZGU6RQNiTBuAf
-    WKtYfdOAGE6MH04AbIoUS2J4RQ/EKJ+WxEUPj3wROJsSPDI6GOFPdAIy4cPYNgOPAlB2x8
-    Ne0aVCb/OagVMWODlmuZF7wMXAOsdoeziRyzpaz+CGMU5/xhrTrAcMxnZS1lzhXH6300Bd
-    3qxSGp288mi90bEAUTZhy/Sf+nILQv8fkbVdnS+MeJflzcPSVz/fJ3N0nY5T0s2ddCYpnv
-    a/tG7zpRtffu4vYfIMsyxhAEjj66Z2JILzS4ApcxSuUcu36QlNbDCAGu4m5Nymga41XDH/
-    z/Rkf9M7nOuT37MztkHVRYxaKP0Q+ZCTTm/izxo1nDQ0o6CHZLrLYTRiqxfglw9faueWjB
-    B7Kqe/Lnw4EO4J+TYIw5oo9yDXBELjFAZ8tZpNqvejhqdsqEODfUtLoxQVSg321ETDgtRI
-    Y4TpbQHBQmFD4xVC7a8QzJZNDSBo9BtWWtdvqNVCurf74qL6EB17lky7iSd4gxH/rBHxaL
-    TsFQ+isZk2LMIFxp8di+pd/MeKyyYNmS7AP5SX5GqFtElWgcT/zb7qDzN33hRKGP7fktT0
-    n1eeTVNpsrBRgc+ZVAEMtqoiWsqSMCWbGGgbGSp64K774H4fVlbbAN/x4cKg
-X-ME-Proxy: <xmx:_nIpapQWNrBMbZLVVaOsAN98vddhNXxqtjJzqnpcQRejEVxhiVHoAw>
-    <xmx:_nIpagvemu88tJNkWDqeJp0810afUviFOLdO1Y5sAlmhufLavzLpvg>
-    <xmx:_nIpambqWE77GmkV7DoeaGld6SLQ5bbH7-6NUqSJFIsitclXgxp5SQ>
-    <xmx:_nIpattcE2YRW3I6kHU1P1BhzH53QgD0Bl6cul7RhjMetGdHPWoFzg>
-    <xmx:_nIpavE75gcOO-qGtVdA1Q4Q_Jxa9wjlDkG_4xzVDWxm7ZmXkyAiGhTD>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6CC3130201A3; Wed, 10 Jun 2026 10:21:50 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="gbVwDNSc"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1781101586;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KkcJTSnJpIdhC9/15lTJZ4a1N6xVPsC4tkGTqV9zVJQ=;
+	b=gbVwDNScoKSxwTKcZ8OcltwAR+eI6L4fxP2Ob/CiVWlGncTnKCzK5wYAuxsDCvsoHwlZVm
+	5o04dmYQNtURFlD1lO/1BHcAi1TJWzYKa39HG2cJSuU1dMdUWOv0tAF60cCMdREMEEfRnb
+	9ZUeLoqoInu/HZ1pIRZH7nsbHVDUzqU=
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>, Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/3] replay: offer an option to linearize the commit
+ topology
+In-Reply-To: <xmqqtsrcvnjw.fsf@gitster.g>
+References: <20260608-toon-git-replay-drop-merges-v1-0-e3ee71fce7b4@iotcl.com>
+ <20260608-toon-git-replay-drop-merges-v1-3-e3ee71fce7b4@iotcl.com>
+ <xmqqtsrcvnjw.fsf@gitster.g>
+Date: Wed, 10 Jun 2026 16:26:08 +0200
+Message-ID: <87zf12zd33.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AAxCzT8Sx1UB
-Date: Wed, 10 Jun 2026 16:21:29 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jeff King" <peff@peff.net>
-Cc: git@vger.kernel.org
-Message-Id: <d8f7f827-27da-41fc-af8d-72d383b24fff@app.fastmail.com>
-In-Reply-To: <20260609004340.GF358144@coredump.intra.peff.net>
-References: <ae4a32e7-bacb-4c88-b2a0-5aeaff60b904@app.fastmail.com>
- <20260609004340.GF358144@coredump.intra.peff.net>
-Subject: Re: trailers: --only-trailers normalizes URLs to trailers
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Jun 9, 2026, at 02:43, Jeff King wrote:
-> On Thu, Jun 04, 2026 at 11:27:51PM +0200, Kristoffer Haugsbakk wrote:
->
->> The following is a bug that follows straightforwardly from the docume=
-nted
->> or discussed behavior. In that sense it is not a bug. But it is a bug=
- in
->> the sense that it makes things inconvenient and violates a design goa=
-l.
->
-> Yeah, though if you'll allow me to nitpick your subject a moment: I
-> don't think --only-trailers is really the culprit here. It demonstrates
-> the problem because it normalizes the "trailer" it found. But the loose
-> trailer matching is the more fundamental issue. For example:
->
->[snip]
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah, this is more precise. I focused a ton on the normalized output
-because that=E2=80=99s what makes it obvious. But the fundamental proble=
-m is
-interpreting URLs like trailers.
-
+> Toon Claes <toon@iotcl.com> writes:
 >
->> > What's different between what you expected and what actually happen=
-ed?
+>> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 >>
->> In an ideal world to have some special-casing of URLs so that they are
->> not detected as trailers. Does anyone realistically want trailers like
->> this?:
+>> One of the stated goals of git-replay(1) is to allow implementing the
+>> git-rebase(1) functionality on the server side.
 >>
->>     file: //...
->>     http: //...
->>     https: //...
+>> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
+>> was given. This mode drops merge commits instead of replaying them, and
+>> linearized the commit history into a sequence of the
+>> regular (single-parent) commits.
 >
-> I could even see those as trailers, if somebody really wanted to allow
-> arbitrary values that might just happen to start with "//". But without
-> the whitespace after the colon, it is quite questionable.
+> "linearized" -> "linearizes"?
+
+Thanks.
+
+>>
+>> Add option `--linearize` to git-replay(1) do the same.
 >
->> Just special-casing `https` would go a long way.
+> "do the same" -> "to do the same"?
+
+Ack.
+
+>> Co-authored-by: Toon Claes <toon@iotcl.com>
 >
-> Agreed, though I think a rule like: ":// (with no whitespace)" is not a
-> valid separator. Something like this:
+> There is no sign-off by any of the authors?
 
-Yes, matching on `://` strictly is a better proposal. No need to care
-about `http`, `https`, `file`, etc. And both of these would *still* have
-to be true for this change to be a false negative w.r.t. the user=E2=80=99s
-intentions:
+My bad. I'll add mine.
 
-=E2=80=A2 They really input a trailer that looks like a URL, but it=E2=80=
-=99s not meant
-  to be a URL
-=E2=80=A2 They really wanted the value to start with `//`
+@Johannes, can I re-add yours? I've removed it because I've made some
+changes on top of the patch you wrote, but if you agree, I'll add your
+Sign-off back.
 
-And again I don=E2=80=99t think that is likely to ever happen (with a kn=
-ock
-on wood).
-
-Thanks!
-
+>> @@ -430,12 +435,20 @@ int replay_revisions(struct rev_info *revs,
+>>  	while ((commit = get_revision(revs))) {
+>>  		const struct name_decoration *decoration;
+>>  
+>> -		if (commit->parents && commit->parents->next)
+>> +		if (opts->linearize && (!commit->parents || commit->parents->next))
+>> +			; /* map current commit to the same as the previous commit */
 >
-> diff --git a/trailer.c b/trailer.c
-> index 6d8ec7fa8d..342ed81c78 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -635,8 +635,12 @@ static ssize_t find_separator(const char *line,
-> const char *separators)
->  	int whitespace_found =3D 0;
->  	const char *c;
->  	for (c =3D line; *c; c++) {
-> -		if (strchr(separators, *c))
-> +		if (strchr(separators, *c)) {
-> +			/* special case to avoid accidental URL matches */
-> +			if (*c =3D=3D ':' && c[1] =3D=3D '/' && c[2] =3D=3D '/')
-> +				return -1;
->  			return c - line;
-> +		}
->  		if (!whitespace_found && (isalnum(*c) || *c =3D=3D '-'))
->  			continue;
->  		if (c !=3D line && (*c =3D=3D ' ' || *c =3D=3D '\t')) {
+> This uses the same treatment on either root commits or merge
+> commits?  If this were a mistake and this wants to handle merges but
+> not roots, shouldn't it be more like
+>
+> 		if (opts->linearize && (commit->parents && commit->parents->next))
+> 			; /* map the merge to the previous */
+>
+>> +		else if (commit->parents && commit->parents->next)
+>>  			die(_("replaying merge commits is not supported yet!"));
+>
+> And because the next one is also about merges, perhaps the early
+> part of this if/else if cascade can be written
+>
+> 		if (commit->parents && commit->parents->next) {
+> 			/* We have a merge */
+> 			if (!opts->linearize)
+> 				die(_("can't replay a merge (yet)"));
+> 			; /* map current to the previous */
+> 		} else {
+> 			...
+>
+> wouldn't it?
+
+The way it was written in v1 was maybe a bit too smart and hard to
+follow. I agree with your suggestion and will adopt this (with some
+tweaks) in the next version.
+
+> If the "map current to prev" is applicable to root, any root are
+> mapped to the last_commit in the above, and if we saw a root as the
+> first thing in the loop, last_commit is NULL, we do not do anything
+> here, and after the if/else if/else cascade, we see last_commit is
+> NULL and break out of the loop.
+
+Yes, good observation. I did not test this.
+
+> Perhaps we would want to have a test that replays all the way down
+> to the root commit?
+
+I'll add it.
+
+-- 
+Cheers,
+Toon
