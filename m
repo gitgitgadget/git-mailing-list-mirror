@@ -1,171 +1,183 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A248357D18
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 18:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685D72D46B3
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 18:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781117543; cv=none; b=hJvtzoiHWXVIby1l2iqG1Hg09nHF2+pbgDCIZpOvgmMa+dqKqRSbL7s0yx9WAdkLGbPYxYKq7imeZJl7EavAAfGHUY3k2PsAFtcRKi9YbV1G8Y8cIWfxTX6+JAiiiZbsfqHztLizwkIsav5JCLDSqPAPXucCkDPsmKxfl3jKRpU=
+	t=1781117824; cv=none; b=B6Q3JSL35DFFD9+k6HqDpqoZh2VIWf0CcAj0SWeQ2j2OQmg0Vfkq6eS55wv+nYyT76hik5RVFpcl1PBYBFpuvCXsrsXv4wiZiLR+2Vf3DJMoWuxvPWBykT8wfsqRUNkXVk9qMB7q23DxB01yTQeXamax3SMaabvwcjg20FVoEVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781117543; c=relaxed/simple;
-	bh=26brt9Q2GH5evyCaYqEf+3ngdCeAQqSMxszaBHXrpUE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r1p0zndSaI8VnJ0MbY9TLgorBk7x0YXHhxOs644o08LEeLsPS+pU4mGq/q5YvsgAFrHJfvdCIs8CtV/c4f+KNVXacDZqI1p1jDyZZPESpriof2a9TFbd2SHCEmtdhsJTdpWcL4giUXOWfmbvjHx66nnjgRZ/ScFPEGqwCO4hXxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=dL/wVQ8j; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1781117824; c=relaxed/simple;
+	bh=IVO5yXuifL9WZ3JEQXJduwIuBIwCU5yQkPFvvZl/RVU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FkDZWNSYIYOiJx5wXJzQVee2Ox3jHkz97/BnRGVtv8KE4E2PWei7GhTGlH5/dgannWRwxJyhbclT3IVOX1e8sv1tgKvVdM5+TZxe/LOYxG0QFMRFz/S1OvZx1AxVtVafZau3D1EWY9uNBwCccmodRCNViGC60ETHgXaTTnXVn+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nc97vWEs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S/eA865m; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="dL/wVQ8j"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 65AIq19x012508-65AIq1A1012508
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 21:52:02 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wXO1x-00EeLa-Sx
-	for git@vger.kernel.org;
-	Wed, 10 Jun 2026 21:52:01 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 10 Jun
- 2026 21:52:01 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 623cbb29;
-	Wed, 10 Jun 2026 18:52:01 +0000 (UTC)
-From: Tuomas Ahola <taahol@utu.fi>
-To: <git@vger.kernel.org>
-CC: Tuomas Ahola <taahol@utu.fi>
-Subject: [PATCH 1/3] doc: config: terminate runaway lists
-Date: Wed, 10 Jun 2026 21:51:46 +0300
-Message-ID: <20260610185148.23920-2-taahol@utu.fi>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260610185148.23920-1-taahol@utu.fi>
-References: <20260610185148.23920-1-taahol@utu.fi>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nc97vWEs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S/eA865m"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A78BD14000A4;
+	Wed, 10 Jun 2026 14:57:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 10 Jun 2026 14:57:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781117821; x=1781204221; bh=Ucs/IZ2xFa
+	5A9W8tsHWYzw2v6cgra+p9YQDFLBS2oEs=; b=nc97vWEsx7PGiYQ9KFSXieZaNE
+	hLzCOgY/toAZXfXBkxmkyUfQKoXcNm1FKb8+eelSacxLO7UtkT+iCwLj0RiH50NJ
+	is280UiOiMZxM1/wvj4f064v5NTik2qcspKKd2ieyze8wIakqJ8mq3zA/QPL5SR9
+	JqsjFJAV40uoxosR0n+BVVE95FiXcB+DFIBeZ/ZgRXSU8ZFJmf4ZU1/aCPg54mlH
+	POv7RyQeERnB7GrEOZw8Pn59FhPeg2J+P4bY+D5jglD7MHu+XzEOlLkVD8silvIw
+	zm9NMrESRgJsdhCD6MeuP9cjDzjiUYo/Nb28fqK2mlHU3Q8qb8/vYsTs/lPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781117821; x=1781204221; bh=Ucs/IZ2xFa5A9W8tsHWYzw2v6cgra+p9YQD
+	FLBS2oEs=; b=S/eA865mupbTU0gECjAywR0cG0MdAGxxL+18xlkMtHqjWwgDDvE
+	vIClavrtbMEeqcYI9s3sEAdZV9LMidtnGBMFiTBq3vI6T3UJeYbER+g/rVxZETKL
+	4r9cYxSiAAY7NAA3Jzx2ziC9f5wNe2oJ9WOb5ylWWxP/ow89RigZIFJ0UFKS3bwv
+	HD8k+ZgfnGzg7Zy+wCPyAUbpYT8rcrAQdPh1G9Eva2DcOJLkV33jbzoKadhp9kD7
+	iITXDd+Qtx8l4unMEBQs4HmnzinBeaYoCR2pJXgpDSAKMnO9rMTol5JDTOMQP4Xi
+	KovjvEeeiTLLSyNXHxYqfxfNBgjx498ES1Q==
+X-ME-Sender: <xms:fbMpaneaiRFX9v92ZHM2Pse5jGfLWj5eYSJEVkwSYG75EYf_EofIog>
+    <xme:fbMpakNvQBOAi1E8f7ECO2Hjf_rZmyV48L4s1jw_Q8SfR4Cy6eMRxGI8Mz0nyAu3v
+    rODrjhv1tZupnOWyuY579787nIHpqpAkw7uD7VrqpzhrAx1-TELBA>
+X-ME-Received: <xmr:fbMpalifEzA1MEbM5Y2U3rYO883nQEZpVroxbEyoobMLaEa19alFDs-SXDKjje0wEev_V6H1ZIxOLYlK8004iUTSagNmFYPsT9Tj>
+X-ME-Proxy-Cause: dmFkZTF8Wt2D+bft+P0xBshC6GXnIvz+/cAH6akA8I+Vu7Fn2Wf0DxRlnOCM8a8NU3vvLk
+    FTBfS5TwGiYbirv47y9DJpm8Il2/S8OmkcYQiBdCxWhUHlVgRzolq30dXifdd/K3KTxyOo
+    mt49dM79Li5BYIFBocOdGcxfUjkMNHmcqp4CjtbkRLEadgxemaFaodQFz7I2FdFEtNUiTm
+    iN9kl+P/ymjU9nANK7wzvFR0Pt+lyMKF+0dSzY8hWQr1yKsRVUpWxc3R/JOBN3Rj+7vHQG
+    pwPMB6eQEKMxaWBJTtHa0QNTCI/bc6CLFIWZB+osIQp7H/aJrazxjWf1A2KHR2W8ANuSrA
+    5ZWafjp1i+pp0JbHyQqHHa+zR2Sh5CnwHMQSp/9hjXCMXlC3yqJwHYotJsIcgnr6LYv7Cj
+    4hbRjn3HdFcsqUuflcg2/868cFwWKqfEJDMdGi0PmD7fiaRc6CYXiarpCW9h6VfzMHjyxM
+    E+lOfegdz4WSm2kdIG8AnWvdN/Y9eWY67wGHbsGTnZ7kXddig0Xe/umHOYwLXMfnIwr9FV
+    rNK3E1zhM6beoFIjQlz5NiUnAUCFZcXkYiYGmnVCcZKm/RNpBsMY7/8Z3ryB3vguW8TiCu
+    C4GVPbfVYwIUzjTZg+yoiMrlE1Ff4YgyxFFGqA2pp1+0/ak7R+MNi+/7uSJQ
+X-ME-Proxy: <xmx:fbMpan32wydN0FxaE4fjil3uTxaqd6c0rwGvvAkbtGM5M2eqFhBn4w>
+    <xmx:fbMpavh2YUyaeCUzbWd3-FgCYDltwBCEL_nZHzQIvF0-HgefafJ6lw>
+    <xmx:fbMpanfFmCHG5x1xGHhRkscS8f7I7Dst3HQk6upKgeFGrt1LdAdDMw>
+    <xmx:fbMpaikRFFOPeHGU-ItPZYI-pm-KqKwwHmooGUarzBCn0Pf-_q8IsQ>
+    <xmx:fbMpapBjXiWOcLumTBaM8MmazFV22Z4f4VUM4cNV5d3hUZ6w5RrgbJwL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Jun 2026 14:57:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Zakariyah Ali <zakariyahali100@gmail.com>
+Subject: Re: [PATCH v2] completion: hide dotfiles for selected path completion
+In-Reply-To: <pull.2311.v2.git.git.1779808987825.gitgitgadget@gmail.com>
+	(Zakariyah Ali via GitGitGadget's message of "Tue, 26 May 2026
+	15:23:07 +0000")
+References: <pull.2311.git.git.1779590184752.gitgitgadget@gmail.com>
+	<pull.2311.v2.git.git.1779808987825.gitgitgadget@gmail.com>
+Date: Wed, 10 Jun 2026 11:56:59 -0700
+Message-ID: <xmqqik7qusuc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: ex19-08.utu.fi (130.232.247.48) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
- BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhZSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWA==
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=from:to:cc:subject:date:message-id:references:mime-version:content-type;
- bh=g8sX+uuzjDMNU8w0juveAbXthwArHyIksaWQFRDt7Sw=;
- b=dL/wVQ8jFi/HSwAby5XJyj0A69VT88D3ahpSk9Hx4tardBAAX6WPZdGq14cYSCsJljFnZauS7OCd
-	mp2CKmsQjF3hgHOqos57xZXsmFByHDXhcPTT5I6u8E4A1DS/EYMiLz3naygC/IYb03PnPNg1R0+6
-	LI1FYg6ftUug0VWWM9rOBMYHy5Sh9+Hvd9+E08WisHK+x4qzJdg2Wb0NM5raWqzB3rojRqHCGOv5
-	sNGzTSG6EWMcRekpiHqIkFbGbbExaGv0AAfoxcVqsueC/FylzJLgysPJ0jaPoOd6tJ4bUDMy8/o4
-	Xr0dcBjth9B6hgROV2QJFzOpXiiI2hEul3pScQ==
 
-There are many places in git-config(1) where paragraphs that should
-logically come after a list are instead appended to the last item of
-the list.  This is a well-documented quirk of AsciiDoc, and can be
-mitigated by enclosing the list in an open block:
+"Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-	--
-	* first item
-	* last item
-	--
-	+
-	New paragraph after the list.
+> -# __git_index_files accepts 1 or 2 arguments:
+> +# __git_index_files accepts 1 to 4 arguments:
+>  # 1: Options to pass to ls-files (required).
+>  # 2: A directory path (optional).
+>  #    If provided, only files within the specified directory are listed.
+>  #    Sub directories are never recursed.  Path must have a trailing
+>  #    slash.
+>  # 3: List only paths matching this path component (optional).
+> +# 4: Hide paths whose first component starts with a dot if this is
+> +#    "hide-dotfiles" and the third argument is empty (optional).
+>  __git_index_files ()
+>  {
+> -	local root="$2" match="$3"
+> +	local root="$2" match="$3" hide_dotfiles="${4-}"
+> +	local hide_dotfiles_awk=0
+> +	if [ "$hide_dotfiles" = "hide-dotfiles" ] && [ -z "$match" ]; then
+> +		hide_dotfiles_awk=1
+> +	fi
+>  
+>  	__git_ls_files_helper "$root" "$1" "${match:-?}" |
+> -	awk -F / -v pfx="${2//\\/\\\\}" '{
+> +	awk -F / -v pfx="${2//\\/\\\\}" -v hide_dotfiles="$hide_dotfiles_awk" '{
+>  		paths[$1] = 1
+>  	}
+>  	END {
+>  		for (p in paths) {
+>  			if (substr(p, 1, 1) != "\"") {
+>  				# No special characters, easy!
+> +				if (hide_dotfiles == 1 && substr(p, 1, 1) == ".")
+> +					continue
+>  				print pfx p
+>  				continue
+>  			}
+> @@ -675,8 +683,10 @@ __git_index_files ()
+>  				# We have seen the same directory unquoted,
+>  				# skip it.
+>  				continue
+> -			else
+> -				print pfx p
+> +
+> +			if (hide_dotfiles == 1 && substr(p, 1, 1) == ".")
+> +				continue
+> +			print pfx p
+>  		}
+>  	}
 
-Fix the issue accordingly.
+Having to repeat the same thing twice here is a bit unsatisfying,
+but that is not a fault of this addition.  I suspect that it would
+have been simpler to patch if the original were first simplified
+into something like:
 
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
----
- Documentation/config.adoc          | 4 +++-
- Documentation/config/promisor.adoc | 2 ++
- Documentation/config/safe.adoc     | 2 ++
- Documentation/git-config.adoc      | 2 ++
- 4 files changed, 9 insertions(+), 1 deletion(-)
+	for (p in paths) {
+		if (substr(p, 1, 1) == "\"") {
+			p = dequote(p);
+			if ((p == "") || (p in paths))
+				continue
+		}
+                print pfx p
+	}
 
-diff --git a/Documentation/config.adoc b/Documentation/config.adoc
-index dcea3c0c15..fc48c1c461 100644
---- a/Documentation/config.adoc
-+++ b/Documentation/config.adoc
-@@ -276,13 +276,15 @@ boolean::
-        When a variable is said to take a boolean value, many
-        synonyms are accepted for 'true' and 'false'; these are all
-        case-insensitive.
--
-++
-+--
- 	true;; Boolean true literals are `yes`, `on`, `true`,
- 		and `1`.  Also, a variable defined without `= <value>`
- 		is taken as true.
- 
- 	false;; Boolean false literals are `no`, `off`, `false`,
- 		`0` and the empty string.
-+--
- +
- When converting a value to its canonical form using the `--type=bool` type
- specifier, 'git config' will ensure that the output is "true" or
-diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-index b0fa43b839..39af63dcb8 100644
---- a/Documentation/config/promisor.adoc
-+++ b/Documentation/config/promisor.adoc
-@@ -63,11 +63,13 @@ If one of these field names (e.g., "token") is being checked for an
- advertised promisor remote (e.g., "foo"), three conditions must be met
- for the check of this specific field to pass:
- +
-+--
- 1. The corresponding local configuration (e.g., `remote.foo.token`)
-    must be set.
- 2. The server must advertise the "token" field for remote "foo".
- 3. The value of the locally configured `remote.foo.token` must exactly
-    match the value advertised by the server for the "token" field.
-+--
- +
- If any of these conditions is not met for any field name listed in
- `promisor.checkFields`, the advertised remote "foo" is rejected.
-diff --git a/Documentation/config/safe.adoc b/Documentation/config/safe.adoc
-index 2d45c98b12..5ae4476b24 100644
---- a/Documentation/config/safe.adoc
-+++ b/Documentation/config/safe.adoc
-@@ -2,10 +2,12 @@ safe.bareRepository::
- 	Specifies which bare repositories Git will work with. The currently
- 	supported values are:
- +
-+--
- * `all`: Git works with all bare repositories. This is the default.
- * `explicit`: Git only works with bare repositories specified via
-   the top-level `--git-dir` command-line option, or the `GIT_DIR`
-   environment variable (see linkgit:git[1]).
-+--
- +
- If you do not use bare repositories in your workflow, then it may be
- beneficial to set `safe.bareRepository` to `explicit` in your global
-diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
-index 00545b2054..8439ce97df 100644
---- a/Documentation/git-config.adoc
-+++ b/Documentation/git-config.adoc
-@@ -221,6 +221,7 @@ Use `--no-value` to unset _<pattern>_.
- +
- Valid `<type>`'s include:
- +
-+--
- - 'bool': canonicalize values `true`, `yes`, `on`, and positive
-   numbers as "true", and values `false`, `no`, `off` and `0` as
-   "false".
-@@ -239,6 +240,7 @@ Valid `<type>`'s include:
-   escape sequence. When setting a value, a sanity-check is performed to ensure
-   that the given value is canonicalize-able as an ANSI color, but it is written
-   as-is.
-+--
- +
- If the command is in `list` mode, then the `--type <type>` argument will apply
- to each listed config value. If the value does not successfully parse in that
--- 
-2.30.2
+Then the new "ah, that thing begins with a dot" logic can be added
+only once and at an obvious place.
+
+> @@ -2164,7 +2176,7 @@ _git_ls_files ()
+>  
+>  	# XXX ignore options like --modified and always suggest all cached
+>  	# files.
+> -	__git_complete_index_file "--cached"
+> +	__git_complete_index_file "--cached" hide-dotfiles
+>  }
+
+In this patch, it is hard to tell from the patch what _other_ calls
+to the __git_complete_index_file helper lack hide-dotfiles flag
+(i.e., they are to show everything including the path that begins
+with a dot).  I will not try to be exhaustive, but for example
+_git_add does not get hide-dotfiles but it is unclear why.  The same
+for _clean, _commit.  But _mv does hide them.  The choice seems
+arbitrary and incoherent.
+
+A few ideas (some of them may be mutually incompatible)
+
+ * Instead of "empty vs hide-dotfiles", perhaps make the 2nd option
+   mandatory for __git_complete_index_file, e.g., "hide-" vs
+   "include-" dotfiles, to make it easier to see in the patch which
+   ones exclude and which ones include dotfiles.
+
+ * Extend comments like we saw in the above hunk to say why we treat
+   files that begin with dot specially.
+
+ * Make __git_complete_index_file unconditionally hide the dotfiles
+   when there is no match pattern for consistency (getting rid of
+   the need to explay why).
 
