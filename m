@@ -1,153 +1,165 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8094841360E
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781105305; cv=pass; b=mrWaeiAvjdZf34jF3pZGB6V7JNepwOMmHeA94x7AONIYPx+Z+AFCuuvwJInOPKzfC/AF0oteHhYpg5H3farsNPv2ESsKSXDOoaliPaoRxDNG7nOs+8KdN2nGy5sfklrb2GEhii3xR/GafKGtfV1ocq3f6lJNiIJ1KRgDDMdVCSg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781105305; c=relaxed/simple;
-	bh=9AYNQvH/u1q3OwReh3LTGR2ZZWVgawduRjVuQlr8mZ4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fZum6hTHvVRe9sf+JyLyHy3rEwu0Q3hzGV6ZEKKvv91dQuEqQFabvFkz/62eOaa60ULnjgjoIPoZUYPHNU+UJ8DD2ihMQTRZ6PvXx+2vKuDCBaL/n5XQl8i4m2HET5XTF0Ywdy/kDUjsmGSHTHCOcROOwVdyllMzQ+T3294zk+Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d/u4lRWL; arc=pass smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7AE3BB114
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781105968; cv=none; b=LCPyCK0DoW4CCo/538Yq/wXjtNwI+CVx1JDpCKDiAlxDZNehM1wnETrhLnMH0U1HMP9e01k23prrD0z/eHRSofSqawHgPMRUrI1qNoNK+fyz8PiCcMMKfV74td/6JSIs5IBYRzn5YL7eabBhyhCGxD+srZyRWK33A4rM5RdzfXA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781105968; c=relaxed/simple;
+	bh=tynOfWbz7bn1HYYu8ZZsYvfXijT/7yglcvJoNrIdepU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=hwZyBKQ++U0GXy+JLJcXqu9slsashPaR4jyFHUZBeFOnsWMpgME0On5KOPPevyNrW79K/2j6g+3CDeaeaxMAQj0vkpT8HglnCIU7uROf3s11CxqMjFjbENlDhoo+moEAoKYNQ/M645BMO24pEiJezv0oyFarUglLb+yLPeJWVQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ihjxTFyo; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/u4lRWL"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7e1916922b9so76776357b3.1
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 08:28:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781105303; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gYLFak6ExMXQitWmZXhJdURFQejEqIwH52Nq85vWwsvzCtKy3vhoI9Rf3qDUmZaX2p
-         AKUQoT4zSjVtE68nzW6cCLjRhkyJIly4tiHODxWbNbu3NvPjAGWE+vKVwJ4u1ZP5cIM9
-         RzOJ6vaSDOTi/jgNiRXewaQpk/k+uecEI0IUHykj3L1JhpKnyMOoH1gwgg7usG3WgbKP
-         yMFlMMyngsfkxWtBNUUVb30RIgDcSYFOnPP6PiTfd8aEDZDVK1Y+1i48DSw8BdVTvdiq
-         xV+7oh5Nqu0cvoI8LgqcjsLjRsnyrnS4tRX1enUWJB9r8rxsKshEI+eSAOS5rip+9JgJ
-         7ztQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=T/PHqIPdSgYkjfnqt7/M2Q99wXv5SJ0nyeARUiqTbEU=;
-        fh=w+X3P60Wn7H6AyE8SU8rops3AXBIpMT6WTc9Sp4Ag5g=;
-        b=iBW3xpSXdhHJUcYvkMinPGgFhnykmaoRhvY7joOfnHKrTNnp/XLI5h+QE/IXWvs9Ls
-         OCNVk3aZM56w4+E45oV/XHqqbaB0ZkYJJfa5ecOMp05sBSI8vXbdnLb7ZweTbnFiPT/D
-         ZjniR67UI45Wnhwb2tBjfkGt2T2tn2kjNoc4TOeBgBVaDXDdcBB+vGESJ59OWD0/a8WF
-         yAteKAWt87zI1W/P91ZpSM7Cm1pebK7rednwsG6lLYEEeNh8mQc/n0vQDm4CQkAGDcoZ
-         4yzT8ksnJWgE339/8DiuNx+Xpj2UkGFhhJoD541lufpbJGISXJ/ZBN4reJciXVdfze91
-         gJLg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ihjxTFyo"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-490d1e54b3bso32219765e9.1
+        for <git@vger.kernel.org>; Wed, 10 Jun 2026 08:39:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781105303; x=1781710103; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T/PHqIPdSgYkjfnqt7/M2Q99wXv5SJ0nyeARUiqTbEU=;
-        b=d/u4lRWLA032SJcPah+/UBvTngNKq3U7uokNU6vjoncXfkxhqvjqklxwSwR7aOskgj
-         tWMtwMtqvtdIR47kLefeB6OiZmlEOivQgopQusZH330/1EN6PGZ6gp7aQ6nFZXjqemob
-         RSv/xoCHg4CdGgn0VzCyL/LhOpQ4+eRsxzbwu77/NJuXr6Fz11jAJjuttYAwThg17/6b
-         E7+2/FSiVRzmWnl9ilhgAJAUDy2X5fLman7jqlIq1/9hq51hu59FeMBk4V60pD2h63TE
-         0Z8B2fzg4TJnzQzfP3+iN4jHP0+SSVjwHZh+8+81+5hUfg4K2G+t991QLQ4SW+ZGTBGM
-         4JFQ==
+        d=gmail.com; s=20251104; t=1781105965; x=1781710765; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zz42vgvtq2qif+glhDd/p3AaCsjZpvrVJlnRDAUy24Y=;
+        b=ihjxTFyoPRlvcQnqX3XoX/5aTnED/NnaqjtwyNLAVyk81wmvrfEULCdZqSaiZRBMQj
+         KVxFbiEPypElnBd83WbM/FlUAvmTLZ1gj2LaOVoqkpnp2iHDGc4WkxjnfgFH96Mg6s5W
+         ugRQD4rIrJlSr91FfqI9xXXOdcFcfOjE4Ttl8jaikqLMzzQIKycPzfDzUivziUMQRU76
+         RRGqeOvHCEKYILK0uGmnHQP6nhAdKzwtge70Jrm9QQAHzfF7nS2o/qGpMKxpL2OYkKsI
+         qVmykoJ5cGi/9ZQNVLdd7O8VGDq4KL990WSMWIjrI53Q78fWTGpee874AeWfpqpt59jS
+         5HPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781105303; x=1781710103;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=T/PHqIPdSgYkjfnqt7/M2Q99wXv5SJ0nyeARUiqTbEU=;
-        b=b4GPLDTwA/uqlkPW8ZVNHuah0DXYd8E7vCZRnKJzDT98Kk/j8nJuB8WvZWCnmlKD91
-         x/S68p84j4+3SIuL/MKlgJD6A15rVdobGg+7YAHAD405ZYAtTjFExIqUlJ54Ek6uNBSr
-         tQhJjJoVssrYPuWpxmmNXeASxebYLSUnVsPFepYq3iUHSndzoXUUIepabANANsRKd6B1
-         SF2WH/Yey/vbPRquBaz/MVw2/UukTLJXSheiOg/QJZB6jEwAb4DZkodvBNcqJ5Bl8QRa
-         /5/sKXzRoz5y4LgRoalSaC2PhHI9sv7kmCStx0KYKfmhkx+m1CFmCIiOazVk5/f6FPm5
-         ZgJA==
-X-Forwarded-Encrypted: i=1; AFNElJ/ADAtZ66X8wpx7yDlsxVzr3Xs+uOHlo1BkVsAFwD7b3TVYUx0Lh9vWGEqjybt4+QOJa5s=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx31sFGiOKDR2n/h7bqnPzsJv7ijKJQEQZH0vtj+aRnR+HNhxSg
-	Q58wgVL6eSmRQf1pv6GnR7NESOuGh84O/U0hgkjeQRiT9m6MtpIxr+3waq5brVw8yIYahCCBwOc
-	XX5oUIP+iywKTTSd1GueQvpia8hlCosE=
-X-Gm-Gg: Acq92OEdz6EZ3RrrsWc/ZhHaNsVE7agXbPO0zUn8608A/GpqAiq0HEYr/GUj+qfc7Yj
-	SQrLZw4UKOnVgzqD0Qm7NDp81sHBDD9EGPCJRy2bY0518HdxvnpFNa4XuZM1eHRf7Cp3QDQJsaf
-	muwyGJV07Dv11JGjuMW69m6ivvXUZZqGR0FocsVKsZcjQn/EX2gS/wWaGS6WUIn/wcKc4fKv78H
-	CB2pZUX9gw1e3izfr7ExNg9cLBgBjh0qbT79z8/3R7O92aPUxm5+5IYb4Fb87mq7Ry5xJaDgZbb
-	GdYdX7ic5FQfsc2o32kEefWnPJiMYWcjRLyWy470RraRbOr94kEicLYg1RDPLlgz50I8hhz4zaU
-	l+feM371CbE5l0/MEXTNbAxlSrF0CxN5PQg1m/9Jaewf7GdHz7JlC7Nq7Mz8CsQCeXf6rzKSv2g
-	wynbp1OjAEMmCw
-X-Received: by 2002:a05:690c:710a:b0:7cf:d594:346f with SMTP id
- 00721157ae682-7ed0c61a14amr247949017b3.3.1781105303434; Wed, 10 Jun 2026
- 08:28:23 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781105965; x=1781710765;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zz42vgvtq2qif+glhDd/p3AaCsjZpvrVJlnRDAUy24Y=;
+        b=PxKHtif8dHhA9CGcjO9ZnWqWnls0Me44RtQtFfFah20kiU64br9v7o89rpUv/xw02o
+         YuJ1a/c/KiT91hDF9DIaBblz3rWKfufhZshkAulmAlC/9hM57uz32R3g2CcFjLYMh8ri
+         vdYO+yBspYfACAL3uAeXEkt8aawmD0KE30xgCiDqZU2GSe7iAYMf3aVHpCxyMj/PwjLx
+         IuFO6fh8Cj+FPWLtcZxJA/L2I58UzRb9wh5GlvgyMA3yfWMgYYgcjnlNHcXHrCHcFrg3
+         xEB44uAg+IdhcY37z7B61CpUzCAB2E5wizkh4huuHi+t+K3sys0JDyZ0P7v4seYRLnR5
+         bBIw==
+X-Forwarded-Encrypted: i=1; AFNElJ/yfdz2u4GihmeTltbuXV3rP6fikep7xMaBke3GtcUo2Uam0dGif33oV0r6p6cFjMsfNkU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSoo0Y/oFshQJXebsFo77iyA/M6hHQ3/FINjtouDQHgMpU83nc
+	QCOH6vw3FgTC0UY9BQkE+G1p5qEY3EV68LOtL4v1TN0xQa/AO/sXTEJSFLllKg==
+X-Gm-Gg: Acq92OHtDuBhMU/yD3Dj9oABluZjWtlStrPA3obIux5cd2R1jIg1P4Xc4qRV04xv4Kg
+	f5iU59uFWO96LiNuP8Qb12Lq1ZAnH4C18JdLbfAujC3VITMpiIxrmJhd+4UUxFDGdXJ0NNuVHlA
+	x2xslMEkeNDk9i/36WcX/P7LiXEejHg1Ki+FRg8MAMJRT/kUzpi2ZtaHSO4eAKbRjEZeiaBDYjf
+	nAH/R7jP91ige69IPepj0Z2WUxPqzV8ILmyqTpDmsb909dcMrm//bSaI1yn4PAKoO0WVDrh7mJ6
+	fUODFGTSZ68ES7oSPb0St/DKZJzuzt65RTN4V4WfL25hiDpYghdiumzmdLh56S/dzEpW+Q0KAtp
+	JJamzL2YzOftMN8zyEcVsm+/jRmMxJx3PSB2mor41UrHU1FWW+ZgPZd3REdWbt2lx7b0bcr3OsL
+	2GxMk23Q35S2vt/GtrXz1sCemIi1Um3RS7ZGGLBNqPpYtKmV/euDvWrLQ0RspiZs5g7/tRp5iHO
+	0dayYc/DEAw8gg0
+X-Received: by 2002:a05:600c:3551:b0:490:6237:521b with SMTP id 5b1f17b1804b1-490c25cc5c2mr403835205e9.27.1781105964885;
+        Wed, 10 Jun 2026 08:39:24 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc39eb04sm574986175e9.6.2026.06.10.08.39.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2026 08:39:24 -0700 (PDT)
+Message-ID: <c9918880-31f8-42a2-83a2-8175dbffd07d@gmail.com>
+Date: Wed, 10 Jun 2026 16:39:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260402211717.3604688-1-pabloosabaterr@gmail.com>
- <26d887d2-6ec2-4af1-b0bd-8e9b017bb4dd@gmail.com> <CAN5EUNQCsKD0CJqDi43i2JVBQQChAZVt_THQ1wGpdeydNHHCFw@mail.gmail.com>
- <2e8b9b1b-6a69-4e94-95ea-7f587435bfce@gmail.com> <CA+J6zkTGgeNuH0eusTy+t8LO3bjygSz4svJB=K4R5ASmBdd0uQ@mail.gmail.com>
- <CAN5EUNQoKRqt3FGLmzRGpPU1nO5jCAogP8Wm9gBZXuPbMNbQAw@mail.gmail.com>
- <xmqq8q9gb704.fsf@gitster.g> <CAN5EUNSFBC0+aoW1ceGjEiKWBRjzuzUEUjg8Xys5O9rDsJdkjg@mail.gmail.com>
- <xmqqcxxyxvyo.fsf@gitster.g>
-In-Reply-To: <xmqqcxxyxvyo.fsf@gitster.g>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Wed, 10 Jun 2026 17:28:12 +0200
-X-Gm-Features: AVVi8Cds_nONcWaf2K7zomJhZqL__-46Mq2HD8603DOF8_7pJ5XW4QGbgnXrf-8
-Message-ID: <CAN5EUNS4o_SN61UHrGM-4eXDNpkHzYkVKtJbw_CBJGmfbA-Hgw@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH 0/1] graph: add indentation for commits preceded
- by a root
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org, christian.couder@gmail.com, karthik.188@gmail.com, 
-	jltobler@gmail.com, ayu.chandekar@gmail.com, siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [BUG] rebase --update-refs emits unqualified "update-ref HEAD"
+ into the todo
+To: betel_taxis4h@icloud.com, git@vger.kernel.org
+References: <35A368B8-9B8A-44A9-96DA-65ED16D7D564@icloud.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <35A368B8-9B8A-44A9-96DA-65ED16D7D564@icloud.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-El mi=C3=A9, 10 jun 2026 a las 17:21, Junio C Hamano (<gitster@pobox.com>) =
-escribi=C3=B3:
->
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
-> >> > Do we want cascading or just a fixed indentation?
-> >> >
-> >> >     * A parentless
-> >> >     * B parentless
-> >> >     * C parentless
-> >> >   * D1 child
-> >> >   * D parentless
-> >>
-> >> I am late to the party, but I cannot get how the latter is viable.
-> >> If "A" had parent "B" whose parent was "C" that is root, wouldn't we
-> >> see the same output?  Or are we adding " parentless" at the end of
-> >> the one-liner log message?
-> >
-> > We wouldn't see the same output because A and B wouldn't get padded in
-> > that case. Vertical adjacency between indented commits doesn't imply
-> > relation because indentation means that they are "parentless",
->
-> Hmph, I guess such "the first column is special in that two commits
-> on consecutive lines with the asterisk on the same column, if only
-> that is on the first column, are parent-child, but it does not hold
-> in all other columns" was beyond my imagination. And that was why I
-> said I am late to the party.  Do others find such a rule intuitive?
-> I didn't (and that is what led me to ask the question).
->
-> > Anyways, having more than 2 "parentless" commits one after the other
-> > is strange. Cascading is just having a depth counter and printing the
-> > padding depth times, so I'll keep it as it is more intuitive.
->
-> Is everbody happy with this version, or will we see an updated final
-> reroll to tie any loose ends?  For example, do we need the above
-> "vertically adjacent commits are in parent-child relationship only
-> when they appear on the first column" given as a new instruction in
-> the documentation to help users read and understand what the graph
-> output is trying to tell them?
->
-> Thanks.
+On 10/06/2026 12:00, betel_taxis4h@icloud.com wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> With rebase.updateRefs=true, an interactive rebase of the checked-out branch generates a todo containing the literal line "update-ref HEAD”, which git's own todo parser then rejects.
+> 
+> Minimal reproduction (plain repo, no worktrees, no remotes required):
+> 
+>    git init -b main repro && cd repro
+>    git -c user.email=t@t.t -c user.name=t commit --allow-empty -m base
+>    git checkout -b feat
+>    git -c user.email=t@t.t -c user.name=t commit --allow-empty -m c1
+>    git -c user.email=t@t.t -c user.name=t commit --allow-empty -m c2
+>    git -c rebase.updateRefs=true rebase -i feat~2
+> 
+> The generated todo contains:
+> 
+>    pick <c1> c1
+>    pick <c2> c2
+>    update-ref HEAD                <-- emitted for HEAD, a symref to the branch being rebased
+>    update-ref refs/heads/feat     (correctly placed; this one is fine)
 
-Hi!
-No, it is not ready yet, sorry, I have to send the next version but I
-cannot get some tests to work, I should have it by this week.
+I'm unable to reproduce this with the script above and I do not see any 
+update-ref commands added to the todo list (which is expected as feat is 
+being rebased so should not appear in the todo list). Do you have 
+rebase.instructionFormat set? We recently had a bug report and fix[1] 
+for "update-ref HEAD" being added when rebase.instructionFormat includes 
+"%d".
 
-Thanks,
-Pablo.
+Thanks
+
+Phillip
+
+[1] https://lore.kernel.org/git/20260510224111.64467-1-mail@abhinavg.net/
+
+> Letting the editor save the auto-generated todo verbatim (or running `git rebase --continue`) fails immediately with:
+> 
+>    error: update-ref requires a fully qualified refname e.g. refs/heads/HEAD
+>    error: invalid line 3: update-ref HEAD
+>    You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> --update-refs should not emit an "update-ref HEAD" line. HEAD is a symbolic alias of the branch being rebased; the branch ref itself is (correctly) excluded from the update-ref set, so its HEAD alias should be excluded too. The todo should contain only fully-qualified refs/heads/... lines.
+> 
+> What happened instead? (Actual behavior)
+> 
+> git emits a todo line ("update-ref HEAD") that its own sequencer parser rejects as not fully qualified, breaking the rebase. The only recovery is `git rebase --edit-todo` to manually delete the line.
+> 
+> What's different between what you expected and what actually happened?
+> 
+> git generated a todo command it refuses to execute. The unqualified "HEAD" should either be expanded to its target ref or omitted entirely.
+> 
+> Anything else you want to add:
+> 
+> - Reproduces identically in a plain single-worktree repo and in a bare-repo + linked-worktree layout, so it is not worktree-specific.
+> - An in-sync remote-tracking ref (origin/feat) on the tip adds a second, valid "update-ref refs/remotes/origin/feat" line but is not required to trigger the fatal "update-ref HEAD".
+> - Workaround: unset rebase.updateRefs (or pass -c rebase.updateRefs=false), or delete the "update-ref HEAD" line via `git rebase --edit-todo`.
+> 
+> 
+> [System Info]
+> git version:
+> git version 2.54.0
+> cpu: aarch64
+> no commit associated with this build
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> rust: disabled
+> gettext: enabled
+> libcurl: 8.14.1
+> OpenSSL: OpenSSL 3.5.6 7 Apr 2026
+> zlib: 1.3.1
+> SHA-1: SHA1_DC
+> SHA-256: SHA256_BLK
+> default-ref-format: files
+> default-hash: sha1
+> uname: Linux 7.0.11-orbstack-00360-gc9bc4d96ac70 #1 SMP PREEMPT Thu Jun  4 16:40:25 UTC 2026 aarch64
+> compiler info: gnuc: 14.2
+> libc info: glibc: 2.41
+> $SHELL (typically, interactive shell): /usr/bin/zsh
+> 
+> 
+
