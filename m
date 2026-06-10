@@ -1,195 +1,111 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E2E20C029
-	for <git@vger.kernel.org>; Wed, 10 Jun 2026 22:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7A915746F
+	for <git@vger.kernel.org>; Wed, 10 Jun 2026 22:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781130129; cv=none; b=AerHryrAGqlDR1B+drOaOjh9Udns8fY5j9O3o7afMI67O35WXmtmd4M14umN1ZTJXxAAdf38Al4L0S07Jw5LS0QphCKeStcImMpd5d7h7+h7BACnUZQxHlPj/qEXLn3aw661ILI1gEgkkcwaxXOq7ktHo9set0BxSaFa2yzJBWw=
+	t=1781130197; cv=none; b=EbNk9anv6w9aTAM5+A/AlL68kF2alN+YYJQHcZYwgmDhRtSps0dqhIefMhKdhYy8qAoXw+GfTamr8FzPMXIs7C8nPEzSeF7TdRahQX/r7UD90NLd3R9tol6iuR/ehOWO4ZRVQ030zByAYpFWtIgCTeUc7Sn/YshvF9h1YlGmXJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781130129; c=relaxed/simple;
-	bh=g+dDuHFgs5Qt6lTiT5Sa65XOCmtZHqqXXLL/U+3lISk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oUXWhuSDkFVxRtlfqy/4WWMsEUZqgU3hwWcSEwbarlq7MAvsg2taDmvgdJ5TVnqfCIvBYJlZ1kgpinIX3rb71TQi/cc7+sTSA0ohJSgHIa6OB6tLysMQMBCChdmU1qjlKRX6c+JzpVpp4PIoFsrkbJL9Zk1aEPIb1ByP8T//ETg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s9TRVdo/; arc=none smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781130197; c=relaxed/simple;
+	bh=RxRtJHNU2XqWGDj9h55OK/fe2EEpz6mW1fDdG2NCDE0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=uWMTFblEhGseMBwfTmGG3FMuESRUC7eHCWqbEM9a8ftwyoQCuYpmgkpWf8PnbjJZNsZP6Jfu9PJNpGQ5kdwRQo26Z2MHLBtadUY1+HoxQd46wA0U0Lp2H36FUJ2ZcCpBxhZ9fSauluQPOiVPmSr+CuSjTChp9c3evZbmobpISJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=YORBo7xb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O0arKg8q; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s9TRVdo/"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-69e9b037d82so2441209eaf.2
-        for <git@vger.kernel.org>; Wed, 10 Jun 2026 15:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781130127; x=1781734927; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ucEzvcT8UXy8ZAL7HrvIAovYOfAhNFS4vJ6yU0C2ER4=;
-        b=s9TRVdo/vsjDFt75robD+LZr1a9yGxWz+YfbLmj6jOg4gzTv+2y0bibqMbGXDfzqQC
-         92URE7LcIMkUIxNNBjRGmcfJEljaN6uGluZ5cbtwMvVlvjwh9+K1PvBLlw7xGySrqj1b
-         KeWnxPYvizJ5t/WJuyuNnc09DYXL6IrZWJpiqwHkcWbgg3p3R1BjbzWp5IIipjA7dsBD
-         TzujNZIsGD9lYDrAG5oDXuz1wWWMksoculKgwYp+WusD9MOWVtiEqmD8DI0wC3fWzQ7r
-         YXt/5cPUcLuJcVfhSUa85mqKknf1zzq+RNjvvAxwscxCZtItO/Pl9YNrJQi/PuUIlriM
-         SN+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781130127; x=1781734927;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ucEzvcT8UXy8ZAL7HrvIAovYOfAhNFS4vJ6yU0C2ER4=;
-        b=qY1jswrssuyQeGGRa+CHk10AAJUiucSKt2pHFKB8Qu4++vpvL7MXHYpFEniSpElbN+
-         QJUmYbMjifwxZvDj3np92JFz2PUQlZAuYRmfQ8L4cFkHx5PcmU7L35alLYtv6qTNkFaV
-         +dxY8VSF/bHrOdyLUpbrcMYJu6twfKkynHQx5MBM1M8x1Jfoq7oYUJ/N50JeGAxNc182
-         wY0jhQ6UcoYTFccvg+e8Wf4O1V+LDMhK8tIYOxZoE1jftDIfqWtrpkNn/+AjIaCcjG3y
-         TiGdA9XXRVE6LbnFBWgWZvfAJH2fpSu7sLyhEnrKWEs/PYlWZp1n9v0YTKeD7bE4ONKI
-         QffQ==
-X-Gm-Message-State: AOJu0Yw+ff3HXuPDqMz8SJ3w66NGbvIiys69UEnMNkJIVZPHaClUBaWJ
-	501E5y+hvsK6ir++3GB/az/Pxj3CRxWWgqks1Q1lcCwrYR1FdUVqnlhfRPeU3w==
-X-Gm-Gg: Acq92OFM3YOjxfEAz0fEelwQhAmAW1bYNCGVHPfXfInSnA19tW89ZCezgGLo51encJ0
-	I249+12cAyzXyxdDiAWVnkzHmLEP2rPrM0MWwXsci6NP9d4KHqakJroX2BvJAVs2YtMOZF4lIto
-	Quq1H5A27Oy/8TBI7lbpi3we9S7kqRSICu26bju3Pw/JDWem/1zMDsCtc+MEUtSeLyCC6HAT9hZ
-	NZOaCGwizhhLKBl6lU51GepN3Y6CT6MyQhoN52A+rLDq7RKw3LbVy1VHLw6EUboVVRYdjQ9kafX
-	+eoNVOZ/zEuBmhFiMIBRplgQ2/eWHRfahJsrsFOsL6dFsb9Ch/NV9Luohn549MRiY6mnX3DNe7e
-	m7CwJyHIp6+gnx5Nagnmzml7pMPZxe7ycIjtSNWNoc45LSmEJk/M3NGQIGL3xxAKe/pstxMfuQ9
-	wZIPEkk+C9csFat3FyhErdGyDsQ5o=
-X-Received: by 2002:a05:6820:5705:10b0:69e:ba3c:124 with SMTP id 006d021491bc7-69eba3c03d0mr2409350eaf.43.1781130127097;
-        Wed, 10 Jun 2026 15:22:07 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69e46405105sm13009465eaf.10.2026.06.10.15.22.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 15:22:06 -0700 (PDT)
-Date: Wed, 10 Jun 2026 17:22:04 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/7] environment: split up concerns of
- `is_bare_repository_cfg`
-Message-ID: <ainesoUOuhspKxHF@denethor>
-References: <20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im>
- <20260610-b4-pks-setup-drop-global-state-v1-5-5dff3eec8f06@pks.im>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="YORBo7xb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O0arKg8q"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5BE511D00070;
+	Wed, 10 Jun 2026 18:23:15 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 10 Jun 2026 18:23:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1781130195; x=1781216595; bh=R1
+	E8iaXTI14cIEwNq94oAaqG12r8v4Rosffr4ksgydU=; b=YORBo7xb5C+FzNUWpG
+	mz4bj5ebTACTaJDM+VxfPZwIr7IihCAIyj/PX6CjjwVZqYOIGVjcXUWzkmbKkQ2N
+	uR5+lo3jURaEab8jt3RCGFz9R6pyo0snmXm3uVsaDu+FgQ+V3EStffG6I1I0/b1H
+	jByUI0GH99BrxIG3m09DIm1Wt+bM1ErRw4sK8WUOLXooxq0FV968+va8SSjlx4gN
+	iEOC0FIJ44+N/mmBc5i3kAIi0d5iN2huBXJ3wy6rWA7B5vseFyRwHub8dNTGklW1
+	klTXqQgV+H6KQ5aMjzvSGAL992rOqG6K8DOvVyUCSHKe0hV3ElmBd7YMwNgjIwdc
+	+j6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1781130195; x=1781216595; bh=R1E8iaXTI14cIEwNq94oAaqG12r8
+	v4Rosffr4ksgydU=; b=O0arKg8qqyPR43bsOBqVBz1xSqjZBFTucb12rSV2b2PB
+	iLpQdAL3WAfC3NQmh64JvTpdNrGomC3sNM0p7hLCMlFYSUDVMTocL1u72g0qvr39
+	OcVE2+6kwUT0SiuYoCrF67mKQf/QFMKTsWs1L73KLATRyu0wQPOMM/vuf4rok2V5
+	OmDrY8hrcjYfr9tlsoOS9/hJSYzlntB2dFGa9xBjcGSFxEPkUd4Y5e89Ttzl1QHy
+	eKP8LxhVl7u+bmVtyl8a9tOk+JkKxIO4pkGNfrLE+sWWFajd/V9Cuzwl2J0BxvBE
+	wRj88cUiRSzEPkPV0WpwGK01oaW23uCxNfGWCxYYAg==
+X-ME-Sender: <xms:0-MpahoduTUfdB8I0mnKUVTw3xSTQzw3UuMwBJoyZPChhtgZ_387vnU>
+    <xme:0-Mpappfgmjf0GU98BBIHm7Mt0FwWQBBDXiktOq-QpLyXx8OWOF5KwAbGLaslCi4z
+    oXRtWXBWgfMboPuq8UEjDLd2vk0zbM8yaOD3F4FmkM5QHErjdxmrQ>
+X-ME-Received: <xmr:0-Mpar0GqIMMF4w7nSs91MmZgkhMSutmvrKtdHY8Kl2mnc5lrFKerB6t675vEbPnV-BQfE7y8R9u_Dfb9-MKigfMElkrdr0qhX_ZslYKgLz9iPL3vjwbsN2pPQ>
+X-ME-Proxy-Cause: dmFkZTGiWPNRqASvMVdlP9h40Y9OWrM5vR052QkblstALiTh8ETkqhAEHxjtfqfzbEzbbj
+    Jl+yHfwddO3FdR9cnHa+oAzNAq1ayXMgEU/iOGpmPYrCiiLDuXeR6b4MAFwEhrczSQRXCl
+    VsJwoiFKjzsPaIXSpUziX3Jl7QqCqcxaL4HxfeO9osG+UnUA62nPui4xAyAEZ1Bb3+IF0u
+    5sbTg1g3L4k6PznSUz9sZ79LOWzGxxF+5+Aht46bO0vlXMtNCh5z8RZNzbZ0vrm9xZk3k5
+    6N7mvcn2yyTLe7fH1O65WftL09rI8PGodMLJB+rpU+Qlwz0uCSx9vr97k+j+Ql7ed2n7PD
+    nIh65LMQkYLG2aFt7iS5x3uc98J1XfKB5dm3U/06JGbSnaVJRRa1hSgvz0IMZf+mtwBlTE
+    NJcV6mfY6hYrsLPIl5SFl+G6txtCK/46kqtQgPPV5wApKhDmPdTuTGuAtMCqull1IrVmdA
+    N2+f4SrKuWSCFUVuAjb15fVlrIwNiW4mSb9xkqUmDZ9BoESGef+Mx55HX/bPG4wFC8lgL9
+    hvFGvZaofDhaNuCVr/1N5fFlSpwTaHvEO8ex7CieAKCn21YFz/JbU79Id0JiZkwuoUuGvv
+    A1E2eKsaorQYt+naiJnnsoDGfSw0tJt28R1xJMEskez8S1ByXleYqIdZPx7Q
+X-ME-Proxy: <xmx:0-MpaoD1rkgwQMEoYy6sNEWSLZhEV8cdgDlnU6ms1-MEZXeGC_11Ng>
+    <xmx:0-MpajcF1l5Pt5ODfKzdBzhaovDk2kuiDr9rpGkptE9pTkq8wB5TWg>
+    <xmx:0-MpatiNG8ij-tVZdtFYUp1RkgmShuSIslfAiLPKYvTfXydfq9YawQ>
+    <xmx:0-Mparon4OMHFLt1BnuRIqaOcrKzxzxRun_CJXBFUKONZYKiROvt_g>
+    <xmx:0-MpalDA9KMZcqmn45tH8XAC_aj7jVRj6KmTnEoZtzlhAqw5sxDfgc0w>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Jun 2026 18:23:14 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH 0/6] SubmittingPatches: update and flesh out trailer sections
+Date: Thu, 11 Jun 2026 00:22:43 +0200
+Message-ID: <CV_SubPatches_trailers.8f3@msgid.xyz>
+X-Mailer: git-send-email 2.54.0.22.g9e26862b904
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260610-b4-pks-setup-drop-global-state-v1-5-5dff3eec8f06@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 26/06/10 08:56AM, Patrick Steinhardt wrote:
-> The `is_bare_repository_cfg` variable tracks two different pieces of
-> information:
-> 
->   - It tracks whether the user has invoked git with the "--bare" flag,
->     which makes us treat any discovered Git repository as if it was a
->     bare repository.
-> 
->   - Otherwise it tracks whether the discovered `the_repository` is bare.
-> 
-> This makes the flag extremely confusing and creates a bit of a challenge
-> when handling multiple repositories in the same process.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Indeed, this does seem rather confusing.
+Topic name: kh/submitting-patches-trailers
 
-> Split up the concerns of this variable into two pieces:
-> 
->   - `startup_info.force_bare_repository` tracks whether the user has
->     passed the "--bare" flag. This is used as a hint to treat newly set
->     up repositories as bare regardless of whether or not they have a
->     worktree.
-> 
->   - `struct repository::bare_cfg` tracks whether or not a repository is
->     considered bare. This takes into account both whether the user has
->     passed "--bare" and the discovered state of the repository itself.
-> 
-> Whether or not a repository is bare is now resolved when checking the
-> repository's format, and is then later applied to the repository itself
-> via `apply_repository_format()`.
+Topic summary: Flesh out and update the trailer sections.
 
-Nice. These seem like they should be tracked separately, so splitting
-them up sounds like a good idea.
+All of these points have come up on the mailing list. At least for me.
+And `Based-on-patch-by` is a nice-to-have documented kind of thing.
 
-> This enables a subsequent change where we make `is_bare_repository()`
-> not depend on global state anymore.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/init-db.c |  2 +-
->  environment.c     |  5 ++---
->  environment.h     |  1 -
->  git.c             |  2 +-
->  repository.c      |  1 +
->  repository.h      |  7 +++++++
->  setup.c           | 21 ++++++++++++++-------
->  setup.h           |  6 ++++++
->  worktree.c        |  2 +-
->  9 files changed, 33 insertions(+), 14 deletions(-)
-> 
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 52aa92fb0a..566732c9f4 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -81,7 +81,7 @@ int cmd_init_db(int argc,
->  	const char *template_dir = NULL;
->  	char *template_dir_to_free = NULL;
->  	unsigned int flags = 0;
-> -	int bare = is_bare_repository_cfg;
-> +	int bare = startup_info->force_bare_repository ? 1 : -1;
+I have had these lying around since January since I got distracted. I just
+wrote this cover letter today. But I think this still makes sense.
 
-Any particular reason to continue mapping `force_bare_repository=false`
-to -1? Or was this to just minimize changes?
+[1/6] SubmittingPatches: encourage trailer use for substantial help
+[2/6] SubmittingPatches: discuss non-ident trailers
+[3/6] SubmittingPatches: discourage common Linux trailers
+[4/6] SubmittingPatches: document Based-on-patch-by trailer
+[5/6] SubmittingPatches: be consistent with trailer markup
+[6/6] SubmittingPatches: note that trailer order matters
 
->  	const char *object_format = NULL;
->  	const char *ref_format = NULL;
->  	const char *initial_branch = NULL;
-[snip]
-> diff --git a/repository.h b/repository.h
-> index 36e2db2633..7d649e32e7 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -117,6 +117,13 @@ struct repository {
->  	bool worktree_initialized;
->  	bool worktree_config_is_bogus;
->  
-> +	/*
-> +	 * Whether the repository is bare, as set by "core.bare" config or
-> +	 * inferred during repository discovery. -1 means unset/unknown, 0
-> +	 * means non-bare, 1 means bare.
-> +	 */
-> +	int bare_cfg;
+ Documentation/SubmittingPatches | 46 +++++++++++++++++++++++++--------
+ 1 file changed, 35 insertions(+), 11 deletions(-)
 
-Now we track whether a repository is bare in `struct repository` and
-removes the need to a separate global to track this state.
 
-> +
->  	/*
->  	 * Path from the root of the top-level superproject down to this
->  	 * repository.  This is only non-NULL if the repository is initialized
-> diff --git a/setup.c b/setup.c
-> index 71fc6b33da..2b690da8ca 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -795,10 +795,16 @@ static int check_repository_format_gently(const char *gitdir,
->  		has_common = 0;
->  	}
->  
-> -	if (!has_common) {
-> -		if (candidate->is_bare != -1)
-> -			is_bare_repository_cfg = candidate->is_bare;
-> -	} else {
-> +	if (startup_info->force_bare_repository) {
-> +		candidate->is_bare = 1;
-> +		FREE_AND_NULL(candidate->work_tree);
-> +	} else if (has_common) {
-> +		/*
-> +		 * When sharing a common dir with another repository (e.g. a
-> +		 * linked worktree), do not let this repository's config
-> +		 * dictate bareness; it is inherited from the main worktree.
-> +		 */
-> +		candidate->is_bare = -1;
->  		FREE_AND_NULL(candidate->work_tree);
+base-commit: 1ff279f3404a482a83fb04c7457e41ab26884aea
+-- 
+2.54.0.22.g9e26862b904
 
-Previously, when there was a common dir, `candidate->work_tree` was left
-untouched, but now we are expclicitly setting it. I'm not sure I fully
-understand this change.
-
--Justin
