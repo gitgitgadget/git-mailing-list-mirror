@@ -1,80 +1,80 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93C0411677
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D7C41361B
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184454; cv=none; b=Mo6LXnUlkJCs1seG9ZuHqL1cI09JrB3Hx7TAOOPE70KHcIiKGKq3ZLimQj2QOBMCcvr7XIBMaKD/KOINhm60QQtwiB1djQF+5X7QZKDyeusQKBXVLtnS23SL+4J+CAmHaxRH3l1nwqVB8segwNC38GSBGtQsgY5vZZSuG32RPH8=
+	t=1781184456; cv=none; b=ODsVqexneHBeIDUx36CJ/aO1NKJ/uI4lOE7O+Wth88yMtjn9Xiy5x1kM8FHujpbHYzHeNAgQEa3ILTHxzlrX/2pAswIwXtBFWTtG1Rk3gUxxD0WYixpd+TR27uSOVGXQxIO1jIJm6hXvYm4Ag/gfUYuTDXTCB9K15yIYArvLx3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184454; c=relaxed/simple;
-	bh=uLXoz0x8Iv/qJ+ElQTLKbu3ACouzDz2MU1llIOV4O5I=;
+	s=arc-20240116; t=1781184456; c=relaxed/simple;
+	bh=hGzQpoYI6vSzvHr7cXoEPALfHZrG2YQ0IBpBB3tccEI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LS1m/bny5p7MOJtYhwzdkjT8V4leklPVioc8P769+nBHQD6n5ha6ymkqRZ7+BxPVAUvQbv8/Xkfgh09f+KoaFcay6yi3cxVtdrwHqcPlXrdfc+93za+nw9wkBDIXPnsM9HSeOMTEr+upl/XllgLNfPVmISj1kXhBzuYtlPaqvRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h/gw8zzi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SAqsH6/A; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=IuIBR92Zn3q/hs9jbcH+1qBoVbWP4eWub6VegwL6TmwOqyifSizdnuRlgnRQOqnkxa6VzabVJUu97G3BSoo/yHqd0a+ZuWTSBnSbDC9sgDd2d1hz8KHK6AAwqBtn4aP38jPOMWi43272XLe+FsZKaQnwhEpTj2xOBXli80yBu/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MkmRv9Bi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q1ZAjCWj; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h/gw8zzi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SAqsH6/A"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6745A14000FC;
-	Thu, 11 Jun 2026 09:27:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MkmRv9Bi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q1ZAjCWj"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A987114000F8;
+	Thu, 11 Jun 2026 09:27:34 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 11 Jun 2026 09:27:32 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 09:27:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184452;
-	 x=1781270852; bh=l2oS4W7clZCUsNHMcslHPm93eFUuhBu1zDAWTnlTfGM=; b=
-	h/gw8zziXGzsqIVzHFsLXv+gZa0HBaYJkqyE7rn5KrI8ZdvNZMAZYc1bZ2Y6Z/oN
-	wNmH4UL65pSPMBBFTL82shaylJXJRf3hIirKCvEMklFVefapvV+qZXzpMnkdgHFL
-	iwGfix2PA+LXLmgO6H4kfca2oteU/HjeCCm80ysJtpyl/1q/4Gzpa+5JA/aPczAT
-	/b40coG8ANE0wo0LYlgtpToP17PxF6dznXcpH1TfDJl8ytrpkGnUXIm7nVS0oo5X
-	tOjdjKnVFlvItO/mYN2l0LT5EXQkHYFF/0LTDV0e7OHpOOVN0LV0qugfjJQJPKz2
-	SnwUnzqsusH7ZMyb3C++dg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184454;
+	 x=1781270854; bh=4Lf/eXFsyc82vMTmu6NWYQUgf6vC/Rb7D49g6tTJXfo=; b=
+	MkmRv9Binx3A77CwsjxPcF2PA4tdmQvHPZtVeAWzO9bGCEcXGnbC6m1Kii+RX/DN
+	iwSuBCHIxNocqZSGzdCSB7apNE1YgM+MPIXyUztVyQXkOSlPI86sM6LVT44n91ea
+	LcNAhL55ocTduRKvUcj4fkj0WIKB4bGwamKW7wfVL3RbMid2jHfWDqCYQ0bPPhoe
+	6aog4lzGzjbGbzCCcA7/9+uVi/TgiZpak/RQD5TCWjgUXiEcgpMNZjCfrcVB1zVt
+	9PAEDkuuJibkMMShUKHHqk85NuL4gDFN7+0CRbitndopBLBRPmsSUBCkh1MuJP2y
+	dGmoid0a7PaffJeg++J6DA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184452; x=
-	1781270852; bh=l2oS4W7clZCUsNHMcslHPm93eFUuhBu1zDAWTnlTfGM=; b=S
-	AqsH6/A270Www81+FmjgB6gVeEfQksu3pcvb/CuzHj7wVgk+QiifujwJwMvWVE8L
-	vMSE9CYg+Cfztv+63CdxkEpZhKOsGoeDhVcGfdltAKIR+WpUiIoG+cgjW+W6rYx7
-	rjI59mzriDM6AldrokdXB+CcvR6cs/7zas9b7kPK3qMLoU13lmxWwGSvMUu26TMb
-	jy6irY4EIx7gVHbTfH+O5RCfZb5iLji4Z8z+Cox0TyCkE0HAjOAN+pm+nxeRBJyr
-	PklzucuQdKNy+YVViy/TGCl3XUuiXcWLrWPsO1AzhM3z4Dtc/V8r0I4quZ13xenv
-	wp/L0XdvwDy8IFZOu4MbQ==
-X-ME-Sender: <xms:xLcqanH3EOUwoJgnJHfp63jU-iNOfRrIhIqftZozb2ySd3QzYWaxEw>
-    <xme:xLcqal0LVmZET6Ly6RWdTxYmCeLO1YTp1vUgwbuO3I-MAVPLxnmXK9P7TX6otr7ar
-    VCOjqySJLMCIF2DS6nmsHkXbQgvlneaxV5X7RxMRv2Dad_Z4qFq>
-X-ME-Received: <xmr:xLcqapMhqjWGYT3GzO1rxS7klJqx6_mcym_VjRDEe-Vl_DjOIrGJ9zr7EiFa9krZ8cUQnW8DvmcygN9t9a7l1JRFNnoQnSKyyDcvgPANzKlO>
-X-ME-Proxy-Cause: dmFkZTGGNOZQy2QTFN7IZUfAYMTq5Ljsjny/aPIOx7WJqe7Z1LumpFueIzeDdJnNJ5DVRz
-    36KQCGTaoNUuTNfOfSxzVLKyz3syu0LyEd+VcrSaIbKR2Wk7mIy39Hol2k7OuX4+m1/Xrl
-    QAVFceJO/5DINnoaU26AA0MPf95ZHQ9cWzgSwjXix9sAfTqoT0utcmEmlXQ8CpRHfMI13E
-    5B4Mb7HeFzViwhZIFrHVRQdl5UW+0EMgSFWe6vn/6xx9YWCTd6FX/8MUSb+Wys5/iT0aWB
-    cGMngkH9QtISmu5huLQYQ4jCqugx2AyXKFtoDlr8DLcs7+95+gqLjyrCGApmWLjjQ4h7h0
-    j6g33VpVOd4jKEVr0LFCPaQefTR0vhyHL4LdshaQZRa46sOQCLtPn8MJYa1C3lTYLAsuJy
-    oZ7FLIUw86m9UmdtnCciaogeL76FG5A0/ilw50akof21EqFUdN2BOvuGqa+nTg0il5mcBk
-    VvdJoSgipEtHmliiBb8M7BySOfZSG4vGVaqtCEwYTLXw5Lw40+G0hoerOXkp8kQLg+vUE0
-    T2E6dLKaNajUFLE0Jdi0XTR28IrivzcY04COk5EGh7vmL9DltYnERR2Ch2z9NV2k7X7FKt
-    kYWG1+MXIV27MM4W/Cu0Y3HZLVjtNEtL21T5FHJfFS/VET4GtT0/pnjnfvjg
-X-ME-Proxy: <xmx:xLcqak63GiUgTfKEyRHSEpwXiqtonrmbHiUtoPZ8V3S6IfSjrFff5A>
-    <xmx:xLcqaj1oMcMYVY0ZYvoPqSr6Ad6P3JJMgXjok_Cxuoh-4CN9hxqrWg>
-    <xmx:xLcqalxxXXVI0nml4IMyEBlNf_rz8N_S77J5UbJGBv20gQ2TYxMHSA>
-    <xmx:xLcqattGNX4an_IofAU8Ir-mhl-Z27LHIbkzGcO9Njky-O3Lt-kYhg>
-    <xmx:xLcqalJGddNnW7G49RA8O-q0JOZKgAT4FQ9RSrgl3zRZ1mxW4zBVxgtu>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184454; x=
+	1781270854; bh=4Lf/eXFsyc82vMTmu6NWYQUgf6vC/Rb7D49g6tTJXfo=; b=Q
+	1ZAjCWjthGMGL2/z2oGa1G7p6fQbVNpuAdzR4sqMoFinkYUDUJ9EgDVvVBRKZCjq
+	bFM30tt6s+XThrQ6+3Fd0598GVmCn3uhNEp9+5nPwP22nhLkx+A7uWZuOJDw3a7q
+	t0SPp7u0b3SjTZ6WEo8CWfC9i0Hf3TI4K0VsssqX+8RWth/yXpDgu234M0lYWiVa
+	PYUz7QC7QCEXI2/fJqGSbnnMYo6GSnMQGSCvRl7q4N88Lqhgr9ortw9UDv2cgCbi
+	CvB4vGND56E8YB71b9FTFq2pgo2nFXy+I1fTfJj/bfNYcWV46WJwV69LkIjp2x5v
+	H0avSp14pRH4RTmU0mIJQ==
+X-ME-Sender: <xms:xrcqahrZ7hvwY3Q4u97u5DDgFxf342OlShoFAdQOxlsvMw1tm9xUIQ>
+    <xme:xrcqalL2WLFhXbjI2Km5fWJozpP4X46mquLsmjAwb8JrIpkIhmnv85IpCfz02LRk9
+    MpyTSPIV0KtS2tWAv_eXjas7L2jUdFbNHQhIX12yyKK_PAvPcEa_kM>
+X-ME-Received: <xmr:xrcqauRJ3NTVRzsg-z0PBWT3Vih38lBWeCG0YtwJYf6_BcdjfSwX8E1SGNtYJ5HNsl4XaInNdrWwgOKgTBCU6Vsgl0Xy24mP-zNFgGb0slsF>
+X-ME-Proxy-Cause: dmFkZTGwvRir9c3jOJCfaO/fcQZVMOvwNAvS1QZKH5gRSNLEUXkTOOKA8JJZVtzjW2Du2Z
+    N9g4eX/U0NY1IRiNE8hYBqy9/FzVX9SlooG7PrF15U6jO32N6ofuJ79gtfeIU73w/rXX4k
+    WMV9sxmRZ4MR3e+NnhIRFaemFiS7/Tru2qJ36Y6weCRhaSxrSfPmOybkHoO8a7jWozpd5/
+    afCV8WniK9wyefTXN6rgCLyMeplM8dDrV2LJGRYqxlcDzr2/4dUd00EtnLkXL9eJxJhkvy
+    BHrL+cHqauXqZKokOz+gymX3a8pP2GCE5rBgE00hhzZu7HWdqbNcum5jhi51UFUNUR+mF4
+    RiAQY/oanFXGAIOabV9LJuGkzIbZ8UnnlqXGZrUjXoTghE8HqGZBT2C8K2AWpbz4s75ACJ
+    H1hGCSYfRB5AIKIKQH/OfACBYGkXHdcDPDi46iVt/EVYTMGJk18ZGQP0GJinADZQDKXV7B
+    jOmtLz3QA1kqD68+AJ39MbVOMX6XWBeS68rwyHBajL/nIneJMyxi+MzEuMShhDGr7QCtqp
+    UMic5qxSVRfwPpI8/Zm47aD1TkGD9AEeibpHS+EmFTw90Kdxqb0jZX17QFiBNHvNYzhKgw
+    Ap8AqQsTGNODl4EoryCB1/kNqJBaI8W9pMI2+lwAh81xOaJ1faSGpYQK+Rdg
+X-ME-Proxy: <xmx:xrcqasunWmbkq6ZtdXF0G5pinRCpD341Chl-mNJ-Gec0Y41xnNIT_A>
+    <xmx:xrcqanYbtxbyK3HYMqORKcLtSnMzo72OWUbYAlNogF_i_UHSAf_9lA>
+    <xmx:xrcqaqH228rGDPeDfjo-fzWV2zw39mpya-NuZdk-o6ajbMGzjvyNQA>
+    <xmx:xrcqajwDbEKsDpNGDpz8Zh9QGUvlWk-sHkEJVt4LibbhfR1Tcp1oBg>
+    <xmx:xrcqah9hzm5dzZxOCqbZRW18nNZKVb4rvQznLKXnmwr2lnLsJ1kTAFes>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 09:27:31 -0400 (EDT)
+ 11 Jun 2026 09:27:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 97bfe3ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 13:27:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id fcd7b831 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 13:27:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 11 Jun 2026 15:27:10 +0200
-Subject: [PATCH v5 07/10] reset: allow the caller to specify the current
- HEAD object
+Date: Thu, 11 Jun 2026 15:27:11 +0200
+Subject: [PATCH v5 08/10] reset: stop assuming that the caller passes in a
+ clean index
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-b4-pks-history-drop-v5-7-34d35725559c@pks.im>
+Message-Id: <20260611-b4-pks-history-drop-v5-8-34d35725559c@pks.im>
 References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 In-Reply-To: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 To: git@vger.kernel.org
@@ -93,52 +93,58 @@ Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-When calling `reset_working_tree()` we automatically derive the commit
-that the callers wants to move from by reading the HEAD commit. Some
-callers may already have resolved it, or they may want to move from a
-different commit that doesn't match HEAD.
+In 652bd0211d (rebase: use 'skip_cache_tree_update' option, 2022-11-10),
+we updated `reset_working_tree()` to stop updating the index tree cache.
+This was done as a performance optimization: the function is only called
+by "sequencer.c" and "rebase.c", both of which assume a clean index
+before they perform their operation, so we know that the end result will
+be a clean index, too. Consequently, we can skip recomputing the cache
+as we can instead use `prime_cache_tree()` directly.
 
-Introduce a new `oid_from` option that lets the caller specify the
-commit.
+In a subsequent commit we're about to add a new caller though where the
+assumption doesn't hold anymore: the index may be dirty before calling
+`reset_working_tree()`, and consequently we cannot prime the cache with
+a given tree anymore as the index and tree will mismatch.
+
+Adapt the logic so that we only skip the cache tree update in case we're
+doing a hard reset. While we could introduce logic that only skips the
+update in case the incoming index was dirty already, that doesn't really
+feel worth it: after all, the mentioned commit says itself that the
+performance improvement was negligible anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reset.c | 5 ++++-
- reset.h | 5 +++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ reset.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/reset.c b/reset.c
-index a744b0f0fc..955ea4ed5a 100644
+index 955ea4ed5a..5a9ed807d7 100644
 --- a/reset.c
 +++ b/reset.c
-@@ -122,7 +122,10 @@ int reset_working_tree(struct repository *r,
+@@ -167,10 +167,11 @@ int reset_working_tree(struct repository *r,
+ 	unpack_tree_opts.dry_run = dry_run;
+ 	unpack_tree_opts.merge = 1;
+ 	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
+-	unpack_tree_opts.skip_cache_tree_update = 1;
+ 	init_checkout_metadata(&unpack_tree_opts.meta, switch_to_branch, oid, NULL);
+-	if (reset_hard)
++	if (reset_hard) {
++		unpack_tree_opts.skip_cache_tree_update = 1;
+ 		unpack_tree_opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
++	}
+ 
+ 	if (!reset_hard && !fill_tree_descriptor(r, &desc[nr++], &head_oid)) {
+ 		ret = error(_("failed to find tree of %s"),
+@@ -197,7 +198,8 @@ int reset_working_tree(struct repository *r,
  		goto leave_reset_head;
  	}
  
--	if (!repo_get_oid(r, "HEAD", &head_oid)) {
-+	if (opts->oid_from) {
-+		oidcpy(&head_oid, opts->oid_from);
-+		head = &head_oid;
-+	} else if (!repo_get_oid(r, "HEAD", &head_oid)) {
- 		head = &head_oid;
- 	} else if (!oid || !reset_hard) {
- 		ret = error(_("could not determine HEAD revision"));
-diff --git a/reset.h b/reset.h
-index 38b2891b53..4c992ba671 100644
---- a/reset.h
-+++ b/reset.h
-@@ -37,6 +37,11 @@ struct reset_working_tree_options {
- 	 * The commit to checkout/reset to. Defaults to HEAD.
- 	 */
- 	const struct object_id *oid;
-+	/*
-+	 * The commit to checkout/reset from when doing a two-way merge. This
-+	 * is used as one of the sides to merge.
-+	 */
-+	const struct object_id *oid_from;
- 	/*
- 	 * Optional value to set ORIG_HEAD. Defaults to HEAD.
- 	 */
+-	prime_cache_tree(r, r->index, tree);
++	if (reset_hard)
++		prime_cache_tree(r, r->index, tree);
+ 
+ 	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0) {
+ 		ret = error(_("could not write index"));
 
 -- 
 2.54.0.1189.g8c84645362.dirty
