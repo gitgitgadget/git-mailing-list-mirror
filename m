@@ -1,80 +1,80 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D7C41361B
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CB740BCCD
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184456; cv=none; b=ODsVqexneHBeIDUx36CJ/aO1NKJ/uI4lOE7O+Wth88yMtjn9Xiy5x1kM8FHujpbHYzHeNAgQEa3ILTHxzlrX/2pAswIwXtBFWTtG1Rk3gUxxD0WYixpd+TR27uSOVGXQxIO1jIJm6hXvYm4Ag/gfUYuTDXTCB9K15yIYArvLx3g=
+	t=1781184458; cv=none; b=d3jzxBTA6jg83Ph8k6MIsKUSbani/zDDvZamrpElTxbx6KIuriC8FDiqe9d4mueBemo22WJ80gl2o7E6Zr72OlX7l7PiNocr0cnqX0Ua+/X4sYPG2Vdmci+ej5MSG7Fx3yopx2+VL6/PvPIq1tZ4DY2zlVfwwf5OzP1eo6Gs0jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184456; c=relaxed/simple;
-	bh=hGzQpoYI6vSzvHr7cXoEPALfHZrG2YQ0IBpBB3tccEI=;
+	s=arc-20240116; t=1781184458; c=relaxed/simple;
+	bh=5IZJHLVBy2qJoe0VhN2D0YkysL/7HAqo6X+2eF682S4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IuIBR92Zn3q/hs9jbcH+1qBoVbWP4eWub6VegwL6TmwOqyifSizdnuRlgnRQOqnkxa6VzabVJUu97G3BSoo/yHqd0a+ZuWTSBnSbDC9sgDd2d1hz8KHK6AAwqBtn4aP38jPOMWi43272XLe+FsZKaQnwhEpTj2xOBXli80yBu/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MkmRv9Bi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q1ZAjCWj; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=gaJonWKUBb2cc4SCTItksSYCFMNo3tqf6E7YdBUpCA9dU8CZVfkT2SaXox16FqvTnX6XRkVe7BMtTbHoQkfhMmY1wy9PEl3O6W2kjhwmumYIja6uuSPJp69wlCk/CjcUsHtZ7bNVNHU/HBvnBquk9SEfP6OljqEa9BS+ODXi9Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ENAPMFpJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LhXOUudA; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MkmRv9Bi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q1ZAjCWj"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A987114000F8;
-	Thu, 11 Jun 2026 09:27:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ENAPMFpJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LhXOUudA"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D8A32EC0185;
+	Thu, 11 Jun 2026 09:27:36 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 09:27:34 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 11 Jun 2026 09:27:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184454;
-	 x=1781270854; bh=4Lf/eXFsyc82vMTmu6NWYQUgf6vC/Rb7D49g6tTJXfo=; b=
-	MkmRv9Binx3A77CwsjxPcF2PA4tdmQvHPZtVeAWzO9bGCEcXGnbC6m1Kii+RX/DN
-	iwSuBCHIxNocqZSGzdCSB7apNE1YgM+MPIXyUztVyQXkOSlPI86sM6LVT44n91ea
-	LcNAhL55ocTduRKvUcj4fkj0WIKB4bGwamKW7wfVL3RbMid2jHfWDqCYQ0bPPhoe
-	6aog4lzGzjbGbzCCcA7/9+uVi/TgiZpak/RQD5TCWjgUXiEcgpMNZjCfrcVB1zVt
-	9PAEDkuuJibkMMShUKHHqk85NuL4gDFN7+0CRbitndopBLBRPmsSUBCkh1MuJP2y
-	dGmoid0a7PaffJeg++J6DA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184456;
+	 x=1781270856; bh=sOsqAfttR7dMzXVWVEFEKfZTfxt4wGkxFXyn6yEwutY=; b=
+	ENAPMFpJGVW3AEJfxEGtVwYxiPcH8iUuWjknbAxx48pcxVLj6Ojup5Mw83lx9cgj
+	hZ8kYYWIFOfbNF4Bpu0+94sioxpAO4h+C10MSLIpYp/j0A1Uy2da1GodD7fa0oiq
+	UDtCMKpfvcMC6ucsoZ0/KV5tOmykE+U1hZ9g4Cn2X6JLaeeEm/qzmTdNf0Omj7GW
+	T+wbpCbPly3hYLk3jb/xmXaOaELo7+rypZjCYY9NCZGZziKgfdyYcopEXFfu3mkS
+	u1/psKnngVAngcYr7S/4wKhuJagCLaC6IXe5iOxUQQsbJCneHuCN5q11+2ChuZoa
+	F+Y5rEpoFPcfrN9wiOGj6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184454; x=
-	1781270854; bh=4Lf/eXFsyc82vMTmu6NWYQUgf6vC/Rb7D49g6tTJXfo=; b=Q
-	1ZAjCWjthGMGL2/z2oGa1G7p6fQbVNpuAdzR4sqMoFinkYUDUJ9EgDVvVBRKZCjq
-	bFM30tt6s+XThrQ6+3Fd0598GVmCn3uhNEp9+5nPwP22nhLkx+A7uWZuOJDw3a7q
-	t0SPp7u0b3SjTZ6WEo8CWfC9i0Hf3TI4K0VsssqX+8RWth/yXpDgu234M0lYWiVa
-	PYUz7QC7QCEXI2/fJqGSbnnMYo6GSnMQGSCvRl7q4N88Lqhgr9ortw9UDv2cgCbi
-	CvB4vGND56E8YB71b9FTFq2pgo2nFXy+I1fTfJj/bfNYcWV46WJwV69LkIjp2x5v
-	H0avSp14pRH4RTmU0mIJQ==
-X-ME-Sender: <xms:xrcqahrZ7hvwY3Q4u97u5DDgFxf342OlShoFAdQOxlsvMw1tm9xUIQ>
-    <xme:xrcqalL2WLFhXbjI2Km5fWJozpP4X46mquLsmjAwb8JrIpkIhmnv85IpCfz02LRk9
-    MpyTSPIV0KtS2tWAv_eXjas7L2jUdFbNHQhIX12yyKK_PAvPcEa_kM>
-X-ME-Received: <xmr:xrcqauRJ3NTVRzsg-z0PBWT3Vih38lBWeCG0YtwJYf6_BcdjfSwX8E1SGNtYJ5HNsl4XaInNdrWwgOKgTBCU6Vsgl0Xy24mP-zNFgGb0slsF>
-X-ME-Proxy-Cause: dmFkZTGwvRir9c3jOJCfaO/fcQZVMOvwNAvS1QZKH5gRSNLEUXkTOOKA8JJZVtzjW2Du2Z
-    N9g4eX/U0NY1IRiNE8hYBqy9/FzVX9SlooG7PrF15U6jO32N6ofuJ79gtfeIU73w/rXX4k
-    WMV9sxmRZ4MR3e+NnhIRFaemFiS7/Tru2qJ36Y6weCRhaSxrSfPmOybkHoO8a7jWozpd5/
-    afCV8WniK9wyefTXN6rgCLyMeplM8dDrV2LJGRYqxlcDzr2/4dUd00EtnLkXL9eJxJhkvy
-    BHrL+cHqauXqZKokOz+gymX3a8pP2GCE5rBgE00hhzZu7HWdqbNcum5jhi51UFUNUR+mF4
-    RiAQY/oanFXGAIOabV9LJuGkzIbZ8UnnlqXGZrUjXoTghE8HqGZBT2C8K2AWpbz4s75ACJ
-    H1hGCSYfRB5AIKIKQH/OfACBYGkXHdcDPDi46iVt/EVYTMGJk18ZGQP0GJinADZQDKXV7B
-    jOmtLz3QA1kqD68+AJ39MbVOMX6XWBeS68rwyHBajL/nIneJMyxi+MzEuMShhDGr7QCtqp
-    UMic5qxSVRfwPpI8/Zm47aD1TkGD9AEeibpHS+EmFTw90Kdxqb0jZX17QFiBNHvNYzhKgw
-    Ap8AqQsTGNODl4EoryCB1/kNqJBaI8W9pMI2+lwAh81xOaJ1faSGpYQK+Rdg
-X-ME-Proxy: <xmx:xrcqasunWmbkq6ZtdXF0G5pinRCpD341Chl-mNJ-Gec0Y41xnNIT_A>
-    <xmx:xrcqanYbtxbyK3HYMqORKcLtSnMzo72OWUbYAlNogF_i_UHSAf_9lA>
-    <xmx:xrcqaqH228rGDPeDfjo-fzWV2zw39mpya-NuZdk-o6ajbMGzjvyNQA>
-    <xmx:xrcqajwDbEKsDpNGDpz8Zh9QGUvlWk-sHkEJVt4LibbhfR1Tcp1oBg>
-    <xmx:xrcqah9hzm5dzZxOCqbZRW18nNZKVb4rvQznLKXnmwr2lnLsJ1kTAFes>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184456; x=
+	1781270856; bh=sOsqAfttR7dMzXVWVEFEKfZTfxt4wGkxFXyn6yEwutY=; b=L
+	hXOUudAqzLyJUvfFRnjBnvXjAqqMkRgLVffoNPKLbhopZ6QRR4S98JrFoQDZYCaT
+	06d6RdPAOdVLPZXT6XUm7XdHe3r2p3Vd5rbeFpzSktTJc/lPUbzXTIT+15sRR3/3
+	g0UErDCKLOSkjP/OLY/HthfFrQ+tImc0Sok76vnCrookbN4SXVTqNOHFWeR8rg10
+	46FjdPnpXOCqdvhXtL7B7PRBVFqpkJj8omUMKaD8s14jbpm5DU2TXLxA+IdrNt39
+	Hp8mcjsLm6T6OZs6Ixk3T2D66xBXYTt/PbR4Gr/1olRB5g7Cts+qt2T8AklEZlIy
+	6dik05qpytkWgKYnOrzgg==
+X-ME-Sender: <xms:yLcqahylQfHAWleQ0hkQOEk4B2vydM_ovvsw0IvRJgHbz93H5ZVJ1w>
+    <xme:yLcqaiyfu7Y-ELFgjtVWsRNbAXRyQ-ZzXxFNhkuLFZau3rLsFgYNsMlY9IkbreHeb
+    a0rG9o7j7-yFmZzgPC2fM3GOY-GOhwxzMH9YbRVcctNOVeaEKIUHw>
+X-ME-Received: <xmr:yLcqarYKinhNUBTHc13OcJZmYR2An9auk6U7NbdsDXn9Jr3bU7YG52FEUe5H3JzWPk32kKgKL0rhbjNAIOA0ITOxE97D2eYd4gvDrLpqLdsj>
+X-ME-Proxy-Cause: dmFkZTGGNOZQy2QTFN7IZUfAYMTq5Ljsjny/aPIOx7WJqe7Z1LumpFueIzeDdJnNJ5DVRz
+    36KQCGTaoNUuTNfOfSxzVLKyz3syu0LyEd+VcrSaIbKR2Wk7mIy39Hol2k7OuX4+m1/Xrl
+    QAVFceJO/5DINnoaU26AA0MPf95ZHQ9cWzgSwjXix9sAfTqoT0utcmEmlXQ8CpRHfMI13E
+    5B4Mb7HeFzViwhZIFrHVRQdl5UW+0EMgSFWe6vn/6xx9YWCTd6FX/8MUSb+Wys5/iT0aWB
+    cGMngkH9QtISmu5huLQYQ4jCqugx2AyXKFtoDlr8DLcs7+95+gqLjyrCGApmWLjjQ4h7qn
+    X1d0IV+Z5gtiqpcrjHsYnjq0GD8M+TnfivJscJzeRLw+AWwN2ePInej010IyAqyvcZjXwy
+    LlINEVHm3UsBZ0xPbsODrU/wc6JuNQ89sqqWFtWcQId6/fu4jGID5V5XKXKiHb/gyr8zdf
+    L7+DEFEGRx+SahQyvTUqAaTRXAxlcmziSuqNFM9BAKoywbd7O0J5n2hPJFHZUh0NIjd4tP
+    ycCtAZkWbV/0nXTnlYOyfbxlr4J9HyagoH3/xpmeGxWLWka6rxCnB54AdNe76xRoKj9NFn
+    8+75FdX9X4yKq6Hb/FtpxzmmCt/+Fg5VHN7llTbD5tkVhYJdVN9YYYMxPpRg
+X-ME-Proxy: <xmx:yLcqajVtKhDTmmCPicwaVv2m7-_hpwtDP7MicJJ8Iq3hElCzJvt69A>
+    <xmx:yLcqaphlQ_mnYoH7m1YagQWI5Lpk3CDZYCKvsCRRHMZhjYc4-x8AWg>
+    <xmx:yLcqahsTih6w80ZZs9EnA2uMW_at_CLs_9Z2Y1dvBL-DkSMUXkBLPA>
+    <xmx:yLcqai6_m13UHUSOAoMeGdvw58-bWZ46L7idM9u_mJykrbQpN1O52w>
+    <xmx:yLcqaim6P_KdQeZgEX0AHRpkhwa8b1O4pRocidUrWzxiOB8a9CKYT0J_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 09:27:33 -0400 (EDT)
+ 11 Jun 2026 09:27:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fcd7b831 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 13:27:32 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9ddf1802 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 13:27:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 11 Jun 2026 15:27:11 +0200
-Subject: [PATCH v5 08/10] reset: stop assuming that the caller passes in a
- clean index
+Date: Thu, 11 Jun 2026 15:27:12 +0200
+Subject: [PATCH v5 09/10] builtin/history: split handling of ref updates
+ into two phases
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-b4-pks-history-drop-v5-8-34d35725559c@pks.im>
+Message-Id: <20260611-b4-pks-history-drop-v5-9-34d35725559c@pks.im>
 References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 In-Reply-To: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 To: git@vger.kernel.org
@@ -93,58 +93,175 @@ Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-In 652bd0211d (rebase: use 'skip_cache_tree_update' option, 2022-11-10),
-we updated `reset_working_tree()` to stop updating the index tree cache.
-This was done as a performance optimization: the function is only called
-by "sequencer.c" and "rebase.c", both of which assume a clean index
-before they perform their operation, so we know that the end result will
-be a clean index, too. Consequently, we can skip recomputing the cache
-as we can instead use `prime_cache_tree()` directly.
+The function `handle_reference_updates()` is used by git-history(1) to
+update all references that refer to commits that have been rewritten. As
+such, it performs two steps:
 
-In a subsequent commit we're about to add a new caller though where the
-assumption doesn't hold anymore: the index may be dirty before calling
-`reset_working_tree()`, and consequently we cannot prime the cache with
-a given tree anymore as the index and tree will mismatch.
+  - It gathers the references that need to be updated in the first
+    place.
 
-Adapt the logic so that we only skip the cache tree update in case we're
-doing a hard reset. While we could introduce logic that only skips the
-update in case the incoming index was dirty already, that doesn't really
-feel worth it: after all, the mentioned commit says itself that the
-performance improvement was negligible anyway.
+  - It prepares and commits the reference transaction.
+
+In a subsequent commit we'll want to handle those two steps separately.
+Prepare for this by splitting up the function into two.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reset.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ builtin/history.c | 102 ++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 64 insertions(+), 38 deletions(-)
 
-diff --git a/reset.c b/reset.c
-index 955ea4ed5a..5a9ed807d7 100644
---- a/reset.c
-+++ b/reset.c
-@@ -167,10 +167,11 @@ int reset_working_tree(struct repository *r,
- 	unpack_tree_opts.dry_run = dry_run;
- 	unpack_tree_opts.merge = 1;
- 	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
--	unpack_tree_opts.skip_cache_tree_update = 1;
- 	init_checkout_metadata(&unpack_tree_opts.meta, switch_to_branch, oid, NULL);
--	if (reset_hard)
-+	if (reset_hard) {
-+		unpack_tree_opts.skip_cache_tree_update = 1;
- 		unpack_tree_opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
+diff --git a/builtin/history.c b/builtin/history.c
+index 0fc06fb204..4fadf38c32 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -333,21 +333,17 @@ static int handle_ref_update(struct ref_transaction *transaction,
+ 				      NULL, NULL, 0, reflog_msg, err);
+ }
+ 
+-static int handle_reference_updates(struct rev_info *revs,
+-				    enum ref_action action,
+-				    struct commit *original,
+-				    struct commit *rewritten,
+-				    const char *reflog_msg,
+-				    int dry_run,
+-				    enum replay_empty_commit_action empty)
++static int compute_pending_ref_updates(struct rev_info *revs,
++				       enum ref_action action,
++				       struct commit *original,
++				       struct commit *rewritten,
++				       enum replay_empty_commit_action empty,
++				       struct replay_result *result)
+ {
+ 	const struct name_decoration *decoration;
+ 	struct replay_revisions_options opts = {
+ 		.empty = empty,
+ 	};
+-	struct replay_result result = { 0 };
+-	struct ref_transaction *transaction = NULL;
+-	struct strbuf err = STRBUF_INIT;
+ 	char hex[GIT_MAX_HEXSZ + 1];
+ 	bool detached_head;
+ 	int head_flags = 0;
+@@ -359,34 +355,13 @@ static int handle_reference_updates(struct rev_info *revs,
+ 
+ 	opts.onto = oid_to_hex_r(hex, &rewritten->object.oid);
+ 
+-	ret = replay_revisions(revs, &opts, &result);
++	ret = replay_revisions(revs, &opts, result);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 
+ 	if (action != REF_ACTION_BRANCHES && action != REF_ACTION_HEAD)
+ 		BUG("unsupported ref action %d", action);
+ 
+-	if (!dry_run) {
+-		transaction = ref_store_transaction_begin(get_main_ref_store(revs->repo), 0, &err);
+-		if (!transaction) {
+-			ret = error(_("failed to begin ref transaction: %s"), err.buf);
+-			goto out;
+-		}
+-	}
+-
+-	for (size_t i = 0; i < result.updates_nr; i++) {
+-		ret = handle_ref_update(transaction,
+-					result.updates[i].refname,
+-					&result.updates[i].new_oid,
+-					&result.updates[i].old_oid,
+-					reflog_msg, &err);
+-		if (ret) {
+-			ret = error(_("failed to update ref '%s': %s"),
+-				    result.updates[i].refname, err.buf);
+-			goto out;
+-		}
+-	}
+-
+ 	/*
+ 	 * `replay_revisions()` only updates references that are
+ 	 * ancestors of `rewritten`, so we need to manually
+@@ -414,14 +389,43 @@ static int handle_reference_updates(struct rev_info *revs,
+ 		    !detached_head)
+ 			continue;
+ 
++		ALLOC_GROW(result->updates, result->updates_nr + 1, result->updates_alloc);
++		result->updates[result->updates_nr].refname = xstrdup(decoration->name);
++		result->updates[result->updates_nr].old_oid = original->object.oid;
++		result->updates[result->updates_nr].new_oid = rewritten->object.oid;
++		result->updates_nr++;
 +	}
- 
- 	if (!reset_hard && !fill_tree_descriptor(r, &desc[nr++], &head_oid)) {
- 		ret = error(_("failed to find tree of %s"),
-@@ -197,7 +198,8 @@ int reset_working_tree(struct repository *r,
- 		goto leave_reset_head;
++
++	return 0;
++}
++
++static int apply_pending_ref_updates(struct repository *repo,
++				     const struct replay_result *result,
++				     const char *reflog_msg,
++				     int dry_run)
++{
++	struct ref_transaction *transaction = NULL;
++	struct strbuf err = STRBUF_INIT;
++	int ret;
++
++	if (!dry_run) {
++		transaction = ref_store_transaction_begin(get_main_ref_store(repo),
++							  0, &err);
++		if (!transaction) {
++			ret = error(_("failed to begin ref transaction: %s"), err.buf);
++			goto out;
++		}
++	}
++
++	for (size_t i = 0; i < result->updates_nr; i++) {
+ 		ret = handle_ref_update(transaction,
+-					decoration->name,
+-					&rewritten->object.oid,
+-					&original->object.oid,
++					result->updates[i].refname,
++					&result->updates[i].new_oid,
++					&result->updates[i].old_oid,
+ 					reflog_msg, &err);
+ 		if (ret) {
+ 			ret = error(_("failed to update ref '%s': %s"),
+-				    decoration->name, err.buf);
++				    result->updates[i].refname, err.buf);
+ 			goto out;
+ 		}
  	}
+@@ -435,11 +439,33 @@ static int handle_reference_updates(struct rev_info *revs,
  
--	prime_cache_tree(r, r->index, tree);
-+	if (reset_hard)
-+		prime_cache_tree(r, r->index, tree);
+ out:
+ 	ref_transaction_free(transaction);
+-	replay_result_release(&result);
+ 	strbuf_release(&err);
+ 	return ret;
+ }
  
- 	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0) {
- 		ret = error(_("could not write index"));
++static int handle_reference_updates(struct rev_info *revs,
++				    enum ref_action action,
++				    struct commit *original,
++				    struct commit *rewritten,
++				    const char *reflog_msg,
++				    int dry_run,
++				    enum replay_empty_commit_action empty)
++{
++	struct replay_result result = { 0 };
++	int ret;
++
++	ret = compute_pending_ref_updates(revs, action, original, rewritten,
++					  empty, &result);
++	if (ret)
++		goto out;
++
++	ret = apply_pending_ref_updates(revs->repo, &result, reflog_msg, dry_run);
++
++out:
++	replay_result_release(&result);
++	return ret;
++}
++
+ static int commit_became_empty(struct repository *repo,
+ 			       struct commit *original,
+ 			       struct tree *result)
 
 -- 
 2.54.0.1189.g8c84645362.dirty
