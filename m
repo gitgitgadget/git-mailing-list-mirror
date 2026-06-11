@@ -1,80 +1,80 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BA340B6E2
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A079240BCC3
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184437; cv=none; b=RR6/9Q0Rn1n9df0wSwmE2DZcWIp3fIrsbGOLI3zmymmFoGYCsaFE+IW2TOJPwTcLXj2J+GmqjXWyR0/mGwCCnZ9F13RdbJUrqbgKNHxSKXKlqkaQpw9gj59LvWt7sZ2fPs8dhDRM44qNBaKbelRPearggvdt2tQc24TtnK7PPz0=
+	t=1781184439; cv=none; b=gq7c2avOjMhHsPHLnvUhTN/4VnWSv81q7VCF88Re+2BkVaoyEIpeAPanIy+/jAl+kuO6v5nOMns6fGOvo0Ta9z5GiRYosZMZoC2RD2/UxN8rHtSDiLnuXsCREmBBILRPYFB+I6196Iupnh9TJC45wc1YjZMlllSW/uhI8d0+pSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184437; c=relaxed/simple;
-	bh=bz8UCv2QcjtKUGoie34ZXdp8JV8JpvPjWodE/VJIa9U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=cHc4QJ3FvT/vBn4OB49Rz7Gz+maT2Wf4VYNEGGXccujDIAgCO+G8TQqUqNOAOeJoANKoIoZ+6vTY0etSrjsiWoM1/0LT3VnUiJXHWU36961FqDNN1bzhPO5fdyRP6tIotdiGPnCf82Irorz2+ChIpWI1219/Eh7+3bbEZyBYRe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mvuyxPer; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DwNinvm6; arc=none smtp.client-ip=103.168.172.157
+	s=arc-20240116; t=1781184439; c=relaxed/simple;
+	bh=6V7XRFTTcj8oAKfhC8ESYqljldLEXfbxhLAya1LyEIw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=N2a6xrDGpbXYXHa5VrcjZR6iyE+cOejMny3EKN9xk/za0OWlzWn77EnutGhQNeTQQC17jdknYOUbIEbPy67EEgeDGALHLphEqGdCbXiCjibS5T6ucMwNjnOzi9KiqKY4FgIJIYLvO0/GnaaelpP/B6F17/Jk3aK78HDPeVEoF38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vOBL827o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZFXvX/MN; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mvuyxPer";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DwNinvm6"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A040714000E8;
-	Thu, 11 Jun 2026 09:27:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vOBL827o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZFXvX/MN"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 04A60140006E;
+	Thu, 11 Jun 2026 09:27:17 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 09:27:15 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 11 Jun 2026 09:27:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184435;
-	 x=1781270835; bh=UHd0Aa5lUyL5kdqZkTKCin8ke2aMIup4WifMnWjmmF4=; b=
-	mvuyxPerf+0i3m03d+0yitjC62ixiIgLVaNXg/0brEG3uvaVXuYFuTBoTZtdrJLB
-	YEdANgczY7tekpIGAZVYgfO5m2YR9HroOB/iwRUUjtFHGtKXjf1AyAFLcACuTg85
-	oEG7WY9jUVg9oJcyEbqnXRDu2bCPjo4VPZUhDuc3aTyFI6QzQpogHoT0O0M9/nID
-	ZF7WDCgoQMBrOPaAyiuCritG77iy6xCQuj5wbvx+5KkQm7HSrUIoZSn0idE9SHHh
-	9RYkL1tjxoPSwMPFb3aG5Bs7zqCtXVaAKy3u9/x8EUBrEj1lln6LMNQrD3W9AFz6
-	SX9zsx7kwEUtFcGnWqZxUw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184437;
+	 x=1781270837; bh=QOagea45WFwkEw3TA4VGqLhkkfvJGoU2fM0PGf0tULM=; b=
+	vOBL827oCTzMTSnXsuaInwtZujhzbINknLW0neIrPOjYEU9Pthp96wIRb7jphQ1L
+	pocb/csAaU/+8NP1rTdtru9G2TejPfE/TAHXoDthgxFCUUXvLvGN3MnpmWW6yS9X
+	26EyNP7eI80Ipbnxw4yBBGJHvwlYrR/UmZA1kl8oxMvCRk5eYhHn4C7vP8ODZWwG
+	1x2b0if/pcWHRmKEOyzf+iP63hrAe20zbOvqTcnMvv39o1pUZTP3EuA+NLqkBlms
+	rCX6voxl4eMK6xfiG7Ng71I4zs99tLIyneaohi1jTyZGqCk/HhIiNDknXHxWtIsu
+	gzwRl51pfcjgHQSa5aSdkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184435; x=
-	1781270835; bh=UHd0Aa5lUyL5kdqZkTKCin8ke2aMIup4WifMnWjmmF4=; b=D
-	wNinvm6shInUCSsTzT9Wh/PrCPdZqyS8JeNLceNzdOEYbT2UNDyN5XEl+sHjOg/x
-	eXqgSaGVzpZwBpQq75PImWw77PUtUFMmsECX2yYqY9TFUpROwEpT6RqL980DdTy7
-	SKsZf6b36g8ApW+GV8ha3ii71SXT5srU4Mh2t87VkE+RKwH8+k65ypZyZ6RZZeBa
-	XOSEDZZqpP+3vmY/nEcjUGrYeMCugAAcdjSKQVxA+p3/xG7VLBDgnRnmt0Y65eDZ
-	6ctgKg70KuPD59OJsmvAyhw3njK4NiHLudNtW3f9y95eusITjuAyGJBe0gOE2SZV
-	YrP9FiDuYxRAQKl3tBzwA==
-X-ME-Sender: <xms:s7cqaniIAGdaCYx03JhmmUfvxMVnFdhWiaixHk8P0Nw43h6AEUMWyQ>
-    <xme:s7cqalgVF7pJPI4HP86TCwtTmyIk_ZWl721R6JM8gj-qYB0al8sgrlyjaNnds3wFf
-    H8DhqtqimdOHdDYHA7qJrr5F1L5VHqibJgPp8G_2pBzk_SIndawAg>
-X-ME-Received: <xmr:s7cqanLjNitKzhL3uHOmDjY8yHRYsyHL-JnJ-eALz5rcTr2BwCTByzK0UdHvaocvPp09yFCZE9vUyxivBSybEYDUjVTR8UO7-yT3xtY9CVBd>
-X-ME-Proxy-Cause: dmFkZTGJG2tJGWCMOLue2nmT8xTMxGb/FjjBgeEfwJbFh4iYb5xhX/HejKbaNYcAilNrxS
-    oMj9elr+ntszgKBnGCFTHIJKTorH4BXw47Z6eicZ0xvOA8c5P8M48zeBgdq+tZiOOa8kyJ
-    I96y/t8B0zHg5XYIr7n9OT4xsVZAOZqED2RYW0Ut1YZ6ShIs1M1YY2NW9THDtbofEwhNLC
-    mRfyO1jB6ahbHQh6vs7qxU90oZSzLAnJd5NZpDYdnxjft0Cacr6cU0Hu2oifKYFdgr8yW7
-    R3Ih5iQNDFe1GULK0v7qu0oPlSdXNuSCpu+Y5lJ2KCa7j9XTsSoGQrW5zWok+7fCABQ9dY
-    5rWORpoSXZI//f2gzAzIQ0+685Wsh5ZgwdzmAkxtMTNpy8/qF7wTAsJI3q/WAEdOPLrxjX
-    t0K23oy5CVxNz0nVZjNZN5rRBQ4bgCreKSXHUGYXsAr6adfVSQ38wVARa8MpOC2qFa1C3H
-    E5GVCuCbH+DrnhaCf/7qAV/U6j1OWKMKbwGAtnAJ3kL7p5jJnOnGYu1CIws/Hjs3NhvZ0g
-    fEzWskU4zxPtMo81NEjyYtl6QhsfpQ+VegMA6osF2FachTO5hdH0jHV43uS1Ew43PbEFzy
-    WzWC0sYrwxi3XN4qOr9RPpxgqbUOebqXKbFH30O7cQ032j3r/5pcIA1VPfgA
-X-ME-Proxy: <xmx:s7cqakGdy0PtnnoV6rG_OYVAKSD4iaQOZMb45_Gyor5-LigjYVkM-g>
-    <xmx:s7cqarSiH3mu6jeGfBJDOTuYFFG0zpDwYw-PMiPCzXWFGkeTcfhJ0g>
-    <xmx:s7cqagdABwyZ6nN01R9hxrrb_YCU4YAFRsetG7W-LbblcLfvNyj6Ig>
-    <xmx:s7cqaqrn0wPHmnrBO07IOZ8Rz0yrtli7S7ZD5vmWNp1ii83J8Zy8qg>
-    <xmx:s7cqavVgLEa9GJ_MYHV7XzxBXt2H6dfq5ey0WqeiTu3a1qrmezeLuRwz>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184437; x=
+	1781270837; bh=QOagea45WFwkEw3TA4VGqLhkkfvJGoU2fM0PGf0tULM=; b=Z
+	FXvX/MN3rx5sofhkNbJsQVclbuXx/Z7INJiQ+rUtw3pPIyKq3Kg0V8MBs+GPDvRf
+	0XMLDFyHXWtlUs7lByWurHnM2QJxWxKSokzpQdik5bI/Amzag9HblZNJIHApDf65
+	MXaQpeADEBBRpCYhDtymimlgPXLPzJmeqBkM6gKAH7Io3vSHrSGVxjqlxx6i2jev
+	cWxbIYVPORr1Acttve87dYEfAiyQaC8+YIgS0li8HLXKiNZBUvPOBV8dCITY6aV5
+	830M2DzR8iziWuMpNcwVfaL3tGHBJa8hwccXNXkUwO0rSE1NpPSHp77oa0Lv/54o
+	wkA977Gch51+TzGigyBNQ==
+X-ME-Sender: <xms:tLcqaku0EDMtUbSngCHc8ZNbFXSBAQQo5Vyqo1mX12L-KecYO51dfA>
+    <xme:tLcqai9Q3YT41eDM_UdzWLYLenPpUBs4ITi_QbcluL2qRNcMOaPbLFwbH4cLwjht9
+    ZUBZUbiwIErP1PhA1K7tmcmGYzGHtpT_-FhQkxhmjRvu72Ai__1>
+X-ME-Received: <xmr:tLcqav0ar0pdcbkQl0-ySL7bEzkYfK1JIqDuKPqQbButLpZV9n4qFa26RrVfGCOTukSJaLvy10rKKT3XSCeBrSA4ACRetMR9kNzMl9XjGeZ5>
+X-ME-Proxy-Cause: dmFkZTGTxPIFhuBoiEsDDhB9RSHDCXHbFJ5VnVZDD4bec7nRzrCcE+c/MFsVjwohVHwftl
+    cVFao0kG58zAIws/O0Ei+RCSGpQ0XKAQJ897zbTpVEbAIBEUeVlBXzfOFp55wWFPDBC63b
+    ++i23VB0mlc+JXzPK3+XAmANc+ZYYAp9T+MNk3HVd/hzScgiy84HRbrCh3vZt+7kXlIWUj
+    ICMm9WiiSqqEB0XslkAYhBOOtsaSDKKRXTT8LmcdFGr003K4VIXcWEJk40SYS0wk41aqac
+    5QeQLlxVantr78Np3u7bywp17Vc7XJmbCgEqW3Tgiuxa+RRmWIgUhEXLaBmgiHi/rb6RY9
+    f9YlP0dC0s9NDqHveN17LHzCivK4Qv0bse6MlfM73A8hvZ9rtHIYeSLB0PBMyC/J59AQ0x
+    ggLGN/EU2AEIBjFRqp2cqUfIzm5g5IT0rvLJGmE4WLxhKg3xQzpWsxqblcwW4Rbb2DhwYf
+    YgbPXPM/URP66tTQx9jdf6BR4bxuy+Y/1KeKE7k5nLVV5j+IKChX0S/PvlXFbJRvVZ67+G
+    pdwoHn2CoGp64lWE8RDylCVsDqjFxeZgOKp0X4B1r1LiQhpx0SsQbRunDNkgF8PaKHTWyX
+    mSGGyEgXDWihBtgL1g1WweemukuUpqZ77YlyGygJveqzP+TmKErpghHByzow
+X-ME-Proxy: <xmx:tLcqanAlBmqXLVQM0rvQb4o9tDnfNcxtjLdPQiy23TeVlJ2VUEf6vw>
+    <xmx:tLcqarfYuaNfC5hrhfoTY1-2p0uQI2AWOujB_VPq2dBKDIwnYICkgA>
+    <xmx:tLcqak7x-iA0ED5vjfu1UlP4E-qvyBVVjRr7WUXL80SzLT_ic72ssw>
+    <xmx:tLcqauUsUOAK8sEFpjevJt4y70sl8z_jgC1PfCp9uTfbv-QQw3ZWaA>
+    <xmx:tbcqapSPIofNLybkUOyWwF4CS7x-G_1LJRnLEeV6zjmn4WaxdwWNZbVo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 09:27:14 -0400 (EDT)
+ 11 Jun 2026 09:27:15 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 15198c24 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 13:27:12 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id aa96f9a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 13:27:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v5 00/10] builtin/history: introduce "drop" subcommand
-Date: Thu, 11 Jun 2026 15:27:03 +0200
-Message-Id: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
+Date: Thu, 11 Jun 2026 15:27:04 +0200
+Subject: [PATCH v5 01/10] read-cache: split out function to drop unmerged
+ entries to stage 0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,14 +83,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKe3KmoC/33PTQrCMBAF4KuUrI3kv6kr7yEumnRqo9iWRIMiv
- buJClYoLh+8+WbmgQJ4BwFtigfyEF1wQ5+CXBXIdnV/AOyalBEjTBFFKDYCj6eAOxcug7/jxg8
- jZrpVVvGqgtKgNDl6aN3tpe727xyu5gj2kqnc+Iy/1kaae/83RIoJVoIDZ1yQRsptqqzdGWU+s
- jnAlwGWgFIwa6SRtFTND8DngF4GeAK0sLWGdEbFyx9AzABKlgGRL0i3t6QGbdn3hWmansQD6ne
- IAQAA
-X-Change-ID: 20260601-b4-pks-history-drop-28f6c6399e7b
-In-Reply-To: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im>
-References: <20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im>
+Message-Id: <20260611-b4-pks-history-drop-v5-1-34d35725559c@pks.im>
+References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
+In-Reply-To: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 To: git@vger.kernel.org
 Cc: Pablo Sabater <pabloosabaterr@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>, 
@@ -98,106 +93,61 @@ Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-Hi,
+In `repo_read_index_unmerged()` we read the index and then drop any
+unmerged entries to stage 0. In a subsequent commit we'll want to
+perform this operation on arbitrary indexes, not only the one of the
+given repository.
 
-this small patch series introduces the new "drop" subcommand for
-git-history(1). As a reader might guess, the command does exactly that:
-given a commit, it will drop that commit from the commit history and
-replay descendant branches on top of it.
+Prepare for this by splitting out the functionality into a new function
+that can act on an arbitrary index.
 
-Changes in v5:
-  - Reject UPDATE_ORIG_HEAD without UPDATE_HEAD.
-  - Link to v4: https://patch.msgid.link/20260610-b4-pks-history-drop-v4-0-70d5f0ae8c25@pks.im
+While at it, fix a signedness mismatch when iterating through the index
+cache entries.
 
-Changes in v4:
-  - Remove the `SKIP_REF_UPDATES` flag in favor of a new `UPDATE_HEAD`
-    flag, as suggested by Phillip.
-  - Rename `reset_head()` to `reset_working_tree()`. This better matches
-    the new scope of the function, and it helps us to catch any
-    in-flight patches that would now have to set the `UPDATE_HEAD` flag.
-  - Link to v3: https://patch.msgid.link/20260608-b4-pks-history-drop-v3-0-84ca8e43e937@pks.im
-
-Changes in v3:
-  - Fix commit message typos.
-  - Make `update_orig_head` and `skip_ref_updates` mutually exclusive.
-  - Use fancy revisions to specify the commit to drop in the example
-    section.
-  - Detect conflicting changes in the index/working tree in dry-run
-    mode.
-  - Consistently use a subshell.
-  - Rename `RESET_HEAD_ORIG_HEAD` to `RESET_HEAD_UPDATE_ORIG_HEAD`.
-  - 
-  - Link to v2: https://patch.msgid.link/20260603-b4-pks-history-drop-v2-0-742cb5b5176d@pks.im
-
-Changes in v2:
-  - Reworked `update_worktree()` to use `reset_head()`, which required a
-    bunch of changes to `reset_head()`.
-  - Consistently mention the commit that cannot be dropped as part of
-    error messages.
-  - Adapt error message to not use backticks anymore.
-  - Drop redundant "--graph" flag in a test helper.
-  - Link to v1: https://patch.msgid.link/20260601-b4-pks-history-drop-v1-0-643e32340d55@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      read-cache: split out function to drop unmerged entries to stage 0
-      reset: drop `USE_THE_REPOSITORY_VARIABLE`
-      reset: rename `reset_head()`
-      reset: modernize flags passed to `reset_working_tree()`
-      reset: introduce dry-run mode
-      reset: introduce ability to skip updating HEAD
-      reset: allow the caller to specify the current HEAD object
-      reset: stop assuming that the caller passes in a clean index
-      builtin/history: split handling of ref updates into two phases
-      builtin/history: implement "drop" subcommand
+ read-cache-ll.h |  1 +
+ read-cache.c    | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
- Documentation/git-history.adoc |  38 ++-
- builtin/history.c              | 288 +++++++++++++++++++---
- builtin/rebase.c               |  41 ++--
- read-cache-ll.h                |   1 +
- read-cache.c                   |  12 +-
- reset.c                        | 102 +++++---
- reset.h                        |  51 ++--
- sequencer.c                    |  17 +-
- t/meson.build                  |   1 +
- t/t3454-history-drop.sh        | 537 +++++++++++++++++++++++++++++++++++++++++
- 10 files changed, 971 insertions(+), 117 deletions(-)
+diff --git a/read-cache-ll.h b/read-cache-ll.h
+index 2c8b4b21b1..71b87615eb 100644
+--- a/read-cache-ll.h
++++ b/read-cache-ll.h
+@@ -309,6 +309,7 @@ int write_locked_index(struct index_state *, struct lock_file *lock, unsigned fl
+ void discard_index(struct index_state *);
+ void move_index_extensions(struct index_state *dst, struct index_state *src);
+ int unmerged_index(const struct index_state *);
++int index_state_unmerged_to_stage0(struct index_state *istate);
+ 
+ /**
+  * Returns 1 if istate differs from tree, 0 otherwise.  If tree is NULL,
+diff --git a/read-cache.c b/read-cache.c
+index 21829102ae..799a5bc719 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3403,13 +3403,15 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+  */
+ int repo_read_index_unmerged(struct repository *repo)
+ {
+-	struct index_state *istate;
+-	int i;
++	repo_read_index(repo);
++	return index_state_unmerged_to_stage0(repo->index);
++}
++
++int index_state_unmerged_to_stage0(struct index_state *istate)
++{
+ 	int unmerged = 0;
+ 
+-	repo_read_index(repo);
+-	istate = repo->index;
+-	for (i = 0; i < istate->cache_nr; i++) {
++	for (unsigned int i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+ 		struct cache_entry *new_ce;
+ 		int len;
 
-Range-diff versus v4:
-
- 1:  82e26ff318 =  1:  6f74de2025 read-cache: split out function to drop unmerged entries to stage 0
- 2:  93e6e7276c =  2:  673658d03c reset: drop `USE_THE_REPOSITORY_VARIABLE`
- 3:  79c2877a65 =  3:  3a4745775a reset: rename `reset_head()`
- 4:  9e67c7ee84 =  4:  d53df7446e reset: modernize flags passed to `reset_working_tree()`
- 5:  4da39e7cec =  5:  2c06054013 reset: introduce dry-run mode
- 6:  683897ac8d !  6:  b9f3438140 reset: introduce ability to skip updating HEAD
-    @@ reset.c: int reset_working_tree(struct repository *r,
-      	unsigned update_orig_head = opts->flags & RESET_WORKING_TREE_UPDATE_ORIG_HEAD;
-      	unsigned dry_run = opts->flags & RESET_WORKING_TREE_DRY_RUN;
-      	struct object_id *head = NULL, head_oid;
-    +@@ reset.c: int reset_working_tree(struct repository *r,
-    + 	if (opts->branch_msg && !opts->branch)
-    + 		BUG("branch reflog message given without a branch");
-    + 
-    ++	if (update_orig_head && !update_head)
-    ++		BUG("cannot update ORIG_HEAD without updating HEAD" );
-    ++
-    + 	if (!refs_only && !dry_run && repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
-    + 		ret = -1;
-    + 		goto leave_reset_head;
-     @@ reset.c: int reset_working_tree(struct repository *r,
-      		oid = &head_oid;
-      
- 7:  2d70838562 =  7:  9e7af4b77b reset: allow the caller to specify the current HEAD object
- 8:  ad56a2d370 =  8:  90b12199e8 reset: stop assuming that the caller passes in a clean index
- 9:  b47f608e92 =  9:  a7e0e345be builtin/history: split handling of ref updates into two phases
-10:  f39ec74b0f = 10:  93bc3d46a4 builtin/history: implement "drop" subcommand
-
----
-base-commit: 1666c1265231b0bc5f613fbbf3f0a9896cdef76e
-change-id: 20260601-b4-pks-history-drop-28f6c6399e7b
+-- 
+2.54.0.1189.g8c84645362.dirty
 
