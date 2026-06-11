@@ -1,80 +1,80 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39A435F191
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E0C35F191
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781160299; cv=none; b=jhkKGVFx0RWNasl3sGHhRvPtCFhxESjt0ZHc2hUMP0YQNJBlf714jnPxVRXNQ+9TT3GAHFlA6b2lmpqUZfsNyArRH2ij/3au8Vw1aRGJPRDXXNNGiWJjzjbDhTQtVnFLxe7yMubb/80UWxEAqx2dcPVVdpYkRU41lMf20OasjcM=
+	t=1781160302; cv=none; b=klD5Ut3dd91tIKRCH3EfYrVYdzs30ezxsV9s1LSVRp3QbrXTUfkSJmDE5XehO6XWi6uXxbJAOqmWfqT3vCdwUcDpRYWXESr3JK1x3soVQvGtxqv7amoD0a8rWURlehDy/CX8SxJGKol+0LC26pKMpL747OpwY9gBVGUMPyKUrpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781160299; c=relaxed/simple;
-	bh=wHKafm47JQS76k7jJmUNXiah0xVHlKwdnNrHvIAuFMk=;
+	s=arc-20240116; t=1781160302; c=relaxed/simple;
+	bh=+NcLbjpAX6sbcrUMx9f3+EiBBrxZCumqsKR1aCV7c4k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SNLgpD7iEQyxH5C1mB2ytOXYWaVL0AkN4pn5/gONglNPw+cCxwVK+zsq30Zt0CgkA0FOWL0Y6F3Jkkk9hzKtT/0L0P+2r+SIDApqH/obR/SYSulCDrmNtxxfBs8MIvlA8iikWTOojfNcrQ0q//BECi/Qb4uaYdSXqEEXjJPV53Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sc4lt7oz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U6jX3076; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=YI1Pq5KPU2L7IgSdXzMz4HxZ0kvVtToKBrGCa8wiQaAuK0Ei/O60fnm8Ice6KTqbAw7GENuWOh5s8lGfcz72K3QgJbNMvS5Fva5CgXkaUxCVawmnDQR33O+xQAmS1hsPumsxt6N8zIa5pWPrTHY6bag8RhX7A55JUhS/F7FB6D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YtRW/jCq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RxBgzOUv; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sc4lt7oz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U6jX3076"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4151D7A00FD;
-	Thu, 11 Jun 2026 02:44:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YtRW/jCq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RxBgzOUv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6DED07A00FD;
+	Thu, 11 Jun 2026 02:45:00 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 11 Jun 2026 02:44:57 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 02:45:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781160297;
-	 x=1781246697; bh=KosdnOqL5W4UaCbbaNmHF/jDBH/wNucmeZ/3DeI2eww=; b=
-	sc4lt7ozOs9hRHp0BdSHDk32D4Mb5dt/dedohRsNBFH0tR01o+Os3pXiYE/yNZ5t
-	Ky2vah1qmDlc0GKTrr9t3i9E0kmYcsb0IH9m45/SNRB3KY8iUaIHReRZjQe8BEr0
-	k/DajaAbcig0pCjaym2WBZwseTF560XxpH/asUoG6ghzYCGQvOd1Ix9VfR8HnZ2/
-	sAqDFxhcpBWRWQYrASB8p0ar2hllaoP90wChwl9j4pmCnCYXl1hQHwpnBdXEZNl/
-	RyMFrr/7jfDmPBC78F/Rl8tLFIbEYP1s9jCa+FXCZywM0paFzqLBkJWq17W+qyv8
-	lYdod/jUPXDb46aPPB5jJQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781160300;
+	 x=1781246700; bh=ZvLcK4bum8MoF1JbRRYQfwrTLOc2KDdxY5tYMZ1obto=; b=
+	YtRW/jCqAIF8MZ3a/AcTpsBzMtR826EDUOzJb/Vj9ji/YyndHCEoMOUO0h7kJka/
+	qfSjqXNEqzNVBECLHv8OE2tL8wlSBXAe1Mq+vlTV3EvHLbJ81yHyEqjqgdolbLrd
+	1fd9xAHU7Qf7eXE+T7rU3fgK2F/MD3JjKJIvRzF/njkUyQfr5CpbKFAzqZULKtz1
+	ZJ1svpQKocjeXFixA0SpNcUVZ3jKSrNTuUMV0yR5BuV7/Ivu0LHAtVRedpkJRcuz
+	wFneIVHyn8GtfcRUOwmgVZ1kxbHfEgOn++muMFKOa6S5h9erKGd6eMTFSnlDV6ww
+	Sv7q3+T5WaFl+au9RbdHBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781160297; x=
-	1781246697; bh=KosdnOqL5W4UaCbbaNmHF/jDBH/wNucmeZ/3DeI2eww=; b=U
-	6jX307639Q97qkWP1kz1uI7c+8dwSJkv7W6fNtBiWvP24PwoQT2m+TRJbH3qhWWO
-	2ySXV2ndxd5wpuT7dF6QD/8tFZfWKjmzpHmjk41sRgRwX3xRWXwwLLb2z836kRHF
-	wZnY776mmC/wwL1q27J9Uqn1G3Q6aIeo/NpQnCRuKSBkynTvFR7QAUqgJklR6W38
-	R46J1Z3IrM/cdCoDXkMdag1K7N3k35fe5AfQRI6ZnVTOb8atYSmkvpAX1kwyFk1m
-	yRo0YiWzjjZfnA9RLYIbO1vuEpDlL7X8eCiY3Clj1GymDVLRiheVsY1gnv1V8sQR
-	mfmU+ICouc867yr9xXMgQ==
-X-ME-Sender: <xms:aVkqaluB-w9BjDuomRo5CJ-ph8a5CO3cFqCQD8rqNfA1rZybFAKxMw>
-    <xme:aVkqakd1xcZAdrNT-jxDSQLluJbchQeG6WCs-Pw_XeXVtOVlOnz9cSmdSbov1YKSg
-    Zea3QbKuuusi-CB7_2QCdmr-PP7C4zdO4_L6jO8ipDl69ikO4vq>
-X-ME-Received: <xmr:aVkqamavLe2pDmQKcR2yRt-uykdmvf_rp-gaNbVGgTlhpxFyju7ZWMuQWPT4r0SZw6SKcpvMKTUsrnyBEic28RukuzJmI_Dbix4XzwqfjIR1>
-X-ME-Proxy-Cause: dmFkZTF/+amKZAWEfZ0XKC1clGzeEdUQ0sbNVPmfkao1bjuFszGMFlLsNP6VIL6nYaFhf8
-    KuZOlpXDb1+t+UjZzn+rooZ63IyyiHIGHw09HoJoH9KXxBBj+o6sqMXMiAdGpIbsou6I7U
-    7SECo8r2jLbqxNxaKEsfWCXGgIZJehesKiCeieg9aFozFaYm4wMsH6ArmFJuaSmaDJUEuX
-    X0++evCOGiHAiDfyOmSU+MO7I8nUHuXRF43lJrXyZVLyGz+nBstf2CfiAOFg8A9zs/xB1H
-    x33NIndHuVLmXhfJridtUEJvT8M5hbXbLkM+mlDXo3gtSuC3qLjhY4A9mkeHuuoK9wvjsK
-    +Zb6kqCsj5TiLTmocYy+mNnHdjVaUMMIYQ7b6GQvnIQWhBUPAJmW8gjGZtDcn23o9Xfqwk
-    ofe0xigXmCx4CFfv8793KWffwooop6b9vCz7ui80AKskJO7D1vV97nmTwxwRkGCwV0ichH
-    pelahfZz5ROCYwAYaFkKNICzO9lkcDyI4xpcpT66k8YvU0XwM5DwkcLlP11Cregw4erVn1
-    4y6wjNNLyLWxQAM+yDnXb3vY6O5Y0DE+Mwhil7bvrXy/UesBTMp46f/1pl22A8ZlsAQEbI
-    0nZfbP7MH2/DFmPKaSTzc9RQDJ12KCPE0AJhjQp/tXRn8SaI+tOoThqa0Lqg
-X-ME-Proxy: <xmx:aVkqanWb61U4F6vZg6vNt753PqS74LePDuNlhSDWfdGzaDNRTiPh3A>
-    <xmx:aVkqaojMnvK1fvKKQh_hPOVBFTGcYG4rYhzliV2WwEk5ofxi9S0WfQ>
-    <xmx:aVkqalUxVxSnxnU9ZmQuxO1LJ_QI_C6Cik2haabKC20N8J2LoADgZA>
-    <xmx:aVkqavMRYwtlmoa9QJ58Y3poakhfTVwH6XAHt-5buPx-2-6s3ArN7A>
-    <xmx:aVkqagfamYcThk-5-wD07d7YvG_jSvSSimYH7is_DKWW7OqxRHnV7ALd>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781160300; x=
+	1781246700; bh=ZvLcK4bum8MoF1JbRRYQfwrTLOc2KDdxY5tYMZ1obto=; b=R
+	xBgzOUvOkgkQUkrthJ55FArTQzMuLjC6RI4D3pjYUBF/IPsQLyUjY0l8LDcPepyl
+	sXoQ6Fwi7Lz7+pSSZNwpK/y05eSNnZ8Swss+RG+shL6pJU9v2zvkTMygeWwJVG0C
+	cNIwJkVP5+knnMxM/U5gBezA+89E3DyP6ZhKO8PtRJdR38/v7s3jZ6I4ieF2MbYc
+	26HFCFRUZJZWGB5enKyrrBri2v5LQ0PiprFbE9Q3axyCznc6FONwhZKwdUKOTMSM
+	ceA1hzFQDMTTH304p4PNJGBTuWaqBm/T/A9phQC9g3sJHqQ2jVhw2hREw2VdF9CC
+	fGklEx2eQA0Osd2FPVpqw==
+X-ME-Sender: <xms:bFkqaks_kdkNAC36SNKkhfc-t1Bv2abfpTtJN5MfQQI7aym1fnX3HQ>
+    <xme:bFkqanf0bF1IW75Wy35bKyxEc9f7i66PvR6apy4tc5eLPQAOlfBZk3EgZlMhStxVJ
+    1vZQK-Od4QZgvkJt48I6muOExOjs1u4zZ0rlOqFULeMYWn5tno5>
+X-ME-Received: <xmr:bFkqatb2A2-bhJ2YCudZ4tfjSJoFJobYl6FT6OCkJ9tF1yOdWwOPxy87sQdpGI2rR0KXi686YPZ2SlbQfISPiozOpVi89uOsEE5K-kj3hw1P>
+X-ME-Proxy-Cause: dmFkZTEB1+/wXIrstN1RxODrElfIL2f6LfPbEmd7DasvHhTabWVEGshHALNDtuwzcnXqjh
+    iraf9oWNhgGPKHjQwozX1BToJhNmgmvvOQHtdrVuBZwVEacpWW/0tse4gyN1PVUZ3/Ga8f
+    DHvWSt7yPziOd0QmAAqq9ybs75EzVqKwaeefI6K+8Tc91jTDYtIJASGEjCYkWoJOFvJVt8
+    2TaxETAWlGZRS7wjVo6BD4FPndrggwmbrqE2mPUUdgrZ0irVXcQRWkIgaebF6uLvVVEQQ4
+    UXN0ilh/JhYaqsvdqhkL0r1foTdfEnXNjgm6ykQ08whFjNf2OTgqa8hKdbmxPZ15oOrebt
+    fUY0YdE8BeItmJ0QX9+2uqMT4V3dDPysM4/zkNlE4Yq1MYh0cZi2rT0HOf5cSrernUBJFl
+    bQgfotj3srshoI9FdlePbxi2iYHK2WVk3Qj8Cvr3b5N6x/vAoqDBdtruuL9n0Y2XN290WT
+    jT/E2PZphlnhJtzuoFNt9LdCR42nhRkqtW4zfHIBp9cWulhWfwiJAgrCQMS+sxBry5jbiS
+    dP+hGu3yk4+DPI3e74JVPl1wVXYIr31wyzZ5Cb5G0JI4Dkoz19f/aNNo4Ifx9eRz8Rakpn
+    XtMcovf6n1k8PYBuvDl4w6lKCzDlARfqYt7TLNbQdmQsJWMBnCxCdYS6gO8Q
+X-ME-Proxy: <xmx:bFkqaiWmlh3QQrebY4CCM6aeH4FFCKkKkQ9ulQwxHke_cIyPfymSfg>
+    <xmx:bFkqanh5TByIIPDl0KqtXzM5P4yk8a3_EykSrpkzmLePoAvDgEvZDQ>
+    <xmx:bFkqaoVz6WmVEq_L4eHgVENVvj93RD9hqeqbjp7Ja2wvL1sECNvqdA>
+    <xmx:bFkqamNgYIYAnUhl13RKJsKwnoPOBoADd3iTlY-JgC0k4t2rUXoiWQ>
+    <xmx:bFkqavf2VUtWcKaib8_07TQzkWm4v-UTRHI7fW4vMRUGLDUXEwEc3Axz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 02:44:56 -0400 (EDT)
+ 11 Jun 2026 02:44:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 457a4951 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 06:44:55 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 4db17d3d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 06:44:58 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 11 Jun 2026 08:44:43 +0200
-Subject: [PATCH v2 5/7] environment: split up concerns of
- `is_bare_repository_cfg`
+Date: Thu, 11 Jun 2026 08:44:44 +0200
+Subject: [PATCH v2 6/7] environment: stop using `the_repository` in
+ `is_bare_repository()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,250 +83,326 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-b4-pks-setup-drop-global-state-v2-5-a6f7269c841d@pks.im>
+Message-Id: <20260611-b4-pks-setup-drop-global-state-v2-6-a6f7269c841d@pks.im>
 References: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
 In-Reply-To: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-The `is_bare_repository_cfg` variable tracks two different pieces of
-information:
+Refactor `is_bare_repository()` to take in a repository parameter so
+that we no longer depend on `the_repository`. Adjust callers
+accordingly.
 
-  - It tracks whether the user has invoked git with the "--bare" flag,
-    which makes us treat any discovered Git repository as if it was a
-    bare repository.
-
-  - Otherwise it tracks whether the discovered `the_repository` is bare.
-
-This makes the flag extremely confusing and creates a bit of a challenge
-when handling multiple repositories in the same process.
-
-Split up the concerns of this variable into two pieces:
-
-  - `startup_info.force_bare_repository` tracks whether the user has
-    passed the "--bare" flag. This is used as a hint to treat newly set
-    up repositories as bare regardless of whether or not they have a
-    worktree.
-
-  - `struct repository::bare_cfg` tracks whether or not a repository is
-    considered bare. This takes into account both whether the user has
-    passed "--bare" and the discovered state of the repository itself.
-
-Whether or not a repository is bare is now resolved when checking the
-repository's format, and is then later applied to the repository itself
-via `apply_repository_format()`.
-
-This enables a subsequent change where we make `is_bare_repository()`
-not depend on global state anymore.
+Furthermore, move the function outside of the declarations that are only
+available when `USE_THE_REPOSITORY_VARIABLE` is set, as it no longer
+depends on that variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/init-db.c |  2 +-
- environment.c     |  5 ++---
- environment.h     |  1 -
- git.c             |  2 +-
- repository.c      |  1 +
- repository.h      |  7 +++++++
- setup.c           | 27 ++++++++++++++++++++-------
- setup.h           |  6 ++++++
- worktree.c        |  2 +-
- 9 files changed, 39 insertions(+), 14 deletions(-)
+ attr.c                  | 4 ++--
+ builtin/bisect.c        | 2 +-
+ builtin/blame.c         | 2 +-
+ builtin/check-attr.c    | 2 +-
+ builtin/fetch.c         | 2 +-
+ builtin/gc.c            | 2 +-
+ builtin/history.c       | 2 +-
+ builtin/repack.c        | 2 +-
+ builtin/repo.c          | 2 +-
+ builtin/reset.c         | 2 +-
+ builtin/rev-parse.c     | 2 +-
+ environment.c           | 4 ++--
+ environment.h           | 4 ++--
+ mailmap.c               | 4 ++--
+ refs/files-backend.c    | 2 +-
+ refs/reftable-backend.c | 2 +-
+ setup.c                 | 2 +-
+ transport.c             | 4 ++--
+ worktree.c              | 2 +-
+ 19 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 52aa92fb0a..566732c9f4 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -81,7 +81,7 @@ int cmd_init_db(int argc,
- 	const char *template_dir = NULL;
- 	char *template_dir_to_free = NULL;
- 	unsigned int flags = 0;
--	int bare = is_bare_repository_cfg;
-+	int bare = startup_info->force_bare_repository ? 1 : -1;
- 	const char *object_format = NULL;
- 	const char *ref_format = NULL;
- 	const char *initial_branch = NULL;
+diff --git a/attr.c b/attr.c
+index 75369547b3..04cb284954 100644
+--- a/attr.c
++++ b/attr.c
+@@ -681,7 +681,7 @@ static enum git_attr_direction direction;
+ 
+ void git_attr_set_direction(enum git_attr_direction new_direction)
+ {
+-	if (is_bare_repository() && new_direction != GIT_ATTR_INDEX)
++	if (is_bare_repository(the_repository) && new_direction != GIT_ATTR_INDEX)
+ 		BUG("non-INDEX attr direction in a bare repo");
+ 
+ 	if (new_direction != direction)
+@@ -848,7 +848,7 @@ static struct attr_stack *read_attr(struct index_state *istate,
+ 		res = read_attr_from_index(istate, path, flags);
+ 	} else if (tree_oid) {
+ 		res = read_attr_from_blob(istate, tree_oid, path, flags);
+-	} else if (!is_bare_repository()) {
++	} else if (!is_bare_repository(the_repository)) {
+ 		if (direction == GIT_ATTR_CHECKOUT) {
+ 			res = read_attr_from_index(istate, path, flags);
+ 			if (!res)
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index e7c2d2f3bb..798e28f501 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -724,7 +724,7 @@ static enum bisect_error bisect_start(struct bisect_terms *terms, int argc,
+ 	struct object_id oid;
+ 	const char *head;
+ 
+-	if (is_bare_repository())
++	if (is_bare_repository(the_repository))
+ 		no_checkout = 1;
+ 
+ 	/*
+diff --git a/builtin/blame.c b/builtin/blame.c
+index ffbd3ce5c5..553f4cb780 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1163,7 +1163,7 @@ int cmd_blame(int argc,
+ 
+ 	revs.disable_stdin = 1;
+ 	setup_revisions(argc, argv, &revs, NULL);
+-	if (!revs.pending.nr && is_bare_repository()) {
++	if (!revs.pending.nr && is_bare_repository(the_repository)) {
+ 		struct commit *head_commit;
+ 		struct object_id head_oid;
+ 
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index 98f64d5b92..217d83ea7d 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -116,7 +116,7 @@ int cmd_check_attr(int argc,
+ 	struct object_id initialized_oid;
+ 	int cnt, i, doubledash, filei;
+ 
+-	if (!is_bare_repository())
++	if (!is_bare_repository(the_repository))
+ 		setup_work_tree(the_repository);
+ 
+ 	repo_config(the_repository, git_default_config, NULL);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c1d7c672f4..44b8c70da1 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1764,7 +1764,7 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
+ 
+ 	if (!head_name)
+ 		goto cleanup;
+-	baremirror = is_bare_repository() && remote->mirror;
++	baremirror = is_bare_repository(the_repository) && remote->mirror;
+ 	create_only = follow_remote_head == FOLLOW_REMOTE_ALWAYS ? 0 : !baremirror;
+ 	if (baremirror) {
+ 		strbuf_addstr(&b_head, "HEAD");
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 84a66d3240..61da30de9f 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -902,7 +902,7 @@ int cmd_gc(int argc,
+ 		die(_("failed to parse gc.logExpiry value %s"), cfg.gc_log_expire);
+ 
+ 	if (cfg.pack_refs < 0)
+-		cfg.pack_refs = !is_bare_repository();
++		cfg.pack_refs = !is_bare_repository(the_repository);
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_gc_options,
+ 			     builtin_gc_usage, 0);
+diff --git a/builtin/history.c b/builtin/history.c
+index 091465a59e..fd83de8265 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -525,7 +525,7 @@ static int cmd_history_fixup(int argc,
+ 	if (action == REF_ACTION_DEFAULT)
+ 		action = REF_ACTION_BRANCHES;
+ 
+-	if (is_bare_repository()) {
++	if (is_bare_repository(repo)) {
+ 		ret = error(_("cannot run fixup in a bare repository"));
+ 		goto out;
+ 	}
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 1524a9c13a..bbc6f51639 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -265,7 +265,7 @@ int cmd_repack(int argc,
+ 
+ 	if (write_bitmaps < 0) {
+ 		if (write_midx == REPACK_WRITE_MIDX_NONE &&
+-		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository()))
++		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository(the_repository)))
+ 			write_bitmaps = 0;
+ 	}
+ 	if (po_args.pack_kept_objects < 0)
+diff --git a/builtin/repo.c b/builtin/repo.c
+index 71a5c1c29c..34e96514bc 100644
+--- a/builtin/repo.c
++++ b/builtin/repo.c
+@@ -58,7 +58,7 @@ struct repo_info_field {
+ 
+ static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
+ {
+-	strbuf_addstr(buf, is_bare_repository() ? "true" : "false");
++	strbuf_addstr(buf, is_bare_repository(the_repository) ? "true" : "false");
+ 	return 0;
+ }
+ 
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 3be6bd0121..78e69bd84b 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -470,7 +470,7 @@ int cmd_reset(int argc,
+ 	if (reset_type != SOFT && (reset_type != MIXED || repo_get_work_tree(the_repository)))
+ 		setup_work_tree(the_repository);
+ 
+-	if (reset_type == MIXED && is_bare_repository())
++	if (reset_type == MIXED && is_bare_repository(the_repository))
+ 		die(_("%s reset is not allowed in a bare repository"),
+ 		    _(reset_type_names[reset_type]));
+ 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index bb882678fe..090e5cfbb0 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -1084,7 +1084,7 @@ int cmd_rev_parse(int argc,
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--is-bare-repository")) {
+-				printf("%s\n", is_bare_repository() ? "true"
++				printf("%s\n", is_bare_repository(the_repository) ? "true"
+ 						: "false");
+ 				continue;
+ 			}
 diff --git a/environment.c b/environment.c
-index 4e86335f25..9d7c908c55 100644
+index 9d7c908c55..bf20953415 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -48,7 +48,6 @@ int has_symlinks = 1;
- int minimum_abbrev = 4, default_abbrev = -1;
- int ignore_case;
- int assume_unchanged;
--int is_bare_repository_cfg = -1; /* unspecified */
- int warn_on_object_refname_ambiguity = 1;
- char *git_commit_encoding;
- char *git_log_output_encoding;
-@@ -136,7 +135,7 @@ const char *getenv_safe(struct strvec *argv, const char *name)
- int is_bare_repository(void)
+@@ -132,10 +132,10 @@ const char *getenv_safe(struct strvec *argv, const char *name)
+ 	return argv->v[argv->nr - 1];
+ }
+ 
+-int is_bare_repository(void)
++int is_bare_repository(struct repository *repo)
  {
  	/* if core.bare is not 'false', let's see if there is a work tree */
--	return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
-+	return the_repository->bare_cfg && !repo_get_work_tree(the_repository);
+-	return the_repository->bare_cfg && !repo_get_work_tree(the_repository);
++	return repo->bare_cfg && !repo_get_work_tree(repo);
  }
  
  int have_git_dir(void)
-@@ -342,7 +341,7 @@ int git_default_core_config(const char *var, const char *value,
- 	}
- 
- 	if (!strcmp(var, "core.bare")) {
--		is_bare_repository_cfg = git_config_bool(var, value);
-+		the_repository->bare_cfg = git_config_bool(var, value);
- 		return 0;
- 	}
- 
 diff --git a/environment.h b/environment.h
-index 5d6e4e6c1b..afb5bcf197 100644
+index afb5bcf197..164a55df2c 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -147,7 +147,6 @@ void repo_config_values_init(struct repo_config_values *cfg);
+@@ -125,6 +125,8 @@ int git_default_core_config(const char *var, const char *value,
+ 
+ void repo_config_values_init(struct repo_config_values *cfg);
+ 
++int is_bare_repository(struct repository *repo);
++
+ /*
+  * TODO: All the below state either explicitly or implicitly relies on
+  * `the_repository`. We should eventually get rid of these and make the
+@@ -147,8 +149,6 @@ void repo_config_values_init(struct repo_config_values *cfg);
   */
  int have_git_dir(void);
  
--extern int is_bare_repository_cfg;
- int is_bare_repository(void);
- 
+-int is_bare_repository(void);
+-
  /* Environment bits from configuration mechanism */
-diff --git a/git.c b/git.c
-index 36f08891ef..387eabe38c 100644
---- a/git.c
-+++ b/git.c
-@@ -255,7 +255,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--bare")) {
- 			char *cwd = xgetcwd();
--			is_bare_repository_cfg = 1;
-+			startup_info->force_bare_repository = true;
- 			setenv(GIT_DIR_ENVIRONMENT, cwd, 0);
- 			free(cwd);
- 			setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
-diff --git a/repository.c b/repository.c
-index 187dd471c4..c1e91eb0da 100644
---- a/repository.c
-+++ b/repository.c
-@@ -73,6 +73,7 @@ void initialize_repository(struct repository *repo)
- 	ALLOC_ARRAY(repo->index, 1);
- 	index_state_init(repo->index, repo);
- 	repo->check_deprecated_config = true;
-+	repo->bare_cfg = -1;
- 	repo_config_values_init(&repo->config_values_private_);
+ extern int trust_executable_bit;
+ extern int trust_ctime;
+diff --git a/mailmap.c b/mailmap.c
+index 3b2691781d..7d8590cdd6 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -219,10 +219,10 @@ int read_mailmap(struct repository *repo, struct string_list *map)
+ 	map->strdup_strings = 1;
+ 	map->cmp = namemap_cmp;
  
- 	/*
-diff --git a/repository.h b/repository.h
-index 36e2db2633..7d649e32e7 100644
---- a/repository.h
-+++ b/repository.h
-@@ -117,6 +117,13 @@ struct repository {
- 	bool worktree_initialized;
- 	bool worktree_config_is_bogus;
+-	if (!mailmap_blob && is_bare_repository())
++	if (!mailmap_blob && is_bare_repository(the_repository))
+ 		mailmap_blob = xstrdup("HEAD:.mailmap");
  
-+	/*
-+	 * Whether the repository is bare, as set by "core.bare" config or
-+	 * inferred during repository discovery. -1 means unset/unknown, 0
-+	 * means non-bare, 1 means bare.
-+	 */
-+	int bare_cfg;
-+
- 	/*
- 	 * Path from the root of the top-level superproject down to this
- 	 * repository.  This is only non-NULL if the repository is initialized
+-	if (!startup_info->have_repository || !is_bare_repository())
++	if (!startup_info->have_repository || !is_bare_repository(the_repository))
+ 		err |= read_mailmap_file(map, ".mailmap",
+ 					 startup_info->have_repository ?
+ 					 MAILMAP_NOFOLLOW : 0);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index a4c7858787..2b27091484 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1865,7 +1865,7 @@ static int log_ref_setup(struct files_ref_store *refs,
+ 	char *logfile;
+ 
+ 	if (log_refs_cfg == LOG_REFS_UNSET)
+-		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
++		log_refs_cfg = is_bare_repository(the_repository) ? LOG_REFS_NONE : LOG_REFS_NORMAL;
+ 
+ 	files_reflog_path(refs, &logfile_sb, refname);
+ 	logfile = strbuf_detach(&logfile_sb, NULL);
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 4ae22922de..101ef29ac8 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -288,7 +288,7 @@ static int should_write_log(struct reftable_ref_store *refs, const char *refname
+ {
+ 	enum log_refs_config log_refs_cfg = refs->log_all_ref_updates;
+ 	if (log_refs_cfg == LOG_REFS_UNSET)
+-		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
++		log_refs_cfg = is_bare_repository(the_repository) ? LOG_REFS_NONE : LOG_REFS_NORMAL;
+ 
+ 	switch (log_refs_cfg) {
+ 	case LOG_REFS_NONE:
 diff --git a/setup.c b/setup.c
-index 71fc6b33da..32f14a8688 100644
+index 32f14a8688..e6db80ab07 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -795,10 +795,22 @@ static int check_repository_format_gently(const char *gitdir,
- 		has_common = 0;
+@@ -2610,7 +2610,7 @@ static int create_default_files(struct repository *repo,
  	}
+ 	repo_config_set(repo, "core.filemode", filemode ? "true" : "false");
  
--	if (!has_common) {
--		if (candidate->is_bare != -1)
--			is_bare_repository_cfg = candidate->is_bare;
--	} else {
-+	if (startup_info->force_bare_repository) {
-+		candidate->is_bare = 1;
-+		FREE_AND_NULL(candidate->work_tree);
-+	} else if (has_common) {
-+		/*
-+		 * When sharing a common dir with another repository (e.g. a
-+		 * linked worktree), do not let this repository's config
-+		 * dictate bareness; it is inherited from the main worktree.
-+		 */
-+		candidate->is_bare = -1;
-+
-+		/*
-+		 * Furthermore, "core.worktree" is supposed to be ignored when
-+		 * we have a commondir configured, unless it comes from the
-+		 * per-worktree configuration.
-+		 */
- 		FREE_AND_NULL(candidate->work_tree);
- 	}
+-	if (is_bare_repository())
++	if (is_bare_repository(the_repository))
+ 		repo_config_set(repo, "core.bare", "true");
+ 	else {
+ 		repo_config_set(repo, "core.bare", "false");
+diff --git a/transport.c b/transport.c
+index 0f5ec30247..fc144f0aed 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1482,7 +1482,7 @@ int transport_push(struct repository *r,
  
-@@ -1138,7 +1150,7 @@ static const char *setup_explicit_git_dir(struct repository *repo,
- 	/* #3, #7, #11, #15, #19, #23, #27, #31 (see t1510) */
- 	if (work_tree_env)
- 		set_git_work_tree(repo, work_tree_env);
--	else if (is_bare_repository_cfg > 0) {
-+	else if (repo_fmt->is_bare > 0) {
- 		if (repo_fmt->work_tree) {
- 			/* #22.2, #30 */
- 			warning("core.bare and core.worktree do not make sense");
-@@ -1225,7 +1237,7 @@ static const char *setup_discovered_git_dir(struct repository *repo,
- 	}
+ 	if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
+ 		      TRANSPORT_RECURSE_SUBMODULES_ONLY)) &&
+-	    !is_bare_repository()) {
++	    !is_bare_repository(the_repository)) {
+ 		struct ref *ref = remote_refs;
+ 		struct oid_array commits = OID_ARRAY_INIT;
  
- 	/* #16.2, #17.2, #20.2, #21.2, #24, #25, #28, #29 (see t1510) */
--	if (is_bare_repository_cfg > 0) {
-+	if (repo_fmt->is_bare > 0) {
- 		set_git_dir(repo, gitdir, (offset != cwd->len));
- 		if (chdir(cwd->buf))
- 			die_errno(_("cannot come back to cwd"));
-@@ -1762,6 +1774,7 @@ int apply_repository_format(struct repository *repo,
- 		alternate_object_directories = xstrdup_or_null(getenv(ALTERNATE_DB_ENVIRONMENT));
- 	}
- 
-+	repo->bare_cfg = format->is_bare;
- 	repo_set_hash_algo(repo, format->hash_algo);
- 	repo->objects = odb_new(repo, object_directory,
- 				alternate_object_directories);
-@@ -2571,7 +2584,7 @@ static int create_default_files(struct repository *repo,
- 		repo_settings_set_shared_repository(repo,
- 						    init_shared_repository);
- 
--	is_bare_repository_cfg = !work_tree;
-+	repo->bare_cfg = !work_tree;
- 
- 	/*
- 	 * We would have created the above under user's umask -- under
-diff --git a/setup.h b/setup.h
-index 705d1d6ff7..b9fd96bea6 100644
---- a/setup.h
-+++ b/setup.h
-@@ -292,6 +292,12 @@ enum sharedrepo {
- int git_config_perm(const char *var, const char *value);
- 
- struct startup_info {
-+	/*
-+	 * Whether the user is asking us to treat the repository as bare via
-+	 * `git --bare`, even if it's not.
-+	 */
-+	bool force_bare_repository;
-+
- 	int have_repository;
- 	const char *prefix;
- 	const char *original_cwd;
+@@ -1509,7 +1509,7 @@ int transport_push(struct repository *r,
+ 	if (((flags & TRANSPORT_RECURSE_SUBMODULES_CHECK) ||
+ 	     ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
+ 			TRANSPORT_RECURSE_SUBMODULES_ONLY)) &&
+-	      !pretend)) && !is_bare_repository()) {
++	      !pretend)) && !is_bare_repository(the_repository)) {
+ 		struct ref *ref = remote_refs;
+ 		struct string_list needs_pushing = STRING_LIST_INIT_DUP;
+ 		struct oid_array commits = OID_ARRAY_INIT;
 diff --git a/worktree.c b/worktree.c
-index 97eddc3916..7d70f2c1da 100644
+index 7d70f2c1da..30125827fd 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -123,7 +123,7 @@ static struct worktree *get_main_worktree(int skip_reading_head)
- 	worktree->repo = the_repository;
+@@ -124,7 +124,7 @@ static struct worktree *get_main_worktree(int skip_reading_head)
  	worktree->path = strbuf_detach(&worktree_path, NULL);
  	worktree->is_current = is_current_worktree(worktree);
--	worktree->is_bare = (is_bare_repository_cfg == 1) ||
-+	worktree->is_bare = (the_repository->bare_cfg == 1) ||
- 		is_bare_repository() ||
+ 	worktree->is_bare = (the_repository->bare_cfg == 1) ||
+-		is_bare_repository() ||
++		is_bare_repository(the_repository) ||
  		/*
  		 * When in a secondary worktree we have to also verify if the main
+ 		 * worktree is bare in $commondir/config.worktree.
 
 -- 
 2.54.0.1189.g8c84645362.dirty
