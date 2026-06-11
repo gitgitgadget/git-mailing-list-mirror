@@ -1,79 +1,79 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00ECC40E8D4
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211733E7BD0
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184441; cv=none; b=FO1gdb/WdzKLK1/lD7rj9Oxe2BUKLBRfG78DXCsLPApDXUCrrNGodHBwqH1sz0b59DDu00VliE5+v3PdeDYoxYFYKUwsia6a1cbe7wRievLzPoFw3LGdCAUaK2FwAJzvqcofAnMWs+VwuFXaUyQN6YAp0S5GNn1L3tvdepuXTHs=
+	t=1781184444; cv=none; b=jZvtqa6v/oSdHumTD417UrrrbyVGnRAVW8Ia451fZVzNLJyeuvSPibVP7RAFqJA2DWLDVHznNFrooPC+W50tF0/w3F3+MH24/XUaa7VEz1UYvB4mvt07n71KHXtoC8byezTT0ILvuNwOT3GdKLKUKHe0ymoXeBpHoibE/6d2MCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184441; c=relaxed/simple;
-	bh=aCKx8RAdUBN0jhn+KdWUiigGFQKs3Qj1qM7JT4xlbH0=;
+	s=arc-20240116; t=1781184444; c=relaxed/simple;
+	bh=vl4v0npmAK7aynY7mzbvd1hINV3PVRwQKxAdMku+D70=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rimyGisqDQkh28xJujVB15Qj99zYGfs2hOZAv1o4gtYjrrYv4h26L/jnUN5u1wcsBeugWvm+UoWiwHc2P7HptRfWZLfPWdzR1QCCcDNLezRAkx8jdTfdte1kZPY4DjHUebXC/s6C4aNQkaf6aWxj286m2X1Yj/v7qMAIXr7QsGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bn09XeCn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CGB1Wabf; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=f0jB12a1uyft+q1A91WKTVtHPonaWxfxXhRZohSqWKKfKnfLKl0aZZrloh1iPeOVfZl86tBthmy9tz9jZCOepAdU0HdQHG2ITLST8wfj3LXU2MtL2JMB3rrWQI5WVpO/0oWxs0E2kJZcNfl1eKvXDZXSOIrTKP/uG7ONAr3A+bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IU+WFgG7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i3hLypuH; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bn09XeCn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CGB1Wabf"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 31A54EC0171;
-	Thu, 11 Jun 2026 09:27:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IU+WFgG7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i3hLypuH"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6FC1CEC00CE;
+	Thu, 11 Jun 2026 09:27:22 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 11 Jun 2026 09:27:19 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 11 Jun 2026 09:27:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184439;
-	 x=1781270839; bh=ZExGmDHv+LmWh0NHGhqyng7Igrt6hKsKZGrKTOMA1DY=; b=
-	bn09XeCnKhYyzipE8qqk/DwVk/7jj7Mb2GCu/etpuSKQl6qhL0YYGIs7INwEX+Z/
-	wuCYG9804WVLcjuTOod0ze3O4DQa/JImRqL8L8rjzC+dV+lx7MnGowBS0BfPP0RX
-	x4pgPYOyc5sSp1gvUOu0svrcAltwke7JKicfENOdl1Im78xKC3jbV2/JtXNlRl47
-	8SXZUq8B+A0WuqqA6eKFVe6VdB3smkjk+OitiU5OVRpoOA9qRb0LVXldHXVft0B8
-	zTo7NLxLqq7Lklz+cCLXRLRG0fTNftsO9xilIN1Bm2ooykSyhayp3o+4vwgPYvhQ
-	b63abkqIUUZ/orZMqpUjuA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184442;
+	 x=1781270842; bh=5S6CmnefYUHMVfmoviMiuHQJJ0Mlx0fbRPq53F8P/eQ=; b=
+	IU+WFgG71L+TWnL4XXtUmdArbEgyYwQJ8fIT/Fe2jNK6mA91i5oTSvFd+i9eJaL3
+	eGetORqspj9vPLPF6snMcKjSXOmPXtUGoXorXH2l08rJLGkr+hYiepDxjBRiNT9y
+	MEezLQdcvH+9mO9so6S8cCI5MLhSOUqRbgKlne/STObgulx42+sGMvDqJpGVq6hl
+	aONa+XZvwV1CjQDZCm99y5Ndc3X6Jqh8ncZnCXUhAxoKEOPBj8yrcfpWklKPs1/O
+	RJoHVP+1y6kvCpF1tYxfPq7foOTKkTAi7/fxyGsf8YCHEV3LYuPtMsz47AyHdB0P
+	qduzWOULTdLC0GoU4hCmCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184439; x=
-	1781270839; bh=ZExGmDHv+LmWh0NHGhqyng7Igrt6hKsKZGrKTOMA1DY=; b=C
-	GB1WabfU/687eSPArgIkDr1uw5sJRvkaG+4KY1lF1cXkkOGmT9dsMjisn43/mvxg
-	zM+CyQFovRHXgtzvN1BKuQoP1WauaSMxW8POB3HV4ZhO6i2vkwp0nb8loK1vySGW
-	yDIMSN5mVZ7YVAEV0geJSrKcCSybnTL5HtY5CzEC/3vdMlusf1fg2hykU8MJH6aJ
-	/iFBio0XhUTZyS+I9jGE1FhoyZ3VqERkDjzpBLNRE1xqRo3W6o56qZ8zh9ovXZFC
-	mF6Gu5w5OrLpafY4k4I8Ixr7iA7q/VFa4cVw9u4gnagvEzuYUqOaMTLZmcThSv3k
-	xtBcJmvx7PuRQTT9EqrKg==
-X-ME-Sender: <xms:t7cqagUDBV4MvSKHqsoA6usEMG-9Cv8Nfi5LQtitDlARdpzztWsAHg>
-    <xme:t7cqamHxFS1CixyLQOJFqCW2JrUo6tMmY9hx5E_kDzY3gcYieXQAspEwI-13DO3VU
-    Cjf0H3cN0vZo6KGAM-86q3c77YyuEzigYjeAmSRtPh65JWsz1Xl>
-X-ME-Received: <xmr:t7cqakeptsFwp4RQy5Ubr52t4yAEo8Syg96WgbN8I5DgrkjouwWBZz3i1_D-kpokM_SeaYK-WgAR5SiKkpnq6V76quUNzcOrzzZbz9TAIXja>
-X-ME-Proxy-Cause: dmFkZTE7MVGK4Ba+oYOC1nLoG7cbGVUzVu+Iucq2ujoLCcLVcHoPfJ3B2E58mZFloJJEWg
-    7AGsW2I/4BjpnRlKmxKo0wt5YOdMuUxOsLMTkjZem8VQiAtVIsicVRgUAWRkbQi87i2Jw+
-    DfFPXaGDI6pvc1qclb1US1dvL3b36kPqfQhl6/bp455aJE9vNT0S8JoEdfBhTTrfsv+ZJZ
-    KGGdcWggPNgCbSUbX0ddUs3WBfsfTprEsRyVVOLqKAiyj4l5//RbQBoUNUkrXiNsB/13q1
-    rlMGTissinGZJwG7DXheIFo7J/pXapx80MYmHAwM6GeItP8Mn0+4S30TiL/EPpBsgU1nTS
-    rKGgJJTr+dbgNooAb3tiaysY0lrkr9dXScwWuedNuSjuXWtUSj1DL8eNnrnJcnHd5j/mOZ
-    vwcQ2/HbI3STsG/kpEqq1qps3KH5mqvZ7kVP8uXf3d0SDlxgadta38SWfFRSbgQ0yCLstu
-    iDAZepdn5ZsRuwdN9FXMMAoMFvpBAK36pK8B90wtUYh9LsroCSWMoNGp+4XlNymjZJR4Oa
-    9mwVMd/W+1JPbKWiNfV9xrYHCsTlt+1tmcwkCGAr8bvhin/1oHdFj73iEmWCoc8XczYRoU
-    y8AuMK15sK+BL7ulPwQYvgwq6LjzBC43Qj4QIhzaiUiLJrBBH/+tkk08vI6A
-X-ME-Proxy: <xmx:t7cqavI2TDq08o6DGluAJEk98xzWu5JWKrlvdnJP6Ydv3p7A83E94g>
-    <xmx:t7cqahEZIiWA05PGc2rfWDaCoy76i-z10zOyYWIzhvN4ALyzf2PAxw>
-    <xmx:t7cqaqAzJ0MUWFme0ZOKs0zp2lO3vKJIKZj9dL08uZoJWvVMvdmujg>
-    <xmx:t7cqas8VVnBRTjqMWZHLjjskOYTDPyr8gdFXxMxfmzmV24lavsi4Bw>
-    <xmx:t7cqajbixRgie8KXt2RFhk3ZmUxv-1ZgZCPfkET10viSi9jV0y7GJpDk>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184442; x=
+	1781270842; bh=5S6CmnefYUHMVfmoviMiuHQJJ0Mlx0fbRPq53F8P/eQ=; b=i
+	3hLypuHCbAlKUVET0n/AXeDOt+JosgkQ6G6UjJ91FG5DDB6HkjQ/RFCCUQt1Ky7i
+	7IjL+oCfUFrbiIId4QaNtnSa1OH9gkLe0Va4QMj4s7Gi3gfiCsjeXxXrQ+8zvC35
+	IwoTLpMWUC05Ir2n0TYaqZ1r9ViU/C9zYmbe6knLL8GFMaga0+wv7KXMeQ+cJAjU
+	DQMIy4XCXaOk2RTUEavpARZDzRdtVKTrOJ5o5DPOfRHSaWUhNT0MLlpFVbXai9vK
+	7jUHIjyxp+BEVxFA41zhn/YTMGzyHqjU5hjRCuxHFBEjnwAgnMzRp2I77+/M9BKo
+	bsKWXFhcIqJeshK4khYDQ==
+X-ME-Sender: <xms:urcqam_x2HTLr6fC0fAA58rZ6FG6RKeRjLMcJEla2MnEp460QN6GlQ>
+    <xme:urcqaoOwPQNHrFVPLbLTqb_2kGcPGMXV4bNO_ppY6l_6-bxwXIffSMpLFPSzGi3mp
+    uwRmJyAy0GiN8aCyFoatnl6raTuwxNJA_Ty72cBHwJ-2AMhoaYBNA>
+X-ME-Received: <xmr:urcqasGWs1WD2sdAwpZO7Rsk1gpcbbwcyswAuh5svyf5tsq2zuugMLFA98YhF9nvWgWQhHBYQ4xpVfhqOaBadUKPU1GxBBhPFTaTulhzm-H9>
+X-ME-Proxy-Cause: dmFkZTGTxPIFhuBoiEsDDhB9RSHDCXHbFJ5VnVZDD4bec7nRzrCcE+c/MFsVjwohVHwftl
+    cVFao0kG58zAIws/O0Ei+RCSGpQ0XKAQJ897zbTpVEbAIBEUeVlBXzfOFp55wWFPDBC63b
+    ++i23VB0mlc+JXzPK3+XAmANc+ZYYAp9T+MNk3HVd/hzScgiy84HRbrCh3vZt+7kXlIWUj
+    ICMm9WiiSqqEB0XslkAYhBOOtsaSDKKRXTT8LmcdFGr003K4VIXcWEJk40SYS0wk41aqac
+    5QeQLlxVantr78Np3u7bywp17Vc7XJmbCgEqW3Tgiuxa+RRmWIgUhEXLaBmgiHi/rb6RkO
+    9JzEVo3PW9XaJnQ0v7ZrgmSr0JQpqTo49TFaPWAyAJ0hwtJpRCij11Ft3An3CeF7ZT5AGV
+    EaZwoKx3XsEYDqog/vMzT6CI0OuJwFusSJH65ubPl4D53ychSmAtlsRcanv8a3RE+ElciI
+    Gp28EtkMpZEP9ANZsWxLrz+xrFEorgZdIIC0CN10Geo1pnXYGSCdLAE8zo2IW6N8I8XNTm
+    QSit5WEHzZS+hFt36+ZhzahBW06fcu3zarz4Wz0/+3UPSVMxUo4gJUgmmQ4GdHpzQgy5VE
+    DjEpRJ97EYmksUCIQlV9Ceydmrh95V9VxZiyq2+ce46kXoI8+M5D0r7wWlIA
+X-ME-Proxy: <xmx:urcqauTv0DLeKVjhE77JjJjRSUjrxFmIYzf63o8b10R29k12818eZA>
+    <xmx:urcqahtE5o4049sJpygCSw-JEGbtOLY8rszwKNluSU1SSejk2MBbIg>
+    <xmx:urcqauKCkOPF3WMlkaYhy5uqjGS3mWeYN_1IOSuaiY8djJUqkzklww>
+    <xmx:urcqaukgOqfycU3rs3fWiIJlLr9bjkGtYKYCV1piXZL-Ly-DMGji7g>
+    <xmx:urcqakjLgNU8FnVpCd23wDntRrjVA5Y-s3vkbV818kf8WwaW5zmJP0og>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 09:27:18 -0400 (EDT)
+ 11 Jun 2026 09:27:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d03d5e7b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 13:27:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d6ad3013 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 13:27:20 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 11 Jun 2026 15:27:05 +0200
-Subject: [PATCH v5 02/10] reset: drop `USE_THE_REPOSITORY_VARIABLE`
+Date: Thu, 11 Jun 2026 15:27:06 +0200
+Subject: [PATCH v5 03/10] reset: rename `reset_head()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-b4-pks-history-drop-v5-2-34d35725559c@pks.im>
+Message-Id: <20260611-b4-pks-history-drop-v5-3-34d35725559c@pks.im>
 References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 In-Reply-To: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 To: git@vger.kernel.org
@@ -92,117 +92,204 @@ Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-In "reset.c" we still have references to `the_repository`, even though
-the only entry point into the file already receives a repository as
-parameter.
+In a subsequent commit we're about to adapt `reset_head()` so that the
+reference update to HEAD is optional, only. At this point the function
+starts to feel misnamed, as it doesn't necessarily have anything to do
+with the HEAD reference anymore. The gist of the function then is that
+we reset the working tree to a specific new commit, updating both the
+index and the checked-out files.
 
-Update all uses of `the_repository` to instead use the passed-in repo
-and drop `USE_THE_REPOSITORY_VARIABLE`.
+Rename it to `reset_working_tree()` to better reflect that.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Note that we don't adjust the flags yet. This will happen in a
+subsequent commit.
+
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
 ---
- reset.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ builtin/rebase.c | 20 ++++++++++----------
+ reset.c          |  5 +++--
+ reset.h          |  4 ++--
+ sequencer.c      |  8 ++++----
+ 4 files changed, 19 insertions(+), 18 deletions(-)
 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index fa4f5d9306..22fbba3c62 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -592,7 +592,7 @@ static int finish_rebase(struct rebase_options *opts)
+ static int move_to_original_branch(struct rebase_options *opts)
+ {
+ 	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+-	struct reset_head_opts ropts = { 0 };
++	struct reset_working_tree_options ropts = { 0 };
+ 	int ret;
+ 
+ 	if (!opts->head_name)
+@@ -610,7 +610,7 @@ static int move_to_original_branch(struct rebase_options *opts)
+ 	ropts.flags = RESET_HEAD_REFS_ONLY;
+ 	ropts.branch_msg = branch_reflog.buf;
+ 	ropts.head_msg = head_reflog.buf;
+-	ret = reset_head(the_repository, &ropts);
++	ret = reset_working_tree(the_repository, &ropts);
+ 
+ 	strbuf_release(&branch_reflog);
+ 	strbuf_release(&head_reflog);
+@@ -685,7 +685,7 @@ static int run_am(struct rebase_options *opts)
+ 
+ 	status = run_command(&format_patch);
+ 	if (status) {
+-		struct reset_head_opts ropts = { 0 };
++		struct reset_working_tree_options ropts = { 0 };
+ 		unlink(rebased_patches);
+ 		free(rebased_patches);
+ 		child_process_clear(&am);
+@@ -693,7 +693,7 @@ static int run_am(struct rebase_options *opts)
+ 		ropts.oid = &opts->orig_head->object.oid;
+ 		ropts.branch = opts->head_name;
+ 		ropts.default_reflog_action = opts->reflog_action;
+-		reset_head(the_repository, &ropts);
++		reset_working_tree(the_repository, &ropts);
+ 		error(_("\ngit encountered an error while preparing the "
+ 			"patches to replay\n"
+ 			"these revisions:\n"
+@@ -855,7 +855,7 @@ static int rebase_config(const char *var, const char *value,
+ static int checkout_up_to_date(struct rebase_options *options)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct reset_head_opts ropts = { 0 };
++	struct reset_working_tree_options ropts = { 0 };
+ 	int ret = 0;
+ 
+ 	strbuf_addf(&buf, "%s: checkout %s",
+@@ -866,7 +866,7 @@ static int checkout_up_to_date(struct rebase_options *options)
+ 	if (!ropts.branch)
+ 		ropts.flags |=  RESET_HEAD_DETACH;
+ 	ropts.head_msg = buf.buf;
+-	if (reset_head(the_repository, &ropts) < 0)
++	if (reset_working_tree(the_repository, &ropts) < 0)
+ 		ret = error(_("could not switch to %s"), options->switch_to);
+ 	strbuf_release(&buf);
+ 
+@@ -1116,7 +1116,7 @@ int cmd_rebase(int argc,
+ 	int reschedule_failed_exec = -1;
+ 	int allow_preemptive_ff = 1;
+ 	int preserve_merges_selected = 0;
+-	struct reset_head_opts ropts = { 0 };
++	struct reset_working_tree_options ropts = { 0 };
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -1385,7 +1385,7 @@ int cmd_rebase(int argc,
+ 		rerere_clear(the_repository, &merge_rr);
+ 		string_list_clear(&merge_rr, 1);
+ 		ropts.flags = RESET_HEAD_HARD;
+-		if (reset_head(the_repository, &ropts) < 0)
++		if (reset_working_tree(the_repository, &ropts) < 0)
+ 			die(_("could not discard worktree changes"));
+ 		remove_branch_state(the_repository, 0);
+ 		if (read_basic_state(&options))
+@@ -1410,7 +1410,7 @@ int cmd_rebase(int argc,
+ 		ropts.head_msg = head_msg.buf;
+ 		ropts.branch = options.head_name;
+ 		ropts.flags = RESET_HEAD_HARD;
+-		if (reset_head(the_repository, &ropts) < 0)
++		if (reset_working_tree(the_repository, &ropts) < 0)
+ 			die(_("could not move back to %s"),
+ 			    oid_to_hex(&options.orig_head->object.oid));
+ 		strbuf_release(&head_msg);
+@@ -1880,7 +1880,7 @@ int cmd_rebase(int argc,
+ 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
+ 	ropts.head_msg = msg.buf;
+ 	ropts.default_reflog_action = options.reflog_action;
+-	if (reset_head(the_repository, &ropts)) {
++	if (reset_working_tree(the_repository, &ropts)) {
+ 		ret = error(_("Could not detach HEAD"));
+ 		goto cleanup_autostash;
+ 	}
 diff --git a/reset.c b/reset.c
-index 46e30e6394..3b3cb74dab 100644
+index 3b3cb74dab..799596398b 100644
 --- a/reset.c
 +++ b/reset.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "cache-tree.h"
- #include "gettext.h"
-@@ -13,7 +11,8 @@
- #include "unpack-trees.h"
+@@ -12,7 +12,7 @@
  #include "hook.h"
  
--static int update_refs(const struct reset_head_opts *opts,
-+static int update_refs(struct repository *repo,
-+		       const struct reset_head_opts *opts,
+ static int update_refs(struct repository *repo,
+-		       const struct reset_head_opts *opts,
++		       const struct reset_working_tree_options *opts,
  		       const struct object_id *oid,
  		       const struct object_id *head)
  {
-@@ -42,19 +41,19 @@ static int update_refs(const struct reset_head_opts *opts,
- 	prefix_len = msg.len;
- 
- 	if (update_orig_head) {
--		if (!repo_get_oid(the_repository, "ORIG_HEAD", &oid_old_orig))
-+		if (!repo_get_oid(repo, "ORIG_HEAD", &oid_old_orig))
- 			old_orig = &oid_old_orig;
- 		if (head) {
- 			if (!reflog_orig_head) {
- 				strbuf_addstr(&msg, "updating ORIG_HEAD");
- 				reflog_orig_head = msg.buf;
- 			}
--			refs_update_ref(get_main_ref_store(the_repository),
-+			refs_update_ref(get_main_ref_store(repo),
- 					reflog_orig_head, "ORIG_HEAD",
- 					orig_head ? orig_head : head,
- 					old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
- 		} else if (old_orig)
--			refs_delete_ref(get_main_ref_store(the_repository),
-+			refs_delete_ref(get_main_ref_store(repo),
- 					NULL, "ORIG_HEAD", old_orig, 0);
- 	}
- 
-@@ -64,23 +63,23 @@ static int update_refs(const struct reset_head_opts *opts,
- 		reflog_head = msg.buf;
- 	}
- 	if (!switch_to_branch)
--		ret = refs_update_ref(get_main_ref_store(the_repository),
-+		ret = refs_update_ref(get_main_ref_store(repo),
- 				      reflog_head, "HEAD", oid, head,
- 				      detach_head ? REF_NO_DEREF : 0,
- 				      UPDATE_REFS_MSG_ON_ERR);
- 	else {
--		ret = refs_update_ref(get_main_ref_store(the_repository),
-+		ret = refs_update_ref(get_main_ref_store(repo),
- 				      reflog_branch ? reflog_branch : reflog_head,
- 				      switch_to_branch, oid, NULL, 0,
- 				      UPDATE_REFS_MSG_ON_ERR);
- 		if (!ret)
--			ret = refs_update_symref(get_main_ref_store(the_repository),
-+			ret = refs_update_symref(get_main_ref_store(repo),
- 						 "HEAD", switch_to_branch,
- 						 reflog_head);
- 	}
- 	if (!ret && run_hook)
--		run_hooks_l(the_repository, "post-checkout",
--			    oid_to_hex(head ? head : null_oid(the_hash_algo)),
-+		run_hooks_l(repo, "post-checkout",
-+			    oid_to_hex(head ? head : null_oid(repo->hash_algo)),
- 			    oid_to_hex(oid), "1", NULL);
- 	strbuf_release(&msg);
+@@ -85,7 +85,8 @@ static int update_refs(struct repository *repo,
  	return ret;
-@@ -126,7 +125,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 		oid = &head_oid;
+ }
  
- 	if (refs_only)
--		return update_refs(opts, oid, head);
-+		return update_refs(r, opts, oid, head);
+-int reset_head(struct repository *r, const struct reset_head_opts *opts)
++int reset_working_tree(struct repository *r,
++		       const struct reset_working_tree_options *opts)
+ {
+ 	const struct object_id *oid = opts->oid;
+ 	const char *switch_to_branch = opts->branch;
+diff --git a/reset.h b/reset.h
+index a28f81829d..f130152014 100644
+--- a/reset.h
++++ b/reset.h
+@@ -17,7 +17,7 @@
+ /* Update ORIG_HEAD as well as HEAD */
+ #define RESET_ORIG_HEAD (1<<4)
  
- 	action = reset_hard ? "reset" : "checkout";
- 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-@@ -163,7 +162,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 		goto leave_reset_head;
- 	}
+-struct reset_head_opts {
++struct reset_working_tree_options {
+ 	/*
+ 	 * The commit to checkout/reset to. Defaults to HEAD.
+ 	 */
+@@ -55,6 +55,6 @@ struct reset_head_opts {
+ 	const char *default_reflog_action;
+ };
  
--	tree = repo_parse_tree_indirect(the_repository, oid);
-+	tree = repo_parse_tree_indirect(r, oid);
- 	if (!tree) {
- 		ret = error(_("unable to read tree (%s)"), oid_to_hex(oid));
- 		goto leave_reset_head;
-@@ -177,7 +176,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 	}
+-int reset_head(struct repository *r, const struct reset_head_opts *opts);
++int reset_working_tree(struct repository *r, const struct reset_working_tree_options *opts);
  
- 	if (oid != &head_oid || update_orig_head || switch_to_branch)
--		ret = update_refs(opts, oid, head);
-+		ret = update_refs(r, opts, oid, head);
+ #endif
+diff --git a/sequencer.c b/sequencer.c
+index 1ee4b2875b..d73ecf0384 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4677,7 +4677,7 @@ static void create_autostash_internal(struct repository *r,
+ 	if (has_unstaged_changes(r, 1) ||
+ 	    has_uncommitted_changes(r, 1)) {
+ 		struct child_process stash = CHILD_PROCESS_INIT;
+-		struct reset_head_opts ropts = { .flags = RESET_HEAD_HARD };
++		struct reset_working_tree_options ropts = { .flags = RESET_HEAD_HARD };
+ 		struct object_id oid;
  
- leave_reset_head:
- 	rollback_lock_file(&lock);
+ 		strvec_pushl(&stash.args,
+@@ -4707,7 +4707,7 @@ static void create_autostash_internal(struct repository *r,
+ 
+ 		if (!silent)
+ 			printf(_("Created autostash: %s\n"), buf.buf);
+-		if (reset_head(r, &ropts) < 0)
++		if (reset_working_tree(r, &ropts) < 0)
+ 			die(_("could not reset --hard"));
+ 		discard_index(r->index);
+ 		if (repo_read_index(r) < 0)
+@@ -4867,7 +4867,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 			 const char *onto_name, const struct object_id *onto,
+ 			 const struct object_id *orig_head)
+ {
+-	struct reset_head_opts ropts = {
++	struct reset_working_tree_options ropts = {
+ 		.oid = onto,
+ 		.orig_head = orig_head,
+ 		.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
+@@ -4876,7 +4876,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 					   onto_name),
+ 		.default_reflog_action = sequencer_reflog_action(opts)
+ 	};
+-	if (reset_head(r, &ropts)) {
++	if (reset_working_tree(r, &ropts)) {
+ 		apply_autostash(rebase_path_autostash());
+ 		sequencer_remove_state(opts);
+ 		return error(_("could not detach HEAD"));
 
 -- 
 2.54.0.1189.g8c84645362.dirty
