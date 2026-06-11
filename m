@@ -1,125 +1,121 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A635A3DB309
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 12:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5ED26CE2D
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 12:41:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781179582; cv=none; b=rlKnKiY0+Xy0qruSXBIFL846qH+luRMd1Q0SqJO6HxvssIr8c9OuFg4TKv9DEqhm1XUPZxffgzlZWbHNWHqCeAXALo/xoCxsOhSh+PbrfJdjlKHFfRdBwOGAZW/E/wrpouLTuUwgxOKQMx4eyTmazj5a7dz0eSCm0aKzAf9N0xY=
+	t=1781181680; cv=none; b=pseb8a8CEa994AmBQeuEspl+oAlhNiIrIN4O7Sut5rZjQgt9H6LkyBajPOCdxSObT8z8xKti5ZcUKa0THCzBdea1XmzaTH4UZlSyRHI9lWUoxWFxxeCFayzL9v00kUMYWICyfuxY09POxNyn4+n3hMcILYdZtt6R70UbAUAUq3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781179582; c=relaxed/simple;
-	bh=uPJMvsNdXaXcQBjAuDDGeA2b5XrpcvdrqTr+y9kUd50=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=eEfVcmI4dcf+qMun0qBcLhJJlpz0YD7p1CUCgt/tq31kdql4oojhJ8J/A2HsftqVOslqwqI1yYjbzD9OBArPdTRyPUo9bwIBCvthgWiwCV8DIsF5USu7wD65ygrOd0SLvacoTd+7XPDtimw1477xTh5igxQzmdxqZSsWccoALzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mxXKdQB0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GHJCUwrF; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1781181680; c=relaxed/simple;
+	bh=1iP3ATOwkRoNA3q2xankDwBM9QHSAqQutcfDYg50098=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZUQB0ii/PMUP7QEwdRF819nbEABXVetq7rx2T6OTMb2vLlhD/6f3K0c83V3tqcTqX4k0U5OtJ8PegGAw/hgqRp2T/kedMcHeuyP9o92KjscH0pXopQv1cLKrMBudLZ9YlORP4tKj2Gp6lrF2efB0VMsqCd+khSMeT3s/UrGsFnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tg2Bxdqt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MdnsjEVh; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mxXKdQB0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GHJCUwrF"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8B7C57A01E5;
-	Thu, 11 Jun 2026 08:06:19 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 11 Jun 2026 08:06:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781179579;
-	 x=1781265979; bh=yOZMdkSfZUZEI+pbVhOR1vA5jy2AI/Oy3qyLC/MQJ90=; b=
-	mxXKdQB0Qs/00QbKiI4lgUYY1Fy8cnr/Y2FD7Gh1P/sufmrjAjacgo39XLM0+02e
-	DTzYqQzqI4nwu6On5wfcibMaSVpeDiBHxOc2cmVBueM4Sru/FKVfzEJUAUc/V0KC
-	TnnRTpx9vqLO2K5zkdnkrHU0k26v7Kelu0tVxrTgxDRUMIuauCnefDR7fBmdJG2H
-	zOI46IeoVHE9XiG0Uhpu9h2/oazX+db1sevIO8sHzI/QyCvOXyxT8nXkeeez/RCW
-	h/UjIs7oRbr1oTel/yRzuTxg3d8k6Q6SbuqSgooXw3sMMkJBDtP2AM0S0u90WTIW
-	szV5kvXnnM5HcHim7HJKbQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tg2Bxdqt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MdnsjEVh"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1064714000EE;
+	Thu, 11 Jun 2026 08:41:19 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Thu, 11 Jun 2026 08:41:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781181679; x=1781268079; bh=EKyDpEJ3u2
+	kWYFnkdfpsZi9MO/WpUGINp5Fw8G2iWL0=; b=tg2BxdqtrsF80rtN6cnzpkFRcK
+	k7qfOhhtXIAjtJ+HV/tHNuKEzSrz0ogFEShB0orW7e49WbBcwEDwWC3FuwSgs/ug
+	GvZ5jxjhW33/G4+WKr2bXXBpEoXeXl4r6LvPolgk0M6wovvpa0QnrVGpYphNM3bw
+	tkPsr7olQGKfUBv5wvLDaxzFGedbSNB1qI+z9BvMx3dMAU58xFcWswpQwYJVXDBm
+	dpWaHpafVhBx7RKXQZyiEsxF1Kx4bCbScGeTUzC+h9L98auQwUzCbFxUTJA0iEb8
+	LRyf45uq3oGBuE8ttPKUSgku5q1y0Ss7CeP5WVJQDgQPdp9+cC5ANKqaVTzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781179579; x=
-	1781265979; bh=yOZMdkSfZUZEI+pbVhOR1vA5jy2AI/Oy3qyLC/MQJ90=; b=G
-	HJCUwrFlJA8cae5JBZAC/3ernedjOmSAsSVj43efmHW6v2iNCzs56dcuQ0bPbE8q
-	BJ78oQfMa9RHwLl36lHGOhFoC6Gm2zxC+W99Ym1M8RtP1ndaxQkJ/zi/ZK3AwcaW
-	Xgm4oXFQB+wGd685m50kooM9dkctOJwT99Hw47x8VQwmVxekIFjHKLLEX8V40O5v
-	fwKTconXbYrRkjGLKQ/wvJ9GJpnaSspJK86dbdkePt1ZSxWrkm3ZCmGSl5cLdpTx
-	LoyAYeedyux/xDsEpULDyPQmYp7eD8prkE4pnxP+LFemagIhQB7M/nUCBXFGCcyH
-	HVrogxzAJQiPPWEEmYQgQ==
-X-ME-Sender: <xms:u6Qqal_aX64e4Tov5Y6cFKjiRE7tYZTmiblrtQH0yc5is1LjM97dqQU>
-    <xme:u6QqakgoJOoy7jKu6p3n2roX58WzRDXutTUFwbW-EGjVGy2Xv4WwxpKTOIoAWYrW1
-    dk-MkfTOlwlVZxI1sF_vsgCtt8LLvBTXiJswfHe5stme5ONYurqNzc>
-X-ME-Proxy-Cause: dmFkZTE3X/dyLCSdjKGXOYR8Au6mq1CgWyMLZFDq0d1/rp5V8ItICWJ0CZ6j43c7GZEDGR
-    /RksDK/ep2fw97KDx+pCvExUJnt1otBytIaOXq3Dhx0kFxPaCCoq74bp3SGL7Tdi9YYAQk
-    rD0qvxClLGVYE7EDqjlnVoozNGkTBpCllwlV14wmuSXUaRJPNud78X3IydE8luK7y2j41X
-    p3DbNLJFJEKbMvE85hEGf3phHGW+dirIwTG155n6q4XMLECzfJCyagc1cEpCxzqRF4n4pS
-    pcP4+kr5163XhxCcG+maVYaRA6qM8o6xuJPu/PAcYo8icu7StOj+Im2jiN7kQvZL5Z+FSB
-    9XsiUYfkqufd/DAUP3fKXu/tzFId5WDNUJOZeL2h+xbtUfVmUEySfwjbvcIdgPMyr/0FEo
-    EFBSEFkC/GBjmaQUxLwWOummFA7eDcYukzAEo6pkyi9l8ZQBeR9tNDipOClV+Z7P9PeJQS
-    NptVwgxB5m06cGUqxhl8RUsST4ilXJvh6rr0wB2xl0OeLv/pXHGF8mKqBKBZOkq87HpMIV
-    d2dJe0AhxtVGcJ6yneFdRMEHrYDxcDo/SNHgzuMgqf0GLc+F0YTm75e8nYWK1FOlhXd23u
-    IOKC77m9LW/rgqQZ3frrDklsp59MsXoi0/MLN/yXfcGz2r/BkPUpyvDuO1GQ
-X-ME-Proxy: <xmx:u6QqalVP0pX8p3NpLiUVMwws-2_S2BDFXnTXS7vKV9SGtpMJsM37DQ>
-    <xmx:u6QqamST3SR7KpyaPo0tEOmoj7Ua0H3UG_taRPxFJNyuXDaOc0awSw>
-    <xmx:u6QqavltqKREzl5z1sBFpEKVjPoUod6ffR6rfPqI_4W10PAxFWoYGw>
-    <xmx:u6Qqas7oXRCc8RCHMptQrlbrnoqCckgSxLK0EgBliDPPFSPvPiFFRA>
-    <xmx:u6QqapWDce8bjoKN-PpTK91dF8uCSyUPKKt8GrRSp6Sv0Amnpk8Go8Hm>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3863330201A8; Thu, 11 Jun 2026 08:06:19 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781181679; x=1781268079; bh=EKyDpEJ3u2kWYFnkdfpsZi9MO/WpUGINp5F
+	w8G2iWL0=; b=MdnsjEVhmc061y2NVKpApNvpLUdxBtVLhlhZd1Ib3e+tWurdeeH
+	uind6Sn79XFUo8E9DfhrPaiyJJm9DbVecd+Dw+BHjL3nlFWznD/gWtAMFY3VSm0o
+	ThbUQW8RGvL0mg5lVN+A7ZuhYAy5PheX6KkWATbcPvRoQt/4hvx4Ou8GxLoW2Mx6
+	YhDmVgc9QKMbfyGv1ccdUIydjQaiHWGSjfX2tOABC75tzEq0/5CnL7XGp/VgkS6V
+	XEX9wbQ0hMIHUsOKws6N+CGXOoCyxCcNLht9+03RoyBqIEDthsaq1TkP1VmqZyr+
+	uoEzLrRbj2vXeIFr+3ALnULQ/DOcP6CEIlA==
+X-ME-Sender: <xms:7qwqaq-7XVN9sQ9zm_Udi3K0dvvRIDcU1-oeA3ndlRnIcrMgaQbL4A>
+    <xme:7qwqagvDb1XqJXwqcdBWXUJA0hyuBKOkrhOkMFn5kTFjHoQIJ-Tw9_Jq6vmoK9FgF
+    1ZUII74r2wvAeab3myZangdtM_BQdbIwSi52x9GOtohU7dp1D5X4A>
+X-ME-Received: <xmr:7qwqatrjPlaZCk0CgzJHfqGdeFDu19ZCQRmjbx6AY59Zp7ZJk22mj__WPsW9ENOF6Nl-T33zjVZQ6Ifg7dTE2sK1Kx7_AyVyFveX3GvqOJH0>
+X-ME-Proxy-Cause: dmFkZTFOHZvM4bNkoEm2ybmUF5HVTyup+3PbHpE9ZDgMQskZmDzrtZlr4H6iubiV3awExN
+    zFG/665BgqG0Z40EyVMRE4EYS9K3TIKZfRK+22sDeMnv7GrbmSFpEuvuqqglkN2bfUyS/C
+    7wRRTUxp2xTSkKCNcv/GozVgRbO2OwIy9Fygc7YIQRIyITA2uV5srMUlmTAglN4cAvGPUY
+    6aKO71R/0vbLcM980mBD9yuH+uTWdWZ3EjuKwxZkJhe0k9tUMmChu0n7TFm9fgkdZViQcz
+    P1mnQJS7f0ZmQlolx9HSJwSvI1sDAxMckI/qjEOX/hE81WEF+/w/lPbIfiVWla8xsUzyQq
+    vzGrpbFXemey6oqSc/+tx/r+XD8wyYMwPh3Dvn1xpKKhfin/gPHxpKXNXW614ScuCAPWYa
+    X4l/SjiB67+fm+znukjniiz/LmCRw0YJA4vwKItgzDYBC/KUNCBdl2QSZc8pjl+Zj6nWzp
+    2Vh+tZBfYSEqxGda+62DfeB0XuMiTSJ5E33Bj5DQ7sIcB+kmFJQUdSDkh6/PmTgMA+NBUg
+    XE8JHHradJkTIW4HgCNJXTDDoz4jetk3P9HzjbNIPqOTY9Q6fPMF69bB2IelgTKMUP/JCH
+    zB/62dzCfMN1Z06flNHLQLO7nA8KTqbSpszFz+pMxfWpqZjuRYh4mRP6k/XQ
+X-ME-Proxy: <xmx:76wqatkoT3rP8MIOih19OIk0zGYDMmmVfnLSCwDznJAPjLx6l9I7-g>
+    <xmx:76wqahzYOfI2I0NxrOPscoZy5IuyG2loGOTeiWtNK_lENipn_4CUaA>
+    <xmx:76wqalkXMjpXRZXNQoCvHaxHMcBJdDorYv5SDKGi7BX6NLnz19kd7A>
+    <xmx:76wqaqeZ7ldNr7CJoq8Eyh-X_F8FVT5GOL0CEhbtUuFTX0uaCiyDsg>
+    <xmx:76wqajQgbhUzhKcXdMa6UTL5W9EpVhRZ-WNp2Y5PW9Ye-i9jJas0tFV1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Jun 2026 08:41:18 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9e9b5dcf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 12:41:16 +0000 (UTC)
+Date: Thu, 11 Jun 2026 14:41:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] t1400: have fifo test clean after itself
+Message-ID: <aiqs5Wq2Di-6yW0D@pks.im>
+References: <xmqqo6hit6rn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AdJf8Qpl78Hc
-Date: Thu, 11 Jun 2026 14:05:58 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Christian Couder" <christian.couder@gmail.com>, jackmanb@google.com,
- "Linus Arver" <linus@ucla.edu>, "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <f738e97b-1aa6-492f-82df-c284a2f94c6a@app.fastmail.com>
-In-Reply-To: <xmqq1pedthkv.fsf@gitster.g>
-References: <CV_doc_int-tr_key_format.533@msgid.xyz>
- <V3_CV_doc_int-tr_key_format.8a3@msgid.xyz> <xmqqcxxyt4op.fsf@gitster.g>
- <xmqq1pedthkv.fsf@gitster.g>
-Subject: Re: [PATCH v3 00/11] doc: interpret-trailers: explain key format
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6hit6rn.fsf@gitster.g>
 
-On Thu, Jun 11, 2026, at 13:57, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> kristofferhaugsbakk@fastmail.com writes:
->>
->>> Interdiff against v2:
->>> diff --git a/Documentation/git-interpret-trailers.adoc b/Documentati=
-on/git-interpret-trailers.adoc
->>> ...
->
-> By the way, what I queued last night was missing [10/11] as I used
-> "b4 am" to grab the latest thread messages by giving the message-id
-> of the cover letter, but somehow [10/11] had a bogus value in the
-> e-mail header.
->
->     Subject: [PATCH v3 10/11] doc: interpret-trailers: rewrite
-> new-trailers paragraphs
->     Date: Wed, 10 Jun 2026 23:21:28 +0200
->     Message-ID: <>
->     X-Mailer: git-send-email 2.54.0.22.g9e26862b904
->
-> So, I reverted to the old and battle tested way to pick these 11
-> messages manually in my newsreader to replace the topic.
->
-> If you have a chance, could you investigate where the send-out
-> process went wrong and gave one message a bogus ID?  I am worried if
-> you may have triggered a bug in send-email, in which case we would
-> want to fix it to avoid hurting other users.
+On Wed, Jun 10, 2026 at 02:39:08PM -0700, Junio C Hamano wrote:
+> One test in this script creates a pair of FIFOs, "in" and "out",
+> that are named so generically that later tests may be tempted to use
+> them.  By the time those later tests run a command with its output
+> redirected to the file (e.g., "git foobar >out"), however, nobody is
+> reading from the lingering FIFO, and the test gets blocked forever.
+> 
+> Clean them up when the test finishes.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  t/t1400-update-ref.sh | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index db7f5444da..477af544bc 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -1610,6 +1610,7 @@ test_expect_success 'transaction cannot restart ongoing transaction' '
+>  '
+>  
+>  test_expect_success PIPE 'transaction flushes status updates' '
+> +	test_when_finished "rm -f in out" &&
+>  	mkfifo in out &&
+>  	(git update-ref --stdin <in >out &) &&
 
-I=E2=80=99ll investigate. It=E2=80=99s 99.99% chance a problem on my end=
-, created by me.
+I'd expect that such a test that tried to reuse the sockets would
+probably break quite obviously, but I guess you never really know. In
+any case, it doesn't hurt to clean up after the test.
 
-Sorry for the trouble!
+Thanks!
+
+Patrick
