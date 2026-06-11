@@ -1,258 +1,253 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94A1372B32
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 08:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781165815; cv=pass; b=YWjZFqu7G9zZg2Cu0f45JjC/vp7V7M4xSXQ9QjOslc1usJUfAT4h3jB3s0ERtDbKCPZc03ZxqXSh9BCyot6C6OrT3aRus0ottH92Y0+qmkYHhIzTaCV5iyVYBuzzO3vXXnV663H9/bxXWuv9tfDhyeznwWNFT/H3XS+bAPQezWg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781165815; c=relaxed/simple;
-	bh=97c1QF1IeIFA/XIuAOVNZJ9wA6rP0VPLLh7gsdQceY0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZQi5v8MfjPz0LS0/Tf28faxINJ4Lzcgb6yZy44xWF79ElO7XaYqTw1zX+JZNjS8WzKV77iuvnyDgcWuK2CmebouvGQ7seACHQ6bU8vbHyjpObZzlXBUxKeYg6aP6JPQqnB9ik2lOass7jvQfZ2gU78RzdHuYTOy6+5aKTjNMQm0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GT1XyeLV; arc=pass smtp.client-ip=209.85.222.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F8E377EAC
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 08:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781166167; cv=none; b=khtlyd2mMXFplaI9R+S+qiweO67aobuLMCUNjMxkeAjOZ7AbjPKbBmFvamdDyvWvajdO1RztrhQFysMzP+dL4l9mcLFd6jdy2EhrNqIBkXIrL9tM4HlscDBAJp9kky2B0CaNptR2QUUY8YRypH59WuydaJXMFzOYJn22QJ/u1bM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781166167; c=relaxed/simple;
+	bh=KHzHKomtSb1Jya4i2VZh+EKXoZQ3V3hfh98eDig96vI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nz2HYSWrjoPW9hDgaJVlbxGUuTAbVaVGZ3GXHMsgNKuUsUy16duUqxzqujKKSus6FjwNltK02rfzZIl6e26wyOuXzpBO+4auwexx/Y629q42jXGCiUScJi4Oc321KdQRUqpXgTMK+p5IWxOFUWZVrkwlDMy59HaNLFGYdCKzyso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Np0BDHNv; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GT1XyeLV"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-9638f7e9896so354931241.1
-        for <git@vger.kernel.org>; Thu, 11 Jun 2026 01:16:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781165813; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hMpWk35X/BzZw++qaVZ3J7gdE2eqroEp3H/HypkbT5P9tIqMtqITBy3ZWOmDHf3/Sf
-         YJPXMDYY+Tbd5IrG08E9jwiRaYFvCEoZ1LCq+mjLepBqzTLQCV6GgTNLVJ4PFXLYxYBR
-         d1+Z1n+xBl3J6/KzBuRI9rktYUnyfWQqHeyjizR2/+86Ippswz4/m0FYU7zN7XK1okE/
-         HPP3sHseBdUpYbK+ccykD54o2ZvQmILWmSAXvjDr6XSasKe/7D2PMcbLYJEa5EKlRDrP
-         IzlUQFqaLKAMUk8PEHED2pCXcfZKxo5VFWwH5ppA8cAP4XzNMEy03ANA6Vk+F6xKbH9i
-         Nv5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:dkim-signature;
-        bh=15N30mP5yI33NhAhinMOtYD+gsTpLBjecMk4/aCvLIs=;
-        fh=SVcJ57Ikenus8+D0dWnhvNUqzjuzEBu0D99c00gGeGU=;
-        b=ZVVj2FghVd8VWcI2bfqlwaFhM5WhhHajJKbKtaoNNEFW+290ja77eK1VquR1PscRRM
-         1wUt+OMioRWHc7ev/mrdN8bDZYFXpeXhncFcC9oSWZIaaNCTZUCFJ1aVd/9D2GZAuuzr
-         st6ul3ZB3YbJhWk7mekl1y8v9AXgF7DkmkcCw4lPAihByu9G2YwM0u3aOgOin97Zr9qD
-         AEa6vFE5MeFl63MfI2I3EIw2uu1HqcmpW27lZ3iHBy3Y5k92NMkkyZGnCZN3wPRZRrSY
-         eZq7TacK3mRgItHTp6w/DWbnc7uURrLp6eL58DT+wBvh4krdihpMR5+dPHVmElhWBZG4
-         bLmg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781165813; x=1781770613; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=15N30mP5yI33NhAhinMOtYD+gsTpLBjecMk4/aCvLIs=;
-        b=GT1XyeLVb8TpKK0lVzQDZ8BjEWmcVQbwbQ1qUXiuvb+Bjs6KVmlslYmLkYxG4gz9n+
-         9WsYZCXAbzy1e0FWOYRorRZU/kZvFsuPQTN3aO9/qaGO9ETklcvBUMAoE2+0cb/lXGRH
-         mzUa1Ecke/k474ulmH/D/S2bGw7cUNUmAPZiGJz9FAfit0E0JAaenBZsYx7x0FLbSVH3
-         f+xJqdq8n5uEDMmuP0w47Oot87PtusKn64C3OfTchC/9+OM15yl9P97AAnDdkIVW+Fig
-         tV2n4EMq0PITeye5zOW8v9naXF2MoR8Frn+VtTqZJUnqp5A318d1LKG79Q4IfDUg812G
-         uvjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781165813; x=1781770613;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=15N30mP5yI33NhAhinMOtYD+gsTpLBjecMk4/aCvLIs=;
-        b=N2HZKBQICia5+Hoza3Tn/qKW5eyPHx39FXdcU9QPiEpuzPSaAe2NbZ0zn6Gw/N+sKh
-         Bxyye820QWmHd04cSCI0P4CbD5CU7Ehuu77iCutmt9BLfWrBPgD4NW1xnuNY7YVkVBAR
-         JjKLEA/SGg76wXgRXzDecFs3NiK1bzFdCTShlDg4V2YEj+385MS69HLkDrwpNQy0rnp5
-         4THn8K5piUGunMwhpxgHNCWERT99VQIUd6HhKvj8umO2O4fIlWwJGnpDNNvDQrC/LjTh
-         DXRPr50Nv1e5068IrKau5zSidE6gd3dG3s8pfreYT1iY+8Dqo1GCHtPftB+zAcdwcRWE
-         GNNg==
-X-Gm-Message-State: AOJu0YwSqgLIrqH+athQUHdNT935w+T5qfIZWHrgZMMtiP73fUbDV8g2
-	btNpeI3noHH/IU17ppigUZh1Qp35+5gF9mjbk48u9KC4/sF6ECZNoTR59cNVgxDGiBbaRPymZoM
-	BhqnZJ2MFuhqiPtBkIsrWVEYxLFYJmcY=
-X-Gm-Gg: Acq92OHaMEguL5Ndjg5RwfdeqGggllK0IEar2T7MJPjKMOxHlmTrE869fGvyZGj1Tr4
-	h4vO4gPeFfCHZHEd877l5mr1fT7R4RkEuqpml9QxhOk2OR0dZaFyvbxEcFLnKz6Hja6Snk1iYsl
-	fZGbPKGDM18Wxklm//DcbNZxnqyqeHlN8ceUcEe+UyFp/OuijZEcd1vgJnSsUiyyfX5TEDvWCcb
-	ppS+UbUUd7/6b1WtIhjB9T75S2OgL3PkIMgJa5kqFRRFCDEpwcvEzR57u4g0/NJZqdQhkcjjr9e
-	GsfDf3CKmRjEDKoi2KKf8GCfihXeKTim3yy44u4xAIXlVp4ZVYGUhuF2QIaRCBYHkUelZgkxD0o
-	+vNoz4zy+MUQKdFy4R8k=
-X-Received: by 2002:a05:6102:442a:b0:634:6b98:c37 with SMTP id
- ada2fe7eead31-71d69bb28d7mr31332137.7.1781165812830; Thu, 11 Jun 2026
- 01:16:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 11 Jun 2026 03:16:52 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 11 Jun 2026 03:16:52 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAJ-ks9ku=-675naKESOJJxOo0b5BmoH7=76aKZXXmUHM+=ZV0w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Np0BDHNv"
+Received: (qmail 106851 invoked by uid 106); 11 Jun 2026 08:22:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KHzHKomtSb1Jya4i2VZh+EKXoZQ3V3hfh98eDig96vI=; b=Np0BDHNvOe4kW/LtCRFKzMHhwFnQTQ99gVezSC6Cle8lFeLWOY0qF5fnsSbRjn7wGks3XNAKwkfLD1XIkhWVHvqUO1r4rCWRWlUKtXWEEmxH9K8X1xldlQlsWXnNkjTB5Z9F9XUQRwo0zihc85GATru2t8hiygtml6+1vAdNFuKqF8VUO+7611naUt39BqOt6OGZVffBocabYr7Jo6ARedNHWZ7XCj+xh8FsDreTHihEyXiZxgSazeNXa02IUcCZgtPNxAgE1hB7oIFGAvB62wt9yTl/Cd63fj+2/RmrPVyGMn1qY2pDgfXpJjsLwTFyxf3dfxF5/4N54R+hnn6cRA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jun 2026 08:22:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 315013 invoked by uid 111); 11 Jun 2026 08:22:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jun 2026 04:22:49 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 11 Jun 2026 04:22:44 -0400
+From: Jeff King <peff@peff.net>
+To: Tamir Duberstein <tamird@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+	Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 2/2] ref-filter: memoize --contains with generations
+Message-ID: <20260611082244.GH2191159@coredump.intra.peff.net>
 References: <20260608-ref-filter-memoized-contains-v2-0-e72720344a7c@gmail.com>
  <20260608-ref-filter-memoized-contains-v2-2-e72720344a7c@gmail.com>
- <CAOLa=ZRFSuGrqFXhTuQ7Dk5GCQQGHom++78xwONoiNdt1h_gWQ@mail.gmail.com> <CAJ-ks9ku=-675naKESOJJxOo0b5BmoH7=76aKZXXmUHM+=ZV0w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 11 Jun 2026 03:16:52 -0500
-X-Gm-Features: AVVi8CfIDxzf-N0fkJ986h9H7T9uUm5rV56tzt1NOIz0Utx2iJingqHihvYaHGg
-Message-ID: <CAOLa=ZSezQOj56-TezVaAcisUyczxhJmu4VghyFBHcBB_mKJ2A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] ref-filter: memoize --contains with generations
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000008f6be80653f5fbf1"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260608-ref-filter-memoized-contains-v2-2-e72720344a7c@gmail.com>
 
---0000000000008f6be80653f5fbf1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jun 08, 2026 at 07:36:35PM -0700, Tamir Duberstein wrote:
 
-Tamir Duberstein <tamird@gmail.com> writes:
+> The wall-time standard deviations were 11.356 seconds and 133.8
+> milliseconds, respectively. Separate runs without redirection produced
+> the same output with SHA-256
+> 2466f6e2b72aa16b1a2126eddb81c8a1b2764ee251204ac034c191a925aa896f.
 
-> On Wed, Jun 10, 2026 at 4:47=E2=80=AFAM Karthik Nayak <karthik.188@gmail.=
-com> wrote:
->>
->> Tamir Duberstein <tamird@gmail.com> writes:
->>
->> > git branch and git for-each-ref call repo_is_descendant_of() for
->> > each candidate selected by --contains or --no-contains. Each call
->> > starts a new graph walk, so refs with shared history repeatedly
->> > traverse the same commits.
->> >
->> > ffc4b8012d (tag: speed up --contains calculation, 2011-06-11)
->> > introduced a depth-first walk for git tag that caches positive and
->> > negative answers across candidates. ee2bd06b0f (ref-filter: implement
->> > '--contains' option, 2015-07-07) preserved both implementations when
->> > ref-filter learned --contains.
->> >
->> > The memoized walk is not always faster. Without generation numbers,
->> > a negative check can walk to the root even when the breadth-first
->> > merge-base walk finds a nearby divergence. With generation numbers,
->> > the depth-first walk can stop below the oldest target while still
->> > reusing answers across candidates.
->> >
->> > Keep the existing memoized selection for git tag. Select it for other
->> > ref-filter callers when generation numbers are enabled, and retain
->> > the breadth-first walk otherwise.
->> >
->> > When generation numbers are unavailable, repo_is_descendant_of() can
->> > return -1 if ancestry cannot be read. The ref-filter Boolean interface
->> > treated that error as a match. Check it and exit instead. The memoized
->> > path already dies on the same parse failure, so both selected paths no=
-w
->> > fail rather than return a result.
->> >
->> > Add p1500 cases for up to 8,192 packed refs along one first-parent
->> > history and for sibling refs near the tip with generation numbers
->> > forced off.
->> >
->> > On a checkout with 62,174 remote-tracking refs and generation numbers
->> > enabled, I ran:
->> >
->> >     hyperfine --warmup 0 --runs 3 \
->> >         --command-name parent \
->> >         '"$parent" branch -r --contains c78ae85f3ce7e >/dev/null' \
->> >         --command-name this-commit \
->> >         '"$this" branch -r --contains c78ae85f3ce7e >/dev/null'
->> >
->> > The results were:
->> >
->> >              parent       this commit
->> >   elapsed    104.365 s     467.7 ms
->> >   user        93.702 s     220.2 ms
->> >   system       0.723 s     182.7 ms
->> >
->> > The wall-time standard deviations were 11.356 seconds and 133.8
->> > milliseconds, respectively. Separate runs without redirection produced
->> > the same output with SHA-256
->> > 2466f6e2b72aa16b1a2126eddb81c8a1b2764ee251204ac034c191a925aa896f.
->> >
->> > Both revisions were built with the default -O2 flags using Apple
->> > clang 21.0.0 on macOS 26.5. The machine was a MacBook Pro (Mac16,6)
->> > with a 16-core Apple M4 Max (12 performance and four efficiency
->> > cores) and 128 GB RAM.
->> >
->> > Link: https://lore.kernel.org/git/1445163904-24611-1-git-send-email-Ka=
-rthik.188@gmail.com/
->> > Link: https://lore.kernel.org/r/20230324191009.GA536967@coredump.intra=
-.peff.net
->> > Link: https://lore.kernel.org/git/20260527070510.3510836-1-krka@spotif=
-y.com/
->> > Link: https://lore.kernel.org/r/20260608223430.GA340696@coredump.intra=
-.peff.net
->> > Suggested-by: Jeff King <peff@peff.net>
->> > Signed-off-by: Tamir Duberstein <tamird@gmail.com>
->> > ---
->> >  commit-reach.c                 | 13 +++++++++--
->> >  commit-reach.h                 |  7 ++++++
->> >  t/perf/p1500-graph-walks.sh    | 49 +++++++++++++++++++++++++++++++++=
-++++++++-
->> >  t/t6301-for-each-ref-errors.sh | 22 +++++++++++++++++++
->> >  4 files changed, 88 insertions(+), 3 deletions(-)
->> >
->> > diff --git a/commit-reach.c b/commit-reach.c
->> > index 65b618959b..83a48004ef 100644
->> > --- a/commit-reach.c
->> > +++ b/commit-reach.c
->> > @@ -821,9 +821,18 @@ static enum contains_result contains_tag_algo(str=
-uct commit *candidate,
->> >  int commit_contains(struct ref_filter *filter, struct commit *commit,
->> >                   struct commit_list *list, struct contains_cache *cac=
-he)
->> >  {
->> > -     if (filter->with_commit_tag_algo)
->> > +     int result;
->> > +
->> > +     if (!list)
->> > +             return 1;
->> > +     if (filter->with_commit_tag_algo ||
->> > +         generation_numbers_enabled(the_repository))
->>
->> What's stopping us from dropping `filter->with_commit_tag_algo`
->> completely and then doing?
->>
->>   if (generation_numbers_enabled(the_repository))
->>      return contains_algo(commit, list, cache) =3D=3D CONTAINS_YES;
->>   return repo_is_descendant_of(the_repository, commit, list);
->
-> Jeff raised this distinction during the v1 review:
->
-> https://lore.kernel.org/r/20260608223430.GA340696@coredump.intra.peff.net=
-/
->
-> `with_commit_tag_algo` preserves the existing behavior of `git tag` when
-> generation numbers are unavailable. `git tag --contains` has used the
-> memoized walk since ffc4b8012d (tag: speed up --contains calculation,
-> 2011-06-11). Dropping the flag would send it back through repeated
-> `repo_is_descendant_of()` walks in repositories without usable generation
-> numbers.
->
+Heh. Without the original repo, this sha256 hash is meaningless to us,
+isn't it? Ditto for the sha1 the earlier command.
 
-I did read that, my question is on top of that. Do we also want to use
-the non-memoized walk for 'git tag' when there are no generation numbers
-available or does that not work? If not, we should mention that too in
-the commit message.
+>  int commit_contains(struct ref_filter *filter, struct commit *commit,
+>  		    struct commit_list *list, struct contains_cache *cache)
+>  {
+> -	if (filter->with_commit_tag_algo)
+> +	int result;
+> +
+> +	if (!list)
+> +		return 1;
+> +	if (filter->with_commit_tag_algo ||
+> +	    generation_numbers_enabled(the_repository))
+>  		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
+> -	return repo_is_descendant_of(the_repository, commit, list);
+> +
+> +	result = repo_is_descendant_of(the_repository, commit, list);
+> +	if (result < 0)
+> +		exit(128);
+> +	return result;
 
-> The condition in v2 implements the rule discussed there: retain the
-> existing memoized path for `git tag`, and use it for other ref-filter
-> callers when generation numbers make the depth-first walk reliably
-> advantageous.
->
-> This is probably my fault for breaking the threading between this and
-> v1. Sorry about that.
+There's a little more going on here than I expected from the commit
+message. Is it important for us to short-circuit the empty list and just
+return 1? Or did the existing helper functions already handle that?
 
---0000000000008f6be80653f5fbf1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 895c317c50ff9e6e_0.1
+Looking at contains_tag_algo(), I think it would actually return
+CONTAINS_NO here (though I didn't test it). So this is actually a change
+in behavior for "git tag" if that's correct. I doubt it is triggerable
+in practice, though, as we would simply never call commit_contains() in
+the first place with an empty list. But if we are going to add in this
+logic, I think it makes sense to do so as a separate commit (describing
+what it is doing and why it's not (yet) a triggerable bug).
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vcWJ1OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0FPQy85WVpCc0IvZXcyalBxbGpxeERPd1FtYnM0ZQpTZUpOaGZmMEtJ
-NVl1UUUrdW1NN1RDMkRZSUpVM1lCeGxuSFFBM0N2bGN6WVYwNDREVWdpbjBBQzZ1aVp1cm1vCmNP
-Lzg1OWt6dlBYN3l3TXdkSUFIMTQxaFVSM1E4NFV6N2FlQ1UxYndHQ1JKOE5OL2lTU1huYlRnYUox
-cVdYSTMKNXUrVCtUR29iOGJmTXArY2ZyYnB0LzZvOVAxckRpMHQ4ZWF2dmVVb2RBMTU5eDN5ZTlw
-WkV1MGY5MlVXeHB2UApNMm1UZktQd2pFanRWY1RkMmlFdE5rbmd1azNNeWlVem1TZ0pRUlc1UDhL
-L25QbVcxLzhBOTN0N3E4TnFOdTJ5ClZ2by9FNngvYTJpMnJ6REQ0TUg1d2ZxREJWalY1c3pxVXZl
-T0MvUjd5N3lVdTdYbzFpOHpTTS90aFpEcTBhcmsKVThVYUJwb041VlY1UW5ha203MzRZdFJmY0d5
-K3Q1RVpsMFJPeWwzbHFnVEpuS0NrUkdnd1hOUG9WdnI4TmhnagpHT3JZRHdOOCtVd3ovWFpCY2lQ
-Yk5TTUpPZHFra3RWbmJiZHF0ay9qc2FNelB6MWRPWVlhMTNFMlcySy9pS2lhClNOaU5YU1crd3Vi
-R0N4b2U2UFZaSlZFL25jdFNIZ1FMQ0dFSEVZdz0KPUtOYmcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008f6be80653f5fbf1--
+Checking the result of repo_is_descendant_of() makes sense, as discussed
+earlier. But probably that should come as its own patch, since it's an
+independent bug-fix. I'm also tempted to say it should call die()
+instead of a direct exit, though it does look like the error exit paths
+from repo_is_descendant_of() would all have produced their own messages.
+
+
+And one side note. While looking at the implementation of
+repo_is_descendant_of(), I did notice something curious: it also
+switches algorithms based on the presence of generation numbers! So it
+should also be cutting off the traversal early when possible. But I
+guess its main problem is that we call it independently for each
+candidate, so it may traverse the same (useful) stretch of history
+multiple times.
+
+So probably an alternative approach to this patch would be feeding all
+of the candidates at once, the way we do with reach_filter() via
+filter_refs(). I'm not sure if we have the right functions available for
+that (naively, --contains and --merged are inversions of each other, so
+swapping the arguments to tips_reachable_from_bases() might work, but I
+didn't think very hard on it).
+
+I wonder if that might perform better or worse. I'm content to leave it
+for another day, though, as switching to the memoizing depth-first algo
+here is a pretty easy change.
+
+> -	commit=$(git commit-tree $(git rev-parse HEAD^{tree})) &&
+> +	git rev-list --first-parent --max-count=8192 HEAD >contains-commits &&
+> +	test_file_not_empty contains-commits &&
+> +	git update-ref refs/contains-perf-base "$(tail -n 1 contains-commits)" &&
+> +	awk "{
+> +		printf \"update refs/contains-perf/%04d %s\\n\", NR, \$1
+> +	}" contains-commits |
+> +		git update-ref --stdin &&
+> +	git pack-refs --include "refs/contains-perf/*" &&
+
+My head almost exploded reading the embedded quoting in that awk
+invocation. But I can't think offhand of a better way to do it. You
+can't use test_seq because it needs both the number and the original
+string. You can do it with sed, but it probably ends up even more
+unreadable.
+
+But OK, we are making a bunch of refs based on first-parent history.
+
+> +	tree=$(git rev-parse HEAD^{tree}) &&
+> +	base=$(git rev-parse HEAD) &&
+> +	target=$(echo target | git commit-tree "$tree" -p "$base") &&
+> +	git update-ref refs/contains-diverged/target "$target" &&
+> +	for i in $(test_seq 1 4)
+> +	do
+> +		commit=$(echo candidate-$i |
+> +			git commit-tree "$tree" -p "$base") &&
+> +		git update-ref refs/contains-diverged/candidate-$i "$commit" ||
+> +		return 1
+> +	done &&
+
+And then a few candidate refs that are not reachable from other refs, or
+from each other. OK.
+
+I think you could just write:
+
+  git commit-tree HEAD^{tree} -p HEAD
+
+instead of doing separate rev-parses, but it's probably not a big deal
+either way.
+
+> +test_expect_success 'verify contains results' '
+> +	git for-each-ref --contains=refs/contains-perf-base \
+> +		refs/contains-perf/ >actual &&
+> +	test_line_count = $(wc -l <contains-commits) actual &&
+> +
+> +	echo refs/contains-diverged/target >expect &&
+> +	GIT_TEST_COMMIT_GRAPH=0 \
+> +		git -c core.commitGraph=false for-each-ref \
+> +			--format="%(refname)" \
+> +			--contains=refs/contains-diverged/target \
+> +			refs/contains-diverged/ >actual &&
+> +	test_cmp expect actual
+> +'
+
+This is a funny test to have in the middle of a perf script (which
+hardly anybody ever runs). If we are concerned about the correctness,
+should this be in a non-perf test script? Though I'd imagine something
+like it is already covered there.
+
+There's a lot of subtlety in what we're verifying, too. In the first
+half, we are checking that all of the commits in contains-perf contain
+the base.  And that base is the final element of the contains-commits
+list. Which made me wonder what happens in a branch history, since that
+list is linearized. But because we used --first-parent to generate it,
+it _is_ linear, and the results work out. So OK, I don't think it's
+wrong, but I am struggling to understand the meaning of the test.
+
+The second half is just checking that...the other refs which are not
+contained in "target" are not mentioned? OK, but why do it only with
+commit graphs off. Why not both off and on? Again, I'm not sure I
+understand what we're trying to focus on here.
+
+> +test_perf 'contains: git for-each-ref --contains' '
+> +	git for-each-ref --contains=refs/contains-perf-base \
+> +		refs/contains-perf/ >/dev/null
+> +'
+
+Yay, actual perf tests. Here we have a ton of matches, and they all walk
+over the same chunk of history. Should get much faster, though it's
+mostly a synthetic test.
+
+For --merged, we already have separate tests with each of for-each-ref,
+branch, and tag. Should we have the same here for --contains? And should
+we be using the input repo data, rather than our synthetic test? It is
+nice to show off the performance with the synthetic test, but ultimately
+the point of the perf suite is feeding it real workloads and looking for
+regressions.
+
+> +test_perf 'contains without generations: divergent refs' '
+> +	GIT_TEST_COMMIT_GRAPH=0 \
+> +		git -c core.commitGraph=false for-each-ref \
+> +			--contains=refs/contains-diverged/target \
+> +			refs/contains-diverged/ >/dev/null
+> +'
+
+OK, and this one should find that most of them are not contained, but
+the depth-first algorithm could walk all the way down to the roots. But
+we don't run it at all, since we disable commit graphs!
+
+So what are we trying to measure here? If it left commit graphs enabled,
+I think we could demonstrate that using the depth-first algorithm with
+generation numbers does not make anything _worse_. I.e., that
+for-each-ref and branch did not regress from the change.
+
+> +test_expect_success 'missing ancestors are reported by contains filters' '
+> +	test_when_finished "git update-ref -d refs/heads/missing-parent" &&
+> +	{
+> +		echo "tree $(git rev-parse HEAD^{tree})" &&
+> +		echo "parent $MISSING" &&
+> +		git cat-file commit HEAD |
+> +			sed -n -e "/^author /p" -e "/^committer /p" &&
+> +		echo &&
+> +		echo "missing parent"
+> +	} >commit &&
+> +	broken=$(git hash-object -t commit -w commit) &&
+> +	git update-ref refs/heads/missing-parent "$broken" &&
+> +	for option in --contains --no-contains
+> +	do
+> +		test_must_fail git for-each-ref "$option=HEAD" \
+> +			refs/heads/missing-parent >out 2>err &&
+> +		test_must_be_empty out &&
+> +		test_grep "parse commit $MISSING" err ||
+> +		return 1
+> +	done
+> +'
+
+This is a great thing to test, but probably should be pulled out into
+a separate patch along with the fix to check the return code.
+
+The commit construction looks OK, and is nicer than corrupting the
+repository by deleting a real object. Given that we are pulling the
+idents from an existing commit, it might be simpler to just use the
+whole commit as a template, like:
+
+  git cat-file commit HEAD |
+  sed "s/^parent /parent $MISSING/"
+
+but it may be a matter of taste.
+
+-Peff
