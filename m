@@ -1,142 +1,132 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5427A38331F
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 15:47:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E672E7F39
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 15:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781192857; cv=none; b=AtCxpS4iDAWvurqcbbqxQR6MUNK0uwiNpGWoKrrVm08nVIbHCHBjVJpgsTJREIMG9hlUuXW1SL2p/zlAEUXOFKe08w7VV2oaVo5thresHVtBiFf+MBljucH4cyOItM4AYdAJDo5nJxIlzetq6xEMw9KZcyTDY/5Iyq47KqrldJs=
+	t=1781192909; cv=none; b=gAJ6xOYiTHE7V3h016wK5lZqfwjrr9DVaw1TWs9NRMBhncv3GwYic0J+tQAbTg4K1rMUNFUxf9S0kRqvcAF2R9VucCm31AGUmcuVlJlCqUlY0v62nJDVsbqNIEN0HW0Wu72Vpwdma7cU6gx8KdUfH6zSj+oscsP7rhNJ5WSmkzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781192857; c=relaxed/simple;
-	bh=D3acoOz4Xb1b8nWalIboJLirAZUiF3DEE57NdSf9GNE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S0E3JnwOSFdhKgp9JnhLyqBmVy6yfWSX56pvVxi+pkvyO22IjLMqfC1tFU1NdqvuPhav9rfwCntea3ndZkk0KG1xDNMGTTlLibHpXMzDX8mSS2brqDBWSFjKlcqi3YnZ6117yqJKGOPAd72sF1hXNLuNgv4nw97tKLbq3CzOJxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YxQuaiXc; arc=none smtp.client-ip=209.85.167.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781192909; c=relaxed/simple;
+	bh=p4ygP9B7xB/FkZJd1+SlSxP3dy6vr1teM/z3orP3YRM=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TzPV0/slHXzg/q6HlLhrZyhDVeJF7tmsu1EIOy1v6FEsPxjRRBlo/mvU+120L4BYj4WD0McV4/1+BtDbVuIKmj3SzzpUZXHqnYJlIe8AY3YXgW0sypGSlf0kuQ/+M/5cb2fl7p5xlWpja+lFklUhyVAnjPEVvS446N6F09sZogM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y2DEvzKr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UtdcCoyt; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxQuaiXc"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-48633190849so21705b6e.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2026 08:47:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781192853; x=1781797653; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lffsHXTMGeJEwCURsW/zP/xL/saqmoU6WxGU91NdZck=;
-        b=YxQuaiXcvhoh1gFxlc/9+fiqqSuCgpQgJnfbApESFyjVzaedXG8myTb5zo2hioKpQg
-         jos4G1UYyzPVZfEOruI13Zt2av2jGazCRFVNpVtZwttlNumSGkDuLTZHaqjSxMj56vsD
-         jTNM7+tWhbYVXq2WS5Pv+KEdK0VrbfoSZjsX02PfArJgF4lDZ6n0L8xKwZrM7BCqK38J
-         RmQcg7DJ85XK9Iu1RR5BPcmw8suEfpl/+TKsNLA2XU6f0XILlsHJltm6ZMu27JXwk+7W
-         mfPH+xla4v0G5Ff1+m9bIeRoTVIUdwAljyPOI33qKPsAIxzWpbeQiIe5V2+4QXz7IYaa
-         hTXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781192853; x=1781797653;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lffsHXTMGeJEwCURsW/zP/xL/saqmoU6WxGU91NdZck=;
-        b=p2zzZdhZcvjuYaNoUlNSPofr4KoQerjLayKAVxa6niw2DMHLWL2zXZFKCjDQ8UP0v/
-         AJh1usjVglT53WgFKMaksZhOYlfAbOJhvqWa2RsgkYMWDCgaDMSlyIDw2DVylQrNVbUS
-         5Azns8It463zl/WDwi/FAEnSg500EhQoflfPfzlBvkCx3ga6SmCeziEr4uwn+MyGL2WQ
-         xYOZWEFF3mAdz9nVtZOkawFsMNy0xoi4zCUHt6cpdR0f9VewsiegMLi/N7Bb+KOR5xvV
-         1yE12mviDII0EHQeHtqS3QW8EwJoNADEptQL+7QS1m92z4G01O3o/9OF3qarwrIoZsqL
-         6GOQ==
-X-Gm-Message-State: AOJu0YzAgWQOJSZCtLKeRHpI6mciDpkqLNYZZZZip35LyATkcN/PUSAI
-	UHpXA79N31cuYQU61G5H5mtkq+S4n5g3iSWee6Gq9Qi7/En1obouQR2T99P+Cw==
-X-Gm-Gg: Acq92OHzdEF2cweaqioHjZkadwWRIUzMm+UdijOjnEqWyYwdNAvRayzHbNB9PMornfn
-	tD2KWtVIynWBClpoh5sBNvTIehPayIlrBBz4ADlW5NBtxInSqo3zg7BvxTgz00tdva1YHJw7nRz
-	AFoYDSC+cvKGMjBijiMOTQ1ah0a0fOwIwPOEM+htklW53dmldm/yGvJZCHnE8KkCczFQV3kTQt9
-	yiWJ1SrpjeTvPyxUb4O9a+ZIPhvV41pH6Y8Sw0r4fedV1uc0aQywMHHNVf6PNZrFkuPPyfYkuKj
-	NGad4vKO6nMWhNpmKZWOh+N0Hi1f/WQq2Nb+OxeNwHb0KJkV0Wg0rMqU56OGEwFTqXCjlqlS+8z
-	k+Y0avR0r2x0k1bM9udFZnl0/UGA8EfYSonrwdJh1Eq2rOh6qNcynISuWol82TOfZpH1I12gjhI
-	k4wdziRdvEVTGLXpatoRt6AlT/rf4=
-X-Received: by 2002:a05:6820:1907:b0:69e:ba66:4e11 with SMTP id 006d021491bc7-69ecb08102amr2270198eaf.56.1781192852904;
-        Thu, 11 Jun 2026 08:47:32 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69ecb111c49sm1189945eaf.0.2026.06.11.08.47.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 08:47:32 -0700 (PDT)
-Date: Thu, 11 Jun 2026 10:47:29 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] setup: drop global state
-Message-ID: <airVOrTboNDDGBak@denethor>
-References: <20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im>
- <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y2DEvzKr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UtdcCoyt"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E1D1DEC010A;
+	Thu, 11 Jun 2026 11:48:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 11:48:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781192906; x=1781279306; bh=Bk504lQTKn
+	/Cd6SYNZ+qTFuQT3u/8VTIJGiGWdguVg0=; b=Y2DEvzKrYf9Iz9CAPKCBmzzz2b
+	EwTl8kUQW//vFsz99hfcAFdc3cE+svpq9QFKcrefFa/SqQE5kr3JGUzrCp79Hu7z
+	MuHYB+dYTfJ8joLaLV4kayON3JMn+G8Al3/7Z3dkUKwfTG/f8DrPkWRZWpsrqixA
+	ttYVYGztGAQ33xxJOAYQCqrFFPvzRO9oQbIvMGss5VcqtzdIP7wK/68EP4E2FT4X
+	sypycouAkrD4xe63Jnfw8abI895fgU3GfXy9Us3yT2A7n7/Okd6lcV7yffKMrUsN
+	LCK5G8CixeGf5pW73QnUKRcZsAVAo1Liag2GXpf/juZyVUwwFDpiCL8wcnPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781192906; x=1781279306; bh=Bk504lQTKn/Cd6SYNZ+qTFuQT3u/8VTIJGi
+	GWdguVg0=; b=UtdcCoytIVJT8mUltPk1wxCQ2naCAmmY3yIJ7wsCXJRnjXdQGCS
+	Ep+A7RW/zdXb6zAY/uXANgjDzivEPq7xQHAdcchotgbVbKZASGoUuxQnvQtoo3NT
+	c7xpigyj/n6VfJRVKPp6dp4e3GxDaMgyX0626IXpYZczQRU160w0T/MaOgc+rkwk
+	jKpNdHi5pteveRi5hXSeozK/IpkGihJlWMnlz58805NCoQJTNMQQl4C+cJiNWrXC
+	tP+tXCsrSifSSxMskYGq2zrdpIUbgca5uuGBFMqHlFVNIFzMwhkLjTj3IWnSad6f
+	wpJgL1iglZZic0hg4T5wIKFVwqnV90Dt5tA==
+X-ME-Sender: <xms:ytgqapc3b2OsHHyx7rt4PYZDdYoEDyDrrdTT2pwLDCA_wpeFbzvKKA>
+    <xme:ytgqatP0E0ybjxzzf-Ps_81pCbEpAkPmILKJecKJ-8OBOBTgYJ1J3kKUQxpEIFKji
+    xNEUnf4TKLDPdf1-EKm5kdWKhN2PT0_GYUIwj6Na-vGjHILs6F5Lg>
+X-ME-Received: <xmr:ytgqagLGQTMiuzsvjmzljM4Ar13JH9pzf3qu0XKqO89lv_rkF1tuE6nYSLZUIhhbz4i4MJI7hGJtS7YFFwYzm1nwS10dSJTORsa0>
+X-ME-Proxy-Cause: dmFkZTEqh35bwvR3aRbp+PLYUNLOpOJfvY+isaeJLrte8NnMAl7muDkhe2N/+r9TuSVdGV
+    XjcTkBXopaMjQSa6tWuJM0ydIS6u71xbtR0HOD4VcXfpj1GAfFtsgXrFuiheyROkES3cUb
+    fIbi6TAJKe9bcrIxxC2y9Yb4wGS8qIyxmu2WtEUOXGhFXDflCvLk+6PKvzFB+Fl9qYUxiQ
+    tz5sqeFWNciWSzx2yLlpgH/lBzBbhp0gJl1m79LzHqNEgWJ5GmQktgNLqgdh2qxj9iYANp
+    fN2Xk0G4NLgB0q3rMG88O5zQGPUxhkJE1umObgz0xbZyFB/GR5wKcCDCi2f9azwrkmh/rJ
+    HHoxROmgZb+64ndoLMbruul3oUAfwwqjBeKhvjklEDE3xrDypsSN7z2ICSqYn9CoxoYDn4
+    7KtbLA/jL2fb7BsJA1sFO1UU/mlWA1zzGFQSOlkzeXdNmU7k0YVeSEjfsfDLOWs+APBsRS
+    nHCpEzbn4r9mSPC8ulaeMKxe8HffQwhqUB4AWxKCLCjXva3k1JT6e2U3+hIT6KIRUr6qDh
+    GndSJwtrRMINne8XGv3SbCGVj8gQRAcudG02zp5vUvT/1FmYCEU27YaEzzplZm3fLoUogE
+    RrqyYMb2DYr/mua2P6JO08I6nLuGhu7ABCL2qx85ShwwhffCQtLRWVxJh/SA
+X-ME-Proxy: <xmx:ytgqauFjmVjZL1k6RfEZbtUgeiwLORZ-vseqA_sSogy3A2I9HG5zUA>
+    <xmx:ytgqaoQqPqR7qcYckgf8A49oKilsAKb0h5T0O-9Pq5_I3mjSZYMInw>
+    <xmx:ytgqaqGd8g9XGJ7bciz85oeoKixYUbJn6hkdRJkrTHmp2A-CARtGkQ>
+    <xmx:ytgqak927I1a8ifXVIAk7OYUAm2b1z3xFL4TH-higiz0EBtwKlRgOg>
+    <xmx:ytgqak3dgg5T26DExawC0nC7uMRxuwZUTlasFfEuX8jqIkSToYElaFfX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Jun 2026 11:48:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: Shipping 2.55 with stricter "neuter sideband" topic
+In-Reply-To: <20260305233452.3727126-8-gitster@pobox.com> (Junio C. Hamano's
+	message of "Thu, 5 Mar 2026 15:34:52 -0800")
+References: <pull.1853.v4.git.1770113882.gitgitgadget@gmail.com>
+	<20260305233452.3727126-1-gitster@pobox.com>
+	<20260305233452.3727126-8-gitster@pobox.com>
+Date: Thu, 11 Jun 2026 08:48:25 -0700
+Message-ID: <xmqqzf11oz7a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
+Content-Type: text/plain
 
-On 26/06/11 08:44AM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series continues to refactor "setup.c", where the focus is to
-> drop remaining global state that we have in "setup.c". The most
-> important consequence of this is that we don't need to rely on
-> `the_repository` in `is_bare_repository()` anymore.
-> 
-> This series is built on top of 1ff279f340 (The 13th batch, 2026-06-09)
-> with ps/setup-centralize-odb-creation at 42b9d3dc9d (setup: construct
-> object database in `apply_repository_format()`, 2026-06-04) merged into
-> it.
-> 
-> Changes in v2:
->   - Improve documentation for some aspects of `check_repository_format_gently()`.
->   - Link to v1: https://patch.msgid.link/20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im
-> 
-> Thanks!
-> 
-> Patrick
-> 
+Junio C Hamano <gitster@pobox.com> writes:
+
+Was: Re: [PATCH v5 7/7] sideband: delay sanitizing by default to Git v3.0
+
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The sideband sanitization patches allow ANSI color sequences through
+> by default, preserving compatibility with pre-receive hooks that
+> provide colored output during `git push`.
+>
+> Even so, there is concern that changing any default behavior in a
+> minor release may have unforeseen consequences. To accommodate this,
+> defer the secure-by-default behavior to Git v3.0, where breaking
+> changes are expected.
+>
+> This gives users and tooling time to prepare, while committing to
+> address CVE-2024-52005 in Git v3.0.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> [jc: adjusted for the removal of 'default' value]
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
-[snip]
-> Range-diff versus v1:
-> 
-> 1:  0281a4bca9 = 1:  96b71f5223 builtin/init: stop modifying global `git_work_tree_cfg` variable
-> 2:  6fdc8d77e8 = 2:  a51c0ff79d builtin/init: simplify logic to configure worktree
-> 3:  ce31595ff5 ! 3:  e06393ddc5 setup: remove global `git_work_tree_cfg` variable
->     @@ Commit message
->          Refactor the code so that we instead use the worktree configuration as
->          discovered via the repository format. Drop the global variable.
->      
->     +    Note that in `check_repository_format_gently()` we now have to free the
->     +    candidate work tree variable. This change is required to retain previous
->     +    semantics: before we essentially had an implicit `else` branch where we
->     +    set `git_work_tree_cfg = NULL`, but we were able to elide that branch
->     +    because we already knew that it would be `NULL` anyway. Now that we use
->     +    the candidate work tree directly to populate the repository's work tree
->     +    though we have to clear it to retain those semantics.
+>  Documentation/config/sideband.adoc  | 12 ++++++++++--
+>  sideband.c                          |  6 +++++-
+>  t/t5409-colorize-remote-messages.sh | 18 +++++++++++++-----
+>  3 files changed, 28 insertions(+), 8 deletions(-)
 
-I find the additional explaination here quite helpful. Thanks.
+As some of you may have noticed, Dscho's "be more strict about
+control code sequences used in sideband output and pass only the
+ANSI color sequences by default" series originally had this "but
+until Git 3.0, be loose as before" as the last step.  I kept this
+step outside 'next' while the remainder graduated to 'master' for
+upcoming v2.55.0, hoping that it would give us a chance to measure
+how this limiting negatively affects real-world users.
 
->          Signed-off-by: Patrick Steinhardt <ps@pks.im>
->      
->       ## setup.c ##
-> 4:  6a69dc853c = 4:  628ed54c8c builtin/init: stop modifying `is_bare_repository_cfg`
-> 5:  afa2d8bbda ! 5:  02ceaf4a20 environment: split up concerns of `is_bare_repository_cfg`
->     @@ setup.c: static int check_repository_format_gently(const char *gitdir,
->      +		 * dictate bareness; it is inherited from the main worktree.
->      +		 */
->      +		candidate->is_bare = -1;
->     ++
->     ++		/*
->     ++		 * Furthermore, "core.worktree" is supposed to be ignored when
->     ++		 * we have a commondir configured, unless it comes from the
->     ++		 * per-worktree configuration.
->     ++		 */
->       		FREE_AND_NULL(candidate->work_tree);
+The merge of the stricter version happend about a month ago at
+7760f83b (Merge branch 'jc/neuter-sideband-fixup', 2026-05-11).
+Luckily, it seems that we haven't heard any complaints after it
+happened.
 
-Ok, so when we have a commondir set we need to clear
-`candidate->work_tree` since we need to ignore core.worktree
-configuration in such cases. Makes sense.
+So I plan to hold this step back indefinitely (aka "retract this
+step"), which means that the "neuter sideband" topic will ship
+in its stricter form in Git 2.55.
 
-The changes in this version of the series looks good to me.
-
--Justin
+Thoughts?
