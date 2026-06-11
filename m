@@ -1,82 +1,82 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7113B2AA
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 16:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DD340BCD2
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 16:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781196396; cv=none; b=cJF74Koy6eVoH0uEErfZUFGgs8mn40g14L98hS9mz8d3j4lR053CBpnAsXlCxcRzpcJyhs/oUmZpUzJOypTYNhnyNR3+RWyMlmlHTrCUB9sgXDQCKudinZ/gVVi3vIP+EA5xnuRplcOLrxc1VM1o+pp4hvvxAmaKP5LjxwSjlbw=
+	t=1781196754; cv=none; b=nKpHCHFMei+idvbAeGyWdVSVgS9Wa0ZFVh/5tGnKozuj/DEbTQvCnhpccaFXuVHmcnBfxbdNFaJJU0gBZR0cHU9SNWAqpwfN0JD+j8z5gN+0DJ9LsoEj9+TLpPRYHDLJGNeFmDczIPydHEUs2l4YYHpwukGNbnUv3Cr82QIIxr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781196396; c=relaxed/simple;
-	bh=4LhrRR1+vYlaFUvvjmDHmgWrSY9TUHQ7qx6BGl7N/bs=;
+	s=arc-20240116; t=1781196754; c=relaxed/simple;
+	bh=I97BhSUfj1QwCdqOOEQSTxTzD2O0yX8B4jUCQXae3Z8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B+07I6Nx8Zr3vJZj27AzgN4gNh99tLvXudz/9Y4ccFmKXmSqSqDYvi6g3fUdDVBQK3kASBtAjoB+TEqJnv1JIe1+ZeSUGbB6T8jreQhCMaXowx0CB7zKYevTzd7ge9iTFXlr2bQCpJiV3qgPwQ7zONzFuMGCNQX25Q6r3v2ftzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ps7z6BYf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TACammOZ; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=SiafuQr3MM4I6PLhcmBrOW4woAmycwVJf00R6z8j84uZdqufj2eHeX9ssQOYgwZdrOpigkMdRBzPsOJGf0PQ30Djxuz58bQ8LFKAELz/oWgUBgr2IWZ0HhSLPeKcXNtYu4cGyZPd2eRz9qqy9D+6ItRLTB8VJYZgL95gcm47Kv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QrmPaxhC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gsvvnQxL; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ps7z6BYf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TACammOZ"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5299F1400106;
-	Thu, 11 Jun 2026 12:46:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QrmPaxhC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gsvvnQxL"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 551D214000D4;
+	Thu, 11 Jun 2026 12:52:32 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Thu, 11 Jun 2026 12:46:34 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 11 Jun 2026 12:52:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781196394; x=1781282794; bh=A+aMGPcLhv
-	KUqQO29BqwLuD5vPr83pSsa6+NCS5OUC8=; b=Ps7z6BYfZmF24NV4Nwsyf9kA9u
-	eEg8+rOP+PCu9iTgspytjW4BvhuA2Z6onOVjY4j8U/fcXgS8kzTC/AuukgEnEmFo
-	Tl+1Pj9h03RsJTYQKfeWZ+SnRMHEnKRjcfom6l0GLATQ4MaeYfv0V7ckMasn7fRc
-	lotD/FYyEvmm3QOBRcykI9oCmMxgGeXFmApFBZIpF4JaU4wm9rdAUAsAqS77sH2v
-	/VJaEHE9cuncRFrVH52PZFaLFUL0vp6znUlibLzcTIVFh2r4A/UpJ3VdPKGErrCx
-	CipNIg9XBP4eKUzzZCnZA2HTB2maCPt+usDKz8J4eaICbr4B0cwobUyJHGLA==
+	:subject:to:to; s=fm3; t=1781196752; x=1781283152; bh=LfenCdKaPn
+	1EVFGiOkc7mwn6KdMMd3h4m99QsoQfpzU=; b=QrmPaxhC3WThybD3vSMl231TTR
+	1yBNxid4fdF+cTkIL6RS0J17foD5HvBfHtYwxoWO8HBv2W1HBhlFKeL5cEqW22Rt
+	tikKgIJpK3OoRbWCJJ8ZVvEb7YMr+wsEos5oYwlzJuCWOKbIPrRVDC1QrO4BoUy5
+	IsqJP6zWlmygbGR1Zx6bvbrnWFEsqMkPqJdkIG14+Y1RCo8ZsS+VSdvlRm9lfrPT
+	CPJtNQ2szNVoKHSrB+pwZxGM/jFvAa3z4IFgu8a/PXjE8WXxbmkLNbuAuUkQ/B5J
+	ZQth/XzuiE6xUfpYS9Jy3Y45+gjWgqeDHOkgFflk5oXuSiVfx/eJiXpGDC7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781196394; x=1781282794; bh=A+aMGPcLhvKUqQO29BqwLuD5vPr83pSsa6+
-	NCS5OUC8=; b=TACammOZtNOCavn2sIIgL6EvOh1/4fo4waUAnxbfZTvVDqAKv+G
-	GHo31E548Z5P8N8Y4S9ryFUFzjmVPceisxS/eQa5UMEhaSlR/1dWa5JlXNSsF01m
-	t37/Re8huJmZkXFkWNnWYuStEhpnQdY/SAIUVF4BqablNHItB5nfE1fuKO3fbpAW
-	Ox9kgEerUO29qJmIL8Dm8sG2womyeYhjktdremo2qITHzH0Khc7JLW5ovgXwOF8O
-	i/rkd4d37PEIM1uRyuz7TMM7NSZa7SDEyP6gSdN3SvpQfrQ8XDc4zZhOXnhFcX1p
-	IsUGADp2xSsBUN5pwRN/xWDqGjLe0yU2XsA==
-X-ME-Sender: <xms:auYqauzNREaq1tXKKNH__MHaTtvyJSHBLExH7b6MGLg81S5J6pB1Pg>
-    <xme:auYqahR2DJ1dTUut7TbSSeF2SPkcDzuwX41Wj_9s0MLiG8FyDoJgRKC0KobkDCBmb
-    1nCyRi75FbtXQSaH8bMDFEo6SUQ2oG6NYwEhsNgf_lN6ejbTo0-ug>
-X-ME-Received: <xmr:auYqalVMvrDqn8mJk-rCTgI-El0BKuDm2UwbNIo_VymglC1NvaDtdPG-qP192c2TRM8L5DvPip40aU_jkglz2pOCiAhsRLZ3dHOS>
-X-ME-Proxy-Cause: dmFkZTFByD1VLIfY7mov0wN3C95Lha05UdiZskl+DVzy4qzyHxb+8xQe82SU2qF8r1zShR
-    fgaFn5RS9HvmLSt1l1w74Ku48keHEPxN/MyYIKYo+wVEqsBnoqibie9cwfua+b3V/aI/1v
-    StmJzDI4mOvosOuF8lynIGmO3cgwG8h5jKDqnqktQxkIpf2cdQrPaBrsANUh7RpXdgjW07
-    XIwesw3O8XU/e8UQR91I63bv0kjKXv2uyL4z1iLT1JIdyqKaTslYTPi8D9mDL4B27Y7Gzj
-    nRD1ji2aP3XyhQsm+yyXX+ftChS3l08omyk1BI0ZZcAykFni+Dd53aa+iBeWOTNsQpW5S0
-    Puz0fmy9Nhik9TBpF+8nu82xaawBT9nMoeZVbCIfFOYyiRskhN4WaXRraPKXwfD/REQrof
-    8XbH+2pxN1qjjTxUAwqmSw5ouTDylAnwLfrGWd/H9TFyF0ss6hq2HUXnnaElxUvbmOc1ty
-    mBjiDED3ZfBpFAmog+glbyaMob4hAqtHJgZ4WEGJheXgsyBP1GKuo/rXKjFBGJMIsPTL1j
-    D/E9kdL0Ndv2l9i2JVBIdeTViFKH325Ad9sFDtxGY4Wp6celPbz/yz7HRdI+8EL7SpBfgo
-    M+eKm8Tk3VzqG5Rf/BIMuLMm4qhNFxTWhsqL4rGn4hOqMxdW1JgjMnZUDhwg
-X-ME-Proxy: <xmx:auYqajbsFie0sC9rF92JxYIHk3EBfxJJtNWQsTdBD8M1WQyO3SMHPg>
-    <xmx:auYqar1MBICGgYE2-QcYgFF2KwqRuUdP8EVQOPM1QFT-4XlvnVYJ9w>
-    <xmx:auYqaljImFFIi1NQgcrSBB1zE8gEdnZV31ZHCfu6ZCYzuX-F7ltonA>
-    <xmx:auYqavZwF4veh--BRv6qq-YUbiOgp66PudLrk0vbfxjH2ShdzC4Y7g>
-    <xmx:auYqaj-PaUiL2JfXbA_hhnMc6UZGG6oZXYZRDnxzo2Vr9SvnJLR2mVAr>
+	1781196752; x=1781283152; bh=LfenCdKaPn1EVFGiOkc7mwn6KdMMd3h4m99
+	QsoQfpzU=; b=gsvvnQxLFDpOiWIIN7Ntw+7AHHuwR50ndd32d12cAww9DiKgIad
+	xpo0yZ1jJiSlS6aH32WDzxSpu9z/q+T5hneWRNIuZ/dBIwuq5P9BHJw8UuYXsoiF
+	25kerPd4c6ip6PNImIplda3j/T3z11xVC7hiGB+FWESHcWh9TS/MSsroA9eIAz8r
+	5akOChKvDh8mpvvuQ1EDG3wejDN3T0XAcTTur1d1hwXS5PGdqKtJd9OAZKywh1zH
+	xTzzWHvlaqOTatkAu6QygjiBS2R6PidxezyxM5jQ27x2Px/5Akj4gTwRTWVMcSs+
+	9CeCbYe4xQbYmfQt4oODxiLSEWVY8Typmuw==
+X-ME-Sender: <xms:0OcqarHBLTp35JrxNqJaJepMg6zGccZaEdqSaz_F_0VedBjb1jAekA>
+    <xme:0OcqavU-21GYWlwL3LQT7UHEqq977ImVtL944xUY7bs-k2GaN8yJ8n8GPLlZeW0Bu
+    _IASWCgYTIgkmMYJ1RuZLaA7hWxFShNb3lV-CI9lagEsPK_EqN-Rw>
+X-ME-Received: <xmr:0OcqaiL6r8J6AWLK9kjxLvosEhJWO0TM7gV8jQ76HH2XphighkOVY-muWae1mX_HVl1Ed9DICECalK-G-nZ0VNv4djJdogCF86D_>
+X-ME-Proxy-Cause: dmFkZTFL32veJ5XdFWz0DAt8kNwnyR1dBXz9e839Aaa1a+7MPSfumQyPTprWd3PN092R05
+    yK27nU4bRR/sDxhh8flliWqciUQJNux/MtwTarNQZImjJpCWUZ07lijt3xUK00mrblSN3Y
+    cTYeO3X6/yjbJvNF6xWoGe6myp2h6PAYhvpaNkDOv51FEkuCIojJXZ6HPGBWA3AvRbN3mE
+    y7HZJ2ogfz3qrTHZuoX/tMnUAQUON5DLD7tYUGYB9GfqHoJidm9WgyFPm/bqf6ENBAxpJR
+    VLAw8eKG/4Kxo9JWlPExZHm7cMd10ULNzsQa/EM3KkQp8hm6NVkRd6OqvPIZ3FkvcMw7XH
+    qp3bKGxHRg9WZtXhlzbio2GuTrhQQ5finB3uaBS3qgtKgOkBQX+T1AJ3qbpjfDTb1qyQsp
+    fDsPMUtsOVo8hlM7IXghErcqZb8Ev31QtDfBaNDW1AhJV0Fw08zA1SuyQ+bpaPZqXRnvad
+    Iulo/abfsNmgA7YiBptDR4k2HULYJqeD8LnHgGgHjpH96//OSqUvxSo3wvN/yvo6jlT+UM
+    TU93zXJWbTKTtIloWhBMvOQgsss3IHCTQ7B17uxJN36yU7bCet4wizxg7tKyLApo+iG7i+
+    3FzocXfxD+E+vw613k8UtUaX6pN1HDAEVWlUMCIfMVD3/vnmzEPPOdp1IgtA
+X-ME-Proxy: <xmx:0Ocqan8aIOyYMNwXkLcQf_12FgJOZ_x1Qv4B2jwIz7pso3fCnmpXDQ>
+    <xmx:0OcqatKXzp3IH3hbLtGBGhJfbzK4sq58gY-Yzq9PXbSDHLQwKeF_Ug>
+    <xmx:0Ocqakmeiy2rS0fmB6RHW8bY6BdzGpzBsvBU-biscO5vvcL5UeCvpg>
+    <xmx:0OcqapMO35XKkHdHaq2nrsA5FpSMca_V6zx1BzbwOL453auwbtFjJg>
+    <xmx:0Ocqaownj91-7RlXr6UVmHz9PmE5-eHev_3tdNQrrx1qcPK4nsom2hgH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 12:46:33 -0400 (EDT)
+ 11 Jun 2026 12:52:31 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: kristofferhaugsbakk@fastmail.com
 Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH 3/6] SubmittingPatches: discourage common Linux trailers
-In-Reply-To: <discourage_Linux.8f6@msgid.xyz>
+Subject: Re: [PATCH 4/6] SubmittingPatches: document Based-on-patch-by trailer
+In-Reply-To: <Based-on-patch-by.8f7@msgid.xyz>
 	(kristofferhaugsbakk@fastmail.com's message of "Thu, 11 Jun 2026
-	00:22:46 +0200")
+	00:22:47 +0200")
 References: <CV_SubPatches_trailers.8f3@msgid.xyz>
-	<discourage_Linux.8f6@msgid.xyz>
-Date: Thu, 11 Jun 2026 09:46:32 -0700
-Message-ID: <xmqqwlw5nhxz.fsf@gitster.g>
+	<Based-on-patch-by.8f7@msgid.xyz>
+Date: Thu, 11 Jun 2026 09:52:30 -0700
+Message-ID: <xmqqse6tnho1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,32 +88,21 @@ Content-Type: text/plain
 
 kristofferhaugsbakk@fastmail.com writes:
 
-> This project does regularly mention what commits a patch/commit fixes,
-> but that is done inline in the commit message proper (c.f. the trailer
-> block of the message).
+> +. `Based-on-patch-by:` can be used when someone else authored parts of
+> +  the patch that you are submitting. This might be relevant if someone
+> +  sent a patch to the mailing list without a commit message or a
+> +  `Signed-off-by:` and you have picked it up.
 
-"cf."?
+Hmph, this seems to encourage pick up material that come outside of
+the usual DCO process, which should not be the intention of this
+document.
 
-> Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/ [2]
+Unless the changes are trivial enough to not be copyrightable, it
+may be better to say "... if someone submitted a preliminary patch or
+a detailed code snippet with their sign-off", plus encourage asking
+the original author to sign-off if it initially came without, or
+something like that?
 
-;-)
-
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  Documentation/SubmittingPatches | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 51c308a89a8..5dc32128883 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -479,6 +479,10 @@ to be accepted since these are the most common ones. But another kind of
->  trailer might be relevant, for example to link to an issue tracker
->  belonging to a downstream project that is affected by a bug in Git.
->  
-> +Other projects might regularly refer to other kinds of data, like
-> +`Fixes:` and `Link:` in the Linux Kernel project, but these ones in
-> +particular are not used in this project.
-> +
->  Only capitalize the very first letter of the trailer, i.e. favor
->  "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
+>  . `Helped-by:` is used to credit someone who suggested ideas for
+>    changes without providing the precise changes in patch form.
+>  . `Mentored-by:` is used to credit someone with helping develop a
