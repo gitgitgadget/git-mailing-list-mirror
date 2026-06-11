@@ -1,83 +1,83 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F422E34252C
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 17:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2051481641
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 18:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781200102; cv=none; b=JNY0P7uRxXn+wVSR4wBYnScGTav6xXT71gc16bTRWSwBI0a6WSwhWGBH/vTy7rD/1BLbbKTmoQvuEhTL1AlwbYJJLqp/NXy8ZI8Q/89uS+ESpPT/kMUxvAIAvOdq05yQrERap5JZP7HrqT4jrrbIF+qjhdt7Bwa9KKB8vhXebx8=
+	t=1781200830; cv=none; b=hxpZ3lthz8plq7m035nIDV7XARZkbTlB6yv2XX4lkoe70fsUhpTHU7i1Li+eQCGzDbpePnuRyYt95lW4POQzF6lDz9eIQhZAnidP8bcLAppmfRlBEJseaf3K2MgPWEVJPc9/D9wG4Mz4ze/36uCra1K2IX1xK0tGyM8il6ZHTf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781200102; c=relaxed/simple;
-	bh=R8XMykJYiN6g6zsBfaRbWFK+3HEfuS5w2ViyviJNgBM=;
+	s=arc-20240116; t=1781200830; c=relaxed/simple;
+	bh=t+ArDmu/Sw4NPMhOc5zk9IaniXGiX+rXCb1XrOOU2yk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=D5X/cW5qiFNCHFTTiloLnxQ0YQnyFCoOt016V/jCfgVZZZ1x4zKO57Fb+4bcvRgTbprBDLhjzL4rgiGmI30dN2lS2kF7x2AiM2/5GbpV1hXIA+SIyJh9xfJktRi9BLVpnxu3LV2BZeG8ApIuMi6yo7Dvb56eTucKUFoaMsBDRz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j7txHvJN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MmJM8d4r; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=sfH5MxSUoYJZi0wJlSk0BqkC2qW5a9dL67i7AmEv1gpKIGMx+h8N9XLP/T9JU1UuHB/djZv/wDPiUCPmIKF1Lh8oA/oUAHx3sMxoaEUOJRLT2Unqc/TVZJsDGZ6W+6FUm3ChIz+Y55TlUT9WvLBXlf8uzVqbsx0WbzeVqZmK1AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wzl7xDNc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c2L1f9CQ; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j7txHvJN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MmJM8d4r"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 39D6DEC0191;
-	Thu, 11 Jun 2026 13:48:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wzl7xDNc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c2L1f9CQ"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1A339EC01E8;
+	Thu, 11 Jun 2026 14:00:28 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 13:48:20 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 11 Jun 2026 14:00:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781200100; x=1781286500; bh=86PEXox1rk
-	XzhoyA6NIEluz0+J+rcwDCBV32hPtMkZc=; b=j7txHvJNmXxobDNK5FuXApZ7KS
-	QhNtuYvzd/sljPuUsMvfA8zqaVxdIL6hE5ndbSgSwM7PHP9E9F5EvuRIm/XomNtQ
-	1eOuUH5rBeaX6L3e+4DiVZLo+IF73dJlkh3Gu0PyHtKNLIuLZ5dkBDaYRZA77Ud5
-	CqCb5UWolD3je+osEbuStVZUgJfeuyNAlBbxrmyYgl3spGnSGKMAETRWkBuVTBdM
-	vCYppMRKeW97ryw+e7iMs6xIUkPG49s5qeitU2349pF5v8uKhHtXG5143pvk9hy+
-	yOkM4izx1GPGEpg9bauuPRiF9qKM0MQ2isLuWHRX3ueQpsLNG9kEzNDAKz1Q==
+	:subject:to:to; s=fm3; t=1781200828; x=1781287228; bh=NmDFF/s1+J
+	N9I1mqpyjN2pKk1fqwFYr7NMxFc06WJXA=; b=Wzl7xDNcp4sugox0fLz0vpffar
+	4qiTVwdQvBYC4s59o+OPflPX2DV4arFBSsW9HqY1LhrsJgAN/PNK75Z2+B2CrSla
+	jwcASDV5o+/OHtHHtSJWrJLzihx+297dW8YfWmRktgsNpzwJ1KmJ2ZnME74C3YSs
+	doIhKS1M+l+YhFKN1EUd7NdZbgI2g1tUMHiFH9OFNjsByvoKokosT01LJMMlYcoC
+	UzA1l3YhZgWq7WfemFK8LzV9TLS4oRqvahnv9mbhjLRPGb8ZS5PamOQQNAm0EqCy
+	rHSECuRcYRg2+GNaOcvh6IZLrUUpJXcJCcO8Nu5ngA2RKPxvlY8pYBN2sYqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781200100; x=1781286500; bh=86PEXox1rkXzhoyA6NIEluz0+J+rcwDCBV3
-	2hPtMkZc=; b=MmJM8d4rkDMhvu7FEhvdQy+Y+9V1hDtH2l3/5LkogmqGD83JYS8
-	1u3LCTr1cettmlzY50LW3sN/9wHMHg3NTIWlUPyP1bdyR6wrt5PtWiZh9AXJq8un
-	ojHREz7PeJL/7Kam7Qc7jM95xZwRhlXoccJzWaYSEEmBrXmxE5NC2pyoaKFm21v9
-	506YrMZ6C5r4zhI7iVciDJW0LtlKtubqlVzCvjOryS0YQaAak35B/zY7d2aeDopw
-	lOohP+ueVRDCPSq22A3g7xM73qXRULRDhtdSlndM4zPIKqIcZfVxZwMylZE+ARk6
-	LbG0dxkg/9ebefDJgfXR2bH8pJjk/PhNHeQ==
-X-ME-Sender: <xms:5PQqatAzLyzuMknkrksGqriTs6oOUXEYgh2w_YaskhTWH-A3i52F6w>
-    <xme:5PQqaibWkned8UUv7_6yQ32jWAXeGEmHlWDLhlfuzxuZtssxJz_ax4CoEL5PSWeky
-    4XhSbBC28vaX5tvJyZ5TjX265Z9QggQausvKJG1BfJ3f7AOOM_B7Q>
-X-ME-Received: <xmr:5PQqag7lBdiiOiXUD7VEyiQ46M9qqIa_zhlqq3PkVScEvoVfAY9UjvEgA2WIW5XAmwb50qrwZmsOUSN_XD7Jjj1jOAmt88N26SXg>
-X-ME-Proxy-Cause: dmFkZTGBXVDdOClPYoFMTjfJ+9IobeE6pTQ1vPpV3G9tASv2+Lc2X4NUsePDDu4z+N+eLa
-    qpfFyJESz/2s+DovcA9U0q2/umBEvjE7FEBIQ8rcrljz+t1j2OW6/1SlFu8mddjn52rMGm
-    4CXdvwH/J4ic2sp65Ztyv9kkWtlFwk2Re72nKpW9kxHtYO4ZzhAWY9I2jzgCDSpK3JKGdq
-    0XVFy/gRjyTScXTPz7D/LgDeWQudcAn8dvC2vZFaHonWyVEEeFSCXAM5gwPf9Row4zYCO8
-    wNr4/NcTakd+vCPqTKuNi/RlHB1f6SMWKkfgSfuM4VackBZaKBcSD2eT57tRsfTA87IVez
-    TmBT97fjlg2RtxBrLeMdqYfmwMgBHkHad+nPcesYRH8zjvVSrCrceD/SsklWh9tlvzkDbs
-    EEzKDSbu0tl0PuLoZE8EBORoV9HNE59ZFQWSvpF4+Z84nA8ByRtRyi5sMWTDXHwfDppx1H
-    fLPFppA85sFwUaaVW66Kj5Vjxl1iUgAyAvikVnGkXZm/Yywq2mcZcIxK5Sm/wHw9vclH/G
-    d1TtNGyqqQpY5g7oDTvnSl4tOp92xxZplTzslMlresi/OhAnb9QtH506epZS+SCgaOuZVd
-    u+fQENqq2IDybTu1Uxlayhufq9eitMwmD9ZUxcHjYTmdJCiWN4rs3ohQEg/A
-X-ME-Proxy: <xmx:5PQqajZF1hjWYTNpzKBrmfBarvuzZ5QRPkjNE-9L9eenKC1P_6pMWg>
-    <xmx:5PQqavi4R-zo64WtUUXEDfbfSuCewpejD86RPlC61VcBELGm4YO0aA>
-    <xmx:5PQqak_rVKN9xfP1gGH6hioa0ALPpQOHziNWuZwZVm1VmjnqYQVYGQ>
-    <xmx:5PQqaqpynputjNbEJWSmFEhXgtmW2cyEkkFWXSId4AXf7f1CV-WkRA>
-    <xmx:5PQqapa4f83ADHwM4_qOAn4ukv-Go64Z_ceheIBeaE2pcBnzUwf6TiJS>
+	1781200828; x=1781287228; bh=NmDFF/s1+JN9I1mqpyjN2pKk1fqwFYr7NMx
+	Fc06WJXA=; b=c2L1f9CQ/wbq3eeF5Qwvs38EajyeX375NlzUYBmy4nCgMhUFs/l
+	/hqQ8pKxlSOgPOuP/520Y0khxacmIqGLfATWwnvnI1Pxqf8V3vtogp7j8Z+p92AK
+	z1xaCcIXWmFp9SxwGAc4GwobSnshAa+JIipEoqVVm5HcvxY68XFwiRDqL6T02aDl
+	TXGfuQwg0z876VFBvEGSqP+KV1Rl1K22SHM+yXD6z+9vOY30pyegpn9ChELpDoUZ
+	jYHjwSZ9/Dq1DAeRkE8erfg/CU+HKhggwrwgtBY3E8d/EXUpED9yf5jOlcNzds90
+	nGehCztmX5ZH+Ip8WJpaOJSA//1MgWb/2tA==
+X-ME-Sender: <xms:u_cqatgO3lFdA7KGwUd3U7touQuw9o3jm7A9l4PLm3sKAOGLNiB3mA>
+    <xme:u_cqarXR7z_1s8fwBPv7As6UC51EcSt9OAgmP1ZhGkX6-Ieucu702kVzDhwFDSto0
+    4CTWTw4NKv7y2Tzm1Np63nx_KtN4_96_djq4mjIf51kF-Dj9B47>
+X-ME-Received: <xmr:u_cqakW31l6GxTDuUbRTD7TBpmqJog3B5EoQwGLT55aGaAi3N6dVHt1kQKTyHTnNFL105upnm68gD5LDIcqbZPul5-3P2F64uZJd>
+X-ME-Proxy-Cause: dmFkZTFMmnFmEldTIFBAvKGKq484xT7XMxz0h5wd/e8RBSUtgh9PinTkgjYgj4S7Uv2WZQ
+    e4fhNyuHhcUL4Wpp6NlN+yFvvlszadqhGuAWVDJk785UkyHsyMKlH86QMN9z5LhS5py/5K
+    ssnbp6rabDKjUvHe4/1BtbkyPV9NcwRBI+FwTcTLht3T9LhpOjTNr3sCT4T8URPrQFveHP
+    lelHwc6wBMTZmaYGk5Gmmp5Immne0Mr+skA1HcLtQ2FpF3QmDQPAxv2c+1DX6N0OBpt0NL
+    RVj2Vm77jLzONJOU/dO65YhB3ChGJjdNMrhosfMReKDgSJP6skC/924SgkSYsKkALW0Bq4
+    Yec4hlVouSvf4bouuL0ReXcBC2Q56RnRJTtYC/AsV2lDxA0J/qekY1FEOuBd/itLPBa6BE
+    U5CUFC2WwNxko9SoQdCzIjsYspErmnZNXEzErJokSfRw+3+7ukliMwA4hTCR8xetcmso40
+    vhQU5i8qyQpH4ndy1FeypgcN1FvFTsvpkjAn3V949nfmzn9Ddmm3DdKZ87aE+aMjGGJo5c
+    0NXjEongQe6QQ42jsQKBPE5Ri4VOD9CvACWPAtun1E0ON+MqEC1qgL9fizcYkm4ClATjYj
+    Ekpb9n3OcQ5ZUzI30GgidKmu4AQlpo2IftHcSGCOw64dOaiedhpQ2mMrae2Q
+X-ME-Proxy: <xmx:u_cqajgl4KKXuI6p6bA58Nep8qW4RoASngi4SbTV_4iPe2Fdo6XpZQ>
+    <xmx:u_cqanafiKih5VheCtCX4HjXp1066RRNHxaqFAgY4xdYC4CtxxOmNA>
+    <xmx:u_cqaortBdUVmqmxx8HrbrF0xRtKoVtGyFZCtqSv3v1F-bbf4gUoJQ>
+    <xmx:u_cqasP7a5lyBQ6vxsSdicbzm8d_8UUabdxQRPok4-geevN5luY2CA>
+    <xmx:vPcqagocjU7Wfie9d7rf52sye-6l4uasCBnCdtQyBSo6TcqcBv99owiJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 13:48:19 -0400 (EDT)
+ 11 Jun 2026 14:00:27 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>
-Subject: Re: [PATCH v2] commit-reach: remove get_reachable_subset()
-In-Reply-To: <ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com> (Derrick
-	Stolee's message of "Thu, 11 Jun 2026 08:57:19 -0400")
-References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com>
-	<pull.2144.v2.git.1781178567862.gitgitgadget@gmail.com>
-	<ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com>
-Date: Thu, 11 Jun 2026 10:48:18 -0700
-Message-ID: <xmqq7bo5nf31.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Pablo Sabater <pabloosabaterr@gmail.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v5 06/10] reset: introduce ability to skip updating HEAD
+In-Reply-To: <20260611-b4-pks-history-drop-v5-6-34d35725559c@pks.im> (Patrick
+	Steinhardt's message of "Thu, 11 Jun 2026 15:27:09 +0200")
+References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
+	<20260611-b4-pks-history-drop-v5-6-34d35725559c@pks.im>
+Date: Thu, 11 Jun 2026 11:00:25 -0700
+Message-ID: <xmqq33ytneiu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,21 +87,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Finally, a commentary: You seem to have a habit of responding to
-> review feedback only through new patch versions, but I'd rather see
-> some thoughts in the discussion thread as direct replies to the review,
-> especially if you think you will change direction like this. Saying
-> something like "Maybe I should update the method to have two walk modes"
-> in a reply would have given me an opportunity to respond and perhaps
-> avoided a new version that went in this direction.
+> Note that in a previous iteration we instead introduced a flag that made
+> callers opt out of updating any references. This was somewhat awkward
+> though because we already have the `UPDATE_ORIG_HEAD` flag, so the
+> result was somewhat inconsistent.
+>
+> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/rebase.c | 14 ++++++++++----
+>  reset.c          |  9 +++++++--
+>  reset.h          |  9 ++++++---
+>  sequencer.c      |  4 +++-
+>  4 files changed, 26 insertions(+), 10 deletions(-)
+>
+> diff --git a/reset.c b/reset.c
+> ...
+> @@ -129,7 +133,7 @@ int reset_working_tree(struct repository *r,
+>  		oid = &head_oid;
+>  
+>  	if (refs_only) {
+> -		if (!dry_run)
+> +		if (update_head)
+>  			return update_refs(r, opts, oid, head);
+>  		return 0;
+>  	}
 
-Thanks for saying this.  
+So when refs_only and update-head are in effect, we will call
+update_refs(), even if dry_run is given.  update_refs() does not
+seem to pay attention to (opts->flags & RESET_WORKING_TREE_DRY_RUN)
+at all, so wouldn't this mean that we would update even in a dry-run
+session?
 
-I haven't (yet) found it in my exchange with Kristofer, but I did
-find similar irritations during review sessions with other
-contributors.
 
-I wonder if we should talk about it in the SubmittingPatches and/or
-MyFirstContribution document?
