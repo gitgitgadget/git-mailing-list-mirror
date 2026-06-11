@@ -1,129 +1,113 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1471F30E0E5
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:28:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184527; cv=none; b=UIwSiYe6FUBXFS/3P9NgXsZPOpTSHlWh7C7ZBLuJZjr6OfycYR5B48bXIK3AdkGa+oOiRWDctBL5McHhbUlVPHbDZePGfQR/WmN5Dt61EyH/o5QzilnBsFVsM52vdApW0CnmXaDg3wRzRYBB7eQEFr3b1+pci58uF03HmQHPoMQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184527; c=relaxed/simple;
-	bh=Vzdx2OF19wRATwuDTbzvxr1Eo3KJRzKoFLD+WKT0C/w=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TpOewmsJwtZTARJnDS9IeRVwcMEi2sC1P35FMUc30HMfXjHHdqGXQli1S8PsKy8r0oP2q3HZCHNfQ8oQPBaE4iZhag4VhW9QGROfiZjtZU20FfgxZZepG0G5e8y9Waazym/WkpeugUCWcvJduXWwFuOXVvQwiPPsuxmpEL4F5jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=Fu0A5T/i; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD2E406273
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781184618; cv=pass; b=Z6BwXu8K0lAkJcl5PQFRw/iliUkX47/HWtEp2qBLILioh7T3Pqn92+nL+xebq47VNqb0jOcdBbAdVZE6gpPZtzw+SsYo6CSZQtAlJZY9jq54vUwq071upnJx61WhXsEi/aiXAgAmFV5bR8WkGxmZHPAoBSL9fRKRejC1pHN54ws=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781184618; c=relaxed/simple;
+	bh=FR+k9UG4YVxX4lTVL4djABJ0NCaFZOvflAM04ynWHtA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q12a8zc8LpJb68DEOPoN+aUrl1ZOFyPk8Qt+tIq/FV2aEhwqoFv90nFXOI/qU+6EON3s8JUuNpvlELw1pi5YzmjLLSJcjau24KE3bNxpOE1psjh2uRdxUIzCXYOeE6fRJnSkEfk6eNmJS5rn9CkFKANmX4BwFLoS1JID/Eq/kwA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AGhyAJQv; arc=pass smtp.client-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="Fu0A5T/i"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 65BDSVAF029967-65BDSVAH029967
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 11 Jun 2026 16:28:31 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1wXfSR-00GI2z-5U;
-	Thu, 11 Jun 2026 16:28:31 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 11 Jun
- 2026 16:28:30 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 679b5dc0;
-	Thu, 11 Jun 2026 13:28:30 +0000 (UTC)
-Date: Thu, 11 Jun 2026 16:28:30 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Jeff King <peff@peff.net>
-CC: <git@vger.kernel.org>, Kristoffer Haugsbakk
-	<kristofferhaugsbakk@fastmail.com>, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v2 3/3] doc: git-config: escape erroneous highlight
- markup
-Message-ID: <20260611132830.FZ0Ks%taahol@utu.fi>
-In-Reply-To: <20260611083139.GA2237523@coredump.intra.peff.net>
-References: <20260610185148.23920-1-taahol@utu.fi>
- <20260610225513.6269-1-taahol@utu.fi> <20260610225513.6269-4-taahol@utu.fi>
- <20260611061156.GC2187173@coredump.intra.peff.net>
- <20260611080242.lqXwi%taahol@utu.fi>
- <20260611083139.GA2237523@coredump.intra.peff.net>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AGhyAJQv"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-13817614cd3so4459722c88.0
+        for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:30:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781184613; cv=none;
+        d=google.com; s=arc-20240605;
+        b=R1NpjiXgABRAjNiwcYM2U2/i1UcANrG39yAL9HA1TEkDDTGe3B2rpV03TLA37LW7eX
+         UofUtCwgk6ulS+YrJZReY3ZLkx8hjbJLLQEc1vAX2Xf/9a5OaqV5QeENEpnpw963jAf/
+         wxPA1cH+CyWrsTuw4FAZI0cindB+mCoM9xDtX8CRtuJSX0f3nfzzeLqj/yTVcLYAz4GT
+         jlb57Dpw9efswsi16q5ZdAf9i5LCymIbcc6dYySRwlCt4+xT3o9pRqsIzPkDDQBShGyG
+         plQbpAEAxZga8ADJmwfODoyJ8kZCj8KIei6tyaZjAf3Kc4PUykrbhmMoKFIACmFQ/5iZ
+         AzGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=JjPKQHOzmAJVUgClcInqiV0SJs0Yj/UHLDkpGG1vAgg=;
+        fh=fS5tLAl8/6suJ2lZqlRmbbuZKJ44gHLzg26abFIQ0cY=;
+        b=HEPTfYJodd7os/UnvySZ3L4IC01UvRk8/G3p3nQCWAaRZa26SZpNTtO8J4kYNX2muH
+         Vezwkt/Ph4jaOZU+7547V1sO/ewZj713yVjLPMmh7w9+ex39r8rCY10qaSWzJbHP8T6b
+         17vUlqkop1CXFbjDkrenZfT9GZ/fbWODPzBDVb/XjGmo51i6NwSYNmdlq0nni5wYgvhq
+         7y3X7hrWciFHX2JB5UpyMwbnT0/aTK6wvpFrkj2E6Xnr/F/2U5dTWJM3JndGFE+HjE5o
+         H576X0PUhcuOY11d2mmsLrrmCGVLW8DHRzABqBaCQAUUjjlUjiL2kHUSO+qVRfxt+dA4
+         I5Pw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781184613; x=1781789413; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JjPKQHOzmAJVUgClcInqiV0SJs0Yj/UHLDkpGG1vAgg=;
+        b=AGhyAJQvFh84GrttqvCEbd/p/BColYFYPsHpOc8bGYXJDyEhNK2MGxw69pPdfEljr+
+         C87NE6yfiOXd/Kngm68MZW16pYR0r5lhCVOUaivR/4O0QlQJfmXyf6vcEiDq/WkhuaXq
+         YLrzt6QDAkrXct+FCtIbt5ALzs72uBeJzqafuKOTV31+5zReiDk7wa2pL4SpTQxGGCWB
+         wMzk+uQFT5NDmSoZrG2AcHT6A8zP/Jieizw1AeqqfDRvirk1BlRKHw2WlQN+ESuO6NfW
+         v6N95ryOHjeD8gegBLb+zm+U2nFmK6TLF1al8J6tL/MIdKf2DCLRFdrMG1L5+6gNwA7x
+         oXNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781184613; x=1781789413;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JjPKQHOzmAJVUgClcInqiV0SJs0Yj/UHLDkpGG1vAgg=;
+        b=BMU0rCVARjEEuoWJTuzBkVHck8HNWSJi8BoXnNlifzzyVsT1gA2aKFRqMaBwVflgvQ
+         P+s6xsAyqQDZ/53r+wtaaRp1X/0tHXb1as52RHcMC+5JKqf7YWzAQ9wV0RLbmMPJBVw+
+         2nOU3BrMbE5qGF4HhL4Ain0HL2FGjCp5OaalGvpr8LWOKxBaQW1KDWKmK65t+iV7SATp
+         6n3oT+HQKwUKJftJ+rMMTRlA2/MruJ6q3ZJ9kgKZNinaEGDWLuIktSSCao4kdQCsSoef
+         R6/AqJfRu25q8HjWn9skuPzBmLk3dtmmH0pBUYNmmtd8qDrcXxLQrIXgJoqjMBsq+kS5
+         5cfQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8oL9v1PdrssHkb3UebvErSaNdv+3MBmk49/RVjKPncCPyZMyzC163zgM6/1+sVncBbsSI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzL5+46buP0yVCc/kpcifnJRIMMkBHPtWmmt+IkMptbJ+nScKM1
+	FMNe4plvMJ9bu9OcugfS8aTmRboWegWxxh9+GAe5T0jlhC0gp0eYjq5rJ/CdaMgNuobuu9lVkPR
+	eBz9wpqT5u6TJXYEPjZA2aTiS1CedHJw=
+X-Gm-Gg: Acq92OEttOp0xw98VmTZU8pECxAS7/6w+vpDCUxtjsk2dqMjAtaLyedob+mGDvHuUwI
+	cKoMQ5yDRrlmBshSxGcsD3BTTGoFbZL8m4hXjbjg7k5gbJvAURQnV5HPjYD5B6UKCASEOtsLtRb
+	gduNHGFJvidEIC9wb4UnmOC5SiPe1Bj+Fn/mSdW76chHWk7gr7vVfhlAhMnXu2wsb5OLz97MN8H
+	ZZbiB2sBr83ZsxQ4G6WreVpSlexMMpp/ykdRxwnxZn8r5nJd0eaiEKZSVNyF3A9msgn90Ujd+/2
+	ipC1Mp7rhdQwNzQQA/wgJpZPkPWgcBCBIYLDOthghcecBqCOynJi3JnWMjSXjSxLJiqDVlvyLdE
+	T7AE=
+X-Received: by 2002:a05:7022:49c:b0:134:def6:e70b with SMTP id
+ a92af1059eb24-13842171514mr1616914c88.6.1781184608320; Thu, 11 Jun 2026
+ 06:30:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-X-ClientProxiedBy: ex19-03.utu.fi (130.232.247.43) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRG
- BxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhdSFhIWEhYSFlRSA8BHCgeDw0aRgMNGgYNBEYHGg9IWEhZX0gPARwbHA0aKBgHCgcQRgsHBUhYSFleSAIGRgke
- AQQJKA4aDQ1GDhpIWEhbWkgDGgEbHAcODg0aAAkdDxsKCQMDKA4JGxwFCQEERgsHBUhYSFlbSBgNDg4oGA0ODkYGDRxIWA==
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=N8AshGkPXNUwRVHwPfWA9IvxPwm/zExgjSk2Ed0iISI=;
- b=Fu0A5T/iBP2lr5S5qwyFOaV+cLJRUE3nktiGZnet/put5xA9gFFy5fYbL1fEiaFIEKXwZlZ8cocS
-	Wc9OR5wANuijp+uPu/c2UDk2S/s79Apfhv00fcRw15NYWeoe1RclZgp94HOLHqrI6mvRXZGFS6iH
-	G2kN4RseTNiT+ADbY/v/3kfKuw8ne+28v/3w860OXKMSkyLeM9wl/DM8vhl5SzrUXY6MfMG2srXc
-	c3v6wWybl9pnBQQVc+IXTD61LyKQAuahkdU02WK/JrnWxmZ0lsQkRCupF5KBiulmZqkoUVu+b79W
-	wozkov6Va6V21gFVqLXAqUigA8SV+y/L1W9dhA==
+References: <20260519153808.494105-1-christian.couder@gmail.com>
+ <20260527140820.1438165-1-christian.couder@gmail.com> <87ik7s16sg.fsf@emacs.iotcl.com>
+ <CAP8UFD0r96KxU3kW2khJ_MySgtv0ZpU26KR1vNimp_FwigQfXA@mail.gmail.com>
+ <877bo7294j.fsf@emacs.iotcl.com> <xmqqh5naxwfc.fsf@gitster.g>
+In-Reply-To: <xmqqh5naxwfc.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 11 Jun 2026 15:29:56 +0200
+X-Gm-Features: AVVi8CdInxzff67FXLOCwJx5oT28FkV9uxgY5qgSmTcv6evLorsOvSvGTu0GsKw
+Message-ID: <CAP8UFD1gNGHXKufTK-Vwc7qgpcW3tJDq1ovV0WhhSAuPsGEVwQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/8] Auto-configure advertised remotes via URL allowlist
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> wrote:
+On Wed, Jun 10, 2026 at 5:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Toon Claes <toon@iotcl.com> writes:
 
-> On Thu, Jun 11, 2026 at 11:02:42AM +0300, Tuomas Ahola wrote:
-> 
-> > > >  If _<message>_ begins with one or more whitespaces followed
-> > > > -by "#", it is used as-is.  If it begins with "#", a space is
-> > > > +by "\#", it is used as-is.  If it begins with "\#", a space is
-> > > >  prepended before it is used.  Otherwise, a string " # " (a
-> > > >  space followed by a hash followed by a space) is prepended
-> > > 
-> > > I saw the comment on round 1 about this second "#" on the line. But
-> > > while we are here, should we be doing the one in the context, too?
-> > > 
-> > > -Peff
-> > 
-> > It seems adding that second backslash was already too much, as doc-diff (which
-> > I neglected to run before submitting V2) shows:
-> > 
-> > ```
-> > $ ./doc-diff V1 V2
-> >  
-> >             If <message> begins with one or more whitespaces followed by "#",
-> > -           it is used as-is. If it begins with "#", a space is prepended
-> > +           it is used as-is. If it begins with "\#", a space is prepended
-> >             before it is used. Otherwise, a string " # " (a space followed by a
-> >             hash followed by a space) is prepended to it. The resulting string
-> >             is placed immediately after the value defined for the variable. The
-> > ```
-> 
-> Heh, it would not be the first time I am baffled by asciidoc's parsing. :)
-> 
-> Adding a backslash to the third instance "fixes" the second one to me,
-> but I wouldn't want to rely on that (plus it breaks the third instance).
-> 
-> Using backticks does work, though it always opens a typographical
-> question. When reading the source, you see `#`, so you get a punctuation
-> delimiter but no typographical one. In the rendered output, you'll see
-> it in a typewriter font (assuming we fix the config issue), but we'd
-> lose the visible punctuation. I could live with that.
-> 
-> But for " # ", it gets weirder. We need punctuation to call out the
-> spaces, but what should happen to the quotes? They are not really part
-> of the literal string, so should they go inside or outside the
-> backticks? I think it may be a moot point as "` # `" is not parsed as
-> you might hope by asciidoc. Doing `" # "` does work, and is probably OK
-> enough here.
-> 
-> -Peff
+> > Thanks for explaining, I still agree moving on like this.
+>
+> Sounds good.  Shall we mark the topic for 'next' then?
 
-Okay, I'll change those to `#` and `" # "`.  That seems to be the best,
-or the least bad option right now. :-)
+Yes please. I think it's ready.
 
---Tuomas
+Thanks.
