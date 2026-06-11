@@ -1,51 +1,88 @@
-Received: from bsmtp3.bon.at (bsmtp.bon.at [213.33.87.14])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5265F1A3172
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 05:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0EB35893
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781156263; cv=none; b=dyRdEAsBfhJLXzABwBofHEBiSQ9RFITt8X5mZzhi9Di6sGZIQRE8XNMTgyI21Jh6N1SZNp5VG0x2/Mx+vaU63biEqGrYyAGuq9El+DY4WTxR5Ab9VNKZc6j2dpLMqA1PiSyPKvJdl7xR1cGkrRmrKVxNbyNofmQa8BgC/OOzgKI=
+	t=1781157693; cv=none; b=lpx17ybFnu6Z0zVswPQ2LppzGyoWPIiYo1snlzrkp4BcLGQfnXHjbUrIeL4qC3YzgWtFc7jMMEmu+tx7VlTSGkI1H5z7/kiIqPmkWgmv9ocuN/+KBSTxdKOTmUbo2/Ng3YhnPlZrUImR+YIuwF/Fds4SMNKqBpg8YAazK4qVOuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781156263; c=relaxed/simple;
-	bh=YJ7lTsMRshaL3Yzie5mFB4VNU+RqrlqwM+Yi7EcDIg0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lKC7sqgO+12tQGNjEZp7NOcOcnoPsXCghqbNwu/N9u6tvkgwRzFzWLBbwXvqZOQDTJwLuBEWkaiThP5ejSYPt1JOyAP4FW5ZYeW+hNWs4FWRTbZnhaoGKk19e8I9hjJOphQpF1ZbGC0RYCfRqHEfiPGll1XfMCgQC1jrN8au7Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4gbWcq6nvszRq2C;
-	Thu, 11 Jun 2026 07:37:31 +0200 (CEST)
-Message-ID: <fdf7f988-d345-4107-845f-e089d7829c16@kdbg.org>
-Date: Thu, 11 Jun 2026 07:37:31 +0200
+	s=arc-20240116; t=1781157693; c=relaxed/simple;
+	bh=GXh1/98YaVEyMcSzmaNPmMVUES4ZHQjlOIjE4YPXcUE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sImdfbNEaPcVN0TP0FEA3wCZ+FX386pJKfYrTI8daI9DC+cvXriewO/s389YK+JoNO77lR7tFDIdo+r/dLNaDacHRaf7CF873duYEn5NH2csBhFGpgn00cqQAe9hNn+7DyARVJiXB7iLd9Q9pQE4lriPnnpt1zivIf7djjrgB4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XWqAShNy; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XWqAShNy"
+Received: (qmail 106073 invoked by uid 106); 11 Jun 2026 06:01:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GXh1/98YaVEyMcSzmaNPmMVUES4ZHQjlOIjE4YPXcUE=; b=XWqAShNyslAndQXnAIsZNJYLuY2q2gnImO5A+uGz9J+XiAT3Nd7iRshYpoLoDH7bqOnOzR33x02k1F0/bfEKNbmmcYm6nN7s+H147klcu27l7vtQyzECgVQGw5MLar6H/zD4f2yCh7ieSheaPzREeqStd+sfosujNzKyGc1+JOmbrUP1UOKJP0LeddKLocfDRMhCo09BGEC+OK2p3GV5S4sD1Db1eKTVhqyiLeRK8bvMqWs8eIXfzDg/ZwWE2g6m6UrdaXgwdNXkDfp+mJeSfsorXDxGPG9f4P+d+51e7OuAhdClqOv0TCIBClF0hmlxsiw1AiQUvWMQVZQFdBrfxw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jun 2026 06:01:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 313410 invoked by uid 111); 11 Jun 2026 06:01:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jun 2026 02:01:28 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 11 Jun 2026 02:01:23 -0400
+From: Jeff King <peff@peff.net>
+To: Matt Hunter <m@lfurio.us>
+Cc: git@vger.kernel.org, Bence Ferdinandy <bence@ferdinandy.com>
+Subject: Re: followRemoteHEAD management question
+Message-ID: <20260611060123.GA2187173@coredump.intra.peff.net>
+References: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
+ <20260608234946.GB358144@coredump.intra.peff.net>
+ <DJ5XE9HC5YNY.33U8AG1GX6ZP0@lfurio.us>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] git-gui: silence install recipes under "make -s"
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: git@vger.kernel.org,
- Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-References: <pull.2318.v3.git.git.1780555730228.gitgitgadget@gmail.com>
- <pull.2318.v4.git.git.1780742303298.gitgitgadget@gmail.com>
- <950f70ea-1615-402f-9cd4-3317bf177c5c@kdbg.org>
- <CAHwyqnUpiWmXo0SVr=7L-+cwA+qhVyqodpV-O4C46w=kLqaLMg@mail.gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <CAHwyqnUpiWmXo0SVr=7L-+cwA+qhVyqodpV-O4C46w=kLqaLMg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DJ5XE9HC5YNY.33U8AG1GX6ZP0@lfurio.us>
 
-Am 10.06.26 um 15:19 schrieb Harald Nordgren:
-> What does it mean for it to be queued here, should I expect it to show
-> up on seen or next?
-It means that I'll arrange that it will appear in the next Git release.
-Until then you can find the commit in
-https://github.com/j6t/git-gui/tree/hn/silence-make-s .
+On Thu, Jun 11, 2026 at 12:12:54AM -0400, Matt Hunter wrote:
 
--- Hannes
+> > Yes, this is a common problem with the remote-config namespace. Defining
+> > _any_ key makes the remote "exist", even without a defined url, but that
+> > isn't usually the intent.  But we can't distinguish that from the case
+> > where you really do want to define a remote without a url (in which case
+> > the url is the name of the remote).
+> 
+> I had no idea a remote like that was supported.  Interesting.
 
+I suspect it is more of an emergent property than something that was
+carefully designed, but after so many years I'd hesitate to change it
+(at least without a big warning and deprecation period).
+
+> > I think you are on the right track. I can see arguments for or against
+> > putting it in fetch.* or remote.*, so you'll have to pick one. ;)
+> 
+> As stated, I think putting it in fetch.* is more consistent.  I'd be
+> curious to hear arguments the other way.
+
+My initial thought is that it might affect clone as well as fetch. But I
+guess this feature does not kick in for clone, as it has its own logic
+for handling the remote-tracking HEAD. Though arguably it should be
+possible to configure it not to create one in the first place.
+
+> As for another design decision: I'm leaning toward omitting support for
+> the "warn-if-not-$branch" value in fetch.followRemoteHEAD.
+> 
+> My take on that option as-documented is that it serves more as an
+> acknowledgment from the user that "yes, I understand that origin has
+> pointed HEAD at foo, please only warn me if it changes" as opposed to the
+> user expressing that the branch "foo" is in some way special to them.
+> 
+> This interpretation feels very remote-dependent and doesn't make sense in
+> the context of a default catch-all value to me.
+
+Agreed. I can't think of a reason you'd want it in the global option.
+And if we're wrong, it is easy to add support later (versus adding it
+now, finding out that it creates awkward corner cases, and then having
+the backwards-incompatible change of ripping it out).
+
+-Peff
