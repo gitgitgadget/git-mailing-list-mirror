@@ -1,85 +1,83 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDD222259F
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 17:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DCE341065
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 17:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781199490; cv=none; b=Bpv03x00KopWNvg+6gkMGRBoil+723848Laj2An47iydsBQDo+YJz27xB2vNMpc3X80MytEN9N4oDos3PR55hd+VVnkwsbRfSlY/SP6QdmQOK9X4M1jjIgxoyNHzJo64Cz02l+Usk4ZlxBI1BjlOpzeTu3/8a9YMeJuRQ0joVD4=
+	t=1781199836; cv=none; b=B34oZYnmXKmEVabMLMuK7TXkLhgx2E5IohYkzwxCV/f6QLzqIh85qEOFkk0leB3IdV1GvzCrPIoB92pSpuruhQx9IufK3YOl9ZkxmZsyvHKAS5s4GrSzDHr3jbkBZqljdt5JGVaGKu/eiyTfHCfDxNzdVAWZKOJSnkuKBUrtwbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781199490; c=relaxed/simple;
-	bh=qQITY4li40BRP/9L30RP8Q3TgwsqE34EIIoUOKaNc/o=;
+	s=arc-20240116; t=1781199836; c=relaxed/simple;
+	bh=Vk2koJrHPm2Q8KOd3J+3bbcoyxEI9bXhkMt6tg5Na6k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i9FSoBGapoTG99/hoL4b5fwwpJVcINb1nJSyqDA+uR4ujXnJ39jbC1pepdkE9vXDGIBJl8igBdiW6ji4nUktt9ePFj/zq+8cJ0s5ZUelrXu5n+cjPPbbG6dtPor3ce5RKvryAzzmpRjHN8Rw4pMtwNrtbjnOijVoIgR/Qdh6fSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=csCYbSE2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YSx7Z5nD; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=olvtlTuxFQzXsQXBokZh8mtx0hg7olTKmj417hraWwOSg5ERRIUIxLB4D4UB+jBPzS9ac22dyekl6raChjy6NPw1VVawEGIXnITgu4M/0Aso7vED/aIhRFUmK9l9h+kobTVNHOJYL/33LAKZ7NXoPiFuTnPi7Xz78vBtHBhWdAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OuLHPzu/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CO5nf/YA; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="csCYbSE2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YSx7Z5nD"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D98471400123;
-	Thu, 11 Jun 2026 13:38:08 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 13:38:08 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OuLHPzu/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CO5nf/YA"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 60F281400062;
+	Thu, 11 Jun 2026 13:43:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 11 Jun 2026 13:43:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781199488; x=1781285888; bh=qQITY4li40
-	BRP/9L30RP8Q3TgwsqE34EIIoUOKaNc/o=; b=csCYbSE2PWyifX7wt6P3gUSxD6
-	8oHPI3qMZxPkrHF3HhjgCgR79XS2mG1MGr6yN3IhBO+HaHu56D56bosi/gj7Cfds
-	proDjuKrdDS+OEAohIw/lFXaD/stTi3NlaWmr/nbQ2s/wCDiJnUvkVAiymS8xrVo
-	uLtfLfUPsvQgeEzr0bDCTW3b7H3HLvMScNel+axYaHHzhsX1t8nh/85ZpCBcuDxf
-	BteFylx362JSP3UwE/fcjnD3fCeVH0pCIeXYloFITFooR02e9NJk/qj25ce73DNL
-	8F8IDG04Z+nCI2/CGA/VjILzJhP9E/oCWwZZw59Q7qW0S4eGHN9yjhyeXoIg==
+	:subject:to:to; s=fm3; t=1781199834; x=1781286234; bh=usG+YAILYP
+	W/oNrIiJbQOsom1xtzKnqmPCIHXkToDQI=; b=OuLHPzu/6ygwtAD8YOK7U99SvA
+	01XPV3DYGjzCOT7nN1XzP7PR2DrejvuclY0dB8LnQ9LE94kHINLvpTQSeQXw2T9e
+	BFUhwV/iOFquRsKtlneGcThsNor4E+k0N9uKqj29Y3qTgPZgLJARuphdcfHwJ0lP
+	IQTUON0Q/S8kCjm3+XU1n6e+nL4+oZfJExk/WhJOOOMVoO61ONmzDBKU7yAA0Ex4
+	HkLM1DDnOqQCvJWq55ol8YD4WZ6753Ad17LjkbRk/95re++D3xGbr03PuOGJz9SZ
+	nkubhmCayAuxEoIfXzCQoX75H+FBXsONbmcrnp+TJe48rHaKTmPdOFRWXdbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781199488; x=1781285888; bh=qQITY4li40BRP/9L30RP8Q3TgwsqE34EIIo
-	UOKaNc/o=; b=YSx7Z5nDgIS4DE/RB98e1xQP7yO25EIY+h0lz+A8Vq3dJrXrx/3
-	QAZ5eMhB762XfvNrhvb6dYCmaOzctCl09qUNLFoEAMCTzwnucRmEwpVvE5JVZKDh
-	CN7Kpr1ClVyNen/8RKaUfBu1sDdsGAltL7DyEh1FUqvDB6/uSvmxHOpRj+XdfBpa
-	e57zHLDZAmIAVnEVQ0bUzKv3xzHIbFez7mrmgSy3dG7EheIIjskVorQwSoHzj0r9
-	NyIzVprcqFRshOFXV44x+DOfqIexurM+TM7hSbt1P6shSoq/izFw3qneaRixtrOv
-	zWv8dZcCYQPmEkJy7fjiwXjgW2Y/+Hh41kA==
-X-ME-Sender: <xms:gPIqagigj4BL5Kh77rRsGrXhmKUZM1vdxp397fpZYq4iRGO1htv7wQ>
-    <xme:gPIqasuUvzWERqU7ICuGzTpYdMOLxnCpAtRezF-rtrsp1L9B1NykciMRq7-3LsSHP
-    BjRTDr8opeY4YetyYgNS_YGbvsY9XW04IjMgn4ffVi8GHGRFN72Ww>
-X-ME-Received: <xmr:gPIqah4XKICa5500ge73NvZD4rjxGOSBznWIOp-aHUGvgAhtlEFZHO6qsspRQ2oQkIdh_uMRZwmSmg2_Imgb5QPRrM1cnTbUCpjT>
-X-ME-Proxy-Cause: dmFkZTGHiIo0WxIs9cGHGoy+uoPOMCFXQ36xwldEPZ0zStuHW9BiYBd0VK5130Q7IapR+b
-    RzYhWJLvRDIjtJl35F8SCmfLIHdW1NKT5TZejFqwKNtnemDT8xQYIjHKEbjl8Tb9+DHR6D
-    Aa6YNuDcCUOUeCoseHbqOaoiwbOd3Kw9oOzn0e/9P3DZOUXTMDwmTmP6/3qfU6bjDXtiAI
-    Ij+QOutzNdjhF3bPKq0xx5/Q0AcM3u5pUBGJB4GRe/a/Dj7lnXu0zGN4BVx+eYa3Hs9Xb8
-    9AJOQitX7Mu5/oJTk9SPrp6T6ZXjJaNrEB8HRa4YUXfrqo9zaWe81aVlLbxyDe56YtHlVj
-    k4pwea5F0tKDUNbIT4+CkMb7+psZChT2NbHcih0Hxvj9exQKNfuDXBKVlVxPZtp+zDOGp3
-    llBoo4ep2Z3oGVyichkw5pBX4lMgZqGOPGEG9LevuMk0Ur1CvUWnFuTJJ8HD8nYSvM0LZc
-    jKhmlzCIIQoR8dYm+VvFQjg8pWgG4dx2HetDWaVryt/0RuseaLpo/6wmSCyt5jl0euTNeA
-    2JspWgF5UiPORnzmTlnEx7akY8iAvn2pvpiip7zJJPT0HTKReSaczlgPWqDBZpf7j6KHJU
-    cFPhMlgxDM+s2hZrNAi2MjsEVD0yjWklC9bOS4pVtAB7ii0t83D6qOtL0smQ
-X-ME-Proxy: <xmx:gPIqaoM7bM2clXSyipMkWMMC3NJfVAShnu6GEPOXR36cBPUNASEWWQ>
-    <xmx:gPIqavvXxpFmU8q4A5GuydUixDXp3FhwL5pF_Pff7bNtHf2bfLGeWQ>
-    <xmx:gPIqaraWSQwc7h48_cYM0Agivi0gA1zxdo4RHO3QY3W7lwmpDzYfYw>
-    <xmx:gPIqahwmjSpgOBB1Sp1peu5cHW2gcwsCjc2wf6dwMWc5AhawhoYFyg>
-    <xmx:gPIqajcYvP2v_bQpEjkPBtnehcBtigkyZnXyU8DdP_054qT5UuWqjdE8>
+	1781199834; x=1781286234; bh=usG+YAILYPW/oNrIiJbQOsom1xtzKnqmPCI
+	HXkToDQI=; b=CO5nf/YAVjz5E6t9wSkMMzC63boupABTjexalSBq0/QF/1O9Nxw
+	jrzXcEsRTlpkBz57cZ7IedJp8gh4KXVtoBwtx1FR5EGGVEwLT/tSij4o2NVpRKTq
+	P7b5aefDvV5XxoXCzh4kSx/03VEPZye13XupT17H+nEnJq8t+yvxe14JHMQ6HXBv
+	PeN6VHjR+7eFcnZsTup/J1/g2hs2CYIcNet+q9FlDUZE+dkL2EkZLk6JIXs7flmI
+	vEoLq+Ami5cJ9ZW463hlsosVuI2CFr6NWY570YYf/mo1UP9UL8XRF2hnVk4EqIYB
+	py8pe1s/fXcHaUZa9QY5NGW3fIA4p5avJaA==
+X-ME-Sender: <xms:2vMqaqv841oIlX55tIRV7qWuxDuSv-PVnvOcmEpAgik15CKmWN8wHA>
+    <xme:2vMqamf35iJFQUVHYJx75kjpIj5dqKG-EuYK1jQ-nmZcv4vWstRcrve9efjTd0cOV
+    Tiih8_EHJnXdnXORUg04lXZudx1_XI7WcOdV4b41pav2mRalRYZ_Q>
+X-ME-Received: <xmr:2vMqaqzuezEk4HjJWM3ME8VQSyZYK2df3n-tKVQ0CQLNND3ME7RkuXq5xHLxxuQ8qpXrO0LZ66tSND2mBSqhDQnMyjD2FyN2TR1P>
+X-ME-Proxy-Cause: dmFkZTGqdO7JP2I/vNFzQWqtS41heA4NHNS1c3RwqNFyc4d7lC/1knfgBHlKkn414cblzk
+    NTgiTom5GxIc3LDifbfiqaeGfHPjPjO15jpNLBU0q2YI/wzq78JjhipMErVh2JUAzJnz8k
+    n5PDk4datFKmkMHxUD+miC09t96EkNE6dXNoLGXmA35UufOyurZ9Pnb5Y6pc+8SY4imkhr
+    ktCqQksD96X1oUWJ66K7L3tJwLsoEElkO18UXHgBCvckN4L/xqRPwGZHyZsTlUqONMy0dT
+    BETZlvFWNWTnbrk/h1ewLSg4t2zlN7Ob4qPlhiffWqCIgYyB2ISGcP1XJ0NS6tbn6y2uM3
+    HumUpFPiHkaIFc/rZPt+IOwW5H2daACsSNduXdCqeee6eb4RXoCHnGnIM+tgW9kS9O7Hmf
+    gPgxmj0xephv4QdJGduRKrQw2zAhooyyd/dhaoj0Z4qzsNz2aiFBrb8xrPLcjeuT1NFX/N
+    5zrMivtp+vsIPyPb/kOE6S2rrCGBTzpTM7Eay1wjOeDzjOkoA0QHAc/RG+ZsA2RrTlkdAA
+    FrHmCjYJxPOoTqzrfS4M6G9prKCpIxlrQqDi778IdttDRdw0hqq2uNVgThN+U+SKWfS1pO
+    K0NE2M/JQaVucSL8i1pv/o8ShDnbyDfFomn4I+09PAPUXUKegfcKf8cB4vYQ
+X-ME-Proxy: <xmx:2vMqakE143Hzu4tk-9Jh-cQ4W9OlN8OAi2r2U0k7_x0qRX4bfWFhcw>
+    <xmx:2vMqamxIw8K_eDSSmsWQ-N8lat1RS-DJ41ug-SlwvXtnR3AJJ0Aq3Q>
+    <xmx:2vMqatsrXRqLFSlc6Aw7KRL8OevhYRV3c9esBi_0HsobtZX8FaklFA>
+    <xmx:2vMqar2B4c4sgj44Y--vbZa3nLeXWEJq_kZ3ZRUx8ZLrPTeKpe4DjQ>
+    <xmx:2vMqamsuwVBC22eW8sNwk8mKFaAr-gjNHnWkG5QYsrvSU1Vx7Oq4N4kB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 13:38:08 -0400 (EDT)
+ 11 Jun 2026 13:43:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Tamir Duberstein <tamird@gmail.com>,  git@vger.kernel.org,
-  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] ls-files: filter pathspec before lstat
-In-Reply-To: <20260611084132.GK2191159@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 11 Jun 2026 04:41:32 -0400")
-References: <20260608-ls-files-pathspec-lstat-v2-1-fb734b28422e@gmail.com>
-	<20260609104119.GA1509396@coredump.intra.peff.net>
-	<CAJ-ks9mJk-=xp1hW77hAoZwwQAfpMukYO8OvvkLx646-2Z3_kg@mail.gmail.com>
-	<20260611084132.GK2191159@coredump.intra.peff.net>
-Date: Thu, 11 Jun 2026 10:38:07 -0700
-Message-ID: <xmqqfr2tnfk0.fsf@gitster.g>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Git <git@vger.kernel.org>
+Subject: Re: git-diff in a worktree is an order of magnitude slower?
+In-Reply-To: <20260611085526.GL2191159@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 11 Jun 2026 04:55:26 -0400")
+References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+	<20260609001134.GD358144@coredump.intra.peff.net>
+	<CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
+	<20260611085526.GL2191159@coredump.intra.peff.net>
+Date: Thu, 11 Jun 2026 10:43:52 -0700
+Message-ID: <xmqqbjdhnfaf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,27 +89,19 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
->> Yeah, absolutely it's arbitrary. The simplest answer is that others
->> are welcome to bump this, provided they make the case for it.
+> I guess the distinction goes back to c06ff4908b (Record ns-timestamps if
+> possible, but do not use it without USE_NSEC, 2009-03-04), which details
+> some reasons you might not want USE_NSEC. Feels like it ought to be a
+> run-time config, though, and maybe even something that gets auto-probed
+> by git-init.
+
+I thought for a bit but didn't think of a clean way to auto-probe if
+a filesystem loses nanosecond-precision part of .st_Xtime when
+"metadata is flushed and later read back in" with reasonable
+overhead.  I do not think we want to trigger system-wide sync and/or
+dropping of buffer cache ;-)
+
+> Definitely not an area I have looked at much, though, nor thought hard
+> about. So there might be gotchas. :)
 >
-> OK. I can live with, I suppose, but I am tempted to say that it should
-> just kick in always (i.e., removing the pathspec.nr check).
-
-Yeah, that is certainly simpler, and this ...
-
-> Though I did show a case where the performance regresses, it was pretty
-> made-up and not something I'd expect in the real world. And you'd see
-> that same crappy performance with "git ls-files -- $(git ls-files)",
-> without the "-m".
-
-... makes it clear that "trigger only when there is one element in
-the pathspec" is optimizing for a wrong case.
-
-I think we want the log message document that this kind of thinking
-went into the final choice of the heuristics, like, "trigger only
-when there is one because ...", or "even though it would actually be
-an anti-optimization when the pathspec has enourmous number of
-elements, we always use this optimization because ...", but as long
-as that is done, either solution is fine.
-
-Thanks.
+> -Peff
