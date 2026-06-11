@@ -1,244 +1,212 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA7FA391E7F
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 20:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D5D369204
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 21:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781210649; cv=none; b=WsloMVkx3CGzy2D7MrdPrBmm4jYg1oD1ETXVdr6GWK6XSKOCDMhC5qivperfTjADwczKTDi02MWyrhg4Nt2D7UzijowlE4VFy5Mz42c29xKaNbTYQgDkbBvmGkeKatohZWJxvMv8qOdhhhck7jT10QpYBPcF1QdpyvFEDLyZf/Q=
+	t=1781211901; cv=none; b=awzXIboU1qC6LhQYGBwQooIAMieIL8mMR0dAvpL9ePzdYEASh3F70A4TGNxt/rjfH/l7svBBHteS3DivY1FvKTlc0XTNMWvBU3cvn7msid8AKT3GstVGQFETDjK7UIASWqdpiVzMJBAGXd7kWTn8CLLtdmsPLg+XSEzS8Pdbf0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781210649; c=relaxed/simple;
-	bh=/5pslbifY91UME4XU0RZ5/91OMXj8BUnGRkEFLJQWQ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nyaTP0Lxb0xH+886c3fl/IuTbyg803m/PV2Ijf7EA6nUg9iuzS+J7yqpPZ/DEBSr9MohTn2h7NgxMdn9CKrGjNrKeXU0nAuXlko22PXnkcDIcqUDhx99SvR01/Z+j0YXACMhgSIKduPlRVZp/ErEPShcBtdLFL6C+fINIODau3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=YWBjh/s+; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1781211901; c=relaxed/simple;
+	bh=rGAYNeuIgnqJS+EynA+xkwNLDQuKTEFX3Kt1skp79Ec=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=rumI1vkOgnGl+jwbjVdu8PvWxwwJ2QSH/WpLvX3FVSOHO1tF9k/L6DreppDWvbZ8CN5Tm2mvhigwNjA+Gj4oPaBxvLA9FqS/TWXbYGojeOwvQYl28SpkVXS+bkLVXmp5FH93MWG0YJ2V9OzUPpa1e9OdYD6fwbojvEih1AyY7jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iXayux+W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BLxUvp60; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="YWBjh/s+"
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 9DC9B4CF44
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 22:43:56 +0200 (CEST)
-Received: from piment-oiseau.localnet (unknown [IPv6:2a01:e0a:d1:f360:3d51:7a10:3981:3744])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id B4A5AB00563;
-	Thu, 11 Jun 2026 22:43:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1781210629;
-	bh=/5pslbifY91UME4XU0RZ5/91OMXj8BUnGRkEFLJQWQ8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWBjh/s+FIbiqCQE+v7JF3mI+KU1iFMTqETIpDQ+N2XbARJn0W8eHREDTf8HL6C4/
-	 sa5hgVb4naTTzdDXzfHFaPOg3z0boTUasvb0VlNB5GuqAVwH5Tb0iK27tks918158c
-	 p4JoKJLLBn6n7BPzkRKtKQBBjU5KSHuObwJmYQC/Xn080aAvWXz9co0dDxkkhM1iFP
-	 bWXa/BaMUPiResufh2rjam5d1qjgJvGDFzWSQRo+8491jBDPESF5HIZmyC/tfFXDTH
-	 J5cihlGmcmqX39AnuUHclVoUq/pALo/Id7UPNLHk9myGcKnBeTPrH7c4hF8+KKwGpf
-	 JcY9rvJhlkkOQ==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: Tuomas Ahola <taahol@utu.fi>, Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] doc: git-config: escape erroneous highlight markup
-Date: Thu, 11 Jun 2026 22:43:44 +0200
-Message-ID: <5106812.31r3eYUQgx@piment-oiseau>
-In-Reply-To: <20260611062525.GB2189088@coredump.intra.peff.net>
-References:
- <20260610185148.23920-1-taahol@utu.fi>
- <20260611062423.GA2189088@coredump.intra.peff.net>
- <20260611062525.GB2189088@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iXayux+W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BLxUvp60"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E324EEC0099;
+	Thu, 11 Jun 2026 17:04:58 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 17:04:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1781211898; x=1781298298; bh=jwIkPwo0twy6/fPO9+xkxwGxnvK6EgGg
+	7lhlqmOVnhs=; b=iXayux+W8SoCGvs2RQYXlW6LCRgom1RnHy/qA59NrwZYpn0C
+	ghv4LRO5dyS03trzdQw4ZEnQD90eBJQN8OG6ht0t14a21L3img6O/CT0Eu3w7wF9
+	yNEdmqxKfs72NuHViYyy+7qf8OJX7X25JCTiGx34hS9sdeWXbrR+0a5it8kt0hHd
+	5aa/dTltdrxTUdp4t3Xeza22iEdWY28zxTu+veSF2sSCFaWmAKwX51/rBRnCOL7n
+	xCz56lXhl84fdjU2R57hs9flQ7792WkrkESHmehhlKieIpMY3m6K9dlxI0BQJFFw
+	YkrgRZOkiC2kK7Udzn5MoCFyFfFLrW6bQLHghg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781211898; x=
+	1781298298; bh=jwIkPwo0twy6/fPO9+xkxwGxnvK6EgGg7lhlqmOVnhs=; b=B
+	LxUvp60Vmfcrtweye8dsVtqx4V6cTuFZBu7IWkjJexahXlCRI1iRp6STWmDCkoKT
+	AmVoyx57pJ9wK2rvWz7/NFhoAArgdt824c0bYd1tllJIkTNEv0W8Oda41of9KyK9
+	x1JVQ6pznT+4tELbJ7NrBbU7oc4PTAOyrSSqqfJMJIHfrzPdbSyefOE1Mbnyuulq
+	JlwP4ClMdnwM2avmKriPUz1XwUuxf1Da7gJLeNHbUCCdhq9SODY7i0FA/j4BPYk1
+	COdXN8fm++h4IRfrjm8rPWnAyo9GrWTMSF7nOiEf19L4ZOgLB9iiy6+UBtKIfibK
+	fJ+NfgWhALdMYLOJfGPPQ==
+X-ME-Sender: <xms:-iIraqNkjl2KNLGWAFfwDP2IkeN1VH1oir0H7ZBT0YYtNzdR_uMXcQ>
+    <xme:-iIrau_q4ry3e8QtN3CAQzTRWfooPyihVFAUCKz0rrMSHmoDgmPOkKvhBPTn5MttY
+    3bgBcN9Cs-zWh_urJ-cEglTOwOzcGqZbWd_q4uXhsG3fYCtJ902mQ>
+X-ME-Received: <xmr:-iIrau63TVaF9C96PPcdQo1U9sxrSwHvhQ3RP7baBkh__7NxZhoA5HoyMRI8jSYjTWoJAnb1T36DelE2q5093xHrkrATtA2XTuSn6BnGbr3vy3DAo-yj2HM>
+X-ME-Proxy-Cause: dmFkZTEXWNKQuUG1cgLpU7Ad1qjPqsUMLPXUJzcaSrhV6woD+9OKt8PYa2Ks5ajXU5Nk4t
+    begG3XWYQ7/VM3pd2OXPizPHGVVcff6fJkPpk2Zd/Qnc8Z630Tcon4/nuxIcDPqJYCAHn7
+    wmYe2TKWjbywI1dxLPGGeTGFNKvOaH8X2VTJpZCDLBtm3PBzS3t3/mU9qdex0dRIWmCGLZ
+    w5XYWmDYWu/6XzwB3/bmq9R63EmTXw/bOXKJP/Oe+ygWKolPl5TBMHMZEKfeLa+rDlElYD
+    ls+8zdG1YudgEcEmbvLeTrbNXflARJDhbJLYd6Mp4HDTqd8mxVtFOD0SN1dKS6lirxBzZF
+    IG5eEj8M+AFXvm44IMNFfTcVDO/wLHYFDEpTrDlNCq8ogd3HdwjKi3eRmzw3BimzL0URy4
+    ckqrwU7wenCQu5LJfP1l8eepF0UtFZ75G7q25b/ktb0dkfqiI73UKwSLgvLrZZiAS4bOsu
+    03qlZ8nAHtFE8hXsgXCOBPgq6mcXnxJxygBPd/6LAsOcFFjwPZkhSfPlCmWVt4JWMJGidi
+    slarmPymk3bZzw31XqD9xl4FvuJ0NWnO13qPmzeqpTVKVZA2wOYbUSlSzMdE0eUngZw5wz
+    i4ZxlfenHDiig3kZgTYMIuvsGyAsutpWjxLRRWrIO5+Ro+tb2zR7HHewmE6w
+X-ME-Proxy: <xmx:-iIral1tma2b_nuXI35NIopC38tSiQPvU4yEwEkyuf-jHB4l1-QurQ>
+    <xmx:-iIralCcFyTvkT0l6zbwft8u3gJucYG2Gfy35m-Tp3_9Agoi7dwWvQ>
+    <xmx:-iIran1Z1at1Y0bMbKk5psmnbvc-Yym_RFcziBcyJU8nKof6AaxSOg>
+    <xmx:-iIravsaDpmfhT5q385tGipG8HrR1cO_oFuJNBd8r5RHwJFV8mVFTQ>
+    <xmx:-iIrapywy9Ja-1XTUmbVCKotgdyjqe3K86Vnhl6YmeZCaBkIJL3sajx_>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Jun 2026 17:04:58 -0400 (EDT)
+Date: Thu, 11 Jun 2026 17:04:56 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: git@vger.kernel.org
+Cc: Matthew John Cheetham <mjcheetham@outlook.com>
+Subject: t5563-simple-http-auth failures with v2.55.0-rc0
+Message-ID: <20260611210456.XYfhytSL@teonanacatl.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Thursday, 11 June 2026 08:25:25 CEST Jeff King wrote:
-> [and naturally I forgot to cc Jean-No=C3=ABl; resending, sorry for the no=
-ise]
->=20
-> On Thu, Jun 11, 2026 at 02:24:23AM -0400, Jeff King wrote:
-> > On Thu, Jun 11, 2026 at 02:11:57AM -0400, Jeff King wrote:
-> > > Though curiously the case of `#` in git-fast-import seems not to get
-> > > marked as <code> in the html output (even though the nearby `LF` does=
-).
-> > > I wonder if there is some special treatment of `#` or something.
-> >=20
-> > Ah, weird, it has to do with our config file.
-> >=20
-> > If I do this (not in the git repository):
-> >   echo 'This is a literal `#` symbol.' >foo.adoc
-> >   asciidoc foo.adoc
-> >   grep -i symbol foo.html
-> >=20
-> > then I get <code> markers, like:
-> >   <div class=3D"paragraph"><p>This is a literal <code>#</code> symbol.<=
-/p></div>
-> >=20
-> > But if I build with:
-> >   asciidoc -f path/to/git/Documentation/asciidoc.conf foo.adoc
-> >=20
-> > then the grep shows:
-> >   <div class=3D"paragraph"><p>This is a literal # symbol.</p></div>
-> >=20
-> > Looks like it is due to our [literal-inlinemacro] definition, which
-> > comes from 974cdca345 (doc: introduce a synopsis typesetting,
-> > 2024-09-24). I think this might have been an unintended side effect.
-> > +cc the author of that commit.
-> >=20
-> > For the purposes of your series, I think we can ignore any issues with
-> > [literal-inlinemacro] for the moment, and decide on "\" versus ``
-> > depending on which we prefer.
-> >=20
-> > -Peff
+Hi,
 
-Oh, this is the black magic regexp that is not considering # for keyword
-character. Should be solved by something like (and I really hate these .in=
-=20
-files):
+I tested the freshly-tagged 2.55.0-rc0 and noticed some new
+failures on the in-progress Fedora 45 (AKA Rawhide) for
+t5563.18 (http.emptyAuth=auto attempts Negotiate before
+credential_fill) which was added in 9b1630b972 (t5563: add
+tests for http.emptyAuth with Negotiate, 2026-04-16).
 
+I notice that Fedora 44 (where the tests all pass) has
+curl-8.18.0 while Fedora 45 has curl-8.21.0-rc2.  The
+version of httpd is the same between them, FWIW.  I didn't
+compare other package differences; it could be something
+else entirely.
 
-=2D- >8 --
+Here is the output from a failing test run:
 
-=46rom: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
-Date: Thu, 11 Jun 2026 19:44:43 +0200
-Subject: [PATCH] asciidoc: fix handling of # in synopsis text
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+--8<--
+++ test_when_finished per_test_cleanup                                                                                                                                                                             
+++ test 0 = 0                                                                                                                                                                                                      
+++ test_cleanup=$'{ per_test_cleanup\n\t\t} || eval_ret=$?; :'                                                                                                                                                     
+++ set_credential_reply get                                                                                                                                                                                        
++++ test -n ''                                                                                                                                                                                                     
+++ local suffix=                                                                                                                                                                                                   
+++ cat                                                                                                                                                                                                             
+++ cat                                                                                                                                                                                                             
+++ cat                                                                                                                                                                                                             
+++ test_config_global credential.helper test-helper                                                                                                                                                                
+++ test_when_finished 'test_unconfig --global '\''credential.helper'\'''                                                                                                                                           
+++ test 0 = 0                                                                                                                                                                                                      
+++ test_cleanup=$'{ test_unconfig --global \'credential.helper\'\n\t\t} || eval_ret=$?; { per_test_cleanup\n\t\t} || eval_ret=$?; :'                                                                               
+++ git config --global credential.helper test-helper                                                                                                                                                               
+++ GIT_TRACE_CURL='/builddir/build/BUILD/git-2.55.0_rc0-build/git-2.55.0.rc0/t/trash directory.t5563-simple-http-auth/trace-auto'                                                                                  
+++ git -c http.emptyAuth=auto ls-remote http://127.0.0.1:5563/custom_auth/repo.git                                                                                                                                 
+ddd63c907a6168e9992caee4ef0e0fa1139e4eb3        HEAD                                                                                                                                                               
+ddd63c907a6168e9992caee4ef0e0fa1139e4eb3        refs/heads/master                                                                                                                                                  
+ddd63c907a6168e9992caee4ef0e0fa1139e4eb3        refs/tags/foo                                                                                                                                                      
+++ grep 'HTTP/[0-9.]* 401' '/builddir/build/BUILD/git-2.55.0_rc0-build/git-2.55.0.rc0/t/trash directory.t5563-simple-http-auth/trace-auto'                                                                         
+++ test_line_count = 3 actual_401s                                                                                                                                                                                 
+++ test 3 '!=' 3                                                                                                                                                                                                   
++++ wc -l                                                                                                                                                                                                          
+++ test 2 = 3                                                                                                                                                                                                      
+++ echo 'test_line_count: line count for actual_401s != 3'                                                                                                                                                         
+test_line_count: line count for actual_401s != 3                                                                                                                                                                   
+++ cat actual_401s                                                                                                                                                                                                 
+<= Recv header: HTTP/1.1 401 Authorization Required                                                                                                                                                                
+<= Recv header: HTTP/1.1 401 Authorization Required                                                                                                                                                                
+++ return 1                                                                                                                                                                                                        
+error: last command exited with $?=1                                                                                                                                                                               
+not ok 18 - http.emptyAuth=auto attempts Negotiate before credential_fill                                                                                                                                          
+--8<--
 
-There are occurrences of # in the synopsis text of git-config(1) and
-git-clone(1) that are not handled as keyword by the current asciidoc
-and asciidoctor processors.
+And a diff of the trace-auto from Fedora 44 and 45 via
+./t5563-simple-http-auth.sh -dix --run='-18' (with the
+sending port normalized to 44444 to reduce the noise):
 
-Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-=2D--
- Documentation/asciidoc.conf.in             | 12 ++++++------
- Documentation/asciidoctor-extensions.rb.in |  6 +++---
- 2 files changed, 9 insertions(+), 9 deletions(-)
+--- /dev/fd/63	2026-06-11 16:51:05.852135692 -0400
++++ /dev/fd/62	2026-06-11 16:51:05.853135711 -0400
+@@ -23,6 +23,7 @@
+ <= Recv header:
+ <= Recv data, 0000000000 bytes (0x00000000)
+ == Info: shutting down connection #0
++== Info: Could not find host 127.0.0.1 in the .netrc file; using defaults
+ == Info: NTLM-proxy picked AND auth done set, clear picked
+ == Info: Hostname 127.0.0.1 was found in DNS cache
+ == Info:   Trying 127.0.0.1:5563...
+@@ -47,37 +48,8 @@
+ == Info: no chunk, no close, no size. Assume close to signal end
+ <= Recv header, 0000000001 bytes (0x00000001)
+ <= Recv header:
+-== Info: shutting down connection #1
+-== Info: Issue another request to this URL: 'http://127.0.0.1:5563/custom_auth/repo.git/info/refs?service=git-upload-pack'
+-== Info: NTLM-proxy picked AND auth done set, clear picked
+-== Info: Hostname 127.0.0.1 was found in DNS cache
+-== Info:   Trying 127.0.0.1:5563...
+-== Info: Established connection to 127.0.0.1 (127.0.0.1 port 5563) from 127.0.0.1 port 44444
+-== Info: using HTTP/1.x
+-== Info: gss_init_sec_context() failed: No credentials were supplied, or the credentials were unavailable or inaccessible. SPNEGO cannot find mechanisms to negotiate. 
+-== Info: Server auth using Negotiate with user ''
+-=> Send header, 0000000214 bytes (0x000000d6)
+-=> Send header: GET /custom_auth/repo.git/info/refs?service=git-upload-pack HTTP/1.1
+-=> Send header: Host: 127.0.0.1:5563
+-=> Send header: User-Agent: git/2.55.0.rc0
+-=> Send header: Accept: */*
+-=> Send header: Accept-Encoding: deflate, gzip, br
+-=> Send header: Pragma: no-cache
+-=> Send header: Git-Protocol: version=2
+-=> Send header:
+-== Info: Request completely sent off
+-<= Recv header, 0000000036 bytes (0x00000024)
+-<= Recv header: HTTP/1.1 401 Authorization Required
+-== Info: gss_init_sec_context() failed: No credentials were supplied, or the credentials were unavailable or inaccessible. SPNEGO cannot find mechanisms to negotiate. 
+-<= Recv header, 0000000028 bytes (0x0000001c)
+-<= Recv header: WWW-Authenticate: Negotiate
+-<= Recv header, 0000000044 bytes (0x0000002c)
+-<= Recv header: WWW-Authenticate: Basic realm="example.com"
+-== Info: no chunk, no close, no size. Assume close to signal end
+-<= Recv header, 0000000001 bytes (0x00000001)
+-<= Recv header:
+ <= Recv data, 0000000000 bytes (0x00000000)
+-== Info: shutting down connection #2
++== Info: shutting down connection #1
+ == Info: NTLM-proxy picked AND auth done set, clear picked
+ == Info: Hostname 127.0.0.1 was found in DNS cache
+ == Info:   Trying 127.0.0.1:5563...
+@@ -113,7 +85,7 @@
+ <= Recv data: orn.0020fetch=shallow wait-for-done.0012server-option.0017ob
+ <= Recv data: ject-format=sha1.0000
+ <= Recv data, 0000000000 bytes (0x00000000)
+-== Info: shutting down connection #3
++== Info: shutting down connection #2
+ == Info: NTLM-proxy picked AND auth done set, clear picked
+ == Info: Hostname 127.0.0.1 was found in DNS cache
+ == Info:   Trying 127.0.0.1:5563...
+@@ -154,4 +126,4 @@
+ <= Recv data: 9e4eb3 refs/heads/master.003bddd63c907a6168e9992caee4ef0e0fa
+ <= Recv data: 1139e4eb3 refs/tags/foo.0000
+ <= Recv data, 0000000000 bytes (0x00000000)
+-== Info: shutting down connection #4
++== Info: shutting down connection #3
 
-diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
-index 31b883a72c..b50fad588e 100644
-=2D-- a/Documentation/asciidoc.conf.in
-+++ b/Documentation/asciidoc.conf.in
-@@ -43,7 +43,7 @@ ifdef::doctype-book[]
- endif::doctype-book[]
-=20
- [literal-inlinemacro]
-=2D{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<emphasis>\1</emphasis>', re=
-=2Esub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@\\\*\/_^\$%]+\.?)+|,)=
-',r'\1<literal>\2</literal>', re.sub(r'(\.\.\.?)([^\]$.])', r'<literal>\1</=
-literal>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['pa=
-sstext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
-+{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<emphasis>\1</emphasis>', re.s=
-ub(r'([\[\s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@#\\\*\/_^\$%]+\.?)+|,)',r=
-'\1<literal>\2</literal>', re.sub(r'(\.\.\.?)([^\]$.])', r'<literal>\1</lit=
-eral>\2', macros.passthroughs[int(attrs['passtext'][1:-1])] if attrs['passt=
-ext'][1:-1].isnumeric() else attrs['passtext'][1:-1])))}
-=20
- endif::backend-docbook[]
-=20
-@@ -75,24 +75,24 @@ git-relative-html-prefix=3D
- <a href=3D"{git-relative-html-prefix}{target}.html">{target}{0?({0})}</a>
-=20
- [literal-inlinemacro]
-=2D{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<em>\1</em>', re.sub(r'([\[\=
-s|()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@,\\\*\/_^\$]+\.?)+)',r'\1<code>\2</=
-code>', re.sub(r'(\.\.\.?)([^\]$.])', r'<code>\1</code>\2', macros.passthro=
-ughs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() e=
-lse attrs['passtext'][1:-1])))}
-+{eval:re.sub(r'(&lt;[-a-zA-Z0-9.]+&gt;)', r'<em>\1</em>', re.sub(r'([\[\s|=
-()>]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@#,\\\*\/_^\$]+\.?)+)',r'\1<code>\2</c=
-ode>', re.sub(r'(\.\.\.?)([^\]$.])', r'<code>\1</code>\2', macros.passthrou=
-ghs[int(attrs['passtext'][1:-1])] if attrs['passtext'][1:-1].isnumeric() el=
-se attrs['passtext'][1:-1])))}
-=20
- endif::backend-xhtml11[]
-=20
- ifdef::backend-docbook[]
- ifdef::doctype-manpage[]
- [blockdef-open]
-=2Dsynopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(=
-\\]\\|$\\)!<phrase>\\0</phrase>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=
-=3Da-zA-Z0-9:+@,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<literal>\\2</literal>=
-!g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<emphasis>\\0</emphasis>!g'"
-+synopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(\\=
-]\\|$\\)!<phrase>\\0</phrase>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=3Da=
-=2DzA-Z0-9:+@#,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<literal>\\2</literal>!=
-g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<emphasis>\\0</emphasis>!g'"
-=20
- [paradef-default]
-=2Dsynopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(=
-\\]\\|$\\)!<phrase>\\0</phrase>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=
-=3Da-zA-Z0-9:+@,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<literal>\\2</literal>=
-!g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<emphasis>\\0</emphasis>!g'"
-+synopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(\\=
-]\\|$\\)!<phrase>\\0</phrase>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=3Da=
-=2DzA-Z0-9:+@#,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<literal>\\2</literal>!=
-g;s!&lt;[-a-zA-Z0-9.]\\+&gt;!<emphasis>\\0</emphasis>!g'"
- endif::doctype-manpage[]
- endif::backend-docbook[]
-=20
- ifdef::backend-xhtml11[]
- [blockdef-open]
-=2Dsynopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(=
-\\]\\|$\\)!<span>\\0</span>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=3Da-z=
-A-Z0-9:+@,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<code>\\2</code>!g;s!&lt;[-a=
-=2DzA-Z0-9.]\\+&gt;!<em>\\0</em>!g'"
-+synopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(\\=
-]\\|$\\)!<span>\\0</span>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=3Da-zA-=
-Z0-9:+@#,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<code>\\2</code>!g;s!&lt;[-a-=
-zA-Z0-9.]\\+&gt;!<em>\\0</em>!g'"
-=20
- [paradef-default]
-=2Dsynopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(=
-\\]\\|$\\)!<span>\\0</span>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=3Da-z=
-A-Z0-9:+@,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<code>\\2</code>!g;s!&lt;[-a=
-=2DzA-Z0-9.]\\+&gt;!<em>\\0</em>!g'"
-+synopsis-style=3Dtemplate=3D"verseparagraph",filter=3D"sed 's!&#8230;\\(\\=
-]\\|$\\)!<span>\\0</span>!g;s!\\([\\[ |()]\\|^\\|\\]\\|&gt;\\)\\([-=3Da-zA-=
-Z0-9:+@#,\\/_^\\$.\\\\\\*]\\+\\|&#8230;\\)!\\1<code>\\2</code>!g;s!&lt;[-a-=
-zA-Z0-9.]\\+&gt;!<em>\\0</em>!g'"
- endif::backend-xhtml11[]
-diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asc=
-iidoctor-extensions.rb.in
-index fe64a62d96..b5f06827ca 100644
-=2D-- a/Documentation/asciidoctor-extensions.rb.in
-+++ b/Documentation/asciidoctor-extensions.rb.in
-@@ -50,7 +50,7 @@ module Git
-       def process parent, reader, attrs
-         outlines =3D reader.lines.map do |l|
-           l.gsub(/(\.\.\.?)([^\]$\. ])/, '{empty}`\1`{empty}\2')
-=2D           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=3D~@,/_^\$\\\*]+)}, '\=
-1{empty}`\2`{empty}')
-+           .gsub(%r{([\[\] |()>]|^)([-a-zA-Z0-9:+=3D~@#,/_^\$\\\*]+)}, '\1=
-{empty}`\2`{empty}')
-            .gsub(/(<[-a-zA-Z0-9.]+>)/, '__\\1__')
-            .gsub(']', ']{empty}')
-         end
-@@ -73,7 +73,7 @@ module Git
-         elsif type =3D=3D :monospaced
-           node.text.gsub(/(\.\.\.?)([^\]$\.])/, '<literal>\1</literal>\2')
-               .gsub(/^\.\.\.?$/, '<literal>\0</literal>')
-=2D              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@/_^=
-\$\\\*%]+\.{0,2})+|,)}, '\1<literal>\2</literal>')
-+              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@#/_^\=
-$\\\*%]+\.{0,2})+|,)}, '\1<literal>\2</literal>')
-               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<emphasis>\1</emphasis>')
-         else
-           open, close, supports_phrase =3D QUOTE_TAGS[type]
-@@ -102,7 +102,7 @@ module Git
-         if node.type =3D=3D :monospaced
-           node.text.gsub(/(\.\.\.?)([^\]$.])/, '<code>\1</code>\2')
-               .gsub(/^\.\.\.?$/, '<code>\0</code>')
-=2D              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@,/_=
-^\$\\\*%]+\.{0,2})+)}, '\1<code>\2</code>')
-+              .gsub(%r{([\[\s|()>.]|^|\]|&gt;)(\.?([-a-zA-Z0-9:+=3D~@#,/_^=
-\$\\\*%]+\.{0,2})+)}, '\1<code>\2</code>')
-               .gsub(/(&lt;[-a-zA-Z0-9.]+&gt;)/, '<em>\1</em>')
-=20
-         else
-=2D-=20
+The absence of one of the requests stands out.  Anyone
+familiar with this area have suggestions for how to further
+debug it?  It should reproduce easily in a Fedora 45
+container, if anyone wants to poke at it more directly.
 
+Thanks,
 
-
+-- 
+Todd
