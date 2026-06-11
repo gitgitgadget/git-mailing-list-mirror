@@ -1,79 +1,80 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23373644DB
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A173624B8
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781160293; cv=none; b=NAdtF8d4Er0UeZaGgHZ2BE3YYwk/U2SvWbadXrD7NnB4EbX0rN2+aFsoMhk8UhBImq6FpgkmLZ+n+MUmbrtxWkutDEBJws/MpLQUSwQ5ODIb6naFx6hxudkhP2YZE0Udo+11fPsBUlVfYGU+2gADf11WwXLZd1pFj0wM9H3c24I=
+	t=1781160298; cv=none; b=rLOAiCRJm4gGAhJnN88HMBcvyds2Pa9AdYLtndje5dGS1+CAggfyrlgou8QWHdqpGFvmRo0GTnKzDo5zRWB1RDimu26tghp7nHsGRPRBD3BZJIoEoKQn/SDhwPff4fXm07jXp9FPcjUBVndwmGEEP4sDcCKfM/+602puFBgvSVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781160293; c=relaxed/simple;
-	bh=UNlSG75y363a5InmT0NOl5Kgha4u3nM/8x02gL9yPYM=;
+	s=arc-20240116; t=1781160298; c=relaxed/simple;
+	bh=1zJUIfVP0yZ4TeZtwHJjH0AdaZf/P1RjOweeZFkrgcU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=is2BUDvq6uwMvIj2j1kdNSBI44Si8pBlmIq4po04hLLChmGy6YeY52PvdWBxI5TNOVNgQwSjoXWdggh61T6oZdDQF6S6TQvT1ayVgsBzDYR3Wa7Xsf0j/DUI7/Q2GJgu2AJxuN4IlJEwU0GwBWbHyagSbaL3YA6g9/8xl+sqhfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rOf3QSsq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C4QNXMqu; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=VYJsI40qXSIwDu82fRtySlyN1j3iSIrxOgVOQr63ajbeb0TZD+6dkgh5yeggnjkkyLzpBEjo+tY45Khs/foHSA8FSNknG2W1Em19pZGI4nbKIyXpjPx3ucOHtLR0PKafV7tBV0yYJdyJjb6v7mwuvGjDczbOibyC1yId9AjmoXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZLMSTozu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SC6GmNfh; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rOf3QSsq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C4QNXMqu"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 047231D00110;
-	Thu, 11 Jun 2026 02:44:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZLMSTozu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SC6GmNfh"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 27CAD1D000F8;
+	Thu, 11 Jun 2026 02:44:55 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 11 Jun 2026 02:44:52 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 11 Jun 2026 02:44:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781160291;
-	 x=1781246691; bh=oa3kwXe0uUAQErv5xnK+EiGjha/CbuknGbAPVewxYZU=; b=
-	rOf3QSsqOIc8QEqF3W8Bi68mRo0nUC+DPJ9Jabyj0uYdFpq0HQE4ueLBeur2Izvt
-	F71iVpG0Q6UhY2X+GAXxQeQCoWNSOTMyDgqKOxTslM890IzmLq966G8C2fF/LhvU
-	i8x24vQyKl9pQ20+ttUrJI0pfp2PJibazx14Qw4C6AfkIdlWouXTZg8zk8DtgLL9
-	kHfaDsgNoc0LpeDisNIxbxziwullkaOmP703QoLAEXmXcdTjA2zdRyQazyZx/3cP
-	eSwN2UABiP+MGFZxJJ8fi3DSooispqXQB8x4gbbT48J/qeNuuaEJm4ZAo6srPCqB
-	pTp4CLQSm/PRCXd87Pdr3A==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781160295;
+	 x=1781246695; bh=AOdzHf3iWIFe3SStbsPJR+/cWifPhjV1QCISugNeO8g=; b=
+	ZLMSTozugSs83s8OybVKy/mOlVWo1tPYnth5iftCtfUykIjLo5+XP4V3w4kTbyXf
+	Sydf9SzRoYAjU+t2SXu8pX7amEbXbfy8/NARpG+ZE9swwF9OJHHHQT+UrwR4tPAU
+	gpCYpzEQKl4EoproGLh0zcbLi27nmblGorutwr1e+RbkFtuP4wUWhA0ZvacZLU18
+	ioPUPa/fiSKNa51cY8IavxSHFYUR2WeP+85I8uEsmQmFLERf3iuliVBKoO2DuExR
+	/tsfXf8ILlthCwqhuAhy24TD8XRczlWylfXbqJB7ED2ICkVGvQcGBT7cm3SyumEY
+	XZthvJ8f9lektubFj7QLSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781160291; x=
-	1781246691; bh=oa3kwXe0uUAQErv5xnK+EiGjha/CbuknGbAPVewxYZU=; b=C
-	4QNXMquHgPgX0UlVZ8Yi32QD74S7Ymf3uSDksifF/aIM4JyTHSW51W+2JCDQW1y1
-	Mc6QNRd8aEI7atOw7vC229tYxaqyng5abUsjP/5RJLuWPNvUIqixWoWi9qsZLANp
-	EHwArXZl/ja1OZAFY9hIJSnCZdExllQ4cwnnkkooORobSYUiSjDMAJFSqpm/ydvd
-	qKk9yhyBvbkRww5o15qnJTmndYnfiuYrCXiCoO8KHX/QCk2ZTVP8hV7/qxnEckwm
-	GdpJCPOljpuH9Uua+wVtI4rxxK2iOebCNCEAgSDwrpT45PrGUDOPQo0brRIm6LwJ
-	gJ+IH0gwyIk1hrXLzRlIQ==
-X-ME-Sender: <xms:Y1kqapsmy0OKebHGf4RHKG5YiofrMwAsuRU7oFprjgH9o7iHgZcqLw>
-    <xme:Y1kqaodRpju81olUR4Gs2cwfBH0oZhLhWs-P98nz3ZS4syRh3Uw6Avz2GgGRt9BgN
-    1IDiphnTstjvgnoZJCE8EgeDUFU4Kd4fqiM3VkatmvQIUxeBdz2Qw>
-X-ME-Received: <xmr:Y1kqaqb2zEEqducHmJx86xpr1UC859x4kfkjYQxg9y7Y86OPEFAhpOt3usHbHtsQlMIBb0rJqZzfptSZblykNj4lPsHOkVUbioRYGeeOCZlK>
-X-ME-Proxy-Cause: dmFkZTFCyXCD6OjKtcsXuWUj1sAwMVK/fG6NosXZlI3sudgmNyYqAeR9UQNuHFYqeGwr8l
-    MyWCUoqkM2JdySlbFv88VWNSdrPdVDSe0MJgKUHYRY9oPpYHvOFKzG/TVcAWnQnW5Rzqo3
-    1nnLUU7uPmuOuN+xrA3VgVRZyuunO21GDK/0/A16BQmKHZgaP8oBrB8vNx1q2kOPepV+S6
-    xjI+sdRVQ2IQbxC4O1vIeGvt3nKJAJ2rzrFO62MaBlI8YtHDFgqsA8YSRinnb1rMUhV52X
-    4Ov2R3Dw9BtV8XFmsdQJeHSf0zI2fVj4naBVJSze9XJ0cHk1tYqhXuFqMsTx50nUN31/Qn
-    ERAfDp4sOUJoYvea84M4wR3UDPWLZg2BEjCUMJYM11skevrcQWmAdovwIq9+QALNzgtj4c
-    snf0BEMcmuGe6FCWvURwdmtwXiTDjkAjJF4yjbR/w1AJbOEtFW3e+WilHcZbldaRdWOIPY
-    kmHp/1P1+ZGy5JK5SGd/SkLv9QufH7Ds3oui1ozLQ+dPwC6g9/OKHmDTE/J1iWn474Yle7
-    QKJaXmNwM9WZweL1KZ4u5HgNg3ZtOoU+2saBWzZGkzChiEJMiIU/4G2ZI53XQhPztCFqfT
-    RPYx/A0igPK3hPSEQQ+3pv7bhG5KB7ruAwqpLNpx/5ShnFnZz1X+j3p+0t3w
-X-ME-Proxy: <xmx:Y1kqarVxwKZjWV1gnCx4_6FZqapC1bFtZkQTn492wi6u2o10Wwbq3g>
-    <xmx:Y1kqasiFu5iBk2C76O4oCd1xp3ukEJzI6BnXE9wDPa8LvwEFNIC3BA>
-    <xmx:Y1kqapWRAeSxgzoBtCCw27PiAbuZKSWhsmBvSTigCdw-eZSqIV8m5A>
-    <xmx:Y1kqajONZ8QJwmXWZS9hpmJVGv6ZXhZpJjk-wtbg9XB90_v-M4ue7w>
-    <xmx:Y1kqaste6nxEEvkSGuTEzK05r4DG54g4EC7eW4ZqVVL4VlQzPhHBgftz>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781160295; x=
+	1781246695; bh=AOdzHf3iWIFe3SStbsPJR+/cWifPhjV1QCISugNeO8g=; b=S
+	C6GmNfhAt2v4l36vkUSKFZGVNE/KIvFgbuFnx6TZcytxIJ3wb72QMpXIE6B1Ic0R
+	2Ka4ExnnOEAf89Ja3ChBzQKqM4inGUvgI2ybvyQopaf+P9YUZGBCb/vFAPCwDQUl
+	CJ2NfLAOQYT2qNg93d6ZMV1pdGc0y2E/h1YDExv7tOz/Nd3oB77r1mxCZV22nAUt
+	hFj4I06Ua+hXKsyQOjgT2Sfj7EkKEH9DHczkvQK+WnwVPSBjpniqKR9uIPtdS9Wu
+	g62QgMllgWqYJTd3rdLb5oYAMa6076c6J2yFUzcm1CQFlOKbD+4FHeI9gF3A27Zh
+	CZ0mm2suuDRE/wGnmtXpA==
+X-ME-Sender: <xms:ZlkqahD5TmmAYsdAdzHXR5yw5Jdji5RjpiHgCRog0rZN30Gs-7yfWQ>
+    <xme:ZlkqalgLuB20f0MlE492mG89KnTtRxkQ3LE44rfBJP2P6k9fAwacC55iGso_5znaZ
+    bGb1XQLHB48mtkTJGCgOM-i2vNdpSzx6gm9fhdHHAJ3VMTca9bG0A>
+X-ME-Received: <xmr:ZlkqaqPa9vp1beNl06nbN-IvG8g-c7JqpCkQRUqLmYHXx9PF7oCNSAobeBK5yBadzzpcRwTlzqz9ThauE7Sy5ZzEQ4EMN-rMx-Zk1jPjfMcc>
+X-ME-Proxy-Cause: dmFkZTF/+amKZAWEfZ0XKC1clGzeEdUQ0sbNVPmfkao1bjuFszGMFlLsNP6VIL6nYaFhf8
+    KuZOlpXDb1+t+UjZzn+rooZ63IyyiHIGHw09HoJoH9KXxBBj+o6sqMXMiAdGpIbsou6I7U
+    7SECo8r2jLbqxNxaKEsfWCXGgIZJehesKiCeieg9aFozFaYm4wMsH6ArmFJuaSmaDJUEuX
+    X0++evCOGiHAiDfyOmSU+MO7I8nUHuXRF43lJrXyZVLyGz+nBstf2CfiAOFg8A9zs/xB1H
+    x33NIndHuVLmXhfJridtUEJvT8M5hbXbLkM+mlDXo3gtSuC3qLjhY4A9mkeHuuoK9wvjgr
+    Kf0526yNYI6A2Tgd9EpmanjbhG4CnhnfLXG8al2+m/NbDxlGQtTE8KH5gnyrmEy+/AkxjE
+    FCeusASHYVR02XqaBX/b0jhZUSkSxZZB67aiCc8fEJC2NKjsQNs6z8qu1KLofynT3h5Z3v
+    qHOdX6ze4sMbl8ViOP37VRjO0ZN9FEEX9rzxjlYmgy2tKL6B9E7sFRpFm3cVVlxAs2R6S5
+    wdTyP+QC6YgZ/4BIyFD8hSNgAOpCdd4rM17tGjjMuWWKQdmy+0LtnjJQPehBGB2mk2RBRd
+    6ys4OI1wpY+Swm4cXhpo/R5J8ZvZlNeAo0tPZe5xWW+eFB2h6zTbgxp+3o3Q
+X-ME-Proxy: <xmx:Zlkqam7Sp7MOpljIdNPasPrJ2FUCuk1AFU9fkgoo7Hwu6aR4Ilga6A>
+    <xmx:Zlkqao3qsZBMs1sum75J6TI4iSR4K_NU-R_KkTbDT3HPOuK8j2PKsg>
+    <xmx:ZlkqanZ3D5Im4UbtMAdV4aM0-RVvzeE9H7fOXQG52PzOgftJEwGf5w>
+    <xmx:ZlkqagCURmZSQ3f2sDBXiqS_2V47t7K42K4nkg47F6bGo-QAY9TyYQ>
+    <xmx:Z1kqagwFc38DrcsLbmcMZLqLP66iac7QKtv-5t8oUeo9X1dUQ_Xa5PTm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 02:44:51 -0400 (EDT)
+ 11 Jun 2026 02:44:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a2b90259 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 06:44:50 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 77a436c8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 06:44:53 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 11 Jun 2026 08:44:41 +0200
-Subject: [PATCH v2 3/7] setup: remove global `git_work_tree_cfg` variable
+Date: Thu, 11 Jun 2026 08:44:42 +0200
+Subject: [PATCH v2 4/7] builtin/init: stop modifying
+ `is_bare_repository_cfg`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,119 +83,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-b4-pks-setup-drop-global-state-v2-3-a6f7269c841d@pks.im>
+Message-Id: <20260611-b4-pks-setup-drop-global-state-v2-4-a6f7269c841d@pks.im>
 References: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
 In-Reply-To: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-The global `git_work_tree_cfg` variable used to be modified by both
-"setup.c" and by "builtin/init-db.c". We have refactored the latter user
-to not use that variable at all anymore in a preceding commit, which
-makes "setup.c" the only remaining user.
+We're modifying `is_bare_repository_cfg` in "builtin/init.c" to indicate
+whether the newly created repository is supposed to be a bare repository
+or not.
 
-Even for "setup.c" it is unnecessary though, as we only ever set it to
-the value we have stored in the discovered repository format. The
-consequence is that we only ever set it in case we already have it set
-to the same value in our discovered repository format, which makes it
-redundant.
+This is ultimately unnecessary though: when initializing the repository
+in `init_db()` we eventually set `is_bare_repository_cfg = !work_tree`,
+so all that matters is whether or not we have a working tree configured,
+and the working tree is set up in the non-bare in "builtin/init.c".
 
-Refactor the code so that we instead use the worktree configuration as
-discovered via the repository format. Drop the global variable.
-
-Note that in `check_repository_format_gently()` we now have to free the
-candidate work tree variable. This change is required to retain previous
-semantics: before we essentially had an implicit `else` branch where we
-set `git_work_tree_cfg = NULL`, but we were able to elide that branch
-because we already knew that it would be `NULL` anyway. Now that we use
-the candidate work tree directly to populate the repository's work tree
-though we have to clear it to retain those semantics.
+Stop modifying the global variable in "builtin/init.c" in favor of a
+local variable.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 28 +++++++++++-----------------
- 1 file changed, 11 insertions(+), 17 deletions(-)
+ builtin/init-db.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 52228b42a1..71fc6b33da 100644
---- a/setup.c
-+++ b/setup.c
-@@ -31,9 +31,6 @@ enum allowed_bare_repo {
- 	ALLOWED_BARE_REPO_ALL,
- };
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index b4343c2804..52aa92fb0a 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -81,6 +81,7 @@ int cmd_init_db(int argc,
+ 	const char *template_dir = NULL;
+ 	char *template_dir_to_free = NULL;
+ 	unsigned int flags = 0;
++	int bare = is_bare_repository_cfg;
+ 	const char *object_format = NULL;
+ 	const char *ref_format = NULL;
+ 	const char *initial_branch = NULL;
+@@ -90,7 +91,7 @@ int cmd_init_db(int argc,
+ 	const struct option init_db_options[] = {
+ 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+ 				N_("directory from which templates will be used")),
+-		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
++		OPT_SET_INT(0, "bare", &bare,
+ 				N_("create a bare repository"), 1),
+ 		{
+ 			.type = OPTION_CALLBACK,
+@@ -116,7 +117,7 @@ int cmd_init_db(int argc,
  
--/* This is set by setup_git_directory_gently() and/or git_default_config() */
--static char *git_work_tree_cfg;
--
- static struct startup_info the_startup_info;
- struct startup_info *startup_info = &the_startup_info;
- const char *tmp_original_cwd;
-@@ -799,13 +796,10 @@ static int check_repository_format_gently(const char *gitdir,
+ 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
+ 
+-	if (real_git_dir && is_bare_repository_cfg == 1)
++	if (real_git_dir && bare == 1)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--separate-git-dir", "--bare");
+ 
+ 	if (real_git_dir && !is_absolute_path(real_git_dir))
+@@ -160,7 +161,7 @@ int cmd_init_db(int argc,
+ 	} else if (0 < argc) {
+ 		usage(init_db_usage[0]);
+ 	}
+-	if (is_bare_repository_cfg == 1) {
++	if (bare == 1) {
+ 		char *cwd = xgetcwd();
+ 		setenv(GIT_DIR_ENVIRONMENT, cwd, argc > 0);
+ 		free(cwd);
+@@ -187,7 +188,7 @@ int cmd_init_db(int argc,
+ 	 */
+ 	git_dir = xstrdup_or_null(getenv(GIT_DIR_ENVIRONMENT));
+ 	work_tree = xstrdup_or_null(getenv(GIT_WORK_TREE_ENVIRONMENT));
+-	if ((!git_dir || is_bare_repository_cfg == 1) && work_tree)
++	if ((!git_dir || bare == 1) && work_tree)
+ 		die(_("%s (or --work-tree=<directory>) not allowed without "
+ 			  "specifying %s (or --git-dir=<directory>)"),
+ 		    GIT_WORK_TREE_ENVIRONMENT,
+@@ -224,10 +225,10 @@ int cmd_init_db(int argc,
+ 		strbuf_release(&sb);
  	}
  
- 	if (!has_common) {
--		if (candidate->is_bare != -1) {
-+		if (candidate->is_bare != -1)
- 			is_bare_repository_cfg = candidate->is_bare;
--		}
--		if (candidate->work_tree) {
--			free(git_work_tree_cfg);
--			git_work_tree_cfg = xstrdup(candidate->work_tree);
--		}
-+	} else {
-+		FREE_AND_NULL(candidate->work_tree);
- 	}
+-	if (is_bare_repository_cfg < 0)
+-		is_bare_repository_cfg = guess_repository_type(git_dir);
++	if (bare < 0)
++		bare = guess_repository_type(git_dir);
  
- 	return 0;
-@@ -1145,7 +1139,7 @@ static const char *setup_explicit_git_dir(struct repository *repo,
- 	if (work_tree_env)
- 		set_git_work_tree(repo, work_tree_env);
- 	else if (is_bare_repository_cfg > 0) {
--		if (git_work_tree_cfg) {
-+		if (repo_fmt->work_tree) {
- 			/* #22.2, #30 */
- 			warning("core.bare and core.worktree do not make sense");
- 			repo->worktree_config_is_bogus = true;
-@@ -1156,15 +1150,15 @@ static const char *setup_explicit_git_dir(struct repository *repo,
- 		free(gitfile);
- 		return NULL;
- 	}
--	else if (git_work_tree_cfg) { /* #6, #14 */
--		if (is_absolute_path(git_work_tree_cfg))
--			set_git_work_tree(repo, git_work_tree_cfg);
-+	else if (repo_fmt->work_tree) { /* #6, #14 */
-+		if (is_absolute_path(repo_fmt->work_tree))
-+			set_git_work_tree(repo, repo_fmt->work_tree);
- 		else {
- 			char *core_worktree;
- 			if (chdir(gitdirenv))
- 				die_errno(_("cannot chdir to '%s'"), gitdirenv);
--			if (chdir(git_work_tree_cfg))
--				die_errno(_("cannot chdir to '%s'"), git_work_tree_cfg);
-+			if (chdir(repo_fmt->work_tree))
-+				die_errno(_("cannot chdir to '%s'"), repo_fmt->work_tree);
- 			core_worktree = xgetcwd();
- 			if (chdir(cwd->buf))
- 				die_errno(_("cannot come back to cwd"));
-@@ -1217,7 +1211,7 @@ static const char *setup_discovered_git_dir(struct repository *repo,
- 		return NULL;
+-	if (!is_bare_repository_cfg) {
++	if (!bare) {
+ 		const char *git_dir_parent = strrchr(git_dir, '/');
  
- 	/* --work-tree is set without --git-dir; use discovered one */
--	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-+	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || repo_fmt->work_tree) {
- 		char *to_free = NULL;
- 		const char *ret;
- 
-@@ -1267,7 +1261,7 @@ static const char *setup_bare_git_dir(struct repository *repo,
- 	setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
- 
- 	/* --work-tree is set without --git-dir; use discovered one */
--	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-+	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || repo_fmt->work_tree) {
- 		static const char *gitdir;
- 
- 		gitdir = offset == cwd->len ? "." : xmemdupz(cwd->buf, offset);
+ 		if (work_tree) {
 
 -- 
 2.54.0.1189.g8c84645362.dirty
