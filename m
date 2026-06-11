@@ -1,114 +1,104 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05041DEFE8
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781185955; cv=pass; b=doHwsdst8lEp+/OxEPzixwVpH4ua/LgjnMhJn8ZSNxaCxFNaNZRsj8sZ6ezhMOrti7FOvNO7Hq3l1avha5y5mSU69YWO9TqPI+VO7QlXBwfZJGvw7e3fBZdx/dfL1V/adq9PiVXZN+vdNy/W6qSOHMiAGa41je/tQAhq59vnFd8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781185955; c=relaxed/simple;
-	bh=f/Yay6Hpg6TGMAUoV/StdAEQj2dPbb8TzfUoF02xDS8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F5szQB3pMgu2UJRW8/VUIMMmu1xr1ns5nkiS84lcZC689HzHKw4H/eKFBiW36z7FYmztZZn/USf4sf+JykMOMJxNwftHqZsgIMyADAIycINO9aZncer8m/1BR8QBb0BXr6s0zZFbN/wXEDmSjIaVjFrCbp0K/k7LoDW3y9WsMNw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=NUy6bZu4; arc=pass smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731CA408638
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 14:15:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781187310; cv=none; b=UcN4iqDckBEEZocf1WHOAjlXSOL1MmSMiOLgz2wlWucky5yVUT2xnmLkKeW20uNpwodxp7MJ1Z0Y50Jlbounkq49CPiAx4NpI6vyvCUr76IwTCQ0co5JIsySIIdJW5E9vgg7FB1OlXELcTaq8wEhsSJJJTNzk4zBci61Ot1LsH8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781187310; c=relaxed/simple;
+	bh=rg1fshBOxu5d1orNDU9UaHcqEVwjs4HF5jLsYkJN8P4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=RAxXkEst554gKPCnqHm0W6zU1Hd8hFT+QIA6uMu63IEjYEtE26gsCa+xuzNcgTCJKJu6jNnltkJ0Yk69sxqGvEVR6Le7oekAPGJF0Nm6ChfatmhAqAGVIO1A04tFr/wQdfOOdFImH6HpX9Y5KzyQfn0XbUJ9p8LIWbnNgJp8Fz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=VD0Mrryp; arc=none smtp.client-ip=95.215.58.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="NUy6bZu4"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7ea6923cc94so83690697b3.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2026 06:52:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781185953; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NlkK3WdH3ObpjYeGx15yhSGjiPgmLhGaearsyX/bMfPBCsQTxdqhuExqbA/ssNDANO
-         Vbve3t8PnEp7xyRg1+CU32Cjf6nJ2pTkk4OmLDRt0xX3DD9lqFhhJglAT6PnNEDGTdHL
-         O2Ubau3u4t91E471RlRH6pJD4kspQ3NaLridzZK4niSyBoTdvRJ/N7HDUxsAw3sYvkM1
-         Av/6C2N4zounFWyTzUn0LtI0K0zC1wtMpRcATCfgzvMrhnGmk2nLFq1yIQhNdT3BWd2u
-         ycfyljQc1WjCD8qct9uBZjRNliz1A4BhaWdDgZYV75ypHAEQSAWoLyDeJzTUqcqDNTyj
-         YYeg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=f/Yay6Hpg6TGMAUoV/StdAEQj2dPbb8TzfUoF02xDS8=;
-        fh=dihjdKYTUKh3psE+Y1nqQFhzCEvmIOdPmp29lTu4jSA=;
-        b=jnx8Wy/WdkXgmNgQBytT2NqhJoo6Vt+FCqM5YatlFURfFeG3jCMskqCPR/iAccMjM1
-         6RHk19PegYqRWGZZi4gusMUrFEXzzn/hU72qz5niivHccw0wdqxIbz0jTw2/gJPUeK+0
-         0Z9UJAXFaRC7X/atMpbp4e74goSD/4pJnerPWwNsQ2SHv0Dn2TlFg9afAZOrSunpRd10
-         rT7fvR6TuumL/Gtkt+wQAv/DQbKFB13Nd9WlGzgLmE8vP+6bZ0gAyO4/6ghlq8dIH425
-         AU8/RDZXLPqNgaPQrzcfomMOKYVeh+BmVjns5WL1BGQOw4dAucscqwwtiuunQQIs1OGr
-         dMEw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1781185953; x=1781790753; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f/Yay6Hpg6TGMAUoV/StdAEQj2dPbb8TzfUoF02xDS8=;
-        b=NUy6bZu4+/mQwG1Esx9vHWBnbRyxkFk0r/d9taQEfdLT6YbLt46W8Dbl47r/43Y87t
-         //FLXWdnHJsRjuML4H2xdDgwHYv1hDPqcXqTZHxCtGeinlQ8FcVunivyrNpNH9RfcRVC
-         KC9P6zDxHFJ9w4vBNY8MHfA3UQJCe437zzxBw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781185953; x=1781790753;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f/Yay6Hpg6TGMAUoV/StdAEQj2dPbb8TzfUoF02xDS8=;
-        b=kjoYLBjlo52GHGmMMw4NMB/KzADKaoRUYxlMiRPbLwnxw2QPQzkkBuYX8JRauuyJed
-         Pjj47298A7gmaK1jkb2k2hX9L8lFvW+Ciu36tXIOTs6poUaVsTH8krbrmrLHUuqO+UDL
-         seAgILYjBy91lucdhQUzXe5HQl70UOHL8Jjx9prZvKiaoRlv66YdLTnzI8UpPY8cMowZ
-         p4ShKIJnv5PvKL7TfevIXCaw/RHauDXSR0LhQWSoRK+ntMKjur8LH0C5n5sYbtvDSGZ8
-         95FHuzJrVnfDXzO4VSbsOngul4ww7ZJT4vQ46w/noMyd45X6uiDQ9qszYjnv0IrdUT9T
-         r/XQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/DaVTNyl4eRjYUCM4tMLxhvAPhM8i/DRN9Qo5ZHeTqAjQUxgm0jRWXK+yJQGoDUnpk7vo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzs/4g/Gs5P2FWM0SsMEA+kdR/cEu6WjvhE+Nys3ZYwzY7UAfnk
-	82g4PidO22OCyI+vrF98e5OWSEAxdO8tEyFXyHL0YZFLbLpeuZK90idoNuUcfrRPtEw82ruVSo0
-	KFFUPbX3u+8t1FOeO9dIH+lMisLhhSJXidIWakbZp+VGMdPfpFB3+qbA=
-X-Gm-Gg: Acq92OGCUjnVEzIVftfdb+DaRIjppdjG6TpP9xuBLXLHttEcwOmGU6ndpkSGGyFF5iC
-	0Va5tBLXWorvzejNAOgnzidp4nuuP1C67LdlLRod1xsNIE3wkpo+2lYppIrXQtUxk8bbjmaJOJZ
-	rV8LGltcgUwOn1vY6i0c2x4qf9BwvyOVisTAQ+q4WyK7kWdzrUbV+mUxALu1G/HeCGWNUfkfJud
-	tmXPeUEXyVPFe03Q1wKba8GtmyLtc1XtFPv3TBDQg+pYBs4st9uzKhH8DPfAbHACdPs5q+l9YyD
-	M3yJxKZYDJWB9aqT2A==
-X-Received: by 2002:a05:690c:ec9:b0:7bd:a50c:4554 with SMTP id
- 00721157ae682-7f6559e6d11mr29026207b3.17.1781185952698; Thu, 11 Jun 2026
- 06:52:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="VD0Mrryp"
+Date: Thu, 11 Jun 2026 22:14:35 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1781187306;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=diheQsddEhvR/7+2JqsJS+5STdN58aQI3kMatZLXS7U=;
+	b=VD0Mrryp6NOrPy7ZTdWdfXS0+1d4zw+XY7+tJnRMFVqgflhlLQWpgAdAEsddWRzVFA3jfq
+	/SZNlz1EHkWq3qxYIkfEU+SKekC6pFDp3CV72FeG/YvImYzr5cvxhrRzQpzBCdL1mD1v6b
+	CRJEw5x1gq21mv2P68TwodQX75gv+Ef8QxoK1QVW/Ad5kxZqcjc3ceGf8qPIxvbFIcvjdD
+	MNVdE/wqRREmCbDKDcQwbKukqZX3D6hKooSmWogER95//emkUeGixGTnBlK/nekhsmK0At
+	bHK4FSyPzoo8c8Mwe3cDEiWReEB3BLuea40o5UkUTngCJMHFzqYzY3JLOeiobA==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Subject: [RFC PATCH] MyFirstContribution: mention trimming quoted text in
+ replies
+Message-ID: <080402ff0ac8127b654dccea59a1bf643df62a5c.1781186476.git.wy@wyuan.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com>
- <pull.2144.v2.git.1781178567862.gitgitgadget@gmail.com> <ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com>
-In-Reply-To: <ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Thu, 11 Jun 2026 15:52:21 +0200
-X-Gm-Features: AVVi8CfI5NfIVdlWnvptoDiv8uhlpeXa2UKP8kXUk_YkiPN9craU84mr8rkXdUs
-Message-ID: <CAL71e4Nn8Lk87A5=t1Wu=SStQqzmFqad+pcyOw_Fu-PLpRMq_g@mail.gmail.com>
-Subject: Re: [PATCH v2] commit-reach: remove get_reachable_subset()
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, 11 Jun 2026 at 14:57, Derrick Stolee <stolee@gmail.com> wrote:
-> Finally, a commentary: You seem to have a habit of responding to
-> review feedback only through new patch versions, but I'd rather see
-> some thoughts in the discussion thread as direct replies to the review,
-> especially if you think you will change direction like this. Saying
-> something like "Maybe I should update the method to have two walk modes"
-> in a reply would have given me an opportunity to respond and perhaps
-> avoided a new version that went in this direction.
+Hi,
 
-That's fair, I apologize both for jumping ahead too quickly with a new
-patch and also for evolving it into multiple logical changes
-(both code removal and complex refactoring).
+Junio has pointed out a few times that over-quoting can make review
+discussions harder to follow [1], so I thought it would be helpful to
+add a reminder about it in MyFirstContribution. Please feel free to
+comment on the patch, as my English is not good.
 
-I will be more mindful going forward about letting the discussion
-settle more before submitting followup patches.
+For your reference:
 
-I have no strong opinion on how to proceed - either park/abandon this
-or go with v1 as-is. I think you're right that having two modes within
-tips_reachable_from_bases is reducing the win here unless the mode is
-truly seamless but the abstraction does leak through a bit.
+Git's ReviewingGuidelines [2]:
 
-Thanks,
-Kristofer
+If a patch is long, you are encouraged to delete parts of it that are
+unrelated to your review from the email reply. Make sure to leave enough
+context for readers to understand your comments!
+
+The Linux Kernel documentation [3]:
+
+Similarly, please trim all unneeded quotations that aren´t relevant to
+your reply. This makes responses easier to find, and saves time and
+space.
+
+[1] <xmqqik7tz092.fsf@gitster.g>
+[2] https://git-scm.com/docs/ReviewingGuidelines/2.38.0#_performing_your_review
+[3] https://docs.kernel.org/process/submitting-patches.html#use-trimmed-interleaved-replies-in-email-discussions
+
+--- >8 ---
+
+ReviewingGuidelines already advises reviewers to trim irrelevant quoted
+context when replying. Give the same advice to new contributors in
+MyFirstContribution, so our documentation is consistent about mailing
+list reply etiquette.
+
+Signed-off-by: Weijie Yuan <wy@wyuan.org>
+---
+ Documentation/MyFirstContribution.adoc | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index 607876f3d8..0e2a9313ce 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -1453,6 +1453,11 @@ effect which had not occurred to you. It is always okay to ask for clarification
+ if you aren't sure why a change was suggested, or what the reviewer is asking
+ you to do.
+ 
++When replying to review comments, quote only the parts of the message that are
++relevant to your response. It is usually helpful to trim away unrelated context,
++such as large portions of the patch that are not being discussed, while keeping
++enough quoted text for readers to understand what you are responding to.
++
+ Make sure your email client has a plaintext email mode and it is turned on; the
+ Git list rejects HTML email. Please also follow the mailing list etiquette
+ outlined in the
+-- 
+2.54.0
+
