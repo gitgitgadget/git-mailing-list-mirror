@@ -1,80 +1,79 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CB740BCCD
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C5440BCB6
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 13:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781184458; cv=none; b=d3jzxBTA6jg83Ph8k6MIsKUSbani/zDDvZamrpElTxbx6KIuriC8FDiqe9d4mueBemo22WJ80gl2o7E6Zr72OlX7l7PiNocr0cnqX0Ua+/X4sYPG2Vdmci+ej5MSG7Fx3yopx2+VL6/PvPIq1tZ4DY2zlVfwwf5OzP1eo6Gs0jo=
+	t=1781184463; cv=none; b=Yqclote3Jd8NEUoJQ4mOuUGDPPVX5CWGSMImzqit32O0fK9t8etYnkyf+E21KWLB7LiIXqUrqm/DqdqXfNKR96+aHYVA9IeNKVtPD6KPGVGe+kCjPhKBtrmpZorxbmP/j/42T7JsSVgM6q3IsH4jFnCvBeDejctFr0/m5OQ1Wfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781184458; c=relaxed/simple;
-	bh=5IZJHLVBy2qJoe0VhN2D0YkysL/7HAqo6X+2eF682S4=;
+	s=arc-20240116; t=1781184463; c=relaxed/simple;
+	bh=5iHc7KGz0UGtfx0NGn0JX5QQzc36Y42Px4RXV+6K4Tk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gaJonWKUBb2cc4SCTItksSYCFMNo3tqf6E7YdBUpCA9dU8CZVfkT2SaXox16FqvTnX6XRkVe7BMtTbHoQkfhMmY1wy9PEl3O6W2kjhwmumYIja6uuSPJp69wlCk/CjcUsHtZ7bNVNHU/HBvnBquk9SEfP6OljqEa9BS+ODXi9Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ENAPMFpJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LhXOUudA; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=lhh9G8fbYivXuPX1nwUtx4c6YeEkU3HcXdsVJDNWdA9FYGrBMdtGagiYRkrULQF+RylocEmWC+eTx7DjaFz/Z1ArY7FfSESNZmPYXuwUuASaTrLOQmG/9OiD/zJOQHbUb8j5LHVTI6h7HJXs5aN+AKXqELBOunVpq+hbAQEMD/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sofKg1XR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gufb9JOZ; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ENAPMFpJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LhXOUudA"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id D8A32EC0185;
-	Thu, 11 Jun 2026 09:27:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sofKg1XR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gufb9JOZ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3E42CEC00CF;
+	Thu, 11 Jun 2026 09:27:40 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 11 Jun 2026 09:27:36 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 11 Jun 2026 09:27:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184456;
-	 x=1781270856; bh=sOsqAfttR7dMzXVWVEFEKfZTfxt4wGkxFXyn6yEwutY=; b=
-	ENAPMFpJGVW3AEJfxEGtVwYxiPcH8iUuWjknbAxx48pcxVLj6Ojup5Mw83lx9cgj
-	hZ8kYYWIFOfbNF4Bpu0+94sioxpAO4h+C10MSLIpYp/j0A1Uy2da1GodD7fa0oiq
-	UDtCMKpfvcMC6ucsoZ0/KV5tOmykE+U1hZ9g4Cn2X6JLaeeEm/qzmTdNf0Omj7GW
-	T+wbpCbPly3hYLk3jb/xmXaOaELo7+rypZjCYY9NCZGZziKgfdyYcopEXFfu3mkS
-	u1/psKnngVAngcYr7S/4wKhuJagCLaC6IXe5iOxUQQsbJCneHuCN5q11+2ChuZoa
-	F+Y5rEpoFPcfrN9wiOGj6w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781184460;
+	 x=1781270860; bh=S0wXY6N6ZWp4E1VlJQezhcyVg+wUkOEioU0h42viN/o=; b=
+	sofKg1XRlY82bo8ITM2Mgf2K6IJ6owQHRgcfgdi4dgAFaAb+qFQPBGFSUKI+znCk
+	ohgrTuBJIU3426Jmg9HTm7xNIFHCFvCJ1uQsuVcv/4863yvDcktdmvIByQRJZ2F7
+	KGVwluLitP0DKVqWfwsrnld7ZpOFhtJHp40f6eqVsCdQD/wmHcZWW04dKhkBEPDh
+	v5sllmae9YvXJBWO3GDRNa2CuEWXrwUZkk7SsfhcBJ8SBiErPoISmQ5P8vhn4Sh4
+	NpmWdLx2o2a/XXcRPM6SX4on3ZMQxsy+tYwPqsUmWgob0L66c76GvjowRAbLHHNU
+	eycD99AFrFLZMGsKyc4mKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184456; x=
-	1781270856; bh=sOsqAfttR7dMzXVWVEFEKfZTfxt4wGkxFXyn6yEwutY=; b=L
-	hXOUudAqzLyJUvfFRnjBnvXjAqqMkRgLVffoNPKLbhopZ6QRR4S98JrFoQDZYCaT
-	06d6RdPAOdVLPZXT6XUm7XdHe3r2p3Vd5rbeFpzSktTJc/lPUbzXTIT+15sRR3/3
-	g0UErDCKLOSkjP/OLY/HthfFrQ+tImc0Sok76vnCrookbN4SXVTqNOHFWeR8rg10
-	46FjdPnpXOCqdvhXtL7B7PRBVFqpkJj8omUMKaD8s14jbpm5DU2TXLxA+IdrNt39
-	Hp8mcjsLm6T6OZs6Ixk3T2D66xBXYTt/PbR4Gr/1olRB5g7Cts+qt2T8AklEZlIy
-	6dik05qpytkWgKYnOrzgg==
-X-ME-Sender: <xms:yLcqahylQfHAWleQ0hkQOEk4B2vydM_ovvsw0IvRJgHbz93H5ZVJ1w>
-    <xme:yLcqaiyfu7Y-ELFgjtVWsRNbAXRyQ-ZzXxFNhkuLFZau3rLsFgYNsMlY9IkbreHeb
-    a0rG9o7j7-yFmZzgPC2fM3GOY-GOhwxzMH9YbRVcctNOVeaEKIUHw>
-X-ME-Received: <xmr:yLcqarYKinhNUBTHc13OcJZmYR2An9auk6U7NbdsDXn9Jr3bU7YG52FEUe5H3JzWPk32kKgKL0rhbjNAIOA0ITOxE97D2eYd4gvDrLpqLdsj>
-X-ME-Proxy-Cause: dmFkZTGGNOZQy2QTFN7IZUfAYMTq5Ljsjny/aPIOx7WJqe7Z1LumpFueIzeDdJnNJ5DVRz
-    36KQCGTaoNUuTNfOfSxzVLKyz3syu0LyEd+VcrSaIbKR2Wk7mIy39Hol2k7OuX4+m1/Xrl
-    QAVFceJO/5DINnoaU26AA0MPf95ZHQ9cWzgSwjXix9sAfTqoT0utcmEmlXQ8CpRHfMI13E
-    5B4Mb7HeFzViwhZIFrHVRQdl5UW+0EMgSFWe6vn/6xx9YWCTd6FX/8MUSb+Wys5/iT0aWB
-    cGMngkH9QtISmu5huLQYQ4jCqugx2AyXKFtoDlr8DLcs7+95+gqLjyrCGApmWLjjQ4h7qn
-    X1d0IV+Z5gtiqpcrjHsYnjq0GD8M+TnfivJscJzeRLw+AWwN2ePInej010IyAqyvcZjXwy
-    LlINEVHm3UsBZ0xPbsODrU/wc6JuNQ89sqqWFtWcQId6/fu4jGID5V5XKXKiHb/gyr8zdf
-    L7+DEFEGRx+SahQyvTUqAaTRXAxlcmziSuqNFM9BAKoywbd7O0J5n2hPJFHZUh0NIjd4tP
-    ycCtAZkWbV/0nXTnlYOyfbxlr4J9HyagoH3/xpmeGxWLWka6rxCnB54AdNe76xRoKj9NFn
-    8+75FdX9X4yKq6Hb/FtpxzmmCt/+Fg5VHN7llTbD5tkVhYJdVN9YYYMxPpRg
-X-ME-Proxy: <xmx:yLcqajVtKhDTmmCPicwaVv2m7-_hpwtDP7MicJJ8Iq3hElCzJvt69A>
-    <xmx:yLcqaphlQ_mnYoH7m1YagQWI5Lpk3CDZYCKvsCRRHMZhjYc4-x8AWg>
-    <xmx:yLcqahsTih6w80ZZs9EnA2uMW_at_CLs_9Z2Y1dvBL-DkSMUXkBLPA>
-    <xmx:yLcqai6_m13UHUSOAoMeGdvw58-bWZ46L7idM9u_mJykrbQpN1O52w>
-    <xmx:yLcqaim6P_KdQeZgEX0AHRpkhwa8b1O4pRocidUrWzxiOB8a9CKYT0J_>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781184460; x=
+	1781270860; bh=S0wXY6N6ZWp4E1VlJQezhcyVg+wUkOEioU0h42viN/o=; b=G
+	ufb9JOZkKYuPtGoZxqtvvuHRVQ7EQsmlUUJ12GKbgstXEiE9Q6XbFBdbwjIyl0xC
+	F3xT53Km+uMggWx5QeDY/LZBVUpJ98HunWDNzCtLn4lR8vKD3QfK5aH+wnOs2z7Q
+	/WRQeWHnKuG4Kp3nEPnZdjiYeVVjmvm82ddSxZY6CLpny7uMANrg4h1t+NRXF6Dh
+	xwPh19gqPlzg0nKQBjLu8d1TSrI5UcMuJbfcsZovvS5ZrqmYnH3QXP3psu6Jzywv
+	Ht29cuGvEDpQBwt8SLhGDqIwG9NhIl7bZfb/7evzoDI/n1XiaD3eNKkUubkDkdsW
+	q3qMIfRN5xAqgTfwJmmNQ==
+X-ME-Sender: <xms:zLcqakTQHAePMJQ9drNK0ER05p2p8EA7a3nDLSqC17nli4EG5QSEcA>
+    <xme:zLcqajTvsmZ-VuANgKy5I3as7Buk8XRnWh_txNdsJc7r-YCXTK1Vd2mbSA2jk1YZi
+    sRK2SkRcvCwRAkg6a12IFmgHBm3lZEyafuBX5c45HcYMH2E-z6WuA>
+X-ME-Received: <xmr:zLcqah5OHk5rZWALw2CS6mtjIDJfWdWDTObRUDkmGmgUKSZhS7PEpXtrRZquU1LikvvDLwE1vujtFxUWaEkD5fP8No71GRaRo4206LPbV6dW>
+X-ME-Proxy-Cause: dmFkZTE7MVGK4Ba+oYOC1nLoG7cbGVUzVu+Iucq2ujoLCcLVcHoPfJ3B2E58mZFloJJEWg
+    7AGsW2I/4BjpnRlKmxKo0wt5YOdMuUxOsLMTkjZem8VQiAtVIsicVRgUAWRkbQi87i2Jw+
+    DfFPXaGDI6pvc1qclb1US1dvL3b36kPqfQhl6/bp455aJE9vNT0S8JoEdfBhTTrfsv+ZJZ
+    KGGdcWggPNgCbSUbX0ddUs3WBfsfTprEsRyVVOLqKAiyj4l5//RbQBoUNUkrXiNsB/13q1
+    rlMGTissinGZJwG7DXheIFo7J/pXapx80MYmHAwM6GeItP8Mn0+4S30TiL/EPpBsgU1nAg
+    hxRgB92i/WSmO3wHjMkThBoeoijncPNILHnWaW+0IpYkYuousD+PRkUhAXQTWYfl1RtEep
+    6m5F5nmxi/GyUGmwMM0H6Io1ZeXU39LoHLiyOI4z2BnMyMbkmBG2JSYdHpY/yCeXR/3uT2
+    I6wECAHMoiN1cpYqRBQfCgeKwfhL/+zOYN3VItJRG/kSyd92o+0zTpNdFWaNo7rQuz0UEn
+    m8eENEX4nD7JV4orCfi9kM5BpQQRz3qaiENHEht2xgky+Vm1vX1KfMWGCd8oQPGLSfBsY/
+    7FTeoUNIRU8493i3DC2rkMoAMlfr3B9PnnsN6tJ6zQ8h+fxMFcRB7xXA5+wQ
+X-ME-Proxy: <xmx:zLcqan2QuohmVVBhmNQ51At_IenV7DbmNHShkMLIE8KCUQ30x-SY3w>
+    <xmx:zLcqakAbtcQti0q-kSCUUyC2tz7qg9oiXhZ-Bk-bsYwo05Y-ogW6UQ>
+    <xmx:zLcqaqNbCQ70oCIFKp8ys9ZT-RpCMf0g0VHTPOxPc_pvVs7M5w1BNQ>
+    <xmx:zLcqahbRV38rzJ-dNoyqa8_Zpd1JT1z_09JIfEkir0MIuTYerCD0Dg>
+    <xmx:zLcqavFVwgnfkmRIkwma1TffssB8vrsWBQ_8P6VOXVw_Wxw2dSlFogWD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 09:27:35 -0400 (EDT)
+ 11 Jun 2026 09:27:39 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9ddf1802 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 13:27:35 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id cb367f96 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jun 2026 13:27:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 11 Jun 2026 15:27:12 +0200
-Subject: [PATCH v5 09/10] builtin/history: split handling of ref updates
- into two phases
+Date: Thu, 11 Jun 2026 15:27:13 +0200
+Subject: [PATCH v5 10/10] builtin/history: implement "drop" subcommand
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-b4-pks-history-drop-v5-9-34d35725559c@pks.im>
+Message-Id: <20260611-b4-pks-history-drop-v5-10-34d35725559c@pks.im>
 References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 In-Reply-To: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
 To: git@vger.kernel.org
@@ -93,175 +92,884 @@ Cc: Pablo Sabater <pabloosabaterr@gmail.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.15.2
 
-The function `handle_reference_updates()` is used by git-history(1) to
-update all references that refer to commits that have been rewritten. As
-such, it performs two steps:
+A common operation when editing the commit history is to drop a specific
+commit from the history entirely, but this operation is not currently
+covered by git-history(1).
 
-  - It gathers the references that need to be updated in the first
-    place.
+A couple of noteworthy bits:
 
-  - It prepares and commits the reference transaction.
+  - This is the first git-history(1) command that will ultimately result
+    in changes to both the index and the working tree. We thus have to
+    add logic to merge resulting changes into those.
 
-In a subsequent commit we'll want to handle those two steps separately.
-Prepare for this by splitting up the function into two.
+  - It is still not possible to replay merge commits, so this limitation
+    is inherited for the new "drop" command.
+
+  - For now we refuse to drop root commits. While we _can_ indeed drop
+    root commits in the general case, there are edge cases where the
+    resulting history would become completely empty. This is thus left
+    to a subsequent patch series.
+
+Other than that, most of the logic is rather straight-forward as we can
+continue to build on the preexisting logic in git-history(1) for most of
+the part.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/history.c | 102 ++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 64 insertions(+), 38 deletions(-)
+ Documentation/git-history.adoc |  38 ++-
+ builtin/history.c              | 186 ++++++++++++++
+ t/meson.build                  |   1 +
+ t/t3454-history-drop.sh        | 537 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 761 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+index 2ba8121795..28b477cd37 100644
+--- a/Documentation/git-history.adoc
++++ b/Documentation/git-history.adoc
+@@ -8,6 +8,7 @@ git-history - EXPERIMENTAL: Rewrite history
+ SYNOPSIS
+ --------
+ [synopsis]
++git history drop <commit> [--dry-run] [--update-refs=(branches|head)] [--empty=(drop|keep|abort)]
+ git history fixup <commit> [--dry-run] [--update-refs=(branches|head)] [--reedit-message] [--empty=(drop|keep|abort)]
+ git history reword <commit> [--dry-run] [--update-refs=(branches|head)]
+ git history split <commit> [--dry-run] [--update-refs=(branches|head)] [--] [<pathspec>...]
+@@ -51,13 +52,28 @@ be stateful operations. The limitation can be lifted once (if) Git learns about
+ first-class conflicts.
+ 
+ When using `fixup` with `--empty=drop`, dropping the root commit is not yet
+-supported.
++supported. Likewise, `drop` cannot remove the root commit or a merge commit.
+ 
+ COMMANDS
+ --------
+ 
+ The following commands are available to rewrite history in different ways:
+ 
++`drop <commit>`::
++	Remove the specified commit from the history. All descendants of the
++	commit are replayed directly onto its parent.
+++
++The root commit cannot be dropped as that may lead to edge cases where refs
++end up with no commits anymore. Merge commits cannot be dropped either; see
++LIMITATIONS.
+++
++If `HEAD` points at a commit that is to be rewritten, the index and working
++tree are updated to match the new `HEAD`. The command aborts before any
++references are updated in case local modifications would be overwritten.
+++
++If replaying any descendant would result in a conflict, the command aborts
++with an error.
++
+ `fixup <commit>`::
+ 	Apply the currently staged changes to the specified commit. This is
+ 	similar in nature to `git commit --fixup=<commit>` followed by `git
+@@ -170,6 +186,26 @@ The staged addition of `unrelated.txt` has been incorporated into the `first`
+ commit. All descendant commits have been replayed on top of the rewritten
+ history.
+ 
++Drop a commit
++~~~~~~~~~~~~~
++
++----------
++$ git log --oneline
++abc1234 (HEAD -> main) third
++def5678 second
++ghi9012 first
++
++$ git history drop 'main^{/second}'
++
++$ git log --oneline
++jkl3456 (HEAD -> main) third
++ghi9012 first
++----------
++
++The `second` commit has been removed from the history, and `third` has been
++replayed directly on top of `first`. All branches that pointed at the dropped
++commit have been moved to its parent.
++
+ Split a commit
+ ~~~~~~~~~~~~~~
+ 
 diff --git a/builtin/history.c b/builtin/history.c
-index 0fc06fb204..4fadf38c32 100644
+index 4fadf38c32..e59f69233b 100644
 --- a/builtin/history.c
 +++ b/builtin/history.c
-@@ -333,21 +333,17 @@ static int handle_ref_update(struct ref_transaction *transaction,
- 				      NULL, NULL, 0, reflog_msg, err);
+@@ -17,13 +17,17 @@
+ #include "read-cache.h"
+ #include "refs.h"
+ #include "replay.h"
++#include "reset.h"
+ #include "revision.h"
+ #include "sequencer.h"
+ #include "strvec.h"
+ #include "tree.h"
++#include "tree-walk.h"
+ #include "unpack-trees.h"
+ #include "wt-status.h"
+ 
++#define GIT_HISTORY_DROP_USAGE \
++	N_("git history drop <commit> [--dry-run] [--update-refs=(branches|head)] [--empty=(drop|keep|abort)]")
+ #define GIT_HISTORY_FIXUP_USAGE \
+ 	N_("git history fixup <commit> [--dry-run] [--update-refs=(branches|head)] [--reedit-message] [--empty=(drop|keep|abort)]")
+ #define GIT_HISTORY_REWORD_USAGE \
+@@ -1001,12 +1005,193 @@ static int cmd_history_split(int argc,
+ 	return ret;
  }
  
--static int handle_reference_updates(struct rev_info *revs,
--				    enum ref_action action,
--				    struct commit *original,
--				    struct commit *rewritten,
--				    const char *reflog_msg,
--				    int dry_run,
--				    enum replay_empty_commit_action empty)
-+static int compute_pending_ref_updates(struct rev_info *revs,
-+				       enum ref_action action,
-+				       struct commit *original,
-+				       struct commit *rewritten,
-+				       enum replay_empty_commit_action empty,
-+				       struct replay_result *result)
- {
- 	const struct name_decoration *decoration;
- 	struct replay_revisions_options opts = {
- 		.empty = empty,
- 	};
--	struct replay_result result = { 0 };
--	struct ref_transaction *transaction = NULL;
--	struct strbuf err = STRBUF_INIT;
- 	char hex[GIT_MAX_HEXSZ + 1];
- 	bool detached_head;
- 	int head_flags = 0;
-@@ -359,34 +355,13 @@ static int handle_reference_updates(struct rev_info *revs,
- 
- 	opts.onto = oid_to_hex_r(hex, &rewritten->object.oid);
- 
--	ret = replay_revisions(revs, &opts, &result);
-+	ret = replay_revisions(revs, &opts, result);
- 	if (ret)
--		goto out;
-+		return ret;
- 
- 	if (action != REF_ACTION_BRANCHES && action != REF_ACTION_HEAD)
- 		BUG("unsupported ref action %d", action);
- 
--	if (!dry_run) {
--		transaction = ref_store_transaction_begin(get_main_ref_store(revs->repo), 0, &err);
--		if (!transaction) {
--			ret = error(_("failed to begin ref transaction: %s"), err.buf);
--			goto out;
--		}
--	}
--
--	for (size_t i = 0; i < result.updates_nr; i++) {
--		ret = handle_ref_update(transaction,
--					result.updates[i].refname,
--					&result.updates[i].new_oid,
--					&result.updates[i].old_oid,
--					reflog_msg, &err);
--		if (ret) {
--			ret = error(_("failed to update ref '%s': %s"),
--				    result.updates[i].refname, err.buf);
--			goto out;
--		}
--	}
--
- 	/*
- 	 * `replay_revisions()` only updates references that are
- 	 * ancestors of `rewritten`, so we need to manually
-@@ -414,14 +389,43 @@ static int handle_reference_updates(struct rev_info *revs,
- 		    !detached_head)
- 			continue;
- 
-+		ALLOC_GROW(result->updates, result->updates_nr + 1, result->updates_alloc);
-+		result->updates[result->updates_nr].refname = xstrdup(decoration->name);
-+		result->updates[result->updates_nr].old_oid = original->object.oid;
-+		result->updates[result->updates_nr].new_oid = rewritten->object.oid;
-+		result->updates_nr++;
++static int update_worktree(struct repository *repo,
++			   const struct commit *old_head,
++			   const struct commit *new_head,
++			   bool dry_run)
++{
++	struct reset_working_tree_options opts = {
++		.oid_from = &old_head->object.oid,
++		.oid = &new_head->object.oid,
++	};
++	if (dry_run)
++		opts.flags |= RESET_WORKING_TREE_DRY_RUN;
++	return reset_working_tree(repo, &opts);
++}
++
++static int find_head_tree_change(struct repository *repo,
++				 const struct replay_result *result,
++				 struct commit **old_head,
++				 struct commit **new_head,
++				 bool *changed)
++{
++	const struct replay_ref_update *head_update = NULL;
++	struct commit *old_head_commit, *new_head_commit;
++	struct tree *old_head_tree, *new_head_tree;
++	const char *head_target;
++	int head_flags;
++
++	*changed = false;
++
++	head_target = refs_resolve_ref_unsafe(get_main_ref_store(repo),
++					      "HEAD", RESOLVE_REF_NO_RECURSE,
++					      NULL, &head_flags);
++	if (!head_target)
++		return error(_("cannot look up HEAD"));
++	if (!(head_flags & REF_ISSYMREF))
++		head_target = "HEAD";
++
++	for (size_t i = 0; i < result->updates_nr; i++) {
++		if (!strcmp(result->updates[i].refname, head_target)) {
++			head_update = &result->updates[i];
++			break;
++		}
 +	}
++
++	if (!head_update)
++		return 0;
++
++	old_head_commit = lookup_commit_reference(repo, &head_update->old_oid);
++	new_head_commit = lookup_commit_reference(repo, &head_update->new_oid);
++	if (!old_head_commit || !new_head_commit)
++		return error(_("cannot resolve HEAD commit"));
++
++	old_head_tree = repo_get_commit_tree(repo, old_head_commit);
++	new_head_tree = repo_get_commit_tree(repo, new_head_commit);
++	if (!old_head_tree || !new_head_tree)
++		return error(_("cannot resolve tree for HEAD"));
++
++	if (oideq(&old_head_tree->object.oid, &new_head_tree->object.oid))
++		return 0;
++
++	*old_head = old_head_commit;
++	*new_head = new_head_commit;
++	*changed = true;
 +
 +	return 0;
 +}
 +
-+static int apply_pending_ref_updates(struct repository *repo,
-+				     const struct replay_result *result,
-+				     const char *reflog_msg,
-+				     int dry_run)
++static int cmd_history_drop(int argc,
++			    const char **argv,
++			    const char *prefix,
++			    struct repository *repo)
 +{
-+	struct ref_transaction *transaction = NULL;
-+	struct strbuf err = STRBUF_INIT;
++	const char * const usage[] = {
++		GIT_HISTORY_DROP_USAGE,
++		NULL,
++	};
++	enum replay_empty_commit_action empty = REPLAY_EMPTY_COMMIT_DROP;
++	enum ref_action action = REF_ACTION_DEFAULT;
++	int dry_run = 0;
++	struct option options[] = {
++		OPT_CALLBACK_F(0, "update-refs", &action, "(branches|head)",
++			       N_("control which refs should be updated"),
++			       PARSE_OPT_NONEG, parse_ref_action),
++		OPT_BOOL('n', "dry-run", &dry_run,
++			 N_("perform a dry-run without updating any refs")),
++		OPT_CALLBACK_F(0, "empty", &empty, "(drop|keep|abort)",
++			       N_("how to handle descendants that become empty"),
++			       PARSE_OPT_NONEG, parse_opt_empty),
++		OPT_END(),
++	};
++	struct strbuf reflog_msg = STRBUF_INIT;
++	struct commit *original, *rewritten;
++	struct rev_info revs = { 0 };
++	struct replay_result result = { 0 };
++	struct commit *old_head, *new_head;
++	bool head_moves = false;
 +	int ret;
 +
-+	if (!dry_run) {
-+		transaction = ref_store_transaction_begin(get_main_ref_store(repo),
-+							  0, &err);
-+		if (!transaction) {
-+			ret = error(_("failed to begin ref transaction: %s"), err.buf);
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	if (argc != 1) {
++		ret = error(_("command expects a single revision"));
++		goto out;
++	}
++	repo_config(repo, git_default_config, NULL);
++
++	if (action == REF_ACTION_DEFAULT)
++		action = REF_ACTION_BRANCHES;
++
++	original = lookup_commit_reference_by_name(argv[0]);
++	if (!original) {
++		ret = error(_("commit cannot be found: %s"), argv[0]);
++		goto out;
++	}
++
++	if (!original->parents) {
++		ret = error(_("cannot drop root commit %s: "
++			      "it has no parent to replay onto"),
++			    argv[0]);
++		goto out;
++	} else if (original->parents->next) {
++		ret = error(_("cannot drop merge commit: %s"), argv[0]);
++		goto out;
++	}
++
++	ret = setup_revwalk(repo, action, original, &revs);
++	if (ret)
++		goto out;
++
++	rewritten = original->parents->item;
++
++	ret = compute_pending_ref_updates(&revs, action, original, rewritten,
++					  empty, &result);
++	if (ret) {
++		ret = error(_("failed replaying descendants"));
++		goto out;
++	}
++
++	/*
++	 * If HEAD will move as a result of the rewrite then we'll have to
++	 * merge in the changes into the worktree and index. This merge can of
++	 * course conflict, which will cause the whole operation to abort.
++	 *
++	 * If we had already updated the refs at that point then we'd have an
++	 * inconsistent repository state. So we first perform a dry-run merge
++	 * here before updating refs.
++	 */
++	if (!is_bare_repository()) {
++		ret = find_head_tree_change(repo, &result, &old_head,
++					    &new_head, &head_moves);
++		if (ret < 0)
++			goto out;
++
++		if (head_moves && update_worktree(repo, old_head, new_head, true) < 0) {
++			ret = error(_("dropping this commit would "
++				      "overwrite local changes; aborting"));
 +			goto out;
 +		}
 +	}
 +
-+	for (size_t i = 0; i < result->updates_nr; i++) {
- 		ret = handle_ref_update(transaction,
--					decoration->name,
--					&rewritten->object.oid,
--					&original->object.oid,
-+					result->updates[i].refname,
-+					&result->updates[i].new_oid,
-+					&result->updates[i].old_oid,
- 					reflog_msg, &err);
- 		if (ret) {
- 			ret = error(_("failed to update ref '%s': %s"),
--				    decoration->name, err.buf);
-+				    result->updates[i].refname, err.buf);
- 			goto out;
- 		}
- 	}
-@@ -435,11 +439,33 @@ static int handle_reference_updates(struct rev_info *revs,
- 
- out:
- 	ref_transaction_free(transaction);
--	replay_result_release(&result);
- 	strbuf_release(&err);
- 	return ret;
- }
- 
-+static int handle_reference_updates(struct rev_info *revs,
-+				    enum ref_action action,
-+				    struct commit *original,
-+				    struct commit *rewritten,
-+				    const char *reflog_msg,
-+				    int dry_run,
-+				    enum replay_empty_commit_action empty)
-+{
-+	struct replay_result result = { 0 };
-+	int ret;
-+
-+	ret = compute_pending_ref_updates(revs, action, original, rewritten,
-+					  empty, &result);
-+	if (ret)
++	strbuf_addf(&reflog_msg, "drop: dropping %s", argv[0]);
++	ret = apply_pending_ref_updates(repo, &result, reflog_msg.buf, dry_run);
++	if (ret < 0) {
++		ret = error(_("failed to update references"));
 +		goto out;
++	}
 +
-+	ret = apply_pending_ref_updates(revs->repo, &result, reflog_msg, dry_run);
++	if (!dry_run && head_moves && update_worktree(repo, old_head, new_head, false) < 0) {
++		ret = error(_("could not update working tree to new commit %s"),
++			    oid_to_hex(&new_head->object.oid));
++		goto out;
++	}
++
++	ret = 0;
 +
 +out:
 +	replay_result_release(&result);
++	strbuf_release(&reflog_msg);
++	release_revisions(&revs);
 +	return ret;
 +}
 +
- static int commit_became_empty(struct repository *repo,
- 			       struct commit *original,
- 			       struct tree *result)
+ int cmd_history(int argc,
+ 		const char **argv,
+ 		const char *prefix,
+ 		struct repository *repo)
+ {
+ 	const char * const usage[] = {
++		GIT_HISTORY_DROP_USAGE,
+ 		GIT_HISTORY_FIXUP_USAGE,
+ 		GIT_HISTORY_REWORD_USAGE,
+ 		GIT_HISTORY_SPLIT_USAGE,
+@@ -1014,6 +1199,7 @@ int cmd_history(int argc,
+ 	};
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
++		OPT_SUBCOMMAND("drop", &fn, cmd_history_drop),
+ 		OPT_SUBCOMMAND("fixup", &fn, cmd_history_fixup),
+ 		OPT_SUBCOMMAND("reword", &fn, cmd_history_reword),
+ 		OPT_SUBCOMMAND("split", &fn, cmd_history_split),
+diff --git a/t/meson.build b/t/meson.build
+index 2af8d01279..d5e71056b2 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -399,6 +399,7 @@ integration_tests = [
+   't3451-history-reword.sh',
+   't3452-history-split.sh',
+   't3453-history-fixup.sh',
++  't3454-history-drop.sh',
+   't3500-cherry.sh',
+   't3501-revert-cherry-pick.sh',
+   't3502-cherry-pick-merge.sh',
+diff --git a/t/t3454-history-drop.sh b/t/t3454-history-drop.sh
+new file mode 100755
+index 0000000000..0f33247212
+--- /dev/null
++++ b/t/t3454-history-drop.sh
+@@ -0,0 +1,537 @@
++#!/bin/sh
++
++test_description='tests for git-history drop subcommand'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-log-graph.sh"
++
++expect_graph () {
++	cat >expect &&
++	lib_test_cmp_graph --format=%s "$@"
++}
++
++expect_log () {
++	git log --format="%s" "$@" >actual &&
++	cat >expect &&
++	test_cmp expect actual
++}
++
++test_expect_success 'errors on missing commit argument' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		test_must_fail git history drop 2>err &&
++		test_grep "command expects a single revision" err
++	)
++'
++
++test_expect_success 'errors on too many arguments' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		test_must_fail git history drop HEAD HEAD 2>err &&
++		test_grep "command expects a single revision" err
++	)
++'
++
++test_expect_success 'errors on unknown revision' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		test_must_fail git history drop does-not-exist 2>err &&
++		test_grep "commit cannot be found: does-not-exist" err
++	)
++'
++
++test_expect_success 'errors with invalid --empty= value' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		test_commit second &&
++		test_must_fail git history drop --empty=bogus HEAD 2>err &&
++		test_grep "unrecognized.*--empty.*bogus" err
++	)
++'
++
++test_expect_success 'drops a commit in the middle and replays descendants' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++
++		git symbolic-ref HEAD >expect &&
++		git history drop HEAD~ &&
++		git symbolic-ref HEAD >actual &&
++		test_cmp expect actual &&
++
++		expect_log <<-\EOF &&
++		third
++		first
++		EOF
++
++		test_must_fail git show HEAD:second.t &&
++		test_path_is_missing second.t &&
++
++		git reflog >reflog &&
++		test_grep "drop: dropping HEAD~" reflog
++	)
++'
++
++test_expect_success 'drops the HEAD commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++
++		git history drop HEAD &&
++
++		expect_log <<-\EOF
++		first
++		EOF
++	)
++'
++
++test_expect_success 'drops a commit on detached HEAD' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++		git checkout --detach HEAD &&
++
++		git history drop HEAD~ &&
++
++		expect_log <<-\EOF
++		third
++		first
++		EOF
++	)
++'
++
++# Note: in this case it would actually be fine to drop the root commit, as we
++# do have a descendant commit, and no reference points to the root commit
++# directly. So this is something that we may relax eventually.
++test_expect_success 'refuses to drop the root commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++
++		test_must_fail git history drop HEAD~ 2>err &&
++		test_grep "cannot drop root commit" err
++	)
++'
++
++# In contrast to the above case, we actually don't want to drop the root commit
++# here as that would cause us to end up with an empty commit graph.
++test_expect_success 'refuses to drop the root commit when branch becomes empty' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++
++		test_must_fail git history drop HEAD 2>err &&
++		test_grep "cannot drop root commit" err
++	)
++'
++
++test_expect_success 'refuses to drop a merge commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		git branch branch &&
++		test_commit ours &&
++		git switch branch &&
++		test_commit theirs &&
++		git switch - &&
++		git merge theirs &&
++
++		test_must_fail git history drop HEAD 2>err &&
++		test_grep "cannot drop merge commit" err
++	)
++'
++
++test_expect_success 'refuses when descendants contain a merge commit' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		test_commit middle &&
++		git branch branch &&
++		test_commit ours &&
++		git switch branch &&
++		test_commit theirs &&
++		git switch - &&
++		git merge theirs &&
++
++		test_must_fail git history drop middle 2>err &&
++		test_grep "replaying merge commits is not supported yet" err
++	)
++'
++
++test_expect_success 'works in a bare repository' '
++	test_when_finished "rm -rf repo repo.git" &&
++
++	git init repo &&
++	test_commit -C repo first &&
++	test_commit -C repo second &&
++	test_commit -C repo third &&
++
++	git clone --bare repo repo.git &&
++	(
++		cd repo.git &&
++
++		git history drop HEAD~ &&
++		expect_log <<-\EOF
++		third
++		first
++		EOF
++	)
++'
++
++test_expect_success 'updates branches on other lines of descent' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		test_commit target &&
++		git branch theirs &&
++		test_commit ours &&
++		git switch theirs &&
++		test_commit theirs &&
++
++		expect_graph --branches <<-\EOF &&
++		* theirs
++		| * ours
++		|/
++		* target
++		* base
++		EOF
++
++		git history drop target &&
++
++		expect_graph --branches <<-\EOF
++		* ours
++		| * theirs
++		|/
++		* base
++		EOF
++	)
++'
++
++test_expect_success 'moves branch pointing at dropped commit to its parent' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		git branch points-at-second &&
++		test_commit third &&
++
++		git rev-parse first >expect &&
++		git history drop second &&
++		git rev-parse points-at-second >actual &&
++		test_cmp expect actual &&
++
++		expect_log --format="%s %D" --branches <<-\EOF
++		third HEAD -> main
++		first tag: first, points-at-second
++		EOF
++	)
++'
++
++test_expect_success '--dry-run prints ref updates without modifying repo' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit base &&
++		git branch branch &&
++		test_commit middle &&
++		test_commit ours &&
++		git switch branch &&
++		test_commit theirs &&
++
++		git refs list >refs-expect &&
++		git history drop --dry-run main~ >updates &&
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual &&
++		test_grep "update refs/heads/main" updates &&
++
++		git update-ref --stdin <updates &&
++		expect_log main <<-\EOF
++		ours
++		base
++		EOF
++	)
++'
++
++test_expect_success '--dry-run detects conflicts with modified working tree' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second modify-me &&
++		echo modified >modify-me &&
++
++		git refs list >refs-expect &&
++		git diff >diff-expect &&
++		test_must_fail git history drop --dry-run HEAD 2>err &&
++		test_grep "dropping this commit would overwrite local changes" err &&
++		git diff >diff-actual &&
++		git refs list >refs-actual &&
++
++		test_cmp diff-expect diff-actual &&
++		test_cmp refs-expect refs-actual
++	)
++'
++
++test_expect_success '--update-refs=head updates only HEAD' '
++	test_when_finished "rm -rf repo" &&
++	git init repo --initial-branch=main &&
++	(
++		cd repo &&
++		test_commit base &&
++		test_commit target &&
++		git branch theirs &&
++		test_commit ours &&
++		git switch theirs &&
++		test_commit theirs &&
++
++		# When told to update HEAD only, the command refuses to
++		# rewrite commits that are not an ancestor of HEAD.
++		test_must_fail git history drop --update-refs=head main 2>err &&
++		test_grep "rewritten commit must be an ancestor of HEAD" err &&
++
++		expect_graph --branches <<-\EOF &&
++		* theirs
++		| * ours
++		|/
++		* target
++		* base
++		EOF
++
++		git switch main &&
++		git history drop --update-refs=head target &&
++
++		expect_graph --branches <<-\EOF
++		* ours
++		| * theirs
++		| * target
++		|/
++		* base
++		EOF
++	)
++'
++
++test_expect_success 'conflict with replayed commit aborts cleanly' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		test_commit conflict-a file &&
++		test_commit conflict-b file &&
++
++		git refs list >refs-expect &&
++		test_must_fail git history drop HEAD~ 2>err &&
++		test_grep "failed replaying descendants" err &&
++		git refs list >refs-actual &&
++		test_cmp refs-expect refs-actual
++	)
++'
++
++# Build a history where a descendant of the drop target reverts the change
++# introduced by the drop target. After dropping, the descendant's diff applies
++# against a tree that already lacks the change, so it becomes empty.
++setup_empty_descendant_repo () {
++	git init "$1" &&
++	(
++		cd "$1" &&
++		echo C1 >file &&
++		git add file &&
++		git commit -m "base" &&
++		git tag base &&
++		echo C2 >file &&
++		git add file &&
++		git commit -m "drop-me" &&
++		git tag drop-me &&
++		test_commit middle &&
++		echo C1 >file &&
++		git add file &&
++		git commit -m "revert-drop-me" &&
++		git tag revert-drop-me
++	)
++}
++
++test_expect_success '--empty=drop drops descendants that become empty' '
++	test_when_finished "rm -rf repo" &&
++	setup_empty_descendant_repo repo &&
++	(
++		cd repo &&
++
++		git history drop --empty=drop drop-me &&
++
++		expect_log <<-\EOF
++		middle
++		base
++		EOF
++	)
++'
++
++test_expect_success '--empty=keep keeps descendants that become empty' '
++	test_when_finished "rm -rf repo" &&
++	setup_empty_descendant_repo repo &&
++	(
++		cd repo &&
++
++		git history drop --empty=keep drop-me &&
++
++		expect_log <<-\EOF &&
++		revert-drop-me
++		middle
++		base
++		EOF
++		git diff HEAD~ HEAD >diff &&
++		test_must_be_empty diff
++	)
++'
++
++test_expect_success '--empty=abort errors out when a descendant becomes empty' '
++	test_when_finished "rm -rf repo" &&
++	setup_empty_descendant_repo repo &&
++	(
++		cd repo &&
++
++		test_must_fail git history drop --empty=abort drop-me 2>err &&
++		test_grep "became empty after replay" err
++	)
++'
++
++test_expect_success 'updates index and worktree when HEAD moves' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++		test_commit third &&
++
++		git history drop second &&
++
++		# Worktree should no longer contain second.t.
++		test_path_is_missing second.t &&
++		test_path_is_file first.t &&
++		test_path_is_file third.t &&
++
++		# Index and worktree should both match the new HEAD.
++		git status --porcelain --untracked-files=no >status &&
++		test_must_be_empty status
++	)
++'
++
++test_expect_success 'updates worktree when dropping HEAD itself' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		test_commit second &&
++
++		git history drop HEAD &&
++
++		test_path_is_missing second.t &&
++		test_path_is_file first.t &&
++
++		git status --porcelain --untracked-files=no >status &&
++		test_must_be_empty status
++	)
++'
++
++test_expect_success 'preserves unrelated unstaged modifications' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		echo first-content >unrelated.txt &&
++		git add unrelated.txt &&
++		git commit -m "add unrelated" &&
++		test_commit second &&
++		test_commit third &&
++
++		echo locally-modified >unrelated.txt &&
++
++		git diff >diff-expect &&
++		git history drop second &&
++		git diff >diff-actual &&
++		test_cmp diff-expect diff-actual &&
++		test_path_is_missing second.t
++	)
++'
++
++test_expect_success 'preserves unrelated staged changes' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit first &&
++		echo first-content >unrelated.txt &&
++		git add unrelated.txt &&
++		git commit -m "add unrelated" &&
++		test_commit second &&
++		test_commit third &&
++
++		echo staged-change >unrelated.txt &&
++		git add unrelated.txt &&
++
++		git diff --cached >diff-expect &&
++		git history drop second &&
++		git diff --cached >diff-actual &&
++		test_cmp diff-expect diff-actual &&
++		test_path_is_missing second.t
++	)
++'
++
++test_expect_success 'aborts when local modifications would be overwritten' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit base &&
++		test_commit conflict &&
++
++		echo local-edit >conflict.t &&
++		git diff >diff-expect &&
++		test_must_fail git history drop HEAD 2>err &&
++		test_grep "would overwrite local changes" err &&
++		git diff >diff-actual &&
++		test_cmp diff-expect diff-actual
++	)
++'
++
++test_done
 
 -- 
 2.54.0.1189.g8c84645362.dirty
