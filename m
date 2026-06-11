@@ -1,168 +1,102 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9AB346FA0
-	for <git@vger.kernel.org>; Thu, 11 Jun 2026 09:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781169553; cv=none; b=G2cpjYtE26nAQ7yfsU3IMqfINEsR2pn1FBIvQiCu7fPX6SG+RS8/ehxkoJJP7bGNYLws7rC8L6Nb34hp9GcwBQwjQEEL4+euJ3J5m5riE9dOPcJZZ3+Z6fBab5+6Et5z/KEsnZMYChCgducrwDGceOM8WL/zhBauVITWkXwx1Cg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781169553; c=relaxed/simple;
-	bh=V4uxX8EsWfLsx9+p2/JZq7roD9+f/MaB7NTh6250taU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VXOL+KdkKfKOhZwkRcDpQ2Xg9QHoXURVxDOYotHoG+/uruf+CMhP9k+4KdWRTc5hfBjA57R6rMJjpdBrZwmGuR/ug0a/TlRa40RP+LMBf6JU77Z4rh4iCpA2V+frhPGAtOwV1JJ493LIvN1jHAzsZg6Gk03XfXw0TUvay58Km6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rKXHPQBy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZA/uRxpb; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7DE3DCDA4
+	for <git@vger.kernel.org>; Thu, 11 Jun 2026 11:18:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781176708; cv=pass; b=tNzWaC/XJ0bq6w0cjWV4/0AKk6pAJPSdlWUwCb2N5FzDU5MEy3NfIm4DpvjwTljlfTnSL9e7j0Dr8Sj2LmOCWE1TaQYfm1K+44FiL7ywtBCsxImVkZgwQZazBdVKgOA8SogyG5OAauIOVboZUA5ltPQTNChA8OFPAJHBc8JpgCY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781176708; c=relaxed/simple;
+	bh=SJ5mSzZpbokYkTeUrojVuOzsFbi3P0a2bJKtN3SaCzo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FijWcGJ8vugM+IoyuY86jnAWhjlB/CreXnoAhTHanMFs07UvUlTq7K4W08K+rMxHhSLaID75sF+g3brTVqRa1YrjPYKqaD/0I6e772+CnHHGOghJghpgfLxrrzMy7dkUoXUPjVS+g0g5+phkA14DYHZkeWqW5d2S4sx4v3vGPR4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bhfoKLTG; arc=pass smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rKXHPQBy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZA/uRxpb"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7E0A61D0011D;
-	Thu, 11 Jun 2026 05:19:11 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 11 Jun 2026 05:19:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781169551; x=1781255951; bh=qC1SXADlVM
-	LbbmTswOX7s+G4wzfWvboxVTALUz/kF9E=; b=rKXHPQByN0ZwVBkKshm2prCoie
-	83fQEFCqnswGoKHAW55jjcrSL9dSHINDkeN4KcVqxzSA+mV4BM4Hz3wXWmWnrEEX
-	9OobiMbYsfLFWoyPqVyxVPR3AaACm8YCWkfgCYNnJ40t4iRUR3m9x4QF6LkMlB0H
-	1Fh7ybTBkMzj2EVNyKqoQvjo4yjzCnfeWfYD+QL4E+RYAt6sUszEgG9MKMT37kOI
-	1zqei3OmXPr/6/uxphHJgc+Z+aTEvyRLWzVbKjWTMx5qt7uMksnCKPOBmDgUod3l
-	pGgs0bfnpa++ElrN9IzKe//5oQ2RTzlalCzPFOFnj2f+wjcKArkyOF4i2zSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781169551; x=1781255951; bh=qC1SXADlVMLbbmTswOX7s+G4wzfWvboxVTA
-	LUz/kF9E=; b=ZA/uRxpbFDGsjjLB6ahbmwfjXpJmD4C+pJxG3LuKItm5hZNFY/1
-	tZ2JAfrFYxakhE+FJzX1KizoGieeR4XeYz+mJveNKBC9XnhHfLqTBue5EL8L5Up1
-	UycjlfId7t1XttV0FmL/hxcUZooGB9EWiOzM5LgrY9zCKiIUTDlymFEE7LF7NOdq
-	dbHn3iHxzTBOh6LBKWxKLWxI0q5qdDWMil9wP5flQK1HQZEl79OAZex6Gx2ZD2Ji
-	Mqcra1WY02+HcE9Q1ZR6RhjeQUva2tzxf4XBEdfdl2qHMCGlPAF+KVzyHjcwItLt
-	pESlkmw5y3tAIAYLdEyljL8X5piTHx0E7ag==
-X-ME-Sender: <xms:j30qaiXSVlQyJvSuDeYe-exuu1_uFoV3lLXkmeeHVhfsriIGea1vJA>
-    <xme:j30qaklXdJLAq8Ebl-Jx2zf9Wb97Y_3WzYPs1F-E0Mwan8F4ilxXw9XXsI1lUOt6v
-    R6lJ1b04i_2K3C1yLxqG5I2FBzIFHHkQZPh9UmqmTIIi0B0NovZ>
-X-ME-Received: <xmr:j30qakC2idsN-fnFLdR7Iee71Pe9ty194D59Q6cSBLRdS2Sd3fg6THhpwgceqSB5ID5YmYapbmTnFOOxjKYfUGHneOp0bqQm-os5saVd4hAW>
-X-ME-Proxy-Cause: dmFkZTFXzyTzErB7zzttV7UdPh98Dp+i7JWcbVI0tMUPmgleOrCdsplzpaTFm73LJhnJix
-    CPtf9BykmbzFBLFx3/AbPnw+kba4FZk8qtO+zgLTffSupRsj1x1rfBxS0c+4U2eEJt/T9L
-    ZGCKDgZkHt51c23v8msNJDglOuhwiHMEFGMMQ07Lt9DkYpfCaWtzMkcFV/kC1KgakZBBFh
-    gjaKsDMlKK/BcLYuEkaL39+btbNnc/OzrlWKoFZAtRdqdLNGMb3tcNeFJhspWpDzZbAgds
-    IDiILnRtUYPDdcsrWvpagudqVX9rNQo0DIxJSacFEPiMEFHU68CEi40f1uTHJ5RLYL0zML
-    HxJA3cQQA3vVKNISwfEvNbNaQgmjYa9/dmMqje7D1aOoKPWiW0yw5VmSZD9mn3ajnVOnjq
-    VovXyEKlgcatCgnS34v/juLpvuYxQzu/pKVKSF3UghSwJ/oNptwXDQNFTSQbrguLPVBxI6
-    Dt3u8b4vneEaPY/Hb281zI7Y22YVbYe8ITGBTld/AnZnQCPI47+pFsnaFda45vdJ0dAErN
-    MQ8wsG2JJWjHhASD4IliuxbHqF0jvwr3Xq+cOEU1plpqDmWOPiagkRIzE2RHXteQ4JLiMx
-    6T8V9TpTLzU6o86nqBfDUIj5z70yfpiXPcAVQdaKemESSfMf8Mo/Cnbl/4Xg
-X-ME-Proxy: <xmx:j30qakdiOt7LEjlhJW381RCqyOl_HefWOHgxQWnvATAE5niQO9gB0w>
-    <xmx:j30qavIfYihuzJurKE1JGEY5gLWo32g0n39nSMUUjyD0I_VWrYzOCA>
-    <xmx:j30qanfxKkdUJCRZTw5msyBFvin85Lo67QXBS7yf74uLl5d8zt2SVQ>
-    <xmx:j30qam1sgonGYi_VhHPkEKKyl9ivit-RKBGdu2U2p87s-K5yHs8Bsw>
-    <xmx:j30qanGnv-D2qyFi5TVrmmCWGVUwgNCC5id5IvP4Hkw4b5aK8ZRikC3k>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jun 2026 05:19:10 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b6bae56d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jun 2026 09:19:08 +0000 (UTC)
-Date: Thu, 11 Jun 2026 11:19:06 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/7] environment: split up concerns of
- `is_bare_repository_cfg`
-Message-ID: <aip9irJ7WBaICxDa@pks.im>
-References: <20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im>
- <20260610-b4-pks-setup-drop-global-state-v1-5-5dff3eec8f06@pks.im>
- <ainesoUOuhspKxHF@denethor>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bhfoKLTG"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-bebb72b845aso1259282666b.3
+        for <git@vger.kernel.org>; Thu, 11 Jun 2026 04:18:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781176705; cv=none;
+        d=google.com; s=arc-20240605;
+        b=b5g+pIrKer9niJRKrX3DYMJkgUVL+lM6cV5KhGt3ZTG8fjNWq1ghhWU33bk5CAZHdh
+         UQ9rae9UWJcgjInpz9dfzJ4ejM4Q/C5385KDx3vG8Td7So3SBQcOBI4a0qjzgV8Z8gn2
+         1v9neKm87vEx83vVr2O61zudRbs7ujjYJHOsL0xQp5chEB8iPU5iQrWfTyxdK+Y6MBxT
+         18nkxsL7Af7eIBiqVF7MBffcLyjqSo3eHGBIHMt2QS0hR2nEpSrKEKGliSk1G42bLKUS
+         PQlteOci0EwuZpR7Gd8QNtcffwwFLNSdsHyrj8uo0xm2zR4JOzwTk42um4/KsmXTFSLn
+         4keQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=SJ5mSzZpbokYkTeUrojVuOzsFbi3P0a2bJKtN3SaCzo=;
+        fh=cnVTxPqFsYP+zazeOPiMQunEvSHtzPF6bPjKz6ST5zY=;
+        b=Da9VwX1qrBJCWPGGq+VaW4yWLtnMTLQOVIcHBdP9VlCuvuayiL/+Tv93z6O524Zq9k
+         HJUnyYbTs1Dg8a/hwrgfz+fjUbimJNcacvDh6uDz57PaI1opRC2zXxuRiX8NuSzAjor2
+         etXNtd19gcKbLQ60Ldkkijh/UMXKLQDSlzc9ihiM1tibc91ePYUU72oJS1lJklBZaExU
+         a1nWzvQ/3S7h57IAi/zIaDK5OWqnen7Uf4XsdhaMRJELKFbQB7D03eHI6IQ2PuuCndVM
+         GPrXOaE0yMY/ePyiHR1nFjJqkg5VKK28QnWwZ0MiBisNr/XDtcGQtamFo+IQabwMQcLa
+         ZbQw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781176705; x=1781781505; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=SJ5mSzZpbokYkTeUrojVuOzsFbi3P0a2bJKtN3SaCzo=;
+        b=bhfoKLTGg5ozQthJcvwgcvXCt3ZpSNQi+R0oJ7zkHfmVegyKD4qI3guhxqJ7BLlXn8
+         o9H2boL/cbQsNKnkaWLXThCRNQxw8kEkq95FPxtmkJfRdzqXTd/7KRc5aHlmZUm4ebx3
+         56owE7wJjajCGV5zE4R9A13VZuBk+lqCes0ghvQMUbdTmxk+v9zD1OHgZu9XAURR7qkw
+         XAqz0C1eqGKQ7ZpSdhd2o3ytb7GAuTssS6Jp9F5bRUQTJJXDY/nC28UMDzPNbmrvfNHx
+         A+odUGeFGf4sFsXuG34pPrp3pQm2EZKQaLw/uU5A3AHnFctJP0pyhClD9k/LTJ2ka4Cl
+         +Uhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781176705; x=1781781505;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SJ5mSzZpbokYkTeUrojVuOzsFbi3P0a2bJKtN3SaCzo=;
+        b=CPjMTHXrhCMnw2fdjQSnmq4QMqN8fzUVmWqguchhbpTUN1wBlHjybB5mOGBJ5l6Hn6
+         geimOOEiZjoMaPi04LZO6nXQgkDB8VgisqOcl5W5Rj96O+hEULHeKrdGLMBIUad/Hbmv
+         2tQOiws/jfMwrhfxyVGoss2snLQg7U29jWRiS1k9rVPinZnjyGkZK17Ni/sOtIhZlJhh
+         rIHaumprs+t0rJ3TEqWyJEqK5m9lGw/9feSE+egaan3dq2TIfUJ/AfCJrplUR+CFBJMH
+         YUzV1wvWWN1FKufq+5X+aGty3t8PpDgOqJyXYUU0mp1pY++AmVVU08H0IWvcoUhB1ief
+         LbNg==
+X-Forwarded-Encrypted: i=1; AFNElJ9Q0rnRIjTjsBeuQ2Pj1XjdXMgP+7YIibcCtGUImcquVORekjDR6UwaECkvl/hxCX3Z2GU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAj2wmNarkkvpIuXomn61d+RuEzXL4eJiJuGw0dMaAYB5Fnjij
+	Wj714wlK3Rrwi/g43wAIeSKXjxm26AJJ9US4KoDIduMKD+fkXmkh9toW91YR1+MB2/pwAdhcfSw
+	HFJp2tCQ/r3kFk5zEyggdb/lAgaM2Fec=
+X-Gm-Gg: Acq92OGLQGZmwWulA2zmM1fwtE9lBTN5Zz8fp58/z0lI8ssRHwVHzP/beRR0eKBGWm9
+	PSlQqPs9z2dk26pyQioy2cLfV2Wr3Ax4fa07Rb1MmTYjB+i7Vh1wuSkx0VophH106mZ9Zo5wHOR
+	NelTrk0uYzWwcO+1boPNcYIb71mgIwXEP/zKv/HdQdiqwqkKj1G3lZKBxEE/fNgGSvctfqCmODL
+	le+uEkicHWfbP9EKB5d/lEEvjhawOL4SRNBjMA7eSQ8lEjprFlLFbxRCkfn4uq27EvMjI/mG1cQ
+	Ac4mSGsKyX923VaoYQ==
+X-Received: by 2002:a17:907:3e21:b0:bec:e6ae:2f69 with SMTP id
+ a640c23a62f3a-bfc87bf96a0mr111649066b.30.1781176704896; Thu, 11 Jun 2026
+ 04:18:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ainesoUOuhspKxHF@denethor>
+References: <pull.2318.v3.git.git.1780555730228.gitgitgadget@gmail.com>
+ <pull.2318.v4.git.git.1780742303298.gitgitgadget@gmail.com>
+ <950f70ea-1615-402f-9cd4-3317bf177c5c@kdbg.org> <CAHwyqnUpiWmXo0SVr=7L-+cwA+qhVyqodpV-O4C46w=kLqaLMg@mail.gmail.com>
+ <fdf7f988-d345-4107-845f-e089d7829c16@kdbg.org> <CAHwyqnVSnf9K50xgUjeHFM395Rvj_uTVvZ1U8EZayNDZeMP4Bg@mail.gmail.com>
+ <7b40cabe-d243-40dd-ab29-fc4dd91fa20d@app.fastmail.com>
+In-Reply-To: <7b40cabe-d243-40dd-ab29-fc4dd91fa20d@app.fastmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 11 Jun 2026 13:17:48 +0200
+X-Gm-Features: AVVi8CdBC1vH9usivn2jEpUGIcN9h6UPGjZH_kysvViuO5UwVYN_ESEUKnBiMK4
+Message-ID: <CAHwyqnVvSBCx=KQck+Yb-+5Ff05suHVPFqdVrg5atnbt1=fOMQ@mail.gmail.com>
+Subject: Re: [PATCH v4] git-gui: silence install recipes under "make -s"
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, 
+	Koji Nakamaru <gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 10, 2026 at 05:22:04PM -0500, Justin Tobler wrote:
-> On 26/06/10 08:56AM, Patrick Steinhardt wrote:
-> > diff --git a/builtin/init-db.c b/builtin/init-db.c
-> > index 52aa92fb0a..566732c9f4 100644
-> > --- a/builtin/init-db.c
-> > +++ b/builtin/init-db.c
-> > @@ -81,7 +81,7 @@ int cmd_init_db(int argc,
-> >  	const char *template_dir = NULL;
-> >  	char *template_dir_to_free = NULL;
-> >  	unsigned int flags = 0;
-> > -	int bare = is_bare_repository_cfg;
-> > +	int bare = startup_info->force_bare_repository ? 1 : -1;
-> 
-> Any particular reason to continue mapping `force_bare_repository=false`
-> to -1? Or was this to just minimize changes?
+Thanks for the explanation.
 
-The `-1` value doesn't mean "false", but it rather means "undecided".
-The effect of this is that "core.bare" will eventually override this.
 
-> > diff --git a/setup.c b/setup.c
-> > index 71fc6b33da..2b690da8ca 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -795,10 +795,16 @@ static int check_repository_format_gently(const char *gitdir,
-> >  		has_common = 0;
-> >  	}
-> >  
-> > -	if (!has_common) {
-> > -		if (candidate->is_bare != -1)
-> > -			is_bare_repository_cfg = candidate->is_bare;
-> > -	} else {
-> > +	if (startup_info->force_bare_repository) {
-> > +		candidate->is_bare = 1;
-> > +		FREE_AND_NULL(candidate->work_tree);
-> > +	} else if (has_common) {
-> > +		/*
-> > +		 * When sharing a common dir with another repository (e.g. a
-> > +		 * linked worktree), do not let this repository's config
-> > +		 * dictate bareness; it is inherited from the main worktree.
-> > +		 */
-> > +		candidate->is_bare = -1;
-> >  		FREE_AND_NULL(candidate->work_tree);
-> 
-> Previously, when there was a common dir, `candidate->work_tree` was left
-> untouched, but now we are expclicitly setting it. I'm not sure I fully
-> understand this change.
-
-I cannot blame you. All of this logic is so unbelievably tangled and
-hard to follow.
-
-In any case, I think you might have missed the fact that we `else if`
-branch is now `has_common` as compared to `!has_common`? To explain the
-different cases a bit:
-
-  - When we have `force_bare_repository` we are being told that the
-    repository should be treated as bare. So we set `is_bare` and also
-    clear the work tree that may have been discovered.
-
-  - When we have a commondir we know that we're in a worktree.
-    Previously we did nothing in this case, and that had the implicit
-    effect that `is_bare_repository_cfg` would remain at `-1`. So to
-    match that behaviour we have to also reset the candidate's bareness
-    to `-1`, so that we parse it via the repository's configuration at a
-    later point in time.
-
-    The other part here is that we also reset `candidate->work_tree`.
-    This is because the expectation is that `$GIT_DIR/common` should
-    override any "core.worktree" settings. Quoting git-config(1):
-
-        If GIT_COMMON_DIR environment variable is set, core.worktree is
-        ignored and not used for determining the root of working tree.
-
-  - When we don't have a commondir we previosuly had to also adapt the
-    global `is_bare_repository_cfg` variable. This part is not necessary
-    anymore, so we basically just drop this case altogether.
-
-Patrick
+Harald
