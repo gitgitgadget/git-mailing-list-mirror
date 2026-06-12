@@ -1,160 +1,115 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20D135E1A0
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 09:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781256054; cv=pass; b=OPzFwvaIz8CHBAvTLcNqWh23xP0FJk/CnWudsLDiRfFTpqXh9HCkYB0qprpEJkJuWTGZHNioxVJOU9kWeHvV0wynFE+ofZ9KZu5r+ShXw8GXtqxDQbwE+sZu+Anee1T3VSghB2uOrbSN8IBJoJtMoCHHbVPoha32TrFxJttFfK4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781256054; c=relaxed/simple;
-	bh=tVS42282fAFswwzr9NijTkqd56jqYsbuYmKo1mSQjuU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=gf0KUnhEN85hHG6Lu5MTNk9sLvKxxKTeDZRT1DJvm+tY5lnkGbfJsArLCaHfUDTCQ0gajKtFvSufmYe8+vPDH3ta+kTi3b6nbk3Ml40ayOqSSl8UE5bnmq+U/yoDWoPp/Lfjz7NREDrhETUOXtIANEkMHTT1tD5GjD0skAInaic=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TTGTBlfN; arc=pass smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475B430566C
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 09:26:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781256402; cv=none; b=gMjzI7/L4duHWz6H0ILOFO2akTrulXVqeKBNL8PlvWjcWlAwgCsObod0eDV7wZsjwDiphPLRFpMwRIZ5Lr3+UNJifbZ1Y35+/vwvLplYErFIJFMmhAcqWwhtEbiIfWi3Wa7EMX4Vs22WyYbNp09hWdSpDq5h2eM9Eve1vPDxxks=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781256402; c=relaxed/simple;
+	bh=6gdOoSL8Ca6gYigAXf554mlYJ3m4Og01wzqrFn93gR0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eDAVftOGrZ7Z1dqiIvzbxeQTnQk9Vtw+TUXMWRodyPRkwPeHpjftSg0d/q3CcoxLIIP+8gUuToC38c7fK/w93aCpYI8bJaL/KbXA9RfW2meOdvL+e+GJ5uABfDaT94lpx7Te1mIkIogX4qH+LHVPRuC4I/p9JonsN2YDHyeP4wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=CqQjiIO1; arc=none smtp.client-ip=91.218.175.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTGTBlfN"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5ab03872a64so353313e0c.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 02:20:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781256050; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UKuhA1Ofz+IdVt0A98E7lXDc06QKhaTaVxup2KRSgvhlDBOAlooZ/HXaSdr6t9NLRw
-         yQw7XEwK3s9Mq36R1vSuBx1+1ktmnfC/1FNE4aqdnEug0berY2hUJX5MYqrzFHooW4Z2
-         KMM25CWdJ4vNKHGHDlKgaEbG4QGYJ7gwZYpElnv12tuUWUncFrPpXqJ7zVpawM6kW8GZ
-         /On7WVQ9+1glMHSr3jRlMnbXJFSpyfgfHa4Gyr7Gt0dpaBQQwCTRDalTjPwDCzy9ykb/
-         fp61VXdBgNg+efvoulykH3FelnF5UeRrK9OwPYhS3mg3K77Mq0CQC7zxjudF0aGisKLj
-         MxKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :dkim-signature;
-        bh=bpR00dsmjtoEnrBKwydcfFa5wbuY9IDuRwKcJMKSbVg=;
-        fh=TlS1X/4+BAj0H7/WyyI5Wqi2J/R5LHv0MbnCr9s21vo=;
-        b=k9WSR0QklolorSE8KqqQ9BwpKDTpcVDmympzmvhFxJkKnRPyJa+zgIvDVsjQzyFHm1
-         AdUWUJWKqDFt4CVlY1UTmQ5u8gPNp+ec9q++tg1Tc/PhSyDayEqxa5GetROwAQWlMe4y
-         c7MN8CCECESv5JI1yhenIdFD/AzKSkKgrhMNdyoLEqOyG8DOOG8Emkj1JKnF78NfjsgA
-         G5rTjjfeJ6pyI2GBdeW+pn9GeAZNCNOobtPKu6OvP74X8n+M3FHcOYhhOrgkjrd1I+rx
-         FZuUxTSuh1K7BbRxzHJPQFNUPhWchQzQzy9XF0fbtXimhKPqMLT0AZ3cfW9K6EeV6W2c
-         uVXQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781256050; x=1781860850; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bpR00dsmjtoEnrBKwydcfFa5wbuY9IDuRwKcJMKSbVg=;
-        b=TTGTBlfNQDgrq62bMwxwH250RkRdTl8UTx5f59GiQzjeQLBhAr92SozDZLEDTgdfk3
-         e9F8GBBZnPH7wE6S1C0EScrxO56EBBasIQWsB9VOfArjf2VzIUKuL123T39Dhdi0J5KY
-         +WJnDWCvtokmZ2hFyUrAq4KrRCApXgCm2O7FtPpt3uQCfz5UqDzKZy7TC/NpxbpQAE/0
-         6FabZOtrGi8wq+AkI1ed5TxhtERdTQUJtLKYDdEg/+Mrw7wtYVyFpAnTGa4NONUfdD5I
-         ickcARNOFJmXcmt1m5nbbxmzxi3VZ9Qh+Qbfwu64jykhxZuvi0zQjcwhdywQdb4CVa+3
-         XD9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781256050; x=1781860850;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bpR00dsmjtoEnrBKwydcfFa5wbuY9IDuRwKcJMKSbVg=;
-        b=VJ64KGt60c1ge4bJ6p/McEeCHktjhhd/dKn8mivsl0mK/ycqiFtwMNBII0LJgI9sYa
-         E922UqKKiVU1zLjXRngNcA9znF3FahTLVjQaXremZzRemm4ko1C+CxrtWE7a4PEW3Jlk
-         KpuhP/Ju7pCP1VN0ghXwo31qwwoaEv9acBNml4ufXR6MntrjvyzM7r0ZqChIeAEJ+nuX
-         feDxs1njN1d1LHd4+HWpg5JxKvvEcFhu/5d6kUWtSLHwzb/SSkadAOOBVM02t8ZTV9M/
-         PnuiC8iKmvGGyv69G3eVAwlMykw/1NeA5rr0+XfkEowwfgigfk8Mg9eiZWwlWt/4dUrh
-         mlBQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/BuGMVo5XYK0oSX6A68N9B2CKr8+KodXtkogxNK3LX6CMohzLpgVu5VRi9J1YcS/rE4Xk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQpYrF/3ph7argOBAsqc3o984vnLTmt5llH1J8G/JMVZT5pxPv
-	fsgvh61dnvHoDaF6C8f/t5B9wLWTbRulRnZN/JSVPkMbSl8pzO1SqAWpe06t77pOjz5+4jMWSSL
-	q2ba+FRjpZyOmFn35cdYTrrZOVnLdUFE=
-X-Gm-Gg: Acq92OEB5phmxuPFeTTIBz7HOZWINr69MqKKNAWj+5p76yvdgUjzvGH9JXhwl5TmkQs
-	iNY1yuXWeABplMbTTT+JvNNX9t9/Na1r+j/YiSiPNKG+MoaPQ9WzQYyk+TXOjiMPLKwVUOk3hZn
-	ZiA21x8+Qmlh/V4aDDcgogBMrMf2v28alMr3EbWMJIGA42EP8FgobPAYS8ihMBeKTdpYWGIEwO1
-	7OmFVlAPNme3nHvqGhMbeDNu33/9EeoCxnPJa6fAOXaNTkXklRW6lCRr2pWsmUlFSW5A9W6+O+z
-	eBldaQeFWnAliVdkDaV/1AwS/hjjyV9FwDv7VhTI4NYqajTay77Guo4pw4fuwDaGdBusoR36lg=
-	=
-X-Received: by 2002:a05:6122:614d:b0:5a4:6b77:2d79 with SMTP id
- 71dfb90a1353d-5bb6c081669mr754934e0c.6.1781256049769; Fri, 12 Jun 2026
- 02:20:49 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 12 Jun 2026 02:20:49 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 12 Jun 2026 02:20:49 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-6-56c864b01c43@pks.im>
-References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
- <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-6-56c864b01c43@pks.im>
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="CqQjiIO1"
+Date: Fri, 12 Jun 2026 17:26:23 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1781256397;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=J2iZojrfp7vTGm2byczLjZrMja37QzJARgsdTI67p/o=;
+	b=CqQjiIO17cyXhxC6/3Lnjzp8lyXrTQGZQS2x8sNaMxKpTCdq43oQfDEBLcWl13Si67BbGI
+	IZ/RkdkR3u/bkCizOMIlFQvQRNcHyCi3eexkx0Xko6A7RBlshQce6scrolSzazAvWkSvW2
+	cogSpgCsMvRNt8QOcGRq0WwV0cZfL6cfZf2g9ScaOU3Sj3HMv5Pu2GgcToNMCQWQhfVLTF
+	AfB2KP2TaJu2SBOSuHpYc0zSpqHtwLWlTqLOKFEnR3q6JjPW7jqcAMFNgoG289kMgmd3iz
+	WSGTJdRZZfByI4Zm7cwhooR8N9N376ipoC/ySdTC8j3vDDHlvtQesdyjMuLHBA==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>,
+	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] commit-reach: remove get_reachable_subset()
+Message-ID: <aivQv5FkTEWDn22i@wyuan.org>
+References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com>
+ <pull.2144.v2.git.1781178567862.gitgitgadget@gmail.com>
+ <ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com>
+ <xmqq7bo5nf31.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 12 Jun 2026 02:20:49 -0700
-X-Gm-Features: AVVi8CdJPmu6fEpB7ayx4bu6SAuW0T5otgBOhmDf5lGaiQR1xCCm5x7nrFPg4Y8
-Message-ID: <CAOLa=ZRUF61cp5JqXKwpNLf1BO3bhMFAT5Ph_-yvz1D9-qUSzw@mail.gmail.com>
-Subject: Re: [PATCH 6/9] repository: free main reference database
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000001a489906540afede"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7bo5nf31.fsf@gitster.g>
+X-Migadu-Flow: FLOW_OUT
 
---0000000000001a489906540afede
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Jun 11, 2026 at 10:48:18AM -0700, Junio C Hamano wrote:
+> I wonder if we should talk about it in the SubmittingPatches and/or
+> MyFirstContribution document?
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi, I think it might be a good idea to cover these details in
+MyFirstContribution, then cross-reference them from the part of
+SubmittingPatches that discusses sending a new version.
 
-> While we release worktree and submodule reference databases when
-> clearing a repository, we don't ever release the main reference
-> database. This memory leak went unnoticed because its pointer is
-> kept alive by the "chdir_notify" subsystem.
->
-> Fix the memory leak.
->
+More specifically, I think these details could fit around steps 3 and 4
+of "A typical life cycle of a patch series" in SubmittingPatches,
+starting around line 54. That section may need some reworking of the
+existing wording, rather than just an additive change.
 
-Funny, cause long ago I looked into this and thought I was clearly
-missing something and eventually forgot about it. Good to know that I
-was correct :)
+Also, for the part about sending a new version, I wonder whether it
+would be better to summarize and fold in Patrick's explanation here,
+thank you Patrick:
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  repository.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/repository.c b/repository.c
-> index 187dd471c4..e2b5c6712b 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -421,6 +421,11 @@ void repo_clear(struct repository *repo)
->  		FREE_AND_NULL(repo->remote_state);
->  	}
->
-> +	if (repo->refs_private) {
-> +		ref_store_release(repo->refs_private);
-> +		FREE_AND_NULL(repo->refs_private);
-> +	}
-> +
->  	strmap_for_each_entry(&repo->submodule_ref_stores, &iter, e)
->  		ref_store_release(e->value);
->  	strmap_clear(&repo->submodule_ref_stores, 1);
->
-> --
-> 2.54.0.1189.g8c84645362.dirty
+---
 
---0000000000001a489906540afede
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: c945f42038e68560_0.1
+From: Patrick Steinhardt <ps@pks.im>
+Message-ID: <aietF4BX1Ewt3cpG@pks.im>
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1vcnoyOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEQzQy9pMjRhbDExMGRVM2FpRE1acFpkb2dQRU1WdAp6QkszTkNJTTI2
-TUhFSWdQem1rMi92QkxxMHFKdHBEd1B6b2ZlbVBmOGN2STU0UjYxUW4vNUcxNyt6UjZrckRWCm1s
-QTdOeGkrcTZOQW9IU1pHQ2RXWFNpZ2puVURIY2lCa0R3VVgvdTZaVG13ODBPQjdhM1JwaGJFb0JT
-b1JNMm4KYXh5bnloZ25saTR3aTZlSElSRjZpL3ZBVTI5VlFwN0RBaTdjRHJuTEIrY1BWK3hCblBS
-MGVHaXhtTGNnSzNzdQptQTJvTFlQV1J3a2xNNit0d2ZJajMvZUljYTBsU2ZpZEd1aDZHYTFObDI2
-bDNZN0Q1VVVkZ25aWnN5TnRvNmxmCkhhT0NZbDFZOW1BUnVtSXdEWnRGaDhUd1R3cG1FT0xzKzN5
-RmdXVVJDYko4bmhIOTQyeVF6c0c5TUZUZjZLamUKZmVJM3BwVnZyV0xPLzNtcmQ3TGMwbytTZzFs
-Tkk0eTAzRW5pOWVvNGszMlRTaVdNMUNTYzFaZE9kWTBmRFJOeApSUldBREZOZXhvazRmdXFxTURx
-czh4QjZqYWpOZlR2YXRSM2NSM29Zakdjc244dklPRElkVi80amVFRitsYW9LCjYxNVJ0cmI5WkxG
-cDBvWU05VExvQytsbnFSZ2VvNTFZcXJxc1pnPT0KPWUyS3AKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001a489906540afede--
+> By the way, how long should I wait before sending new versions of my
+> patches? I have 4 outstanding at the moment.
+
+I typically aim to send at most one version per day per patch series.
+This avoids that you're "flooding" the mailing list with too many
+versions of the same series, allows you to address feedback from
+multiple folks in batches, and it gives you enough time to think about
+the feedback without having to rush anything.
+
+Whether I actually do end up sending a series depends on a couple of
+factors:
+
+  - How big is the series? The bigger it is the more time I give folks
+    to perform reviews.
+
+  - How substantial were the reviews you received? Is it just a couple
+    of small typos? Then it probably makes sense to wait one or two more
+    days to get some more involved reviews. Is it something that
+    requires signifciant rework? Then I'd send out soon so that others
+    don't review a patch series that will change significantly anyway.
+
+  - How close to being merged is the series? The closer it is the less
+    substantial the reviews will (hopefully) get, so it makes sense to
+    reroll a bit faster even if you only received minor feedback.
+
+So there isn't really a golden rule to follow here, but a lot of this
+depends on gut feeling. You probably won't have that feeling yet when
+starting out in a new project, but that's fine. In case we see that
+behaviour doesn't quite match the norm we'll typically give a hint that
+the contributor should slow down or maybe send a new iteration.
+
+Patrick
+
+---
+
+Patrick's point may be beyond the scope of this thread, so I only
+mention it as an aside. Maybe these could be part of the same series.
+
+Thanks.
