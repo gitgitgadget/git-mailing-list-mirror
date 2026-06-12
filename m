@@ -1,126 +1,90 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884723932E8
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 05:35:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EB237AA63
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:00:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781242520; cv=none; b=fDYTymeG9bgClWlV8jZ8ewsREP/3AYlp3bWHuAwyzHfDuxPUYrh+8mqz+ELkCXP1RSR+2dDieS8UPXQCKTmdsKKJlbJVYhq9k1J5lVikkpXdhYJl1TCYCA0gKleVnPRHsiuJPh4OvAv6bodriSU1Mt1KeMyrZYPXkoEfhkB3mYg=
+	t=1781244004; cv=none; b=BRhcK5pnBl+BxBaZgC+7bcBITrl3aSaTfP/8Pku9z8JVZ7lfCxRmyfkKLMY3ef9q5duC6qfAAcwBWSgCu76WGGf+uTq3Xvbeiu4Uv5wF70g4UGTYy4rkLyJ7tdbbgAdEsNLwmXxoxgoxJkn9JWj8zxviA0DuFBZqu5kvAHdNIdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781242520; c=relaxed/simple;
-	bh=NHnBW/GSnijzWt9S6o8CGWmqH+LQBAdAyADlOnjFso4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uqHbZzR2o+1rLxlKcV+XC0Lk5Xc5cixhqVBG30rdmlzX2bBEsf9x9zDo8SDkD2NUXa9HeoAFHHewro6Z7kt+WWQXg46a6eMlI5Mwlgll6P0FlMDbut9kSid7xu4h6DJkmd2gSLZAhTfyuJ5bOhLStRcTZowH0Gx4567wvv1vWYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eyZJf/j/; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781244004; c=relaxed/simple;
+	bh=yUkE4bcGp7qWoQtC5JpTFglF3RLZRXWSCljmUwaCnbw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=q484TyRiQXcOYsUZAJx2iz9nKBRRTbymvf9u3eTKETsUT8wgYotApsdr34P+/yB2Dl8c2XDbSd2ngD92UJouDLqlZ9IKtaLnD06XQywCbTPAmiL1p4IjJpu6D2W4DgEYudplvNFh2PusKcgPHrffYbsJ9/Mevw2ClBaYBorB/1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=QrFPqpAR; arc=none smtp.client-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyZJf/j/"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490b2b037d2so4215205e9.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2026 22:35:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781242517; x=1781847317; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LYBryw2QYr2wSInjgBjqDM0vM3rKpt4GvaUCeLbWJtA=;
-        b=eyZJf/j/LxyFUPAKle2urTXlJU2rhbdkdmZoCNsfKVD/QnL0YiwXZcYVA62mRjtj9u
-         iEAQXKKoWxejIi+Mv35NHFApQLOY16Vsd3T6gyyGVKSrTraC0kyAVieT7JPLtGfbp88C
-         KtVSgfM/sGaZpTFOrc40HyG8JPejQkb1voDfhgqAMKjCZIJsRqc5gU04uB0EaEXPT8Op
-         ys8ndZ0BPxsKEBfV6AYa7UcXhOA/TIBNGnJWhBQvCWSplxkUu3Jvtj6k75E716f22z8d
-         Agi9S1+S1w5wBcQOTLoERj5RjHBw04K1D4bMuN3TcMibGC+pSEMJp873LEOIHgG1PQF7
-         1EgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781242517; x=1781847317;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LYBryw2QYr2wSInjgBjqDM0vM3rKpt4GvaUCeLbWJtA=;
-        b=VLC7g3RPHD3+rh+9WF+fwZTeFZX4U2FcBE40oOCzBLRGgg3AEoHrbcbPx7vem8LVmB
-         HDXi1cpLlXaCe3WuC3ub7o0kz2DNUEsbGjURikYY5sFIfOVDb9h8XvPVQOQjlG7O1RQ7
-         Yf4d+6xJroHuyfsf91JwJssd2FDmPsh8FO079VXvHLQlg1K3hZ59hUihAawbMIXYSQie
-         6hL4T7r48+dQ8UR6qghofrDk6IEAT2dYebroK8lPJAxv8A8AlB2LvaEqbYhlmn4rN76g
-         pCNxpbX7wWDUMWaKZUjyzcru3OzRz0Kv8wAqqr6jrVSUCr7IOAjpvvooszTvCFAgq492
-         KV5g==
-X-Gm-Message-State: AOJu0YxeyAYdVcS6M9Ve9yYir2zCgcT3jttGIKLzXwTufbscSEL8GmS5
-	c6wi01ScnNThIJzFtWewGFfQiC/p5ubqHuYXQhQV1c8G+dBrTDP5hQGE
-X-Gm-Gg: Acq92OEGsLPnmbl8W/xUkTK+ub6jDeqHB2HSLMVkOke1dxmoU/K68nZdSMQU88Rpmtp
-	Omq3i0844dEb/BKY8OSvwQO7/t9eTyuyjmQI0P7d/tf6GHau9z1frG+ZugumsHlYYz783OJ7ejM
-	aZ2O4U9g8BbF6fST9XyD0aCjaRiW0g5RW2fSxw45k7qvHKcdPzmNondX7saK//qUdmck+9QfS7b
-	x+M/FTiP6usTppn0YkpqpFcrZe8BSeVSvYdQ42aGRyY770a15UE3oHIKmMlUr37UGt/DvaAqRHD
-	XZ666NNiedoH5Hg1j+4AAt0QudSZnaDl3qbLpFhfMtpC5NVrFXZbfPv/HJVLdUFpPCw18XOG2OX
-	Al7G1BXz1vs9Mcmr325z+XHK4lLQzHrW9nFK8o29BeQFD9BbBLfz23fAllixAifaBzA0qcZqKe3
-	4ciWeX12FQRxdjEbbLihX5wr8tcbbRZNsGOs/Kq8mUgkQPiOLJKNtsowBludXHoADEHQZeOYbJ+
-	QgbIeF8USDS
-X-Received: by 2002:a05:600d:644a:10b0:490:44eb:c1d9 with SMTP id 5b1f17b1804b1-490ec50a39bmr7669445e9.28.1781242516586;
-        Thu, 11 Jun 2026 22:35:16 -0700 (PDT)
-Received: from localhost (20014C4D24E52C006DFABB7466B15AA5.dsl.pool.telekom.hu. [2001:4c4d:24e5:2c00:6dfa:bb74:66b1:5aa5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f2c4240sm2696184f8f.27.2026.06.11.22.35.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 22:35:16 -0700 (PDT)
-Date: Fri, 12 Jun 2026 07:34:55 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 06/16] midx: support custom `--base` for incremental
- MIDX writes
-Message-ID: <aiuaf3fKJ6kIITrf@szeder.dev>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <cover.1779206239.git.me@ttaylorr.com>
- <1bbb387d6b6204045d97882fd8775dbff12dedbb.1779206240.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="QrFPqpAR"
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id AE7B360002;
+	Fri, 12 Jun 2026 05:59:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1781243995; bh=yUkE4bcGp7qWoQtC5JpTFglF3RLZRXWSCljmUwaCnbw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=QrFPqpARZ2n5wQTGEMjx28T7Qi3/HN31Kf8N2eHZ99EeUAGp3JBLyoZJxciVbmEva
+	 dXbnD5bRf6LFFgFCrCSiIR2nvPuD53Uy951CzPhdrQpCDH+lVmaxRJi1XtMANTuQy0
+	 Yu4PmzMQI15h5IbKfnCr/7zUuKzhxtTUwgE+0+Gw=
+From: Matt Hunter <m@lfurio.us>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH 0/7] Introduce fetch.followRemoteHEAD config option
+Date: Fri, 12 Jun 2026 01:55:36 -0400
+Message-ID: <20260612055947.1499497-1-m@lfurio.us>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
+References: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1bbb387d6b6204045d97882fd8775dbff12dedbb.1779206240.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 19, 2026 at 11:57:54AM -0400, Taylor Blau wrote:
-> diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
-> index 66d6894761b..68a103d13d2 100755
-> --- a/t/t5334-incremental-multi-pack-index.sh
-> +++ b/t/t5334-incremental-multi-pack-index.sh
-> @@ -113,6 +113,36 @@ test_expect_success 'write non-incremental MIDX layer with --no-write-chain-file
->  	test_grep "cannot use --no-write-chain-file without --incremental" err
->  '
->  
-> +test_expect_success 'write MIDX layer with --base without --no-write-chain-file' '
-> +	test_must_fail git multi-pack-index write --bitmap --incremental \
-> +		--base=none 2>err &&
-> +	test_grep "cannot use --base without --no-write-chain-file" err
-> +'
-> +
-> +test_expect_success 'write MIDX layer with --base=none and --no-write-chain-file' '
-> +	test_commit base-none &&
-> +	git repack -d &&
-> +
-> +	cp "$midx_chain" "$midx_chain.bak" &&
-> +	layer="$(git multi-pack-index write --bitmap --incremental \
-> +		--no-write-chain-file --base=none)" &&
-> +
-> +	test_cmp "$midx_chain.bak" "$midx_chain" &&
-> +	test_path_is_file "$midxdir/multi-pack-index-$layer.midx"
-> +'
-> +
-> +test_expect_success 'write MIDX layer with --base=<hash> and --no-write-chain-file' '
-> +	test_commit base-hash &&
-> +	git repack -d &&
-> +
-> +	cp "$midx_chain" "$midx_chain.bak" &&
-> +	layer="$(git multi-pack-index write --bitmap --incremental \
-> +		--no-write-chain-file --base="$(nth_line 1 "$midx_chain")")" &&
+git-fetch presently offers some useful ways to control how remote HEAD
+symbolic-refs are (or aren't) updated when fetching from remote
+repositories.  Namely this is done via the
+'remote.<name>.followRemoteHEAD' configuration option.
 
-There is no 'nth_line' helper function in this test script.
+However, this option can be somewhat painful to use if you prefer a
+default other than the "create" option, and often work with multiple
+different remote repositories.
 
-> +
-> +	test_cmp "$midx_chain.bak" "$midx_chain" &&
-> +	test_path_is_file "$midxdir/multi-pack-index-$layer.midx"
-> +'
-> +
->  for reuse in false single multi
->  do
->  	test_expect_success "full clone (pack.allowPackReuse=$reuse)" '
+This series introduces the option 'fetch.followRemoteHEAD', which
+provides a configurable default in place of per-remote settings.
+
+'fetch.followRemoteHEAD' functions exactly the same as the original
+option, except that it doesn't allow warning suppression via
+'warn-if-not-$branch'.  Given that different remotes will vary their
+HEAD and set of branches independently, setting a false-positive
+globally in this way doesn't make logical sense.
+
+While it is not mentioned by any of the patches in this series, note
+also that the behavior introduced by 012bc566bad7 (remote set-head: set
+followRemoteHEAD to "warn" if "always") is unaffected by this series,
+and this feature continues to work for only the
+'remote.<name>.followRemoteHEAD' option.
+
+Matt Hunter (7):
+  fetch: fixup set_head advice for warn-if-not-branch
+  doc: explain fetchRemoteHEADWarn advice
+  t5510: cleanup remote in followRemoteHEAD dangling ref test
+  fetch: rename function report_set_head
+  fetch: refactor do_fetch handling of followRemoteHEAD
+  fetch: add configuration option fetch.followRemoteHEAD
+  fetch: fixup a misaligned comment
+
+ Documentation/config/advice.adoc |   4 ++
+ Documentation/config/fetch.adoc  |  19 ++++++
+ Documentation/config/remote.adoc |  21 +++---
+ builtin/fetch.c                  |  52 +++++++++++----
+ remote.h                         |  14 ++--
+ t/t5510-fetch.sh                 | 106 +++++++++++++++++++++++++++++++
+ 6 files changed, 186 insertions(+), 30 deletions(-)
+
+
+base-commit: 1ff279f3404a482a83fb04c7457e41ab26884aea
+-- 
+2.54.0
+
