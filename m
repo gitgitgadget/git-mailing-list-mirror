@@ -1,127 +1,103 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F1A322C67
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 18:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F57D25776
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 18:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781287328; cv=none; b=QqYCrmM6lvZSnHYkU0/yokSoRKdhI5odkGLpbdaT9EFkAKFQkpcn61FevNLBFMlKGOuyuWd/1VCdRbjJi8bbvu+cfREKhZ2J/uk1/zNdHSpLeP8TL24IxUa3QymPuXoULKtweMhvpmGKieq9ZpoJdVmpgKKZ8vhtqIA+b95OLdo=
+	t=1781288288; cv=none; b=e7SOJbCsTBm4g2CslxzOQPENHAXrQ3hUcA1eA91cJ8gclNVBKm/mspktK7ydGbW6gY27oLJuFs+uF6daRKB1S4JL0/JRZ0K/CodZ/jC4sRbCh9H1mcJpJ9kIPJpFPwe/kkXzdbyqwlIlKjtup7rYioxWncqCARvtV6UjWf+LHQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781287328; c=relaxed/simple;
-	bh=vymVvWaRApQYlHGuqqz6vz4dBNYGLM64PK0rMb1CIBg=;
+	s=arc-20240116; t=1781288288; c=relaxed/simple;
+	bh=ZMzYBXdbuo+TDokPHKPLpLz3Yj7tCuvcZQMkqdClquU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fQ6A0BUWb8edYLEoadrcauEpCg3hXODPLaUiphfjpK0xzqG3l0R7bR/RZ3PK+XC6h4mT9WiddhDF+qsHf+d+G0eEf+nQNael+q94jkb3Ycnt2e4342MkOg9vvbmcGPyj4BpVIhzmg5d1pgGWTRoiZU0ZLhcCjXgFRa8uJrmxeAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VskOufhV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jUAEg39+; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=DdHTPMFFJadLNPVyf/6i8S6jgEMrdGv29iIYUiknaBW9jsb6KvXZwq0DKEEbL0MNeANxhpEo6QDXUS5RsXMJcypEGW5QOJZrwPicSIpHOoVZoUjtcfGPpBftGxm/6GT6e7C1qzllGhXj2bRdM+7vRP/FYs8cNrZiyNzrYvMx1Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=SnP/uMIJ; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VskOufhV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jUAEg39+"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9901E1D0007D;
-	Fri, 12 Jun 2026 14:02:05 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 12 Jun 2026 14:02:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781287325; x=1781373725; bh=bOneXlNGKf
-	b2LqNkG4Hx5i8zNKJroxTojD9U4ZyF/BQ=; b=VskOufhVgA5YXXEsS5SNF5kyz4
-	N4s+EjnwMjQXaBZX18oySIw+cergz8frbPMGkiLJ4TQuVNC3WhW1Igsqy3PMLdQY
-	vQystVREIXAyN5FM/DC4nPnMu05nI7pyu98xB/DHe0XuslVB9OKoRFQrAl51rcM/
-	lGv0WQvSd4UYxM6BRi6s3zv3DrbVYN1ErrgO+z9jPsGMMd9fkMGi3FaAy18mKdCg
-	pzP1Jp24MYXKWbe58MIyt8hGtpT5U8GRM9IffkCNZflZRoYbG+vf+Dc1ZPheRNd0
-	mnOSi3Y04Hede/K7B+/Nk2+VftEUcaTZZeisQ1gHfdZXi5ct5RLpF1nVxBhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781287325; x=1781373725; bh=bOneXlNGKfb2LqNkG4Hx5i8zNKJroxTojD9
-	U4ZyF/BQ=; b=jUAEg39+t0Iie7HRv2lRVSxG5HBowZwuBunogUv3KRkzwa4dgJD
-	S/7XkQhRc/QmOdEPDlwPk/zdT7MKm03/qnLu02eSFyRgQIN/fGeW85NpUuAAuA39
-	m7NG9TraPPQbOptnCnpf8xMFNt4qcwGx1rYCBhYmWZTHsY71HmO8OThjDynTHhaM
-	M+kmZyk+ASa+ArKYsWO3H1fND0n8tRybjtgbHZy885zLITDxN1Mva9volFGhwWkQ
-	6rm4p8E4itxHM30Kkl4XQLVGrTUi5UEBByUri1CK40q3p3QAVIQzsdzkEap3B1Xz
-	WCpxTuh0eWzMz6Q+bVFBa/sNqiBgqEdOJ8Q==
-X-ME-Sender: <xms:nUksapXA2p8Qfjf9nJLskhanA9ZaJu-7l_8RCpAmfckonucdekfjJQ>
-    <xme:nUksavl8GTFLjDZxU5yrYvkAn-ru8ELRUIMfjG3bSQR2y5XiSuoANlXIYKgfM4n0q
-    Cuqct9y02hkSvHAnnbvq84M1UjHx8WCyQVImNQIAUc4u2SKH2uJcUI>
-X-ME-Received: <xmr:nUksajDi9iUkmLsv3r7IFBf-L852QZ9bniElwcKLOwYJI4GV1r_1NrTtRgBKEziCHObYVMAws-t_tKmAvJgGULyeF6i2Z9BK50w_YN0Im9n9HKUDxvHNwck>
-X-ME-Proxy-Cause: dmFkZTEUYDSRLxRLUFTccxtbqPfGgrIVVnTEyC6AM37zrUflaDef0sgGx39wPoqY3DKDoP
-    H4xdZG8suKwp7A5JfbCxqH8wgh0teehRY68EsWIgE38oZ7cmTZzQLR7BYrcj3MdMcuAU2A
-    gQmF3pB1dUsPnZHJFDBA4ULiHsybQYFSLLn5ZxWLdrMimd1qPnjJ40/FRLj65Vl2ts0H5I
-    lL8mrM59Rwk+n+f9pXPiIlWGLVNVS5PKM1ulAqqRGMNA7j6VIodE22+XeRHnLoVHaLUUX2
-    SBjPXtkT1UYouznnUvCMYIMz/JKdVEmfMiZtxqFhBn/JfHcTHQitYiX3HaTm9qMaDZ5vre
-    eWn+/AyCiGLaRr/+6IAoYt51QADTEswB50B/dpb2Ve8KVx5DVWnrjJymi1duLJEiStyo+c
-    f8v5q31EjazHLgH8dhcoyeHeEknuQIUznqeQUIJ3wl2wpwwGFgvOmYC3h1NYdruZDvtSy6
-    aqGP9OnAROy9a057PF0uBZCiu7vY873kaOnAaVDOpxJQKvjusqBlXR3nCue072/o5oK+IL
-    aaulZmjtSvbUakMY3fOhKW5BAt7izXdxdo9LwQGw98YNR8/9uCp5mMd1xwSztTHtxh9NcE
-    32Ogu4hqN0KMPcoEeN6iUf24SZPwzIv7LmNcPO9kJ4Hr9xrpvZX9kLzILIDw
-X-ME-Proxy: <xmx:nUksane3b0Xvt4vNZEM2rAFp1EPAQPQr7ByN6Aco3r9Xf2ox5PQYJg>
-    <xmx:nUksamKF4CyQs78Ul2TBUWQwaajEzS3bBKN-5dvRiDlVsnD0Imrqow>
-    <xmx:nUksaifCXmM8hv3DtyJyCX6vfqUcNoYl55IehMCXp9momXCm2Ec9Sg>
-    <xmx:nUksal1nUBtc-7bV_AuJNcpwXbEddEEPbv0Lcp99D-aq3brXwgWVGA>
-    <xmx:nUksajJgJ8BMXkTpy7qZqJoMQLU-5RYZktlFogPBch066FSstBIE1x-B>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 14:02:05 -0400 (EDT)
-Date: Fri, 12 Jun 2026 14:02:03 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Matthew John Cheetham <mjcheetham@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: t5563-simple-http-auth failures with v2.55.0-rc0
-Message-ID: <20260612180203.s2qSgDUs@teonanacatl.net>
-References: <20260611210456.XYfhytSL@teonanacatl.net>
- <VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="SnP/uMIJ"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-7dc6fbf3e86so16109187b3.3
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 11:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1781288286; x=1781893086; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=YeaahjCDrv0pkpODu9lu47TFIXZ9TgsfrXoQjvvNkHo=;
+        b=SnP/uMIJInosawxwOb1svoDOEk45cu/E2c1X3emRaqLcRtdJvPJAwQKb4EHWXC0Un3
+         VFIZ/vbOVBwUU9o+4g/XwFLCRDgr4OBkhqL85Cx86hCmVEheHBI8mZkEYwUnQTVBS4nn
+         YLaWsD9MOBSWgHx3OSWewVO2Ma3LsfqFtM9qV7DKbvAIj7JWNHAj/FL6Ybtqkhpcn1qa
+         V1KiDEAxpcrLd+HZAlWWnMmbJUt/rxOJfOEXFo22jR6M0XOsGiQ6sAmTPGZr/5gGBurI
+         YR2ycrqBofQ2qDSCRAVgsIa3MjhiNQ3C7xjctTQnT9EvRoPUkK03cD/9MXfOH9wT8UsO
+         tIWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781288286; x=1781893086;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YeaahjCDrv0pkpODu9lu47TFIXZ9TgsfrXoQjvvNkHo=;
+        b=ScreNccUOy8NO9Gk/B+CdwnDSB6PfCo0yLGOZgNE6VC2KYaDqIlwTwiWG0fYKifAtC
+         NakjTnws/kI3OtdKXhBEp5pCmLxCP7aRfTCcKfaAyxo7OFGsx7aljhGYD2S4nfF4XpZS
+         ei0CL7ZxGfcNObedAfIB7l3BUI1uZ8FXees2d0IxELadhqywMMfdxy6qU3X+suAMCZia
+         gxkNaz/9OA4GOOE0Rpf/4J4pMhNYvRFFplyA9Sk7etnw07gMDAjI0q65Bg+R6L6w/bgU
+         44Re/T6zgqwzjdnU2hkcpn7ndqR16eRhIHCA5j/hUSgEUYDCrWgo4N+vWD7nA83XCC+2
+         8mOw==
+X-Forwarded-Encrypted: i=1; AFNElJ9Haq8esdv66neB5Ulz6nRkZ7SlJGm8wdmcKLZJzMMmhTh3+Fpu18FE4HbtIXR6Xmdra7s=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2XToOBEfTsdIVJnE7gN+fZR/6e7ZAVohVucEeIjygaywsQxhf
+	BqmH16JgDeT2wJifNjdT0kqxpui51IvsRyednwKzRehe+BTkbSsya4288VlY61op/x8=
+X-Gm-Gg: Acq92OFqzK7EVU0Emn8P1Hq+CEcQ7mvjpS9z/myJ1z5QfFtplvpbRFpvZYivNrGks+g
+	Yh/Z6ihbnbmB4Un20pFtNwGbIWZ13QsPifZIbChL50BUkoE7no7T7tDb/C7ZEVnStjSBOc3jJyV
+	V8b+le4VkecZTJCEKUow/Ti5EKeV3tn6TN+BqMLoSF+bUrtJh3XyCoClpAokUqlemPRy9vqJgjc
+	LslhgDIeJQ4MWMc1PncYbCXV5MXz4XKbI9uoNK7hMpyYQ1LMek2pOlZisZ7F8g4RXHGBqwlkvH3
+	HnxBANfNgWqjK7NsN1XEbZfdSbJULfNh2+xc2nZisBy48aQN5so0tnHGOSWu0GBZ2fmMAa8Hznw
+	ox592IKdlgd8lk3uEYPj60sQEdYe4p4A7em2K+xfYZrPpUpJdA+zuKdFsHXa134qI+RKsAhOuxT
+	bw/JpNXcPPhuWI0oU4Z91ZrxIn2bcV4QeD+gMIwFpWUvzilvyTGqXbz6SoI6ijcnvPj2Mx3PBXL
+	BzE7KAmAjqaqBDHUntyjCA5znNpY0BSaBNSFBTIwvDdwq2ittlTIcpg0s1Fnpbcl5q0QNbXOj1w
+	HlZ4BHmkz6OmlXrJ
+X-Received: by 2002:a05:690c:ec7:b0:7bd:73f3:7a70 with SMTP id 00721157ae682-7f7b8523999mr38185377b3.32.1781288285957;
+        Fri, 12 Jun 2026 11:18:05 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7f76e994903sm13421697b3.20.2026.06.12.11.18.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jun 2026 11:18:05 -0700 (PDT)
+Date: Fri, 12 Jun 2026 14:18:04 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 06/16] midx: support custom `--base` for incremental
+ MIDX writes
+Message-ID: <aixNXOxfPZnAVLgK@nand.local>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <cover.1779206239.git.me@ttaylorr.com>
+ <1bbb387d6b6204045d97882fd8775dbff12dedbb.1779206240.git.me@ttaylorr.com>
+ <aiuaf3fKJ6kIITrf@szeder.dev>
+ <xmqqqzmbj3mb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqqzmbj3mb.fsf@gitster.g>
 
-Hi,
+On Fri, Jun 12, 2026 at 06:21:48AM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>
+> >> +	layer="$(git multi-pack-index write --bitmap --incremental \
+> >> +		--no-write-chain-file --base="$(nth_line 1 "$midx_chain")")" &&
+> >
+> > There is no 'nth_line' helper function in this test script.
+>
+> Good eyes.  It has been there in the file next door t5335 since
+> February, but not available here in t5334.
 
-Matthew John Cheetham wrote:
-> On 2026-06-11 22:04, Todd Zullinger wrote:
->> I notice that Fedora 44 (where the tests all pass) has
->> curl-8.18.0 while Fedora 45 has curl-8.21.0-rc2.  The
->> version of httpd is the same between them, FWIW.  I didn't
->> compare other package differences; it could be something
->> else entirely.
-> 
-> Thanks for the report. The failure is not in Git, it is a libcurl
-> behaviour change, and there is already an open upstream issue:
-> 
->   https://github.com/curl/curl/issues/21943
->   "Negotiate ignored with --anyauth" (Dan Fandrich, 2026-06-10)
-> 
-> Dan also bisected it to the same commit I had locally,
-> `8f71d0fde515` ("creds: hold credentials", curl PR #21548).
-[...]
-> Daniel Stenberg has acknowledged the curl issue but has not yet
-> posted a fix. I will follow curl#21943 and, if the upstream answer
-> is "the new behaviour is intended", come back here with a proposal
-> for what Git should do about `http.emptyAuth` and test 18.
+Good spotting indeed. Fortunately or unfortunately for us, pulling on
+this thread revealed a bit of a rabbit hole. Patches forthcoming..
 
-Excellent.  This is it good hands all around.
-
-With luck, curl is updated and the canary of distributions
-like Fedora's Rawhide will have served a useful purpose in
-flushing out issues before they affect most people.  With
-the help of git's excellent and thorough test suite, of
-course. :)
-
-If there is a curl update, I imagine it will be picked up
-reasonably quickly in Fedora (and elsewhere that was testing
-8.21.0 release candidates) and there will hopefully be no
-strong need to make any changes on the git side.
-
-Thanks!
-
--- 
-Todd
+Thanks,
+Taylor
