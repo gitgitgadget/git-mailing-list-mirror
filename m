@@ -1,46 +1,84 @@
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475B430566C
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 09:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE07635AC2F
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 09:27:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781256402; cv=none; b=gMjzI7/L4duHWz6H0ILOFO2akTrulXVqeKBNL8PlvWjcWlAwgCsObod0eDV7wZsjwDiphPLRFpMwRIZ5Lr3+UNJifbZ1Y35+/vwvLplYErFIJFMmhAcqWwhtEbiIfWi3Wa7EMX4Vs22WyYbNp09hWdSpDq5h2eM9Eve1vPDxxks=
+	t=1781256479; cv=none; b=tADNItoeS+O2z89oMGOudS4BiOQIjPgSY4s7aZrmV75GKVJw/fyhc7t1cbcIAcWaMfwy45v+EPgg8L0oONWzAzzbbQ+uJWz81vBhb7tHkrnntPKC9Mt2rBJ2BwhHdiimnWZPdQdRvgjaxLtWQRxqn+Y22pR7preZGx6wii3KA/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781256402; c=relaxed/simple;
-	bh=6gdOoSL8Ca6gYigAXf554mlYJ3m4Og01wzqrFn93gR0=;
+	s=arc-20240116; t=1781256479; c=relaxed/simple;
+	bh=wIkpAPhZNiRtR52O+U4vmfUim8OGOozzAQxCzlqO7NQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eDAVftOGrZ7Z1dqiIvzbxeQTnQk9Vtw+TUXMWRodyPRkwPeHpjftSg0d/q3CcoxLIIP+8gUuToC38c7fK/w93aCpYI8bJaL/KbXA9RfW2meOdvL+e+GJ5uABfDaT94lpx7Te1mIkIogX4qH+LHVPRuC4I/p9JonsN2YDHyeP4wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=CqQjiIO1; arc=none smtp.client-ip=91.218.175.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=ixW7T92GyDdhSI+68y2Pb44k+jQ1ZaEajfjMLangWqQPcVh1zDY1KGQGDIVpRLkHpQwHTj6AZwRH7aB2p0eRQzNmcrj6HX33NpO+PaGrAfuguTg/gK7HRhjF5tNbtmfFJBn/JYV97zqcyei+KkNMha40fxTXDjbw/eG4Y0dqDvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y5QRlth4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jSmAE+5m; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="CqQjiIO1"
-Date: Fri, 12 Jun 2026 17:26:23 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1781256397;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=J2iZojrfp7vTGm2byczLjZrMja37QzJARgsdTI67p/o=;
-	b=CqQjiIO17cyXhxC6/3Lnjzp8lyXrTQGZQS2x8sNaMxKpTCdq43oQfDEBLcWl13Si67BbGI
-	IZ/RkdkR3u/bkCizOMIlFQvQRNcHyCi3eexkx0Xko6A7RBlshQce6scrolSzazAvWkSvW2
-	cogSpgCsMvRNt8QOcGRq0WwV0cZfL6cfZf2g9ScaOU3Sj3HMv5Pu2GgcToNMCQWQhfVLTF
-	AfB2KP2TaJu2SBOSuHpYc0zSpqHtwLWlTqLOKFEnR3q6JjPW7jqcAMFNgoG289kMgmd3iz
-	WSGTJdRZZfByI4Zm7cwhooR8N9N376ipoC/ySdTC8j3vDDHlvtQesdyjMuLHBA==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>,
-	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] commit-reach: remove get_reachable_subset()
-Message-ID: <aivQv5FkTEWDn22i@wyuan.org>
-References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com>
- <pull.2144.v2.git.1781178567862.gitgitgadget@gmail.com>
- <ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com>
- <xmqq7bo5nf31.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y5QRlth4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jSmAE+5m"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D9AA814000CB;
+	Fri, 12 Jun 2026 05:27:56 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Fri, 12 Jun 2026 05:27:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781256476; x=1781342876; bh=egFw/wpfrN
+	0gXOdO5/jQ2TiH7casxOnBMoA9jjZhFbc=; b=Y5QRlth4m1tZZviy7aSBd2oWKd
+	A6G5TdfbI7BK3gDHL7QDZWU9/udeY8QiClqiKE/om9IAVgK5G09Pw+ZeaGmQbj8s
+	n2BgeWe5aGOeg75fP865nBd1ZE1h6HoLaG0ugZRYZR6ijF2WZcjO3zvDjiaJ3VYh
+	r+r4nsjmumGLigB5eS/jexKB6q/Bcyq6cn2ZzeQXdxHBV9BUWOwOCedKElSNSZ00
+	ZNg1pQSbGAt3lTQnIGJhhtZOMNb761bL9PcseHtQj5wHJQmMIIy24mnkJ/MZZG7r
+	+5yslPoUdaS6yao0/81hDgk0vYcTUI9hJafLLkzL1eeWwx5gW6Sqlas3PebQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781256476; x=1781342876; bh=egFw/wpfrN0gXOdO5/jQ2TiH7casxOnBMoA
+	9jjZhFbc=; b=jSmAE+5mUHTqrB4+pnsWjx7uPolA61lvExM8gyl5MMsTMfeDdFi
+	m7eCHNLp/SZv+28Y9pJOZAyhWacT8ofs6wXAYso3MGgIvR90kYpzWYcweYDFfDce
+	HHHhgzsBv3Y2LD4FoGpHbNAa4G73gJVGYU1xj05HSb21E2uYYuCxFh5b4TYT1dQs
+	7e633pQedWj+DppJJq6nWBDRb4I1rrLgjnazALFoyBKTvvcxHl6SC/kdLw8kluSQ
+	vRikx9QJICLk93OoDKlu/7JWm3veLGjRTd0Rg/x9vupFtAqEXNLXG2dLgx0KjoyF
+	IZ7pfhEanj15pBVp0RDt9qT/gXZs+D6GfFg==
+X-ME-Sender: <xms:HNEralrgobdLT5CvxOwwO0fRikWFd72SWNXk2aNNekh5cCZrArQ-fQ>
+    <xme:HNEravFZRzC7AbF9_R07HrAhqY4q6MFxZ6ra3zCLgFjf6zpNRRf_gGv_isoEykGLP
+    4mRVMz0kyONmwCQMqxFQKtvBxK7IsPUXG8tyQLR2NbjGFCE4UUXaQ>
+X-ME-Received: <xmr:HNEravnZ2cVX_bmmwTGCVMPRwnLXjgMb5RaGSNjkRvyW__8WDuuajzIBl1lVoNW-ahkkct7ne9Wo8uQgsprs36Wp5Fg0W1xUjeVA8dTrO_U>
+X-ME-Proxy-Cause: dmFkZTFj1ik/BeL7640FCwdioSXGEKljFWYYFhGToQRUuTKS8mArZv7AZyB/clCtmZHGlW
+    sa3pH2//dQBLtyoNZz+1DZBDEZAGilB7hADbDMt0f557PfsK1TZQ8FtnCsO+CPfTdypp9V
+    X+Pa0FP0H1DnlrKRJGnrfDjXYSRxSmzar2DfIQtLUrO+BPBQ1F7Kh1t2kToA5GQe8pwcTM
+    1ro+ar+/5fnQAiUzoU2DycxIiOWeyv5SLcfcna6+c6jTSER+ZckeANFIpVxMW7jY74J4Ij
+    d2CcZxahmXrrkkBMXZshYxzrmHf4e1azm1YIzC2OfHNJlezq1B0eIX0Ffh7U+jcrRDOwN8
+    4qn9uKz/20LYY8CD6zXxgGSqg5XD0XZKny9udnk/s7isWAcey9iyUL3VRWftpz4GX4WZho
+    NADFAFNLV3R7MivYGN7i1StyIC0m8IV8hRzgdNwUWCa9K47ay8mIfFNnyWuXj6xU/h6asw
+    nE9aGuzeDyAYnyQ/M/QWE4GpYfcleuTIyEjEanDK09xjuKKOAMET9Hi1sDM/KuN3E57Qt2
+    qpDfFMddcnv6y9ciINpCxHAj1Enoc9kC/2UWtu0QE8OBGV6Fpoof+wUVIPCa9fwsbyoXNC
+    oeao08ZVvSobDK4V6RGfFqbpVQ/UH70dMuEk16nSxlU0Z+IRffbMFqnZYzTQ
+X-ME-Proxy: <xmx:HNEraqkI7r-adHwzZHplXoc-77xiRNQVfrPaoTSzA9ZWm7Won3SL_A>
+    <xmx:HNEraosBT4gxZ8YvfXjIhYEoVmw06dlwfuG4PsAj9YS0NG94blu6FA>
+    <xmx:HNEralkLvAXFjiRSji1LIcWdezei7u95I9Medz2cJkKxPbA_1hp6_g>
+    <xmx:HNErarvUIXXphr7TAhiQ_b6OFPsaYMyMjlzYccJ38XayzklACU9edA>
+    <xmx:HNEranF73ZC3cdWLDCnoMY-3kCcrlJr-bZVc6hv5GANtQUaqXtDJUrde>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Jun 2026 05:27:55 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2e71bda5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Jun 2026 09:27:52 +0000 (UTC)
+Date: Fri, 12 Jun 2026 11:27:49 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/7] builtin/init: stop modifying global
+ `git_work_tree_cfg` variable
+Message-ID: <aivRFY4T9ACtuoFP@pks.im>
+References: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
+ <20260611-b4-pks-setup-drop-global-state-v2-1-a6f7269c841d@pks.im>
+ <87pl1wyyjw.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -49,67 +87,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq7bo5nf31.fsf@gitster.g>
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <87pl1wyyjw.fsf@emacs.iotcl.com>
 
-On Thu, Jun 11, 2026 at 10:48:18AM -0700, Junio C Hamano wrote:
-> I wonder if we should talk about it in the SubmittingPatches and/or
-> MyFirstContribution document?
+On Fri, Jun 12, 2026 at 10:04:35AM +0200, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > When executing git-init(1) we need to figure out the final location of
+> > the worktree. This location can be configured in a couple of ways: via
+> > an environment variable, via the preexisting "core.worktree" config in
+> > case we're reinitializing, or implicitly when reinitializing a non-bare
+> > repository.
+> 
+> Do you mean:
+> 
+> > case we're reinitializing, or implicitly when initializing a non-bare
+> > repository.
+> 
+> So the second 'init' without the 're'?
+> 
+> Obviously not worth a reroll on it's own.
 
-Hi, I think it might be a good idea to cover these details in
-MyFirstContribution, then cross-reference them from the part of
-SubmittingPatches that discusses sending a new version.
-
-More specifically, I think these details could fit around steps 3 and 4
-of "A typical life cycle of a patch series" in SubmittingPatches,
-starting around line 54. That section may need some reworking of the
-existing wording, rather than just an additive change.
-
-Also, for the part about sending a new version, I wonder whether it
-would be better to summarize and fold in Patrick's explanation here,
-thank you Patrick:
-
----
-
-From: Patrick Steinhardt <ps@pks.im>
-Message-ID: <aietF4BX1Ewt3cpG@pks.im>
-
-> By the way, how long should I wait before sending new versions of my
-> patches? I have 4 outstanding at the moment.
-
-I typically aim to send at most one version per day per patch series.
-This avoids that you're "flooding" the mailing list with too many
-versions of the same series, allows you to address feedback from
-multiple folks in batches, and it gives you enough time to think about
-the feedback without having to rush anything.
-
-Whether I actually do end up sending a series depends on a couple of
-factors:
-
-  - How big is the series? The bigger it is the more time I give folks
-    to perform reviews.
-
-  - How substantial were the reviews you received? Is it just a couple
-    of small typos? Then it probably makes sense to wait one or two more
-    days to get some more involved reviews. Is it something that
-    requires signifciant rework? Then I'd send out soon so that others
-    don't review a patch series that will change significantly anyway.
-
-  - How close to being merged is the series? The closer it is the less
-    substantial the reviews will (hopefully) get, so it makes sense to
-    reroll a bit faster even if you only received minor feedback.
-
-So there isn't really a golden rule to follow here, but a lot of this
-depends on gut feeling. You probably won't have that feeling yet when
-starting out in a new project, but that's fine. In case we see that
-behaviour doesn't quite match the norm we'll typically give a hint that
-the contributor should slow down or maybe send a new iteration.
+It can actually happen in both cases. I've queued the following change
+locally. Thanks!
 
 Patrick
 
----
+1:  0808dbb336 ! 1:  cc6999257c builtin/init: stop modifying global `git_work_tree_cfg` variable
+    @@ Commit message
+         When executing git-init(1) we need to figure out the final location of
+         the worktree. This location can be configured in a couple of ways: via
+         an environment variable, via the preexisting "core.worktree" config in
+    -    case we're reinitializing, or implicitly when reinitializing a non-bare
+    -    repository.
+    +    case we're reinitializing, or implicitly when (re)initializing a
+    +    non-bare repository.
 
-Patrick's point may be beyond the scope of this thread, so I only
-mention it as an aside. Maybe these could be part of the same series.
+         When checking for the worktree location in "builtin/init-db.c" we
+         populate any potentially-discovered value both by setting the global
 
-Thanks.
