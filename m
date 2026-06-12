@@ -1,107 +1,99 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0BE3A7F58
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 20:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F3B35676E
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 20:10:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781294890; cv=none; b=BmY5S0G1UUQGb2YbzFJ+NSPNzNaTep4zZ3uXR8/CW0zynd/gcmsJzYuNQavm2hZjUtGTF+IlOLdZ0vAltX4JTJg8GunzURhO31qyYBNjdXSDLJFDrTAj85aA22vQzRiVDNTW/kaRic5FH8eHRrDBKL3hCIZX5ehILKS9kGUqY5Y=
+	t=1781295055; cv=none; b=F59D6GiAJNNoh6WBq/8VdHcEQzT85Fi+dmmBld0+GC68pQVFwZ8pdNCG7uyOchsP4gMBnWsXekA6hW3ga2ETCrj+oy3f+sWIC7+7TKKXv1Rgzywa6cVvHD5LTofGCURsm2DiEWPKTwKDpzTnJ5/921TLeIuQtANv3wQ+jxpNBsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781294890; c=relaxed/simple;
-	bh=6bS4VtmGL6UPK1g0lo4ZX8kUyzvH6QJS8Mi3fCRFHpE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bz7AwTCRjyPH7DXbb0V03CgbJ6IEEn4KmQGfacEihJ/+G+LqIevz/V3Jof2B1I142gGECoOqspV1nHOfc5QDo/L8ednIl3W1AY5LYia1lC3v7wxlZV64jADGhiiH6yDGCVj3qIa0dkz5AJKUMtEfVtAr2127riKPVs++ltr96k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NXxr7JWw; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1781295055; c=relaxed/simple;
+	bh=G6KzRIhQ/oLyfoGeS3p7E11909wvjl/B/ek1yFVEumY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=P4FJKox3FiwGTzJ0J1U0xfulp60V9Xwfjev9w3QUri3QGE2ARgTp49ToPY124iniE4uA7sCyokbpD7FusYQIBrYvf4YOrS4AOkTAaYL9eyhXJCPsDB1g2w3ZZGAt5/faPKYZmaWJWmxIQhCo38ferXgUnZUX/dj7gg904vg5Z9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QIWK3LRf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b+FG+Icd; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NXxr7JWw"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7ea16f090b4so18171787b3.2
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:08:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1781294886; x=1781899686; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2qFlCvZKMR/PSSlD7u3y1NtwbcXb06tCySNYAsailk0=;
-        b=NXxr7JWwGwPx0T9IvwKdRsJqS4YrAxA6SJ3CIEa+cad5qwF53Db9XQ7J0QezkwbfDo
-         yP62acXHcnUo8hnFNPGW5CjJI1dUJZROQJrf4sXEdfJdPOxZrM+0MI62+KOKSn4r8RF4
-         WgdKZe7dU5gmaG6NYWlx+vf85rImIULwemJgfUGyCV9IZXeVSyQ+hPd3GUZEfOjgYfkO
-         V5Ur95j98EQABXYamyGrKo9mR07aabJ9fL2mZYnXHMnW4IqWXVUeTypc2ih5Htp9/2XC
-         7Ha9XogybE8J4YDL3X95WFOGUTs2A9axQfF85sihln5p/Icpwdw7RSq9Ua0iDDsiE3NJ
-         UhUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781294886; x=1781899686;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2qFlCvZKMR/PSSlD7u3y1NtwbcXb06tCySNYAsailk0=;
-        b=MFiD91/NnqrXhWKYnj9isvFgKgRrLyTs2CDstWE4HcynDSOGJG5FUH8JDIU1P+94+8
-         Fvr8v0ZLobKqsDHauJbfHndtWHU44A/JOrKSomWKzrQNnLi5+vgpWJxlzAqYSTAfUhqt
-         VzOP0ZXqXEsIEqzZTgguM9+iC7Rew6FT5/dnzQuBgBHBrP9KBmPVh4I0SsApxORTVSQS
-         4SKnJc9yb+Yv9N5wCKxhsDLaiqgehpp1UNweYsCCog+ioxXmEPT2BLLV8cm1gNFCW06b
-         dihGCyoqEpAjWiRaTIu1dMatAuDQcJ7kuFOwfsK2TM7jz2KYCymyJIqA6zjGMA6JV1WO
-         QKIw==
-X-Forwarded-Encrypted: i=1; AFNElJ9D2SHO/mQ+yYv53l+QStCGExELWMWO5o3a2J73TG2E2F9Mq5M7050rKNlUps79U/VP+hg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyVqteCPno+cMuIflUG7mr3AVCoZ9MWt9Ed6EllSos8U0Ljxzs1
-	Ddum5wqbr27m0TXrdEMAEn6f+VZTsoU/6eA1fJN+zwxeaGYHXmnk93wduR/pJ6UusRA=
-X-Gm-Gg: Acq92OEEpJXf/sUcOUDkRoZBlM36YTpWT5aCxR1nEDVeoirasedB7CFHSIJH1Ar1+1a
-	PaOoHcRTmZOnWJYuwcEGfbtgaOtteRAwWeTuiRoZ7eFj8hP4F9oy4UgdxQDY79HR2XsG7ef+h1P
-	bAZWWPZpJcbkRAJQuHpKYtskGnc6D0B442NnGY/ou9uyJY13XLoR5ANSRn20g4QYBtN96noZQTs
-	k29GPzzhB81HLtRa0xk209Wnslv+FI2Nk6E3DYZz0k+Jm9yJw1p8x44zoRkG0LipqOw1E1tL0R8
-	kx0poPq18SwgufSJ9K38LjtE6E7Pq8dB85Dg8yCwXbaUdOzTS8TDSYt95iQdvBFjVoxeoY525xi
-	lVu6DpG7/kDXMCOUwo9wcJRwLQRZpeWBqCNGgzsNYKERujRSGWJsG+RsyJPu1bKuXdJqBS/9hQs
-	hzUMluY44ZEpDu4A+lO5XFNG0SNoqU+Um2VnuvL+g/VyFPVZ+VWBdIrfW4ZeEcrd4v2J+CSOpuB
-	UZUKD+TukbRVd8OBouEIZgbwY3B3kpF+ecVm38wTU4mVbp+IF+lJd1CmnLCCOme9+PYhe5/NdoN
-	eMyhvYZm89WJTsSn
-X-Received: by 2002:a05:690c:3392:b0:7bd:5c9e:2397 with SMTP id 00721157ae682-7f8c45cc084mr11903197b3.30.1781294886547;
-        Fri, 12 Jun 2026 13:08:06 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7f770d05a1bsm14254337b3.24.2026.06.12.13.08.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2026 13:08:05 -0700 (PDT)
-Date: Fri, 12 Jun 2026 16:08:04 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 06/16] midx: support custom `--base` for incremental
- MIDX writes
-Message-ID: <aixnJJuDLOo/FsGt@nand.local>
-References: <cover.1774820449.git.me@ttaylorr.com>
- <cover.1779206239.git.me@ttaylorr.com>
- <1bbb387d6b6204045d97882fd8775dbff12dedbb.1779206240.git.me@ttaylorr.com>
- <aiuaf3fKJ6kIITrf@szeder.dev>
- <xmqqqzmbj3mb.fsf@gitster.g>
- <aixNXOxfPZnAVLgK@nand.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QIWK3LRf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b+FG+Icd"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A07BD1400051;
+	Fri, 12 Jun 2026 16:10:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 12 Jun 2026 16:10:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781295053; x=1781381453; bh=vOWd2C2qmH
+	Wp691qBlfpoNfmnRtdnn9oFj61VhX1G7U=; b=QIWK3LRfPeSQWOwyplKW2RM5Xm
+	YYisLu88AMV3t1KmUXkZmK3lcp1fRxQf+UbqNS7hcrQaS5fbBATTRyQLSIMnOOBa
+	8oOSLDNcvgATwYfA++iCVHG4DYdUfS1qx7oTfd3m72Lvkcr0rpRjxxfgN9JlFT7+
+	oIfX0aFKQ3lHblLv958y3FKoXYtLjVdD7eh3SDJZnfo8a5Kv5YUe7f2u5FsWGn4d
+	b4qFd+0brsT7cWr//yGjYkzxrjmWJ9nFL/V89mA94kqf0dgQky31w+qyFBhVxr6e
+	iuqANXfO/jWJMi52k3QcQtalUZaud3zhVPC64SMyLIOJTJVRqaiwU2XAwHzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781295053; x=1781381453; bh=vOWd2C2qmHWp691qBlfpoNfmnRtdnn9oFj6
+	1VhX1G7U=; b=b+FG+IcdsoD/V2aFop/LFYPEUpi5gpOuptmnZI52qqTvMIWVGTf
+	9h8rC3dC9sSCaYEY9AaZfRY4HFQKGiaQSn3gCYjX2Wi5zSKyXhG6dwPV1x2UqrUi
+	0oL9sKukwHimn9mpbcZRTn63jCX/aCfylLOQ51wNesgOawfclipf7B6dhR1E0o+W
+	jGl0sb1iBSVqKSSa3DwYmS73Ow+/BGdr446BcGgPlyG0aXcBW/11xg9KQzCJrKCT
+	2hBIUorDgAZfnJ2Gyrk6EijxfhB7Luk0V9FzT9nrrCw6pHp8NpFFn7dBX6td5jVK
+	Y4/XDNoWauOgKW7uuYAsCiL5YzpgeYdFSmg==
+X-ME-Sender: <xms:zWcsas6oRRer9jhZ7LAl9k396L_ROIUMGi9vO5Upb5eLwT_cJuh5Gw>
+    <xme:zWcsak60aCPwHQvAV8u1yl4Tjx4wOe6RaFWmr3nC8KQ5XFijVtP8qGP1qK5f7FKKh
+    gVEiUruBcYZUxI7LlvRZy522yPnkYW1GrqQ5Q7yaIaHOplHar1jqg>
+X-ME-Received: <xmr:zWcsagfnZG_skrPiTVw9XArq1u9INkNm7lunU0zIuP3LBrtDAkOu5LW4L7iNbvLzpFh-uIRfXVoupxmH67XYznrcmigjP2cYIG44>
+X-ME-Proxy-Cause: dmFkZTFyYh3AbL/izsfuhe7HRIKVOKbO1C0kstr98pT3k8o5ZZ71Fvm/Tz2Fsa1VGeVz/s
+    Du8HdQVG/G3yJtH3Hv8EVTYVZTdwh9sePTFQAwT8NjsPNW33ZjcrL2njMgPckmCSXeSg4a
+    3z8E9mqDuqdcYJOsDrKNGYPqeRlBno50m5nuRO7YKPeUZPbf17wkqsrxeXO/qIbV0qQ/G+
+    O1nOQXvrkVq/Ua80v43AxkW3AjkmqN/OHYyjmRsT+b31oAd8tyjnFiv2M695GJLi3IsMdP
+    J/+2u/UAkmu4FJBY2vlvVr9BgOm4a5ivky6DgioDsI1jIZAwpBg8f8UGUDlgZvPiSy5kKR
+    TL0knPv57hdgkwfiaU2QsVOsfiL2dP07pf+Ai2ICDoud+BYUQCkC1+CDYT9vD3qCtCtZCw
+    Uk0DHyw66rlnrKQBDxyxMLETYuhNXeVEPmiSBZQMMdLwjHqauZke9MhegCxuToJSurzl5o
+    XOrlNnZ+sej/K2H5BpJb9OF/Wv9HVVkU60bheK1hnJJRuSXnnK4wBekD4JvIP2NB+r4JPn
+    pcGqo3/KmXTEp91dS/1e5l5IOwrYwYD4JbmoDXxvv7iKB2drI7nCBYk6kcbPzww6/XI0JU
+    7SCTc1Qdc8mGL+TAZpmPqgEdw3LzaEUNWTjBOCntTeUh6bNieZe/ohY6Kbng
+X-ME-Proxy: <xmx:zWcsagC2GvvueLe89kSBQBOFTeDMYyhArj2opCaxCAMXgkk3EQg0xw>
+    <xmx:zWcsar-zJF-9gJZXkygkv0mHQxXQN3YAPhenW5OG3oNzdrejw6HoNQ>
+    <xmx:zWcsajJwyCDmdtJxdBFvq7GOJpOs8l38DY4d6J2ywhZaH9Y7yTn0DQ>
+    <xmx:zWcsasjEJ1x1SyAmlL9IDiS4c1A_IdQwCAz1d1GLvfxjw5IbiF2j0Q>
+    <xmx:zWcsalGfCTTk1m6Q9EjmTk_K-XlhkFGVYN5zwyBs63k7TfGemBa-NDHW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Jun 2026 16:10:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Miklos Vajna <vmiklos@collabora.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: [PATCH v2] log: improve --follow following renames for
+ non-linear history
+In-Reply-To: <aipTOsH8LKTSwglj@collabora.com> (Miklos Vajna's message of "Thu,
+	11 Jun 2026 08:18:34 +0200")
+References: <aipTOsH8LKTSwglj@collabora.com>
+Date: Fri, 12 Jun 2026 13:10:51 -0700
+Message-ID: <xmqqa4szh644.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aixNXOxfPZnAVLgK@nand.local>
+Content-Type: text/plain
 
-On Fri, Jun 12, 2026 at 02:18:04PM -0400, Taylor Blau wrote:
-> On Fri, Jun 12, 2026 at 06:21:48AM -0700, Junio C Hamano wrote:
-> > SZEDER Gábor <szeder.dev@gmail.com> writes:
-> >
-> > >> +	layer="$(git multi-pack-index write --bitmap --incremental \
-> > >> +		--no-write-chain-file --base="$(nth_line 1 "$midx_chain")")" &&
-> > >
-> > > There is no 'nth_line' helper function in this test script.
-> >
-> > Good eyes.  It has been there in the file next door t5335 since
-> > February, but not available here in t5334.
->
-> Good spotting indeed. Fortunately or unfortunately for us, pulling on
-> this thread revealed a bit of a rabbit hole. Patches forthcoming..
+Miklos Vajna <vmiklos@collabora.com> writes:
 
-  https://lore.kernel.org/git/cover.1781294771.git.me@ttaylorr.com/
+>  Documentation/config/log.adoc |   3 +-
+>  log-tree.c                    | 133 ++++++++++++++++++++++++++++++++++
+>  log-tree.h                    |   1 +
+>  revision.c                    |   2 +
+>  revision.h                    |   4 +
+>  t/meson.build                 |   1 +
+>  t/t4218-log-follow-merge.sh   | 119 ++++++++++++++++++++++++++++++
 
-Thanks,
-Taylor
+t4218 seems to be taken by another topic in-flight, so this needs
+renumbering.
