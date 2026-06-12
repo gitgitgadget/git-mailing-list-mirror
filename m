@@ -1,160 +1,186 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174DF3EFFC8
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781270865; cv=none; b=XitYvzdpavQXITH0egQ0xc7ZJpNaHh4r9JIkPnNK5ulV9rtYcquMGnw97TTv9R27c57kN6TynqAClEjaCg9n38xUhoC6pXzQ/2M+RDK2XCMHyQ5Pw2v4F4WxxM48B9Qo/ca0K70eO5ygoJUvuQ6tmAKrp4RSgZEqpItzM/W2Gbk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781270865; c=relaxed/simple;
-	bh=tauZb0AvoD3H/Wnd9R8OuYpbbNjLIBTYKdrDTYO3K64=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LZSmWKhh96+IiqGrGk0fLjikd3H01bbUue/FN7xFOuLorqn2pOM8qBTcQ76Dh5UsnYocWCjyzj5XUXte/nVptEYSmlfjcrsS6mb/XyKcgNJp7ZmALlDPcTINyS0SRrdPJbRHiiWk4xsg3KpPE8+uIfgryWq871z0aWF3r09JaNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PeCs9oXO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HaY+yD2i; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FA830B502
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:29:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781270978; cv=pass; b=GCDZWMXkbVLuNLv7Mza19WbgqBIos5uXHhYt1OumizGziKmQRmCYHctF3jp/41vRr8qHamnmrzZ3NzbU+UBuJHBvwKAQNwiCZgtEMmiBDHr0+LkPK7hzWQ0JWrWotR8BORBi5y0ZUa664Tmf6113B6eeatowKajmLFBYrhNGc0s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781270978; c=relaxed/simple;
+	bh=lgzmGPKdR5j2Qckwozxr/n+byTblTcT3fkiZA7bqmX8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lnaxS/p0sB3EiQnl64b4P2mSnOw0fogi//4IqT3LY8GBiYY8chuPgMpyaHBACHPYGG5tMW6Afi7ESjr5pWXdHUc3xFssGAo/MOwn2Fx217w+/rj3DNRvnHAOo7F4PgIyBPHCD2z35U9arPgIFs96zEEXyQiW1rsLKQDKl1tR1rc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GlGER5z8; arc=pass smtp.client-ip=74.125.82.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PeCs9oXO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HaY+yD2i"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 444D6EC01ED;
-	Fri, 12 Jun 2026 09:27:43 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 12 Jun 2026 09:27:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781270863; x=1781357263; bh=YSnO2eLgvQ
-	5mmAF0ehuLKv9l/B564osGKSGC9V8NMBk=; b=PeCs9oXOIoa3HJBm6zFvHpmwps
-	7E2IEX5jhbf1GwPpMzwyNBoZf2+1WHZ1U9jQOmCI5zG4ShVeVVxXLaHD7dYTJ+Ex
-	dEz61YVjaN7HvwKyDxce8qQJV+yubxTIJjqQIlJgALy31wx1Fagj/hr4bSjyttGI
-	pO5FpTbKU76beQtJvVMUdSYeFFc5DcaoFcWqRMZNN0dyjbwCImg50Cuhl964w4YK
-	0UvL2DVAD+WORqHSaos9Lo+j2l6H+2U1i6U2CMj0LCfEiJFPRtXwpsxHsCpy/BUd
-	E7+CoFbHi5CWaUmz1iF9cUQvXGp8//7eV70KGw1SkjSaOgpLwsGo14/rowQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781270863; x=1781357263; bh=YSnO2eLgvQ5mmAF0ehuLKv9l/B564osGKSG
-	C9V8NMBk=; b=HaY+yD2iMuhlhqPq4b+hyaCkS9hI7zxO7JPpV4VVeqSO0NpLmnU
-	I+d4uTntTa2uxGb0Wn4zj4Y4D5FK1AHSjMHbvTomaslgJjTuLSNHbbsFo45vc9My
-	7o5uOIU2FOCLakb8blXV69zYMnNqcWOdfz37BQHnqQEHTeu2lJ/PrcAjfS28xX0G
-	VDmZGsOm/yFI29MCWTQNLj+c24/y4FQftLj8Sm7M9Jx5xHCAFlY1xcR3hazexNEL
-	s3n8fuRZJE14c166i4G8eAkeYp8cWXvjZUjruE/71pgA2KMFFA6OdHt71sdzyr4c
-	tFvN6dCnF85ECwI4B95Lxe0TdN7JASesD9w==
-X-ME-Sender: <xms:TgksakqamQj2XPxTn-vCeBYYyxQLSZb_dtym6IAUN23LKMyiy6HgEw>
-    <xme:Tgksaj-dKvYBCZPvUsmINWioJ088Y4njVtre295AJKaAWf3u06djO_9WED-ck-jQ1
-    v-VHpUu4FZE4KoiuB5nyJ-9TyBOTwDC5Sz2LGGDkusInm84JjA-fw>
-X-ME-Received: <xmr:Tgksagdd9RdzP5isva_QLuAxHVLh3ko7Jbws_vhCbn_9H3Qqg5CpUjqLtzU51M_ByvyTUbVW3PNhw0AgqMQmjVSiQ-R1urtpyyhlf_NzzcY>
-X-ME-Proxy-Cause: dmFkZTFXRDenXycenKuuHtCaTs4PLp3GaktHRR0HO6TYGmoXk7oeRPhAqY6wEoTZKg9X1n
-    oLh03DjLHnmPnP+dBEiqIZSWA67wp4Ht10L5PQlCUnnVwq73rFEKQ60P+/1HmdzRQjvK0p
-    VJHB7hSTGIEkjLXDJbrqIqRJ/a/cUU1mvF459F7XsQw10PkNXZbteE4pZFhsq4XM/JoGmp
-    F4UBW+k+lM4RNbQTY3PEi0eFECOlt0HEPW+q5/omsAHt6wMsAkB4a36guG0w/OzYpSb5k2
-    br8g3cvU0T51NgmJwCCA7cmwKScusjKi+DhqkFA+Hk0KhmJTp6wbyOfqAm5SpBF+EPMkjM
-    7c2asoKLDNqignX78ESFIqzA2Rhd119pVw8XX8S9s1Jbi3P7SRyEGfUgeveWsiuwUL8q8/
-    u1xdsjxyYkVU6JxQXgrd6csSswRJCAp9g9bYgI+Aa8LZomX8vkLiZKlBKMzgc2ZLoitRMx
-    cWSeLZ2dKsdMvU++RegDvUpVOSbBbXF73rWlkNGobSFMyH//rJoqUjloDMNv2SlzLANvyM
-    6f4lunGkxiFuCls8TR3qMN9ir6qRu8zU0ggRJs6ktErZevOjzwL10+fL94Dn7xCfBXllZq
-    ZjCtY6S1BfLHHvddS/VHMbEnwiXJr2It+EPULM9Ug1DTcqx70hqvM40dMAcQ
-X-ME-Proxy: <xmx:TgksatIEsQj9mCRfKbAdUHosRAolLxi6yQYwix6yER8_yQRxVWmMQw>
-    <xmx:TgksaggwVFk3V7nVWWybaO4DGN43CYPXGTJiM1Bn1BjoAv8Ia9TlOg>
-    <xmx:TgksarSnLeIaSKw_jttt9QpjEc4S08ERhjBYDdMHYzy4acdSOukQLQ>
-    <xmx:TgksaqX7T-_zCLN6nia_GKqB90ERI83_AEoLSO1D42cCEKnGU2ik1w>
-    <xmx:Twksar_A_Kgl1XzgNOfIFmqAG-4Ot0llm8xH-7wKCBcFsYIXaoSWk5Qa>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 09:27:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e95014d8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Jun 2026 13:27:39 +0000 (UTC)
-Date: Fri, 12 Jun 2026 15:27:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Dominik Loidolt <dominik.loidolt@univie.ac.at>
-Cc: git@vger.kernel.org, gitster@pobox.com, asedeno@MIT.EDU,
-	asedeno@google.com, avarab@gmail.com
-Subject: Re: [PATCH v3 2/2] compat/posix.h: simplify GIT_GNUC_PREREQ()
- comparison
-Message-ID: <aiwJSBfRbUFZ70gP@pks.im>
-References: <20260605094647.94805-1-dominik.loidolt@univie.ac.at>
- <20260608124419.38905-1-dominik.loidolt@univie.ac.at>
- <20260608124419.38905-2-dominik.loidolt@univie.ac.at>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GlGER5z8"
+Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1363fe80fe8so1472257c88.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:29:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781270976; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MlTJN3xMbT//RqfEhaw+aLcWPlR1VmLzz1IdyetsOjfi2KJQ4Ns7IbAeG5tbUbmV3W
+         CBz04JasdnCzhw8JOVdQ4Lv5ibcS0TX/Dq68EOUv4zjZlag8KDH6XSs38yV1WInudBVB
+         BnmmNHM8FTtUIaYHcWFyeYTpNMkkRSA/34x1kseVA9F82V17XPfWELE48lMMnPTwsZaB
+         Y3AT/ph3oEUg+zPgtmr5GZEft6RhKv8GBXhrqDPtMWRzMDwRRYAGCKIU7ZhJrjRZIzAx
+         oU/tJbbZXvdbU+g1dFgvQ2+c1XG/AoVvp6WHKrEPJxh9IvSJRqQNsk38d4P9L0jDHd+J
+         neng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=B/Oy7Rtb1CzYtM7/zQtKoMobcVaXXOc2NCrEwdekfio=;
+        fh=LwuSnJBCccdjKxYEcovLKSJ6FbFCwY5qXrqI3Nds1Cs=;
+        b=UU89SJ3KFWx6AtMvXPx+TyElIEDv6yNwQub1100Tr244ecs1jqCUmU5NC3sY+/GoeS
+         BUBH8F5lYPLIQgjXA1AriPKx6NVIv2oNDgxM/TO7h9rFNIO/pibLR6oZXwIMKNqHkRm8
+         86wJtj2HjBwTS7ydGEkaOZRiPQ8c8DqdjHfWscVm8o3HTA/gPlWp0kxyKzlvFo89D34n
+         kJe9Wd6bBNYvk+bZFidFqc4xxz4dSdK7qQsmU2Q2d55plODwJhKKEC6ZLuLsYTjU8Nsh
+         VAzKES16Ug4r7S97Sewzu5ByeEa58hz6cIJF6SG5/SFWWHUsVFIVSGaJ/pC7hTJyoJd6
+         Qisw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781270976; x=1781875776; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B/Oy7Rtb1CzYtM7/zQtKoMobcVaXXOc2NCrEwdekfio=;
+        b=GlGER5z8yz0sVlI5PjgzBAmRmy4iOxJmT4xT1a/QTRObbgbdlfwCxePWqgwiHvePfO
+         FqS+miYdOHt3x5oJKSI5xyUoONkf2vJqyg7Ng1/PN3UP8pylvJZWoDr+IllBmNOFHLAG
+         TfBL4xQ1b2eXMpKPedLAszuP1eOGywBUzaVkcujxC/W8kGrE1BQzdXQF/G5sgKFctcDF
+         r/pZdtkMvricUdIeFfh1c3Z+NTnMyl/08bwTRew2ZLiVX/97d5QZBzOMcPlGALnDEY/n
+         BzSr4SQh8nvAdsNMx4iKPeYMeG+0Z12QUFuZYO3u/dSYnOYzeueDLhrAYgtuU123w6Fl
+         7NHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781270976; x=1781875776;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=B/Oy7Rtb1CzYtM7/zQtKoMobcVaXXOc2NCrEwdekfio=;
+        b=UD4HCoAi5Lc0bL2PeBknO50PCvwdxWLasfyCCTVUQ1cjx8S7l1KkG2Ul8+Gci5Fh3j
+         8ELcQAqN3jeGpoFQ0rhex/lgbxdPlefNtaQNHwl45zGWOnQWhiGXE+Blcr+AFvDp0Q7N
+         Ulv38HlwKe/MPNge8rqwOWiPnwEL5oTUEI+qZsxhdwlZhOwOtBLzTWcRCzBrXm/J5A38
+         LTwmR2ooAQGOvsaFo9J9WT/nvJpRQoq0pTkfXc7u6SWaFeBSQlGSgNIh757e2hCDnpU+
+         087qHhnqUmxxDfez0G78BEWncB4XSGKxlnM4yV07rUDXYIhPke3SiDGAQENiM9Y13Ty8
+         VHsA==
+X-Forwarded-Encrypted: i=1; AFNElJ+/n2QyiKusx/a4U+9lrCsTISBDIsgRoEo5c65CK5Rx13HAvh5aXK3c7kjGtyA+Wp7baXU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy15Q+aj/IWaceyBNlldd3gA9OJiucQZljBkH2uNFhKWnzwY4Ik
+	E6+jNpO2Fuq1+xkGqJ/HH3mcXZ9WMulPBeRX2ARakKCBvGFOjGuPzfjtc/ooB5usAR61OuJqSXf
+	SfUs5BIuNLlHz8cSraiTjYCMMXCUVfJw=
+X-Gm-Gg: Acq92OHQhN9iiKP27O/wkSpXJNwhGcA7VKbIF5w7KaIVkdDWmDKvFXOjbTsLL2+JQgi
+	qEn9JSfeLfUN0OuMlijXv6zZUvDRyvcOuoT5jljEa9DgkWHsDiAkkeHx5HRy6k0e1E4+Iz7odEo
+	7gYbpPTydNVdXLEPat2gfLu6f6DU+iSX9bIvRsj0UmfYC3/ZDsO4rEGDhem6H2Z9QbPxEhaChZe
+	Y784L2MZAAqRwtjYQDTCzfhdHfpT2kgEDVRh9Ujy72nnFVtMQ3NuLigE3ijYHd6TvP7H3Q3XvVY
+	fDZdWEWY3jA6sbUjoKE2yQqUFXpnAQU66qHGe6Ao1KWb7CtlMLokrJ/+SWDkufx6UJA+
+X-Received: by 2002:a05:7022:491:b0:138:56d:27e8 with SMTP id
+ a92af1059eb24-1384baef0c6mr1261402c88.1.1781270976120; Fri, 12 Jun 2026
+ 06:29:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260608124419.38905-2-dominik.loidolt@univie.ac.at>
+References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
+ <xmqqpl2a4f09.fsf@gitster.g> <ah2PLBluBFy44AQI@pks.im>
+In-Reply-To: <ah2PLBluBFy44AQI@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 12 Jun 2026 15:29:24 +0200
+X-Gm-Features: AVVi8CdHbMvGp4NVEfJaakD_s3xI41cGby-RfVgT_jjUITJLApuZCqWEUpW7Wgs
+Message-ID: <CAP8UFD35cLP6FcEuPr+SghKae1ew4JWLWYAoMQ-fuEOu-JmZdg@mail.gmail.com>
+Subject: Automated reviews by AI (was Re: [PATCH 0/5] Duplicate entry hardening)
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git <git@vger.kernel.org>, 
+	Elijah Newren <newren@gmail.com>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 08, 2026 at 02:44:19PM +0200, Dominik Loidolt wrote:
-> Replace the glibc-style bit-shift version comparison with an explicit
-> major/minor comparison. This is easier to read and is consistent with
-> the format already used by GIT_CLANG_PREREQ() and many BSD
+On Tue, Jun 2, 2026 at 8:16=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> On Mon, Jun 01, 2026 at 09:33:10PM +0900, Junio C Hamano wrote:
 
-It's a bit funny to use `GIT_CLANG_PREREQ()` as an argument here as
-we've just added it in the preceding commit.
+> > This is a fix to an important corner of our system, but somehow left
+> > in "Needs review" state for much longer than I would have liked, so
+> > even though I am officially on vacation ;-), I took some time to
+> > read these through (by the way it was a pleasant read, thank you).
+>
+> Honestly, I always shy away from the merge-related subsystems. It has a
+> lot of subtleties that I don't have any experience with, so I never
+> really consider my input to be helpful here.
+>
+> > I wonder if we create a rule like
+> >
+> >     Those of you who have more than 30 commits in our project are
+> >     expected to review one topic (or more) from other contributors
+> >     for every three patches you send and ask for reviews by others.
+>
+> Heh, that would make me condense patch series into fewer patches ;)
+>
+> > it would help balance the patch vs review ratio, perhaps?
+>
+> It's a good question. I typically try to aim for reviewing series on the
+> mailing list at least every second day, and I always encourage other
+> folks in my team to do the same. But recently I (well, rather we)
+> haven't really been able to due to the current situation at GitLab,
+> which forces us to put almost all of our focus towards a different
+> project for a while.
+>
+> Overall I agree that everyone who is a core contributor should also make
+> reviews part of their regular worflow. At least for corporate
+> contributors that might also make it easier to communicate this to their
+> respective employers. Regardless of that, my expectation is that there
+> will be times where it works well, and other times where it works less
+> well.
 
-> <sys/cdefs.h> headers.
-> 
-> This has no runtime impact, as the macro is evaluated at compile time.
-> It is also more future-proof, as it no longer assumes that GCC version
-> components stay below 65536.
+Sashiko (https://github.com/sashiko-dev/sashiko) is used these days by
+Linux kernel developers and seems to work well for them.
 
-I feel like all the message needs to say is "let's do it for
-consistency, and it's easier to read". That would've been sufficient,
-whereas this argument here feels a bit thin.
+At GitLab and probably in other companies, some of us also use AI to
+review our work before sending it to the mailing list. And yeah, it
+helps find issues before our patches reach the mailing list.
 
-Doesn't matter much though, and I think ultimately the message is fine
-as-is, even though the reasoning is a bit funny.
+In the same way as we require that patches must pass CI, do we want to
+require that patches "pass" an AI review before they get accepted?
 
-> diff --git a/compat/posix.h b/compat/posix.h
-> index ffdfd91c7b..deefc43f28 100644
-> --- a/compat/posix.h
-> +++ b/compat/posix.h
-> @@ -4,22 +4,24 @@
->  #define _FILE_OFFSET_BITS 64
->  
->  /*
-> - * Derived from Linux "Features Test Macro" header
-> - * Convenience macros to test the versions of gcc (or
-> - * a compatible compiler).
-> + * Convenience macros to test the versions of GCC (or a compatible compiler).
->   * Use them like this:
->   *  #if GIT_GNUC_PREREQ (2,8)
-> - *   ... code requiring gcc 2.8 or later ...
-> + *   ... code requiring GCC 2.8 or later ...
->   *  #endif
->   *
-> + * Note that Clang and other compilers define __GNUC__ for compatibility; use
-> + * GIT_CLANG_PREREQ() to check for specific Clang versions.
-> + *
->   * This macro of course is not part of POSIX, but we need it for the UNUSED
->   * macro which is used by some of our POSIX compatibility wrappers.
-> -*/
-> + */
+The benefit would be that it would hopefully catch a lot of trivial
+things like indentation, typos/grammos, etc, and a lot of things a bit
+more difficult to spot like memory issues. Perhaps with some amount of
+prompting/configuration (for example pointing it at our
+CodingGuidelines and SubmittingPatches) it could also catch issues
+like style issues, commits that do too many things, refactoring
+opportunities, etc.
 
-It would've been nice to either move these changes into a preparatory
-commit or at least mention them 
+We would likely still require at least one human review (by someone
+who is not the maintainer) to validate architectural decisions, to
+make sure it goes in the same direction as other efforts, and perhaps
+also to make sure that AI suggestions were properly handled by the
+patch author.
 
->  #if defined(__GNUC__) && defined(__GNUC_MINOR__)
->  # define GIT_GNUC_PREREQ(maj, min) \
-> -	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
-> +	((__GNUC__ > (maj)) || \
-> +	 (__GNUC__ == (maj) && __GNUC_MINOR__ >= (min)))
->  #else
-> - #define GIT_GNUC_PREREQ(maj, min) 0
-> +# define GIT_GNUC_PREREQ(maj, min) 0
->  #endif
+If we decide to require it, then there are a lot of questions that we
+will have to answer.
 
-The change itself makes sense to me.
+Do we want to have our own system somehow managed by us or would we be
+happy to use existing systems already in place in some companies as
+long as we can still tweak them in some ways, like the current CI
+systems we use?
 
-I'm not sure myself whether this could use another reroll. It's all just
-nits, and the intent is clear enough.
+If we use existing systems likely at GitLab and GitHub, it might be
+more difficult to get coherent results as they might use different
+LLMs, but maybe it could help tighten our docs to make sure everyone
+is aligned, and we could get better reviews by using multiple systems
+because an LLM might find an issue that the other LLM missed.
 
-Thanks!
+Do we want an AI review right after a patch is posted or only if there
+is no human review in the next X days?
 
-Patrick
+Also what if the AI makes a long concrete suggestion to improve on the
+patches? Could that be incompatible with our AI policy to apply it?
+Should we try to prevent the AI from making such a suggestion in the
+first place?
+
+I haven't looked at how Sashiko is used for the kernel, but maybe
+there will need to be some kinds of restrictions/authentications to
+avoid potential abuse.
