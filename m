@@ -1,39 +1,41 @@
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F414D3624C9
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 08:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0AE2F7EF9
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 08:04:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781251351; cv=none; b=BkWfBWQF7HpzzC9FbI4LW3B6oNQ4LDILlWUhGyBQD3tP9A2isQZEVy0fzdhnijh8GZ+IikNtD/xrisfFXO/XHJtCavcBXfvNrvFGSIl/W0GeDfJOzJZiEQ4gvbblei99TT/s3RStQvHMk6f2A6pHakkR1boKXDnti8C9pbVSLy0=
+	t=1781251485; cv=none; b=ay1Y8k8146XXh4AANJiuWAl6NxW8HvsgeD0+Z7DUXTVQSsTgJnuIbBeDBqJYZJekGxEi/7dtKiLMmA5eH3yieEYgRewK97mazDpJbMRKNAWbxJsrUPOTZ1yqqf1lVkKCDd+0EXDMD71AcVaAPESIPnfwqq/vPWOw4i5j4SiEkrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781251351; c=relaxed/simple;
-	bh=6uCZtdowP+DHWGb+BOFFPrgr7/ISBlbqGT0gXQqLbPY=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=niapu/cZ1WlGajJnpCPXyEcqCNNemWIJ8JHMjrflP58lm52UcSbaaiDjvZmIDnILscXfDOApwErASXjgeAENwHGIJI9mEn58rUFeurzYw5cH5KR7xUuaynFbc8aoP7vkbrklFhcymN6oiJI3v05Y4eVbWUi5cqBjZ8Gv5w1s5mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=jLpoZ8Hy; arc=none smtp.client-ip=95.215.58.181
+	s=arc-20240116; t=1781251485; c=relaxed/simple;
+	bh=WngOlzoqct66sGomyAGrl9yWq4nm78ASDLDIQ8aE7Ns=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hSTkNFUVFhVkUfwOEwCw+HAijc1HmbCzwbN0zD4EpSdy5GmLfOJiGU9FN2witeTBbr09uROj4A+X11kb1aqcW0oHzL3oEXGbq/3SWk4alhhp6uuJkzf/oxreESROuX/mDtuFUa+OYmKrA1aM4z6AGoQLc/cSBUfL7l1HRwfi3Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=a2bUDaUP; arc=none smtp.client-ip=91.218.175.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="jLpoZ8Hy"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="a2bUDaUP"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1781251347;
+	t=1781251479;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=0zqqcDQIa3Bh9LcKAzN45WUMEM+feBQlWjxGX8yfNN0=;
-	b=jLpoZ8Hy9w/CDlI+dCU4GvrO9Llp9Xi2Ww+y6NjTXhlwzgKApaa9PfZ/X7VtDFgjWp947K
-	7dIq8uZRkDokhFkB/uqGUwXmGSp4XMQl3op3N9V3UQE7WY2IZfP8a+tjWNxlij0hoyjxI8
-	ctL7PqKXRDURnvXi7E+B/x0nRWoeglo=
+	bh=sc9e10HKBhQDvfvaP2eg3RLPAKKPeWL8i5IQbirT8R0=;
+	b=a2bUDaUPgtjt29ApyIugEKktA2zn35DFnTY3FgkDMxNxk7n8TJVmZadvY9bvtuPwYV9p9R
+	VOy2efT+VAjqMhKt7M9XOZx4MXCU6Fc7Fc77QVpcltp2uzZZUsoanoObpftBGF585UCivJ
+	OvtBsFs0fuHGpZJhlLLSLI9HpyKAN6w=
 From: Toon Claes <toon@iotcl.com>
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 7/7] treewide: drop USE_THE_REPOSITORY_VARIABLE
-In-Reply-To: <20260610-b4-pks-setup-drop-global-state-v1-7-5dff3eec8f06@pks.im>
-References: <20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im>
- <20260610-b4-pks-setup-drop-global-state-v1-7-5dff3eec8f06@pks.im>
-Date: Fri, 12 Jun 2026 10:02:12 +0200
-Message-ID: <87tsr8yynv.fsf@emacs.iotcl.com>
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 1/7] builtin/init: stop modifying global
+ `git_work_tree_cfg` variable
+In-Reply-To: <20260611-b4-pks-setup-drop-global-state-v2-1-a6f7269c841d@pks.im>
+References: <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
+ <20260611-b4-pks-setup-drop-global-state-v2-1-a6f7269c841d@pks.im>
+Date: Fri, 12 Jun 2026 10:04:35 +0200
+Message-ID: <87pl1wyyjw.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,26 +47,20 @@ X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Adapt a couple of trivial callers of `is_bare_repository()` to instead
-> use a repository available via the caller's context so that we can drop
-> the `USE_THE_REPOSITORY_VARIABLE` macro.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/repack.c        | 3 +--
->  mailmap.c               | 6 ++----
->  refs/reftable-backend.c | 4 +---
->  setup.c                 | 3 +--
->  4 files changed, 5 insertions(+), 11 deletions(-)
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index bbc6f51639..d0465fb4f5 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -1,4 +1,3 @@
-> -#define USE_THE_REPOSITORY_VARIABLE
+> When executing git-init(1) we need to figure out the final location of
+> the worktree. This location can be configured in a couple of ways: via
+> an environment variable, via the preexisting "core.worktree" config in
+> case we're reinitializing, or implicitly when reinitializing a non-bare
+> repository.
 
-This makes it all worthwhile. Great work on untangling this!
+Do you mean:
+
+> case we're reinitializing, or implicitly when initializing a non-bare
+> repository.
+
+So the second 'init' without the 're'?
+
+Obviously not worth a reroll on it's own.
 
 -- 
 Cheers,
