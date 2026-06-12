@@ -1,84 +1,82 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7861D3546F7
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:18:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637FB3112AB
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781245098; cv=none; b=p+7Wk7LTo+yMsr6tV0POgu8ZGXdmDl8qtNm2k23hu7TrY23w7DSSSfnhxj1M1v2+hOBw6yEPhjB0RR4GsKOIWix7kIqoidOgFqCOYIXujpEitZ2/8yBZSKKh7y9T8ehyseGjHsv7HCzlemx1wQw/aHY4GspoEO0PkoeCxV+Riq0=
+	t=1781245102; cv=none; b=o2tIzP2TEXT4xDddqy44GM+XJ0YHbMwrAKR5DALiZqiMrSzAf7yBPkcpFOuuB/mpqgK2g+T9a3Sp38f4SPdEQ2w3KJRIc9FqK9EJ/ufzN48sItbqN3eZMRt29P7ws5Mqe2OX7u81WbMcVZ45vQhXdK5vSfw64RHDUeDulInFB9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781245098; c=relaxed/simple;
-	bh=bZr2z5kPlDhQ4Oy9HTr6v8+JBQnRzglrdD7Z3WF45Ug=;
+	s=arc-20240116; t=1781245102; c=relaxed/simple;
+	bh=nNckjuPVLdr2mcEbC4c/ruqvn1oEMp4F4YhkM6JHp6c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZHAWymItaNDMy+Vq4kpx639VPuVyzNMkGs+IdgywWl4ZJQTBZiNryVLwB/RziAHu4G6y1gOOZ33LABHr4oybFLwiWd9Zw0U6LyjThjtW28g5rji54YAdty9JtUvPdHH79z7DWskjYgo8fOF0ograuWg4tgfVPj7rjs2s0iotSN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cZtvoO64; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f+iUP8EW; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=EYrERmyJnmBObOTQAFQgU5383Z6ngSjDLAXgGiT7CLHqtacH+ob08Timzg84qyJS4G775uOe7tTv3rVVEMok8utVEks5OXGCX4plXuHUVXyuda1VIXJglQPOjkHlhzbmmQBVrVJ4XxgOwJ1N2MPhaRqKk+bsrsipIoSbHXHwKRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nyk35cv/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jYiuh0g/; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cZtvoO64";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f+iUP8EW"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB12314000B5;
-	Fri, 12 Jun 2026 02:18:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nyk35cv/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jYiuh0g/"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id BAED7EC01BF;
+	Fri, 12 Jun 2026 02:18:20 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 12 Jun 2026 02:18:16 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 12 Jun 2026 02:18:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781245096; x=1781331496; bh=R5PmZq/vI+
-	ja05wfdLaqOMldwt/e8YleMG9zzAePUGA=; b=cZtvoO64TxR8kiRejKknVxK8yH
-	rP/XW9toSbA1AbNKaB+fXuxE44yqZNwiDIvgacjoU84hgSwHpxrf7qehaxP8ipOP
-	UtGRBGZoO49h8zfLEK+i8t90GuB5PwCpJ+pxztBU6Fg+rxLKoTVwxXRcThSg/h+q
-	NRc1HAfvByTGshEuYbjXV/XZr+Wg9Z4f2Ei2ZeeA1hbJS/5cOOnk7fSfbCj0uMgy
-	efUR1qavQX5kGFp7CVL+0bqxWoocS9VLTtdwF5DDiCfnp8irCicgVxUuibIe0CbZ
-	QE+o0GtiL9kf6V1GZcAM3V56TDRC0KboTTZUQqiLD5EJYHRkUdUcRoadyf2w==
+	:subject:to:to; s=fm1; t=1781245100; x=1781331500; bh=PcIC8v05yr
+	1A+hJlDzp5qR7o4dqofPfmKKxY11SFSU0=; b=nyk35cv/Pa3v5PCNZuKcqZFRTp
+	CuJXwAiNI/R2fMPwpALN2RRDJ/n6w0ySi2TVp3dgXtRIQ/r/NNSODD+Xy4B61004
+	/b/PfEMkoipzCqDOwGlYVBHqe+453B6Hk5ZraFjJB88oHLsDzOYVEIRdu+WsiqBc
+	0Ppys/Wa9Ko9iNP+xWEe8CSG4rCpDxFyURAy0Wn0VUSNziZClZDW1M+9rcz/XLSF
+	HMN+4HiruVufCu1jl1q6p3xYfrWUFKJ/farftPoY3gtTG7ojWi0nch9UXM6RfLCX
+	k3WPN1YKmIeLDMS0MxV+5xjOLfpOfES3Q8EvqPiXkp6Jiicpmyl6mNsQh8cg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781245096; x=1781331496; bh=R5PmZq/vI+ja05wfdLaqOMldwt/e8YleMG9
-	zzAePUGA=; b=f+iUP8EWb6FlvxEAxgCXBGdqpbdILNoofH7DZjkSpZTxliJxMZO
-	vvqxT02TyjGgn0igUtEH5zLQ47I4aXHzfm8N76TpeFoRW+F05UPrVLo7cUd/5tgT
-	H8/2eNwv/njXSo6zcaHW+kx/tTwloFH1p4hmydWf7BikMHJSlwm8x7tARkPJd39e
-	Sc1eO3arrysKV/+0u4o57wT2HKXfWyV1ekv5eXk1DZHQU3AL+fTGEpdbPKo2FFKq
-	CFCOZAsTEwzWJdfK5TJUmk474HxIxAhRN25s4Wp0mHDrBL3F4LH3lMVee7rv4FXI
-	X5pyOG73XefR9jKDxa9FOkCcYOroTbLuomQ==
-X-ME-Sender: <xms:qKQraoLb3Go9RgSLGtldy7-XtCdFRDpW-bJy4iNsGRS-WxIaDTDzGA>
-    <xme:qKQravk56rbShfCY7O_TToGQ2as5dXS9eTytQCxxszTPgAlV1yIGKSsgmKSKQpLX7
-    7XsfMF621gSwNf16ztxSboNoCVemNr7cwLOfZUKIaWUY_jFFEpZLQ>
-X-ME-Received: <xmr:qKQramFt2uXo4RVFFfeqLaE7Yj1vGOkwNK9WDgkrMBheljdVlYx0wHDygWlT9rz0yZ5ntqw1YatB-g86lD7FCB1o6H_LCmmEmJFq0Sgqiyg>
-X-ME-Proxy-Cause: dmFkZTE/iVGtSoPHBasVfDZu/yyGwLFwMreXruUGok3VgL6+Og5FUGT608VelEGqJHHnGb
-    H0tPXPr6M0aHy95x2hrJiPRhuPCxDOP0XzjTyrbu3EMFi4jFQkBEBWO8sIAmha2JjkMoWc
-    iMLc/HPctdQGGaNBPLXsH7h0/ukWWwjDtWUO0k+BuiP6ZQGXRN0lo4sj6VbVVxipAxJaEP
-    go6p0sb+Phxt8P9POsP4jH106IrfsJuzFcFxtU2F7vnLuHcDqcvJH0G6X0owPF1rwDV5xy
-    2XdwjOmKpuWYsdqDyVkkLT97RBih9mt17BpFkKH9ZIahqj1n4o3QX/9RYaIa5HP0Edw4GS
-    kkFc9Z5mLwORNOd7XQzVQGxOEyFM2vFqWVSiO6JImqkOEAq6DoCpw38sVhqE9yGdvRvTyF
-    JRKrO6neiyuLPA5T5E6C/RLJPgLQK9d6Vq5kOsXrcVvvaSJpmyVitSbkSiWSOYXojX+X2Y
-    o7U+2aWYlZOBkZ0tK+lKHrAST0Amc/zAIaotkOIEvhv4XkMmXUsL8fSD3ixqRhorTyAldU
-    xhuPBd5/wAejEQtGBPWoVKd3gArx5k22tWoqdWNUKrgXTryRuCGI8Mh0gcSBOidz0WnnS9
-    BS1Eg72n6aSumD0LAQTNK3/fY3srUg5J2hN6K5sh6TFZvY8SB0mtZGIJybwQ
-X-ME-Proxy: <xmx:qKQravE7fPjVtQfxnzB1Am04KMLkyvo_OQ1XDC8vxs1syAALMhwHcQ>
-    <xmx:qKQrajOHTRVb6lAAZ2HymRXkmI7WJFC8nBQokm5MMGFF5E8-yHjs7Q>
-    <xmx:qKQrauHjD6EZil5qjnAnQIshYF4i06fqEvVPTqoliBrIBWCoQkLzmA>
-    <xmx:qKQraqM2v3nfz9CIH2cSjzWymfX6uNZGVA9dHGTuJoT3Zz38Sp06kw>
-    <xmx:qKQranm1zbaCXTjod5tr5nbTOd-NPgwkqXk-lW9LhqGMLWrKgff5q6Op>
+	1781245100; x=1781331500; bh=PcIC8v05yr1A+hJlDzp5qR7o4dqofPfmKKx
+	Y11SFSU0=; b=jYiuh0g/4JcqaPuN9IJZJ/B2yua/y9dsaOEjbYeBx5fLoDmQf0u
+	9kZiWhqLULhXag8f8SLFLFduAY/vUkjs8ohHDVwsf7Eus8BsHz+gBE350Q1rrdf5
+	C1rRgGqKNsjqY+CZgScysBTSkWfRz9mJQM4ptirIqb5R6Kx6rR6BQTWqJaGWo6IE
+	qh7ik8ENWnE4o7CKpoNCaz1xVpMXGpaoHIkA2ckaAbLKnWdtGnP+vAeHjypRcZei
+	V/EwW8LWOJSJYJ/+IY5ORAt5He4L6ixYckuXpeiRauuNsA9IjM4f4EWiOzMUFk5A
+	ak95f+7vLvZXMnrHkMQbRUy3hLVfGtHfoLA==
+X-ME-Sender: <xms:rKQranTOe9DGugfldUP8PtILRFu4TAgxGFpog4nGuEl3fAdf3GUyIA>
+    <xme:rKQragMX9ZwR-YRyu7Pg9K0r0QX9k5qczONHGvnBkBcztpzzf4LcECR_rwCJOqL0w
+    QEX2MCnEE_g7Y_AID0Bg69iBXVuQiJ3rjLV2fhjno10Iu-aySNu>
+X-ME-Received: <xmr:rKQraqOGSQw3VLVLbIvYy8UmHC0vJxQpVv15ox5p-W5OthG-T_e_5UP8NorMQIC7z5XStgN4lEiMQdpCV1BpORCPis0Bwq1RYjQXlXH1gUA>
+X-ME-Proxy-Cause: dmFkZTFOJeI8Tl/FBVX3wlT2dnscVCx7YoYiKwpnJy4hD3oIXtfgY/8GZnd6IH/OS8Evth
+    LgQczB8QD7J1YRlCPTy8pwrNqrNEWze6j/6DFCVApwHihDf3wc5A8r3nIWRsRhn8N1njxn
+    BsH1By+WBh3IK62cDXLNRjIuIzg8Ei0IrKioDpG+sBC99NbO00vK+cMVLr4JpcjwXtAppY
+    sz2ZyAR1htrpW+AzKsB6RnRa0NV5sKl5WQZew65hPt+82BKxpEyrYp6JxKi8b2c9+Lk4dW
+    yjujjI1krc2zVcyyZeauKQaLNWpu6IPIumMomZuvoOXoIZo8QApUsj7I6BiVNuRJgXQ7RA
+    YIH/NehaQLU/QVYEFy40CkN4WCm4fVnv/Gy4kMv0Cq1lIXaHp8EEyujA6zCbulezWr0xjq
+    5c1M0RPiaNyMc3CB+m1tcvTYQkD+sJgoPhVp3FphHharN2GiL/NPU7lRuB6HOhfkF4tlQ7
+    i66DmRfJz3V9obEqgXVVsJAkfxoSNW8LKaKkFYnDBJYZyi0mxC3s6SpJ5g12dtoSFGdu6m
+    JUMZyndxUKL7NBvMMsxEynDtXPuqo6CpQfAofYFs5LdTjn3iG3M9xP+BUz8goTGdn4oqDs
+    A0Gp8gAwWBzQ5R7gjVe0UkVvBs7tHPeHD+67f811iVPLu2H/t8YST3PHcdig
+X-ME-Proxy: <xmx:rKQragtJU6vY8HHP6QoTNQPr8bHVSLgLMFGk3yWFcdNMo21DJ47Mkw>
+    <xmx:rKQrakV3mxASz0FlnqH8GeoBvUTiKu8Vhj8vVBape4bfNkCsMlZ7cg>
+    <xmx:rKQraotHh5OgWxkWLq5UACVtuNrQCQwWSvRXmiVNYhnHnpgIlj1LnQ>
+    <xmx:rKQragVi10bPzMAvwWPAWg72EN4EJR6p3r2HDBY0MH5F8_44UvzUgA>
+    <xmx:rKQraq5rcDorWklYmFan3vUR4iYYj05rtrnz19j_Tdb6ZpNocmSMlfll>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 02:18:15 -0400 (EDT)
+ 12 Jun 2026 02:18:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 12994eda (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Jun 2026 06:18:13 +0000 (UTC)
-Date: Fri, 12 Jun 2026 08:18:11 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 4521db51 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Jun 2026 06:18:19 +0000 (UTC)
+Date: Fri, 12 Jun 2026 08:18:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 3/9] setup: don't apply "GIT_REFERENCE_BACKEND" without a
- repository
-Message-ID: <aiukox1_HrWFxnS_@pks.im>
+Subject: Re: [PATCH 0/9] refs: stop using `chdir_notify_reparent()`
+Message-ID: <aiukqI0Nj_RRn-wZ@pks.im>
 References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
- <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-3-56c864b01c43@pks.im>
- <xmqqa4t2wbb5.fsf@gitster.g>
+ <20260611065346.GD2191159@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,30 +85,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqa4t2wbb5.fsf@gitster.g>
+In-Reply-To: <20260611065346.GD2191159@coredump.intra.peff.net>
 
-On Wed, Jun 10, 2026 at 10:32:46AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Jun 11, 2026 at 02:53:46AM -0400, Jeff King wrote:
+> On Wed, Jun 10, 2026 at 04:57:06PM +0200, Patrick Steinhardt wrote:
 > 
-> > When discovering a repository we eventually also apply the
-> > "GIT_REFERENCE_BACKEND" environment variable to the repository. There's
-> > two problems with that:
-> >
-> >   - We do this unconditionally, which is rather pointless: we really
-> >     only have to configure the repository when we have found one.
-> >
-> >   - We have already applied the repository format at that point in time,
-> >     so we need to manually reapply it.
+> > this patch series is a follow-up of the discussion at [1]. It converts
+> > the reference backends to always use absolute paths internally, which
+> > then allows us to drop the calls to `chdir_notify_reparent()`.
 > 
-> Does the second point have a small typo, i.e., "if we have a
-> repository, we have already applied the ref backend to it when we
-> discovered it, so NO need to manually reapply"?
+> We added chdir-notify to suport set_work_tree(). Commit 8500e0de3f
+> (set_work_tree: use chdir_notify, 2018-03-30) mentions an optimization
+> from 044bbbcb63 (Make git_dir a path relative to work_tree in
+> setup_work_tree(), 2008-06-19). That commit demonstrates some measurable
+> speedup from using relative versus absolute paths.
 
-No, this is correct as-is. At the point in time where we handle
-GIT_REFERENCE_BACKEND we have already discovered the repository format,
-applied it to the repository, configured the reference database format
-et al. So because we handle GIT_REFERENCE_BACKEND _after_ that whole
-dance we basically have to re-configure the reference database format,
-which is awkward.
+Oh, that is context I wasn't aware of. Not much of a surprise though,
+given that this is from 2008 :) So thanks a lot for the pointer!
+
+> If we move to a world of all absolute paths where chdir-notify is not
+> necessary, will we lose that optimization?
+
+Probably. Unfortunately, the commit doesn't have any repeatable
+benchmarks in there, so it's hard to say whether we could still
+reproduce those issues or not.
+
+> I'm not sure how much it matters in practice these days, or if those
+> timings could be repeated. And they weren't all _that_ big to start
+> with. I guess it may depend on how deep your repo is within your
+> filesystem, too.
+
+Ideally, we'd have the best of both worlds: absolute paths everywhere
+without the performance hit. A while back I had a discussion with
+Torvalds on the securiy mailing list around this issue, and ultimately
+the conclusion was that the best way forward would be to use openat(3p).
+
+This wouldn't only allow us to optimize cases like this, but it also has
+the added benefit that we're much less prone to TOCTOU-style issues and
+we might even be able to use flags like O_BENEATH. So it would basically
+be win-win. The only problem is of course that Windows doesn't have
+openat(3p), so we'd have to emulate it, and that's where I always lost
+the desire to do this.
+
+When waking up this morning though I had the thought that we shouldn't
+try to emulate openat(3p) directly, but instead create a higher-level
+interface.
+
+    struct fsroot;
+
+    /*
+     * Open a new filesystem root at the given directory. All subsequent
+     * calls to open will be relative to this fsroot.
+     */
+    struct fsroot *fsroot_new(const char *dir);
+
+    /*
+     * Create a new fsroot from a subdirectory relative to the given
+     * root directory.
+     */
+    struct fsroot *fsroot_new_subdir(struct fsroot *r, const char *dir);
+
+    /*
+     * Open a new file relative to the given fsroot. This will use the
+     * equivalent of O_BENEATH so that we only ever open files that are
+     * located below the fsroot.
+     */
+    int fsroot_open(struct fsroot *r, const char *path, int oflag, ...);
+
+This is of course heavily inspired by similar interfaces that exist in
+Go [1]. By having such a higher-level abstraction it should also be way
+easier to port this to different platforms, where we can then add safety
+features like O_BENEATH when available on any given platform.
+
+The idea here would be that we can then convert some subsystems to use
+those structures instead of tracking paths. I'd for example love for the
+repository's working tree to use this mechanism so that we can squash a
+whole class of potential security issues when checking out files that
+end in locations we didn't intend to.
+
+Thanks!
 
 Patrick
+
+[1]: https://pkg.go.dev/io/fs#FS
