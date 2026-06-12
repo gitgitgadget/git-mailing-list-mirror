@@ -1,73 +1,80 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A143AFD1D
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 20:07:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0BE3A7F58
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 20:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781294839; cv=none; b=fXKmLBjjzET+94WJ30frFZfewFx0VJF7rA42wCkXz6c7L8CjuisIWwRSumxV7xp/JqAuhvh72FSLScqR+sKmsE1V5kj5g53++0XRRDYQxscOiJBoJrPJ0Z1Cga5K0Q8h/epBb/d2T5KSHNazDHW/+ZSKNZT/0Uojo+BqIBoLfHY=
+	t=1781294890; cv=none; b=BmY5S0G1UUQGb2YbzFJ+NSPNzNaTep4zZ3uXR8/CW0zynd/gcmsJzYuNQavm2hZjUtGTF+IlOLdZ0vAltX4JTJg8GunzURhO31qyYBNjdXSDLJFDrTAj85aA22vQzRiVDNTW/kaRic5FH8eHRrDBKL3hCIZX5ehILKS9kGUqY5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781294839; c=relaxed/simple;
-	bh=n+gJCPMcEr6UO2nt6qKwxs2bNkmD91c8EfT/TPu5EhU=;
+	s=arc-20240116; t=1781294890; c=relaxed/simple;
+	bh=6bS4VtmGL6UPK1g0lo4ZX8kUyzvH6QJS8Mi3fCRFHpE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N7n1LN0r164fJPBXBvg9V4SW7ESKmfXyN6RuUj7TMlCh0EX6CD57KEENAUI31brFMbkbfa1v6NgJ7Tzni5Ljvn4JdyuOTFSqakS2TQogMrbrMi7S2FgzxMo5LcIipnn+yUvYMd8hO0Z/LPA5ZsH4Nr+g7yg93QBnZI85nr6CP64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Nu9NNHN9; arc=none smtp.client-ip=209.85.128.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=bz7AwTCRjyPH7DXbb0V03CgbJ6IEEn4KmQGfacEihJ/+G+LqIevz/V3Jof2B1I142gGECoOqspV1nHOfc5QDo/L8ednIl3W1AY5LYia1lC3v7wxlZV64jADGhiiH6yDGCVj3qIa0dkz5AJKUMtEfVtAr2127riKPVs++ltr96k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=NXxr7JWw; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Nu9NNHN9"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7ddd3d67084so16229907b3.3
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:07:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="NXxr7JWw"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7ea16f090b4so18171787b3.2
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1781294835; x=1781899635; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z6+2l72HdIjxiYb615Ptb87/k/n35vWzCgI5reDoQYk=;
-        b=Nu9NNHN9HxpkaMqSl27gOP5eM1D6cN5gbmksrN7/sjQEwSRYd3E7Tjg6jRTVKvDuZF
-         WMI42X1Bcrs/Qb7yfdPf+YssVfEgYWshsslyCgF4vUPHCPT4JL6HrniKi6ur5rzOYFvW
-         wcVc9CM3Iezu6bR2j2A1TEOclIeWz8YbmuZB+HzRdJGkw+07I5vY3PQdhwlriawULDB0
-         AzeOcwbxBHnwyLXoHWJ1Pc4tcuNQh1F9/sr6D3XdczoSEeq3ZzsAGKo2nMa1PdWUEYUJ
-         /sr8QyC1JAKC3DAcF5J3cIvKvu4DHel8dohPJ9W6NdBEZwdKp0M+PRefFEaicGxBRIip
-         rKfA==
+        d=ttaylorr.com; s=google; t=1781294886; x=1781899686; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2qFlCvZKMR/PSSlD7u3y1NtwbcXb06tCySNYAsailk0=;
+        b=NXxr7JWwGwPx0T9IvwKdRsJqS4YrAxA6SJ3CIEa+cad5qwF53Db9XQ7J0QezkwbfDo
+         yP62acXHcnUo8hnFNPGW5CjJI1dUJZROQJrf4sXEdfJdPOxZrM+0MI62+KOKSn4r8RF4
+         WgdKZe7dU5gmaG6NYWlx+vf85rImIULwemJgfUGyCV9IZXeVSyQ+hPd3GUZEfOjgYfkO
+         V5Ur95j98EQABXYamyGrKo9mR07aabJ9fL2mZYnXHMnW4IqWXVUeTypc2ih5Htp9/2XC
+         7Ha9XogybE8J4YDL3X95WFOGUTs2A9axQfF85sihln5p/Icpwdw7RSq9Ua0iDDsiE3NJ
+         UhUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781294835; x=1781899635;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z6+2l72HdIjxiYb615Ptb87/k/n35vWzCgI5reDoQYk=;
-        b=j1uid94ZyO7tB4s192BkepwVWtwgaAjUkNnjOD4MO/tMSNkJOMEF0kCAr1dEubIDJv
-         Rt08si8Q/SyEY6QI+LZr0rCpsZLCereXwdOMkiIezcx+IIDim+abcACLCJ9QWPHUgwaL
-         OMBZWc+/4zl0wcU24OpSk51lZucnaVNYEBld1sAxuP6nXO7OtgHxOAl0U3aC9cQgTBEk
-         bHFc42BjBCAiYyrLsYEmBpRt/BGFLgamJMZ3FJOJlNf+72zLivQYReWbRPBxdluR3PvE
-         aHrelFuM32fkvA4IsaEQPIG2Coh7rjFNV5JS8+L/YpTYuj2vsx1dnKv6zrICbjLWYQ1n
-         zL+w==
-X-Gm-Message-State: AOJu0YwvSKwfPaPn9MCn/iLCpLp6F82stqUEKpGakZQ54MeIYcb/ryTB
-	6gvgM+3b9S2nQdh5Zj52XaqU3Dqrfn6V+sYY9el5wOd8kxfons+PsaLKg4Irt8hPYDzRAWD8AoA
-	x+mMf0Aw=
-X-Gm-Gg: Acq92OHLcEvoVr6xuV+C+ckcX5omZ5ZLOsTQL1+F60m4kqZs9/aDb8o0Qg58JDIzJab
-	lvSBky+VLJC50hP/3i2rf7PfYVFq8+ja91vF/nq3JaNXrwv05y0ZTHVYRLf9lAIKz9IX63VF0iS
-	alDNXdGZLYDOGWj78kAfpEhjt9Vy7JqKSwA4QECKg1L06JLZjF4lhzJ/n3QN5qfe07VIkTZvuUr
-	APZNgFnZOD6yrpkQ2/PYG9F6KdmCnS9Hs7/VBe9EFN/clt9vwOvkApLMkft501JjCegCpdqivZk
-	vNlqPSm493uuaj1CrDBEtA6b2uRaggcktV7/fyNUUEOUlHfVJAyFbivptfE5s6dUzyEdhC1C75b
-	ZlTfsKmrZwCvG5qIJhn6+zmNPVBmXmgoGJNe58b+bgBeUomvbowDOBl76VpgD/RuZiAXmA+yMx8
-	2nIwx6FDh8lW3k+RKJTr9jBzVSBGOccBEKk2xBYLWB5wynaYc3OdNA7RDrgTbZP7BH2fxkGKWPE
-	JuLkb+0/bwEi/CbF9b52nQ3jH9vvXlfLy9aEUoTbwHQHqLyhZoIqTjQXm4oLFTGcBQ8YkfCTAeO
-	36Byl5UE/C/z0Hqh
-X-Received: by 2002:a05:690e:1243:b0:660:6d41:df5d with SMTP id 956f58d0204a3-6627831d801mr3763738d50.46.1781294835510;
-        Fri, 12 Jun 2026 13:07:15 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781294886; x=1781899686;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2qFlCvZKMR/PSSlD7u3y1NtwbcXb06tCySNYAsailk0=;
+        b=MFiD91/NnqrXhWKYnj9isvFgKgRrLyTs2CDstWE4HcynDSOGJG5FUH8JDIU1P+94+8
+         Fvr8v0ZLobKqsDHauJbfHndtWHU44A/JOrKSomWKzrQNnLi5+vgpWJxlzAqYSTAfUhqt
+         VzOP0ZXqXEsIEqzZTgguM9+iC7Rew6FT5/dnzQuBgBHBrP9KBmPVh4I0SsApxORTVSQS
+         4SKnJc9yb+Yv9N5wCKxhsDLaiqgehpp1UNweYsCCog+ioxXmEPT2BLLV8cm1gNFCW06b
+         dihGCyoqEpAjWiRaTIu1dMatAuDQcJ7kuFOwfsK2TM7jz2KYCymyJIqA6zjGMA6JV1WO
+         QKIw==
+X-Forwarded-Encrypted: i=1; AFNElJ9D2SHO/mQ+yYv53l+QStCGExELWMWO5o3a2J73TG2E2F9Mq5M7050rKNlUps79U/VP+hg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVqteCPno+cMuIflUG7mr3AVCoZ9MWt9Ed6EllSos8U0Ljxzs1
+	Ddum5wqbr27m0TXrdEMAEn6f+VZTsoU/6eA1fJN+zwxeaGYHXmnk93wduR/pJ6UusRA=
+X-Gm-Gg: Acq92OEEpJXf/sUcOUDkRoZBlM36YTpWT5aCxR1nEDVeoirasedB7CFHSIJH1Ar1+1a
+	PaOoHcRTmZOnWJYuwcEGfbtgaOtteRAwWeTuiRoZ7eFj8hP4F9oy4UgdxQDY79HR2XsG7ef+h1P
+	bAZWWPZpJcbkRAJQuHpKYtskGnc6D0B442NnGY/ou9uyJY13XLoR5ANSRn20g4QYBtN96noZQTs
+	k29GPzzhB81HLtRa0xk209Wnslv+FI2Nk6E3DYZz0k+Jm9yJw1p8x44zoRkG0LipqOw1E1tL0R8
+	kx0poPq18SwgufSJ9K38LjtE6E7Pq8dB85Dg8yCwXbaUdOzTS8TDSYt95iQdvBFjVoxeoY525xi
+	lVu6DpG7/kDXMCOUwo9wcJRwLQRZpeWBqCNGgzsNYKERujRSGWJsG+RsyJPu1bKuXdJqBS/9hQs
+	hzUMluY44ZEpDu4A+lO5XFNG0SNoqU+Um2VnuvL+g/VyFPVZ+VWBdIrfW4ZeEcrd4v2J+CSOpuB
+	UZUKD+TukbRVd8OBouEIZgbwY3B3kpF+ecVm38wTU4mVbp+IF+lJd1CmnLCCOme9+PYhe5/NdoN
+	eMyhvYZm89WJTsSn
+X-Received: by 2002:a05:690c:3392:b0:7bd:5c9e:2397 with SMTP id 00721157ae682-7f8c45cc084mr11903197b3.30.1781294886547;
+        Fri, 12 Jun 2026 13:08:06 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66274e5718asm1596816d50.20.2026.06.12.13.07.14
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7f770d05a1bsm14254337b3.24.2026.06.12.13.08.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2026 13:07:15 -0700 (PDT)
-Date: Fri, 12 Jun 2026 16:07:14 -0400
+        Fri, 12 Jun 2026 13:08:05 -0700 (PDT)
+Date: Fri, 12 Jun 2026 16:08:04 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/3] midx-write: include packs above custom incremental base
-Message-ID: <7bf7c87b60532a90c04c4a2404449a9d8ea21214.1781294771.git.me@ttaylorr.com>
-References: <cover.1781294771.git.me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 06/16] midx: support custom `--base` for incremental
+ MIDX writes
+Message-ID: <aixnJJuDLOo/FsGt@nand.local>
+References: <cover.1774820449.git.me@ttaylorr.com>
+ <cover.1779206239.git.me@ttaylorr.com>
+ <1bbb387d6b6204045d97882fd8775dbff12dedbb.1779206240.git.me@ttaylorr.com>
+ <aiuaf3fKJ6kIITrf@szeder.dev>
+ <xmqqqzmbj3mb.fsf@gitster.g>
+ <aixNXOxfPZnAVLgK@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,88 +83,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1781294771.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aixNXOxfPZnAVLgK@nand.local>
 
-The previous commit made '--base' take effect on the normal incremental
-write path, which exposed an existing assumption in our helper function
-`should_include_pack()`, which is that any pack already present in
-`ctx->m` was skipped.
+On Fri, Jun 12, 2026 at 02:18:04PM -0400, Taylor Blau wrote:
+> On Fri, Jun 12, 2026 at 06:21:48AM -0700, Junio C Hamano wrote:
+> > SZEDER Gábor <szeder.dev@gmail.com> writes:
+> >
+> > >> +	layer="$(git multi-pack-index write --bitmap --incremental \
+> > >> +		--no-write-chain-file --base="$(nth_line 1 "$midx_chain")")" &&
+> > >
+> > > There is no 'nth_line' helper function in this test script.
+> >
+> > Good eyes.  It has been there in the file next door t5335 since
+> > February, but not available here in t5334.
+>
+> Good spotting indeed. Fortunately or unfortunately for us, pulling on
+> this thread revealed a bit of a rabbit hole. Patches forthcoming..
 
-That is only correct for non-incremental writes. For incremental writes,
-`ctx->base_midx` is the boundary that should be excluded from the new
-layer. If the caller selects an older base, or no base at all, then
-packs from layers above that base have to be included in the detached
-layer so that its bitmap has reachability closure.
+  https://lore.kernel.org/git/cover.1781294771.git.me@ttaylorr.com/
 
-Teach `should_include_pack()` to choose the MIDX used for pack exclusion
-based on whether or not we are performing an incremental write. When
-doing so, use `ctx->base_midx`, and use `ctx->m` otherwise.
-
-The t5334 cases from the previous commit can now be marked as
-successful.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- midx-write.c                            | 16 +++++++++++-----
- t/t5334-incremental-multi-pack-index.sh |  4 ++--
- 2 files changed, 13 insertions(+), 7 deletions(-)
-
-diff --git a/midx-write.c b/midx-write.c
-index aa438775ebd..c50fdb5c6d1 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -133,8 +133,17 @@ static uint32_t midx_pack_perm(struct write_midx_context *ctx,
- static int should_include_pack(const struct write_midx_context *ctx,
- 			       const char *file_name)
- {
-+	struct multi_pack_index *m = ctx->m;
- 	/*
--	 * Note that at most one of ctx->m and ctx->to_include are set,
-+	 * When writing incrementally, ctx->m may contain layers above
-+	 * the selected base MIDX, which must be included in the new
-+	 * layer.
-+	 */
-+	if (ctx->incremental)
-+		m = ctx->base_midx;
-+
-+	/*
-+	 * Note that at most one of m and ctx->to_include are set,
- 	 * so we are testing midx_contains_pack() and
- 	 * string_list_has_string() independently (guarded by the
- 	 * appropriate NULL checks).
-@@ -148,10 +157,7 @@ static int should_include_pack(const struct write_midx_context *ctx,
- 	 * should be performed independently (likely checking
- 	 * to_include before the existing MIDX).
- 	 */
--	if (ctx->m && midx_contains_pack(ctx->m, file_name))
--		return 0;
--	else if (ctx->base_midx && midx_contains_pack(ctx->base_midx,
--						      file_name))
-+	if (m && midx_contains_pack(m, file_name))
- 		return 0;
- 	else if (ctx->to_include &&
- 		 !string_list_has_string(ctx->to_include, file_name))
-diff --git a/t/t5334-incremental-multi-pack-index.sh b/t/t5334-incremental-multi-pack-index.sh
-index 69e96bf8d93..84ff6120978 100755
---- a/t/t5334-incremental-multi-pack-index.sh
-+++ b/t/t5334-incremental-multi-pack-index.sh
-@@ -119,7 +119,7 @@ test_expect_success 'write MIDX layer with --base without --no-write-chain-file'
- 	test_grep "cannot use --base without --no-write-chain-file" err
- '
- 
--test_expect_failure 'write MIDX layer with --base=none and --no-write-chain-file' '
-+test_expect_success 'write MIDX layer with --base=none and --no-write-chain-file' '
- 	test_commit base-none &&
- 	git repack -d &&
- 
-@@ -136,7 +136,7 @@ test_expect_failure 'write MIDX layer with --base=none and --no-write-chain-file
- 	cp "$midx_chain.bak" "$midx_chain"
- '
- 
--test_expect_failure 'write MIDX layer with --base=<hash> and --no-write-chain-file' '
-+test_expect_success 'write MIDX layer with --base=<hash> and --no-write-chain-file' '
- 	test_commit base-hash &&
- 	git repack -d &&
- 
--- 
-2.55.0.rc0.3.g7bf7c87b605
+Thanks,
+Taylor
