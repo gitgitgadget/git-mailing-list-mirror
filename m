@@ -1,137 +1,119 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53F92F8E9D
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 15:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781277696; cv=pass; b=ZgWdkokJdtuav8DhU1azZ2Fad1YDjp+AVP+v/9cgyJYk6IB5xRiIr1a1fh4+V0Z0ymJ60frB8/R19LVu3v+RSULI5YdwrbGq3TaclbKeaRCC46K92DGNVIbV4bN2jY7/kXVl+fxpgMCClCF0EacExIVQyrYnYPwefYPmiM1iGss=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781277696; c=relaxed/simple;
-	bh=Vv6zSoUFNKZBiuiZuVrHJTUclyptA7J00YQSifFso4s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ClhSp/AXpEAIAkqsp+PtITdGSc5oDGH3RG4/MlEL3Eb24NvlrnphP4bT4sRF0q8xs3651Gve7bLNLoui2MMlX3prXxJVKA3kiFelSIFK6XEpuURXptjPckkGrN3ZYrX1m9YJg4LWKkqcMzvSr3r+c9utk8kAdqji4DPmgB79Q7E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=DTq4zfBy; arc=pass smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504B72F28FC
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 15:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781277713; cv=none; b=OxAEQtK6QIraKoK9Z6wk2aVmeaW9es6MmVq8yxp/LgFfzyFIehyguAhshvww6wD3qcKO8giDn70I2i24YOWsVDeHA8s+R7Uln1k5jr8niby2IUthQOohb5rPmrT4O0uNhiM18wENPhm35W5/NMmcQAPVjD5Ib+h0ezLHIa0PA8A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781277713; c=relaxed/simple;
+	bh=OCGjR84Duf1l2/zoZplmNPyT9QRTVmzab38x1DYADu4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VpyX8VzEbbOjIzm4GcRcpihioQoWBLuSEXI2Jrf6X6HyV7zAmHax8D8FvsbYpFwxRrUTToioj0J5ELjWbuolr+JikyJeRDDx6m34gWIaXj/M402u3A7k3LZZgqmfekC9KhUXorFw0sXl1BHFf//1rlOFGIGrru/uU2NfvZDAtZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hX+0Igue; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X5e53KLn; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="DTq4zfBy"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7e2cb01a974so12871197b3.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 08:21:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781277694; cv=none;
-        d=google.com; s=arc-20240605;
-        b=YXdxFtVFUhi3aYQYuX2mbJ88HlZDk4ARYhkswT9thl9s8q24bs52ybGI0qjfnySzF7
-         3pezLLKYTHF8c/TSAn8ynbPep1VcDaZy6osTepkdSc4HWlcG24Ebl8ShUW9GfBCVCl83
-         r4q2TrzIYzNc890tKCoJc+6Yoo7ZxxlC+bBY0ersYqxZDfWKR+AoczEPdFcQu0KsS9Eq
-         o6tH1f/aVoJiHdr4phUfzJaMsGtwaH1Rq7/jG+uad7lre58k3mCpZx9x8EVa2RUmFHuz
-         zz0j8tVL8GCbuT0a9XuD9+180HQ2EZ2lkkS7rpH+xwhcW5HPtku3EnlEY2k6v4HVUVWA
-         J9ag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=C9PjMMyCfpQ7WkUmSa5slsDEK0ALZvxoJV7UcoEhwRA=;
-        fh=2qQh3Twk/9BXP2JN1YJEg5XG37bzhSBn4OXZs4ZhyG4=;
-        b=KACIT8//I+pIqrcllm0Lg2ctVY2sIBuikGmMWqpY9GtwLy7CLKWlYO+lh5xMSTVaZ/
-         1c9ug8EJ/eP6ssLjwwnNibdhOOAK4zVezIciDrDTNB+mGcTv/YLUxzysErSud/ikaT10
-         2ZRZjfJ5c7AFEHJcbXKk07IMmkWI/DtVTTpsPilxgY7Xg0EuLWK1458OUVoISap6MBzN
-         bePMXVOV5FjTGjv1DIxZsRtm2WSud1yGFnbeJbhYH75IgrqTAFrMgPmDf9aLm05hidB+
-         hc4LsKBN/MqGBp3u8Ao/4FJD4/eyxfqKsqYtKNhLgxzTOfqD0C091+x+TxPfIY7HPiW8
-         alsw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1781277694; x=1781882494; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=C9PjMMyCfpQ7WkUmSa5slsDEK0ALZvxoJV7UcoEhwRA=;
-        b=DTq4zfBysXaIfIW2ZcykP8FCi+2vGilN/Xnp14FQFr3c0IS0WRIV4XMzh44iFrxYVT
-         tgrnZsTV3fXJxtP6GkBl/1JXnaadIvk7yXjeWbbDt0bRvQRH88dvrEqJKXZ4BjCtLX2q
-         3PYJkJTrTda7UDGANOm3zgp8zcRX1Vly4Qv0U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781277694; x=1781882494;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C9PjMMyCfpQ7WkUmSa5slsDEK0ALZvxoJV7UcoEhwRA=;
-        b=m2wV+Bphd1SrXWreV5ZoRS2f+wkBk659uHf/n7VCDo+OapCz2AfIIRj5IgGqWA6hHw
-         ljOTNZvLar3FbSKsZdarD7Y8Uf5m61YFupeHcxyOByIZExehRghg6Smh3bnM75c2wR+I
-         HISdUBSEURvHqZWpfZ/4q283LFMtMHi0JqGZHWV5iCJ1chrfv2jjV0z7QCEX+PUjcPzi
-         sn2o6xcI0Iu7DvyixsERcz1zDCb2UuG0kU6HKv9hIuAHPm0Znvo6ISCMYjIOZod+XMqo
-         KObBMh5aQ+vmcLYSh44az48bDu2RgQ8Iz7XFxssjCm5LaOv8lWKDPxJjS6JtpqjapfO2
-         mV0g==
-X-Gm-Message-State: AOJu0YxS1RcVrE0pvbh37a66zyWX2XdyE/zTZl21stHBHhFPXnLsWm/n
-	pzqz/m+7taUKe1qN0C0WMkTDScQEzD37kGgRi3oPrSe3D18CQ3ObRSxNNhdfbKrgB/wT/YMfNFz
-	7lmimDqGp7e/ien+h1cJDHmPUwUkzoA1rr9MD0WkqRZcac+MpuZ5Cgws=
-X-Gm-Gg: Acq92OFzp+OM+pthjQ6Mxe9/batYrJnAPLVCB/5p7DBmLAdC7NSaCsEGhw5TD5v7oy6
-	jEQPHLGkNcJr2XUWNu3E73zUjE4xbX6h3T9h5JKps3vfZSady11e6BA46B76WwvIkIguh6rUU2C
-	orYfT1EGmdxr9HiCuKzMcaGwx4vSMJxyvy2R1pre2NTxqh9GP8EVaMHWnNhkIzxY4qhkXdAVlx1
-	Zq5X/IZqp7Cf4rIUhYx8uLlt0O0IzSgpZPDkrrjGmW5ptYvAHOAsHz1cg2PierA+LP2RIfUgmz4
-	TYE2yJs=
-X-Received: by 2002:a05:690c:6203:b0:7c5:4c4e:a8a5 with SMTP id
- 00721157ae682-7f7b991262dmr31776957b3.46.1781277693659; Fri, 12 Jun 2026
- 08:21:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hX+0Igue";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X5e53KLn"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C4FB7A009F;
+	Fri, 12 Jun 2026 11:21:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 12 Jun 2026 11:21:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781277711;
+	 x=1781364111; bh=8RE6VFOFBD6DBt+q/gMkTrhIChxBk4fmgegb5InTcmg=; b=
+	hX+0IgueQ11KQ5W4h1OVZqkqA02R02baImb5+fTQ2WrE8rpg9NzRCHy4kTw10rZu
+	RInGTRhLn8E3sjYf+hScuA0IFih58o2W0q9LP7eW0R01b0XbpToA2p1VLN+xtWOT
+	STQH4F2DbaRvQQnr5kzMC9UyGoYp9NbaOeme9WpEdmyOwR+eLEfTNLbKlVGZn6Gz
+	ELL5/LKUEzO2GUkw1OZF0On+Hg/7Jbyfv28dgdvitoDJZAbGcDvYzYlYGGfVJQs4
+	WJxSYPvET0nAA/zJi8TR5Qabm0S0mi11TUTiYSV54H6s8f08JV1DxYcV8DtcTbnf
+	ECzBScGNV9dgAEa7O9RViQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781277711; x=
+	1781364111; bh=8RE6VFOFBD6DBt+q/gMkTrhIChxBk4fmgegb5InTcmg=; b=X
+	5e53KLntPnLvVHin3tlx5c24N258lMuX8ApCqT/Yl4AAubXeTiSaGevgGlWq3Jmo
+	pLorg1ZohWg1k++ch8KRYR/ITFj5/8y+Hd3+BQxFLiKEiUe899ULo6oDkiWCMHMe
+	KY1TezDkLq1UrtVMOS8rPZ2Nqeee3J1742O56x74TfEUxPxvCQl7jcWHyDaH3Hqy
+	PzmNIP23fATCUT5QYV0gBAKqJ5qiiNtoOuldYXE697aggM3PlNrdt2IJrV9G4fSg
+	IqRp1Dm4UNGD8BvYo2vs2EQLStYmY9W4Nox9bx1vKFD+uhrVRIk2spkHzRpLhDNa
+	2Hve+2eNZZiGSi8dH1BnQ==
+X-ME-Sender: <xms:DiQsas2OKrt3M2bkA5AcSuY_LsAEeZQhkPxv1wC0FH1lTZc-UoYNIA>
+    <xme:DiQsapX_NFdZEA1p6JjFO7jXDXAqylIJFGopVQ-1puzYRgXZyIAldt0lC3cs7bfCt
+    O06BFLDvVSg_dz9bHkbzJDANUIUnsOXlRbR9pQtfKHogmenW_hFCw>
+X-ME-Received: <xmr:DiQsanKM0H2XwDDrNXLPSuwH9d9IlG6G0YTo678zOUhj7hFecvcamVIzm3AbDPPDBKm3MmwSZrjmqElTvldDfAbGxYBRHOtuxFmP>
+X-ME-Proxy-Cause: dmFkZTGPwPe475dhneHvE9sJQWJpyq366gklHT6ltgfcTzWyJ9n1kzboJiMfH3ghApgXUp
+    6g4uPqWNT6U2p66ETs5d4iAn06FonHzG2o3IssTRfyKZ+HcRFIlZbdEPxhxFy4/0bc2npv
+    VTcsJuPHEq0AON3rIahkRnQ38lk5yYxQrkM8rkKY2BNx67FrvQ2soCrCyNbW647Yq1hZ0K
+    NKmRYsb5DYjL0isFdO3wPgSKMoAVxQ6RXjzez3LhYCsBO9CDiVqHZyDo6/r4q1Ye+U/dVb
+    YaJIhAPgaIUIrESEof8fbEt+DXpuD55Mr0pQWgTugPUMVAsrqhw5v6S53HomC6PF7AvfRT
+    K0DL6p/iyuoftVwlij18X1BP2sg82CbAISrwJ3fMUaITeh7tUEO/UQxUgTXW6tIvU0BBx+
+    QBAqKjenT5A/7/faWEDjBkSSDqjKwARvpKne0laqQNsWa/Wiw/h2CXU0GNpJ5ARB2DpiMG
+    ZUOZLBmmKGVNTfvTerZ7I0YDzSqcDWVBn4VCMt5RmQAzgzn+dIAwxx7JNW0LK09zemRTz8
+    L1oyJeqm9+2xlL8pMwq9wiXsDvpWPSnx57PXwAf6pKjuAIvtXbjGmYOJ17lzmjZN2ZVvOg
+    /jcrHq2Gje9A3C6C8bwTY+e5BL0rhPiO0Rdu+hoeJUIqGPQeRWF8lXgbdeVQ
+X-ME-Proxy: <xmx:DiQsar2mwdMuHW2lsvg6sKmiMboASp2ADdKw-TEg9Rqu_hGtp-FYFg>
+    <xmx:DiQsat6gMglRqg3IYzkBZdMgmddpMlvqEiRfmYXALuDvJaJlF4fjGQ>
+    <xmx:DiQsak9SC4qKf_QzJ0gGwtjPgkKpYfbHCSN90C8d0OjxAb9dzfJ6IA>
+    <xmx:DiQsakVhc8ljyU_oNmlWpTG-_sMIcXOSqBdmfE-2kkdkznAfNxzDtg>
+    <xmx:DyQsaliPhr3V67Y3CpRTmrEoFJkLopC7fYs_s2AsQ2COnU9jUZJXlGZ6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Jun 2026 11:21:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,  ps@pks.im,  Ayush
+ Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
+ <belkid98@gmail.com>
+Subject: Re: [PATCH v2 3/3] environment: move trust_executable_bit into
+ repo_config_values
+In-Reply-To: <CAP8UFD0X48BJcjLrr8mY0x3A03NSEN35G7jrvdvvp7Qm5PYAdw@mail.gmail.com>
+	(Christian Couder's message of "Fri, 12 Jun 2026 09:48:37 +0200")
+References: <20260530160520.77859-1-cat@malon.dev>
+	<20260610093635.139719-1-cat@malon.dev>
+	<20260610093635.139719-4-cat@malon.dev>
+	<CAP8UFD0X48BJcjLrr8mY0x3A03NSEN35G7jrvdvvp7Qm5PYAdw@mail.gmail.com>
+Date: Fri, 12 Jun 2026 08:21:48 -0700
+Message-ID: <xmqqv7bnhjhv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAL71e4Mp7ewv0UGS8j=iTq6quyxLXzrr0uNDbWR8JKaOsTSVyA@mail.gmail.com>
- <0b3f7429-a4fb-4f7a-bf7b-5a0edeb1db52@gmail.com> <CAL71e4OmPzpCXh-zZ8NsT6L4zVKnXV1gqiFZ2w0XgMJhD=LArQ@mail.gmail.com>
- <8d0902ca-98b7-44a4-a23b-51de44ab6daa@gmail.com>
-In-Reply-To: <8d0902ca-98b7-44a4-a23b-51de44ab6daa@gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 12 Jun 2026 17:21:20 +0200
-X-Gm-Features: AVVi8Cc194BpBh70zgTQ6o4s1TlRgLVOTgUWY9c34RxHv_2ac3m-sKcZeaNeqOg
-Message-ID: <CAL71e4MFb3UUKBr1P4ZwtK3o1gvUHMs+siCpLTXKkW6Vx=BxRg@mail.gmail.com>
-Subject: Re: [RFC] commit-reach: terminate merge-base walk when one paint side
- is exhausted
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, 12 Jun 2026 at 17:04, Derrick Stolee <stolee@gmail.com> wrote:
-> > So the actual halt condition would be:
-> >
-> >     no non-stale P1|P2 candidates in the queue
-> >     AND (no pure-P1 OR no pure-P2)
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Wed, Jun 10, 2026 at 11:37 AM Tian Yuchen <cat@malon.dev> wrote:
 >
-> And since STALE is added only after both P1 and P2 bits, the two
-> conditions are identical to how queue_has_nonstale() terminates the
-> loop.
-
-No, I think this part is different. I can demonstrate with an example queue
-state: [P1, stale, P1, stale, stale]
-With the old code, the non-stale tracker would consider this to be non-stale
-since it still has two P1 commits to process.
-My new approach would instead consider that a valid halt state - we
-can't find any new merge-bases at that point.
-
-> > If this reasoning is correct, then the walk only terminates after
-> > merge-base candidates have either been processed or marked STALE,
-> > and the counterexample should produce [B] rather than [B, C].
-> That's the correct distinction: we need the set [B] and not [B,C]
-> but we need to discover that B can reach C to remove it from the
-> result set.
-
-Yes, and I think that part works since we visit them in generational order,
-so B can invalidate C before C is reached.
-
-> I think there is potential merit in "switching walk modes" to DFS
-> when all queued commits have both P1 and P2, but it comes with a
-> lot of complications. So tread carefully if you go down this road.
+>> +/*
+>> + * Getters for the `repo_trust_executable_bit` fields of `struct repo_config_values`.
 >
+> s/Getters/Getter/
+> s/fields/field/
+> s/repo_trust_executable_bit/trust_executable_bit/
+>
+>> + * They check `repo->gitdir` to prevent calling repo_config_values()
+>> + * before the configuration is loaded or in bare environments.
+>> + */
+>> +int repo_trust_executable_bit(struct repository *repo);
+>
+> Thanks.
 
-On the DFS point: I may be misunderstanding the suggestion, but my current
-approach depends quite heavily on generation ordering. The reason the
-STALE propagation is safe is that, in the finite-generation region,
-descendants are processed before ancestors. If we switch to DFS, I think we
-would lose that ordering property unless the DFS is constrained in some
-additional way.
+Thanks.  
 
-So I think I may not fully understand the DFS idea, and I am not sure if
-that type of optimization would be orthogonal to tweaking the halt condition
-or not.
+A hopefully small and final reroll is in order, and
+<21f74852-2209-4d77-94f4-b2b9412eb8e0@malon.dev> has already
+promised one.
 
-Thanks,
-Kristofer
