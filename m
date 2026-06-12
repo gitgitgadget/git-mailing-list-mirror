@@ -1,134 +1,245 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306A6377567
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 21:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781299603; cv=pass; b=uF9T1psCV9GsgcPbkLoOb65Vlfd2n+h0j9LrJ2W6D4hhtkgHlshw3SGUslOPcRtsTO5u11Rx+vfVXJ7rzqKD48AZ2jd4M8wYOEqx5PrgV8xaG1XfiGKRb7IiMBZk5wJ4SQGyDPeDvM9GeG4V2xLFx8J5960H/WYilrfIkMdlHfI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781299603; c=relaxed/simple;
-	bh=LXyFWXjTPpb02G6oOlmnfM2uLWgrrkjE58ZqMxzh0O4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MwzvQu5rN7ycdUT3h6QgV8/glA1PhZCyykPUn4IrYHsnS2CcUQzLht7rS1U65v1gcEaah/HU9MWrXhjYiehDR2kCATAWHfrm4znJlEEUvxLvasrItsIsNGrPLax8VMerH90exdaUYsXYZxwmNXnepm71CCwz2+1KqfHZROCWLY0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r98S0wMv; arc=pass smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DBB38D3EC
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 21:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781299676; cv=none; b=iJNCNCYKljGufu2AGN3kMqlIxRlMT1+qhd1sHZafj/EmZ2spCXbJLMsdRzfSyu0XLWOhK1Bg/L1Az4mFoUIKM8Wx75LgnlQ4C+trXwqzP2syZ+7sAQpbgbeIFnl9GiD8sWQ8azX8UHxz+tiuQdF5BJeypz15e45rUpLOeq0FfYQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781299676; c=relaxed/simple;
+	bh=A82zUKjzMbe0XPnzvN0cxzZUMxhc7aGZT0XRQu6Ca/g=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=upxrLIxucTzJsZXmG0ACEsPvrdCvgApaYXrZkYTbwgLotW0uIRZjjuVRAE/XoPHDFKDV/t8zBIzNJQJ4czdsfHo4HXuHKt7I63nH0dMaCu8XnzQsCXZZ9asLYd7vAL7jCqg3leDaRbiy8nQv71XO+l7I66Q+TTfXPW6k3bcgOyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RNQ9kp97; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r98S0wMv"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5aa7a7ad475so1625178e87.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 14:26:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781299600; cv=none;
-        d=google.com; s=arc-20240605;
-        b=AM97EG57roiOq5WbFRpXwNXHArm8/3ZWwEng7wgryQwtQ9aUfKWtP21VWMmNjBFHS4
-         0fvCGg0GzCfiEcwXGekTyptPuEa32+JgHs1IdVTxf5dw+85WpQ5u1DQJgoe6KdI4l0dI
-         GG5+AAwMMs4bxA8iSAb2FOH8XdAPj2lgUg8f2D/xhCOzh/zUG142txgvWVzVMyVe2j16
-         nHCHU8vN2AH2TCiaywznbEFrJanLedMCE2UJUhmmLpkdNP1k0pK5BObotxUDT8T62D7j
-         4riP64C+by0IsQTt8/4yThWGXwumWz/xXEeABxUVyXzIUSBSFT9EiRY+zA9i5hPbFufh
-         3p7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RnZRkpNvL6ok8vImUx7cazn5KnbipnFp4X+0WwDFEQU=;
-        fh=LZEgid/AfemsFiZwffY7wXuKEMSws2L/WldwtnvdoFM=;
-        b=WtzimcMUIUG3al09Lcwr8kBGRIYDA0mWBKxZE6FV8E2vr0Lo+IQax2YA29lCMybgEM
-         r1nxJlzU1upSFYWGPSmW4c8wzPvjC7GdAR8sQdPYrm0J1bPl/2VhImCjeoWO1Ioo6cTz
-         407FIBUBxTu4BCcWF2q5jP4DKeHJmSeJ70Gg/2cknUWeGTrQUfsn+znRCP7m7Mz97IKd
-         0JI2nxIS55Q7FRAF2ercjG0pZgD67blaSlnvoo155rwiA4aHVh3M9LHPKtJbI/famtAT
-         iZDAbKoOD8ADQ8jDBcySJPtUyjNgh6SsE5VkqAWgl9x86SOg2TebVSjzpNa7j2eYLlT1
-         BTlA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RNQ9kp97"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-9159da9bba5so109594885a.1
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 14:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781299600; x=1781904400; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RnZRkpNvL6ok8vImUx7cazn5KnbipnFp4X+0WwDFEQU=;
-        b=r98S0wMvz4Eu7FOK8FLZHrvN42j0N4cz/rmTs4P0r497NS50x2LnpNgbwj6ejoMW7T
-         rkk70ZJrQ4h38BEQhKpBwLf7JbgU7sq8tzVbZ0pqAE2+uScgAf9YmqKkdJvCPir8999i
-         ZZXDv0fCDJ5zBeQcv4kxOQgVjENLnyvKvRoa/sgB4oiY35ozVWjO8FhdOcA+XkKi8eK7
-         wqkiOJwXyeIkdmaXVtQ5+a4UWzkOrz1jHpJH+qPNJ3LLNzmgxQKNRe/aS8KX1XmqFlHL
-         +giJw/ujfwCF2L9CI9Z1Tm8bGCp8zQJSOORW1EODcP5ewV5QFtxcCPSaSO4epNjhEalU
-         hLFw==
+        d=gmail.com; s=20251104; t=1781299674; x=1781904474; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kta0PzVJgRTKfdXw+8YJ8cLU1zNocETw+5KXVqbukvc=;
+        b=RNQ9kp97aw8SOaTk635E5J0avrQEN4OEZbJa4q5CSWQjHHmFpaM1zv7Qcx8ZZkH7vB
+         pAMKln/vjbQxlMHzjRFEu5fV4QgSj8sV7kx0tKdsGuZWiP0QoKp82i2nGEpztCzCpmmU
+         Vq5y/xG9kcqgxcjXnt9y4mb2WHZbA/39Kx2phi1IPJUsctp3mp6Mr1SRBmGl0GVCdfdv
+         r2ed5gQ6Q1dpGibEnvYmkcf4zIfT9H9qTrSZC4PISHm9a+GKTVrwmypDsn4NNkZIXhdA
+         7ysuR2VDEJUfriYG0HCSa22Bvd8Fmb8FDFsKb0nD9lVqWmqxMMzNBHwgFAhqWfKhpdvj
+         M85Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781299600; x=1781904400;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RnZRkpNvL6ok8vImUx7cazn5KnbipnFp4X+0WwDFEQU=;
-        b=sZP0iw6OtmlWWKi0LKK+bdlgcYXd01mNXxi+p8vBwrwH3EjdKSBJg3tghHkVPvKRxY
-         9t360kAFrn6pz98FVZBF426WeYGMWufV2c75s86/FW1Gao1Xg8Sx+YXjxGsj6uaCT72c
-         P8IhL7M21Jp45Ay3eWOEwAyduaGE8/YjULFOfRC0vv/J3IUgAdsUK6GIkIaPIJP/Ra89
-         tYzg3HA/lQwTMhqKf3Rd9/6PBwgihk63EgzERrRFhcT+vOQKU0GOYi9XoWQI2AFDRdTc
-         0vNrCh2GNtY1V/zfgzkwr8X23LUGseim8bXC93fR48zN1N1WW+HOoGxJ3qimCkXRuCNJ
-         dzGw==
-X-Gm-Message-State: AOJu0YxkqEohcWiwl19wUV+w2MGNg5NR2QurROkgMUAvk31FGn0wjOF8
-	XuF83BtjQhRuziIX0fqxSM43zVmgL7ytVXuiW9CkkvWoq7dn/ZL9fEfTlcfjqaqpP0Ru/g6TjID
-	d2Uci8KmD5A0jCoOUwxF7RJjEWK/ycQc=
-X-Gm-Gg: Acq92OGwcR/EQX32g54QYycKP6xrhKXx2JbMggMbHzkmJnn3pUiFmTMvxgkySp3kXUJ
-	8ZNv2zR3f/e8xqYVsZsQ42xE9JakFXBzRQs6Fb5SuXj4TwotJfG5YSF4MjxSSZQMYSi+95aG1Z1
-	QLxzQ6CEsP0jOSA7ReMx+ptxZ9dUX/qr0sqr9mDPoju6C+Z6huOsus36C0O1KKQibZxuKmCjUzj
-	Ela2wcBVEbIWcDiHeAwiSnHfCWm7zVKx7zZN/Et0KmbdgfyRtsl/9T9/5nuia3EN8pfbaD3KZJh
-	p8jyIw+PDblaqNxd0611+jleh/2eaX4zxaW2dTEH+SRJvh9AU6VRWkXPj0/2KtPa3eOWhTLwnAb
-	FsigdasgMpIwxcADx5ug6owgHLYw/OhG+TKtg2S8NBtGDXec1gBYF
-X-Received: by 2002:a05:6512:6416:b0:5aa:6232:5766 with SMTP id
- 2adb3069b0e04-5ad2daade2fmr1060514e87.0.1781299600171; Fri, 12 Jun 2026
- 14:26:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781299674; x=1781904474;
+        h=cc:to:references:in-reply-to:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Kta0PzVJgRTKfdXw+8YJ8cLU1zNocETw+5KXVqbukvc=;
+        b=i1jlQhkJM+yC4KwddFVOVvZpzV2ol6QDP5abIkWGdSvb2yTMHiviME+hVqPABnz5uY
+         G4SYbYStol5ShKMCBl8dbZ1637Kcg9d6x6E9t6uTQhHKb8fZUzd9Z4jQMaFfCmSgetUB
+         5993mbHdLREPWZpB/UDSXr0T9beFaVGv3flT20mmfvyaNiAoNffY2RJuv5EX2y3GuzFJ
+         YufuNy8cLKnReQIMdPlkjh/fNZZolAO6IiVpt7edbDYEjzVcGDb/T00IDo5eRK5Dj3Vg
+         nSKY5H6VE5rMoJFyTmtD6A5fjz3frRuKPfjKHYs39wGIDgEe8PBADGPFi4Q6t9eAZCZh
+         Ld1Q==
+X-Gm-Message-State: AOJu0YwLw0Ov3dVyEpiG0UfwoRGR2m303AXXNzMqEr3Z6sBmPZR0iMVC
+	8K0pz69iJB0O+pIuYqVzosK3wZgNMUFMipY6MuQUAqQuwxYJ+vSeA4w/
+X-Gm-Gg: Acq92OHYVAgD73KzMmUHazxpy4X83MolwnwUom8K2PQhhhJQVOFKNKfTgUgHw8iPC67
+	It499nf021PyTeGoC+gfQ7dH3x9dCfAOYvytP9zGdys2cdEKFPyev+DvpPFvrYKgT9GxTIffuxr
+	+oYFMCe5DySI6YrPEjxgyOHM15kf+xgHvAs82cKJEbbcuIOK3vAuGU09V5yCt938tInYJ5j99D2
+	fdeTAdn3PGk1haWSvTCVpwcwPrMaS12+tAbHoDZHNc1n7oSCuw+gxPOHUhUeyjNeFRigSyRzWMQ
+	DDpAXRQdjvVtYgZJX80ycTKOlDN2FZejBRGaD1GRmtM2J+M/wLM7MI1XCtxfj3PmtTav5Fo3T7P
+	tHQGsAY0uu5G90ym15BCRYkHzb7sUL3+puYujKa0Haqi8O34V7s/RZHySBiTpaaoB62yAoiflZX
+	2DHEptgXsLkk/lQDGwwUQkwD4PrQufvjRs5wf1UEnUin0DnQQy+6+9es6hqVFrJ5Wh3qmWDyUhM
+	1g1or0tc8j+bhiMZhoiQdSqgcl5PSlpFwlpjBTWqP9x7hcYJyt5uun5gSbbkDIcEWdgfd2EI2T7
+	V4BIiQPzQ8eQpcGH6//9ZR9X2bfaw84rILc99MRuNOVPWIbRAnpz7pg4JGEZH3ySDRh5/50TOs8
+	=
+X-Received: by 2002:a05:620a:f0e:b0:915:d322:c465 with SMTP id af79cd13be357-9161bac73dbmr726737385a.6.1781299673905;
+        Fri, 12 Jun 2026 14:27:53 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2600:4808:6353:5c00:980:d7de:1287:a424])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619ed7fb5sm324305685a.6.2026.06.12.14.27.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jun 2026 14:27:53 -0700 (PDT)
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Fri, 12 Jun 2026 17:27:44 -0400
+Subject: [PATCH v4] ref-filter: restore prefix-scoped iteration
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260611-ref-filter-memoized-contains-v3-0-b26af3dba285@gmail.com>
- <20260611-ref-filter-memoized-contains-v3-1-b26af3dba285@gmail.com> <CAL71e4PRqN9iPCzvgwC1Vtj-kzn4Udv+v1LTFSUXtGnC5KGrpA@mail.gmail.com>
-In-Reply-To: <CAL71e4PRqN9iPCzvgwC1Vtj-kzn4Udv+v1LTFSUXtGnC5KGrpA@mail.gmail.com>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Fri, 12 Jun 2026 14:26:04 -0700
-X-Gm-Features: AVVi8Cc6RU_IFZOj-dGz31XL8vHXbFZ2ho0FfI7x3HvYRtUljX3I7gZ-fJnqsyQ
-Message-ID: <CAJ-ks9n4461G-Me+1rf0ZgrC15ZW+1b1xcip=11e8=S=OjOuiQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] commit-reach: handle cycles in contains walk
-To: Kristofer Karlsson <krka@spotify.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260612-fix-git-branch-regression-v4-1-f150038c02f4@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43NQQ6CMBQE0KuYrq35/RQorryHcVHpL9QomBaJh
+ nB3W90QF8TlJDNvJhbIOwpsv5mYp9EF13cxyO2G1a3uGuLOxMwQsIACcm7dkzdu4Gevu7rlnhp
+ PIa14RRKzwgoFlWBxf/cUyx/7ePrm8DhfqB4SmBqtC0PvX5/zUaTePz+j4IIDWgnaSKiwOjQ37
+ a67ur+x9DPiUlJrEkbJGoVQ5lrlCL9StpAErElZlAprpLLalDrPltI8z2/4lhNYaAEAAA==
+X-Change-ID: 20260605-fix-git-branch-regression-9e4236f18091
+In-Reply-To: <20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com>
+References: <20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+ Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
+ ZheNing Hu <adlternative@gmail.com>, Tamir Duberstein <tamird@gmail.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openssh-sha256; t=1781299666; l=5221;
+ i=tamird@gmail.com; h=from:subject:message-id;
+ bh=A82zUKjzMbe0XPnzvN0cxzZUMxhc7aGZT0XRQu6Ca/g=;
+ b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
+ MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
+ QHpGx64YcmDjyKyruIaATN0JcJUh9u+3XWGxZfFh8D4bkcPDPLuDPaUtPAMZaCngsuDTdCjPy5+
+ mTsK6s2gqyAI=
+X-Developer-Key: i=tamird@gmail.com; a=openssh;
+ fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-On Fri, Jun 12, 2026 at 2:53=E2=80=AFAM Kristofer Karlsson <krka@spotify.co=
-m> wrote:
->
-> On Fri, 12 Jun 2026 at 05:00, Tamir Duberstein <tamird@gmail.com> wrote:
-> >
-> > The memoized contains traversal used by git tag assumes that commit
-> > ancestry is acyclic. Replacement refs can violate that assumption,
-> > causing it to keep pushing an already active commit until memory is
-> > exhausted.
-> >
->
-> The cycle detection itself makes sense, but would it be simpler to
-> just die() when a cycle is found rather than falling back to a
-> second reachability walk?
->
-> A cycle in the commit graph means replacement refs are
-> misconfigured.  The existing code already loops forever when it
-> hits one, so detecting and dying is strictly an improvement.  The
-> fallback adds a second codepath through the function, discards all
-> cached results (so later candidates redo work), and papers over
-> what is really a broken invariant.
->
-> do_lookup_replace_object() already dies when replacement refs
-> chain deeper than MAXREPLACEDEPTH (which covers cycles), so the
-> existing contract treats this as a fatal configuration error.
-> parse_commit_or_die() sets the same precedent within the walk
-> itself.
+dabecb9db2 (for-each-ref: introduce a '--start-after' option,
+2025-07-15) changed branch, remote-tracking branch, and tag enumeration
+from constructing an iterator with the namespace prefix to constructing
+an unscoped iterator and seeking to the prefix.
 
-Yes. The test creates an ancestry cycle through replacement commit
-parents, so MAXREPLACEDEPTH does not catch this particular cycle. But I
-agree with the design conclusion: the history is malformed and the
-fallback only adds complexity.
+Review of --start-after noted that the construction prefix and seek
+position represent different state and are easy to conflate [1]. It also
+noted that future branch or tag support would need to retain the
+namespace prefix while moving the cursor [2].
 
-Done in v4.
+The files backend constructs its loose-ref iterator with cache priming
+enabled. cache_ref_iterator_begin() immediately applies the construction
+prefix through cache_ref_iterator_set_prefix(), reading loose refs
+beneath it before packed refs are opened. An empty prefix therefore
+reads every loose ref, and a later seek cannot undo that I/O.
 
-Thanks!
+For the current single-kind filters, construct the iterator with the
+namespace prefix when start_after is not set. Leave the existing
+start_after path unchanged; no current command combines it with these
+filters, and future support must carry the prefix separately from the
+cursor.
+
+With 10,000 unrelated loose refs in the files backend, the p6300 tests
+improve as follows:
+
+                         before   after
+  branch                  2.74 s   0.11 s
+  branch --remotes        2.81 s   0.12 s
+  tag                     3.01 s   0.11 s
+
+[1] https://lore.kernel.org/r/aGZidwwlToWThkn8@pks.im/
+[2] https://lore.kernel.org/r/xmqqikjq7s16.fsf@gitster.g/
+
+Fixes: dabecb9db2b2 ("for-each-ref: introduce a '--start-after' option")
+Suggested-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+---
+The series is based on a89346e34a (maint) because the regression has
+been present in released versions since Git 2.51.0.
+---
+Changes in v4:
+- Explain the historical references in the commit message.
+- Run the new performance cases with both ref backends.
+- Drop the Assisted-by trailer.
+- Link to v3: https://patch.msgid.link/20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com
+
+Changes in v3:
+- Construct the iterator directly with the namespace prefix.
+- Explain when the files backend primes its loose-ref cache.
+- Condense the commit message and performance results.
+- Link to v2: https://patch.msgid.link/20260608-fix-git-branch-regression-v2-1-fd82075a8520@gmail.com
+
+Changes in v2:
+- Extract local variable `store`.
+- Link to v1: https://patch.msgid.link/20260605-fix-git-branch-regression-v1-1-02f40ad40929@gmail.com
+---
+ ref-filter.c                 | 13 ++++++-------
+ t/perf/p6300-for-each-ref.sh | 39 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 44 insertions(+), 8 deletions(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 1da4c0e60d..9b04e3af85 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -3316,15 +3316,14 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, refs_for
+ 
+ 	if (prefix) {
+ 		struct ref_iterator *iter;
++		struct ref_store *store = get_main_ref_store(the_repository);
+ 
+-		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+-					       "", NULL, 0, 0);
+-
+-		if (filter->start_after)
++		if (filter->start_after) {
++			iter = refs_ref_iterator_begin(store, "", NULL, 0, 0);
+ 			ret = start_ref_iterator_after(iter, filter->start_after);
+-		else
+-			ret = ref_iterator_seek(iter, prefix,
+-						REF_ITERATOR_SEEK_SET_PREFIX);
++		} else {
++			iter = refs_ref_iterator_begin(store, prefix, NULL, 0, 0);
++		}
+ 
+ 		if (!ret)
+ 			ret = do_for_each_ref_iterator(iter, fn, cb_data);
+diff --git a/t/perf/p6300-for-each-ref.sh b/t/perf/p6300-for-each-ref.sh
+index fa7289c752..25ffa5e84c 100755
+--- a/t/perf/p6300-for-each-ref.sh
++++ b/t/perf/p6300-for-each-ref.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='performance of for-each-ref'
++test_description='performance of ref-filter users'
+ . ./perf-lib.sh
+ 
+ test_perf_fresh_repo
+@@ -84,4 +84,41 @@ test_expect_success 'pack refs' '
+ '
+ run_tests "packed"
+ 
++test_expect_success 'setup many unrelated refs' '
++	git init scoped &&
++	test_commit -C scoped --no-tag base &&
++	test_seq $ref_count_per_type |
++		sed "s,.*,update refs/custom/unrelated_& HEAD," |
++		git -C scoped update-ref --stdin &&
++	git -C scoped update-ref refs/remotes/origin/main HEAD &&
++	git -C scoped update-ref refs/tags/only HEAD
++'
++
++test_perf "branch (many unrelated refs)" "
++	(
++		cd scoped &&
++		for i in \$(test_seq $test_iteration_count); do
++			git branch --format='%(refname)' >/dev/null
++		done
++	)
++"
++
++test_perf "branch --remotes (many unrelated refs)" "
++	(
++		cd scoped &&
++		for i in \$(test_seq $test_iteration_count); do
++			git branch --remotes --format='%(refname)' >/dev/null
++		done
++	)
++"
++
++test_perf "tag (many unrelated refs)" "
++	(
++		cd scoped &&
++		for i in \$(test_seq $test_iteration_count); do
++			git tag --format='%(refname)' >/dev/null
++		done
++	)
++"
++
+ test_done
+
+---
+base-commit: a89346e34a937f001e5d397ee62224e3e9852040
+change-id: 20260605-fix-git-branch-regression-9e4236f18091
+
+Best regards,
+--  
+Tamir Duberstein <tamird@gmail.com>
+
