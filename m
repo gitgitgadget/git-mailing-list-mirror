@@ -1,67 +1,67 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BC22F7EF3
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 03:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9621430C366
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 03:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781233230; cv=none; b=n8J2LH8rlUE5kMt/36M4Jcipga3mrKKikxD+nKUeZJusv6l1XzHR6xG17NXvIViQJRQXjtZDW8wJNoOuCCcNeNo5xFn+4IC98gTVRzdhZSgOCNUW1Gl/hgmATDOiX2TIUpHYwZlS7j0qmcc2+/CoZWPvyDNObdpdsiigXCrKCQA=
+	t=1781233236; cv=none; b=A1rgx2HC8vlRFZED9YaPyKJ/wyg/wzuJTacYiyAV11HMKPb7eXyCUM4liVV+igyaMR1Lo1JB3aJkWXQWyI8mvMQswKj9rp3xnWYARY53twwhJ0SXgmcypQ0KuVcqgOPaycFG/zmxOeIEuE4ihjU0YplizRE4A1oNzq9GFnq8BVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781233230; c=relaxed/simple;
-	bh=SSuQPHMNROlAwDvRhK8espOqSyk88IeonxhjKnwTn88=;
+	s=arc-20240116; t=1781233236; c=relaxed/simple;
+	bh=ROY8ddNfPvnm3KPkyg0haD0LjZYu8OoXNSkfTZyHA44=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lYLeYMcw8sexVfdmn41tDp6gLXqyFfcCtpeDfWmVb9+vXmnxM0ZnlI/GbUQLziKQhKNp5HEi/Xpu7l/NeBMFRoQWOsGedW/h3++htp1HeZbPBZBnJElQUL+sTsVIRQy99p+I7XhAP4me9TgIU/CqWYnziKnCHanTcpebUG0oGDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKNCcKZq; arc=none smtp.client-ip=209.85.167.177
+	 In-Reply-To:To:Cc; b=ikAP+cKx7ZonAAU9/QjAtItu5AHuAS5VlwIjXd7RGdPUqhNUwPKsqJ4uPm5/aP5fVYRqxOKYVOByzShIzVf8xkzSoBd+P+dIdTAlO9lWXPOlp1BSFUVNe/8VfZ/hX4weKCCc7+JhVF9BsTbsLWR9914r1EjeDNmETy+/UZ1MSaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJLKzXMV; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKNCcKZq"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-486d0e175e9so391155b6e.3
-        for <git@vger.kernel.org>; Thu, 11 Jun 2026 20:00:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJLKzXMV"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-43ccd4f6f6eso425572fac.0
+        for <git@vger.kernel.org>; Thu, 11 Jun 2026 20:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781233228; x=1781838028; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781233230; x=1781838030; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=d+/WJPLketynGCcSySKlOP2JyARB7+dqQenD7ZRk3OA=;
-        b=jKNCcKZql2RSYxEdmNYvZaYdlo8MLdMqQUb9s5libgwC2TRip3qAHmLpFnNwwzV9Zh
-         04qBtmXmWTD7bOr8052Ky8M7WUt00wHdmlFBIP8taHHQ5N58o0PBnG+9sGI3y5K64pdG
-         u/eds1Nj1lNpPIdhv1k8eQ3dUZQtt/iBKNQnNu6uBsMtvUvBkgu+5226vvvtoMIWPHwX
-         ixuw38dxClTre2pywwHBNpPWuRsBhXLnTO4so7J/zdWqpmYZcvGFR3zT9T29xtmY4oh8
-         owjw9A395I+DtpNyJz2ZyEm035an6xI0ShdLSsOpzAaPEX5QooSvdXj2tJtKtkQlUaIv
-         8ung==
+        bh=vL4HFL47NVTgGxT7H6Crt4kxYdqmBkHDKXGvyDURVhg=;
+        b=ZJLKzXMVHYu4htlhAqEMAnN/mmguV+ntpBIgsBkG7CK7e1DCqyIbBVJfvz6LMug94p
+         i74+++IJq9obveV96lgkscXPjPwQe340fRkCsMIzaOflMsNXpch6JUq/tnFwedrsPlJn
+         P9afCoTpp3YYZAfjaUD3+UC4SCXFbGAnxoGfafQ4fv2BYOUBDZQuUdOHkHkctf94EwLJ
+         XnmoxYFCOTocTRA8GGcnklr11j10VCCjTzAe3SJRhhBjZnbztGxmj3YCFuPBk1qo/7Zh
+         blX5Bx/XB6qobhqPkdyOjahu7/Kvm/Ac0OUVo3xBwwFbgVnUERX/pBC7mNwK3SqQH2Ig
+         fh3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781233228; x=1781838028;
+        d=1e100.net; s=20251104; t=1781233230; x=1781838030;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=d+/WJPLketynGCcSySKlOP2JyARB7+dqQenD7ZRk3OA=;
-        b=Xx6hlyJvTv63cSNRKL2LDnr72CiXl++1fGgYmtI5OD4Bc+RgmGd7Tai5PN2R2U1/jF
-         4AFSmDaIhlxqWcfigNtmMNGVcelflXuD8ZpA8awIX4rzKdsVN5OhIgusIyTLeNmynDhV
-         RdX7GKR4UQyLBE01YvZats+j+QBPz9k74mClk/oSSTJLoJNEY92Qib61ZlJaafWmO6XE
-         jvAFKLYM7ZxRWBikaOgpqgE0U4V2Bv7l6XGssH9HWX08ls1A5gzoyyNXdAiIuhXMKZ01
-         O3Y4/bVq87PqFDQtoVIX5M6lm8l/5YwlKnYzoE5F6X55UEbITgcqRJQSRLX7Ju2OrP2g
-         QE6A==
-X-Gm-Message-State: AOJu0Yx7bMnG+QMlCz9vN5RDh88IhJHLYBQK5/PZQ6h8EZfKqqc3WE4m
-	0ZLPnZCrAjHWpQUt5Mv2XovPHe1Mr4fcn/JX0VgfjQ2RKniB3EdpQZsX
-X-Gm-Gg: Acq92OFFituv/lWb4edd3vWAI8RyUnYFdH3qzx+ki1aG4qit+VTyi3i+8vyrBVzthhP
-	eSV4DsJ25q1G/5tBakIQWtIEGU6iXrcdrQ3iz1AE22Um/6bCnJZTKNkI/fFVkJemgpbmyOUKK3y
-	BPoGY9cZlwSKKUcLHA4pt1ZXIxxGQu/+/oTPHy/AdwrIocwJY8CjzTNqes4LKzhw/y3A5JxrgP7
-	14kPjUHphr4ex5lHtTpD2bVUO3jPzubW+VZKrLvwrAEbaAtu4L6FD0yuYWPlCN9PODDYLBf5D7W
-	3Ur/vi+TnU9JzJN9/I1JNNGx/z5U59qJEYyrKE3RcC4PcSP2zth0mdCUMr5dN6IeF82KpVgCuFN
-	gTJ+ttZcxAffeerx7irEeAksMdmzzs5fNBURSx1aHqDzFla75tE0HbPqydeqVUu7P4VQ7M+H/d4
-	yD/RY2nqQuUk4KHU5bcFHKjdFlHo7slISmBUo0/HCKkAdfi7t5b70525lRCE6nTyus3umw4/CmJ
-	FvLZfMEHP+RvNyxtxKxzhKWlTTqW3CH4rUVjcVQLgZdV78MDpL/iUJkXgCGzZHVs7DrJtQObgAz
-	ZTPPbaZCA/o8fsgWoVYkaq9h9QOuJ/rdyIQTf3wtb+rAS3oNpWQ3
-X-Received: by 2002:a05:6808:1442:b0:47c:b363:642a with SMTP id 5614622812f47-4872f40fb64mr791918b6e.12.1781233227717;
-        Thu, 11 Jun 2026 20:00:27 -0700 (PDT)
+        bh=vL4HFL47NVTgGxT7H6Crt4kxYdqmBkHDKXGvyDURVhg=;
+        b=leyzYHhw0EQLw7zoQ4scDTod2UhWt7ZTkAfV7rHU6JUlWd0lC8NoONzh9lnBAmGjUJ
+         euuRRlowij+1kG1/M6CIvu0FA8W7dl+YtYfokBOLJJPyz9Ig6nFIlExNDymBchhYWpdz
+         0n8yJi3R2L10nw9HJM3oBMflJQktr7ybi/R+YCDRW+wFr8NnWOhnslOJbSulhkVRSffZ
+         DAKuwtWYPflzB9Z9Yf1Ep1mshC18V8RA6oEpfERrgOJzGK/PymeLagucZWJu5ysadXtf
+         cNtMFPozSbQuRhdX4kl/LTLx88DBqyLJymjML4BuIACLbkxbMttzycEl7Gc2Pt0EVpmV
+         jISw==
+X-Gm-Message-State: AOJu0YyIUTfOSqm5oj/DBjME5wnhjIzWOcZAYnFvYdOyvu307QdC60IQ
+	9rG37kwgJpyVTY8Ja22b4ggZJMYoHSg1d9334zhUshNwESeFYbrnCKsL
+X-Gm-Gg: Acq92OEeP05DNJ4GnzRlpC+4+DY3EAjY6XXlbEqHpX0O0zX6E/wOVBcTMb7XH/FBMUX
+	1T1B2YW4ou6iF7rISpoEw73vCaSJSjRsT/77UxkNHb8u5Yp0lpmIkZlmXfe3hs7hfgM96y3Vcsn
+	Pt7ABfxzYGn63dcjbMMaxSodu22juouhg0mNK0Zt4jichN8hdeG+GQugF5iIoVrM7l2p4zLoADL
+	SbZFYS77ksJMcXO07kn3h/cTYCxwQNEgKzUsQ0PkNG8Fr8pdYJhY+0koy64gbxXO5oJXEsthUbS
+	+CQ92jJH2ZcisZxKFdrT6f/Tqe5VIxNGPzLVV7zOWdq6NzIV/T4sIcBnQFUwpk4kzMgRgVxZfxj
+	a+X543XS7VOETrL8YwHdEpuPywTF8gMtjGMCN/0p7hx/4ulxqYz5IBCdr8D86jZGCGXIcIF2eWJ
+	SIM6Kjs2y9vum/nvnL/QSEAAaofrvEUQi4hpl4XEjCEEo6lEiS/2Jdkxnj9g98I3REaelAelCmR
+	d1ob+8Xm2kUCaWQA9DVoMLBc13YULu9rk2veSFD4y+LmIQeaxAOqSzqUtQMuNHaHMHGjFQ5S+s9
+	TuBvslFMJRrSiY22bIT7MMyno++2omvl9LWQE8tF2pyLfvLpXwwP
+X-Received: by 2002:a05:6820:626:b0:69e:8bbb:78f8 with SMTP id 006d021491bc7-69edc5f9b80mr701956eaf.5.1781233230360;
+        Thu, 11 Jun 2026 20:00:30 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([50.237.239.3])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4426abe97c4sm702031fac.7.2026.06.11.20.00.24
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4426abe97c4sm702031fac.7.2026.06.11.20.00.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 20:00:26 -0700 (PDT)
+        Thu, 11 Jun 2026 20:00:29 -0700 (PDT)
 From: Tamir Duberstein <tamird@gmail.com>
-Date: Thu, 11 Jun 2026 20:00:14 -0700
-Subject: [PATCH v3 2/3] ref-filter: memoize --contains with generations
+Date: Thu, 11 Jun 2026 20:00:15 -0700
+Subject: [PATCH v3 3/3] commit-reach: die on contains walk errors
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-ref-filter-memoized-contains-v3-2-b26af3dba285@gmail.com>
+Message-Id: <20260611-ref-filter-memoized-contains-v3-3-b26af3dba285@gmail.com>
 References: <20260611-ref-filter-memoized-contains-v3-0-b26af3dba285@gmail.com>
 In-Reply-To: <20260611-ref-filter-memoized-contains-v3-0-b26af3dba285@gmail.com>
 To: git@vger.kernel.org
@@ -79,110 +79,89 @@ Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>,
  Derrick Stolee <stolee@gmail.com>, Elijah Newren <newren@gmail.com>, 
  Kristofer Karlsson <krka@spotify.com>, Tamir Duberstein <tamird@gmail.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openssh-sha256; t=1781233218; l=3957;
+X-Developer-Signature: v=1; a=openssh-sha256; t=1781233218; l=2871;
  i=tamird@gmail.com; h=from:subject:message-id;
- bh=SSuQPHMNROlAwDvRhK8espOqSyk88IeonxhjKnwTn88=;
+ bh=ROY8ddNfPvnm3KPkyg0haD0LjZYu8OoXNSkfTZyHA44=;
  b=U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgtYz36g7iDMSkY5K7Ab51ksGX7hJgs
  MRt+XVZTrIzMVIAAAAGcGF0YXR0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAA
- QNJeh20gaOAl+1XjEDy9L1eg3UT4dBqD7K2TJ9KFY97KvatAnvmD6t0VhWJxWj8Xnu8pInfwsIv
- 3b1kbVf+C9Q0=
+ QPfGDPxdaLbUQ3OBgsWjLrKsdGo3RwnrDCYHcjvkDkTzqGX4xfIZoH4YrwhtuPHARMGGZJAxg6I
+ 1K+nQYMxk8Qk=
 X-Developer-Key: i=tamird@gmail.com; a=openssh;
  fpr=SHA256:264rPmnnrb+ERkS7DDS3tuwqcJss/zevJRzoylqMsbc
 
-git branch and git for-each-ref run a separate reachability walk for
-each ref considered by --contains and --no-contains. Refs with shared
-history therefore traverse the same commits repeatedly.
+Without generation numbers, repo_is_descendant_of() can return -1 when
+it cannot read commit ancestry. commit_contains() exposes that result
+through a Boolean interface, so ref-filter treats it as true. This can
+include a ref for --contains or exclude it for --no-contains without
+failing the command.
 
-git tag instead uses a depth-first walk that caches results across
-refs. That walk can perform poorly without generation numbers: a
-negative check may walk to the root instead of stopping at a nearby
-divergence. Generation numbers let it stop below the oldest target.
+Die when repo_is_descendant_of() reports an error. The memoized walk
+already dies when it cannot parse a commit, so callers of the
+non-memoized path no longer turn a failed walk into a match.
 
-Use the memoized walk for all ref-filter callers when generation
-numbers are available. Keep git tag on its existing path without
-generations. Caching still helps when many tags share deep history:
-ffc4b8012d (tag: speed up --contains calculation, 2011-06-11) reduced
-git tag --contains HEAD~200 in linux-2.6 from 15.417 to 5.329 seconds.
-
-The new shared-history perf test improves from 0.72 to 0.03 seconds. In
-a repository with 62,174 remote-tracking refs, running:
-
-    git branch -r --contains c78ae85f3ce7e
-
-improves from 104.365 seconds to 468 milliseconds.
-
-Link: https://lore.kernel.org/git/1445163904-24611-1-git-send-email-Karthik.188@gmail.com/
-Link: https://lore.kernel.org/r/20230324191009.GA536967@coredump.intra.peff.net
-Link: https://lore.kernel.org/git/20260527070510.3510836-1-krka@spotify.com/
-Link: https://lore.kernel.org/r/20260608223430.GA340696@coredump.intra.peff.net
-Link: https://lore.kernel.org/r/CAOLa=ZSezQOj56-TezVaAcisUyczxhJmu4VghyFBHcBB_mKJ2A@mail.gmail.com
-Suggested-by: Jeff King <peff@peff.net>
+Reported-by: Jeff King <peff@peff.net>
+Link: https://lore.kernel.org/r/20260611072942.GG2191159@coredump.intra.peff.net
 Signed-off-by: Tamir Duberstein <tamird@gmail.com>
 ---
- commit-reach.c              |  3 ++-
- t/perf/p1500-graph-walks.sh | 28 +++++++++++++++++++++++++++-
- 2 files changed, 29 insertions(+), 2 deletions(-)
+ commit-reach.c                 |  8 +++++++-
+ t/t6301-for-each-ref-errors.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 1 deletion(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index 1d34d66fe8..572d2d47ff 100644
+index 572d2d47ff..af5563d70f 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -820,7 +820,8 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
+@@ -820,10 +820,16 @@ static enum contains_result contains_tag_algo(struct commit *candidate,
  int commit_contains(struct ref_filter *filter, struct commit *commit,
  		    struct commit_list *list, struct contains_cache *cache)
  {
--	if (filter->with_commit_tag_algo)
-+	if (filter->with_commit_tag_algo ||
-+	    generation_numbers_enabled(the_repository))
++	int result;
++
+ 	if (filter->with_commit_tag_algo ||
+ 	    generation_numbers_enabled(the_repository))
  		return contains_tag_algo(commit, list, cache) == CONTAINS_YES;
- 	return repo_is_descendant_of(the_repository, commit, list);
+-	return repo_is_descendant_of(the_repository, commit, list);
++
++	result = repo_is_descendant_of(the_repository, commit, list);
++	if (result < 0)
++		die(_("failed to check reachability"));
++	return result;
  }
-diff --git a/t/perf/p1500-graph-walks.sh b/t/perf/p1500-graph-walks.sh
-index 5b23ce5db9..d167b4f7e1 100755
---- a/t/perf/p1500-graph-walks.sh
-+++ b/t/perf/p1500-graph-walks.sh
-@@ -32,7 +32,16 @@ test_expect_success 'setup' '
- 		echo "X:$line" >>test-tool-tags || return 1
- 	done &&
  
--	commit=$(git commit-tree $(git rev-parse HEAD^{tree})) &&
-+	git rev-list --first-parent --max-count=8192 HEAD >contains-commits &&
-+	test_file_not_empty contains-commits &&
-+	git update-ref refs/contains-perf-base "$(tail -n 1 contains-commits)" &&
-+	awk "{
-+		printf \"update refs/contains-perf/%04d %s\\n\", NR, \$1
-+	}" contains-commits |
-+		git update-ref --stdin &&
-+	git pack-refs --include "refs/contains-perf/*" &&
-+
-+	commit=$(git commit-tree HEAD^{tree}) &&
- 	git update-ref refs/heads/disjoint-base $commit &&
- 
- 	git commit-graph write --reachable
-@@ -62,6 +71,23 @@ test_perf 'contains: git tag --merged' '
- 	xargs git tag --merged=HEAD <tags
+ int can_all_from_reach_with_flag(struct object_array *from,
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+index e06feb06e9..72b27c8be3 100755
+--- a/t/t6301-for-each-ref-errors.sh
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -52,6 +52,28 @@ test_expect_success 'Missing objects are reported correctly' '
+ 	test_must_be_empty brief-err
  '
  
-+test_perf 'contains: git for-each-ref' '
-+	git for-each-ref --contains=refs/contains-perf-base --stdin <refs
++test_expect_success 'missing ancestors are reported by contains filters' '
++	test_when_finished "git update-ref -d refs/heads/missing-parent" &&
++	{
++		echo "tree $(git rev-parse HEAD^{tree})" &&
++		echo "parent $MISSING" &&
++		git cat-file commit HEAD |
++			sed -n -e "/^author /p" -e "/^committer /p" &&
++		echo &&
++		echo "missing parent"
++	} >commit &&
++	broken=$(git hash-object -t commit -w commit) &&
++	git update-ref refs/heads/missing-parent "$broken" &&
++	for option in --contains --no-contains
++	do
++		test_must_fail git for-each-ref "$option=HEAD" \
++			refs/heads/missing-parent >out 2>err &&
++		test_must_be_empty out &&
++		test_grep "parse commit $MISSING" err ||
++		return 1
++	done
 +'
 +
-+test_perf 'contains: git branch' '
-+	xargs git branch --contains=refs/contains-perf-base <branches
-+'
-+
-+test_perf 'contains: git tag' '
-+	xargs git tag --contains=refs/contains-perf-base <tags
-+'
-+
-+test_perf 'contains: synthetic shared history' '
-+	git for-each-ref --contains=refs/contains-perf-base \
-+		refs/contains-perf/ >/dev/null
-+'
-+
- test_perf 'is-base check: test-tool reach (refs)' '
- 	test-tool reach get_branch_base_for_tip <test-tool-refs
- '
+ test_expect_success 'ahead-behind requires an argument' '
+ 	test_must_fail git for-each-ref \
+ 		--format="%(ahead-behind)" 2>err &&
 
 -- 
 2.54.0.548.gbe7bb2469c
