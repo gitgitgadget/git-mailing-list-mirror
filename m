@@ -1,108 +1,189 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazolkn19013079.outbound.protection.outlook.com [52.103.35.79])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06637384CC1
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 15:41:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781278914; cv=none; b=mDYWpZFi+8Neod79hzGofrYZXc/zYsm/WButPbT5g3YtB6pS5rorrTk/+ztH1il1aF8d1IJ3W//FQP4Np5pOHpBCouoKEcuZ+tOy5GkAwrPw/EsNlPuyB7subSWD1eybrLyycDxj4cetSBw5XwWOHy/DuXmAYmLbwAOHGAnnzV0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781278914; c=relaxed/simple;
-	bh=VFTbij1hYX9S/p1i/5Ah7k/PKy5eXCvRiNww3kl+dSI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tpi3IRoTglpHbAqENIvLo8KakoYf6NkO8rxBfywRCn1lVfqv+I4D188iLdCO0YypFPfXgU8t+kg75tjKcZGgb9JFbOG8xxZXmrGX6ETNFLeLtBObuNMRQcm2QJF3EdtyPOnUylUVnbbIoNj9Y6+frktDvvgNe7W49T9x17mvSCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oXz7qcO7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AZuIe/W4; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8920B359A6D
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 15:42:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.35.79
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781278944; cv=fail; b=qkdlk9xVGYEVlGGzCsmWykcS9kuQsZucqwfRm1WCV1awlvT5l8gm9NDac4xJlfFooezXUbhL6JpuON0XFU2N61bdrAgijBS3vp4TdQWAlxva3F9HlpCczRPayNxRo1aJOdtwrTVtpHYXqWcJuSxv9+dX5oLOID4iAbvGYuaMjwI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781278944; c=relaxed/simple;
+	bh=Vi67/qnNN8ETKe0TNVECfZvRcoRdaTe9Opjx1DfYzvk=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=tD3H1jJWDXwknn8HfZEReSSbnu/rGelmcrijQBRUWIPJnRaUQnfJnBU5ZfzB1sLts+sq8Po54enS6YBj6oY/xuQaVEreYXc9DFqtsO1gDHSOqDQhnvAWhK6cMn9XWaQtp8/D6nI+ZbXoIz3I/1KFqJ422Gw2obH1G4RUxWdrQHA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=E9AyXJoo; arc=fail smtp.client-ip=52.103.35.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oXz7qcO7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AZuIe/W4"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2019D1D0007A;
-	Fri, 12 Jun 2026 11:41:50 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 12 Jun 2026 11:41:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781278910; x=1781365310; bh=9+KL4DYFeH
-	dYW932lamMEEDzPuEkUv5Z3oVDBiLG5c8=; b=oXz7qcO7PAuYrcohQbYlfyQunD
-	0W6KaXKJ0R+nhSBe85xj60M4/lHEJArzn/OQgPLOXkmB18wO9QBBuVtcLuXTlav3
-	lV/GkyBFMDTwLtyiXv4Uf/LZRM5UJncVFO6vkZrI4hHcupZqcX6lRm0osHQOH7Rx
-	tjIIjwtw9pM4jbEpB7r+ji78W42bbNh6LbcwLOVIqFf+IOW6Ou80qvPAdjrWAd7P
-	88gECiAZ9yU2GcTsa7oLYJKXViK7CdH91GI14ybJa7fhZlLucd1QWeEZPDfrF7Uz
-	cg4wSYHsCzsGZffdT1FgbR+yf+lAllkltZ953cLBYs8GARetrc2fsvqFLJsA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781278910; x=1781365310; bh=9+KL4DYFeHdYW932lamMEEDzPuEkUv5Z3oV
-	DBiLG5c8=; b=AZuIe/W4eCRuib8JwegvIoDn0bYimyzXgP3Awn+7t+y4QuG3GT1
-	Po1bCkJHzoR11imdbyVvAAT+/u+72LslXOKU3/JwHISkmTysV3QRuctjNn/LCDOs
-	xVJSSpBEJtE6MOd6Gfv954ry+tMBlGaCjoQjxPFine8Y81yQcXNgXLjCSoYXhb6A
-	JG8IjkaHWD9uI7gpavJ+get12NWVSwmVePaUBZg2oZ3gpYtrZ+yHOl8LOsVxXXMg
-	73KTG0ItQMdffeO6wJOxZA6zupeA1CjAgkXWTyJggvQvXkN47nk8QdEmVty69Tro
-	+JhIgubKTia1WX+mgOptcSvFGWNtONAfTWQ==
-X-ME-Sender: <xms:vigsatVtP-WPU5ZBou62TS9UFWK1VvA5jno54fiuldgnWxS_hCeIuw>
-    <xme:vigsalAZ3UCsAF7ZKOqxX8LyOSy1NdQGcaBBxOB_895nOT-skXUXFTIJ9gbxjqhJ_
-    f2vEw5QSHUNiBBilBU_2X0Tj6tbcbVr7wsO1un6DjKM6hvsmb125Q>
-X-ME-Received: <xmr:vigsamyvHy1qRO55JQfgkYqhzF06ASV_z1YQ2WuE9Lkz-qIXbaiO4KJeHxDxnwBtjsR41I1hBdw16bBcFsSREs9GuSy-zAOJFma0>
-X-ME-Proxy-Cause: dmFkZTGGWhs3tHs4Wb+eCjjcrwKmmD7t9dlNG17Ehq6REBK+fo6kf248KEAKWLKUC8s/qp
-    95bXe7k/uk+tnNtLn123KaYT19ndENVF+OfgWtVaWAVnOiQoOHAdsU6pasUkbLKsV3+M+u
-    IRhGnXzN/oeHY9Hi6r+ZLelrKHPPtSiX4sVnRdAVYVMI7w5pvENmfkMVrplHmFesWeJLuf
-    UF/d6vFg6ixE6TNUcouTkj+Ivesah74emqJaO6Y1KuhKIUeSubMPJErTYwtPActGbZ+tj9
-    PJMwBThe9L8BNNk4CCnCs9GDikpydp3bqyc7qaL/eChxxGc8kleMkSyuaOHg1TP+Gw6zgf
-    YomuWFcn5PEr5fFkDKMxJw4OT9bHFp1m5Q+DfkBdkbJ2KraeotBRA4CqrHfRWLnR1TQZzS
-    qWD5ABZe5Qu9qE/5Bm5YX5lqhp5iBVAvX3E2Z7BB2GNCbXdrPB8ALP3d0Rk0TN91aHyqgI
-    F8hPJbh0uiGUZcKHTUlmjaerNwVXfHdYiYDDAylqEAhPCtqFRZRPSk1GDdS0xb26YQhSxy
-    FU93Rs1RR1lSbV2yn5DjPf9LnL/riCnCoSAIJXfAXjuCXGXRPeYs9nMlp6Z4jqPAakqtPR
-    Eo6AHoA290cbE5g6K9uzpFCg4Xl/TIiY8FVvW7mSiI2wupAfzHEZCqaamL8g
-X-ME-Proxy: <xmx:vigsaqA8c_azlp9K-g73dxWxsygxff0rbYBfVlovCyTgyC1JluIjOQ>
-    <xmx:vigsarYLaoVMp6Y94AlBUFLt4Uzpov8IPRAWHaBGdbOLz35Jnacdhw>
-    <xmx:vigsaqgBBr_D1DslyEiq2ryQPJLSieKtfEBpsC2GYSuCKgLgNDdqcA>
-    <xmx:vigsal6uvl-A-XNT-RjbXd9HbgxmJZuo6mvw_3xUSwrY3o7v_JDpmg>
-    <xmx:vigsalJvrygN8zyhvpZ8LDkmq7qYPu4ek1wUnpv50kAQx0XHyHAHaobi>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 11:41:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] update-ref: add --rename option
-In-Reply-To: <aiugat0gvprSX5yr@pks.im> (Patrick Steinhardt's message of "Fri,
-	12 Jun 2026 08:00:10 +0200")
-References: <xmqqv7brz9ba.fsf@gitster.g> <xmqq7bo4n4ge.fsf@gitster.g>
-	<aiugat0gvprSX5yr@pks.im>
-Date: Fri, 12 Jun 2026 08:41:48 -0700
-Message-ID: <xmqqqzmbhikj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="E9AyXJoo"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pBG/qMsZCknUKaQZzL031rPdoU8T8xrbXp8kCcvPYJNZ3WSUskEY+Smzx7igYWlOxtNu0S+tHe1+gjFgUIefdCk1pRCWNJWfq9nAs8py7EHq9Buka0XVQ7byUA1mJCjSqiA+VLSyUIQ81EY1JchjCbtdV8aOry8BoaVdE4xim2goN/886c/30ioLSAsjxQEPycJIyGyiFPSW2mOnwL1eESlHdiRFzQnVqIkdK65lPYHsqRl57d6wk9IYCmTE510UTtJn1cAXIfHsVhWQoh14l2YPIYGosSlzRfc1p7b5J75ubHvwFHWNugih8WNudGBNRcLSlinpvNAt/3/ePrGSHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/8h9hB9/Ltj+Re16J0KfsJL/Qu6DosLM7gEm0QxVutc=;
+ b=nF7SSfSCTtkp+qluihLaU1hSyhgg317B1v4815YvNP2VJFtyma4TOtZBt9ytoM9NS6jTgyOp5QBKPz4ovSGdKBdRiJjl+N/xN0itLTqFv0do32wpBhvX7a8Yu359a806K0aLtE1iGKCdJ/Tr0JLQwnpUgNfdHjg8ZeBYgIwit4vyrXl/GCJHxFlEk8zQhmDJwnXxp+RRUMsvfQCbUl+tJJhEFGexZ/zBNOsBEscDzac5zAdx2N/L+dHZHOaSQgO/XbStVTy5QERAIYwUe+3tm3sL+90UUkxEhKPDMgjZS9OH0x4+Pr7s8yJJGTXWWiS6yWXfWERctOlVSr0oXGjc7w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/8h9hB9/Ltj+Re16J0KfsJL/Qu6DosLM7gEm0QxVutc=;
+ b=E9AyXJooFC9ETZCnxFoDqUW8qxiTVj/us4pOep9sShRcVAxpHVIMZ2SLayH4n17sbhhvk/gteJ3G+6GQuEzIQ2NVUJigEqoQJ3ex5iRIMUi9vbUY3cCV+qHrGEIkwKc8qMq8Yin7dvfs6X7WGmmZXB0D7aFXoQPpWdDl5ZbXmaNFHPEVZdKPftZmlgkHCqHxVDhdCoZ5JJKeUuQdH+S53AhrvoUJL7JxkBhzmyyaQy2+Kt+YJPGksGebohDjqFNU/0QM4RIabY1FJ+S2N9KyLdMjVqU4XLnKC1Y5TnSYvDbGvCbkMMivQGj2WX+dgZgpMFM/oEJHeRa4q4lRlR346w==
+Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
+ (2603:10a6:800:326::21) by DB9PR03MB9736.eurprd03.prod.outlook.com
+ (2603:10a6:10:451::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
+ 2026 15:42:20 +0000
+Received: from VI0PR03MB11634.eurprd03.prod.outlook.com
+ ([fe80::5e26:cb8:bbb:cf7a]) by VI0PR03MB11634.eurprd03.prod.outlook.com
+ ([fe80::5e26:cb8:bbb:cf7a%2]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
+ 15:42:20 +0000
+Message-ID:
+ <VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
+Date: Fri, 12 Jun 2026 16:42:18 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: t5563-simple-http-auth failures with v2.55.0-rc0
+To: Todd Zullinger <tmz@pobox.com>, "git@vger.kernel.org"
+ <git@vger.kernel.org>
+References: <20260611210456.XYfhytSL@teonanacatl.net>
+Content-Language: en-GB
+From: Matthew John Cheetham <mjcheetham@outlook.com>
+In-Reply-To: <20260611210456.XYfhytSL@teonanacatl.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0698.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:37b::11) To VI0PR03MB11634.eurprd03.prod.outlook.com
+ (2603:10a6:800:326::21)
+X-Microsoft-Original-Message-ID:
+ <718b707a-0c78-46c7-baa7-c4c4746f37a0@outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR03MB11634:EE_|DB9PR03MB9736:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2defae84-d43e-43b6-483b-08dec8993070
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|37011999003|15080799012|23021999003|5072599009|6090799003|24021099003|8060799015|41001999006|19110799012|10035399007|3412199025|440099028|40105399003|52005399003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Vi9xZGtqdXAwcytHUFNxSU1YSlRhNVZSblN2RUN1RHZacTN1a2NwN29jb0Ux?=
+ =?utf-8?B?ZnhwQ0htdTFTS3gzV1ZrbnRsR1pFMDdvRUFtSkRUUWtuejFncFpnb3djRkZC?=
+ =?utf-8?B?ODlFOW8rSlpvV1FON3FDVHl0QmRQb0FUSll3bTlIdGM1ZnQ0QklNVHl6QXBS?=
+ =?utf-8?B?VUgzV05LSjFxU1hMR1pIb1V2UHdqT3R3UVkvUlJEcE91QUlzU3V3c21SNE0r?=
+ =?utf-8?B?c2VjUnNNbHRLVHV1SkhIeWlDdGZBTGxTR1BBZkptTDBIdU1Nd2FhaVc0YlJL?=
+ =?utf-8?B?UTJHUkR4NzZ1Wkp3WWllSEFYUUFOd1dDYlppWVJYN2sxZFFOZU5tZ2xOcUIr?=
+ =?utf-8?B?ZklaZmN0Q3dLbjZUdVpuWGpoMVJ4ak1ZdDgvREMwZ215YS9WTDJkVlJZOU03?=
+ =?utf-8?B?Wk5VNVUrUXI4K1J0RTJMRGRNdDBzdWo2dTk5RTdQSi90dVFtSjh0emFEN0po?=
+ =?utf-8?B?YlZ3L1h6VlBlVXZaRUxKRm8ycG5WV0Jhb2RLeWNLQVBYYUl4bDFmdk1nVDVn?=
+ =?utf-8?B?OHA1VGZwZ0tvaS9xRVVTZHg0WWFGV0FWZ0dPT3BYengva2VJRjE4R1hHZHE2?=
+ =?utf-8?B?MHNOZUc0aTdYdlJEM3RNTWpZUE9NOVJCRTkveUhFTTR5aXhuNDdGcGkxclVq?=
+ =?utf-8?B?VnhlTXNsbXJSTE1oYVVwNFVMbVNBTUJtelJwSDBTaGRza3JoNnNlbGcvRHNj?=
+ =?utf-8?B?N3FOazcxQ0ZYTS9kbVIvWnh1aHZ2MmtXTWlBNnJ4akNvMTR4UjhuL0U3aXdT?=
+ =?utf-8?B?cm05MDNiR2FvZzAxekZSdWpMdHRnNEtTdFZRRkh6Ly9ITFNyQlI3dXRNNDFT?=
+ =?utf-8?B?d2JGaDlVUktFMGk0bVpFUmRCV253UERsUnNWekhrRlFWa3ZGYll1cXI4N2ZS?=
+ =?utf-8?B?czBvUWVoUE9jYUpXNlNyalFXcVpCcEdiYldreGpTZUZQTklxYXRrT3pwWkIv?=
+ =?utf-8?B?MEVaYjdEeVY4RzVzOGNWcVcvNDZoZS96c0xadVp5dWRQaHExemwyOVI4SnRL?=
+ =?utf-8?B?NmppZ3Q1cHdpVXAwYmxhYTBuQm52em9HWktwVnBoRnZtNXpNcDQ5WXJzMFFu?=
+ =?utf-8?B?dE5qV1ZtTHExbDVDek1XRXd6cTIyZEVlbUdsS1NTcDRRMTNneGN6VzFjUU8w?=
+ =?utf-8?B?QW9RQ2ZzNWVIWHpMdmVacm9mRndUSW15MnluamM4R2ZEYTlwR3V5SnE0d0d3?=
+ =?utf-8?B?a0R4cjNhRW5yR0wzb3JUZi8vNTc1aGZhVlRHNG9oK1pJREFzckxhYk4wVThY?=
+ =?utf-8?B?eTA3QXg5RTZZbm05OHFieVFzU20zY1lLOGxqZDlhNkdmcEwvelV2SWZESTBI?=
+ =?utf-8?B?VDEwVWI1K2VGMjhSWS9xcjBIb0thV3dZUUlhT253ekNIR1dvSWhjNW9UN3J5?=
+ =?utf-8?B?NHV6SEY3MkdqQmoxZGphTUdtWThxK0g3VWUvLzhtalF4TGZSNVhSdmJBRmcr?=
+ =?utf-8?Q?5NoyKs7Z?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Q3hJdlVXOWpGNVVtd29nZG8vOEhBVlM4Y2pKOVVsZ3ZqUFhqT0MxbGc4di9B?=
+ =?utf-8?B?OWJtNjBIeDkvM09FUVEyTk9CYU41RTdwdXRpWi9pNnYyQ2RiZ1BYSGVveEVT?=
+ =?utf-8?B?WmlIa1grbC92RE5Ec0lGUjFsN3BlZjk0MDU4d3RVT3UrUHlPeDJwdXNreVVF?=
+ =?utf-8?B?ajlncWZobGN5TXRpbTVpblYzUjFwcHBHS3RlVjhqTCtLY3pJcE9UY3R6UnFU?=
+ =?utf-8?B?UU41T2VFb3MycHVmYUFMa1FDR0YwVU9rRzRwOUVDSmRXSnVjeGFsZUZTTmJp?=
+ =?utf-8?B?V1dYT3N5NktsRlRlSWZZZzdRZnhjajdFT2JKeFU2MnUvLzhNOEdVNnl5SmhJ?=
+ =?utf-8?B?WUhLcENHekNXMHRKOVo5SHR2MGk0T2dCZFRBZ0RUZjU3bXV3c2VweGtTL2dI?=
+ =?utf-8?B?QVR0ZllWbW0zNXVQaHpBZUljb01qaWhTWENYQUlIemVWbUJKWi9zSU1BMVB3?=
+ =?utf-8?B?a2lzY0VLTGpOUW1kVjZhejFLUEZSMFkvbTdmVEVSTTlISG5kcis4NlZWdU1u?=
+ =?utf-8?B?Rmx4eHBCc3dKQVQ5SHVjYlZ6QWorUEN4ZExUYk41am5vWWJjV3F4NDdnQmlr?=
+ =?utf-8?B?M3FKMGVnSW05Y1lnNTZUenpLV0FFRVNLNjVFTnNoOEJDaVBKTWNkVnhYc25j?=
+ =?utf-8?B?MTVXWGtFaVVEc3hxSlF4eTBZMEh0OU1NV0t5ampxUHYzajNmV2xZMlVMRk1j?=
+ =?utf-8?B?Z2duSitTd2pDS1pUazhLeVdxdXRvNk5uY1hMWTltazE0UXhHaUxaa0VRemxz?=
+ =?utf-8?B?TkhGSmlzMnFVdVNBR29Sa2dJblk3Z1hFME5iOHUzajZoL3c2MUltalFEYksr?=
+ =?utf-8?B?cllzSUlIV2dmU1pZNnhsbWU5WWVTblRqOFJpUitDN01NeDhGZ2JpdFpkRzZt?=
+ =?utf-8?B?YWRCUE1zMXlEWWg3eTFBdW04S1hIUFFZQ1pMZ1cvZWFmd00wNEI5UGVFVDBt?=
+ =?utf-8?B?MnBHQnZ2c3lSaFQ0L2locTc1bUJ1eFN4blZPVlVvdEc2UkdGSmNVZ0s4d1FS?=
+ =?utf-8?B?a1ZPaGlWVy8rQmpjUXZBa282d3lUM0VMb0RmM21odmZndUJCSDBCWlVaSGFJ?=
+ =?utf-8?B?WW1oMFV0aVNpeFZlcXVMYWcxRk5EZ3d0R29xOXZMMGF2SUZjVFYwSVFYUU40?=
+ =?utf-8?B?UUNaelhmUmthLzFCNzNIKy9HQzM4NkxaaTRteTlIdFIxUUdORWNETkN0QU5G?=
+ =?utf-8?B?YjMvRUlEUmFEZGluL1BDV1dmTXBzbytDQjJLVlFFME1FRGdiQ0pxVEsyWVNN?=
+ =?utf-8?B?UmFxUTloVzJONkZVNFo5OG1LQ2NBVDRSWXA3c0pmd3Z1Y0xyalYzS3ZNVEpt?=
+ =?utf-8?B?S3ZXZTVmT0w1aFZ3RHltZ3U3WGpOWG90cEtwdkhrMDlRTkRXbllRbUpTbFYz?=
+ =?utf-8?B?clRJM1ZiSFBqRkpRZWZVVTZaVUZ0R2lpdXdPUTlqNzVVWnhDSE00WWt2anBV?=
+ =?utf-8?B?ZUhSKy9MZGJLRUtPeEd3TXRoQnJra0hLeThyOXB5bUNEWHBNTEF4OUJtRXRG?=
+ =?utf-8?B?YXYyNys2U1pMcFh1cEI2eWhNM3pyMHJqdGtOZVVSK3BkbTlxK3RycjFHM0pR?=
+ =?utf-8?B?M2hVZzBjT1NTbEpuak5mY1M2V3Q0QWJGWHhqWFFaQ2RUVWxKQTVKOGt6WE5H?=
+ =?utf-8?B?Nm5CeUpMbUpoeWZnMXh5S2VWSlJKK2JhbWtaYkt2aVVFTWdaN1UvQzBGOUMz?=
+ =?utf-8?B?RWVOa3dRdkplQTVYMHV2Wk0wTUlTOXVtMEx6TnpXOXU3MjJCRWlrTWFwczZV?=
+ =?utf-8?B?eERaNUVjTlZKWHZ2Zm56RTFaOW9ia2hGeCtZKzlETUt1WHFXa1dKNXhmRFNV?=
+ =?utf-8?B?V1RKRlhhSU83RFNwK0tpUmcrcWdDV3hhL3JEdVB5cWZuaVAxKy9aWFp4UXJw?=
+ =?utf-8?Q?6t2BuDfRcrcgE?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2defae84-d43e-43b6-483b-08dec8993070
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR03MB11634.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 15:42:20.4083
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR03MB9736
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 2026-06-11 22:04, Todd Zullinger wrote:
 
-> A slight tangent: this is part of why I really don't like commands that
-> determine their mode via flags: you now have to worry about every
-> combination of flags and whether they even make sense. With subcommands
-> we at least only have to worry about the set of flags that directly
-> apply to that given subcommand.
->
-> Makes me wonder whether I should have a look at extending git-refs(1)
-> further:
->
->     git refs delete <ref> [<oldvalue>]
->     git refs update <ref> <newvalue> [<oldvalue>]
->     git refs rename <ref> <oldname> <newname>
->
-> I always wanted to do this eventually so that we have one top-level
-> command that knows how to do "everything refs".
+> Hi,
+> 
+> I tested the freshly-tagged 2.55.0-rc0 and noticed some new
+> failures on the in-progress Fedora 45 (AKA Rawhide) for
+> t5563.18 (http.emptyAuth=auto attempts Negotiate before
+> credential_fill) which was added in 9b1630b972 (t5563: add
+> tests for http.emptyAuth with Negotiate, 2026-04-16).
+> 
+> I notice that Fedora 44 (where the tests all pass) has
+> curl-8.18.0 while Fedora 45 has curl-8.21.0-rc2.  The
+> version of httpd is the same between them, FWIW.  I didn't
+> compare other package differences; it could be something
+> else entirely.
 
-That may indeed be a better direction to go, but isn't update-ref
-the "everything refs" command already?
+Thanks for the report. The failure is not in Git, it is a libcurl
+behaviour change, and there is already an open upstream issue:
+
+   https://github.com/curl/curl/issues/21943
+   "Negotiate ignored with --anyauth" (Dan Fandrich, 2026-06-10)
+
+Dan also bisected it to the same commit I had locally,
+`8f71d0fde515` ("creds: hold credentials", curl PR #21548).
+
+His report describes the regression at the `curl(1)` level (`curl
+--anyauth -u : ...` no longer attempts Negotiate); t5563 test 18 is
+the same regression observed through `http.emptyAuth=auto`, which
+under the hood is the same `CURLOPT_USERPWD=":"` pattern.
+
+Dan also notes a workaround: replacing `-u :` with `-u
+literally:anything` (any non-blank username, real or fake) puts
+libcurl back on the Negotiate path. That suggests a small Git-side
+escape hatch is possible if we want to unblock people running
+against current libcurl while we wait for an upstream fix; I have
+not tried it yet and would want to be sure it does not have side
+effects on other auth schemes before proposing it.
+
+Daniel Stenberg has acknowledged the curl issue but has not yet
+posted a fix. I will follow curl#21943 and, if the upstream answer
+is "the new behaviour is intended", come back here with a proposal
+for what Git should do about `http.emptyAuth` and test 18.
+
+Thanks,
+Matthew
 
