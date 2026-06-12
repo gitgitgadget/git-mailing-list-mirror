@@ -1,157 +1,109 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1702EA173
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 11:15:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781262957; cv=pass; b=Wg8UKdeSc5C8I19Evrk6PEbdza08aCOm405tlwMOXJOzeA5EjL39Q5lBO+KcImj4yJAUQHwqT/Lct5qGGW4pE7GWdAuyRu017ClhKlZQFdLvedxfRu+yY3dM46sFJ8KUoTNhQg4r8cVIuFz6NU4xGr6vqqQ9s5J0ixJimQ3ztgU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781262957; c=relaxed/simple;
-	bh=9XLasY1X2DCsRrgv7+VUEWGjRIa5tHOae7PdlUs0OFg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=IBspnybs5BP2I5R9SNWBrvwEdkU/+Xg4PgU/bGE5bDBUVqChIigc7+g4aU/SFVrtOeMqvpdPoxiCc26B4t6vkpYyyDa6sUfYlfyDMFvdrCE+HrXmSYkr98JXXGvi1oTh481zHdx4idNZxQ4Zf7k30FzSM2jKlptGDmnqZy0Nn4Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=ICrUiEqa; arc=pass smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5A83CFF56
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 11:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781263553; cv=none; b=c1B/KrC2Q9rOFipUO9KS9dOCo+UOBkDbZ61RBE/vD5tq6j/Yyw4AJ/Pqt9v8/Iv0ligM+BPPeWBE3HlUH81dkawnpGAtJCU4uMYHCo0qwS/+ImQSnFTP8dtN+WtdTMO/QXY3KyXeBFDwV0gB8FyCDf+iPKO+uuWihWITTBlWwAc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781263553; c=relaxed/simple;
+	bh=+BKUFm03Cx+/rgvh3OszThUGnUmCyF1JNpLkLGNEIMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k5qv1zX3hFVk+7Qb4S8KEIFEfFFZPpj3d95HhvZzkFXWm6f1rLP/JKKhODX24LowwfmiXC7miuHT4Jq9/F0nZaA1sbrQaJx2v47EV/kzn3B/dkaOaaTYSw4BBqJhuOb44CnKVD5DQ2QmLWs+iagfYyXmlmfdmhNgUQRRx+XQCOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BaPeAUH5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S4SZfqaZ; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="ICrUiEqa"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7dca5a81be2so7953697b3.2
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 04:15:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781262955; cv=none;
-        d=google.com; s=arc-20240605;
-        b=lcJSpUw42CBN5IMiqCAvrEDmvycveSxRDr1Tq5qljjtI8JiDDACvuoqw1Li1fsEQUf
-         eWBO46KFZySe4W37GtYM3gT3J2VuJt+Hg7Gl36lNOItYOJdpdYHys2fxQ7BdQAiJSi1G
-         yUP3n4V8/zvYkK/ZeG8Uq0Df/WR/vHOkMo5cvqxNeBDz8qAVpTwRUm/fyRwq8jjKOpcX
-         h6sqjuwu7Mp6mWYW6FEo4mkatyGwf3n8+ccq9phV+DRqlfj5GRFiVKnzY2OY/0Mwao6Q
-         EcJmvQzk+iXEz2+SxaJtZi5y+cTorSyYvAklbqEYLnJCdt2teCWBwB6lZ5jI2RQTUxUO
-         d6jA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=Dp5L1YSfueaf9o+PtALM//GQPXboA3QXkv9r9sOD9Kw=;
-        fh=2tEvzZWQCbE72OYzNAR/NxU4VfFXivKla+PISiRN7uw=;
-        b=LMI5m8D6wsuOK7tNDadr7KVUoSTkyqji/rJ3YfTlIM5Kaj7Dnwxi8dy4/wOCz7qJv6
-         bzL4JJFjFFKP7AwzxswNDh4iQmHmWbToCxe0n9/e7OfbexH1UiXzziMfd/2+juqLGmQz
-         GG2V0bcv9cvyGtO23DwlVNzPblgHBY1eEvHK/a0twFUUhRvAyj2sOEtPd4tVj3fYF10+
-         qxK5gqW07AVDfbmsHaWVLluz+ksRn0JWe+aBsoWOUtur8fTt+PhZi3tAJPiCVExxVee9
-         kXL8GNXblQvmTYxFqwANttk+2PBCvgYL4jNqRHo4dtQ2tTFhh9cWQBgJhjCCGXn4P1C7
-         xliQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1781262955; x=1781867755; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Dp5L1YSfueaf9o+PtALM//GQPXboA3QXkv9r9sOD9Kw=;
-        b=ICrUiEqa7DHTUq1j+TJymGgXDjhO17fa0hOTFSgjGAlqj9JIvwtPFR7ThW0ViNDBij
-         OmOo3whBWI6dUlil1yWaar1W3dsgjE6c7j0hPfgnLP/zBoK/o431l4JV5irZmsDGQgv/
-         uduvgsoIQ8rg3fvyFcJ1Ntg5ZJglYHDbKhOsM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781262955; x=1781867755;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dp5L1YSfueaf9o+PtALM//GQPXboA3QXkv9r9sOD9Kw=;
-        b=HHtRPhXOHvIz/wStYRi1EX+DWH18VM25Ptli5DOoxJYcOeW1kfwuNMJfwSmbDa5UaV
-         REQ2ppeDIULHQoCF36HJGxegZZabWhYc07w0fiCVSsxD8V8eCUT8Yxb5sEdWsLxNlyXu
-         c5LMpeVwEP2QhxJBU8JwFOJ/5WM8QSpmlzc4zRAHeav/WNd0a75U5gKaLPwx1XZ7UR0t
-         UPxYGPFVlsfCvzWMuTLxIYRgUUnYZtjLYmZbwac3HioweZyVOz6byckzf5b9wCeeUHjQ
-         kKZ5PiSHputOOdbsOoMQ6Bg8zxNBqsfbVjob59wLnhXPf6c6ydiTm6gBEZaw7AxtOWT+
-         sLzQ==
-X-Gm-Message-State: AOJu0YyXyxENBU/GrO3JO+7INgVvPkL755y4T9XIfCD/wPZSk2QpbUtf
-	POxCADiAg2cvgXp7HzxnP+c1PVPSYgxMtR5tGHuEw09CPkyIKTrLgP8Y5t9RhKnY/wjmtsgGi4O
-	F97U9EVyN+IhO49/18DUgnjx3Cq9KAjkZhfO/JnjdSjAIXg4dyTQylH8=
-X-Gm-Gg: Acq92OET/ObRleB2itZsDU1kpxKMQ/52lR/77Mf3PSGFYDB3nDkU1oercvq7oTxwXWl
-	iOPAHXmTTvN6kfLseH4selsiPdLJv8x7WPDcNSmUOtHIqNLHHSejAwzKeRAgSFiTWqizJvTz9ot
-	WvybbLIu1wtCu8mBShisemXAvoTD7qrzJYX2jNTKAfWNaXD0MvYFezpvfmYbWrHdBDNPB5ZoQ+U
-	CIUWlj+TYKBH1emrx+wXWywvX961//ZmItk7LuqhIFDmKwqQnIWpT20g/84ql4M2oIFHM0MvOl5
-	07xeCCQ=
-X-Received: by 2002:a05:690c:62c4:b0:7da:150a:18b6 with SMTP id
- 00721157ae682-7f7b6345a51mr19964687b3.16.1781262954794; Fri, 12 Jun 2026
- 04:15:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BaPeAUH5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S4SZfqaZ"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9D582140003A;
+	Fri, 12 Jun 2026 07:25:47 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 12 Jun 2026 07:25:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781263547; x=1781349947; bh=X5KmuxLWO/
+	RXlSchUp6g5PRYA0j3neLGsGIatR+fHMk=; b=BaPeAUH5c8LTj4zR1OUTuhfmPx
+	yjMwOSmwgm82pP1PyDFIidcz9O2NaGsAJa1oIWJEQo/xrSUhMFN7TUtKr2WUPwDU
+	TfzlMvwUoSwVGKJCUY0SNjBt/hmOQfve92bJqdN+HVE8ctPd/mKHl13qFnb2fawW
+	XG7iJq+6pxISwHVpo6q6ghtjOH2GTb/H/W13okdb98+CfIYxVZbgEjwNy3b2wQG1
+	UCw3Ch+rSwJXxfXZKdVOL1aLR3PYo7a/+ZxgPZwn5l6YE+dLvF3DaBFDarD3ksp0
+	QMTuoaZ+laYWy5DJ1BPxd7cC5X6a7hBqozHg/x2Fn4tbxJ2064SJ3ZkDzHFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781263547; x=1781349947; bh=X5KmuxLWO/RXlSchUp6g5PRYA0j3neLGsGI
+	atR+fHMk=; b=S4SZfqaZP9l/QwUm86RyRc6C+/8xHVZL+GoSIf2npecR6OIDIpJ
+	g6PZMLlYVOfJVO2C35Yg1WJnxQPJBpnv/Ow0SsSXPCAmtYtCrJqXaDrixaoWTKf9
+	c2v9CLVA7j7gIu5vV5AAQDaJA1sVBx1sJ9iV8wuUM860Tf7zju0tvGmE9n/Najqa
+	1JU2MtGBJweDN1EJF1WDFxuq6P9HJnGzPq7djq1IdPxveD9rIRfA2SRtBKWWJ+UL
+	Gd/xh6asRolT0wzPZxvK2Gx/MeVzpNS+HffmPKe6hkLjJDdMFoGxj2eRYsmx/NKN
+	SVOZZAyXVD8q7WSjzxcsXBEe1TqWromyl9A==
+X-ME-Sender: <xms:u-wrarP8uAf6qWpICejSOXkaYsbYZoHz91SspTrQuiJqqMRW1DlOMQ>
+    <xme:u-wratZhol3bP2JCiIJwbw9PEZs6VFuAt95qLBmxxIk9H7RP6T5Y1nUH4Rutr71zo
+    ELwha59lNfik-ZJLz4ktJ61H_NfRu32HASg9-dMLEdl6ZIz_AMloA>
+X-ME-Received: <xmr:u-wranr0z7uL5VaWACe7AVAj7yaBm-fbMkrNmygOPh-qatqrouBjuWcnc_A8O0ii4YSqtWoqBxWKDcRIoxKr-2Zn81ZisfZFKVRHeySkVc0>
+X-ME-Proxy-Cause: dmFkZTF48TXsJSDjSzNsOJo/GpS7NMZ1aZJUYSyXFtFKpGENzLsHAOjH/U7wwvbkQH4Arz
+    itMBD75i093uBW5XaWUk46GopEZh1brVI1Oc0pZlNlV+r7bR80erQvyGMkox3UblWkEEub
+    rQbjZdF1FQtBsfJ7PI11UvK4AO4FvM+xYy3JuqsoGgCmc8JlJHqN5erj2Q9F6pyzkRpMEM
+    Ys+AwDxdgajFJJKJsfmSED8Yi/E6zuCeo3zv2/OmXAFwbDb/M/HUzNGYrotWg46q8lrfQT
+    RH/98gOKGaQTr6jgdTWDUHuRLNWzKe+Xw37BDJUguy0GkMPDfh/fAE2z7gzFKY9YcbD5HJ
+    OaIP5NHHrcJ6WjYJ4BRZh/aVRsXIXEHuWFFoLaWXlh4j1XYSa6BPyJTrIizFzpuiOn2Mf9
+    XKsmD34BMmm9viS57jc91QZ3Cio1hC2wgpBWPZGtXqwQJ+pQtYMBw0k+/wjmukYS8FTKKj
+    wHHxVrImxdMV6vmRnE+QNm4VIo2N+SsADDvtb+xofG1WknUzKZAio6BT1fs8LGxsGOuMVT
+    6LlcCzlAmHoHc5w0ay4dU7AN9Q1WF28hTcfTb1Ijou3pjZNcjkXkom1BYlWQvlqf8mS1pl
+    /YsMhX8TxCFIgKadKI6EAVt6anaMuvRWXmg1gm090Bj3hQRQFBlDSZo8Xhqw
+X-ME-Proxy: <xmx:u-wrapY3c-L0nO1lyfJZmIlyXyZ0u0Y-5KAWauhLJ49JoO8WI1kE4Q>
+    <xmx:u-wranTqqKu1ZoqAo7Lo6shaJXqFBBPhHlLQ0DiEKbko_rhtNGR6cg>
+    <xmx:u-wrao6MEZ9qV53X8qQGJPzNtEh2zJGTxJ_1-DwIrW72yQ9XKhNRPA>
+    <xmx:u-wrakx2e6MDE12zcqETB6MiF4czcCOTfn1wgZcJ3ARVzaa6cAmDig>
+    <xmx:u-wrapZzVjokhjriMyRLYjk_SoYvHPVd8t3O2sAfGKUQB3SM7-_zF24g>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Jun 2026 07:25:46 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 83af6673 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 12 Jun 2026 11:25:44 +0000 (UTC)
+Date: Fri, 12 Jun 2026 13:25:35 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] setup: drop global state
+Message-ID: <aivsoM9Qwv0m_P1c@pks.im>
+References: <20260610-b4-pks-setup-drop-global-state-v1-0-5dff3eec8f06@pks.im>
+ <20260611-b4-pks-setup-drop-global-state-v2-0-a6f7269c841d@pks.im>
+ <airVOrTboNDDGBak@denethor>
+ <87ldckyygk.fsf@emacs.iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 12 Jun 2026 13:15:43 +0200
-X-Gm-Features: AVVi8CfnvKgq1e7DKbFqakC1FDizq7gAaW4boR2eQCicTLh8VOP2-1J_CoBozWA
-Message-ID: <CAL71e4Mp7ewv0UGS8j=iTq6quyxLXzrr0uNDbWR8JKaOsTSVyA@mail.gmail.com>
-Subject: [RFC] commit-reach: terminate merge-base walk when one paint side is exhausted
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ldckyygk.fsf@emacs.iotcl.com>
 
-Hi! I previously sent a patch[1] to optimize paint_down_to_common
-for the single merge-base case. I believe I have found a stronger
-optimization, but before sending a patch I wanted to discuss the
-correctness argument.
+On Fri, Jun 12, 2026 at 10:06:35AM +0200, Toon Claes wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > I find the additional explaination here quite helpful. Thanks.
+> 
+> Yeah, hard to follow series looking at the code only, but commit
+> messages make more bearable.
+> 
+> > The changes in this version of the series looks good to me.
+> 
+> I've only reviewed v2 and I agree this version looks good.
 
-The main problem to solve is that computing merge-bases is slow today
-in some scenarios, especially large monorepos with complex graphs.
-This affects multiple operations, including merge-base and merge-tree.
+There's only a single change to a commit message I've queued, so I'll
+for now not send another iteration.
 
-The previous patch improved it for the special case of the
-merge-base being part of the commit-graph and the caller only
-needing to know about one merge-base.
+Thanks for your review!
 
-I have an idea to make it faster for fetching all merge-bases for
-common flows in large repos, as long as the commit graph is
-reasonably up to date.
-
-The key part is the exit condition in paint_down_to_common.
-Instead of waiting for the queue to only contain stale entries,
-it is enough to wait for one of the sides to be exhausted,
-i.e. side 1 is exhausted if no more commits exist in the
-traversal queue flagged with only PARENT1. For example, if
-the two sides are origin/HEAD and a small PR branch, the PR
-branch will quickly become exhausted at the merge-base, while
-the main side will continue.
-
-Now you may ask: why is that a safe condition?
-
-The traversal in paint_down_to_common has two logical phases
-due to the priority queue ordering:
-
-  1. Process all commits with infinite generation numbers.
-     This includes all commits when there is no commit-graph.
-  2. Process all commits with finite generation numbers.
-
-These happen in strict order -- all INFINITY commits are popped
-before any finite-generation commit.
-
-The optimization only applies after the walk enters the second phase.
-In the first phase, the traversal behaves exactly as today
-and uses the existing termination condition.
-
-In the second phase, traversal follows strict topological
-order -- descendants are processed before ancestors. Paint flags
-propagate from each processed commit to its parents, which have
-strictly lower generation and are therefore not yet examined.
-
-A new merge-base candidate can only form when a PARENT1-only path
-meets a PARENT2-only path. Once a commit acquires both paint flags
-in this phase, any descendant carrying both paint flags would
-already have been processed.
-
-Once one side is exhausted from the queue, no new meeting between
-pure sides can occur. Any commit that subsequently acquires both
-paint flags must inherit them from a commit that already had both
-flags -- it is deeper in the graph and cannot affect the final
-merge-base set. We can stop.
-
-On a large monorepo with previously expensive merge-base and
-merge-tree queries, I observed speedups ranging from roughly 300x
-to 1000x. The nice thing is that this works for merge-base --all
-and every internal caller of paint_down_to_common -- we no longer
-have to restrict the optimization to finding just the first merge-base.
-
-Does the correctness argument above hold?
-
-Happy to come back with a patch later if the logic holds and the
-overall approach is wanted.
-
-Thanks,
-Kristofer
-
-[1] https://lore.kernel.org/git/pull.2109.v4.git.1778504352.gitgitgadget@gmail.com/
+Patrick
