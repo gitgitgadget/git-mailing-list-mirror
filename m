@@ -1,114 +1,127 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2238D3F20FA
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 16:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F1A322C67
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 18:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781283113; cv=none; b=frIDD/wtY+pk3CzhI2Trr6hrL4mGQSDc/R62CEpgY0Z2DsnQ32UCY6PF5hbSVcGoS1IhASVMJSIoZrZV0FWaVXLhBO+6wVjuB/9nb1n5XoCDLDRjsIsWZBJQUHJiUYh/h2jM4AC3YreWP+LZTBDGyXzLCtiU3TksRIgAeGdKNeY=
+	t=1781287328; cv=none; b=QqYCrmM6lvZSnHYkU0/yokSoRKdhI5odkGLpbdaT9EFkAKFQkpcn61FevNLBFMlKGOuyuWd/1VCdRbjJi8bbvu+cfREKhZ2J/uk1/zNdHSpLeP8TL24IxUa3QymPuXoULKtweMhvpmGKieq9ZpoJdVmpgKKZ8vhtqIA+b95OLdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781283113; c=relaxed/simple;
-	bh=h/Jgv1rHPOht6C4eKDGyNfytuaGIVtDYDi7k7QkIrgA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KImapX6lDADSooCKxLR91ZnKs6k6+cQGMz7tLQmE3Xpo/nCNrNqylMbMGV2BF+6WSRPR39I5Q3AuRDbWWhHlc2jAohefFTUtivmVjlXr24YxOd6NbFbMZQowXF0WsknB4t7b4wX6JGwgTLW+jdGZ9/u0Cup5snpZXsSsSr/nWfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DB4DFdat; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SMOyyzSa; arc=none smtp.client-ip=202.12.124.151
+	s=arc-20240116; t=1781287328; c=relaxed/simple;
+	bh=vymVvWaRApQYlHGuqqz6vz4dBNYGLM64PK0rMb1CIBg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fQ6A0BUWb8edYLEoadrcauEpCg3hXODPLaUiphfjpK0xzqG3l0R7bR/RZ3PK+XC6h4mT9WiddhDF+qsHf+d+G0eEf+nQNael+q94jkb3Ycnt2e4342MkOg9vvbmcGPyj4BpVIhzmg5d1pgGWTRoiZU0ZLhcCjXgFRa8uJrmxeAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VskOufhV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jUAEg39+; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DB4DFdat";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SMOyyzSa"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VskOufhV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jUAEg39+"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id F176D1D0010B;
-	Fri, 12 Jun 2026 12:51:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 12 Jun 2026 12:51:51 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id 9901E1D0007D;
+	Fri, 12 Jun 2026 14:02:05 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 12 Jun 2026 14:02:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781283110;
-	 x=1781369510; bh=ACTk7rlPh2KPSB7l/Yc3IL6MrcO7xifC6jNdypMDhLE=; b=
-	DB4DFdatpN/F2ExqSQ7LlTwg3kspJOu2wcK+uHm2XkVgHTKRCbumfOQj1NtxAaEa
-	RiuJ8ThZZWxiY1cIh4bzx1NOc0rJwr8Cm3S7KWOcxO06ZC0CUGYAUHX3nSfW00En
-	XtdaVgVyfgLdCTp7VH0pvi7UJRUcTpj+CTm06y3Gg+xhLjaCmdL5e9p8OnUDVbjh
-	wZLbfjaGAgGNEyWzvpNMggGUczzqUKO5pHOs1Z8b1jemxiLt4Pb77AyfPELDS4wU
-	l4yya6EOaKbWzymhFIMhGMv4jnQ1I2i9zYvNIFo7Gx5zP6xq59RSrR+CUuR9fxfg
-	W9xP0pNaFJgcbc9YHRseNQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781287325; x=1781373725; bh=bOneXlNGKf
+	b2LqNkG4Hx5i8zNKJroxTojD9U4ZyF/BQ=; b=VskOufhVgA5YXXEsS5SNF5kyz4
+	N4s+EjnwMjQXaBZX18oySIw+cergz8frbPMGkiLJ4TQuVNC3WhW1Igsqy3PMLdQY
+	vQystVREIXAyN5FM/DC4nPnMu05nI7pyu98xB/DHe0XuslVB9OKoRFQrAl51rcM/
+	lGv0WQvSd4UYxM6BRi6s3zv3DrbVYN1ErrgO+z9jPsGMMd9fkMGi3FaAy18mKdCg
+	pzP1Jp24MYXKWbe58MIyt8hGtpT5U8GRM9IffkCNZflZRoYbG+vf+Dc1ZPheRNd0
+	mnOSi3Y04Hede/K7B+/Nk2+VftEUcaTZZeisQ1gHfdZXi5ct5RLpF1nVxBhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781283110; x=
-	1781369510; bh=ACTk7rlPh2KPSB7l/Yc3IL6MrcO7xifC6jNdypMDhLE=; b=S
-	MOyyzSaOa+KlkCGXGjf7RWRduejlSJ/0ZdCKcN5XntTd6W0qKe2t12s3nfA6wPBL
-	Flrl8fmW4+lMi4xwhGZj4dy3PB9pgoM5Qe1QbhXaafuLBMk+nk2YMcsO1svn+8+/
-	LPSpuYi+WoC4C4sdV/U85FN9y3GU1ipra5hob78efnvsFbyd2jKJcWKt2tZsxAlN
-	QKG84LRFbTEj79n9XpI6uXNgvZEIokDMWM28JwITHAH1COyBcA1z03lvwWrF28gq
-	+3fekjOF6Y8ZeAPvxFP0Ht5eajBMWOMR5Jczk+WF9h1JgNyLJGDpYA+dMEayZCKE
-	TiOCOjbFwlKN1Gtoh4wmA==
-X-ME-Sender: <xms:JjksasVom5cTCNyVpuvGSxvGKJ0bwERka3PdWhpPUL5RFOkA38DTXw>
-    <xme:Jjksai2etpeI44geZTf5O6oSC8qpa6gmW-pMn-wnexOR3cjMUqAMbto7elfdA8Zt1
-    dj8JFyopfz65VPJqi267r-y4ZXScS8L1s8nPOFjSZOIJsu-wVbG2g>
-X-ME-Received: <xmr:JjksaiqjnW2nrX4-x9jOdqb0FzLJ6Is5VPCMHCEBR7-ogteM1CZrrIJM3RlFn7_H-Mj_cuD3HypeFXJncTx6mLx2pPVVHQe1n_pi>
-X-ME-Proxy-Cause: dmFkZTFxX0xmHrRxiCZ/4iduiUh91i24ClaCbH4RMY3SVLfIaXqz5jIvtWquR2EsU3VvA6
-    WC7g04WKDhKU5QFA+pMP1YiZlrFd/GJq0qUrY+LIJZAs9vHcHvisCUNTeXQm3t9OxvkaDP
-    q0mqwtVNMiF99JyxaRXY39kUENCmO3Uy+5uYYif+GGYkFX7fEt5d9xzvYd+od8uhPjJvcV
-    GFoMiziPipUHO1i9hcYeazptbBDHFYA3SEHNksukMjsOJaVomEq8aJ/uoUXmEugRrJ0PrF
-    4kIT1utgrs2u6wV3LfnVaAU3na7MAyLFoV665ZPvufym+g4O4kT0hwlvnVcRmtyzfQwPcr
-    CjrFx+UNLB/RKP9/QzFZ2c5OyirKqsI5cZN5fZrOgdjcfxB+RLm9pZUc9EtUZXh15arMqo
-    Q39BVeR64DxoeVeenQh79St+Wg5LHRLC3pOnCF7A23k0C13B4A9M1UPLAtp4J/caqML8QG
-    FLXfSIBz+R8eJ/xXe8uJxdnNRnXWOf0iakhxMJjgGq/zIU/WdpZLfk98rH4n7mes8ADCc3
-    +y/5a7x3ECd81/IzjSJViyJg3U73T0KFvhzDoQwjzo2UkVaZp/2y81qX4kG7UCdg4yup3o
-    hZ62YFJxuQW73NmqO0lvkvJYQ7bIn0Y7uHbtlx12+gnXfQaQIJNu8cb8GDdA
-X-ME-Proxy: <xmx:JjksahWjHbJv4XQf6KYsGhzZ5XvtkV3XMbuECi38Nvu-LsiP0Xm2GA>
-    <xmx:JjksalYiNExQ5zIkEqqoNIm1ngpX5shR32RNI9xX0xvpvz5ryok3nQ>
-    <xmx:JjksamdCodZgKeRwfI_Vz6u_2llEPVUyRUGUdCgW8knrYFD54gsX1Q>
-    <xmx:Jjksan0rIEG3cQ_sJIFiJ9Nc8S82uoYHQg3qTu_C58mkIfrDEh9__w>
-    <xmx:JjksarBcUFFIJV4fputF29IDbzKfIYImuDHJDnK39Sp2jsNlV12y8xRo>
-Feedback-ID: if26b431b:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781287325; x=1781373725; bh=bOneXlNGKfb2LqNkG4Hx5i8zNKJroxTojD9
+	U4ZyF/BQ=; b=jUAEg39+t0Iie7HRv2lRVSxG5HBowZwuBunogUv3KRkzwa4dgJD
+	S/7XkQhRc/QmOdEPDlwPk/zdT7MKm03/qnLu02eSFyRgQIN/fGeW85NpUuAAuA39
+	m7NG9TraPPQbOptnCnpf8xMFNt4qcwGx1rYCBhYmWZTHsY71HmO8OThjDynTHhaM
+	M+kmZyk+ASa+ArKYsWO3H1fND0n8tRybjtgbHZy885zLITDxN1Mva9volFGhwWkQ
+	6rm4p8E4itxHM30Kkl4XQLVGrTUi5UEBByUri1CK40q3p3QAVIQzsdzkEap3B1Xz
+	WCpxTuh0eWzMz6Q+bVFBa/sNqiBgqEdOJ8Q==
+X-ME-Sender: <xms:nUksapXA2p8Qfjf9nJLskhanA9ZaJu-7l_8RCpAmfckonucdekfjJQ>
+    <xme:nUksavl8GTFLjDZxU5yrYvkAn-ru8ELRUIMfjG3bSQR2y5XiSuoANlXIYKgfM4n0q
+    Cuqct9y02hkSvHAnnbvq84M1UjHx8WCyQVImNQIAUc4u2SKH2uJcUI>
+X-ME-Received: <xmr:nUksajDi9iUkmLsv3r7IFBf-L852QZ9bniElwcKLOwYJI4GV1r_1NrTtRgBKEziCHObYVMAws-t_tKmAvJgGULyeF6i2Z9BK50w_YN0Im9n9HKUDxvHNwck>
+X-ME-Proxy-Cause: dmFkZTEUYDSRLxRLUFTccxtbqPfGgrIVVnTEyC6AM37zrUflaDef0sgGx39wPoqY3DKDoP
+    H4xdZG8suKwp7A5JfbCxqH8wgh0teehRY68EsWIgE38oZ7cmTZzQLR7BYrcj3MdMcuAU2A
+    gQmF3pB1dUsPnZHJFDBA4ULiHsybQYFSLLn5ZxWLdrMimd1qPnjJ40/FRLj65Vl2ts0H5I
+    lL8mrM59Rwk+n+f9pXPiIlWGLVNVS5PKM1ulAqqRGMNA7j6VIodE22+XeRHnLoVHaLUUX2
+    SBjPXtkT1UYouznnUvCMYIMz/JKdVEmfMiZtxqFhBn/JfHcTHQitYiX3HaTm9qMaDZ5vre
+    eWn+/AyCiGLaRr/+6IAoYt51QADTEswB50B/dpb2Ve8KVx5DVWnrjJymi1duLJEiStyo+c
+    f8v5q31EjazHLgH8dhcoyeHeEknuQIUznqeQUIJ3wl2wpwwGFgvOmYC3h1NYdruZDvtSy6
+    aqGP9OnAROy9a057PF0uBZCiu7vY873kaOnAaVDOpxJQKvjusqBlXR3nCue072/o5oK+IL
+    aaulZmjtSvbUakMY3fOhKW5BAt7izXdxdo9LwQGw98YNR8/9uCp5mMd1xwSztTHtxh9NcE
+    32Ogu4hqN0KMPcoEeN6iUf24SZPwzIv7LmNcPO9kJ4Hr9xrpvZX9kLzILIDw
+X-ME-Proxy: <xmx:nUksane3b0Xvt4vNZEM2rAFp1EPAQPQr7ByN6Aco3r9Xf2ox5PQYJg>
+    <xmx:nUksamKF4CyQs78Ul2TBUWQwaajEzS3bBKN-5dvRiDlVsnD0Imrqow>
+    <xmx:nUksaifCXmM8hv3DtyJyCX6vfqUcNoYl55IehMCXp9momXCm2Ec9Sg>
+    <xmx:nUksal1nUBtc-7bV_AuJNcpwXbEddEEPbv0Lcp99D-aq3brXwgWVGA>
+    <xmx:nUksajJgJ8BMXkTpy7qZqJoMQLU-5RYZktlFogPBch066FSstBIE1x-B>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 12:51:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Tian Yuchen <cat@malon.dev>,  git@vger.kernel.org,
-  phillip.wood123@gmail.com,  Ayush Chandekar <ayu.chandekar@gmail.com>,
-  Olamide Caleb Bello <belkid98@gmail.com>
-Subject: Re: [PATCH v2 1/1] environment.c: move 'protect_hfs' and
- 'protect_ntfs' into 'repo_config_values'
-In-Reply-To: <CAP8UFD1UbsXu_7DK2keGLUO3Yh06-YHieZP+On-yjY3SmV2Xmg@mail.gmail.com>
-	(Christian Couder's message of "Fri, 12 Jun 2026 09:22:23 +0200")
-References: <20260606143412.15443-1-cat@malon.dev>
-	<20260610124353.149874-1-cat@malon.dev>
-	<20260610124353.149874-2-cat@malon.dev> <xmqqse6uwdnz.fsf@gitster.g>
-	<CAP8UFD1UbsXu_7DK2keGLUO3Yh06-YHieZP+On-yjY3SmV2Xmg@mail.gmail.com>
-Date: Fri, 12 Jun 2026 09:51:48 -0700
-Message-ID: <xmqqik7nhfbv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 12 Jun 2026 14:02:05 -0400 (EDT)
+Date: Fri, 12 Jun 2026 14:02:03 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: Matthew John Cheetham <mjcheetham@outlook.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: t5563-simple-http-auth failures with v2.55.0-rc0
+Message-ID: <20260612180203.s2qSgDUs@teonanacatl.net>
+References: <20260611210456.XYfhytSL@teonanacatl.net>
+ <VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi,
 
-> On Wed, Jun 10, 2026 at 6:41 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Tian Yuchen <cat@malon.dev> writes:
->>
->> > +int repo_protect_ntfs(struct repository *repo)
->> > +{
->> > +     return repo->gitdir ?
->> ...
->> Shall we declare victory and mark the topic for 'next' now?
->
-> I would have preferred the commit subject to start with "environment:"
-> rather than "environment.c:" but it's a small nit and maybe you can
-> fix it while merging.
+Matthew John Cheetham wrote:
+> On 2026-06-11 22:04, Todd Zullinger wrote:
+>> I notice that Fedora 44 (where the tests all pass) has
+>> curl-8.18.0 while Fedora 45 has curl-8.21.0-rc2.  The
+>> version of httpd is the same between them, FWIW.  I didn't
+>> compare other package differences; it could be something
+>> else entirely.
+> 
+> Thanks for the report. The failure is not in Git, it is a libcurl
+> behaviour change, and there is already an open upstream issue:
+> 
+>   https://github.com/curl/curl/issues/21943
+>   "Negotiate ignored with --anyauth" (Dan Fandrich, 2026-06-10)
+> 
+> Dan also bisected it to the same commit I had locally,
+> `8f71d0fde515` ("creds: hold credentials", curl PR #21548).
+[...]
+> Daniel Stenberg has acknowledged the curl issue but has not yet
+> posted a fix. I will follow curl#21943 and, if the upstream answer
+> is "the new behaviour is intended", come back here with a proposal
+> for what Git should do about `http.emptyAuth` and test 18.
 
-If I remember, perhaps I'll try.  But you know what happens when you
-add more stuff that are not something only the maintainer can do on
-my plate ;-)
+Excellent.  This is it good hands all around.
+
+With luck, curl is updated and the canary of distributions
+like Fedora's Rawhide will have served a useful purpose in
+flushing out issues before they affect most people.  With
+the help of git's excellent and thorough test suite, of
+course. :)
+
+If there is a curl update, I imagine it will be picked up
+reasonably quickly in Fedora (and elsewhere that was testing
+8.21.0 release candidates) and there will hopefully be no
+strong need to make any changes on the git side.
+
+Thanks!
+
+-- 
+Todd
