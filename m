@@ -1,186 +1,188 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FA830B502
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:29:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781270978; cv=pass; b=GCDZWMXkbVLuNLv7Mza19WbgqBIos5uXHhYt1OumizGziKmQRmCYHctF3jp/41vRr8qHamnmrzZ3NzbU+UBuJHBvwKAQNwiCZgtEMmiBDHr0+LkPK7hzWQ0JWrWotR8BORBi5y0ZUa664Tmf6113B6eeatowKajmLFBYrhNGc0s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781270978; c=relaxed/simple;
-	bh=lgzmGPKdR5j2Qckwozxr/n+byTblTcT3fkiZA7bqmX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lnaxS/p0sB3EiQnl64b4P2mSnOw0fogi//4IqT3LY8GBiYY8chuPgMpyaHBACHPYGG5tMW6Afi7ESjr5pWXdHUc3xFssGAo/MOwn2Fx217w+/rj3DNRvnHAOo7F4PgIyBPHCD2z35U9arPgIFs96zEEXyQiW1rsLKQDKl1tR1rc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GlGER5z8; arc=pass smtp.client-ip=74.125.82.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F97C3385A7
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 13:48:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781272121; cv=none; b=YlvTUXeD3da0FWDfHFCnDSDBDzPF5eIwVIWY0YyjqUM1QBw7PPEogkrgVAXVF/PHxY1z7Hq8c/Y6edhY+S14hTEMoDMDOThZ05LxRe69oWhvSnJiNOJek9OfOk/niHwBCuvfE0053Ilu+2I2xqJHdwz+7nyDTa9fpJcs6JkdZ/I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781272121; c=relaxed/simple;
+	bh=5+ZfR8XvEwx5E6cMWX/bekzBqebMVxwsVg2lh4ORkGk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=m3RjRIpN2tCzwB1GxsZqvAiE6H2pqVo+FgMr2mJPwHv7t/7k1+aGBLEPcim37aMqdKXVLi7Ayca4x2SPOzvPstc8ZbyuED3FwywLrLIkNlR6AeoSDags3TbQ8QaIdiKGKUxAKRMzOoEI1SntFtpXrGc0tQ/rYXo7ZyEp5EdGYjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VakdAicI; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GlGER5z8"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-1363fe80fe8so1472257c88.0
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:29:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781270976; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MlTJN3xMbT//RqfEhaw+aLcWPlR1VmLzz1IdyetsOjfi2KJQ4Ns7IbAeG5tbUbmV3W
-         CBz04JasdnCzhw8JOVdQ4Lv5ibcS0TX/Dq68EOUv4zjZlag8KDH6XSs38yV1WInudBVB
-         BnmmNHM8FTtUIaYHcWFyeYTpNMkkRSA/34x1kseVA9F82V17XPfWELE48lMMnPTwsZaB
-         Y3AT/ph3oEUg+zPgtmr5GZEft6RhKv8GBXhrqDPtMWRzMDwRRYAGCKIU7ZhJrjRZIzAx
-         oU/tJbbZXvdbU+g1dFgvQ2+c1XG/AoVvp6WHKrEPJxh9IvSJRqQNsk38d4P9L0jDHd+J
-         neng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=B/Oy7Rtb1CzYtM7/zQtKoMobcVaXXOc2NCrEwdekfio=;
-        fh=LwuSnJBCccdjKxYEcovLKSJ6FbFCwY5qXrqI3Nds1Cs=;
-        b=UU89SJ3KFWx6AtMvXPx+TyElIEDv6yNwQub1100Tr244ecs1jqCUmU5NC3sY+/GoeS
-         BUBH8F5lYPLIQgjXA1AriPKx6NVIv2oNDgxM/TO7h9rFNIO/pibLR6oZXwIMKNqHkRm8
-         86wJtj2HjBwTS7ydGEkaOZRiPQ8c8DqdjHfWscVm8o3HTA/gPlWp0kxyKzlvFo89D34n
-         kJe9Wd6bBNYvk+bZFidFqc4xxz4dSdK7qQsmU2Q2d55plODwJhKKEC6ZLuLsYTjU8Nsh
-         VAzKES16Ug4r7S97Sewzu5ByeEa58hz6cIJF6SG5/SFWWHUsVFIVSGaJ/pC7hTJyoJd6
-         Qisw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VakdAicI"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-491b390f9e9so3171215e9.0
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:48:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781270976; x=1781875776; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781272116; x=1781876916; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B/Oy7Rtb1CzYtM7/zQtKoMobcVaXXOc2NCrEwdekfio=;
-        b=GlGER5z8yz0sVlI5PjgzBAmRmy4iOxJmT4xT1a/QTRObbgbdlfwCxePWqgwiHvePfO
-         FqS+miYdOHt3x5oJKSI5xyUoONkf2vJqyg7Ng1/PN3UP8pylvJZWoDr+IllBmNOFHLAG
-         TfBL4xQ1b2eXMpKPedLAszuP1eOGywBUzaVkcujxC/W8kGrE1BQzdXQF/G5sgKFctcDF
-         r/pZdtkMvricUdIeFfh1c3Z+NTnMyl/08bwTRew2ZLiVX/97d5QZBzOMcPlGALnDEY/n
-         BzSr4SQh8nvAdsNMx4iKPeYMeG+0Z12QUFuZYO3u/dSYnOYzeueDLhrAYgtuU123w6Fl
-         7NHg==
+        bh=ZGdYlewSN7OUQ7pm+FR5E4kkyuYfaCNwL/OntQPDIBg=;
+        b=VakdAicIiII9TTQl5m3yQC/uBQpXIPmPhiagb1/ZL8jp/K4e4oy/2BokHovXNU69v/
+         tWiIf7ccJH1PtAM1/5hdvjynq8PbFj1oEKkHGwOOJ2UkivVwwfwIosXiyrGCdVvsshix
+         R5hPwk+ddLCzxrjArOEPe2UgGXjSTVqSQSxShQO5lAXz9u+OeNJlh4rTKV0NVfpn9uQU
+         zc9zYszHJm11/7Gma2b29boDg9TVJshwOS8sLe2sRjSwZTY8eKZg5UyZrB4cBPg8V8tl
+         d3ZUMj6WQFODD+MRYDPklJ4ehFSf0u77ovNrGJtvFk5ocB55iG3qiMVtzS90G35qQfuh
+         Lp0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781270976; x=1781875776;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781272116; x=1781876916;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=B/Oy7Rtb1CzYtM7/zQtKoMobcVaXXOc2NCrEwdekfio=;
-        b=UD4HCoAi5Lc0bL2PeBknO50PCvwdxWLasfyCCTVUQ1cjx8S7l1KkG2Ul8+Gci5Fh3j
-         8ELcQAqN3jeGpoFQ0rhex/lgbxdPlefNtaQNHwl45zGWOnQWhiGXE+Blcr+AFvDp0Q7N
-         Ulv38HlwKe/MPNge8rqwOWiPnwEL5oTUEI+qZsxhdwlZhOwOtBLzTWcRCzBrXm/J5A38
-         LTwmR2ooAQGOvsaFo9J9WT/nvJpRQoq0pTkfXc7u6SWaFeBSQlGSgNIh757e2hCDnpU+
-         087qHhnqUmxxDfez0G78BEWncB4XSGKxlnM4yV07rUDXYIhPke3SiDGAQENiM9Y13Ty8
-         VHsA==
-X-Forwarded-Encrypted: i=1; AFNElJ+/n2QyiKusx/a4U+9lrCsTISBDIsgRoEo5c65CK5Rx13HAvh5aXK3c7kjGtyA+Wp7baXU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy15Q+aj/IWaceyBNlldd3gA9OJiucQZljBkH2uNFhKWnzwY4Ik
-	E6+jNpO2Fuq1+xkGqJ/HH3mcXZ9WMulPBeRX2ARakKCBvGFOjGuPzfjtc/ooB5usAR61OuJqSXf
-	SfUs5BIuNLlHz8cSraiTjYCMMXCUVfJw=
-X-Gm-Gg: Acq92OHQhN9iiKP27O/wkSpXJNwhGcA7VKbIF5w7KaIVkdDWmDKvFXOjbTsLL2+JQgi
-	qEn9JSfeLfUN0OuMlijXv6zZUvDRyvcOuoT5jljEa9DgkWHsDiAkkeHx5HRy6k0e1E4+Iz7odEo
-	7gYbpPTydNVdXLEPat2gfLu6f6DU+iSX9bIvRsj0UmfYC3/ZDsO4rEGDhem6H2Z9QbPxEhaChZe
-	Y784L2MZAAqRwtjYQDTCzfhdHfpT2kgEDVRh9Ujy72nnFVtMQ3NuLigE3ijYHd6TvP7H3Q3XvVY
-	fDZdWEWY3jA6sbUjoKE2yQqUFXpnAQU66qHGe6Ao1KWb7CtlMLokrJ/+SWDkufx6UJA+
-X-Received: by 2002:a05:7022:491:b0:138:56d:27e8 with SMTP id
- a92af1059eb24-1384baef0c6mr1261402c88.1.1781270976120; Fri, 12 Jun 2026
- 06:29:36 -0700 (PDT)
+        bh=ZGdYlewSN7OUQ7pm+FR5E4kkyuYfaCNwL/OntQPDIBg=;
+        b=D+ifK4L3XCQp6ItGni5kRzy/gAH9aIX0FcG0OXFrChXEgE7p6J29TCegtfnqUCk7FM
+         WurxgkLOo6d7xPp/hg3mkJIqgqazb6haenK4F6E9s6gDOfmd/epMNS+2O3sP3XVUbz3e
+         4TdeVQLu1Fw7k/8+TvCNPKe6akQI11NUjp0KVQUkBOxrKnUeLwbjG2Ktk+2t6imZx/vL
+         rPbabJ/I2uM2VhsgxNCk7TDLJ0uloJH0R6CdAM7g+Dnb3XTZeqS1CwktSz0hPgl8Thtp
+         +nbyO9WIvY8ZPCVH0OIahihIh1uLfyb8SWktlsiuQN+WbCU4ftBawzvRD+6B9Gtw+bDd
+         P+pg==
+X-Gm-Message-State: AOJu0YxyF4mwpLi8QcXtvRrersIhFpcsGYJXoyUEw1E1xOQWIw9XSeff
+	LipNGbQLIvtn73iBRKJ7WvrDrjMtn7/x7nFFMFnCmkmgh46tUChrXD3dUrU5gock
+X-Gm-Gg: Acq92OH9nhyOxvostxGttmuIBY6C/HdvkGkxMkQEpR5SEJsoHzo9FwYUPwAtHo9I2SW
+	L7wvR2j4oOQukDsXZ/D//8EsZqARJvhofies0nay7Q5NTi/r4teW4Qbmp5yeg8t+wT8TVoX2KWc
+	/tQwTKfORymdwW3S6far9J7osgYCjnQYg4Jm3yWaXPgDoPp9EWdun2YBgyMGSmjpL0eKLKE3vRN
+	8xfSPLDVHVM1ZR4FoZhjrhM+LMSLeiv4X+dcxTI4rbqoC6EdAkDa6Wq4hBXFkFE8SsnqV9LU6tp
+	wsA4aONBR47hpRuGFIGuvhumuo3OhieMxMN/9axhA+q0Otqyxp0uuENEAvLCCMIZYNws5Q5CXBV
+	37woEthaPpWnhACWPVuFWntW7XH1x+5BANsF9cHWWLmOKdBU+T2Pc2o87u3JHB2zTQGvgQ6/u49
+	ecMCXj/BoUBaQOWcGkqXPFCn/m+xx4xyi48ccKXLS1J8J28PPk029WExzizYk7+lDFYyWwIeUU2
+	rzPC16/6ys3yB6YaS8AZ529I9zBw+rUN8rJe//8cugekWvluGt9sNj2s8NQgKDGsEFqqyRlUiyz
+	AUU8fOWhYGOJswZxqFGY17Y0XLPQILgxsXK0l0HMR9xxqRQz9r84DbA3+g==
+X-Received: by 2002:a05:600c:1d11:b0:492:1e36:552c with SMTP id 5b1f17b1804b1-4921e365572mr6799755e9.37.1781272115759;
+        Fri, 12 Jun 2026 06:48:35 -0700 (PDT)
+Received: from localhost.localdomain ([155.54.213.68])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490ea7c0960sm61223305e9.3.2026.06.12.06.48.34
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 12 Jun 2026 06:48:35 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: git@vger.kernel.org
+Cc: ayu.chandekar@gmail.com,
+	chandrapratap3519@gmail.com,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	peff@peff.net,
+	phillip.wood@dunelm.org.uk,
+	siddharthasthana31@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [PATCH v4 0/2] graph: indent visual roots in graph
+Date: Fri, 12 Jun 2026 15:48:29 +0200
+Message-ID: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260427102838.44867-1-pabloosabaterr@gmail.com>
+References: <20260427102838.44867-1-pabloosabaterr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
- <xmqqpl2a4f09.fsf@gitster.g> <ah2PLBluBFy44AQI@pks.im>
-In-Reply-To: <ah2PLBluBFy44AQI@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 12 Jun 2026 15:29:24 +0200
-X-Gm-Features: AVVi8CdHbMvGp4NVEfJaakD_s3xI41cGby-RfVgT_jjUITJLApuZCqWEUpW7Wgs
-Message-ID: <CAP8UFD35cLP6FcEuPr+SghKae1ew4JWLWYAoMQ-fuEOu-JmZdg@mail.gmail.com>
-Subject: Automated reviews by AI (was Re: [PATCH 0/5] Duplicate entry hardening)
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git <git@vger.kernel.org>, 
-	Elijah Newren <newren@gmail.com>, Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260612-ps-pre-commit-indent-39ca72816382
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 2, 2026 at 8:16=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Mon, Jun 01, 2026 at 09:33:10PM +0900, Junio C Hamano wrote:
+When rendering a graph, if the history contains multiple "visual roots",
+actual roots or commits that look like roots (i.e. have their parents
+filtered out) can end up being vertically adjacent to unrelated commits,
+falsely appearing to be related.
 
-> > This is a fix to an important corner of our system, but somehow left
-> > in "Needs review" state for much longer than I would have liked, so
-> > even though I am officially on vacation ;-), I took some time to
-> > read these through (by the way it was a pleasant read, thank you).
->
-> Honestly, I always shy away from the merge-related subsystems. It has a
-> lot of subtleties that I don't have any experience with, so I never
-> really consider my input to be helpful here.
->
-> > I wonder if we create a rule like
-> >
-> >     Those of you who have more than 30 commits in our project are
-> >     expected to review one topic (or more) from other contributors
-> >     for every three patches you send and ask for reviews by others.
->
-> Heh, that would make me condense patch series into fewer patches ;)
->
-> > it would help balance the patch vs review ratio, perhaps?
->
-> It's a good question. I typically try to aim for reviewing series on the
-> mailing list at least every second day, and I always encourage other
-> folks in my team to do the same. But recently I (well, rather we)
-> haven't really been able to due to the current situation at GitLab,
-> which forces us to put almost all of our focus towards a different
-> project for a while.
->
-> Overall I agree that everyone who is a core contributor should also make
-> reviews part of their regular worflow. At least for corporate
-> contributors that might also make it easier to communicate this to their
-> respective employers. Regardless of that, my expectation is that there
-> will be times where it works well, and other times where it works less
-> well.
+A fix for this issue was already attempted [1] a while ago.
 
-Sashiko (https://github.com/sashiko-dev/sashiko) is used these days by
-Linux kernel developers and seems to work well for them.
+This series adds indentation to the visual root commits, so they cannot be
+vertically adjacent anymore making it easier to identify them.
 
-At GitLab and probably in other companies, some of us also use AI to
-review our work before sending it to the mailing list. And yeah, it
-helps find issues before our patches reach the mailing list.
+before indentation:
 
-In the same way as we require that patches must pass CI, do we want to
-require that patches "pass" an AI review before they get accepted?
+	* A
+	* B1
+	* B2
+	* C1
+	* C2
 
-The benefit would be that it would hopefully catch a lot of trivial
-things like indentation, typos/grammos, etc, and a lot of things a bit
-more difficult to spot like memory issues. Perhaps with some amount of
-prompting/configuration (for example pointing it at our
-CodingGuidelines and SubmittingPatches) it could also catch issues
-like style issues, commits that do too many things, refactoring
-opportunities, etc.
+after indentation:
 
-We would likely still require at least one human review (by someone
-who is not the maintainer) to validate architectural decisions, to
-make sure it goes in the same direction as other efforts, and perhaps
-also to make sure that AI suggestions were properly handled by the
-patch author.
+	  * A
+	* B1
+	 \
+	  * B2
+	* C1
+	* C2
 
-If we decide to require it, then there are a lot of questions that we
-will have to answer.
+Indents the visual root commits that have still commits to show after them, and
+if they have children it connects them with an edge at a new row.
 
-Do we want to have our own system somehow managed by us or would we be
-happy to use existing systems already in place in some companies as
-long as we can still tweak them in some ways, like the current CI
-systems we use?
+If there are multiple visual roots adjacent in history, the indentation starts
+with the second one, avoiding redundant indentation of the first one and cascades
+after the second.
 
-If we use existing systems likely at GitLab and GitHub, it might be
-more difficult to get coherent results as they might use different
-LLMs, but maybe it could help tighten our docs to make sure everyone
-is aligned, and we could get better reviews by using multiple systems
-because an LLM might find an issue that the other LLM missed.
+	* A
+	  * B
+	    * C
+	* D1
+	* D2
 
-Do we want an AI review right after a patch is posted or only if there
-is no human review in the next X days?
+This series first commit is a cleanup that brings a common function from t4215
+and t6016 to a graph functions file which they both use, so the new test file
+for indentation, t4218, can use it as well.
 
-Also what if the AI makes a long concrete suggestion to improve on the
-patches? Could that be incompatible with our AI policy to apply it?
-Should we try to prevent the AI from making such a suggestion in the
-first place?
+The lookahead used to set the cascading and avoid extra indentation is not
+completely reliable, as the walker goes through the commits it simplifies the
+history of the current commit and its parents, but it doesn't simplify it
+for the next unrelated or the grandparents. When the walker simplifies the
+history, it removes filtered commits from the history and sets its flags.
+When the next commit is an unrelated commit and its parents will be filtered
+out, for the lookahead the commit is still a child of, it cannot know that the
+next commit once simplified (advancing the walker) it will become a visual root.
+This makes the lookahead fail, failing to set the cascading and starting it
+with the first visual root, carrying an extra indent for the cascade.
 
-I haven't looked at how Sashiko is used for the kernel, but maybe
-there will need to be some kinds of restrictions/authentications to
-avoid potential abuse.
+given:
+
+	* A unrelated (visual root)
+	* B child of C
+	* C visual root WILL BE FILTERED OUT
+	* D unrelated (visual root)
+
+the actual output is:
+
+	  * A
+	    * B
+	* D
+
+A test has been added to t4218 and a NEEDSWORK to the lookahead function to
+document this edge case but I'm not that familiar with revision.c. Maybe there's
+a better way to make the lookahead more reliable.
+
+[1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
+
+V3 DIFF:
+
+ - Completly changes the approach to indent the visual roots instead of the
+   commits after the visual roots.
+
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+Pablo Sabater (2):
+      lib-log-graph: move check_graph function
+      graph: indent visual root in graph
+
+ graph.c                                    | 262 +++++++++++++++++
+ t/lib-log-graph.sh                         |   5 +
+ t/meson.build                              |   1 +
+ t/t4215-log-skewed-merges.sh               |  33 +--
+ t/t4218-log-graph-indentation.sh           | 455 +++++++++++++++++++++++++++++
+ t/t6016-rev-list-graph-simplify-history.sh |  25 +-
+ 6 files changed, 747 insertions(+), 34 deletions(-)
+---
+base-commit: 3e65291872de10c3f0bf05ea8c24187e7a71ebf0
+change-id: 20260612-ps-pre-commit-indent-39ca72816382
+
+Best regards,
+--  
+Pablo Sabater <pabloosabaterr@gmail.com>
