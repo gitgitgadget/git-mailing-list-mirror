@@ -1,34 +1,34 @@
 Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E333939BD
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECB3343D86
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781244014; cv=none; b=GtRGHxGy+LHFl7YVi+KHVbP+NFfZ5NGTO0B1SCNQHAxnynNx2Cxdk/WNx32kHASpkRb2/BIzNufq0umJqtuuMbcVQxU+voMMlShSqr2u8wO5JLzfIMfyUmH20eb42uEDYXrdgNm8i9nTwhEIt9ZWvc7M5S/KU2Mz7pNyTnfg5lM=
+	t=1781244016; cv=none; b=QRSx0HXXXJUHy5/cgimklOlivzeV9eWo+SSAOqk0zkc+XxP1AZH3wnkPNyBo5fLFY1Gl8YV3994RMWr4DRd2s4eOEUZFFk4vRpBytvOJW+g2FxM4nxe0g+qs1/BTPCG151S5Ig9fpgfcOlKNB9KXZDF7oD0s3z1xZJSXbCpZza4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781244014; c=relaxed/simple;
-	bh=G72C4jjGerqyahu55rO8vDH/dV2jUr3qX8BQraPooJo=;
+	s=arc-20240116; t=1781244016; c=relaxed/simple;
+	bh=GQNDqdART+z3Tvmr6GnoigjQlVlLD8bQEhZwIxCxY+Q=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etfDtDA2KDW5OazmvWdGB9Sa0t+oBCntOb7iOW679PQt2ZFkv5K7bHPCyAIlNYblEtby56VpAa/0XH+SDN1kVnIyorluNvDFI0MxXQt7AG/wrpQko6d8aBLbm/0aBvyZkG0ZGp/70OhmZHeEfmdzx06DI1AHRwF5Lk5SrffOmWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=bHRR6XKo; arc=none smtp.client-ip=157.230.60.252
+	 MIME-Version; b=qmD9/2OSGKrpeGusqH7kr4+1E3zydcFKpL+CDQXm6u7IOYUVHJ30VxXbFjOe3Essmz4cJYXR2Q+9PAhYd4lr32XFLmhci5z5cLswUkVxCbbqELmm3meVlvNcYeOslIv74xLuyiVMhpFLbn8LhuLZ3zhGXIe+9GjzsgJJCpnCBhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=ntJn1jSj; arc=none smtp.client-ip=157.230.60.252
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="bHRR6XKo"
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id 4C98D60272
-	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="ntJn1jSj"
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id AB24160002
+	for <git@vger.kernel.org>; Fri, 12 Jun 2026 06:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1781244012; bh=G72C4jjGerqyahu55rO8vDH/dV2jUr3qX8BQraPooJo=;
+	t=1781244013; bh=GQNDqdART+z3Tvmr6GnoigjQlVlLD8bQEhZwIxCxY+Q=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=bHRR6XKoaf0jBO3ALPOvVxb3Ig0DnjIIq+ZBVca9SpvwvHeudyeRmL1y8jOmaa/ZZ
-	 H9CItXpjJT+HEqcF+LnAiqhP86BLrcBBhvqc9iBDSX+kHlufbjJdRNHFje9rsY8lyj
-	 h4Rp8RCT5dWtLnjkOnwmFrOESPMqok1s7ZT7VMS8=
+	b=ntJn1jSj+adcxHj15CRSJrEMny73FJvl9eg+5EsExHfchR3Ix25jX3cibYU1FJd0g
+	 17ids4/VTryFnWb7fphwYY6xYlJgpfjXKSHDXvezxNBAwuV2pzlEF0gRf6Myg2kPC4
+	 sXdKkFb0rRgKV1Kg8c8u8qeT/PeOumybO6yzP1/k=
 From: Matt Hunter <m@lfurio.us>
 To: git@vger.kernel.org
-Subject: [PATCH 5/7] fetch: refactor do_fetch handling of followRemoteHEAD
-Date: Fri, 12 Jun 2026 01:55:41 -0400
-Message-ID: <20260612055947.1499497-6-m@lfurio.us>
+Subject: [PATCH 6/7] fetch: add configuration option fetch.followRemoteHEAD
+Date: Fri, 12 Jun 2026 01:55:42 -0400
+Message-ID: <20260612055947.1499497-7-m@lfurio.us>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260612055947.1499497-1-m@lfurio.us>
 References: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
@@ -41,117 +41,323 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update enum follow_remote_head_settings to include the value
-FOLLOW_REMOTE_UNCONFIGURED as the new zero-initialized value for
-followRemoteHEAD.  This will allow us to distinguish between the option
-being unset vs. explicitly set to 'create', which is ultimately the
-system default.  The unnecessary indentation is removed.
+'fetch.followRemoteHEAD' is added as a generic option used by all
+remotes for which 'remote.<name>.followRemoteHEAD' is undefined.  If
+both options are undefined, a builtin default of "create" is in effect,
+matching the previous behavior.
 
-The do_fetch function is likewise updated to perform its own decision
-making to determine the effective followRemoteHEAD mode, falling back to
-the system default if necessary.  This will enable the next patch to
-introduce a user-configurable fallback default option.
+As mentioned in the previous patch, 'fetch.followRemoteHEAD' supports
+all of the values that its 'remote' counterpart does _except_
+warn-if-not-$branch, due to its tighter coupling to individual remote
+repositories.
 
-Function set_head now accepts this value as an argument rather than only
-considering the value defined by the remote.
+Documentation and advice messages for both of the followRemoteHEAD
+options are reworded to better capture the relationship between the two.
 
-The use of the 'warn-if-not-$branch' value is awkward in the context of
-a global default option, since the branches will differ between
-individual remotes.  For this reason, it's left out of this scheme and
-handling of the no_warn_branch variable is untouched.  Since a
-remote-specific setting for followRemoteHEAD takes priority, we can
-assume that if remote->no_warn_branch is set, then the remote is also
-asserting FOLLOW_REMOTE_WARN as the effective operating mode, and it
-will be honored by do_fetch.
+The added tests assert feature parity between the two followRemoteHEAD
+options, as well as the fact that 'remote.<name>.followRemoteHEAD'
+always supersedes this new configurable default.
 
 Signed-off-by: Matt Hunter <m@lfurio.us>
 ---
- builtin/fetch.c | 14 ++++++++++----
- remote.h        | 14 ++++++++------
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ Documentation/config/fetch.adoc  |  19 ++++++
+ Documentation/config/remote.adoc |  21 +++----
+ builtin/fetch.c                  |  32 ++++++++--
+ t/t5510-fetch.sh                 | 105 +++++++++++++++++++++++++++++++
+ 4 files changed, 160 insertions(+), 17 deletions(-)
 
+diff --git a/Documentation/config/fetch.adoc b/Documentation/config/fetch.adoc
+index 04ac90912d3a..f7de22a34a54 100644
+--- a/Documentation/config/fetch.adoc
++++ b/Documentation/config/fetch.adoc
+@@ -126,3 +126,22 @@ the new bundle URI.
+ The creation token values are chosen by the provider serving the specific
+ bundle URI. If you modify the URI at `fetch.bundleURI`, then be sure to
+ remove the value for the `fetch.bundleCreationToken` value before fetching.
++
++`fetch.followRemoteHEAD`::
++	When fetching using a default refspec, this option determines how to handle
++	differences between a fetched remote's `HEAD` and the local
++	`remotes/<name>/HEAD` symbolic-ref.  Its value is one of
+++
++--
++`create`;;
++	Create `remotes/<name>/HEAD` if a ref exists on the remote, but not locally.
++	An existing symbolic-ref will not be touched.  This is the default value.
++`warn`;;
++	Display a warning if the remote advertises a different `HEAD` than what is
++	set locally.  Behaves like "create" if the local symbolic-ref doesn't exist.
++`always`;;
++	Silently update `remotes/<name>/HEAD` whenever the remote advertises a new
++	value.
++`never`;;
++	Never create or modify the `remotes/<name>/HEAD` symbolic-ref.
++--
+diff --git a/Documentation/config/remote.adoc b/Documentation/config/remote.adoc
+index eb9c8a3c4884..761bf4ba7d14 100644
+--- a/Documentation/config/remote.adoc
++++ b/Documentation/config/remote.adoc
+@@ -157,15 +157,12 @@ Blank values signal to ignore all previous values, allowing a reset of
+ the list from broader config scenarios.
+ 
+ remote.<name>.followRemoteHEAD::
+-	How linkgit:git-fetch[1] should handle updates to `remotes/<name>/HEAD`
+-	when fetching using the configured refspecs of a remote.
+-	The default value is "create", which will create `remotes/<name>/HEAD`
+-	if it exists on the remote, but not locally; this will not touch an
+-	already existing local reference. Setting it to "warn" will print
+-	a message if the remote has a different value than the local one;
+-	in case there is no local reference, it behaves like "create".
+-	A variant on "warn" is "warn-if-not-$branch", which behaves like
+-	"warn", but if `HEAD` on the remote is `$branch` it will be silent.
+-	Setting it to "always" will silently update `remotes/<name>/HEAD` to
+-	the value on the remote.  Finally, setting it to "never" will never
+-	change or create the local reference.
++	When fetching this remote using its default refspec, this option determines
++	how to handle differences between the remote's `HEAD` and the local
++	`remotes/<name>/HEAD` symbolic-ref.  Overrides the setting for
++	`fetch.followRemoteHEAD`.  See `fetch.followRemoteHEAD` for a description of
++	accepted values.
+++
++In addition to the values supported by `fetch.followRemoteHEAD`, this option may
++also take on the value "warn-if-not-`$branch`", which behaves like "warn", but
++ignores the warning if the remote's `HEAD` is `remotes/<name>/$branch`.
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 9a45e1e7a44d..3cc7efdd83a0 100644
+index 3cc7efdd83a0..a21bb82274d4 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -1729,12 +1729,12 @@ static void warn_set_head(const char *remote, const char *head_name,
- 	strbuf_release(&buf_prefix);
+@@ -103,6 +103,7 @@ static struct string_list negotiation_include = STRING_LIST_INIT_NODUP;
+ 
+ struct fetch_config {
+ 	enum display_format display_format;
++	enum follow_remote_head_settings follow_remote_head;
+ 	int all;
+ 	int prune;
+ 	int prune_tags;
+@@ -173,6 +174,22 @@ static int git_fetch_config(const char *k, const char *v,
+ 			    "fetch.output", v);
+ 	}
+ 
++	if (!strcmp(k, "fetch.followremotehead")) {
++		if (!v)
++			return config_error_nonbool(k);
++		else if (!strcasecmp(v, "never"))
++			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
++		else if (!strcasecmp(v, "create"))
++			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
++		else if (!strcasecmp(v, "warn"))
++			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
++		else if (!strcasecmp(v, "always"))
++			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
++		else
++			die(_("invalid value for '%s': '%s'"),
++				"fetch.followRemoteHEAD", v);
++	}
++
+ 	return git_default_config(k, v, ctx, cb);
  }
  
--static int set_head(const struct ref *remote_refs, struct remote *remote)
-+static int set_head(const struct ref *remote_refs, struct remote *remote,
-+			int follow_remote_head)
+@@ -1697,11 +1714,13 @@ static const char *strip_refshead(const char *name){
+ static void set_head_advice_msg(const char *remote, const char *head_name)
  {
- 	int result = 0, create_only, baremirror, was_detached;
- 	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
- 		      b_local_head = STRBUF_INIT;
--	int follow_remote_head = remote->follow_remote_head;
- 	const char *no_warn_branch = remote->no_warn_branch;
- 	char *head_name = NULL;
- 	struct ref *ref, *matches;
-@@ -1901,6 +1901,7 @@ static int do_fetch(struct transport *transport,
- 	struct ref_update_display_info_array display_array = { 0 };
- 	struct strmap rejected_refs = STRMAP_INIT;
- 	int summary_width = 0;
-+	int follow_remote_head;
- 
- 	if (tags == TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags == 2)
-@@ -1916,6 +1917,11 @@ static int do_fetch(struct transport *transport,
- 			goto cleanup;
- 	}
- 
-+	if (transport->remote->follow_remote_head)
-+		follow_remote_head = transport->remote->follow_remote_head;
-+	else
-+		follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
+ 	const char message_advice_set_head[] =
+-	N_("Run 'git remote set-head %s %s' to follow the change, or set\n"
+-	   "'remote.%s.followRemoteHEAD' configuration option to a different value\n"
+-	   "if you do not want to see this message. Specifically running\n"
+-	   "'git config set remote.%s.followRemoteHEAD warn-if-not-%s'\n"
+-	   "will disable the warning until the remote changes HEAD to something else.");
++	N_("Run 'git remote set-head %s %s' to follow the change, or modify\n"
++	   "either of the 'remote.%s.followRemoteHEAD' or 'fetch.followRemoteHEAD'\n"
++	   "configuration options to handle the situation differently.\n\n"
 +
- 	if (rs->nr) {
- 		refspec_ref_prefixes(rs, &transport_ls_refs_options.ref_prefixes);
- 	} else {
-@@ -1924,7 +1930,7 @@ static int do_fetch(struct transport *transport,
- 		if (transport->remote->fetch.nr) {
- 			refspec_ref_prefixes(&transport->remote->fetch,
- 					     &transport_ls_refs_options.ref_prefixes);
--			if (transport->remote->follow_remote_head != FOLLOW_REMOTE_NEVER)
-+			if (follow_remote_head != FOLLOW_REMOTE_NEVER)
- 				do_set_head = 1;
- 		}
- 		if (branch && branch_has_merge_config(branch) &&
-@@ -2131,7 +2137,7 @@ static int do_fetch(struct transport *transport,
- 		 * Way too many cases where this can go wrong so let's just
- 		 * ignore errors and fail silently for now.
- 		 */
--		set_head(remote_refs, transport->remote);
-+		set_head(remote_refs, transport->remote, follow_remote_head);
- 	}
++	   "Using this specific option\n\n"
++	   "    git config set remote.%s.followRemoteHEAD warn-if-not-%s\n\n"
++	   "will suppress the warning until the remote changes HEAD to something else.");
  
- cleanup:
-diff --git a/remote.h b/remote.h
-index 54b17e4b028b..72a54d84ad51 100644
---- a/remote.h
-+++ b/remote.h
-@@ -62,12 +62,14 @@ struct remote_state {
- void remote_state_clear(struct remote_state *remote_state);
- struct remote_state *remote_state_new(void);
+ 	advise_if_enabled(ADVICE_FETCH_SET_HEAD_WARN, _(message_advice_set_head),
+ 			remote, head_name, remote, remote, head_name);
+@@ -1919,6 +1938,8 @@ static int do_fetch(struct transport *transport,
  
--	enum follow_remote_head_settings {
--		FOLLOW_REMOTE_NEVER = -1,
--		FOLLOW_REMOTE_CREATE = 0,
--		FOLLOW_REMOTE_WARN = 1,
--		FOLLOW_REMOTE_ALWAYS = 2,
--	};
-+#define BUILTIN_FOLLOW_REMOTE_HEAD_DFLT FOLLOW_REMOTE_CREATE
-+enum follow_remote_head_settings {
-+	FOLLOW_REMOTE_UNCONFIGURED = 0,
-+	FOLLOW_REMOTE_NEVER,
-+	FOLLOW_REMOTE_CREATE,
-+	FOLLOW_REMOTE_WARN,
-+	FOLLOW_REMOTE_ALWAYS,
-+};
+ 	if (transport->remote->follow_remote_head)
+ 		follow_remote_head = transport->remote->follow_remote_head;
++	else if (config->follow_remote_head)
++		follow_remote_head = config->follow_remote_head;
+ 	else
+ 		follow_remote_head = BUILTIN_FOLLOW_REMOTE_HEAD_DFLT;
  
- struct remote {
- 	struct hashmap_entry ent;
+@@ -2477,6 +2498,7 @@ int cmd_fetch(int argc,
+ {
+ 	struct fetch_config config = {
+ 		.display_format = DISPLAY_FORMAT_FULL,
++		.follow_remote_head = FOLLOW_REMOTE_UNCONFIGURED,
+ 		.prune = -1,
+ 		.prune_tags = -1,
+ 		.show_forced_updates = 1,
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 43190630e714..6f0ae1bdd798 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -140,6 +140,16 @@ test_expect_success "fetch test remote HEAD change" '
+ 	)
+ '
+ 
++test_expect_success "fetch test default followRemoteHEAD never" '
++	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
++	test_config -C two fetch.followRemoteHEAD "never" &&
++	GIT_TRACE_PACKET=$PWD/trace.out git -C two fetch &&
++	# Confirm that we do not even ask for HEAD when we are
++	# not going to act on it.
++	test_grep ! "ref-prefix HEAD" trace.out &&
++	test_must_fail git -C two rev-parse --verify refs/remotes/origin/HEAD
++'
++
+ test_expect_success "fetch test followRemoteHEAD never" '
+ 	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
+ 	test_config -C two remote.origin.followRemoteHEAD "never" &&
+@@ -150,6 +160,21 @@ test_expect_success "fetch test followRemoteHEAD never" '
+ 	test_must_fail git -C two rev-parse --verify refs/remotes/origin/HEAD
+ '
+ 
++test_expect_success "fetch test default followRemoteHEAD warn no change" '
++	git -C two rev-parse --verify refs/remotes/origin/other &&
++	git -C two remote set-head origin other &&
++	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
++	git -C two rev-parse --verify refs/remotes/origin/main &&
++	test_config -C two fetch.followRemoteHEAD "warn" &&
++	git -C two fetch >output &&
++	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
++		"but we have ${SQ}other${SQ} locally." >expect &&
++	test_cmp expect output &&
++	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
++	test "z$head" = "z$branch"
++'
++
+ test_expect_success "fetch test followRemoteHEAD warn no change" '
+ 	git -C two rev-parse --verify refs/remotes/origin/other &&
+ 	git -C two remote set-head origin other &&
+@@ -165,6 +190,17 @@ test_expect_success "fetch test followRemoteHEAD warn no change" '
+ 	test "z$head" = "z$branch"
+ '
+ 
++test_expect_success "fetch test default followRemoteHEAD warn create" '
++	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
++	test_config -C two fetch.followRemoteHEAD "warn" &&
++	git -C two rev-parse --verify refs/remotes/origin/main &&
++	output=$(git -C two fetch) &&
++	test "z" = "z$output" &&
++	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
++	test "z$head" = "z$branch"
++'
++
+ test_expect_success "fetch test followRemoteHEAD warn create" '
+ 	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
+ 	test_config -C two remote.origin.followRemoteHEAD "warn" &&
+@@ -176,6 +212,18 @@ test_expect_success "fetch test followRemoteHEAD warn create" '
+ 	test "z$head" = "z$branch"
+ '
+ 
++test_expect_success "fetch test default followRemoteHEAD warn detached" '
++	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
++	git -C two update-ref refs/remotes/origin/HEAD HEAD &&
++	HEAD=$(git -C two log --pretty="%H") &&
++	test_config -C two fetch.followRemoteHEAD "warn" &&
++	git -C two fetch >output &&
++	echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
++		"but we have a detached HEAD pointing to" \
++		"${SQ}${HEAD}${SQ} locally." >expect &&
++	test_cmp expect output
++'
++
+ test_expect_success "fetch test followRemoteHEAD warn detached" '
+ 	git -C two update-ref --no-deref -d refs/remotes/origin/HEAD &&
+ 	git -C two update-ref refs/remotes/origin/HEAD HEAD &&
+@@ -188,6 +236,19 @@ test_expect_success "fetch test followRemoteHEAD warn detached" '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success "fetch test default followRemoteHEAD warn quiet" '
++	git -C two rev-parse --verify refs/remotes/origin/other &&
++	git -C two remote set-head origin other &&
++	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
++	git -C two rev-parse --verify refs/remotes/origin/main &&
++	test_config -C two fetch.followRemoteHEAD "warn" &&
++	output=$(git -C two fetch --quiet) &&
++	test "z" = "z$output" &&
++	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git -C two rev-parse refs/remotes/origin/other) &&
++	test "z$head" = "z$branch"
++'
++
+ test_expect_success "fetch test followRemoteHEAD warn quiet" '
+ 	git -C two rev-parse --verify refs/remotes/origin/other &&
+ 	git -C two remote set-head origin other &&
+@@ -229,6 +290,18 @@ test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is di
+ 	test "z$head" = "z$branch"
+ '
+ 
++test_expect_success "fetch test default followRemoteHEAD always" '
++	git -C two rev-parse --verify refs/remotes/origin/other &&
++	git -C two remote set-head origin other &&
++	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
++	git -C two rev-parse --verify refs/remotes/origin/main &&
++	test_config -C two fetch.followRemoteHEAD "always" &&
++	git -C two fetch &&
++	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
++	test "z$head" = "z$branch"
++'
++
+ test_expect_success "fetch test followRemoteHEAD always" '
+ 	git -C two rev-parse --verify refs/remotes/origin/other &&
+ 	git -C two remote set-head origin other &&
+@@ -241,6 +314,28 @@ test_expect_success "fetch test followRemoteHEAD always" '
+ 	test "z$head" = "z$branch"
+ '
+ 
++test_expect_success 'per-remote followRemoteHEAD takes priority over fetch default' '
++	git -C two rev-parse --verify refs/remotes/origin/other &&
++	git -C two remote set-head origin other &&
++	git -C two rev-parse --verify refs/remotes/origin/HEAD &&
++	git -C two rev-parse --verify refs/remotes/origin/main &&
++	test_config -C two fetch.followRemoteHEAD "never" &&
++	test_config -C two remote.origin.followRemoteHEAD "always" &&
++	git -C two fetch &&
++	head=$(git -C two rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git -C two rev-parse refs/remotes/origin/main) &&
++	test "z$head" = "z$branch"
++'
++
++test_expect_success 'default followRemoteHEAD does not kick in with refspecs' '
++	git -C two remote set-head origin other &&
++	test_config -C two fetch.followRemoteHEAD always &&
++	git -C two fetch origin refs/heads/main:refs/remotes/origin/main &&
++	echo refs/remotes/origin/other >expect &&
++	git -C two symbolic-ref refs/remotes/origin/HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'followRemoteHEAD does not kick in with refspecs' '
+ 	git -C two remote set-head origin other &&
+ 	test_config -C two remote.origin.followRemoteHEAD always &&
+@@ -250,6 +345,16 @@ test_expect_success 'followRemoteHEAD does not kick in with refspecs' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'default followRemoteHEAD create does not overwrite dangling symref' '
++	test_when_finished "git -C two remote remove custom-head" &&
++	git -C two remote add -m does-not-exist custom-head ../one &&
++	test_config -C two fetch.followRemoteHEAD create &&
++	git -C two fetch custom-head &&
++	echo refs/remotes/custom-head/does-not-exist >expect &&
++	git -C two symbolic-ref refs/remotes/custom-head/HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'followRemoteHEAD create does not overwrite dangling symref' '
+ 	test_when_finished "git -C two remote remove custom-head" &&
+ 	git -C two remote add -m does-not-exist custom-head ../one &&
 -- 
 2.54.0
 
