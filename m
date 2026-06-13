@@ -1,69 +1,69 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F42356764
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 04:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9614F356764
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 04:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781323582; cv=none; b=mA99ce/cSxomBa1pYadSXziCE2mMA2KW0mAGRbO4j0TXkfN5xZUgF2gXa1/RNCOCfkTNLCVjpZhj3pnNW3YsezAIMDrRCmCwYnKtk55e8wNL2z6m7HK8hDtr6q3ZKyisEgn+Cnx9nNl1M+RuhBlJm7At9RDYWpOFhPN3ljQdM0c=
+	t=1781323585; cv=none; b=Cm7ZmAkQ/i/AsrADavIxD50AymkT/uFFTEMMOV9H3v5ePm4WN2KFCF1FV75gATe+c4SU0gIJ1lKCKvX4xmdnbymvQmQ+AZ0z1RnVgKrbyZWMnyOfJ61OPPrHP1pY2x5hnJj4Q8fzUhK8PCY1DST+CvB/sFlKtS1eiSzFUtz9dMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781323582; c=relaxed/simple;
-	bh=5QDtg6gzn37OdXVFwU/xCOt2PUS4gwEGaDhfhysl5r0=;
+	s=arc-20240116; t=1781323585; c=relaxed/simple;
+	bh=qaB1nsiXAcgKjaL+Qht+y9BlAoNECNd5rcmEi+61Miw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OtX0z/lD6hGsqNDgEbyCDbgOTYlMatsvL4IrXt//IbqWKw06h1hnteFrmvx26jAYczCmL5y/1u51RWMBbi7dTLqlhh83Odk3MMIpxaHLxpEuh5Sbgjio30MgwTs9KRoJzYVN27jiJP4Ui9BmLmcC4gByUFdcc51dQgL3W1cmhYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrJOPaoG; arc=none smtp.client-ip=74.125.82.46
+	 MIME-Version:To:Cc; b=Ile4f/OROyY6kliKIlTFQdPpHWde8eQVf+x50adYm5Sa2A2DJph+NjBPZBcW1k2Rh2k31IWXGRsTGfS+PE4yMHJY/IGGiaG6Qsr4qK9hIZ2QUDhOuGovh1LbThnbjVPZEiszsnw4RTuxTFsSVibtCEvT0fLrUUG5EOS56vvEgT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oVXQ/93M; arc=none smtp.client-ip=74.125.82.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrJOPaoG"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-137dd523634so2301669c88.1
-        for <git@vger.kernel.org>; Fri, 12 Jun 2026 21:06:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oVXQ/93M"
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-3075ce9c05aso3745109eec.1
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 21:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781323581; x=1781928381; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781323583; x=1781928383; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ESq2YLqEO5HVk/FTETy5sagY2SS89Ig05qva2heSvY8=;
-        b=TrJOPaoGT1vhd7ktKPluLHz5zmyXfXxqmlQNmROdhWfwNuGDtBFZp+2/OQgTOXPiej
-         50E0dUFH142krOr8qudDz/pkQO0f/wpz+hmKY9u3WHKsWFUXGd+yz56IMROlSBidF+e9
-         T9yoCEUElfgb9s+ghvlJgom5W1gk97yHAzrk9MkoKSsZwBCE94uAJf9k5FqqS3GXwu7U
-         RUrZTu1J/jB39+6Ucij1RpjZB8dRxBl8bAb35SW2BPbSg84qAPUqhJvVBSl9uHWuQKd5
-         UW9+s321nlP9uSx1pXsuh7AcRHKDeW4ZYYEXqUYUz6cRhb5A1AvuMCHJpoTaNchzJsxu
-         2gGQ==
+        bh=/LTIQGno0E9IVyA8/YHvOOSseNq4q5Fmb1ybXTEFeAI=;
+        b=oVXQ/93Mj30anpWnYCCbJhIsZZuqJt//nDrHH/VJOrlVJF1riI53SvfCNB4SO+W3td
+         i0R99c0Ca2GC7j/MqbcNO2k95YVhDd3FG3d0yjQ2VcoMwIBUIlSZQPfRfgmCiWk1EGiM
+         CUqUUY+8KSQeGvISq52BdmVBt+9pBSZrUV4h8fdT+wUcSW1+0xmy73qbQvi50r9JNKzs
+         JtxNM6pkB440znPbtBEWvlbW7IZTybv6CBCyIyVxORAeicSoWV9G0C7/dr90gvUi3Vlm
+         6EHeu6YAZJ0EO6sRFWwyl7CCR/jmhd50nBcR+iH8fnSpZR3oBmnjtJzKWezCA6Tm4V4M
+         6kIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781323581; x=1781928381;
+        d=1e100.net; s=20251104; t=1781323583; x=1781928383;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ESq2YLqEO5HVk/FTETy5sagY2SS89Ig05qva2heSvY8=;
-        b=WCUfSud5NoU4WTcGKTeu5Wmv594ksiy9nSRDwtKKk6c3+mD2pQhK7EtdNh46INrBaW
-         ubhIDgbIsLT1qkk7ucwwKL4DQZuaY5EynhAj1lt0EmohvjKloz+PdiBeyNPKVu+SHxup
-         5TNKq9NNJ12PLgeE/APe2Do1B5SMNOhGPx/+PmLvWn48WD+SfArfahNlZnV8Iqr3usvy
-         fJwPpBWI3WTggnlnJeqjtHbTpvIfQuXe50qb67a1F0fcHLL4RDM4HSi0SdS0z33OtnDl
-         q4nwdu9s7UDZaGOsY5CZQdiXz8/nLN9/gQI/3AREGXwSkAOn7dfftgel4CRAp8Hx3k5F
-         oEXA==
-X-Gm-Message-State: AOJu0Yw2qTNRI+1hT9lcOn6l7C0dPDCBALwQyd9RTxuStXmGb3DmsjZh
-	mQrXVU8hPyWkyXY9kCHWxuR5rtNkb6hTjUxewGPs2gC286PgNlro5xwpPA3FKw==
-X-Gm-Gg: Acq92OFLKQQO7GktVd8JmnmS9CKLxPn4gW/RSkYObvLK4DnQmICDOi4p4p97Rtygmdq
-	ZcnpZZ742pT4kmAU4zB6ZAjVEQ1kKeo+OQcRFl4QRdmNWNtnXxd8gW02jVB7CZfdRrGNQ/9M+vt
-	4jYrCg0rYlX30LGz2v5fMvz8U+LTAo5FEUjGyNXvS79p1RLNgp7bb6e7jOKhWC/wwTqY178rNSe
-	7rk0+386yn1+oHwY1mQduwnT8dutqeP43EsW8pTanrNoiP1JrpBdBGZKgg3Ghmu9ePZ9/b2fFqr
-	mV+rOKp7R76jQbuws0nFzaDN7GIk19e6nkwUqXk6XB4uduwpenwiJjZ+2rYzT9xBclDs0KML9J7
-	Bdi6RIpXF3guseF8+bN9IhJhvFNC6ojBVoTUPiQjeQhI1FDzmsh70cA0X4qYBUM+T5hnXVxGtUG
-	tXsRqc7XgBukl1UvNoqluf7dI2
-X-Received: by 2002:a05:7022:79a:b0:137:1ae1:bc2f with SMTP id a92af1059eb24-1384bafee86mr2066657c88.13.1781323580580;
-        Fri, 12 Jun 2026 21:06:20 -0700 (PDT)
+        bh=/LTIQGno0E9IVyA8/YHvOOSseNq4q5Fmb1ybXTEFeAI=;
+        b=dnWWgQ6snnVFUCdFe7/t3rSbuLqePXXK3gOP8dsdnFn/HI6pCarw85+xSMsg9geHiu
+         I0yXT8oWjr5Re4wVb2KcrcFfnl2PLnMq2t/1kCAz0w9a/cmAj9yJWWeOBtg91uDVxV4P
+         6QiKAXQnSHiD+vW0ciLKjft4Yg0N2maJYG2FjinuGmCzPvFMZMEVxMYh57ZXFPS+X04S
+         0L0RKoZTfxfL0vOsgX1l9EkORHVlxWoNOw4hmNnGgTRtr0WTHICRHRcZPD13Xd006aJ2
+         1U06moageXBdmmvPeJH7vbNdwcQvRnftZKkIKIqCIbd+vlgjCFSR9Bsk7txGbCMLCkl3
+         JaDA==
+X-Gm-Message-State: AOJu0YxyH9vNVPphPutKc4RJQ7Do5dyRjrzRcsI0wadkL+G24zmbfi7Q
+	OwuCuquEiGxe2MISj3ILkrfK3Hivyff2vGa67aHsNi9b5f3MkuPHPalfXN9kfw==
+X-Gm-Gg: Acq92OGW2/OVRsqb4DKBH3QcjGbEgnyCOJSfPo9afc4lH0wvwN8sXWGY/WtygdV4itT
+	oqtRI3Fo93KOJRzfWKSPr2r1l9Ab9QldY7NYjeiTiCCIAKiZ0W2Zjaop8DEPvX0nLII1JyfI/4y
+	RC6S1F8dvVL3xrS/cDRpsmd8LsD5CeycYyz4kcRqVli4XuBeFvLD8cF+ngXheYQYW+YT7m1cvrM
+	fkpRGPTrEvqK6Lw+ra9yGPEbg3UcBCVa1nUEw4F55FOoASpXa8RpVMviKlesX/YLS34IagXvtVt
+	GTuPuvbsdTUw2z6/gC0fmtohAeW76brdXp+Z3YTeEbmVtsesUJ0LooWdrkmkKg8NS567rfur0dD
+	Z29wRx+Ppxi9nDjn6a97nPVUbdjBAe6qUKqfOkPKQLuavYFwQkNJw3Xqw6rdyRt6Ll0Ejnsxx1J
+	eEedG1r2zZLtTZltthQxDOx5Ii
+X-Received: by 2002:a05:7300:5b83:b0:2de:c5ca:c1f3 with SMTP id 5a478bee46e88-3081ff55ceemr3527187eec.4.1781323583214;
+        Fri, 12 Jun 2026 21:06:23 -0700 (PDT)
 Received: from [127.0.0.1] ([40.65.56.225])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1384b9110d3sm4461968c88.5.2026.06.12.21.06.19
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e91f878sm6098524eec.17.2026.06.12.21.06.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jun 2026 21:06:19 -0700 (PDT)
-Message-Id: <5959cab258ad6c5099e1aa7696416cc2376b3a3d.1781323575.git.gitgitgadget@gmail.com>
+        Fri, 12 Jun 2026 21:06:22 -0700 (PDT)
+Message-Id: <f3e8e19e6ea318e25ca05574a86003b7f241c995.1781323575.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
 References: <pull.2135.git.1780559158.gitgitgadget@gmail.com>
 	<pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 13 Jun 2026 04:06:10 +0000
-Subject: [PATCH v2 1/6] t/README: document test_grep helper
+Date: Sat, 13 Jun 2026 04:06:11 +0000
+Subject: [PATCH v2 2/6] t: fix grep assertions missing file arguments
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,53 +81,68 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
 
 From: Michael Montalbo <mmontalbo@gmail.com>
 
-test_grep is a wrapper around grep for test assertions that prints
-the file contents on failure for easier debugging.  It also accepts
-'!' as its first argument for negation, which preserves the
-diagnostic output that '! test_grep' would suppress.
+Three grep assertions were missing their file arguments, causing
+them to read from empty stdin instead of the intended file:
 
-Despite being widely used (and the preferred replacement for bare
-grep in assertions), test_grep has no entry in t/README alongside
-the other documented helpers like test_cmp and test_line_count.
-Add one.
+- t2402: '! grep ...' should read from 'out', matching the
+  grep on the preceding line.
+- t7507: the closing quote is in the wrong place, making the
+  entire 'diff --git actual' a single pattern with no file
+  argument instead of pattern 'diff --git' and file 'actual'.
+- t7700: '! grep ...' should read from 'packlist', matching
+  the redirect on the preceding line.
+
+Without file arguments these greps always succeed (empty stdin
+matches nothing), so the assertions were not actually checking
+anything.  All three tests pass with the corrected file arguments,
+confirming the intended behavior is sound.
 
 Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
 ---
- t/README | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ t/t2402-worktree-list.sh  | 2 +-
+ t/t7507-commit-verbose.sh | 2 +-
+ t/t7700-repack.sh         | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/README b/t/README
-index adbbd9acf4..c12a1c317a 100644
---- a/t/README
-+++ b/t/README
-@@ -1039,6 +1039,27 @@ see test-lib-functions.sh for the full list and their options.
+diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+index e0c6abd2f5..93f92e854a 100755
+--- a/t/t2402-worktree-list.sh
++++ b/t/t2402-worktree-list.sh
+@@ -144,7 +144,7 @@ test_expect_success '"list" all worktrees with prunable annotation' '
+ 	rm -rf prunable &&
+ 	git worktree list >out &&
+ 	grep "/prunable  *[0-9a-f].* prunable$" out &&
+-	! grep "/unprunable  *[0-9a-f].* prunable$"
++	! grep "/unprunable  *[0-9a-f].* prunable$" out
+ '
  
-    Check whether a file has the length it is expected to.
+ test_expect_success '"list" all worktrees --porcelain with prunable' '
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index b53d71c086..acdb6b1455 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -163,7 +163,7 @@ done
  
-+ - test_grep [!] [<grep-options>] <pattern> <file>
-+
-+   Check whether <file> contains a line matching <pattern>, or
-+   with '!' that no line matches.  Use this instead of bare
-+   'grep <pattern> <file>' in test assertions.  On failure,
-+   test_grep prints the contents of <file> for easier debugging,
-+   whereas a bare 'grep' would fail silently.
-+
-+   For negation, pass '!' as the first argument:
-+
-+	test_grep ! "^diff --git" actual
-+
-+   Do not negate by writing '! test_grep', as that suppresses the
-+   diagnostic output.
-+
-+   test_grep should only be used as a test assertion.  When grep
-+   is used as a data filter (e.g. 'grep -v "^index" actual >filtered')
-+   or inside a command substitution (e.g. '$(grep -c ...)'), plain
-+   'grep' is the right choice because the exit code is not the
-+   assertion itself.
-+
-  - test_path_is_file <path>
-    test_path_is_dir <path>
-    test_path_is_missing <path>
+ test_expect_success "status ignores commit.verbose=true" '
+ 	git -c commit.verbose=true status >actual &&
+-	! grep "^diff --git actual"
++	! grep "^diff --git" actual
+ '
+ 
+ test_done
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 63ef63fc50..c6ff3aed30 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -194,7 +194,7 @@ test_expect_success 'local packed unreachable obs that exist in alternate ODB ar
+ 	rm -f .git/objects/pack/* &&
+ 	mv pack-* .git/objects/pack/ &&
+ 	git verify-pack -v -- .git/objects/pack/*.idx >packlist &&
+-	! grep "^$coid " &&
++	! grep "^$coid " packlist &&
+ 	echo >.git/objects/info/alternates &&
+ 	test_must_fail git show $coid
+ '
 -- 
 gitgitgadget
 
