@@ -1,141 +1,160 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59DA175A98
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 21:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781385682; cv=pass; b=EZnjpdR88ggWe6/eyqRbt6M0QL+rx3KoSYPyzscrY+B/f1FyuF7pArYmBcTgA+DNjhB/lhQUBASmzUATnWBxrbnIbEnZPxEA6Un9kld80AtoHrbegGjLzP5gmmBLgHBRl1OhURkrgXspxp+fA6jiRBPPMjddoVXla0YCsoVLWjE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781385682; c=relaxed/simple;
-	bh=iML7ZrjpPHfLtyV4B8jqUz56yfQVGrNIQ+T2NWHNo7U=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=M0NpWGmKFOdwYCdv7gpyT7LCU6xaEFZzQNGI0h5qD/L93uIi2XoSDGOUJRmEKtCjMQdS0Vliu9fF9QSUSCmbTZbYq593OL75Od6spfgdeUOOADb0Oc+WCsyNpcgkXKnT4rJXFmUCFxtXLTSy6s9yx4A7fOLHi3da3F3TY7mI+70=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qw45zqYf; arc=pass smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB29283C82
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 21:53:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781387624; cv=none; b=FSS6NYMCgKual+mgwdygUv6D+Nj9YL0RA+vogj4aC9PSoos76J1Cuc2D/racyGRlUYyeaPJGb9hiOwa58JSEDmO046R/I6Qn+LlGMSInFuugONTLXlJZrLNy7iGxZnEhNXeIfBdqItMXZxVIMyodGbQmekyWy8WFGG3Pp1YFgIU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781387624; c=relaxed/simple;
+	bh=XoxtJw2QNa9220adrKUWneyhVLvFewlOI4K8q5y/Xf0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jFww1Ib+sX4MyIm5d1pz8dGI6NbHArmF1s06FpKh4F3nhhsm6sXhbBi/m5LS9I3hTaMbC4Bc3nRsu3LWF01ODjBR880sc6/VEFZrgnY1DCh/z14QRpNkjsD3WN2noxxiCnYtQ6n/YkecLkSwzdc8aBx4bHevlxdzn0g3mqG8RkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=u7yONSWR; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qw45zqYf"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7f015f87fddso22717077b3.0
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 14:21:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781385679; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gaD7z7+01M3LMhYPBndx9otO0e79ENi3bQSFF9o8/YytIAALlGmDjf0Bo8AciZGsRD
-         GLdt5Y8YFIaOsJ2dVQfbQl8t0cthOZdXhZPEZU/DVWrrVPBR2XK3cBv7xyWyLSRUcWct
-         ffXVZPDyGKmLUZmoL2x89Nl5z5xjmIDVkgJqSVExKNuAK3JZkNuDPiGRhogdta2D+4tS
-         +WonrHteHG+cNdB+tBsPF7jNXVmTJsHDQJKGcXA9rl+SzEQA9rwAWklKs9vHFdgj5Smu
-         PcuTbJZG//C2PcKuGWiLBbx+beV7+1qJtwwNl2zynloF2CIX5f9J98kOLlv3b5yylR21
-         4wxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :dkim-signature;
-        bh=iML7ZrjpPHfLtyV4B8jqUz56yfQVGrNIQ+T2NWHNo7U=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=TbslwRqMjsvhtitMzmR+RKaxmlnM1seTKIlAJPY5rsCcgz0o84r/UcGRHC5MWo4JZq
-         fQf1FjuDIBC0vje0ezabcuNV4UcRNEknbpJG5wYQaPNJRxPAkMPOPGqdzMymbOynd4Qf
-         N1SLQr9nwDkXu57GU2+qqr40cvr1DzR/PfX2Sg5jknrAq1tq0R1xkLzYrKlfOZCsB6Q0
-         Y/H5SnLQSVxG25z51b+3aJPyVAGcNzArrr8vW+yq6L/RKzmFWdpzBnZs8PjESDIF6ALv
-         DrqPequZXtIFlqHuMFP9QxzoeGgg9MEb/Edp8yxKer54iebEVZ4NqfsvOwfDRuPLIMt9
-         yoBg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781385679; x=1781990479; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iML7ZrjpPHfLtyV4B8jqUz56yfQVGrNIQ+T2NWHNo7U=;
-        b=Qw45zqYfvD72d3MVsFaUGefkSafPB3PFBA1Sx+XCDP8ukZXqOdyQotEPuvzOpQAr//
-         82BKpXGSPNcFTNhlKq8+SHAWN4r+HzxIijMWE5MZ7DPqs5QFrZ2dnQ/J1s6KFAWACD2E
-         KPAJBmtX9lCt67irY2Cjil7+jkmD7F1/vp/1K/oyLUdpL7SFc0t/XT63WMm+N4sPUhy1
-         Pvec+La9riFo6G5YgilZ0NbdMijOkyxdf3pvG004r4m+jfeo4TaOOWYHurlbt29+lb+S
-         tn7hLHPazo4yhE8IKU/hS83ItoLMhmZPJw7fDCpY8nDHOhkvSs/S+rEstkgeYZmerEvK
-         eACQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781385679; x=1781990479;
-        h=to:subject:message-id:date:from:reply-to:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iML7ZrjpPHfLtyV4B8jqUz56yfQVGrNIQ+T2NWHNo7U=;
-        b=pYoMwHAaXnB8saJvbWcYkuNwv2pAyn8aMfy/VWr9UUH+H1/XEvo9aQeL/7YKKfjLWB
-         ld1+WODql2VDE0cgmkL5T0qAkunakJxIvY3asAT5GZdigc0Az1yZpQa8KBuvhcdi7Y5M
-         WBXHOxKdmwMcBGX5e1xhijOVTQ2dNGcMLY48c0aOVfFUQFClZnQ0MX9h7zJPnO66TnE6
-         LOBSUt64b8bwpegrxdI+/G7VGmdGzBpgoupUdKwFfyUGLgXebkyTrTGiEblkw8szTN6h
-         YHvxd70S5DyY1mcjc9kFwCrkNGPpVpJORbz/MVaVIL4vQhhNJlFHH046pTWIZsIQFsBR
-         bMAA==
-X-Gm-Message-State: AOJu0YytuedOPV2RrSiCHoaOp5sOKIRxwL0DPGl0V+SaGYKqB3RMk06o
-	rKyFtLEJ6G0npBCx4Iwj2XcrZfTuJGGZltlwdY+mFv2aZqf2KlXnY2IP4hgfs+sUuvo7pmKYeAW
-	F2E2LlavlV2O7RCJmXFr10+1RHmOgdSVdG4Ug
-X-Gm-Gg: Acq92OEvxoWcNrOOcsrNlcVyAsHqguRpFVyGBEbjZnao8ZX8agU295zJeyEafTXdF6i
-	6Kqf9ITAANJLJDm0oqkTfLyhuAUHi2nbMGWcJAbosfBi3NuXJvUpTrQtjnnurhRiYniFxeiPWYZ
-	5ChBQdQ5nw3MJMUspnFB1FyOn09vjkKz2Ue+e8Q+TlBIW3/jdD3vXKHipVVtptkOcekVPm6r5Hs
-	HA5dqk+y7Yo022tbIpGIeJtY18aJuqRTI4mOo+BZUVp2dMkavzU44m2rg5i92cNedNFB6lYHHWR
-	wwL3cgpzZpNWX6Wb
-X-Received: by 2002:a05:690c:ed2:b0:7bf:eadc:c13d with SMTP id
- 00721157ae682-7f798e63560mr68362337b3.31.1781385679483; Sat, 13 Jun 2026
- 14:21:19 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="u7yONSWR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1781387615;
+	bh=XoxtJw2QNa9220adrKUWneyhVLvFewlOI4K8q5y/Xf0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=u7yONSWR7ejraEtWF29BVQNSqC8JtI1NvVMsbOR7hmTWVbNrh6ALQZfqvc5wTYEVV
+	 7aNFv5KNlCHNlvtau8sOn+L+0NzAbHljvfJ/cCwLA2sgw54PAjXBbDCE9xLremdRJG
+	 P4JRzfyVdHC6FIVdovsNzfhmbW0zwsDHVJ2cWkyK2OO/6FTzucj8/UT7XkXL7nWbtA
+	 1v6kkMfy/imk53fAMiOFvhrmoWx32n2pKuGKmH8Y/JTrPoPPZzxwpnHXFUMlGo0lY7
+	 2A+Qs/eK+XS9CWGIsYLfsQQPBTISFelAp4juS5FDHwAKNyKTIUfAV09iAXV7kLkkl4
+	 9GXt2JK7+wFLWKnflIFVxp5TuPyJ0wLCLNajVsxoP+D1lAeua73Hq5ltp8whH51q0A
+	 youf2re61ulNWjtfTYlxf2p2R2gj7fRPP6oZ2wU8lTKh6C15ruEc7IqpVwF1UfDU5a
+	 hSyWQ5oBze/ducETuCZhmD3Juig0zCpzUgFeW2ONgj74mu0QbNA
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3c09:7eb3:49a1:129f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2D8272018E;
+	Sat, 13 Jun 2026 21:53:35 +0000 (UTC)
+Date: Sat, 13 Jun 2026 21:53:33 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jamison Phillips <JamisonCPhillips@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC/PATCH] Suggestion: Safe Hook Verification for
+ Unzipped/Local Repositories
+Message-ID: <ai3RXeTeTNmFfUuL@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jamison Phillips <JamisonCPhillips@gmail.com>, git@vger.kernel.org
+References: <CA+pATbgyg3Wqg7NnScPx3hUmo8nG23EFx2QUXuVAd3nJ6Z_CPw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Reply-To: JamisonCPhillips@gmail.com
-From: Jamison Phillips <JamisonCPhillips@gmail.com>
-Date: Sat, 13 Jun 2026 17:20:43 -0400
-X-Gm-Features: AVVi8Cd835wXU-mfsNPk2sh8vBHr4W8_YXKp-aL0_bTAWBsE31V3IMb1mw_786w
-Message-ID: <CA+pATbgyg3Wqg7NnScPx3hUmo8nG23EFx2QUXuVAd3nJ6Z_CPw@mail.gmail.com>
-Subject: [RFC/PATCH] Suggestion: Safe Hook Verification for Unzipped/Local Repositories
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="oDXAv4YmWMtiCJLl"
+Content-Disposition: inline
+In-Reply-To: <CA+pATbgyg3Wqg7NnScPx3hUmo8nG23EFx2QUXuVAd3nJ6Z_CPw@mail.gmail.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
 
-Hello Git Community,
 
-I would like to propose a defensive security enhancement regarding how
-Git handles hooks in repositories initialized outside of standard 'git
-clone' pathways (such as repositories downloaded and extracted via
-ZIP/tarball archives).
+--oDXAv4YmWMtiCJLl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
----
-THE PROBLEM:
-When a user clones a repository, Git safely excludes the '.git/hooks'
-directory. However, if a developer downloads a project as a ZIP
-archive from an untrusted third party and extracts it, the archive can
-contain a fully formed '.git/hooks' directory populated with
-malicious, executable scripts.
+On 2026-06-13 at 21:20:43, Jamison Phillips wrote:
+> Hello Git Community,
 
-The moment the developer runs a standard command like 'git checkout'
-or 'git status' inside this unzipped folder, the hooks execute
-immediately without user consent or awareness. This is an active
-vector for supply-chain malware insertion on developer workstations.
+Hey,
 
----
-PROPOSED FEATURE:
-I suggest implementing a "Safe Hook Verification" mechanism with the
-following logic:
+> THE PROBLEM:
+> When a user clones a repository, Git safely excludes the '.git/hooks'
+> directory. However, if a developer downloads a project as a ZIP
+> archive from an untrusted third party and extracts it, the archive can
+> contain a fully formed '.git/hooks' directory populated with
+> malicious, executable scripts.
+>=20
+> The moment the developer runs a standard command like 'git checkout'
+> or 'git status' inside this unzipped folder, the hooks execute
+> immediately without user consent or awareness. This is an active
+> vector for supply-chain malware insertion on developer workstations.
 
-1. First-Time Intercept: If Git detects executable scripts inside
-'.git/hooks' on a repository that does not have an explicit local
-clearance, it should halt execution and prompt the user: "Warning:
-This repository contains local hooks that have not been approved. Run
-them? (y/N)".
+Git's security model does not allow working with untrusted working
+trees, period.  The only things we guarantee are safe to do with an
+untrusted repository are clone and fetch from it.
 
-2. Out-of-Directory Verification State: If the user approves ('y'),
-Git should log this approval by saving a unique cryptographic hash of
-the approved hooks to a global state directory outside of the
-repository's working tree (e.g., inside
-~/.config/git/approved_hooks/).
+I'll also note that there are a variety of other methods that one can
+use to execute arbitrary code with an untrusted working tree due to
+unsafe configuration options.  For example, one can set
+`filter.<driver>.clean` and `filter.<driver>.smudge` and execute
+arbitrary code with a crafted repository.  This is why we don't let
+people include config (or hooks) as part of the repository.
 
-3. Subsequent Runs: On future commands, Git will check the current
-hooks against the global hash map. If they match, they run silently.
-If a hook file is modified or a new repository is unzipped, the prompt
-appears again.
+My concern is that we'd be misleading people that this was a safe way to
+work by adopting your proposal when that is not true.  We would then be
+deluged by a whole host of invalid security reports.
 
----
-IMPACT:
-This would close a massive blind spot for developers interacting with
-shared zipped codebases, enforcing a model of explicit consent before
-third-party code is executed locally by the VCS.
+Would you like to maybe share a little bit about why you (or others) are
+distributing repositories as ZIP files instead of using the standard
+protocol methods?  Perhaps we can offer some thoughtful comments about
+how to achieve the intended goals with a better security posture.
 
-I look forward to hearing your thoughts on the feasibility or
-alternative architectures for this defense-in-depth feature.
+> PROPOSED FEATURE:
+> I suggest implementing a "Safe Hook Verification" mechanism with the
+> following logic:
+>=20
+> 1. First-Time Intercept: If Git detects executable scripts inside
+> '.git/hooks' on a repository that does not have an explicit local
+> clearance, it should halt execution and prompt the user: "Warning:
+> This repository contains local hooks that have not been approved. Run
+> them? (y/N)".
 
-Regards,
-Jamison Phillips
+How would this work in a non-interactive situation?  If I install Git
+LFS, it installs hooks when its filter process is installed for the
+first time.  So if I then clone a repository using Git LFS in a CI job
+or a container build process, the hooks won't work and my repository may
+end up broken.
+
+Note that the Unix philosophy does not have tools prompt users by
+default.  If I say `rm -fr ~`, then my home directory gets blown away
+because that is what I asked for, even if that may have been improvident
+and imprudent; no prompt is expected.
+
+> 2. Out-of-Directory Verification State: If the user approves ('y'),
+> Git should log this approval by saving a unique cryptographic hash of
+> the approved hooks to a global state directory outside of the
+> repository's working tree (e.g., inside
+> ~/.config/git/approved_hooks/).
+
+This is almost certainly going to grow indefinitely.  I've been copying
+my entire home directory from machine to machine as I get a new one for
+19 years and I fully imagine that this would have grown quite a bit in
+that time.
+
+Another thing I think is worth noting is that just because I think a
+hook is safe in one context does not mean I think it's safe in another.
+A post-checkout hook that runs a particular command (say, `bin/setup`)
+=66rom the repository might be safe on my dotfiles (which I exclusively
+control and maintain), but an identical hook on a repository from Bob's
+Malware Emporium would probably not be a good idea.  Reusing safe code
+to do unsafe things has long been a favourite approach of attackers.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--oDXAv4YmWMtiCJLl
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8Fgmot0V0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZymB7+7kp9+dJCzl0YJ/QgdZ9/XkY27RBfQeubgPkwb4
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAPA8AP9I5lzqFK8iHlaiBaiDmZf66GY1
+TH+K0OPC6ZCqGo3oTAD7B1r+DOEWMoT3+Wumeir9rR8J5DAqVL4QR/HWOPC/hgc=
+=3zMU
+-----END PGP SIGNATURE-----
+
+--oDXAv4YmWMtiCJLl--
