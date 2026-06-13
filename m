@@ -1,336 +1,185 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34083AA1BD
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 09:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781342197; cv=none; b=iY2Ywwa+6Pf6BWOpbhlncLtLVWtATfahO9gQqd4cZbC5rorCACGAp1V1olW3x47aBbsar5VQewIelrz30qZkvZmgWJbSeXh5MMYgjPZCiffODxPmvIX8wFWHfCLtTbqLEXqIQovAx79KNnppwmC4XE72V49F+a4/+GYFwbTQBkw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781342197; c=relaxed/simple;
-	bh=tUX2orAStOb1dK8CKySe604NKX12JLczbYeP2Z59Nq8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=URCbZiUQnyn2yNGJvZTzFiP8pkEv+cZ7gbBusZwHdIjeoyewkowV9NgHZMlNZap7zU1TrhH9yn9LPrUj7ASVpqJyHw7RNI7wujMhYwDVikZKYPkSvMz3UejQbZGlIe+OiVFjjJXMgxxLiAJn8djRJ50lb4d3B04CBLUo2b7VJEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EB12LN9z; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D05833DEE6
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 09:42:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781343745; cv=pass; b=YGMwx7jZgfUCF2SjDTPPUhV2JrQlIttIeOgeO1A62FTPg0VnF02hSRPDXVBaufq4bdeWTGvoBawbgi8sTYaSJzp8NQeJx0iAo7vYe+eXZ5xjkoa8gnVhq2bSJS1HgqzmKrXPI1cplDqdFi8KKtbUeUHJQNsnRcpPj6Lgrsakvfo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781343745; c=relaxed/simple;
+	bh=U8srrEKTtZhQKxc3sDk+8X3qAe90GjlNOhsAF5oNfyA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F1zzem5SJFa4fvrCNiozsHXo3lkmA3eb8wmGz/uy/vieMgVUv/fUCm7DFDUaOb3iDSOq9bP92zc7hP76ChoQ29tiV/lixIEig/JWwoqeSTXSa3Ahu6FA0YZcpsAr1kzrbldNVxNcquvYrRlB0sLpyavweFQS4ikQhLYvGH1yTnY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=YelSwBRr; arc=pass smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EB12LN9z"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5177945a279so19151011cf.0
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 02:16:35 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="YelSwBRr"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7e1c3f47d78so19549287b3.0
+        for <git@vger.kernel.org>; Sat, 13 Jun 2026 02:42:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781343740; cv=none;
+        d=google.com; s=arc-20240605;
+        b=XqGYrgv89it1U1UNDnQYvD/0K6SnNJ4X3va/APzlvkmMbnO0plsqWmQvw97hIZlxUc
+         h2RYq/g1Kmu6vhVufyh83zNXhZGVxK8r/z7DQ1acdfpwk+4NL+6tp5dTorMUsgbiPOq+
+         c7JR6SYP00ZXVPnSCc3dLYyCemC7s13UrHNcjZAsGJlI5AQk8qpK7T2vGVvLNWtDOGIV
+         X3PCNoWq9IBw8IJilChq2xyEOHrHyLGc3tX0dscW8Vv4pP7SrXpvx4OMZsfiLW/UwJ1+
+         hvtom8hOmPHxzeu1zEyZEiTbEe1o2hQW+/g+b8iv18b1rIkCMel6z0CVm2fKOqEpr6ES
+         aJ9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Gp01Gg9d3qEjgaBE8k3jKSLE9qbtPiF1YOu+AdNoHng=;
+        fh=2qQh3Twk/9BXP2JN1YJEg5XG37bzhSBn4OXZs4ZhyG4=;
+        b=QLwAofjQ1XMnjS14NfCdQDtlLmpJphxsrtaN1vP6Cjv80fQw8stXSfEwBm+QHAhAmx
+         jKEXbBdZmESGd8i3/NGiF5QAEN9SsovOkuTYZEhcO9cHKb2n5ObROkZL5oKcFp5X9Gr5
+         YXulZkqWXXg7HVYfMV8SLGS+WBZjolTCkyvsztik+9D3FmV4x3/B3JfwlRmXkWd7ZeFh
+         hwWDR4uVp/JF6G5d45sBMhZ/KEb9NnNHUWRBNw0sLm8P4lapbQ33qync+tiK2Sf0VdrA
+         JTdyZyDOpYOUgcuuApHOkCpDUBP3nTeGUUlqvFrVKx+fEruslHKfWGZ9ZGo3c/AwKai1
+         iE9Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781342194; x=1781946994; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hGxbjkRBvWdqnIUkYBgR7kJADReuG4xppjv8bVtUvZ8=;
-        b=EB12LN9zFtGM4uNZWcFDsPRHqaKKhUO07gW3FBa8A2+qr8Uu840NoEG9pwuGhKoj8v
-         SHbqQImGqLkFQYdC+T+Zuo7hNC/UGTy7p3hH7JqsISl+JMvOJmEPvDKU4gkM+NtBiR2A
-         pMHfhCbaM5/2S6O2DJM3y6Vmhl+tHg97FXgUfIE353xCnSGIX10N0i+CW6PAdV5UirDl
-         /ChL2P7fV/unz3mgflp5+CAlk/XvH6fXGorzT4oyNVsX4GMeWwb/8MWfc+0cZkKMozUg
-         +6CcH5ID1E5LVPTMlAkKsculRVD3g+1NW84jPKAfK7T+etPgtL8LBZmtbelS/I+JywjI
-         DhWA==
+        d=spotify.com; s=google; t=1781343740; x=1781948540; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gp01Gg9d3qEjgaBE8k3jKSLE9qbtPiF1YOu+AdNoHng=;
+        b=YelSwBRr+NpQYC+DhzlVeNNKXWrxzYycCQegsv+asNEXjvtP0+a/jMeaoshLvGgjjs
+         uGzPQodtK38rH6UXi4g8EAbkVkDwW2hBzPH8h0xlCYwFRbmcvjUg+etxjmN4XLeRZgpA
+         wjmxTA16iYOqfu5j5bSPetsVTm8HcNmDVoIIc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781342194; x=1781946994;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hGxbjkRBvWdqnIUkYBgR7kJADReuG4xppjv8bVtUvZ8=;
-        b=qom7boT7smsemrW2ARzTLD9D4IFIESQ0BEy72vcUYt3yJgY0v643iZr27UkLEH7ZEU
-         0+0vbCSeKPB7PC9BOfHnYYongUUYDUL5bREsE3cbJMWxSDBD3tidkAKPZyk0rlkKnEbw
-         LS8uBrskUP0+JAuVRcGGaifrg3xuKvLMCY1kmu3vOk54ppoVP3SAiNJqDopMkfSMvqWw
-         ysj0A+KuDYvUde9Wy6pMEAY96aRt+nSPnyLZaIonrLTpNw9HIjSZ1wuh3IpxVn8CpAGv
-         USmaR4n8xlNntbXBoVtjHOXxvmIeu9smKoDuRld/1VTI+1VdbjqNf3mElXXP/bi2uieP
-         LbKA==
-X-Gm-Message-State: AOJu0YyymKVayo0QT0Efo0PWKxW7xJUo3Ia8ImMBAWw91dQzs7t/IaoC
-	i+k6HB8sDX/KjVICpfkhLwv2xSrzEpirEQAfaqWoR7vonv6ay9/WLxU7pxybiA==
-X-Gm-Gg: Acq92OENNjlUkye8Ao/qmm8l1+zejBUf6m7bqb76G648prApjtrGlFVNWX5lv/1GYeC
-	ZiBEtBk5cvZ+mYPdnK6wB3KKF4mfF65b8jMpFWad7LibCLA1gUVZ2aWDUp/rit5+TgWXIs0UEOD
-	tM6uB+LCdwigHRZ6D60ymWrPr9AC0FE+G26hoZ7RIrmCDqzqfmnFxRA3hKusVnZ3dcd/u0yxnJz
-	z9KMQvXZgfhvfErXj1JfOkgE7+E/C8EVFcG4Ch5eGwJdwE2V+4/iP9gXx9sECvfVZ3POewgraIl
-	5e6E/F8tavxAgNe+17K8BYyJIwOWO5h2c4fRHdZUfBERRufV6kjvQLSTuOCX0ov40hoV+Gl8coH
-	tJ5X9HQw1Y/0RVHfSStKRHXF7qGHNBQDV1SU+NvxdA/KRAqozs80YifEKl05LmnBZyB9QKD81lg
-	ilrlXijvAAf5h2rt9qDmYYzarwys8=
-X-Received: by 2002:a05:622a:13d3:b0:517:75d8:b956 with SMTP id d75a77b69052e-517fe601cd9mr92542211cf.40.1781342194463;
-        Sat, 13 Jun 2026 02:16:34 -0700 (PDT)
-Received: from [127.0.0.1] ([20.102.134.103])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-517fb79c5absm43251441cf.18.2026.06.13.02.16.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2026 02:16:33 -0700 (PDT)
-Message-Id: <44be2f98d62d73a690c295c9b3c782aa9cebb0e8.1781342189.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2334.git.git.1781342189.gitgitgadget@gmail.com>
-References: <pull.2334.git.git.1781342189.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 13 Jun 2026 09:16:29 +0000
-Subject: [PATCH 2/2] commit: keep the commit on a no-op amend
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20251104; t=1781343740; x=1781948540;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gp01Gg9d3qEjgaBE8k3jKSLE9qbtPiF1YOu+AdNoHng=;
+        b=p6PEjNVzhoquBZf9T4QZV0XHdc9nqGR2Fv68Ao+eGFbw1LSFevfPjqMIRWuB/bX61f
+         Wn6fyA47AJjRP73BqE+yCmYAB1QP4+Q82mr1bli1UiM5uMKKP+0LV/qqNZcAsbe3FSeo
+         tD0c/o5/dMaZ3jeXgpoKspfcS5MB1qjw9UBzbub8Nuq21cIXxLhQdZsRPuD97az3rp3B
+         Y+3Izadwkqrw0ijcN/JRqZWCMbB3lhDV+uXZPsdK4O306ZfQ/txjWxvp5CRM5pTca1q3
+         uCfWZlnwqJIzxqXKQd+W/nYlRupLMnnRBY0oEytsPYJ4R1hlXext21ryfYiuk2sEG3Wm
+         xehA==
+X-Gm-Message-State: AOJu0YzC//SK8U8mIzrVU1zpJWGfoMS1vnt6C6sYUFziU7uoZtT1H6ew
+	6pxigSsoniAFFmVW2z9x25GVCW8kF0wVrmNbZQcprlxLvgNp1jjvV8i3/PSXt4zccO8qfNbOLCE
+	YGBK5+hDeTiw5GYdkzjyyYAoKoqDu+UQNvO9DR6mwVSwIYH/oCyzwP8E=
+X-Gm-Gg: Acq92OGZ8rihVhwXLc4gEAMgPE0xmhHRSeoApfay0UiAQAGeLTpQKnVFFUKHrSId8MG
+	idZxOuxL2pyKF9pfwY3uZpHbPQ/424R+GB/u+HK/uhoX3O4QUDOtmP2obxO5EdNzfbF6RF4sa7m
+	Aaa/9zHtZY8fzk88ay9nb42aZ+doKmZJ6u4VVf2L1l8sDbcPyy3LBNArPxuiFW6XWxuiH6r0c5T
+	dEXhMEuYQZRaq6SvZ5wZijAAy4PyozXSxnfIy1Fl2HY78ijaY20uyU3dNmqsaym+nkSBL2N73DY
+	BGXsLu0=
+X-Received: by 2002:a05:690c:e34b:b0:7b9:ed52:deed with SMTP id
+ 00721157ae682-7f7b822c2femr63547007b3.26.1781343740304; Sat, 13 Jun 2026
+ 02:42:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+References: <CAL71e4Mp7ewv0UGS8j=iTq6quyxLXzrr0uNDbWR8JKaOsTSVyA@mail.gmail.com>
+ <0b3f7429-a4fb-4f7a-bf7b-5a0edeb1db52@gmail.com> <CAL71e4OmPzpCXh-zZ8NsT6L4zVKnXV1gqiFZ2w0XgMJhD=LArQ@mail.gmail.com>
+ <8d0902ca-98b7-44a4-a23b-51de44ab6daa@gmail.com> <CAL71e4MFb3UUKBr1P4ZwtK3o1gvUHMs+siCpLTXKkW6Vx=BxRg@mail.gmail.com>
+ <8c06cc48-d036-4d01-98d3-e94b5edb389c@gmail.com>
+In-Reply-To: <8c06cc48-d036-4d01-98d3-e94b5edb389c@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Sat, 13 Jun 2026 11:42:08 +0200
+X-Gm-Features: AVVi8Cds4esW9eXPjtVt1J5uPIWpZGM1GabOJqh17ugmjXSQyOnLlP8vHy1qzEU
+Message-ID: <CAL71e4NRvmDagFAJE-0HYwiLPSfhVVQO2qZe-EJPVXxeC4PWqg@mail.gmail.com>
+Subject: Re: [RFC] commit-reach: terminate merge-base walk when one paint side
+ is exhausted
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On Fri, 12 Jun 2026 at 17:48, Derrick Stolee <stolee@gmail.com> wrote:
+> Suppose developers are merging into 'main' frequently. On occasion,
+> the tip of 'main' is merged into a new 'release' branch. Thus, the
+> first-parent history of 'release' is long and completely separate
+> from the commit history of 'main'. To reach the queue_has_nonstale()
+> exit condition, we'd need to walk the entire history.
+>
+> However, if we focus on the single-side condition you are proposing,
+> we can stop walking once everything in the queue that is reachable
+> form 'main' is also reachable from that top merge-base.
 
-"git commit --amend --no-edit" reset the committer date to "now" and
-rewrote the commit even when nothing else changed, moving the branch tip
-to a new hash for an effective no-op.
+Exactly - I have a similar example and a minimal reproduction idea
+for the current problem:
+Consider two graph shapes for `git merge-base H B`:
 
-Build the amended commit reusing the existing committer date: if that
-reproduces the current commit, leave the branch alone, report "nothing
-to amend", and skip the reflog entry and the post-commit and post-rewrite
-hooks.
+    Shape 1 (fast):       Shape 2 (slow):
 
-Signing always rewrites the commit, since its signature cannot reproduce
-the original, so it skips this detection.
+        H   B                 H   B
+        |   |                 |   |
+        A   |                 A   |
+         \ /                 / \ /
+          C                 X   C
+          |                 |   |
+          ...                \ /
+                              D
+                              |
+                              ...
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-commit.adoc         |   6 ++
- builtin/commit.c                      |  56 ++++++++++++
- t/t7501-commit-basic-functionality.sh | 119 ++++++++++++++++++++++++++
- 3 files changed, 181 insertions(+)
+In shape 2, A is a merge commit with parents C and X.  X
+branches off from an older commit D on the main line and gets
+merged back.  This is extremely common in repositories that
+use merge commits (monorepos, release-branch workflows).
 
-diff --git a/Documentation/git-commit.adoc b/Documentation/git-commit.adoc
-index 8329c1034b..c433c60929 100644
---- a/Documentation/git-commit.adoc
-+++ b/Documentation/git-commit.adoc
-@@ -282,6 +282,12 @@ variable (see linkgit:git-config[1]).
- 	parents and author as the current one (the `--reset-author`
- 	option can countermand this).
- +
-+If the amended commit would be identical to the original (its tree,
-+message, author, parents, and committer are all unchanged), the original
-+committer date is kept so that the commit, and thus the branch tip, is
-+left untouched. A commit that is being signed (`-S`, or `commit.gpgsign`)
-+is always rewritten, since its signature cannot reproduce the original.
-++
- --
- It is a rough equivalent for:
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 1a51450660..e330a53d5c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -17,6 +17,7 @@
- #include "dir.h"
- #include "editor.h"
- #include "environment.h"
-+#include "ident.h"
- #include "diff.h"
- #include "commit.h"
- #include "add-interactive.h"
-@@ -760,6 +761,49 @@ static void prepare_amend_commit(struct commit *commit, struct strbuf *sb,
- 	repo_unuse_commit_buffer(the_repository, commit, buffer);
- }
- 
-+/*
-+ * Rebuild the amended commit reusing the existing committer date and report
-+ * whether it reproduces the current commit. Because the committer date is the
-+ * only field that an amend would otherwise replace with "now", an exact match
-+ * means everything else (tree, message, author, parents, committer identity)
-+ * is unchanged too.
-+ */
-+static int amend_is_noop(struct commit *current_head,
-+				 const struct strbuf *message,
-+				 const struct commit_list *parents,
-+				 const char *author,
-+				 const struct commit_extra_header *extra,
-+				 struct object_id *oid)
-+{
-+	const char *buffer, *committer_line;
-+	size_t len;
-+	struct ident_split ident;
-+	struct strbuf date = STRBUF_INIT;
-+	int unchanged = 0;
-+
-+	buffer = repo_get_commit_buffer(the_repository, current_head, NULL);
-+	committer_line = find_commit_header(buffer, "committer", &len);
-+	if (committer_line && !split_ident_line(&ident, committer_line, len) &&
-+	    ident.date_begin) {
-+		const char *committer;
-+
-+		strbuf_add(&date, ident.date_begin,
-+			   ident.tz_end - ident.date_begin);
-+		committer = fmt_ident(getenv("GIT_COMMITTER_NAME"),
-+				      getenv("GIT_COMMITTER_EMAIL"),
-+				      WANT_COMMITTER_IDENT, date.buf,
-+				      IDENT_STRICT);
-+		if (!commit_tree_extended(message->buf, message->len,
-+					  &the_repository->index->cache_tree->oid,
-+					  parents, oid, author, committer, NULL,
-+					  extra))
-+			unchanged = oideq(oid, &current_head->object.oid);
-+	}
-+	repo_unuse_commit_buffer(the_repository, current_head, buffer);
-+	strbuf_release(&date);
-+	return unchanged;
-+}
-+
- static void change_data_free(void *util, const char *str UNUSED)
- {
- 	struct wt_status_change_data *d = util;
-@@ -1943,6 +1987,18 @@ int cmd_commit(int argc,
- 		append_merge_tag_headers(parents, &tail);
- 	}
- 
-+	if (amend && current_head && !sign_commit &&
-+	    amend_is_noop(current_head, &sb, parents, author_ident.buf,
-+			  extra, &oid)) {
-+		commit_index_files_or_die();
-+		if (!quiet)
-+			fprintf(stderr,
-+				_("nothing to amend; %s left unchanged\n"),
-+				repo_find_unique_abbrev(the_repository, &oid,
-+							DEFAULT_ABBREV));
-+		goto cleanup;
-+	}
-+
- 	if (commit_tree_extended(sb.buf, sb.len, &the_repository->index->cache_tree->oid,
- 				 parents, &oid, author_ident.buf, NULL,
- 				 sign_commit, extra)) {
-diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
-index a37509f004..160edb9c0a 100755
---- a/t/t7501-commit-basic-functionality.sh
-+++ b/t/t7501-commit-basic-functionality.sh
-@@ -11,6 +11,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-diff.sh"
-+. "$TEST_DIRECTORY/lib-gpg.sh"
- 
- author='The Real Author <someguy@his.email.org>'
- 
-@@ -654,6 +655,124 @@ test_expect_success 'amend commit to fix author' '
- 
- '
- 
-+test_expect_success 'amend --no-edit that changes nothing keeps the commit' '
-+	git reset --hard &&
-+	old=$(git rev-parse HEAD) &&
-+	test_tick &&
-+	git commit --amend --no-edit 2>err &&
-+	test_cmp_rev $old HEAD &&
-+	test_grep "nothing to amend" err
-+'
-+
-+test_expect_success 'amend --no-edit keeps the commit out of the reflog' '
-+	git reset --hard &&
-+	git rev-parse HEAD@{0} >before &&
-+	test_tick &&
-+	git commit --amend --no-edit &&
-+	git rev-parse HEAD@{0} >after &&
-+	test_cmp before after
-+'
-+
-+test_expect_success 'amend --signoff is idempotent once signed off' '
-+	git reset --hard &&
-+	test_tick &&
-+	git commit --amend --no-edit --signoff &&
-+	signed=$(git rev-parse HEAD) &&
-+	git log -1 --format=%B | grep "^Signed-off-by:" &&
-+	test_tick &&
-+	git commit --amend --no-edit --signoff &&
-+	test_cmp_rev $signed HEAD
-+'
-+
-+test_expect_success 'amend that changes the tree still rewrites the commit' '
-+	git reset --hard &&
-+	old=$(git rev-parse HEAD) &&
-+	echo changed >>file &&
-+	git add file &&
-+	test_tick &&
-+	git commit --amend --no-edit &&
-+	test_cmp_rev ! $old HEAD
-+'
-+
-+test_expect_success 'amend that changes the committer still rewrites the commit' '
-+	git reset --hard &&
-+	old=$(git rev-parse HEAD) &&
-+	test_tick &&
-+	GIT_COMMITTER_EMAIL=other@example.com \
-+		git commit --amend --no-edit &&
-+	test_cmp_rev ! $old HEAD
-+'
-+
-+test_expect_success 'amend that changes only the message still rewrites the commit' '
-+	git reset --hard &&
-+	old=$(git rev-parse HEAD) &&
-+	test_tick &&
-+	git commit --amend -m "new message" &&
-+	test_cmp_rev ! $old HEAD &&
-+	echo "new message" >expect &&
-+	git log -1 --format=%s >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'amend --allow-empty of an empty commit that changes nothing keeps it' '
-+	test_when_finished "git reset --hard parent && git tag -d parent" &&
-+	git tag parent &&
-+	git commit --allow-empty -m "empty" &&
-+	old=$(git rev-parse HEAD) &&
-+	test_tick &&
-+	git commit --amend --no-edit --allow-empty 2>err &&
-+	test_cmp_rev $old HEAD &&
-+	test_grep "nothing to amend" err
-+'
-+
-+test_expect_success GPG 'amend --no-edit of a signed commit is not a no-op' '
-+	git reset --hard &&
-+	test_tick &&
-+	git commit --amend --no-edit -S &&
-+	signed=$(git rev-parse HEAD) &&
-+	git verify-commit HEAD &&
-+	test_tick &&
-+	git commit --amend --no-edit -S &&
-+	test_cmp_rev ! $signed HEAD &&
-+	git verify-commit HEAD
-+'
-+
-+test_expect_success GPG 'amend --no-edit with commit.gpgsign is not a no-op' '
-+	git reset --hard &&
-+	test_tick &&
-+	old=$(git rev-parse HEAD) &&
-+	git -c commit.gpgsign=true commit --amend --no-edit &&
-+	test_cmp_rev ! $old HEAD &&
-+	git verify-commit HEAD
-+'
-+
-+test_expect_success 'amend --reset-author rewrites the commit' '
-+	git reset --hard &&
-+	old=$(git rev-parse HEAD) &&
-+	test_tick &&
-+	git commit --amend --no-edit --reset-author &&
-+	test_cmp_rev ! $old HEAD
-+'
-+
-+test_expect_success 'amend --date rewrites the commit' '
-+	git reset --hard &&
-+	old=$(git rev-parse HEAD) &&
-+	test_tick &&
-+	git commit --amend --no-edit --date="@1234567890 +0000" &&
-+	test_cmp_rev ! $old HEAD
-+'
-+
-+test_expect_success 'amend that changes nothing skips the post-commit hook' '
-+	test_when_finished "rm -f post-commit.ran" &&
-+	test_hook post-commit <<-\EOF &&
-+	>post-commit.ran
-+	EOF
-+	git reset --hard &&
-+	test_tick &&
-+	git commit --amend --no-edit &&
-+	test_path_is_missing post-commit.ran
-+'
-+
- test_expect_success 'git commit <file> with dirty index' '
- 	echo tacocat >elif &&
- 	echo tehlulz >chz &&
--- 
-gitgitgadget
+In both shapes, C is the only merge-base.  But in shape 2, the
+walk through X's ancestry is P1-only: STALE propagates through
+C's ancestors but never reaches D's lineage.  The max_nonstale
+pointer stays alive until D's entire history is drained.
+
+On a 2.5M-commit monorepo, we measured this directly by creating
+test commits with `git commit-tree`:
+
+    Shape 1: 10ms
+    Shape 2: 4.85s
+
+Both running with stock git 2.53 and both found the merge-base C.
+
+A single merge bypass to old history is enough to force the walk
+through the entire graph.  In practice, master's history contains
+many such merge commits, which is why we consistently see 5-7s
+wall-clock time for merge-base queries.
+
+With per-side tracking, the P2 side exhausts immediately after C
+is found (B's only parent C has been processed), and the walk
+terminates in 6ms regardless of how deep the P1-only bypass goes.
+
+As you noted, the "release branch" shape is another case where
+this helps -- the main side exhausts at the merge-base while
+release's first-parent history is entirely one-sided.
+
+> But I think your single-sided approach is a better way to get the gains
+> that you want. I think that case is much more likely to occur.
+
+Thanks for working through this with me. I started thinking the idea
+itself is not strong enough on its own, so I have attempted to
+write a more formal correctness proof covering the
+drain phase, result exactness, and the INFINITY/finite region
+boundary. It is too long to inline (~2000 words) and the high
+level argument is already in this thread, so linking it here
+instead - I consider it optional reading, since it's not really
+light reading and we can likely make progress without it:
+
+    https://gist.github.com/spkrka/621695aa464df2a8c1837e9abca822e3
+
+The proof assumes finite generation numbers (commit-graph
+present). The side-exhaustion check is guarded by
+generation < INFINITY in the implementation.
+
+I am far from an expert in logical proofs though, so this may
+not be strong enough to be useful, but it may be possible to
+fix it - or it will uncover some flaw that invalidates the idea.
+
+> Thanks for your persistence in working on this through my
+> misunderstanding.
+>
+
+To be fair, I think this was more a case of me not being fully
+able to explain the idea with enough precision initially, so I
+appreciate getting the opportunity to refine it with your very useful
+example case.
+
+Thanks,
+Kristofer
