@@ -1,122 +1,133 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC56156F45
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 03:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F42356764
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 04:06:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781319714; cv=none; b=Zf2K+ye+4eq9Gtbg4+pKYfEVCsfrL1o7GcN+/Ctzgk6wWusdn1NqmeWcLoDCCBmeryoMGJ5P3yv1RoXkd08X27RzQk5cemaJWjtLfr/0L1U967EynvbJE2c/o0sPERtrqvgu/f8AZsFj02AU9smN+2sFIg8hO5yPvEEKt61GjXc=
+	t=1781323582; cv=none; b=mA99ce/cSxomBa1pYadSXziCE2mMA2KW0mAGRbO4j0TXkfN5xZUgF2gXa1/RNCOCfkTNLCVjpZhj3pnNW3YsezAIMDrRCmCwYnKtk55e8wNL2z6m7HK8hDtr6q3ZKyisEgn+Cnx9nNl1M+RuhBlJm7At9RDYWpOFhPN3ljQdM0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781319714; c=relaxed/simple;
-	bh=GewawWoaAyJilpxh5G/y5IhpXKNksgwr4rz5b2wjiAw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ABLQLrWuFwHxpr0+M29my6OWMrf9jU8pwspXG5Ck3NHhD6B8tBVfmf9Ee8skQEN+G7MRogmiWiyGI2V0/V3ocGoCQy8uYiRFx0YmSL9FFEXBmeB1bsiwWdDRug1CzU9YwWwMEiULSGCiTu4EeLZMRHjdp3TnDpl96vOp6UEhIDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SODFftGJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ap7CggNF; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781323582; c=relaxed/simple;
+	bh=5QDtg6gzn37OdXVFwU/xCOt2PUS4gwEGaDhfhysl5r0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=OtX0z/lD6hGsqNDgEbyCDbgOTYlMatsvL4IrXt//IbqWKw06h1hnteFrmvx26jAYczCmL5y/1u51RWMBbi7dTLqlhh83Odk3MMIpxaHLxpEuh5Sbgjio30MgwTs9KRoJzYVN27jiJP4Ui9BmLmcC4gByUFdcc51dQgL3W1cmhYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrJOPaoG; arc=none smtp.client-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SODFftGJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ap7CggNF"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 746A37A009F;
-	Fri, 12 Jun 2026 23:01:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 12 Jun 2026 23:01:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781319711; x=1781406111; bh=pqVLryWEp3
-	ILunfds4pLh0XT2shbeoQIdFeh5a0szRc=; b=SODFftGJtIhWlp0BRuQV6mAOAt
-	Q0CbwfjWKVFYeZjsiZsSKYasg6Ac1oeCtES8aIKus5dYz9H7/5CdRoItPSTRS2Jc
-	ag+7FwjuAQ1oarX1hcbmLZo4M0yCJno3/w2gEoqCkA0FvAhruVG5XO0Tr4T5lUgL
-	6W7zvnWgOam9b33gpPT1eYpF5IdXworhd7hT/VS2mwHJwfn2nx0oNjv0i6ayz0/v
-	lCJ7hFMDid/OOhi7vAbxJsEYZvO+FFKTA6AZTucBtHS229THlUb+5vmgzsC/qAfy
-	bgkzUQKBaYAZOsVyQfZAk24Y/uFh4V6AyCYT7cSGsxoQo8sIiywI1C6Cwa3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781319711; x=1781406111; bh=pqVLryWEp3ILunfds4pLh0XT2shbeoQIdFe
-	h5a0szRc=; b=Ap7CggNFcODW3ZreYud6D5+nFi+P6G6OjEZ2fRKRal2wJdXGxuW
-	WGPGuqx7kIsbCB/6V+Kp9AyW/+IRE2wIeJQ8FNmSqA5wBD0i64ipFIaHS82SxsFO
-	e8ZBkOmQ2QAogakldfSSLD3cTRhzhvW1Btm/O7VGghmsy91JgU2PUy3NLCgPfQBP
-	KuaPhVA8VixLiIMLSWETDoINblkD5Ps54KQa9duc90n/i1LvEbSOoeQgchba4834
-	MoWJZYRTaaONdbMmxxDj/0reWYB0zdvM24lGcG14dbBbIHGUaxwx93IaildC+RdV
-	MNP6zPqlV5HC6VA/OXcctOFXUqEy+gLYf/w==
-X-ME-Sender: <xms:Hsgsav0DjUaaj3bX8b33tZBqv9uA_n0uSB5_NDjypp24SxdSk-LncQ>
-    <xme:HsgsasWGVDHk45ws2nPn2V48l4oE1oMhuMna7ZBUJFigRY-QdDcrXq-PAMnib9xra
-    bR81jz0G9pxuJGgkeWEPPbVHYkQw9OzBaN2ZGADHEsDpILd9UFx0Q>
-X-ME-Received: <xmr:HsgsapOj_PxFaVNJOfemY3slS-7Het4xITV7XCvfWwBuqD5LcDPb27s-yZzZVRJp875I85phARqW1UDk-qd-xu9SYop5S6HeRYd->
-X-ME-Proxy-Cause: dmFkZTGmxvJBDKlSaoenpZmSOgg10xcaY2OnDAatWHEgnfjnbZXZZeECXz+tgLJTZX8rak
-    L1jjgUe0n98eKGXacAP+G7G+5SE0036Vj2JSMr0w7F0FeeTHzRcF+sazG81XmqcW1OGn0K
-    BEbTr9ixehzV050WSZiwcYtoPkUjHjJO71Slp5M7rNTk7Mqf14Nw1gkoMZJCFrZ5OkC6QW
-    O/dAs9OMnFvsF/SVgs0n9LTVuqglGGKNvM80YICxA0lTfMVwut5f+puKaGFsrlIRbun9nX
-    4V/9oD51/8GTcyezzffC4x2kv0XxZGr3P/TBx5WujTsOfLijz+3yPTYzzJaG/pyPxIJUV9
-    LthosXBYFXSx3QZGPsj66+/3VgyowKJuN1yxN/875fwupo873pWHMXnNJY34guz9jrjRRD
-    I53436zKsAxx3ajp1uY9gbZ3m/WpUdEvOu9XnYYr9BpFVCarsJ3/Xot1xSWVrWZ/cEpL9E
-    /jeDfE74/1qJL4+E8kwkv/1432WbvRjMHnYR+K2WNntWplxJihhZCWIBF2h+gTFI+65417
-    ouXutSOW0RRJDDc0LnN83uiP55JgJgBeByp2KXTh5LjmYl8PfSdfkQGQXxFvTuVROiMfcG
-    Urj51uY0I4zycxCEWypfz0lP1pENwuD8DQEgkKLYrF+OZKmn+nj1qRFDDQYg
-X-ME-Proxy: <xmx:Hsgsan2K8O4fUvbqFNdQzySf8cPO2OuwVYkw7GAnGdC2P7kAbonoDA>
-    <xmx:HsgsalRg3rnTiy78WNyOu0f8EdwxzH0FoBoJuL3TX6_lLymXajT9-w>
-    <xmx:Hsgsaqnm21DP8i2WmRnf4JupX7I0hxZhfITmDZ0RxNTq9EyZSJDrew>
-    <xmx:HsgsamNF-viRYq-6s3YbsGQdQenzFaQwPuCUU32qttmIzWMdbqPeYA>
-    <xmx:H8gsaiRvbSYhsaj-pmqE1DD4V1c8kUR5d35XPI432EQIanllPi3XmrwJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 23:01:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,  ayu.chandekar@gmail.com,
-  chandrapratap3519@gmail.com,  christian.couder@gmail.com,
-  jltobler@gmail.com,  karthik.188@gmail.com,  peff@peff.net,
-  phillip.wood@dunelm.org.uk,  siddharthasthana31@gmail.com
-Subject: Re: [PATCH v4 0/2] graph: indent visual roots in graph
-In-Reply-To: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
-	(Pablo Sabater's message of "Fri, 12 Jun 2026 15:48:29 +0200")
-References: <20260427102838.44867-1-pabloosabaterr@gmail.com>
-	<20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
-Date: Fri, 12 Jun 2026 20:01:48 -0700
-Message-ID: <xmqqwlw3f8ir.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrJOPaoG"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-137dd523634so2301669c88.1
+        for <git@vger.kernel.org>; Fri, 12 Jun 2026 21:06:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781323581; x=1781928381; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ESq2YLqEO5HVk/FTETy5sagY2SS89Ig05qva2heSvY8=;
+        b=TrJOPaoGT1vhd7ktKPluLHz5zmyXfXxqmlQNmROdhWfwNuGDtBFZp+2/OQgTOXPiej
+         50E0dUFH142krOr8qudDz/pkQO0f/wpz+hmKY9u3WHKsWFUXGd+yz56IMROlSBidF+e9
+         T9yoCEUElfgb9s+ghvlJgom5W1gk97yHAzrk9MkoKSsZwBCE94uAJf9k5FqqS3GXwu7U
+         RUrZTu1J/jB39+6Ucij1RpjZB8dRxBl8bAb35SW2BPbSg84qAPUqhJvVBSl9uHWuQKd5
+         UW9+s321nlP9uSx1pXsuh7AcRHKDeW4ZYYEXqUYUz6cRhb5A1AvuMCHJpoTaNchzJsxu
+         2gGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781323581; x=1781928381;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ESq2YLqEO5HVk/FTETy5sagY2SS89Ig05qva2heSvY8=;
+        b=WCUfSud5NoU4WTcGKTeu5Wmv594ksiy9nSRDwtKKk6c3+mD2pQhK7EtdNh46INrBaW
+         ubhIDgbIsLT1qkk7ucwwKL4DQZuaY5EynhAj1lt0EmohvjKloz+PdiBeyNPKVu+SHxup
+         5TNKq9NNJ12PLgeE/APe2Do1B5SMNOhGPx/+PmLvWn48WD+SfArfahNlZnV8Iqr3usvy
+         fJwPpBWI3WTggnlnJeqjtHbTpvIfQuXe50qb67a1F0fcHLL4RDM4HSi0SdS0z33OtnDl
+         q4nwdu9s7UDZaGOsY5CZQdiXz8/nLN9/gQI/3AREGXwSkAOn7dfftgel4CRAp8Hx3k5F
+         oEXA==
+X-Gm-Message-State: AOJu0Yw2qTNRI+1hT9lcOn6l7C0dPDCBALwQyd9RTxuStXmGb3DmsjZh
+	mQrXVU8hPyWkyXY9kCHWxuR5rtNkb6hTjUxewGPs2gC286PgNlro5xwpPA3FKw==
+X-Gm-Gg: Acq92OFLKQQO7GktVd8JmnmS9CKLxPn4gW/RSkYObvLK4DnQmICDOi4p4p97Rtygmdq
+	ZcnpZZ742pT4kmAU4zB6ZAjVEQ1kKeo+OQcRFl4QRdmNWNtnXxd8gW02jVB7CZfdRrGNQ/9M+vt
+	4jYrCg0rYlX30LGz2v5fMvz8U+LTAo5FEUjGyNXvS79p1RLNgp7bb6e7jOKhWC/wwTqY178rNSe
+	7rk0+386yn1+oHwY1mQduwnT8dutqeP43EsW8pTanrNoiP1JrpBdBGZKgg3Ghmu9ePZ9/b2fFqr
+	mV+rOKp7R76jQbuws0nFzaDN7GIk19e6nkwUqXk6XB4uduwpenwiJjZ+2rYzT9xBclDs0KML9J7
+	Bdi6RIpXF3guseF8+bN9IhJhvFNC6ojBVoTUPiQjeQhI1FDzmsh70cA0X4qYBUM+T5hnXVxGtUG
+	tXsRqc7XgBukl1UvNoqluf7dI2
+X-Received: by 2002:a05:7022:79a:b0:137:1ae1:bc2f with SMTP id a92af1059eb24-1384bafee86mr2066657c88.13.1781323580580;
+        Fri, 12 Jun 2026 21:06:20 -0700 (PDT)
+Received: from [127.0.0.1] ([40.65.56.225])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1384b9110d3sm4461968c88.5.2026.06.12.21.06.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jun 2026 21:06:19 -0700 (PDT)
+Message-Id: <5959cab258ad6c5099e1aa7696416cc2376b3a3d.1781323575.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
+References: <pull.2135.git.1780559158.gitgitgadget@gmail.com>
+	<pull.2135.v2.git.1781323575.gitgitgadget@gmail.com>
+From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 13 Jun 2026 04:06:10 +0000
+Subject: [PATCH v2 1/6] t/README: document test_grep helper
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Michael Montalbo <mmontalbo@gmail.com>,
+    Michael Montalbo <mmontalbo@gmail.com>
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+From: Michael Montalbo <mmontalbo@gmail.com>
 
-> When rendering a graph, if the history contains multiple "visual roots",
-> actual roots or commits that look like roots (i.e. have their parents
-> filtered out) can end up being vertically adjacent to unrelated commits,
-> falsely appearing to be related.
-> ...
-> [1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
->
-> V3 DIFF:
->
->  - Completly changes the approach to indent the visual roots instead of the
->    commits after the visual roots.
->
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
-> Pablo Sabater (2):
->       lib-log-graph: move check_graph function
->       graph: indent visual root in graph
+test_grep is a wrapper around grep for test assertions that prints
+the file contents on failure for easier debugging.  It also accepts
+'!' as its first argument for negation, which preserves the
+diagnostic output that '! test_grep' would suppress.
 
-The new tests added here does not seem to play well with
-linux-TEST-vars CI job when merged to 'seen' or 'jch' with other
-topics in flight.
+Despite being widely used (and the preferred replacement for bare
+grep in assertions), test_grep has no entry in t/README alongside
+the other documented helpers like test_cmp and test_line_count.
+Add one.
 
-  https://github.com/git/git/actions/runs/27445164550/job/81128391150#step:10:1779
-  https://github.com/git/git/actions/runs/27445164037/job/81128386244#step:10:1778
+Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+---
+ t/README | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-I suspect that these tests are failing the same way even standalone.
-
-  https://github.com/git/git/actions/runs/27447146727/job/81134594264#step:9:2136
-
+diff --git a/t/README b/t/README
+index adbbd9acf4..c12a1c317a 100644
+--- a/t/README
++++ b/t/README
+@@ -1039,6 +1039,27 @@ see test-lib-functions.sh for the full list and their options.
+ 
+    Check whether a file has the length it is expected to.
+ 
++ - test_grep [!] [<grep-options>] <pattern> <file>
++
++   Check whether <file> contains a line matching <pattern>, or
++   with '!' that no line matches.  Use this instead of bare
++   'grep <pattern> <file>' in test assertions.  On failure,
++   test_grep prints the contents of <file> for easier debugging,
++   whereas a bare 'grep' would fail silently.
++
++   For negation, pass '!' as the first argument:
++
++	test_grep ! "^diff --git" actual
++
++   Do not negate by writing '! test_grep', as that suppresses the
++   diagnostic output.
++
++   test_grep should only be used as a test assertion.  When grep
++   is used as a data filter (e.g. 'grep -v "^index" actual >filtered')
++   or inside a command substitution (e.g. '$(grep -c ...)'), plain
++   'grep' is the right choice because the exit code is not the
++   assertion itself.
++
+  - test_path_is_file <path>
+    test_path_is_dir <path>
+    test_path_is_missing <path>
+-- 
+gitgitgadget
 
