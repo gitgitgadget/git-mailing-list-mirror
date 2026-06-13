@@ -1,112 +1,276 @@
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34CF37F8A4
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 17:43:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781372617; cv=pass; b=ivZJXpvtTMdTvte1M3/RgzmhHgLvSBRV9LwR+pruemfY84k1oshPb91jO4fq4zu1QccHktIbXZgLCr9hio7GCet1FLzuaKZ6lTbz6/25wpDkf7prii74wN/Iq4MfTL0dOILkGpSU1Gp+WN/KsHrPoLUP8vRQnWtbCvmRnw6CbKg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781372617; c=relaxed/simple;
-	bh=L2VMkHo9nwgQ6S4sb+c9wTn0OOOhUKGgp+od3tG2NPk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=jWjqITS8u7smKqsqu7DDtkRNM/Jas6zL/vfZBBSbW8r7hiOwWfPSzZA21LfBa/eDpnOhw5BC7SwoTYqaKGv6YejvsM+J53by9EZetSe1KjaFREQUx+f/mKueixnClZI0U5VAfNAiznX1vJdlVgmRDr18iBrT5rhh/kIBt46PXLE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rn4wfoIF; arc=pass smtp.client-ip=74.125.82.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4942F39C2
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 18:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781373767; cv=none; b=HOBtytjd1HHNcFMV0pHnVRiL6Qp6ZuJDr50vwQIiMR/ZBZGtJI50ER/xyowyiOOUzE2Unr2sOyMpemf1jD2TpayUyh9AN/nzodOdftFpGq0uA3hA0IbuDcZI7rPsM+V8gkHiBruo5c5NiJb5nn9Qe8VOoRMs0wgAiKPHcAw7/KM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781373767; c=relaxed/simple;
+	bh=gNQ9KqT9Jz8rYAK936N04rSSxKFMgQGmCLZOb36CDJI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=fb9aM6VpJNWQMoVyAucWP3ZgOWN1oJFx/Mwswl2shrHMjh4gpOj76sXWl6i0SJIbexfDc1+yCC27VPztwLhez974kNg4EMk614TXNJdZx2eqqsm+XC+6HJrOU0WlyILQOldjmZz478vrLIhBrdoedre8lMU5vbFC2wyJB1GhY/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b=HBmQs2k9; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rn4wfoIF"
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1370417c01cso2568214c88.1
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 10:43:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781372615; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SmUAS28V0WvNEUq7tiUQ4CGB1rvDYkyYpp8Wuzfqabglpcdo6RW+nDLiyXlzfWWby2
-         upP+RCl1JVe3wHCxCTnBtcOhv7uBUeqPYngoP0DJxxtKEziB8LdHiSvX1ixBodlLID37
-         OCV1KdrdWhizjek4FT2dKLcWkD3UYOWWlaB2PEhsM1DDxQTQHiDyBrL2qzN3zbP+vzOY
-         0/Cd+DqVYYqpqQkFn/8b3ekV11PCG3ytRrIMFONo4tCCS4vqGDWB8HLjnKf3i3/7SzyD
-         wK6NWavgBGu6TsiN2CpM8rHmKCzcd+zuOwEgNA4057HajqNw3PnZ8i6A/yQ10Ob+8esd
-         tJrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=eXLMr1JjX6kr/nFwar1hFDv2yeHewht6Uo4b9sIQkQU=;
-        fh=o9qB5PXa7vosqHeNAjXT/dcYACJXfUUgxpUfJ02J2PQ=;
-        b=ixBqZlYzGph9VQvReI3csjN1y1+aQkpHGE9b5jStvtHGxjhsYGtLrRNBI27b1XjBx6
-         CPH+cBS/Tb02qGfBKE9H5V0GEiqDkwTDCTBRfDpHt8B9icc3aIEZ25FgFufH80aflIRK
-         BBZwa963EwGh31ClpYqrE3es4alXPBtTosjLID1F1VHsgclb9W+8oGOtBsx1aytDLHly
-         yF0qjih2Mfad4gAlMFVtZ+CYtgAGZMc5Zdxh9234Fq0z0AvlQ5nAjV/qFtVpKSQ6fTPa
-         i/rCBLRiWm4ofNdThptPnbBAlFoMCLcQHeWkG4oLOmV5sMWGIPwOC+8kKYDaLn/nYvWI
-         eG+w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781372615; x=1781977415; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=eXLMr1JjX6kr/nFwar1hFDv2yeHewht6Uo4b9sIQkQU=;
-        b=rn4wfoIFmvDENl0vOEQ5sBRqjdILxBJf3bIcBiOoTmzG2Z0uiufbB6hmZfo49QIliU
-         GPHtviS7gCQTIphx3Jr/ELf0gpKBQUHtchNQcnTOhD1ZZSYNkQhg+H8Jrh0MVnS0dLC3
-         upTtxEYWyCX+tB7RnIedZNqhPUMCm0zTMk0fZDmTS9Y2RtStahQ4Rj0AVJ3dE8kh7HdR
-         l/RUVBmZMlXnM3eoNq4jIXXJI3jlUGTZlKheNH9vH6sV/qs75uXQliu1EyKiFg3f7SXC
-         w9oWbGRMtvGGOOi0Ic1DCcu+kh/X67k6fc65AVPMh0zOSzml+V8m5F07nuplwkOLGVWE
-         lowQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781372615; x=1781977415;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eXLMr1JjX6kr/nFwar1hFDv2yeHewht6Uo4b9sIQkQU=;
-        b=ougwMTsHMeyv4Fe1YAilt2o2LAWlnWBXeDodHMlnahUL3dni/BEIf9LUeUx/yTmce/
-         Ca5wyH3MYU8DsMqTDep1y9HJ17WpzxvYx9XVFKIQ8z1RjQ0LxDC/kYYYVJUrv+4tcaiS
-         8OZFO9LpEc65L0BYpxXrlYwdIez+XEvBLPcMTzY9rlGhoB4SrxwHKM8Lho8qdEPu5Uf0
-         DxknPnK6yc3BVqOMRpnfQczBHT+asMrEQRXvu6wOmQr7ejBBAZw+0IAptJJ2MqjVlUeJ
-         l/07CyNaRdo0SAJl+7Yihwquu7Z0Mz6kEMFmRexFuwPAmfJeTQYhZ+OD4xO4PUBSZBU1
-         wLbQ==
-X-Gm-Message-State: AOJu0YwMszynxBHaicumHHJH+7B5KyeYI9cbQFfmu29tEDBpnhnRZsgO
-	7JKD0CkTT8QxoL0y8XcmMxRWPT+MxGbVwJOFJUlZTz2qLRxJLMnLkIpCDvhyjHLCap5mnlHwk2H
-	rVPYoiFiS/IqCk1qxBsHThL/22wrCAlZkHZFV
-X-Gm-Gg: Acq92OFxNoCCtdHNXMAYQkwrF7njipO0OAQyrHBw68bfgGa5Txms3MDrGYOn+hMcAXM
-	BV6hHIu0A1hIRwufR7747XyX4Q2kc66Id00VZUdIhAw5mhY/2SOg/vJKT88Htbuk6JFyNR0BLwu
-	Llq4Wb1GlsTs3TeFRjSsD1hPFJ+TbCgVogo3yxJIbL+mK0k/ShxMFIatWIn/T18Q/QTHa6lOdjf
-	ZiuBQ1+AWnJeLfSAdRI/JCs7nsg36K7sMEvMZvMYSYzOF8rSXPsSd9omNxh5tm3CCAiYSFiW0H8
-	XqaJ
-X-Received: by 2002:a05:7300:8188:b0:2f3:3daf:3496 with SMTP id
- 5a478bee46e88-30820098dd8mr4339027eec.26.1781372615083; Sat, 13 Jun 2026
- 10:43:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b="HBmQs2k9"
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 802A34D135
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 20:02:34 +0200 (CEST)
+Received: from [IPV6:2a01:e0a:ecb:c5f0:ccd1:30f1:b7d9:b95f] (unknown [IPv6:2a01:e0a:ecb:c5f0:ccd1:30f1:b7d9:b95f])
+	(Authenticated sender: thomas.koutcher@online.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 4D5285FFA3;
+	Sat, 13 Jun 2026 20:02:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
+	s=smtp-20201210; t=1781373747;
+	bh=gNQ9KqT9Jz8rYAK936N04rSSxKFMgQGmCLZOb36CDJI=;
+	h=Date:From:Subject:To:References:In-Reply-To:From;
+	b=HBmQs2k9bZdJqlJdn2HQ/rFA8YnMSbyW2dwm36hDU9z/mR1S/eZ/Qn5nt6Ras2KXG
+	 ZvgMa9hRw3jTM/e6bAsGp5pVBtEKMYGOUPBK264ecHADTnD/E9Biy7OQ5sSpMYzSgt
+	 i0w2dlU9egqgQ48AJ1lpLayadyvYRftbLMN2wu1vQkdU54j2QCAbdMd3cJqwjOBhB9
+	 8YvrgpAWVv1o6Lc1Z1LbIM4wjsHUFYm645zcSLTRD+9hr9c5goDzl5XQRY7eHyFAku
+	 jBb5uhUPuX98aZ586R5QbQ9rbVMElsPeoF1ZbRZmPIddHgDSdioOsXumt6w2+3Y81K
+	 uE5RfMZp+dHTg==
+Message-ID: <1bdcbdb9-4198-41aa-a621-0676e9a20876@online.fr>
+Date: Sat, 13 Jun 2026 20:02:26 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Hadrien Loge <hadrien.loge@gmail.com>
-Date: Sat, 13 Jun 2026 19:43:23 +0200
-X-Gm-Features: AVVi8CeYh6qXsoQdDifPuOns1WzOS1a4iGubbvKIKMWIOWrDvLm_gvHBffEJgKY
-Message-ID: <CADeHOfw6kNstNFucG7an6+Mbm2+=-PnOH8xtZkO9RK8=eWsx=w@mail.gmail.com>
-Subject: Re: [PATCH] clone: accept DEPTH env var as fallback for --depth
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, hadean-eon-dev@proton.me, 
-	m@lfurio.us
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+From: Thomas Koutcher <thomas.koutcher@online.fr>
+Subject: [ANNOUNCE] tig-2.6.1
+To: git@vger.kernel.org
+References: <466060ab-ea6c-4c13-93f7-2de7a380429d@online.fr>
+Content-Language: en-GB, et, fr
+In-Reply-To: <466060ab-ea6c-4c13-93f7-2de7a380429d@online.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Well mainly I'm asking this for packaging (Arch/Alpine/Etc)
-These all follow similar conventions (PKGBUILD/APKBUILD).
+Hi,
 
-But in nested flows the ENV var seems like the proper solution.
+I am pleased to announce Tig version 2.6.1 which brings a security fix as
+well as some improvements and bugfixes. See the release notes below for a
+detailed list of changes. Thanks to everyone who contributed.
 
-Mainly I gave this example on github:
+What is Tig?
+------------
 
-    git clone --depth 1 url dest
-    cd dest
-    bash run.sh
-    here run.sh has its own clone deps (perhaps even multiple)
-    --depth 1 is now lost
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a Git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various Git
+commands.
 
-And only ENV vars that I can think of properly propagate for CI
-flows/clean chroot envirs.
-Thank you for considering the solution. It would be very useful
-for speeding up packaging.
-Even on 5k commits history it's 900kb vs 17mb.
+  - Homepage:	https://github.com/jonas/tig
+  - Manual:	https://www.mankier.com/7/tigmanual
+  - Tarballs:	https://github.com/jonas/tig/releases
+  - Q&A:		https://stackoverflow.com/questions/tagged/tig
 
-I have also reworked the commit to include tests/docs.
-and rename to GIT_CLONE_DEPTH
+Release notes
+-------------
 
-Kind regards,
-Hade
+Security fixes:
+
+  - Fix editor command injection vulnerability (only affects
+    version 2.6.0). (#1432)
+
+Bug fixes:
+
+  - Fix notes handling in the main view. (#1394)
+  - Honor init_size in string_map_put_to().
+  - Reset view->parent both when switching and closing view.
+  - Fix grep with revision argument. (#1398)
+  - Minor tweaks to the blame view.
+  - Fix repo info in bare repository with no HEAD.
+  - Document `%(status)`. (#1406)
+  - Update Cygwin build.
+  - Fix "DU" conflicts showing as 'Staged changes' in the main view. (#471)
+  - Ensure consistent blame view access from the blob view.
+  - Fix compiler warning with glibc-2.43.
+  - contrib: chocolate-theme: Fix cursor color in backgrounded view. (#1419)
+  - Fix date for 'Not Committed Yet' changes. (#1423)
+  - Fix slow tig status when given a subdirectory path. (#1424)
+  - Handle pure file rename in the diff view. (#1426)
+
+Improvements:
+
+  - Handle the NO_COLOR environment variable. (#1402)
+  - Run tests against system's tig when SYSTEM_TIG=1. (#1400)
+  - Support option append. (#1413)
+  - Add an option to make the tree view recursive.
+  - Enable direct blob edits in clean HEAD state. (#1415, #1416)
+
+Change summary
+--------------
+
+The diffstat and log summary for changes made in this release.
+
+  .gitignore                                    |   1 +
+  INSTALL.adoc                                  |  50 ++-----
+  Makefile                                      |  36 +++--
+  NEWS.adoc                                     |  38 ++++-
+  README.adoc                                   |   5 +-
+  appveyor.yml                                  |   2 +-
+  compat/ansidecl.h                             | 137 +++++++++++------
+  compat/compat.h                               |   2 +-
+  compat/hashtab.c                              | 141 +++++++++---------
+  compat/hashtab.h                              |  24 ++-
+  compat/wordexp.c                              |   2 +-
+  contrib/chocolate.theme.tigrc                 |   2 +
+  ...ke-CYGWIN_NT-6.1 => config.make-CYGWIN_NT} |  17 +++
+  contrib/tig-completion.bash                   |   2 +-
+  contrib/tig.cygport.in                        |  30 ++++
+  doc/manual.adoc                               |   2 +-
+  doc/tig.1.adoc                                |   2 +-
+  doc/tigrc.5.adoc                              |  17 ++-
+  include/tig/apps.h                            |   2 +-
+  include/tig/argv.h                            |   2 +-
+  include/tig/blame.h                           |   2 +-
+  include/tig/blob.h                            |   2 +-
+  include/tig/diff.h                            |   2 +-
+  include/tig/display.h                         |   2 +-
+  include/tig/draw.h                            |   2 +-
+  include/tig/git.h                             |   6 +-
+  include/tig/graph.h                           |   2 +-
+  include/tig/grep.h                            |   2 +-
+  include/tig/help.h                            |   2 +-
+  include/tig/io.h                              |   2 +-
+  include/tig/keys.h                            |   2 +-
+  include/tig/line.h                            |   4 +-
+  include/tig/log.h                             |   2 +-
+  include/tig/main.h                            |   3 +-
+  include/tig/map.h                             |   2 +-
+  include/tig/options.h                         |  14 +-
+  include/tig/pager.h                           |   2 +-
+  include/tig/parse.h                           |   2 +-
+  include/tig/prompt.h                          |   2 +-
+  include/tig/refdb.h                           |   2 +-
+  include/tig/reflog.h                          |   2 +-
+  include/tig/refs.h                            |   2 +-
+  include/tig/repo.h                            |   2 +-
+  include/tig/request.h                         |   2 +-
+  include/tig/search.h                          |   2 +-
+  include/tig/stage.h                           |   2 +-
+  include/tig/stash.h                           |   2 +-
+  include/tig/status.h                          |   2 +-
+  include/tig/string.h                          |   2 +-
+  include/tig/tig.h                             |   2 +-
+  include/tig/tree.h                            |   2 +-
+  include/tig/types.h                           |   2 +-
+  include/tig/ui.h                              |   2 +-
+  include/tig/util.h                            |   2 +-
+  include/tig/view.h                            |   6 +-
+  include/tig/watch.h                           |   2 +-
+  src/apps.c                                    |   2 +-
+  src/argv.c                                    |   2 +-
+  src/blame.c                                   |  18 ++-
+  src/blob.c                                    |  38 +++--
+  src/diff.c                                    |  47 +++---
+  src/display.c                                 |  35 ++++-
+  src/draw.c                                    |   2 +-
+  src/graph-v1.c                                |   2 +-
+  src/graph-v2.c                                |   2 +-
+  src/graph.c                                   |   2 +-
+  src/grep.c                                    |  31 +++-
+  src/help.c                                    |   2 +-
+  src/io.c                                      |   2 +-
+  src/keys.c                                    |   2 +-
+  src/line.c                                    |   5 +-
+  src/log.c                                     |   4 +-
+  src/main.c                                    |  14 +-
+  src/map.c                                     |   4 +-
+  src/options.c                                 |  45 ++++--
+  src/pager.c                                   |   2 +-
+  src/parse.c                                   |   2 +-
+  src/prompt.c                                  |   2 +-
+  src/refdb.c                                   |   2 +-
+  src/reflog.c                                  |   2 +-
+  src/refs.c                                    |   2 +-
+  src/repo.c                                    |  10 +-
+  src/request.c                                 |   2 +-
+  src/search.c                                  |   2 +-
+  src/stage.c                                   |   2 +-
+  src/stash.c                                   |   2 +-
+  src/status.c                                  |  23 +--
+  src/string.c                                  |   2 +-
+  src/tig.c                                     |   3 +-
+  src/tree.c                                    |  10 +-
+  src/types.c                                   |   2 +-
+  src/ui.c                                      |   2 +-
+  src/util.c                                    |  16 +-
+  src/view.c                                    |   2 +-
+  src/watch.c                                   |   2 +-
+  test/blame/blob-blame-test                    |   2 +-
+  test/blame/default-test                       |   8 +-
+  test/blame/initial-diff-test                  |   2 +-
+  test/blame/navigation-parent-test             |   2 +-
+  test/blame/revargs-test                       |   4 +-
+  test/blame/start-on-line-test                 |   2 +-
+  test/blame/stash-test                         |   4 +-
+  test/grep/refspec-test                        |  59 ++++++++
+  test/main/filter-args-test                    |   2 +-
+  test/status/file-filter-test                  |  80 ++++++++++
+  test/tigrc/append-option-test                 |  33 ++++
+  test/tools/libgit.sh                          |   2 +-
+  test/tools/libtest.sh                         |   2 +-
+  test/tools/show-results.sh                    |   2 +-
+  test/tools/test-graph.c                       |   2 +-
+  test/tree/recurse-test                        |  64 ++++++++
+  tigrc                                         |   4 +
+  tools/announcement.sh                         |   2 +-
+  tools/doc-gen.c                               |   2 +-
+  tools/header.h                                |   2 +-
+  tools/install.sh                              |   2 +-
+  tools/make-builtin-config.sh                  |   2 +-
+  tools/release.sh                              |   2 +-
+  tools/uninstall.sh                            |   2 +-
+  119 files changed, 873 insertions(+), 375 deletions(-)
+
+Karl Liang (1):
+       support option append (#1413)
+
+Lee Garrett (1):
+       Run tests against system's tig when SYSTEM_TIG=1
+
+Marcel Holtmann (1):
+       Fix compiler warning with glibc-2.43
+
+Siddh Raman Pant (1):
+       contrib: chocolate-theme: Fix cursor color in backgrounded view (#1419)
+
+Thomas Koutcher (23):
+       Update manual link to point to mankier.com and remove link to Gitter
+       Fix notes handling in the main view
+       Update compat/hashtab.c with latest libiberty version
+       Honor init_size in string_map_put_to()
+       Reset view->parent both when switching and closing view
+       Fix grep with revision argument
+       Minor tweaks to the blame view
+       Handle the NO_COLOR environment variable
+       Bump copyright year to 2026
+       Fix repo info in bare repository with no HEAD
+       Document %(status)
+       Update Cygwin build
+       Add an option to make the tree view recursive
+       Fix "DU" conflicts showing as 'Staged changes' in the main view
+       Use compat/wordexp with Cygwin
+       Ensure consistent blame view access from the blob view
+       Skip generating manual.pdf when running make doc
+       Fix date for 'Not Committed Yet' changes
+       Add new AI related trailers to default tigrc
+       Handle pure file rename in the diff view
+       Fix editor command injection vulnerability
+       Update NEWS
+       tig-2.6.1
+
+phpmac (1):
+       Enable direct blob edits in clean HEAD state (#1416)
+
+apawn (1):
+       Fix slow tig status when given a subdirectory path (#1424)
+
+--
+Thomas Koutcher
+
