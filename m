@@ -1,103 +1,122 @@
-Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E9737DE89
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 02:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC56156F45
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 03:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781319499; cv=none; b=ull8SaJuFK0YSmYDlXdANlWT5UfLfaKU1nRPBAmweoHqF9j13S5HheZWHO4irMbP7c+fFw6VrURK5zJ0mXGB+VgF5BtA62DGSjHPigVqEmmyjVe52JRGDsQt3gXk9ej+3AaZRGRgiaf9tm8R4B7HxM479F1/RjeMV5cCbht0YQw=
+	t=1781319714; cv=none; b=Zf2K+ye+4eq9Gtbg4+pKYfEVCsfrL1o7GcN+/Ctzgk6wWusdn1NqmeWcLoDCCBmeryoMGJ5P3yv1RoXkd08X27RzQk5cemaJWjtLfr/0L1U967EynvbJE2c/o0sPERtrqvgu/f8AZsFj02AU9smN+2sFIg8hO5yPvEEKt61GjXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781319499; c=relaxed/simple;
-	bh=JBZ5nvTBvYy25c1J+a9JtH3e3VeN12YAJwuCFgB9+g8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
-	 References:In-Reply-To; b=XPNRSYWCPybWNOl92nnv06lrgmqkJUorjFElF7hHzm5Zvp50Vk1y3fTG8SOFPEbFVc6WUNWFvpUGT5taU3LRk8qdodHPRIk+3gmMXZfQ1XUpocjH7bKE3v7xaTNBY9rgNs19XKivYjGCOnz2fmMeBjEE0RhYILqZpromaMMUWm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=VjR/lX/6; arc=none smtp.client-ip=157.230.60.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
+	s=arc-20240116; t=1781319714; c=relaxed/simple;
+	bh=GewawWoaAyJilpxh5G/y5IhpXKNksgwr4rz5b2wjiAw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ABLQLrWuFwHxpr0+M29my6OWMrf9jU8pwspXG5Ck3NHhD6B8tBVfmf9Ee8skQEN+G7MRogmiWiyGI2V0/V3ocGoCQy8uYiRFx0YmSL9FFEXBmeB1bsiwWdDRug1CzU9YwWwMEiULSGCiTu4EeLZMRHjdp3TnDpl96vOp6UEhIDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SODFftGJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ap7CggNF; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="VjR/lX/6"
-Received: by mail.normalmode.org (Postfix) with ESMTPSA id A748660007;
-	Sat, 13 Jun 2026 02:58:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
-	t=1781319496; bh=JBZ5nvTBvYy25c1J+a9JtH3e3VeN12YAJwuCFgB9+g8=;
-	h=Date:From:Subject:Cc:To:References:In-Reply-To:From;
-	b=VjR/lX/6fpNUBJoxT+hauhUT9VlJmHE3jTDSDzu34fSXJG4T7CqpyjyT3ZAHmis9k
-	 2AjY3ZgHeW+NtWztP0/qOJcwqvTCUxHusZRSrx2CDyG3jqQlq2ACJ/q3NnZHxxBHSb
-	 VVNqcxpAXYy6Wntgn1Y6QWrOir6+FEyu2LlG8cxw=
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SODFftGJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ap7CggNF"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 746A37A009F;
+	Fri, 12 Jun 2026 23:01:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 12 Jun 2026 23:01:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781319711; x=1781406111; bh=pqVLryWEp3
+	ILunfds4pLh0XT2shbeoQIdFeh5a0szRc=; b=SODFftGJtIhWlp0BRuQV6mAOAt
+	Q0CbwfjWKVFYeZjsiZsSKYasg6Ac1oeCtES8aIKus5dYz9H7/5CdRoItPSTRS2Jc
+	ag+7FwjuAQ1oarX1hcbmLZo4M0yCJno3/w2gEoqCkA0FvAhruVG5XO0Tr4T5lUgL
+	6W7zvnWgOam9b33gpPT1eYpF5IdXworhd7hT/VS2mwHJwfn2nx0oNjv0i6ayz0/v
+	lCJ7hFMDid/OOhi7vAbxJsEYZvO+FFKTA6AZTucBtHS229THlUb+5vmgzsC/qAfy
+	bgkzUQKBaYAZOsVyQfZAk24Y/uFh4V6AyCYT7cSGsxoQo8sIiywI1C6Cwa3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781319711; x=1781406111; bh=pqVLryWEp3ILunfds4pLh0XT2shbeoQIdFe
+	h5a0szRc=; b=Ap7CggNFcODW3ZreYud6D5+nFi+P6G6OjEZ2fRKRal2wJdXGxuW
+	WGPGuqx7kIsbCB/6V+Kp9AyW/+IRE2wIeJQ8FNmSqA5wBD0i64ipFIaHS82SxsFO
+	e8ZBkOmQ2QAogakldfSSLD3cTRhzhvW1Btm/O7VGghmsy91JgU2PUy3NLCgPfQBP
+	KuaPhVA8VixLiIMLSWETDoINblkD5Ps54KQa9duc90n/i1LvEbSOoeQgchba4834
+	MoWJZYRTaaONdbMmxxDj/0reWYB0zdvM24lGcG14dbBbIHGUaxwx93IaildC+RdV
+	MNP6zPqlV5HC6VA/OXcctOFXUqEy+gLYf/w==
+X-ME-Sender: <xms:Hsgsav0DjUaaj3bX8b33tZBqv9uA_n0uSB5_NDjypp24SxdSk-LncQ>
+    <xme:HsgsasWGVDHk45ws2nPn2V48l4oE1oMhuMna7ZBUJFigRY-QdDcrXq-PAMnib9xra
+    bR81jz0G9pxuJGgkeWEPPbVHYkQw9OzBaN2ZGADHEsDpILd9UFx0Q>
+X-ME-Received: <xmr:HsgsapOj_PxFaVNJOfemY3slS-7Het4xITV7XCvfWwBuqD5LcDPb27s-yZzZVRJp875I85phARqW1UDk-qd-xu9SYop5S6HeRYd->
+X-ME-Proxy-Cause: dmFkZTGmxvJBDKlSaoenpZmSOgg10xcaY2OnDAatWHEgnfjnbZXZZeECXz+tgLJTZX8rak
+    L1jjgUe0n98eKGXacAP+G7G+5SE0036Vj2JSMr0w7F0FeeTHzRcF+sazG81XmqcW1OGn0K
+    BEbTr9ixehzV050WSZiwcYtoPkUjHjJO71Slp5M7rNTk7Mqf14Nw1gkoMZJCFrZ5OkC6QW
+    O/dAs9OMnFvsF/SVgs0n9LTVuqglGGKNvM80YICxA0lTfMVwut5f+puKaGFsrlIRbun9nX
+    4V/9oD51/8GTcyezzffC4x2kv0XxZGr3P/TBx5WujTsOfLijz+3yPTYzzJaG/pyPxIJUV9
+    LthosXBYFXSx3QZGPsj66+/3VgyowKJuN1yxN/875fwupo873pWHMXnNJY34guz9jrjRRD
+    I53436zKsAxx3ajp1uY9gbZ3m/WpUdEvOu9XnYYr9BpFVCarsJ3/Xot1xSWVrWZ/cEpL9E
+    /jeDfE74/1qJL4+E8kwkv/1432WbvRjMHnYR+K2WNntWplxJihhZCWIBF2h+gTFI+65417
+    ouXutSOW0RRJDDc0LnN83uiP55JgJgBeByp2KXTh5LjmYl8PfSdfkQGQXxFvTuVROiMfcG
+    Urj51uY0I4zycxCEWypfz0lP1pENwuD8DQEgkKLYrF+OZKmn+nj1qRFDDQYg
+X-ME-Proxy: <xmx:Hsgsan2K8O4fUvbqFNdQzySf8cPO2OuwVYkw7GAnGdC2P7kAbonoDA>
+    <xmx:HsgsalRg3rnTiy78WNyOu0f8EdwxzH0FoBoJuL3TX6_lLymXajT9-w>
+    <xmx:Hsgsaqnm21DP8i2WmRnf4JupX7I0hxZhfITmDZ0RxNTq9EyZSJDrew>
+    <xmx:HsgsamNF-viRYq-6s3YbsGQdQenzFaQwPuCUU32qttmIzWMdbqPeYA>
+    <xmx:H8gsaiRvbSYhsaj-pmqE1DD4V1c8kUR5d35XPI432EQIanllPi3XmrwJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Jun 2026 23:01:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org,  ayu.chandekar@gmail.com,
+  chandrapratap3519@gmail.com,  christian.couder@gmail.com,
+  jltobler@gmail.com,  karthik.188@gmail.com,  peff@peff.net,
+  phillip.wood@dunelm.org.uk,  siddharthasthana31@gmail.com
+Subject: Re: [PATCH v4 0/2] graph: indent visual roots in graph
+In-Reply-To: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+	(Pablo Sabater's message of "Fri, 12 Jun 2026 15:48:29 +0200")
+References: <20260427102838.44867-1-pabloosabaterr@gmail.com>
+	<20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+Date: Fri, 12 Jun 2026 20:01:48 -0700
+Message-ID: <xmqqwlw3f8ir.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 12 Jun 2026 22:58:16 -0400
-Message-Id: <DJ7L27FXS2PG.7PMBDY817U4V@lfurio.us>
-From: "Matt Hunter" <m@lfurio.us>
-Subject: Re: [PATCH 6/7] fetch: add configuration option
- fetch.followRemoteHEAD
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <DJ19CI50W6UH.17QLIBNTXBWXU@lfurio.us>
- <20260612055947.1499497-1-m@lfurio.us>
- <20260612055947.1499497-7-m@lfurio.us> <xmqqik7nj11i.fsf@gitster.g>
-In-Reply-To: <xmqqik7nj11i.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Fri Jun 12, 2026 at 10:17 AM EDT, Junio C Hamano wrote:
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
+
+> When rendering a graph, if the history contains multiple "visual roots",
+> actual roots or commits that look like roots (i.e. have their parents
+> filtered out) can end up being vertically adjacent to unrelated commits,
+> falsely appearing to be related.
+> ...
+> [1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
 >
-> By the way, do not call a "configuration variable" a "configuration optio=
-n".
-> Let's keep the vocabulary forcused without using random synonyms.
-
-Noted.  I can appreciate that the term "option" may be better reserved
-for describing command-line options, to avoid confusion.
-
-Is it safe to assume "setting" may be an appropriate alternative to
-"configuration variable" in some contexts?
-
+> V3 DIFF:
 >
-> I think these uses of strcasecmp() are unnecessary and actively
-> harms end-user experience.  This is especially true because the
-> value given to remote.<name>.followRemoteHEAD is case sensitive.
+>  - Completly changes the approach to indent the visual roots instead of the
+>    commits after the visual roots.
 >
-> [...]
->
-> Admittedly values to some existing configuration variables may be
-> parsed case insensitively but we should aim to fix the mistake in
-> the longer term, and we should certainly not add more of them.
+> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+> ---
+> Pablo Sabater (2):
+>       lib-log-graph: move check_graph function
+>       graph: indent visual root in graph
 
-Thanks for clarifying the correct form here.  The use of strcasecmp()
-was largely to match surrounding context as I assumed it would meet most
-people's expectations.
+The new tests added here does not seem to play well with
+linux-TEST-vars CI job when merged to 'seen' or 'jch' with other
+topics in flight.
 
-I think a detail like this can be especially confusing since it seems
-like the parsing for config variable **names** generally is
-case-insensitive.
+  https://github.com/git/git/actions/runs/27445164550/job/81128391150#step:10:1779
+  https://github.com/git/git/actions/runs/27445164037/job/81128386244#step:10:1778
 
->
-> Is it sensible to die() here?  If you are fetching from somewhere
-> without keeping a set of remote-tracking branches for it (i.e., a
-> single shot "git fetch https://github.com/gitster/git master"), you
-> do not care what garbage value is in fetch.followRemoteHEAD.
-> Perhaps the version of Git that is slightly newer than the version
-> that ships with this patch defined new valid values that this patch
-> does not know about, and such a user who is doing a single-shot
-> fetch may have that setting to help them working with their usual
-> non-single shot repositories, but they use a newer version of Git
-> for such regular work, and they are using slightly old version of
-> Git to perform this single-shot fetch.  The point is that the
-> configured value will *NOT* be used for such a user, and dying only
-> because this piece of code does not understand the configuration that
-> will not be used is of dubious value.
+I suspect that these tests are failing the same way even standalone.
 
-Very good point about forward compatibility.  Agreed that die() is the
-wrong call here.
+  https://github.com/git/git/actions/runs/27447146727/job/81134594264#step:9:2136
 
-The most sensible thing is probably to leave fetch.followRemoteHEAD
-UNCONFIGURED if the value is unrecognized, so we fall back to the
-"create" behavior unless the remote in question defines its own
-followRemoteHEAD policy.
 
-Will incorporate each of these in the next round, thanks!
