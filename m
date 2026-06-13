@@ -1,116 +1,107 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA88E256C61
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 14:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77E92D0C62
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 15:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781359776; cv=none; b=o+Z8qubbklLrxpdL/MNwL9r5JEl5a1VDRlKUru5RTiVxAK61AhAd44kGg0G3BOq1dqpoLZvWfU+au4oUvHStPCj3g9nTMsU76ZQVIzAojQ4vkU07nm0j487ugW5Iz0OxK0xLl5J1UdmGAwynZcdkFVw2WH5PRs2AKot3CQvbc28=
+	t=1781364010; cv=none; b=BRxwFm4CvMG0CxTrNIRAiCzvQQjIL+rwEiDS7wAsWG11deWkgDD4KMn6HJZxyKH1NI7y8bHt3Psv5eJYE5I1Z3vTjIuBB9LdSqjvbEDDIUoB0iImSOlVuT2TZx/8cVyliPW6+sDj9zJs7uVsJTJ5yfCSwNDD2PfkICbA73vLVTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781359776; c=relaxed/simple;
-	bh=RwtbdHwVWMFT4D83o+Vxph0on54bfN5N2u4p7BJmUj0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cBLqw6L071Bvr9LPF+X4OpVUqK+YC4UePcd5crZujBORncfadeehHkctNDSeZj80N4nkscJwcABE2hqg6RJHx7xQv8AMapcRSibjGISuQgD3c0Vnrl1graAFfVLwJJC/0ngJreCmxYzi1bvuv6l2VQeQsfwWXlE57qmJ6C2QTno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=eTqeIoN1; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	s=arc-20240116; t=1781364010; c=relaxed/simple;
+	bh=MlR9gclcKaYxss6Uw+CgSTVhL85m7P6tzlKKLIl6nbA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HwB4CKlsPz0YGcjKe2f9uRlfmjOZ8tGPz0oL4vm8T9TCx+wDA0kGR8sIW4igyR6LazUp3GsV1TMm0rFmeGdvMIYGQoVJKSttjxCmbELs8mdhRKhjuSS18La3mEMONexfgfDGUfeTm1Lk05tinew+zus9YI89ZcFbWCnQaG5v664=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MiB1CnxS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZQp5U77y; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="eTqeIoN1"
-Date: Sat, 13 Jun 2026 22:09:06 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1781359772;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=n/PBkLSenZlONB9MuHfTBJFQe7+KgmVK7U+gbhGI264=;
-	b=eTqeIoN1IuYPI3pXo/yPizl5dS99XOWdtg2uoDIFqn9pYO8QUDyEhUgHyhrl0MT7/Y5TCd
-	zkI632eZ2hm2Qq9iWytEJVmW4IsLHsQMYq5F0h3rD1DIFP4HM7TU5e2gX2BGqbmOWpvTUy
-	jdwJjwT6wg6sz9IW6P6ypU4k2AoqkP/zdpCe+wB9l7Ug7UpzXa4MFU0zNYJm1BGH2w1+NU
-	28wnQpA9vksS+FfyM5w1+qaOPPJIXfwSiMWoMuZJeJkenKKEN8fx2/xcV/ER3KsaL7NuF3
-	Z5ikcdlCMSJ0JxguVSsgPUcxZ1Jz9FoQIBe9tQmfE/clxsjE6uECcKpSJ7LHRA==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-Subject: [RFC PATCH 2/2] doc: advise batching patch rerolls
-Message-ID: <8166623d1599fca2cd4614889e4a69b2006c12c1.1781358364.git.wy@wyuan.org>
-References: <cover.1781358364.git.wy@wyuan.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MiB1CnxS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZQp5U77y"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 055ADEC00F2;
+	Sat, 13 Jun 2026 11:20:08 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 13 Jun 2026 11:20:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781364008; x=1781450408; bh=iBlvt97HQC
+	CS1hkyFsWNq2B7+AnWxuPl7AJpUlIcE74=; b=MiB1CnxSvK6v0DMzhd9hmkLztR
+	NmCj+Lf1rpmpW1/AXAwwXWTECqWQH9p6p+nfZf/grYxGe0qAnoJ12FtAOJltk7V+
+	czMumtBligDjvxqUDeVV0GObDfRM1liHcQHLUzu3p3xGC+DGMTCynRKIL/oafv7I
+	Jb1CRnr6q77JQp+2+82hSeur+RANuVPYhBfDxDX7Dqghmax9bM/senBEyk4bA/3r
+	w4NszFZ8Hve7XkQOvNcTb7/TIAcc36/N+eMFjYMlhMjKke5sn24VUnWfK0n9yMnN
+	7YPIz3etsdRDTgloonN5tBm5CEnfTkIx4nzSNeDDNEVwtEP6qwyXnlW7nrXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781364008; x=1781450408; bh=iBlvt97HQCCS1hkyFsWNq2B7+AnWxuPl7AJ
+	pUlIcE74=; b=ZQp5U77ypnj/ETjcGiNpQ0O+iCJSFA53q5xsldWvhx3cTteRqLt
+	QESpuyk5ypUr0zpG2aKekRAY0Z0KGErMow/mdCQxi1ias4HveANMlt2Hr0aUpdEN
+	jok23o605PzW7NiZmYZer8BcV8o/TTGYJxeVELvVx+bvYwMnabvBhm3KEhsTaB8r
+	9OFpBm9widLuPpmMn5VzW+k0FhmoGUDgzgaT7rDLhTCR7IlmlvLVfYuhwHQrQ+pV
+	tZDKrltFKDBsDFOGUyLNd4cabfK6fG+wPYWMx3xkHlJktIgNVKfi5K8sFLS/Cjf8
+	tvALeEtIHYcNd5Pp0K51S0HfYWxIJe9zajw==
+X-ME-Sender: <xms:J3Utap50W_Hu-X4-_S6zIMKiSQ_vEqiHEH0J0nAQ7L6Z8ePb8ep0ZA>
+    <xme:J3UtatyBi4_gV7xxd4wMwsfnfb_RlkPF5IzYCX0toP7ndgeATgnQlrEpAvMcHawIw
+    EmVLP2KRaBryQDlr3KfNk-RUJz0rh67OJkt2suJRxeyHVtrxjDMnpA>
+X-ME-Received: <xmr:J3UtaoyF9JY5ZeIoJpIptDqG_LZ158wJSbm9Rk_IOoF3UMBCt6jWbzc0WyjfXfnVn6DvJKxtTXjQnCD5LvzgpGYzKgcHuct8YbXh>
+X-ME-Proxy-Cause: dmFkZTGOrvgbYTvJnHSM6821PcauCZSfRoyLVp+CYk09LYu9xQJyw/KIsSL5YgDhosiZpu
+    1j+vTie3OHY0OylCCBAaryc6fSQ/TS4mw9oFArzJRCz/zOTGTeoT6P02w+ovvk7hFV20Lq
+    cJ3zzX6EcGpZFxsfEVPPzsvAg40zDF5HnwLkGw9/jYibzcKw/k754y7sfwgfhPTBjOVOI3
+    EbtcolYD8xRMJBCbmCvg6fMyGEF93MgavrtsfsyGT2jMffsRNIwA6jevFD0PSggobC3G6S
+    HKBghEIYmpzNY9Hyac5fhAPgzaPhqKu8Vn1NAIs5bK9ho9eWw+27r223x6wML/SeuyBimy
+    /q9m7kc4DrsdDEsR/xLcDHaisl15xn2EAbiS0frvELch+litXM9ntoL4cOAbU2SeqjcrJm
+    tzSrbrbIGf+boG2MstRRMk42LZPwh+zq5yn9P5E7RfVaQb8QwlXlKhDWdnNOtbJjhDf8M/
+    MsgAsaDO23Pzb9piV59z6kbcVfPzzY1k9DvIdkoI7RbJq9ncvAhA93BvuOiBbBZ35zgTin
+    vc1042jlp8ja7+nOGlukWzp10LkI/IIbFNkBRENwVAcrhqLSERYCNLFHv5GiLHusBWT2io
+    E6LROp4gxhJPfGPoyB4ruULYua2qZWnOYLIOv1n59QXYEkFYKltciyE9EeSA
+X-ME-Proxy: <xmx:J3UtatzOyQCzGI-PX0p6MLPbv8Z6oKelEqzFxN3smPxh5SvtYWBxqA>
+    <xmx:J3UtaqZ4rFViQhHxDx4ykxtQFIgP98ctpgA9T4Quygg8gmewWq_LGw>
+    <xmx:J3UtamXc2J9_2GfMEzPVDWwVZUyUOhpwtkzhiuzL9Q4SSRLvZZ5dzw>
+    <xmx:J3Utagjdrf4sd1mAgb3S5jEDEzpmwoKDxjro045csvu2StcbMdkkxg>
+    <xmx:KHUtavIIh_q77T9C_RsF24oogASIA4ApmGKg8Si9A2yK2sda2B0wtCAf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 13 Jun 2026 11:20:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Matt Hunter" <m@lfurio.us>
+Cc: "h8d13 via GitGitGadget" <gitgitgadget@gmail.com>,
+  <git@vger.kernel.org>,  "h8d13" <hadean-eon-dev@proton.me>
+Subject: Re: [PATCH] clone: accept DEPTH env var as fallback for --depth
+In-Reply-To: <DJ7MJMIFZR5N.2SG1RWB46WPQB@lfurio.us> (Matt Hunter's message of
+	"Sat, 13 Jun 2026 00:08:02 -0400")
+References: <pull.2333.git.git.1781314780645.gitgitgadget@gmail.com>
+	<DJ7MJMIFZR5N.2SG1RWB46WPQB@lfurio.us>
+Date: Sat, 13 Jun 2026 08:20:05 -0700
+Message-ID: <xmqqeciafowq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1781358364.git.wy@wyuan.org>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-Contributors often need guidance on how quickly to send later iterations
-of a patch series. Add a rough default of no more than one new version
-of the same series per day so feedback can be batched and reviewers have
-time to comment.
+"Matt Hunter" <m@lfurio.us> writes:
 
-Mention factors that can affect the timing, such as series size, review
-depth, substantial rework, and how close the topic is to being accepted.
+> On Fri Jun 12, 2026 at 9:39 PM EDT, h8d13 via GitGitGadget wrote:
+>> @@ -1022,6 +1022,12 @@ int cmd_clone(int argc,
+>>  		usage_msg_opt(_("You must specify a repository to clone."),
+>>  			builtin_clone_usage, builtin_clone_options);
+>>  
+>> +	if (!option_depth) {
+>> +		const char *env_depth = getenv("DEPTH");
+>
+> Nearly all of the non-standard environment variables used by git start
+> with "GIT_".  "GIT_CLONE_DEPTH" may be a better choice.
 
-Signed-off-by: Weijie Yuan <wy@wyuan.org>
----
- Documentation/MyFirstContribution.adoc | 15 +++++++++++++++
- Documentation/SubmittingPatches        |  7 ++++++-
- 2 files changed, 21 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 59891e3c14..9d76c72d05 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -1416,6 +1416,21 @@ previous one" patches over 2 days), reviewers would strongly prefer if a
- single polished version came 2 days later instead, and that version with
- fewer mistakes were the only one they would need to review.
- 
-+This consideration applies not only when going from the initial patch to v2, but
-+also to later iterations of the same series. There is no fixed rule for how long
-+to wait before sending a new version. A useful default is to send at most one
-+new version of the same patch series per day. This gives multiple reviewers time
-+to comment, lets you batch feedback together, and gives you time to think
-+through the comments you received.
-+
-+The right timing depends on the topic and the feedback. Larger series usually
-+need more review time. If the only comments so far are minor, such as typo
-+fixes, it often makes sense to wait a little longer in case deeper reviews are
-+still coming. If the comments require substantial rework, sending a new version
-+sooner may save reviewers from spending time on a version you already know will
-+change significantly. If the topic is close to being accepted and the remaining
-+comments are small, a quicker new version may also be fine.
-+
- 
- [[reviewing]]
- === Responding to Reviews
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index d8ad7fb73e..1bc2684c54 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -59,6 +59,10 @@ It is often beneficial to allow some time for reviewers to provide
- feedback before sending a new version, rather than sending an updated
- series immediately after receiving a review. This helps collect broader
- input and avoids unnecessary churn from many rapid iterations.
-++
-+As a rough default, avoid sending more than one new version of the same
-+series per day, while considering the size of the series, the depth of
-+review, and how close the topic is to being accepted.
- 
- . These early update iterations are expected to be full replacements,
-   not incremental updates on top of what you posted already.  If you
-@@ -645,7 +649,8 @@ letter" message (see below), the first patch, or the respective preceding patch.
- Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
- how to submit updated versions of a patch series.  Before sending another
- version, make sure you have answered meaningful review comments in the existing
--discussion.
-+discussion.  Also give reviewers enough time to comment before sending another
-+version.
- 
- If your log message (including your name on the
- `Signed-off-by:` trailer) is not writable in ASCII, make sure that
--- 
-2.54.0
-
+Isn't it sufficient to add a new configuration variable in the
+clone.* namespace?  Unless there is a reason why it does not work, I
+won't accept a patch that adds a random environment support like
+this.  We do not want to end up having to add other random
+environment variables like GIT_CLONE_DEFAULTREMOTENAME,
+CLONE_REJECTSHALLOW, CLONE_FILTERSUBMODULES for consistency.
