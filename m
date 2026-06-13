@@ -1,298 +1,165 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B14739AD55
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 15:33:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B396283FE6
+	for <git@vger.kernel.org>; Sat, 13 Jun 2026 15:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781364802; cv=none; b=DmUk0c4g8p3Pj/MH/WUe2L68G2XWCfaSPmuTfchJzLh0hLuGPxeqR5vMO2YJX8pptWXHd+i6L/ZpQ21hWfcApiqP2f5IpahwCCh9tWtFthzfmi4c34Z00LV6ecqHBy+K+nk0BMsvXnFX0FDgrdI+DjPukF+mXdzfxc6BH3dR0GM=
+	t=1781365465; cv=none; b=V8o0YptqXOdYJqOEwn6de44AjqxYza6YhbIxIwvADEupqpvB8yWR3Ikbzo3UnhWqTtooPeZe7trVZ1KQWnmGddoCjIWRW7/X549FsBDnXZPGq0QfK8Qy9D3yhz9VeDHe2gUqpU9/m/4f/mKHuVn/x2huOElXj3HO3WquWnfa9Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781364802; c=relaxed/simple;
-	bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c1SRtqnHE4oKU3oTVhxkcNdSCkrH7PVaNsCeHdBnYntGZzbaSCF4KCCfE0GEals2yxRRfoNC30mYgKGUv6N3w8rraKWL9yBKZNXW8uzkdIsSXbBh3QvmAMEM2or4ffDWeYtKuN6y6lHrkWAA2CARWxaYtYV3E/ZW8oH7YpnJOmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=ehjGFTGw; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=U0MSVC2d; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1781365465; c=relaxed/simple;
+	bh=i4azWqS18lbxRbSRospYUjJ+ZEXxbyhL0c6UeBHV99U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nIo3LT+EDExi2BT6LC5OVgUbgYbB+sRmDLtotrDJeERJRnbdwOXdc0bRzfcihYa5yfq0I4M2MzJRaJY00sfnZgPNT4kWBlv2Z8RUBFjaaRtRJQJvu3Ken1ZRhFMJF+S2GXlFdgU+TdUKE6fZXhGXbyzzU8iV1g1GkLW2yD1GFVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SbaZxxKN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DTqQE7FW; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="ehjGFTGw";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="U0MSVC2d"
-Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=ehjGFTGwLG2NRzkjbtoaqxtYCRZOOFNO5X/6IylHAwLT9mCt6He6sIcER0v1MAArXocnZwTAIeQocItnrdF2d0BjRGh4BsNm2Pl8piD/JUKprj1EQ7Lv4kpV0BIlCBiTnVc2hVMAxh9XroJFePIjDvnfnGSN5RVMEbQze6g6hXZ+twZ4+ucj3EB2LVZZIaNFoaiOmw7a9uAw4NGaL5wHYw63Yw2nPbHJV7KH/sGztYIPIN2I9vXXrfrQBlXnFAnXQ1tk/Z8epQu9VMsziJ+j0pBm0M1tuGfN+7v7Wr965UIbJ5z9olLeBMBx5kyRicIB9uvNj01OnSVDXJ1U1yDHAA==; s=purelymail3; d=malon.dev; v=1; bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=U0MSVC2dKkzgq+sSEaV6Ayo1offSI0sFiOGpnhMbU9kFSJElC7bgk8xrXxhcP6rODV4+B2fHNJxehiUIWgqq/8mSiAneYl3EzlQhaLx7jy7QlhBLyUycV4pKZEmm7aRIlLp/otAAjEX7MsjoSbaVPALju1neuhjAmDDtOMW4fuwCnOx966z85E3ziNmwTzBXIqt4KfyvEKjKM4eRFhdwi10meo66bYCb6gvzyanwBYoEE8iD2UHEiWRtrGTCj1uDCdNOxVquDwl3vv8y5w7fKrtp0nuB2I9t5D73gdGl9VpnHTyqF/S29SoFo7uLGDb5BGKSIBSCS2T8TmTxZcSsCw==; s=purelymail3; d=purelymail.com; v=1; bh=CvFiUdvRlZ039l8P4HVIogPxsQxjXfm++qWdpQNAUXE=; h=Feedback-ID:Received:From:To:Subject:Date;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -185209553;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sat, 13 Jun 2026 15:33:11 +0000 (UTC)
-From: Tian Yuchen <cat@malon.dev>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	Tian Yuchen <cat@malon.dev>,
-	Christian Couder <christian.couder@gmail.com>,
-	Ayush Chandekar <ayu.chandekar@gmail.com>,
-	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v3 1/1] environment: move 'protect_hfs' and 'protect_ntfs' into 'repo_config_values'
-Date: Sat, 13 Jun 2026 23:33:01 +0800
-Message-ID: <20260613153302.168801-2-cat@malon.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260613153302.168801-1-cat@malon.dev>
-References: <20260610124353.149874-1-cat@malon.dev>
- <20260613153302.168801-1-cat@malon.dev>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SbaZxxKN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DTqQE7FW"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id BFF3BEC0100;
+	Sat, 13 Jun 2026 11:44:22 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sat, 13 Jun 2026 11:44:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781365462; x=1781451862; bh=sZdOEXGCh/
+	N/GgyokjYOOXrJnHbGq8NU8dWtR/tcXhA=; b=SbaZxxKNIrmMCp6GPbjDkoAI/i
+	/Bbimw/6AkCg+CyURt4uNtCI6CMBObxYDbhBqFR4UbMNeu/WETx/CdKbxAjXxw7E
+	pHMH4/Jgpgtl2365LPqPB+5G7B4hgehyRksZf6g0Qj1RLLQGQDT/IZttaeuM7lhB
+	p+oM2rbF/i5YhRmfhinUgBpfBVAl/T4L3k4KANHqxBP4KlUi7nhzQrVMiSx1l9Ve
+	5AlrikteHCLdkxs/xxV4/ZheuMkwVdoabhTntWGwoJ0dXNpD+0I5zbcG8xJYts+3
+	RcDWgvR/ycyJrOL02QcZx2Aq/TEiBN+hO2NWf30fdpjnNx0cBq6NOG9mqjng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781365462; x=1781451862; bh=sZdOEXGCh/N/GgyokjYOOXrJnHbGq8NU8dW
+	tR/tcXhA=; b=DTqQE7FWu0XLM49FMX5/k/4pkIiGDyP/hS6z+oemEkYytcsPx8x
+	6ng3vvmgB94yGGx3ATQpbEhk/soiY+tmomDmW3OAEs3yasZ1f8fle03zP/vqqkr8
+	iynhDygAZ5jNWgvn1WxYXU818RnVFvGBSp3VsaEQupC/ZTg4meyVTqdShJOc33ex
+	mRhLA86XBLLVsEtFCibKYGVvJkXF2KGfF+U2mPnZZK1E9G/cQYPv8ntQvrH/IIdX
+	CfWTJRv4J2COpw/QMNteuqz0a2MzzpfsLxXpbHFQPhVRaxVmiKFixPKE2J1JQOLK
+	DZzcYLCkqSIFz6LSefeCJeV87EWHWg1uugQ==
+X-ME-Sender: <xms:1notag-XacEfi4FzaqqLLcPXAgYtSL9cflwCHg3adAzvkxO3VR1lKw>
+    <xme:1notavuLr943H8O_vcJf_rVYu0p7WXED8Fz65D03PgYKWBGjfO7GaNIoQ1HF8LXGd
+    Yg-BOlcM8ymXgaFZlIXY2wANTu1MwtMXuU28yklMlXu1asw-R9IQGI>
+X-ME-Received: <xmr:1notarAp0Ktb7p-EwFhr82Yjcc63HqidAJjtYr14sVBZmb_KJoSW2bUG3r1RO5rF5ILoXIRwQZ-Cs_gSz743QCiqoo8_hrUs07wm>
+X-ME-Proxy-Cause: dmFkZTGvBSdwRdzBWXU9lXMte7jv5/pJyEyK7OvdpFR76DjDIWBuhn7MC9sJ9PocE0p6qi
+    5Dl7dtEORwmYPbY8c335eKF2M5NKCl97uuU7tiGFzGrrEhTW6me59x2atQ3gsBjwjqMxLu
+    sSJbswcncYauB4qMcreh03FpC5IwRJHYVQzk2Gf/fQlRrgnlaRp8hX9iPVAkYXzzztxcnL
+    jbNvC3ppLehezQ1HDS2Wevj4HZewMyr/m46YB80kq7PAnjEqY8OrcI/6FRcIfPzqzwlKNy
+    ASQ+w2ogEI8fAGQcyoac+fkHYN6Z2auxCV2l7H33Xf4EViDhTY0Fh0eWVtMTWUYfCnxJOP
+    pK15o0Vm2042OdnOgFd3fhwh55SasEAdVRNkSrmI/Qv5K0zMdWRUw9M+nGPg1A/VpTUms1
+    7hukjxkzhq4nn8B3wv+0hdAJT8EejXJH47budcy8InlHpddbVkpfYVu4vM40eTL5Hj/5t1
+    7Yym60Lm4BP2oKjYRthgDWWswCm96KYV2sits1TRk5eAlB1KXtmlmmzmrbhm1xX4/vLCOx
+    wcwnhZV6yxULQvEn70Ee+unZMFxwPb8s8f+RFykSbYOAnpw/4w5mPFMoqpkv8vsBbJpY8Q
+    LAWEdFdsrxfP81oxUreqf/ZMCxFUKnCv9GFfiTFXIL6ViGh3szRzFCSGmybQ
+X-ME-Proxy: <xmx:1notavXtdRRuD-6t4_zm0qqFmYORRrM-keGsioN3L-ixHwMZM0Sfiw>
+    <xmx:1notahClHSs5rlwNzBLJVrho0tFEF5IwEUpNY3iUxoESyhZ40MDwZQ>
+    <xmx:1notaq_1QVcoKkeljok8fZJuz3_u_znRayzfoqwxZIFUJ4t4L-rpoA>
+    <xmx:1notagHpDzGsaEVPws849E1Cj1p1urDEz67r9sU2CeSmTAZxdnOM8Q>
+    <xmx:1notauhL9kRKHXpWGHUiIM1ctLDrxg9uFeUu7AvopNfzpW2jctvRJQPL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 13 Jun 2026 11:44:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH 0/2] commit: preserve commit hash on a no-op amend
+In-Reply-To: <pull.2334.git.git.1781342189.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Sat, 13 Jun 2026 09:16:27
+	+0000")
+References: <pull.2334.git.git.1781342189.gitgitgadget@gmail.com>
+Date: Sat, 13 Jun 2026 08:44:21 -0700
+Message-ID: <xmqq33yqfnsa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 
-Move the global 'protect_hfs' and 'protect_ntfs' configurations
-into the repository-specific 'repo_config_values' struct.
-This will help with the elimination of 'the_repository'
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-To ensure code readability, the getter functions
-'repo_protect_hfs()' and 'repo_protect_ntfs()'
-have been introduced.
+> git commit --amend --no-edit rewrote the commit and moved the branch tip
+> even when nothing changed, because the committer date was reset to "now".
+> Reuse the existing committer date so a no-op amend keeps the commit hash and
+> leaves the branch untouched.
+>
+> A real change (tree, message, author, committer, or signing) still rewrites
+> as before.
 
-For now, associated functions access this configuration by
-explicitly falling back to 'the_repository', which needs to
-be addressed in the future.
+I think this change brings nothing but regression.
 
-Note: In 't/helper/test-path-utils.c', there is a function
-'protect_ntfs_hfs_benchmark()' where these two global
-variables are used as loop iterators. New local variables
-have been created to replace them.
+Isn't it obvious that "commit --amend --no-edit" without updating
+any tree contents would record exactly the same contents as before,
+without a "real change" (as you said above), to any and all users,
+expert and casual alike?
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
-Signed-off-by: Tian Yuchen <cat@malon.dev>
----
- compat/mingw.c             |  2 +-
- environment.c              | 22 ++++++++++++++++++----
- environment.h              | 12 ++++++++++--
- read-cache.c               |  7 ++++---
- t/helper/test-path-utils.c | 24 +++++++++++++++---------
- 5 files changed, 48 insertions(+), 19 deletions(-)
+The end-user who runs such a command must have a reason to do so.
+The *ONLY* valid reason anybody might want to such an amend is to
+make sure the result is a new object, even if it records otherwise
+the same content.
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index aa7525f419..af87df77fd 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -3392,7 +3392,7 @@ int is_valid_win32_path(const char *path, int allow_l=
-iteral_nul)
- =09const char *p =3D path;
- =09int preceding_space_or_period =3D 0, i =3D 0, periods =3D 0;
-=20
--=09if (!protect_ntfs)
-+=09if (!repo_protect_ntfs(the_repository))
- =09=09return 1;
-=20
- =09skip_dos_drive_prefix((char **)&path);
-diff --git a/environment.c b/environment.c
-index fc3ed8bb1c..683fe1b4d3 100644
---- a/environment.c
-+++ b/environment.c
-@@ -82,12 +82,10 @@ unsigned long pack_size_limit_cfg;
- #ifndef PROTECT_HFS_DEFAULT
- #define PROTECT_HFS_DEFAULT 0
- #endif
--int protect_hfs =3D PROTECT_HFS_DEFAULT;
-=20
- #ifndef PROTECT_NTFS_DEFAULT
- #define PROTECT_NTFS_DEFAULT 1
- #endif
--int protect_ntfs =3D PROTECT_NTFS_DEFAULT;
-=20
- /*
-  * The character that begins a commented line in user-editable file
-@@ -142,6 +140,20 @@ int is_bare_repository(void)
- =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
- }
-=20
-+int repo_protect_ntfs(struct repository *repo)
-+{
-+=09return repo->gitdir ?
-+=09=09repo_config_values(repo)->protect_ntfs :
-+=09=09PROTECT_NTFS_DEFAULT;
-+}
-+
-+int repo_protect_hfs(struct repository *repo)
-+{
-+=09return repo->gitdir ?
-+=09=09repo_config_values(repo)->protect_hfs :
-+=09=09PROTECT_HFS_DEFAULT;
-+}
-+
- int have_git_dir(void)
- {
- =09return startup_info->have_repository
-@@ -541,12 +553,12 @@ int git_default_core_config(const char *var, const ch=
-ar *value,
- =09}
-=20
- =09if (!strcmp(var, "core.protecthfs")) {
--=09=09protect_hfs =3D git_config_bool(var, value);
-+=09=09cfg->protect_hfs =3D git_config_bool(var, value);
- =09=09return 0;
- =09}
-=20
- =09if (!strcmp(var, "core.protectntfs")) {
--=09=09protect_ntfs =3D git_config_bool(var, value);
-+=09=09cfg->protect_ntfs =3D git_config_bool(var, value);
- =09=09return 0;
- =09}
-=20
-@@ -720,5 +732,7 @@ void repo_config_values_init(struct repo_config_values =
-*cfg)
- {
- =09cfg->attributes_file =3D NULL;
- =09cfg->apply_sparse_checkout =3D 0;
-+=09cfg->protect_hfs =3D PROTECT_HFS_DEFAULT;
-+=09cfg->protect_ntfs =3D PROTECT_NTFS_DEFAULT;
- =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
- }
-diff --git a/environment.h b/environment.h
-index 9eb97b3869..fdd9775900 100644
---- a/environment.h
-+++ b/environment.h
-@@ -91,6 +91,8 @@ struct repo_config_values {
- =09/* section "core" config values */
- =09char *attributes_file;
- =09int apply_sparse_checkout;
-+=09int protect_hfs;
-+=09int protect_ntfs;
-=20
- =09/* section "branch" config values */
- =09enum branch_track branch_track;
-@@ -123,6 +125,14 @@ int git_default_config(const char *, const char *,
- int git_default_core_config(const char *var, const char *value,
- =09=09=09    const struct config_context *ctx, void *cb);
-=20
-+/*
-+ * Getters for the `protect_hfs` and `protect_ntfs` fields of `struct repo=
-_config_values`.
-+ * They check `repo->gitdir` to prevent calling repo_config_values()
-+ * before the configuration is loaded or in bare environments.
-+ */
-+int repo_protect_hfs(struct repository *repo);
-+int repo_protect_ntfs(struct repository *repo);
-+
- void repo_config_values_init(struct repo_config_values *cfg);
-=20
- /*
-@@ -173,8 +183,6 @@ extern int pack_compression_level;
- extern unsigned long pack_size_limit_cfg;
-=20
- extern int precomposed_unicode;
--extern int protect_hfs;
--extern int protect_ntfs;
-=20
- extern int core_sparse_checkout_cone;
- extern int sparse_expect_files_outside_of_patterns;
-diff --git a/read-cache.c b/read-cache.c
-index 21829102ae..2c6a60c756 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1002,7 +1002,7 @@ static enum verify_path_result verify_path_internal(c=
-onst char *path,
- =09=09=09return PATH_OK;
- =09=09if (is_dir_sep(c)) {
- inside:
--=09=09=09if (protect_hfs) {
-+=09=09=09if (repo_protect_hfs(the_repository)) {
-=20
- =09=09=09=09if (is_hfs_dotgit(path))
- =09=09=09=09=09return PATH_INVALID;
-@@ -1011,7 +1011,7 @@ static enum verify_path_result verify_path_internal(c=
-onst char *path,
- =09=09=09=09=09=09return PATH_INVALID;
- =09=09=09=09}
- =09=09=09}
--=09=09=09if (protect_ntfs) {
-+=09=09=09if (repo_protect_ntfs(the_repository)) {
- #if defined GIT_WINDOWS_NATIVE || defined __CYGWIN__
- =09=09=09=09if (c =3D=3D '\\')
- =09=09=09=09=09return PATH_INVALID;
-@@ -1035,7 +1035,8 @@ static enum verify_path_result verify_path_internal(c=
-onst char *path,
- =09=09=09if (c =3D=3D '\0')
- =09=09=09=09return S_ISDIR(mode) ? PATH_DIR_WITH_SEP :
- =09=09=09=09=09=09       PATH_INVALID;
--=09=09} else if (c =3D=3D '\\' && protect_ntfs) {
-+=09=09} else if (c =3D=3D '\\' &&
-+=09=09=09   repo_protect_ntfs(the_repository)) {
- =09=09=09if (is_ntfs_dotgit(path))
- =09=09=09=09return PATH_INVALID;
- =09=09=09if (S_ISLNK(mode)) {
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 15eb44485c..f77b3f9d70 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -250,6 +250,7 @@ static int protect_ntfs_hfs_benchmark(int argc, const c=
-har **argv)
- =09double m[3][2], v[3][2];
- =09uint64_t cumul;
- =09double cumul2;
-+=09int ntfs, hfs;
-=20
- =09if (argc > 1 && !strcmp(argv[1], "--with-symlink-mode")) {
- =09=09file_mode =3D 0120000;
-@@ -276,8 +277,13 @@ static int protect_ntfs_hfs_benchmark(int argc, const =
-char **argv)
- =09=09=09names[i][--len] =3D (char)(' ' + (my_random() % ('\x7f' - ' ')));
- =09}
-=20
--=09for (protect_ntfs =3D 0; protect_ntfs < 2; protect_ntfs++)
--=09=09for (protect_hfs =3D 0; protect_hfs < 2; protect_hfs++) {
-+=09if (!the_repository->gitdir)
-+=09=09the_repository->gitdir =3D xstrdup(".git");
-+
-+=09for (ntfs =3D 0; ntfs < 2; ntfs++)
-+=09=09for (hfs =3D 0; hfs < 2; hfs++) {
-+=09=09=09repo_config_values(the_repository)->protect_ntfs =3D ntfs;
-+=09=09=09repo_config_values(the_repository)->protect_hfs =3D hfs;
- =09=09=09cumul =3D 0;
- =09=09=09cumul2 =3D 0;
- =09=09=09for (i =3D 0; i < repetitions; i++) {
-@@ -285,18 +291,18 @@ static int protect_ntfs_hfs_benchmark(int argc, const=
- char **argv)
- =09=09=09=09for (j =3D 0; j < nr; j++)
- =09=09=09=09=09verify_path(names[j], file_mode);
- =09=09=09=09end =3D getnanotime();
--=09=09=09=09printf("protect_ntfs =3D %d, protect_hfs =3D %d: %lfms\n", pro=
-tect_ntfs, protect_hfs, (end-begin) / (double)1e6);
-+=09=09=09=09printf("protect_ntfs =3D %d, protect_hfs =3D %d: %lfms\n", ntf=
-s, hfs, (end-begin) / (double)1e6);
- =09=09=09=09cumul +=3D end - begin;
- =09=09=09=09cumul2 +=3D (end - begin) * (end - begin);
- =09=09=09}
--=09=09=09m[protect_ntfs][protect_hfs] =3D cumul / (double)repetitions;
--=09=09=09v[protect_ntfs][protect_hfs] =3D my_sqrt(cumul2 / (double)repetit=
-ions - m[protect_ntfs][protect_hfs] * m[protect_ntfs][protect_hfs]);
--=09=09=09printf("mean: %lfms, stddev: %lfms\n", m[protect_ntfs][protect_hf=
-s] / (double)1e6, v[protect_ntfs][protect_hfs] / (double)1e6);
-+=09=09=09m[ntfs][hfs] =3D cumul / (double)repetitions;
-+=09=09=09v[ntfs][hfs] =3D my_sqrt(cumul2 / (double)repetitions - m[ntfs][h=
-fs] * m[ntfs][hfs]);
-+=09=09=09printf("mean: %lfms, stddev: %lfms\n", m[ntfs][hfs] / (double)1e6=
-, v[ntfs][hfs] / (double)1e6);
- =09=09}
-=20
--=09for (protect_ntfs =3D 0; protect_ntfs < 2; protect_ntfs++)
--=09=09for (protect_hfs =3D 0; protect_hfs < 2; protect_hfs++)
--=09=09=09printf("ntfs=3D%d/hfs=3D%d: %lf%% slower\n", protect_ntfs, protec=
-t_hfs, (m[protect_ntfs][protect_hfs] - m[0][0]) * 100 / m[0][0]);
-+=09for (ntfs =3D 0; ntfs < 2; ntfs++)
-+=09=09for (hfs =3D 0; hfs < 2; hfs++)
-+=09=09=09printf("ntfs=3D%d/hfs=3D%d: %lf%% slower\n", ntfs, hfs, (m[ntfs][=
-hfs] - m[0][0]) * 100 / m[0][0]);
-=20
- =09return 0;
- }
---=20
-2.43.0
+Why would they want to do so?  Perhaps it is so that future merges
+of the topic branch that contains the commit will work more smoothly
+into an integration branch that had earlier merged the topic branch,
+and then that earlier merge was reverted.  This change will rob an
+effective way to ensure a successful final merge in a workflow to
+(1) merge a topic, (2) revert the topic, (3) update near the tip of
+the topic while keeping earlier topic intact, and then (4) merge the
+result again.
 
+So, no.  I do not think this is a good change.
+
+Let's digress and imagine an alternate universe where rebase/commit
+--amend/history were "smart" from day one.  These command in such a
+hypothetical world may not be capable of refreshing an existing
+commit without making any "real change".
+
+Making a change to these commands to _optionally_ allow them to
+recreate an otherwise unchanged commit, so that it will get a new
+object name, would be a welcome change that would allow users who
+would use "commit --amend --no-edit" with today's system for such a
+use case.  
+
+And that would have been a logical evolution of the system in such a
+hypothetical world.
+
+But the thing is, we do not live in such a world.
+
+If we still think that alternate hypothetical world is a better
+place, we'd need to actively move things around, carefully designing
+the transition to avoid harming existing users along the way, to get
+there.  Changing the behaviour all of a sudden and breaking existing
+workflows is not something we do around here.
+
+One way to get to such a world might be:
+
+ * Introduce an "committer timestamp is a trashable information"
+   option, and teach commands like "commit --amend", "rebase", and
+   "history" to cheat and yield the existing commit without
+   refreshing when they are asked to recreate an existing commit
+   while the option is in effect.  Give people the opposite
+   "committer timestamp is not trashable information" option, so an
+   earlier "is trashable" option on the command line can be
+   countermanded by giving it later on the command line.
+
+ * Have users discuss if "is trashable" is a better default, and
+   gain consensus to make it the default in a future version of Git.
+   Advertise the fact that we achieved consensus LOUDLY, while
+   telling dissidents that "is not trashable" option will forever be
+   available for them.
+
+ * At a big version boundary, switch the default.
+
+And I do not think I in principle would object to the first step of
+such a three step process.
+
+Thanks.
