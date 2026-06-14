@@ -1,354 +1,108 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9E529D288
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 19:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AB7296BBA
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 21:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781465150; cv=none; b=cb4DOkS/f4W9gB/brZpsQ9SzlwX6u3NJrsS68EY2IdRmN6Su6Pqqm0EdTMamfKRIocJvoiZPwqjltjDoLi5/A+UGgCEXIwBT0arN6DWHBGGVl/Q0NpsirBpiQjw5f33l04DsQLEPLJ2aFlgSbarZY/aMbHCSA+wffeoKhlgyiPg=
+	t=1781473977; cv=none; b=NUHIbUNHQCzF61Hg092xwnJQ4Y8GBHQHPL4jY23FjhD+1w68pfdxJm+TZuB6KgL/ZOLC8ZfKDAInRAXDba4etCZU/V7xsX/lNAq2He6nUI+UT7gL9YUdJ/eNUCh+s2OvMkSEYgwetXA7cW72mnokyX7wyPJvRl0FfByaRnzQSXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781465150; c=relaxed/simple;
-	bh=kSjy0lGur9+iyfDTALRSm8mygQU6PtGL7V7XK5hoAtI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=utfWzudAEApu+BcFfAsJghQEVIPHVJbWXp61OgMEoYHnyZc/0qdwnjhVZd2iSjdBy58j7mbShaFBBJhXBOp8VkzGu/xIm0DnJ7zMuZvO05ayhlXm7QX4qd7JFrM3bThZEojDmONYpnaqEC86bAVlTqiELZll7Ra1So/hidupAgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQKGqoHl; arc=none smtp.client-ip=74.125.82.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781473977; c=relaxed/simple;
+	bh=1zE8ETGrl6ET++w2fN74RtCnXvwTxx8uA57AIAD9qV0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gGGKq0b3b62yKZsZpk24/JDViUAXYI22jm3dr4fG4QEOPFQcdw6xD2hVb2I3vflo5ADVR6QG0RcrCslGJCR/HTqOuoSgwIisfDwNihazH8K+UOAt6PfI2zMzSwQYX5bM2LcxOsbfZC+vS5p0GQk8Aq7D84VlhMfDADJgHhu/76c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mO56qzNT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D3RfI6AW; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQKGqoHl"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-1397e093f90so714887c88.1
-        for <git@vger.kernel.org>; Sun, 14 Jun 2026 12:25:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781465148; x=1782069948; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pZOcleRdLiTwZeRXk4kS3G5C2Zeo5sFBQVL/wjBVuIw=;
-        b=LQKGqoHlAJ0zuxyR+4TjCIJYe5VVur8kFMfhnVMzVr/tfy0L2wg2XlQ3ZyBPJ4D5Qb
-         8iQSpeiIZJIMVzNoohwiQ0NV9aVVf0/l6R8f0reuVTmD79gmQz/HMQkd4sXyaO4AnYXA
-         Jwn96EqTkhk1JrDt8h8w8yyl4G3SMohN+j5/Q2+spa1FVM8ImI6/IXrSkFbx4IRFLwSt
-         KwBk3eLhMc8fA5be/QSY3Rn8qmP1C+Rh2URgzn0ZUAMGk99z1UAYmlxXJV8znLCYeOO5
-         pEIys+Q/LCl/0zCxqyYFOvjrCjYcFpK93OO8STnAK1TFR+1G6HSuQiBq3aMo83El/w0n
-         Mz6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781465148; x=1782069948;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pZOcleRdLiTwZeRXk4kS3G5C2Zeo5sFBQVL/wjBVuIw=;
-        b=fG9AXknE+QT7SEcaGIZRQBGOsDCEc6Pmno1XaFEOSJ9lTPvxBtv3rygUO31YrYcjQL
-         5qwYYpGNpNDY13UYZwiJ+DhKifjrvvboVA+Sqhx9Oq6SHabzjegNyprftJy2OLmR7TqK
-         h7T4zg/U/ZQXt75gA7UmfABA0sRN6E4omfrQB8+mSh9/16kk6EDqjdb4FHMqprIkHaP6
-         /u5BnVs9P2xv+fZwu2YHpixP40ztogDkPzJEsR1ekdvoSahKLffuu5VUkNwOmniIxb60
-         hfaWMqvLUq6DjcYUggzNOdtdi2Mkfk+CLncUBqDQvcig2emrmRTiFj2OsrvEQ81QTnPL
-         3Aow==
-X-Gm-Message-State: AOJu0Yy7OaOxJ6goe5Gh/kLKFWi92H8EYSjTImjAxUo2vdiDHSJhMzYV
-	ghyeMsAJG3dBOeQoXgqMe69hbhMHjru1+aOESyBXCsT+DzrnkJEGxfioT6TDGzbg
-X-Gm-Gg: Acq92OExrsDzpCJrcHUUnS4VqKQDZDYIq9Hdm8CIpwmcaKgstfbMpMJ/2dR5j/RKZuY
-	jqsarQAWVGkLEYod//M5DTlv481FcBs9yV9Imh7S4k4L6qqRTu9pA9sxxYbhMG1WnOxOYBx6FQN
-	VDHrXZlgmG4qgSLpLqioEwrwHSNzPMYAp+6z3IjddEKQpVz6mzc95nLsKnM6kKQK7MMpKvsQAiP
-	6My+nBpCeoyShMLCCxBZqoPQhVMAV0u81gfv8V3dRtemK92CKjAyYOfHEm52V2f3DqlbnUumI6G
-	oblFgcMBlE0WZUoNKdv7fuHqE1XZSdODRICxt8VQfNcDYnhST6M631SCvLCTQH0EsLPzWZA+KhP
-	CDOH/Oga5LxDtDIXJHez86smJo4q0llG43Vcsa5Dd7oPFjgP5sM6dsGvkPld5nmZ9Jsz15/5QTu
-	/ueXrsiNrtywlXPt1Xy/83v9g=
-X-Received: by 2002:a05:7022:fd08:b0:138:49ea:f463 with SMTP id a92af1059eb24-1384bb1613cmr4975049c88.16.1781465147958;
-        Sun, 14 Jun 2026 12:25:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.83.42.67])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1384b964853sm8122954c88.11.2026.06.14.12.25.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Jun 2026 12:25:45 -0700 (PDT)
-Message-Id: <bd1bc62aa81579e19180d06925940157d7f6f155.1781465141.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 14 Jun 2026 19:25:41 +0000
-Subject: [PATCH 2/2] rebase: add --fixup-all to fold a range
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mO56qzNT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D3RfI6AW"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A9E6140002F;
+	Sun, 14 Jun 2026 17:52:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Sun, 14 Jun 2026 17:52:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781473975;
+	 x=1781560375; bh=ME2GHviGy2axXP4sOZ+TjmkaHlKcbNcPy6zGdo5HZVE=; b=
+	mO56qzNTxsK8dh+6nyJAGoe8fHHhoMPs0fh+z53YAig1yCe/PU2/m9fm6yjIKm9g
+	n5WJxU/a1YfYr9doy+01SpQqTHIGw716mggpjMVFvZlkn0LtVw18Q+udJmf+a4AN
+	TOYP2gX6a1z3PGbRzd7EBn7ycrSwAsjdnWxEFJJQqqkn8DonU1K4MxtxirxuxQpf
+	O+9oZoRHvB46Yz0Z/W9EMI36a07EAGI/lsTGOl86QY6rXRkLGCMZxS+GML+T/aNX
+	SGokR9KQKF+2goNUP04CEWQi6GjZ22ma8c+BBmMies3aZeZq5XbQp2y3L7zA/Xj1
+	SQKqGV+RCjvpPYG7MurpNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781473975; x=
+	1781560375; bh=ME2GHviGy2axXP4sOZ+TjmkaHlKcbNcPy6zGdo5HZVE=; b=D
+	3RfI6AWz1S5hCWYDE7SU54/g/i+ZOeVl5MpCHAcMCqG/w+mwzRp6wCVJJ7urPED+
+	0aiE1HuBD1ssYZWKiAjjq0eBlvP0lLdRfrg3U3KFvWUjQGzyagKROyxKmqL8P274
+	pRWm7c8zQ2fNoFuz/bw9OigT/++QItEyQ31S06ZCo4OW20LB9O7GoVBLe6xyoN9O
+	7irmrv3f7xK3+hkjIyVovqTOdIYX7s4pOvjoTrUfC+r9Y8vQLhM0yxrjfwbHPiu7
+	sBMWhuE+fUb7t8imos4XR01pKXaiqozO9WyvrUt2FAyzs/PFTqFIcGn3uAPMLDjd
+	N5XhZaBo33jfadgI8llKw==
+X-ME-Sender: <xms:tiIvahMGDH6wju7xvuoKZNALWnMhZu1pPydBtXbTgKW2jCltkC0reQ>
+    <xme:tiIvaq9oRu8g7EPJyYT194ur7KTtHRS4mbTacXUIa3r8-I2Z9fmZPpOEtetcLkgx2
+    ZdriFdNrP-ZFfAYudnNBaE0qUkFMHO_Fv_CXbE0adLm8o6dI-Ux>
+X-ME-Received: <xmr:tiIvalTaRdR68n6SnE0zgQH31PDw91bF0bF9C6mpLqQTnlUgHlBSjXZ_4NfO0JQ-kh5Y0akpWdTdyQXVjSxul2gk7bJe9XQy5MP6>
+X-ME-Proxy-Cause: dmFkZTFdeq6hX4wJvgOQXeEqQ4+DdSI4RM6R+co4HNvR+EUsCW9nQSt13pl3u1prPdvFPC
+    A+vFt7dv1toRyt5LcgCK5kitplgxzwigEt0auc51IXScJsPKzfd/u6k8OBBT8fhJOUTtMG
+    FtUdRbvTgXbda/dm/ZF+boMnPMLNjhvEllLjMDWa6psAwIem3axE13tbh1SNRGZIkk6wJz
+    94kLoTyp1Oo2Np3AsFcnTxsqemz32087VjhNeSIR/aaUE/3dbvUZYjfR/Ldy7I36GRI06P
+    GrVDgI1MwpycA/gNO9S9KDOpuR28miM5Mz9gPqQtr3ISkxnw/0tgA6I2wNTKUMHeeYYJiQ
+    Zev/1mpZvKAg3DU3PQXGur1zGjGy4CL5mNnQVW7EfOB/GhvRCvEn6uygLq7lqJvWkOl/iD
+    UjRgtpK1N/lvxbJcjtO4RtgCQ25+4FyQ1sQUCKsDEK6ard9o+dCPiPcy13xIngcD4iZ2yM
+    h+CF3jNywYoLkfmfm8b5AXeY17x89lGpRqNcm86lZxIk6h+kW7jhgqI5DIVhDIfk+sFQHY
+    96PIlzkV/fpw+Aq0HZUWy3q/leX6t+l5NwBcLwu7D+3vxLYA8Yca9DP0JVXaDqFJPEZg59
+    kSMA37oIkDH9AZaHmP12FQD8G38pnkO3+eINzxXA5jgmtzwCGyeFaID4AC2w
+X-ME-Proxy: <xmx:tyIvasl7dRrsWKY-YKl0lmddsVpyu45vlF4wBI1U_6MkP6NL3Vjdzw>
+    <xmx:tyIvalSAyenf1VXg0NQXK1QoOTAOI_smyjxHCZ19T4MP1RlgYD6TZQ>
+    <xmx:tyIvaqNpHQgzCFpT-5ukHbWrmZERRDGRXTZZS8CJo_8zFxIN-IZCSg>
+    <xmx:tyIvauV_nSV31qvRu4vQPSeoU61kdsOd7g8KwXfcONX_6mMt78tkBw>
+    <xmx:tyIvaoyxDZij6vTBqRtm6rjza_WlZMV088wXKwEsau5vP4qVT5pTrLQW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 14 Jun 2026 17:52:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] doc: fix a small, old release notes typo
+In-Reply-To: <645638cd87d6d919af6d4310be8176d49fba326e.1781456960.git.ben.knoble+github@gmail.com>
+	(D. Ben Knoble's message of "Sun, 14 Jun 2026 13:28:31 -0400")
+References: <645638cd87d6d919af6d4310be8176d49fba326e.1781456960.git.ben.knoble+github@gmail.com>
+Date: Sun, 14 Jun 2026 14:52:52 -0700
+Message-ID: <xmqq1pe8eqmj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-Folding a series of commits into one required either an interactive
-rebase where each commit after the first was hand-edited to "fixup", or
-a "git reset --soft" to the merge base followed by "git commit --amend".
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> ---
+> No harm done if you choose not to keep this, I think. Stumbled upon it when
+> trying to understand Elijah's message [1] about timestamp_t overflowing in 2106
+> (I though 32-bit time_t overflowed in 2038, but timestamp_t is something
+> different… except maybe when it's not? Anyway…)
 
-Add "git rebase --autosquash --fixup-all [<upstream>]" to do this
-directly. It keeps the first commit in the range as a "pick" and turns
-every later commit into a "fixup", so the whole range collapses into a
-single commit that reuses the first commit's message. With no <upstream>
-argument the range is "@{upstream}..HEAD", folding all unpushed commits
-into one.
+Unless it fixes a glaring factual error that would harm end-users if
+left unfixed, I would not very much be enthused to see fixes to
+these ancient documents, quite honestly.
 
-Fold the commits in their original order, so that any fixup!/squash!
-commits already present in the range are folded in as well. Allow the
-flag only together with --autosquash, and reject --rebase-merges since a
-merge commit cannot be folded into another commit.
+>     separate and dedicated timestamp_t (so that we can distinguish
+> -   timestamps and a vanilla ulongs, which along is already a good
+> +   timestamps and a vanilla ulongs, which alone is already a good
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/git-rebase.adoc |  11 ++++
- builtin/rebase.c              |  13 ++++-
- sequencer.c                   |  24 +++++++-
- sequencer.h                   |   2 +-
- t/t3415-rebase-autosquash.sh  | 105 ++++++++++++++++++++++++++++++++++
- 5 files changed, 151 insertions(+), 4 deletions(-)
+"timestamps and vanilla ulongs", as both are plural?
 
-diff --git a/Documentation/git-rebase.adoc b/Documentation/git-rebase.adoc
-index f6c22d1598..d1a3e4ef64 100644
---- a/Documentation/git-rebase.adoc
-+++ b/Documentation/git-rebase.adoc
-@@ -602,6 +602,16 @@ option can be used to override that setting.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-+--fixup-all::
-+	Valid only when used with `--autosquash`.  Keep the first commit in
-+	the range as a `pick` and change every later commit to a `fixup`, so
-+	the whole range is folded into a single commit that reuses the first
-+	commit's message.  With no `<upstream>` argument this folds all commits
-+	since `@{upstream}` into one.  The commits are folded in their original
-+	order, so any `fixup!`/`squash!` commits already in the range are folded
-+	in as well.  Cannot be combined with `--rebase-merges`, as a merge
-+	commit cannot be folded into another commit.
-+
- --autostash::
- --no-autostash::
- 	Automatically create a temporary stash entry before the operation
-@@ -652,6 +662,7 @@ are incompatible with the following options:
-  * --strategy
-  * --strategy-option
-  * --autosquash
-+ * --fixup-all
-  * --rebase-merges
-  * --interactive
-  * --exec
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index fa4f5d9306..a363fbc1f2 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -118,6 +118,7 @@ struct rebase_options {
- 	int allow_rerere_autoupdate;
- 	int keep_empty;
- 	int autosquash;
-+	int fixup_all;
- 	char *gpg_sign_opt;
- 	int autostash;
- 	int committer_date_is_author_date;
-@@ -329,7 +330,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 	ret = complete_action(the_repository, &replay, flags,
- 		shortrevisions, opts->onto_name, opts->onto,
- 		&opts->orig_head->object.oid, &opts->exec,
--		opts->autosquash, opts->update_refs, &todo_list);
-+		opts->autosquash, opts->fixup_all, opts->update_refs,
-+		&todo_list);
- 
- cleanup:
- 	replay_opts_release(&replay);
-@@ -1205,6 +1207,8 @@ int cmd_rebase(int argc,
- 		OPT_BOOL(0, "autosquash", &options.autosquash,
- 			 N_("move commits that begin with "
- 			    "squash!/fixup! under -i")),
-+		OPT_BOOL(0, "fixup-all", &options.fixup_all,
-+			 N_("fold all commits in the range into the first one")),
- 		OPT_BOOL(0, "update-refs", &options.update_refs,
- 			 N_("update branches that point to commits "
- 			    "that are being rebased")),
-@@ -1594,6 +1598,13 @@ int cmd_rebase(int argc,
- 	options.rebase_merges = (options.rebase_merges >= 0) ? options.rebase_merges :
- 				((options.config_rebase_merges >= 0) ? options.config_rebase_merges : 0);
- 
-+	if (options.fixup_all && options.autosquash != 1)
-+		die(_("--fixup-all requires --autosquash"));
-+
-+	if (options.fixup_all && options.rebase_merges)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--fixup-all", "--rebase-merges");
-+
- 	if (options.autosquash == 1) {
- 		imply_merge(&options, "--autosquash");
- 	} else if (options.autosquash == -1) {
-diff --git a/sequencer.c b/sequencer.c
-index 57855b0066..eeaf6226fe 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -6554,11 +6554,29 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
- 	return 0;
- }
- 
-+static void todo_list_fixup_all_but_first(struct todo_list *todo_list)
-+{
-+	int i, seen_first = 0;
-+
-+	for (i = 0; i < todo_list->nr; i++) {
-+		struct todo_item *item = todo_list->items + i;
-+
-+		if (!item->commit || item->command == TODO_DROP)
-+			continue;
-+		if (!seen_first) {
-+			seen_first = 1;
-+			item->command = TODO_PICK;
-+			continue;
-+		}
-+		item->command = TODO_FIXUP;
-+	}
-+}
-+
- int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
- 		    const char *shortrevisions, const char *onto_name,
- 		    struct commit *onto, const struct object_id *orig_head,
- 		    struct string_list *commands, unsigned autosquash,
--		    unsigned update_refs,
-+		    unsigned fixup_all, unsigned update_refs,
- 		    struct todo_list *todo_list)
- {
- 	char shortonto[GIT_MAX_HEXSZ + 1];
-@@ -6581,7 +6599,9 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 	if (update_refs && todo_list_add_update_ref_commands(todo_list))
- 		return -1;
- 
--	if (autosquash && todo_list_rearrange_squash(todo_list))
-+	if (fixup_all)
-+		todo_list_fixup_all_but_first(todo_list);
-+	else if (autosquash && todo_list_rearrange_squash(todo_list))
- 		return -1;
- 
- 	if (commands->nr)
-diff --git a/sequencer.h b/sequencer.h
-index 3164bd437d..9bb6b42c94 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -196,7 +196,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		    const char *shortrevisions, const char *onto_name,
- 		    struct commit *onto, const struct object_id *orig_head,
- 		    struct string_list *commands, unsigned autosquash,
--		    unsigned update_refs,
-+		    unsigned fixup_all, unsigned update_refs,
- 		    struct todo_list *todo_list);
- int todo_list_rearrange_squash(struct todo_list *todo_list);
- 
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 8964d1cc88..21d4159ebd 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -511,4 +511,109 @@ test_expect_success 'pick and fixup respect commit.cleanup' '
- 	test_commit_message HEAD -m "something"
- '
- 
-+test_expect_success '--fixup-all folds the range into the first commit' '
-+	git reset --hard base &&
-+	test_commit --no-tag fold1 file_fold a &&
-+	test_commit --no-tag fold2 file_fold b &&
-+	test_commit --no-tag fold3 file_fold c &&
-+	git rebase --autosquash --fixup-all HEAD~3 &&
-+	test_cmp_rev base HEAD~1 &&
-+	test_commit_message HEAD -m "fold1" &&
-+	echo c >expect &&
-+	test_cmp expect file_fold
-+'
-+
-+test_expect_success '--fixup-all folds smoothly when a fixup! commit is in the series' '
-+	git reset --hard base &&
-+	test_commit --no-tag foldA file_fold a &&
-+	test_commit --no-tag foldB file_fold b &&
-+	git commit --allow-empty --fixup HEAD~1 &&
-+	git rebase --autosquash --fixup-all HEAD~3 &&
-+	test_cmp_rev base HEAD~1 &&
-+	test_commit_message HEAD -m "foldA" &&
-+	echo b >expect &&
-+	test_cmp expect file_fold
-+'
-+
-+test_expect_success '--fixup-all picks the first commit even if it is a fixup!' '
-+	git reset --hard base &&
-+	test_commit --no-tag fixupbase file_fix a &&
-+	git commit --allow-empty --fixup HEAD &&
-+	test_commit --no-tag fixuptail file_fix b &&
-+	git rebase --autosquash --fixup-all HEAD~3 &&
-+	test_cmp_rev base HEAD~1 &&
-+	echo b >expect &&
-+	test_cmp expect file_fix
-+'
-+
-+test_expect_success '--fixup-all with a single commit in range is a no-op' '
-+	git reset --hard base &&
-+	test_commit --no-tag solo file_solo a &&
-+	git rev-parse HEAD >expect &&
-+	git rebase --autosquash --fixup-all HEAD~1 &&
-+	git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--fixup-all with an empty range succeeds' '
-+	git reset --hard base &&
-+	git rebase --autosquash --fixup-all HEAD &&
-+	test_cmp_rev base HEAD
-+'
-+
-+test_expect_success '--fixup-all skips a dropped commit in the range' '
-+	git reset --hard base &&
-+	test_commit --no-tag fixdrop1 file_drop a &&
-+	git commit --allow-empty -m "empty in the middle" &&
-+	test_commit --no-tag fixdrop3 file_drop b &&
-+	git rebase --autosquash --empty=drop --fixup-all HEAD~3 &&
-+	test_cmp_rev base HEAD~1 &&
-+	test_commit_message HEAD -m "fixdrop1" &&
-+	echo b >expect &&
-+	test_cmp expect file_drop
-+'
-+
-+test_expect_success '--fixup-all folds a merge commit in the middle of the range' '
-+	git reset --hard base &&
-+	test_commit --no-tag mid-first &&
-+	git checkout -b mid-side &&
-+	test_commit --no-tag mid-merged &&
-+	git checkout - &&
-+	git merge --no-ff -m "merge mid-side" mid-side &&
-+	test_commit --no-tag mid-last &&
-+	git rebase --autosquash --fixup-all base &&
-+	test_cmp_rev base HEAD~1 &&
-+	test_commit_message HEAD -m "mid-first" &&
-+	test_path_is_file mid-merged.t
-+'
-+
-+test_expect_success '--fixup-all keeps the first flattened commit when a merge sorts first' '
-+	git reset --hard base &&
-+	git checkout -b head-side &&
-+	test_commit --no-tag head-merged &&
-+	git checkout - &&
-+	git merge --no-ff -m "merge head-side" head-side &&
-+	test_commit --no-tag head-last &&
-+	git rebase --autosquash --fixup-all base &&
-+	test_cmp_rev base HEAD~1 &&
-+	test_commit_message HEAD -m "head-merged" &&
-+	test_path_is_file head-merged.t
-+'
-+
-+test_expect_success '--fixup-all requires --autosquash' '
-+	git reset --hard base &&
-+	test_must_fail git rebase --fixup-all HEAD~1 2>err &&
-+	test_grep "fixup-all requires --autosquash" err &&
-+	test_must_fail git rebase --no-autosquash --fixup-all HEAD~1 2>err &&
-+	test_grep "fixup-all requires --autosquash" err
-+'
-+
-+test_expect_success '--fixup-all and --rebase-merges cannot be combined' '
-+	git reset --hard base &&
-+	test_must_fail git rebase --autosquash --rebase-merges \
-+		--fixup-all HEAD~1 2>err &&
-+	test_grep "cannot be used together" err &&
-+	test_path_is_missing .git/rebase-merge
-+'
-+
- test_done
--- 
-gitgitgadget
