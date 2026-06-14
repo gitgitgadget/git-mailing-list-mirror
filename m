@@ -1,332 +1,375 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B073369234
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 06:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781419059; cv=none; b=Ip7rh4fCfQxqJAH9eVEauCf9tp51Zm676sbbCDxQH/cMM42CApdIgQkZMflNGQVvAngnglp6IG52xm2gE5l78mdf7/F164I1qS66wKCc8Cl8DnPw23cpLdmpMBR7yapy3hKXWg0CiD2xyXP17lCO+bb5ef61XtvbCUbIwI8UalM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781419059; c=relaxed/simple;
-	bh=QSofk/86tfiUO+u8LH87vJiGaCflJP6ajgeBxuwGlGc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kUcJSSWVaWWBAyykSNaev8qYlW39RAOCT91j1ixkqPrUbZpJLbAJpJrRzdV6P09AASkl2vjlO9e4NGBWCRjNBUnlIfdO/2Sc9Te1UqpAZrpWyVv66BGSbeq/gV1b3LavEECLLBAQ6wwjfj2liZb/XmoOCzqBwwgOW7E2NgjYRQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g5rFPCCU; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCA919CCF5
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 06:56:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781420179; cv=pass; b=tgYCdmf2R+IwG2CBjYAW+FAjcCsMxvXKbloNYRzlzojXlebYQNp20+wkoXq1E1P+c5GlTnLY3CbXpSkFo9nJucKWV5DJy7/u4sGKL2E50z4zQk6Jt490ZeOQ7XWtMgdOHsC1YU16yY3b5hHX40MiZH9177CeCJn/U8jehz5HKyI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781420179; c=relaxed/simple;
+	bh=xT2KYBii5sKVb7xCCfjFzPmYU3LnLnmw/70V3GR1MU0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nSmVd8oV3xNZo8gfqjidYhKfn2L/izhURXvG3Z8VgMZJxMglz4CKrVB/n2dOl4jA3tE+XyDfGM+lw/udSYIFWRh7JucB/0kEcOWObaTerb5VBk7Q/zp1dTMw0lf8uacKTkMCa4prQAQKMFe4bxeaJfLCii213r0hO8pP94Uelv4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=styvrW0B; arc=pass smtp.client-ip=209.85.167.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g5rFPCCU"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-91578122305so377080985a.0
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 23:37:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="styvrW0B"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-48761fdc4baso68401b6e.1
+        for <git@vger.kernel.org>; Sat, 13 Jun 2026 23:56:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781420176; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JbQSkoL3c5kGTboxSwQV6+7kDWP1MipIWVH7MvGWm1MNaW+wri3M+8olvnJ/TNj8mA
+         e4RGhXLfiHo/JsFArg7EtBnQWeuiXQh0AnqvETeVFO12rTFXjcTIAcJErI5Ou1HX4t5G
+         5hm+6CZ1PQjHOvN4Lun2RbOepLRv9TCzPu/sA1xiKdr/YwelM/FWEWwk/yimYQL8+Krv
+         yUQuZt5d6QU+R4KDEmmV05nO3RQ8pLP6ghHe1xNY9oQWsqh71CqD5gqYMF1yKIOnvqyg
+         0ZlBW9SNHJuf2nbwhm2g0BX9gQdkSo6PUABgqG6KKlsS8yCyf3UY7Bk2YRf3eNMbNUin
+         72YA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=0EdXmL9J/QsEniuPy95/oZGy+to7pCg+xHHIBlieY2s=;
+        fh=YsDP8qhdejPnmdlVXvdly/uN84AbM1az0llqI3pfvq0=;
+        b=BVj2/WiZfko4rlOOZYo1CLl/2dLGGTVjBdpCiCtaNmf9b5Edn1ahc8z4KnxLJD/2Ch
+         FExJ/AGxsIoy3akyCwZYEVNkrQx1J3nuMhR64SIy366qr3NWyNo3yVMbnED39R0aMxVI
+         6cpwKlrsGgkPzrig4U0Shd58LY8rR3NjWKZ/XnHN0+NxbKyhBgeycGuNG9wrnI4bT7PN
+         AKtJqekTIEI1dm/0U3/VSfQw4EKUhCqI7qTqHVX/kmbFGYvpBgCQ4yTPbiwzECH10xC6
+         6gFGB7p0oP6dtrQLPbdjXItxLzEJOiSCZ5UvqRH1m7hyHBUq/h9xM3HSA3+fcniWyRIX
+         4HOw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781419057; x=1782023857; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781420176; x=1782024976; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xZqX/SJg9g2wRNSKfKG1P8ISt8XIfoAVh/Jn4G9RGcc=;
-        b=g5rFPCCU8v6BxhlEdFY5Djph4QmB9QCY6QjQ0qE7vJxqSlTIKN6bBRluUoB5dJNx5Q
-         2kGZTsD1mbp3Be/nLDJpa4Td5fnGAkxMI/31gZOTcGNHJlybLaIgog6MhOfxg6oGh1Ud
-         dSKiR+nzO/mITRa6MKXJokxCqY4HrGB7w1gbVDahC1ISH4v5wGA7pvu2E0cLcvZyYJdV
-         8nCws0o5lh+K/wFqEfVvAj8ehZRb+3N2RVySG/vu4Uzx0mH4AbOTpSNlmT7Og0iWLjfh
-         /gAe77tRsg1mTpCu+nHwXJWbmFpTl5aWUE15y26DoGNkxHZ2taxSj14w9Wzetx4R3o83
-         /aSQ==
+        bh=0EdXmL9J/QsEniuPy95/oZGy+to7pCg+xHHIBlieY2s=;
+        b=styvrW0BqzXK4ZMB9vOS23qxx1VPfU+vOd/1euDqIA1+lzqvenBDX91ZCBIn3LQCBY
+         Z7QIeL5okhDABKZrp6KKG/JZStjnBPl6hXrwFzO6ercA01uZsvgAgWGYYweGd1uwr3tB
+         lx5JIYsgJ0WAO3RhekD5SkgAFXSo2EF375B4tNe6ZyIzrbBIoGDWef4Pz6A4nN9BaYKE
+         w1eZ3T6W9z8Cm9gLPwwGaTDcOkyc80wf0XNpOxaPtOGN8tNYZPVclEzslsuYzyWdf+1h
+         dMaQqnrN8LpdnFoatz+YJtCov4lBuS5pOcsRWH1ibziz9yX91VnL2SvT0e0z5n10TStg
+         WOrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781419057; x=1782023857;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781420176; x=1782024976;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=xZqX/SJg9g2wRNSKfKG1P8ISt8XIfoAVh/Jn4G9RGcc=;
-        b=nMvTeElLnsTkqOk+id1E7AdMmt4wKESkGD7ID58bmHPr47EdfDXEqYGt8tu1PBBscS
-         2zdo/0pvM+oG0OZUbykPE5ZVJxkQZuQt4QuMSrMQ0cZPGOK/dbC2WwhLpV9EUAl+WvBg
-         4P7veeYCdlEIeNou2ehSSGgreWdYx6UCAXlRLjHycafFcna7mhN7QppQ/1JK9Y8ddLTz
-         PjHi0MLcdJGx3aw7iEDL0BYQ9KncnVbEb7Ho2K7I16nF66/RJ84bJki1VJUUafNOt6tn
-         9VrN4pfstI4WqnS8rNoOH1+y98ZlzEflWoV674+GGX6ypFZBLpmw+hzYmD9GTOb9Rj1K
-         zTJg==
-X-Gm-Message-State: AOJu0YzhFFykW2+7eJq3FOCz1/wJGtESz8Qx+nb8HOohOzNaJEzrMdhW
-	f7vneYU5vSOIOOHfGasnbWfywQvemnUUuMP6O2uO5RehG2nD66QqItWtd1z27Q==
-X-Gm-Gg: Acq92OFDqBZ/JEzCJeRHDwRp6lwozt4Tl5TI4hkPbUzOzYLnnbK032GnY5rxRGfBU+5
-	bhyRDodYobFIhk81N2kVVnhTC0cNRvITp+2tuOL0ObbPJlV8cqdVlVwbNS5bLS1tJ0KY0WYv1Xx
-	hgeQ9nhM02fap7tGWs6E+CzitDNKhHx4DC5CmvvqaHrSjw/mfn384amO3VB0oQB+SPHdYec2SSv
-	BvFqztDNOYJkH9H7YQUsgFdn9rSo1DDQiZ+QNhmFeIHUuJ7JL+fE/qw9UCQafpbUuSLPdxJ4igg
-	m+GpnWLOvOn8tJEgBxf+oJQ1frK/QoF/o47ULZFjM/HffhxKNOzIa1Ui2ccRGmPgS4rsYTlw4W8
-	PrYHy+QweYIqmZC0UgVWfoZ5QtLvbiL81Wf4o7xk5ccdvgZ2ZxOhTDiFpM/pYCoWHUMMKd9ye7i
-	JJh/efN+ZuJXGl0N0sQ0GmuA==
-X-Received: by 2002:a05:620a:1709:b0:915:a217:a96b with SMTP id af79cd13be357-917eb7027f6mr950553485a.0.1781419057083;
-        Sat, 13 Jun 2026 23:37:37 -0700 (PDT)
-Received: from [127.0.0.1] ([20.55.15.2])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9161a035855sm674607885a.32.2026.06.13.23.37.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2026 23:37:36 -0700 (PDT)
-Message-Id: <cf50f1aabcf84aa755808318756c233305cc008d.1781419047.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2096.v2.git.1781419047.gitgitgadget@gmail.com>
-References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
-	<pull.2096.v2.git.1781419047.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 14 Jun 2026 06:37:26 +0000
-Subject: [PATCH v2 5/5] cache-tree: fix verify_cache() to catch non-adjacent
- D/F conflicts
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=0EdXmL9J/QsEniuPy95/oZGy+to7pCg+xHHIBlieY2s=;
+        b=B5641n6+r+19eImjF098v6RGhGyR9+zZa839BYmesvM6CKjXvNfBWUtpJ4wog7SAjN
+         0dAZKMLJd0d0SlhPBQLzAgyTe3zHKLCqOgy4McIBcaQSwdokj0pETG5GWC00+ATk82mw
+         pCgFy3XlJuYpGejVXLh2yI+yOLcjPqUomS+CuOVLSlxmP1E/Ne9zfm2AzO1CSr0unrOx
+         9xHx/AoPBlFUBAUP0DTbJUcthPUQ5/3FB5C/g7SDy6DbHtmpRVmKrOzSGjclhgKzaolw
+         GCg6Cux3a9q7nFXGRJT7WSOtCHDgEvdq3wnTwm11ehtcQ6Veku4CkcoJZinfS03U/cTs
+         Gntg==
+X-Gm-Message-State: AOJu0YwphBt87X+K7GcY/PGKkksVuO6ulxXBAtnYCfBOHcBXbmvdbVMp
+	F4zpSIUZOZ4yFHm/8at5j9KmZ+iWdoEkB0CnmokIo+kiR2g2gHJnduCIll0qePi9GZMjJE0W8XR
+	7GMF0IAJqXlUSfKroz2todcR0Xw0mUWzvTq7m
+X-Gm-Gg: Acq92OG/C8tRwWCiFFd8SxeKL7CAjbtj/I5ttVmVmnXLyQoEL/1sd9ynvMKnUdbakb/
+	xp+IFQjneGE1XZmEeu8c5cCmktNsUQ17qZ/xqqOFmPOI50K0136BPAk2P1cfckAneWdrvvgq3am
+	5XDqNGNss4m0r2UniIgHfuzpG7pJBYnQ5STKJVUdGubOnoI0LtAWyzuJrvjNw2IXUjlhroGagJK
+	caILUrT+R1SgiMTXMNnOK/EJexmR0PxKnEmff9QFcr4SnDYb/kKUxCywfgQOcmjVk9B643g5/Yf
+	PPBoscHSgRkt535kCLAvoPuu7Lp00BExYlifK3DM3NPQQomZw2S+MEGWE14zDP3hlBDl+K6wSjb
+	KzG88IKzK35sdLKDB3urd4KTs4g8EkQXobgbM
+X-Received: by 2002:a05:6808:1187:b0:486:4ae9:f9a5 with SMTP id
+ 5614622812f47-48741b883cbmr3994719b6e.38.1781420175568; Sat, 13 Jun 2026
+ 23:56:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Christian Couder <christian.couder@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
-
+References: <20260610-toon-git-replay-drop-merges-v2-0-5714a71c6d83@iotcl.com> <20260610-toon-git-replay-drop-merges-v2-3-5714a71c6d83@iotcl.com>
+In-Reply-To: <20260610-toon-git-replay-drop-merges-v2-3-5714a71c6d83@iotcl.com>
 From: Elijah Newren <newren@gmail.com>
+Date: Sat, 13 Jun 2026 23:56:04 -0700
+X-Gm-Features: AVVi8Cd1k6peBHfszavlgdjDbXmzZ8gvduRlbeg3axQWs-IrNTSHb-mBUuxnasc
+Message-ID: <CABPp-BGRi2obnqRGEY9pSMyvRbNGs8AdVUpZmr0C6vZSgHb=cg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] replay: offer an option to linearize the commit topology
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-verify_cache() checks that the index does not contain both "path" and
-"path/file" before writing a tree.  It does this by comparing only
-adjacent entries, relying on the assumption that "path/file" would
-immediately follow "path" in sorted order.  Unfortunately, this
-assumption does not always hold.  For example:
+Hi,
 
-    docs                     <-- submodule entry
-    docs-internal/README.md  <-- intervening entry
-    docs/requirements.txt    <-- D/F conflict, NOT adjacent to "docs"
+On Wed, Jun 10, 2026 at 7:51=E2=80=AFAM Toon Claes <toon@iotcl.com> wrote:
+>
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>
+> One of the stated goals of git-replay(1) is to allow implementing the
+> git-rebase(1) functionality on the server side.
+>
+> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
+> was given. This mode drops merge commits instead of replaying them, and
+> linearizes the commit history into a sequence of the
+> regular (single-parent) commits.
+>
+> Add option `--linearize` to git-replay(1) to do the same.
 
-When this happens, verify_cache() silently misses the D/F conflict and
-write-tree produces a corrupt tree object containing duplicate entries
-(one for the submodule "docs" and one for the tree "docs").
+I think this version is nicer overall than the one from my
+replay-upstream branch; sorry for repeatedly getting distracted from
+that, but this does look nice.
 
-I could not find any caller in current git that both allows the index to
-get into this state and then tries to write it out without doing other
-checks beyond the verify_cache() call in cache_tree_update(), but
-verify_cache() is documented as a safety net for preventing corrupt
-trees and should actually provide that guarantee.  A downstream consumer
-that relied solely on cache_tree_update()'s internal checking via
-verify_cache() to prevent duplicate tree entries was bitten by the gap.
+A few small comments:
 
-Add a test that constructs a corrupt index directly (bypassing the D/F
-checks in add_index_entry) and verifies that write-tree now rejects it.
+> Co-authored-by: Toon Claes <toon@iotcl.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  Documentation/git-replay.adoc |  5 +++++
+>  builtin/replay.c              |  4 ++++
+>  replay.c                      | 30 +++++++++++++++++++++++-------
+>  replay.h                      |  5 +++++
+>  t/t3650-replay-basics.sh      | 26 ++++++++++++++++++++++++++
+>  5 files changed, 63 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.ado=
+c
+> index a32f72aead..41c96c7061 100644
+> --- a/Documentation/git-replay.adoc
+> +++ b/Documentation/git-replay.adoc
+> @@ -88,6 +88,11 @@ incompatible with `--contained` (which is a modifier f=
+or `--onto` only).
+>  +
+>  The default mode can be configured via the `replay.refAction` configurat=
+ion variable.
+>
+> +--linearize::
+> +       In this mode, `git replay` imitates `git rebase --no-rebase-merge=
+s`,
+> +       i.e. it cherry-picks only non-merge commits, each one on top of t=
+he
+> +       previous one.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- cache-tree.c                   | 64 ++++++++++++++++++++++++++++------
- t/meson.build                  |  1 +
- t/t0093-direct-index-write.pl  | 38 ++++++++++++++++++++
- t/t0093-verify-cache-df-gap.sh | 59 +++++++++++++++++++++++++++++++
- 4 files changed, 151 insertions(+), 11 deletions(-)
- create mode 100644 t/t0093-direct-index-write.pl
- create mode 100755 t/t0093-verify-cache-df-gap.sh
+The SYNOPSIS block at the top of the file is missing this new flag.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 7881b42aa2..4d2669b312 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -161,6 +161,54 @@ void cache_tree_invalidate_path(struct index_state *istate, const char *path)
- 		istate->cache_changed |= CACHE_TREE_CHANGED;
- }
- 
-+/*
-+ * Check whether this_ce and the next entry in the index form a D/F
-+ * conflict ("path" vs "path/file").  Returns the conflicting "path/..."
-+ * name when one is found, or NULL otherwise.
-+ *
-+ * The cache is sorted, so "path/file" sorts after "path" and the
-+ * conflict is usually visible as adjacent entries.  But other entries
-+ * can sort between them -- e.g. "path-internal" sits between "path"
-+ * and "path/file" because '-' (0x2D) precedes '/' (0x2F) -- so when
-+ * the immediately following entry shares our prefix but starts with a
-+ * character that sorts before '/', binary search for "path/" instead.
-+ */
-+static const char *find_df_conflict(struct index_state *istate,
-+				    const struct cache_entry *this_ce,
-+				    const struct cache_entry *next_ce)
-+{
-+	const char *this_name = this_ce->name;
-+	const char *next_name = next_ce->name;
-+	int this_len = ce_namelen(this_ce);
-+	const struct cache_entry *other;
-+	struct strbuf probe = STRBUF_INIT;
-+	int pos;
-+
-+	if (this_len >= ce_namelen(next_ce) ||
-+	    next_name[this_len] > '/' ||
-+	    strncmp(this_name, next_name, this_len))
-+		return NULL;
-+
-+	if (next_name[this_len] == '/')
-+		return next_name;
-+
-+	strbuf_add(&probe, this_name, this_len);
-+	strbuf_addch(&probe, '/');
-+	pos = index_name_pos_sparse(istate, probe.buf, probe.len);
-+	strbuf_release(&probe);
-+
-+	if (pos < 0)
-+		pos = -pos - 1;
-+	if (pos >= (int)istate->cache_nr)
-+		return NULL;
-+	other = istate->cache[pos];
-+	if (ce_namelen(other) > this_len &&
-+	    other->name[this_len] == '/' &&
-+	    !strncmp(this_name, other->name, this_len))
-+		return other->name;
-+	return NULL;
-+}
-+
- static int verify_cache(struct index_state *istate, int flags)
- {
- 	unsigned i, funny;
-@@ -190,24 +238,18 @@ static int verify_cache(struct index_state *istate, int flags)
- 	 */
- 	funny = 0;
- 	for (i = 0; i + 1 < istate->cache_nr; i++) {
--		/* path/file always comes after path because of the way
--		 * the cache is sorted.  Also path can appear only once,
--		 * which means conflicting one would immediately follow.
--		 */
- 		const struct cache_entry *this_ce = istate->cache[i];
- 		const struct cache_entry *next_ce = istate->cache[i + 1];
--		const char *this_name = this_ce->name;
--		const char *next_name = next_ce->name;
--		int this_len = ce_namelen(this_ce);
--		if (this_len < ce_namelen(next_ce) &&
--		    next_name[this_len] == '/' &&
--		    strncmp(this_name, next_name, this_len) == 0) {
-+		const char *conflict_name;
-+
-+		conflict_name = find_df_conflict(istate, this_ce, next_ce);
-+		if (conflict_name) {
- 			if (10 < ++funny) {
- 				fprintf(stderr, "...\n");
- 				break;
- 			}
- 			fprintf(stderr, "You have both %s and %s\n",
--				this_name, next_name);
-+				this_ce->name, conflict_name);
- 		}
- 	}
- 	if (funny)
-diff --git a/t/meson.build b/t/meson.build
-index 7528e5cda5..362177999b 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -124,6 +124,7 @@ integration_tests = [
-   't0090-cache-tree.sh',
-   't0091-bugreport.sh',
-   't0092-diagnose.sh',
-+  't0093-verify-cache-df-gap.sh',
-   't0095-bloom.sh',
-   't0100-previous.sh',
-   't0101-at-syntax.sh',
-diff --git a/t/t0093-direct-index-write.pl b/t/t0093-direct-index-write.pl
-new file mode 100644
-index 0000000000..2881a3ebb2
---- /dev/null
-+++ b/t/t0093-direct-index-write.pl
-@@ -0,0 +1,38 @@
-+#!/usr/bin/perl
-+#
-+# Build a v2 index file from entries listed on stdin.
-+# Each line: "octalmode hex-oid name"
-+# Output: binary index written to stdout.
-+#
-+# This bypasses all D/F safety checks in add_index_entry(), simulating
-+# what happens when code uses ADD_CACHE_JUST_APPEND to bulk-load entries.
-+use strict;
-+use warnings;
-+use Digest::SHA qw(sha1 sha256);
-+
-+my $hash_algo = $ENV{'GIT_DEFAULT_HASH'} || 'sha1';
-+my $hash_func = $hash_algo eq 'sha256' ? \&sha256 : \&sha1;
-+
-+my @entries;
-+while (my $line = <STDIN>) {
-+	chomp $line;
-+	my ($mode, $oid_hex, $name) = split(/ /, $line, 3);
-+	push @entries, [$mode, $oid_hex, $name];
-+}
-+
-+my $body = "DIRC" . pack("NN", 2, scalar @entries);
-+
-+for my $ent (@entries) {
-+	my ($mode, $oid_hex, $name) = @{$ent};
-+	# 10 x 32-bit stat fields (zeroed), with mode in position 7
-+	my $stat = pack("N10", 0, 0, 0, 0, 0, 0, oct($mode), 0, 0, 0);
-+	my $oid = pack("H*", $oid_hex);
-+	my $flags = pack("n", length($name) & 0xFFF);
-+	my $entry = $stat . $oid . $flags . $name . "\0";
-+	# Pad to 8-byte boundary
-+	while (length($entry) % 8) { $entry .= "\0"; }
-+	$body .= $entry;
-+}
-+
-+binmode STDOUT;
-+print $body . $hash_func->($body);
-diff --git a/t/t0093-verify-cache-df-gap.sh b/t/t0093-verify-cache-df-gap.sh
-new file mode 100755
-index 0000000000..0b6829d805
---- /dev/null
-+++ b/t/t0093-verify-cache-df-gap.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+
-+test_description='verify_cache() must catch non-adjacent D/F conflicts
-+
-+Ensure that verify_cache() can complain about bad entries like:
-+
-+  docs               <-- submodule
-+  docs-internal/...  <-- sorts here because "-" < "/"
-+  docs/...           <-- D/F conflict with "docs" above, not adjacent
-+
-+In order to test verify_cache, we directly construct a corrupt index
-+(bypassing the D/F safety checks in add_index_entry) and verify that
-+write-tree rejects it.
-+'
-+
-+. ./test-lib.sh
-+
-+if ! test_have_prereq PERL
-+then
-+	skip_all='skipping verify_cache D/F tests; Perl not available'
-+	test_done
-+fi
-+
-+# Build a v2 index from entries on stdin, bypassing D/F checks.
-+# Each line: "octalmode hex-oid name" (entries must be pre-sorted).
-+build_corrupt_index () {
-+	perl "$TEST_DIRECTORY/t0093-direct-index-write.pl" >"$1"
-+}
-+
-+test_expect_success 'setup objects' '
-+	test_commit base &&
-+	BLOB=$(git rev-parse HEAD:base.t) &&
-+	SUB_COMMIT=$(git rev-parse HEAD)
-+'
-+
-+test_expect_success 'adjacent D/F conflict is caught by verify_cache' '
-+	cat >index-entries <<-EOF &&
-+	0160000 $SUB_COMMIT docs
-+	0100644 $BLOB docs/requirements.txt
-+	EOF
-+	build_corrupt_index .git/index <index-entries &&
-+
-+	test_must_fail git write-tree 2>err &&
-+	test_grep "You have both docs and docs/requirements.txt" err
-+'
-+
-+test_expect_success 'non-adjacent D/F conflict is caught by verify_cache' '
-+	cat >index-entries <<-EOF &&
-+	0160000 $SUB_COMMIT docs
-+	0100644 $BLOB docs-internal/README.md
-+	0100644 $BLOB docs/requirements.txt
-+	EOF
-+	build_corrupt_index .git/index <index-entries &&
-+
-+	test_must_fail git write-tree 2>err &&
-+	test_grep "You have both docs and docs/requirements.txt" err
-+'
-+
-+test_done
--- 
-gitgitgadget
+The replay_usage[] variable in cmd_replay is also missing this new flag.
+
+>  <revision-range>::
+>         Range of commits to replay; see "Specifying Ranges" in
+>         linkgit:git-rev-parse[1]. In `--advance=3D<branch>` or
+> diff --git a/builtin/replay.c b/builtin/replay.c
+> index 39e3a86f6c..fedfe46dc6 100644
+> --- a/builtin/replay.c
+> +++ b/builtin/replay.c
+> @@ -111,6 +111,8 @@ int cmd_replay(int argc,
+>                              N_("mode"),
+>                              N_("control ref update behavior (update|prin=
+t)"),
+>                              PARSE_OPT_NONEG),
+> +               OPT_BOOL(0, "linearize", &opts.linearize,
+> +                        N_("ignore merge commits instead of replaying th=
+em")),
+
+"ignore" feels a bit ambiguous to me.  Can we use "drop" instead,
+matching your commit message?
+
+>                 OPT_END()
+>         };
+>
+> @@ -132,6 +134,8 @@ int cmd_replay(int argc,
+>                                   opts.contained, "--contained");
+>         die_for_incompatible_opt2(!!opts.ref, "--ref",
+>                                   !!opts.contained, "--contained");
+> +       die_for_incompatible_opt2(!!opts.revert, "--revert",
+> +                                 opts.linearize, "--linearize");
+
+Sensible; should the docs mention this incompatibility?  (I'm not sure
+myself; just throwing it out as food for thought.)
+
+>
+>         /* Parse ref action mode from command line or config */
+>         ref_mode =3D get_ref_action_mode(repo, ref_action);
+> diff --git a/replay.c b/replay.c
+> index 7921d7dba3..81033fb889 100644
+> --- a/replay.c
+> +++ b/replay.c
+> @@ -277,12 +277,16 @@ static struct commit *pick_regular_commit(struct re=
+pository *repo,
+>                                           struct commit *onto,
+>                                           struct merge_options *merge_opt=
+,
+>                                           struct merge_result *result,
+> +                                         struct commit *replayed_base,
+>                                           bool reverse,
+>                                           enum replay_empty_commit_action=
+ empty)
+>  {
+> -       struct commit *base, *replayed_base;
+> +       struct commit *base;
+>         struct tree *pickme_tree, *base_tree, *replayed_base_tree;
+>
+> +       if (replayed_base && reverse)
+> +               BUG("Linearizing commits is not supported when replaying =
+in reverse");
+> +
+
+This is dead code given the die_for_incompatible_opt2 check above,
+right?  Just extra defense in depth?
+
+>         if (pickme->parents) {
+>                 base =3D pickme->parents->item;
+>                 base_tree =3D repo_get_commit_tree(repo, base);
+> @@ -291,7 +295,8 @@ static struct commit *pick_regular_commit(struct repo=
+sitory *repo,
+>                 base_tree =3D lookup_tree(repo, repo->hash_algo->empty_tr=
+ee);
+>         }
+>
+> -       replayed_base =3D get_mapped_commit(replayed_commits, base, onto)=
+;
+> +       if (!replayed_base)
+> +               replayed_base =3D get_mapped_commit(replayed_commits, bas=
+e, onto);
+>         replayed_base_tree =3D repo_get_commit_tree(repo, replayed_base);
+>         pickme_tree =3D repo_get_commit_tree(repo, pickme);
+>
+> @@ -430,12 +435,23 @@ int replay_revisions(struct rev_info *revs,
+>         while ((commit =3D get_revision(revs))) {
+>                 const struct name_decoration *decoration;
+>
+> -               if (commit->parents && commit->parents->next)
+> -                       die(_("replaying merge commits is not supported y=
+et!"));
+> +               if (commit->parents && commit->parents->next) {
+> +                       if (!opts->linearize)
+> +                               die(_("replaying merge commits is not sup=
+ported yet!"));
+> +                       /*
+> +                        * When linearizing, a merge commit itself is not=
+ picked,
+> +                        * but refs that point to it might need updating.
+> +                        */
+
+Is it worth pointing out that last_commit is intentionally not updated
+by this code path?  That is implied by your comment, but it takes a
+bit of reasoning to get there, and I think it might help future
+readers to just explicitly state it.
+
+> +               } else {
+> +                       struct commit *to_pick =3D reverse ? last_commit =
+: onto;
+> +                       last_commit =3D
+> +                               pick_regular_commit(revs->repo, commit,
+> +                                                   replayed_commits, to_=
+pick,
+> +                                                   &merge_opt, &result,
+> +                                                   opts->linearize ? las=
+t_commit : NULL,
+> +                                                   reverse, opts->empty)=
+;
+> +               }
+>
+> -               last_commit =3D pick_regular_commit(revs->repo, commit, r=
+eplayed_commits,
+> -                                                 reverse ? last_commit :=
+ onto,
+> -                                                 &merge_opt, &result, re=
+verse, opts->empty);
+>                 if (!last_commit)
+>                         break;
+>
+> diff --git a/replay.h b/replay.h
+> index 1851a07705..07e6fdcca3 100644
+> --- a/replay.h
+> +++ b/replay.h
+> @@ -62,6 +62,11 @@ struct replay_revisions_options {
+>          * Defaults to REPLAY_EMPTY_COMMIT_DROP.
+>          */
+>         enum replay_empty_commit_action empty;
+> +
+> +       /*
+> +        * Whether to linearize the commits (i.e. drop merge commits).
+> +        */
+> +       int linearize;
+>  };
+>
+>  /* This struct is used as an out-parameter by `replay_revisions()`. */
+> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+> index 3353bc4a4d..64e0731188 100755
+> --- a/t/t3650-replay-basics.sh
+> +++ b/t/t3650-replay-basics.sh
+> @@ -565,4 +565,30 @@ test_expect_success '--onto with --ref rejects multi=
+ple revision ranges' '
+>         test_grep "cannot be used with multiple revision ranges" err
+>  '
+>
+> +test_expect_success 'replay merge commit fails' '
+> +       echo "fatal: replaying merge commits is not supported yet!" >expe=
+ct &&
+> +       test_must_fail git replay --ref-action=3Dprint --onto main I..P 2=
+>actual &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'replay to rebase merge commit with --linearize' '
+> +       git replay --ref-action=3Dprint --linearize --onto main I..topic-=
+with-merge >result &&
+> +
+> +       test_line_count =3D 1 result &&
+> +
+> +       git log --format=3D%s $(cut -f 3 -d " " result) >actual &&
+> +       test_write_lines O N J M L B A >expect &&
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'replay to rebase merge commit with --linearize down=
+ to root commit' '
+> +       git replay --ref-action=3Dprint --linearize --onto main A..topic-=
+with-merge >result &&
+
+You'd need to drop "A.." to have it go down to the root commit, as
+Junio mentioned elsewhere.
+
+> +
+> +       test_line_count =3D 1 result &&
+> +
+> +       git log --format=3D%s $(cut -f 3 -d " " result) >actual &&
+> +       test_write_lines O N J I M L B A >expect &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
+
+Should there also be a testcase combining --linearize and --advance?
+
+Should there be a test with the incompatibility of --revert &
+--linearize?  I think we have a few other tests for incompatible
+options.
+
+One additional testing idea, borrowed from an older variant of
+this patch I had sitting in a local branch (dscho's original
+linearize patch, adapted): in addition to checking specific commit
+subjects, it's worth verifying that the linearized chain produces
+the *same patches* as the original.  Something along the lines of:
+
+        test_expect_success '--linearize preserves patches' '
+                test_when_finished "git update-ref -d refs/heads/merge_I_L"=
+ &&
+                test_tick &&
+                git checkout -b merge_I_L I &&
+                git merge --no-edit L &&
+
+                git replay --linearize --onto A B..merge_I_L &&
+
+                # range-diff ignores merges, so the original
+                # {I, L, merge} reduces to {I, L} on the LHS,
+                # and the replayed chain on the RHS should match.
+                git range-diff B..merge_I_L@{1} B..merge_I_L >out &&
+                ! test_grep -v "=3D" out &&
+
+                git log --oneline A..merge_I_L >out &&
+                test_line_count =3D 2 out
+        '
+
+The range-diff check is nice because it asserts patch equivalence
+rather than tying the test to a particular replay ordering, which
+makes the test less brittle if the rev-walk order ever changes.
+Feel free to take, adapt, or ignore.
+
+Anyway, thanks for working on this; looking good.
+
+Elijah
