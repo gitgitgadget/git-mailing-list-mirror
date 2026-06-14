@@ -1,375 +1,176 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCA919CCF5
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 06:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781420179; cv=pass; b=tgYCdmf2R+IwG2CBjYAW+FAjcCsMxvXKbloNYRzlzojXlebYQNp20+wkoXq1E1P+c5GlTnLY3CbXpSkFo9nJucKWV5DJy7/u4sGKL2E50z4zQk6Jt490ZeOQ7XWtMgdOHsC1YU16yY3b5hHX40MiZH9177CeCJn/U8jehz5HKyI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781420179; c=relaxed/simple;
-	bh=xT2KYBii5sKVb7xCCfjFzPmYU3LnLnmw/70V3GR1MU0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nSmVd8oV3xNZo8gfqjidYhKfn2L/izhURXvG3Z8VgMZJxMglz4CKrVB/n2dOl4jA3tE+XyDfGM+lw/udSYIFWRh7JucB/0kEcOWObaTerb5VBk7Q/zp1dTMw0lf8uacKTkMCa4prQAQKMFe4bxeaJfLCii213r0hO8pP94Uelv4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=styvrW0B; arc=pass smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF51119CCF5
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 06:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781420276; cv=none; b=ZJBRVZpw8jfIg2cZMQniCjNS24F/Dm4d6VRplJuVatIOq9iMjPyaJAJtY/ysUhAv9Kt8Uwh5uFCvGBhoqqcRogBoxNieEoSKhGErfCZ2mL4YrPBNj/+JQM2D5hLUbvf30oyYhOHfqDtNTMj4TivQjzGb+N0E997Nx5hCuxrxZHY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781420276; c=relaxed/simple;
+	bh=KrBvZ67Jlq+i+oBQjCqHB0oe6OBFhOcre8biCf2tQog=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=rMfsCAgP9txijS9k2Arekt+nbS/pszd6kbHWxOPdnTA2z9gUYedsCGZCpW6yincQzVZWcrUolLYpFaCcPljFd15rQ3V6jIjF0KpSFM4+JsAQ8CzGYCnLnGc+I/cB85uee94Qa5h7QT2nJMnkhV/NEHk3ATCootI0qCfIn7tbct0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W0KiaVOm; arc=none smtp.client-ip=74.125.82.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="styvrW0B"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-48761fdc4baso68401b6e.1
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 23:56:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781420176; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JbQSkoL3c5kGTboxSwQV6+7kDWP1MipIWVH7MvGWm1MNaW+wri3M+8olvnJ/TNj8mA
-         e4RGhXLfiHo/JsFArg7EtBnQWeuiXQh0AnqvETeVFO12rTFXjcTIAcJErI5Ou1HX4t5G
-         5hm+6CZ1PQjHOvN4Lun2RbOepLRv9TCzPu/sA1xiKdr/YwelM/FWEWwk/yimYQL8+Krv
-         yUQuZt5d6QU+R4KDEmmV05nO3RQ8pLP6ghHe1xNY9oQWsqh71CqD5gqYMF1yKIOnvqyg
-         0ZlBW9SNHJuf2nbwhm2g0BX9gQdkSo6PUABgqG6KKlsS8yCyf3UY7Bk2YRf3eNMbNUin
-         72YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0EdXmL9J/QsEniuPy95/oZGy+to7pCg+xHHIBlieY2s=;
-        fh=YsDP8qhdejPnmdlVXvdly/uN84AbM1az0llqI3pfvq0=;
-        b=BVj2/WiZfko4rlOOZYo1CLl/2dLGGTVjBdpCiCtaNmf9b5Edn1ahc8z4KnxLJD/2Ch
-         FExJ/AGxsIoy3akyCwZYEVNkrQx1J3nuMhR64SIy366qr3NWyNo3yVMbnED39R0aMxVI
-         6cpwKlrsGgkPzrig4U0Shd58LY8rR3NjWKZ/XnHN0+NxbKyhBgeycGuNG9wrnI4bT7PN
-         AKtJqekTIEI1dm/0U3/VSfQw4EKUhCqI7qTqHVX/kmbFGYvpBgCQ4yTPbiwzECH10xC6
-         6gFGB7p0oP6dtrQLPbdjXItxLzEJOiSCZ5UvqRH1m7hyHBUq/h9xM3HSA3+fcniWyRIX
-         4HOw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W0KiaVOm"
+Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-1384f8ee710so4292693c88.1
+        for <git@vger.kernel.org>; Sat, 13 Jun 2026 23:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781420176; x=1782024976; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0EdXmL9J/QsEniuPy95/oZGy+to7pCg+xHHIBlieY2s=;
-        b=styvrW0BqzXK4ZMB9vOS23qxx1VPfU+vOd/1euDqIA1+lzqvenBDX91ZCBIn3LQCBY
-         Z7QIeL5okhDABKZrp6KKG/JZStjnBPl6hXrwFzO6ercA01uZsvgAgWGYYweGd1uwr3tB
-         lx5JIYsgJ0WAO3RhekD5SkgAFXSo2EF375B4tNe6ZyIzrbBIoGDWef4Pz6A4nN9BaYKE
-         w1eZ3T6W9z8Cm9gLPwwGaTDcOkyc80wf0XNpOxaPtOGN8tNYZPVclEzslsuYzyWdf+1h
-         dMaQqnrN8LpdnFoatz+YJtCov4lBuS5pOcsRWH1ibziz9yX91VnL2SvT0e0z5n10TStg
-         WOrg==
+        d=gmail.com; s=20251104; t=1781420274; x=1782025074; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=28XkFi86A0C3KfFkZrx6dUJGKktRYunVnguPItXBv7g=;
+        b=W0KiaVOmFXvbxgmx36Nf6QeamttJN4nW2kXPhA0loD8sPQWCuS4fEA8U25SoEe+F75
+         xl8bQf48NS93zBvXb2h3p9cCILS1E6EQ2gkzyV3fp3gP7s33UadCh0nHrCz/4pRGuWYT
+         oqFFN2ON1fOs+aq3vWnmh7sUGIbH1MR5A/YuSkJhmYp32w7vYbNFTUUmm1r/hgxuex3S
+         l0zNS4x53y2RkCew91OQ8oZVEw/il1v14KzcVijRymch0AP9d9bEnKHT9LQHNsDvy9C4
+         Wt78H3gmofifMLbjRi0T7cA44446hLY35KDqGulvSxht+B0aeou58kfAHcDenmSuJT/J
+         larA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781420176; x=1782024976;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0EdXmL9J/QsEniuPy95/oZGy+to7pCg+xHHIBlieY2s=;
-        b=B5641n6+r+19eImjF098v6RGhGyR9+zZa839BYmesvM6CKjXvNfBWUtpJ4wog7SAjN
-         0dAZKMLJd0d0SlhPBQLzAgyTe3zHKLCqOgy4McIBcaQSwdokj0pETG5GWC00+ATk82mw
-         pCgFy3XlJuYpGejVXLh2yI+yOLcjPqUomS+CuOVLSlxmP1E/Ne9zfm2AzO1CSr0unrOx
-         9xHx/AoPBlFUBAUP0DTbJUcthPUQ5/3FB5C/g7SDy6DbHtmpRVmKrOzSGjclhgKzaolw
-         GCg6Cux3a9q7nFXGRJT7WSOtCHDgEvdq3wnTwm11ehtcQ6Veku4CkcoJZinfS03U/cTs
-         Gntg==
-X-Gm-Message-State: AOJu0YwphBt87X+K7GcY/PGKkksVuO6ulxXBAtnYCfBOHcBXbmvdbVMp
-	F4zpSIUZOZ4yFHm/8at5j9KmZ+iWdoEkB0CnmokIo+kiR2g2gHJnduCIll0qePi9GZMjJE0W8XR
-	7GMF0IAJqXlUSfKroz2todcR0Xw0mUWzvTq7m
-X-Gm-Gg: Acq92OG/C8tRwWCiFFd8SxeKL7CAjbtj/I5ttVmVmnXLyQoEL/1sd9ynvMKnUdbakb/
-	xp+IFQjneGE1XZmEeu8c5cCmktNsUQ17qZ/xqqOFmPOI50K0136BPAk2P1cfckAneWdrvvgq3am
-	5XDqNGNss4m0r2UniIgHfuzpG7pJBYnQ5STKJVUdGubOnoI0LtAWyzuJrvjNw2IXUjlhroGagJK
-	caILUrT+R1SgiMTXMNnOK/EJexmR0PxKnEmff9QFcr4SnDYb/kKUxCywfgQOcmjVk9B643g5/Yf
-	PPBoscHSgRkt535kCLAvoPuu7Lp00BExYlifK3DM3NPQQomZw2S+MEGWE14zDP3hlBDl+K6wSjb
-	KzG88IKzK35sdLKDB3urd4KTs4g8EkQXobgbM
-X-Received: by 2002:a05:6808:1187:b0:486:4ae9:f9a5 with SMTP id
- 5614622812f47-48741b883cbmr3994719b6e.38.1781420175568; Sat, 13 Jun 2026
- 23:56:15 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781420274; x=1782025074;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=28XkFi86A0C3KfFkZrx6dUJGKktRYunVnguPItXBv7g=;
+        b=A1eXxZkLBJ4uRghD49Ug9XvsOzLE0G9A2HBtKB7xSqN5Ji0OG/109F0GVLC54/uigD
+         zSh9j29BkhV2RkDYqGgXDKH0kCaUFW6zTXrRVVkCqpPkt0ZUpEYr/rgrxUeAt0TC57nM
+         e1Ib2WXc96UkkOFdBCd9pGUL6hqHCYhrv73W5H39yi4TNDGn85TZg8TIH/4W5op4b9AN
+         aHURnfIz1J+UdejjAEXdVwLqIwkrBbxl4s+LDbWTPJUIGnFCgQGX8WPh0LgT0W5SvFfz
+         2YFOyQWs7iPDH6654nO+6C/D6rT3ZjCkSs3blXx3lRIh0Q9kQ6WsYQdCmgfVpb8seFQI
+         IuwQ==
+X-Gm-Message-State: AOJu0YyjWu3niftTE4aJm1jzzTweAUFRBQfI+XapOMCfBNBc0RG/uf3b
+	XDBE/tCvhVJIlnZeZ4E+BZXkQa5XYzN11qS/FBzPeO0nka1wWtlIuJBxh0vlcA==
+X-Gm-Gg: Acq92OGdC52vdnWA7WZIfU+D5IibroWF4CuAj1ix+iqclw3q7JInqm7xqNKLnMCfYm4
+	jaKv62+E1ynVT92Hhmwgo82MZI85x+IqmvGk4qVnde2GwzgVHZJs3OUUf3wyjBSjO8PkZc/w23U
+	Zv7CD8048HK7+ypWViFq5jJniKHc+fB1SnyeX78DlG4UFZVXs/jpjUT+xrOEIxOA6FaypFFh/x7
+	T33RFPGAokD5Ov8QV4vsHltFmb1VK66fB0bkn4t+mHbvrKDFH6TKsmnUExkDEYI1GKMKnqc0Umf
+	imBYMFtuxRP2keD5ao8/R9hlajuWEob47JGCo5l846JrEDKeEEJQOApsZAuz39hrly4rwu1VIBa
+	CjkI0FSjEMNwr0BDvHQNE4ZYyi7DaMvScegjaTA43kbA2PnDgUVUQ7gEL2Ds0V/thZ/EwXMmg4k
+	JwhiYu5FJ/tO407O+623TBCYFo
+X-Received: by 2002:a05:7022:68a7:b0:136:90d9:f1f6 with SMTP id a92af1059eb24-1384bb7f102mr4949850c88.25.1781420273757;
+        Sat, 13 Jun 2026 23:57:53 -0700 (PDT)
+Received: from [127.0.0.1] ([40.65.59.115])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1384b97bf09sm7156288c88.14.2026.06.13.23.57.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Jun 2026 23:57:52 -0700 (PDT)
+Message-Id: <pull.2148.git.1781420271100.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 14 Jun 2026 06:57:50 +0000
+Subject: [PATCH] commit-graph: use timestamp_t for max parent generation
+ accumulator
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260610-toon-git-replay-drop-merges-v2-0-5714a71c6d83@iotcl.com> <20260610-toon-git-replay-drop-merges-v2-3-5714a71c6d83@iotcl.com>
-In-Reply-To: <20260610-toon-git-replay-drop-merges-v2-3-5714a71c6d83@iotcl.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
+
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 13 Jun 2026 23:56:04 -0700
-X-Gm-Features: AVVi8Cd1k6peBHfszavlgdjDbXmzZ8gvduRlbeg3axQWs-IrNTSHb-mBUuxnasc
-Message-ID: <CABPp-BGRi2obnqRGEY9pSMyvRbNGs8AdVUpZmr0C6vZSgHb=cg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] replay: offer an option to linearize the commit topology
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+compute_reachable_generation_numbers() computes each commit's
+generation as
 
-On Wed, Jun 10, 2026 at 7:51=E2=80=AFAM Toon Claes <toon@iotcl.com> wrote:
->
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> One of the stated goals of git-replay(1) is to allow implementing the
-> git-rebase(1) functionality on the server side.
->
-> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
-> was given. This mode drops merge commits instead of replaying them, and
-> linearizes the commit history into a sequence of the
-> regular (single-parent) commits.
->
-> Add option `--linearize` to git-replay(1) to do the same.
+    max(c->date, max(parent.generation)) + 1
 
-I think this version is nicer overall than the one from my
-replay-upstream branch; sorry for repeatedly getting distracted from
-that, but this does look nice.
+by walking its parents and accumulating their generations into a
+local
 
-A few small comments:
+    uint32_t max_gen = 0;
 
-> Co-authored-by: Toon Claes <toon@iotcl.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  Documentation/git-replay.adoc |  5 +++++
->  builtin/replay.c              |  4 ++++
->  replay.c                      | 30 +++++++++++++++++++++++-------
->  replay.h                      |  5 +++++
->  t/t3650-replay-basics.sh      | 26 ++++++++++++++++++++++++++
->  5 files changed, 63 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.ado=
-c
-> index a32f72aead..41c96c7061 100644
-> --- a/Documentation/git-replay.adoc
-> +++ b/Documentation/git-replay.adoc
-> @@ -88,6 +88,11 @@ incompatible with `--contained` (which is a modifier f=
-or `--onto` only).
->  +
->  The default mode can be configured via the `replay.refAction` configurat=
-ion variable.
->
-> +--linearize::
-> +       In this mode, `git replay` imitates `git rebase --no-rebase-merge=
-s`,
-> +       i.e. it cherry-picks only non-merge commits, each one on top of t=
-he
-> +       previous one.
+while info->get_generation() returns timestamp_t and
+compute_generation_from_max() already takes its max_gen parameter
+as timestamp_t.  For v1 (topological levels) the narrowing is
+harmless because GENERATION_NUMBER_V1_MAX is less than 2^30, but
+for v2 (corrected committer dates) it silently truncates any
+parent generation that does not fit in 32 bits, i.e. any parent
+whose committer timestamp is at or beyond 2106-02-07 UTC
+(>= 2^32).
 
-The SYNOPSIS block at the top of the file is missing this new flag.
+The truncated max then causes child commits to end up with a
+corrected committer date that matches the parent's instead of being
+at least 1 higher.  The bad value gets written into the commit-graph
+and causes problems later, and can be noticed by running `git
+commit-graph verify`.
 
-The replay_usage[] variable in cmd_replay is also missing this new flag.
+Widen the accumulator to timestamp_t.
 
->  <revision-range>::
->         Range of commits to replay; see "Specifying Ranges" in
->         linkgit:git-rev-parse[1]. In `--advance=3D<branch>` or
-> diff --git a/builtin/replay.c b/builtin/replay.c
-> index 39e3a86f6c..fedfe46dc6 100644
-> --- a/builtin/replay.c
-> +++ b/builtin/replay.c
-> @@ -111,6 +111,8 @@ int cmd_replay(int argc,
->                              N_("mode"),
->                              N_("control ref update behavior (update|prin=
-t)"),
->                              PARSE_OPT_NONEG),
-> +               OPT_BOOL(0, "linearize", &opts.linearize,
-> +                        N_("ignore merge commits instead of replaying th=
-em")),
+This is solely an in-memory arithmetic fix with no on-disk format
+change: the on-disk format already encodes timestamp_t values and
+existing readers handle them unchanged.  This merely allows the code to
+compute the correct value to write to disk.
 
-"ignore" feels a bit ambiguous to me.  Can we use "drop" instead,
-matching your commit message?
+The narrowing was introduced in 80c928d947c2 (commit-graph:
+simplify compute_generation_numbers(), 2023-03-20), which rewired
+v2 to use the shared compute_reachable_generation_numbers()
+helper; the helper's local accumulator had been declared uint32_t
+in the immediately preceding 368d19b0b7fa (commit-graph: refactor
+compute_topological_levels(), 2023-03-20) when only v1 was using
+it, where it was harmless.
 
->                 OPT_END()
->         };
->
-> @@ -132,6 +134,8 @@ int cmd_replay(int argc,
->                                   opts.contained, "--contained");
->         die_for_incompatible_opt2(!!opts.ref, "--ref",
->                                   !!opts.contained, "--contained");
-> +       die_for_incompatible_opt2(!!opts.revert, "--revert",
-> +                                 opts.linearize, "--linearize");
+Add a new test with a future-dated parent and a present-day child;
+without the above fix, `git commit-graph verify` reports the
+descendant's stored generation as below parent + 1.
 
-Sensible; should the docs mention this incompatibility?  (I'm not sure
-myself; just throwing it out as food for thought.)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    commit-graph: use timestamp_t for max parent generation accumulator
+    
+    We found a few repositories in the wild with commits whose authors were
+    apparently on a computer in the year 2120 when they recorded their
+    commits. Apparently, in a century from now, some folks are going to have
+    a really weird timezone as well (-13068837), though the timezone doesn't
+    factor into this patch at all.
 
->
->         /* Parse ref action mode from command line or config */
->         ref_mode =3D get_ref_action_mode(repo, ref_action);
-> diff --git a/replay.c b/replay.c
-> index 7921d7dba3..81033fb889 100644
-> --- a/replay.c
-> +++ b/replay.c
-> @@ -277,12 +277,16 @@ static struct commit *pick_regular_commit(struct re=
-pository *repo,
->                                           struct commit *onto,
->                                           struct merge_options *merge_opt=
-,
->                                           struct merge_result *result,
-> +                                         struct commit *replayed_base,
->                                           bool reverse,
->                                           enum replay_empty_commit_action=
- empty)
->  {
-> -       struct commit *base, *replayed_base;
-> +       struct commit *base;
->         struct tree *pickme_tree, *base_tree, *replayed_base_tree;
->
-> +       if (replayed_base && reverse)
-> +               BUG("Linearizing commits is not supported when replaying =
-in reverse");
-> +
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2148%2Fnewren%2Fcommit-graph-fix-ccd-uint32-truncation-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2148/newren/commit-graph-fix-ccd-uint32-truncation-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2148
 
-This is dead code given the die_for_incompatible_opt2 check above,
-right?  Just extra defense in depth?
+ commit-graph.c                     | 2 +-
+ t/t5328-commit-graph-64bit-time.sh | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
->         if (pickme->parents) {
->                 base =3D pickme->parents->item;
->                 base_tree =3D repo_get_commit_tree(repo, base);
-> @@ -291,7 +295,8 @@ static struct commit *pick_regular_commit(struct repo=
-sitory *repo,
->                 base_tree =3D lookup_tree(repo, repo->hash_algo->empty_tr=
-ee);
->         }
->
-> -       replayed_base =3D get_mapped_commit(replayed_commits, base, onto)=
-;
-> +       if (!replayed_base)
-> +               replayed_base =3D get_mapped_commit(replayed_commits, bas=
-e, onto);
->         replayed_base_tree =3D repo_get_commit_tree(repo, replayed_base);
->         pickme_tree =3D repo_get_commit_tree(repo, pickme);
->
-> @@ -430,12 +435,23 @@ int replay_revisions(struct rev_info *revs,
->         while ((commit =3D get_revision(revs))) {
->                 const struct name_decoration *decoration;
->
-> -               if (commit->parents && commit->parents->next)
-> -                       die(_("replaying merge commits is not supported y=
-et!"));
-> +               if (commit->parents && commit->parents->next) {
-> +                       if (!opts->linearize)
-> +                               die(_("replaying merge commits is not sup=
-ported yet!"));
-> +                       /*
-> +                        * When linearizing, a merge commit itself is not=
- picked,
-> +                        * but refs that point to it might need updating.
-> +                        */
+diff --git a/commit-graph.c b/commit-graph.c
+index 9abe62bd5a..4b7156fd76 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1669,7 +1669,7 @@ static void compute_reachable_generation_numbers(
+ 			struct commit *current = list->item;
+ 			struct commit_list *parent;
+ 			int all_parents_computed = 1;
+-			uint32_t max_gen = 0;
++			timestamp_t max_gen = 0;
+ 
+ 			for (parent = current->parents; parent; parent = parent->next) {
+ 				repo_parse_commit(info->r, parent->item);
+diff --git a/t/t5328-commit-graph-64bit-time.sh b/t/t5328-commit-graph-64bit-time.sh
+index d8891e6a92..bc651b69de 100755
+--- a/t/t5328-commit-graph-64bit-time.sh
++++ b/t/t5328-commit-graph-64bit-time.sh
+@@ -74,6 +74,15 @@ test_expect_success 'single commit with generation data exceeding UINT32_MAX' '
+ 	git -C repo-uint32-max commit-graph verify
+ '
+ 
++test_expect_success 'descendant of commit with date exceeding UINT32_MAX' '
++	git init repo-uint32-max-descendant &&
++	test_commit -C repo-uint32-max-descendant \
++		--date "@4294967300 +0000" future-parent &&
++	test_commit -C repo-uint32-max-descendant present-day-child &&
++	git -C repo-uint32-max-descendant commit-graph write --reachable &&
++	git -C repo-uint32-max-descendant commit-graph verify
++'
++
+ test_expect_success PERL_TEST_HELPERS 'reader notices out-of-bounds generation overflow' '
+ 	graph=.git/objects/info/commit-graph &&
+ 	test_when_finished "rm -rf $graph" &&
 
-Is it worth pointing out that last_commit is intentionally not updated
-by this code path?  That is implied by your comment, but it takes a
-bit of reasoning to get there, and I think it might help future
-readers to just explicitly state it.
-
-> +               } else {
-> +                       struct commit *to_pick =3D reverse ? last_commit =
-: onto;
-> +                       last_commit =3D
-> +                               pick_regular_commit(revs->repo, commit,
-> +                                                   replayed_commits, to_=
-pick,
-> +                                                   &merge_opt, &result,
-> +                                                   opts->linearize ? las=
-t_commit : NULL,
-> +                                                   reverse, opts->empty)=
-;
-> +               }
->
-> -               last_commit =3D pick_regular_commit(revs->repo, commit, r=
-eplayed_commits,
-> -                                                 reverse ? last_commit :=
- onto,
-> -                                                 &merge_opt, &result, re=
-verse, opts->empty);
->                 if (!last_commit)
->                         break;
->
-> diff --git a/replay.h b/replay.h
-> index 1851a07705..07e6fdcca3 100644
-> --- a/replay.h
-> +++ b/replay.h
-> @@ -62,6 +62,11 @@ struct replay_revisions_options {
->          * Defaults to REPLAY_EMPTY_COMMIT_DROP.
->          */
->         enum replay_empty_commit_action empty;
-> +
-> +       /*
-> +        * Whether to linearize the commits (i.e. drop merge commits).
-> +        */
-> +       int linearize;
->  };
->
->  /* This struct is used as an out-parameter by `replay_revisions()`. */
-> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-> index 3353bc4a4d..64e0731188 100755
-> --- a/t/t3650-replay-basics.sh
-> +++ b/t/t3650-replay-basics.sh
-> @@ -565,4 +565,30 @@ test_expect_success '--onto with --ref rejects multi=
-ple revision ranges' '
->         test_grep "cannot be used with multiple revision ranges" err
->  '
->
-> +test_expect_success 'replay merge commit fails' '
-> +       echo "fatal: replaying merge commits is not supported yet!" >expe=
-ct &&
-> +       test_must_fail git replay --ref-action=3Dprint --onto main I..P 2=
->actual &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'replay to rebase merge commit with --linearize' '
-> +       git replay --ref-action=3Dprint --linearize --onto main I..topic-=
-with-merge >result &&
-> +
-> +       test_line_count =3D 1 result &&
-> +
-> +       git log --format=3D%s $(cut -f 3 -d " " result) >actual &&
-> +       test_write_lines O N J M L B A >expect &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'replay to rebase merge commit with --linearize down=
- to root commit' '
-> +       git replay --ref-action=3Dprint --linearize --onto main A..topic-=
-with-merge >result &&
-
-You'd need to drop "A.." to have it go down to the root commit, as
-Junio mentioned elsewhere.
-
-> +
-> +       test_line_count =3D 1 result &&
-> +
-> +       git log --format=3D%s $(cut -f 3 -d " " result) >actual &&
-> +       test_write_lines O N J I M L B A >expect &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-
-Should there also be a testcase combining --linearize and --advance?
-
-Should there be a test with the incompatibility of --revert &
---linearize?  I think we have a few other tests for incompatible
-options.
-
-One additional testing idea, borrowed from an older variant of
-this patch I had sitting in a local branch (dscho's original
-linearize patch, adapted): in addition to checking specific commit
-subjects, it's worth verifying that the linearized chain produces
-the *same patches* as the original.  Something along the lines of:
-
-        test_expect_success '--linearize preserves patches' '
-                test_when_finished "git update-ref -d refs/heads/merge_I_L"=
- &&
-                test_tick &&
-                git checkout -b merge_I_L I &&
-                git merge --no-edit L &&
-
-                git replay --linearize --onto A B..merge_I_L &&
-
-                # range-diff ignores merges, so the original
-                # {I, L, merge} reduces to {I, L} on the LHS,
-                # and the replayed chain on the RHS should match.
-                git range-diff B..merge_I_L@{1} B..merge_I_L >out &&
-                ! test_grep -v "=3D" out &&
-
-                git log --oneline A..merge_I_L >out &&
-                test_line_count =3D 2 out
-        '
-
-The range-diff check is nice because it asserts patch equivalence
-rather than tying the test to a particular replay ordering, which
-makes the test less brittle if the rev-walk order ever changes.
-Feel free to take, adapt, or ignore.
-
-Anyway, thanks for working on this; looking good.
-
-Elijah
+base-commit: 600fe743028cbfb640855f659e9851522214bc0b
+-- 
+gitgitgadget
