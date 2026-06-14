@@ -1,162 +1,204 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AA63B42FF
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 14:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F8C32C8B
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 15:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781446580; cv=none; b=mmfd20fh086eFAA8yIg2yV4+PONOD3Fo0vAyQLb39k+kR6JXn2uD3srguKpZcmoC8ICWRwnpLY4xAh/2gafnMIx1X6ER0NopmTtHobO6k3uCQgIGtSbL4fxhSngOt2Q3mMp3auw+K7RcWZTsIDs9hs6YiAOinyT3Zx4h6pa36M8=
+	t=1781450563; cv=none; b=swHGAlvqdJ7MXdq3vZ6RMsOvFOUe4uZNl/4ZvD1bFt97GzDryCxUl5GuVIXPc1mxeajyE9kjmE5PTBj2AB6Tm3OFzkiTquH1gvgCtHdfl3r/B2lsKsMyA3lSKzjKoExXSzIqA31YD/z/zEW7KMuYbJXWyN8xqGd7UtlFVGNDkTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781446580; c=relaxed/simple;
-	bh=0Ob+oLHb2ELdqWub2hVVn0Maiqsoxkb84LpEtZDmjw0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hsqo2gv4RJAs3v9UKtUCZM175lsi4bMyHu1QrxfUu+6jw8iQT0G7Z7JM8ow5TTazCuxYx7REmwICnJNXrC8cE15j9m/nXz4Q8BIiTFr5fhcicC7QBNU5LQOdG4yIBBwuLEXOY7KsAPLvFW4z+HKar57U0ss2hnoIhPARvkIoGS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=seRxcA7O; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781450563; c=relaxed/simple;
+	bh=El7WCeQhKoWuw8jTltJIrraPoURyBfqp5aOQhTf7Cl8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FYy1SrS0pZppBKccDiaa7pVGeOWjcPTIkl3+/CpFc1yQb40SIOXV8liqSF83+StRtBYGz+iW39/4GQLGgcb9MDVvsBF3YGL4yrWn2vhJVfJ+j6dJJhaxyfygqM0S7IUg+Q6cTa9swEt/5sIUhziI/qzzRGE7oPWT/m3ahTIsRlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FCx+Pref; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X9TgD06a; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="seRxcA7O"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8423efad617so1555393b3a.0
-        for <git@vger.kernel.org>; Sun, 14 Jun 2026 07:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781446578; x=1782051378; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=W2H0MHPE4TFenwXtH3Trbcj9hTiB/yNvMAuGqS5MQFI=;
-        b=seRxcA7OxDna31aXoojTFD9IAWgxTN/P7tteGNgU1s9xNiYdKTNaI7WxO+SWpDGz9N
-         vt8jlvovb2r0YGFMoB6DGwD7a2xIq2KPw4HLJZ8LXbuMaURMT/tYY/1uFKATxLNAHKjF
-         X8pU0o/yyO6W9hLc5qQ9j1OshuGjWV9Lb6T1ciPLtYyeBrI5vS6S2k9RmCBuKm98fYyc
-         bVAhULOAMogoEjL+TiOYupW7ao+EN5gX8w91+xHHdOgh510Ig3+41BOwN9Yw5HQQyW89
-         Jtns+IsFpRVYHBYO7Jop82DIq9W//sK1ZoXIcMdxLMCzsx4aXZHoVVTkUYJWZISfGh7T
-         FoeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781446578; x=1782051378;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W2H0MHPE4TFenwXtH3Trbcj9hTiB/yNvMAuGqS5MQFI=;
-        b=DZhCfzW3x8/SYnWircgbMh965X03vYSgoUE6Vv+qssKNpJ8TFeMKn0/SJHBqGWoXsv
-         IgskdfpnuhEX4m7uIZH4YhhoFodKGqSW8blLj190l9BZebfX4uxHLf8PVAKI3/glbC6W
-         QzJfS0P37h7HBpjWrPpBeH0MT89P7FsTlq3rSW79rr5N5tdKj/QtjbVjzDfuzmapGS/s
-         4MJVMeLobOPUwWDgQWKcolI1tooWOXaicFDVUgCSza1zjX3f4Pm6P5a/IYhrDsVdkMLC
-         tzD824xint4n01uOTYbO1X2eD4mHSaQ2diB/QSIDS1hNcdUADDnUfSeQNoZDKmCfnDSG
-         gkzg==
-X-Gm-Message-State: AOJu0YwPmwzdW3bSEqBRdMIL/PjZq33HP9O2pYssl5YyXXfDqLmtBe6X
-	dZLCXCUPxYp0ReikxQZrRvxQ3b/dCv4pcdGPxM7fQuAOuzpFwbo8vIvt81vYBA==
-X-Gm-Gg: Acq92OFOAA3oSPAY1VBfVlrmuPGd/XqH5MI7G2+LXdHBB+5ag6dfm3V5o/v9AiW7QBJ
-	nSmDmgq+FlGB8pLH7yI1WrW5cqPhNduNXtPqfsC+nuc4UoFpicG0hOVuTWJtKnBPoiWZESi7XHN
-	upMmP+NyqPvycv78dt3SaJljOJijCxiBGRexeyqCS+hN6nINlLRtlNviOa4UYzkFZOfil8Rj7G9
-	dFrBVHGxtpt9oxmWSBFBkJj7O43/eCJfSOz2CY29oAPx+9sbqa1Uch406KmHOtXacqMajiRdJMZ
-	HqjJC25RXtmnUZ0+47hcsriv0Dx3JsOU4cc0EEtcv9DkuDSymX7//9osgeyQszyrtDneiEyVJgT
-	HZN5EiFIYo6apnU4ZvWjzOdI7lyD+GgIihxQ9eh0VkpND2OM9RADMewfH4pcWlAn71f1S8+aYx2
-	6x03h5mbD+lUARKG8qWqpZHBZWL1XLcQXphxvIgdY=
-X-Received: by 2002:a05:6a00:993:b0:839:9ad:ee31 with SMTP id d2e1a72fcca58-8434cdcadcfmr11598745b3a.8.1781446577995;
-        Sun, 14 Jun 2026 07:16:17 -0700 (PDT)
-Received: from HOGWARTS.localdomain ([171.79.53.8])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434ac9cf01sm7321638b3a.11.2026.06.14.07.16.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Jun 2026 07:16:17 -0700 (PDT)
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Git mailing list <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] builtin/history: unuse the commit buffer after use
-Date: Sun, 14 Jun 2026 14:15:40 +0000
-Message-ID: <20260614141600.620272-1-kaartic.sivaraam@gmail.com>
-X-Mailer: git-send-email 2.55.0.rc0.738.g0c8ab3ebcc.dirty
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FCx+Pref";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X9TgD06a"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0122BEC0087;
+	Sun, 14 Jun 2026 11:22:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sun, 14 Jun 2026 11:22:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781450560; x=1781536960; bh=1Sqa8kqHZ8
+	fBkYXhJRWrjP4zF6CBUrFc01ArrIlkRmw=; b=FCx+Pref0Rht5WVfjcP5xaeh0g
+	DcF4gC5tlfIscK/PghMHUi8upw+70OAwxuBRYlR2+jyAcc0R2Hm4CJ9+IQZSNoD+
+	22qBmbmy90MKqc10SHD/NYn9ohtND9EdSm4+Mwnx0q0SKUdKMV8Ub06p1nOofCUt
+	GwadZQxkX0hvLJN1VsFYxXJ3GeraAdiAqg9BZTXEB0L6djn++PpqA3BO15HEhE/d
+	7X/8LUsTr1v+/eVd1TACUHpIjkingOPmpTeroWZcdPjBQKcYXx504AWEnSUks1Pm
+	Zph/3+x2upDpa5dloIJOGMY9wm8W/xCAldFIOOQYY/Lljnxuig3bUdybKjtA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781450560; x=1781536960; bh=1Sqa8kqHZ8fBkYXhJRWrjP4zF6CBUrFc01A
+	rrIlkRmw=; b=X9TgD06agWEb5HkeZUb9eFz8Oo3hd+NRpwYi7dYn/mTwJKW07Pr
+	9vZY5rF285ArYoc3w2uuzB8M8jNPaxlwobg50p9delNtL8+tzqCHxtHjVMatLWOd
+	6zx+L+e2BLLmkV/QNAoY5NLNZJtEEd/CRC+aACeOw7fLrUwdCeBZMxscXw5zd3t8
+	BS0/tBUvl89FMVbrPBtoGevCdOVZpVmRyDNV56F2/YmRO8/sVb/xhLr0OfN1l1zs
+	lsRPqEtzVXYA4h5EvmsJ+QsStx3f0Tk8SFVIr2EK7CMray26QHH97iDrUS01PDM8
+	nhwFyCkTXJkZG98NG8WSU8JHTjPDBiiEnyw==
+X-ME-Sender: <xms:QMcuag_DsJs_5K-0VdDO4WCxXR5VtXC7lizIPBS5T3M3zifXbzIApw>
+    <xme:QMcuasbIx-Tv1ia_XZ41Ssts9h-aOVz9S1GjSMmuaHzafbgeCuJuKzTrc92buCDdy
+    Gc5x3SB0mpQ1sVV5ocECy5pua60pJA09BCee9jBS65Z6tFcZTvP>
+X-ME-Received: <xmr:QMcuav26vfo6QZq9gbSeSFtcW8neDVd7v-LqeImPH2ROKQAgSxDoOx2Dg1CIcjg-EPoug_u96IhgWSS_R_9CcyRefXh_WBSMdpVZ>
+X-ME-Proxy-Cause: dmFkZTFSutKa68Pju9Nwg1C6FLOgk0d9pctINx+6RbTs/q2/z7ptuTPpqalyZ1X1EYvvAI
+    teFVxxY9GLmBIZMK/5sk3jmiBSFyv5I9HxpWBUXd8Qpsamn+Zau67K6WorY9WhhMF2vLsS
+    aW9aEuWO4LoRh9+wzuDjpJOyMTBNiyzahMma7CpTZvgGYE+K1kCL07Mmh9JahT9eCl2feP
+    heCBwcs2fSBX2Bj5TN0Ais/+8/A69BVGqLGZeUukq+o9dzcM2a5foRLnmqjBdXCkUjVHrb
+    wAlF0tcXjpZSWhvO8HmlgPslsQ9YvLmVDb+vZwth/PfC3krJ7Df68JOh4zM+Yr5ywBW+tB
+    YerqFdMvCDO5JT5X5RoEXWusUgDkQWkyZFe6MbNTkPpZku6hBgoCSkKxKhJ2Mb1mvjFUwG
+    WhJ3JIDBFoLlaeGNSRnJNlHwCSPL7bR0QrW2qJG/pxaPGGMTNWq+17WIpn2fnzTvjuYikr
+    nsVvqw3b6RG8UxqRGkLDcLutNqSzswj8GN3w/u2WKnAxmJn81ML63iJwKszSfnFrgJ6tCC
+    fAPyLBVB6Sk4B3O7lVcQezeqRKJoxM9htNh2KkgIP0MtB6XDyYBtosir2MzlKhbW0x9+wK
+    XFc9ZUP5OZhnUP6BMPaaLhCvm8uTx0y6Eu+987EIKNJ/ENJ8Ksg+gyZmZPAQ
+X-ME-Proxy: <xmx:QMcuanZb8ePdF8cw1DAr58gEnaq9oR0V3L5e_6wlmeqHdVlDqcSKnw>
+    <xmx:QMcuanLELfFDpk4UGVQ1NX1isbHCTNG9ZhJYrNlZHB8Xhh9WIvErGA>
+    <xmx:QMcuamEvQ1O8lZjACEnMcJIT760CUIZS8W1wJrHG5-wIdCNpyHMzXg>
+    <xmx:QMcuauvIoKmemPqnDRHKfgIo2SoHLtDS_2ghCDeH5242w0lfQc8epg>
+    <xmx:QMcuahirfI8qDj79sjdYsORt0dIocOXTDtNKFyEf9q6PmHwBi63iy_B2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 14 Jun 2026 11:22:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
+ <christian.couder@gmail.com>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 5/5] cache-tree: fix verify_cache() to catch
+ non-adjacent D/F conflicts
+In-Reply-To: <cf50f1aabcf84aa755808318756c233305cc008d.1781419047.git.gitgitgadget@gmail.com>
+	(Elijah Newren via GitGitGadget's message of "Sun, 14 Jun 2026
+	06:37:26 +0000")
+References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
+	<pull.2096.v2.git.1781419047.gitgitgadget@gmail.com>
+	<cf50f1aabcf84aa755808318756c233305cc008d.1781419047.git.gitgitgadget@gmail.com>
+Date: Sun, 14 Jun 2026 08:22:38 -0700
+Message-ID: <xmqq5x3ldu4h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-While running `git history reword` using a Git built with `SANITIZE` flag set
-to `address,leak`, we could observe the following leak being reported:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
--- 8< --
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 7881b42aa2..4d2669b312 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -161,6 +161,54 @@ void cache_tree_invalidate_path(struct index_state *istate, const char *path)
+>  		istate->cache_changed |= CACHE_TREE_CHANGED;
+>  }
+>  
+> +/*
+> + * Check whether this_ce and the next entry in the index form a D/F
+> + * conflict ("path" vs "path/file").  Returns the conflicting "path/..."
+> + * name when one is found, or NULL otherwise.
+> + *
+> + * The cache is sorted, so "path/file" sorts after "path" and the
+> + * conflict is usually visible as adjacent entries.  But other entries
+> + * can sort between them -- e.g. "path-internal" sits between "path"
+> + * and "path/file" because '-' (0x2D) precedes '/' (0x2F) -- so when
+> + * the immediately following entry shares our prefix but starts with a
+> + * character that sorts before '/', binary search for "path/" instead.
+> + */
+> +static const char *find_df_conflict(struct index_state *istate,
+> +				    const struct cache_entry *this_ce,
+> +				    const struct cache_entry *next_ce)
+> +{
+> +	const char *this_name = this_ce->name;
+> +	const char *next_name = next_ce->name;
+> +	int this_len = ce_namelen(this_ce);
+> +	const struct cache_entry *other;
+> +	struct strbuf probe = STRBUF_INIT;
+> +	int pos;
 
-=================================================================
-==7156==ERROR: LeakSanitizer: detected memory leaks
+> +	if (this_len >= ce_namelen(next_ce) ||
+> +	    next_name[this_len] > '/' ||
+> +	    strncmp(this_name, next_name, this_len))
+> +		return NULL;
 
-Direct leak of 1813 byte(s) in 1 object(s) allocated from:
-    #0 0x79a3d1d2b60f in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:67
-    #1 0x612e2bb8c2e9 in do_xmalloc /path/to/git/wrapper.c:55
-    #2 0x612e2bb8c3f7 in do_xmallocz /path/to/git/wrapper.c:89
-    #3 0x612e2bb8c48f in xmallocz_gently /path/to/git/wrapper.c:102
-    #4 0x612e2b8dc28e in unpack_compressed_entry /path/to/git/packfile.c:1744
-    #5 0x612e2b8dd12a in unpack_entry /path/to/git/packfile.c:1897
-    #6 0x612e2b8daae2 in cache_or_unpack_entry /path/to/git/packfile.c:1535
-    #7 0x612e2b8db1f6 in packed_object_info_with_index_pos /path/to/git/packfile.c:1617
-    #8 0x612e2b8dc1c4 in packed_object_info /path/to/git/packfile.c:1732
-    #9 0x612e2b8def05 in packfile_store_read_object_info /path/to/git/packfile.c:2228
-    #10 0x612e2b889cb0 in odb_source_files_read_object_info odb/source-files.c:58
-    #11 0x612e2b8805e9 in odb_source_read_object_info odb/source.h:326
-    #12 0x612e2b885cf0 in do_oid_object_info_extended /path/to/git/odb.c:572
-    #13 0x612e2b886fe4 in odb_read_object_info_extended /path/to/git/odb.c:710
-    #14 0x612e2b887584 in odb_read_object /path/to/git/odb.c:756
-    #15 0x612e2b68d6e4 in repo_get_commit_buffer /path/to/git/commit.c:399
-    #16 0x612e2b91a7d4 in repo_logmsg_reencode /path/to/git/pretty.c:716
-    #17 0x612e2b3de7da in commit_tree_ext builtin/history.c:127
-    #18 0x612e2b3dee9f in commit_tree_with_edited_message builtin/history.c:183
-    #19 0x612e2b3e2c4d in cmd_history_reword builtin/history.c:717
-    #20 0x612e2b3e53b6 in cmd_history builtin/history.c:998
-    #21 0x612e2b27ae97 in run_builtin /path/to/git/git.c:506
-    #22 0x612e2b27b9ae in handle_builtin /path/to/git/git.c:782
-    #23 0x612e2b27c240 in run_argv /path/to/git/git.c:865
-    #24 0x612e2b27cd94 in cmd_main /path/to/git/git.c:986
-    #25 0x612e2b5c4267 in main /path/to/git/common-main.c:9
-    #26 0x79a3d182a600 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
-    #27 0x79a3d182a717 in __libc_start_main_impl ../csu/libc-start.c:360
-    #28 0x612e2b276124 in _start (/path/to.local/bin/git+0x211124) (BuildId: 8da3d640a944e21b895fc4802d7942b1505be663)
+First we reject an abvious "cannot conflict" case. If the current
+one is not strictly shorter than the next one, it cannot be an
+overlapping with one of the leading directories in the next one and
+the next one cannot be "hiding" an overlapping one in the "docs,
+docs-i, docs/r" relationship described in the log message (where
+next=="docs-i' hides the fact that this=="docs" conflicts with
+"docs/r").  Of course, the current one cannot be such a confliciting
+entry, if an earlier part of the next name does not entirely match
+the current name.  In addition, if the byte after the matching
+leading part in the next name is larger than '/', any entry that
+comes later than the next name cannot have '/' at that byte position.
 
-SUMMARY: AddressSanitizer: 1813 byte(s) leaked in 1 allocation(s).
+Makes sense.
 
--- >8 --
+> +	if (next_name[this_len] == '/')
+> +		return next_name;
 
-A deeper investigation on this reveals the following as the root cause.
+And if we see '/' there, we definitely have conflict right there.
 
-As part of rewording a commit in `git history`, we get the commit message
-buffer in the `commit_tree_ext` function. This in turn obtains the buffer
-from `repo_logmsg_reencode`. Given how `commit_tree_ext` is invoking the
-function with the last two parameters as NULL, we are clearly not expecting
-a reencode to happen. In this case, the buffer that we receive from
-`repo_logmsg_reencode` ends up always being obtained from a call to
-`repo_get_commit_buffer`.
+So these trivial cases after us, we need to see if an entry that
+comes after next has a name whose leading part is identical to this
+name, plus '/'.  How would we compute it?
 
-This buffer is expected to be released with an accompanying call to
-`repo_unuse_commit_buffer` which takes care of freeing it. This call
-is missing in the `commit_tree_ext` flow thus resulting in the leak.
+> +	strbuf_add(&probe, this_name, this_len);
+> +	strbuf_addch(&probe, '/');
+> +	pos = index_name_pos_sparse(istate, probe.buf, probe.len);
+> +	strbuf_release(&probe);
 
-Fix this by ensuring we call `repo_unuse_commit_buffer` on the
-original_message buffer.
+We see where the first of such a name (i.e. this name followed by '/')
+may appear.  Normal cache entries in the index would never have a
+trailing slash in their names, so I expect that this would either
+find an directory that is sparsed out and returns a non-negative
+index into the .cache[] array, or a negative index that indicates
+where a name like this + '/' + anything would appear.
 
-Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
----
-I must mention that I also noticed the following comment in `commit_tree_ext`:
+> +
+> +	if (pos < 0)
+> +		pos = -pos - 1;
 
-»       /* We retain authorship of the original commit. */
-»       original_message = repo_logmsg_reencode(repo, commit_with_message, NULL, NULL);
+So in order to check both cases, we do the usual index flipping.  We
+do not need to to treat "it exists---that's sparse dir" case and "it
+is expanded and we are trying to find the first entry in that index"
+case differently below, which simplifies things a bit.
 
-... but I'm not quite sure why we don't unuse the buffer after its purpose is
-done. Kindly englighten me in case I missed something.
+> +	if (pos >= (int)istate->cache_nr)
+> +		return NULL;
 
+OK, such an entry whose name is this followed by '/' does not exist
+so we are safe.
 
- builtin/history.c | 1 +
- 1 file changed, 1 insertion(+)
+> +	other = istate->cache[pos];
+> +	if (ce_namelen(other) > this_len &&
+> +	    other->name[this_len] == '/' &&
+> +	    !strncmp(this_name, other->name, this_len))
+> +		return other->name;
+> +	return NULL;
 
-diff --git a/builtin/history.c b/builtin/history.c
-index 091465a59e..0e9259b5d7 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -154,6 +154,7 @@ static int commit_tree_ext(struct repository *repo,
- 	free_commit_extra_headers(original_extra_headers);
- 	strbuf_release(&commit_message);
- 	free(original_author);
-+	repo_unuse_commit_buffer(repo, commit_with_message, original_message);
- 	return ret;
- }
- 
--- 
-2.55.0.rc0.738.g0c8ab3ebcc.dirty
+This looks very similar to the inverse of the earlier one but
+slightly different.  It might be easier to spot where it differs, if
+we flipped the polarity, like so, perhaps?
+
+	other = istate->cache[pos];
+	if (this_len >= ce_namelen(other) ||
+	    other->name[this_len] != '/' ||
+	    strncmp(this_name, other->name, this_len))
+		return NULL;
+
+	return other->name;
+
+Or perhaps not.  I do not care very strongly, but I only spotted the
+subtle difference while attempting to flip the polarity in my head,
+so it might help ther readers the same way.  I dunno.
+
+Thanks, looking very good.
 
