@@ -1,146 +1,162 @@
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237E231714B
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 11:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781437685; cv=pass; b=kbmMQRQIDiPppPkSWPhSc4Kzp5Rn8WspE2V0zRYQHve0bY+Nu6gqsUv9FGYZdZo0Jiva4Zc7xXzj1U9/eNIg7uupf6fax2wsfaCP1AZAoUlADeeBbIXPlAmmCArjQIQzlztDnK3qJWITnQI/xdJEY8sBZAIGc09Yd/FKWpOdisA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781437685; c=relaxed/simple;
-	bh=OoYqtVb+Zztbv6NfkXPh7FOOvpBhAy0zUvqIifAWDM0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l/JBK69lBXlyc2QRMNH46fDDaevICD1WOhPwEkrNUGRk8F8S2CgoLpkTJofbZYZ4Qkk787HGaSS2gLq6RRjsF9JDBINcaoR1noKt91tHwheT524eAQhIkChVgcRl4Z8BZVXsGBIY2KMLNhxDVbsTcly/U+1T+EdBwI1oHytQP6A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=A8aGKcMk; arc=pass smtp.client-ip=74.125.224.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AA63B42FF
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 14:16:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781446580; cv=none; b=mmfd20fh086eFAA8yIg2yV4+PONOD3Fo0vAyQLb39k+kR6JXn2uD3srguKpZcmoC8ICWRwnpLY4xAh/2gafnMIx1X6ER0NopmTtHobO6k3uCQgIGtSbL4fxhSngOt2Q3mMp3auw+K7RcWZTsIDs9hs6YiAOinyT3Zx4h6pa36M8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781446580; c=relaxed/simple;
+	bh=0Ob+oLHb2ELdqWub2hVVn0Maiqsoxkb84LpEtZDmjw0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hsqo2gv4RJAs3v9UKtUCZM175lsi4bMyHu1QrxfUu+6jw8iQT0G7Z7JM8ow5TTazCuxYx7REmwICnJNXrC8cE15j9m/nXz4Q8BIiTFr5fhcicC7QBNU5LQOdG4yIBBwuLEXOY7KsAPLvFW4z+HKar57U0ss2hnoIhPARvkIoGS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=seRxcA7O; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="A8aGKcMk"
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-660e9fe3c3aso1342228d50.2
-        for <git@vger.kernel.org>; Sun, 14 Jun 2026 04:48:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781437683; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SC/kcbk5NvOisWxvY9wPxLyKMTDJHO6SPjU/ua98jRQvoeqygWwsujioyBg9kYMIq6
-         cEvRMuUwkpUNJ3AjC+14MBfiqRVsZfDnd/AprbHUg54pLjPglhvNPpAXAt4Ff2CUukrv
-         vpm761SHeBd2jYYL+gZyOF0ARSwmX1rYa0+ZvGmt+pCA1KwN9cvq51Gx2SAPVPLTLLdg
-         hFBoaBWt1Me2reBZlbltqdV3AkM8htRisLM/P/cKScb/gEapPJTfA+XevTIoLaixeyJh
-         129C2e59gIZS7yL7CMWAmYnZyDg+WG6S5rcliEI6gXxeBvO7ZZr2q02U628w7kWgXwbJ
-         qdBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=OoYqtVb+Zztbv6NfkXPh7FOOvpBhAy0zUvqIifAWDM0=;
-        fh=rPb5C4Z3hxwAL7thMBaVgRiNwznHyHW+RN710asG530=;
-        b=cWMM6ZpHlYAa9U/FCia11QlmU30je36PaVHrBylaOmxeNhqZsi9p275LvEABJdhFPn
-         KGNgFCmhBOz9IjGbjBbz+pSIwoSXkwibuzW8ioA587L7mPiqql/5sGJ36hWy1+6Z0ije
-         3HACfSCIw8vYlwjZQZIsMmiPpMrOyb1mjsoSvfj6cLxe0FRnvUYug7v/vbHUDdpestX0
-         FOltNxBkdfmU7hWYeFy7LcLGZ9Dvwvn97jwahfT0FizRMyW0wZPZQXFDoBuvlMUC4tkZ
-         P/XPgn8r2Mh0B3FMAnuX7bIplQbL0dcG3K5LxbwWR43rZUtlZcfk2K5f29UhsKRKuDQ4
-         +DRg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="seRxcA7O"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8423efad617so1555393b3a.0
+        for <git@vger.kernel.org>; Sun, 14 Jun 2026 07:16:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1781437683; x=1782042483; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OoYqtVb+Zztbv6NfkXPh7FOOvpBhAy0zUvqIifAWDM0=;
-        b=A8aGKcMkBi9Vn1f91jluctV7dt+pgXjt4oq+vybLi9UQ/HUwpZOeKVaGo929BuN7Xi
-         HEjdjb/YU9ceFrQxZnenqLwvgCVl/ASeqjFSrpaL8sL6AP/Oznco6SmkAkqwOYv1/I4h
-         HlozLAzjc3uhT/SP0Gys3gTPqhBda4EAIPJv0=
+        d=gmail.com; s=20251104; t=1781446578; x=1782051378; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W2H0MHPE4TFenwXtH3Trbcj9hTiB/yNvMAuGqS5MQFI=;
+        b=seRxcA7OxDna31aXoojTFD9IAWgxTN/P7tteGNgU1s9xNiYdKTNaI7WxO+SWpDGz9N
+         vt8jlvovb2r0YGFMoB6DGwD7a2xIq2KPw4HLJZ8LXbuMaURMT/tYY/1uFKATxLNAHKjF
+         X8pU0o/yyO6W9hLc5qQ9j1OshuGjWV9Lb6T1ciPLtYyeBrI5vS6S2k9RmCBuKm98fYyc
+         bVAhULOAMogoEjL+TiOYupW7ao+EN5gX8w91+xHHdOgh510Ig3+41BOwN9Yw5HQQyW89
+         Jtns+IsFpRVYHBYO7Jop82DIq9W//sK1ZoXIcMdxLMCzsx4aXZHoVVTkUYJWZISfGh7T
+         FoeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781437683; x=1782042483;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1781446578; x=1782051378;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OoYqtVb+Zztbv6NfkXPh7FOOvpBhAy0zUvqIifAWDM0=;
-        b=RWDCd/dLLlvysbgoTG/WBCYdRa5h2kl4K5yezJBsdGGrgEOmmQuaUyMiNWMSy36RH7
-         oBDX0XGpl+eBwgNMkVL2z+j6P3fq+EDvDmJaBlF6pwHusfM9iCPaOaqVLInVlgsIvGov
-         lmHvT7x5a72MnzS7uTTXalad0upJqvOYlAfh7VcuV3CjWekcCS13vbsCDyvisNRWdnh+
-         5Sd7chDDin5+NkKR2kyjGfrbz5FkEq1Dwldgmf+chj08QIXFg32NHguEbPoHwsLe32N0
-         /gyyqxKL54j67A0c39rpJseiriryw+eL+9AsdWI/FDPXzC4mRxTAetWqEwd+ovgt8xkE
-         G70g==
-X-Gm-Message-State: AOJu0YzcCS4y5FFDKIkYrjPdK2qiHpPnz2Lhiuckbr88Q0WHihgwoda5
-	6OfC1Kc5mucIf5lSbYyi4mr15+mI3Ztb2oNJ24FQCPrDKHkr6Bkz8+eeLWcy/nDNxZPP3dIJlgU
-	YJpcoyAdmBCpiF4aj3758aVLc31oBBQVBHXca/P+fqQ==
-X-Gm-Gg: Acq92OGI//QdDNRM/lQwgHc2sYmENVhzKmFelFWTInm5xDxzN0qcLOj6ktpsxS7K6v7
-	0Hu/Ap0SR/mEYyxv4snjMubg6WAkPY8JRwSiwnanQnPkXu53bpv7d7gy0IQgmFyhso88hTdTPtL
-	4WkhkNeo1DcX4AOcYkmjxIMzvHiG68AdIwtXCpJxgVJ1hPJsvQdNXEKgfrRH7609hmbMuvg/Ywc
-	6uJYCE1+FXAkEe+JiKOJxOF0Ej7Ehuc6KfKQIiqeg+eWZXog210/5n1FNqKGDX4fu2g1lf0pU3I
-	umwkrVw=
-X-Received: by 2002:a05:690e:14cc:b0:660:5df1:f22f with SMTP id
- 956f58d0204a3-662782cf74dmr7684221d50.34.1781437683119; Sun, 14 Jun 2026
- 04:48:03 -0700 (PDT)
+        bh=W2H0MHPE4TFenwXtH3Trbcj9hTiB/yNvMAuGqS5MQFI=;
+        b=DZhCfzW3x8/SYnWircgbMh965X03vYSgoUE6Vv+qssKNpJ8TFeMKn0/SJHBqGWoXsv
+         IgskdfpnuhEX4m7uIZH4YhhoFodKGqSW8blLj190l9BZebfX4uxHLf8PVAKI3/glbC6W
+         QzJfS0P37h7HBpjWrPpBeH0MT89P7FsTlq3rSW79rr5N5tdKj/QtjbVjzDfuzmapGS/s
+         4MJVMeLobOPUwWDgQWKcolI1tooWOXaicFDVUgCSza1zjX3f4Pm6P5a/IYhrDsVdkMLC
+         tzD824xint4n01uOTYbO1X2eD4mHSaQ2diB/QSIDS1hNcdUADDnUfSeQNoZDKmCfnDSG
+         gkzg==
+X-Gm-Message-State: AOJu0YwPmwzdW3bSEqBRdMIL/PjZq33HP9O2pYssl5YyXXfDqLmtBe6X
+	dZLCXCUPxYp0ReikxQZrRvxQ3b/dCv4pcdGPxM7fQuAOuzpFwbo8vIvt81vYBA==
+X-Gm-Gg: Acq92OFOAA3oSPAY1VBfVlrmuPGd/XqH5MI7G2+LXdHBB+5ag6dfm3V5o/v9AiW7QBJ
+	nSmDmgq+FlGB8pLH7yI1WrW5cqPhNduNXtPqfsC+nuc4UoFpicG0hOVuTWJtKnBPoiWZESi7XHN
+	upMmP+NyqPvycv78dt3SaJljOJijCxiBGRexeyqCS+hN6nINlLRtlNviOa4UYzkFZOfil8Rj7G9
+	dFrBVHGxtpt9oxmWSBFBkJj7O43/eCJfSOz2CY29oAPx+9sbqa1Uch406KmHOtXacqMajiRdJMZ
+	HqjJC25RXtmnUZ0+47hcsriv0Dx3JsOU4cc0EEtcv9DkuDSymX7//9osgeyQszyrtDneiEyVJgT
+	HZN5EiFIYo6apnU4ZvWjzOdI7lyD+GgIihxQ9eh0VkpND2OM9RADMewfH4pcWlAn71f1S8+aYx2
+	6x03h5mbD+lUARKG8qWqpZHBZWL1XLcQXphxvIgdY=
+X-Received: by 2002:a05:6a00:993:b0:839:9ad:ee31 with SMTP id d2e1a72fcca58-8434cdcadcfmr11598745b3a.8.1781446577995;
+        Sun, 14 Jun 2026 07:16:17 -0700 (PDT)
+Received: from HOGWARTS.localdomain ([171.79.53.8])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434ac9cf01sm7321638b3a.11.2026.06.14.07.16.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jun 2026 07:16:17 -0700 (PDT)
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Git mailing list <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] builtin/history: unuse the commit buffer after use
+Date: Sun, 14 Jun 2026 14:15:40 +0000
+Message-ID: <20260614141600.620272-1-kaartic.sivaraam@gmail.com>
+X-Mailer: git-send-email 2.55.0.rc0.738.g0c8ab3ebcc.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAL71e4Mp7ewv0UGS8j=iTq6quyxLXzrr0uNDbWR8JKaOsTSVyA@mail.gmail.com>
- <CABPp-BGq8a-3ocJ+1HCgJutw1SBUvFg6YxtUamryfgEMx3qDYQ@mail.gmail.com>
-In-Reply-To: <CABPp-BGq8a-3ocJ+1HCgJutw1SBUvFg6YxtUamryfgEMx3qDYQ@mail.gmail.com>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Sun, 14 Jun 2026 13:47:51 +0200
-X-Gm-Features: AVVi8CevgvOKNjMANJAr5GgBuv0jRIvDl3dIlVicPhaaEhpf-VcQOE9lavMBuFw
-Message-ID: <CAL71e4Ps-2_0+uuZu43N9pFnXBemoAohPs_eyRJf8taXHJPAXQ@mail.gmail.com>
-Subject: Re: [RFC] commit-reach: terminate merge-base walk when one paint side
- is exhausted
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, 14 Jun 2026 at 06:32, Elijah Newren <newren@gmail.com> wrote:
-> Wow...it appears this optimization was discovered by 3 separate
-> people in the last month. This optimization was implemented and
-> is live at GitHub...but it feels incomplete to me because my
-> version doesn't handle both sides having an infinite generation
-> number (it just falls back to the old algorithm when that
-> happens).
+While running `git history reword` using a Git built with `SANITIZE` flag set
+to `address,leak`, we could observe the following leak being reported:
 
-It is nice to know that multiple people converged on the same idea
-independently -- that gives me a lot of confidence that we are
-exploiting a real and useful property of the graph/walk structure.
+-- 8< --
 
-> I uploaded my version at
-> https://github.com/gitgitgadget/git/pull/2150.
+=================================================================
+==7156==ERROR: LeakSanitizer: detected memory leaks
 
-I uploaded mine at
-https://github.com/gitgitgadget/git/pull/2149 (draft, still
-iterating on the series).
+Direct leak of 1813 byte(s) in 1 object(s) allocated from:
+    #0 0x79a3d1d2b60f in malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:67
+    #1 0x612e2bb8c2e9 in do_xmalloc /path/to/git/wrapper.c:55
+    #2 0x612e2bb8c3f7 in do_xmallocz /path/to/git/wrapper.c:89
+    #3 0x612e2bb8c48f in xmallocz_gently /path/to/git/wrapper.c:102
+    #4 0x612e2b8dc28e in unpack_compressed_entry /path/to/git/packfile.c:1744
+    #5 0x612e2b8dd12a in unpack_entry /path/to/git/packfile.c:1897
+    #6 0x612e2b8daae2 in cache_or_unpack_entry /path/to/git/packfile.c:1535
+    #7 0x612e2b8db1f6 in packed_object_info_with_index_pos /path/to/git/packfile.c:1617
+    #8 0x612e2b8dc1c4 in packed_object_info /path/to/git/packfile.c:1732
+    #9 0x612e2b8def05 in packfile_store_read_object_info /path/to/git/packfile.c:2228
+    #10 0x612e2b889cb0 in odb_source_files_read_object_info odb/source-files.c:58
+    #11 0x612e2b8805e9 in odb_source_read_object_info odb/source.h:326
+    #12 0x612e2b885cf0 in do_oid_object_info_extended /path/to/git/odb.c:572
+    #13 0x612e2b886fe4 in odb_read_object_info_extended /path/to/git/odb.c:710
+    #14 0x612e2b887584 in odb_read_object /path/to/git/odb.c:756
+    #15 0x612e2b68d6e4 in repo_get_commit_buffer /path/to/git/commit.c:399
+    #16 0x612e2b91a7d4 in repo_logmsg_reencode /path/to/git/pretty.c:716
+    #17 0x612e2b3de7da in commit_tree_ext builtin/history.c:127
+    #18 0x612e2b3dee9f in commit_tree_with_edited_message builtin/history.c:183
+    #19 0x612e2b3e2c4d in cmd_history_reword builtin/history.c:717
+    #20 0x612e2b3e53b6 in cmd_history builtin/history.c:998
+    #21 0x612e2b27ae97 in run_builtin /path/to/git/git.c:506
+    #22 0x612e2b27b9ae in handle_builtin /path/to/git/git.c:782
+    #23 0x612e2b27c240 in run_argv /path/to/git/git.c:865
+    #24 0x612e2b27cd94 in cmd_main /path/to/git/git.c:986
+    #25 0x612e2b5c4267 in main /path/to/git/common-main.c:9
+    #26 0x79a3d182a600 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:59
+    #27 0x79a3d182a717 in __libc_start_main_impl ../csu/libc-start.c:360
+    #28 0x612e2b276124 in _start (/path/to.local/bin/git+0x211124) (BuildId: 8da3d640a944e21b895fc4802d7942b1505be663)
 
-I realize this is getting into implementation details before
-the idea itself has been discussed on the list. I am happy to wait
-with a formal patch submission until there is more consensus on the
-approach -- but since you shared your implementation, I wanted to
-compare notes while it is fresh.
+SUMMARY: AddressSanitizer: 1813 byte(s) leaked in 1 allocation(s).
 
-I integrated your new t6600 test cases into my branch -- thanks!
-They exercise important edge cases that my original tests missed.
-I also extended the perf test to cover the case where both tips
-are outside the commit-graph.
+-- >8 --
 
-After looking at your implementation, I also moved from a
-max-pointer scheme to per-side counters. We ended up with slightly
-different implementations, but they are tracking the same underlying
-condition: whether either paint side still has non-stale exclusive
-commits remaining.
+A deeper investigation on this reveals the following as the root cause.
 
-The main behavioral difference is handling of commits outside the
-commit-graph. Your version disables the optimization once both
-sides have touched such commits, while mine only enables the break
-after the walk reaches the finite-generation region. This still
-allows the optimization to fire when both tips start outside the
-graph, as soon as the walk crosses into commits covered by the
-commit-graph.
+As part of rewording a commit in `git history`, we get the commit message
+buffer in the `commit_tree_ext` function. This in turn obtains the buffer
+from `repo_logmsg_reencode`. Given how `commit_tree_ext` is invoking the
+function with the last two parameters as NULL, we are clearly not expecting
+a reencode to happen. In this case, the buffer that we receive from
+`repo_logmsg_reencode` ends up always being obtained from a call to
+`repo_get_commit_buffer`.
 
-> Do you want to take this over, rebase it, and extend to the
-> infinite generation number case? Or do you want me to rebase
-> and see it through after my vacation? Or some other mixture?
+This buffer is expected to be released with an accompanying call to
+`repo_unuse_commit_buffer` which takes care of freeing it. This call
+is missing in the `commit_tree_ext` flow thus resulting in the leak.
 
-I am happy to keep working on this -- starting from either your
-branch or mine, or some hybrid. I do not have a strong preference
-for which version it would be based on, but if either of them lands
-I would be happy. Enjoy your vacation!
+Fix this by ensuring we call `repo_unuse_commit_buffer` on the
+original_message buffer.
 
-Thanks,
-Kristofer
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+---
+I must mention that I also noticed the following comment in `commit_tree_ext`:
+
+»       /* We retain authorship of the original commit. */
+»       original_message = repo_logmsg_reencode(repo, commit_with_message, NULL, NULL);
+
+... but I'm not quite sure why we don't unuse the buffer after its purpose is
+done. Kindly englighten me in case I missed something.
+
+
+ builtin/history.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/builtin/history.c b/builtin/history.c
+index 091465a59e..0e9259b5d7 100644
+--- a/builtin/history.c
++++ b/builtin/history.c
+@@ -154,6 +154,7 @@ static int commit_tree_ext(struct repository *repo,
+ 	free_commit_extra_headers(original_extra_headers);
+ 	strbuf_release(&commit_message);
+ 	free(original_author);
++	repo_unuse_commit_buffer(repo, commit_with_message, original_message);
+ 	return ret;
+ }
+ 
+-- 
+2.55.0.rc0.738.g0c8ab3ebcc.dirty
+
