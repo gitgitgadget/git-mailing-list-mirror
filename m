@@ -1,70 +1,70 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806AF35CB6A
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 06:37:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B073369234
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 06:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781419058; cv=none; b=Q8Z2FVXrprdcfGuxHocLybwyrHsOzq/Mwxeon+1R0DH7UHuC7ZkZMtoq2tnvprWZCQkFjddziczF+6hxEHMuYXyyL1RBj1rHx9xeTBQwHGcqIxN9kcNiCYRRDrxfj+oiffcEzyzZVCV28h56th38rQt0Ech5dd4OVuIUBS4ZxWY=
+	t=1781419059; cv=none; b=Ip7rh4fCfQxqJAH9eVEauCf9tp51Zm676sbbCDxQH/cMM42CApdIgQkZMflNGQVvAngnglp6IG52xm2gE5l78mdf7/F164I1qS66wKCc8Cl8DnPw23cpLdmpMBR7yapy3hKXWg0CiD2xyXP17lCO+bb5ef61XtvbCUbIwI8UalM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781419058; c=relaxed/simple;
-	bh=V0yuFY07b8V2jF2cWnBvNH7D10iDFRdNjNeRK0+eQLw=;
+	s=arc-20240116; t=1781419059; c=relaxed/simple;
+	bh=QSofk/86tfiUO+u8LH87vJiGaCflJP6ajgeBxuwGlGc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=f0hd6t6fSyVhr5vfcLrNbsjZV/2GmpOxHU8533/n8PDYa0gJNCb+NOau5fgUV1VoO4I33hB0wgxxoLZMREba7wAGTVYUQCGzbUD+sZvtp0aOaDV3hR/I2qOcebqsUJ0ILfsgL3qBpBKmD9GwZGMf6evyBcaDpVyeyiLrLIuo890=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rUJCaMBy; arc=none smtp.client-ip=209.85.222.171
+	 MIME-Version:To:Cc; b=kUcJSSWVaWWBAyykSNaev8qYlW39RAOCT91j1ixkqPrUbZpJLbAJpJrRzdV6P09AASkl2vjlO9e4NGBWCRjNBUnlIfdO/2Sc9Te1UqpAZrpWyVv66BGSbeq/gV1b3LavEECLLBAQ6wwjfj2liZb/XmoOCzqBwwgOW7E2NgjYRQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g5rFPCCU; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rUJCaMBy"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-915e1354934so248230185a.1
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 23:37:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g5rFPCCU"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-91578122305so377080985a.0
+        for <git@vger.kernel.org>; Sat, 13 Jun 2026 23:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781419055; x=1782023855; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781419057; x=1782023857; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zKEqLTWj4tHGOob5tl/Hn6N8fBtH1FPUSP8wU0B/Bwg=;
-        b=rUJCaMByIUa7GezFH9IB9gBwdH9p2vX2USfinZ9UpSTK4HistiDYOJNtlIqpqHLZhF
-         XmvEy1NI/RwQmskdqw4Z8idlTwDK9ZhY2/t5kOWH1ahyKj/keA15aw6S3pgTLplbGhjv
-         nOmGkbXpqveMsNUgNkj/CAUKG2cKo6R7y5cELT+moSdtHolbPy+ko3GZOX4AkgoYRhUS
-         D8QRnpgVG/VBNkjFrF+g4Xea6Nr7gLlNsIVyDqf20UGVTWB8ECKbqZEugKeFxviGJlLS
-         REtZHWG9B+w2rJYUhx42X5fxPXHuDz6S73ifXtSOc9wTB4fK35IMHYS5s+kgwbLr1hEt
-         UllQ==
+        bh=xZqX/SJg9g2wRNSKfKG1P8ISt8XIfoAVh/Jn4G9RGcc=;
+        b=g5rFPCCU8v6BxhlEdFY5Djph4QmB9QCY6QjQ0qE7vJxqSlTIKN6bBRluUoB5dJNx5Q
+         2kGZTsD1mbp3Be/nLDJpa4Td5fnGAkxMI/31gZOTcGNHJlybLaIgog6MhOfxg6oGh1Ud
+         dSKiR+nzO/mITRa6MKXJokxCqY4HrGB7w1gbVDahC1ISH4v5wGA7pvu2E0cLcvZyYJdV
+         8nCws0o5lh+K/wFqEfVvAj8ehZRb+3N2RVySG/vu4Uzx0mH4AbOTpSNlmT7Og0iWLjfh
+         /gAe77tRsg1mTpCu+nHwXJWbmFpTl5aWUE15y26DoGNkxHZ2taxSj14w9Wzetx4R3o83
+         /aSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781419055; x=1782023855;
+        d=1e100.net; s=20251104; t=1781419057; x=1782023857;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=zKEqLTWj4tHGOob5tl/Hn6N8fBtH1FPUSP8wU0B/Bwg=;
-        b=ATKjJfsiy70gRsY/XBw2oNQ/TlXEPorzkc37iu5mFwXR78i+FQZC2POwKNcARpE4RK
-         FKozPkMQ+QzNjc8hjDHu91BHIybZbDfr8eEuwQKf5P0FaBiXcTqB7Cw5aubXpZsDT/fu
-         S529/MF1gT3ZA/CrvNYIjbw8rX2TGTYSvtMTwKbWQAkcD9P1Sl4f6IB2iKUpwlUeUVkr
-         CaTDwL2FLSyCuSj8ivwkosgQVuMkwBQg3IaT/tumtYni0LWqeO4CNP1MWrPElYQArcI2
-         ZAdhdCxP9t4gPVdBNykAnjF830Jy8LEs8MXuBADL/N331wAWsuPNjyeQy501NzbM0NUX
-         S+JQ==
-X-Gm-Message-State: AOJu0YyBBNetyNv3kdL3uuvIwOy8ftzv9gEjli2jhC+bwJp14yH9NkNF
-	bXCSC0bzQras1Mnl+LaKusEEX6qnXUMgQpoi6SZNZ4z5G8OoFb1cPsF5nvqaMA==
-X-Gm-Gg: Acq92OFcFUNlOtxwulgbmWcKSWScEX6UTR3cBRTiLAoMDv1YW4LRKEBa8J8XJM3aaN9
-	4CLxNJEtKJO8+SpZYPDtr5YQQblYmZfuAaZF7Xe7+0PU0vnv5nyrKPDZW30dkUtnlRozf0C4ALj
-	aQw4yV/lV+WkMm9ucIo+f993ReB3lN5oyCRRjRbCl1B9P0gJNMrFQ6JexsE65syQhdti/jsHRPO
-	6M9Hvtxz6KJ0XdJx5p90XBDHzTfnaSQ0z0ZIfgLwUMN5K5PwJtWutS77LG1pYbQh/NC+ByWnOKl
-	LsClfTvo3kNGE6Q6sMrJS6LFSN1BZVzGoa3a3jEJQgCO+XMA0W3LVgZ8V2BPvz+UIUuul3mVjH0
-	4mU16Q9vSc0NA78ZAhn5E+UXiC2EKmFjpqbo6iN13DRE7yHwz8PfN4C/Cc2VYLqr2E88jf4BK+p
-	g/HnJ1tSEveV/RDgHvar3RWg==
-X-Received: by 2002:a05:620a:454b:b0:915:c4de:7ad8 with SMTP id af79cd13be357-917f11744a4mr992206885a.38.1781419055345;
-        Sat, 13 Jun 2026 23:37:35 -0700 (PDT)
+        bh=xZqX/SJg9g2wRNSKfKG1P8ISt8XIfoAVh/Jn4G9RGcc=;
+        b=nMvTeElLnsTkqOk+id1E7AdMmt4wKESkGD7ID58bmHPr47EdfDXEqYGt8tu1PBBscS
+         2zdo/0pvM+oG0OZUbykPE5ZVJxkQZuQt4QuMSrMQ0cZPGOK/dbC2WwhLpV9EUAl+WvBg
+         4P7veeYCdlEIeNou2ehSSGgreWdYx6UCAXlRLjHycafFcna7mhN7QppQ/1JK9Y8ddLTz
+         PjHi0MLcdJGx3aw7iEDL0BYQ9KncnVbEb7Ho2K7I16nF66/RJ84bJki1VJUUafNOt6tn
+         9VrN4pfstI4WqnS8rNoOH1+y98ZlzEflWoV674+GGX6ypFZBLpmw+hzYmD9GTOb9Rj1K
+         zTJg==
+X-Gm-Message-State: AOJu0YzhFFykW2+7eJq3FOCz1/wJGtESz8Qx+nb8HOohOzNaJEzrMdhW
+	f7vneYU5vSOIOOHfGasnbWfywQvemnUUuMP6O2uO5RehG2nD66QqItWtd1z27Q==
+X-Gm-Gg: Acq92OFDqBZ/JEzCJeRHDwRp6lwozt4Tl5TI4hkPbUzOzYLnnbK032GnY5rxRGfBU+5
+	bhyRDodYobFIhk81N2kVVnhTC0cNRvITp+2tuOL0ObbPJlV8cqdVlVwbNS5bLS1tJ0KY0WYv1Xx
+	hgeQ9nhM02fap7tGWs6E+CzitDNKhHx4DC5CmvvqaHrSjw/mfn384amO3VB0oQB+SPHdYec2SSv
+	BvFqztDNOYJkH9H7YQUsgFdn9rSo1DDQiZ+QNhmFeIHUuJ7JL+fE/qw9UCQafpbUuSLPdxJ4igg
+	m+GpnWLOvOn8tJEgBxf+oJQ1frK/QoF/o47ULZFjM/HffhxKNOzIa1Ui2ccRGmPgS4rsYTlw4W8
+	PrYHy+QweYIqmZC0UgVWfoZ5QtLvbiL81Wf4o7xk5ccdvgZ2ZxOhTDiFpM/pYCoWHUMMKd9ye7i
+	JJh/efN+ZuJXGl0N0sQ0GmuA==
+X-Received: by 2002:a05:620a:1709:b0:915:a217:a96b with SMTP id af79cd13be357-917eb7027f6mr950553485a.0.1781419057083;
+        Sat, 13 Jun 2026 23:37:37 -0700 (PDT)
 Received: from [127.0.0.1] ([20.55.15.2])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619f05fe7sm723722385a.12.2026.06.13.23.37.33
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9161a035855sm674607885a.32.2026.06.13.23.37.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2026 23:37:34 -0700 (PDT)
-Message-Id: <b5421244d41ed90a66f64c619d18935a71475bc7.1781419047.git.gitgitgadget@gmail.com>
+        Sat, 13 Jun 2026 23:37:36 -0700 (PDT)
+Message-Id: <cf50f1aabcf84aa755808318756c233305cc008d.1781419047.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2096.v2.git.1781419047.gitgitgadget@gmail.com>
 References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
 	<pull.2096.v2.git.1781419047.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 14 Jun 2026 06:37:25 +0000
-Subject: [PATCH v2 4/5] merge-ort: abort merge when trees have duplicate
- entries
+Date: Sun, 14 Jun 2026 06:37:26 +0000
+Subject: [PATCH v2 5/5] cache-tree: fix verify_cache() to catch non-adjacent
+ D/F conflicts
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,208 +83,250 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Elijah Newren <newren@gmail.com>
 
-Trees with duplicate entries are malformed; fsck reports "contains
-duplicate file entries" for them.  merge-ort has from the beginning
-assumed that we would never hit such trees.  It was written with the
-assumption that traverse_trees() calls collect_merge_info_callback() at
-most once per path.  The "sanity checks" in that callback (added in
-d2bc1994f363 (merge-ort: implement a very basic collect_merge_info(),
-2020-12-13)) verify properties of each individual call but not that
-invariant.  The strmap_put() in setup_path_info() silently overwrites
-the entry from any prior call for the same path, because it assumed
-there would be no other path.  Unfortunately, supplemental data
-structures for various optimizations could still be tweaked before the
-extra paths were overwritten, and those data structures not matching
-expected state could trip various assertions.
+verify_cache() checks that the index does not contain both "path" and
+"path/file" before writing a tree.  It does this by comparing only
+adjacent entries, relying on the assumption that "path/file" would
+immediately follow "path" in sorted order.  Unfortunately, this
+assumption does not always hold.  For example:
 
-Change the return type of setup_path_info() from void to int to allow us
-to detect this case, and abort the merge with a clear error message when
-it occurs.
+    docs                     <-- submodule entry
+    docs-internal/README.md  <-- intervening entry
+    docs/requirements.txt    <-- D/F conflict, NOT adjacent to "docs"
+
+When this happens, verify_cache() silently misses the D/F conflict and
+write-tree produces a corrupt tree object containing duplicate entries
+(one for the submodule "docs" and one for the tree "docs").
+
+I could not find any caller in current git that both allows the index to
+get into this state and then tries to write it out without doing other
+checks beyond the verify_cache() call in cache_tree_update(), but
+verify_cache() is documented as a safety net for preventing corrupt
+trees and should actually provide that guarantee.  A downstream consumer
+that relied solely on cache_tree_update()'s internal checking via
+verify_cache() to prevent duplicate tree entries was bitten by the gap.
+
+Add a test that constructs a corrupt index directly (bypassing the D/F
+checks in add_index_entry) and verifies that write-tree now rejects it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c                          | 61 ++++++++++++++++------------
- t/t6422-merge-rename-corner-cases.sh | 54 ++++++++++++++++++++++++
- 2 files changed, 88 insertions(+), 27 deletions(-)
+ cache-tree.c                   | 64 ++++++++++++++++++++++++++++------
+ t/meson.build                  |  1 +
+ t/t0093-direct-index-write.pl  | 38 ++++++++++++++++++++
+ t/t0093-verify-cache-df-gap.sh | 59 +++++++++++++++++++++++++++++++
+ 4 files changed, 151 insertions(+), 11 deletions(-)
+ create mode 100644 t/t0093-direct-index-write.pl
+ create mode 100755 t/t0093-verify-cache-df-gap.sh
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 8f911cb639..be0829bbb7 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1026,18 +1026,18 @@ static int traverse_trees_wrapper(struct index_state *istate,
- 	return ret < 0 ? ret : 0;
+diff --git a/cache-tree.c b/cache-tree.c
+index 7881b42aa2..4d2669b312 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -161,6 +161,54 @@ void cache_tree_invalidate_path(struct index_state *istate, const char *path)
+ 		istate->cache_changed |= CACHE_TREE_CHANGED;
  }
  
--static void setup_path_info(struct merge_options *opt,
--			    struct string_list_item *result,
--			    const char *current_dir_name,
--			    int current_dir_name_len,
--			    char *fullpath, /* we'll take over ownership */
--			    struct name_entry *names,
--			    struct name_entry *merged_version,
--			    unsigned is_null,     /* boolean */
--			    unsigned df_conflict, /* boolean */
--			    unsigned filemask,
--			    unsigned dirmask,
--			    int resolved          /* boolean */)
-+static int setup_path_info(struct merge_options *opt,
-+			   struct string_list_item *result,
-+			   const char *current_dir_name,
-+			   int current_dir_name_len,
-+			   char *fullpath, /* we'll take over ownership */
-+			   struct name_entry *names,
-+			   struct name_entry *merged_version,
-+			   unsigned is_null,     /* boolean */
-+			   unsigned df_conflict, /* boolean */
-+			   unsigned filemask,
-+			   unsigned dirmask,
-+			   int resolved          /* boolean */)
++/*
++ * Check whether this_ce and the next entry in the index form a D/F
++ * conflict ("path" vs "path/file").  Returns the conflicting "path/..."
++ * name when one is found, or NULL otherwise.
++ *
++ * The cache is sorted, so "path/file" sorts after "path" and the
++ * conflict is usually visible as adjacent entries.  But other entries
++ * can sort between them -- e.g. "path-internal" sits between "path"
++ * and "path/file" because '-' (0x2D) precedes '/' (0x2F) -- so when
++ * the immediately following entry shares our prefix but starts with a
++ * character that sorts before '/', binary search for "path/" instead.
++ */
++static const char *find_df_conflict(struct index_state *istate,
++				    const struct cache_entry *this_ce,
++				    const struct cache_entry *next_ce)
++{
++	const char *this_name = this_ce->name;
++	const char *next_name = next_ce->name;
++	int this_len = ce_namelen(this_ce);
++	const struct cache_entry *other;
++	struct strbuf probe = STRBUF_INIT;
++	int pos;
++
++	if (this_len >= ce_namelen(next_ce) ||
++	    next_name[this_len] > '/' ||
++	    strncmp(this_name, next_name, this_len))
++		return NULL;
++
++	if (next_name[this_len] == '/')
++		return next_name;
++
++	strbuf_add(&probe, this_name, this_len);
++	strbuf_addch(&probe, '/');
++	pos = index_name_pos_sparse(istate, probe.buf, probe.len);
++	strbuf_release(&probe);
++
++	if (pos < 0)
++		pos = -pos - 1;
++	if (pos >= (int)istate->cache_nr)
++		return NULL;
++	other = istate->cache[pos];
++	if (ce_namelen(other) > this_len &&
++	    other->name[this_len] == '/' &&
++	    !strncmp(this_name, other->name, this_len))
++		return other->name;
++	return NULL;
++}
++
+ static int verify_cache(struct index_state *istate, int flags)
  {
- 	/* result->util is void*, so mi is a convenience typed variable */
- 	struct merged_info *mi;
-@@ -1081,9 +1081,11 @@ static void setup_path_info(struct merge_options *opt,
- 			 */
- 			mi->is_null = 1;
- 	}
--	strmap_put(&opt->priv->paths, fullpath, mi);
-+	if (strmap_put(&opt->priv->paths, fullpath, mi))
-+		return error(_("tree has duplicate entries for '%s'"), fullpath);
- 	result->string = fullpath;
- 	result->util = mi;
-+	return 0;
- }
- 
- static void add_pair(struct merge_options *opt,
-@@ -1350,9 +1352,10 @@ static int collect_merge_info_callback(int n,
+ 	unsigned i, funny;
+@@ -190,24 +238,18 @@ static int verify_cache(struct index_state *istate, int flags)
  	 */
- 	if (side1_matches_mbase && side2_matches_mbase) {
- 		/* mbase, side1, & side2 all match; use mbase as resolution */
--		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
--				names, names+0, mbase_null, 0 /* df_conflict */,
--				filemask, dirmask, 1 /* resolved */);
-+		if (setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				    names, names+0, mbase_null, 0 /* df_conflict */,
-+				    filemask, dirmask, 1 /* resolved */))
-+			return -1; /* Quit traversing */
- 		return mask;
+ 	funny = 0;
+ 	for (i = 0; i + 1 < istate->cache_nr; i++) {
+-		/* path/file always comes after path because of the way
+-		 * the cache is sorted.  Also path can appear only once,
+-		 * which means conflicting one would immediately follow.
+-		 */
+ 		const struct cache_entry *this_ce = istate->cache[i];
+ 		const struct cache_entry *next_ce = istate->cache[i + 1];
+-		const char *this_name = this_ce->name;
+-		const char *next_name = next_ce->name;
+-		int this_len = ce_namelen(this_ce);
+-		if (this_len < ce_namelen(next_ce) &&
+-		    next_name[this_len] == '/' &&
+-		    strncmp(this_name, next_name, this_len) == 0) {
++		const char *conflict_name;
++
++		conflict_name = find_df_conflict(istate, this_ce, next_ce);
++		if (conflict_name) {
+ 			if (10 < ++funny) {
+ 				fprintf(stderr, "...\n");
+ 				break;
+ 			}
+ 			fprintf(stderr, "You have both %s and %s\n",
+-				this_name, next_name);
++				this_ce->name, conflict_name);
+ 		}
  	}
- 
-@@ -1364,9 +1367,10 @@ static int collect_merge_info_callback(int n,
- 	 */
- 	if (sides_match && filemask == 0x07) {
- 		/* use side1 (== side2) version as resolution */
--		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
--				names, names+1, side1_null, 0,
--				filemask, dirmask, 1);
-+		if (setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				    names, names+1, side1_null, 0,
-+				    filemask, dirmask, 1))
-+			return -1; /* Quit traversing */
- 		return mask;
- 	}
- 
-@@ -1378,18 +1382,20 @@ static int collect_merge_info_callback(int n,
- 	 */
- 	if (side1_matches_mbase && filemask == 0x07) {
- 		/* use side2 version as resolution */
--		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
--				names, names+2, side2_null, 0,
--				filemask, dirmask, 1);
-+		if (setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				    names, names+2, side2_null, 0,
-+				    filemask, dirmask, 1))
-+			return -1; /* Quit traversing */
- 		return mask;
- 	}
- 
- 	/* Similar to above but swapping sides 1 and 2 */
- 	if (side2_matches_mbase && filemask == 0x07) {
- 		/* use side1 version as resolution */
--		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
--				names, names+1, side1_null, 0,
--				filemask, dirmask, 1);
-+		if (setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+				    names, names+1, side1_null, 0,
-+				    filemask, dirmask, 1))
-+			return -1; /* Quit traversing */
- 		return mask;
- 	}
- 
-@@ -1413,8 +1419,9 @@ static int collect_merge_info_callback(int n,
- 	 * unconflict some more cases, but that comes later so all we can
- 	 * do now is record the different non-null file hashes.)
- 	 */
--	setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
--			names, NULL, 0, df_conflict, filemask, dirmask, 0);
-+	if (setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
-+			    names, NULL, 0, df_conflict, filemask, dirmask, 0))
-+		return -1; /* Quit traversing */
- 
- 	ci = pi.util;
- 	VERIFY_CI(ci);
-diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
-index e18d5a227d..81b645bb3b 100755
---- a/t/t6422-merge-rename-corner-cases.sh
-+++ b/t/t6422-merge-rename-corner-cases.sh
-@@ -1525,4 +1525,58 @@ test_expect_success 'submodule/directory preliminary conflict' '
- 	)
- '
- 
-+# Testcase: submodule/directory conflict with duplicate tree entries
-+#   One side has a path as a gitlink (submodule).  The other side replaces
-+#   the gitlink with a directory.  A third-party tool creates a tree on the
-+#   submodule side that has *both* a gitlink and a tree entry for the same
-+#   path (adding a file inside the submodule path ignoring that there's a
-+#   gitlink there).  collect_merge_info_callback() should detect the
-+#   duplicate and abort rather than silently corrupting its bookkeeping.
+ 	if (funny)
+diff --git a/t/meson.build b/t/meson.build
+index 7528e5cda5..362177999b 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -124,6 +124,7 @@ integration_tests = [
+   't0090-cache-tree.sh',
+   't0091-bugreport.sh',
+   't0092-diagnose.sh',
++  't0093-verify-cache-df-gap.sh',
+   't0095-bloom.sh',
+   't0100-previous.sh',
+   't0101-at-syntax.sh',
+diff --git a/t/t0093-direct-index-write.pl b/t/t0093-direct-index-write.pl
+new file mode 100644
+index 0000000000..2881a3ebb2
+--- /dev/null
++++ b/t/t0093-direct-index-write.pl
+@@ -0,0 +1,38 @@
++#!/usr/bin/perl
++#
++# Build a v2 index file from entries listed on stdin.
++# Each line: "octalmode hex-oid name"
++# Output: binary index written to stdout.
++#
++# This bypasses all D/F safety checks in add_index_entry(), simulating
++# what happens when code uses ADD_CACHE_JUST_APPEND to bulk-load entries.
++use strict;
++use warnings;
++use Digest::SHA qw(sha1 sha256);
 +
-+test_expect_success 'duplicate tree entries trigger an error' '
-+	test_when_finished "rm -rf duplicate-entry" &&
-+	git init duplicate-entry &&
-+	(
-+		cd duplicate-entry &&
++my $hash_algo = $ENV{'GIT_DEFAULT_HASH'} || 'sha1';
++my $hash_func = $hash_algo eq 'sha256' ? \&sha256 : \&sha1;
 +
-+		# Base commit: "docs" is a gitlink (submodule)
-+		empty_tree=$(git mktree </dev/null) &&
-+		fake_commit=$(git commit-tree $empty_tree </dev/null) &&
-+		git update-index --add --cacheinfo 160000,$fake_commit,docs &&
-+		echo base >file.txt &&
-+		git add file.txt &&
-+		git commit -m base &&
++my @entries;
++while (my $line = <STDIN>) {
++	chomp $line;
++	my ($mode, $oid_hex, $name) = split(/ /, $line, 3);
++	push @entries, [$mode, $oid_hex, $name];
++}
 +
-+		# side1: remove the gitlink, replace with a directory
-+		git checkout -b side1 &&
-+		git rm --cached docs &&
-+		mkdir -p docs &&
-+		echo hello >docs/requirements.txt &&
-+		git add docs/requirements.txt &&
-+		git commit -m "side1: submodule to directory" &&
++my $body = "DIRC" . pack("NN", 2, scalar @entries);
 +
-+		# side2: keep the gitlink but craft a tree that also
-+		# contains a tree entry for "docs" (simulating a tool
-+		# that adds files inside a submodule path without
-+		# removing the gitlink first).
-+		git checkout main &&
-+		git checkout -b side2 &&
-+		blob_oid=$(echo world | git hash-object -w --stdin) &&
-+		docs_tree=$(printf "100644 blob %s\trequirements.txt\n" \
-+			"$blob_oid" | git mktree) &&
-+		cur_tree=$(git rev-parse HEAD^{tree}) &&
-+		git cat-file -p $cur_tree >tree-listing &&
-+		printf "040000 tree %s\tdocs\n" "$docs_tree" >>tree-listing &&
-+		new_tree=$(git mktree <tree-listing) &&
-+		side2_commit=$(git commit-tree $new_tree -p HEAD \
-+			-m "side2: add file alongside submodule") &&
-+		git update-ref refs/heads/side2 $side2_commit &&
++for my $ent (@entries) {
++	my ($mode, $oid_hex, $name) = @{$ent};
++	# 10 x 32-bit stat fields (zeroed), with mode in position 7
++	my $stat = pack("N10", 0, 0, 0, 0, 0, 0, oct($mode), 0, 0, 0);
++	my $oid = pack("H*", $oid_hex);
++	my $flags = pack("n", length($name) & 0xFFF);
++	my $entry = $stat . $oid . $flags . $name . "\0";
++	# Pad to 8-byte boundary
++	while (length($entry) % 8) { $entry .= "\0"; }
++	$body .= $entry;
++}
 +
-+		# Merging must detect the duplicate and abort
-+		git checkout side1 &&
-+		test_must_fail git merge side2 2>err &&
-+		test_grep "duplicate entries" err
-+	)
++binmode STDOUT;
++print $body . $hash_func->($body);
+diff --git a/t/t0093-verify-cache-df-gap.sh b/t/t0093-verify-cache-df-gap.sh
+new file mode 100755
+index 0000000000..0b6829d805
+--- /dev/null
++++ b/t/t0093-verify-cache-df-gap.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++
++test_description='verify_cache() must catch non-adjacent D/F conflicts
++
++Ensure that verify_cache() can complain about bad entries like:
++
++  docs               <-- submodule
++  docs-internal/...  <-- sorts here because "-" < "/"
++  docs/...           <-- D/F conflict with "docs" above, not adjacent
++
++In order to test verify_cache, we directly construct a corrupt index
++(bypassing the D/F safety checks in add_index_entry) and verify that
++write-tree rejects it.
 +'
 +
- test_done
++. ./test-lib.sh
++
++if ! test_have_prereq PERL
++then
++	skip_all='skipping verify_cache D/F tests; Perl not available'
++	test_done
++fi
++
++# Build a v2 index from entries on stdin, bypassing D/F checks.
++# Each line: "octalmode hex-oid name" (entries must be pre-sorted).
++build_corrupt_index () {
++	perl "$TEST_DIRECTORY/t0093-direct-index-write.pl" >"$1"
++}
++
++test_expect_success 'setup objects' '
++	test_commit base &&
++	BLOB=$(git rev-parse HEAD:base.t) &&
++	SUB_COMMIT=$(git rev-parse HEAD)
++'
++
++test_expect_success 'adjacent D/F conflict is caught by verify_cache' '
++	cat >index-entries <<-EOF &&
++	0160000 $SUB_COMMIT docs
++	0100644 $BLOB docs/requirements.txt
++	EOF
++	build_corrupt_index .git/index <index-entries &&
++
++	test_must_fail git write-tree 2>err &&
++	test_grep "You have both docs and docs/requirements.txt" err
++'
++
++test_expect_success 'non-adjacent D/F conflict is caught by verify_cache' '
++	cat >index-entries <<-EOF &&
++	0160000 $SUB_COMMIT docs
++	0100644 $BLOB docs-internal/README.md
++	0100644 $BLOB docs/requirements.txt
++	EOF
++	build_corrupt_index .git/index <index-entries &&
++
++	test_must_fail git write-tree 2>err &&
++	test_grep "You have both docs and docs/requirements.txt" err
++'
++
++test_done
 -- 
 gitgitgadget
-
