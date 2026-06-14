@@ -1,52 +1,54 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB29283C82
-	for <git@vger.kernel.org>; Sat, 13 Jun 2026 21:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75511E505
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 01:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781387624; cv=none; b=FSS6NYMCgKual+mgwdygUv6D+Nj9YL0RA+vogj4aC9PSoos76J1Cuc2D/racyGRlUYyeaPJGb9hiOwa58JSEDmO046R/I6Qn+LlGMSInFuugONTLXlJZrLNy7iGxZnEhNXeIfBdqItMXZxVIMyodGbQmekyWy8WFGG3Pp1YFgIU=
+	t=1781399308; cv=none; b=CuoWXvtlTA4awyq4d2EIDYI99Mk4BPKDKiBqpku6k0KqPPbV6yAqJOV9nMqXbYm49YRb2dminqAwB8uDFzNvl4NI/9cfuPjO7JxDFk4268wI/3+FCydRwHe2DpwF2Ehk11HaRNyPKgSq11BOyWxg8S7AhH8W5aVjSCcls9JosDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781387624; c=relaxed/simple;
-	bh=XoxtJw2QNa9220adrKUWneyhVLvFewlOI4K8q5y/Xf0=;
+	s=arc-20240116; t=1781399308; c=relaxed/simple;
+	bh=TsNkK7u2JlumjN752u1xn5UaPZFVBuNEqBf1maP7QDc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jFww1Ib+sX4MyIm5d1pz8dGI6NbHArmF1s06FpKh4F3nhhsm6sXhbBi/m5LS9I3hTaMbC4Bc3nRsu3LWF01ODjBR880sc6/VEFZrgnY1DCh/z14QRpNkjsD3WN2noxxiCnYtQ6n/YkecLkSwzdc8aBx4bHevlxdzn0g3mqG8RkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=u7yONSWR; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZC5LQggQsPvFeujaBytnCIPppozKPe/hcYS8f3Gd51M5z+q8k8OoZqcW4Q5n+0k/BMo6hwLRjnfpM+kB9OTXyMvNNneRWn6HYoNRh9ip5WTLhrvo6Uk38lHdNC7D2vmjWwgY0tnOzPpo7yclBh2eMOhyP7lrwWsI6QWWu9NtDkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Ish82phY; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="u7yONSWR"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ish82phY"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1781387615;
-	bh=XoxtJw2QNa9220adrKUWneyhVLvFewlOI4K8q5y/Xf0=;
+	s=default; t=1781399305;
+	bh=TsNkK7u2JlumjN752u1xn5UaPZFVBuNEqBf1maP7QDc=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=u7yONSWR7ejraEtWF29BVQNSqC8JtI1NvVMsbOR7hmTWVbNrh6ALQZfqvc5wTYEVV
-	 7aNFv5KNlCHNlvtau8sOn+L+0NzAbHljvfJ/cCwLA2sgw54PAjXBbDCE9xLremdRJG
-	 P4JRzfyVdHC6FIVdovsNzfhmbW0zwsDHVJ2cWkyK2OO/6FTzucj8/UT7XkXL7nWbtA
-	 1v6kkMfy/imk53fAMiOFvhrmoWx32n2pKuGKmH8Y/JTrPoPPZzxwpnHXFUMlGo0lY7
-	 2A+Qs/eK+XS9CWGIsYLfsQQPBTISFelAp4juS5FDHwAKNyKTIUfAV09iAXV7kLkkl4
-	 9GXt2JK7+wFLWKnflIFVxp5TuPyJ0wLCLNajVsxoP+D1lAeua73Hq5ltp8whH51q0A
-	 youf2re61ulNWjtfTYlxf2p2R2gj7fRPP6oZ2wU8lTKh6C15ruEc7IqpVwF1UfDU5a
-	 hSyWQ5oBze/ducETuCZhmD3Juig0zCpzUgFeW2ONgj74mu0QbNA
+	b=Ish82phYLiU+pemXqYNcO1W3bwbDIJOx7bqWzyISu+6qFXlEQ1FlOHy8aUUlSRzfS
+	 /XCwVr5Z4cXbYbSFF/1Ankg6skSrZ7g9cG2PqdpAeS03WF3E10Oyw/0lA13QU0qK1P
+	 d/1YOWA37HqfDu0zMMAWnk+MhuQksQqSQLCPLbU6Iw9pmj6tZRgoIFz71DF5TURJA/
+	 Ar6V3M4Bk1mtUa3AxK+A+j258RiigXCOjG4ZhRNJGkdW66h4I6ahxAZLXX2kPWBKfc
+	 4vmUMHIVPqatDsFQZwNXd9QJIES3q3NyfmA8UK5k2hjmUwL4efMuxyutmxdvx+211y
+	 WbaV3JEs2XYaWR/9VYQ0q8fiU4s8qyCv0eGzfer/bR3JZqH5OeNYO9UyrluEW76Z3w
+	 hHpv8Dpege2XKakoWZO4u8JMmAX/rDS4UfX1M+m5BqUK5TjaBeb+5g88qCqq3uZeIL
+	 q04WnQ+JmUvwO4ummFrV3rGh9k5Yy7d2Fa5vXhm6kRUGZiLXeZT
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:3c09:7eb3:49a1:129f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2D8272018E;
-	Sat, 13 Jun 2026 21:53:35 +0000 (UTC)
-Date: Sat, 13 Jun 2026 21:53:33 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9E315200AF;
+	Sun, 14 Jun 2026 01:08:25 +0000 (UTC)
+Date: Sun, 14 Jun 2026 01:08:24 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jamison Phillips <JamisonCPhillips@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC/PATCH] Suggestion: Safe Hook Verification for
- Unzipped/Local Repositories
-Message-ID: <ai3RXeTeTNmFfUuL@fruit.crustytoothpaste.net>
+To: Hadrien Loge <hadrien.loge@gmail.com>
+Cc: gitster@pobox.com, git@vger.kernel.org, gitgitgadget@gmail.com,
+	hadean-eon-dev@proton.me, m@lfurio.us
+Subject: Re: [PATCH] clone: accept DEPTH env var as fallback for --depth
+Message-ID: <ai3_CEstWqtw51MF@fruit.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jamison Phillips <JamisonCPhillips@gmail.com>, git@vger.kernel.org
-References: <CA+pATbgyg3Wqg7NnScPx3hUmo8nG23EFx2QUXuVAd3nJ6Z_CPw@mail.gmail.com>
+	Hadrien Loge <hadrien.loge@gmail.com>, gitster@pobox.com,
+	git@vger.kernel.org, gitgitgadget@gmail.com,
+	hadean-eon-dev@proton.me, m@lfurio.us
+References: <CADeHOfw6kNstNFucG7an6+Mbm2+=-PnOH8xtZkO9RK8=eWsx=w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,107 +56,80 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oDXAv4YmWMtiCJLl"
+	protocol="application/pgp-signature"; boundary="2ccN4DHryjpEdtsU"
 Content-Disposition: inline
-In-Reply-To: <CA+pATbgyg3Wqg7NnScPx3hUmo8nG23EFx2QUXuVAd3nJ6Z_CPw@mail.gmail.com>
+In-Reply-To: <CADeHOfw6kNstNFucG7an6+Mbm2+=-PnOH8xtZkO9RK8=eWsx=w@mail.gmail.com>
 User-Agent: Mutt/2.3.2 (2026-04-26)
 
 
---oDXAv4YmWMtiCJLl
+--2ccN4DHryjpEdtsU
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2026-06-13 at 21:20:43, Jamison Phillips wrote:
-> Hello Git Community,
+On 2026-06-13 at 17:43:23, Hadrien Loge wrote:
+> Well mainly I'm asking this for packaging (Arch/Alpine/Etc)
+> These all follow similar conventions (PKGBUILD/APKBUILD).
 
-Hey,
+Debian builds packages without network access because they want to make
+sure that every piece of the source is in the source package, that every
+package is reproducibly built, and that users can rebuild source
+packages if they like without worrying about needing network access or
+having their location exposed to the author.
 
-> THE PROBLEM:
-> When a user clones a repository, Git safely excludes the '.git/hooks'
-> directory. However, if a developer downloads a project as a ZIP
-> archive from an untrusted third party and extracts it, the archive can
-> contain a fully formed '.git/hooks' directory populated with
-> malicious, executable scripts.
+Wouldn't that be the right decision for reproducibility and privacy
+reasons?  If so, then the download of the source would happen before
+building and could be tailored to meet your needs with the existing
+command-line option.
+
+> But in nested flows the ENV var seems like the proper solution.
 >=20
-> The moment the developer runs a standard command like 'git checkout'
-> or 'git status' inside this unzipped folder, the hooks execute
-> immediately without user consent or awareness. This is an active
-> vector for supply-chain malware insertion on developer workstations.
-
-Git's security model does not allow working with untrusted working
-trees, period.  The only things we guarantee are safe to do with an
-untrusted repository are clone and fetch from it.
-
-I'll also note that there are a variety of other methods that one can
-use to execute arbitrary code with an untrusted working tree due to
-unsafe configuration options.  For example, one can set
-`filter.<driver>.clean` and `filter.<driver>.smudge` and execute
-arbitrary code with a crafted repository.  This is why we don't let
-people include config (or hooks) as part of the repository.
-
-My concern is that we'd be misleading people that this was a safe way to
-work by adopting your proposal when that is not true.  We would then be
-deluged by a whole host of invalid security reports.
-
-Would you like to maybe share a little bit about why you (or others) are
-distributing repositories as ZIP files instead of using the standard
-protocol methods?  Perhaps we can offer some thoughtful comments about
-how to achieve the intended goals with a better security posture.
-
-> PROPOSED FEATURE:
-> I suggest implementing a "Safe Hook Verification" mechanism with the
-> following logic:
+> Mainly I gave this example on github:
 >=20
-> 1. First-Time Intercept: If Git detects executable scripts inside
-> '.git/hooks' on a repository that does not have an explicit local
-> clearance, it should halt execution and prompt the user: "Warning:
-> This repository contains local hooks that have not been approved. Run
-> them? (y/N)".
+>     git clone --depth 1 url dest
+>     cd dest
+>     bash run.sh
+>     here run.sh has its own clone deps (perhaps even multiple)
+>     --depth 1 is now lost
+>=20
+> And only ENV vars that I can think of properly propagate for CI
+> flows/clean chroot envirs.
+> Thank you for considering the solution. It would be very useful
+> for speeding up packaging.
+> Even on 5k commits history it's 900kb vs 17mb.
+>=20
+> I have also reworked the commit to include tests/docs.
+> and rename to GIT_CLONE_DEPTH
 
-How would this work in a non-interactive situation?  If I install Git
-LFS, it installs hooks when its filter process is installed for the
-first time.  So if I then clone a repository using Git LFS in a CI job
-or a container build process, the hooks won't work and my repository may
-end up broken.
+So say someone has this set in their environment and then they run a
+script that clones a repository and runs `git describe`.  That no longer
+works and the script fails because it assumed that it had history.
 
-Note that the Unix philosophy does not have tools prompt users by
-default.  If I say `rm -fr ~`, then my home directory gets blown away
-because that is what I asked for, even if that may have been improvident
-and imprudent; no prompt is expected.
+It's also a problem if you then do a fetch into the shallow repository
+because shallow fetches are _extremely_ expensive to serve (more
+expensive than full clones), so having automation that now runs
+thousands of these shallow fetches means that your requests will be
+throttled by the server operator whereas they wouldn't with a regular
+fetch.
 
-> 2. Out-of-Directory Verification State: If the user approves ('y'),
-> Git should log this approval by saving a unique cryptographic hash of
-> the approved hooks to a global state directory outside of the
-> repository's working tree (e.g., inside
-> ~/.config/git/approved_hooks/).
-
-This is almost certainly going to grow indefinitely.  I've been copying
-my entire home directory from machine to machine as I get a new one for
-19 years and I fully imagine that this would have grown quite a bit in
-that time.
-
-Another thing I think is worth noting is that just because I think a
-hook is safe in one context does not mean I think it's safe in another.
-A post-checkout hook that runs a particular command (say, `bin/setup`)
-=66rom the repository might be safe on my dotfiles (which I exclusively
-control and maintain), but an identical hook on a repository from Bob's
-Malware Emporium would probably not be a good idea.  Reusing safe code
-to do unsafe things has long been a favourite approach of attackers.
+There's no one right solution here and while I am sympathetic to your
+situation, it will also result in hard-to-reproduce breakage for other
+tooling.  People rely on `git clone` and similar commands only honouring
+command line arguments.
 --=20
 brian m. carlson (they/them)
 Toronto, Ontario, CA
 
---oDXAv4YmWMtiCJLl
+--2ccN4DHryjpEdtsU
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-wr0EABYKAG8Fgmot0V0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZymB7+7kp9+dJCzl0YJ/QgdZ9/XkY27RBfQeubgPkwb4
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAPA8AP9I5lzqFK8iHlaiBaiDmZf66GY1
-TH+K0OPC6ZCqGo3oTAD7B1r+DOEWMoT3+Wumeir9rR8J5DAqVL4QR/HWOPC/hgc=
-=3zMU
+wr0EABYKAG8Fgmot/wcJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ8KmdlEQcjZxGhOQZVNclMrhIaZ+oUK7rroKgPtWUYgU
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAN5DAP0TrhP5QpqkuJgZ1WufveeME5kb
+se+A1M2ujjlxkVrgswD/cRqntQ3y452vT62AySfbIJjplWH7WReWu9XxTrSMcQc=
+=AGhJ
 -----END PGP SIGNATURE-----
 
---oDXAv4YmWMtiCJLl--
+--2ccN4DHryjpEdtsU--
