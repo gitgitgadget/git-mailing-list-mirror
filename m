@@ -1,156 +1,121 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6C91E8320
-	for <git@vger.kernel.org>; Sun, 14 Jun 2026 03:16:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781406999; cv=pass; b=O6Y8e5FHnZQ8q6p8ZyLtO/Q0w6jAiO1NSGNjAa6ZqS1WqhFiFfRE+e7ZS/q9fqIoAJ7695cwnUArnweybIPfwYXDW5LikAw3xxbe1U0brGrxbl7siYOis5KxgSEMIbnyybkOhwM/jUKV094/TLxeeP8TArInHaebAet9bhFe0bY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781406999; c=relaxed/simple;
-	bh=lvf20+YYBz0kS3gUbLtEDseAzrgmBeHwET5rLB7IPnU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i0KVeRqQjSzNUUxIzcikYnRCuU+HXJLkUTN205Q8lreuQ73TZ/auunNE138NNKOSzDRbgqH7QRHhmLwW/neLCc1H0zZ0O+Vo1ZwRTAo3s+u+Trqd6xiPqQEcSyJOZlH131KFG4bcrUIwYTTZXIeoKTW2lQiEDNiSBSYX0ApUczc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XXPaEYX1; arc=pass smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43DB23ABA8
+	for <git@vger.kernel.org>; Sun, 14 Jun 2026 04:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781409939; cv=none; b=crVQtKtlEoXYqpWIozY1/KC9272TvtmZLIC/YC8gBQQQKeBs6CkbeNVy7PngwQcKeVNEU7oKVy5ZdVXltokKk6FB22Lk7k2JABTRGWRJc+CeTMxzHmwrwsUdndZLlcybyKdOKgEzGyU5iBoLfOUWI0NLHPIzrrZGtC3ie3hH/Tg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781409939; c=relaxed/simple;
+	bh=8E9Cw4y2rfLkgMX0RoBg+pkuP5Rn7w9RruCNQQrc0kY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LUajQg787DngMGUSqMcbbfhlPrEMVHhx2LxFWIjs4c1IJiOUaS1cekh9UmPJim498dl1yb06bCkkm0u9nVj6N6rMGvmalASBtlaVq/2tBTD2KXtSLU1fPn/qqazOaiAqJmRlK6kv5D/ofvC1wQv5Qi6ErbtDOMYzlRIaebxydfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dGZ0cUt0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S0zELVzQ; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XXPaEYX1"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-48650c78e09so767969b6e.2
-        for <git@vger.kernel.org>; Sat, 13 Jun 2026 20:16:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781406996; cv=none;
-        d=google.com; s=arc-20240605;
-        b=LhFFvcTlTUoojdAM+1yfHNgY2qZKYKVhj+ClsrzReSzu7sRtEWgYOuun3QMQVmwB1B
-         nJRojDwEvSj/wf6/Esa2OoamVRPLezOjFjZ+YmfJcwSgfJujH6JhLKzx1G1SXXsiIgjp
-         KG13kSu7gjfi/GF7Eoj/3DpbH23fDu+xfp/3nMixbvCPS+JqDyp1RCFZYXBWDFqWDwrK
-         rm575t43NUumlfHXpC12dxEfQJ6A6OktfMkEQm3J/2GRdqHKxe1brWfLrC24P2f3ku3x
-         A+8FuQQaJ99/cLwWnHERyp/DWvZ4fv/p/UA+vnL1tmQ7bK8VxVytK/blECg7kWnrlALr
-         O/RA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bVoouD5bvOfKnDyA8OZ9M454R6z/DzHUTMu0bjtICYs=;
-        fh=S42HY7KEnfWP6+r5LiikF40sPvIRq3Rk8/bcpy/oTvw=;
-        b=b0+HQmuEQe0atO12IUIfIvV4ZI7MVYRyGEIY3xhdR4kvzE3264eZ0gYNhi53DKnb6C
-         /kSZVuOYv63r/HFAFzExawWRS1iDRjKj+w8WZujKHGnYviIsUraO9bY3zQzYOK9og54Q
-         OMin7tUmD6lBEHVFhIR13U88Cbeu6hY8FaodDppUlBcPcbqRidmwqpznABtI46qkfi4p
-         ZZEei4fYSgEqlwdE3+t1XdhvxGMsJsHP/Vyr2x2VmFlWsrePswtYzafaGefp9PEgSHZx
-         0wn4W+ZEX5dvkianXYsH3obY2ZWH2QO0AwTJASmHz8dx4TbaGVHzRiNe8sWuum0vx3xT
-         Npag==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781406996; x=1782011796; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bVoouD5bvOfKnDyA8OZ9M454R6z/DzHUTMu0bjtICYs=;
-        b=XXPaEYX11JZYb0p5sRIUnunnEGiUXLUP/yPFB+y6LHWOYFewe26RcYQH18loKdP9Cg
-         22tUkLBxSsmmUrXZ0pWcSE2T+edeWGXNikVK3ruF+iCWO9MrHXKopStv1prLhKOg06w7
-         gM3AjjkWen0Wlpovim82kJJPetsdNpL3USwPJoY8xq7jk2C/th6a+7QgQFG+/lG2tDZq
-         EXNCwmZKRVwYc4rZf0fpA/LCevW+aE1ir8O730FruwJXSKMJF04fvcVhM7Iu9zl5bz5Q
-         RWzku2esZ7M4Gat4tKJJODJCpwOdLbh3Wx6k3aayrgpi/vAGDyDg+9k1419p+GEiu903
-         JUUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781406996; x=1782011796;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bVoouD5bvOfKnDyA8OZ9M454R6z/DzHUTMu0bjtICYs=;
-        b=XHGZ4PL0Zzzjk7wzrm0O/6gYTHWzSGHdcmWcDbWpqqDL4S7nrQZaQJCem5CwjLoDIG
-         7QFSiutB5F2FdQIU6l3j30EuqU7BJu5ABQV4E1Ma6rT9nlZ3gnu6XjOX+KcGhUhc85Yz
-         6rk71VSrUqVueIguN1ry61YJtKZbL+8WzP4M+/R8LbUMR/g5PqgmFdkvJmj5nuI3AAQC
-         QWgijMAfh84EE6yVANhGVcnVe1U5MMfgFC6fs1xR540XtTMvD3qXZqQPkKOU1C8gdthd
-         FcmAEdB+BP0zcaF1KyPxcEiKQAynfobtJ1mT9tmkZZue3pQgJPSI2ceCoPXlibfO7GdJ
-         U+7g==
-X-Forwarded-Encrypted: i=1; AFNElJ+V+BUh66QQqDl9kLrNxuS7iqs1wuPqZWUFyHEaj9W0C4CWiWXlKLH/h/3cWOlFWzi1yoY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywx+TebV89i1Xe9jkoIYofcgLTBvPoaBDwVobDAPTX2bBNak15W
-	BUEjadR4bmMbX4I2AagKbYNwxtiDc1CpG0QMZA22UC7kp3QAdHQMvFYgbR7psAY7dO8CDO4Hxeb
-	/rYN0JAem8Jly2asDfoJo7RRNjZbbOpeBEw==
-X-Gm-Gg: Acq92OGcy8rlAmKhRYVIDrGHHpZN+54+dESbVCIeASrxXYFJE+sd+hHbsPIgb2wyaqc
-	NmLTWEfL67sp0tksQaMT/bIjeSqBTVWlSdpspNNS9UbQy8bWHir/7hK0a0z8xb2BN7bgfyvmOMG
-	SWZq+U8UC/9PD7LFOACR1Y+P3XRY1LGNiu6SIMc/g/O0236icmRpMEJhpDRwSh6V18+nwmbBQjr
-	SOh1CVmZNudNVY9LMbrQr8s2fPLAIuyKXjQcUEKRCHaPIHMBe671YKMqxGWHGRPn39ZyDAg0Krb
-	w/86tG1txH4ru2TS6t/BMzp2tZgn/5kfOtNMnZGtDFODyfV7II6gj3xtcLc2utba1rR8z1a5mHE
-	FZaHZalKstX/qTsXEd+9uS7jmbA==
-X-Received: by 2002:a05:6808:300f:b0:487:5f5e:71b9 with SMTP id
- 5614622812f47-4875f5e82ccmr588895b6e.10.1781406996435; Sat, 13 Jun 2026
- 20:16:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dGZ0cUt0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S0zELVzQ"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 931041D000E6;
+	Sun, 14 Jun 2026 00:05:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sun, 14 Jun 2026 00:05:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781409936; x=1781496336; bh=eGHL5i26GV
+	lFubH1whaxdkbOhh4AwHAnen4GiFVlwKE=; b=dGZ0cUt0AiMcnmd3tvpSvYuQ6i
+	1S9aEy11bneEKXjgB4c7Z1Hzh6BrkEG7tFmMni4CdeUAKbIddI5RUKk6w+wlmksO
+	PwMm0P0aZHUwiV93BcyiDYB6alQ6Cv3Zl1vA7UcrzmZ1cfla03e70kFl7VSayDm+
+	TE2rmZHwnQ/rarTVP334JVzMF6XQZaSawRheydsRttkpGm8mnnMsW4/mJUx++Gjt
+	1wIPd0iQlgVRDl9UJndfblXg4bvs9tWERpjQ3Y0bjDBogjSHnKKKmepkbsK7fpir
+	xYjgchEuNwrkyOErOYhP9n7HLURPZs4Z5cv2N/fh/CFw2aHSlObGaXb13Z/Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781409936; x=1781496336; bh=eGHL5i26GVlFubH1whaxdkbOhh4AwHAnen4
+	GiFVlwKE=; b=S0zELVzQ5V6jOPARl/TihNs/A16cXK50Tf3/nHpH9KlKF1gAZ8k
+	S3DeQqGPFeaM5ZWwQRW+7p4W07LCet7PiR0uPijAuFs+nh8WKDV9jkn6Vg0yRU6c
+	cLI8UrDynJsIJQaSf6vFELuUrxkDi6SE+/6+enhNAf630SvXSTHHTIjC/MbgpXj/
+	jR6LUOXQl3J4rLJiu86eh5YfrkkjrBFsGJ17X8dnu4uADMrfLJK790wPN8VjPXps
+	2j0dycscOq8zpwDNBCZ9cGRqegKdZSuJ8tsZzai+jMq0Gij2qFhOfke51FbELxo8
+	qyebVWOs30x2dV7sJmRZY6oupuD0hMZ/D4w==
+X-ME-Sender: <xms:jyguapsL7jjdjB10IiTKGBeSrco8TT2TnTEH5Ls7jFKVkP64CUMBCA>
+    <xme:jyguan_JNn97ixpCfTsAU33tsn2cVXPEG-VZk3vvVTcWz7wxKryTtncaeJgauqyfp
+    wUD1gkRVpReyj6ZlM_lEtp5trNjnxReBJADcs_6YZOSIatW6YCwvg>
+X-ME-Received: <xmr:jyguar22bnH544oxLzj_VPb-i6TsbKXPuVzxRXBLKOaSyafkovfZNxtoso4mkOGPfQxaiC-hM7JsIUbHNLhSWezSaj9abh36WWLk>
+X-ME-Proxy-Cause: dmFkZTG04dpUvYIYUnge6DT9xfJM9TGOq/oNquFEAyIbEpCOLN7KYLr4TgLQNzDm/f0E1U
+    9MWMP19oWbPzOJzCCX2ql7OMDTNDUrZzIGpmC8zrI6xO1Fdzmz0CmgFf2zQoqwhXPheIiw
+    3IoaoPZKEfLcM8tf0uPA8O3WHt9O8OxhiBqjDds1zcNkOoDAHN6wbqPiuvEVtC30k7QL1w
+    bER8DEZ3ydP7xLqZ7NA0zxJMyXaTrhfOckEJB8dVOsxQz2Y+xKuPJeZ9lYk9oIad2o9k8R
+    ufgcPAXovEbAL8iSZiH0Qd4xwfYFZwntEZH0JRX/z4ygbqSuoQG0/2johjoSl9W5BxUgnf
+    3uBBoejAyBVEh3I9v7PJ4+w8KfAbcmgYiNMMrUo+dsiqyz7xln08GTQbM3MWX6+dnkgZNA
+    JYDNLmEJnkOUW75NaDyco96NYKn8jZCXJ9VyE76rFrb4uBYCEzC7goHFbWptZvln66hNJ1
+    CexgzU4YMQD4K7qIzkkSG1t7/h2Vl0UPGK+NG3FT2ba6Q99sqd1MKwMcP0unuEwLr49k47
+    6bBFEMOVbJds9mKhfG8qmMAYH+dS0r4KtcTDBnH7ItQGGhAtxsyI41NygLFG72dXncbYjF
+    cdBWJq2f8ee8dTG0OIs5f5hvhGBD+c/hAgWuAsXFllB7sok77tlKj/AMeoZQ
+X-ME-Proxy: <xmx:jyguakiqJupY-zZeL3MnNp94z9xqRa1dTWTw0QherRW7r7mkfQI2Yw>
+    <xmx:jyguajavPSxrq1mJMVQOEe9Pv8eIOCPO15nZa_BP_jHzWtFY7-Y-fg>
+    <xmx:jyguaoU_Zhihs8O3nTCglzjfRZXmoCr4VCYxccCCn4fyyFUZ4kKH7w>
+    <xmx:jyguajEppIoG4IyP7zk3nNlBGD-cyRy65oWC6MZiUS5mSApKuP7R0A>
+    <xmx:kCgualBP45UedEhp-6-XhLZJKonZh3SBTJ8g5ccR9GjCZPxpuCAHKOR5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 14 Jun 2026 00:05:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  ayu.chandekar@gmail.com,
+  chandrapratap3519@gmail.com,  christian.couder@gmail.com,
+  jltobler@gmail.com,  karthik.188@gmail.com,  peff@peff.net,
+  phillip.wood@dunelm.org.uk,  siddharthasthana31@gmail.com
+Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
+In-Reply-To: <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
+	(Pablo Sabater's message of "Sat, 13 Jun 2026 21:09:16 +0200")
+References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+	<20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+	<20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
+Date: Sat, 13 Jun 2026 21:05:33 -0700
+Message-ID: <xmqqo6hdepgy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2096.git.1776731171.gitgitgadget@gmail.com>
- <282f906d1b4767d95e2a66072c280c2294a93a9f.1776731171.git.gitgitgadget@gmail.com>
- <xmqq33z65ui1.fsf@gitster.g>
-In-Reply-To: <xmqq33z65ui1.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 13 Jun 2026 20:16:23 -0700
-X-Gm-Features: AVVi8Cd8K9pucw1Ex2akeBPvz-TSDHeERtHoBev-PHDJtRqtPXu45D1__ImeyTI
-Message-ID: <CABPp-BEGvmes=mH=XKf0YYRLB-S2bAd_LB4hqaQOxp9xBCF3Bw@mail.gmail.com>
-Subject: Re: [PATCH 1/5] merge-ort: propagate callback errors from traverse_trees_wrapper()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Sorry for the late reply...
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-On Mon, Jun 1, 2026 at 5:13=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > traverse_trees_wrapper() saves entries from a first pass through
-> > traverse_trees() and then replays them through the real callback
-> > (collect_merge_info_callback).  However, the replay loop silently
-> > discards the callback return value.  This means any error reported by
-> > the callback during replay -- including a future check for malformed
-> > trees -- would be ignored, allowing the merge to proceed with corrupt
-> > state.
-> >
-> > Capture the return value, stop the loop on negative (error) returns,
-> > and propagate the error to the caller.  Note that the callback returns
-> > a positive mask value on success, so we normalize non-negative returns
-> > to 0 for the caller.
->
-> All makes perfect sense.
->
-> How would the externally visible behaviour change at this step?
+[jc: Taylor CC'ed for his expertise and opinion on the quoted part
+that mucks with commit-graph files during the test]
 
-There's almost no change at this point.  There is only one callpath
-that can result in a negative return value, from near the top of
-traverse_trees():
-    if (traverse_trees_cur_depth > r->settings.max_allowed_tree_depth)
-        return error("exceeded maximum allowed tree depth");
-All other paths return non-negative values currently, so this patch is
-mostly preparatory for later patches in this series.
+> diff --git a/t/t4218-log-graph-indentation.sh b/t/t4218-log-graph-indentation.sh
+> new file mode 100755
+> index 0000000000..ccf15c0a52
+> --- /dev/null
+> +++ b/t/t4218-log-graph-indentation.sh
+> @@ -0,0 +1,467 @@
+> +#!/bin/sh
+> ...
+> +# disable commit-graph topo order to have the graph to render in different
+> +# ways (used in --first-parent tests to have multiple visual roots while a
+> +# column is active at the same time).
+> +unset_commit_graph() {
+> +	sane_unset GIT_TEST_COMMIT_GRAPH &&
+> +	rm -f .git/objects/info/commit-graph &&
+> +	rm -rf .git/objects/info/commit-graphs
+> +}
 
-> Upon an error from the callback, we used to keep going and processed
-> other callback data in the renames structure.  We now leave the rest
-> unprocessed.
->
-> The caller of this helper would never have seen a failure, but now
-> they will.  Both callers, collect_merge_info_callback() and
-> handle_deferred_entries(), are reacting to a negative "error" return
-> well (perhaps because they sometimes call traverse_trees() in the
-> same control flow, which does return an error already), so
-> presumably there is no downside caused by aborting the innermost
-> process upon the first error return.
+I do not quite understand why having commit-graph makes the test
+result unpredictable here, but wouldn't we have a more stable way
+to disable use of commit-graph than going into filesystem and muck
+with the implementation detail like the above?  
 
-I'd state it a bit differently: not only is there no downwise to
-aborting upon the first error, there IS a clear downside from ignoring
-the errors and attempting to proceed anyway.  This code wasn't a
-deferred error kind of thing; it was an ignored error.  For the
-maximum allowed tree depth issue, we'd just prune the trees below that
-depth and pretend that was the correct merge.  And our lack of
-detecting duplicate tree entries essentially means that we have a
-"last one wins" (are we sure that's really the correct rule?) with the
-added wrinkle that the first one can toggle various state flags that
-can further tweak the merge and maybe even trip some assertions.
+Thanks.
 
-I'll add some of this info to the commit message.
+
