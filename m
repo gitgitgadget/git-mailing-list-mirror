@@ -1,173 +1,160 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC593AE19F
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 19:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DFE30E858
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 20:47:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781551552; cv=pass; b=qoH+HkjF9x/FeS75Wev4te4bRUrjqjpWPzIoH1xg/WbWqyawKPCJjycvjR/3kv040JQq21pRqCrxlv8/L2P2ylpH9CJ2en3afi9jhmijWYvrReOALtmQzEDym147l82//K6YlCW5PlVJUa3bDzx7lSoAQ7ZdK04hK0lsHkfYLnU=
+	t=1781556474; cv=pass; b=TpbjwZfQ4Fez5nhiUVK6qRLmafuzyW8ggvsD2maeurjQNkILhvrjMsrp9rBv0loTPwyH4i3J/4tYa1pKokyiSLdkgt/YKZi+o9Rj036Au9YuuKlsJwYzaFrT1BU4/2fq9JsEtmEDNfOsv1M6M4C/JAQvAnwQ3LVWj0PZCRbmhRg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781551552; c=relaxed/simple;
-	bh=MktWjYQzLNM/6sWjBvwB8y35JVAD9j4qQbnCM4pglpY=;
+	s=arc-20240116; t=1781556474; c=relaxed/simple;
+	bh=o/UGZa20pOnsOYkg+HO9uyYyPKxGYKpxY1WQXmdkBBw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HeDfZUVnwsWmiAUQDTVGVw9pnIOYDYyWgQlCAXb5GqHO5OMvJX+/++vn3a562yW+kBmc6eF4UN1rsSUEIojH0RVGjXoIMt0uX4UbF3nnqH/IPgXPXCMCyTZPOxElio7F/qTlGz26OOgASAol3tn7T2Je/NgYrU01e4E35E1+eSI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cvtg2Ces; arc=pass smtp.client-ip=209.85.218.47
+	 To:Cc:Content-Type; b=M34exSghU5VxNyt7SxRwcMPuB/N7EaRrm5pncoLQ6FOR2NZg8FbkIvITMsf2XFpo0RjQ22K9QAa+kgysOC01q0/+1Z1yQ6Pxg77ReaKuc4whufqG5oRutLu51TacsFRe9uUqEw5QQGFAEbGUHPe6JxA2QPYOPxNMeiznGDt0gOI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hq/gm+Gb; arc=pass smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cvtg2Ces"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-bef47b1ac01so522425466b.2
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:25:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781551550; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hq/gm+Gb"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5aa5ce4904eso3684881e87.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:47:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781556471; cv=none;
         d=google.com; s=arc-20240605;
-        b=HnTr9aXwq0hEXwYix7qmT7Cdf9rhZHRmkyHFW3les6gsY1YBkgIKpHoJipBkGKUSG2
-         IT6YkacFgY+ZBst1tAyXiZeMCod8f70thipAdf4qC9kX1lIb90nBGvJ+k6eA14ut0H18
-         4vcAFS1vCK68VKX0gIbaQaVqRQB2t7L2HcGun/p5xHPLZBQJzoo30BgFH93srqK+VupL
-         KwW5mjww4aFqAkrh35jU2V9n0dfE1i5BpfipYpiLAujc3z8OcSb0KLKZt+vcBGiEokiw
-         qw/JXDWl396NpV4IKqsmG+xa7WQolvSuW7jzgALxRhjOiagFEchXZF7nNjYKsiUd88P0
-         Lu0Q==
+        b=kNhq61ywheHVTgq3kmtQBvjUmW5HpcJaiDTJ/B2PJtfQrp1vJ4SXNqyMd/IPKRvIRx
+         3eKzhLgY+/J8+uikCXuWGgTDvxy7NC2PhsLeiSUdXK8zM8iEIX9TY0ncsTJORjKZDSNj
+         67R5X8pf2ioy71wWhS6HPffN5saj+j31Ui8/oTCvbWgXsGwK/4vCb+QNywlxqYRWwlgr
+         kAyzan1RprFKkrBu0oYiPVlc7Bs4cqqW+Xa/WdfGuIv7CEd3AQpkfOSxPrItllUIOStb
+         5H6p2iTp4fgrgaQg94opDdxhpEtDA/hTzwKI0eBfKGH5B/XWgj21k27B0m5EbK72IiKT
+         eL1A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=EKh6kkfNtTyhS+qZknPzSPB1ZJmvUOMYiE4yX7iQcog=;
-        fh=4taht92dzazhQDOjq8CsAaKR4Bsqe7vCuOP5jjEO90Y=;
-        b=BA70MV3GT+6tlPkVnv67SxENdJZTDIS4xq+dXA07KNUjMOhLTgqoMM7nMDAtU67d5u
-         TaRpk5G6jwT4Yc5AvZqBESGz6xjKeGHx65PtEvzMsS8LZSprPsRGEoPuC0GmikLo/rEX
-         76yM/MzCMN2naU3tBgjtG1Yxp/rrmnWZ0XjoguxWTCd2GvCwk3OvKz/7Q46xhJ4gtLO5
-         4HsNUlGiL9S7dipkdxdXsQSxReXLAcgH9bIUt4pJXsBVVIPh8LXizVJiHflOKDdOoiTL
-         T0ZPPDszCkGV1gKL2U4rv9K8aNCualUKX29xOLQJyIKTzfXJyO6/VyPSqvFM0QuNdGc4
-         7IBQ==;
+        bh=Or7w2SlWNBP4/6FkbOu0n5CPwivgdu9XsfNQ4H1sIU8=;
+        fh=RD/vUOVMoT1UUKxjcxCpxkPLYvwUpf2EQL3VSfmX2rY=;
+        b=i3cChVUwwj1rOFyxEpmHE/xdd/ycu6Vgf7OUrrY2dPcIke/qlN7mjeZZVp1vtrtF+3
+         Cj1vyKdYfZrwZSGfUnpg8oUDZ2DNwEMBxJTcUzuQ7By8SxhmpnUrBXlW2QdZOFCpInrn
+         mIKQAQBaSNY7QQdLpH/es4Ut3vnybQqwV3j0rZohRrimAM/QXD5UTAnl9An5ju9AS+zg
+         qB7JXaLlSFDJkt1XMD8bGpVHCnvuDmM0GWShxl4RT6U7xVOqyFzVh6SGNn/RzJxHFQu+
+         DwXKLM4ZNJKVdSTS6i/r+WT1Bb/vC8448dHMTcSOS8po/Yfu/StucXaafymqvN2aj+mq
+         JDPQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781551550; x=1782156350; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781556471; x=1782161271; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EKh6kkfNtTyhS+qZknPzSPB1ZJmvUOMYiE4yX7iQcog=;
-        b=cvtg2CesQg1Nj05JlzzDea27ghuHGfZsaDYG1jVYHI75VBAF73bIEMyhI+mjN0W6b0
-         zBivRg7i+2LqvHep4z1YYR7WFtUE+VzJvSBCCx+wdF4VhJhjiAXvZ42cSSxagMOJpcJ/
-         PHZmQ9C6NeVWMfFayJ/hYBIeA9zhrnYlvxHB7i8w4kcimILx2kVkbCII6IHCpiPd/REM
-         3MYEE7J2oByuoYHrSdF2IpHHhumbZHUvcwu2QESfLar3865RQ8IGNlAuofDLJvTW1VJ4
-         moQwRn81QjWY4kIc+8U3ms6nrLpk4bkApUxN1e4yIQ9b0+rbhiLeDPpWlk6SWTJhaYvn
-         L1gA==
+        bh=Or7w2SlWNBP4/6FkbOu0n5CPwivgdu9XsfNQ4H1sIU8=;
+        b=Hq/gm+Gbu26GaVo+LM2MZ763aBkRTrQOKuhlzQ8iV+ACXgpg/znwY6Mbvx2Q6n+Bio
+         Dph9ImqEnd93qz1z/7m0TiVVkh2fFzE3/j1PmJWsZVYZdiTxCdcDtmp7fr847zKaf0ON
+         64n45YCyQpfNFqrKKvc8h3kDd9OMY3GDnW0yzCawpqCEJvFAnxEH+cLgA1T5pQkjnGo+
+         hCUUX1p7AyxUdVTSoHcNxylGrSnTBaqx0E/a43EBFi+mOmlmirrsRdb7PUi6P7wRVXds
+         VJemi0v3ZhzRovz9U/NlseflJhXMfWUs72iVRDhmOqYvymtti1ZRgIiq8KVJHp2bFl6S
+         ZRjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781551550; x=1782156350;
+        d=1e100.net; s=20251104; t=1781556471; x=1782161271;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=EKh6kkfNtTyhS+qZknPzSPB1ZJmvUOMYiE4yX7iQcog=;
-        b=F4F8QRMIBOnlgZw8cPgJ0JYZ+QycAVuFf8pVKWov7VMvi3Xa2LwI+WmB1PnAD49ePZ
-         HNYlJRbX3mQePwNgldQfBDYk3/e8EEzaArK/f0f3QLV5ApsZp8lTfsQ9WXnZBnLZCgDZ
-         WlfeRUNKFOxxYYV7rurGXxzZOyxxMdoJLI5OY+4T792pVhfqoJWWdEqugGAl//WLTsyn
-         j/w1FUIkkTNYGfrvvd65Y1wfgYyN4d4A4q5J95m96JrWwZC2UIs3YLqH5ucj4SMkqsjB
-         +ZyZBgbh+5JVHnFLKHeoA1eVfVX7dxvkHbgwxY3AMIBhZHo1a5tfjHO6hUr40nRdwKfY
-         wFdw==
-X-Gm-Message-State: AOJu0YzkSyQMrLjQvD2Pm896IIIp7Bg03Mh8VFeR41aLcSQKhzFgVqgG
-	qsA2qLLJ8MCV6zHRwbv0K02PhiW+Zif4mJ3SPduLSUsSyZkA8xYFlDlbECohtGs/k8NgHoWwFUt
-	ywTrWjdDlwiHvIT+inN2QT11iJRc719r+xV0s
-X-Gm-Gg: Acq92OH6V53t6hswZwc1OMBZvhHNHSWRYE1Dpq63oES3LHeGrLRheBn8uBkSeU5o4s5
-	2oT0Gc0I7XkS2BNwh8AGFfJTnuzT+b5Uoy/VPjYmdJpsBip41N6YG4TVGXkvt3pQHVuM9+rP+f2
-	wkfquU54YxlQnB+aiI0fsXvhtyMB1Nl5Fntz4Dp5CDThIp9YLDYwOGsmXZui67N+LmOKfzyMEax
-	gMQ+J0UebZT9fx9lUvIGBjEU8JDOdkQrKzcBX3pn3rHE5vz6mbw+p9X3HA6sE+H7jQnqhvxlxn5
-	9Y3UxGY=
-X-Received: by 2002:a17:906:8445:b0:bed:19af:f89a with SMTP id
- a640c23a62f3a-c043c700c2amr10213366b.7.1781551549531; Mon, 15 Jun 2026
- 12:25:49 -0700 (PDT)
+        bh=Or7w2SlWNBP4/6FkbOu0n5CPwivgdu9XsfNQ4H1sIU8=;
+        b=FpTtGCoQ/bVJBBsEWkRONk+C8kqlIPr34fK3Aa/Qk94RkBAmWVvULfqjYdbD9JRF+H
+         SLjGopwTNEyF6XA8h44cUUcc85MkipWf7TR/1ewVW382k3GT2NIGJlWWR5NBR3QGpzil
+         H9dTxyB9tdVG247S5jDN2mlFtDNqAJhYoCDOsFJ+cMQQZR2D557ffY6g3e62Aq6o7RIt
+         WiNvwDzTJ5wTZF4V8UClN9tp+CKNKwAjYQu2zVyDZK4LGwV3EkyuTyIFMhY9nKiBI8pn
+         FvbZId9eodWNHLppn7cGxYIEWlxQX1+ziOAjK+9RKz2iRUsjhq0sTuypvdIm1HTJ3hS8
+         QWTg==
+X-Gm-Message-State: AOJu0YyZPaXgZP+LFeOKM/Xfnq0MrcyIh5AN4//i19tpKYO1f91snJgu
+	BdYYknQPvUa8/G9isYBo20umSakz+OuS2/oG067XaYQX6OYshLE0Unxc7a8oQ+SVjY3L7psyOPc
+	XEe6FnaAXUOazj+NwZ/yESVb4skOkOJXcpAii
+X-Gm-Gg: Acq92OEMb6QYof7JM+kXyY0Z82lot+DlbKbiSK3gK8ixh0QQVZb838l3NR6SxvkJjrR
+	7OF/1e8YsmJsXVURRUbWXFMAQjsLW2yjo6kBCl6Adl3L+wkeDcrac+247Blc7FGDm/6/BB6SXDq
+	Y9WDVhXR/iJfORU5JPTf0NwhJL2z62suFEX9TAnsfSgj8So3Ziljq5b50CeXKbxq6KELYDAFu6o
+	Y+vzJQg9/eRpH0dsp+8jRgqXNDeFze4Recq60iM1kYX0Ead1YVXKNGNGo7gyGXnvagTlnUdcv2c
+	45kECnw7XwAVNYppbtVxuQjq2G4ZZIQwY8o3GoakJzX/oP2cVAYL1GsLT7ItNC4+OPrc8DxZFmv
+	r2JE3M/4lX3ABPFNXr8RjsVuN71w3
+X-Received: by 2002:a05:6512:64c4:b0:5aa:8823:e312 with SMTP id
+ 2adb3069b0e04-5ad437531b3mr153639e87.48.1781556470669; Mon, 15 Jun 2026
+ 13:47:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2339.git.git.1781459539.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2339.git.git.1781459539.gitgitgadget@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 15 Jun 2026 21:25:12 +0200
-X-Gm-Features: AVVi8CeFJZlGYpptyPFlBIzM4OeCwFMQgOPfCadAuGUZPtdIXf7ZmvBwNCB-Yd0
-Message-ID: <CAHwyqnVG4LjQ-q1-DD56595Ba2OkOzA3LzHLKT+O+c-SViD8Sw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Silence po catalog output under "make -s"
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
+References: <20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com> <20260612-fix-git-branch-regression-v4-1-f150038c02f4@gmail.com>
+In-Reply-To: <20260612-fix-git-branch-regression-v4-1-f150038c02f4@gmail.com>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Mon, 15 Jun 2026 13:47:14 -0700
+X-Gm-Features: AVVi8Cfs7Qo6u0x6Ux4KpuW2kJ38tEKFCPsQqsYwOkWbEx_mxdmI-LNrbswLXdQ
+Message-ID: <CAJ-ks9=Qa0956vCmE=RyReu4jfdXzjiSO4rRGD9nGbNNrMvOfA@mail.gmail.com>
+Subject: Re: [PATCH v4] ref-filter: restore prefix-scoped iteration
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	Victoria Dye <vdye@github.com>, ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-It's this output that currently is not silent:
-
-$ make -s
-...
-579 translated messages.
-558 translated messages.
-514 translated messages.
-381 translated messages, 4 fuzzy translations, 6 untranslated messages.
-520 translated messages.
-519 translated messages, 1 untranslated message.
-546 translated messages, 1 untranslated message.
-474 translated messages, 39 untranslated messages.
-520 translated messages.
-550 translated messages.
-579 translated messages.
-576 translated messages.
-366 translated messages, 7 fuzzy translations, 17 untranslated messages.
-543 translated messages.
-Generating catalog po/bg.msg
-322 translated messages.
-Generating catalog po/ca.msg
-307 translated messages.
-Generating catalog po/de.msg
-307 translated messages.
-Generating catalog po/es.msg
-184 translated messages, 46 fuzzy translations, 77 untranslated messages.
-Generating catalog po/fr.msg
-311 translated messages.
-Generating catalog po/hu.msg
-277 translated messages, 18 fuzzy translations, 12 untranslated messages.
-Generating catalog po/it.msg
-274 translated messages, 17 fuzzy translations, 16 untranslated messages.
-Generating catalog po/ja.msg
-311 translated messages.
-Generating catalog po/pt_br.msg
-279 translated messages, 16 fuzzy translations, 12 untranslated messages.
-Generating catalog po/pt_pt.msg
-311 translated messages.
-Generating catalog po/ru.msg
-317 translated messages.
-Generating catalog po/sv.msg
-323 translated messages.
-Generating catalog po/ta.msg
-Generating catalog po/vi.msg
-327 translated messages.
-Generating catalog po/zh_cn.msg
-307 translated messages.
-    GEN gitk-wish
-317 translated messages.
-
-
-
-
-On Sun, Jun 14, 2026 at 7:52=E2=80=AFPM Harald Nordgren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Fri, Jun 12, 2026 at 5:27=E2=80=AFPM Tamir Duberstein <tamird@gmail.com>=
+ wrote:
 >
-> The gitk and git-gui catalog rules sent msgfmt --statistics output (and a
-> "Generating catalog" line) to stderr, so it survived "make -s". Emit it o=
-nly
-> when "-s" is absent, keeping a quiet build silent and a verbose build
-> unchanged.
+> dabecb9db2 (for-each-ref: introduce a '--start-after' option,
+> 2025-07-15) changed branch, remote-tracking branch, and tag enumeration
+> from constructing an iterator with the namespace prefix to constructing
+> an unscoped iterator and seeking to the prefix.
 >
-> Harald Nordgren (2):
->   gitk: silence catalog output under "make -s"
->   git-gui: silence statistics under "make -s"
+> Review of --start-after noted that the construction prefix and seek
+> position represent different state and are easy to conflate [1]. It also
+> noted that future branch or tag support would need to retain the
+> namespace prefix while moving the cursor [2].
 >
->  git-gui/Makefile  |  3 ++-
->  gitk-git/Makefile | 10 ++++++++--
->  2 files changed, 10 insertions(+), 3 deletions(-)
+> The files backend constructs its loose-ref iterator with cache priming
+> enabled. cache_ref_iterator_begin() immediately applies the construction
+> prefix through cache_ref_iterator_set_prefix(), reading loose refs
+> beneath it before packed refs are opened. An empty prefix therefore
+> reads every loose ref, and a later seek cannot undo that I/O.
 >
+> For the current single-kind filters, construct the iterator with the
+> namespace prefix when start_after is not set. Leave the existing
+> start_after path unchanged; no current command combines it with these
+> filters, and future support must carry the prefix separately from the
+> cursor.
 >
-> base-commit: ea97ad8d017de0c9037451a78008a0fd60abea0c
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-233=
-9%2FHaraldNordgren%2Fsilence-catalog-output-under-make-s-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2339/H=
-araldNordgren/silence-catalog-output-under-make-s-v1
-> Pull-Request: https://github.com/git/git/pull/2339
-> --
-> gitgitgadget
+> With 10,000 unrelated loose refs in the files backend, the p6300 tests
+> improve as follows:
+>
+>                          before   after
+>   branch                  2.74 s   0.11 s
+>   branch --remotes        2.81 s   0.12 s
+>   tag                     3.01 s   0.11 s
+>
+> [1] https://lore.kernel.org/r/aGZidwwlToWThkn8@pks.im/
+> [2] https://lore.kernel.org/r/xmqqikjq7s16.fsf@gitster.g/
+>
+> Fixes: dabecb9db2b2 ("for-each-ref: introduce a '--start-after' option")
+> Suggested-by: Karthik Nayak <karthik.188@gmail.com>
+> Signed-off-by: Tamir Duberstein <tamird@gmail.com>
+> ---
+> The series is based on a89346e34a (maint) because the regression has
+> been present in released versions since Git 2.51.0.
+> ---
+> Changes in v4:
+> - Explain the historical references in the commit message.
+> - Run the new performance cases with both ref backends.
+> - Drop the Assisted-by trailer.
+> - Link to v3: https://patch.msgid.link/20260610-fix-git-branch-regression=
+-v3-1-6fd48fad7a53@gmail.com
+>
+> Changes in v3:
+> - Construct the iterator directly with the namespace prefix.
+> - Explain when the files backend primes its loose-ref cache.
+> - Condense the commit message and performance results.
+> - Link to v2: https://patch.msgid.link/20260608-fix-git-branch-regression=
+-v2-1-fd82075a8520@gmail.com
+>
+> Changes in v2:
+> - Extract local variable `store`.
+> - Link to v1: https://patch.msgid.link/20260605-fix-git-branch-regression=
+-v1-1-02f40ad40929@gmail.com
+> ---
+
+Hi folks, does this look reasonable?
