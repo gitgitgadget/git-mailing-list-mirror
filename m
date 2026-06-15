@@ -1,113 +1,122 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5A0390205
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 20:57:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781557053; cv=none; b=qKzVrQ8jweCtSKfp/+loITGKQx4DGCRLWDKxkCqd489S45aKVNsFhBdT5ZwGG1I/3OmYqHtyIDRd/mU31P+7ZwTJz5gslGtlY8MxZpeJS4MkW6pCo33J9jSy+pX+Uoj72PnrrTwvb4Z6bpRLVyc3mEA+g8WtMpVzo/m1lN76vmM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781557053; c=relaxed/simple;
-	bh=qNn8r8ah+30gMHOX9ka9JXMhbA4JjMWLnzzclF86qkA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n3O0/OgyAduolml/Q9gX+CTubJYM/3cdlHvsObCJPrjN8Sw02BDpWa8WibjhaF/mfcvssC0VO+ycVqegB92c8oquAKJXj+7HX/R0vbe0OhvqCE6MLcyvyxTS3rUU2VfphCTDlypYXLJAev8esov6w5Gfbjd91GeHUN4hl0eXcH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dajjuleF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bjj9tLgp; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72423AA4FA
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 20:58:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781557116; cv=pass; b=TV9e8UpLxdREJ56YiIOrcr+JJkjzIz6nZq1WBJR1bEaXOF7Y5BJQ/NaWs6s3sw4MjATVMjJyuWFb8G3OmTzpKNWPZfexG/AEUQQWzbwR+5ffzzeldJ0WEIvm5C3ZqLlOUenl02xMEDaawUE1JFiMF/dl80kgfVA7vyWmHyhQPws=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781557116; c=relaxed/simple;
+	bh=7f3WLkaA0SBKcrRGZCnvwznJzEF/tmAv4bcKuycZvSo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uB4ksWPMlLXaW/13eLw8WcpXTyd5t0Jam9oAvxc0F0p8Oiq3p/52SgsHB4Xrbdec2rGvwhHlekuiYo0xsU4IWtvinqVB7e0xjzPx/63FvlDeQyIMBt0Ty8v9YDkCyCS9+zhyPi4tFwdzxGqUALNq6kMLut/XSWHFgZQiHF9JOno=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=AXBalETL; arc=pass smtp.client-ip=74.125.224.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dajjuleF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bjj9tLgp"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9A2377A00D1;
-	Mon, 15 Jun 2026 16:57:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 15 Jun 2026 16:57:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781557050; x=1781643450; bh=WfZb0laZ+h
-	FwC0KMvnBFcbaxvVZmkEongEnyI78P+Ik=; b=dajjuleFzO2Ka62cCpPMy9E8ZL
-	Cg+wrXh2uzA+qDkBx679Mx7Cuq3vqXVYBpoAMyMlmbVouj2oeisFSK1v0klY0PtN
-	aCaqsSV2Bgm2uw0pXhqnyKX2sGzUT1ftCn0yG3YHvlqinQJAmw4QlbBiq7OWXwKx
-	k/pAk3yp0grPvoFIA57tR159ZguXqiVyTBXCWDVN1sQDrUjBkxv1HvG/jT6cttss
-	AEQqCuLe8TlPgS1Kje8BMZPChtpYD3aQXLFHmTjIhJKjAWO1254g41LMooizOeAy
-	XUr/qQhEtbiJzXk2mK76LR0eZMS3jIgJ1ou4uTsVsYVxkGiY6otpESblrh8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781557050; x=1781643450; bh=WfZb0laZ+hFwC0KMvnBFcbaxvVZmkEongEn
-	yI78P+Ik=; b=bjj9tLgp54LVmXYDpZRRgX6l/JVS5K599S3jCkWx1esYKUeI+qA
-	0r0CcORILWj7NrRczdymAFRED00ivvNB0NEskVJGcS1NXOrAARCI6f/UfgutCIFV
-	UeohxEzu6sfLoQETmm8CjwmTSgBj4bCCJju/gAoCYzDfodXDlOk7RTXjTbWpYYQa
-	yaTU5v6uc3qBYlVITmXHekSl/G4mgOW3zERQA/ZcaNAgyUoGlyxyE+U83FFDz8ji
-	JGw8CKHIz/NljNMNWeGFjak7Po0F9mZ0og5ggfrc4ny/lwZFICOIPrKABLIjf24w
-	Wzh7R3q8ySwbrM1+yj3PQfayLAsDb2gd4TA==
-X-ME-Sender: <xms:OmcwatyXaPrPhwcaSvcrzasKSVsv8gplLzfhACse3zxjkja6rnv3-Q>
-    <xme:OmcwavhUllzCyg2YgFSoK-WYIeqmUlW73zrXE9nCcaSzh0tJlnNOi_Qe6x07bl2lw
-    FFxcHdopByGz2RRgLJVMDyDcnJL3BX5l7JMchvhPeZYM-KDnuO6-g>
-X-ME-Received: <xmr:OmcwapnZPMym0qEmUHUvCUOmn6RCCjT21nH339A29Goyotr_fq1xhWk9BcMXQxuX_ByhnK_Buh9E03std8sJAZ71txjrhZK4zaSq>
-X-ME-Proxy-Cause: dmFkZTGi/8E0e9Ld69RiIrWyy4MTWAKGN9gQA4eDTcbJf+CacUk/uGOpOUuiHks9i5mUx8
-    8dw735aNfFdDVhOIPmbKC2RfXEDix6F7sAc9C8Syzai/vOW6IxRNCyAheQATI5RPl0vOdx
-    yx2IERrSuCN+k6Dwp/G/yqcdmp/20s/2eQnq0fZv8mFKjQR1wpDUjmtkVXDXtQ0MvWtT3d
-    TAOCL0YSSgXRpw0h04rikTa1x/RV6CVjITqGx1Q55YSXqh0Qs8wtzGz2t7o9/v9kxRFjBH
-    7tv9/0WC9dg929ugDE7Q9ziaDDAdUSB/9cLUbl7PJYYayomED9uTkIovoYUv2GARUnZWWa
-    uXmEYSYiD9/VipmVwnLTCgwMeYB3YgWncuA4ISN+p6+QXPx+nuyzxvUXNBDkOVf9DF/uCc
-    Ke7d9IJvFuwcy4c7+bV4zHcE7WhXSq5tC9CuxrY81FEJCgmaQ0UZdV68K9jBS8tJNqos3P
-    H4rlni1NnBCJsEDwZF7UFHjXHVsoWmCjLjJXsd2XBZDoWAJ+l4PsJcVqLFTPN03sE/A3Le
-    9jbX9xv4lwyuEIFHc9/asm+xkm8A3ed6tJl+fbfCiz5apj+cJdh+y1XLeh1QsgLQGYuIhE
-    3/zodBW1S1AA2kT2S75/+REM0Jg6ZRgnIr51NnPNsmaIi7RzJp1Q4KpOpaAA
-X-ME-Proxy: <xmx:OmcwaliKI3fGYeFwE5fZNsO66ENxi-_Qy910fwtVUyRWnCn5x5LguQ>
-    <xmx:Omcwat3LQcnhx79EvQIue-llfCnyQviMj2NWA-YbleU8BTvYu5aswg>
-    <xmx:OmcwauK6NbaCoSBT9slT94xDNqam06EQpF89pXP9ASXAEEr3UNa2pQ>
-    <xmx:Omcwatz5-ZIqBWzJJHakohmIKA0qPkHHrLJUcsTI-FR7LU7hV9_wjA>
-    <xmx:OmcwashtoXSNKMbm7oRlRQeHO3c0J2GG8NDWogy8qHG8-xbx5nqG9STR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 16:57:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,
-    Michael Montalbo <mmontalbo@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Jeff King <peff@peff.net>,
-    Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/4] pack-objects: support reachability bitmaps with
- `--path-walk`
-In-Reply-To: <ffad584a43ebf3cb2138e8dce7daef84ab72712f.1780438896.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Tue, 2 Jun 2026 18:21:47 -0400")
-References: <cover.1779923907.git.me@ttaylorr.com>
-	<cover.1780438896.git.me@ttaylorr.com>
-	<ffad584a43ebf3cb2138e8dce7daef84ab72712f.1780438896.git.me@ttaylorr.com>
-Date: Mon, 15 Jun 2026 13:57:28 -0700
-Message-ID: <xmqqjyrzbjyf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="AXBalETL"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-66058b880e9so3734438d50.2
+        for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:58:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781557114; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lidNWa150BPaX4EHrp9GYvUiop7QHyW4xX5fUhMn8EBOdNej55ohKzq51cvSCMM6gY
+         cs2HbqJFxLPJgzCEC10bylEC1gT3Bgx24AJvA6bLevO9fcKoK8vGlGDeReaYlgike/fs
+         srVCvYXb7uVyOvCXNa6fclXpAZmRkpCJxGnalhOoJJckAwPURcfVjEd0fFveYZA17x02
+         bP9drZZc5rJoeQWuSOv5zKLqzle2gaPfLnlZyfkT62hbHzvmcVZUzV/Eyn95ZDl0dEd0
+         e69B7RQ434sZ9Q+jZVg4HTklAsMzhFZ4oAYU2aMWkvzYU9dDizyhmg/D9v2EjP7adIhw
+         O2pg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=7f3WLkaA0SBKcrRGZCnvwznJzEF/tmAv4bcKuycZvSo=;
+        fh=x3yJ6RQ8ItFvGGTsmMj5TdRGFa+m2qBkw3TdrtuKeQM=;
+        b=hWDWX40Xy1HYolyJ33Jusb/i07bsGahHHOhnMsvA5NEVWnt1kDy3b2qLc7/z8QucAr
+         hnT62AlmOPWJVuiGDTgQ2HULSwW3Rz7LvCIiWjDJ8t/CIUapyIAcPHDe5YytMD2DokGD
+         WiyNIwDw5tpbFT3n9PAv6ThgNrYoa9XhKwtnD4IZi8l+c9CJzp3fojVNNmpU/56ZebEa
+         HfZHCCMhwU2zguvwJZriBijmrowVoob+W9VdodyniD7wlJgcX2yCAbOfX8uPNPX3lmpp
+         6BzttbY1SghjXZfHPQFRbjRc7QCq6+f/u3PNYLOEO+xgv3PTJJMSWX5xxGar7Wy47n9g
+         2X8w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1781557114; x=1782161914; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7f3WLkaA0SBKcrRGZCnvwznJzEF/tmAv4bcKuycZvSo=;
+        b=AXBalETLHaFUrUtRYXKLASexp5ZDuOUvyOgWpdpx8n006AXi+gL64/WRIVfGRcmQYx
+         fXjYxcr09X+ScJJO85utY+3JAigZAh/1KDUeMsL4+w9yjw5xO68SaTeY5CaEF6cdvgdI
+         w1L1NqxGVQaMLYagdR/IBoIupqjJujAG0+SPU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781557114; x=1782161914;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7f3WLkaA0SBKcrRGZCnvwznJzEF/tmAv4bcKuycZvSo=;
+        b=alieZ43zHyTKn6GU3f+v6xPPbVJ+MWIfx+CGl7J4iGhEE1Zn46+nhCPdJGv3apifpJ
+         8Xm7Fr/57x4WCyVgfcfRAf5BeEwu9erXAi2MLQ91QstpJMgKeMYA5ddJxY0kC7cN7lpE
+         l5POQe8NMWeTZ9JeYup7F6pVP5ZfJu4Gv6UNiZ7ptZTX0Hgy0saWRwETqt78YSO8C5+n
+         lBifxxdzeaYAHs91PHvcxLTOm818ZYB3LlMqK0unq97AacbDgVS8qC8W0Muv4JvtTAwW
+         PbD2MsHeaiAXgm04qFWBx6Dda6Q3ki1IR933Z3uiB+PW82z48gj9tZT5mhjSYp0DeII8
+         yQVw==
+X-Forwarded-Encrypted: i=1; AFNElJ9gRprLlYdOsP/77DXLBdsC0UG7eVU95yiMnbjRxvrz3+9PMUAqC/I7ozitYsOKCK9VGTM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhCJHFtebw6TOXFV3BD4BZ+9jTf9tVg4bmLuaNyd/BOSW/T4MD
+	op7IOvkVQwBiIQDJ8N/Te2/RcGCDDtFiVxXIgzf2XpyT5E0KYJ0sG0kJL4P4n8+Ux67b+kSKy3s
+	SlGYqrtEAjgyf2s1ai36YzQzCHKQ6pHfJO7lQ8Zb+mQ==
+X-Gm-Gg: Acq92OHev0wa8JZcw9SC+dFCeYbLjxqLPxtg8o627uNXygU4u0vVvPqRzWBDMlMHc1s
+	C9/OnWW1cCJwhxtJE7UT4tPotj4ov9HWzd0uPLoLgXcLfDx5GDMBHlUOzKPsTpX6jWhJJ11BDaq
+	1iRdFCGCIvV6GzHx8asWtHSPUvehIVz/B3HnV9qteyF9PYT694x1zHU+by9UcHcpm1hx4tqSlNP
+	FKJ6SdDDyjnrf0vhCr6qbhkSm341lgJngZ6PrEzzpXT06nWelpk0bYQ3woFuIHfEmKVWGYmNmCb
+	XH9H+g==
+X-Received: by 2002:a05:690e:1301:b0:650:3bbc:5375 with SMTP id
+ 956f58d0204a3-66284f86d75mr10574535d50.17.1781557113569; Mon, 15 Jun 2026
+ 13:58:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2144.git.1781033285419.gitgitgadget@gmail.com>
+ <pull.2144.v2.git.1781178567862.gitgitgadget@gmail.com> <ffaf26b1-c55e-43c7-84b6-f810a54f7717@gmail.com>
+ <xmqq7bo5nf31.fsf@gitster.g>
+In-Reply-To: <xmqq7bo5nf31.fsf@gitster.g>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 15 Jun 2026 22:58:22 +0200
+X-Gm-Features: AVVi8CdH2PLrS1KS2PMYGjiLcsK7MMMIQuzuRFzEEVrWB5-IWp-tVc7DfjHjeag
+Message-ID: <CAL71e4P3Oq08xVPZ+dxQ8L5PKekPJN0RsL4pTicom1og7-1D=A@mail.gmail.com>
+Subject: Re: [PATCH v2] commit-reach: remove get_reachable_subset()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>, 
+	Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Taylor Blau <me@ttaylorr.com> writes:
+I think we should park or abandon this patch for now; I initially thought
+it would be a somewhat cheap win in code reduction but the risk of
+introducing performance regressions for repos without commit graphs
+means it's not really worth the time investment and I don't want to
+add more maintainer burden for tracking it.
 
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index f693cb56691..69c5da1580a 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> ...
-> +		for reuse in true false
-> +		do
-> +			: >trace.txt &&
-> +
-> +			GIT_TRACE2_EVENT="$(pwd)/trace.txt" \
-> +			git -c pack.allowPackReuse=$reuse pack-objects \
-> +				--stdout --revs --path-walk --use-bitmap-index \
-> +				<in >out.pack &&
-> +			grep "\"category\":\"bitmap\",\"key\":\"bitmap/hits\"" trace.txt &&
+Thanks for looking at it though, I appreciate it!
+Kristofer
 
-This gets flagged by updated test linter X-<.  Use test_grep to
-pacify it.
-
+On Thu, 11 Jun 2026 at 19:48, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Derrick Stolee <stolee@gmail.com> writes:
+>
+> > Finally, a commentary: You seem to have a habit of responding to
+> > review feedback only through new patch versions, but I'd rather see
+> > some thoughts in the discussion thread as direct replies to the review,
+> > especially if you think you will change direction like this. Saying
+> > something like "Maybe I should update the method to have two walk modes"
+> > in a reply would have given me an opportunity to respond and perhaps
+> > avoided a new version that went in this direction.
+>
+> Thanks for saying this.
+>
+> I haven't (yet) found it in my exchange with Kristofer, but I did
+> find similar irritations during review sessions with other
+> contributors.
+>
+> I wonder if we should talk about it in the SubmittingPatches and/or
+> MyFirstContribution document?
