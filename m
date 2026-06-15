@@ -1,85 +1,89 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB9D3EF0DC
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA03F20F3
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781527558; cv=none; b=jNaNsb7A/Hp/9F4IBUh9xqOJTI7x7NtqFnCfMWPS9zJbKfQm5msEACh2Dv8kjThCJzjPXr4hvLlsh5+stkG5SFCylX8Ka18zamvuSuM9T5dq4EaBbt6Wx5vFM7Uv+dw4w1wlaFyTsPuqmRvW4y+EIEeMTc96zHYtYkPS6tH3YiQ=
+	t=1781528308; cv=none; b=FwLU4MnVrEoqhAGaowM0m4MXau3b0WIGEV6bE06oHdNEyuSiBDDGWneIYKO9N8jIKty3k/grv2Wh/4UhSMNdQLVTKkcMSbg95VKIoCw5bGV7GvG1UH3kdRhCXBQ/ju+RiZe+8fUtYRPFhvQR8gFUd4buP5TxR3pmwLWOx9XdguE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781527558; c=relaxed/simple;
-	bh=jUIYbjbSSBf2hFxRraaFKsXX2PObExuFvFjiPoeq8uQ=;
+	s=arc-20240116; t=1781528308; c=relaxed/simple;
+	bh=v4cznSRSdmFCxc/x/X8s3CS7Fy+nAaah/VQ9568GYs4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bWOs/mktN9l+W8z3txmoqA02LHybBBHZt5g48TiNA5v1hNSGzHv3RFFFqnF9tOshtD+7j12cz1ma2pQ7oCNXk+/PsrDjD6ccnPBJCZKkHORp2L4Sl9HLJLHaZ5AQMBAtBJNe8GQK7tm7RFtyOTBuEcESjFgL0t8NL9lUPIoS0hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qAcCLesg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pd7I9svC; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yn5Hb0ohq+X5eOq0qHUBkg3nNz4wpTVn6yb2kxCsSN95N/hebsX82Iin+W9IHkOZYEtJziEZRjKGMn1TG8o8NMY3MlYY4REgoDORdBTsjk+UI+WKVAZwP+lD2tx4o1+8gKSqsk0yQSBIK58aPzwRbmPpZp4lSF16Pn19RBTyqBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KmkgtJyZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MH7+VTvo; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qAcCLesg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pd7I9svC"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2C850EC0222;
-	Mon, 15 Jun 2026 08:45:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KmkgtJyZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MH7+VTvo"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 79E96140009B;
+	Mon, 15 Jun 2026 08:58:25 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 15 Jun 2026 08:45:56 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 15 Jun 2026 08:58:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781527556; x=1781613956; bh=p7kDoBMxdo
-	JOaGefthBlGQWAy73gYzq9hKBGQMFf3+0=; b=qAcCLesg2gYFpmEmPVaPPjMbVg
-	TsZjvqmb0DLbsj4PHbqgag7dzOFuzTXXDegxSsuOJ/sv+a50gMVr3ctFHA3T4bFI
-	xmKghzIBrkRAGs1j3CiU3ncAqrkvBXVq5yLVOLpYQ5yBo3OEf7ydg1ZpeC8U6FCp
-	kBFb510/kdd8OLs4VtM+ilrg6lA2iBsfg3un+0tnPAIeK11uCUCPClKewO9Gu2ag
-	WC46ftcYx04A//7IXVF2tcPXrwhcNiEPSW6TBUkXqurQq4ayb88vtQk9zGGRmRoT
-	6lgrxvujqcgc3rWqdTvJLDcKDesDLLyQULkfnZOGjg4WmMFyVKhD+W32cLpQ==
+	:subject:to:to; s=fm1; t=1781528305; x=1781614705; bh=HM3UkhQyat
+	AYUKCEXg2LolZiqIEfYrv7xvYqaT8E4Ro=; b=KmkgtJyZJW/raWmbU33f5ky1CZ
+	rPhcFY6w4pI5j+gokS1nol2UACMQLDsEihPgdwYe3xDclGEwQ3RcEiEvPbXQbVB8
+	y4C8nRZYftXvpcoxlNZCEEVy6WjQH1TIVh/vWE0CA0lGmMbABhj9pECU8e3SYO2h
+	xPe5LAwPdtnMqXTGhRP73m1BDJuRjQ1fiWT0mdhKDb1u4yiaOyU2/ZTMgC7z0rig
+	VGgz6aJt1DTU88hy/tWfAwhFaBvhDUBKpi2rXOrf6el1wwpnTmSlm4HguI7k6rYm
+	v0Vjd6NsjplvWgoapc4Wece1LoA/CWXXLwh+mydrRzzsWsbsk9yKdlocvWzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781527556; x=1781613956; bh=p7kDoBMxdoJOaGefthBlGQWAy73gYzq9hKB
-	GQMFf3+0=; b=Pd7I9svCQ/6342Pzh5OmX+xLR6ncuGZr88cQGYL2zWl/lsOaAwH
-	wi1k8uBwtdpmcwRw/+xbUVbFm3N0Ub+pIu918RbH8006hcz4kfxoTSwiKsumEj5x
-	qjc+UA2t1h9Zzw+NxxOSdVLLVyT35KaY4Tnz27OLyy7HTP8qSluywwV1WzCxA13N
-	zIp/rdyLleiD8AFZrG7hO+NN9T8TwMmZnbJliXTrlyz9LqxA3+Hl+tgmwJe0hutC
-	DcjoaEwDx59NSNvWIGPoIzCNFiFvf+ffmuZAe2FulHYlw9oK4PuyPkMuB951zhqm
-	3AKid/RxCuMH9TWmB+GzELRKfnW6DqUQelw==
-X-ME-Sender: <xms:A_Qvaq2LCXqCoWlPLuxFqu4y45wxtJ3UmUAJBfYlZzUYbNa5tovhAQ>
-    <xme:A_QvaukQq9iPdiIbpJ02P7x4QM1Ltit6lVGh9tDqiAfDk31CKSGtKg6zetE4mk-j8
-    fC9PH4TGxLxnXiJlNnmP-ARvrxPZYV7R2v65aikofiWtyB_Vq4kIpA>
-X-ME-Received: <xmr:A_Qvai9G6ctoMB_DE3lFzKDxxKW2bLEe0cyXPSwse7i50bRFx7tDFcqRMlrFXwY5fcUgMSkDGSMQHQNhvera3cEEecrf7lIDHihv22JGUg>
-X-ME-Proxy-Cause: dmFkZTEDLwpN6MCsEzZDf23pCwJfm4ASTPvcosX8PSzIqJ+BLBExFC3NAqlCMUCIo/T2vV
-    oFIZ0kX03cSXCajbgLqpFU/JzbXvAo1U6sJwdsvF0Eh5aFufJfVQCP++gE5pqZnBo0VDWX
-    yd/UAUvWUCTH+FBLQxuk8gvbhO98/N7Nzdu6Yvd1M5Qa4mRrW86k0xfp2RVzrSKkoGAdpO
-    WhQaqDdWWNW9EXvEV3jFIEtq0Bt/cQNu1+SBcCPFdQYGjlqmgdIUTzQWFjSHjsHv2/Ssy5
-    +tfSpsuOvWhlhBPOMf0bPqxanZNX1biqYpQlEFWV6fPQRWs7q8Tu+4nWIaMAMyY8BmqJDb
-    EzgdbFU+KcSop/ecVppiEpEXVYXKWxSWHWdAikPQSlfKah4XM/317AX71jDlCS5EYHwp6l
-    QLaxlbsKNFe4ULssm/2iltBttJt7oPkpGD7211ekCrp05fGOcMabGoC3fyo9LQ+EFDd74f
-    94kolYadzjNgYblqIjCcaI49myKAPftFR5TxjwLnGmGPsKHduCfbiyavIGbwdzWObwius1
-    7ExK8fhfXsGwJuzr2GekVTCZatkqrM2jM2zUk7pvqHvUKANlBCiwllHzODDF+uQu7Bx3NV
-    VPj5K5WqurJj9/TK2ASj2Uwwqi0aj44AbsyqFjEdB3jthCDQTcvX9A5XzjEw
-X-ME-Proxy: <xmx:A_Qvarp1seC48G-VpDQfK5h2LLgXT_oq3oRsEK5gPprUz1B71n4Sow>
-    <xmx:A_QvajmEBUVl2DlNssX4whClBuNQrZaJ6WwT8tQacqJ8aZ0X9kB8_w>
-    <xmx:A_QvaqjDIaKcDzIV7BBfD9hBiTsJLYDyY_LnjSqxxpGM7uBdp8qjkg>
-    <xmx:A_QvajeZzLWY49AFUoqJGtNMVwx-_Nc5OBq5OJQ7Tymkfk5_IlhTtQ>
-    <xmx:BPQvan4RU0w0vpdsumX7KmoAeHTTMXXFS5Vl6o3_AhIe86_OgCFnUi6U>
+	1781528305; x=1781614705; bh=HM3UkhQyatAYUKCEXg2LolZiqIEfYrv7xvY
+	qaT8E4Ro=; b=MH7+VTvo/Jfyhu7nJ7uzP2VKubaX2rS5HxWITZCoRi0/9Vshuzs
+	3hf322FBPSg97TKRq5qBNra7XAMmN6aRmG6XkfI9r8Ce8kD2lJ5gnZ9hLM4c8GbS
+	0QSi7XHLNEP+KezDOA+Tgi9yZAcGdmuEEK7HIwUrv0QzJRII9jT8JIZ1/+lQQEAc
+	mPvb29UEoB7E0mWPrtiZD2j6YSXeokFph1mBoVCWSUH+VuuSm7WZB2Y6Nr3uigkQ
+	C3cYEtYKxkCCsqrInCJOitZn2SSIBjuJIMhQCXS3iq4Cir8t03G1stN6aukNUSzK
+	bJOtELyEY9fVLHmCC/C4ifRm72tU7II2M/w==
+X-ME-Sender: <xms:8PYvanlMsea4N86CCmOUSmtpoeXK_e5ff3YIGF91d9NIrgXtHH_JNA>
+    <xme:8PYvavz6Sv8vGBYqr8L8Z8pgenmUN98_djWoFLTxlTPyMcwVhQaFw1EsWfz_nrZ0T
+    2WKRN2x2v_0URkUQKwZCZacPshMt35DM-rGi8JDNEYBQ-Q8uLT2>
+X-ME-Received: <xmr:8PYvah51O3r-AZ9Zgcr7iNCEBADwvNnyEsZkDLTwhSWk54Z0P8QqRQmCzxvgVypJhsywi9_2g3JedbVu0IQlV9XjKko4o2wHrnvGMeYcUw>
+X-ME-Proxy-Cause: dmFkZTFXCHa6aC1+76eJv8S5WHCc4n6pfBal6OzmidYCIsw9cHVnS6ghOUb+jb+q/eAejJ
+    7Rs80nBbSXjddWHXPVOt/PLVFeH6xfXf/KZaZQY79jeIWLrLnQzxmU6fUjVNUzEpyjNOKa
+    VTBCphTY1Nb2m3TGa/YY79ACurNDWebXwnhMw77bvtOMNihceaV0uhGrerZUZAOCFDxeru
+    ClOqKGE8VHJDsiLNeasKqO+2uxwwwWTUwsvZNPUQ81TcoUSquQpWMuFcXtDpy/5mTaN8hR
+    e7XwwIaCW7Xaeq2bWHJteWvc0I2gx/P/4rNIeMh69ylj6NKkzT/ydiyX7OFy+APTH0e/BZ
+    ADan6W34pWt4bvs2f1Rpzw46St1punUMaYuvSJ6EkVDkacxeYGt3G8UdX2nHzFqkXv/mfc
+    zYlU1DCveMO4qyr4S2WnnO/KwnbKaJ3Dcts4lHwWvr0E6B5cr6dv2pBLrgoopVlll9C18j
+    pZLIeSoz8IvFnjCoT1u+4OeagndM02AznL793AGUQGu8uE9Vne0T3Uc7KekbXAaZxMzqXT
+    aBVKIJIVgc+RDQiG0vzQJtOgMwkIsrlBoBDwKHz2FPqWncC+N/YrDxkoSUe6GIydaUP/RL
+    Q7I5rOtK/zxNQw+IUUNZl189eo6GXCnXLCey0pEcHT/fJMQCjKEyIo0NjCmA
+X-ME-Proxy: <xmx:8PYvavWH04Ovk0qrJs4jnyj830spLZwh3R4-gOGwv99N1OlZ78K7Kw>
+    <xmx:8PYvapL9GcL6N4GPcMrupe3VzREZ5BhBxXKAuCyDpO0Q1RKJxDNFKQ>
+    <xmx:8PYvahsKRtXAsPtvAywnYIlHjTSyOnE4A3cKlzhhb7-C6O_Dub6pfg>
+    <xmx:8PYvamLIcOodQo_C3IMtzpIFcocq6L2XiIpGIhizGCEEPT7UtmRzsw>
+    <xmx:8fYval1qG2epeocuWeg9OPRsUSnRnW6rRHdNfLwTuIYSzb8_P7nDO90Z>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 08:45:54 -0400 (EDT)
+ 15 Jun 2026 08:58:22 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 372047be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 12:45:53 +0000 (UTC)
-Date: Mon, 15 Jun 2026 14:45:50 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a782d046 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 12:58:21 +0000 (UTC)
+Date: Mon, 15 Jun 2026 14:58:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Pablo Sabater <pabloosabaterr@gmail.com>,
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Tuomas Ahola <taahol@utu.fi>, Weijie Yuan <wy@wyuan.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v5 06/10] reset: introduce ability to skip updating HEAD
-Message-ID: <ai_z_vloLEwxxmKg@pks.im>
-References: <20260611-b4-pks-history-drop-v5-0-34d35725559c@pks.im>
- <20260611-b4-pks-history-drop-v5-6-34d35725559c@pks.im>
- <xmqq33ytneiu.fsf@gitster.g>
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v3 1/3] MyFirstContribution: recommend shallow threading
+ of cover letters
+Message-ID: <ai_26l4sYwK09kdY@pks.im>
+References: <20260608-pks-b4-v3-0-f5e497d10c56@pks.im>
+ <20260608-pks-b4-v3-1-f5e497d10c56@pks.im>
+ <CAOLa=ZQE-kkpSX=pP2A6SXdbp_O6AHzRmbUDOtKCsvz2Yz66Ng@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,43 +92,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq33ytneiu.fsf@gitster.g>
+In-Reply-To: <CAOLa=ZQE-kkpSX=pP2A6SXdbp_O6AHzRmbUDOtKCsvz2Yz66Ng@mail.gmail.com>
 
-On Thu, Jun 11, 2026 at 11:00:25AM -0700, Junio C Hamano wrote:
+On Wed, Jun 10, 2026 at 07:08:33AM -0400, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Note that in a previous iteration we instead introduced a flag that made
-> > callers opt out of updating any references. This was somewhat awkward
-> > though because we already have the `UPDATE_ORIG_HEAD` flag, so the
-> > result was somewhat inconsistent.
+> > The "MyFirstContribution" document recommends the use of deep threading
+> > of cover letters: every cover letter of subsequent iterations shall be
+> > linked to the cover letter of the preceding version. The result of this
+> > is that eventually, threads with many versions are getting nested so
+> > deep that it becomes hard to follow.
 > >
-> > Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  builtin/rebase.c | 14 ++++++++++----
-> >  reset.c          |  9 +++++++--
-> >  reset.h          |  9 ++++++---
-> >  sequencer.c      |  4 +++-
-> >  4 files changed, 26 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/reset.c b/reset.c
-> > ...
-> > @@ -129,7 +133,7 @@ int reset_working_tree(struct repository *r,
-> >  		oid = &head_oid;
-> >  
-> >  	if (refs_only) {
-> > -		if (!dry_run)
-> > +		if (update_head)
-> >  			return update_refs(r, opts, oid, head);
-> >  		return 0;
-> >  	}
+> > Adapt the recommendation to instead propose shallow threading of cover
+> > letters: instead of linking the cover letter to the previous cover
+> > letter, the user is supposed to always link it to the first cover
+> > letter. This still makes it easy to follow the iterations, but has the
+> > benefit of nesting to a much shallower level.
 > 
-> So when refs_only and update-head are in effect, we will call
-> update_refs(), even if dry_run is given.  update_refs() does not
-> seem to pay attention to (opts->flags & RESET_WORKING_TREE_DRY_RUN)
-> at all, so wouldn't this mean that we would update even in a dry-run
-> session?
+> Should we also modify 'Documentation/SubmittingPatches'? Which states:
+> 
+>   All subsequent versions of a patch series and other related patches
+>   should be grouped into their own e-mail thread to help readers find
+>   all parts of the series.  To that end, send them as replies to either
+>   an additional "cover letter" message (see below), the first patch, or
+>   the respective preceding patch. Here is a
+>   link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
+>   how to submit updated versions of a patch series.
+> 
+> Personally, I find it a bit awkward when new versions are sent as a new
+> separate thread, especially when the subject is changed over versions.
 
-Ugh, good catch, this is obviously wrong. Will fix.
+I don't necessarily see this as contradicting advice, I rather read it
+as "patches of vN+1 should have their own subthread". But it certainly
+is confusingly written, and I'm not even sure myself whether I'm reading
+it correctly or not.
+
+I kind of feel like this is a bit outside the scope of this series. Also
+because I'm not a 100% sure how to reword this to make it read nicer :)
+But I'm very happy to accept suggestions here.
 
 Patrick
