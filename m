@@ -1,117 +1,128 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3B13BF699
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 08:19:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781511558; cv=pass; b=uQvnk21/sp0L2nb5SC+a+afKO1gzT4uGzE7Xcc04BvzHg3S3/eVdSlo7TXIJOE6t4yKpb/8b3ZkhC39RvthbSa8oS65N1t5GNyP0/T3vrRL+yXy86Zf78HguZQzBh32fwmn92ygkEB9h0LrpvR1M8ijXl4N9XkTClAZ0eVNqaB4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781511558; c=relaxed/simple;
-	bh=gM6vzBeHaEc19P9eW8kBEA4ElewFHrqBHKDmJ/nQ6ZM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SKX+QeYRTFIp0CFl+/9xH129EmJIA/FEZIML3F+N5euoZCa5GAQcbXRB9QQ/UkTxapI/tzsvKTTZUKbAnbHfdGccluQ+Ml5Q29umR+s+NlTkkiKBIw+9u5JJzxwVU67Xb637fky/QlI/CAjIn4lMVza5vVeOHpu3qdflzmEntSM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S0/ar5T7; arc=pass smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327AA3CF663
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 08:35:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781512545; cv=none; b=RIfJJm2ZzNEpsWTVPuDzQMNs+pP4MOF6E3L1e2iSRqyPUsHE2cjN9uLYuCY1zDSZ4Ubufg0NCtLTyz5OwKuNSiLpS7Ld8knW63VQzgAdFTmWsyerMrbA8xmwpY4UWSLoQH0hodwyXTo6TMFec1hRry1u8P7TST3xPUs5S34R1FY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781512545; c=relaxed/simple;
+	bh=cFqzHupKz9oBsqBIOFJNq/HEsP6mtk17AZTZIynVliM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BExtTzvkvPx8lCGhBXVExYdKtPyqgImGDqVTCzbm9akYE6Mh+ZVZjIehsKITcPy+9BGRVqx+YpynJeMcRVs1EC/CXJrq4ZUN0nfhHIjlCVEc+7gpFR3Mf5ZQYwyhiOgyqACtY+aAz5o9zPcOKZ7VYaPHjnaDWoiLc0s5jVB7Xkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MkvTMiEa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GmybDksC; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S0/ar5T7"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-68ced97b6eeso4785935a12.0
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 01:19:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781511555; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bmpOiV0V32kUjglhl3KsPHMebqAGiEKUMDTKAHiivfNXVAW9j6X/r1lWedvwJSdg5e
-         3pLMoo+vppvd26as9qd2NFLGcSRGaGcCwhVa0EZH9jApZpeZ41m11UQYaPNkFbeu31b1
-         yPqy7XvE/xNMjSTWJQnVrvKfaSMnx/+rMi1boy6tFGz8VJjO1hR5oa66EZmxVGVW5ULQ
-         MyPrWXVVerFkFc3EFyPYm35oLXRgd2jXy1lhbnINKdUL9VvhnvTxKz9EHBFDinsdj2TX
-         hfQFRTpHPGKlpgx7hhTasfMIH2oYF2dRbLasv8XbcoJGEsguIktb15Y/7CcLadakA6vq
-         ML1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=asOlLYIMhqLFMiZYhnhBAX3j/IXsU9cRkextd0oMk/I=;
-        fh=I0oEGHlCg/UTDT2MrqWlQaHPHFnTmRYgcvT/R9u+I0I=;
-        b=hOQ0eQlb1tsbaV2OMWO1geRhzHTEkLrml8C3raKTILB1TAS8W0iZWxoXjIiHErBy55
-         Tb9hDGFuoLtjFctQr2FlmwKp85ZmdzecZAZ/2DXh1wbFGE2VuktnWGyVsjVLX7cc8c9k
-         viHRV+eMOnwwcH+7WRyfDM9T01j4bTz+dDee90UMgohKZJvfMLd1EMPUO2TkNfCLklMe
-         COSzKVmNbQjPxLTv1nvLuBbzRizfOVl4GyfAQ+NbHjhQDuoOpS2ZcHG0BHhXjMmhMWn+
-         F8+cX4NZvlzWcP1tOoLXUfDqUY+lOOydYHHaX5Q/R3KYlZmTuomSyA9Vr5FtbgyhrUGw
-         8W1g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781511555; x=1782116355; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=asOlLYIMhqLFMiZYhnhBAX3j/IXsU9cRkextd0oMk/I=;
-        b=S0/ar5T75SncxH40ueZTfC3/OeA5DzZ9Sy4gL3lNzUnR/GQpAj8yx4hpfnPY39x7TO
-         3MUYbW70x7D6t07e+6rYgI+6YjXIRr+evwTJCoVpRH1Gpq9FLu4sWfXDlw7jql1ICVBZ
-         pLdZKQVa+HGo7BB9FlZQz5DLlmSUARy+1PeGGsPo/1xoczS3VaGY8xRH0/zjRKHXd1W4
-         XfuopX+LQ4LfrDfYpJ45durYYJeXTr9ZIAAawR6dgbS0/2jisLJr9FqBMusmcb3Jygsf
-         /PLc3kS0iSeTlsIUeiDuMHy8bBObbObzLQ7HhkIwaSyHXw0nNscu4P4s4vTNJkVCfU4g
-         LPTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781511555; x=1782116355;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=asOlLYIMhqLFMiZYhnhBAX3j/IXsU9cRkextd0oMk/I=;
-        b=p3HRftTUMmitYAWPO2p37Z3Oh9TtRWsQuESYSZpCKWiLHuQ0R6jmOL1+SftnTQFDcq
-         Hl+kE5oYkH8CjZLq9T2P52LQW+/4teOngM9foV50FROsG7qtY+y5rq67rqpX65zqxMkt
-         S4XKWzir4dW5JOlr9oO51akNp1s/QrmhnSoNxtoUqxBD5xkzV0Ly3KZn0d1LaaIw8UMj
-         YCC5qiJIUcmXnRo1rTkIL557fylB4XdyM9q1evqYCV0eXu32i27IrpHZn5K7g2A+8Gvr
-         t7STkBvnDu/HKX/ERqXlFXStUWBsWo9VSHHww+PCmofxuiS2TpkmMUCk65aEsWeQUpz9
-         UCWQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8Tj7Nvb48FQmlNljXp04p0KX/1NAUhhZ5mHFQxjmyYrgEWKxKHVdbbO5uG7LqJG5QH/aQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznOR1en8kW4EQjsQptFzgA3gmUdY3sARD6KUK6HSyCYyP/JbEc
-	siC58dSPzOr5pCshHM9VEUW9GCq4IH0MfBofPpq1zEj3w1hp7JnVwKUmQVODp8dUet2CdEdEVE6
-	NuBzbMSNtyG1cdc5XqsIb8mKOsc1gBiJjb+MkWN4=
-X-Gm-Gg: Acq92OGLcT7KUIIMBss6SdulnZVna6WZVl7aaxsd9Q8ywfwx13J4glJ/IV4OiGehPcc
-	9UkltPrmPl78Oa4cJU+Xjq+ro0OdW54QtNn9V7CdIw6AIZDaRSpr32iEe17MbcPuve7RzF+7SaM
-	BUMkgC6OC9e9vzLvG7PjoHlH27QMMfLECNvroIxG95UitJma1K+gKiikzVh/pbrfSuYt5bgyqQI
-	bJJkikEl2G0S5MWeadilv9qK98+7svaA/n/oxVctm3k4Df14VsWMPRlcJovL5WI5mPkX6YzsFHI
-	JItfabY=
-X-Received: by 2002:a05:6402:1585:b0:683:e394:cc0c with SMTP id
- 4fb4d7f45d1cf-693784ebd19mr5469251a12.4.1781511555071; Mon, 15 Jun 2026
- 01:19:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MkvTMiEa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GmybDksC"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EB8157A0172;
+	Mon, 15 Jun 2026 04:35:40 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 15 Jun 2026 04:35:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781512540; x=1781598940; bh=+Bl8j0K7AJ
+	rIyLz7b8kAP5ezPawqdi22JDsyWel0Ef4=; b=MkvTMiEaPj2pekM+mE9D2UjXwH
+	XkaHTzhcsxFHO4UQuguuvXqgjqO0fG1qbOIreUYthyVHeaLLW/5g1c1wy7dFsrpj
+	AvKZG+0wOIZVv/Mge6FOa0DyYkRNGwAUfWP7aBQ5Z+K70QzL4SJZbbbqAqxTr9N+
+	XMydADl1OpBx/7+7mfqYkPnL795ksOumUg4NTSf330SB0+B5T0rfNUWPnOPArb0R
+	Lqlv0Y/lmmQRpwKfFQ51cJ4MOpL7d5kuZPDxXtGqrEHid/uM+Us5mZ6/W83KQkX9
+	D+plzKbf5N03gcRogvPXU8zivax5dTaaqmhpz/GS3Dmp3IZbPDxYdxMt6CyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781512540; x=1781598940; bh=+Bl8j0K7AJrIyLz7b8kAP5ezPawqdi22JDs
+	yWel0Ef4=; b=GmybDksCX00NyJYSIxcq2E7Hf8ol8aS5L4iGcCwFum1KHr0MbvK
+	72ihDcqfAHMP/KGbjaTRsXcKwdFQBfLk3Y0pzvmQ5KU8l2Tp1QmbZi+EU585u3Kq
+	2mmeKEws86EKYg2sA3e4sWDOj+PFmpc55P7o73r3qSyTjfBe3I0CBhmB7Hcbbj+V
+	4O9hd6DM2cA6wew4a96z+TlrbuKXrXkzHX6BUKjOyGKGJ+7mkojufPF+OhUweU3+
+	9ZiNbkjxfsKqmUCKwThU0PB6nh2X7/zsr+/LUphLive/P3BBlJpM/75IoD+glAY3
+	7Ushclv0d1HosxOHcU4MJG7VvKGPp0OB/nA==
+X-ME-Sender: <xms:XLkvathpi97GOp-UVGNAbWL1jNaSbGA1XyxOPFLl5hRhZb8NARhX_w>
+    <xme:XLkvapDhwkhqHZUVLhzbdirECoDp0wpDt00juEBs2J2qFnpaiFPccmEXefODFYh3-
+    KUoR2kzvmpd5xDiVXnsFAcWDsGtql9D2NyrZ545WMQ9ZStklL3v>
+X-ME-Received: <xmr:XLkvaiF4S1Bc3Q11v7k3JzPafAvSZq-DP31o4bu1zVNRcFtZ-8JIUewaKsie4UtfZrObNdL5Wg1Join84TIuYaVTpRKEY7vLcZhjzACwQQ>
+X-ME-Proxy-Cause: dmFkZTFqRGv5BEiS0BniXxYlelXhPhhcdY0WUQePTpB8XnRm3qvarROREyDeyxzVd2oMaJ
+    LrOloOjDmJp059w6ohduOAwwB+IAXjfeIrafXRBUYqw3vBa7YHdkDLUCQ1eHU5lNu+TTJB
+    19Dfv6e0xXfBsxLhyFk8XTlqLUf6+mwZDbVW0ZdP3OfJbgGRdHcnYSd2atEJd8D3kLdJDS
+    hGe+9fb0gLseJOFV22FMmgz9b8MkuShluRa6ttGixDGXXInfSgF0YuiJ7hcmZrYshkKfkO
+    3Ay2NswXAxUPAGz1idyBg2/1qbKrJBBBAbCBK4jVusSC4H72P93ovi45wsqYCqTJVYpTk8
+    vVVzj7nuFu76YR/veQtuPzKz8e/sYEzyU1CEdfGWV19eXRM4g/0qFkeDQn8YEoId0rHkNj
+    XufQFBWrV6R43C2YMBz+Zz2DLjZMqpcesoBbT0dv401Asc4LlftRtNSmYvoHtNj4zEL8IR
+    Rag7RaemoK3b5wIeg+bWzisXmoSZQXvWiO+woPUV4aDBOnhukNSyWW9M64+CKzfhZKsyOR
+    H45ITje2kn83ZKXM3YVt0Lu3M6lWANrqU76zL8zZbrx872xLkoX2J9PVue1XXQCXYgmsK9
+    EoBqTK1UbTvkEBFNMmLmvkIcm1A7mhFaO8fWz95WAjZOBrD0mft59/p+5dpw
+X-ME-Proxy: <xmx:XLkvahLamzPaCWnmqBc_gyrvTg3maM2CVzl9xrBEdYsnAYbvrMdvgA>
+    <xmx:XLkvamk7IVFQvicBMznrE6voHAwEL0oO9EbQvelLg-VQtMQfO79sfg>
+    <xmx:XLkvapTv6IcWQx2PMvjk_pvwxlKGfrm4F5gd7wJReizQinZt56vIxw>
+    <xmx:XLkvaoINyOFlUUBQTtFAbVrgWbPdJxvZ05EANU61NJvft1DLtlccCg>
+    <xmx:XLkvan-EgorvOo_E-TgS3wRgrXVtI-zksmEd47Lyde35AL0497dB3lxg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Jun 2026 04:35:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 11e5dc7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 08:35:37 +0000 (UTC)
+Date: Mon, 15 Jun 2026 10:35:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH 3/6] hash algorithms: use size_t for section lengths
+Message-ID: <ai-5VmawU2MRiAHQ@pks.im>
+References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
+ <253d6f8004e710d05b5de1f8279d67d2220f83de.1780593313.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com> <xmqqqzm8d0j7.fsf@gitster.g>
-In-Reply-To: <xmqqqzm8d0j7.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 15 Jun 2026 10:18:38 +0200
-X-Gm-Features: AVVi8CdN6HS0384QE25u4cDFuEgrQybnp8iKYbap9P6N_9rnGS3ITxK_Y9KfYak
-Message-ID: <CAHwyqnWa55xbTpzq-Nf6cMyvgR1yYgg8fhvgMFkquSEGPUwDmg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] rebase: add --fixup to fold a range into its oldest commit
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <253d6f8004e710d05b5de1f8279d67d2220f83de.1780593313.git.gitgitgadget@gmail.com>
 
-> > Adds git rebase --autosquash --fixup [<upstream>] to fold a range of commits
-> > into its oldest one, reusing that commit's message.
->
-> [2/2] seems to add "--fixup-all" but I agree with the "related idea"
-> that naming it and modelling it after "merge --squash" would be
-> easier to understand.
+On Thu, Jun 04, 2026 at 05:15:09PM +0000, Philip Oakley via GitGitGadget wrote:
+> diff --git a/object-file.c b/object-file.c
+> index 1f5f9daf24..c648cecd80 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -581,7 +581,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
+>  	/* Generate the header */
+>  	*hdrlen = format_object_header(hdr, *hdrlen, type, len);
+>  
+> -	/* Sha1.. */
+> +	/* Hash (function pointers) computation */
+>  	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
+>  }
+>  
 
-Sounds reasonable.
+Thanks for updating this comment while at it :)
 
-> I also wonder if we can do something like this without adding any
-> new option or command.  E.g., if you have four patch series, where
-> the initial implementation HEAD~3 is followed by "oops it was still
-> wrong" fix-up HEAD~2, HEAD~1 and HEAD, then
->
->     git reset --soft HEAD~3 && git commit --amend --no-edit
->
-> is what the user wants to do, no?
+> diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+> index 7867fd1dbf..10382a815e 100755
+> --- a/t/t1007-hash-object.sh
+> +++ b/t/t1007-hash-object.sh
+> @@ -261,7 +261,7 @@ test_expect_success '--stdin outside of repository (uses default hash)' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_failure EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
+> +test_expect_success EXPENSIVE,SIZE_T_IS_64BIT,!LONG_IS_64BIT \
+>  		'files over 4GB hash literally' '
+>  	test-tool genzeros $((5*1024*1024*1024)) >big &&
+>  	test_oid large5GB >expect &&
 
-I don't think it's enough. First of all the user has to know the N for
-HEAD~N, and then 'git reset --soft HEAD~N && git commit --amend
---no-edit' is still quite ugly.
+Previously we required `!LONG_IS_64BIT`, because the test would have
+succeeded on platforms where it is 64 bit wide. But now that this test
+works on all platforms I rather wonder whether we should completely drop
+that prerequisite here, as we expect it to pass regardless of whether or
+not long is 64 bit now.
 
-
-Harald
+Patrick
