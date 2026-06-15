@@ -1,239 +1,370 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6231E410D3E
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 16:47:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FE740FD86
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 16:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781542061; cv=none; b=bgmWcikdEaKqdrZrwNKX9v+E/741OL2Cjr3IfwgkJPa5NdCKuk8ZNVr11IYg0Xn2/u00j+U1nUB3fVHBZbzjFggyE1yIRv5f8Qa2QA9CFn2NkmC44oGuJm6aVEM+KPbt5kHDblAc9ZaFk/bjcVjwKF9gdHSH2V6+BBJFk1pBqx0=
+	t=1781542418; cv=none; b=sHy3ne84Ts7RUFMLhLnDur3j2kSkVuG5vHIU3xSTI9FeoAlpKYwsWlJBFUbXV4FKbriNcBnKz36yjrzLMuJ76uKt8dbvTMIqSsps7dZN1EngaryUMBD+xMk2STWpmgDkeRmIjM2kk9Y+JvF1Wduh0ozmB+UCE8QMOYJEvrTMRjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781542061; c=relaxed/simple;
-	bh=ci4OKeHT9eDgHTpxr156Qllfg2LMdgWxKHoX5gvSnew=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=P37Zcnkk0UkOJCfduoJlC6nNPPAyLOY2y1DouzTs8ToufBA57x1/yLQhVY1Z7HrpxXO88wwUdyEpqRvLn2N9mBAqa21YaOYicDIGChwMIbcbxF4hCZeUzUBkx3P9nLxeD37Q0vJ5UoYcOLmDlC2kKSCnFPjUtjbICWpq8osVV0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r4Xy6qBH; arc=none smtp.client-ip=74.125.82.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781542418; c=relaxed/simple;
+	bh=nufY0y73GDdLn6YV3u/l7mWQl3IzD7gAu1AWMgdIkzY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EJO5KUDQHPHSar/zlkb6T6nASIC28pYaMQHw088B3rWjCN/kh63b+glZsGGlJqSzJwBlT0vyq6mpKWvQfKyrkU5Nh/GtaBaxHwuQjrR2AsWXCXtErY2cNAvX79mmy8rgKccPLIlPxaysZX13cadkLVd4l9MUY+rC+NNAorR0DBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JztOCdsb; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r4Xy6qBH"
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-30807ba471bso10138528eec.1
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 09:47:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781542059; x=1782146859; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+wdaiaAsOn5ptqV1LOJnXvC4Y/auDZW1TmtrKWSp9Bw=;
-        b=r4Xy6qBHtFR7ZgNTObfn2CXwmDmPSyChQkrp5AIh+FX/qvG+eimCECBHc+KTmOX7ul
-         4zHDzoaojnXFiKivyXZ4FwoSdzj9W/fvzBuYxiNiIF0Bth3hXcyX8Hb3EPuyFtHXdYpq
-         R2idEGJ2HSLvyaMDXt+eLAtxGEOJmQsxYyhcB2/4hRGiGg/wjG2Vg3liqLE41vTx4Yjl
-         OHv92yARc/Cgxa2PpHzuQ52SaJWUMHNbvIM6IQlo1ZeeqWp0hFjF23DLBRQgFuU6WE1z
-         0yUvBaJWm62gS9CyB88Lk9qjY6XDJ8Hls7nC7oJbgP6FGkN5sLFuVYiKkbwFtIIqqhOj
-         FZuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781542059; x=1782146859;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+wdaiaAsOn5ptqV1LOJnXvC4Y/auDZW1TmtrKWSp9Bw=;
-        b=pF6JJB3wehOBuh1vHKQXKd1CgnlTRarlJuJF27g3PgQ+DcFXu4/9xJkgadwGXNBjcp
-         nd6QVeU8rTT7PpKtAM0D0+T8X/mYVdZXC5LyBynMaFaUEVb5Nd9LcbQ6+9ZHBuf0ZkcM
-         5EE66RdbkA4GJP5RkwCIDHAAUPA8SR56NUvxkiJy39Odh+iPYFRE1+VpqM+OQJ/poZNM
-         SqOzu5I6U8Kcq2V/YhCx2JnHw+vKNKt4FZ1OIxxq7efTY/JpFnPG6blITKmIZj6/ninj
-         +Gh63R9ONq+b8ArwNhTFamjn/n5UPUMbAF2KjnCOXwnRSsnxsqLQTCH3JLZUnocJZ9Kd
-         Dleg==
-X-Gm-Message-State: AOJu0Yy7/9tqx+xS2kZnlvSUVs9NK7U86B38bxfvSB0LcgpzL6wnWTfA
-	N6+P5neC89yY86gqPzyB+7+T8ev5usOJrLOOZuoonFZexZBZfjwX5TC1XX4epg==
-X-Gm-Gg: Acq92OFO6CHlO7utJuZGtmeJd0DrIOTFkDrsxqGMQCXMK4s3oBKRh7ZuMnGn6sBP7Cg
-	UFLrgV0RFviZ7Rkuct9qiseqCwQhGfSNPnE/2NcxARez1pyCtxuJbcB73/iaxbveNSpowK0YcCS
-	wa2MmPzXB/FXAMj6t9CKgraGGzTYgdVeS2npu09rx721Khdy1mgKwFkdjOnM5ZKZSQHRVtvwpy5
-	yePpgngK6aFMclGG3D4wXwM285u0OTCXuQUpgRITLe34SFOcKgijx9IbUIhsfTmHw0l96C7APyv
-	eKpUv+KID/r6UeCP6t5EoexLUaTDiuaXSdPSyA9HvfYTKrtY6IV9cplfPHtWMRSEB8K9LShcyDd
-	EzcJPWvT6nWqbsgrLObZ7rQVS2QA1Tk97/Y1z/U3n2EkpIXronZkjcTFp7eplWsTkzpvhUIbDLp
-	/RC1VqtMU+PqXZyWsyFSFGX75g
-X-Received: by 2002:a05:7300:b54b:b0:304:de28:1b16 with SMTP id 5a478bee46e88-308200a60b5mr8801981eec.28.1781542058574;
-        Mon, 15 Jun 2026 09:47:38 -0700 (PDT)
-Received: from [127.0.0.1] ([128.24.162.3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5fefecsm15507203eec.13.2026.06.15.09.47.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 09:47:38 -0700 (PDT)
-Message-Id: <7b2b01b9887d630a47be0f9e98c4a75f0b22626f.1781542042.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com>
-References: <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
-	<pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 15 Jun 2026 16:47:22 +0000
-Subject: [PATCH v15 7/7] branch: add --dry-run for --delete-merged
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JztOCdsb"
+Received: (qmail 144180 invoked by uid 106); 15 Jun 2026 16:53:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=nufY0y73GDdLn6YV3u/l7mWQl3IzD7gAu1AWMgdIkzY=; b=JztOCdsbLq/EO3uroOj7brB7koA/GxJ+9iUBhcmk/uHpC8QuiG9x52EZ6UN07BxW2eksEBPpn6PJCqq8xFXRKUgcZtZ+uUMMr9NGTUMh3sP4stWC4jMbgxSyVZjrwa/OUBkzrz/SZtV1tM6/b1EPjc8h8NVrjvqa1QKkDGIFlMT3q3SGU0LoG1mpzGRpfJ/ERWCQqhSGYB7SK8kdx61zyGdZoxdjseM45rIoFbXyiLr+Rl8Ki5RIG87pfukvxZZg16Q+1seyKuS4iI+HOq8y2dWb649KlOjTtIe03uv1zK993RGixhi7ZmihWj+17tbUU0I4vHOld6D7iD6Sf4f63Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 15 Jun 2026 16:53:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 394227 invoked by uid 111); 15 Jun 2026 16:53:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Jun 2026 12:53:28 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 15 Jun 2026 12:53:26 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] cat-file: speed up default format
+Message-ID: <20260615165326.GA91269@coredump.intra.peff.net>
+References: <5a7ed929-6fe0-496c-83bd-65dee57c2241@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5a7ed929-6fe0-496c-83bd-65dee57c2241@web.de>
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+On Sun, Jun 14, 2026 at 06:28:34PM +0200, René Scharfe wrote:
 
-With --dry-run, --delete-merged prints the local branches it would
-delete, one "Would delete branch <name>" line each, and exits
-without touching any ref. The same filtering applies, so the output
-is exactly the set that the real run would delete.
+> eb54a3391b (cat-file: skip expanding default format, 2022-03-15) added
+> special handling for the default batch format.  In the meantime it has
+> fallen behind the code path for handling arbitrary formats.  Bring it up
+> to speed by using the new and more efficient strbuf_add_oid_hex() and
+> strbuf_add_uint() instead of strbuf_addf():
+> 
+> Benchmark 1: ./git_main cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
+>   Time (mean ± σ):      1.051 s ±  0.003 s    [User: 1.027 s, System: 0.023 s]
+>   Range (min … max):    1.049 s …  1.058 s    10 runs
+> 
+> Benchmark 2: ./git_main cat-file --batch-all-objects --batch-check='%(objectname)-%(objecttype)-%(objectsize)'
+>   Time (mean ± σ):      1.012 s ±  0.002 s    [User: 0.988 s, System: 0.023 s]
+>   Range (min … max):    1.010 s …  1.018 s    10 runs
+> 
+> Benchmark 3: ./git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
+>   Time (mean ± σ):     979.0 ms ±   1.1 ms    [User: 954.1 ms, System: 23.2 ms]
+>   Range (min … max):   977.7 ms … 980.8 ms    10 runs
 
---dry-run is only meaningful together with --delete-merged and is
-rejected otherwise.
+Interesting that it was actually slower than a custom format.  Using the
+default format saves the cost of strbuf_expand(), but it was paying the
+price of strbuf_addf(), which the custom path no longer used. So the
+cost of strbuf_addf() is more than strbuf_expand(), which is not all
+that surprising.
 
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+Your patch seems obviously right, and everything below is idle
+speculation / nerd-sniping.
+
+I have long wondered if we could do better with a separate initial parse
+step, which would let us walk the parse tree for each object. In theory
+that tree is more compact.
+
+I think it would be a huge improvement for ref-filter, whose parser is
+complicated and slow (though its biggest sin is that it allocates a
+separate string for each atom before assembling the final output). But
+could it help even cat-file, which is using a pretty tight loop over
+strbuf_expand()? I sketched out a rough draft below.
+
+It uses per-atom callback functions which is nice and clean, though we
+might be able to do even better with a big ugly switch() statement.
+
+The timings I got are below (git.old is master with your patch here
+applied, and git.new is my patch on top). It looks like it does make a
+custom format ~3% faster. But it's still a shade slower than the default
+format. Not sure if it's the extra function calls, or if the static
+print_default_format() function gives the compiler more opportunities
+for optimization.
+
+  Benchmark 1: ./git.old cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
+    Time (mean ± σ):     580.2 ms ±   5.0 ms    [User: 558.7 ms, System: 21.5 ms]
+    Range (min … max):   569.9 ms … 585.6 ms    10 runs
+  
+  Benchmark 2: ./git.new cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
+    Time (mean ± σ):     580.4 ms ±   5.1 ms    [User: 562.7 ms, System: 17.8 ms]
+    Range (min … max):   571.8 ms … 587.0 ms    10 runs
+  
+  Benchmark 3: ./git.old cat-file --batch-all-objects --batch-check='%(objectname)-%(objecttype)-%(objectsize)'
+    Time (mean ± σ):     618.6 ms ±   5.0 ms    [User: 598.9 ms, System: 19.7 ms]
+    Range (min … max):   613.6 ms … 628.3 ms    10 runs
+  
+  Benchmark 4: ./git.new cat-file --batch-all-objects --batch-check='%(objectname)-%(objecttype)-%(objectsize)'
+    Time (mean ± σ):     600.2 ms ±   4.2 ms    [User: 581.2 ms, System: 19.0 ms]
+    Range (min … max):   595.2 ms … 608.8 ms    10 runs
+  
+  Summary
+    ./git.old cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)' ran
+      1.00 ± 0.01 times faster than ./git.new cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
+      1.03 ± 0.01 times faster than ./git.new cat-file --batch-all-objects --batch-check='%(objectname)-%(objecttype)-%(objectsize)'
+      1.07 ± 0.01 times faster than ./git.old cat-file --batch-all-objects --batch-check='%(objectname)-%(objecttype)-%(objectsize)'
+
+Patch below, only lightly tested.
+
 ---
- Documentation/git-branch.adoc |  8 ++++++-
- builtin/branch.c              | 13 ++++++++---
- t/t3200-branch.sh             | 44 +++++++++++++++++++++++++++++++++++
- 3 files changed, 61 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 91700f2e8a..09063d74f2 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -25,7 +25,7 @@ git branch (-m|-M) [<old-branch>] <new-branch>
- git branch (-c|-C) [<old-branch>] <new-branch>
- git branch (-d|-D) [-r] <branch-name>...
- git branch --edit-description [<branch-name>]
--git branch --delete-merged <branch>...
-+git branch [--dry-run] --delete-merged <branch>...
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index d7f7895e30..9cc7ec7a6f 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -36,6 +36,8 @@ enum batch_mode {
+ 	BATCH_MODE_QUEUE_AND_DISPATCH,
+ };
  
- DESCRIPTION
- -----------
-@@ -226,6 +226,12 @@ A branch whose work has not yet been merged into its upstream is
- silently skipped. Delete it with `git branch -D` if you want to
- remove it anyway.
- 
-+`--dry-run`::
-+	With `--delete-merged`, print which branches would be
-+	deleted and exit without touching any ref.  Useful for
-+	sanity-checking a wide pattern like `'origin/*'` before
-+	committing to the deletion.
++struct format_item;
 +
- `-v`::
- `-vv`::
- `--verbose`::
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0e1e7c2e6f..d18a830249 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -716,7 +716,7 @@ static int parse_opt_forked(const struct option *opt, const char *arg, int unset
+ struct batch_options {
+ 	struct list_objects_filter_options objects_filter;
+ 	int enabled;
+@@ -48,6 +50,7 @@ struct batch_options {
+ 	char input_delim;
+ 	char output_delim;
+ 	const char *format;
++	struct format_item *parsed_format;
+ };
+ 
+ static const char *force_path;
+@@ -294,12 +297,6 @@ struct expand_data {
+ 	const char *rest;
+ 	struct object_id delta_base_oid;
+ 
+-	/*
+-	 * If mark_query is true, we do not expand anything, but rather
+-	 * just mark the object_info with items we wish to query.
+-	 */
+-	int mark_query;
+-
+ 	/*
+ 	 * Whether to split the input on whitespace before feeding it to
+ 	 * get_sha1; this is decided during the mark_query phase based on
+@@ -323,65 +320,152 @@ struct expand_data {
+ };
+ #define EXPAND_DATA_INIT  { .mode = S_IFINVALID }
+ 
++struct format_item {
++	void (*add)(struct format_item *item, struct strbuf *sb, struct expand_data *data);
++	union {
++		struct {
++			const char *p;
++			size_t len;
++		} literal;
++	} u;
++	/*
++	 * We could make a true tree here with child/next pointers, which would
++	 * be necessary if we had recursive formats, like %(if). But for our
++	 * simple formats for now it is enough to have a linear set of items,
++	 * so we'll just allocate an array and terminate it with a NULL entry.
++	 */
++};
++
++static void objectname_add(struct format_item *item UNUSED,
++			   struct strbuf *sb, struct expand_data *data)
++{
++	strbuf_add_oid_hex(sb, &data->oid);
++}
++
++static void objecttype_add(struct format_item *item UNUSED,
++			   struct strbuf *sb, struct expand_data *data)
++{
++	strbuf_addstr(sb, type_name(data->type));
++}
++
++static void objectsize_add(struct format_item *item UNUSED,
++			   struct strbuf *sb, struct expand_data *data)
++{
++	strbuf_add_uint(sb, data->size);
++}
++
++static void objectsize_disk_add(struct format_item *item UNUSED,
++				struct strbuf *sb, struct expand_data *data)
++{
++	strbuf_add_uint(sb, data->disk_size);
++}
++
++static void rest_add(struct format_item *item UNUSED,
++		     struct strbuf *sb, struct expand_data *data)
++{
++	strbuf_addstr(sb, data->rest);
++}
++
++static void deltabase_add(struct format_item *item UNUSED,
++			  struct strbuf *sb, struct expand_data *data)
++{
++	strbuf_add_oid_hex(sb, &data->delta_base_oid);
++}
++
++static void objectmode_add(struct format_item *item UNUSED,
++			   struct strbuf *sb, struct expand_data *data)
++{
++	if (data->mode != S_IFINVALID)
++		strbuf_addf(sb, "%06o", data->mode);
++}
++
++static void literal_add(struct format_item *item,
++			struct strbuf *sb, struct expand_data *data UNUSED)
++{
++	strbuf_add(sb, item->u.literal.p, item->u.literal.len);
++}
++
+ static int is_atom(const char *atom, const char *s, int slen)
+ {
+ 	int alen = strlen(atom);
+ 	return alen == slen && !memcmp(atom, s, alen);
  }
  
- static int delete_merged_branches(int argc, const char **argv,
--				 int quiet)
-+				 int quiet, int dry_run)
+-static int expand_atom(struct strbuf *sb, const char *atom, int len,
+-		       struct expand_data *data)
++static int parse_atom(struct format_item *fmt, const char *atom, int len,
++		      struct expand_data *data)
  {
- 	struct ref_store *refs = get_main_ref_store(the_repository);
- 	struct ref_filter filter = REF_FILTER_INIT;
-@@ -775,7 +775,8 @@ static int delete_merged_branches(int argc, const char **argv,
- 				      FILTER_REFS_BRANCHES,
- 				      DELETE_BRANCH_SKIP_UNMERGED |
- 				      DELETE_BRANCH_NO_HEAD_FALLBACK |
--				      (quiet ? DELETE_BRANCH_QUIET : 0));
-+				      (quiet ? DELETE_BRANCH_QUIET : 0) |
-+				      (dry_run ? DELETE_BRANCH_DRY_RUN : 0));
+ 	if (is_atom("objectname", atom, len)) {
+-		if (!data->mark_query)
+-			strbuf_add_oid_hex(sb, &data->oid);
++		fmt->add = objectname_add;
+ 	} else if (is_atom("objecttype", atom, len)) {
+-		if (data->mark_query)
+-			data->info.typep = &data->type;
+-		else
+-			strbuf_addstr(sb, type_name(data->type));
++		data->info.typep = &data->type;
++		fmt->add = objecttype_add;
+ 	} else if (is_atom("objectsize", atom, len)) {
+-		if (data->mark_query)
+-			data->info.sizep = &data->size;
+-		else
+-			strbuf_add_uint(sb, data->size);
++		data->info.sizep = &data->size;
++		fmt->add = objectsize_add;
+ 	} else if (is_atom("objectsize:disk", atom, len)) {
+-		if (data->mark_query)
+-			data->info.disk_sizep = &data->disk_size;
+-		else
+-			strbuf_add_uint(sb, data->disk_size);
++		data->info.disk_sizep = &data->disk_size;
++		fmt->add = objectsize_disk_add;
+ 	} else if (is_atom("rest", atom, len)) {
+-		if (data->mark_query)
+-			data->split_on_whitespace = 1;
+-		else if (data->rest)
+-			strbuf_addstr(sb, data->rest);
++		data->split_on_whitespace = 1;
++		fmt->add = rest_add;
+ 	} else if (is_atom("deltabase", atom, len)) {
+-		if (data->mark_query)
+-			data->info.delta_base_oid = &data->delta_base_oid;
+-		else
+-			strbuf_add_oid_hex(sb, &data->delta_base_oid);
++		data->info.delta_base_oid = &data->delta_base_oid;
++		fmt->add = deltabase_add;
+ 	} else if (is_atom("objectmode", atom, len)) {
+-		if (!data->mark_query && !(S_IFINVALID == data->mode))
+-			strbuf_addf(sb, "%06o", data->mode);
++		fmt->add = objectmode_add;
+ 	} else
+ 		return 0;
+ 	return 1;
+ }
  
- 	strvec_clear(&deletable);
- 	ref_array_clear(&candidates);
-@@ -825,6 +826,7 @@ int cmd_branch(int argc,
- 	int delete = 0, rename = 0, copy = 0, list = 0,
- 	    unset_upstream = 0, show_current = 0, edit_description = 0;
- 	int delete_merged = 0;
-+	int dry_run = 0;
- 	const char *new_upstream = NULL;
- 	int noncreate_actions = 0;
- 	/* possible options */
-@@ -880,6 +882,8 @@ int cmd_branch(int argc,
- 			 N_("edit the description for the branch")),
- 		OPT_BOOL(0, "delete-merged", &delete_merged,
- 			N_("delete local branches whose upstream matches <branch> and are merged")),
-+		OPT_BOOL(0, "dry-run", &dry_run,
-+			N_("with --delete-merged, only print which branches would be deleted")),
- 		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
- 		OPT_MERGED(&filter, N_("print only branches that are merged")),
- 		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
-@@ -942,6 +946,9 @@ int cmd_branch(int argc,
- 	if (noncreate_actions > 1)
- 		usage_with_options(builtin_branch_usage, options);
+-static void expand_format(struct strbuf *sb, const char *start,
+-			  struct expand_data *data)
++static struct format_item *parse_format(const char *start,
++					struct expand_data *data)
+ {
+-	while (strbuf_expand_step(sb, &start)) {
++	struct format_item *ret = NULL;
++	size_t nr = 0, alloc = 0;
++
++	while (1) {
++		const char *percent = strchrnul(start, '%');
+ 		const char *end;
  
-+	if (dry_run && !delete_merged)
-+		die(_("--dry-run requires --delete-merged"));
+-		if (skip_prefix(start, "%", &start) || *start != '(')
+-			strbuf_addch(sb, '%');
+-		else if ((end = strchr(start + 1, ')')) &&
+-			 expand_atom(sb, start + 1, end - start - 1, data))
++		if (percent != start) {
++			ALLOC_GROW(ret, nr + 1, alloc);
++			ret[nr].add = literal_add;
++			ret[nr].u.literal.p = start;
++			ret[nr].u.literal.len = percent - start;
++			nr++;
++		}
 +
- 	if (recurse_submodules_explicit) {
- 		if (!submodule_propagate_branches)
- 			die(_("branch with --recurse-submodules can only be used if submodule.propagateBranches is enabled"));
-@@ -981,7 +988,7 @@ int cmd_branch(int argc,
- 				      (quiet ? DELETE_BRANCH_QUIET : 0));
- 		goto out;
- 	} else if (delete_merged) {
--		ret = delete_merged_branches(argc, argv, quiet);
-+		ret = delete_merged_branches(argc, argv, quiet, dry_run);
- 		goto out;
- 	} else if (show_current) {
- 		print_current_branch_name();
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 5ac3c2bb5d..1cb32497b8 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -2060,4 +2060,48 @@ test_expect_success 'branch -d still deletes a deleteMerged=false branch' '
- 	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
- '
++		if (!*percent)
++			break;
++
++		start = percent + 1;
++
++		ALLOC_GROW(ret, nr + 1, alloc);
++		if (skip_prefix(start, "%", &start) || *start != '(') {
++			ret[nr].add = literal_add;
++			ret[nr].u.literal.p = "%";
++			ret[nr].u.literal.len = 1;
++		} else if ((end = strchr(start + 1, ')')) &&
++			   parse_atom(&ret[nr], start + 1, end - start - 1, data)) {
+ 			start = end + 1;
+-		else
++		} else {
+ 			strbuf_expand_bad_format(start, "cat-file");
++		}
++		nr++;
+ 	}
++
++	ALLOC_GROW(ret, nr + 1, alloc);
++	ret[nr].add = NULL;
++
++	return ret;
++}
++
++static void expand_format(struct strbuf *sb, struct format_item *fmt,
++			  struct expand_data *data)
++{
++	for (; fmt->add; fmt++)
++		fmt->add(fmt, sb, data);
+ }
  
-+test_expect_success '--delete-merged --dry-run lists but does not delete' '
-+	test_when_finished "rm -rf pm-dry" &&
-+	git clone pm-upstream pm-dry &&
-+	git -C pm-dry remote add fork ../pm-fork &&
-+	test_config -C pm-dry remote.pushDefault fork &&
-+	test_config -C pm-dry push.default current &&
-+	git -C pm-dry branch one one-commit &&
-+	git -C pm-dry branch --set-upstream-to=origin/next one &&
-+	git -C pm-dry branch two two-commit &&
-+	git -C pm-dry branch --set-upstream-to=origin/next two &&
-+
-+	git -C pm-dry branch --dry-run --delete-merged "origin/*" >actual &&
-+	test_grep "Would delete branch one " actual &&
-+	test_grep "Would delete branch two " actual &&
-+
-+	git -C pm-dry rev-parse --verify refs/heads/one &&
-+	git -C pm-dry rev-parse --verify refs/heads/two
-+'
-+
-+test_expect_success '--delete-merged --dry-run only lists branches the live run would delete' '
-+	test_when_finished "rm -rf pm-dry-mixed" &&
-+	git clone pm-upstream pm-dry-mixed &&
-+	git -C pm-dry-mixed remote add fork ../pm-fork &&
-+	test_config -C pm-dry-mixed remote.pushDefault fork &&
-+	test_config -C pm-dry-mixed push.default current &&
-+	git -C pm-dry-mixed checkout -b wip origin/next &&
-+	git -C pm-dry-mixed branch --set-upstream-to=origin/next wip &&
-+	test_commit -C pm-dry-mixed local-only &&
-+	git -C pm-dry-mixed checkout - &&
-+	git -C pm-dry-mixed branch merged one-commit &&
-+	git -C pm-dry-mixed branch --set-upstream-to=origin/next merged &&
-+
-+	git -C pm-dry-mixed branch --dry-run --delete-merged "origin/*" >out &&
-+	test_grep "Would delete branch merged" out &&
-+	test_grep ! "Would delete branch wip" out &&
-+	git -C pm-dry-mixed rev-parse --verify refs/heads/wip &&
-+	git -C pm-dry-mixed rev-parse --verify refs/heads/merged
-+'
-+
-+test_expect_success '--dry-run without --delete-merged is rejected' '
-+	test_must_fail git -C forked branch --dry-run 2>err &&
-+	test_grep "requires --delete-merged" err
-+'
-+
- test_done
--- 
-gitgitgadget
+ static void batch_write(struct batch_options *opt, const void *data, int len)
+@@ -568,7 +652,7 @@ static void batch_object_write(const char *obj_name,
+ 	if (!opt->format) {
+ 		print_default_format(scratch, data, opt);
+ 	} else {
+-		expand_format(scratch, opt->format, data);
++		expand_format(scratch, opt->parsed_format, data);
+ 		strbuf_addch(scratch, opt->output_delim);
+ 	}
+ 
+@@ -936,17 +1020,9 @@ static int batch_objects(struct batch_options *opt)
+ 	int save_warning;
+ 	int retval = 0;
+ 
+-	/*
+-	 * Expand once with our special mark_query flag, which will prime the
+-	 * object_info to be handed to odb_read_object_info_extended for each
+-	 * object.
+-	 */
+-	data.mark_query = 1;
+-	expand_format(&output,
+-		      opt->format ? opt->format : DEFAULT_FORMAT,
+-		      &data);
+-	data.mark_query = 0;
+-	strbuf_release(&output);
++	opt->parsed_format = parse_format(opt->format ?
++					  opt->format : DEFAULT_FORMAT,
++					  &data);
+ 	if (opt->transform_mode)
+ 		data.split_on_whitespace = 1;
+ 
