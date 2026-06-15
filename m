@@ -1,109 +1,126 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF4A403E8B
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 15:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781537254; cv=none; b=j59oAKqyWWgvz3mpleHufkrB8GEq1Min9UZIU0NOBuC0t8ohGtlY4E2F1F8sO39IPMctC5PvhmFChCi1E2DNpJK/apoOa11SYO8NJlECaI8yAPzaNgipizftBF6r9bk6STJTY6wEnw+oBzZGet2AMaELM23uPRZnIyKX2DR3dXA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781537254; c=relaxed/simple;
-	bh=htZCU8gKO/nZbjlGy3GFSD7LOICSGUT2YMBJ2y3NVSQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B6d3T9RPwJfGKNUJpTiL1Hpooz0XmDq81EB7n7eUetha35imcfSPp3WRUfBj5Zj5T0QCheY3Ls1RUhxO05Y5cI9+frhLUSGmDnW2KH2DF7F7EpfjwQCa/qcWNIKvSeKkicakcMQWxzvS9XAFAAlhr9BUYQusYEdPrdyT97Ogmfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DlMKV6T2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bcWo6Edy; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5627402B92
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 15:27:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781537267; cv=pass; b=pYk2ZzWCv6bpKd9RXcDrjJ3nhy4CEF5vU1AXAm8ZQrMDG8kdtonG7ZBeBOkujYBHE07lut2uLAN+mo+oCXINR8k4JOPKw62wNdI8Ow6ZBAmwmKurH7ZlJkGBMAD1Ambvcovbl2OfiEVZ5EeIIMXtnDPxMVjdVLJ2jgS0u5gVhdQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781537267; c=relaxed/simple;
+	bh=4nwDyMoH0oHvzh6ksuEITDRzvVmLsJyUww524py/0Vk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HvO1BqPL3FRcJQ0+hkcAHqHZ8rZAfE1wxoymCoNTfaHoHdY0y96JPVj+odTcJ2j8EhhYgy7O8xDD67a0ucegbi9oD6+Yb0yrh52rnNx+lNM8GJ964WUTqeLmym4RE1+joFgO34RN0A5iP/xXjdbqzkoqBr84SNSV5puDAevPVHk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pAAHIT9Q; arc=pass smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DlMKV6T2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bcWo6Edy"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 18C9A1400073;
-	Mon, 15 Jun 2026 11:27:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 15 Jun 2026 11:27:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781537252; x=1781623652; bh=htZCU8gKO/
-	nZbjlGy3GFSD7LOICSGUT2YMBJ2y3NVSQ=; b=DlMKV6T2Y/umyyEpyX/PTer9kN
-	mPjpV3NB9yY3BycIZMid9XCBewlfDxVmpuoBpDK/frO/PyKat+C3KQOhwUlyI5K7
-	83+IkJKsWLReSCrfQUduf7Bi79YsAbIMIwoKbRUTP8I25z6dchhGQPteJhkhPWag
-	2avO1VcH9v9dFVtEqtyH2UQx0lg9C0NrlI6LEMALA8PopRQmry0cwb/Nky53tDyJ
-	EAiKhcMBuC/wVWf2MNfKveaVJ4/qKX7nyaqnee+qV599n+1xeIUW6l03EkWXFYxP
-	Toho4mRscIMR/70BynO3T40ASwyX7AmZYKWO6GoJPhMJDoSbcKiIC76USaKw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781537252; x=1781623652; bh=htZCU8gKO/nZbjlGy3GFSD7LOICSGUT2YMB
-	J2y3NVSQ=; b=bcWo6EdyMqIqc1q7dj5uPaaaz245zPf8UDIFzkwz9OdKhvY6lCn
-	M+iOHuYoYkwmyD+KPsS11HKK6Agfe6e++TVuwo5tpYjR8hhMmSrL6qYrofquUEkZ
-	x1IWd4C+JbrBYnzfX5rqBPZ2S7CUHToBb7z63srbXXYUDxHharoR0QkqVI8TpDIB
-	zhLQYjZ8mqumcrPgrWtannm73ba5MKfirgbjpxn6iQvjFvuVqTx0FejFCTNbUgzN
-	BDaioaiCIncrlkrm4drCAlzYPJwNVoXCg2CEXN9+9gsLQVkY9hdJQrZtLFyrEx/g
-	0OrFshF6vuLUdsnzSaZBOTzGuljRp3JAHBA==
-X-ME-Sender: <xms:4xkwaojWP6eqkHv20TCtkNGj0BJ94Svn0EPPtFm1KFnbNKTKoomPHA>
-    <xme:4xkwakvJvT31IfjzN8AsCrwJYEQjZC4zOQQSEiM3wpEafzfbNS1hEb-pcRLfemxu0
-    wADVkqYb1kGGXpV4_7zk3HUNVK1-D4L66rufu9hpCJqPuVEsWgS3Q>
-X-ME-Received: <xmr:4xkwap5xj7BLs8oqmgifuya2TIwxYBUQi6WE-5_6q9NXEI-7zpHycm3I3db_7oW5WOto6g8zfhOsrdOzvJWgphbMcNqIP1c3j8k_>
-X-ME-Proxy-Cause: dmFkZTEvSyOJf5oDoRO6Cenko4TbmCOoCI0YTO7nawYm8fq55t+frhmg9UFOPomZzd+Pmh
-    zDcdTJSQs5E0HV/BfsP+M1HN8o/sHqviFUYnXAr7we45tfXB6ngC28I7KUSR1TniNuj4E5
-    9NRONq1mfOF1LFnG6G2r0S0/rv1D1FnydCJDwGh5m8EcF3D+yTAc8tLU4RjzjhdIzKU6TF
-    cmWFxifgso1tWFKdof4vOlYT2f7cytUTtgWPqAejYbA0VtAtcur9KshDeT0T83u6uYU82Z
-    kvRc9u6RA4QXhl+WlPcGFgKePrygTq3wwFFZqzx5WgbTFvh4xONvbQk3Z4yZBrqnQl1yqR
-    3b3p4Jit3flvv04Stq+pO2c/GG0hSqeNUdJOoOIqFK27i8TG+4WkK1Pz2xlCiGmplrHPQf
-    fM2kCHl/CCzLOc777RsgiS0Qq1M8rDLK8yrx/WCerInLQA8f19ROZJqYmD59qcrO1U5JWf
-    4dB8eIOP/PG3XA5koGi/xA+uxXenh1TDbLQbxMuIQqBYelq9t9YpRXPw6iJy9KI/+ZMWx+
-    2klALrf9TZovu6WdfOa8Ct9fH7Y47hh1X80E5uKQs+rrE+f8FzjBcjHUrKS4A0J7TVEAMQ
-    uD36oGUJzPCWiAJ0KOOoxHBMrU9iGeH8KVw/gRPZQ6z2FRHmRYJ8Jzyea/EQ
-X-ME-Proxy: <xmx:4xkwagPEvLIUWPq_iJfpQwzl7qddyNZFGV0auBJ1r-nI4vUCdaQZsw>
-    <xmx:4xkwanv2s2WRFVifSiJNGKD755Zr4wgcx9QCo-YwsJsvLsOtPPjNkA>
-    <xmx:4xkwajaTpm_2XZSPfmPyXJSM3kL_-mRPOvmxTUIg1-O7y9sd5LZCEA>
-    <xmx:4xkwapyo_8nyFgaN1dizN2vittGDbA8B38COfAFs6rfEtAmQY1F8Bg>
-    <xmx:5BkwardefAXtLAstHPPgxq2et4ictD7xAK4yY377avvH9gTHVBk-ECyA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 11:27:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Patrick Steinhardt
- <ps@pks.im>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3] ls-files: filter pathspec before lstat
-In-Reply-To: <20260611-ls-files-pathspec-lstat-v3-1-f967e1a00c13@gmail.com>
-	(Tamir Duberstein's message of "Thu, 11 Jun 2026 21:31:51 -0700")
-References: <20260608-ls-files-pathspec-lstat-v2-1-fb734b28422e@gmail.com>
-	<20260611-ls-files-pathspec-lstat-v3-1-f967e1a00c13@gmail.com>
-Date: Mon, 15 Jun 2026 08:27:30 -0700
-Message-ID: <xmqq4ij3ddst.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pAAHIT9Q"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-36b9033d230so1946222a91.1
+        for <git@vger.kernel.org>; Mon, 15 Jun 2026 08:27:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781537265; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JAhMkUumWagtEOhsK3Y8poTTmerV+ICHxrs+yDtAI5XvQwOwd7NTnvhXPGPyU4ajl/
+         DEyKgSGkBiqAq9U8lITW1wCV65BP463FpWc2EPtvB3qsArvQ9NHrOiV0H1NdQQoUgX6Z
+         DTaUDJKJubXEJMiFOLSv5vqnC6zMqlv+JIVg1n0chJAe+QfVmRz7vaG9ZQwMwhxnmcYh
+         gyQYLzvJwyZDQc8AsY6LuofpLlBLtk+n1G7q9TvH4IFa2u+WXTdhwTj3Q2JOuSFVGg2P
+         e5EMfe7+JyZkoQLqHFycmLfeJmZnjGXVJnJRTj2poItmNxc/HTs6tIzS0refQjfQCUVC
+         w2Ew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=koNXwqWL7XFtlO33VPCZ24UFvH00QiGeaUgVIISeNZ8=;
+        fh=/AuRq0Ekie0rf+HwAYA4OlWC9UNL1zEBhTiQLLUEZ78=;
+        b=T8ab+8Q2n3rSqJDHbYgD5+DNCd2PgL5mKKdHiJOY3R/3M+I0+OEBPojxTnSKstv6ud
+         X8oOCGpoxlfvhS2TeTiSvTM+q3KelW5m8dlNFZm6jDezTb3+9+7S3RMpiDGy+PB9dYvp
+         vmrg3yh4Bk8rt8hCqGwsQ/bWNHdnlRYs/Ek/1CDdSvrPf1rbyQrQcCE3Q9+irS+JEV2I
+         zxNglrFilPgmdWCyxwpHZREmIt/sG0vJmNr/8O735d5ylCe6PuXpu5W6QR0ylgoORwXC
+         QykwwKHb9omslrQp33+Gd3rLgt/G1dmfFvhKyTU/fWlZafkjPab3rp65kNFfrGJRRC7S
+         EcOw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781537265; x=1782142065; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=koNXwqWL7XFtlO33VPCZ24UFvH00QiGeaUgVIISeNZ8=;
+        b=pAAHIT9QQoezZVoRTEElt3rWXthZY9MShK+FhRYSxKjN/Mf2Ht6vdF4I6JMUyKpGCV
+         kbb67y7W50rf4LHBDkxewu00uUTs/3OKtbLwTWGzhtPxRjc0HgEmRuYjxVG1TWtg47PO
+         uf8KINgJMp+Lvsv7mHexZSQ3YPUkcTwF1DYD+v4OeoPam8YI+Kmw2PoAe8NchjgZBRnJ
+         BkbKkq6RytOUo6NkKl7tpo8mAYVAzIQhya8chHyc3Qq365wg5tgs1HFh7tOehX6JTVW6
+         IBcvC8YK3USXpJtudpYOaCRX3Y633KwMDKEgZV/W3ZaOvd3AMC8SV+JDG6NUSCVtq9AJ
+         LNNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781537265; x=1782142065;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=koNXwqWL7XFtlO33VPCZ24UFvH00QiGeaUgVIISeNZ8=;
+        b=LTAXxpgQP1WAzByRs540+4+BbGd6c4pQBjI/xYfdui5yjLEiURmSZiGB/c6MZp+OqR
+         4oFAvjTb5iVmYDQ58yLO3GubNvIq7AIspFsijWyi1xvjlv5wzOz1KHGxivG2AFzgdkU1
+         ZFhLpIzmjM1xxmZ/Q3HnVgyU+z0g0GLdrDStmyZieJfpEQq1HoQ+sA/ZbjIchw8Loy1c
+         76apsoLxxdQsAeGs5KxC21LvHcdCRvILGd2enPGBqsb6etzNnm53S3xo7LFlDruw/6mr
+         nja6JtNUWehz311NmzO8jRf+kPRmxDW1SgQh4hWYGcRVr5JcVApZ8UFyX2pbEVQ8hzn8
+         JAeA==
+X-Gm-Message-State: AOJu0YyTsbndhfeB/m1/OanXWaCGpTXLfaINKS+k33lN+7vGAFcrVB7/
+	2swskMzHpV69JD0d18uJ2KXSfTMOo+vxd3O2bkBUS9Ubvvc4Yru0rmMp8h60iNCzj8g6KXl58Pl
+	YF6fGTx4bHrMod6XSdXHdS5ubQSGuGiZf8XguDEM=
+X-Gm-Gg: Acq92OHOpFCVXNKG+27nYLptOFNotrGXtzid3ZvkzWy9hm5VCmyIKVslDvp2sL2a7SC
+	gpKSIOVjuOH1D1JvPwYJYZaHCwtlpyNrZ5A830tdP1fuHTbfUwI92tfEvqPdgTgFWVTTnF3TqB7
+	cYCjjMYFpzjU+TUSaPWzcwb8sg19mJu6zYwlL6xHYxxp01ZCewIANXI4wGCzq0TpVZfm3BHRuzW
+	lqd5XRMdEmzLAhkc93Ud3v2OdXFd4kuddeyeLz28ctCWZ0W/rIi53bp4HpyUU1wpNgMvx/8wukH
+	5Kht6esNl/eB7LbQKKiaO0luY2jfNgIN0CoMQGY92dF9xP5KF7hhVF7xcyhSlWNSbIa+e5hsbBk
+	vEbySXRUIm3PKhbY=
+X-Received: by 2002:a17:90b:5205:b0:36b:769c:c037 with SMTP id
+ 98e67ed59e1d1-37a1e0084cdmr9902759a91.5.1781537264904; Mon, 15 Jun 2026
+ 08:27:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <645638cd87d6d919af6d4310be8176d49fba326e.1781456960.git.ben.knoble+github@gmail.com>
+ <xmqq1pe8eqmj.fsf@gitster.g>
+In-Reply-To: <xmqq1pe8eqmj.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Mon, 15 Jun 2026 11:27:33 -0400
+X-Gm-Features: AVVi8Cdh31XsD5sKqb_MKCnCkQlHaWPnTHEBzEkUR3VWOhCUqJqkOQEGB313Hs8
+Message-ID: <CALnO6CAzS818J4TRTNAa5s74RzvxJJ5=HXb24UnTxQzVPH9Khg@mail.gmail.com>
+Subject: Re: [PATCH] doc: fix a small, old release notes typo
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tamir Duberstein <tamird@gmail.com> writes:
+[Resending for list]
 
-> Prefilter only a single pathspec item, bounding the added work for each
-> index entry. Applying match_pathspec() to multiple arguments can cost
-> more than the lstat() calls it avoids. In a synthetic repository with
-> 10,000 clean files, passing every path to ls-files --modified increased
-> runtime from 112.5 ms to 494.1 ms when the prefilter was unconditional.
+On Sun, Jun 14, 2026 at 5:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+>
+> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> > ---
+> > No harm done if you choose not to keep this, I think. Stumbled upon it =
+when
+> > trying to understand Elijah's message [1] about timestamp_t overflowing=
+ in 2106
+> > (I though 32-bit time_t overflowed in 2038, but timestamp_t is somethin=
+g
+> > different=E2=80=A6 except maybe when it's not? Anyway=E2=80=A6)
 
-I still think the choice of special casing a pathspec with a single
-element is a lot harder to justify and invite people to start
-complaining "why one and not three?" than not special casing any
-(which makes the code simpler as well), as long as it is documented
-clearly, like the above paragraph, why the performance
-characteristics are so much different when pathspec has more than
-one elments, the users and future developers can take it from there.
+=F0=9F=91=8D
 
-So let me mark the topic for 'next' now.
+> Unless it fixes a glaring factual error that would harm end-users if
+> left unfixed, I would not very much be enthused to see fixes to
+> these ancient documents, quite honestly.
+>
+> >     separate and dedicated timestamp_t (so that we can distinguish
+> > -   timestamps and a vanilla ulongs, which along is already a good
+> > +   timestamps and a vanilla ulongs, which alone is already a good
+>
+> "timestamps and vanilla ulongs", as both are plural?
 
-Thanks.
-
+Indeed
