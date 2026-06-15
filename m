@@ -1,80 +1,79 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFB933065D
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0203F1AD3
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781528396; cv=none; b=DO0+qKlgrzZd73VnZXtCAwdjjuZi7+csYoAMtqFZHb02S9uiXAXOAQTIalycfkvTPI+jOKNaeOZDAxeqUYohaAcEkwTzPPM4AMQ1C13pR5McLDYGppsXFOZAXMoKLzfljV0x1A0/I7n6lqGAgnJmUt3zOS6uyQjJw/rX4xq/blI=
+	t=1781528400; cv=none; b=UjuNjj+MYxlSPSzHrUyzHKZso/TCQyGQkQAOyq0oZ0xJNJJrIkt+IMyl6eBK/LdN0/auWYNkgp+bawhOJ2BrrOYNjmRf1m6Z2ZzkI7uMIWWoPQYwR5ec88geqsxyNfbPVf6RFsfkeNzj0ZhPa9C4OAsbX4esuJX5URjop593Ps8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781528396; c=relaxed/simple;
-	bh=tuLwXao1ddH9P23LqJVBjtb66axDrAX3cSu4l5tTflY=;
+	s=arc-20240116; t=1781528400; c=relaxed/simple;
+	bh=smMa38GgsCXNxsIKwgHTCSIAfoTgm0nB0RLDsOEVeY4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pznbYOgER0RqbVH4590j4y5izj2NP+LIegleCw9ft4drFe7c2zy1vNVjMDqlRmUKzGM6x1lFsmwDF2fGEbbF8bi5LVmVDveoXPUrhF6l3jBqdO5WAxOcTJG6URUZlu/Cj36IfZPreUSzH2mHbs2re5RzNoMZBL8LqplRls7V7jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a3kkYAhT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R+JEow7V; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=RBF9yegMRpqbqNJnFZERvrjzywEecw53pX47b7RaOM/gNrGMKfcY80qyP/f6r1wlTBnBMEDmiOA01FycN3x6V28hCZqeXnYgNX0PSr5upTqWaIqxwwh6isExr1EG7FNfDmut/BgBa7QSS5Gf98WFdh8dHpEmNc68rrqThmJcZ9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MaasSUJ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FWbdPD36; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a3kkYAhT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R+JEow7V"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id B8719EC01E0;
-	Mon, 15 Jun 2026 08:59:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MaasSUJ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FWbdPD36"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9E49EEC0076;
+	Mon, 15 Jun 2026 08:59:56 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 15 Jun 2026 08:59:53 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 15 Jun 2026 08:59:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781528393;
-	 x=1781614793; bh=+duuHPKw2fj/j3P427nI3uEhlQPNcNR+tvk+uototLU=; b=
-	a3kkYAhTG2cVZY31cHF+K93f8I+EjKCTGzMjC6Tj64+ZeyEZ10jeD9mt988TG+za
-	QgmTvw3mHOCaeZhi+xp3EexQuAqFQGHtaIQhJNiZ65shBTzLlGEwqwrh9v+3Js9v
-	RQa7kf9q/3HspEc65uKjXGY8B13/UXDMURjlseoq7SVtiTvQCXg1/Cl7ivR0ev2e
-	x2cv+Kc85HUn3VC97aYP6k19jRw2GNDDMXmpn+8UwDTMYRJJd35/tXU/v7kSa17l
-	xypDbuDs/cG//BU5aYjWrRKpeP00iQuqQMad9PeJA4c1gavrPM3p0PqNw8LZEVAu
-	ZZcQYASSqhwlXl699K0i3w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781528396;
+	 x=1781614796; bh=ULM22KK0LfllHtBMmH68YT6JWPqmJZa//Y8QxkBPj84=; b=
+	MaasSUJ1tEGk7zGFCO2JJx6LMfgQl+ZpWF2usW4PlsmeCEaF2SnAZSXk1lAHT6Or
+	8CEfU91vZj7W+77RKLuy65V5P7/X46RW6uzcrRNN2bxgIYzFvC+Le+HlRAb7iYTN
+	5cfm0FIeDtLb9T36oT9NxNZ/4ur1+kgmVEC9XItxkZqqrelrWyCd1kbkuV4aDVU4
+	Aa02WkTy8kK0zZLcEokrDFm5uhokbzo5+1gJgdUF0Uy8P9Az2/qBR1s3AKG8KC3x
+	9f2x8JECEFjlO9roVzNhktda0v5O8MoeqfUoHVJT7yQkMzjvElOjmWDSxSMGGS02
+	CWZiMOtl6vsIM5kZBk9Jxw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781528393; x=
-	1781614793; bh=+duuHPKw2fj/j3P427nI3uEhlQPNcNR+tvk+uototLU=; b=R
-	+JEow7Vh78/4Vo877jyOjInwW34dqvwYnd9Byn94SfrGn6mN3X2/Dcz6Y72y3HSo
-	eCS7aS0JZxhyFDXnz9qk52nAzSTMMXdKqtuGRxPrWK8fxUeN1QQLLaOE6kfx1Q1p
-	NqtnnM+znrTLDiYA6yqaDtULeeo/KrDAleAyiwUkrCFgLg0DvTTwsGzQpgaLOsiN
-	P6LL6Bh0xyjtt39Q2ASff6E5oB2IAPMCG+DSnEwnM7kOXrkapDC/exknP+TzfprG
-	JBAVkc6Cxm79rxI7p5q/l2nqGy58ZAa1ZYsjXjt8R+0rDr/E6QZi1E5ws5khajle
-	D5eMZBa/+q8o8Pbl3+vMw==
-X-ME-Sender: <xms:Sfcvagds8BwmXxrN16CfpKpWUIWO-6AEc_YjilwAalKH8XXKWlYV4Q>
-    <xme:SfcvanL-bAmkQwNMONeCdAMRdHSvEWcLA68Y4jHxkMn-b2mJzpjbLABx08sdREE6c
-    3ZmJHzovXN260MyWdiWfNMjxBool1qi95BkSJAfrx-ek8P30ZXY>
-X-ME-Received: <xmr:Sfcvalzymt6Rqpy0-kPnQLVydkZu0EwryWvYcu7w1IThtqQGA1lkxV3TiJKGOlpNOsCz5_EOWuc0KcxLkRws6A4ZJmODeC69A0fcBOjbQQ>
-X-ME-Proxy-Cause: dmFkZTFAP/RsZ2ztb9AFRZGcJMRJNdbOBXbN9v0CSQgdBTUTVcQ8qWNLB8qIF1OObPmZyV
-    ERwPxR4CgVn8QaQDXt9X6AD+fLqccdWiEkzALJBZOUBueDgC8PrPXdEHIrKeIHW/rqqjrk
-    btm2o/+VEdg+hJVtJJz62wkfui/htRPqyjO9xhY80n3slmc3JJ2nfqZ5Byu/DUX8vPCtny
-    u+2IV/hzcG3Ljvy41AT1k89srYmDWW8pOuHPs49W//nJGXJVLcdKJGFpsnnN0AcJGmH5O4
-    /4gsDHsrcYVSRuJjFzakFcWcyU4UDacH3JtaVEx5S/Ns5q+PGxumY8Pq4x3PWLjWxg2TRa
-    4GtpNissj+8wKpax8wUNsFaq0MlEmuqLpdj1nYLO4BUcRZS4SHZz7tU0dkk8q0SjhvJrxy
-    bKoJIBoIbvHpMVTnfodA5e8gNRezQKmrp1eBQ/15QQyMh8IIfjO+NVmVU16CFX3tR7Pcip
-    4JnIO9fpJViqGKJReYDhv3dAf+I7clQK6YGcki0i0y38CkTNIuYcoQG4aRNmdJAWpVDZ0P
-    UAnOVbhte6n5Zg9GG+QykTVFVCqkPoK8HNg3zH5rEkcUomhm0dTt+97Hlk73Ajl5BPNN2N
-    nWoiq5jEey9VMm79LkLPFQMCURsTzIRzFepN0mFv4tqyj0x+Ubgq+f/vmvlw
-X-ME-Proxy: <xmx:SfcvaluPKUTpdDb0YRXTOJjX-j82T7jTLMESSa7ONjq5aA5lwZuKhw>
-    <xmx:SfcvagDIaDerd8AhRPvPj8-SP5d-Mek3z69mAyZVXWgsxHYflBUhYg>
-    <xmx:SfcvavEOGZM-BDc9ucqhu3rpnkLSL4NYUvLxH2EnSqoZs09Zo4gDrw>
-    <xmx:SfcvaoAb6lx9RLaJkaz8_HuKFRwRbcTt7E_JAa8jT7Wny2Hk6rmZzA>
-    <xmx:SfcvauNlI0v2g34rLTI6Hvjrm1zEf_JwGtycbfItRWalYhLHcepsW0i8>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781528396; x=
+	1781614796; bh=ULM22KK0LfllHtBMmH68YT6JWPqmJZa//Y8QxkBPj84=; b=F
+	WbdPD36kKYhKYN+mKFnHxS9xY/cGyV70qlhFNF01yPyaT5zg9McG4tY3J76Pxia3
+	k0YLNy+u1Q2Tj97l9bhx4ZffWNmz/DKW6URy4AdER2XOr3mac8zAgbdShMPXla67
+	lgSJ2xbjybw2Ernlql06ps1YdLrvZfqp2f9K9CxpCX7u/KEy6413B8EuAhsTvlR/
+	/eiXDpowkPe5l29wK40NZqXszuCss2Z+/OngjbwhhFNy53Ey61IViAlZ/Fd2wHOx
+	c7qOApVbaQyhgXDOwhQX/qsqLwtyGZDkD06Wz7CFUoPkoOPhESkqy6UrEmwm1eTc
+	B6HlFxzO0tAT3+LbVUEFg==
+X-ME-Sender: <xms:TPcvakCUgxJLLc8KEI2EDLoLcXu-gSgt-oqsHbSJuEZqAlypyvZCJQ>
+    <xme:TPcvardUxFF7FFsREQvWDNqUphm3C1MoQwOuPz_KoST_cRPCcfkM2krste7oBqpeF
+    1W_O2RsZ-55uT3wlyZJkWc3BDtWRFFW2X_Dgua8TrYYE72xyo5yuA>
+X-ME-Received: <xmr:TPcvar2r6IAEdiP3I7-SssV0bB6AoPbNdDuc4QQJjqJIblmHcozm8iu7xm2qEK3jQ6_8K27KKd_nFpiR8CCAh9FMZvPWEBWoPGVbAOzmPA>
+X-ME-Proxy-Cause: dmFkZTE0R8yETLxJQEQu5qYlTTsCn/4aFpcCdk82zSwSdbj1KUrfOuidsUuLBW1EbGZp8s
+    scEnVB34pR/8GeEMgUnkwyhFiK6dcsbzRjpOxJXJduony3MaT92A6ZLYKDWAnDPi0Q4FXg
+    e1sZKp7HxeEEJfAy1aXtK3gBmwEzv0ecqr8HvLEfdGtjWVpRM4g5yXooiz4nkB4mO88aYg
+    LYEjqIBt/37I5q4VEJ6KjbSI6d3k2z/cEV/L4qhmRI9wcB+O5CRtAYYUVV/gSZjjGgF5Tw
+    TlKeos9wjiHBoT+NKo7HBfQNmdqicRh0K9o/UXt/wEJuvBhFsAg9eg97W8L4w1D2OI7ppU
+    GQK4ZVbd/Z9ubhOuQQPit9hIzXtq3CHOjHlQ1NtfXrtiHR0s5ipAUj/A0UeRrHl5Hy18Rt
+    U9cZnaVuSf2fHgrKHmG8J5ZEUqmC1lpKuC2OCMq4EEnqCT/2I3qTpHp1iJa0Y1ShwK9W8U
+    DhLO/rGpmOVLFi7x5eSHUXDyeIzT1sGzndo/8JJsqtybeK0nzpHbPGJk4FlHS4Ylbjqln9
+    H+5lK2IusAglsP4Sbz5njI91SrbkXthEoxGfDFL8AxMDSW/oEG5Xa/GL1iYLeKpe9j0rn+
+    igPKo06RDqeK+P2wandyn+bK39H6bsNZivudVGNgQ87wJgz16Ct0Khn1odJA
+X-ME-Proxy: <xmx:TPcvaqijOjcPnf7VNJQgPqJmK0eQ7XSA1bAjNamYShCOmtN-Ekefaw>
+    <xmx:TPcvasma54p09I2qcGb40QqVV5JG5SbwuM_PMfPrIwAcv9YndUpVgA>
+    <xmx:TPcvaoZkxbCJx4xSgK5tNzqDmnAP5rj71QBku1YJ7i13uen5op-39g>
+    <xmx:TPcvavFpiu8asbvDFFNVe8wu4owRPjvwoxfNb4jN5ZvmNie0pw6T_A>
+    <xmx:TPcvaiAApDlQ4z6DuxoE5xOg6zGuI2gF3ePUDNcsGOj1mJfH5xxUaCKE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 08:59:52 -0400 (EDT)
+ 15 Jun 2026 08:59:54 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a09a56ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 12:59:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 160e922c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 12:59:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Jun 2026 14:59:41 +0200
-Subject: [PATCH v4 1/3] MyFirstContribution: recommend shallow threading of
- cover letters
+Date: Mon, 15 Jun 2026 14:59:42 +0200
+Subject: [PATCH v4 2/3] MyFirstContribution: recommend the use of b4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-pks-b4-v4-1-22cfca8f19c5@pks.im>
+Message-Id: <20260615-pks-b4-v4-2-22cfca8f19c5@pks.im>
 References: <20260615-pks-b4-v4-0-22cfca8f19c5@pks.im>
 In-Reply-To: <20260615-pks-b4-v4-0-22cfca8f19c5@pks.im>
 To: git@vger.kernel.org
@@ -94,56 +93,158 @@ Cc: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>,
  Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15.2
 
-The "MyFirstContribution" document recommends the use of deep threading
-of cover letters: every cover letter of subsequent iterations shall be
-linked to the cover letter of the preceding version. The result of this
-is that eventually, threads with many versions are getting nested so
-deep that it becomes hard to follow.
+The b4 tool originates from the Linux kernel community and is intended
+to help mailing-list based workflows. It automates a lot of the annoying
+bookkeeping tasks that contributors typically need to do: tracking the
+list of recipients, Message-IDs, range-diffs and the like. In addition
+to that, b4 also has many other subcommands that help the maintainer and
+reviewers.
 
-Adapt the recommendation to instead propose shallow threading of cover
-letters: instead of linking the cover letter to the previous cover
-letter, the user is supposed to always link it to the first cover
-letter. This still makes it easy to follow the iterations, but has the
-benefit of nesting to a much shallower level.
+The Git project uses the same infrastructure as the kernel, so this tool
+is also a very good fit for us. Adapt "MyFirstContribution" to
+explicitly recommend its use.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/MyFirstContribution.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/MyFirstContribution.adoc | 92 ++++++++++++++++++++++++++++++++--
+ Documentation/SubmittingPatches        |  6 ++-
+ 2 files changed, 93 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index b9fdefce02..984b7f5aa8 100644
+index 984b7f5aa8..607876f3d8 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -790,7 +790,7 @@ We can note a few things:
-   v3", etc. in place of "PATCH". For example, "[PATCH v2 1/3]" would be the first of
-   three patches in the second iteration. Each iteration is sent with a new cover
-   letter (like "[PATCH v2 0/3]" above), itself a reply to the cover letter of the
--  previous iteration (more on that below).
-+  first iteration (more on that below).
+@@ -833,7 +833,7 @@ This patchset is part of the MyFirstContribution tutorial and should not
+ be merged.
+ ----
  
- NOTE: A single-patch topic is sent with "[PATCH]", "[PATCH v2]", etc. without
- _i_/_n_ numbering (in the above thread overview, no single-patch topic appears,
-@@ -1214,7 +1214,7 @@ between your last version and now, if it's something significant. You do not
- need the exact same body in your second cover letter; focus on explaining to
- reviewers the changes you've made that may not be as visible.
+-At this point the tutorial diverges, in order to demonstrate two
++At this point the tutorial diverges, in order to demonstrate three
+ different methods of formatting your patchset and getting it reviewed.
  
--You will also need to go and find the Message-ID of your previous cover letter.
-+You will also need to go and find the Message-ID of your first cover letter.
- You can either note it when you send the first series, from the output of `git
- send-email`, or you can look it up on the
- https://lore.kernel.org/git[mailing list]. Find your cover letter in the
-@@ -1227,8 +1227,8 @@ Message-ID: <foo.12345.author@example.com>
+ The first method to be covered is GitGitGadget, which is useful for those
+@@ -845,9 +845,14 @@ more fine-grained control over the emails to be sent. This method requires some
+ setup which can change depending on your system and will not be covered in this
+ tutorial.
  
- Your Message-ID is `<foo.12345.author@example.com>`. This example will be used
- below as well; make sure to replace it with the correct Message-ID for your
--**previous cover letter** - that is, if you're sending v2, use the Message-ID
--from v1; if you're sending v3, use the Message-ID from v2.
-+**first cover letter** - that is, for any subsequent version that you send,
-+always use the Message-ID from v1.
++The third method to be covered is `b4`, which builds on top of `git
++format-patch` and `git send-email`. This method is the recommended way to
++submit patches via mail as it automates a lot of the bookkeeping required by
++`git send-email`.
++
+ Regardless of which method you choose, your engagement with reviewers will be
+-the same; the review process will be covered after the sections on GitGitGadget
+-and `git send-email`.
++the same; the review process will be covered after the sections on GitGitGadget,
++`git send-email` and `b4`.
  
- While you're looking at the email, you should also note who is CC'd, as it's
- common practice in the mailing list to keep all CCs on a thread. You can add
+ [[howto-ggg]]
+ == Sending Patches via GitGitGadget
+@@ -1296,6 +1301,87 @@ index 88f126184c..38da593a60 100644
+ 2.21.0.392.gf8f6787159e-goog
+ ----
+ 
++[[howto-b4]]
++== Sending Patches with `b4`
++
++`b4` is a tool that builds on top of `git format-patch` and `git send-email`.
++It automates much of the bookkeeping involved in sending a patch series to a
++mailing-list-based project.
++
++Refer to the https://b4.docs.kernel.org/[b4 documentation] for a full reference.
++
++[[prep-b4]]
++=== Preparing a Patch Series
++
++`b4` tracks your patch series as a branch. To start tracking the `psuh` branch
++you have been working on, run:
++
++----
++$ b4 prep --enroll master
++----
++
++This enrolls the current branch, using `master` as the base of the topic. `b4`
++manages the cover letter as part of the branch, so you can edit it at any time
++with:
++
++----
++$ b4 prep --edit-cover
++----
++
++The cover letter not only tracks the content of the top-level mail, but also
++the set of recipients. You can add recipients by adding `To:` and `Cc:`
++trailer lines.
++
++[[send-b4]]
++=== Sending the Patches
++
++Before sending the series out for real, you can inspect what `b4` would send by
++passing `--dry-run`:
++
++----
++$ b4 send --dry-run
++----
++
++Once you are happy with the result, send the series with:
++
++----
++$ b4 send
++----
++
++[[v2-b4]]
++=== Sending v2
++
++When you are ready to send a new iteration of your series, refine your
++patches as usual using linkgit:git-rebase[1]. Note that you typically want to
++rebase on top of the cover letter. You can configure an alias to enable easy
++rebases going forward:
++
++---
++$ git config set alias.b4-rebase 'rebase "HEAD^{/--- b4-submit-tracking ---}"'
++$ git b4-rebase -i
++---
++
++Before sending out the new version you should also update the cover letter with
++`b4 prep --edit-cover` to note the relevant changes compared to the previous
++version. You can inspect the changes between the two versions with `b4 prep
++--compare-to=v1`.
++
++Same as with the first version, you can use `b4 send` to send out the second
++version. `b4` automatically bumps the version to `v2`, generates the range-diff
++against the previous iteration, and threads the new series as a reply to the
++cover letter of the first version.
++
++[[configure-b4]]
++=== Configure b4
++
++`b4` can be configured via linkgit:git-config[1]. In addition to that, projects
++can have their own set of defaults in `.b4-config` in the root tree, which also
++uses Git's config format. The user's configuration always takes precedence over
++the per-project defaults.
++
++Refer to the https://b4.docs.kernel.org/en/latest/config.html[b4 config documentation]
++for more information on the available options.
++
+ [[now-what]]
+ == My Patch Got Emailed - Now What?
+ 
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index d570184ec8..99427e1ee1 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -573,8 +573,10 @@ your existing e-mail client (often optimized for "multipart/*" MIME
+ type e-mails) might render your patches unusable.
+ 
+ NOTE: Here we outline the procedure using `format-patch` and
+-`send-email`, but you can instead use GitGitGadget to send in your
+-patches (see link:MyFirstContribution.html[MyFirstContribution]).
++`send-email`, but you can instead use GitGitGadget or `b4` to send in
++your patches (see link:MyFirstContribution.html[MyFirstContribution]).
++Contributors are encouraged to use `b4`, which automates much of the
++bookkeeping that is otherwise done by hand.
+ 
+ People on the Git mailing list need to be able to read and
+ comment on the changes you are submitting.  It is important for
 
 -- 
 2.55.0.rc0.738.g0c8ab3ebcc.dirty
