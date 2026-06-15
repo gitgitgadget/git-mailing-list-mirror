@@ -1,166 +1,169 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E4F3F23C0
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B211433065D
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:17:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781528401; cv=none; b=BvaTYWtK49po0x2EzMnyCj2pBnzBYD3Ap+XYUShOnKi8pnEdzsSk2TQyVEFqu/LqXZHR97aMdkbLQrE1HpUtRkSQR9FTrnL4TI1U0dMujkCBgzNBCG5qvuLenSGavZPVjeR2QPv/eRFkDJmhsTldAxWuJcIIklV7FEtkC97QzZA=
+	t=1781529442; cv=none; b=anlubvA+Hd6sRTq2iSHdjvv3bah5O/nLHs66VtRlla64DFTNE8jUZjYsewFWxiUeICp267gx0gLflLvAwiZfGAxlB1x0dz6U6VrAaNtthUK7acr3Y0bx2zeu+Q/NUjjKMlHIFI6Onf29Dm6rYm8lECtP0QMgLC/TtzOyMBOJVBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781528401; c=relaxed/simple;
-	bh=291q+WSSWnirUIELJoxzzlhEG+Konpwk2Ki83H3pbL0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZA3cjqt/2wA01ksXtS6ycHUPBjtn3YRE62y+se7vGgjLT+p9fDuK8fII44i8U7iAXHLaaIK4rztYVskvTyywetDGpsN6WE3kInQFCpNzZRyba2PeYEWgkpR4eiRH9uVR+9JWBvDU3jV4Yr5LpGA8wyU7I8L5qRU+9UofIQzRd9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZQuYteNo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TBTH74mr; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1781529442; c=relaxed/simple;
+	bh=JePScs1EQSe/08L/GAXw0iEVlZVhkJJHpMBGXveZ7ZM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=axbVdozxZC5I6iWNQVkvPxI2BFvwlhpBDU/3GZJ0q8n0yTrkyJy9UxRxd61HPQgI1c28kgTyYAfss1PP4tPGp4JAJiZEFL6N1Bof1CvkHM0hS0SdqjBVb1Pg8NqmAVbB1m4yAeopZZeDaY4PMNLNYTp3a9RoA2iaCvqDbR5VYBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j0geTEtY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d1EIJVPx; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZQuYteNo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TBTH74mr"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 59C23EC0203;
-	Mon, 15 Jun 2026 08:59:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j0geTEtY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d1EIJVPx"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id EE00EEC01F1;
+	Mon, 15 Jun 2026 09:17:19 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 15 Jun 2026 08:59:58 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 15 Jun 2026 09:17:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781528398;
-	 x=1781614798; bh=yweRGq7/sGTJOqhffMBB/6e6mhvFerMUji31ZVggwRQ=; b=
-	ZQuYteNoXTzI+s6sFt7stI7wLWVt9j4kRb0edkIBKguotuEJxxBycBNzMohgIUBg
-	rWIeKp1C6xjDfvaHnIsmjJogBllKBPyBvA6mban9UXbX6pzfQYv4gQRsPv3M+TYW
-	T4zCIINhvxM6mjxMSqlg+ebweihA/zcDEs+bEcJlOa48pYklKjCLEupoIYCciXXZ
-	b0jo1wUIIog8ZitwLaUD9aEMA7YXUw0qGgMvEhRfpN+vvgU70VoqmcFFt2cwCgZz
-	dGIJNNhsCKeuBdCSP441YiiM2q/f1iYgcmPXWqUxsonCqIipJ76jnX7poA+uXcAl
-	6oqNoU3P4/Mo+TD7MpUqLg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781529439; x=1781615839; bh=X6wTY+y28E
+	RDMwYblQKB4eHR+27lXutT1fJWQxP4s44=; b=j0geTEtY08Gn384HyQR9yXRRaI
+	9+ayAhcg5gZxpCY9jPmNGl8eHQvArVSZf4hmUg/CBPpuAGf/yOC6AdQ3rvaR5oyu
+	xyjZ3xS+p8B6GYz6i5Ud7A+NFWYx8wOne7nmgw88jhMFD10TR6Iy0fO2UKNyFxa4
+	GzC4HytpMq784ERooWhHgEgHOud4xfozVQmB7zZsXUIjHS9Bnhpaa4O2+lnKeT2w
+	xnAFCd3Z9muEo1CXN2Mppoaw/Jobkekv7qY8Trxhx1otmvjLKoPcw+L8SE7JARyw
+	NPYgMCvsCahHPyKlMPR4RIZny9YF1hGKMhccXZtrN6HaBeQPl6K5m9z3xPMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781528398; x=
-	1781614798; bh=yweRGq7/sGTJOqhffMBB/6e6mhvFerMUji31ZVggwRQ=; b=T
-	BTH74mrzmpmxkTbpf3eDMD99dxWFL/tFsMLJ+qcdbYJo2YyNTI8lWP3hPhyuUwxx
-	noxLPN9HLPrJao3eE0hlMxS5IS358U5pgHH2Z/K+cdJV4eB86YC302CR49wOby+1
-	iuzUBJcdWUTqiZuMvvrrBDYbPEqLdSFcHw+WszreHFKNX247KeZGVKMY5ZlxnUzG
-	5NlrpCY8kMeG5biek6qmvGNSgusC9Efv/9bxK41knfk/3N2izEZBdW0iV+IldlcV
-	Ic2IMHsVKrgyuf0IBVfIdwJ49n+Ops/PPt4yeEJ2hsmtQ8lZwo1J36L5L/dfO3F5
-	RUTpo618Fef8ITVs+IjMA==
-X-ME-Sender: <xms:TvcvapcCoCkywdKKgiBCxyjbbn_rEv-gUlp48GKtcEAwtIw7L1gZuQ>
-    <xme:TvcvasJ5Nd7LfdwH7Bb-4wvxUReRFi_gxbBVg1KsaL9FdK_fNdQWGBklOC9z654NF
-    cz3qs8w6gBV04KGMnlrdi37GjY1yn6FgEIMUkOzOOzZ0JVfgAvSbw>
-X-ME-Received: <xmr:TvcvamxTgaQUDMXRwMSJZM3plYZi9VUTdDdfK0vPPL7R7qso-x6uVBXkuWpaHAeoNJquNKI-LNBv-nSIfxz7OTqZekHyX2auRmWiu0Pikw>
-X-ME-Proxy-Cause: dmFkZTFaWKqrbGiK/MQLmoMBo0Ls31+NgkSWqalw8WjdwdDnFzohSPXOkrgBQLz0Dxe3sn
-    zUDW5PIfL3Qi4Sm4ehgD9SNHbjsj9fBgLLweWlJ16/+P6gWbEbS9qJmU4Rql3hmR3jSmnN
-    Ip/vdL3+ANw/YirnR+MH78Gkr6SiBp8zL/g/5E5uawdRgYH8baXf6AJgDO3SiHH4uSdcUR
-    sCozLkoGvtbnQhaNd6nP4GBN+FhnhI1JGAPcUft4cepMhdQ/FzqeFTdnipUmFAfcoTmap3
-    e25RAUmuJY7/3gQYdEFxJqU9LNhCa7jovVg5PvG2Vf6cZoHOoqKCeEv05MFQTFY8M41wC0
-    u8pBCJVHI0LtiH2Nyec9ni+2WF/OorOuGGtll6ARWo5W+pWshIFKmdHouuQVhrS8SiyKw7
-    Y9GLXt/1AXk16Ojs0rUGJBdlSU6kDg7hrdtQ10nvKLdcnbcRoNKwzleVaAzRlOqclnvYdS
-    PGgn9YE/3djDKRwmv1zPpeICXELqKN4Y0g0RQ8h/eiy8ZQhEEdNxnJxEeY3od4Gafe3eHe
-    rhrsMosqkmyE7TJEBybapN3uhtO910iD1yRDu/0x5mBQio68sK3m7yVSCRCEoW7QCPTsBr
-    +5hGRx3aWNNNz/aA7AO4ik2024wCKIWybBBYi7lXYopvutR+FZqJZZvuNRbw
-X-ME-Proxy: <xmx:TvcvaitDNd2oVPszfk8pjF1k21_On4J5OztdnW8YFlxhSWXkmctLMA>
-    <xmx:TvcvapA3sQgvq0SqcA6jT7aJJL62PmKTshCcAdt_-MBRN5exk-nHCw>
-    <xmx:TvcvakHv63uYpMZQKGeTeJnRc3RJdjHlpLkTFW6akH-RfbTIukk59A>
-    <xmx:TvcvapB9-x2kVVc42RG6yR0Ui_Us6BRbx6yWsElHG4KVhFCpZwDFGA>
-    <xmx:TvcvarPILjpg_810cMj64EuRU3f74A09HQviVJXQFehmDyBMHxbGCYKO>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781529439; x=1781615839; bh=X6wTY+y28ERDMwYblQKB4eHR+27lXutT1fJ
+	WQxP4s44=; b=d1EIJVPxDwj1Z1uSqvGv6mkeRwhMpZ1I2hSOyEs3I5CDz+AUFAF
+	ANpm68JbIr16OfKgDmABedSZhP2AVifKf5fhOsywJ+qIOQEVmqc4O7X6U6I+aN/O
+	jRqPxCWCqAaiLY2DD6rUiHuiWqvpfbmSbQ4CafDntb/hrVy1Rm79Equ3VtEgm0Fb
+	wv+xmtHG0ql4hBNVIUnuvxTYpY8zlNFnsLydlmtcu4tT0DroWQuwGr+Y+dxNwDr8
+	WBWb+QIgsFGFKTbDuOzc6BRyacs4ISDd3P4JyXGtuQV/KOoNx+0i7Xi27G+rOfpA
+	0UL74rw7k4EDVhMRBbol2xnW2SXdCvKJYhw==
+X-ME-Sender: <xms:X_svajh8yTjXmGi6YK6p4c6S1PRXH_KinSUZm4LjK4oyPnGeEQa1rw>
+    <xme:X_svancr1viPc25W8ZrJU0dRdyfAnRq0gVs0wWFLS9LBNX0_bqCbwTghDU5Pd5z6_
+    mWwiwSUUsqVHTzU4nIflnno-IWBcOnrP65yGgA5zsDQVJ1E9TxqYVw>
+X-ME-Received: <xmr:X_svagd0b9btL6GnioQw4D0mO0JUopSvDzTjjt5ayQR9w7x9DegNznDw36B06y9cVhSqWiQc5Ik_fhzctnVl7jR7dVe4jh3h_4uJ9hVOew>
+X-ME-Proxy-Cause: dmFkZTGx6cO6TXlOtraG+0vadV/Mx1nHjGrkenpP9Qg+0E3rwZ7zAdJyYTOl6QR0R6Fkmf
+    UOpa6DpaloNMy5+Xrwim7o+uOHLz9QYLNuZkehG0d5ulw3qnu2dTBnnX2UsLcUcZLNteQk
+    scYzVth/LT88hAy9vRfexx9whGRfL0WxGxdcTPbhvQPGXMLzRGtE8OZc9hByLy6xoIi8mF
+    GIfGJRKsKvRHGBnSCQsjzUtgEquJB2aXbC3j+JA2vf6kEbByW8WFQvfqE1YhwbOucjQwVI
+    YjyvKo09cPrYXTpj2/81tQbb2xRHu0g9DIrQVFwT+XIxa0ehSvzt3C2zxn5Xmirt468toJ
+    cWfG9E5/2WeNH75fiwFYzMGWA0GYGyjsFi/0E29w3zD68QvCZ22m5hLtH3bp9K9sYnxiKh
+    hv14unL3zofIW+HmzqAPA1SYtPoLquZQBK1K3Bq7gQ3tb8F/vwFSnyRtw1lGoKzELmmCER
+    rK4C2g0XP7fIylLa8+8Z/nkX4LdCL6BlIJi94znPpH34ZuKd4maktmE5mH+n3d4YCtxVqu
+    wx5/pzhCn8pN0G348rBS7fRh0y1M6AaaiZktwri55iOyMCCvn/3C0540rlfGl3i6K52jZ6
+    rJAEwcOoRW0MoMcM5Z0lvkKoX/TjmEJR4y9ddHYpFDT3vIXyGZh4rvKl+HbQ
+X-ME-Proxy: <xmx:X_svap808WBEkUfoGfIRh4JEEgLv9PJaOu7m6rKx7A8hUBYnEjbjmg>
+    <xmx:X_svakm978q-9moyd7aTTdGol9iVjGy6iBIT-9TzEVI8PYvUq8FCGA>
+    <xmx:X_svaj-vAKQtTARonGQE4j3oTnJOl29IxNbJcFhzmkQHbDSpf0YjHg>
+    <xmx:X_svaqlBpA9BgIFEOFX57j0REA9SOApgwDOo6Zs3AAz6LawZJ57e9g>
+    <xmx:X_svaiHXQ67H2BwqgUrmYZZFAD6u92SHSkf8RmDX1oVCwYDstgFtXT-W>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 08:59:56 -0400 (EDT)
+ 15 Jun 2026 09:17:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ed3a4bed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 12:59:56 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id bd1fb129 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 13:17:17 +0000 (UTC)
+Date: Mon, 15 Jun 2026 15:17:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Jun 2026 14:59:43 +0200
-Subject: [PATCH v4 3/3] b4: introduce configuration for the Git project
+To: Weijie Yuan <wy@wyuan.org>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC PATCH 1/2] doc: encourage review replies before rerolling
+Message-ID: <ai_7Wh7hrD8PZozg@pks.im>
+References: <cover.1781358364.git.wy@wyuan.org>
+ <68a1969c35cbc2d24af7a0d09c376ecf403c3591.1781358364.git.wy@wyuan.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-pks-b4-v4-3-22cfca8f19c5@pks.im>
-References: <20260615-pks-b4-v4-0-22cfca8f19c5@pks.im>
-In-Reply-To: <20260615-pks-b4-v4-0-22cfca8f19c5@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Tuomas Ahola <taahol@utu.fi>, 
- Weijie Yuan <wy@wyuan.org>, Ramsay Jones <ramsay@ramsayjones.plus.com>, 
- =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Toon Claes <toon@iotcl.com>, Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <68a1969c35cbc2d24af7a0d09c376ecf403c3591.1781358364.git.wy@wyuan.org>
 
-In the preceding commit we have extended our documentation to recommend
-b4 for sending patch series to the mailing list. Introduce configuration
-so that it knows to honor preferences of the Git project by default. For
-now, this configuration does two things:
+On Sat, Jun 13, 2026 at 10:08:30PM +0800, Weijie Yuan wrote:
+> Review feedback should not be answered only by sending a new patch
+> version. Encourage contributors to discuss their planned response in the
+> mailing-list thread before rerolling.
+> 
+> This makes the author's reasoning explicit before the next version is
+> prepared, instead of forcing reviewers to infer it from the rerolled
+> patches.
 
-  - It configures "send-same-thread = shallow", which tells b4 to always
-    send subsequent versions of the same patch series as a reply to the
-    cover letter of the first version.
+Not only that, but it also encourages more social interactions between
+contributors.
 
-  - It configures "prep-cover-template", which tells b4 to use a custom
-    template for the cover letter. The most important change compared to
-    the default template is that our custom template also includes a
-    range-diff.
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+> index 0e2a9313ce..59891e3c14 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -1423,11 +1423,13 @@ fewer mistakes were the only one they would need to review.
+>  After a few days, you will hopefully receive a reply to your patchset with some
+>  comments. Woohoo! Now you can get back to work.
+>  
+> -It's good manners to reply to each comment, notifying the reviewer that you have
+> -made the change suggested, feel the original is better, or that the comment
+> -inspired you to do something a new way which is superior to both the original
+> -and the suggested change. This way reviewers don't need to inspect your v2 to
+> -figure out whether you implemented their comment or not.
+> +It's good manners to reply to each comment in the mailing list discussion
+> +instead of letting the next version of your patch be your only response. Tell
+> +the reviewer whether you plan to make the suggested change, keep the original,
+> +or pursue a different approach. This way reviewers can respond to your reasoning
+> +before you spend time preparing a version they may not agree with, and later do
+> +not need to inspect your v2 to figure out whether you implemented their comment
+> +or not.
+>  
+>  Reviewers may ask you about what you wrote in the patchset, either in
+>  the proposed commit log message or in the changes themselves.  You
 
-There's potentially more things that we may want to configure going
-forward, like for example auto-configuration of folks to Cc on certain
-patches. But these two tweaks feel like a good place to start.
+I feel like the new version doesn't really add anything significant to
+this paragraph that it didn't already say before your patch, but it does
+so with more words.
 
-Note that these values only serve as defaults, and users may want to
-tweak those defaults based on their own preference. Luckily, users can
-do that without having to touch `.b4-config` at all, as b4 allows them
-to override values via Git configuration:
+I'm of course biased though, so maybe more words help newcomers?
 
-    ```
-    $ git config set b4.prep-cover-template /does/not/exist
-    $ b4 send --dry-run
-    ERROR: prep-cover-template says to use x, but it does not exist
-    ```
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 6b83b6c89e..d8ad7fb73e 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -48,8 +48,12 @@ area.
+>  
+>  . You get comments and suggestions for improvements.  You may even get
+>    them in an "on top of your change" patch form.  You are expected to
+> -  respond to them with "Reply-All" on the mailing list, while taking
+> -  them into account while preparing an updated set of patches.
+> +  respond to them with "Reply-All" on the mailing list, instead of
+> +  letting an updated patch series be your only response.  Tell
+> +  reviewers which suggestions you plan to use, which ones you disagree
+> +  with, and when a comment leads you to consider a different approach.
+> +  Use these replies and any follow-up discussion as input when
+> +  preparing an updated set of patches.
 
-So this gives users an easy way to override our defaults without having
-to touch ".b4-config", which would dirty the tree.
+This change I agree with though, as it highlights what kind of
+discussions we expect to happen.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- .b4-config         |  6 ++++++
- .b4-cover-template | 11 +++++++++++
- 2 files changed, 17 insertions(+)
+> @@ -639,7 +643,9 @@ grouped into their own e-mail thread to help readers find all parts of the
+>  series.  To that end, send them as replies to either an additional "cover
+>  letter" message (see below), the first patch, or the respective preceding patch.
+>  Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
+> -how to submit updated versions of a patch series.
+> +how to submit updated versions of a patch series.  Before sending another
+> +version, make sure you have answered meaningful review comments in the existing
+> +discussion.
 
-diff --git a/.b4-config b/.b4-config
-new file mode 100644
-index 0000000000..fd4fb56b6d
---- /dev/null
-+++ b/.b4-config
-@@ -0,0 +1,6 @@
-+# Note that these are default values that you can tweak via the typical
-+# git-config(1) machinery. You thus shouldn't ever have to change this file.
-+# See also https://b4.docs.kernel.org/en/latest/config.html.
-+[b4]
-+send-same-thread = shallow
-+prep-cover-template = ./.b4-cover-template
-diff --git a/.b4-cover-template b/.b4-cover-template
-new file mode 100644
-index 0000000000..ab864933b5
---- /dev/null
-+++ b/.b4-cover-template
-@@ -0,0 +1,11 @@
-+${cover}
-+
-+---
-+${shortlog}
-+
-+${diffstat}
-+
-+${range_diff}
-+---
-+base-commit: ${base_commit}
-+${prerequisites}
+This change is probably good, as well.
 
--- 
-2.55.0.rc0.738.g0c8ab3ebcc.dirty
+Overall it's a bit on the annoying side that we have to always make sure
+to update both SubmittingPatches and MyFirstContribution in tandem.
+Makes me wonder whether they are mostly redundant and whether it would
+make sense to eventually merge them. But that's a tangent and not
+anything that needs to be addressed in this (or any other) patch series.
 
+Patrick
