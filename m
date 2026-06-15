@@ -1,70 +1,69 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780D5408020
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 16:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3667A40F8F6
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 16:47:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781542053; cv=none; b=IYcFP63Nf3ckttFFG5UQi0HkR1CrtSeh4dgm6EWU7AXRSKx+kAKjDeQ12DaJuWEJug0byCHNGzqRTvGAySOPvSss7Ja3bmFrww89UAF6JLA1n/zq1Fo59/uw61fVxtbL8tr3GLspH6u+T9uaO3tIm9YN4UEHUfv0IBT+q7YGUuw=
+	t=1781542055; cv=none; b=GUkob6sma3qhNhx/AYsCH6Ed3fQ/Bj4aBrckA1gRy8cqnDrwcHM1ZBmyVT+zyvAJCEDTuFORaYomQHYq1VuIU3Wpo2uOhwUIculeevFjDneEFX6XDqwQBnZs4J/ZTctHt8WKbbk/wdOhAGWost+rz+kDs6aFVa3LNFjyrktsx24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781542053; c=relaxed/simple;
-	bh=NutoYXBg1C7XgbflVuG0jW+euBPKTNQMr3lJ1a/7C7Q=;
+	s=arc-20240116; t=1781542055; c=relaxed/simple;
+	bh=R722YYMFCNumLlRbEZd8gEj3tzLydkg6rygOUVW/jyc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mYjJxEAt7Nwdxl+BFjBCGET2DQL4X7zSD16K9Ub6PRmLU1XWWtWeNdcX0LicX3R4MKjYvM4OO/4izlIKF2SURa45Cp3XnfRQZXc1lHwoK/jjHAAYTddDXzInnEHzMQoZ2aDRGm7hVeZQ6Amef74wwaXdknETJJe746Nr/CpN+8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kQWoyBJ7; arc=none smtp.client-ip=74.125.82.174
+	 MIME-Version:To:Cc; b=lOU+5WnFAVKtOLi8Nr9jLJfn/iHbnlOe+enu1wzgqgm7XZUF3Rximz4QTIRe5bEJpY/frotlW52dTVQLfwfa8sg0aaJn7uX5XIoA09QqNwlV6FP4nvNQTKxZ2VBb8dGAflQ3kt1yLB3yFZAPvnZwTwAZGoMuFAqsU7pgSbYXOMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s/OKROLb; arc=none smtp.client-ip=74.125.82.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kQWoyBJ7"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-306f36df4feso2460701eec.0
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 09:47:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s/OKROLb"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-3078e0dcd67so3811220eec.0
+        for <git@vger.kernel.org>; Mon, 15 Jun 2026 09:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781542051; x=1782146851; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781542053; x=1782146853; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JPdWLSYQGc4P/AtgxUlWCtkQOHlQaMHX/ERzqQFwwoM=;
-        b=kQWoyBJ7EKvPgUniejpqr+tbmApEbeRwvtCxC0dbNe9mQwo1QnZ0afXHCFQVCdW8Ko
-         1eZBM8hKwb7pLkTdcLVuJzqwFIq08VWvya+k7twP58lEAhSMEV45f0zikU4+6nt8Qq50
-         WYOpDX6iG5xioHp6GT8fOt8jmmXIebK9Oy2nf+nfk18iFaAf96lLxP2yUjK9/nEZ5ONU
-         GqUmeIqHKOl8dGV1wikrF4ypQCoXT6yU2EPkEYiqBm9LbECjHVkP1Suqj3XHBo+aZNif
-         QTcRUgtrmi0IP//5NjsVBavYHV7t0M2r/gjxam+PAs1npeZMyvo4O1LgEZ6lpCEqdSvQ
-         p+CA==
+        bh=rFF88vgzgWTjwLRD7PrCaWM6puVWHCydg6dfHxEVo2g=;
+        b=s/OKROLbpZulJjmZNLSnvjHBvAU+u0DB9tzILWJm+cLfwTeLt4xtN4FoC/tVjgGKWX
+         SrYYssg/Otl/w/Dw93noPt+vnBnRqjPtCbcCD0WOdGgpbRRzeM15/nYA+EhHuI4z0D5K
+         eQUO7AlnS9agZ3UKIFz+ITpqk2F2aiW9ClzxgiNsyBeBRyMoCHWgxZxZNuOaEem3zlhs
+         iapzRxhCWLV9oyW5Vdp8h+Kk2908cx/WjXDP0YgzpPEWOnSDOeTxSD2+rTAyB04Ul12a
+         G8D4mtiS40EjoiRZN4T8CPyQYO04ZU6POop6f//MElNu+jVcuenD7vGkiZXASf3TQOd7
+         vFFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781542051; x=1782146851;
+        d=1e100.net; s=20251104; t=1781542053; x=1782146853;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=JPdWLSYQGc4P/AtgxUlWCtkQOHlQaMHX/ERzqQFwwoM=;
-        b=THFdyqUHNXQ/UDzG2tSS8edFEQOu+vgNl/7cJ39/htQY0zxrkd5D4UgBei88uF+V/R
-         ZUtMudfyS7KffIL9CvRhet0Ya8Q3m3yCfyUxXa8Ln4exbmtIeN161sFLaPLSYaADCT7I
-         DdOIYOp/pJX3zE1IuXhB0pEvJd3X7aKXSXTPXM3oKoq6EW5io5RowpsZjsLIWfDZDfS3
-         VEEmbHMki+cC+3jctjQflzIFtd5a2TBKYeDQrQmv1+eLo6CnxqJVf9qWmPQ0G2/BwIAs
-         ehx5t7elCsvmKGoFobasRk0xp8mGL3jxnvM96kf3SikJm980tmTA0aghltRvowbG7zFr
-         SI0Q==
-X-Gm-Message-State: AOJu0YzSuYqMJt3NMLYaDeZ/5xiDd+kAhJYXJIBrebBpUDTf5K9+gtcV
-	aKMKmCjOvT3RI2sQM/LBrvQJdUNZL9eQMO7AIJhBgAc5mHWZiA+2VjL4XcyOWQ==
-X-Gm-Gg: Acq92OEs8G34sMBk1+nrMFQ7ljLG6UFSAI3E16cUH5DGIwzsLWfFqsRm2mP/n6av5yg
-	d4cYnl7+YqeXXItDb/aySklb1B7evvmyC6TDdcTCwNoMSuBJCHoio6EsUd6DYPGK1L5c22nHUNA
-	mpt3vC4jM+vS5cfAeLUNk6KMr/YOTqsx6Jb8aFdAnZjTC6h09U2pjUwRHHgruzKdhnuZlCoRZzn
-	p/U+nX6Voo6JYRWM5zV+bdB2WJBJn4WA8AMtJZH3WKtpqww/ZqTExlQBjsyI186sisTySeHqINP
-	f542BBKLb+ViEW6XqR5jQ8cJ9ZKKlhYfc7ojq/L1G0T5HPEcIvJyAl09u16ZhRsyNK3C/SLki/M
-	iU9A09eR5OcWxnRmRMiQOG1cUakDDT+MMvVYEUNf75ZqF4jFPv85W/daGhzrTFVvIkt6l8423OC
-	lCf27/tmavSc2SysnxKRZ2cTy7
-X-Received: by 2002:a05:7301:41b:b0:2c0:df3b:ec1e with SMTP id 5a478bee46e88-30ba38076a8mr98838eec.11.1781542051468;
-        Mon, 15 Jun 2026 09:47:31 -0700 (PDT)
+        bh=rFF88vgzgWTjwLRD7PrCaWM6puVWHCydg6dfHxEVo2g=;
+        b=aLzCsoQp4yKBDgAVig63eT9oxSN+hRkPMrx62RDZx0e2PZyUT3RaXfdHP+Srq/DmVT
+         HhF0vl/CADB6g5fwD+/UXjf+ptV4viffRCH2u2e9UKzFNCvl6PM1Id0C28FzSWTXDDf0
+         vksf2Iu8uGBJXugUQ6zYzCjAq7nN/JW6gmREWR/f7TrsQdtgHE0en4wSa8Qydbj8CgCJ
+         3wWGskmI5VygWRXmTOkwy+3EIRESQkGb8MNgcXICDAmRkXVHjh9WLjCRUhgI/Q7TgHGI
+         mf2+QAHacDXY/ricQ6ksRZY6mdnxZPcNmuIsGGz0XENHdzKu1elIJj0BN1eim1HUHSPp
+         IiIA==
+X-Gm-Message-State: AOJu0Yy1wRUwPYZGkUWwwhP23hyRb6YeghbOEj1wOTx8RLbzfkN3N3Mo
+	yYtcq2p83rmqGtgVY4QpNeddrYyjXyjqOmZlT8O//9jMuLnp487fnntuc+NlFQ==
+X-Gm-Gg: Acq92OHhfGvhz6Zx67FGmw9xbVFPkeEQc1ISM4DZGESts8ghe2TmL1z5pQLB9QbbQK5
+	bLz8/dmnpdmEAtS9YsZ/4AOJQ8CjiAja7pO6gXBMve0bzKW1ORmRBn5d679aNMNAXJjORxBhs1j
+	4xYwkWnSgthaygvPHPWhvLRGsqPtPhwmM23eabSRxhf+ywlt4GF6t2wgceeKiyNDq7jpgzG1EmQ
+	0CN8gFwgC0v8ZWppLNK5xQWs9fhSWmNqz+P6B1B68NIQWNM0wFixisDXgDp9TezYh4/647LhqEE
+	zl+c1W7X3FrKyA9Yg8DWmiT3VgWi5ga1hSxli2DZMv3hesafID9rNC9jvK1yQhVyVn0bakJNfq4
+	kl3SCFCa2PZgHTEae9VzDY99ZIEEt3WiyqVJI/FpnSNacJSF5VQKAOaLkxfo1+HD1hm+a8ARP22
+	Obyu5Az6pYXq0PYC3nMXqUV6Ak
+X-Received: by 2002:a05:7301:169a:b0:304:cc9c:35ae with SMTP id 5a478bee46e88-3093532e192mr6430918eec.4.1781542053252;
+        Mon, 15 Jun 2026 09:47:33 -0700 (PDT)
 Received: from [127.0.0.1] ([128.24.162.3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081ea4fe55sm15208657eec.25.2026.06.15.09.47.28
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5d0849sm17081969eec.7.2026.06.15.09.47.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 09:47:29 -0700 (PDT)
-Message-Id: <e101dd2886ad0142480bc134911674d08812e42d.1781542042.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2026 09:47:32 -0700 (PDT)
+Message-Id: <6c3534901ae4946de85b719be8e9fd9bf16b3dd0.1781542042.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com>
 References: <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
 	<pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 15 Jun 2026 16:47:18 +0000
-Subject: [PATCH v15 3/7] branch: let delete_branches skip unmerged branches on
- bulk refusal
+Date: Mon, 15 Jun 2026 16:47:19 +0000
+Subject: [PATCH v15 4/7] branch: prepare delete_branches for a bulk caller
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,72 +82,88 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Add a skip-unmerged mode to delete_branches() and check_branch_commit()
-so a bulk caller can silently skip branches that are not fully merged
-and carry on, rather than erroring with the "use 'git branch -D'"
-advice that the plain "git branch -d" path emits. Existing callers are
-unaffected.
+Teach delete_branches() two new modes for the upcoming
+--delete-merged: one that asks only whether a branch is merged into
+its upstream, without falling back to HEAD when there is no
+upstream, and one that rehearses the deletions without removing any
+ref. Existing callers keep their current behavior.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/branch.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ builtin/branch.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index a9be980aef..4c569d056a 100644
+index 4c569d056a..1d3f28e4cb 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -192,6 +192,7 @@ static int branch_merged(int kind, const char *name,
- enum delete_branch_flags {
+@@ -168,10 +168,13 @@ static int branch_merged(int kind, const char *name,
+ 	 * upstream, if any, otherwise with HEAD", we should just
+ 	 * return the result of the repo_in_merge_bases() above without
+ 	 * any of the following code, but during the transition period,
+-	 * a gentle reminder is in order.
++	 * a gentle reminder is in order.  Callers that opt out of the
++	 * HEAD fallback by passing head_rev=NULL are not interested in
++	 * the reminder either: they have already established that the
++	 * branch has an upstream, so HEAD is irrelevant to the decision.
+ 	 */
+-	if (head_rev != reference_rev) {
+-		int expect = head_rev ? repo_in_merge_bases(the_repository, rev, head_rev) : 0;
++	if (head_rev && head_rev != reference_rev) {
++		int expect = repo_in_merge_bases(the_repository, rev, head_rev);
+ 		if (expect < 0)
+ 			exit(128);
+ 		if (expect == merged)
+@@ -193,6 +196,8 @@ enum delete_branch_flags {
  	DELETE_BRANCH_FORCE = (1 << 0),
  	DELETE_BRANCH_QUIET = (1 << 1),
-+	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
+ 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
++	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
++	DELETE_BRANCH_DRY_RUN = (1 << 4),
  };
  
  static int check_branch_commit(const char *branchname, const char *refname,
-@@ -199,16 +200,20 @@ static int check_branch_commit(const char *branchname, const char *refname,
- 			       int kinds, unsigned int flags)
- {
- 	bool force = flags & DELETE_BRANCH_FORCE;
-+	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
- 	struct commit *rev = lookup_commit_reference(the_repository, oid);
- 	if (!force && !rev) {
- 		error(_("couldn't look up commit object for '%s'"), refname);
- 		return -1;
- 	}
- 	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
--		error(_("the branch '%s' is not fully merged"), branchname);
--		advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
--				  _("If you are sure you want to delete it, "
--				  "run 'git branch -D %s'"), branchname);
-+		if (!skip_unmerged) {
-+			error(_("the branch '%s' is not fully merged"),
-+			      branchname);
-+			advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
-+					  _("If you are sure you want to delete it, "
-+					  "run 'git branch -D %s'"), branchname);
-+		}
- 		return -1;
- 	}
- 	return 0;
-@@ -235,6 +240,7 @@ static int delete_branches(int argc, const char **argv, int kinds,
- 	int remote_branch = 0;
+@@ -241,6 +246,8 @@ static int delete_branches(int argc, const char **argv, int kinds,
  	bool force;
  	bool quiet = flags & DELETE_BRANCH_QUIET;
-+	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
+ 	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
++	bool dry_run = flags & DELETE_BRANCH_DRY_RUN;
++	bool no_head_fallback = flags & DELETE_BRANCH_NO_HEAD_FALLBACK;
  	struct strbuf bname = STRBUF_INIT;
  	enum interpret_branch_kind allowed_interpret;
  	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
-@@ -319,7 +325,8 @@ static int delete_branches(int argc, const char **argv, int kinds,
- 		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
- 		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
- 					flags)) {
--			ret = 1;
-+			if (!skip_unmerged)
-+				ret = 1;
- 			goto next;
- 		}
+@@ -268,7 +275,7 @@ static int delete_branches(int argc, const char **argv, int kinds,
  
+ 	force = flags & DELETE_BRANCH_FORCE;
+ 
+-	if (!force)
++	if (!force && !no_head_fallback)
+ 		head_rev = lookup_commit_reference(the_repository, &head_oid);
+ 
+ 	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+@@ -339,13 +346,20 @@ static int delete_branches(int argc, const char **argv, int kinds,
+ 		free(target);
+ 	}
+ 
+-	if (refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
++	if (!dry_run &&
++	    refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+ 		ret = 1;
+ 
+ 	for_each_string_list_item(item, &refs_to_delete) {
+ 		char *describe_ref = item->util;
+ 		char *name = item->string;
+-		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
++		if (dry_run) {
++			if (!quiet)
++				printf(remote_branch
++					? _("Would delete remote-tracking branch %s (was %s).\n")
++					: _("Would delete branch %s (was %s).\n"),
++					name + branch_name_pos, describe_ref);
++		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+ 			char *refname = name + branch_name_pos;
+ 			if (!quiet)
+ 				printf(remote_branch
 -- 
 gitgitgadget
 
