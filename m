@@ -1,79 +1,79 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B78B3F44FC
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5328F3F5BCB
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781531828; cv=none; b=LsIv3lCgc4AAF1sMHan3fptSsXn0qi0v4nyUXSjDF4RnvhI0qMa+trS5Pzs0QTW6E1rN8ogHbcPeZW/tWx3Iyci3jAeHjupMi2nTMovDzKiWVQ9cEg2UbbIUlRL7fNrvOok8nCHFFZySmxdojj3CW5I1nYpFZMegsXx0jT3cUo4=
+	t=1781531830; cv=none; b=D4UxmwAN1hp0KjO5F6g26FhWXlWOyl0YM6zKk6+IVHi5exDJltVl9hswCHLlCwQ1U+T7SEFx/YAiQTN/OtpdTA+I0VNzsSkIGd8w8fjoFlndfuq7RhH25jB4X1fYYXijm/V4YYAJeT5jLbZB3VY3u9CAeoDmir5aMCH+U8Laifo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781531828; c=relaxed/simple;
-	bh=D/CvAsYGj90w8RVx15F/Vi9zaw/sgNGF5uJwQVfoQZQ=;
+	s=arc-20240116; t=1781531830; c=relaxed/simple;
+	bh=62tteGTTY5PIePuM2tcfHmbJQzMjVo6aDeckqMndPdo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K5RgV5l40Nxq+sVLTZtQ1zS1H4faJKexZ2rioLyu9Mu819j1ziBSOAuyUvPLZXzZ+Mq+lAumk8yUG1qrirAm0FZFjHne5wEF+zbTzLiOK31HbOdp50o1FDp7mqs1WVst1Z4gHCsHyIsnD3O04q328K7utMfHaaRqD+rCzHzfWIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jsErKXLq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WafWaf1K; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=A1pyNGThEBc7pvF8dIsIKCKToSp24uPAmYyxTgFoNXUqJcBEQYvXfi8+tJCeqgaMQhVaiI3dX1B25elYl1P0yA2ug6QgOaJegXARaHxGcFPlprPT7aiYnWM071F6eZLnbzfnhpOk8shKPaTbfFqYmZPiXEysJrI7DZo7l2fYHV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FG1rnn3T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bUXRk2ds; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jsErKXLq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WafWaf1K"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9FD09EC001C;
-	Mon, 15 Jun 2026 09:57:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FG1rnn3T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bUXRk2ds"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8C1BCEC0281;
+	Mon, 15 Jun 2026 09:57:08 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 15 Jun 2026 09:57:06 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 15 Jun 2026 09:57:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781531826;
-	 x=1781618226; bh=v5tGCaWJeyM+3eVkyzR6iOLDFtfrsBwc0xaUcASS68o=; b=
-	jsErKXLq3WBAi3nql489ystc8nlV3nSgx3SrH/CxrMjgyCGYoVexAv6oweQc0tj+
-	twrJ881dMrszvJDupYd9Ii50FnGyf6nf6DPj+rXY2bqUHY0uiZEa9GSCCVnR+vJu
-	dmexg6NbY/nM2mnrESvptdprX56pISIaZCu4g2rPJuFoMCw6CpoYftwwhodM6Dn3
-	P2hAtlXb7xdn1cepxnrX6eTSOl/w9zpwopVrMpalz5cEync+UbICshQ2GyXmEJ5S
-	4W2nLg/Annq/kKMsO3/JllvwM8y3c+H/Im/XLTDqxEcgScUPsUZ5q0eg0jJWqpeu
-	eoLEXhfNXqiL8nBDRRWtvQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781531828;
+	 x=1781618228; bh=vfDhau6uqIPSbP/Tl8MZ6+BjEfmjmfBCQHHztXDO6hY=; b=
+	FG1rnn3TuqtX41w6f0Udb2FSE8GCmMXB6t+qkW4rnfci5Mpf640MuKSco2eb+68G
+	MDmmliSvJhf9UKcRkIwaqdzwG61umI30FiBAlGr6l+XOaQ8SeP1oT8z2RK3klwhu
+	P7g2Omen+MULExJQklAg1Qz+bYvlCVBZdCTD8eSnTbgyJiPfCMwCqCDT6fproD9j
+	xuxf2HCmccrKglFVfFOTrKgxkbL4GRtNgTFbXI55P/2Wgq7rxu3wKMDUWM0OlbmC
+	mB5xruxggj9RJMNK5vQXPpgLCgy6cFzZp3SDnNeQIvwijIaCRSpKbEOTtPbe7QTF
+	w+lBHtKMeLptWIcF1eiQ5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781531826; x=
-	1781618226; bh=v5tGCaWJeyM+3eVkyzR6iOLDFtfrsBwc0xaUcASS68o=; b=W
-	afWaf1KqZVsAUqvYJnCUwb7GlizKiR61vh7lAwporMHxkCmy/LDF03Igb9llG1nn
-	hdRuWLfN7UU23r6Szfx3yzgGiQJBPt3QsT3BOvR+7DrxJq3LaTrK2nPJ14WldAdq
-	wt2Xg5iVx35xNcw9+uvmUq94XftLJ2P16mVNJtdKJGEpsHOpiiS6favcpS6UqUQU
-	m2K5CnBv9dDEmvRcUwPo44B8uIMludhqbNbDPvzYD6n79XFlTZeZ+Jf+Et9IJ16O
-	GAX9ssZxee0l9esRsbRJa/cD6VbfeWH4hs28eh0UhDreED/MP/fWXrF2s0dN3w/t
-	n0y3T5WRNqIwewUBK7W3w==
-X-ME-Sender: <xms:sgQwajX2tMmwmn8OszMoT2xbI0abhqU8-A_wJh-e4_lRskotwEHAxQ>
-    <xme:sgQwajBq7hewBZoqW1QuUYuKWW3Ft3PgPoYbanRqGJqQXUN-VSKsKbgqpBWrsgiVF
-    tbFPRfi6UivQlHTGyyTOzGvry5f67I92G1ADV8khh3KsWgPXHsD4Q>
-X-ME-Received: <xmr:sgQwasxeqBzzY7hbzt001btLCe9L0k_KTlnA5ZQuNvmlbz-Ub7xSlPCxXoc7d1fTJ24cVhTtqOvbbxFVpyy66QQ0wHGe1k4TKdqLBwOcHg>
-X-ME-Proxy-Cause: dmFkZTF1FG+X5HxMGxOgCAZMy4A7SvmaeSo8nWVIUYom5oj1dQYaH7atcMinwTjrhcUyUb
-    LZan+BOoi5ge9vWfhtLLsEJ6nozXuvgxf5Kre19hZamhgwR0kDzFxjz443r3LfEN0HSBzC
-    eukzV1YjVJAegImryJKbJrBYtZbul/kuDL7+1mQnTd4ql7YGqXAGhhukI9FiiNwgCHqy+l
-    BLSdjQUYerE20wsVpJRKZc4+wrOvLcOxsuKNhg33c7tdC3ovyr2Y8bNMARXZwwqqWISsz+
-    zZJEPANDT/QdTsAiGkRM58RqOqc4pCnkclD6WNSyNVkuatZTyKu4DM5S4sdA8JUB43kSPo
-    7W4WTsyTuatibOZys3ggMUJ2KjzZ8V2N726EUQ9dZc8gM5GrWV76PdHjaNJ9yzrf6epvks
-    a2di1ks6xJEVK+OMt9F+UYmugm0gNARfXbpnXxQGUctVcnnLwX/H7p/Kgrt5mPfsH67l6W
-    kdKkMcKEh+uDpWD7XqBRIeaqvSkIMUhx1RbUThL3KFVmBlt+xOFJ6MXwtmlgugwjYaBLvW
-    Urh3NK6/kfxj8WaNGZrsHS6qqsEWnrobOoZ47KkQms7iJxosSLUGrEMqLc3SdtJJcCtlhE
-    yzV06vCUGJu+UrVhu3mNY4rdoqJfNk3L7JI07RdTfZxev094O/DTBo8Y9Rpg
-X-ME-Proxy: <xmx:sgQwaoAotq2-tSpMknDK4SZ3TblYxGtKF64z2C9-tqq258blV7A40g>
-    <xmx:sgQwaha6U18tRSnkU9K8OdMvFypsUfENzQNiIB02xPSX-UaETuGEXg>
-    <xmx:sgQwaoiAr3o951zihfN74LKkIt_IWjdp0UUrb7fF0OgqcTPC1W2Wzg>
-    <xmx:sgQwar7zZsViLHd7veRwOa6dDcivtWwheJvPp5SPsHk468JM4focWw>
-    <xmx:sgQwaktMj3SXv5dPc7_rhecTowBe4ZDLxNYJ72-4Wmkfq2e3aDfr-6WG>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781531828; x=
+	1781618228; bh=vfDhau6uqIPSbP/Tl8MZ6+BjEfmjmfBCQHHztXDO6hY=; b=b
+	UXRk2dsAVIQSfJkaNHMXiQEWxjB/j7DmEw1zNafMfKrV75+IcfMlm4K/zXB/m/rk
+	NYW0b9h8m/OxmlLz0V6wH5lTcXVrGCDiJiKzF2Ips18/sP8Es+9i2yW81tnd0s5t
+	TDOnPJImeJ9ulpMPF4D8nTPwwpr+NFE/l7oMWPR5Pbu6tBaCE/8mh3kvNphEl5V2
+	9JwlOF7v/kQtVd0F0rtA5p6MtRg8R5oDAp2rXT2TjrTABYuVb+8TyTsn6LTaE+HB
+	/dYrtOUqNHSuIUX7d12v2J/AeJd3YdsVMlzvkW8L/ZShCe9i5LbkvKyoyZmZ0fpZ
+	VxNQtbUDcZ//y5lCHvojQ==
+X-ME-Sender: <xms:tAQwaofAMPWn851IkM8SYiTiDx2nuX16B6V6eU5umilMsevscvsbNA>
+    <xme:tAQwaho7AXNgwZjpKEnEgOZHWGsU7d8Bq9CrxfXAqT4PJa0TSwmVPcbxbvTEB50wk
+    Z0TdZ3ExApGo_tEO0xhQtQYx-WuPfEQ8-OyQT77ji0zNva69zRtC_o>
+X-ME-Received: <xmr:tAQwam6OFU_JPIOfIf3YTRO64wcgdyKV9TsCa-nqxDzjGn0saPJfUoJDIGYqJlhThJnPCZh8ERCOzMPzpS-rREbpBcoNWADKwYr0UEuoRw>
+X-ME-Proxy-Cause: dmFkZTEzlJZ7R8Fvdu12VIGi3pV5LVsqHobsEu2nC0pNPyYWLdj9qPJCTKMapBlAsX/FC1
+    ZbCX8TtHPplEWxYtSTu6Wxgl3HBugROG2heABRQngsHUxAkgA9ZJNEDMP2d2cDdLEK9PCh
+    R9hAehfnKauFBTwOG4hB8EZg00fL1KQglppoCzUXP3cP+K4uNaKKWeaQ4zVLMTGHxDG1uT
+    RHXaOGhJ6FYs6BRN9/WmRzlmt9z5H8dzqvlGMu9eQRpm7PjBo6kWzwGxTriYr9kp/zbnmh
+    Reva0Rh+pLvtzTtkYVOqewlTH1iAUjzt9vKEkWf/t8xUrNceBF5ppzYc0VRIMxMTGr0kM+
+    yx5yfpEEdecGhki3Bb8beqFdEahMQU2Ytp7B8vCG4ozsGF/dvVsBNmqZVyTFLi1CwmomAx
+    dNK9EVYMz6QPPfVQCLGSUUCInakeR9/b6Kd/q75CWsIJiqAgW8ior2TXRWnjhXQ1UBPRnq
+    Li9VDagbwFql4lfYUfFbRqaW2pgDg4Sw/Q4YjUHumVUhk+hIu7wr7f8G0oFHo1vu+J11sz
+    mjd2nJasz3ZT90h/Ozgckzj4lSeAgSAghs+col++xkL6NY7pTSrV3FN+lfs0zAG8CLwf8t
+    IQrE2AfHL/MhrHk7u+YYOr+5EFiJwVpKU35XULLRGAZZDpOfdAaJWadK/smg
+X-ME-Proxy: <xmx:tAQwanr8VqTYsKXHpRMJgrqAjwLbMr3LxJTHudXGizBvtfSx9jMfRg>
+    <xmx:tAQwaoiXuBZq7C3410Q9XIfk_PJVdUicdB_eyEyJv6QTCkh3UN86JA>
+    <xmx:tAQwahI2rjCu7xn1rScNHIcsXvNdCT79VFggknyDe3_XCk4y_rAzFA>
+    <xmx:tAQwaoA7LCHm2F-JYtJ_s_2YqjTm7ykgd05xLXoE60wawmWI4oggoQ>
+    <xmx:tAQwahVDUoeYTWb7TQR09PAEjtuNZbkPkSw3odR_29EOMrh60dDWNqFm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 09:57:05 -0400 (EDT)
+ 15 Jun 2026 09:57:07 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1cca66da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 13:57:04 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id a031951e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 13:57:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Jun 2026 15:56:51 +0200
-Subject: [PATCH v2 5/8] chdir-notify: drop unused `chdir_notify_reparent()`
+Date: Mon, 15 Jun 2026 15:56:52 +0200
+Subject: [PATCH v2 6/8] repository: free main reference database
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,83 +82,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-5-f4854aa99859@pks.im>
+Message-Id: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-6-f4854aa99859@pks.im>
 References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
 In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.15.2
 
-With the preceding commit we've removed all callers of
-`chdir_notify_reparent()`, so the function is unused now. Drop it.
+While we release worktree and submodule reference databases when
+clearing a repository, we don't ever release the main reference
+database. This memory leak went unnoticed because its pointer is
+kept alive by the "chdir_notify" subsystem.
+
+Fix the memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- chdir-notify.c | 26 --------------------------
- chdir-notify.h |  6 +-----
- 2 files changed, 1 insertion(+), 31 deletions(-)
+ repository.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/chdir-notify.c b/chdir-notify.c
-index f8bfe3cbef..1237a45e2e 100644
---- a/chdir-notify.c
-+++ b/chdir-notify.c
-@@ -43,32 +43,6 @@ void chdir_notify_unregister(const char *name, chdir_notify_callback cb,
+diff --git a/repository.c b/repository.c
+index 187dd471c4..e2b5c6712b 100644
+--- a/repository.c
++++ b/repository.c
+@@ -421,6 +421,11 @@ void repo_clear(struct repository *repo)
+ 		FREE_AND_NULL(repo->remote_state);
  	}
- }
  
--static void reparent_cb(const char *name,
--			const char *old_cwd,
--			const char *new_cwd,
--			void *data)
--{
--	char **path = data;
--	char *tmp = *path;
--
--	if (!tmp)
--		return;
--
--	*path = reparent_relative_path(old_cwd, new_cwd, tmp);
--	free(tmp);
--
--	if (name) {
--		trace_printf_key(&trace_setup_key,
--				 "setup: reparent %s to '%s'",
--				 name, *path);
--	}
--}
--
--void chdir_notify_reparent(const char *name, char **path)
--{
--	chdir_notify_register(name, reparent_cb, path);
--}
--
- int chdir_notify(const char *new_cwd)
- {
- 	struct strbuf old_cwd = STRBUF_INIT;
-diff --git a/chdir-notify.h b/chdir-notify.h
-index 81eb69d846..36b4114472 100644
---- a/chdir-notify.h
-+++ b/chdir-notify.h
-@@ -19,10 +19,7 @@
-  *   chdir_notify_register("description", foo, data);
-  *
-  * In practice most callers will want to move a relative path to the new root;
-- * they can use the reparent_relative_path() helper for that. If that's all
-- * you're doing, you can also use the convenience function:
-- *
-- *   chdir_notify_reparent("description", &my_path);
-+ * they can use the reparent_relative_path() helper for that.
-  *
-  * Whenever a chdir event occurs, that will update my_path (if it's relative)
-  * to adjust for the new cwd by freeing any existing string and allocating a
-@@ -43,7 +40,6 @@ typedef void (*chdir_notify_callback)(const char *name,
- void chdir_notify_register(const char *name, chdir_notify_callback cb, void *data);
- void chdir_notify_unregister(const char *name, chdir_notify_callback cb,
- 			     void *data);
--void chdir_notify_reparent(const char *name, char **path);
- 
- /*
-  *
++	if (repo->refs_private) {
++		ref_store_release(repo->refs_private);
++		FREE_AND_NULL(repo->refs_private);
++	}
++
+ 	strmap_for_each_entry(&repo->submodule_ref_stores, &iter, e)
+ 		ref_store_release(e->value);
+ 	strmap_clear(&repo->submodule_ref_stores, 1);
 
 -- 
 2.55.0.rc0.738.g0c8ab3ebcc.dirty
