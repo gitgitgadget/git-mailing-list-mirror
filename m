@@ -1,126 +1,156 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5627402B92
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 15:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781537267; cv=pass; b=pYk2ZzWCv6bpKd9RXcDrjJ3nhy4CEF5vU1AXAm8ZQrMDG8kdtonG7ZBeBOkujYBHE07lut2uLAN+mo+oCXINR8k4JOPKw62wNdI8Ow6ZBAmwmKurH7ZlJkGBMAD1Ambvcovbl2OfiEVZ5EeIIMXtnDPxMVjdVLJ2jgS0u5gVhdQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781537267; c=relaxed/simple;
-	bh=4nwDyMoH0oHvzh6ksuEITDRzvVmLsJyUww524py/0Vk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HvO1BqPL3FRcJQ0+hkcAHqHZ8rZAfE1wxoymCoNTfaHoHdY0y96JPVj+odTcJ2j8EhhYgy7O8xDD67a0ucegbi9oD6+Yb0yrh52rnNx+lNM8GJ964WUTqeLmym4RE1+joFgO34RN0A5iP/xXjdbqzkoqBr84SNSV5puDAevPVHk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pAAHIT9Q; arc=pass smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7E740757E
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 15:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781538161; cv=none; b=creQG8+YbzAOY0CE9jS/9y6rQ6qYlGmeOpDfoFpqO9vIFRNu6E+f/qAlx/qRFDQRYG8WPEqsp+xazDVOR4UFQ8crcUYtf+6fN+dF4eeIrrLS1uLiRivDVp5sfCglXObcVn+z9D6sOpSLwII8P+zQcfrgcT8tsZWFfmxrSwHM1S8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781538161; c=relaxed/simple;
+	bh=7XkJahV7r2a90JZi6Zeul4hBzR4fXIGHtfBeUOZCgK0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VaY4mRRZa+S2aPaErVBzuwD+vh05GC010EHK+OaHF51j2pH1XXpR3d46mhnpcG1ruo8bp5Iy40V85H9/4Knzq0ix2N6UmCK1BKodXRZknP6rD0cCGzqauQyQqnuRIQuwriteLan9zdojNDywPouyDUXSXyg/NVOqnMEVHkSUd9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F4htcZTo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KkITWS+S; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pAAHIT9Q"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-36b9033d230so1946222a91.1
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 08:27:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781537265; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JAhMkUumWagtEOhsK3Y8poTTmerV+ICHxrs+yDtAI5XvQwOwd7NTnvhXPGPyU4ajl/
-         DEyKgSGkBiqAq9U8lITW1wCV65BP463FpWc2EPtvB3qsArvQ9NHrOiV0H1NdQQoUgX6Z
-         DTaUDJKJubXEJMiFOLSv5vqnC6zMqlv+JIVg1n0chJAe+QfVmRz7vaG9ZQwMwhxnmcYh
-         gyQYLzvJwyZDQc8AsY6LuofpLlBLtk+n1G7q9TvH4IFa2u+WXTdhwTj3Q2JOuSFVGg2P
-         e5EMfe7+JyZkoQLqHFycmLfeJmZnjGXVJnJRTj2poItmNxc/HTs6tIzS0refQjfQCUVC
-         w2Ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=koNXwqWL7XFtlO33VPCZ24UFvH00QiGeaUgVIISeNZ8=;
-        fh=/AuRq0Ekie0rf+HwAYA4OlWC9UNL1zEBhTiQLLUEZ78=;
-        b=T8ab+8Q2n3rSqJDHbYgD5+DNCd2PgL5mKKdHiJOY3R/3M+I0+OEBPojxTnSKstv6ud
-         X8oOCGpoxlfvhS2TeTiSvTM+q3KelW5m8dlNFZm6jDezTb3+9+7S3RMpiDGy+PB9dYvp
-         vmrg3yh4Bk8rt8hCqGwsQ/bWNHdnlRYs/Ek/1CDdSvrPf1rbyQrQcCE3Q9+irS+JEV2I
-         zxNglrFilPgmdWCyxwpHZREmIt/sG0vJmNr/8O735d5ylCe6PuXpu5W6QR0ylgoORwXC
-         QykwwKHb9omslrQp33+Gd3rLgt/G1dmfFvhKyTU/fWlZafkjPab3rp65kNFfrGJRRC7S
-         EcOw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781537265; x=1782142065; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=koNXwqWL7XFtlO33VPCZ24UFvH00QiGeaUgVIISeNZ8=;
-        b=pAAHIT9QQoezZVoRTEElt3rWXthZY9MShK+FhRYSxKjN/Mf2Ht6vdF4I6JMUyKpGCV
-         kbb67y7W50rf4LHBDkxewu00uUTs/3OKtbLwTWGzhtPxRjc0HgEmRuYjxVG1TWtg47PO
-         uf8KINgJMp+Lvsv7mHexZSQ3YPUkcTwF1DYD+v4OeoPam8YI+Kmw2PoAe8NchjgZBRnJ
-         BkbKkq6RytOUo6NkKl7tpo8mAYVAzIQhya8chHyc3Qq365wg5tgs1HFh7tOehX6JTVW6
-         IBcvC8YK3USXpJtudpYOaCRX3Y633KwMDKEgZV/W3ZaOvd3AMC8SV+JDG6NUSCVtq9AJ
-         LNNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781537265; x=1782142065;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=koNXwqWL7XFtlO33VPCZ24UFvH00QiGeaUgVIISeNZ8=;
-        b=LTAXxpgQP1WAzByRs540+4+BbGd6c4pQBjI/xYfdui5yjLEiURmSZiGB/c6MZp+OqR
-         4oFAvjTb5iVmYDQ58yLO3GubNvIq7AIspFsijWyi1xvjlv5wzOz1KHGxivG2AFzgdkU1
-         ZFhLpIzmjM1xxmZ/Q3HnVgyU+z0g0GLdrDStmyZieJfpEQq1HoQ+sA/ZbjIchw8Loy1c
-         76apsoLxxdQsAeGs5KxC21LvHcdCRvILGd2enPGBqsb6etzNnm53S3xo7LFlDruw/6mr
-         nja6JtNUWehz311NmzO8jRf+kPRmxDW1SgQh4hWYGcRVr5JcVApZ8UFyX2pbEVQ8hzn8
-         JAeA==
-X-Gm-Message-State: AOJu0YyTsbndhfeB/m1/OanXWaCGpTXLfaINKS+k33lN+7vGAFcrVB7/
-	2swskMzHpV69JD0d18uJ2KXSfTMOo+vxd3O2bkBUS9Ubvvc4Yru0rmMp8h60iNCzj8g6KXl58Pl
-	YF6fGTx4bHrMod6XSdXHdS5ubQSGuGiZf8XguDEM=
-X-Gm-Gg: Acq92OHOpFCVXNKG+27nYLptOFNotrGXtzid3ZvkzWy9hm5VCmyIKVslDvp2sL2a7SC
-	gpKSIOVjuOH1D1JvPwYJYZaHCwtlpyNrZ5A830tdP1fuHTbfUwI92tfEvqPdgTgFWVTTnF3TqB7
-	cYCjjMYFpzjU+TUSaPWzcwb8sg19mJu6zYwlL6xHYxxp01ZCewIANXI4wGCzq0TpVZfm3BHRuzW
-	lqd5XRMdEmzLAhkc93Ud3v2OdXFd4kuddeyeLz28ctCWZ0W/rIi53bp4HpyUU1wpNgMvx/8wukH
-	5Kht6esNl/eB7LbQKKiaO0luY2jfNgIN0CoMQGY92dF9xP5KF7hhVF7xcyhSlWNSbIa+e5hsbBk
-	vEbySXRUIm3PKhbY=
-X-Received: by 2002:a17:90b:5205:b0:36b:769c:c037 with SMTP id
- 98e67ed59e1d1-37a1e0084cdmr9902759a91.5.1781537264904; Mon, 15 Jun 2026
- 08:27:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F4htcZTo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KkITWS+S"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0B17D14000B5;
+	Mon, 15 Jun 2026 11:42:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 15 Jun 2026 11:42:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781538158; x=1781624558; bh=xUvGDcmhIL
+	TH36FnsPM8o882ZqqT7KI5eH1mk9w+fwo=; b=F4htcZToUU5nHLYKU0+CcnEAyI
+	dt/02RU0llevAoELN0Of57zoNSAdKd8kwA2If2swJIPGO/cmKhSld5qm3AfNN/IP
+	MbzWitvUUVtB/zOmoFrmYEJfG9DVcQxqGmBR8PDD9xlUgFgcuG1Nn5dKNbC/WuoL
+	R/KfITTWgh5SGoWYLsl/ue90gj63bOIjwx2aaqyN0T3RkzArrSbuFQg8QkOg8Kf5
+	INF0k+nJc/1xSFYv0sS5G+hU62uWbAYWZ9KDMiPXriYhzplMuff72ERz4GWdjmk0
+	XlIHQo+IEY8fxmzysEmOYpLwAiSYPrYarUa2ExwTVPfyFbMEEibS/XWevhoQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781538158; x=1781624558; bh=xUvGDcmhILTH36FnsPM8o882ZqqT7KI5eH1
+	mk9w+fwo=; b=KkITWS+SlFcyo6WNUYsOnIyfneIIRHSiPGx16TGMXyqbWTzQZOX
+	WRDPNLBbQAgRi4NGoKSipg6jO2NR7pIIgxig9RUbMGU10yOzhHfjStT29q3ekczR
+	mXE11SpxBNNjnGHbJU32kWvxTQUDa6LmAwZmTGcvD/PtbU7RKahtmSFgqBdR+NcU
+	fgeuwJuPix9+/xN4bFqSG4B6317sdwlallJvB8C3wd6UGrNzuLQpAXucLqnzIa7N
+	ZYBeGgqm6mN5WEoV5Jh95uqILGu2/PaxgjFERR2NHoiC5MRyEkG+hJG1j74p3CRs
+	q8fZQe4WZ2UZKPeBmkf3xU/b9JDskXizncg==
+X-ME-Sender: <xms:bR0wakRvsLa02Z1pPSUtZBnmG_r9t7Pxz_9LzJRZDphbWvRcwRSC0Q>
+    <xme:bR0wajW1dAq-lIOFBwzZjL7-7hhUeqtRwvrCNfTblgCC935ns_Ef0sOFt1-g7DFhC
+    rRZ7Vb0DU1faC4cVB9EasGvsqnxQCYGPHFoDOJ9KF7F_1NZphtGCQ>
+X-ME-Received: <xmr:bR0wahFc5ZdPf3kbE8uS-_9_WUrtEiqL7lvh0I9DcMWS7wi2ASpzyxWTULdaXeTr1gF11PGusaZt_4mNKJbwX9UqmYZuUoEIMKgI>
+X-ME-Proxy-Cause: dmFkZTG3bNvFM6g7SaNJCXDdenZ65RrIz5lz4ATd/O4+kAhY/5b3ky0+OlKvu3lJzH5qmM
+    WO1LL9ijzC2nznNmYNjQQW9Ekl4TKEyl+80nqMwaFmNBWMqxPJCKjUrZFob6B8aA34e1Vl
+    ElNEFdjRnBefx1rayoLhOBP1TDjlYMx+OVlCAEgRrx0cy8DTHA+BU9T5Yrbgj4mI0yPWTJ
+    y7t2sj0e4/6gLBJLfZTjGqfGq6uWc48SQym12GIj7iitMRb5InnH9cG1Dbm8dc+zh1l0Bm
+    gUzp64VAP3FmJvQo40Z3xXVIEw0KHMqPXKst4t2Mmvgs5iMjb+9mSNGHiJIXw4Piy2UcUK
+    S6+ypj83qCK71EGt8f+ooVRGv9SFMvKx5FAua/x2tzUG7TeVJl1YkeNsc/xE2PKwhUdA3D
+    ESzn9ZrMJGwGjJaQX7dKm4xe9RiUwL139CpRomKihtBl9vb9cz4PJSKsjXJT8pf6Afy3If
+    C/IYZVxcTdyRnK2UmmjMVHB/SDBIulj/Bgn5ZUvuw70/7+qtulLFibNlBLRDqCTAl2/q21
+    7kl3h4AJMRNkWm07lYYP8vY86xz5+9x3i64wvvid8FNJLySfLQ/ZuVk1j2dGzyjyl2sGhE
+    KkSE+h3HOzbJAEtI9BqWABZ4o48tGqYwhGmbgb0oOAQslpwNOtlRjkJLwQUg
+X-ME-Proxy: <xmx:bR0waudKCoZlNijKrDAY17xTPZ8qUqIW7EE0yqnmdk8ScFICW5lOAA>
+    <xmx:bR0waip8Onr6hozPYSGKAN7tMEqXycj4SgP-uPFF0soi20Hv3XCNmQ>
+    <xmx:bR0wanAYl8vN_2As6060DEc7AsxabIkxX4hX6jqsfUwQcQ0_sOr8TQ>
+    <xmx:bR0wajcpepNeQdXhhpJq7bA3-JvZzbSY8DhtMTS4KUHImEihz0b7Ow>
+    <xmx:bh0waoZAHsKD0bDwfNt5QR1N4-K26rziBIdgdiVF_T_7zwyS7aVvGaG5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Jun 2026 11:42:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,
+  ayu.chandekar@gmail.com,  chandrapratap3519@gmail.com,
+  christian.couder@gmail.com,  jltobler@gmail.com,  karthik.188@gmail.com,
+  peff@peff.net,  phillip.wood@dunelm.org.uk,  siddharthasthana31@gmail.com
+Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
+In-Reply-To: <CAN5EUNQ193QyOeTLdu9aXzDeBhFpg38YYBbOLhZLgcg3qfd=uA@mail.gmail.com>
+	(Pablo Sabater's message of "Sun, 14 Jun 2026 07:28:24 +0200")
+References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+	<20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+	<20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
+	<xmqqo6hdepgy.fsf@gitster.g>
+	<CAN5EUNQ193QyOeTLdu9aXzDeBhFpg38YYBbOLhZLgcg3qfd=uA@mail.gmail.com>
+Date: Mon, 15 Jun 2026 08:42:35 -0700
+Message-ID: <xmqqzf0vbyj8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <645638cd87d6d919af6d4310be8176d49fba326e.1781456960.git.ben.knoble+github@gmail.com>
- <xmqq1pe8eqmj.fsf@gitster.g>
-In-Reply-To: <xmqq1pe8eqmj.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Mon, 15 Jun 2026 11:27:33 -0400
-X-Gm-Features: AVVi8Cdh31XsD5sKqb_MKCnCkQlHaWPnTHEBzEkUR3VWOhCUqJqkOQEGB313Hs8
-Message-ID: <CALnO6CAzS818J4TRTNAa5s74RzvxJJ5=HXb24UnTxQzVPH9Khg@mail.gmail.com>
-Subject: Re: [PATCH] doc: fix a small, old release notes typo
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-[Resending for list]
+Pablo Sabater <pabloosabaterr@gmail.com> writes:
 
-On Sun, Jun 14, 2026 at 5:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+> It does not make it unpredictable but it makes it not output what I
+> wanted to test, what I wanted to test is having an active column at
+> the same time that visual roots in different cases were being rendered
+> on another column.
+
+Oh, use of commit-graph changes the traversal order, which would
+affect how the graph is drawn, and there is no way to ensure that we
+traverse in the same way with or without commit-graph?  That's
+inconvenient.  But even without commit-graph, do we guarantee the
+same traversal order forever?  I doubt it.  So I suspect that it is
+a brittle workaround to disable commit-graph in the longer term.
+
+As long as the graph engine shows correct graph no matter what order
+the commits come out of the revision traversal engine, we won't hurt
+end-users, but we need our tests to be reproducible, so that is a
+bit unfortunate.
+
+Anyway, stepping back a bit, 
+
+> However having GIT_TEST_COMMIT_GRAPH in the last
+> text for example changes from:
 >
-> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
->
-> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> > ---
-> > No harm done if you choose not to keep this, I think. Stumbled upon it =
-when
-> > trying to understand Elijah's message [1] about timestamp_t overflowing=
- in 2106
-> > (I though 32-bit time_t overflowed in 2038, but timestamp_t is somethin=
-g
-> > different=E2=80=A6 except maybe when it's not? Anyway=E2=80=A6)
+> * 41_octopus
+> | * 43_B
+> |  \
+> |   * 43_A
+> | * 42_B
+> | * 42_A
+> * 41_B
+> * 41_A
 
-=F0=9F=91=8D
+Does the "vertically aligned * on 2nd and later columns do not mean
+any parent-child relationship" rule no longer apply in this version?
+IOW, does the above graph show that
 
-> Unless it fixes a glaring factual error that would harm end-users if
-> left unfixed, I would not very much be enthused to see fixes to
-> these ancient documents, quite honestly.
->
-> >     separate and dedicated timestamp_t (so that we can distinguish
-> > -   timestamps and a vanilla ulongs, which along is already a good
-> > +   timestamps and a vanilla ulongs, which alone is already a good
->
-> "timestamps and vanilla ulongs", as both are plural?
+ - 41_A is a parent of 41_B, which is a parent of 41_octopus
+ - 42_A is a parent of 42_B, and 
+ - 43_A is a parent of 43_B but is not related to 42_B
 
-Indeed
+?  Who are the parents of 41_octopus?  It has no relationship with
+42_B and 43_B, and unlike what its name suggests, it has only 41_b
+as its parent (probably with history simplification that makes only
+these commits shown)?
+
+> to:
+>
+> * 41_octopus
+> * 41_B
+>  \
+>   * 41_A
+> * 43_B
+>  \
+>   * 43_A
+> * 42_B
+> * 42_A
+
+And this graph shows the same inter-commit relationship.  So both
+are correctly showing what we want to express, but they show the
+same information differently, making test_cmp unhappy?
+
+Thanks.
