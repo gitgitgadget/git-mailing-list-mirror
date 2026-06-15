@@ -1,70 +1,69 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08032221FB4
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 11:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A16A2F7F0F
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 11:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781524359; cv=none; b=bSvDNW2DVjCKDW3DXQEwypTIQKjsgwRmd7bj/S9MOqYN6pHeYwHopXslWYXo3z9aU5lhsZMPYfxczd4EhhlgEt4XSOfNEyWOIQFEzCJdbuflwEpgUUbWrZQpyqSSzKBK/GsjSy2f8iJ2g2U6i+vCqYXvNQdJRLwHV9yxEQbUSOM=
+	t=1781524360; cv=none; b=pLqbeMz0Gh8TTleiewfQsq/0HuwWFMruXOiL91visD8lDsOiC1rtrJaCyevjdK6cdZvFHe9Wgai4UdUmeBxNy2pTKUeFHN4Q7gNNIVpWfG9eEoWwasej/2iBLkwiByjSsKSi8Q1fJnbNZ9pLIMPPrMeMyT2+hJuJcV/TSkgwvVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781524359; c=relaxed/simple;
-	bh=dyVNR+V2gM+vFetpKUlbK4VdPnpreMjpIaurnXdWTso=;
+	s=arc-20240116; t=1781524360; c=relaxed/simple;
+	bh=EdXrh6jJKbPp+e1tLUHFDD3mnYslrJZNjGER4z6RT24=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OJ7h3aYqZ5O2ZUIMe2TFdA8CGr4Z0ovrZau3JkMNzTjsEIKJS/58Iv68HlhkXWBLmJcqlERPOcB/A3A5WnqgJTlFw2FGdRJvcQkuKlpFGi7nLRj1EiqiBBfqxYXMcz1nrZwx2SjyLAHnG/FiZ9xfTJ8i5flCEaiLEEKqu/gXxC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoa1Yfxd; arc=none smtp.client-ip=209.85.219.44
+	 MIME-Version:To:Cc; b=DT00HFUmZeelitCVrEKMXcpwRPQMbb9xI2pNFSQ2/0PgzJlYa8crZqHqPzyeHwhhr+wU3Avd53WcNJuZyJyxrumvZ5qjBrP4bdIdlDtH/CJ1p+7lO6HX2c8/EyOX8LEKNFwYm2czmEInZ8fask9TzzJKcYFsBd401snbZktwFGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BWis3zMJ; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoa1Yfxd"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-8ccedaf0b54so22863066d6.0
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 04:52:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BWis3zMJ"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8cceb2ecc03so31688886d6.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2026 04:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781524357; x=1782129157; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781524358; x=1782129158; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NMa0Nd3W8HH5T9A7ZPAtp4QkMilAyxUsm4kBqBMDqJM=;
-        b=hoa1Yfxd2Y4AURXJ02qJVY0/Vwrl+7dmaAKzPh5PgBGc14HgToEEqeu6r5IMs0q2EG
-         b28OZP97oNjKQ2CsCsoZHORtgYBMBevcG6C67RKigh+cnaofoVlc2+4wbk2NOcUaJACD
-         8JCzq8cuARwvOH8/H0dk3CMsAzi45VKKxm9HA8HXv9Iq3qW8846zHF3VYoC5f53KUvLf
-         h8eP8++qv1sENvT5L+4PVgfa/J8aZL2ssCzIXLYVXAyfLiX4vXZOA3htZto6y7yrTZro
-         /0JJpP6QARXkAkmJ+4juVaV39gKXEF0oEXN9MYSR46bH1krIhvl6EgRQprhANEVQCxus
-         8fmw==
+        bh=qjhhVXYn5PfAx7FoAYcRk4V7gNbvxK8p6qRVosKG2Vo=;
+        b=BWis3zMJXyGz46AAauT6NoNvPYRNtID2MV49UJ5AokCMWZXTSAL0vqgM8iL6Ydpc7X
+         jCgRg//DgCCyxDKY66eN2KuSk4/uehDW2gKCN2HqnyQzXZvYu5m5F/JczlHF6pMh/b4q
+         11KJ1ZEfw+XHg0PTnEzG12KUT/9IsUU0f/S51owqLR6AzFloODT4ayGg57J0VMywcd2V
+         tI4WLRBWvSji6y92dJZ+JAAvbT9Zv6AP7ovymOBZVS5PtyMXY1oiTgfZAIg6r70cRJtf
+         iC2KDigv9MVqVnYmMP+G41Ru8qDitZiFtOWd5W9VawKBTtgRnl9nQA06l7zILLrIjzhM
+         d/UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781524357; x=1782129157;
+        d=1e100.net; s=20251104; t=1781524358; x=1782129158;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NMa0Nd3W8HH5T9A7ZPAtp4QkMilAyxUsm4kBqBMDqJM=;
-        b=FxILZhsiUTdgSApkdXTW0DXeWGRl637mxS3y6P1pZvPXWalBrcLE7e5iNddU3xyJ0R
-         bTmQhE/fPmIO625HYsbZtHZrbbW4qIcQ3fB9aaEwOybaMrCnjLi/Bl/iab37pmCrcniX
-         tzBJaom8KOBrjGPDDcryB332NyBQg+53LPVa83FHUDCwThV/8eBOFky7E6OuKjrr/bIf
-         nE+r5rLz1y4coHZRpAH/GOtRuhrz4zKqlvooWJsNoQgaQjPnNJLJ+Kvec4VRYuvBb4/l
-         Sjue3zOJb/FcqEH2NqETYjEdcnGKHcmymfM60IMsBHtfdHlHS2A/9hX70x1VlC2+ZtwT
-         ItuQ==
-X-Gm-Message-State: AOJu0YwFOyq6Ee1bv4/qzZx+7D/CIul8rj2DiAoqUqcSO8SmP0sB6Bsi
-	sG/9AsrJ6OcGb2lg3RRdiD/Asopwq4foc5VzqSR2MXW+ZB8iNJIYGZH59frgxw==
-X-Gm-Gg: Acq92OHOUUgalYPgoNQ0TNZtAGFHmjrGGTOgThZXRqnR76ySYIEvuFHihAqPpg//3Iy
-	iPArfhuOX6BWelxR2BjGU30vmYDt6BjQ91ruXcBxTSbkFckmo9kn9LfEctuSf5e8hs3mt2aTLam
-	sPET9K5JAsT1I8QjKXq64fze+hg14uxCmHhU8wBtDwWpKby/Gh9C7jwo7EP3gZ/xGhtVWgr55i7
-	fBgQgcACiK0CyoGR6l1sjeiUrNyIafaVhfFhsw44KbpN2Tr2+BDp2T429S44dFIEi28CcyEpl/Z
-	4N9nEiVQm8xynHZnebUbTZbjmb0vsGnZnjBhRJHq7Pgbf5o/aY1359uB7vTTHnzkkiH5s9JN6pW
-	PBEbFH0TxWnmtWF6Hi9JBiiT8jC+/R6qx9MwPgXWzyYaDArpSwPfySFTTJkWflPQE8XQEJbwdO7
-	UZ1TNO84Am7eSLjdEzCLgIT/YTUkA=
-X-Received: by 2002:a05:6214:226b:b0:8d1:8cfd:b00c with SMTP id 6a1803df08f44-8d32e21550amr239881936d6.31.1781524356889;
-        Mon, 15 Jun 2026 04:52:36 -0700 (PDT)
+        bh=qjhhVXYn5PfAx7FoAYcRk4V7gNbvxK8p6qRVosKG2Vo=;
+        b=XV2FPCHzWNBRfKLvM9ti5wQDWz7B0wczUgHfJFXQSbIrA72VIiDh5j130Pyd9oKC33
+         lPotzeVsnDQjACeCdbU3TPuWBdvbmpYK72R/rvH+ra+R4WAM3V9KrmH16Nnp+EtMoPzj
+         sv/uUCO4Lnfisd2UWsM2h4658AZJLtMh4g24O3ub0myOLx8yookix/2I0buXulVLRGJp
+         6JmphrlewvLENGcgWIsFDTzBL/mNabHqBMBaFlqwZB66wFrIFeNu3fFPevcY9DLYVITY
+         y01+Qt6vy9tb+qgR9OFZOhbVpgDQhT6jWcw8jcdSURnVWlEM4W46yOogCq0OtxScITvC
+         KG5A==
+X-Gm-Message-State: AOJu0YwHZC+JxyfTHakYj9G5z46kfioYyrCwYwNrMDIMhoT1Zx8fsm7K
+	ZcadbRsE6gAmkv70EGtDQ3xycXV4qigoy76D0f+kpUcM2f3dMzm0CClkgqYOLA==
+X-Gm-Gg: Acq92OF9eMIZMQILsb101KRyweNM8udMxveZKrWZfYl0OnDp3VUAY0oHB02BJ+n/ble
+	y1juHpd1ZTjsb7a4OkALHYf44RZbrHTDVDMcN4jxtcPN13J67iZtnc/4KdkuY0C7r0SeSKEt84f
+	SZp9q1Meyi3OUptw2tMbNc5g5cjo5Q+kgKWv9E0wGaXncAkggTeyVZQ3F2ajJkpyj+EbUgvyfpV
+	+DU2CZ/q+1t+/zrbxxHbQLLUqu3nvQVusdalwOat9AMinedX47TnNsNJxFu99HI75u8DeomAPtZ
+	XEAoMG/Aeb+CVlB5N9Jv3cXL2Z4pgfGAbdvvr+tA+yNhjeJ8dvuB0C3748k1p8T31tBhnTQ2Ck+
+	2rolnLpil0oXHkW/vAVSBhdZqdRQKXcHBwvhzk56F/HnibCfwfZhjq5CrnYg+3ujFcgRTU8S3U5
+	38IGRaUgtpflnTp11yWRAuo5lKY5QGuMmtSqGhDQ==
+X-Received: by 2002:a05:6214:3210:b0:8ce:e409:22c5 with SMTP id 6a1803df08f44-8d44f70bcb5mr185833486d6.22.1781524358297;
+        Mon, 15 Jun 2026 04:52:38 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.143.211])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8d30105fd9csm113783806d6.10.2026.06.15.04.52.36
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8d304b5f833sm108657246d6.38.2026.06.15.04.52.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 04:52:36 -0700 (PDT)
-Message-Id: <5c329535df4bed84f16223ca2e1ffbf2854ba42a.1781524349.git.gitgitgadget@gmail.com>
+        Mon, 15 Jun 2026 04:52:37 -0700 (PDT)
+Message-Id: <01b9209b26335c0c4744e7f76684f823eebb69a5.1781524349.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
 References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
 	<pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 15 Jun 2026 11:52:26 +0000
-Subject: [PATCH v2 4/7] packfile: widen unpack_entry()'s size out-parameter to
- size_t
+Date: Mon, 15 Jun 2026 11:52:27 +0000
+Subject: [PATCH v2 5/7] pack-objects: use size_t for in-core object sizes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,190 +81,159 @@ Cc: Kristofer Karlsson <krka@spotify.com>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The topic `js/objects-larger-than-4gb-on-windows` widened the streaming,
-index-pack and unpack-objects paths to `size_t` but deliberately stopped
-at the in-memory `unpack_entry()` cascade, which still hands back the
-unpacked size through `unsigned long *`.  On Windows that boundary
-truncates above 4 GiB because that data type is only 32 bits wide on
-that platform.
+`pack-objects` stores per-entry object sizes in either the 31-bit
+`size_` member of the `struct object_entry` or, when the value does not
+fit, the `pack->delta_size[]` spill array.  The accessors (`oe_size`,
+`oe_delta_size`, `oe_get_size_slow`, `oe_size_*_than`) and the setters
+(`oe_set_size`, `oe_set_delta_size`) used `unsigned long` for the spill
+type, which on Windows means the spill silently caps at 4 GiB per entry.
+That is what made `upload-pack` die with "object too large to read on
+this platform" when serving the >4 GiB blob in `t5608` tests 5 and 6
+when run with `GIT_TEST_CLONE_2GB`.
 
-Widen the code path. Except `packed_object_info_with_index_pos()`: It
-cannot yet pass `oi->sizep` directly because the field is still
-`unsigned long *`; bridge it with a `size_t` temporary that narrows
-back, and let a later commit drop the bridge once the field is wide
-too. `gfi_unpack_entry()` keeps its narrow signature because fast-import
-tracks sizes through `unsigned long` everywhere it crosses subsystem
-boundaries, keeping its signature allows the scope of this commit to be
-somewhat reasonable, still.
+Widen them all to `size_t` (including `pack->delta_size`) and drop the
+three `cast_size_t_to_ulong()` calls in `check_object()` that guarded
+`in_pack_size`.  The two `SET_SIZE(entry, canonical_size)` calls in the
+same function stay cast-free as before, since `canonical_size` is still
+`unsigned long` until a later commit widens `object_info::sizep`.
 
 Assisted-by: Opus 4.7
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/fast-import.c |  7 ++++++-
- pack-check.c          |  5 ++---
- packfile.c            | 28 +++++++++++++++++-----------
- packfile.h            |  3 ++-
- 4 files changed, 27 insertions(+), 16 deletions(-)
+ builtin/pack-objects.c | 35 ++++++++++++++++++-----------------
+ pack-objects.h         |  2 +-
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 82bc6dcc00..3dff898c43 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1239,6 +1239,8 @@ static void *gfi_unpack_entry(
- 	unsigned long *sizep)
- {
- 	enum object_type type;
-+	size_t size_st = 0;
-+	void *data;
- 	struct packed_git *p = all_packs[oe->pack_id];
- 	if (p == pack_data && p->pack_size < (pack_size + the_hash_algo->rawsz)) {
- 		/* The object is stored in the packfile we are writing to
-@@ -1260,7 +1262,10 @@ static void *gfi_unpack_entry(
- 		 */
- 		p->pack_size = pack_size + the_hash_algo->rawsz;
- 	}
--	return unpack_entry(the_repository, p, oe->idx.offset, &type, sizep);
-+	data = unpack_entry(the_repository, p, oe->idx.offset, &type, &size_st);
-+	if (sizep)
-+		*sizep = cast_size_t_to_ulong(size_st);
-+	return data;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 56d1bb498d..961d547ef2 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -66,8 +66,8 @@ static inline struct object_entry *oe_delta(
+ 		return &pack->objects[e->delta_idx - 1];
  }
  
- static void load_tree(struct tree_entry *root)
-diff --git a/pack-check.c b/pack-check.c
-index 2792f34d25..5adfb3f272 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -143,9 +143,8 @@ static int verify_packfile(struct repository *r,
- 			data = NULL;
- 			data_valid = 0;
- 		} else {
--			unsigned long sz;
--			data = unpack_entry(r, p, entries[i].offset, &type, &sz);
--			size = sz;
-+			data = unpack_entry(r, p, entries[i].offset, &type,
-+					    &size);
- 			data_valid = 1;
- 		}
- 
-diff --git a/packfile.c b/packfile.c
-index e202f48837..dab0a9b16d 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1454,7 +1454,7 @@ struct delta_base_cache_entry {
- 	struct delta_base_cache_key key;
- 	struct list_head lru;
- 	void *data;
--	unsigned long size;
-+	size_t size;
- 	enum object_type type;
- };
- 
-@@ -1525,7 +1525,7 @@ static void detach_delta_base_cache_entry(struct delta_base_cache_entry *ent)
+-static inline unsigned long oe_delta_size(struct packing_data *pack,
+-					  const struct object_entry *e)
++static inline size_t oe_delta_size(struct packing_data *pack,
++				   const struct object_entry *e)
+ {
+ 	if (e->delta_size_valid)
+ 		return e->delta_size_;
+@@ -83,11 +83,11 @@ static inline unsigned long oe_delta_size(struct packing_data *pack,
+ 	return pack->delta_size[e - pack->objects];
  }
  
- static void *cache_or_unpack_entry(struct repository *r, struct packed_git *p,
--				   off_t base_offset, unsigned long *base_size,
-+				   off_t base_offset, size_t *base_size,
- 				   enum object_type *type)
+-unsigned long oe_get_size_slow(struct packing_data *pack,
+-			       const struct object_entry *e);
++size_t oe_get_size_slow(struct packing_data *pack,
++			const struct object_entry *e);
+ 
+-static inline unsigned long oe_size(struct packing_data *pack,
+-				    const struct object_entry *e)
++static inline size_t oe_size(struct packing_data *pack,
++			     const struct object_entry *e)
  {
- 	struct delta_base_cache_entry *ent;
-@@ -1558,8 +1558,8 @@ void clear_delta_base_cache(void)
+ 	if (e->size_valid)
+ 		return e->size_;
+@@ -145,7 +145,7 @@ static inline void oe_set_delta_sibling(struct packing_data *pack,
+ 
+ static inline void oe_set_size(struct packing_data *pack,
+ 			       struct object_entry *e,
+-			       unsigned long size)
++			       size_t size)
+ {
+ 	if (size < pack->oe_size_limit) {
+ 		e->size_ = size;
+@@ -159,7 +159,7 @@ static inline void oe_set_size(struct packing_data *pack,
+ 
+ static inline void oe_set_delta_size(struct packing_data *pack,
+ 				     struct object_entry *e,
+-				     unsigned long size)
++				     size_t size)
+ {
+ 	if (size < pack->oe_delta_size_limit) {
+ 		e->delta_size_ = size;
+@@ -496,7 +496,7 @@ static void copy_pack_data(struct hashfile *f,
+ 
+ static inline int oe_size_greater_than(struct packing_data *pack,
+ 				       const struct object_entry *lhs,
+-				       unsigned long rhs)
++				       size_t rhs)
+ {
+ 	if (lhs->size_valid)
+ 		return lhs->size_ > rhs;
+@@ -2279,7 +2279,7 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 		default:
+ 			/* Not a delta hence we've already got all we need. */
+ 			oe_set_type(entry, entry->in_pack_type);
+-			SET_SIZE(entry, cast_size_t_to_ulong(in_pack_size));
++			SET_SIZE(entry, in_pack_size);
+ 			entry->in_pack_header_size = used;
+ 			if (oe_type(entry) < OBJ_COMMIT || oe_type(entry) > OBJ_BLOB)
+ 				goto give_up;
+@@ -2333,8 +2333,8 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 		if (have_base &&
+ 		    can_reuse_delta(&base_ref, entry, &base_entry)) {
+ 			oe_set_type(entry, entry->in_pack_type);
+-			SET_SIZE(entry, cast_size_t_to_ulong(in_pack_size)); /* delta size */
+-			SET_DELTA_SIZE(entry, cast_size_t_to_ulong(in_pack_size));
++			SET_SIZE(entry, in_pack_size); /* delta size */
++			SET_DELTA_SIZE(entry, in_pack_size);
+ 
+ 			if (base_entry) {
+ 				SET_DELTA(entry, base_entry);
+@@ -2357,7 +2357,8 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 			 * object size from the delta header.
+ 			 */
+ 			delta_pos = entry->in_pack_offset + entry->in_pack_header_size;
+-			canonical_size = get_size_from_delta(p, &w_curs, delta_pos);
++			canonical_size = get_size_from_delta(p, &w_curs,
++							     delta_pos);
+ 			if (canonical_size == 0)
+ 				goto give_up;
+ 			SET_SIZE(entry, canonical_size);
+@@ -2713,7 +2714,7 @@ static pthread_mutex_t progress_mutex;
+ 
+ static inline int oe_size_less_than(struct packing_data *pack,
+ 				    const struct object_entry *lhs,
+-				    unsigned long rhs)
++				    size_t rhs)
+ {
+ 	if (lhs->size_valid)
+ 		return lhs->size_ < rhs;
+@@ -2736,8 +2737,8 @@ static inline void oe_set_tree_depth(struct packing_data *pack,
+  * reconstruction (so non-deltas are true object sizes, but deltas
+  * return the size of the delta data).
+  */
+-unsigned long oe_get_size_slow(struct packing_data *pack,
+-			       const struct object_entry *e)
++size_t oe_get_size_slow(struct packing_data *pack,
++			const struct object_entry *e)
+ {
+ 	struct packed_git *p;
+ 	struct pack_window *w_curs;
+@@ -2771,7 +2772,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+ 
+ 	unuse_pack(&w_curs);
+ 	packing_data_unlock(&to_pack);
+-	return cast_size_t_to_ulong(size);
++	return size;
  }
  
- static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
--				 void *base, unsigned long base_size,
--				 unsigned long delta_base_cache_limit,
-+				 void *base, size_t base_size,
-+				 size_t delta_base_cache_limit,
- 				 enum object_type type)
- {
- 	struct delta_base_cache_entry *ent;
-@@ -1614,10 +1614,13 @@ static int packed_object_info_with_index_pos(struct packed_git *p, off_t obj_off
- 	 * a "real" type later if the caller is interested.
- 	 */
- 	if (oi->contentp) {
--		*oi->contentp = cache_or_unpack_entry(p->repo, p, obj_offset, oi->sizep,
--						      &type);
-+		size_t size_st = 0;
-+		*oi->contentp = cache_or_unpack_entry(p->repo, p, obj_offset,
-+						      &size_st, &type);
- 		if (!*oi->contentp)
- 			type = OBJ_BAD;
-+		else if (oi->sizep)
-+			*oi->sizep = cast_size_t_to_ulong(size_st);
- 	} else if (oi->sizep || oi->typep || oi->delta_base_oid) {
- 		type = unpack_object_header(p, &w_curs, &curpos, &size);
- 	}
-@@ -1735,7 +1738,7 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
- static void *unpack_compressed_entry(struct packed_git *p,
- 				    struct pack_window **w_curs,
- 				    off_t curpos,
--				    unsigned long size)
-+				    size_t size)
- {
- 	int st;
- 	git_zstream stream;
-@@ -1790,11 +1793,11 @@ int do_check_packed_object_crc;
- struct unpack_entry_stack_ent {
- 	off_t obj_offset;
- 	off_t curpos;
--	unsigned long size;
-+	size_t size;
- };
+ static int try_delta(struct unpacked *trg, struct unpacked *src,
+diff --git a/pack-objects.h b/pack-objects.h
+index 83299d4732..e97e84ddcb 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -141,7 +141,7 @@ struct packing_data {
+ 	uint32_t index_size;
  
- void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
--		   enum object_type *final_type, unsigned long *final_size)
-+		   enum object_type *final_type, size_t *final_size)
- {
- 	struct pack_window *w_curs = NULL;
- 	off_t curpos = obj_offset;
-@@ -1911,7 +1914,7 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 		void *delta_data;
- 		void *base = data;
- 		void *external_base = NULL;
--		unsigned long delta_size, base_size = size;
-+		size_t delta_size, base_size = size;
- 		int i;
- 		off_t base_obj_offset = obj_offset;
+ 	unsigned int *in_pack_pos;
+-	unsigned long *delta_size;
++	size_t *delta_size;
  
-@@ -1928,6 +1931,7 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 			struct object_id base_oid;
- 			if (!(offset_to_pack_pos(p, obj_offset, &pos))) {
- 				struct object_info oi = OBJECT_INFO_INIT;
-+				unsigned long bsz_ul = 0;
- 
- 				nth_packed_object_id(&base_oid, p,
- 						     pack_pos_to_index(p, pos));
-@@ -1938,11 +1942,13 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 				mark_bad_packed_object(p, &base_oid);
- 
- 				oi.typep = &type;
--				oi.sizep = &base_size;
-+				oi.sizep = &bsz_ul;
- 				oi.contentp = &base;
- 				if (odb_read_object_info_extended(r->objects, &base_oid,
- 								  &oi, 0) < 0)
- 					base = NULL;
-+				else
-+					base_size = bsz_ul;
- 
- 				external_base = base;
- 			}
-diff --git a/packfile.h b/packfile.h
-index 49d6bdecf6..0b5ae3f9fc 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -455,7 +455,8 @@ off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
- off_t find_pack_entry_one(const struct object_id *oid, struct packed_git *);
- 
- int is_pack_valid(struct packed_git *);
--void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object_type *, unsigned long *);
-+void *unpack_entry(struct repository *r, struct packed_git *, off_t,
-+		   enum object_type *, size_t *);
- unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, size_t *sizep);
- unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, size_t *);
+ 	/*
+ 	 * Only one of these can be non-NULL and they have different
 -- 
 gitgitgadget
 
