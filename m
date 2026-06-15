@@ -1,154 +1,108 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE053FD971
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 14:53:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781535238; cv=pass; b=GoX3b7lY9cn1XVP0JMzV7j11ogjO2byFwJWh3WPxA3o/gTJuGwo75tf0p79TOBiY1f0bw8BcMqFJdDEtMtBLaT38RU5RJBsREibw5ooAlBf647S5T5UAIapvirJ1f4f4sHZVRvdr7LXNrL1mFpixaEco8K/0PSl5Aw4so0denHE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781535238; c=relaxed/simple;
-	bh=3/52sTURc08fW9CFI5hwEZPMkagnY8An4NEU6tK6g5o=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=EwHzpqV/QUiP1VV15rIZxWv9vPW1T3th8Jm16Wy+bCFzqCnMyss+DJMlrtp0/Ux7Zzjo7xFwXsdD36qILDU0Irx5g7lIhqFvM7iQdrRG6f/3e7SVfHjwkCd/o7NMUnnSAFhd99wr44iHHp2PHKRtuOZOq7b4ywruGhaZrQdenXo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bD8a+pWd; arc=pass smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38303FE377
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 14:55:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781535352; cv=none; b=Jo1XdiC+QBqRTkvcwNmFdbwtJjRWPLMTBYcHFgsd+l133+5QosvQGEQXVJmF28paD7fhluVOBLTl0cC9oazS//xgCJD87RfIIt4GQ8iJPYgBDdtNgYKAxw8Gn1IcaEUZGatf45FpTeDuz5Ij2wesFgzekBqaye67Z9kdr5VFHBw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781535352; c=relaxed/simple;
+	bh=+yxXN4Anvai7Exrfdg5jaizKm0LdIfB/qUJDuFzk0zQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pjh6KWyiF3hyy8J1pBnGYwgbEh1u1Np0NrZ72/67kjS6dYIgCRH9E41ahTbsOZrzmC8t5HI+uQvS6KDHkZo7ICCW8Bx6nKG9P52o4zGb1Jf52WllUP25RwGquiDqwP/zKHeIsDrYUwV07WY9+43MuDBKSO/ZpA5zecUzsNrkmqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m1NRZlu7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BaefiTOg; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bD8a+pWd"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-1363fe80fe8so4938815c88.0
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 07:53:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781535236; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jAbX9+8JLAfXi8nyw03tb4Xc3IvE2a6RQAaeJqVfLIu/fI6DdcJmAHljXjF4n+8qkY
-         idfLuWFIzFsbv9qRBOEmbLVd2fdC8ioQPCZc0qqqa96ji6e8RWrsKlqMjTh/9SH1PH26
-         psg59xFbp7/T99LkBOKIJUxX3KXTymqEYbuhETKEBFR5N2ON6QmQ5vnbsS275mhNmkvP
-         IRSKjgw6081iKzhvlkuY2TQQrBCUJHUs1weLbGLfe7XG+o6QTgEGuePlt9wXaYLMJGjs
-         DR7XuWbJa3IwrNt6ccnl8XU1R0qwrbkuNSp3WkWWjdWih4h7h6yGbRteqocGDq9igrcr
-         zwvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=HNrBtBTyqxkVoiweeftO8zxacfyPlGXY7NL8/lH+wbE=;
-        fh=AdLvfp5rDLFEqEXBqPWoMWgsTSDK6pd8NZNu0VEubK4=;
-        b=DOmY1b+tLf0K+9MvmsYXo8WshV8NcTOEMVOQ+JzjfZVmdgs9+Hm0PFOunSunqTvxaZ
-         ztrcwWa0YVZnR9MkYvsJyUZAKNdjIuUU6XKfg3WD2plxStc1JCF3HBSfuDT3qth2Uei8
-         RKWxZNom06wudxgRYa4KwTooi7YHMKdNfn5wilnl6R9OSv5MiUf6JFxX9/SUnRMK+FvS
-         X0V1ZSeVJc2SWX1ViBtsAr3/WepfW/AXLgEmZ9c8NPTJI2dAccYPBq3ASWk0Gc04qiSF
-         ekl8B2LGc752k18IzyKe7x4x/17082104q1zTcyMWFb8gxDAnTbyEYYWazmv27TlNC17
-         QQVg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781535236; x=1782140036; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=HNrBtBTyqxkVoiweeftO8zxacfyPlGXY7NL8/lH+wbE=;
-        b=bD8a+pWdwGd8yOF9qJSWIMdLuBrAT6xHgSpNig0RpRfOBuyo4iPkxScPtNo9oUhHiy
-         6XtqJ/uYLc79ufprotYca82g5YMGML+NKSuCuHDZG6cFP7kq0MJenVSWIHxzS3K0r0Np
-         TF9dVWV0sd+dGc9fNvOCr8R/1jIl+23CHuboW5p9CsdS/5CvTI0B7i3cDYz2VrXgS2om
-         ms+A7hhgvs2BxL2bgMnto1pNR+AEJ3srdN6I0gvs3kfeq7hXlQpwTLeqmLMYLaf1+8kM
-         dyx/vWGK7e/+6jJe2Wxq9lp6NBNdGPNoseTu1YYBy5kemBB1zU6qmQLDTJuAn9I3ugMT
-         /0Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781535236; x=1782140036;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HNrBtBTyqxkVoiweeftO8zxacfyPlGXY7NL8/lH+wbE=;
-        b=ov6ynydXETGTLtXRKZzPOvRqKrlJlm6+7QW5QVZAIITvKFVbvwuTZniuaRnElpx9Ec
-         mOZlkA9kmHWEmvkGYguqE2A7tryDy3yj2jTm4rAop1k9atpt76p8ugbbVL59CMf987sR
-         tfd8KeReN8M35rbL6TsHdDsqEn+ilvmgiKPwHjhbzfKuFAQYcqIF+LrZWOIheyiG5+wB
-         nk82q/mUOY+BQtWeE7qV/FXD8qTaPC3Y56UYLlhLNOILEMW9cAFD0NYkMcAwRiPgYGQW
-         Aq165yw09Sre1tVisHoJjQ6SgcLygcIsvzEGW026CETEvtEXTDm4C5/fUFILlq6yUitA
-         BCJw==
-X-Gm-Message-State: AOJu0YxsnQFYsCxtC/DHV4XLiZaFNTUjGbZ/zdNNFBhTbf+aanOEjcNa
-	pbVpKLroKROAz7yWkZO67OcK+iiiPNlagqN+SvsL92u96MCYzDuJXXv+AfKxgOYYPikVyxBNS6H
-	UTkvjf0MWwBVg729A38MwGgFrv06huN29ILpfWOANhnO3
-X-Gm-Gg: Acq92OG+ooFAYKoG1aTzsqoj0xshRhN8DgXTCPQjwo+DZMRXWo08dfDUWr4iTlUUCYf
-	Z9dmzn+PtXXkJ2kfrRoPO6Lfk36afBdzXFx3mfhxQwW5PVrcZxT5xXxiT6I2B0pQUvhdKaUASnX
-	TeatDz4grKFYhzrHLCI8j8+LNFvv8ZLKAivLczCSrtp2qrfSgkEu5OWDGkKzhLpbMs6rMyfyv/Q
-	HwmORVrSCoIDFrcbV3chPzJ8ckl5Y3fUbLCLYbFwJ1DZSFdnyF/1tZ7jwuGDA94XZo6IXqAyXwk
-	elPeCMr1nvh25D3JrMHwQbVlSHO8k2RMoW0RT+67KO0k1glB0UhNKcj8Hlq3SaVL9Pd5fMwzFHa
-	tSFha0lFOD0fetf/Z6dyJfMUCNZauS+bmOw==
-X-Received: by 2002:a05:701b:4285:20b0:12d:de3f:f3e5 with SMTP id
- a92af1059eb24-1384bba7cdbmr4940853c88.37.1781535235644; Mon, 15 Jun 2026
- 07:53:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m1NRZlu7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BaefiTOg"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id DADDAEC02CA;
+	Mon, 15 Jun 2026 10:55:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 15 Jun 2026 10:55:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781535349; x=1781621749; bh=Dz0d85MvRN
+	cnspMumI4tK9k+fH4Y4VkR0Q3r7NI27Lk=; b=m1NRZlu7mRfev5qorUFl7tU69j
+	fqXkheyAep1R6bEX0u4s4B+lc5nWo4z+PtOPqq0Q45nBVjZVs7Mri3G6fG9wv3bj
+	TLmPRAZkLObGIsQT8cM30Qmg3xeyXnzLB4gWZom18nCFASjffBUcWQFA7jq2p/Ou
+	l3fdkJ3IHyiqqTjXEZHFNZYRXm2CRn7iiUSgIAZSnWH5uIU9rUbFXvLYlAfUpCF8
+	XYNWwnfeCL7r70kRGfy4ni3EQ2gjIvg4027tKQDm+jBK1JQCtOtePYmkcGObMd9x
+	b+iew/b6D0SHtYcLYHeiXdPAWZ1J8+DRQkT7WAYCD4RvgVAs97xOTpJXWsyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781535349; x=1781621749; bh=Dz0d85MvRNcnspMumI4tK9k+fH4Y4VkR0Q3
+	r7NI27Lk=; b=BaefiTOgWTB+3dw56cFmZhB56dNOwd6/tJeJybHth39xmOJipJX
+	xwnJDmrEB0absFBCW9DXotTQEwKdZqyuyXMMQCt9SETOetKV5RjZBhqPLDwO/KJ9
+	fpST0qAiU2HmhcV+ISqCkDQ4DiLtmwJj5LncX/AuKcMlnVDsG9NSG2XugjWD9KD5
+	i+yZDK7/xZxnggDUMJQAMplSALMb/DkkeKNKB0hnkNIbpXza37hZEyi0WMJY8Gxz
+	rmt1i6DdiTBNZySK5pZWQ3gzQUlzTXzHLAdmDaSpDt4K5vQ7iOpxx1eLeQZXPkat
+	ESRXIJ5uKvpgTOompdt8xJemH0LEWsNmiyw==
+X-ME-Sender: <xms:dRIwanRZx2UGlMwsAEKz_8RD9Q1GEtZTMuqeLY_JD1wAsaK-vdZNSw>
+    <xme:dRIwasePoHYStSgRdwlXH2mMIIAe6vf-El6yGkmXkaqvt8CcRIstufVa_kWpoFsuP
+    01TXLsboN0kRUP4QycVHvZoULiYr_hhwGxxj43HF7xYtibwvPIa>
+X-ME-Received: <xmr:dRIwampcwSlKBqw2WfgHg27jxGxSVhRLZ99moJbe5XoG9CT0TAiVLSO8GJBLrCIFuNTo16na5XKT-RfWzI2Sh4Lh1G-7W6anfu2u>
+X-ME-Proxy-Cause: dmFkZTEfzHAuldSRXUB8P7Ll3pryio5Oo2r1UVBxxKvnl7OD791WNd1gTEPJBOebvqo8Qf
+    ZBfRCYfAWZmbSmEbxXWqId+I6/Ru9M+gaKZGWKz6oUuB2bFjogMB5yF6F8yLL6D3F43q3O
+    et1/ud9652v4Nr+no+Re0JI8vVjIG147w1sWGRxMvRSPCDm7NbqQEkReWdsRapcv/OCHTE
+    jujA/b/ckTCJw7Jo1+0WeLu7wP+lIvZniI06SXjA+Hv1L4oEwPwuR+pWc12lbLMzFmlDbg
+    RvqMmHIvXEVnToMTR1ebPNUBS41Va2YNHH9yY9W2E6TrM5tgGxsd/FtLkBI7euPpHmMpRu
+    i0W5orSPDpd+juHsoV/x+9uLjw2r9DZOdsRoNU8dGCm8tJdKDMlBpFbJCOjXzmDtNxUBKI
+    1BhXLOc7ioDC0MBV3MiY9f6J6gRSp11MBEJRqK+aqqrhVx4Z1CX92fcpBmf0XVWuFnprbl
+    7n27j6Wr9LrLD4rEcm2KF555H8i7xNmazwlLwVMwcTJ2Ltzb0YX23rS5btSHPQDqzEID3p
+    lSmHBuKUZxphFLqGMyYZ3/ig6SNO01BY4gDW4/eD4DY/6wUZ6yvYzBsyh71YzN/Y5ov6Mc
+    nwXkLjeWVfxFrYvsIiYd3luXnwzgKKEA7lEcd4nk1O47kZz4iZ0fdeBvAAcA
+X-ME-Proxy: <xmx:dRIwat8EAYKztXoowRJQAqgAradtOt_wlsABCw9KN47d4ykQ-VYomA>
+    <xmx:dRIwaic82Yql3q_3eWlg0ife2fXZVhdoI5chJm4oEpp6Eqhd71Geog>
+    <xmx:dRIwanLFrR_MskdUSNa4ThBUzhXNSQAlTJHDZaMo8G7L-CRanQSd_w>
+    <xmx:dRIwaij0gYtMkm5HyTlxqZMKu8NlVIpBuit4xnspbzXOgXcUWD0VfQ>
+    <xmx:dRIwakLG9azRyULlDPoXwSVMHxiaNgUWTWIYlSYLl7LhgrCmZNb3GBtS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Jun 2026 10:55:49 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/7] More work supporting objects larger than 4GB on
+ Windows
+In-Reply-To: <pull.2137.v2.git.1781524349.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Mon, 15 Jun 2026 11:52:22
+	+0000")
+References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
+	<pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
+Date: Mon, 15 Jun 2026 07:55:48 -0700
+Message-ID: <xmqqldcfdf9n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: will.flowers@gmail.com
-Date: Mon, 15 Jun 2026 10:53:17 -0400
-X-Gm-Features: AVVi8CdQK_MtHAvK_IDDLw4sdUAdsnQQvHC76t0pQJ3rM2-crPCNiHEVb6XaSrw
-Message-ID: <CAGA=4btkTrxi2AL6mr_=dinhP-K8Y3afPpVEwyG_OqwpAUR=cg@mail.gmail.com>
-Subject: Bug: Git Bash appends GNUPGHOME variable to existing value, rather
- than replacing
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I came across a bug with Git Bash that I wanted to report. I'm using
-another program in Windows that requires that I install GPG4Win so I
-can use their GPG signing integration.
+> This patch series tries to address the problems pointed out by the expensive
+> tests that now run in CI: t5608 and t7508 verify various aspects about
+> objects larger than 4GB, which Git does not currently handle correctly when
+> run on a platform where size_t is 64-bit and unsigned long is 32-bit.
+>
+> Changes vs v1:
+>
+>  * Rebased onto master, which merged ps/odb-source-loose (with which these
+>    patches previously conflicted rather badly).
 
-Thanks,
-Will Flowers
+Very much appreciated.  There was a rather old set of patches by
+Philip Oakley you relayed earlier, which had the same issue, by the
+way.  Will queue, and will try to take a look if I can find time
+before -rc1 but no promises X-<.
 
-Bug Description: There is a configuration conflict between how the
-GNUPGHOME environment variable is used by GPG4Win and how Git Bash
-uses it. If I set GNUPGHOME as an environment variable, it is used
-correctly to set the home location for gpg commands by GPG4Win.
-
-This is an example of the home directory that is used by GPG4Win:
-
-PS C:\Users\wiflow> gpg --version
-gpg (GnuPG) 2.5.20
-libgcrypt 1.12.2
-Copyright (C) 2026 g10 Code GmbH
-License GNU GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-
-Home: C:\Users\wiflow\.gnupg
-Supported algorithms:
-Pubkey: RSA, Kyber, ELG, DSA, ECDH, ECDSA, EDDSA
-Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
-        CAMELLIA128, CAMELLIA192, CAMELLIA256
-Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
-Compression: Uncompressed, ZIP, ZLIB, BZIP2
-
-===========================================
-
-However, in Git Bash the value of GNUPGHOME is appended to the
-existing home value. This is an example of the output from Git Bash:
-$ gpg --version
-gpg (GnuPG) 2.4.9
-libgcrypt 1.12.2-unknown
-Copyright (C) 2025 g10 Code GmbH
-License GNU GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-
-Home: /c/Users/wiflow/C:\Users\wiflow\.gnupg
-Supported algorithms:
-Pubkey: RSA, ELG, DSA, ECDH, ECDSA, EDDSA
-Cipher: IDEA, 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH,
-        CAMELLIA128, CAMELLIA192, CAMELLIA256
-Hash: SHA1, RIPEMD160, SHA256, SHA384, SHA512, SHA224
-Compression: Uncompressed, ZIP, ZLIB, BZIP2
-
-==============================================
-
-Steps to reproduce:
-
-1. Install Git for Windows (Git Bash). Use default settings for
-everything, including the option to use some commands (but not all) in
-Windows terminals.
-2. Install GPG4Win with the default settings.
-3. Set the GNUPGHOME environment variable in Windows.
-4. In Powershell, enter the command gpg --version and view the results.
-5. In Git Bash, enter the command gpg --version and view the results.
-
-Git for Windows version: 2.54.0.windows.1
-Operating System: Windows 11 Enterprise, 26100.8390
