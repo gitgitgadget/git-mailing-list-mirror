@@ -1,156 +1,133 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD8D3D1CD1
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 15:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781536654; cv=pass; b=hGoNVz/M7foYVYS7ZUan2p8F5jvNcgEOP9/jCKdM2v98ig3Q0yyfysZP3WBzNC30LTdTdaVl9Lb2fa6WTaG6KksUUZOp3JG3/F9kZ7ccV5xk+1BA/NMfwx3B3dnSx81PXEUKhc+N1c+x/iBPh5oEVopRP1FmfJ26RLFPxdVJPdk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781536654; c=relaxed/simple;
-	bh=FNmj1zzj2PHQV6yADJPtMqaI3yemBpDL5/VJGsIbmaM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LdoeMD1XI9IYko9y4v4Whr1G5y6fXRCIbw2YGZqXU7IFKtaSgDqwXt6s9j9bG7EK33oHAlr20XyCy9ERB9dAvsy2atIVsthAb/W+2SwWmhTxq64mSnhGQT1zbYGgjYO/mS9r6S+zyzC133u9S1DZFvMTxmCzLmcuMENsY8NBa2I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aVpgF6JK; arc=pass smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021E33F485F
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 15:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781537140; cv=none; b=EOHFtxode6T68R0XTaXf5+tDlS5xXZWfYBXejJUg647l7ECfXRSiR1l736x0+t24UMuxJpS3v5r7k1RFOOG/H/tRrPDGjI5PYha37eww1iEUBOvwx8KDdFNf7ZsZM0QXn4owyKldDc5ZFb7+lK9Rdnsjm6Ng7pIDuI0pVuehiaw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781537140; c=relaxed/simple;
+	bh=ZZaByhZUZjzfLBholSVFLWoNXj/YXE8oCjJOS5BCERc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gLbcuENi6Fhvgi2vX8PZ4FttUY0oEOBcuIwNlaskeaGMWKkBShXlC3DdbeizymSXOHWVTlB1BApaCd97xHvplhXiuU4lOHkrgwcTFZwl+V/yw/Ob85SK/OxQgmHTmUU9nvHts3FAsoTieLyR7P7C5TPRw23/q9qJXbkctR7bIEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=chCtijcp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yp0ETIon; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aVpgF6JK"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-84232e83ca9so1685266b3a.2
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 08:17:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781536653; cv=none;
-        d=google.com; s=arc-20240605;
-        b=M5UHQyDF6Jlq5oTvM9UvGeRn1q2wjO7JUpm9eoIYgair5odrZiRcQGWRc6pDeMbhOg
-         CNlhcmX18BKIUOKuteaU1so3qXE26HpydH7oP1oviETtwk9WHlmsKCQvqW/frO2S7q1a
-         hF+mu3Jp8p5/te7luagj7iZNG8OWQ7pg96xr5PsBnCplAfZgSa4LJSTBlTes2zR3zldA
-         6AhosIhQRpgZQABFQUonrWefvSw34ucMAenaiskX1cp/JX6Gse0Xgmoc+nLYSQEgTWXS
-         QxO5hihRAi64DGe+utCqCsaaxkP9ESGNVDXrAolyqIRWUbEgi7M2293viZG6COkTfdX0
-         TXvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tnaGHGrPMnas8VVPUAn0I34cmBqD6ShZsKLrUJhrnEI=;
-        fh=en1VouKqo+qtqgBDqIMvG38vG9V56hlN9Ems/+TZKXQ=;
-        b=bvwBSLlJVeURvui2GDcZ+19P/4UpqeGpf2GSYkWfBEa+8+MGo91l+/YNUuehKN8fOn
-         xkynGbvfgF20sVcwYjRAyoOHEBP7AAOhJpVYFRZhdkkpG8KUC4Ow8VGqN2/GMW0WCXS1
-         9WWuElsRHXOOooFhuEYFSiqxF4zZi1AadtCdd4NmTJlTvk/O+9oL6BlJyhmElXKf1iel
-         zR8N9Tki15TBf1H3uxeSY6aUirYutvwNebDASlgBdwM1y/jJpJ4SUbCiw1CUk84Eqngl
-         YpZsnpaQAamj+Lv8rzfrKjrTdjUGmoUIJT+NmbPd8ygFsRHtx4wKOuvAkgtocToZVO7a
-         sbwA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781536653; x=1782141453; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tnaGHGrPMnas8VVPUAn0I34cmBqD6ShZsKLrUJhrnEI=;
-        b=aVpgF6JKN4xe5SVORaDlGfJKpxfvep3cKtGFgBY5ndZZuFEkpIkTSXfroBctwvDSL3
-         HhVJH1jxnUbNAeiHuz84aXQ7W5mJGweZ+09PMMbYfoBVZ2w1Lc6YwsLqiq4yAXfZ9bea
-         dJGSXogQSQmy4ztSFeIYe6SOzkoa974YBXt+matFRpszqd+/DVoqKMvyZazSY6oKtIeH
-         BSyJSMczlHzQLjEJp7/K5/VOiwzP8jjQCCoDt2t8Zjsxk4uIi+bsLhGuj8Sb/8IX5XpN
-         LM7Tko8SudsqmwbWbWT6yt7r4HpEU+5GaF748wwqSZ2Uu1gJW2dqcMm8b3jxHwByCVJ9
-         r0Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781536653; x=1782141453;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tnaGHGrPMnas8VVPUAn0I34cmBqD6ShZsKLrUJhrnEI=;
-        b=Ya+X6sSj8TradSws0pev5PxK7dRisYC0r/wn3k+/Y6rYpdrzmgKm6eK0ndGJ1RoJXl
-         QGfjZC+X+bRj5UxCc4XE7hBgX4Yh/mX3jXutD0ShPO2gBZfwoQO6OFRmLIc30WZqsrf1
-         B4DRAkDw07e/OOhHZOl6BOLK5aeXjFuGejHftGsf1Gz6cfeN6JTXlcrEMLl00Z3xRPh+
-         cqSrJGOkIfv/uhDyROXufHVdl5dtoEnyKwm/Fx9dXHKtuxz6b60mXMYmh/RfdEZQMyoW
-         nV+3mCXSc8gCmDBMZl4fX8gqdmr7PUvib0ZtiiAS6qvU+YDHhrhb1CqJbgNdXSoaJIvt
-         cFNA==
-X-Forwarded-Encrypted: i=1; AFNElJ/kJLNh6SZmAKoSuvgG+tPrWz5VG6ItiLAWRFw3nc5bjy58ZWV4ldwKxiyOI28H2ul02Tk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaFXl3zbgvG7Cj0DsIK2zz4n/YWPr5cjZbGI+1hGZ8gOLQoEcJ
-	J+i+ohENms3Pc7A8vXjSVsYPMKMABbk9JvCgfmO6+bLFH9LGSHWcjdoEWE1ToAd9Sk+xZnEWrwI
-	TPCGCGP7/1zitHQTMI3cR88DIHA40Ne0=
-X-Gm-Gg: Acq92OG7JqOn9p9SyY9KvUh2bqmDo3ot1N1zoMAB4ik1WLnmV5sFw9gA3/KsAo4WB2h
-	U4jr0/gfWPLbZyUehpu12jA155FVvDbSYviH5ep5F4kV4BtjubxuPFx1U9yAUka0dedD/qveWkp
-	CS15Mo6o3X1pM26lLhRo7gyBxY2YmXkr++9hJkjAqGXu9B3fBesIMr16JbPN6rHPFwPZDeEqEN6
-	NKpp+n1Vl5qZJcwom7q5wnMpXV2GBNvE2zq1dIPtr3DzgiEj/Ois44ASFtgryCFI0cjbO3psI6+
-	RrWvoEmJZzX9OwogBHWQyJSu6GEhhWVd6AkgRRvao0SdwRgMUU+phVUF1JZ0e7NOuBm6mZiY6Tx
-	xxiCu
-X-Received: by 2002:a05:6a00:3a16:b0:842:33f3:da68 with SMTP id
- d2e1a72fcca58-8434cd0b4d2mr15760386b3a.8.1781536653135; Mon, 15 Jun 2026
- 08:17:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="chCtijcp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yp0ETIon"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 243BC1400071;
+	Mon, 15 Jun 2026 11:25:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 15 Jun 2026 11:25:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781537138; x=1781623538; bh=a+ozw6NexB
+	iyDNeL7SwoU1M26BieKNcj7ziBAtKt5JY=; b=chCtijcpMtu83mWd5tayxjY2jR
+	Ue0R0Uh5q0FGzY9TGh6yjQWbdClB6SUASjzkynRZwO/rfTzPJ7KE6XPfNsIIV/lY
+	38Hj3U5nmyms3l52+DX6oAAPd/EJFy9CFWAzHxzwVhYfbfA1zepJgYmxeh50VO+e
+	dCX9uFC0QOfXTNGAiZeQ9DfOcONnXayL8e1fSIF1lZL/04RNDbqcJA0Wttd+98Tx
+	EpJXBSuR69xEhFR4+8dyMyefcOVwvp31iUCQea3KTDuaFM2GCxGkA5EGZtaQFaWJ
+	DVmAXSn/ZpIJkr+7dDbeV3Retab1KyaeZfHq1jfu1/69IhxYH0IoXL61JXig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781537138; x=1781623538; bh=a+ozw6NexBiyDNeL7SwoU1M26BieKNcj7zi
+	BAtKt5JY=; b=Yp0ETIonAKcJg30z4YLQIxyZgsd/PJ0NQNZx19xAMBTMO4JyY3a
+	WxZH8WvZ6en3G7mxfxr3LWmyIvocTweW1EDO7le2jNAaEASsDCPFvDhHeHng4C9k
+	G36kQZ3PPRiLhbhzBg+HFWahADcoDDQVIFLvzpRW/G2zPK17uJD6pMduxCtB9DJl
+	HAMWsx3SEFl7FSVThoA90RRmaaOgd7MchFbuhZ+IZP9RzxaOJBnNTUaihCStP/cs
+	g3cgw4gkvCkpM5dYrT32TbWGhMTvyLC2T+Cl5TvHox3unK7qq8dlE1mpA5Vk7aM/
+	VpdUhKh3z9+5pe3xotxLfQRZkCaVtYVy9Yg==
+X-ME-Sender: <xms:chkwah6p_gwYI4aM-xge_STBZIzASdzBOwfm2CdyUxirtyj0Idlcdw>
+    <xme:chkwal62NaPVBHCfYl63e8BpQYEla73KHkMMTfkt1PG61-DaATg1fG_nwmGE66-C-
+    qyDJVOTQ86R5Rq2_ErNeIIR_YnBggzfb5kTnnLDA00qUXFwMnzYgQ>
+X-ME-Received: <xmr:chkwatcnSdAIHoa4ar2zFNb2LgZLDyvKGJSZtyo__JInD0JM2KSW8YqHn_1avDjzrNHwudXtKQhUFcn2mQjUiUJdAYtt1lwRd7MH>
+X-ME-Proxy-Cause: dmFkZTGwIzkRyPZ9MvpjorgJiM7AKxzkMahw53laZzAKrg+8DxrIZrvHbmzSRgv7DRP4NR
+    26s1WwhNqUw6R05Lxuan+MspU9wiHJibJAn0F54kSa4VpTOvf7GUdnV1/vS/QwNvRPkUab
+    BlLpVUpp+pTmakv/Cw0wOWeS6LlTjFM2XNDJYDVBfs39y4Htty0n0lPbUjZgf2EthfF4m0
+    Up+EEMdYC85xpS69gMVzDXAmgdTXMRlAik1gJLzIlDdll1KnRawNTYyHRBT89Ir3Wz7tqL
+    dU5jrzf/NQa3gXOBYHaq0zhtnrx+FYLhD0U4vr26XklLpiFIXMeec83udzgPRRpXKgy0Fd
+    SdYoFxDYKPUaeB/WK5Nw8+7FWQ9OoVbnj/kJ76NgJ5ddPIOCFiyOC9rcDKhqlzTFt5w4Vi
+    ggVdJAhznttzbYsgRz2bSoV8qDmrCzc5l+gR2diCI5+njeElhJrWsUmkGmcV919ZGYW8m5
+    wQhqmcmiyWdhGk4MQUnPSkhpYT4BgbUewDhmj9wFhc5+O5wYIjgo9PUHlnk+ROIorbyEOv
+    DlXm2wwJWbJ5JPZEPpeQyh5cXEO5ssmxRwNS5c6DW/h5H1B0tH82lfCbTd+QDljsDvR8wY
+    FfUbjuO0KNzVPMlG1bE6Tc3MsC2rlaO6OS/um63gM4/WDAf4XpwrjI5OD3cA
+X-ME-Proxy: <xmx:chkwapAuRW7k4GHvtNKXjo-9DkjVDK8EaNuESSwfirYsVWd6ykL1RA>
+    <xmx:chkwag9pS5WyInLJrSZTlX5sGlllLJn0MDsH1GHP8oFuoJpi0OAPlQ>
+    <xmx:chkwakKD6Xt7qC9Qm8bLKIM7mP2Waq5MpRZPn5D_vnd-ollLGx9dpA>
+    <xmx:chkwaphCHVMsR5COdW_HEiDq_WFFTO96IVBzm1W44KF2GdiX0UgjDg>
+    <xmx:chkwas_gxJZYkFAPjXH7LprfOpf7jxWS_qObkVzqjiCQqnukh9sKXJky>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Jun 2026 11:25:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Koutian Wu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Koutian Wu <ktwu01@gmail.com>
+Subject: Re: [PATCH] gitattributes: fix eol attribute for Perl scripts
+In-Reply-To: <pull.2151.git.1781497525828.gitgitgadget@gmail.com> (Koutian Wu
+	via GitGitGadget's message of "Mon, 15 Jun 2026 04:25:25 +0000")
+References: <pull.2151.git.1781497525828.gitgitgadget@gmail.com>
+Date: Mon, 15 Jun 2026 08:25:36 -0700
+Message-ID: <xmqqa4svddvz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
- <xmqqqzm8d0j7.fsf@gitster.g> <CAHwyqnWa55xbTpzq-Nf6cMyvgR1yYgg8fhvgMFkquSEGPUwDmg@mail.gmail.com>
-In-Reply-To: <CAHwyqnWa55xbTpzq-Nf6cMyvgR1yYgg8fhvgMFkquSEGPUwDmg@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 15 Jun 2026 11:17:21 -0400
-X-Gm-Features: AVVi8CccdZ3N5_KchDIqVtFt6PG14QFyCjNJKaMd6ADhl8Rzhs3nrH2aGeMtHqA
-Message-ID: <CALnO6CBgHz5d5BT5gCyqyhw_HpV733msWOnrxmu-TJ0QGHE9tA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] rebase: add --fixup to fold a range into its oldest commit
-To: Harald Nordgren <haraldnordgren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Jun 15, 2026 at 4:22=E2=80=AFAM Harald Nordgren
-<haraldnordgren@gmail.com> wrote:
-> > > Adds git rebase --autosquash --fixup [<upstream>] to fold a range of =
-commits
-> > > into its oldest one, reusing that commit's message.
-[snip]
-> > I also wonder if we can do something like this without adding any
-> > new option or command.  E.g., if you have four patch series, where
-> > the initial implementation HEAD~3 is followed by "oops it was still
-> > wrong" fix-up HEAD~2, HEAD~1 and HEAD, then
-> >
-> >     git reset --soft HEAD~3 && git commit --amend --no-edit
-> >
-> > is what the user wants to do, no?
+"Koutian Wu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: ktwu01 <ktwu01@gmail.com>
+> ...
+> Signed-off-by: ktwu01 <ktwu01@gmail.com>
+> ---
+
+Thanks.
+
+This typo come from 1f34e0cd (.gitattributes: include `text`
+attribute for eol attributes, 2023-02-03), that added "text" to
+those entries with eol=lf, which inherited from 20460635
+(.gitattributes: use the "perl" differ for Perl, 2018-04-26), which
+inherited it while it was adding diff=perl from 00acdbc6
+(.gitattributes: add *.pl extension for Perl, 2018-04-26) that added
+the .pl pattern.  It is interesting that nobody seems to have
+noticed the typo during the reviews of these three patches that
+touched these lines ;-).
+
+By the way, we'd prefer to interact with humans with real sounding
+names rather than handles, especially when it is not particularly
+secret.  Your authorship and sign-off information will blend better
+in the community if you used "Koutian Wu".
+
+
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2151%2Fktwu01%2Fkw%2Ffix-pl-eol-attribute-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2151/ktwu01/kw/fix-pl-eol-attribute-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/2151
 >
-> I don't think it's enough. First of all the user has to know the N for
-> HEAD~N, and then 'git reset --soft HEAD~N && git commit --amend
-> --no-edit' is still quite ugly.
-
-Well, there are a few ways to get this more easily than counting; for examp=
-le,
-
-- git rev-list @{u}.. | tail -n1
-- the lovely ":/<pattern>" or "@^{/<pattern>}" revision notations
-- etc.
-
----
-
-Stepping back a moment and assuming that the important thing you want
-is the "squash" (and not necessarily the "rebase" moving commits onto
-a new base), I wonder about
-
-     git history squash <range>
-
-which would squash all commits in the (now arbitrary!) range into the
-first. That makes it somewhat more versatile at selecting commits, I
-think, at the cost that re-basing is somewhat harder. That is, you
-could then do
-
-    git history squash @~3..
-
-and things like
-
-    git history squash @~5..@~2
-
-As a future extension, I think we could support merge commits: merges
-could be replayed as a merge into the final squash instead (creating
-an octopus merge if there are multiple merges to replay), though I'm
-hand-waving what we should do for conflicts. (We _do_ know what the
-final tree should look like=E2=80=94the same as the final commit in the
-range=E2=80=94so maybe we can actually avoid all conflicts?)
-
-Anyway, I've cc'd Patrick for his opinion about whether this fits in
-"git-history".
-
---=20
-D. Ben Knoble
+>  .gitattributes | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/.gitattributes b/.gitattributes
+> index 556322be01..26490ad60a 100644
+> --- a/.gitattributes
+> +++ b/.gitattributes
+> @@ -2,7 +2,7 @@
+>  *.[ch] whitespace=indent,trail,space,incomplete diff=cpp
+>  *.sh whitespace=indent,trail,space,incomplete text eol=lf
+>  *.perl text eol=lf diff=perl
+> -*.pl text eof=lf diff=perl
+> +*.pl text eol=lf diff=perl
+>  *.pm text eol=lf diff=perl
+>  *.py text eol=lf diff=python
+>  *.bat text eol=crlf
+>
+> base-commit: ea97ad8d017de0c9037451a78008a0fd60abea0c
