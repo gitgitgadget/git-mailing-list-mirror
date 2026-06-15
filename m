@@ -1,80 +1,80 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2973F5BCB
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DFC3F44FC
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:57:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781531822; cv=none; b=YcQdwn+dvO90vATRgWujxVETjHK0tFRYXbjhInVgLucl49u73fvsQYD2NGfSTS3GBezXpHRLB+v9BMvAnnrCUpSvS61BFX21DKKmb9e0zG9WGMxeqA5Sd/oMrvgbOQWo405xd/m9JfM7pGAY/0oaecog7GBMNfCIR8pSg3RNqfc=
+	t=1781531825; cv=none; b=GsMWv0Z0UguELgZ/SOrXsztHPnDh3YozajLeOgIKKDxMK4x9i0kG0invN0wVS2xQRPluyNnfVfFYUkSA1XGP1HFXfY27DvX3Z0zPOrPssmyxPXu3ZNqOnTeoCWx5RX/V7UEtiRkbmS1aC7OyoB1XyXPgeVOlMsWr7y7MRj60/Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781531822; c=relaxed/simple;
-	bh=vpyzVYLeaROuRZ94CyK1F84P1t8jEwaFaFYTzOXmgzc=;
+	s=arc-20240116; t=1781531825; c=relaxed/simple;
+	bh=9z1e/DrZywMghLx/FUXva4xq6T/H3fvECdL5J82Y2vQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hEBZfnnI2C4hXbsOfwhnjGQxBRz3SA/+fkGFLp1UZq+7qJwyL3Dukjm6nLMqyUVmNm0CnBq9EpRDlmuFarCQMs+5UWCMTiIIYFx+LMt3L4LOLangtAQiTSJ9b+SUBYeyIHC3dVNBNIQtKLZ+dhg20+Ax8oFbM8u6eq2hTorDtgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ezY7dTH5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jSUD5rj/; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=Z4pGSZNosQv8QNqgBCJf4jTJWbs6qIxkwZyqRSQya3KFW7PKNQXb9eVINmSEXp6/tiylfZrInZYYpKlohJkms9dxf1nC2S2DCkJs3a6MYMPJhPMeCQA4mYnR4Mv1MHgpX3oNhjsZeDa+JhqdFEousPONbgcGEPB+L8R5v0im38E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=u/HIzqxP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U1NUzl1W; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ezY7dTH5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jSUD5rj/"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9760D14000A2;
-	Mon, 15 Jun 2026 09:57:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="u/HIzqxP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U1NUzl1W"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9A7CAEC0281;
+	Mon, 15 Jun 2026 09:57:03 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 15 Jun 2026 09:57:00 -0400
+  by phl-compute-09.internal (MEProxy); Mon, 15 Jun 2026 09:57:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781531820;
-	 x=1781618220; bh=hMgvZM8tj49V2rwzehtVQb+23f7t3gVnWZ+ZJlhj6dg=; b=
-	ezY7dTH53RhOuhdDg0bFqncTeyi2AUev54rSgF7HIQdO8Rcd9KYFpBGq5dYmw4v9
-	6bP/QuEUg3aG8o/hhvtCdfLhs0i9Vivb6sQ7AJ7BwLE8gbV2Og3Wcro5YRwxaA+e
-	Ih1p9NNNKG2mRDiI++yZVmY8ZyqHNKUTYY2th6Ps+++xrpfRyfksBjyOo/tnUwM0
-	Rg90azUuxTvKJfwT4wTAy/VuHemzgwXec7L1Qh6MjfAC4Htmf/HfAMuGejTLhhy+
-	W6QRoaCdwWlSEZ7EcVZ7nfNCUUzX64y1MkAzBbxvR/ey1DUuctpSoXKux+h/djl0
-	gcmK6kqGiIgQTWXPRpFHyw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781531823;
+	 x=1781618223; bh=WmffaeAjtpe+Wb+34csfbI15MZ2uvg0PI3f420QVNjU=; b=
+	u/HIzqxP23Kp/zSrx391zuHztXQFbtO/Mxo+wzKabcDekpiS/O3AQvWobz/C3BvL
+	dsKalnH+b70zCEe3DZOg1DJq8d2QVnu+4CZz8UtZ3QIc9R1heeg0zomIqkaLWUnn
+	uZfBIDGj5cOWYSflxvf9ROP6J5m6YTcMaZ7Gh6soioTLxYJqu37SPhAGE5WhagxU
+	HQ20MvkpHb09B6/+ZVACHOM+nvhVWX+H6ju0rZ0t1Gjn90RUpA7y9t2Px1q64lDU
+	3CHEVLEp5LIjFgw1AGbr/yf9gTQw6hpj22O/PdjG0TWeIa9wxpoHNrU8mHuP2A+V
+	TjKoUnIlKtY5tpkQLhkrpA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781531820; x=
-	1781618220; bh=hMgvZM8tj49V2rwzehtVQb+23f7t3gVnWZ+ZJlhj6dg=; b=j
-	SUD5rj/jseoXwSe2+DSqNwCbzMVBNEurcjfx9YPvM8RGvk6kar5qVo9CVJTuTTK8
-	UOj9k3iT2v5xCzf4/rXoM/dWpb0Der4gmzENnQAYLGR+PTkEndwZP0BpL3yUOypK
-	ukNNDSYXSQAy/2bWMUjW1YYE/aVYJEiYGHvOhOnMoGiSoTrCFKpjUxENrlUZ+SlU
-	YBLEFsxmgSamN2xnV2CTH0SkCdbgbbrnpZ9rG6jaRIfQYu71Eu4OheyQhBBqnCDa
-	CaU2nElQf99gR4dnq/VzpXJb5szWpZ65kmmvKvvsfXVPRRsGou/YEIrxG1FCuNoq
-	AY5rTrH6dSOeO+jPmyTYg==
-X-ME-Sender: <xms:rAQwakMl8m1TH8lA6WnQWOQeF6uAshnYOZafENTrDadpR_U0MZoGGw>
-    <xme:rAQwaiYHKoNYg2XPuXQIbgmBg3D_lBW8zorByr11SkauCsxbQeO_0ToJwvvC3CYUR
-    Sr9AerDJHzx2NmUx30vq1RU2O5KY3Yo4yOz4YH9YKzDz5PLTfAT5A>
-X-ME-Received: <xmr:rAQwaoo311qUeLR0v-3fBdmfBIva-r6K31mJC_MgnT8UAlGe4UL4gyfyHwKJuCaKiegyBgM5YS7Lc6NDmz3ovSqk9NDVYDm0LERp-5u_GA>
-X-ME-Proxy-Cause: dmFkZTF1FG+X5HxMGxOgCAZMy4A7SvmaeSo8nWVIUYom5oj1dQYaH7atcMinwTjrhcUyUb
-    LZan+BOoi5ge9vWfhtLLsEJ6nozXuvgxf5Kre19hZamhgwR0kDzFxjz443r3LfEN0HSBzC
-    eukzV1YjVJAegImryJKbJrBYtZbul/kuDL7+1mQnTd4ql7YGqXAGhhukI9FiiNwgCHqy+l
-    BLSdjQUYerE20wsVpJRKZc4+wrOvLcOxsuKNhg33c7tdC3ovyr2Y8bNMARXZwwqqWISsz+
-    zZJEPANDT/QdTsAiGkRM58RqOqc4pCnkclD6WNSyNVkuatZTyKu4DM5S4sdA8JUB43kSHm
-    jX/EzimeqevcNC+QIK176G+s3tVMXNr5HI1BbPq2/pFvmMxKEuIP3EJOwvTRD4c2SLMmsr
-    ilACXngEZvMzEJdl/Hi0yf3g64dhHJdxNs99Mc0H8vzyuChyV5BwtdqeHDSLQ7Wc8ym2MA
-    v+Q4OoTvO+XdRLRFguHSGSr+NVUQBsjhYAVqhNbfvQHboGJ4SywLiVLJiLW8xqwnGd/+8J
-    GZCcRdpuZmtMioYIIlp0DZSVa+FWB9DOBQVDlljeIQvYkfK2VEKdgkCJSUBfK8vb4D597+
-    2L8JP2ZFccnOthnk5ygFhfdvnYD+UeI2Rx+rDKPiAojVxaLgJdw/IdOL9S+Q
-X-ME-Proxy: <xmx:rAQwamYli9Eg55SVmGp-N1Qlc9ZaNuKqg88Xx6B7fFIklabEHDKdxA>
-    <xmx:rAQwagQMQpSW_6MleQQjhyKzJ9YZepzesao53KcEZCc0G3reqmioLA>
-    <xmx:rAQwat42LA1Vc2H5HyXJkxZk_Ds07Bhn1O1vvI9rAqh-nlhaEFtAAw>
-    <xmx:rAQwalzamdttFTiiSPirTX6t6wkHLfy4jqY7-nr_5aNNrhKKe3oO7g>
-    <xmx:rAQwamE9kG2jxVyoSQ5RKyK3Igq1PrSAuBeNnpqZ0TpuahCM8SZeemfb>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781531823; x=
+	1781618223; bh=WmffaeAjtpe+Wb+34csfbI15MZ2uvg0PI3f420QVNjU=; b=U
+	1NUzl1Wq8aKNQU+/KOvwIMldbjcAv0rIDEcjU/+Yo9pVksKXrkkeVcQspqhUt6dJ
+	WL7FNNDceMXa9qCevZKraiaDtSTZJLqj6tPMu+CuEIcYYaSahVGtpmDY78ccBwkR
+	SxRWEwKr/edfGBpTgLLb5Zkq0Bxb1P3+gVRZZEgIUqDgtoftTJ9GDSXTNkAMqS8g
+	pwA+3yTzaiaGh9hq1uy72kiMV/4hJ/B6A5YDm3LIP1MyhsKVwCQ9aNAdJ/UbV2bT
+	fbwgJ58QG1pftve9B+GK5cp8Ee4zs6BX+BXeB+hXHHqGPA9KDZiEmopNBb2k4fQH
+	FObseJeQQL7CbN0OZyUCQ==
+X-ME-Sender: <xms:rwQwasgLucYhnLHZps77TVWKjg9zPejhMt5nlFY--1eRzGr-L6AI9g>
+    <xme:rwQwaserkdvKoEXyjvquCUKjxvZZ1tnpIsXGm240syXot5WB_AWBZ8qrRq_1bYELf
+    ZeBbCA7MO0Qs4PaXP4o_slyQxxpXptuuWenmZz2W-xSqCr_bYz9qg>
+X-ME-Received: <xmr:rwQwahf2TH9pmXhHEY6DAGNQuDhvj9WpE3xOJL4cCYvLZ8dxDKZdvCQ14jF60-ZOAQ9zW2ssUb6FXeiiAP5B2o-KgXnBFlxQqHeWErUDnA>
+X-ME-Proxy-Cause: dmFkZTEzlJZ7R8Fvdu12VIGi3pV5LVsqHobsEu2nC0pNPyYWLdj9qPJCTKMapBlAsX/FC1
+    ZbCX8TtHPplEWxYtSTu6Wxgl3HBugROG2heABRQngsHUxAkgA9ZJNEDMP2d2cDdLEK9PCh
+    R9hAehfnKauFBTwOG4hB8EZg00fL1KQglppoCzUXP3cP+K4uNaKKWeaQ4zVLMTGHxDG1uT
+    RHXaOGhJ6FYs6BRN9/WmRzlmt9z5H8dzqvlGMu9eQRpm7PjBo6kWzwGxTriYr9kp/zbnmh
+    Reva0Rh+pLvtzTtkYVOqewlTH1iAUjzt9vKEkWf/t8xUrNceBF5ppzYc0VRIMxMTGr0kZf
+    heduzCFoho7U+ZrxlKU5t8O2IC0GC7rHbw0nUl5N+o6PoWe30fUTBle4ZlvQS0QOW+7VL1
+    0FXk/XO6OCEahO1J/5QJSZrDEfp3VJr0lIEfFB482DBUZuHuEVrPDGvEpxyUSxNxAS9F5I
+    Jgu1t/otqpe2BAy1nt1ctByLXm0IyQjiWPHzvD7b2a1CHUoN7X1EBI2q2AV+RLAU71zBnG
+    ag88RT22BSxXp3f/rNdu5tELqyzr3B24tE+jMVEzQttvuF+P7Jdn/qEvoCkFcJBkMDky3R
+    GbQIFUAJw2HLYIN8anYbDyDrw8brr+gFv2y0eA3sSAFz/cuzOV/HC64YGkaQ
+X-ME-Proxy: <xmx:rwQwam_12xCskHJPI3uii4ooH9I_qNkFZlvIUH0x5d0lYYeM8g8ESQ>
+    <xmx:rwQwatm13rqY0kxDir0pOmHwCav_lQS_evLzhrLdkrMnGw2Afdw9vQ>
+    <xmx:rwQwao_k0YQ-WKP79y4tht9vv9ojqjJoP_FR2UzQy-2rvYe555SQEA>
+    <xmx:rwQwarnUXUTM6FkyjJBHUEVh8pUvOO5Tv90Sv4-S560owU175XK5Ag>
+    <xmx:rwQwajJJN7TMlgrqzvMWuU-uohvIkMle2ikCGXBFROSwF1F0VkIZ_SGD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 09:56:59 -0400 (EDT)
+ 15 Jun 2026 09:57:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f10ad0a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 13:56:59 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id d81ba363 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 13:57:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Jun 2026 15:56:49 +0200
-Subject: [PATCH v2 3/8] setup: don't apply "GIT_REFERENCE_BACKEND" without
- a repository
+Date: Mon, 15 Jun 2026 15:56:50 +0200
+Subject: [PATCH v2 4/8] refs: unregister reference stores from
+ "chdir_notify"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,105 +83,178 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-3-f4854aa99859@pks.im>
+Message-Id: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-4-f4854aa99859@pks.im>
 References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
 In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.15.2
 
-When discovering a repository we eventually also apply the
-"GIT_REFERENCE_BACKEND" environment variable to the repository. There's
-two problems with that:
+When creating reference stores we register them with the "chdir_notify"
+subsystem. This is required because some of the paths we track may be
+relative paths, so we have to reparent them in case the current working
+directory changes.
 
-  - We do this unconditionally, which is rather pointless: we really
-    only have to configure the repository when we have found one.
+But while we register the reference stores, we never unregister them.
+This can have multiple outcomes:
 
-  - We have already applied the repository format at that point in time,
-    so we need to manually reapply it.
+  - For a repository's main reference database we essentially keep the
+    pointer alive. We never free that database, either, and our leak
+    checker doesn't notice because it's still registered.
 
-Move the logic around so that we only apply the environment variable
-when a repository was discovered. This also allows us to drop the
-explcit call to `repo_set_ref_storage_format()` because we now adjust
-the format before we apply it via `apply_repository_format()`.
+  - For submodule and worktree reference databases we do eventually free
+    them in `repo_clear()`, so we may keep pointers to free'd memory
+    registered. We never notice though as we don't tend to chdir around
+    in the middle of the process.
+
+We never noticed either of these symptoms, but they are obviously bad.
+
+Partially fix those issues by unregistering the reference stores when
+releasing them. The leak of the main reference database will be fixed in
+a subsequent commit.
+
+Note that this requires us to use `chdir_notify_register()` instead of
+`chdir_notify_reparent()`, as there is no infrastructure to unregister the
+latter. It ultimately doesn't matter much though: in a subsequent commit
+we'll drop this infrastructure completely. We merely require this step
+here so that we can fix the memory leaks ahead of time.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ refs/files-backend.c    | 22 +++++++++++++++++++---
+ refs/packed-backend.c   | 16 +++++++++++++++-
+ refs/reftable-backend.c | 16 +++++++++++++++-
+ 3 files changed, 49 insertions(+), 5 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 2748155964..7b2e50a8c5 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1906,7 +1906,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	static struct strbuf cwd = STRBUF_INIT;
- 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT, report = STRBUF_INIT;
- 	const char *prefix = NULL;
--	const char *ref_backend_uri;
- 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index a4c7858787..296981584b 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -100,6 +100,23 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
+ 	}
+ }
  
- 	/*
-@@ -2023,6 +2022,8 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 	    startup_info->have_repository ||
- 	    /* GIT_DIR_EXPLICIT */
- 	    getenv(GIT_DIR_ENVIRONMENT)) {
-+		const char *ref_backend_uri;
++static void files_ref_store_reparent(const char *name UNUSED,
++				     const char *old_cwd,
++				     const char *new_cwd,
++				     void *payload)
++{
++	struct files_ref_store *refs = payload;
++	char *tmp;
 +
- 		if (!repo->gitdir) {
- 			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
- 			if (!gitdir)
-@@ -2030,6 +2031,24 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 			setup_git_env_internal(repo, gitdir);
- 		}
++	tmp = reparent_relative_path(old_cwd, new_cwd, refs->base.gitdir);
++	free(refs->base.gitdir);
++	refs->base.gitdir = tmp;
++
++	tmp = reparent_relative_path(old_cwd, new_cwd, refs->gitcommondir);
++	free(refs->gitcommondir);
++	refs->gitcommondir = tmp;
++}
++
+ /*
+  * Create a new submodule ref cache and add it to the internal
+  * set of caches.
+@@ -128,9 +145,7 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
  
-+		/*
-+		 * The env variable should override the repository config
-+		 * for 'extensions.refStorage'.
-+		 */
-+		ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
-+		if (ref_backend_uri) {
-+			char *format;
-+
-+			free(repo_fmt.ref_storage_payload);
-+
-+			parse_reference_uri(ref_backend_uri, &format, &repo_fmt.ref_storage_payload);
-+			repo_fmt.ref_storage_format = ref_storage_format_by_name(format);
-+			if (repo_fmt.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-+				die(_("unknown ref storage format: '%s'"), format);
-+
-+			free(format);
-+		}
-+
- 		if (startup_info->have_repository) {
- 			struct strbuf err = STRBUF_INIT;
+ 	repo_config_get_bool(repo, "core.prefersymlinkrefs", &refs->prefer_symlink_refs);
  
-@@ -2057,25 +2076,6 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
- 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
+-	chdir_notify_reparent("files-backend $GIT_DIR", &refs->base.gitdir);
+-	chdir_notify_reparent("files-backend $GIT_COMMONDIR",
+-			      &refs->gitcommondir);
++	chdir_notify_register(NULL, files_ref_store_reparent, refs);
+ 
+ 	strbuf_release(&refdir);
+ 
+@@ -182,6 +197,7 @@ static void files_ref_store_release(struct ref_store *ref_store)
+ 	free(refs->gitcommondir);
+ 	ref_store_release(refs->packed_ref_store);
+ 	free(refs->packed_ref_store);
++	chdir_notify_unregister(NULL, files_ref_store_reparent, refs);
+ }
+ 
+ static void files_reflog_path(struct files_ref_store *refs,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 0acde48c45..499cb55dfa 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -211,6 +211,19 @@ static size_t snapshot_hexsz(const struct snapshot *snapshot)
+ 	return snapshot->refs->base.repo->hash_algo->hexsz;
+ }
+ 
++static void packed_ref_store_reparent(const char *name UNUSED,
++				      const char *old_cwd,
++				      const char *new_cwd,
++				      void *payload)
++{
++	struct packed_ref_store *refs = payload;
++	char *tmp;
++
++	tmp = reparent_relative_path(old_cwd, new_cwd, refs->path);
++	free(refs->path);
++	refs->path = tmp;
++}
++
+ /*
+  * Since packed-refs is only stored in the common dir, don't parse the
+  * payload and rely on the files-backend to set 'gitdir' correctly.
+@@ -229,7 +242,7 @@ struct ref_store *packed_ref_store_init(struct repository *repo,
+ 
+ 	strbuf_addf(&sb, "%s/packed-refs", gitdir);
+ 	refs->path = strbuf_detach(&sb, NULL);
+-	chdir_notify_reparent("packed-refs", &refs->path);
++	chdir_notify_register(NULL, packed_ref_store_reparent, refs);
+ 	return ref_store;
+ }
+ 
+@@ -274,6 +287,7 @@ static void packed_ref_store_release(struct ref_store *ref_store)
+ 	clear_snapshot(refs);
+ 	rollback_lock_file(&refs->lock);
+ 	delete_tempfile(&refs->tempfile);
++	chdir_notify_unregister(NULL, packed_ref_store_reparent, refs);
+ 	free(refs->path);
+ }
+ 
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 4ae22922de..8c93070677 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -365,6 +365,19 @@ static int reftable_be_config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
++static void reftable_be_reparent(const char *name UNUSED,
++				 const char *old_cwd,
++				 const char *new_cwd,
++				 void *payload)
++{
++	struct reftable_ref_store *refs = payload;
++	char *tmp;
++
++	tmp = reparent_relative_path(old_cwd, new_cwd, refs->base.gitdir);
++	free(refs->base.gitdir);
++	refs->base.gitdir = tmp;
++}
++
+ static struct ref_store *reftable_be_init(struct repository *repo,
+ 					  const char *payload,
+ 					  const char *gitdir,
+@@ -447,7 +460,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 			goto done;
  	}
  
--	/*
--	 * The env variable should override the repository config
--	 * for 'extensions.refStorage'.
--	 */
--	ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
--	if (ref_backend_uri) {
--		char *backend, *payload;
--		enum ref_storage_format format;
--
--		parse_reference_uri(ref_backend_uri, &backend, &payload);
--		format = ref_storage_format_by_name(backend);
--		if (format == REF_STORAGE_FORMAT_UNKNOWN)
--			die(_("unknown ref storage format: '%s'"), backend);
--		repo_set_ref_storage_format(repo, format, payload);
--
--		free(backend);
--		free(payload);
--	}
--
- 	setup_original_cwd(repo);
+-	chdir_notify_reparent("reftables-backend $GIT_DIR", &refs->base.gitdir);
++	chdir_notify_register(NULL, reftable_be_reparent, refs);
  
- 	strbuf_release(&dir);
+ done:
+ 	assert(refs->err != REFTABLE_API_ERROR);
+@@ -474,6 +487,7 @@ static void reftable_be_release(struct ref_store *ref_store)
+ 		free(be);
+ 	}
+ 	strmap_clear(&refs->worktree_backends, 0);
++	chdir_notify_unregister(NULL, reftable_be_reparent, refs);
+ }
+ 
+ static int reftable_be_create_on_disk(struct ref_store *ref_store,
 
 -- 
 2.55.0.rc0.738.g0c8ab3ebcc.dirty
