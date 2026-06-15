@@ -1,226 +1,117 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9B33E95AB
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255A915A864
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781526112; cv=none; b=Js+DZag89Fl8ZzMGQZjl+Da5i9wXgT9KCshUwshIbWqvD/bXCKw5kT0PnrSZKJwdvsLR4FyQy+07Tu0d1P2nOTV73BoUEKvar905Jw4Zug2DjCJNoEwpsCBQBx3ywiAopNGIgkj47WPqO1cmqfuS8ROK+/rdyA+TVKAo3cHMRpY=
+	t=1781527008; cv=none; b=tVVDpP5xyUAOl6gM/jiDY4oO5WLeYg1EtSt8XtzxMC83BcZgg+smX40mqkbUHMKkbjg5LsPP8+v/COcaYYFVs0TOstyF1p6f5wqstVVDexaPXsDhhIqJwd0bG8PGWJ/HdlvJGtk6Jm6Q1n/etNSnPR1FwRxKNQuZgX1vUZK3t3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781526112; c=relaxed/simple;
-	bh=XichFX1UqmGWv5lEB5ERPI+kAku1Xzz3CRir+HJgd6U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FJsQUZaV4ciUUZUbpp2zVk5ejgx8mtZOWR5G3ibLebVIYU4gVxEbl6hSAnYWSbaNXdGI/uK3R046fedwaUdXsuo4G2yOOaqIVTsn2IA2oz/iBj2+SW3+I+dGnyP+OCAjQDIdfGKvpemk0JoerovpG/TTJrlvHNx9rbpQnC6Gh3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aoFqxFdJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UXS/V0Gg; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1781527008; c=relaxed/simple;
+	bh=+gCXIDJXJ5jsOLW1FCy8IKGbVBhecA+2KV8vMdatK6Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aOI8tgH8GQZhQEGJKtucwdKuofKyAc7ExZ6YJ2RmNpUkuvgEYKe32vYklPmjx+cOnpqMUDPxyduiQ4Q8D3uu/NkWIqVbzr1Gtzn4/3kXfFGEanVnoXLrOvVTpGXnYZ+0pjiA+T5jdQ9PRAa4s5c8CFIaN+vSSTq2b6a/q70YD1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d5oA26cS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4jXlps0; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aoFqxFdJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UXS/V0Gg"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 087E2140004A
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 08:21:49 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 15 Jun 2026 08:21:49 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d5oA26cS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4jXlps0"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id E8E0BEC01FA;
+	Mon, 15 Jun 2026 08:36:42 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 15 Jun 2026 08:36:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1781526109; x=1781612509; bh=Rru5dE/CNp
-	NG02zVg6K81ZhTeEStq1mZ9Fcspdee2do=; b=aoFqxFdJUSfDlHLzKdycFYiBSz
-	xxpAtSLGiR5SMYEpUynEj5fIY5QSlnBz+7tMaKeaHFcwDnR6g53XIJn1MrLQHPQv
-	ggyeDrpopIA7f1MmxiXIxJnO8QBfHqxkhkzinMUgGD/DrbWybhqPYK2xTVLokazT
-	8beEvBsBtbVA74HEXsuiyK3ecWBE8MC79iehOMSaXDsgaQY8ROBxvHR+JU12A5Vh
-	ImuxXUSdM9QpG8tBelVjN4rGsnbqBtlzF1NuIGC3fyGmt/hha5xV4gL7zK3v6yqH
-	mNL/5w7GMEKwxcmM4NEjXdIlln6pNBao09ZidQpvic06GJqroF2lPHvgN47A==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781527002; x=1781613402; bh=DS1sSDXuYd
+	hSu7cRC0HTQu5Tq2EygoDxnqHDV0xgz9s=; b=d5oA26cS1IR1CWyrNitMZjoxFW
+	FYcdmE4vi17M4s6h6oGFG9r+3K+VXrylMrXpjgJDz79Yt5pyc8jJUcRqQfoJ9qMU
+	4jToktW8rMZjnQV3b1TQiaryVIO0DsJ312JNEVpHYrzL3k5grkUNnhIUHCsGQy5e
+	8x0Vb1wp+Kjw+gmlG82NmfdFqHJgdXF7gZyJlfZnnG4XJGQcZx2YQ8re/8Zvz/np
+	p/XwWuH04fPw+86m77kTYTTU94pkFFtptXc9XEcGrXVIKHK4timIPMO+0N1uMdV7
+	nPYxaMV6AoUjQfbDcaT4S5z02OaA5uEvmEf0qoVzooIQeYbUsY91PU1ZDs+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1781526109; x=1781612509; bh=Rru5dE/CNpNG02zVg6K81ZhTeESt
-	q1mZ9Fcspdee2do=; b=UXS/V0Gggv6Jzhh/S3Y4yvMFxxACuHAvt4LN5ZMpWiDL
-	aIoxVy4YOaUxReXD8U8TdWRC/4qKpD0iRT+dQxlmA1atK93NG7qO7h6RiB+E7vu6
-	06FiLG36T/tOOdF0u/yfXvwBY1y9Abhsyiqndet5boTA/wOtlvL4zEpwF/RvtNmf
-	fK9DbK9DbZjr34dBNC51Ve5CkXYsX9Kk3lTL4Fz5ZqMfk9K7LWJLpnwi9yuooN4J
-	+W2bMob7E9pNWYNNSEqnmBefeUGyIbzzjniiWjguvt1Fn27Z11bNxo05jOrtkfzK
-	9n592QSmWAuWSu+wCdg5ckO3TwP5XCiLRpyY7oeDsg==
-X-ME-Sender: <xms:XO4vatDTnd1xvR-d-VwwF71-DWDSqUItkO1hEQaer_97yuFfw5o6LA>
-    <xme:XO4vaick4HJl_HOAqO3zK_5tkey6-PSjGJ2KQ96NDgx4BDFV3eojZrPrN1q_YGy7M
-    Kc0EoYITJsU9k-ZGPutdKklu8tlwcfQ8WxeqdvjN7ipsV13MdJ5Nbc>
-X-ME-Received: <xmr:XO4vauPZAOwQvxyVezTPiQx2zpjNjIpDNNriSzwomRZjey95trHGoZ7cr6gz2pMExs51q5NGguNEmBUkcjK8nmDZsx7_YXEoEk32KdczHQ>
-X-ME-Proxy-Cause: dmFkZTEiSqDZ3ipzL5FBvxhXmlWH6rTj/yeDrU8Wph8uX5n4gvREN7Cfis5TAN98uV2BGC
-    Lz9SXFL1fWZNT7GC6j49cXZKMRhJuIz53FXOl7/O4ogxKTjScdlYviurJ7XjGvDPSVTDxD
-    +/QJyC08BLoQ4CqyZhpHDir0he6JtswPr43VzxQOO+Ff4ZWsueFxWO2Fh5r4rqByWnUSUp
-    2v+tZFuclGYL3L4tM37bNzhG3NX5ag6c81ynsmrDMMrWVbvrIm/ok6+ooUjHnTlWlefIKI
-    xYSOprNRypwbp6G25L04WKEKPsz7UCZBMVNJ5fxw7kWs2iHiRIxzNxa2Hhi0oX+mYGnRZG
-    LN7+MDTjJVt+bHoFEaMt3T/xB1BEVXSxzhrK1H1RZo6M+9BWeWzcpe9DEvoO3kl3vuEkE+
-    y1+PNjRoH2wDfjkEPo5C34LaQctMaAkZHob22+gcAt1UpZfoMBIMDFZw5EOo+HmU4xMIY2
-    fkuvp/Xr8ssuNT8Ca6HC5kfqc9WDbzk8BoI1gIx3bsqTQEm7GdpSrpHEsGVQ6Mz8RwV0Fm
-    URhsuY3XqproqC0NxMkQbE/pGdMxADTl31V2mRp4r7be1ufuhSTEbUjgswfLVHZKsv6bZ2
-    7Pa19VFl/m9vTAHicolRxZRSiJrpp0bsJhpZL0CIpDpyPOXxhU1bc1k71poA
-X-ME-Proxy: <xmx:XO4vas442F-m26IWjVoXWM53FJAnamfVotZ3CCrFrZzKz7985BV6Tw>
-    <xmx:XO4vaiI5JrVW8O3JrZeLXEO0F2kdXW_fc-1DniJloYtnIrTQDYXFsQ>
-    <xmx:XO4vamfMnWFgbRO3ZRGtd9T4EytTk1VkThoZDWHqMHSmcV0L5Tow2Q>
-    <xmx:XO4valebxyW9GiaFk1Wl2otKGOYirf7N5jf92VwYPOgjWraJ-v9lMA>
-    <xmx:Xe4vasBXpGWxopLeehaV_cZCmJX-UuW5zS1cxtOsS75ZUg4-M2wZD3mU>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781527002; x=1781613402; bh=DS1sSDXuYdhSu7cRC0HTQu5Tq2EygoDxnqH
+	DV0xgz9s=; b=g4jXlps0s8Vh8C+0obuch3lhb/mbyaOQm6mWTMj+2+tN/iwcrVf
+	2WjKJlfPwct6yhDxwen8/WOtSabmXuKTi+/gASvX1wCoyo6jYJoS4yl6g6V/Muku
+	fULAYeGLEzQzMfiecZe2GsctyiVEHi1Br8QNykMoVGAQU/pAgqPYJDXL+GEXbhFS
+	jLVxxjRO7I9jHu1QzGSyP7UEE5dKlXSvPp7O71BTUtRw9mEcFPF9My5y3TEjJMaI
+	aNgu37PJ+rmstX3fgajWppwzRpxEARTrPFXbnenckodi5lWNVBbRTl0hLTzf7o4f
+	PcZLwnKsa7Y2s7zDEjtkpF2mJe4M6b32c7A==
+X-ME-Sender: <xms:2vEvami68a06mSgV920hUv2ds41ndSvg8Xul9eV7zy7lijR13SAMyw>
+    <xme:2vEvatBt2R3Iw0lBv1x-A8gfTfq5n2otuFizQdP_NfVwvZ9hiUqRecUqm-_J0_fIi
+    nntDfq_LhS1rcSS0UegBg5VfH2OCZp2-zxfuCyNOAhoB2Xx25rP>
+X-ME-Received: <xmr:2vEvaruXRd7ICq2PD5e_wzz4AFX5w3U8r7hjSr216hdmCDErLBQv4dXocPYoZynwvRcdtUO4h3YjwkjhSJQe659BXfCX87zcruE7_lsEDw>
+X-ME-Proxy-Cause: dmFkZTGdrVSbvEDAk+RYsdA6XKO8+ZgDA4e0H/iW88R9UuUpcbM/o/6HLM8SPOIwO27Com
+    d79E1MQqFJT9NcVqQ1KyVTIxGITVMO9QG5X5xzIWYt5rKBZywS7XNAMViCuFiNsK7cki+r
+    PeEjORhThduo9t93dx7jutMto8jOapfIXJFw7KApVFQi3QndWgzicK+0oHNn/N44eMUQV8
+    1ianTktF4CXCLRCP2DJ5Be+6U25YFXKZrm+VKvGfmsAtSt0CxhjY5KQTk9aiQPSp2Sfd4u
+    k8kdZcB0lK1jB+RQnzjGcM6gdhBz71CLrw/yVyw0aQyjk2IPmS/FgRdfZ0JzCBaYBS6xqu
+    W4qH4XpiB8D/KdKKBdIiS8XdtdGHvtbXWxQG61xDnCVg5++7EPdlpTxLGG9EpANxnrAHcm
+    o9Hr96JkiipTlP8I5eBpLhMQ7aLqgW6dMry4wu+CFKOeiaI2oKqXTjlHh9YQZV0mIXVEbM
+    uzB1pF+HL/lPnWrAq3HLD2bg7y6LESsUZvAEwyVvrFAAcvHycj/g28kJHEiuuBR5GV5YYc
+    GlTyv3pv0ydxxp9c0Ub4M6GYX5D80dPMKqG+QVSJmbrfchMQw30zc2RlE8pDg1899KA0wb
+    SiaK1AfwtDzz+ZeeMga/YwSYlTbccupDvbOOK96arqu8tC9vHCzL5NuGhiDg
+X-ME-Proxy: <xmx:2vEvaqblMVxTn4WK0WpnV6e8LtPcviCUOglqTY9T00FosZTRbhNTsw>
+    <xmx:2vEvamVpYKiPOucYIwelznDNmnzL99w7ZWYKq6k3QR91eywu-jKzEQ>
+    <xmx:2vEvam6JcawOH0OGTGkPnjxBODVZtECny3poqN_RiBqNYzG4H7ba6w>
+    <xmx:2vEvapgKzV6bILORp1JCgdcgYYFv2cg4NIsvn2xz6u5N9Mf_OgbqEg>
+    <xmx:2vEvauQbeLfMs325p5mzgLzDbSE6x3MGLEEtp_IgR-WcHqdOg8DFZeaq>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 15 Jun 2026 08:21:48 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 15 Jun 2026 08:36:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0ef00bba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 15 Jun 2026 12:21:45 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6873ed95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 12:36:40 +0000 (UTC)
+Date: Mon, 15 Jun 2026 14:36:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Jun 2026 14:21:40 +0200
-Subject: [PATCH] gitlab-ci: migrate Windows builds away from Chocolatey
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/9] setup: stop applying repository format twice
+Message-ID: <ai_x1eKiSC9LZM6v@pks.im>
+References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+ <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-2-56c864b01c43@pks.im>
+ <CAOLa=ZQC7YCBxjxkbm8qcWqpNFgAKNpvw9B6t=+XnX4bbkGq0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-b4-pks-gitlab-ci-drop-chocolatey-v1-1-51a6e7d5e388@pks.im>
-X-B4-Tracking: v=1; b=H4sIAFPuL2oC/yXNQQrCMBBA0auUWTvQhFjQq4iLTDJtR0sTMlGU0
- rsbdfk2/2+gXIQVzt0GhZ+iktYGc+ggzH6dGCU2g+3t0A/miOQw3xUnqYsnDIKxpIxhTiEtvvI
- baeRTdETGOQstkwuP8votLte/9UE3DvXbhX3/ANx4pLqEAAAA
-X-Change-ID: 20260615-b4-pks-gitlab-ci-drop-chocolatey-bfe9d4bb1442
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQC7YCBxjxkbm8qcWqpNFgAKNpvw9B6t=+XnX4bbkGq0Q@mail.gmail.com>
 
-The Windows builds in GitLab CI use Chocolatey to install dependencies.
-Unfortunately, Chocolatey seems to be very unreliable, which causes the
-jobs to fail very regularly. This is a limitation that seems to be
-somewhat known [1]:
+On Fri, Jun 12, 2026 at 02:00:20AM -0700, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > When discovering the repository in "setup.c" we apply the final
+> > repository format multiple times:
+> >
+> >   - Once via `repository_format_configure()`, where we configure the
+> >     repository format for both `struct repository_format` and `struct
+> >     repository`.
+> >
+> >   - And once via `apply_repository_format()`, where we then apply the
+> >     `struct repository_format` to the `struct repository` again.
+> >
+> 
+> Okay so we're talking applying the repository format to the `struct
+> repository` specifically.
+> 
+> > As the format will be applied to the repository when applying the format
+> > it's thus somewhat unnecessary to also apply it to the repository when
+> > adapting the discovered format.
+> 
+> This was a bit confusing to read at first. Okay since we already apply
+> the format in the second step, the first is not necessary.
 
-  As an organization, you want 100% reliability (or at least that
-  potential), and you may want full trust and control as well. This is
-  something you can get with internally hosted packages, and you are
-  unlikely to achieve from use of the Community Package Repository.
-
-So using the Community Package Repository is kind of discouraged in case
-one wants reliability. We _do_ want reliability though, and we cannot
-easily switch to an enterprise license to fix this issue.
-
-Introduce a new script that downloads and installs dependencies
-directly. This has a couple of benefits:
-
-  - We can drop our dependency on Chocolatey completely, thus improving
-    reliability.
-
-  - We can easily cache the installers.
-
-  - We get direct control over the exact versions we install.
-
-  - Installing dependencies is sped up from roundabout 3 minutes to 1
-    minute.
-
-[1]: https://docs.chocolatey.org/en-us/community-repository/community-packages-disclaimer/#summary
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi
-
-I've been quite annoyed recently because our Windows builds in GitLab CI
-are extremely flakey. All of those flakes come from Chocolatey, which is
-why this patch moves away from it.
-
-Thanks!
+I agree. I'll rephrase this a bit.
 
 Patrick
----
- .gitlab-ci.yml              | 11 ++++++---
- ci/install-dependencies.ps1 | 55 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 3 deletions(-)
-
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index e0b9a0d82b..87a5343a94 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -161,11 +161,16 @@ test:mingw64:
-     TEST_OUTPUT_DIRECTORY: "C:/Git-Test"
-   tags:
-     - saas-windows-medium-amd64
-+  cache:
-+    key:
-+      files:
-+        - ci/install-dependencies.ps1
-+    paths:
-+      - .dependencies
-   before_script:
-     - *windows_before_script
--    - choco install -y git meson ninja rust-ms
--    - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
--    - refreshenv
-+    - ./ci/install-dependencies.ps1
-+    - $env:Path = "C:\Meson;C:\Rust\bin;$env:Path"
-     - New-Item -Path $env:TEST_OUTPUT_DIRECTORY -ItemType Directory
- 
- build:msvc-meson:
-diff --git a/ci/install-dependencies.ps1 b/ci/install-dependencies.ps1
-new file mode 100755
-index 0000000000..e3b367fa54
---- /dev/null
-+++ b/ci/install-dependencies.ps1
-@@ -0,0 +1,55 @@
-+param(
-+    [string]$DownloadDirectory = '.dependencies'
-+)
-+
-+$ErrorActionPreference = 'Stop'
-+$ProgressPreference = 'SilentlyContinue'
-+
-+$GitVersion = '2.54.0.windows.1'
-+$MesonVersion = '1.11.0'
-+$RustVersion = '1.96.0'
-+
-+New-Item -Path $DownloadDirectory -ItemType Directory -Force | Out-Null
-+New-Item -Path .git/info -ItemType Directory -Force | Out-Null
-+New-Item -Path .git/info/exclude -ItemType File -Force | Out-Null
-+Add-Content -Path .git/info/exclude -Value "/$DownloadDirectory"
-+
-+function Get-Installer {
-+    param(
-+        [Parameter(Mandatory = $true)][string]$Name,
-+        [Parameter(Mandatory = $true)][string]$Url
-+    )
-+
-+    $path = Join-Path $DownloadDirectory $Name
-+    if (-not (Test-Path $path)) {
-+        Write-Host "Downloading $Url"
-+        Invoke-WebRequest $Url -OutFile $path -TimeoutSec 300
-+    }
-+    return $path
-+}
-+
-+function Invoke-Installer {
-+    param(
-+        [Parameter(Mandatory = $true)][string]$FilePath,
-+        [Parameter(Mandatory = $true)][string[]]$ArgumentList
-+    )
-+
-+    Write-Host "Running $FilePath $($ArgumentList -join ' ')"
-+    $process = Start-Process -Wait -PassThru -FilePath $FilePath -ArgumentList $ArgumentList
-+    if ($process.ExitCode -ne 0) {
-+        throw "$FilePath failed with exit code $($process.ExitCode)"
-+    }
-+}
-+
-+$gitAssetVersion = $GitVersion -replace '\.windows\.\d+$', ''
-+$gitInstaller = Get-Installer "Git-Installer.exe" `
-+    "https://github.com/git-for-windows/git/releases/download/v$GitVersion/PortableGit-$gitAssetVersion-64-bit.7z.exe"
-+Invoke-Installer $gitInstaller @('-y', '-o"C:\Program Files\Git"')
-+
-+$mesonMsi = Get-Installer "meson.msi" `
-+    "https://github.com/mesonbuild/meson/releases/download/$MesonVersion/meson-$MesonVersion-64.msi"
-+Invoke-Installer msiexec.exe @('/i', $mesonMsi, 'INSTALLDIR=C:\Meson', '/quiet', '/norestart')
-+
-+$rustMsi = Get-Installer "rust.msi" `
-+    "https://static.rust-lang.org/dist/rust-$RustVersion-x86_64-pc-windows-msvc.msi"
-+Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust', 'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
-
----
-base-commit: ea97ad8d017de0c9037451a78008a0fd60abea0c
-change-id: 20260615-b4-pks-gitlab-ci-drop-chocolatey-bfe9d4bb1442
-
