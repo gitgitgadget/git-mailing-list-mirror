@@ -1,83 +1,83 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255A915A864
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E256F3F0762
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 12:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781527008; cv=none; b=tVVDpP5xyUAOl6gM/jiDY4oO5WLeYg1EtSt8XtzxMC83BcZgg+smX40mqkbUHMKkbjg5LsPP8+v/COcaYYFVs0TOstyF1p6f5wqstVVDexaPXsDhhIqJwd0bG8PGWJ/HdlvJGtk6Jm6Q1n/etNSnPR1FwRxKNQuZgX1vUZK3t3g=
+	t=1781527012; cv=none; b=AZYWohiHv7+w/bzYDf3Tdes3kTWXM1n+i0O0Xd02LHKonpRLx960XSiYvBdmO9rGBqVYkO2MKIk0Jw/yPF3a0CNmjw9rcxkj3vVSmVCBYQtFR9SJt9x4XSys2qPIXdqbqIiU8s6aTSwI4xBpR7TrrNtUbiyrgxpe898RbMm0JH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781527008; c=relaxed/simple;
-	bh=+gCXIDJXJ5jsOLW1FCy8IKGbVBhecA+2KV8vMdatK6Y=;
+	s=arc-20240116; t=1781527012; c=relaxed/simple;
+	bh=ldqRAISATuirUOaPoMEYvpwHWFMUHWZTlW90Vt7vq4w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aOI8tgH8GQZhQEGJKtucwdKuofKyAc7ExZ6YJ2RmNpUkuvgEYKe32vYklPmjx+cOnpqMUDPxyduiQ4Q8D3uu/NkWIqVbzr1Gtzn4/3kXfFGEanVnoXLrOvVTpGXnYZ+0pjiA+T5jdQ9PRAa4s5c8CFIaN+vSSTq2b6a/q70YD1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d5oA26cS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4jXlps0; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bs8vSz/4cv7w5V+eSHQyXC8hVndvEpqmeJR/+krxNClO0JU14zP+mqo/uaetFHgwm/JzfBCmgqlc03uHehVcrs3s73wlC5EGEwuzfltzKf6Tq3WegeIrB+XUiDZojaHn0Qq6Lz1idMiQOo4UDBEymDYrfObKLtDVrMEY5zrRQlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NoeKLVqK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QlwgGdw9; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d5oA26cS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4jXlps0"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E8E0BEC01FA;
-	Mon, 15 Jun 2026 08:36:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NoeKLVqK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QlwgGdw9"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C99E5140000E;
+	Mon, 15 Jun 2026 08:36:46 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 15 Jun 2026 08:36:42 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 15 Jun 2026 08:36:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781527002; x=1781613402; bh=DS1sSDXuYd
-	hSu7cRC0HTQu5Tq2EygoDxnqHDV0xgz9s=; b=d5oA26cS1IR1CWyrNitMZjoxFW
-	FYcdmE4vi17M4s6h6oGFG9r+3K+VXrylMrXpjgJDz79Yt5pyc8jJUcRqQfoJ9qMU
-	4jToktW8rMZjnQV3b1TQiaryVIO0DsJ312JNEVpHYrzL3k5grkUNnhIUHCsGQy5e
-	8x0Vb1wp+Kjw+gmlG82NmfdFqHJgdXF7gZyJlfZnnG4XJGQcZx2YQ8re/8Zvz/np
-	p/XwWuH04fPw+86m77kTYTTU94pkFFtptXc9XEcGrXVIKHK4timIPMO+0N1uMdV7
-	nPYxaMV6AoUjQfbDcaT4S5z02OaA5uEvmEf0qoVzooIQeYbUsY91PU1ZDs+Q==
+	:subject:to:to; s=fm1; t=1781527006; x=1781613406; bh=VV97lWEuJ/
+	/5B1ewvBI4Mp98JwkMUEonnL/XaWcuS/A=; b=NoeKLVqK0QhBxbjp3mg7tXdl/d
+	ShLFQEFyIZ8nYNiQ0+BKwZLit4UC474/bkBhb0YlAPGuLgU0u3fW+kG8am06ZJ0A
+	kJvHtsZk9hER8I/Z8r/vk1Pa3D4cufq71UPBkh1EWpe7DicYJOzMDaSbGyvTpxno
+	ZsQAJPEmpHnV+HGSjhAcmEb7Y69/u4+ryiSAUuhNL12nyGYTCUuJhKmDYce0PbyX
+	+ShzpHG9Z1uBIzj6RvAqN/eDPyv+g33vQvUdWiuvhAPXG9/V7CqXDqxcEaRDVg/d
+	y4P5n6tJ8ORhvIx8NOFwwLvZXdWwcrtkdzE32dfDFFrgZ39dTOihkBXbClmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781527002; x=1781613402; bh=DS1sSDXuYdhSu7cRC0HTQu5Tq2EygoDxnqH
-	DV0xgz9s=; b=g4jXlps0s8Vh8C+0obuch3lhb/mbyaOQm6mWTMj+2+tN/iwcrVf
-	2WjKJlfPwct6yhDxwen8/WOtSabmXuKTi+/gASvX1wCoyo6jYJoS4yl6g6V/Muku
-	fULAYeGLEzQzMfiecZe2GsctyiVEHi1Br8QNykMoVGAQU/pAgqPYJDXL+GEXbhFS
-	jLVxxjRO7I9jHu1QzGSyP7UEE5dKlXSvPp7O71BTUtRw9mEcFPF9My5y3TEjJMaI
-	aNgu37PJ+rmstX3fgajWppwzRpxEARTrPFXbnenckodi5lWNVBbRTl0hLTzf7o4f
-	PcZLwnKsa7Y2s7zDEjtkpF2mJe4M6b32c7A==
-X-ME-Sender: <xms:2vEvami68a06mSgV920hUv2ds41ndSvg8Xul9eV7zy7lijR13SAMyw>
-    <xme:2vEvatBt2R3Iw0lBv1x-A8gfTfq5n2otuFizQdP_NfVwvZ9hiUqRecUqm-_J0_fIi
-    nntDfq_LhS1rcSS0UegBg5VfH2OCZp2-zxfuCyNOAhoB2Xx25rP>
-X-ME-Received: <xmr:2vEvaruXRd7ICq2PD5e_wzz4AFX5w3U8r7hjSr216hdmCDErLBQv4dXocPYoZynwvRcdtUO4h3YjwkjhSJQe659BXfCX87zcruE7_lsEDw>
+	1781527006; x=1781613406; bh=VV97lWEuJ//5B1ewvBI4Mp98JwkMUEonnL/
+	XaWcuS/A=; b=QlwgGdw9A3JNajadoiK3PqBO0s/wanXYWNMbSosdnZ6keRSIgvC
+	irkqRmNlesXZeJeQj/PFdMVfMiy/DZlJ6Q2irIyQIkNWol1L8/xidKoNzsdu6a59
+	ebgf+NNnVTK+T3/17S7YaJ6KhLYp2ZU41EYY1uyMIF/8a0XTpUSoTOQUeiPKJ7AH
+	qCLOwXu1zWF82rNwiNgxjB/AoNLH9g53VstXGEhTBnqqKlKgpqT5dE6ZQCc8I5uh
+	GBVfvEDC4XkLoyc3aCYORl2v0eqm3Coww5h0oH92iM3Zvbzz6iAP/E76Xqdi8QU5
+	Oa8FOHvlCmcMmstmuxMUpehyYvvZWJCSP5w==
+X-ME-Sender: <xms:3vEvauLTYU566w6WhYrNCH8lYXDckNsRmUVglqGRHiwg7qH7j5yD-w>
+    <xme:3vEvasLi72x7uomiKM0t5fzturymkAm6LTgHXv8-8YwmObhBZoet87DkDBoutKTpW
+    J498I93fmrh5N_q1nbBrS_z_Be5e14NxBrOACxkIWITF87sqjmNEw>
+X-ME-Received: <xmr:3vEvasXO_mJhHaY9jpv8Gc_qXP9ugil3MX6YkueLjVU6aSv9n9TAXjO41H_uzXoeX2BTzCvw2rPVb1HHh1SWvbJRonHJieqcAd6o7wtDsw>
 X-ME-Proxy-Cause: dmFkZTGdrVSbvEDAk+RYsdA6XKO8+ZgDA4e0H/iW88R9UuUpcbM/o/6HLM8SPOIwO27Com
     d79E1MQqFJT9NcVqQ1KyVTIxGITVMO9QG5X5xzIWYt5rKBZywS7XNAMViCuFiNsK7cki+r
     PeEjORhThduo9t93dx7jutMto8jOapfIXJFw7KApVFQi3QndWgzicK+0oHNn/N44eMUQV8
     1ianTktF4CXCLRCP2DJ5Be+6U25YFXKZrm+VKvGfmsAtSt0CxhjY5KQTk9aiQPSp2Sfd4u
-    k8kdZcB0lK1jB+RQnzjGcM6gdhBz71CLrw/yVyw0aQyjk2IPmS/FgRdfZ0JzCBaYBS6xqu
-    W4qH4XpiB8D/KdKKBdIiS8XdtdGHvtbXWxQG61xDnCVg5++7EPdlpTxLGG9EpANxnrAHcm
-    o9Hr96JkiipTlP8I5eBpLhMQ7aLqgW6dMry4wu+CFKOeiaI2oKqXTjlHh9YQZV0mIXVEbM
-    uzB1pF+HL/lPnWrAq3HLD2bg7y6LESsUZvAEwyVvrFAAcvHycj/g28kJHEiuuBR5GV5YYc
-    GlTyv3pv0ydxxp9c0Ub4M6GYX5D80dPMKqG+QVSJmbrfchMQw30zc2RlE8pDg1899KA0wb
-    SiaK1AfwtDzz+ZeeMga/YwSYlTbccupDvbOOK96arqu8tC9vHCzL5NuGhiDg
-X-ME-Proxy: <xmx:2vEvaqblMVxTn4WK0WpnV6e8LtPcviCUOglqTY9T00FosZTRbhNTsw>
-    <xmx:2vEvamVpYKiPOucYIwelznDNmnzL99w7ZWYKq6k3QR91eywu-jKzEQ>
-    <xmx:2vEvam6JcawOH0OGTGkPnjxBODVZtECny3poqN_RiBqNYzG4H7ba6w>
-    <xmx:2vEvapgKzV6bILORp1JCgdcgYYFv2cg4NIsvn2xz6u5N9Mf_OgbqEg>
-    <xmx:2vEvauQbeLfMs325p5mzgLzDbSE6x3MGLEEtp_IgR-WcHqdOg8DFZeaq>
+    k8kdZcB0lK1jB+RQnzjGcM6gdhBz71CLrw/yVyw0aQyjk2IPmS/FgRdfZ0JzCBaYBS6xeq
+    5BblpwSto6SeLuwBzYpfBs9DwSNWzdQFUsA5uD6FwC515LXcIzZRey18z+6H9TyLtcB39x
+    IPGNAx7CvjU2pEfqxdNFNXBcU1mcqZc8nTwtd+vyH+NvhDsDUzj5foWdd/dRawDA8oF9+S
+    A20xKf9tf8cPml6/PlNkfsKJdQhSqEFQejmV+8xt885JeTHl7enj4s1PnfnD5rrdGnoWbM
+    RR6p0UOirWutFN2u5YRAXIfq/hiElx3gN9kBw/e9LAq2lXdlCY2NiOyXAC7upz4WBaz0b/
+    DRQsmqQutQs0NYfSfg7x9VFJSNi0q22ox6rSpr+QGWJUySfwTF5YNWJ51n5Q
+X-ME-Proxy: <xmx:3vEvauhQua8cL1DDoKBsxOjSrNWwhIJgOLZBKD_Gh6anHxM6BEEkVw>
+    <xmx:3vEvan9gPgDmA5xpcgO8oCfTh9BE_bDfgrZIvxrLTT7t8T7P40_dEA>
+    <xmx:3vEvaoAb7dlhpyeL6MVTH6-sTvWG7u26nS5lp_Pi_a5a_3IYdGZvtQ>
+    <xmx:3vEvakJoPgaKg-UwyiHnR4m5ryLE0sixr0hN0lMHnnR0qAyaLjaYfA>
+    <xmx:3vEvav68e_BWsiTZfKpgVBXtEvkKGyOHUBzc1NKwXtvJK_GVLhgMeR-F>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 08:36:42 -0400 (EDT)
+ 15 Jun 2026 08:36:46 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6873ed95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 12:36:40 +0000 (UTC)
-Date: Mon, 15 Jun 2026 14:36:37 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 732987c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jun 2026 12:36:45 +0000 (UTC)
+Date: Mon, 15 Jun 2026 14:36:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/9] setup: stop applying repository format twice
-Message-ID: <ai_x1eKiSC9LZM6v@pks.im>
+Subject: Re: [PATCH 4/9] refs: unregister reference stores from "chdir_notify"
+Message-ID: <ai_x2uJOwInU9lvj@pks.im>
 References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
- <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-2-56c864b01c43@pks.im>
- <CAOLa=ZQC7YCBxjxkbm8qcWqpNFgAKNpvw9B6t=+XnX4bbkGq0Q@mail.gmail.com>
+ <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-4-56c864b01c43@pks.im>
+ <CAOLa=ZS_0b9o2YucgA6Se_Mq4nLo1Luow7adTLAifbkF9jpUrA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,32 +86,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQC7YCBxjxkbm8qcWqpNFgAKNpvw9B6t=+XnX4bbkGq0Q@mail.gmail.com>
+In-Reply-To: <CAOLa=ZS_0b9o2YucgA6Se_Mq4nLo1Luow7adTLAifbkF9jpUrA@mail.gmail.com>
 
-On Fri, Jun 12, 2026 at 02:00:20AM -0700, Karthik Nayak wrote:
+On Fri, Jun 12, 2026 at 02:18:28AM -0700, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > When discovering the repository in "setup.c" we apply the final
-> > repository format multiple times:
+[snip]
+> > We never noticed either of these symptoms, but they are obviously bad.
 > >
-> >   - Once via `repository_format_configure()`, where we configure the
-> >     repository format for both `struct repository_format` and `struct
-> >     repository`.
+> > Partially fix those issues by unregistering the reference stores when
+> > releasing them. The leak of the main reference database will be fixed in
+> > a subsequent commit.
 > >
-> >   - And once via `apply_repository_format()`, where we then apply the
-> >     `struct repository_format` to the `struct repository` again.
-> >
+> > Note that this requires us to use `chdir_notify_register()` instead of
+> > `chdir_notify_parent()`, as there is no infrastructure to unregister the
 > 
-> Okay so we're talking applying the repository format to the `struct
-> repository` specifically.
-> 
-> > As the format will be applied to the repository when applying the format
-> > it's thus somewhat unnecessary to also apply it to the repository when
-> > adapting the discovered format.
-> 
-> This was a bit confusing to read at first. Okay since we already apply
-> the format in the second step, the first is not necessary.
+> Shouldn't this be s/chdir_notify_parent/chdir_notify_reparent ?
 
-I agree. I'll rephrase this a bit.
+Yup, good catch.
 
 Patrick
