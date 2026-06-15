@@ -1,141 +1,136 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5323F5BCF
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 13:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49D23F99E9
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 14:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781531835; cv=none; b=Ddru+9eEA9gOO4Oke00TTis3/290ik0n4RxzwNQXc4Vk14s/bLecky85aAOlL06+vzFZNWqFs+fm1b1mA6A7wu/7pAkcKuoL1J4JlIyXjfb0AKUnTT/giCfkHRJNej0PXXlzhdh/KhUw1kt8xdP1Sl8j6Euu50NSgFS3HWzYROk=
+	t=1781534191; cv=none; b=HbaK33oF5MRcY10n80bvulOGR8HsWhkTjkPgOhEQy8K8NkXwDxYrUR3jWSBx9Z95Jj6QGcHczAvlJ+i635FVk9ku6NHz8n8Cb7p/T+pclUtViO6nTCHoQ1dVdg24L0E35+Urv6Rwd10ERbv1bntiTvp/du3AWaVdYAhCWsKVqaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781531835; c=relaxed/simple;
-	bh=hGgGNrFRDPADZxOxN3sDuSeBp7Vdi05GNV4T8lHyFWA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qFDM/dktOWvoPR9bRX5R1dabXSsOxPu6zwsMt502MDvxMhdtB3bCbgraJNbQObyRtiS7DSHJI/5oiX5wUtDnYAZQbf4n+y2a9eM1ShuYGAo8pPQUWi4E0eKquTr1yPoCZ3q5TxRTG2qcyX2u+upSBWGXUf7ruq/IWTBPalYEb14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W95bYrOE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cqIbjhKA; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1781534191; c=relaxed/simple;
+	bh=xG0cKTI0vBRCSvvfkYZx2jY4SoYVE2mQqProrY2XsZ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UmrNnJcis+QJhUH2xykYtGhpU6WerHRV8OBdW1u/WVEsTSblWKzyqlC48+S0p7lau4+cyOSAYB32bCugqLMNkNGO0VOj8ef2A3sC1qHC5mvNmUf3satsvHdqjpyiuHKK9AOkILe17fJA4qIP5Fasn1aZ3n0GmhR8rHyYGXPO4fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=H6B/3INg; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W95bYrOE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cqIbjhKA"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7A1011400088;
-	Mon, 15 Jun 2026 09:57:13 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 15 Jun 2026 09:57:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781531833;
-	 x=1781618233; bh=DDiJy7ny5X0qllDWE+l0rwGuhyFKZqD6i1rRx1upTTQ=; b=
-	W95bYrOEg/FjielgNY5E5xpiuSf/kfKaUotFIcK/oOzQx3jJ2nsy1Pgzk8MHpVcM
-	6HJQAxFpPMDC7XQqj+rS9Uv6LrT7gaeWuO8EsocXTkfNznJPuDDQ7aeNaZhSZ1Q6
-	LIsXyG0r67h2KhBWDCYOtpHFa3ek5v/I614FFWNWp2rctxAVtYudnrE9HqYRPS96
-	hf4NRE9cShsQ00EyeBbvPz2lgA4ubtgK392k7gGe2xUJ+wJizrq0Ngo1+xUM+Sa7
-	zaFrS0o9mQlX5wT6ULesVaRZDxS1P3BkasmRJeG/DHunWExz8CsNOVBOZcQNYm+J
-	WSw3uj2r6i+81QvR0ncK+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781531833; x=
-	1781618233; bh=DDiJy7ny5X0qllDWE+l0rwGuhyFKZqD6i1rRx1upTTQ=; b=c
-	qIbjhKAq6cNSBlUKjSN/3piC6MrCP83pPc3NJrcY7i9CmaASA+gVAkskYxMxgZMK
-	NOjFMrHPscubsK+OdVZAR4+r+QDP+dJ5bZzJLVW59migeRJ9B//JmBnFBKgx27fY
-	NgtkO/F7pgTfO+WvYR7BWF+bZ5pPYXsAorsiXpPoQJpuw0PAG/geFT1/x6ILflQb
-	Nj/u7o23ctIHl/08PokJ1Twkz19J/aKSmZjrVbec5M+MyOsOb4gRpX1FjmnkPAsg
-	fyXbQYUOqVeFm8/oWUFPdS5pg3ILm4YlhXD5kI6t/MFvnaxAw1BjR7jzSuRi/Rgi
-	p4J7e00Z/7RHO0VgoXrlg==
-X-ME-Sender: <xms:uQQwaockM181ui-vLkRPj1bgncHje7kTt1EJzXzmhFHSNjgTEqfKeQ>
-    <xme:uQQwahrP3eucSS9vtpzor2qFX9hDk5VD8syxqipCPre9AcOOD0zjlPSy3tV2hGEj4
-    RSeKAls0ad55rfS35o3Dc9iV-GgKHy6Mw6Fo5AqmR6CoyTlz0PVkw>
-X-ME-Received: <xmr:uQQwam6S-GFPr7XhiSpK-Ybvyaj-mBAOTfPTTd3gm4Ly9QlCOEkJl0UQuyOIWsqcOnDgxU-GgyPd2JmX-GEsmKmGXyOvsUx8VIOiPg-8cA>
-X-ME-Proxy-Cause: dmFkZTGFhnwv/YvFh6g4CptNd7XsyKN95Web0ZIZs4XMP2v59A2c8hDhZ4VNJ/MQxBhMoI
-    FWZ9GvenrC3kM7RRy3k2kxBtkzeIGwjw8dLo/RpOMYqK1kz3TfFEo7V8uaLwaE7NQYHF3I
-    wfF67zuCkHSv7iQgvKBFFp6OUjP0P3VEOUQIt8OSsqw2klesHbMKhOydcbE6VEmPPlIPNq
-    ZySPByW6p2jKJ0N4UqPKjGwqXr9fX/2NZVLxm0BYmDIPXuoILOsOLWVhQptj77pEZp+d72
-    CziUcfUBHDeap8uqtsPocxWbqNRndtyNwiJlbnFM0XNN1VUAqQL6wbZ0+VSk9v9/mJXbLe
-    1dTQS4z+U0inJxWHjoIAlUkX5BMICqL/zp9zZ0RcEHWgM1sx9bJawkWYI8QhmUebZ8binW
-    zGykl/5YhbZa/pteWlk5oWTpiVK8dY29gvAK38ZeT0xbs7ks7z2Vk2PWodG1Dp8dUJVylM
-    gT6AJuPP8ha+i7UXBBQOXP87IKf80gRSz5augmEFoD6N5Q1G0s8Z/XR8zkSMZmguAscy6S
-    gLNzXqPkVJ7bW3mLNz5WvZca+uZ4Gs/MNWQtGSHBZW50i9cXbl2cKF4IX2C8XBTMW/H56L
-    h+zHRqCti+I212dIPQVWCj5qJnX/wgec9ayzXCYmzCICVbrvwpowFSBFvKSg
-X-ME-Proxy: <xmx:uQQwanqwl1S2q0Ily_M4MyqTmayu9vg63yQns1BLlGxpKjQoTN7Yig>
-    <xmx:uQQwaog7_TMpOsAnWVwtanaJ8lmUW2WIBcOx50rVFy3dTOpP1ooddg>
-    <xmx:uQQwahIKQIKRIBcygX4ADbJLuj6onqCjG2H-clvhjhlMWFsgmXaaJA>
-    <xmx:uQQwaoB_u1BCst_dlpQAmqwuDaS5dHpTWJSP21eCLmLlN9yR6vz4TQ>
-    <xmx:uQQwahWXPvRDtSc4VD67hrMYAZW96m883YD0U1jeSFWORaU1ZZGTwRAB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jun 2026 09:57:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 93baacf6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jun 2026 13:57:12 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 15 Jun 2026 15:56:54 +0200
-Subject: [PATCH v2 8/8] refs: drop local buffer in
- `refs_compute_filesystem_location()`
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="H6B/3INg"
+Date: Mon, 15 Jun 2026 22:35:28 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
+	t=1781534185;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+XXdVlQvyWdhXOhZyU6bkYWhKk8vel2eRg7xkX6b0ao=;
+	b=H6B/3INgX87uHPPkJ0vvZbgrL35zaMHSu+JzMYjI0Q+8lyl19BWqLrDnvL59HOpXNhkL1m
+	+W1FEI2MM4cQAS9spbtFXpABmBEaUY4EIMlMlnm4657iF8XpTjjR8j1lgLRO9S3uUms16R
+	U9mLNwQOu42MRKYQjglyh7pBix/miAecWCEPle/hFJ7ioNErZWV4iX+BXp+BlAGUMyICGs
+	NrOzvq5Iz4utieFHy1WzQjv0MBW6nRB26etylt5pF5lc7LaqEZm9XwVGBHlY93UxgnoDY5
+	RqrR7NWWsBLy4LbMCSlCan2GHizXVIS4WVWjsCxoDHykQg21IxJ/YHJ41XwzkQ==
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Weijie Yuan <wy@wyuan.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [RFC PATCH 1/2] doc: encourage review replies before rerolling
+Message-ID: <ajANsC5pfuk0PAn1@wyuan.org>
+References: <cover.1781358364.git.wy@wyuan.org>
+ <68a1969c35cbc2d24af7a0d09c376ecf403c3591.1781358364.git.wy@wyuan.org>
+ <ai_7Wh7hrD8PZozg@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-8-f4854aa99859@pks.im>
-References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
-In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ai_7Wh7hrD8PZozg@pks.im>
+X-Migadu-Flow: FLOW_OUT
 
-We're using a local buffer in `refs_compute_filesystem_location()` that
-is only used so that we can fill it and then call `strbuf_realpath()` on
-its result. This roundtrip isn't necessary though: `strbuf_realpath()`
-already knows to use a single buffer as both input and output at the
-same time. So all this does is to add a bit of confusion and an extra
-memory allocation.
+On Mon, Jun 15, 2026 at 03:17:14PM +0200, Patrick Steinhardt wrote:
+> On Sat, Jun 13, 2026 at 10:08:30PM +0800, Weijie Yuan wrote:
+> > Review feedback should not be answered only by sending a new patch
+> > version. Encourage contributors to discuss their planned response in the
+> > mailing-list thread before rerolling.
+> > 
+> > This makes the author's reasoning explicit before the next version is
+> > prepared, instead of forcing reviewers to infer it from the rerolled
+> > patches.
+> 
+> Not only that, but it also encourages more social interactions between
+> contributors.
 
-Drop the local buffer.
+Thank you, yes, let me add "social interactions" in v2.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+> > diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+> > index 0e2a9313ce..59891e3c14 100644
+> > --- a/Documentation/MyFirstContribution.adoc
+> > +++ b/Documentation/MyFirstContribution.adoc
+> > @@ -1423,11 +1423,13 @@ fewer mistakes were the only one they would need to review.
+> >  After a few days, you will hopefully receive a reply to your patchset with some
+> >  comments. Woohoo! Now you can get back to work.
+> >  
+> > -It's good manners to reply to each comment, notifying the reviewer that you have
+> > -made the change suggested, feel the original is better, or that the comment
+> > -inspired you to do something a new way which is superior to both the original
+> > -and the suggested change. This way reviewers don't need to inspect your v2 to
+> > -figure out whether you implemented their comment or not.
+> > +It's good manners to reply to each comment in the mailing list discussion
+> > +instead of letting the next version of your patch be your only response. Tell
+> > +the reviewer whether you plan to make the suggested change, keep the original,
+> > +or pursue a different approach. This way reviewers can respond to your reasoning
+> > +before you spend time preparing a version they may not agree with, and later do
+> > +not need to inspect your v2 to figure out whether you implemented their comment
+> > +or not.
+> >  
+> >  Reviewers may ask you about what you wrote in the patchset, either in
+> >  the proposed commit log message or in the changes themselves.  You
+> 
+> I feel like the new version doesn't really add anything significant to
+> this paragraph that it didn't already say before your patch, but it does
+> so with more words.
+> 
+> I'm of course biased though, so maybe more words help newcomers?
 
-diff --git a/refs.c b/refs.c
-index e69b9b8ac8..4912510590 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3571,8 +3571,6 @@ void refs_compute_filesystem_location(const char *gitdir, const char *payload,
- 				      bool *is_worktree, struct strbuf *refdir,
- 				      struct strbuf *ref_common_dir)
- {
--	struct strbuf sb = STRBUF_INIT;
--
- 	*is_worktree = get_common_dir_noenv(ref_common_dir, gitdir);
- 
- 	if (!payload) {
-@@ -3586,8 +3584,8 @@ void refs_compute_filesystem_location(const char *gitdir, const char *payload,
- 	}
- 
- 	if (!is_absolute_path(payload)) {
--		strbuf_addf(&sb, "%s/%s", ref_common_dir->buf, payload);
--		strbuf_realpath(ref_common_dir, sb.buf, 1);
-+		strbuf_addf(ref_common_dir, "/%s", payload);
-+		strbuf_realpath(ref_common_dir, ref_common_dir->buf, 1);
- 	} else {
- 		strbuf_realpath(ref_common_dir, payload, 1);
- 	}
-@@ -3600,6 +3598,4 @@ void refs_compute_filesystem_location(const char *gitdir, const char *payload,
- 			BUG("worktree path does not contain slash");
- 		strbuf_addf(refdir, "/worktrees/%s", wt_id + 1);
- 	}
--
--	strbuf_release(&sb);
- }
+Yes, this diff only and merely emphasizes "use the normal response
+first, rather than re-rerolling directly." a litte bit, as I described
+in commit message. But indend, the existing sentence:
 
--- 
-2.55.0.rc0.738.g0c8ab3ebcc.dirty
+"This way reviewers don't need to inspect your v2 to
+-figure out whether you implemented their comment or not."
 
+basically already has the same meaning.
+
+So it does seem a bit wordy, but in other words, explicitly emphasizing
+what not to do and what to do instead is more straightforward and clear
+for new contributors.
+
+Then the newly added sentence can correspond with the existing content
+at the end of this paragraph (of course, this doesn't really make much
+sense.)
+
+> Overall it's a bit on the annoying side that we have to always make sure
+> to update both SubmittingPatches and MyFirstContribution in tandem.
+> Makes me wonder whether they are mostly redundant and whether it would
+> make sense to eventually merge them. But that's a tangent and not
+> anything that needs to be addressed in this (or any other) patch series.
+
+To be honest, when I first started reading and writing, I had this
+feeling and confusion. Since I haven't gone through the history of these
+two documents yet, I just completed the preset task first.
+
+Overall, I feel that the two documents have overlapping parts as well as
+their own distinct focuses, and like being intertwined with each other.
+
+For new contributors, it seems more convenient to just look at one
+document, rather than trying to understand how the two files are
+cross-referenced with each other. (although I found some newcomers in
+GitHub PR pages don't even read one!) But this is obviously not an easy
+task for the writer.
+
+Perhaps start a discussion in a separate thread? with all relevant
+personnel? But I understand that writing documentation is time-consuming
+and not easy.
+
+Thank you very much.
