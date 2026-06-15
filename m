@@ -1,63 +1,63 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2136C2CCC5
-	for <git@vger.kernel.org>; Mon, 15 Jun 2026 01:54:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08F81DF751
+	for <git@vger.kernel.org>; Mon, 15 Jun 2026 01:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781488478; cv=none; b=cmewOf1plAISlKe7PuPfc+auYt6xgyQpDlWIJbzQQ4+YcgY1Nrz2rJpN60N/4NIkuDRB8YUjDEHhkTubJneJWeVDWzA/wIdBuWFUy1XH4+fQ/uXOzsSGh/OMwZPgK63j8qXXHlYVSOWy1wK06AvAHtT5hVrsAbz7fysD9sjllhM=
+	t=1781488543; cv=none; b=BXF1sw/l4fmcVmNULChDGnjlMvaYrSzfeJDWlJGBiT5aSWQDcXr3nGQY4ce3Cww/IbfUjDrH6to28t8tKbzk9LS3fmTF8CJUx/Zk4sBlMx6ZnMokr1kXDiCGVwcWVFo9CoRYaFG+PNGrUPcypkPD12OKnYkLazUhF1eK12sFtzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781488478; c=relaxed/simple;
-	bh=NjxuH1zfpLCAHncZom4TLxwk51b37CMsTAe0uxQvYEE=;
+	s=arc-20240116; t=1781488543; c=relaxed/simple;
+	bh=ME66QNP+VEsRaOEB4lE3GFW8IJUlFBKgdMJuYBvfEmY=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Tgh1xXEpNYwpGpUnqKemrjJo5nqhw4HhxNiaPhhjXMEQH6jyGXphomLX5GSL2HTjy3gj1aTme+nU57RImPKTrwweD1gkFm9TORw3RJKlnypSh5rGPXWmAIox7yWQvTf4Jjh4StBdkE60YsErvXwjL3iiL4D0fc7CrxX+Eo4YUPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O981euuQ; arc=none smtp.client-ip=209.85.217.51
+	 Message-Id:References:To; b=LA+iWQAtWK3k/DhtvR9liHa3LMjL6GFnZClXoiZjD3iIGVyYHku2aakSNRkPeTj3+dX3fOrPkx6poLYUgV2vyb4topieRl1z/onTK8y5HJ2qMwF8k2A9kNKt8HEX5AfGYHe2aRIbnOE9s+89piiGJl5ouRF+68Fw1tYVPcqS2Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IgbFgG1f; arc=none smtp.client-ip=209.85.217.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O981euuQ"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-6cb414a5d50so2330474137.3
-        for <git@vger.kernel.org>; Sun, 14 Jun 2026 18:54:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IgbFgG1f"
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-6c3099b11a9so1089973137.2
+        for <git@vger.kernel.org>; Sun, 14 Jun 2026 18:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781488476; x=1782093276; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781488541; x=1782093341; darn=vger.kernel.org;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TeJNttwoQsp6KTNaI8Oj+ZGRXWSMT9Q1UG0STx1ozl0=;
-        b=O981euuQutI2dS6Fj6vc5ubSelN6rsNWVLz3Mijszo+3gKW/yzV5EAtK1WeLvyM2IZ
-         5lEUAm/Gea1g/ceuBwNF+Gk8qGQBhjocI6tmrt3HnL6qeU2uN5CrDeE525+H9hrFFE5E
-         ROM6nmmaBv9uZYS6eeiD2G8q4JJXw4Cy78RnfYhJowkMQo44T1QMvVINFjq6Ug8BMbBg
-         OJVM1by++Vjd5OLxjre8b6kgcqKHEaG4qg5IemxXRgATd4rudLtRJFEfkVpbM6ZhKdaE
-         Q14qoV5tMI/7unttJDOscGctQJXxhSUI12rXY/9bPjGyqqlAR08GDJcXaWtf/ta1Btij
-         B+TQ==
+        bh=hu6Y+YKG4tMaArEqF4HtjGQxFPFUNnINvsH9THkscJU=;
+        b=IgbFgG1fd6rovyNsLFGRDLEeQ+kukauhp7ZycbypTZV1tathMzNAJ5e/BUmcWt4jwt
+         FIZ/VH8B4GqgBMLuWu7smE547Trj+AVKqRaT1flc87ak4EvuRT/Fh9Ddu8EgQDPuEX6R
+         OVu2arJz68XF3F0OLj5wHJjK0NtEi+B4haZkV07Ga7EaaMhMCVUM23P0J6nrnUngX1lj
+         Gmz3t1CEWaDFZMzboI3NZBoMW/DXfpDB6YJMT/f87YBKDdhPAc4EOb07aMuyrFwpkpoC
+         VCO/6cxGyyMvsIFF3RvxTx/xPGIP6JjFQrh+NhwZZkOelQOrG9XoYPclASnLX0rcGA4Z
+         bbrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781488476; x=1782093276;
+        d=1e100.net; s=20251104; t=1781488541; x=1782093341;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TeJNttwoQsp6KTNaI8Oj+ZGRXWSMT9Q1UG0STx1ozl0=;
-        b=dlvAgkIB5TCb3C/HRCS5blsiWFsZ2Q8D/MrNDxdmD99YbJMbcs4gqHbWfzj06dixo6
-         xmH5FboDEMj1b/PIDohcYkbAjEJzxKam0c22JgkCO8Yzq/VYrDtcZO+rbIIb5gzwa7Tk
-         GtXgpT10suDWR+kHLn2B8F39iQdmvoGBAv+2qmsDTucoQzToOrYvXm4iK1ObJg2TaR8d
-         I+H8AXUvuxAgARzGHDVyfBU2Hm15E8zZZCXhkvBxO14UcL/RDPXgnNMEWg3V7wr+3FJw
-         Cd0JGmKr4oX1hy0z8SUVYN9xg0jXRtihiZ2ncaq4PdjTGaDiVAQLhYkTIoyM8PaNldrK
-         z8ZA==
-X-Forwarded-Encrypted: i=1; AFNElJ9djLEnB8c4BHSTOoT1JuLUBSdLER7SNWojeRoSEuJwf5uQEq0yMtNGCrRVXWuAZvVkieE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZNxG8fucdhxCQSG1c0hr4L8StFOADtI5tGLpEfi1gUPSiwqxh
-	z2VRQndVJ+bkwau9x31XlvViM8hLYXSlVdoPtZO76RF0CwkCEVNgbEj+
-X-Gm-Gg: Acq92OHKoELXMwpGPIOxgM34T1074Yajqjp+2GfZcAKC7inIKgKSFK4GHqtLsMlxBaU
-	Z2dqSKWx3C068gwoCkAMhgtCeZanFMbGUsBwRkAS9USRqEXhgcQCnkx/vja4OWKMoEGqOEXFUp8
-	oiD2AFV5CHGFvx4dlbg1ZF4z3vS6y6lab26CmvpWflloqhE3L6l0Gqkz0igu+YqTdD03XDcJg1Q
-	c8i8w9GKzty78YRXo6MD48DTXW9H8o0Gkj2myBlU8QUTwGROwoh3EAccBxcULVFNc1NELCcNaG2
-	yyAhdHcA16L4Mg0k+THnx7l+IZjzfvrQYUdIaMgwk04uimFyh45zIcFmArRaCA1eYctZbiiov+U
-	lObLpdvWh+8LtnSQH94QifU9j0DdJrIX/6fIkr0g8DJO3NHn0V+ZxHsE6bCkkgtxoYyFlFMDuSp
-	lcVivQy12RijQiWEkBMs0jiDmJsliTufVtrqgvcmjfMjqoE9MpK2/Ixv2HHrHC
-X-Received: by 2002:a05:6102:5a87:b0:6da:1341:1147 with SMTP id ada2fe7eead31-71e88aba001mr7154408137.1.1781488476078;
-        Sun, 14 Jun 2026 18:54:36 -0700 (PDT)
+        bh=hu6Y+YKG4tMaArEqF4HtjGQxFPFUNnINvsH9THkscJU=;
+        b=Iqvkp3OG/QvKOhFDZkLekGYn4Hu/LkmOCmJkZiqA6h32s9iztFdNKn02kY0kstnE36
+         Jx0OVYXn5RSlD0lDYHjQt41mt+jpGx+OntBCnnK9IK6BxlUIvwf8txtutuk6tjTNV0BB
+         wuzLR5Z2r72lPfO5JSR9nJMFstBzdcM7X8riYfRqeoSHydkTkWQMQZ2pUv8ZqMIRiMvR
+         iGuHsvz8ZIfssLOS+xMQnCGqxVGfpMjh7OE02nNDPMVJdjKqjlFCa9fw2ZkWIlMNq9ce
+         Z+SqY7BRXpGrZGGdEZr3WjxGRk6G2XkNp7IkEiDm8l/oSUafmjq/egOp3ySHhsANG8SE
+         m3zA==
+X-Forwarded-Encrypted: i=1; AFNElJ8Pu70HY/4g+GZxnmZ+CyCG7CmaKE0ZVBnDXcipbVJgR56AcIdaBfRR5Bhk5v5pRsjw5bQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhZPkMhWwJhez1DHkkmm2/1O5J+0b0weorbSklc5afXe0c/783
+	d+7Ild8fRGZl6CNHXSS280j7gvXgBhaYY/DGBhgy1Ld4FTLDnMDRKK4b
+X-Gm-Gg: Acq92OHeIvr97dcEUFrGAmuxrjnu1V1pn5dtFZZqBUgsrY18mknyPwuOOpA3DZ0n+YY
+	M6IPih+Ast7y0DVcNbYWFx/oF0MYtKqCA55ysUeDO6ilAgNkuqjJ3BW+LCQ2p7B2zvMF4q/08rb
+	DBcqLuQKK0O3DZL56QJhq0OV1csuXc4mRkrggbb/ebVHKZr+oPx9L7zmfw5GIR8LL/T9yv23lTu
+	yThBsEAPh15JbfleOPrZ5dHnZSSy0rRZLwYQkaPy/f8QDYw0TGbVGuraGSWll5B6OR5QBEKNheg
+	/xItKilFbzSpsG5qcJdzG6QOyzZIyx+lqhLpCEBe+HihZEewaU4NM9oNAedGB+trnjihU1bdO7P
+	mM8nfWmvXMrIB5FMyPcSWKnLDkuG3OsdQ53NvwKWMf2sM/JxAFUe/DGpH2DSZ7UI3wNB/bHFqtn
+	zi2ZtTWJ8J6iFtJ5Ad7Tf74D+FG/yiYhuoRhBbEJ8Xtduj/myFuw8N4gn5CPJ3
+X-Received: by 2002:a05:6102:4412:b0:634:a573:c097 with SMTP id ada2fe7eead31-71e88c554d2mr5355106137.13.1781488541546;
+        Sun, 14 Jun 2026 18:55:41 -0700 (PDT)
 Received: from smtpclient.apple ([2804:14c:c4:89c7:b89f:3820:2765:34f6])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-720847c15a5sm1771399137.3.2026.06.14.18.54.32
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-72084dd327esm1781661137.6.2026.06.14.18.55.38
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Jun 2026 18:54:35 -0700 (PDT)
+        Sun, 14 Jun 2026 18:55:41 -0700 (PDT)
 Content-Type: text/plain;
 	charset=us-ascii
 Precedence: bulk
@@ -66,11 +66,11 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [GSoC Patch v3 3/4] repo: add path.commondir with absolute and
+Subject: Re: [GSoC Patch v3 4/4] repo: add path.gitdir with absolute and
  relative suffix formatting
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <20260612182847.562816-4-jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 14 Jun 2026 22:54:17 -0300
+In-Reply-To: <20260612182847.562816-5-jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 14 Jun 2026 22:55:28 -0300
 Cc: a3205153416@gmail.com,
  git@vger.kernel.org,
  gitster@pobox.com,
@@ -79,39 +79,18 @@ Cc: a3205153416@gmail.com,
  kumarayushjha123@gmail.com,
  phillip.wood@dunelm.org.uk,
  sandals@crustytoothpaste.net
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B0AAB2FE-5E7B-4C67-8A71-84C1A3ACBA44@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <4F32FD89-2E90-4E85-BE8C-2E2BB4D9E890@gmail.com>
 References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
  <20260612182847.562816-1-jayatheerthkulkarni2005@gmail.com>
- <20260612182847.562816-4-jayatheerthkulkarni2005@gmail.com>
+ <20260612182847.562816-5-jayatheerthkulkarni2005@gmail.com>
 To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 X-Mailer: Apple Mail (2.3864.600.51.1.1)
 
 
-> + test_expect_success "absolute: $label" '
-> + (
-> + cd "$absolute_root/sub" &&
-> + ROOT=3D"$(test-tool path-utils real_path "..")" && export ROOT &&
+> +test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+> + 'gitdir-env' '.git' '../.git' \
+> + 'GIT_DIR="../.git" && export GIT_DIR'
 
-Be carful with the quotes here. Actually, there's no need to use
-quotes around `..`, and export can be used directly with the env
-var:
+	'export GIT_DIR="../.git"
 
-	export ROOT=3D"$(test-tool path-utils real_path ..)" &&
-
->=20
-> + test_expect_success "relative: $label" '
-> + (
-> + cd "$relative_root/sub" &&
-> + ROOT=3D"$(test-tool path-utils real_path "..")" && export ROOT &&
-
-Same here.
-
-> +test_repo_info_path 'commondir with GIT_COMMON_DIR and GIT_DIR' =
-'commondir' \
-> + 'commondir-envs' 'custom-common' '../custom-common' \
-> + 'GIT_COMMON_DIR=3D"$ROOT/custom-common" && export GIT_COMMON_DIR &&
-> + GIT_DIR=3D"../.git" && export GIT_DIR &&
-
-	export GIT_COMMON_DIR=3D"$ROOT/custom-common" &&
-	export GIT_DIR=3D"../.git" &&=
