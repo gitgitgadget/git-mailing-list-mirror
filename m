@@ -1,69 +1,70 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0C53C062A
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D232D3C062A
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:50:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781621412; cv=none; b=r8vEJUC7hzdbwX6oKuIYmD53KxCE5ECvO24KqCXYRvEXF5sTLGPctnhAmCvVkjXi5C0UKURfH6xhLWY32d3gZCLwCJXy4woLH1226Qp13A+nOceMFsxKFfUJIB3fRMwMoIXfAOvoKX7CIjOR6pP4Ibfo2FqonGdq5GBga9H/BJk=
+	t=1781621415; cv=none; b=deKy4+/XztOdMJGKZBiV+JuemTKLAN5iPffnidCUS3ERT1/9FMw2B1PlpVMahDR4xHWZti3WXQMMcIemoTICFYEapBdUxTTD2WbcrmSOAxBzyHgPWV+WY4XaXaTV5xbLkjh0DsbiWw+XWrlVpM+LxoHiBon57S9dRQ+tjZ9LEa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781621412; c=relaxed/simple;
-	bh=U1W508UgiLLlKAEubLbQUCYMc/hnrClmjgDFhqeuATk=;
+	s=arc-20240116; t=1781621415; c=relaxed/simple;
+	bh=SAhQR/wJQxVDP/ziKT+VkL+7qXXW2pm8u7Rl3+RTdcg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=eCb+E3mKZ3D9pDtaUfuJAInugw7+a4wN5vCZSb73bMTSPgB4Y3VSejgDtgZggw03wKbpK8cjxLRp8bcJgeajxpK6Xyh8pOLM/nP+oQexZBRrXz6LaD87IaZ57dbPg9XLVV9DxT9G/XS7F94ptCPhFMgXBX0ADe1AaN2w3sUb4+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dl4Volr5; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version:To:Cc; b=qX1hJZG2u0IvdPpmNAwhbNLEEuyQrbvTDvXvuuxT/J9JhrT1E+DJ8RK/kayZEhP37KdyShg6dezlx3wkt0aiUFzG976kSUI42iuaQOZnBZlAbcXvUNjpGToQVTTg+5VEPi4pDCEf3deMKM7E3w3qf6yALVE5Duyw7zoVgiYw8yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K8AhBlGx; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dl4Volr5"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-915d17e2721so659502085a.3
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 07:50:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8AhBlGx"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-9157f7c1c0eso489252685a.1
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 07:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781621410; x=1782226210; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781621413; x=1782226213; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KYpoF6QqLLZenLhdP2gMzSbswL0pIsMFgW6dfmoktRY=;
-        b=dl4Volr5mCxeZ8eX9A6YnTQpz1fSI9ZOgi/Skx6edBJXLkgrDYCs5zOLueZFYPSVvA
-         Y/dlm5Brvh4EdnOJOH2QMJ/TBAcZrWRFK728b/LFWC8nEZ43+46r0bcF0GG5f+x7t6Sa
-         YvmHe6kl/EyRiNMlHUOSTooxCjo190JN8q1LwLHcDG4b/GhYGqmFmSnw9LF7xsU9dOLA
-         zLEJLHIcY4ciiEhHffvvUWk/258na2WjO96U5OCmJHbWc6ypdvCRG6l4SUi8WXV4o0pE
-         QUXQRGE5eQZ/L7KwGLzd+Ntx/xXJDSjRdt88v5EI2CBAt4o6GCUPKQhZlHsqfWi68RLq
-         0enA==
+        bh=A2AE3KoIOq0la3p3A4ZyybJMRj89lbCmkY9X+rQxjvE=;
+        b=K8AhBlGx3FuDyqvQgBtA43g4ncecsc0YSQgiG776uf3pH749Qp6gfGE95xt/SPRpvw
+         c07GfVWCAcMc13ipeAmh8JCtfVoSNqwnRKMDBq1ND88vtrPV2TU3Ie/q6kaF4aJp3rEH
+         eodxoJ1t4LLIfemnuiBqiNo7mou82hUw39Tpe1b0lLNoH2vtex/3zTfUghVoxJLZl4Sq
+         2nTh3c5aQeQXUVEUQONlACwRH1UxdY1Ne0fgXq1yJ50Kp1qfjArYqZUmydITAqdtwIg1
+         lCrBTIEe2RVpYAOHOY9cMt/omlcrXrtYiHj7dpa0QUhdUqF7l5Wp83/CQE0Ss1ZIDh7C
+         ZRHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781621410; x=1782226210;
+        d=1e100.net; s=20251104; t=1781621413; x=1782226213;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=KYpoF6QqLLZenLhdP2gMzSbswL0pIsMFgW6dfmoktRY=;
-        b=YFSbdTCsNAFj15B7vfWHwGrMLy8T7Ri4l6/st/OXbhDg9uKiBhlQOy5KgFGWDuaOVO
-         tpQbqxn6LQakUrAI91Otf2I/tvh+zH35A9ceQkrGb2sHah1E4iYvGWUgJksrPXG2MKCw
-         VbzHiHs1Q3ZVOYnZR3gWsST7Ry0BSYNfzfzu8WRZcJc3sMzfDhcoXUtHhyZWQB1XwyNW
-         cUrj2tMCgBarZ3pUg9yDc06514ZggOBIS8pLhTw57PIYCPm933Bo0DajPfzpkv1RukS0
-         ff7hSHJCcOni0cpz1xKgUQUP2Jmv0vg6Fvu0tTNWsu74nZFs3FgQawTndS7Lnnqi6QPB
-         bX6Q==
-X-Gm-Message-State: AOJu0YwH8U970SQ9+/rGHyI3Emlv7pKK5W1iLvzEK9o/7qmkk6x/EER/
-	TpCCijRPHEAxK7N1nfVZ3GnwxbJQuAOyAyiiW3Wq2+d4Hmr4Ikwszn2SNlqXyA==
-X-Gm-Gg: Acq92OEdn7GRUw2ThVydLD6MjFMfeSHPMnLeoRxRUCv963WRDxLp8niKgMXxy7YyRZt
-	7a80rSLDsY4I8jBjYd78VSUdWpv1+1hskioo+VcPmhBzhR/QAJ/Jvehr7LMp7lYLLng1lsciOME
-	qjFd6+ciFEVDpISvYQgk5Fg9lm+F35lOI2BXh/nE5IVk9dqUitOWK4e25aS2EQIk3/fIur/jiy1
-	vgd/Ydi3XiY880GStTU1WBYuHy6s12+2j0f4rCAoaPKE+G1lHxkrBFo+UALRxkNZq78OyOy6vUM
-	PgTx0oVy2CWTQ7Q1uPrxEYGIKysv8N7y53aH/PX98ElV+toUCAdAiQ0P3801REm2zV+jgDFLWsB
-	L5KaT0SWy9wvrbwLupOCLv12pr1iBkqB5u4hpUjQe5Z8pVnQv+MySFx9TlSb3TVfXe/HjlXT8+e
-	ha9GpgDKwdoVvQYVRN6FhGHOQPvQ==
-X-Received: by 2002:a05:620a:2303:10b0:918:4ca7:8482 with SMTP id af79cd13be357-9184ca78669mr1640055385a.26.1781621409762;
-        Tue, 16 Jun 2026 07:50:09 -0700 (PDT)
+        bh=A2AE3KoIOq0la3p3A4ZyybJMRj89lbCmkY9X+rQxjvE=;
+        b=BFzzgW6TkBcN5u+CQxEY3ysfWNNGElkF/fQ+DJ3aHKa4V+sTPKULGTu9OFsiFa73Ty
+         C5Oa2G67b0XPTBc52eu11cYyRdWcdxHrFUHqY6jNAUBOrarAOAndzgJONgJQqxlOf3sQ
+         sMGJiBIpZi0SvuwqZFw54d59KeTFMbnUdSIwBOMC0lzEUa1dWE6rcEkxdTFL9OH+W1oh
+         jpREzYMRkPV1+VHQt8Uj6To4TCq71AQu4y7a4wSrmW56L4XcQuFLz2RyVza6I6xiDFqb
+         nw2411t+XphiV/NDhJCzIecni0AenzG4wm1R3DtjzbCrhzwtiaB7JvyJI5CtrZo+onLy
+         htpQ==
+X-Gm-Message-State: AOJu0YxwIbJ7/4+pgLrs/vrTfZ9CKIg3yG03HMol8ijmat//8NFwcMZe
+	ZHyT8rizJGtVkwmg33FmyxqSdvXq8FMPKq+z83+9pvHnStQgmfBJnFTKwik5/Q==
+X-Gm-Gg: Acq92OEAF6Gh4PDedvg6onH1asiGTFS4eGWLF7paCTiEZh3HAvCPp+2bmrrWDmaNw+y
+	bUeJoUNYZolVRD8CNar3rWz+11Ba5R9GFWAvieDNBcLQ/MjUeI1w73amksRaQgiJTU+1XxjDvq7
+	MpY6jctiZp5JmjGnZVdM7OmcBiQveoGKDdhoROpKXkAcCk+liKEad+bzDznGNbbscwGPzTpbAY0
+	hakNsNWRDIPqGH5gOuFEy+ZEWBi3AOh0BMzr7r24p7av9pjJ3c+CYSZZxaY3ZnfDKIsrHW+8Kpd
+	EBDpiPEzhnX7BEmu6/lbLxLDKE4oy3tXyEw42b4gDU/Z5ffiGU1fe+qh4eyLra7926otN7Bt/fW
+	gIACfTBGbVQ8Ty/MvHHvl01JgCzj0uvCWV/wKE7Jvp6XNOrscP+jm1O7aCLUVjvnVqxkTMp64nL
+	+gUEid1o3W2DW+3A0Q3tQXPmP+qQ==
+X-Received: by 2002:a05:620a:2552:b0:915:c858:7d3f with SMTP id af79cd13be357-91c468c8c2cmr611871885a.19.1781621412644;
+        Tue, 16 Jun 2026 07:50:12 -0700 (PDT)
 Received: from [127.0.0.1] ([20.161.77.160])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9161a04f5b7sm1478055485a.38.2026.06.16.07.50.08
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619f3c324sm1477401485a.21.2026.06.16.07.50.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 07:50:08 -0700 (PDT)
-Message-Id: <e6bb4e6228da676cc9736acad1fca3f795933dde.1781621398.git.gitgitgadget@gmail.com>
+        Tue, 16 Jun 2026 07:50:10 -0700 (PDT)
+Message-Id: <568807ac349c8b9c6b01b7564ac12aeef2ef387b.1781621398.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2138.v2.git.1781621398.gitgitgadget@gmail.com>
 References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
 	<pull.2138.v2.git.1781621398.gitgitgadget@gmail.com>
 From: "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 16 Jun 2026 14:49:56 +0000
-Subject: [PATCH v2 5/6] hash-object: add another >4GB/LLP64 test case
+Date: Tue, 16 Jun 2026 14:49:57 +0000
+Subject: [PATCH v2 6/6] hash-object: add a >4GB/LLP64 test case using filtered
+ input
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,32 +82,37 @@ Cc: Philip Oakley <philipoakley@iee.email>,
 
 From: Philip Oakley <philipoakley@iee.email>
 
-To complement the `--stdin` and `--literally` test cases that verify
-that we can hash files larger than 4GB on 64-bit platforms using the
-LLP64 data model, here is a test case that exercises `hash-object`
-_without_ any options.
+To verify that the `clean` side of the `clean`/`smudge` filter code is
+correct with regards to LLP64 (read: to ensure that `size_t` is used
+instead of `unsigned long`), here is a test case using a trivial filter,
+specifically _not_ writing anything to the object store to limit the
+scope of the test case.
 
-Just as before, we use the `big` file from the previous test case if it
-exists to save on setup time, otherwise generate it.
+As in previous commits, the `big` file from previous test cases is
+reused if available, to save setup time, otherwise re-generated.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.email>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1007-hash-object.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ t/t1007-hash-object.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index bcae3fc54c..f96c29ce68 100755
+index f96c29ce68..4bc82dd968 100755
 --- a/t/t1007-hash-object.sh
 +++ b/t/t1007-hash-object.sh
-@@ -277,4 +277,12 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
+@@ -285,4 +285,16 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
  	test_cmp expect actual
  '
  
++# This clean filter does nothing, other than excercising the interface.
++# We ensure that cleaning doesn't mangle large files on 64-bit Windows.
 +test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
-+		'files over 4GB hash correctly' '
++		'hash filtered files over 4GB correctly' '
 +	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
 +	test_oid large5GB >expect &&
++	test_config filter.null-filter.clean "cat" &&
++	echo "big filter=null-filter" >.gitattributes &&
 +	git hash-object -- big >actual &&
 +	test_cmp expect actual
 +'
@@ -114,4 +120,3 @@ index bcae3fc54c..f96c29ce68 100755
  test_done
 -- 
 gitgitgadget
-
