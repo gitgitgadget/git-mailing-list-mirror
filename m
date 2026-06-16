@@ -1,122 +1,128 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D232D3C062A
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC471303C9C
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781621415; cv=none; b=deKy4+/XztOdMJGKZBiV+JuemTKLAN5iPffnidCUS3ERT1/9FMw2B1PlpVMahDR4xHWZti3WXQMMcIemoTICFYEapBdUxTTD2WbcrmSOAxBzyHgPWV+WY4XaXaTV5xbLkjh0DsbiWw+XWrlVpM+LxoHiBon57S9dRQ+tjZ9LEa0=
+	t=1781621584; cv=none; b=LpM48lvXhH5Im9E7EaIaeloca+BF2bbkAOvGls49lrdF9wgoK/8a5RHOAcMOLb5y0r4bZOHz5gHUYGy3uU9HoE7tz4UoX7+Km6k6WwVG2/904eCLliKWMIhugmA1GvjZm1/O1Rn8F0UrxLRO1IaDkxl1X8wUXc37gPdhkQd446M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781621415; c=relaxed/simple;
-	bh=SAhQR/wJQxVDP/ziKT+VkL+7qXXW2pm8u7Rl3+RTdcg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=qX1hJZG2u0IvdPpmNAwhbNLEEuyQrbvTDvXvuuxT/J9JhrT1E+DJ8RK/kayZEhP37KdyShg6dezlx3wkt0aiUFzG976kSUI42iuaQOZnBZlAbcXvUNjpGToQVTTg+5VEPi4pDCEf3deMKM7E3w3qf6yALVE5Duyw7zoVgiYw8yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K8AhBlGx; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781621584; c=relaxed/simple;
+	bh=Db06xndU04k2XJuuyXoI15Odp80jeR7dIZzIokE5guY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TDLCue11Zq/kCVKqJocMy5BWAZSxAEtT4q/JsM3OSv58Zr1550BdnF3kIB7VFhnfOAY38OTDcnAj39MFcOJaTMBeOcheNZBbi/uLDqCV3g3jXyovkiuHRmd0i3ueRcoGDdF/Tgt80BJ2kEeGcKCM+O3UpK4S1cQhFZ3TCMJq83o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cepJw5cz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y40z1i50; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K8AhBlGx"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-9157f7c1c0eso489252685a.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 07:50:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781621413; x=1782226213; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A2AE3KoIOq0la3p3A4ZyybJMRj89lbCmkY9X+rQxjvE=;
-        b=K8AhBlGx3FuDyqvQgBtA43g4ncecsc0YSQgiG776uf3pH749Qp6gfGE95xt/SPRpvw
-         c07GfVWCAcMc13ipeAmh8JCtfVoSNqwnRKMDBq1ND88vtrPV2TU3Ie/q6kaF4aJp3rEH
-         eodxoJ1t4LLIfemnuiBqiNo7mou82hUw39Tpe1b0lLNoH2vtex/3zTfUghVoxJLZl4Sq
-         2nTh3c5aQeQXUVEUQONlACwRH1UxdY1Ne0fgXq1yJ50Kp1qfjArYqZUmydITAqdtwIg1
-         lCrBTIEe2RVpYAOHOY9cMt/omlcrXrtYiHj7dpa0QUhdUqF7l5Wp83/CQE0Ss1ZIDh7C
-         ZRHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781621413; x=1782226213;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=A2AE3KoIOq0la3p3A4ZyybJMRj89lbCmkY9X+rQxjvE=;
-        b=BFzzgW6TkBcN5u+CQxEY3ysfWNNGElkF/fQ+DJ3aHKa4V+sTPKULGTu9OFsiFa73Ty
-         C5Oa2G67b0XPTBc52eu11cYyRdWcdxHrFUHqY6jNAUBOrarAOAndzgJONgJQqxlOf3sQ
-         sMGJiBIpZi0SvuwqZFw54d59KeTFMbnUdSIwBOMC0lzEUa1dWE6rcEkxdTFL9OH+W1oh
-         jpREzYMRkPV1+VHQt8Uj6To4TCq71AQu4y7a4wSrmW56L4XcQuFLz2RyVza6I6xiDFqb
-         nw2411t+XphiV/NDhJCzIecni0AenzG4wm1R3DtjzbCrhzwtiaB7JvyJI5CtrZo+onLy
-         htpQ==
-X-Gm-Message-State: AOJu0YxwIbJ7/4+pgLrs/vrTfZ9CKIg3yG03HMol8ijmat//8NFwcMZe
-	ZHyT8rizJGtVkwmg33FmyxqSdvXq8FMPKq+z83+9pvHnStQgmfBJnFTKwik5/Q==
-X-Gm-Gg: Acq92OEAF6Gh4PDedvg6onH1asiGTFS4eGWLF7paCTiEZh3HAvCPp+2bmrrWDmaNw+y
-	bUeJoUNYZolVRD8CNar3rWz+11Ba5R9GFWAvieDNBcLQ/MjUeI1w73amksRaQgiJTU+1XxjDvq7
-	MpY6jctiZp5JmjGnZVdM7OmcBiQveoGKDdhoROpKXkAcCk+liKEad+bzDznGNbbscwGPzTpbAY0
-	hakNsNWRDIPqGH5gOuFEy+ZEWBi3AOh0BMzr7r24p7av9pjJ3c+CYSZZxaY3ZnfDKIsrHW+8Kpd
-	EBDpiPEzhnX7BEmu6/lbLxLDKE4oy3tXyEw42b4gDU/Z5ffiGU1fe+qh4eyLra7926otN7Bt/fW
-	gIACfTBGbVQ8Ty/MvHHvl01JgCzj0uvCWV/wKE7Jvp6XNOrscP+jm1O7aCLUVjvnVqxkTMp64nL
-	+gUEid1o3W2DW+3A0Q3tQXPmP+qQ==
-X-Received: by 2002:a05:620a:2552:b0:915:c858:7d3f with SMTP id af79cd13be357-91c468c8c2cmr611871885a.19.1781621412644;
-        Tue, 16 Jun 2026 07:50:12 -0700 (PDT)
-Received: from [127.0.0.1] ([20.161.77.160])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619f3c324sm1477401485a.21.2026.06.16.07.50.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 07:50:10 -0700 (PDT)
-Message-Id: <568807ac349c8b9c6b01b7564ac12aeef2ef387b.1781621398.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2138.v2.git.1781621398.gitgitgadget@gmail.com>
-References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
-	<pull.2138.v2.git.1781621398.gitgitgadget@gmail.com>
-From: "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 16 Jun 2026 14:49:57 +0000
-Subject: [PATCH v2 6/6] hash-object: add a >4GB/LLP64 test case using filtered
- input
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cepJw5cz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y40z1i50"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 10E831D00101;
+	Tue, 16 Jun 2026 10:53:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 16 Jun 2026 10:53:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781621581; x=1781707981; bh=PMX1FT7VjG
+	QQh3YrMcNu/405wKr3jS8kRcJcceR6qMY=; b=cepJw5czUsHP6YjXlRKs8IOIQ8
+	Ly9fICk5SiyrPkQTKiTaO7yj8uamiO9+0fDF5CYjyLhFjlsWRBU7MwK/SQmOKFXr
+	sdRHyMhD/WDOnPPJC7/v1K9p5bGSBgLhsX43OjbG7/g0dUqegE7DiK51tgVr9lDD
+	C5hKdChENUVCnNp55ef7rgReLfhymJI53//k/FpWaIkr+OCWYfsQgFkai6pvaCzz
+	cBecbMePs5aZkispGIsRJEN5bnTaVAGl4kVjXHFsqicxRbGTnk0hJrKkyeuYWhAv
+	bbRv3vwgsfrlZOR/pcQy1BZgZ3u+LfvMu4vSgG4mJFyWqkGZaA76HmriU1bQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781621581; x=1781707981; bh=PMX1FT7VjGQQh3YrMcNu/405wKr3jS8kRcJ
+	cceR6qMY=; b=Y40z1i50nWPn5wMBlIFf2MRGEIN5OvQfj8G/SW0H6CL54p+drk2
+	lbwkkkxWql1nEaFJW0t8qkv0vo7AWJ4oWGM1ewqc+Y71QMa2w8/kx45Lo/kV5BHQ
+	PGgnqjA3YlceBFYvdhaGpX4bwbnF/OAWXHEtAPlMQyb7knRkG37LoBJLldpozAT5
+	jYa3Tg2rV8Xj1VhWyz3VU6+NtqWWGn1muVirdaTu0IRvUYT3djCfKa2FGVI8teAJ
+	/AW9N01lfA9/hdZ0I9S9BuRsBSCyaLQVbvlzQMMR5Ovj/eeTRd3q1lvFJywnHZ0o
+	jz95blad0xILE8hVea/2LBZOwqeK8KVcb2g==
+X-ME-Sender: <xms:TWMxaqhPZ8bXSJtyzAWfP7Bk7RmzXK39dEmeiJmccwA7WbK86m-H8Q>
+    <xme:TWMxaifSPxyiInyOtcPMfDL-j3APFLVtApUTDU-LE2l45AqvKdj_Q9uzocGJ8wFQx
+    x0vTH_7agR8z_VWBp0XAiPajdpD19w9JRVTnS73Edwx8U1nx1k>
+X-ME-Received: <xmr:TWMxaveMbSCdT9QTSLO0f9kEkMBjUUBNgnLhqITB4kDQC3c9pw7Cm70GemUorbabBIwsVLbOXIbzxrZ-uxu3DcWUuP08jPrxLyIm>
+X-ME-Proxy-Cause: dmFkZTFQynjETECiL76JVTG60UdYlilX05/y6ECUmlr5EmGy8LmIkHmW0mYcCEiBrZjdT1
+    lO6rcfzrGoxziBZ9jlCe1kznHpDZWw1lNIu1n7E8sLJ2tbAdLeTxoICdMkBiktVD5lnI+t
+    ME9pb8JgmI0DpHJ8pTpg+1oj+zy28VKtaU2i3UzrNo2eAyfcOca8QY19lEX8wVYUuN8FHt
+    pxSCTLKBfrfpMWn4DD1ehXy+Dt5rXwdZ0vYwwWrhfdiDi/J+rJp7iU/M+peWqD9b9tonvd
+    id4hmpiWX57JJaBXxEGY8Xd3yqnzvSXsNUYoeQDajDd/s4Es+yNP9Jz5p6GNnWZtCh58mH
+    xRk6SEC227bEl/qGNfRuQwY0o9//7FjF8AiGI761evizuFBU0h8EA/OfkSVmzADZgsHTFl
+    ryMg+LXYl0nHG3GOBBGtyZnLFY9xOFPFKk2NWkOzUojpAXzgEFYf2Qu8f1bsomK7mHK0JI
+    rh5DK8SvDZsfSl2l6cIGwAO+Ghcxf7DNiWlt61UhOLYaVlXgEEQs7rKrejRH3tyVJDl4JM
+    oBGbLz2pRdVCVAX5qtBKanGz2uBQx4eQXDtqynV70SX3IY92YM4hWgnZxvveHcnbR06kjE
+    GUF3YCAE0khwQEEvyzNvD7n12ui5jDoth7nB++NRSgKQB0zevo10NnIyTkdQ
+X-ME-Proxy: <xmx:TWMxas9yyUnpZ4fKZYTslbzBFlQFvvjrda7e-cYsCXJeQFuETeHKZg>
+    <xmx:TWMxarlXISv9zqqpggerrbGpfLyq2XrIdExJ_Gl0AL8l-i2xeOYTqg>
+    <xmx:TWMxau8QIKml0p5FEqOn9Zww5MQJH_81jwk4wgLEa6fnjC24Tpt8bA>
+    <xmx:TWMxapn5BB4qw8TLYHZqoP6aihuyYd5ExDyTyF05U__04mvHPNsW8A>
+    <xmx:TWMxaqlf6jDZhREne1ZrjwH3IK7NzHk3f7TkumrjCSGNlmvXFnnM81mp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Jun 2026 10:53:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/4] builtin/refs: add "update" subcommand
+In-Reply-To: <20260616-pks-refs-writing-subcommands-v1-3-9f5219b6109d@pks.im>
+	(Patrick Steinhardt's message of "Tue, 16 Jun 2026 10:44:08 +0200")
+References: <20260616-pks-refs-writing-subcommands-v1-0-9f5219b6109d@pks.im>
+	<20260616-pks-refs-writing-subcommands-v1-3-9f5219b6109d@pks.im>
+Date: Tue, 16 Jun 2026 07:52:59 -0700
+Message-ID: <xmqqse6m4jw4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Philip Oakley <philipoakley@iee.email>,
-    Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain
 
-From: Philip Oakley <philipoakley@iee.email>
+Patrick Steinhardt <ps@pks.im> writes:
 
-To verify that the `clean` side of the `clean`/`smudge` filter code is
-correct with regards to LLP64 (read: to ensure that `size_t` is used
-instead of `unsigned long`), here is a test case using a trivial filter,
-specifically _not_ writing anything to the object store to limit the
-scope of the test case.
+>  git refs delete [--message=<reason>] [--no-deref] <ref> [<oldvalue>]
+> +git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
 
-As in previous commits, the `big` file from previous test cases is
-reused if available, to save setup time, otherwise re-generated.
+"<old-value> vs <new-value>" is good, we should update "delete" to
+use "<old-value>" to match.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t1007-hash-object.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
 
-diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-index f96c29ce68..4bc82dd968 100755
---- a/t/t1007-hash-object.sh
-+++ b/t/t1007-hash-object.sh
-@@ -285,4 +285,16 @@ test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
- 	test_cmp expect actual
- '
- 
-+# This clean filter does nothing, other than excercising the interface.
-+# We ensure that cleaning doesn't mangle large files on 64-bit Windows.
-+test_expect_success EXPENSIVE,SIZE_T_IS_64BIT \
-+		'hash filtered files over 4GB correctly' '
-+	{ test -f big || test-tool genzeros $((5*1024*1024*1024)) >big; } &&
-+	test_oid large5GB >expect &&
-+	test_config filter.null-filter.clean "cat" &&
-+	echo "big filter=null-filter" >.gitattributes &&
-+	git hash-object -- big >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+>  DESCRIPTION
+>  -----------
+> @@ -58,6 +59,12 @@ delete::
+>  	reference is only deleted after verifying that it currently contains
+>  	`<oldvalue>`.
+>  
+> +update::
+> +	Update the given reference to point at `<new-value>`. This subcommand
+> +	mirrors `git update-ref` (see linkgit:git-update-ref[1]). When
+> +	`<old-value>` is given, the reference is only updated after verifying
+> +	that it currently contains `<old-value>`.
+
+As to the lack of "create", among the two potential changes, I have
+a slight preference for adding "create" and failing "update" that
+does not refer to an existing ref.  If we go that route, the
+"--create-reflog" option should move to "create", as "update" will
+never be used to create a new ref.
+
+
+> +	if (repo_get_oid_with_flags(repo, argv[1], &newoid,
+> +				    GET_OID_SKIP_AMBIGUITY_CHECK))
+> +		die(_("invalid new object ID: %s"), argv[1]);
+> +	if (argc == 3 &&
+> +	    repo_get_oid_with_flags(repo, argv[2], &oldoid,
+> +				    GET_OID_SKIP_AMBIGUITY_CHECK))
+> +		die(_("invalid old object ID: %s"), argv[2]);
+
+On the "delete" side, these messages quote the object name, i.e.,
+
+			die(_("invalid old object ID: '%s'"), argv[1]);
+
+We should be consistent.
