@@ -1,305 +1,175 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF83421F10
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 09:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58B3421EF6
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 09:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781602049; cv=none; b=ZabLijajQCM0naLNNn83K8EX2luz7hBpFgEE1qnAeyivalGczvDh8FLszi2tfhhU8/s9/v0B60nqAgc3/gAXCsZsA9DY/eoOq1USYqsyQYaK2Xp35Ln90HBn23utXH67UzC6yMJzXp3Dl8nkMzVFOYduVIw+AJZE5HaKvZ/gDho=
+	t=1781603833; cv=none; b=FewUCxXhnNOudl58Ms1jOhq9LGZbKonWJbH9GroNDtTj+w9WocAgNtPxzgKDi0CCgqTgp/AdS4gYV3IiuaxxiD9Vi64YtW0C5MUZ/wJo7mH4i8QbqOW/xidtOQxba6tCUEP8ho3B/JjOKuW9/nI1AwtOOHKtO3D1UaIQn/rUiWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781602049; c=relaxed/simple;
-	bh=MnROpugHG4YUEZLq6Lo0xNtZAx+vV2xZwbeW1LvagLE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BjmPT846FVR3ONRb4sIzSDOYz15xp3Pr/ZZ5+le6ylfZcJialEqYqCXQJAgKac48zFhn2SjRBHL3MJkkRSgJ5/R2TV+OM7xRDLM6yKjdZ7nvZUYDo8NerLDGS1kMSUoKc/gkK7Ucx6U+zuEAo/59v581lgPe8/w1nz7ZooximTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=KAlqP4Cf; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1781603833; c=relaxed/simple;
+	bh=v78NEEwbTzAQmrVo40dgXIP8vBJZO3HQcW+Lv/0Ktqw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VbqvmcUmJYCDQGrliL6SgQTnHJSuzYpZWgz7tIxOFqkPMxB5cK68Mr3QklR31foxUAxIqSXtCwBjLyPfdM1n63h7OMNazKZafXTNAGwQedCjQfFnPk64yhD8MybgQy1KaCzJgAJFKKnmtiDIQqRWVgmOAHYIad33AwwgmzdYogU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdDlhzFD; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="KAlqP4Cf"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1781602045;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/YDKUbEKJ8ZA7BrxBb8sJsTdXkg4V3t19tGemoQZ/yc=;
-	b=KAlqP4Cf1v62t9Y/dAXM4dzvpPuC5lVRslGZlB4+W5/e1z3DrqgLIJ0un0yhGk2GDyVyBS
-	HbIKbkIb3G4P7AwANaqQ1wIXPzWz7G0+iG/qFStM+oOO3TouxdLrYzclhquz4jLEchBJ/P
-	p+VtWTb56y4Fd99M8EF49fLpHwDm0R8=
-From: Toon Claes <toon@iotcl.com>
-Date: Tue, 16 Jun 2026 11:26:37 +0200
-Subject: [PATCH v3 3/3] replay: offer an option to linearize the commit
- topology
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdDlhzFD"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c0115a3794bso449788066b.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 02:57:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781603830; x=1782208630; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8d7rnrWAquwzY34v2jhr3jmjjOwNULifz4GzbsYSaZ8=;
+        b=CdDlhzFDDLeH/PjaRUnt2uS3z4hhTMzSAdC2vj+JNFy0TT1UX0BVyuiUpT16kLl4U4
+         UOGMGjZ+iYHkBYCsyR7Xmo50QGbNbfIED5h2kTiQ6dGb/MPW4QDE0xDNOY5pI67g13e0
+         snzDAv3ltvT35L37bhkUSvWsXnDKwBYibC9jzuKC3zSx7JWaRdM5vj3956S8wVZb9rZB
+         FS9auCM5I2uuCqKc8KrDfk1+I9wzf8wgd7dZmparGj9cTsh/z7DZRoUdfXxTcrvjf24M
+         PPzbtDdz7XVcgHw5Jgq+FDE2C2JRNHJVywChJ+pO26/x7a1kwyXiLmRfl3r0O771mmLl
+         c5gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781603830; x=1782208630;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8d7rnrWAquwzY34v2jhr3jmjjOwNULifz4GzbsYSaZ8=;
+        b=oWnhkTt+yxIJED/huVQDHtBjMtyzImR/fnU16qUrsRGVrzTKovk5U96+j1SOuBZlBD
+         E9MddsqcmeItMI1m0aw2YPlZwcusDiIg7Wp/dWwAw4/19BEKhnIoLMU/gk8BggauBcyi
+         S7Q75sL5kfcr3u5F16Tt/1PsJ+vgEfd9dS82GFiqIWS7towfZ5V2428Hi3CUCnoqezH9
+         hlcmhDq/cLvKL20ab594Ay87gnwBVvkaJk7hKyQnG/M2ehXg+CETme0sL4VB3sT5Swts
+         ZXS30W6ailjzBMb7izkYSOr9ednkKiYtD0KNq6HZKru+6VEql5uRGBhecyDMeNiUneey
+         g2ig==
+X-Forwarded-Encrypted: i=1; AFNElJ/SVct+/SeSDyfRqP/WtajL4JYodr7jSE4G8dnTXRhtVGWS5+DeeWiWqXrc51zZY9Kh0Z4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTc+G5wG47Njg1UTPAFBJxnqdaZ7TvWMDmvljvEHnrlD6peBGs
+	MQ+TFnKugGynXj0FloFPKdysb+oH2gibhI8OHpYiCMFzjhH4Xj8+es0y
+X-Gm-Gg: Acq92OF124giS/gGBpBSOM8YtHku7wjL4AISUWcktXzYP1vfP+E3nrrv6pkKOZw4mMS
+	B8V6w/2u/UUXlZrHXpSzUb0qcLme3nZcPdom39N6poEdt7Vjxc7eMWYVcst1Vg/5vTLZ2RQm6Pr
+	PCoSFRCh2iWiY65wXXQva7G2uVZA4LmP2c8qsLDy4umUWFh0GSwBGlF0vY6pOSUDBkdnxVvwOfu
+	X5xPNDsJNfL/XChMyOUSme68T26uZWVlTDxGKHCYvrBDyPBw/JALNDrfPfZoO4xFSJLY1T8cqfD
+	rSbIUia9kGiHhwrEWIuc27H/CPk21cWF1JCca8xcnU8Vol3E12gOy7FbWlRjzNqHHwDcnPQSnIY
+	dMgfX8PR5Z2jI51gVmQMKrr5k7Ec/NL0pOQFvPxmoyMuFymu//0eOdPk3wiOxYn93UAoZyYOYs6
+	2xsqvdFGfljiz18ZT1o3EJpriEspi6txUB2ay8bTHpFsS+omeAKycRB6ABprTZE86vYX+uT7L9D
+	Ny9mt06KH4=
+X-Received: by 2002:a17:907:7636:b0:bf8:6011:53b1 with SMTP id a640c23a62f3a-bff49620fe4mr442048466b.4.1781603829833;
+        Tue, 16 Jun 2026 02:57:09 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6? ([2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb4420823sm621199566b.4.2026.06.16.02.57.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2026 02:57:09 -0700 (PDT)
+Message-ID: <7b43a0f1-32a0-40f0-8c82-d2ee78809cc2@gmail.com>
+Date: Tue, 16 Jun 2026 10:57:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 6/6] branch: add --dry-run for --prune-merged
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+ <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+ <ede8c6172963fb8d15f0ae28f4e11501cf42be6c.1780999917.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <ede8c6172963fb8d15f0ae28f4e11501cf42be6c.1780999917.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260616-toon-git-replay-drop-merges-v3-3-153e9eb99ce1@iotcl.com>
-References: <20260616-toon-git-replay-drop-merges-v3-0-153e9eb99ce1@iotcl.com>
-In-Reply-To: <20260616-toon-git-replay-drop-merges-v3-0-153e9eb99ce1@iotcl.com>
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Migadu-Flow: FLOW_OUT
 
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Hi Harald
 
-One of the stated goals of git-replay(1) is to allow implementing the
-git-rebase(1) functionality on the server side.
+On 09/06/2026 11:11, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
+> 
+> With --dry-run, --prune-merged prints the local branches it would
+> delete, one "Would delete branch <name>" line each, and exits
+> without touching any ref. The same filtering applies, so the output
+> is exactly the set that the real run would delete.
 
-The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
-was given. This mode drops merge commits instead of replaying them, and
-linearizes the commit history into a sequence of the
-regular (single-parent) commits.
+I can see this being very useful.
 
-Add option `--linearize` to git-replay(1) to do the same.
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 52a0371292..7c52a88af2 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -717,7 +717,7 @@ static int parse_opt_forked(const struct option *opt, const char *arg, int unset
+>   }
+>   
+>   static int prune_merged_branches(int argc, const char **argv,
+> -				 int quiet)
+> +				 int quiet, int dry_run)
 
-Co-authored-by: Toon Claes <toon@iotcl.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- Documentation/git-replay.adoc |  8 ++++-
- builtin/replay.c              |  6 +++-
- replay.c                      | 32 +++++++++++++++-----
- replay.h                      |  5 ++++
- t/t3650-replay-basics.sh      | 68 ++++++++++++++++++++++++++++++++++++++++++-
- 5 files changed, 109 insertions(+), 10 deletions(-)
+Let's not start adding multiple boolean augments - use a flags argument 
+like we do for delete_branches() - if you get feedback on one patch you 
+should think about whether it applies later in the series as well. The 
+rest of the implementation looks good.
 
-diff --git a/Documentation/git-replay.adoc b/Documentation/git-replay.adoc
-index a32f72aead..ef56ee0f1b 100644
---- a/Documentation/git-replay.adoc
-+++ b/Documentation/git-replay.adoc
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- (EXPERIMENTAL!) 'git replay' ([--contained] --onto=<newbase> | --advance=<branch> | --revert=<branch>)
--			     [--ref=<ref>] [--ref-action=<mode>] <revision-range>
-+			     [--ref=<ref>] [--ref-action=<mode>] [--linearize] <revision-range>
- 
- DESCRIPTION
- -----------
-@@ -88,6 +88,12 @@ incompatible with `--contained` (which is a modifier for `--onto` only).
- +
- The default mode can be configured via the `replay.refAction` configuration variable.
- 
-+--linearize::
-+	In this mode, `git replay` imitates `git rebase --no-rebase-merges`,
-+	i.e. it cherry-picks only non-merge commits, each one on top of the
-+	previous one.
-+	This option is incompatible with `--revert`.
-+
- <revision-range>::
- 	Range of commits to replay; see "Specifying Ranges" in
- 	linkgit:git-rev-parse[1]. In `--advance=<branch>` or
-diff --git a/builtin/replay.c b/builtin/replay.c
-index 39e3a86f6c..62962c73c7 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -85,7 +85,7 @@ int cmd_replay(int argc,
- 	const char *const replay_usage[] = {
- 		N_("(EXPERIMENTAL!) git replay "
- 		   "([--contained] --onto=<newbase> | --advance=<branch> | --revert=<branch>)\n"
--		   "[--ref=<ref>] [--ref-action=<mode>] <revision-range>"),
-+		   "[--ref=<ref>] [--ref-action=<mode>] [--linearize] <revision-range>"),
- 		NULL
- 	};
- 	struct option replay_options[] = {
-@@ -111,6 +111,8 @@ int cmd_replay(int argc,
- 			     N_("mode"),
- 			     N_("control ref update behavior (update|print)"),
- 			     PARSE_OPT_NONEG),
-+		OPT_BOOL(0, "linearize", &opts.linearize,
-+			 N_("drop merge commits, replaying only non-merge commits")),
- 		OPT_END()
- 	};
- 
-@@ -132,6 +134,8 @@ int cmd_replay(int argc,
- 				  opts.contained, "--contained");
- 	die_for_incompatible_opt2(!!opts.ref, "--ref",
- 				  !!opts.contained, "--contained");
-+	die_for_incompatible_opt2(!!opts.revert, "--revert",
-+				  opts.linearize, "--linearize");
- 
- 	/* Parse ref action mode from command line or config */
- 	ref_mode = get_ref_action_mode(repo, ref_action);
-diff --git a/replay.c b/replay.c
-index 7921d7dba3..5539daff00 100644
---- a/replay.c
-+++ b/replay.c
-@@ -277,12 +277,16 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 					  struct commit *onto,
- 					  struct merge_options *merge_opt,
- 					  struct merge_result *result,
-+					  struct commit *replayed_base,
- 					  bool reverse,
- 					  enum replay_empty_commit_action empty)
- {
--	struct commit *base, *replayed_base;
-+	struct commit *base;
- 	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
- 
-+	if (replayed_base && reverse)
-+		BUG("Linearizing commits is not supported when replaying in reverse");
-+
- 	if (pickme->parents) {
- 		base = pickme->parents->item;
- 		base_tree = repo_get_commit_tree(repo, base);
-@@ -291,7 +295,8 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 		base_tree = lookup_tree(repo, repo->hash_algo->empty_tree);
- 	}
- 
--	replayed_base = get_mapped_commit(replayed_commits, base, onto);
-+	if (!replayed_base)
-+		replayed_base = get_mapped_commit(replayed_commits, base, onto);
- 	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
- 	pickme_tree = repo_get_commit_tree(repo, pickme);
- 
-@@ -430,12 +435,25 @@ int replay_revisions(struct rev_info *revs,
- 	while ((commit = get_revision(revs))) {
- 		const struct name_decoration *decoration;
- 
--		if (commit->parents && commit->parents->next)
--			die(_("replaying merge commits is not supported yet!"));
-+		if (commit->parents && commit->parents->next) {
-+			if (!opts->linearize)
-+				die(_("replaying merge commits is not supported yet!"));
-+			/*
-+			 * Drop the merge commit: do not pick it and leave
-+			 * last_commit unchanged, so its children (and any ref
-+			 * pointing at it) are reparented onto the previous
-+			 * non-merge commit, which the ref-update loop below uses.
-+			 */
-+		} else {
-+			struct commit *to_pick = reverse ? last_commit : onto;
-+			last_commit =
-+				pick_regular_commit(revs->repo, commit,
-+						    replayed_commits, to_pick,
-+						    &merge_opt, &result,
-+						    opts->linearize ? last_commit : NULL,
-+						    reverse, opts->empty);
-+		}
- 
--		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
--						  reverse ? last_commit : onto,
--						  &merge_opt, &result, reverse, opts->empty);
- 		if (!last_commit)
- 			break;
- 
-diff --git a/replay.h b/replay.h
-index 1851a07705..07e6fdcca3 100644
---- a/replay.h
-+++ b/replay.h
-@@ -62,6 +62,11 @@ struct replay_revisions_options {
- 	 * Defaults to REPLAY_EMPTY_COMMIT_DROP.
- 	 */
- 	enum replay_empty_commit_action empty;
-+
-+	/*
-+	 * Whether to linearize the commits (i.e. drop merge commits).
-+	 */
-+	int linearize;
- };
- 
- /* This struct is used as an out-parameter by `replay_revisions()`. */
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index 3353bc4a4d..1874d06769 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -52,8 +52,12 @@ test_expect_success 'setup' '
- 	test_merge P O --no-ff &&
- 	git switch main &&
- 
-+	git switch --orphan unrelated &&
-+	test_commit unrelated-root &&
-+
- 	git switch -c conflict B &&
--	test_commit C.conflict C.t conflict
-+	test_commit C.conflict C.t conflict &&
-+	git branch -D unrelated
- '
- 
- test_expect_success 'setup bare' '
-@@ -97,6 +101,12 @@ test_expect_success '--advance and --contained cannot be used together' '
- 	test_grep "cannot be used together" actual
- '
- 
-+test_expect_success '--revert and --linearize cannot be used together' '
-+	test_must_fail git replay --revert=main --linearize \
-+		topic1..topic2 2>actual &&
-+	test_grep "cannot be used together" actual
-+'
-+
- test_expect_success 'cannot advance target ... ordering would be ill-defined' '
- 	echo "fatal: ${SQ}--advance${SQ} cannot be used with multiple revision ranges because the ordering would be ill-defined" >expect &&
- 	test_must_fail git replay --advance=main main topic1 topic2 2>actual &&
-@@ -565,4 +575,60 @@ test_expect_success '--onto with --ref rejects multiple revision ranges' '
- 	test_grep "cannot be used with multiple revision ranges" err
- '
- 
-+test_expect_success 'replay to rebase merge commit with --linearize' '
-+	git replay --ref-action=print --linearize \
-+		--onto main I..topic-with-merge >result &&
-+
-+	test_line_count = 1 result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-+	test_write_lines O N J M L B A >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'replay to rebase merge commit with --linearize down to the root commit' '
-+	git replay --ref-action=print --linearize \
-+		--onto unrelated-root topic-with-merge >result &&
-+
-+	test_line_count = 1 result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-+	test_write_lines O N J I B A unrelated-root >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'replay to cherry-pick merge commit with --linearize' '
-+	git replay --ref-action=print --linearize \
-+		--advance main I..topic-with-merge >result &&
-+
-+	test_line_count = 1 result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-+	test_write_lines O N J M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	printf "update refs/heads/main " >expect &&
-+	printf "%s " $(cut -f 3 -d " " result) >>expect &&
-+	git rev-parse main >>expect &&
-+	test_cmp expect result
-+'
-+
-+test_expect_success 'replay --linearize produces the same patches' '
-+	git replay --ref-action=print --linearize \
-+		--onto main I..topic-with-merge >result &&
-+
-+	test_line_count = 1 result &&
-+	tip=$(cut -f 3 -d " " result) &&
-+
-+	# range-diff does not care about the dropped merge,
-+	# so the original commits (I..topic-with-merge)
-+	# and the replayed chain (main..tip) must produce identical patches.
-+	git range-diff I..topic-with-merge main..$tip >out &&
-+	test_file_not_empty out &&
-+	! grep -v "=" out &&
-+
-+	git log --oneline main..$tip >out &&
-+	test_line_count = 3 out
-+'
-+
- test_done
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index 3f7b1fc3d6..305c0141fc 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -2040,4 +2040,48 @@ test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
+>   	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
+>   '
+>   
+> +test_expect_success '--prune-merged --dry-run lists but does not delete' '
 
--- 
-2.53.0.1323.g189a785ab5
+A good way to test --dry-run would be to add it to an existing test 
+before calling --prune-merged without --dry-run.
+
+Thanks
+
+Phillip
+
+> +	test_when_finished "rm -rf pm-dry" &&
+> +	git clone pm-upstream pm-dry &&
+> +	git -C pm-dry remote add fork ../pm-fork &&
+> +	test_config -C pm-dry remote.pushDefault fork &&
+> +	test_config -C pm-dry push.default current &&
+> +	git -C pm-dry branch one one-commit &&
+> +	git -C pm-dry branch --set-upstream-to=origin/next one &&
+> +	git -C pm-dry branch two two-commit &&
+> +	git -C pm-dry branch --set-upstream-to=origin/next two &&
+> +
+> +	git -C pm-dry branch --dry-run --prune-merged "origin/*" >actual &&
+> +	test_grep "Would delete branch one " actual &&
+> +	test_grep "Would delete branch two " actual &&
+> +
+> +	git -C pm-dry rev-parse --verify refs/heads/one &&
+> +	git -C pm-dry rev-parse --verify refs/heads/two
+> +'
+> +
+> +test_expect_success '--prune-merged --dry-run only lists branches the live run would delete' '
+> +	test_when_finished "rm -rf pm-dry-mixed" &&
+> +	git clone pm-upstream pm-dry-mixed &&
+> +	git -C pm-dry-mixed remote add fork ../pm-fork &&
+> +	test_config -C pm-dry-mixed remote.pushDefault fork &&
+> +	test_config -C pm-dry-mixed push.default current &&
+> +	git -C pm-dry-mixed checkout -b wip origin/next &&
+> +	git -C pm-dry-mixed branch --set-upstream-to=origin/next wip &&
+> +	test_commit -C pm-dry-mixed local-only &&
+> +	git -C pm-dry-mixed checkout - &&
+> +	git -C pm-dry-mixed branch merged one-commit &&
+> +	git -C pm-dry-mixed branch --set-upstream-to=origin/next merged &&
+> +
+> +	git -C pm-dry-mixed branch --dry-run --prune-merged "origin/*" >out &&
+> +	test_grep "Would delete branch merged" out &&
+> +	test_grep ! "Would delete branch wip" out &&
+> +	git -C pm-dry-mixed rev-parse --verify refs/heads/wip &&
+> +	git -C pm-dry-mixed rev-parse --verify refs/heads/merged
+> +'
+> +
+> +test_expect_success '--dry-run without --prune-merged is rejected' '
+> +	test_must_fail git -C forked branch --dry-run 2>err &&
+> +	test_grep "requires --prune-merged" err
+> +'
+> +
+>   test_done
 
