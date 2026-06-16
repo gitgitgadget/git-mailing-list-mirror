@@ -1,126 +1,150 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BF33A7F4B
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 22:51:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6A43A8732
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 23:19:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781650309; cv=none; b=KrSao9rmQM99f3LFPw0H7V3nXmSEhIqCoE9hsM6DB+85TxcDelJ9QDgzPYON4SyTOPTz/Fg3343XNZLohauknQnObpuXklIPDx/7op79tK3hEerr75M1Mvsuo8SYd0aZpfrYHI19WMnWeejfsT3961AXTgYXPPfk30NkGrF/H+I=
+	t=1781651943; cv=none; b=o/igZ5XUcxo7UFBARIJMXRURilOxcuR1tszIfYqmYoctS6/SWhfZFAsBy/5VpJdh9jh3liiZXDdddztv//wNWHZLf7Z8qHUCsbttH0QIWkqZyeur5797tbnNEnw4DIldkn9Sh3iJycYqjuE/W2UUAfhlOt2lUk2sVfy1/CBSQpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781650309; c=relaxed/simple;
-	bh=OU6E3j+d504LCrhE4njbwUwDpPHTL4sQ0ZeC7cW8Ouo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dYmoyWuwz0YutqJ2QXyDVK/g5SW3BfSnxyQ90aelY62q31rDJE+cr4fqb4STsaBwFFzuB7ipxDXOLaaopaJ8hnxjzdkKHTyhvhRH+LE6qPtZr8zF9ndeCefbPwTOIXXtXgnNPgC3m0nhQmXJop4Npl4+qF9shmrrupwj5O1s99A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hpcg7TxP; arc=none smtp.client-ip=209.85.210.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781651943; c=relaxed/simple;
+	bh=d9p7/xqiEeo4605+ozxSJew6KdffPEnEiv1caQush9s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l6TiPWEUr0a8kQTwBccptD0IsR6mS5rBGfZgq5SRFVP3nASuMWqKDyR4rZa2usPn9B6c3r2Gt05XLSoIoBPLJeR5/SA22DmvjkThlWyWbWv5aFxQoF+HBwfriGc+6ZZjR/F4DNGjWYlrDpfFauSnTstwrhsYxSwsUl9UQgZDtR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eM1SgsS9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bKrWtAQv; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hpcg7TxP"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7e6dcc22cbcso4338807a34.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 15:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781650307; x=1782255107; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IssmbunB5mA7g9PHb325ITbmoW4h9E8U8XDV8fNW4BE=;
-        b=Hpcg7TxPXf1U1CrgEameScXkbOtTThEsi4Ok6t8Vs8wXLrZFGWNezq5v+Ww8wR5uQS
-         Nr5UJ9cgHV0p02x2qjIMTpdYFBEGDKMjYWGgjT5y8iTSS83a080bTC0w1C7W3wFUP9pw
-         9vyuh1C/rJ1PPlF52dTMdUHP7QsZTWCtEcB5KfOm9viSzIr3m4LQN8guQx/M/XGanMma
-         bH7T5z0a7rXjIgAIKN9UCcemWN28p4TCV1XxjXiqM1zAgRnx1ClG/a1ZVxLSVGosuj1T
-         WgKZzljAoviZURiLjZk2dy6kZ6p2SLa5DS/03xhOFspgp4R3NH2dD3V16yczcqcAFYZ0
-         lEzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781650307; x=1782255107;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IssmbunB5mA7g9PHb325ITbmoW4h9E8U8XDV8fNW4BE=;
-        b=gj8qcJwvV+h+/u12MM3om0WTwKIo9H085LNCgh120eEVa2LFsyX5KsJXWlXLgXOcEj
-         Ctoy47y+MM/1gzv5z9GKgkO8LP2z98G2EZgPj4nI/TvWsTEn8WtJ0h4l9XKKMNFHExPh
-         Am+rl9b+0+XsUIY7nlCUumtBb2hV8aZvqi4q9wmyTeyCxvnBNkMV2L9SDiNBIe5H9k5p
-         r2AobojFqADvT7AXxwE2oNMpOfyRlvZIbML6MlRKXLkPykUTYIiU8DOlVmBXNHf59Nri
-         A0fU71901D/xglvuEYD3HuksLexzxvJGBpY/v8QSXZ/QD56fwR34yU9qQrn5yR9jW23h
-         LFrw==
-X-Gm-Message-State: AOJu0YyRd2rA6S5zZDN0NLURFMJpjnkT7dJ4+EcYoBq3ifWwHpn5JGSx
-	E3dQ5na6H2f46JYXQ2pCO13psF9GDCH11hkX4T8V/ydyqZr4r1lMKzN75EAl8Q==
-X-Gm-Gg: Acq92OHT+n6t976NCFaa45sdbl17LES9A2sXiLyEqaLjHV+z9UB1prk9smLnIVRxu8j
-	bzcr8CXYVGlze8HahZt1N71o2ForHydp+kDCCpMcKtZnaXGLp35B67udVCrn7iNQ1LMZ872/nfs
-	szjh8dIt6/YDURQ6BHF0P0GQifGgUM1nbHxuYvEp0sun/9I+b1ZGLxQFuHLNbmapnTDhhztYl80
-	+w6Fn+2B73RendxZOwmERcHRFVvMjuKrZEDb0mNGziPJ5ekYkDLvEWG0hSNPvC2IbngJ3O1oRuF
-	HQ33RYdyDtO8DtkxxfktaTpcM2E1H/bquek+LLNbbmS+kuDl5ovOTDP0U7w/yT4FjyEA40bM0fR
-	NhBit2yD759A8gipqZ96mbEHVkVI3ZRRvK1a20BZaWBepsANBUYixSRuXxuyxnAz96+SZbXiVWR
-	aql2Mi50AWIVIpErvUhg9K7pvoDjw=
-X-Received: by 2002:a05:6808:2205:b0:464:3d5d:d9d4 with SMTP id 5614622812f47-48942a24d6amr1219552b6e.39.1781650307141;
-        Tue, 16 Jun 2026 15:51:47 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4875dda5f7csm5225954b6e.1.2026.06.16.15.51.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 15:51:46 -0700 (PDT)
-Date: Tue, 16 Jun 2026 17:51:43 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 17/17] odb/source-packed: drop pointer to "files"
- parent source
-Message-ID: <ajHRkrsvNtcBMFx2@denethor>
-References: <20260609-pks-odb-source-packed-v2-0-839089132c8b@pks.im>
- <20260609-pks-odb-source-packed-v2-17-839089132c8b@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eM1SgsS9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bKrWtAQv"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 890ED1400183;
+	Tue, 16 Jun 2026 19:19:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Tue, 16 Jun 2026 19:19:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781651941; x=1781738341; bh=G9Jk3f3t5Q
+	MhSvvablbBlFPiQGtlWZk5hghbtPyTK5w=; b=eM1SgsS94q+SlL15Jfg7idGs+X
+	cWs3uCUwSXc3jEQu/Wq/Saa82MUjCQ8gRAOVxmBP/35zCOoI4kTDsoiare1Kg7Ah
+	WSnMl01ZfJzJrAjJmUZ9i05X+vufeLYCrTiUy/JmodH372C2Bx2GHa94vrMWAJx5
+	311F73i7QnkvbvGVBzdD6zwYn21zFSy44aHc5onNWIAMpYCdB61+UAS2LYSn6BXD
+	8fHCP013LW2Zf4MhC6+PsMOurCY473VmZ4i3qcAFuUz5UXNYA+Jy4nlzsuA5FU+H
+	WJc3BCD8CikxbPL6QJWiFkGZUOav3y7qpwYGzBzrZ9LkviAINPFoLNvznttg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781651941; x=1781738341; bh=G9Jk3f3t5QMhSvvablbBlFPiQGtlWZk5hgh
+	btPyTK5w=; b=bKrWtAQvQu0h8hGcEM1yGpmyW1JX94GJ94Kj6uT0w7jpEg/yeoz
+	x9gmTFQ4fywXBM0SOL8VUEefN8gJ1Wy4VoDKzdsNnMzU/q8KUbtsKUT1rXZNvzzs
+	BxXvF6bY0hMncGKecxfVB0f0Tw7EO1yTx7wd48hr6R3BMLo41vC6fDhWekkStv+q
+	/uRjRx52BD2AvSTbHyVQMEk+/P7tqesFrqmTo9F0hBOzXhqVuXw69J66FhvjkyI+
+	9yUjedk4UtknLx8DV0B3knY5SgpwR+QtzsistRDKBWKOT689GtrvxchQRfUI0Hx2
+	lcNpa702xLTQRKBkbltk9W1jlJBVRsEhILQ==
+X-ME-Sender: <xms:5dkxavkoAeqCBO1W5dgYc3-IjNkUVzGX7hAnHXUxTko5Y1DOVMzM9A>
+    <xme:5dkxapsOB3xcuRmgeAek1r60U6M7THYOTyftU7htTn3kEeveLa-dJQVCqs552Uv1p
+    z16APx_QnvxKcZNC5L3UINr2g5m0B7QzuOi2Kpt0SiVS_lNagpf>
+X-ME-Received: <xmr:5dkxat8MF6qGCa1CG_W8JIEgimFgZ6CVCeQ1uaNRPy-xiZRQgG8Jj4lYK_h3uWFSGoDSWd7msUeC94AXNZ0JppBCVtByaop-ttlX>
+X-ME-Proxy-Cause: dmFkZTFyTKwAnso1oYKKwvp0OAvZM/3Onz3NF0AhXyk0DRAL4J3OwmbRHkRp/NKRmaJ3Sf
+    vRjqbgznr9cnsuF7bbzdwjdwBKAk/jkXuyubi3JX+PlJyGb8Wn61LYrpzKEWRZSGQGXTHK
+    4WirmPRxvoAFWxUJwfsw4Dgkwx79wQDp6ORKBrcGMIiNVl3wsaP3V0F5+pmT0JQOOcIeZr
+    cqhKeM2eS5sBj9V4riJVmA74SF8MwyTzaEXYNDzmrf5KelsPwhANrsOYfEPOZnEl8eVBGN
+    txxLtyg9ODbJU89dxveM3fGlZiR77chxy/RFVDOEzlkEK4QB6p/fthY1Cfs63iXLOZ4WXl
+    AZRoUNCz00rgrWFgJfNnSZ/Y+1ZEupj0KaiWYNxsUZFjCLSGYht5/7XjN7rtq7me87mnDq
+    eATQni6A7Nqz2sVaPytQ+RXPfGHKIxOfhReNvndXJ6xoqfA/P8L9cy6x2wcWU2Gtqy9YYJ
+    jYxoWmdImbJkJUjKPE6SAABYZuKQZtvikK7bRSnCmYXSr4uZ3ZlCEbZIX7B6xtxqaoviTT
+    MAXE9MJwTTns32NyZHkOewB1Mg6RPmIGWKv84VFCXGwLwn9vb1HVudmwzJAG9g6SqXgygK
+    /xgvUQJTH6Ln92/Ggk7y8GbHS0fRqxMz4tPFWwOGZuv4g4g2M9Xbby9xEwGQ
+X-ME-Proxy: <xmx:5dkxajP_leaQxyLP86KDQzyxI82g_E5jv8SAmRC2NXWC7lXRymcCpg>
+    <xmx:5dkxarE3P6OsYbmfTOVvJCs8NO4gfbUg4P3FFnZ8Gq3SpYnEWJRVCg>
+    <xmx:5dkxahQWHCdkr42TntIXd_zdnJnqgTnEXnpOUN07qwW1TdPYV4b9jg>
+    <xmx:5dkxaoumdOtOZU_w1atX9BxHf6W-6XBq21OwWtZY3Pnvvf3YA8WtWw>
+    <xmx:5dkxapV0_uH-qrAFQy_QCWAK32zvo4zC5x-O4aivvmCOgEqJXXQN4L-K>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Jun 2026 19:19:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Matt Hunter <m@lfurio.us>
+Cc: git@vger.kernel.org,  Bence Ferdinandy <bence@ferdinandy.com>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH v2 0/7] Introduce fetch.followRemoteHEAD config variable
+In-Reply-To: <20260616222606.1003521-1-m@lfurio.us> (Matt Hunter's message of
+	"Tue, 16 Jun 2026 18:25:14 -0400")
+References: <20260612055947.1499497-1-m@lfurio.us>
+	<20260616222606.1003521-1-m@lfurio.us>
+Date: Tue, 16 Jun 2026 16:18:59 -0700
+Message-ID: <xmqqh5n213bw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260609-pks-odb-source-packed-v2-17-839089132c8b@pks.im>
+Content-Type: text/plain
 
-On 26/06/09 10:51AM, Patrick Steinhardt wrote:
-> Over the last commits we have turned the packfile store into a proper
-> object database source that can be used as a standalone backend. As
-> such, it is no longer necessary to have it coupled to the "files" parent
-> source.
-> 
-> Remove the pointer to the owning "files" source so that the "packed"
-> source can be used as a standalone entity.
+Matt Hunter <m@lfurio.us> writes:
 
-Makes sense.
+> Changes in v2:
+>   - Don't die() if the value of fetch.followRemoteHEAD is unrecognized.
+>   - Use case-sensitive matching for fetch.followRemoteHEAD values.
+>   - Avoid the phrase "configuration option".
+>   - Minor documentation wording changes.
+>   - Link to v1: https://patch.msgid.link/20260612055947.1499497-1-m@lfurio.us
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> @@ -626,7 +625,7 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
->  		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
->  }
->  
-> -static void prepare_packed_git_one(struct odb_source *source)
-> +static void prepare_packed_git_one(struct odb_source_packed *source)
+>     @@ builtin/fetch.c: static int git_fetch_config(const char *k, const char *v,
+>      +	if (!strcmp(k, "fetch.followremotehead")) {
+>      +		if (!v)
+>      +			return config_error_nonbool(k);
+>     -+		else if (!strcasecmp(v, "never"))
+>     ++		else if (!strcmp(v, "never"))
+>      +			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
+>     -+		else if (!strcasecmp(v, "create"))
+>     ++		else if (!strcmp(v, "create"))
+>      +			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
+>     -+		else if (!strcasecmp(v, "warn"))
+>     ++		else if (!strcmp(v, "warn"))
+>      +			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
+>     -+		else if (!strcasecmp(v, "always"))
+>     ++		else if (!strcmp(v, "always"))
+>      +			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
+>     -+		else
+>     -+			die(_("invalid value for '%s': '%s'"),
+>     -+				"fetch.followRemoteHEAD", v);
+>      +	}
 
-At first I was a bit confused to see this change here, but IIUC
-previously this function was passed the "base" source of the "files"
-ODB. Now that we have a proper "packed" source we can use that directly
-instead.
+Not dying on an unrecognised value is certainly better than dying,
+but shouldn't we at least clear fetch_config->follow_remote_head
+to some "unspecified" or "default" value?  What does the existing
+parser routine for remote.*.followremotehead do?
 
-[snip]
-> -struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
-> +struct odb_source_packed *odb_source_packed_new(struct object_database *odb,
-> +						const char *path,
-> +						bool local)
+Ideally,
 
-Since we no longer depend on the parent source the function signature is
-updated accordingly. This also matches the "loose" ODB source.
+ (1) If the "fetch" operation ends up with not needing to consult
+     the value of fetch.followRemoteHEAD at all (e.g., it is a
+     one-shot fetch that updates no remote-tracking hierarchy, or it
+     has a more specific per-remote setting that this variable is
+     meant to serve as a mere fallback), any bogus or unknown value
+     will not get any warning.
 
-[snip]
-> diff --git a/odb/source-packed.h b/odb/source-packed.h
-> index 9d4796261a..88994098c1 100644
-> --- a/odb/source-packed.h
-> +++ b/odb/source-packed.h
-> @@ -10,7 +10,6 @@
->   */
->  struct odb_source_packed {
->  	struct odb_source base;
-> -	struct odb_source_files *files;
+ (2) If fetch.followRemoteHEAD ends up being _used_, and if it has
+     an unknown value, we should at least warn "we do not understand
+     what you wrote, 'awlays', and we ignore it", or die "we do not
+     understand 'reset', perhaps it is from a future version of Git?".
 
-Nice. :)
+I do not think customization based on git_config() callback like the
+above can easily implement such an ideal semantics.
 
--Justin
+And I suspect that the existing per-remote configuration that this
+variable is meant to serve as a fallback definition would not work
+in such an ideal way (i.e., even if we are doing one-shot fetch that
+does not touch any remote-tracking hierarchies, "git fetch" may warn
+if the value is not understood, and when we do need the value, the
+code would only warn and does not die), so in that sense this new
+code is not making things _worse_, even though it may be spreading
+the same badness more widely X-<.
+
+Thanks.
