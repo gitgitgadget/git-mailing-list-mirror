@@ -1,231 +1,243 @@
-Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5786E369D72
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 13:06:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781615217; cv=pass; b=G4MymYHOeL9D/DG2iyw0TxjWWeemIUDTMt3YkSLyaIA38tJbeaRx4WhKsOLEH1Wx6JIHpNfQvrEt7M+tUyq+PxZNhYveQ1gvNYU+uci4gFM45paReK5ko+MewmxOv1/exUtUafFrrvdinXCHM9HcTxHL4WFeW4t4ReAHA4IMz08=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781615217; c=relaxed/simple;
-	bh=DPhAAQKdF9CkjpmefzBnQF7j5RsWqa/TW4yj64/Q/t4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QFMMnB45p7xo32hT2rDiPzsWSsQkup1He8fh+7K+3B4iI/uuDyl9i+EmuCJ58lA0eAZ5Om6N3ceOjhENA9jK/Pdw73TzubVg30ECaB3L07gOzmSfK3G2//QMsU9AviqWJbRUvmeYw6jpEGiY8C+nnvYcpya1tXkIQL0Sk10wxgc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TJeLhol1; arc=pass smtp.client-ip=74.125.224.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29346374745
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 13:08:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781615319; cv=none; b=dxxcXZOEB6idKZLcM27VfqlqocLC+B39VlNWPVjzc7q9JF41v2VLyg8DGYgLgdVPuFwkV3oQ7baat5yw1lVoS9pjfNmQULokOQuwHf+V1VswiPX4vwY/4wMW/M/ylL+FANBmlsUG8ChFeHCAOqYBKPlNBIimRtPY+2vL1QxAUB8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781615319; c=relaxed/simple;
+	bh=ChR/HYAL7qwcjBXJNjMWAM5vH3UoQPheDhjg8TRwKUY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JLYuOcmRSAtjTzM9KaYdIoJXN7el1eSJRwZXC6i7ryta1TCZHyNVTPMSbjAxGAun/dctg9rHVnA71//i+mREV8I3J0OlU5P6YXn3xy02eE3mo66I8BBfQ03x6ZH4ofcugyYt7IalX4tIsnobQDLWxW+Vo4JH/zRcrqxAzDp2BBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j/rO1OO7; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TJeLhol1"
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6626cd98209so4741762d50.3
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 06:06:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781615215; cv=none;
-        d=google.com; s=arc-20240605;
-        b=eQs0vySgZP+r7bZw14RJdppwJY2u+4ofA+2jRJjwasMIWRA0ZAVwB8p2kzbnjMRp3D
-         0uIS15pHlTAk+B1040XULQvcWyU17ec3xcxNNITLczcbLBEi3RZSa/1tqg+97QRXBBtJ
-         XUHSpaC0+l/YIhiDdXAb6McegkMQnfXwnvwsPre7zdvpJORgIjwni+Tm7LRacTHxnkRG
-         a5Aqu3EzIhD8jNYWEBxmhcZpM3wMxqBZEuIl0sKLnDfwEuCw6kZPq+UwaiHy9XDRaRH0
-         dztMemeyswUJAshLW+9xljDqPkTjXyBx/tqxJpkNBAwAjEFyfnecwWH8Q85HZaQsSk5c
-         /mcA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=U8WB25NuFyM0fHNwdnRhNL+CMBbg/5dWjXlH/j7wnFY=;
-        fh=uf2io49Zi79AZy9yGvXUGxW9gffORSHAYmKov6Z9bSM=;
-        b=BgvLpNJIMtUe8RyP1aq/uE8O96ppi3+5XLudLTAOv88PqIMVUB16PzJZOMECG/NXdO
-         sEueUzM1sdFmYYUmsRrNjqWShEFOdv+S5aAhBHeNDBwjLZT0EK+DOKF/BodnmiX+HWPD
-         NzE71Isq/78FAWH2O+TUcc6U8isLH6XoGS88ArnkuOggEHVg/NNPNXs/Y40BoYPv/x6m
-         dIPEY+TDocBGXRoKuPrmpIBNvOlQlZj+eRM7r3U3ouOI0lyUSRW2I5qJd2qrlMIapfQ0
-         KZeDOrgevhNiCfFy2b8761UyfQeUrWziVKkhWkTu64eZSjkyBMkoXpQwewW/SrOtw4cg
-         bXzA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j/rO1OO7"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-68bd9fce347so8225805a12.2
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 06:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781615215; x=1782220015; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U8WB25NuFyM0fHNwdnRhNL+CMBbg/5dWjXlH/j7wnFY=;
-        b=TJeLhol1TRzpXvlQKMclXSm34uHtZmb3P9HFwvfVbUhkr+Y/VkDAYxGJRvrqzKgVa4
-         CqZ3z8v6HB6rpxQLHZtu271QpzKJdt7O7kbNvjygCjskd1G4pnQSFpavdX6qACNkjzUG
-         aJozDF/ozBt9yNYyQ0F9nsLhXGLH9u5b3lvWAspR4dwXL42pC4ENw8jTM4NttEesVaZ6
-         IrVQ0Nnq/E1SzMQdxYkrcU2kZohMCFa9vmYljrhXXKb0iKGN3Y6ZUdOQXl3LadGABCI7
-         57osu6wxuUxfHtPwemwQvuQGZNeBzurOfqZ2k57xo74LFXOiJZztne8GMpZVRGMr5500
-         gXJg==
+        d=gmail.com; s=20251104; t=1781615314; x=1782220114; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5C4I3q69ZyiHjTlIvTpnUuLqg5C+w/tsyWKLNyUGKfg=;
+        b=j/rO1OO7+xBqcKt8R6NchaiAjsrsqrZ77MtWgKl2Y8OIjLy+go9gvXQXBjZNyH0NwV
+         b8Qx4NgLqsx6Te7rssigYFjJLdc6AXoOtT/WISVup7NGtWdRAdhmwqhOXGUqanb6SmIi
+         RF1NfpAh4PRoGSRnG/tln/onV1QGNXoScE4ggfKoSZ5f9px076PsBj5CKs8aPBNTsivn
+         Gw8MDdWwIHvgMcYlBE21ac/W7ZkGWJv40JE4wtko3NOl1Dfw5dLetgqHFbYZ/77ZkV2Y
+         QNZPV09zFGF4HsDW80vvhzPSHAqkK3oblfBPAL4+OgXYFtfi+TuvGw4GCat4K9wy+73m
+         Dp4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781615215; x=1782220015;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=U8WB25NuFyM0fHNwdnRhNL+CMBbg/5dWjXlH/j7wnFY=;
-        b=cau0GzDcpqSMnvxNGbq8EuQTQqVRidgyfb5Ro4b08Tv9GPB4MV4Xpo8X8IE9IuGdtH
-         00nd1BtbpxEj6iqubAIRrLvxd7eNtWjt4WsaTvq0tT0ZF2hldgUK5yEO/K02zM4p1EF8
-         jd2NUK+wiJZo3Gul6RoQH3pAXeNnXfvF4O/Om3LEbC5QHj7UyXZT/NcsXC+jKW6j7t/c
-         PEansfmV3wPKWXelBgGSBJk9qWppJ+DWOfriivaPF0bgEL25yIMEsZ7hGffdLGdPLRlI
-         j2iLJcAhJMe/sGQ+XuaPi1TNLwsNUuJ8c6fGYxjfQfGpoqQwAcTjElQxMjEEfSgIM1nl
-         0PQg==
-X-Forwarded-Encrypted: i=1; AFNElJ/0BSZ4NC3QTJATNjTy3H0GuJWo2j6+LR0ef1PA04N89RRx/xhivzwRBZ0cje1o5mm1ECc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz31rx9OfiMiomQr7nh7xwHMMFP23GZ1NGlVHGfpztg/hSbFCpZ
-	17JU6xtutRY306+KNBRfnTFBp6QPnCjK6PZu7IJWh/LDffR7hKiD8nXuqPjj0Nuetsd+1c3pCOG
-	2S1sZ/MXTk2AzYTC+vk4JJVNgadI1ugE=
-X-Gm-Gg: AfdE7cnHlgMawDU7PQS8t3FaZeUwpjc63v0D8Pt30CW/IJ5556DiZeE6H5Xlv2Idpxv
-	5X2vfLJPM5Lwyjx62I5GYDB5chX7wr+ZN4yRUWXXKCDtcxwc5aYYChoUjGzQnnVH/FLpcCZbYTg
-	GV5RLUTlInqrCtVxLOO92G68AzRgov1GUCfWbvtfGgRhiwAa9TRrGnGnb/+bmSAFdMoTnFQLD+N
-	PvKiy8U/Cbb8tfNAEnKd06Tk1fEdXoxnI83AP8z28oigHvyXALDPVqqHabkn3femxsU2PwbCBJ/
-	WPfx5hj02ug4mCKgERUephbCFecYZzg/4Qkoda0OF1RMrItSJWLoBrO5wuoNOxO6CpfewiBxOFS
-	+tGZX9f1mrxS22kvJ7IUeoFeK2sLpoiXn/I5kMJgx5DYD2c2OJuBB9yloUZ9pO+LVaBYmPPt4Iy
-	i4NvM=
-X-Received: by 2002:a05:690c:6886:b0:7dc:7ccb:33a1 with SMTP id
- 00721157ae682-7fcfe96d4acmr31244807b3.23.1781615215169; Tue, 16 Jun 2026
- 06:06:55 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781615314; x=1782220114;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5C4I3q69ZyiHjTlIvTpnUuLqg5C+w/tsyWKLNyUGKfg=;
+        b=dqqy8KTOTKQjp4twO3E1ME6dLya93RuZi0xKr1V2Hhy4FZE0J/jQ3mhUAbiB+8/5Vt
+         u5t+vC2h/q+mnNAegQ0o85Oew5L7MBfFI1r9XKdfppatFO2X3IEJ1gsSQ6yd2qyFrtln
+         7ujWCMIE8S4xfEfh2CHS/5HraxUDRX0dpCfHrxMxyu0z7gwzmm4cpZivY9lbfyaYIxDM
+         kUzslZqVEaj4wZylptShAQGqd9B2zg7ShUC0Z6MCYV/gr3IhdPIf5ksYUjOncfn9kGZ9
+         OoKx5Xa4BHPd9b7R7xi6LxU/fPeeekV+S7dABA/5BsqG5KiZ8O9pEdzOEFHVXxUJWbXY
+         iLMA==
+X-Forwarded-Encrypted: i=1; AFNElJ98XJw46HUdtoooutU4O+UUjKqu2oKjfpL9GpuZKurFmfUaxp+b+dh5K1715NioorNtkoE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyydaYNgn0VhWTvK7d8Awt0uhVI7sma263Pwe/Xwp3mIZ2AHuA1
+	QZHw93SZ/Vzb/+iyjd+AOwGJEccfFyNDCfVEecTDRU07t4n0SHaA+oE5
+X-Gm-Gg: Acq92OEy//t1nkCZHDJIYMZyVSnqsAyK1ByHNEkux2d/UAYcI/8t5IXjsZEIEoDrRxo
+	d/92/fiqSPDdeYz207u+H1BvjGyjE3svZu6Wzdk1RuW4aY3KXPeZnPQK3xvzG6eqxaORHrFjoPu
+	jS9Hhv34larRyORvnXR8vMbjAoV5J4gv8wvyaLBqFBOgaEk/SNNntSczAXwVZTo0ClcN37A34Fr
+	kbYpuEiuyXIKfUFKVSSbL9qlJp1cd3wCBksfc8+kCma/rtzZK0l4tr1Vih60HimPfp6mKoQSdSa
+	Ni14vEXgT6QhGLQUZkCyeepTQJpfQAfs5Xq7eW4zfu6cTY5KRVsnum86VkXBNoURuPtN3iLkdwc
+	txH/R7mUhPUSxefvWi+9FkGiv3ARIjOl8iLcvOOTKy6oaQ5TUiq/fR9ACOtv0Sno5c6SKRzScq0
+	P4IjUHNxoj/4f4vlRD3ubpDLedfNEG70a6EG0Mc96Vy7xfm9tYy75wS5TrB1ZBWUcvuzdABs5fB
+	ncC0zAPFro=
+X-Received: by 2002:a17:907:7615:b0:bd5:40d9:c6c9 with SMTP id a640c23a62f3a-c041381222fmr170606866b.0.1781615314031;
+        Tue, 16 Jun 2026 06:08:34 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6? ([2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb83428a8sm656473466b.44.2026.06.16.06.08.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2026 06:08:33 -0700 (PDT)
+Message-ID: <c58d3b78-985e-4fce-a605-14e693ebef61@gmail.com>
+Date: Tue, 16 Jun 2026 14:08:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
- <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
- <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
- <xmqqo6hdepgy.fsf@gitster.g> <CAN5EUNQ193QyOeTLdu9aXzDeBhFpg38YYBbOLhZLgcg3qfd=uA@mail.gmail.com>
- <xmqqzf0vbyj8.fsf@gitster.g>
-In-Reply-To: <xmqqzf0vbyj8.fsf@gitster.g>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Tue, 16 Jun 2026 15:06:43 +0200
-X-Gm-Features: AVVi8CeHMSWYfVPE1OcxRFsJxILawMPr-cj1q0drHpU6rT2gqk2aZn6I_GdRhNk
-Message-ID: <CAN5EUNR-o_sLzeWuy7M9UMFHBKxSuytNd=4p2svtFuv40E8vZg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, ayu.chandekar@gmail.com, 
-	chandrapratap3519@gmail.com, christian.couder@gmail.com, jltobler@gmail.com, 
-	karthik.188@gmail.com, peff@peff.net, phillip.wood@dunelm.org.uk, 
-	siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC Patch v5 1/4] path: introduce append_formatted_path() for
+ shared path formatting
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, git@vger.kernel.org
+Cc: jltobler@gmail.com, lucasseikioshiro@gmail.com, gitster@pobox.com,
+ phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net,
+ kumarayushjha123@gmail.com, a3205153416@gmail.com
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260616044953.184806-1-jayatheerthkulkarni2005@gmail.com>
+ <20260616044953.184806-2-jayatheerthkulkarni2005@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20260616044953.184806-2-jayatheerthkulkarni2005@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-El lun, 15 jun 2026 a las 17:42, Junio C Hamano (<gitster@pobox.com>) escri=
-bi=C3=B3:
->
-> Pablo Sabater <pabloosabaterr@gmail.com> writes:
->
-> > It does not make it unpredictable but it makes it not output what I
-> > wanted to test, what I wanted to test is having an active column at
-> > the same time that visual roots in different cases were being rendered
-> > on another column.
->
-> Oh, use of commit-graph changes the traversal order, which would
-> affect how the graph is drawn, and there is no way to ensure that we
-> traverse in the same way with or without commit-graph?  That's
-> inconvenient.  But even without commit-graph, do we guarantee the
-> same traversal order forever?  I doubt it.  So I suspect that it is
-> a brittle workaround to disable commit-graph in the longer term.
+On 16/06/2026 05:49, K Jayatheerth wrote:
+> The path-formatting logic in builtin/rev-parse.c is tightly coupled
+> to that command and writes directly to stdout, making it impossible
+> for other builtins to reuse.
+> 
+> Extract the core algorithm into append_formatted_path() in path.c
+> and expose a path_format enum in path.h so that any builtin can
+> format paths consistently without duplicating logic.
 
-Hi!
+Sorry I haven't had time to look at this series recently, it is looking 
+much nicer now that we have a single enum. It would be helpful to 
+explain why we need PATH_FORMAT_DEFAULT that acts exactly like 
+PATH_FORMAT_UNMODIFIED. Looking at the next patch it seems this is still 
+a wart in the api due to rev-parse wanting needing to distinguish the 
+unmodified case from the default case.
 
-About the traversal order, aren't all the graph tests dependent on the
-traversal order?  If it changed they would all need to be updated
-because the tests are hardcoded expects of the graph.
-I guess it might be more brittle than other graph tests specially
-because it also depends on removing files, I tried using "git config
-core.commitGraph false" or "--date-order" but I still get different
-results and removing the files fixed it. If someone knows a better way
-of doing it I'm happy to change it.
+Thanks
 
->
-> As long as the graph engine shows correct graph no matter what order
-> the commits come out of the revision traversal engine, we won't hurt
-> end-users, but we need our tests to be reproducible, so that is a
-> bit unfortunate.
->
-> Anyway, stepping back a bit,
->
-> > However having GIT_TEST_COMMIT_GRAPH in the last
-> > text for example changes from:
-> >
-> > * 41_octopus
-> > | * 43_B
-> > |  \
-> > |   * 43_A
-> > | * 42_B
-> > | * 42_A
-> > * 41_B
-> > * 41_A
->
-> Does the "vertically aligned * on 2nd and later columns do not mean
-> any parent-child relationship" rule no longer apply in this version?
-> IOW, does the above graph show that
->
->  - 41_A is a parent of 41_B, which is a parent of 41_octopus
->  - 42_A is a parent of 42_B, and
->  - 43_A is a parent of 43_B but is not related to 42_B
+Phillip
 
-Yes, this means that all commits vertically adjacent are related,
-those who are not related and can cause that ambiguity get indented
-(43_A).
+> Mentored-by: Justin Tobler <jltobler@gmail.com>
+> Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>   path.c | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>   path.h | 36 ++++++++++++++++++++++++++++++
+>   2 files changed, 106 insertions(+)
+> 
+> diff --git a/path.c b/path.c
+> index d7e17bf174..5e83e3e4f6 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -1579,6 +1579,76 @@ char *xdg_cache_home(const char *filename)
+>   	return NULL;
+>   }
+>   
+> +void append_formatted_path(struct strbuf *dest, const char *path,
+> +			   const char *prefix, enum path_format format)
+> +{
+> +	switch (format) {
+> +	case PATH_FORMAT_DEFAULT:
+> +	case PATH_FORMAT_UNMODIFIED:
+> +		strbuf_addstr(dest, path);
+> +		break;
+> +
+> +	case PATH_FORMAT_RELATIVE: {
+> +		struct strbuf relative_buf = STRBUF_INIT;
+> +		struct strbuf real_path = STRBUF_INIT;
+> +		struct strbuf real_prefix = STRBUF_INIT;
+> +		char *cwd = NULL;
+> +
+> +		/*
+> +		 * We don't ever produce a relative path if prefix is NULL,
+> +		 * so set the prefix to the current directory so that we can
+> +		 * produce a relative path whenever possible.
+> +		 */
+> +		if (!prefix)
+> +			prefix = cwd = xgetcwd();
+> +
+> +		if (!is_absolute_path(path)) {
+> +			strbuf_realpath_forgiving(&real_path, path, 1);
+> +			path = real_path.buf;
+> +		}
+> +		if (!is_absolute_path(prefix)) {
+> +			strbuf_realpath_forgiving(&real_prefix, prefix, 1);
+> +			prefix = real_prefix.buf;
+> +		}
+> +
+> +		strbuf_addstr(dest, relative_path(path, prefix, &relative_buf));
+> +
+> +		strbuf_release(&relative_buf);
+> +		strbuf_release(&real_path);
+> +		strbuf_release(&real_prefix);
+> +		free(cwd);
+> +		break;
+> +	}
+> +
+> +	case PATH_FORMAT_RELATIVE_IF_SHARED: {
+> +		struct strbuf relative_buf = STRBUF_INIT;
+> +
+> +		/*
+> +		 * If we're using RELATIVE_IF_SHARED mode, then we want an
+> +		 * absolute path unless the two share a common prefix, so don't
+> +		 * default the prefix to the current working directory. Doing so
+> +		 * would cause a relative path to always be produced if possible.
+> +		 */
+> +		strbuf_addstr(dest, relative_path(path, prefix, &relative_buf));
+> +		strbuf_release(&relative_buf);
+> +		break;
+> +	}
+> +
+> +	case PATH_FORMAT_CANONICAL: {
+> +		struct strbuf canonical_buf = STRBUF_INIT;
+> +
+> +		strbuf_realpath_forgiving(&canonical_buf, path, 1);
+> +		strbuf_addbuf(dest, &canonical_buf);
+> +
+> +		strbuf_release(&canonical_buf);
+> +		break;
+> +	}
+> +
+> +	default:
+> +		BUG("unknown path_format value %d", format);
+> +	}
+> +}
+> +
+>   REPO_GIT_PATH_FUNC(squash_msg, "SQUASH_MSG")
+>   REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
+>   REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+> diff --git a/path.h b/path.h
+> index 0434ba5e07..6aca53b100 100644
+> --- a/path.h
+> +++ b/path.h
+> @@ -262,6 +262,42 @@ enum scld_error safe_create_leading_directories_no_share(char *path);
+>   int safe_create_file_with_leading_directories(struct repository *repo,
+>   					      const char *path);
+>   
+> +/**
+> + * The formatting strategy to apply when writing a path into a buffer.
+> + */
+> +enum path_format {
+> +	/*
+> +	 * Represents the default formatting behavior. Treated as
+> +	 * PATH_FORMAT_UNMODIFIED by append_formatted_path().
+> +	 */
+> +	PATH_FORMAT_DEFAULT,
+> +
+> +	/* Output the path exactly as-is without any modifications. */
+> +	PATH_FORMAT_UNMODIFIED,
+> +
+> +	/* Output a path relative to the provided directory prefix. */
+> +	PATH_FORMAT_RELATIVE,
+> +
+> +	/* Output a relative path only if the path shares a root with the prefix. */
+> +	PATH_FORMAT_RELATIVE_IF_SHARED,
+> +
+> +	/* Output a fully resolved, absolute canonical path. */
+> +	PATH_FORMAT_CANONICAL
+> +};
+> +
+> +/**
+> + * Format a path according to the specified formatting strategy and append
+> + * the result to the given strbuf.
+> + *
+> + * `dest`   : The string buffer to append the formatted path to.
+> + * `path`   : The path string that needs to be formatted.
+> + * `prefix` : The directory prefix to calculate relative offsets against.
+> + * Pass NULL to default to the current working directory where applicable.
+> + * `format` : The formatting behavior rule to execute.
+> + */
+> +void append_formatted_path(struct strbuf *dest, const char *path,
+> +			   const char *prefix, enum path_format format);
+> +
+>   # ifdef USE_THE_REPOSITORY_VARIABLE
+>   #  include "strbuf.h"
+>   #  include "repository.h"
 
->
-> ?  Who are the parents of 41_octopus?  It has no relationship with
-> 42_B and 43_B, and unlike what its name suggests, it has only 41_b
-> as its parent (probably with history simplification that makes only
-> these commits shown)?
-
-On this test we are using "--first-parent" which excludes all the
-parents but the first one, but later we force its excluded parents to
-be shown.
-We exclude 42_* and 43_* branches and then force them to appear as
-unrelated branches.
-
->
-> > to:
-> >
-> > * 41_octopus
-> > * 41_B
-> >  \
-> >   * 41_A
-> > * 43_B
-> >  \
-> >   * 43_A
-> > * 42_B
-> > * 42_A
->
-> And this graph shows the same inter-commit relationship.  So both
-> are correctly showing what we want to express, but they show the
-> same information differently, making test_cmp unhappy?
-
-Yes they show the same information.  On the second graph every commit
-is on the first column (or second if they get indented) but on the
-first graph we have:
-
-*
-| * <- visual root on second column
-^
-`----- first column remains active
-
-If you tested v3 with this case you would see that it assumes that
-visual roots only happen to be rendered on the first column, therefore
-failing to correctly indent those visual roots on the second column,
-which this test proves that they can appear on other columns.
-
-Back to the test:
-
-  * 41_octopus
-  | * 43_B
-  |  \
-  |   * 43_A
-  | * 42_B
-  | * 42_A
-  * 41_B
-  * 41_A
-
-43_A is rendered on the second column (first column is active by the
-41_* branch) and gets indented to the third one. With commit-graph it
-would be on the first and get indented to the second, making it the
-same as more general tests above in "t4218", it is an edge case but
-shows that indentation works correctly independently where the visual
-root is.
-
->
-> Thanks.
-
-Thanks,
-
-Pablo
