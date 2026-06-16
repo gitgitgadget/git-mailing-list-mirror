@@ -1,35 +1,35 @@
-Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EF8423173
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 09:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DAF423A65
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 09:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781602035; cv=none; b=D825x/OJahy6+nMSfBM/vdY5FCl0iPdOA/4t+Orb4K7uY4wbwAKnavAoIuITgNxkx67dpbtZqcJD4/mmC5954/1H2G5OXsAKPIQtuOJIVg9OP9D58XQHH+WravkVhgQk7sy8deSEangLkrreZptka3K3v6Fb/s8xwRBNdECWza4=
+	t=1781602044; cv=none; b=Dz+jDMHYjgq8RCHJ/dE8Sv8CdCS7wT7Z5mZ9cU9VHfEva/pilumLUlEr2Yjhid/VzeHxR1Pu/mJAbdNrOOWPHIpQvrHyZP2gHO1LY8sDO2iXsUXz/YcgOM+ewn3Twsw9bXejuZB5cqpWPYuqb0nThpn65vV19B6LIczC3bOw0Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781602035; c=relaxed/simple;
-	bh=QQ1h+/UHlim49lLF2VWldw3n8U/mZMjxKeLvPb0pEpc=;
+	s=arc-20240116; t=1781602044; c=relaxed/simple;
+	bh=prFBX61Qql/cVBkZZkdJanaYevpXcvPgKew1Vv3oKQQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZOVaRUwjGAv3aMnf5B4tSgTdDZeA5v5UB8aCKnJghHbQ3gUFdk5fBelLTt6tLHhy+SMICZpZusfV0xqEPVSA8f+Vbq8A6iVgb35xyFgd3xOXQUcFSZXr5J2lWkrq7yMAyLAyVw4EtlXpMn+i82b4LomLPrzhE3tzfohTVrSkEn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=IYXSrzjo; arc=none smtp.client-ip=91.218.175.177
+	 In-Reply-To:To:Cc; b=N+Zt1EQ4CMJvTxjzde9zmK4qw6XJ08K68o40LjNvhF43OG2575h1PQJPb6cdVAYlcXx0RjIALSxDZj5XsZLgTDouxLdby39es9S7bdjZcvw8jrM3AMaYReMY44rHeNbNAwXsB0ZwxlAFlWuEY82KrJz2ljBGfMCLsWqpG9AiCTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=5/nj/BUB; arc=none smtp.client-ip=91.218.175.185
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="IYXSrzjo"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="5/nj/BUB"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1781602031;
+	t=1781602041;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=n6AmJDk8UsvHBtDQuHklFZhWtmZUNY4Bpp9Ziyy8GxQ=;
-	b=IYXSrzjosEidvupxfuWxkGwSqfCllGgTbdazfBe32psUdRTJEHPBbOBOiDXYRN9UBXO6fa
-	vlOvzikXRmVXyX63yjXY4m6sK0C+zlUfKZMw0/SAL6/NH0hFIfM/jcI2OxR/juACLGZQgi
-	n4vn+6dYoaI1DDVcn2CgEWb7VU9h/TY=
+	bh=pPY2A8d+4mqTEQqqn2krGb2vSfMTbnaz2WeBow7i5Es=;
+	b=5/nj/BUBrKxMzF4ea2Fa9gRA8h7T4v8nllY3wFI0yZUxzRDsSX1cHCn8zXFi0Kw80LNUQW
+	3RjnokfbE0EY7jyIOfkYzSv/OUIvajQ83aUcw67mrDqSogI/2HGi51Xjl3xTyCQbJ6waJU
+	dGJQb4sl2ckG14FiO73vzNA03tHbTyc=
 From: Toon Claes <toon@iotcl.com>
-Date: Tue, 16 Jun 2026 11:26:35 +0200
-Subject: [PATCH v3 1/3] replay: refactor enum replay_mode into a bool
+Date: Tue, 16 Jun 2026 11:26:36 +0200
+Subject: [PATCH v3 2/3] replay: add helper to put entry into mapped_commits
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,171 +38,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260616-toon-git-replay-drop-merges-v3-1-153e9eb99ce1@iotcl.com>
+Message-Id: <20260616-toon-git-replay-drop-merges-v3-2-153e9eb99ce1@iotcl.com>
 References: <20260616-toon-git-replay-drop-merges-v3-0-153e9eb99ce1@iotcl.com>
 In-Reply-To: <20260616-toon-git-replay-drop-merges-v3-0-153e9eb99ce1@iotcl.com>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-In 2760ee4983 (replay: add --revert mode to reverse commit changes,
-2026-03-26) the enum `replay_mode` was introduced. This has two possible
-values:
+The function replay_revisions() in replay.c is rather lengthy. Extract
+the logic to put a commit entry into mapped_commits into a helper
+function put_mapped_commit().
 
- - The value `REPLAY_MODE_REVERT` is used when option `--revert` is
-   passed to git-replay(1). When using this value the commits are
-   processed in reverse order and the inverse of the changes are
-   applied.
-
- - The value `REPLAY_MODE_PICK` is used when either option `--onto` or
-   `--advance` is used. In both cases the commits are processed in
-   normal order, and the changes are applied as-is.
-
-Since there are only two possible values of this enum, simplify the code
-by converting the enum into a bool. This avoids adding code paths that
-check for invalid values of the enum, and shortens code where the value
-is checked with a ternary operator.
+While at it, rename mapped_commit() to get_mapped_commit() to pair with
+this new function.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- replay.c | 59 +++++++++++++++++++++++++----------------------------------
- 1 file changed, 25 insertions(+), 34 deletions(-)
+ replay.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/replay.c b/replay.c
-index 4ef8abb607..1f8e5b083b 100644
+index 1f8e5b083b..7921d7dba3 100644
 --- a/replay.c
 +++ b/replay.c
-@@ -18,11 +18,6 @@
-  */
- #define the_repository DO_NOT_USE_THE_REPOSITORY
+@@ -243,9 +243,9 @@ static void set_up_replay_mode(struct repository *repo,
+ 	strset_clear(&rinfo.positive_refs);
+ }
  
--enum replay_mode {
--	REPLAY_MODE_PICK,
--	REPLAY_MODE_REVERT,
--};
--
- static const char *short_commit_name(struct repository *repo,
- 				     struct commit *commit)
+-static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
+-				    struct commit *commit,
+-				    struct commit *fallback)
++static struct commit *get_mapped_commit(kh_oid_map_t *replayed_commits,
++					struct commit *commit,
++					struct commit *fallback)
  {
-@@ -81,7 +76,7 @@ static struct commit *create_commit(struct repository *repo,
- 				    struct tree *tree,
- 				    struct commit *based_on,
- 				    struct commit *parent,
--				    enum replay_mode mode)
-+				    bool reverse)
- {
- 	struct object_id ret;
- 	struct object *obj = NULL;
-@@ -98,15 +93,13 @@ static struct commit *create_commit(struct repository *repo,
+ 	khint_t pos;
+ 	if (!commit)
+@@ -256,6 +256,21 @@ static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
+ 	return kh_value(replayed_commits, pos);
+ }
  
- 	commit_list_insert(parent, &parents);
- 	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
--	if (mode == REPLAY_MODE_REVERT) {
-+	if (reverse) {
- 		generate_revert_message(&msg, based_on, repo);
- 		/* For revert, use current user as author (NULL = use default) */
--	} else if (mode == REPLAY_MODE_PICK) {
-+	} else {
- 		find_commit_subject(message, &orig_message);
- 		strbuf_addstr(&msg, orig_message);
- 		author = get_author(message);
--	} else {
--		BUG("unexpected replay mode %d", mode);
++static void put_mapped_commit(kh_oid_map_t *replayed_commits,
++			      struct commit *commit,
++			      struct commit *new_commit)
++{
++	khint_t pos;
++	int ret;
++
++	pos = kh_put_oid_map(replayed_commits, commit->object.oid, &ret);
++	if (ret == 0)
++		BUG("Duplicate rewritten commit: %s\n",
++		    oid_to_hex(&commit->object.oid));
++
++	kh_value(replayed_commits, pos) = new_commit;
++}
++
+ static struct commit *pick_regular_commit(struct repository *repo,
+ 					  struct commit *pickme,
+ 					  kh_oid_map_t *replayed_commits,
+@@ -276,7 +291,7 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 		base_tree = lookup_tree(repo, repo->hash_algo->empty_tree);
  	}
- 	reset_ident_date();
- 	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
-@@ -269,7 +262,7 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 					  struct commit *onto,
- 					  struct merge_options *merge_opt,
- 					  struct merge_result *result,
--					  enum replay_mode mode,
-+					  bool reverse,
- 					  enum replay_empty_commit_action empty)
- {
- 	struct commit *base, *replayed_base;
-@@ -287,7 +280,21 @@ static struct commit *pick_regular_commit(struct repository *repo,
+ 
+-	replayed_base = mapped_commit(replayed_commits, base, onto);
++	replayed_base = get_mapped_commit(replayed_commits, base, onto);
  	replayed_base_tree = repo_get_commit_tree(repo, replayed_base);
  	pickme_tree = repo_get_commit_tree(repo, pickme);
  
--	if (mode == REPLAY_MODE_PICK) {
-+	if (reverse) {
-+		/* Revert: swap base and pickme to reverse the diff */
-+		const char *pickme_name = short_commit_name(repo, pickme);
-+		merge_opt->branch1 = short_commit_name(repo, replayed_base);
-+		merge_opt->branch2 = xstrfmt("parent of %s", pickme_name);
-+		merge_opt->ancestor = pickme_name;
-+
-+		merge_incore_nonrecursive(merge_opt,
-+					  pickme_tree,
-+					  replayed_base_tree,
-+					  base_tree,
-+					  result);
-+
-+		free((char *)merge_opt->branch2);
-+	} else {
- 		/* Cherry-pick: normal order */
- 		merge_opt->branch1 = short_commit_name(repo, replayed_base);
- 		merge_opt->branch2 = short_commit_name(repo, pickme);
-@@ -303,22 +310,6 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 					  result);
+@@ -414,8 +429,6 @@ int replay_revisions(struct rev_info *revs,
+ 	replayed_commits = kh_init_oid_map();
+ 	while ((commit = get_revision(revs))) {
+ 		const struct name_decoration *decoration;
+-		khint_t pos;
+-		int hr;
  
- 		free((char *)merge_opt->ancestor);
--	} else if (mode == REPLAY_MODE_REVERT) {
--		/* Revert: swap base and pickme to reverse the diff */
--		const char *pickme_name = short_commit_name(repo, pickme);
--		merge_opt->branch1 = short_commit_name(repo, replayed_base);
--		merge_opt->branch2 = xstrfmt("parent of %s", pickme_name);
--		merge_opt->ancestor = pickme_name;
--
--		merge_incore_nonrecursive(merge_opt,
--					  pickme_tree,
--					  replayed_base_tree,
--					  base_tree,
--					  result);
--
--		free((char *)merge_opt->branch2);
--	} else {
--		BUG("unexpected replay mode %d", mode);
- 	}
- 	merge_opt->ancestor = NULL;
- 	merge_opt->branch2 = NULL;
-@@ -341,7 +332,7 @@ static struct commit *pick_regular_commit(struct repository *repo,
- 		}
- 	}
- 
--	return create_commit(repo, result->tree, pickme, replayed_base, mode);
-+	return create_commit(repo, result->tree, pickme, replayed_base, reverse);
- }
- 
- void replay_result_release(struct replay_result *result)
-@@ -381,13 +372,13 @@ int replay_revisions(struct rev_info *revs,
- 	char *revert;
- 	const char *ref;
- 	struct object_id old_oid;
--	enum replay_mode mode = REPLAY_MODE_PICK;
-+	bool reverse;
- 	int ret;
- 
- 	advance = xstrdup_or_null(opts->advance);
- 	revert = xstrdup_or_null(opts->revert);
--	if (revert)
--		mode = REPLAY_MODE_REVERT;
-+	reverse = !!revert;
-+
- 	set_up_replay_mode(revs->repo, &revs->cmdline, opts->onto,
- 			   &detached_head, &advance, &revert, &onto, &update_refs);
- 
-@@ -430,8 +421,8 @@ int replay_revisions(struct rev_info *revs,
+ 		if (commit->parents && commit->parents->next)
  			die(_("replaying merge commits is not supported yet!"));
- 
- 		last_commit = pick_regular_commit(revs->repo, commit, replayed_commits,
--						  mode == REPLAY_MODE_REVERT ? last_commit : onto,
--						  &merge_opt, &result, mode, opts->empty);
-+						  reverse ? last_commit : onto,
-+						  &merge_opt, &result, reverse, opts->empty);
- 		if (!last_commit)
+@@ -427,11 +440,7 @@ int replay_revisions(struct rev_info *revs,
  			break;
  
+ 		/* Record commit -> last_commit mapping */
+-		pos = kh_put_oid_map(replayed_commits, commit->object.oid, &hr);
+-		if (hr == 0)
+-			BUG("Duplicate rewritten commit: %s\n",
+-			    oid_to_hex(&commit->object.oid));
+-		kh_value(replayed_commits, pos) = last_commit;
++		put_mapped_commit(replayed_commits, commit, last_commit);
+ 
+ 		/* Update any necessary branches */
+ 		if (ref)
 
 -- 
 2.53.0.1323.g189a785ab5
