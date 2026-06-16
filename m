@@ -1,190 +1,118 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF153630BA
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 13:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAFF36C5A1
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781615551; cv=none; b=cFcL3zyoymUX7ZX3sZdJxMewLCPbgb+2175Es6xCyHypGI5vhrNSd/OyzTuc8bUy3qfmWovtXXh9I4XwYnAra+otJwEBQjQLxCI+ImLx5zj8F/quwWT0j6UI+lR23VKZT12/pVE0sY9+6K4fGIzKgC9Q34uaM0i0/iGDs8pWyKo=
+	t=1781619909; cv=none; b=etwKtJNvrXCqbdk0GRMgScUrXhZbVAFLWw+sfswUm3xiB5UbLUG+CgBhq6riQBxTyD7pRuMngBBRPXACVJDrNuWIDDW7CQLRdRcXor981c/EICniJS7NWVl5gs4wWVKyX+aISxGprRgJo1ksCBPTnnPbZlsv8RT5FnerORcuW18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781615551; c=relaxed/simple;
-	bh=e3LEQupwnKN5u7O9yvHWdBFD4zseGzOukEeYT4HyhwE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=gDOmAklQ+FLMiR+VtXenYlKFvixnrfuXMXaJsAbJc4/AXo/NwGjWt/UgFiR+hscKzNUV7Ef3wZl0K23seCuTwaCGBCroaBJMucvVqvARHx+52hMwOY96+t4ySDnQWan9UjX+/vhhcoZ3jx/cQS9xWMSbPy6z0Oj3PjIFn1a2Ygk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KbRTeZIH; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781619909; c=relaxed/simple;
+	bh=/DTAfAdHOa5QpVg1u1+P8PC4LHTdcuW2hhcRbPgmjHo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PUDrvOsv31AtsC6qXHVx14KuhvNRu52KGRay4Cz/9P5//kK6af+cIuuYViizkdrTdoIjmVT4kpLl6EmShcb74nM2OJ4MSg4HcbnhVbhAuq5ddDyJISPLYk3Vb32tPJL9QiPTSSkSG1JXaGu1CxXnHXA6n/d2noAycpUkidnKPu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y/eDKrBw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ylt4dekS; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KbRTeZIH"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-bed2b9bfa02so576550066b.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 06:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781615549; x=1782220349; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MAUy35sHhZI69ba3aNXWSdG0t3Pp8TX/0PFeNubXUMk=;
-        b=KbRTeZIH6gOu6qM4D+X4bJcYfsz/iRw8hoBHeH8O07W1DWZrOzutqqqt8PdQ5eDoSk
-         Cv0waJ1kd4N/F1rmxFvFlUyyxWsSsefGzVGNPRVAcJtrporyNwjL6ZbYAjXQNI0IjxiA
-         ldLD9HG1F+O2x4NkeJT8mwrdhad3YZeMyxNMXKKNXMsoZzVKGanXNVQJHQdlUIzH2Sah
-         PQkF7sPpVG0cNsWMaqmuPfOGYkGtAFl0uxtTlGY7ajXGxBdsd1eUhyBRYehEvFNPblVs
-         vCfBm7sj9JjCWdeDF6fp17jtUp/ll/bNJS007wP7e8j3tT16ldUe/wPB26JJ1a3oa+xp
-         ZJCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781615549; x=1782220349;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MAUy35sHhZI69ba3aNXWSdG0t3Pp8TX/0PFeNubXUMk=;
-        b=HmS6Df6CjAdTehJeeDdoYvEqocI/0RhYXEINIlPzoidgXFRU/mwgw29yGM5KCsh/Sv
-         ae8G39KDJgc23F3X+0dcihPwC/JYKAov3y6Kq8DrnZO7c2+DYcYohmIgyW60fNKK7KUI
-         S86ib7Ytkt01/bnJn7itGAUoV8JkVs7ZSpgiPQoB0eg2OOgzL+m7jPtOnhko3RESVJvw
-         SQgGq7/4KrKKatoCtRcwape/vCmyyuHII4TO4D58MnF9lu5OEnE0f+ra/CxiGLjahcZU
-         UTwzjACnIlvYX0gaoYtO3XRjP+MHqUKTj4IHRToHlQNQKrtz1yVHN7SL3vYNv0sZIQgj
-         vA8A==
-X-Forwarded-Encrypted: i=1; AFNElJ+scGicMcMclzYqdyfBzNq31hu1i72cqKuTgaMB3qo8l5H7BHXfK2McOBnNww9mfj8n8Io=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzX9R4qZallecOzMBZnDq2MNZ/5BydRNmboL9wESY9Czhm0Qbyz
-	hrNE3YwjdQdI9BIngFXEeEdZPSwta3P7+QBof7gXOaq3Oix+NK2ZuukftQcj/A==
-X-Gm-Gg: Acq92OFaIhQEEcPE9HBbW0JJ+ue0VisWZG8hphYEFzQkBBfvhnb7Es6YkYiRvX9m303
-	ft9hFICE4tzozBiu4Ji2DRUrXN27tilmmLVG7E62ypW07/63xl5ZHgjjpObaC0Gd2lTbupnfRg6
-	XKQluxzer0mGKPSg9W5vo/QfmEbjCnHPMVx8VqkEzh0/2TuWzGrWdZwLch3XVLEM3TZhkRaPVqH
-	D68wCTnGOTY0W6H43CxhjLtJMJuoX0D3gkgaOcVvbPKK/w/qdpj7KE2bDc5HNCCfv6vi+DuUekI
-	ZBjz53to2kTbqAqmYyYPKDeP/KXYmtwoUoSi7vGq11FzxDwOByDMA6fHqC4Xr3U3qbgcicHzrzV
-	DMazZH33qg+mAno0WhxKa6uJud9DbcWS2NlDRo1o/S1wvV/MAV1EmrLDQbvp/hUEKOJsiD+rTNl
-	ZnWHh+jWNC3553vIzXDoYn9cfQIWLi4ZcCDXiRl5JRo4oopn4TTWqzDIKydHUQC8HJK/7v5rmSL
-	Q8che4X8rd5weCjQ96hkA==
-X-Received: by 2002:a17:907:9404:b0:bd5:405c:7964 with SMTP id a640c23a62f3a-bff4c9eab9fmr827948266b.48.1781615548663;
-        Tue, 16 Jun 2026 06:12:28 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6? ([2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb51007a9sm636910666b.21.2026.06.16.06.12.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 06:12:27 -0700 (PDT)
-Message-ID: <27938b0e-d131-4a44-95bc-c06f4513e542@gmail.com>
-Date: Tue, 16 Jun 2026 14:12:22 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y/eDKrBw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ylt4dekS"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4D1A71D0002F;
+	Tue, 16 Jun 2026 10:25:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 16 Jun 2026 10:25:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781619906; x=1781706306; bh=0+/LKMRCGm
+	F3Go3CFNEBbh6YVskii671EJoeNz/oVxM=; b=Y/eDKrBwSL7idHHvD4CjyFEjdY
+	vG7M2f2wX4D/0Jn46FmM5dSCHQPf+Kv2UI+R2/O0T3sf7FkPu/eazG8IMzdfdjA6
+	0i+sxGXoTF8ovbGU5g0+YxHjSLxQhf4EKlNBSvLlmGIohccmNCK1AvjaoQpLkcg0
+	r9D4WL6XB56mdB8YESsMH+sCcFe6vZJ/CS53/bxT70282xBLF0gB6v4C6l/0QMdh
+	R/iaN+dNlCm5UX+jxg+CW2ozgNXtbmmV4GuzGBWNE+wcmv9M3KPFOXoQR0TZPii+
+	p5W3EAp/XYuw/HoDcD+v7Y6ABbFddbEYsiFKysoi1Eg8ldje3ihuSAnVP6Rw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781619906; x=1781706306; bh=0+/LKMRCGmF3Go3CFNEBbh6YVskii671EJo
+	eNz/oVxM=; b=Ylt4dekSmhAVO9CN+9HVWzrcTh7rc368F13NunC0xHAhBvqpdE2
+	udrkzsW8caCa3hp9+rwPEckCaUiseGUw3swxYlYXKlY+4ZAyLmTREcyDhEvkM0OQ
+	uTqkZj/Ww6RZa6jzkFK+Q5SVtkS6bMAo0VzvMhNWvZCJ6doSaCdeLcJtq0Hjk92d
+	lMtBAnBuKHMnszBo2OEoqBSGGQnkJb1zm90asplfAMFjdMBl2Po/tYgn09tIyMnG
+	7ujx2RiU+2tuXTanUw8rMyplYWXuoZNAmvvOWZCz6ufoXnbLQUemKsQT7GmX6wfy
+	+1vTIYxJ1gutDBz3/zbgO/XGme0jVDM7HzQ==
+X-ME-Sender: <xms:wVwxars7_Ir9q4r-EWUmMe3WufMFmuWNBoQLGYxSIYgv1Rwnl1lnlQ>
+    <xme:wVwxajVXoCBysXwbtTbK2mTcWqfPq4B9jkeg-OAHBbwnr-L51zzWxQ6F3Rc745BOM
+    VLAOnV7jK6JJsDFZAyEQBddL45HriaHXIt3N0MK-LhLFK-I1pUzBsQ>
+X-ME-Received: <xmr:wVwxanFSjfBLfzjocY1qVxMhpnuvJiucmL2ZHwynkSYqq_I1v9N42I7jI7MCqf42uL-fsDUrIvErJMbrib6iU4CwWlsR_A0i4koS>
+X-ME-Proxy-Cause: dmFkZTFlZDCNB41FZN/noeloGfksmeVkR3AlhKTBYhckFLrS4uqZ+38N6pyFZi36y5M2SI
+    JRpExK1NZ8UbE037S/d+NZPzbRs4uexBZxZXHrGMmrx+EH8joFUBIMaxVqZ9aF0OX8JB5A
+    mntsINswBTVmpHjC59UUI5RxglLjfjqFdwVgGskx/i76C8m7vpPAxAao/yXPkBhPijaCfU
+    F4nSktQfNhmeDrp1iF9cVDJnnsSsOq8RltAKGAcelCD71aUpO0qivvhLsBhiWW66eWiXuU
+    uv07+fcb/C9/UZ0wHsGo4ulF4vUvLi2FqLFIsW5Eyp6swkNxjtfOfHd1V6k7dPua9PlrB4
+    GOp/PxqozI/soeP2CG8ShHDJs2ERwPv4L8dw0k7ECrXdbMV/mZJNAzYh/yuKNC9gs7p+fM
+    tJ0krhJuQ00/pc+v0uygANpo04+S/XEUizlGfHAmo81ej1B849EZVNyaUHssUN+rp3wqo3
+    X4v/TKab/uMNOEDAupLe8wcy9coypxH5RwSS/Ws2AQB1+GzW2ZSp+CzgtuLoTh5Ldom7/k
+    JCtWsLbgWmnskEnbDPRtyIh/N436c2xwWvgzc15WNTTz60jt8Au4WUYRlIgfw9/WTP9VVq
+    MCW9IfdVw9raaC9zOMPwS9UcaGW8mtxUkuj7RJLoVliXFya7987sFnUtC+Lw
+X-ME-Proxy: <xmx:wVwxal3KCug9Y7bjC61EAx38pGwncJ0Ms0xcV5sLOT7crFrWNl5SdA>
+    <xmx:wVwxapN0OeckNyF0chUAFrM0MgxKpdi3xLciU51nxyEoXgyr0VG4fQ>
+    <xmx:wVwxak4Oswcc46MGHvAIkWMK1OvLYYAV0h88xPgFZYER0JebdwKdZQ>
+    <xmx:wVwxaj1zOFCHrr0-3JGNmNc4evcg1QXC3coldwzOYB1gFIRiB1f6bQ>
+    <xmx:wlwxagFj5R5ZzRluV7TlIaxaEkgYEQ-T3RlVdXtHrXagm3GTm79un9gK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Jun 2026 10:25:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Tian Yuchen
+ <cat@malon.dev>
+Subject: Re: [PATCH v3] read_gitfile(): simplify NOT_A_REPO error message
+In-Reply-To: <20260616123516.GA2301231@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 16 Jun 2026 08:35:16 -0400")
+References: <20260602061159.GA693928@coredump.intra.peff.net>
+	<ah6WEtk2pXyViEQA@pks.im> <xmqqeciezh0w.fsf@gitster.g>
+	<20260616111919.GC687438@coredump.intra.peff.net>
+	<20260616123516.GA2301231@coredump.intra.peff.net>
+Date: Tue, 16 Jun 2026 07:25:02 -0700
+Message-ID: <xmqq7bnya7gh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Add a test about broken notes handling on rebase
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- git@vger.kernel.org
-References: <20260612143952.3281115-2-u.kleine-koenig@baylibre.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20260612143952.3281115-2-u.kleine-koenig@baylibre.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 12/06/2026 15:39, Uwe Kleine-König wrote:
-> When a commit disappears during rebase because the patch content is
-> already there (but not by the same patch in which case the commit would
-> be skipped) the notes of that disappearing commit still survives and is
-> added to the (rebased) parent of the disappearing commit.
-> 
-> So with the commit graph
-> 
->   A -- B -- C
->    `
->     `-BD
-> 
-> where BD includes the changes done in B, when rebasing C on top of BD,
-> the note for B should disappear and not be added to BD.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-> ---
-> Hello,
-> 
-> this is a behaviour of git that really bothers me when working on big
-> patch series. I use notes to track the Message-Id of the patches when I
-> send them out. Then when rebasing to a newer upstream version, the
-> tracking gets confused because the Message-Id notes end up on commits
-> that were not sent out yet (or I got two Message-Ids in them).
-> 
-> I reported that already back in 2023[1],
+Jeff King <peff@peff.net> writes:
 
-That thread includes a suggestion on how to fix it if anyone reading 
-this is interesting in working on it.
+> On Tue, Jun 16, 2026 at 07:19:20AM -0400, Jeff King wrote:
+>
+>> Here it is.
 
-> but obviously not in a way that
-> resulted in a fix. So I'm trying again with a patch that adds a failing
-> test.
+Thanks.
 
-I'm not sure carrying this test makes it any more likely that it will be 
-fixed, though your mail might get someone interested in fixing it. Don't 
-we already have some relevant tests t3400 rather than adding a whole new 
-file for a single test?
+>     +@@ t/t7450-bad-git-dotfiles.sh: test_expect_success 'git dirs of sibling submodules must not be nested' '
+>     + test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
+>     + 	test_must_fail git clone --recurse-submodules --jobs=2 nested clone_parallel 2>err &&
+>     + 	cat err &&
+>     +-	grep -E "(already exists|is inside git dir|not a git repository)" err &&
+>     ++	grep -E "(already exists|is inside git dir|does not point to a valid repository)" err &&
 
-Thanks
+A few things.
 
-Phillip
+ * Will we be happy to see only one of these possibilities, or do we
+   expect to see these once for each kind?
 
-> Best regards
-> Uwe
-> 
-> [1] https://lore.kernel.org/git/20230530092155.3zbb5uxa7eisdzxb@pengutronix.de/
-> 
->   t/meson.build           |  1 +
->   t/t3322-notes-rebase.sh | 35 +++++++++++++++++++++++++++++++++++
->   2 files changed, 36 insertions(+)
->   create mode 100644 t/t3322-notes-rebase.sh
-> 
-> diff --git a/t/meson.build b/t/meson.build
-> index c5832fee0535..6927bd9c794f 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -358,6 +358,7 @@ integration_tests = [
->     't3311-notes-merge-fanout.sh',
->     't3320-notes-merge-worktrees.sh',
->     't3321-notes-stripspace.sh',
-> +  't3322-notes-rebase.sh',
->     't3400-rebase.sh',
->     't3401-rebase-and-am-rename.sh',
->     't3402-rebase-merge.sh',
-> diff --git a/t/t3322-notes-rebase.sh b/t/t3322-notes-rebase.sh
-> new file mode 100644
-> index 000000000000..64c40a523b50
-> --- /dev/null
-> +++ b/t/t3322-notes-rebase.sh
-> @@ -0,0 +1,35 @@
-> +#!/bin/sh
-> +
-> +test_description='Test notes on rebase'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success setup '
-> +	git init &&
-> +	echo A > A &&
-> +	git add A &&
-> +	git commit -m A &&
-> +	git branch branch &&
-> +	echo B > B &&
-> +	git add B &&
-> +	git commit -m B &&
-> +	git notes add -m "This is B" @ &&
-> +	echo C > C &&
-> +	git add C &&
-> +	git commit -m C &&
-> +	git checkout branch &&
-> +	echo B > B &&
-> +	echo D > D &&
-> +	git add B D &&
-> +	git commit -m BD
-> +'
-> +
-> +test_expect_success 'rebase B + C on top of BD' '
-> +	git rebase @ master
-> +'
-> +
-> +test_expect_failure 'assert there is no note on BD' '
-> +	git notes show branch
-> +'
-> +
-> +test_done
-> 
-> base-commit: 3e65291872de10c3f0bf05ea8c24187e7a71ebf0
+ * a recently started in-flight topic tries to catch bare "grep" and
+   fails until you write test_grep X-<.
+
+> We also racily trigger this in t7450. During parallel cloning we might
+> see one of several errors, including this one. And so we must update
+> that message, too (you can otherwise find the failure pretty quickly by
+> running t7450 with --stress).
 
