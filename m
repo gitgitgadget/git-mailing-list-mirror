@@ -1,138 +1,245 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from mail.normalmode.org (h01.normalmode.org [157.230.60.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7037F394EA6
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 22:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1448B3ACA64
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 22:26:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.230.60.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781648488; cv=none; b=GhZz8qaZjYhL86ahoXYOtGKgRaekyCmg4cEhI/vDBoHz1y7ncS1HE+CDVVo83AuWHagXmCCmlm0pchueJp+YbOT4xFogJp4sgZpx9Tqhk5e98+y0aJPGdxthzgD6Ok2pQP01KmXEjEf4442RJfDnE8+OVxtezJWuEvgqSS0eYSA=
+	t=1781648795; cv=none; b=cMaRBbz8k7uIC9mEEaFpIKLBw+copHqv1AflNotObu3DuezerNOYSLUcLs81f53qeqbuMoCiN2NAzOm6gFOi6IHvtOvBjHGRi83oXI8fe+Y8z9z690LhHmVnHBj3M+qVQLtybU0KwXu/erUpOhy1mIeo7KLnogi4/boP78r17Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781648488; c=relaxed/simple;
-	bh=zXgGU78/vvuJZswqjQmTT06mhNQuPpH/rzi74pN4aMU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gdBmT4EUsd5CBrXHKdSL0rM67SBfv3bPyiejlN2QEzaDkITr6xy4Qn31RHlLnYMWDMzKlMJy/WORjIAvxH+fXIBb5LSOk9sXAhNQZ807ahFrFVL5rk/HgzaDfItUJZMn+hOdbjv5WXBSxd/EfWvYt6GRa5t6TJseY9tfhVOtEV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I6seu8sA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gch7hoV1; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781648795; c=relaxed/simple;
+	bh=PLebOYd1G6D+y7Wd6cx7HjquBZWdtvrEjMUQaL9DZK0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mheK0UvKH0IyfONbcA2zST7e6vXtw9jItP9NtdKnm4NEmCa35AycWQRVlnxIgVhdEOKytFG351RIQOooFJ5BW7vbMScUKK3wqnRqPuPKtDTArt+K1fXHfiSL1nx8ZlRqaznpcoN+FhC8wbUv6+wYchAYs4hGAPyXcSUm5vIDio8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us; spf=pass smtp.mailfrom=lfurio.us; dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b=IWa++xUK; arc=none smtp.client-ip=157.230.60.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lfurio.us
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lfurio.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I6seu8sA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gch7hoV1"
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A5D5A1400014;
-	Tue, 16 Jun 2026 18:21:26 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 16 Jun 2026 18:21:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781648486;
-	 x=1781734886; bh=kPSDNmzSDTDtpoonRRkcA7kVpJupsTlHSU2b+uYaFjw=; b=
-	I6seu8sAYzHovTy/rRMGfJDBukn0T5T2wrQW+pI9s9safLFyCX/mfvIHMeGzLgL0
-	vbPK63M3rlpxJLZYSkNo7AVIMy1+KpJ00vX3E/o/C5QLPJdgyhcZfzrCyDnh7HFh
-	qdBHol6ANnUkODpRhdabz/O+6cPShtZd97vhk2MYWOPLiiNmPQPyWUXkHMPIGfDv
-	6fhANhbk3z6SOlk/36kE87xvUNPCx1MUyeYWmyuANpb4A+EPFqafez3tYrKZoQh9
-	qphAfWLkio7NYabU2WLf4Zp8+HOW6Fmw9jS429wEB+V3ockBtVqJrc+swTa8pxPK
-	Ok+aWRQzAle32n0V7wIddg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781648486; x=
-	1781734886; bh=kPSDNmzSDTDtpoonRRkcA7kVpJupsTlHSU2b+uYaFjw=; b=g
-	ch7hoV1Wue4E404rbwEM2c2z9Ge1NpS7gja10HphkWmu3xKoEd7dIfa0r5lWvhO7
-	/C+9E7pyWN52lyFWcAdbcLUGR2rm19wlopyMaLyAuHrLVKzVIJWDUyhN3QJ4guyR
-	ocNTV6CJC0sbo4CRNeCrHnVJYNBJymMYEDJ2hAFPv5wDtMDFOw/NFwbbdR05IpE+
-	DMR3m55cUMx2LOxVisnByDuO0jz80ea/myEfz98ORs5NATfUQPdWVV7ys9SH9sjL
-	GO4zVVbUscAMr8CoGQAMskl96fgNP3o2fUDnnZq0EwbbxGVPJe+muTWd2ocXxBlL
-	NM+/1E8pwubx75AK3QjAQ==
-X-ME-Sender: <xms:ZswxaiFwQn_VePrqISO9t9Byu-1Xl2lZKFRL3MbDKGFHAvuHk-pTkA>
-    <xme:ZswxaqUkoj9RIi71-p3H4ZRBtHQ3KtGOJ_YF-1ktm_mUmAE9zr4hFtW771lkDE-K_
-    XKI2YRzify1enluWoNhzlmEQQGkWHvRLhiLAMpM5i8ysuOEi56M>
-X-ME-Received: <xmr:ZswxahLm-xCRyK5-TcymWd91vkka8F6P1WCJy0iOw4TivAxqXC2R0ycpWigKwRXvEfz5p3647ZUx9GwFDOXSUwRPgkhDhWLMYYc0>
-X-ME-Proxy-Cause: dmFkZTFtHWZXVqz23E236Jcxt9vwigVfSYKc3cpQUK1/AmIUXUdj7hV3QXXN1cKf+4rqQ+
-    F+5i0glW7f145G/wR3UzpoBvUkfKX1eiTLoWcqey5LXbFnqeUHHOjN/o2SAXkk2krh03dq
-    ZZJyYUZySwUYk9mzMsubl/9FLGnADzCfExZRIpobjor6hQ4xC/NIqO4VO2E52ReoYTVSqy
-    vilYTNpvHzxfEgnvxLz9NJhR5kFDS8mPg5lIdODDub2aPMNmLOeD1dqSVHPGZwdeo793yg
-    ZF2Uyae3esa4/j1LzUCBlQjdc8zPBu9o04qdazQd7POFZLUQINWpYCPcQDYXU4BA2XwFdo
-    vEWVIWj8zo9N24BceAgVBr1AXMSFYfuacoDhNuVTREFfO5e9Q/gQCi1p2DLszckJQzaZQc
-    ygPPpSEpbdjAPUFvPPl4KkHEQSmSNHLOi6Yn9WsZc/yDvcW/uy7aMEd1FqfUkyoZk7s7E8
-    JXKTuRkP3u1R1R54TpY+TnxpuXg4fQmzxjvcKFQjv8DxlEwqXP06sX3viXbhtOQckuS1eI
-    cpIFaDft22+frV8t/l+GBUGG7PpMJG/TiuAWVkvecN9PJRfxdEMfQCWAi0VBlw/zieuXb6
-    05EKBEHFbvXIIb4dTOmuawxE6LAZkmsUtLdMB9E8R2su0XiMKTXmXgiUE11A
-X-ME-Proxy: <xmx:Zswxaq8vrRll8zGF-lfL1IKhAKJ3dbyOPTp2_qFntFaDd_I5xSP5iw>
-    <xmx:ZswxakK9Key3l689zqlBxQ_z9B3rvizVj1X_713o4Zz7bcMAfXFHWg>
-    <xmx:ZswxavkuPRHLLOj0gAVg7mVyiobelVENbAD4JwInBPZLpJwoX0aQDQ>
-    <xmx:ZswxaoPJtxJvl6Wvxe3RTPRUe4Bjt-Uw5ONrvAwPD73LRsYehZp2dQ>
-    <xmx:Zswxaie-pyyDby1VQp2xeYbl7rx8d4dlCpGBpGylkUeliEvEsPFuZUCx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Jun 2026 18:21:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Jeff King <peff@peff.net>,  Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] cat-file: speed up default format
-In-Reply-To: <47e3cf16-217e-45d4-91e2-5a1abb4ee49e@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Wed, 17 Jun 2026 00:14:37 +0200")
-References: <5a7ed929-6fe0-496c-83bd-65dee57c2241@web.de>
-	<20260615165326.GA91269@coredump.intra.peff.net>
-	<20260615170652.GB91269@coredump.intra.peff.net>
-	<10a33614-837f-4166-aa30-6de28b052692@web.de>
-	<20260616111237.GA687438@coredump.intra.peff.net>
-	<47e3cf16-217e-45d4-91e2-5a1abb4ee49e@web.de>
-Date: Tue, 16 Jun 2026 15:21:24 -0700
-Message-ID: <xmqqo6ha15zv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=lfurio.us header.i=@lfurio.us header.b="IWa++xUK"
+Received: by mail.normalmode.org (Postfix) with ESMTPSA id C422C600E8;
+	Tue, 16 Jun 2026 22:26:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lfurio.us; s=default;
+	t=1781648792; bh=PLebOYd1G6D+y7Wd6cx7HjquBZWdtvrEjMUQaL9DZK0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IWa++xUKiFKaIvxIKZpEZxqPw2irbN7nLQBKluocIfDNXWQGtUybjvDreUt+o1BLc
+	 pi2MHOr+Q3Q6utH4RRdSHSfMc7pR54/Ostzar6aWlsvapTdK88KqFVmEWlOZO8QBTg
+	 G2sbSqwUjuqgURXmWWN9ACA4WXomyChpvOLkHnmY=
+From: Matt Hunter <m@lfurio.us>
+To: git@vger.kernel.org
+Cc: Bence Ferdinandy <bence@ferdinandy.com>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/7] Introduce fetch.followRemoteHEAD config variable
+Date: Tue, 16 Jun 2026 18:25:14 -0400
+Message-ID: <20260616222606.1003521-1-m@lfurio.us>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260612055947.1499497-1-m@lfurio.us>
+References: <20260612055947.1499497-1-m@lfurio.us>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-René Scharfe <l.s.r@web.de> writes:
+git-fetch presently offers some useful ways to control how remote HEAD
+symbolic-refs are (or aren't) updated when fetching from remote
+repositories.  Namely this is done via the
+'remote.<name>.followRemoteHEAD' configuration variable.
 
-> On 6/16/26 1:12 PM, Jeff King wrote:
->> On Mon, Jun 15, 2026 at 11:53:07PM +0200, René Scharfe wrote:
->> 
->>> We can also store literal characters in there.  An opcode plus with a
->>> payload char incurs an overhead of 50%, which sounds high, but at least
->>> the default format only has two of them and it's much better than
->>> storing pointer plus size for an overhead of more than 90% in case of a
->>> single char.
->> 
->> True, and it's a size win if the literal portions tend to be small
->> (fewer than 15 bytes). You do lose out on the ability to strbuf_add()
->> them in one go, though. So lots more strbuf_grow() checks, etc. If you
->> really wanted to get fancy, you could follow the opcode with a length
->> represented as a variable-sized integer, followed by the literal bytes.
->
-> Or an opcode that shovels a fixed-size string.  Depends on how much
-> literal text people include in their formats.
->
->> I'm not sure that Git's formatting code needs to squeeze out quite that
->> much performance, though.
->
-> Good point.  Near-native performance would be necessary to make peephole
-> optimizations like the special handling of the default format
-> unnecessary, which I understand exists to speed up Gitaly [1], but I
-> guess most users don't have such high demands.  And there's no point in
-> removing a few lines of duplicate code if the necessary machinery adds a
-> lot of complexity.  Though the code discussed so far was not too crazy
-> IMHO.
->
-> [1] https://gitlab.com/gitlab-org/gitaly/-/blob/master/internal/git/gitpipe/catfile_info.go
->
->> OK, so we managed another 1%. But I'm skeptical that this linear opcode
->> technique is where we want to go in the long run, if we're ever going to
->> unify formatters.
->
-> Agreed.
->
-> René
+However, this setting can be somewhat painful to use if you prefer a
+default other than "create" and often work with multiple different
+remote repositories.
 
-Obviously I agree with the conclusion, but it was fun to watch cute
-experiments from the sidelines.  Thanks for entertainment ;-)
+This series introduces the variable 'fetch.followRemoteHEAD', which
+provides a configurable default in place of per-remote settings.
+
+'fetch.followRemoteHEAD' functions exactly the same as the original
+variable, except that it doesn't allow warning suppression via
+'warn-if-not-$branch'.  Given that different remotes will vary their
+HEAD and set of branches independently, setting a false-positive
+globally in this way doesn't make logical sense.
+
+While it is not mentioned by any of the patches in this series, note
+also that the behavior introduced by 012bc566bad7 (remote set-head: set
+followRemoteHEAD to "warn" if "always") is unaffected by this series,
+and this feature continues to work for only the
+'remote.<name>.followRemoteHEAD' variable.
+
+--- 
+
+Changes in v2:
+  - Don't die() if the value of fetch.followRemoteHEAD is unrecognized.
+  - Use case-sensitive matching for fetch.followRemoteHEAD values.
+  - Avoid the phrase "configuration option".
+  - Minor documentation wording changes.
+  - Link to v1: https://patch.msgid.link/20260612055947.1499497-1-m@lfurio.us
+
+Matt Hunter (7):
+  fetch: fixup set_head advice for warn-if-not-branch
+  doc: explain fetchRemoteHEADWarn advice
+  t5510: cleanup remote in followRemoteHEAD dangling ref test
+  fetch: rename function report_set_head
+  fetch: refactor do_fetch handling of followRemoteHEAD
+  fetch: add configuration variable fetch.followRemoteHEAD
+  fetch: fixup a misaligned comment
+
+ Documentation/config/advice.adoc |   4 ++
+ Documentation/config/fetch.adoc  |  19 ++++++
+ Documentation/config/remote.adoc |  21 +++---
+ builtin/fetch.c                  |  49 ++++++++++----
+ remote.h                         |  14 ++--
+ t/t5510-fetch.sh                 | 106 +++++++++++++++++++++++++++++++
+ 6 files changed, 183 insertions(+), 30 deletions(-)
+
+Range-diff against v1:
+1:  779fb9bfc59f = 1:  2106228f7b98 fetch: fixup set_head advice for warn-if-not-branch
+2:  aacc2856bc77 = 2:  b1c58c06e0c7 doc: explain fetchRemoteHEADWarn advice
+3:  f5272eaafbcc = 3:  c1d11e8883e6 t5510: cleanup remote in followRemoteHEAD dangling ref test
+4:  43a17027c13e = 4:  6306c8212fc0 fetch: rename function report_set_head
+5:  c719435d9675 ! 5:  3c7257094686 fetch: refactor do_fetch handling of followRemoteHEAD
+    @@ Commit message
+     
+         Update enum follow_remote_head_settings to include the value
+         FOLLOW_REMOTE_UNCONFIGURED as the new zero-initialized value for
+    -    followRemoteHEAD.  This will allow us to distinguish between the option
+    -    being unset vs. explicitly set to 'create', which is ultimately the
+    -    system default.  The unnecessary indentation is removed.
+    +    followRemoteHEAD.  This will allow us to distinguish between the
+    +    variable being unset vs. explicitly set to 'create', which is ultimately
+    +    the system default.  The unnecessary indentation is removed.
+     
+         The do_fetch function is likewise updated to perform its own decision
+         making to determine the effective followRemoteHEAD mode, falling back to
+         the system default if necessary.  This will enable the next patch to
+    -    introduce a user-configurable fallback default option.
+    +    introduce a user-configurable default.
+     
+    -    Function set_head now accepts this value as an argument rather than only
+    +    Function set_head now accepts the mode as an argument rather than only
+         considering the value defined by the remote.
+     
+         The use of the 'warn-if-not-$branch' value is awkward in the context of
+    -    a global default option, since the branches will differ between
+    -    individual remotes.  For this reason, it's left out of this scheme and
+    -    handling of the no_warn_branch variable is untouched.  Since a
+    -    remote-specific setting for followRemoteHEAD takes priority, we can
+    -    assume that if remote->no_warn_branch is set, then the remote is also
+    -    asserting FOLLOW_REMOTE_WARN as the effective operating mode, and it
+    -    will be honored by do_fetch.
+    +    a global default, since the branches will differ between individual
+    +    remotes.  For this reason, it's left out of this scheme and handling of
+    +    the no_warn_branch variable is untouched.  Since a remote-specific
+    +    value for followRemoteHEAD takes priority, we can assume that if
+    +    remote->no_warn_branch is set, then the remote is also asserting
+    +    FOLLOW_REMOTE_WARN as the effective operating mode, and it will be
+    +    honored by do_fetch.
+     
+         Signed-off-by: Matt Hunter <m@lfurio.us>
+     
+6:  56f6fc8ded2d ! 6:  af9f99b1ceb2 fetch: add configuration option fetch.followRemoteHEAD
+    @@ Metadata
+     Author: Matt Hunter <m@lfurio.us>
+     
+      ## Commit message ##
+    -    fetch: add configuration option fetch.followRemoteHEAD
+    +    fetch: add configuration variable fetch.followRemoteHEAD
+     
+    -    'fetch.followRemoteHEAD' is added as a generic option used by all
+    +    'fetch.followRemoteHEAD' is added as a generic setting used by all
+         remotes for which 'remote.<name>.followRemoteHEAD' is undefined.  If
+    -    both options are undefined, a builtin default of "create" is in effect,
+    -    matching the previous behavior.
+    +    both variables are undefined, a builtin default of "create" is in
+    +    effect, matching the previous behavior.
+     
+         As mentioned in the previous patch, 'fetch.followRemoteHEAD' supports
+         all of the values that its 'remote' counterpart does _except_
+    @@ Commit message
+         repositories.
+     
+         Documentation and advice messages for both of the followRemoteHEAD
+    -    options are reworded to better capture the relationship between the two.
+    +    variables are reworded to better capture the relationship between the
+    +    two.
+     
+         The added tests assert feature parity between the two followRemoteHEAD
+    -    options, as well as the fact that 'remote.<name>.followRemoteHEAD'
+    +    variables, as well as the fact that 'remote.<name>.followRemoteHEAD'
+         always supersedes this new configurable default.
+     
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Matt Hunter <m@lfurio.us>
+     
+      ## Documentation/config/fetch.adoc ##
+    @@ Documentation/config/fetch.adoc: the new bundle URI.
+      remove the value for the `fetch.bundleCreationToken` value before fetching.
+     +
+     +`fetch.followRemoteHEAD`::
+    -+	When fetching using a default refspec, this option determines how to handle
+    ++	When fetching using a default refspec, this setting determines how to handle
+     +	differences between a fetched remote's `HEAD` and the local
+     +	`remotes/<name>/HEAD` symbolic-ref.  Its value is one of
+     ++
+    @@ Documentation/config/remote.adoc: Blank values signal to ignore all previous val
+     -	Setting it to "always" will silently update `remotes/<name>/HEAD` to
+     -	the value on the remote.  Finally, setting it to "never" will never
+     -	change or create the local reference.
+    -+	When fetching this remote using its default refspec, this option determines
+    ++	When fetching this remote using its default refspec, this setting determines
+     +	how to handle differences between the remote's `HEAD` and the local
+    -+	`remotes/<name>/HEAD` symbolic-ref.  Overrides the setting for
+    ++	`remotes/<name>/HEAD` symbolic-ref.  Overrides the value of
+     +	`fetch.followRemoteHEAD`.  See `fetch.followRemoteHEAD` for a description of
+     +	accepted values.
+     ++
+    -+In addition to the values supported by `fetch.followRemoteHEAD`, this option may
+    -+also take on the value "warn-if-not-`$branch`", which behaves like "warn", but
+    -+ignores the warning if the remote's `HEAD` is `remotes/<name>/$branch`.
+    ++In addition to the values supported by `fetch.followRemoteHEAD`, this setting
+    ++may also take on the value "warn-if-not-`$branch`", which behaves like "warn",
+    ++but ignores the warning if the remote's `HEAD` is `remotes/<name>/$branch`.
+     
+      ## builtin/fetch.c ##
+     @@ builtin/fetch.c: static struct string_list negotiation_include = STRING_LIST_INIT_NODUP;
+    @@ builtin/fetch.c: static int git_fetch_config(const char *k, const char *v,
+     +	if (!strcmp(k, "fetch.followremotehead")) {
+     +		if (!v)
+     +			return config_error_nonbool(k);
+    -+		else if (!strcasecmp(v, "never"))
+    ++		else if (!strcmp(v, "never"))
+     +			fetch_config->follow_remote_head = FOLLOW_REMOTE_NEVER;
+    -+		else if (!strcasecmp(v, "create"))
+    ++		else if (!strcmp(v, "create"))
+     +			fetch_config->follow_remote_head = FOLLOW_REMOTE_CREATE;
+    -+		else if (!strcasecmp(v, "warn"))
+    ++		else if (!strcmp(v, "warn"))
+     +			fetch_config->follow_remote_head = FOLLOW_REMOTE_WARN;
+    -+		else if (!strcasecmp(v, "always"))
+    ++		else if (!strcmp(v, "always"))
+     +			fetch_config->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
+    -+		else
+    -+			die(_("invalid value for '%s': '%s'"),
+    -+				"fetch.followRemoteHEAD", v);
+     +	}
+     +
+      	return git_default_config(k, v, ctx, cb);
+    @@ builtin/fetch.c: static const char *strip_refshead(const char *name){
+     -	   "will disable the warning until the remote changes HEAD to something else.");
+     +	N_("Run 'git remote set-head %s %s' to follow the change, or modify\n"
+     +	   "either of the 'remote.%s.followRemoteHEAD' or 'fetch.followRemoteHEAD'\n"
+    -+	   "configuration options to handle the situation differently.\n\n"
+    ++	   "configuration variables to handle the situation differently.\n\n"
+     +
+    -+	   "Using this specific option\n\n"
+    ++	   "Using this specific setting\n\n"
+     +	   "    git config set remote.%s.followRemoteHEAD warn-if-not-%s\n\n"
+     +	   "will suppress the warning until the remote changes HEAD to something else.");
+      
+7:  5e0bdd0f00b4 = 7:  5c80107f6488 fetch: fixup a misaligned comment
+
+base-commit: 0fae78c9d55efe705877ea537fe42c59164ccd94
+-- 
+2.54.0
+
