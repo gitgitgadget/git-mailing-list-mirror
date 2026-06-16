@@ -1,81 +1,86 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17FF3C063C
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3445D35DA75
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 15:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781621586; cv=none; b=WrzGXppXRXlXNV7ePe7ag3e28/M+5ARLfUcbTEcdfA2svO8VrN4og0WieKqgUlbROrIph6iMfi0pj1offdeoXrX08RRCG5htDgx6rhbjI/OjVHpCMcNMeY6pBMasqFBIAjEVK4mO1TpCwiXXUfCs6yJaTFwDZk4QfCjeIRPV648=
+	t=1781624939; cv=none; b=VVw/pJCWEWBnaJacTBv9q8dq6MchIZNi0UnHPJqk6LH2w4fbLl/3wYBG+zps+a/PPh10VyfJI/dInuoNadKdEUeE3QpoDJIA5Wsv2o21C3AYBkviMjpcxZIP0xUSDQUQFNE8usyspHJ2EiNeo7G08DBBoSX4gXLWj/xVSv73u5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781621586; c=relaxed/simple;
-	bh=KWP+ByY/dtK1B2MGK0lrwAWESq2H5kF/F7v0qFcPePQ=;
+	s=arc-20240116; t=1781624939; c=relaxed/simple;
+	bh=htZ0gn4iOLrrklH/PH4vVhHs99xd8luotRkf2egq9fE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WLKmeuC7g7wdbpeevTTFYnrpDyMJpASJE/yhCxl9ZhUUUKhzOa8MXgAcJ2ItfOY9NuVMozrL7YsfvIFXwK4KP6M0KenCQdbfoFcPQ5aM3paxFdzaw0s34HxG5ljdIW0vI+0An6iYlc8rRdVmgG5whbM1rH1be+4j50rUx3zYIaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FXMDTg81; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k3FiKXLQ; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=TENGaiDQr4Y+GiVFvObLeWwduNIyhv5J0w3xKg9cvQpwHOUH7FwSuY1pUNStxVzIUkN73IDtpKfLj1xlUboQgXrd2LCsodpsDpKSJKbpJKar9X5k9iQvGwSYnyLTn4Pu+yhDeTOzlxBnEkcAKionZCKYj3man+4e/Uttbhr4Xoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sl/Hq8MT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PbyOzBSm; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FXMDTg81";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k3FiKXLQ"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1DA281D00041;
-	Tue, 16 Jun 2026 10:53:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 16 Jun 2026 10:53:04 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sl/Hq8MT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PbyOzBSm"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0E4111D000B0;
+	Tue, 16 Jun 2026 11:48:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 16 Jun 2026 11:48:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781621583; x=1781707983; bh=xLtV3Zsbw6
-	30UHu4iOu+YBhEZdo4JqgmNc2bRtk/PdE=; b=FXMDTg81viaYLw8BAdm5Z0ceE3
-	hIcoJX7U3Tc1TEp02Ps5A+m7o66/rGALs5mRDWgAUbepdbVtk9ObfU9L/xJxgHvs
-	sAJJfQ4aLrX4Pim0ic8QHjMrGEuLDLcE3e10pFltIAgEicQzU0UHdzZC+z48WMaX
-	6RJj7WbImsGzzCmmOrdkJZFEHe/O0zdoEwe+FxFAlMLbc5Yh2JFFq6vudKAoKh6e
-	YimlWOgOExCL84rIdQLJqOoppYG5wrctWZtjwMurP2cpg2ruzbtDwDuWVoc/1MOd
-	fs5WUAVQsj3G74DHe/EzH4S2nzNVuJn3ybWD3HZxAz8vIGlMVuTcSxFv17Cw==
+	:subject:to:to; s=fm3; t=1781624936; x=1781711336; bh=o+kCF8neba
+	YX0JAMYGsLdjeMBvrQ/Kc4yIIHFbMWmW0=; b=Sl/Hq8MTBY6GEONUPzP4Xp1nxc
+	TaQSuCoYIn2e1+lVg3yI82Kr5t5xsD5PoFSv/lRqp/h7blSlWfURG8ExvbK46SqY
+	6ovB5cCThzx5yqtSgCrVEH9bu1CgftFraZeBIHfuNHjKvCFdyBenjs4jnm243/Ya
+	CL0WkfLXnFm38Cqoyd/AHwlrkVklAC4GtMNl+kt75fbUXUsXLeFUjWS0gKls9gVX
+	+k6IshWMIdL09AC9VLlWIhVzuRD6zZomExCVFqtoYtf+1pUZ9xiowJJex/eK9tWx
+	rRLa3To1bBaxa9HoR+liykeNLqF6XlSu0tbQwvJhb0uLw627mznXGVSdghig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781621583; x=1781707983; bh=xLtV3Zsbw630UHu4iOu+YBhEZdo4JqgmNc2
-	bRtk/PdE=; b=k3FiKXLQKgt1Fu/s0T751vWZA7eoWwdOYGaQLYrGDP1KTKMG8ZU
-	tAaFc6ehIjsk55g+79Y6G4NX9gbW02IpifgVljycEUegkMkREjs1iFZQbQ6WnqxJ
-	TCxNUBG30B83kBE6x+OTsBJv8vsVSnwyKWmTRNKl7A2Gy4y09hVCdUCCHjt7yvgj
-	JCGXQryCyuVvuZMvErzS8SXOpyhYkWEmFS1Jh7kk0Aqty4VyZjSrxQPjK0YE6e2b
-	wrU4JaO72JidDjs3ieVLy1KgFDmt2o/8RMIDtvGHsGS48BH/C33Vnm8c06L9g38q
-	caS97dYBWLxOwA4wj0X/br8JskXxbstCLiA==
-X-ME-Sender: <xms:T2Mxauni1rA5zdOV7Q1QNW__wJmxKc3yXYP_roHKydgH2ytx2Ea9iQ>
-    <xme:T2MxatTq-UkWvc9Y8LTiXDbKLBZJLNlcUETWBtLHyqU0-Z6gqwQX4qQ1MDEGgnP71
-    ZWSZZPHW_7rfhIKRC1DfnLFjCz8B4V4MLWDciMjPhD61GPvVA4yoj8>
-X-ME-Received: <xmr:T2MxaqB8UZAihn15q5iybmE3iMwUuKxbEYYA7ZWeKZ62low-uzW-RrQQEE-r9bixpLz02GuqlDIs7C7PNZvlsAuwC65NU4RddHTr>
-X-ME-Proxy-Cause: dmFkZTFQynjETECiL76JVTG60UdYlilX05/y6ECUmlr5EmGy8LmIkHmW0mYcCEiBrZjdT1
-    lO6rcfzrGoxziBZ9jlCe1kznHpDZWw1lNIu1n7E8sLJ2tbAdLeTxoICdMkBiktVD5lnI+t
-    ME9pb8JgmI0DpHJ8pTpg+1oj+zy28VKtaU2i3UzrNo2eAyfcOca8QY19lEX8wVYUuN8FHt
-    pxSCTLKBfrfpMWn4DD1ehXy+Dt5rXwdZ0vYwwWrhfdiDi/J+rJp7iU/M+peWqD9b9tonvd
-    id4hmpiWX57JJaBXxEGY8Xd3yqnzvSXsNUYoeQDajDd/s4Es+yNP9Jz5p6GNnWZtCh58rZ
-    b/O5RxvGhanRvW+IQjd0Z6k4oLRvsl8PbPB9K7DKMyGDx0SBdkQT/Oo1VrrARH0hxeT0yy
-    MGgC3VWmkqH6g0abHi6YQYiEJ6QjbdD1AmJW4Uyi00CxUbofYJPolT1Nx6oNzoAKWclhID
-    SXmRW1YvYr0Jff8wLaRsNPMvBvv2q7aoMqDGhId/muQDblUVyyJclF/lYmnKCaI367aQtY
-    GkVVVIWLIu3CtAfTb+Nrun9dCuzvI0nahXegtEt7muCZ33sSxZvh5W/38d16tLzaAE2bW8
-    4Uj6cQeaVYw7cDnK/Xf82aveiJZHhkXOXfzojmEczdZmkMTsrLt5tPP3NrXQ
-X-ME-Proxy: <xmx:T2MxasRT9DTkePwlzYTt6N7DEZzDftuIkqtRocvE3C--Gq13uXVYgA>
-    <xmx:T2Mxago-W6r1A6ikvd7j22HjN1h89LAkXroVl9m9a1M3EDKmk3SH3w>
-    <xmx:T2MxamznX2pke07mnwvF9GMzoQ6eLwlF_kkqiGFDd-hsOa6adH6EZQ>
-    <xmx:T2MxatKaI-JidMzN-5soEc4ZCg849Jiu4jZJx_uM0uej1qodwE9cHw>
-    <xmx:T2MxatZSxx-7-YGZYHbLgkZ0aX3vgTiFHwBDLN-3xPY45EjIo93gZZwA>
+	1781624936; x=1781711336; bh=o+kCF8nebaYX0JAMYGsLdjeMBvrQ/Kc4yII
+	HFbMWmW0=; b=PbyOzBSmW/SBKfTKa3d36HZjQUTR7Ux4wZ8TwHYk8SsJpuPYest
+	UQMR5iOu7koa8a81NhGDN3vXJCK8qTjwNFEXgmS3OAaMWHdzhlPk+ifd2miuVM2o
+	NmiI83eHrSQaIIaSJxkV458hhaFaxID9HOO+ihyBwO8UGCNa6tPl7FIizBy55LIF
+	yVnj8skcMqdZaPoX+zq7OUBHuABB3DhzMPIv7ak8Anxq9fUSIw2RwDQDuLV3Uv/r
+	5fLcKI95D1k3BzOllGOLNcO4XIobB7Jjwa7gtYdBsbbvwaaYrmFF1vyJWC1Snz1/
+	cehKsv5KyYmqujqoj9qaBi3NhfQBF+WCyRw==
+X-ME-Sender: <xms:aHAxav23W6VtX3Qj_AIfcVLZ5gmml39ndIzC-138xFIt9ctcq7suIQ>
+    <xme:aHAxak-Lw-3qxChSmSIWn7DoxJBYFdHLiZqCumukbZJp3vP49altNBDQBAUxh_n-K
+    ViEmieO1N9mgBNN5VvVZtxujAgYxyVlq_Grjwb3fG_LZxuyh9A>
+X-ME-Received: <xmr:aHAxaoPdUX3CSeHz7YS8Uhrbe5icZnFR3L5YRtcUiDXA26KuYDMkOEyubeXvErO6MHEEqid33t5o_75GH7Fh77H78aIIb1r5CXvz>
+X-ME-Proxy-Cause: dmFkZTGaA9zoBYutOaeluXdkobG1Tnkm4SY86MJMmRTYW6jHiBtwR+ccg0fasHo76aps6t
+    ITA5snLRnrNNKnrqEcKT/uzvwuFtSQQGZGacIyMmgiKztmqMl8jOA8HEhINiOgJAGBkr5w
+    iNy3JYnHzVjh7xsP6sCN0W81MPEWgCS3HDNPJe3V5u64mhyBBBGtPNNc/vQJL0XeBaSziE
+    x5plq/pQgn6vvIhukXYe8zhv47fZP1qhpvD9ZwoVVrRDMGzxWQjlzKdTl/V+TTscIg2YTn
+    M7kPOpMkM9qdI8vDuBx+BEp6nuRd87qPRt1O+QSW258tu9Z5HbH/qwOBAxL77X3sn4GiVS
+    cl38+bhIDGdoHFpT3iznZc7XyZggAG5VooCMTtfdVJHxynaGfUBr1GPMJl65qF3ZZu9ob6
+    /g21DqT6Ri5lRczQmwFxek2lcQYFgyDQblXoeiro08isRwlB5EOQVqs13dRD3uECa8yfNX
+    2j6gekoHTLgqc9+nNzntJanPNFRjKAL0+DpR8vdzRqog4zpJayjEZ8qMmMT3ZfCfgZ837m
+    aVLGjUFjkwzxdfN/I5qLZk2fq7OxidSeCwzkbBo1/13kN66/PVPlTcE8mS3RY1t+WW2qZd
+    j/GadgqEBCUaOvBtCwgKxnOzVbwBAdPH14OXZHPG6VP/FNPz2b7UP36G9zpw
+X-ME-Proxy: <xmx:aHAxagctRD2Z98VTNq1z_uz9TmWnEQejgUwQmXk4QJ02YkrgQRdr_g>
+    <xmx:aHAxavUyBSCq017jFBigyRD__avgZVF7ZAmJtwFvQ62czsLGtTSFrA>
+    <xmx:aHAxaggq18Hz_dt9UXHzUQQHf8N7CJFSNdU-DPPwOxuMpIYZ9Ez0JA>
+    <xmx:aHAxam9d-d2m_r56N1wd4ypcc1Bp-crBv-UbYeXXafU6_u4v1uUr0A>
+    <xmx:aHAxapsmc1hi-Uso0tb30CCEM67YQTtU5P0gUKkI_efyRgE1DWm0DcOc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Jun 2026 10:53:03 -0400 (EDT)
+ 16 Jun 2026 11:48:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] builtin/refs: add "rename" subcommand
-In-Reply-To: <20260616-pks-refs-writing-subcommands-v1-4-9f5219b6109d@pks.im>
-	(Patrick Steinhardt's message of "Tue, 16 Jun 2026 10:44:09 +0200")
-References: <20260616-pks-refs-writing-subcommands-v1-0-9f5219b6109d@pks.im>
-	<20260616-pks-refs-writing-subcommands-v1-4-9f5219b6109d@pks.im>
-Date: Tue, 16 Jun 2026 07:53:02 -0700
-Message-ID: <xmqqo6ha4jw1.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Tian Yuchen
+ <cat@malon.dev>
+Subject: Re: [PATCH v3] read_gitfile(): simplify NOT_A_REPO error message
+In-Reply-To: <20260616144554.GA2305974@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 16 Jun 2026 10:45:54 -0400")
+References: <20260602061159.GA693928@coredump.intra.peff.net>
+	<ah6WEtk2pXyViEQA@pks.im> <xmqqeciezh0w.fsf@gitster.g>
+	<20260616111919.GC687438@coredump.intra.peff.net>
+	<20260616123516.GA2301231@coredump.intra.peff.net>
+	<xmqq7bnya7gh.fsf@gitster.g>
+	<20260616144554.GA2305974@coredump.intra.peff.net>
+Date: Tue, 16 Jun 2026 08:48:54 -0700
+Message-ID: <xmqqjyry4hax.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,57 +90,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> +static int cmd_refs_rename(int argc, const char **argv, const char *prefix,
-> +			   struct repository *repo)
-> +{
-> +	static char const * const refs_rename_usage[] = {
-> +		REFS_RENAME_USAGE,
-> +		NULL
-> +	};
-> +	const char *message = NULL;
-> +	struct option opts[] = {
-> +		OPT_STRING(0, "message", &message, N_("reason"),
-> +			   N_("reason of the update")),
-> +		OPT_END(),
-> +	};
-> +	const char *oldref, *newref;
-> +
-> +	argc = parse_options(argc, argv, prefix, opts, refs_rename_usage, 0);
-> +	if (argc != 2)
-> +		usage(_("rename requires old and new reference name"));
-> +	if (message && !*message)
-> +		die(_("refusing to perform update with empty message"));
-> +
-> +	oldref = argv[0];
-> +	newref = argv[1];
-> +
-> +	if (check_refname_format(oldref, 0))
-> +		die(_("invalid ref format: %s"), oldref);
-> +	if (check_refname_format(newref, 0))
-> +		die(_("invalid ref format: %s"), newref);
+> On Tue, Jun 16, 2026 at 07:25:02AM -0700, Junio C Hamano wrote:
+>
+>> >     +@@ t/t7450-bad-git-dotfiles.sh: test_expect_success 'git dirs of sibling submodules must not be nested' '
+>> >     + test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
+>> >     + 	test_must_fail git clone --recurse-submodules --jobs=2 nested clone_parallel 2>err &&
+>> >     + 	cat err &&
+>> >     +-	grep -E "(already exists|is inside git dir|not a git repository)" err &&
+>> >     ++	grep -E "(already exists|is inside git dir|does not point to a valid repository)" err &&
+>> 
+>> A few things.
+>> 
+>>  * Will we be happy to see only one of these possibilities, or do we
+>>    expect to see these once for each kind?
+>
+> I imagine it is only one. This all comes from 9cf8547320 (clone: prevent
+> clashing git dirs when cloning submodule in parallel, 2024-01-28), and
+> it is expecting the nested path to cause a failure. Which failure I
+> guess depends on the racy ordering. If we create the inner one first,
+> then we probably get "already exists", and if the outer one, then "is
+> inside git dir". I don't know exactly what sequence yields the
+> NOT_A_REPO message.
+>
+> But none of that is changing in this patch, just what the user-visible
+> text is for the NOT_A_REPO case.
+>
+> I did briefly wonder if we might see "not a git repository" from a
+> _different_ code path, and need to catch it along with the new message.
+> But running successfully with --stress implies that we never see the old
+> one anymore.
 
-Do we want to quote the value?  What other subcommands do in "git refs"?
+I see.  Thanks.
 
-> +	if (!refs_ref_exists(get_main_ref_store(repo), oldref))
-> +		die(_("reference does not exist: '%s'"), oldref);
-> +	if (refs_ref_exists(get_main_ref_store(repo), newref))
-> +		die(_("reference already exists: '%s'"), newref);
-> +
-> +	return refs_rename_ref(get_main_ref_store(repo), oldref, newref, message);
-> +}
+>
+>>  * a recently started in-flight topic tries to catch bare "grep" and
+>>    fails until you write test_grep X-<.
+>
+> Yeah. This will create a merge conflict for you, but hopefully the
+> resolution should be obvious. I don't think it makes sense to fix here,
+> as it's orthogonal to the purpose of the patch.
 
-I suspect that my version shared the same issue, but doesn't
-refs_rename_ref() return -1 for failure, which we may want to turn
-to positive 1 before returning?
+Yup.  I agree that, given that others in the same script will be
+updated by that other topic to conflict with this change, it would
+not make sense to do the same changes here.
 
-This is a tangent but git.c:handle_builtin() that calls
-git.c:run_builtin() may want to do the "negative return? flip the
-polarity" conversion to make this worry go away.  I dunno what such
-a change would break, though.
-
-If we rename a ref that does not have a reflog, would it leave the
-ref under the new name without reflog, or would we get a reflog with
-a single entry that marks the fact the old ref was renamed into the
-new ref?  Should that be controlled via --create-reflog option?
+Thanks.
