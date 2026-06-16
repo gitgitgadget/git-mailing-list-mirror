@@ -1,79 +1,79 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB0F416D0A
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 08:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6808D416D02
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 08:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781599464; cv=none; b=G4XLHowbiGOE2VQuKeJHBZaadXFCy2emLCROX0O8vM9ZKVXqHmPc1ruhQc32prff0EKilnJpUN7vNECPP1/9PC00RSV4Tc+PpMVxCGMpkTz6x4raXnZ6v+xztAhpAcAr/pWmsLTAWgOSHuf8ro1UzwCehcUGxo3NiTPo2/w2HjE=
+	t=1781599466; cv=none; b=JPGZf++VaE3bSAYaX+gRQJtg0w0OGxNeE0jO7093GFoCCD6nHVVnQuxwn53sgcaMOmx0O0JY5syuZUD2JIjRjFdTvHIX8AVcPRqijDcl6Zgzy/XjoCn0h/8yyl5c41UzGWImXaC+4EHbgZxVZY3y8nb1tP97NpKKf8AryZEbh/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781599464; c=relaxed/simple;
-	bh=MTweZApy02AlPTMDu32Q4O9VH0caNS12+d4KhpfvJkk=;
+	s=arc-20240116; t=1781599466; c=relaxed/simple;
+	bh=Qd2WYg8CVH5wMAn5kpcm+9/pq0R/EmlKfkxXNcwKahc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cTHr9Qe8PUOZ6gH8pN7QqB5rK50BkAGuK14w8Ojq8xIc3zl+0mXurk0EBnTx7QM2UmnfIi3kUf2EsENB8WQaXt45nkGaoXAvqcXrN2c2r1ewd+GBw/wVoYcX+bNoqZcq1InA8t18GPSUmP6Z3LAAkFv9SkSeG8/nRHiQ4WeCTEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nAoOZ/Wo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gOQdvApD; arc=none smtp.client-ip=202.12.124.152
+	 In-Reply-To:To:Cc; b=NoJnxUtm7SDmvrNRFgk3otQ9wrI/vT+PsO9Z4rupY3hxOQvPm7lcUZ447x+jwiszk15LQhXhjjItNkgtS330JAc8+U39p7mEhhhpANe0zdKNkgohIwYTzYNZoPDtATvyh73q6qrpGwEJTqwLGl0jpWiT9TSyPQPunTmiAcVafso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OdCuwkn4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=guT7brVD; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nAoOZ/Wo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gOQdvApD"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B480A7A0149;
-	Tue, 16 Jun 2026 04:44:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OdCuwkn4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="guT7brVD"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C7A2D7A0182;
+	Tue, 16 Jun 2026 04:44:24 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 16 Jun 2026 04:44:22 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 16 Jun 2026 04:44:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781599462;
-	 x=1781685862; bh=ZY5mbYHMp0b17M/cg6ILnOdp5JxBh9XiNYUbfhIT++s=; b=
-	nAoOZ/Woz/VbqwUIAGSxGJ8sLKrZb1YwlWjBNmAbxxLfNbIVz8u0EDCZpQhkNBfA
-	HSeotwRb9VjRuR0ZcrzEO752ABNzQiHrW4lOeO4tLgUXfPqefLMdNwLAv37ZEnP/
-	l8I73wZRES5gwlmNP6R0AUTDBAGCRm+OU28EgTZYZiwc81F+Ff4Tkfh0uwzzgzu9
-	lATJuiniKc/9fLJlvMSeBi7oVTXVlY8Z2lqZHRoSjSwQxFwFJb9EAMrAjj8aEwa8
-	t6ngojIUrp2UaYtPvdVm39JoTPxFxIxvZGnUoIWtwO64oCdyY0LeXVleKe8a+BKl
-	9ff0mePH06sspDIVkuu6ng==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781599464;
+	 x=1781685864; bh=+ejAjZA2GLrvg+8KKiNv/qqd3SOHb7Ub6SgXvEdma+Q=; b=
+	OdCuwkn420PuvemtrJZACud76v+PSJK9X1YNolZtKF0Ibcr4Ch2Jcvq2F3tYWXEH
+	OJYB6a79eu+crB26z7qwPXVo8ZYTQ3nupFF2FSyHWlvcrjiobm4/WRPs05VUUdHV
+	nFEzGwyqKUAcojWt8RACLhftsDToUjFlpNpRGW4qdnakLyolrqKPlhMO+dIiEOMA
+	DCxgV5K5bVJrUhB7yJkRh/FVuwZoZ6gLvX5tXSeOozyQsfG/EE55i6adie+wrhvE
+	cyybcxWjmUZMV/jiGa/vX9XaA/HOBsjGLbAxMlfmt/JkzJT2sNYlJjz+KTFfvo1x
+	K3W4UfUWnZwkX2K3qSG5sQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781599462; x=
-	1781685862; bh=ZY5mbYHMp0b17M/cg6ILnOdp5JxBh9XiNYUbfhIT++s=; b=g
-	OQdvApDBUwhMYu9tgmVkojCTy37UnXBWZL2ev74ySduodtiIOogSnpmt9hr852Eq
-	g5uHYtcL8bDcQ09WLo37VGnc5MjxOCpoowDiIkypWrNjR8Z9gsB2Z8hsNoloLIQ9
-	FSf+ldaePioRUx0RNKtSCqnCMD6fIVCRLAnqatMzNB1PY34kXqnffu/Gg90f00BV
-	wHwcAvugnV4EF1uLzEtjIjcPI1gcYNQ3nU10FKtkD5JVj2WBdNKwIe15AqsfU8dF
-	Eg1NyTmvb2M+YJ6vb8nGOtpPRLe5tYfwiVdJkZRFklvCTWIrNmFqn1beZYLcqgbV
-	sSRn7soIhcEnTKF4dmhVw==
-X-ME-Sender: <xms:5gwxamwlsZfytTGfGWtS7FAHrgMHq1e1is7HQYlA4Eh8neu_GCVZ6g>
-    <xme:5gwxaoSWL74IVej6bZgcsIwb9JDSSu_9ggNy2GDVuUOE2GwB5hDi6Ws5PDA2SX44Z
-    9ps2oFOCOzx5aEBah_gIpzkcf3oKUGhb2UT7G6kkFnCAJBtDTlTTQ>
-X-ME-Received: <xmr:5gwxal-kdimD0PQHGeFP6ysScw2dNM7qZlzuqHzHZjUcf4IE_-Y8tgQaGEtHSqQ1DMtGxa0rzk7xn69E3UuuFEn4cV3NXKDeKBIUTs5OiystFA>
-X-ME-Proxy-Cause: dmFkZTFBk5CWSueBh1W9d8KzddL0zCsFFQZw01Xrj+/G5WsDERV5CEq8iQgMA6rkpb01Ha
-    XO2sPvtgztpkfBWoASmLj0xbcH+OHbEp/Ntqa65jJ4lH6/LQsqzJ7SHT2FgmtGJB1bHeOC
-    XIiagSI94YMf3JJr8g7IUXkjs6Pr+wY/2pTVtxWi1fdmXxZn+NBj8tS76E8hIvNsBuZH+U
-    ZHkSQm05igjvDv2JMx40FszLieL925SSqFNBjj2D1t/vQhNyThEajaqNQ/yZQKKtGC60AS
-    8hoKIO7fl2Xgg5O+wx88z/9O8HKF0b73BMtkEJnjSrGaDQbnxxwJdEfVcGMAxHBIm2BdW3
-    wJcmDAM43Js2KqGHXmfT21iLhThUOBTrd6b8UhdNTBiucv/fJ4QC1XlAZxz8SS2nQIRwKM
-    a/QBsd7yTEvq5eNxGsIgSs5eZQPCPSJ8OutY1bczQOZrsOS/BWaGpgN0o6V5rV5vD5VdeX
-    +ZExGnw1Bqm+6pPzgixEwIyio8hMHq+0g0pQMYC+g9S/R1qMagoiZUUs/5TFV1yGH5Tr4j
-    p5opTprOKjhEH5WhD4JqX+pQ18snAEA17JWCBb/dxjB1dMLY8TigJ8Okzi+jutWt/RJlPP
-    kK4kNGIMCVdohskbDqPBQPKiPkkru14cNvq7rMRykAyE/ax2vPFhrZrMlXrQ
-X-ME-Proxy: <xmx:5gwxanqfn1AXA2Sv2BKJksbepGkaU_1s2Ye5cxJ6_NWJCF_Hi1MKEg>
-    <xmx:5gwxaqkAfXdBmJL0swrkCLGqU6WLHLQZq9f8aARJ_wqr-x6ow5xobg>
-    <xmx:5gwxamIJNfbFwco7dWp41Qp-J5ZWv0WQmRPSnMrhAx_K97_5WEyRcw>
-    <xmx:5gwxany97_gApzwzjUhUlE1fu6JWjxJWsADuCvFDr8BcMvhIjQiABQ>
-    <xmx:5gwxaqJZgcretU_Ochs1qG9KXpuN9fMua3fQLEAZyLOfOKj2NDnXQvYT>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781599464; x=
+	1781685864; bh=+ejAjZA2GLrvg+8KKiNv/qqd3SOHb7Ub6SgXvEdma+Q=; b=g
+	uT7brVDW9oGvZbpZjYDRhFXUV+njwbN4hx3NzMW5Y0rtTJ0V5fw+TS7dW8oApnAn
+	uoIJ+0LBEleUTMWm4rsRqcE2DDNjK0DWjiHPa1HAxok6oVm4rCPtZsvU5JNnsOo7
+	gF8OyDTcTYXOd9vyy0T1tWUkntq27VmusxPcv9Y1Yd4ifi7qH/uS372UsZ5mTAcK
+	aIM6Sg3TJg8wX6ndCuodTxGsqnPeZoNqkMxXrzgHd9yvDgZPjYZ7/KKLHbpU/FXl
+	peiXJgnugGlWwUyuig/hF+Df2fYQXH2FfGniaXaIdQE6+A2vyeGGNERfzW4X4rH9
+	6Xt40SpY8agog+sZYTxDg==
+X-ME-Sender: <xms:6Awxat25Js-abjcjpj9Dy8WgCFk2KC3XskS8FRdANtM1JqBaJTs84Q>
+    <xme:6AwxaqFQydRTitAyPDOUgfDl1JWOY0kH8zLYoJ0QWoOIb0TG0PvHIMDSuNvY7L8ID
+    L5Fb0kKXnkwSEfRFPzAYURNe00JG3VTPjGtc3F5kAD5mdciF07p-w>
+X-ME-Received: <xmr:6Awxarjw3J5-_auXGp7ER8KIe7cyLcZ3mu2yiH4kot5fZO05K4Uav_c8-N7aqkTauYdl6Fuv4s6E3LFKJ9cryUqhTzu505unasWIsa-ms9L4JQ>
+X-ME-Proxy-Cause: dmFkZTEOlVcZWEzrPwdEy18ZWCa4jjcjf5fltFevy+Diy6LjKc+K1bJlLYqbhA0NRBEQm2
+    JAgZMioNj2OWNFjvTShEZoGoUC51PcaK2LMwh49sGR0sX9pSceUhjiLidkEXPS2D08z/T4
+    MP3ukocLsR8NDbbj6mTjc/vzuHfnpBg4PuGK+0KA6biGsJi0qEAcGXBzOI2hQr9AC6q5Ec
+    fWfU7ZTcOn2vArbq2/qwCqPAcGetGEUuYC0GBZPi+akfXmvZnskqo82CNkKs8lxMH+VyOB
+    gLvf9BMFIswaJfbZCBPSv+WrIWWSswq4fTNe9DbgxCbqO6jXxmORZoyMyPXUIwEIauCbCi
+    3aPHn0V/Vm4myOTDs/PdlnJiDW0ySUwXWB2ZsFeNQ86ftu0KeGm491I3Xj1HFnzeXLQ+v+
+    CLj7iMpIvmNdS6rmtAxE4JTti2xcCd/ciwNHFtjyRC6cqRkN+ttq7biNbTIjW8flZo4IXF
+    tYLXOIRnmIbrP3RDu9L5qjpNRRT4A/DqjjzEQX8fHMqJYGl04qvLBxMLh5y9EQW9QGvzA/
+    tKt4R2i8urgR8htTCld7v4jwX3caSTQu9Wb7IoRWZ5srbjYNHSDy+qAnuZmadEBAAlySBK
+    FTqfzOMRGDEi+4NZV4YxzFJ5XKbT1mzRqXKai8+YeDjvUf9itExaFrHJ5P/w
+X-ME-Proxy: <xmx:6Awxal8X0sVXMflqYN5vry1CXyufcZXOMZCQeIRlzkP39PU2Al4QQg>
+    <xmx:6AwxairLzdJVWytrrDbPdHAuPmurKEj53HToWoiT6ZpC7nk5PCn9rA>
+    <xmx:6Awxak8od_pzNaGq33dRJuC1qmgBFhvS4PKxlotpH_MUBdFwbEc0oQ>
+    <xmx:6AwxamXWWzmsozSq-flKQQjWXazyVp0RM12Wj7WYaJZKnPF73eHtBg>
+    <xmx:6AwxapP69oIAh0_MAxj9zH-6av0TS3tRWKVYYfB9aa5kA0FBd8cS1tLE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Jun 2026 04:44:21 -0400 (EDT)
+ 16 Jun 2026 04:44:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8f32c8b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 16 Jun 2026 08:44:20 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 8e53fac2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 16 Jun 2026 08:44:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 16 Jun 2026 10:44:07 +0200
-Subject: [PATCH 2/4] builtin/refs: add "delete" subcommand
+Date: Tue, 16 Jun 2026 10:44:08 +0200
+Subject: [PATCH 3/4] builtin/refs: add "update" subcommand
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,105 +82,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260616-pks-refs-writing-subcommands-v1-2-9f5219b6109d@pks.im>
+Message-Id: <20260616-pks-refs-writing-subcommands-v1-3-9f5219b6109d@pks.im>
 References: <20260616-pks-refs-writing-subcommands-v1-0-9f5219b6109d@pks.im>
 In-Reply-To: <20260616-pks-refs-writing-subcommands-v1-0-9f5219b6109d@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.15.2
 
-Reference-related functionality in Git is currently spread across many
-different commands: git-update-ref(1), git-for-each-ref(1),
-git-show-ref(1), git-pack-refs(1) and git-symbolic-ref(1). This makes it
-hard for users to discover what functionality we have available to work
-with references.
-
-We have thus started to consolidate this functionality into git-refs(1),
-which is a toolbox of everything related to references. Until now, the
-command doesn't handle functionality of git-update-ref(1).
-
-Fix this gap by introducing a new "delete" subcommand, which is the
-equivalent of `git update-ref -d`.
-
-Note that we're intentionally not using a generic "write" subcommand
-with a "-d" flag. This is rather harder to discover, and subcommands
-that are implmented as flags tend to be hard to reason about in the code
-as we'd have to handle mutually-exclusive flags that stem from the other
-subcommand-like modes.
+Add a new "update" subcommand which mirrors `git update-ref <refname>
+<oldoid> <newoid>`. This follows the same reasoning as the preceding
+commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-refs.adoc |  17 ++++++
- builtin/refs.c              |  46 +++++++++++++++
+ Documentation/git-refs.adoc |   7 ++
+ builtin/refs.c              |  50 +++++++++++++
  t/meson.build               |   1 +
- t/t1464-refs-delete.sh      | 133 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 197 insertions(+)
+ t/t1465-refs-update.sh      | 179 ++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 237 insertions(+)
 
 diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index fa33680cc7..c03e8e6ac3 100644
+index c03e8e6ac3..0a887cf5e5 100644
 --- a/Documentation/git-refs.adoc
 +++ b/Documentation/git-refs.adoc
-@@ -20,6 +20,7 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
- 		   [ --stdin | (<pattern>...)]
+@@ -21,6 +21,7 @@ git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
  git refs exists <ref>
  git refs optimize [--all] [--no-prune] [--auto] [--include <pattern>] [--exclude <pattern>]
-+git refs delete [--message=<reason>] [--no-deref] <ref> [<oldvalue>]
+ git refs delete [--message=<reason>] [--no-deref] <ref> [<oldvalue>]
++git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
  
  DESCRIPTION
  -----------
-@@ -51,6 +52,12 @@ optimize::
- 	usage. This subcommand is an alias for linkgit:git-pack-refs[1] and
- 	offers identical functionality.
+@@ -58,6 +59,12 @@ delete::
+ 	reference is only deleted after verifying that it currently contains
+ 	`<oldvalue>`.
  
-+delete::
-+	Delete the given reference. This subcommand mirrors `git update-ref -d`
-+	(see linkgit:git-update-ref[1]). When `<oldvalue>` is given, the
-+	reference is only deleted after verifying that it currently contains
-+	`<oldvalue>`.
++update::
++	Update the given reference to point at `<new-value>`. This subcommand
++	mirrors `git update-ref` (see linkgit:git-update-ref[1]). When
++	`<old-value>` is given, the reference is only updated after verifying
++	that it currently contains `<old-value>`.
 +
  OPTIONS
  -------
  
-@@ -90,6 +97,16 @@ The following options are specific to 'git refs optimize':
- 
- include::pack-refs-options.adoc[]
- 
-+The following options are specific to commands which write references:
-+
-+`--message=<reason>`::
-+	Use the given <reason> string for the reflog entry associated with the
-+	update. An empty message is rejected.
-+
-+`--no-deref`::
-+	Operate on <ref> itself rather than the reference it points to via a
-+	symbolic ref.
-+
- KNOWN LIMITATIONS
- -----------------
- 
 diff --git a/builtin/refs.c b/builtin/refs.c
-index f0faabf45a..69eb528522 100644
+index 69eb528522..3238ddf3f0 100644
 --- a/builtin/refs.c
 +++ b/builtin/refs.c
-@@ -21,6 +21,9 @@
- #define REFS_OPTIMIZE_USAGE \
- 	N_("git refs optimize " PACK_REFS_OPTS)
+@@ -24,6 +24,9 @@
+ #define REFS_DELETE_USAGE \
+ 	N_("git refs delete [--message=<reason>] [--no-deref] <ref> [<oldvalue>]")
  
-+#define REFS_DELETE_USAGE \
-+	N_("git refs delete [--message=<reason>] [--no-deref] <ref> [<oldvalue>]")
++#define REFS_UPDATE_USAGE \
++	N_("git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]")
 +
  static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
  			    struct repository *repo)
  {
-@@ -175,6 +178,47 @@ static int cmd_refs_optimize(int argc, const char **argv, const char *prefix,
- 	return pack_refs_core(argc, argv, prefix, repo, refs_optimize_usage);
+@@ -219,6 +222,51 @@ static int cmd_refs_delete(int argc, const char **argv, const char *prefix,
+ 			       argc == 2 ? &oldoid : NULL, flags);
  }
  
-+static int cmd_refs_delete(int argc, const char **argv, const char *prefix,
++static int cmd_refs_update(int argc, const char **argv, const char *prefix,
 +			   struct repository *repo)
 +{
-+	static char const * const refs_delete_usage[] = {
-+		REFS_DELETE_USAGE,
++	static char const * const refs_update_usage[] = {
++		REFS_UPDATE_USAGE,
 +		NULL
 +	};
 +	const char *message = NULL;
@@ -191,14 +159,16 @@ index f0faabf45a..69eb528522 100644
 +		OPT_BIT(0 ,"no-deref", &flags,
 +			N_("update <refname> not the one it points to"),
 +			REF_NO_DEREF),
++		OPT_BIT(0, "create-reflog", &flags, N_("create a reflog"),
++			REF_FORCE_CREATE_REFLOG),
 +		OPT_END(),
 +	};
-+	struct object_id oldoid;
++	struct object_id newoid, oldoid;
 +	const char *refname;
 +
-+	argc = parse_options(argc, argv, prefix, opts, refs_delete_usage, 0);
-+	if (argc < 1 || argc > 2)
-+		usage(_("delete requires reference name and an optional old object ID"));
++	argc = parse_options(argc, argv, prefix, opts, refs_update_usage, 0);
++	if (argc < 2 || argc > 3)
++		usage(_("update requires reference name, new value and an optional old value"));
 +
 +	if (message && !*message)
 +		die(_("refusing to perform update with empty message"));
@@ -206,60 +176,59 @@ index f0faabf45a..69eb528522 100644
 +	repo_config(repo, git_default_config, NULL);
 +
 +	refname = argv[0];
-+	if (argc == 2) {
-+		if (repo_get_oid_with_flags(repo, argv[1], &oldoid, GET_OID_SKIP_AMBIGUITY_CHECK))
-+			die(_("invalid old object ID: '%s'"), argv[1]);
-+		if (is_null_oid(&oldoid))
-+			die(_("cannot delete object with null old object ID"));
-+	}
++	if (repo_get_oid_with_flags(repo, argv[1], &newoid,
++				    GET_OID_SKIP_AMBIGUITY_CHECK))
++		die(_("invalid new object ID: %s"), argv[1]);
++	if (argc == 3 &&
++	    repo_get_oid_with_flags(repo, argv[2], &oldoid,
++				    GET_OID_SKIP_AMBIGUITY_CHECK))
++		die(_("invalid old object ID: %s"), argv[2]);
 +
-+	return refs_delete_ref(get_main_ref_store(repo), message, refname,
-+			       argc == 2 ? &oldoid : NULL, flags);
++	return refs_update_ref(get_main_ref_store(repo), message, refname,
++			       &newoid, argc == 3 ? &oldoid : NULL, flags,
++			       UPDATE_REFS_DIE_ON_ERR);
 +}
 +
  int cmd_refs(int argc,
  	     const char **argv,
  	     const char *prefix,
-@@ -186,6 +230,7 @@ int cmd_refs(int argc,
- 		"git refs list " COMMON_USAGE_FOR_EACH_REF,
+@@ -231,6 +279,7 @@ int cmd_refs(int argc,
  		REFS_EXISTS_USAGE,
  		REFS_OPTIMIZE_USAGE,
-+		REFS_DELETE_USAGE,
+ 		REFS_DELETE_USAGE,
++		REFS_UPDATE_USAGE,
  		NULL,
  	};
  	parse_opt_subcommand_fn *fn = NULL;
-@@ -195,6 +240,7 @@ int cmd_refs(int argc,
- 		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
+@@ -241,6 +290,7 @@ int cmd_refs(int argc,
  		OPT_SUBCOMMAND("exists", &fn, cmd_refs_exists),
  		OPT_SUBCOMMAND("optimize", &fn, cmd_refs_optimize),
-+		OPT_SUBCOMMAND("delete", &fn, cmd_refs_delete),
+ 		OPT_SUBCOMMAND("delete", &fn, cmd_refs_delete),
++		OPT_SUBCOMMAND("update", &fn, cmd_refs_update),
  		OPT_END(),
  	};
  
 diff --git a/t/meson.build b/t/meson.build
-index c5832fee05..1ccf08a3b5 100644
+index 1ccf08a3b5..2063962dab 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -223,6 +223,7 @@ integration_tests = [
-   't1461-refs-list.sh',
+@@ -224,6 +224,7 @@ integration_tests = [
    't1462-refs-exists.sh',
    't1463-refs-optimize.sh',
-+  't1464-refs-delete.sh',
+   't1464-refs-delete.sh',
++  't1465-refs-update.sh',
    't1500-rev-parse.sh',
    't1501-work-tree.sh',
    't1502-rev-parse-parseopt.sh',
-diff --git a/t/t1464-refs-delete.sh b/t/t1464-refs-delete.sh
+diff --git a/t/t1465-refs-update.sh b/t/t1465-refs-update.sh
 new file mode 100755
-index 0000000000..4a36d3866b
+index 0000000000..e7582a6195
 --- /dev/null
-+++ b/t/t1464-refs-delete.sh
-@@ -0,0 +1,133 @@
++++ b/t/t1465-refs-update.sh
+@@ -0,0 +1,179 @@
 +#!/bin/sh
 +
-+test_description='git refs delete'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++test_description='git refs update'
 +
 +. ./test-lib.sh
 +
@@ -269,121 +238,170 @@ index 0000000000..4a36d3866b
 +	test_commit -C "$1" B
 +}
 +
-+test_expect_success 'delete without oldvalue verification' '
-+	test_when_finished "rm -rf repo" &&
-+	setup_repo repo &&
-+	A=$(git -C repo rev-parse A) &&
-+	git -C repo update-ref refs/heads/foo $A &&
-+	git -C repo refs delete refs/heads/foo &&
-+	test_must_fail git -C repo show-ref --verify -q refs/heads/foo
-+'
++test_ref_matches () {
++	git rev-parse "$1" >expect &&
++	echo "$2" >actual &&
++	test_cmp expect actual
++}
 +
-+test_expect_success 'delete with matching oldvalue' '
++test_expect_success 'update creates a new reference' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
 +	(
 +		cd repo &&
 +		A=$(git rev-parse A) &&
-+		git update-ref refs/heads/foo $A &&
-+		git refs delete refs/heads/foo $A &&
-+		test_must_fail git refs exists refs/heads/foo
++		git refs update refs/heads/foo $A &&
++		test_ref_matches refs/heads/foo "$A"
 +	)
 +'
 +
-+test_expect_success 'delete with stale oldvalue fails' '
++test_expect_success 'update an existing reference without oldvalue' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
 +	(
 +		cd repo &&
 +		A=$(git rev-parse A) &&
 +		B=$(git rev-parse B) &&
-+		git update-ref refs/heads/foo $A &&
-+		test_must_fail git refs delete refs/heads/foo $B 2>err &&
++		git refs update refs/heads/foo $A &&
++		git refs update refs/heads/foo $B &&
++		test_ref_matches refs/heads/foo $B
++	)
++'
++
++test_expect_success 'update with matching oldvalue' '
++	test_when_finished "rm -rf repo" &&
++	setup_repo repo &&
++	(
++		cd repo &&
++		A=$(git rev-parse A) &&
++		B=$(git rev-parse B) &&
++		git refs update refs/heads/foo $A &&
++		git refs update refs/heads/foo $B $A &&
++		test_ref_matches refs/heads/foo $B
++	)
++'
++
++test_expect_success 'update with stale oldvalue fails' '
++	test_when_finished "rm -rf repo" &&
++	setup_repo repo &&
++	(
++		cd repo &&
++		A=$(git rev-parse A) &&
++		B=$(git rev-parse B) &&
++		git refs update refs/heads/foo $A &&
++		test_must_fail git refs update refs/heads/foo $B $B 2>err &&
 +		test_grep " but expected " err &&
-+		git refs exists refs/heads/foo
++		test_ref_matches refs/heads/foo $A
 +	)
 +'
 +
-+test_expect_success 'delete with null oldvalue fails' '
++test_expect_success 'update with invalid new value fails' '
++	test_when_finished "rm -rf repo" &&
++	setup_repo repo &&
++	(
++		cd repo &&
++		test_must_fail git refs update refs/heads/foo invalid-oid 2>err &&
++		test_grep "invalid new object ID" err &&
++		test_must_fail git refs exists refs/heads/foo
++	)
++'
++
++test_expect_success 'update with invalid old value fails' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
 +	(
 +		cd repo &&
 +		A=$(git rev-parse A) &&
-+		git update-ref refs/heads/foo $A &&
-+		test_must_fail git refs delete refs/heads/foo $ZERO_OID 2>err &&
-+		test_grep "null old object ID" err &&
-+		git refs exists refs/heads/foo
-+	)
-+'
-+
-+test_expect_success 'delete with invalid oldvalue fails' '
-+	test_when_finished "rm -rf repo" &&
-+	setup_repo repo &&
-+	(
-+		cd repo &&
-+		A=$(git rev-parse A) &&
-+		git update-ref refs/heads/foo $A &&
-+		test_must_fail git refs delete refs/heads/foo invalid-oid 2>err &&
++		B=$(git rev-parse B) &&
++		git refs update refs/heads/foo $A &&
++		test_must_fail git refs update refs/heads/foo $B invalid-oid 2>err &&
 +		test_grep "invalid old object ID" err &&
-+		git refs exists refs/heads/foo
++		test_ref_matches refs/heads/foo $A
 +	)
 +'
 +
-+test_expect_success 'delete symref with --no-deref leaves target intact' '
++test_expect_success 'update --no-deref rewrites the symref itself' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
 +	(
 +		cd repo &&
 +		A=$(git rev-parse A) &&
-+		git update-ref refs/heads/foo $A &&
++		B=$(git rev-parse B) &&
++		git refs update refs/heads/foo $A &&
 +		git symbolic-ref refs/heads/symref refs/heads/foo &&
-+		git refs delete --no-deref refs/heads/symref &&
-+		test_must_fail git refs exists refs/heads/symref &&
-+		git refs exists refs/heads/foo
++		git refs update --no-deref refs/heads/symref $B &&
++		test_must_fail git symbolic-ref refs/heads/symref &&
++		test_ref_matches refs/heads/symref $B &&
++		test_ref_matches refs/heads/foo $A
 +	)
 +'
 +
-+test_expect_success 'delete with message records reason in reflog' '
++test_expect_success 'update does not create a reflog by default' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
 +	(
 +		cd repo &&
 +		A=$(git rev-parse A) &&
-+		git update-ref refs/heads/foo $A &&
-+		git symbolic-ref HEAD refs/heads/foo &&
-+		git refs delete --message=delete-reason refs/heads/foo &&
-+		test_must_fail git refs exists refs/heads/foo &&
-+		test-tool ref-store main for-each-reflog-ent HEAD >actual &&
-+		test_grep "delete-reason$" actual
++		git refs update refs/foo $A &&
++		test_must_fail git reflog exists refs/foo
 +	)
 +'
 +
-+test_expect_success 'delete with empty message fails' '
++test_expect_success 'update creates a reflog with --create-reflog' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
 +	(
 +		cd repo &&
 +		A=$(git rev-parse A) &&
-+		git update-ref refs/heads/foo $A &&
-+		test_must_fail git refs delete --message= refs/heads/foo 2>err &&
-+		test_grep "empty message" err &&
-+		git refs exists refs/heads/foo
++		git refs update --create-reflog refs/foo $A &&
++		git reflog exists refs/foo
 +	)
 +'
 +
-+test_expect_success 'delete without arguments fails' '
++test_expect_success 'update with message records reason in reflog' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
-+	test_must_fail git -C repo refs delete 2>err &&
-+	test_grep "requires reference name" err
++	(
++		cd repo &&
++		A=$(git rev-parse A) &&
++		B=$(git rev-parse B) &&
++		git refs update refs/heads/foo $A &&
++		git refs update --message=update-reason refs/heads/foo $B &&
++		git reflog show refs/heads/foo >actual &&
++		test_grep "update-reason$" actual
++	)
 +'
 +
-+test_expect_success 'delete with too many arguments fails' '
++test_expect_success 'update with empty message fails' '
 +	test_when_finished "rm -rf repo" &&
 +	setup_repo repo &&
-+	test_must_fail git refs delete one two three 2>err &&
-+	test_grep "requires reference name" err
++	(
++		cd repo &&
++		A=$(git rev-parse A) &&
++		B=$(git rev-parse B) &&
++		git refs update refs/heads/foo $A &&
++		test_must_fail git refs update --message= refs/heads/foo $B 2>err &&
++		test_grep "empty message" err
++	)
++'
++
++test_expect_success 'update with too few arguments fails' '
++	test_when_finished "rm -rf repo" &&
++	setup_repo repo &&
++	test_must_fail git -C repo refs update refs/heads/foo 2>err &&
++	test_grep "requires reference name, new value" err
++'
++
++test_expect_success 'update with too many arguments fails' '
++	test_when_finished "rm -rf repo" &&
++	setup_repo repo &&
++	(
++		cd repo &&
++		A=$(git rev-parse A) &&
++		B=$(git rev-parse B) &&
++		test_must_fail git refs update refs/heads/foo $A $B extra 2>err &&
++		test_grep "requires reference name, new value" err
++	)
 +'
 +
 +test_done
