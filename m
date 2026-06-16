@@ -1,158 +1,318 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEEB416D0A
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 08:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2DA416CE3
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 08:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781598859; cv=none; b=GhQm5/M8gnwkRgh7hiDgwABoI3OjiE1G64HbRk+qu8Tn6QAY1p/npd/Ttzl4AsMQucVvxzjvyQnXq2l7jRyvfwxfEwVrLXgyi8k4odWYJ83Ne6WTUDqIjU8lSH9l4gcwl9TD66Ia20/M1ZEPI9+GZN9dJ5fHbhkswDUll6AgqKs=
+	t=1781599001; cv=none; b=afm0dx0+4RvPomtWYaGE+hME/BYakRXVdnui0hScT/jT0TL8HsU/nuRuVsl0s0si88r/dNHOc/MEwWu3qEAz768jYWbIJkXGQz8HSIvLOi0kKA4Kzi+r4QsOmAP0e6vob6YgVk2taryIJkI+SeQnY8gddwTC4ckHnK+pe8jVRzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781598859; c=relaxed/simple;
-	bh=XuVLeNI6mhjsdIfpfw36LII0iWt0bb29TTYUBe2hO34=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VP7twYhxXttGBTfOEuC0wUcG5ljLiz1kMzXgPCGoj2XAn4V669lRQi/c3dBvkMcGMN3mSgnlMHCSQXX+rjOxIo4STdSeRgSdRrwFEb6Jir/LDb9q3+RNt+B+eO12OOveCsnYJGUCRxirN6lKB0qFJM6Mfr/vUm+Pi7u2m8x6kAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PI78TPRz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=issWr72/; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1781599001; c=relaxed/simple;
+	bh=2AJIS2KX7dBb/FGKCwSR8qN35whLw+4S0XxzGhqYIyA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sA5urXFsk5YjnGkl07UkJpQ3NOQbVBbrthuUNpdJ6CBdfxMFwEgXmCEVklQ1MyJx7lraNGIkSihHil8Cvszkc9ftjfjVLZNXIFVTofE5Xyp9zgBoUhgEHgeo+Yfp1KwvSoMCYS35UgSlHawxCto6z3XbVJmpMM9ujuihMgUZ9cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b696iXBu; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PI78TPRz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="issWr72/"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 946307A0049;
-	Tue, 16 Jun 2026 04:34:17 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 16 Jun 2026 04:34:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781598857;
-	 x=1781685257; bh=mVSIIY+fom5jgDrNnfTZsA0IAHzrx49k10wl5jSZIKY=; b=
-	PI78TPRzpWzgRT7JwcZHxPUCfy04BUbjTBF8J0N6ril049ozT78xGvTKB4iZmC7p
-	IJfqd3QDgvKwmsMe6m0KglPJNm/9NwJufft9LqSXJpfHSBdUEU9riu0Jy3Jo6Wz+
-	Kis12/Mgp7zcQijkTM1YcpegtqrVkRQTWkFbtE4hpvGalvfTjbxA8kBMKCRYlCR+
-	Y2PJeGZgK0VLIZgQgz3V08QD4i+iHHLjr1zi5NE2pXAnr9y+VmD3DnwNC/rXSrFi
-	TRYVZ3HuBD5XCDXMacIrI9gbuU8CWunZJ4rMDs3KNuACQPQqp9wuT3z860fzhXCt
-	ETb1xrC+3Q330nt9LxHKxg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781598857; x=
-	1781685257; bh=mVSIIY+fom5jgDrNnfTZsA0IAHzrx49k10wl5jSZIKY=; b=i
-	ssWr72/b98ckSEkQ65tGDfqpb/5ho1HI4NZ17qWKzdG7jBpaS8Gb73DfSr7a4ym8
-	bCVdY8jm8oY0bOtKz5nyTrZOu8lvoZd54kaVGj6REZ2YvQWCNrWV7TximZBRp0es
-	hOA2R0UAMZ37jHJDRL+E+VvPSTYqDdWYyqQt7zg9Q3ZXWyujUeFg1WJVVkPeUWli
-	CJ8tzHoNpfnNzgyDs4bBONVbqIuVaw+XCB+C7P4JInygGDXNzqTczq6Wt5/QbcmO
-	aUGLLsnN5EKqGeNvzpiUCFtfEkpS47jJLcsd7oRwC8jnnH3nvn4uSneEi9WAfHfT
-	x3hCCii1V4nDaHLzZzEpA==
-X-ME-Sender: <xms:iQoxaiURpOaMWSUsG0XaUD3lZuEZyvlAXI6CbvDH8aZtS_wMli5cBA>
-    <xme:iQoxaldxi5o5RfYwy8aF9jz8zWJOGCsEZUdwj1UzYMWqNm0ZZX0t3B_ZPLRx1pk3B
-    nuVabf1F_il0KXxkYPvey9uz6PLtPAeRnRLceDmZFIr5mMOg3AgHUw>
-X-ME-Received: <xmr:iQoxauv-eaYLx6ibWKGiON-kzCEGW7JinQWaFvUvjj6Omdkl-ZvZ2my8LPxox3g3Wucg3x_iqHwzQhbXBtsrCqcG3hHilceFJ7StmRh3RM-X8w>
-X-ME-Proxy-Cause: dmFkZTGVzjIlQsO2GVqWksYFIG6VJNp4lIb0nEh840w1zniixtei4YTZa6Ot29ZHd71qWB
-    z2JoWfoLe8bHRsnBMUyAXxEYgpsHatGC81GJUws9P8cbK3e8xBgT/vEZeYBe90rnAtBJ0i
-    ccXlkMTZoh37gqgdTFZ4oacvlKFNqQEDYFC4M/A/7gykrrSDI5TYc4RN/6nrmOZCaYi3b4
-    nKSIcrDM9qul7ZFDXQ3RzyquALGKNOHuTGNAJFZXdrXezMqj5Y07zsGTZo/T17PayqsRXU
-    0MzNAyuyrcPvckkTUl5Fn1UD+WQFajVOqPH80ZPTIotfwzLbQKlN8BWehx3j7coUji0kmL
-    S+k54CdtodX6mjdHkFvR0WB+5LLyJ7cWskF7el8UlO4cRJobQcgbE4XVoFSOFkfs7ZmCzu
-    gA6xkqm2S2uUG2ovrLTmB/5vep20Ob5hij3hmSuIHfYzkILanSLmeRf2FTdtYFM+FD8W3O
-    XmNcWVpn4pn6DbQBWkK5MOeLELHYwYYqAvN2vHYfVcI90mYLPbJexf7mhCK8p4QQ8JSkmu
-    LegQpMAjtubI9nahAfB4vl1lIscbcuT5MKUVZA7i8xdzPtvj72jjnBNYOAmItw2XzFGf1Q
-    pg0TMJNCUDcf9PUIJiFg0mWkegw+scochqXnuCkAOh3C8FW6rtsUD8ZOaDaQ
-X-ME-Proxy: <xmx:iQoxak_WPc2RSrKLIPG06cl2I9rPZvIP07W8kVDlaS_UbBobor68dQ>
-    <xmx:iQoxap32yDkaf_9q7-RWg6uBvmJvNL0Dyr5F9KAj8Xfy7PwgoMh_tA>
-    <xmx:iQoxapBo2qrod-jqIaTJafAj70D8SdG7AQ6xb0nCfY7oFoEGDBwfiA>
-    <xmx:iQoxalct6ZM1ox1flUhw9hwpoQYTSTGYX6y94zcyWWyzViQzc-T4jw>
-    <xmx:iQoxakOR-kkay0ifiqgA-3tThfunUVFxZKeW8S9gXZZzk76vtqpZJTy8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Jun 2026 04:34:16 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a1d8893a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 16 Jun 2026 08:34:14 +0000 (UTC)
-Date: Tue, 16 Jun 2026 10:34:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/2] rebase: add --fixup to fold a range into its oldest
- commit
-Message-ID: <ajEKf-jCIDVPQCeO@pks.im>
-References: <pull.2337.git.git.1781465141.gitgitgadget@gmail.com>
- <xmqqqzm8d0j7.fsf@gitster.g>
- <CAHwyqnWa55xbTpzq-Nf6cMyvgR1yYgg8fhvgMFkquSEGPUwDmg@mail.gmail.com>
- <CALnO6CBgHz5d5BT5gCyqyhw_HpV733msWOnrxmu-TJ0QGHE9tA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b696iXBu"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-bf1cdcfd6deso503285366b.3
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 01:36:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781598997; x=1782203797; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8ezRDNQdIHkhRP8xYNucvKVbfOhd+aFnUZBA0hhT/ok=;
+        b=b696iXBubdFhtlzXky9v6H67Ad/UMQL/wkDu1/yRPZbgpndVbXJ39oR7SARS2xbhIc
+         QriPBKfxvWZASJVXtteAmLLlp+OwItI/0QR5SQ8mOBdECWb90mm9J+zG63Q9nLkbGseS
+         NR2X+fi0AhiLXvZsnZfLcW9hlrgNPJ88/2xmMoYpAWHU+e317addstW5x6eQtcqThGHE
+         30gvbgSYYx+MJAVGlAgK4DOMJfiOspXjtt0HrX50IC+oOCzeGWfIErFqiDv0vEWmlUyc
+         sT8vXtTraTjDBL92ZFHTxTwsp2cwjWPbTmkNTIhanw0ArVNJIwCZtN+ere8wh9ZkBh/G
+         tBOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781598997; x=1782203797;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8ezRDNQdIHkhRP8xYNucvKVbfOhd+aFnUZBA0hhT/ok=;
+        b=Dqjl1AeU+9GrlVbXHvKKZNIh8uKXJ7EZOm0M4JQ7TyYJysM2WrH1BfVaCmIz15OPmY
+         HUkVMfhLtL/lxvgHymNQRiK6TMfntTy+SmwoCgfR/NVoLy0d4Mo3oK0/hyCOHoQ3R7aZ
+         Cy+iaJ36wXdp5GLY8C/Xu7GSQLF5I4W2znTd457btuR1+3uCWyo8HzU8ATgO4i+zOBI5
+         p3N1BS7alahwCIwgD9mLREdbtnpM0CvxqnIYv7x4XQ7FUDzM/zt+QSREj3eMOzGgwztx
+         VPE2xYDTV5nLDkHLat4c9lezIVOxggjL/SAFZh4/xXhyd6tKIPQH9/cJ44qm2q8QqyWX
+         v4bw==
+X-Forwarded-Encrypted: i=1; AFNElJ81tkdge45DlxFtX8w/Yve0Ju44huPOY4S3b7YcwG92kFOhbH0g3EVt5Tm4BabN7bBstc4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWr1wg9rSmaHKSTpab6PXRRraJJtE2HzVmtelkMtRQy1Px5CfG
+	ME3fs/k/go7oQE6iYyUEiTjTPm+dycgZv4R0Rd6q7qGKrDSk1RPPrcnH
+X-Gm-Gg: Acq92OFz5aDzzqgA4uv+WalsQpUyr6khWzgKSZ6+o/r88+2/BsiqKEHhIbrnrd/0tch
+	hKoA2kXZ5lZRtKavAq53Wci6K4SsQnLw5I69IiWpX3dXsd973/VwBiyIykAAA13ZmXvlbupBpco
+	3TJrIV6v4Dbd5pyTLTTVnfqgQ6QPexvByJCD0XS8ZbuFIjClTcDcKl6ivxDSkLevhK3a6igmr8Q
+	HZ88okyUdeySbhxwvXc42BNqXtIIwJC4t0IeBU6T5JCYOV/nGDsFf4/92zZExvmw3IJn/oKmhUR
+	HsiXu5nOWIraFX/fCtcUJzxyUNgX2AtG1afS980Y6piiDx8cI5laMTlsMuWSgofKFCxeLrSFmj7
+	mZmX06Smry+aCyePdneXQROcTNZbaaM++xAhxVHJFgrLcJ98dzjwuCPWAkcHfilKZRRfIn0mwgr
+	YKNzQrTURagLhpEbEuwXHwjUFDmXpw1NTvgxaerx+enO0wbKE0gpVwJVgYHQOpEqTulWmYiWZp+
+	IOvqtsyRtc=
+X-Received: by 2002:a17:907:c26:b0:bd8:6ac6:d722 with SMTP id a640c23a62f3a-c043cade0ffmr132171466b.24.1781598996855;
+        Tue, 16 Jun 2026 01:36:36 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:786c:b99d:5866:4e92? ([2a0a:ef40:69a:b801:786c:b99d:5866:4e92])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb7b6d621sm597664066b.34.2026.06.16.01.36.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2026 01:36:36 -0700 (PDT)
+Message-ID: <89d72342-5aa1-4dcf-951b-d0c791f91738@gmail.com>
+Date: Tue, 16 Jun 2026 09:36:35 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALnO6CBgHz5d5BT5gCyqyhw_HpV733msWOnrxmu-TJ0QGHE9tA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rebase: mention --abort alongside --continue
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
+References: <pull.2330.git.git.1781551170529.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2330.git.git.1781551170529.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 15, 2026 at 11:17:21AM -0400, D. Ben Knoble wrote:
-> On Mon, Jun 15, 2026 at 4:22 AM Harald Nordgren
-> <haraldnordgren@gmail.com> wrote:
-> > > > Adds git rebase --autosquash --fixup [<upstream>] to fold a range of commits
-> > > > into its oldest one, reusing that commit's message.
-> [snip]
-> > > I also wonder if we can do something like this without adding any
-> > > new option or command.  E.g., if you have four patch series, where
-> > > the initial implementation HEAD~3 is followed by "oops it was still
-> > > wrong" fix-up HEAD~2, HEAD~1 and HEAD, then
-> > >
-> > >     git reset --soft HEAD~3 && git commit --amend --no-edit
-> > >
-> > > is what the user wants to do, no?
-> >
-> > I don't think it's enough. First of all the user has to know the N for
-> > HEAD~N, and then 'git reset --soft HEAD~N && git commit --amend
-> > --no-edit' is still quite ugly.
+Hi Harald
+
+On 15/06/2026 20:19, Harald Nordgren via GitGitGadget wrote:
+> From: Harald Nordgren <haraldnordgren@gmail.com>
 > 
-> Well, there are a few ways to get this more easily than counting; for example,
-> 
-> - git rev-list @{u}.. | tail -n1
-> - the lovely ":/<pattern>" or "@^{/<pattern>}" revision notations
-> - etc.
-> 
+> The warning shown when an "exec" step fails and the "git status"
+> advice while splitting or editing a commit pointed users at "git
+> rebase --continue" but not "--abort". Mention it in both, matching
+> the conflict case.
+
+I'm not sure that the "failed exec" and "conflicts" cases are equivalent 
+though. If you have some nasty conflict that you don't want to resolve 
+then aborting and trying another approach such is incrementally rebasing 
+is the only option. If an exec command fails then it likely means that a 
+test has failed or some something similar which is minor inconvenience 
+which needs fixing before continuing - it seems very unlikely that the 
+user would want to abort the rebase.
+
+Thanks
+
+Phillip
+
+> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 > ---
+>      rebase: mention --abort when an exec step fails
+>      
+>      Mention git rebase --abort both in the warning shown when an exec step
+>      fails and in the git status advice while splitting or editing a commit,
+>      since rebase pointed users at --continue there without saying how to
+>      bail out, unlike every comparable command.
 > 
-> Stepping back a moment and assuming that the important thing you want
-> is the "squash" (and not necessarily the "rebase" moving commits onto
-> a new base), I wonder about
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2330%2FHaraldNordgren%2Frebase-exec-abort-hint-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2330/HaraldNordgren/rebase-exec-abort-hint-v1
+> Pull-Request: https://github.com/git/git/pull/2330
 > 
->      git history squash <range>
+>   sequencer.c            |  8 ++++++--
+>   t/t7512-status-help.sh | 17 +++++++++++++++++
+>   wt-status.c            |  7 ++++++-
+>   3 files changed, 29 insertions(+), 3 deletions(-)
 > 
-> which would squash all commits in the (now arbitrary!) range into the
-> first. That makes it somewhat more versatile at selecting commits, I
-> think, at the cost that re-basing is somewhat harder. That is, you
-> could then do
+> diff --git a/sequencer.c b/sequencer.c
+> index 57855b0066..c46e5b95bc 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3884,7 +3884,9 @@ static int do_exec(struct repository *r, const char *command_line, int quiet)
+>   			  "You can fix the problem, and then run\n"
+>   			  "\n"
+>   			  "  git rebase --continue\n"
+> -			  "\n"),
+> +			  "\n"
+> +			  "To abort and get back to the state before \"git rebase\", run "
+> +			  "\"git rebase --abort\".\n"),
+>   			command_line,
+>   			dirty ? _("and made changes to the index and/or the "
+>   				"working tree.\n") : "");
+> @@ -3897,7 +3899,9 @@ static int do_exec(struct repository *r, const char *command_line, int quiet)
+>   			  "Commit or stash your changes, and then run\n"
+>   			  "\n"
+>   			  "  git rebase --continue\n"
+> -			  "\n"), command_line);
+> +			  "\n"
+> +			  "To abort and get back to the state before \"git rebase\", run "
+> +			  "\"git rebase --abort\".\n"), command_line);
+>   		status = 1;
+>   	}
+>   
+> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+> index 08e82f7914..ca7ef66ae3 100755
+> --- a/t/t7512-status-help.sh
+> +++ b/t/t7512-status-help.sh
+> @@ -206,6 +206,7 @@ No commands remaining.
+>   You are currently editing a commit while rebasing branch '\''rebase_i_edit'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -240,6 +241,7 @@ Next command to do (1 remaining command):
+>     (use "git rebase --edit-todo" to view and edit)
+>   You are currently splitting a commit while rebasing branch '\''split_commit'\'' on '\''$ONTO'\''.
+>     (Once your working directory is clean, run "git rebase --continue")
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   Changes not staged for commit:
+>     (use "git add <file>..." to update what will be committed)
+> @@ -278,6 +280,7 @@ No commands remaining.
+>   You are currently editing a commit while rebasing branch '\''amend_last'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -317,6 +320,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -347,6 +351,7 @@ Next command to do (1 remaining command):
+>     (use "git rebase --edit-todo" to view and edit)
+>   You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (Once your working directory is clean, run "git rebase --continue")
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   Changes not staged for commit:
+>     (use "git add <file>..." to update what will be committed)
+> @@ -383,6 +388,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -414,6 +420,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -445,6 +452,7 @@ Next command to do (1 remaining command):
+>     (use "git rebase --edit-todo" to view and edit)
+>   You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (Once your working directory is clean, run "git rebase --continue")
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   Changes not staged for commit:
+>     (use "git add <file>..." to update what will be committed)
+> @@ -482,6 +490,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -515,6 +524,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -548,6 +558,7 @@ Next command to do (1 remaining command):
+>     (use "git rebase --edit-todo" to view and edit)
+>   You are currently splitting a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (Once your working directory is clean, run "git rebase --continue")
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   Changes not staged for commit:
+>     (use "git add <file>..." to update what will be committed)
+> @@ -587,6 +598,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_edits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -718,6 +730,7 @@ No commands remaining.
+>   You are currently editing a commit while rebasing branch '\''bisect'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   You are currently bisecting, started from branch '\''bisect_while_rebasing'\''.
+>     (use "git bisect reset" to get back to the original branch)
+> @@ -987,6 +1000,7 @@ No commands remaining.
+>   You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -1015,6 +1029,7 @@ Next commands to do (2 remaining commands):
+>   You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -1044,6 +1059,7 @@ Next commands to do (2 remaining commands):
+>   You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> @@ -1064,6 +1080,7 @@ Next command to do (1 remaining command):
+>   You are currently editing a commit while rebasing branch '\''several_commits'\'' on '\''$ONTO'\''.
+>     (use "git commit --amend" to amend the current commit)
+>     (use "git rebase --continue" once you are satisfied with your changes)
+> +  (use "git rebase --abort" to check out the original branch)
+>   
+>   nothing to commit (use -u to show untracked files)
+>   EOF
+> diff --git a/wt-status.c b/wt-status.c
+> index b17372390c..94fd14a058 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1527,9 +1527,12 @@ static void show_rebase_in_progress(struct wt_status *s,
+>   		else
+>   			status_printf_ln(s, color,
+>   					 _("You are currently splitting a commit during a rebase."));
+> -		if (s->hints)
+> +		if (s->hints) {
+>   			status_printf_ln(s, color,
+>   				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
+> +			status_printf_ln(s, color,
+> +				_("  (use \"git rebase --abort\" to check out the original branch)"));
+> +		}
+>   	} else {
+>   		if (s->state.branch)
+>   			status_printf_ln(s, color,
+> @@ -1544,6 +1547,8 @@ static void show_rebase_in_progress(struct wt_status *s,
+>   				_("  (use \"git commit --amend\" to amend the current commit)"));
+>   			status_printf_ln(s, color,
+>   				_("  (use \"git rebase --continue\" once you are satisfied with your changes)"));
+> +			status_printf_ln(s, color,
+> +				_("  (use \"git rebase --abort\" to check out the original branch)"));
+>   		}
+>   	}
+>   	wt_longstatus_print_trailer(s);
 > 
->     git history squash @~3..
-> 
-> and things like
-> 
->     git history squash @~5..@~2
-> 
-> As a future extension, I think we could support merge commits: merges
-> could be replayed as a merge into the final squash instead (creating
-> an octopus merge if there are multiple merges to replay), though I'm
-> hand-waving what we should do for conflicts. (We _do_ know what the
-> final tree should look like—the same as the final commit in the
-> range—so maybe we can actually avoid all conflicts?)
-> 
-> Anyway, I've cc'd Patrick for his opinion about whether this fits in
-> "git-history".
+> base-commit: ea97ad8d017de0c9037451a78008a0fd60abea0c
 
-Yes, it does fit into git-history(1), and I do indeed already have plans
-to implement such a command going forward. I wouldn't mind at all though
-if somebody else beat me to it, I want to implement at least one more
-command before I get to this.
-
-Patrick
