@@ -1,251 +1,260 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A13535839C
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 04:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781583567; cv=pass; b=rDjGw2Es4E3kP6YhGgkTBLWhBLoqS9oKMfQbfgsjJaqCA9uyYfnL4pUfJuNkRtsOFyesWNIv5oUeJ2j6X23Ke6sE5iZUyJUVurWSneMDbLemFTEYoxSbGJGlE4D1gtdjAWiJsv3nTprbZLFO/f5peP7tmsDfSp59/35GYgfUTz0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781583567; c=relaxed/simple;
-	bh=SYNvLWatuWUBg53jH65PK/1N7Q9gyHzFovqHASHqkKw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u6HnAvvg8vIHueIfsBoJkKbJogAHeOTygufFqBgtS7TxDVC2ebPCV33lMBhZjiZvm8OYWuVzmUSZvFtXZkBcZjrj571f8RVTjd4MGuHLZ+1xkWytuAtnkyQKeAL5Tnq5dcjYUNuHaC9nFYZj8BvyobAqrD9ZoJ6e2AA1ODAVADA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HqOiqCL3; arc=pass smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FB62750ED
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 04:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781585454; cv=none; b=Jwl+QS9Cbplp6EcQNqdHu5x0iZ8vuPHBYJ07bavji0U5o3uqCfWSKWCKQDRL74Wwky2DLASjDPuZ5qZArDQHzhYvlTl7BYUVNJeQ/V+6nJPt61f2vl+1yzR6plPb3x6JPoPTM8O7KvnnmfwCezdcuE9gINu2DUAajmbpL8jguL4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781585454; c=relaxed/simple;
+	bh=QvOpgbyhtz9fEpAI3jFn0bI8pRDLlCyfd78hPq2Spu4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=i3TUb7hgHTlZLtmJ96ayAvadDD4MC5/pFFGocXCCjwEBi+yaDvdczVaEa7UHkaAKyt+CYGSnXhY7uRL3qfYy5l6wh5e1Wp2tiV5OrV3afKWURTPaHwYFkuXjaaSANC7oPhxHqxyxXOxLCPmSJK5SBKajKwY4XmkBKejhtIdRjLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ginOPs4B; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HqOiqCL3"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-660390a8999so4379173d50.3
-        for <git@vger.kernel.org>; Mon, 15 Jun 2026 21:19:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781583565; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UOeCgHxgbww/Tz446S3KbQ+/o5/sT2mzVa1ZzOOJwLgf/yT1qwrqjxzMcSMvhILQUN
-         7S80o02T509D6lcmPzyG+5YTGvYqHdGebhytRiJRAO4Cy559OvUvMFUPBZPoYfNtMcC6
-         /Q7Q4lgz0MqkTgEbKnM+Ylj0i4IDwPW01HrAusTc2kOTEJgblEyGF1DTY6vwSPHeTWwp
-         l4hSL6kC6isPmih4l0zxBZy8VFDwAit5DH0tbHTzLwWWyl6FKQMeVCarOXSaYh8R2AD6
-         qtDYFvTarLTKOZA+wA5qzFdcS4UBjLOZMfgC3+3mtUkRzDf1Hv3A/wSHwnmfDhxYhqZE
-         V4tQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YataI2kI5H8/+fyaQpsNNmyseaOSaJZ8n04w+H86d7s=;
-        fh=BB2t2fnz0EobgBkcsubrt6cUgswygpqsDgtm3fvlvkA=;
-        b=bmFqT1NOPt2x5j1yDB/1KPfMRmAnXoKJ/CXN976ccQltBElw9Lilocyn2fjpgiRuEr
-         W8ufpMPJd8/UrY+n2DEOusrGJv3FVgD0/Qs74ZiPRrhwi95s7aDyKYXI5+nOwYnb3vYc
-         spmCC00SrLszHMVUNfAd/gpMtMVPzf3gaxFDlEINV/R+1DvGO3ksULXAfmH/RDNXykb5
-         BxCxWcQesBBcWYj/MhxkuMbJFTOZLJL1Fv9h3y117CTvFsbEycN1oAKNgG8lbGMM74Xu
-         LFmwsaTB31SRHeLVK4Y6a1SPvASw7AuCxUpW/ChkDN8SzDZfSaRBFMhv+LREu8rYUUvW
-         Oiag==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ginOPs4B"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8434840cea8so2463124b3a.3
+        for <git@vger.kernel.org>; Mon, 15 Jun 2026 21:50:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781583565; x=1782188365; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781585453; x=1782190253; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YataI2kI5H8/+fyaQpsNNmyseaOSaJZ8n04w+H86d7s=;
-        b=HqOiqCL3ftOhLlsG1ausdLmNZllLoYh3ZoSmpsChz2eprXTtDkgJSzuZJpz+Qol5Ky
-         MllZTfkih+0c6pWqpzk3AMNvKahbR6kk5URoEIa32XdJ91o4/0HVK6RHwGo8SonDK7XX
-         Eir2tw1H8Bq3JxRmxuW3cHmrzmFkQkwvHpImesiQT8MMk3ixRTN7OPJvOAQ+590m1J84
-         tFXUnA6DB676Vi15jU+1on/tVs5q1xgihugMMlOG9aDTUfX8slBNLhTEZz9enZstb3bY
-         zMvgmG+zvyzAIErPzeyS7irQARmXbsIK34bSDF35/w7teFRhUEwJndT3cZUVtgkalVjm
-         XlCw==
+        bh=qZhNmVHd5ArDxV1DPtZuXeryPkwPpTpiFlRDIqjbPcI=;
+        b=ginOPs4BSvUiUJOAgN9NvyCLL4V0ED3dFgOW4a9qCHUYQC23BFZFymVgtxX1Sh4UY1
+         rbheO3h0x5LJBURDLIf7KJKY769zFDLb5y3XAovMxrbWxCoEWlEdUy9nqKlfRLCbPsBq
+         tIzgIOknK/eZxEpE4eycpa1NnxfZMN8MhrgerCDxUTl/udN/brYTRPQDTGLa2I0fCInP
+         Ow233uzpsWyio1+hZEMTTLajEe1mcDxRP3B0tzjuPXNGELRqkNAL/dSPgKH/ogqY9bar
+         syoNiAjEbJ6WIz+sP2bJ/ngJW4BXTk1q0nmwq6Cxajb3BMX1JyNZ4H38b/i4dQA7QTqO
+         tK8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781583565; x=1782188365;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781585453; x=1782190253;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YataI2kI5H8/+fyaQpsNNmyseaOSaJZ8n04w+H86d7s=;
-        b=WarflzdIcgLHGsYyNqNAIloG4G7oi/eywoDlvRJ/0X6xNTMBmw5FFdCZdYV1Z03+6j
-         uSwZHGNCTvrHsPi12OkPZp/uFFkMzq6BUo4ArxlwS1avZQrLerORqbyjk+/wylAM1WAc
-         h3w8fFzc62TMY9NmfCk7agjtCMjK+J9W4Vvg+I3zHP5tPyJ9t23+UbVow36WQp7z2WJs
-         UAmxL3FpaR1aT4CnU5kCPXJddKV2uQ1MARLl8YZRxU04vRl5MuWv+zYutd1aOqNPZYSu
-         RKYAQOVXiLt8UYDRbRlZ1c1MmXVzOzidUPo5eh/UqUdjEqHe5UjBhQrSY/Us6/RFZSqF
-         Xi1A==
-X-Gm-Message-State: AOJu0Yzzq9ISLo7qvLbhZvIQztIXEOwN7+1TlLDiP2jE3sdMFzHWSKWu
-	WgPi6IgLXd4jhy8wNyw9mVg8EtFeBL2/Ze/VjaQsDXB2zyLhkcoJP2sUiUPAgGteiBea10kj5gb
-	2j9kL1hq8QuWcMse14wzlHJ+ALAHRGBo=
-X-Gm-Gg: Acq92OHz1IWJfvWrs3/r/bZ8Aumkh8+5OGBXNbNBWxnNyxBL6ZZR2R2zv43e+NpGL8r
-	RCVobhOPP9N9lg5Q2T1mOL7aU/JW6ud6xAg7ni/RIIDgA+tXyHJDHNprZmDEl29qKjkMdXX6XiZ
-	N51LsPLOFwUEiAoFdcnSsQHMgqYcYyiOOywTx6nPEGO+caFEVI/89AZES/QOdS4T7DnzBhG7RXB
-	0quH4RpU9QX9wg7lcTvNarzbCJyw6KOJDy93N/nTAmFRqXnl/NFj2ETFmHnHWvrzLUfhdwNj31c
-	SEfsKYvWWO8yA7Je+LxjOxUAASTklYg5G3owUk4SSbaz0Vbn9PlyOcqd+K+J5sHOQUbAjn4QVkj
-	krUV5PYQMRfl7UcQLExmW1FF5mA==
-X-Received: by 2002:a05:690e:4384:b0:660:ef1e:5efa with SMTP id
- 956f58d0204a3-662850c2501mr9677555d50.40.1781583565143; Mon, 15 Jun 2026
- 21:19:25 -0700 (PDT)
+        bh=qZhNmVHd5ArDxV1DPtZuXeryPkwPpTpiFlRDIqjbPcI=;
+        b=EKDlzlNQnW5EFJOHDcka9GNw5OmFHcP0P3JoqHIoyQAyA56PEIoOzYcCkSOm+eXElx
+         005unq1iQjgKqjrGPh83ozIKUFixvaMnXgatIq0jjlg0qyPIhhw2JUoo9NnPtzOMdXSt
+         xs06P4diSMgjUpKKXgeacQ4ABlPVaXKeguAzPnj3kTjk02iNiY4WEl2xLrEbaYEWJIE2
+         VqBWSo9F7YsOTvfuWHD8EZVUhMA4dWo0Lasm/ENp+iloGWa5L3iwpsi7twT+dfNBI2gY
+         h7qm1rCHImMzwsi61fm3/3/aVqRkJfSGACotoVDJYWR5Qvc6VOhEZQAmzyiIlF34CYtv
+         JeFA==
+X-Gm-Message-State: AOJu0Yzuz4zUiSnV7H9D1OTyQ5Daw3YQG5khjXklb7fVicKuM7iGraq4
+	ybHCbIY9fXwtqu9kbk0iLIoG3MIhyBjiCY7kFiUrSYKwqu5+GvHpmLBOzd4/GA==
+X-Gm-Gg: Acq92OEPnn6kYmbYoQZtIhk51my3xDEJc/dniuBr4VhPkpB0akpwgwLgMSq9rTXlinm
+	FEiOQ0YEu3tVc8liWJipeNmiEGWBUVX0fmko98VluNO/fa3Lx0rzmsHJKzGldZ44jn8RAqevQFW
+	1Dnmfwl8wvAMliUdUCL3gF5teL5VslsaUFCS8LyZFL78cnCI4QWroijUjaGD9WGhsMTE3YtU3P5
+	uPACAytNfQ/P2pMVDsv1GOyjOK7ZGoVCjihZs0zebufOEeReqdYSUfYkWkZeSc9/n+wReQpq7pK
+	kjoaqx5MbcbcjhrRIuTw6NcO6lvj0YcxfjCBG9tGGMGN0iRX6xcm1M15/FqBwOEAXWHxMcxNKQb
+	nxtQkhj8I5UNBx2FflIdQRbk/IXEKAIQiJJzT2eg7IhhpDJXC4SYu0YNBTZ+T5cIcqMOR6sqOQe
+	bAbCxJKBfzG66SEGhazC8t2o/ZCTxPiQI6geKw6aAnL2JymtqD2+K9ZSbqYS9g+c7vdjlKqvy+T
+	GD556jOLdyLBMJEomWyjMQB8ij8NcL0jw==
+X-Received: by 2002:a05:6a00:2c94:b0:842:5719:4552 with SMTP id d2e1a72fcca58-845155811c4mr1839046b3a.46.1781585452862;
+        Mon, 15 Jun 2026 21:50:52 -0700 (PDT)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434b040718sm12122614b3a.51.2026.06.15.21.50.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2026 21:50:51 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: jltobler@gmail.com,
+	lucasseikioshiro@gmail.com,
+	gitster@pobox.com,
+	phillip.wood@dunelm.org.uk,
+	sandals@crustytoothpaste.net,
+	kumarayushjha123@gmail.com,
+	a3205153416@gmail.com,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Subject: [GSoC Patch v5 0/4] teach git repo info to handle path keys
+Date: Tue, 16 Jun 2026 10:19:49 +0530
+Message-ID: <20260616044953.184806-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260615045112.50686-1-jayatheerthkulkarni2005@gmail.com>
- <20260615045112.50686-3-jayatheerthkulkarni2005@gmail.com> <ajAy1it6CGDQzVes@denethor>
-In-Reply-To: <ajAy1it6CGDQzVes@denethor>
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 16 Jun 2026 09:49:11 +0530
-X-Gm-Features: AVVi8CfF80T6HpPVm5AMSQq0A3nKjjZQUgh2rrZCrmEO015ZEAhmNKBT2nivcLM
-Message-ID: <CA+rGoLf6Tj-j0r3cCReBaKK5bGFUALJ638-yPi2GSoRML0kbgA@mail.gmail.com>
-Subject: Re: [GSoC Patch v4 2/4] rev-parse: use append_formatted_path() for
- path formatting
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, a3205153416@gmail.com, gitster@pobox.com, 
-	kumarayushjha123@gmail.com, lucasseikioshiro@gmail.com, 
-	phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net, 
-	kristofferhaugsbakk@fastmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hey Justin,
+Hi!
 
->
-> Without context, it might be a bit confusing to readers as to why we
-> override PATH_FORMAT_DEFAULT without our own provided default. It may be
-> worth leaving a comment to provide some breadcrumbs.
->
-> The rest of this patch looks good to me.
+This series teaches `git repo info` to handle `path.*`
+keys, allowing scripts to reliably discover core
+repository paths without resorting to `git rev-parse`.
 
-That makes sense.
-That's a minor change.
-I will add proper comments!
+The patches are structured as follows:
 
+1. path: Extract the localized path-formatting logic
+   out of `rev-parse` and expose it globally via
+   `path.h` using clear append semantics.
 
-> > Add a test helper test_repo_info_path that creates isolated
-> > repositories per test case to prevent state leaks, captures the repo
-> > root before changing directories to avoid eval, and accepts an optional
-> > init_command to cover environment variable overrides such as
-> > GIT_COMMON_DIR and GIT_DIR.
->
-> I'm not sure this last paragraph in the log message provides much value.
-> To me it's a bit verbose and focuses mostly on what the test helper is
-> doing. Maybe we can just omit this section? If we want to have a note
-> though maybe we could say something like:
->
->   Each path key is expected to have an absolute and relative form. To
->   reduce duplication, a test_repo_info_path helper function is
->   introduced to configure and exercise both cases.
->
+2. rev-parse: Refactor the command to leverage the
+   newly shared path engine.
 
-Now that I think about it
-Maybe removing it is a better option.
+3. repo: Introduce `path.commondir.absolute` and
+   `path.commondir.relative` alongside a robust,
+   isolated test helper.
 
-I mean the patch itself contains the test and it has comments explaining
-the test itself.
+4. repo: Introduce `path.gitdir.absolute` and
+   `path.gitdir.relative` using the same standardized
+   formatting rules.
 
-I am gonna remove the last para in the next series.
-Thanks for pointing that out!
+changes since v4:
+* Simplified the `test_repo_info_path` helper by dropping the `repo_name` 
+  argument and utilizing `test_when_finished "rm -rf repo"` to handle 
+  repository setup/teardown inline. This ensures perfect test isolation.
+* Condensed the redundant `expect_absolute_suffix` and `expect_relative` 
+  test helper arguments into a single `expected_dir` argument, reducing 
+  the helper signature to 4 arguments (Justin).
+* Added a contextual comment in `builtin/rev-parse.c`'s `print_path()` 
+  explaining why `PATH_FORMAT_DEFAULT` is intercepted and overridden with 
+  a path-specific fallback (Justin).
+* Trimmed the verbose test helper explanations from the commit messages 
+  in patches 3 and 4.
 
+K Jayatheerth (4):
+  path: introduce append_formatted_path() for shared path formatting
+  rev-parse: use append_formatted_path() for path formatting
+  repo: add path.commondir with absolute and relative suffix formatting
+  repo: add path.gitdir with absolute and relative suffix formatting
 
-> > +test_repo_info_path () {
-> > +     label=3D$1
-> > +     field_name=3D$2
-> > +     repo_name=3D$3
-> > +     expect_absolute_suffix=3D$4
-> > +     expect_relative=3D$5
-> > +     init_command=3D$6
->
-> I may be overthinking it, but I can't help but feel this test helper is
-> overly complicated. I wonder if we can simlify and reduce the number of
-> arguments. For example, could we programatically construct the label
-> from the field name and init_command instead of explicitly passing it?
->
+ Documentation/git-repo.adoc |  15 ++++++
+ builtin/repo.c              |  50 +++++++++++++++++
+ builtin/rev-parse.c         | 104 +++++++++---------------------------
+ path.c                      |  70 ++++++++++++++++++++++++
+ path.h                      |  36 +++++++++++++
+ t/t1900-repo-info.sh        |  58 ++++++++++++++++++++
+ 6 files changed, 253 insertions(+), 80 deletions(-)
 
-That=E2=80=99s a fair question
-But I personally don't think the helper is overly complicated.
-I think a lot of the current helper can be mapped with test_repo_info's
-structure itself.
-
-The existing helper uses a very similar 5-argument signature (label,
-init_command, repo_name, key, expected_value)
-and separates the setup step from the assertion steps.
-
-Regarding the labels, I'd prefer to keep them explicitly passed in.
-Programmatically constructing the label from the init_command could
-result in messy
-or hard-to-read test descriptions in the console output,
-and having explicit strings makes it much easier to debug when a
-specific test fails.
-
-
-> > +     absolute_root=3D"$repo_name-absolute"
-> > +     relative_root=3D"$repo_name-relative"
-> > +
-> > +     test_expect_success "setup: $label" '
-> > +             git init "$absolute_root" &&
-> > +             git init "$relative_root" &&
-> > +             mkdir -p "$absolute_root/sub" "$relative_root/sub"
-> > +     '
->
-> Do really need this setup test case? Could we instead embed the setup in
-> both test cases below? Something like:
->
->         test_when_finished rm -rf repo &&
->         git init repo &&
->         (
->           mkdir repo/sub &&
->           cd repo/sub &&
->           ...
->         )
->
-
-That's a much more elegant way to handle it.
-I will incorporate this in v5!
-
-> With something like this, each test case is responsible to creating its
-> own repo and cleaning it up when finished. Then we could avoid have to
-> provide a separate repo name for each set of test cases and remove the
-> repo_name argument.
->
-
-True,
-Thanks!
-
-
-> > +test_repo_info_path 'commondir standard' 'commondir' 'commondir-std' \
-> > +     '.git' '../.git'
-> > +
-> > +test_repo_info_path 'commondir with GIT_COMMON_DIR and GIT_DIR' 'commo=
-ndir' \
-> > +     'commondir-envs' 'custom-common' '../custom-common' \
-> > +     'GIT_COMMON_DIR=3D"$ROOT/custom-common" && export GIT_COMMON_DIR =
-&&
-> > +      GIT_DIR=3D"../.git" && export GIT_DIR &&
-> > +      git init --bare "$ROOT/custom-common"'
-> > +
-> > +test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
-> > +     'commondir-only-gitdir' '.git' '../.git' \
->
-> For each of these test cases, the `expect_absolute_suffix` and
-> `expect_relative` and exactly the same. This also appears to be the case
-> for the test cases in the next patch. Do these really need to be
-> configurable at all? Can we just embed them directly in each test case
-> assertion? Or maybe future keys will need this to be configurable?
->
-
-You're right that passing both is completely redundant!
-However, the path does still need to be configurable because the directory
-name changes between test cases (e.g., `.git` in the standard case vs.
-`custom-common` when GIT_COMMON_DIR is exported).
-
-Since the relative path is always just `../` appended to the directory name=
-,
-I will condense these two arguments into a single `expected_dir` argument i=
-n v5.
-The helper will then just construct `$ROOT/$expected_dir` and
-`../$expected_dir` internally.
-
-> > +     'GIT_DIR=3D"../.git" && export GIT_DIR'
-> > +
-> >  test_done
->
-> Overall the rest of the patch looks good to me.
->
-
-Thanks again!
-These are helpful.
-
-Regards,
-- K Jayatheerth
+Range-diff against v4:
+1:  a396b4f8e6 = 1:  a396b4f8e6 path: introduce append_formatted_path() for shared path formatting
+2:  16198f96d1 ! 2:  16b42a51d2 rev-parse: use append_formatted_path() for path formatting
+    @@ builtin/rev-parse.c: static void handle_ref_opt(const char *pattern, const char
+     -	}
+     -	free(cwd);
+     +	struct strbuf sb = STRBUF_INIT;
+    ++	/* If the user didn't explicitly specify a format, fallback to the path-specific default. */
+     +	enum path_format fmt = (arg_path_format != PATH_FORMAT_DEFAULT) ? arg_path_format : def_format;
+     +
+     +	append_formatted_path(&sb, path, prefix, fmt);
+3:  b45c6f0d12 ! 3:  38b733ea64 repo: add path.commondir with absolute and relative suffix formatting
+    @@ Commit message
+         Exposing explicit format variants rather than a single key with a
+         default avoids ambiguity for scripts that require predictable output.
+     
+    -    Add a test helper test_repo_info_path that creates isolated
+    -    repositories per test case to prevent state leaks, captures the repo
+    -    root before changing directories to avoid eval, and accepts an optional
+    -    init_command to cover environment variable overrides such as
+    -    GIT_COMMON_DIR and GIT_DIR.
+    -
+         Mentored-by: Justin Tobler <jltobler@gmail.com>
+         Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+         Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+    @@ t/t1900-repo-info.sh: test_expect_success 'git repo info -h shows only repo info
+     +# Helper function to test path keys in both absolute and relative formats.
+     +# $1: label for the test
+     +# $2: field_name (e.g., commondir)
+    -+# $3: unique repo name for isolation
+    -+# $4: expect_absolute (suffix appended to repo root)
+    -+# $5: expect_relative (the relative path string expected)
+    -+# $6: init_command (extra setup like exporting env vars)
+    ++# $3: expected_dir (the directory name, e.g., .git or custom-common)
+    ++# $4: init_command (extra setup like exporting env vars)
+     +test_repo_info_path () {
+     +	label=$1
+     +	field_name=$2
+    -+	repo_name=$3
+    -+	expect_absolute_suffix=$4
+    -+	expect_relative=$5
+    -+	init_command=$6
+    -+
+    -+	absolute_root="$repo_name-absolute"
+    -+	relative_root="$repo_name-relative"
+    -+
+    -+	test_expect_success "setup: $label" '
+    -+		git init "$absolute_root" &&
+    -+		git init "$relative_root" &&
+    -+		mkdir -p "$absolute_root/sub" "$relative_root/sub"
+    -+	'
+    ++	expected_dir=$3
+    ++	init_command=$4
+     +
+     +	test_expect_success "absolute: $label" '
+    ++		test_when_finished "rm -rf repo" &&
+    ++		git init repo &&
+     +		(
+    -+			cd "$absolute_root/sub" &&
+    ++			mkdir -p repo/sub &&
+    ++			cd repo/sub &&
+     +			ROOT="$(test-tool path-utils real_path ..)" && export ROOT &&
+     +			eval "$init_command" &&
+    -+			expect_path="$ROOT${expect_absolute_suffix:+/$expect_absolute_suffix}" &&
+    -+			echo "path.$field_name.absolute=$expect_path" >expect &&
+    ++			echo "path.$field_name.absolute=$ROOT/$expected_dir" >expect &&
+     +			git repo info "path.$field_name.absolute" >actual &&
+     +			test_cmp expect actual
+     +		)
+     +	'
+     +
+     +	test_expect_success "relative: $label" '
+    ++		test_when_finished "rm -rf repo" &&
+    ++		git init repo &&
+     +		(
+    -+			cd "$relative_root/sub" &&
+    ++			mkdir -p repo/sub &&
+    ++			cd repo/sub &&
+     +			ROOT="$(test-tool path-utils real_path ..)" && export ROOT &&
+     +			eval "$init_command" &&
+    -+			echo "path.$field_name.relative=$expect_relative" >expect &&
+    ++			echo "path.$field_name.relative=../$expected_dir" >expect &&
+     +			git repo info "path.$field_name.relative" >actual &&
+     +			test_cmp expect actual
+     +		)
+     +	'
+     +}
+     +
+    -+test_repo_info_path 'commondir standard' 'commondir' 'commondir-std' \
+    -+	'.git' '../.git'
+    ++test_repo_info_path 'commondir standard' 'commondir' '.git'
+     +
+     +test_repo_info_path 'commondir with GIT_COMMON_DIR and GIT_DIR' 'commondir' \
+    -+	'commondir-envs' 'custom-common' '../custom-common' \
+    ++	'custom-common' \
+     +	'GIT_COMMON_DIR="$ROOT/custom-common" && export GIT_COMMON_DIR &&
+     +	 GIT_DIR="../.git" && export GIT_DIR &&
+     +	 git init --bare "$ROOT/custom-common"'
+     +
+     +test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
+    -+	'commondir-only-gitdir' '.git' '../.git' \
+    ++	'.git' \
+     +	'GIT_DIR="../.git" && export GIT_DIR'
+     +
+      test_done
+4:  b5234ffe3e ! 4:  ead1117332 repo: add path.gitdir with absolute and relative suffix formatting
+    @@ builtin/repo.c: static const struct repo_info_field repo_info_field[] = {
+     
+      ## t/t1900-repo-info.sh ##
+     @@ t/t1900-repo-info.sh: test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
+    - 	'commondir-only-gitdir' '.git' '../.git' \
+    + 	'.git' \
+      	'GIT_DIR="../.git" && export GIT_DIR'
+      
+    -+test_repo_info_path 'gitdir standard' 'gitdir' 'gitdir-std' \
+    -+	'.git' '../.git'
+    ++test_repo_info_path 'gitdir standard' 'gitdir' '.git'
+     +
+     +test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
+    -+	'gitdir-env' '.git' '../.git' \
+    ++	'.git' \
+     +	'GIT_DIR="../.git" && export GIT_DIR'
+     +
+      test_done
+-- 
+2.54.0
