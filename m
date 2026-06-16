@@ -1,98 +1,96 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19677394E91
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 21:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2994C394E91
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 21:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781645180; cv=none; b=Gtyw1gjfAaf9FrvEJqqyO3Kcgtfuv4pGckpAZ4527QjIYTT59+Rk6qxeQE2tFQhVT2+LnJl3f8lBtwJMBk4yevOdy8QLQ/ygISUpClgfXncmqroDZvpCjSC/VxB0xP9BAXHoH9RkmvxtLuTdaNXWOpXhEMv00En7uJbUiY1Ks9s=
+	t=1781645343; cv=none; b=JoJJkLOOjrz/Z/wSC1OdzbMXRYZ6jnuXlwT6qD5geBWOjMFVBFvxrzqf0e3foeNjWIkY79cOVCBqLi+Y8tkdqm04u/n+DGkDup/RQ0RkYMhJTXra6A6q4HP02QGDzFVcCEstVGS9CHJX8U5bXUlOL7gfS+xWb6Xw/k2P5+Zz1Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781645180; c=relaxed/simple;
-	bh=Lv3vrRbvSQGTOrUZxm6CSWiW1LtqByjvHzTNOtJBfXk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WiDQxLrPrzSXNyJBleQNlkTG1+j64Z4+b7VOsWB6+IW+Wccs58jHmrDaSNmdZelU9JoC227mcgGIsfEA9MB+E/lOACSiGS0uTR/E+xOnM++Q/gYriM1ExeeodHmm0gnBfNaNhZzB6odRrp9XHC+5yoNPRKbYaHNrwvTstuU2Nrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bUdcHNJY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hqi9LkUP; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781645343; c=relaxed/simple;
+	bh=2Z7X67nmAHy5sCCPINMPlDm2IJLYExFqP9MBVHBfJ9s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kbF9Q6GlAFFtjxQZ8X9pow2IHa0mjFAEHAu4SpsZn+YRNURu8T5EIU38WvZx08znBdUkpPDOL7dwF4wf3I5xwppZ3Bt0AxZY+toremtXpNbYDNu4NsUlL9ZrRhvYSqB61MTAtX5VbU0ZZPz1Ff/BTHKxzRJ1N7P+0lydNP6SOqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s63WzaX8; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bUdcHNJY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hqi9LkUP"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0CC66EC0190;
-	Tue, 16 Jun 2026 17:26:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 16 Jun 2026 17:26:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781645178; x=1781731578; bh=rk00i+MS5X
-	3PEqtw1a1svMw4hKWpXb9WYcX0AXpN7tY=; b=bUdcHNJY49Zr6sWmXx9Hmf95xa
-	8NK6j+fTRo+irI7/RUQXEywYo0lsr5V9gP+42OyOWh8/CDZCjKeGTYP22RAgllGU
-	glUNISCmhDoSf4YJFPmgEkl79s3xanmlvRUfMQN1QoiohrzIdrU6dbKR2ir4GOkM
-	I1BylNBEigTktPjdZX/DqEIbEqS777g546nZsK8tcSz6vwvHRVKjo2sVhZGx0vUt
-	Q01XfZw3W9ohSEcaHxhr5Y1QhntbkgeljRXAnr9HDScxEA2tBtf5JpF9Gw/5+ZfC
-	LlDZCWIsMMcjYegB82XKsEalBdKNFvYwSdGy5LFEqUIZ9vKB/PWRgynBrX/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781645178; x=1781731578; bh=rk00i+MS5X3PEqtw1a1svMw4hKWpXb9WYcX
-	0AXpN7tY=; b=Hqi9LkUPtP/pCn008AE98DrjuoBeo+yIe4xHu5gLEylolGWcC9F
-	+f9u5oEo/SEw17Bldlx8WZdDMOJP/ZLgIQLBasOTTG5p3431yGkOrHha/v5ZRjty
-	yzmD0M6BinhY3SQgFqBCucCeaezXf0ZjyTq7B5CMK8OZT+Es5qQkmeQCpUdEdyQQ
-	OpFG5BI1AI46lVxERLcMap3x2S5msrt8pLG69CR8i5v/OkzXbK9gc1/QXwPd43jN
-	gcpNnLdyTkfnkr31LV3QXSKoEeD2DKCbGpra2oOKpRqLN6XabWyG2WS9BZBOkJZk
-	P7WkMbMlpQ4QqkLydvakSy+vEwHUwcJQhPg==
-X-ME-Sender: <xms:eb8xanK9YH8iIOCXE-k1xLUuxBoKQapxybBh59nBYHu6pjg_394YNQ>
-    <xme:eb8xau1W7p4QM30kPhL5JAwt2cJGYdDuOVkSA4R-zbWYoAtnOLNQg4q-OvstJW5TI
-    Y5L3U3eNjcLo6V7aMn_vpkofUOv3kiGTfhnKo1CrEwJ5SL-HOX5>
-X-ME-Received: <xmr:eb8xaphL074rNPb4wxY5pbOJpJ_1eJ2BWLhhLzAuWhhCNBqfoEWsvOuY79_0ye9AlMrWnbkYjNGib4ABRcJYMpL2rpnU6FNJCGai>
-X-ME-Proxy-Cause: dmFkZTEncEe54OPjcAvdO2ZSOTpSbVaoFmQ/1qbBIFFg25Yf6Cn1gQDxq/k+n8B9nl0URS
-    k0LM/vtGu9Inyhi9FWzYsppy5UyRJtCJb7+maR7EtejNWN8NF0XLm9A0hf+T2dxP+u5bCZ
-    hFP+f6o1pSPSVYtTNacHuSYUH0dvTlxROXJrVcghT5zAVIJbhK5PtGTlcJ5BNqIpoNOtiq
-    19c/yeL0jxAbPAdWVhRvB3aEam82zvx8dg9B4KbBwWhkqZQQrrlACKzxwVxP1RNE5FvQzR
-    fmYJlgz3rY4OVnul8Qqvu+CMHJOsxfyqAlPW9WJBbaQWyBcPFpwt5smwkFMxvEOxnEsaKF
-    EWu//11vqdDFf+AUOWVFeH6Wzhtv9tr2QxDWbXR/+wrxUwBTgLCNIX2hsKjB9+eWMfppCt
-    kiu+5/U/kLSLNOTKGN6cUYKU8LoWM2ezEWoOaCxzOirfVYXViE/zQu/xs8wGiiWxSWi873
-    6Hd5r4qzhimcYbuBqOKGIlwP1SbBB1DctpohTyHlog5f1EtOXb4C+rebh0ghogUKfc/fCY
-    /aKQRSPVyct3516cthWAQrmUDBvUWKOUsEdlXG7jQQfhR2Dci1ELMhcUmmlun7J30Piea9
-    9YLLUS02vLkQDpugkcPdZ9xOs3lOy840ZFeK11ASyHBLDaZkWX27NU3N/WYg
-X-ME-Proxy: <xmx:eb8xanUv73kukiTw5maJQ57cDMWboF0Q5aDNAsL-tOyLWImSuaw63w>
-    <xmx:eb8xagUizGsDACtUVJy7AD1mDEEv3R6LG_HKaALHXxEb_C18hx36ng>
-    <xmx:eb8xavgYR44wkg0nveRlRbw9-OFeVnmVzLVj2AQdTfIJ8_EpPFSEXg>
-    <xmx:eb8xajboXJf8194uxUbOgSKLHqaJf1fsJhXA0uVY_K3gF3bwuyX7Pw>
-    <xmx:er8xaoAz5C5jnPows18jAJ3SmB-M1npPaEybR1dfpmDibJlj4Gw_hng_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Jun 2026 17:26:17 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>,  Patrick
- Steinhardt <ps@pks.im>,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/7] patch-delta: use size_t for sizes
-In-Reply-To: <66a642c39e7755755fe388af7612ac8c9bf41a5a.1781524349.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Mon, 15 Jun 2026
-	11:52:24 +0000")
-References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
-	<pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
-	<66a642c39e7755755fe388af7612ac8c9bf41a5a.1781524349.git.gitgitgadget@gmail.com>
-Date: Tue, 16 Jun 2026 14:26:15 -0700
-Message-ID: <xmqqwlvy18js.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s63WzaX8"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-4864a8e80bbso2589934b6e.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781645341; x=1782250141; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=w1adKW73pmpDkIrgN/F5V2N3ZnHCNu8vF7DTE5CfzbA=;
+        b=s63WzaX86dUoLS3XmwDPPcqrP7nlU+Mx71wIm/4K2kmeWUuFHXAAw7UnhYT0c+YZoH
+         9lvXUsvJNhYSi1qhuBPAqE4jWltxOqXaCsDJ2f+a8A/118KuAewQeObji4+Oh/hs4FTt
+         bClknj3Iq6WX0ugyoTZmDgl/WcBcDH1khFb8hsBtgoQba/+0i/3fNKwApkM1sjNaXBhS
+         NQCGZYOp5xGIxTj3tl+xznYaJ6QRlAqEGowRh/n0HrJvVYttW3sG9BLj03dhTqfR8FiE
+         ZkYlKN1HXSDsFxxQ0H6Gl8rBCgn3NpmLPuDmAnrqWJUWpdpkMcQOx7yxaa/HIfNs9SYJ
+         8Mcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781645341; x=1782250141;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w1adKW73pmpDkIrgN/F5V2N3ZnHCNu8vF7DTE5CfzbA=;
+        b=VE5dabR5QqumffpA+994F5Ffmw9NwhX9WjPRNON+8txBsZXTIIvaa60HSg7bZLA4H/
+         utxIluP5ArJ07YpnVw8ACYqeX5+bFyyZUEvPGWOrHb9Ng8fzLdP1Bi7pb5hgiB+qo4wD
+         W81BHbKhuFdxnxoQyjIwUWpuAGBuXgnOPX+pTTdCdl+o0NItZoABbZ0Iid7FNdVK2k4x
+         Gjbu+Zl9BxijBz/y3KwAD5F3/F7Djf759Jtnt19SoPYG2ULrETA9Q34igYu3ha3lmyKQ
+         s573x8o6/g3cyVgt+IGZA9x/HyvD2suEFTmqcXCnL9gwyZ7E4JerdpxfRlc0SNUvxmLF
+         hv7g==
+X-Gm-Message-State: AOJu0YwpBIul1S2WqAKWK8IvD90DQYBFBZcRMQf6VDSTaoLrVgkiSKHI
+	ASN+epMycFHnX95Kp9QYTHKYoIWdutahSD9DaWBtoNuDNO9aeDIlylB7udNVYw==
+X-Gm-Gg: Acq92OFhN1pXxgEG9kri0TocdNu0zUFTrs/u7KWmE2lSDGpZBl4zqXVL+bcIPYA8BxK
+	Z5QV2FYQzNDrjdVUuCBtB85kCuBqmJD0aO8d083U3bQj6aLindC6ni/LqiVRFZAVuFgmQxWk2NF
+	X8M//ngpoVsD5sB3yuHwAyQRfmDI8TTzuCOLsaNWasv0koVe9Vn6WuCDldk1+XkgG+ArrdGlXTo
+	PWqkGsw7XIyF3h1l4P0wyseLjDKc8Wy1VMTtgs5vC0juYJf19foE8O+1aApcDcZuAl1jz95lJyC
+	uiSRIQKr6QnCK+AtTR1hZ7Cz+lmcG5s0DItVf2K6iqYS0kOeOa1lF7ziwEC2t2lLqA1i7giAFIM
+	ruzeYSrjjTAvGD4KkMjmAO5bC8w9e3L/IBI1joa2Vf8MNXIUak6Wo7khjsNnJoSYLFsWdWb2ZAC
+	lmMus1tx4tNgU0eiOE
+X-Received: by 2002:a05:6808:1205:b0:486:ca9f:52fc with SMTP id 5614622812f47-4894259d5admr989194b6e.0.1781645341009;
+        Tue, 16 Jun 2026 14:29:01 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e79f5a11efsm7659541a34.1.2026.06.16.14.29.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jun 2026 14:29:00 -0700 (PDT)
+Date: Tue, 16 Jun 2026 16:28:59 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 04/17] odb/source-packed: store pointer to "files"
+ instead of generic source
+Message-ID: <ajG_gC73ch923EkI@denethor>
+References: <20260609-pks-odb-source-packed-v2-0-839089132c8b@pks.im>
+ <20260609-pks-odb-source-packed-v2-4-839089132c8b@pks.im>
+ <ajG69JZHx_u2mt7q@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ajG69JZHx_u2mt7q@denethor>
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 26/06/16 04:14PM, Justin Tobler wrote:
+> On 26/06/09 10:50AM, Patrick Steinhardt wrote:
+> > The `struct odb_source_packed` holds a pointer to its owning parent
+> > source. The way that Git is currently structured, this parent is always
+> > the "files" source. In subsequent commits we're going to detangle that
+> > so that the "packed" source doesn't have any owning parent source at
+> > all, which makes it usable as a completely standalone source.
+> 
+> Out of curiousity, `struct odb_source_loose` also stores a similar to
+> pointer to its owning parent. Is the plan to also eventually do the same
+> there?
 
-> Widen `patch_delta()`'s three size parameters to `size_t` and switch
-> its internal use of `get_delta_hdr_size()` to the `_sz` variant.
-> Then propagate the wider type through the callers.
+Ok, I think I got myself mixed up. IIUC the `struct odb_source` pointer
+currently stored in `struct odb_source_loose` is not to the parent
+source, but to its "base". And the eventual goal here is to move towards
+that same direction which makes sense.
 
-Makes sense.  
+-Justin
