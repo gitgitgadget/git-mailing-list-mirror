@@ -1,40 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1D52D8DD0
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 11:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821D635677C
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 12:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781608763; cv=none; b=L0jvRn4oRRuuuJ59xbpjlw9nc8AiUclIGMreu4MzMXIcm7hPlrB1LyZTse36wwO+PAFj9XESK01pjGFiTxbCfOSRcPfPABr4qC21QQ+oXQXUlG73PQFGCXIe3kYNY9aQrg8MpcZfZl7SVvesVw+qqUu+yFH5dJZZjc5n2hA1pVM=
+	t=1781613320; cv=none; b=tLS5I5szKgAYOw+aXnTGFZncw3v5cZhP+UvGXJ9Dr8aEM2Jzj3oFvWWa/zDiGOE6SzrHfxDesqevqOHk8BEM1phyejWTmWVUTbw9BckJfB96/zxloD5zGn3+I3uiVLDk4mvxOuMCOovqvLmDZKfRCNFHViGnzIn7GTJbI7x0xPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781608763; c=relaxed/simple;
-	bh=8pc3szgRv6E5VapRqpgV2YSRbgGihmPEbWVmSoZu4EI=;
+	s=arc-20240116; t=1781613320; c=relaxed/simple;
+	bh=hqdlH1oexfRnKxuDAdWMvaWPiIyjzkw/KpofbAe3Lp0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AsIDZUj4awKOy94cWYE4wwUBoDrP2oTahWVazg9MxoRgXusmGKkdegTYZKZeIEoRq5Xk1uBz4F49SpZOJl78xavVkCqFjU3kGJARy2UzpfGr644eZopoBu5XENUbw6SyU+G+WWGhQhXt/Bzzx5oGZ0DXzZEbjNco1bhZUSJtNQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OhsHKuQ4; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=LNZliSlPjf91E0Z+PwY43SHBWb8gf0fMH2qdEmpGNrjDmYsxgv81KYCii4httdQ8Ouf1veGZmhiALkhRjS8H6FnYV99jAFMJ7LjZP0wjsdGYSO4tTsK42QUpPpX6cnf17qSkAKIc1TsxJJSaK2iUInliOvbDGHVSWjq5MIZzYkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RgLbq/QG; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OhsHKuQ4"
-Received: (qmail 149203 invoked by uid 106); 16 Jun 2026 11:19:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8pc3szgRv6E5VapRqpgV2YSRbgGihmPEbWVmSoZu4EI=; b=OhsHKuQ4Xjo6RyA7LpYhA2tHZ4kbYkMN20BsUlA1hJic3Ir1JU8OF3QXKQhVQgFI1mtvcV5M9B2SyVc/I6ryrG26zAY4MRI4Er7hqgfFxAQ5DKWud/Ah+CQlWvWyIKVqTHH2cBO3GsWELqSBdjyC16cB5vdhy2DsIsITnDi/1nLlRZzMe3aH4qjbm8JhLFCdLxFLGWpuCE6rvd2onkklfNtebo2eVh29WbYmzJb/W6LR3B2KRm+vOS8HbHA2tc2m+mA4ljOmn9FFCkPay8AMCl4gUJA+x95ps6qCYfbNa06HsL9xny66qwz28UmOwP2lfEm1demmxIfxY0tIPhzENw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RgLbq/QG"
+Received: (qmail 149614 invoked by uid 106); 16 Jun 2026 12:35:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hqdlH1oexfRnKxuDAdWMvaWPiIyjzkw/KpofbAe3Lp0=; b=RgLbq/QG9w2P2DKgyQXPuXfDUXelsajBdGgYcc/ix6h4QVKMjYNfDEmGdLXxXL/l9CDT0Bw5E3y33mTZ1q0mn84MXaRhf1/uHS3d7QXS//dZMfP6zeCANfbo4DOKXbxfJ8EjYusa1oUAuNOepUdHIhdAe3N/61o/QCzk65/dF3OmJUuCjVzhxjKMgpKe0F7og4M4xSfNbsWRRm3iXkxMiTrDoeC8uxpo1Lj90XL/iM2Xu0la0aq02asIOI45LF/oZ9U/eUG0CWW9g6UH+flCEPZXjCyOXTFbZRIfIH6oqUjbY8GxSIshvyQJ3n8+8oosJW9+ZRZZJA0gSc03RrMbdQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2026 11:19:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2026 12:35:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 407798 invoked by uid 111); 16 Jun 2026 11:19:20 -0000
+Received: (qmail 408950 invoked by uid 111); 16 Jun 2026 12:35:17 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2026 07:19:20 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2026 08:35:17 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 16 Jun 2026 07:19:19 -0400
+Date: Tue, 16 Jun 2026 08:35:16 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
 	Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v2] read_gitfile(): simplify NOT_A_REPO error message
-Message-ID: <20260616111919.GC687438@coredump.intra.peff.net>
+Subject: [PATCH v3] read_gitfile(): simplify NOT_A_REPO error message
+Message-ID: <20260616123516.GA2301231@coredump.intra.peff.net>
 References: <20260602061159.GA693928@coredump.intra.peff.net>
  <ah6WEtk2pXyViEQA@pks.im>
  <xmqqeciezh0w.fsf@gitster.g>
+ <20260616111919.GC687438@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,24 +44,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqeciezh0w.fsf@gitster.g>
+In-Reply-To: <20260616111919.GC687438@coredump.intra.peff.net>
 
-On Wed, Jun 10, 2026 at 06:01:03AM -0700, Junio C Hamano wrote:
+On Tue, Jun 16, 2026 at 07:19:20AM -0400, Jeff King wrote:
 
-> > I have to agree that the patch is somewhat gross, and I myself don't
-> > really see much of an issue to move to an error message like the above
-> > if it ends up simplifying the logic.
+> Here it is.
 > 
-> So we are in agreement among three of us that simplifying the code
-> to lose error message with dubious value would be a good way
-> forward.
-> 
-> Peff, can we have a formal [v2] then?
+> -- >8 --
+> Subject: read_gitfile(): simplify NOT_A_REPO error message
 
-Here it is.
+<sigh> This triggered a failure in CI after passing tests locally.
+Turned out to be a race in t7450.
+
+Here's an update, with range-diff.
+
+1:  daf7f99511 ! 1:  67d42141e9 read_gitfile(): simplify NOT_A_REPO error message
+    @@ Commit message
+         We'll tweak the test to match the new error, but there's no need to beef
+         it up further, since we're not showing the pointed-to path at all.
+     
+    +    We also racily trigger this in t7450. During parallel cloning we might
+    +    see one of several errors, including this one. And so we must update
+    +    that message, too (you can otherwise find the failure pretty quickly by
+    +    running t7450 with --stress).
+    +
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+      ## setup.c ##
+    @@ t/t0002-gitfile.sh: test_expect_success 'bad setup: invalid .git file format' '
+      '
+      
+      test_expect_success 'final setup + check rev-parse --git-dir' '
+    +
+    + ## t/t7450-bad-git-dotfiles.sh ##
+    +@@ t/t7450-bad-git-dotfiles.sh: test_expect_success 'git dirs of sibling submodules must not be nested' '
+    + test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
+    + 	test_must_fail git clone --recurse-submodules --jobs=2 nested clone_parallel 2>err &&
+    + 	cat err &&
+    +-	grep -E "(already exists|is inside git dir|not a git repository)" err &&
+    ++	grep -E "(already exists|is inside git dir|does not point to a valid repository)" err &&
+    + 	{
+    + 		test_path_is_missing .git/modules/hippo/HEAD ||
+    + 		test_path_is_missing .git/modules/hippo/hooks/HEAD
 
 -- >8 --
-Subject: read_gitfile(): simplify NOT_A_REPO error message
+Subject: [PATCH] read_gitfile(): simplify NOT_A_REPO error message
 
 If a .git file is well-formed but points to a directory that is not
 itself a valid repository, then we say:
@@ -119,13 +147,19 @@ asking for NULL printf checks to be implemented in the sanitizers).
 We'll tweak the test to match the new error, but there's no need to beef
 it up further, since we're not showing the pointed-to path at all.
 
+We also racily trigger this in t7450. During parallel cloning we might
+see one of several errors, including this one. And so we must update
+that message, too (you can otherwise find the failure pretty quickly by
+running t7450 with --stress).
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- setup.c            | 9 +++++----
- setup.h            | 2 +-
- submodule.c        | 2 +-
- t/t0002-gitfile.sh | 2 +-
- 4 files changed, 8 insertions(+), 7 deletions(-)
+ setup.c                     | 9 +++++----
+ setup.h                     | 2 +-
+ submodule.c                 | 2 +-
+ t/t0002-gitfile.sh          | 2 +-
+ t/t7450-bad-git-dotfiles.sh | 2 +-
+ 5 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/setup.c b/setup.c
 index b4652651df..b1d9249d91 100644
@@ -207,6 +241,19 @@ index dfbcdddbcc..6356e9ec72 100755
  '
  
  test_expect_success 'final setup + check rev-parse --git-dir' '
+diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+index 8cc86522b2..69a17a9d13 100755
+--- a/t/t7450-bad-git-dotfiles.sh
++++ b/t/t7450-bad-git-dotfiles.sh
+@@ -350,7 +350,7 @@ test_expect_success 'git dirs of sibling submodules must not be nested' '
+ test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
+ 	test_must_fail git clone --recurse-submodules --jobs=2 nested clone_parallel 2>err &&
+ 	cat err &&
+-	grep -E "(already exists|is inside git dir|not a git repository)" err &&
++	grep -E "(already exists|is inside git dir|does not point to a valid repository)" err &&
+ 	{
+ 		test_path_is_missing .git/modules/hippo/HEAD ||
+ 		test_path_is_missing .git/modules/hippo/hooks/HEAD
 -- 
-2.55.0.rc0.342.g45e27e83e2
+2.55.0.rc0.346.g4c7eff6ddc
 
