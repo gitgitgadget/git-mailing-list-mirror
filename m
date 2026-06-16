@@ -1,164 +1,119 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E872C0261
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 18:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634409; cv=none; b=pU0ejwUP+MsyUGVYRuCsfcc0Zf9tvwJJo1SJb/AnLgsAuNh1l7al+eQ6tLa4lifP8tfoFo6XwbnbLmns4uZxxAQ+u+Dfxo+xIbX8Wp7TRPoixedMeFTcLXuT1+woZHa3lj3ZK7wI9PeTB3dXEtvrXQdEsQzvULKW/FHrXNGJp9U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634409; c=relaxed/simple;
-	bh=SnSGkVJL5g/Lb2QjAfx+Yl5SFZ1dMittEZnE7lZStmA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hZyCAG8SxqlEbqbN8htKHbctgi5agHmpjxzPa18ELePX9yX9j8SC6sG7lOuYi76Ky9Ybs/inIg/Ky2oyklNi4VHLf9rfrB+wx7an7fh7RMEtWi+1pdrae8zjZd6IhWrPi9avyf91VbjZiK9O6fzsx/04p27PJVutn9EQzUa+Saw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ql0Ttl3M; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3434743CEC7
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 18:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781634525; cv=pass; b=p+4JyvTUENafymtQRaTgtavVTwzNBV4yZ8eauVKOUyrgFYfSSbJXaaSjaZhowhLIDn6JicV2qteG7roYXYl1SB6qR4DUiTbnLBlBCKg/cijjAcwuG1Wz0E+gO+qOoS6fjIAN8eA7KeQzPSusFvuNePLaMV8vQYFTCLnF8dTP1E8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781634525; c=relaxed/simple;
+	bh=9IXjAdl9TXXOEdE20D8lWSis6wijqmr4+q63cX8Wj5I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uMOu8bIsWRWM+UylcJEfPQY1oq+v81h4089qe5sQcH/lPtwAqlGk0oTQlCK+EEUBhz0VvHLBNBPz7fXGcD3vSh5okm/14eMBHWuIJDoKjCcJwgs4DYt/rvdQWnvXmjXnofFTiPEyrXv6eiEVqROfy7aE3dsTcnFj6udDoYWq734=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=imfh56X9; arc=pass smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ql0Ttl3M"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490ac357c55so46455635e9.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 11:26:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="imfh56X9"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-68d233bf083so6892279a12.1
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 11:28:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781634523; cv=none;
+        d=google.com; s=arc-20240605;
+        b=R7lElBgZ7ejOLAXyouQGCQLvDPd6RFiF5+yX1AgCmJPYFQIPhxctd2bjSRIOwIRfS/
+         u4Ylj6nw4q8ZshnFT0oEL0f1RIprleUnPceSfsYW2AJTebHLzFsck9CwhQy0eUFRkqEr
+         0p/ePxGml8MXqA7EHStT0sbpjJ9Ylo/6e9J6CX13C6t+ZUzPOxkXzOEqD/naa3WwXiEb
+         QxvLD+dN/aZFohyRJHsc5npH+0+1mSY7mYfpj9dCVSirFxoqcUS/SgxMaakmdZtMNXqi
+         tKHQYrmM+wjeWPNjHxDDt/vuORntMyVp0k7ev2x66mjREPrB7s63Gju3M8udaeTA6UOF
+         2xTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=DN6lPv/TI/wORFo62eFJzvqQlqZqogIHr8Ujlgz3W+0=;
+        fh=sQMz3fwunlK1zrBX2Z+XUjTkam9EY0CwXBvN+WWVPSY=;
+        b=WxQbpC2esKW8MA8lws3Mq0oEvf+anrlVGVFcH9CAdIb80SQ4wmo2IZ8hC7PeCzHnCW
+         2+VKgHkiQDfYtHrcRuyB82xOVqeotTnxniUYH9XOwuKj4o+v4xxKPN3L4Yq8+36WRM6L
+         6kQVRz89KiVXGNarDrma1vUBpSORjMYej1L5gqnfGyuZKZXq0vsP+5F4A33M2e/147K6
+         yogtClmXq62NLAsNJ1NXiTyxmr2oRO6uLbopfqu03++877KQlxfoF4bSd1jR6Y4TJZWn
+         +VPGPGabUAKv76HSkURjYCB25ShFnM3Kc2oCj8kvALAL1B4VXocR+5S3a22cvrhZ3NH/
+         SCXQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781634406; x=1782239206; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UCADqLnwvhNoHk0mM6YGVmgwXHOhric86g+h+axLLpI=;
-        b=ql0Ttl3M4Xc5KUaK/uB3TNRKwa+5wjfJYBPFCjsbBfAEsnCWyUq9TDkggFS/d8cBUW
-         GFseCVzPeTB6dtf2hCgPEvMwvv9qZatRKnKvtEWwxt3wpc1wlaJ2o+LGXUPymbjVev+W
-         baidYdkBgvuQ4uG4nfl2/g59VO2NoKafZYLkxpgtBSbSTQgAqJXrSJHd1ZrnxyALSqwm
-         Tp7e5BkYHHZR1hJH3B+6ae96Ng5OP7apnWkn/SO4AITcorVilyqUOvXAl/SrxQp/2HYd
-         vlazHbzNsgxzWUYR9r00H5dY8ylRRqIGxBrV1/HhMU6hhGP1xiqKtXmFy6Woy0V+BVd/
-         zSNw==
+        d=gmail.com; s=20251104; t=1781634523; x=1782239323; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DN6lPv/TI/wORFo62eFJzvqQlqZqogIHr8Ujlgz3W+0=;
+        b=imfh56X96puT0rToN/v/IlD+/3lPRFDPArOs96Pf5FkTDCUL/NzP4Bwx7feINmAFgC
+         DuaD/XzUSy1kZJ5tUCxDbb/QjFNUxWNxoJnmmiSSPXC0ZmmpJ5Ru9onTIBXcA3FIEnfg
+         EWYT2JHVmDAsAO6LUzosREOJ4Am6Cm3pOltt2KbViBD5mumFd0u3tU4JC2eEajNRB7TR
+         zdFQ3ezMSqSxFNd3r67yzRVOWtIi5D9X/pML82CVBPD7Q3T9+4QEmZn2VEj4hasCQ0Nb
+         i+F/NdlK9XESDUswb9Y1fwvXaUMTdjibnezCbtL94cTeQhnDlGrfmkpZ/WWhyVO4VXrc
+         mAfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781634406; x=1782239206;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UCADqLnwvhNoHk0mM6YGVmgwXHOhric86g+h+axLLpI=;
-        b=aTbTXtgMFKA7UATDHvtQ0bsPrEcbpgDDyprJRvv3HsGRoNk3++ARZ/E5HED2LGJEEU
-         REy78tnx5zVl6f2oCclcqaF9E/vCCURe13PVksTTxij4Kv7Lwre0n3s5kHvh+mLf4WvQ
-         h4aFQO5Q5sleiXjhp9j1/mNQTZPlM82HnYn30iiHscGFi4BvVHfOdJ8EWfWnF4hxlH87
-         bWqqN/7zQxKTuVu6U1V18sRhOi0vF/9Dg4Jo35hdCPF33oDp3TWMSc4E8c0KYCBzsCEM
-         n8pzY0pHSDNXrVg28QpBiNohgJXgGYKIj02IamymKdYHEzbXsXoCaKU0Awo0AgAl6pS0
-         Rx0A==
-X-Gm-Message-State: AOJu0Yz51/OaGEsmVBFVujVoTZ87NNqbyk07osiNcQrF6j6j+PAOph36
-	Fc9/qDbUHf32xAEUS41U4Js1ZnW8JufCkQWl+Dy2gPFr33tpDcjjVt38
-X-Gm-Gg: Acq92OG/0yRJutJgzayS/MZJ9Jcu9F7VyfOtXjUDKEjnlditjbiEZMmgk9g/k1wXxRE
-	yT692cuu5Iya/2cwAtjM6gcqVD4i8FL7IGIr6eh73ZuvJWGWNFAUnI85MtWcFyjpK51UZUK5h7v
-	5X+r7GhZb49r6KQDFCWmfq4/3CZ/U1c2ZPL8Kxk+4lkZ4457+zgheMRf3MszVmhiS7F6SwnANyB
-	mS6I9KQJOCcyMB1ydmUueIht3pvrZnyvFeYknAE3fx3lMkRzGK4w4/LY2lfyVjkfCvZQuYXafUv
-	MGEiRKJyj7XhtLclulhMtQoiT1s73pnbQMIX/SXStdH7U6JdSWBJiQJhWybmyOmS1dci7nzYRLB
-	HK8UC5eB238hx4hu8EzkSn2uwD96F97jDRwySk4Zw8oiEHSCgv2u7L5173j48snHaiK+yGp407m
-	0MdDz92hFGGw7OpR5UXEy4PNUtWisCFeKg0s8MybdLLpJoOk8bjDuE9glQW1ekAVBADibI8xSzL
-	JVaBw==
-X-Received: by 2002:a05:600d:84ca:20b0:492:3071:1db7 with SMTP id 5b1f17b1804b1-492333d8b49mr8339145e9.28.1781634405570;
-        Tue, 16 Jun 2026 11:26:45 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923343c925sm4756735e9.0.2026.06.16.11.26.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 11:26:44 -0700 (PDT)
-Message-ID: <204a4160-f913-4121-8eee-1f42103afca1@gmail.com>
-Date: Tue, 16 Jun 2026 19:26:43 +0100
+        d=1e100.net; s=20251104; t=1781634523; x=1782239323;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DN6lPv/TI/wORFo62eFJzvqQlqZqogIHr8Ujlgz3W+0=;
+        b=k2RmSIe0a91N+wa8is0awkOdVovXdrpwkgVOd0RUq+dmpWeaJIdmnuMwJqWOcInJ5I
+         9q/9TfvfTu4B148ubzD8gLybHHOTwda1AJ5WG+EBdTULu+sVFk8RzYcRQGTAj3UBDjPw
+         dPStLB1rWOs+2IGGBqPx0GtJBnRdjgVTVVMx376fjfB/CpOzMPtf8DJlQZ+ankjKRHWl
+         5+ZdVHVeEZ472f3/QrVVYQVE9nCd7/A/DJkNafNv3a79BDtnfi5ZbKZjlXi3UnCqRXgX
+         FjKJnvv9du37HkpQUXF53l0mRwnjU8lRmO2zpDUGIqRI2T5P9eyYz2pdqpMKQ5zOgiv8
+         j7fQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/i3ptzxxEAHfpVhO33rvusAV8kA6uOahNXCiDT66xSBJQOj/bWzg82mZb3YSdOjc/f75I=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6HfHFjDMg6+5NWq2Qs/oO0ERifVR5dRiTxFIsdIavL8KcBXkt
+	zhAa27TgHpwJa55La2sCoR3UKOg+WoipQu2Tnzq4df0TqrPIPGYM4uqR3iZZs5q/fSGD1hGXeIN
+	SkKilE/DaFxiwWKJnE6fi2Aox3IM87Sc=
+X-Gm-Gg: Acq92OHpNczB+F7+Av1YH3nObg/1th7831qxRkrGCsjR+MKaxw+detcGfOwmLFhA95z
+	9tDeOP9h7MJS+s2bcebzYpncCwuXWFJvjiFDSd3hOsi4ke3aZc+VcBSW0IBgNxg8CW7sxiqaS/1
+	jP7FrDGOblnGf7zY3ZUXiLkBspTHlQWq0QhrdRsKPYChtlWWIx7xIFzEhWkRXGPtDVmI4Y5TqVW
+	WgZkeOeJzFcgQnCp9INYpw0OQMy3g0liRJWqHHlmoH7UCBMX94dqf+chD6ckf2B8pMVkdHQOFgE
+	w5yUpPQ=
+X-Received: by 2002:a05:6402:280a:b0:68b:f026:f381 with SMTP id
+ 4fb4d7f45d1cf-69547580b15mr217072a12.8.1781634522487; Tue, 16 Jun 2026
+ 11:28:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC Patch v5 2/4] rev-parse: use append_formatted_path() for
- path formatting
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, lucasseikioshiro@gmail.com,
- gitster@pobox.com, phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net,
- kumarayushjha123@gmail.com, a3205153416@gmail.com
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260616044953.184806-1-jayatheerthkulkarni2005@gmail.com>
- <20260616044953.184806-3-jayatheerthkulkarni2005@gmail.com>
- <0077b1ae-3c85-4b34-a0ac-766395157c4f@gmail.com>
- <CA+rGoLfhhRNrSReeJ1grhy+2K3BSrikTCNgGpCaGqc4fFp3Lfg@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CA+rGoLfhhRNrSReeJ1grhy+2K3BSrikTCNgGpCaGqc4fFp3Lfg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+ <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com> <ede8c6172963fb8d15f0ae28f4e11501cf42be6c.1780999917.git.gitgitgadget@gmail.com>
+ <7b43a0f1-32a0-40f0-8c82-d2ee78809cc2@gmail.com>
+In-Reply-To: <7b43a0f1-32a0-40f0-8c82-d2ee78809cc2@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Tue, 16 Jun 2026 20:28:05 +0200
+X-Gm-Features: AVVi8Cd_YITXOHyY_hwJrZtTcMHHBg2AbqM2CZDh7HHxdahpAbKKRPysec9FRcI
+Message-ID: <CAHwyqnXjt962HBzcMwRfghiWtv7Wkx6CUxapMv9O9igg27A_fw@mail.gmail.com>
+Subject: Re: [PATCH v14 6/6] branch: add --dry-run for --prune-merged
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+
+> > With --dry-run, --prune-merged prints the local branches it would
+> > delete, one "Would delete branch <name>" line each, and exits
+> > without touching any ref. The same filtering applies, so the output
+> > is exactly the set that the real run would delete.
+>
+> I can see this being very useful.
+
+Great to hear and thanks for taking the time to review this! Much appreciated!
+
+> >   static int prune_merged_branches(int argc, const char **argv,
+> > -                              int quiet)
+> > +                              int quiet, int dry_run)
+>
+> Let's not start adding multiple boolean augments - use a flags argument
+> like we do for delete_branches() - if you get feedback on one patch you
+> should think about whether it applies later in the series as well. The
+> rest of the implementation looks good.
+
+I'm trying to generalize all feedback, but sometimes I miss things.
+Thanks for pointing it out!
 
 
-
-On 16/06/2026 18:04, K Jayatheerth wrote:
-> Hi Phillip,
-> Thanks for taking a look!
-> 
->> On 16/06/2026 05:49, K Jayatheerth wrote:
->>> The path-formatting logic in builtin/rev-parse.c is tightly coupled
->>> to that command and writes directly to stdout, making it impossible
->>> for other builtins to reuse.
->>>
->>> Extract the core algorithm into append_formatted_path() in path.c
->>> and expose a path_format enum in path.h so that any builtin can
->>> format paths consistently without duplicating logic.
->>
->> Sorry I haven't had time to look at this series recently, it is looking
->> much nicer now that we have a single enum. It would be helpful to
->> explain why we need PATH_FORMAT_DEFAULT that acts exactly like
->> PATH_FORMAT_UNMODIFIED. Looking at the next patch it seems this is still
->> a wart in the api due to rev-parse wanting needing to distinguish the
->> unmodified case from the default case.
-> t);
->>> +
->>>    # ifdef USE_THE_REPOSITORY_VARIABLE
->>>    #  include "strbuf.h"
->>>    #  include "repository.h"
->>
-> 
-> 
->>>    int cmd_rev_parse(int argc,
->>> @@ -717,7 +661,7 @@ int cmd_rev_parse(int argc,
->>>        const char *name = NULL;
->>>        struct strbuf buf = STRBUF_INIT;
->>>        int seen_end_of_options = 0;
->>> -     enum format_type format = FORMAT_DEFAULT;
->>> +     enum path_format arg_path_format = PATH_FORMAT_DEFAULT;
->>
->> This is the source of the api wart I referred to in the previous patch.
->> Could we keep the existing enums and convert them into the appropriate
->> PATH_FORMAT_* flag in print_path() above? I think we already have the
->> logic to do that in the existing code. That would mean that other users
->> of append_formatted_path() don't have to worry about the extra flag.
->>
-> 
-> That is a much more elegant solution than the current one.
-> 
-> For v6, I will clean this up by keeping the fallback logic
-> localized within builtin/rev-parse.c and removing
-> PATH_FORMAT_DEFAULT entirely from enum path_format in path.h.
-> 
-> Instead, I'll re-introduce a small local enum (e.g., enum
-> rev_parse_format) inside rev-parse.c to handle the
-> command-line parsing state (tracking whether the user
-> explicitly provided a flag or if we are still in a
-> neutral/default state).
-
-I think it is probably simplest to keep the existing enums and modify 
-print_path() to convert them to the appropriate PATH_FORMAT_*. That way 
-we can keep the option parsing code as is.
-
-Thanks
-
-Phillip
-
-> As you said, most of the logic is already present. In
-> print_path(), we will check that local tracking enum. If it’s
-> set to the local default, we can map it directly to the
-> path-specific def_format before invoking append_formatted_path().
-> This ensures other users of the function don't have to worry
-> about the extra flag.
-> 
-> I will send out the v6 series with these fixes shortly.
-> 
-> Regards,
-> - K Jayatheerth
-
+Harald
