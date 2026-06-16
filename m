@@ -1,158 +1,142 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5604282F2C
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 20:01:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A97F282F2C
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 20:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781640102; cv=none; b=rh3Ey+Vh1D9kKZtHYcqPKlCKVXPpGfvAbLX33bWZpzl7oC76WE5MIRJr3NvVb/wKDeOCr288ITP7yfDGxcQ0agtGNbEimQBuXve9nmN9lsbgJ/UExju2QJGYtKfuRCUEQusHGTSDa44fD4QjbkD5PPaKTZFvlf6u9Xz/V3lmjEg=
+	t=1781640189; cv=none; b=Xpt+vTmlAHb45/8qfLdzLiC0604/U/AG5NHhAC5OwkLsFw2nlUndFRGK3lcb7T7epTQu4HIwBF0q7aUSOhqt8bp78KKCWocEuDv3BcP0xLY+UP6w6DRG21ivFSF90N/S+iIJa6xZQ707VoPXbTSfnOVCiqPOrPEOC4z5m1Fs90A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781640102; c=relaxed/simple;
-	bh=UJE3F5DZcQkjp4NiWePN0BKtcMYCZnS3eBZA4DnJAwk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DkLMwai6nGrYMLyF250tN3MCBYK+bMESZ3558uRhyHCjiquOSRzLSX/YCpSmmJyU97hxRKHhiMxwuAYVHIiPm5DTqUBfCNp9ztyQopFcPghUyArgpy5zYIKBD4PuWE/lK/onxSP0BbpMbhRxiUB8wSVEAiipuCGASECaLB1ueAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XfI8IQWa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FSGhrTXR; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781640189; c=relaxed/simple;
+	bh=LJC2YFetp9EZo5EzTY9B8ZodvIlQADyOj+w0Si01EBA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ALBs5CKzWk6ZpRUvEcAmrguI6CIdx/oZeheFLaWa2TehCMJGaHWQ5+gWXhOBQmMNFRsVtHSjds51doErKNwcMbJvTkVmmOBpyiazw2ymg7mKFS1gUbhSQEBYN/jikGeRzk0nSch5gOG/GSnU3SuvvKEC1BnFyK7tbGfqI/4Pwdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TBxUCX2W; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CnmGoK7c; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XfI8IQWa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FSGhrTXR"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1D7BBEC0209;
-	Tue, 16 Jun 2026 16:01:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 16 Jun 2026 16:01:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TBxUCX2W";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CnmGoK7c"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7547214000EB;
+	Tue, 16 Jun 2026 16:03:07 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 16 Jun 2026 16:03:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781640099;
-	 x=1781726499; bh=C8UkZYR48lhZaWfRuo48fO+U9xnEreRmRRY4YJrsuKg=; b=
-	XfI8IQWaiZ6Tl9qnNkDAp6KnfIXRqi8MR2IM95LnZ/xNGjpMhPtLVYdek83vhqce
-	3DNonBL8Uydv7HmIquO2HrVVNexGsdG1YB0jjiZ2+GiJ6UCpo7qJKUdOdWzF2xbD
-	hGFNKJG1Y62XWSg2oGrUGReSoA8MjkN76GQKdjUqgZ7Hfz8TKlkHFivXT+m7wNlf
-	Vvqdx8xkq27biail2lydF30h+hWx42+0gqNktCkMWlCR5OL2VEU/cYn5NfTT3CCx
-	WpSph7koJ1GmA01Ql/HL/EeS7XnFstwTnHz1wr2euyfzEAr1cYpu2o3OcDlms7pL
-	MvoVWR/rLQ1lw5tn/0fxBQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781640187;
+	 x=1781726587; bh=LzL0iFx76OWCcDyEnU1AMyXOKZ1hH+LY4nUzP/7NEUE=; b=
+	TBxUCX2WDreJUm8ElqdIRaz10f6z9TtxwvxirEn/tgwVM96jk1Z9DusQX3HF8J3G
+	y8/Y4mth5Nhi6VWraikN+Uj+93fXkk3hkmoALGJ3AzByis1jdT47WuZpgvMKyyTl
+	rCYWVlhD3AC/PfIntLr4Sa/f00G/BxQt0WcQWl6DSbl2/K+1VHDr3N8qqyftTyE+
+	EnrggxrX695vjipvLYAFlWJKSbv2TWxE/9UEMjv5KVBFOQKmQXsiz639tb/wG09m
+	P0LO4nuYxDsuR6HzRwDGxBjtTQZgr+iroATtj+5DlNyYWsXDXGPeV72d34pbuxMH
+	lQenTyQv92jhnnChTmUSZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781640099; x=
-	1781726499; bh=C8UkZYR48lhZaWfRuo48fO+U9xnEreRmRRY4YJrsuKg=; b=F
-	SGhrTXRDcbbEU3KU2OFN928yfsE7x9GFWptFHNdsPznQIrAFgT3yLtVJnwpBF98+
-	+o4GUpS8JEcbPVekfAQz5M3NBJZBYm2LSK3sogfRVd1qeYtlPSMCmO/4nbu9BlNz
-	dBYIjeCoPPFZJiEECXYvJJ1WCfiWrdoKp77lqrGuNURZM52/ssirFAZASHAoo8JL
-	IrMq3Rhh8XUr8rEdC6OkJUlLDSdBoapTlzkIKGzqcy/Au/F1gSN+2axaUcfOvzhF
-	jS9bAIEv1OFyPID3bJUVn8H8nIaePBLSZ9qS8CMCPx7OXXIFmX6WxMc2GoIUCwSo
-	M77EHTrTBvAy/M2/jjmyA==
-X-ME-Sender: <xms:oqsxalgYeo2bjDV8Pcl_Enpr5tLd4DO1fKMjMC_ZgJu8Q4MOVzrUVw>
-    <xme:oqsxahdlzWH-SncTgJC5WXBTpQR8H40bRINoBhOFq5wwJem03RGd8wyoGNMHzmz8L
-    cNyspb90OYPfUfGUDyKdBETrmjUaQwGttdTkUo3Oiq8x6WEkTF8>
-X-ME-Received: <xmr:oqsxaie9-ISLc2XiCJJF7Lhe8tuZkSXym69j74x_Z7G2au47o11JWjDnIqwFAKQSR3h9P_6_bPNZ4eIKQ7-zU1OQg2OVkrKxa51x>
-X-ME-Proxy-Cause: dmFkZTF8I82rHxv8kCMgErreGDYawgF26ePrMNhgGvs0WVvkdcQVqIR3WwtAW/p5F5++QH
-    pLfbi7ZhRamyZ3+uPAFbHhWd1sHi8Gz1In8joTKYgsVt5mqD+j2Ne1npI9DaVYJm3k2gTs
-    H5L+sFSXpvJL9oiUZP3xtv3mVS5ufNTENnw5gnBUBVUqgqqVxREFv440HpyTTHCzaLE70W
-    gB4cmqfIwhCBr/TVuLMuOCmXifVyVvrvVpqiL60yrsM4R7YdP3IHAZWsj0zCuhKz9/JF8/
-    fL3c3o3ll9WcnfUkSkPh9bz1d2/8ksyQLDbnKbI4ifZxAM90+UM/1khnhhWvHBwahjrAPk
-    Ecfm5UUPyMjyZ1Gg34Xn9R4qeEiqIJv2WzuULXe7wAxtUBeKnStAZ5S08009/lNwd62g/7
-    jiu/s3gCqvzOpyJm7Cj9DK50j7d7vcqpbrDg6z+Adgau3C7rLrCXNim+XkkXpw8lHzpLei
-    TqDq1YM1pqkKtqlB0KpuXfDQ0tkPirhjxjgHC21m6/I4pII3gKBEly+w2b5hlm3xcMKFOM
-    /sxHvSjlGGI/Wy17h6MYl80pQvE+2+n+4//MI16dh7LeC8V1AAXtZ0he+cNEw3tfggAOUU
-    NsoZEauP0fEX3yUQ+mpoBID0y6kTuoNAajbHT0vQ1HNfbC+glAVSIb2/V+Jg
-X-ME-Proxy: <xmx:oqsxaj8XmDLXEUQGp1lZBaSmQRceHLdrS_6eEme13tJ14swCi-bEJw>
-    <xmx:o6sxamn7GapP4cJNxuka4akSL96GdJ05ph3VC3Xph5NKxTPs3i69hw>
-    <xmx:o6sxat_iTaKdyB1xFX3NMT26AZ1Y7Zv3RRJ8m_RlBd1vMwqq7VMsFg>
-    <xmx:o6sxasn8ZArsfYKsdilWq7mPC5nK0MLWnpSWp3J8LA5XE7ad4qC1yg>
-    <xmx:o6sxapo_sT6JUEUHn2CGVvbk2fC8J77iW6rh2KvhHkAnMk2bf7otiswr>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 16 Jun 2026 16:01:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: SHA-1/SHA-256 interoperability work is functional
-In-Reply-To: <ajCWBG9RHBrm8jMZ@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Tue, 16 Jun 2026 00:17:08 +0000")
-References: <ajCWBG9RHBrm8jMZ@fruit.crustytoothpaste.net>
-Date: Tue, 16 Jun 2026 13:01:37 -0700
-Message-ID: <xmqqldce2r1a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781640187; x=
+	1781726587; bh=LzL0iFx76OWCcDyEnU1AMyXOKZ1hH+LY4nUzP/7NEUE=; b=C
+	nmGoK7cQfwg0zsr9f4NUjE/YVffiu/HQz6W8V3gPMICOgRmc0SCawy5GZVmim6AY
+	alkqK2whwptGhWtPOUKvJElwX0LB8K3snJtbw4ofaFrIIegva3IOZ5xsHvcgptHA
+	NuVrR4hsh54aeL/DROdT8C+byeSXYKc+8aR6v3fXtDhIB+EBt/ofYlH8w6xxbz++
+	YkwjahZmKS6txAtvacJykj+MXDPYtgf54ribhRTUWIyUepRAdwJuLLDBRdH6yHVp
+	IouXNU9dd8QXopRNVyzqTrtovPy/dRGiu+I6cJQM8gLp8K/G4tI8GUJVUFoN2R4q
+	jlGto7ZqvgdKTiBQrQhxA==
+X-ME-Sender: <xms:-6sxar6y8Q6bbo9BZjFLcBguisDrltt3glXxgtCHh0KmMyuYEDhxIjw>
+    <xme:-6sxaruiNuqHXu2neeC_qFZ4_5BkoJHfzxv-kEynG8bIwXm9m3WpMbRzqmTmzFW71
+    wTBCqfYHzF5_WIfAmco6bz0OFKK7xwQ4l49K_sa8KoFWjq7-yRn>
+X-ME-Proxy-Cause: dmFkZTFQg89f42Jo/Kf5NS6pWKtfJi0P6PjlpCHh5iROBukkdTmuhMGovCVRqPKf57UXWe
+    Ue+83ZzcSKXp2v8YYrsco0uFHLVfwlmvEJc6JGnl0uATIhUatpfUN8KDAPykLQohKbA1m+
+    aiDo9ePHJqeYQmTXKAZghSEDggzKEUkT4XOj1KNopdcD7+49vEGRD3BLssggGArs6tWvgN
+    0qdi5UiihM6P6HMTt70q4tAFwK9NaUKMYKxJ3034xb9pl/Hwub8rjxfsFhlQx+PDtSH8MN
+    dk8hgQxXXZrtZCn05NXr3jVoytdSonL9PdlOU+sYCzmPs/e7HWr8p1VGvVNBapSr2Cu8B/
+    gLzj750v5n2Sw1Ovzrm/VaAhjTkkSAV8vUWUj7y2TLygDMXQETq++3zBphlx6ou53W+OYr
+    IncAGgshpjbuPRQAFYcOkM9t1aH7fp9HrRoEUHXkETw3VheX7TRHHhhckdNZ9JRW5P8WV3
+    jMmX0H4H7VGI57nCqDx4SAq0iSgT9poYB3KYZd+fHH2DaZgInRvXhxF+nC1wx07bnuPnui
+    ycyIm1HDeVB9tyFegyBtgcKxkfw9UgvcRz2/YZwigLSfxt6D1Dr+BnFPtvnZPyD2OpJ4iC
+    YoHxWC8MqqgE2YUttJokiBZOHkmBbrQSKgpXnxTC4ItRBdGfT2ZiW+Yz8zgQ
+X-ME-Proxy: <xmx:-6sxamlFJuimqIQGHCXNsu6E4xanVa1uu7T4WVwzOib5XwCMtk_vig>
+    <xmx:-6sxarwsTm15jECCePTk3uFcw28sJvtvMw85nzI6AQv11Txbh2q2aA>
+    <xmx:-6sxasNxkPVUhPhNJ5TEgr5o40GLpsnaTTVO-P7KDtOBz2Vae4PA3A>
+    <xmx:-6sxanSNEezf1tq_bgfmQkdRuKwX0Np3xsduZw_trcZqz2GqmrutiQ>
+    <xmx:-6sxaqfZRKanwPF8fXf9Wy41ujtBpQvfcb57IwQwasPRBjzJJG2lBVrw>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3855D3021A92; Tue, 16 Jun 2026 16:03:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: A5otprVY9DGc
+Date: Tue, 16 Jun 2026 22:02:46 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org
+Message-Id: <43cd8c48-c933-4eef-a6c0-970c38885967@app.fastmail.com>
+In-Reply-To: <aivvE6gVMGWhRbCB@pks.im>
+References: <CV_SubPatches_trailers.8f3@msgid.xyz>
+ <non-ident_trailers.8f5@msgid.xyz> <aivvE6gVMGWhRbCB@pks.im>
+Subject: Re: [PATCH 2/6] SubmittingPatches: discuss non-ident trailers
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> I'm pleased to announce that I have Git fully passing the testsuite and
-> CI in interoperability mode, both with SHA-256 and SHA-1 as the main
-> algorithm.  While this is very exciting, the work is not ready to send
-> to the list and is effectively a draft, since there is still cleanup
-> and efficiency work to be done.
-
-Great to hear about a great milestone.
-
-> Features which are currently unsupported (and which may or may not be
-> supported in the future):
+On Fri, Jun 12, 2026, at 13:35, Patrick Steinhardt wrote:
+> On Thu, Jun 11, 2026 at 12:22:45AM +0200,
+> kristofferhaugsbakk@fastmail.com wrote:
+>> diff --git a/Documentation/SubmittingPatches b/Documentation/Submitti=
+ngPatches
+>> index 0b12badf86d..51c308a89a8 100644
+>> --- a/Documentation/SubmittingPatches
+>> +++ b/Documentation/SubmittingPatches
+>> @@ -474,7 +474,10 @@ These are the common trailers in use:
+>>
+>>  While you can also create your own trailer if the situation warrants=
+ it, we
+>>  encourage you to instead use one of the common trailers in this proj=
+ect
+>> -highlighted above.
+>> +highlighted above. A trailer that credits someone might be more like=
+ly
+>> +to be accepted since these are the most common ones. But another kin=
+d of
+>> +trailer might be relevant, for example to link to an issue tracker
+>> +belonging to a downstream project that is affected by a bug in Git.
 >
-> * Filtered bundles are unsupported because there is currently no way to provide
-> 	a mapping.
-> * Multi-pack index cannot be used as the sole pack index format because it does
-> 	not yet provide mappings.
-> * Pack index v1 and v2 cannot be used because they do not provide object
-> 	mappings.  Git automatically uses pack index v3 instead when necessary, which
-> 	does handle mappings.
+> Hm, I wonder whether this is a bit too vague to really be helpful for a
+> newcomer. Instead of alluding to such trailers, wouldn't it be
+> preferable if we added those as actual examples to the list of known
+> trailers and then tell folks that they can invent their own ones if
+> there is a good reason to do so?
 
-> * Packfile URIs are not supported because the protocol-provided packfile is not
-> 	complete and its objects cannot be mapped.
+Honestly there are so few non-ident trailers that I don=E2=80=99t think =
+they can
+be listed as common trailers:
 
-Not that I specifically care about packfile URI, but this one is
-curious.  How would regular "fetch" and "push" traffic work under
-the new world order?  Presumably we will keep one characteristic of
-the protocol, that the packdata stream is the only thing that is
-given to the other side and no object names are given, because the
-receiving end would not want to blindly trust the object name the
-sending end _claims_ to have sent and instead recomputes the object
-name out of the packed objects in the data stream ("if we rehash
-and recompute the object names from the datastream, the other side
-cannot lie to us" IIRC was a security measure).
+1. The Git project doesn=E2=80=99t need them (e.g. no bug tracker)
+2. They seem mostly for use by other projects (bug trackers again)
 
-For a regular "fetch" and "push" to work, we would need to recompute
-the native object names and also somehow compute the compatibility
-object names if we are in interoperability mode, no?
+With this list:
 
-If we download *.pack files from a packfile URI, wouldn't it be the
-same story?
+    git log --format=3D'%(trailers:only,keyonly)' | sort | uniq
 
-> * Large object promisors cannot be used if the server does not actually have
-> 	the entire history, since the server must have a complete history in order to
-> 	provide object mappings.
+If you filter out the ident-looking ones:
 
-Again, this one worries me a bit, but perhaps I am not reading it
-correctly.  Does this mean that the server side says "this is the
-data for object whose name is X in the SHA-1 world, which translates
-to X256 in the SHA-256 world", the receiving end blindly trusts
-without having a way to verify?
+    grep -v --extended-regexp -- '-[Bb]y$'
 
-> There is new documentation in `Documentation/gitformat-hash.adoc` that
-> outlines the requirements for using the protocol.  The protocol
-> restrictions described there are hard technical limitations that cannot
-> be avoided; I've intentionally made things as featureful as they can be.
-> This imposes real restrictions on using protocol interoperability with many
-> projects, including Git and Linux[0].  Interested parties may wish to look
-> at t1017 to see what's tested vis-à-vis the protocol and
-> interoperability.
-> ...
-> If you're interested in testing or perusing the work, you may get it
-> from the `sha256-interop` branch of https://github.com/bk2204/git.git.
-> Please note that it may be rebased, rewound, or otherwise folded,
-> spindled, or mutilated at any time.
+There are few left. And some can be discarded:
 
-Sounds exciting.
+=E2=80=A2 Change-Id
+=E2=80=A2 Message-ID
+=E2=80=A2 Fixes (pointing to a commit)
 
-Thanks.
+So to address your point:
+
+1. Maybe this is so niche that it is not worth mentioning; or
+2. Maybe give a concrete example like `Closes: <bug link>`?
