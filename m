@@ -1,160 +1,98 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104AC39768C
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 21:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19677394E91
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 21:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781644450; cv=none; b=Rcf3jtZR+I8LnU2JxfWVJPDWOmna2EcsmSpxatnqkkgmgPafRVJQUmlT6C6ETeIxYwL4cW40Crfe9IODrSF4kWEYtmUbaB66d1+is/aVJ2e9vGjU6VEbO0K+OT0gDHQZ83pp2DESnhxMuFls3Jz6+nRdV8aF1fkSHqfzkFsAwXY=
+	t=1781645180; cv=none; b=Gtyw1gjfAaf9FrvEJqqyO3Kcgtfuv4pGckpAZ4527QjIYTT59+Rk6qxeQE2tFQhVT2+LnJl3f8lBtwJMBk4yevOdy8QLQ/ygISUpClgfXncmqroDZvpCjSC/VxB0xP9BAXHoH9RkmvxtLuTdaNXWOpXhEMv00En7uJbUiY1Ks9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781644450; c=relaxed/simple;
-	bh=l5sSaY1CK/60xefihMzmhr2tTwfcntLNvkYp3vPu4QI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RHaMzK/NiU1zwNyHl1fa6bK4k0wt3VbFa3T66a7x7mGh5Kzwx6Td0odScr8QvhdQU4DjuHnSzm+815h20UY7ZAtmLQvBF0bZBh1Iz4BaOcl3UaM/OY5vRNaGjModU9dEegrWkX4g9SJw1fj9qQTVjCNsUDavQzWeDXydaeLWF1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JrCC2abF; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781645180; c=relaxed/simple;
+	bh=Lv3vrRbvSQGTOrUZxm6CSWiW1LtqByjvHzTNOtJBfXk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WiDQxLrPrzSXNyJBleQNlkTG1+j64Z4+b7VOsWB6+IW+Wccs58jHmrDaSNmdZelU9JoC227mcgGIsfEA9MB+E/lOACSiGS0uTR/E+xOnM++Q/gYriM1ExeeodHmm0gnBfNaNhZzB6odRrp9XHC+5yoNPRKbYaHNrwvTstuU2Nrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bUdcHNJY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hqi9LkUP; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JrCC2abF"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-43d2ff651f2so4184771fac.2
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 14:14:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781644448; x=1782249248; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RpvuYS+YSeK2dX92zmrM7OSY4raK0z5Ie6bPgbl7HaU=;
-        b=JrCC2abF7ZApSX3hIIjUVikobjj01w9uUzAGxTutQx1tzX9ONbN2A2eSCvbAWeRPwe
-         eJBf9ZAt52UCytE1CicS/GxWOvTJz3h/wnWU/JNO2XIrMJlDmuoJ9WTtpShBzwoOX/GJ
-         t/RKc6py0mND5PX8siAr71RFBaz1VohANRIaWAHl+qBXI6OaJgW307sbPqIpKRvhiP7D
-         aFEWPA3HBDwn3eoGbbySc0/elb0isSh42YRXaUBMvVY1kCNdcKxT5EM59Ib61mh465BB
-         +rKNMwtTOLhqaZEosXSL2ng7eONGtQ4fRTyAnfPHFdwg86F5u1QnJ8nZbnCLt+J9byP9
-         nTZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781644448; x=1782249248;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RpvuYS+YSeK2dX92zmrM7OSY4raK0z5Ie6bPgbl7HaU=;
-        b=ByXT7mO3jwxbK7WpvJ4zaBfXO42ji7DFaNMKUoshS4xMH9MKnf5WdM+gbAwTdRZ7lq
-         gKN5kpZawRbezA7Lck6k8jVvXyj/1xfeGpwXfyLJMqoBMfjZ6VEV0WxMCF5jZiSuR1U2
-         Psq2SyUqH4q6rFgFaRrSR/hqvax/kihw3qpUXaqzjRLAoW7eivtNvlg6n8VmCxM75PaJ
-         z+WeI6QhNyd3zYokw3GNHIQEQMTTh9Hodet/LOZl2HIyRBRRgxj+SzhNNBy3WrFhFEEJ
-         DpEunUB3aNLHuhWGKvJEoMxqR6Pj2j4YhsKOXUh8AGOsK2suvwdpVlmX6dD+pIdsM77x
-         Am1g==
-X-Gm-Message-State: AOJu0Yx5HcueL4RGaYUNjICP91KUyk9qNK7eGXUUbS8QdYXCC1IsaN8m
-	HqyjS2LkcNy4m6aBMNUPZiUTXTglVbDVxCKEX3o6yuBtqEzW04x/2Vqr
-X-Gm-Gg: Acq92OEEoxNLHuO1lcqWR7F+SU+kBC6w4NAnx3/pTauSk2qqV6jYYkVSBcrxsEHSGXB
-	dAQf2/hSns1ULboGD3e/hJEJVK9YIWMkLUSTSDTke65dBinuBg+ne3bKXqYvmTf27EbFc5xpYue
-	Gm5hKP/CPOacs0YQz0Uo6U84eluxNdeuvZ/ZgyKh/ET3nMsdC3esdnxN+VPGkCyTiKqkoOwikfl
-	2oNOo6xc+QgkV/o7FHT8FxNKkDXPNH6N6sAdbEi8zbKGW7o09u1hqo69peSgAoim+aHr2OPp0qx
-	+osAdMexlkf+6HBhFArphDLU3/LFYIOnvEs8PLNdNquuhjSVbmWwzEl04MQ41jLsABaUm9eIkj+
-	Ex6w5QZKZs4DevoNtZLPo3IEm4ZNugXAWNUvRdmuvRgQGrZNDInbKmJKWVntnLQ7121ecMtb1+J
-	Ep+STQK+04qDSO7/oc
-X-Received: by 2002:a05:6820:1c95:b0:69d:fcff:a3c9 with SMTP id 006d021491bc7-6a0b619207emr669447eaf.43.1781644447938;
-        Tue, 16 Jun 2026 14:14:07 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69f00d2138dsm5736876eaf.5.2026.06.16.14.14.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 14:14:07 -0700 (PDT)
-Date: Tue, 16 Jun 2026 16:14:02 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 04/17] odb/source-packed: store pointer to "files"
- instead of generic source
-Message-ID: <ajG69JZHx_u2mt7q@denethor>
-References: <20260609-pks-odb-source-packed-v2-0-839089132c8b@pks.im>
- <20260609-pks-odb-source-packed-v2-4-839089132c8b@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bUdcHNJY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hqi9LkUP"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0CC66EC0190;
+	Tue, 16 Jun 2026 17:26:18 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Tue, 16 Jun 2026 17:26:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781645178; x=1781731578; bh=rk00i+MS5X
+	3PEqtw1a1svMw4hKWpXb9WYcX0AXpN7tY=; b=bUdcHNJY49Zr6sWmXx9Hmf95xa
+	8NK6j+fTRo+irI7/RUQXEywYo0lsr5V9gP+42OyOWh8/CDZCjKeGTYP22RAgllGU
+	glUNISCmhDoSf4YJFPmgEkl79s3xanmlvRUfMQN1QoiohrzIdrU6dbKR2ir4GOkM
+	I1BylNBEigTktPjdZX/DqEIbEqS777g546nZsK8tcSz6vwvHRVKjo2sVhZGx0vUt
+	Q01XfZw3W9ohSEcaHxhr5Y1QhntbkgeljRXAnr9HDScxEA2tBtf5JpF9Gw/5+ZfC
+	LlDZCWIsMMcjYegB82XKsEalBdKNFvYwSdGy5LFEqUIZ9vKB/PWRgynBrX/A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781645178; x=1781731578; bh=rk00i+MS5X3PEqtw1a1svMw4hKWpXb9WYcX
+	0AXpN7tY=; b=Hqi9LkUPtP/pCn008AE98DrjuoBeo+yIe4xHu5gLEylolGWcC9F
+	+f9u5oEo/SEw17Bldlx8WZdDMOJP/ZLgIQLBasOTTG5p3431yGkOrHha/v5ZRjty
+	yzmD0M6BinhY3SQgFqBCucCeaezXf0ZjyTq7B5CMK8OZT+Es5qQkmeQCpUdEdyQQ
+	OpFG5BI1AI46lVxERLcMap3x2S5msrt8pLG69CR8i5v/OkzXbK9gc1/QXwPd43jN
+	gcpNnLdyTkfnkr31LV3QXSKoEeD2DKCbGpra2oOKpRqLN6XabWyG2WS9BZBOkJZk
+	P7WkMbMlpQ4QqkLydvakSy+vEwHUwcJQhPg==
+X-ME-Sender: <xms:eb8xanK9YH8iIOCXE-k1xLUuxBoKQapxybBh59nBYHu6pjg_394YNQ>
+    <xme:eb8xau1W7p4QM30kPhL5JAwt2cJGYdDuOVkSA4R-zbWYoAtnOLNQg4q-OvstJW5TI
+    Y5L3U3eNjcLo6V7aMn_vpkofUOv3kiGTfhnKo1CrEwJ5SL-HOX5>
+X-ME-Received: <xmr:eb8xaphL074rNPb4wxY5pbOJpJ_1eJ2BWLhhLzAuWhhCNBqfoEWsvOuY79_0ye9AlMrWnbkYjNGib4ABRcJYMpL2rpnU6FNJCGai>
+X-ME-Proxy-Cause: dmFkZTEncEe54OPjcAvdO2ZSOTpSbVaoFmQ/1qbBIFFg25Yf6Cn1gQDxq/k+n8B9nl0URS
+    k0LM/vtGu9Inyhi9FWzYsppy5UyRJtCJb7+maR7EtejNWN8NF0XLm9A0hf+T2dxP+u5bCZ
+    hFP+f6o1pSPSVYtTNacHuSYUH0dvTlxROXJrVcghT5zAVIJbhK5PtGTlcJ5BNqIpoNOtiq
+    19c/yeL0jxAbPAdWVhRvB3aEam82zvx8dg9B4KbBwWhkqZQQrrlACKzxwVxP1RNE5FvQzR
+    fmYJlgz3rY4OVnul8Qqvu+CMHJOsxfyqAlPW9WJBbaQWyBcPFpwt5smwkFMxvEOxnEsaKF
+    EWu//11vqdDFf+AUOWVFeH6Wzhtv9tr2QxDWbXR/+wrxUwBTgLCNIX2hsKjB9+eWMfppCt
+    kiu+5/U/kLSLNOTKGN6cUYKU8LoWM2ezEWoOaCxzOirfVYXViE/zQu/xs8wGiiWxSWi873
+    6Hd5r4qzhimcYbuBqOKGIlwP1SbBB1DctpohTyHlog5f1EtOXb4C+rebh0ghogUKfc/fCY
+    /aKQRSPVyct3516cthWAQrmUDBvUWKOUsEdlXG7jQQfhR2Dci1ELMhcUmmlun7J30Piea9
+    9YLLUS02vLkQDpugkcPdZ9xOs3lOy840ZFeK11ASyHBLDaZkWX27NU3N/WYg
+X-ME-Proxy: <xmx:eb8xanUv73kukiTw5maJQ57cDMWboF0Q5aDNAsL-tOyLWImSuaw63w>
+    <xmx:eb8xagUizGsDACtUVJy7AD1mDEEv3R6LG_HKaALHXxEb_C18hx36ng>
+    <xmx:eb8xavgYR44wkg0nveRlRbw9-OFeVnmVzLVj2AQdTfIJ8_EpPFSEXg>
+    <xmx:eb8xajboXJf8194uxUbOgSKLHqaJf1fsJhXA0uVY_K3gF3bwuyX7Pw>
+    <xmx:er8xaoAz5C5jnPows18jAJ3SmB-M1npPaEybR1dfpmDibJlj4Gw_hng_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Jun 2026 17:26:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristofer Karlsson <krka@spotify.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/7] patch-delta: use size_t for sizes
+In-Reply-To: <66a642c39e7755755fe388af7612ac8c9bf41a5a.1781524349.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Mon, 15 Jun 2026
+	11:52:24 +0000")
+References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
+	<pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
+	<66a642c39e7755755fe388af7612ac8c9bf41a5a.1781524349.git.gitgitgadget@gmail.com>
+Date: Tue, 16 Jun 2026 14:26:15 -0700
+Message-ID: <xmqqwlvy18js.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260609-pks-odb-source-packed-v2-4-839089132c8b@pks.im>
+Content-Type: text/plain
 
-On 26/06/09 10:50AM, Patrick Steinhardt wrote:
-> The `struct odb_source_packed` holds a pointer to its owning parent
-> source. The way that Git is currently structured, this parent is always
-> the "files" source. In subsequent commits we're going to detangle that
-> so that the "packed" source doesn't have any owning parent source at
-> all, which makes it usable as a completely standalone source.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Out of curiousity, `struct odb_source_loose` also stores a similar to
-pointer to its owning parent. Is the plan to also eventually do the same
-there?
+> Widen `patch_delta()`'s three size parameters to `size_t` and switch
+> its internal use of `get_delta_hdr_size()` to the `_sz` variant.
+> Then propagate the wider type through the callers.
 
-> Detangling this mess is somewhat intricate though, and is made even more
-> intricate because it's not always clear which kind of source one is
-> holding at a specific point in time -- either the parent "files" source,
-> or the child "packed" source.
-> 
-> Make this relationship more explicit by storing a pointer to the "files"
-> source instead of storing a pointer to a generic `struct odb_source`.
-> This will help make subsequent steps a bit clearer.
-> 
-> Note that this is a temporary step, only. At the end of this series
-> we will have dropped the parent pointer completely.
-
-Ok, so IIUC the eventual goal is to get rid of the pointer entirely, but
-for now we are just making its concrete type explicit without having to
-downcast. It's not immediately obvious to me how this step gets us
-closer to that goal, but that may become more obvious in the next
-patches. :)
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  odb/source-files.c  |  2 +-
->  odb/source-packed.c |  4 ++--
->  odb/source-packed.h |  4 ++--
->  packfile.c          | 12 ++++++------
->  4 files changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/odb/source-files.c b/odb/source-files.c
-> index 191562f316..e04525fb08 100644
-> --- a/odb/source-files.c
-> +++ b/odb/source-files.c
-> @@ -269,7 +269,7 @@ struct odb_source_files *odb_source_files_new(struct object_database *odb,
->  	CALLOC_ARRAY(files, 1);
->  	odb_source_init(&files->base, odb, ODB_SOURCE_FILES, path, local);
->  	files->loose = odb_source_loose_new(odb, path, local);
-> -	files->packed = odb_source_packed_new(&files->base);
-> +	files->packed = odb_source_packed_new(files);
->  
->  	files->base.free = odb_source_files_free;
->  	files->base.close = odb_source_files_close;
-> diff --git a/odb/source-packed.c b/odb/source-packed.c
-> index 1e94b47ea0..12e785be48 100644
-> --- a/odb/source-packed.c
-> +++ b/odb/source-packed.c
-> @@ -1,11 +1,11 @@
->  #include "git-compat-util.h"
->  #include "odb/source-packed.h"
->  
-> -struct odb_source_packed *odb_source_packed_new(struct odb_source *source)
-> +struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
->  {
->  	struct odb_source_packed *store;
->  	CALLOC_ARRAY(store, 1);
-> -	store->source = source;
-> +	store->files = parent;
->  	strmap_init(&store->packs_by_path);
->  	return store;
->  }
-> diff --git a/odb/source-packed.h b/odb/source-packed.h
-> index 327be4ad65..3c2d229a17 100644
-> --- a/odb/source-packed.h
-> +++ b/odb/source-packed.h
-> @@ -9,7 +9,7 @@
->   * A store that manages packfiles for a given object database.
->   */
->  struct odb_source_packed {
-> -	struct odb_source *source;
-> +	struct odb_source_files *files;
-
-The rest of this patch updates the callsites accordingly and looks
-correct.
-
--Justin
+Makes sense.  
