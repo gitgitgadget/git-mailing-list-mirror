@@ -1,136 +1,158 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC3D3793A9
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 19:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5604282F2C
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 20:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781639606; cv=none; b=VmRzzEdF8tklHlabsve68KC/83OVNBvid2ofwHSda6Muz11MwRCaeve6NG4flngxXfTe73jRrLUPBMBPlYpP9NcQKEUa8m4f4Es3lPvq1uKtnE2Zl5syDeiXd4J8U1jjMd3x17+yOvR5OM0CK9OhIbwBtDWfOWQ90whok407PPw=
+	t=1781640102; cv=none; b=rh3Ey+Vh1D9kKZtHYcqPKlCKVXPpGfvAbLX33bWZpzl7oC76WE5MIRJr3NvVb/wKDeOCr288ITP7yfDGxcQ0agtGNbEimQBuXve9nmN9lsbgJ/UExju2QJGYtKfuRCUEQusHGTSDa44fD4QjbkD5PPaKTZFvlf6u9Xz/V3lmjEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781639606; c=relaxed/simple;
-	bh=FWdJ2MjyqGsVhzDIQ696J3xqHvSnNqFOMWxIQruBXNs=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=e7mHTdNAk4PI6JKQ6GkJKUNES4+2B0AnCcUAGOo/21H0Phks5iRH5n/tQODGgVbRWcFgvhlbgyY+HVBTT7qmXCzHPTzFrmfDkHXV3thn+wRf0UztIanISNyFmwZoLl9ehHql60w8TfUXrSOJoG3QjTFOAzPd4V945HGMbefkv6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=tYHVrtFT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fIwzd5zW; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1781640102; c=relaxed/simple;
+	bh=UJE3F5DZcQkjp4NiWePN0BKtcMYCZnS3eBZA4DnJAwk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DkLMwai6nGrYMLyF250tN3MCBYK+bMESZ3558uRhyHCjiquOSRzLSX/YCpSmmJyU97hxRKHhiMxwuAYVHIiPm5DTqUBfCNp9ztyQopFcPghUyArgpy5zYIKBD4PuWE/lK/onxSP0BbpMbhRxiUB8wSVEAiipuCGASECaLB1ueAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XfI8IQWa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FSGhrTXR; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="tYHVrtFT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fIwzd5zW"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 537B9EC0171;
-	Tue, 16 Jun 2026 15:53:24 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 16 Jun 2026 15:53:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781639604;
-	 x=1781726004; bh=bnwIZfqGb412H8+DISGNEdbbMSY0OuFPm7RCrXDErCU=; b=
-	tYHVrtFT0ybLENnNEVd4dofr+dJ9L9bvFb79t/UYsWH+U0QOgSrlvd4phdsaNRhO
-	6hnKVGi4lFYSmtZZV35+f46W/98vbxp5YyanrSqvTkVDoBnQKjFlz/I29mBadsNe
-	v+B9AqtURErNK0RRzdgGDWfHwXxpr8Oa8PcODx4Uoia12TpkNb7lLJEzR7Ohtfbf
-	RiI3hupXGIYWsLD/KqwvHf7l1g2WtpIbi0lLAvHnE+lf4L6YoUqZIETHX24EXi1r
-	AfgmWxbW2SMGWMpoXXkMz5GYwcElurytxEpc9cXW1Elcg2jRNFCEMZuXH2dCUQDS
-	LaJDpqq4/3ZG/zYptTZd2Q==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XfI8IQWa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FSGhrTXR"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1D7BBEC0209;
+	Tue, 16 Jun 2026 16:01:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 16 Jun 2026 16:01:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781640099;
+	 x=1781726499; bh=C8UkZYR48lhZaWfRuo48fO+U9xnEreRmRRY4YJrsuKg=; b=
+	XfI8IQWaiZ6Tl9qnNkDAp6KnfIXRqi8MR2IM95LnZ/xNGjpMhPtLVYdek83vhqce
+	3DNonBL8Uydv7HmIquO2HrVVNexGsdG1YB0jjiZ2+GiJ6UCpo7qJKUdOdWzF2xbD
+	hGFNKJG1Y62XWSg2oGrUGReSoA8MjkN76GQKdjUqgZ7Hfz8TKlkHFivXT+m7wNlf
+	Vvqdx8xkq27biail2lydF30h+hWx42+0gqNktCkMWlCR5OL2VEU/cYn5NfTT3CCx
+	WpSph7koJ1GmA01Ql/HL/EeS7XnFstwTnHz1wr2euyfzEAr1cYpu2o3OcDlms7pL
+	MvoVWR/rLQ1lw5tn/0fxBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1781639604; x=1781726004; bh=b
-	nwIZfqGb412H8+DISGNEdbbMSY0OuFPm7RCrXDErCU=; b=fIwzd5zWblpmvrrKY
-	QOeu8OpC/H5Y7kNrcER1mNafLeK5U6KNSJc17VpiAXPmFT++t6w3/aUAM0hPfiNN
-	e+VTgKkwtqAg3Yg2+t7GZnEzrFAAmhRmWcJAm7bZ1Tr+OhmkqwqoviaQtYI84oT4
-	lOgW4YoJp+QrKKbm4Zx4yeINzGT4vO0UYupORycaw62vPVuNRAxVZFWs2mPIAVWS
-	A5g1s3/Qonj9GC2ySueNuav0i0O3H2nvjKAUCLaBLIx51TUGgyTh8HwHbEJ+wceY
-	rM96a5JKvOWkSdfKPQnjpvzVt4DWdK92JRDhisVU9gynuoDxY5cERwtGOYLSEXCt
-	qhiqw==
-X-ME-Sender: <xms:tKkxaktlkegZM0yalMXhbkXxwYcHgjEHYAiltw6KNH1HEfL_2_RbgZc>
-    <xme:tKkxasRWnO1AXiHjv3UPoW56t_UMhggOStGmZKb8XK9Z6t6aPKDegC7-7hWnRQAmU
-    eOTI-NFDvGQ3VTVmDyjzqA94L-LkX36SQrmi0L5b7ZyXkH1Pgts>
-X-ME-Proxy-Cause: dmFkZTEAekuYa5nXZP0Y3UclCliHp4IvZCWZZ5+PSwUbIZjeMPd3cw7Qai7ixZFEHsSJJW
-    XzfCYyam0GHoOO7mAzxWojs5oO7l1svgVC7zUzq4Mth+uBZldmmqx7IvCYXfGTQfjQ71X7
-    FKHNLL0Nd35s33AC9qsKcBMRTPraCXP/Mqt8zGvZGTjOf6CyFqrtnikUSA9q8vaJoArmgz
-    FEBGHjq/c9YtjHb1VWa7WIb3DHRXvdQ5m7F+HevLUJHn5m6xTYsRG0O3XBiL56zylOWzBS
-    Wzc1PDvnqCzA83rR0PEmneh/qhaBRBMJ1U8HMYYuYBuCk/vX2tntjrXmKZWA7Ya9IYiqQl
-    TEtknvBuMkzW47cfi4ava4670H5D1af0Ofp8hMLv0N2hIkxtLC/OoH/VLMVB1fXMvX042S
-    6hGAgydghjrGLblQ8gxhlzUUvkJyAp7OWOaTmLde6W2V7j2xRkee4lfGZymrwJX3G3PfFH
-    Y0lJN/+DFB+5HkMsr+dyfG8ic7YdCzwSsfljQDCjoKMp/D7DFXojeFn7uupwUxAclF6C9m
-    NbJ6H/pR1+p7JDalT8rz/skf+0d3ByOdKZWOP4mpWQsebSe+4TjWAoUxGxSgQZnWZ4J7rM
-    4daH7o+VFQq3B3CsZit8s0BX4zLmrUVF6b3Vs2ggVq/k+hwSdmM31cxX4ISQ
-X-ME-Proxy: <xmx:tKkxaja1-zDsKdinTeThV4XNc2YAJnWVZlRSnc17fztO-vTj0bnyKQ>
-    <xmx:tKkxagX1nAklIS7KsYZNuyd0RUKP4TM-sSkgOseU9iVM1dT3nlO7CQ>
-    <xmx:tKkxathOWTxRceehdrdmc-H2nb2qGhCvdoA9y5Qeba77YMb1HGbCHQ>
-    <xmx:tKkxamWNlIs7KvNgv-Vci60nN2Zls8CG-0zNZrCgZdPLiiyhUvupkg>
-    <xmx:tKkxauDvFfKhJ2aedo1qp9hEVVeoya9qmnjQ3-YTHh6D4W5_BfvAPlVB>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1D1BE3021A93; Tue, 16 Jun 2026 15:53:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781640099; x=
+	1781726499; bh=C8UkZYR48lhZaWfRuo48fO+U9xnEreRmRRY4YJrsuKg=; b=F
+	SGhrTXRDcbbEU3KU2OFN928yfsE7x9GFWptFHNdsPznQIrAFgT3yLtVJnwpBF98+
+	+o4GUpS8JEcbPVekfAQz5M3NBJZBYm2LSK3sogfRVd1qeYtlPSMCmO/4nbu9BlNz
+	dBYIjeCoPPFZJiEECXYvJJ1WCfiWrdoKp77lqrGuNURZM52/ssirFAZASHAoo8JL
+	IrMq3Rhh8XUr8rEdC6OkJUlLDSdBoapTlzkIKGzqcy/Au/F1gSN+2axaUcfOvzhF
+	jS9bAIEv1OFyPID3bJUVn8H8nIaePBLSZ9qS8CMCPx7OXXIFmX6WxMc2GoIUCwSo
+	M77EHTrTBvAy/M2/jjmyA==
+X-ME-Sender: <xms:oqsxalgYeo2bjDV8Pcl_Enpr5tLd4DO1fKMjMC_ZgJu8Q4MOVzrUVw>
+    <xme:oqsxahdlzWH-SncTgJC5WXBTpQR8H40bRINoBhOFq5wwJem03RGd8wyoGNMHzmz8L
+    cNyspb90OYPfUfGUDyKdBETrmjUaQwGttdTkUo3Oiq8x6WEkTF8>
+X-ME-Received: <xmr:oqsxaie9-ISLc2XiCJJF7Lhe8tuZkSXym69j74x_Z7G2au47o11JWjDnIqwFAKQSR3h9P_6_bPNZ4eIKQ7-zU1OQg2OVkrKxa51x>
+X-ME-Proxy-Cause: dmFkZTF8I82rHxv8kCMgErreGDYawgF26ePrMNhgGvs0WVvkdcQVqIR3WwtAW/p5F5++QH
+    pLfbi7ZhRamyZ3+uPAFbHhWd1sHi8Gz1In8joTKYgsVt5mqD+j2Ne1npI9DaVYJm3k2gTs
+    H5L+sFSXpvJL9oiUZP3xtv3mVS5ufNTENnw5gnBUBVUqgqqVxREFv440HpyTTHCzaLE70W
+    gB4cmqfIwhCBr/TVuLMuOCmXifVyVvrvVpqiL60yrsM4R7YdP3IHAZWsj0zCuhKz9/JF8/
+    fL3c3o3ll9WcnfUkSkPh9bz1d2/8ksyQLDbnKbI4ifZxAM90+UM/1khnhhWvHBwahjrAPk
+    Ecfm5UUPyMjyZ1Gg34Xn9R4qeEiqIJv2WzuULXe7wAxtUBeKnStAZ5S08009/lNwd62g/7
+    jiu/s3gCqvzOpyJm7Cj9DK50j7d7vcqpbrDg6z+Adgau3C7rLrCXNim+XkkXpw8lHzpLei
+    TqDq1YM1pqkKtqlB0KpuXfDQ0tkPirhjxjgHC21m6/I4pII3gKBEly+w2b5hlm3xcMKFOM
+    /sxHvSjlGGI/Wy17h6MYl80pQvE+2+n+4//MI16dh7LeC8V1AAXtZ0he+cNEw3tfggAOUU
+    NsoZEauP0fEX3yUQ+mpoBID0y6kTuoNAajbHT0vQ1HNfbC+glAVSIb2/V+Jg
+X-ME-Proxy: <xmx:oqsxaj8XmDLXEUQGp1lZBaSmQRceHLdrS_6eEme13tJ14swCi-bEJw>
+    <xmx:o6sxamn7GapP4cJNxuka4akSL96GdJ05ph3VC3Xph5NKxTPs3i69hw>
+    <xmx:o6sxat_iTaKdyB1xFX3NMT26AZ1Y7Zv3RRJ8m_RlBd1vMwqq7VMsFg>
+    <xmx:o6sxasn8ZArsfYKsdilWq7mPC5nK0MLWnpSWp3J8LA5XE7ad4qC1yg>
+    <xmx:o6sxapo_sT6JUEUHn2CGVvbk2fC8J77iW6rh2KvhHkAnMk2bf7otiswr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 16 Jun 2026 16:01:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: SHA-1/SHA-256 interoperability work is functional
+In-Reply-To: <ajCWBG9RHBrm8jMZ@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Tue, 16 Jun 2026 00:17:08 +0000")
+References: <ajCWBG9RHBrm8jMZ@fruit.crustytoothpaste.net>
+Date: Tue, 16 Jun 2026 13:01:37 -0700
+Message-ID: <xmqqldce2r1a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AJ0DiacZ5_2c
-Date: Tue, 16 Jun 2026 21:53:03 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Marius Spix" <marius.spix@web.de>, git@vger.kernel.org
-Message-Id: <9ef3ac51-9f98-45bb-9815-6fbc5636e15a@app.fastmail.com>
-In-Reply-To: <20260616212553.31ddea83@rockhopper>
-References: <20260616212553.31ddea83@rockhopper>
-Subject: Re: Assisted-by tag
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 16, 2026, at 21:25, Marius Spix wrote:
-> as the Linux kernel requires the new Assisted-by tag for AI-assisted
-> commits, I was researching how git handles such tags. Thereby I
-> observed the following behaviour:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> I'm pleased to announce that I have Git fully passing the testsuite and
+> CI in interoperability mode, both with SHA-256 and SHA-1 as the main
+> algorithm.  While this is very exciting, the work is not ready to send
+> to the list and is effectively a draft, since there is still cleanup
+> and efficiency work to be done.
+
+Great to hear about a great milestone.
+
+> Features which are currently unsupported (and which may or may not be
+> supported in the future):
 >
-> git commit --signoff
-> * adds an empty line before the Signed-off-by tag
-> * ignores the Signed-off-by tag by checking for an empty commit message
+> * Filtered bundles are unsupported because there is currently no way to provide
+> 	a mapping.
+> * Multi-pack index cannot be used as the sole pack index format because it does
+> 	not yet provide mappings.
+> * Pack index v1 and v2 cannot be used because they do not provide object
+> 	mappings.  Git automatically uses pack index v3 instead when necessary, which
+> 	does handle mappings.
 
-That a bare message which is just `Signed-off-by` is considered an
-=E2=80=9Cempty=E2=80=9D commit message seems like a historical quirk. It=
- checks
-specifically for that tag/trailer.
+> * Packfile URIs are not supported because the protocol-provided packfile is not
+> 	complete and its objects cannot be mapped.
 
->
-> git commit --trailer "\nAssisted-by: OpenAI"
-> * does not add an empty line (the "\n" is not converted to a newline)
-> * does not ignore the tag by checking for empty commit message
+Not that I specifically care about packfile URI, but this one is
+curious.  How would regular "fetch" and "push" traffic work under
+the new world order?  Presumably we will keep one characteristic of
+the protocol, that the packdata stream is the only thing that is
+given to the other side and no object names are given, because the
+receiving end would not want to blindly trust the object name the
+sending end _claims_ to have sent and instead recomputes the object
+name out of the packed objects in the data stream ("if we rehash
+and recompute the object names from the datastream, the other side
+cannot lie to us" IIRC was a security measure).
 
-This is just a regular trailer. I don=E2=80=99t know why you have a `\n`.
+For a regular "fetch" and "push" to work, we would need to recompute
+the native object names and also somehow compute the compatibility
+object names if we are in interoperability mode, no?
 
-    git commit --trailer "Assisted-by: OpenAI"
+If we download *.pack files from a packfile URI, wouldn't it be the
+same story?
 
-Any number of these will populate the trailer block.
+> * Large object promisors cannot be used if the server does not actually have
+> 	the entire history, since the server must have a complete history in order to
+> 	provide object mappings.
 
-> Since there will be more and more AI-assisted commits in projects like
-> the Linux kernel in the future, this should be taken in account.
->
-> When merging or squashing commits, that tag should also be
-> automatically applied to the new commit message to make it clear that
-> the commit is tainted by AI.
+Again, this one worries me a bit, but perhaps I am not reading it
+correctly.  Does this mean that the server side says "this is the
+data for object whose name is X in the SHA-1 world, which translates
+to X256 in the SHA-256 world", the receiving end blindly trusts
+without having a way to verify?
 
-That `Signed-off-by` has dedicated options and logic is historical
-baggage at this point.
+> There is new documentation in `Documentation/gitformat-hash.adoc` that
+> outlines the requirements for using the protocol.  The protocol
+> restrictions described there are hard technical limitations that cannot
+> be avoided; I've intentionally made things as featureful as they can be.
+> This imposes real restrictions on using protocol interoperability with many
+> projects, including Git and Linux[0].  Interested parties may wish to look
+> at t1017 to see what's tested vis-à-vis the protocol and
+> interoperability.
+> ...
+> If you're interested in testing or perusing the work, you may get it
+> from the `sha256-interop` branch of https://github.com/bk2204/git.git.
+> Please note that it may be rebased, rewound, or otherwise folded,
+> spindled, or mutilated at any time.
 
-A 2013 [patch] to add `git commit --fixes` because the Linux Kernel uses
-`Fixes` was rejected because the Git project considers tags/trailers
-project-specific. Instead git-interpret-trailers(1) was born which
-eventually provided the code base for `git commit --trailer` and similar
-options.
+Sounds exciting.
 
-  [patch]: https://lore.kernel.org/all/20131027013402.GA7146@leaf/
-
-Handling how trailers are added is also deemed project-specific. There
-are only the configurations and options that git-interpret-trailers(1)
-provides. And handling that commits are rewritten (combined and so on)
-in such a way that trailer-taint sticks is beyond any discussion I=E2=80=
-=99ve
-seen on the subject.
+Thanks.
