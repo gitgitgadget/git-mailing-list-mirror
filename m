@@ -1,259 +1,231 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f43.google.com (mail-yx1-f43.google.com [74.125.224.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821D635677C
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 12:35:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781613320; cv=none; b=tLS5I5szKgAYOw+aXnTGFZncw3v5cZhP+UvGXJ9Dr8aEM2Jzj3oFvWWa/zDiGOE6SzrHfxDesqevqOHk8BEM1phyejWTmWVUTbw9BckJfB96/zxloD5zGn3+I3uiVLDk4mvxOuMCOovqvLmDZKfRCNFHViGnzIn7GTJbI7x0xPU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781613320; c=relaxed/simple;
-	bh=hqdlH1oexfRnKxuDAdWMvaWPiIyjzkw/KpofbAe3Lp0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LNZliSlPjf91E0Z+PwY43SHBWb8gf0fMH2qdEmpGNrjDmYsxgv81KYCii4httdQ8Ouf1veGZmhiALkhRjS8H6FnYV99jAFMJ7LjZP0wjsdGYSO4tTsK42QUpPpX6cnf17qSkAKIc1TsxJJSaK2iUInliOvbDGHVSWjq5MIZzYkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RgLbq/QG; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5786E369D72
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 13:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781615217; cv=pass; b=G4MymYHOeL9D/DG2iyw0TxjWWeemIUDTMt3YkSLyaIA38tJbeaRx4WhKsOLEH1Wx6JIHpNfQvrEt7M+tUyq+PxZNhYveQ1gvNYU+uci4gFM45paReK5ko+MewmxOv1/exUtUafFrrvdinXCHM9HcTxHL4WFeW4t4ReAHA4IMz08=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781615217; c=relaxed/simple;
+	bh=DPhAAQKdF9CkjpmefzBnQF7j5RsWqa/TW4yj64/Q/t4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QFMMnB45p7xo32hT2rDiPzsWSsQkup1He8fh+7K+3B4iI/uuDyl9i+EmuCJ58lA0eAZ5Om6N3ceOjhENA9jK/Pdw73TzubVg30ECaB3L07gOzmSfK3G2//QMsU9AviqWJbRUvmeYw6jpEGiY8C+nnvYcpya1tXkIQL0Sk10wxgc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TJeLhol1; arc=pass smtp.client-ip=74.125.224.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RgLbq/QG"
-Received: (qmail 149614 invoked by uid 106); 16 Jun 2026 12:35:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hqdlH1oexfRnKxuDAdWMvaWPiIyjzkw/KpofbAe3Lp0=; b=RgLbq/QG9w2P2DKgyQXPuXfDUXelsajBdGgYcc/ix6h4QVKMjYNfDEmGdLXxXL/l9CDT0Bw5E3y33mTZ1q0mn84MXaRhf1/uHS3d7QXS//dZMfP6zeCANfbo4DOKXbxfJ8EjYusa1oUAuNOepUdHIhdAe3N/61o/QCzk65/dF3OmJUuCjVzhxjKMgpKe0F7og4M4xSfNbsWRRm3iXkxMiTrDoeC8uxpo1Lj90XL/iM2Xu0la0aq02asIOI45LF/oZ9U/eUG0CWW9g6UH+flCEPZXjCyOXTFbZRIfIH6oqUjbY8GxSIshvyQJ3n8+8oosJW9+ZRZZJA0gSc03RrMbdQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Jun 2026 12:35:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 408950 invoked by uid 111); 16 Jun 2026 12:35:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Jun 2026 08:35:17 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 16 Jun 2026 08:35:16 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v3] read_gitfile(): simplify NOT_A_REPO error message
-Message-ID: <20260616123516.GA2301231@coredump.intra.peff.net>
-References: <20260602061159.GA693928@coredump.intra.peff.net>
- <ah6WEtk2pXyViEQA@pks.im>
- <xmqqeciezh0w.fsf@gitster.g>
- <20260616111919.GC687438@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TJeLhol1"
+Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6626cd98209so4741762d50.3
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 06:06:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781615215; cv=none;
+        d=google.com; s=arc-20240605;
+        b=eQs0vySgZP+r7bZw14RJdppwJY2u+4ofA+2jRJjwasMIWRA0ZAVwB8p2kzbnjMRp3D
+         0uIS15pHlTAk+B1040XULQvcWyU17ec3xcxNNITLczcbLBEi3RZSa/1tqg+97QRXBBtJ
+         XUHSpaC0+l/YIhiDdXAb6McegkMQnfXwnvwsPre7zdvpJORgIjwni+Tm7LRacTHxnkRG
+         a5Aqu3EzIhD8jNYWEBxmhcZpM3wMxqBZEuIl0sKLnDfwEuCw6kZPq+UwaiHy9XDRaRH0
+         dztMemeyswUJAshLW+9xljDqPkTjXyBx/tqxJpkNBAwAjEFyfnecwWH8Q85HZaQsSk5c
+         /mcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=U8WB25NuFyM0fHNwdnRhNL+CMBbg/5dWjXlH/j7wnFY=;
+        fh=uf2io49Zi79AZy9yGvXUGxW9gffORSHAYmKov6Z9bSM=;
+        b=BgvLpNJIMtUe8RyP1aq/uE8O96ppi3+5XLudLTAOv88PqIMVUB16PzJZOMECG/NXdO
+         sEueUzM1sdFmYYUmsRrNjqWShEFOdv+S5aAhBHeNDBwjLZT0EK+DOKF/BodnmiX+HWPD
+         NzE71Isq/78FAWH2O+TUcc6U8isLH6XoGS88ArnkuOggEHVg/NNPNXs/Y40BoYPv/x6m
+         dIPEY+TDocBGXRoKuPrmpIBNvOlQlZj+eRM7r3U3ouOI0lyUSRW2I5qJd2qrlMIapfQ0
+         KZeDOrgevhNiCfFy2b8761UyfQeUrWziVKkhWkTu64eZSjkyBMkoXpQwewW/SrOtw4cg
+         bXzA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781615215; x=1782220015; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U8WB25NuFyM0fHNwdnRhNL+CMBbg/5dWjXlH/j7wnFY=;
+        b=TJeLhol1TRzpXvlQKMclXSm34uHtZmb3P9HFwvfVbUhkr+Y/VkDAYxGJRvrqzKgVa4
+         CqZ3z8v6HB6rpxQLHZtu271QpzKJdt7O7kbNvjygCjskd1G4pnQSFpavdX6qACNkjzUG
+         aJozDF/ozBt9yNYyQ0F9nsLhXGLH9u5b3lvWAspR4dwXL42pC4ENw8jTM4NttEesVaZ6
+         IrVQ0Nnq/E1SzMQdxYkrcU2kZohMCFa9vmYljrhXXKb0iKGN3Y6ZUdOQXl3LadGABCI7
+         57osu6wxuUxfHtPwemwQvuQGZNeBzurOfqZ2k57xo74LFXOiJZztne8GMpZVRGMr5500
+         gXJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781615215; x=1782220015;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=U8WB25NuFyM0fHNwdnRhNL+CMBbg/5dWjXlH/j7wnFY=;
+        b=cau0GzDcpqSMnvxNGbq8EuQTQqVRidgyfb5Ro4b08Tv9GPB4MV4Xpo8X8IE9IuGdtH
+         00nd1BtbpxEj6iqubAIRrLvxd7eNtWjt4WsaTvq0tT0ZF2hldgUK5yEO/K02zM4p1EF8
+         jd2NUK+wiJZo3Gul6RoQH3pAXeNnXfvF4O/Om3LEbC5QHj7UyXZT/NcsXC+jKW6j7t/c
+         PEansfmV3wPKWXelBgGSBJk9qWppJ+DWOfriivaPF0bgEL25yIMEsZ7hGffdLGdPLRlI
+         j2iLJcAhJMe/sGQ+XuaPi1TNLwsNUuJ8c6fGYxjfQfGpoqQwAcTjElQxMjEEfSgIM1nl
+         0PQg==
+X-Forwarded-Encrypted: i=1; AFNElJ/0BSZ4NC3QTJATNjTy3H0GuJWo2j6+LR0ef1PA04N89RRx/xhivzwRBZ0cje1o5mm1ECc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz31rx9OfiMiomQr7nh7xwHMMFP23GZ1NGlVHGfpztg/hSbFCpZ
+	17JU6xtutRY306+KNBRfnTFBp6QPnCjK6PZu7IJWh/LDffR7hKiD8nXuqPjj0Nuetsd+1c3pCOG
+	2S1sZ/MXTk2AzYTC+vk4JJVNgadI1ugE=
+X-Gm-Gg: AfdE7cnHlgMawDU7PQS8t3FaZeUwpjc63v0D8Pt30CW/IJ5556DiZeE6H5Xlv2Idpxv
+	5X2vfLJPM5Lwyjx62I5GYDB5chX7wr+ZN4yRUWXXKCDtcxwc5aYYChoUjGzQnnVH/FLpcCZbYTg
+	GV5RLUTlInqrCtVxLOO92G68AzRgov1GUCfWbvtfGgRhiwAa9TRrGnGnb/+bmSAFdMoTnFQLD+N
+	PvKiy8U/Cbb8tfNAEnKd06Tk1fEdXoxnI83AP8z28oigHvyXALDPVqqHabkn3femxsU2PwbCBJ/
+	WPfx5hj02ug4mCKgERUephbCFecYZzg/4Qkoda0OF1RMrItSJWLoBrO5wuoNOxO6CpfewiBxOFS
+	+tGZX9f1mrxS22kvJ7IUeoFeK2sLpoiXn/I5kMJgx5DYD2c2OJuBB9yloUZ9pO+LVaBYmPPt4Iy
+	i4NvM=
+X-Received: by 2002:a05:690c:6886:b0:7dc:7ccb:33a1 with SMTP id
+ 00721157ae682-7fcfe96d4acmr31244807b3.23.1781615215169; Tue, 16 Jun 2026
+ 06:06:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260616111919.GC687438@coredump.intra.peff.net>
+References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+ <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+ <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
+ <xmqqo6hdepgy.fsf@gitster.g> <CAN5EUNQ193QyOeTLdu9aXzDeBhFpg38YYBbOLhZLgcg3qfd=uA@mail.gmail.com>
+ <xmqqzf0vbyj8.fsf@gitster.g>
+In-Reply-To: <xmqqzf0vbyj8.fsf@gitster.g>
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+Date: Tue, 16 Jun 2026 15:06:43 +0200
+X-Gm-Features: AVVi8CeHMSWYfVPE1OcxRFsJxILawMPr-cj1q0drHpU6rT2gqk2aZn6I_GdRhNk
+Message-ID: <CAN5EUNR-o_sLzeWuy7M9UMFHBKxSuytNd=4p2svtFuv40E8vZg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, ayu.chandekar@gmail.com, 
+	chandrapratap3519@gmail.com, christian.couder@gmail.com, jltobler@gmail.com, 
+	karthik.188@gmail.com, peff@peff.net, phillip.wood@dunelm.org.uk, 
+	siddharthasthana31@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 16, 2026 at 07:19:20AM -0400, Jeff King wrote:
+El lun, 15 jun 2026 a las 17:42, Junio C Hamano (<gitster@pobox.com>) escri=
+bi=C3=B3:
+>
+> Pablo Sabater <pabloosabaterr@gmail.com> writes:
+>
+> > It does not make it unpredictable but it makes it not output what I
+> > wanted to test, what I wanted to test is having an active column at
+> > the same time that visual roots in different cases were being rendered
+> > on another column.
+>
+> Oh, use of commit-graph changes the traversal order, which would
+> affect how the graph is drawn, and there is no way to ensure that we
+> traverse in the same way with or without commit-graph?  That's
+> inconvenient.  But even without commit-graph, do we guarantee the
+> same traversal order forever?  I doubt it.  So I suspect that it is
+> a brittle workaround to disable commit-graph in the longer term.
 
-> Here it is.
-> 
-> -- >8 --
-> Subject: read_gitfile(): simplify NOT_A_REPO error message
+Hi!
 
-<sigh> This triggered a failure in CI after passing tests locally.
-Turned out to be a race in t7450.
+About the traversal order, aren't all the graph tests dependent on the
+traversal order?  If it changed they would all need to be updated
+because the tests are hardcoded expects of the graph.
+I guess it might be more brittle than other graph tests specially
+because it also depends on removing files, I tried using "git config
+core.commitGraph false" or "--date-order" but I still get different
+results and removing the files fixed it. If someone knows a better way
+of doing it I'm happy to change it.
 
-Here's an update, with range-diff.
+>
+> As long as the graph engine shows correct graph no matter what order
+> the commits come out of the revision traversal engine, we won't hurt
+> end-users, but we need our tests to be reproducible, so that is a
+> bit unfortunate.
+>
+> Anyway, stepping back a bit,
+>
+> > However having GIT_TEST_COMMIT_GRAPH in the last
+> > text for example changes from:
+> >
+> > * 41_octopus
+> > | * 43_B
+> > |  \
+> > |   * 43_A
+> > | * 42_B
+> > | * 42_A
+> > * 41_B
+> > * 41_A
+>
+> Does the "vertically aligned * on 2nd and later columns do not mean
+> any parent-child relationship" rule no longer apply in this version?
+> IOW, does the above graph show that
+>
+>  - 41_A is a parent of 41_B, which is a parent of 41_octopus
+>  - 42_A is a parent of 42_B, and
+>  - 43_A is a parent of 43_B but is not related to 42_B
 
-1:  daf7f99511 ! 1:  67d42141e9 read_gitfile(): simplify NOT_A_REPO error message
-    @@ Commit message
-         We'll tweak the test to match the new error, but there's no need to beef
-         it up further, since we're not showing the pointed-to path at all.
-     
-    +    We also racily trigger this in t7450. During parallel cloning we might
-    +    see one of several errors, including this one. And so we must update
-    +    that message, too (you can otherwise find the failure pretty quickly by
-    +    running t7450 with --stress).
-    +
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-      ## setup.c ##
-    @@ t/t0002-gitfile.sh: test_expect_success 'bad setup: invalid .git file format' '
-      '
-      
-      test_expect_success 'final setup + check rev-parse --git-dir' '
-    +
-    + ## t/t7450-bad-git-dotfiles.sh ##
-    +@@ t/t7450-bad-git-dotfiles.sh: test_expect_success 'git dirs of sibling submodules must not be nested' '
-    + test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
-    + 	test_must_fail git clone --recurse-submodules --jobs=2 nested clone_parallel 2>err &&
-    + 	cat err &&
-    +-	grep -E "(already exists|is inside git dir|not a git repository)" err &&
-    ++	grep -E "(already exists|is inside git dir|does not point to a valid repository)" err &&
-    + 	{
-    + 		test_path_is_missing .git/modules/hippo/HEAD ||
-    + 		test_path_is_missing .git/modules/hippo/hooks/HEAD
+Yes, this means that all commits vertically adjacent are related,
+those who are not related and can cause that ambiguity get indented
+(43_A).
 
--- >8 --
-Subject: [PATCH] read_gitfile(): simplify NOT_A_REPO error message
+>
+> ?  Who are the parents of 41_octopus?  It has no relationship with
+> 42_B and 43_B, and unlike what its name suggests, it has only 41_b
+> as its parent (probably with history simplification that makes only
+> these commits shown)?
 
-If a .git file is well-formed but points to a directory that is not
-itself a valid repository, then we say:
+On this test we are using "--first-parent" which excludes all the
+parents but the first one, but later we force its excluded parents to
+be shown.
+We exclude 42_* and 43_* branches and then force them to appear as
+unrelated branches.
 
-  fatal: not a git repository: <pointed-to-repo>
+>
+> > to:
+> >
+> > * 41_octopus
+> > * 41_B
+> >  \
+> >   * 41_A
+> > * 43_B
+> >  \
+> >   * 43_A
+> > * 42_B
+> > * 42_A
+>
+> And this graph shows the same inter-commit relationship.  So both
+> are correctly showing what we want to express, but they show the
+> same information differently, making test_cmp unhappy?
 
-without mentioning the .git file that pointed us there in the first
-place. Doing so could better help the user understand the source of the
-problem.
+Yes they show the same information.  On the second graph every commit
+is on the first column (or second if they get indented) but on the
+first graph we have:
 
-In theory the most helpful thing we could do is mention both paths,
-like:
+*
+| * <- visual root on second column
+^
+`----- first column remains active
 
-  gitfile '<gitfile>' points to invalid repository: <pointed-to-repo>
+If you tested v3 with this case you would see that it assumes that
+visual roots only happen to be rendered on the first column, therefore
+failing to correctly indent those visual roots on the second column,
+which this test proves that they can appear on other columns.
 
-But there's another catch: when we generate the error, we don't always
-know the pointed-to repository! This leads to a potential segfault.
+Back to the test:
 
-The message comes from read_gitfile_error_die(). Originally we only
-called that function from inside read_gitfile_gently(), passing in both
-the gitfile path and the pointed-to path. But that changed in 1dd27bfbfd
-(setup: improve error diagnosis for invalid .git files, 2026-03-04).
-Since then, the caller in setup_git_directory_gently(), even if it wants
-to die on error, always passes in the "return_error_code" flag, asking
-the function to instead return a numeric error code. And then it calls
-read_gitfile_error_die() itself, passing NULL for the pointed-to path.
+  * 41_octopus
+  | * 43_B
+  |  \
+  |   * 43_A
+  | * 42_B
+  | * 42_A
+  * 41_B
+  * 41_A
 
-If we get the READ_GITFILE_ERR_NOT_A_REPO code, we form a message using
-that NULL pointer, and either segfault or get garbage like "not a git
-repository: (null)", depending on the platform.
+43_A is rendered on the second column (first column is active by the
+41_* branch) and gets indented to the third one. With commit-graph it
+would be on the first and get indented to the second, making it the
+same as more general tests above in "t4218", it is an edge case but
+shows that indentation works correctly independently where the visual
+root is.
 
-We could fix this by having the function pass out both the numeric error
-code and the pointed-to path. But that creates a new headache: we have
-to allocate that string on the heap and pass ownership back to the
-caller. So now every caller has to be aware of it (and either free the
-result, or signal that they are not interested by using an extra
-parameter).
+>
+> Thanks.
 
-Instead, let's just drop the pointed-to path from the error message
-entirely, and mention only the gitfile. This fixes the NULL dereference
-without introducing any more complexity. The user-facing error message
-is not as detailed as it could be, but is better than the original.
-Since it mentions the gitfile, a user investigating the situation can
-look there to find the pointed-to path (whereas you could not go the
-other way from the original message).
+Thanks,
 
-There's an existing test in t0002 which triggers this case, but we
-didn't notice the problem because it checks only that we said "not a
-repository", and not the full string. So if we print "(null)" it is
-happy. It will probably crash on some non-glibc platforms, but nobody
-seems to have reported it yet (the breakage is recent-ish as of v2.54).
-I'm also somewhat surprised that building with ASan/UBSan doesn't catch
-this, but it doesn't seem to (and I found an open issue with somebody
-asking for NULL printf checks to be implemented in the sanitizers).
-
-We'll tweak the test to match the new error, but there's no need to beef
-it up further, since we're not showing the pointed-to path at all.
-
-We also racily trigger this in t7450. During parallel cloning we might
-see one of several errors, including this one. And so we must update
-that message, too (you can otherwise find the failure pretty quickly by
-running t7450 with --stress).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- setup.c                     | 9 +++++----
- setup.h                     | 2 +-
- submodule.c                 | 2 +-
- t/t0002-gitfile.sh          | 2 +-
- t/t7450-bad-git-dotfiles.sh | 2 +-
- 5 files changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index b4652651df..b1d9249d91 100644
---- a/setup.c
-+++ b/setup.c
-@@ -917,7 +917,7 @@ int verify_repository_format(const struct repository_format *format,
- 	return 0;
- }
- 
--void read_gitfile_error_die(int error_code, const char *path, const char *dir)
-+void read_gitfile_error_die(int error_code, const char *path)
- {
- 	switch (error_code) {
- 	case READ_GITFILE_ERR_NOT_A_FILE:
-@@ -937,7 +937,8 @@ void read_gitfile_error_die(int error_code, const char *path, const char *dir)
- 	case READ_GITFILE_ERR_NO_PATH:
- 		die(_("no path in gitfile: %s"), path);
- 	case READ_GITFILE_ERR_NOT_A_REPO:
--		die(_("not a git repository: %s"), dir);
-+		die(_("gitfile does not point to a valid repository: %s"),
-+		    path);
- 	default:
- 		BUG("unknown error code");
- 	}
-@@ -1028,7 +1029,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- 	if (return_error_code)
- 		*return_error_code = error_code;
- 	else if (error_code)
--		read_gitfile_error_die(error_code, path, dir);
-+		read_gitfile_error_die(error_code, path);
- 
- 	free(buf);
- 	return error_code ? NULL : path;
-@@ -1629,7 +1630,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 					return GIT_DIR_INVALID_GITFILE;
- 			default:
- 				if (die_on_error)
--					read_gitfile_error_die(error_code, dir->buf, NULL);
-+					read_gitfile_error_die(error_code, dir->buf);
- 				else
- 					return GIT_DIR_INVALID_GITFILE;
- 			}
-diff --git a/setup.h b/setup.h
-index 705d1d6ff7..df8c93687a 100644
---- a/setup.h
-+++ b/setup.h
-@@ -38,7 +38,7 @@ int is_nonbare_repository_dir(struct strbuf *path);
- #define READ_GITFILE_ERR_TOO_LARGE 8
- #define READ_GITFILE_ERR_MISSING 9
- #define READ_GITFILE_ERR_IS_A_DIR 10
--void read_gitfile_error_die(int error_code, const char *path, const char *dir);
-+void read_gitfile_error_die(int error_code, const char *path);
- const char *read_gitfile_gently(const char *path, int *return_error_code);
- #define read_gitfile(path) read_gitfile_gently((path), NULL)
- const char *resolve_gitdir_gently(const char *suspect, int *return_error_code);
-diff --git a/submodule.c b/submodule.c
-index fd91201a92..93d0361072 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2579,7 +2579,7 @@ void absorb_git_dir_into_superproject(const char *path,
- 
- 		if (err_code != READ_GITFILE_ERR_NOT_A_REPO)
- 			/* We don't know what broke here. */
--			read_gitfile_error_die(err_code, path, NULL);
-+			read_gitfile_error_die(err_code, path);
- 
- 		/*
- 		* Maybe populated, but no git directory was found?
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-index dfbcdddbcc..6356e9ec72 100755
---- a/t/t0002-gitfile.sh
-+++ b/t/t0002-gitfile.sh
-@@ -27,7 +27,7 @@ test_expect_success 'bad setup: invalid .git file format' '
- test_expect_success 'bad setup: invalid .git file path' '
- 	echo "gitdir: $REAL.not" >.git &&
- 	test_must_fail git rev-parse 2>.err &&
--	test_grep "not a git repository" .err
-+	test_grep "gitfile does not point to a valid repository" .err
- '
- 
- test_expect_success 'final setup + check rev-parse --git-dir' '
-diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-index 8cc86522b2..69a17a9d13 100755
---- a/t/t7450-bad-git-dotfiles.sh
-+++ b/t/t7450-bad-git-dotfiles.sh
-@@ -350,7 +350,7 @@ test_expect_success 'git dirs of sibling submodules must not be nested' '
- test_expect_success 'submodule git dir nesting detection must work with parallel cloning' '
- 	test_must_fail git clone --recurse-submodules --jobs=2 nested clone_parallel 2>err &&
- 	cat err &&
--	grep -E "(already exists|is inside git dir|not a git repository)" err &&
-+	grep -E "(already exists|is inside git dir|does not point to a valid repository)" err &&
- 	{
- 		test_path_is_missing .git/modules/hippo/HEAD ||
- 		test_path_is_missing .git/modules/hippo/hooks/HEAD
--- 
-2.55.0.rc0.346.g4c7eff6ddc
-
+Pablo
