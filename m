@@ -1,157 +1,136 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59EF3DB626
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 19:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC3D3793A9
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 19:53:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781637958; cv=none; b=fBrp0flApAIthpUxV+tp8O0U4g2jfccCcHjKrK/qN8OLkUkeUPlxYP3q6vJS0QFR7urgnazvw1wh0+tz2hreZTZFYa7QbzTfQI7rQilh8E9T9+b/4WMEvf4JnjoaQf0KsQM2BpwIzU7MbB9Z6C8w4vk56rBg8mkn5jF0Ud7MinY=
+	t=1781639606; cv=none; b=VmRzzEdF8tklHlabsve68KC/83OVNBvid2ofwHSda6Muz11MwRCaeve6NG4flngxXfTe73jRrLUPBMBPlYpP9NcQKEUa8m4f4Es3lPvq1uKtnE2Zl5syDeiXd4J8U1jjMd3x17+yOvR5OM0CK9OhIbwBtDWfOWQ90whok407PPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781637958; c=relaxed/simple;
-	bh=Goro8hWs2ABpO97g2fDu+7YL/t4C2HBjwEqetpyXhFU=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=ka3GvVQ0wZSPqbv6Loz9QSshCU7Jux1FEABLwZ1rQ4IJD9+QmGZeThd7CxkB8xs/3W6g0WPKXNuSxGAa0TF+O7A9ET8Fgr5FiLiCFiYxvKNai+gvWN6HFQZ2X4c/xlZAlh9NmVghUNVjbvCxqvVFyx2ey2koy2sj9rmM3QbunGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=marius.spix@web.de header.b=n15MExbA; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1781639606; c=relaxed/simple;
+	bh=FWdJ2MjyqGsVhzDIQ696J3xqHvSnNqFOMWxIQruBXNs=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=e7mHTdNAk4PI6JKQ6GkJKUNES4+2B0AnCcUAGOo/21H0Phks5iRH5n/tQODGgVbRWcFgvhlbgyY+HVBTT7qmXCzHPTzFrmfDkHXV3thn+wRf0UztIanISNyFmwZoLl9ehHql60w8TfUXrSOJoG3QjTFOAzPd4V945HGMbefkv6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=tYHVrtFT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fIwzd5zW; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=marius.spix@web.de header.b="n15MExbA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1781637954; x=1782242754; i=marius.spix@web.de;
-	bh=Goro8hWs2ABpO97g2fDu+7YL/t4C2HBjwEqetpyXhFU=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=n15MExbA36r/nG9603HaVi6GCAWo6mv/8WqWCT5Hn+nSe7GpY4l87Krx6BZ+OCN/
-	 KahCxl/aSMODHCKcVk67q6Qm/ToteoS5NmnzMkyBpyYOQB5wd7Ar1zzEDrLIBsdl7
-	 kO4vu7XDIR2ZUu4IJKj04JMkoe2HOQg9+tJqXwD5e1CzTZX9mrHsjjej1nOG3Mfk2
-	 MtcGr0m2qblflRCbnUYz5M84eVkmLLxXoYL+rdu1muOv4hDmq7WPfKbBpMgC+PGYu
-	 Ah/+FDoDrA2LUqIqiKQS+5rfbb0UJ2rVMZDwSjj19CvC6OWl7ebhJMUtInwr553k7
-	 2lJaMTT6ZLSj4L1ypA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MnX1L-1x0cqd2oKL-00iHLh for
- <git@vger.kernel.org>; Tue, 16 Jun 2026 21:25:54 +0200
-Date: Tue, 16 Jun 2026 21:25:53 +0200
-From: Marius Spix <marius.spix@web.de>
-To: git@vger.kernel.org
-Subject: Assisted-by tag
-Message-ID: <20260616212553.31ddea83@rockhopper>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="tYHVrtFT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fIwzd5zW"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 537B9EC0171;
+	Tue, 16 Jun 2026 15:53:24 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 16 Jun 2026 15:53:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781639604;
+	 x=1781726004; bh=bnwIZfqGb412H8+DISGNEdbbMSY0OuFPm7RCrXDErCU=; b=
+	tYHVrtFT0ybLENnNEVd4dofr+dJ9L9bvFb79t/UYsWH+U0QOgSrlvd4phdsaNRhO
+	6hnKVGi4lFYSmtZZV35+f46W/98vbxp5YyanrSqvTkVDoBnQKjFlz/I29mBadsNe
+	v+B9AqtURErNK0RRzdgGDWfHwXxpr8Oa8PcODx4Uoia12TpkNb7lLJEzR7Ohtfbf
+	RiI3hupXGIYWsLD/KqwvHf7l1g2WtpIbi0lLAvHnE+lf4L6YoUqZIETHX24EXi1r
+	AfgmWxbW2SMGWMpoXXkMz5GYwcElurytxEpc9cXW1Elcg2jRNFCEMZuXH2dCUQDS
+	LaJDpqq4/3ZG/zYptTZd2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1781639604; x=1781726004; bh=b
+	nwIZfqGb412H8+DISGNEdbbMSY0OuFPm7RCrXDErCU=; b=fIwzd5zWblpmvrrKY
+	QOeu8OpC/H5Y7kNrcER1mNafLeK5U6KNSJc17VpiAXPmFT++t6w3/aUAM0hPfiNN
+	e+VTgKkwtqAg3Yg2+t7GZnEzrFAAmhRmWcJAm7bZ1Tr+OhmkqwqoviaQtYI84oT4
+	lOgW4YoJp+QrKKbm4Zx4yeINzGT4vO0UYupORycaw62vPVuNRAxVZFWs2mPIAVWS
+	A5g1s3/Qonj9GC2ySueNuav0i0O3H2nvjKAUCLaBLIx51TUGgyTh8HwHbEJ+wceY
+	rM96a5JKvOWkSdfKPQnjpvzVt4DWdK92JRDhisVU9gynuoDxY5cERwtGOYLSEXCt
+	qhiqw==
+X-ME-Sender: <xms:tKkxaktlkegZM0yalMXhbkXxwYcHgjEHYAiltw6KNH1HEfL_2_RbgZc>
+    <xme:tKkxasRWnO1AXiHjv3UPoW56t_UMhggOStGmZKb8XK9Z6t6aPKDegC7-7hWnRQAmU
+    eOTI-NFDvGQ3VTVmDyjzqA94L-LkX36SQrmi0L5b7ZyXkH1Pgts>
+X-ME-Proxy-Cause: dmFkZTEAekuYa5nXZP0Y3UclCliHp4IvZCWZZ5+PSwUbIZjeMPd3cw7Qai7ixZFEHsSJJW
+    XzfCYyam0GHoOO7mAzxWojs5oO7l1svgVC7zUzq4Mth+uBZldmmqx7IvCYXfGTQfjQ71X7
+    FKHNLL0Nd35s33AC9qsKcBMRTPraCXP/Mqt8zGvZGTjOf6CyFqrtnikUSA9q8vaJoArmgz
+    FEBGHjq/c9YtjHb1VWa7WIb3DHRXvdQ5m7F+HevLUJHn5m6xTYsRG0O3XBiL56zylOWzBS
+    Wzc1PDvnqCzA83rR0PEmneh/qhaBRBMJ1U8HMYYuYBuCk/vX2tntjrXmKZWA7Ya9IYiqQl
+    TEtknvBuMkzW47cfi4ava4670H5D1af0Ofp8hMLv0N2hIkxtLC/OoH/VLMVB1fXMvX042S
+    6hGAgydghjrGLblQ8gxhlzUUvkJyAp7OWOaTmLde6W2V7j2xRkee4lfGZymrwJX3G3PfFH
+    Y0lJN/+DFB+5HkMsr+dyfG8ic7YdCzwSsfljQDCjoKMp/D7DFXojeFn7uupwUxAclF6C9m
+    NbJ6H/pR1+p7JDalT8rz/skf+0d3ByOdKZWOP4mpWQsebSe+4TjWAoUxGxSgQZnWZ4J7rM
+    4daH7o+VFQq3B3CsZit8s0BX4zLmrUVF6b3Vs2ggVq/k+hwSdmM31cxX4ISQ
+X-ME-Proxy: <xmx:tKkxaja1-zDsKdinTeThV4XNc2YAJnWVZlRSnc17fztO-vTj0bnyKQ>
+    <xmx:tKkxagX1nAklIS7KsYZNuyd0RUKP4TM-sSkgOseU9iVM1dT3nlO7CQ>
+    <xmx:tKkxathOWTxRceehdrdmc-H2nb2qGhCvdoA9y5Qeba77YMb1HGbCHQ>
+    <xmx:tKkxamWNlIs7KvNgv-Vci60nN2Zls8CG-0zNZrCgZdPLiiyhUvupkg>
+    <xmx:tKkxauDvFfKhJ2aedo1qp9hEVVeoya9qmnjQ3-YTHh6D4W5_BfvAPlVB>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1D1BE3021A93; Tue, 16 Jun 2026 15:53:24 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:Y5FdDZG7J8eW4fZ5eRhRPwMmpGsGIdrgf4AzVOEoXQukuLN1UgT
- QqtnddfWvmazrOmV3gnRWA8YnkNOq8D/ccLRtIA/QM5Gc81yfiJCmXhPUmHCWjP6W25tXhx
- m43/4ggfN6+MSxZn1YKddgKjIWbdKU/2j7Au1ArcaXGwnt4SEvCXghGIEFJUPi30lcMhGaM
- PvafNGsaqnpYhr7OGNxWQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:7Lr3QSetMW0=;rPMIhjWWtwMdIuYLwzmYWzxOT5q
- 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
- p1
+X-ThreadId: AJ0DiacZ5_2c
+Date: Tue, 16 Jun 2026 21:53:03 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Marius Spix" <marius.spix@web.de>, git@vger.kernel.org
+Message-Id: <9ef3ac51-9f98-45bb-9815-6fbc5636e15a@app.fastmail.com>
+In-Reply-To: <20260616212553.31ddea83@rockhopper>
+References: <20260616212553.31ddea83@rockhopper>
+Subject: Re: Assisted-by tag
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi there,
+On Tue, Jun 16, 2026, at 21:25, Marius Spix wrote:
+> as the Linux kernel requires the new Assisted-by tag for AI-assisted
+> commits, I was researching how git handles such tags. Thereby I
+> observed the following behaviour:
+>
+> git commit --signoff
+> * adds an empty line before the Signed-off-by tag
+> * ignores the Signed-off-by tag by checking for an empty commit message
 
-as the Linux kernel requires the new Assisted-by tag for AI-assisted
-commits, I was researching how git handles such tags. Thereby I
-observed the following behaviour:
+That a bare message which is just `Signed-off-by` is considered an
+=E2=80=9Cempty=E2=80=9D commit message seems like a historical quirk. It=
+ checks
+specifically for that tag/trailer.
 
-git commit --signoff
-* adds an empty line before the Signed-off-by tag
-* ignores the Signed-off-by tag by checking for an empty commit message
+>
+> git commit --trailer "\nAssisted-by: OpenAI"
+> * does not add an empty line (the "\n" is not converted to a newline)
+> * does not ignore the tag by checking for empty commit message
 
-git commit --trailer "\nAssisted-by: OpenAI"
-* does not add an empty line (the "\n" is not converted to a newline)
-* does not ignore the tag by checking for empty commit message
+This is just a regular trailer. I don=E2=80=99t know why you have a `\n`.
 
-Since there will be more and more AI-assisted commits in projects like
-the Linux kernel in the future, this should be taken in account.
+    git commit --trailer "Assisted-by: OpenAI"
 
-When merging or squashing commits, that tag should also be
-automatically applied to the new commit message to make it clear that
-the commit is tainted by AI.
+Any number of these will populate the trailer block.
 
-Your opinion?
+> Since there will be more and more AI-assisted commits in projects like
+> the Linux kernel in the future, this should be taken in account.
+>
+> When merging or squashing commits, that tag should also be
+> automatically applied to the new commit message to make it clear that
+> the commit is tainted by AI.
 
-Best regards
+That `Signed-off-by` has dedicated options and logic is historical
+baggage at this point.
 
-Marius
+A 2013 [patch] to add `git commit --fixes` because the Linux Kernel uses
+`Fixes` was rejected because the Git project considers tags/trailers
+project-specific. Instead git-interpret-trailers(1) was born which
+eventually provided the code base for `git commit --trailer` and similar
+options.
+
+  [patch]: https://lore.kernel.org/all/20131027013402.GA7146@leaf/
+
+Handling how trailers are added is also deemed project-specific. There
+are only the configurations and options that git-interpret-trailers(1)
+provides. And handling that commits are rewritten (combined and so on)
+in such a way that trailer-taint sticks is beyond any discussion I=E2=80=
+=99ve
+seen on the subject.
