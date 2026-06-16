@@ -1,67 +1,67 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58B3421EF6
-	for <git@vger.kernel.org>; Tue, 16 Jun 2026 09:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A94E425CC0
+	for <git@vger.kernel.org>; Tue, 16 Jun 2026 09:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781603833; cv=none; b=FewUCxXhnNOudl58Ms1jOhq9LGZbKonWJbH9GroNDtTj+w9WocAgNtPxzgKDi0CCgqTgp/AdS4gYV3IiuaxxiD9Vi64YtW0C5MUZ/wJo7mH4i8QbqOW/xidtOQxba6tCUEP8ho3B/JjOKuW9/nI1AwtOOHKtO3D1UaIQn/rUiWU=
+	t=1781603870; cv=none; b=ED9sVYLnuf76EH2j2TVjx60cus86ZWhcuykHT+l/JR6UCyIK7r1H+UJDWW0IT902euJihj3XTtWlo8h0jLSlQ5JDc+dowiHfvryhuXajeRe32klix2vH+pIEaCDNqehAzfqJeGcF7nMh79YqgiKjfBHHNTH/PTUPLexjWcNtD+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781603833; c=relaxed/simple;
-	bh=v78NEEwbTzAQmrVo40dgXIP8vBJZO3HQcW+Lv/0Ktqw=;
+	s=arc-20240116; t=1781603870; c=relaxed/simple;
+	bh=uS5xgOdgIXtlNQKttAtl99eabPFrfLiqkWOLwDJUWDQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VbqvmcUmJYCDQGrliL6SgQTnHJSuzYpZWgz7tIxOFqkPMxB5cK68Mr3QklR31foxUAxIqSXtCwBjLyPfdM1n63h7OMNazKZafXTNAGwQedCjQfFnPk64yhD8MybgQy1KaCzJgAJFKKnmtiDIQqRWVgmOAHYIad33AwwgmzdYogU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdDlhzFD; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=Dtl+q/3fiDnNDZEtoTWOwq1dcw+YDHf7lEX6yQwQ3jq7I0Qrlp5IWak0pvS/z4eaBMhJNFwYLszAmT3zVQ/HB8PYYqCgWzppyTfgV7H5U0SRLdRMjZq18X0Wl1IACQBIZEq/L1Gn7uS/Q2oxd5BXaiNncw4s71fJSxuWyrACAuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G3OwWflQ; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdDlhzFD"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c0115a3794bso449788066b.0
-        for <git@vger.kernel.org>; Tue, 16 Jun 2026 02:57:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G3OwWflQ"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-beb7f26ed62so508917566b.0
+        for <git@vger.kernel.org>; Tue, 16 Jun 2026 02:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781603830; x=1782208630; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781603867; x=1782208667; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8d7rnrWAquwzY34v2jhr3jmjjOwNULifz4GzbsYSaZ8=;
-        b=CdDlhzFDDLeH/PjaRUnt2uS3z4hhTMzSAdC2vj+JNFy0TT1UX0BVyuiUpT16kLl4U4
-         UOGMGjZ+iYHkBYCsyR7Xmo50QGbNbfIED5h2kTiQ6dGb/MPW4QDE0xDNOY5pI67g13e0
-         snzDAv3ltvT35L37bhkUSvWsXnDKwBYibC9jzuKC3zSx7JWaRdM5vj3956S8wVZb9rZB
-         FS9auCM5I2uuCqKc8KrDfk1+I9wzf8wgd7dZmparGj9cTsh/z7DZRoUdfXxTcrvjf24M
-         PPzbtDdz7XVcgHw5Jgq+FDE2C2JRNHJVywChJ+pO26/x7a1kwyXiLmRfl3r0O771mmLl
-         c5gg==
+        bh=SzgeBavYzrwCiUWZS/q4sCSE4+CezGlYhgc0oYWRJ6w=;
+        b=G3OwWflQCJupJ51fhgTIJ9FUMqMVH+s529SVUBQftxaslMdJVEHLpGElYgCqjwQYrd
+         88d7sb4QYkYcUo24XQ7SDDcDrppXFJ6PWmrdNZNjTSt3Qn6VvFbRmWdbtFBmoxodut1p
+         meCwCfNAtxf+pYBLSfoj+dq44uXF6WehfDTHVoLtmjNWsAmNdIho0RTGGksU70CCBQKH
+         IE6vyb12gi2VaeeJo1dDlkdGmtl5p+QpAlZjJDPTSiHzEQZyqbRsg7SUD3sqfSYNZcXV
+         F5IXpIKrUsiAL0p3lW2b3gvjdmurQ1nc5RX0SIQFoRVYcy7a+hxq+cO7pLMSAj6blmWW
+         4XYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781603830; x=1782208630;
+        d=1e100.net; s=20251104; t=1781603867; x=1782208667;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8d7rnrWAquwzY34v2jhr3jmjjOwNULifz4GzbsYSaZ8=;
-        b=oWnhkTt+yxIJED/huVQDHtBjMtyzImR/fnU16qUrsRGVrzTKovk5U96+j1SOuBZlBD
-         E9MddsqcmeItMI1m0aw2YPlZwcusDiIg7Wp/dWwAw4/19BEKhnIoLMU/gk8BggauBcyi
-         S7Q75sL5kfcr3u5F16Tt/1PsJ+vgEfd9dS82GFiqIWS7towfZ5V2428Hi3CUCnoqezH9
-         hlcmhDq/cLvKL20ab594Ay87gnwBVvkaJk7hKyQnG/M2ehXg+CETme0sL4VB3sT5Swts
-         ZXS30W6ailjzBMb7izkYSOr9ednkKiYtD0KNq6HZKru+6VEql5uRGBhecyDMeNiUneey
-         g2ig==
-X-Forwarded-Encrypted: i=1; AFNElJ/SVct+/SeSDyfRqP/WtajL4JYodr7jSE4G8dnTXRhtVGWS5+DeeWiWqXrc51zZY9Kh0Z4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzTc+G5wG47Njg1UTPAFBJxnqdaZ7TvWMDmvljvEHnrlD6peBGs
-	MQ+TFnKugGynXj0FloFPKdysb+oH2gibhI8OHpYiCMFzjhH4Xj8+es0y
-X-Gm-Gg: Acq92OF124giS/gGBpBSOM8YtHku7wjL4AISUWcktXzYP1vfP+E3nrrv6pkKOZw4mMS
-	B8V6w/2u/UUXlZrHXpSzUb0qcLme3nZcPdom39N6poEdt7Vjxc7eMWYVcst1Vg/5vTLZ2RQm6Pr
-	PCoSFRCh2iWiY65wXXQva7G2uVZA4LmP2c8qsLDy4umUWFh0GSwBGlF0vY6pOSUDBkdnxVvwOfu
-	X5xPNDsJNfL/XChMyOUSme68T26uZWVlTDxGKHCYvrBDyPBw/JALNDrfPfZoO4xFSJLY1T8cqfD
-	rSbIUia9kGiHhwrEWIuc27H/CPk21cWF1JCca8xcnU8Vol3E12gOy7FbWlRjzNqHHwDcnPQSnIY
-	dMgfX8PR5Z2jI51gVmQMKrr5k7Ec/NL0pOQFvPxmoyMuFymu//0eOdPk3wiOxYn93UAoZyYOYs6
-	2xsqvdFGfljiz18ZT1o3EJpriEspi6txUB2ay8bTHpFsS+omeAKycRB6ABprTZE86vYX+uT7L9D
-	Ny9mt06KH4=
-X-Received: by 2002:a17:907:7636:b0:bf8:6011:53b1 with SMTP id a640c23a62f3a-bff49620fe4mr442048466b.4.1781603829833;
-        Tue, 16 Jun 2026 02:57:09 -0700 (PDT)
+        bh=SzgeBavYzrwCiUWZS/q4sCSE4+CezGlYhgc0oYWRJ6w=;
+        b=L7vsbvn43dhvxMeUEnis7LU+I8BDaL2WTVMPM1q/EuO9ORLKcvB1dKy41ULXAHtIKQ
+         0sHRBRBMeunmFu96E/RcAtKKOK5Sioqi0dVYbUNktIVzUOHcYWlSrBOZxAPHofTkcFTz
+         n7Izzq99AQXsNBe7pS+gn4hx9s51M2bR18eBy9pfiRMvkrFRINAkRG2hOU5s1n8sqSQb
+         kkb+BeTmuYasnvTfE2CmdA563+SdFtEG76HlGjtzy1neg2jFbqCZVA7J8kvXIf8Qpgdw
+         GgudVF/VVPfMX/cF5BhZ5uWRh1DwTXtcJHqPZxh8gLoH6+NZeDRsICcSLnHENKpsDq5O
+         CYdw==
+X-Forwarded-Encrypted: i=1; AFNElJ818bx27UdwlfK0oAFYaSwVn/GPdSbn4aLba3z5W2hqtOhSm8caLub5goqt6O2l5jhD2BU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx887c2sq+xO/pdl0TfnoeYvI1htng8Z9hrpTgqVMQ84Y9II6kB
+	8u7MdLdGlpRL60m8CYi+81fR8Ly65wS7HwlLkNCvLxRDJ73M2AJ5bZvsc6rF4w==
+X-Gm-Gg: Acq92OH9wfsSlvoO1ULbYkGVk728pK893OGJTM5RdCsEAOxVe/pN934WhQbGAz/BtPI
+	XffTYqL5tpJdehEQne1pxjbNXBmyA2GvkZlrQFbW+OLURDFfIm/i9iGUpDeHglUkb3BOVAxLfeo
+	AGf116ezh5ROgfZRFiG56wx/vp3IuDBSV6pot4+1O/nEnawVgsuCfvBlPoWRSqKhuDdukuhEx3b
+	jmw+956vqzRuTsyGg7jmRT1otVIfygpZdft6lnzS4SPLp7WmATNFMbfp9UeBQaID1fi/mKRF7O1
+	A3ddnPFbEUC1J8NtUi4q0zW28/UZyzGiFXGXpy/JSauMVdr2hMhECwbLVdqOxrr255NEGhnld5Y
+	U/o8FrYAhI3HCl5iId+pGamXHcJvOzLlNhUy5Np0XNPFzG+ub/vlgTWfB2Ezz82RqkdIDajQclf
+	vQ6/s1rCpYVhLBc4lp8B31dnOEaze10oojtQ/KEXeyHZi8clPyNedMHsnD5v3/3OwXheoUwaHlH
+	jaGBEblHeXYM6Ed8Gd5UQ==
+X-Received: by 2002:a17:907:2714:b0:c00:f408:c8a8 with SMTP id a640c23a62f3a-c04148c0b50mr122956166b.18.1781603867001;
+        Tue, 16 Jun 2026 02:57:47 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6? ([2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb4420823sm621199566b.4.2026.06.16.02.57.08
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-693794ae998sm4800914a12.30.2026.06.16.02.57.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 02:57:09 -0700 (PDT)
-Message-ID: <7b43a0f1-32a0-40f0-8c82-d2ee78809cc2@gmail.com>
-Date: Tue, 16 Jun 2026 10:57:08 +0100
+        Tue, 16 Jun 2026 02:57:46 -0700 (PDT)
+Message-ID: <fe752544-b076-4aa4-a9d6-d48fe15ce57b@gmail.com>
+Date: Tue, 16 Jun 2026 10:57:45 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,17 +69,18 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 6/6] branch: add --dry-run for --prune-merged
+Subject: Re: [PATCH v14 5/6] branch: add branch.<name>.pruneMerged opt-out
 To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Johannes Sixt <j6t@kdbg.org>, Harald Nordgren <haraldnordgren@gmail.com>
+ Johannes Sixt <j6t@kdbg.org>, Phillip Wood <phillip.wood123@gmail.com>,
+ Harald Nordgren <haraldnordgren@gmail.com>
 References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
  <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
- <ede8c6172963fb8d15f0ae28f4e11501cf42be6c.1780999917.git.gitgitgadget@gmail.com>
+ <d691d5051b35a569dbd3f4a0488030a7d84d72f9.1780999917.git.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ede8c6172963fb8d15f0ae28f4e11501cf42be6c.1780999917.git.gitgitgadget@gmail.com>
+In-Reply-To: <d691d5051b35a569dbd3f4a0488030a7d84d72f9.1780999917.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -88,87 +89,70 @@ Hi Harald
 On 09/06/2026 11:11, Harald Nordgren via GitGitGadget wrote:
 > From: Harald Nordgren <haraldnordgren@gmail.com>
 > 
-> With --dry-run, --prune-merged prints the local branches it would
-> delete, one "Would delete branch <name>" line each, and exits
-> without touching any ref. The same filtering applies, so the output
-> is exactly the set that the real run would delete.
+> Setting branch.<name>.pruneMerged=false exempts that branch from
+> "git branch --prune-merged", which is useful for a topic you want
+> to keep developing after an early round of it has been merged
+> upstream. Unless --quiet is given, each skip is reported so the
+> user knows why their topic was kept.
 
-I can see this being very useful.
+Sounds good
 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 52a0371292..7c52a88af2 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -717,7 +717,7 @@ static int parse_opt_forked(const struct option *opt, const char *arg, int unset
->   }
+> @@ -755,6 +757,18 @@ static int prune_merged_branches(int argc, const char **argv,
+>   		if (!push || !strcmp(push, upstream))
+>   			continue;
 >   
->   static int prune_merged_branches(int argc, const char **argv,
-> -				 int quiet)
-> +				 int quiet, int dry_run)
+> +		strbuf_addf(&key, "branch.%s.prunemerged", short_name);
+> +		if (!repo_config_get_bool(the_repository, key.buf, &opt_out) &&
+> +		    !opt_out) {
+> +			if (!quiet)
+> +				fprintf(stderr,
+> +					_("Skipping '%s' (branch.%s.pruneMerged is false)\n"),
+> +					short_name, short_name);
+> +			strbuf_release(&key);
+> +			continue;
+> +		}
+> +		strbuf_release(&key);
 
-Let's not start adding multiple boolean augments - use a flags argument 
-like we do for delete_branches() - if you get feedback on one patch you 
-should think about whether it applies later in the series as well. The 
-rest of the implementation looks good.
+As this is in a loop we don't want to free the buffer on each iteration, 
+only at the end. You should call strbuf_reset() just before 
+strbuf_addf() above and then move this call to strbuf_release() out of 
+the loop.
 
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 3f7b1fc3d6..305c0141fc 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -2040,4 +2040,48 @@ test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
->   	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
->   '
->   
-> +test_expect_success '--prune-merged --dry-run lists but does not delete' '
+> +test_expect_success '--prune-merged honours branch.<name>.pruneMerged=false' '
+> +	test_when_finished "rm -rf pm-optout" &&
+> +	git clone pm-upstream pm-optout &&
+> +	git -C pm-optout remote add fork ../pm-fork &&
+> +	test_config -C pm-optout remote.pushDefault fork &&
+> +	test_config -C pm-optout push.default current &&
+> +	git -C pm-optout branch one one-commit &&
+> +	git -C pm-optout branch --set-upstream-to=origin/next one &&
+> +	git -C pm-optout branch two two-commit &&
+> +	git -C pm-optout branch --set-upstream-to=origin/next two &&
+> +	test_config -C pm-optout branch.one.pruneMerged false &&
+> +
+> +	git -C pm-optout branch --prune-merged "origin/*" 2>err &&
+> +
+> +	git -C pm-optout rev-parse --verify refs/heads/one &&
+> +	test_must_fail git -C pm-optout rev-parse --verify refs/heads/two &&
+> +	test_grep "Skipping .one." err
 
-A good way to test --dry-run would be to add it to an existing test 
-before calling --prune-merged without --dry-run.
+Do we really need a whole new setup to test this - can't we just add a 
+protected branch to an existing test?
 
 Thanks
 
 Phillip
 
-> +	test_when_finished "rm -rf pm-dry" &&
-> +	git clone pm-upstream pm-dry &&
-> +	git -C pm-dry remote add fork ../pm-fork &&
-> +	test_config -C pm-dry remote.pushDefault fork &&
-> +	test_config -C pm-dry push.default current &&
-> +	git -C pm-dry branch one one-commit &&
-> +	git -C pm-dry branch --set-upstream-to=origin/next one &&
-> +	git -C pm-dry branch two two-commit &&
-> +	git -C pm-dry branch --set-upstream-to=origin/next two &&
 > +
-> +	git -C pm-dry branch --dry-run --prune-merged "origin/*" >actual &&
-> +	test_grep "Would delete branch one " actual &&
-> +	test_grep "Would delete branch two " actual &&
+> +test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
+> +	test_when_finished "rm -rf pm-optout-d" &&
+> +	git clone pm-upstream pm-optout-d &&
+> +	git -C pm-optout-d branch one one-commit &&
+> +	git -C pm-optout-d branch --set-upstream-to=origin/next one &&
+> +	test_config -C pm-optout-d branch.one.pruneMerged false &&
 > +
-> +	git -C pm-dry rev-parse --verify refs/heads/one &&
-> +	git -C pm-dry rev-parse --verify refs/heads/two
-> +'
-> +
-> +test_expect_success '--prune-merged --dry-run only lists branches the live run would delete' '
-> +	test_when_finished "rm -rf pm-dry-mixed" &&
-> +	git clone pm-upstream pm-dry-mixed &&
-> +	git -C pm-dry-mixed remote add fork ../pm-fork &&
-> +	test_config -C pm-dry-mixed remote.pushDefault fork &&
-> +	test_config -C pm-dry-mixed push.default current &&
-> +	git -C pm-dry-mixed checkout -b wip origin/next &&
-> +	git -C pm-dry-mixed branch --set-upstream-to=origin/next wip &&
-> +	test_commit -C pm-dry-mixed local-only &&
-> +	git -C pm-dry-mixed checkout - &&
-> +	git -C pm-dry-mixed branch merged one-commit &&
-> +	git -C pm-dry-mixed branch --set-upstream-to=origin/next merged &&
-> +
-> +	git -C pm-dry-mixed branch --dry-run --prune-merged "origin/*" >out &&
-> +	test_grep "Would delete branch merged" out &&
-> +	test_grep ! "Would delete branch wip" out &&
-> +	git -C pm-dry-mixed rev-parse --verify refs/heads/wip &&
-> +	git -C pm-dry-mixed rev-parse --verify refs/heads/merged
-> +'
-> +
-> +test_expect_success '--dry-run without --prune-merged is rejected' '
-> +	test_must_fail git -C forked branch --dry-run 2>err &&
-> +	test_grep "requires --prune-merged" err
+> +	git -C pm-optout-d branch -d one &&
+> +	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
 > +'
 > +
 >   test_done
