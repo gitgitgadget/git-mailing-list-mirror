@@ -1,131 +1,114 @@
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D12648B39A
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 16:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469FA4204E
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 16:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781715119; cv=none; b=TYVs06ECPBNrB9dLjAXtQGK3DuPnnMZVIeZOJwCnUcOBNqOvW4nyGsRuAsMKr63D9iGfMJ98smCrI+E1D7AUbzTeZnMty2kIpMqquhpYEH2gacBLaskW+BItM0Jh6Fotio4LVZsEE3PUs+sqcnbLgq8ydMgS3K2wVIrBwXlD6tA=
+	t=1781715209; cv=none; b=JqmwPvcFf9UvVABiBmQa9ILCpxzGzA4wrUS0oDh5lBzj4EMqvCw/GXzI6aJgTmFCQMbY8Hv0/BaIamY1W+U2GTAchS4yBBfbGAyBKhLwkDw/HDhXSXLytvC1dBYQJjnrjckuVxSJrHDLSeGJscaQFiPa73Wt7OhCv7IbucXMJZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781715119; c=relaxed/simple;
-	bh=jOuhxG8dWuanBFc9InpS3NTklAUJD52OBqdCJVxVsl0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gI4B3WIEW2Fc5OrK7QZD3NdjFci3SK6e5M6xXmN6ox06CN3XPs6SO6PlwBgxLYxKNQrx3XgWXghHh+iI2oISpCvLjKQ2ixS8h2wFDE0xiZbr8KN+2GHXs2t0HVQE+JiTq7ezFT9i8kHj+vhQJZU4eG6x0WmYFiFm2EL+l3xBzQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=PM4nT2t4; arc=none smtp.client-ip=95.215.58.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
+	s=arc-20240116; t=1781715209; c=relaxed/simple;
+	bh=yQ2iZxVJ+TtK2GgkvXbud8GsbZku/5LG+zNmG0+AWho=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mhmUWJLq2Z8Y6+rmGW6ILqlB6oW5vslerWAzGvtnl403Em301Vms4tLqiTpbJLSnfYHMIib8nQpFvJF410RktoE6xbdSnOHo/txM3lfhLKJpLcdoFbPRqsNf++nMhgVGBtykHdAZFCm4NBq30ojCorzUYkcxZmTQ8FSWlFq5gxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KPWkvhbC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=In4kxgKN; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="PM4nT2t4"
-Date: Thu, 18 Jun 2026 00:51:34 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1781715111;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MfAfpCIepdA8BYIcDsRyvjw6MZaKmIdWnM1AweW6gYY=;
-	b=PM4nT2t4jQStDFgDflRFS0e6Y2932Ka5cDh+SOVdE0L36FDbsmWcF5BdqXvPsb7VErybl6
-	2Zb+gjxcOnBlvD0euhjTdODpzdWyKjaVQN49vj0xMhiNHgz5hyiobFI+MOvBIElB+4KUZM
-	lt/zFSTc11hB/9dUg3oyTYZtEkrrQ7+YvqGaWkS2FdsOaTfW2s5CMO2LtIJLaB381/9Z45
-	EmERh4vlJHZuDML8Dvn8eqf+sYPc1JvXrC587l1sfOVUxrb/B6XaY9cle2q/qr0gO8kGYr
-	s46rX3Yev1nJFeym7Hy7mEiHb2dhAVHug7EUzV5AhgFD6BXivfDt1URDAWBj5g==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-Subject: [PATCH v2 2/2] doc: advise batching patch rerolls
-Message-ID: <496a08c74ddd9368587d032da7117520af1478ae.1781714757.git.wy@wyuan.org>
-References: <cover.1781358364.git.wy@wyuan.org>
- <cover.1781714757.git.wy@wyuan.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KPWkvhbC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="In4kxgKN"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id CF4821D00183;
+	Wed, 17 Jun 2026 12:53:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 17 Jun 2026 12:53:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781715205; x=1781801605; bh=iRvDyugKLv
+	q7BPKH3wIgD3gGNDnNJ5hVJz/oAEtunnE=; b=KPWkvhbCTx5wIlvaEa9nkJ+z4F
+	ojuUwY9KcakOnfx3UYTkNqqHAYyDD5jmQR/uIAZaco/h5Apuc1HGfDgGjWTRkaE2
+	aq+pCIAFYJ1ba2I1EYhNibOWsJVLrQ9JAxhb915gS36mEC2BlzTJAKT2TNuhOGzI
+	yLBq+chAcUYDQnZnnWFNRnrxSA7Tqs3j9cxrNEQM1ZYkQu/1mvvVe9paulnYYkZg
+	q/OsMmitceFqQ9cZw/1QPvk2G1kSh0Ov2jMim+DjI7Cr4yq58RciiFNekhMqmT2x
+	I2YnwAHN8nFsd8WYel4DykbDksG65hEVmq69TP4Vj4O37UIc/7sdgBd5HNpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781715205; x=1781801605; bh=iRvDyugKLvq7BPKH3wIgD3gGNDnNJ5hVJz/
+	oAEtunnE=; b=In4kxgKNd9yntMbegisgmYfOhCX6srPhu5w2JLwJ6WjXFXpvgBl
+	XuIshXAJkX7myhRR35Yz6v0RlLGNPAWFN4l/ahKRZ/J1Fj0Fhn69jldf32xYucGu
+	XyqUHfI4jyARQ6CWQJkvN0HFdTTFf4fRh9+rdXuJWvdi9cUzEZLAmoXBXRQAn/oI
+	TW0C1klrJqEILjRnxpR8Z7pNChuHeCojZcEwvH3Nn7Hw3TcjJz/kLdCrV764r5i7
+	3lVf7vo9zh3FFjS2ccrr7pTGcQDqysxVBJa9yshXtID0vx/lSV+urwAT46CF8vkA
+	X4YBxwsRadnqMubb9HH7DYj4tWVydI1ipng==
+X-ME-Sender: <xms:BdEyapgFF0eCGuZgTmG01MzSTANXarYCB2pdM-gApiUyzN_pMMGwrQ>
+    <xme:BdEyak7YIAc8M32fmj6SF5-dg2lan3xBr4oPcBy6FnvVMdlNEocQsHZAtkOsjvVaB
+    ZWa2Eu-RbACG33O2PpAogpax4R0KttZ0C1p-nsvbmuYENSTiobiIiQ>
+X-ME-Received: <xmr:BdEyahbATDrCEllI246Bymrg9465-BbsrAWC2OPnEpsihMhWLZH6JVNJI8itOA2D_S71js-AVt7g-4lLlOaMjh6MTHYF41snK7LU>
+X-ME-Proxy-Cause: dmFkZTGeX3Jn3fFu6tKo1291caKzimL4qUNqLxCBLHceOQowtBzt8cJewfYbnPorEytV3B
+    OONAaSXUB076iAvit3t1tsZaDmUI739Qc7cHsIHiFvD5lHiBqDhGA3J0SoXwNuAbjsXzqe
+    eSFMeFYuP1gXyJJZWNiwSbuq3yexe4jBn7rSJPXpniez5F7MMfhlmTUBezvrWdJmP2PIFr
+    eP+Lek62C/qFTL08u79K2KqeMGz2SbLtfGoPiJsIPxpg6398KAJ1YXuG1MH6lnZAppfltZ
+    5XRF3KgEXB2VXROuuvn+efcbFK/fzO56JIu6mOKfXOyV9z9KyySUNSvwDnVddk/oLJaYnX
+    M8CLLia3ujKqGXqWFsyWOZ9xt0Z60LTI640dsfHT6wUG09ckIPL4BB/6eT3NjxDQhML968
+    UcaTlUkevq4ZGbTh8aLj32PbMTFWWdKsrLMcBzemzMNZnm6qVQEtiAznCu7TRWJffoTSWa
+    kjtLshE84+V92KYrOvSvs2kARbglTIkQpdAM0GhnEVImhgZzwTGWXgaIxCuFtTa23cbfuk
+    HehdavoPiFK9CWA4PeJXt7rBxDUCnpd/6D+XjwJczEsGH4vrRSWkqRyD3R3lsNyDcI75QY
+    AEeiQ2IB3oqXmUVAY3l3QbAKDXxKQW9WyI/S5uWG9+GhaeaPv6P4njdttbYA
+X-ME-Proxy: <xmx:BdEyap63KnWAXII9VPfSmPVPmJDKRSzTbsIWi8xeTuiYKa9hRPuckw>
+    <xmx:BdEyakDf5cJInjt8UDACq-KkNeE0D6Y58tG_xh0H4ewBBpp_k8pcOA>
+    <xmx:BdEyavfnb9W6AbECK6Ua-VFney5UZvpEUNA6-fi3hvS6iXI4PgwukQ>
+    <xmx:BdEyajL2-sq_ESUNjbBKIbbOp7RscLEGGunAX3bTQQ7Bn74gDRblKQ>
+    <xmx:BdEyalKLoVWil81jkwctb759t4tNMJeTFa6UCsaW7-OamQ_JLhOcszT5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Jun 2026 12:53:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 00/17] odb: make packed object source a proper
+ `struct odb_source`
+In-Reply-To: <ajK2QKdW-TdflfR0@denethor> (Justin Tobler's message of "Wed, 17
+	Jun 2026 10:02:46 -0500")
+References: <20260604-pks-odb-source-packed-v1-0-2e7ab31b4b5c@pks.im>
+	<20260617-pks-odb-source-packed-v3-0-b5c7583cd795@pks.im>
+	<ajK2QKdW-TdflfR0@denethor>
+Date: Wed, 17 Jun 2026 09:53:23 -0700
+Message-ID: <xmqq1pe5xg58.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1781714757.git.wy@wyuan.org>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-Contributors often need guidance on how quickly to send later iterations
-of a patch series. Add a rough default of no more than one new version
-of the same series per day so feedback can be batched and reviewers have
-time to comment regardless of their time zones.
+Justin Tobler <jltobler@gmail.com> writes:
 
-Mention factors that can affect the timing, such as series size, review
-depth, substantial rework, and how close the topic is to being accepted.
-Also point out that avoiding rapid rerolls encourages authors to polish
-each version before sending it, so reviewers can focus on substantial
-issues.
+> On 26/06/17 08:39AM, Patrick Steinhardt wrote:
+>>  5:  8eb3cb17a1 !  5:  c9b1e1da26 odb/source-packed: start converting to a proper `struct odb_source`
+>>     @@ Commit message
+>>          odb_source`, as it's missing all of the callback implementations. These
+>>          will be wired up in subsequent commits.
+>>      
+>>     +    Further note that we're also registering a `chdir_notify` callback to
+>>     +    reparent our path. This wasn't previously necessary (and still isn't at
+>>     +    this point in time) because all paths are taken from the owning "files"
+>>     +    source, and that source already handles the reparenting for us. But a
+>>     +    subsequent commit will change that so that we're using the path of the
+>>     +    "packed" source, and once that happens we'll need it to be updated when
+>>     +    changing the working directory.
+>
+> Ah ok, the "file" ODB source already has a `chdir_notify` callback
+> registered to handle this which is why we could get away with using the
+> path taken from the parent. Make sense. The explaination here is very
+> helpful.
+>
+> This version of the series looks good to me.
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Weijie Yuan <wy@wyuan.org>
----
- Documentation/MyFirstContribution.adoc | 20 ++++++++++++++++++++
- Documentation/SubmittingPatches        | 12 ++++++++++--
- 2 files changed, 30 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 00704ab91e..f8f5f4e320 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -1330,6 +1330,26 @@ previous one" patches over 2 days), reviewers would strongly prefer if a
- single polished version came 2 days later instead, and that version with
- fewer mistakes were the only one they would need to review.
- 
-+This consideration applies not only when going from the initial patch to v2,
-+but also to later iterations of the same series. There is no fixed rule for how
-+long to wait before sending a new version. A useful default is to send at most
-+one new version of the same patch series per day. This gives multiple reviewers
-+time to comment, gives reviewers across time zones a fair chance to
-+participate, lets you batch feedback together, and gives you time to think
-+through the comments you received. Knowing that you should not immediately send
-+another version also encourages you to review the patches more carefully before
-+sending them, catch small mistakes such as typos and off-by-one errors
-+yourself, and let reviewers spend more of their attention on design,
-+algorithms, and other substantial issues.
-+
-+The right timing depends on the topic and the feedback. Larger series usually
-+need more review time. If the only comments so far are minor, such as typo
-+fixes, it often makes sense to wait a little longer in case deeper reviews are
-+still coming. If the comments require substantial rework, sending a new version
-+sooner may save reviewers from spending time on a version you already know will
-+change significantly. If the topic is close to being accepted and the remaining
-+comments are small, a quicker new version may also be fine.
-+
- 
- [[reviewing]]
- === Responding to Reviews
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 6c1e1f6423..13f180a8bd 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -58,7 +58,14 @@ area.
- It is often beneficial to allow some time for reviewers to provide
- feedback before sending a new version, rather than sending an updated
- series immediately after receiving a review. This helps collect broader
--input and avoids unnecessary churn from many rapid iterations.
-+input, gives reviewers in different time zones a fair chance to comment,
-+and avoids unnecessary churn from many rapid iterations.  Waiting also
-+encourages you to polish each version before sending it, so reviewers can
-+focus on substantial issues rather than typos or other small mistakes.
-++
-+As a rough default, avoid sending more than one new version of the same
-+series per day, while considering the size of the series, the depth of
-+review, and how close the topic is to being accepted.
- 
- . These early update iterations are expected to be full replacements,
-   not incremental updates on top of what you posted already.  If you
-@@ -619,7 +626,8 @@ letter" message (see below), the first patch, or the respective preceding patch.
- Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
- how to submit updated versions of a patch series.  Before sending another
- version, make sure you have answered meaningful review comments in the existing
--discussion.
-+discussion.  Also give reviewers enough time to comment before sending another
-+version.
- 
- If your log message (including your name on the
- `Signed-off-by` trailer) is not writable in ASCII, make sure that
--- 
-2.54.0
-
+Thanks, all of you.  Very much appreciated.
