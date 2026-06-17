@@ -1,142 +1,133 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28858363C40
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 17:43:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A7933F8C1
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 17:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781718188; cv=none; b=MLsLG0fJjqvtcGf9KkDkE7ezV9SEG3t+3htknaso1CrLm94t0ajQqF+hTknB9dYo/D/rFUUYqmN0wxOaAIbvNCjQZCinwkzxKq1GELOo6UFD2u7C87/eGzoTBxZNLRl+ejELkLvnnUz6NLFmlQpjtFOibruyTRHaU7EjjgV0jy4=
+	t=1781718657; cv=none; b=uH/5AT0z4bQrOpq7Md/8YDP7eDDYSprmuHUrh4lP4G/OxOFyba6zPFgvBbIhG3w5lcDe9wEM+Mea9rgBlKh5lW+yjHllz0kvtZo1e1EwLIxaddRtIINwiCLs0ylvUoSU2jpsXJASfhvVTz5mEx950ENRdKslHkfQf9k+Wi70ycU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781718188; c=relaxed/simple;
-	bh=RDWe9bfyNMjaVGrM+e2rOXv4jk/Upn4g4oq6rRbz1sI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CGQ6dgM1DVcCerYf8B8I79Ix/2+TSuIVZr7wvhmo+uwcQoFsm22TpZmRcJ1sIpL/I9MsBVBqZoDw2z/N1DW1V2geAjtW4hL4XleJWqYRU7bm8gFtYmR92EkhGr2ZNwYSPswTsV7MYK9jFb2QaC27fs5Nt/zFq4LD1HKNORw/i+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o6IuC7Wx; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781718657; c=relaxed/simple;
+	bh=laTvIXVg/a2fLlNUAXPjXHmjsYxWCY98oCRYvkuXp+Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Y7owEk/WolJY68dqqIkcMSYIsCE3iNePG8VbgSHDhwLsyq/dde7I9+7drpsxiSIj2p/rC2Xv4a3CdG7M59vjD14ThwlHC/x5jvAZ2HlqkFCi+glFIvmqBs7XKsOwV4sAdMJwPr5traR0KRtEeFqE9BbMRq85fPRaYC5FznnqKtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U1lQgTEJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PDn7kzBo; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o6IuC7Wx"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7e6cfdc8382so12236a34.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:43:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781718186; x=1782322986; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ax7rdxY4AfG/Tdm2hF5K50U+pMv3XhPv/ZdKGQzUSUM=;
-        b=o6IuC7WxBj/GCEHrd49DJmT/2niaMAwm7UwshfXJnlDjdZl1u2AVjPbJAOyDt9qmHM
-         7p2PKN50CebVxi0+qZy0FIqKBwAgvaKjMPmpjmGsUcY1vy4iFF2S0a2HqTe3VQ5XtUZu
-         sP0HECmJ1aJdm738t2jDebEAs2YoWyADj9zM0IFUZWtRzDjtqw34fypuTy6GMrFDNMtY
-         yt56FINdGuDDjqhLAQLZkgjyKm8pToQWNzdIcgDu3piYccp/Cji3JwyPsQcdGOcwoiwz
-         zShJVEUaE29u6s2CX4bcVAPQB0i2fsCg83z8NjWda0EKub5ko6fbwRsHiWCTA64tn/yW
-         iPuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781718186; x=1782322986;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ax7rdxY4AfG/Tdm2hF5K50U+pMv3XhPv/ZdKGQzUSUM=;
-        b=cmKcBk/V887xDei6rwfzMIg4LeMb21cJ4HZ7W7/dzozkPK9yD1R/APgIifZw3/6jlI
-         39ZEmX/3ajlam9M9LAhPd5DQCe+4kARA/n6tF1hHJITj3VJhNMdRoisD5S9c3MiOYFz/
-         tct3PclMQwWdWunWE1ZNJJhb8z/mCrqaL43NKg43XE3GpnRv0xv4et1n+F2seiSu/fIu
-         Bf0lFBwiRSarGoL9mq1TMIUY13tqx1UiMJYH99iGkASjlfls0PV+EenLDOwsirSqDosO
-         zSmxaHRspI4rHoVEov1WlxoWvIszs27t6WjquT3PIcHMTcH+C0tLRHkoJJDlR+QvpFm7
-         I4Vw==
-X-Gm-Message-State: AOJu0Yy6aMaYIBPw8eLPtjYwBg0cYTiD4qqack93HoBDGSzbdfg+tLx9
-	3fFDyHmDVAiqJYL9iSJBNVzzCVbepjHVxmNzj0KvEimqpRI8AzJl9WDGL9od+Q==
-X-Gm-Gg: Acq92OEyIkz7Z5J+XH3LMVHQIa5ro7SnUTUbOt5CFjUTq0PTFpSbUbYasO2zZcj/+6t
-	5Qpfx+zPgWevESXE7Bpthkx58is7ufDHET/ubbAQJDdCbJcV3q9K+g/aRoPVLBBGcNvX8sOGT/G
-	j68JtTudvYPtAmOFe9ZSc/5m64d6gT3CVPnpcVxsucWexJVxtzN6wHa/Z8iVFUF8sSytfoU7kVO
-	z6s2/kLw6tOE/625d10rAmJV4pbuZDoprlgDSH++GXEZpR2jnX84KfIIdcJM6Ti7bQyTnfN/dvn
-	FmnUZbEZ37RmWYVL5KlE1HrN/tU15UdDOn53XCdNUgTDsMtJkE2yY59RCuZVxmfWnP/Il1NsmSh
-	g72KEz5xQVtllZG9WPfWp7hW/LGGg1Ta5VM6W8Sv1+7ahbH9HLlAmYT2Q5f5yDCIHtG+4B4hFwp
-	enE5GLig==
-X-Received: by 2002:a05:6830:8296:b0:7dc:c338:d23d with SMTP id 46e09a7af769-7e90b38b774mr4626772a34.14.1781718185826;
-        Wed, 17 Jun 2026 10:43:05 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e79f5bb5fcsm10325077a34.9.2026.06.17.10.43.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 10:43:05 -0700 (PDT)
-Date: Wed, 17 Jun 2026 12:43:02 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/8] setup: don't apply "GIT_REFERENCE_BACKEND"
- without a repository
-Message-ID: <ajLapsLze_zF-dsS@denethor>
-References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
- <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-3-f4854aa99859@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U1lQgTEJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PDn7kzBo"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1EA8D7A00F9;
+	Wed, 17 Jun 2026 13:50:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 17 Jun 2026 13:50:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781718654; x=1781805054; bh=PdhygIVOdu
+	2WB0+0Ex41AdYm2/zOhASFWStUankSmI4=; b=U1lQgTEJarnOYKslSO06J6Stc3
+	km4oseD15EZ/MRFytlQ6MjQCTkDOM776lxibASiwtQYlJy+zEFGsDbzoPA31EJuq
+	G7K6UNl89U4u21dkfjJKwDBGq5VkqoLbYyA6a0kG/4D9eHK4tI0WQIivzBUeAlS6
+	jvRGTnpABZhY/wmHdYqsoIAy/VH+YQDScDoyWnLajUrR5sxrE5Wi0p+iVHw5HJU9
+	jqItdTE/M8ZNBKAZZPMAsrG6yHhyvGcQj2pHD+VfHVPn7jC3wGWDEumvGJoSdUGc
+	xYWPol9/wk8u9UEB59Us1LxOACi/JlCQj19l6pol1HIaA1eQcXxStyfl+oGQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781718654; x=1781805054; bh=PdhygIVOdu2WB0+0Ex41AdYm2/zOhASFWSt
+	UankSmI4=; b=PDn7kzBoyr0khGbQNYi5h8mLmKB/PtCXTxSrVr+oc9/oaf/+Yc1
+	pH/afSUVomB8hCx57Ud0/iRMQeAdxlbF31Z+XoXEm2+QEPV4r4xJogoAzoVkTMN/
+	JAgAA+7scTucinYedUrS8T+tZy/YNKHxcEMweQCFo4IRbJWfKDKi/svXo+CtaH7f
+	4g9+m0u0cEhGbqnxlh2TvNOY6IzuD/h4kEz4DH7+0fST5+viqWofcd6aDXUvQEk7
+	N35Qd7ZkUlttgl7n/A5+AmjJkJUW2/IqmaTCMg5RaS9851/e0ODKwCnpr6VejxCM
+	iRzEPnBi4nPdSBpf+VVIV6I3m4MtTuKWHbg==
+X-ME-Sender: <xms:ft4yatOr4vz5YyNYd7jdHfS6cJAMH057uti7t7XIkotbzbI6KXj06Q>
+    <xme:ft4yam97lRZbJxahBke8kFw6xDNus3oJnRmTrnCVHFfIFvxC7QbYzUwlAiFiSlZZ_
+    2suTXm08uSPszgLaUEl-P4mYHfWT0ypSi5anIkFxsO9ohd5SHNAVw>
+X-ME-Received: <xmr:ft4yahRWyWQaldhR1XvywqBGnKpcDF5b6mUCgT3IR1pFPNSulK3uyuaqcc0XaqQQDEWuQtBo6TAL-7rEJ0bc_8-lIOhdKPqCp-ru>
+X-ME-Proxy-Cause: dmFkZTFihhk2AN375MGKeQTQUemTYGkwHERtoFqgRu459SwrBOwvB3mFZlnv1EnMkEW+ZQ
+    nZUWGDGhFXN14sDB1L4HvD0JGCFpYwa0TdxNTW9RZHFog1xO1VgeghkgT4V0FTgNnaLL8m
+    Dv8jsYfQBM/0J3zBGjulSpf5rAsRfic72Bmnn0F2msmC8cFJvReq2jiTBFgHjAeWp+6qwP
+    rRX2sR1jTiPVLL6O1Xx82lkC3CYIfbVhrUA3M9JcIHG2w30iorQ//jbZYCdYS0gEgztqMN
+    g1Oy1mEGTuoslZxP9LbwDnYD0U0bySsJJ9nH948tMiYX+etEAk1xclxi3PV9pk3NqeUnJJ
+    hGRJ0NHg0S9wDspehb+7ILcVvJITuL6MyqMxQ6pKRkUiLAZ8oAPDray98+W8aSfVPy2hQU
+    DDiTPIPbjbOvfmgx8cRtKZe9GiLQyf6fBJgDqZQ/44tK3+/f8Xb04wzRMVi136PpxPckjK
+    ykjGVS7ETIXfcS0gp0eJSV84yFYxQ3BXaDUbcD90lvglEQtKD2Vln6PoPoG7ZJcV7ypPte
+    uXPoIM8w/OUD17aVFKNMsKrBPBKCznchDopexgPrqn7ztvOIEdDnZWEf5sCT4CILrHwSu0
+    9k73cYYL0+b6MrRloYTVIcBFaQk3S2V4j0Zq648sOvZuPBhCPCHAiZ3qArPw
+X-ME-Proxy: <xmx:ft4yaomsn1gW7ewuayjRK8OU-JcIg9PK_SnDcUk-maVWgnQunHltjg>
+    <xmx:ft4yahTCjLpGChLCqha1C3v0sTJrXpAncN-l46TmVm98LtiYlxpycg>
+    <xmx:ft4yamPoUnV18DHO-vqrJ0N0EJ-w0qkR9euvpmDz1mEoyHG9fcgXNA>
+    <xmx:ft4yaqX3RA7cEoiiRW89fun2sp4bUlrOG2UzbW2t5Ug-YOzySFiHVw>
+    <xmx:ft4yaiNe22Gmr2aJXbBlRiERHTyGbGx1BYNLOPEdqTtToLGZuGSQzdQ6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Jun 2026 13:50:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Weijie Yuan <wy@wyuan.org>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v2 2/2] doc: advise batching patch rerolls
+In-Reply-To: <496a08c74ddd9368587d032da7117520af1478ae.1781714757.git.wy@wyuan.org>
+	(Weijie Yuan's message of "Thu, 18 Jun 2026 00:51:34 +0800")
+References: <cover.1781358364.git.wy@wyuan.org>
+	<cover.1781714757.git.wy@wyuan.org>
+	<496a08c74ddd9368587d032da7117520af1478ae.1781714757.git.wy@wyuan.org>
+Date: Wed, 17 Jun 2026 10:50:53 -0700
+Message-ID: <xmqq4ij1vywy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-3-f4854aa99859@pks.im>
+Content-Type: text/plain
 
-On 26/06/15 03:56PM, Patrick Steinhardt wrote:
-> When discovering a repository we eventually also apply the
-> "GIT_REFERENCE_BACKEND" environment variable to the repository. There's
-> two problems with that:
-> 
->   - We do this unconditionally, which is rather pointless: we really
->     only have to configure the repository when we have found one.
+Weijie Yuan <wy@wyuan.org> writes:
 
-I agree that configuring the repository reference format when there
-isn't a repository to begin doesn't sound very useful.
+> +The right timing depends on the topic and the feedback. Larger series usually
+> +need more review time. If the only comments so far are minor, such as typo
+> +fixes, it often makes sense to wait a little longer in case deeper reviews are
+> +still coming.
 
->   - We have already applied the repository format at that point in time,
->     so we need to manually reapply it.
-> 
-> Move the logic around so that we only apply the environment variable
-> when a repository was discovered. This also allows us to drop the
-> explcit call to `repo_set_ref_storage_format()` because we now adjust
-> the format before we apply it via `apply_repository_format()`.
+All sensible up to this point.
 
-Make sense.
+> If the comments require substantial rework, sending a new version
+> +sooner may save reviewers from spending time on a version you already know will
+> +change significantly.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> @@ -2023,6 +2022,8 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
->  	    startup_info->have_repository ||
->  	    /* GIT_DIR_EXPLICIT */
->  	    getenv(GIT_DIR_ENVIRONMENT)) {
-> +		const char *ref_backend_uri;
-> +
->  		if (!repo->gitdir) {
->  			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
->  			if (!gitdir)
-> @@ -2030,6 +2031,24 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
->  			setup_git_env_internal(repo, gitdir);
->  		}
->  
-> +		/*
-> +		 * The env variable should override the repository config
-> +		 * for 'extensions.refStorage'.
-> +		 */
-> +		ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
-> +		if (ref_backend_uri) {
-> +			char *format;
-> +
-> +			free(repo_fmt.ref_storage_payload);
-> +
-> +			parse_reference_uri(ref_backend_uri, &format, &repo_fmt.ref_storage_payload);
-> +			repo_fmt.ref_storage_format = ref_storage_format_by_name(format);
-> +			if (repo_fmt.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-> +				die(_("unknown ref storage format: '%s'"), format);
-> +
-> +			free(format);
-> +		}
-> +
->  		if (startup_info->have_repository) {
->  			struct strbuf err = STRBUF_INIT;
+I am not sure about this one.  Even though the intention to avoid
+wasting reviewers' time spent on reading through the previous
+version that will be invalidated is a good one, by definition, a
+substantial rework will naturally take time, and it is better not to
+rush and send an updated version with substantial changes that you
+yourself haven't had a chance to thoroughly review yet.
 
-Hmmm, we only invoke `apply_repository_format()` if we indeed have a
-repository (having just GIT_DIR_ENVIRONMENT set isn't enough). Should we
-instead nest this logic right above `apply_repository_format()` in the
-same block?
+In such a case, it would be a better idea to respond to the review
+that made you realize a substantial rewrite is needed with a simple
+"I'll make a substantial rework based on this comment, which would
+invalidate this and that part of the current patch series, so please
+do not waste reviewer cycles on these parts until I send an updated
+series out" message.
 
--Justin
+> If the topic is close to being accepted and the remaining
+> +comments are small, a quicker new version may also be fine.
+
+I am not sure if this needs to be codified.
+
+I often see (e.g., in patches from Patrick) that an iteration is
+marked clearly as final candidate that the author is not aware of
+any outstanding issues.  This encourages reviewers to ask "what
+about this one raised there?"  to remind what is missed, or chime in
+with "yup, this looks good" to show support.  Such a note is highly
+recommended, but I do not see a need to say "the (supposedly) final
+one is specifically allowed to be sent without waiting" even then.
+
+Thanks.
+
+
+
+
