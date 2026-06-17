@@ -1,132 +1,118 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3745733A9FF
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 18:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781722434; cv=none; b=txH6vc/JpoqZiJdIsp8/ih85AbG/S2GBNDu/DWAwxebNT8TUvF65RcwH5PxPwHryyv3/YLo04od56m61s4LtU+1FRkM2KiRCKgAakqI70PeJ12vy3u1U2G89n0ZHxQGtu/wm/kCqzIPVUfFRQZkLVJb8GdJU3ymRaAN4HjMEEfc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781722434; c=relaxed/simple;
-	bh=JjRFfTrqJkw6Ug6DibpmFUJB1gt/zJFsQJ1IDwUPC7s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fwV6nf4g19YrmIARFmgzu8mn5Y1ZvkucpWd776sC7n480JFiP2RkNjC+uctVMPqVFLmarFDBMpzxbEum7SFDFTs9gwe3ffVgTSrJU2seuMiFYay1j7CHYAUWuBCdrU09pRckyd/6GWKuzZiHPH2CBc9ACGlCUZF9GZLsKn3ugiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oRmf9s9E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TTBdWEm0; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364D22DB788
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 19:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781723517; cv=pass; b=bD0yo7jhsegqhvB+YO9fOGTO3UvC1wTMXL6yw54P8aq3TTXqizdT032u9KaRrIYZ4I4xWU0XF+IQm1GnqC+VQ+Q2oDffpIJICKfx8X6SeCpNOKWStdR2+1zZIbp2TdvV29Gzyg5lPo+I7LhMnuTezz4kSW1GKTgGu0SytyQ1eb8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781723517; c=relaxed/simple;
+	bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vAfDNLW83TzOH9Kjwv5aDLgV0TWriiq4rgp+h1yxvobKw7VReFBeDPHwG6pFvQcsvgbvXxmHLXEc16LL1LKuBLnKGpFSoPmJmdpfVOZZKS4wb+4gRQONGnGVDQTwTGx0V79ufGAgM2a/uEl+VDpzBu7BO4dNVCm3E5O74R/anQI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YnGd6PzN; arc=pass smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oRmf9s9E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TTBdWEm0"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3D5001D00107;
-	Wed, 17 Jun 2026 14:53:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 17 Jun 2026 14:53:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781722431; x=1781808831; bh=Asvdnll0JR
-	nhPeEktJb2tsyAREuS+eWGwYtCxkYsbro=; b=oRmf9s9EboGIGU2u2JDZif2OOI
-	1RFZNLqsfsyr7BripeJ3rdR6O9G1dQx5iJ4IUP0adnWKmpm+DnjETk9LGYBX2kg2
-	zT6/4j4XQuq/ACrARY1eZ0FR8MVI1Bma6PV5d9X0aeETjQMdpxsXtedYF/JUOJnt
-	5Y7cZioXfuBHiMguRL2hi6xszYy9NJvoFl07uaPWOBGsqCF3sqcZ0kBP6Y/vGDNX
-	H52v9gL0bxrTIA0Eyhc3qSqgjB+BjbrRBh682tGpjgOUZokG4DmxdYSzwKkls8ms
-	/n9J3Ei04Y2/vx0MTGLkDqF39UWOC3vXdPEgMi0dmTLSWaXK0B9bkBrkSngg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781722431; x=1781808831; bh=Asvdnll0JRnhPeEktJb2tsyAREuS+eWGwYt
-	CxkYsbro=; b=TTBdWEm0G02ePzca9iPnWoIEv5vsbRYrhM8/C+fVzwrpdiW/Vzt
-	a8KcH58f4xj+0+d6XkNfzfXys30ye632qrpUJdD5GvSmKOQSuSy95DmT5lBGA2aW
-	ch6g9vt3jCUGe0dvyzARej/Q1aS2eHP6+7LPGmPg0DIaQ1WSUMAJm13iNMv9SSX6
-	+FCgUsWEOx8R9biCkbiLqC828JjC1NUfOhXAxJw94RZ9jVxIWUsroAxWynK+E0QE
-	BoOOFP/svCMyxtmYCKDicoSzYpiRqHikBXKP1TVroya1i5zNSjMnUE5NpDV9nPIz
-	Ktj/BdHNnGBqWgmk/9sBLnBhS/VtUvKtPMg==
-X-ME-Sender: <xms:Pu0yauc0IPJVBBWBaYnk-9QelZRrhgvoep9v85dQr6UMttZj27PyKw>
-    <xme:Pu0yavH2XjnqeKN6_p0r0SQl25-aQ9n42G6WQjRCqWdx4kYEw4acFWtr9UgtBp-uW
-    6ydgDMyP_c39orA1YH7c-w3C_bDm2Lw0lX-LcM1UHLCw2epO6HPiQ>
-X-ME-Received: <xmr:Pu0yan09igbULM_8V56VN70bZJpNy4MO4li4azgssjfPvwTMywKBCAN_P3Gl0CHR1BXyYSaNJenyBst1fAL3sq8m7iif0Vs9vgmM>
-X-ME-Proxy-Cause: dmFkZTG4j/YW9gydrxk9murKPt5vajuzeRByC1NZjjkeurbBwsVowcojsCx8z/LIRBbnyK
-    tX6GegSGLUZKOP9XApC447x0OEavL6Adhxs448N0aqVFnSm/duC/Gok8MtRu8MjZDeo77m
-    uRL+17zS3Gi+RmB+b3VQXYSlt/9yf5NzVBNWTKZ3B3bhve9ijY9a9z6mDQjH7stN6X2knn
-    1z5NBPfdhGpclA9fESvFa21fq7JGFdGnCrmhPZKdXYnznlBJThLA2nrr4p3zSdOXuseLVX
-    /hVn+i4uoLH0X1sIvUyPXT8TFQHJgiAIOb96QuPUNovsA411J+7PMQSkNNjtPOvuoKsMW4
-    LLkYW5Jk2DwAgqQf8RsmDw+DryP7BVWYPXoF8ufSR9SE3W1YvhhNsyE0u+I7qtMdXFvv8O
-    jA74+Ja5PM6r8MP5zQ1J0uVviUXapKROOW3ARpPVndlffXGp/Q92azaqmMa/RXI7k51VLE
-    fK/2jAoz4Tt+P56UKrV0cbZTAHKrGEqi6JFQkpR5Z2QPaGu3RDyEmeoy2Ui8hJ9rX/yXH/
-    eK9pbo1N13MVuvXhVfWMqtjzzZqQe+9R+U2gMUcQoanwuU+5ZpQD5ptGvDGssd/5G9FEXF
-    752NVnnnFgB5svYmSwJbM3Yjz3MJwT591M4saFrlItVQtx4/qn+b/vlH/I1Q
-X-ME-Proxy: <xmx:Pu0yanmm95Z4kBKvJ-mIh2zyAUT-SRdXwLOSxRd6u0jH_Frsmv96Qg>
-    <xmx:Pu0yan9UpGFN1xFOo9-6nnKRcTqQXHXasPRl-S1zweXHNbfALvwQhQ>
-    <xmx:Pu0yaspt8kG3q3On2TpVbKajgFGBilq7PZLjQhFNAVMdnFqR8awMXg>
-    <xmx:Pu0yagmDTZvbdQKk0AsUS1MGd1voMpDnsOv6vgKFIf5lRlrailLRig>
-    <xmx:P-0yauEvhiWsM3kW6XY5ee3YSnoOR6YgQIfi4lDKRi9w7lMniyfb_NK5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 14:53:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Derrick Stolee via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/3] config: allow disabling config includes
-In-Reply-To: <539713c4-b291-42e6-8541-a16a454518f5@gmail.com> (Derrick
-	Stolee's message of "Thu, 11 Jun 2026 09:08:45 -0400")
-References: <pull.2139.git.1780927027.gitgitgadget@gmail.com>
-	<20260608225149.GB340696@coredump.intra.peff.net>
-	<4d7834c0-d8ab-4dcd-8a7f-ed62c30cbe43@gmail.com>
-	<20260611083943.GJ2191159@coredump.intra.peff.net>
-	<539713c4-b291-42e6-8541-a16a454518f5@gmail.com>
-Date: Wed, 17 Jun 2026 11:53:49 -0700
-Message-ID: <xmqqzf0tuhfm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YnGd6PzN"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-68bd9fce347so46241a12.2
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 12:11:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781723514; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JvSv0dmrkbGMmrHvmN3tOyubOT+MXzq/tywUEWnGPd0yLUnnguQvjUob0wLXoveVru
+         CzxZotnsSqdTWwcJvpHi0x2ryw83zN25qrFpZkewpfBs0Ku+PQ3hb+XVe/X2+sAlj9yl
+         PtQnrutyM84qCiOqbt7X3i391gu1uxZm4OgLNLHmAxoA1iPoLYXtVwtUL5n+8UDZir51
+         RxVcagmFhESyQivzrGKnTYEt+AVFsfGIDy9KG9JN5PiiigP82KIyEdanRu2+yMeF32hM
+         L90mrquJ+rXePXtoV8ZsQad7DDog+ziJhpMg/HraJSpYC00qz490U2c848CSsR0czD2i
+         W5Og==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
+        fh=zUHYrQmrnTIvGR3EP/ZGpJyRQ6ZjiNoFKfUdXDhw9og=;
+        b=H6whbubC/dnDQt85DtIxTqiEaA3AMt8VddYqKIvImAcCFirCCpO12QQabBwpaG3yLT
+         ERkr8WMeQbyw5e1L4h60r+5I1AvmtJFDYNJtt5zvLAIgdEnQSiay0tVLT0Hp7EKIrdqd
+         Sgxxe641XuPUk/MRhSPjzfcP43asqhaDw2kdiXXBH4sILyHhdLc9CD1uCOg3pXz8ipKI
+         Mtfny9TQo/HlE/7kPTbGKQ1zoAoAYKlhT/zvW09HeHEw87N0sPgw5mjFiYLNbuP3xu3W
+         8Xjy4t3Qa6NCsRB9Qoc8kSIto6dALxIX0lf4HEOEg2HL87dXzjB7hqbHfZPZuJzfsHBP
+         aY9A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781723514; x=1782328314; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
+        b=YnGd6PzNxfDsQqRR8xF2tEQBwQHv0TcKdmZBwv4nd8J+juqZSBrGNNv2Go+q4b1HVc
+         fEcCSm775UZo0k3PrIAh+BN7zy8MHpfqHJuEnyl9rLGQqRjElU/wxIPQSrlehRa2inyz
+         KTMRK3JAWeg/xfE6PSteey6W7qIRloSgncK4ReKcbmA1/aPwsaur2g9vNwbHZyhPak8M
+         Wqzrc+gGGtKv+ppI+VDDii9a+Yb2fYZrS7Q+t0jbtyTLq8TPULZ56uRi4PAvXQmOrig3
+         WF7q5qiCZ1eDvDwK1lvW7UETNa3mxWzzCBoOV2OZ2BUQpKBPwnZPCeBCszlMB0YWh32f
+         RviA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781723514; x=1782328314;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
+        b=BGDuz7MGSFMu/sFXrnGIs21JBHfRE0Cwc+9fiKQnRxZVWFkPHS0x5vmuh3kHOh/+bz
+         AigbtbaJ4bDBLPrGFcMe3Iil9NwAzXLilGLzBjqDZ81jvhROHiLplmUYA1kLn5pK05rZ
+         WheRCWE6CC7/pr5OpHTfLpbJM4CDlpUTT5gy9TInherztugPCfShhxcWOCU6c9xbRBTr
+         JINhkqUEyaNTBQVye44nlS+HZMO2+744l1NQsqYVfzPPRHFAVYxn8qC0teSPcDCdc6El
+         U9AWghlvc2dP8H+unArc0ThkMz6IuEuSbW/fOQz09PG01nvObzM4JQQRg9tEwphHyhx4
+         PFHA==
+X-Forwarded-Encrypted: i=1; AFNElJ+qlGVywMuMopCJwlpBE5tbrDh6m5aShO/o+pYDWgeYAFz7LsXh80nNLtY8oUX/sTf8yzA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy1kKmLr4BD2VUirUYZTWb5qfi/vcI81kCeU28aOChJ78oWjyr5
+	p3Gp3HWYQ6TovzCEJOHE4Tl/I3UdKATg+J+LQ0rAJAR+8AgvrVyTSJcIZwselL3NPXUBs++hLuf
+	bDc7TS93RRMLgi1Pkovn0dMI8qurqyxo=
+X-Gm-Gg: AfdE7cn4+DLyStP/FK3ZlbGVG/0fL6fElu6OXdcnSWudmaAT/AY4+v4cxHjGgYSSz5n
+	RrmBnsJlLa8aZTLIxk1uXZvid5vfulgxGhQnzX9sqYgpG/Ba8+8uhi/BCDpdBSFouQ832OoYhZ8
+	TDPNmHm23aF66KYHMg7MhRZART5PmWfIMPQQ7QqtOA08F5XR3ClFzzZg5bghecfY+I3eD44BxLf
+	0sjWKIxfBMAyCQ28KWZSFshXufdKGpJYykKgL+gIE9c/JsnG1tOgVdsnwvbiSs1Z4qTwCZK
+X-Received: by 2002:a05:6402:548d:b0:691:acfc:54bf with SMTP id
+ 4fb4d7f45d1cf-69547492d3emr2815462a12.21.1781723514401; Wed, 17 Jun 2026
+ 12:11:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+ <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com> <f68e2a11-02a5-47b9-a01a-458eba821c37@gmail.com>
+ <CAHwyqnXRo=P5Zihs6s7Uh8CrYCO7mjyeZ5nAv9JqYbGH0RE72g@mail.gmail.com> <5829103e-d357-4880-b295-fa0d9f4a2c62@gmail.com>
+In-Reply-To: <5829103e-d357-4880-b295-fa0d9f4a2c62@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Wed, 17 Jun 2026 21:11:18 +0200
+X-Gm-Features: AVVi8CevEMHwHNls8shiYKcqaoxsZgH8mtAtf6L_Ht4KfecYsuMPsAdXNTzv-2Q
+Message-ID: <CAHwyqnWFM2jskm6soEu58tp_TgO3fmuODD-yTiK6-4Hpv8SMLQ@mail.gmail.com>
+Subject: Re: [PATCH v15 0/7] branch: delete-merged
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Derrick Stolee <stolee@gmail.com> writes:
+> Right but you sent that version a few hours after I'd posted a partial
+> review which concluded by saying I'd finish it the next day. If you send
+> a new version when you are waiting for further comments it clutters the
+> list because you know you're going to have to post another revision when
+> you get the rest of the comments. Anyone reviewing the interim version
+> is wasting their time. When you receive review comments, by all means
+> start thinking about them and updating your local copy but please don't
+> post a new version until the discussion on the previous version has
+> settled down.
 
-> On 6/11/2026 4:39 AM, Jeff King wrote:
->> On Tue, Jun 09, 2026 at 08:59:22AM -0400, Derrick Stolee wrote:
->
->> I'm not sure I entirely understand the problematic case, though. The
->> user points to in-repo config (which we already tell people is a bad
->> idea), and then that config breaks for some reason? Because the include
->> is relative and git is run from another directory?
->
->>> Or: are we venturing into territory where we don't even want to create a
->>> new foot-gun? If there were another way to solve the situation that I'm
->>> facing without these risks, then I'd be open to it. Any ideas?
->> 
->> Yeah, the more I think on it, the more it seems like a foot-gun. Like I
->> said, I'm not sure I entirely understand the use-case. If you could
->> flesh out an example, that might help.
-> The case I'm struggling with is that our build system has sandboxing
-> restrictions to make sure the build is deterministic based on a certain
-> number of inputs. A tool we don't control is calling Git commands and
-> these users with included config are getting errors because the build
-> is looking at files in the repo that are not registered as build inputs.
->
-> Files within $SRCROOT/.git/ are ignored as "internal to Git" but when
-> the users update their config to include other files, this error occurs.
->
-> I'd much rather that this tool doesn't call Git at all, but I'm unable
-> to make that change to a third-party tool. But this environment variable
-> would make it possible to disable this behavior. And I'd also rather
-> that these users don't use includes in this way, but they are using a
-> checked-in file to share aliases and other quality-of-life things when
-> a human uses Git, not "critical" settings.
->
-> This series is my attempt to see if we can find a solution that enables
-> this behavior, but maybe we've found enough concerns with the idea that
-> we can push back on the users to say "stop doing that."
+That's fair. Sorry about that.
 
-It seems that the thread went dark after this message.  Should I
-take silence as an agreement, and mark the topic as retracted?
+Will you let me know when your review here is finished?
 
-Thanks for an interesting discussion.
+I received the same feedback from Junio before, so I'm not unaware of
+this problem. I am trying to slow down. I often prepare the work as
+soon as I get some comments -- I'm on paternity leave so I have a lot
+of time when the baby is sleeping -- then I actively hold off on
+sending to not overload the rest of you. But at the same time I think
+it's valuable to keep up a certain pace. It's a balancing act.
+
+
+Harald
