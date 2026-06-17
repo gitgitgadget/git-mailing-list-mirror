@@ -1,1105 +1,138 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A613CE4A3
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:01:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EEA3D9DCA
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781690489; cv=none; b=Bc0q15I412nTQw9MB2F4z2pG0ZaQpx4KDQarfmbix92tvJJbJbOGpI26IdOAKAdlBTnaHNjVvwBfxlzNDXx8Fi1pL6UYETH+5JiVbl5z/N+TSFQHNab16tYZB4jKHf1dpqGZBqavgDJPuoZ7BqqY2gxfeLKPiw4crLfP7sa3EOI=
+	t=1781691080; cv=none; b=TR23boA1+U5gimgFpw9ztqL/N4+UHoXDYLeVf57MjVYEE0mI75u45/B3I19F6TVeW9YthStBAGuXIAeelDv8cPJcrX00YuL3blNzFlMfwGWeCXvHgHJ+V6ctvdLKUv23TcE6EekOx5nTtX7EMRIrwXphYRLnoUPhm4zPe7BIh8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781690489; c=relaxed/simple;
-	bh=eemzh0ztbDVDyUWeDUaKLRFzGrlnxcwE0e7oAId188E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zdrwj5OaSj25cXGx69bHQ7gaHC90trMRbbkZlpbd46WLxYXA9aCscDmY2C1HKJFj6ZoNGvl2VO4IsElwK03T21KmP598bfmiAYwtGwM5GjyUlFAxyh3gUiErn4tK+PrMxZVrRYKrsK5LZdtGhloShgsAN3s2HB0UV8rSgN57qhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaBgaHgI; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1781691080; c=relaxed/simple;
+	bh=acYhllvuDbXQXTK/QPpaBp6cCU72JJZwIv2Gk5RgljQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=hcLIzGvSwjrpjVl0+3dHEPYhlfQvylMZb9kdZlQzoP+lMEF8L1GehE+xfnwicjwUlmjJj8MVr9sRMbx0SdxTzYThjg3rSsGbVq5TkiBNoUdW6Q3R6r/slQy5pQJ9bxw/eJ6FhN5tkV1zPdyS7CLTL/MDRJIAggwn1+UnsmK4IT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YD/cVZeN; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaBgaHgI"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-68852b58d87so9968246a12.3
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 03:01:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YD/cVZeN"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-7e71dd64ea2so3253201a34.3
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 03:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781690484; x=1782295284; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dR+GwQXzDWnVB4Fx0rCsYlUi+2PPpXvTg7igzYKP4JE=;
-        b=AaBgaHgIr5Np/vDZc8ye1uYMOrme6EU11g4aBwlbGNAg+msR8uaLzFfYEhq7L/+kWD
-         ScJAP21U+nv45Ahi4BJJVkpcZsuG6XkjfBHUVd8namAt8LKKud4pCZBQTOCWTjd6sVX8
-         +2sqazyWZYfgNdTirTmqmqQKKiDJ9VpSUzoWhNI1ULczem6G0v+mM9ccZIPw8OkE1iCa
-         Dr9Rpe0tSx5LIHunZefb5LMdMVfy5Ou2QQOdMmfmL0eliuV+w/VHg0pih3uYPOVuQNik
-         pHtedLJJSTKJSjltA0NNPM5cTdxioo8gpQZ+lcyFwn7tCEA2ZCQFiikOlOd10QuA2LHO
-         +h5Q==
+        d=gmail.com; s=20251104; t=1781691076; x=1782295876; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=p0TVfUE7kZfb8lDuy0pwSCfSGdrDZzBaQTmjAt7VUR0=;
+        b=YD/cVZeNYQcu9yG9Akov/HQwJ3qrGmGB9KPSVFG/GOfG0AhCy2kULjsxHg15CRpOEm
+         BzgX6V0rFcdFoQ0LLKlzFLj3y1n0QCVfzvFCfPpykk3ZK5qX+kYgzmqSYFXwz7IhdGJf
+         eIFKl2byhHpJ7XusUBmtx4bDPb7SRfVKXzgVMIad0gAsTJKoqh8hLv5xQXbQNNuEcSg3
+         U+lkPg7Lac5v6L+NtUb2zotLtU4+KoqoX1Ivi4lN040hoW9JpHHLqFQnkOiSjQbSWRIu
+         XTlre9HWGMSIEEAW6m451Zug7qHYZXlWCoOM7kD3YBjlo2hh9x4ZnbzlYkv72hoVUGDP
+         jRvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781690484; x=1782295284;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dR+GwQXzDWnVB4Fx0rCsYlUi+2PPpXvTg7igzYKP4JE=;
-        b=CL7uc749v/whoIZHj9CgkXQ21IUASmERtMJ2lUWeCzDJuIUKVEBngRu4l+oHLF1d8a
-         gI6JDbloQB7BRcJUdhjqEC3QCnS5j2n0j0ijO+mz6r5XHmtsZHYlaAppWAin2yNWL+Qv
-         Scre/xa5if8AD/ZlTliqGRl4jWnEwCDze1T8xyf0Pz5mkREhpiuAC9IBw8j+cCNp0jZk
-         QQO9tX0iQU1dNuplNzsekOl+gYbap5tljdX4HSDfJxqrCVA+K2pp9Y7mf8sRoQOFWVFk
-         SVNOFZCuCLvk8B78sqmA0JJ8sjR5fbSwQ2k33Rq+Vlb56WByrGy1ovyKszw4V8XnNbiE
-         IaTA==
-X-Forwarded-Encrypted: i=1; AFNElJ/Jt8KuG2T/h/K0jxkSHSVoeOVzMDojk2Iydk+HqM1GcObixaJmsSyuFPOS9Syh+MgglmQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvYvjLlyQTkijW/S8JuD2lUsrwobkCH09wBmcQ43688zNtfNSO
-	Yf6+23f1pAwsoyhf98z39OCT47p832iRm03YkglgDptSR/weSSR2a7xu
-X-Gm-Gg: AfdE7ckR+X2fPZYxbAkveK53jjSeo2q8ylnJdp9MqW1TU0or0FuujDNFGX21veGDsbm
-	B3gojuijye0ADd+WLG/Dv/tIzzNdUXyPUl28PQ7YZSFz5afqW88l5YOiGTM4Hp5r2X3xvRHbq4o
-	jiPj+yWOCcKmMJHnYvoBD5ddaRII6lWJeadgXCFb5r1KmGJHIcMGgM7bhhTIQ7MmYRfdmTM1LQ9
-	EtkDE4bXI3UbXG+dlXIvrj8dpA5vSPOD4Fy8zrF4fEf63i0xPr8CUdBHCrvWmMi8sO3UlpvNcgH
-	KE7nljRKyG1zSccLngRBKU+8dp3UaN9yenaHASslpt0HG69N890pCicDxJA4m/MAuf7Tok0CBRH
-	27xPrF2bR4BHwEFDMIWzB57EmrkhwGV+UZh036bmPq29i6IN+rlow7iSpuoRIAYdRmcC5AZWARc
-	WlcGRckmi/NiqsQJ1FClhZeZioFitZGhFHAslsinAz2IYOWEKR7YE7Sz5lWzWICTyLenQCLlkT
-X-Received: by 2002:a05:6402:538c:b0:68c:f3a5:4990 with SMTP id 4fb4d7f45d1cf-69547494c3emr1419406a12.25.1781690483939;
-        Wed, 17 Jun 2026 03:01:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6? ([2a0a:ef40:69a:b801:537b:c4f5:ba6d:96c6])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-693794b36d7sm6617771a12.31.2026.06.17.03.01.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2026 03:01:22 -0700 (PDT)
-Message-ID: <f68e2a11-02a5-47b9-a01a-458eba821c37@gmail.com>
-Date: Wed, 17 Jun 2026 11:01:22 +0100
+        d=1e100.net; s=20251104; t=1781691076; x=1782295876;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p0TVfUE7kZfb8lDuy0pwSCfSGdrDZzBaQTmjAt7VUR0=;
+        b=AU0No3ok2Itjd4h+K+S9ge7RwPiFo1KcTCj2QeTkB5PwV4K4bysYAg+JK6IIT0Zlhv
+         UaFrOQI4ChQ7C5IvK1sMEp8IKteEpIXulyEfVLBWmn5JDIiaSf7x7NSJXsZg/vUYqH7j
+         uvUhefXi2urcoECk0F7loSIpWdWqlPofagFsMCjll5raKfnrN7aa4nBnCLb6y28ZXFtL
+         Ew13ow0s7ccmxZ43ZDA+JEdPV24asxOE2qt65264DHwGZ/N42APCqpMfcob+z8CfCA93
+         5iOwx91gN874ifIFk1aUSwBmQmF3SAAF6fyvwBXIF+OAjmyFckJZ+VQ9N/eet51ICgiR
+         oVsA==
+X-Gm-Message-State: AOJu0YzXHto7sxaC3THUikYnOXbxnMS9O8Iw28382/cPJh2+sNsi+dg0
+	lJeyfO0PBbzxUDSPCg3/0LyeGckQmzwe0qyLaPXy+iBm5xK3iL7VvzjLCoAIjg==
+X-Gm-Gg: Acq92OERbHQPsV5ckeMWSPrw37p44N7csaQYb0CsjnxJT+Fs0Qald8cbb/yKoeqx1TJ
+	V+brEP35hOqJud12EHrcCNcxpDhUG2cw6rSCZCWk5kVOS1DXws3zf5/tpXlvkmss6DVBe2DABCW
+	mXdf/st9KjGq7y6Il3P0OjfvFZx33MU19PxhrPZWZNlSzDQ6ntzrrVHocrwYwCV8VBweY8zT60+
+	AZz4qZitEWvPxMrw8fO2GWSS6Gv6KBSreD1MvLvrZZEmda5bPEjAegD9Z+Oeyu7yugQ+D3CbfaM
+	GAXjGhdXZr+RIKMm80cduSdoce2/m9BY6/o226OuPlNyQ+CNodO7Oq2JZ8xT/X2H+9QSK6DdUzE
+	ecWekuDYGadSa3wG4EqkgUfX0oV4UMYCk059lqG5GYc7PqH/mF3cO7P7XYMShxWwkEb61t0HN1f
+	a9edtX9u/af3H+CjShUk+eNh78cA==
+X-Received: by 2002:a05:6830:2a17:b0:7e6:f083:1302 with SMTP id 46e09a7af769-7e90b37c71amr2686847a34.2.1781691076537;
+        Wed, 17 Jun 2026 03:11:16 -0700 (PDT)
+Received: from [127.0.0.1] ([135.119.38.33])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e907248dc7sm2909040a34.21.2026.06.17.03.11.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jun 2026 03:11:15 -0700 (PDT)
+Message-Id: <pull.2154.git.1781691074710.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 17 Jun 2026 10:11:13 +0000
+Subject: [PATCH] osxkeychain: fix build with Rust
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 0/7] branch: delete-merged
-To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Johannes Sixt <j6t@kdbg.org>, Phillip Wood <phillip.wood123@gmail.com>,
- Harald Nordgren <haraldnordgren@gmail.com>
-References: <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
- <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Hi Harald
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Our SubmittingPatches documentation recommends waiting for the 
-discussion to settle before sending a new version. When you know someone 
-is going send more comments on a series it is a good idea to wait for 
-them before sending a new version to avoid too much churn on the list 
-which makes it hard for people to keep up. I'm not going to read this 
-version in detail because I know another version will be needed but I 
-did spot a couple of things in the summary below.
+Without NO_RUST defined, the varint encoder/decoder lives in the
+RUST_LIB, which needs to be linked. Symptom:
 
-On 15/06/2026 17:47, Harald Nordgren via GitGitGadget wrote:
->   * Renamed --prune-merged to --delete-merged throughout. Not necessarily
->     final, but something to advance the discussion.
->   * --delete-merged now silently skips not-yet-merged branches instead of
->     warning.
+cc [... -o contrib/credential/osxkeychain/git-credential-osxkeychain [...]
+Undefined symbols for architecture x86_64:
+  "_decode_varint", referenced from:
+      _read_untracked_extension in libgit.a[x86_64][63](dir.o)
+      _read_untracked_extension in libgit.a[x86_64][63](dir.o)
+      _read_one_dir in libgit.a[x86_64][63](dir.o)
+      _read_one_dir in libgit.a[x86_64][63](dir.o)
+      _load_cache_entry_block in libgit.a[x86_64][174](read-cache.o)
+  "_encode_varint", referenced from:
+      _write_untracked_extension in libgit.a[x86_64][63](dir.o)
+      _write_untracked_extension in libgit.a[x86_64][63](dir.o)
+      _write_untracked_extension in libgit.a[x86_64][63](dir.o)
+      _write_one_dir in libgit.a[x86_64][63](dir.o)
+      _write_one_dir in libgit.a[x86_64][63](dir.o)
+      _do_write_index in libgit.a[x86_64][174](read-cache.o)
+ld: symbol(s) not found for architecture x86_64
 
-Good
+While it is curious why these functions are needed at all (osxkeychain
+does not read or write the index), the compile error is a real problem.
 
->   * --forked now accepts a bare remote name (e.g. origin) for the branch
->     origin/HEAD points at using DWIM.
+Instead of trying to play games to add `GITLIBS` while filtering out
+`common-main.o`, replace the `$(LIB_FILE) $(EXTLIBS)` construct with the
+much shorter `$(LIBS)` construct that _already_ filters out
+`common-main.o` and adds the Rust library when needed.
 
-The range-diff below does not show any changes to the implementation, 
-only the Documentation and tests
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    osxkeychain: fix build with Rust
+    
+    I ran into this when trying to build Microsoft Git v2.55.0-rc0. This
+    seems to be similar in spirit to
+    https://lore.kernel.org/git/pull.2288.git.git.1778001976709.gitgitgadget@gmail.com/
+    but the latter seems not to have gained traction. This build failure is
+    a hard regression in v2.55.0, though.
 
->   * Initialized the delete_branches() flag locals where declared. Only force
->     stays deferred.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2154%2Fdscho%2Fosxkeychain-vs-rust-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2154/dscho/osxkeychain-vs-rust-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/2154
 
-Not changing force sounds like a bad idea. The whole point of unpacking 
-the flags at the start of the function is to avoid accidental 
-regressions. Unpacking the flags into separate variables means the rest 
-of the function does not need to know that the function arguments have 
-changed.
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks
+diff --git a/Makefile b/Makefile
+index 0976a69b4c..1cec251f43 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4074,7 +4074,7 @@ contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+ 
+ contrib/credential/osxkeychain/git-credential-osxkeychain: contrib/credential/osxkeychain/git-credential-osxkeychain.o $(LIB_FILE) GIT-LDFLAGS
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+-		$(filter %.o,$^) $(LIB_FILE) $(EXTLIBS) -framework Security -framework CoreFoundation
++		$(filter %.o,$^) $(LIBS) -framework Security -framework CoreFoundation
+ 
+ contrib/credential/osxkeychain/git-credential-osxkeychain.o: contrib/credential/osxkeychain/git-credential-osxkeychain.c GIT-CFLAGS
+ 	$(QUIET_LINK)$(CC) -o $@ -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
 
-Phillip
-
->   * delete_branches()/check_branch_commit() doc and code cleanups: redundant
->     branch NULL checks dropped, ref_array candidates = { 0 }, a BUG() for the
->     unreachable non-branch ref, and reworked --delete-merged doc wording.
->   * Broadened the --forked tests (local commits for realism, remote add -f,
->     --forked <pattern> <branch> coverage), renamed the misleading trunk
->     fixture, and replaced the misnamed detached branch with git checkout
->     --detach.
-> 
-> Harald Nordgren (7):
->    branch: add --forked filter for --list mode
->    branch: convert delete_branches() to a flags argument
->    branch: let delete_branches skip unmerged branches on bulk refusal
->    branch: prepare delete_branches for a bulk caller
->    branch: add --delete-merged <branch>
->    branch: add branch.<name>.deleteMerged opt-out
->    branch: add --dry-run for --delete-merged
-> 
->   Documentation/config/branch.adoc |   7 +
->   Documentation/git-branch.adoc    |  43 +++-
->   builtin/branch.c                 | 184 ++++++++++++---
->   ref-filter.c                     |  70 ++++++
->   ref-filter.h                     |  10 +
->   t/t3200-branch.sh                | 387 +++++++++++++++++++++++++++++++
->   6 files changed, 673 insertions(+), 28 deletions(-)
-> 
-> 
-> base-commit: ea97ad8d017de0c9037451a78008a0fd60abea0c
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2285%2FHaraldNordgren%2Ffetch-prune-local-branches-v15
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2285/HaraldNordgren/fetch-prune-local-branches-v15
-> Pull-Request: https://github.com/git/git/pull/2285
-> 
-> Range-diff vs v14:
-> 
->   1:  7383872f4b ! 1:  da741b5ea7 branch: add --forked filter for --list mode
->       @@ Commit message
->        
->            Add a --forked option to "git branch" list mode that lists only
->            branches whose configured upstream matches <branch>. The argument
->       -    can be a ref (e.g. "origin/main", "master") or a shell glob
->       +    can be a ref (e.g. "origin/main", "master"), a remote name like
->       +    "origin" for the branch its origin/HEAD points at, or a shell glob
->            (e.g. "origin/*"), and may be repeated to widen the filter.
->        
->            It is an ordinary list filter, so it combines with the others:
->       @@ Commit message
->            lists branches forked from origin that are already merged into
->            origin/main, and --no-merged inverts the question.
->        
->       -    This is the building block for --prune-merged, which deletes the
->       +    This is the building block for --delete-merged, which deletes the
->            listed branches once they have landed on their upstream.
->        
->            Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
->       @@ Documentation/git-branch.adoc: superproject's "origin/main", but tracks the subm
->        +`--forked <branch>`::
->        +	Only list branches whose configured upstream matches
->        +	_<branch>_. The argument can be a ref (e.g. `origin/main`,
->       -+	`master`) or a shell-style glob (e.g. `'origin/*'`). The
->       -+	option can be repeated to widen the filter. Implies `--list`.
->       ++	`master`), a remote name like `origin` for the branch its
->       ++	`origin/HEAD` points at, or a shell-style glob (e.g.
->       ++	`'origin/*'`). The option can be repeated to widen the
->       ++	filter. Implies `--list`.
->        +
->         `--points-at <object>`::
->         	Only list branches of _<object>_.
->       @@ t/t3200-branch.sh: test_expect_success 'errors if given a bad branch name' '
->        +	git -C forked-other branch foreign other-base &&
->        +
->        +	git clone forked-upstream forked &&
->       -+	git -C forked remote add other ../forked-other &&
->       -+	git -C forked fetch other &&
->       ++	git -C forked remote add -f other ../forked-other &&
->       ++	git -C forked remote set-head origin one &&
->        +	git -C forked branch local-base &&
->        +	git -C forked branch --track local-one origin/one &&
->        +	git -C forked branch --track local-two origin/two &&
->        +	git -C forked branch --track local-foreign other/foreign &&
->       -+	git -C forked branch detached &&
->       -+	git -C forked branch --track local-trunk local-base
->       ++	git -C forked branch --track local-onbase local-base &&
->       ++
->       ++	git -C forked checkout local-one &&
->       ++	test_commit -C forked --no-tag local-one-work local-one.t &&
->       ++	git -C forked checkout local-foreign &&
->       ++	test_commit -C forked --no-tag local-foreign-work local-foreign.t &&
->       ++	git -C forked checkout --detach
->        +'
->        +
->        +test_expect_success '--forked <upstream-tracking-branch> filters by upstream' '
->       @@ t/t3200-branch.sh: test_expect_success 'errors if given a bad branch name' '
->        +
->        +test_expect_success '--forked <local-branch> matches branches with local upstream' '
->        +	git -C forked branch --forked local-base --format="%(refname:short)" >actual &&
->       -+	echo local-trunk >expect &&
->       ++	echo local-onbase >expect &&
->        +	test_cmp expect actual
->        +'
->        +
->       @@ t/t3200-branch.sh: test_expect_success 'errors if given a bad branch name' '
->        +	git -C forked branch --forked local-base --forked "other/*" --format="%(refname:short)" >actual &&
->        +	cat >expect <<-\EOF &&
->        +	local-foreign
->       -+	local-trunk
->       ++	local-onbase
->        +	EOF
->        +	test_cmp expect actual
->        +'
->       @@ t/t3200-branch.sh: test_expect_success 'errors if given a bad branch name' '
->        +'
->        +
->        +test_expect_success '--forked composes with --no-merged' '
->       -+	test_when_finished "git -C forked checkout detached" &&
->       ++	test_when_finished "git -C forked checkout --detach" &&
->        +	git -C forked checkout local-one &&
->        +	test_commit -C forked local-only &&
->        +	git -C forked branch --forked "origin/*" --no-merged origin/one \
->       @@ t/t3200-branch.sh: test_expect_success 'errors if given a bad branch name' '
->        +	test_must_fail git -C forked branch --forked 2>err &&
->        +	test_grep "requires a value" err
->        +'
->       ++
->       ++test_expect_success '--forked <remote> uses the branch <remote>/HEAD points at' '
->       ++	git -C forked branch --forked origin --format="%(refname:short)" >actual &&
->       ++	echo local-one >expect &&
->       ++	test_cmp expect actual
->       ++'
->       ++
->       ++test_expect_success '--forked narrows a <pattern> argument' '
->       ++	git -C forked branch --forked "origin/*" "local-*" \
->       ++		--format="%(refname:short)" >actual &&
->       ++	cat >expect <<-\EOF &&
->       ++	local-one
->       ++	local-two
->       ++	EOF
->       ++	test_cmp expect actual
->       ++'
->        +
->         test_done
->   2:  7ef9502e01 ! 2:  91c35f10cc branch: let delete_branches warn instead of error on bulk refusal
->       @@ Metadata
->        Author: Harald Nordgren <haraldnordgren@gmail.com>
->        
->         ## Commit message ##
->       -    branch: let delete_branches warn instead of error on bulk refusal
->       +    branch: convert delete_branches() to a flags argument
->        
->       -    Add a warn-only mode to delete_branches() and check_branch_commit()
->       -    so a bulk caller can report branches that are not fully merged as a
->       -    short warning and carry on, rather than erroring with the longer
->       -    "use 'git branch -D'" advice that the plain "git branch -d" path
->       -    emits. Existing callers are unaffected.
->       +    delete_branches() and check_branch_commit() take a pair of int
->       +    booleans (force and quiet) that the next commits would grow further.
->       +    Replace them with a single "unsigned int flags" argument and an
->       +    enum, splitting the bits back into named bool locals so the body
->       +    keeps reading the same named values.
->       +
->       +    No change in behavior.
->        
->            Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
->        
->       @@ builtin/branch.c: static int branch_merged(int kind, const char *name,
->        +enum delete_branch_flags {
->        +	DELETE_BRANCH_FORCE = (1 << 0),
->        +	DELETE_BRANCH_QUIET = (1 << 1),
->       -+	DELETE_BRANCH_WARN_ONLY = (1 << 2),
->        +};
->        +
->         static int check_branch_commit(const char *branchname, const char *refname,
->       @@ builtin/branch.c: static int branch_merged(int kind, const char *name,
->        -			       int kinds, int force)
->        +			       int kinds, unsigned int flags)
->         {
->       -+	int force = flags & DELETE_BRANCH_FORCE;
->       ++	bool force = flags & DELETE_BRANCH_FORCE;
->         	struct commit *rev = lookup_commit_reference(the_repository, oid);
->         	if (!force && !rev) {
->         		error(_("couldn't look up commit object for '%s'"), refname);
->       - 		return -1;
->       - 	}
->       - 	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
->       --		error(_("the branch '%s' is not fully merged"), branchname);
->       --		advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
->       --				  _("If you are sure you want to delete it, "
->       --				  "run 'git branch -D %s'"), branchname);
->       -+		if (flags & DELETE_BRANCH_WARN_ONLY) {
->       -+			warning(_("the branch '%s' is not fully merged"),
->       -+				branchname);
->       -+		} else {
->       -+			error(_("the branch '%s' is not fully merged"),
->       -+			      branchname);
->       -+			advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
->       -+					  _("If you are sure you want to delete it, "
->       -+					  "run 'git branch -D %s'"), branchname);
->       -+		}
->       - 		return -1;
->       - 	}
->       - 	return 0;
->        @@ builtin/branch.c: static void delete_branch_config(const char *branchname)
->         	strbuf_release(&buf);
->         }
->       @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int fo
->         	int i;
->         	int ret = 0;
->         	int remote_branch = 0;
->       -+	int force, quiet;
->       ++	bool force;
->       ++	bool quiet = flags & DELETE_BRANCH_QUIET;
->         	struct strbuf bname = STRBUF_INIT;
->         	enum interpret_branch_kind allowed_interpret;
->         	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
->       @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int fo
->         	branch_name_pos = strcspn(fmt, "%");
->         
->        +	force = flags & DELETE_BRANCH_FORCE;
->       -+	quiet = flags & DELETE_BRANCH_QUIET;
->        +
->         	if (!force)
->         		head_rev = lookup_commit_reference(the_repository, &head_oid);
->       @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int fo
->        +		if (!(ref_flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
->         		    check_branch_commit(bname.buf, name, &oid, head_rev, kinds,
->        -					force)) {
->       --			ret = 1;
->        +					flags)) {
->       -+			if (!(flags & DELETE_BRANCH_WARN_ONLY))
->       -+				ret = 1;
->       + 			ret = 1;
->         			goto next;
->         		}
->         
->   -:  ---------- > 3:  e101dd2886 branch: let delete_branches skip unmerged branches on bulk refusal
->   3:  259113e304 ! 4:  6c3534901a branch: prepare delete_branches for a bulk caller
->       @@ Commit message
->            branch: prepare delete_branches for a bulk caller
->        
->            Teach delete_branches() two new modes for the upcoming
->       -    --prune-merged: one that asks only whether a branch is merged into
->       +    --delete-merged: one that asks only whether a branch is merged into
->            its upstream, without falling back to HEAD when there is no
->            upstream, and one that rehearses the deletions without removing any
->            ref. Existing callers keep their current behavior.
->       @@ builtin/branch.c: static int branch_merged(int kind, const char *name,
->        @@ builtin/branch.c: enum delete_branch_flags {
->         	DELETE_BRANCH_FORCE = (1 << 0),
->         	DELETE_BRANCH_QUIET = (1 << 1),
->       - 	DELETE_BRANCH_WARN_ONLY = (1 << 2),
->       + 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
->        +	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
->        +	DELETE_BRANCH_DRY_RUN = (1 << 4),
->         };
->         
->         static int check_branch_commit(const char *branchname, const char *refname,
->        @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int kinds,
->       - 	int i;
->       - 	int ret = 0;
->       - 	int remote_branch = 0;
->       --	int force, quiet;
->       -+	int force, quiet, dry_run, no_head_fallback;
->       + 	bool force;
->       + 	bool quiet = flags & DELETE_BRANCH_QUIET;
->       + 	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
->       ++	bool dry_run = flags & DELETE_BRANCH_DRY_RUN;
->       ++	bool no_head_fallback = flags & DELETE_BRANCH_NO_HEAD_FALLBACK;
->         	struct strbuf bname = STRBUF_INIT;
->         	enum interpret_branch_kind allowed_interpret;
->         	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
->        @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int kinds,
->         
->         	force = flags & DELETE_BRANCH_FORCE;
->       - 	quiet = flags & DELETE_BRANCH_QUIET;
->       -+	dry_run = flags & DELETE_BRANCH_DRY_RUN;
->       -+	no_head_fallback = flags & DELETE_BRANCH_NO_HEAD_FALLBACK;
->         
->        -	if (!force)
->        +	if (!force && !no_head_fallback)
->   4:  9924373da0 ! 5:  5899013b8f branch: add --prune-merged <branch>
->       @@ Metadata
->        Author: Harald Nordgren <haraldnordgren@gmail.com>
->        
->         ## Commit message ##
->       -    branch: add --prune-merged <branch>
->       +    branch: add --delete-merged <branch>
->        
->       -            git branch --prune-merged <branch>...
->       +            git branch --delete-merged <branch>...
->        
->            deletes the local branches that "--forked <branch>" would list,
->            keeping only those whose tip is reachable from their configured
->       -    upstream: the work has already landed on the upstream they track,
->       +    upstream. The work has already landed on the upstream they track,
->            so the local copy is no longer needed.
->        
->       -    Reachability is read from local refs; nothing is fetched. Run
->       -    "git fetch" first if you want fresh upstream refs.
->       +    Three kinds of branches are not deleted:
->        
->       -    Three kinds of branches are spared:
->       -
->       -      * any branch checked out in any worktree;
->       -      * any branch whose upstream no longer resolves locally, since a
->       -        missing upstream is not by itself a sign of integration;
->       +      * any branch checked out in any worktree
->       +      * any branch whose upstream remote-tracking branch no longer
->       +        exists, since a missing upstream is not by itself a sign of
->       +        integration
->              * any branch whose push destination equals its upstream
->                (<branch>@{push} is the same as <branch>@{upstream}), such as
->                a local "main" that tracks and pushes to "origin/main". Right
->       -        after a pull it just looks "fully merged", so it is left
->       -        alone. Only branches that push somewhere other than their
->       -        upstream, typically topics in a fork workflow, are candidates.
->       +        after a pull it just looks "fully merged", so it is kept. Only
->       +        branches that push somewhere other than their upstream,
->       +        typically topics in a fork workflow, are candidates.
->        
->       -    Branches that are not yet merged into their upstream are reported
->       -    as a short warning and skipped, so one unmerged topic does not
->       -    abort the whole sweep.
->       +    A branch whose work is not yet merged into its upstream is silently
->       +    skipped, so one unmerged topic does not abort the whole sweep.
->        
->            Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
->        
->       @@ Documentation/git-branch.adoc: git branch (-m|-M) [<old-branch>] <new-branch>
->         git branch (-c|-C) [<old-branch>] <new-branch>
->         git branch (-d|-D) [-r] <branch-name>...
->         git branch --edit-description [<branch-name>]
->       -+git branch --prune-merged <branch>...
->       ++git branch --delete-merged <branch>...
->         
->         DESCRIPTION
->         -----------
->       @@ Documentation/git-branch.adoc: This option is only applicable in non-verbose mod
->         	Print the name of the current branch. In detached `HEAD` state,
->         	nothing is printed.
->         
->       -+`--prune-merged <branch>...`::
->       ++`--delete-merged <branch>...`::
->        +	Delete the local branches that `--forked` would list for the
->        +	given _<branch>_ arguments, but only those whose tip is
->        +	reachable from their configured upstream. In other words, the
->        +	work on the branch has already landed on the upstream it
->        +	tracks, so the local copy is no longer needed. Several
->        +	_<branch>_ patterns may be given, e.g. `git branch
->       -+	--prune-merged origin/main 'feature*'`.
->       ++	--delete-merged origin/main 'feature*'`.
->        ++
->       -+Reachability is checked against whatever the upstream refs say
->       -+locally; nothing is fetched. Run `git fetch` first if you want
->       -+the upstream refs refreshed.
->       ++A branch is not deleted when:
->        ++
->       -+A branch is left alone if any of the following holds:
->       -+its upstream no longer resolves locally; it is checked out in any
->       -+worktree; or its push destination (`<branch>@{push}`) equals its
->       -+upstream (`<branch>@{upstream}`), so it cannot be distinguished
->       -+from a freshly pulled trunk that just looks "fully merged".
->       ++--
->       ++* its upstream remote-tracking branch no longer exists,
->       ++* it is checked out in any worktree, or
->       ++* its push destination (`<branch>@{push}`) equals its upstream
->       ++  (`<branch>@{upstream}`), so it cannot be distinguished from a
->       ++  branch that just looks "fully merged" right after a pull.
->       ++--
->        ++
->       -+Branches refused by the "fully merged" safety check are listed as
->       -+warnings and skipped; pass them to `git branch -D` explicitly if
->       -+you want them gone.
->       ++A branch whose work has not yet been merged into its upstream is
->       ++silently skipped. Delete it with `git branch -D` if you want to
->       ++remove it anyway.
->        +
->         `-v`::
->         `-vv`::
->       @@ builtin/branch.c: static const char * const builtin_branch_usage[] = {
->         	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
->         	N_("git branch [<options>] [-r | -a] [--points-at]"),
->         	N_("git branch [<options>] [-r | -a] [--format]"),
->       -+	N_("git branch [<options>] --prune-merged <branch>..."),
->       ++	N_("git branch [<options>] --delete-merged <branch>..."),
->         	NULL
->         };
->         
->       @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const ch
->         	return 0;
->         }
->         
->       -+static int prune_merged_branches(int argc, const char **argv,
->       ++static int delete_merged_branches(int argc, const char **argv,
->        +				 int quiet)
->        +{
->        +	struct ref_store *refs = get_main_ref_store(the_repository);
->        +	struct ref_filter filter = REF_FILTER_INIT;
->       -+	struct ref_array candidates;
->       ++	struct ref_array candidates = { 0 };
->        +	struct strvec deletable = STRVEC_INIT;
->        +	int i, ret = 0;
->        +
->        +	if (!argc)
->       -+		die(_("--prune-merged requires at least one <branch>"));
->       ++		die(_("--delete-merged requires at least one <branch>"));
->        +
->        +	for (i = 0; i < argc; i++)
->        +		if (ref_filter_forked_add(&filter, argv[i]) < 0)
->        +			die(_("'%s' is not a valid branch or pattern"), argv[i]);
->        +
->        +	filter.kind = FILTER_REFS_BRANCHES;
->       -+	memset(&candidates, 0, sizeof(candidates));
->        +	filter_refs(&candidates, &filter, filter.kind);
->        +
->        +	for (i = 0; i < candidates.nr; i++) {
->       @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const ch
->        +		const char *upstream, *push;
->        +
->        +		if (!skip_prefix(full_name, "refs/heads/", &short_name))
->       -+			continue;
->       ++			BUG("filter returned non-branch ref '%s'", full_name);
->        +		if (branch_checked_out(full_name))
->        +			continue;
->        +
->        +		branch = branch_get(short_name);
->       -+		upstream = branch ? branch_get_upstream(branch, NULL) : NULL;
->       ++		upstream = branch_get_upstream(branch, NULL);
->        +		if (!upstream || !refs_ref_exists(refs, upstream))
->        +			continue;
->       -+		push = branch ? branch_get_push(branch, NULL) : NULL;
->       ++		push = branch_get_push(branch, NULL);
->        +		if (!push || !strcmp(push, upstream))
->        +			continue;
->        +
->       @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const ch
->        +	if (deletable.nr)
->        +		ret = delete_branches(deletable.nr, deletable.v,
->        +				      FILTER_REFS_BRANCHES,
->       -+				      DELETE_BRANCH_WARN_ONLY |
->       ++				      DELETE_BRANCH_SKIP_UNMERGED |
->        +				      DELETE_BRANCH_NO_HEAD_FALLBACK |
->        +				      (quiet ? DELETE_BRANCH_QUIET : 0));
->        +
->       @@ builtin/branch.c: int cmd_branch(int argc,
->         	/* possible actions */
->         	int delete = 0, rename = 0, copy = 0, list = 0,
->         	    unset_upstream = 0, show_current = 0, edit_description = 0;
->       -+	int prune_merged = 0;
->       ++	int delete_merged = 0;
->         	const char *new_upstream = NULL;
->         	int noncreate_actions = 0;
->         	/* possible options */
->       @@ builtin/branch.c: int cmd_branch(int argc,
->         		OPT_BOOL(0, "create-reflog", &reflog, N_("create the branch's reflog")),
->         		OPT_BOOL(0, "edit-description", &edit_description,
->         			 N_("edit the description for the branch")),
->       -+		OPT_BOOL(0, "prune-merged", &prune_merged,
->       -+			N_("delete local branches whose upstream matches <branch> and is merged")),
->       ++		OPT_BOOL(0, "delete-merged", &delete_merged,
->       ++			N_("delete local branches whose upstream matches <branch> and are merged")),
->         		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
->         		OPT_MERGED(&filter, N_("print only branches that are merged")),
->         		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
->       @@ builtin/branch.c: int cmd_branch(int argc,
->         
->         	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
->        -	    !show_current && !unset_upstream && argc == 0)
->       -+	    !show_current && !unset_upstream && !prune_merged &&
->       ++	    !show_current && !unset_upstream && !delete_merged &&
->        +	    argc == 0)
->         		list = 1;
->         
->       @@ builtin/branch.c: int cmd_branch(int argc,
->         	noncreate_actions = !!delete + !!rename + !!copy + !!new_upstream +
->         			    !!show_current + !!list + !!edit_description +
->        -			    !!unset_upstream;
->       -+			    !!unset_upstream + !!prune_merged;
->       ++			    !!unset_upstream + !!delete_merged;
->         	if (noncreate_actions > 1)
->         		usage_with_options(builtin_branch_usage, options);
->         
->       @@ builtin/branch.c: int cmd_branch(int argc,
->         				      (delete > 1 ? DELETE_BRANCH_FORCE : 0) |
->         				      (quiet ? DELETE_BRANCH_QUIET : 0));
->         		goto out;
->       -+	} else if (prune_merged) {
->       -+		ret = prune_merged_branches(argc, argv, quiet);
->       ++	} else if (delete_merged) {
->       ++		ret = delete_merged_branches(argc, argv, quiet);
->        +		goto out;
->         	} else if (show_current) {
->         		print_current_branch_name();
->         		ret = 0;
->        
->         ## t/t3200-branch.sh ##
->       -@@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->       - 	test_grep "requires a value" err
->       +@@ t/t3200-branch.sh: test_expect_success '--forked narrows a <pattern> argument' '
->       + 	test_cmp expect actual
->         '
->         
->       -+test_expect_success '--prune-merged: setup' '
->       ++test_expect_success '--delete-merged: setup' '
->        +	test_create_repo pm-upstream &&
->        +	test_commit -C pm-upstream base &&
->        +	git -C pm-upstream checkout -b next &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	test_create_repo pm-fork
->        +'
->        +
->       -+test_expect_success '--prune-merged deletes branches integrated into upstream' '
->       ++test_expect_success '--delete-merged deletes branches integrated into upstream' '
->        +	test_when_finished "rm -rf pm-merged" &&
->        +	git clone pm-upstream pm-merged &&
->        +	git -C pm-merged remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-merged branch two two-commit &&
->        +	git -C pm-merged branch --set-upstream-to=origin/next two &&
->        +
->       -+	git -C pm-merged branch --prune-merged "origin/*" &&
->       ++	git -C pm-merged branch --delete-merged "origin/*" &&
->        +
->        +	test_must_fail git -C pm-merged rev-parse --verify refs/heads/one &&
->        +	test_must_fail git -C pm-merged rev-parse --verify refs/heads/two
->        +'
->        +
->       -+test_expect_success '--prune-merged accepts a literal upstream' '
->       ++test_expect_success '--delete-merged accepts a literal upstream' '
->        +	test_when_finished "rm -rf pm-literal" &&
->        +	git clone pm-upstream pm-literal &&
->        +	git -C pm-literal remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-literal branch one one-commit &&
->        +	git -C pm-literal branch --set-upstream-to=origin/next one &&
->        +
->       -+	git -C pm-literal branch --prune-merged origin/next &&
->       ++	git -C pm-literal branch --delete-merged origin/next &&
->        +
->        +	test_must_fail git -C pm-literal rev-parse --verify refs/heads/one
->        +'
->        +
->       -+test_expect_success '--prune-merged unions multiple <branch> arguments' '
->       ++test_expect_success '--delete-merged unions multiple <branch> arguments' '
->        +	test_when_finished "rm -rf pm-union" &&
->        +	git clone pm-upstream pm-union &&
->        +	git -C pm-union remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-union branch --set-upstream-to=origin/main two &&
->        +	git -C pm-union checkout --detach &&
->        +
->       -+	git -C pm-union branch --prune-merged origin/next origin/main &&
->       ++	git -C pm-union branch --delete-merged origin/next origin/main &&
->        +
->        +	test_must_fail git -C pm-union rev-parse --verify refs/heads/one &&
->        +	test_must_fail git -C pm-union rev-parse --verify refs/heads/two
->        +'
->        +
->       -+test_expect_success '--prune-merged accepts a local upstream' '
->       ++test_expect_success '--delete-merged accepts a local upstream' '
->        +	test_when_finished "rm -rf pm-local" &&
->        +	git clone pm-upstream pm-local &&
->        +	git -C pm-local remote add fork ../pm-fork &&
->        +	test_config -C pm-local remote.pushDefault fork &&
->        +	test_config -C pm-local push.default current &&
->       -+	git -C pm-local checkout -b trunk &&
->       ++	git -C pm-local checkout -b mainline &&
->        +	git -C pm-local branch one one-commit &&
->       -+	git -C pm-local branch --set-upstream-to=trunk one &&
->       ++	git -C pm-local branch --set-upstream-to=mainline one &&
->        +	git -C pm-local merge --ff-only one-commit &&
->        +
->       -+	git -C pm-local branch --prune-merged trunk &&
->       ++	git -C pm-local branch --delete-merged mainline &&
->        +
->        +	test_must_fail git -C pm-local rev-parse --verify refs/heads/one
->        +'
->        +
->       -+test_expect_success '--prune-merged warns instead of erroring on un-integrated commits' '
->       ++test_expect_success '--delete-merged silently skips un-integrated commits' '
->        +	test_when_finished "rm -rf pm-unmerged" &&
->        +	git clone pm-upstream pm-unmerged &&
->        +	git -C pm-unmerged remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	test_commit -C pm-unmerged local-only &&
->        +	git -C pm-unmerged checkout - &&
->        +
->       -+	git -C pm-unmerged branch --prune-merged "origin/*" 2>err &&
->       -+	test_grep "not fully merged" err &&
->       -+	test_grep ! "If you are sure you want to delete it" err &&
->       ++	git -C pm-unmerged branch --delete-merged "origin/*" 2>err &&
->       ++	test_grep ! "not fully merged" err &&
->        +	git -C pm-unmerged rev-parse --verify refs/heads/wip
->        +'
->        +
->       -+test_expect_success '--prune-merged is silent about not-merged-to-HEAD' '
->       ++test_expect_success '--delete-merged is silent about not-merged-to-HEAD' '
->        +	test_when_finished "rm -rf pm-nohead" &&
->        +	git clone pm-upstream pm-nohead &&
->        +	git -C pm-nohead remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-nohead branch topic one-commit &&
->        +	git -C pm-nohead branch --set-upstream-to=origin/next topic &&
->        +
->       -+	git -C pm-nohead branch --prune-merged "origin/*" 2>err &&
->       ++	git -C pm-nohead branch --delete-merged "origin/*" 2>err &&
->        +
->        +	test_grep ! "not yet merged to HEAD" err &&
->        +	test_must_fail git -C pm-nohead rev-parse --verify refs/heads/topic
->        +'
->        +
->       -+test_expect_success '--prune-merged skips branches whose upstream is gone' '
->       ++test_expect_success '--delete-merged skips branches whose upstream is gone' '
->        +	test_when_finished "rm -rf pm-upstream-gone" &&
->        +	git clone pm-upstream pm-upstream-gone &&
->        +	git -C pm-upstream-gone remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-upstream-gone branch --set-upstream-to=origin/next one &&
->        +
->        +	git -C pm-upstream-gone update-ref -d refs/remotes/origin/next &&
->       -+	git -C pm-upstream-gone branch --prune-merged "origin/*" &&
->       ++	git -C pm-upstream-gone branch --delete-merged "origin/*" &&
->        +
->        +	git -C pm-upstream-gone rev-parse --verify refs/heads/one
->        +'
->        +
->       -+test_expect_success '--prune-merged never deletes the checked-out branch' '
->       ++test_expect_success '--delete-merged never deletes the checked-out branch' '
->        +	test_when_finished "rm -rf pm-head" &&
->        +	git clone pm-upstream pm-head &&
->        +	git -C pm-head remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-head checkout -b one one-commit &&
->        +	git -C pm-head branch --set-upstream-to=origin/next one &&
->        +
->       -+	git -C pm-head branch --prune-merged "origin/*" &&
->       ++	git -C pm-head branch --delete-merged "origin/*" &&
->        +
->        +	git -C pm-head rev-parse --verify refs/heads/one
->        +'
->        +
->       -+test_expect_success '--prune-merged spares branches that push back to their upstream' '
->       ++test_expect_success '--delete-merged spares branches that push back to their upstream' '
->        +	test_when_finished "rm -rf pm-push-eq" &&
->        +	git clone pm-upstream pm-push-eq &&
->        +	git -C pm-push-eq checkout --detach &&
->        +
->       -+	git -C pm-push-eq branch --prune-merged "origin/*" &&
->       ++	git -C pm-push-eq branch --delete-merged "origin/*" &&
->        +
->        +	git -C pm-push-eq rev-parse --verify refs/heads/main
->        +'
->        +
->       -+test_expect_success '--prune-merged spares a per-branch pushRemote==upstream remote' '
->       ++test_expect_success '--delete-merged spares a per-branch pushRemote==upstream remote' '
->        +	test_when_finished "rm -rf pm-push-branch" &&
->        +	git clone pm-upstream pm-push-branch &&
->        +	git -C pm-push-branch remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	test_config -C pm-push-branch branch.main.pushRemote origin &&
->        +	git -C pm-push-branch checkout --detach &&
->        +
->       -+	git -C pm-push-branch branch --prune-merged "origin/*" &&
->       ++	git -C pm-push-branch branch --delete-merged "origin/*" &&
->        +
->        +	git -C pm-push-branch rev-parse --verify refs/heads/main
->        +'
->        +
->       -+test_expect_success '--prune-merged prunes when @{push} differs from @{upstream}' '
->       ++test_expect_success '--delete-merged prunes when @{push} differs from @{upstream}' '
->        +	test_when_finished "rm -rf pm-push-diff" &&
->        +	git clone pm-upstream pm-push-diff &&
->        +	git -C pm-push-diff remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-push-diff branch --set-upstream-to=origin/next topic &&
->        +	git -C pm-push-diff checkout --detach &&
->        +
->       -+	git -C pm-push-diff branch --prune-merged "origin/*" &&
->       ++	git -C pm-push-diff branch --delete-merged "origin/*" &&
->        +
->        +	test_must_fail git -C pm-push-diff rev-parse --verify refs/heads/topic
->        +'
->        +
->       -+test_expect_success '--prune-merged requires at least one <branch>' '
->       -+	test_must_fail git -C forked branch --prune-merged 2>err &&
->       ++test_expect_success '--delete-merged requires at least one <branch>' '
->       ++	test_must_fail git -C forked branch --delete-merged 2>err &&
->        +	test_grep "requires at least one <branch>" err
->        +'
->        +
->       -+test_expect_success '--prune-merged takes positional <branch> arguments' '
->       ++test_expect_success '--delete-merged takes positional <branch> arguments' '
->        +	test_when_finished "rm -rf pm-positional" &&
->        +	git clone pm-upstream pm-positional &&
->        +	git -C pm-positional remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--forked requires a value' '
->        +	git -C pm-positional branch --set-upstream-to=origin/main two &&
->        +	git -C pm-positional checkout --detach &&
->        +
->       -+	git -C pm-positional branch --prune-merged origin/next origin/main &&
->       ++	git -C pm-positional branch --delete-merged origin/next origin/main &&
->        +
->        +	test_must_fail git -C pm-positional rev-parse --verify refs/heads/one &&
->        +	test_must_fail git -C pm-positional rev-parse --verify refs/heads/two
->   5:  d691d5051b ! 6:  72aaca0666 branch: add branch.<name>.pruneMerged opt-out
->       @@ Metadata
->        Author: Harald Nordgren <haraldnordgren@gmail.com>
->        
->         ## Commit message ##
->       -    branch: add branch.<name>.pruneMerged opt-out
->       +    branch: add branch.<name>.deleteMerged opt-out
->        
->       -    Setting branch.<name>.pruneMerged=false exempts that branch from
->       -    "git branch --prune-merged", which is useful for a topic you want
->       +    Setting branch.<name>.deleteMerged=false exempts that branch from
->       +    "git branch --delete-merged", which is useful for a topic you want
->            to keep developing after an early round of it has been merged
->            upstream. Unless --quiet is given, each skip is reported so the
->            user knows why their topic was kept.
->       @@ Documentation/config/branch.adoc: for details).
->         	automatically added to the `format-patch` cover letter or
->         	`request-pull` summary.
->        +
->       -+`branch.<name>.pruneMerged`::
->       ++`branch.<name>.deleteMerged`::
->        +	If set to `false`, branch _<name>_ is exempt from
->       -+	`git branch --prune-merged`.  Useful for a topic branch you
->       ++	`git branch --delete-merged`.  Useful for a topic branch you
->        +	intend to develop further after an initial round has been
->        +	merged upstream.  Defaults to true.  Explicit deletion via
->        +	`git branch -d` is unaffected.
->        
->         ## Documentation/git-branch.adoc ##
->       -@@ Documentation/git-branch.adoc: the upstream refs refreshed.
->       +@@ Documentation/git-branch.adoc: A branch is not deleted when:
->         +
->       - A branch is left alone if any of the following holds:
->       - its upstream no longer resolves locally; it is checked out in any
->       --worktree; or its push destination (`<branch>@{push}`) equals its
->       -+worktree; its push destination (`<branch>@{push}`) equals its
->       - upstream (`<branch>@{upstream}`), so it cannot be distinguished
->       --from a freshly pulled trunk that just looks "fully merged".
->       -+from a freshly pulled trunk that just looks "fully merged"; or
->       -+`branch.<name>.pruneMerged` is set to `false`.
->       + --
->       + * its upstream remote-tracking branch no longer exists,
->       +-* it is checked out in any worktree, or
->       ++* it is checked out in any worktree,
->       + * its push destination (`<branch>@{push}`) equals its upstream
->       +   (`<branch>@{upstream}`), so it cannot be distinguished from a
->       +-  branch that just looks "fully merged" right after a pull.
->       ++  branch that just looks "fully merged" right after a pull, or
->       ++* `branch.<name>.deleteMerged` is set to `false`.
->       + --
->         +
->       - Branches refused by the "fully merged" safety check are listed as
->       - warnings and skipped; pass them to `git branch -D` explicitly if
->       + A branch whose work has not yet been merged into its upstream is
->        
->         ## builtin/branch.c ##
->       -@@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
->       +@@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
->         		const char *short_name;
->         		struct branch *branch;
->         		const char *upstream, *push;
->       @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
->        +		int opt_out;
->         
->         		if (!skip_prefix(full_name, "refs/heads/", &short_name))
->       - 			continue;
->       -@@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
->       + 			BUG("filter returned non-branch ref '%s'", full_name);
->       +@@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
->         		if (!push || !strcmp(push, upstream))
->         			continue;
->         
->       -+		strbuf_addf(&key, "branch.%s.prunemerged", short_name);
->       ++		strbuf_addf(&key, "branch.%s.deletemerged", short_name);
->        +		if (!repo_config_get_bool(the_repository, key.buf, &opt_out) &&
->        +		    !opt_out) {
->        +			if (!quiet)
->        +				fprintf(stderr,
->       -+					_("Skipping '%s' (branch.%s.pruneMerged is false)\n"),
->       ++					_("Skipping '%s' (branch.%s.deleteMerged is false)\n"),
->        +					short_name, short_name);
->        +			strbuf_release(&key);
->        +			continue;
->       @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
->         
->        
->         ## t/t3200-branch.sh ##
->       -@@ t/t3200-branch.sh: test_expect_success '--prune-merged takes positional <branch> arguments' '
->       +@@ t/t3200-branch.sh: test_expect_success '--delete-merged takes positional <branch> arguments' '
->         	test_must_fail git -C pm-positional rev-parse --verify refs/heads/two
->         '
->         
->       -+test_expect_success '--prune-merged honours branch.<name>.pruneMerged=false' '
->       ++test_expect_success '--delete-merged honours branch.<name>.deleteMerged=false' '
->        +	test_when_finished "rm -rf pm-optout" &&
->        +	git clone pm-upstream pm-optout &&
->        +	git -C pm-optout remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success '--prune-merged takes positional <branch>
->        +	git -C pm-optout branch --set-upstream-to=origin/next one &&
->        +	git -C pm-optout branch two two-commit &&
->        +	git -C pm-optout branch --set-upstream-to=origin/next two &&
->       -+	test_config -C pm-optout branch.one.pruneMerged false &&
->       ++	test_config -C pm-optout branch.one.deleteMerged false &&
->        +
->       -+	git -C pm-optout branch --prune-merged "origin/*" 2>err &&
->       ++	git -C pm-optout branch --delete-merged "origin/*" 2>err &&
->        +
->        +	git -C pm-optout rev-parse --verify refs/heads/one &&
->        +	test_must_fail git -C pm-optout rev-parse --verify refs/heads/two &&
->        +	test_grep "Skipping .one." err
->        +'
->        +
->       -+test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
->       ++test_expect_success 'branch -d still deletes a deleteMerged=false branch' '
->        +	test_when_finished "rm -rf pm-optout-d" &&
->        +	git clone pm-upstream pm-optout-d &&
->        +	git -C pm-optout-d branch one one-commit &&
->        +	git -C pm-optout-d branch --set-upstream-to=origin/next one &&
->       -+	test_config -C pm-optout-d branch.one.pruneMerged false &&
->       ++	test_config -C pm-optout-d branch.one.deleteMerged false &&
->        +
->        +	git -C pm-optout-d branch -d one &&
->        +	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
->   6:  ede8c61729 ! 7:  7b2b01b988 branch: add --dry-run for --prune-merged
->       @@ Metadata
->        Author: Harald Nordgren <haraldnordgren@gmail.com>
->        
->         ## Commit message ##
->       -    branch: add --dry-run for --prune-merged
->       +    branch: add --dry-run for --delete-merged
->        
->       -    With --dry-run, --prune-merged prints the local branches it would
->       +    With --dry-run, --delete-merged prints the local branches it would
->            delete, one "Would delete branch <name>" line each, and exits
->            without touching any ref. The same filtering applies, so the output
->            is exactly the set that the real run would delete.
->        
->       -    --dry-run is only meaningful together with --prune-merged and is
->       +    --dry-run is only meaningful together with --delete-merged and is
->            rejected otherwise.
->        
->            Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
->       @@ Documentation/git-branch.adoc: git branch (-m|-M) [<old-branch>] <new-branch>
->         git branch (-c|-C) [<old-branch>] <new-branch>
->         git branch (-d|-D) [-r] <branch-name>...
->         git branch --edit-description [<branch-name>]
->       --git branch --prune-merged <branch>...
->       -+git branch [--dry-run] --prune-merged <branch>...
->       +-git branch --delete-merged <branch>...
->       ++git branch [--dry-run] --delete-merged <branch>...
->         
->         DESCRIPTION
->         -----------
->       -@@ Documentation/git-branch.adoc: Branches refused by the "fully merged" safety check are listed as
->       - warnings and skipped; pass them to `git branch -D` explicitly if
->       - you want them gone.
->       +@@ Documentation/git-branch.adoc: A branch whose work has not yet been merged into its upstream is
->       + silently skipped. Delete it with `git branch -D` if you want to
->       + remove it anyway.
->         
->        +`--dry-run`::
->       -+	With `--prune-merged`, print which branches would be
->       ++	With `--delete-merged`, print which branches would be
->        +	deleted and exit without touching any ref.  Useful for
->        +	sanity-checking a wide pattern like `'origin/*'` before
->        +	committing to the deletion.
->       @@ builtin/branch.c
->        @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const char *arg, int unset
->         }
->         
->       - static int prune_merged_branches(int argc, const char **argv,
->       + static int delete_merged_branches(int argc, const char **argv,
->        -				 int quiet)
->        +				 int quiet, int dry_run)
->         {
->         	struct ref_store *refs = get_main_ref_store(the_repository);
->         	struct ref_filter filter = REF_FILTER_INIT;
->       -@@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
->       +@@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
->         				      FILTER_REFS_BRANCHES,
->       - 				      DELETE_BRANCH_WARN_ONLY |
->       + 				      DELETE_BRANCH_SKIP_UNMERGED |
->         				      DELETE_BRANCH_NO_HEAD_FALLBACK |
->        -				      (quiet ? DELETE_BRANCH_QUIET : 0));
->        +				      (quiet ? DELETE_BRANCH_QUIET : 0) |
->       @@ builtin/branch.c: static int prune_merged_branches(int argc, const char **argv,
->        @@ builtin/branch.c: int cmd_branch(int argc,
->         	int delete = 0, rename = 0, copy = 0, list = 0,
->         	    unset_upstream = 0, show_current = 0, edit_description = 0;
->       - 	int prune_merged = 0;
->       + 	int delete_merged = 0;
->        +	int dry_run = 0;
->         	const char *new_upstream = NULL;
->         	int noncreate_actions = 0;
->         	/* possible options */
->        @@ builtin/branch.c: int cmd_branch(int argc,
->         			 N_("edit the description for the branch")),
->       - 		OPT_BOOL(0, "prune-merged", &prune_merged,
->       - 			N_("delete local branches whose upstream matches <branch> and is merged")),
->       + 		OPT_BOOL(0, "delete-merged", &delete_merged,
->       + 			N_("delete local branches whose upstream matches <branch> and are merged")),
->        +		OPT_BOOL(0, "dry-run", &dry_run,
->       -+			N_("with --prune-merged, only print which branches would be deleted")),
->       ++			N_("with --delete-merged, only print which branches would be deleted")),
->         		OPT__FORCE(&force, N_("force creation, move/rename, deletion"), PARSE_OPT_NOCOMPLETE),
->         		OPT_MERGED(&filter, N_("print only branches that are merged")),
->         		OPT_NO_MERGED(&filter, N_("print only branches that are not merged")),
->       @@ builtin/branch.c: int cmd_branch(int argc,
->         	if (noncreate_actions > 1)
->         		usage_with_options(builtin_branch_usage, options);
->         
->       -+	if (dry_run && !prune_merged)
->       -+		die(_("--dry-run requires --prune-merged"));
->       ++	if (dry_run && !delete_merged)
->       ++		die(_("--dry-run requires --delete-merged"));
->        +
->         	if (recurse_submodules_explicit) {
->         		if (!submodule_propagate_branches)
->       @@ builtin/branch.c: int cmd_branch(int argc,
->        @@ builtin/branch.c: int cmd_branch(int argc,
->         				      (quiet ? DELETE_BRANCH_QUIET : 0));
->         		goto out;
->       - 	} else if (prune_merged) {
->       --		ret = prune_merged_branches(argc, argv, quiet);
->       -+		ret = prune_merged_branches(argc, argv, quiet, dry_run);
->       + 	} else if (delete_merged) {
->       +-		ret = delete_merged_branches(argc, argv, quiet);
->       ++		ret = delete_merged_branches(argc, argv, quiet, dry_run);
->         		goto out;
->         	} else if (show_current) {
->         		print_current_branch_name();
->        
->         ## t/t3200-branch.sh ##
->       -@@ t/t3200-branch.sh: test_expect_success 'branch -d still deletes a pruneMerged=false branch' '
->       +@@ t/t3200-branch.sh: test_expect_success 'branch -d still deletes a deleteMerged=false branch' '
->         	test_must_fail git -C pm-optout-d rev-parse --verify refs/heads/one
->         '
->         
->       -+test_expect_success '--prune-merged --dry-run lists but does not delete' '
->       ++test_expect_success '--delete-merged --dry-run lists but does not delete' '
->        +	test_when_finished "rm -rf pm-dry" &&
->        +	git clone pm-upstream pm-dry &&
->        +	git -C pm-dry remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success 'branch -d still deletes a pruneMerged=fa
->        +	git -C pm-dry branch two two-commit &&
->        +	git -C pm-dry branch --set-upstream-to=origin/next two &&
->        +
->       -+	git -C pm-dry branch --dry-run --prune-merged "origin/*" >actual &&
->       ++	git -C pm-dry branch --dry-run --delete-merged "origin/*" >actual &&
->        +	test_grep "Would delete branch one " actual &&
->        +	test_grep "Would delete branch two " actual &&
->        +
->       @@ t/t3200-branch.sh: test_expect_success 'branch -d still deletes a pruneMerged=fa
->        +	git -C pm-dry rev-parse --verify refs/heads/two
->        +'
->        +
->       -+test_expect_success '--prune-merged --dry-run only lists branches the live run would delete' '
->       ++test_expect_success '--delete-merged --dry-run only lists branches the live run would delete' '
->        +	test_when_finished "rm -rf pm-dry-mixed" &&
->        +	git clone pm-upstream pm-dry-mixed &&
->        +	git -C pm-dry-mixed remote add fork ../pm-fork &&
->       @@ t/t3200-branch.sh: test_expect_success 'branch -d still deletes a pruneMerged=fa
->        +	git -C pm-dry-mixed branch merged one-commit &&
->        +	git -C pm-dry-mixed branch --set-upstream-to=origin/next merged &&
->        +
->       -+	git -C pm-dry-mixed branch --dry-run --prune-merged "origin/*" >out &&
->       ++	git -C pm-dry-mixed branch --dry-run --delete-merged "origin/*" >out &&
->        +	test_grep "Would delete branch merged" out &&
->        +	test_grep ! "Would delete branch wip" out &&
->        +	git -C pm-dry-mixed rev-parse --verify refs/heads/wip &&
->        +	git -C pm-dry-mixed rev-parse --verify refs/heads/merged
->        +'
->        +
->       -+test_expect_success '--dry-run without --prune-merged is rejected' '
->       ++test_expect_success '--dry-run without --delete-merged is rejected' '
->        +	test_must_fail git -C forked branch --dry-run 2>err &&
->       -+	test_grep "requires --prune-merged" err
->       ++	test_grep "requires --delete-merged" err
->        +'
->        +
->         test_done
-> 
-
+base-commit: 0fae78c9d55efe705877ea537fe42c59164ccd94
+-- 
+gitgitgadget
