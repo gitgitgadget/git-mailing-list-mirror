@@ -1,39 +1,39 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9383BB66B
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 16:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D12648B39A
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 16:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781715058; cv=none; b=RyLJnoIOn7XGrrU9m7Zyu9tNq/80btzosqSDCOFaM8AXv4ZNrzsPcom8I4Ps+/WBTkMrj7dP3Te+/YTzceDl7+Hm0WSsLa7Am4tUFkfiBcAsKVH6nUSrn4zWo+FLnbXlgp3CdL8kQf7ZsJMhohRcj+TyZ3fVLaQS+akPPJ+p2QQ=
+	t=1781715119; cv=none; b=TYVs06ECPBNrB9dLjAXtQGK3DuPnnMZVIeZOJwCnUcOBNqOvW4nyGsRuAsMKr63D9iGfMJ98smCrI+E1D7AUbzTeZnMty2kIpMqquhpYEH2gacBLaskW+BItM0Jh6Fotio4LVZsEE3PUs+sqcnbLgq8ydMgS3K2wVIrBwXlD6tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781715058; c=relaxed/simple;
-	bh=HKVQO6zBcnPOYCzKMhEkKYu++2QPayaKe1jSL6IfQzk=;
+	s=arc-20240116; t=1781715119; c=relaxed/simple;
+	bh=jOuhxG8dWuanBFc9InpS3NTklAUJD52OBqdCJVxVsl0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SqBPqwN6glmhqiGe3Ec9fx7LNFPQiBlTyIBGqG5qCJukEnh5TYvAB518lOWP80vd3kR46/MWxwiNDIjqyWiC+jigIUcLugNNudai9Y57Qu6WxGdGADVMv2rVFm3V9NTs+SqUFaCmls7sSOOtQZmCqfxjUKFOnY6/0VzE/5gg/Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=FtWPHg2f; arc=none smtp.client-ip=91.218.175.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=gI4B3WIEW2Fc5OrK7QZD3NdjFci3SK6e5M6xXmN6ox06CN3XPs6SO6PlwBgxLYxKNQrx3XgWXghHh+iI2oISpCvLjKQ2ixS8h2wFDE0xiZbr8KN+2GHXs2t0HVQE+JiTq7ezFT9i8kHj+vhQJZU4eG6x0WmYFiFm2EL+l3xBzQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=PM4nT2t4; arc=none smtp.client-ip=95.215.58.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="FtWPHg2f"
-Date: Thu, 18 Jun 2026 00:50:40 +0800
+	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="PM4nT2t4"
+Date: Thu, 18 Jun 2026 00:51:34 +0800
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1781715055;
+	t=1781715111;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Cpxwt+JmaqCCk5YLmdjeKOS2An2pJB74OGZFaMf1Plc=;
-	b=FtWPHg2fuXem2sSy7aCB3QISJE1VaulrVJQJxR4xG0echQO8B4NAHmMUxOcp+suFuEtaC7
-	WLvZ2eHIyvm4ArINS2cpB5E2Ca+qLfQDofpXCVSM1jbqkdUTgViZhpu7fHl/VfC7zFpV0n
-	S0dxukqYKDTEbs1lXb06VfUCHLUBQCQwf6OwCIXUGEOjPL4/fIxIJYguXN/TKNHpCJgzAL
-	8ywXVzkh9w2uAnOKrvmJHJorHyoZlJ9bNEg6HGN9EfOxdPL5K1R4VH5ERWQgGsuuteLseh
-	0VpUXt7PhRxeQ8LogjcMtmMVo3GEaHq63eD0q6rHqioltItnsjDgolGXJsyYwQ==
+	bh=MfAfpCIepdA8BYIcDsRyvjw6MZaKmIdWnM1AweW6gYY=;
+	b=PM4nT2t4jQStDFgDflRFS0e6Y2932Ka5cDh+SOVdE0L36FDbsmWcF5BdqXvPsb7VErybl6
+	2Zb+gjxcOnBlvD0euhjTdODpzdWyKjaVQN49vj0xMhiNHgz5hyiobFI+MOvBIElB+4KUZM
+	lt/zFSTc11hB/9dUg3oyTYZtEkrrQ7+YvqGaWkS2FdsOaTfW2s5CMO2LtIJLaB381/9Z45
+	EmERh4vlJHZuDML8Dvn8eqf+sYPc1JvXrC587l1sfOVUxrb/B6XaY9cle2q/qr0gO8kGYr
+	s46rX3Yev1nJFeym7Hy7mEiHb2dhAVHug7EUzV5AhgFD6BXivfDt1URDAWBj5g==
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Weijie Yuan <wy@wyuan.org>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com, ps@pks.im
-Subject: [PATCH v2 1/2] doc: encourage review replies before rerolling
-Message-ID: <4bb1efe71da5a9a16860a1fc4d22ef9ceab83ca2.1781714757.git.wy@wyuan.org>
+Subject: [PATCH v2 2/2] doc: advise batching patch rerolls
+Message-ID: <496a08c74ddd9368587d032da7117520af1478ae.1781714757.git.wy@wyuan.org>
 References: <cover.1781358364.git.wy@wyuan.org>
  <cover.1781714757.git.wy@wyuan.org>
 Precedence: bulk
@@ -47,71 +47,82 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781714757.git.wy@wyuan.org>
 X-Migadu-Flow: FLOW_OUT
 
-Review feedback should not be answered only by sending a new patch
-version. Encourage contributors to discuss their planned response in the
-mailing-list thread before rerolling.
+Contributors often need guidance on how quickly to send later iterations
+of a patch series. Add a rough default of no more than one new version
+of the same series per day so feedback can be batched and reviewers have
+time to comment regardless of their time zones.
 
-This makes the author's reasoning explicit before the next version is
-prepared, instead of forcing reviewers to infer it from the rerolled
-patches. It also encourages more direct social interaction between
-contributors and helps foster a more collaborative review process.
+Mention factors that can affect the timing, such as series size, review
+depth, substantial rework, and how close the topic is to being accepted.
+Also point out that avoiding rapid rerolls encourages authors to polish
+each version before sending it, so reviewers can focus on substantial
+issues.
 
+Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Weijie Yuan <wy@wyuan.org>
 ---
- Documentation/MyFirstContribution.adoc | 12 +++++++-----
- Documentation/SubmittingPatches        | 12 +++++++++---
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ Documentation/MyFirstContribution.adoc | 20 ++++++++++++++++++++
+ Documentation/SubmittingPatches        | 12 ++++++++++--
+ 2 files changed, 30 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index b9fdefce02..00704ab91e 100644
+index 00704ab91e..f8f5f4e320 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -1337,11 +1337,13 @@ fewer mistakes were the only one they would need to review.
- After a few days, you will hopefully receive a reply to your patchset with some
- comments. Woohoo! Now you can get back to work.
+@@ -1330,6 +1330,26 @@ previous one" patches over 2 days), reviewers would strongly prefer if a
+ single polished version came 2 days later instead, and that version with
+ fewer mistakes were the only one they would need to review.
  
--It's good manners to reply to each comment, notifying the reviewer that you have
--made the change suggested, feel the original is better, or that the comment
--inspired you to do something a new way which is superior to both the original
--and the suggested change. This way reviewers don't need to inspect your v2 to
--figure out whether you implemented their comment or not.
-+It's good manners to reply to each comment in the mailing list discussion
-+instead of letting the next version of your patch be your only response. Tell
-+the reviewer whether you plan to make the suggested change, keep the original,
-+or pursue a different approach. This way reviewers can respond to your reasoning
-+before you spend time preparing a version they may not agree with, and later do
-+not need to inspect your v2 to figure out whether you implemented their comment
-+or not.
++This consideration applies not only when going from the initial patch to v2,
++but also to later iterations of the same series. There is no fixed rule for how
++long to wait before sending a new version. A useful default is to send at most
++one new version of the same patch series per day. This gives multiple reviewers
++time to comment, gives reviewers across time zones a fair chance to
++participate, lets you batch feedback together, and gives you time to think
++through the comments you received. Knowing that you should not immediately send
++another version also encourages you to review the patches more carefully before
++sending them, catch small mistakes such as typos and off-by-one errors
++yourself, and let reviewers spend more of their attention on design,
++algorithms, and other substantial issues.
++
++The right timing depends on the topic and the feedback. Larger series usually
++need more review time. If the only comments so far are minor, such as typo
++fixes, it often makes sense to wait a little longer in case deeper reviews are
++still coming. If the comments require substantial rework, sending a new version
++sooner may save reviewers from spending time on a version you already know will
++change significantly. If the topic is close to being accepted and the remaining
++comments are small, a quicker new version may also be fine.
++
  
- Reviewers may ask you about what you wrote in the patchset, either in
- the proposed commit log message or in the changes themselves.  You
+ [[reviewing]]
+ === Responding to Reviews
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index f042bb5aaf..6c1e1f6423 100644
+index 6c1e1f6423..13f180a8bd 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -48,8 +48,12 @@ area.
- 
- . You get comments and suggestions for improvements.  You may even get
-   them in an "on top of your change" patch form.  You are expected to
--  respond to them with "Reply-All" on the mailing list, while taking
--  them into account while preparing an updated set of patches.
-+  respond to them with "Reply-All" on the mailing list, instead of
-+  letting an updated patch series be your only response.  Tell
-+  reviewers which suggestions you plan to use, which ones you disagree
-+  with, and when a comment leads you to consider a different approach.
-+  Use these replies and any follow-up discussion as input when
-+  preparing an updated set of patches.
- +
+@@ -58,7 +58,14 @@ area.
  It is often beneficial to allow some time for reviewers to provide
  feedback before sending a new version, rather than sending an updated
-@@ -613,7 +617,9 @@ grouped into their own e-mail thread to help readers find all parts of the
- series.  To that end, send them as replies to either an additional "cover
- letter" message (see below), the first patch, or the respective preceding patch.
+ series immediately after receiving a review. This helps collect broader
+-input and avoids unnecessary churn from many rapid iterations.
++input, gives reviewers in different time zones a fair chance to comment,
++and avoids unnecessary churn from many rapid iterations.  Waiting also
++encourages you to polish each version before sending it, so reviewers can
++focus on substantial issues rather than typos or other small mistakes.
+++
++As a rough default, avoid sending more than one new version of the same
++series per day, while considering the size of the series, the depth of
++review, and how close the topic is to being accepted.
+ 
+ . These early update iterations are expected to be full replacements,
+   not incremental updates on top of what you posted already.  If you
+@@ -619,7 +626,8 @@ letter" message (see below), the first patch, or the respective preceding patch.
  Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
--how to submit updated versions of a patch series.
-+how to submit updated versions of a patch series.  Before sending another
-+version, make sure you have answered meaningful review comments in the existing
-+discussion.
+ how to submit updated versions of a patch series.  Before sending another
+ version, make sure you have answered meaningful review comments in the existing
+-discussion.
++discussion.  Also give reviewers enough time to comment before sending another
++version.
  
  If your log message (including your name on the
  `Signed-off-by` trailer) is not writable in ASCII, make sure that
