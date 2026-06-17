@@ -1,70 +1,71 @@
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CEB1ACED5
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 17:22:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28858363C40
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 17:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781716976; cv=none; b=NB//wLSV3GyUBAZLDCmhUjX1cC2UBfWUGoGbCmcQCv1zKxFPTBuUhS/nKjI2Bzgr05cswjL51INoeq4hLBb5GqjE0khVVvEAdxIJlL5hPiO10zkqXtDitqqSOc2YrzFH/Llg8Xk/mYRnaW3SNgvH/O1Fq7Wu3sCkcCARoMt6bGU=
+	t=1781718188; cv=none; b=MLsLG0fJjqvtcGf9KkDkE7ezV9SEG3t+3htknaso1CrLm94t0ajQqF+hTknB9dYo/D/rFUUYqmN0wxOaAIbvNCjQZCinwkzxKq1GELOo6UFD2u7C87/eGzoTBxZNLRl+ejELkLvnnUz6NLFmlQpjtFOibruyTRHaU7EjjgV0jy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781716976; c=relaxed/simple;
-	bh=wK8qU6Yhjjpp6A8uoTrmbjPU1TOZ+9bseQiJlphkNJk=;
+	s=arc-20240116; t=1781718188; c=relaxed/simple;
+	bh=RDWe9bfyNMjaVGrM+e2rOXv4jk/Upn4g4oq6rRbz1sI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hS+f5ItKvgYxpDFAc/GMf1dVfLJ2oj1tx2kzQt2I0hD+sXqiLEnQDFT8EV//+y7ux8HLKE/NNcFhwFXduRJH3ocDBhBavEq2UXIcF1r3Ivh26ORmdl1H0Kn5BAgU3/Yqmd6JciuUt1jIpfaEKaIpc9uTxz73b+Cnomk48aPHaj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q4WWrW0A; arc=none smtp.client-ip=209.85.167.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=CGQ6dgM1DVcCerYf8B8I79Ix/2+TSuIVZr7wvhmo+uwcQoFsm22TpZmRcJ1sIpL/I9MsBVBqZoDw2z/N1DW1V2geAjtW4hL4XleJWqYRU7bm8gFtYmR92EkhGr2ZNwYSPswTsV7MYK9jFb2QaC27fs5Nt/zFq4LD1HKNORw/i+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o6IuC7Wx; arc=none smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q4WWrW0A"
-Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-48670d35a87so846512b6e.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:22:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o6IuC7Wx"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7e6cfdc8382so12236a34.2
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781716974; x=1782321774; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781718186; x=1782322986; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=o837Mp6/lPGzBKP2hiUhwtCuiM6Q+8ciQw8TRCfQxWo=;
-        b=q4WWrW0ABVp4H4xwlDkH4O4D3HuEyiwN14CQBdJQiR5gqMbc9/3dhSvMcXEgzNOTj3
-         5j+6rOEL7C07rQDfxf09QM1c1Ci+JQ8evHsXC+gf0HngxFQph9OlwOJCkCqiVtUW//WV
-         XBM7y5z26OgrogIm5NiwYFk+RETlHwO5oDAgMG48xyujLf3MhYzhukGIyek0+Tbkf8BF
-         bMpLWKo7ErWQQMzu9UdwlkanOykAMyvNhX7mtRnPZW1cL7g/p0GS0obvrdUNHwf6suXE
-         0TiZ58CF1+0NJo+rSMzBMns0Jce59JoW/vA2TfO4QqKQ6kmZ6LGRwJEq+hezZOzk4ogw
-         L/KA==
+        bh=ax7rdxY4AfG/Tdm2hF5K50U+pMv3XhPv/ZdKGQzUSUM=;
+        b=o6IuC7WxBj/GCEHrd49DJmT/2niaMAwm7UwshfXJnlDjdZl1u2AVjPbJAOyDt9qmHM
+         7p2PKN50CebVxi0+qZy0FIqKBwAgvaKjMPmpjmGsUcY1vy4iFF2S0a2HqTe3VQ5XtUZu
+         sP0HECmJ1aJdm738t2jDebEAs2YoWyADj9zM0IFUZWtRzDjtqw34fypuTy6GMrFDNMtY
+         yt56FINdGuDDjqhLAQLZkgjyKm8pToQWNzdIcgDu3piYccp/Cji3JwyPsQcdGOcwoiwz
+         zShJVEUaE29u6s2CX4bcVAPQB0i2fsCg83z8NjWda0EKub5ko6fbwRsHiWCTA64tn/yW
+         iPuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781716974; x=1782321774;
+        d=1e100.net; s=20251104; t=1781718186; x=1782322986;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o837Mp6/lPGzBKP2hiUhwtCuiM6Q+8ciQw8TRCfQxWo=;
-        b=Ud+xWY/JzrcI7HqXfFK14kOX1dJ6xFVKOmS61pY/OcbjOHMU0S19/AbAcva3AqYPpa
-         0XeMNJtMiq3VnAlpkctbbRT6+JiCXmtIJBw5SMaYzYMm8/vRVr7msgmntAe8Tfo0vMEz
-         gDEHVVlzzV0PXzcQrscsGGEE3iHxjLw9b1+S33Tjm59UOuTMGyMtlHSu/WVFvyj+td9E
-         qGIz3Ip6P3Fra6MPWEwsGdB4s5PYxdt5gBQh9uZ3OUhoKqFaFrRyzYtni7F2JXZyq5m2
-         Pa9uifRMWvEdbPkjTNjddgZXp80UXTHbsQSd3GpPT9oFwv3tYLdAi90Ti/fBScCYz5NF
-         4llw==
-X-Gm-Message-State: AOJu0YzivFmcwRLJLtHIhTpgvtX9Pm2V7l0IaS6i+FHhjz4tdVWcZsDQ
-	mwA0kXGfZwtA9ZI6+ngf+dZo8ZqmOGAi7rXwzNp2mf2jzDdzIt6mc0Tz
-X-Gm-Gg: Acq92OFHEyMoVH9/15zg0v+1/ANKA5qHoGNhhKS6KYE061Yyhr0xcSSR+/67k4x8Sjj
-	eT5v/kDwV0z6JNl0YmSksUc8BbvJPoKz70lQsc7Dy2J4DxOR5/wL1yR5QoCzLw116yyE/hJI094
-	m97yOPv3JIx+LYCYP6DAeuDdpE0wZF69Yp5wbJmOWSeEIjvfWyap39DPJZQCAWte+SWmo0TaZTj
-	Zf6u/1ussRjPGr4MhwajU+MVpT+ey1TUvisbtmYDHCSzcWFG+HlCyL1K+0lnF+6uEEtBsg/q4E1
-	Abz9BpAC8MyTsfvh1QWrvC9IXBelmyCthp0rkzPB2WUntlG/h8sdZvh9MJ5WiMZ+qoY3CTHgdHf
-	Y7c42JEnmoPjFEiddDkcyX94Ruu6TCsQVEOHtYVOuXDJFu3Ge6IiPVVlLm7n3/5ZgPD7A5SNpLR
-	iOqbpimQ==
-X-Received: by 2002:a05:6808:118e:b0:485:724c:36fa with SMTP id 5614622812f47-48955e5364bmr291049b6e.0.1781716974098;
-        Wed, 17 Jun 2026 10:22:54 -0700 (PDT)
+        bh=ax7rdxY4AfG/Tdm2hF5K50U+pMv3XhPv/ZdKGQzUSUM=;
+        b=cmKcBk/V887xDei6rwfzMIg4LeMb21cJ4HZ7W7/dzozkPK9yD1R/APgIifZw3/6jlI
+         39ZEmX/3ajlam9M9LAhPd5DQCe+4kARA/n6tF1hHJITj3VJhNMdRoisD5S9c3MiOYFz/
+         tct3PclMQwWdWunWE1ZNJJhb8z/mCrqaL43NKg43XE3GpnRv0xv4et1n+F2seiSu/fIu
+         Bf0lFBwiRSarGoL9mq1TMIUY13tqx1UiMJYH99iGkASjlfls0PV+EenLDOwsirSqDosO
+         zSmxaHRspI4rHoVEov1WlxoWvIszs27t6WjquT3PIcHMTcH+C0tLRHkoJJDlR+QvpFm7
+         I4Vw==
+X-Gm-Message-State: AOJu0Yy6aMaYIBPw8eLPtjYwBg0cYTiD4qqack93HoBDGSzbdfg+tLx9
+	3fFDyHmDVAiqJYL9iSJBNVzzCVbepjHVxmNzj0KvEimqpRI8AzJl9WDGL9od+Q==
+X-Gm-Gg: Acq92OEyIkz7Z5J+XH3LMVHQIa5ro7SnUTUbOt5CFjUTq0PTFpSbUbYasO2zZcj/+6t
+	5Qpfx+zPgWevESXE7Bpthkx58is7ufDHET/ubbAQJDdCbJcV3q9K+g/aRoPVLBBGcNvX8sOGT/G
+	j68JtTudvYPtAmOFe9ZSc/5m64d6gT3CVPnpcVxsucWexJVxtzN6wHa/Z8iVFUF8sSytfoU7kVO
+	z6s2/kLw6tOE/625d10rAmJV4pbuZDoprlgDSH++GXEZpR2jnX84KfIIdcJM6Ti7bQyTnfN/dvn
+	FmnUZbEZ37RmWYVL5KlE1HrN/tU15UdDOn53XCdNUgTDsMtJkE2yY59RCuZVxmfWnP/Il1NsmSh
+	g72KEz5xQVtllZG9WPfWp7hW/LGGg1Ta5VM6W8Sv1+7ahbH9HLlAmYT2Q5f5yDCIHtG+4B4hFwp
+	enE5GLig==
+X-Received: by 2002:a05:6830:8296:b0:7dc:c338:d23d with SMTP id 46e09a7af769-7e90b38b774mr4626772a34.14.1781718185826;
+        Wed, 17 Jun 2026 10:43:05 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e79f6de65bsm9724234a34.19.2026.06.17.10.22.53
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e79f5bb5fcsm10325077a34.9.2026.06.17.10.43.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 10:22:53 -0700 (PDT)
-Date: Wed, 17 Jun 2026 12:22:50 -0500
+        Wed, 17 Jun 2026 10:43:05 -0700 (PDT)
+Date: Wed, 17 Jun 2026 12:43:02 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/8] setup: stop applying repository format twice
-Message-ID: <ajLV1if5XYO-pyNb@denethor>
+Subject: Re: [PATCH v2 3/8] setup: don't apply "GIT_REFERENCE_BACKEND"
+ without a repository
+Message-ID: <ajLapsLze_zF-dsS@denethor>
 References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
- <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-2-f4854aa99859@pks.im>
+ <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-3-f4854aa99859@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,69 +74,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-2-f4854aa99859@pks.im>
+In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-3-f4854aa99859@pks.im>
 
 On 26/06/15 03:56PM, Patrick Steinhardt wrote:
-> When discovering the repository in "setup.c" we apply the final
-> repository format multiple times:
+> When discovering a repository we eventually also apply the
+> "GIT_REFERENCE_BACKEND" environment variable to the repository. There's
+> two problems with that:
 > 
->   - Once via `repository_format_configure()`, where we apply the hash
->     algorithm and ref storage format to both `struct repository_format`
->     and `struct repository`.
+>   - We do this unconditionally, which is rather pointless: we really
+>     only have to configure the repository when we have found one.
+
+I agree that configuring the repository reference format when there
+isn't a repository to begin doesn't sound very useful.
+
+>   - We have already applied the repository format at that point in time,
+>     so we need to manually reapply it.
 > 
->   - And once via `apply_repository_format()`, where we apply these two
->     settings from `struct repository_format` to `struct repository`.
-> 
-> With the current flow both of these are in fact necessary. But this is
-> only because we call `repository_format_configure()` after we have
-> called `apply_repository_format()`. Consequently, if we only changed the
-> repository format in `repository_format_configure()` it would never
-> propagate to the repository.
+> Move the logic around so that we only apply the environment variable
+> when a repository was discovered. This also allows us to drop the
+> explcit call to `repo_set_ref_storage_format()` because we now adjust
+> the format before we apply it via `apply_repository_format()`.
 
-Ok, so because `repository_format_configure()` is invoked after the
-repository format was already applied, it had to explictly configure the
-repository as well.
-
-> Refactor the code so that we first configure the repository format
-> before applying it to the repository so that we can stop setting the
-> hash and reference storage format multiple times.
-
-Makes sense. Sounds like a good change.
+Make sense.
 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  setup.c | 9 ++-------
->  1 file changed, 2 insertions(+), 7 deletions(-)
-> 
-> diff --git a/setup.c b/setup.c
-> index a9db1f2c23..2748155964 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -2710,8 +2710,7 @@ static int read_default_format_config(const char *key, const char *value,
->  	return ret;
->  }
->  
-> -static void repository_format_configure(struct repository *repo,
-> -					struct repository_format *repo_fmt,
-> +static void repository_format_configure(struct repository_format *repo_fmt,
->  					int hash, enum ref_storage_format ref_format)
-
-We now only care about configuring the repository format and will let
-`apply_repository_format()` handle setting the repository. Looks good.
-
 [snip]
-> @@ -2830,10 +2825,10 @@ int init_db(struct repository *repo,
->  	 * is an attempt to reinitialize new repository with an old tool.
->  	 */
->  	check_repository_format_gently(repo_get_git_dir(repo), &repo_fmt, NULL);
-> +	repository_format_configure(&repo_fmt, hash, ref_storage_format);
->  	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
->  		die("%s", err.buf);
->  	startup_info->have_repository = 1;
-> -	repository_format_configure(repo, &repo_fmt, hash, ref_storage_format);
+> @@ -2023,6 +2022,8 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+>  	    startup_info->have_repository ||
+>  	    /* GIT_DIR_EXPLICIT */
+>  	    getenv(GIT_DIR_ENVIRONMENT)) {
+> +		const char *ref_backend_uri;
+> +
+>  		if (!repo->gitdir) {
+>  			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+>  			if (!gitdir)
+> @@ -2030,6 +2031,24 @@ const char *setup_git_directory_gently(struct repository *repo, int *nongit_ok)
+>  			setup_git_env_internal(repo, gitdir);
+>  		}
+>  
+> +		/*
+> +		 * The env variable should override the repository config
+> +		 * for 'extensions.refStorage'.
+> +		 */
+> +		ref_backend_uri = getenv(GIT_REFERENCE_BACKEND_ENVIRONMENT);
+> +		if (ref_backend_uri) {
+> +			char *format;
+> +
+> +			free(repo_fmt.ref_storage_payload);
+> +
+> +			parse_reference_uri(ref_backend_uri, &format, &repo_fmt.ref_storage_payload);
+> +			repo_fmt.ref_storage_format = ref_storage_format_by_name(format);
+> +			if (repo_fmt.ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+> +				die(_("unknown ref storage format: '%s'"), format);
+> +
+> +			free(format);
+> +		}
+> +
+>  		if (startup_info->have_repository) {
+>  			struct strbuf err = STRBUF_INIT;
 
-`apply_repository_format()` already has the logic to set the hash algo
-and ref storage format from the repository format, so change changing
-the order here is ok and a good change.
+Hmmm, we only invoke `apply_repository_format()` if we indeed have a
+repository (having just GIT_DIR_ENVIRONMENT set isn't enough). Should we
+instead nest this logic right above `apply_repository_format()` in the
+same block?
 
 -Justin
