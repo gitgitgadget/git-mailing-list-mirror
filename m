@@ -1,86 +1,82 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E6C3AB460
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 11:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20CF392C56
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 12:11:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781697542; cv=none; b=t01yIQ5Et7jAMnEMh5AgdUnY+MbH24X0emVQtqwwUakL3u/Kj3Jy1YTARgoshnRbJnTRyxk2Jn8WF1tXoZyHj1Tt6vopsbGx03WZ29uDDTXRqO0gS7f11lKq6Dw87wN3vlTZ7867INWRq5jZDsYSchL9p/xlbdGscYw2DHAaXig=
+	t=1781698284; cv=none; b=k7yJo2BaI66SkWqjekP0bVgOjKjdAaf6zjQIa7bIAdAJEOuvpKRgB72tm6S3xTiNkbqWzgFZMwgFeVMqZ+e9vofWnnXGXdtdh14AZYMkepu0vpbj6DMUWyI2wiQOocTypKYa2uvRrnXEtaYayhG4ZeFfDsMHd09oLx2znK5z7Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781697542; c=relaxed/simple;
-	bh=b4eFSzCUkT9NGm2UqYNIrP+WoHxI4DLSWOIXLuNjQcc=;
+	s=arc-20240116; t=1781698284; c=relaxed/simple;
+	bh=TVYWG5/NLdQkkIY6XyjRdA+Ork+RdQNcJu9+Ps6V4Ec=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L8lg0PzAnjxc71aQXvaP3xI06aUJ++nwNF/DnivdJMFMo3mf8QefhxO5TR/yGe6+C/5fIgijEIskyXIh6JPNOopNMq6kdgjfn8wzxB+gohRXT0CdVpOZlHgiS6L0FDhY6kuKf5RSPTyqWts6zz4DSfOsnp52npsU+tqT9K8MaKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fyCW2//w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g/awLooU; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=G8DFKr+3DmNjeeTLdqAxwcMH+fwXcLxgKmDSJbEr1BzhxwqZbpKe6Io3++VmGaYC7fKRQNCca85DGtAkMBnI7zOqQRWMhyF7S5yIJuegh0WaGGVzZ78YGSZ4zLcDdC1mpa2codpUnY4oEZJjkwafiYki4GtB1q5a+0K9GI3DaVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f5qxGpoN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=evEh9c07; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fyCW2//w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g/awLooU"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 83CC81D00141;
-	Wed, 17 Jun 2026 07:59:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f5qxGpoN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="evEh9c07"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2312D7A0198;
+	Wed, 17 Jun 2026 08:11:22 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 17 Jun 2026 07:59:00 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 17 Jun 2026 08:11:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781697540; x=1781783940; bh=GFa+Jw58T0
-	XE0U/6v75/Ji3zWnb3JZpCq6crreiVj0A=; b=fyCW2//wwic0NZc6RpCL0vey9E
-	tutUo+IADQY2pj7UBaWYnmo8/Q/bpmSN2GONIh75Yfaiqe8mRg3LOWlDDdzZxN9a
-	YSW6xCEjc59kebYxMA2F79/rJBsSsj7FAwjuBp1wBWWbHQ2EYp2tDF753OUHi5OV
-	sInvx5N50K1LkPN1ErXeGBw5wT4Dt48evDxuYRxmcKNbkxXMbRBVraSQqfpMe3DL
-	Gxrr8B9yW95nT46lb8q39VjL06A364nQ12gSnO/voSxCexOlq/y85nvXq3dDiKNk
-	o2ltoxqmdzC87ueXFG5BJT/utZEQ1iVJe8hWgQbDjyWKBx0VfNhuYUrMuKZQ==
+	:subject:to:to; s=fm3; t=1781698281; x=1781784681; bh=3jST9mbDqx
+	KaLzVuBoEl0bL7DzLsDTkZwWGPDYbyO9U=; b=f5qxGpoNOsND+4Tqf7gHzQBoOX
+	MeSMzVSK+Bsm3KqYpHckMFOY6J29TtomWgRHShY5oIM0Cdo8szT0hqwlc/fESsHe
+	6TPXTxuMPFXbf+5oLYWL6vX7WGBfxc6CusP6DqyPXfb1IJz03hb6LChX8i1KzPLv
+	J/dc+lcnEW28lyV/ABO6x7PSyhebXw4BgnAQRuE/H7wjpDa3Hl4ENCBeWLPAJ6kh
+	zKbEEg/BrbizH0yoLQcuAxSHTvCj3SNCGxYDG3X+6LZJygKsDoYM8w/Zy2unFGG8
+	jKz5xqTVKZOKPvG3CtS1gHsFDAb3aEW2iffZf6uF6Y7e/B7CjrxxpJgz7lKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781697540; x=1781783940; bh=GFa+Jw58T0XE0U/6v75/Ji3zWnb3JZpCq6c
-	rreiVj0A=; b=g/awLooUw1+eFc9kS5E+x2O/UV6stvKK09E7hM7gScgApWE6HDX
-	NDZmlNjIzeCuNbhfQaWV2QanLhKBhOLvFB8X4l6OpQ/06YOeIXja6e3IYsap/GQw
-	fGVCRf0gSitOWnix3oI3qtu5vQBKeBdW+U2ApSpsDYacX91qZMsyayeKa3c2tXRY
-	iWVq63xDCYcCcJhRS/uqrnqubX42xG6HJzCjkuqkSmQAuyg/g8VOUECpT1NFFCeb
-	7vq6OTHfb5do9+2xihjcJBSv0/+hySbNfvm4aC0kGgNbqkCwnw0sI0O1WbQr4vqF
-	AhKSgBcvINkspELo2P+9v7zIayrlOFXNVTg==
-X-ME-Sender: <xms:BIwyarzwEhJ_Gh57UBiXaCAgqDxNrtRVtCJJ52lJ-S4CfpgThC4kYw>
-    <xme:BIwyam-pGqP2L9ghK4i-u2sWq_vtAfFmuFhNiIk-PffiEZObSScjkN2-Dm_wzNJQv
-    mdj7Aw1MYSii4GQCuzroWop15YrA1z7iLBWqwiz6EHkDFt782yUAQ>
-X-ME-Received: <xmr:BIwyavI4qyMWD8QExIvQU6jI1F2aeMo5zyQVgbMsDk-VLu1UClD02qmylPYnQ6FcZRRm5719msP7EhZkmz1YZYK37mLF_oxVrtNT>
-X-ME-Proxy-Cause: dmFkZTGIW7Mw+T895CBMSiGyiL7nWHIDDE/239D1EIVjZoDoxHVM3eVAffkMJR/R9n6Dr1
-    nu/QqP2yzHiONAVac/YP/HVrO/0yrKb3a8p/KsTtWLF6h1PuElzI/qsXWyfXX3Ro7pw1RO
-    /bVElfsjhfKjkDAHTEqegMZ6hP4g8KttcJOO0HPrS3Yf7ghjBvubFgoUxB5qLPMLeKi0NS
-    Rxkypy+o5wvnrbQ1alYI5FgMRqGl7eWCQZruDPGcITdC/LJQqZRer515dQ4dpTOWIWGyHI
-    wKLzAfYm1Ng756SdZFvOvky9BF/4oGgXsNieUGEwC8tVweSq+pAM7++PBL1pO25b/5PXsO
-    17rKXGd+3gv09INCW+lR+3l8uy0pGufMjEfCZx7vNDmEdP3UnDznygLGUq7jQAZuYCIQFO
-    lcpPybyLpmCyhV0CapeaG5HtBvTToXbh76aLhdCUIECOVk6wrVi+cSW+AXlzRHhnTP62Y0
-    fsCUE/SNQ2aUDpDATJgDj7MVSSkIztuG8PqyoY1pD0D12YKnJ7oHQ+wPZl6YC4ZDlOfOHS
-    Cfil6qtoX8cnQnMWzJy8m+NqjFlj5pBIsmGbk26JpQLUvdFKEombuUhyoL42/xBlZIP/ik
-    eiydaL1eFdAlU8Uh76wQVnnhNNHh9d+x5JTorfB3SsTPCug7gb6b0LtarNCQ
-X-ME-Proxy: <xmx:BIwyascaFkR82fm_H_dUzI_xN1YYgp50dRw6ZhwZu9alOIQm9fCOkA>
-    <xmx:BIwyau__YYGGIw172SN24EeWxcxO207Zfv8THQFujO5Mhes43zUIAA>
-    <xmx:BIwyaprRLuSx6mVLD7HcvjUqVqR01j4DxvHfTlvYuQz4LRwDT9L0VA>
-    <xmx:BIwyajARQAzt7bCDIcA8q1aLCG0DtW_HDauMp-Vr2SqlJLypcU_LLQ>
-    <xmx:BIwyaiaBmSym2Q0hSIZVcHc8lAdV60AZAesH2LQzQY1INCUAtHpVs9s7>
+	1781698281; x=1781784681; bh=3jST9mbDqxKaLzVuBoEl0bL7DzLsDTkZwWG
+	PDYbyO9U=; b=evEh9c07uw0pOSnIXguOB2DnlxXrFa7xDQ/Ys1AVRkOs2YD62tj
+	92PdX6Trm8OzoCGC/Eqn3Oq8Gbe8hmunIZUa3L65z58mQQOdDEXPEJWnoVfMvq6x
+	LIdK+i2oxG8+CE/nE6DAW2XFgGbNxse3Uq72JRAlrm773dKIhdoCVzc8Hd7rurWC
+	nbPZ6JDTzgYUDJ+dfo6wBGY52aPp5TYhB8lzJWDSwMpDGzKdp6KxhlGPvsV8mh5l
+	C0IyvPjNecDKix+GdeytwchWGRWSWbaabsZUMMo2HnCSC0CXtg3Dj0w7ptm8c1AQ
+	+L1mGm84PBUgvNrayfd537coZfHl0Vsd8Mg==
+X-ME-Sender: <xms:6Y4yatWU47pwbZP-FTDLgounlKxPcHPzt5_ZPvuFMBf7l5_nvRDQsQ>
+    <xme:6Y4yalC0y6bAbiIw115C6hdUUzscMr5sCyuaswneDcWzD5F5ueJ-YVzu4hwMJeHAD
+    ax7LOKX4V_4-mvCMnN2gEkpmeFkoQMkR7J9yTw488i5XWzF97gt>
+X-ME-Received: <xmr:6Y4yamyu-daFkLlBq5QvYP993lPKfMZozSCLaMC-WHYs3ktnvu6oB65EwaQSU3u1Djqupy39NaMDybBP441ElM_XOKWqGCZwoRIl>
+X-ME-Proxy-Cause: dmFkZTFjUq/pk23AU21HfPQjHvHXR8UKlqUv4Jf/WizKAGAmQyGkZE9xSsn0i8hMSUGVkO
+    xo4JIwqpfXxHNAbZNEIaKhEsJin9iLJ3lODdQAq12piSsB8TV9XBjv0T6DDnGK1cQP/KnQ
+    6YgOQtWBdxDIbKRI1cx1326FXysD4yXruCj7d0CVwFYbpOUOPnvJa8G90sa/Ae4NvpBixm
+    Ch61G0x2uvHLHvPmYaft+UD4LYKsov/rzCtUtICA+28OS0+wb/uPAbqyZhkr2tijEjXw1z
+    FwOcxyH2n+36MNTrZA7cqvIRsNORQJZ6Gp+zNsvpgTxyv1DmDzOS+7c/FonRn2cGINTVHG
+    LRSYPNZJvGAr2uqQgkbZV41NglN/hW3eSNE2GP4/CD6Du1hQerVuZWnFcrflzN5Ve6cfkv
+    wJgbFMjawoyg1sAPWPtr4ASIiBT1l0Ap1D6rn+PFSnuB37Bn6ibC/+d7VExFw4MWwhYL+d
+    SIRJBJx5S6D9Z3TQEE3d6umJFAr0AvjetTePBcDXEcjt3BsXDU93jB/2Sk5Bo4AbvbH0QH
+    5YqVeac1/gu6KJsVsqY6OQajKq5IrDyVYlLw82bqphNzjCvHnusQdB8Wb/WJQruUFoquO2
+    FS4ejhP4WbxQFdwAENGyi3WQfqlR3Nzm/LxEgSNN7H+8PiKrARkRoi0CgIEQ
+X-ME-Proxy: <xmx:6Y4yaqDPXjfzVT0pBH5KbfJLcUULmvIpYYqdhRat7Lt3gO8oc-mpSQ>
+    <xmx:6Y4yaraiyVPSSasBPtkDrnCZChjBdHvhIhCHeAuWrLlNTctqyTjpXQ>
+    <xmx:6Y4yaqhMY7N_-VLPs2lZQfYoFTEePYvvQYy3xO_yN3YLAXIbeBMyXQ>
+    <xmx:6Y4yal6d2WDQi7Njj6QNBE83BsPbyPpuV47-1DlcAftqLLE729GJNw>
+    <xmx:6Y4yamUfUoaaeenAM7bCcjErjJpqDLECjMpc_3zq99jFaEtRLRqsiB3A>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 07:58:59 -0400 (EDT)
+ 17 Jun 2026 08:11:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Philip Oakley <philipoakley@iee.email>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: How does GitGitGadget generate range-diffs, was Re: [PATCH v2
- 0/6] Support hashing objects larger than 4GB on Windows
-In-Reply-To: <fcb9e52a-5f71-1fd0-a18e-c48e22e6e28c@gmx.de> (Johannes
-	Schindelin's message of "Wed, 17 Jun 2026 12:39:15 +0200 (CEST)")
-References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
-	<pull.2138.v2.git.1781621398.gitgitgadget@gmail.com>
-	<xmqqfr2m4gd1.fsf@gitster.g>
-	<fcb9e52a-5f71-1fd0-a18e-c48e22e6e28c@gmx.de>
-Date: Wed, 17 Jun 2026 04:58:58 -0700
-Message-ID: <xmqq4ij11ipp.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/4] builtin/refs: add "update" subcommand
+In-Reply-To: <ajJMnZchqdpiuKTg@pks.im> (Patrick Steinhardt's message of "Wed,
+	17 Jun 2026 09:28:29 +0200")
+References: <20260616-pks-refs-writing-subcommands-v1-0-9f5219b6109d@pks.im>
+	<20260616-pks-refs-writing-subcommands-v1-3-9f5219b6109d@pks.im>
+	<xmqqeci6bupk.fsf@gitster.g> <ajJMnZchqdpiuKTg@pks.im>
+Date: Wed, 17 Jun 2026 05:11:20 -0700
+Message-ID: <xmqqwlvxz7rr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,15 +86,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> GitGitGadget is using range-diff to compare between iterations of
-> essentially the same patches, therefore it encourages `range-diff` to try
-> harder to look for matches via `--creation-factor=95`:
+> We can:
+>
+>     $ git update-ref $NEW_OID $NULL_OID
+>     $ git refs update $NEW_OID $NULL_OID
+>
+> This will verify that the reference doesn't exist before actually
+> writing it. Will add a test.
 
-Thanks, I'll use the matching 95 in my local "sanity check after
-applying" step.  As you say, it is not like comparing an integration
-branch with many topics with the same integration branch from a
-different day, which would need to avoid misidentifying two unrelted
-ones as if they are related, so the tool should asssume most of them
-match with each other.
+I think refname is missing from the command line, but the above is
+good.  I forgot we had update-ref already doing that ;-)
+
+Thanks.
