@@ -1,118 +1,185 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364D22DB788
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 19:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781723517; cv=pass; b=bD0yo7jhsegqhvB+YO9fOGTO3UvC1wTMXL6yw54P8aq3TTXqizdT032u9KaRrIYZ4I4xWU0XF+IQm1GnqC+VQ+Q2oDffpIJICKfx8X6SeCpNOKWStdR2+1zZIbp2TdvV29Gzyg5lPo+I7LhMnuTezz4kSW1GKTgGu0SytyQ1eb8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781723517; c=relaxed/simple;
-	bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vAfDNLW83TzOH9Kjwv5aDLgV0TWriiq4rgp+h1yxvobKw7VReFBeDPHwG6pFvQcsvgbvXxmHLXEc16LL1LKuBLnKGpFSoPmJmdpfVOZZKS4wb+4gRQONGnGVDQTwTGx0V79ufGAgM2a/uEl+VDpzBu7BO4dNVCm3E5O74R/anQI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YnGd6PzN; arc=pass smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B98A33ADB2
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 19:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781723710; cv=none; b=KgojVMY4SW2Gl6Mut2O/GArKHcnIkdQAyASWlmvs8HNnQKaebW5KQMNhhK7+X4p+s6q0BkgqQdX/C3W4iR/SPG8IFS/z3pyEwpr/GuELbQ7N+zeIM+JTRA43AljPg+CKUuGPZKi5YD0tS5hpI5i98YUwwih+dgMyGYtWdZzNIgA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781723710; c=relaxed/simple;
+	bh=pl2GORRAm7GAjYWWW4jzXQPoRBjPGMH6BjnQrgALmlI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MAUrEynqQd+p1IQWfe2acBNvPBTL1YLoyL3hH8f0YIq+lo3ODkSAwCuh0P9rme3KkMYLyqT/xs3iAElu0Pm0lgqu4Oe6G6mVmJ4gXnquX3PwOgREgLwaZq+J886kjGrJ21DkXJ8qF9dUpr7AFw3eLePXuE0yNVrg8N52bRkApCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KqvFQA56; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hiH0OkWX; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YnGd6PzN"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-68bd9fce347so46241a12.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 12:11:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781723514; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JvSv0dmrkbGMmrHvmN3tOyubOT+MXzq/tywUEWnGPd0yLUnnguQvjUob0wLXoveVru
-         CzxZotnsSqdTWwcJvpHi0x2ryw83zN25qrFpZkewpfBs0Ku+PQ3hb+XVe/X2+sAlj9yl
-         PtQnrutyM84qCiOqbt7X3i391gu1uxZm4OgLNLHmAxoA1iPoLYXtVwtUL5n+8UDZir51
-         RxVcagmFhESyQivzrGKnTYEt+AVFsfGIDy9KG9JN5PiiigP82KIyEdanRu2+yMeF32hM
-         L90mrquJ+rXePXtoV8ZsQad7DDog+ziJhpMg/HraJSpYC00qz490U2c848CSsR0czD2i
-         W5Og==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
-        fh=zUHYrQmrnTIvGR3EP/ZGpJyRQ6ZjiNoFKfUdXDhw9og=;
-        b=H6whbubC/dnDQt85DtIxTqiEaA3AMt8VddYqKIvImAcCFirCCpO12QQabBwpaG3yLT
-         ERkr8WMeQbyw5e1L4h60r+5I1AvmtJFDYNJtt5zvLAIgdEnQSiay0tVLT0Hp7EKIrdqd
-         Sgxxe641XuPUk/MRhSPjzfcP43asqhaDw2kdiXXBH4sILyHhdLc9CD1uCOg3pXz8ipKI
-         Mtfny9TQo/HlE/7kPTbGKQ1zoAoAYKlhT/zvW09HeHEw87N0sPgw5mjFiYLNbuP3xu3W
-         8Xjy4t3Qa6NCsRB9Qoc8kSIto6dALxIX0lf4HEOEg2HL87dXzjB7hqbHfZPZuJzfsHBP
-         aY9A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781723514; x=1782328314; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
-        b=YnGd6PzNxfDsQqRR8xF2tEQBwQHv0TcKdmZBwv4nd8J+juqZSBrGNNv2Go+q4b1HVc
-         fEcCSm775UZo0k3PrIAh+BN7zy8MHpfqHJuEnyl9rLGQqRjElU/wxIPQSrlehRa2inyz
-         KTMRK3JAWeg/xfE6PSteey6W7qIRloSgncK4ReKcbmA1/aPwsaur2g9vNwbHZyhPak8M
-         Wqzrc+gGGtKv+ppI+VDDii9a+Yb2fYZrS7Q+t0jbtyTLq8TPULZ56uRi4PAvXQmOrig3
-         WF7q5qiCZ1eDvDwK1lvW7UETNa3mxWzzCBoOV2OZ2BUQpKBPwnZPCeBCszlMB0YWh32f
-         RviA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781723514; x=1782328314;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IYnVYWJdXGKbORrdfTEB4Zg6TkeJB1HhkvW/E0z0dYA=;
-        b=BGDuz7MGSFMu/sFXrnGIs21JBHfRE0Cwc+9fiKQnRxZVWFkPHS0x5vmuh3kHOh/+bz
-         AigbtbaJ4bDBLPrGFcMe3Iil9NwAzXLilGLzBjqDZ81jvhROHiLplmUYA1kLn5pK05rZ
-         WheRCWE6CC7/pr5OpHTfLpbJM4CDlpUTT5gy9TInherztugPCfShhxcWOCU6c9xbRBTr
-         JINhkqUEyaNTBQVye44nlS+HZMO2+744l1NQsqYVfzPPRHFAVYxn8qC0teSPcDCdc6El
-         U9AWghlvc2dP8H+unArc0ThkMz6IuEuSbW/fOQz09PG01nvObzM4JQQRg9tEwphHyhx4
-         PFHA==
-X-Forwarded-Encrypted: i=1; AFNElJ+qlGVywMuMopCJwlpBE5tbrDh6m5aShO/o+pYDWgeYAFz7LsXh80nNLtY8oUX/sTf8yzA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1kKmLr4BD2VUirUYZTWb5qfi/vcI81kCeU28aOChJ78oWjyr5
-	p3Gp3HWYQ6TovzCEJOHE4Tl/I3UdKATg+J+LQ0rAJAR+8AgvrVyTSJcIZwselL3NPXUBs++hLuf
-	bDc7TS93RRMLgi1Pkovn0dMI8qurqyxo=
-X-Gm-Gg: AfdE7cn4+DLyStP/FK3ZlbGVG/0fL6fElu6OXdcnSWudmaAT/AY4+v4cxHjGgYSSz5n
-	RrmBnsJlLa8aZTLIxk1uXZvid5vfulgxGhQnzX9sqYgpG/Ba8+8uhi/BCDpdBSFouQ832OoYhZ8
-	TDPNmHm23aF66KYHMg7MhRZART5PmWfIMPQQ7QqtOA08F5XR3ClFzzZg5bghecfY+I3eD44BxLf
-	0sjWKIxfBMAyCQ28KWZSFshXufdKGpJYykKgL+gIE9c/JsnG1tOgVdsnwvbiSs1Z4qTwCZK
-X-Received: by 2002:a05:6402:548d:b0:691:acfc:54bf with SMTP id
- 4fb4d7f45d1cf-69547492d3emr2815462a12.21.1781723514401; Wed, 17 Jun 2026
- 12:11:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KqvFQA56";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hiH0OkWX"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C82F7A0159;
+	Wed, 17 Jun 2026 15:15:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 17 Jun 2026 15:15:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781723706; x=1781810106; bh=wrxYBHqU6N
+	s1t+w9de3sRQkbG6QZ5sINyVpaGfr3NV4=; b=KqvFQA56wOsTuxvIzU/DYoqv44
+	Wd1P6jEIxI9awRCleUA3YmXOhjP61itEGLUGYBVrzdRc4zdjWQ6ogALQZbWvR60m
+	h1qgjjLXuhvmBGgIMqj9E9cADE946r0zmWs+FMpSX+biElG/JtQ59fUiD0pU2TaF
+	6TEfViSFEtvxUrx7srfahBK4REpw62P9pS1MlCb/f21VuometiRFdaz4WEAeDLyK
+	TqyEaQVvpEtzCcWoQJoJTbOYAi6RsVZJcfuSHAhCxA684/fC9BMvtewADcPVCoNH
+	XtzuH4uilqGHfO6jZb80Z510y5pPttISAKeOd1YpRirqXntoa6dyYGxxSU/A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781723706; x=1781810106; bh=wrxYBHqU6Ns1t+w9de3sRQkbG6QZ5sINyVp
+	aGfr3NV4=; b=hiH0OkWXY3AbBeNjrOPuDeIl/jwbfNfmzthzS/shlJDE0v0ZzPK
+	7AKxJf+fIlIcXrzmk1/JDsyTgTt84rSQqvgwk+7wmHFjOuRl6IzyQpP+H84JWwZl
+	vTKlk9nKj+s0bWPOAtRmzlyVAE60/ymykXn0/CkDe8k+duSM9FOy7Tf5M+azk046
+	NB+cVItjF8BNWQUCnazx7Ucr4etlf+vE8H8bsz6oniQxiA3ZHB9TbnqLB27Cob1E
+	vi/AK78GNUOuqMVfm/TowYa4K5aaopuvyZdCW7HxBOF38P3UXfeluEwXR3BfLweX
+	lttoLx4BgZPRiJ6AazHJbL9079nJqmacj6A==
+X-ME-Sender: <xms:OfIyauSuQBLr8m8es1QHnyfjywfnfRX_BWjzpGSFq8aXusU7a-thNg>
+    <xme:OfIyaosEaOKrYZdXMKzGGPi00IR_8z7Y8LWZcTN9rGyBoiI8Jvap5saHrgthoXmyc
+    5AlUU4pcBcn20t9vz3e4W_2OMA_riYyr0n62xf-utNlisoOwaZX9w>
+X-ME-Received: <xmr:OfIyagEBAxZC6NwgAp2__gj68lckY76slnjrgc9k0RcprO0PqsNy3TLO_G0RZ5ooOoUj2L41tRbWiE-8W9Scsq-UoOSZc8qBPTj1>
+X-ME-Proxy-Cause: dmFkZTGBWp29+vrLWYxboR1moS1B5ejrH6PELAQBZnno/+suzeXPtqQOdE3VPlaFjcNpSl
+    DFf7Vh3fYPNxTz6WJFxFwRfdqAqTvCpMjmRoN7iutM9Ci3uWUztGQkwxLyC3RlNW8+XHSJ
+    /0hRr1dxXFQa9Itn4YqZ2V0kC33cSsM1wEThYtNL5xzj/9CoqIsWof2jaLe2tFkE24qvoC
+    0PNnzuWogRr3cOcnnqBtZMkBNmZekNbqD58NPPIv61Ngej9/wTXcD9qezw63IluZrWo3hg
+    PymnXIIyWKJxjTvytr0jK/F8EaXxuwReoFWk1J1sYi1V3QhD2LYcUm4iDQydAs/S2/Qekf
+    K4/JSrLTKc10DfV6ymNwu6vYiEr0AoFaRO3xafsm4WT7uWcKeB//NaWaoWYTbfBKjrnFjX
+    4lytAhc3J4pZ0fPELqDtIOn5hK2lB2Ysyh7ypneoDYi2w/t2A3FJUwjYk4zSb5y4OIQUjc
+    X/jKg0cTzBh4FVlvTekUmQrvPBrPVtNAWvbwbU2Tl53HqlAhOI0VII5lz2H6X5Rc0zESFP
+    GBatTA1scVyyqONGeomeiXcVV5kX5dvPEIy8+Zu9DVvGHyQsOAAlxIRpi72WIFJtfz2aKx
+    oR4oCcHgXpuunQRUJQvBMwoo/z/kXeoml6ABXFvup7rjDS3BHITzFCgNjJzQ
+X-ME-Proxy: <xmx:OfIyapwJvO6nPCcE0FrEh6x05iosEYzUjm-Hjbll1PoJSekhcSa5-w>
+    <xmx:OfIyaq07iYPrTEvaEtMmknJ3v1Qo56EjdTnCFW_gaWwJw6PO37PGhQ>
+    <xmx:OfIyapq9U86-z9ZfZJchbDKJ69bFqGeYsOvym9ycIGmfBL7NGUSFTA>
+    <xmx:OfIyanVPnt8TNdYVi2Ha5tq37pXzYM_87-8wlqAWjASvjMrMFXBHUg>
+    <xmx:OvIyat4tBA3dSgQytkXa5rqi_M6uPKZ22fXw4qAtNG9axm6n5_gBUWdf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Jun 2026 15:15:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Ramsay Jones <ramsay@ramsayjones.plus.com>,  "D.
+ Ben Knoble" <ben.knoble@gmail.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Marc Branchaud <marcnarc@gmail.com>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren
+ <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v13 0/2] checkout: --track=fetch
+In-Reply-To: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com> (Harald
+	Nordgren via GitGitGadget's message of "Sat, 23 May 2026 19:48:32
+	+0000")
+References: <pull.2281.v12.git.git.1779358803652.gitgitgadget@gmail.com>
+	<pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
+Date: Wed, 17 Jun 2026 12:15:00 -0700
+Message-ID: <xmqqmrwtuggb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
- <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com> <f68e2a11-02a5-47b9-a01a-458eba821c37@gmail.com>
- <CAHwyqnXRo=P5Zihs6s7Uh8CrYCO7mjyeZ5nAv9JqYbGH0RE72g@mail.gmail.com> <5829103e-d357-4880-b295-fa0d9f4a2c62@gmail.com>
-In-Reply-To: <5829103e-d357-4880-b295-fa0d9f4a2c62@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Wed, 17 Jun 2026 21:11:18 +0200
-X-Gm-Features: AVVi8CevEMHwHNls8shiYKcqaoxsZgH8mtAtf6L_Ht4KfecYsuMPsAdXNTzv-2Q
-Message-ID: <CAHwyqnWFM2jskm6soEu58tp_TgO3fmuODD-yTiK6-4Hpv8SMLQ@mail.gmail.com>
-Subject: Re: [PATCH v15 0/7] branch: delete-merged
-To: phillip.wood@dunelm.org.uk
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-> Right but you sent that version a few hours after I'd posted a partial
-> review which concluded by saying I'd finish it the next day. If you send
-> a new version when you are waiting for further comments it clutters the
-> list because you know you're going to have to post another revision when
-> you get the rest of the comments. Anyone reviewing the interim version
-> is wasting their time. When you receive review comments, by all means
-> start thinking about them and updating your local copy but please don't
-> post a new version until the discussion on the previous version has
-> settled down.
+"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-That's fair. Sorry about that.
+>  * Create a preparatory commit that exposes find_tracking_remote_for_ref()
+>    and advise_ambiguous_fetch_refspec() from branch.c, so checkout can reuse
+>    the same lookup git branch --track uses.
+>  * Use advise_ambiguous_fetch_refspec() for the "multiple remotes match"
+>    case, so the wording matches git branch --track.
+>
+> Harald Nordgren (2):
+>   branch: expose helpers for finding the remote owning a tracking ref
+>   checkout: extend --track with a "fetch" mode to refresh start-point
+>
+>  Documentation/git-checkout.adoc |  17 +-
+>  Documentation/git-switch.adoc   |   5 +-
+>  branch.c                        |  96 ++++++-----
+>  branch.h                        |  16 ++
+>  builtin/checkout.c              | 139 +++++++++++++++-
+>  t/t7201-co.sh                   | 276 ++++++++++++++++++++++++++++++++
+>  6 files changed, 498 insertions(+), 51 deletions(-)
 
-Will you let me know when your review here is finished?
+I was scanning "What's cooking" and this topic was the oldest one
+among the ones marked as "Needs review".  Nobody seems to have
+commented on this iteration.
 
-I received the same feedback from Junio before, so I'm not unaware of
-this problem. I am trying to slow down. I often prepare the work as
-soon as I get some comments -- I'm on paternity leave so I have a lot
-of time when the baby is sleeping -- then I actively hold off on
-sending to not overload the rest of you. But at the same time I think
-it's valuable to keep up a certain pace. It's a balancing act.
+I am still not convinced that it is a good idea to allow "checkout"
+to go to the network and muck with remote-tracking branches.  The
+remote-tracking branches are meant to give us solid reference
+points, and such an on-demand update to move them (which by itself
+is not bad) and then use the updated result without first seeing
+what it contains (which is the part I disagree with) cannot lead us
+to a good place. I suspect that the feature encourages a bad
+workflow to our end-users.
 
+Having said all that, the changes since v12, in response to earlier
+review comments to avoid duplicating the remote lookup and ambiguity
+advice logic, look well executed in this round.  This also ensures
+consistent error messages and behavior between 'git branch --track'
+and 'git checkout --track=fetch'.
 
-Harald
+IOW, I find the mechanical implementation fairly solid.  I am not
+sure if we are implementing a good thing, though.
+
+One small thing about [1/2];
+
+diff --git a/branch.h b/branch.h
+index 3dc6e2a0ff..0aafa1673f 100644
+--- a/branch.h
++++ b/branch.h
+@@ -1,9 +1,25 @@
+ #ifndef BRANCH_H
+ #define BRANCH_H
+ 
++#include "refspec.h"
++#include "string-list.h"
++
+ struct repository;
+ struct strbuf;
+ 
++struct tracking {
++	struct refspec_item spec;
++	struct string_list *srcs;
++	const char *remote;
++	int matches;
++};
++
++void find_tracking_remote_for_ref(struct tracking *tracking,
++				  struct string_list *ambiguous_remotes);
++
++void advise_ambiguous_fetch_refspec(const char *dst,
++				    const struct string_list *ambiguous_remotes);
++
+
+As we are not embedding any "string_list" instance into any of our
+struct (we only have a pointer to a struct), unlike the way we embed
+"struct refspec_item" that requires us to include "refspec.h", we do
+not need to include "string-list.h".  Instead, we only need to
+declare "struct string_list", just like we declare repository and
+strbuf.
+
+diff --git i/branch.h w/branch.h
+index 0aafa1673f..c2e6725491 100644
+--- i/branch.h
++++ w/branch.h
+@@ -2,8 +2,8 @@
+ #define BRANCH_H
+ 
+ #include "refspec.h"
+-#include "string-list.h"
+ 
++struct string_list;
+ struct repository;
+ struct strbuf;
+ 
