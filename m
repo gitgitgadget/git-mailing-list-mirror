@@ -1,259 +1,232 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4162DB7A3
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 19:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5834E345750
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 20:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781725565; cv=none; b=qSAzq418GtjCfcM0FSlo/1f5b8myRODfDWJ+gGn1mml4UWb60oTtXC5tFvdx07OVgvlMiSwvkRl+tcWcttph2I+m7K6O65Y05gG5FoRuxrvhGJpiDnANkuHquR9N6T3HwYMUsGqRDVE07/tCgerZjGcjXJq0DeZG/P9HaOuthYo=
+	t=1781726627; cv=none; b=Vhd1BBf6QjwrPtvhX8wXJaOcdPTrUT6eQvHtxI1NDRKQoudmB2Dvo2e4NxpOgSxBKWAIiWQXX3EmLhr7sXTuKJXJ3+lkzS5YXqClqScrBoL1Rk06LdAYqLYRiSJCIs+8bbFAxuui7oBXZNbIboOmf7tn8jgOYwyARRWOUE8fGqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781725565; c=relaxed/simple;
-	bh=ektDdHBWMeeZLquavRHxtDzsbd4gw96tayUqdzJBbaU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=F2ZMIfXoUCJB++hl7eHGaySzo6ol+7XEn7vFvGfCqz5TdTslxeX8lYqlkhpDF1WKEafraxg+Vn3W2ANHipSE/aya7Pqo6neDc2Q0wGFnemFyZhTp9B5gzpEQYGR0c+qXMP30QfmWqK+c8/l+9Hfr1eUZnCD+RhM86JBxYbra9Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sw07Pwc9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XlIUd+dw; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1781726627; c=relaxed/simple;
+	bh=2Se1fAsvdjGRhLUxLc90IP2TQ9y9ZeHxyCMCxiw6DNo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ycnq+gWcHIiOxtxApUCRh+zu42aswFN97/Ixt4tMXX06H6n4EYZynvbvLmRf4C0CmwHwSsvVc4KsABMj9MG5dxT+8YjvGfYRJBvydZTF8Ulua44dcARBm6VEE4nGARYfRJYCJqJR3o1CTQwVPlVYri7ZSA8D6dW+HpB0EskKTXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lzdc0hp0; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sw07Pwc9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XlIUd+dw"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id E5D4F1D0008B;
-	Wed, 17 Jun 2026 15:46:02 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 17 Jun 2026 15:46:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781725562;
-	 x=1781811962; bh=brtdCat4XxYlIjZhZjBQECcYxY4H2G2qnKNQVrN4FOc=; b=
-	sw07Pwc9wICmGXcxYNhPsjZrCjXAAFoUgx/E8ML59T7ywnVOPiqUYO9I59nTqTDM
-	lnISP/dnWdMA+334gBTm39xjPpBIZUZcQepgyzwksQvco5J17G3cv7Y5sPq3bf4w
-	EmaB6DGfrCL5jnMQY+65imelqlc6y1PfbUhaBDz3Mr6kUVhFzB7Ew/UP71P9ByR1
-	fMWy0L9uIgWIaYEzLRIg7pJYYJ59QxPO69qBz8992c3FHoLMMPCBjh1XdS3Y3cF4
-	T8Pghin8BYgoj5slHKbl1QaIHvBtdHQEOrJj1XTJsG3bSWiOZ13N3XjCx4gnf5Om
-	KEbqBSppojgGziN9zFM7yg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781725562; x=
-	1781811962; bh=brtdCat4XxYlIjZhZjBQECcYxY4H2G2qnKNQVrN4FOc=; b=X
-	lIUd+dwuxXZSBLASfNhi9HxvAZpQRQW9hT8zdSD18DDBfbqAWWandGKLE9GiY8Vw
-	914F448Dlj5rKMNYj6lhKekB/Gu3nZXdiuQ+5ffiU6tKr3XdR7VvqF0sVAE0OvP6
-	F2ZH4iQq5uSGetsWow/mUOqoAp4amfAaIpgwZBWUDT9mAYkq3L8heG/N7URNlzJV
-	Gc8C3ihG4iqhXqSuGZr4e2ldfFPJqQA7dOZhdVv0/vNOUVLZRVs1XxqD6T0gkPTd
-	baXhEQtzUGcYHGgJhcWWpHolSKVJuMwySIR7RaTZGRqv5f/Lsx5Ltc54+vnPFoK7
-	pewgzPUafJpPqC0Nzs5ZQ==
-X-ME-Sender: <xms:evkyaisN18bLTljruDciCOkpb3q1X0PS-T7QRO2n1reqolQPV9W_Tjk>
-    <xme:evkyaiQRmChr3_coPxUbIRhnhxp15pdcKPur0KQHlzIRAzDJC1aCu8z3F4QbsnpfF
-    c1Vr9MJQ_kCqS_Ir4HhaWcZLkMykasDJk6PP61Z1LskpPUchSG_kg>
-X-ME-Proxy-Cause: dmFkZTFo3WbRxc6OOImxmaedIjZCf2qyMWTrTnFvGVRaDQtQA2FMF60yuApfuIh58l1hsD
-    rT8ud9HNhIPJwOV8pXQcZV+SbLQVnKNPhgMbo7nftUD2S+mCWouAgEEjdDKyEdB2icZaYK
-    GdjXYSWx0hI6495BvsRemAygR+/v+G0juESVy2teMk8zdF7pE67M6oG4/VQ4rzWP396rhS
-    B4SEIWLguL7y53ndEv3MeUCP0bjxu8Hk8+rjYjZz7Uu9c+eDDLIaAV583Kc23rK6ktRfmF
-    XZGW6xoHTVEPSMpTd45ukKgiomsdMEM9mVIr+D17Y0Vv0beHVY1jIkzdVxNFCdQOpNAgHJ
-    GDofjJBZJkVOdXjbC3FL/UFFclfqcL33oA8v8RUdPnw4VuE6Ja9joQwx9zubfUWnru9oEu
-    Oh3qzjiG2VYlTCMFDzEmfpiZXGhMbnuKcjqU2i4WLGxgAuFhIZ3VXngA9zpb64bPAHj7Tp
-    mtwnRSXxTDZSUOGUYi/EqTX78DuOxKpXvxuZCvsSI8U7n28kxioOwS/eF196dsZqKBHIk2
-    nHdh4pr8YnP1iAk/hw0GkFyHyPeqXNnlC8BWwVEd1jIE7l43MwDBJIpv79tQ7vzJVrKM2z
-    9coTUg3Qi4jdR9ppDdvmE2Z6eq6uVa8Kx8W1iir6m6E6TAmxx/mESQgH6vfA
-X-ME-Proxy: <xmx:evkyasatsmP9POTM7olEChpZwpSZA1PRRrDM6fUy6c9jc4Hwwlotsg>
-    <xmx:evkyagtRqcWIwj5l4AptaZK-CV0zIdQSJzCGiD01Tl9Z7cK0sHWBKg>
-    <xmx:evkyauMyge7B6a711CDsHuSKuMJho1BSnQhuVxCMkci0rrwdWc7fSA>
-    <xmx:evkyan67LvPO0hTYqz8_y5OBVbgmxPsGWyySIZtVSaSLMw1gVEqh7Q>
-    <xmx:evkyalupTfJn8z37iSRHeWxInpy94zHLyqsJ7GlJoNeHcpg_DCnGSPuR>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 893E23021A92; Wed, 17 Jun 2026 15:46:02 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lzdc0hp0"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-69e1eae4eb4so167767eaf.2
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 13:03:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781726625; x=1782331425; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/7LiCIFq31Y1QIIUuK3lFrwzmMju6PcJu+clGLhw6gA=;
+        b=Lzdc0hp0ZsRzXSoiW29FjdvdZRxyv9dWxSEVOfBmVxM/bHRkDXteFpuciXcpDDbQ4G
+         ADX5WeP1i4RVYYEYcoNZiklhLS0Dg8SajK5g1HDDgft1nemnT+BGHBRfsTcJwpnNVSWG
+         HW8DlX5b5/f/WujUdDFJLxHn5nbORweIKEu147rrkaaWXo8klMuLFdSM+MFvdDqGTs57
+         JLo8brpdCFGeFsI8V9g2FWlkpddIw5BgKtp3DVCoFcN9nGM8x34qcvg6JxaWihrtXThB
+         Ff+RU7Gv1f81ZN20dLsIgbNQ3xnWPddyvIObcERYhy2y/T+Dyjz4C3SywI5os5Ei6uZx
+         FZEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781726625; x=1782331425;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/7LiCIFq31Y1QIIUuK3lFrwzmMju6PcJu+clGLhw6gA=;
+        b=TIIRF6zAZVXpR+3RV/pU3qraVlQveVzXrWSrNSnqOgIRzoaXmvsnV11qpw+7alm5G/
+         fwRRzhYLV7nvaMkKFW0Wsb0BspO0yI9G7a5u8s9Ue9PyPdyoY3lH9T9eyoHl728T85IX
+         epnj8Do1on+5clQkCQ6RTOxAQ92PVb2EDBhlDVFhzuiWXSzMbZNOLKlrdD4SDItPTLMn
+         rMwK3zIKX6ceOQzGQdcBIMT1Xn+JYK7Aftwf92kEIxzTWQAurYcHlbd+1GLsnR5TR+FX
+         R3f2s73S5woHLHxNa5HcrM/FUXzdZEKg+Hpc6eRQmNpI3DdmrcxYmEZl8IwT33sf4Avq
+         gORw==
+X-Gm-Message-State: AOJu0YxyQUewi/52BxFjBNU6wbWQzIT3lKT75iO54clHEXmXIluiplha
+	N05885RXIqXyM7KGwm54S6+8+6eLg3ocwMM+6fBZlj4NPJvOZmRgUN8YiYDGQQ==
+X-Gm-Gg: Acq92OH9x5xoHVsGFRVr85oEkDjooWwalkmeo0wsOhq70bRjAWul0nBNmfcejdvBPGe
+	f2zumOLeBev5QmSUhPF0ruwyb4PfdkQNXYv7yCF+gYZSRHV35OGjnpKIEYClOC+V3D49xNANfem
+	bvvfHXcTzjl25Uz7MQPYdWJpBCEOm0FeYhQ8S0xrvf5gIvalEIDWm/4kKsttsg/zBOGtZbPEyvs
+	jjejQdZRpD5MQqBKYlnBHpbrmEOMYho3PA4+PPr/2/j1MAx7RQWxln7iiRINntNZAssv2WLYosb
+	JM2e8uFGxFR58I+whTObuIZXyf7OhP9VCuzvwt/AHdMwSjDiSiI2khHnkYKy22zj1K0b9HFwLd7
+	WcVenMTWCt20r82KmUh211MBOHy4qAOCB+PrBe2eeFqaW35jmTrwsp/nzm5BAI7P6cTwBKT83Jd
+	gOTZM3XjLK7m8QEUZA
+X-Received: by 2002:a05:6820:806:b0:69e:3e2a:a838 with SMTP id 006d021491bc7-6a0b61e091dmr3931299eaf.52.1781726625162;
+        Wed, 17 Jun 2026 13:03:45 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44308fd68d9sm5315984fac.14.2026.06.17.13.03.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jun 2026 13:03:44 -0700 (PDT)
+Date: Wed, 17 Jun 2026 15:03:39 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] gitlab-ci: migrate Windows builds away from Chocolatey
+Message-ID: <ajL1677NQShTO6tD@denethor>
+References: <20260615-b4-pks-gitlab-ci-drop-chocolatey-v1-1-51a6e7d5e388@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: AdJf8Qpl78Hc
-Date: Wed, 17 Jun 2026 21:45:31 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Christian Couder" <christian.couder@gmail.com>,
- jackmanb@google.com, "Linus Arver" <linus@ucla.edu>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <729baf6b-53ea-4e8d-95ab-5935667e66c2@app.fastmail.com>
-In-Reply-To: <xmqqcxxyt4op.fsf@gitster.g>
-References: <CV_doc_int-tr_key_format.533@msgid.xyz>
- <V3_CV_doc_int-tr_key_format.8a3@msgid.xyz> <xmqqcxxyt4op.fsf@gitster.g>
-Subject: Re: [PATCH v3 00/11] doc: interpret-trailers: explain key format
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260615-b4-pks-gitlab-ci-drop-chocolatey-v1-1-51a6e7d5e388@pks.im>
 
-On Thu, Jun 11, 2026, at 00:24, Junio C Hamano wrote:
->[snip]
->> +A trailer block will be created with only that trailer if a trailer
->> +block does not already exist. Recall that a trailer block needs to be
->> +preceded by a blank line, so a blank line (specifically an empty lin=
-e)
->> +will be inserted before the new trailer block in that case.
->
-> If you want to stress that a line with only whitespaces on it does
-> not count as a blank line for the purpose of this paragraph, you can
-> consistently say "an empty line" withotu saying "a blank line", and
-> you do not need to have "(specifically an empty lline)" there.
+On 26/06/15 02:21PM, Patrick Steinhardt wrote:
+> The Windows builds in GitLab CI use Chocolatey to install dependencies.
+> Unfortunately, Chocolatey seems to be very unreliable, which causes the
+> jobs to fail very regularly. This is a limitation that seems to be
+> somewhat known [1]:
+> 
+>   As an organization, you want 100% reliability (or at least that
+>   potential), and you may want full trust and control as well. This is
+>   something you can get with internally hosted packages, and you are
+>   unlikely to achieve from use of the Community Package Repository.
+> 
+> So using the Community Package Repository is kind of discouraged in case
+> one wants reliability. We _do_ want reliability though, and we cannot
+> easily switch to an enterprise license to fix this issue.
 
-Okay, I=E2=80=99ll make it shorter.
+Make sense.
 
-It felt too long for a simple concept indeed.
+> Introduce a new script that downloads and installs dependencies
+> directly. This has a couple of benefits:
+> 
+>   - We can drop our dependency on Chocolatey completely, thus improving
+>     reliability.
+> 
+>   - We can easily cache the installers.
+> 
+>   - We get direct control over the exact versions we install.
 
->
->> +More concretely, this is how the new trailer is added: a `<key>=3D<v=
-alue>`
->> +or `<key>:<value>` argument given using `--trailer` will be appended
->> +after the existing trailers. The _<key>_ and _<value>_ parts will be
->> +trimmed to remove starting and trailing whitespace, and the resulting
->> +trimmed _<key>_ and _<value>_ will appear in the output like this:
->
-> "More concretely" here feels a bit out of place, as the three paragrap=
-hs
-> we saw so far aren't really progression of the same thing.  First we
-> saw when a new trailer line is added, second we learned that an
-> extra empty line may be added in addition to the new trailer line.
-> What we are about to mention is orthogonal: how each trailer line
-> would look like.  There is no more or less concrete about it.
+Naive question: Do we expect to have to update the pinned versions
+often?
 
-Yeah, I think I see. I thought this would be continuation into the more
-nuts and bolts of it, where we move from discussing the concepts to the
-concrete placeholders, so to speak.
+>   - Installing dependencies is sped up from roundabout 3 minutes to 1
+>     minute.
 
-I thought I needed a phrase to connect the paragraphs. But now I don=E2=80=
-=99t
-think I do. Just dropping that phrase:
+Is fetching the dependencides directly just plain faster? Or is this due
+to the caching?
 
-    Let's consider new trailers added with `--trailer`.
-    By default, the new trailer will appear at the end of the trailer bl=
-ock.
-    Also by default, this new trailer will only be added
-    if the last trailer is different to it.
-    A trailer block will be created with only that trailer if a trailer
-    block does not already exist. Recall that a trailer block needs to be
-    preceded by a blank line, so a blank line (specifically an empty lin=
-e)
-    will be inserted before the new trailer block in that case.
+> [1]: https://docs.chocolatey.org/en-us/community-repository/community-packages-disclaimer/#summary
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi
+> 
+> I've been quite annoyed recently because our Windows builds in GitLab CI
+> are extremely flakey. All of those flakes come from Chocolatey, which is
+> why this patch moves away from it.
+> 
+> Thanks!
+> 
+> Patrick
+> ---
+>  .gitlab-ci.yml              | 11 ++++++---
+>  ci/install-dependencies.ps1 | 55 +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 63 insertions(+), 3 deletions(-)
+> 
+> diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> index e0b9a0d82b..87a5343a94 100644
+> --- a/.gitlab-ci.yml
+> +++ b/.gitlab-ci.yml
+> @@ -161,11 +161,16 @@ test:mingw64:
+>      TEST_OUTPUT_DIRECTORY: "C:/Git-Test"
+>    tags:
+>      - saas-windows-medium-amd64
+> +  cache:
+> +    key:
+> +      files:
+> +        - ci/install-dependencies.ps1
+> +    paths:
+> +      - .dependencies
 
-    This is how the new trailer is added: a `<key>=3D<value>`
-    or `<key>:<value>` argument given using `--trailer` will be appended
-    after the existing trailers. The _<key>_ and _<value>_ parts will be
-    trimmed to remove starting and trailing whitespace, and the resulting
-    trimmed _<key>_ and _<value>_ will appear in the output like this:
+Nice that we can cache the installers now.
 
-And it still flows.
+>    before_script:
+>      - *windows_before_script
+> -    - choco install -y git meson ninja rust-ms
+> -    - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+> -    - refreshenv
+> +    - ./ci/install-dependencies.ps1
+> +    - $env:Path = "C:\Meson;C:\Rust\bin;$env:Path"
 
->
->>  ------------------------------------------------
->>  key: value
->> @@ -74,6 +82,16 @@ key: value
->>  This means that the trimmed _<key>_ and _<value>_ will be separated =
-by
->>  "`:`{nbsp}" (one colon followed by one space).
->>
->> +Existing trailers are extracted from the input by looking for the
->> +trailer block. Concretely, that is a group of one or more lines that=
- (i)
->
-> "Concretely, that is a" -> "A trailer block is a".
+I assume Git is already discoverable on the path?
 
-Yeah. That seems simpler.
+>      - New-Item -Path $env:TEST_OUTPUT_DIRECTORY -ItemType Directory
+>  
+>  build:msvc-meson:
+> diff --git a/ci/install-dependencies.ps1 b/ci/install-dependencies.ps1
+> new file mode 100755
+> index 0000000000..e3b367fa54
+> --- /dev/null
+> +++ b/ci/install-dependencies.ps1
+> @@ -0,0 +1,55 @@
+> +param(
+> +    [string]$DownloadDirectory = '.dependencies'
+> +)
+> +
+> +$ErrorActionPreference = 'Stop'
+> +$ProgressPreference = 'SilentlyContinue'
+> +
+> +$GitVersion = '2.54.0.windows.1'
+> +$MesonVersion = '1.11.0'
+> +$RustVersion = '1.96.0'
+> +
+> +New-Item -Path $DownloadDirectory -ItemType Directory -Force | Out-Null
+> +New-Item -Path .git/info -ItemType Directory -Force | Out-Null
+> +New-Item -Path .git/info/exclude -ItemType File -Force | Out-Null
+> +Add-Content -Path .git/info/exclude -Value "/$DownloadDirectory"
 
-Replacing =E2=80=9Cthat=E2=80=9D with what it represents, namely =E2=80=9C=
-A trailer block=E2=80=9D.
+Here we create the ".dependencies" directory and add it to
+".git/info/exclude" to be ignored.
 
-Sometimes just repeating the noun can feel stuttery, like the sentences
-don=E2=80=99t flow. But there is enough variation here; the previous sen=
-tence
-ends with =E2=80=9Cthe trailer block=E2=80=9D (definitive), and the next=
- sentence takes
-a step back and talks about the indefinitive (a trailer block).
+> +function Get-Installer {
+> +    param(
+> +        [Parameter(Mandatory = $true)][string]$Name,
+> +        [Parameter(Mandatory = $true)][string]$Url
+> +    )
+> +
+> +    $path = Join-Path $DownloadDirectory $Name
+> +    if (-not (Test-Path $path)) {
+> +        Write-Host "Downloading $Url"
+> +        Invoke-WebRequest $Url -OutFile $path -TimeoutSec 300
 
->
->> +is all trailers, or (ii) contains at least one Git-generated or
->> +user-configured trailer and consists of at
->> +least 25% trailers.
->
-> Hmph, isn't (i) a narrow subset of (ii)?
+We only download the installer if it is not already cached. Makes sense.
 
-Well, this text modulo a grammatical fix goes back all the way to the
-implementation of the 25% rule in 14624506 (trailer: allow non-trailers
-in trailer block, 2016-10-21).
+> +    }
+> +    return $path
+> +}
+> +
+> +function Invoke-Installer {
+> +    param(
+> +        [Parameter(Mandatory = $true)][string]$FilePath,
+> +        [Parameter(Mandatory = $true)][string[]]$ArgumentList
+> +    )
+> +
+> +    Write-Host "Running $FilePath $($ArgumentList -join ' ')"
+> +    $process = Start-Process -Wait -PassThru -FilePath $FilePath -ArgumentList $ArgumentList
+> +    if ($process.ExitCode -ne 0) {
+> +        throw "$FilePath failed with exit code $($process.ExitCode)"
+> +    }
+> +}
+> +
+> +$gitAssetVersion = $GitVersion -replace '\.windows\.\d+$', ''
+> +$gitInstaller = Get-Installer "Git-Installer.exe" `
+> +    "https://github.com/git-for-windows/git/releases/download/v$GitVersion/PortableGit-$gitAssetVersion-64-bit.7z.exe"
+> +Invoke-Installer $gitInstaller @('-y', '-o"C:\Program Files\Git"')
+> +
+> +$mesonMsi = Get-Installer "meson.msi" `
+> +    "https://github.com/mesonbuild/meson/releases/download/$MesonVersion/meson-$MesonVersion-64.msi"
+> +Invoke-Installer msiexec.exe @('/i', $mesonMsi, 'INSTALLDIR=C:\Meson', '/quiet', '/norestart')
+> +
+> +$rustMsi = Get-Installer "rust.msi" `
+> +    "https://static.rust-lang.org/dist/rust-$RustVersion-x86_64-pc-windows-msvc.msi"
+> +Invoke-Installer msiexec.exe @('/i', $rustMsi, 'INSTALLDIR=C:\Rust', 'ADDLOCAL=Rustc,Cargo,Std', '/quiet', '/norestart')
 
-But I don=E2=80=99t see how either one is a subset of the other. With (i=
-) I just
-need valid trailers. With (ii) I need at least one =E2=80=9CGit-generate=
-d=E2=80=9D
-trailer (or `(cherry picked from` I think), i.e. as soon as a
-non-trailer line has infected the prospective block.
+Here is actually invoke the helpers to fetch and install the
+dependencies. Looks good. I also validated that this job is working on
+GitLab CI.
 
-You could have respectively:
-
-i.  Only trailers but none are configured
-ii. One configured trailer and one comment line
-
-I don=E2=80=99t see how one can subsume the other.
-
->
->> +The trailer block is by definition at the end the the message. The e=
-nd
->> +of the message in turn is either (i) at the end of the input, or (ii)
->
-> "at the end the the message" -> "at the end of the commit log
-> message", and "the input" -> "the message", probably.
-
-Okay, there is both a =E2=80=9Cthe the=E2=80=9D as well as missing =E2=80=
-=9Cof=E2=80=9D.
-
-As to =E2=80=9C*commit* message=E2=80=9D: my first instinct was that the=
- text might as
-well talk about just =E2=80=9Cmessage=E2=80=9D throughout, since we esta=
-blish at the
-beginning that a commit message is *one* application (and the main one)
-but isn=E2=80=99t necessarily the only one (tag messages these days, in
-fact). But now I see that we already use =E2=80=9Ccommit message=E2=80=9D=
- throughout, so
-it is indeed best to stick with that here.
-
-> The latter is because not everybody is "parsing" the message to futz
-> with trailers, using the message as "input", and some are "writing
-> out" the message, using it as "output".
-
-I don=E2=80=99t understand this part. This is supposed to be prosaic. Th=
-e input
-is the data on the standard input. And of that data the message is a
-subset, for example and probably most notably with the
-git-format-patch(1) format.
-
-Now, we could define what =E2=80=9Cthe commit message=E2=80=9D is in ter=
-ms of =E2=80=9Cthe
-message=E2=80=9D. But those terms are so close, it might look like you a=
-re
-restating =E2=80=9Ccommit message=E2=80=9D but just dropping =E2=80=9Cco=
-mmit=E2=80=9D because it is
-clear from context now.
-
-For comparison this is the paragraph on `master` (commit 0fae78c9).
-
-    Existing trailers are extracted from the input by looking for
-    a group of one or more lines that (i) is all trailers, or (ii) conta=
-ins at
-    least one Git-generated or user-configured trailer and consists of at
-    least 25% trailers.
-    The group must be preceded by one or more empty (or whitespace-only)=
- lines.
-    The group must either be at the end of the input or be the last
-    non-whitespace lines before a line that starts with `---` (followed =
-by a
-    space or the end of the line).
-
->> +the last non-whitespace lines before a line that starts with `---`
->> +(followed by a space or the end of the line).
->
-> OK.
+-Justin
