@@ -1,71 +1,72 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE135E956
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 18:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3CD318EFF
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 18:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781719350; cv=none; b=JtLMSYrMGkcGMk12cMDsIKQCj2YzvyAYVpAkyXFl2OcbK2+LekfNz38kL2BH1vCRY2UWXTk8RYk2Qth0YSaNISpDsSuHcSvraiBGlvBuA3CzyB3S/7zUTNsYS/AdBE6rZ+mQnURI7wGPy6/j1KYuXFCMOQiFMrc7Hwil5PymGYw=
+	t=1781719667; cv=none; b=pWBI+Q4q0F9WpaQxB13DgyjdvjP/mTTuGKvRVta44g4mSfB722JE0dP6NPIN1/c5MgxPB1/F0v/Dd47r34LBYOfvfCkfl+Z5Wi+ZT+q3mu6DURdKBhW8ldyWAR/M5d0b32BlnDhSZZbVRHMUjkSuL7gzwNyKW/3qPWcKtVJdAWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781719350; c=relaxed/simple;
-	bh=mHAhcbt3rW0ifstyQmnEWWf6H6PjKr7YGztZrlbSIug=;
+	s=arc-20240116; t=1781719667; c=relaxed/simple;
+	bh=QfA3+oyzcCT+kk75DydvTW1wtQG/YQP34vV1fVqTc/M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FtrNN1N7n+8Nlw/aSZ6ehtslusWsI+KyuuQl2gAPFua3YPAs7cPHfCi8wIiXEKyCr0LTrbqd1UQmEve0+lCIFoIYw9KyfEqkbJrI91lOidlv9gsetPiCpAFrNKLGeHf8HRQ1osSrlJxV0FaSAHILY2m/Kf/OX4clb60wEDsJxss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLCrDo1J; arc=none smtp.client-ip=209.85.210.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZiIdDDONZPo5w6krVKqltnHOZ5M9i7p5pZQ3xGaKetzuD8nTyeNdkIILsNZnsKZxN5eKBZgaIkrdy6dCQRg8I37OxbaWux5tyODSNOFTGEJV8D8w1o95xE3hfwjdw/uL9+w5qFZq8oFF4MroF+m5QyLtmdi6MJYgpeh9LovoeWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uf7qvQ8Z; arc=none smtp.client-ip=209.85.161.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLCrDo1J"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-7e71198e0adso14388a34.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 11:02:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uf7qvQ8Z"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-69d7e72b052so62926eaf.2
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 11:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781719347; x=1782324147; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781719665; x=1782324465; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NY9/i7V0fIM7XqgHOMykgg2dVjIIRgQeErVARfWCpXk=;
-        b=OLCrDo1JNc2p+7yjmflAA+v8jOycqUliulY9ICA5F3gnfSexxy06oxUqL5DVRcQhFi
-         +nWJYKpoP6Vmhlco7mxUjCxKRgmmv5nN7eT2kC2omwUnJnzes0TMDu4nXwLwXGwI+gvb
-         /lxNbHPHYZVQxemqzoaUt3n8FLQXYKyGDEiE03Zq9TMoRGh0n8PGFaF12NoFK4NKklpo
-         oSgjNU7komXYwFscULW1kYiLUs+xTN1XCQW58SqXLOwsyN4UhY7vhxZoo1rBXnYFDQC6
-         rRXNhmS9P7whHqApDDJr6Ct4rlOWetPlEcQZqUvFjoMghVHHEpBWf4kJyMVhV9QMs7gF
-         FLeQ==
+        bh=Q3hyE+gWPyzSIMSxIc2zVcKlqUpBdYz38DJXN5VmmNU=;
+        b=Uf7qvQ8ZzaPWlu5xT8V3V3q/pT3WlWp9SmvZq/ObZg4fjbbJBWL1/IgW9bjv3S4Zob
+         kVe8yuLhW+EvyfqLtUAKdGT344FbPRpprnZDoLNC9EmqlYLUG7E+gKhAbaH/iPGFwJGk
+         dBH3YB4M+FZzydti6GU812HXJoFqdZTk4I4KEr8WuqTVHwjDsszcrpqb3j4hKljXjtRW
+         KSkmlZIHfwgDTmFohxzTDJn0dep33xJrZoUWohobYzmL/QKof+RJb1/OVXdZ37jbTkVe
+         B9G6I7mbB+6xxRL/FQZ73Qn6WLXg1ronCgHlvxns1S582VqF4ydXT20theBRvO0RWeJ6
+         hs8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781719347; x=1782324147;
+        d=1e100.net; s=20251104; t=1781719665; x=1782324465;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NY9/i7V0fIM7XqgHOMykgg2dVjIIRgQeErVARfWCpXk=;
-        b=HYCOMtBUJQ6MPPWLi4BXqGFA56H4G6GvPHU2WWuGCuiBxH7Lox8dwYew701L4nlhxu
-         yx0lA0tymaLo6zVBpDmaWbmANtKepOVJpuxgb4QYPs7TcDL7EyRQZ55O+sblWbvMWqc5
-         5Zwxqew5h9tw8KBwPVp1fJpHlKrnO93bP8JDr6DNhthZMvKXnV0/glV7pytz0DafA6+d
-         m6Hpj4n7uC8RMoizcdaz98HqW8TAa40Be6FWtFWd7fVFyGfrQXpp4l7ldcsDDwbSogNN
-         6gZe96tnb4lEn1qq+iLNu8STEHlIVs++AoLcsMrJe9/rzkTTy3Zebu+8DoqePHIKdvMq
-         jENw==
-X-Gm-Message-State: AOJu0YxwGyYJAQQn8v83iY1Lw86CcqYRW6Gu9U8kRKHWirgEvMBGiJCp
-	saIzem2B+LVLURs+UGC+a6uKNcy3qXGOBseYt+2JdclBkYiqctwJhmHo
-X-Gm-Gg: Acq92OFG0wnyRigb01lqsZsWc50Hj0rsjjQCQfd8wa+TyUfiA/oEMD5hnX5qWoL3SkI
-	2TJZTLzRRwZWQW5gkFEdPKuV8Pas8p8nhkeTUi8i/zNLutOrIVu4e7UBBEZQvoJKyQ0CS4+R8/Z
-	h8oR3kL9OfzZg0Nl82jORjxXkneUqhqv552ajCJ2Vq/q8NsGj30xOs6tJqyXKWaaPXwIkAFrC8v
-	9UVCLuOJ5KVACFG/n767l8f8N3iW+0WjZw++XWUbo37U9H+WCGkAQ7F/vjqQaOMrkjPvNSFwreJ
-	2UVvCe8xssEK/dEhvRnpn8WQ7QmzPzmDVeMZ5Js0a/1eV/KY/PNuw/K5ckug4Jxifxv9sitq5jT
-	NvACNQYcuLO6MBgnTLm6RpWZcXEY9nBv/bpCvpDrSTadHn5Gb6KTbL5il9R1wmMNYXuYS9ToUnF
-	hlriBCZA==
-X-Received: by 2002:a05:6830:d11:b0:7e7:c1d:bf5b with SMTP id 46e09a7af769-7e90c99b2a8mr3839296a34.24.1781719347227;
-        Wed, 17 Jun 2026 11:02:27 -0700 (PDT)
+        bh=Q3hyE+gWPyzSIMSxIc2zVcKlqUpBdYz38DJXN5VmmNU=;
+        b=GPEq3ynIZGYSmh9+130yz1SqJXNbPueXNuU+HsbqyLUJfh80LotxC2fuzJ37dEv+NC
+         zHNRt1tF9usHhegJZfDWpPUToLYQ2DeQa3bsI4FX3cPaKrVab/B2MIO52t4qyudRyH+V
+         Fg6xjdMyqOOQ8E7ZXyP3RrWbIAo0hDU10TNgZVLeoOGIh2BhPNAhfvQheBKZpo4+M2fq
+         iLS1IcQQsg5iX5GJLMGFKGNzAb3o56RlZdpZORYiVRj0gKfOpMl25dA3o6beP5OaaAtY
+         +o8ylb5ws84FMYo/Jg59fR1cNm7OWo+TeagUU7RF7UqdheVQuBxMgoY4MQzjCADhZw4s
+         sUHw==
+X-Gm-Message-State: AOJu0Yzc/WViiUh7KYyXwik6BBqd+SqmVfsaYxAvF4iv4jiyNlwnMNgO
+	mVqpcFO+WrmXlRIM/oWKdSC6Jo8FJUJygWCiRT5d9gpHc7mbwznYLCle
+X-Gm-Gg: Acq92OFOuwG0dEW3elJISUfIFJGUZud38qTzVmPC60OiGXUmRl1LUIwhhrZImOjiHDP
+	FtLzz7uD/hkWF+DzOl/qhR5GCA/EVl2qhsnWR3iDqHa78ld5i49G+FQBPuH8bjaBvFGyVIa9ghu
+	KhEo6IKk8I4zFX8h+BPCkaGyyh8GMnGIQt2QRO7nyXM4219FR0dUEzVl8s8s0DqCFd+PhaNaHPj
+	WiNvN5SB2QLIqCPTtVkGN+R4CwFE4oLIRxY+grPGp2ZCpq0rYraS8e209pW1RZ8038WYMSlcmcW
+	nakYaThb8FvHXHJsEZC6Puys+zjhHJXxpHRbP15AJMfYwA5GOLg+mPsjiXbCttAHI6Kg3HQcy94
+	1lihicirdj+JzelDEKrR4z7mgCXZDCYYvVuopgYpoTuJer6cgxxf/w22JNnwnLXdsfZ2+rQsZlJ
+	F5DuRBvw==
+X-Received: by 2002:a05:6820:1686:b0:696:6440:9e1d with SMTP id 006d021491bc7-6a0b60c31e1mr3298836eaf.39.1781719665048;
+        Wed, 17 Jun 2026 11:07:45 -0700 (PDT)
 Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e79f5a11efsm9827165a34.1.2026.06.17.11.02.26
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69f00ce2f24sm6884463eaf.3.2026.06.17.11.07.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 11:02:26 -0700 (PDT)
-Date: Wed, 17 Jun 2026 13:02:23 -0500
+        Wed, 17 Jun 2026 11:07:43 -0700 (PDT)
+Date: Wed, 17 Jun 2026 13:07:42 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
 	Jeff King <peff@peff.net>
 Subject: Re: [PATCH v2 4/8] refs: unregister reference stores from
  "chdir_notify"
-Message-ID: <ajLdIY_fxkKDTBaW@denethor>
+Message-ID: <ajLhlWqkJLqCzp7v@denethor>
 References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
  <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-4-f4854aa99859@pks.im>
+ <ajLdIY_fxkKDTBaW@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,104 +75,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-4-f4854aa99859@pks.im>
+In-Reply-To: <ajLdIY_fxkKDTBaW@denethor>
 
-On 26/06/15 03:56PM, Patrick Steinhardt wrote:
-> When creating reference stores we register them with the "chdir_notify"
-> subsystem. This is required because some of the paths we track may be
-> relative paths, so we have to reparent them in case the current working
-> directory changes.
+On 26/06/17 01:02PM, Justin Tobler wrote:
+> On 26/06/15 03:56PM, Patrick Steinhardt wrote:
+> > Note that this requires us to use `chdir_notify_register()` instead of
+> > `chdir_notify_reparent()`, as there is no infrastructure to unregister the
+> > latter. It ultimately doesn't matter much though: in a subsequent commit
+> > we'll drop this infrastructure completely. We merely require this step
+> > here so that we can fix the memory leaks ahead of time.
 > 
-> But while we register the reference stores, we never unregister them.
-> This can have multiple outcomes:
-> 
->   - For a repository's main reference database we essentially keep the
->     pointer alive. We never free that database, either, and our leak
->     checker doesn't notice because it's still registered.
-> 
->   - For submodule and worktree reference databases we do eventually free
->     them in `repo_clear()`, so we may keep pointers to free'd memory
->     registered. We never notice though as we don't tend to chdir around
->     in the middle of the process.
-> 
-> We never noticed either of these symptoms, but they are obviously bad.
-> 
-> Partially fix those issues by unregistering the reference stores when
-> releasing them. The leak of the main reference database will be fixed in
-> a subsequent commit.
-> 
-> Note that this requires us to use `chdir_notify_register()` instead of
-> `chdir_notify_reparent()`, as there is no infrastructure to unregister the
-> latter. It ultimately doesn't matter much though: in a subsequent commit
-> we'll drop this infrastructure completely. We merely require this step
-> here so that we can fix the memory leaks ahead of time.
+> Since this version of the series dropped the last patch which stopped
+> using `chdir_notify_reparent()`, does the log message here need to be
+> updated?
 
-Since this version of the series dropped the last patch which stopped
-using `chdir_notify_reparent()`, does the log message here need to be
-updated?
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/files-backend.c    | 22 +++++++++++++++++++---
->  refs/packed-backend.c   | 16 +++++++++++++++-
->  refs/reftable-backend.c | 16 +++++++++++++++-
->  3 files changed, 49 insertions(+), 5 deletions(-)
-> 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index a4c7858787..296981584b 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -100,6 +100,23 @@ static void clear_loose_ref_cache(struct files_ref_store *refs)
->  	}
->  }
->  
-> +static void files_ref_store_reparent(const char *name UNUSED,
-> +				     const char *old_cwd,
-> +				     const char *new_cwd,
-> +				     void *payload)
-> +{
-> +	struct files_ref_store *refs = payload;
-> +	char *tmp;
-> +
-> +	tmp = reparent_relative_path(old_cwd, new_cwd, refs->base.gitdir);
-> +	free(refs->base.gitdir);
-> +	refs->base.gitdir = tmp;
-> +
-> +	tmp = reparent_relative_path(old_cwd, new_cwd, refs->gitcommondir);
-> +	free(refs->gitcommondir);
-> +	refs->gitcommondir = tmp;
-> +}
-
-Ok, here is introduce a callback specific to the file ref store to
-handle reparenting both the gitdir and commondir.
-
->  /*
->   * Create a new submodule ref cache and add it to the internal
->   * set of caches.
-> @@ -128,9 +145,7 @@ static struct ref_store *files_ref_store_init(struct repository *repo,
->  
->  	repo_config_get_bool(repo, "core.prefersymlinkrefs", &refs->prefer_symlink_refs);
->  
-> -	chdir_notify_reparent("files-backend $GIT_DIR", &refs->base.gitdir);
-> -	chdir_notify_reparent("files-backend $GIT_COMMONDIR",
-> -			      &refs->gitcommondir);
-> +	chdir_notify_register(NULL, files_ref_store_reparent, refs);
-
-We use the new callback here instead of relying on the generic callback
-used by `chdir_notify_reparent()`.
-
->  	strbuf_release(&refdir);
->  
-> @@ -182,6 +197,7 @@ static void files_ref_store_release(struct ref_store *ref_store)
->  	free(refs->gitcommondir);
->  	ref_store_release(refs->packed_ref_store);
->  	free(refs->packed_ref_store);
-> +	chdir_notify_unregister(NULL, files_ref_store_reparent, refs);
-
-This allows us to unregister the callback and avoid holding on
-references which may have been free'd. Makes sense.
-
-The rest of the patch does the exact same for the packed ref store and
-reftable BE which look correct too.
+After looking at the next patch, I realized we are referring to just the
+`chdir_notify_reparent()` function here which is no longer used. The
+current log message makes sense.
 
 -Justin
