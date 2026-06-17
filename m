@@ -1,138 +1,117 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F7A38D006
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 22:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781733814; cv=none; b=nZJ0xkKt79JcnIByqbQDOAlSy6GvE9L5gm2VSrpFjlHCE1ylMOA83HoF5MmDDt+HsJTAfqhe/Pq9Gp1WxbUhTfsMrugILiqLGV+6vbfs3fCs1R+LmUbFsccTWhVXQ7rz/35hxKEBxoHHC5POqS5rOK2vnXZil1yVufiRFa6bL7s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781733814; c=relaxed/simple;
-	bh=Wak3lQOMzzSxPG/pkXn9qQYQHZZxK5PTM9c9rjxWmpU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=UoNjv4bMNEAA9ppLvUFRcWl4L9DyVokNYMbkR6cS///yujRlzbNhzfutavwwc5ZAYT9PLpHQltiP7YC1yw9WnnCycvk2CYf+KUYcyEQ/3fYG14Zo6DqFb03yDQHD7u6pZjSulyfE2ziLJvsLjPBXhrBiiQTURLj41yAjtYn/ndU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X9THIc+q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dyQC+rBM; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7C333B6DA
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 22:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781734276; cv=pass; b=EdbRDyCKySgrBkvdvz0RCkeMaGI9FTKYtwtn5uXJPXBVqcInua1DuDCxAn3hVxnP9cbxFBmXkNP3M26X475qaLUGGwBBKlJsj/3vshgCqFO2gYvKS31+NI5zL+1ORIjk/JMH/cemn8dbHXYcOZgCPqUasro4TcZjVodyegeSFDE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781734276; c=relaxed/simple;
+	bh=jkc0KpQZ06IQFqvfo5weLiE6jD0FlneInSQgr76gC6k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JONMkUK9W29bK/ws+63PIHUATcrv1wPWYgZY+TMbuXk9nWAlsPfd/2PY2ShA3+xEZx1ICQOVSyOiItixU424aDGCxOLJUZKQaWFfa96IXs9ZMx1ga9HsQZZBF0LFKFeY7jv1CFmd3jrtzgsTYGwUMFllyhaKj8WoCfJT1IQ2HkE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/DpfXKe; arc=pass smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X9THIc+q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dyQC+rBM"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2014B1400023;
-	Wed, 17 Jun 2026 18:03:32 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 17 Jun 2026 18:03:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1781733812; x=1781820212; bh=KXuK9Xb0nEsxXhu73C0YtnAb+dN0X9+v
-	MQCNPN0RPVQ=; b=X9THIc+qptzWrFJoyvs3GkV/ARkLq94gwga5XHG1Wwntb3T9
-	TY3z2+HWRyYRYFUsF5g8h2ebLMtolqKBkfkACJNtctmW7F8rKjg7hyFwVtUkpyvS
-	6L3wAlfu9qHV9XXrj/yjtjz+VkeumMVqW8+Qi67vI+/iP6cqLaHr/mmSUAxmz73b
-	ei/bQ0Ic/hYn+NT/V6urxe03hDO9J0VDPGSt7X2im9eQk9baVQlcMoiJn9DzHOvw
-	obctjx3NmfOgR6IyixRTzlf4Ct9xO6SoZpTIN1stD4iXY1fyUNP3EGcXBfBQSNwU
-	/91ObqCFrlNF9tn9clIjXSuyVWhNsVGVu2+vOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781733812; x=
-	1781820212; bh=KXuK9Xb0nEsxXhu73C0YtnAb+dN0X9+vMQCNPN0RPVQ=; b=d
-	yQC+rBMEPpytj1AkFCMmY9IeRxp4xZC3v5CwZ0SUBLmGrZ7GXawkCKy/cZ1XTCl4
-	WZRoZXXnfIiHNNDWRDiz1s4Q1O7j9FkNB6If7TTQIw3EA6XF5s2/eJED3JJ196tJ
-	ZUyQTEulebhAAIZEmN47A9ZXFwT/OxnkbAwkXxe52A7dkHLEwubfzDax5i3XMWdI
-	A7HfK0Jzm6gnCQKGYwO/n0tcl91flFFaW23gEcoXa8re0BB9g5y/a86g1dxTbvWV
-	pTCEJUZYoRB5w0RoZ156KDnDEKtIpwKsbsTf6uxAmFRlG4wvIj2+hZamxAP0C5y5
-	JU1jWNtrPKnFiq//mZzPg==
-X-ME-Sender: <xms:sxkzaiziVIphiicGqwoGDsxFxRQf-Z53RQXBpyCfP_0-ZDhjJBMF4g>
-    <xme:sxkzalvMuYN5a81inA7qJiHeI6L8EGSUrdHv9kfsOxU3Bz_QEkpND5BmUQ6IAjljz
-    QeeVmfuBtdq85gzZyqq1I_TqhK_agMInoI6s6vtvscN-A5KvaSfGak>
-X-ME-Received: <xmr:sxkzahvNF4auOEcARYZvmA05WuqG9X7G7Cz75MWvu1PFFxpn8pbDA8F4qZOxgOxZaWBIqxtbWaPdCRRoJ3UJLSpZ6jQS41gJUCg6svIosToBLnTCmW_ypB0>
-X-ME-Proxy-Cause: dmFkZTErvVmiVCOrHaypA7drOJFzrg+653d9QHK++aJlBRpPe2E9AHy0C2euwaLpzfg0Qy
-    HQLpuce+lr3ieRyzjd+RVYHAIy5ezCiQKdekgytaM8rS1D+PHSwuCdRs02dFMlVYOvMKY5
-    BRj36Scp05+xArjt3lgkmIGT2b8dD4P+3ao8IZj4Tc/zZfRIuGkh6n9ka+hkQ/SsECwr1O
-    mx98ZWsYVUjoSk1keWGe1Jgxn6TcTjK+unQySq1JKmRSACcIMuYJbsAjX6hS5t1BF21eWU
-    ZMlTlZyptbrIP2OvsXKcGjCqDwdARV63NPx1xw9/Rdu+LboQyo/0qYaaFf97M18nGM6TJq
-    8186NJChx5YdWp7sMgzHPgyHK2fU866DKKh8UzGoIWwxQSvCtxeDyE5x1/Oe8tzXB4J+l7
-    TdsokjyMlMhF8HM/VEX/Cl5VH3a1EuayagyI5/Plv3ZKvebwmPYvWCuz4Aa6uCFdRllcgj
-    efs5iPE+s+Sv18dHwEIn7Q4V5VgQiA6e84vEt2RaCqFUL5b4rAK24S0wIr0ChWu+VNjXxQ
-    oWXWN4HYNjgGNWmHcjqSL6RcJdUfCC45bmpDSOdj7VVm1BjxSd0EwjEbBjHNibGpsaz469
-    jsT6f0ETbTPNsObnFTizNKNf1mnDEwRmQ8KTDYEnwI9EXj7DYsWke+cbTReg
-X-ME-Proxy: <xmx:sxkzaiMaF-LHrjnnmPjonjnVG98HRvkYrtPYFTf4k1qk5FdQ9q1_uw>
-    <xmx:sxkzan0O9-HcYZhq0RsNVrMtudJf1jy0PmoB8N1iNPiHANJSM4fH2A>
-    <xmx:sxkzamP6AvmJRqJ0PQUFcb65qypmml9rUIyvYOngmjHns-1_3b86nw>
-    <xmx:sxkzav2XUM4q0dV4MqqMalCotecW7MP4mAhhCwKYYdthCT_OWiLTFQ>
-    <xmx:tBkzala0nH6FZOfB9imDDZeCG6lhSaODWbNfZYlSZD_-SAl1F-dxKXwy>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 18:03:31 -0400 (EDT)
-Date: Wed, 17 Jun 2026 18:03:30 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
-Subject: git-2.55.0-rc1 t4216 broken TAP failures on non-x86 arch
-Message-ID: <20260617220330.n6byiFQr@teonanacatl.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/DpfXKe"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-bec423a5265so33606966b.1
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 15:11:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781734274; cv=none;
+        d=google.com; s=arc-20240605;
+        b=FQRMd+hiI3AilC0t2oZMjtcwv2qQ5m3DfsFREQ18QAOiDJ+PE9BT6Qo8IgWDtvZjI1
+         6m9o8ZTdj+VeLcGL1qqQ6KHyDbRpAlyhe65K72RQx0AcL6Sbfn75YzQKq2IKV52XHDWY
+         6Xj+xSUUIp3o7HjLns3ArF3Z6lD4LnB0drKO45/h9nxg7Ckb877Yos3KT+9dFEy+roPS
+         Avt2cpgW08OFaiemNk6O1Uk+0iqAZeqbQY6oFUrBD29xznGfM83ZNT5T0WFJSn4bOH/z
+         8KrQ3FPpUhdAyxbt7BRrkmMv3oHgUHVJ1XJVoIq2NFkSkTg2np1ejblCJR3cEXUQmmyH
+         KIOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=jkc0KpQZ06IQFqvfo5weLiE6jD0FlneInSQgr76gC6k=;
+        fh=S4tTSywxdxLfdk27UINuh3gy8Mj9s91UUFskeSJWWBA=;
+        b=CiPa2D2pTfEZxa4lUrhDGZFR2iqUyx83wpNXimMILYFdQqeYvTjkRKT9W1WtLdCmoP
+         hdwad1ecDQJU0pL/rsktfSCQYcArh/SWQ0a7/F7lIPFlshNyH0j8ApVdX74dAxMrozOL
+         6/TW6EJcCkdRX+MDRmIjAYu1uMynP9ggP3XT0nt13npJQ5jxNBuXCsJcdimzw9S8Slsi
+         o7JpOdCxd+QdvSg2/rIy0zotlTaUsYEI5qm3ztvyRi6j39O3q8r24i0O+L5c/oWoQ2mX
+         o9p2dluhKYR8OefVOIRijfNoRs8qXku7rMbJdUBV/qx9EZ0nW8zVCQjyoaG4iGPvyPPD
+         ju1Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781734274; x=1782339074; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jkc0KpQZ06IQFqvfo5weLiE6jD0FlneInSQgr76gC6k=;
+        b=P/DpfXKeizBmz9TqTR8jXrG2Er6iKP5PyuN6IEx49Jq0cUamdY9NYrtK1ls+4NDdFq
+         +ehmGL5J0FgnO9zyT+6tzzgmaht/Lh/WfywIvzVOUxq2oaPtJrD11Wh6T1ZDIzcEG3mH
+         2DAl85k1/gfDkv4eR5P1xaNywWKggu1yLQINaWDKl5n17TKecO5mcHCHnmRU+EH+Ybs7
+         f5iZuSwC34O+5Y47at1WtEahO6hxqgMFdEAP8Y7VxN1JROtRe9uE/jXN/VDhBuZ82DVE
+         bEB87A4U379o8c3Y0TKGjFAHziEnFLWStiDpzACiYQdf9+KQLFTte5SRL9xabfMNDkli
+         dPBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781734274; x=1782339074;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jkc0KpQZ06IQFqvfo5weLiE6jD0FlneInSQgr76gC6k=;
+        b=eaHj94GIyW7uU/RFpkkpNQUgkElCcFqThkM7JAtO36s+Z4JWDiU+z9Hgchzl5Cb//g
+         i1OAL350afLuZBWp4vV6uqXYJ7ZRBhakhuNgEhu5QyDxUHLTPyjJlZzdHBp8b+UpJkvj
+         98DasAvAYKZtGpLi3QuCMYJ+qHfhHthxcgiU5k5wzcJKzoS5SM473lwvW+pkVBVkjEFs
+         arDA2c+u+NPKjgMGT667Ok4/B/CMUuU3FtXPhUshyGa8kEZ5C5Vs5rBOJN/48B2uBN7n
+         PmRBqv/7HWWVnEz/HSXqKc1qfLducy/abx1fMp8sJfjbTD0T+Ku3Yo2V3G+szjXSk5QY
+         oREw==
+X-Forwarded-Encrypted: i=1; AFNElJ9BtkqOoGdKjiEQWzAphHcteQNHiiX0iNJXSPhdNCjjcAjAMMx794/faieM79/Rfjc9zNc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNCmid3Hmwag+Nyre5dw7eWxNLFxfRjfAEUZzHZDrIDrbVJzN0
+	vgHGeXd72DIb5U1BmPRLAjgv4LEtxEu1o/7FiPxKKBTOrWyAwdEHAsqktMl0n6/MCcVzcbpbcFu
+	LzpYOIN4tFOUfHkq3Z9EYmY3lN/0YbdE=
+X-Gm-Gg: AfdE7cnARFD5lT5Yasob1cDAy9rVHbU0GXhUubQNPWo24NPC//tOQ6FZGMxs+x6PZp4
+	ELd1wvAT6tJW0Zx/9nmdHrI6jD0p33drbrAaX0VIq3pxWX1g1tR361S3oKYyKgObPvT0sMjyyUx
+	xQxGgbj2eRXlSFTUKzK/nB15iUNYHfblVbbvLn9ZiYYFRzyxHRJUrPVqAguqmVQ/14Y3EyqSQNE
+	T+0f424KyOiOFZQIWsfpc8/qpTgIFdAgAHKTSX0RqshI8NK9mPAE7mHrm2fj1Tsn0Eb90A8
+X-Received: by 2002:a17:907:982:b0:be8:c839:3c4f with SMTP id
+ a640c23a62f3a-c05a2f3a6a3mr368691066b.23.1781734273372; Wed, 17 Jun 2026
+ 15:11:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <pull.2281.v12.git.git.1779358803652.gitgitgadget@gmail.com>
+ <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com> <xmqqmrwtuggb.fsf@gitster.g>
+In-Reply-To: <xmqqmrwtuggb.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 18 Jun 2026 00:10:36 +0200
+X-Gm-Features: AVVi8Cc9WCvGPZHNCJCaVrb_M-IiLgkOfEeP1K3zV9HOOzUvJ3-i3JQ-481kez4
+Message-ID: <CAHwyqnXLceLXzRrW_7TB8JM+Ur92gw5QkYeKjzOGbWX+f_yLjw@mail.gmail.com>
+Subject: Re: [PATCH v13 0/2] checkout: --track=fetch
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Marc Branchaud <marcnarc@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+Hi!
 
-Building git-2.55.0-rc1 today, all non-x86 architectures
-failed with:
+Thanks for your continued attention here, I appreciate the help on all
+my topics.
 
-    Test Summary Report
-    -------------------
-    t4216-log-bloom.sh                               (Wstat: 0 Tests: 167 Failed: 0)
-      Parse errors: Unknown TAP token: "--- highbit1/expect 2026-06-17 19:44:07.555797743 +0000"
-		    Unknown TAP token: "+++ highbit1/actual 2026-06-17 19:44:07.563651478 +0000"
-		    Unknown TAP token: "@@ -1 +1 @@"
-		    Unknown TAP token: "-52a9"
-		    Unknown TAP token: "+c01f"
-    Files=1047, Tests=34680, 1072 wallclock secs ( 7.61 usr  1.61 sys + 395.73 cusr 586.23 csys = 991.18 CPU)
-    Result: FAIL
+But can I offer some (unsolicited) feedback on this review process in
+particular? Given that it seems unlikely to hit 'master' at this
+point, I want to say that it's the wrong order of things to dig into
+code specific feedback, before deciding if we even want the feature at
+all. We are wasting each other's time. I have pushed on despite
+initial negative feedback, that's on me. But I also cannot lay flat, I
+like the idea so I keep pushing. Now we have v13, maybe soon v14, of a
+topic that has slim chances of passing.
 
-The test output is:
+I would have been much happier if you shut this topic down directly.
 
-    ok 148 - setup check value of version 1 changed-path
-    --- highbit1/expect     2026-06-17 19:44:07.555797743 +0000
-    +++ highbit1/actual     2026-06-17 19:44:07.563651478 +0000
-    @@ -1 +1 @@
-    -52a9
-    +c01f
-    ok 149 # SKIP check value of version 1 changed-path (missing SIGNED_CHAR_BY_DEFAULT)
+Imagine all the review time spent on this that could have been better
+spent elsewhere.
 
-This looks like it comes from the following chunk of code in
-the test:
 
-    # expect will not match actual if char is unsigned by default. Write the test
-    # in this way, so that a user running this test script can still see if the two
-    # files match. (It will appear as an ordinary success if they match, and a skip
-    # if not.)
-    if test_cmp highbit1/expect highbit1/actual
-    then
-	    test_set_prereq SIGNED_CHAR_BY_DEFAULT
-    fi
-    test_expect_success SIGNED_CHAR_BY_DEFAULT 'check value of version 1 changed-path' '
-	    # Only the prereq matters for this test.
-	    true
-    '
-
-It seems like we could (and perhaps should) redirect the
-output from test_cmp to a file (or /dev/null).
-
-But... are we expecting these tests to not pass the test_cmp
-on any non-x86 arch in the first place?  Or is this exposing
-something broken in the test setup (test-tool read-graph
-bloom-filters) or elsewhere?
-
-Looking at some older builds for non-x86 architectures, they
-are indeed failing to set the SIGNED_CHAR_BY_DEFAULT prereq.
-
--- 
-Todd
+Harald
