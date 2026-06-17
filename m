@@ -1,174 +1,141 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D4A3093B5
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 17:21:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CEB1ACED5
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 17:22:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781716916; cv=none; b=A/l6m0awRnTfzW6N009TuySlznPRJopUpDexJYuqqnliwyYCSmSgVBQqHKYbbeLBzIuRJuezSCoN4jGiAD+Q2prhBEYiTr+ZgwVOHfHKmhLL5vmpybOmCB9jdGshODgWGAhT1j3ObLyjAc+tHBQXrcgxb15oUedT5IWsU9+oakI=
+	t=1781716976; cv=none; b=NB//wLSV3GyUBAZLDCmhUjX1cC2UBfWUGoGbCmcQCv1zKxFPTBuUhS/nKjI2Bzgr05cswjL51INoeq4hLBb5GqjE0khVVvEAdxIJlL5hPiO10zkqXtDitqqSOc2YrzFH/Llg8Xk/mYRnaW3SNgvH/O1Fq7Wu3sCkcCARoMt6bGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781716916; c=relaxed/simple;
-	bh=ak+GjipcEl2ZnKtYR9JZuWlfkVwun7zth33nkZ+GRRM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=phwiOqt7UENHALzwL8ELA1fjD1ckwvUp6OLhxf7v4vzb2U940NLAT9otIxBQ9iCz8pwSz5NZ11EUTdvwQ2Wx9ql2NfihcZK1qal3g+FHS82vJLbf/TSCwMUILzD+nRCcSj3m/PXFiPULgfROHsfLxjL4HhXeeFq3RBFh7SiOhZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=j1GVXtEC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nc9gooJG; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781716976; c=relaxed/simple;
+	bh=wK8qU6Yhjjpp6A8uoTrmbjPU1TOZ+9bseQiJlphkNJk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hS+f5ItKvgYxpDFAc/GMf1dVfLJ2oj1tx2kzQt2I0hD+sXqiLEnQDFT8EV//+y7ux8HLKE/NNcFhwFXduRJH3ocDBhBavEq2UXIcF1r3Ivh26ORmdl1H0Kn5BAgU3/Yqmd6JciuUt1jIpfaEKaIpc9uTxz73b+Cnomk48aPHaj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q4WWrW0A; arc=none smtp.client-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="j1GVXtEC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nc9gooJG"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BDF687A00EA;
-	Wed, 17 Jun 2026 13:21:53 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 17 Jun 2026 13:21:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781716913; x=1781803313; bh=yqbFuSd967
-	49kw9ootCDvuNBmzFthtB2Je4aI5Y5474=; b=j1GVXtECTblPqIIfKVS/2uF+Zh
-	OliLHv6cWQgRem9T7Np+xJyvIZ58ZJjLA/Sjxz86rz8LFCVQn7EvKG1olzwFFlmv
-	STylqUGEKT5d/lRduYBILSv0X079sTTJrF0qg3sFLkadv6tuRdIxKloR5P5gmlvt
-	uRVJ8zEF2ZjHzPr5+2aeihllMLQy8V43DmtCLX59zmC+Xv3yvcnnUQnCNvmvdfqP
-	0gNMyERPWZVAra4K0GFDCnHimSJRRiBQpQ5UBop0o8fBNGWVCCmsSJg/POc9XWyN
-	V4+sW+ka4XGda9I6WJPknzB4fIx5WzJtefDmSY1/gBjntx4xikW6JZz7lLeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781716913; x=1781803313; bh=yqbFuSd96749kw9ootCDvuNBmzFthtB2Je4
-	aI5Y5474=; b=Nc9gooJGcT3uzmYn0shWaKmtWJpj2Jo4BXwXJ2fF7orVvcAEfGc
-	gfAJ69nVQSjAQVuGEtRigVrgJlcL+wm1nRfLsf2hYnaZ3uAAlYFoZ8NrPRk9XyVh
-	wWRsEDIhvfxGLjOPV3Nsf2gcwVKdJLqyCejtVJWNU8QRpeNeZKa7g93fjJmJytPw
-	GddSkQskSTxq2Oeb0TXL9Uo9JNZri+NSXdja2tlmWrAsaXyoVCjosna1s/MdaVx8
-	ZIEx15Ztz//zTa7HCWm2Fvw3eYTHgpeACM6AdJ1q//2IQNt4xK3BDSz+8DCX+S4C
-	CtsRar3p39kDdPnDYkE3LfEEaJUaPclYChA==
-X-ME-Sender: <xms:sdcyahPkU_V-5ZAyn79dYr8no3PzvNC9xTdmXB8f4b9VpRdbtkdljQ>
-    <xme:sdcyaq_uU_JAYjwOG70ozF3OMhIltngd8M3uk7SWt7u1LUcx_n_KBChAVf1gBLhL2
-    cuxYWz_in2bnvGc33eeHJRoX_oobsME2GUYlQAirusYSwQ_nCOhWQ>
-X-ME-Received: <xmr:sdcyalToa8-WFzdUissPhTqqwGJPuKvI0w56YQ-uYCIx_lnaaKx9GfGEqt1zaZ6kluaID7fLYTH27lqsRM5CudgqA_tPDolUtdLD>
-X-ME-Proxy-Cause: dmFkZTFf6vWfF/846mFdMOth/5SvPregSW/XOpP1oi4wMrBnVT1ayS9c/n+BumaV3F50xO
-    6uBYzuw9dHLfbn5kx9OvmQU435Lh2jLdQFF7SqsMzGHiYrZRHSmLMa5lDAiT7vPtMWFUWb
-    1re6Q81fkEoDMOtV23f9V+XgFFploHU+fFl2wlkLnDz4IZMS62vKwaQPBNY9s/HXW0C3lT
-    jlrp3YrQrQGilCtsnC8fi0cYnl+NaxUG171qvKTxvdLm3IDG/temU8LP3mNo4oPfGNlME/
-    Cu22DtumTHg0CEgyicKCWzjiDDgTZv1bchL+4rzuq2dM+N+c1vU6DwSu7WHNZKZBJ676jK
-    a4ShAT0M0h0K9frbaPQxZfaLGVYTkluaUJOQDBXcRW1gfb4xAUnRf9YAm0luyPaS3/hsjk
-    F7OYgXFoNDAeRR0PgVhNyVC1GyO24AST87EmecSdp5V5JFudj9kM5XDd5x0Ld9zpyWKiSZ
-    CBrP2bAQpeV4f0VqqkLRk9AH19JRKk+O8ocVaGcNq6X0vHQ/KFKzDDJkpNVuZK9yJXlqEU
-    S2CA+bcROgiPwJXw1RcmRYHOX9bpRFStcaP4wDF+MfPrGAvZPIwavqtt9Q6/d+s9TPO23/
-    mHP8A5Yc00H90lYGB+yDSvITxI8KihNf2qzPLxX7zYz3Wdjn929ntFNz4mQg
-X-ME-Proxy: <xmx:sdcyaslxPSIqie_7i_W3PMrjn5sWzoV6e85dG4jps7hpwtLupWuvOQ>
-    <xmx:sdcyalQ-8ah0UgPJdLUJfi7yxXIJd8yAOMu_pJIY7QxiyNyNUdaoyQ>
-    <xmx:sdcyaqNPvUiUo2QX9Vd8P6oCJe1YuQkYV48MTorPacsaUyaOKl-NFA>
-    <xmx:sdcyauVtVlrESpoJ0h4wdvOLz7wHiLoc0vEI_Zj_NF9X-kxrGXzr_A>
-    <xmx:sdcyaow_EewprjoSLPhDyqzfzYVHosrWMaorJUs3--QjkgCMV2p_2a0->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 13:21:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Lutz Lengemann via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Lutz Lengemann <lutz@lengemann.net>
-Subject: Re: [PATCH] completion: zsh: support completion after "git -C <path>"
-In-Reply-To: <pull.2155.git.1781710256081.gitgitgadget@gmail.com> (Lutz
-	Lengemann via GitGitGadget's message of "Wed, 17 Jun 2026 15:30:55
-	+0000")
-References: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
-Date: Wed, 17 Jun 2026 10:21:50 -0700
-Message-ID: <xmqqa4stw09d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q4WWrW0A"
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-48670d35a87so846512b6e.1
+        for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781716974; x=1782321774; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=o837Mp6/lPGzBKP2hiUhwtCuiM6Q+8ciQw8TRCfQxWo=;
+        b=q4WWrW0ABVp4H4xwlDkH4O4D3HuEyiwN14CQBdJQiR5gqMbc9/3dhSvMcXEgzNOTj3
+         5j+6rOEL7C07rQDfxf09QM1c1Ci+JQ8evHsXC+gf0HngxFQph9OlwOJCkCqiVtUW//WV
+         XBM7y5z26OgrogIm5NiwYFk+RETlHwO5oDAgMG48xyujLf3MhYzhukGIyek0+Tbkf8BF
+         bMpLWKo7ErWQQMzu9UdwlkanOykAMyvNhX7mtRnPZW1cL7g/p0GS0obvrdUNHwf6suXE
+         0TiZ58CF1+0NJo+rSMzBMns0Jce59JoW/vA2TfO4QqKQ6kmZ6LGRwJEq+hezZOzk4ogw
+         L/KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781716974; x=1782321774;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o837Mp6/lPGzBKP2hiUhwtCuiM6Q+8ciQw8TRCfQxWo=;
+        b=Ud+xWY/JzrcI7HqXfFK14kOX1dJ6xFVKOmS61pY/OcbjOHMU0S19/AbAcva3AqYPpa
+         0XeMNJtMiq3VnAlpkctbbRT6+JiCXmtIJBw5SMaYzYMm8/vRVr7msgmntAe8Tfo0vMEz
+         gDEHVVlzzV0PXzcQrscsGGEE3iHxjLw9b1+S33Tjm59UOuTMGyMtlHSu/WVFvyj+td9E
+         qGIz3Ip6P3Fra6MPWEwsGdB4s5PYxdt5gBQh9uZ3OUhoKqFaFrRyzYtni7F2JXZyq5m2
+         Pa9uifRMWvEdbPkjTNjddgZXp80UXTHbsQSd3GpPT9oFwv3tYLdAi90Ti/fBScCYz5NF
+         4llw==
+X-Gm-Message-State: AOJu0YzivFmcwRLJLtHIhTpgvtX9Pm2V7l0IaS6i+FHhjz4tdVWcZsDQ
+	mwA0kXGfZwtA9ZI6+ngf+dZo8ZqmOGAi7rXwzNp2mf2jzDdzIt6mc0Tz
+X-Gm-Gg: Acq92OFHEyMoVH9/15zg0v+1/ANKA5qHoGNhhKS6KYE061Yyhr0xcSSR+/67k4x8Sjj
+	eT5v/kDwV0z6JNl0YmSksUc8BbvJPoKz70lQsc7Dy2J4DxOR5/wL1yR5QoCzLw116yyE/hJI094
+	m97yOPv3JIx+LYCYP6DAeuDdpE0wZF69Yp5wbJmOWSeEIjvfWyap39DPJZQCAWte+SWmo0TaZTj
+	Zf6u/1ussRjPGr4MhwajU+MVpT+ey1TUvisbtmYDHCSzcWFG+HlCyL1K+0lnF+6uEEtBsg/q4E1
+	Abz9BpAC8MyTsfvh1QWrvC9IXBelmyCthp0rkzPB2WUntlG/h8sdZvh9MJ5WiMZ+qoY3CTHgdHf
+	Y7c42JEnmoPjFEiddDkcyX94Ruu6TCsQVEOHtYVOuXDJFu3Ge6IiPVVlLm7n3/5ZgPD7A5SNpLR
+	iOqbpimQ==
+X-Received: by 2002:a05:6808:118e:b0:485:724c:36fa with SMTP id 5614622812f47-48955e5364bmr291049b6e.0.1781716974098;
+        Wed, 17 Jun 2026 10:22:54 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e79f6de65bsm9724234a34.19.2026.06.17.10.22.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jun 2026 10:22:53 -0700 (PDT)
+Date: Wed, 17 Jun 2026 12:22:50 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/8] setup: stop applying repository format twice
+Message-ID: <ajLV1if5XYO-pyNb@denethor>
+References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
+ <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-2-f4854aa99859@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-2-f4854aa99859@pks.im>
 
-"Lutz Lengemann via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 26/06/15 03:56PM, Patrick Steinhardt wrote:
+> When discovering the repository in "setup.c" we apply the final
+> repository format multiple times:
+> 
+>   - Once via `repository_format_configure()`, where we apply the hash
+>     algorithm and ref storage format to both `struct repository_format`
+>     and `struct repository`.
+> 
+>   - And once via `apply_repository_format()`, where we apply these two
+>     settings from `struct repository_format` to `struct repository`.
+> 
+> With the current flow both of these are in fact necessary. But this is
+> only because we call `repository_format_configure()` after we have
+> called `apply_repository_format()`. Consequently, if we only changed the
+> repository format in `repository_format_configure()` it would never
+> propagate to the repository.
 
-> From: Lutz Lengemann <lutz@lengemann.net>
->
-> The zsh completion wrapper (__git_zsh_main) did not handle the global -C
-> option, so "git -C <path> <command> <TAB>" offered nothing and could not
-> complete a command's arguments.
+Ok, so because `repository_format_configure()` is invoked after the
+repository format was already applied, it had to explictly configure the
+repository as well.
 
-I do not write, use, or customize zsh, so please take my comments
-with huge grains of salt, or just ignore them completely (your
-choice) ;-), but one thng I noticed was that ...
+> Refactor the code so that we first configure the repository format
+> before applying it to the repository so that we can stop setting the
+> hash and reference storage format multiple times.
 
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-> index c32186a977..323049be8b 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -227,6 +227,7 @@ __git_zsh_main ()
->  		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
->  		'(-p --paginate)--no-pager[do not pipe git output into a pager]' \
->  		'--git-dir=-[set the path to the repository]: :_directories' \
-> +		'*-C[run as if git was started in <path>]: :_directories' \
->  		'--bare[treat the repository as a bare repository]' \
->  		'(- :)--version[prints the git suite version]' \
->  		'--exec-path=-[path to where your core git programs are installed]:: :_directories' \
+Makes sense. Sounds like a good change.
 
-... this part talks about not just "-C<dir>" but knows about
-all the other options that the "git" potty itself takes, while ...
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  setup.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
+> 
+> diff --git a/setup.c b/setup.c
+> index a9db1f2c23..2748155964 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2710,8 +2710,7 @@ static int read_default_format_config(const char *key, const char *value,
+>  	return ret;
+>  }
+>  
+> -static void repository_format_configure(struct repository *repo,
+> -					struct repository_format *repo_fmt,
+> +static void repository_format_configure(struct repository_format *repo_fmt,
+>  					int hash, enum ref_storage_format ref_format)
 
-> @@ -252,6 +253,14 @@ __git_zsh_main ()
->  		;;
->  	(arg)
->  		local command="${words[1]}" __git_dir __git_cmd_idx=1
-> +		local -a __git_C_args
-> +		local -i i=2
-> +
-> +		while [[ ${orig_words[i]} == -C ]]; do
-> +			__git_C_args+=(-C ${orig_words[i+1]})
-> +			(( __git_cmd_idx += 2 ))
-> +			(( i += 2 ))
-> +		done
+We now only care about configuring the repository format and will let
+`apply_repository_format()` handle setting the repository. Looks good.
 
-... this only knows about "-C<dir>" and nothing else.
+[snip]
+> @@ -2830,10 +2825,10 @@ int init_db(struct repository *repo,
+>  	 * is an attempt to reinitialize new repository with an old tool.
+>  	 */
+>  	check_repository_format_gently(repo_get_git_dir(repo), &repo_fmt, NULL);
+> +	repository_format_configure(&repo_fmt, hash, ref_storage_format);
+>  	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
+>  		die("%s", err.buf);
+>  	startup_info->have_repository = 1;
+> -	repository_format_configure(repo, &repo_fmt, hash, ref_storage_format);
 
-Doesn't it want to do something similar to what __git_main in
-git-completion.bash does at the beginning, namely, this part?
+`apply_repository_format()` already has the logic to set the hash algo
+and ref storage format from the repository format, so change changing
+the order here is ok and a good change.
 
-__git_main ()
-{
-	local i c=1 command __git_dir __git_repo_path
-	local __git_C_args C_args_count=0
-	local __git_cmd_idx
-
-	while [ $c -lt $cword ]; do
-		i="${words[c]}"
-		case "$i" in
-		--git-dir=*)
-			__git_dir="${i#--git-dir=}"
-			;;
-		--git-dir)
-			((c++))
-			__git_dir="${words[c]}"
-			;;
-		--bare)
-			__git_dir="."
-			;;
-		--help)
-			command="help"
-			break
-			;;
-		-c|--work-tree|--namespace)
-			((c++))
-			;;
-		-C)
-			__git_C_args[C_args_count++]=-C
-			((c++))
-			__git_C_args[C_args_count++]="${words[c]}"
-			;;
-		-*)
-			;;
-		*)
-			command="$i"
-			__git_cmd_idx="$c"
-			break
-			;;
-		esac
-		((c++))
-	done
+-Justin
