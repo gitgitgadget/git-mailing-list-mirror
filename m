@@ -1,80 +1,79 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753073B71D4
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 06:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F763B6356
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 06:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781678412; cv=none; b=gs5+PXlAj/Qp1eu9uMoGYfo/O97NWLR+UBkYvYsn+ynIoY1f4xuYOjeNYu5UQKgTSRuPxaJmEj4FWf1KlDQvwgjnbv/zQ1Qe2elmR21KS7wxKWHDwoEw4uLsG1Lz3RH3kk8gqAtdJmnsixXbb8GRZU6wcoE/5Vt+GYmDO/7syJg=
+	t=1781678414; cv=none; b=EVV4r1+sAj2CVv+ECbBditNFl00L6DEJVbJCBclzix3R/V2s+k3nG75MGneBJ95GPndieBtasF4Nayus3FpnFBVtjOKBB67kfCcNRXqhnYbtLqfFfpdOYvYsdKUSs4XNo5sR1lbHONxUZ8+o2RJpueeL4PcD2IZCLFEL97zAax0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781678412; c=relaxed/simple;
-	bh=gVzcIvVfTEI92p/DzfzxjAzDxCZKW9OdQWUQhjTVx3E=;
+	s=arc-20240116; t=1781678414; c=relaxed/simple;
+	bh=t5QERsZ9Shw2ubtuYd4zGV8KBwWeR6IyALk4gtjngvI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qYzgt0DoXQD3Pfke+JvIrqgWU7rmlxz5DY6bpsMhqyx6x4GrXNOywxz9RHxEUuqYFsHdK02jCT41HJHVC2fPuCnAF3ArVDdq2c/oDKPQ9kD5mWI90VlMK+iwxYSiRuEw2eR9NP5RLArG+U0i/qRx8CBnnY38FC9zMppcfuo6OAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZLnZmiRB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fF81UIud; arc=none smtp.client-ip=202.12.124.158
+	 In-Reply-To:To:Cc; b=iCIuEIeB7AZDWxbIUdBdNoIpKkmE6Ajx4ej3UcmTVqdxpPm9w5L6rBceM34A82uJgVRi5f6eItX1gZMWeYChQfNGyrTnb5plRhcs/SbmIs4QJzHQE4mlvYpgxlfUmOg6M0CSEa/dVZ73MBwl91ELfD6EgNzmxwovDHBu1lGyflc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XSfdm5fO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yz1mAgTM; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZLnZmiRB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fF81UIud"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CC2187A0104;
-	Wed, 17 Jun 2026 02:40:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XSfdm5fO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yz1mAgTM"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 132951D0013F;
+	Wed, 17 Jun 2026 02:40:12 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Wed, 17 Jun 2026 02:40:10 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 17 Jun 2026 02:40:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781678410;
-	 x=1781764810; bh=H2OFrnLx3JgDmAYIQQ6UzfxhAmC7ErZKWT746Jw5Ln8=; b=
-	ZLnZmiRBqZOYRPFrtSwnVgdNwNsydSCQyLub/Lw4ufrEOVhscz8uXc9pq8WZ7z/L
-	vIc5TZLCjXOtcR7SJSBdMbctBJXvZ87awTJqm9E/79GgA5ZPqSLD8IW3AsmWsIw1
-	RAMGpjeEY6FX7WcuUFRlq6Y0lz2u6W+vqZ3XeHH48jMegtDB2rTqFvB2nAgbkQvh
-	fNXxys2QQv5ODr69bAfSwdTh0iZWhAqj/hfgNAMkofM/BChcRInrm1iPw919Ic4e
-	Wa4UTA9VkQL2bPhqG4gEKmmablG+LJAmf1tFz9/DWyDlCtsw0QDVViqHs96nbrVR
-	/ebaw3vuWxiRY4585oQg4g==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781678411;
+	 x=1781764811; bh=LftKF7wtb6U8O/zyiKCqkXbH2NrYzhcdUeHZUDtvtYU=; b=
+	XSfdm5fOSuqa+IphSZHZ+kvdH3wA7bRafYaZxFjc7JYxawA/tHjOFhsTIHcP4tm+
+	PpsAH153k+8yfC1apvZzE0ALAkUfi5Dd8kdfq5tHZmLDW4904bmjjoBJoB2mHKzD
+	qJmzP97SdDPvB4IoYYRAk+ypCFPA5G/TcNnH6WafcPdOa4xT3zM+G+yBHztczTrA
+	/34nFk0ZKSlmnu+PbLE2GgNkUKBouJlGuakvawxn4YsZ6ER5ekOuzCAnNHO7+e89
+	CG6nW088wA1PR+Pve844ItYu0nuAnLERd083D4lRxWSOmA7Net69KW3HcK4midlt
+	qyu2B8/UGep1d1igISYzZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781678410; x=
-	1781764810; bh=H2OFrnLx3JgDmAYIQQ6UzfxhAmC7ErZKWT746Jw5Ln8=; b=f
-	F81UIudBnC+oxWEPn8ddRqPpRSl4BZgP+MVSfSiIIXXb60g9ILKiPPQ2p1ThqyKK
-	lc7RSaROLjd+w2LNJPFey/giMfAq+/PPOEysFJVs9+SWfc4HrR0Npx6TqS2Cvi1M
-	7T6ZaUhNwueo8csD3OO/fGN8pxgYNvGr2Lz/hO/G9JAncy4IaMMXzRV9aIGPKclm
-	f71XTp//MTaCE7WkgxDoVQQ/kNhb6K5LvMAcplQVXUw68JRIXD2xe8VI71yKgomb
-	/vrJ0IBDDkMdstwyFCnXci8Cs/+BcSWoI09v6R1f7SqzFKVamux5Bi+JYU84vtU5
-	SMo0Q0WgPg7uyalX+YV+w==
-X-ME-Sender: <xms:SUEyauWlKTUw1TV4sdYxlr8R6pAekyYhfSbq1m3QiBqjDUOGLL5qCQ>
-    <xme:SUEyaiBYtURM0N4ASz-9tDh3QYG9soWzFYR8tdfoaVYeybplTlOAg6giCEeqQ9LAC
-    6qpjnFNZkmEHlxDnDnofidRxyQN0ERa23Fuqd6zxyjFta1laRBNyw>
-X-ME-Received: <xmr:SUEyavxNYWCMXbMV6NPb3xnY_iQzc4O68Z_zXSVL3xMZo2s-9OZUnGofbgXgeDhkzBk3HPhs_EiFpeMyovfKFxrf8CWieaFsoIKh_rI>
-X-ME-Proxy-Cause: dmFkZTEnB39eLvyMgsk+d1zBATJAS2Dd09yZUP4TCe4zWysBccoWgY8Y+enBv1+9aJfPT8
-    oVvaCC5MWGV30uZzKswgiCAK2gGSGYELp/F+QCNhRNY/bQx6x+ywijOIUW8TKDwAx48Lcx
-    KhLHoOJu9m1Ux2Kfz7iOtjqmT/hnPJJkdtWT0xsGgHMCb1yqiVx9G0A93DDw8nseLTKulF
-    USUks9qtFi47cv66z4EPIfMktSNXs9lIOpQJ4JZJ8Sqt4LT7yml6xL5bA1DQ7F1XoINCS5
-    8+0eJLKjW+BUl0nBlxv0Wa8T6T4Bg1YQKal6uMYv+KeVZbCqw870pv0xnOpn9ZF3vGEMKP
-    zIwI0/aOCo8JqOR+zRXSUmFh1oNe92kVoLwGqh6ZQUC6HQB0YsRutR2SpnfbP/eB0u7t3V
-    xwTX7bH3+MqV/TwCWfb50mU4c/UMRauSHT2tYd2Y855kNMz9zFlqI2fa0aW5QCqf7bCiMy
-    4ph65NCYtOEPUf7JbdVsEcME/j9WyUv6pX9VYdYkLF/mvZ6k4Rs3FDsssgAZ/fKRHj4WTE
-    v49U3QfvIJ9iJobJB6ddqcK/4rOQ6s2aXIP7inRnG653olwEuEn9Qn28ZnQN3xmTs35mDj
-    EzSiyzxdvA6IIOl/M/QLszHEPexIay8peROTyRaM+d9/SYXo3/VztmrV/H2w
-X-ME-Proxy: <xmx:SUEyavAfmcrcPvOBryo4fhzzReAhXkjgwwVHbEPbSQ2TTFaseZ8iyA>
-    <xmx:SUEyasa0hdGQ27bcuZhLV0RuIZ3PPyC1XSg_g4RSykoQcySyU5-JKA>
-    <xmx:SUEyanhdcbuC6OOZiEaWoVlDkatFf5hPaBduoj7Sdeyu0Q6NZXk0SA>
-    <xmx:SUEyau6lsVHqgwybWMAiLqRZGoeg_CSwXr7n9MF7vbkmYJVwWgOzUw>
-    <xmx:SkEyameyZR4lvSB--9653QsjvCpj3ucDJjbjRGA1KenenJw2sB1LuaqI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781678411; x=
+	1781764811; bh=LftKF7wtb6U8O/zyiKCqkXbH2NrYzhcdUeHZUDtvtYU=; b=Y
+	z1mAgTMcNkZvy+fR/+UISqXqmC88BIzv+nXFHmVChNca41zqC6XdP8SinXDdYsLD
+	ntyBYvDFE3ppsUOa1LDEYSOIwDmuOuVT7rZL9FtyBeEtspyMulOnmWkjTxNL4NgD
+	ghtUeSLXXu2RFsfJyWfNIcgOasRDSwK9HI+DIqijbMTJbQfIuNFFlQtWuOwuAz5a
+	V6yAXgtBwk/GrHyH2/FGNIJlIreozktETcI58yR2RybkYoVsk3fvIwsx/P8xxryl
+	DPhTu7nAgjvR9eJbcfIBntxDwznUQ4NuF1FaJWZbVyvPk5PrsyQGznQ4pyGzStg8
+	tLUWwlSjnny10CxRKA+uQ==
+X-ME-Sender: <xms:S0EyavdE0bAp3HjfpR1Y9sZwcd4bJ_0iA9WIkCCKIvPmBZ3DF7fg1w>
+    <xme:S0Eyaso-lsQIlilleswtnCRz0s_BDfh7NGRevjYXnmIg_c8KNUmTwPVHGE9DrShTy
+    GnF6MELR5ASI9yd84Vmg_76GS1XTd6VMuTMofCmASijlx0IAFs62A>
+X-ME-Received: <xmr:S0Eyal5AGPPCLiJAG1W3gwTC2SXDp8KYmFBbuQD6qas6d-vM3QPLb6nZdRByCZRHM2d08nOFfjnwJCtbvAdBGPnHbmT95wodW3uuPD8>
+X-ME-Proxy-Cause: dmFkZTFl07ipAIi9xJGEFtFdeXJ32YlTxjlf2nx1N6xtGXKrOC1bLbDlVvbrzzA5+wU1Co
+    Syg+K8Q1ZQCASKzRK2+jUlv03fQMlni6m1uSDG9ZfsMez+CExN6BaOaB4dWww+dwFVrBWc
+    MDEQgterYVrJX0duTt2YYH5sPQ0va9XcOu2v8cjr9lrtGWO3H/PAeE6gOAmLvw2VMk7fmQ
+    bS0Z8M1QPaN6dBkHxm/qp0BwBioAlyPsS5cJKvA0SEp9LqrehZotcHKdpFgJTmQDXUKsqa
+    EmWuysjWltbEijcyaQ8KC9W9onfmQCiSXmKIDwQVCz3CkB3vqB4j2FCfjXy4ARgFAuRiCf
+    lk6Q/r/iBAHyVINLlhu2uNdfODhXQfyNzSlid+AykmOal7w2PwTmdWMDP8C1gz/I2XbTLH
+    V9QrjJbusVBNmSD47g5C1k/nJ6yXchKrpF8oKHpr/NLwhDD3+wRP1XAVbBmIrKaWRoSKKU
+    KR/szRYPzkvwmcqXEgIi1Njkow5fE5K2Nt1R/ORX/I/QvwE0XQNKCSUamTRYVsO12Y0rkb
+    q1BpvsOM6iGoekHE8aIPuZrnAflk1hji+wxXMdq4mtqxpCvXKGF1FFm/qEa8w2rsvtLR/+
+    h8lFxSjr1scjub38/53vy6jtXYj4m5PontFgvFFz8JT24ifZgzQC1ofMklEw
+X-ME-Proxy: <xmx:S0Eyaqpfmg7ASjxys8zuMcN7su2BQw7AmcJBOo5GpTLBCvcgi-j9dw>
+    <xmx:S0EyavjyxvDmqkgvvOFLypNRdscnZNHw7_14XwwxvQ2GXrANghZyng>
+    <xmx:S0EyasLEMVouKpKriQ5bn_-0_h5a2yQXz_ENKnnfiU6FMWUiPpbRgw>
+    <xmx:S0EyanAcoirEJrPkvMByX0WUEJvty1Ou3Ufm83T6iV137mRDuUld-A>
+    <xmx:S0EyarFz7_WqbTF88pHNESsYj6Vx_nx-xo1fAdnnGPC0rEwsLhVucDyx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 02:40:08 -0400 (EDT)
+ 17 Jun 2026 02:40:11 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4de51668 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 17 Jun 2026 06:40:07 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c48e4339 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 17 Jun 2026 06:40:10 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 17 Jun 2026 08:39:48 +0200
-Subject: [PATCH v3 05/17] odb/source-packed: start converting to a proper
- `struct odb_source`
+Date: Wed, 17 Jun 2026 08:39:49 +0200
+Subject: [PATCH v3 06/17] odb/source-packed: wire up `close()` callback
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260617-pks-odb-source-packed-v3-5-b5c7583cd795@pks.im>
+Message-Id: <20260617-pks-odb-source-packed-v3-6-b5c7583cd795@pks.im>
 References: <20260617-pks-odb-source-packed-v3-0-b5c7583cd795@pks.im>
 In-Reply-To: <20260617-pks-odb-source-packed-v3-0-b5c7583cd795@pks.im>
 To: git@vger.kernel.org
@@ -91,172 +90,96 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-Start converting `struct odb_source_packed` into a proper pluggable
-`struct odb_source` by embedding the base struct and assigning it the
-new `ODB_SOURCE_PACKED` type. Furthermore, wire up lifecycle management
-of this source by implementing the `free` callback and taking ownership
-of the chdir notifications.
-
-Note that the packed source is not yet functional as a standalone `struct
-odb_source`, as it's missing all of the callback implementations. These
-will be wired up in subsequent commits.
-
-Further note that we're also registering a `chdir_notify` callback to
-reparent our path. This wasn't previously necessary (and still isn't at
-this point in time) because all paths are taken from the owning "files"
-source, and that source already handles the reparenting for us. But a
-subsequent commit will change that so that we're using the path of the
-"packed" source, and once that happens we'll need it to be updated when
-changing the working directory.
+Wire up a new `close()` callback for the packed source and call it from
+the "files" source via the generic `odb_source_close()` interface.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
  odb/source-files.c  |  2 +-
- odb/source-packed.c | 49 ++++++++++++++++++++++++++++++++++++++++++++-----
- odb/source-packed.h | 12 ++++++++++++
- odb/source.h        |  3 +++
- packfile.c          | 10 ----------
+ odb/source-packed.c | 16 ++++++++++++++++
+ packfile.c          | 12 ------------
  packfile.h          |  6 ------
- 6 files changed, 60 insertions(+), 22 deletions(-)
+ 4 files changed, 17 insertions(+), 19 deletions(-)
 
 diff --git a/odb/source-files.c b/odb/source-files.c
-index e04525fb08..3608808e7c 100644
+index 3608808e7c..9b0fa9ccdc 100644
 --- a/odb/source-files.c
 +++ b/odb/source-files.c
-@@ -29,7 +29,7 @@ static void odb_source_files_free(struct odb_source *source)
+@@ -38,7 +38,7 @@ static void odb_source_files_close(struct odb_source *source)
+ {
  	struct odb_source_files *files = odb_source_files_downcast(source);
- 	chdir_notify_unregister(NULL, odb_source_files_reparent, files);
- 	odb_source_free(&files->loose->base);
--	packfile_store_free(files->packed);
-+	odb_source_free(&files->packed->base);
- 	odb_source_release(&files->base);
- 	free(files);
+ 	odb_source_close(&files->loose->base);
+-	packfile_store_close(files->packed);
++	odb_source_close(&files->packed->base);
  }
+ 
+ static void odb_source_files_reprepare(struct odb_source *source)
 diff --git a/odb/source-packed.c b/odb/source-packed.c
-index 12e785be48..f81a990cbd 100644
+index f81a990cbd..74805be1dd 100644
 --- a/odb/source-packed.c
 +++ b/odb/source-packed.c
-@@ -1,11 +1,50 @@
+@@ -1,6 +1,7 @@
  #include "git-compat-util.h"
-+#include "abspath.h"
-+#include "chdir-notify.h"
+ #include "abspath.h"
+ #include "chdir-notify.h"
++#include "midx.h"
  #include "odb/source-packed.h"
-+#include "packfile.h"
-+
-+static void odb_source_packed_reparent(const char *name UNUSED,
-+				       const char *old_cwd,
-+				       const char *new_cwd,
-+				       void *cb_data)
-+{
-+	struct odb_source_packed *packed = cb_data;
-+	char *path = reparent_relative_path(old_cwd, new_cwd,
-+					    packed->base.path);
-+	free(packed->base.path);
-+	packed->base.path = path;
-+}
-+
-+static void odb_source_packed_free(struct odb_source *source)
+ #include "packfile.h"
+ 
+@@ -16,6 +17,20 @@ static void odb_source_packed_reparent(const char *name UNUSED,
+ 	packed->base.path = path;
+ }
+ 
++static void odb_source_packed_close(struct odb_source *source)
 +{
 +	struct odb_source_packed *packed = odb_source_packed_downcast(source);
 +
-+	chdir_notify_unregister(NULL, odb_source_packed_reparent, packed);
-+
-+	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next)
-+		free(e->pack);
-+	packfile_list_clear(&packed->packs);
-+
-+	strmap_clear(&packed->packs_by_path, 0);
-+	odb_source_release(&packed->base);
-+	free(packed);
++	for (struct packfile_list_entry *e = packed->packs.head; e; e = e->next) {
++		if (e->pack->do_not_close)
++			BUG("want to close pack marked 'do-not-close'");
++		close_pack(e->pack);
++	}
++	if (packed->midx)
++		close_midx(packed->midx);
++	packed->midx = NULL;
 +}
- 
- struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
++
+ static void odb_source_packed_free(struct odb_source *source)
  {
--	struct odb_source_packed *store;
--	CALLOC_ARRAY(store, 1);
--	store->files = parent;
--	strmap_init(&store->packs_by_path);
--	return store;
-+	struct odb_source_packed *packed;
-+
-+	CALLOC_ARRAY(packed, 1);
-+	odb_source_init(&packed->base, parent->base.odb, ODB_SOURCE_PACKED,
-+			parent->base.path, parent->base.local);
-+	packed->files = parent;
-+	strmap_init(&packed->packs_by_path);
-+
-+	packed->base.free = odb_source_packed_free;
-+
-+	if (!is_absolute_path(parent->base.path))
-+		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
-+
-+	return packed;
- }
-diff --git a/odb/source-packed.h b/odb/source-packed.h
-index 3c2d229a17..68e64cabab 100644
---- a/odb/source-packed.h
-+++ b/odb/source-packed.h
-@@ -9,6 +9,7 @@
-  * A store that manages packfiles for a given object database.
-  */
- struct odb_source_packed {
-+	struct odb_source base;
- 	struct odb_source_files *files;
+ 	struct odb_source_packed *packed = odb_source_packed_downcast(source);
+@@ -42,6 +57,7 @@ struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent)
+ 	strmap_init(&packed->packs_by_path);
  
- 	/*
-@@ -69,4 +70,15 @@ struct odb_source_packed {
-  */
- struct odb_source_packed *odb_source_packed_new(struct odb_source_files *parent);
+ 	packed->base.free = odb_source_packed_free;
++	packed->base.close = odb_source_packed_close;
  
-+/*
-+ * Cast the given object database source to the packed backend. This will cause
-+ * a BUG in case the source doesn't use this backend.
-+ */
-+static inline struct odb_source_packed *odb_source_packed_downcast(struct odb_source *source)
-+{
-+	if (source->type != ODB_SOURCE_PACKED)
-+		BUG("trying to downcast source of type '%d' to packed", source->type);
-+	return container_of(source, struct odb_source_packed, base);
-+}
-+
- #endif
-diff --git a/odb/source.h b/odb/source.h
-index 8bcb67787e..6865e1f71a 100644
---- a/odb/source.h
-+++ b/odb/source.h
-@@ -17,6 +17,9 @@ enum odb_source_type {
- 	/* The "loose" backend that uses loose objects, only. */
- 	ODB_SOURCE_LOOSE,
- 
-+	/* The "packed" backend that uses packfiles. */
-+	ODB_SOURCE_PACKED,
-+
- 	/* The "in-memory" backend that stores objects in memory. */
- 	ODB_SOURCE_INMEMORY,
- };
+ 	if (!is_absolute_path(parent->base.path))
+ 		chdir_notify_register(NULL, odb_source_packed_reparent, packed);
 diff --git a/packfile.c b/packfile.c
-index 862a24ad49..6d492216de 100644
+index 6d492216de..e5386145a7 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -2749,16 +2749,6 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
+@@ -2749,18 +2749,6 @@ int parse_pack_header_option(const char *in, unsigned char *out, unsigned int *l
  	return 0;
  }
  
--void packfile_store_free(struct odb_source_packed *store)
+-void packfile_store_close(struct odb_source_packed *store)
 -{
--	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next)
--		free(e->pack);
--	packfile_list_clear(&store->packs);
--
--	strmap_clear(&store->packs_by_path, 0);
--	free(store);
+-	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next) {
+-		if (e->pack->do_not_close)
+-			BUG("want to close pack marked 'do-not-close'");
+-		close_pack(e->pack);
+-	}
+-	if (store->midx)
+-		close_midx(store->midx);
+-	store->midx = NULL;
 -}
 -
- void packfile_store_close(struct odb_source_packed *store)
- {
- 	for (struct packfile_list_entry *e = store->packs.head; e; e = e->next) {
+ struct odb_packed_read_stream {
+ 	struct odb_read_stream base;
+ 	struct packed_git *pack;
 diff --git a/packfile.h b/packfile.h
-index 2d0bb7adbe..e8bc9349f8 100644
+index e8bc9349f8..9dc3a13112 100644
 --- a/packfile.h
 +++ b/packfile.h
 @@ -55,12 +55,6 @@ struct packed_git {
@@ -264,14 +187,14 @@ index 2d0bb7adbe..e8bc9349f8 100644
  };
  
 -/*
-- * Free the packfile store and all its associated state. All packfiles
-- * tracked by the store will be closed.
+- * Close all packfiles associated with this store. The packfiles won't be
+- * free'd, so they can be re-opened at a later point in time.
 - */
--void packfile_store_free(struct odb_source_packed *store);
+-void packfile_store_close(struct odb_source_packed *store);
 -
  /*
-  * Close all packfiles associated with this store. The packfiles won't be
-  * free'd, so they can be re-opened at a later point in time.
+  * Prepare the packfile store by loading packfiles and multi-pack indices for
+  * all alternates. This becomes a no-op if the store is already prepared.
 
 -- 
 2.55.0.rc0.786.g65d90a0328.dirty
