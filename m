@@ -1,120 +1,138 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7290538655B
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 21:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F7A38D006
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 22:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781732501; cv=none; b=uUiPrNTvDbA+T8UhZps/x7SKdb229MrCTyrMzZfEbMBCI/9vM9AZFbN+sIpAieClcXzLM79poM8KsNep4fHMaJPdZ7vKhcZU0qoMJGpS2j0QvivVW21d8hNuERb1n9lrgobwA2O6T6MZg5MA8xuny17AgUTKa7khFvBLxKjUqJk=
+	t=1781733814; cv=none; b=nZJ0xkKt79JcnIByqbQDOAlSy6GvE9L5gm2VSrpFjlHCE1ylMOA83HoF5MmDDt+HsJTAfqhe/Pq9Gp1WxbUhTfsMrugILiqLGV+6vbfs3fCs1R+LmUbFsccTWhVXQ7rz/35hxKEBxoHHC5POqS5rOK2vnXZil1yVufiRFa6bL7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781732501; c=relaxed/simple;
-	bh=0CdksdxdW/TMoiICPiHMw+/2/x5pP639xe84i59miAk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lQngRLabL+kRYJSvx8BkQ6fCKgT8pnZumHvVzyWdB1Z9UGTBqWjiZ7yibwDZDsfsdgilrhqI9i+tnbzKrrGsP/C2IJN9vzkfnBxvG9l3+NwbHiCCVKGu8E0vwjL731J81LfGUXRtwkGVC/gp1IDagFUOQ9Me/3KOWFgr8NtO1a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d7dlehS9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LbSffYw4; arc=none smtp.client-ip=202.12.124.145
+	s=arc-20240116; t=1781733814; c=relaxed/simple;
+	bh=Wak3lQOMzzSxPG/pkXn9qQYQHZZxK5PTM9c9rjxWmpU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=UoNjv4bMNEAA9ppLvUFRcWl4L9DyVokNYMbkR6cS///yujRlzbNhzfutavwwc5ZAYT9PLpHQltiP7YC1yw9WnnCycvk2CYf+KUYcyEQ/3fYG14Zo6DqFb03yDQHD7u6pZjSulyfE2ziLJvsLjPBXhrBiiQTURLj41yAjtYn/ndU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X9THIc+q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dyQC+rBM; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d7dlehS9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LbSffYw4"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2B5831D0001A;
-	Wed, 17 Jun 2026 17:41:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 17 Jun 2026 17:41:38 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X9THIc+q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dyQC+rBM"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2014B1400023;
+	Wed, 17 Jun 2026 18:03:32 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 17 Jun 2026 18:03:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781732497; x=1781818897; bh=PwNT0gACXt
-	TynZEr05LFx6DeGPDt/irjBVU+Dhg+FKs=; b=d7dlehS9CcOeNkzG7sg50SvlhU
-	FbEkHNcA9Hl11Ss/Jsu63Kv5Lau1GXqCkZbxOgVH+XUmKr6kvU4zzld3tjIupeDm
-	1fRCmXGcgI65MjkKG2gyHrBlFXbXWProZeMIXf2dUvyJcjW5L65iu+ceyZ899BlX
-	JMbasITOsp22fulDWN9iXjQFo4za44khX1luvh/g6GU4bRdeyYYDe6qh3NRgS9cX
-	+ogUtlccR3k4DTMp6M9lyyOqDLRbbPXfmSLoBzEpjIXNYHoAv/sO8N0SDH9jTo/E
-	Q4l1ZSwqxTNDCiWND9AlwA9ScWXk1Wo6DxGvZFJqV/b9JtMO95YV0vgwjgag==
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1781733812; x=1781820212; bh=KXuK9Xb0nEsxXhu73C0YtnAb+dN0X9+v
+	MQCNPN0RPVQ=; b=X9THIc+qptzWrFJoyvs3GkV/ARkLq94gwga5XHG1Wwntb3T9
+	TY3z2+HWRyYRYFUsF5g8h2ebLMtolqKBkfkACJNtctmW7F8rKjg7hyFwVtUkpyvS
+	6L3wAlfu9qHV9XXrj/yjtjz+VkeumMVqW8+Qi67vI+/iP6cqLaHr/mmSUAxmz73b
+	ei/bQ0Ic/hYn+NT/V6urxe03hDO9J0VDPGSt7X2im9eQk9baVQlcMoiJn9DzHOvw
+	obctjx3NmfOgR6IyixRTzlf4Ct9xO6SoZpTIN1stD4iXY1fyUNP3EGcXBfBQSNwU
+	/91ObqCFrlNF9tn9clIjXSuyVWhNsVGVu2+vOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781732497; x=1781818897; bh=PwNT0gACXtTynZEr05LFx6DeGPDt/irjBVU
-	+Dhg+FKs=; b=LbSffYw4HKxPxoyq045Taq5Ap7YBVD51E46bzWRZaACUijl7KoI
-	raAl6KXfNnKZn72WLJDCw93D+nvoj6guXsYrzfvTxrxqkX5r12ORmSXtSmzKHeSM
-	fL/2tAKrnSsIvKsa6qjQyeILCL+nbAezQmaOe9Dtso2ooxxJp91grOkCW7b7C+YG
-	TNC/R0FK0HBVWLIZwuAykDKemzw/bFIBoxo4gM3ciFbxQvtIpvvCVTHlxd1HwD9e
-	G+YYPY9HmfLP6bZN4stgEzRUkK6DOp4hXCZzoqOa5yWLECywbJPqY+zrxS/KDWOF
-	KsjzuCDJX0fFgbicKZSAHJKw71o5gA0yGeg==
-X-ME-Sender: <xms:kRQzatGqkQQwErYU5jDUzGnzWqZRLrZZp2qId-Erd8UEFfXecE7GTA>
-    <xme:kRQzapNnVqPwufntOZZMhL1hENemjQubxa7jFZ2ydignTkW1hnBCabzj9QITUB2vj
-    xIbVClu3dW7uIFj-6SHnJ8lqOpSOL8Kka7P0kSLPlKDQn96ZLVDMDo>
-X-ME-Received: <xmr:kRQzane-bsUWdYpsuyBjzOF9sXwtuSvbiCmt1cnU4Z9LzAtsoJPM4GvJzpRqPKNGiimFkJSJjj1OVsufwezrK1pplJ-L2cDQU0iR>
-X-ME-Proxy-Cause: dmFkZTGlkBMjYjufDoNjo7aFQ1IBL+AwQE2l3modqGrSYe3UbhGN1lNpHaU/uiquqOep1+
-    Q9Nvv2ov0xCqOTj8NdtzeLoeXTekXd/tJEiUdc/j4k7yOAGRsYQDqRG8H+C13JmryxpCa9
-    9JYcPZykz5FepX3Rpjfy/sygZFNO9iLUwSYvdX8J06Gsk0813+iCjba9Vx26KFEYolmds3
-    BzyuJtGTr9+SKgVQVOZqciR5WimVpRY0Q/8+pF2FOIo+rSoZp1WxDhsC1A1/eYGSz1G/fI
-    c5qWXga/fcDgiSFjoww4g68MbNQnyZG33nr4U5HIO4n/pjwVjO2gcmd+lwLiwgPRml6TI7
-    tOR4iGQoDTKrrx2SBTT5VIMh7QNHX1J/LYnXP2wedSvO9Vvgqf46a2/2dM1pSosgZhs10+
-    +LfpbE2tgAO55fsEUBM2sCgi9h4hAHaDguRM4TTXxAAigy84gVS0mOFOe1T9SBg1dhiVtM
-    lelGxilghhVzDeuuKzrAl/r6m5X9esrOAJOUkuCHecIisR9pu4mImdpKiTd8H3VbN7TZcl
-    OPdw3kGVCyNOAT4KM1Gu7M5X5h5IsmNS3zhWV56FcC7YrAaAhREm44tj1xtpdpZwIf44hy
-    rZmC/CB4Ho9iyczdB1ZrTKXEUNdCVZvq2/liWMbpfr+G6gbgxv5CmdlcJo5A
-X-ME-Proxy: <xmx:kRQzaussm9yRXDKZjo1ds5beWinsfUD_bTG3C8FJ5mRK--XmhL2ufg>
-    <xmx:kRQzagn_JsDgL6Iq-moMkh1yJMRux7IgYXbVgYlP-L105brMaJCLqg>
-    <xmx:kRQzaowGBcg37KUbAODriwM1jD-3VKx-Y6qev987NRdQp5n7ZyUEQg>
-    <xmx:kRQzaqPZTnUbc8ZmO1YWRqwasiAX0I6hq5-nzBRzILN_HJmkrm4CUw>
-    <xmx:kRQzanXIeVPoDuHXxmdpiV4C3v3HP55HGSQXltTmJ2Fp15bEtU1ILKjt>
-Feedback-ID: if26b431b:Fastmail
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781733812; x=
+	1781820212; bh=KXuK9Xb0nEsxXhu73C0YtnAb+dN0X9+vMQCNPN0RPVQ=; b=d
+	yQC+rBMEPpytj1AkFCMmY9IeRxp4xZC3v5CwZ0SUBLmGrZ7GXawkCKy/cZ1XTCl4
+	WZRoZXXnfIiHNNDWRDiz1s4Q1O7j9FkNB6If7TTQIw3EA6XF5s2/eJED3JJ196tJ
+	ZUyQTEulebhAAIZEmN47A9ZXFwT/OxnkbAwkXxe52A7dkHLEwubfzDax5i3XMWdI
+	A7HfK0Jzm6gnCQKGYwO/n0tcl91flFFaW23gEcoXa8re0BB9g5y/a86g1dxTbvWV
+	pTCEJUZYoRB5w0RoZ156KDnDEKtIpwKsbsTf6uxAmFRlG4wvIj2+hZamxAP0C5y5
+	JU1jWNtrPKnFiq//mZzPg==
+X-ME-Sender: <xms:sxkzaiziVIphiicGqwoGDsxFxRQf-Z53RQXBpyCfP_0-ZDhjJBMF4g>
+    <xme:sxkzalvMuYN5a81inA7qJiHeI6L8EGSUrdHv9kfsOxU3Bz_QEkpND5BmUQ6IAjljz
+    QeeVmfuBtdq85gzZyqq1I_TqhK_agMInoI6s6vtvscN-A5KvaSfGak>
+X-ME-Received: <xmr:sxkzahvNF4auOEcARYZvmA05WuqG9X7G7Cz75MWvu1PFFxpn8pbDA8F4qZOxgOxZaWBIqxtbWaPdCRRoJ3UJLSpZ6jQS41gJUCg6svIosToBLnTCmW_ypB0>
+X-ME-Proxy-Cause: dmFkZTErvVmiVCOrHaypA7drOJFzrg+653d9QHK++aJlBRpPe2E9AHy0C2euwaLpzfg0Qy
+    HQLpuce+lr3ieRyzjd+RVYHAIy5ezCiQKdekgytaM8rS1D+PHSwuCdRs02dFMlVYOvMKY5
+    BRj36Scp05+xArjt3lgkmIGT2b8dD4P+3ao8IZj4Tc/zZfRIuGkh6n9ka+hkQ/SsECwr1O
+    mx98ZWsYVUjoSk1keWGe1Jgxn6TcTjK+unQySq1JKmRSACcIMuYJbsAjX6hS5t1BF21eWU
+    ZMlTlZyptbrIP2OvsXKcGjCqDwdARV63NPx1xw9/Rdu+LboQyo/0qYaaFf97M18nGM6TJq
+    8186NJChx5YdWp7sMgzHPgyHK2fU866DKKh8UzGoIWwxQSvCtxeDyE5x1/Oe8tzXB4J+l7
+    TdsokjyMlMhF8HM/VEX/Cl5VH3a1EuayagyI5/Plv3ZKvebwmPYvWCuz4Aa6uCFdRllcgj
+    efs5iPE+s+Sv18dHwEIn7Q4V5VgQiA6e84vEt2RaCqFUL5b4rAK24S0wIr0ChWu+VNjXxQ
+    oWXWN4HYNjgGNWmHcjqSL6RcJdUfCC45bmpDSOdj7VVm1BjxSd0EwjEbBjHNibGpsaz469
+    jsT6f0ETbTPNsObnFTizNKNf1mnDEwRmQ8KTDYEnwI9EXj7DYsWke+cbTReg
+X-ME-Proxy: <xmx:sxkzaiMaF-LHrjnnmPjonjnVG98HRvkYrtPYFTf4k1qk5FdQ9q1_uw>
+    <xmx:sxkzan0O9-HcYZhq0RsNVrMtudJf1jy0PmoB8N1iNPiHANJSM4fH2A>
+    <xmx:sxkzamP6AvmJRqJ0PQUFcb65qypmml9rUIyvYOngmjHns-1_3b86nw>
+    <xmx:sxkzav2XUM4q0dV4MqqMalCotecW7MP4mAhhCwKYYdthCT_OWiLTFQ>
+    <xmx:tBkzala0nH6FZOfB9imDDZeCG6lhSaODWbNfZYlSZD_-SAl1F-dxKXwy>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 17:41:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 1/5] SubmittingPatches: encourage trailer use for
- substantial help
-In-Reply-To: <V2_encourage_substantial.9b7@msgid.xyz>
-	(kristofferhaugsbakk@fastmail.com's message of "Wed, 17 Jun 2026
-	22:52:15 +0200")
-References: <CV_SubPatches_trailers.8f3@msgid.xyz>
-	<V2_CV_SubPatches_trailers.9b6@msgid.xyz>
-	<V2_encourage_substantial.9b7@msgid.xyz>
-Date: Wed, 17 Jun 2026 14:41:36 -0700
-Message-ID: <xmqq4ij0vo8f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 17 Jun 2026 18:03:31 -0400 (EDT)
+Date: Wed, 17 Jun 2026 18:03:30 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
+Subject: git-2.55.0-rc1 t4216 broken TAP failures on non-x86 arch
+Message-ID: <20260617220330.n6byiFQr@teonanacatl.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-kristofferhaugsbakk@fastmail.com writes:
+Hi,
 
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 176567738d4..0b12badf86d 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -443,8 +443,16 @@ identifying, and not misleading.
->  The goal of this policy is to allow us to have sufficient information to contact
->  you if questions arise about your contribution.
->  
-> +=== Commit trailers
->  [[commit-trailers]]
-> -If you like, you can put extra trailers at the end:
+Building git-2.55.0-rc1 today, all non-x86 architectures
+failed with:
 
-I think majority of AsciiDoc files in this project places [[anchor]]
-before the "=== title" of a section.  For example, here is how the
-patch flow section begins in SubmittingPatches:
+    Test Summary Report
+    -------------------
+    t4216-log-bloom.sh                               (Wstat: 0 Tests: 167 Failed: 0)
+      Parse errors: Unknown TAP token: "--- highbit1/expect 2026-06-17 19:44:07.555797743 +0000"
+		    Unknown TAP token: "+++ highbit1/actual 2026-06-17 19:44:07.563651478 +0000"
+		    Unknown TAP token: "@@ -1 +1 @@"
+		    Unknown TAP token: "-52a9"
+		    Unknown TAP token: "+c01f"
+    Files=1047, Tests=34680, 1072 wallclock secs ( 7.61 usr  1.61 sys + 395.73 cusr 586.23 csys = 991.18 CPU)
+    Result: FAIL
 
-    [[patch-flow]]
-    === A typical life cycle of a patch series
+The test output is:
 
-    To help us understand the reason behind various guidelines given later
-    in the document, first let's understand how the life cycle of a
-    typical patch series for this project goes.
+    ok 148 - setup check value of version 1 changed-path
+    --- highbit1/expect     2026-06-17 19:44:07.555797743 +0000
+    +++ highbit1/actual     2026-06-17 19:44:07.563651478 +0000
+    @@ -1 +1 @@
+    -52a9
+    +c01f
+    ok 149 # SKIP check value of version 1 changed-path (missing SIGNED_CHAR_BY_DEFAULT)
 
-I do not offhand know which way is kosher, but we should be
-consistent either way.
+This looks like it comes from the following chunk of code in
+the test:
 
-Thanks.
+    # expect will not match actual if char is unsigned by default. Write the test
+    # in this way, so that a user running this test script can still see if the two
+    # files match. (It will appear as an ordinary success if they match, and a skip
+    # if not.)
+    if test_cmp highbit1/expect highbit1/actual
+    then
+	    test_set_prereq SIGNED_CHAR_BY_DEFAULT
+    fi
+    test_expect_success SIGNED_CHAR_BY_DEFAULT 'check value of version 1 changed-path' '
+	    # Only the prereq matters for this test.
+	    true
+    '
+
+It seems like we could (and perhaps should) redirect the
+output from test_cmp to a file (or /dev/null).
+
+But... are we expecting these tests to not pass the test_cmp
+on any non-x86 arch in the first place?  Or is this exposing
+something broken in the test setup (test-tool read-graph
+bloom-filters) or elsewhere?
+
+Looking at some older builds for non-x86 architectures, they
+are indeed failing to set the SIGNED_CHAR_BY_DEFAULT prereq.
+
+-- 
+Todd
