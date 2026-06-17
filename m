@@ -1,161 +1,113 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3704949FA
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 15:30:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7892648A2D7
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 15:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781710268; cv=none; b=ZPCAI6SQkomxY2JLftcx7felDle8XecWwH+E+p9aN0tGaT9bNphCsL4zpkUrpnf9OkjXAb1gTOjrJxZCoEaOlz6gvGQy3HWrzgsriNNo8J0psR8+3B20BahSUpdS0uA1V6tnOQNVQZI1/impUkLv8G28x8l0qNg+JYfzTSqfz4c=
+	t=1781711391; cv=none; b=YuHHYJ/gWl1EA/4grF3RUa/Lzq2ZP47+oK+utcxhl8xTVEDr7uBzGY4T0Rqn2Sy1kYFAD7PK02D9G5nXFfNmbAfBGv/8f4ukadKJS12uYGOLu/iWQtys1lh4UI8EX1UzDVhopbWVtNkQJLfAGuWqBHZBv3obdVyC9ZXMnlmDzr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781710268; c=relaxed/simple;
-	bh=SOEfoLoL/dntQbdlk29p25CUT1uMwnCKGpstv+U4icw=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=q8HrxngMpdC0Zrah7db06kud29+3fGdfNPxfFyw75M+vyU/+PlIKJDnvX7fbcdeuSa+fJbH6CkpmmEuWL3ZPSSuMeu7lm3CekA08K21wOI//p2S/9ajmJA4GBpFoCbNgM46WzMkL9NL5+PFgNa80YtQV9CbWGAxf+DIsmGuHq+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PgUWMZdx; arc=none smtp.client-ip=74.125.82.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781711391; c=relaxed/simple;
+	bh=UPfTpdgPpPzaFJ1clW5sNpTe4TH2EVT9wxTMXpTa+X8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UFGPTKyZyQJNwWjoU9IxSCjGqgM/4Jn+zqZRkX9sTF49NAy3KY8nZ15zyj8BGklT5n+QmM9l+iyJ/SxWjovnx/Mxff1Np1PxF8tvJNoDa2dH0L5tEp+vGZzE2kbj+mbkxNASMkY8XYWtu2EvWMHcJkOpSms/cXZ9c/JqY1wm38k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=Xo36brsB; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=hW1dTjbP; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PgUWMZdx"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-13807d2f898so6326009c88.0
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 08:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781710258; x=1782315058; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NnTxg2uDUqptCs2rFl1sU53oZEGJ+XsnaXY6Dn7tBFs=;
-        b=PgUWMZdx6k1BH0xQD5TLk6JOemJKQ25XaR7fsd6xcagfZJg6oCYJDCilZG2eYP49S4
-         w8Bu6j4aOAYv8uGXZHLlxw3VglkjNu6s4hz+P59u//F792mnbLqK0wUIefQHRW2XKbp9
-         A6wQGyASvfDQ1CGLYstGnLlznKDu1hNCy5lFcRAty8xcny39hdXuOw2zzYCx4HNWE/Ek
-         pOaYby3FIbiSUP0bTaxN4PAlRDr5wFie539ERxLD7AUqCy9yFELNemIel1Y/GR8jBhXO
-         nTH7xoUTjmfEzkF5NY660I4iGOoI3ir8DBn6O7A+4MJaOT6gJE+rUQrmCQDw9yvO5TP3
-         +IZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781710258; x=1782315058;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NnTxg2uDUqptCs2rFl1sU53oZEGJ+XsnaXY6Dn7tBFs=;
-        b=V+smkvr+HqdLCPwXBaEgCoUnpjNgBB2OGKi2fLS7X1r/jeZPz+sZR1lIVvRqy0a8xj
-         B0rHLRtGTGitx+JS2aC071NqB57dGAn8ap2TnJgEySElqeoB9rxIh8IrZzJQ+LfpY7pe
-         xUW3KMJ9ywh4hK1i1bEnNvF1mW2SXJzIdd5pvZENom6Q5ZjBPMfuNlXy+GSUZi3patas
-         LLrF42CsYbhzquq6/eoqMOgY4zsctIs8WSRNjnqSlrcvxeTC3wKyMyO2Jgxx0vhAvQaI
-         qV21T5e0gGimgeu0LjxHPZR81QpKUXfIo0Y9lx+bpns3GuqFimFuDyH+JvUh3TZsZc35
-         yRWA==
-X-Gm-Message-State: AOJu0Yywo1+JxO9/4zhlEZyB+wZ09iqMRJ0VekS5sim6CdSJvjXsc2sd
-	/RZpPU1LLnOz7qAs6xC2pQv53at22517zl8/RfgdZ3ubx9IWpmlbuXrNYMagBQ==
-X-Gm-Gg: Acq92OGreWofQIjBqO5xL2QOxJq0w1lVy1sK0y0+EumqIOZ5UzSzquamQ20k74OWo9K
-	qawQABZ8PFGlc8R6pXCv0N8rjZ/AwPpmesWsJ/JqYHPaj/j6jpqOJyaZezDNyOd5uaZ1ZgzZ9Je
-	3xXJCu1u28pZy23u4R5zU6poUZx+WazoHQdiMgHlIJJb52zxQTg0ZzSgKEqOxR/DNugY3N3t1V8
-	mPKTBSFeP8xLa6KkVj3kJrVYcNmMzTDvpYEuINJNwP/5CcJ+TeHFIL/8BGssgaPmZQkVirnb9M/
-	+OnzD55Z+Xpr1bZ0s2vWnrUAx7oTTFx6g/Tuxe8EbGhhcSke7cw2CrBaF4z0U0Qguohl9eOg0AU
-	rqngmzxB9cmbTfcx/f/KYPxfKDnZYYkBmYpFgXKQTuWjRIhejTXQqQjQqy1bzaYnqTdwYKpxnbZ
-	HUlhzMv2xz37CO9D8=
-X-Received: by 2002:a05:7022:990:b0:134:dfd0:9760 with SMTP id a92af1059eb24-1398f630d78mr1955708c88.5.1781710257626;
-        Wed, 17 Jun 2026 08:30:57 -0700 (PDT)
-Received: from [127.0.0.1] ([57.154.13.241])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1384b97570asm16062182c88.12.2026.06.17.08.30.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 08:30:56 -0700 (PDT)
-Message-Id: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
-From: "Lutz Lengemann via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Jun 2026 15:30:55 +0000
-Subject: [PATCH] completion: zsh: support completion after "git -C <path>"
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="Xo36brsB";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="hW1dTjbP"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=Xo36brsBCdDITPmprddwn7nBETI2RTebMXhp8nRJRy/gCaZbCTCJ6SfL2CyoJqntj7EbJLLggA4lRNMHQMdMegZfshqcZRCGDZaXGcWFWOtzY9f+Wuj4dc2ALWiYE+SMA7ZazdtkXTi2AVx1fmqCiyRxUEHCA2V0bIK6ncfCt1+hnzXaTx/UUbXAcuiB7Xe1gu+qiS1MZC3HxkUzxGJHZYcOeG8Pyfr3TNUC5aGNtN/QnhNGRv1jTYqJWiQ2q349FZF4u5SP0nYGnby9XbNyzqENxMRMPCnYE89icY41cNI7V2PkaEO2KIvzVRJoQvqLquc0e6PrnjAsPAUHgwC62A==; s=purelymail3; d=malon.dev; v=1; bh=UPfTpdgPpPzaFJ1clW5sNpTe4TH2EVT9wxTMXpTa+X8=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=hW1dTjbPIWeNJwXjO1+yhA3tfKY5r2uSR/iFo/YVSwK4IOGAwGRrOrSkqPQ7ZzkiTnKpXxEM/wxC5bH52MWmgPfJL5EvYghhty5NaRLX6cPPJz5EqC7sBNYV2K1773uc1MpOPuJHrBpNdCyWJKzRYflcQeu1E+8dL5JHJSKnMEtHr2lBl0FqvYWV9B1puBrkx48Jr6Flpv7HsOs2chX8X2joerNF4TJuMN72CvUAt0elJSnCrghAD4nb0Sqrvqg95V/txw0MP/ydgJ704rZ2INucqGEcNx6xKhy+xB/93Q+OQCltXoy3nIz3LMjAjARywplE+WC/HMfjF/VNsEo3rg==; s=purelymail3; d=purelymail.com; v=1; bh=UPfTpdgPpPzaFJ1clW5sNpTe4TH2EVT9wxTMXpTa+X8=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 416529734;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Wed, 17 Jun 2026 15:49:36 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	phillip.wood123@gmail.com,
+	johannes.schindelin@gmx.de,
+	stolee@gmail.com,
+	Tian Yuchen <cat@malon.dev>
+Subject: [PATCH 0/2] environment: move ignore_case into repo_config_values
+Date: Wed, 17 Jun 2026 23:49:27 +0800
+Message-ID: <20260617154929.564498-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lutz Lengemann <lutz@lengemann.net>,
-    Lutz Lengemann <lutz@lengemann.net>
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-From: Lutz Lengemann <lutz@lengemann.net>
+The 'core.ignorecase' configuration, stored as the global variable
+'ignore_case', acts as a core filesystem capability flag.
 
-The zsh completion wrapper (__git_zsh_main) did not handle the global -C
-option, so "git -C <path> <command> <TAB>" offered nothing and could not
-complete a command's arguments.
+This series continues the ongoing libification effort by moving
+this global variable into struct 'repo_config_values', tying it
+to the specific repository instance it was read from. This allows
+us to encapsulate the configuration without altering its
+eager-parsing behavior.
 
-Three things are needed to make it work, all scoped to -C:
+The getter function 'repo_get_ignore_case()' is introduced so
+that we can safely retrieve the configuration value whilst
+maintaining the correct fallback logic.
 
-  - Add -C to the _arguments specification, so completion no longer stops
-    at it.
+RFC Questions:
 
-  - Advance __git_cmd_idx past any leading "-C <path>" options. The index
-    is hard-coded to 1, i.e. the command is assumed to be the first
-    argument; with -C present the command sits two words later for each
-    -C, so the bash helpers otherwise look at the wrong word and produce
-    nothing.
+environment.h --- Is the fallback logic for repo_get_ignore_case()
+correct? I am unsure whether gitdir should be used here, since it
+might not be ready when we access it in the early stage of
+initialization (e.g. git init / git clone).
 
-  - Collect the -C paths into __git_C_args, as __git_main does. The bash
-    helpers run git to resolve aliases and list refs; without the -C
-    paths they run in the current directory, so completion fails whenever
-    the cwd is not the target repository or the command is an alias.
+dir.c --- Performance overhead?
 
-With these, "git -C <path> <command> <TAB>" completes the command, its
-options and its arguments, including outside the repository, through
-aliases, and with repeated -C options.
+compat/win32/path-utils.c --- Is it appropriate to include the
+repository.h header file?
 
-Signed-off-by: Lutz Lengemann <lutz@lengemann.net>
----
-    completion: zsh: support completion after "git -C "
-    
-    This patch is intentionally scoped to -C, but the underlying problem is
-    more general. The zsh wrapper hard-codes __git_cmd_idx=1, i.e. it
-    assumes the command is always the first argument. That assumption breaks
-    argument completion after any global option that precedes the command,
-    not just -C — e.g. --git-dir, --work-tree, --namespace, -c, and
-    -p/--paginate. After those, git <opt> <command> <TAB> currently
-    completes the command name but not its arguments.
-    
-    The same approach generalizes cleanly: instead of skipping only leading
-    -C options, walk all leading global options and their arguments to
-    locate the command and its true index (mirroring the option scan in
-    __git_main in git-completion.bash), while collecting -C into
-    __git_C_args and --git-dir into __git_dir as today.
-    
-    I kept this revision narrow for reviewability and because git -C is the
-    case where I miss the completion, but I'm happy to extend it to cover
-    the other global options in a follow-up (or fold it into this patch) if
-    that's preferred.
+Related materials:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2155%2Fmobilutz%2Fzsh-complete-global-C-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2155/mobilutz/zsh-complete-global-C-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2155
+[1] In this patch to migrate protect_hfs and protect_ntfs, the approach
+of introducing getters has been endorsed.
+[2] Derrick Stolee's previous attempt. The reasons for the failure are
+also mentioned in [1].
 
- contrib/completion/git-completion.zsh | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Thanks!
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index c32186a977..323049be8b 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -227,6 +227,7 @@ __git_zsh_main ()
- 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
- 		'(-p --paginate)--no-pager[do not pipe git output into a pager]' \
- 		'--git-dir=-[set the path to the repository]: :_directories' \
-+		'*-C[run as if git was started in <path>]: :_directories' \
- 		'--bare[treat the repository as a bare repository]' \
- 		'(- :)--version[prints the git suite version]' \
- 		'--exec-path=-[path to where your core git programs are installed]:: :_directories' \
-@@ -252,6 +253,14 @@ __git_zsh_main ()
- 		;;
- 	(arg)
- 		local command="${words[1]}" __git_dir __git_cmd_idx=1
-+		local -a __git_C_args
-+		local -i i=2
-+
-+		while [[ ${orig_words[i]} == -C ]]; do
-+			__git_C_args+=(-C ${orig_words[i+1]})
-+			(( __git_cmd_idx += 2 ))
-+			(( i += 2 ))
-+		done
- 
- 		if (( $+opt_args[--bare] )); then
- 			__git_dir='.'
+Mentored-by: Christian Couder christian.couder@gmail.com
+Mentored-by: Ayush Chandekar ayu.chandekar@gmail.com
+Mentored-by: Olamide Caleb Bello belkid98@gmail.com
+Signed-off-by: Tian Yuchen cat@malon.dev
 
-base-commit: 0fae78c9d55efe705877ea537fe42c59164ccd94
--- 
-gitgitgadget
+[1] https://lore.kernel.org/git/20260606143412.15443-1-cat@malon.dev/
+[2] https://lore.kernel.org/git/2b4198c09cb6c04c60608d19072d419503dfe5df.16=
+85716421.git.gitgitgadget@gmail.com/
+
+Tian Yuchen (2):
+  environment: move ignore_case into repo_config_values
+  config: use repo_get_ignore_case() to access core.ignorecase
+
+ apply.c                             |  2 +-
+ builtin/fetch.c                     |  2 +-
+ builtin/mv.c                        |  2 +-
+ compat/win32/path-utils.c           |  3 ++-
+ dir.c                               | 18 +++++++++---------
+ environment.c                       | 11 +++++++++--
+ environment.h                       |  9 ++++++++-
+ fsmonitor.c                         |  2 +-
+ name-hash.c                         |  6 +++---
+ read-cache.c                        |  6 +++---
+ refs/files-backend.c                |  4 ++--
+ submodule.c                         |  2 +-
+ t/helper/test-lazy-init-name-hash.c |  2 +-
+ unpack-trees.c                      |  2 +-
+ 14 files changed, 43 insertions(+), 28 deletions(-)
+
+--=20
+2.43.0
+
