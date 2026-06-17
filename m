@@ -1,81 +1,86 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58885227B94
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 11:54:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E6C3AB460
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 11:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781697253; cv=none; b=u8MIHtang0VktN7O+QwuwPOAPeK0yKCCVriNHvkwca55LPTi5XQMb/xJTHtwnqlrTRihAIAm2+evNquz2r70hN5MBg6gIyGdI//H/dSYjDBLw6mDc4emWTSqJN4BFFytqsC1pS6TFq3K8kdJmhd326qWfoZ2CBGBZhcNv74qk00=
+	t=1781697542; cv=none; b=t01yIQ5Et7jAMnEMh5AgdUnY+MbH24X0emVQtqwwUakL3u/Kj3Jy1YTARgoshnRbJnTRyxk2Jn8WF1tXoZyHj1Tt6vopsbGx03WZ29uDDTXRqO0gS7f11lKq6Dw87wN3vlTZ7867INWRq5jZDsYSchL9p/xlbdGscYw2DHAaXig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781697253; c=relaxed/simple;
-	bh=7oZJFtLbU5rLbhemrnE7QuXuedrLYSVI22+3hwYCV04=;
+	s=arc-20240116; t=1781697542; c=relaxed/simple;
+	bh=b4eFSzCUkT9NGm2UqYNIrP+WoHxI4DLSWOIXLuNjQcc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NlEDYhjzzDEfH2q8Wi7kQpPciXRNowJBwZw57W0Oy8BNMQezLe9fUCzDusZL3sydyBTwovUwAxOz7YBZppbAuoJY9IMN94bpGQpKiE2NObU55xhl7+Yuoh3AC/+/dJeuTBd0T9CZSmsd7UcYXrkScIyC9m17q6RA9/PrIwC4gFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oODtLQ5L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZrGvE1O; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=L8lg0PzAnjxc71aQXvaP3xI06aUJ++nwNF/DnivdJMFMo3mf8QefhxO5TR/yGe6+C/5fIgijEIskyXIh6JPNOopNMq6kdgjfn8wzxB+gohRXT0CdVpOZlHgiS6L0FDhY6kuKf5RSPTyqWts6zz4DSfOsnp52npsU+tqT9K8MaKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fyCW2//w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g/awLooU; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oODtLQ5L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZrGvE1O"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AD2D37A00CB;
-	Wed, 17 Jun 2026 07:54:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 17 Jun 2026 07:54:11 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fyCW2//w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g/awLooU"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 83CC81D00141;
+	Wed, 17 Jun 2026 07:59:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 17 Jun 2026 07:59:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781697251; x=1781783651; bh=/ZwPcyOvt3
-	XeNSb9Nm7nSD4PxT+sF24iJZ7VR7bqNMY=; b=oODtLQ5Ly8b8VqHM/NbxUDbDWv
-	fBD2Uwnr4k/LZLCuhHn9mwaiFtrZ4N72B/MXtjLNLs3+JQNuUzTUE+f3ab4bEK4m
-	JX/Y9vU6MFMKcuzgdKTiyal91tBctpIQXsdPHb/n+Zs6bOZbQspd8bj/hzOo7hMz
-	D6f0qHlxRsSU0LpNUm/kzS115JupPfPcbsz6a2LzKU7xv3HKNrlgdHjialEAFamI
-	0/ZVP5tKIUUzzbrkLZngbizN42j9knSGhZEty/ZZRVpaE5I+tBG7LeNbioC2r1Ni
-	NW45jjPm8LB2GIahHWJCD/SmDHgbmi1yiTg/rmRqfZ1ysxGZ/VrhE1o3ywUA==
+	:subject:to:to; s=fm3; t=1781697540; x=1781783940; bh=GFa+Jw58T0
+	XE0U/6v75/Ji3zWnb3JZpCq6crreiVj0A=; b=fyCW2//wwic0NZc6RpCL0vey9E
+	tutUo+IADQY2pj7UBaWYnmo8/Q/bpmSN2GONIh75Yfaiqe8mRg3LOWlDDdzZxN9a
+	YSW6xCEjc59kebYxMA2F79/rJBsSsj7FAwjuBp1wBWWbHQ2EYp2tDF753OUHi5OV
+	sInvx5N50K1LkPN1ErXeGBw5wT4Dt48evDxuYRxmcKNbkxXMbRBVraSQqfpMe3DL
+	Gxrr8B9yW95nT46lb8q39VjL06A364nQ12gSnO/voSxCexOlq/y85nvXq3dDiKNk
+	o2ltoxqmdzC87ueXFG5BJT/utZEQ1iVJe8hWgQbDjyWKBx0VfNhuYUrMuKZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781697251; x=1781783651; bh=/ZwPcyOvt3XeNSb9Nm7nSD4PxT+sF24iJZ7
-	VR7bqNMY=; b=hZrGvE1OrkgT83rmAdkC1QK3Jtn9H1dtAlLXih3ZxcjFYX+AYey
-	Y8pw7MpC7+Z4VTjfoL3pB4JD7xmGQ10//CGUL+1f+ORcFd0hujllVihD5Cm4MfRZ
-	A2MvNaDXAtE5qSPR93cGKvYENc0nfKabKA/45bf5sDv0MvSpN/1pOe9rI+u9PViy
-	D9SFjG0Tp2QK0/PTn3vBBK2NhQi13XMw5JQ81/oVMngh/r8kPCLaiJzacCKE2Xwb
-	N9Gd+0VEsD6ybFRboc9Rwq2qDXTwAw3pSz1otDp9o7SxVP7fj89iD6jfUInL5SJr
-	eRr0/rapOlr39Aukmet62tZwUTrclp5rFSw==
-X-ME-Sender: <xms:44oyavbO5HbG_YRJ-sbFs7Ku9QLkMZU-sH-S69HAa10YUvP_xJPs-Q>
-    <xme:44oyalbjU7PQusoPcRz75x4vU9BZ3kYWM8iraE6a6HzorF6jWtMZuh_sJZbeWXIjt
-    60KiMAjEtUKoRRAgCpT7yA4UPRTLYZLpLl4M7cE4KKIIEgcq0PFlQ>
-X-ME-Received: <xmr:44oyam8dKU7Pm-cOZXA6IlXXh31x8bwFq-G5AAgll-kv-Y3RlFNe6XR1wrJeKVvOtxWZc0qY7hkTr5jBh117zhwgZhUi7w8vRc87>
-X-ME-Proxy-Cause: dmFkZTFB/fFbrb4SRL6U0vbzzjRGhBdEvPVuL5n0B6JwXlPA9RwaR5kKJH5RDriLu6gRSv
-    ElyUOFsQanAGp/PlCzhiPZt7LBwZ8s8oAy1rZ2oda9dSIy023m+aomQERsARBVRqxAKBe5
-    pka6f4OxNyPEjzWtXEhWQz+kGzJQRmf6NRuiDK2U07sEwutYjJkehON2e2J9HZZqLT04TO
-    JnFtEal5bCRIwntHErlAxTnSyqwDf9eJjhythqmqNW9pTp5stm+7Nxq7NLma5IrQbjYy19
-    4mcKMTavrZEf4om0DzpHuuujgtVT95HELW2tPYVFzzeYemNhB7M/GuZSfkXTMrVLSfe3Ik
-    VMEur8O/WYEcfHiouynWnFGnIvJnyRYnH7uFIyErqq1fb/Tej727ajMw0eGulaLOkrSeeI
-    pKrd/TUkOrMsW4AnEakDYXRfEt/JaM5APA7Sf7TRLY79kj7f5DrHhEaEjq9guWB0YjMh5l
-    DbDTFNBoW1kTtWHu0sG8ozka+obYnFnYQYsG2iKWJKHq/5zKeQJFPRfX//tepcR1OuhJmm
-    TcbsFNfGoSo235kVDnyoE7OKE0KeCbi6MlGF/50euJ8FwLvTxFksxV9BDq3PS31xBwiuZx
-    BmOQ4OEvANzdt8VAwieJn6nr77ohrqJd/Co4cvspmwzvronejekdbAVc4yfw
-X-ME-Proxy: <xmx:44oyakhQZ3Vb4QnTri9CQr_E9O35SIuroX_5a0NUVae2677PQADE4w>
-    <xmx:44oyamcUv-53YBAWi7Q7wFL_QOjpUNoPeQqyauZ3b4qu0kWuhHBy-A>
-    <xmx:44oyarqHOsOC-9apHZpa7EvTi-PHbq5PNaPs6Xz6wlUziqxGKjvc0Q>
-    <xmx:44oyarD5P6n4_TdMRWwyJKYfakXB-lqIaZJ9HM694olZFZ-O8S2aKQ>
-    <xmx:44oyasVGLRPF3WBuIeLWvoF2e8Zjo3wTlPByFzhXKLT4I0jhdL4xF_O0>
+	1781697540; x=1781783940; bh=GFa+Jw58T0XE0U/6v75/Ji3zWnb3JZpCq6c
+	rreiVj0A=; b=g/awLooUw1+eFc9kS5E+x2O/UV6stvKK09E7hM7gScgApWE6HDX
+	NDZmlNjIzeCuNbhfQaWV2QanLhKBhOLvFB8X4l6OpQ/06YOeIXja6e3IYsap/GQw
+	fGVCRf0gSitOWnix3oI3qtu5vQBKeBdW+U2ApSpsDYacX91qZMsyayeKa3c2tXRY
+	iWVq63xDCYcCcJhRS/uqrnqubX42xG6HJzCjkuqkSmQAuyg/g8VOUECpT1NFFCeb
+	7vq6OTHfb5do9+2xihjcJBSv0/+hySbNfvm4aC0kGgNbqkCwnw0sI0O1WbQr4vqF
+	AhKSgBcvINkspELo2P+9v7zIayrlOFXNVTg==
+X-ME-Sender: <xms:BIwyarzwEhJ_Gh57UBiXaCAgqDxNrtRVtCJJ52lJ-S4CfpgThC4kYw>
+    <xme:BIwyam-pGqP2L9ghK4i-u2sWq_vtAfFmuFhNiIk-PffiEZObSScjkN2-Dm_wzNJQv
+    mdj7Aw1MYSii4GQCuzroWop15YrA1z7iLBWqwiz6EHkDFt782yUAQ>
+X-ME-Received: <xmr:BIwyavI4qyMWD8QExIvQU6jI1F2aeMo5zyQVgbMsDk-VLu1UClD02qmylPYnQ6FcZRRm5719msP7EhZkmz1YZYK37mLF_oxVrtNT>
+X-ME-Proxy-Cause: dmFkZTGIW7Mw+T895CBMSiGyiL7nWHIDDE/239D1EIVjZoDoxHVM3eVAffkMJR/R9n6Dr1
+    nu/QqP2yzHiONAVac/YP/HVrO/0yrKb3a8p/KsTtWLF6h1PuElzI/qsXWyfXX3Ro7pw1RO
+    /bVElfsjhfKjkDAHTEqegMZ6hP4g8KttcJOO0HPrS3Yf7ghjBvubFgoUxB5qLPMLeKi0NS
+    Rxkypy+o5wvnrbQ1alYI5FgMRqGl7eWCQZruDPGcITdC/LJQqZRer515dQ4dpTOWIWGyHI
+    wKLzAfYm1Ng756SdZFvOvky9BF/4oGgXsNieUGEwC8tVweSq+pAM7++PBL1pO25b/5PXsO
+    17rKXGd+3gv09INCW+lR+3l8uy0pGufMjEfCZx7vNDmEdP3UnDznygLGUq7jQAZuYCIQFO
+    lcpPybyLpmCyhV0CapeaG5HtBvTToXbh76aLhdCUIECOVk6wrVi+cSW+AXlzRHhnTP62Y0
+    fsCUE/SNQ2aUDpDATJgDj7MVSSkIztuG8PqyoY1pD0D12YKnJ7oHQ+wPZl6YC4ZDlOfOHS
+    Cfil6qtoX8cnQnMWzJy8m+NqjFlj5pBIsmGbk26JpQLUvdFKEombuUhyoL42/xBlZIP/ik
+    eiydaL1eFdAlU8Uh76wQVnnhNNHh9d+x5JTorfB3SsTPCug7gb6b0LtarNCQ
+X-ME-Proxy: <xmx:BIwyascaFkR82fm_H_dUzI_xN1YYgp50dRw6ZhwZu9alOIQm9fCOkA>
+    <xmx:BIwyau__YYGGIw172SN24EeWxcxO207Zfv8THQFujO5Mhes43zUIAA>
+    <xmx:BIwyaprRLuSx6mVLD7HcvjUqVqR01j4DxvHfTlvYuQz4LRwDT9L0VA>
+    <xmx:BIwyajARQAzt7bCDIcA8q1aLCG0DtW_HDauMp-Vr2SqlJLypcU_LLQ>
+    <xmx:BIwyaiaBmSym2Q0hSIZVcHc8lAdV60AZAesH2LQzQY1INCUAtHpVs9s7>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 07:54:11 -0400 (EDT)
+ 17 Jun 2026 07:58:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] osxkeychain: fix build with Rust
-In-Reply-To: <pull.2154.git.1781691074710.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Wed, 17 Jun 2026 10:11:13
-	+0000")
-References: <pull.2154.git.1781691074710.gitgitgadget@gmail.com>
-Date: Wed, 17 Jun 2026 04:54:09 -0700
-Message-ID: <xmqq8q8d1ixq.fsf@gitster.g>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Philip Oakley <philipoakley@iee.email>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: How does GitGitGadget generate range-diffs, was Re: [PATCH v2
+ 0/6] Support hashing objects larger than 4GB on Windows
+In-Reply-To: <fcb9e52a-5f71-1fd0-a18e-c48e22e6e28c@gmx.de> (Johannes
+	Schindelin's message of "Wed, 17 Jun 2026 12:39:15 +0200 (CEST)")
+References: <pull.2138.git.1780593313.gitgitgadget@gmail.com>
+	<pull.2138.v2.git.1781621398.gitgitgadget@gmail.com>
+	<xmqqfr2m4gd1.fsf@gitster.g>
+	<fcb9e52a-5f71-1fd0-a18e-c48e22e6e28c@gmx.de>
+Date: Wed, 17 Jun 2026 04:58:58 -0700
+Message-ID: <xmqq4ij11ipp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,45 +90,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Without NO_RUST defined, the varint encoder/decoder lives in the
-> RUST_LIB, which needs to be linked. Symptom:
->
-> cc [... -o contrib/credential/osxkeychain/git-credential-osxkeychain [...]
-> Undefined symbols for architecture x86_64:
->   "_decode_varint", referenced from:
->       _read_untracked_extension in libgit.a[x86_64][63](dir.o)
->       _read_untracked_extension in libgit.a[x86_64][63](dir.o)
->       _read_one_dir in libgit.a[x86_64][63](dir.o)
->       _read_one_dir in libgit.a[x86_64][63](dir.o)
->       _load_cache_entry_block in libgit.a[x86_64][174](read-cache.o)
->   "_encode_varint", referenced from:
->       _write_untracked_extension in libgit.a[x86_64][63](dir.o)
->       _write_untracked_extension in libgit.a[x86_64][63](dir.o)
->       _write_untracked_extension in libgit.a[x86_64][63](dir.o)
->       _write_one_dir in libgit.a[x86_64][63](dir.o)
->       _write_one_dir in libgit.a[x86_64][63](dir.o)
->       _do_write_index in libgit.a[x86_64][174](read-cache.o)
-> ld: symbol(s) not found for architecture x86_64
->
-> While it is curious why these functions are needed at all (osxkeychain
-> does not read or write the index), the compile error is a real problem.
->
-> Instead of trying to play games to add `GITLIBS` while filtering out
-> `common-main.o`, replace the `$(LIB_FILE) $(EXTLIBS)` construct with the
-> much shorter `$(LIBS)` construct that _already_ filters out
-> `common-main.o` and adds the Rust library when needed.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> GitGitGadget is using range-diff to compare between iterations of
+> essentially the same patches, therefore it encourages `range-diff` to try
+> harder to look for matches via `--creation-factor=95`:
 
-Hmph, we do not build this at GitHub Actions based CI?  Just being
-curious.
-
-Let me take this directly to 'master' before tagging -rc1.  Thanks.
-
->     osxkeychain: fix build with Rust
+Thanks, I'll use the matching 95 in my local "sanity check after
+applying" step.  As you say, it is not like comparing an integration
+branch with many topics with the same integration branch from a
+different day, which would need to avoid misidentifying two unrelted
+ones as if they are related, so the tool should asssume most of them
+match with each other.
