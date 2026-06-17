@@ -1,83 +1,83 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44E139FCC5
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 07:28:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E213139FCC5
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 07:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781681321; cv=none; b=c0OaUOL3+IFrRvX8BfydO+/M8aUNM5rSuDEXfLZ40nICB9MF5YgedYybTZd8wcSHYXx2E8xR/GiJ7yy/iENPXxpgiyoicFCB/3KEcYDsUWq8VLcXvTkgqbLeaaqju8x6BEKUBiOUYsQYMrQKzdz4XQ6OSJlx3Qyiv24L7zSueFg=
+	t=1781681326; cv=none; b=tiyHLMY8KGDj3sXFHEkBKSk4HfbMd6q4GSeupZzJOEPWJCouMidHdChzWus9G3IK0jQG6HGqPzuzC1Zfrj8Db4tGnXfkk8qLqQGsHXz+uvtIIsh/DdR+ICSQfd5neK91CgDWXFplEYId+ouHrApcexOPeGMjyVrAco9QJ4VH91I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781681321; c=relaxed/simple;
-	bh=IZW4s+//hhFiy1UA7cFR+YeK0/Eq255rMhrAYw1ZuaM=;
+	s=arc-20240116; t=1781681326; c=relaxed/simple;
+	bh=MEngJsk+YOla2w2UPGVzW0CLsaaaWcTwl2rUV6zQKdI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eIQY4pog/sv9HoHQz+I4bm605McfztR5KgpnpSKKgaU2/PVhn4urnfNg7Oq91qGHRNqIUf8hoS5KbZw4+5a+e11Dmp0L84nw0B3g5k9At6qyGUOa7gf8UOUA4DVBoge4vxWwnU+IdIYP03wpNG0z0M7IG8Vati/eXnuhNz0UAgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FRQUulDl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k4mKCRwi; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=NuGmCarY0ekvYFLGQOXShAXowpZyMcJjQv2tr0XlHBYPAE0Pz9OI+oPkL3BlrC5WkBrAsVHGIG+2ANdI5NKENcbV/LxGVuAhgDCbOu69ScvVZhEA4ccfLWamkljF39U9EyJlzmkkdknXXj+kSYbpCqlB7YNYL/LjW6E6/ahLYng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kuADpzpd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=id/h2rpp; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FRQUulDl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k4mKCRwi"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2599D7A00F1;
-	Wed, 17 Jun 2026 03:28:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kuADpzpd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="id/h2rpp"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 524101D00094;
+	Wed, 17 Jun 2026 03:28:45 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 17 Jun 2026 03:28:40 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 17 Jun 2026 03:28:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781681320; x=1781767720; bh=Bb9vzgThzX
-	+itVAKU+zpoeZWxR0Xib6OwatjG2hpDCk=; b=FRQUulDl2vMUcu6fqsjYqMJqTk
-	GofcEIxNeY/xtdLzUvtvsU3pJIelmfIi7I+RpOWzL162S/lKeo0niZde03QsiftX
-	eFvtm1UFrVEpK6lw2fNaaqIoaoKG8JcGsWH0gHCnrZM2ygmyj9br2U4Ueg3ai6So
-	JH1VQRBsuOVFRMHPxz9chAweU4qvzIf3oRA4VGdCkqL7mxM7ynQE9cvSOgiOiO3t
-	F1+CzPci8RyENiIH5XXmh2m4g/RQ5CHfJ8X+8gmeLZNgsk4UyvC5sZeOwTPstKcs
-	7yHOuJb9R6vuqpDkz/CKNNIdAWpQOHYwLBPmnDhxu5pTd2ivCtzwVnk1NWWg==
+	:subject:to:to; s=fm1; t=1781681325; x=1781767725; bh=u6VTIyef8s
+	wS76qCtsLflRnAgJ+OjYALt9q2PwYqR7I=; b=kuADpzpdnv3ijugklxbkcyqU72
+	tstTtH+Bow4WsDXrME7egj3ApuZg9dqoXWknfFTcBbI86CnfjyeOGO0FDgAUQAG0
+	n/rwjabdjwTfkhiJ0ZoARY4coeX5pOFTalsAkSYxgacOM0rQB0kp0hflWICOaGD1
+	L3oMThWuXUEWG5hZLzeaXXAnZPlOI8hlZJnxZ53JtcPAlzi/n/97n16WFh6rrZSF
+	q8wI12aanFI1FS0ElVivcV4Xv2XJ5bqATKE5JJDk4pJPGxCilBrlaiLLXj3MhYIe
+	1qjJ9zSmFt++eqfOUiH+RUQJfxpw+D9oArKrt6Lr6kTGCeUG2wUMElgNKzWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781681320; x=1781767720; bh=Bb9vzgThzX+itVAKU+zpoeZWxR0Xib6Owat
-	jG2hpDCk=; b=k4mKCRwiKELyw4+LbVPCzYeU/c+HVx3WkSBgS9OzW29S0Z/MglG
-	wIwj0mIXyUEeuCgl6Wcw7XtY/2Bo+sEYn7fV4otmaWjytuap8EHo2V3Nyp4VrUJg
-	88VHgF7pLHDGlNb0VSKmgm7QA3P6itrA0nXIB6tSQA9cFJIXu5uFfstKgIa0XWv7
-	JNRLz4HQI1MvbkJkxwUJUM0dq1PndYz3PmfHkrgrORZ9koeM7gh3TRl092hu1V6i
-	y0itRJyEkhxZpuVdsUhuHtMzKYEo50cMXCc1Vv8frtHvcojvUlzEqVYJIYSf+M6d
-	1cW+Pn4Lk+tP0SAEYr25dGw4J0x11b1Za8w==
-X-ME-Sender: <xms:p0wyaujw_9Te8zNCz8huwuUUCTCKoQOfDEN-aeFBKRJ2TFFIIPgXIg>
-    <xme:p0wyalCi3cGvhyPuxGwd8eThYmVykj33L4SC8mMKTXsAHkTUWB9p_-cxwMvp8ms2Z
-    C_Ky_9LlDmyi9FUaUtg6jGAN3P5nF7phH3bMd0FrGec-dZyWTcB>
-X-ME-Received: <xmr:p0wyajvyOuF4hnV8w1F7a_ijsF9hj8g5Z8kbDodPJdubOU7frqfX2SdsX7eSa9Aar7dqiBJo5D-EKq9PdOe8faXdkWfJ3-wx2u9ypQQ>
+	1781681325; x=1781767725; bh=u6VTIyef8swS76qCtsLflRnAgJ+OjYALt9q
+	2PwYqR7I=; b=id/h2rpp+FTw4qPE8prwuRXgozCNMLKnJbxp3cVVOv+6Rm0x+R8
+	OaUhl0tBrY4vPybrMtnozQL30Zv4aohvGvctE8Zq8snhhGlNxWtX/Sb+bskM8by9
+	EGPaugOIm5CYljmveknkJsBq1rV29uKeRv/e0M57LkgoE0JBKfmEEac+lzF7bzjf
+	NKmvsZ0sVthvYfW/G1kqxCS2zcsV+FryfTQIFh06sT86HDFNju7qOJCnxAxWbsrm
+	AQEx46b+FligRZ4CYsqt85z10hE7N8ylw/ebcIWgBJuxs8flV7eRCYe7Ah5AKmEv
+	YCtquqDwdCxMYNCalCIXGxSAY4NfJdW2IzQ==
+X-ME-Sender: <xms:rUwyaqv9zlCbbDZ5HRAnjUHFZZgr9mYw5cNqN4NIioEUWkbmCqKCDA>
+    <xme:rUwyaldDQVx2Nj9nZCjPeeLKMN1zjEzI1RQFw6LDFxwwifMSATs3vHZlygVB7FyYU
+    kDEQm1_eOoK_gIUwEesgCZy_B25dxqTPuoZFZglVNH4pdoDV9kU>
+X-ME-Received: <xmr:rUwyajbMxqQDqmNMePWh4PS105VoZO7K2CMhAD6W7plWLFF2OxTXISzFS0SvZJGoVjJCbjPanHy6k_OJdQO8xLphoYOWKTwzqvJeeSk>
 X-ME-Proxy-Cause: dmFkZTGyUsLXeodEuO5Zklc+Avvz7Jzf2Vy7qoqTB94f5EUHGUWpDVGB0+owJMohiKT6Rk
     56SMYT0FItF05pbBBiazqjVabQCBXOj8ydC51PCORJJmf738n+G6GNCfCOfVderOEio8gn
     gCN2m8QIAgQLKAU+/UcSsGsQsz0llGUZY2YItYIKFQYiqpdLqWQ1zJq+QSP6RxoeQ/R+gt
     Yx8NfW7g0WqpsJ77sl4IhJINmwXHNIM3porakL9jnm0dqEt/86ZosQA6LuoA4p8ppY3Jq1
-    9KRPdQqCk/vBk32aJFjgnXJIKukKQBsO6cgVs6QKu42qSjARysafsSDmC9u8scF2+TS2GQ
-    dn3D9DW+a8i+Cw5RCz4vVst7n7WoQrPlGGSgT5VfHXFP3jvG2BV54LvzhbQ7sXZ8GglgWV
-    D3kCCgOW/8sZ+VPNQE9PydsCDdo2fHNLeoOslH8KPaUcYREd6hQ4Jjm0jMrRkgBDY46YeW
-    krizEUqzMyQBuvNYqRmIAQDl/Vi8+4GnP6Lf9GyUlJvRUhzvY42P+X5DaUkQ/GEyoDS2Ok
-    IFSMmFaO7GQoNT8RToJktrUzJrZgQpIJjZKqXcaG2y14VGuPX7JgGcNb8hN4ffqJFG3JSz
-    IcVN9TCXJWHVMOiDP1axmw8TGXgWNS+WYaObQ2cuenoaEJpqxr828ppfbGPA
-X-ME-Proxy: <xmx:p0wyaiZu-HvQxp0-aFVYTT2WzrEWGOoKf-cBVm20uZNwzGQDFu1QhA>
-    <xmx:p0wyauWHi2QrwCCOU3OIjhURzKm-_Mi4YboohJYvSjoBAArgSejCgQ>
-    <xmx:p0wyau6FNKZiugz7ql7o6GtxCDfHMU-NtK5k_xxKzGvvGezbz4rkXw>
-    <xmx:p0wyahiNrav_TrnxSg424vmpeJ1pwEoBy9PjB8q-qbx8HPpkz932LA>
-    <xmx:qEwyah6T5xB3s48mpcIKZUpA37OqSIapCd1UA2fLeyGXe4yjkfl8u3eO>
+    9KRPdQqCk/vBk32aJFjgnXJIKukKQBsO6cgVs6QKu42qSjARysafsSDmC9u8scF2+TS2DJ
+    /8KsC6npxF5JS+12uYrYzvM4inkv6eWhGgjoAvXXkeAelWyWpbuybq6PMWYNwg/zRISrfW
+    jbBLqAYR92kFm0DNQYqG+JDEI4/lm9fwFV4N+2lu18FtpT4qlZmlX11KVqqlaNaxAAPPLU
+    T/aq7pHwS2KeVGp9VY3nr/8rhJlmcdfejRAB/l4VqizLR7vKO4t7Sc6flBwb+sjfj9sKgP
+    BmiSwBoBgeDvj7BQhszdPHWQq6ODOdZ5ZLq6bJYMOb7oZFzJsZgy8jBqlZrOjkoKRFx2xe
+    25ufGCNbLh9ASbVBBnZXAoo3Qewjin57qZ74xo7m/TavcEaPZMj1PGO6aGrA
+X-ME-Proxy: <xmx:rUwyagXAvwGOd219T8PQqYHibNheTaKkYiGK1cOKLYTq6b-Utx4FrQ>
+    <xmx:rUwyati9i0nYnOYcKb4TmFOnjSDlNmlozcacRe_JGAJeojZ7bAHqCQ>
+    <xmx:rUwyamXQx83S-riYzdaLUrEKXQwABreQIzlsamSCKyzlNNooNQEH4Q>
+    <xmx:rUwyasMr_7Eo48-cD_qQ12O9BOtrmmtGX-7wZHsUbvcDO3-Znp4dUQ>
+    <xmx:rUwyamE9w0-iv2I2X8jNIbwlW3o6yT9rYQl5OjBUAjEruqIu0x2LCQjB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jun 2026 03:28:39 -0400 (EDT)
+ 17 Jun 2026 03:28:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b560d91f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 17 Jun 2026 07:28:38 +0000 (UTC)
-Date: Wed, 17 Jun 2026 09:28:36 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 28712aa3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 17 Jun 2026 07:28:44 +0000 (UTC)
+Date: Wed, 17 Jun 2026 09:28:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] builtin/refs: add "update" subcommand
-Message-ID: <ajJMpH7VQY3Hxm9A@pks.im>
+Subject: Re: [PATCH 4/4] builtin/refs: add "rename" subcommand
+Message-ID: <ajJMqayXuie1FyIW@pks.im>
 References: <20260616-pks-refs-writing-subcommands-v1-0-9f5219b6109d@pks.im>
- <20260616-pks-refs-writing-subcommands-v1-3-9f5219b6109d@pks.im>
- <xmqqse6m4jw4.fsf@gitster.g>
+ <20260616-pks-refs-writing-subcommands-v1-4-9f5219b6109d@pks.im>
+ <xmqqo6ha4jw1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,60 +86,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqse6m4jw4.fsf@gitster.g>
+In-Reply-To: <xmqqo6ha4jw1.fsf@gitster.g>
 
-On Tue, Jun 16, 2026 at 07:52:59AM -0700, Junio C Hamano wrote:
+On Tue, Jun 16, 2026 at 07:53:02AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+[snip]
+> > +	if (!refs_ref_exists(get_main_ref_store(repo), oldref))
+> > +		die(_("reference does not exist: '%s'"), oldref);
+> > +	if (refs_ref_exists(get_main_ref_store(repo), newref))
+> > +		die(_("reference already exists: '%s'"), newref);
+> > +
+> > +	return refs_rename_ref(get_main_ref_store(repo), oldref, newref, message);
+> > +}
 > 
-> >  git refs delete [--message=<reason>] [--no-deref] <ref> [<oldvalue>]
-> > +git refs update [--message=<reason>] [--no-deref] [--create-reflog] <ref> <new-value> [<old-value>]
+> I suspect that my version shared the same issue, but doesn't
+> refs_rename_ref() return -1 for failure, which we may want to turn
+> to positive 1 before returning?
 > 
-> "<old-value> vs <new-value>" is good, we should update "delete" to
-> use "<old-value>" to match.
+> This is a tangent but git.c:handle_builtin() that calls
+> git.c:run_builtin() may want to do the "negative return? flip the
+> polarity" conversion to make this worry go away.  I dunno what such
+> a change would break, though.
 
-Good catch.
+Fair. The other subcommands also suffer from the same problem, so I'll
+update all of them to return 1 explicitly.
 
-> > @@ -58,6 +59,12 @@ delete::
-> >  	reference is only deleted after verifying that it currently contains
-> >  	`<oldvalue>`.
-> >  
-> > +update::
-> > +	Update the given reference to point at `<new-value>`. This subcommand
-> > +	mirrors `git update-ref` (see linkgit:git-update-ref[1]). When
-> > +	`<old-value>` is given, the reference is only updated after verifying
-> > +	that it currently contains `<old-value>`.
-> 
-> As to the lack of "create", among the two potential changes, I have
-> a slight preference for adding "create" and failing "update" that
-> does not refer to an existing ref.  If we go that route, the
-> "--create-reflog" option should move to "create", as "update" will
-> never be used to create a new ref.
+> If we rename a ref that does not have a reflog, would it leave the
+> ref under the new name without reflog, or would we get a reflog with
+> a single entry that marks the fact the old ref was renamed into the
+> new ref?  Should that be controlled via --create-reflog option?
 
-I agree that we should add "create", but I also think that we should
-keep the special syntax of:
-
-  - "git refs update $NULL_OID [$OLD_OID]" to delete a branch.
-
-  - "git refs update $NEW_OID $NULL_OID" to create a branch.
-
-While the other commands are more ergonomic, I don't see a strong reason
-to restrict the "update" subcommand. Also, this ensures that it's in
-line with git-update-ref(1), which also allows for these use cases.
-
-> > +	if (repo_get_oid_with_flags(repo, argv[1], &newoid,
-> > +				    GET_OID_SKIP_AMBIGUITY_CHECK))
-> > +		die(_("invalid new object ID: %s"), argv[1]);
-> > +	if (argc == 3 &&
-> > +	    repo_get_oid_with_flags(repo, argv[2], &oldoid,
-> > +				    GET_OID_SKIP_AMBIGUITY_CHECK))
-> > +		die(_("invalid old object ID: %s"), argv[2]);
-> 
-> On the "delete" side, these messages quote the object name, i.e.,
-> 
-> 			die(_("invalid old object ID: '%s'"), argv[1]);
-> 
-> We should be consistent.
-
-Yup, fixed now.
+It would leave it without a reflog. In theory I agree that it might make
+sense to introduce a "--create-reflog" option, but that would require
+some new plumbing in `refs_rename_ref()`. So I'd say that we can add it
+at a later point as needed.
 
 Patrick
