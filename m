@@ -1,203 +1,176 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A323F822B
-	for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781692426; cv=pass; b=JS1rbbZyh5T9jp3P1uSCq17o1AZ4HloQSXZiYLZdOBuOKIxrqmeFbXK3GZRhuw7b+du9xY//Ey6xV+IDN4PflIXtFWDQ+GutCv/o8wruoZua0qacOKvm0yVeQkf/a/7z7k3IqgNT5Ahvlfn2kTtjfy9zTe2m+fOkUxWbOD5t2js=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781692426; c=relaxed/simple;
-	bh=KFepJTOtZxTdiO6uiSzabIicgkSrvjFDy0nxyKPEpMw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gVoOann2N58Q6tvHh/Z2SNy+coApHvYoslJsaaR4klH6pLRhIr7qRSE60qaUIHSKEyAL8QrJKnV7qDqiBvkyZqUDWtb+GoYrPOcj5Q2MekvN8kFrIzOnO35aX/jLtU6MrfKBVPS0XjR1cR47ttyJSOrynQgm6RyH5kzoojqfQug=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HMzU3Lqc; arc=pass smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692DB48C3E6
+	for <git@vger.kernel.org>; Wed, 17 Jun 2026 10:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781692764; cv=none; b=MeAqSTFgVQmy21zjdepP4rOwZy8CIQfoiTtrLWWO586ifivHNdYthF2OkyG83ZEw+gruOMlMv3wOWzBdSqQo+vptyi1B/iZNT6ZyIP0tOiiUbOX8WsnCgp5V3qCdmT6KC/MkXmSNfDsFbhIPMDBKwbR4PGaG6dgNK81URC6lLA0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781692764; c=relaxed/simple;
+	bh=0HevRyaw4VPHf/s/v5JdgJYDyxWCoXJtc2ny2ODFXtg=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=OBazQV9DxkgNf7/R2R+W40Z8I5OlgoJbCu3cVSixdtQt3oCRdsnMJB5pL1l60mlR/Vk9q0u/SzHltpRMlusn/F7xQzDtc2fKej3/dnEokkfB7EI/GXZMTsFd+N0RgAHwO4owpPaB2dUZXxfZXOHhUxIX835GGBBinJi4DC3y94E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=J+kvc8a6; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMzU3Lqc"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6956a8abe7aso602964a12.2
-        for <git@vger.kernel.org>; Wed, 17 Jun 2026 03:33:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781692424; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JnZwDxQGNpkg+ZhMrX0AxCBORwxrSp6tFicvc8ScbCQ/dsYrJ49+57Qeo3jyoaEfs7
-         br9cv0otcJGgLBBEksFS1HYgh60jZiyHMqD6uWkmv3jrqcXPcG4LSh4ZhhDuOQf7LhHE
-         wraBMXPELlDREutLFTHx0Fa5e/EXUEPMSqLpJYDLc/hkPOzIHltQJLnGPjMh0c3adYPZ
-         /XwPYNQda3SNd7eS0Wzt8PWZZrWftiYP6QASxsQMychwZPhwncURs6IYI0sndOL9RBSS
-         Yy2ejKD9hgU/bXksvtxREo6t6m3vuFx5bS/X0zd4lwNnxlCu4XYQOlylu9JElbWsAeWK
-         jJfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=7g3wdfKewj1ZV+Ze2lXFF7EsVzYSTwVBg1CnjfX0Qe0=;
-        fh=FNLIMZhZiDFzfjD6hRJkkjs23dKhojv9FJ2aShxuIfI=;
-        b=CDLPfzc4XZVhdH82G/4zMdzzZIWltN2T5G+QmCmXSIW86kDXqFVeg3sg4GX3qNORi3
-         Q2Q5CCIftCiWEQhKf0Ym0QQZkGdpHi2i4acmYNbimesPDxijR2kjriLZytI3QqmaNMPp
-         2sVpc3MeltjyWh2vm2P770iy5VB7Iy5BAnx528Jidx6b6lbf1PmALpz0RwEaI7HnM7ZN
-         7hz5LURpn7Kh7KNPfG8wpQk45ieMImPIcDCZTSk2vEyQrouPoaDbj3kT1h1oW8SnmGlh
-         +WrrsmgK10JIdVBSEwXeUDDFsLnhkuhePpVp5OviJmCMIPd55roy2/XeacK5XpQ1wZ/k
-         iU3g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781692424; x=1782297224; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7g3wdfKewj1ZV+Ze2lXFF7EsVzYSTwVBg1CnjfX0Qe0=;
-        b=HMzU3Lqc+xAvJrQDPjYiKDa6SnmrkJvozpD8/m+v+iYMooJ82wdfOH/Pvb1Lr+78cu
-         /JodboQ1tEq0uTgMlDfqBZy5PcRPUpCViYDd4Cro5a5ZE1SWNY6ddA167hkiSf0U8/+w
-         Kuhmw96TxSnkz+O+CKsSU887CucEdG3vXD97jaaxYjLwzmpibE9jC/jNXMLxMc5qAWrK
-         yWUrKbVm97OCQWPqbEGPkE6Obp1+SYBxHx/8mVSkCAQhzQJjqSxKAkTn89zidNjnRs8i
-         dlx3PvpKxMe4XYUCPo0wrScLGzQrARdskD7/kCKWWZyeDxuLmlLIo77BGd3d2r7RQwRE
-         yhPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781692424; x=1782297224;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7g3wdfKewj1ZV+Ze2lXFF7EsVzYSTwVBg1CnjfX0Qe0=;
-        b=M9ioDzd1lpI5q1SyTtwbjrp+FXYFoIR1WzaEbyiMEWK1IElGSML4rtqEEEEdevoRni
-         qFdrbhNbykIvw4lBodp7pt9vOiGjOOuun9suiz1aTlQKnNqYodxhHmHsfrGWHBi8+dln
-         gQMzJj1Cs+e0Iz/yIjAdHL/jeRzs8y9y7bk1fhug1TR/f9zXrW1vl2ChJQbbJslEtEuX
-         /BVkutkrEdAa5NDr6nOauJQTv+PbWMb1+nUnap1crhHTH9pq023KmfvL9OzwclPWYq0l
-         xIzLxLHW94ndbiwG2WHg06HYloptx45AxVPwQHuX3vDyuA2i95CMQXZrNYiikY/0hj29
-         od5w==
-X-Gm-Message-State: AOJu0YyZGLaTSQ1rMdToH/t7a/IbgNPigqKrBxDM8pKVpBpqKY/7dvAP
-	zGTMO0nuY9Kxkn1LHeL5S0bWzBcNsj6EYV1kDWp3JwRsVEPywTYJCfHfkhXbD71cERlWxSGVFgo
-	OE2z8hR4ebvSduewiYQWQb9H3PNUC4P0=
-X-Gm-Gg: Acq92OGIAW1sHx6x8g8l8afoqj18ViFKybMq7dGhMGuhn0Kf/oREWVeiup44CVRRLfp
-	DarSX/OsQ1j831BbH8eT/yos+YiW4fOQC72ITHd/VZFvAAGMu6SNqplPwNzBywW67+/VKoeIbfn
-	p+pFvVhRmfl79WgvNcJaQUj754XKaL22B2BGgdFxMuEEDHJBEicHchm/wPbGiwr/By8zukAk7Qg
-	uwufPD8trCgpcK+yDQdg7r1wYWnD/XQcf44ZeF9MATvCTkttfwnj3jXgVrsLC67ISA7JfMADRiD
-	ZSqZbf2L68KCGW8RTrGhjnzeH9nwJtcX5h6Er5Ikkr0CSp/DQahR1awzkTkgieqfF0E7+ixfZOv
-	Bnbozjl/UNf0=
-X-Received: by 2002:a17:906:8a6f:b0:bdb:b76c:4dd0 with SMTP id
- a640c23a62f3a-c05d2ca302cmr117829666b.40.1781692423682; Wed, 17 Jun 2026
- 03:33:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="J+kvc8a6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1781692753; x=1782297553;
+	i=johannes.schindelin@gmx.de;
+	bh=vSlGCpJBJQL6oCtKDSqLHh+hs76tpkzm3cmy7JiZTcU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=J+kvc8a6nCr+Rd8vcWr2Z/K5Mf+q1RWYznPAqnfIXeQrjQmCbkK55Wq/PTltaLVd
+	 JsL7INyF1yfhKJg2JEUTiMoaWeZVOeQ/55rSA+QsMPpT1m47vsfkuBxl7BzL/sIPA
+	 QL7hmrCIowtjVOGoaF6xx47ua0vMZ+rWGhrDmEy3NTWZoyGMDvlybz9b0dnf7pl9v
+	 ZpSdP88pgWiGBhnVFUx01B7ZfCFhKi4Bypoo/sl0bSORY9cJgT1CzWUo5cDZ6CP6A
+	 i5vrBwUxLDoCEXc4z+VObfZ5eXKU+q6ezOdZNdVzK96+wsLWjacjcVKX5x1xbSUxq
+	 egLTUXcxB9QFjB/AlA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MDhhX-1wRnT53lId-003mq8; Wed, 17
+ Jun 2026 12:39:12 +0200
+Date: Wed, 17 Jun 2026 12:39:15 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>, 
+    Patrick Steinhardt <ps@pks.im>
+Subject: How does GitGitGadget generate range-diffs, was Re: [PATCH v2 0/6]
+ Support hashing objects larger than 4GB on Windows
+In-Reply-To: <xmqqfr2m4gd1.fsf@gitster.g>
+Message-ID: <fcb9e52a-5f71-1fd0-a18e-c48e22e6e28c@gmx.de>
+References: <pull.2138.git.1780593313.gitgitgadget@gmail.com> <pull.2138.v2.git.1781621398.gitgitgadget@gmail.com> <xmqqfr2m4gd1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com> <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
-In-Reply-To: <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Wed, 17 Jun 2026 16:03:16 +0530
-X-Gm-Features: AVVi8CerUCF2ouiCYPsVy0lekWSG6v3y6xPHZZVWXhSiWL0o84YQcS-Ml50reA4
-Message-ID: <CA+J6zkRF8Pm5TGZncO_0=HcVcovJsw2J+3WBfqjCS1CiS1Y_Rg@mail.gmail.com>
-Subject: Re: [PATCH v5 0/2] graph: indent visual roots in graph
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org, ayu.chandekar@gmail.com, christian.couder@gmail.com, 
-	gitster@pobox.com, jltobler@gmail.com, karthik.188@gmail.com, peff@peff.net, 
-	phillip.wood@dunelm.org.uk, siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+X-Provags-ID: V03:K1:H3pj9+bKcCtRyNvR7GpkEpg0ffJOjKS8R2jnPiYJ6fPlQzBQ0wJ
+ iXfTHOJkzE6GGU2WF5cdwOr5BkdJbsQpj2iEVXlh2VX94cKN901aIinc1V0B12MUOKlz8KX
+ Kgy/VH6SiJVLSZWB7Q+z5ZyGJXt2pHHk1LcaWAlWoCigVzt1aJgklZ0l8R8VRYlCxq5wxtY
+ Wh2ZmA/pyKMaEny7LGo0A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:g6BfVQCfkd0=;zHb7lZZl7wtJVX28R20vQBmDBJa
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 14 Jun 2026 at 00:39, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
->
-> When rendering a graph, if the history contains multiple "visual roots",
-> actual roots or commits that look like roots (i.e. have their parents
-> filtered out) can end up being vertically adjacent to unrelated commits,
-> falsely appearing to be related.
->
-> A fix for this issue was already attempted [1] a while ago.
->
-> This series adds indentation to the visual root commits, so they cannot be
-> vertically adjacent anymore making it easier to identify them.
->
-> before indentation:
->
->         * A
->         * B1
->         * B2
->         * C1
->         * C2
->
-> after indentation:
->
->           * A
->         * B1
->          \
->           * B2
->         * C1
->         * C2
->
-> Indents the visual root commits that have still commits to show after them, and
-> if they have children it connects them with an edge at a new row.
->
-> If there are multiple visual roots adjacent in history, the indentation starts
-> with the second one, avoiding redundant indentation of the first one and cascades
-> after the second.
->
->         * A
->           * B
->             * C
->         * D1
->         * D2
->
-> This series first commit is a cleanup that brings a common function from t4215
-> and t6016 to a graph functions file which they both use, so the new test file
-> for indentation, t4218, can use it as well.
->
-> The lookahead used to set the cascading and avoid extra indentation is not
-> completely reliable, as the walker goes through the commits it simplifies the
-> history of the current commit and its parents, but it doesn't simplify it
-> for the next unrelated or the grandparents. When the walker simplifies the
-> history, it removes filtered commits from the history and sets its flags.
-> When the next commit is an unrelated commit and its parents will be filtered
-> out, for the lookahead the commit is still a child of, it cannot know that the
-> next commit once simplified (advancing the walker) it will become a visual root.
-> This makes the lookahead fail, failing to set the cascading and starting it
-> with the first visual root, carrying an extra indent for the cascade.
->
-> given:
->
->         * A unrelated (visual root)
->         * B child of C
->         * C visual root WILL BE FILTERED OUT
->         * D unrelated (visual root)
->
-> the actual output is:
->
->           * A
->             * B
->         * D
->
-> A test has been added to t4218 and a NEEDSWORK to the lookahead function to
-> document this edge case but I'm not that familiar with revision.c. Maybe there's
-> a better way to make the lookahead more reliable.
+Hi Junio,
 
-It's slightly disappointing that we couldn't find a way to fix this
-after all, but at least the bug is non-breaking and the added
-NEEDSWORK properly documents the issue for someone else
-to tackle in the future.
+On Wed, 17 Jun 2026, Junio C Hamano wrote:
 
-Other than that, this version looks fine to me.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>=20
+> > Range-diff vs v1:
+> >
+> >  1:  84e1cd0aa0 =3D 1:  9c01bac407 hash-object: demonstrate a >4GB/LLP=
+64 problem
+> >  2:  809d83e46f ! 2:  aa5859c14f object-file.c: use size_t for header =
+lengths
+> >      @@ Commit message
+>=20
+> By the way, how is range-diff driven via GGG?  After applying these
+> patches on the same base commit, my "git range-diff v1...v2" invocation
+> punts on matching step 2 and I do not get a comparison like this unless
+> I give --creation-factor=3D<large number> from the command line.
 
+GitGitGadget is using range-diff to compare between iterations of
+essentially the same patches, therefore it encourages `range-diff` to try
+harder to look for matches via `--creation-factor=3D95`:
+https://github.com/gitgitgadget/gitgitgadget/blob/bf9140eef184/lib/patch-s=
+eries.ts#L722
 
-> [1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
->
-> V4 DIFF:
->
-> - Fixed test to be shown as expected by unsetting COMMIT_GRAPH
->
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
-> ---
-> Pablo Sabater (2):
->       lib-log-graph: move check_graph function
->       graph: indent visual root in graph
->
->  graph.c                                    | 262 ++++++++++++++++
->  t/lib-log-graph.sh                         |   5 +
->  t/meson.build                              |   1 +
->  t/t4215-log-skewed-merges.sh               |  33 +-
->  t/t4218-log-graph-indentation.sh           | 467 +++++++++++++++++++++++++++++
->  t/t6016-rev-list-graph-simplify-history.sh |  25 +-
->  6 files changed, 759 insertions(+), 34 deletions(-)
-> ---
-> base-commit: 3e65291872de10c3f0bf05ea8c24187e7a71ebf0
-> change-id: 20260612-ps-pre-commit-indent-39ca72816382
->
-> Best regards,
-> --
-> Pablo Sabater <pabloosabaterr@gmail.com>
+The full details how the magic number "95" was determined is in the commit
+https://github.com/gitgitgadget/gitgitgadget/commit/2605f72f92bb0ff63f4db9=
+1eaf91969749568dd7
+(essentially, I played with a couple of values and known hard-cases of
+actual, real-world patch series iterations and 95 was the best
+compromise).
+
+Ciao,
+Johannes
