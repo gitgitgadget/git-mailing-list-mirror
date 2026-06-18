@@ -1,174 +1,127 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9973C3C12
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 18:49:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781808597; cv=pass; b=as6Qzl/lKpajCZyuzY667YdLrjm6mgvIga/Gs668hsuJnuFi8eIfJdDGmOEitei08zSpAFF8RGp6uZueiFgihNMA16rgwUfOOi3QFtVbPwK7PIeq3DjntKpJHzuouHQXc5KFLBigkgWELY+nz2mR5YC9gIAKgnsBMd7zOb7irIQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781808597; c=relaxed/simple;
-	bh=AKA2LpCb/vo2mCGYj+kMp862s5zxsn67anZjdkjAKnY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DiC2KUxslJQd+IOpN0Ag35AUgEPuX4ZT/8efHYQ9H6EdGecvtaUCaveQ3vE6zr+kS20U7bei4Fd9vkOzI01LHKtg+7hucdfKmDOmIpKgMJBu0AgezH8O9L5nKpvuWOgU8ue1JVCejypDYk4VDE5aPV9Ste9X/UXl1ffPcqk2iRI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XBmtfC03; arc=pass smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB0121D5AF
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 19:17:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781810231; cv=none; b=KWhtKoftM85XU3JGW1qiKpEa83qLlDd3yqGfLfHLr4MTYxnwJYvzVFYZXRqryy6IH+SuFup0/6JFLa2oNZFx4r/RR+9OYCM4wDPscpSgloGuPMmXcF8h1ZOTH0hHeD65U9sL8UktuYSQWVGZ+/I9JyeAlypIjVlOWVTH19m/HTk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781810231; c=relaxed/simple;
+	bh=0QVYUNb253sjKC65n2U/ROsame+ySUIcQUhQPLdl0nw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=RfR39J5v6YVKloT51Wk3mjWH0dp5rkLjm8CymfSF8CHRxS1Y/Nhwce01GkqsmUJ8Jw6gYwpZ70hkSreDwPhWJBlrP9PitxkFpqcYJh7sv/OdABMhA7MMl47QT1JUyeSnyUfyBSmC83dhE0ztcasBNVt8nBjss+qLXwwxjYw94G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r1fCKMRM; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XBmtfC03"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6870ad8072eso540376a12.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 11:49:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781808595; cv=none;
-        d=google.com; s=arc-20240605;
-        b=k5KSXbpFaVWEaJ9EajEJrTOpuzsKrIn9kOeHfSB4I4FEpACiJu6y/OxOmfkSGUj0x+
-         ZA+uqwE46HsV845jB4zLpdLWpNWAseNnDc2R4uaquCXIOnqNXW+BkBjSJL+UxT1lHhY9
-         0RLzmSSXu7Q5ZaHRofCHDeR8rR8nZAiw+2TchQXwC6FvuydbdAL6mO+XfWj7mwvMvyb0
-         OzmTrjor+GNc6CbDtF+EpiR0ra34ExWNzd7UnlsVjYOALC/zc5P4FiSFb2xZJ5TLlgjk
-         DmkujR8wfzW5VpAfSSPmXEMtIJrtphsqBmLxMti5L6PAO2dVk394Ooa35cyTvJzhmtoY
-         8F9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hzrT1bz+kis8qazBhBtDF+scLjK7jAOtwP+a67wEAns=;
-        fh=DxBzptdDbLyVJmZTrposGAIUNq9/B0o2En/XtpZFBMY=;
-        b=bI5EpumIzA/ndZh7vs5ikc3tK9Ssgy3vNClJ0MvvlsfUIEOVie/6pklOKzSo/Fj0Li
-         oszkgasHOIqBnWsDMdzqBjHv1RuoN84O3Ej2tv/SL37kJSbsrBH120H6C0q4B9Ujb3jV
-         k4+Q8Q3PisgMqVpqidZUzI7UXMIZKB7ky+kUCt6p8bWHYFpNVCDvxntRngFW7PHYRG4i
-         fByLWINMDh5vpcG3WCEQRH4pFDJUJfL6HVgmqdmAWM16SfB2sEt3oVZs0ieCMvpSExne
-         o8FolKbss7sXorYNDIphdD8rErRtWRlGQypdRKLKE53bx0C42BIVVXmHIVn2qC8M9uie
-         g71A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r1fCKMRM"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-519ddebce3dso4492891cf.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 12:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781808595; x=1782413395; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781810229; x=1782415029; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hzrT1bz+kis8qazBhBtDF+scLjK7jAOtwP+a67wEAns=;
-        b=XBmtfC03HlVFtbTEjNvvij2uAikkGlb1nW+8CJvSPw8JCcmdxbdJkMmQQtKscXbRke
-         mjv4eLTHUXsHhX2hY2zgxCvWn+P5AzhCKU96IjJMa9uEoJmvTeB1GFJ+dRqAY2cKHxcl
-         jrtJKIbx1JoNz4mhsVN0W2R2y0PW7l1/PkuHT5T6EVLfKkNlmOfNG4X+ZFMafNdX8NIB
-         h9oYYCerFek0fI6dx4Pj++cdrASzy8r77ar9VQx3TnfJ+UVO7KDNSS3cqKgNc4Gjz2Ye
-         UGOEIXmvxGH4wjEBIjXEjRouPjBqpWZu5qPcaK32MvJm1LF9JXCgzYSUq8NyizVIg66M
-         lbUg==
+        bh=+DhU//k0+rcgk7xHIMH5ubOswPYQ8MfuOHVQfQJELLE=;
+        b=r1fCKMRMjVvNM6LQ2PRYHXg0Ue3uvIXbH9U+mUUrIX4Rr+3b1CCf8MAIrTB7vx9tzo
+         iTEYC97eI/mBrJjokVCAVYMbevTs8eb6BfgqUFCbdrsIBOuH6DCT1VqPlKuLSnprgfxd
+         KAhloOhBoPJhAfJ5z/sMiSCzS8B8cJTrHNYWiiEXbIK3uhJ9WTfGhlyUCrSqpEdkQFvN
+         Cq+RbJVLlPwqWX3zULZhgLQQ0XAR07M/XIa5f82kwfPveNOhBTSpQdd56W2xO7AsSNWH
+         x9kMr1ZD9q7wcYD6/rcBfgFL8M7fSLg8CjlvSiGrXP3Hu76y3qHKCqHv45vvuVfJtTcp
+         DZrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781808595; x=1782413395;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781810229; x=1782415029;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=hzrT1bz+kis8qazBhBtDF+scLjK7jAOtwP+a67wEAns=;
-        b=q+Hlyv4ePLj3+NoaLmu2nIubqiHYOxjNWPFTyX+mOA3I9S0ogs6qnNWS6QBxgCn0WG
-         N0vuyBmxQivh6elU24s/yfVNZm8p/i1RszBXa1UyJrrpoDlh938cVW2k4To0P5oreMBY
-         bAMiSRzqKLByUjCN4OCQZk07Y4voixyF24eZR3xHDzp6RidMBIInhmfoUlmJYg79mpZv
-         1n2Ebrd9Qcv7KaMtl1br1fJ9JRR0yT/JOuBoTaTwktpXamSVDLjE+cq9Ex47bxwa8IIQ
-         4c548Q49zAAHs3wS9Lz89XrgZ5INVoiSJBFga/nXsA4vDwaPThtSmkz9ULeG1n0PO9Rf
-         QJtQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9pTVdu3W5fj+dIfWYqcFzjjKzhbhUWarClKXHOgcKxUW+FSQD6Xg1xgt4Bf+7NAifYyLM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyrDL228OZF1+e9nEra9W4FDDCpIb6WSnHZymudhsRVGXptxH0
-	oFr5OhU961UNc2Q87kaOhrEZjO+ZJuM4VntNHgIMBsVIc4PqF1hVhbHTcaMenuLNf9jtAIRpRQa
-	FsUClqblMvKJ/PS2dwx8xFb5pODrmlmE=
-X-Gm-Gg: AfdE7cn03ooq1ylP2re1xlsnwlX/QH+5jaXtlwUdWYTlSAdHda6A34Kf5KHyiA5Uev8
-	gbMvxHmvIqPxeti/rb+zCGna8Yj23l6hcUxPdPqOTJsWZac55gVxEXNwYjxBZ9VeUfYXFT/mFJM
-	obe0o2hE8YSatVLhOGiv4o0VtxjtTdcytmrd/gYPKWK2IMDkZpPDD7lW5yAi+lPn2/FWE69gUA/
-	jwqsh/af65hd7DDXX1yNDYMycvU5h2oUwXjw2ETzOPHwZEERZwc4N6gRLnAQsn46BbXRoGWj2aU
-	jvf7Ipc=
-X-Received: by 2002:a05:6402:40c7:b0:689:b30c:421a with SMTP id
- 4fb4d7f45d1cf-6973aef69famr162002a12.0.1781808594664; Thu, 18 Jun 2026
- 11:49:54 -0700 (PDT)
+        bh=+DhU//k0+rcgk7xHIMH5ubOswPYQ8MfuOHVQfQJELLE=;
+        b=YqOnO43LyH7WxWso4flIOsS7990As2tlQBEtlD9XwcNDq/g1v95IEMEBlDb3znT3y4
+         TkX0pw/38cNBrGASFFNTRm9a/nDjsBcYVnA92kIyUMr0T/cOX3bH5qpJsZysuWz3pS6z
+         JL1QZRtq1Omop5ArR/O8YXIqOEU4Z8V7dIo5oPFifD22dbb7Eoq4qjutt5VRcdlA/Cw3
+         cnppI2+kkxzwj4NMyKL1jEY36PNQemdqLSZ74M7Nrod8qvHNws1Qf6rvuO5p24S73Ph1
+         FF2zz6QxFF7ACEtX+6tvmp+vYAZQWFPS7DKKCjwRS8lP88Jbrg+bcdvPhBmJOh1yFaqA
+         ZQow==
+X-Gm-Message-State: AOJu0YyLHsA9+6aIvP1tJwSOfCP5ObZUMzw9hpSSyGcAHbMpfisoSYwL
+	UyY/qZAaEDy2p7iEwI7HrJuFBKHVt1YI2ccJLS+o87kzwT+jZqpAGv+0IxEPrA==
+X-Gm-Gg: AfdE7cnIoOKP+gNyX91hCqQQLMUAk6He6vShrJxZRE2+Wfw2h78sRRLno6avx14Dr+o
+	XZTI/6FcvArg6Dc9DN58R8jjims2GY+dDKQHOqWGmY3JYw65GZqU5qulNNRqFgS5XJMm+TOGDmb
+	X0pyEhJ6EyX8oleYfEwvEIf3vZrEQ7jZPOXdv0YOCQroDMBQfY2y+HoqE9jDYmktw9wFomziivq
+	ws6RYbqSRnrF/yJ6ArPWRu1HEZ++bjS5COMk5WFoVXZ+puSv95FYRlWDj38b4Y5x0GfPFC73huB
+	hTs6fmHfX1cJdHl/bE8uXbpCp369VScSvxKNVOfjxK09s5UI+RkeNXWlzjoFd2DQjPxNyuG1pOd
+	4BnUFvusUCOKnV4XAwUZLfCDm3akeVVbkDgIJAEEweYkRUve+xkvX01rFPOn6UCAsM78s6hrALg
+	6EJN1GbqAWm0L9UQE=
+X-Received: by 2002:ac8:59c5:0:b0:50b:3f6a:1d88 with SMTP id d75a77b69052e-519e4a55702mr7738361cf.19.1781810228738;
+        Thu, 18 Jun 2026 12:17:08 -0700 (PDT)
+Received: from [127.0.0.1] ([20.161.77.168])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-519e4e9536bsm2303191cf.11.2026.06.18.12.17.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2026 12:17:07 -0700 (PDT)
+Message-Id: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
+References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Jun 2026 19:17:02 +0000
+Subject: [PATCH v3 0/4] history: add squash subcommand to fold a range
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2330.git.git.1781551170529.gitgitgadget@gmail.com>
- <89d72342-5aa1-4dcf-951b-d0c791f91738@gmail.com> <xmqqpl1q2xw5.fsf@gitster.g>
- <bd7dc183-6597-4fd0-ae64-682d46480cd4@gmail.com> <xmqqo6h9z7e6.fsf@gitster.g>
-In-Reply-To: <xmqqo6h9z7e6.fsf@gitster.g>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Thu, 18 Jun 2026 20:49:17 +0200
-X-Gm-Features: AVVi8Cfqs8soZZgIKoyaFidrkvfmt4wzOUwNJI4_RI7aaoR9leqFtIPnDLQY2fA
-Message-ID: <CAHwyqnV8je6gCTExr=CFCdYskN1dVaEDVSKDLUo5A4Ukv=qhiA@mail.gmail.com>
-Subject: Re: [PATCH] rebase: mention --abort alongside --continue
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Harald Nordgren <haraldnordgren@gmail.com>
 
-Just an example when working on a different topic:
+Adds git history squash <revision-range> to fold a range of commits into its
+oldest one, reusing that commit's message and replaying any descendants on
+top.
 
-I rebased with -x to run all the tests, but ran a test that didn't
-exist yet on the first commit and ended up in a bad state. Here it
-should clearly show the 'git rebase --abort', so I can start over,
-it's not something to fix:
+Changes in v3:
 
-```
-$ git rebase --keep-base -x 'make -s' -x 'cd t && prove -j8
-t3454-history-squash.sh t3453-history-fixup.sh t3452-history-split.sh
-t3451-history-reword.sh t3450-history.sh'
-Executing: make -s
-GIT_VERSION=3D2.55.0.rc1.20.g1e31474ef6
-Executing: cd t && prove -j8 t3454-history-squash.sh
-t3453-history-fixup.sh t3452-history-split.sh t3451-history-reword.sh
-t3450-history.sh
-Cannot detect source of 't3454-history-squash.sh'! at
-/System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
-...
-warning: execution failed: cd t && prove -j8 t3454-history-squash.sh
-t3453-history-fixup.sh t3452-history-split.sh t3451-history-reword.sh
-t3450-history.sh
-You can fix the problem, and then run
+ * Moved the feature out of git rebase and into a new git history squash
+   <revision-range> subcommand, per the list discussion. git rebase --squash
+   is dropped.
+ * Takes an arbitrary range (git history squash @~3.., git history squash
+   @~5..@~2), folding it into the oldest commit and replaying any
+   descendants on top.
+ * Implemented as a single tree operation rather than picking each commit,
+   so there are no repeated conflict stops (addresses Phillip's efficiency
+   point).
+ * A merge inside the range is folded fine, only a range with more than one
+   base is rejected.
+ * --reedit-message seeds the editor with every folded-in message, not just
+   the oldest.
 
-  git rebase --continue
+Harald Nordgren (4):
+  history: extract helper for a commit's parent tree
+  history: give commit_tree_ext a message template
+  history: add squash subcommand to fold a range
+  history: re-edit a squash with every message
 
-$ git status
-interactive rebase in progress; onto 95e20213fa
-Last commands done (3 commands done):
-   exec make -s
-   exec cd t && prove -j8 t3454-history-squash.sh
-t3453-history-fixup.sh t3452-history-split.sh t3451-history-reword.sh
-t3450-history.sh
-  (see more in file .git/rebase-merge/done)
-Next commands to do (9 remaining commands):
-   pick 498da64046 # history: give commit_tree_ext a message template
-   exec make -s
-  (use "git rebase --edit-todo" to view and edit)
-You are currently editing a commit while rebasing branch
-'rebase-fixup-fold' on '95e20213fa'.
-  (use "git commit --amend" to amend the current commit)
-  (use "git rebase --continue" once you are satisfied with your changes)
-
-nothing to commit, working tree clean
-```
+ Documentation/git-history.adoc |  21 +++
+ builtin/history.c              | 287 ++++++++++++++++++++++++++++-----
+ t/meson.build                  |   1 +
+ t/t3454-history-squash.sh      | 250 ++++++++++++++++++++++++++++
+ 4 files changed, 521 insertions(+), 38 deletions(-)
+ create mode 100755 t/t3454-history-squash.sh
 
 
-Harald
+base-commit: 95e20213faefeb95df29277c58ac1980ab68f701
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2337%2FHaraldNordgren%2Frebase-fixup-fold-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2337/HaraldNordgren/rebase-fixup-fold-v3
+Pull-Request: https://github.com/git/git/pull/2337
 
-On Wed, Jun 17, 2026 at 2:19=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> >> It is very true that users who know what they are doing and got into
-> >> such conflicts are opted to go into such a situation tnat it is
-> >> unlikely that they would appreciate a choice to abort.
-> >
-> > That's not quite what I was trying to say which was that aborting in th=
-e
-> > case of conflicts is more likely than in the case of a failed exec.
->
-> Ah, I misread the intention.  And I agree with you that "failed
-> test" case is very likely to lead to "further changes/amends" and
-> not "aborted rebase".
->
-> > So if I've understood we'd print a message explaining what's happened
-> > and how to continue followed by a hint about aborting. The message woul=
-d
-> > depend on what problem caused the rebase to stop, but the hint would be
-> > the same in each case. That sounds fine to me.
->
-> Yeah, and "failed test" would not be one of the problem that would
-> invite the hint to "abort".  I am OK with that, too.  FWIW, I am OK
-> if the "you can abort" hint cannot be configured away, either ;-)
->
+Range-diff vs v2:
+
+ 1:  c55b9cd6f7 < -:  ---------- t3415: remove prepare-commit-msg hook after use
+ 2:  22d4276ff5 < -:  ---------- rebase: add --squash to fold a range
+ -:  ---------- > 1:  1e31474ef6 history: extract helper for a commit's parent tree
+ -:  ---------- > 2:  498da64046 history: give commit_tree_ext a message template
+ -:  ---------- > 3:  66b2f49fb4 history: add squash subcommand to fold a range
+ -:  ---------- > 4:  43e4270614 history: re-edit a squash with every message
+
+-- 
+gitgitgadget
