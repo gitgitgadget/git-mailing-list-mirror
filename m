@@ -1,103 +1,121 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5702931355D
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 17:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781804939; cv=none; b=VNqxo5arnvG2GRn1MT06rjh9hCyFyBbBD2dsGXaauTIp2tEKn4ksViUgiZ2HcHT2f29IXvpTWuS22L+Ra+ZGOI3uJMu6tpMJv78jak0fr0uc7VHxDmH2FVQRGRYoSGuVj2ju04Pgu5u2mTFHZIcCP25RHcPVboF6jLcY3ljdFpo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781804939; c=relaxed/simple;
-	bh=p3I1SglmKO4Z9guCA2iQdEjzebKXMqgAUWoRdmUxIlo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FLdSXCqiweIgUSAj7YEE1kSTG9Iy6gLUI8g3Aggx6cKqkKMnHaKEnVoMt4CmDnE4r5fxQbjJIqroArcXpKIDFh5z9ofkmAWxPYlKZ3TqoeeL+LmGOZtEqbG5hrp8KS69s4z+9SRvV/FTGquaQL+YIpgf9oPGvsR6YvWVO7Sdmkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cZOzLY70; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF6632FA2B
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 17:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781805240; cv=pass; b=VVM7ZTELFOps8YDMwUT6yER8hP9N6XTvbZ9b/S8BQBFCZGdBwYSLdleLOMQXMD5806kAC6T7VhjmHqIrxUqrgMGrmLKHnpjV4QW0n5AwSSm1t9MfJFQo9xFYA0OYhwsP36OI4GLc2ThFjCjnvTmuk1a+X5RsnWHOmmad7URzx+Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781805240; c=relaxed/simple;
+	bh=HxUn1reR5oZCh9hV/a7Rrd5cBGnmm5IV3R0t3exinxM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jsoI2j/D69pbhZGKGe5DRiX0ozUAVprx8uSq8X73NdM0N3grlCVnrY4hOOlselQF+hf63SvYWDPEl4JokmTusfw+O1QWUosk8DAieBwmGMaU3XlJ+O9wIdYek02ReIdhtInJVWDPNLSGm+ov11YZeBKlDGYYEqeNgsX2zT2xby8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPPjrWzn; arc=pass smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cZOzLY70"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-69ed219d3ecso966923eaf.2
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 10:48:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPPjrWzn"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-68f36e1663cso2171132a12.3
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 10:53:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781805237; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WYVPIHPRdfxuSuonhimxy0pHcCsfwGpegTkHo1jiskpVw2OwYZ0iCNjsbNDrBeNVXq
+         8mhY7MNEEQF2j0FIALd8Vwn48iPqD5mp3/Xz4fDRW2GDGwt1jqcpOWTgKiRQiT+nFkTo
+         Oyf/icFn9ztsX/EeZosvJJ/A9tNLf/XPFnjmDhsgmo2rCr3QvQMBB086RPO/NLTI0i2l
+         X4VVLcGqrXgmhEYbrzIdxhIt3vc5OXNx4fXIUFzkdy3177etFfnfUti5I9LmtgVC4Lzk
+         GN9tI8L3xWPlZYb0UmqEIdOi0xLsTSa4UgW1D2WiWAnmMznsHTfveVWZqOynLIB0LQg0
+         /tnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=HxUn1reR5oZCh9hV/a7Rrd5cBGnmm5IV3R0t3exinxM=;
+        fh=ItXGbS2TlLZ+KlLyBUdylSGzqedkafIIRW8bV9hJHSg=;
+        b=c8EptRvuMZYsfPwD+2b7l6GHZ8kcnidE14K9OI8HL47UFFqURt1HJEaBjS7rPsok16
+         vGhmIBMaES8+nul4zOShK6NGY0tPPib42XvenkB7xLXgmPHGgwubHd6VH26wgA4xTul2
+         kYNRPtKuCP7NUmeuPQy5pDqCX4A5VNsx5wMSVgMKzxOcWJXEtuwDLaGTBtLLG9TvyyMu
+         bYyg0g9tYL1LqPdFj+VZ5AJzaZcG2pdopSRBOzLfmyZdbDt3QzmTf8foZivZg5VzIclk
+         FOjDSi7xFjzU6cLsXVtjrf7fX4Th6JVsUmQrg21cgM5TUtgqkwoJIbfBrJVUm7vjIZvq
+         nFIQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781804937; x=1782409737; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q8vrBqIhhq5Y/oceVBXjvwerX8lZCYI9hegcgtMbzSU=;
-        b=cZOzLY7000UoBlii+iGDMDxicaQiWeZOhIW3iaF4kwQK8UcC7uxkwB2vPKWZBA2/tm
-         hp3+1apNsAQ5UIrfdK5RnYjUpit06Jmy9Dp/34aAgLs812dC9e50z4OADJIL6Xy/Gz7f
-         kM3GBTrdTEyCrYSSxd5bjd26RfB+QHzR9rrQJWeYEqJP2EqZq/C1wyZUj5tLEkuH2Bh0
-         BkkFgoW0pfXKK/Kuy9bmwmwZaypnhr/bxvUjljD1hBZnJhXOPWV+y8AM/O7RJMzPxSeJ
-         5CbVZbO9Tr6Gmg0hQTv2jK2gdbBkA3i9Os79B24L6A8pm8aFEdVjnupCF0nsfokFKeHg
-         T3Yg==
+        d=gmail.com; s=20251104; t=1781805237; x=1782410037; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HxUn1reR5oZCh9hV/a7Rrd5cBGnmm5IV3R0t3exinxM=;
+        b=GPPjrWznR2uJ8yAWns/0L7z3IF0+GkXgMd9K+xbx5KhTZVdYTJ4yIrrf0B6snHi4fZ
+         8blfw6HJ+PRAV9k5ucc/Q9kJohHGCVcbckBNEQq4y+EcRo4guQCt8BPY+hEyTqhI2kvH
+         JJ4tOAzlp/YRhmPCxg4VbrQxx8qHiRtyK9bQaTvNyAWnfZ9MNpvWHPn07ntldeT6zzEt
+         rRSOQ+v/UWj8X6kPLmYr7mxlIoaXRLvf6s5xwM8+23koU54/DBcD5iR+TOnWOwLIS4pc
+         6x31JF04SDUrIwjUIeIT3TRqlQp2FTbphzjq/Ht0LpwCoESBEqwP6CvcWXJNJHT4EjfS
+         Ca7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781804937; x=1782409737;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q8vrBqIhhq5Y/oceVBXjvwerX8lZCYI9hegcgtMbzSU=;
-        b=ScwH6TL7u4OOV6YiSs8mo8Nz+BAyfRLjH9yFyikrT85RXUNbCx91ov9nctB/EPtNBG
-         WNhno1M0LStQlLKi9JCUKFm7j/vcjymSb71b0DAT9fF5Y5a9BLBxuZvmILKdqVi+Ue9J
-         yeSolTzTOTfp7fbNHCAQIaWpyI6iJoq1h7MiMIRqdZ3xpDJg49eoJmFrHqEWUSk+9KOT
-         jrheXkAC41PZxXTHc8hwv/KHjJd8rjgf+YlYT2Voc49bUJ4j0JzuAMft28+/WRYItL2n
-         wTZ3XvrjvPS9/YxmzJ3beqUUd36aFqtPCXjbt/hi1yvk6FXDRU5z5z0ID3VPFKpm4n7I
-         SEKQ==
-X-Gm-Message-State: AOJu0YzHQqFKFVLFekMTcSOTbWcSy4RVZjwDPwkvUu6DZGtfvfa+A0nC
-	XHDVtLiPqmIu6cm4+GYhCvrawCA9CvAy6qvV9ANoc4y+41srqLjW02Xp
-X-Gm-Gg: AfdE7cnJWh0Cfh1q143vHf7Wb86Axuxyzd6hErL61UO2tgr2dG7d5+M0r32/2lFvFwv
-	8qexDAqadky7JxE33bcpR/6deTpeKNBBPb8k4MfeCPKR6RyrFz2sI9DBAgbwIUVSNsWHFtKZiGA
-	V01F3FRjrtRecJ+d45dW42OPfEzxjkEQ7iebZuyZn8FsBSLdXOU2YbWIRXPh1af3aRW5J3/Ajqy
-	CGHaNJHrJRtCAWuqFCMPrCEAQTkshbnGg+DVLbMWGyK+aYQgMhdzsRBTJt3ZSsjX2x7OBZXgmj1
-	P7ly0239RaNBocC1h17HLvxm/BTskWN+CjeFfjCMoRxCTDVJl/YJxJLMjKK1XuBqXyuIIzyYcdV
-	clf/Fka7o6mq0wkGaSevak/bxcPKGQdY86IPUUxjLCUWEjcejlOVg2gRg2NQWBm0LwizRXSgTT1
-	31Wn/lgQahMxCMd0I7
-X-Received: by 2002:a4a:ec49:0:b0:69d:cfb6:4f53 with SMTP id 006d021491bc7-6a0d8bd96b9mr332803eaf.9.1781804937168;
-        Thu, 18 Jun 2026 10:48:57 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44709d24619sm60990fac.8.2026.06.18.10.48.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2026 10:48:56 -0700 (PDT)
-Date: Thu, 18 Jun 2026 12:48:55 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: calicomills <jishnuck26@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] help: prompt user to run corrected command on typo
-Message-ID: <ajQuqTB580gqNP8D@denethor>
-References: <6a340006.60da1a74.20db39.8f57@mx.google.com>
+        d=1e100.net; s=20251104; t=1781805237; x=1782410037;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HxUn1reR5oZCh9hV/a7Rrd5cBGnmm5IV3R0t3exinxM=;
+        b=MF3BMQq7nMVGJp68P4BOPVsgQZidrOP1K0vFkW362op2ITFc0bTk385ZWn7C8DFu5R
+         5UfCcB5QQSbZxWug7qe04MjDKU0QYdMTT9wTE/prc59nM9sxGfA3wyZMvtuYfMRfDQW2
+         cwIJnderEjwvnX3Cr8MA8OUFLGfgzaEmgqA/LpOfvWyHAspD7eLJ92iluRi4LIhxaNY6
+         5VnatUTIdXiAM2p4LfWAXLUD1JWUejJy3NVqRh08Qb9GWtLE+WKpZzFtVB6cp/FjOjJ7
+         +e9lCUqilw7RW6bovfTWn3itEGhf3DwJpHMwftzn113pgn1HHliHFzaTxa/X0Wpg2+40
+         GPMQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+1dIeScDvqC+5VTV5n5qab+NPCD0IBdPr9MJ3NLhIINlekWMZvd+o1HH+EZxxrpEjGQYo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvATGwiWWPq7sGYlCNpZWokpX56qxQsYnxuqAkjyGmthEss01a
+	d4F5JoMFzpGyKWKYX0QMfaB+slQXVsV/Li5/OK2HbH/36979SwQNeQYTSPYzZwjJUgBrqBwIBeW
+	v6Ev22bOuQw6J0+kQvJ55iDxlIDuKuRMqtFOo/Jw=
+X-Gm-Gg: AfdE7ckw4LA8Nf9ttAS1UuSWSQozecMBRQtlbH0xCEnvpdR8HAPCwaSITeB3WXBF5yl
+	bSXCA712a5yBGIAuz4myuFDUvLmm0kpMPb4IJvZ6yQjWNcl409s2RsbK0/aHzXzpAFnXf4GRRGb
+	EbHnT4g2M3URMBS0Z3gJbAWgbzlH9PdZKPP8DBh/hpHaiAndtTeheoarMWMTwSFIdMjOBpoc+2m
+	uGbtrERtkSe76V8JqJ/uWp9cysf+vgDtRexWn7utF5awIj/5cXLdvP+M5DQYF4USDEafm2u
+X-Received: by 2002:a05:6402:1599:b0:67b:cd1f:9cc1 with SMTP id
+ 4fb4d7f45d1cf-696edc5a4ecmr200951a12.6.1781805236899; Thu, 18 Jun 2026
+ 10:53:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6a340006.60da1a74.20db39.8f57@mx.google.com>
+References: <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+ <pull.2285.v15.git.git.1781542042.gitgitgadget@gmail.com> <f68e2a11-02a5-47b9-a01a-458eba821c37@gmail.com>
+ <CAHwyqnXRo=P5Zihs6s7Uh8CrYCO7mjyeZ5nAv9JqYbGH0RE72g@mail.gmail.com>
+ <5829103e-d357-4880-b295-fa0d9f4a2c62@gmail.com> <CAHwyqnWFM2jskm6soEu58tp_TgO3fmuODD-yTiK6-4Hpv8SMLQ@mail.gmail.com>
+ <feac3d8b-e291-48e8-ac73-3b1f5321799b@gmail.com>
+In-Reply-To: <feac3d8b-e291-48e8-ac73-3b1f5321799b@gmail.com>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Thu, 18 Jun 2026 19:53:18 +0200
+X-Gm-Features: AVVi8Cc_lKLXP8U5LusAjhJW_y-F-vvUt_4HaQ-aPrLSI9r4OvLcGg2YH8O0nQM
+Message-ID: <CAHwyqnW-rizVteUiPB_dVRBm3c8NRAV4TP5uPd9koL38sokW_Q@mail.gmail.com>
+Subject: Re: [PATCH v15 0/7] branch: delete-merged
+To: phillip.wood@dunelm.org.uk
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/06/18 07:26AM, calicomills wrote:
-> From 0dc9e5c4593611b75e7003e8fdbea9370524c05b Mon Sep 17 00:00:00 2001
-> From: calicomills <jishnuck26@gmail.com>
-> Date: Thu, 18 Jun 2026 19:47:12 +0530
-> Subject: [PATCH] help: prompt user to run corrected command on typo
-> 
-> When a user mistypes a git command and there is exactly one similar
-> command, git currently prints a suggestion but exits, requiring the
-> user to retype the corrected command manually.
-> 
-> Instead, when stdin and stderr are both connected to a terminal and
-> there is a single best match, prompt the user with:
-> 
->   Did you mean 'git checkout neo'? [y/N]
-> 
-> The full corrected invocation (command + original arguments) is shown
-> in the prompt so the user knows exactly what will run. Answering 'y'
-> re-executes git with the corrected command and all original arguments.
-> Answering anything else exits as before.
+> > I received the same feedback from Junio before, so I'm not unaware of
+> > this problem. I am trying to slow down. I often prepare the work as
+> > soon as I get some comments -- I'm on paternity leave so I have a lot
+> > of time when the baby is sleeping --
+>
+> Congratulations - I hope the baby is sleeping at night as well in the day!
 
-Isn't this already possible via setting `help.autoCorrect=prompt` in the
-config? For example:
+Thanks! It's our third, so hopefully we got the hang of it now.
 
-  git -c help.autoCorrect=prompt comit --allow-empty -m init
+He sleeps -- some of the time.
 
-seems to already do exactly what is proposed here.
+> > then I actively hold off on
+> > sending to not overload the rest of you. But at the same time I think
+> > it's valuable to keep up a certain pace. It's a balancing act.
+> It is worth waiting for the discussion to settle on each round, I'll try
+> and be clear when I've finished looking at each revision. I'm sure other
+> folks would appreciate you looking at their patches and commenting on
+> them while you're waiting for feedback on yours, especially the GSoC
+> project students.
 
--Justin
+That's a good point!
+
+
+Harald
