@@ -1,275 +1,231 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE772E7F0A
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 14:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD3B31326B
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 14:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781792777; cv=none; b=Mvczn0ALcJ5msbPGf05qYHean+D++cVi6jGswno1TVUvr23NtnUgvF28YCdkKhQ+w2zhHXk0GuLNHMGIBD72zL0zRfoNC+aNQpimbBlZ07dMnTQWWKoxvGuPTi4+FVzvR1LNUhlhtpN2kGOJkRe7TWmlUruXjmU48Jg+ZrYmZRM=
+	t=1781793836; cv=none; b=AXmdklPT3GKJ3gsqRF109XsII8ujPMwKuVkaSdmMGiacPsSFsswMxl4H/0JkZt+Babk+K72aM85DSx/FU2yN1IQ6nOXi/JPVHR6zvVRjMcNyg6LotIfkGwmrvBsdupy5sPtcrnjHC1Vd2zG+hjj2V1sOZu2ca9+N7X++Qwr9MSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781792777; c=relaxed/simple;
-	bh=P+GIHALqDcUTmGSWim4RGJ3a8eBJHwOPx5KMsqGdvhw=;
-	h=Message-ID:Date:From:To:Cc:Subject:Content-Type; b=kNKJi0CBz6IuA15WriAao1xItsS5cwlTs5xnUMQrtr1WNrsJ4hN7fS6hw4Nd/ZbsT1NPzE5z6pECEcUWSyxn4BZpHAbf4lBMSjgKw+eSaCAKJPDF/jbw9PyS7MCR1wlGAJwrrxMEZdDvs63/CYD61YvdvzVPntq0qbk9CoRpjko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gx0tHAUH; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781793836; c=relaxed/simple;
+	bh=vF43Veu6eEUGPjZeW2t7l0Una760Kd0qmP34B/J3icI=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=tCvU7WphD8FR5i6rRK5QVCOXKobmo+0z5eKJz13wXObowiBPZEzzCnL2H4HNW9JTq9t5Vye0dQUgUMD2aAMxatfUhwTCuGPNM+6Vf6pebnca/O1/oJk33QWVTuKqliuvpSVvXP66FZOve8hX0MlR4r5A5WlTj9Yv0/5Er0sltwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QJi5oS6M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lej4PzcH; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gx0tHAUH"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8423610ec93so837204b3a.2
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 07:26:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781792775; x=1782397575; darn=vger.kernel.org;
-        h=subject:cc:to:from:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YIZUkhk4vt0d/I4F/SPm3ugJgsLI/ZsgToUwwDvmCok=;
-        b=gx0tHAUHr+h0AIlSbU8DMqXkL30CQNRpun/KRMkQo2E8OWErbYDTjRVnLD4mfMuqjS
-         LYMOXZkhu0MMxnWaCaM7S/qWWkjVdvZAvCGDlFGPnFIe4SiPSrJMxETSH2+NTb2vIake
-         h8wnDXwhvc4Fx8sLQJuAeotgr2LsmZo/H3gldLCK23XwGuFqNoBrk9m3P+jP0IDF6VKT
-         1rRB0B2aSXidHYJq5Bge9NLfJHkySJ7fsyWlHgh7cVcTUa66A3+e5DkebOS+s1920dPq
-         KjEsU5rOJEFvhoKObZTxQbXdpmHIphkZEs9ApG4VqqBtEOJUSdQZRvLcUJXw2tVBgVM+
-         uQ2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781792775; x=1782397575;
-        h=subject:cc:to:from:date:message-id:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YIZUkhk4vt0d/I4F/SPm3ugJgsLI/ZsgToUwwDvmCok=;
-        b=ffpUjO/7nR5GLdB35w61wNmCbAZwMZGXXJUsrNrf0kcCWKzb8q5cduMXGOjFZZbjWU
-         fRgnAmhBQbLfZi3l0Dm4QIiMs580q+0llk1YZla/py1i6pd3P3T/5uQtD9qsM4+uHsqF
-         tNAq6oVQiNrSmgMSIGYoeSv9iZGh/RjrZA7OBfuhdFocfRDgbaNDB4mqUnwcQ/8IgY8A
-         CYRrItMRaztZzI/aviljPpIRVQ2k852gdV2Zjiu5MMcdh4FHlF1OzEs05F6HtR27GV0c
-         LIX//l7Ga8qR5hWw+JScPH8/+qmqoKIHaycflwS0KSr4ahHEbThn9g++YucVD3XFR8MG
-         /HbA==
-X-Gm-Message-State: AOJu0Ywc3PNmX3yrI0fwuymzpR+XrYXgWNvJqJMJh//JG/NO4y/fgFs0
-	36nffMiNjdLDfEDeiT7CMgCQ0ZdGQupr6MAhixKuj/MNG5REFWZi+RyC9lfgrA==
-X-Gm-Gg: AfdE7cke6lYVplm+gAp2DoZhz7YnY0ozqMX32gucjNbf1qamhpamHwt5fnNGCzmnWUH
-	DpRYleBPq+wFceKI0hQZbPkYL68eSJN2bQqxqhWRxqtX0kesRnQGhVUghWTbEqC5ZH9li+oDfKd
-	uXhnPPFDenJMlvnZxsED76gsXCqfkxM6seZ02fwNEgRYg4aR0a/3Sdf6hXWYXcv6oq3zGXh1/Jf
-	Pst2zz+HjroFMoKfcGCKzxRQWUl40Gn/9w7QE2hGRm6+i3OVSLPDTlFpZXx1HPOYDeJo4JaIB+/
-	Jqe85NkQg02WnwgC4Z/NnfYe+A7n6jq/Z6fXIZtwN9dSuRgSgmL6uM8TyGvD+wWnq3zBvJ9fZj1
-	3JLJPXUJMeaN8I7XPSy6ZZktYUR3rcc+Nx2GxZ4BGJmCX7uhV6kl9rhiKI3VkNI6R1D+qskkAyv
-	FKE9jo12obmIEKfEI=
-X-Received: by 2002:a05:6a00:7492:b0:845:34ea:75ac with SMTP id d2e1a72fcca58-84534ea7a01mr5289756b3a.0.1781792774853;
-        Thu, 18 Jun 2026 07:26:14 -0700 (PDT)
-Received: from 11 ([111.92.66.172])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434b009e67sm23485593b3a.42.2026.06.18.07.26.13
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 18 Jun 2026 07:26:14 -0700 (PDT)
-Message-ID: <6a340006.60da1a74.20db39.8f57@mx.google.com>
-Date: Thu, 18 Jun 2026 07:26:14 -0700 (PDT)
-From: calicomills <jishnuck26@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH] help: prompt user to run corrected command on typo
-Content-Type: text/plain
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QJi5oS6M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lej4PzcH"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2EADC14000B2;
+	Thu, 18 Jun 2026 10:43:53 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 18 Jun 2026 10:43:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781793833;
+	 x=1781880233; bh=3oK7VF0TW6ZrEGytZo+H6pcF6mCXPfEeVpZeRd2ahEM=; b=
+	QJi5oS6MVU2a4pVvT870l32FC8Qt8YQEhidxJPb5DDcHrXlaTo4/8rAzCkCpONMF
+	+6mvp3idngElqvnJN4+dmfI1+d8eagtb/iaZIKG7VipSLrPr5wZyrTTu7WwWOedo
+	9vNmoXS265fjuE1I7P4RO6jbVO6Y1GBBTWBW1aNbUrXkZXWAl1LGZhtzzq+D9vhD
+	+SDwRCHw55X8z3hT2IKsqPqQP6gHgRWmHwFoLPvyuukm7ijkNfafLfXcl2lTM3ld
+	Is3DFs/nPehFJjHqcQwjjKjUKPjmiBnOeQ4GOP/8y4I9o62t8dBKq7lc290UjhfY
+	o+PHDGLVb6t2kZaBA7dUwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1781793833; x=1781880233; bh=3
+	oK7VF0TW6ZrEGytZo+H6pcF6mCXPfEeVpZeRd2ahEM=; b=Lej4PzcHWqOXuSiCu
+	j84nkdmFAszeUfuxdHssAD3tO9w33XEFvIuRgDuelRJI05UfTkUFF9U26BtCARf8
+	arH36dZoyVzs8o+OgxQBpeRuFZqipe/iGmbhM1vSSdsKnXEM7qlb59+LUnHstXSa
+	LoJWL/jV+YOyO+5xM/ySjIabLDr0cPp/E3n1D3Xy8o8ETAhChdaNp9/csN18qjIe
+	UDBoyxIewQc08PXJIwo50UQZGWSpeAkaDudy/X6QMiKtmyg0o5pNKOQ89QVyl/1K
+	+3qJl9vHLg1b79tfTWHEwRjxDXiuFWJ+tDCKMY95zSzdDJ+ZXjDE5LwPWKyg8cDo
+	hQ4Sg==
+X-ME-Sender: <xms:KQQ0ailY41UzWRBFPkacT2y-SQ53SLTtef_H5KyM5sPTMK2MD4diqJA>
+    <xme:KQQ0akozXILV172SFoD5krJ1y2IY0jguCb6YLbs-Yro_OErdXAsTS45pT7tmqE9XA
+    Gn8qEbfob-BP7iRjYiIffXQrwyoTvbuvqTTMKz5NKD1Kex0V0O76AU>
+X-ME-Proxy-Cause: dmFkZTEObN2rrd6QSCqBU2d8OTgAGnk7t4PYTlgYSP/RXnOyFX3ZUiw5RI4PByAIIUcym2
+    KOwq0KirC8QWweZV8gK9v3fthWz/C8zxX1PS6qGbFGUv7dZLKw87TszHfbFcOTpE72vcxt
+    YFkiiDCN7toHllL4MxXdVZXREM/U5BcyNfIKBAMxfQ1FbTT3U6k4qc+DlTi7jWdtmmNs85
+    QGkzWBR/Eg1Uf2AK6B2AKqMD1fLIyKZ06BZiHZ+5193dhJBQmSvH5M/9pB6h3Pwx7xFtBQ
+    2Hpqf4QuZ/zIpNMDrgPiKC3eK6DSLuVoO0rsKtNiH7xVvDXySTvAtiVoBDXNkzEEDLq3cp
+    bcO86Tfm1yZDVRj27dPN2ZyqtWpOa0IX6CCP0elk9Z+IiR+8JjHQ4k70BLsUpUd+8WKVKl
+    kYr6DFifDPig3OnETCBnODwp3AXqlqWxbUXaAzn2r3dGAiCRh1gYkoWmbQT7Lb5+BSP5IC
+    rMqS9lbEHtCRs1oW9N9kSRMrkgzzAs1hsT0OD5+P24IEZgG3C3cnWWk4JzIwhIsRBtmtOK
+    6xfnLlNyUj/VypnpAKsn7/GF9GB5S6FEYJtZtti1TInf2tafpP4FCoV1EofBSVnNr2zCsG
+    P+mA2w4jZpcH9mNQLWyA44+JjoVQt04soy0BpBcCizh8Yx74MdEr31f05I2w
+X-ME-Proxy: <xmx:KQQ0apQbSOMW_NUK-WSZ5h4e43y7kC2yg2rgjNFv4eosb6Tan9tb6Q>
+    <xmx:KQQ0agv_xHr4R7VqXuRmESgeHUPJyzu-mRC4c0aE_HMf46ZUcPsBJQ>
+    <xmx:KQQ0amb37tT0i_k_SVDGOO2jLUBnuiz7J8zB5CdCtyK64SsTjF4KYg>
+    <xmx:KQQ0atvlpH8h5AdJXnYng0iGdLvqdIT1J0zq-W9-YBc3zT9v6siH5g>
+    <xmx:KQQ0aobQtbYk9r8aI9QF-nRnblug7-4scN-hOzdESUcqZs9R9l90_U3q>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 0585F3021B5E; Thu, 18 Jun 2026 10:43:53 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+X-ThreadId: Aql5imKZl43V
+Date: Thu, 18 Jun 2026 16:43:32 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <95cd81dc-baea-4318-9f01-6a795f8eb5bb@app.fastmail.com>
+In-Reply-To: <xmqqpl1oteoi.fsf@gitster.g>
+References: <xmqqv7bhxiby.fsf@gitster.g> <xmqqpl1oteoi.fsf@gitster.g>
+Subject: Re: [PATCH v2] SubmittingPatches: address design critiques
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From 0dc9e5c4593611b75e7003e8fdbea9370524c05b Mon Sep 17 00:00:00 2001
-From: calicomills <jishnuck26@gmail.com>
-Date: Thu, 18 Jun 2026 19:47:12 +0530
-Subject: [PATCH] help: prompt user to run corrected command on typo
+On Thu, Jun 18, 2026, at 10:50, Junio C Hamano wrote:
+> Contributors sometimes fail to answer fundamental design or
+> viability comments from reviewers and submit subsequent rounds
+> without addressing them.  When design decisions are resolved on the
+> mailing list, the final justification should be recorded in the
+> commit messages.
 
-When a user mistypes a git command and there is exactly one similar
-command, git currently prints a suggestion but exits, requiring the
-user to retype the corrected command manually.
+It=E2=80=99s useful to explain design decisions etc. that were not commi=
+tted to
+in the commit message. It=E2=80=99s yet another thing that might be far =
+from
+obvious during review, but when the message is written only the option
+that was landed on is explained.
 
-Instead, when stdin and stderr are both connected to a terminal and
-there is a single best match, prompt the user with:
+>[snip]
+> diff --git a/Documentation/SubmittingPatches b/Documentation/Submittin=
+gPatches
+> index f042bb5aaf..bbe759f3d9 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -51,6 +51,21 @@ area.
+>    respond to them with "Reply-All" on the mailing list, while taking
+>    them into account while preparing an updated set of patches.
+>  +
+> +You should be particularly mindful of critiques regarding the
+> +high-level design or viability of your proposal (e.g., questioning
+> +whether the feature is worth implementing, or if the chosen approach
+> +is appropriate).  Defend your design decisions on the list first, to
+> +avoid wasting effort on an implementation whose design is not yet
+> +solid.
 
-  Did you mean 'git checkout neo'? [y/N]
+To take it to the other extreme, there are =E2=80=9Ccontributions=E2=80=9D=
+ which are
+design decisions *only*, no implementation. Namely emails which sketch a
+design like a new option. Those are often met with a stock response
+saying:[1] submit some code, doesn=E2=80=99t have to implement it fully,=
+ but we
+will need some code to proceed here. I=E2=80=99ve never understood that =
+stance,
+and I don=E2=80=99t think it harmonizes with the sentence here of sparin=
+g effort
+if the design is not solid.
 
-The full corrected invocation (command + original arguments) is shown
-in the prompt so the user knows exactly what will run. Answering 'y'
-re-executes git with the corrected command and all original arguments.
-Answering anything else exits as before.
+Many of these emails are straightforward.
 
-When there are multiple similarly-named commands, or when running
-non-interactively (scripts, pipes), the original behaviour of printing
-the suggestion list and exiting is preserved.
+1. I want this thing
+2. I can implement it but I don=E2=80=99t know if *would be* accepted (a=
+nd
+   implementing things here would be a lot of effort for me, personally)
+3. Would it be?
 
-The help_unknown_cmd() signature is updated to accept the full args
-vector so the prompt can include the original arguments alongside the
-corrected command name.
+And the only thing I personally would change is to weaken =E2=80=9Cwould=
+ be?=E2=80=9D to
+=E2=80=9Ccould be?=E2=80=9D. Then with that out in the world, maybe some=
+one finds this
+message this day or the next week or month and reports that at least
+they would like this thing.
 
-Add tests to t9003 covering:
-- non-interactive single match: falls back to suggestion list
-- non-interactive multiple matches: falls back to suggestion list
-- interactive single match, 'y': corrected command runs (TTY prereq)
-- interactive single match, 'n': exits cleanly (TTY prereq)
+Some people could change something small in this code base as easily as
+they could propose the change idea for it (so it seems to me). They
+would just have to take a walk and watch a movie to let their
+subconscious process whether it was a good idea or not... But for most
+people, committing to implementing something in a new codebase without
+spooky assistance (...) is a task that takes a lot of effort.
 
-Signed-off-by: calicomills <jishnuck26@gmail.com>
----
- builtin/help.c              |  2 +-
- git.c                       |  2 +-
- help.c                      | 40 ++++++++++++++++++++++------
- help.h                      |  3 ++-
- t/t9003-help-autocorrect.sh | 53 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 89 insertions(+), 11 deletions(-)
+To illustrate a related point, there are at least three kinds of Git
+users out there:
 
-diff --git a/builtin/help.c b/builtin/help.c
-index a140339999..b17e61ccc8 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -618,7 +618,7 @@ static char *check_git_cmd(const char *cmd)
- 	}
- 
- 	if (exclude_guides)
--		return help_unknown_cmd(cmd);
-+		return help_unknown_cmd(cmd, NULL);
- 
- 	return xstrdup(cmd);
- }
-diff --git a/git.c b/git.c
-index 36f08891ef..d379cc85bb 100644
---- a/git.c
-+++ b/git.c
-@@ -994,7 +994,7 @@ int cmd_main(int argc, const char **argv)
- 			exit(1);
- 		}
- 		if (!done_help) {
--			char *assumed = help_unknown_cmd(cmd);
-+			char *assumed = help_unknown_cmd(cmd, &args);
- 			strvec_replace(&args, 0, assumed);
- 			free(assumed);
- 			cmd = args.v[0];
-diff --git a/help.c b/help.c
-index 46241492ce..30f32a7206 100644
---- a/help.c
-+++ b/help.c
-@@ -641,7 +641,7 @@ static const char bad_interpreter_advice[] =
- 	N_("'%s' appears to be a git command, but we were not\n"
- 	"able to execute it. Maybe git-%s is broken?");
- 
--char *help_unknown_cmd(const char *cmd)
-+char *help_unknown_cmd(const char *cmd, const struct strvec *args)
- {
- 	struct help_unknown_cmd_config cfg = { 0 };
- 	int i, n, best_similarity = 0;
-@@ -762,13 +762,37 @@ char *help_unknown_cmd(const char *cmd)
- 	fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
- 
- 	if (SIMILAR_ENOUGH(best_similarity)) {
--		fprintf_ln(stderr,
--			   Q_("\nThe most similar command is",
--			      "\nThe most similar commands are",
--			   n));
--
--		for (i = 0; i < n; i++)
--			fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
-+		if (n == 1 && isatty(0) && isatty(2)) {
-+			char *answer;
-+			struct strbuf msg = STRBUF_INIT;
-+			struct strbuf full_cmd = STRBUF_INIT;
-+			strbuf_addstr(&full_cmd, main_cmds.names[0]->name);
-+			if (args) {
-+				for (size_t j = 1; j < args->nr; j++) {
-+					strbuf_addch(&full_cmd, ' ');
-+					strbuf_addstr(&full_cmd, args->v[j]);
-+				}
-+			}
-+			strbuf_addf(&msg, _("\nDid you mean 'git %s'? [y/N] "),
-+				    full_cmd.buf);
-+			strbuf_release(&full_cmd);
-+			answer = git_prompt(msg.buf, PROMPT_ECHO);
-+			strbuf_release(&msg);
-+			if (starts_with(answer, "y") || starts_with(answer, "Y")) {
-+				char *assumed = xstrdup(main_cmds.names[0]->name);
-+				cmdnames_release(&cfg.aliases);
-+				cmdnames_release(&main_cmds);
-+				cmdnames_release(&other_cmds);
-+				return assumed;
-+			}
-+		} else {
-+			fprintf_ln(stderr,
-+				   Q_("\nThe most similar command is",
-+				      "\nThe most similar commands are",
-+				   n));
-+			for (i = 0; i < n; i++)
-+				fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
-+		}
- 	}
- 
- 	exit(1);
-diff --git a/help.h b/help.h
-index c54bf0977d..a8c465b3df 100644
---- a/help.h
-+++ b/help.h
-@@ -32,7 +32,8 @@ void list_all_other_cmds(struct string_list *list);
- void list_cmds_by_category(struct string_list *list,
- 			   const char *category);
- void list_cmds_by_config(struct string_list *list);
--char *help_unknown_cmd(const char *cmd);
-+#include "strvec.h"
-+char *help_unknown_cmd(const char *cmd, const struct strvec *args);
- void load_command_list(const char *prefix,
- 		       struct cmdnames *main_cmds,
- 		       struct cmdnames *other_cmds);
-diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
-index 8da318d2b5..6fe2da1595 100755
---- a/t/t9003-help-autocorrect.sh
-+++ b/t/t9003-help-autocorrect.sh
-@@ -70,4 +70,57 @@ test_expect_success 'autocorrect works in work tree created from bare repo' '
- 	git -C worktree -c help.autocorrect=immediate status
- '
- 
-+# Default behaviour (no help.autocorrect set): when there is exactly one
-+# similar command but the session is non-interactive, fall back to printing
-+# the suggestion list and exiting rather than showing a prompt.
-+test_expect_success 'default: single match non-interactive shows suggestion and fails' '
-+	test_might_fail git config --unset help.autocorrect &&
-+
-+	test_must_fail git lfg 2>actual &&
-+	grep "most similar command" actual &&
-+	grep "lgf" actual
-+'
-+
-+test_expect_success 'default: multiple matches non-interactive shows list and fails' '
-+	test_might_fail git config --unset help.autocorrect &&
-+
-+	test_must_fail git com 2>actual &&
-+	grep "most similar commands" actual &&
-+	grep "commit" actual
-+'
-+
-+# Interactive prompt tests require a real TTY.  On macOS the TTY prereq is
-+# skipped due to IO::Pty reliability issues; these tests run on Linux CI.
-+test_expect_success TTY 'default: single match interactive, answer y runs command' '
-+	git config --unset help.autocorrect &&
-+
-+	write_script git-typotest <<-\EOF &&
-+		echo typotest-ran
-+	EOF
-+	PATH="$PATH:." export PATH &&
-+
-+	# Feed "y" to /dev/tty via a wrapper that answers the prompt
-+	write_script answer-prompt <<-\EOF &&
-+		# Write the answer to the controlling terminal
-+		printf "y\n" >/dev/tty
-+		exec "$@"
-+	EOF
-+
-+	test_terminal ./answer-prompt git typotest 2>err >out &&
-+	grep "typotest-ran" out &&
-+	grep "Did you mean" err
-+'
-+
-+test_expect_success TTY 'default: single match interactive, answer n exits cleanly' '
-+	git config --unset help.autocorrect &&
-+
-+	write_script answer-prompt-no <<-\EOF &&
-+		printf "n\n" >/dev/tty
-+		exec "$@"
-+	EOF
-+
-+	test_must_fail test_terminal ./answer-prompt-no git typotest 2>err &&
-+	grep "Did you mean" err
-+'
-+
- test_done
--- 
-2.50.1
+1. Experienced C developers
+2. Experienced Git developers (heavy overlap with (1))
+3. Experienced and partisan Git users (knows it, believes in it)
 
+You can imagine someone from group number 1 who is *not* in group number
+3 use a weekend to implement something. But then when it is submitted it
+turns out that is a very =E2=80=9Ccentralized CVS=E2=80=9D idea which do=
+esn=E2=80=99t fit into
+git(1) at all. That=E2=80=99s easily spotted by group number 3 by just l=
+ooking
+at the proposed docs or design. Now that group number 1 individual might
+just have a bunch of code that is dead weight for any proper Git
+workflow.
 
+So I don=E2=80=99t understand this canned response.
+
+There is the unofficial project idea tracker on the GitGitGadget
+fork. But it seems weird to post things there and not on the mailing
+list.
+
+=E2=80=A0 1: From `git show todo:CannedResponses`:
+
+     | [make us come to you, begging]
+     |
+     | I've seen from time to time people ask "I am thinking of doing th=
+is;
+     | will a patch be accepted?  If so, I'll work on it." before showing
+     | any work, and my response always has been:
+     |
+     |  (1) We don't know how useful and interesting your contribution w=
+ould
+     |      be for our audience, until we see it; and
+     |
+     |  (2) If you truly believe in your work (find it useful, find writ=
+ing
+     |      it fun, etc.), that would be incentive enough for you to work
+     |      on it, whether or not the result will land in my tree.  You
+     |      should instead aim for something so brilliant that we would
+     |      come to you begging for your permission to include it in our
+     |      project.
+
+    Note that point (2) is a bit more ambitious than it looks; if the
+    idea is to implement your own thing for your own fork/tree and then
+    maintain it yourself if upstream git.git doesn not accept it, well,
+    now you need to learn how to maintain a fork for however long you
+    want that feature. If you did not already know that.
+
+> ++
+> +Make sure that any new version is accompanied by a much clearer
+> +explanation and justification (in the cover letter, your responses,
+> +and in the revised commit messages).  Aim to make the reviewers say
+> +"it is now clear why we may want to do this with the updated version".
+> ++
+> +Topics that fail to address fundamental design critiques without
+> +resolution will not be considered ready for merging.
+
+Nicely explained.
+> ++
+>  It is often beneficial to allow some time for reviewers to provide
+>  feedback before sending a new version, rather than sending an updated
+>  series immediately after receiving a review. This helps collect broad=
+er
+> @@ -323,6 +338,10 @@ The body should provide a meaningful commit messa=
+ge, which:
+>
+>  . alternate solutions considered but discarded, if any.
+>
+> +. records the resolution of design or viability concerns raised by the
+> +  community during the review, if any, ensuring the historical record
+> +  explains why the chosen approach was accepted over alternatives.
+> +
+
+Okay.
+
+>  [[present-tense]]
+>[snip]
