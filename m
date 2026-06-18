@@ -1,105 +1,120 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9686B233942
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 15:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781796978; cv=pass; b=so/wKsuHbkxRTZa8YQl7qywZO2aFD9jg4yqWv0wGZblWu5IWZ11RAQkzCaPuqa1n5oXuWYdKKNtpQUBH1YHAyEUy4QAMAqzSgCEb0IaL3wID2jLQ6mjeVtbq1unOMl0EnxOXVoYwJ/zq0n3PknJja9o/5FV5Rj/byNATbOkxe8s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781796978; c=relaxed/simple;
-	bh=mRE+rLwCBJZpa0bUeUO21Tzqh43CFgNISBveA5K7pe0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=BnqZCMFEBU/Re/yGsvNPDsMwc3HWX06rdOFCHPuAyghmVYYbldDhZ/9KaAtXyKun0+8BBQNzmgt3EJ04ef+fgSNY6EhyIpRo3tL4o/2pjJT8X+EWYcINJj1MLGRZ6D0VUgJuzxeAnpB7Lp4AOtwDPnYjX6GAG3vQocVK5k8RBDY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YO0HkGiC; arc=pass smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6221B32B128
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 15:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781797223; cv=none; b=rqLbGhT53lA3Owy7cvzJdF6rEsFsAW9hjW5PJQRrJczMXiftwwYrn9rKtzO9U5gp2CX3F7DdgzzGsgkX14qoSEsHNw/fawpbdZQF0g8AzfEh0diDkb/XdFAAWNnUhAoZq/OztXGIi8JZWONedhxopvVLb46wGJnOLBLZZKk1bNU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781797223; c=relaxed/simple;
+	bh=SQd2ymL9tvhZhO+D5GNtJ+PbknmdkL7MdTU+epGLA/0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hdNSQ4PMu2Db0d5/s6dfZIPMI4nPinFZPMxtPH7L4U6auQC9QVR2y1aAgO+Z6/45h8mzedjuIjSneRU7bCCmpuOvmV/38aRxzlMQ8KrCOF12tyGquZwp3eJpcuXyHjdwezNi/QVdSLttgdl7rZf/fz0WCp1QU2x/dCG7pjVW5RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RzZ1lsmJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eAj9+bNo; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YO0HkGiC"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-44104dac6f5so1777783fac.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 08:36:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781796976; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Ec+k2vyGqr4ojaYRT3EH7qUL2Oa03TR1yaXNlBMxYAMPq+JyOn/XoNnYyq4wSMd/RT
-         Jp9Rz/L5A6xi/M4DKPSUqBvO1nraoYILs6s0iJzxpkhdKfhbO3txtXvty8hXuJZzooCj
-         iUoMmoLfEcWJceBZhBo8SuBSEi/4iZBVMAQQP0Q10IUonzdQ+SCi/x8fUN1T37+YdYLz
-         ZVpD9oW5jPg003tMADSG78D59ns+xsfulTWzukC1adG/m//9GyQXXF4uA6WY4Uqgh6uO
-         xqlfd7lPCEk5INMxYv3KKgTmTnweS2eLKVX2hqhMQKJC41/wBUFxuzLhKkSbQrvlM20g
-         cDoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=XX+DJAONABdHkQ7lvK0GMKBsu99TwPHDIA1KGycL2C4=;
-        fh=1/3dtt18tXnIvB8syWQ2wTvDn6umrk66dlnjmb+I9bo=;
-        b=D9mi4SV0vqHk7X82oQumnmhcXWglzmTyDZ2ICDvRIeMa0MR7i2j8vWhQn975lTDFeU
-         ermwAw/oqUvl2563tP5DoZLfnxC4PyEfDfarJZV2WGMF5fLvpM7Nu6Tkst2O4cUivRtk
-         bKQAu+UeKaQ6RP6CQqPUs1fWYe2XDdxJQu6OAqPlvL6t1FgpHetHA26CV8bGpVLPfwTQ
-         3frea4xoxGgNpODDFtFvajjN7gZ2Qh9OUci67pTbuAandYdnR2sMYP1q4YzfzKsNTmsh
-         ytPXExpVBZlAEqvJfhJBnN8FIFdjxbNCwrF30Qq0GoNwg/g/7ifQow/AlYsD0UV/qTwk
-         wIJQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781796976; x=1782401776; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=XX+DJAONABdHkQ7lvK0GMKBsu99TwPHDIA1KGycL2C4=;
-        b=YO0HkGiCify8fXUGn3If+V5Ew6aVC3zEkEFX3KU3dUSXnFd0XSz5TBd8NHM50LUMaP
-         5ueAgiy9xNvqQLuoLyBH8Nu4e48FU/T8cy4WES1QNseeREYAV27nfkPnbQbgZjevPgpK
-         z9WjSUmccSDQP5olk9bLjCQ73FTo5K5XXmepJVSstw0MDun7HFUoqMttaspgBZCOgdMY
-         j55EC/drwqVP8UI1346kvGJ4o3w56AhA3XYxD3LPfDZc2dUj9gwcCpfGRkp+tHwrw67A
-         srm/y4tWXY+MCyQPvZ76j6ghZqh/PuYx0OOLH+57q2A4q2ZlsgOOUifma9086b4eYX+Z
-         DikA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781796976; x=1782401776;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XX+DJAONABdHkQ7lvK0GMKBsu99TwPHDIA1KGycL2C4=;
-        b=qIggJ2nYYslzTjc/HrEuelAaL9gdBRj0IGqM7nOVYwo8ZKHOx8pp50mi0XaD/1NTgs
-         wxTqxie9wEnt7bngCGgJNQ1pMfQYLjmBflRFAT67R0TiyfPXIPCCWLi9VYsqNjYgMvYV
-         S/IRXSnoENWNHgWsK6/YjHJcy0Nllzy4YfsvsYSsMumbj4SkbOO3GmaOHQUiDxncx0kJ
-         aNvQA8Xe63K9atNvgi66Y5MTyluD06aNu4tdkayxta6u8kx/OOAq4Qw6b7a/l3B9aVEK
-         DI4oeQH9aUpy8UYyMZaXyVfYw3BuCLAJVOM74+3trmJcEo/xekxO+rx1Pc1Iyq4u4oMR
-         V5Bw==
-X-Gm-Message-State: AOJu0YzUl1M59WmFKTaUVSRTZ+ds+wKPo+IYmR6Dr1Cm1GuAzpWWDG+Q
-	N+EeGohrp+znJAcampSrp/ZjUJAA+RDlt9hmKHvbENrR0hhGxYlqpMWRLquutWDVSTzwz7cy8bD
-	13j7kKKGFj52jLGl1T9yi5/oww0u24/EQxxsL
-X-Gm-Gg: AfdE7cnrCwOkOwGQJOIBc/iooS4M8FSfHlWw4PPVZmKoDqIQJoKT+cE1C2zz1v8co5S
-	86SEhS9vAUwPMlC+d8+wz2BOG7e9VTkprP//lMFIcQ9srkc0CPnfq1mtn9bUXJW5fqhLU388PeP
-	2C1OioSS3Uf9BQM6WfGV64uKv/fEiG4lUIS3haTeOyWRQAGlmslmQQ927qc0jdg6caXxNa0GwO7
-	BzfdIYPACUkZXXJ6fJCyqN/L6mWVcgejOK+CYxmP0ozBUo2gF3d8svZuDjX/uohm6fGa9aK6AiK
-	SK0Fw8adLsQ40+nsHZmXRpDOSDmB7J0xKas1cGb8B5e9MbTm8sZb3mN0xiRT9Lu/YAV7YKxYmob
-	1vORSQ9GcjIQag9A=
-X-Received: by 2002:a05:6808:11d0:b0:486:4b79:12b6 with SMTP id
- 5614622812f47-4895609e253mr2829671b6e.9.1781796976572; Thu, 18 Jun 2026
- 08:36:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RzZ1lsmJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eAj9+bNo"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 949AE1400049;
+	Thu, 18 Jun 2026 11:40:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 18 Jun 2026 11:40:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781797221; x=1781883621; bh=zuEeUAm7oI
+	xE60htlrNnyhsAHHSst39fWOz8zXUE+JQ=; b=RzZ1lsmJf9v2VsAmzbm4Vfjslk
+	BH6MwSokNFEFlo9baCxBsvMCK9BkmzVxVIzoB45flGQZ1lhZyl+RbfKvIlRcukca
+	WFKaBSw9fB6g+YtDuGE2ujKgsP+xLN8/fD3O6HSRvUvgTZzLwEYyLA7DhcQYm6tk
+	kp7zdkqfcH/CvWlEXFyM0ofQCSdUS3wViZZ8AnRS1Dm3FzPVLZDXYab6Cdi80YWB
+	sszOIAtmkmC+exMaUSQuXzy1YWGz1oEDo0KXkk5Oio7aSmEuqG8zLzca9Myn1Fq1
+	j5Tji8cfzDWbUQOWin243MYb3qCaOV6kxA8lD4OfGCVob/tHzVTA+HhZHiMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781797221; x=1781883621; bh=zuEeUAm7oIxE60htlrNnyhsAHHSst39fWOz
+	8zXUE+JQ=; b=eAj9+bNo+YvwP3aDfUBjH1aiNzcsTYiMt74Ij64Gg2c5AyOBEhc
+	jOhIz6PPNVMdq8iboyW3FpTMAr1HdglTtNvHC6tExvNoSSSD3In5H8IB+jExXGJY
+	BNU+FdqqZvZBbq7lNkl7Y7ZJ7uEBDDnYNHgq8isz9F7OJhAdeXDhkBJvMwhx/RGQ
+	v6Uatt5fXO0Un1fX1NwhSO+mra6O5Wm0O+WnBzE5TEe8GswEPrAL+J6U6Zo62KpM
+	fRoxhk9ILo9xmiqzMibggDvcwjoXgY5VwKq1meaUaAXEpFw5hpx7k01F2b7zmdGH
+	O8yMJE0RomQ1sHbexF8tL6t4j/hY1wBUEsQ==
+X-ME-Sender: <xms:ZRE0arH4m3xQLYqhryq4ffi4wpJ7lzV0FFfNfp0TtbD0CrMPs7_2eA>
+    <xme:ZRE0avzg1aJ2u2vdxjBN_fvqJuJua8Efxzf-1cnpMxoM0jBiazRzdWDQo8dUiu8R8
+    UrOhVDNb263JxLt36OPskzo0-TJqh_8-3Mv-bAZxTQt9LMhrlbbesI>
+X-ME-Received: <xmr:ZRE0aqg7AaLLW9NwARcPzmp1Xgij6o2zC92ttJKfI67CmYfcQ4nVpUqvA-ZuoEQaiOBe0yaJU-KKfGOSNoNhoPGWHuacoLhakV-Y>
+X-ME-Proxy-Cause: dmFkZTFDTxO7QVLdIfnh1ZIT0mGLqIir/Xd3AvRW4yVjbDOMXOR3JU/hxbFoS2+mdD3aKv
+    k4fmS8qQnZpptehLzMhGv68j1TwaTXrNZvbRlqykDHekWg70K0UU/XjpSbfMEaVg0LtCYk
+    hGsFTFMCZqATvY6RaUFsm4hyelZD0FNCGh4C1kAtLw8yUTcttVbYAppGY95GdaOktpR5Eh
+    Qpd43JDtZWQLEb9ekfNc4zPh/cxhI7wlrO6NGr4wAH/xYzT10EX1GlLrT8LMiQsJofIinh
+    lghfEfzpYM8EIv7AHbBkxBP/SGSl3w5R54GDyZAZ08vNXQOI6oyJClRqaBYK13nlR+Q4N5
+    r6wIcDwYhsqUei0k7jsWsiJMxBwfVd98TKxBYpUuae4BWugUUg31Ahl3r5/yq4wzKW6xdp
+    woEaEHjsiU40o5/zoExyt5Xusr3I18Ext3J92R4fzdDN5wjm3cjxHXuOXjCDlcDfcnN15W
+    qfwmfR38QQbNwJXt7iUk5NzTssXGp1sEzwyFGGf+VwUD/siILzHJboy/p8evHaxL8/IRjd
+    HcMGbmueF7lUzZit4QIdJvE/3ogM8EHvUUjlH2ocOEYEvTYsAzb13MjA+DaVQijk3vvMG4
+    Dtzy1e606G+TONZBRWf9vWwNwtwjsOgsi4CPXkJNDFOV7iX6yLto+1fP/V/A
+X-ME-Proxy: <xmx:ZRE0aizaya0P5U2sIVuviXspKfwBD_venRPaZ7JYy3wfcPCZ1wmTPw>
+    <xmx:ZRE0alLo5gtktjNLEQG_Y3CklgbQFVUpOC9Td839CNO4IagEsYZ7Ew>
+    <xmx:ZRE0ahQYNNh5wx0Jgk82lxL7kauu_IrOdM8P5GXtoSbZRHrv2aFdwg>
+    <xmx:ZRE0alpCE9S4CNfk_uVqge-6GDj-LRwfzlSQKY6rFg1gZW2Kma-bgg>
+    <xmx:ZRE0ajweTDBGfMtN63MgXca2XOUmMkY-4Z4iADCfpcS3EEBUtZeVxkW_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 18 Jun 2026 11:40:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Montalbo <mmontalbo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] SubmittingPatches: address design critiques
+In-Reply-To: <CAC2QwmJdF+YzAQE3WDEaUrurLVkYcAA0Cgs1YAqyxYcQ0jKfqA@mail.gmail.com>
+	(Michael Montalbo's message of "Wed, 17 Jun 2026 20:53:07 -0700")
+References: <CAC2QwmJdF+YzAQE3WDEaUrurLVkYcAA0Cgs1YAqyxYcQ0jKfqA@mail.gmail.com>
+Date: Thu, 18 Jun 2026 08:40:19 -0700
+Message-ID: <xmqqqzm3svq4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Thu, 18 Jun 2026 08:36:03 -0700
-X-Gm-Features: AVVi8CdL0glnp7cdRIVa6Fqz-7Eq9KwmzGLc5migSO1_3xSn1Np3-9fzan7os-Y
-Message-ID: <CAC2QwmLy3WZbGYC14kYuC-BmLGFi6ztTEoqZdo+hVTQt+6=y=A@mail.gmail.com>
-Subject: Re: [PATCH v2] SubmittingPatches: address design critiques
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> +You should be particularly mindful of critiques regarding the
-> +high-level design or viability of your proposal (e.g., questioning
-> +whether the feature is worth implementing, or if the chosen approach
-> +is appropriate).  Defend your design decisions on the list first, to
-> +avoid wasting effort on an implementation whose design is not yet
-> +solid.
-> ++
-> +Make sure that any new version is accompanied by a much clearer
-> +explanation and justification (in the cover letter, your responses,
-> +and in the revised commit messages).  Aim to make the reviewers say
-> +"it is now clear why we may want to do this with the updated version".
-> ++
-> +Topics that fail to address fundamental design critiques without
-> +resolution will not be considered ready for merging.
+Michael Montalbo <mmontalbo@gmail.com> writes:
 
-This wording looks good to me.
+> Two small suggestions: open with a direct imperative and replace
+> "effort in the implementation" with "effort on the implementation".
+>
+>     [B]e particularly mindful of...
+>     ... too much effort [on] the implementation...
+
+Yeah, I started from something like that then toned it down, but I
+agree that it is more appropriate to be more assertive here.
+
+> Maybe it would help to spell out what the explanation/justification is
+> for more explicitly (though it may be a bit redundant with the
+> "meaningful message" blurb):
+
+Yeah, and it depends on what kind of higher level issues the
+reviewer comment is about, so ...
+
+>     Make sure that any new version explains and justifies those
+>     design decisions more clearly: why the change is worth making,
+>     what alternatives were considered, and why the chosen approach
+>     is correct.  Put that justification in the cover letter, your
+>     responses, and the revised commit messages.  Aim to make the
+>     reviewers say "it is now clear why we may want to do this with
+>     the updated version".
+
+... I find the beginning part of the above very much better than
+what I had in my version, but part of the first sentence after the
+colon is probably a bit too much.
+
+I'll send out v3 sometime before the next week.
+
+Thanks.
+
