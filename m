@@ -1,147 +1,105 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60FB31E848
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 13:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA4029AB1A
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 14:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781790623; cv=none; b=cUQnhc4PBaF4bdAfo+5Kz/QNbifyLzmS54ElNDbropAvtFFWaMKB/kSTCasV4z2IGN14BewXl00wmsWdkr5m8+x2aEvRMaKsGzZO/tcfQfamkBVpC+tT3aVROGI6jj8wqOxXGhRiGkwNWF83RpePjARzSq6t/7Pzjl1TdmGCPOI=
+	t=1781791408; cv=none; b=kMn/XrIl91TkruyceKO8diVM2rk+iXgvqdZEfaX5Y7qYJJMfInEHRdntgiL7nAEp/GQQW9P6qBpJ7RfLkt6lg/iO261zFdRbXo7cnCJA6GDm6/queTQHmn+ezeXuctcI+gIMSKbbpu4k43bzfu5mYD0/1ssUy6+0nx/kSx7pXfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781790623; c=relaxed/simple;
-	bh=2WFsByTzos+f42H3JWdYuYHHngR5GH0KKuHdiNuRAZE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=mCwSiXiRWF2l6A7QmRN+zdwG76JtHs4di/VjMxrZyscitwVHlpuzmucau+gXsLrk/MCuk9boNtdcumaVVHmDRvB0F1Jg+v8IwgoKbIAvURiPhnJZgQUOeHNPWIfAEPZLUPmggl5Ipusenn8EHHpmqM6SvaF9alx2/p2zIFHCTLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KVYrL2Vq; arc=none smtp.client-ip=209.85.219.43
+	s=arc-20240116; t=1781791408; c=relaxed/simple;
+	bh=3zJNtr7UG2Tk/MccFh9lvxX9lRnvZttfxYCnVh2ofbA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VKbeATOk2/bvWUt64lalTd6IH4l53kHpa+l0uz13ZUiW8BMUbAoNFNGG7nd3k/WHkTXBCTtHm85Yh7CMrMitYlGNvcO314pAIXOeRrNtEP3jiNu1DQMkBfsek4hmPdL6AJfiGKS5OhpbQdY4Sq3uX7qbwXYPIK5GAPn8UIfMrF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jpgBMLL6; arc=none smtp.client-ip=209.85.161.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KVYrL2Vq"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8ce9df31840so6734426d6.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 06:50:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jpgBMLL6"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6a0c604b9cfso892723eaf.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 07:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781790621; x=1782395421; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=heDBTW8UZLfcuxZkQbpkkVUGo9AWguMKzsgaLL2XMIk=;
-        b=KVYrL2Vq3iGHz8fb4i3d6YVzKbLoF6jvd3O8kRq6/GK4nSLQQTaL20fpyQzm/HyCC0
-         RNviIRg4/Bsmr4D1u1OzsH4OhRvQHQpjswA6OH+HUzl/ItXl3JizlyIo6Fw9E+7pnSVY
-         JNt1SJD8lhjiYt2vFcANyIUx7B9EojvbU6uXGDjgIQAJKY31IKtROXleUgO5UpCu77JZ
-         izA78BvqJQf7kh1Ya9yHO/8Gu6Oa7Auh3T+J+yyUZ5gwY3zGKoUMyqj5vj8qgdEp9jer
-         8IuL8bCxReNuVZamopSQPHpEEsDlJyhlGvCxbtJ8r/X5/Oe1G5AK/aoeYwiVV3Zsi6vr
-         vAfQ==
+        d=gmail.com; s=20251104; t=1781791406; x=1782396206; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7azovMoJOjvNICbDVMdci55j/SpcjOlD8wIlchYWrtw=;
+        b=jpgBMLL6esYMNmveHDvRqebYSB+YT16KsiT/pLFxk682v51LjjeNicTfR6Ej/W590i
+         9IZeT9lvI9ZaoAqvv+5o+Y4Zy/kKxhw4qvfCMltX2aJw30S3DDZ5+6dLk/fwC3VgmzXE
+         7WqMfRDOxAgZWdbFFAKbVz4tI/7ZFw7jGVb3uuVfyyaI11rERatxQjIglnR9nBnFLjDr
+         ZrKKj0Egajs4E5uIwcW+O2sUx26sgSPUTEnEqjHcoaFWwhBvCzNVKgAUpNAVIKs6I7It
+         gAkvlfBBf6KJ2cnj9v7QOCflxLn9D2e18u+r6WznSBf3ND5hKVBhDdVdVzhOU51qgszR
+         KYWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781790621; x=1782395421;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=heDBTW8UZLfcuxZkQbpkkVUGo9AWguMKzsgaLL2XMIk=;
-        b=h/QI/bFo56Z/BOSSAqpeq5rAeBbntlzR7LC/YeNmmT+/FRXK69Z1sfZqhF+IVehVc1
-         UMlbOalt1KQLBlFmvHiDijNwlE+ULLa5CuKl0WLtlRbeveFOz99cGN9b4Fz0kBaMpqPY
-         TLm/9D3HNvsU/J/8ZcCTScjITL9AtUhMTL25jmyFtuR7HPgjGR8E50e1sM40T26IakXw
-         /OG0+b9FjW6hMkRsv1X5Gw+HnTH5FZAfmaGwOUEJdfZsf01QQay5X3H1yBDXOK9Kb5sb
-         zmWql30F+sr46pgU2XTjZb5QYJUGGMGLyaEElFtPSF/yA5qLNGdPJIT6v3Q/rAaGBjuZ
-         vnjQ==
-X-Gm-Message-State: AOJu0Yw6Pad9kVJVJPVihteX+XkezdUtCqXYYZGJwQc2igXl/Xs4DlXk
-	RRsC8/R3DQHilDPsKF31UVKJ/UZ/wC7sVmqJ65jcD6RQx83dbIqOHHs6Awy5JQ==
-X-Gm-Gg: AfdE7cnw+WRNYLGo9mz9iTnRPYbTTUoPk1hf6wL7bf5OxSAhJWcN/lNg6cWAUV3a/C6
-	qeib6HJmNn/SzR+nIU7oU8jTj3TRv1YVWmcrqbmaCdVb8QM3aw8Bm/Q39ho3yrRfm6bCTKlB8ti
-	AfkSepWmZ4pWNS0FUlT5XGUQoJWqV0SoZLurITK9wdT+6KNqK0zcwzVhst3pRy195fgKriSU0NY
-	dN94w9PDVJ0HVIz7hXCZiPV0ZBZpaFO0xGb0MI16x8R6LNjkj7CsUPUxoYmTPmfNj4DZyg1CqDV
-	p1J2LwwgkXait/Iq3454TJfAMHOgPNj4BhWzuuA8Txa5NC2MMXSixl//oaAd/h91QBbZFilQVl9
-	9LTMZay+NNGawcSo99M9VNOGuuEeDDICSF652NCK3/lzFNaBYgNZTvzHMyvrEtpe7ZAQuA3Xx2O
-	Zqz67XT+XC3ZHs6aaGFg==
-X-Received: by 2002:a05:6214:201:b0:8cc:dfa6:3333 with SMTP id 6a1803df08f44-8db5d1d59f1mr109595906d6.32.1781790620654;
-        Thu, 18 Jun 2026 06:50:20 -0700 (PDT)
-Received: from [127.0.0.1] ([145.132.101.179])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8d9f19e8ce7sm97575796d6.14.2026.06.18.06.50.19
+        d=1e100.net; s=20251104; t=1781791406; x=1782396206;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7azovMoJOjvNICbDVMdci55j/SpcjOlD8wIlchYWrtw=;
+        b=bWNHURl9DTX35khEmIY7dHUvc+WLDv9YLE5MyAhN4ncCQ+Shn54NzMUAKipQD2DLEE
+         0HWjFhONdYam9aQzK16f7nNOq2H+6dZ36Yk36zcVfG4rqH7jtkTXUDVX59WpwuSImzEP
+         CeBR7FIM26IpW6/6BBQO/Dzr3NQBWf6BNG160xPiYNvxHGj/4YxxuPHzFWseeRZlOOVx
+         cXJzbgk7MafebYW76wELfRtE/oOqwQB1RDtJTRnI+SGXpBs022Nd5BymEwn3qb81ifG9
+         UfyQXCTnYYu9LgFELckRSLetTJTDvsCo/ouSncg3tKj9iLKF7lXqU2HJZhWm2svQpa2R
+         A3Rg==
+X-Gm-Message-State: AOJu0Yz26XpoQ/RCg56NB+h+zGi7nqebyY1F1fCupIV3+cOr0H7CFg+t
+	4k9oXl1SQQxNuT6HJ7DEME5bi4ocKqs5S8Z5vRgw2BrHraL8kMxAu41JOETN2g==
+X-Gm-Gg: AfdE7clbcHrt4UPSwp8a4BTqTe/3VA2VBkhoDPaAFkVlwNv4w4G327PRk+vwUiCCScH
+	vd3+FC1XCTf4Do+AQjS2D6ffZa/2LPEKqyoYfQShL86LBXx68tfuH/dd6+/0kv3JRvq1N2yvdlh
+	WWPm7NZ9EJbYHlJhNgPFxas6V/jo4wDIQgh6YwR+Fk5f619+PNw1tlv+Xu5WiOrCY5db+3RetUi
+	3vkorXrb6ThQkBnJSQFFH/bSUfXNOKuxGL05saBfGEoAjeyBxj7CAvHZRF3KWCil1YQQqBh6In+
+	fKfl+SfLdrXKk9oxsEsAIzXTSh4v6a4yAGZqrM+AquZhHwFVrEu9DLDGi8tXRuUyebXaXVe0xSq
+	ESu9Zca/DqAgUiKJX043Kzh4Ja94/6+VpPB1ayX5lkSjnFtmfBe05blfMZVMFBmwN0D1UMqDIlv
+	GzX/P2zw==
+X-Received: by 2002:a05:6820:198c:b0:69e:3062:4b77 with SMTP id 006d021491bc7-6a0cd9c84d3mr1848145eaf.13.1781791405291;
+        Thu, 18 Jun 2026 07:03:25 -0700 (PDT)
+Received: from localhost ([136.51.44.64])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69f00d232e1sm9122633eaf.6.2026.06.18.07.03.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2026 06:50:19 -0700 (PDT)
-Message-Id: <pull.2153.git.1781790619424.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Jun 2026 13:50:18 +0000
-Subject: [PATCH] zlib: properly clamp to uLong
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 18 Jun 2026 07:03:24 -0700 (PDT)
+Date: Thu, 18 Jun 2026 09:03:24 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] gitlab-ci: migrate Windows builds away from Chocolatey
+Message-ID: <ajP5owy3r_GyuLqk@denethor>
+References: <20260615-b4-pks-gitlab-ci-drop-chocolatey-v1-1-51a6e7d5e388@pks.im>
+ <ajL1677NQShTO6tD@denethor>
+ <ajOE2XMBzgrXxbH8@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ajOE2XMBzgrXxbH8@pks.im>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 26/06/18 07:40AM, Patrick Steinhardt wrote:
+> On Wed, Jun 17, 2026 at 03:03:39PM -0500, Justin Tobler wrote:
+> > On 26/06/15 02:21PM, Patrick Steinhardt wrote:
+> > >    before_script:
+> > >      - *windows_before_script
+> > > -    - choco install -y git meson ninja rust-ms
+> > > -    - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+> > > -    - refreshenv
+> > > +    - ./ci/install-dependencies.ps1
+> > > +    - $env:Path = "C:\Meson;C:\Rust\bin;$env:Path"
+> > 
+> > I assume Git is already discoverable on the path?
+> 
+> Good question -- in fact it's not, but in Meson we know to use the
+> well-known path of "C:\Program Files\Git" automatically and that's why
+> we don't have to add it here. That certainly is a bit hacky, but I'm not
+> sure whether we need to change it.
+> 
+> Just let me know if you think so.
 
-On platforms where `unsigned long` and `size_t` differ in bit size, we
-want to clamp the buffers we pass to zlib to the former's size, as per
-d05d666977 (git-zlib: handle data streams larger than 4GB, 2026-05-08).
+If it's only Meson that needs to locate Git and it is already capable of
+doing that without updating the path here, this is probably fine as-is.
+We could maybe explain this to future reader in a comment? But I'm not
+sure it matters too much and is likely not worth a reroll IMO.
 
-The logic introduced in that commit performs a clamping to the bits,
-though, which fails to do what is needed here: If too many bytes are
-available in the buffers, we need to clamp to the maximum value of an
-`unsigned long`. Otherwise, we ask zlib to use too small buffers, in the
-worst case using 0 as the size (think: a value whose 32 lowest bits are
-all zero).
+Overall this patch looks good to me.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    zlib: properly clamp to uLong
-    
-    I re-read this logic earlier this week... and I am quite convinced that
-    it needs to be fixed.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2153%2Fdscho%2Ffix-ulong-clamping-for-zlib-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2153/dscho/fix-ulong-clamping-for-zlib-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2153
-
- git-zlib.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/git-zlib.c b/git-zlib.c
-index b91cb323ae..d21adb3bf5 100644
---- a/git-zlib.c
-+++ b/git-zlib.c
-@@ -38,12 +38,17 @@ static inline uInt zlib_buf_cap(unsigned long len)
- 	return (ZLIB_BUF_MAX < len) ? ZLIB_BUF_MAX : len;
- }
- 
-+static inline uLong zlib_uLong_cap(size_t s)
-+{
-+	return s < ULONG_MAX_VALUE ? (uLong)s : ULONG_MAX_VALUE;
-+}
-+
- static void zlib_pre_call(git_zstream *s)
- {
- 	s->z.next_in = s->next_in;
- 	s->z.next_out = s->next_out;
--	s->z.total_in = (uLong)(s->total_in & ULONG_MAX_VALUE);
--	s->z.total_out = (uLong)(s->total_out & ULONG_MAX_VALUE);
-+	s->z.total_in = zlib_uLong_cap(s->total_in);
-+	s->z.total_out = zlib_uLong_cap(s->total_out);
- 	s->z.avail_in = zlib_buf_cap(s->avail_in);
- 	s->z.avail_out = zlib_buf_cap(s->avail_out);
- }
-@@ -60,7 +65,7 @@ static void zlib_post_call(git_zstream *s, int status)
- 	 * We track our own totals and verify only the low bits match.
- 	 */
- 	if ((s->z.total_out & ULONG_MAX_VALUE) !=
--	    ((s->total_out + bytes_produced) & ULONG_MAX_VALUE))
-+	    ((zlib_uLong_cap(s->total_out) + bytes_produced) & ULONG_MAX_VALUE))
- 		BUG("total_out mismatch");
- 	/*
- 	 * zlib does not update total_in when it returns Z_NEED_DICT,
-@@ -68,7 +73,7 @@ static void zlib_post_call(git_zstream *s, int status)
- 	 */
- 	if (status != Z_NEED_DICT &&
- 	    (s->z.total_in & ULONG_MAX_VALUE) !=
--	    ((s->total_in + bytes_consumed) & ULONG_MAX_VALUE))
-+	    ((zlib_uLong_cap(s->total_in) + bytes_consumed) & ULONG_MAX_VALUE))
- 		BUG("total_in mismatch");
- 
- 	s->total_out += bytes_produced;
-
-base-commit: 7a094d68a27e321a99c8ab6b700909e503904bd9
--- 
-gitgitgadget
+-Justin
