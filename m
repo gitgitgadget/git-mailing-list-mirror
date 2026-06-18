@@ -1,170 +1,287 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33B2D738F
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 17:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781802379; cv=none; b=UkkyxdAdd63OELoQAiEdLlA1U6EDCEnuhByM6TCCtkh+b7O5Mic0M68byDV04VS4lGYNv6557LyLXjA0PggtNVzlDduDlGD+4GBmIzMEWBU6k9Na0siB+XKLi/c9VLYavfe06lG/etvNa+pktUdYLFucVCb+QuKhZr6D1W8ivw0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781802379; c=relaxed/simple;
-	bh=kT4MTcAG6pmEA1aRYpLyd1RaChS5paa54GLwOnjRYzk=;
-	h=Content-Type:MIME-Version:From:To:Cc:Subject:Date:Message-ID:
-	 MIME-Version; b=i5gLD0cjKcOtUZIoZIJYJYwvlVCo+tu4LIwacVKiWdviT5p/vSKje14v7mEwl57ByuWGcpJrSN5//iEBBeuQ18F68TYoaOlpbJ+V5ivN8KlaJMQakuivJaWILLTXh0G0P2jepgaXS8g4jYzEWu5JbNGfXxWbD3spfpydWtdD2zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R0rcVQzT; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BEB2C21D0
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 17:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781804617; cv=pass; b=DtThZVseo/Nb20nQwOEptySkPgr4M1bq+hGYVxzH5a2eITw05dgZeiMEsDyWdnSA+fktG9AwAo7A0Fs5ZUAkqRF5Q7xacpCu7v/LezsEk0XzqI6lpCAaiAUQ4FYLqWvQ2SsrEgoD8C2btq1Yr+P4JRlb9U5iVpDsvIHApVLvvPI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781804617; c=relaxed/simple;
+	bh=0uU32dycXIv8J0yapWLLh6SCdNM2Qd4b64eUKw6OK88=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=osphKv0BCkZbqWHFgovLHqanUCFHpldJJvBE04a/1+3QkrLKT+lTnk9UIxTo9Lma6eiTJyNaSCwe6Y6lBI+65BM/uy/s9uBpA07kF4KsUkF4LNNsNXkCItVG1aAsvjf4ongQ8SbKEMn+gsWR7K3I0gzjp9WMf4QmWcJRiBWAKcs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O4/mBduG; arc=pass smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0rcVQzT"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c892935bcdeso532929a12.3
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 10:06:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O4/mBduG"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-845385adf4cso654219b3a.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 10:43:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781804616; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lmOz6VK+o84SLaILqr7BUQkPziQUMzcIWgOE+U/GeveueLFuum2dTnrNbWUZYHnAln
+         8nZc6w2nT9RekIkWrzrJ9YlfjFMxeqQETWa9a+kmLmBfVN/aC4YmezoMZi2EIKHziyVz
+         IBhf4kOnNoD2zkZZKvd0px0g3QZkQ/FPHZyIKxKNi9/kikvfb2g9RY5g4W1DevTQKq0h
+         oLpoxZZUih6EMCTo3AvyYTCzuu8YR7vxJdNO7JKDRbbnXfI8XdUFedgSlwdmJ0TeMavi
+         B/P4PLyWytv267I1gdLt5ktRDLWJNsmbuIl/RvkGFfMfVOjynFjFJoJapU2tKA22KnXb
+         7mvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=HeFwxc0QE+FHjzXq6ZOCbVqTGzWLr+NYWIxWftnO3/Y=;
+        fh=tRywq0+sqXbiUEVOIgeqb9aq+ZmDFGlgumczAjAR+HI=;
+        b=HMElQIhpQUXffagh0HjdCsHU9kvVa6gQvAdmODUBt9+7QxAC8aJOGq+mixXCPnc1FV
+         EofwidhG7ujIGk2yAju5yQjH4GhJd0jbPUH2HQ6AZtRgycJOK7RDD0wix53MJE7NWC2n
+         nNA4JfvIAO3/8N5TrsUQTwHGDoxF182obERHizniKWVKV+TJbNkwpprjt9Hx6Up8gVlB
+         8lYS/4cuGV3RvVR1cxbSK0U7hUrFhJew1eUFV67vZtlhOc6rsddSfAfmd9tuGhbxgNik
+         p0yTvjV10WYpFlQl5ImNcGXbYSb3pQ+2wfZLtsKz4XqBpRQbAFyf1YdPnuFqAG+gCC5X
+         JD7Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781802378; x=1782407178; darn=vger.kernel.org;
-        h=mime-version:message-id:date:subject:cc:to:from
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781804616; x=1782409416; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kT4MTcAG6pmEA1aRYpLyd1RaChS5paa54GLwOnjRYzk=;
-        b=R0rcVQzTso34OT53pbOS1jffxMxrAF3m2TQSCbzKFUJA/UFRm4fS5b1WR/eYqcObc9
-         OfSUxeLFXeHCk6Ob4liELSxteo/kXUlrBf2EbQNBjhERQE9yH3YTT5SeUHT/rcRQRndK
-         uMyup7Gr81MGWrbY24/Gt/V8+Mjs6mnqnabwKh4PQyJQnMFF+ucoW2Ju9hbnd1alrQ0y
-         sfH5t9WLPjSw+l/nSGT33nzPC4l9jAZANmbO0BHTbALReYDANl/LX1xhfWpEphPvpj6L
-         ydK1Yu2Gs9/lZyHrV4wkH7ycGTdZYU9fQmyzKvdgNaBFg8uj9TQ0v4yg6yN5DINEvfV4
-         JNeA==
+        bh=HeFwxc0QE+FHjzXq6ZOCbVqTGzWLr+NYWIxWftnO3/Y=;
+        b=O4/mBduGaxV5HC+a8GgKDZJ8fDq3gn0sG6PQO+Nl8dYEfWU2ZaVV9yDgARmUl8ACiL
+         JDK0leRev296Z6RMRbUdRzx5HgeGK5SI/vD4bAOw4S7R22aQroYy/E/SfViAxe1O0abD
+         tQk++ScfjvbcM/T8xN6rQARmIz30iKyefk7xCSmza/Vz/OZHs7tXtEXQYJI0hEUqpAxh
+         tjH0OYO4Yy17r9bOlsQRSR4VTy3TDRI+4VemUv99KV3aGffoFERPjIEpdfwjj0qSKZD3
+         pnJPoNx00FjtJL1S1KanDNwcebBQlkTMDvijJfTMwybtABGScIVw4tG+wWJchNVXbBcB
+         /QGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781802378; x=1782407178;
-        h=mime-version:message-id:date:subject:cc:to:from
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kT4MTcAG6pmEA1aRYpLyd1RaChS5paa54GLwOnjRYzk=;
-        b=ImUSowSlDSdJ/fXTg4550QzFbAXuI4JFvl9ZqBsgVFab6H81BHGRXAmJOWFrJmsahd
-         bT9BuY/zK09oZKbKWbZwphlpGy9XsEHXlTwJ2zN+xJXvdYDrjBnIO5EIKX65YcT5PaFA
-         Av7+wPRv5Uiavj/qN4AZsf3xcvL9q8u1R8Ahf/LZqVPqmKLcquPvknENi1AoQ6UitObv
-         6STyhlpjqut1Q3V+VK/u40kBybdUWrjUpanZ3Z8VOpKKGjl6oF9yfCMmGBfzb3COsTww
-         NVOeilMDZt0HmlmV6vpLZUX58ABHFPjhvTOWhzon38GYR+pzbSsuwFZXRBj1K6Tblwt0
-         qqRg==
-X-Gm-Message-State: AOJu0Yyxe9RtXAvPn/sTHHda/Tu8V0j9zDqTC4rX0rYJGNepsI4tVIGU
-	x9ZsCOrTxDGha1EJ4h9rmn72GUJV0lLz84jTxc7hQehWC98uTziWMbgEpvKHsxVb
-X-Gm-Gg: AfdE7cme5wREhvTpc45J8FkT8fGSxtZ2caKjYcUmfg9tjVTumsdaNH5vwvv9dAFumAq
-	isgE0xOAsI+ppSRuPlO4Xd8Hs21TR3MoOI2MdQbg1rvhUYz/YM0EHb9z8Xxi5k8QyB7Mlsz0cc0
-	wVO1FBCdDrM6xi+bh0hOHtbu7aA6xdVYAtSb1QpgsW3suMlUlVl4a9FWf6DmfL6HQyJSpY0pr2N
-	wT8E2jxsvE0YjTEOgn+SySXrKO6fbgcGzXeW6nOwMAD8lpjP1DtQUK7/75QYLARSb/RW5eBlP9K
-	tPiJI9Qa747yLqTjqzxcfMr9+RF64Q66cJzEI9wEFMWpLfJRepCXHihqIxLT6aPGMjj02Lgwr6n
-	P1CDjjt5oq2jdwlkpXCIRjWc4kWXF5uS19G8w2Sw7sMzsqIhDOIghQvh7/YTujFGzEz635Q9GHl
-	4z3KCOc1rsima40QIcNYGG+7/aYt9cBSZvmNdWJbEBaZ2bLSGaugyoWUO+m6bmTyjO96Ihp0cK2
-	4xj0F9eVNmvSK7nxzsh0f2VQmKlUyOR/A0oxdYmvxRpWaTT3nGDTTY=
-X-Received: by 2002:a17:903:98b:b0:2bd:ba44:6c07 with SMTP id d9443c01a7336-2c718f83ca3mr452655ad.16.1781802377558;
-        Thu, 18 Jun 2026 10:06:17 -0700 (PDT)
-Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2404:c0:a301:1642:8040:7870:cfeb:ba5d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c4327aca78sm217509325ad.54.2026.06.18.10.06.16
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Jun 2026 10:06:17 -0700 (PDT)
-Content-Type: text/plain; charset="utf-8"
+        d=1e100.net; s=20251104; t=1781804616; x=1782409416;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HeFwxc0QE+FHjzXq6ZOCbVqTGzWLr+NYWIxWftnO3/Y=;
+        b=qIAQ31bmzFKxlrOeXlR+EkvwzGTubYP+hT1olz4LMgF6V9PknB7r7lYefvAbyoyqgV
+         fWhuIATVpTbxTBaMZPFztW9fVlK/0kCe6ovaKnp9dSZyqRAl8c4yALWJoE3QH3tTuwNU
+         RH/y6D77Q8nlUYsNocnGp09xFJWLTTUaq07XpZz6U18+QCMKlPBEAvtf4DvOqK6M8UMt
+         Xv9gLxo/pPqyNSZggEz4nYUgZmOJoxXwiQM0xGVCGevHj/33+Mphk+ZO25VikzXJavTm
+         gi1gSHF+tZZ4hKmdylEbsO2jfJScUdF5DXkpebfdDjf+Y6zqUBL6rd8lSlIVIGc445UW
+         8sUw==
+X-Gm-Message-State: AOJu0YwIN0uJZSCbrZ7NXnq6M4Vp1YdrisW7C4gStWiWciLZBHgRRhYG
+	nbQT4FxfF7TOV1xtCE+Yt9oqBxOE9W5Gz9d8O8vLQetiRYWr1Jc+y9/OBwJvwc6JG2HiavNGhIz
+	r9l7mLHEQZAhpXQLaydzxWd2hOG5+/vQJXHGeijA=
+X-Gm-Gg: AfdE7cmJJezKTWShBT3SWvGhaOezlLCkCDcE0AAMRUu73V0/w/gbfyMFgmM4Ixm/p0D
+	p6tXpzIuI87YczZiQfmOE3jiHscYwERMYZhZC4bw1k67Tdszmv4TCW/q3hmA4wRsNr6NuHzrHUH
+	piKIGJ5kYXrtBHsjEB/qILsfwVhkp8iAvZDYaT4cGkHE2/e6XhyyEaJrOmUImO9n1fIvKJcZ4CH
+	vCXDF2Q2pHi1tQu/D1A9iymeol9tg6yAYSDPKVzNiQjaIXJumJqjYSgvbsMciKthA1nl9RHPSUA
+	v1kBoDAVGQiopHCs+ErBEDf9UKgx+rWvNoGjP/yitPUftwp9ztwi0ftXJvgzUf0YMOx55w==
+X-Received: by 2002:a05:6a00:2d84:b0:842:422b:259f with SMTP id
+ d2e1a72fcca58-8453b07c89bmr5301465b3a.10.1781804615830; Thu, 18 Jun 2026
+ 10:43:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: base64
-From: irsalshydiq <ichalprov@gmail.com>
-To: git@vger.kernel.org
-Cc: irsalshydiq <ichalprov@gmail.com>
-Subject: [PATCH] doc: detail LMAP binary format specification
-Date: Thu, 16 Apr 2026 12:55:42 +0700
-Message-ID: <20260619000000.3286-1-ichalprov@gmail.com>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
+References: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2155.git.1781710256081.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 18 Jun 2026 13:43:24 -0400
+X-Gm-Features: AVVi8CfL-g9WENxlBhuBtdnYw1KO2n93UQQlsDYwvenChG_PesxJvjD8YeV2Q5Q
+Message-ID: <CALnO6CD9P4+e=YPdKaLfSBOk-H3_ir64pBP-qMKNNvzUNqunXQ@mail.gmail.com>
+Subject: Re: [PATCH] completion: zsh: support completion after "git -C <path>"
+To: Lutz Lengemann via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Lutz Lengemann <lutz@lengemann.net>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-VGhlIGV4cGVyaW1lbnRhbCBSdXN0IGltcGxlbWVudGF0aW9uIGluICdsb29zZS5ycycgaW50cm9k
-dWNlcyBhIG5ldwpiaW5hcnkgZm9ybWF0IGNhbGxlZCAnTE1BUCcgZm9yIG1hcHBpbmcgYmV0d2Vl
-biBkaWZmZXJlbnQgb2JqZWN0IElECmZvcm1hdHMgKGUuZy4sIFNIQS0xIGFuZCBTSEEtMjU2KS4K
-Ckhvd2V2ZXIsIHRoZSB0ZWNobmljYWwgZG9jdW1lbnRhdGlvbiBmb3IgdGhpcyBmb3JtYXQgd2Fz
-IG1pc3NpbmcgZnJvbQp0aGUgJ0RvY3VtZW50YXRpb24vdGVjaG5pY2FsLycgZGlyZWN0b3J5LCBt
-YWtpbmcgaXQgZGlmZmljdWx0IGZvcgpDIGRldmVsb3BlcnMgdG8gdW5kZXJzdGFuZCB0aGUgZm9y
-bWF0J3MgbGF5b3V0IGFuZCBsb2dpYy4KCkFkZCAnRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbG9v
-c2Utb2JqZWN0LW1hcC5hZG9jJyB0byBwcm92aWRlIGEgYml0LWJ5LWJpdApzcGVjaWZpY2F0aW9u
-IG9mIHRoZSAnTE1BUCcgZm9ybWF0IGFuZCByZWdpc3RlciBpdCBpbiB0aGUgYnVpbGQgc3lzdGVt
-cy4KClNpZ25lZC1vZmYtYnk6IGlyc2Fsc2h5ZGlxIDxpY2hhbHByb3ZAZ21haWwuY29tPgotLS0K
-IERvY3VtZW50YXRpb24vTWFrZWZpbGUgICAgICAgICAgICAgICAgICAgICAgICB8ICAxICsKIERv
-Y3VtZW50YXRpb24vdGVjaG5pY2FsL2xvb3NlLW9iamVjdC1tYXAuYWRvYyB8IDcyICsrKysrKysr
-KysrKysrKysrKysKIERvY3VtZW50YXRpb24vdGVjaG5pY2FsL21lc29uLmJ1aWxkICAgICAgICAg
-ICB8ICAxICsKIDMgZmlsZXMgY2hhbmdlZCwgNzQgaW5zZXJ0aW9ucygrKQogY3JlYXRlIG1vZGUg
-MTAwNjQ0IERvY3VtZW50YXRpb24vdGVjaG5pY2FsL2xvb3NlLW9iamVjdC1tYXAuYWRvYwoKZGlm
-ZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vTWFrZWZpbGUgYi9Eb2N1bWVudGF0aW9uL01ha2VmaWxl
-CmluZGV4IDI2OTlmMGIyNGEuLjhhZDkwOGQ2MmMgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24v
-TWFrZWZpbGUKKysrIGIvRG9jdW1lbnRhdGlvbi9NYWtlZmlsZQpAQCAtMTI2LDYgKzEyNiw3IEBA
-IFRFQ0hfRE9DUyArPSB0ZWNobmljYWwvZGlyZWN0b3J5LXJlbmFtZS1kZXRlY3Rpb24KIFRFQ0hf
-RE9DUyArPSB0ZWNobmljYWwvaGFzaC1mdW5jdGlvbi10cmFuc2l0aW9uCiBURUNIX0RPQ1MgKz0g
-dGVjaG5pY2FsL2xhcmdlLW9iamVjdC1wcm9taXNvcnMKIFRFQ0hfRE9DUyArPSB0ZWNobmljYWwv
-bG9uZy1ydW5uaW5nLXByb2Nlc3MtcHJvdG9jb2wKK1RFQ0hfRE9DUyArPSB0ZWNobmljYWwvbG9v
-c2Utb2JqZWN0LW1hcAogVEVDSF9ET0NTICs9IHRlY2huaWNhbC9tdWx0aS1wYWNrLWluZGV4CiBU
-RUNIX0RPQ1MgKz0gdGVjaG5pY2FsL3BhY2tmaWxlLXVyaQogVEVDSF9ET0NTICs9IHRlY2huaWNh
-bC9wYWNrLWhldXJpc3RpY3MKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdGVjaG5pY2FsL2xv
-b3NlLW9iamVjdC1tYXAuYWRvYyBiL0RvY3VtZW50YXRpb24vdGVjaG5pY2FsL2xvb3NlLW9iamVj
-dC1tYXAuYWRvYwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwMDAwLi42ZThkYmQ2
-YzZmCi0tLSAvZGV2L251bGwKKysrIGIvRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbG9vc2Utb2Jq
-ZWN0LW1hcC5hZG9jCkBAIC0wLDAgKzEsNzIgQEAKK0xvb3NlIE9iamVjdCBNYXAgKExNQVApIGZv
-cm1hdAorPT09PT09PT09PT09PT09PT09PT09PT09PT09PQorCitUaGUgbG9vc2Ugb2JqZWN0IG1h
-cCBmaWxlIChMTUFQKSBwcm92aWRlcyBhIHdheSB0byBtYXAgYmV0d2VlbiBkaWZmZXJlbnQgb2Jq
-ZWN0CitJRCBmb3JtYXRzIChlLmcuLCBTSEEtMSBhbmQgU0hBLTI1NikgZm9yIGxvb3NlIG9iamVj
-dHMuIEl0IGlzIGRlc2lnbmVkIGZvcgorZWZmaWNpZW50IGxvb2t1cCBhbmQgc3RvcmFnZSBvZiB0
-aGVzZSBtYXBwaW5ncy4KKworQWxsIG11bHRpLWJ5dGUgaW50ZWdlcnMgYXJlIGluIG5ldHdvcmsg
-Ynl0ZSBvcmRlciAoYmlnLWVuZGlhbikuCisKKz09IEZpbGUgTGF5b3V0CisKKy0gQSBoZWFkZXIg
-KDIwIGJ5dGVzKQorLSBBbiBPYmplY3QgRm9ybWF0IFRhYmxlICgxNiBieXRlcyBwZXIgZm9ybWF0
-KQorLSBBIFRyYWlsZXIgT2Zmc2V0ICg4IGJ5dGVzKQorLSBEYXRhIFNlY3Rpb25zICh2YXJpYWJs
-ZSBsZW5ndGgsIDQtYnl0ZSBhbGlnbmVkKQorLSBBIFRyYWlsZXIgKHZhcmlhYmxlIGxlbmd0aCwg
-ZGVmaW5lZCBieSBoYXNoIGFsZ29yaXRobSkKKworPT09IEhlYWRlcgorCistIDQtYnl0ZSBzaWdu
-YXR1cmU6IGBMTUFQYAorLSA0LWJ5dGUgdmVyc2lvbiBudW1iZXI6IFRoZSBjdXJyZW50IHZlcnNp
-b24gaXMgMS4KKy0gNC1ieXRlIGhlYWRlciBzaXplOiBUaGUgdG90YWwgc2l6ZSBvZiB0aGUgaGVh
-ZGVyLCBpbmNsdWRpbmcgdGhlIE9iamVjdCBGb3JtYXQgVGFibGUgYW5kIFRyYWlsZXIgT2Zmc2V0
-LgorLSA0LWJ5dGUgbnVtYmVyIG9mIGl0ZW1zOiBUaGUgbnVtYmVyIG9mIG9iamVjdCBJRHMgbWFw
-cGVkIGluIHRoaXMgZmlsZS4KKy0gNC1ieXRlIG51bWJlciBvZiBvYmplY3QgZm9ybWF0czogVGhl
-IG51bWJlciBvZiBkaWZmZXJlbnQgaGFzaCBhbGdvcml0aG1zIHN1cHBvcnRlZCBpbiB0aGlzIGZp
-bGUgKG1pbmltdW0gMikuCisKKz09PSBPYmplY3QgRm9ybWF0IFRhYmxlCisKK0ZvciBlYWNoIG9i
-amVjdCBmb3JtYXQgKGFzIHNwZWNpZmllZCBpbiB0aGUgaGVhZGVyKSwgdGhlcmUgaXMgYSAxNi1i
-eXRlIGVudHJ5OgorCistIDQtYnl0ZSBGb3JtYXQgSUQ6IFRoZSBpZGVudGlmaWVyIGZvciB0aGUg
-aGFzaCBhbGdvcml0aG0gKGUuZy4sIGAweDczNjg2MTMxYCBmb3IgU0hBLTEsIGAweDczMzIzNTM2
-YCBmb3IgU0hBLTI1NikuCistIDQtYnl0ZSBTaG9ydGVuZWQgTGVuZ3RoOiBUaGUgbWluaW11bSBu
-dW1iZXIgb2YgYnl0ZXMgbmVlZGVkIHRvIHVuYW1iaWd1b3VzbHkgaWRlbnRpZnkgYW4gb2JqZWN0
-IElEIGluIHRoaXMgZm9ybWF0IHdpdGhpbiB0aGlzIGZpbGUuCistIDgtYnl0ZSBEYXRhIE9mZnNl
-dDogVGhlIGFic29sdXRlIG9mZnNldCBmcm9tIHRoZSBiZWdpbm5pbmcgb2YgdGhlIGZpbGUgdG8g
-dGhlIHN0YXJ0IG9mIHRoZSBkYXRhIHNlY3Rpb24gZm9yIHRoaXMgZm9ybWF0LgorCis9PT0gVHJh
-aWxlciBPZmZzZXQKKworLSA4LWJ5dGUgVHJhaWxlciBPZmZzZXQ6IFRoZSBhYnNvbHV0ZSBvZmZz
-ZXQgZnJvbSB0aGUgYmVnaW5uaW5nIG9mIHRoZSBmaWxlIHRvIHRoZSBzdGFydCBvZiB0aGUgVHJh
-aWxlci4KKworPT09IERhdGEgU2VjdGlvbnMKKworRWFjaCBvYmplY3QgZm9ybWF0IGhhcyBhIGNv
-cnJlc3BvbmRpbmcgZGF0YSBzZWN0aW9uIHN0YXJ0aW5nIGF0IHRoZSBvZmZzZXQgcHJvdmlkZWQg
-aW4gdGhlIE9iamVjdCBGb3JtYXQgVGFibGUuIEVhY2ggZGF0YSBzZWN0aW9uIGlzIGFsaWduZWQg
-dG8gYSA0LWJ5dGUgYm91bmRhcnkuCisKKz09PT0gRm9ybWF0IDEgKFN0b3JhZ2UgRm9ybWF0KSBE
-YXRhIFNlY3Rpb24KKworVGhlIGZpcnN0IGZvcm1hdCBsaXN0ZWQgaXMgY29uc2lkZXJlZCB0aGUg
-InN0b3JhZ2UiIG9yICJtYWluIiBmb3JtYXQuIEl0cyBkYXRhIHNlY3Rpb24gY29udGFpbnM6CisK
-KzEuICoqU2hvcnRlbmVkIEluZGV4Kio6IGAobnVtYmVyIG9mIGl0ZW1zKSAqIChzaG9ydGVuZWQg
-bGVuZ3RoKWAgYnl0ZXMuCisgICBUaGlzIHRhYmxlIGNvbnRhaW5zIHRoZSBmaXJzdCBgc2hvcnRl
-bmVkIGxlbmd0aGAgYnl0ZXMgb2YgZWFjaCBvYmplY3QgSUQsIHNvcnRlZCBsZXhpY29ncmFwaGlj
-YWxseS4gVGhpcyBhbGxvd3MgZm9yIGJpbmFyeSBzZWFyY2ggbG9va3VwLgorCisyLiAqKkZ1bGwg
-T0lEIFRhYmxlKio6IGAobnVtYmVyIG9mIGl0ZW1zKSAqIChoYXNoIGxlbmd0aClgIGJ5dGVzLgor
-ICAgVGhlIGZ1bGwgb2JqZWN0IElEcyBmb3IgdGhlIHN0b3JhZ2UgZm9ybWF0LCBpbiB0aGUgc2Ft
-ZSBvcmRlciBhcyB0aGUgU2hvcnRlbmVkIEluZGV4LgorCiszLiAqKk1ldGFkYXRhIFRhYmxlKio6
-IGAobnVtYmVyIG9mIGl0ZW1zKSAqIDRgIGJ5dGVzLgorICAgQSB0YWJsZSBvZiAzMi1iaXQgaW50
-ZWdlcnMgcmVwcmVzZW50aW5nIHRoZSB0eXBlIG9mIGVhY2ggb2JqZWN0OgorICAgLSAwOiBSZXNl
-cnZlZCAoZS5nLiwgbnVsbCBPSUQsIGVtcHR5IHRyZWUvYmxvYikKKyAgIC0gMTogTG9vc2UgT2Jq
-ZWN0CisgICAtIDI6IFNoYWxsb3cgQ29tbWl0CisgICAtIDM6IFN1Ym1vZHVsZSBDb21taXQKKwor
-PT09PSBTdWJzZXF1ZW50IEZvcm1hdCAoQ29tcGF0aWJpbGl0eSkgRGF0YSBTZWN0aW9uCisKK0Zv
-ciBlYWNoIHN1YnNlcXVlbnQgZm9ybWF0LCB0aGUgZGF0YSBzZWN0aW9uIGNvbnRhaW5zOgorCisx
-LiAqKlNob3J0ZW5lZCBJbmRleCoqOiBTaW1pbGFyIHRvIHRoZSBzdG9yYWdlIGZvcm1hdCwgYnV0
-IGZvciB0aGUgY29tcGF0aWJpbGl0eSBhbGdvcml0aG0ncyBPSURzLgorCisyLiAqKkZ1bGwgT0lE
-IFRhYmxlKio6IFRoZSBmdWxsIG9iamVjdCBJRHMgaW4gdGhlIGNvbXBhdGliaWxpdHkgYWxnb3Jp
-dGhtLgorCiszLiAqKk1hcHBpbmcgVGFibGUqKjogYChudW1iZXIgb2YgaXRlbXMpICogNGAgYnl0
-ZXMuCisgICBBIHRhYmxlIG9mIDMyLWJpdCBpbnRlZ2Vycy4gRWFjaCBlbnRyeSBhdCBpbmRleCBg
-aWAgcHJvdmlkZXMgdGhlIGluZGV4IGluIHRoZSAqKnN0b3JhZ2UgZm9ybWF0J3MqKiB0YWJsZXMg
-dGhhdCBjb3JyZXNwb25kcyB0byB0aGlzIGNvbXBhdGliaWxpdHkgb2JqZWN0IElELgorCis9PT0g
-VHJhaWxlcgorCistIFZhcmlhYmxlIGxlbmd0aDogVGhlIGhhc2ggb2YgYWxsIHByZWNlZGluZyBi
-eXRlcyBpbiB0aGUgZmlsZSwgY2FsY3VsYXRlZCB1c2luZyB0aGUgbWFpbiBoYXNoIGFsZ29yaXRo
-bS4KZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdGVjaG5pY2FsL21lc29uLmJ1aWxkIGIvRG9j
-dW1lbnRhdGlvbi90ZWNobmljYWwvbWVzb24uYnVpbGQKaW5kZXggZWMwNzA4OGM1Ny4uZGMxMjQ5
-ZjlhYSAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbWVzb24uYnVpbGQKKysr
-IGIvRG9jdW1lbnRhdGlvbi90ZWNobmljYWwvbWVzb24uYnVpbGQKQEAgLTE2LDYgKzE2LDcgQEAg
-YXJ0aWNsZXMgPSBbCiAgICdsYXJnZS1vYmplY3QtcHJvbWlzb3JzLmFkb2MnLAogICAnbG9uZy1y
-dW5uaW5nLXByb2Nlc3MtcHJvdG9jb2wuYWRvYycsCiAgICdtdWx0aS1wYWNrLWluZGV4LmFkb2Mn
-LAorICAnbG9vc2Utb2JqZWN0LW1hcC5hZG9jJywKICAgJ3BhY2tmaWxlLXVyaS5hZG9jJywKICAg
-J3BhY2staGV1cmlzdGljcy5hZG9jJywKICAgJ3BhcmFsbGVsLWNoZWNrb3V0LmFkb2MnLAotLSAK
-Mi41MC4xIChBcHBsZSBHaXQtMTU1KQoK
+[apologies in advance for the strange format below]
+
+On Wed, Jun 17, 2026 at 11:37=E2=80=AFAM Lutz Lengemann via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Lutz Lengemann <lutz@lengemann.net>
+>
+> The zsh completion wrapper (__git_zsh_main) did not handle the global -C
+> option, so "git -C <path> <command> <TAB>" offered nothing and could not
+> complete a command's arguments.
+>
+> Three things are needed to make it work, all scoped to -C:
+>
+>   - Add -C to the _arguments specification, so completion no longer stops
+>     at it.
+>
+>   - Advance __git_cmd_idx past any leading "-C <path>" options. The index
+>     is hard-coded to 1, i.e. the command is assumed to be the first
+>     argument; with -C present the command sits two words later for each
+>     -C, so the bash helpers otherwise look at the wrong word and produce
+>     nothing.
+>
+>   - Collect the -C paths into __git_C_args, as __git_main does. The bash
+>     helpers run git to resolve aliases and list refs; without the -C
+>     paths they run in the current directory, so completion fails whenever
+>     the cwd is not the target repository or the command is an alias.
+>
+> With these, "git -C <path> <command> <TAB>" completes the command, its
+> options and its arguments, including outside the repository, through
+> aliases, and with repeated -C options.
+>
+> Signed-off-by: Lutz Lengemann <lutz@lengemann.net>
+> ---
+>     completion: zsh: support completion after "git -C "
+>
+>     This patch is intentionally scoped to -C, but the underlying problem =
+is
+>     more general. The zsh wrapper hard-codes __git_cmd_idx=3D1, i.e. it
+>     assumes the command is always the first argument. That assumption bre=
+aks
+>     argument completion after any global option that precedes the command=
+,
+>     not just -C =E2=80=94 e.g. --git-dir, --work-tree, --namespace, -c, a=
+nd
+>     -p/--paginate. After those, git <opt> <command> <TAB> currently
+>     completes the command name but not its arguments.
+>
+>     The same approach generalizes cleanly: instead of skipping only leadi=
+ng
+>     -C options, walk all leading global options and their arguments to
+>     locate the command and its true index (mirroring the option scan in
+>     __git_main in git-completion.bash), while collecting -C into
+>     __git_C_args and --git-dir into __git_dir as today.
+>
+>     I kept this revision narrow for reviewability and because git -C is t=
+he
+>     case where I miss the completion, but I'm happy to extend it to cover
+>     the other global options in a follow-up (or fold it into this patch) =
+if
+>     that's preferred.
+
+See Junio's review for whether we should expand in this patch or a follow-u=
+p.
+
+In reply to Junio:
+
+> [the new handling only knows about -C]
+> Doesn't it want to do something similar to what __git_main in
+> git-completion.bash does at the beginning, namely, this part?
+
+Yeah, we probably do want to skip over -c, etc. (I see some support for
+--bare and --git-dir, but not skipping over it.) Still, this patch makes
+things no worse in that regard, and improves the situation for -C
+AFAICT.
+
+In reply to Lutz:
+
+> +        local -a __git_C_args
+> +        local -i i=3D2
+> +
+> +        while [[ ${orig_words[i]} =3D=3D -C ]]; do
+> +            __git_C_args+=3D(-C ${orig_words[i+1]})
+> +            (( __git_cmd_idx +=3D 2 ))
+> +            (( i +=3D 2 ))
+> +        done
+
+I don't see either of these 2 local variables used anywhere else=E2=80=A6
+
+=E2=80=A6well, except the Bash completion helpers, I suppose. But we mark t=
+hese
+local, so how do they propagate to the other functions?
+
+Still, I was able to try this out with the somewhat hacky
+
+    zsh # new shell :)
+    # absolute path important
+    autoload -Uz $PWD/contrib/completion/git-completion.zsh
+    compdef git-completion.zsh git
+
+    git -C <tab>
+
+and it does prioritize directories there (though I still get a listing
+of files afterwards, so the screen is taken up by that gigantic listing
+in git.git, for example).
+
+By the way, I've realized that "git -<tab>" has the same problem (a
+giant list of files after the other option completions), and worse has
+some _funky_ output!
+
+    git -<tab> # without patch
+    (option)
+    --bare
+    --exec-path
+    --git-dir
+    --help
+    --html-path
+    --info-path
+    --man-path
+    --namespace
+    --no-pager
+    --no-replace-objects
+    --paginate
+    --version
+    --work-tree
+
+    -p
+
+    # treat the repository as a bare repository
+    # path to where your core git programs are installed
+    # set the path to the repository
+    # prints the synopsis and a list of the most commonly used commands
+    # print the path where gits HTML documentation is installed
+    # print the path where the Info files are installed
+    # print the manpath (see `man(1)`) for the man pages
+    # set the git namespace
+    # do not pipe git output into a pager
+    # do not use replacement refs to replace git objects
+    # pipe all output into less
+    # prints the git suite version
+    # set the path to the working tree
+    [ed: the above block repeats twice more before the (file) listing below=
+]
+    (file)
+    [=E2=80=A6]
+
+Here's the output of _complete_help (^Xh by default) in both situations,
+in case that helps to understand either the extra files listing (1) in
+the example further back or the issue with single letter options (2)
+just mentioned:
+
+1: tags in context :completion::complete:git::
+    option-C-1     (_arguments __git_zsh_main _git git-completion.zsh)
+    use-compctl    (_default _git git-completion.zsh)
+    globbed-files  (_files _default _git git-completion.zsh)
+tags in context :completion::complete:git:option-C-1:
+    directories    (_directories _arguments __git_zsh_main _git
+git-completion.zsh)
+    globbed-files  (_files _directories _arguments __git_zsh_main _git
+git-completion.zsh)
+    all-files      (_files _directories _arguments __git_zsh_main _git
+git-completion.zsh)
+
+2: tags in context :completion::complete:git::
+    argument-1 options  (_arguments __git_zsh_main _git)
+    use-compctl         (_default _git)
+    globbed-files       (_files _default _git)
+tags in context :completion::complete:git:argument-1:
+    common-commands alias-commands all-commands  (__git_zsh_main _git)
+    common-commands                              (__git_zsh_cmd_common
+__git_zsh_main _git)
+    alias-commands                               (__git_zsh_cmd_alias
+__git_zsh_main _git)
+    all-commands                                 (__git_zsh_cmd_all
+__git_zsh_main _git)
+tags in context :completion::complete:git:options:
+    options  (_arguments __git_zsh_main _git)
+
+> +        '*-C[run as if git was started in <path>]: :_directories' \
+
+We should probably note in the log message that the _directories
+completion will not account for previous -C; that is, after typing
+
+    git -C dir -C <tab>
+
+we will complete directories in ".", not "dir". That's probably a
+reasonable limitation for now, but I think we could do _slightly_ better
+by using a state "->dir" or something, accumulating the current prefix,
+and passing that to _directories as a prefix with -W (see _path_files in
+zshcompsys, which _directories delegates to via _files, IIUC).
+
+--=20
+D. Ben Knoble
