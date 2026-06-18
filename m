@@ -1,88 +1,84 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43601DDC1D
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A8E298CB2
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781798899; cv=none; b=P9+aJQBZQAKbR+FRXixvCpadMcdsRFY0lHdY04r9XQbPKnHnU9gtIyt4zCZC3pep8XqJTYc/cM7JmAsL+nGGNjrBg5RVaKsQ3nd8GCqGRW5g9hzJZmtuR9fzgn8F4Q7VC2q2ViC/2KH/aIKeMN0G1TdUL9p5jeuHWNsRlQtD/LU=
+	t=1781799540; cv=none; b=YqOTOb13XIU7XdGXIWdkA0uxNagiHF7uO7iBrVEJE2+pfSGvPl/h3V08l4Y+xv50u3IClHd/8qEtNkLjsU1GhhdaiXob6pz4Dlx05mx+SDD3r1rB3IUJZthziJ43jdkLAiRFVHa6xo7f7kVtozWshv3Of/68jPu3kZb/N6SVm28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781798899; c=relaxed/simple;
-	bh=A8MRkTxs26Vz4fAwMGlqoYVMoJGgeOrgqZB0KsYuo7U=;
+	s=arc-20240116; t=1781799540; c=relaxed/simple;
+	bh=1IMehE0sgKge1PQBQkMIubK9o4BwLvCW8UHEith4ptU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eXQoqcS0WJ+LjN5bWGtJ20YvqY8LumrnftD8xXz2DfPZFEtisI8aAx52D2k1rbEeZ97nlTdkgdeKEWnOPVSzaf1kqQsuVzRojAGZi0OjxExSBUc0Qbdqng88EvGaP5l275YBEnVf7EzkqfJLUD7XMuyGXLEwbRjqs1erZbXYixM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UoTmgnKO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ehpWqBIE; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=m5SNulEAkPHn06lZPf3Z4MDVoR4UFX2rd1Sy+mczoL6+bHEYgyiDr5tKA01LQxITXMh/Ph6bmhKy6Evtgap6DNcDH82YUlySptuUGbvTkpz4zXnhwImgrKYdIH6RC5b0NlPWnj1k0V8rnOKBknXnb5YNcWEcL4yMAIDzmdnXDE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nbcK/iI3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lAaW997R; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UoTmgnKO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ehpWqBIE"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nbcK/iI3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lAaW997R"
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B8B6E1400184;
-	Thu, 18 Jun 2026 12:08:16 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 11D94EC01B5;
+	Thu, 18 Jun 2026 12:18:58 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 18 Jun 2026 12:08:16 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 18 Jun 2026 12:18:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781798896; x=1781885296; bh=GfQIeYHcPd
-	LhtQBoP1WKacxgpty7XVUWHvaSfDebjHc=; b=UoTmgnKORJvAlQ9RQJTmLtTJ4m
-	A6JTe9uUMDfV0DA/OvXlrbCBIrGHXdF8W5zWKsGHtRLH3oK++2qy7y+YQxpzVXJk
-	9UlPdGL9YBWWd3SJ9bgOR+WnzlIlvB1dpReMTXYdbFjuv/nmv/36rTHu4Y1Xx8py
-	TtewZJEe2R8ApB8krC8b6XM5/XUx3hBP4na5sEdb15ziFBhJZzmyngPaESqftqjC
-	OHELc1bJfXUoZExS6tecQ9YLlzjT6I7TxfsZx+jZkYeZttrr/1I+Oav2Xr+z15JY
-	ReZq4HxbmMtek6ce00WPTnPa2HSyWXLVseygQbBDkMj8wJqmsbsfLE4ACkPg==
+	:subject:to:to; s=fm3; t=1781799538; x=1781885938; bh=colgx/9G8o
+	2bIqN/Oak3yYUnGa29ETSV/G7bD2bUBYo=; b=nbcK/iI3Zd0K6MUBddbBvV77nL
+	gKqlokPRM0XB9rBohbSHrCsWhxTh81nesWsPqsMjn66uWauNlv9WVe6ge1TLpjPf
+	INk/Im4sg7q6lRsA5sGvqjo7Sq1uPbFbwePBbbxNl9c6fc54+q7jrQsoYsWJVCqC
+	MMT0GkYue9PpBYhoTQT9fcea7/dKGpinvKBPCWxQ3rsV5QBMN43RxScqyZYKj90J
+	yVtQULbpX3yFhTSxOHZJ4bYgZIGjCf3ulrYLzFi8VYIZ2HD99OszEBntUVknjhhb
+	14of6+1aKXfW8K3Vtz/xpixJHlAS6GgO6qRg6wvGy4s76U06ZUlb29mDF1GQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781798896; x=1781885296; bh=GfQIeYHcPdLhtQBoP1WKacxgpty7XVUWHva
-	SfDebjHc=; b=ehpWqBIEF2SgjiPS+uCEtvbl9h0AAELRE3wInUHJE6dbiIvQ3lD
-	fQdOG80/BAYTtEgiQDe7nsIcjcElVjNXdhWAgoRqpy8S1kg7vZ+d53keJsm4zQVk
-	Cv60pdWHEb4K6+QTcaaDZeQKWgLj2QFHTGMxObbzz4EdQ/ZfWRL3en2puvT89C+Z
-	mFAbBrMhBCsttQH79V3iAPECYk1JCmke5vskx7691DeQ7SeJu3oPSmwEpas9AsBM
-	42zJgaI52AXKZsVBPKqFpYPzVMNgAOADNPvNQbFc+h3KnFyF2Vbcth704DNzkTNH
-	3F5K4Tvk5jWzRrpdosTWqkI4p5h9PRJiIEw==
-X-ME-Sender: <xms:8Bc0arwu7aWsWn3waKbELNDLJiw9YSBAUU6tpjE7uQhZhWl7Rgl1_Q>
-    <xme:8Bc0ag2qjcYtW046ghCfCfC_0Y1UizDMSaxlqIjwQFuQiYbxnB12uio6VgPiYObPL
-    IFRqxUSZ7F_xy6IQ3YypB9Za2GEmBECk2lGS_hs4XI0COgJgYC41w>
-X-ME-Received: <xmr:8Bc0aryDxGnt-q_mgXEp_meRh4VJ0ILDHveKsI5CyuwnlKPFYg5iG77ye_r5KRWx7KG8jBE2n6yCBNsatvqEagUmNersKPl9PXdI>
-X-ME-Proxy-Cause: dmFkZTGZzf02LuFd28igBi12qmA3CB0y45DwiZXSKNOHPdiGnB3Xhdmr+XXgjwSqgt82eo
-    kkqO2RFr1B5E5h934dvVV08OIEOFI438jaPkgzVGLAZAPQCmzGwjzeE+SHldIy/JJCCYV4
-    Wi4N1TR3dwi6I4vXim/gldIEked4UWFmZ1L9wEqGvDhzTgDBrQqUk2E/BzIQnM4EWE5ZzC
-    5t3Z3cAi1v+fq0YCLzHSMtMrqQGKv/TfLMfYHaHWY6+3Wmx7z2neL5ZGI4fNS6NKw/k58V
-    xezj6Gr0N/nO352pY8DNEU9fo5aszlLVyaYD9+bkMkNYZAy1IeaRI5+C8slqUj2A8r6AOd
-    wifnnZMA0nrC3Ipa5lVFP0U/HPX/LQU9MglrgIzU+YAS2gL4COu0JdUGT+7aEpBATle4rd
-    r1PGx4zFyAxaILJkCLWT5OlWBNOy/IYhlUNYmdBnshgSd7pmUrp050wyeKbxo9GiLwHsDo
-    Zgicuera3o8DHBv1O9aQ5KvhmJ9zQX9kzfHEWxxHlTGxoZEyj2G7/rw8RtvDZXf0KMj647
-    K01YWEnhYBetOrg+WTtSrK793XPZ09vxY5kQFb5o7CnsXSIfWFoW/KTMZXFBSgDuTuZADe
-    u3+XE6CJ9J9KJuUpgv999CGvjLFLRrc5ONq22PAyEakh975B6pgIhuPh1+pA
-X-ME-Proxy: <xmx:8Bc0anHTC1h5HrtZlLYdaCSGR1jNvhcCMu8rfxhlWSodtcYhfzX4Iw>
-    <xmx:8Bc0aubseVmTdloNqpspHSDLTy7-DaSuMn1iGkST0-OAii4sv3hHZQ>
-    <xmx:8Bc0apDdou_y0vy0HganFuYl9g4P88AgYubOvlFfkGA9hfFdPBf7Gg>
-    <xmx:8Bc0ammxkAoWzmlmRjLtZWQ4NowFW_wENQ_JnBHbzEZ7qlAazsspkA>
-    <xmx:8Bc0auDFAZn82MVJNceKPhSvFvDCsYNiSOnBvXnUUUgoKr86ZbbGWiGo>
+	1781799538; x=1781885938; bh=colgx/9G8o2bIqN/Oak3yYUnGa29ETSV/G7
+	bD2bUBYo=; b=lAaW997RUc36FaSfIFvtLUA+nq1G/1/Pc9wDiTEudYKnox7TEV0
+	BYhkhjvp1ibeVRaEpch6KR+ZMlTDfH+b3OCIro5bciOYHpKgiHuwvEQKXQNUasGf
+	Fenht4R5hP7SIYPt4PMECeL4VmNKv50RMGrZuQHMKTvh7MiwOZlXZDBkK9fZHSGO
+	3418Jz4bxZYnGO4sXbIiqhqqIB/QZX+u3QMfBumZIUQXaPaCScx87dVIk19thBd8
+	b0oXcxm3QaFxx0sJk+eqIncwCWjejaUExp7+keKPwPrygIB5GuFWSaKeeC0ZzfGI
+	dAYYZvpDl6zFFDSnpq0yX7RRgnpBoOBXd0A==
+X-ME-Sender: <xms:cRo0au2zdJPlhPIbhtAootn00OqdKO_FNurW77qUknZHW18COIz_3g>
+    <xme:cRo0aoFKAmqRughjtGkeoem_cVD2nruQFBD66GVm6JUp50Ke3418pYxrPXAUx3MpQ
+    5vKaO_aBoC2admETareujONBBI1U8CBblIXkPvvrBfb638v7y92vg>
+X-ME-Received: <xmr:cRo0ar6svyw2SFqqdt3SLsIW3-5czrQl9x7VFts0S8DemqvDU0SnUpMhAlNq9kag8uTDQ1iQZQ22PU4S1cnsvhY5QEE3ujG-HmRT>
+X-ME-Proxy-Cause: dmFkZTEJ8N6TerGmyHTwdaoGK+BY6x7nRSa+9ZUxDrCt4j4gHNpA58iyNmfzv3HBGDgxJq
+    rt8Xm20T72aclA5zn5dM9BAQOv8brGhEaA/QDLHOnVJU78CIbTKA6lU409AKCvfbzQ2M6H
+    nM/KHrOQ6inVCjWc8uK5hmKpDcney8e2rUh48Ldsaxd7ZZULgR2Jku9OUNXcYsHxj+kGY9
+    irCrp5IP+ouuZsCZNF9u5mRxQ6KCU45tzPGDbnB9vTz8lqowI8vAuqbfDytBiruTYm28Zz
+    DjAtgsUmoPxmML2Ae9GYi4HMQbiRohSB4eiy6Uo5VEa9Ar3CvrpH3d0lzbEc+nI158pWG1
+    eA8X9nbxZylumHJ43mfJfOgy9s+T5TGwfbHcZlsusRykJOL3aAL72DHefH15m0B3dK1hfE
+    +otOpGwmyQEU3kiD1ZfFojps6rFJNvUxhDSS3S8E1LKg3BY/8nQq16KeiyhGoqImEE2qSa
+    x6UjknbDJCy9Kel5xEI7QhfM6IjMFn3+Z1JSKFC9uSXfG6yVHSd1G+2uUk6OMZsh9GEtJL
+    21mf6ZSPNvNKEOqyHmCpa9bgdVxZqBAfzvfmTDf+5kcLagPozuz8F2AkYvzlXXRlml34SV
+    3FbtDh1sAH/byXW+xKbXBYkQ6NwI0iMTypX8cn8PxcU01d9Tp5A2xxXzmcwQ
+X-ME-Proxy: <xmx:cRo0autOFx_qq_pdY9IJWnRzKLC1gMxXwwJOWw6JiZZvr3bYBdInAA>
+    <xmx:cRo0as7xuGWkOB08qcGUrI_kK0QWtVIYxbhfvzUOvPQCO-HIpzG5IA>
+    <xmx:cRo0apVWfFWdP13WE4CYzDqGUZrJX4Q9LSWy8ko8N0bL5EGcZJ5oaQ>
+    <xmx:cRo0au_OAavQrEfaPra_kWEDRZ1XnkyHWwIuIxIbDcmxdpG62BVS-A>
+    <xmx:cho0ageqNGExQUIE2BIWScObwj2ZOBgEf049KqqkByn9sKxEwDckzAib>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 12:08:16 -0400 (EDT)
+ 18 Jun 2026 12:18:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt
- <j6t@kdbg.org>
-Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
-In-Reply-To: <37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com> (Phillip Wood's
-	message of "Thu, 18 Jun 2026 14:42:25 +0100")
-References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
-	<pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
-	<9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
-	<78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com>
-	<CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
-	<37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com>
-Date: Thu, 18 Jun 2026 09:08:14 -0700
-Message-ID: <xmqqcxxnsufl.fsf@gitster.g>
+To: Todd Zullinger <tmz@pobox.com>
+Cc: Matthew John Cheetham <mjcheetham@outlook.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: t5563-simple-http-auth failures with v2.55.0-rc0
+In-Reply-To: <20260618144953.l6Ng-dvv@teonanacatl.net> (Todd Zullinger's
+	message of "Thu, 18 Jun 2026 10:49:53 -0400")
+References: <20260611210456.XYfhytSL@teonanacatl.net>
+	<VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
+	<20260612180203.s2qSgDUs@teonanacatl.net>
+	<20260618144953.l6Ng-dvv@teonanacatl.net>
+Date: Thu, 18 Jun 2026 09:18:56 -0700
+Message-ID: <xmqq8q8bstxr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,28 +88,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> One thing I've just thought of related to this patch is whether we want 
-> to protect branches that are the upstreams of branches that are not 
-> slated for deletion. With stacked branches it is possible that a branch 
-> has been merged but has other branches stacked on top of it that have 
-> not been merged.
-
-An interesting point.  We do have "this topic is built on the result
-of merging these other topics into main" and I expect the practice
-is wide spread.  These base topics may graduate first, but other
-topics may still be updated.
-
-But when you rewrite these other topics, wouldn't you leave their
-bases untouched?  IOW, a new iteration (i.e. "rebase -i") would
-reuse the base that was used in an earlier iteration, i.e. the
-result of an earlier merge of the other topics, some of which might
-have been pruned since then, into an older 'main', so it is OK to
-lose these other topics once they have graduated, simply because you
-wouldn't be recreating the merge that you used as the base of this
-remaining topic, no?
-
-Or am I missing something?
+> I saw Fedora picked up curl-8.21.0-rc3 this morning and
+> confirmed it resolves the git test failures.  Someone else
+> has already commented on the upstream curl issue to note
+> that.
 
 Thanks.
