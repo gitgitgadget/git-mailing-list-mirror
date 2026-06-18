@@ -1,64 +1,68 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB3F321F5F
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 18:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2BF3002D8
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 18:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781806597; cv=none; b=cOQuGMtNKouYAXs2HEajlhTdKkXTa9VJ8vThTnx1xF9zva0nB4G8MvgwVCVN2tNsUpuUJI2yJVywbQwCObZJDY321yewgs+zW45ViS+QwTCioREnK7vYkAcn+fopz8slyytmtnjY5YqBD8QGvKE3WzbkbFX6LK3fqaX8iu2nkfY=
+	t=1781806599; cv=none; b=irjKAkfv+jlxzkuGKVmn4emy8GNDdG1IWAG4zFhoyA4O4LI2IQPC8SWAfYuEVli1EvkpH4Pli6udlt7OVdvWE0tDNXeSdSGsGVT4dVTC5PemIHgaDbzvMdJWFZUxHxgxCD4C1urx/AcJdRG5xZIBrE6eVWUYbB3kmSFCgdD5Ayg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781806597; c=relaxed/simple;
-	bh=RymIbmBPokZDF1T4BvA5bpegjB1yNRwWIGtML7zb0h8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=G7D6C21VxqfLqnff02N7Id50dJh17MXfj2FdMlseh+X388/uVgJsEfU3OO22aWsYAc8OBHnk+j3BC3qB69YlrUnSvZhjCoqf3wND1tTrVHboQTClPZe4p5oWcdZT2ZQcW7aVAjo97TeXVfEP48XGtKHQRX2EL9mvmU2VbZ7oC4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSuCdMjy; arc=none smtp.client-ip=209.85.222.175
+	s=arc-20240116; t=1781806599; c=relaxed/simple;
+	bh=5piq1zggfc4GXZAwPYt6M76GHejD4Bxj5ql89NWc2lY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SYykJngvSpBU+Ya7NBxM0dczsd3RmafGCkx46nPcCahFI8JUFJtFKTPM0oSbBuioPPRoNgoGuyanX06qF3wxzcXwwyM/k3c9j3QXtVasobuxmaArS1ylseozbrDyVdP+mayykMPfFaOJKeDAoKd+dTJtQ/z0jWzC3PnaBVdbZDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rgwwbtI/; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSuCdMjy"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-915d17e2721so185661585a.3
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 11:16:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rgwwbtI/"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8db35680d0cso24280896d6.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 11:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781806595; x=1782411395; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781806597; x=1782411397; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ciq42Jz44m0TU9U9AkYtrXJXjvx1jvAWQAC7LsueuJc=;
-        b=bSuCdMjymILyIAcD3ADsl970iuTHmSt6Mu+50djE1cVEe6Jo9bPwzFxOygir8stAHn
-         YPBV31JOO3ilshRsrEcmuXXUabZVXtrNQWmx8fAC5fXgBN2AOYSdfraYu+db+3QNLH2Q
-         1dApaLE7zP/YqTmsJbF3K9nutrz7LrnOtImdllWuz8whZLXQ7IL6g71hqRnUBLbN11RT
-         VHITHSM5e/hAzwH8YfIe1rpSUBtGusqwEnO5N0AGoSKMP6GB9jFPILcraBj+5vM8fFFg
-         H5B0KAtuEvkYvoc4mj3SWgnn7v8vbAC6jaUdqf8nfaRzw4o+kG8VORQ53CNrl/CPgo+g
-         UOOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781806595; x=1782411395;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ciq42Jz44m0TU9U9AkYtrXJXjvx1jvAWQAC7LsueuJc=;
-        b=Gcna5Mmj4YJgySPeh2V7V2V+U/qYqXuPQGgSlc6gHopxiABNkqxcIvFyTclxxQNl+5
-         hlubDu2ETr3PzbthTbckN8sD1INBYIu49vFnUj6bCXokz7s5EnOfM42Mb32NfFt6RuTn
-         tTi0uM2PsPp9cOH77LKCorApgijVjwNk2AK0RLiYsnVfhUVfddXsXKsMCBOp0uS1cKTy
-         ggAI/1QmLpU03LCVCShwZyNRv4W/hKEej8M9P200feC1EgVlYIYEeJAeOwx1b8DjZDNk
-         lobRocLx1ZgG+GhQ0uJplBrHF40MX+Rhjrhai6fgweJ4cNs3lw6yjHxlj+/WSLjf2Yz4
-         hiHQ==
-X-Gm-Message-State: AOJu0YyMnjZnz2pnL6zkqb91re/djMqtuzdtxAD/0eKtQ4k6oIAgkGfw
-	aCaaomEXFBi1TCeDFMawKkrTJv5Zm1YVvOxUl1BpeL+OkRhkTnfAX3QmfK0gVQ==
-X-Gm-Gg: AfdE7clp733Hu+KboBeVCFKpXBu6k8WjIWfHqaxzzpETZ+xqTNt9cUBRoOMn3kvHH3A
-	WhER5qdTgzqDbzxx35OBJVqaqPpka5LzKH+XUP0e9nZYtA8SLYacJXqcw0yqPXcaKh314fQVVuB
-	TieBTPPykVo42S12BdliLKOBng1D+6zpmUKceTJmArR/3lFvvSngqkECx6Ds/d10jVlg1ajMSOw
-	UVjllURRVttnTNBIAzbfMOCbBDgx83ukJ3eLNv3lMsU1alcbhVZxopM3+he6WHROw3F3SzT4An+
-	Nd1ralwQLKqXBEvYMQxuxRLmfIRNf34/QD2gQQQpwj6ppa9VdYGStX2xtff31hlGxBgqEX82Oey
-	khP7Z9Y+cy5GOFgv79OYuEyt/iNlG4U/bkCyAwEixirS5VFSZZq+RAZcVNuQA0dDCJUAX0N4VPQ
-	7xtJrPY8d4Rv/4vw==
-X-Received: by 2002:a05:620a:43aa:b0:914:9ecb:9adb with SMTP id af79cd13be357-92092a3d365mr5728585a.50.1781806594903;
-        Thu, 18 Jun 2026 11:16:34 -0700 (PDT)
+        bh=KnjmKej3TG/YFymh9dwVH/ZAJH7FpV5ojkB4goPSZ2k=;
+        b=rgwwbtI/6Kqu5AXbtS2oNf9yuYMA9IRna3gNFYSiYP58rMOzbmZV+TorpD6lAUH4zm
+         5A+LL3nwzuYXKN32IdNJmMbYLKaUKdzfWLwN+m1U1gwVxKe7/O5ev/jTTCQWYi0g1sgA
+         8iU2FSqapRUtui7gFwiDkBecrqV0P99T8xgAs9fNvRQ8lPi2Bxa/loUYSW2UI7UbkimE
+         uWxrhN0U65UXYlGwV5Yeq/ZOmsf4xdOKYFNvGgaU8sFI9CWVSS0+iinnwGELrkR21CON
+         ZYMtsY1HjQhzxc4WuF7Xc6ODA7wqXTW3wwA5TWMqy5a5dVzy9AqR+LvrgSHxdsB/RsgY
+         m0vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781806597; x=1782411397;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KnjmKej3TG/YFymh9dwVH/ZAJH7FpV5ojkB4goPSZ2k=;
+        b=nH3tzyPKbWLRnwW9U6y0czVvQ/zP15nIEXMkP1OHnqq6rolllc1VNkOnjE5VqG2GIB
+         QN3ogbaZQLUfPG6WALW3fI3OgMlRnxViu+rnD8TOJcAP6ickN/Kozrl9hLAbgmqRaOsM
+         uiVQQYQvwur69vZ3KWH17gVRlPNT6VCLUuYnezUo6Yce2pw+w8J7pej5qHvA6yM5YCyL
+         BJfhcaiZSnKOYwa8ZUcQVOASb6QasCCtDAHP16Yp6RsUU2gzgoJuGUlWnHein7K8/zxB
+         PVZgsRKl+Elp5LG6hmAX3JtL1c7PEfJuAORspVk5lBrm7VPeEzNwO7Wz2VKm4xTg23KT
+         gdJA==
+X-Gm-Message-State: AOJu0Yz6c/0QKIOHXqxQ9sZSBOEmSa4435cryiyGR4dUg9queaF31Z4W
+	re/B9V0GhAZ32Ux/LzoEZ9ERcZxdnmvzmiK5WGt8TXu/dcX72P9nkdy8WIS1Vw==
+X-Gm-Gg: AfdE7cla/AO4iEnBfJIXpDQE73Fx4/os6I+vZ0tCuxsNRWoKdGy91gZrV/K/YdiyNIo
+	rIdea7DVrTHuc+FC6dJbYBdhZVyZBoJeshoF7YbGTVqyYmqjfadZ5T/igwaB0eo7nqwrFBQSelE
+	P271IUXxfj/gatmnD0uQ7IdRstUS8smwB5sA1ifiXvCvHlLxB6zzDITt+hEHpVuFO5G/BD5ygoI
+	Rf09Wq8J3mlnr21skpJ36X3jZIW817B5Lmx64wlwHPgmXh4XraFKBUjrvSsJ5SLr8CJuSMfC7RK
+	jCNr4YReWo9dlZ/8RbIbRz7rTyu7CJuy8IQK1fUQMDOvDkJflOqxgFHjXWitxiEREVCS9glln1m
+	2emgvzNBrtaVi/22Cz8hsP2+nqrVNXLXCRyZCEGnZMX4u4JpnIDhBnxWngZnz5/3Ueuaw443Spl
+	BayFdhawn8JlOrqg==
+X-Received: by 2002:ad4:4eaf:0:b0:8cb:fd1a:c87e with SMTP id 6a1803df08f44-8de49e6c64emr2368486d6.1.1781806596464;
+        Thu, 18 Jun 2026 11:16:36 -0700 (PDT)
 Received: from [127.0.0.1] ([64.236.177.0])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619ed8c83sm2087123885a.5.2026.06.18.11.16.33
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8d9f53cedfcsm102282036d6.42.2026.06.18.11.16.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2026 11:16:34 -0700 (PDT)
-Message-Id: <pull.2152.git.1781806593.gitgitgadget@gmail.com>
+        Thu, 18 Jun 2026 11:16:35 -0700 (PDT)
+Message-Id: <6cfaccab923694fae4c1f607c459af52dce9a021.1781806593.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2152.git.1781806593.gitgitgadget@gmail.com>
+References: <pull.2152.git.1781806593.gitgitgadget@gmail.com>
 From: "Michael Montalbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Jun 2026 18:16:25 +0000
-Subject: [PATCH 0/7] line-log: range-scope stat, check, and -G under -L
+Date: Thu, 18 Jun 2026 18:16:26 +0000
+Subject: [PATCH 1/7] diff: rename and group the line-range filter for clarity
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,136 +74,383 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Michael Montalbo <mmontalbo@gmail.com>,
     Michael Montalbo <mmontalbo@gmail.com>
 
-This series extends git log -L so that more of its diff output and commit
-selection honor the tracked line ranges: the diff stat formats and --check
-are supported with range-scoped results, and the -G pickaxe is scoped to the
-tracked range.
+From: Michael Montalbo <mmontalbo@gmail.com>
 
-It builds on top of the mm/line-log-cleanup topic [1], which integrated -L
-with the standard log output pipeline and taught it the non-patch formats
---raw, --name-only, --name-status, and --summary.
+The line-range filter that mm/line-log-cleanup added uses names that
+obscure its model.  The cursors lno_post/lno_pre and the index lno_0
+share an lno_ prefix but conflate the pre/post-image axis with the
+0-based/1-based axis, the hunk state is a flat set of rhunk_* fields,
+and the filter-state pointer is just s.
 
-With these patches the following also honor the tracked range:
+The filter bridges two layers of diff.c, and its fields already used
+each layer's vocabulary, but in cryptic abbreviations.  Spell them out
+to the form the rest of the file uses, so that the patches that follow
+can simplify and fix it with those clearer names in place:
 
- * --stat, --numstat, --shortstat: counts cover only the lines inside the
-   tracked range, not the whole file.
+  - lno_post/lno_pre -> lno_in_postimage/lno_in_preimage, the
+    line-number cursors, matching the counters in struct emit_callback
+  - lno_0 -> idx_in_postimage, the 0-based range index
+  - the hunk-header geometry stays old/new (old_begin, new_begin, and
+    counts) to match the xdiff_emit_hunk_fn callback and the
+    "@@ -<old> +<new> @@" header it feeds, but moves from flat rhunk_*
+    fields into a "hunk" sub-struct, so accesses read
+    filter->hunk.old_begin
+  - flush_rhunk -> flush_range_hunk
+  - the filter-state pointer in each callback: s -> filter
 
- * --check: whitespace errors are reported only for added lines inside the
-   tracked range, with the correct file line numbers.
+Also rename the struct line_range_callback to line_range_filter: it is
+a filter over xdiff output, not merely a callback.
 
- * -G: a commit is selected only when the pattern appears on an
-   added/removed line inside the tracked range, rather than anywhere in the
-   file.
+No behavior change.
 
-The --dirstat format is deliberately rejected. Its default mode reports each
-directory's share of the total churn as a percentage, computed from
-whole-file byte damage (via diffcore_count_changes(), outside the line-based
-pipeline that -L scopes), so bare --dirstat cannot honor the tracked range.
-The --dirstat=lines mode could: it aggregates the same per-file line counts
-as --numstat, which -L already scopes. But supporting only that sub-mode
-while bare --dirstat still errors is a confusing split, so the whole format
-is left to a follow-up; --numstat already gives the exact range-scoped
-per-file counts.
+Signed-off-by: Michael Montalbo <mmontalbo@gmail.com>
+---
+ diff.c | 192 +++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 97 insertions(+), 95 deletions(-)
 
--S is left matching the whole file. Unlike -G, it counts needle occurrences
-per blob rather than grepping the diff, so scoping it to a range needs a
-different approach; that is left to a follow-up. Patch 7, which scopes -G,
-also updates the -L documentation to note the -S/-G distinction, so the
-whole-file behavior of -S is not mistaken for the range-scoped behavior
-around it.
-
-Patches 1-3 are independent of the new formats: they fix two bugs in the
-existing -L patch output (a leaked deletion and an off-by-one hunk header),
-bring its hunk headers in line with git diff's format, and clarify the
-line-range filter mm/line-log-cleanup added, whose names obscured its model
-(cryptic lno_ cursors conflating the pre/post-image and 0/1-based axes, a
-flat hunk-state struct, and a one-letter state pointer (s)). The two bugs
-may be a hint that the model could use clarification, so patch 1 renames and
-groups the filter state and patch 2 documents the model, before the fixes
-that read against it. Patches 4-7 then build the new formats on top:
-
- * Patch 1: rename and group the filter for clarity. Spell the cryptic names
-   out to the file's own forms: the line-number cursors to
-   lno_in_preimage/lno_in_postimage (as in struct emit_callback) and the
-   range index to idx_in_postimage, while the hunk geometry stays old/new
-   (the xdiff_emit_hunk_fn convention) and moves into a sub-struct. Name the
-   filter pointer (filter) and rename the struct to line_range_filter and
-   the flush helper to flush_range_hunk. No behavior change.
-
- * Patch 2: simplify the filter by classifying removals as they arrive,
-   dropping the pending_rm buffer and a latent flush_range_hunk() bug that
-   leaked deletions just past the range. Make the buffered lines the hunk's
-   single source of truth: flush_range_hunk() derives the counts from them
-   rather than tracking them per line, dropping three more fields. Document
-   the model with a block comment and worked example, and add
-   begin_range_hunk() as the counterpart to flush_range_hunk(). (This
-   simplification was submitted by itself previously [2] but did not
-   advance, so it is re-included here.)
-
- * Patch 3: stop hand-rolling the synthetic hunk header and emit it through
-   xdiff's own formatter via a new xdiff_emit_hunk_header() helper. The
-   hand-rolled code put a count-0 side's begin one too high (the convention
-   is the line before the change); routing through xdl_emit_hunk_hdr() fixes
-   that by construction and, as a side effect, makes -L headers match git
-   diff exactly, including its omission of a count of 1. Regenerate the two
-   affected fixtures.
-
- * Patch 4: extract a line_range_filter_diff() helper that folds the
-   filter's two preconditions into one place: inflate ctxlen to the largest
-   range span so every change within a range lands in a single xdiff hunk,
-   and clear XDL_EMIT_NO_HUNK_HDR so the hunk headers the filter reads are
-   always emitted (its position tracking relies on both). It then runs an
-   initialized filter through xdiff, flushes the final range hunk, and
-   releases it; use it in builtin_diff(). The stat, check, and -G patches
-   that reuse it inherit both.
-
- * Patch 5: reuse the filter in builtin_diffstat() for the stat formats,
-   extend the -L output-format allowlist, and reject --dirstat.
-
- * Patch 6: reuse the filter in builtin_checkdiff() and extend the allowlist
-   for --check. The separate blank-at-eof pass scans the whole file, so
-   scope its report to the tracked ranges too.
-
- * Patch 7: scope -G to the tracked range. Expose the filter as
-   diff_emit_line_ranges() and grep only the tracked range's lines,
-   threading the filepair's line_ranges through the pickaxe callback. -S is
-   left whole-file, and the -L documentation is updated to note that -G is
-   range-scoped while -S still matches the whole file.
-
-[1]
-https://lore.kernel.org/git/pull.2094.v3.git.1780001267.gitgitgadget@gmail.com/
-[2]
-https://lore.kernel.org/git/pull.2099.git.1777230630020.gitgitgadget@gmail.com/
-
-Michael Montalbo (7):
-  diff: rename and group the line-range filter for clarity
-  diff: simplify the line-range filter by classifying removals
-    immediately
-  diff: emit -L hunk headers via xdiff's formatter
-  diff: extract a line-range diff helper for reuse
-  line-log: support diff stat formats with -L
-  diff: support --check with -L line ranges
-  diffcore-pickaxe: scope -G to the -L tracked range
-
- Documentation/line-range-options.adoc    |  17 +-
- diff.c                                   | 491 ++++++++++++++---------
- diffcore-pickaxe.c                       |  37 +-
- revision.c                               |   6 +-
- t/t4211-line-log.sh                      | 439 +++++++++++++++++++-
- t/t4211/sha1/expect.no-assertion-error   |   2 +-
- t/t4211/sha1/expect.vanishes-early       |   6 +-
- t/t4211/sha256/expect.no-assertion-error |   2 +-
- t/t4211/sha256/expect.vanishes-early     |   6 +-
- xdiff-interface.c                        |  19 +
- xdiff-interface.h                        |  28 ++
- 11 files changed, 826 insertions(+), 227 deletions(-)
-
-
-base-commit: ea97ad8d017de0c9037451a78008a0fd60abea0c
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-2152%2Fmmontalbo%2Fmm%2Fline-log-stat-formats-followup-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-2152/mmontalbo/mm/line-log-stat-formats-followup-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/2152
+diff --git a/diff.c b/diff.c
+index 5a584fa1d5..1e043c959f 100644
+--- a/diff.c
++++ b/diff.c
+@@ -623,15 +623,15 @@ struct emit_callback {
+  * reveals whether they precede an in-range line (flush into range hunk) or
+  * an out-of-range line (discard).
+  */
+-struct line_range_callback {
++struct line_range_filter {
+ 	xdiff_emit_line_fn orig_line_fn;
+ 	void *orig_cb_data;
+ 	const struct range_set *ranges;	/* 0-based [start, end) */
+ 	unsigned int cur_range;		/* index into the range_set */
+ 
+ 	/* Post/pre-image line counters (1-based, set from hunk headers) */
+-	long lno_post;
+-	long lno_pre;
++	long lno_in_postimage;
++	long lno_in_preimage;
+ 
+ 	/*
+ 	 * Function name from most recent xdiff hunk header;
+@@ -640,12 +640,14 @@ struct line_range_callback {
+ 	char func[80];
+ 	long funclen;
+ 
+-	/* Range hunk being accumulated for the current range */
+-	struct strbuf rhunk;
+-	long rhunk_old_begin, rhunk_old_count;
+-	long rhunk_new_begin, rhunk_new_count;
+-	int rhunk_active;
+-	int rhunk_has_changes;		/* any '+' or '-' lines? */
++	/* The range hunk being accumulated for the current range. */
++	struct {
++		struct strbuf lines;	/* buffered in-range diff lines */
++		long old_begin, old_count;
++		long new_begin, new_count;
++		int active;
++		int has_changes;	/* any '+' or '-' line? */
++	} hunk;
+ 
+ 	/* Removal lines not yet known to be in-range */
+ 	struct strbuf pending_rm;
+@@ -2540,26 +2542,26 @@ static int quick_consume(void *priv, char *line UNUSED, unsigned long len UNUSED
+ 	return 1;
+ }
+ 
+-static void discard_pending_rm(struct line_range_callback *s)
++static void discard_pending_rm(struct line_range_filter *filter)
+ {
+-	strbuf_reset(&s->pending_rm);
+-	s->pending_rm_count = 0;
++	strbuf_reset(&filter->pending_rm);
++	filter->pending_rm_count = 0;
+ }
+ 
+-static void flush_rhunk(struct line_range_callback *s)
++static void flush_range_hunk(struct line_range_filter *filter)
+ {
+ 	struct strbuf hdr = STRBUF_INIT;
+ 	const char *p, *end;
+ 
+-	if (!s->rhunk_active || s->ret)
++	if (!filter->hunk.active || filter->ret)
+ 		return;
+ 
+ 	/* Drain any pending removal lines into the range hunk */
+-	if (s->pending_rm_count) {
+-		strbuf_addbuf(&s->rhunk, &s->pending_rm);
+-		s->rhunk_old_count += s->pending_rm_count;
+-		s->rhunk_has_changes = 1;
+-		discard_pending_rm(s);
++	if (filter->pending_rm_count) {
++		strbuf_addbuf(&filter->hunk.lines, &filter->pending_rm);
++		filter->hunk.old_count += filter->pending_rm_count;
++		filter->hunk.has_changes = 1;
++		discard_pending_rm(filter);
+ 	}
+ 
+ 	/*
+@@ -2568,22 +2570,22 @@ static void flush_rhunk(struct line_range_callback *s)
+ 	 * ctxlen causes xdiff to emit context covering a range that
+ 	 * has no changes in this commit.
+ 	 */
+-	if (!s->rhunk_has_changes) {
+-		s->rhunk_active = 0;
+-		strbuf_reset(&s->rhunk);
++	if (!filter->hunk.has_changes) {
++		filter->hunk.active = 0;
++		strbuf_reset(&filter->hunk.lines);
+ 		return;
+ 	}
+ 
+ 	strbuf_addf(&hdr, "@@ -%ld,%ld +%ld,%ld @@",
+-		    s->rhunk_old_begin, s->rhunk_old_count,
+-		    s->rhunk_new_begin, s->rhunk_new_count);
+-	if (s->funclen > 0) {
++		    filter->hunk.old_begin, filter->hunk.old_count,
++		    filter->hunk.new_begin, filter->hunk.new_count);
++	if (filter->funclen > 0) {
+ 		strbuf_addch(&hdr, ' ');
+-		strbuf_add(&hdr, s->func, s->funclen);
++		strbuf_add(&hdr, filter->func, filter->funclen);
+ 	}
+ 	strbuf_addch(&hdr, '\n');
+ 
+-	s->ret = s->orig_line_fn(s->orig_cb_data, hdr.buf, hdr.len);
++	filter->ret = filter->orig_line_fn(filter->orig_cb_data, hdr.buf, hdr.len);
+ 	strbuf_release(&hdr);
+ 
+ 	/*
+@@ -2591,18 +2593,18 @@ static void flush_rhunk(struct line_range_callback *s)
+ 	 * The cast discards const because xdiff_emit_line_fn takes
+ 	 * char *, though fn_out_consume does not modify the buffer.
+ 	 */
+-	p = s->rhunk.buf;
+-	end = p + s->rhunk.len;
+-	while (!s->ret && p < end) {
++	p = filter->hunk.lines.buf;
++	end = p + filter->hunk.lines.len;
++	while (!filter->ret && p < end) {
+ 		const char *eol = memchr(p, '\n', end - p);
+ 		unsigned long line_len = eol ? (unsigned long)(eol - p + 1)
+ 					     : (unsigned long)(end - p);
+-		s->ret = s->orig_line_fn(s->orig_cb_data, (char *)p, line_len);
++		filter->ret = filter->orig_line_fn(filter->orig_cb_data, (char *)p, line_len);
+ 		p += line_len;
+ 	}
+ 
+-	s->rhunk_active = 0;
+-	strbuf_reset(&s->rhunk);
++	filter->hunk.active = 0;
++	strbuf_reset(&filter->hunk.lines);
+ }
+ 
+ static void line_range_hunk_fn(void *data,
+@@ -2610,7 +2612,7 @@ static void line_range_hunk_fn(void *data,
+ 			       long new_begin, long new_nr UNUSED,
+ 			       const char *func, long funclen)
+ {
+-	struct line_range_callback *s = data;
++	struct line_range_filter *filter = data;
+ 
+ 	/*
+ 	 * When count > 0, begin is 1-based.  When count == 0, begin is
+@@ -2622,104 +2624,104 @@ static void line_range_hunk_fn(void *data,
+ 	 * flush or discard them when the next content line reveals
+ 	 * whether the removals precede in-range content.
+ 	 */
+-	s->lno_post = new_begin;
+-	s->lno_pre = old_begin;
++	filter->lno_in_postimage = new_begin;
++	filter->lno_in_preimage = old_begin;
+ 
+ 	if (funclen > 0) {
+-		if (funclen > (long)sizeof(s->func))
+-			funclen = sizeof(s->func);
+-		memcpy(s->func, func, funclen);
++		if (funclen > (long)sizeof(filter->func))
++			funclen = sizeof(filter->func);
++		memcpy(filter->func, func, funclen);
+ 	}
+-	s->funclen = funclen;
++	filter->funclen = funclen;
+ }
+ 
+ static int line_range_line_fn(void *priv, char *line, unsigned long len)
+ {
+-	struct line_range_callback *s = priv;
++	struct line_range_filter *filter = priv;
+ 	const struct range *cur;
+-	long lno_0, cur_pre;
++	long idx_in_postimage, cur_pre;
+ 
+-	if (s->ret)
+-		return s->ret;
++	if (filter->ret)
++		return filter->ret;
+ 
+ 	if (line[0] == '-') {
+-		if (!s->pending_rm_count)
+-			s->pending_rm_pre_begin = s->lno_pre;
+-		s->lno_pre++;
+-		strbuf_add(&s->pending_rm, line, len);
+-		s->pending_rm_count++;
+-		return s->ret;
++		if (!filter->pending_rm_count)
++			filter->pending_rm_pre_begin = filter->lno_in_preimage;
++		filter->lno_in_preimage++;
++		strbuf_add(&filter->pending_rm, line, len);
++		filter->pending_rm_count++;
++		return filter->ret;
+ 	}
+ 
+ 	if (line[0] == '\\') {
+-		if (s->pending_rm_count)
+-			strbuf_add(&s->pending_rm, line, len);
+-		else if (s->rhunk_active)
+-			strbuf_add(&s->rhunk, line, len);
++		if (filter->pending_rm_count)
++			strbuf_add(&filter->pending_rm, line, len);
++		else if (filter->hunk.active)
++			strbuf_add(&filter->hunk.lines, line, len);
+ 		/* otherwise outside tracked range; drop silently */
+-		return s->ret;
++		return filter->ret;
+ 	}
+ 
+ 	if (line[0] != '+' && line[0] != ' ')
+ 		BUG("unexpected diff line type '%c'", line[0]);
+ 
+-	lno_0 = s->lno_post - 1;
+-	cur_pre = s->lno_pre;	/* save before advancing for context lines */
+-	s->lno_post++;
++	idx_in_postimage = filter->lno_in_postimage - 1;
++	cur_pre = filter->lno_in_preimage;	/* save before advancing for context lines */
++	filter->lno_in_postimage++;
+ 	if (line[0] == ' ')
+-		s->lno_pre++;
++		filter->lno_in_preimage++;
+ 
+ 	/* Advance past ranges we've passed */
+-	while (s->cur_range < s->ranges->nr &&
+-	       lno_0 >= s->ranges->ranges[s->cur_range].end) {
+-		if (s->rhunk_active)
+-			flush_rhunk(s);
+-		discard_pending_rm(s);
+-		s->cur_range++;
++	while (filter->cur_range < filter->ranges->nr &&
++	       idx_in_postimage >= filter->ranges->ranges[filter->cur_range].end) {
++		if (filter->hunk.active)
++			flush_range_hunk(filter);
++		discard_pending_rm(filter);
++		filter->cur_range++;
+ 	}
+ 
+ 	/* Past all ranges */
+-	if (s->cur_range >= s->ranges->nr) {
+-		discard_pending_rm(s);
+-		return s->ret;
++	if (filter->cur_range >= filter->ranges->nr) {
++		discard_pending_rm(filter);
++		return filter->ret;
+ 	}
+ 
+-	cur = &s->ranges->ranges[s->cur_range];
++	cur = &filter->ranges->ranges[filter->cur_range];
+ 
+ 	/* Before current range */
+-	if (lno_0 < cur->start) {
+-		discard_pending_rm(s);
+-		return s->ret;
++	if (idx_in_postimage < cur->start) {
++		discard_pending_rm(filter);
++		return filter->ret;
+ 	}
+ 
+ 	/* In range so start a new range hunk if needed */
+-	if (!s->rhunk_active) {
+-		s->rhunk_active = 1;
+-		s->rhunk_has_changes = 0;
+-		s->rhunk_new_begin = lno_0 + 1;
+-		s->rhunk_old_begin = s->pending_rm_count
+-			? s->pending_rm_pre_begin : cur_pre;
+-		s->rhunk_old_count = 0;
+-		s->rhunk_new_count = 0;
+-		strbuf_reset(&s->rhunk);
++	if (!filter->hunk.active) {
++		filter->hunk.active = 1;
++		filter->hunk.has_changes = 0;
++		filter->hunk.new_begin = idx_in_postimage + 1;
++		filter->hunk.old_begin = filter->pending_rm_count
++			? filter->pending_rm_pre_begin : cur_pre;
++		filter->hunk.old_count = 0;
++		filter->hunk.new_count = 0;
++		strbuf_reset(&filter->hunk.lines);
+ 	}
+ 
+ 	/* Flush pending removals into range hunk */
+-	if (s->pending_rm_count) {
+-		strbuf_addbuf(&s->rhunk, &s->pending_rm);
+-		s->rhunk_old_count += s->pending_rm_count;
+-		s->rhunk_has_changes = 1;
+-		discard_pending_rm(s);
++	if (filter->pending_rm_count) {
++		strbuf_addbuf(&filter->hunk.lines, &filter->pending_rm);
++		filter->hunk.old_count += filter->pending_rm_count;
++		filter->hunk.has_changes = 1;
++		discard_pending_rm(filter);
+ 	}
+ 
+-	strbuf_add(&s->rhunk, line, len);
+-	s->rhunk_new_count++;
++	strbuf_add(&filter->hunk.lines, line, len);
++	filter->hunk.new_count++;
+ 	if (line[0] == '+')
+-		s->rhunk_has_changes = 1;
++		filter->hunk.has_changes = 1;
+ 	else
+-		s->rhunk_old_count++;
++		filter->hunk.old_count++;
+ 
+-	return s->ret;
++	return filter->ret;
+ }
+ 
+ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
+@@ -4086,7 +4088,7 @@ static void builtin_diff(const char *name_a,
+ 			xdi_diff_outf(&mf1, &mf2, NULL, quick_consume,
+ 				      &ecbdata, &xpp, &xecfg);
+ 		} else if (line_ranges) {
+-			struct line_range_callback lr_state;
++			struct line_range_filter lr_state;
+ 			unsigned int i;
+ 			long max_span = 0;
+ 
+@@ -4094,7 +4096,7 @@ static void builtin_diff(const char *name_a,
+ 			lr_state.orig_line_fn = fn_out_consume;
+ 			lr_state.orig_cb_data = &ecbdata;
+ 			lr_state.ranges = line_ranges;
+-			strbuf_init(&lr_state.rhunk, 0);
++			strbuf_init(&lr_state.hunk.lines, 0);
+ 			strbuf_init(&lr_state.pending_rm, 0);
+ 
+ 			/*
+@@ -4125,11 +4127,11 @@ static void builtin_diff(const char *name_a,
+ 				die("unable to generate diff for %s",
+ 				    one->path);
+ 
+-			flush_rhunk(&lr_state);
++			flush_range_hunk(&lr_state);
+ 			if (lr_state.ret)
+ 				die("unable to generate diff for %s",
+ 				    one->path);
+-			strbuf_release(&lr_state.rhunk);
++			strbuf_release(&lr_state.hunk.lines);
+ 			strbuf_release(&lr_state.pending_rm);
+ 		} else if (xdi_diff_outf(&mf1, &mf2, NULL, fn_out_consume,
+ 					 &ecbdata, &xpp, &xecfg))
 -- 
 gitgitgadget
+
