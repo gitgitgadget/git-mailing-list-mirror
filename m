@@ -1,68 +1,70 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195A2EA75E
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 12:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DE2386429
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 12:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781786655; cv=none; b=Ak29pywIK5cIT8bQuJK58DQ4szob3sg7MI45WXKT7tQOz/FkGL3OZ0OWaC6e2T4FdVgIJwBOCtRxXdEdAuIp5tbAIn2+1OGqKKS+EaSCBxEleu+u8Qu4H5dAvKYbeWsdgf/n+mfn/1dp6f4v/ZeMUsY0wZ2JZkPZE6uxHrxRJ9Q=
+	t=1781786656; cv=none; b=HHzmAIkYs0MavPFyPZpIueOgsJYcl9E1EFrBB4pSIurDXO9PAjUt6gamABo5N7Ig+lFkbgw8ybtSYoExr2wwytw4p5yQzSTOUCDrumtmIHGukNt3Q9piIwbA9AW8/Eo/mPtZzAi5b+3qvEPGiFJJ6r5nJiYRJbp5RY7tFGZ2eKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781786655; c=relaxed/simple;
-	bh=WyRoLIUIE51kDoPe8PUlzT5iyORC9z79nwnSLinLRI4=;
+	s=arc-20240116; t=1781786656; c=relaxed/simple;
+	bh=+pcQKsX2Od7PYmXpWgrGvYJyM8pJQOynDjbSAQBJKHU=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kNDjRLF2Zso+OzOD8GK2y818cUE8nApph0QGbqxudNruRZE2pTRommxfqYe7WqY6JPYTNXrLi3QCraR/gKM3AsRQik+iV674C2ce3uhSdJ7js0GyVqa9wJEimqLMmG2NeX1whVigoaSFDcSylUnlC3lEWsDTLt8DnLzrL/eU5Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TITUdv59; arc=none smtp.client-ip=209.85.222.177
+	 MIME-Version:To:Cc; b=QrY1Or5pGe6PkiE3TIOJ/UWE5LoKKUlTDhYAd7eH31rWMcjY8Xc4Y88DD85RVaO4roAzMBNhBhwyMJw0lWZWGCrzS6XaUBc6MVWKlzYtpsX9sGwPc+JqRo7N+dx7Ma3mD32nf3o/HnSLui6UdlhObN+veKgC7BlQKSnY7dsfBAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SNHJJhT1; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TITUdv59"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-9185503e6a5so116780085a.0
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 05:44:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNHJJhT1"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8ce9de10985so9982356d6.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 05:44:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781786653; x=1782391453; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781786654; x=1782391454; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ht0OHWAkPUGLukFTVZWcn1Psr8N8mEaDOF7YVbaboFk=;
-        b=TITUdv59RUOI25afqRmrG88Sq0/r6DMF8d/2kEeVand8tqWB2zl2jiyKKQkpJgAh3V
-         k4sjhG3Zl5XmQIC2IUpK+1SBmdUFjpbSjWxnH5+fjHOI402uzSTvkI2z0NXLb8NZQ/0t
-         q+sP173B99LRGOQsUP03keBqiLsarl0oJ7yDEISGUijGJSV6o7x1OjAHZYfgtCFpGSUV
-         UzBR+niueyCjqMzbfIKv5atbDuA7BkPI9aA+Pgo1q3cXffGh7Y4pkCWabo6D6uDek7Bf
-         OdWpQBKWVgzWixm359bssZ7sCHLNMJdfMEcRszKz+gcSSRogsV39x4ZRDvr8l/DMayzv
-         zT4g==
+        bh=fTrrKEcGxONzLUj//fMDW172QJl5AWztQkpBEFRtkhs=;
+        b=SNHJJhT1dRUu8RalSuYjVeVYAFFBTdiTnbSAEVppMuXGmlxg1B9YMAZWahlvajD6KP
+         1crIaD24EWG5zVlYvEvDGs3fNdNkGRqDnp19epG/q/innjB/3DIiPKnujhtU++MvxaBs
+         iANmcqBeBrJhXIJfFCnYwzPJgOuN1UlRmNqnB+Yl1cBBwUjpm7F+Lxn5yLo/EUP/SJHm
+         YpTMEgiVXj8u5GUPT1t/fcsuQXvhtLQOnZcz9T3dUe/9d/29mcBAeqKc41c4Lyhjdkr8
+         Hg5SMqF9aogy8weHSPqVdMNi23Ln71sHtjarG1tgPZGYMgDP8kfD5Rqr2XMyg2YupSy/
+         QMDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781786653; x=1782391453;
+        d=1e100.net; s=20251104; t=1781786654; x=1782391454;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Ht0OHWAkPUGLukFTVZWcn1Psr8N8mEaDOF7YVbaboFk=;
-        b=ojWMF1JgmiNJquQyffj2OuQ/aq7NUHCaza1ClyX/SDmaKrMN8qhMKy9UbR6ZK8Au6z
-         wP3+yH5vWT6FO0krETkch7o6vqjixw+UlWH9lcn/F2fwZfQpnhuCsZ+vdSr1hW/GzOF8
-         YrPysjmNQFKlnsro7PhnCRms1grwZ7ZOJujSZ1G2/lZJa8X5szYJpyxRQRiwP6nmh+W4
-         NBzKWAbCdefgVaDBOt2P8by9+v3pISabcd9tK7EPidiAi8xJ2DjSP96crkGjdaxzfJsQ
-         BkQMQ87A6vIiUYre47AdGzGN7Ypjxulx5Jvn1/anFOwCFEM6ESEP6M+3cGFGXGN8EFMi
-         k5yA==
-X-Gm-Message-State: AOJu0YzJOPUUxJsacrxRiB3e4GAGk2CHx6+fJ/eppBHtX5ZCBdCDLIyU
-	M7Jpv17cQsqLPBskkkWmuMnptJtgxkL7SV8rm3TH9nDjC2LFmxAwQWV4irXnnQP7
-X-Gm-Gg: AfdE7cl0B7nXqKkW4kbzt52xYsKM67nMkSdHdil3AhtTiJTsam1IBJN03cjPoTJmJr+
-	tNQCyF8SXW8MA2BikFH2NShMIsx3uYU6RONhxj/SACwVputt2Hn/BkjZlG+tfvEIfdkp6QaHhAU
-	JwxGS5w57cKi33QudGc55lSkncz4XzWcyrWzXFevs0IyZnritzAcsh1zaWY8H1YhXldFen6DqcB
-	vzj3LDbvyUlNvw8ASwZVfzuIeswveQTu8RLFfcX9lrw70+a92qHn0HvgXDjtZAVneo4O19CIrxw
-	EpheKd5m5u144qN5mcgivhy/uxAgZFIDcQB07E7tuTaLfYCe9/8DzK4+gAZ4dVDU9ghGz7VbzvT
-	UfyojHN51o/9erYexK/OUtm2RXE7rJxEjLjczrU2xxYhya+HFXX3FXn29CCKAiQnw0rlEWfxyJf
-	cp5fDDrhDGy6mPtH0Y
-X-Received: by 2002:a05:620a:4728:b0:8cf:bad7:20c5 with SMTP id af79cd13be357-91f09c7f212mr497673785a.25.1781786653231;
-        Thu, 18 Jun 2026 05:44:13 -0700 (PDT)
+        bh=fTrrKEcGxONzLUj//fMDW172QJl5AWztQkpBEFRtkhs=;
+        b=Gqb7F8JLgTcp4/w7vU9dl15Vl2GkFFwT7GiG92748O4OqC8g/uKSpJSrZrLGl7yiU1
+         WtAMgN4cJQuYUUpmvh44U+RDhMifOBAIC+/ApFmWnaobtIDHe+euVDyVsASf5pKwDxiq
+         dlLnficzQzkiumQbGyStOFLA0EfBfW03wGEY+KwPeAsy1rdaZ19PymdFVJKO2ZyRm76c
+         MKRCJIa7k26I2rqnVevPpIEzeD+B74XIqwXekZPsxFxYWhs6bHtdPaWUDfSDNu/zMhLk
+         G3LdxoYsPL2pQhLaP1WmPDVDzxj8Npq6t+alcWRDRmj5CFGR1+/jcMf+rDWDzsW8GRq2
+         pRew==
+X-Gm-Message-State: AOJu0Yxhh0ZusSanc/m/hCfvPA90jrwzPMeKourIz9HxrjMA6F9sSMkL
+	z6RO1VkFKmAeNFPylH6pVyCoVAoxTr+PF9kqRfEeBiys8VeXZGxOul2kczeqgazf
+X-Gm-Gg: AfdE7ckUZelXgqACy8Dh20tZflKbfLZx8R2EYVXkvflKnS28+oRV0uyeQ1eCO6tG4AG
+	mbWtNxavEkQZrxN0SJ2kq3Pn8rayBA0MG6gzYVulmO4slNljEc/wMlh/h/U+g+vaHP1J7EHKJsF
+	+U3bkZ0WGNXqNLSZL/0ArQy4okiZG5YX6wkRV1ANnH70du49FuhWpTEQrLdXmBWp3aOyKIDYSoe
+	QeHFfl8YUcWmFhUMTEB6zYPBebpYYDZDpcB3V24514zEhFdUUE2jBtfPVHrF7RXuE6QFbfWXDFp
+	aNAUwIEENuZJXUm3JoW1Clqmy+iNu3Ac1Sg6eUDl0lwTdA5f5LeAlOzuU7NrYMMHPLb5k7UtVVL
+	JPL1LktBJik8ohN3jAOnUd3skqiP8j8Wkx4XXLlQpBh9JznbRJ3ZdguR/YSESIkl1dfql24NbX3
+	Xg0XLdoP2JY27WuivG
+X-Received: by 2002:a0c:e018:0:b0:8db:480e:6944 with SMTP id 6a1803df08f44-8dcce340996mr51671136d6.26.1781786654412;
+        Thu, 18 Jun 2026 05:44:14 -0700 (PDT)
 Received: from [127.0.0.1] ([52.186.174.180])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619ed8c83sm2014842485a.5.2026.06.18.05.44.12
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8dc7f9b4b3fsm39846466d6.31.2026.06.18.05.44.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jun 2026 05:44:12 -0700 (PDT)
-Message-Id: <pull.2281.v14.git.git.1781786652.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
+        Thu, 18 Jun 2026 05:44:13 -0700 (PDT)
+Message-Id: <f79689c23d962c117e374970686ae408f0163e67.1781786652.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2281.v14.git.git.1781786652.gitgitgadget@gmail.com>
 References: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
+	<pull.2281.v14.git.git.1781786652.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 18 Jun 2026 12:44:10 +0000
-Subject: [PATCH v14 0/2] checkout: --track=fetch
+Date: Thu, 18 Jun 2026 12:44:11 +0000
+Subject: [PATCH v14 1/2] branch: expose helpers for finding the remote owning
+ a tracking ref
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,63 +80,210 @@ Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
     Marc Branchaud <marcnarc@gmail.com>,
     Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>,
     Harald Nordgren <haraldnordgren@gmail.com>
 
-Extend checkout --track with a fetch mode to refresh start-point.
+From: Harald Nordgren <haraldnordgren@gmail.com>
 
-Changes in v14:
+The remote-lookup that setup_tracking() does is useful outside
+branch.c too; for example, deciding which remote to "git fetch"
+from given a remote-tracking ref.
 
- * Handle .h files in a better way.
+Move 'struct tracking' to branch.h and add two helpers backed by the
+existing for_each_remote walk: find_tracking_remote_for_ref() and
+advise_ambiguous_fetch_refspec(). setup_tracking() uses both. No
+behavior change.
 
-Changes in v13:
+Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+---
+ branch.c | 96 ++++++++++++++++++++++++++++++--------------------------
+ branch.h | 16 ++++++++++
+ 2 files changed, 68 insertions(+), 44 deletions(-)
 
- * Create a preparatory commit that exposes find_tracking_remote_for_ref()
-   and advise_ambiguous_fetch_refspec() from branch.c, so checkout can reuse
-   the same lookup git branch --track uses.
- * Use advise_ambiguous_fetch_refspec() for the "multiple remotes match"
-   case, so the wording matches git branch --track.
-
-Harald Nordgren (2):
-  branch: expose helpers for finding the remote owning a tracking ref
-  checkout: extend --track with a "fetch" mode to refresh start-point
-
- Documentation/git-checkout.adoc |  17 +-
- Documentation/git-switch.adoc   |   5 +-
- branch.c                        |  96 ++++++-----
- branch.h                        |  16 ++
- builtin/checkout.c              | 139 +++++++++++++++-
- t/t7201-co.sh                   | 276 ++++++++++++++++++++++++++++++++
- 6 files changed, 498 insertions(+), 51 deletions(-)
-
-
-base-commit: 4621f8ce5e9b97aa2e8d0d9ffe9d25df2471074d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2281%2FHaraldNordgren%2Fcheckout-fetch-start-point-v14
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2281/HaraldNordgren/checkout-fetch-start-point-v14
-Pull-Request: https://github.com/git/git/pull/2281
-
-Range-diff vs v13:
-
- 1:  2369afad24 ! 1:  f79689c23d branch: expose helpers for finding the remote owning a tracking ref
-     @@ branch.h
-       #define BRANCH_H
-       
-      +#include "refspec.h"
-     -+#include "string-list.h"
-      +
-     ++struct string_list;
-       struct repository;
-       struct strbuf;
-       
- 2:  60adf0e67d ! 2:  8518f090b1 checkout: extend --track with a "fetch" mode to refresh start-point
-     @@ builtin/checkout.c
-      +#include "run-command.h"
-       #include "sequencer.h"
-       #include "setup.h"
-     - #include "strvec.h"
-     + #include "sparse-index.h"
-      @@ builtin/checkout.c: struct checkout_opts {
-       	int count_checkout_paths;
-       	int overlay_mode;
-
+diff --git a/branch.c b/branch.c
+index 243db7d0fc..46ae7f0035 100644
+--- a/branch.c
++++ b/branch.c
+@@ -20,16 +20,9 @@
+ #include "run-command.h"
+ #include "strmap.h"
+ 
+-struct tracking {
+-	struct refspec_item spec;
+-	struct string_list *srcs;
+-	const char *remote;
+-	int matches;
+-};
+-
+ struct find_tracked_branch_cb {
+ 	struct tracking *tracking;
+-	struct string_list ambiguous_remotes;
++	struct string_list *ambiguous_remotes;
+ };
+ 
+ static int find_tracked_branch(struct remote *remote, void *priv)
+@@ -45,10 +38,10 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+ 			break;
+ 		case 2:
+ 			/* there are at least two remotes; backfill the first one */
+-			string_list_append(&ftb->ambiguous_remotes, tracking->remote);
++			string_list_append(ftb->ambiguous_remotes, tracking->remote);
+ 			/* fall through */
+ 		default:
+-			string_list_append(&ftb->ambiguous_remotes, remote->name);
++			string_list_append(ftb->ambiguous_remotes, remote->name);
+ 			free(tracking->spec.src);
+ 			string_list_clear(tracking->srcs, 0);
+ 		break;
+@@ -59,6 +52,51 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+ 	return 0;
+ }
+ 
++void find_tracking_remote_for_ref(struct tracking *tracking,
++				  struct string_list *ambiguous_remotes)
++{
++	struct find_tracked_branch_cb ftb_cb = {
++		.tracking = tracking,
++		.ambiguous_remotes = ambiguous_remotes,
++	};
++
++	for_each_remote(find_tracked_branch, &ftb_cb);
++}
++
++void advise_ambiguous_fetch_refspec(const char *dst,
++				    const struct string_list *ambiguous_remotes)
++{
++	struct strbuf remotes_advice = STRBUF_INIT;
++	struct string_list_item *item;
++
++	if (!advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC))
++		return;
++
++	for_each_string_list_item(item, ambiguous_remotes)
++		/*
++		 * TRANSLATORS: This is a line listing a remote with duplicate
++		 * refspecs in the advice message below. For RTL languages you'll
++		 * probably want to swap the "%s" and leading "  " space around.
++		 */
++		strbuf_addf(&remotes_advice, _("  %s\n"), item->string);
++
++	/*
++	 * TRANSLATORS: The second argument is a \n-delimited list of
++	 * duplicate refspecs, composed above.
++	 */
++	advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
++		 "tracking ref '%s':\n"
++		 "%s"
++		 "\n"
++		 "This is typically a configuration error.\n"
++		 "\n"
++		 "To support setting up tracking branches, ensure that\n"
++		 "different remotes' fetch refspecs map into different\n"
++		 "tracking namespaces."), dst,
++	       remotes_advice.buf);
++	strbuf_release(&remotes_advice);
++}
++
+ static int should_setup_rebase(const char *origin)
+ {
+ 	switch (autorebase) {
+@@ -254,11 +292,8 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ {
+ 	struct tracking tracking;
+ 	struct string_list tracking_srcs = STRING_LIST_INIT_DUP;
++	struct string_list ambiguous_remotes = STRING_LIST_INIT_DUP;
+ 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+-	struct find_tracked_branch_cb ftb_cb = {
+-		.tracking = &tracking,
+-		.ambiguous_remotes = STRING_LIST_INIT_DUP,
+-	};
+ 
+ 	if (!track)
+ 		BUG("asked to set up tracking, but tracking is disallowed");
+@@ -267,7 +302,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 	tracking.spec.dst = (char *)orig_ref;
+ 	tracking.srcs = &tracking_srcs;
+ 	if (track != BRANCH_TRACK_INHERIT)
+-		for_each_remote(find_tracked_branch, &ftb_cb);
++		find_tracking_remote_for_ref(&tracking, &ambiguous_remotes);
+ 	else if (inherit_tracking(&tracking, orig_ref))
+ 		goto cleanup;
+ 
+@@ -293,34 +328,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 	if (tracking.matches > 1) {
+ 		int status = die_message(_("not tracking: ambiguous information for ref '%s'"),
+ 					    orig_ref);
+-		if (advice_enabled(ADVICE_AMBIGUOUS_FETCH_REFSPEC)) {
+-			struct strbuf remotes_advice = STRBUF_INIT;
+-			struct string_list_item *item;
+-
+-			for_each_string_list_item(item, &ftb_cb.ambiguous_remotes)
+-				/*
+-				 * TRANSLATORS: This is a line listing a remote with duplicate
+-				 * refspecs in the advice message below. For RTL languages you'll
+-				 * probably want to swap the "%s" and leading "  " space around.
+-				 */
+-				strbuf_addf(&remotes_advice, _("  %s\n"), item->string);
+-
+-			/*
+-			 * TRANSLATORS: The second argument is a \n-delimited list of
+-			 * duplicate refspecs, composed above.
+-			 */
+-			advise(_("There are multiple remotes whose fetch refspecs map to the remote\n"
+-				 "tracking ref '%s':\n"
+-				 "%s"
+-				 "\n"
+-				 "This is typically a configuration error.\n"
+-				 "\n"
+-				 "To support setting up tracking branches, ensure that\n"
+-				 "different remotes' fetch refspecs map into different\n"
+-				 "tracking namespaces."), orig_ref,
+-			       remotes_advice.buf);
+-			strbuf_release(&remotes_advice);
+-		}
++		advise_ambiguous_fetch_refspec(orig_ref, &ambiguous_remotes);
+ 		exit(status);
+ 	}
+ 
+@@ -347,7 +355,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+ 
+ cleanup:
+ 	string_list_clear(&tracking_srcs, 0);
+-	string_list_clear(&ftb_cb.ambiguous_remotes, 0);
++	string_list_clear(&ambiguous_remotes, 0);
+ }
+ 
+ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+diff --git a/branch.h b/branch.h
+index 3dc6e2a0ff..c2e6725491 100644
+--- a/branch.h
++++ b/branch.h
+@@ -1,9 +1,25 @@
+ #ifndef BRANCH_H
+ #define BRANCH_H
+ 
++#include "refspec.h"
++
++struct string_list;
+ struct repository;
+ struct strbuf;
+ 
++struct tracking {
++	struct refspec_item spec;
++	struct string_list *srcs;
++	const char *remote;
++	int matches;
++};
++
++void find_tracking_remote_for_ref(struct tracking *tracking,
++				  struct string_list *ambiguous_remotes);
++
++void advise_ambiguous_fetch_refspec(const char *dst,
++				    const struct string_list *ambiguous_remotes);
++
+ enum branch_track {
+ 	BRANCH_TRACK_UNSPECIFIED = -1,
+ 	BRANCH_TRACK_NEVER = 0,
 -- 
 gitgitgadget
+
