@@ -1,137 +1,136 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A04E217723
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 20:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781814625; cv=none; b=hxNewpTPDqkAZKGA4roleW9YHIAI1zIScPnrEtL5gHqg4eJraVTfy/RkCeOXYso5IAZL5EpFjEoLPl4exa61IXkJumrsKSrIPTmXJaj4gxVT8CnwUFJUvGovSwVrqVo1qJ9zbpIBeKHfuy1TEdio++iaP6ppfddvtzzxW70vKSQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781814625; c=relaxed/simple;
-	bh=PIeRZYSdqrCwRdcbrRGg5ZDca8iuVvNGqXhQn7DTPKM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FHAlGuamfsBuJv72596cph6qJEdPdQUxtqdrBlp/JcUKcLxrlKUgyV216UKvfIQfZTBHmusQGRQG5c8W9iXj1KE9yhXJ4j8fJc09cSWZK/lAdavzYjYRZgSgPy0kY6F8XKZrgv0fRosOBzNRcIuKTeiHm8FISN2RRdPUnpWRv5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=auCANxHP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O5Aq6Xeu; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4776326941
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 21:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781817830; cv=pass; b=ELMy/ZqfKOvXMYniOx2vg50a1WpDZzhoEjfkCLevdk6O2BOEIbeP1BtpS1xrOLTIcnLAZiGX9TxSw11G1mpsWkHDM3kM+gV5ccBWnYToXbUbRkd/tZFbc0/WB5EBPQvqQycsxNVIpCfMBkwACyvgV2/702KXKo4eAgRlHfI+fkk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781817830; c=relaxed/simple;
+	bh=s10StDCnUGeW1W3iqOIneOnXD5Y5804WRyI2G5Y4/po=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VopFVt3cIOqETjYbAWvpFfKpyIYbz743PlVOdNUSFIeOISSsPKweEFNlUozZKa3uADBdMeZUQh6BdrQBsQRGdsjHxlJYUziHDd83Ukif9I9TSrkey5fC5oANP0aZQq34ukpJtAWPMRtSEXgiOAMtP5YbzsQa55Blj3JCtTDymgo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=StdExmNW; arc=pass smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="auCANxHP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O5Aq6Xeu"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7D131EC02AF;
-	Thu, 18 Jun 2026 16:30:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 18 Jun 2026 16:30:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781814622; x=1781901022; bh=pRPBxmxNma
-	RvOzr6WKPgNQCQkagR/4KixacKy0qIfXs=; b=auCANxHPyCjNNtydq2Hajg51i9
-	VH9Li0UGf9T2rcAVGArlC93p9hHbal6b8tUrblu/1/4Miu8wWfKbftKX31xk8Aef
-	5q8wR4n/JZfNHA5qKLPOfNXf0PlpdRVARrSoUvUcXgdQw48hPOnD2X/cN4M3xxAo
-	iKB5rk5LznVYlW2EV/PJqL9ZCbv/w1OotBlkgcIHn9oXdPWov5k5dGadeETT4uOR
-	vQsEOkZAge6lr4tsKbM20vT3mPdAC9vgtfAVI61dHnQD2SLlUie/+R/vLkkE4oWt
-	slC6NUI3bkDcAiDgNzsaZrkVI2DHxXmjH+36q9XC1Zbz5Gqog5vFfRj7Z9lA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781814622; x=1781901022; bh=pRPBxmxNmaRvOzr6WKPgNQCQkagR/4Kixac
-	Ky0qIfXs=; b=O5Aq6Xeu3Zl2JjkMfMZ+qEjysBm/XcICIKvh2E/zlyVR5GWC6bH
-	BYCXMxQLIHUVySbgkVdxvRmzbVVI2yT6A3b6VtE3PBdrAKMMa4Uk50pFJd8D1lgv
-	dYA/z+TSli3188bBFojSG+7ZR7EtaFvwBVCNHrFNDm5k2UzP50ZnYCgO63QG71tI
-	3L/AYVc07NTalbGLSG0Y2y1gxY4YfJ5FPdPrhJIDvTjCvrnqEmO/oTpRiWqDz/VG
-	IJ3B9BgJMjFczuNKYvKrWwNHtNn4+DO52H7aPKTiHDK2E5ktBqN/TEsyAvrQbJrY
-	sr1zr+AQIcZP5xI0UBHyw/oRUGC1Mw4pKJA==
-X-ME-Sender: <xms:XlU0alY7Baz3m5yPB_E4OmtsWsLVJjzzYQCAd5msvkrpF7Ow65Ugog>
-    <xme:XlU0ajZIAJxPyHbp33d8gfy2K-K93yeVPksfXjbWx9iU8E-WPsw5q7yp63clVciO4
-    mSiScJ7nqNxcsNeTD3FHSkukd1batsKSsBPwMcyx-QZKqlfCI0miUg>
-X-ME-Received: <xmr:XlU0as9QsYCAslu5mdhNVbAEBaOE16tIEPwafGPCUq6K3F81zUFR8x554IfEsO47yclRXpKlZeOmRR2vmVOaRJrRa5Y_m3-2spYu>
-X-ME-Proxy-Cause: dmFkZTGPRm0EVtj9krNs/PcxWbj7vuLlTgavJfeBoFZfmPCG5hOTbh20reWb8eSwIFeJtc
-    1BqkWCFfxwr42ou+cHXHq9VCgOUhMdqyGcE6zwsMf9FKNp8W7iJu43Hceio5RnuRAQ+ckL
-    K4MP3eJNL/tefu4i1bn0VItOqd8LIst1vUukPXCW3RSid2Kqg0xKF2QpTD2NZ2HhQ2+Ai7
-    r472My2D3MbcBpwfc8OYyOQQgv9YILMw9ygWInyMyOr5fODpbnJ1XX3Kb+OWQPM+DX+WWc
-    dN5CWSIA/M/b+2Cw3cjHNcWIx9CFFWq//1jmfdx4ZuSNW3MzElRK/HXVc6t+/YptnkoOrD
-    1PELZxTMLHmpRS4ZnL1CLSbp5YWh9Klnz/kWTfwVU7ijHIKNxqPI1c16vwe6P9mQSwdehp
-    mjq95/jlAhIx0b032T334YXWYSJZbm51EpQhmCyUT1LMnpRg9YesuG/WfMvYYxvbKWdVVC
-    p7MoaKo/GJBBuMbiLErRJ8lIoP+oTJQ+qBkR9oNVxlhIThtj/KHoPdzxBxfd4YgB35qZs6
-    1RBt2Jf+DOK2uNy/wO//Dcb3ILHXC+1o7JgDI+VpyWenD7Z/yt2b8j++IDOtf9xSuyaai+
-    FT7U80aPTrnUa5+r526UDApLlUV8Z1qq/RMoxdM/wCV73/42Mi1uy8C3sKzQ
-X-ME-Proxy: <xmx:XlU0aihwDfTBrUDnXDQybawanSsUhkBqincwCdRriDvfKsgm3WLDqg>
-    <xmx:XlU0asfmnb64BsRaVGbKiPVK5AUOuDG5TEQuOpv6QhkWQU2k47i6dg>
-    <xmx:XlU0appanKY02W_UjHUiJbvXlfyuSyyXFUhNS2mvdMkeIHN6oVBUAw>
-    <xmx:XlU0ahAD3AO9_PfPOhZQqlgtaxgE7-KSTYanQTpVJZJ_fZ1fzmUUig>
-    <xmx:XlU0avJfUxruO54yr7AlqqpHl2FinSiQOYfuKSuDNZk43wemiymBPQkG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 16:30:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 3/4] history: add squash subcommand to fold a range
-In-Reply-To: <66b2f49fb427c7328136b2d440dc7461b97fb4e0.1781810227.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Thu, 18 Jun 2026
-	19:17:05 +0000")
-References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
-	<pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
-	<66b2f49fb427c7328136b2d440dc7461b97fb4e0.1781810227.git.gitgitgadget@gmail.com>
-Date: Thu, 18 Jun 2026 13:30:20 -0700
-Message-ID: <xmqq7bnvr3qb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="StdExmNW"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-36b900f350fso1605570a91.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 14:23:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781817829; cv=none;
+        d=google.com; s=arc-20240605;
+        b=XYPbAgokJoOQN7MN90g+/X2Xnax6u4/nGlx7pk63C2cWy0TqzaenWd/W7f09mUCwVJ
+         dH4U8cQF5fwGQZ37oz6rBCx5jeaOTRFwYtUY2pq4tQICVEM1uty8X5heClqn+vyicaV/
+         LjKfBp613Sw8ds8g7M8vXzT5PF+MkmRKh3IcUm/IjwIbmwA/MuPhNuvSazlHAXBtbLAj
+         f+/J7X5mnJPDb9Pw16VBXEJCy8M4AqiUR9MuZfknNnU2CvIfoiJzwT/UhtN2fHdrYGLc
+         3ghbSY2bmQ46q96wX+dpPKQc4HblEBXDsaE8F443mL67RxdlBKM9itsp37+E7rw6BLpd
+         pmMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=XrRJHIPv+dyQelRla+/JODt7Sce1Ivv183LERLA9Vwc=;
+        fh=Ox4D5aCb0Wm3NuWmIZhbrD5IUgm6JPtaEE6xbKungY4=;
+        b=Q8rmhaetekPuiUTwiaAuuE3SPvN/Ve6+PpfiNEzi/pSAfmlzj3dcbff4hVd+hhTGo8
+         ncgWxZK9aGkqKN5UZlLDb9bfGaHFou90mVjpIzI7MbdM7RWviegL4dBFJBpTlbjZkZnJ
+         whebX2z8rVKA11srKS2TUq+Fn6ST4rCoT/4nLCBplfAdeV7s7zJ501RhZ3gsRc341GCh
+         4wBJDjgkrTG49tW3oxBykdJskJRWR+y71cXlH8QALeA3RdAHwncRpQtlg/Rot2KmXLK9
+         Y+X/3EtXPpI9Zms/cN3cQdc0x9ul4wPa5hYDNLnxxTauoVP19al48ZB+F3ptjgtnq11b
+         k9Yw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781817829; x=1782422629; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XrRJHIPv+dyQelRla+/JODt7Sce1Ivv183LERLA9Vwc=;
+        b=StdExmNWXoZFUJ0Dlicb8v61L+dW+BME1jUZhZw74/c+d5t6QXUz1tsU7ovjOWHUEj
+         mmZ3+Y25toBdbF/3rykqlaVUBjeRrlFFzjRm9Fnf8LHPvfmsiZpQ9KFZuDfAyWPVKCYe
+         PL5JLJ1Djq0r+hkr4BgFqTF5KWHmc1kgvjL6AN0DBn+bqYkg7OfNfgr4qGPqtFeP4qfO
+         7Mi6eQwuof3eVJQ/OvNLfMNJYefqEdFMqH1GSz0FLMBOgxDY96rZFINAH+b5jKX1nz8d
+         uKkG3SWRxqMMH+JnN9p7Gar0gsHOmXsC9N7kmuVrAtkFweDNnGAejPp1r2D1e4FtbmBD
+         agZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781817829; x=1782422629;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=XrRJHIPv+dyQelRla+/JODt7Sce1Ivv183LERLA9Vwc=;
+        b=Yd9mGDuAVnPJVVhbVkYFkXKw4I8SMknFs+0QzFGx5obpDnFz8/UwYD+38S+RvgPX9k
+         OOSOk+jzivFNWfH3XChvr9vTtqG+Y2Fp9MkZn8p4yR01h/KqI72OVYNc77T1OrODnkje
+         6Q4mh/HsVJdtax8XkzRAAsj3LsoB4MqRK4rU/3omGow8hzxv1Au2kHcWQzho8IbyiR5y
+         P+mXyMzCb4UIERvTHfp/6vOfIRETk38frYXbo61SBb9MdfnVlklFSkzfREFOAZkd/H5g
+         pAs15A+U4d6Z/74S48joUzKnAOexMM3XTYx6HBAcsuWetirPUyiT6BdIusCDTyJ2S9Mc
+         EjvA==
+X-Gm-Message-State: AOJu0YxacODTD7vJRShCv1NOqgjnBfGHKMRHntD/W7/FwcbrgygW7p2O
+	Gi5mHAP3Mq7TzCKOJNs3wCkNr/xVeghEHIZXd28FrTypdgOvOMJj3jLbD6Q+KBM9ZQAOLvs/egJ
+	iAUO6Hjok3SES/knJHwVkvMB6GPcZMJw=
+X-Gm-Gg: AfdE7cnXazW7TarvRYgVYXwaoY38WM1VMhOoKByRMK4TSPadPZgkYoCkFaKqqY5AKl+
+	3LbPMidUTqffh+vbTvorQtQwdXEreL2G9kBekGSYIl7xYsW+oOoBKpPtwtf7licQXojiZ6ZsY7e
+	BkZmOtI5FtMYc7vHRq5/ugjRKRVoGDmW6JnVZcF9PHBlrj878JwgcZ4JFrmJYbLe6EkVUx+joCo
+	lps6gBNNNqpSsWIZR2IN57+tzHLH0uvUHhA+VkNPsrEfmpq/wh6j7wD/pJFHtetXtgc7CzpqPDR
+	3tSEu143vN9gDjy/OR1fJLDiqpqF1bzcq+ObiwRo4na7zW+iZOXKsehJMj+Z1uRcZqFE04lLDfT
+	Ksj+z
+X-Received: by 2002:a17:90a:dfc3:b0:36d:b9c5:e8f6 with SMTP id
+ 98e67ed59e1d1-37d15e8fc41mr1301668a91.19.1781817828880; Thu, 18 Jun 2026
+ 14:23:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com> <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 18 Jun 2026 17:23:37 -0400
+X-Gm-Features: AVVi8Ce8s_WIlgIy2ohBsx_jvbsGcBz50IzgE_dfhfgplp5HZVSUYqUF8DK4zSA
+Message-ID: <CALnO6CAeSbjJs9Cb+C7hukBBy2KW0x3cjLTz5WMnG-BuaA0DGg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] history: add squash subcommand to fold a range
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Jun 18, 2026 at 3:17=E2=80=AFPM Harald Nordgren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Adds git history squash <revision-range> to fold a range of commits into =
+its
+> oldest one, reusing that commit's message and replaying any descendants o=
+n
+> top.
+>
+> Changes in v3:
+>
+>  * Moved the feature out of git rebase and into a new git history squash
+>    <revision-range> subcommand, per the list discussion. git rebase --squ=
+ash
+>    is dropped.
+>  * Takes an arbitrary range (git history squash @~3.., git history squash
+>    @~5..@~2), folding it into the oldest commit and replaying any
+>    descendants on top.
+>  * Implemented as a single tree operation rather than picking each commit=
+,
+>    so there are no repeated conflict stops (addresses Phillip's efficienc=
+y
+>    point).
 
-> +static int cmd_history_squash(int argc,
-> +			      const char **argv,
-> +			      const char *prefix,
-> +			      struct repository *repo)
-> +{
-> +	base_tree_oid = &repo_get_commit_tree(repo, base)->object.oid;
-> +	tip_tree_oid = &repo_get_commit_tree(repo, tip)->object.oid;
-> +	commit_list_append(base, &parents);
-> +
-> +	ret = commit_tree_ext(repo, "squash", oldest, NULL, parents,
-> +			      base_tree_oid, tip_tree_oid, &rewritten, flags);
+I think I mentioned this, too, albeit indirectly. I'm not concerned
+about credit, though. Just excited to have this.
 
-We use the tree object taken from the commit at the top end of the
-range, and create a new commit directly on top of the boundary
-commit beyond the bottom of the range, using the message from the
-commit at the bottom of the range.  No need to go through the
-rigmarole of replaying commits in the range stepwise like sequencer
-does, since we are not transplanting the history on top of a
-different tree at all.  Very nice.
+Thanks!
 
-When I do drunken-walk development to build many commits, making
-detour to arrive at an ideal state, the key message is often not in
-the bottommost commit but somewhere in the middle where I discovered
-why my initial attempt were wrong and discovered a much better
-solution, so using only the message from the oldest limits the
-usefulness of this feature, but I guess for certain people the
-bottommost commit would be a good default.
-
-I see you have already an option to grab messages from all the
-commits in the range (many of which may have useless "oops, that was
-wrong" single-liner) in a way similar to how "git rebase --squash"
-or "squash" insn in the "git rebase -i" todo list lets you use them
-in the next step, which is workable.  It is plausible that we would
-later want to offer an option to name the single commit that may not
-be the bottommost one and use the message only from that commit.
-
-But we'd need to start from somewhere, and "use the bottommost
-commit and nothing else" and "we will give you messages from all the
-commits, just rearrange them in your editor" may be a good place to
-start.
-
-As t3454 is taken by another topic already in flight, I've queued a
-trivial "rename it to t3455" patch on top before queuing the topic.
-
-Thanks.
-
+>  * A merge inside the range is folded fine, only a range with more than o=
+ne
+>    base is rejected.
+>  * --reedit-message seeds the editor with every folded-in message, not ju=
+st
+>    the oldest.
+>
+> Harald Nordgren (4):
+>   history: extract helper for a commit's parent tree
+>   history: give commit_tree_ext a message template
+>   history: add squash subcommand to fold a range
+>   history: re-edit a squash with every message
