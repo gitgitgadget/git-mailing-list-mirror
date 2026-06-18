@@ -1,43 +1,47 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4A681724
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 11:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C7F3ED3B3
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 11:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781782943; cv=none; b=d4wVAhVFzt1yFJs5f8GQ6TZqMjnXhMMGHQxww4QjU+T8Kg4oRwY3mC/usJTe5TXz0VpmVboacRvs0RK0SJIz1+wcjGoqDbuC5rNJ+mRniVdpMXYRBtvNUnBdVVlo2SZhlNJKekYnT/IRw8FN7GMsEwBDlrGUUyW/kTugHWTYMsk=
+	t=1781782945; cv=none; b=OL41nt6+2i0L4rFiRNAkvKe6G0DYQQ+6DFMxOwY9ZRDcj7cOQY1LGE6HYH2a/HVCbuzRLDnXpe9aWOT16I9lTR9160CsOblg9HwDw8Sgjez6a37XMVLKyFLLvFS37dJxCWN4mVcAdQ6xXDbRaQ/rGjb3/HyXaEADSfqpE0a9wVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781782943; c=relaxed/simple;
-	bh=h2fT8jnYD4vKGFEHTWqJoijeSqkVxSyoyiH3MJSUFwY=;
+	s=arc-20240116; t=1781782945; c=relaxed/simple;
+	bh=Du+Gaty/FqiH1oDawXT8omAz+dlIXAN8ZS0diBfOGiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fvp2khH9wOzSaxVVmcn4xtDMQF7BABCpAPnk3lrBimDzhOooN15KVxCJjW1s0f7phpj4BWL4X+g7c6a6PDYjw1qUgLzkJR45J2sTxcV/dhfPkXlRkJ9J7gf6/oHfSOREtDiJyDlefCo08JmoZephCtq4VrpKuTIw9v7obyon5Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=mq0XfrGQ; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=bPkLYlmZ; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=cyhTKBfnH/o9tQJ3vBnLboiloNN2zKYKfiBji/I1B/oUrXob3G+ZPkc1rQuG/wLaB0QLKH6lN18XI1NJqB6aye+rbXzqZBaz1dXvKe8RgPzAxzNTaV97Ln5ycNEffydaSK/TNrV2ly6J4Q5qC8v3tsndKGVcbShHexlYJOZXJ1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=XVXEI9DN; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=hI/KMiK/; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="mq0XfrGQ";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="bPkLYlmZ"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="XVXEI9DN";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="hI/KMiK/"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=mq0XfrGQWCGg1zVjKaiKcMAEtwHsq+LkI/WQv9arPtLLLjLcCUC6Q6DEcE6It+eLwB0bx7iPUO0V3AKkDB7/QvCWgEQdSO3+FFr/U1NVyapQemyy0eM7BHy26VqMymNrHizBAc3/cYZ93sAS2Jbp87LA1CTPBz5gEcf3C/LoxJ6lZtb6vOxEJFM4lbzXQ3jSzlf8p6MNQyOiqd0cQbw1nGlwhH2GwpMiy7GZCyXQw+MSrX9TXfXj4gBBIFrN+aewWqQLELtOwYdH0Y8aFEJdmZchXS+cFQLSVF2P1FrAX3CywvWFNGHNpYW5nb4Y3dPJ1Hgb459xhOl64aQoiPP0eA==; s=purelymail1; d=malon.dev; v=1; bh=h2fT8jnYD4vKGFEHTWqJoijeSqkVxSyoyiH3MJSUFwY=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=bPkLYlmZhcoA+S5yvOx2MafAGLY/MP6Kb6hjiopBMoYH6/qLbcVV9lk3zaTrK8B0tKSpehhoEA64CtRq5t194d3TTMxMc73xS+3Vt9pJvmZOytogwsqjHpdVbMsSvysQcBP+YkhhNOSZWYkFIvs58zMOyfoxLQSFvNJT7EXr83Ces3oUqf+Vk/uuqvC3FhHDevjEA52eIo7UySPACQERCkD9wgZgyD4zH+EhNbdyVHQeMUc9QcWgqfLN0iiJWwvxAnRUrOMMkctF0scU3Yi2vPAD5FC6zyKCPtDHEDiqipIUguSvA4ubmJ/P47vPhZs0Rygs4MBK4QVa8ip76vhv/Q==; s=purelymail1; d=purelymail.com; v=1; bh=h2fT8jnYD4vKGFEHTWqJoijeSqkVxSyoyiH3MJSUFwY=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=XVXEI9DNseOFCVCkhrleQbCVYFW3ngX5lMylmk8GiqRWuj57vha1y2pnglYJfLrCPWMRIaxSYJKDR6HJYVrmGvgaq3sFjlxh31k8L70YT2urrBAVQTlyCeCSpTCQbVGYzeIJWcPJ4K9246EzaMME+YF2LZoCO5MKy2kNuQzmdmlj+4isHhLaf1vhjZqsTEfitP420Ep/04MoROSmUpgzrCn0Sv8iVYIPc532oTpnDDzTOCBm0dpNGJi4dA3B8Y3uz4xWxCRZU3QY/q6am36cTE8eUNGapb4ol0yaEe6ZEKRP9/KiCcID7OOGNNBudG67GUwvaoLOZliziuWruGnbtg==; s=purelymail1; d=malon.dev; v=1; bh=Du+Gaty/FqiH1oDawXT8omAz+dlIXAN8ZS0diBfOGiU=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=hI/KMiK/2ET+etI0nN0gzt29qkNCkPQOSY6b03EWIlCl0MI5XNuHWNDV5YdlEbaGv5t1bejxbCc8qSoN9pOVfZV3aHnbf8a22ndK9jz+nDi+8QuUV2TlDtyT+5g/QRHr2i3en/CSMu3ZeDG7eBZ077e9k7GE/c16CtberTPgyglWNQfSqqevCR4/DTFj4V9lnSxXoF3tBgNwkWYx/tEHKlhWSkdCTeNLmYlORp4F+UcPmjXSiGaOWkRPl/79SuaurURgJSw7mysTqiU9Mw++PdK/pkQfiTnVx0z/BPu1MDMOGFTlimtsKqs/bkHub8lAGxZoLS6TABXsXpA8o6JYWw==; s=purelymail1; d=purelymail.com; v=1; bh=Du+Gaty/FqiH1oDawXT8omAz+dlIXAN8ZS0diBfOGiU=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -632351446;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Thu, 18 Jun 2026 11:42:16 +0000 (UTC)
+          Thu, 18 Jun 2026 11:42:20 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood123@gmail.com,
 	johannes.schindelin@gmx.de,
 	stolee@gmail.com,
-	Tian Yuchen <cat@malon.dev>
-Subject: [PATCH v2 0/2] environment: move ignore_case into repo_config_values
-Date: Thu, 18 Jun 2026 19:42:05 +0800
-Message-ID: <20260618114207.605211-1-cat@malon.dev>
+	Tian Yuchen <cat@malon.dev>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH v2 1/2] environment: move ignore_case into repo_config_values
+Date: Thu, 18 Jun 2026 19:42:06 +0800
+Message-ID: <20260618114207.605211-2-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260617154929.564498-1-cat@malon.dev>
+In-Reply-To: <20260618114207.605211-1-cat@malon.dev>
 References: <20260617154929.564498-1-cat@malon.dev>
+ <20260618114207.605211-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,71 +52,79 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-The 'core.ignorecase' configuration, stored as the global variable
-'ignore_case', acts as a core filesystem capability flag.
+The 'core.ignorecase' configuration which is stored as the
+global variable 'ignore_case' acts as a core filesystem
+capability flag.
 
-This series continues the ongoing libification effort by moving
-this global variable into 'struct repo_config_values', tying it
-to the specific repository instance it was read from. This allows
-us to encapsulate the configuration without altering its
-eager-parsing behavior.
+Move this global variable into 'struct repo_config_values' to tie it
+to the specific repository instance it was read from. This reduces
+global state and aligns with the ongoing libification effort.
 
-The getter function 'repo_ignore_case()' is introduced so
-that we can safely retrieve the configuration value whilst
-maintaining the correct fallback logic.
+To ensure code readability, the getter function
+'repo_ignore_case()' is introduced.
 
-RFC Questions:
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
+ environment.c | 8 ++++++++
+ environment.h | 8 ++++++++
+ 2 files changed, 16 insertions(+)
 
-dir.c --- Performance overhead?
-
-compat/win32/path-utils.c --- Is it appropriate to include the
-repository.h header file?
-
-Related materials:
-
- [1] In this patch to migrate protect_hfs and protect_ntfs, the approach
-of introducing getters has been endorsed.
-
- [2] Derrick Stolee's previous attempt. The reasons for the failure are
-also mentioned in [1].
-
-Changes since V1:
-
- - s/repo_get_ignore_case()/repo_ignore_case()
-
- - Use repo->initialized instead of repo->gitdir
-
-Thanks!
-
-Mentored-by: Christian Couder christian.couder@gmail.com
-Mentored-by: Ayush Chandekar ayu.chandekar@gmail.com
-Mentored-by: Olamide Caleb Bello belkid98@gmail.com
-Signed-off-by: Tian Yuchen cat@malon.dev
-
-[1] https://lore.kernel.org/git/20260606143412.15443-1-cat@malon.dev/
-[2] https://lore.kernel.org/git/2b4198c09cb6c04c60608d19072d419503dfe5df.16=
-85716421.git.gitgitgadget@gmail.com/
-
-Tian Yuchen (2):
-  environment: move ignore_case into repo_config_values
-  config: use repo_ignore_case() to access core.ignorecase
-
- apply.c                             |  2 +-
- builtin/fetch.c                     |  2 +-
- builtin/mv.c                        |  2 +-
- compat/win32/path-utils.c           |  3 ++-
- dir.c                               | 18 +++++++++---------
- environment.c                       | 11 +++++++++--
- environment.h                       |  9 ++++++++-
- fsmonitor.c                         |  2 +-
- name-hash.c                         |  6 +++---
- read-cache.c                        |  6 +++---
- refs/files-backend.c                |  4 ++--
- submodule.c                         |  2 +-
- t/helper/test-lazy-init-name-hash.c |  2 +-
- unpack-trees.c                      |  2 +-
- 14 files changed, 43 insertions(+), 28 deletions(-)
-
+diff --git a/environment.c b/environment.c
+index fc3ed8bb1c..bfa3cb3045 100644
+--- a/environment.c
++++ b/environment.c
+@@ -142,6 +142,13 @@ int is_bare_repository(void)
+ =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
+ }
+=20
++int repo_ignore_case(struct repository *repo)
++{
++=09return (repo && repo->initialized) ?
++=09=09repo_config_values(repo)->ignore_case :
++=09=090;
++}
++
+ int have_git_dir(void)
+ {
+ =09return startup_info->have_repository
+@@ -720,5 +727,6 @@ void repo_config_values_init(struct repo_config_values =
+*cfg)
+ {
+ =09cfg->attributes_file =3D NULL;
+ =09cfg->apply_sparse_checkout =3D 0;
++=09cfg->ignore_case =3D 0;
+ =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+ }
+diff --git a/environment.h b/environment.h
+index 9eb97b3869..39a8bf0b49 100644
+--- a/environment.h
++++ b/environment.h
+@@ -91,6 +91,7 @@ struct repo_config_values {
+ =09/* section "core" config values */
+ =09char *attributes_file;
+ =09int apply_sparse_checkout;
++=09int ignore_case;
+=20
+ =09/* section "branch" config values */
+ =09enum branch_track branch_track;
+@@ -123,6 +124,13 @@ int git_default_config(const char *, const char *,
+ int git_default_core_config(const char *var, const char *value,
+ =09=09=09    const struct config_context *ctx, void *cb);
+=20
++/*
++ * Getter for the `ignore_case` field of `struct repo_config_values`.
++ * It checks `repo->initialized` to prevent calling repo_config_values()`
++ * before the repository setup is fully complete or in non-git environment=
+s.
++ */
++int repo_ignore_case(struct repository *repo);
++
+ void repo_config_values_init(struct repo_config_values *cfg);
+=20
+ /*
 --=20
 2.43.0
 
