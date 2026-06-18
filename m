@@ -1,223 +1,140 @@
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F2C3F58F5
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 12:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781786556; cv=pass; b=MwHv6822XKRWw/RgeBaGb85iwGZEezY531o2+Mi3hz3GM4mxNpNaC1hJQgBrzn5XL4f+qvObD7gTuSS8+zX8N245/UkL/2c2MJbHPVNAi51MBGRqj8pDGXjWrhOpseg8sWxW9JcrCN4tMcsybV2nWt91nmRB4fmS/c9EqWi7roo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781786556; c=relaxed/simple;
-	bh=JsC5pK65T4mDVfW6Ce+3xjZU5zKkUwqCyVd5FeKSMb4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HOTCmt5LLCHbiJ6u6nXJyNuJiSiRtg3gwtPYu393UGElKDtIQFriv9nZIaurQgRg0FzEoJ3R1zO+ms/T/ua4BgvI9q53NKfx7iKKdlyMSOVfyizJJLTMq4Z6ZC6BAaf+iGoecYJFKasYz8DMmZtMZZ/bc0GGZvzu/dbLFSSwlbU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HyYIoSBH; arc=pass smtp.client-ip=74.125.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195A2EA75E
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 12:44:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781786655; cv=none; b=Ak29pywIK5cIT8bQuJK58DQ4szob3sg7MI45WXKT7tQOz/FkGL3OZ0OWaC6e2T4FdVgIJwBOCtRxXdEdAuIp5tbAIn2+1OGqKKS+EaSCBxEleu+u8Qu4H5dAvKYbeWsdgf/n+mfn/1dp6f4v/ZeMUsY0wZ2JZkPZE6uxHrxRJ9Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781786655; c=relaxed/simple;
+	bh=WyRoLIUIE51kDoPe8PUlzT5iyORC9z79nwnSLinLRI4=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kNDjRLF2Zso+OzOD8GK2y818cUE8nApph0QGbqxudNruRZE2pTRommxfqYe7WqY6JPYTNXrLi3QCraR/gKM3AsRQik+iV674C2ce3uhSdJ7js0GyVqa9wJEimqLMmG2NeX1whVigoaSFDcSylUnlC3lEWsDTLt8DnLzrL/eU5Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TITUdv59; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HyYIoSBH"
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-662bcc30fafso940198d50.2
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 05:42:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781786550; cv=none;
-        d=google.com; s=arc-20240605;
-        b=FVV1iHn3zWcI9bXrke7qwRjcZW3aJITwZHHdDuzq+UQFSEESk4HybwFGxD1VCe3ljc
-         n4Nq5ol0+MWPHd1LkJQbmJjgz232QP+FN69jM3zhx7ExC1fWrIWs8jv7F1aQ97AIjR7w
-         GwvXxIDoX7a+kTzFb/ln4LyqTpF9St04Ujw0esX6DSykEy1mhhOY9Mzn/VqXtTkGeaE1
-         WUHeWOGgA6MkBASbzKy0JysDw/GF7s3beB4OiNn5TdJKANZKmHiUYr1z5SAujYf7MV5C
-         TnvdfV5O6IE1J2WpjmCnmKz8zGx4L5QB+QMqwZdXa+pYlw7lEXCgZAccOUMnFhmHH6NO
-         TlRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=DiPs7uGk2bRdBizdq/dDsZ/flVNlypZRrepsmddPOD8=;
-        fh=cZBByUo7rLZEQ1iQnPdEqG97JwM4d+gjJ4TvD0JaSKk=;
-        b=Rl1QqwWiv+hBkx/UNT/i50/6jCrYVf+TQIluEzAqwWqvF1ixxHufLdm1pU6M9nQoq3
-         G7TIgyfs05Q/JMoX3gHiMhPa5MqwwXWVBuSc7DR2QseMWamFcNTIUv88pHq9XoeGFr+8
-         ccNexgdlBm3c+yLkZyj1iJJxwzqaDElSpIFH86I1MWK2PN8F2sqHHoe0BxlQmracQilk
-         IRngirzrTEdjZJhsalYwyH0nF/sKoKlX55zs5s7De7hBot1oEzem+dg07RTiyr3K9GOt
-         hf6Y1PsdMCpCb0+rydhUdPzYH64Q2YppiWUk557eyxP8Hi7SXvGSMxJ/NFebWhnNobfT
-         BW6w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TITUdv59"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-9185503e6a5so116780085a.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 05:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781786550; x=1782391350; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781786653; x=1782391453; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DiPs7uGk2bRdBizdq/dDsZ/flVNlypZRrepsmddPOD8=;
-        b=HyYIoSBHi/jzZaiik4fcS0F3ANizDm6ObwafDnfklIiaRbSEuZttfvvW33pnoY6cRJ
-         1mQg5IWvaK4abLy302JRFpK7sBJOBzx2H2frnI7oFlRjT/8eRXHO8mnmdSwYRFcm9apo
-         lLLX/qzTgTT+yqpp/rURKZSCCo59WR8xeUFtjEWPxEOdBIaM0hSriuue/XtX03G+MbIp
-         yVYLBMRRu7cYonRramUdV2RbrckH0MUaLHV89Kxlq9M92iCuUDDGoFi0VteMNqrcX66h
-         vK9AqXmM9XX+CdEeNU2GCWLneCgYOiPIXxVuVuXjjAR4YXT5g7OCBhw7LGPIvBQt9Fw4
-         W7dQ==
+        bh=Ht0OHWAkPUGLukFTVZWcn1Psr8N8mEaDOF7YVbaboFk=;
+        b=TITUdv59RUOI25afqRmrG88Sq0/r6DMF8d/2kEeVand8tqWB2zl2jiyKKQkpJgAh3V
+         k4sjhG3Zl5XmQIC2IUpK+1SBmdUFjpbSjWxnH5+fjHOI402uzSTvkI2z0NXLb8NZQ/0t
+         q+sP173B99LRGOQsUP03keBqiLsarl0oJ7yDEISGUijGJSV6o7x1OjAHZYfgtCFpGSUV
+         UzBR+niueyCjqMzbfIKv5atbDuA7BkPI9aA+Pgo1q3cXffGh7Y4pkCWabo6D6uDek7Bf
+         OdWpQBKWVgzWixm359bssZ7sCHLNMJdfMEcRszKz+gcSSRogsV39x4ZRDvr8l/DMayzv
+         zT4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781786550; x=1782391350;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781786653; x=1782391453;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DiPs7uGk2bRdBizdq/dDsZ/flVNlypZRrepsmddPOD8=;
-        b=m9U58nm5AjVMe9BoeZ3da0haRtaPRfixg6vktmxaoG8nmky3kz9EuULIl+nKKN5ri+
-         msoAGRMIeYMtJxOK10Bw9/lYFY0xwXBAqlFIl3OE72sJK0dZXGdQWlh961UeBMx40ojW
-         1XWTE4FgNWyiTzCdGlk42uOmmLr8w+kb/dHIO04+nW1bRVLg0nMyeVVZYpLfyqQZcOKU
-         4CQ8qjDAIsJ0iPGpsYBs7jAW3yGejsuoVmchtCrTWEf+y6uFzK4ApDJiobdBPRtGDjSK
-         owAnb74FkIOD0M8fB0erYorNiYDZBkw73GRL8YNfylbIcCdYh9269d1H/Lgxuim47PWZ
-         F2lg==
-X-Gm-Message-State: AOJu0Yzl7WAIohBYzM0YqBmU4QI6LDT/ioDD2dl4CorQIN6PwEJZtsB1
-	Uc1RbJgydQ/YNIbOo4cktPojMQmKx/GY/7NN8L8FVbMwBEJwuEbTO8qfzTGQMT6/+/6jiFZ84oP
-	TaNazLqUmPbCClcHpa3xt9hkbPewRQyioVbrA0O4=
-X-Gm-Gg: AfdE7ckpYdejmeuezV3WGeQxwcSYYwexstJSYMpMepAgQkrlWv21ATfSpQg1/FVb7xU
-	SHKblfEPkFr+0CjGv3wpA1YT4m+k0KtJ+EQOkqeVNUpDhXHcgMc8qDO5KyFdmKGkcVMWz6S1Cwr
-	/WZdrro4MXAMNYmxUzsJXjb8L41WtuTzK8Tpt+W0gTvlOAV7afsmkBEl3jzTzAbioGVATsu+qNR
-	hAHwNXPvBg0nHR87oe1irDWPpV1lrE6G2pHD480eKJ8wc7T5NUAHmCDvEpZ85s1F7LjPjrqzGzU
-	L6vmd69j1y/gesA7M+a+RkvQ2RuHqFZRfd3unZ3s+tzF2lkKKl5vmejUKIpqbick3RHrgaAmYey
-	J2mHX/xwxRjyMnYjrOlrUSa4cjoWcMCTtV7D7pMEhnYPz7n9/0GXY0PHHevc7wn4aBgpO
-X-Received: by 2002:a05:690e:b89:b0:662:cf82:711e with SMTP id
- 956f58d0204a3-662cf82c2e3mr7437859d50.0.1781786549493; Thu, 18 Jun 2026
- 05:42:29 -0700 (PDT)
+        bh=Ht0OHWAkPUGLukFTVZWcn1Psr8N8mEaDOF7YVbaboFk=;
+        b=ojWMF1JgmiNJquQyffj2OuQ/aq7NUHCaza1ClyX/SDmaKrMN8qhMKy9UbR6ZK8Au6z
+         wP3+yH5vWT6FO0krETkch7o6vqjixw+UlWH9lcn/F2fwZfQpnhuCsZ+vdSr1hW/GzOF8
+         YrPysjmNQFKlnsro7PhnCRms1grwZ7ZOJujSZ1G2/lZJa8X5szYJpyxRQRiwP6nmh+W4
+         NBzKWAbCdefgVaDBOt2P8by9+v3pISabcd9tK7EPidiAi8xJ2DjSP96crkGjdaxzfJsQ
+         BkQMQ87A6vIiUYre47AdGzGN7Ypjxulx5Jvn1/anFOwCFEM6ESEP6M+3cGFGXGN8EFMi
+         k5yA==
+X-Gm-Message-State: AOJu0YzJOPUUxJsacrxRiB3e4GAGk2CHx6+fJ/eppBHtX5ZCBdCDLIyU
+	M7Jpv17cQsqLPBskkkWmuMnptJtgxkL7SV8rm3TH9nDjC2LFmxAwQWV4irXnnQP7
+X-Gm-Gg: AfdE7cl0B7nXqKkW4kbzt52xYsKM67nMkSdHdil3AhtTiJTsam1IBJN03cjPoTJmJr+
+	tNQCyF8SXW8MA2BikFH2NShMIsx3uYU6RONhxj/SACwVputt2Hn/BkjZlG+tfvEIfdkp6QaHhAU
+	JwxGS5w57cKi33QudGc55lSkncz4XzWcyrWzXFevs0IyZnritzAcsh1zaWY8H1YhXldFen6DqcB
+	vzj3LDbvyUlNvw8ASwZVfzuIeswveQTu8RLFfcX9lrw70+a92qHn0HvgXDjtZAVneo4O19CIrxw
+	EpheKd5m5u144qN5mcgivhy/uxAgZFIDcQB07E7tuTaLfYCe9/8DzK4+gAZ4dVDU9ghGz7VbzvT
+	UfyojHN51o/9erYexK/OUtm2RXE7rJxEjLjczrU2xxYhya+HFXX3FXn29CCKAiQnw0rlEWfxyJf
+	cp5fDDrhDGy6mPtH0Y
+X-Received: by 2002:a05:620a:4728:b0:8cf:bad7:20c5 with SMTP id af79cd13be357-91f09c7f212mr497673785a.25.1781786653231;
+        Thu, 18 Jun 2026 05:44:13 -0700 (PDT)
+Received: from [127.0.0.1] ([52.186.174.180])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-91619ed8c83sm2014842485a.5.2026.06.18.05.44.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2026 05:44:12 -0700 (PDT)
+Message-Id: <pull.2281.v14.git.git.1781786652.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
+References: <pull.2281.v13.git.git.1779565714.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Jun 2026 12:44:10 +0000
+Subject: [PATCH v14 0/2] checkout: --track=fetch
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
- <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
- <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com> <20260617202744.GA3465855@coredump.intra.peff.net>
-In-Reply-To: <20260617202744.GA3465855@coredump.intra.peff.net>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Thu, 18 Jun 2026 14:42:16 +0200
-X-Gm-Features: AVVi8CfT0A_p_rex6XL374v6O3CL2FFFhxx-W8XegajlX3xFrvLTYKxilHPtIA8
-Message-ID: <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, ayu.chandekar@gmail.com, chandrapratap3519@gmail.com, 
-	christian.couder@gmail.com, gitster@pobox.com, jltobler@gmail.com, 
-	karthik.188@gmail.com, phillip.wood@dunelm.org.uk, 
-	siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+    "D. Ben Knoble" <ben.knoble@gmail.com>,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Marc Branchaud <marcnarc@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-El mi=C3=A9, 17 jun 2026 a las 22:27, Jeff King (<peff@peff.net>) escribi=
-=C3=B3:
->
-> On Sat, Jun 13, 2026 at 09:09:16PM +0200, Pablo Sabater wrote:
->
-> > +/*
-> > + * Iterates the commits queue searching for the next visible commit, o=
-nce found
-> > + * sets visibleness and visual-root flags.
-> > + * Knowing if the next commit is also a visual root avoids redundant i=
-ndentations
-> > + *
-> > + * NEEDSWORK: The queue is actively being modified by the walker, for =
-each commit
-> > + * its parents and itself get simplified and their flags set, but for =
-the next
-> > + * unrelated commit or the grandparents they are not simplified yet, w=
-hich means
-> > + * that a commit whose parents are all filtered will not be marked as =
-a visual
-> > + * root candidate at the lookahead.
-> > + * This causes the lookahead to fail, failing to set the cascade flag =
-to avoid
-> > + * redundant indentations.
-> > + * See 'test_expect_failure' at t4218-log-graph-indentation.sh.
-> > + */
-> > +static void graph_peek_next_visible(struct git_graph *graph,
-> > +                                 struct graph_lookahead_flags *flags)
-> > +{
-> > +     struct commit_list *cl;
-> > +
-> > +     flags->is_next_visible =3D 0;
-> > +     flags->is_next_visual_root =3D 0;
-> > +     flags->next_has_column =3D 0;
-> > +
-> > +     for (cl =3D graph->revs->commits; cl; cl =3D cl->next) {
-> > +             if (get_commit_action(graph->revs, cl->item) !=3D commit_=
-show)
-> > +                     continue;
-> > [...]
->
-> I have a feeling this may interact badly with the prio-queue introduced
-> by dd4bc01c0a (revision: use priority queue for non-limited streaming
-> walks, 2026-05-27). In that commit, get_revision_1() sucks all of the
-> commits from revs->commits into revs->commit_queue, and then traversal
-> puts the parents into that queue, not the commits list.
->
-> So during the traversal, revs->commits does not hold the complete queue
-> anymore. I think it does see _some_ commits, since some get placed
-> directly into revs->commits and then later moved next time
-> get_revision() is called. But if we instrument the code like this:
->
-> diff --git a/graph.c b/graph.c
-> index e0d1e2a510..8a5f17a089 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -926,6 +926,10 @@ static void graph_peek_next_visible(struct git_graph=
- *graph,
->         flags->is_next_visual_root =3D 0;
->         flags->next_has_column =3D 0;
->
-> +       warning("peeking at visible commits: %d in list, %d in queue",
-> +               commit_list_count(graph->revs->commits),
-> +               (int)graph->revs->commit_queue.nr);
-> +
->         for (cl =3D graph->revs->commits; cl; cl =3D cl->next) {
->                 if (get_commit_action(graph->revs, cl->item) !=3D commit_=
-show)
->                         continue;
->
-> and run something like:
->
->   ./git log --graph --oneline -- Makefile
->
-> we can see that we're always considering just one commit, while there
-> may be dozens or hundreds in the queue.
->
-> I'm not sure what the solution is. This function wants to peek ahead in
-> queue order, possibly through multiple entries. But a heap-based queue
-> inherently only supports peeking at the first entry.
+Extend checkout --track with a fetch mode to refresh start-point.
 
-Hi Jeff!
+Changes in v14:
 
-Yeah, I haven't read dd4bc01c0a yet but from what you say it prob
-won't work anymore, I didn't know about that series, about the
-lookahead I think it could still work with some tweaks, the important
-part is to set the three lookahead flags.
+ * Handle .h files in a better way.
 
-From what I understood, we can only get the direct next commit, but no
-more reliably ordered.
+Changes in v13:
 
-The flags should be fine:
+ * Create a preparatory commit that exposes find_tracking_remote_for_ref()
+   and advise_ambiguous_fetch_refspec() from branch.c, so checkout can reuse
+   the same lookup git branch --track uses.
+ * Use advise_ambiguous_fetch_refspec() for the "multiple remotes match"
+   case, so the wording matches git branch --track.
 
-- 'is_next_visible' could need to traverse multiple entries, but it
-doesn't need them to be in order. We just need to know if something
-will be rendered after.
-- 'next_has_column' only needs the first entry.
-- 'is_next_visual_root' only needs the first entry to know if it could
-be a visual root, and also if it is not the last one (but we don't
-need them to be ordered for this last part).
+Harald Nordgren (2):
+  branch: expose helpers for finding the remote owning a tracking ref
+  checkout: extend --track with a "fetch" mode to refresh start-point
 
-Should I work with 'next' as a base to have dd4bc01c0a? (Sorry I've
-just worked with master).
+ Documentation/git-checkout.adoc |  17 +-
+ Documentation/git-switch.adoc   |   5 +-
+ branch.c                        |  96 ++++++-----
+ branch.h                        |  16 ++
+ builtin/checkout.c              | 139 +++++++++++++++-
+ t/t7201-co.sh                   | 276 ++++++++++++++++++++++++++++++++
+ 6 files changed, 498 insertions(+), 51 deletions(-)
 
-I'll try to make it work but if not, the lookahead works to avoid
-_redundant_ indentations, but it would still work correctly without
-it.
 
->
-> None of the tests seem to fail, but I'm not sure if that's because I'm
-> way off base in my analysis, or there's a gap in the test coverage, or
-> if this case is part of the expect_failure ones mentioned in the
-> comment.
->
-> I noticed because I have another topic which drops the revs->commits
-> list entirely (and just always uses the queue), which of course doesn't
-> compile when merged with this (I merge with 'jch' for my daily driver,
-> which now includes this patch).
->
-> -Peff
+base-commit: 4621f8ce5e9b97aa2e8d0d9ffe9d25df2471074d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2281%2FHaraldNordgren%2Fcheckout-fetch-start-point-v14
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2281/HaraldNordgren/checkout-fetch-start-point-v14
+Pull-Request: https://github.com/git/git/pull/2281
 
-Thanks,
-Pablo
+Range-diff vs v13:
+
+ 1:  2369afad24 ! 1:  f79689c23d branch: expose helpers for finding the remote owning a tracking ref
+     @@ branch.h
+       #define BRANCH_H
+       
+      +#include "refspec.h"
+     -+#include "string-list.h"
+      +
+     ++struct string_list;
+       struct repository;
+       struct strbuf;
+       
+ 2:  60adf0e67d ! 2:  8518f090b1 checkout: extend --track with a "fetch" mode to refresh start-point
+     @@ builtin/checkout.c
+      +#include "run-command.h"
+       #include "sequencer.h"
+       #include "setup.h"
+     - #include "strvec.h"
+     + #include "sparse-index.h"
+      @@ builtin/checkout.c: struct checkout_opts {
+       	int count_checkout_paths;
+       	int overlay_mode;
+
+-- 
+gitgitgadget
