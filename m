@@ -1,80 +1,87 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D622D594F
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 14:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24C82DE702
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 14:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781794197; cv=none; b=eYG05V9UgRqamgLKUSPChGLGGHyrLlml9AvMT2Y/G5L3yp6hSK1C/1xccGCe/MaziLbxypFmm1VpDJ52qPNC/x41w00Ns6bOzgbjP8w24qzcBXHk1yOnIM915kOvUINh2Noc3TmQ2KzpIS3y7onnurdFhuBQot7yH2uiTFmpdy4=
+	t=1781794272; cv=none; b=bJhhYYDB1QZ6T6cPZXaNwZmW7g5z3JJzLf1bZhjjEj3L8E046GDFjG6YCi6mcdB9N92t8IFKI48FPMpWOvltOjt4gZYKrzbzBMaU4UaZi1vDs3RgxuQx22p/PW/TPeRQSWSMZw7GgvxmzbMrEpLD4vD21JySQ9oi1oq8/lkJ7n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781794197; c=relaxed/simple;
-	bh=oFj4QnicFWACmVlPWn737f9qbHGJHxsz555Do3aEZto=;
+	s=arc-20240116; t=1781794272; c=relaxed/simple;
+	bh=aL3qJ3dfImzB4a8KvjtVY+MUAiG28rt2BFDUeTH+CHY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rs0K96c373PlqvzN0y1g6b5GxWdJQCBRvrWzmq+GEkujv6MdSWtZORzxlpOg7DSSzG0WrrjrPFCrNUyx462Vjrve4O4MadpMQbJXDsdthyZ9CrIlKlSPVRL2Pax9J7pEQP9yM7R1HK4BK8NUrvJLw1MzVVZrFSxSKNeCekrK+o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fPt2Z4uP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dXP2Y731; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=BaIV+hxc1c2noFWVYrtXgYWMh7bJ9wB2nop3XsA32STLn9xe8NNZ1H6pdqetqCwzqccvqk8QLGiT8a2+1XJVhWZkIDt0iWBcoZd4W9d6ZatuJs11n/6U7ZAt1YHdnmdyXkpDe4J/sFv3dYLprMUJVbw3fyaaoZd1aatMcNK1Jws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tMGjuTMs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JaEmoKrF; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fPt2Z4uP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dXP2Y731"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5D020EC0209;
-	Thu, 18 Jun 2026 10:49:55 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 18 Jun 2026 10:49:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tMGjuTMs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JaEmoKrF"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 036641D000D9;
+	Thu, 18 Jun 2026 10:51:09 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 18 Jun 2026 10:51:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781794195; x=1781880595; bh=zxKe8KuUhC
-	JNo49GjY/jwtWUZJp7f47KrJhyPXCufTw=; b=fPt2Z4uPLvXQmxQIBg7IHx6EK7
-	UoPCCZV9PQRquZ5UGG35VNaBsi0cjfKglGWZC0U0By39NAUORbKvkc/shY0ZkJ9J
-	xRnqTdtEyyIDu2KbvjtocH4wxg4W2pcFSQQAwKeW7zkHVzttQOFkD8f1WSesWgTz
-	23QbbiEeqZKXy8dOVOdZUfNAbQmM6tUQCAZ9ubqPbeVEpLzIw6M3SWTs8rbzdz72
-	BSCe1Qsc31ybuN11psXLrzKHHYg/YSYptZpSL2xL/RnBJOAyjPolw9Z8KJ56wWGp
-	gWlSTzJTvYDwenVnLoXswRgQBfDtZGkxec76vgCS+6cH/2Lqw0C122AwrBbA==
+	:subject:to:to; s=fm1; t=1781794269; x=1781880669; bh=o0FR2Sv1mE
+	27tP/ZtvsiO+QqWu8GXjy+dU04GjvIgEs=; b=tMGjuTMsxWZDfH3WTyHMQd234t
+	POUOKgAcTpsMiscwj/jyL3LL4Q+aZvlk6/LtO3i7UUCVqCchwDeZy7HbFgbvcJLC
+	0ZEnEpPSYudHBAU9DmpMd7IzPCRODARXtXbuugRYdJg72EjsNli98oc02HG/l18L
+	d7opOscyUelrBg1DhnBvOvNEuV/QbwAogGTYb0pjeCkZUFDlcdRSbqL5ErubBjdV
+	M9Dbf/oKJiNM+Z0hH6i+Jq6m65hjgnG80kvsPMM3RCibFsapM0G6j+YAwSpusSfI
+	Pocy+nWPnMOq+cUKWXv8fEBDaYFG5fhhXK71JA1q+GlAQKSkQFAvr/rnOBQQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781794195; x=1781880595; bh=zxKe8KuUhCJNo49GjY/jwtWUZJp7f47KrJh
-	yPXCufTw=; b=dXP2Y731QhiEByQzOKq1O+081jfovC9fasmsF/SM2ZpI9mCOIt2
-	f5isTu9+RC3jcUNegLP4ZZ3/yB32ddXrr6IqowuXs/P8IcllWtX+ZNjGuWVUSdqQ
-	16JeLkHFXmelxEfXKZTfmtOV2hntIWCCbmWYHduYr7+BwsSGRfGF9/rSBpqk/cLb
-	c7QPbr4snG+zpQ2bkyXYnQk3MfF1HYWwtkfAzP4ahuhHPzXp5PeHAu3jJMcxU4Fz
-	4kFaMaiLx/FcnCwqhRBesrtYJABj1eR90AOisYnw//hjxCVjcT0atI/bAVmoQhuG
-	2QsJvmElGEFyZKt0WyRgBS97KzcA+aTBkmQ==
-X-ME-Sender: <xms:kwU0atiH617kQ5L-8z5xeTFkqJ5pZH_9Fyd9y_kYQzubovJS0tXSCQ>
-    <xme:kwU0aoCGCGpYXbPR5O2sL2B719wP67R9Bx3rwU1za7r1hSIqWjp_LIfF7BdWnEaAZ
-    KvPELEWqE2i28UHkLEfba361gisaCT04YHu6-8SCQrrEfwNJbjFGg>
-X-ME-Received: <xmr:kwU0aqs6wQAJUw7vK6q2s_m8fh2NpWveOgLrS1ky_7puM9bkHwVeJdYaF2BhL1n-c6lZueDsNj3xc4X-oquTYt0-oGz07XP9T2CpJz-YHVYkgt56oiIA4NI>
-X-ME-Proxy-Cause: dmFkZTG03XrAOjzOGBxxMrQofWQQ5JKRugsFaywEmN1S2V7M+hSROGpM1FtpHHmx3PLX9x
-    JkxfrYgm96/xhdRnsGg7dkQM9kNX1OBn0etbQtXnnf+GJn4oBDLo77s2SPwUFbqESSaALb
-    SiCDTRjikaQ5MCN5uO+AQQGFVvU21WsUdvxIjghJtCbmAkpcrmlVr3+V86ZUkpRGJLSIOi
-    kOLiaEEz/jFz8DTS2JLG67/q6K7TVFYKpBONamJyNBWhmBtoFaKlb4aazLtOPC+j45SAH7
-    CfXHgWl0mXgy3Y0uSVAzHkchFcbwAj3Wi+0AgCQedit0wt2C2/Vdt7rXZ2xGAQ37gbf+ai
-    6s6kVGmCUSY+B3S7tcm5bU+UpOlqGuiYI6pPJL6qeN/meRS+mcyN8qZtOEiX+SRBO3NnpF
-    lTS4Rbs5hOXaYvtTsGXT1KINLiFQ55miD8nGanoGOuHIZ59PH8mtwuQL/qQJThVYwF7+vR
-    Jaffz1+OeN/nOt6l0zOBRN0iDdLqZOc5WcbZwTvhkbz4W4m8Hfz+uV6rwXoUTHASomAFtt
-    QwYQmYqPWkmTB7nLkub/XjiCN5zsMq/4ylDdjGjMdcf4M40rsEPfTI3k+h2lLhzuwP7LVj
-    6Ttrrnz0YDUReBXPB0GeckPm/9pzM47L6l6lG039+jshqqIzK7CQD8LBMPVQ
-X-ME-Proxy: <xmx:kwU0atbleXRBIK3A4vEJWxtS8ujyKRqmOlk9ZQfbMiktgYcSkgfmZg>
-    <xmx:kwU0atWdc3uDEhubDil4INLNYWJQBVIGp7VnUBX89v0GQ_6O0Ro9xg>
-    <xmx:kwU0ah59-0OLr8qJiwvbMY4UuV_H9tZFY7Pcagn4xyU6R1eImpTzWg>
-    <xmx:kwU0aojsuRvUWygDqzp9hKS8O5ZR9XSUs2enx6UliLXR5-16KtJMHg>
-    <xmx:kwU0agksb3E7PrgV6PNFgVj580CCAMk8D8VUeI0i1rd4T1BbsvFM1Tfj>
-Feedback-ID: ia13843cf:Fastmail
+	1781794269; x=1781880669; bh=o0FR2Sv1mE27tP/ZtvsiO+QqWu8GXjy+dU0
+	4GjvIgEs=; b=JaEmoKrFlI+LsDp6bZhnVJiSvws4We8X6QjJe4CMaMQGJU/m4fd
+	alucbV3T3OwV34JhqDxQuaIykiRMS/F1daFehrM7vY4JrK5dkDbc3C8UpAE5Xt0q
+	Rwn/A79x4gq/stv2W6GpTU3bfeAQDd4xkTMOqRXpTdi74jCozEIV5uOdvQ+p+7px
+	PlLp/cLPKKSM/Muhhs8L5s6ndnxGV36uuNHMGuECtX1Hz7axdv2k/9TMw8bnZOE4
+	tNaZw2DXMhOqrwYi2F940NVvbbElrA0/XU8n8NIsNs+0xjN0JfwztqMhwnzAB7bU
+	/xyFQwJVy7DGfTlGvnJgaoRd3bSxA4k73fQ==
+X-ME-Sender: <xms:3QU0ahvNXzLWi1S4SOqdLoNXdKq3m6zCiM1EZ7zDm9xzUcyHAuSs6g>
+    <xme:3QU0ahdXI2fIw9BbJmNOxEVLgB6tGd2KsGTEImOn9qBsEUS2TVEdJoHWaWUH1QJ_B
+    awcSn-kbRQeTCSugTlqxxatTTVuA-sBVkIS2pBOPAsm97HPi_4R7g>
+X-ME-Received: <xmr:3QU0apzMaFMaCT4-ZRBY-BMDo_QJsOx6610NFDPmj_8Bwg3vKn1-SO0M6RHtUY4i-4ibfQWLN2OnKYCTrb-XWH4WUGVU738kCbFjWc1zkQ>
+X-ME-Proxy-Cause: dmFkZTF8x0tP7w/J94sOkCjK9wrJZ6iZhJgJDavtp5dVLAvX0RiIh0/A4crQtL9XM1Xm1p
+    qikB8cL0cAVAORc+DWO7lNb7p8f8vAB2HOFVwIEMm2TV4Qz0f1ufMAvKi5YRqN9gHjGHe1
+    wvkQgBwqedrV68nJj3og5CMz0QBO1VyS/EcrqgpXIpF6JUrmFgXWJstnDQwkplixZDo0F8
+    ENIp7qdF2uAP4Iczy81oaIkY3zvNELbGt1ckASdyOD6uzLd3JODfBEYpbPXoL3zS2hGrwx
+    8vioRBR57NvQ00+AHXtNof4oAuCMu4YvaLrQ46cd3i7IHcKnYmacO/ODqlxORu/i6vp0E/
+    xo4EO/QizXNVmCezGVaqd8zyu9pabEUDrFU3Ygn5AjJZzQP7rNBH6RBMvs+zbLRru+t0b1
+    zgYcU+mVqNVWniDnkUakov+Ju4/XZN5szlwUDdbsmxQxx1rUiAepp0Vvopvymw/9kFxoTx
+    6V337gc2j8t9nXPBGoaINYaPTDYZHkWnoF6Sb/YEoqhI+2eoLJtOKSEulJTRFsLGcGLt3B
+    bwiAg3m7zNitnz8jxSEkqDFJhVbd6SMGB9QY/Sgek4lQ0VR/f5YmrNa5jZb+YIzlaY8WVs
+    FvOgVyh7yvq3F/PNfhoNUIqcwoKYBGdvP49hoyE6Mkuq39Df8AyqGUJ5NM/Q
+X-ME-Proxy: <xmx:3QU0anFUY2y-ZPishaO2THUjMdaJ_G4NEjycEhQ202OztEZDQ2RiSA>
+    <xmx:3QU0atyvlefcSrGEQywcIxMny_V27MlhQI5dT-0OcGEUyWVji-KKhA>
+    <xmx:3QU0aovWIUzm6op3l5xEl0OlArgBSrEO1d06-VACJ-K-zZSR1Og2cg>
+    <xmx:3QU0aq1OOKsBmJpz8INLrANNxPKN3Jl_Zgssa_MlPXnRkK1pLmlfTw>
+    <xmx:3QU0ai2ebJpQi-PcDjSwO-tES7h6fNa-B1z27VPtkiFtrufAUTWUoA7l>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 10:49:54 -0400 (EDT)
-Date: Thu, 18 Jun 2026 10:49:53 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Matthew John Cheetham <mjcheetham@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: t5563-simple-http-auth failures with v2.55.0-rc0
-Message-ID: <20260618144953.l6Ng-dvv@teonanacatl.net>
-References: <20260611210456.XYfhytSL@teonanacatl.net>
- <VI0PR03MB1163416D5C66FAB25AECAAE21C0182@VI0PR03MB11634.eurprd03.prod.outlook.com>
- <20260612180203.s2qSgDUs@teonanacatl.net>
+ 18 Jun 2026 10:51:08 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0e60ddf4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Jun 2026 14:51:06 +0000 (UTC)
+Date: Thu, 18 Jun 2026 16:51:03 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 7/8] refs: fix recursing `get_main_ref_store()` with
+ "onbranch" config
+Message-ID: <ajQF1yyCUOdzC4Jq@pks.im>
+References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
+ <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
+ <ajLoiCS2mXP49eAJ@denethor>
+ <ajOJM8EvGWWkYNuL@pks.im>
+ <ajP7W7KsXz4Wk262@denethor>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,40 +90,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260612180203.s2qSgDUs@teonanacatl.net>
+In-Reply-To: <ajP7W7KsXz4Wk262@denethor>
 
-Hi,
-
-I wrote:
-> Matthew John Cheetham wrote:
->> Thanks for the report. The failure is not in Git, it is a libcurl
->> behaviour change, and there is already an open upstream issue:
->> 
->>   https://github.com/curl/curl/issues/21943
->>   "Negotiate ignored with --anyauth" (Dan Fandrich, 2026-06-10)
->> 
->> Dan also bisected it to the same commit I had locally,
->> `8f71d0fde515` ("creds: hold credentials", curl PR #21548).
-> [...]
->> Daniel Stenberg has acknowledged the curl issue but has not yet
->> posted a fix. I will follow curl#21943 and, if the upstream answer
->> is "the new behaviour is intended", come back here with a proposal
->> for what Git should do about `http.emptyAuth` and test 18.
+On Thu, Jun 18, 2026 at 09:15:00AM -0500, Justin Tobler wrote:
+> On 26/06/18 07:59AM, Patrick Steinhardt wrote:
+> > On Wed, Jun 17, 2026 at 01:41:40PM -0500, Justin Tobler wrote:
+> > > Is this really the best signal to indicate that a repository ref store
+> > > has not been initialized? Temporarily setting the storage format to
+> > > REF_STORAGE_FORMAT_UNKNOWN feels rather awkward and suggests to me that
+> > > `include_by_branch()` probably shouldn't be using it to begin with if
+> > > its not reliable.
+> > 
+> > True, but we don't really have a better signal to the best of my
+> > knowledge. Ideally, we'd be able to use the existence `r->refs_private`
+> > as signal. But that doesn't really work as the reference database is
+> > lazily constructed, and the recursion happens in the exact function that
+> > would construct it in the first place. And there indeed are cases where
+> > reading the configuration is the first caller of `get_main_ref_store()`.
 > 
-> Excellent.  This is it good hands all around.
-[...]
+> Ok, my first thought was also whether we could use the existence of the
+> ref store as a signal, but I guess that won't work here.
 > 
-> If there is a curl update, I imagine it will be picked up
-> reasonably quickly in Fedora (and elsewhere that was testing
-> 8.21.0 release candidates) and there will hopefully be no
-> strong need to make any changes on the git side.
+> > My first internal iteration tried to make this non-lazily constructed so
+> > that we can use it as a proper signal. But that led to a bunch of
+> > problems where we now parsed configuration way earlier than we currently
+> > do, and that in turn led to all kinds of errors. I was able to fix all
+> > of those errors except one: we expect `git config set` to work in a
+> > misconfigured repository so that the user can fix the misconfig without
+> > having to manually edit the Git configuration files. But when
+> > constructing the refdb eagerly we will die early in such cases.
+> > 
+> > We could again work around that issue, but that unfortunately evolved
+> > into a proper mess that I eventually discarded as unworkable. I think
+> > this is an inherent design flaw: constructing the refdb requires us to
+> > be able to parse the configuration, but constructing the configuration
+> > may require us to construct the refdb. So this awkwardness is built into
+> > Git's design, unfortunately.
+> > 
+> > So I'd really love to have a better signal, as I fully agree that the
+> > above workaround is nothing more but a hack. But I'm just not sure what
+> > that signal would be. And this version here does exactly what we want:
+> > we honor "onbranch" conditionals in all cases, except when constructing
+> > the main reference store. Even if it's ugly.
+> 
+> Could we embed an `initialized` boolean in `struct ref_store` that gets
+> set when the ref store is properly initialized and use that as a signal
+> instead? I'm not sure how complex introducing this would be though.
 
-I saw Fedora picked up curl-8.21.0-rc3 this morning and
-confirmed it resolves the git test failures.  Someone else
-has already commented on the upstream curl issue to note
-that.
+We could, but I'm not sure what that would really buy us. It would
+basically be one more bit of state that we have to track going forward,
+and thus one more source of inconsistencies.
 
-Thanks,
-
--- 
-Todd
+Patrick
