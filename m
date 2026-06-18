@@ -1,134 +1,107 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB0735202A
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 11:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1FD3DB319
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 12:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781783334; cv=none; b=grHORjxpboC1S90V0aClARXjdekdo3yWMBZSBXkmsGOZrmXS/HnSstcswHrrADVaUZNdUbARYkBhqy14Tk52ft7ZEaI8NoVHgy7Fs2Pr9kaPz28aJ08/dqTqG5S6Z1t7R495xPpLyfxZRXlrWHeGM+qADViUDqJr1MGptgEtzmQ=
+	t=1781784847; cv=none; b=VZ8YQ4S1j4EfiTmkmAm76nXuExQHncglVGNhFx3x4aZEFz32dd+z5/sRcNvIvBXHc4piCDvy9/idKKwOe5pj7T8ZDdUAGF4sPV7y2jyDotPn30PaK3OaFVPPOwqK+Gem64/aYK4DlwZGu40MuSamBAjy2EAAGEqY+amnbCl6GKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781783334; c=relaxed/simple;
-	bh=8CQqcolbvX9JR0j1zUdvQ1Rcmd/lcm9tS440UgooxQU=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lWhi1x47pbyloRizkJJO90tKO6Co57FMFO3CZPhms0rKPKHXag0ApRZJSxxYAPQ7aQfLD9QH4tQlzBH5WOBaqVpVeSJbPnoDOmA19JYt4e9nw18yA1fHKdkeFLIf40zOAOv6YmJpZiSHs0Ct99FF5OE+zW5JSE+BVGJkFlmb4Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=Uj4DBxc5; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1781784847; c=relaxed/simple;
+	bh=1Vn5Tysj+ImOEfc3jpRjHqtB4FGa6EPYAKNeUX1/Bsc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pw/1YVsqtmAaKwLN9Dw7l6KXSp41sMqOrsWLCnCCbkCXPGZ8WqtG1Qe7RJFafQRomHT9ItdbwLkYrskeBe/7oU+z8bqt0GukV10ezdH5w+vZw7a1Vx5zuuO2cCUNZu+wOc1YurVQ3Unr24hXyg2uDDZjvjaadSu1BMPq7b1W1iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IxhrEbH/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NbZe3wou; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="Uj4DBxc5"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 65IBmcFV024278-65IBmcFX024278
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 18 Jun 2026 14:48:38 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1waBEc-004Ow7-7s;
-	Thu, 18 Jun 2026 14:48:38 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Thu, 18 Jun
- 2026 14:48:37 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 95e8e22b;
-	Thu, 18 Jun 2026 11:48:37 +0000 (UTC)
-Date: Thu, 18 Jun 2026 14:48:37 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: Junio C Hamano <gitster@pobox.com>
-CC: Silas Poulson <silas@dyalog.com>, <gitgitgadget@gmail.com>,
-	<git@vger.kernel.org>
-Subject: Re: [PATCH] Fix typo in MaintNotes regarding versioning scheme
-Message-ID: <20260618114837.0_RVf%taahol@utu.fi>
-In-Reply-To: <xmqqfr6czmye.fsf@gitster.g>
-References: <pull.2209.git.git.1771774770368.gitgitgadget@gmail.com>
- <882432fe-30f5-46c5-9efa-5b8a047283b6@dyalog.com>
- <xmqqfr6czmye.fsf@gitster.g>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IxhrEbH/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NbZe3wou"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E46E97A0034;
+	Thu, 18 Jun 2026 08:14:04 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 18 Jun 2026 08:14:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781784844; x=1781871244; bh=24fmHy67TZ
+	l4lErEPBObbQqAk5KnW0VeAb+JN82BQrg=; b=IxhrEbH/dr37OtQmHhXwmA+4+o
+	bj/dvkpI7sxElO6qZ453Uni3RmX8V55WFWk66HJyqYyXmHAKbDzVzSf/t3Hc1OeS
+	XP+vyINqWJzRT0y2CUrDfQVKUe+WibfujMJinSo9XKy9GQcUozOVn/J1JpZiBnpQ
+	zVuyzeY1lrYGGOmxKflz4EV3BRU2kuG3QBp9fWaF39Co5xxdfT4PNt0V442vQwT0
+	dBUQGu2HMFkKUjZZ8trSlZgIrbBULDL64qIpdaI4XKSRYjQLTnoVMdIV6y6QF52l
+	T0/pfrCMgAh9+pYB4fK7/WFV2QY6rURblXGuECaPxYrJ65+dLgnOhYG38Baw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781784844; x=1781871244; bh=24fmHy67TZl4lErEPBObbQqAk5KnW0VeAb+
+	JN82BQrg=; b=NbZe3wou+E/GWmJO1+NDcBWwxi858cs8gx0yBj7Va3ZXIGSK835
+	vCjXk4yvNhnS4qzG6Ce1KVEnXQvyLli3XRYLxFmBr8HJ5ZLUU1RWYd8cPOXQgrtr
+	fMAr0PHC4jS7jjuYnwLLn3nPqetL31OsIDeEN5C/hBjfue//kvLxdbhXid0p9uVc
+	GjbHbeznOzjEZmsCc+1E0jgaEfnRL5AOLmSuEQr2mThRp21MIY8sLZJS2YCoJ7aC
+	qJxSBxXECqiVet5deGhqEmsCXbbwoJTolKwHk8hqdT0VztHvgV6UUG+GTceHf+Zu
+	ynqFN0pqMQm4GCxIaZ7ltPxwwNmX5bGdzkg==
+X-ME-Sender: <xms:DOEzaiBR8MnYrMyEQhfxoAI6BrZWjci-P45LYLdLqeEmGK4JO9YumA>
+    <xme:DOEzajgL5NB0jqmNhlOzvJ9O39pX6rTBJvWKu-1wbKpqXz3ZTfRB12rvfQffUmijl
+    -6A0uGI3hhilRQeUMBL4JdFOz2u7odg8wbbrjErqSfWtC7gUUeyeQ>
+X-ME-Received: <xmr:DOEzaqkktyiB8fs0BdopgRBXwvzf-FYXFaA6UXALYch7LxXbD5Tro_L0REE4WFP-frI8SAezxbzHrizEQ7PAqhPMJFW9TWt72RgqJ2FNzQ>
+X-ME-Proxy-Cause: dmFkZTGOz3BKUnSAhAvsagihXM+HdSQ3eqVfojZWxQ8QD6nmjhtER7sZBZgOSMQW43zABn
+    k6cfbhnat62Gg8RYmyYw7LE4WZ6YSaFI9i/rPnQK2TLG88Hi3MCVnG5itmhrMasZMf32oW
+    tT7n38RHCVrg2pWmzTeMuivGSOf5lbaDeMnYSOhZtmXOuaEZAOpdWJJmt12dXb2BTj3xQD
+    /JTm1kzf6nmdKesONSqtWQj7v3OeWOoCz+uihMUv7ruq/py7+xTvfsGgbLSumvcWK4wJZc
+    gFe6jBeiIJwcfiQ4rY//DEQ9GpwbCWzdSJeeA53W688v/zNkwe/y4UyyCyOjQO1UrGelTb
+    WGcvef6Ycj+V5jGiBKWZkJ7s+7+Y7KEt3VChZRRK0y0hiC6M+L5TLn3Q8k3v0UhLDwDjFE
+    2oYe/BCqNPnzIjhZ2wjscrwKoP/aAMy3mquIlzWQXjZ78MR09u1YGIpSi160DKJs/bHZXP
+    Pcaq92/cqe0WDX6fAeBOkNgAXyIyNPS+td/K6nreNX3JRNbR/wxEd5mY3gAPXBI4nOsorb
+    Fwb19YV0ZwQdYjAMfsj1wjuKlKreRuv9cDCej6qgMqRAQp7mlBIVwhTbWUSZKDZedWDo14
+    AEgYzXQqRgc0qb5GmmJ5lucXcoFAgFW36JnldNlGeDOUHhiJWFRXGtZRly5g
+X-ME-Proxy: <xmx:DOEzavp_1hOsj-tr1Lr7j5W0YooYLx0vzYdxzwZxEql-w1siYhCfzg>
+    <xmx:DOEzajFPCJ0_XRTDMF5m9JOvM4zxKq0zJMIhX7N78XIAQt8nxaanwA>
+    <xmx:DOEzarwLciEQezDkbZzuVu6gjFFX_VzEpLFp1xuH1aehRbXJ1scAUg>
+    <xmx:DOEzaor6VBUm0SG_vs2McKkAtVorkQmBPX57A8_aPkFjNH_Vznngrw>
+    <xmx:DOEzaoX3DT0UlRwVB51zRO7d8-gh5lUO_9-pYXr7MeIjxC_Z9a4huD6c>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 18 Jun 2026 08:14:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 49e595c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Jun 2026 12:14:00 +0000 (UTC)
+Date: Thu, 18 Jun 2026 14:13:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kristofer Karlsson <krka@spotify.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/7] More work supporting objects larger than 4GB on
+ Windows
+Message-ID: <ajPhBn7n1wR-sii4@pks.im>
+References: <pull.2137.git.1780570272.gitgitgadget@gmail.com>
+ <pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: ex19-14.utu.fi (130.232.247.54) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWkhZXkguLT4lWFxYWFhYWFBeUVxfSFhISFlbSBwJCQAHBCgdHB1GDgFIWUhZX0gPARwbHA0aKBgHCgcQRgsH
- BUhYSFpIWVxIWVtYRlpbWkZaWF9GXF9IUEhYSFhIXEhYSFhIWEhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWlpIDwEcDwEcDwkMDw0cKA8FCQEERgsHBUhYSFlfSA8B
- HBscDRooGAcKBxBGCwcFSFhIWV5IGwEECRsoDBEJBAcPRgsHBUhY
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-X-FE-Hostname: fortymile.utu.fi
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=fu+ovZzqXODDq/Gd78V+MRZJPuFhiCeRUm9y/7Dld8c=;
- b=Uj4DBxc5PI0Bv+dBQbcayo0TDiLozspItG5W7vZSBFqSOv+1KTe9C31wv2299UXAnkw+i4aHQdlK
-	RWCZNPuvkI/sCYm3qg5Xwo4rABmxLAmalrIst5bKbOGFbeHK7aHT+C5eZ58I+n8wMFz61t5qbcxB
-	6aUc9MTo76D0+2sc7IbJCBK+AlM/vNTToyPSsg8VSbVDlcxNiUTLt76R9d+CgLJteZJNRK+98PNz
-	pbR2xS1rY29VjPdX9xU+H+My++TVUpVOKJ3Cfl3rfXq0C5cYDUKuUgRcfQJ+GkomCCRsRJHML9Ts
-	Y6fpyxjY5L5tMNC93koefAYRuunPl/AfF/BPng==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2137.v2.git.1781524349.gitgitgadget@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> Silas Poulson <silas@dyalog.com> writes:
+On Mon, Jun 15, 2026 at 11:52:22AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> This patch series tries to address the problems pointed out by the expensive
+> tests that now run in CI: t5608 and t7508 verify various aspects about
+> objects larger than 4GB, which Git does not currently handle correctly when
+> run on a platform where size_t is 64-bit and unsigned long is 32-bit.
 > 
-> > I'm aware this is a very minor change, but it would be good to not let 
-> > this fall through the cracks.
+> Changes vs v1:
 > 
-> Thanks for noticing a typo.
-> 
-> Will update before the next issue is sent to the mailing list.  No
-> point in changing it before that.
+>  * Rebased onto master, which merged ps/odb-source-loose (with which these
+>    patches previously conflicted rather badly).
+>  * Removed superfluous size_t s variables (thanks, Patrick!).
 
-On that occasion, please consider also these fixes:
------8<-----
-Subject: [PATCH] MaintNotes: fix typos and grammar
+I skimmed those parts that I was previously commenting on and am
+happy with those changes. Thanks!
 
-Signed-off-by: Tuomas Ahola <taahol@utu.fi>
----
- MaintNotes | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/MaintNotes b/MaintNotes
-index 12ba677c36..44b29c9e10 100644
---- a/MaintNotes
-+++ b/MaintNotes
-@@ -82,7 +82,7 @@ available at:
- There is a volunteer-run newsletter to serve our community ("Git Rev
- News" https://git.github.io/rev_news/).
- 
--Git is a member project of software freedom conservancy, a non-profit
-+Git is a member project of Software Freedom Conservancy, a non-profit
- organization (https://sfconservancy.org/).  To reach a committee of
- liaisons to the conservancy, contact them at <git@sfconservancy.org>.
- 
-@@ -245,7 +245,7 @@ by others may cause conflicts with their own work, and find people who
- are working on these topics to talk to before the potential conflicts
- get out of control.  It would be a good idea to fork your work from
- maint or master and to (1) test it by itself, (2) test a temporary
--merge of it to "next" and (3) test a temporary merge to it to "seen",
-+merge of it to "next" and (3) test a temporary merge of it to "seen",
- before sending it to the list (or asking GitGitGadget to send it to
- the list).
- 
-@@ -262,10 +262,10 @@ using the topics that didn't make the cut in the feature release.
- Some topics that used to be in "next" during the previous cycle may
- get ejected from "next" when this happens.
- 
--A natural consequence of how "next" and "seen" bundles topics together
--is that until a topic is merged to "next", updates to it is expected
-+A natural consequence of how "next" and "seen" bundle topics together
-+is that until a topic is merged to "next", updates to it are expected
- by replacing the patch(es) in the topic with an improved version, and
--once a topic is merged to "next", updates to it needs to come as
-+once a topic is merged to "next", updates to it need to come as
- incremental patches, pointing out what was wrong in the previous
- patches and how the problem was corrected.  The idea is that if many
- reviewers thought it has seen enough eyeballs and is good enough for
-
-base-commit: f9b08c9b285c9154e41b9f5fce7506018b83dfcb
--- 
-2.30.2
-
+Patrick
