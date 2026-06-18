@@ -1,72 +1,119 @@
-Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2AA31ED7D
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43601DDC1D
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781798866; cv=none; b=Ym3Ma228iKXIy62d4o0DKpxbFzzNQv9X67mO8O3bVYcoaNWGQppNOHpg4F23wPYI9ZgGXYbH5qkIm5P+oSWdVzM4+zw0XRb4/zNDCuko5+6EPtXb/n+4f39ywEHgHwP/x4t0ZnAdi5xFUywKsw7vvo52N8SQj7zmNiTF5hrhzt0=
+	t=1781798899; cv=none; b=P9+aJQBZQAKbR+FRXixvCpadMcdsRFY0lHdY04r9XQbPKnHnU9gtIyt4zCZC3pep8XqJTYc/cM7JmAsL+nGGNjrBg5RVaKsQ3nd8GCqGRW5g9hzJZmtuR9fzgn8F4Q7VC2q2ViC/2KH/aIKeMN0G1TdUL9p5jeuHWNsRlQtD/LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781798866; c=relaxed/simple;
-	bh=2ev9uIkI6ALHYPp6oq2iYaXQhUpaKsoJaFkJwoj3fkk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T1vRY3vrzKNmSFSCrZi5oMiR3xuY2J+9uciAXO7B8KtsKFPCulyvrpp/alS+qL6C6awC9gm0vbc7ebnCxXIB2wfxrMvNhlFhALhnUW67fya3MGvSMipJ1rLBE2xBYb9PaAD1TLKs6ODAAFUQrMF70iDyiosCtzrk4/fi9DN7oTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ap7y0Yrd; arc=none smtp.client-ip=217.216.95.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1781798899; c=relaxed/simple;
+	bh=A8MRkTxs26Vz4fAwMGlqoYVMoJGgeOrgqZB0KsYuo7U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eXQoqcS0WJ+LjN5bWGtJ20YvqY8LumrnftD8xXz2DfPZFEtisI8aAx52D2k1rbEeZ97nlTdkgdeKEWnOPVSzaf1kqQsuVzRojAGZi0OjxExSBUc0Qbdqng88EvGaP5l275YBEnVf7EzkqfJLUD7XMuyGXLEwbRjqs1erZbXYixM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UoTmgnKO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ehpWqBIE; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ap7y0Yrd"
-Received: (qmail 167847 invoked by uid 106); 18 Jun 2026 16:07:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2ev9uIkI6ALHYPp6oq2iYaXQhUpaKsoJaFkJwoj3fkk=; b=ap7y0YrdUGsmqFwjbvaSxEPKLwA2NtY/FudAJm7FoOzkbw8qX6aEiDj+X7n8Ak96sVAh/iNyIJ/jhrLjgBIopl/5Qx0iXSqX5HSinMMAW1iQMndIQRH+V5WOi1VGM0bBGd09KwPDbXN8XfG2z1Fyek8mEkYYIyjqnzSjgAkvN5xdq7eAlsxmd3ejjlZfZXwe/Oma5KEfgZ2uYyZM2shO2TfFFEMC/tgBLrpIIoTKttjBTLqQPWfYrECxTC3jRzJFEH+FOplFhtrcQ9snM7XgPWDMPIeZy/HRY6Hne7LRF/Y93LhP47KNCZ9Pd5JsQ9GDBMFTUH6sXIdMKoFOfuBZTg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jun 2026 16:07:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 474120 invoked by uid 111); 18 Jun 2026 16:07:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Jun 2026 12:07:44 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 18 Jun 2026 12:07:43 -0400
-From: Jeff King <peff@peff.net>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: Kristofer Karlsson <krka@spotify.com>, git@vger.kernel.org,
-	ayu.chandekar@gmail.com, chandrapratap3519@gmail.com,
-	christian.couder@gmail.com, gitster@pobox.com, jltobler@gmail.com,
-	karthik.188@gmail.com, phillip.wood@dunelm.org.uk,
-	siddharthasthana31@gmail.com
-Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
-Message-ID: <20260618160743.GA821987@coredump.intra.peff.net>
-References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
- <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
- <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
- <20260617202744.GA3465855@coredump.intra.peff.net>
- <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
- <20260618160504.GA818042@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UoTmgnKO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ehpWqBIE"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B8B6E1400184;
+	Thu, 18 Jun 2026 12:08:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 18 Jun 2026 12:08:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781798896; x=1781885296; bh=GfQIeYHcPd
+	LhtQBoP1WKacxgpty7XVUWHvaSfDebjHc=; b=UoTmgnKORJvAlQ9RQJTmLtTJ4m
+	A6JTe9uUMDfV0DA/OvXlrbCBIrGHXdF8W5zWKsGHtRLH3oK++2qy7y+YQxpzVXJk
+	9UlPdGL9YBWWd3SJ9bgOR+WnzlIlvB1dpReMTXYdbFjuv/nmv/36rTHu4Y1Xx8py
+	TtewZJEe2R8ApB8krC8b6XM5/XUx3hBP4na5sEdb15ziFBhJZzmyngPaESqftqjC
+	OHELc1bJfXUoZExS6tecQ9YLlzjT6I7TxfsZx+jZkYeZttrr/1I+Oav2Xr+z15JY
+	ReZq4HxbmMtek6ce00WPTnPa2HSyWXLVseygQbBDkMj8wJqmsbsfLE4ACkPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781798896; x=1781885296; bh=GfQIeYHcPdLhtQBoP1WKacxgpty7XVUWHva
+	SfDebjHc=; b=ehpWqBIEF2SgjiPS+uCEtvbl9h0AAELRE3wInUHJE6dbiIvQ3lD
+	fQdOG80/BAYTtEgiQDe7nsIcjcElVjNXdhWAgoRqpy8S1kg7vZ+d53keJsm4zQVk
+	Cv60pdWHEb4K6+QTcaaDZeQKWgLj2QFHTGMxObbzz4EdQ/ZfWRL3en2puvT89C+Z
+	mFAbBrMhBCsttQH79V3iAPECYk1JCmke5vskx7691DeQ7SeJu3oPSmwEpas9AsBM
+	42zJgaI52AXKZsVBPKqFpYPzVMNgAOADNPvNQbFc+h3KnFyF2Vbcth704DNzkTNH
+	3F5K4Tvk5jWzRrpdosTWqkI4p5h9PRJiIEw==
+X-ME-Sender: <xms:8Bc0arwu7aWsWn3waKbELNDLJiw9YSBAUU6tpjE7uQhZhWl7Rgl1_Q>
+    <xme:8Bc0ag2qjcYtW046ghCfCfC_0Y1UizDMSaxlqIjwQFuQiYbxnB12uio6VgPiYObPL
+    IFRqxUSZ7F_xy6IQ3YypB9Za2GEmBECk2lGS_hs4XI0COgJgYC41w>
+X-ME-Received: <xmr:8Bc0aryDxGnt-q_mgXEp_meRh4VJ0ILDHveKsI5CyuwnlKPFYg5iG77ye_r5KRWx7KG8jBE2n6yCBNsatvqEagUmNersKPl9PXdI>
+X-ME-Proxy-Cause: dmFkZTGZzf02LuFd28igBi12qmA3CB0y45DwiZXSKNOHPdiGnB3Xhdmr+XXgjwSqgt82eo
+    kkqO2RFr1B5E5h934dvVV08OIEOFI438jaPkgzVGLAZAPQCmzGwjzeE+SHldIy/JJCCYV4
+    Wi4N1TR3dwi6I4vXim/gldIEked4UWFmZ1L9wEqGvDhzTgDBrQqUk2E/BzIQnM4EWE5ZzC
+    5t3Z3cAi1v+fq0YCLzHSMtMrqQGKv/TfLMfYHaHWY6+3Wmx7z2neL5ZGI4fNS6NKw/k58V
+    xezj6Gr0N/nO352pY8DNEU9fo5aszlLVyaYD9+bkMkNYZAy1IeaRI5+C8slqUj2A8r6AOd
+    wifnnZMA0nrC3Ipa5lVFP0U/HPX/LQU9MglrgIzU+YAS2gL4COu0JdUGT+7aEpBATle4rd
+    r1PGx4zFyAxaILJkCLWT5OlWBNOy/IYhlUNYmdBnshgSd7pmUrp050wyeKbxo9GiLwHsDo
+    Zgicuera3o8DHBv1O9aQ5KvhmJ9zQX9kzfHEWxxHlTGxoZEyj2G7/rw8RtvDZXf0KMj647
+    K01YWEnhYBetOrg+WTtSrK793XPZ09vxY5kQFb5o7CnsXSIfWFoW/KTMZXFBSgDuTuZADe
+    u3+XE6CJ9J9KJuUpgv999CGvjLFLRrc5ONq22PAyEakh975B6pgIhuPh1+pA
+X-ME-Proxy: <xmx:8Bc0anHTC1h5HrtZlLYdaCSGR1jNvhcCMu8rfxhlWSodtcYhfzX4Iw>
+    <xmx:8Bc0aubseVmTdloNqpspHSDLTy7-DaSuMn1iGkST0-OAii4sv3hHZQ>
+    <xmx:8Bc0apDdou_y0vy0HganFuYl9g4P88AgYubOvlFfkGA9hfFdPBf7Gg>
+    <xmx:8Bc0ammxkAoWzmlmRjLtZWQ4NowFW_wENQ_JnBHbzEZ7qlAazsspkA>
+    <xmx:8Bc0auDFAZn82MVJNceKPhSvFvDCsYNiSOnBvXnUUUgoKr86ZbbGWiGo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 18 Jun 2026 12:08:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt
+ <j6t@kdbg.org>
+Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
+In-Reply-To: <37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com> (Phillip Wood's
+	message of "Thu, 18 Jun 2026 14:42:25 +0100")
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+	<pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+	<9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
+	<78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com>
+	<CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
+	<37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com>
+Date: Thu, 18 Jun 2026 09:08:14 -0700
+Message-ID: <xmqqcxxnsufl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260618160504.GA818042@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Thu, Jun 18, 2026 at 12:05:05PM -0400, Jeff King wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> > From what I understood, we can only get the direct next commit, but no
-> > more reliably ordered.
-> 
-> Right. There are other queue implementations that could allow full
-> in-order traversal (e.g., a binary tree), but our prio_queue does not. I
-> suspect performance for other cases would suffer if we switched the
-> underlying data structure.
+> One thing I've just thought of related to this patch is whether we want 
+> to protect branches that are the upstreams of branches that are not 
+> slated for deletion. With stacked branches it is possible that a branch 
+> has been merged but has other branches stacked on top of it that have 
+> not been merged.
 
-BTW, there's one extra trick here in the iteration: you might see
-commits in _both_ revs->commits and revs->commit_queue. So you'll have
-to iterate over both of them (and I guess push the loop body into a
-function to avoid duplication).
+An interesting point.  We do have "this topic is built on the result
+of merging these other topics into main" and I expect the practice
+is wide spread.  These base topics may graduate first, but other
+topics may still be updated.
 
-We may eventually settle on having just one queue sturcture, but I think
-dd4bc01c0a used that to avoid disrupting existing callers.
+But when you rewrite these other topics, wouldn't you leave their
+bases untouched?  IOW, a new iteration (i.e. "rebase -i") would
+reuse the base that was used in an earlier iteration, i.e. the
+result of an earlier merge of the other topics, some of which might
+have been pruned since then, into an older 'main', so it is OK to
+lose these other topics once they have graduated, simply because you
+wouldn't be recreating the merge that you used as the base of this
+remaining topic, no?
 
--Peff
+Or am I missing something?
+
+Thanks.
