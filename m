@@ -1,84 +1,39 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8EE318B85
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CC9291C10
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:40:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781799978; cv=none; b=f3pjwaZy6pSRaSjdKCu78jzveVmIFnJ87WC3A/3OWX1k5JYKIrLEwwM8M3ETIWOW4Go+vHG5ZtfuCaGHkrB6pr4/a7yIn0C/qmBUBfEz5cjMkOtdNbqHTFivETcTHyWoVDEfzyZDoWZPtskFokgAZnbAqqesD45Y/eBOjpGGwMQ=
+	t=1781800838; cv=none; b=olWz12UdJzO+cnvO2EiAW/v0GTkNFPyy0gwEId/hGugBs1fXeIVh5TQACS10Li4U1YND93hv/Pd9V0qEmYu0T7zRpjwC7QLuUiYmYpd1Cktc0YUtozm7UNGbEShkYXq5Tc2+1CtmJyVOfRPa+jACfCosbPZokc027A+j6W8YFlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781799978; c=relaxed/simple;
-	bh=r3KvzmirWkUVvAyS16Kz0mTiPszxoL4QyPFlw/W+pw8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jRMTNotYTRlH5udlNOthR4vMoBMmUvFgKRwd8+DO8f+cF2t9C01UN20TMuF4yvOjYFl0fo8e9XyPwMrON25AV9SAlLFcTXZoYuFejcUhRHqydzJQAtL8dXqJykgCJUDGYXbJJybihhGWrgMJEa/u/2W3myybT6A5QQOmbkqEkrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DIWxgMaM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cDBn+6SF; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781800838; c=relaxed/simple;
+	bh=hEg0IPxMeM52jF/wTXLOrpMlMh5oHsL5jtG47BRcmog=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mtkPZhbnl7lfp5DvVXkL+dsShemhs6w6dIuZI9Vor8D+jZgSnOrzJ4BkZIQDb5l7FOsZDX3PDyYnQNPaHbkpN5tLbHbF8y9lQC1kiXPKMAurxIVt1chxs3VNxdT+lCBcjuM0QAZszKJuTy7CjMBpiC2yEDEWWCyp37jK6HRROmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bwLbKEof; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DIWxgMaM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cDBn+6SF"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1E937EC029A;
-	Thu, 18 Jun 2026 12:26:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 18 Jun 2026 12:26:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781799975;
-	 x=1781886375; bh=0Y3FvVnNgYMoqFlYdfUdvFVYGJtKbESc1fcitrWpcr4=; b=
-	DIWxgMaMEEztP8RgvYHeHfyFAlmAvU390oMRsVTkRerLmjv5gto9mSr3Hq0Klffh
-	nbEMkWTBwyMUCs0l222CrH4j5xxAqhTXU1KwrxRLtCiYRdLdHnzATowlPL+1rfmc
-	leAtFv/nEcWXT0bXJhYjL7OHzYVPv2QYPH9T70Fvqo8Axh817sS5ggDsDpbmXMGZ
-	W5s+hp9H61TmunHf60AJKIgvjc0Av8GJmIl06+GE7xtuRVqN2KKEvDf6fNigZ1QE
-	NhGffyPJqwgqBhuy95BIYDN+hlJUKE1/CUsP+PobuJgBEpOMqc2IT6KGpewgy9xq
-	0iaKGwAL87VCe139RdsuXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781799975; x=
-	1781886375; bh=0Y3FvVnNgYMoqFlYdfUdvFVYGJtKbESc1fcitrWpcr4=; b=c
-	DBn+6SFd6q5B7kKOihcvWTR5Z+4bMGWRdrNFtpqqgIi1Q93S6NuIQw27YvUoArJc
-	zVmMeXr/3AhaOfcRegOBspFi/ExcpS/mWYn50/TLmj4v8JEC6Rn0Q6JMzHwLZpIC
-	H+99lJU09a2fMO4y35b4hpaKFt/9ITuWQkR8BTcjmdZSeXAX5atUYNS8IB/eZML0
-	sFgCjuHRtyc7V79zQCGKnBpyPuUyoVDtopq7Xa59HwERN+lyojqLXt9eaoDSI/K2
-	vDwolZodG9GIOhoVyjqqQhu+4hRqDz97LoIQqUomj/9cw7AR0lX6PKC8O7K5vSs/
-	3b4+PAGM80f0qjymkBn0Q==
-X-ME-Sender: <xms:Jxw0astJCCnLT2eKMiJBcN7Zy59HfGyaQ5pD-4uFxaI9M8EqVq-9Fw>
-    <xme:Jxw0ag7Fya2xruDJHOWtm8rib8WxCGr6bBBVxDrsp6GssUxIuksXhQAGzzG9ZpCZp
-    XSEzRIY3_UNjByv3LAHda0R62uGPWxJmU8BJb8MEher73V3J_noUQ>
-X-ME-Received: <xmr:Jxw0alKDWUe9PvjimafCBQQvIBAHKT6YBw5OL5o6fSpE0iMu0ol6tJzF0Zey-Nk9kAv3BvqCqpwmTRyJx3bbyp_6UHZvzNDSPfbI>
-X-ME-Proxy-Cause: dmFkZTE2emUgX3Aht1+9JZT53Nc7GYWA0brQyP/LrnsQ8OY5tqN42LLpnVZ5QITWMO8w3S
-    jt9Cu88aF+255sUef3bqfh09AfjUVSofzHohZJoOM7U/pVbYz9q8POIps2RSQbxHQ6DM13
-    Wm6ei18P5h2OIFeOK1iRMlylGhQ+7uVjhh7pTu7kWGhaqGwn2wWl8T41kx/ZIobrOtkFE8
-    TyGYnapy1LmBrszSXqurwgh4mc6zVHOeCp8u5I2T/ndiwrg8EASCwbrSXCQtSuJ50yUDsS
-    E1mrnec4i+NegpPy44hTU+hAb3YjvB6KhdIK2ttbUzA9n3H4TgM89mqJEqnhZQKGA7/zJL
-    Dv5lvgohsceCKpuc/wVLeE8tR6zD2C/mViOgpT9eRYVfufrR0vt72KYFD8ft1oxtNx7C49
-    be2OMQfncEjXbprzvD/uHLYBw/M0yV4OGaVlEyOZZWkrSnZ8+OpEJjPSzYOiAI6J1d19zL
-    RvbT8pwJGi9yGEtDWSz+ih6U13/0rS9PWvju10QARvJllkQCStXsCqDiLtnMwfU6ugVQNq
-    yRsZDg/5fcnUGm/AsEQt/YenlrYhxvpEOyqgQE1SR1o6uPq8b9ODnK17clPcP7nUqjKk7D
-    va3Fv4itGbx9fK1INoejZDUN0cOPedFscl5VpuELxYUZIkD519E2geGWbP5g
-X-ME-Proxy: <xmx:Jxw0ao4Ze-GugY1KfpcU0UJZ3QQUNQ5_uCoaUsvbuGQuG1lwwBPCsQ>
-    <xmx:Jxw0agzxqLePog0n6ZB_TKyzoZ-OTyzgi_JFItS-g48OHAUi91esOw>
-    <xmx:Jxw0akbrIKUiM0SumAtUpIpT8cqgfHprzusOSmX4yFs0SEgL74PUIw>
-    <xmx:Jxw0aqQawOg0LZ-O9GZJKwQvaHYj14h-6qKUgR0O7_nvaL8Y0PDa8A>
-    <xmx:Jxw0ahDSQnTIzg7fSYG-D4LyVb98Q8_CKD8i8kmyPmdUeHUldw28eiy2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 12:26:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] SubmittingPatches: address design critiques
-In-Reply-To: <95cd81dc-baea-4318-9f01-6a795f8eb5bb@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Thu, 18 Jun 2026 16:43:32 +0200")
-References: <xmqqv7bhxiby.fsf@gitster.g> <xmqqpl1oteoi.fsf@gitster.g>
-	<95cd81dc-baea-4318-9f01-6a795f8eb5bb@app.fastmail.com>
-Date: Thu, 18 Jun 2026 09:26:13 -0700
-Message-ID: <xmqq4iizstlm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bwLbKEof"
+Received: (qmail 168203 invoked by uid 106); 18 Jun 2026 16:40:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hEg0IPxMeM52jF/wTXLOrpMlMh5oHsL5jtG47BRcmog=; b=bwLbKEofgUQDKk5+FuGSs0lNVtOs8HRQwNPr6Dy4MH8kfzlDBY5sM+ASUcksjXChX1MqbQRiiXxCwawhh/j5JDV2RDPxr+e45hKZe6UnZxcMLVHuHx8qB3zVn3TtXRWJsNGrAI1YZjjQ11ql+YsCEjE7Hkf7garIHHeeYsMJ24mVIJ+FbZTC9H4Fczju6ZY9ogOk7+Ks/B73QxoCHZez34zPvGtxVGqTbe91iITyuXH4n6PAE1fX1ogfqXm6l0Y7ewpHcqUJ03/59Q3pf3e+cdH1o3/BNYJBvjf8wXIPegtV1ySMYKLf0+5CsHmtknjFIwcYQ1TOB/bSgR1sxYbDjA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jun 2026 16:40:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 474539 invoked by uid 111); 18 Jun 2026 16:40:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Jun 2026 12:40:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 18 Jun 2026 12:40:35 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 7/8] refs: fix recursing `get_main_ref_store()` with
+ "onbranch" config
+Message-ID: <20260618164035.GA1218204@coredump.intra.peff.net>
+References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
+ <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,25 +41,97 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Mon, Jun 15, 2026 at 03:56:53PM +0200, Patrick Steinhardt wrote:
 
-> You can imagine someone from group number 1 who is *not* in group number
-> 3 use a weekend to implement something. But then when it is submitted it
-> turns out that is a very “centralized CVS” idea which doesn’t fit into
-> git(1) at all. That’s easily spotted by group number 3 by just looking
-> at the proposed docs or design. Now that group number 1 individual might
-> just have a bunch of code that is dead weight for any proper Git
-> workflow.
+> When we have an "onbranch" condition we need to ask the reference
+> database whether HEAD currently points at the configured branch. This
+> unfortunately creates a chicken-and-egg problem:
+> 
+>   - The reference database needs to read the configuration so that it
+>     can configure itself.
+> 
+>   - The configuration needs to construct a reference database to fully
+>     parse all of its conditionals.
+> 
+> The way we handle this is by simply excluding "onbranch" conditionals
+> when we haven't yet configured the reference database.
 
-That depends on how obviously wrong the idea is.  If your proposal
-is to write another CVS into Git, that may be too obvious it may not
-fly, but the thing is, "proposals" that get the canned response you
-quoted are often vague enough that crucial details that divide
-"iffy" and "obviously wrong" are missing.
+My gut feeling upon reading this is that some part of the config reading
+is being done wrong to create this chicken-and-egg situation.
 
-One way to make these proposals sufficiently clear to allow
-reviewers to tell the difference is with a code that builds.  There
-may be other ways, but that is one obvious way to start a meaningful
-discussion.
+I'd expect the ref database config (like the ref format) to be read not
+through the regular config subsystem, but via read_repository_format()
+and friends. And while that does build on the regular config code, it
+should never enable includes at all. So includeIf.onbranch:foo.path is
+just another uninteresting config key to it.
+
+In other words, there should be two passes over the config file: one to
+load basic repository information (and not respect includes), and one to
+actually load what we think of as user-visible config[1].
+
+And it seems to work. If I do this:
+
+diff --git a/config.c b/config.c
+index 45144f73c5..343af2cf9a 100644
+--- a/config.c
++++ b/config.c
+@@ -303,7 +303,7 @@ static int include_by_branch(struct config_include_data *data,
+ 	const char *refname, *shortname;
+ 
+ 	if (!data->repo || data->repo->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+-		return 0;
++		BUG("chicken and egg");
+ 
+ 	refname = refs_resolve_ref_unsafe(get_main_ref_store(data->repo),
+ 					  "HEAD", 0, NULL, &flags);
+
+and then:
+
+  git config includeIf.onbranch:main.path alt-config
+  git config -f .git/alt-config foo.bar baz
+  git config foo.bar
+
+then we correctly read the value without triggering this code path.
+
+Looking back at the last commit that touched include_by_branch(), the
+problem does not appear to be about a chicken-and-egg at all, though. It
+is about reading config with includes when there is _no_ repository at
+all. I.e., this:
+
+  git config -f main-config includeIf.onbranch:main.path alt-config
+  git config -f  alt-config foo.bar baz
+  GIT_DIR=/does/not/exist git.compile config --include -f main-config foo.bar
+
+will trigger that BUG() marker, and quietly returning "no match" (like
+the current code does) is the right thing.
+
+Looking below...
+
+> The consequence is that we have recursion:
+> 
+>   1. We call `get_main_ref_store()`.
+> 
+>   2. We don't yet have a reference store, so we call `ref_store_init()`.
+> 
+>   3. We parse the configuration required for the reference store.
+> 
+>   4. We eventually end up in `include_by_branch()`.
+> 
+>   5. We have already configured the reference storage format, so we end
+>      up calling `get_main_ref_store()` again.
+
+Ah, the culprit seems to be ref_store_init() calling into the regular
+config parser via repo_settings_get_log_all_ref_updates(). But that
+feels weird to me. Either:
+
+  1. It is application config that should not be something we need to
+     load in order to initialize the backend. We could lazy-load it
+     later, or rely on higher level code to set the option.
+
+  2. It is crucial to the ref backend functioning, in which case we
+     ought to be reading it alongside core.repositoryFormatVersion, etc.
+
+-Peff
