@@ -1,104 +1,152 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D253B7778
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 08:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156A63E3C4D
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 10:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781773071; cv=none; b=BRafziSRmMZpOGzjJuDrNoVLwTLbRPlrfjupeQNVUNQkRK0utPTFTZ2ClHTGMYv8l7ZEIB3KCH5RhwGn0yDnRwtJiQoz7R8cUw8vX5FiZIyv1MB/IMXDnIye0mVyvMP++nZjZbU9S+aQwz+lI9BIP8XHKTxzDE4vRTnUkIaLW+U=
+	t=1781780197; cv=none; b=gbZnwNw8kB0ywolwp9yTwYzwgtV5LPofxsDGzq6t930dER33AZQmY1o2efm4kTr5bSz7iGkZG/Rfh23pJWR7d9f2lUuiulRPBdCcg8mWnFERrNWqrr1mdEdwKPl0tMRibW2119GHkWtzOaew1ebBOG09jwjtItztMkXJOKZ/YMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781773071; c=relaxed/simple;
-	bh=MDQVaJpWyEjp2IEHq9y3KMWoYfQkpYM+k+luTidhqaY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=b8qe7tLEZQy4WHEpGOlQE4EMI0s2Gpj7fv9SLnhXf0YoWJzk3UF23BzgganlTftm2L89TtnVay4BIaYCA1aPZwuVZphfY5j3/8aTXSB1JLN+Ji1Nh5hzWA/ZvqQRvbbRgfqpBMw6blQGRQJDdGg/5+ACCqcZN5/saic2bJGRPs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XH73RiTq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bQtH4UkB; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1781780197; c=relaxed/simple;
+	bh=GSYTYsu3TydslO1Mzq+kHPaonEVx1s3IDSraf4cwcWs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SVOBIT6vUENUKqu9qjepiIIRMcJRx270zt/JYks1jvwHXEycOonsrXZx3SpirwHntylVVgUDxw6CE6LgsG0yGTEwWBCII584m++u36L5rk9s66K5TjsnRrbn2KB8qZUiYYok4FFH0b99RZdT152fRuZxnwgGRRxEJujdw8e5Fp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=V3OZxrgf; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=XrBUtdAU; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XH73RiTq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bQtH4UkB"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A38851400079;
-	Thu, 18 Jun 2026 04:57:43 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 18 Jun 2026 04:57:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781773063;
-	 x=1781859463; bh=MDQVaJpWyEjp2IEHq9y3KMWoYfQkpYM+k+luTidhqaY=; b=
-	XH73RiTqO1AYMBGxu261SrwzZwja+HNjNxuXtsu6zJtFYRKfgjsppuMk+TnMpSrP
-	IWE4Aie7phOv+RcfohESpDeamEzIvDSD/lNlKThJ7fjXaCHS9fTNB1LINArd4yHq
-	k4F2kyUhJpOXltakta0xEGUOdvdXdhct6KA9RCeYe+rfNH9l7SLYPi2y9avIouBg
-	wRvDa3j4xBGJtFdskrXqZk/suMx82/TNGh6vWWaZlNRqkGFTMzXgwnjnDODUEbGp
-	UbRGmXXnyYZDvaShIYr2z9XWTHuWp4ffDkOapmEwGJ3OQ8SrDY3xGfAee0mmQjin
-	cl/bOEEHohxLMBwjQemmuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781773063; x=
-	1781859463; bh=MDQVaJpWyEjp2IEHq9y3KMWoYfQkpYM+k+luTidhqaY=; b=b
-	QtH4UkBJxKusI0w5jNtvl5ZItEAaxNaK/VaNJsAAcgmweswQV+EuthCOHnPutJ65
-	unCHudK06T+ytXl+aHpOWvKDgOspn43lcB3qMrFGg/uC5cfSj09O1Yi/Mxbtz638
-	x6R5AEmZrWum1l//tLDqcY8icpMuXf4ze3bdbdBugBHD7VR38ltehBsVqIBG/F8V
-	9XcjqIGnBGafpq5QpiYRwwZcllXl0AZhHLgWeSBz+6EHw+5t+R9YNuktb0oHWfS7
-	jE9gNG6b0uROAEsAqb7+AXf5tz+VPiNZKbSYQasdU5Nh1n7EYcIax0LLgyFr9he9
-	l7czjMpZUwqTCrsYVcY5Q==
-X-ME-Sender: <xms:B7MzalKXi1GE1rFdMwNBuBEKIBylbh6auTLqWgfBtlBeiK3ZoEIGXVQ>
-    <xme:B7Mzar_tiZn2xGB3KOegrAQt-txTCSVfALxC7oKUGRBPM3Zv4QW6eTqQg0WfM5Z5j
-    VzWFpyNyVwfjfytMCrG-UF9f8oH5s4z7eDyxwUt1nCe5L_O-AHzbA>
-X-ME-Proxy-Cause: dmFkZTEZLyaoJh5ax8RsShtcTOgOyNl/1pbSTJtJ19ZP3W8XOQ5qEkBCx8rmaG5UDsd940
-    F8D+U9U4luyims5czeKKieNmYrdHGXoxQjGazFlx4zkB2fS4QhFH7FlYJ6f3siOwGuzuRG
-    NpSezbMyUGmorSa0+0zaJ1LyUz0iPQsMieL2FrEPU78gezm+csDXqpX9FMN+7rQUiXSmU0
-    MiT4bMZbpgL1MADTQHhHFg0Cutldb57HfjER/pLwPMWgYcfRB7XIpSjIejBDcKvMJnlu+K
-    usyS2JOUzljqZ6rqnSrLHhFKQ356E1FgMAhzr7V0isUuCKHgzyz9CZoSJUdnaFwqvnMmhZ
-    W97VofA0RMs46U42iAtIGE14koRYOruxUzjAveIqqoPIbZvjAkRPgpmwtO9BtU/2lpPxvX
-    PP7xWLKoFaEFGp497mL9wqW9Pgt/UbDQ+DbOIw1lpyHQQgfCeKDfDP7ogSqVCOskgEvQoN
-    Q5D/UTMaZt4eToU7CifYoO8v3r+QoopL+9siZX8m87JGsHBDTTPCtIHmv8TJsdd/KfYKf/
-    Xvtkkreowq02zsettB5iVOjuoxJ5lBy6u95FzOp2bBFgzUVtKfJjaIsutFPFJb5xhpWvSK
-    fZLk/1QKMqvrD/kEmVov5Okgq0rQPGMMo/v0tfjPCtNHpOqmGffqMO6Sc+YQ
-X-ME-Proxy: <xmx:B7MzapnOLyvMLGt_L5KATv127bz4rYT8LtmenipLO07nW3VmF1JHSA>
-    <xmx:B7MzasnwzmLt0MP208hPjQ4DAjkb0W8wKY6ALOay9LPYA3RfURoKnw>
-    <xmx:B7MzaiuXHrACPPpcDNCVit6jpexjEDP0NuHF2OFLM1xtEtXx1atbVA>
-    <xmx:B7MzanmADCntudr0u_46GP5yPVceA0lnXnNMbyCB-H-6LNePGCQmuw>
-    <xmx:B7MzarB8ta8OdxkA1EA3ExV0iqa4h-IefStjnldrnwhozjhsZEd9rj0->
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 7DC383021B5E; Thu, 18 Jun 2026 04:57:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="V3OZxrgf";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="XrBUtdAU"
+DKIM-Signature: a=rsa-sha256; b=V3OZxrgfTv+zCWbSeEwIXgcQgrQ0kiJzWWlWJEM8XVtWv2rafQa27x/yIUK80YrXg0H3es+rHHKcC4QZnLXqA+QefZ96Yt3MEZeZWZFN5ItXux4lJo2wGeHFTJkT0ZK1jyg7qNol9tI4NxAognrfAqOspbE+uFGoMRCUKG1nBQvZlTc3zARPQL79g4Glh/QxpoN491ARAJpLjlRheiJh0KMOQDC2wjfI7ROc2s1qUZwOPSE2rY+3QTyctTLDEIMMey8kNl0iFDVW/maO0jbj6RIyeaoX7zOVobkHbBeeY+GeRcBjAUBJkNih4Ubave7kT+YrgVMIuOqHZgvlOiKG4A==; s=purelymail1; d=malon.dev; v=1; bh=GSYTYsu3TydslO1Mzq+kHPaonEVx1s3IDSraf4cwcWs=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=XrBUtdAUt0lv7wfuAbINew32/PKKaK2cs5DrhkeN4ZGtcaCJMohn0BTtq06BAOv6yjoMVqxVY82bVeYIBoGz/hDHNGfI/ZmGQM/IaJ+Ot5QHm6Acf89bxQQcMouFktHLXrKgQ4VTEFZ53St1v50WxAqrkMGBSjYpu8W4Gxd4dh1REZk/pEQV6m3WzivukZZEDBxsy8iMDqk+yGElvzApIdMOclvYXTm5WVTl5Vemh/fybWS29tdaUZNifANr78W+EIomrIuWzfgKiIiAsR6uLTeDKsB4B8fiCjq5MqurkNzMpt4oXZMvMwkZlvjV+Q5F0hAdfc0KIM+vyhFIkpItPg==; s=purelymail1; d=purelymail.com; v=1; bh=GSYTYsu3TydslO1Mzq+kHPaonEVx1s3IDSraf4cwcWs=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1595915638;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Thu, 18 Jun 2026 10:56:31 +0000 (UTC)
+Message-ID: <dcafaf9d-d422-46ae-96c3-26674ee70e3f@malon.dev>
+Date: Thu, 18 Jun 2026 18:56:25 +0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ATk8gt0lp1-J
-Date: Thu, 18 Jun 2026 10:55:24 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Michael Montalbo" <mmontalbo@gmail.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <af7dea68-59c4-42c2-afd5-708a3068858e@app.fastmail.com>
-In-Reply-To: 
- <CAC2QwmJdF+YzAQE3WDEaUrurLVkYcAA0Cgs1YAqyxYcQ0jKfqA@mail.gmail.com>
-References: 
- <CAC2QwmJdF+YzAQE3WDEaUrurLVkYcAA0Cgs1YAqyxYcQ0jKfqA@mail.gmail.com>
-Subject: Re: [PATCH] SubmittingPatches: address design critiques
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] environment: move ignore_case into repo_config_values
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com,
+ johannes.schindelin@gmx.de, stolee@gmail.com,
+ Christian Couder <christian.couder@gmail.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Olamide Caleb Bello <belkid98@gmail.com>
+References: <20260617154929.564498-1-cat@malon.dev>
+ <20260617154929.564498-2-cat@malon.dev> <xmqqh5n1w0i7.fsf@gitster.g>
+From: Tian Yuchen <cat@malon.dev>
+In-Reply-To: <xmqqh5n1w0i7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 18, 2026, at 05:53, Michael Montalbo wrote:
-> Junio C Hamano wrote:
->>[snip]
->
-> Two small suggestions: open with a direct imperative and replace
-> "effort in the implementation" with "effort on the implementation".
->[snip]
+On 6/18/26 01:16, Junio C Hamano wrote:
+> Tian Yuchen <cat@malon.dev> writes:
+> 
+>> Note that the newly introduced getter, 'repo_get_ignore_case()',
+>> intentionally avoids checking 'repo->gitdir'. This could safely
+>> accommodates early dynamic probing of the filesystem during
+>> 'git init' or clone operations, where the 'gitdir' might not be fully
+>> initialized but the filesystem capability must be recorded.
+> 
+> Why "could"?  It either "safely accommodates" or it doesn't.
+> 
 
-The threading doesn=E2=80=99t work here. This is in reply to:
+Okay, will change in the next reroll.
 
-https://lore.kernel.org/git/xmqqv7bhxiby.fsf@gitster.g/
+> I do not quite understand the logic behind this part.  Why is it OK
+> to punt until .gitdir is ready for trust-executable-bit, like it is
+> done in f951ed98 (environment: move trust_executable_bit into
+> repo_config_values, 2026-06-13)
+> 
+> diff --git a/environment.c b/environment.c
+> index fc3ed8bb1c..75069a884d 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -142,6 +141,13 @@ int is_bare_repository(void)
+>   	return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
+>   }
+>   
+> +int repo_trust_executable_bit(struct repository *repo)
+> +{
+> +	return repo->gitdir?
+> +		repo_config_values(repo)->trust_executable_bit :
+> +		1;
+> +}
+> +
+> 
+> or hfs/ntfs in 71386c21 (environment: move 'protect_hfs' and
+> 'protect_ntfs' into 'repo_config_values', 2026-06-10)
+> 
+> diff --git a/environment.c b/environment.c
+> index fc3ed8bb1c..683fe1b4d3 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -142,6 +140,20 @@ int is_bare_repository(void)
+>   	return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
+>   }
+>   
+> +int repo_protect_ntfs(struct repository *repo)
+> +{
+> +	return repo->gitdir ?
+> +		repo_config_values(repo)->protect_ntfs :
+> +		PROTECT_NTFS_DEFAULT;
+> +}
+> +
+> +int repo_protect_hfs(struct repository *repo)
+> +{
+> +	return repo->gitdir ?
+> +		repo_config_values(repo)->protect_hfs :
+> +		PROTECT_HFS_DEFAULT;
+> +}
+> +
+>   int have_git_dir(void)
+>   {
+>   	return startup_info->have_repository
+> 
+> but not for this bit?
 
-But your email has no `In-Reply-To` header.
+You're right, I made a mistake.
+
+Earlier, when I was testing using 'repo->gitdir', the CI tests failed, 
+and I thought it was because the test script was forcing initial values 
+too early. I just realized the error was somewhere else. I'll fix it.
+
+> 
+>> +int repo_get_ignore_case(struct repository *repo)
+>> +{
+>> +	if (repo)
+>> +		return repo_config_values(repo)->ignore_case;
+>> +	return 0;
+>> +}
+> 
+> What makes ignore-case so special?  Doesn't the same logic apply to
+> the other three bits?
+> 
+> Or use a more direct
+> 
+> 	if (repo && repo->initialized)
+> 		...;
+> 
+> for all three, as repo_config_values(repo) barfs when repo is not
+> initialized?
+> 
+> I dunno.
+
+That makes some sense. The reasoning behind using 'repo->gitdir' is that 
+"as long as I know where .git is, I assume the repository has been 
+initialized," which may indeed be less precise than 'repo->initialized'.
+
+Btw, I think it's better to change the getter's name from 
+'repo_get_ignore_case()' to 'repo_ignore_case()'. This way, it will be 
+consistent with the previous flags.
+
+Thanks, yuchen
