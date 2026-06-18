@@ -1,101 +1,124 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF382DFA25
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 15:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429FD33FE36
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 16:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781798069; cv=none; b=lDGA1uGIT5jLXeEd2x4m9ar9mvrqoOKFreaZXCn7J9MhUzHIh4HF4YyEcwFxLtbh0BunPF9MVPlSWjcj2nMOESwdDhMzqg+x/2Ii4ax/dlSB73cVyFfGMS3Qr7knCScswwRs03tg/KT+d1Lw3ooayBRsZ5seTTX9m1GsWBY1sp4=
+	t=1781798709; cv=none; b=IEQa1BglxdGoRXl+wgJmpntfq0aIsDf5BYi2/rbWtwFyNUk9L1QCiTC+OXfnRMSOcZYL8U/5MMpIhi+sptI9spF/1E3E8iyLmqClZCLdkxtiNg8puLjghOAnHrYpLYn9LUHo8kU0lXOVMFHdgBJscBVLnujj+eejf08AAbBTCnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781798069; c=relaxed/simple;
-	bh=H+BZgjZ0DVvT8CA088lMl4DIOspjKIkquuSkbLtg37E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nMW7l93Iz+Zis3JPH9l8HW21yP6sMPuhTsjmkjq9ghySGw5f+cxtowwGfztgu3dW4Fuf55VWBQdJ30XaMoRG/ZbqlZS6G3ldCWLZUp7SC+UnRZ496ajDRVi9h6hVbjUypU/WkAnaj6ixM6YSgV9618rwFV1q38yMzEGNDn71iEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MvFdn2M+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c66RYr2N; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781798709; c=relaxed/simple;
+	bh=N2/4VqP0vH5jQBC0//PwLQZtbvwcdmr5TkFf4MWgz1g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gRQEbM65aQobW/Y1XhW0po13qe30uPPaSJa8WeqGYvBVJY5wUM394cLzkXYPZhVwsnZhBV0KwWJtJRlbU8ijZbFlmckEWu1TeHG0VlcVktqP0hveNTcmdUbNT2cxtrfE6Z0zqzbfeW6/8wkSIoLoWMT3w9WSvs8VY2J+pwYZVAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SlaN2wMm; arc=none smtp.client-ip=217.216.95.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MvFdn2M+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c66RYr2N"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A6C8314000E6;
-	Thu, 18 Jun 2026 11:54:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 18 Jun 2026 11:54:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781798067; x=1781884467; bh=6d2Pn7PfBU
-	KT1Jl/dADIw0MUJiakA5bk55zBgZweTis=; b=MvFdn2M+5xxIv7+ZKxbUwcSDxK
-	ZVjGK/csHzmY1pxJZHhQ56KpsIJdWIWa74uBazXW1VkDqE/2Io2OFJZA+BFcrNjm
-	nlFMDjeYf1rVytCsCeTxlhAnHhRzKmZGVT8KrUQ/FZotxfVxcyZX02mJ5q5EqLwd
-	BeAIFt87SYeETyKTL3z9R1nHNrHN04+DXK960rPs5PEgSuv1KugHxZZMnVsO/vWa
-	b//0/asCiWM0eCvUYrSRnaOOkp5i6VgxhxwstrgW+9U9gaXtYSGweH0B6Vh2Ly1R
-	cmAowX65CymAFenaGHuYAyIkt2ZA0o3KTvR5dQOXPUveXR7Pkc3KfXDupK0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781798067; x=1781884467; bh=6d2Pn7PfBUKT1Jl/dADIw0MUJiakA5bk55z
-	BgZweTis=; b=c66RYr2N9qoHSBXwpz25ysSS84fpIqAIA8wzrOanww9kcC1HoTP
-	qcxgTJ4D/Zzo65HyvHzKycjYg2X7nZI5KatX02aeEjR7kJiqQ2twH7k5olZiA0VU
-	WMhDzTFYDjENpt315Y6xSkZltjM+uRU1oc58nFD9DR4a98Ih5HY/0CUAJ8jRDnld
-	7ECWzp3TTNFPRay2DkUOKJ2xf8bXOiqNHkv0Eqa58ZUr4vifVTkXAA9SwXrVFaqp
-	C2fPPDp7YEYryt2XX/xRfOfqj35+Rx5PucSsdRm9/o2FSBflOcuhOjuBoTt/y4Em
-	X2sQTPjhfLYHpe/fQ5kwJGldsEnTPZx7FdQ==
-X-ME-Sender: <xms:sxQ0ateS_9FNFVQntbbT_Jn_XBpZo-VYgjsOtgdtCM2WTjJAcZ5Uig>
-    <xme:sxQ0atezwNblmFV5HluW25HXlWV8B1os5hvoLLrYh521XN4TeqcTEZoAnmORyE5O3
-    G09G53OIS5JO9mzBUje34q6hox7oj2E-OGBZ50qcsd9rr9GSkGYcw>
-X-ME-Received: <xmr:sxQ0aoyYF7nmo_V1H4Sb9nZ00S0hrml05HtqkI4YpSD8sQ5Vu7VK7Wgx5M7asezgT4r9wFPZEs9LSUV4IEt1TyrhOaB62uUz8m2I>
-X-ME-Proxy-Cause: dmFkZTFLNSLtbYLNBareWTsQ4UmoIs1xQVG855ppgOB0X8bt49w9HFsZHKtH5dWK+zRUZH
-    Km+Hkb23JCZJRI5KXiH1hYEtdPDSneDh1QS/MnfMw9UkI5y4glixM1eg2BuK+6wfXQ2oSQ
-    vUHWLqxp3sFhiA3yAdAZEiSBLl+ST1qBeKjgrnINCQXd/HCqPey9XG9J/hkFEuopwtq/HG
-    rOHzvlhPasO0L5F5eQxvV/mvXOu0Z3qnLuTZKVrHydlyEJn/087jTe9b5CT9tQ8hZlxbkC
-    4gXdPlGCUik3fcJokXdodLAT12S0l3PuBpBdUa1TU4yaltYs1Qs6wSu0zuQCTGHdmdQIIR
-    S1aNkRx74eEycBRSqxU5eou4hdM6eoUiJvIw97wG0aqEB9W5S5ehGmCDUcilqMO9qmpsFi
-    CEUItROaseu3DO1AorsOm2VJzqdfsfW3hOWsiXF4K+f5bPm+yZbaeKSLvavTV5mIcHVdl/
-    xkuS07KOsUee/1q3ulM7pepTH2zjb71tqWGPzXc3msG1jZdqYAhnqAWX3hEv3QxDYTvXs4
-    kmGQ+RMCxKjU+a9vKMnBQDEd+DNgNelzTTVPlOr87TBAIMm9W50R4Mub6d2ji2l/R7yIN1
-    od6fmzxbebkhgkVO5gsVyfu1fwwfIuN2vQzTiZ7WfkAJ+wCHaQvl4Xq/qjww
-X-ME-Proxy: <xmx:sxQ0as8p2Zk9pSJs3nY1Wiku5ofR10N1Ui6QX1WdmtyIPCuRZ3zBQA>
-    <xmx:sxQ0aoibj_F4JjJRuylgngQ8ix_6jg3WLpSMg0eqrRjNqnciXVIgLA>
-    <xmx:sxQ0arHIjoNwDNopi9iOXzstS16CJAQXc70kK2hoT3aEVsIuZ4jCKA>
-    <xmx:sxQ0av_UIEGMlYlh3pAVVG34ePj9agw1zAt4cVeyRnWP5TeL4zw0ZA>
-    <xmx:sxQ0alqRjpy04oibqwKcbojNHqOfO2YmweK71hjBMIymUbElROpcds5E>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 11:54:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tamir Duberstein <tamird@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Victoria Dye <vdye@github.com>,  ZheNing Hu
- <adlternative@gmail.com>
-Subject: Re: [PATCH v4] ref-filter: restore prefix-scoped iteration
-In-Reply-To: <20260612-fix-git-branch-regression-v4-1-f150038c02f4@gmail.com>
-	(Tamir Duberstein's message of "Fri, 12 Jun 2026 17:27:44 -0400")
-References: <20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com>
-	<20260612-fix-git-branch-regression-v4-1-f150038c02f4@gmail.com>
-Date: Thu, 18 Jun 2026 08:54:25 -0700
-Message-ID: <xmqqik7fsv2m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SlaN2wMm"
+Received: (qmail 167796 invoked by uid 106); 18 Jun 2026 16:05:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=N2/4VqP0vH5jQBC0//PwLQZtbvwcdmr5TkFf4MWgz1g=; b=SlaN2wMmiqqj+m8eTKL2+6E83QheejUKEz7NqDAvcp3NNOx2rOE9x4f6AfKZl8cCE/rwqqFN3U3LpoEPWtU0fBoGnum9BPrM/EJjgZTQirHfuR5n1MyEOvOQjmHssMfmMM9YYOF1ZeDr8jvtrZkyAOW+B6uuIzceocOf5u+vDe/xfJ98wNPbo0MJtqY55DWXrvsW0i2eI3OpWwtdeX0XUqI2K6UXEsCQ8adCkb64E1UiingeQtiCmUeOYqTWL+EBBIS9fT3C3EKENi/mYLdLx1m2l2w2cIi40pNT+FAWIRzs7UtH26IAlCYP8EmpMvdAUpzzIkI4x03Rd4nbZUKzmA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 18 Jun 2026 16:05:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 474072 invoked by uid 111); 18 Jun 2026 16:05:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 18 Jun 2026 12:05:06 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 18 Jun 2026 12:05:04 -0400
+From: Jeff King <peff@peff.net>
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: Kristofer Karlsson <krka@spotify.com>, git@vger.kernel.org,
+	ayu.chandekar@gmail.com, chandrapratap3519@gmail.com,
+	christian.couder@gmail.com, gitster@pobox.com, jltobler@gmail.com,
+	karthik.188@gmail.com, phillip.wood@dunelm.org.uk,
+	siddharthasthana31@gmail.com
+Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
+Message-ID: <20260618160504.GA818042@coredump.intra.peff.net>
+References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+ <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+ <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
+ <20260617202744.GA3465855@coredump.intra.peff.net>
+ <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
 
-Tamir Duberstein <tamird@gmail.com> writes:
+On Thu, Jun 18, 2026 at 02:42:16PM +0200, Pablo Sabater wrote:
 
-> Changes in v4:
-> - Explain the historical references in the commit message.
-> - Run the new performance cases with both ref backends.
-> - Drop the Assisted-by trailer.
-> - Link to v3: https://patch.msgid.link/20260610-fix-git-branch-regression-v3-1-6fd48fad7a53@gmail.com
+> > > +     for (cl = graph->revs->commits; cl; cl = cl->next) {
+> > > +             if (get_commit_action(graph->revs, cl->item) != commit_show)
+> > > +                     continue;
+> [...]
+> > I'm not sure what the solution is. This function wants to peek ahead in
+> > queue order, possibly through multiple entries. But a heap-based queue
+> > inherently only supports peeking at the first entry.
+> 
+> Yeah, I haven't read dd4bc01c0a yet but from what you say it prob
+> won't work anymore, I didn't know about that series, about the
+> lookahead I think it could still work with some tweaks, the important
+> part is to set the three lookahead flags.
 
-This seems to fully address comments by Patrick in
-https://lore.kernel.org/git/aivx-7VOKE_TC50R@pks.im/
+Thanks for looking into it. I meant to also cc the Kristofer, the author
+of dd4bc01c0a, for any thoughts (adding him now).
 
-Let me mark the topic for 'next'.  Thanks all who discussed this patch.
+> From what I understood, we can only get the direct next commit, but no
+> more reliably ordered.
+
+Right. There are other queue implementations that could allow full
+in-order traversal (e.g., a binary tree), but our prio_queue does not. I
+suspect performance for other cases would suffer if we switched the
+underlying data structure.
+
+> The flags should be fine:
+> 
+> - 'is_next_visible' could need to traverse multiple entries, but it
+> doesn't need them to be in order. We just need to know if something
+> will be rendered after.
+
+Yeah, this one seems easy. We are just setting a bit based on whether
+we'd find any commit to show. So order doesn't matter.
+
+> - 'next_has_column' only needs the first entry.
+
+But this was the one I was worried about. Walking the linked list in
+order will find us the next commit we're going to show, and the result
+of the flag depends on graph_find_new_column_by_commit(). Is it OK to
+find _any_ such commit?
+
+(I'm looking at this purely based on reading the existing code, and
+haven't really thought hard about the problem space).
+
+> - 'is_next_visual_root' only needs the first entry to know if it could
+> be a visual root, and also if it is not the last one (but we don't
+> need them to be ordered for this last part).
+
+This one just iterates looking for any other commit we'll show after the
+next one. So finding any two entries would be equivalent to the current
+code (though we only get to this loop if the first one passes the test
+for graph_is_visual_root_candidate).
+
+So if you say order doesn't matter for checking the column and the
+visual-root-candidate function, I'm happy to believe you. It makes life
+much easier. :)
+
+> Should I work with 'next' as a base to have dd4bc01c0a? (Sorry I've
+> just worked with master).
+
+As Junio noted, that's already in master, so I think you're OK to just
+base there.
+
+But for future reference, no, you probably don't want to build off of
+'next'. If your commit has a dependency on another topic it is best to
+build directly off of that topic (and note it in the cover letter of the
+series). That way you do not accidentally depend on other things in
+'next' which might not ever make it to 'master' (and would thus hold
+your topic hostage).
+
+-Peff
