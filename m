@@ -1,102 +1,198 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511E517557E
-	for <git@vger.kernel.org>; Thu, 18 Jun 2026 13:31:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2DD3DBD41
+	for <git@vger.kernel.org>; Thu, 18 Jun 2026 13:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781789506; cv=none; b=AV2JRDXR4VcW8J1+WHi814UoD3z87w8bbGdDXnmhAOtI1B2Y+TSn5h+bxEBqgfn3nqEePPfB6R5cNhPFWYLCaQ1YjU+w3RHqMxzHTFaVGx6PCm41W5WIM4bqfis8sJ8fgMZ2rZkmD3Cv4j2l5xrdEZn2JxNQ3I8uaOA6m3oP/Jw=
+	t=1781790151; cv=none; b=VIkOmYIIKOV2Bl4ZJPYqlq+j1/ft4MQI6NODgfWCKGpP07SU8EQjBbJCegYrGxEN/2Nt7NWv9+Jpxl7CUqkT/pGNMKKGIkzjEntCWOe9qjKkPB9Kv1jnYFtYEQIEjdxGNdxNl+WtInA6upT1GN5+9KSMsQdSxQMqpp9Sbod9vMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781789506; c=relaxed/simple;
-	bh=piLG8D1rukKYsMUX9z7MvBPA/PRHCWTFnIJUAQfue3M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uC9lTwX3n0FRUwrql/XNuwp0Y8bP2WxjS/T5ImXLo0lGI0O3Wjo9bjVk9Y4PgOZqjOxzUyNEsggdiDAJrwnhmgAom3AoQxgaxdcLifXKCEYiD7vmqwH/ZZUO/uBmFBb6QpfydbiHhQWicLTGPpaeziESfM6C6X1fPQdDovOEAD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XzC0RWKA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L0QYIuXd; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781790151; c=relaxed/simple;
+	bh=6/j9Zb8pdpmt5tdHPbhYclV+k9jhMsluH03Gef3t66E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LtveLP+xm+jx28UQh0IY4EdvAccfiQJZo1fFIY6tMC7VzNBdY/h5c4KQs4QCnHU6KtKbiB3Cd7yYOJHtAD9gVR8v0IP5maqm/MuEo+LCV0ydrhviSvca+DeFgMl83oDWBIfD2jQIc99CabzDaC1+qQWwoV5gQ4O8tIRh2rRT7WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VIshsrRL; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XzC0RWKA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L0QYIuXd"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 650811400046;
-	Thu, 18 Jun 2026 09:31:44 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 18 Jun 2026 09:31:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781789504; x=1781875904; bh=piLG8D1ruk
-	KYsMUX9z7MvBPA/PRHCWTFnIJUAQfue3M=; b=XzC0RWKAg6bhNk7XQR231TLplr
-	Gdokp9quNghr69/CWH8H0LFKmUz06ymoPMrQXcNzyXF35+ZN49tL4qf5iI0pMaG+
-	uUjPGVS+aRHlLAimACNO6wDCwOEvhI532U5V+LWQVF9mSDbNKYrYiGODnqG5vaWg
-	13DboeK96reDVJeSrp04S77Askn6nT0M1PvosrN4s0VCBh74pikLLhP0Y74RSm7e
-	QTTjZij2KehYekghejNXGxJirVlKNWmFMFVd3glD+8T9SxmvpHwXf6OwyuoVSfuo
-	uXPYPGyJHmb5nNzzbuAapvPzZnzibXyTsXC9qXpVBW5qBzyhUPqw2cuLMGRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781789504; x=1781875904; bh=piLG8D1rukKYsMUX9z7MvBPA/PRHCWTFnIJ
-	UAQfue3M=; b=L0QYIuXdcmUsrP1PwHm0Ybk+kv7WmASopuWjZIsekkwpQKSpA67
-	YXfYQYhyI5T2BTonbs5hq5p2uR+s7UOGNRwV/6lxzLvT0wy/8fxAI45RcDpeyxN8
-	EmCC97vgKlcb4hdlryYaeDDtrbxv9ZoFV6LZxkK+8seLsEmm6ddDTAS1AzeELCxz
-	f5ZzPKBkiEOZG/yXUqMVMhNpv45SNdALRgh5SzYkiCEB5i5s+4kgz2UKM69XCGJ/
-	ss8O7z8yTbU+EGe/Sm+saq7tW7vvtmt0LfLSxPWwpP2rqSOlLSrFIY3CQFfUkAVX
-	wUsKxa56S2LO5YO8+aywEZFYOq6XL9D+9Zw==
-X-ME-Sender: <xms:QPMzajzQkEgi3q-RK8CItTxFhuGJpjXqEiwafXFw7VWlSkpOkTTJlQ>
-    <xme:QPMzapgXh2KbzOum8R29Kk-cw0XfAlgwsGzev05I3_w5Kt9gq9VSoNvCTrz2FSvMW
-    VX0xvBm5EP2xYOyymnvhQNUBd4y6qKvx8OLmM05OEkTC80npQUjoA>
-X-ME-Received: <xmr:QPMzamrfJdoDPHS9kTQWPsGlTNVyvtKzu68jzxFMNLogwiIWCXLDSrFUw4sP1n5QnuTJXNV4pz1Wquveg0esynS8ORbm1ZnDmHES>
-X-ME-Proxy-Cause: dmFkZTFQ1equc5BqDxAMxOuTXmgVCm5bMff2Krw70QToDHb6cf1NiHIo5n6Ze5xDn5Pip+
-    p42uiqi4eqYZrSFll0MyNN3uatAKRybX+xU5heqNmilBIGGBfMj+M3jvhQXTGMfJgcIxel
-    ZDaqGG438LfanhSYB4FAIwt+NXxqqTwlLpdQrjG9ynq1kR85B4GgD6F7BV00NLc+PfiKur
-    qKEu+LEPjgDdTSBaGOHZzCznOKLzblHbAOCEesDxZUDp2f3dB6fAXtwa3qzC38wvepJISn
-    PVY5IUBTpKqd5S7g2HbEpmVK18zbFDIX9ZKApRJ5QDWGxGOvBz7U/o4V35FtBx9mr+oHX8
-    1eC30WcNK6VnVM5gMFwJYk5O61uuo5E0/veXCvX1opiT8JWbZAKuMi57nnMeqK+bvTiI7K
-    9x1DC6UnTK1iA4eR+Bl/U1ZFLfSU6t02LU2nUrrbEzfTnMwfOKqY+QbCsXLqY6buBYp/pW
-    0qctDmlF4S36+Ph4i3pICK/VO+pqmVpw2OhsNRvPBtv7H+em5++gWtt1uDh7HkDgZHVpDU
-    /Qqo2HZpCIUPsjxL8YjnGBGzh1tLw94tCICQAeiviWiFRVmDcGA9rbQ8L7K78iQAOT8Q6J
-    mwR8EHYj0Lf8cLSP0GlebUxtchA0xJalUmbn9lSTtWkBVaLLxzXrxR/V5yiA
-X-ME-Proxy: <xmx:QPMzaggvdsFqUS-NwJoYf6IQYXrGMpw6EQ902UpW0UmiW2KQLe9Yog>
-    <xmx:QPMzaoNRvqhkLfkY5m03oo7tkxLuoHG9V6GCV5AgKZARZIYLT4PoHA>
-    <xmx:QPMzaqzROVIXAnxgsC-ch3pmIBQiWrXVkpFPaIzKdZYsXCt1BjUGtA>
-    <xmx:QPMzaqoH4C8G9oErLRdeFxDlTvHTYAHzI2hQqeqVfxW1pj9srSaDYQ>
-    <xmx:QPMzame5NzTEsm6gfHgz49wT5fwSiW8tQkChUyFTW6QZBEFgPc-aLzxM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 09:31:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,
-  ayu.chandekar@gmail.com,  chandrapratap3519@gmail.com,
-  christian.couder@gmail.com,  jltobler@gmail.com,  karthik.188@gmail.com,
-  phillip.wood@dunelm.org.uk,  siddharthasthana31@gmail.com
-Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
-In-Reply-To: <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
-	(Pablo Sabater's message of "Thu, 18 Jun 2026 14:42:16 +0200")
-References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
-	<20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
-	<20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
-	<20260617202744.GA3465855@coredump.intra.peff.net>
-	<CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
-Date: Thu, 18 Jun 2026 06:31:42 -0700
-Message-ID: <xmqq5x3gt1oh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VIshsrRL"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-bebac79fff8so111974666b.0
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 06:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781790148; x=1782394948; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=POnoYdAofVEG9PWY/LIDM2FbRjlYhAvkCzHw3Ee+bd0=;
+        b=VIshsrRLBjaG/m95Exichuov7UiVStOfalMqbpZfnElsvkaGto8vTX2VCCQfnMxmeH
+         2mPMag3nNp27yh8wPVh5vRyAVZ7m2/5aHrlw0htV5RiEp2g+YQxZqczE+Hmj/eQMBBw5
+         kh/s98i9xBhOosF4AOMFuiJoXtYOTCA0JUNupykU7I1Hyh8hk3Riuxxlyoy1DRWdlSG3
+         nBLI/ky0ZelTcE4+bbc+9YWvqu9Z+7M7labVSSpbIVwkep49FPbBilhRigqORfx/iArP
+         HjVUt3qSUF/dJm3rqkpm2mxBnY9elA20SCUM3K7o7wu974xH0dATYcFx5va/IMmTRfe7
+         +NlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781790148; x=1782394948;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=POnoYdAofVEG9PWY/LIDM2FbRjlYhAvkCzHw3Ee+bd0=;
+        b=ThyiiRTrI5+mg6zf6Uw8Auw3NeUwxs6Tn1I+uAEC36eyj8hZF9qyo8fxOqTdlGjiTQ
+         i69r2yrAJuNC7fnK84KPI49Cuaouo2SxZmx8mNpV17r6ZOIuK90m37Sxej2jMCjixKz+
+         kY/aVn24Zug+zBjxIQ8IPe5pjPsUhk16ScsxVA+Vt4NbEjljs9txOdG9Xvth7XmSCrR1
+         KVhlnlu8RXBhIdRP4vxfV2irhfeBQtivlcm4cmlZzkIMuWzawLcfj4BKNdWiDq1PLOQd
+         ivwXDj5WqBSrzz4AfkBQZRMfjuxD+ZqqQDMajAKKha79FYWwegO3WdCZsxXEBBZWKHUW
+         CqTg==
+X-Forwarded-Encrypted: i=1; AFNElJ+5OdjEprf6p9Zdbgig3OKITNSq16w1cz0muoRzhCL6wr9HrlLRIVPRAxQV1isdm8GnqJY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyk4U9Io6bx+MnFMhouvZlBH2tUP/lP+VYJdxJXjpBMbfLI/Owc
+	IbQ6Q2xwtEzChWFQpAnz4nPpZHme6+vc1XMtMHoL1XLSxbk2pgz8KP2ruKU+5w==
+X-Gm-Gg: AfdE7clDjyTIdsgIsByR6sYDQbRHfRKMhh4IiZPKbPbyXuGg2T96BUoQwVVZ71IZM/t
+	D6CpPIl/E4pXTJ4ntwzrFcvEIOI3v5LvbnBSYv0WalIvPW4z8K03qbmoMN/mtoHPOg7bal1AIFo
+	v4EHY0VNkZOzix2Guhn3GUPn8lJqWKXpvxBYnc34dKdDrDNiF+e50zwDBSs0b1ptVS/3pgsI2aC
+	1O27eJjfH+q1fRl/3KElzfWq89t47lBaUBTfYbhgMjSS2BNlYjrz1Z7qXhBrWiopO2lRv8lAmm4
+	Vd5yVwXo/oO1WGhi4vTaptjDQdchva+0n/oErl/FrBsWbH1+2uHzmLQ5TY1yHPoqYfK1wXF6gps
+	iOtFI/1Sn1/vD5R9/Q/gOTXFHh0WuuQWonYGiG4No2/efut7Tydh78BY6NRMkAnmdlRz02UvJNh
+	7KVCHKw3GyZ1tOeXa1hbYykdWY3nvrbU42CEjseWkXkjttpGVLyrPtP0fa5PX5nVQZXYU=
+X-Received: by 2002:a17:906:9fcf:b0:bee:426:87ec with SMTP id a640c23a62f3a-c05a541a74dmr561313266b.23.1781790148082;
+        Thu, 18 Jun 2026 06:42:28 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:69a:b801:201a:26ab:8d41:fb43? ([2a0a:ef40:69a:b801:201a:26ab:8d41:fb43])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb85402e9sm939972266b.47.2026.06.18.06.42.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jun 2026 06:42:27 -0700 (PDT)
+Message-ID: <37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com>
+Date: Thu, 18 Jun 2026 14:42:25 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+ <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+ <9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
+ <78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com>
+ <CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Pablo Sabater <pabloosabaterr@gmail.com> writes:
+Hi Harald
 
-> Should I work with 'next' as a base to have dd4bc01c0a? (Sorry I've
-> just worked with master).
+On 16/06/2026 20:15, Harald Nordgren wrote:
+>>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+>>> index 4e7deddc04..27ea1319bb 100755
+>>> --- a/t/t3200-branch.sh
+>>> +++ b/t/t3200-branch.sh
+>>> @@ -1809,4 +1809,205 @@ test_expect_success '--forked requires a value' '
+>>>        test_grep "requires a value" err
+>>>    '
+>>>
+>>> +test_expect_success '--prune-merged: setup' '
+>>> +     test_create_repo pm-upstream &&
+>>
+>> The rest of this test would be easier to read if we did
+>>
+>>          (
+>>                  cd pm-upstream &&
+>>                  ...
+>>          )
+>>
+>> rather than prefixing every command with "-C pm-upstream"
+> 
+> I feel like the discussion to nest or not to nest has come up many
+> times in other topics as well. I don't feel strongly about either way,
+> but I just want to flag that if I change it now, another reviewer
+> might ask me to change it back later.
+> 
+> Should the rules be to nest inside of setup functions (and helpers?)
+> but not inside the actual tests?
 
-As dd4bc01c (revision: use priority queue for non-limited streaming
-walks, 2026-05-27) is already in 'master', you should be able to
-work with 'master' that is no stale than 6e148f82 (Merge branch
-'kk/streaming-walk-pqueue', 2026-06-16).
+I think it depends on how many commands you're running in a row in the 
+same directory. In this case we're running quite a few commands so it 
+seems clearer to use a subshell. In the later tests we're switching 
+between repositories and running fewer commands in each one so it is 
+less clear that using subshells is clearer. Also later on we're using 
+test_config() which I don't think works in a subshell because it relies 
+on test_when_finished().
+
+One thing I've just thought of related to this patch is whether we want 
+to protect branches that are the upstreams of branches that are not 
+slated for deletion. With stacked branches it is possible that a branch 
+has been merged but has other branches stacked on top of it that have 
+not been merged. If we build an strset of branches that we want to 
+delete, then loop over all branches and if there are any that are not in 
+the to be deleted set which have their upstream in that set we'd remove 
+the upstream branch from the set. Once we've done that we can convert 
+the set to an strvec to pass to delete_branches()
+
+Thanks
+
+Phillip
+
+> 
+>>> +     test_commit -C pm-upstream base &&
+>>> +     git -C pm-upstream checkout -b next &&
+>>> +     test_commit -C pm-upstream one-commit &&
+>>> +     test_commit -C pm-upstream two-commit &&
+>>> +     git -C pm-upstream branch one HEAD~ &&
+>>> +     git -C pm-upstream branch two HEAD &&
+>>> +     git -C pm-upstream branch wip main &&
+>>> +     git -C pm-upstream checkout main &&
+>>> +     test_create_repo pm-fork
+>>> +'
+>>> +
+>>> +test_expect_success '--prune-merged deletes branches integrated into upstream' '
+>>> +     test_when_finished "rm -rf pm-merged" &&
+>>> +     git clone pm-upstream pm-merged &&
+>>> +     git -C pm-merged remote add fork ../pm-fork &&
+>>> +     test_config -C pm-merged remote.pushDefault fork &&
+>>> +     test_config -C pm-merged push.default current &&
+>>
+>> So we clone upstream and add fork as the default push remote. I find the
+>> pm- prefixes rather distracting. It would be clearer to me if we just
+>> called the repositories "upstream", "fork" and "repo"
+> 
+> Good point.
+> 
+>>> +     test_must_fail git -C pm-local rev-parse --verify refs/heads/one
+>>> +'
+>>> +
+>>> +test_expect_success '--prune-merged warns instead of erroring on un-integrated commits' '
+>>> +     test_when_finished "rm -rf pm-unmerged" &&
+>>> +     git clone pm-upstream pm-unmerged &&
+>>> +     git -C pm-unmerged remote add fork ../pm-fork &&
+>>> +     test_config -C pm-unmerged remote.pushDefault fork &&
+>>> +     test_config -C pm-unmerged push.default current &&
+>>> +     git -C pm-unmerged checkout -b wip origin/wip &&
+>>> +     git -C pm-unmerged branch --set-upstream-to=origin/next wip &&
+>>> +     test_commit -C pm-unmerged local-only &&
+>>> +     git -C pm-unmerged checkout - &&
+>>> +
+>>> +     git -C pm-unmerged branch --prune-merged "origin/*" 2>err &&
+>>> +     test_grep "not fully merged" err &&
+>>> +     test_grep ! "If you are sure you want to delete it" err &&
+>>
+>> I'm always suspicious of test_grep when we know what the output should
+>> look like - it might be better to use test_cmp. This test does not check
+>> that we also delete branches that are merged when we see one that isn't.
+>>
+>> I'm going to stop here - the tests I've read seem to me to be too much
+>> like unit tests checking one aspect of the implementation in isolation
+>> rather than checking that the whole feature works as expected.
+> 
+> I'll respond to the rest here: Excellent points regarding the testing
+> aboce, I will take a look at doing this.
+> 
+> 
+> Harald
+> 
+
