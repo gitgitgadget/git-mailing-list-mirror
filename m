@@ -1,221 +1,201 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149903242D8
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 10:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A4017C203
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 11:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781864024; cv=none; b=J3SO5INRQxdZZQiJtG6IlByLGiHJL44z8QXZO88gXh4Rc3CNasNJY65ybQNZACvhYCeRIOSURZMbD595KjN7zAY4fBVCltvk7yFexRUmAWWxT2Gv1Vxk/4zd/LY2BVCqVVm0Px2PbaE9N2Di8txMR9Zx7qY5ekgqFBFb0tlLRhA=
+	t=1781868487; cv=none; b=ImpD3HVwYlrtLobXJxkO5oDGq2d82Bl3+Z3kh+sSv05FzulhVBmmexyJ3mBBI+dQWaaX3ziCRgQ+OLZm8fQir7FJi5GK5GVQFKgkERiLl29aZhLNQH+Um7z8PzJxDdm2SUdXC/QYUUmAze2eEOM/uuCR/gkbEXlEIAyF9ubepV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781864024; c=relaxed/simple;
-	bh=dlrUQiigWJkE6hqqazhADrz2I6wQiES+YrfFeZF2YLc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WY/D0xJvVRW/bmcbpcWH+2a2+DyW3IbaLYhRGEaCT/hInWd0geNVePw4C5hI8BZlOa4DjhX4l15G7/4Z/BBq2AtYBMDA599dd7Wtz7uCNMPUKYBoNyX5ESjABG/i7/AhEk7FqIHeSnhkFZpJvdAJX4gRBZlxIhgaI2DnfgCW3EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ophGwYD2; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781868487; c=relaxed/simple;
+	bh=7LajxbGe1I2FEGU4SLLgjDhcZrsEUxHhzM60xvli8SQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=OwfFwSbVoGsSWdfdnCrYdSP3QMJrReyLFVelhfeUlYKFqNYCKTa/GWYiYrPc9U0/cB45twUki/NgnJkz8rMqdWNlC/8KgFt0yNykAkby6LLbIXaYaHyP5lEN2eWvyJrtm7TvDj0xes6TtyG8LJ7U8mJ1FD6C9ebfMINkEw7dB+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jCQaIMW6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bqg3QV7g; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ophGwYD2"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-490ac357c55so18834115e9.1
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 03:13:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781864017; x=1782468817; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a7fHPNbten1SQaYBdEKoJoM6nppSa+1+1GknOW+XSt4=;
-        b=ophGwYD2g41820nE3HsxCZ2cKozDOtEjADwoFQJ0sbLzS13krrsWUnKbAS/88W/ovg
-         qn5AKIeOhmwTtmHZksSPo+MNbeS0dyAw/FTIzLhqRA7PPrbaOeOYD6BxJ8OaiDPuo0kA
-         uOhkk55t5Yb3ZpA0b7/rF6a4kkVeQQ4tyTnej5kSCx4H5mKVcA8X4o1lp6rEjOfBWwkm
-         sdaloGUODqJZSYtx090Encg0KUnovQGUHWmCMdH+yeCQLR96R7GrpwXT6Oiyacz20R1L
-         ABKTB2jcpu9u2QTI2zBQO8UE3pnyphUsmQD/DbbK4wtwfSqgvaAbHfFKpfHZvM7cGCRR
-         Zixw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781864017; x=1782468817;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a7fHPNbten1SQaYBdEKoJoM6nppSa+1+1GknOW+XSt4=;
-        b=dOz5lZOP5oFbL7Xkvi9AbeI9aCuqr50NeaD2/obhsOKtPaML2O4VA3q67Cr95R5OPw
-         ejflup2YYTXOujXr4OARzNqSg7GDD7qs1BPjDeNVlm3u6INOy2yONHR2hxmymK3vI+K+
-         iHSJiHex9n430K/1Hmgry8h2TUI2srsdC4IyakanuTWrFgI2p4k3ZjnYE5YVz4fXtoQl
-         GN0jS+ZgMYOWt9LCw9jDt+7mJxl7OzeauHUYMEcbUdRaw5DI7/jGzhsQQCRWuQPl9TQ9
-         7vMvqJW/YJTyhZ9htn9PeARgcVFKBhLVmW/9g6jAjpK6spGg9spnMbnPAsWZiJUaNpPp
-         IWnA==
-X-Gm-Message-State: AOJu0Yz3LTckSOX/mmdmc8oHiTokSd4YgrheRoA57JbXJMgHlpAjhdXv
-	G4//I+yrXceyZWOx223HkMWbzHSPcvMQjN4PN8KdOuE24ZkDBKI+Nm+L
-X-Gm-Gg: AfdE7cniOgR6nA/wAkIeW/L2Rfe1nESTMC+vGYRnjgFGBpq54jaNnDXoiALlXfFGVfS
-	62GoKvzTtlLY6ZfiSHs4KQ3XRKBwH4dFbc1cgkrmx7vKzci2vaJjShjzkVz00lN4H+SkNOfRVJ/
-	NA941Y6j5BS97lwsyqOv2BJm2mRsX6pmL7zKzJzQPJM91SdjBhILHOM8Civn5YvbMzDiMxw9YPn
-	0g0Lf0es/SuS+pSanp2Cgr/3qs59DKqXPiq57vPjAgLCdOQd20uaAL2zT/hyQw/Mz5fM4gKY2Kh
-	31ByT5lel0OB0f7NLpQTHBy8AclO6AZaI9OONJjseWiE4VHs/0FNGIbaFXQiDKGI3BSOO3onNOg
-	2SfIPUeLBEGNZbiTk2H0SwcI0+YfmRddpdSXToupvQLIHQn/U+4oBCFVY95IIDJ1SFoJBeianLh
-	ecez4Yqzb/7gTX5VZqFBX1jozFbmhI9AcWZ4GrEX6hWBLz9BiT2miV3nxL7SXy8qiJLVcxcQ==
-X-Received: by 2002:a05:600c:c494:b0:48f:d612:3c59 with SMTP id 5b1f17b1804b1-49240e05938mr44980415e9.9.1781864017027;
-        Fri, 19 Jun 2026 03:13:37 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:69a:b801:33f4:2760:38a0:c4f? ([2a0a:ef40:69a:b801:33f4:2760:38a0:c4f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923fc47720sm93991425e9.0.2026.06.19.03.13.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jun 2026 03:13:35 -0700 (PDT)
-Message-ID: <67dbfb5c-5f07-49b8-aa32-a4635c585028@gmail.com>
-Date: Fri, 19 Jun 2026 11:13:32 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jCQaIMW6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bqg3QV7g"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F2B047A0123;
+	Fri, 19 Jun 2026 07:28:04 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Fri, 19 Jun 2026 07:28:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781868484;
+	 x=1781954884; bh=y9CSQyz/agd2vEwgvKqVewqQ8IT9yqHWf24nXOL6Ae8=; b=
+	jCQaIMW6NRONYIeEa/mAVH1MA9XsdPltq7UxMkQ6e87fUAn+dBRmOZdrNlEjdKuj
+	TpSD/xiEG86IN1zWTlPgjGTgTLlLP9c3wsmwPAbuUpDsgbbb0xtiwwa+77maJ+ax
+	uWkbDkwzCK5q5mc5i6L+18SLZsYfYDgGeBktNPhvdXiA2gAsQUjRBNbZJke58VGH
+	ymJ+7OHOklbCz2lppFcFOecJyjzFoXpflOGk89jJQ/4fL+JSasjvk/BT9kGPnv4/
+	T79dHtSu4dPkm/iLF+qeIIS4RtEztCzv9/Vw2IihPuKM0JxyaU1nwaLNNweHfzh9
+	/PXQeSuygIh/dSanTY1gUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781868484; x=
+	1781954884; bh=y9CSQyz/agd2vEwgvKqVewqQ8IT9yqHWf24nXOL6Ae8=; b=b
+	qg3QV7g+v1UeJbuSh8ZylFCBMxH5EBv03UlJeU/s0G96574BGEajKBntKFYF2sje
+	rN/7cKnt8VBU0Aq8ZlgdU5/Ek714YHL7jU//afUqLiF/RpLeNoMUz/UD7mJL42Ao
+	84+0a37eo9ZPK5PRGRt6eNMTHM2hL2IVgDeS6It5fSKuW3zw+ApLP11u/xhq0GKc
+	Ga0SsE2BUm5YIy4lK3O1SYWdrQeISj6VMz/PWt8qihhX0xkE8QRny8kSp3Qg5nmU
+	kPUptA5afGbODXbbxgVEkku5MHDqiYx2tXCwhmC2xR4gy/gCus3g/VNIgpAs4oiB
+	1VkIcipwngh5EjzE63bMg==
+X-ME-Sender: <xms:xCc1alJD4IkmoIVrHWJTPrI7O2JBErQ2m38PYPPeQiWKvQWzvD6hrA>
+    <xme:xCc1aoIWv7_dH3sJMR0F238bhTCH-yhQGzZD5EnHbrYu0a4L-Jlc7EIdLk8E6f2Aq
+    kaxh_1KZ7EoCnmVv_vMFiEodclN5zLX93gCj29M5twnRSmjfnf3Dys>
+X-ME-Received: <xmr:xCc1aitvVzyNGyk7edY5MrU520azRxgmyOyr0ft9YF6SWxVSTMDFjL7Yc7WfgcGwMPcA2T0Om4QlYTj_SfMszHoWLRen_1yveNWymjuv0Xg>
+X-ME-Proxy-Cause: dmFkZTEtYwTR9NyZ7kWJeOx5U6J7XwgXgXlClryTZ15GtIQjtQXlrwo/FjzMuzSu6O3ARm
+    zeOMyU5gIO7MTg9sPtQExFwqVynEci/xaXkpsN5Ouzkqdf9Udplpi6zTUQwh7X3CeJ5x02
+    fFLWv1xoWoDkAoinIt+LKgh3PljUvx1U2WJJDnJysOSafJcrkuRiP+lZrQFLK1L5glGSSs
+    rPCl8fyPTs1JL7xz5rk/MMII+pyRnhJp0l+VIj8YYEYjTAZPgi1EmlgCJ8jzRVN/dLsPK5
+    jb2hzc2AX7D74Vf+HGfewMAspRscEH9j9reT9Pu7DEsgX3ulxbonIBuSy+FuBzvZfDXEBC
+    8BI3zixEgTxPih+E9eQL+zqsYfrFzy1M9SOX6NHs6gVb8f1g8N3r6V+xBC33rIk3iPtOdj
+    i/3jCLCp7PABp4xZbWJFJQxbbAZd9qUW6sqfR6NPI0Sgew2AKPkpTbkboUpMM3ortrSsNP
+    eEi/27DuKSJHWygdEtJkLPyJAq+88Q3WuRwTO4lfRZUpovbm4sHHw/XVSeHPThZN07TpPg
+    tzK32dT54JKZD6vDx6NcIccbcG6g69FUfPWV9QUS3lQNCV+2dHUKAmUpuiKUt+K+0SPfLk
+    rDsVelIDIgH7oZ9n1P4AfjwZnLUyM0HnSgPDhXuTPC3z9SYWUXghUNmI9G+Q
+X-ME-Proxy: <xmx:xCc1alQF391Q_xVmhiddMPOXOgcXx8PWOoYjk6Zmb9mCDY2AVCcbjw>
+    <xmx:xCc1aoPyb0XIV4mfVdjW80y4RHJoEBVnlHsyCAYoi21KQ1JF5hH5Qw>
+    <xmx:xCc1aqZB5p2_Ayv4IMPOPh5pLmqrBe_fxyQLp-H2l-F-k9rFHJpaAA>
+    <xmx:xCc1aiwr-Bp2yIGqw-0NYWeYfnOuUTx981bQk6I46EfSN9PCa20-7w>
+    <xmx:xCc1aozi88QG4_B8V3wcshJg0SucAzr9A8UwBoerlBM4UgGOekg2sd8A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jun 2026 07:28:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 556363e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jun 2026 11:28:00 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v4 00/10] refs: stop using `chdir_notify_reparent()`
+Date: Fri, 19 Jun 2026 13:27:48 +0200
+Message-Id: <20260619-b4-pks-refs-avoid-chdir-notify-reparent-v4-0-a6472be7acc4@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sequencer: Skip copying notes for commits that disappear
- during rebase
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-References: <20260616174012.601651-2-u.kleine-koenig@baylibre.com>
- <xmqqzf0txpu4.fsf@gitster.g> <ajKimV1TDCgE-GzK@monoceros>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ajKimV1TDCgE-GzK@monoceros>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALUnNWoC/43OwU7EIBAG4FfZcHYMUCDgad/DeBjo1I7GtoFK3
+ Gz67tLVmPXW4z+Z+f65ikKZqYin01Vkqlx4nlowDyeRRpxeCbhvWWipnXQyQDSwvBfINBTAOnM
+ Paew5wzSvPFzafMFM0wpoCAdFfUwYRdOWdsFft6bnl59cPuMbpXXn942Ryzrny+2Vqva931YlD
+ 7dWBRKsS96ZKFUy3bmdPfKH2CurvkftcVQ3dDDeGsQQvA3/0O4e9cfRrqEarXOBfMPdH7pt2zc
+ fEzkKlwEAAA==
+X-Change-ID: 20260609-b4-pks-refs-avoid-chdir-notify-reparent-a4eaf1edbcab
+In-Reply-To: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
+ Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.15.2
 
-Hi Uwe and Junio
+Hi,
 
-On 17/06/2026 14:58, Uwe Kleine-König wrote:
-> 
->> It is not yet clear to me if we want to _always_ discard a note from
->> a commit that would become "empty" during a rebase session (in other
->> words, a commit that becomes empty during a rebase is _always_ a
->> sign that the change it brings in is _already_ in the new base of
->> the rebase
-> 
-> Yeah, or in a patch that was picked before.
-> 
->> and the necessary information the note wanted to carry to
->> the target branch is there without need to _duplicate_ it by copying
->> the note).  But assuming that we want the behaviour, the code change
->> to sequencer.c looks very reasonable to me, except for one thing that
->> I am not clear about.
-> 
-> I think given the commit goes away, it's natural that the note goes
-> away, too. And to come back to your question above: I think it doesn't
-> need documentation, that if a commit disappears its notes go away, too.
-> But that might be subjective?!
+this patch series is a follow-up of the discussion at [1]. It converts
+the reference backends to always use absolute paths internally, which
+then allows us to drop the calls to `chdir_notify_reparent()`.
 
-I tend to agree with this - if we're throwing away the commit message 
-without asking the user I think it makes sense to do the same for the 
-notes. We have "--empty=ask" if the user does not want commits that 
-become empty to be automatically discarded.
+Unfortunately, the series has grown quite a bit larger than anticipated.
+This is due to a couple of weirdnesses in how the reference database is
+constructed with an "onbranch" condition. We essentially construct the
+refdb twice and loose one, but we never noticed because the chdir
+notification subsystem kept the pointer to it reachable.
 
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 57855b0066ac..da2185a37c5d 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> ...
->>> @@ -4965,7 +4965,7 @@ static int pick_one_commit(struct repository *r,
->>>   		return error_with_patch(r, commit,
->>>   					arg, item->arg_len, opts, res, !res);
->>>   	}
->>> -	if (is_rebase_i(opts) && !res)
->>> +	if (is_rebase_i(opts) && !res && !dropped_commit)
->>>   		record_in_rewritten(&item->commit->object.oid,
->>>   				    peek_command(todo_list, 1));
->>
->> If we have a sequence of commits where a commit that was *not*
->> dropped is followed by a fixup commit that *is* dropped (e.g.,
->> because it became empty/redundant), wouldn't it prevent the
->> previously pending commit from being flushed to skip
->> `record_in_rewritten` entirely for the dropped fixup commit?
+Note that the first couple patches that touch "setup.c" aren't strictly
+required. They are a remnant of a previous iteration where I tried to
+solve the issue in a different way. But I ultimately figured that these
+changes are worth it by themselves as they simplify "setup.c" a bit.
 
-That's a good point - we should call flush_rewritten_pending() in that 
-case. Looking at the code there are some other bugs related to dropping 
-commits either because they become empty or the user runs "git rebase 
---skip"
+This series is built on top of 1ff279f340 (The 13th batch, 2026-06-09)
+with ps/setup-centralize-odb-creation at 42b9d3dc9d (setup: construct
+object database in `apply_repository_format()`, 2026-06-04) merged into
+it.
 
-  - If we drop the final fixup we don't cleanup the commit message
+Changes in v4:
+  - Fix the "onbranch" recursion at the root of the problem by
+    explicitly disabling the use of the ref store when parsing
+    configuration at ref store initialization time.
+  - Link to v3: https://patch.msgid.link/20260618-b4-pks-refs-avoid-chdir-notify-reparent-v3-0-2a5669e8f486@pks.im
 
-  - If we drop an "edit" command then "git rebase --continue" records it
-    as being rewritten HEAD so we'll copy the notes to the wrong commit
+Changes in v3:
+  - Reduce the scope of applying the GIT_REFERENCE_BACKEND environment
+    variable even further so that we really only do this when we end up
+    applying the reference format.
+  - Fix a commit message that still referred to the dropped last commit.
+  - Link to v2: https://patch.msgid.link/20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im
 
-  - Running "git rebase --skip" causes the commit that had conflicts
-    to also be recorded as as being rewritten to HEAD leading to the
-    same issue.
+Changes in v2:
+  - Drop the last patch. This seemingly destroys the whole purpose of
+    the patch series, but after Peff's hint that this is actually a
+    performance optimization I'm less inclined to drop the chdir_notify
+    infra. I still think that the remainder of the patches make sense
+    standalone, as they simplify "setup.c" and clean memory leaks. Going
+    forward I'd like to investigate the idea of introducing a `struct
+    fsroot` infrastructure that uses the platform-equivalent of openat
+    et al.
+  - Improve a couple of commit messages.
+  - Link to v1: https://patch.msgid.link/20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im
 
-> Huh, sounds possible. I wonder if that makes the change so complicated
-> that my time isn't well spend working on that given that I'm not used to
-> git's source code and it's better addressed by someone with deeper
-> knowledge. Sounds as if we need a state signaling "Current commit is
-> done".
+Thanks!
 
-I'm happy to take this forward and try and fix at least some of the 
-other bugs I've listed above. Uwe - if I don't cc you on some patches 
-within the next couple of weeks please feel free to send a reminder.
+Patrick
 
-Thanks
+[1]: <aifAVpxanV31KUpC@pks.im>
 
-Phillip
+---
+Patrick Steinhardt (10):
+      setup: inline `check_and_apply_repository_format()`
+      setup: stop applying repository format twice
+      setup: don't apply "GIT_REFERENCE_BACKEND" without a repository
+      refs: unregister reference stores from "chdir_notify"
+      chdir-notify: drop unused `chdir_notify_reparent()`
+      repository: free main reference database
+      refs: move parsing of "core.logAllRefUpdates" back into ref stores
+      refs/reftable-backend: manually parse "core.sharedRepository"
+      refs: fix recursing `get_main_ref_store()` with "onbranch" config
+      refs: drop local buffer in `refs_compute_filesystem_location()`
 
+ builtin/checkout.c      |   7 ++-
+ chdir-notify.c          |  26 ------------
+ chdir-notify.h          |   6 +--
+ config.c                |   4 +-
+ config.h                |   1 +
+ path.c                  |  11 ++---
+ path.h                  |   2 +-
+ refs.c                  |  25 ++++++++---
+ refs.h                  |   9 ++++
+ refs/files-backend.c    |  48 ++++++++++++++++++---
+ refs/packed-backend.c   |  16 ++++++-
+ refs/refs-internal.h    |   6 ---
+ refs/reftable-backend.c |  50 +++++++++++++++++-----
+ repo-settings.c         |  16 -------
+ repo-settings.h         |   9 ----
+ repository.c            |   5 +++
+ setup.c                 | 110 +++++++++++++++++++++---------------------------
+ 17 files changed, 192 insertions(+), 159 deletions(-)
 
->> Wouldn't it map the note for `X` to rewritten `C`?
->>
->>> diff --git a/t/t3322-notes-rebase.sh b/t/t3322-notes-rebase.sh
->>> new file mode 100755
->>> index 000000000000..0eddde7f9961
->>> --- /dev/null
->>> +++ b/t/t3322-notes-rebase.sh
->>> @@ -0,0 +1,37 @@
->>> +#!/bin/sh
->>> +
->>> +test_description='Test notes on rebase'
->>> +
->>> +. ./test-lib.sh
->>> +
->>> +test_expect_success setup '
->>> +	git init &&
->>> +	git config notes.rewriteRef refs/notes/commits &&
->>> +	git version > version &&
->>> +	echo A > A &&
->>
->> Style.  In our codebase, redirection operator sticks to the
->> redirection target without SP in between, i.e.
->>
->> 	git version >version &&
->> 	echo A >A &&
->>
->>> +	git notes add -m "This is B" @ &&
->>
->> '@' is hard to read; when you refer to HEAD, please write HEAD.
->>
->>
->>> +test_expect_success 'rebase B + C on top of BD' '
->>> +	git rebase @ master
->>> +'
->>> +
->>> +test_expect_success 'assert there is no note on BD' '
->>> +	if git notes list branch >/tmp/lalaa; then return 1; fi
->>> +'
->>
->> Do not step outside of $TRASH_DIRECTORY without a good reason.
-> 
-> Oh, that is a debug thing that shouldn't have made it into the patch.
->   
->> Style.  In our codebase, shell scripts do not use ';' and written
->> more like
->>
->> 	if git notes list branch >notes-list
->> 	then
->> 		return 1
->> 	fi
->>
->> But more importantly, if you want to make sure the command makes a
->> controlled exit (not crash), use
->>
->> 	test_must_fail git notes list branch
-> 
-> Ah, I really wondered if I'm missing something because it should be
-> easier to say "this command should fail".
-> 
-> Best regards
-> Uwe
+Range-diff versus v3:
+
+ 1:  3ac83ba983 =  1:  3ae112f84b setup: inline `check_and_apply_repository_format()`
+ 2:  b6b15770eb =  2:  d03fb25a01 setup: stop applying repository format twice
+ 3:  5850f0602d =  3:  f437af7ce6 setup: don't apply "GIT_REFERENCE_BACKEND" without a repository
+ 4:  e4b12483b4 =  4:  7704b7e5db refs: unregister reference stores from "chdir_notify"
+ 5:  4a78c5080a =  5:  545fe82dda chdir-notify: drop unused `chdir_notify_reparent()`
+ 6:  3f8ae36acc =  6:  5ac9f8c2b3 repository: free main reference database
+ 7:  2a22f9a2e0 <  -:  ---------- refs: fix recursing `get_main_ref_store()` with "onbranch" config
+ -:  ---------- >  7:  0482470af1 refs: move parsing of "core.logAllRefUpdates" back into ref stores
+ -:  ---------- >  8:  1b2f9d4ff9 refs/reftable-backend: manually parse "core.sharedRepository"
+ -:  ---------- >  9:  c7ec7d887f refs: fix recursing `get_main_ref_store()` with "onbranch" config
+ 8:  6bc943659d = 10:  5fb782268b refs: drop local buffer in `refs_compute_filesystem_location()`
+
+---
+base-commit: 255322df35357168daefec8523a3cdc849edd6c1
+change-id: 20260609-b4-pks-refs-avoid-chdir-notify-reparent-a4eaf1edbcab
 
