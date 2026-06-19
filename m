@@ -1,108 +1,81 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from joooj.vinc17.net (joooj.vinc17.net [155.133.131.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCE43B71B3
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0DB3B38AE
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:47:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=155.133.131.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781883780; cv=none; b=GtHdKcfiHJRSGiAu1lmGmc/NQqDCGESxJTNEKe3dT6rX4SClP/DWgXbt/eX4Y+PohZHLJ7qrqKNgeCPePZTYa4LXVxiOEcSi62y0ugI4r1lqvvgZroLyxw1YBMGBLswDmYJxnmXKCXkfdcdhX8hV7W444a3WGQMs1iwRhp1hGQI=
+	t=1781884056; cv=none; b=T2HxV8AnQ/EX+2/HnRGiuPlAqhO/CDJhnsFWekBigh9b6Sqe6x0VU+RAWxja4EOhgGzRpGw8bDpFlSgf6xGArQPOXqOb/GJ7aHEWRkvw3NiF7uvHRna8WYZW/VrTf7XtcAqsIULZoSdIX953GFAl5wm8f/yBT3P9HUN8COyNhqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781883780; c=relaxed/simple;
-	bh=BbupDABMNEHDLl30Wh/wsRWW67FNooPFxvVyXa432NA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bJDOe68n8ZwpA+boPc336Y0bs3lQxsgyOXCRBQcULeiZc2ckSV/02Ge5LZOCe26pu3gUTHOx+GTbYa0iTcthUSlcO84pbw5eegbAGT1EUPv5QzNpHMHCR7MQg8yhOKoNRe71lbBhNSdaM7orzuvKWA/4dt6OQOailGLGyFmIM/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=n5BP8sOe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i9lzh4KT; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="n5BP8sOe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i9lzh4KT"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4D7307A0116;
-	Fri, 19 Jun 2026 11:42:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 19 Jun 2026 11:42:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781883775; x=1781970175; bh=JBBBM7uhfX
-	XRt6ZNPoPiwjqN2vqF0Rz2j4GZEQGv6HY=; b=n5BP8sOeAQY0kolk9aftR2AuFX
-	1zAtqeNNnIC/zccHkjjp2+22btouPd552v3mGmj6PlLJ4VnAnO9QZ/5t6j6y7hnh
-	C3F0NDYwH4HAynlGyPyr/w6USeVRXhy5jIinFDE3cyg72YTLUP0qv/E6gWkpymO9
-	MS+9giJy7mh4uZRLNQAORYHUfiWR+6d3No8s04nx2+ylS1uGG+ZgE1ca8ur298N0
-	CNj4X+lhWxU/0jMOnRzl1mubqogQnqAuZvpfc76ZxJ7NPzISB1s0wDsiKjhsx61F
-	MbcfSsHzejXHXC38OfJZqpCu3aypRYGjbQ/ST+WbuOgVvtd+v2zNtTxXExBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781883775; x=1781970175; bh=JBBBM7uhfXXRt6ZNPoPiwjqN2vqF0Rz2j4G
-	ZEQGv6HY=; b=i9lzh4KT+cH3LD4FIBJFtBMak1s//ThEzcvnjE/uhJm6wo69+7Y
-	znbLpsCwgPuYv3uTuE4aTysiGs0gQ2IFoKkNZHjI+UnsQszvFOniFo5MzTVCNG3y
-	ceZFff3iJQzTlBkPETdySu62OVcLvMYgAaKbHOjSpKoousOnj9rV47Tv9dmc7mTg
-	lcWvwX+VBMOH52KuelAoySBul5BEm0smDq4zrG4yZWRzEhJUiwQ/ztJBEY5QKhuE
-	FnvCNU6g7XFQU3gq/1j7nt0PqTQ8WOeX0p8RfGfgXIYJHfWJBgbLytxRVuGNKcG4
-	RmWSvFkS1nAzPq5uvZRPFcAhvD8LQKiuFBA==
-X-ME-Sender: <xms:f2M1anT2ubktvL-qoIz4JOyRKMdllfF6SqKvTtzjjAwGPUyrTOeZ6g>
-    <xme:f2M1arArWPES14iUt3gTbxIQsRCkc0QmjPoEoThnwpLY3vZS9Firew-5xwDFuXSl4
-    3WaHcd2s4YMpPH9CSM4FWgbcvx7rsPvdTao6nWY6mYSfmH3YmSIPw>
-X-ME-Received: <xmr:f2M1avGVTsv6g0drQq5rRnvakYNVQTUKfQzVxgMRrsHJezn_iZO2CBjohuewkmy7Utf_QRMWA7iI_eyyM-wbyIt25IcnbOSwzK5D>
-X-ME-Proxy-Cause: dmFkZTGlesXX8jo+RMTXGdL8VQhTgnohVz9Om2bNErqsZWghIHAsfa1aXyEm29fTbhPawx
-    4hwY0IIi7gaE4o4LOKt3c9zahlf0MIirrIGlE8fyIrVd4owq98Lwd/gmVttaDlGW/VkgFO
-    wQcy8KOSPZQevAT55F/JQvkMkGwXOxIq5521/CgkgKXpbTAwGSu4G1Mdr+KC/lxuaBErsk
-    iP+MpJnAi0zj17PKEzzgzsz5mnnUGXdAA3LdqpqqgeFiKL3jS1T3mA2oEPHF0qKsAvv/ZH
-    yiib6iXJBKZwhTX6U1lvMGgdhKm+dxuCTITnedjw+aoUSJWdregF5ncaH9SUarOM8o55cU
-    t5PUvlKWHAOBHzmn89Qw1GSu4cG/n1qjBCOyW4YWrUzbeqgoQMjQSTzYg7PZU8YJ60e3Ho
-    7+82hEbGmYsOe8bFey4dY5hUs1tY8l0Ji7QHTcOlmVqowzbhfsV8xawSrAzu3eN6prczOC
-    OsJR8RbOEsGi9sDaVAwQto6jPSPvHXdxtBCDXfCFtP2am2A3lNuZ/vswT5cFPW+XmMLnnD
-    HdHRBs+R/CeP8gYaElOgHbg5tcxQVP5sQVYHl1L1HGQNdSImoBPPIzSXf0i68Id2MGV+Vs
-    h6j76FtsIUfml99fI4daOLESEjV7ctPAegFVPICT9htclAtqymp7ZskDIDOw
-X-ME-Proxy: <xmx:f2M1atDLB_LuVpM845QhYQkUs8sRjYBhHs3qDlel6QQie-dO-S9H2w>
-    <xmx:f2M1avV745lFva08aFMBUlnl4DrJlFYD0fY7ADp7PoXN9oJBJ2b51A>
-    <xmx:f2M1ahpFY_UoP-S40tr6sYVjBsIWZrTlVCu2cEeoPQhOp1PZXBaBgg>
-    <xmx:f2M1arQjLF-U0f3wT6GIzO_PpReRbyL0HNi2bQkmASMvcWYaodqGFA>
-    <xmx:f2M1aosR3-6CAxP4XSMo7xlrhi30JeI7CNHvBkb29z7CeXKMgN0VVDlW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 11:42:54 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt
- <j6t@kdbg.org>
-Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
-In-Reply-To: <42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com> (Phillip Wood's
-	message of "Fri, 19 Jun 2026 14:13:27 +0100")
-References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
-	<pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
-	<9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
-	<78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com>
-	<CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
-	<37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com>
-	<xmqqcxxnsufl.fsf@gitster.g>
-	<42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com>
-Date: Fri, 19 Jun 2026 08:42:53 -0700
-Message-ID: <xmqqh5mymt8i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1781884056; c=relaxed/simple;
+	bh=UW0LgLTcOJxD6Fz4Pw/+sR0mFuacZ8J4dxSoYCLbRQg=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=BQo5xy38J4ukSazvNNSR4I0hecsGmrMeQ9oYNmrEhqxW29gRifdKBG2Em7gfY97w8cW4tUU0NGabN1Ol89w64X5wkiJu2cfFfU4cwDFI14tRA+slgIg3bGeMZ3GwJu04xkajg9qtbmf2oNbmfv9VPYwFnKJ7dNh25JD14oVbt0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vinc17.net; spf=pass smtp.mailfrom=vinc17.net; arc=none smtp.client-ip=155.133.131.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=vinc17.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinc17.net
+Received: from smtp-qaa.vinc17.net (2a02-8428-1b1d-4d01-96a9-491d-7b48-ba31.rev.sfr.net [IPv6:2a02:8428:1b1d:4d01:96a9:491d:7b48:ba31])
+	by joooj.vinc17.net (Postfix) with ESMTPSA id 770273A1;
+	Fri, 19 Jun 2026 17:44:48 +0200 (CEST)
+Received: by qaa.vinc17.org (Postfix, from userid 1000)
+	id 39683CA37B1; Fri, 19 Jun 2026 17:44:48 +0200 (CEST)
+Date: Fri, 19 Jun 2026 17:44:48 +0200
+From: Vincent Lefevre <vincent@vinc17.net>
+To: git@vger.kernel.org
+Subject: Strange behavior of "git log" with file argument
+Message-ID: <20260619154448.GA769454@qaa.vinc17.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.3.3+139 (2de20fe4) vl-188789 (2026-06-12)
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+With 2.53.0 under Debian/unstable:
 
-> I was thinking that if I have feature1 with upstream origin/master and 
-> feature2 with upstream feautre1, then once feature1 is merged I'd still 
-> like "git log @{u}.." and "git rebase" without an explicit upstream to 
-> work when feature2 is checked out. If "git branch --prune-merged 
-> origin/master" deletes feautre1 then those commands stop working. Maybe 
-> it would be sensible to update feature2's upstream once feature1 is 
-> merged (which I think is what you're saying above) but do we really want 
-> to force the user to do that by deleting feature1?
+* https://github.com/git/git.git repository
+  at 95e20213faefeb95df29277c58ac1980ab68f701
 
-Ahh, reference with @{upstream}.  Yeah, that _does_ make sense.
+"git log git-gui/git-gui--askyesno.sh" outputs nothing. To get logs, I
+can add the -m option. In particular, this shows 3 non-merge commits.
+
+So the behavior without -m seems incorrect, and at least unhelpful.
+
+* https://gitlab.inria.fr/mpfr/mpfr.git repository
+  at 74cb29f0908c2887dc8c3e6ba7a3c5a2f20710a3
+
+"git log --reverse AUTHORS" shows only 2 commits:
+
+  bfa9d064e1cf7a736740c73b9773eabb11da6ed7
+  5a9521d1f305268e575c4a5c4de13614acef6321
+
+where bfa9d064e1cf7a736740c73b9773eabb11da6ed7 corresponds to the file
+creation and 5a9521d1f305268e575c4a5c4de13614acef6321 is unrelated to
+the AUTHORS file:
+
+  git show 5a9521d1f305268e575c4a5c4de13614acef6321
+
+contains nothing about AUTHORS, and "git log AUTHORS" does not list
+this commit. But "git log AUTHORS" also lists
+
+  b28347ab59db2a99168a17c3e1804000069199aa
+
+which had been done *before* the AUTHORS file was created!
+
+Note: According to the git-log(1) man page, the --reverse option
+is supposed to affect only the order, not the list of commits to
+be shown:
+
+  --reverse
+      Output the commits chosen to be shown (see Commit Limiting section
+      above) in reverse order. Cannot be combined with --walk-reflogs.
+
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
