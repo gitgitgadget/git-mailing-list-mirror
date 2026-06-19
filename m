@@ -1,71 +1,77 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E261A6814
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 14:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B22440D59E
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 14:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781877867; cv=none; b=p2zPROted8iYPFiKIs83JGZWGLNSVuvlDE3jEwOAGmQ7gNfLLEjYsZYiTgcqo6aJ3v96WV/38Z7QZCDrDrg563rnX2hqLALDhoiBVu28A99nST6b4AaXNoXHDnKRZDMMkFaV4badWuD3aLkB2okkJ5Ik2er8kYZh6fOOS6+tOIQ=
+	t=1781877944; cv=none; b=eOlnytn0ETi69seeyVikR54FV2BCmdttUfZsaZbbPqxoTXrEzrJiMvY4lIYTbqip9CamEYDcwFNlZju/2gehSC1xPzpJZ4xIgbnF/Cs19CUxw9gGxoEZAymywLSVdQXM6zRqp61fNV59egLjLpopjXOaPZeVB9NjdqDjJVCc2AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781877867; c=relaxed/simple;
-	bh=Dr7pb2qrGoLc4fMg2ZX/MSi2bm9L13q6rwf13xxbDLk=;
+	s=arc-20240116; t=1781877944; c=relaxed/simple;
+	bh=LaDOvoAVOkHNg/dPI80OcSsdxlHMHinIXH0dC2c6g0M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=esg+hGjp8TtgXna/mBO7dlyC7UJ19sur0XvcdPcwSoneKdvPc+n1lgmdpUIgmOXD1P6UsB+XrVk6J3tAmt78qGxZRJK0+JUzpdX8mybUFVAIGpGGgCy6nfNJQ5+wzD7JPWlSeMfHOyd/UbaRM4AJZI8NFIuL3p1LC9yIhbPJRPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=GNT8BD6M; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=CUi5T46TK7zGIYDgF6SIAiZEZXGqoXge820Y+zFiLlMTcaeePoQBMeW9DsSsQ9Aibk+XQ96RiAgjZ/NR7KGUqUf7tO9i0kd9otug5EW/UB/Or47gydEL4f7zXFvMQF5kUODtxG7Ceqwyc/WJTkB0BftIoYiX0fEe/z1EUcweb0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=L7P7ih7Z; arc=none smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="GNT8BD6M"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7dc6fbf3e86so29822907b3.3
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:04:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="L7P7ih7Z"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-6603d8697d2so2429625d50.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1781877865; x=1782482665; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1781877942; x=1782482742; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dr7pb2qrGoLc4fMg2ZX/MSi2bm9L13q6rwf13xxbDLk=;
-        b=GNT8BD6M2i4J2ckJx3k0NNuLie0WI/1eJTRjR5LZCAwrG7UmW6JbrJBKmCR11lcgO2
-         ktAiDq2BILdhg8QZe0tW65LCA9xzg9zyDCZVg+aRV0HueP84RXeujijsWbS70ySIQSZ8
-         N67qpfQauJBFxcogX7iZCXyXrLeESZ828PRbgF6RZIMvccRMrYxzq8ZxRsyeNfV4Wb8y
-         GI/j1bmveiMNiU4KtIeYeFr1XIj5pE2NCLrujGiJ+yzpiKlYI/s+bhvFd2cMH18R9nQP
-         +eP74wnkl5Sj583eqa25ynQlVs4Eoyq1oZalSb62MJiUcc0NXxHmUJtfaZvA4z4/JHDn
-         SbTA==
+        bh=eC7TUgxJkVOYXpqm6VIBjasCKsNMRdTr8hwByW/BVzw=;
+        b=L7P7ih7Z9MXDSPG4KBjPA6Dlyl5/jfv5mjAWQs/6Yu5iblOJh/79z14qU4rd7tt71T
+         J3nxp1vmPDDSdxPCAkWA1gRDHL+ZlYu9IVofYISzdaXf4sbMDutdpLmxsiinHE9lceey
+         rOeNuyo+YS5BXhmn5DzMBFlKGZMxYCPf8sDWgp4XHc09Z9lDUs9Dih8zuCeb3wAE0BHA
+         285r/eYV7cwyrR05ZWmOAGHe79us95mMc0KcxUR74dXj5XVlvG9Sz+tmi47xiGvxlPu+
+         y4+AqkTM4/9qB6Sxlky8cKXGRhqXUKlaIG4mmTwSwqQbQ0CyUCvqIdUdK55tka0qOOK9
+         AI3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781877865; x=1782482665;
+        d=1e100.net; s=20251104; t=1781877942; x=1782482742;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Dr7pb2qrGoLc4fMg2ZX/MSi2bm9L13q6rwf13xxbDLk=;
-        b=TL6VSj5wlF864dm4SR1Dd1jOnq4gNBXg/nUbdW/wbtSrLeBWO0tDAPEAKgVPydaIHb
-         EAauoxYHY8KOyaIuwRgQc6uvVwTqXw/NlhWOW76lAo9B4RxUhhQIAC+DiEPpd94HHR3p
-         kvKe/QXDWEQUImKg95C2nQLTS6Fy8RRWLnH0IsSyvA1hykt1k+IAujEuh+HihiS+jYlG
-         4eHOSjSzOPHpBPzlrbVQrQKfoomqYV9po3knrKtmfilSb3Zabo3V7bC2K5pT75U62PO6
-         N0mdvR0190LpW2N57buL2SWrLWbrpM1sDQjCvJH2EgmP+6yTnw64EJgzUV5Fo8YSuWvC
-         fIFw==
-X-Gm-Message-State: AOJu0Yxr6aW2k6I5xkrY5gZjnsjydyYGx5D+/UuZwT1aHuXp09kv6KUl
-	8thTAdCcF12beq1sxnKRQP/hHaMSqTZG0/N95rBhs6xgElicj0UvCXR9ntO+2aQFzdw=
-X-Gm-Gg: AfdE7cld6Mhs/wZkL4h556c/ys0hweZVYu/FZCJF6aIlZaUq8GP0xITwsHRZN13kO7V
-	q0L8TcrRgPKqpOZQsXfKRua7uTtmjNHTZbwawC8NqWh2xPErChJSrM0ZJ3hOgqTjE0xEMAnKNKw
-	fW+TMyQDHn8F3tJFXkzqp4Foh5E+xpXS4WiWb4CHIqJoTIhnayMF6kpP7y9iwdx3tDEvjid9pJO
-	5PsnWHzIzk8WfUSp73ryM2tyqZB4bCuCDF1l3/tQ62+wEl+Q/Gy4TWv+BTSBmkSS1IymRaC1+c1
-	+Nx6xrUH/TUnWIDhQXpk33e3QeKuXbG8PTRlDc9paSoF69bkm2IzWTzTiSRomN26FK+Od1VD53q
-	9LbgCFuDlBcAHA9N/bghl0Uw5D9q2SvuXluTtUEW4DOR8Yw/9HBHQM8eSwvsgyFqyx+slEu1fqO
-	HwFnnbp0jjIzEbtkflM2IrS96yJhboW4GdegtIqVu5MTrb4MIwIUQfln74TWqFoLstxkJz9T3KE
-	Wlq55RATrFvnzXWWv6j77fwsRiG3Qgl/87H5Ye/RQX1dYfA6n9T9/f7vNtYSoF+e9C9LlVdb3No
-	QW5i/Q==
-X-Received: by 2002:a05:690c:3602:b0:7e8:769:8094 with SMTP id 00721157ae682-801766c5dedmr20947347b3.23.1781877864789;
-        Fri, 19 Jun 2026 07:04:24 -0700 (PDT)
+        bh=eC7TUgxJkVOYXpqm6VIBjasCKsNMRdTr8hwByW/BVzw=;
+        b=lQhfNPSZ1vTSf+N79wpfwpYH+VpHCUO3B1BqwkjnC11zPpBUR64ykRA0If351ayGEL
+         vkM/OAp8e92blv++6D/o9NivOIdW8ji96ryy5cu7s1FhD/H/kYhEgUJNQYZoV3TnUO7O
+         ULOsXTyxThD7sOlhGz5H04nvbuUPV3OEsLduQ1nFs5kn52q300bIRxsl5OYRdGI7f/FL
+         Dj/BGyJ3mYifal6+BBATO9o3vYtvOZSQinbdFPnj9zxF1MA17t2hkqCk2yCsZrt+GBr/
+         fta85PRqMonf7DM/t+e8ie4vrF/hr1SLrP1jKuLhN7+vsBqN0x0pNHri+PetXAwF6fpz
+         E9zQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8069gFE9aldeY6Vt7DXn4d8B3SqBuQWofF28LXPs7kAllsKl7AIsyCiBCwAdES9raH2Yc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjB4K+6NzIkruHJdvFQPdso4DYIAZ11X7/H3bIkzAARR08ZlNF
+	BPCsyiXR2D+EmNqXdApUqmIJPHC7ENUO5zBQ56uYow3qUYIgFxdbAAibrYXbA79Jdtpsks/hn4T
+	PIOLC
+X-Gm-Gg: AfdE7cn+KGm3inhk82jeru5Q9FJAaTp/lc9TqoVZiBUYvlmN85L6BGWQ5pT++JLGBpN
+	gfSDr3GzMY1zbu34/+STL1Zyq2BxFVy9+pOQKlbu/yg10dE9MQlrgcMfMUvNTKlEy+bGd1plReg
+	eWBS4HsJh6sgj1o9Gal9+wM0dhVFCQNeqIj56HnqRPtqVaviaT5c7QOxBQHPSUaZI+F/08PFwfl
+	sju/AigMPhfckU8QhrrZ97tpfWayWen1j5xg+i/XFXxAF22Cuhx5O/kTM9Yj8SyTyf0ZQYkzcA5
+	3rYhYcCKmunjx9USx2wdvmFXkFYdShHwNSxKH3K5Ncxb+F2HRKmqJqWzWsDJm6Htr5IOAQZhFW2
+	9jS4xmxYzhD5nNpzIglU1Ioz7qYrNs7I/uQIpigM4UiiHQxsdhOTj0TVhsUOj74Ql8OnLZmZoxo
+	CLt88PRmJk/UAHo9cBFy7r6q8Fkn5vwUFinQB5WwE6zcvCYf1dhYnfaNUILf6+zYbuAatq1ud0Z
+	GzGNyrDXGHJ0hAgSlGd+9aGqqtxhSbr6MnBJYEo1qYaFniy5rQerb3sOmAbbBk8dlfHoNsDP8si
+	0ndQ/iYivOVEaJAy
+X-Received: by 2002:a53:b1c4:0:b0:662:b984:a5c0 with SMTP id 956f58d0204a3-662fc91c8afmr2949981d50.18.1781877942151;
+        Fri, 19 Jun 2026 07:05:42 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8011a1e0c64sm12105117b3.14.2026.06.19.07.04.24
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-662fdf2361esm1335728d50.13.2026.06.19.07.05.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 07:04:24 -0700 (PDT)
-Date: Fri, 19 Jun 2026 10:04:22 -0400
+        Fri, 19 Jun 2026 07:05:41 -0700 (PDT)
+Date: Fri, 19 Jun 2026 10:05:40 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t4216: fix no-op test that breaks TAP output
-Message-ID: <ajVMZpjTKiXc7TRe@nand.local>
-References: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] commit-graph: use timestamp_t for max parent generation
+ accumulator
+Message-ID: <ajVMtJ73EdBI52sz@nand.local>
+References: <pull.2148.git.1781420271100.gitgitgadget@gmail.com>
+ <ai-zzWn9Ls6-j9h8@pks.im>
+ <09e50180-e165-48d8-a9d0-485283342f5c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,50 +80,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
+In-Reply-To: <09e50180-e165-48d8-a9d0-485283342f5c@gmail.com>
 
-Hi Patrick,
+On Mon, Jun 15, 2026 at 07:44:19AM -0400, Derrick Stolee wrote:
+> On 6/15/26 4:11 AM, Patrick Steinhardt wrote:
+> > On Sun, Jun 14, 2026 at 06:57:50AM +0000, Elijah Newren via GitGitGadget wrote:
+> > >      commit-graph: use timestamp_t for max parent generation accumulator
+> > >      We found a few repositories in the wild with commits whose authors were
+> > >      apparently on a computer in the year 2120 when they recorded their
+> > >      commits. Apparently, in a century from now, some folks are going to have
+> > >      a really weird timezone as well (-13068837), though the timezone doesn't
+> > >      factor into this patch at all.
+>
+> > > @@ -1669,7 +1669,7 @@ static void compute_reachable_generation_numbers(
+> > >   			struct commit *current = list->item;
+> > >   			struct commit_list *parent;
+> > >   			int all_parents_computed = 1;
+> > > -			uint32_t max_gen = 0;
+> > > +			timestamp_t max_gen = 0;
+> > >   			for (parent = current->parents; parent; parent = parent->next) {
+> > >   				repo_parse_commit(info->r, parent->item);
+> >
+> > This looks obviously correct.
+>
+> I agree. I was surprised this was the only necessary change, but
+> your message clearly describes how the timing of the patch that
+> delivered this change contributed to the mismatch.
 
-A couple of thanks are owed: one to Todd for reporting this issue in the
-first place, another to Peff for analyizing why it didn't appear broken
-before, and a third for you for proposing a patch to fix it.
+Ditto. I reviewed a version of this patch before Elijah sent it to the
+list, but this LGTM and is
 
-If you choose to delete this piece of test infrastructure entirely (I
-think that there is an alternative direction that I would prefer, but
-see below for more on why), I think the patch you wrote below is OK.
-
-But...
-
-On Fri, Jun 19, 2026 at 09:20:20AM +0200, Patrick Steinhardt wrote:
-> In t4216 we have have a prerequisite that is active in case the system's
-> `char` type is signed by default. This prerequisite isn't really used by
-> anything though: while it is used to guard one of our tests, that
-> specific test is essentially a no-op. So all this infrastructure does is
-> to provide some debugging hint to a reader that pays a lot of attention.
-
-I don't think that this is guarding nothing, but I agree that the test
-as written is strange. As I recall, this was to sanity check the v1
-Bloom values, but allow failures on platforms where the `char` type is
-unsigned by default.
-
-I don't feel that strongly about whether or not we check the exact
-value of the filter, but I think there are a couple of arguments in
-favor of doing so. Most compelling would be that we know that our
-murmur3 implementation is correct (in at least one case) and that we
-don't regress that case in the future. We do have these checks for v2
-changed-path Bloom filters where the signed-ness of `char` is
-irrelevant.
-
-> Besides that, the way we set up the prerequisite also results in broken
-> TAP output on systems where `char` is unsigned by default: we use
-> `test_cmp()` to diff two files outside of of any test body, and if the
-> files differ we enable the prerequisite. If so, the call to `test_cmp()`
-> would also print output, and that output is of course not valid TAP
-> output.
-
-Given this and the above, I would probably err on the side of
-designating this as 'test_lazy_prereq' or otherwise silencing the output
-of 'test_cmp' so that this does not taint the TAP output.
+    Acked-by: Taylor Blau <me@ttaylorr.com>
 
 Thanks,
 Taylor
