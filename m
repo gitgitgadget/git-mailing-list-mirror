@@ -1,135 +1,180 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0A8282F02
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC4F3B47C4
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781883230; cv=none; b=iarMk3QtXvohHr2LqKbopaSACidXuWE4cTvRUp9Hy6VMJMr0mxhwQpQqATcV0RHB14AkEuJXtyCaHIMEt5dS2TTVa+8zdmF775VKsdCTl6uTh9IKsBNT5qNrJ9f/k+egHmO1hq2DXhgP3Eftou0eGNrBpPqnALMzbOA2lPkvV9A=
+	t=1781883696; cv=none; b=AqMcnQRn1/5xLXlgrIyQQ+SIDcrmB8RRMemC5JC7NDjje7IfhE0VoNEqjB1/QigqXjUWa77lTXrobDHIsOI+dtUjc6wkBsTv9tExKQDy0S3oI9FWvJMuDmzeBgnHi1jh5soWNNwdryzlhkIs8ln/HJaE77msjqht2y95Dndv4Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781883230; c=relaxed/simple;
-	bh=2O13aYfC0qx+jqY8qmtgjevSNDniRlvN2jN8qcSoehA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hUO1Ve8rNFxdbM/kX0P+LOYbPpnj49Kz9bid4mVUx2DE2zGjqSAd8A25cjJt/K7uxqnRqH/1kkYoxfEHtw3UKlcMM20YKU4dO2kPOEnzyHWxjOl0ukR7VCNh5GvYC0I4CoaBTwkhjqlSygfzY7bvJaunnMP4WY3pjg2/mmxxFG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X7TWPM05; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781883696; c=relaxed/simple;
+	bh=/mE1fhPUn15yIUMIMKiKlaIrD/oo3VBBThyWdhlKQcs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OCdNa8jfKGoI1PGdNbuNnWx5bT3XT67zp/UzxBcsIghZFRUgKeFUVE0UHcok7N4oqz4gYiIO6hVmyvjlEEtvTd0nPlEpncB3Dvqr8hAtmhi9ubDeRaKDnP2S6ImdAlGookcDmrjiIfsisAxDzyEr1U5B3auWsZjkvNzPY3LRbyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Iq8VAyYg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eaqR010G; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X7TWPM05"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-91588056619so161791185a.2
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 08:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781883228; x=1782488028; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rrWyadbS0sQrN5RFk2DEsU7WSV8rqEjLT7X7hM8HMLk=;
-        b=X7TWPM05MUc9Gkpj/ue8pok3GhZO6X4rak3WgKG7vKNSWz2TFYFJuvYcd5INunrdRm
-         X9LM/AdTu77/TrxxTLQP9tLXRV/jWLHfc0SrkIjbPRM7PWClXr3q66mJb4L5/6k5ATZ/
-         Xb0t33lru4kML3OqmyJ+94ABpZgk4LUaHCt30RvKeCp55o2q4a+fPqpg6TfnI9Di9W1C
-         HpAuBM8MfunRiAwszljuEMuyHE+Rb+wNc2WTj6VyTnX7EpCwV7PLl5vMetfKdxzGGJHR
-         TSSF1dkd3ihfWy0Z+jP3bkfk5KTYBMLwuroKUAZ7lDXWa8bZN4dBQal7XEDG7uKnACQG
-         PfVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781883228; x=1782488028;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rrWyadbS0sQrN5RFk2DEsU7WSV8rqEjLT7X7hM8HMLk=;
-        b=ffYN/EdOvqaZ8Q+bGFsOSWligy0zE3Et6X2saICDNv5I5T/cLkOpHoNgI31VdNE3g+
-         ruXDBsOxrwVtzqNo5bh4Y44rG6LuzDlOAckEF8gVMuvs3KaQpszpwZDRkOapa/m+ySil
-         XgYk/Erhqxrf4f6oodrasRiztXcSI3Ooz2/xxxDcR4A+uhSQBRbgpKOlK8237BAfjZI2
-         JC36pJdzIV3Tbk9pKA6+7Eo4nd7jXBF/5MEs3mblwwvlE7NF/kUaREr+b+4KiW2jIL1W
-         WzziNAaNt8wM0r+7Rw/LJlNVYF7OE7taeNRxs9PTt7BxhYj1f0XLHovj1cWXQ1HuSM7Q
-         aNew==
-X-Gm-Message-State: AOJu0Yw8mvEwtM0GWWoswnjcvrMhnPDAhk7tY/TmVLEMCQ2GqfVQrUNj
-	UZL9r8P9PbTstbXosBkRXjvDmh0D8wWJqFP557Cpxl9UTGqKNzSmC0av
-X-Gm-Gg: AfdE7cl8RMs1ggetmVdhbbaidRSQ5lmHMmfHSnEkLqkh7HUwQCY2dxAgFISIbgApuwm
-	0HngSxqHU5OdH9TjVdqX9VUWCeEfRv+WuFA/z9kJY/XZUCNVaZKjN6tfr+EgJNc7lpO6hD0ms4H
-	lVdBKjIkkX2zGZzi8a+CATvs99SKTMy5/XarsVybmzVvQwq7J1JjjR43R/5NEKJ3gBVOLUF1srA
-	IoLEuL89ViBnv2ivyydZ+j/SMVLswYrqWaqgr1gXbdaav35evGhm+e+1hlzJHqU2+SCFzmLO8+W
-	XixsXZ1NLcuCW8O8ud76WKvQDVJB/77q8VItJxtTXj95K5CJtM4yZRKU2XbkFOgRh/XqvnxTno1
-	N/Nh4xqNchRiLVnSiEteWL3Exrk8/5vnIEDe7AG0e7QmCoUhbEyZoEUpWSVkCpesHPFUKwwAuBY
-	mNl9KKBi5RAjkq2Wg/WBoS+V41T3wAZVLHG4bcpUhsmnoDYb+l7ttvlyNQ1w==
-X-Received: by 2002:a05:620a:8005:b0:915:f664:2568 with SMTP id af79cd13be357-9208d6ed316mr605219785a.50.1781883228407;
-        Fri, 19 Jun 2026 08:33:48 -0700 (PDT)
-Received: from [192.168.1.109] ([136.61.86.144])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-920a1819fa5sm271440985a.20.2026.06.19.08.33.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jun 2026 08:33:47 -0700 (PDT)
-Message-ID: <7afdaf77-07f5-4d48-955d-e153d148f647@gmail.com>
-Date: Fri, 19 Jun 2026 11:33:47 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Iq8VAyYg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eaqR010G"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 43AED1D00049;
+	Fri, 19 Jun 2026 11:41:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Fri, 19 Jun 2026 11:41:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1781883692;
+	 x=1781970092; bh=qYcf3tPXhc3mtUvZTBk6WdNmNuH0M9bXeiqsz9/hNO0=; b=
+	Iq8VAyYgc80zIKeUtPSR6IdWo2r2dRkVtUpBnRDw1U20BYfe5qLwUpmAMvosvm57
+	ZFnyMGImcSMbgeSo31vjRwmySr6LWmLXHavHZBJU8/PFEp3BeqFIri2ybxrUTBp/
+	i5UPJNHw+SmDAtl4qlKqNXU/4q2RiQW/BSRmBrWQitFaRFeUNJo8UymYFlsqk88g
+	GRJt9MjkhZxQ0QNZ3K2pFLZiqY3pyYWvyWtsPpbm/QhAlZ1ZcaNDVvegBLSQYFuu
+	6Ndq4XdVpq+W+JnW6ToqE0kOyZeH3dGIc7bdAmAi3+3w4BXYnczwQR45IFoZNF44
+	vpqwY/tOYMZCJn1gdLgbmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781883692; x=
+	1781970092; bh=qYcf3tPXhc3mtUvZTBk6WdNmNuH0M9bXeiqsz9/hNO0=; b=e
+	aqR010GQRrVgIYxfXn112bjnqm2PZu+xR4ikGPAH/043UTUlzcBXKUAHlFOjryh9
+	CcUsqBuGxfitY0cczYGeVdyPuVpPDQIKeZsd68nIHnUNDPXVdOAnfNNQ9f1q1UYX
+	WSAVPjjIZx3r8zhQM8O5N7/1e/bePhdatxpLTdwM8V8qXmslpTS7/RX/5dOkIriA
+	thsyg8iz4/RjaMW7lLB2M4uwABkli2o7krsx4RSAsogKKMbbAYt8S0FPOdGEjgDb
+	FK4g/XdjwEG7OMJn6zbhMLVl2NdHTmyP2P0ID9ixyh0OJdjH7UhyIk9xsO9UVUcf
+	bXvF6u4bYfuMipTs9IMkg==
+X-ME-Sender: <xms:LGM1ary0mXKvET60OEafbyNjnp5ZUSZboNL8dhr3Ue3UVFl_ME6ANg>
+    <xme:LGM1aqScUeyh4bZMVB4SPg8TLACKyOoQ88LrNrJOrLtcenS51ahMHVpQv_HY23nrm
+    6HgucTakRjAA70n7bgJkU9NRFN_RHQbGX6U3JXuDujQhGxSig8>
+X-ME-Received: <xmr:LGM1aqUXlf5VbUcG2P3Lb8eud-PLV7KBhsF4Jonz2aPxXxvJFTfnvKl_lWxCL4Nxq8EiXVcpIesvUFe5oKEXPMf2gtYVA7FJFPWG>
+X-ME-Proxy-Cause: dmFkZTEUAZwmUXubT2A234bKzNNYmQVK6E9lTjZudJSAyvF5LDxpb6bYy8aKgZ4hV2YX4C
+    U0hIChEstg1OWtNsgnIDiI24oTbyU9Ik2dmE6I7TyB0XVpHU2XzZaevRX1R1vdk8TA59tx
+    o9YaRBVj7SvuQq/1jWXne9Tbu9W6nPSF40c+mfxEK/eJoSx52hgc0cOg3IoozskmbCU5kR
+    EBm4r5G94WotKEk4OoriIMMLqXjoio9++hy2JmicdlSNZY4nji32+SxrjcQaAp6GbNG6YT
+    Jo4fCqvzf7GTStU4CHdlYB74vEXtI2kcCS8paxK+6/G74zaXL3Cue7+mJwN8TN72np+4Sg
+    fIj/MfmNyJENCI0P7FgSA5LU4/n0UVXMTwnesDc+NFoTMxh/OmKSUX7KY9KTLMQz6rc+9X
+    ZVbB/Ens7VUyTF6f6TqQq3su3mdADicZ+L1b0HGs5osnWlx70jhUA/jLg3zyBkEG1rmTxk
+    XN8pWbAfZwuGLsGXSSnnIH0l/Vx/u68/3XC/2hoceSucUYKaT7JF0Y0v5HK7nDOqA6e9O9
+    qQNUEAFMGDcWE4X7Ovgma7PcMjltEqo7MjMtlxaF78B/9QQzdKHDBcTyLJ+HZbJqGi+Aus
+    5qzNC+X2imTfmQ0HpF+ApDCmXPByB2g77nOsyGU/r93JiGTqSPBaCiDvrsrQ
+X-ME-Proxy: <xmx:LGM1akZd9ROL8KDEqEk4H10ZRWxWd3OT9hoEroL1Cy_I-f1dO4-J6w>
+    <xmx:LGM1ao3QDk_y03uCArNq7TiZ5NYh-DKD2pSGUYUdbmx1DLeiIesaLg>
+    <xmx:LGM1aujHP8-jYLIQ9FBxV0oIhOBpCLRpqsKbSMxMrSaeTWkWx1EE-g>
+    <xmx:LGM1akahjY2un5DNeRkEPI9fx4HqBuVKYPdM3UhU0SMZU4uklmPlOg>
+    <xmx:LGM1ah1e33SMuD31el6LgPXPH4dIEqeVdmtuL5i84qn3XNZOKPpRZPLI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jun 2026 11:41:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2] Makefile: dedup archives in $(LIBS) so link recipes
+ don't repeat them
+In-Reply-To: <CAHwyqnWBb65dC+qSYTw9SKdufjibUmTm065feM5D9906H5SQ4w@mail.gmail.com>
+	(Harald Nordgren's message of "Fri, 19 Jun 2026 10:00:28 +0200")
+References: <pull.2314.git.git.1780269406949.gitgitgadget@gmail.com>
+	<pull.2314.v2.git.git.1780610623006.gitgitgadget@gmail.com>
+	<CAHwyqnWBb65dC+qSYTw9SKdufjibUmTm065feM5D9906H5SQ4w@mail.gmail.com>
+Importance: high
+Date: Fri, 19 Jun 2026 08:41:30 -0700
+Message-ID: <xmqqldcamtat.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] pack-objects: support reachability bitmaps with
- `--path-walk`
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-References: <cover.1779923907.git.me@ttaylorr.com>
- <cover.1780438896.git.me@ttaylorr.com>
- <ffad584a43ebf3cb2138e8dce7daef84ab72712f.1780438896.git.me@ttaylorr.com>
- <849c659f-efa8-430a-bfac-0c26a3ed1aaa@gmail.com>
- <ajVSHvL+On9AEV+g@nand.local>
- <131d7ad3-7791-4d6f-bdf3-afa6b0831a71@gmail.com>
- <ajVXlcHgIF2XkmMQ@nand.local>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <ajVXlcHgIF2XkmMQ@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 6/19/2026 10:52 AM, Taylor Blau wrote:
-> On Fri, Jun 19, 2026 at 10:40:51AM -0400, Derrick Stolee wrote:
->>> [...]
->>> , which gives us:
->>>
->>>     Test                                            HEAD^             HEAD
->>>     ----------------------------------------------------------------------------------------
->>>     5311.3: size of bitmapped pack                           278.8M            278.8M -0.0%
->>>     5311.38: size of bitmapped pack (--path-walk)            278.7M            278.7M +0.0%
->>>
->>> (eliding other tests). I considered whether there are other interesting
->>> tests, but I think "repack" is the right layer to run perf tests, since
->>> you're always writing a closed pack. We could try different subsets of
->>> the repository's objects (which would also have to be closed), but I
->>> don't think this is that interesting.
->>
->> This sort of thing does help to show that we're getting different
->> behavior when repacking with and without --path-walk. And this test
->> is showing the slightest change for git.git, but is likely more
->> impactful for the other repos I've used to demonstrate the benefits.
->>
->> So this is the kind of data I'm hoping to see, but also with data
->> from other repos whose data shapes benefit from --path-walk more
->> than git.git and repos where name-hash v1 is sufficient to give a
->> similar result.
-> 
-> I'm glad this is the sort of data you're looking for. I'm happy to run
-> this on other repositories.
-> 
->> I'd also like to see if the repack _time_ changes with this, but
->> these direct size comparisons are the biggest indicator I'd like to
->> see.
-> 
-> Unfortunately a timing comparison is kind of a pain here. We'd have to
-> use test_perf, which will perform the same repack multiple times. We
-> could do that, though it's wasteful, and changes like bf4a60874af
-> (p5326: generate pack bitmaps before writing the MIDX bitmap,
-> 2021-09-17) move us in the opposite direction.
-> 
-> I'm not opposed to changing this to test_perf if you feel strongly about
-> it.
-Repacking is expensive and time-consuming. I care a bit about it,
-but not as much as I care about the size difference. Feel free to
-skip the time performance impact for now.
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-Thanks,
--Stolee
+> I think this would be quite nice to fix for all the macOS developers
+> (I don't know how many we have who are active on this list), but when
+> running repeated tests it does take up some space on the terminal:
+>
+> ````
+> ❯ git rebase --keep-base -x 'make -s && cd t && prove -j8
+> t345?-history*.sh && echo'
+>
+> Executing: make -s && cd t && prove -j8 t345?-history*.sh && echo
+> GIT_VERSION=2.55.0.rc1.20.g1e31474ef6
+> ld: warning: ignoring duplicate libraries: 'libgit.a',
+> 'target/release/libgitcore.a'
+> ld: warning: ignoring duplicate libraries: 'libgit.a',
+> 'target/release/libgitcore.a'
 
+While I am very sympathetic that it may be annoying, I have to
+wonder if that is ultimately the linker's job to accept the same
+library listed twice on the same command line, deside when it can
+ignore the second one, and *silently* ignore it.
+
+Imagine this situation.
+
+ - There are two library archives, libA.a has a.o in it and libB.a
+   has b.o in it, respectively.
+
+ - The object file a.o defines a symbol that b.o needs, and b.o
+   defines a symbol a.o needs (i.e., mutually dependent). libA.a and
+   libB.a have other symbols in them. There are valid reasons why we
+   do not want to combine them into a single libAB.a.
+
+ - Now our program X uses both libraries and we build and try to link it this way:
+
+   $(CC) -c x.c				# this builds x.o
+   $(CC) -o programX x.o libA.a libB.a  # unfortunately does not work as-is
+
+   which fails because x.o uses symbol from libA.a that is not in
+   a.o (so a.o is not linked), and then x.o also uses something in
+   b.o that is picked up from libB.a.  But b.o in turn needs a.o
+   that we already skipped.  One way to make it work is to tweak the
+   final link phase to read like this:
+
+   $(CC) -o programX x.o libA.a libB.a libA.a
+
+If your linker complains because we list libA.a twice, it would be
+annoying.
+
+I guess if we can assume GNU ld (e.g., gcc/clang), we can use
+
+   $(CC) -o programX x.o -Wl,--start-group libA.a libB.a -Wl,end-group
+
+to tell the linker that they need to be processed for circular
+dependencies, but listing them twice is more portable and harmless
+(i.e., if all the symbols are resolved by the time the linker sees
+the second libA.a, then it would not pick up anything extra from
+there) way to achieve the same thing.  
+
+So from future-proofing and portability perspective (which is
+another way to say maintainability we care about), I would very much
+prefer to see this solved at the linker level, allowing the build
+procedure to list the same library twice on the command line.
+
+It seems that on the Internet various folks, including masonbuild
+and CMake, have heard complaints from users enough and fixed the
+linker by using -no_warn_duplicate_libraries option.  Their approach
+translates to something like the following in our build environment.
+
+ config.mak.uname | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git i/config.mak.uname w/config.mak.uname
+index 8719e09f66..e29eaaf3fd 100644
+--- i/config.mak.uname
++++ w/config.mak.uname
+@@ -149,6 +149,10 @@ ifeq ($(uname_S),Darwin)
+         ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`" -ge 20 && echo 1),1)
+ 		OPEN_RETURNS_EINTR = UnfortunatelyYes
+         endif
++
++	# NEEDSWORK: do this only for XCode 15 or later
++	BASIC_LDFLAGS += -Wl,-no_warn_duplicate_libraries
++
+ 	NO_MEMMEM = YesPlease
+ 	USE_ST_TIMESPEC = YesPlease
+ 	HAVE_DEV_TTY = YesPlease
