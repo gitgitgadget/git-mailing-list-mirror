@@ -1,148 +1,133 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20982DC321
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781854470; cv=pass; b=aLy+vHyRjILZCopbwG4/kneTVtDMxkKwUuz4pvkQZr6/17YAyiI2hiF8AM9t2UgXADX2r7eDK7zHmxRPLOO0beR9fJ2DnxaamJcs+WactRyiwa7E8HX2U6IdhBHXthubafDA4E0Kuy4ikqnmm/yUQpRwEGv+mRqjq4+3ZlH7Reo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781854470; c=relaxed/simple;
-	bh=RW21PskSCANSNylrMjdML+Foo0OWXfabVkoWFUfEPYA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p33wJ8xTBLPINJ+0mAIL7dS/hkFgZPNXipDX8iVPqzem1wOssxJxSRSASE7oPxRKAQLw0KipMqh3zCgpW+pbhUTTEEFeh4DyEjJ47JKGTjCy0i4aOlK6d07UBqC4/0lOVGxlBFiPu0g9L1qDJhT+a6w+hlwbzYMnjeLhqILrtk8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=MNVoPAFc; arc=pass smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B36EED8
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781854718; cv=none; b=mCPSv1iZZJTkYyoGNDJGgi1y7SjXsFJ53Qj+EMyrt+ftYABQ8Y6B2QaP2lfqmDhIqP0aC2vGu0vUIzPHH2qGO10FHPAWP2Mh8cSd3XLarO76VRClinNel+thAQrRArkVQtWeW7B8Ek9vt5hC+0zmCiKvUeASFSPTXp2BfmOblnE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781854718; c=relaxed/simple;
+	bh=ZTn+4IfB4ZEmXkyNJFM+/Rrg3M256LQ+aAwixcee85w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DvXHwsYp8D8TlcNlqTpnb36gDyDKcCRVeJuMYxB4i3IS4bmaMWxoh9ziogdHTokLdLGe8B52dyoWQrdGMPjLeUTreYiNveJmuR6A+dli6cZU5xxCwHZst5Af0ocpGsjAfCTxjJH6wRaQFuKQYpwf0RJfb2EzAoYTmADj67zeMYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nAH2YEoe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I60VLVIQ; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="MNVoPAFc"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-662bcc30fafso2019944d50.2
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 00:34:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781854468; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZARIgpQh7kFaxLKhOSl2Ds7Zn3YiKgI94uzecijpK4uqk9nGeflCqQXdvZoRQ1A4Ms
-         C36Wy6LV+XUSqn0zycAcFgD+L2afTp8MXdjMJeHSQw9A1VscjtXEozkI66QdTdjeKail
-         6CrVsc1rUoIojpKrc4wEk+EmmIj3IilNZNgOTb4gdnULnuHVJoiCE19zxBuQPLXhAdlw
-         NBPCF3R6n0nIhUZgIzpqDvO75t5r8QK/7xOiRUb3BLMhEVlr9qmuvdVLwwNDVcum6Qxq
-         dm1rAAOH3J1QfRbP701cavhQdZhCUd+ukxDXAEVMnUjLgNbN+45vap3/IDwKhz6Oo71y
-         DJYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ICu0fsX+zktGTOxJMZBisgpUa0oSG+e4sNmiOH7w9Dk=;
-        fh=R5TrLSplp9lGS57cY3SRkE+Lug5clNpdqMqNvEgllww=;
-        b=EXps+j1XI6/hyta78wjCslkM6s0IgMA+7JlXvdaa5iFzdQpVkCbfCTc0JclP5/jfvc
-         1skcKY8+LHBl5OotyN7bXv8Io+EwJrM0z5XH19/oshB8LM5rZb8hv8KPR9r9niIoy/Uy
-         r+d2axpZERI7PEKP3xcjS/pUR3R82Otq+He6wUrrg+2I38zeJQuuEnBu4pJWt/CKb+Jc
-         u7W+wOK1dC4fPqDosBwUcudZx+WJKAH5DvweFlUJn6tSCfVvqGDJ4qyR5fD7LLnTbs6H
-         HVmNVMt5N2KHGWrqkDhgHkH1Ah+HAuMut1oVli7+oaJqeOONYacOx3Q6n2T3bhRZXmIB
-         dl7w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spotify.com; s=google; t=1781854468; x=1782459268; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ICu0fsX+zktGTOxJMZBisgpUa0oSG+e4sNmiOH7w9Dk=;
-        b=MNVoPAFc+3Jgdg/wlRet9CtiF22yfKbi3Eth4xFVtImDWSsKRvZbHezYODmvNqoNwU
-         IOdkuJwqKrhuWe2HpAXtKtb4yENn7Ez9ggzcYZv8HR5EC588r6C5ffomws8MXNDaTNG6
-         ztV9dD37T2LpQ7F/UTTU5F7aop16v0xN+73EE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781854468; x=1782459268;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ICu0fsX+zktGTOxJMZBisgpUa0oSG+e4sNmiOH7w9Dk=;
-        b=WBXFUe52LxX6llDChscm/WQX7C8yhqPMTSbiVplh4qeqZRTb2sne4/ZPdatflvSIW+
-         2opoT7Xkh0Dhpz66nVbnDszNgHoLPE/Vs89v0aAfYNBJdcyYk2xWyyGou2VBm6t/r+Do
-         vkZVzIiYWghuD1NEpaz/h46R/zj7rRKMfKifLl/yOOoi47qW8x27/cbB2kf6cCjNGbO6
-         MXg9WaXewibSxPqyzqa42t1FoEW2zRoZEmyucNQxFCki21zEef/IRg0jvVExtHGJUzck
-         NS55lU4ZMCzhUGdI2dmn/b9Ux3vdaeijG5UM3MmVLe+DBSVS4bCSEFtXPO2H/q1XK8Ip
-         l10w==
-X-Forwarded-Encrypted: i=1; AFNElJ+E6I7cMlVKASrjIiz6YZYt1CfDl3+J+BxzJgnsLlcjYNq+2BoNThNwDvffbYaOtIcRM8U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKxESKyy+qrPkjR7vs2Akjx8J1JUUdFh1MQaW3ijS/7nHC0mVu
-	VLN1a1tWk1VFtkTzkp3+D8tna7DaWyrq3kiTWSI8oh9SnlnduyClIM89XAkyJMLJVqs79dm1fp2
-	JKvfmGAkfNGNaBPVXe06p6WgQOwgL6EAWO8sJYNeFQg==
-X-Gm-Gg: AfdE7cl6LeMAfeiOoi9n1qyVByBgvA91MSTcxlinq2GjvQ3Fy30h9zXeOEQ1G0csWfF
-	/YfpZXKey6KR7U2W2Z6r9vTQR2LQpIWu5fFqH4uqdEoLEgeyq7ywe49jZU7fAB3RpjdgO3ipA7C
-	zOVbw7yB7i2+G7ext87zmhbM40ZbID01USCd7YunGgm0ua8EvXr1PGYA9ARAMN8TE73BzbXQ6Yk
-	sv+jqPuOWk4PnAHkrQ84kZ09+L7MAyIObC3MI1DXxwaI071oPhwLZ9sYzK9w9FiFTT4GFw4yuOw
-	4q8nRw==
-X-Received: by 2002:a05:690e:480e:b0:65e:b05:7679 with SMTP id
- 956f58d0204a3-662ffc949c7mr1468986d50.3.1781854467825; Fri, 19 Jun 2026
- 00:34:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nAH2YEoe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I60VLVIQ"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id DE9C81D0015C;
+	Fri, 19 Jun 2026 03:38:35 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Fri, 19 Jun 2026 03:38:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781854715;
+	 x=1781941115; bh=mhvET2wYMZ/pYOQXoh6tuZD+lykxtaRjnIrGtqUTxFY=; b=
+	nAH2YEoeCEAJTbVEHN7yP/ep2t8kql6dhq1Thfn5EXovB7tf01qNNWqZvNP/XUTI
+	LLXRdkVoud9Bsi2m+pcN7oV6A1a0q1oPqT3/QYkMUTSa4Y8bEiVSIghmchM6SdNs
+	7mUgdXEWvfzXrhJrPOL52qdKICh6AV83wVbxd9FB02MX6j4gqQCUtbOJmaNo4hCh
+	JujyUeW/bWqrCfGvx15g9ZkaqXO0Sm8xZcio774mQaTvZaNEXcJJSmTEJQBpoYBT
+	49zRz/2E9NhdiQKrLXXQYaoOD7VPkqrRfjBvoFF+/un/YHmLD/4tBfVxPamkiklg
+	mXXfLLNxg8vDeAVurShrEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781854715; x=
+	1781941115; bh=mhvET2wYMZ/pYOQXoh6tuZD+lykxtaRjnIrGtqUTxFY=; b=I
+	60VLVIQNwCZL+GOHvpXIiSxBuvUpWCXoTHBpnPQsCeDKT1avHgFm2nAbKq/3CLLt
+	5VKDLIMVu7QKOpHDnxwEV7VLorJzvHFMtLF63hrmlUHQPQiNx4sXLNY9bDX7owrq
+	3G1ccZEne6e2OUW1VGqXqTzcHHMObYGVaFEsYBd2DtT1UzcYfMk0oIoU3Gs/E8Bo
+	4P6p4KwcdgNX8+z4QAfoFzitKmXUKGQoinf5FjEvL8rq5Pxa+9n8zsuXRL1glCHN
+	SthTUbvipWX80VtScHyjbvpicyNw8kmbMEtd84al8mGtxKllSQV9E0mZpevQ2IKT
+	RsBCeR+XqIZuYTm4aAlLg==
+X-ME-Sender: <xms:-_E0aj-RodYfuTvxPy7xR9mSiYxmTbMIoW-a_gckQy2EwpSE6hyQVg>
+    <xme:-_E0alsR8eutv9leJT_8yI0tZwtQVipIXnJx-GqS7aqy04mmnQiAIO9PuGaj5vfJ7
+    uCGO6sNAHKXI25ZV4FpIt49h0r_U8aAUqgYnPgCaqQtKdRtMLq2MQ>
+X-ME-Received: <xmr:-_E0auobaSnvRObJ7IrIrOF1_rXypwVnwCu693UTF7FtaxQBcASHdGDpoP_ljH488J5C1Yezt5BcpJHAU0W18NLTHkqE9l1wR8GzhNUdDFY>
+X-ME-Proxy-Cause: dmFkZTGV7uSQ/Nc0k/n/ujj7FsGDpq3Mj4tKtUJoMbwctH05UgJ67Tp5xp6IaIPMK7IJfi
+    TYj+CIlQUc+n559kC9HyG6S/fynQLNx7qlrNXTxwtJBDi6VPGtHDBgOTyW32iIQrZkCln3
+    lwVPefg3BqFT3cs3MsGW6EJLcC4Wy2t/sfGfsaxlZCtwzgOsM3YWgQ+wHHPeFPwb0vEN9/
+    Xw2ipAKkwMcMbhzxgMswn3kVkwuqzser9bZe0jzlrb3Z9lrGv5pX2aOEhTgAPTasLFaYA3
+    XBwhmZrvx5vwGRdGe41Ih/eBErVw9P4r8NG2DZlR13s7dNDomODQvBC0s8kxkC2/+4Wdjp
+    EtnYq0oEhplbnHwdoWuGEZCUlqDWVZvEbAQG7R7G5c4nFQ/Ci/Lr9zglbcWQ4LUjcPfiDm
+    GP9yf/vtrHN/ZdI1sZJ4M9N6JKDYUy/Y2Lmx+w00HTtbDoiTJ2XrGADAitkGGIYaXgMcP3
+    G7Iq+38APIcuUTtZu/g/vmltVxtXW5/HzbaKqDSiShs13080tvCMUE7iLPKXH+imfYrKmM
+    yCBjI4Nh08HY4Wjm7+JrLlU/ne2tEaOZ3HUFH2fhDYCGDh68A2r2rDln7qfGEwy4syPW4v
+    inUCN4GBhQexopzvcUK9OWJmfecZnE6Ov4FUa6VmrBOxobWfUBZ7bVzPBv1Q
+X-ME-Proxy: <xmx:-_E0aqlnZ-CDL2p6yA8QZtr6QthTkHpVuLHZl32U_lZijbJpCcUPtA>
+    <xmx:-_E0aqx2u3rVpTM_USERM4kk5Iy3d_BHWGAtinhfxWUco3x1K9Lzew>
+    <xmx:-_E0aqn6l9pLqFSGQyiY1hOI6Z0zakWT9obSK1Irc3vMG5mMlKtjcA>
+    <xmx:-_E0ardCShutbPHzoYif8VLtXh2S_g2P_nkjS_jFFlvP65Uc5jZCHw>
+    <xmx:-_E0aitINz_EVjFcL9M70atMCauOz13FUSFIBLJ6YaqtvORvqzz4pBZZ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jun 2026 03:38:34 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a2e3af09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jun 2026 07:38:33 +0000 (UTC)
+Date: Fri, 19 Jun 2026 09:38:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Erik =?utf-8?Q?=C3=96stlund?= <erik.ostlund@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Pinned references?
+Message-ID: <ajTx9vLIWK5wvTHM@pks.im>
+References: <CANE2Nt_LP9odF9tVsy8di54eSH=QJxif2WQfHC+TQGGFeVcjvg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
- <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
- <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
- <20260617202744.GA3465855@coredump.intra.peff.net> <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
- <20260618160504.GA818042@coredump.intra.peff.net>
-In-Reply-To: <20260618160504.GA818042@coredump.intra.peff.net>
-From: Kristofer Karlsson <krka@spotify.com>
-Date: Fri, 19 Jun 2026 09:34:16 +0200
-X-Gm-Features: AVVi8Ceolg4BaQIIWt7wBa2hLHfT5Tp6lhB3sATvrTH4Cr_HOUvgfohLwM8wjsA
-Message-ID: <CAL71e4MAtD4MqE-22UyYaNFVYcFgYmffngihhovEChVfHLmEdA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
-To: Jeff King <peff@peff.net>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org, ayu.chandekar@gmail.com, 
-	chandrapratap3519@gmail.com, christian.couder@gmail.com, gitster@pobox.com, 
-	jltobler@gmail.com, karthik.188@gmail.com, phillip.wood@dunelm.org.uk, 
-	siddharthasthana31@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANE2Nt_LP9odF9tVsy8di54eSH=QJxif2WQfHC+TQGGFeVcjvg@mail.gmail.com>
 
-On Thu, 18 Jun 2026 at 18:05, Jeff King <peff@peff.net> wrote:
->
-> Thanks for looking into it. I meant to also cc the Kristofer, the author
-> of dd4bc01c0a, for any thoughts (adding him now).
->
+On Thu, Jun 18, 2026 at 08:37:26PM +0200, Erik Östlund wrote:
+> I'd like to be able to express a reference together with an expected
+> object ID, for example with strawman syntax like:
+> 
+> refs/tags/v1.2.3?oid=a1b2c3d4
+> 
+> The intended semantics would be that both the reference and object ID
+> must exist, and Git should fail if the reference does not resolve to the
+> specified object ID.
+> 
+> Tags are nice because they convey human meaning. Object IDs are nice
+> because they are immutable. As it is, I often have to choose between the
+> two, or represent them separately in external tooling.
+> 
+> Is there existing terminology, prior discussion, or an accepted Git-native
+> approach for this kind of "ref plus expected OID" invariant? I
+> searched both the Git reference documentation and the mailing list
+> archives, but couldn't find what I was looking for.
 
-Thanks for the CC. I took a look at how this interacts with my
-change.
+You can already kind of do this:
 
-dd4bc01c0a doesn't hurt here I think, but future followup changes
-might. From what I can tell --graph triggers topo_order, so
-the walk mode is either REV_WALK_TOPO or REV_WALK_LIMITED
-and the prio_queue change only applies to REV_WALK_STREAMING.
+    $ git rev-parse v2.54.0
+    0b13e48a3a30cdfa94e8ef842e24d6045ab3d015
 
-That said, graph_peek_next_visible() reaching directly into
-revs->commits feels fragile -- especially if we drop revs->commits
-in the future. One option would be to add a thin abstraction in
-revision.c that dispatches per walk mode, something like:
+    $ git rev-parse v2.54.0-0-g0b13e48a3
+    0b13e48a3a30cdfa94e8ef842e24d6045ab3d015
 
-    int revision_has_more_commits(struct rev_info *revs)
-    {
-        if (revs->topo_walk_info)
-            return revs->topo_walk_info->topo_queue.nr > 0;
-        return revs->commits != NULL;
-    }
+    $ git rev-parse v2.54.0-0-g95e20213f
+    95e20213faefeb95df29277c58ac1980ab68f701
 
-    struct commit *revision_peek_next_commit(struct rev_info *revs)
-    {
-        if (revs->topo_walk_info)
-            return prio_queue_peek(&revs->topo_walk_info->topo_queue);
-        if (revs->commits)
-            return revs->commits->item;
-        return NULL;
-    }
+This is described under gitrevisions(7), `<describeOutput>`. The only
+gotcha is that this format will not verify that the tag and the object
+ID actually match. But other than that it gives you the ability to have
+both the human-readable name and the machine-readable commit ID in
+there.
 
-That way graph.c does not need to know which data structure the
-walker uses, and if the internals change later the API adapts in
-one place.
+As said, we don't verify that those two revisions actually match. So in
+the case where they don't the result is certainly going to be lots of
+confusion. It certainly is one of the more surprising syntaxes that we
+have in Git.
 
-This would perhaps be an intermediate safety net -- once we have
-fully rolled it out, those functions could be removed again.
-
-As for the multi-element peek question, I think I would either opt
-for draining into a buffer if it's really needed, though when looking
-at the code here I think multi-element peeking is not truly needed.
-It seems like the logic just checks if there is at least another
-element after the peek, but it does not try to read the actual value,
-so we can just check the queue size instead.
-
-Thanks,
-Kristofer
+Patrick
