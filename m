@@ -1,80 +1,80 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A4017C203
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 11:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF7B367B81
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 11:28:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781868487; cv=none; b=ImpD3HVwYlrtLobXJxkO5oDGq2d82Bl3+Z3kh+sSv05FzulhVBmmexyJ3mBBI+dQWaaX3ziCRgQ+OLZm8fQir7FJi5GK5GVQFKgkERiLl29aZhLNQH+Um7z8PzJxDdm2SUdXC/QYUUmAze2eEOM/uuCR/gkbEXlEIAyF9ubepV8=
+	t=1781868489; cv=none; b=ajkukirTvXqRm1PPjZnj3kZT44BFfIXQ9bD6/5Vq7pCT2s5mRm4NaqAx62MvztqNvi7rYG/gRnmnZyDgA7lt4Isl/UI5VqXa6aDU1ZD6Vp8r3vbGkg45W+T8mxRFIFz4OnHtqbOcFidohUbCTETRkPqGWnv9qO7bpIr3xnVIY1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781868487; c=relaxed/simple;
-	bh=7LajxbGe1I2FEGU4SLLgjDhcZrsEUxHhzM60xvli8SQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=OwfFwSbVoGsSWdfdnCrYdSP3QMJrReyLFVelhfeUlYKFqNYCKTa/GWYiYrPc9U0/cB45twUki/NgnJkz8rMqdWNlC/8KgFt0yNykAkby6LLbIXaYaHyP5lEN2eWvyJrtm7TvDj0xes6TtyG8LJ7U8mJ1FD6C9ebfMINkEw7dB+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jCQaIMW6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bqg3QV7g; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1781868489; c=relaxed/simple;
+	bh=jPyHGdrvrN02RtV5tMXQHWhl6Qgx7L/6Ox65pqNNTvY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=tCIGK8SOOXd2h49XIe2hZRCNJSBzOaEBZ9poNpI4xcYuw33HNBUwmgyyz716wONe7Vg0fZFs5cnhREl2JkjS+NDegxZPOZ2CYVVE3HutjyDXnl6DaPtMJMqcNFSwfSy+rNfvJSgCX9Rpkcq3dmG8iuorjdBYzkwKXW07vIgaVpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F99ZiRvY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CJStvah8; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jCQaIMW6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bqg3QV7g"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F2B047A0123;
-	Fri, 19 Jun 2026 07:28:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F99ZiRvY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CJStvah8"
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 82D6C1D0015E;
+	Fri, 19 Jun 2026 07:28:06 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Fri, 19 Jun 2026 07:28:05 -0400
+  by phl-compute-10.internal (MEProxy); Fri, 19 Jun 2026 07:28:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781868484;
-	 x=1781954884; bh=y9CSQyz/agd2vEwgvKqVewqQ8IT9yqHWf24nXOL6Ae8=; b=
-	jCQaIMW6NRONYIeEa/mAVH1MA9XsdPltq7UxMkQ6e87fUAn+dBRmOZdrNlEjdKuj
-	TpSD/xiEG86IN1zWTlPgjGTgTLlLP9c3wsmwPAbuUpDsgbbb0xtiwwa+77maJ+ax
-	uWkbDkwzCK5q5mc5i6L+18SLZsYfYDgGeBktNPhvdXiA2gAsQUjRBNbZJke58VGH
-	ymJ+7OHOklbCz2lppFcFOecJyjzFoXpflOGk89jJQ/4fL+JSasjvk/BT9kGPnv4/
-	T79dHtSu4dPkm/iLF+qeIIS4RtEztCzv9/Vw2IihPuKM0JxyaU1nwaLNNweHfzh9
-	/PXQeSuygIh/dSanTY1gUQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1781868486;
+	 x=1781954886; bh=zNfGMB7glZzRVWGk0T2VoVLJtB5H3C8lRBcl8GpKr1U=; b=
+	F99ZiRvYFKChMdimXLcW9UZjEWWkM1Sa1qjzdKfetmSMDcPV+agFhJnIGb/PKKae
+	10rxoAOHwhtY9199XkTD35CnSMjFQfA+GmKKQhLfqz8KkykDdOKZUC41R0NWkztP
+	qNBqJziPRIxDgh2ixfQv6SDbjVZe6BGLUAbBlVYa3YbFegfi6GWLeJR8mIFAvZB9
+	W8E4pk91D41ziB9yzMYWX1hzERGJQCJD57fMdAOSuda8LixJ5Yrf9Bi21OhSuFAD
+	6Pw+pvCCS/4nWEPzCRGI4dMJcaNFoqJVBKlj7X3tkBxm5Tjq+cPG6wCAD4PXjm60
+	k7avYoMunY3KPCeOmAjQhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781868484; x=
-	1781954884; bh=y9CSQyz/agd2vEwgvKqVewqQ8IT9yqHWf24nXOL6Ae8=; b=b
-	qg3QV7g+v1UeJbuSh8ZylFCBMxH5EBv03UlJeU/s0G96574BGEajKBntKFYF2sje
-	rN/7cKnt8VBU0Aq8ZlgdU5/Ek714YHL7jU//afUqLiF/RpLeNoMUz/UD7mJL42Ao
-	84+0a37eo9ZPK5PRGRt6eNMTHM2hL2IVgDeS6It5fSKuW3zw+ApLP11u/xhq0GKc
-	Ga0SsE2BUm5YIy4lK3O1SYWdrQeISj6VMz/PWt8qihhX0xkE8QRny8kSp3Qg5nmU
-	kPUptA5afGbODXbbxgVEkku5MHDqiYx2tXCwhmC2xR4gy/gCus3g/VNIgpAs4oiB
-	1VkIcipwngh5EjzE63bMg==
-X-ME-Sender: <xms:xCc1alJD4IkmoIVrHWJTPrI7O2JBErQ2m38PYPPeQiWKvQWzvD6hrA>
-    <xme:xCc1aoIWv7_dH3sJMR0F238bhTCH-yhQGzZD5EnHbrYu0a4L-Jlc7EIdLk8E6f2Aq
-    kaxh_1KZ7EoCnmVv_vMFiEodclN5zLX93gCj29M5twnRSmjfnf3Dys>
-X-ME-Received: <xmr:xCc1aitvVzyNGyk7edY5MrU520azRxgmyOyr0ft9YF6SWxVSTMDFjL7Yc7WfgcGwMPcA2T0Om4QlYTj_SfMszHoWLRen_1yveNWymjuv0Xg>
-X-ME-Proxy-Cause: dmFkZTEtYwTR9NyZ7kWJeOx5U6J7XwgXgXlClryTZ15GtIQjtQXlrwo/FjzMuzSu6O3ARm
-    zeOMyU5gIO7MTg9sPtQExFwqVynEci/xaXkpsN5Ouzkqdf9Udplpi6zTUQwh7X3CeJ5x02
-    fFLWv1xoWoDkAoinIt+LKgh3PljUvx1U2WJJDnJysOSafJcrkuRiP+lZrQFLK1L5glGSSs
-    rPCl8fyPTs1JL7xz5rk/MMII+pyRnhJp0l+VIj8YYEYjTAZPgi1EmlgCJ8jzRVN/dLsPK5
-    jb2hzc2AX7D74Vf+HGfewMAspRscEH9j9reT9Pu7DEsgX3ulxbonIBuSy+FuBzvZfDXEBC
-    8BI3zixEgTxPih+E9eQL+zqsYfrFzy1M9SOX6NHs6gVb8f1g8N3r6V+xBC33rIk3iPtOdj
-    i/3jCLCp7PABp4xZbWJFJQxbbAZd9qUW6sqfR6NPI0Sgew2AKPkpTbkboUpMM3ortrSsNP
-    eEi/27DuKSJHWygdEtJkLPyJAq+88Q3WuRwTO4lfRZUpovbm4sHHw/XVSeHPThZN07TpPg
-    tzK32dT54JKZD6vDx6NcIccbcG6g69FUfPWV9QUS3lQNCV+2dHUKAmUpuiKUt+K+0SPfLk
-    rDsVelIDIgH7oZ9n1P4AfjwZnLUyM0HnSgPDhXuTPC3z9SYWUXghUNmI9G+Q
-X-ME-Proxy: <xmx:xCc1alQF391Q_xVmhiddMPOXOgcXx8PWOoYjk6Zmb9mCDY2AVCcbjw>
-    <xmx:xCc1aoPyb0XIV4mfVdjW80y4RHJoEBVnlHsyCAYoi21KQ1JF5hH5Qw>
-    <xmx:xCc1aqZB5p2_Ayv4IMPOPh5pLmqrBe_fxyQLp-H2l-F-k9rFHJpaAA>
-    <xmx:xCc1aiwr-Bp2yIGqw-0NYWeYfnOuUTx981bQk6I46EfSN9PCa20-7w>
-    <xmx:xCc1aozi88QG4_B8V3wcshJg0SucAzr9A8UwBoerlBM4UgGOekg2sd8A>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781868486; x=
+	1781954886; bh=zNfGMB7glZzRVWGk0T2VoVLJtB5H3C8lRBcl8GpKr1U=; b=C
+	JStvah87cJDuPQIeeWMG4UoVV5Y8kIR+loQklfcpDGHySAHZCPzcXZq/koWa0Phn
+	PNp8w0JLb4YQnptiWcyeQk63SJMxUueSdVtCT74zTn/dBCr/PPdWLJOEWtww4ZOk
+	FMwv770avddeBXELhhtDC74aTjEdsnF3w6S84E7FwfqhiFe1HTniymbkZTitIsju
+	iCn/J/lWyKuXoomcbPElG45E4tledm/c663/1Uf03UagrrzL7kGqCDCGcG2NP+g+
+	Lz6136hDgfqg3CJ1cua+rGtct2GVT/yvpqqzTaJdYsLoWON73UdVljrGiti/u0h1
+	s/49MJYAjMo+D5/TUA1cw==
+X-ME-Sender: <xms:xic1ar2bb5jOoeXaSVvVFDX48uKiIBG_WgC3jZO2nx5L7UiMcYIFeQ>
+    <xme:xic1ahHe2whyXuTkf60vv420YW44euxoLDWC2EGKEuRDa-En2E4TaULxJUfB7j6PH
+    DHf1OwLNOTPTJC-cS-re30cK5Afx_UDo_h39vVOvtlM_FMfbtzV2so>
+X-ME-Received: <xmr:xic1ag7htjIkURBoOhjwmYFQ2j4MfibHT-FRDoxC6q8OtaR38Hi1a0TcR7ZObrUFJ_ilXMxapKTu3kEv3lKhP4YMOsBRP3LbUAFvJw1e8sI>
+X-ME-Proxy-Cause: dmFkZTEde8rkG7Ow/YQajJOxpUKYHnTWdG0AUznTDLiHmSMbSqWzB/6nKIAIdk1nkTwS0K
+    C8jTqdNp1V7h/KMFCwexCiiwcxkUoPM3XGMXsNXnEqixWMufecGwaAXNpfHOfwmwhgziKB
+    gEME1JUhRUF4zEWjEcolbPL4SS80OZZVhDQXhaESCZsPSITOIFAzr9mdv/wwDKbMEUglz6
+    Lrw5108LV8TWN60J1S3iQg3WXtzla3Zx7Q2iJ+qofdJhYzq3vyVO5Ie87s6Y7SykEWxrmz
+    /vmzMKfUyKVDBOQcXezzDDbfTiNE3Vevxi8qzYGVvv3v5UE9OxNTzNX4wxQEWsT+cwQANh
+    WZHfK62B8sQvb0C8zInoZHfhHGRCu50qIEhfdg7lfk/deOIb9vaDsSvYlK72cn55j+5mlm
+    6mPi0YR4Y46IORVcfcoqwZep6pvUjk6x46hU+N1HTN+lPOsGem1+dNzH7GQYxZ+qiKvK/6
+    hdd282FQlQaMzfrI0gGgXei3NUk/lg+M/IXcj87cGzxRTsyKZb2wzd67DQVbrsYAqhPZA2
+    viTlRJb8wun5/rzpxR44FijEZ9QVXA23kbHXM1wLiese1bz+H287xmv9u6KDAgs4H/SmW9
+    yXfdzvLVJSlsPCdW2VscyvCVWR0NxI9Gf5c87DCzEWQ/CeNcesPCUmpDdQwg
+X-ME-Proxy: <xmx:xic1avt0GFwEf9SmBhuvEHPCoHvB31Lc8ZcjvIfnDbHm9eEm56rpzw>
+    <xmx:xic1ap6GKF4uYgEdCbUd97J8MSNuiHk1amSIx7FRHZTIcJOvXMjt5w>
+    <xmx:xic1aiWTcey_K3HnKzsloLH3aUYpoaYcVRssA9tiugIJpFeqcXNXWA>
+    <xmx:xic1aj_4lfovJ9wxI3Msaa1msq4qILsQ6L74xYLwD_AThE-cuswtEw>
+    <xmx:xic1av9JzsW4XdQPl3XckpqwhUALWsyjxQmkaxO8uv53e6Fwjd-Pq-jJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 07:28:03 -0400 (EDT)
+ 19 Jun 2026 07:28:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 556363e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Jun 2026 11:28:00 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 470432ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jun 2026 11:28:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 00/10] refs: stop using `chdir_notify_reparent()`
-Date: Fri, 19 Jun 2026 13:27:48 +0200
-Message-Id: <20260619-b4-pks-refs-avoid-chdir-notify-reparent-v4-0-a6472be7acc4@pks.im>
+Date: Fri, 19 Jun 2026 13:27:49 +0200
+Subject: [PATCH v4 01/10] setup: inline
+ `check_and_apply_repository_format()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,119 +83,114 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALUnNWoC/43OwU7EIBAG4FfZcHYMUCDgad/DeBjo1I7GtoFK3
- Gz67tLVmPXW4z+Z+f65ikKZqYin01Vkqlx4nlowDyeRRpxeCbhvWWipnXQyQDSwvBfINBTAOnM
- Paew5wzSvPFzafMFM0wpoCAdFfUwYRdOWdsFft6bnl59cPuMbpXXn942Ryzrny+2Vqva931YlD
- 7dWBRKsS96ZKFUy3bmdPfKH2CurvkftcVQ3dDDeGsQQvA3/0O4e9cfRrqEarXOBfMPdH7pt2zc
- fEzkKlwEAAA==
-X-Change-ID: 20260609-b4-pks-refs-avoid-chdir-notify-reparent-a4eaf1edbcab
-In-Reply-To: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
-References: <20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im>
+Message-Id: <20260619-b4-pks-refs-avoid-chdir-notify-reparent-v4-1-a6472be7acc4@pks.im>
+References: <20260619-b4-pks-refs-avoid-chdir-notify-reparent-v4-0-a6472be7acc4@pks.im>
+In-Reply-To: <20260619-b4-pks-refs-avoid-chdir-notify-reparent-v4-0-a6472be7acc4@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>, 
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-Hi,
+We have two callsites of `check_and_apply_repository_format()`. In a
+subsequent commit we'll want to adapt one of those callsites to change
+the order in which we read and apply the repository format, at which
+point the helper function will not really be a good fit for us anymore.
 
-this patch series is a follow-up of the discussion at [1]. It converts
-the reference backends to always use absolute paths internally, which
-then allows us to drop the calls to `chdir_notify_reparent()`.
+Inline the function to both of the callsites.
 
-Unfortunately, the series has grown quite a bit larger than anticipated.
-This is due to a couple of weirdnesses in how the reference database is
-constructed with an "onbranch" condition. We essentially construct the
-refdb twice and loose one, but we never noticed because the chdir
-notification subsystem kept the pointer to it reachable.
-
-Note that the first couple patches that touch "setup.c" aren't strictly
-required. They are a remnant of a previous iteration where I tried to
-solve the issue in a different way. But I ultimately figured that these
-changes are worth it by themselves as they simplify "setup.c" a bit.
-
-This series is built on top of 1ff279f340 (The 13th batch, 2026-06-09)
-with ps/setup-centralize-odb-creation at 42b9d3dc9d (setup: construct
-object database in `apply_repository_format()`, 2026-06-04) merged into
-it.
-
-Changes in v4:
-  - Fix the "onbranch" recursion at the root of the problem by
-    explicitly disabling the use of the ref store when parsing
-    configuration at ref store initialization time.
-  - Link to v3: https://patch.msgid.link/20260618-b4-pks-refs-avoid-chdir-notify-reparent-v3-0-2a5669e8f486@pks.im
-
-Changes in v3:
-  - Reduce the scope of applying the GIT_REFERENCE_BACKEND environment
-    variable even further so that we really only do this when we end up
-    applying the reference format.
-  - Fix a commit message that still referred to the dropped last commit.
-  - Link to v2: https://patch.msgid.link/20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im
-
-Changes in v2:
-  - Drop the last patch. This seemingly destroys the whole purpose of
-    the patch series, but after Peff's hint that this is actually a
-    performance optimization I'm less inclined to drop the chdir_notify
-    infra. I still think that the remainder of the patches make sense
-    standalone, as they simplify "setup.c" and clean memory leaks. Going
-    forward I'd like to investigate the idea of introducing a `struct
-    fsroot` infrastructure that uses the platform-equivalent of openat
-    et al.
-  - Improve a couple of commit messages.
-  - Link to v1: https://patch.msgid.link/20260610-b4-pks-refs-avoid-chdir-notify-reparent-v1-0-56c864b01c43@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: <aifAVpxanV31KUpC@pks.im>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      setup: inline `check_and_apply_repository_format()`
-      setup: stop applying repository format twice
-      setup: don't apply "GIT_REFERENCE_BACKEND" without a repository
-      refs: unregister reference stores from "chdir_notify"
-      chdir-notify: drop unused `chdir_notify_reparent()`
-      repository: free main reference database
-      refs: move parsing of "core.logAllRefUpdates" back into ref stores
-      refs/reftable-backend: manually parse "core.sharedRepository"
-      refs: fix recursing `get_main_ref_store()` with "onbranch" config
-      refs: drop local buffer in `refs_compute_filesystem_location()`
+ setup.c | 47 ++++++++++++++++-------------------------------
+ 1 file changed, 16 insertions(+), 31 deletions(-)
 
- builtin/checkout.c      |   7 ++-
- chdir-notify.c          |  26 ------------
- chdir-notify.h          |   6 +--
- config.c                |   4 +-
- config.h                |   1 +
- path.c                  |  11 ++---
- path.h                  |   2 +-
- refs.c                  |  25 ++++++++---
- refs.h                  |   9 ++++
- refs/files-backend.c    |  48 ++++++++++++++++++---
- refs/packed-backend.c   |  16 ++++++-
- refs/refs-internal.h    |   6 ---
- refs/reftable-backend.c |  50 +++++++++++++++++-----
- repo-settings.c         |  16 -------
- repo-settings.h         |   9 ----
- repository.c            |   5 +++
- setup.c                 | 110 +++++++++++++++++++++---------------------------
- 17 files changed, 192 insertions(+), 159 deletions(-)
+diff --git a/setup.c b/setup.c
+index b4652651df..a9db1f2c23 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1788,32 +1788,6 @@ int apply_repository_format(struct repository *repo,
+ 	return 0;
+ }
+ 
+-/*
+- * Check the repository format version in the path found in repo_get_git_dir(repo),
+- * and die if it is a version we don't understand. Generally one would
+- * set_git_dir() before calling this, and use it only for "are we in a valid
+- * repo?".
+- *
+- * If successful and fmt is not NULL, fill fmt with data.
+- */
+-static void check_and_apply_repository_format(struct repository *repo,
+-					      struct repository_format *fmt,
+-					      enum apply_repository_format_flags flags)
+-{
+-	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
+-	struct strbuf err = STRBUF_INIT;
+-
+-	if (!fmt)
+-		fmt = &repo_fmt;
+-
+-	check_repository_format_gently(repo_get_git_dir(repo), fmt, NULL);
+-	if (apply_repository_format(repo, fmt, flags, &err) < 0)
+-		die("%s", err.buf);
+-	startup_info->have_repository = 1;
+-
+-	clear_repository_format(&repo_fmt);
+-}
+-
+ const char *enter_repo(struct repository *repo, const char *path, unsigned flags)
+ {
+ 	static struct strbuf validated_path = STRBUF_INIT;
+@@ -1887,9 +1861,17 @@ const char *enter_repo(struct repository *repo, const char *path, unsigned flags
+ 	}
+ 
+ 	if (is_git_directory(".")) {
++		struct repository_format fmt = REPOSITORY_FORMAT_INIT;
++		struct strbuf err = STRBUF_INIT;
++
+ 		set_git_dir(repo, ".", 0);
+-		check_and_apply_repository_format(repo, NULL,
+-						  APPLY_REPOSITORY_FORMAT_HONOR_ENV);
++		check_repository_format_gently(".", &fmt, NULL);
++		if (apply_repository_format(repo, &fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
++			die("%s", err.buf);
++		startup_info->have_repository = 1;
++
++		clear_repository_format(&fmt);
++		strbuf_release(&err);
+ 		return path;
+ 	}
+ 
+@@ -2820,6 +2802,7 @@ int init_db(struct repository *repo,
+ 	int exist_ok = flags & INIT_DB_EXIST_OK;
+ 	char *original_git_dir = real_pathdup(git_dir, 1);
+ 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
++	struct strbuf err = STRBUF_INIT;
+ 
+ 	if (real_git_dir) {
+ 		struct stat st;
+@@ -2846,9 +2829,10 @@ int init_db(struct repository *repo,
+ 	 * config file, so this will not fail.  What we are catching
+ 	 * is an attempt to reinitialize new repository with an old tool.
+ 	 */
+-	check_and_apply_repository_format(repo, &repo_fmt,
+-					  APPLY_REPOSITORY_FORMAT_HONOR_ENV);
+-
++	check_repository_format_gently(repo_get_git_dir(repo), &repo_fmt, NULL);
++	if (apply_repository_format(repo, &repo_fmt, APPLY_REPOSITORY_FORMAT_HONOR_ENV, &err) < 0)
++		die("%s", err.buf);
++	startup_info->have_repository = 1;
+ 	repository_format_configure(repo, &repo_fmt, hash, ref_storage_format);
+ 
+ 	/*
+@@ -2904,6 +2888,7 @@ int init_db(struct repository *repo,
+ 	}
+ 
+ 	clear_repository_format(&repo_fmt);
++	strbuf_release(&err);
+ 	free(original_git_dir);
+ 	return 0;
+ }
 
-Range-diff versus v3:
-
- 1:  3ac83ba983 =  1:  3ae112f84b setup: inline `check_and_apply_repository_format()`
- 2:  b6b15770eb =  2:  d03fb25a01 setup: stop applying repository format twice
- 3:  5850f0602d =  3:  f437af7ce6 setup: don't apply "GIT_REFERENCE_BACKEND" without a repository
- 4:  e4b12483b4 =  4:  7704b7e5db refs: unregister reference stores from "chdir_notify"
- 5:  4a78c5080a =  5:  545fe82dda chdir-notify: drop unused `chdir_notify_reparent()`
- 6:  3f8ae36acc =  6:  5ac9f8c2b3 repository: free main reference database
- 7:  2a22f9a2e0 <  -:  ---------- refs: fix recursing `get_main_ref_store()` with "onbranch" config
- -:  ---------- >  7:  0482470af1 refs: move parsing of "core.logAllRefUpdates" back into ref stores
- -:  ---------- >  8:  1b2f9d4ff9 refs/reftable-backend: manually parse "core.sharedRepository"
- -:  ---------- >  9:  c7ec7d887f refs: fix recursing `get_main_ref_store()` with "onbranch" config
- 8:  6bc943659d = 10:  5fb782268b refs: drop local buffer in `refs_compute_filesystem_location()`
-
----
-base-commit: 255322df35357168daefec8523a3cdc849edd6c1
-change-id: 20260609-b4-pks-refs-avoid-chdir-notify-reparent-a4eaf1edbcab
+-- 
+2.55.0.rc1.722.g2b3ac350e6.dirty
 
