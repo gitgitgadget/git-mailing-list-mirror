@@ -1,120 +1,135 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3917B368294
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781881581; cv=pass; b=vFdv/MX3jN73ZCWG+a50bEOAhlz79BcUrM47C+hmzrIvP1MyxDvPSjmtibqS7NGJnsX+ajd/Md8EEoXnazI24xEt+HUrU8Vni1P/C/SpIBX+xDBKzXsglR6Vpx/83v8Xvgavo1gyucvD1ajorRYAbSgQ/6ReOq8SHk6UsZuloDo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781881581; c=relaxed/simple;
-	bh=hSapytmVbzdzDsMcO1My2mdn4kSi+Shfl0JPq6LU7bo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bU/LzzlQCKWo+AUfhIogaknnpt0S/RwvSo9UbuGklPZmjJv+vYRzjlXCnTxG1UsdrF9YdGLIPXeJADUSrdD28VZ5hyOw3pbzp/Xcce7gQJICdQfPRWhoYdhS01I6xFtUOInudqCfMESJLBlJcmZoqPznkdz3oY7fl8Y1oa6y16k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aYrE2SoD; arc=pass smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0A8282F02
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781883230; cv=none; b=iarMk3QtXvohHr2LqKbopaSACidXuWE4cTvRUp9Hy6VMJMr0mxhwQpQqATcV0RHB14AkEuJXtyCaHIMEt5dS2TTVa+8zdmF775VKsdCTl6uTh9IKsBNT5qNrJ9f/k+egHmO1hq2DXhgP3Eftou0eGNrBpPqnALMzbOA2lPkvV9A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781883230; c=relaxed/simple;
+	bh=2O13aYfC0qx+jqY8qmtgjevSNDniRlvN2jN8qcSoehA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hUO1Ve8rNFxdbM/kX0P+LOYbPpnj49Kz9bid4mVUx2DE2zGjqSAd8A25cjJt/K7uxqnRqH/1kkYoxfEHtw3UKlcMM20YKU4dO2kPOEnzyHWxjOl0ukR7VCNh5GvYC0I4CoaBTwkhjqlSygfzY7bvJaunnMP4WY3pjg2/mmxxFG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X7TWPM05; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aYrE2SoD"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-7e86d46b02dso26940457b3.3
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 08:06:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781881579; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ikgeotCD2DtAVMSg6QiqdRin88ylr5GWptPeccLVetMSbtU7VKp4e3bt0YOF6JNcmF
-         vFaFduO04iLRD1K5VRZeZB0NLMjIpohDZ+4NeZ2PFo+mkkFf7ulkFcmX/wJxzXM7inNa
-         mbw5Ok4SUKgT0nCuOquoEEseF+6Tv5hVr3+hHY+o6VelDw2s4LxsjLHtOnbbJECm9y21
-         ihWOu2XtDGfVWMOBxQw/KRrWsZdSUOMuWmYzTz6f4HaDwgyB3OEtqqq4TPzQtQMGy8g2
-         RtkPADAqWvqCICoprP6C37nefY8bDkWB40Q+a+JWZjGvj99vcLAKZty2jiBAw4EM8T+r
-         qf0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hSapytmVbzdzDsMcO1My2mdn4kSi+Shfl0JPq6LU7bo=;
-        fh=mBHmkCGVfx5nQk4gXJhIT8t9aZ6h8QovoqCNbv5NNrk=;
-        b=ehrZ6w+PyFbAORu3IzpAnbxApdl3mZxln2nhbzKMXUetITyrPAkK2c/gjCyBKwhl+j
-         thsWiW91Y9PsyiALfuJuBZOq1n24IHsTKGqIqMfiv95/NhQdGMks2ItFfxTmS5hnwR4j
-         ox61/pNhvkc8OG8ZqHvS4hWR7TnEqjbAqr4wLJmuyyaC5+4nlwwkEGcCrcJ0aripGgs9
-         feCbei5U22+KVvI1GbpsPkPf5uN2SJoanfeLqzPqYGIdOUIdKKU2mvl7Kla4iZ6Hf5Xb
-         wk4z+SNyjX9aO04JO17xOIXEOVnQZ2N0jauiDB0Y6RE3iy2QyNCtvkhv0ybqAJ/0sqzf
-         oEwA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X7TWPM05"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-91588056619so161791185a.2
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 08:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781881579; x=1782486379; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hSapytmVbzdzDsMcO1My2mdn4kSi+Shfl0JPq6LU7bo=;
-        b=aYrE2SoD/HVqAGfLiRLPLh4cDyiFBvpz2q5Djqcn8agDBl/wdWPsQ0tmXsajKX/l4P
-         wbjMCM1lFHQuL5U8P9rUQyg4SRZuhqX14r8HSgBuW5SVDU7SdFw1wyXUocMBdaHarb35
-         0MUo2lmWgVP/DQgBtsCD6DFm6vbj7mEPbl3vJW1rM8WVJmLa8xcBs6JHGmhDqSDXrfAn
-         Ail8bNWFFYqfqt8fQqezpvolhuyICcTinV+VLao1V4WUczyuwGO/QbUHqPTyDiW/9Ec2
-         9qQCRIZ9Q3s23goG7TJ+YuwPGcMqJrewwh+0xOOKGHtak7WSCFfE4AiIdcwi6R3py8e4
-         cH3w==
+        d=gmail.com; s=20251104; t=1781883228; x=1782488028; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rrWyadbS0sQrN5RFk2DEsU7WSV8rqEjLT7X7hM8HMLk=;
+        b=X7TWPM05MUc9Gkpj/ue8pok3GhZO6X4rak3WgKG7vKNSWz2TFYFJuvYcd5INunrdRm
+         X9LM/AdTu77/TrxxTLQP9tLXRV/jWLHfc0SrkIjbPRM7PWClXr3q66mJb4L5/6k5ATZ/
+         Xb0t33lru4kML3OqmyJ+94ABpZgk4LUaHCt30RvKeCp55o2q4a+fPqpg6TfnI9Di9W1C
+         HpAuBM8MfunRiAwszljuEMuyHE+Rb+wNc2WTj6VyTnX7EpCwV7PLl5vMetfKdxzGGJHR
+         TSSF1dkd3ihfWy0Z+jP3bkfk5KTYBMLwuroKUAZ7lDXWa8bZN4dBQal7XEDG7uKnACQG
+         PfVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781881579; x=1782486379;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hSapytmVbzdzDsMcO1My2mdn4kSi+Shfl0JPq6LU7bo=;
-        b=EUzbSVWqnDyaPccDBo0ljOYLDcwYLZAtO8fHvgUy2N79hjB6/Ky11hIwC+g+R19bJU
-         ohS7c4NCiV8V7I5g20HzW/LtBAiQh2ymO7cTIfHb0K9573UalYkXqovxFf612I6pLBzq
-         NkzkZO2x7OdEEgRMvGdvFZ44mgBU71DI/MOAz3RXFqNx36jpd7G68rBd+54KTdC0P984
-         uSgiEzQvFtwjilR5GlIfcSxKKoOYU+KcHgfGLL7DHWHFw5Y4O2PWEq+ayzfi869+b7Mb
-         mzpPG0evVY6mmrzJFxcz7O6Os3ewLrDWyMuMjzCLsqUElG6b/zVzOyEY+mdDAf3c4lG9
-         rLtA==
-X-Forwarded-Encrypted: i=1; AFNElJ8znxu87thHzw1v8m4LnfvRFKoOjWC1/dL008m7MlCY4aGx61f0vMPODhJoWIQqY6Tllbg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzaegZYnM7z7Y0LTy1RA15mfajlBpEswMsGtX7LFlFuos66uxiY
-	0bbOddpsTCeAaQIgtU7k0XPhFDf/KvAUcPeGZLtCuQ1PbFzzp9CsyfjwAYfWYaPJm0r9K5unLaf
-	sRLKDZg/qxZ+vgOdIfMAaGhTIjM3HQN4=
-X-Gm-Gg: AfdE7cmUMKydc+h4sY17pkYlb2cqEzOBda0pQlYpDHAO4gMyRvt7IKH4D8q1a57szkE
-	e9sgBs1B3qmBL/WeDLpmCdHntoQsTmJV/SnsS/dSGIDCPsBlhkbNR6IL4tu3eKvePjwxY9c37FP
-	MXJFCt5w0HuK6UKBk1chhO78nI3IpX07nYcrarRpL+Xj0rZkHBM1dSUXQwix0NRUOUUIti4G/iL
-	nSl0G4UyFQM0QbY0uM8O6mkT/uatqegJ10EEW5KhP8PJhktBVhSMg8e/15cgnwyPUBUEd4042mt
-	WTAR9iZu50It704ZT3VW/ywX5TkKlxPvjSLKoBlBxnJSUXREvwtYZLvHNb8tC5gybyEBoFnRgR6
-	XWSXd+ocu8k+RLo4sgoC8wEoCnxpYlmZ9SDOofYf6J6jpwsfUwfzAil0G6KmYnzel8YLYYKyapW
-	ZHn0s=
-X-Received: by 2002:a05:690c:3603:b0:7dd:73e7:84d7 with SMTP id
- 00721157ae682-8013573b779mr39034057b3.41.1781881579007; Fri, 19 Jun 2026
- 08:06:19 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781883228; x=1782488028;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rrWyadbS0sQrN5RFk2DEsU7WSV8rqEjLT7X7hM8HMLk=;
+        b=ffYN/EdOvqaZ8Q+bGFsOSWligy0zE3Et6X2saICDNv5I5T/cLkOpHoNgI31VdNE3g+
+         ruXDBsOxrwVtzqNo5bh4Y44rG6LuzDlOAckEF8gVMuvs3KaQpszpwZDRkOapa/m+ySil
+         XgYk/Erhqxrf4f6oodrasRiztXcSI3Ooz2/xxxDcR4A+uhSQBRbgpKOlK8237BAfjZI2
+         JC36pJdzIV3Tbk9pKA6+7Eo4nd7jXBF/5MEs3mblwwvlE7NF/kUaREr+b+4KiW2jIL1W
+         WzziNAaNt8wM0r+7Rw/LJlNVYF7OE7taeNRxs9PTt7BxhYj1f0XLHovj1cWXQ1HuSM7Q
+         aNew==
+X-Gm-Message-State: AOJu0Yw8mvEwtM0GWWoswnjcvrMhnPDAhk7tY/TmVLEMCQ2GqfVQrUNj
+	UZL9r8P9PbTstbXosBkRXjvDmh0D8wWJqFP557Cpxl9UTGqKNzSmC0av
+X-Gm-Gg: AfdE7cl8RMs1ggetmVdhbbaidRSQ5lmHMmfHSnEkLqkh7HUwQCY2dxAgFISIbgApuwm
+	0HngSxqHU5OdH9TjVdqX9VUWCeEfRv+WuFA/z9kJY/XZUCNVaZKjN6tfr+EgJNc7lpO6hD0ms4H
+	lVdBKjIkkX2zGZzi8a+CATvs99SKTMy5/XarsVybmzVvQwq7J1JjjR43R/5NEKJ3gBVOLUF1srA
+	IoLEuL89ViBnv2ivyydZ+j/SMVLswYrqWaqgr1gXbdaav35evGhm+e+1hlzJHqU2+SCFzmLO8+W
+	XixsXZ1NLcuCW8O8ud76WKvQDVJB/77q8VItJxtTXj95K5CJtM4yZRKU2XbkFOgRh/XqvnxTno1
+	N/Nh4xqNchRiLVnSiEteWL3Exrk8/5vnIEDe7AG0e7QmCoUhbEyZoEUpWSVkCpesHPFUKwwAuBY
+	mNl9KKBi5RAjkq2Wg/WBoS+V41T3wAZVLHG4bcpUhsmnoDYb+l7ttvlyNQ1w==
+X-Received: by 2002:a05:620a:8005:b0:915:f664:2568 with SMTP id af79cd13be357-9208d6ed316mr605219785a.50.1781883228407;
+        Fri, 19 Jun 2026 08:33:48 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-920a1819fa5sm271440985a.20.2026.06.19.08.33.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Jun 2026 08:33:47 -0700 (PDT)
+Message-ID: <7afdaf77-07f5-4d48-955d-e153d148f647@gmail.com>
+Date: Fri, 19 Jun 2026 11:33:47 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
- <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com> <20260619-ps-eric-work-rebase-v13-2-3d4c7315d2f8@gmail.com>
-In-Reply-To: <20260619-ps-eric-work-rebase-v13-2-3d4c7315d2f8@gmail.com>
-From: Pablo Sabater <pabloosabaterr@gmail.com>
-Date: Fri, 19 Jun 2026 17:06:07 +0200
-X-Gm-Features: AVVi8CddMO79qFAxto9JMjL8iAcNe9rlb1TuHufjYjeB-wFBOMWhbV-E6H9HvJ8
-Message-ID: <CAN5EUNQy_sZx5-iVjr7YB_4kBPnEcDyVr_o_OhVD1Kff_Gjurw@mail.gmail.com>
-Subject: Re: [PATCH GSoC RFC v13 02/12] git-compat-util: add strtoul_ul() with
- error handling
-To: gitster@pobox.com
-Cc: peff@peff.net, eric.peijian@gmail.com, chriscool@tuxfamily.org, 
-	git@vger.kernel.org, jltobler@gmail.com, karthik.188@gmail.com, 
-	toon@iotcl.com, chandrapratap3519@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] pack-objects: support reachability bitmaps with
+ `--path-walk`
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
+References: <cover.1779923907.git.me@ttaylorr.com>
+ <cover.1780438896.git.me@ttaylorr.com>
+ <ffad584a43ebf3cb2138e8dce7daef84ab72712f.1780438896.git.me@ttaylorr.com>
+ <849c659f-efa8-430a-bfac-0c26a3ed1aaa@gmail.com>
+ <ajVSHvL+On9AEV+g@nand.local>
+ <131d7ad3-7791-4d6f-bdf3-afa6b0831a71@gmail.com>
+ <ajVXlcHgIF2XkmMQ@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ajVXlcHgIF2XkmMQ@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-El vie, 19 jun 2026 a las 16:56, Pablo Sabater
-(<pabloosabaterr@gmail.com>) escribi=C3=B3:
->
-> From: Eric Ju <eric.peijian@gmail.com>
->
-> We already have strtoul_ui() and similar functions that provide proper
-> error handling using strtoul from the standard library. However,
-> there isn't currently a variant that returns an unsigned long.
->
-> This variant is needed in a subsequent commit.
->
-> This variant is needed in a subsequent commit to enable returning an
-> unsigned long with proper error handling.
->
-> Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+On 6/19/2026 10:52 AM, Taylor Blau wrote:
+> On Fri, Jun 19, 2026 at 10:40:51AM -0400, Derrick Stolee wrote:
+>>> [...]
+>>> , which gives us:
+>>>
+>>>     Test                                            HEAD^             HEAD
+>>>     ----------------------------------------------------------------------------------------
+>>>     5311.3: size of bitmapped pack                           278.8M            278.8M -0.0%
+>>>     5311.38: size of bitmapped pack (--path-walk)            278.7M            278.7M +0.0%
+>>>
+>>> (eliding other tests). I considered whether there are other interesting
+>>> tests, but I think "repack" is the right layer to run perf tests, since
+>>> you're always writing a closed pack. We could try different subsets of
+>>> the repository's objects (which would also have to be closed), but I
+>>> don't think this is that interesting.
+>>
+>> This sort of thing does help to show that we're getting different
+>> behavior when repacking with and without --path-walk. And this test
+>> is showing the slightest change for git.git, but is likely more
+>> impactful for the other repos I've used to demonstrate the benefits.
+>>
+>> So this is the kind of data I'm hoping to see, but also with data
+>> from other repos whose data shapes benefit from --path-walk more
+>> than git.git and repos where name-hash v1 is sufficient to give a
+>> similar result.
+> 
+> I'm glad this is the sort of data you're looking for. I'm happy to run
+> this on other repositories.
+> 
+>> I'd also like to see if the repack _time_ changes with this, but
+>> these direct size comparisons are the biggest indicator I'd like to
+>> see.
+> 
+> Unfortunately a timing comparison is kind of a pain here. We'd have to
+> use test_perf, which will perform the same repack multiple times. We
+> could do that, though it's wasteful, and changes like bf4a60874af
+> (p5326: generate pack bitmaps before writing the MIDX bitmap,
+> 2021-09-17) move us in the opposite direction.
+> 
+> I'm not opposed to changing this to test_perf if you feel strongly about
+> it.
+Repacking is expensive and time-consuming. I care a bit about it,
+but not as much as I care about the size difference. Feel free to
+skip the time performance impact for now.
 
-I should have removed the second paragraph which is duplicated, I
-quickly fixed the last paragraph but didn't realize it contained the
-same as above, sorry.
+Thanks,
+-Stolee
+
