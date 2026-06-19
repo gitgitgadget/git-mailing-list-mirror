@@ -1,30 +1,30 @@
 Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C913B38AA
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A50E2BCF46
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781886082; cv=none; b=k9J/+e5lJS5xbZoMg5rOqHJp/2CuAKx6oaOU6Fdoq+3SiDOLMGube7jkzb0qDeotT0uUNjMz7kIQfy2K1Zlq6VjZw3xnrHqLGr3EANK7YKN9fiF4ZyC7VR5bdfEpcmkOb43vTkhkOM8EYSGj9bBVuyvjdxNP46nkb1dwzRZu8s8=
+	t=1781886086; cv=none; b=gW43vPqX/D0461dUc0XkYHLf0Brgv1xvsGf6iNVRziU6VSlTV1x47j0bgc0XELDCKeaQA5ST3rDT6kiMcYo/GURTAKIl5u84iz08fu/3HlirhbzVLpm1ooYiCu48nzdAl5o/MuXgKIZMJLfJcUjmpQyzC9i+nGc+NOOnNUTTrgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781886082; c=relaxed/simple;
-	bh=0oaLoQsIh6Cs3uAU8MVNnAsWJplbAFI4CX3XnPIFyao=;
+	s=arc-20240116; t=1781886086; c=relaxed/simple;
+	bh=LY8CQhSLic2wgiCPbm8BJA5TEIpd8KoHFZo8+a9UtVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KvMS9c5PGMzspNQt1VxzKlaXfHYbbXk5CsheuGav43BtN1hW95Eez8d/LkTZXfVHQFLOLoifQ6gIFDSQv9AaEtaGDTo4rKytXYgx4XKOqQNf2QswbZrHMOnogXLa6vPfR9RBvwWiMxSshWQV9Hfh8scKR2DPzkgcdTtFvgey2UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=eZ+Q1psc; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=Pmm6LGua; arc=none smtp.client-ip=34.202.193.197
+	 MIME-Version:Content-Type; b=Sdv75QuGh4tGeG7wWuJdDhzAUwFoyXc2jLgI9UkNX8xwZnCmA58SD3VtQpxMPCTZgIGXyO299KrF28uFWH/m1fNqtdyqM1QnslAfZU6UMe26RW8FNyoSrXYbLPS7wDlhq0a/0f/stje7Udn03fPuGQAcIDLH/cJvIkpdjJvf/iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=hgDQVVI6; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=HTxSqH8+; arc=none smtp.client-ip=34.202.193.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="eZ+Q1psc";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="Pmm6LGua"
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="hgDQVVI6";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="HTxSqH8+"
 Authentication-Results: purelymail.com; auth=pass
-DKIM-Signature: a=rsa-sha256; b=eZ+Q1pscofwN3HAsCD/6ji1F8tvcn545WR8hcqqQNPMut0JDwx5pe/z7LyucXV1zrO9DzkF4A/5HBng4GuKlM+a87BcIZ5gKuRy88pYgF+bzmeh6JI3cK4MdycA4fzxiEC2yRJTSwVz+/qcjMCBixMy7dPSsfoHBDFVsveHqwdg8sGyp45C+OJoILbOY7++eOV4Qs/vGcuMLLlVFta7NpX4SADUTAKk6+Br1SU0ykmYamD3V+fYHQbI6esvAL0QmD4FIvdsEOLh6H2dSPV9xQlS/98dhLieTi3HbD4dPBZgt4bUzDE/KNtIk4QNmhbaKH5SRjzlyCZ78hxGceIjvyQ==; s=purelymail1; d=malon.dev; v=1; bh=0oaLoQsIh6Cs3uAU8MVNnAsWJplbAFI4CX3XnPIFyao=; h=Received:From:To:Subject:Date;
-DKIM-Signature: a=rsa-sha256; b=Pmm6LGuaFKHMUOyKyvoFn+QQOrBnHnmEsDYvv8ncf461gI70q+DPAhMuYz9ElPXGXn0UyvNOZvZupJplUCS9R/XHTgpNyA742BwM6qv9Iyz6OjmSUbsKTyXvRtcofnd0BDJSdOGJC9VDmR4FbpzXRhUp2HX2sqIMSZBSgAuRG0WuSv16n3oT5FORfwaWmoeQ19etRkY+XoLCIS21yYZgKb88u/dVKpphOnjIj5ABCMhZSon19f7tHsjWNXqMwC5wtcprQ6N0ThR/l/HwHgWdT00iYeFc+XBI3h11g2FdyE6oyzythRVYNZccQ1UqA+7SfiajxBE+wBc+nwOBdxDbHg==; s=purelymail1; d=purelymail.com; v=1; bh=0oaLoQsIh6Cs3uAU8MVNnAsWJplbAFI4CX3XnPIFyao=; h=Feedback-ID:Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=hgDQVVI6euErS+3ZyYTxsDA5QBMpWd6fu6TQlDLl9HTNVbol7SjC0IHj1ldhRwVvYvNyxt4ErP8xHzGY8xNuGuw2efRXpKn2kwqv0MIQfAzhAYSSlf+oaYd9EaYfP+xXmMyFn6ij4zWeJooxiZO3ODjSJYXC36d3GuXRlFj/ek3u+uHdEIN9acVY1XYEmjoMn6z7Yy8ElNr29CdGKmcCz4J27QorIG/xnFMCxjdw/yDVQeNu3bBs6IovkTNA3TfLBQYCHaesnXIe3S4hMGatFodlFtvdxbKy3vx7mClmkWoH/bUYfKpUe3HlUuZKvfsE26vG2ukJOZOBFhI8KHeGWQ==; s=purelymail1; d=malon.dev; v=1; bh=LY8CQhSLic2wgiCPbm8BJA5TEIpd8KoHFZo8+a9UtVE=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=HTxSqH8+9xW672pFr9m3TerEQvInb+kzpPv2BmrInOfOx78YL2XgJbcOiWs07b2TvmFXWS8CP924aDjwMOXuVUkwSL/wvqYeKxVy059n+VlFLr1aUe5IqReLau2xMz/QJrmoUbg1z8Sez0jPEA4H94kX8W+Bp9qscytmhXoFywcLyAHVVWnmNy7O8zym+5tiFN9OPEmy/T8DYjUnEGchYwMTvj9M2+r/Fw3QCSiD+jghzT0OJ8EFPXDN4aEiPzldbgv9/J8X+R+JyebW42kCXPYO4aCG8vHGtyXqeuymypNjLVhxqRh8M6bCl1DSUfX+Mc66WNRX6O3S7DS3vfLUAA==; s=purelymail1; d=purelymail.com; v=1; bh=LY8CQhSLic2wgiCPbm8BJA5TEIpd8KoHFZo8+a9UtVE=; h=Feedback-ID:Received:From:To:Subject:Date;
 Feedback-ID: 599969:32685:null:purelymail
 X-Pm-Original-To: git@vger.kernel.org
 Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -489877588;
           (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Fri, 19 Jun 2026 16:21:18 +0000 (UTC)
+          Fri, 19 Jun 2026 16:21:22 +0000 (UTC)
 From: Tian Yuchen <cat@malon.dev>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -32,9 +32,9 @@ Cc: ps@pks.im,
 	Christian Couder <christian.couder@gmail.com>,
 	Ayush Chandekar <ayu.chandekar@gmail.com>,
 	Olamide Caleb Bello <belkid98@gmail.com>
-Subject: [PATCH v4 2/3] read-cache: move 'ce_mode_from_stat()' to 'read-cache.c'
-Date: Sat, 20 Jun 2026 00:21:04 +0800
-Message-ID: <20260619162105.648495-3-cat@malon.dev>
+Subject: [PATCH v4 3/3] environment: move trust_executable_bit into repo_config_values
+Date: Sat, 20 Jun 2026 00:21:05 +0800
+Message-ID: <20260619162105.648495-4-cat@malon.dev>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260619162105.648495-1-cat@malon.dev>
 References: <20260612160527.167203-1-cat@malon.dev>
@@ -49,89 +49,165 @@ Content-Transfer-Encoding: quoted-printable
 X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
 Content-Type: text/plain; charset=UTF-8
 
-The ce_mode_from_stat() function is declared as a static inline function
-in 'read-cache.h'. As we want to migrate configuration variables, this
-helper function will need access to corresponding repository-specific
-configuration logic. Move the implementation to 'read-cache.c' to
-cleanly encapsulate its dependencies.
+Move the global 'trust_executable_bit' configuration
+into the repository-specific 'repo_config_values'
+struct. To ensure code readability, the getter function
+'repo_trust_executable_bit()' has been introduced.
 
-Note that the 'extern int trust_executable_bit, has_symlinks;' line is
-discarded because it's not necessary when the function lives in
-"read-cache.c".
-
-At present, this change has no visible impact, but it is crucial
-for our future plans to pass in the repo context. Comment
-has been added whilst we are at it.
+For now, associated functions access this configuration by
+explicitly falling back to 'the_repository'.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
 Signed-off-by: Tian Yuchen <cat@malon.dev>
 ---
- read-cache.c | 13 +++++++++++++
- read-cache.h | 23 +++++++++--------------
- 2 files changed, 22 insertions(+), 14 deletions(-)
+ apply.c       |  2 +-
+ environment.c | 11 +++++++++--
+ environment.h |  9 ++++++++-
+ read-cache.c  |  8 ++++----
+ 4 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index c44e4d128f..54150fe756 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -202,6 +202,19 @@ void fill_stat_cache_info(struct index_state *istate, =
-struct cache_entry *ce, st
- =09}
+diff --git a/apply.c b/apply.c
+index 249248d4f2..fbb907d3c0 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3893,7 +3893,7 @@ static int check_preimage(struct apply_state *state,
+ =09=09if (*ce && !(*ce)->ce_mode)
+ =09=09=09BUG("ce_mode =3D=3D 0 for path '%s'", old_name);
+=20
+-=09=09if (trust_executable_bit || !S_ISREG(st->st_mode))
++=09=09if (repo_trust_executable_bit(the_repository) || !S_ISREG(st->st_mod=
+e))
+ =09=09=09st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
+ =09=09else if (*ce)
+ =09=09=09st_mode =3D (*ce)->ce_mode;
+diff --git a/environment.c b/environment.c
+index fc3ed8bb1c..348053146e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -41,7 +41,6 @@
+ static int pack_compression_seen;
+ static int zlib_compression_seen;
+=20
+-int trust_executable_bit =3D 1;
+ int trust_ctime =3D 1;
+ int check_stat =3D 1;
+ int has_symlinks =3D 1;
+@@ -142,6 +141,13 @@ int is_bare_repository(void)
+ =09return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
  }
 =20
-+unsigned int ce_mode_from_stat(const struct cache_entry *ce, unsigned int =
-mode)
++int repo_trust_executable_bit(struct repository *repo)
 +{
-+=09if (!has_symlinks && S_ISREG(mode) &&
-+=09    ce && S_ISLNK(ce->ce_mode))
-+=09=09return ce->ce_mode;
-+=09if (!trust_executable_bit && S_ISREG(mode)) {
-+=09=09if (ce && S_ISREG(ce->ce_mode))
-+=09=09=09return ce->ce_mode;
-+=09=09return create_ce_mode(0666);
-+=09}
-+=09return create_ce_mode(mode);
++=09return (repo && repo->initialized) ?
++=09=09repo_config_values(repo)->trust_executable_bit :
++=09=091;
 +}
 +
- static unsigned int st_mode_from_ce(const struct cache_entry *ce)
+ int have_git_dir(void)
  {
- =09switch (ce->ce_mode & S_IFMT) {
-diff --git a/read-cache.h b/read-cache.h
-index 043da1f1aa..9088a0724a 100644
---- a/read-cache.h
-+++ b/read-cache.h
-@@ -5,20 +5,15 @@
- #include "object.h"
- #include "pathspec.h"
+ =09return startup_info->have_repository
+@@ -305,7 +311,7 @@ int git_default_core_config(const char *var, const char=
+ *value,
 =20
--static inline unsigned int ce_mode_from_stat(const struct cache_entry *ce,
--=09=09=09=09=09     unsigned int mode)
--{
--=09extern int trust_executable_bit, has_symlinks;
--=09if (!has_symlinks && S_ISREG(mode) &&
--=09    ce && S_ISLNK(ce->ce_mode))
--=09=09return ce->ce_mode;
--=09if (!trust_executable_bit && S_ISREG(mode)) {
--=09=09if (ce && S_ISREG(ce->ce_mode))
--=09=09=09return ce->ce_mode;
--=09=09return create_ce_mode(0666);
--=09}
--=09return create_ce_mode(mode);
--}
+ =09/* This needs a better name */
+ =09if (!strcmp(var, "core.filemode")) {
+-=09=09trust_executable_bit =3D git_config_bool(var, value);
++=09=09cfg->trust_executable_bit =3D git_config_bool(var, value);
+ =09=09return 0;
+ =09}
+ =09if (!strcmp(var, "core.trustctime")) {
+@@ -720,5 +726,6 @@ void repo_config_values_init(struct repo_config_values =
+*cfg)
+ {
+ =09cfg->attributes_file =3D NULL;
+ =09cfg->apply_sparse_checkout =3D 0;
++=09cfg->trust_executable_bit =3D 1;
+ =09cfg->branch_track =3D BRANCH_TRACK_REMOTE;
+ }
+diff --git a/environment.h b/environment.h
+index 123a71cdc8..6607ac9408 100644
+--- a/environment.h
++++ b/environment.h
+@@ -91,6 +91,7 @@ struct repo_config_values {
+ =09/* section "core" config values */
+ =09char *attributes_file;
+ =09int apply_sparse_checkout;
++=09int trust_executable_bit;
+=20
+ =09/* section "branch" config values */
+ =09enum branch_track branch_track;
+@@ -123,6 +124,13 @@ int git_default_config(const char *, const char *,
+ int git_default_core_config(const char *var, const char *value,
+ =09=09=09    const struct config_context *ctx, void *cb);
+=20
 +/*
-+ * Determine the appropriate index mode for a file based on its stat()
-+ * information and the existing cache entry (if any).
-+ *
-+ * This function handles degradation for filesystems that lack
-+ * symlink support or reliable executable bits.
++ * Getter for the `trust_executable_bit` field of `struct repo_config_valu=
+es`.
++ * It checks `repo->initialized` to prevent calling repo_config_values()`
++ * before the repository setup is fully complete or in non-git environment=
+s.
 + */
-+unsigned int ce_mode_from_stat(const struct cache_entry *ce,
-+=09=09=09=09unsigned int mode);
++int repo_trust_executable_bit(struct repository *repo);
++
+ void repo_config_values_init(struct repo_config_values *cfg);
 =20
- static inline int ce_to_dtype(const struct cache_entry *ce)
- {
+ /*
+@@ -160,7 +168,6 @@ int is_bare_repository(void);
+ extern char *git_work_tree_cfg;
+=20
+ /* Environment bits from configuration mechanism */
+-extern int trust_executable_bit;
+ extern int trust_ctime;
+ extern int check_stat;
+ extern int has_symlinks;
+diff --git a/read-cache.c b/read-cache.c
+index 54150fe756..757249a449 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -207,7 +207,7 @@ unsigned int ce_mode_from_stat(const struct cache_entry=
+ *ce, unsigned int mode)
+ =09if (!has_symlinks && S_ISREG(mode) &&
+ =09    ce && S_ISLNK(ce->ce_mode))
+ =09=09return ce->ce_mode;
+-=09if (!trust_executable_bit && S_ISREG(mode)) {
++=09if (!repo_trust_executable_bit(the_repository) && S_ISREG(mode)) {
+ =09=09if (ce && S_ISREG(ce->ce_mode))
+ =09=09=09return ce->ce_mode;
+ =09=09return create_ce_mode(0666);
+@@ -221,7 +221,7 @@ static unsigned int st_mode_from_ce(const struct cache_=
+entry *ce)
+ =09case S_IFLNK:
+ =09=09return has_symlinks ? S_IFLNK : (S_IFREG | 0644);
+ =09case S_IFREG:
+-=09=09return (ce->ce_mode & (trust_executable_bit ? 0755 : 0644)) | S_IFRE=
+G;
++=09=09return (ce->ce_mode & (repo_trust_executable_bit(the_repository) ? 0=
+755 : 0644)) | S_IFREG;
+ =09case S_IFGITLINK:
+ =09=09return S_IFDIR | 0755;
+ =09case S_IFDIR:
+@@ -331,7 +331,7 @@ static int ce_match_stat_basic(const struct cache_entry=
+ *ce, struct stat *st)
+ =09=09/* We consider only the owner x bit to be relevant for
+ =09=09 * "mode changes"
+ =09=09 */
+-=09=09if (trust_executable_bit &&
++=09=09if (repo_trust_executable_bit(the_repository) &&
+ =09=09    (0100 & (ce->ce_mode ^ st->st_mode)))
+ =09=09=09changed |=3D MODE_CHANGED;
+ =09=09break;
+@@ -752,7 +752,7 @@ int add_to_index(struct index_state *istate, const char=
+ *path, struct stat *st,
+ =09=09ce->ce_flags |=3D CE_INTENT_TO_ADD;
+=20
+=20
+-=09if (trust_executable_bit && has_symlinks) {
++=09if (repo_trust_executable_bit(the_repository) && has_symlinks) {
+ =09=09ce->ce_mode =3D create_ce_mode(st_mode);
+ =09} else {
+ =09=09/* If there is an existing entry, pick the mode bits and type
 --=20
 2.43.0
 
