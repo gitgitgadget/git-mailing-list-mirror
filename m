@@ -1,154 +1,106 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFA040D57F
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 05:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BB1224F3
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 06:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781848033; cv=none; b=i6TvgmhTbYZakC2NiUW3xCm2eOGjjSPej2XnZjuBbN7wsqppX4aecfJn8a7Bif/O31EGePGIuX6kLJhCh13TpRKoqO++OFZQQat0hVK9ky76bRaW8K/L5xohKXwXMANAvg5rVGCinpDFv+W8R31uEdWXn7hjrhwiQvsP/wQmMhA=
+	t=1781849154; cv=none; b=C1/EJWCgj43g4iUDYFwDi6QoNERNNrrUIBnTo6Mromhc/vi0hnYjwqKl3vT/bBjE9RzF/1hp27PDMivHdOI+D3iQvyhn3NGCgzoa2WeIXpuf4Jns98aMPjAIUvyBo+6tLcZ1XBuL7aX8Y4icr3+ixjhE/xhQWagJ5P0gdAYk7Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781848033; c=relaxed/simple;
-	bh=i9vLNSY7vqUj+Xc19flkObBlAzdaTzqXa9NRsEUt+Do=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pgZgxxkE6bpU2A9qZ8RYSt4xkRIbux0uW8eE9mh2uUAZesd5tkDtxF8p7BtGwWpn9ZHUADMeSHYFgfbf5UhHCjqehpstqWEkpdjPD+E2mfWPoyb7ocwrvYgdtmx3O+ui53mbRwqJmtl9vbPBkExPE5KJfODOTPNpD8L7szN9yNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ylwg6C3E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BgDAoi1k; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1781849154; c=relaxed/simple;
+	bh=0iwGzaWEsrF7agp/OFwVnUVfCGpXklDxZdZbsna/28o=;
+	h=Message-ID:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type; b=YD7mE3/w9YUYi8xCHGuBYLQuO9MTLGYiAEjnasBeyoxvs3DW5hml9lDUaaEtIVemvW4NI3/QsyVJ76IxZLEXL/Dw6SEpDAuL49BFdgU5OvBkqz0lN1vKjA1sYZ4vwhcJiu6fNUQXqsoiq3O5ARo/Jc/VPfeiL03VQ0HAXpbAVSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aNWisxvs; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ylwg6C3E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BgDAoi1k"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A22F14000CB;
-	Fri, 19 Jun 2026 01:47:11 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 19 Jun 2026 01:47:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1781848031;
-	 x=1781934431; bh=68rh2X564ZM0Mz91PYdGyycLtfVnVReG2qyBuQ0kM/4=; b=
-	ylwg6C3EYI9h5mT1TPfCttHONXjnDcrvRPVBk7XE9aOnQO/mRAnG4Dex6qDV0D0G
-	LYlBPBHAsoPpYfl6GSsVNUxbO6xQadfic87UeNj4UmWBodlChvwUfCcmyEkyfgXk
-	m5ROA8mDJWdr/9ofER4L+Ppo0vFmmyQytmQWwT7doT24e+5THTRi+TSES0rkLPXM
-	H39wjYFm84x21ygS1H5iKPu+09sMfkzlQByg8xCR0peQtWRS283ZmD+CLelaJ+IE
-	riaM8h0jQsCeDy8zuEN1mG+FycKXFWBoscsbhBfd8beXK3Y8CekuQnGJC84xjmGy
-	31rm1lmztKY2tIiZITkzcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781848031; x=
-	1781934431; bh=68rh2X564ZM0Mz91PYdGyycLtfVnVReG2qyBuQ0kM/4=; b=B
-	gDAoi1kMoYQUbIg93cECeLGZKt4WK463m+vIEhgkjh9KIwMnxOBiiWYDpLwmkiul
-	8M9cOojbf8dAktgk6QD697Ky8z7SMfgKfTNJZgcIIbA1MomgPrLOsfhGVRUYNCZM
-	RMwwJ6FOmdPAzHvGPMloc0BQNdYRV1F84s81pECsro0gQzXpgNaCHJ7jx+QzlVAU
-	3SvifD+AzSz/gkmqqfyi+cNWC6f9CcDnavkXneTF3ouEplDwlL5mIWcVk75o2+uZ
-	f6snPLnb7GXXbNx0EiCOKzQ+e4H4V8jfXom+IrCUDIxZf/gISSxMgfJjvq0AZDPV
-	FW1YkJnM/23YdxVy6acWg==
-X-ME-Sender: <xms:39c0aibGSYt9issOjrNqAHmIsNaOjdsk72Cjjkzji-2i0OJVcTEhCS8>
-    <xme:39c0asZCppjNC9WNiJ0b9ZzUUA6FApftstAfYMyqvvTbUre8ixOODYBF4zyQSoZny
-    1_gI1RgYv-cvMyj9QdZpeizh2hCzDiqCqZNHeUH0r97h4eatU2r0Q>
-X-ME-Received: <xmr:39c0ah9gOg_6O-nc7UpovMeST3euAVq8H30h2bA90INJnppM1CiMlhKd27DXbf-pfsimAnlNEzXGEOHKSUI3SAkJGW_O757pOxEEs_SXJmfi_tw>
-X-ME-Proxy-Cause: dmFkZTEVoJViyCXqLnW1YbV3bfakKhJpU9H18zFovGOnk2r5I27tufkSSC2RInSBzRcyxy
-    jXMbMFawwv/AFAcTb1VTKeAmgZTEK4IAEmE+O4Y0sNNSSanZcVzypzIxEnMg33/rmgcNgg
-    z3fdSNziYxoKBrxjVsoIjfOtVkMgFJF96kS19Yv30O7gFGFhRukH2S0x/xJm3aCSGzEM3O
-    rcDo/47wW52Tj6Y80fUI4WJ2zGFcSo+hM3Ojh2VvJhTbCei6GCcOnDddgIrpkOGfEB5ttg
-    OpczVvOfzIRLh+1SQJ5styzQQkrLcqZS5NGQ0+s/cqWHoBBThOBa7bkfhBukUOl3CvrWhi
-    7tyFMVteGQIsq+SnkRmPWJ3UCvTAuG6La29Q87fBKlFclhWxRg/SdyWwpNg1VgiNw3LwO+
-    Bvv0nZDUrAHA4/VoNjNp8WoIbJXveNbLg9v7OiDgu2HOYeGcSsS5jc9rMEdtFiYSbjSA1z
-    ISNoKKiJbC7YrB66lD54dwHFgxzwxF8+y/oGEbrWNKWSWpIxITU2aQ0u4lH6OP1WAr+8B3
-    WsLI6wBotjjEPqUkgPRe21N+sGWrKcV8g8SwqTQVtRyX2Cg7zlntG+BcLe/kGl3Z1Pze9T
-    ZBEt4JoDSVmoKAOo3BcimQT0wYDjHFjePXfuvy1kNzmelOGTeZsqaDkqj+bQ
-X-ME-Proxy: <xmx:39c0ajjV6kVizK3-nDGgcQf_XVEICwN1qKTK-nRauvzPpDXwEcXhEw>
-    <xmx:39c0apdObo0l52pHSMPzZ68yi5xnf95_oqQGH6lqAiYiR6rmzjbVkg>
-    <xmx:39c0aipuXQZY6xW7eDa244PDwSHEZU9qgWhMSdJQkK6zHgW_ys3Nwg>
-    <xmx:39c0amC3ZClDgEbPjbUvZjv6V6nUTUszU_B1DNvY2JXxAEO0OSHJEg>
-    <xmx:39c0aglQfUxtpmB1N82zY5XawsHHA-5qyBMShid6ckDrjN1K40nK8Htg>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 01:47:09 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 5/5] SubmittingPatches: note that trailer order matters
-Date: Fri, 19 Jun 2026 07:44:54 +0200
-Message-ID: <V3_trailer_order_matters.9f1@msgid.xyz>
-X-Mailer: git-send-email 2.54.0.22.g9e26862b904
-In-Reply-To: <V3_CV_SubPatches_trailers.9ec@msgid.xyz>
-References: <CV_SubPatches_trailers.8f3@msgid.xyz> <V3_CV_SubPatches_trailers.9ec@msgid.xyz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aNWisxvs"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8454c5a280aso521486b3a.1
+        for <git@vger.kernel.org>; Thu, 18 Jun 2026 23:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781849152; x=1782453952; darn=vger.kernel.org;
+        h=references:in-reply-to:subject:cc:to:from:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yMAtayVK+lz46CoqaCjGWUJRcHt8drfnfP+vtjrTszU=;
+        b=aNWisxvs85E+nA6a7O3TUwg8l+XPG4r+enuNkQNAsNgZ1DR0j+pZD5FgFyHX8iYCgK
+         QP98LfK5/2e6gjpF/n7NU1Xh3Ci5cLu41FXRTzieZcH5Gg1P+qh1dSSvZdm025jFDlqn
+         gv9hBqqRPxCLNY/tdnKKG9DaQkxeZzSfDXTypd1FBZeWIzR1QDJnp6SuOkiZck3MpPdP
+         gL85nDikpSuXqGYe3sqvV9VsS5bByp9QG3kh0bGRA88BUOV8iVfKRFIZE0fOMyfAmUa6
+         sEQ+uN9XGuUFjA+UiNgoxaFBCpuLYe1fbYfMMHSL8UMiMTKmuYATAzlipbeJJl35SO3w
+         FQlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781849152; x=1782453952;
+        h=references:in-reply-to:subject:cc:to:from:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yMAtayVK+lz46CoqaCjGWUJRcHt8drfnfP+vtjrTszU=;
+        b=cmhGCy+7oLjMIAQ4Z/aPk52+MMkagcP0cSAtJ4AlAeh+GtZMl4GP3hRcP6HedRGo79
+         dFzUX0I1IIBLAcVJufsmyigWnBrohJNov3Hv5YxKh9mxQUkyezSIsZBA4fZ39GStSOmO
+         zorgY244K7FepAhhEDvngTUG7NGDbkqyusfMbGIeFIrmEJsWfEUvDQ5qJmL17I1dc4w/
+         UndcFZWXqiFpQ9GuaINr1iIvGiCMEvFn90uxGvwhhENoPH4ogUeHcdMojzLeKEvv2/P4
+         LkD6/ekwC2ciu6AfQFKi6TG7op34fv7dqgJsRtOIN2pFYp3D4t3eP5zJaAEisj4GjLEn
+         BCMg==
+X-Gm-Message-State: AOJu0YzfKRxv/eVTHnEYmFln6G0k7xQ4kYv6rpA6mOeUti01Iq3LgW4P
+	CPqXgzp226okH6GZdPg5cnN8Z50ZuLJExrIArEKNOkrdVFzydi5TcaVA
+X-Gm-Gg: AfdE7clvpxWiZK6WoBL3X6Uuezn4Ht/Ewfgypshn+5ZOGd8qXJ9qM5BHSyFQnxEKxV8
+	qdlWSoRaf6ao9e9dJQpJR+z8EKaPZsi9/htTS493J3xIl13ZMlByuz/B2PWDiee32+JcGm7cL4X
+	6pbfqSO24VJjBOvGkkzyt23h0iIjUs7BmfjqOyc9BBDh9KMzA9C7ukk3Ok+huVxuCxe2knwPC/m
+	MqkeFAOoNqw9szmIc0Bg1NOK5myhEKE+3wn5YyKwYJZYzHVCnoEWvjMVoYyMLG+gqqf/ipv7M1n
+	MikHqMhu9BsDw+FyrMhyAtARCSZbTjUPZHc7xSHALvm67QxUwUXbsfZbSCEnS4Nz2erwxh3ubcx
+	j8lIlaXUGW62sR1dJZ5zW7y+2EBjNTuSe50hBPYd+u2p/JqmEMCFrMopVLG4R4XRZV/vfB8qX9e
+	BB5GoUIS22to/y/Hw=
+X-Received: by 2002:a05:6a20:1443:b0:3a2:c9a1:2c22 with SMTP id adf61e73a8af0-3bb33c3fa24mr2134791637.6.1781849152474;
+        Thu, 18 Jun 2026 23:05:52 -0700 (PDT)
+Received: from 11 ([111.92.66.172])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8a891a22b7sm1321034a12.27.2026.06.18.23.05.50
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 18 Jun 2026 23:05:52 -0700 (PDT)
+Message-ID: <6a34dc40.2c570c9e.381c97.203f@mx.google.com>
+Date: Thu, 18 Jun 2026 23:05:52 -0700 (PDT)
+From: Jishnu C K <jishnuck26@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] help: prompt user to run corrected command on typo
+In-Reply-To: <ajQuqTB580gqNP8D@denethor>
+References: <20260618142033.15216-1-jishnuck26@gmail.com> <ajQuqTB580gqNP8D@denethor>
+Content-Type: text/plain; charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Thu, Jun 18, 2026, Justin Tobler wrote:
+> Isn't this already possible via setting `help.autoCorrect=prompt` in the
+> config?
 
-It matters where you put new trailers: they should be added in
-chronological order, and each person who passes on a patch should add
-their s-o-b last. You are signing off on the patch as well as the whole
-message up to that point.
+Thank you for the review.
 
-This also makes it clear who added what:
+You're right that `help.autocorrect=prompt` exists and is similar.
+Our change differs in two ways:
 
-    Acked-by: The Reviewer <r@example.org>
-    Signed-off-by: The Contributor <c@example.org>
-    Acked-by: The (Late) Reviewer <late@example.org>
-    Signed-off-by: The Maintainer <m@example.org>
+1. No configuration needed. The existing prompt mode requires the user
+   to explicitly set `help.autocorrect=prompt`. Most users are unaware
+   of this option, so they see a suggestion and must retype the full
+   command manually. Our change makes the interactive prompt the
+   default behaviour when stdin and stderr are a terminal.
 
-The first ack was added by the contributor and the second one was added
-by the maintainer.
+2. The prompt includes the original arguments. `help.autocorrect=prompt`
+   shows only:
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+     Run 'checkout' instead [y/N]?
 
-Notes (series):
-    v2:
-    • Mention this in both the DCO section (new) as well as the trailers
-      section
-    • Emphasize and lead with chronological order and let everything
-      fall in place according to that
-        • https://lore.kernel.org/git/xmqq8q8mt4eo.fsf@gitster.g/
-    • Msg: Drop “the the”; one is enough
+   Our prompt shows the full corrected invocation:
 
- Documentation/SubmittingPatches | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+     Did you mean 'git checkout neo'? [y/N]
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 125bc0a2d63..56706e55ea1 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -427,6 +427,10 @@ D-C-O.  Indeed you are encouraged to do so.  Do not forget to
- place an in-body "From: " line at the beginning to properly attribute
- the change to its true author (see (2) above).
- 
-+Place this `Signed-off-by:` trailer at the end, after trailers added by
-+others and after other trailers added by you; see
-+<<commit-trailers,Commit trailers>> below ("chronological order").
-+
- This procedure originally came from the Linux kernel project, so our
- rule is quite similar to theirs, but what exactly it means to sign-off
- your patch differs from project to project, so it may be different
-@@ -487,6 +491,12 @@ particular are not used in this project.
- Only capitalize the very first letter of the trailer, i.e. favor
- `Signed-off-by:` over `Signed-Off-By:` and `Acked-by:` over `Acked-By:`.
- 
-+As mentioned under <<dco,DCO>> above, trailers are added in
-+chronological order; one person might sign-off on a patch and send it to
-+someone else, who then in turn adds her own sign-off. Further, any
-+trailers that you add beyond your sign-off should come before that
-+sign-off. That makes it clear what trailers which person added.
-+
- [[ai]]
- === Use of Artificial Intelligence (AI)
- 
+   This lets the user confirm exactly what will run, including their
+   original arguments, before pressing 'y'.
+
+If the consensus is that the default should remain non-interactive,
+we are happy to rework this as an improvement to the existing
+`autocorrect=prompt` mode (showing args in the prompt) with
+documentation updates to make the option more discoverable.
+
 -- 
-2.54.0.22.g9e26862b904
-
+Jishnu C K
