@@ -1,106 +1,147 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BB1224F3
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 06:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5D435AC13
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 06:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781849154; cv=none; b=C1/EJWCgj43g4iUDYFwDi6QoNERNNrrUIBnTo6Mromhc/vi0hnYjwqKl3vT/bBjE9RzF/1hp27PDMivHdOI+D3iQvyhn3NGCgzoa2WeIXpuf4Jns98aMPjAIUvyBo+6tLcZ1XBuL7aX8Y4icr3+ixjhE/xhQWagJ5P0gdAYk7Ps=
+	t=1781850357; cv=none; b=UYsC2a0gJEs4v2j18mNsCovsa+qCMFeOukqt/C2Hkfvo1Oa/rGsGLbjopqsxiXVo2ml/zEbGZlcLeXX1m8loNKAID7lGKBMc6BCAjwLLDMp+N2OLZgwqypcLseKBEwWyiOYJY44e+zxcguKrIMhO0ExzSpTkkJ7YayRBdZA904M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781849154; c=relaxed/simple;
-	bh=0iwGzaWEsrF7agp/OFwVnUVfCGpXklDxZdZbsna/28o=;
-	h=Message-ID:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type; b=YD7mE3/w9YUYi8xCHGuBYLQuO9MTLGYiAEjnasBeyoxvs3DW5hml9lDUaaEtIVemvW4NI3/QsyVJ76IxZLEXL/Dw6SEpDAuL49BFdgU5OvBkqz0lN1vKjA1sYZ4vwhcJiu6fNUQXqsoiq3O5ARo/Jc/VPfeiL03VQ0HAXpbAVSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aNWisxvs; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781850357; c=relaxed/simple;
+	bh=RI81ZT890Y9YNuzNoZWIiXJLiblcT+iGK0vjGBgcbK4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M9t14WhJxAFJYTAVa1cZ/DygbUAh1EWxCEXLtdDC2eif+Fq8E12wUoqW1BNYvgJVKyYHcm9FJYmtkKp3ExMtMp9HFC3ol34s7vFKKgX5WO7alof3DBAN8I9i2zCGAFANtuNNDqhZoTzPVI+aH6dgrWcWG/rqV/04hnEUVdYUFR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mkIflurg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EM+u0ySK; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aNWisxvs"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8454c5a280aso521486b3a.1
-        for <git@vger.kernel.org>; Thu, 18 Jun 2026 23:05:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781849152; x=1782453952; darn=vger.kernel.org;
-        h=references:in-reply-to:subject:cc:to:from:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yMAtayVK+lz46CoqaCjGWUJRcHt8drfnfP+vtjrTszU=;
-        b=aNWisxvs85E+nA6a7O3TUwg8l+XPG4r+enuNkQNAsNgZ1DR0j+pZD5FgFyHX8iYCgK
-         QP98LfK5/2e6gjpF/n7NU1Xh3Ci5cLu41FXRTzieZcH5Gg1P+qh1dSSvZdm025jFDlqn
-         gv9hBqqRPxCLNY/tdnKKG9DaQkxeZzSfDXTypd1FBZeWIzR1QDJnp6SuOkiZck3MpPdP
-         gL85nDikpSuXqGYe3sqvV9VsS5bByp9QG3kh0bGRA88BUOV8iVfKRFIZE0fOMyfAmUa6
-         sEQ+uN9XGuUFjA+UiNgoxaFBCpuLYe1fbYfMMHSL8UMiMTKmuYATAzlipbeJJl35SO3w
-         FQlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781849152; x=1782453952;
-        h=references:in-reply-to:subject:cc:to:from:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yMAtayVK+lz46CoqaCjGWUJRcHt8drfnfP+vtjrTszU=;
-        b=cmhGCy+7oLjMIAQ4Z/aPk52+MMkagcP0cSAtJ4AlAeh+GtZMl4GP3hRcP6HedRGo79
-         dFzUX0I1IIBLAcVJufsmyigWnBrohJNov3Hv5YxKh9mxQUkyezSIsZBA4fZ39GStSOmO
-         zorgY244K7FepAhhEDvngTUG7NGDbkqyusfMbGIeFIrmEJsWfEUvDQ5qJmL17I1dc4w/
-         UndcFZWXqiFpQ9GuaINr1iIvGiCMEvFn90uxGvwhhENoPH4ogUeHcdMojzLeKEvv2/P4
-         LkD6/ekwC2ciu6AfQFKi6TG7op34fv7dqgJsRtOIN2pFYp3D4t3eP5zJaAEisj4GjLEn
-         BCMg==
-X-Gm-Message-State: AOJu0YzfKRxv/eVTHnEYmFln6G0k7xQ4kYv6rpA6mOeUti01Iq3LgW4P
-	CPqXgzp226okH6GZdPg5cnN8Z50ZuLJExrIArEKNOkrdVFzydi5TcaVA
-X-Gm-Gg: AfdE7clvpxWiZK6WoBL3X6Uuezn4Ht/Ewfgypshn+5ZOGd8qXJ9qM5BHSyFQnxEKxV8
-	qdlWSoRaf6ao9e9dJQpJR+z8EKaPZsi9/htTS493J3xIl13ZMlByuz/B2PWDiee32+JcGm7cL4X
-	6pbfqSO24VJjBOvGkkzyt23h0iIjUs7BmfjqOyc9BBDh9KMzA9C7ukk3Ok+huVxuCxe2knwPC/m
-	MqkeFAOoNqw9szmIc0Bg1NOK5myhEKE+3wn5YyKwYJZYzHVCnoEWvjMVoYyMLG+gqqf/ipv7M1n
-	MikHqMhu9BsDw+FyrMhyAtARCSZbTjUPZHc7xSHALvm67QxUwUXbsfZbSCEnS4Nz2erwxh3ubcx
-	j8lIlaXUGW62sR1dJZ5zW7y+2EBjNTuSe50hBPYd+u2p/JqmEMCFrMopVLG4R4XRZV/vfB8qX9e
-	BB5GoUIS22to/y/Hw=
-X-Received: by 2002:a05:6a20:1443:b0:3a2:c9a1:2c22 with SMTP id adf61e73a8af0-3bb33c3fa24mr2134791637.6.1781849152474;
-        Thu, 18 Jun 2026 23:05:52 -0700 (PDT)
-Received: from 11 ([111.92.66.172])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8a891a22b7sm1321034a12.27.2026.06.18.23.05.50
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 18 Jun 2026 23:05:52 -0700 (PDT)
-Message-ID: <6a34dc40.2c570c9e.381c97.203f@mx.google.com>
-Date: Thu, 18 Jun 2026 23:05:52 -0700 (PDT)
-From: Jishnu C K <jishnuck26@gmail.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] help: prompt user to run corrected command on typo
-In-Reply-To: <ajQuqTB580gqNP8D@denethor>
-References: <20260618142033.15216-1-jishnuck26@gmail.com> <ajQuqTB580gqNP8D@denethor>
-Content-Type: text/plain; charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mkIflurg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EM+u0ySK"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 97DD31D0015F;
+	Fri, 19 Jun 2026 02:25:53 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 19 Jun 2026 02:25:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1781850353; x=1781936753; bh=671PRNa4mD
+	a1bt0QrTmU91qMXmfZEskPgyHyEW5zMMM=; b=mkIflurgcCGJ9Mlo1JHyUjxg55
+	gYHZSFUccUE5Z2fVu/UdhJUsr6LNkWkeYNZwc1iTUU8b3+KyaO9inoyI8Vo4FUyX
+	zzFRFiyoa/zUffe8d6AKBD2un3uT2ah2DFs5wHarp1X2NGUaA4rrqKBhOx+EzQw+
+	vVjpcGzkiRpcbMaAF2MA2f+pVEsVOQbltcK5NfpwNIcBCFdZwIK46fm6zyZXWYjz
+	bMa4MGidtEMGmxD4rdGqd2rCbVsrfXdDCMkP901rss6jscgpWU/FeJAvx4TzPGAX
+	Rv7WdZa/WOS3u3sDNTUABZQTvlqOFHIYN7TVIBEt7gFHDSVjd+T/WuNHOmWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781850353; x=1781936753; bh=671PRNa4mDa1bt0QrTmU91qMXmfZEskPgyH
+	yEW5zMMM=; b=EM+u0ySKR9rMP17sZvP8sw2myugAFiALJb2Px/lbN8ZEwVSevNa
+	Mtx5WSpufEcGnMoCs6K0/bsAr+XWthcDPr6UMnjdCdWpZQFW9RV2OoNlSfxzKV0Y
+	2aTrB01pBCLFUNnvWuHFCfSEcquLjeXtML3IIHwstC0DnSl310CGLyfk/GnHroh4
+	l+0fFh3Cmyc2drDuqA4UwHSx+8PBMJhJGtg/0CxHrjHrqV4ivBGP7Eid2HMyWgPs
+	7gx62J0ckBQAAGzzQYsHVSwfJLXvkxqZY0BPIPdzFKOeEfi1RZJ3//uKr2DVOWgp
+	vOKQkmla5DAZ2bFh5kB99PU6P+Bt0cWUg1w==
+X-ME-Sender: <xms:8eA0autYB0u02AwCLbYxqEPBjCslTcg1EItSxSjH4EBEn3nq7s_NCw>
+    <xme:8eA0aq71eQCSOOWajsixA403LjD_Gb5BpKeZ6cLhbhJkWmCyxVEJl5qyev-L04xst
+    tnwach2l2YExiNwrE0ox9mzagl5C5oxbQnVrm8Jv_yHfYGsvxFPlYM>
+X-ME-Received: <xmr:8eA0anL3jVsIUCWwN6Cfy9_q2NbItNz-7KktYvJUtG27SWG0T5PpVMicDt7gxwt5sEuViQI1qKFmV8CMMSzOfIAsdLEUlBPTXo8CJTtH744>
+X-ME-Proxy-Cause: dmFkZTF0KL1kQHpqYhzGlHqlxjUMzJJncQZIbyGkRI495GbCgjYU85puhfuqrMYCW9shLn
+    E8WIyhB54GLin0MU9Atppr3VrelSuYNJxF95jbgKYnQ5d3yYzXFA8eNHgSlg9qjd2qbdEb
+    ayHJX9mMOMXaHPFCxJ9rr7ytxBCEtR5jBlRBQKEj+uO8BAnq7IeMOGjf6T5qqzs3yRAiI8
+    WJWNpcu5FwxHnBeYLeCDxfhV/qNOl3ZFFXkILsJ1IRyD9Tyd36RRoMRo+NbM7ux5yn/GlO
+    vdnoBl98+y/gh9DXZcXkoijcisRXTv1dJsHCQYBX+7tV9NzqN/8LHY290QhfGrW+kjfUZ/
+    kqgaaFmr/8dX9U2c0FfPYhvRZj5qpsm3kI3KuHctsYHQsiSwWhgAGfT/h8yerTV3Iw/45h
+    w0RHWl6ks72kbuHQHXHXk01A1GWl6PKUK90WSz9/ASX17uSc43Rh+EOtHWXztCR7ZzGbkc
+    uI9IlR7A1VQjdBB+UW9uysJfaX6cQBj3a46/gx0F8DKRCLpwlW2Vn1Hb7qMpfd9abDT8NQ
+    jgz1XKyk+6gaUhNf6VnNXrAr/7bqZCOeT701RxusTWj1l42lglDQNuxHbd7UaYjuNZTDZQ
+    b9y5MKhoqltBeiixHkTXgQ90Noym80+YjwTmIBzGESYFALjajQIB6S9JABpg
+X-ME-Proxy: <xmx:8eA0ai5LpWk-So7ZynQZrx4zMh1bVSNainDJ2VSgNPRyS-koVtNnvA>
+    <xmx:8eA0aizStRn9yDBcXKFy0VYkTDIyTDxBYOEaZ7CzOSqfQyzal8Kswg>
+    <xmx:8eA0auaFX0DoTKtlaVR6t7tgBxHBlfrc3BR4JZP1n-O4zT4XLGZeDg>
+    <xmx:8eA0asSw04wHFCiT3xnewMA0F5it5dRdPZACWNyTmHdOFnAe5LQ3kA>
+    <xmx:8eA0ammtxkAQcjG2T832VWs59mHtrphsh0qovB3i4CdwdJ1YvK7yx_QZ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jun 2026 02:25:52 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f0c89546 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jun 2026 06:25:49 +0000 (UTC)
+Date: Fri, 19 Jun 2026 08:25:42 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 7/8] refs: fix recursing `get_main_ref_store()` with
+ "onbranch" config
+Message-ID: <ajTggBKIzgSpp99X@pks.im>
+References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
+ <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
+ <20260618164035.GA1218204@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260618164035.GA1218204@coredump.intra.peff.net>
 
-On Thu, Jun 18, 2026, Justin Tobler wrote:
-> Isn't this already possible via setting `help.autoCorrect=prompt` in the
-> config?
+On Thu, Jun 18, 2026 at 12:40:35PM -0400, Jeff King wrote:
+> On Mon, Jun 15, 2026 at 03:56:53PM +0200, Patrick Steinhardt wrote:
+[snip]
+> I'd expect the ref database config (like the ref format) to be read not
+> through the regular config subsystem, but via read_repository_format()
+> and friends. And while that does build on the regular config code, it
+> should never enable includes at all. So includeIf.onbranch:foo.path is
+> just another uninteresting config key to it.
 
-Thank you for the review.
+This feels rather painful though, as we'd now have to do this for every
+single backend that we know about. Also, I think not enabling includes
+is an overly broad fix: there isn't any reason why "includeif.gitdir"
+and all the other conditions shouldn't apply. We really only want to
+disable "onbranch".
 
-You're right that `help.autocorrect=prompt` exists and is similar.
-Our change differs in two ways:
+[snip]
+> > The consequence is that we have recursion:
+> > 
+> >   1. We call `get_main_ref_store()`.
+> > 
+> >   2. We don't yet have a reference store, so we call `ref_store_init()`.
+> > 
+> >   3. We parse the configuration required for the reference store.
+> > 
+> >   4. We eventually end up in `include_by_branch()`.
+> > 
+> >   5. We have already configured the reference storage format, so we end
+> >      up calling `get_main_ref_store()` again.
+> 
+> Ah, the culprit seems to be ref_store_init() calling into the regular
+> config parser via repo_settings_get_log_all_ref_updates(). But that
+> feels weird to me. Either:
+> 
+>   1. It is application config that should not be something we need to
+>      load in order to initialize the backend. We could lazy-load it
+>      later, or rely on higher level code to set the option.
 
-1. No configuration needed. The existing prompt mode requires the user
-   to explicitly set `help.autocorrect=prompt`. Most users are unaware
-   of this option, so they see a suggestion and must retype the full
-   command manually. Our change makes the interactive prompt the
-   default behaviour when stdin and stderr are a terminal.
+I actually tried lazy-loading, but I found it to be quite painful
+overall, as the above setting isn't the only one we use. The reftable
+backend for example has a bunch of additional settings that it reads.
 
-2. The prompt includes the original arguments. `help.autocorrect=prompt`
-   shows only:
+We could of course start lazy-loading all of these. But that may not
+work for future backends that really _need_ to parse some configuration
+at initiation time.
 
-     Run 'checkout' instead [y/N]?
+>   2. It is crucial to the ref backend functioning, in which case we
+>      ought to be reading it alongside core.repositoryFormatVersion, etc.
 
-   Our prompt shows the full corrected invocation:
+I think ideally, we'd have a way to read the repository configuration
+that explicitly disables parsing includes. We could for example extend
+`struct config_options` to have a new "ignore_refdb" toggle then
+explicitly use that in the reference backends.
 
-     Did you mean 'git checkout neo'? [y/N]
+I'll give that a try.
 
-   This lets the user confirm exactly what will run, including their
-   original arguments, before pressing 'y'.
-
-If the consensus is that the default should remain non-interactive,
-we are happy to rework this as an improvement to the existing
-`autocorrect=prompt` mode (showing args in the prompt) with
-documentation updates to make the option more discoverable.
-
--- 
-Jishnu C K
+Patrick
