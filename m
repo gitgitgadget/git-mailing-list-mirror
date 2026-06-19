@@ -1,97 +1,111 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1630D3B38B1
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391E43B7B8E
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781884929; cv=none; b=Z1zI0Wd4dv+8ojfoJWH+iG2Ee49TgdSjb3cWW3EU2EZrIo06eTwHUx42gdGc82rK7Xc9SkXZ6qQZqRdGNr6EJtL9Ib0G+hDql5kHXxO0pR4C9g+RBq7LOps+yDF6hdswNu22+dBj575KrNaqaukx3bUw7ObZU6cuAdDntuUyClw=
+	t=1781885514; cv=none; b=WMVlQe2yeozBfWLBieM4dHPDIF1vrZcuPeq3UOckdwELHTW7q46U1n7r+I6Ll/NzqmhFPXvPcwyyWz2epm2TDotPEsZvNr3b7Wh4q6CQLILwpp77UvG9txyBD0n35HiAvVL/kyI87Wuv0ZpFolWURYlabw8uUEPJNcPhFeKDxGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781884929; c=relaxed/simple;
-	bh=Igy4eCMRa9yrkOvNGx2Goc29UssfSgm7c8JkwLSM1gw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J6cuEEV4Z0NvRpBOSTDabbW4nMxbSCk13cxIdbiOwwkkY57LU8v509Z0rqvEd+M2PivTCG0wa5J+YQ0TPLD7qOPcFbsoQ24sp2wevLzJGTsqEFOeUatLVoudVWsRmf9hZQsfrtttMmXvXE71jZsxFbWT5D7ZBgI5EqtncgFCHPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=denjiRjT; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=DcZW1Tjd; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1781885514; c=relaxed/simple;
+	bh=M5TWDfb6RMk4KMYbMolXyZka+rO2ySk2mlJ4f6KgT4k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dhMnV3uD9qC+gEPjYra7rjPItqxN9DCudyG+hGn7MdGMCxafhUMPJgfK5KadeSubj4Z/5Va9Cv4ZLTEwlYt8uL5rSk8AbGkOgXO50LVbBAboF3ykRMxe1YzfOicThKSoCgfzenviZzZGoyDc4JiWtrm4yspMxjvHn6HfkuHvc/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fKyh3qhx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QBFOtjkR; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="denjiRjT";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="DcZW1Tjd"
-DKIM-Signature: a=rsa-sha256; b=denjiRjTE/HUIV0IyezPKaGcQgeomoJ7gSMzvU0qoWjAfjzYgQX6xwhmMX3BcM0S8FzxNLJYg5TetAHqOi7BY01XgpmPeKdJRGCxcOMKwo7ueRem+frxRbI3CZ8+d6ViTHEf1G1M8L1gG2mnvPFI8lrILg7CwTcEzq7j4TFrO6eo/1odsfpgpQeGIzBDrn5Ko9GBCdQXiyzIXskty/O0OA6+dqz5atTpi1jvidF8pH2xIsh6V4Ujm9QkpyOxxvJhP/0sjOopLxToRug0O8miSwtKWo7sU+eicUtFllWjuc3t4W+8mbY95fJuydi2N0U08mMphW/iCkXUNFTK5EGLbQ==; s=purelymail1; d=malon.dev; v=1; bh=Igy4eCMRa9yrkOvNGx2Goc29UssfSgm7c8JkwLSM1gw=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=DcZW1TjdfpBRnfP11TV/6WZ4r+i2cR2sYiW5ctwJyUqXuvdlyfh7ds84QZRk6vOG4//kZl1nr5vyWlBuIuuHi/lFn50LN+KjEHsTRJ/JNL9PHkUafKctNWrVaUGJyIKp0yFXsZ7OGgK1JOzJaYiRYr0KflHBmpH+IyCdXlQvXqvNjrmpScbUWXk+P5nCotJFjGdv+UXw3rtgNdApKbTa7sdDaQoWy6lNTrldet/XOMbfaU1KTuIPs55TBV21NZBOR55SUHB5AlPch2qynpGe7GspIb3c0KIYKeQgfjU/+ZDRg2qVqhpLM+X4mB+4MIg1Jvm4PY/tWqHQnM8boAWwIA==; s=purelymail1; d=purelymail.com; v=1; bh=Igy4eCMRa9yrkOvNGx2Goc29UssfSgm7c8JkwLSM1gw=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1735248667;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Fri, 19 Jun 2026 16:02:03 +0000 (UTC)
-Message-ID: <b0ad1eba-a4e2-418b-816f-5861b029cf23@malon.dev>
-Date: Sat, 20 Jun 2026 00:01:57 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fKyh3qhx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QBFOtjkR"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 954FB7A0123;
+	Fri, 19 Jun 2026 12:11:52 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 19 Jun 2026 12:11:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781885512; x=1781971912; bh=mwzGUX6tN9
+	9MSnSt+C28U6MWhdqbH6mO/rdcQHWanLc=; b=fKyh3qhxQWQWQ0Iw2M9Kp2oU2Y
+	5sgYz5QVhqejYOnRcykNsFULTRinNtcZ97AOayfJfOfBPY6eHVSGhfHYNafK5gB+
+	Dd3LE6wem/fUVxd6G9GORpYRvrQTn8vVVBf5AjnKLy9YdgJ1WFg/hYagKm+BnnJL
+	eSXawtUrjwUrmJwrffZ47auIhnBwrut3zLn3pAk4GxZd7xwtWFDwrleOXKAAQBDS
+	8DCzwlpVqmeN9QGKRMInJcQDlXoBEP9YNczgrWABXoDgBsBqtfsjiSe/SolNaPpJ
+	37a8EnOck5J+aTWjGEFuKg7Teo3pQ0hUAaBnOqqdeLUz3luvYEHv9L6zYegA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781885512; x=1781971912; bh=mwzGUX6tN99MSnSt+C28U6MWhdqbH6mO/rd
+	cQHWanLc=; b=QBFOtjkRf1+3kjX7xDY6hG0pMit8jU/l/gXbOq8SNGWlLB0klVA
+	aCjrNL/WoDCAGJfqLI9Pp8fNjLer9zsD/5BDboKGmKzBB6KPsEeMU6vxOjV3G7ka
+	arHvOuhMKRHy3t6hxKa6zb7QxzfNoWU7My4lsnhGd/pVTVfcN8shJIVPX96NJ8J9
+	1nLYksxLo6pRDRu48tOFcx29l9UPCoIlwIZsG8OoQAk+Oig0Wl/wd3dy2GfDAyR8
+	aPhH+bB9eiooNbqcrcnIKPusHUl2A+0uNtlYRLcC03A9x1zbgLnmg6557klQzASn
+	Mb2hsh+86GBoBMKmCdWT3Ok5gD6P6IN6axw==
+X-ME-Sender: <xms:R2o1amcY8a9HwsKjAuWzHc67tXjVBFNCjUHcd_FmDbTUXcvx9AO9WA>
+    <xme:R2o1anHUtHHykmkXDauzu6mdUZjec6wrScfA21uCmAO3v7KqXvi6ZrFiFPUiMGYwX
+    0N7jr_96r9YXi7aogmp4qhAqCBhk-38fuOptL4eibRLwQ7fljxbbfQ>
+X-ME-Received: <xmr:R2o1av2MGlpixYa9giPiycZwVy782Rj0QPeZCiePGJ9TJOHt-axG2M9ynJGnjZYvWro6naOTP-Ec_ihQl0Vod4edStytKSs9Xu-r>
+X-ME-Proxy-Cause: dmFkZTEAovaZkaMeqHNv4pvnuXDZJAsHBlkDZPgT7Q1mSK5vQVSp//N7HuVJXhCaUvyuo+
+    KBaPYiwjBzklpO60Af+WIs6paNetKfdkFZq/jN30CSTHTR6DV8cX0ETvwpH/XXg1arHd/k
+    /r3u4Vupk2wTwPbQz4PEXyVw7cW9HxCydr45319ywzatpaXUxyfCwtYJd/FBjvy2Ce+kDP
+    r429mUXfXnc1FUbF1TVXPuk75v4+xw3b+4wrLcUgfYoWDZkpjEGQ586x5E4fbm6EmEgp+l
+    TysYpego8ALU8+itIb7YCl7gOC/F2TPXdH9+fP/ZJPxdv6M9VVT9IUuPK9NlFkIu6b/xZm
+    6Ym8D0hnVWEdguri5t3YZ0zJ1eYbMzw1jY4vfVcgCLEu2v2vd0knjuUSRRU2NwnrmlRKht
+    vM30EreJpDlbF1I7BdaO6Lp+CBPVcYVFcBGt3eQg3P15280y4359LityEYi+v+V9OY5Nn3
+    1oYy1smZ1+14oatS6VUAbLhuY3tlZPfpCasyIClMNo9anVuKKvPt6JAxGX9GTFNPGqmv2g
+    086XIrsTJ4SRm375h+Y9KXH/MrIVZQNfhxOzCJlETs8uGsF2WQF0hnIZyRhKbz+LRUOeEs
+    YTofkKAUye3m4DE+CXZR0N2csvSKG6+ISz3r/trSl9aR7WXqTCnArskH+t2Q
+X-ME-Proxy: <xmx:R2o1avl_1hxn1U5Z2aETtnxRotzp-Q-t4KtoR1FLp6hPVf6X5JQPXw>
+    <xmx:R2o1av_v7xr6GmW2RoZMEV8ElhBapgYr6ulr71WpAf2zrLv8Bx7UIw>
+    <xmx:R2o1akqj2G5HsFzqj9Wbbdk-SG1KguA8l0wqfVrlUOz0rT__pZ5i1g>
+    <xmx:R2o1aolKY9-3uvvPrOxRwUy7ZkQfSc524wfpAwT1WvrS1ybevqfdCQ>
+    <xmx:SGo1am0zfgc8UlPt_-HMuOR9woKshBQwMatb7dTFHanDWryTqbg-TK_s>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jun 2026 12:11:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 0/4] history: add squash subcommand to fold a range
+In-Reply-To: <ajU4JYYUTz5r-Xgc@pks.im> (Patrick Steinhardt's message of "Fri,
+	19 Jun 2026 14:37:57 +0200")
+References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
+	<pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
+	<xmqqo6h7nza3.fsf@gitster.g> <ajU4JYYUTz5r-Xgc@pks.im>
+Date: Fri, 19 Jun 2026 09:11:49 -0700
+Message-ID: <xmqqv7beldbu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] environment: move ignore_case into
- repo_config_values
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com,
- johannes.schindelin@gmx.de, stolee@gmail.com
-References: <20260617154929.564498-1-cat@malon.dev>
- <20260618114207.605211-1-cat@malon.dev> <xmqqldcct2hx.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqldcct2hx.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain
 
-On 6/18/26 21:14, Junio C Hamano wrote:
-> Tian Yuchen <cat@malon.dev> writes:
->=20
->> Related materials:
->>
->>   [1] In this patch to migrate protect_hfs and protect_ntfs, the approac=
-h
->> of introducing getters has been endorsed.
->>
->>   [2] Derrick Stolee's previous attempt. The reasons for the failure are
->> also mentioned in [1].
->=20
-> [1] here refers to the starting message of the whole hfs/ntfs thing.
-> Do you mean that people must read the entire thread to find out what
-> the reasons for the failure was?  For that matter, it is not clear,
-> unless readers read the whole thread, where the approach of using
-> getters was "endorsed", either.
+Patrick Steinhardt <ps@pks.im> writes:
+
+> There are two more modes:
 >
+>   - If a reference points at an intermediate commit then it stays there.
+>
+>   - We detect this case and reject the update. Optionally, we may ask
+>     the user what they intend to do with those other refs.
+>
+> It really is kind of ambiguous what is supposed to happen, and I can
+> think of different scenarios where each of the possibilities would be
+> the best choice. So ultimately, I think the last option is the best one,
+> as it also gives us a way to iterate.
+>
+> If so, a user would already be able to achieve that other refs keep
+> pointing at X by saying `git history squash --update-refs=head`. The
+> other modes can then be added at a later point in time as the need
+> arises.
 
-What I meant to say was that the reasons were already mentioned in the=20
-_cover-letter_ for the patch which the link refers to. It=E2=80=99s certain=
-ly my=20
-fault for not expressing myself clearly. Nevertheless, I=E2=80=99ve briefly=
-=20
-explained the content of the link directly in the cover-letter for V3.
+Yeah, sounds like we should detect and fail this case, with advice()
+to use --update-refs.
 
->> [1] https://lore.kernel.org/git/20260606143412.15443-1-cat@malon.dev/
->> [2] https://lore.kernel.org/git/2b4198c09cb6c04c60608d19072d419503dfe5df=
-.1685716421.git.gitgitgadget@gmail.com/
->=20
->> Changes since V1:
->>
->>   - s/repo_get_ignore_case()/repo_ignore_case()
->>
->>   - Use repo->initialized instead of repo->gitdir
->=20
-> I do not think I have any objections to these changes from the
-> previous iteration.  There may be some other things in the new
-> iteration but I'll have to go in and read the patches to find them
-> out (if they exist).
->=20
-> Thanks.
-
-Additionally, I=E2=80=99ll change 'repo->gitdir' to using 'repo->initialize=
-d'=20
-for the previous three bits as well.
-
-Regards, yuchen
