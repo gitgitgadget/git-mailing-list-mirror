@@ -1,149 +1,106 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C038359A66
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 22:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781908033; cv=none; b=rZeP8ycyBsRCzO+nk7Tu+RSYURp6wJcr1ug5ZUu65uGun7Vb8YrFbm9M6LOa+G51YdMffZ+3e2wniZspORIDqJ5eK2fTOlfXKUYrkTj9GWMFPSmY2sgnY5Dlu152pK2xt9BygsJpJw+ejnawouK3Ow2uq9n07GrbyNHbtr91YhQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781908033; c=relaxed/simple;
-	bh=DOK5EfS5quit7u9SvPARhVPbcDhkQN0J76CBT/XbOqA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rs64rP5+OPVIrfVqIdM+XTMMYSba3/yZQrHNnMa+YRxvidDB5zwUkgVK8m3zd0iIz3DtRMQelvVU4encsJq3qAZwH6MQWF9LMgmNvFI9T5ZjdqnPV0eiRN42C9zQHg0aB24/9a2PWvjaup17EEtgnJEBW9iLyjSaoWbT3kAeMQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f9dOX0uP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MTF8VvKP; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3018836494F
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 22:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.175
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781908865; cv=pass; b=umCvi1FdqOVFCSd2kC6l+zq64yk48VRSeX12ZR6RWk7Z8hMR3GcoK2nqMNVdHoMYuaHEa+nX+7S10nd7+dlCe/ep8AQWifcjJFPK/OqBjoJeTZ9AcWqAkM2Ds4rha4bpJ6uN+DrJpO+U4tpj6OKQyvEgbAEhB/JDt1hayefsw14=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781908865; c=relaxed/simple;
+	bh=ffHqHcYEJB992pAZrZFZtT+LZGlh2oH3uVW/mlq55jU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=GMA8Fyg33ivILQsb6cXrkvyOFOQ8v8MnAxWIdifrkKF3AwSN+U+nhkgyz7Ie2xNwnVbfTHUbFxQsV07Ir0WfPDVJaundtcapSkt9tVmsg3P9mzRNJ/ww4lrfSbFFha6piWs6GhyTrce2EnF5UnmA8cNSIcuOhMXrbTj5HUPi22o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mZjg8DDU; arc=pass smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f9dOX0uP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MTF8VvKP"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 693567A00C5;
-	Fri, 19 Jun 2026 18:27:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 19 Jun 2026 18:27:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781908030; x=1781994430; bh=b4bY04dWVD
-	3oi8ZMZJCFkD6NIWtI0zG1UnGGQ4ZIj1o=; b=f9dOX0uPpKgW9cEYuoOlBX0Br0
-	jz5fUBDrgnt9pQ43eGOyiTxjc1IgPHRiFq1ndvzLBRWSGfUQe9o+SYpUNcw5tBW6
-	ju9eBUul9/nC/quws1YuRv+Ttb5APxbPM5zm+8ewkxRIUOZN2DekQVlKGQlPwqSt
-	Usn/xyWLzRLtHL1tZs81GxLWjD0+vn28h9LagbRYYkV1HvhqJaRjc/B3+8EvQd5g
-	dJ7kzqCK/T+uLsZMdkeef2GLKoruHx4WxUfEAWlnRGTCIwimvApxg6neL09NWFDQ
-	twEA+Y/kuEYfbSLrVzwATtSldRgUjQ9OcUS9m+2D4XvLaj4J7zXDFRrFL/eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781908030; x=1781994430; bh=b4bY04dWVD3oi8ZMZJCFkD6NIWtI0zG1UnG
-	GQ4ZIj1o=; b=MTF8VvKPYQt1k0bno4HB5sEIrxnyQGPsRut31GEFQJZBH81G2Pa
-	8WLbKcZsW+4vCgwlV6DcLMe8RT3GNyOx5KrG9MSio6frYNwNvOTFF8i0C3/ADJID
-	2FWiNIj5V6kf+UxQKEm/pQ9cHNxaduewgxZJ8/PBJH+YNs+s4HdwklTZExHNhlyR
-	wx2oWpdPlArPjBpJreTz4COAVPNKAaVGTDmJpUjAF7JfJiaHZGCw5AuI/vOIhj2L
-	Vp3R7jA7HiVhqFVjSulmypWK3NAJoY0oaviB8EGTDEZ3n0b1wSMVCPFweZsrIy0M
-	9wadyJHxrAXYmGKFEfXZ4iovyPw6gI0T2fw==
-X-ME-Sender: <xms:PsI1ajt4gW48n77jT9DHwWHwajxzyrX1Z4Cy1eSC4jayfFAn4kTTcQ>
-    <xme:PsI1arfzt8IwIRXKZ5UJ7sELr_PwbeN3cMCgDBOGPX-TAalaOJjgLVDNzC68atSf2
-    9IbYjJQTlxtU4yqRY2Oii6M3jTvg6JnJm9bO6Kf9zKoL_6F8QGJVw>
-X-ME-Received: <xmr:PsI1arw85_nzqFx7cRzTpk8sDQOuzxcGzOF0l1rJ4LWTe9uxYc91xF46UDX_0EoBNzJDuN0wSNkD4oTLo2-_BkWpiFksRr3DJcMz>
-X-ME-Proxy-Cause: dmFkZTEzvzWKELHeV6stpPkACWQn7pGHy3dmD5R9i8Bnw2CjmgbVsb0EVTF3QmJ+hzBiB4
-    xFq5yAUAXOo13viImSQWJfzwaSPUOQVYTCJ0P7klosivWKRQmR2yXTyV1g8jINIeMRgKpG
-    kDFp1pFa+DS6WN1RsQbtvRybr1ICl2jbqo5DMX4SoXI6iKk6+4cKdOecIr5oyHFiIZA1AV
-    0ZYEMg0dr3KyEDih26qwPCtyT/3xV3USaKSqeGUoQ+NVbekc7m1p+oDK+fl/ivyRL2+kiQ
-    omRBhtwwpoNHIRj+qs6R9phtLqWwQ2CPIPM064Z7C/hZ2/eW7o6jOBYeLh5zwl4JTaZhQ7
-    P7NLprrTJfW5fSQV0ht2MKwNnktED8A2OasBRcsYRU+Mc6tw4sozHYQ1WsHaKFbFFV3Qb3
-    wN2Ls+kDQlYoDuhVJwtL/14d/h3tTl4J25gTVOoe01MgUSK4uC7xS37fm9puNhNTxLYIoJ
-    i+SrXNhP1VJEko5E8q4iJOzQM9LKODudCm07N5wz1JN9WwcsT3BWv86AR1HQpVdmOhcju+
-    eMi9E3PEytSoa/CP6FPofmqaZLAllD0Zv1FifHm9awU1gDH/9S0bfq3psf60RiGn/jGGq8
-    e2dlq/sPqsDnXFhskN25geQ1NKDjq1QMcH7Ue0SYn4P7/WM4Xfus8AijXZrw
-X-ME-Proxy: <xmx:PsI1ahHSdQZHWV3-pl1Tx01elg0HOuzeLGv3sFdBTfNZxHuOIpVBvw>
-    <xmx:PsI1avzs0q3jdLXMoCuwuTKiQfUqvuWH1_dpnbIrJkNRgWPx55zQWA>
-    <xmx:PsI1aiudn9JW1yHKoEcsQ-DrMfogqS7fN3hQam1-PaR_12EXy1zLdg>
-    <xmx:PsI1as2gucpffaIz5PbznBRIKgzfOD-CL1NV79DzAQgy_tIF3wI65A>
-    <xmx:PsI1avQl89wQl6BTfizqc_kXFtZpTcSOh03HlSoVydPSEg-q8pXQnXJb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 18:27:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3] config.mak.uname: avoid macOS dup-library warning
-In-Reply-To: <pull.2314.v3.git.git.1781901127385.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 19 Jun 2026
-	20:32:07 +0000")
-References: <pull.2314.v2.git.git.1780610623006.gitgitgadget@gmail.com>
-	<pull.2314.v3.git.git.1781901127385.gitgitgadget@gmail.com>
-Date: Fri, 19 Jun 2026 15:27:08 -0700
-Message-ID: <xmqqv7bei2tf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mZjg8DDU"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-489795617e9so533963b6e.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 15:41:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781908863; cv=none;
+        d=google.com; s=arc-20240605;
+        b=TcAMtZvNfZqXnni8z6ekMQ2lDnnjwPZdjknvdta0iOw4zUxgUNTwOIxk80bpthu5Tc
+         7QgOL443hz/8oz/5GS7pahRmOulKK+g/0Kzbn8uidBwqz5wUja+M3q+GXM68uzTAoQJP
+         bxD/V+vifVU2n6CP2lUUKlDQvIJSGpkUXEDcDwwT4BELK14MyeSVefshRTslJN27aE1i
+         /KkugyTdI9CBT95XZl6Ljm6ISEqWi1xUfQ8TFUukddg1pmEYP1aNDHPrEfQaNf+ATn8T
+         gH2YWEln1rsIMtyhWICCeCis1jYS13rcapoixdDa+CsFrwoYghIv9XDcnW3rn/hcnjU1
+         0Htw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=qpzviS7IzpnmQEkcbgJqye/TwUInu/Lw3gkcCK2cyPk=;
+        fh=YbRKR6BrbWXnCXlp2HQVjprJXXNDuw2froTlkW7/RDk=;
+        b=WqmU6lf8fd4wv2DeVhqo4yFCXipBgIITNdUPXXT2N4dce3xJPW90wEpwKFrjqcTcfY
+         tJD53rx9atqeEc4/5eQiVquiELDOBsUTKC17roS8cF+rr6CAu5twTs3pMp/h4nCodE3f
+         FWoBowhkb6m+v1CvRfcFQbWY6/pEeW2FekZtVoDscFypehBydPhWd61IjrJQJ4RimFoF
+         fB+al+o1YrNmqFH2u3ZQyS6HZjjsylcTRrc1mIuw1He2HgauDujGFEp1lgYLr8zK+fh1
+         kpJyELZr+uxxvoeOGvglL3dskG9cQEZocPAhmFCY54iz6PHlDPL4ki/cJjQqoyTrK/C4
+         ilAw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781908863; x=1782513663; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=qpzviS7IzpnmQEkcbgJqye/TwUInu/Lw3gkcCK2cyPk=;
+        b=mZjg8DDUhlH2AJ+Jx6IOlkJLmuYlgSxoR2pjgUo8Z+Y2VNtITJBIG+VxnG6dhZ5F+0
+         QrUM+GuAxagNOofBxR7t6zJO4j+h4DK0Ufqg+aN1Nfwfgo3czDzdWov0UrFCK2Gy/XR8
+         yBm/kmoI49g5ElMPkraI3vh8B/ZcetmWyg4ZcHqvzn5DGNs+FrXNEKeNzYIaJ4ILyJ7e
+         GK8UDqPYkVUUa8/UE7XL16GQukCw2MTAsS0qa7JtS8nUa9dBTgKCOxoYVaOBEuJsAzoL
+         4IwsXMRKq2eUPk1yNOjIt+K4P7gIxb8Iz3jcYBuA/Y0AiGtVPFXbRGoXQyBKusNIJkin
+         tHwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781908863; x=1782513663;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qpzviS7IzpnmQEkcbgJqye/TwUInu/Lw3gkcCK2cyPk=;
+        b=Mdxrz1qFkaoMYdRjJ4oh7Z7xKLfeQJip+tso3v6YziQ+eOkF0/C4JDX9epOVOdwoFz
+         UqqQq4wpKdFsu0/KegK/VphVzDy57ijr4OoWQ/VLWbW+y5VGR7xyNn0ZxeLzvLPCbaMr
+         CkMbWG+icqvQX6svW/Bfk9cankdVS8L622vGRU+VzNPLKpjO11YtV0yZ3fJ9K4dUU+qB
+         MvUoEELmZ4JZPem+Xu1bsoIFOWMfQfVjJh7J/+RvOCL6Pl32ywprCHKX58tzrfWaN2qB
+         F/MRAyZPIpCJCuMx8gRRyLtoYe/cdiamjda095F1ZZUmwNypp2iwkH/l2crKCk4V/apJ
+         EGLg==
+X-Forwarded-Encrypted: i=1; AFNElJ+LPNpQbuPQ65NYzK6I5Mn+gcid3Sh4jETVupZNlStKWN5MllrYjfR19pv3Wsvsn2sJxV8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzq9aIyMQZSbWw8WsO3MOLfZkMLjvIfAfi9eL8RIJvFGIkP3+ig
+	7XqVOtV16s9rHvZaQnSid8Kn8iIIiKxZsYNB3PAJDFJEUD79BSpFCWcNC6NUjQAG60pioAg3lM6
+	F+7/XQXgYto9MNvLZOH7BNUA/W3L1DCU=
+X-Gm-Gg: AfdE7cnWUa03jVZYygxoO6SGC+I8QGNLUVMUsotS3K8w2vkCis4rlr4iU3+ve5ah4gY
+	XsQ0/Z04gHZXF8vYURwHofKtXF/koFa/77CyqyMgUBhxCUw7EtyUGRu0r5m59AJqg0HVE7pbkRp
+	qIVDy92Qm7Nwwo9SVF/wB4wZV4RUaRWF4veDKRvnZTYO9rH0OJOR9siJKBd0Z70Xr1XbSeItLGQ
+	Eo3lPJHPmmPOEvtld78YkjiPUrNluU7rQYb/7M4ORJ3d2aTUKw5vmiQ8nmbKHcOimIWsMIc84sk
+	zBoCA0n5Fo5KQK3qoG8bgtCJdKW4b/JAagzuiRdOOjSE/w+04jeMlWDsbnsKhG7TWMfGP1NP8ch
+	KB1oNALgaL312acv0WdSDrYajcA==
+X-Received: by 2002:a05:6808:5296:b0:487:57d9:9d1c with SMTP id
+ 5614622812f47-4896aa727d4mr4601539b6e.14.1781908863201; Fri, 19 Jun 2026
+ 15:41:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Michael Montalbo <mmontalbo@gmail.com>
+Date: Fri, 19 Jun 2026 15:40:51 -0700
+X-Gm-Features: AVVi8CeCQgCVJMamoQZGpiJ0g-btrRRoAIULyUDWbnXgx1o-pd0hV10yFSYvHro
+Message-ID: <CAC2Qwm+WcGkd9pAV5=JL1hfCDRisGQRFmdfOsMTrMWyx7aa65A@mail.gmail.com>
+Subject: Re: [PATCH v3] SubmittingPatches: address design critiques
+To: Junio C Hamano <gitster@pobox.com>
+Cc: code@khaugsbakk.name, git@vger.kernel.org, 
+	Michael Montalbo <mmontalbo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> +Be particularly mindful of critiques regarding the high-level design
+> +or viability of your proposal (e.g., questioning if the feature is
+> +worth implementing, or if the chosen approach is appropriate).  Defend
+> +your design decisions on the list first, work with reviewers and other
+> +members to improve the design before revising the implementation, to
+> +avoid wasting effort on an implementation before its design is solid.
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> Building on macOS with Xcode 15 or newer emits:
->
->     ld: warning: ignoring duplicate libraries: 'libgit.a',
->     'target/release/libgitcore.a'
->
-> Some link recipes list the same archive twice, which is harmless.
-> Quiet the warning instead.
->
-> Pass -Wl,-no_warn_duplicate_libraries on Xcode 15 and newer, whose
-> linkers added both the warning and the suppression flag (ld64-907
-> and dyld-1009). Earlier linkers reject the flag, so gate on the
-> linker version. Broaden the existing -fno-common version probe to
-> also match the "ld64-NNN" and "dyld-NNN" forms Xcode 15 reports.
->
-> Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
-> ---
+Slight reflow suggestions:
 
-Yeah, this looks like what I expected.
+  Defend your design decisions on the list first; work with reviewers and
+  other members to improve the design before revising the implementation.
+  This will avoid wasting effort on an implementation before its design is
+  solid.
 
-A few things to note.
-
- * Can folks with different versions of Xcode (or is 15 sufficiently
-   old that practically nobody is expected to have anything older?)
-   test this patch?
-
- * We only patch Makefile here; can folks who use meson report how
-   well your build goes?
-
-Thanks.
-
->  config.mak.uname | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/config.mak.uname b/config.mak.uname
-> index 8719e09f66..9ebd240378 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -173,8 +173,15 @@ ifeq ($(uname_S),Darwin)
->  		NEEDS_GOOD_LIBICONV = UnfortunatelyYes
->          endif
->  
-> -	# Silence Xcode 16.3+ linker warning about __DATA,__common alignment.
-> -	LD_MAJOR_VERSION = $(shell ld -v 2>&1 | sed -n 's/.*PROJECT:ld-\([0-9]*\).*/\1/p')
-> +	# ld reports "PROJECT:{ld,ld64,dyld}-NNN", match any of the three.
-> +	LD_MAJOR_VERSION = $(shell ld -v 2>&1 | sed -n 's/.*PROJECT:[^ ]*-\([0-9][0-9]*\).*/\1/p')
-> +
-> +	# Silence the Xcode 15+ warning about archives listed more than once.
-> +        ifeq ($(shell test -n "$(LD_MAJOR_VERSION)" && test "$(LD_MAJOR_VERSION)" -ge 907 && echo 1),1)
-> +		BASIC_LDFLAGS += -Wl,-no_warn_duplicate_libraries
-> +        endif
-> +
-> +	# Silence the Xcode 16.3+ warning about __DATA,__common alignment.
->          ifeq ($(shell test -n "$(LD_MAJOR_VERSION)" && test "$(LD_MAJOR_VERSION)" -ge 1167 && echo 1),1)
->  		BASIC_CFLAGS += -fno-common
->          endif
->
-> base-commit: 95e20213faefeb95df29277c58ac1980ab68f701
+The rest looks good to me!
