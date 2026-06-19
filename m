@@ -1,147 +1,164 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5D435AC13
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 06:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360F31494A8
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781850357; cv=none; b=UYsC2a0gJEs4v2j18mNsCovsa+qCMFeOukqt/C2Hkfvo1Oa/rGsGLbjopqsxiXVo2ml/zEbGZlcLeXX1m8loNKAID7lGKBMc6BCAjwLLDMp+N2OLZgwqypcLseKBEwWyiOYJY44e+zxcguKrIMhO0ExzSpTkkJ7YayRBdZA904M=
+	t=1781853634; cv=none; b=BG2hzbeS5cIytUzpE7XKkBa+03HddqgCmSjBvjToVDAw1ezqk5qF2BwBhCDDLJllvi98/IRKzwTCX4xmzka54rpV5majtLQ13fgHVTU62J9HMpqe5r/NTxgfeXSxfHyWWAkU1usyY4rcHG1+MxDHA7BEhC68uSmJFTCmSvnoz/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781850357; c=relaxed/simple;
-	bh=RI81ZT890Y9YNuzNoZWIiXJLiblcT+iGK0vjGBgcbK4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M9t14WhJxAFJYTAVa1cZ/DygbUAh1EWxCEXLtdDC2eif+Fq8E12wUoqW1BNYvgJVKyYHcm9FJYmtkKp3ExMtMp9HFC3ol34s7vFKKgX5WO7alof3DBAN8I9i2zCGAFANtuNNDqhZoTzPVI+aH6dgrWcWG/rqV/04hnEUVdYUFR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mkIflurg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EM+u0ySK; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1781853634; c=relaxed/simple;
+	bh=1PaBr5bZNuU3nqKQYqbIQk+1XTI4yQOjK1IVDPQGisA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dU/pX4b3EuccqxDN1OkhY4kYQ00zA86pUnW7zOkdwvB3RsFtAegvVbf8XmX+cX6c3rePgUXC3SZW1g+VNIEK5fd8nXeUPVMNf0U+7hPYrYz4RFGjWe0X5DjxTGv7Je0wzIesI3zCK71JsNd5eK2WyW4w4bZm90i7SPGBY0IoC0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lXj1psdU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bH2eGgR0; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mkIflurg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EM+u0ySK"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 97DD31D0015F;
-	Fri, 19 Jun 2026 02:25:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lXj1psdU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bH2eGgR0"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1669F1D0015F;
+	Fri, 19 Jun 2026 03:20:30 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 19 Jun 2026 02:25:53 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 19 Jun 2026 03:20:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781850353; x=1781936753; bh=671PRNa4mD
-	a1bt0QrTmU91qMXmfZEskPgyHyEW5zMMM=; b=mkIflurgcCGJ9Mlo1JHyUjxg55
-	gYHZSFUccUE5Z2fVu/UdhJUsr6LNkWkeYNZwc1iTUU8b3+KyaO9inoyI8Vo4FUyX
-	zzFRFiyoa/zUffe8d6AKBD2un3uT2ah2DFs5wHarp1X2NGUaA4rrqKBhOx+EzQw+
-	vVjpcGzkiRpcbMaAF2MA2f+pVEsVOQbltcK5NfpwNIcBCFdZwIK46fm6zyZXWYjz
-	bMa4MGidtEMGmxD4rdGqd2rCbVsrfXdDCMkP901rss6jscgpWU/FeJAvx4TzPGAX
-	Rv7WdZa/WOS3u3sDNTUABZQTvlqOFHIYN7TVIBEt7gFHDSVjd+T/WuNHOmWw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1781853630; x=1781940030; bh=JLQQefj2mj
+	YxoVNB4NUHFZmOw2Z0ydsH7Taud3eKX0M=; b=lXj1psdU9yJS1RL/kj3PiBSpe+
+	aEBsWzL3mtlEqVc14+9+TwrvQt8xjO/FuUt2Jg9jiEcUS92HK16QLXOeWWwFYHa+
+	TAFa3LneZLIkXneSCMw8z+BsXk2UtCXLUmTZV5Lr/HZSM4papXm+aK113axf9RBn
+	pDD13kj6uwr4ZWHZPHHt6msSIReFqh1017ZLdc84vvDbE1CWmp7XTrmi9+u8Ng5N
+	SqyqS9VD5BBrHG88DpvEdXsakmwn9odCNa0ZdknnAg8H6iLXPPrVGam90YKtzq6h
+	uMdc/CpmvJfvx0JouZOqH1H5QPvYKbOy69ho/xwkm5yj2MbR4+2Bwj+WmyBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781850353; x=1781936753; bh=671PRNa4mDa1bt0QrTmU91qMXmfZEskPgyH
-	yEW5zMMM=; b=EM+u0ySKR9rMP17sZvP8sw2myugAFiALJb2Px/lbN8ZEwVSevNa
-	Mtx5WSpufEcGnMoCs6K0/bsAr+XWthcDPr6UMnjdCdWpZQFW9RV2OoNlSfxzKV0Y
-	2aTrB01pBCLFUNnvWuHFCfSEcquLjeXtML3IIHwstC0DnSl310CGLyfk/GnHroh4
-	l+0fFh3Cmyc2drDuqA4UwHSx+8PBMJhJGtg/0CxHrjHrqV4ivBGP7Eid2HMyWgPs
-	7gx62J0ckBQAAGzzQYsHVSwfJLXvkxqZY0BPIPdzFKOeEfi1RZJ3//uKr2DVOWgp
-	vOKQkmla5DAZ2bFh5kB99PU6P+Bt0cWUg1w==
-X-ME-Sender: <xms:8eA0autYB0u02AwCLbYxqEPBjCslTcg1EItSxSjH4EBEn3nq7s_NCw>
-    <xme:8eA0aq71eQCSOOWajsixA403LjD_Gb5BpKeZ6cLhbhJkWmCyxVEJl5qyev-L04xst
-    tnwach2l2YExiNwrE0ox9mzagl5C5oxbQnVrm8Jv_yHfYGsvxFPlYM>
-X-ME-Received: <xmr:8eA0anL3jVsIUCWwN6Cfy9_q2NbItNz-7KktYvJUtG27SWG0T5PpVMicDt7gxwt5sEuViQI1qKFmV8CMMSzOfIAsdLEUlBPTXo8CJTtH744>
-X-ME-Proxy-Cause: dmFkZTF0KL1kQHpqYhzGlHqlxjUMzJJncQZIbyGkRI495GbCgjYU85puhfuqrMYCW9shLn
-    E8WIyhB54GLin0MU9Atppr3VrelSuYNJxF95jbgKYnQ5d3yYzXFA8eNHgSlg9qjd2qbdEb
-    ayHJX9mMOMXaHPFCxJ9rr7ytxBCEtR5jBlRBQKEj+uO8BAnq7IeMOGjf6T5qqzs3yRAiI8
-    WJWNpcu5FwxHnBeYLeCDxfhV/qNOl3ZFFXkILsJ1IRyD9Tyd36RRoMRo+NbM7ux5yn/GlO
-    vdnoBl98+y/gh9DXZcXkoijcisRXTv1dJsHCQYBX+7tV9NzqN/8LHY290QhfGrW+kjfUZ/
-    kqgaaFmr/8dX9U2c0FfPYhvRZj5qpsm3kI3KuHctsYHQsiSwWhgAGfT/h8yerTV3Iw/45h
-    w0RHWl6ks72kbuHQHXHXk01A1GWl6PKUK90WSz9/ASX17uSc43Rh+EOtHWXztCR7ZzGbkc
-    uI9IlR7A1VQjdBB+UW9uysJfaX6cQBj3a46/gx0F8DKRCLpwlW2Vn1Hb7qMpfd9abDT8NQ
-    jgz1XKyk+6gaUhNf6VnNXrAr/7bqZCOeT701RxusTWj1l42lglDQNuxHbd7UaYjuNZTDZQ
-    b9y5MKhoqltBeiixHkTXgQ90Noym80+YjwTmIBzGESYFALjajQIB6S9JABpg
-X-ME-Proxy: <xmx:8eA0ai5LpWk-So7ZynQZrx4zMh1bVSNainDJ2VSgNPRyS-koVtNnvA>
-    <xmx:8eA0aizStRn9yDBcXKFy0VYkTDIyTDxBYOEaZ7CzOSqfQyzal8Kswg>
-    <xmx:8eA0auaFX0DoTKtlaVR6t7tgBxHBlfrc3BR4JZP1n-O4zT4XLGZeDg>
-    <xmx:8eA0asSw04wHFCiT3xnewMA0F5it5dRdPZACWNyTmHdOFnAe5LQ3kA>
-    <xmx:8eA0ammtxkAQcjG2T832VWs59mHtrphsh0qovB3i4CdwdJ1YvK7yx_QZ>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1781853630; x=1781940030; bh=JLQQefj2mjYxoVNB4NUHFZmOw2Z0
+	ydsH7Taud3eKX0M=; b=bH2eGgR0qKaY3FQsmJhIhOKaEVko3tqfaiJGI9Yvks8O
+	puHjiVQvH//Q8fix1JIaXQh3QaIcZDYF+huClJHLmWcmN+o/8ScfrpIRi0YVLPk+
+	Z7aN2nME5WreKtXrjBMVd5aQ5K2nhuG1p47JJyKVM5G6QfkjU+DuDkvEXgfiNiai
+	OWkHvnod/IWfSo6MlOWODM5VCKozaGb/TmmjGHkBw9Cf73wPvm5itsJ+E296JEj3
+	rJ/Bw7Uf8tVPaDFrU1DkAQhaZWQZh4Z9g67Echzym3ple3PC2prjIO/u3tlUrTBY
+	eWzRb2/UaE2uH2fdIKPYv5XS3R/Wu/LKbxRr+73qdw==
+X-ME-Sender: <xms:vu00atxY54CezOLhlHnGIY1Da3gXRU5FZ_JsR4SXQv7KuExL0ddusg>
+    <xme:vu00akJkU4p6AcCIH4j7NKtAJOAqucD27quaOuYhQLMiDl5axtqGVoGLR-CpUfbG4
+    aTumv2Nm_y18P6jZUgE2WLBhQYxtnGujaAePkkz7vIJbADSYv_uvg>
+X-ME-Received: <xmr:vu00avqOfx2xvVgLmj_VQupuzJrwKxihKQHDZM8Qm3gqsvI2JtaPNcUd9-r-oAvtWzH9orduIU6osfeleLhHzCTukPo1D8p6ZyoLV3YgssI>
+X-ME-Proxy-Cause: dmFkZTGP8v+TjtD4DB7OUTMWofWIxPqpJsUr+kGVgodSQzl5C+ekG1qc6HQykNjx+0Engb
+    i7PI37SM/1vdIjmNxN2rMh1+aY9KIk6zX8ClPqi+Xqp8LyeAwc06SD1Sj4LVN/ssDDnHbC
+    JEAbGfJr3T0hwpU98mIJTr0kLcvryeoS8JgXqHhjYiOTrX+q09MVf/NMb6qMBhzPGlwnrN
+    uA+ZTaWjnMX4dyu9PsHfsMt/qbWXrpzzWWGdld6XJLuG726fZE8rjPv97ajCy6tBnoDi/+
+    KLllTjJu/oaLN7jC9jcoKy4mt9ftllgxpqnb75EMDchH0L9KBPGwoWQ8tmuqSrHAw/ufGp
+    MpuMc9MssF7nygs9cy+knTYEKbq2NC/xVN9GxqXeHNZYjHhtQI1yNLZcLufkmo/LTiT9pe
+    JszV+1kqjNMI/Tq2siGMV9eqsGChbOYDrLMi6O5OjTpI0RbYTsRliweQ7cZ9ImmVZFR+ro
+    5jUYKTl8ooXJLZKcQglkDHma503vuI0aboNWBEzFwJUsXXwVHQPpdtEfVI1nntNyLft3Jf
+    K8J4Un2AjPf3Gp7L9klR6OsdQr6ltB2IRAhUHdDIdPvGZKE87KlFo2vOM9Ayn0ZQl0h30f
+    mRpGrCaLGQJ3AmeHJlEFBR0HwXj9XugKhNHMxvApvie6KDOtYB1z+22gj4ZQ
+X-ME-Proxy: <xmx:vu00arKm3UmrojRxVb4uJ52WFyr-0ljeScdn4s48XSB8y8XITYLatg>
+    <xmx:vu00asSiUdQftVh_TnimFBuFeSjyCsiXqcdcVmYMaOTPcnYCNCSVMw>
+    <xmx:vu00aiu_qsdD2A5jtV823OLzn_0laWIvLjzDTiubXGRqxd-w5XyB4Q>
+    <xmx:vu00alZPUUcepSpDK3Q0GX5pkWayZ760aq5DqFMpADVOQriA0LaZAw>
+    <xmx:vu00amabGurMfRLK5j4T_LnzB5vdnioIRv33gx77K_AY7NW8sYWeau75>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 02:25:52 -0400 (EDT)
+ 19 Jun 2026 03:20:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f0c89546 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Jun 2026 06:25:49 +0000 (UTC)
-Date: Fri, 19 Jun 2026 08:25:42 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a38ed4db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jun 2026 07:20:27 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 7/8] refs: fix recursing `get_main_ref_store()` with
- "onbranch" config
-Message-ID: <ajTggBKIzgSpp99X@pks.im>
-References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
- <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
- <20260618164035.GA1218204@coredump.intra.peff.net>
+Date: Fri, 19 Jun 2026 09:20:20 +0200
+Subject: [PATCH] t4216: fix no-op test that breaks TAP output
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260618164035.GA1218204@coredump.intra.peff.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
+X-B4-Tracking: v=1; b=H4sIALPtNGoC/yXMQQ6CMBBA0auQWTtJW7GkXsWwQDrqaFLqDDUmh
+ LtTcfn+4i+gJEwK52YBoQ8rT6nCHhoYH0O6E3KsBmecN94GzC/FuXXWY5QpY0lFKWIWEnrjqQt
+ Ha7rBuDZAXdR84+++v/R/a7k+aZx/T1jXDYFYvKOAAAAA
+X-Change-ID: 20260619-pks-t4216-drop-unused-prereq-5793107a0249
+To: git@vger.kernel.org
+Cc: Todd Zullinger <tmz@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
+ Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-Mailer: b4 0.15.2
 
-On Thu, Jun 18, 2026 at 12:40:35PM -0400, Jeff King wrote:
-> On Mon, Jun 15, 2026 at 03:56:53PM +0200, Patrick Steinhardt wrote:
-[snip]
-> I'd expect the ref database config (like the ref format) to be read not
-> through the regular config subsystem, but via read_repository_format()
-> and friends. And while that does build on the regular config code, it
-> should never enable includes at all. So includeIf.onbranch:foo.path is
-> just another uninteresting config key to it.
+In t4216 we have have a prerequisite that is active in case the system's
+`char` type is signed by default. This prerequisite isn't really used by
+anything though: while it is used to guard one of our tests, that
+specific test is essentially a no-op. So all this infrastructure does is
+to provide some debugging hint to a reader that pays a lot of attention.
 
-This feels rather painful though, as we'd now have to do this for every
-single backend that we know about. Also, I think not enabling includes
-is an overly broad fix: there isn't any reason why "includeif.gitdir"
-and all the other conditions shouldn't apply. We really only want to
-disable "onbranch".
+Besides that, the way we set up the prerequisite also results in broken
+TAP output on systems where `char` is unsigned by default: we use
+`test_cmp()` to diff two files outside of of any test body, and if the
+files differ we enable the prerequisite. If so, the call to `test_cmp()`
+would also print output, and that output is of course not valid TAP
+output.
 
-[snip]
-> > The consequence is that we have recursion:
-> > 
-> >   1. We call `get_main_ref_store()`.
-> > 
-> >   2. We don't yet have a reference store, so we call `ref_store_init()`.
-> > 
-> >   3. We parse the configuration required for the reference store.
-> > 
-> >   4. We eventually end up in `include_by_branch()`.
-> > 
-> >   5. We have already configured the reference storage format, so we end
-> >      up calling `get_main_ref_store()` again.
-> 
-> Ah, the culprit seems to be ref_store_init() calling into the regular
-> config parser via repo_settings_get_log_all_ref_updates(). But that
-> feels weird to me. Either:
-> 
->   1. It is application config that should not be something we need to
->      load in order to initialize the backend. We could lazy-load it
->      later, or rely on higher level code to set the option.
+That wasn't a problem before 389c83025d (t: let prove fail when parsing
+invalid TAP output, 2026-06-04), because our TAP parser was configured
+to be lenient. But starting with that commit, t4216 is now failing on
+systems with unsigned chars.
 
-I actually tried lazy-loading, but I found it to be quite painful
-overall, as the above setting isn't the only one we use. The reftable
-backend for example has a bunch of additional settings that it reads.
+Drop the whole infrastructure. The prerequisite is not used anywhere
+else, and the only location where it's used doesn't really provide much
+value.
 
-We could of course start lazy-loading all of these. But that may not
-work for future backends that really _need_ to parse some configuration
-at initiation time.
+Reported-by: Todd Zullinger <tmz@pobox.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
 
->   2. It is crucial to the ref backend functioning, in which case we
->      ought to be reading it alongside core.repositoryFormatVersion, etc.
-
-I think ideally, we'd have a way to read the repository configuration
-that explicitly disables parsing includes. We could for example extend
-`struct config_options` to have a new "ignore_refdb" toggle then
-explicitly use that in the reference backends.
-
-I'll give that a try.
+as reported in [1]. Thanks!
 
 Patrick
+
+<20260617220330.n6byiFQr@teonanacatl.net>
+---
+ t/t4216-log-bloom.sh | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index 1064990de3..16bc39c359 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -569,27 +569,6 @@ test_expect_success 'set up repo with high bit path, version 1 changed-path' '
+ 	git -C highbit1 commit-graph write --reachable --changed-paths
+ '
+ 
+-test_expect_success 'setup check value of version 1 changed-path' '
+-	(
+-		cd highbit1 &&
+-		echo "52a9" >expect &&
+-		get_first_changed_path_filter >actual
+-	)
+-'
+-
+-# expect will not match actual if char is unsigned by default. Write the test
+-# in this way, so that a user running this test script can still see if the two
+-# files match. (It will appear as an ordinary success if they match, and a skip
+-# if not.)
+-if test_cmp highbit1/expect highbit1/actual
+-then
+-	test_set_prereq SIGNED_CHAR_BY_DEFAULT
+-fi
+-test_expect_success SIGNED_CHAR_BY_DEFAULT 'check value of version 1 changed-path' '
+-	# Only the prereq matters for this test.
+-	true
+-'
+-
+ test_expect_success 'setup make another commit' '
+ 	# "git log" does not use Bloom filters for root commits - see how, in
+ 	# revision.c, rev_compare_tree() (the only code path that eventually calls
+
+---
+base-commit: 95e20213faefeb95df29277c58ac1980ab68f701
+change-id: 20260619-pks-t4216-drop-unused-prereq-5793107a0249
+
