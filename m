@@ -1,103 +1,243 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2AD1F30BB
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 17:02:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698953B635B
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 17:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781888533; cv=none; b=bKSHWGQKs2Kd8umIOKa57g0B2Wn9Y3B8Epu2ymXHlCIFc4KQ3rX2obbBeRbXgP+grhKntWBvtrlhmLUvCOXUw7d5LG0Xky/qlYgr2N8/54/wsinnL+5MGA12OM7u9HiAExrAlCHYtjRUAwrgOeiH817CrlKlJNlsuQA2+SJES6I=
+	t=1781888651; cv=none; b=uG4MHjON38rIKDhYvWXL1eOCnSlLlb3++EH+n7ANjcEk5k9PSPrPUnd6Ddfu+o+Yxp0jAAdvSZWk3BPt9USxIt+47zppbu670lsb52t+3eBM+3NHwS5vyPxC1L6q/LP+TJ8BKZZkvVtBh0GhkUklRUCHRLltEKlO5kSg8BcFvtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781888533; c=relaxed/simple;
-	bh=efNpeBvEkDHr4Z+nqVvPxabKLUbJGF/tNNp4ZP/V4a4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p/rICOFe1zjljiWTSfWNt/+5o/C8bHAe6j+/PMS0b2LZwgLDWx+jFlpkf7NgXTGFByhGlq1/zJUOGShFhAWK8ocY7nUGlVwEQEdJo2yC/Sx/qcVpsg535zH/9GY1c/WtOSlhRA4/1HMuPe8/BoWcmad0D7uodCjLK7TsrI9jKdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aP2vnboc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XdoHWHl7; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781888651; c=relaxed/simple;
+	bh=tnBMPC3YhbMMfLN4o30wJvGTxHIl0cR3wNj7exDn9NU=;
+	h=Message-ID:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type; b=SyMRm8OfjkHXO1iAvqKmPIMDQDTHiUoVfOzVfX6E2Blq05ks7oqA30OM3Mg1bfMdoeeQDWRx4iyknQ5ZYmteIUAxvE5Pu+7nspAcU5F5rkSMpozWiawltyE5Y5nHXuzjOOc4BR3kFNw/DyFuM0bOPkd5BRXb3kVvDWGeVblh5Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DR3gfdab; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aP2vnboc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XdoHWHl7"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 759FE7A00C1;
-	Fri, 19 Jun 2026 13:02:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 19 Jun 2026 13:02:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781888531; x=1781974931; bh=1EODCcpNDC
-	c5xrcYalNLafGQ90d/0sl7aIgCnHfALv8=; b=aP2vnbocxa2YyNP5nFUnQfJXEF
-	fAisHJ8NnQgo8pmfK26dLBSMmzu5ZCe45omrcjuhhcAVQdaawDgYhROBADYPBUCZ
-	8lJl2QyhctnlGrh2h4JKE3araCX7iqXmr5swExAy5ZYitCn66kd4/6bwn+FQUkcX
-	3LeNQciDnPcNjsmt0gFfLuOaxbGgCHieEuAW6KPTuyyPdjIgY8xmjX2udYOyDUXz
-	HvxH7zdvu/o3NobZ8cb7qDMFSKbk2+5QaNsI7nxr+Vdwjo6xxurzjIkJ3cBHz8xQ
-	MFnjgcQzYPnswGl6s0Hlulmw8qeLscjJT0MXwp7ByqfLi8UXlJ8URSAN8Stg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781888531; x=1781974931; bh=1EODCcpNDCc5xrcYalNLafGQ90d/0sl7aIg
-	CnHfALv8=; b=XdoHWHl7pNVHhjyjwezTkSDokdwKofpoXcvhHxXySq00mS5F2CD
-	QZJqImX1XgYKaFzS+qg3d1PNYOkeHhwH6i1iEChwUznHIDt6znG194sGOKtBgEcu
-	Qm3n+e87SonJcN82DtBro51xiCkYsRgRHjK/uy5PZIk4A4RoTY0mR3RESa9YsP27
-	ho+eWMmK+oL16Iv5aGht2rzX3ITE9e9amX46RvfLSPWkxEPBfe4UwIcHmnflJE7t
-	CzBAgPETjYJjAf/PLQr5P1wNKyPYypB1YO5WiIQbxHGbH82EROuEZIr69EoVrEWe
-	4P2j58s+to8UL3MAbfrEASNg0+wFPwYABPw==
-X-ME-Sender: <xms:E3Y1akWrjbV71UiL8IErAGnU1Yc24wxym6udr6YA2VsbIcmnP5D58A>
-    <xme:E3Y1agDinwA1xpzkHq1lJsH7a3hLSp-xfKz0qUw8lyhjmIx56IejziJY56xgAkO1n
-    lCoAwrlQoV36zwg5ExpXCeEyCXBvJ3DUcRgVaBVHJZrSFdUrZBT>
-X-ME-Received: <xmr:E3Y1alxCnXUFTQjcamXLUzF5lApws6pL7Q69gbLadSHeGCMLErPNrlWuCw0DEFlFPm_bZfitOGzDzz8jalY-rFPFyQnhHsDO_r8d>
-X-ME-Proxy-Cause: dmFkZTG4UUFRZUQid/oRl3AiaNYFveWO7CPgHwxmRdJ3Hg/1JZdKQl3rkBo1seR6zeFa4I
-    13hmn8u0qNIp4WDkJo0//0Gu07nyPkmF4fbAbh+wvDHX/v5NGNm0R+sQAGlkOWwu9u8fp0
-    TxRGEG9zbKH5rZI2ksczKGQa3yl7TF1b80tt+EzsyXbJMHbjZ/WGPnr3+VCII7hA5xkvCe
-    DwIbXfDQLVTQXboLdtXWGN7ZudaGOUklJYXtY7FwK5NjsU4kyfRfSLJouzMRm0GBvJLXDe
-    JhPLc6lURguun7bzundeGLK486i4ODhhNz+K8S2j6HvZOBsqeVJ847S+24/6oUkHQUFgah
-    BhyrY42KD6BpjpJ7gyOQThcScECllYIWRkF8XQAhQlG51wBPpIU/YWIcjvCCVbcqkH6ip9
-    XpudKIsidzs3x4Mz6+IUQNlwsTU0HABL2B7tKllCUf1aU+9ha2WmOQ1k6cZ5SYVjvS7CiU
-    vx+WXgMAclLAAKmmZgfQrRbskHAf4PO1c0jRbJJ1zOCjSvZoIHfrlW+psL4nNBg276/c3s
-    fv0XV9tu6x3IxtkLIafteQ4rNkrsz1iL5O0THx+f8XhbOiHuPP/uGWGDMPB81PCo7LqpAx
-    0QRLJII/u3o6lKm7ivG4sHO7ovEKCLCX92kw0WBwEP6Jc/6mHJCiKtoZkewA
-X-ME-Proxy: <xmx:E3Y1atBsLjvFf--AVFqLPZpthCXoKeMdH7JVqdCWmfIYLI20vwMfNw>
-    <xmx:E3Y1aiawqAKCuwHivA6uVHG9GYdT8tzUjwtY57yxytu9ujp0ojU-RQ>
-    <xmx:E3Y1alilrhHbua3oWwf1wz64j_LzB8BXUymBtMOl19BCbp-wPsWLhg>
-    <xmx:E3Y1ak6A3JpGU48no9E-g8go0c1HLKvJxtt2x7FX2PYZCdCqllFtGA>
-    <xmx:E3Y1arshdgzpARccJUq0eGY1yMqw94TfmQevl951IMrJ8Nn-opOsAatg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 13:02:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Vincent Lefevre <vincent@vinc17.net>
-Cc: git@vger.kernel.org
-Subject: Re: Strange behavior of "git log" with file argument
-In-Reply-To: <20260619154448.GA769454@qaa.vinc17.org> (Vincent Lefevre's
-	message of "Fri, 19 Jun 2026 17:44:48 +0200")
-References: <20260619154448.GA769454@qaa.vinc17.org>
-Date: Fri, 19 Jun 2026 10:02:09 -0700
-Message-ID: <xmqqwlvujwfi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DR3gfdab"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2c6c57c5c07so16098085ad.1
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 10:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781888650; x=1782493450; darn=vger.kernel.org;
+        h=references:in-reply-to:subject:cc:to:from:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mRvSJW18PKhKb/jziTduwIS8QWZkOBJDiTVSAJ5TJgA=;
+        b=DR3gfdabiNHXIqp8YYJVrsN9A9pM14xiCC5v6OwyjrfpDAJoX3RM8/pYhlhp76JEVM
+         YYmYmGFNm2Nam64ilfEJDtG/GJTFr4fAd+HG63wh3G5jfGqmM9+zPEEeit3x7bhTfdh5
+         1EodrpCBUMpXF9F8O7itsyNqvgFizVksyD4WbgtaGqBboK1pcD5GcrPiiygaSeLh3iNQ
+         2Io9YLsPUIbRwX5EtjZYFx2RGgOFqezJYWg2ayCXNBPN0DtL0WEd6oiBr995wf3irwXH
+         8O42D1nSjJjH986xSFjMl2oEag/ozqk7Yieiy9MJM7ZYgYJOT/0SWaHPpihcDB/XRiMC
+         rctg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781888650; x=1782493450;
+        h=references:in-reply-to:subject:cc:to:from:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mRvSJW18PKhKb/jziTduwIS8QWZkOBJDiTVSAJ5TJgA=;
+        b=QAYtl2skHERXdHCApjh+cdxbW7KXA9DgK8ZVTr1xTdrUlU3YfSKYo5gi1E943IvENE
+         T98OI6Lb9luPSeUjBcVpv9X2/t4tY+nsBmwjFlIPuo5lwQPERR7d63MGinC0KiOazj2j
+         6xbaca7m61e6UviF9xqSZb7LccXpYNYcZj1V/Nk2FzZwx/BwgTKD8Kwh6Ll7ij6hqmQz
+         I7wCS4jgm4NS4wjG5Hwd/ufDudSyEQr7pZJkUegyLc7woCk81auHzEhTyXqUZ90lS1ed
+         Az7yTxcZqdxlL7JZNIQ14f3DNBUcIY2aD8kTMd9/9cIkCoTKFLE1bG9TuFSpuftr5maP
+         iSRA==
+X-Gm-Message-State: AOJu0Yx7ODqSs7BFwzcjduKn6QsXoklzaBvqNK9oPm4VpfLdnsrzATX0
+	6bO656Woo0KKMXOC908nKSV5N6aDmXZ+dHhBBzg4D4IcgxnRU8xVYQ0r7jiCIl5U
+X-Gm-Gg: AfdE7cnRsM8kS6ZfSkOI2Guw5125SWdiHnnpTb1OnmmAqq4ksDja1D6i1pJ6A0J/+oY
+	fqAOiDg9795xIQ0z/2Xxko64489eCaCLOyiCG5le9xTLKEcDmfwtt3O09rXHvR0nhVhDONeS/2+
+	YhRI3YIVlZpRU3OfDoccofb9WKSu7NxILjz+a8e0eyyDqJKStJDKV6iLohb4akdjtmBrYS7gee1
+	QVyVvB2tWUYFKEsg/X9UKCfS/KvPwdV9HMOvNf35IT+pLD7WR/7RABe9qQKSV7jB5pAMo2HPVGH
+	IG8OOJnHsV5WMncjY1cz5TDU3v+stZxD56sDSIM/n/ig4ozRq1NRukgWpHB73L8ssiBy37QPM8X
+	/AHei6eGk2G+OJiFA4QkQJ0IbN0QdceJ63RYImB5nlB1uLRK0jlfLjCxB14tTp/KUnobMU9YEVJ
+	drRO5QXXkADw==
+X-Received: by 2002:a17:903:178e:b0:2c6:a185:be8b with SMTP id d9443c01a7336-2c718ccaad3mr55766185ad.10.1781888649520;
+        Fri, 19 Jun 2026 10:04:09 -0700 (PDT)
+Received: from 11 ([111.92.66.172])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7209fdd27sm29465555ad.66.2026.06.19.10.04.07
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 19 Jun 2026 10:04:09 -0700 (PDT)
+Message-ID: <6a357689.0f9b68c4.317a5d.1919@mx.google.com>
+Date: Fri, 19 Jun 2026 10:04:09 -0700 (PDT)
+From: Jishnu C K <jishnuck26@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com, Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2] help: include arguments in autocorrect=prompt message
+In-Reply-To: <ajQuqTB580gqNP8D@denethor>
+References: <20260618142033.15216-1-jishnuck26@gmail.com> <ajQuqTB580gqNP8D@denethor>
+Content-Type: text/plain; charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
 
-Vincent Lefevre <vincent@vinc17.net> writes:
+v2: Reworked as an incremental improvement to the existing
+autocorrect=prompt code path rather than a parallel reimplementation,
+per feedback from Junio and Justin.
 
-> "git log git-gui/git-gui--askyesno.sh" outputs nothing. To get logs, I
-> can add the -m option. In particular, this shows 3 non-merge commits.
+---
+From a4e8fb6fd6dd6a501e565c7500cbf927d7cb0b42 Mon Sep 17 00:00:00 2001
+From: calicomills <jishnuck26@gmail.com>
+Date: Fri, 19 Jun 2026 13:01:40 +0530
+Subject: [PATCH v2 v2] help: include arguments in autocorrect=prompt message
 
-This is a known joy of subtree-merge hack.
+When 'help.autocorrect=prompt' is configured and the user mistypes
+a git command, the prompt currently shows only the corrected command
+name:
 
-You could probably do 
+  Run 'checkout' instead [y/N]?
 
-    $ git log -- git-gui/git-gui--askyesno.sh git-gui--askyesno.sh
+This leaves the user unsure whether their original arguments will be
+preserved. Update the prompt to include the full corrected invocation:
 
-The thing is, in git-gui project, git-gui--askyesno.sh script is at
-the root level of its working tree, and we are subtree-merging it in
-a subdirectory.  Once the history traversal realizes that a change
-to the script came from git-gui history, it would need to be told
-that it needs to pay attention to git-gui--askyesno.sh at the root
-tree as well.
+  Run 'git checkout neo' instead [y/N]?
+
+The help_unknown_cmd() signature is updated to accept the args vector
+so the prompt can show the original arguments alongside the corrected
+command name. Callers that do not have access to the args (e.g.
+builtin/help.c) pass NULL, which is handled gracefully.
+
+Signed-off-by: calicomills <jishnuck26@gmail.com>
+---
+ help.c                      | 49 +++++++++++++----------------------
+ t/t9003-help-autocorrect.sh | 51 +++++--------------------------------
+ 2 files changed, 23 insertions(+), 77 deletions(-)
+
+diff --git a/help.c b/help.c
+index 30f32a7206..9ea4c076e1 100644
+--- a/help.c
++++ b/help.c
+@@ -739,7 +739,16 @@ char *help_unknown_cmd(const char *cmd, const struct strvec *args)
+ 		else if (cfg.autocorrect == AUTOCORRECT_PROMPT) {
+ 			char *answer;
+ 			struct strbuf msg = STRBUF_INIT;
+-			strbuf_addf(&msg, _("Run '%s' instead [y/N]? "), assumed);
++			struct strbuf full_cmd = STRBUF_INIT;
++			strbuf_addstr(&full_cmd, assumed);
++			if (args) {
++				for (size_t j = 1; j < args->nr; j++) {
++					strbuf_addch(&full_cmd, ' ');
++					strbuf_addstr(&full_cmd, args->v[j]);
++				}
++			}
++			strbuf_addf(&msg, _("Run 'git %s' instead [y/N]? "), full_cmd.buf);
++			strbuf_release(&full_cmd);
+ 			answer = git_prompt(msg.buf, PROMPT_ECHO);
+ 			strbuf_release(&msg);
+ 			if (!(starts_with(answer, "y") ||
+@@ -762,37 +771,13 @@ char *help_unknown_cmd(const char *cmd, const struct strvec *args)
+ 	fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
+ 
+ 	if (SIMILAR_ENOUGH(best_similarity)) {
+-		if (n == 1 && isatty(0) && isatty(2)) {
+-			char *answer;
+-			struct strbuf msg = STRBUF_INIT;
+-			struct strbuf full_cmd = STRBUF_INIT;
+-			strbuf_addstr(&full_cmd, main_cmds.names[0]->name);
+-			if (args) {
+-				for (size_t j = 1; j < args->nr; j++) {
+-					strbuf_addch(&full_cmd, ' ');
+-					strbuf_addstr(&full_cmd, args->v[j]);
+-				}
+-			}
+-			strbuf_addf(&msg, _("\nDid you mean 'git %s'? [y/N] "),
+-				    full_cmd.buf);
+-			strbuf_release(&full_cmd);
+-			answer = git_prompt(msg.buf, PROMPT_ECHO);
+-			strbuf_release(&msg);
+-			if (starts_with(answer, "y") || starts_with(answer, "Y")) {
+-				char *assumed = xstrdup(main_cmds.names[0]->name);
+-				cmdnames_release(&cfg.aliases);
+-				cmdnames_release(&main_cmds);
+-				cmdnames_release(&other_cmds);
+-				return assumed;
+-			}
+-		} else {
+-			fprintf_ln(stderr,
+-				   Q_("\nThe most similar command is",
+-				      "\nThe most similar commands are",
+-				   n));
+-			for (i = 0; i < n; i++)
+-				fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
+-		}
++		fprintf_ln(stderr,
++			   Q_("\nThe most similar command is",
++			      "\nThe most similar commands are",
++			   n));
++
++		for (i = 0; i < n; i++)
++			fprintf(stderr, "\t%s\n", main_cmds.names[i]->name);
+ 	}
+ 
+ 	exit(1);
+diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
+index 6fe2da1595..75821d63e1 100755
+--- a/t/t9003-help-autocorrect.sh
++++ b/t/t9003-help-autocorrect.sh
+@@ -70,57 +70,18 @@ test_expect_success 'autocorrect works in work tree created from bare repo' '
+ 	git -C worktree -c help.autocorrect=immediate status
+ '
+ 
+-# Default behaviour (no help.autocorrect set): when there is exactly one
+-# similar command but the session is non-interactive, fall back to printing
+-# the suggestion list and exiting rather than showing a prompt.
+-test_expect_success 'default: single match non-interactive shows suggestion and fails' '
+-	test_might_fail git config --unset help.autocorrect &&
+-
+-	test_must_fail git lfg 2>actual &&
+-	grep "most similar command" actual &&
+-	grep "lgf" actual
+-'
+-
+-test_expect_success 'default: multiple matches non-interactive shows list and fails' '
+-	test_might_fail git config --unset help.autocorrect &&
+-
+-	test_must_fail git com 2>actual &&
+-	grep "most similar commands" actual &&
+-	grep "commit" actual
+-'
+-
+-# Interactive prompt tests require a real TTY.  On macOS the TTY prereq is
+-# skipped due to IO::Pty reliability issues; these tests run on Linux CI.
+-test_expect_success TTY 'default: single match interactive, answer y runs command' '
+-	git config --unset help.autocorrect &&
+-
+-	write_script git-typotest <<-\EOF &&
+-		echo typotest-ran
+-	EOF
+-	PATH="$PATH:." export PATH &&
+-
+-	# Feed "y" to /dev/tty via a wrapper that answers the prompt
+-	write_script answer-prompt <<-\EOF &&
+-		# Write the answer to the controlling terminal
+-		printf "y\n" >/dev/tty
+-		exec "$@"
+-	EOF
+-
+-	test_terminal ./answer-prompt git typotest 2>err >out &&
+-	grep "typotest-ran" out &&
+-	grep "Did you mean" err
+-'
+-
+-test_expect_success TTY 'default: single match interactive, answer n exits cleanly' '
+-	git config --unset help.autocorrect &&
++# autocorrect=prompt should include the original arguments in the prompt.
++# Requires a TTY; skipped on macOS due to IO::Pty reliability issues.
++test_expect_success TTY 'autocorrect=prompt includes arguments in prompt' '
++	git config help.autocorrect prompt &&
+ 
+ 	write_script answer-prompt-no <<-\EOF &&
+ 		printf "n\n" >/dev/tty
+ 		exec "$@"
+ 	EOF
+ 
+-	test_must_fail test_terminal ./answer-prompt-no git typotest 2>err &&
+-	grep "Did you mean" err
++	test_must_fail test_terminal ./answer-prompt-no git lfg --oneline 2>actual &&
++	grep "lgf --oneline" actual
+ '
+ 
+ test_done
+-- 
+2.50.1
+
+
