@@ -1,77 +1,77 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853CF17C203
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 14:47:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A61F30BB
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 14:52:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781880421; cv=none; b=O+a0AVuIvogLe7RYQnOjTYJXXwIdnFX9e65PRiLhPtIVRdWGo7Aem5zW9ZTCB5O3J89FftnmDb1olis8QA7RMFNOpNY5QSQo0drstYv67mVhklVJ+ExbIFGzKOdo9vcVgyQfjOerwcBOwGBwt0fM+nPBtFHDrxr4SlgyKvw8ZNI=
+	t=1781880730; cv=none; b=tgziFIeKqjsbh8SrvS8EEEWnanCPTF7x9e/y4LgKO+Vdf5aFM92AJwPcNCKYRUVN+HtZng0cmwmxvLodhbYfuwDswNhjkR2h+a1e8ji6x6ZR4D69er75TFfL+VPYWHVbO+XyvzuQh06kZfDEXsl58XG0Tv2vnHHhtZxB9lsJjmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781880421; c=relaxed/simple;
-	bh=rFx/eFy+Zp+6i6vSNKsJPZSMuOSsVQTYJMLZVqlWWok=;
+	s=arc-20240116; t=1781880730; c=relaxed/simple;
+	bh=bjARHvmYx+0jdecatEwCY46bjpIivqYV5jRVJSfFus4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F8kK6XqDHEsvh2qOLkti1OUo34BZ5JEAVPtIRLLJRgc+6el271G5/9uDa1YooL3dcxMpMYppXIWaRA+WCeh7vF2ciX6gZ7HYD5FkeMKwAvy+ttZyTNfj6SqlF1HPCYat6s6naZOH6SbRS4tErlbjHi5k7ZJxEh2BGBil9ioawhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=USXcWQPf; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=SokihgfZ3qvIHtv3znK72HYkP+fD/NYMQD2fXBVcueyvcIkqTyTtGidN0SvSuEV4CJ4RKz2hhtlzHo3uluSETIZR7+9No5ypVoHSEtjokle/JrycEkaxJ0ra0lBQZ9RIFZxZw70MLRAJnmGabAImT5Gc1mEPeb9nLwr6d7/SdnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=fn6aHPed; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="USXcWQPf"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-7fe8bc0a01bso21645247b3.1
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:47:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="fn6aHPed"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7dd5a8dc8a2so17042827b3.0
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:52:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1781880419; x=1782485219; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1781880728; x=1782485528; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rFx/eFy+Zp+6i6vSNKsJPZSMuOSsVQTYJMLZVqlWWok=;
-        b=USXcWQPf04MiAhF/C31YGC7elCkHPcURX1awxnm4VZ9ZsSEcANkWIl0TavntINnfgj
-         IaW61tq6WPLHtaIpdGXiNE/8lp07iTqwTrgZdgdeOxCnxZ5cUVN1GJqa3dNmXiUAMQbb
-         GNk2d9zVSdHZQDuOKS/uSc+0E/DmG1psntPoZjoYThaZiUOyJL5c0iKP8PJ02HLrXORS
-         nDL/8r4oulwuwM1+zG3sGGZ5Lpb9GUyNqeZsbtHpXPOxbI/GJAkcvDQGqwoazybsrV31
-         6OAt92Fs+wRIL7MVFCnFS7aXbYaR+gNWSfxN1RbdoW8vf2i56QsBdleWV9YXCgnVCEGK
-         PMZg==
+        bh=ZzSuUmNFWJTpdO8h69Pj1aEUSSOo2HqzoWTxDaOIT5w=;
+        b=fn6aHPedCOhram2kBZxn9k/p0JFefcCLkdMaoUsuH2xfKciAwnp167TEYdzro7W1pi
+         E5BsTJWg8sGA5m+/hzGQcqXOBD23hzuAO9FyJOyrgQNSwDdpybst1aFxDrpMJgJDxA3y
+         rrmN6uRBRrbxqxlFbMvOLvKLVTbVo3qOtk+uZvDz/UwncFPgJslJK/F8oMgJeMOnnUl3
+         zne9DpwjZVVuwYvKSQWMrmCGG/+Xa/iv9OYnrRM1sslzZRW8S0YodgAggRvzjE62vPry
+         ZZUAhEnsA7tN+3J7Vr9XOOhxzk5FBRbPYCPmyzVb6ceslDQLyA/rbpnuYQUK8qSbQ4Zt
+         fhiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781880419; x=1782485219;
+        d=1e100.net; s=20251104; t=1781880728; x=1782485528;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rFx/eFy+Zp+6i6vSNKsJPZSMuOSsVQTYJMLZVqlWWok=;
-        b=k+hdkmZlgvw64suluI6t/rmuUH2ChcuBxX5Mst+ve0tarO+8quIWbrvy68Q/V6Fobo
-         AY8AyeQxBGVPIAPlG2xhH7lJf4NuVF6PRGlTD8hJiDQQe6O2CqKPlN6SVM5gUYkWbXuy
-         5gT49tlz7srJbphb6dr92OWv7fx0xLvi6glZOzvaLtpqrXYiNj4v94/bnm0CWqLrc5By
-         PijZgohpj2s0R6tizjN5PBTpy3psDGtShKYly/f8DjcXfBU95qnH3Gv+g6msXGV3h++9
-         hS/HJMRTmu34M8rkc6ckZzaGgkh0dT76AWfTZ7r6SsJH+HFO7Ej91ttABOhHnFjtgHi5
-         60kA==
-X-Gm-Message-State: AOJu0YxO4KcbAX+ZXF1u+Zz0Hm2RQVBUkv/bmdrIVGI59JgAq8oX30Qx
-	5nqR7tP2H0ddpsbV5qbL9WS94z9iCQbZgpfaA5/6btpM0Ze6KPviDb9h52cFocAddxg=
-X-Gm-Gg: AfdE7cm3+Ta8q3pA2VNGENTz27EYZrbsQiJBxKlWx05t6K2ztqGcdRqA70waKcrBeag
-	kIRV9XDmU02ZhVp7AK/PVhoXgzXdSr53iSUR/GoXsnSjEDqnV1p/m1jlVf3OhxNRIvjaSRIXaSK
-	sni9+Ta1fGU1B169q+5w0RFjqXHmH5Ot30VbONbQNugzT73pb6kcILZc/rgN3bFFlGWlye2Bz4A
-	WOqtRRJivv8op4i8TtT3ujQkJ3aq0Rg1AbdE5sf+BFnF5yi3507May1rZXEl5t5JfXOXM0eXyrB
-	cHxVIsxrp2jIHPvaIMbcapQgnfk+lZfwaU16sz18cHfiXnISlnnKL8dr1nR4436CZXUBCBySLad
-	IiRSzKaidraw28j1b6+pg0CfK87W1ulqwFBRC9UOcMfSgIAm0i0+H+fUZU3T9vg1fpVEeHLiN/N
-	CI2c7U9fjDad7/CHeghOD93Aj2w1g7jbtahA5nOJDQp2UHLVujuR3GbyVvPVCrjLkgPBaY4Irl8
-	0u3N4WHQ8A3WCz505vImD8fkce7hOxkjuhMGB04goYiLO4mUIRdXsfFbzpUEFgFo3bjsGJbLA4R
-	bT7vvg==
-X-Received: by 2002:a05:690c:6706:b0:7ff:f11:24c8 with SMTP id 00721157ae682-80135256f21mr40236647b3.6.1781880419505;
-        Fri, 19 Jun 2026 07:46:59 -0700 (PDT)
+        bh=ZzSuUmNFWJTpdO8h69Pj1aEUSSOo2HqzoWTxDaOIT5w=;
+        b=SZ4fxneK0C4f3PmvPV9+7qmcGgR/2qNEKWiNclOXZt6AVUm8yMn+AVhlbUupIzHlvg
+         lw0/G4BSgvQy7GcDR5dpVewE9VRVQpPzpYPb0slL8Gcd5LXacWEMBGWJkYcpJlr+gstX
+         1znadg5cvpoDYS4e+lwl3+o0/jnPkYXKlUUC5lDDPr0NhybgzDXGlImNFNlAEXEktXjy
+         s0yNlRION3V2NPK/oaxt1ASlN99aCKdqDZFFIiTHeD9JBC7a4jwvqL07sYfhcYDcRrL+
+         bSDPVxND/Ke8iNYTZPVaK99745HK/2uKzjJHjaZx/mn6q3VS3U/hz7W2E0P+BblSA7yO
+         zg8A==
+X-Gm-Message-State: AOJu0YxysMlSXZHt58BWZgE1Vh1O4Up4xf4kDCGgOPyYWY2qNciUZb23
+	EfoRjgvQkTU2cXsD3EJzHXQWODG8miLpxCKi43aHNr2hi2PIWPtdrEPJ+6bQUYNeig0=
+X-Gm-Gg: AfdE7clqlVXNOlrIa6K3fgvISemfMfTy+ZIQLggUriUpYblKu7zXrPFxGvrqBTVuMyQ
+	zia/PXzFI4bXBjxXtUIWf+mVR9wiMuK/Jhms5ehn6NXMw3BLr5QUYgZVe4iqORVpMwcC1rUzmaD
+	3O7YTjemuc38hJBzbBLI3zgrVUGSQ8l6eJUd3shMii0CIyNV+KYDuGIF+Type8I5Gawayuao/TK
+	Wy24f3YPCKiNuDioBSfpeKBo/Kz3iAjkDJfka0zVl5pNaBJlC+cw0RRqtS20HD4umaVEq5Rg/FS
+	rAmjQyqla2K98Zz+FJ88Pm+SMkErxMtbtlnUVhz06k748VuIvV062QwEOqX28s4aFz4X+gJAjL3
+	nu+SIXRGc/t2ViYLUGo3vP/ELWidgtsyL/OAWd7BVcp/6NABxsFvEafowCDeEe4p1KZqGSP2IAz
+	OqjixX8aRyQBVLkDEs0GV5aF2mR0kuOfEZsgzy06zOmlVXyi90s/zdFZ/S53Ir0mpYhx6yXPqAc
+	DMu0T4fR7ERWkM/FNwxW9CFax2QC/HvY4w9Vuky+aZA0DAgVexwbKfoe2lca3mkdmW8k8SC+dKp
+	O0aK1A==
+X-Received: by 2002:a05:690c:63c7:b0:7fd:e030:23db with SMTP id 00721157ae682-8013237064amr31415827b3.31.1781880728017;
+        Fri, 19 Jun 2026 07:52:08 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-80116cb147dsm12869447b3.0.2026.06.19.07.46.58
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-80119810889sm12427987b3.1.2026.06.19.07.52.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 07:46:59 -0700 (PDT)
-Date: Fri, 19 Jun 2026 10:46:57 -0400
+        Fri, 19 Jun 2026 07:52:07 -0700 (PDT)
+Date: Fri, 19 Jun 2026 10:52:05 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Derrick Stolee <stolee@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH v2 2/4] pack-objects: support reachability bitmaps with
  `--path-walk`
-Message-ID: <ajVWYdTThVic+O+f@nand.local>
+Message-ID: <ajVXlcHgIF2XkmMQ@nand.local>
 References: <cover.1779923907.git.me@ttaylorr.com>
  <cover.1780438896.git.me@ttaylorr.com>
  <ffad584a43ebf3cb2138e8dce7daef84ab72712f.1780438896.git.me@ttaylorr.com>
- <6e4a8764-3c56-42c8-a87e-40a94c6c34e9@gmail.com>
- <ajVPJGXuhugDcT+A@nand.local>
- <ec45260a-1d4e-49d1-9aa8-9ec94ecd9b23@gmail.com>
+ <849c659f-efa8-430a-bfac-0c26a3ed1aaa@gmail.com>
+ <ajVSHvL+On9AEV+g@nand.local>
+ <131d7ad3-7791-4d6f-bdf3-afa6b0831a71@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,54 +80,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ec45260a-1d4e-49d1-9aa8-9ec94ecd9b23@gmail.com>
+In-Reply-To: <131d7ad3-7791-4d6f-bdf3-afa6b0831a71@gmail.com>
 
-On Fri, Jun 19, 2026 at 10:36:54AM -0400, Derrick Stolee wrote:
-> On 6/19/2026 10:16 AM, Taylor Blau wrote:
-> > On Fri, Jun 12, 2026 at 09:03:41AM -0400, Derrick Stolee wrote:
-> >> On 6/2/2026 6:21 PM, Taylor Blau wrote:
-> >>
-> >>> As a result, we can see significantly reduced pack sizes from p5311
-> >>> before this commit:
-> >>
-> >> I mentioned this before, but the pack _sizes_ aren't changing in this
-> >> example. We are computing them more quickly, though.
+On Fri, Jun 19, 2026 at 10:40:51AM -0400, Derrick Stolee wrote:
+> > [...]
+> > , which gives us:
 > >
-> > Thanks for pointing this out. The paragraph following the perf output
-> > below correctly explains the results ("We get the same size of output
-> > pack, but [...]"), but this one is obviously wrong.
+> >     Test                                            HEAD^             HEAD
+> >     ----------------------------------------------------------------------------------------
+> >     5311.3: size of bitmapped pack                           278.8M            278.8M -0.0%
+> >     5311.38: size of bitmapped pack (--path-walk)            278.7M            278.7M +0.0%
 > >
-> >> Since we are testing --path-walk on both sides, the change across this
-> >> commit is that we are using the bitmaps for the "counting objects" phase
-> >> and then potentially using the --path-walk algorithm to construct the
-> >> packfile.
-> >
-> > I'm not sure I agree here. Because we are using bitmaps, we're relying
-> > on pack-reuse to construct the output pack, not --path-walk. I mentioned
-> > in git-pack-objects(1), but the combination of seeing "--path-walk" and
-> > "--use-bitmap-index" together only means that we will use a path-walk
-> > traversal as fallback if we can't get an answer by relying on bitmaps.
+> > (eliding other tests). I considered whether there are other interesting
+> > tests, but I think "repack" is the right layer to run perf tests, since
+> > you're always writing a closed pack. We could try different subsets of
+> > the repository's objects (which would also have to be closed), but I
+> > don't think this is that interesting.
 >
-> I guess my thought was that we'd construct bitmaps when they are
-> available, but how do we walk objects to get the objects for commits
-> that are not represented by bitmaps?
-
-Good question, and we use the existing bitmap traversal (or the
-boundary-based one, if enabled). In that case we really want something
-that is topological and not path-based, so we can terminate the walk as
-soon as we run into an existing set bit, or something on the negated
-side of the query.
-
-> But you make a good point: we don't need to do that for functional
-> use: the bitmap code does an object walk to produce a bitmap, and it's
-> all in a layer "below" the pack-objects code.
+> This sort of thing does help to show that we're getting different
+> behavior when repacking with and without --path-walk. And this test
+> is showing the slightest change for git.git, but is likely more
+> impactful for the other repos I've used to demonstrate the benefits.
 >
-> So essentially, this _isn't_ a combined approach: it's "use bitmaps if
-> we can, and fall back to --path-walk if we can't" which is changing
-> from our previous behavior of "--path-walk means we don't try to use
-> bitmaps".
+> So this is the kind of data I'm hoping to see, but also with data
+> from other repos whose data shapes benefit from --path-walk more
+> than git.git and repos where name-hash v1 is sufficient to give a
+> similar result.
 
-Exactly!
+I'm glad this is the sort of data you're looking for. I'm happy to run
+this on other repositories.
+
+> I'd also like to see if the repack _time_ changes with this, but
+> these direct size comparisons are the biggest indicator I'd like to
+> see.
+
+Unfortunately a timing comparison is kind of a pain here. We'd have to
+use test_perf, which will perform the same repack multiple times. We
+could do that, though it's wasteful, and changes like bf4a60874af
+(p5326: generate pack bitmaps before writing the MIDX bitmap,
+2021-09-17) move us in the opposite direction.
+
+I'm not opposed to changing this to test_perf if you feel strongly about
+it.
 
 Thanks,
 Taylor
