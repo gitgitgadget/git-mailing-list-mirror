@@ -1,107 +1,148 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E232DC321
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781853682; cv=none; b=KpXswbVeZNKyTuc/okSLLd3bw34ECEPaNNRqXSu+REmh9z4fjYF43tDyzW6sjEJnZQGb7xZr8Q5upA0K2aEVBY79br1dpx/3J+kR53MgLvkVaY3kLjnzXCSCkFD0ctgoUG7HTtaVOwXonDigNBkKDw5l+7uV4IFgYLhEZy3sLzw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781853682; c=relaxed/simple;
-	bh=VS9LrcC1VZlccK9vC4zoN8A1oAUQoqzNnm9YJtVGdgI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cH9r35uPdvZ3nTP4uoM3yMV4GqXy0q4cFHXAVUn1zBwM7vjWSWIHEjHyA+oB1XLP64/OwBYxSVPuM3rdzX5ROYmk+9Da7Do6s/xdfKp6UPk4CoZ082xT5++luN+Dv+OXk0zMEm1kAyenhqzk/HLsZttmgq16udoHng46BWTlkmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W7oup7Iz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vb+p2pbU; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20982DC321
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:34:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781854470; cv=pass; b=aLy+vHyRjILZCopbwG4/kneTVtDMxkKwUuz4pvkQZr6/17YAyiI2hiF8AM9t2UgXADX2r7eDK7zHmxRPLOO0beR9fJ2DnxaamJcs+WactRyiwa7E8HX2U6IdhBHXthubafDA4E0Kuy4ikqnmm/yUQpRwEGv+mRqjq4+3ZlH7Reo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781854470; c=relaxed/simple;
+	bh=RW21PskSCANSNylrMjdML+Foo0OWXfabVkoWFUfEPYA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p33wJ8xTBLPINJ+0mAIL7dS/hkFgZPNXipDX8iVPqzem1wOssxJxSRSASE7oPxRKAQLw0KipMqh3zCgpW+pbhUTTEEFeh4DyEjJ47JKGTjCy0i4aOlK6d07UBqC4/0lOVGxlBFiPu0g9L1qDJhT+a6w+hlwbzYMnjeLhqILrtk8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=MNVoPAFc; arc=pass smtp.client-ip=74.125.224.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W7oup7Iz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vb+p2pbU"
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5F0E27A017A;
-	Fri, 19 Jun 2026 03:21:20 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 19 Jun 2026 03:21:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781853680; x=1781940080; bh=rh0FwU5WYn
-	Zm2T4sqLLaAUBVD0WK2PaQ4eyzrYq0vVM=; b=W7oup7IzxT/r1XZgtJrRFT41aA
-	a/1ASElJJSWNYDpslsMR6yK3B4vlNoGxO0zanoZ5jgE8XZINbEKOGg8d7vl39+Q8
-	vYaCnF4kptsjfdhqjzIEH42J/+oxB5+QxSNJWwFqGaOU9zBZH8iWNpKszw6SJyHV
-	oa6bK07p/UX7UvHZzYwdDcSWxv/ExFhlT1CLtbhJBzOfMlgq6XVuit0RTgQSXb7S
-	LQtl3bv0rgdg+UjDQ8Kb3jksx8uIV7QIRWdI/AEdLdUO/S9FTEhlx3yIc7D4tos/
-	UFXtIktr9H7Icluq28E1RGjEk9h8zMeNVLiSfa5ps8P/a/ePW+9sS+4aq3Sw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781853680; x=1781940080; bh=rh0FwU5WYnZm2T4sqLLaAUBVD0WK2PaQ4ey
-	zrYq0vVM=; b=Vb+p2pbUvjNVORRuCLEnafphPNoNfLlvwbp6lMl+lhWXx9EcDOC
-	wZDRaWgW481eYiYqVEDH3AmFXC4NLetWn8EegqJZjoLXiPwaYBknPLBEXXfuNS31
-	tWHBZ03PPcEZIvu3nLedHlMBzCeIeLCt73cuEm7rNRjjtyffposhGAT5YIg0P13i
-	rFT54wCU2QfRH6AEyTpuWdtn+SLRebVUSC3FGBusJKnTcGRIVkG3f8oRd3WLTGcy
-	ANZuQbwcquegV/mDQmnrvSGYJKWAJncOIvH3Fmasj1WnvfPfBLDCA093EKjji9iG
-	N6J2x7p7tCp6zNpAyAn0O4KfRq/Z0p4TtOw==
-X-ME-Sender: <xms:8O00amCfKiwY3_00Z03xklHe4cHiQkEgdWpuFQhgzsiowDkb5tP0qA>
-    <xme:8O00anYCA2EBHVg_jdANQhBd5T-2hqufP19PhI0XbVs6CZj0zul_mYni2uYY8mOh6
-    t8mMrZ9rD2ShU0XJSqvjuu7JcmdIOgOgrgcTSWSJxh-JcIw5MjtfSU>
-X-ME-Received: <xmr:8O00ah6jWD773WAekE2FFVQSWkwDo7NWzrtoyo5V5PqQEBitWfwn2pQXZXkbEIEArNWiyjgzL8EkGD2TyhJ4XqdqAnVRFEu03djjVUzySyE>
-X-ME-Proxy-Cause: dmFkZTFoeuJU3QTWt4me62vKvrjjPT52nTQPZ0eVUsyQuHtzBSJ0MYwyNv6f90VBHWf1dZ
-    BVbe5aznl6lW5dnjvFlPVLATq8TuhE/+/8IBQ//aZgNkcykwf9Fb5d2I9XCVa/YVpQybws
-    DPuO3Y7ZTShc8eoA1Ml7Bnh+cqctNJL23RpHcOo4YkUn5/239TdOUSS4eCjMqKbj9GUgO8
-    CBT2hH+HqHrTef0QsBgY14Lv0WC+LqSeFyvtqhlFD9OzUrSFWJy9ytM1uN3qNATEzXC/o/
-    VRHmNT+6sXKd3XIxRVK3G3BlFBCNnem2uJdhmyysuu6lzanxa310RkP+ILS/WQy3w/ajOR
-    4JVely4WltS7Nn6Ps5ckDF6pRZy6TibN30mrX7+M1TbAWyX3oxEUhE9X0hl1xXVkHxxdEJ
-    AXH+dtaFur8BfmEm/XbCI36NlqDsS5rOsSzvdRSfY6Dapessr7p75bb0mQSS5QiEKWgo9I
-    6yBltrqj3jpYm95ka9yQs4fC82tupDO3/6aeFaML+EFNx2qIc2PsZjZKjnRmo+iuFC573U
-    iBNq70UewK3PFnNKtuRgYDmngD+ZvaWP+hFDfOgG8Ug6mX2xtfrercfX9vZrmexq1y9WOU
-    jnWenqsC2H/RhIj7sXrSIiQC//8PJ7Ol2PO6lLmCHbGqB6FXZ+GXV/S2Kptg
-X-ME-Proxy: <xmx:8O00agaSkxc-EaOwKD2xeZqj3undeKGdqa4zAk6T53ekeVRQ7daPGQ>
-    <xmx:8O00aohNpKVz1L5aANrh74KgfMmftpTSobZlrv3Rghx0OI5h6kOfbA>
-    <xmx:8O00ap-M-ZGqpNlwPTCL8PHTbIX0EescIarGB-Er1sveulZ-mrNf-w>
-    <xmx:8O00aroBZTZEQx2vX3RHyga_tqJ67WTX-PJ2SlSvhdQLn-6-gaSPBQ>
-    <xmx:8O00arp3VJYoorX2BvOZj7t0KPbvZ2W4RLX6nuWU3xXQanBRrIAoRAG4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 03:21:19 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2b38d98f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Jun 2026 07:21:17 +0000 (UTC)
-Date: Fri, 19 Jun 2026 09:21:15 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Todd Zullinger <tmz@pobox.com>,
-	git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: git-2.55.0-rc1 t4216 broken TAP failures on non-x86 arch
-Message-ID: <ajTt6xmQxYg6ppMG@pks.im>
-References: <20260617220330.n6byiFQr@teonanacatl.net>
- <ajOP1IOjA3EYvRfm@pks.im>
- <xmqq4iizpkig.fsf@gitster.g>
- <20260618233536.GA1431359@coredump.intra.peff.net>
- <xmqqeci3nz7h.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="MNVoPAFc"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-662bcc30fafso2019944d50.2
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 00:34:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781854468; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ZARIgpQh7kFaxLKhOSl2Ds7Zn3YiKgI94uzecijpK4uqk9nGeflCqQXdvZoRQ1A4Ms
+         C36Wy6LV+XUSqn0zycAcFgD+L2afTp8MXdjMJeHSQw9A1VscjtXEozkI66QdTdjeKail
+         6CrVsc1rUoIojpKrc4wEk+EmmIj3IilNZNgOTb4gdnULnuHVJoiCE19zxBuQPLXhAdlw
+         NBPCF3R6n0nIhUZgIzpqDvO75t5r8QK/7xOiRUb3BLMhEVlr9qmuvdVLwwNDVcum6Qxq
+         dm1rAAOH3J1QfRbP701cavhQdZhCUd+ukxDXAEVMnUjLgNbN+45vap3/IDwKhz6Oo71y
+         DJYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ICu0fsX+zktGTOxJMZBisgpUa0oSG+e4sNmiOH7w9Dk=;
+        fh=R5TrLSplp9lGS57cY3SRkE+Lug5clNpdqMqNvEgllww=;
+        b=EXps+j1XI6/hyta78wjCslkM6s0IgMA+7JlXvdaa5iFzdQpVkCbfCTc0JclP5/jfvc
+         1skcKY8+LHBl5OotyN7bXv8Io+EwJrM0z5XH19/oshB8LM5rZb8hv8KPR9r9niIoy/Uy
+         r+d2axpZERI7PEKP3xcjS/pUR3R82Otq+He6wUrrg+2I38zeJQuuEnBu4pJWt/CKb+Jc
+         u7W+wOK1dC4fPqDosBwUcudZx+WJKAH5DvweFlUJn6tSCfVvqGDJ4qyR5fD7LLnTbs6H
+         HVmNVMt5N2KHGWrqkDhgHkH1Ah+HAuMut1oVli7+oaJqeOONYacOx3Q6n2T3bhRZXmIB
+         dl7w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1781854468; x=1782459268; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ICu0fsX+zktGTOxJMZBisgpUa0oSG+e4sNmiOH7w9Dk=;
+        b=MNVoPAFc+3Jgdg/wlRet9CtiF22yfKbi3Eth4xFVtImDWSsKRvZbHezYODmvNqoNwU
+         IOdkuJwqKrhuWe2HpAXtKtb4yENn7Ez9ggzcYZv8HR5EC588r6C5ffomws8MXNDaTNG6
+         ztV9dD37T2LpQ7F/UTTU5F7aop16v0xN+73EE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781854468; x=1782459268;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ICu0fsX+zktGTOxJMZBisgpUa0oSG+e4sNmiOH7w9Dk=;
+        b=WBXFUe52LxX6llDChscm/WQX7C8yhqPMTSbiVplh4qeqZRTb2sne4/ZPdatflvSIW+
+         2opoT7Xkh0Dhpz66nVbnDszNgHoLPE/Vs89v0aAfYNBJdcyYk2xWyyGou2VBm6t/r+Do
+         vkZVzIiYWghuD1NEpaz/h46R/zj7rRKMfKifLl/yOOoi47qW8x27/cbB2kf6cCjNGbO6
+         MXg9WaXewibSxPqyzqa42t1FoEW2zRoZEmyucNQxFCki21zEef/IRg0jvVExtHGJUzck
+         NS55lU4ZMCzhUGdI2dmn/b9Ux3vdaeijG5UM3MmVLe+DBSVS4bCSEFtXPO2H/q1XK8Ip
+         l10w==
+X-Forwarded-Encrypted: i=1; AFNElJ+E6I7cMlVKASrjIiz6YZYt1CfDl3+J+BxzJgnsLlcjYNq+2BoNThNwDvffbYaOtIcRM8U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKxESKyy+qrPkjR7vs2Akjx8J1JUUdFh1MQaW3ijS/7nHC0mVu
+	VLN1a1tWk1VFtkTzkp3+D8tna7DaWyrq3kiTWSI8oh9SnlnduyClIM89XAkyJMLJVqs79dm1fp2
+	JKvfmGAkfNGNaBPVXe06p6WgQOwgL6EAWO8sJYNeFQg==
+X-Gm-Gg: AfdE7cl6LeMAfeiOoi9n1qyVByBgvA91MSTcxlinq2GjvQ3Fy30h9zXeOEQ1G0csWfF
+	/YfpZXKey6KR7U2W2Z6r9vTQR2LQpIWu5fFqH4uqdEoLEgeyq7ywe49jZU7fAB3RpjdgO3ipA7C
+	zOVbw7yB7i2+G7ext87zmhbM40ZbID01USCd7YunGgm0ua8EvXr1PGYA9ARAMN8TE73BzbXQ6Yk
+	sv+jqPuOWk4PnAHkrQ84kZ09+L7MAyIObC3MI1DXxwaI071oPhwLZ9sYzK9w9FiFTT4GFw4yuOw
+	4q8nRw==
+X-Received: by 2002:a05:690e:480e:b0:65e:b05:7679 with SMTP id
+ 956f58d0204a3-662ffc949c7mr1468986d50.3.1781854467825; Fri, 19 Jun 2026
+ 00:34:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqeci3nz7h.fsf@gitster.g>
+References: <20260612-ps-pre-commit-indent-v4-0-e8492037ebae@gmail.com>
+ <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+ <20260613-ps-pre-commit-indent-v5-2-8d308efea63d@gmail.com>
+ <20260617202744.GA3465855@coredump.intra.peff.net> <CAN5EUNSQY2oK7BE4J9Y8APfkP6eJxta050OUu=RoJYhXOjX_OA@mail.gmail.com>
+ <20260618160504.GA818042@coredump.intra.peff.net>
+In-Reply-To: <20260618160504.GA818042@coredump.intra.peff.net>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Fri, 19 Jun 2026 09:34:16 +0200
+X-Gm-Features: AVVi8Ceolg4BaQIIWt7wBa2hLHfT5Tp6lhB3sATvrTH4Cr_HOUvgfohLwM8wjsA
+Message-ID: <CAL71e4MAtD4MqE-22UyYaNFVYcFgYmffngihhovEChVfHLmEdA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] graph: indent visual root in graph
+To: Jeff King <peff@peff.net>
+Cc: Pablo Sabater <pabloosabaterr@gmail.com>, git@vger.kernel.org, ayu.chandekar@gmail.com, 
+	chandrapratap3519@gmail.com, christian.couder@gmail.com, gitster@pobox.com, 
+	jltobler@gmail.com, karthik.188@gmail.com, phillip.wood@dunelm.org.uk, 
+	siddharthasthana31@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jun 18, 2026 at 05:36:18PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > ... But since 389c83025d (t:
-> > let prove fail when parsing invalid TAP output, 2026-06-04) it will
-> > cause a test failure.
-> 
-> Thanks.  That was the piece I was missing.
+On Thu, 18 Jun 2026 at 18:05, Jeff King <peff@peff.net> wrote:
+>
+> Thanks for looking into it. I meant to also cc the Kristofer, the author
+> of dd4bc01c0a, for any thoughts (adding him now).
+>
 
-I've sent a patch via [1]. Thanks!
+Thanks for the CC. I took a look at how this interacts with my
+change.
 
-Patrick
+dd4bc01c0a doesn't hurt here I think, but future followup changes
+might. From what I can tell --graph triggers topo_order, so
+the walk mode is either REV_WALK_TOPO or REV_WALK_LIMITED
+and the prio_queue change only applies to REV_WALK_STREAMING.
 
-[1]: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
+That said, graph_peek_next_visible() reaching directly into
+revs->commits feels fragile -- especially if we drop revs->commits
+in the future. One option would be to add a thin abstraction in
+revision.c that dispatches per walk mode, something like:
+
+    int revision_has_more_commits(struct rev_info *revs)
+    {
+        if (revs->topo_walk_info)
+            return revs->topo_walk_info->topo_queue.nr > 0;
+        return revs->commits != NULL;
+    }
+
+    struct commit *revision_peek_next_commit(struct rev_info *revs)
+    {
+        if (revs->topo_walk_info)
+            return prio_queue_peek(&revs->topo_walk_info->topo_queue);
+        if (revs->commits)
+            return revs->commits->item;
+        return NULL;
+    }
+
+That way graph.c does not need to know which data structure the
+walker uses, and if the internals change later the API adapts in
+one place.
+
+This would perhaps be an intermediate safety net -- once we have
+fully rolled it out, those functions could be removed again.
+
+As for the multi-element peek question, I think I would either opt
+for draining into a buffer if it's really needed, though when looking
+at the code here I think multi-element peeking is not truly needed.
+It seems like the logic just checks if there is at least another
+element after the peek, but it does not try to read the actual value,
+so we can just check the queue size instead.
+
+Thanks,
+Kristofer
