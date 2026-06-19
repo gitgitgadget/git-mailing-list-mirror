@@ -1,84 +1,83 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E38379EF7
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 12:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F01D372EC5
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 12:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781872688; cv=none; b=X9Em6VU3xv57RiLx26k4RIsbWhWeWZjxwWQ1vKLpyYe54+i46zXFnYyCs5evhkCPB8qA015bRYWxK3o/7h3WUF7SBebFB7Z8VRhNbZIVbMdOpAARz4kgq+NIHySzOSYhz3qh/AjijgA9jm+M/dNfmbc8U5c7At4h30XQ42FR7mw=
+	t=1781873751; cv=none; b=gT/SDn8VyIfgk4gkvfCDfKaSSmqVSRrV9DABa4vQnHm0ewud2jBbimD9RZ26bpCTndO3bnLTr/DWWXggOcGohXE1gVKsIBVz51u1Twk7ApEG6ADyWtqyreBGRqy6Lr2Q/En5hDi6Jus0d64MvRzMPZxkB6pPChXDvX0K+FApA8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781872688; c=relaxed/simple;
-	bh=oehlEOqKff29YAfHR2t4QQmPPaZ/o+qloTifJ6BluNg=;
+	s=arc-20240116; t=1781873751; c=relaxed/simple;
+	bh=++QQHfXo87KSVIuivc6JhlLgWBTKgfbHoGx0P9EJCvA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pdvM/3Ds0NwZ8rh9RpTDG3it7zkgsF8uo6ZSyAlxhdwRgqLUVwdW4fb7b/FaXiicyCFvablaBBunbvkQSas1It/Y95vOnJcC9TtcawMQvdGJIxwWSk2t6tuwL5tHFwsCbw1IB/tL1ZIH9K6V8ncVBgMGmWvVcCu5hu0R/wRr9N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=koCaaIK3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PoMGFI9q; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ja9ACMQBNIWV2OVnyhus3MmnreFLZqBCfQV4zAj9kmFvQbJdBBQMM1iXj2kbPyyBemtzb2jCUFvHIWE3zpqbeBFu6fokdv47mlvz5126oBpTAIPr9MyfPsppTysskFJZQmrtf7Huu6O95fVFODY0VGEbqhscF1hvwGhZ5JhrYDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TwhuJc19; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WrGO7Suw; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="koCaaIK3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PoMGFI9q"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2FCB91D00123;
-	Fri, 19 Jun 2026 08:38:05 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 19 Jun 2026 08:38:05 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TwhuJc19";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WrGO7Suw"
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 74D8B1D00091;
+	Fri, 19 Jun 2026 08:55:49 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 19 Jun 2026 08:55:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1781872684; x=1781959084; bh=RGPgsqHWsL
-	O3vtpihWBad77sEtc5F4gy9lolVPD429M=; b=koCaaIK3xleQzsUYbjowbV+Xl9
-	Te1Ct1FnNITZHuxlxsmOatzXVkvhwAzWU3dpKKO/Mo5uI0Wi+EyKqceI0hhDWS8n
-	NZfHMywP9qrxT9bqqCRtzyBs7ynS4eeBPCpBtjUOA26VeR1h6itbslgpQLYDrx7G
-	ZuDl0xLHFDKSE+zvX99W0SYYeK8QucbuC3PQSynRN2dNIslGq2jWmQ71kk3phgTX
-	B6rZJZjMDqf8NlJGc2m+ZSMhyHLuHFarbYSOvY9XNdVAuHprut/Zfx/+9OVxa2wH
-	4Gn2FByMcz1Qjg4yVqC1tC+xl8I6soN0DFbpIbSSXMzUxXzMKFGhlvkIuZAQ==
+	:subject:to:to; s=fm1; t=1781873749; x=1781960149; bh=5Ft/LwGwGR
+	TckJ92SNspvUvxCMiA5h/OqCC2glbF3kM=; b=TwhuJc19BI4mNnV0s5bOrgsumu
+	4MFeizgOLvn4s0fZ4Q/FVixxgtMJLl5wExBhVQkIn0efETvTOmWglDfTxXDihivk
+	giaEK6G42Fk3yrtxdUbd3LdlYsxHmhOPfzymfvzbuZONf43/I+D4bL8z/Jcjpf+i
+	FsLJ2Q6cdj+Dcc2ArOjGAId1iRk7q3K6lAhl9WE5FQWUuQs0ABhTmPTIzGxdA8Qw
+	IDyeO2d+2SRjIjHMdhy8vV9DAWxi4aTfpyqD6/OVXOpYDup5UzHqihcj4Polhw+0
+	WRfPqdrqOJGpkQKY5K/JIEqZUxlzl0N466IYW9a8W4ymORKLt6Sw5yGQWc+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781872684; x=1781959084; bh=RGPgsqHWsLO3vtpihWBad77sEtc5F4gy9lo
-	lVPD429M=; b=PoMGFI9quO0AT8tpLzzsECDA1Vq/2ISOzLL5ogAidkoRgtJtqyV
-	eLeUGyseza55t1jch2NVbeoCIxRqRZd4jXFjobu3Bzfoza+ItEUYLEY0jHOymV4s
-	aHSSJgefMLxnM48s2n9rPIOAPZqDoYnjH8yBor6ypxYVfFVoo5yJZaqRwSQsIL2O
-	4FSJl+Bxamnp48sTFVnJoqBwPYDOPCUDQXWsrCSKgRtnERNtUJC63c5Ca0TYPMaH
-	WMFvii7qXqB83Bim0L6pWPvp5AS5E3cmmHPTKROQ8snuJN8/RtOYRamAACHizEy4
-	U+PiOCC3oBMtA5uBl4z9FF/8LP9+sXFz/7g==
-X-ME-Sender: <xms:LDg1aipdE-p8rOkKgJzo3Smg121LF8ec8XFnqt_-9Yn-eIacey9m_w>
-    <xme:LDg1anon2cHf_0AZFNmTWEwNA0MdO11WJmnuwextgQAfvevHFxaHRbAXAd8p-Ognw
-    a7C3b_No7ewNKA9Kq8V3veagRXymfRObNRVnCDg9cMHxABLg5t_9FY>
-X-ME-Received: <xmr:LDg1asN4T0HtQkSru2zCYYDmlNnsDyWxTubFoZNZMBGnvAWiUVoZFrckVMMn47_eFqMQ9c2lZB4UUKefANtWky8NUv0pomOcTR9OTNorzNs>
-X-ME-Proxy-Cause: dmFkZTFca0C1w1tjCzbKfW8ORALqfdnECvd7gVuXsFZlGxvzt8wfneYQeOhalVzOY1lyQA
-    9WstAmWBqYuwHGLUuXben6I1DWEAuWICKrt8H3CY4ue+L0qeGquWav4vMUpNj7UsUT30yB
-    DXrDoLLYc+RgPDVJIACRAQwotDCit3Rv5sZuvJV7kSHhumquSb9kmPx/BMNKLZfhMN0oxS
-    96dMUnqXCpxhcNGZ/npWflxNoadaLtE5QBdQ+fev9+FwJzZan8vE6a5kIhxOYgsutBUwgC
-    J5cANvPqYRY0WL0HiwnI2pKn/noHFf9AMPhwX5sEjNFbV+/D8UA7nwA692jMIR20oIbdBJ
-    z7HQxgjFzhHoY4V4m40c+dQSPH6GPrwjtM7ksaVTrztcz28MO3LNL52YNfh1VCwf96Aj/P
-    RM0HUael5YxB1DN571/4euU1lXtByykRGb2avfM0txGLf4xu3NoQbBP/7H5B3QohKLmSA9
-    n06EUcI9fvboYmlhSqkwEz+xVeBtRaUuZpiRlpDWnv2jmLfvrHsWNklkX1GWsKT21ZwJZi
-    1/9exyVBnPiXLr9fpasPhzMLAsKQHB1+arT4g6suB0KsZb9cj/keB5q2AYe48NPyOKcNCt
-    mASshJBUy5c+UiWu7ep2AH5AmvsGsYt3GO7VxEyabI1K/y5zJKfxLR9mW0qQ
-X-ME-Proxy: <xmx:LDg1agyrOXyukFnEeJMMaJMV1e061mkkSj7Grz5w-CVD6mc5jZ4HUg>
-    <xmx:LDg1atvRi3ipMj610PWOV4i6tEtAsiEqoIkEtenDvNBrB2vl0vj_Sw>
-    <xmx:LDg1ah5qjaDXmr-TYVl7XLcGZ5sJ0dEz03yWmNbs1DtoMbZA9auVOA>
-    <xmx:LDg1akQ2IMkP41P4ofKWLIYwP98VCGDOUNoqI12Rc4F370IzaYFO4w>
-    <xmx:LDg1arsQFfTK29tfQzHKq1G9A6eLToM09yhRklYlS6Cj8e0zk3txuw9p>
+	1781873749; x=1781960149; bh=5Ft/LwGwGRTckJ92SNspvUvxCMiA5h/OqCC
+	2glbF3kM=; b=WrGO7Suw9EX0e0ST7kdevzapJqTVpYm/2whl8QYV71jvE9e3hKG
+	emPo4SVRg9bkz/MzCcoWBqnUbhIvEmtGpoV+e78Xq9h6qg7zjaM8WIirszNt7rVS
+	2M4KV5holGhviWUS4WBZyErzQIs0W6yJb+WXgf4Kht99trbbzIFKbHSxXyn6XSEQ
+	c5OFWj0tqwHlz4fH13IuiWCuTOXX8okq7ylCZFn28vcU2lqFl2de0lX7szZ0KuOd
+	GDtsq/DhMBmkWv6+Lls/JcWXaYqoCU06khj1Syv2gBTGrrZAxHFxm6gCe9nT1Baa
+	r3ze051cBqYyM8LxB0MBdjiJMPEHKhaiBfg==
+X-ME-Sender: <xms:VTw1auJ3ertuknssWd1P8h1a0fcd7GYwDhHQDMHizOV383dg8gjXrg>
+    <xme:VTw1atkOBA3zof9pZ-o3Xbda-dRL1kMk0fVAsmETWZSgrozqJsMl4t7a8ixJrKorN
+    o4JmaHkpVt0P2DZxbhVh41adBGACkW-ZJSEGPcd7_RLPVu7EwOnRqM>
+X-ME-Received: <xmr:VTw1asFQm0LdFPC67izE00aeXiqXKimSaZ2jYisBL_bVKzt95nwvp52vjWPx5h3NRaG6bV5gxx8xs5yr5_boMiQCpm_qCo5VPp7DKQJNBZM>
+X-ME-Proxy-Cause: dmFkZTEWZ2zi8aAtyCihksvc3dLVZsfYgap2WQ0FKQv6BmQZEjpZDM9Rq9QNw3hv8Mp6BM
+    0U3IpIED6upoczLgV+FtlGdNdxLgRPKyroyxhbBaK/7rD34cjkhKX2MGE/6gFYgO7udt0P
+    /OoBw6qe17Kxcg+CmhAg/Ns/9n29JI7asmlXpKcXhC9RWM+fsz6vEQkPC2T3noQbg+S2LH
+    95UHtL/76J0vfUHblNd/r9Q5k+YHP80APw7ZDzl/IV2jTVFBHyw2VgamfUhhZCpv76uViX
+    8zqPLdZAUiaN4PcjTa0mOBYg+SGOzGtaPFwMwI5XWiZ3q598dQSF3CGDz1MpWqDcZw5gcF
+    sIJF1pdWqcm4vBHySJ2Jii46DCTO/TvPkJWFSynLTNO8DLVdSoVeTMDcNKwGiK0CxORDRN
+    6g7A2WFQ8zyqpNWJsubNZSjGGG4kLOd7TMn4NUJw99pTxzUHT+ImB/w/0SzePmD7+bjk9S
+    f1P4o8JSp2PEGI5hyo5sddxbtugw1lTxHsYjsVpjXitwPxEn1qg4L+QsCkw4ez3dHvaDB8
+    5V3MuNwMqVkCQb2HtngoNwPQVHH62fZu2JOq5Ji3V0J4VK1PSFcpVOrzvHCn9MvU2TH7MI
+    NQv6WYKNoTwjUNyB4UM5QoxgPD5A5p0v2ikuB+SZ60XUzSANsV4VJrrDrmeg
+X-ME-Proxy: <xmx:VTw1atFLZZ8ixeCSQR7xZPWwHGgYOvHKCIzEX4Fl0my6nHjU_ym04Q>
+    <xmx:VTw1apOJTG3tVEZPdTbRQQp_N0gWvafjszzN7RRn1SnrhWwail6CRw>
+    <xmx:VTw1asEmRqWaxj-ZIDcKi-PufD5ujpOOLNFPdFEdZVA47AkiMLLvQg>
+    <xmx:VTw1agPwbusYHUGFCQi6uMyfW-Gd8naCOdDlzZbUtX689uwnz288gg>
+    <xmx:VTw1arBst0xg_jYPVsYmSCk8TLxgihNelRPphJ-9vOQgHFVVkj7MLAvz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 08:38:03 -0400 (EDT)
+ 19 Jun 2026 08:55:48 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4f85fd10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Jun 2026 12:38:00 +0000 (UTC)
-Date: Fri, 19 Jun 2026 14:37:57 +0200
+	by mail (OpenSMTPD) with ESMTPSA id a96a70f7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jun 2026 12:55:46 +0000 (UTC)
+Date: Fri, 19 Jun 2026 14:55:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 0/4] history: add squash subcommand to fold a range
-Message-ID: <ajU4JYYUTz5r-Xgc@pks.im>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v3 3/4] history: add squash subcommand to fold a range
+Message-ID: <ajU8T2JFJTdk1hr2@pks.im>
 References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
  <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
- <xmqqo6h7nza3.fsf@gitster.g>
+ <66b2f49fb427c7328136b2d440dc7461b97fb4e0.1781810227.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,84 +86,156 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqo6h7nza3.fsf@gitster.g>
+In-Reply-To: <66b2f49fb427c7328136b2d440dc7461b97fb4e0.1781810227.git.gitgitgadget@gmail.com>
 
-On Thu, Jun 18, 2026 at 05:34:44PM -0700, Junio C Hamano wrote:
-> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > Adds git history squash <revision-range> to fold a range of commits into its
-> > oldest one, reusing that commit's message and replaying any descendants on
-> > top.
-> 
-> One thing that just occurred to me.
-> 
-> When you have a linear history
-> 
->     o---A---B---C
-> 
-> you run "git history squash A..C" and come to
-> 
->     o---X
-> 
-> where the tree of X is the same as C, with the log message of A
-> reused for it.  That is simple, clean, and easy to explain.
-> 
-> But what should happen to refs (i.e., branch head) that point at A
-> or B?
+On Thu, Jun 18, 2026 at 07:17:05PM +0000, Harald Nordgren via GitGitGadget wrote:
+> diff --git a/builtin/history.c b/builtin/history.c
+> index 305bde3102..9d9416870f 100644
+> --- a/builtin/history.c
+> +++ b/builtin/history.c
+> @@ -973,6 +975,156 @@ out:
+>  	return ret;
+>  }
+>  
+> +/*
+> + * Resolve a "<base>..<tip>" revision range into the base commit just outside
+> + * the range (which becomes the parent of the squashed commit), the oldest
+> + * commit contained in the range (whose message the squash reuses), and the
+> + * range tip (whose tree becomes the result). A merge inside the range is fine,
+> + * but the range must have a single base and must not reach a root commit.
+> + */
+> +static int resolve_squash_range(struct repository *repo,
+> +				const char *range,
+> +				struct commit **base_out,
+> +				struct commit **oldest_out,
+> +				struct commit **tip_out)
+> +{
+> +	struct rev_info revs;
+> +	struct commit *commit, *base = NULL, *oldest = NULL, *tip = NULL;
+> +	struct strvec args = STRVEC_INIT;
+> +	int ret;
+> +
+> +	repo_init_revisions(repo, &revs, NULL);
+> +	strvec_push(&args, "ignored");
+> +	strvec_push(&args, "--reverse");
+> +	strvec_push(&args, "--topo-order");
+> +	strvec_push(&args, "--boundary");
+> +	strvec_push(&args, range);
 
-It's a very good question. I had `git history squash` in my backlog for
-a while, and this very question made me defer that topic repeatedly.
+We don't have any kind of input verification for "range". So in theory,
+the user could pass whatever string here, and this may or may not work.
 
-> I am adressing this message to Patrick as this question relates to
-> the grand vision for the "git history" command.  I think "git
-> replay" wants to rewrite all the refs that are involved in the
-> rewrite operation, while "git rebase" (without "--update-refs")
-> wants to leave all others refs intact and update only the branch it
-> was told to rewrite.  Is it the same design as "rebase" and
-> "--update-refs" controls if we update _other_ refs that happened to
-> be in the range that are rewritten?
+Also, should we use "--ancestry-path" with the first commit of the range
+here? Otherwise we may incldue commits that aren't descendants of A in a
+range "A..B". If not I wonder whether we might see multiple boundaries
+even though we would be able to resolve the boundary unambiguously in
+some cases.
 
-Yeah.
+> +	setup_revisions_from_strvec(&args, &revs, NULL);
+> +	if (args.nr != 1) {
+> +		ret = error(_("'%s' does not name a revision range"), range);
+> +		goto out;
+> +	}
+> +
+> +	if (prepare_revision_walk(&revs) < 0) {
+> +		ret = error(_("error preparing revisions"));
+> +		goto out;
+> +	}
+> +
+> +	while ((commit = get_revision(&revs))) {
+> +		if (commit->object.flags & BOUNDARY) {
+> +			if (base) {
+> +				ret = error(_("range '%s' has more than one base; "
+> +					      "cannot squash"), range);
+> +				goto out;
+> +			}
+> +			base = commit;
+> +			continue;
+> +		}
+> +		if (!oldest)
+> +			oldest = commit;
+> +		tip = commit;
+> +	}
 
-> Now, assuming that there do exist a mode where the command can
-> update these refs that point into the history that got rewritten,
-> there probably are at least two possibilities.
-> 
-> On one hand, I think it is reasonable to _remove_ these refs that
-> used to point at a section of history that disappeared (like the one
-> that were pointing at A or B).  Perhaps A and B were pointed at by
-> two branches or tags that were used to mark "up to this point things
-> are broken" and "from here on things are fixed" (i.e., imagine a
-> manual bisection).  After squashing all of the commits in this
-> section of history, the result no longer has such transition points.
+Hmm. I really wonder whether we should also restrict merges. It might be
+somewhat obvious that intermediate merge commits should just be
+discarded. But is that equally obvious for HEAD and the base commit?
 
-I think just pruning references would be extremely surprising to our
-users.
+> +	if (!oldest) {
+> +		ret = error(_("the range '%s' is empty"), range);
+> +		goto out;
+> +	}
+> +
+> +	if (!base) {
+> +		ret = error(_("cannot squash the root commit"));
+> +		goto out;
+> +	}
 
-> It also is plausible that users may want these refs that used to
-> point at A or B to point at X, just like the ref that used to point
-> at C would now point at X, even though I cannot offhand think of a
-> good story (like "there used to be transtion points, now there
-> isn't" I said above to explain why these refs should disappear) to
-> support such a behaviour.
->
-> Thoughts?
+In theory we can by squashing onto an empty tree. But it's fine to not
+care about this edge case, we can still address it at a later point in
+time if we ever feel the need to.
 
-There are two more modes:
+> +	*base_out = base;
+> +	*oldest_out = oldest;
+> +	*tip_out = tip;
+> +	ret = 0;
+> +
+> +out:
+> +	reset_revision_walk();
+> +	release_revisions(&revs);
+> +	strvec_clear(&args);
+> +	return ret;
+> +}
+> +
+> +static int cmd_history_squash(int argc,
+> +			      const char **argv,
+> +			      const char *prefix,
+> +			      struct repository *repo)
+> +{
+> +	const char * const usage[] = {
+> +		GIT_HISTORY_SQUASH_USAGE,
+> +		NULL,
+> +	};
+> +	enum ref_action action = REF_ACTION_DEFAULT;
+> +	enum commit_tree_flags flags = 0;
+> +	int dry_run = 0;
+> +	struct option options[] = {
+> +		OPT_CALLBACK_F(0, "update-refs", &action, "(branches|head)",
+> +			       N_("control which refs should be updated"),
+> +			       PARSE_OPT_NONEG, parse_ref_action),
+> +		OPT_BOOL('n', "dry-run", &dry_run,
+> +			 N_("perform a dry-run without updating any refs")),
+> +		OPT_BIT(0, "reedit-message", &flags,
+> +			N_("open an editor to modify the commit message"),
+> +			COMMIT_TREE_EDIT_MESSAGE),
+> +		OPT_END(),
+> +	};
+> +	struct strbuf reflog_msg = STRBUF_INIT;
+> +	struct commit *base, *oldest, *tip, *rewritten;
+> +	const struct object_id *base_tree_oid, *tip_tree_oid;
+> +	struct commit_list *parents = NULL;
+> +	struct rev_info revs = { 0 };
+> +	int ret;
+> +
+> +	argc = parse_options(argc, argv, prefix, options, usage, 0);
+> +	if (argc != 1) {
+> +		ret = error(_("command expects a single revision range"));
+> +		goto out;
+> +	}
+> +	repo_config(repo, git_default_config, NULL);
+> +
+> +	if (action == REF_ACTION_DEFAULT)
+> +		action = REF_ACTION_BRANCHES;
+> +
+> +	ret = resolve_squash_range(repo, argv[0], &base, &oldest, &tip);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = setup_revwalk(repo, action, tip, &revs);
+> +	if (ret < 0)
+> +		goto out;
 
-  - If a reference points at an intermediate commit then it stays there.
-
-  - We detect this case and reject the update. Optionally, we may ask
-    the user what they intend to do with those other refs.
-
-It really is kind of ambiguous what is supposed to happen, and I can
-think of different scenarios where each of the possibilities would be
-the best choice. So ultimately, I think the last option is the best one,
-as it also gives us a way to iterate.
-
-If so, a user would already be able to achieve that other refs keep
-pointing at X by saying `git history squash --update-refs=head`. The
-other modes can then be added at a later point in time as the need
-arises.
+Oh, you already use `setup_revwalk()` here. Wouldn't that keep us from
+accepting merge commits?
 
 Patrick
