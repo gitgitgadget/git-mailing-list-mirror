@@ -1,83 +1,81 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391E43B7B8E
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9651C3BB116
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781885514; cv=none; b=WMVlQe2yeozBfWLBieM4dHPDIF1vrZcuPeq3UOckdwELHTW7q46U1n7r+I6Ll/NzqmhFPXvPcwyyWz2epm2TDotPEsZvNr3b7Wh4q6CQLILwpp77UvG9txyBD0n35HiAvVL/kyI87Wuv0ZpFolWURYlabw8uUEPJNcPhFeKDxGg=
+	t=1781885853; cv=none; b=EbbEGmBT/uP3pwQDVinf+SWMpDXsWq88NM8XzZbUxPiALVddtHcrW6B9F6QuP/ow9xsEnz2C/j6hGP/MiLvCBLJKM2sev5vVDuPVjiDEcobLHz1IPc/CcrNXRXc51oIu/r8Aptw++e2T9YLU4j+1hJPTWtmNuKenMhk0DdnzYqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781885514; c=relaxed/simple;
-	bh=M5TWDfb6RMk4KMYbMolXyZka+rO2ySk2mlJ4f6KgT4k=;
+	s=arc-20240116; t=1781885853; c=relaxed/simple;
+	bh=oPh321HzNMl1gNkmtQWASDoBh2J/yw11Lqku8+Snmjk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dhMnV3uD9qC+gEPjYra7rjPItqxN9DCudyG+hGn7MdGMCxafhUMPJgfK5KadeSubj4Z/5Va9Cv4ZLTEwlYt8uL5rSk8AbGkOgXO50LVbBAboF3ykRMxe1YzfOicThKSoCgfzenviZzZGoyDc4JiWtrm4yspMxjvHn6HfkuHvc/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fKyh3qhx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QBFOtjkR; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=Pky4TxHodHOmeJdslmuC5rvymHNn9PDvK6UtWkmfuYTbdx1BvvxqYhV6IwNmXcYv/ewF26MS4VjfpMExh79D+GcrogKVqQ7SEh4bcQs0Qzio/lJ+pnZtobyvQwKVzb5iCGsRiPyey8Ak3Zucf32fo99IyGyLynP+EGxKllrBduc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FFTAQvvz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RR8m7ZGs; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fKyh3qhx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QBFOtjkR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 954FB7A0123;
-	Fri, 19 Jun 2026 12:11:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FFTAQvvz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RR8m7ZGs"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7B8AF7A012D;
+	Fri, 19 Jun 2026 12:17:29 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 19 Jun 2026 12:11:52 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 19 Jun 2026 12:17:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781885512; x=1781971912; bh=mwzGUX6tN9
-	9MSnSt+C28U6MWhdqbH6mO/rdcQHWanLc=; b=fKyh3qhxQWQWQ0Iw2M9Kp2oU2Y
-	5sgYz5QVhqejYOnRcykNsFULTRinNtcZ97AOayfJfOfBPY6eHVSGhfHYNafK5gB+
-	Dd3LE6wem/fUVxd6G9GORpYRvrQTn8vVVBf5AjnKLy9YdgJ1WFg/hYagKm+BnnJL
-	eSXawtUrjwUrmJwrffZ47auIhnBwrut3zLn3pAk4GxZd7xwtWFDwrleOXKAAQBDS
-	8DCzwlpVqmeN9QGKRMInJcQDlXoBEP9YNczgrWABXoDgBsBqtfsjiSe/SolNaPpJ
-	37a8EnOck5J+aTWjGEFuKg7Teo3pQ0hUAaBnOqqdeLUz3luvYEHv9L6zYegA==
+	:subject:to:to; s=fm3; t=1781885849; x=1781972249; bh=/+LnQ+K5O9
+	UUYowoy4MeXugFUkrqHDsq0mVRGnCPJ+4=; b=FFTAQvvzDbmZCWes6JdGf/P5d1
+	LnBmyBPgcUIrDTkVBqnN0uzMAX4ClKoEn+V1T9n4VO/gU2pTlgZ8Ca9h/QUBaIM9
+	mZg3eC4BxsalbYTHLk19rp5XEVv8FegNed9z30kih0A8nT6ME/bP/8zmEfX8iMZf
+	Jg+w92cRT7Gr8ZyYeom6KeNKDBNdeFlYNf+4Rd7WwrZ9yUVov3ul3eWggZCRRQDq
+	ddpR5wDUeUGnVfr6oDxMBqUcbJCHFThJ5ZiEm/MsO34ka0HCTqAna2z5WYkfWFFi
+	pNaSJIZZH6PFUzNLNdq9PphiW2UhEldHHhvkjVpwdVptyNnIxurEavVGcVvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781885512; x=1781971912; bh=mwzGUX6tN99MSnSt+C28U6MWhdqbH6mO/rd
-	cQHWanLc=; b=QBFOtjkRf1+3kjX7xDY6hG0pMit8jU/l/gXbOq8SNGWlLB0klVA
-	aCjrNL/WoDCAGJfqLI9Pp8fNjLer9zsD/5BDboKGmKzBB6KPsEeMU6vxOjV3G7ka
-	arHvOuhMKRHy3t6hxKa6zb7QxzfNoWU7My4lsnhGd/pVTVfcN8shJIVPX96NJ8J9
-	1nLYksxLo6pRDRu48tOFcx29l9UPCoIlwIZsG8OoQAk+Oig0Wl/wd3dy2GfDAyR8
-	aPhH+bB9eiooNbqcrcnIKPusHUl2A+0uNtlYRLcC03A9x1zbgLnmg6557klQzASn
-	Mb2hsh+86GBoBMKmCdWT3Ok5gD6P6IN6axw==
-X-ME-Sender: <xms:R2o1amcY8a9HwsKjAuWzHc67tXjVBFNCjUHcd_FmDbTUXcvx9AO9WA>
-    <xme:R2o1anHUtHHykmkXDauzu6mdUZjec6wrScfA21uCmAO3v7KqXvi6ZrFiFPUiMGYwX
-    0N7jr_96r9YXi7aogmp4qhAqCBhk-38fuOptL4eibRLwQ7fljxbbfQ>
-X-ME-Received: <xmr:R2o1av2MGlpixYa9giPiycZwVy782Rj0QPeZCiePGJ9TJOHt-axG2M9ynJGnjZYvWro6naOTP-Ec_ihQl0Vod4edStytKSs9Xu-r>
+	1781885849; x=1781972249; bh=/+LnQ+K5O9UUYowoy4MeXugFUkrqHDsq0mV
+	RGnCPJ+4=; b=RR8m7ZGsi38ZoTtiTNukdCo0sHvd1fNJJgqaLhKI2Lz4FBlGEEi
+	YsOhcw4FLuRVsNZ5RJcxbGjxZaVQyJwZyNdtiZEW7EcLeErd69iUaWpU378n2F8y
+	rLuCWQpiOjJbvuJ62M6HvURBNJHpGeklZ3jETHSMXtIqPot12aWbjFqPbruJtrS2
+	Mtit355oNH01qub2192bRIis58C2GT7OZv+kA4f5VR2BmvOH0voyDjuiCTdEZxBo
+	ueiWoY3m+MYuZfl4+t59FejRWDzqUCyBi37TA5iVrpvpecKx0cb0wy/ChBh/6IYJ
+	6hx2EXpprkgtDB6Tjz87FNh98lDvPiTmx8A==
+X-ME-Sender: <xms:mWs1anxeulOFOR_5RhiW_kgvYVyhdjixOlw6E_IDpssluBRfqZc9jA>
+    <xme:mWs1amRjvBy12YjdhXzDznv69IvQynn1fUMPD3getjwROwMgMHIh7G73bGrMBSO5x
+    vvrOxhPQc3atvOTNo63rwUyy07qMeytK4T5OP8xf6VyLExBNiml>
+X-ME-Received: <xmr:mWs1amU3nEMUd_MQT8q9FMYnWbw9W21455DP2yb5ax0qegW_DcahSP0cLTjJjiDeCe0gCyGA3cG7bljN7WI0LgK_E3jCiGEjNrwz>
 X-ME-Proxy-Cause: dmFkZTEAovaZkaMeqHNv4pvnuXDZJAsHBlkDZPgT7Q1mSK5vQVSp//N7HuVJXhCaUvyuo+
     KBaPYiwjBzklpO60Af+WIs6paNetKfdkFZq/jN30CSTHTR6DV8cX0ETvwpH/XXg1arHd/k
     /r3u4Vupk2wTwPbQz4PEXyVw7cW9HxCydr45319ywzatpaXUxyfCwtYJd/FBjvy2Ce+kDP
     r429mUXfXnc1FUbF1TVXPuk75v4+xw3b+4wrLcUgfYoWDZkpjEGQ586x5E4fbm6EmEgp+l
-    TysYpego8ALU8+itIb7YCl7gOC/F2TPXdH9+fP/ZJPxdv6M9VVT9IUuPK9NlFkIu6b/xZm
-    6Ym8D0hnVWEdguri5t3YZ0zJ1eYbMzw1jY4vfVcgCLEu2v2vd0knjuUSRRU2NwnrmlRKht
-    vM30EreJpDlbF1I7BdaO6Lp+CBPVcYVFcBGt3eQg3P15280y4359LityEYi+v+V9OY5Nn3
-    1oYy1smZ1+14oatS6VUAbLhuY3tlZPfpCasyIClMNo9anVuKKvPt6JAxGX9GTFNPGqmv2g
-    086XIrsTJ4SRm375h+Y9KXH/MrIVZQNfhxOzCJlETs8uGsF2WQF0hnIZyRhKbz+LRUOeEs
-    YTofkKAUye3m4DE+CXZR0N2csvSKG6+ISz3r/trSl9aR7WXqTCnArskH+t2Q
-X-ME-Proxy: <xmx:R2o1avl_1hxn1U5Z2aETtnxRotzp-Q-t4KtoR1FLp6hPVf6X5JQPXw>
-    <xmx:R2o1av_v7xr6GmW2RoZMEV8ElhBapgYr6ulr71WpAf2zrLv8Bx7UIw>
-    <xmx:R2o1akqj2G5HsFzqj9Wbbdk-SG1KguA8l0wqfVrlUOz0rT__pZ5i1g>
-    <xmx:R2o1aolKY9-3uvvPrOxRwUy7ZkQfSc524wfpAwT1WvrS1ybevqfdCQ>
-    <xmx:SGo1am0zfgc8UlPt_-HMuOR9woKshBQwMatb7dTFHanDWryTqbg-TK_s>
+    TysYpego8ALU8+itIb7YCl7gOC/F2TPXdH9+fP/ZJPxdv6M9VVT9IUuPK9NlFkIu6b/xE8
+    k59Pp/xTM23h3Yhua9wiK7YnjTz/mik5IC6lcuynvaGEn05dYOp6xd/uZgf6B7nBFtexzA
+    XnmACMyp7hARRH8DxlNj+ODd64uk2nI4TB1qB6ILUePBs/tbJjKrokBHpN2k6QarghaR8g
+    Ofd38QiNnC13T+HfRAfiKIBppLS+LiwvTLLUOIa1437pg+9mZ5UhxtRHJZIumgm7frz7iE
+    uAvoE7sRkra8CfT/QfffVCEwyebk7PJw8xFVLmxGQn/P+LZPAvE8uj1WPWSvOyr3YJyycY
+    v1bqWY4bCbIRmQCzcyxiMakACeiuCSznD1fyzdfQobqi8qsSB05wrwjdhJNQ
+X-ME-Proxy: <xmx:mWs1agZihKP3_EGj4ORZUEYHhXxQLkzPpzWMnKV-oSuQ4XFFNnTeCg>
+    <xmx:mWs1ak1WOM6KrS4qfbNog9fzwhAPEInI8gMuCWEfLfdn2TwrJEnPnQ>
+    <xmx:mWs1aqg6GA_wEyVFVGZLgqjYjrFgcxTN258pJtpiSP1i5T1uaQjrCQ>
+    <xmx:mWs1agb9znz3GWhAr2_06Qa-FO4NMdDHpFbipQABeZ7reVMlUa9vng>
+    <xmx:mWs1at2tYyZ8cUxP-D5cS_nMaOSMA-2MyruXug26jZD5ZQkL1hsbVclU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 12:11:51 -0400 (EDT)
+ 19 Jun 2026 12:17:28 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 0/4] history: add squash subcommand to fold a range
-In-Reply-To: <ajU4JYYUTz5r-Xgc@pks.im> (Patrick Steinhardt's message of "Fri,
-	19 Jun 2026 14:37:57 +0200")
-References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
-	<pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
-	<xmqqo6h7nza3.fsf@gitster.g> <ajU4JYYUTz5r-Xgc@pks.im>
-Date: Fri, 19 Jun 2026 09:11:49 -0700
-Message-ID: <xmqqv7beldbu.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Michael Montalbo <mmontalbo@gmail.com>, Kristoffer Haugsbakk
+ <code@khaugsbakk.name>
+Subject: [PATCH v3] SubmittingPatches: address design critiques
+In-Reply-To: <xmqqpl1oteoi.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	18 Jun 2026 01:50:53 -0700")
+References: <xmqqv7bhxiby.fsf@gitster.g> <xmqqpl1oteoi.fsf@gitster.g>
+Date: Fri, 19 Jun 2026 09:17:27 -0700
+Message-ID: <xmqqik7eld2g.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,25 +85,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Contributors sometimes fail to answer fundamental design or
+viability comments from reviewers and submit subsequent rounds
+without addressing them.  When design decisions are resolved on the
+mailing list, the final justification should be recorded in the
+commit messages.
 
-> There are two more modes:
->
->   - If a reference points at an intermediate commit then it stays there.
->
->   - We detect this case and reject the update. Optionally, we may ask
->     the user what they intend to do with those other refs.
->
-> It really is kind of ambiguous what is supposed to happen, and I can
-> think of different scenarios where each of the possibilities would be
-> the best choice. So ultimately, I think the last option is the best one,
-> as it also gives us a way to iterate.
->
-> If so, a user would already be able to achieve that other refs keep
-> pointing at X by saying `git history squash --update-refs=head`. The
-> other modes can then be added at a later point in time as the need
-> arises.
+Instruct authors to be particularly mindful of critiques regarding
+high-level design or viability, to defend their choices on the list,
+and to accompany new iterations with clearer explanations in the cover
+letter, responses, and revised commit messages. Also instruct them to
+explicitly document the resolution of these concerns in the commit
+message body to keep the historical record complete.
 
-Yeah, sounds like we should detect and fail this case, with advice()
-to use --update-refs.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * Updated a bit after reading comments by Kichael and Kristoffer
+
+ Documentation/SubmittingPatches | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index f042bb5aaf..a9789e5303 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -51,6 +51,21 @@ area.
+   respond to them with "Reply-All" on the mailing list, while taking
+   them into account while preparing an updated set of patches.
+ +
++Be particularly mindful of critiques regarding the high-level design
++or viability of your proposal (e.g., questioning if the feature is
++worth implementing, or if the chosen approach is appropriate).  Defend
++your design decisions on the list first, work with reviewers and other
++members to improve the design before revising the implementation, to
++avoid wasting effort on an implementation before its design is solid.
+++
++Make sure that any new version explains and justifies those design
++decisions more clearly, in the cover letter and in the revised commit
++messages.  Aim to make the reviewers say "it is now clear why we may
++want to do this with the updated version".
+++
++Topics with unresolved fundamental design critiques will not be
++considered ready for merging.
+++
+ It is often beneficial to allow some time for reviewers to provide
+ feedback before sending a new version, rather than sending an updated
+ series immediately after receiving a review. This helps collect broader
+@@ -323,6 +338,10 @@ The body should provide a meaningful commit message, which:
+ 
+ . alternate solutions considered but discarded, if any.
+ 
++. records the resolution of design or viability concerns raised by the
++  community during the review, if any, ensuring the historical record
++  explains why the chosen approach was accepted over alternatives.
++
+ [[present-tense]]
+ The problem statement that describes the status quo is written in the
+ present tense.  Write "The code does X when it is given input Y",
+-- 
+2.55.0-rc1-129-gff98d784de
 
