@@ -1,116 +1,102 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C303BFE38
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977A53B42C2
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:38:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781887082; cv=none; b=Pe1mv+kmFIffREeea/+fd8rBjE/RWIh5WY3AYfS2yBGPnFR/COpl4v74ARNC//kxE6dvChxp3+fpqbxmJ5/BC2W/Hm2sIUHryYWqlDxWVdCAysYDpzrDCpVIvAI2UxqonlnbabQgWJC1B94e+EatH+O9GvNWo4vnlWdXtDNg+Cc=
+	t=1781887120; cv=none; b=XFpaDx9E27M1vBXGZllb5cF+AeXgQEdCpdGPprkJJOydxUaSjM0HvMw8IxIDaxlHP0warr2irZIeY8P/HSsXqypbOPoVG72eqThuAcdiHNF01VCdYjWuRltFLkr+jyOrzMaC2RF+6Nwnku4nQUmR/tznSoJAi+Uy9vLbYCcfMVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781887082; c=relaxed/simple;
-	bh=2wnqVUOt7hv0jwZuHRoC4SKAG2asn8UqM5ig4FGMY44=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GWEyAYXPVeLQ01m++1nReymPJ9bsTj3WCEL+ASLhAbQFqeYxH23Iuklx7gp7UsG1Y1N4PEt32No1VKOpgm4+CkLMsMdku6Vb/H1T5qXPnZ9RW80tmuaBT2hALJeTk42evrqpRwPiBhC9I8jHBTx1dw0fx0WuWofMpFP9YlBBK0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SxV7K1x2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G69+1eNM; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781887120; c=relaxed/simple;
+	bh=6q+czPWacePL6DRJ/SwpsPjSrI/SZjFAff7vAtA6MzA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bhgCGMBhTb97gZ99Bn8uOOeDD7+Ew2ISJMy8HDHwQ1mNut6PSWDfwKNqabmQ8NX8NmkrQier+Y0Gu0kb/O61nN2l3zM5LirbHzFVYpNcG8cGzmgllPeipa2AYHzPyUtYML+H/Xkt3jTIP2VDUuD2xWAsgTFhSKS5tY0hdQEvgvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=jmxiR2Ko; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=dO1ZNzMW; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SxV7K1x2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G69+1eNM"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 49E2F7A002E;
-	Fri, 19 Jun 2026 12:38:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 19 Jun 2026 12:38:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781887080; x=1781973480; bh=KutvYvl+sg
-	9qMN9so0ThQ0wTjWMarlqOMZstk4LZr68=; b=SxV7K1x2FXrZbPFVoscdaAyuRV
-	R6PP+j/U03rq2gJjOVZ6c5ZKP5P4xr7jIwEkJGfj1j5eiFhPa58RN8C1iNlBWt1l
-	N+rwyWJYL/d+0JWPkUuMn3geCPDMn0DRYu+A+x5C2gfoc4L095gyzXYqoGlJ/tKn
-	hJT7GTDG4HH6onp8929K58vR0fgW1rMDoxghdBcJAIjQ35BMBRtMc6JHeehzhuD1
-	TfCdY6sZ4VOPToebkyS8nDJjGJATg+OCUebQrpV9It0wvTChbeur/ZeBFGwVME9q
-	VYwVsNUS8pc4UsoqC2IwotYWUUWDHOTuLxWcGZ+33Ah9ndoNhAv0JYhK/3EA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781887080; x=1781973480; bh=KutvYvl+sg9qMN9so0ThQ0wTjWMarlqOMZs
-	tk4LZr68=; b=G69+1eNMAWBpw6zkoDzhkm0jkCXZjkYZakJv+pIzka1G7tEJiTp
-	1S89AsY7rFA5jP4SjWhgfkztaMcqBDtb004xzFoIfSvVmjvDMf/pLUyVkTHsc6st
-	29jUrx087bw104cme7yWLFLQFtYNt2/ovH0g0X57l7H6SaGs6b9Qrm8wWBXz4f6E
-	99VLVP64vTQXn8fr3Maorg/DJvytx2eOgeIrjw1A64W5LTPAjJJHOjBfppF/vbRO
-	xzH64V0gZI4AQLFkn9k4BxQ6N31X/S+W51Pc+RZWRXrrugBpbE+BV1YhpXMK9u0H
-	cer/KEaW2WDuHoqLIQYPfnnApAMFy69XIPg==
-X-ME-Sender: <xms:aHA1ah97twgEnK6E4wmrP7od9AddpFsEznZUsYPiRcs5ZzPXalQS1Q>
-    <xme:aHA1assGgFTW7ErDCFVpENrotzN0f4a2GIaGEFojBmud8bqQr1cjYG_Rq9KN9uV72
-    3pPIfGIIRDqoVO5OeysalDY__8llWTfZu2g5SROa23gC2wlWzJFFg>
-X-ME-Received: <xmr:aHA1akBUq7sV1i3jdkIgmyYlNjUG5UCP-z-41orA08pH3TH8tPR-6OWcj0lqEuHoF2OD-F8yZk9Q1REHmcnGTugMIWzAvDYbX_9e>
-X-ME-Proxy-Cause: dmFkZTEmXXMK9/DvzZVKTkXErXX59kO7YcTxqLB6fEfBHCXe8x8oDJUMWqras8NjdsN2qE
-    9XWoxBPmxLk++RcLPf0STLSpQ9SS66LuyybEACtJVHJZWoumsxLNg2Lyx95WAc/J8TYlDZ
-    7yl635rRZyadMpOFkhdRYYPWDBMZTq6Y0WWAQ75sYjSKHPup5TRrBmYr/c8QW3T1iLMpVM
-    TPipJAO2lpbO2+kBBAxXFtPspcuxUEEy0f02W2e4bgCvifwDaaRQ1NvWYtLWWs634FiKsB
-    TAj6bj+uvNO9/z6L7qxqYw2WkKVO+ZIH5vWfob1dN87iBjukWJrvoKyc9qeEAT846Wu2pV
-    B4xDnFb7Jep+BhADy7CiDZnlMBhM6GhBetHaqiKc0rdkZg2SKFsIWarsVfrycHGLOWWUfT
-    vR6RJOYzuE+IVVoyqjGSJsV1yBRlripga/U45TsPj/CCL9R8co1+P28XJBheCxJ6FwYYOC
-    p8St0K/e3vXBTFs08dnD1S87+AibJ91R0PHTO3KC7bpD4Zsk4H9zmN9Sxi86K8p0Ws2345
-    7/YlpwopptQ73/Kc/f27+XwtqYc3yVVjoI66VISrg42IztA9TLXL0cBwaGRq2CWeVZgWPu
-    hJecAOJqLJzkis5YzQF/S9UqTl79BE09IuWtmZPbo+Tem5OxowmAGd/GZsCw
-X-ME-Proxy: <xmx:aHA1akVtxNmbKPyjCQojaVDwy67k6DImQB9JcRhJnUdY9hehrfQaXg>
-    <xmx:aHA1aiC6q3GrcaBJfsydFc9h0cFLGP3PVqcu0gzlhcJYdFajTDSWWQ>
-    <xmx:aHA1an9NbVNl1e9m1tLq8sa9PnVH-K2412xSnvGeT9B1fyMkKOyZCg>
-    <xmx:aHA1apEsKdQsTj4GdjgrtXE6ZIT01DUOD3Rhg_NvHLyLjEwUR834_g>
-    <xmx:aHA1anhK6qEL_WS4wX_BD0nemDK2rH3De5ktA-wU_fXMtI9pldNZosik>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jun 2026 12:37:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jishnu C K <jishnuck26@gmail.com>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] help: prompt user to run corrected command on typo
-In-Reply-To: <6a34dc40.2c570c9e.381c97.203f@mx.google.com> (Jishnu C. K.'s
-	message of "Thu, 18 Jun 2026 23:05:52 -0700 (PDT)")
-References: <20260618142033.15216-1-jishnuck26@gmail.com>
-	<ajQuqTB580gqNP8D@denethor>
-	<6a34dc40.2c570c9e.381c97.203f@mx.google.com>
-Date: Fri, 19 Jun 2026 09:37:58 -0700
-Message-ID: <xmqq5x3elc49.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="jmxiR2Ko";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="dO1ZNzMW"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=jmxiR2KopJt0Ivg3HnM9/fO08gHSVEjvE/sYp772jsI+bXez2etHjLujaK9oCu91o/4uEh8Krq7htnKZz6H7jL7r1kOyvKvDVv2rzV5FQ+A2l3X6secN179Txzr6Y3/4abQ11aw7Z05CVifINakYLb2Yvj8JAgnaN4sIJEg2aK82aouuTbF7vj7PQIhUI93c1sZEIQX3vUtRrgE0kG1t2Avla99C2AWj/zFxy4EZAxzn+cMUo2pwk7KFgnTRT1kUsff1HqWtIC8epoEBcguO0GaNds8waSVhvWWSKE4ibRhpJJjp8DaeSs+7Ln+d1z8qDqR4fx04RxhX8luUeNan3g==; s=purelymail1; d=malon.dev; v=1; bh=6q+czPWacePL6DRJ/SwpsPjSrI/SZjFAff7vAtA6MzA=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=dO1ZNzMW8w30p2i5IHZUlcZytht5eFuuFn4QCmy74yNdLnXR24sehUUfhYHLpg6cxQlbOCPapTZ0eJlfBcUNdFSAZ1Tb8Ahsxyh+bc9Nxqn1PRQkgE596DUrwHXF8HFLQXJRfBfE6Htcd7g2Hasj6PSfvMqxGr3OjkdSR2HlhlF1TyGuORCZ3OX8K+T8VIzP+RVB0br0gME1YZ4IByxJ5lswcNtLCeXEmS5Ezdsv6xa/7XFrIh+cMBHccgWcatS4otTtzE/pUbfeOOjmgNvl9Jps8nsA2h73t5T5yd8Tuzx8YACTFlNSjwMsxUIMoLVJGr0a6u5w4TGKZC1G8a0fEw==; s=purelymail1; d=purelymail.com; v=1; bh=6q+czPWacePL6DRJ/SwpsPjSrI/SZjFAff7vAtA6MzA=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 474948874;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 19 Jun 2026 16:38:37 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: Tian Yuchen <cat@malon.dev>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH v4 0/1] environment: move protect_hfs and protect_ntfs into repo_config_values
+Date: Sat, 20 Jun 2026 00:38:22 +0800
+Message-ID: <20260619163823.652091-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+Reply-To: <20260613153302.168801-1-cat@malon.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-Jishnu C K <jishnuck26@gmail.com> writes:
+Hi everyone,
 
-> You're right that `help.autocorrect=prompt` exists and is similar.
-> Our change differs in two ways:
->
-> 1. No configuration needed. The existing prompt mode requires the user
+This series continues the ongoing libification effort by moving the
+global filesystem variables, 'protect_hfs' and 'protect_ntfs', into
+'struct repo_config_values'.
 
-I do not particularly see it as an advantage.
+Place them within the per-repository configuration structure
+aligns with our goal of removing global states.
 
-> 2. The prompt includes the original arguments. `help.autocorrect=prompt`
->    shows only:
->
->      Run 'checkout' instead [y/N]?
->
->    Our prompt shows the full corrected invocation:
->
->      Did you mean 'git checkout neo'? [y/N]
->
->    This lets the user confirm exactly what will run, including their
->    original arguments, before pressing 'y'.
+For reviewers familiar with previous libification efforts, Derrick Stolee
+attempted to wrap this kind of filesystem-level variable using a
+lazy-loaded global accessor get_int_config_global() [1].
 
-This may be an improvement, but is there a reason why such a change
-must be done as a parallel and unrelated (re)implementation and not
-as an incrementa improvement to the code that implements the
-existing feature?
+However, as Glen Choo pointed out in his review of that series [2],
+it is strongly preferred to use plain fields in a repository-scoped
+struct over global lazy-loaders, provided those fields are properly
+initialized during the setup process.
 
+By moving these variables into repo_config_values and parsing
+them eagerly, we successfully tie the filesystem security flags
+to the specific repository instance without altering the timing
+of configuration warnings or introducing new global states.
 
+Thanks!
+
+Change since V3:
+
+ - In repo_protect_hfs() and repo_protect_ntfs(), change repo->gitdir to
+ using (repo && repo->initialized).
+
+[1] https://lore.kernel.org/git/a42dd9397d07b2dc4a0d7e75bfe1af2e46cad262.16=
+85716420.git.gitgitgadget@gmail.com/
+[2] https://lore.kernel.org/git/kl6lbkhpzujf.fsf@chooglen-macbookpro.roam.c=
+orp.google.com/
+[3] https://lore.kernel.org/git/20260612160527.167203-1-cat@malon.dev/
+
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+
+Tian Yuchen (1):
+  environment: move 'protect_hfs' and 'protect_ntfs' into
+    'repo_config_values'
+
+ compat/mingw.c             |  2 +-
+ environment.c              | 22 ++++++++++++++++++----
+ environment.h              | 12 ++++++++++--
+ read-cache.c               |  7 ++++---
+ t/helper/test-path-utils.c | 24 +++++++++++++++---------
+ 5 files changed, 48 insertions(+), 19 deletions(-)
+
+--=20
+2.43.0
 
