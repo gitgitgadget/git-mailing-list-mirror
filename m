@@ -1,127 +1,125 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274A61F30BB
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 14:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48240399011
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 14:56:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781880730; cv=none; b=tgziFIeKqjsbh8SrvS8EEEWnanCPTF7x9e/y4LgKO+Vdf5aFM92AJwPcNCKYRUVN+HtZng0cmwmxvLodhbYfuwDswNhjkR2h+a1e8ji6x6ZR4D69er75TFfL+VPYWHVbO+XyvzuQh06kZfDEXsl58XG0Tv2vnHHhtZxB9lsJjmU=
+	t=1781881010; cv=none; b=KQzsZY5Uw58+DUh35XPJNQTuyTgqSZ3jFVn/ie1Gg0R0dfSBiI/6Ln4fT52I88V57d4+MrvSS1DBbOcJGEJx3X0MGm82dXt14k2o69meC+INNlpvYYVVEJRc2RgnIaBBGyUQAp85HvD4hT9IpRu2Hg28kXQI6DY/GZMIKlhjepY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781880730; c=relaxed/simple;
-	bh=bjARHvmYx+0jdecatEwCY46bjpIivqYV5jRVJSfFus4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SokihgfZ3qvIHtv3znK72HYkP+fD/NYMQD2fXBVcueyvcIkqTyTtGidN0SvSuEV4CJ4RKz2hhtlzHo3uluSETIZR7+9No5ypVoHSEtjokle/JrycEkaxJ0ra0lBQZ9RIFZxZw70MLRAJnmGabAImT5Gc1mEPeb9nLwr6d7/SdnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=fn6aHPed; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1781881010; c=relaxed/simple;
+	bh=laAiaAnY52Vs7h4ueV1OVXp+nNJgOxPRHQj8MNu/S2w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=L8rdInVHDO+9zkCBJJ8qN9SK9Y7crgkIU/I2iThMUSVtsxLuN/0WhKvvSIV6NRDvVwRz9B6nBa0QvuGKBYnA+GAU47JRZAN2LUb5YMwWREQBc06m7bBZqAVjplJgeBRSqR+blWD2FWntPXBmb4VJuIDvrVxUpFNYQ29ENB0kQhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=njSIT6T8; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="fn6aHPed"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7dd5a8dc8a2so17042827b3.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:52:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njSIT6T8"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49241896317so4237885e9.3
+        for <git@vger.kernel.org>; Fri, 19 Jun 2026 07:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1781880728; x=1782485528; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZzSuUmNFWJTpdO8h69Pj1aEUSSOo2HqzoWTxDaOIT5w=;
-        b=fn6aHPedCOhram2kBZxn9k/p0JFefcCLkdMaoUsuH2xfKciAwnp167TEYdzro7W1pi
-         E5BsTJWg8sGA5m+/hzGQcqXOBD23hzuAO9FyJOyrgQNSwDdpybst1aFxDrpMJgJDxA3y
-         rrmN6uRBRrbxqxlFbMvOLvKLVTbVo3qOtk+uZvDz/UwncFPgJslJK/F8oMgJeMOnnUl3
-         zne9DpwjZVVuwYvKSQWMrmCGG/+Xa/iv9OYnrRM1sslzZRW8S0YodgAggRvzjE62vPry
-         ZZUAhEnsA7tN+3J7Vr9XOOhxzk5FBRbPYCPmyzVb6ceslDQLyA/rbpnuYQUK8qSbQ4Zt
-         fhiw==
+        d=gmail.com; s=20251104; t=1781881008; x=1782485808; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gseaeGUpJbXzoOmyiphBGXOvPdALN6vsU7WldfKd0iE=;
+        b=njSIT6T85AKQlJ1maNUl8pXX5bNRSWn3xKxivA7ogH2dNVm3Szn4w6LK7J4fE5bQcZ
+         M2BDW0//y7e7PU2iQhUp2RhbQ/ewShnNmRk/pi63hH2NLKV6ovBdJ3+0GZrRn/6Bpj2J
+         8hkofipi49mMFHndhmXoq3ry3qSwU8OVc/shVeINFPZoOGucTayk+9fKJuJ9HxoYxcng
+         GiqdrrDfyAK7vqbJuib/q42cVjIoXYzX/j+dK/FTR61VNf5U/DfA72SA6RXj2NHUr2nQ
+         TwarRnht4XUS9uJ0ieoNaCuKo+UlI0fJb2q4H18RutPAd6gOyfzE8LXRdyCcVX4CJxNo
+         //Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781880728; x=1782485528;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZzSuUmNFWJTpdO8h69Pj1aEUSSOo2HqzoWTxDaOIT5w=;
-        b=SZ4fxneK0C4f3PmvPV9+7qmcGgR/2qNEKWiNclOXZt6AVUm8yMn+AVhlbUupIzHlvg
-         lw0/G4BSgvQy7GcDR5dpVewE9VRVQpPzpYPb0slL8Gcd5LXacWEMBGWJkYcpJlr+gstX
-         1znadg5cvpoDYS4e+lwl3+o0/jnPkYXKlUUC5lDDPr0NhybgzDXGlImNFNlAEXEktXjy
-         s0yNlRION3V2NPK/oaxt1ASlN99aCKdqDZFFIiTHeD9JBC7a4jwvqL07sYfhcYDcRrL+
-         bSDPVxND/Ke8iNYTZPVaK99745HK/2uKzjJHjaZx/mn6q3VS3U/hz7W2E0P+BblSA7yO
-         zg8A==
-X-Gm-Message-State: AOJu0YxysMlSXZHt58BWZgE1Vh1O4Up4xf4kDCGgOPyYWY2qNciUZb23
-	EfoRjgvQkTU2cXsD3EJzHXQWODG8miLpxCKi43aHNr2hi2PIWPtdrEPJ+6bQUYNeig0=
-X-Gm-Gg: AfdE7clqlVXNOlrIa6K3fgvISemfMfTy+ZIQLggUriUpYblKu7zXrPFxGvrqBTVuMyQ
-	zia/PXzFI4bXBjxXtUIWf+mVR9wiMuK/Jhms5ehn6NXMw3BLr5QUYgZVe4iqORVpMwcC1rUzmaD
-	3O7YTjemuc38hJBzbBLI3zgrVUGSQ8l6eJUd3shMii0CIyNV+KYDuGIF+Type8I5Gawayuao/TK
-	Wy24f3YPCKiNuDioBSfpeKBo/Kz3iAjkDJfka0zVl5pNaBJlC+cw0RRqtS20HD4umaVEq5Rg/FS
-	rAmjQyqla2K98Zz+FJ88Pm+SMkErxMtbtlnUVhz06k748VuIvV062QwEOqX28s4aFz4X+gJAjL3
-	nu+SIXRGc/t2ViYLUGo3vP/ELWidgtsyL/OAWd7BVcp/6NABxsFvEafowCDeEe4p1KZqGSP2IAz
-	OqjixX8aRyQBVLkDEs0GV5aF2mR0kuOfEZsgzy06zOmlVXyi90s/zdFZ/S53Ir0mpYhx6yXPqAc
-	DMu0T4fR7ERWkM/FNwxW9CFax2QC/HvY4w9Vuky+aZA0DAgVexwbKfoe2lca3mkdmW8k8SC+dKp
-	O0aK1A==
-X-Received: by 2002:a05:690c:63c7:b0:7fd:e030:23db with SMTP id 00721157ae682-8013237064amr31415827b3.31.1781880728017;
-        Fri, 19 Jun 2026 07:52:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-80119810889sm12427987b3.1.2026.06.19.07.52.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 07:52:07 -0700 (PDT)
-Date: Fri, 19 Jun 2026 10:52:05 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/4] pack-objects: support reachability bitmaps with
- `--path-walk`
-Message-ID: <ajVXlcHgIF2XkmMQ@nand.local>
-References: <cover.1779923907.git.me@ttaylorr.com>
- <cover.1780438896.git.me@ttaylorr.com>
- <ffad584a43ebf3cb2138e8dce7daef84ab72712f.1780438896.git.me@ttaylorr.com>
- <849c659f-efa8-430a-bfac-0c26a3ed1aaa@gmail.com>
- <ajVSHvL+On9AEV+g@nand.local>
- <131d7ad3-7791-4d6f-bdf3-afa6b0831a71@gmail.com>
+        d=1e100.net; s=20251104; t=1781881008; x=1782485808;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=gseaeGUpJbXzoOmyiphBGXOvPdALN6vsU7WldfKd0iE=;
+        b=gcNB7tOlC4hOnFPFM/Q2ES89QPw9gGVc3JETczefTkiZbZy9GgrSchU6XgT6ypBlHd
+         lanvRu7zVmrb9YB+R/GEyUtNNE52vAj4rkDQuBogOpcOm1DeCEnAA38xRbnmyHbkka5r
+         vcX3as6JHo3ApfqkocFTp2s4ZTPwb443kaY79T/F9c1nFPIR/bqqB1hdLRaBRfwrzo9O
+         CR2ZDzYBO4t5GGCQXeN5mHofhuCnM5FHVOMGx9vl3uoEgB/Y04uc439V9Tju5mKlTOi1
+         EtCEyefkiTkTh+rlE73/bvMH6RloCX06QYQgTc5Eq8ECbVNzTfOK3vMwJn6+mLj9F6eY
+         jOmw==
+X-Forwarded-Encrypted: i=1; AFNElJ+Y1iIXWH4e4V2bOyF3AwYZHjIFYHheTQQT9+3u1fDCfB/L8d0Pj5p7BqOr7X1zSVRU2Lc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxhNQ0RL3CVIauOEq6iOWJ1P1ynLf7YciHedTjljGUSPIrb3kH
+	ax6qv23BtmUIjfIHGpe94T41mVLUvkHGJ2oJmxDMAzn+0eagZGi1VTHT
+X-Gm-Gg: AfdE7cnvH0UYhromWEzyfBLyyvi++1gSf6BmuQmCv3HrRst6EI1YLq0TGbP0JnIlg5H
+	Rxpl4hUGa3I+XhnM8b838eUZTFS+XL21QJt8U3EPydRRZOn93fumfTkbNKkmoxB0DZlkWkN3/Al
+	VB/KWN0SBDAK3UM+Z18maLoMeH58ihwtnrUn3o8kARIgYleVIv1Lr1P+aDtZJPZq1sBzEzX+vkQ
+	5qPo1hGDtL5fApIr77yLtk0KszDgcfOjNMB3OoKbimHHrjfkF+wQAP9+UsdTUjmjityyBkOyfnZ
+	KminP6U4VYUmS4qIwYyzzoGkWAWfKpFUATN4bOheELbA3PgfVvLJF1SvnXW/ROJXHb2D6aL7HM3
+	uoX50oKMozYDGHq6/isYpkkxKmUIg3jNPdMmWTq9gsEgjc/WhErbCWsa9gQi8t35sCFLTK8Fq4H
+	mWGfhHtMK5l2li8WHE1O8ejLgYNNwt99sR/YFfWbAM61DXtSN/eZPnrieKY/eWZCod4tqH0I1tx
+	c3CK8KptGLXOVVpXTDQIOPPEL8rTdxjME5gwAZ0U2/8aYnpypMTycRzHFzrGIrpQktyi/zOe94p
+	f6Kjrru2RnWTnmfG2GTCvFY1YnN9mPURjJ6TW6fvbpMd+yjqzFdiTHI4In3Q/neb0iPgTAgrbd4
+	+ldkn8+JcuDXUtA==
+X-Received: by 2002:a05:600c:3548:b0:490:c6c2:bdc2 with SMTP id 5b1f17b1804b1-4923ef518bfmr88687035e9.4.1781881007488;
+        Fri, 19 Jun 2026 07:56:47 -0700 (PDT)
+Received: from localhost.localdomain (static-204-100-6-89.ipcom.comunitel.net. [89.6.100.204])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49240efc63fsm39430795e9.1.2026.06.19.07.56.46
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 19 Jun 2026 07:56:47 -0700 (PDT)
+From: Pablo Sabater <pabloosabaterr@gmail.com>
+To: gitster@pobox.com
+Cc: peff@peff.net,
+	eric.peijian@gmail.com,
+	chriscool@tuxfamily.org,
+	git@vger.kernel.org,
+	jltobler@gmail.com,
+	karthik.188@gmail.com,
+	toon@iotcl.com,
+	chandrapratap3519@gmail.com,
+	Pablo Sabater <pabloosabaterr@gmail.com>
+Subject: [PATCH GSoC RFC v13 01/12] transport-helper: fix memory leak of helper on disconnect
+Date: Fri, 19 Jun 2026 16:56:30 +0200
+Message-ID: <20260619-ps-eric-work-rebase-v13-1-3d4c7315d2f8@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <131d7ad3-7791-4d6f-bdf3-afa6b0831a71@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jun 19, 2026 at 10:40:51AM -0400, Derrick Stolee wrote:
-> > [...]
-> > , which gives us:
-> >
-> >     Test                                            HEAD^             HEAD
-> >     ----------------------------------------------------------------------------------------
-> >     5311.3: size of bitmapped pack                           278.8M            278.8M -0.0%
-> >     5311.38: size of bitmapped pack (--path-walk)            278.7M            278.7M +0.0%
-> >
-> > (eliding other tests). I considered whether there are other interesting
-> > tests, but I think "repack" is the right layer to run perf tests, since
-> > you're always writing a closed pack. We could try different subsets of
-> > the repository's objects (which would also have to be closed), but I
-> > don't think this is that interesting.
->
-> This sort of thing does help to show that we're getting different
-> behavior when repacking with and without --path-walk. And this test
-> is showing the slightest change for git.git, but is likely more
-> impactful for the other repos I've used to demonstrate the benefits.
->
-> So this is the kind of data I'm hoping to see, but also with data
-> from other repos whose data shapes benefit from --path-walk more
-> than git.git and repos where name-hash v1 is sufficient to give a
-> similar result.
+disconnect_helper() only frees data inside of the if(data->helper)
+block [1]. When the transport is disconnected without the helper
+being fully started, data->name allocated in transport_helper_init()
+is never freed.
 
-I'm glad this is the sort of data you're looking for. I'm happy to run
-this on other repositories.
+Move FREE_AND_NULL(data->name) outside the conditional block so it's
+always freed on disconnect.
 
-> I'd also like to see if the repack _time_ changes with this, but
-> these direct size comparisons are the biggest indicator I'd like to
-> see.
+[1]: https://lore.kernel.org/git/05fbadbae2184479c87c37675dde7bd79b3e32ab.1716465556.git.ps@pks.im/
 
-Unfortunately a timing comparison is kind of a pain here. We'd have to
-use test_perf, which will perform the same repack multiple times. We
-could do that, though it's wasteful, and changes like bf4a60874af
-(p5326: generate pack bitmaps before writing the MIDX bitmap,
-2021-09-17) move us in the opposite direction.
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
+Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
+---
+ transport-helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'm not opposed to changing this to test_perf if you feel strongly about
-it.
+diff --git a/transport-helper.c b/transport-helper.c
+index 0fa0eb2d72..8a71354d50 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -266,9 +266,9 @@ static int disconnect_helper(struct transport *transport)
+ 		close(data->helper->out);
+ 		fclose(data->out);
+ 		res = finish_command(data->helper);
+-		FREE_AND_NULL(data->name);
+ 		FREE_AND_NULL(data->helper);
+ 	}
++	FREE_AND_NULL(data->name);
+ 	return res;
+ }
+ 
 
-Thanks,
-Taylor
+-- 
+2.54.0
