@@ -1,83 +1,86 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73441331ED0
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 00:36:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DF92E8DEF
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 01:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781829382; cv=none; b=gCZ8QmteC0Qh3TtJEFM67t0cDigWwTZDfcz6Kf0JE0tWtFpuUXXCo8Svpy4QoKEqgmTdxpnh2FmEc4VtTxv6drcHc63v4IjNVoJzeLuNbyfpSlVX7eSkTBn6ci5KpllGYpYzNByYe68p1sXxlZsWtPaYsA8qjQ8UncgbQGkGhP4=
+	t=1781832990; cv=none; b=dqrulSMy4yXVXXR77dD7/YvbWZ/aEaSJlkJOvzzVcZHWknl/XLQCzStwXX59Ggn9bbCvTh2JDEqLnWu1dYIl+W9+rgx9NsPLYAXMmrHbRd+IhAQZfyDBo9gtWXRhAlr63R9F55WrG8qQGfRuvaV5PoqAqJdvWTJZ/rrnjZq9fZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781829382; c=relaxed/simple;
-	bh=PXLRl3q1G+8+7lsjyqBrlJAq7iidbgolKg0dZWgSBig=;
+	s=arc-20240116; t=1781832990; c=relaxed/simple;
+	bh=noBZithqtQUMKw6iQ5z0oM0rwF0IxUy3x83+LU7L6Wo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CLhU28amIxupbgC1XAEumPfsvMenvFeik30EGniP1lztkLmYlnoxqVJFrsE02oZS3C/gMfF8NZlTvXWW4uYjB8I9wqaNta8wc43af2/XImVVAg4sgFUxf+KR/pLnbMXILKRk6a4IlKi0JKe3DTi3mhLyBBiy0akTm2iI5araWIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CG5nKmWy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CZSa+NI1; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=l+nur/3ejzQEfGTdIxjOaRwSSe5CkHyGOm4dTaohCAgVCcIVdIGtwRBOLxBWpmicKdEcUfh6yjkgwpEA672EcmJU1gktfGvv8ketWuHg9Zu4Sw+y8RAmfLUsSYSkKvcY+CJIixN84wO0pvlG23Qt6OFtGCIE7jcDJ+FGcjvwJX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Innh4oWS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HnYHZwyv; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CG5nKmWy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CZSa+NI1"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9CFC27A0126;
-	Thu, 18 Jun 2026 20:36:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Innh4oWS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HnYHZwyv"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6AF6F1D00120;
+	Thu, 18 Jun 2026 21:36:27 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Thu, 18 Jun 2026 20:36:20 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 18 Jun 2026 21:36:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781829380; x=1781915780; bh=f9yJsmkh+6
-	IT07pwdpGfUQw1K7C5gz0/D9DSVHLd2hA=; b=CG5nKmWyY98fxR0JSIbyrNcwbZ
-	2rcEDwlDUVZ6FG9Pp//4bH+36xtdjZwJ7aY5SIsYbrRMx/uk4BeHtSwIDjbNHIOA
-	tAuCkLuKp4kJRbuaG3lVZ8bunG2zfTCRlD8Ad6PXHNQc01ufSePubTCUmMgDypur
-	qBS/X9B2lyI3/2zk/XY4qVnZnj/jKOXoZY3wWGRjQ8NyGC84ymReySR7xiPDFqjO
-	4ONBjKl2reB2rPPOZfjsnnwbnvtNXo8dQ2wGxIwNg6vtfquxAyqmGOOjCYGvELiX
-	KTy5bzkqwHi9Y0+LKsHgRDhZCNyWqrGub6pyfqDDq0ZPNyMUUoJLJJxjLeZw==
+	:subject:to:to; s=fm3; t=1781832987; x=1781919387; bh=bOLRIWTTQ6
+	CUOfMlxsAvqZ2tMaomzSUni1nnw3ldpdI=; b=Innh4oWSL2nbgJnfJJap5KPHod
+	9BLh6shGlsR0MFS6q1+YF7c7vsAWpB31SLuYzsO8RUFBzsCP1lTzlhTmkyUAQfWm
+	uBOinNHTqDQuXvhtziIfc+a+leiJmQ0JhotquYvF1w/mhZP3JHqethg0DdJNAmf0
+	PnAV5bp07q+ZyBYee6mF6D6yqCCuHDzSqJNzUIdrasnlAymu4qrD/DqifgWoeLnf
+	juOhDXSbg48dLEuu8QIvydHDVpXMEqR/dPWPXUv+yutwOXiiGJMZeYoDQovoGImh
+	b+Ry3eo86UxFo1d5b/raLgjhLWe1lw7Rk/RuDbyHHAj+lZAd+fVKLXpTJmcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781829380; x=1781915780; bh=f9yJsmkh+6IT07pwdpGfUQw1K7C5gz0/D9D
-	SVHLd2hA=; b=CZSa+NI1Dlb0SO4PQWvBQPUTk4UGbXIGQUZJg8XMmCs4+y1wY0w
-	VshSmkp+TFfqkW1P9mEKP5KBF/fm5OWshukGNhfXklNXo0YV18iE8Ry5+Y6Du5ZS
-	nCCjwl2Woj/M2mGxJfDZBsazOcrB/InnIGACDvPuymavSw372N96UIIYC3vS6vrp
-	kTTukX5wbP2mv0xtU81zmbbbcGrATcfW7P1dORDNRkkqi50HW5yAf9x4YlDkF3kh
-	Dzdwa1yHKdwF3bh1NYTHPvvnwcXkO/iPwIKdtAltcmiDpeJz/5XK5+/Ap3OAKDyi
-	OEgJ0vmR1Fm3WK4C4ezk19nRHAhg7UsxvRQ==
-X-ME-Sender: <xms:BI80aojcESY6VH6m5fgorg86oy71NRY1ZmNIEMsnOdYgkNsmOXhkHw>
-    <xme:BI80aktXjnYfzZEmMBHT0sqBQIbzZ00utroRveyaPGtxdRCxwB5YRNVoA50s6ZQaN
-    9iKbdLRmxy7dfBMtdo_g_N9tCEPG-hIuu6TMNssRt9Gb1pfN2ke3A>
-X-ME-Received: <xmr:BI80ap7n7yibySviduShUrJRCrhp4Yv_zI70lrJbKAlCYK9yRG2IhKuHfipMFNfc9ulpzbCCRE_dso3s9VufC0Ln76T0Cfp8yi-q>
-X-ME-Proxy-Cause: dmFkZTEKwz7qMWxGjoF9H2IMGPzgGzvmpVJKYtgiRD30ISXyV0ib5gXuvl6/DSzNoO7Alf
-    uowF4t7MEI8pYMsNRooJ+FzCiXNuzRxuXKbtMYCl7kGBvkS57hHQizbBwcMTH6SZ8jMIBQ
-    2SVoV0U4A4TU5Vf00BmgE8drfTBR5mCV0acU9O6VZLlaHx3TEBte2isI7cOgGhzc/lgzz0
-    7Ooz78CMBHFLEvW2jtKk0irqWuIUraPHbsQOiO99n5RkJzasAFV96UgC6JwNbjYlm21LU1
-    VHRe4rLXmZtPWKZiz7otxnHArn57nFdP+Yv/jfr1Wuu7ygVV85ulNyPWlD9012/9WtZBVk
-    oeXLZpS+wlwtSk3k3TQFAKzcZWnIGbsJsCeFhSJaDnjEWgS1b/CoAevZXhS+LbEWAEzO24
-    fU7nKed+9yQIDMj4kMivuRAQkK3w878OYSHwltfaHm+aesu67obEOzkeBo1AxmefwZeHTQ
-    +f3Se02+BumHeOM4Fs15dTeaOgg+U0O5x7WOtq4tF1gNPmOfcd0lvjvpbTdGZown00MJEu
-    P0FavyTkIwQ6xYVkIDfrDRBnt+zhyo4alEua6Ej+DNmX4tvJ4p16WJWLj8CqeSIyXosk+l
-    wd9DLBjxFQuNuw1mwV8mw2YtGu3km3YUWJQfc2rV6SBCQ59mWCGjQQ+ZlGKQ
-X-ME-Proxy: <xmx:BI80agMC02XiMEkjRwNxpKmlsZL3Lbkop3jffyv9nRJIbyCr-bSyBw>
-    <xmx:BI80antc4MlVIGte0y3rKaQFblEEwe_BWPI97UfBaROGMQZn50YmJw>
-    <xmx:BI80ajYBMgKlBifaoK3F7nJ1OnHWcJPi1STMhaw_aIaP88ir-QP2og>
-    <xmx:BI80apx-MdwsY7CAWoK8G4mYqe3SDtzzzQ02zvP13dUD-bX7fPu_ig>
-    <xmx:BI80amFIsThAiYtxvqc86XJM-QmNmLLDcNKije6HLelgTIVJmCIcJ1CY>
+	1781832987; x=1781919387; bh=bOLRIWTTQ6CUOfMlxsAvqZ2tMaomzSUni1n
+	nw3ldpdI=; b=HnYHZwyv7JwGvg/PoQA+bT0owyt0jDP7ZXKuV1JOr2LxuX77gHi
+	Vy7yLD3Yx0JubXVEfb3UVLpg9vL0m/qsJTBR3UkP7d+MZoSLSUJ2vffh6iAGnlUd
+	I4Qv3gqgCNVNfvU+YPAFMVZY1zJXy44GxLNHLsLA/GqDqa64WBTSswD0HXKjGNfM
+	y/elxHTvl2FU7A6m9FuYJagMFH2TDR89HX9/qVoU6zDXHofXzK4b95rIXZ8rj35q
+	78EwoLSRcdfY6yLrqIiZ8ntDlkct0MgTnOjCuNwtK7G1jQhY5gQBrPWhFua8H2qR
+	3+UfgtsaAGTFug2mTYKaDQhVtYPnNK+AHag==
+X-ME-Sender: <xms:G500avwQEAguihyZ6ZzPumCY-Pffm8AfE_maBm7GwVSL3RJ3D51e7Q>
+    <xme:G500auKJlik5l_GHXYtvdOE6220bO4Thv6i01uulkpK-3ThxURMKTV-MPZUSlwLy2
+    OToIVG7T_lww8EeV0I4sMbaoJGhoEm15FsE12Zqvx348WeT4P6gQfo>
+X-ME-Received: <xmr:G500ahpUZLDv1oFuLHVzx6c0FStLF5ouxH6okv2dovPZ0GENeuEBnjmejKTJPQwfbX7H_6fp9soMaknTyAu1xHl6MDzXjojdtoUN>
+X-ME-Proxy-Cause: dmFkZTGcet64pKGQis45HCGgT/FfgPza6fIcwJJnCOojpza52fdN0g33vot6p0uTwqK0UK
+    ftZZrNwLwuK6ReUHfDUUgFNb15bgRMHbvtibp+BblWq9JUjgPoxllqXSChi9lvU6eSb9Sf
+    MSRwJ8Zd1eAFkiJS37MU57rZNwuwbyu2J+R2i+j+mafKLQIzjXZ59yQuhCZMROJTfv+HLB
+    m3lUlYlvyl2LkJHeswFA1V2vRIyOtAuU2+T+57W0qIrIOoRZBKD2O6qMFj55g5CPm+PuQe
+    Pi8lMbPtJTK7zoE3LzpTzh2pck44jYAa2Na7oUdNr1HbqWN50SnfwvgAEX3a9QKBj/oLdT
+    pjEA6U5U/jVPERiztGVREYGvXIiHOjoILjzqjd5u3OnvfjvrPb6kA6SnclvvnIeXJ5MgcF
+    qpuKkFaAvrvYiqA5aLRTSZuK9egOHBTaxHfCMtEAf1dsZlQ3poxLi8V0eA9dN9H3pEugWQ
+    supmUS01Qs8zMHkpN6LUQ48FK4hZDhZS9/5pFD5NQ1xERpB/vwbqorriR/RQq5wDBOlbMJ
+    3FEiVMp7X/naIHieKgzBy3/4avpdzV67xhhZB8G0mpf6Zmk1ZORkQwX4+DTc3tYLStYu0u
+    Zye4xokEnunfR3gl9/Hnns3Dx0i9fP4NYkmBZD0QatOVBpva4ZtIBiHmpKvA
+X-ME-Proxy: <xmx:G500alJV4NdYk2N5jzsUhHMlif6IMt3LRclDPBnhpXbOREgbLKdjcQ>
+    <xmx:G500auS82W-V_seTqUviHCVzrCwDpXbwxeFm-1V3HJoShH2Y4RlKag>
+    <xmx:G500asuelh3v6ZOhP7nOds4RaciTbCeUs3MRhF-Ia_2prtvHqPrhhQ>
+    <xmx:G500anZGKa82dGHndPOssO_NQW586I7IykR8EN58ei2HUP1UNL-uug>
+    <xmx:G500agbSLQIyLhI8qnvvuP1x2hCMJRqqES-LOtjbA3oR8H-CRDoQsYtt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 20:36:19 -0400 (EDT)
+ 18 Jun 2026 21:36:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  Todd Zullinger <tmz@pobox.com>,
-  git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: git-2.55.0-rc1 t4216 broken TAP failures on non-x86 arch
-In-Reply-To: <20260618233536.GA1431359@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 18 Jun 2026 19:35:36 -0400")
-References: <20260617220330.n6byiFQr@teonanacatl.net>
-	<ajOP1IOjA3EYvRfm@pks.im> <xmqq4iizpkig.fsf@gitster.g>
-	<20260618233536.GA1431359@coredump.intra.peff.net>
-Date: Thu, 18 Jun 2026 17:36:18 -0700
-Message-ID: <xmqqeci3nz7h.fsf@gitster.g>
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] rebase: mention --abort alongside --continue
+In-Reply-To: <CAHwyqnV8je6gCTExr=CFCdYskN1dVaEDVSKDLUo5A4Ukv=qhiA@mail.gmail.com>
+	(Harald Nordgren's message of "Thu, 18 Jun 2026 20:49:17 +0200")
+References: <pull.2330.git.git.1781551170529.gitgitgadget@gmail.com>
+	<89d72342-5aa1-4dcf-951b-d0c791f91738@gmail.com>
+	<xmqqpl1q2xw5.fsf@gitster.g>
+	<bd7dc183-6597-4fd0-ae64-682d46480cd4@gmail.com>
+	<xmqqo6h9z7e6.fsf@gitster.g>
+	<CAHwyqnV8je6gCTExr=CFCdYskN1dVaEDVSKDLUo5A4Ukv=qhiA@mail.gmail.com>
+Date: Thu, 18 Jun 2026 18:36:25 -0700
+Message-ID: <xmqqa4srnwfa.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,10 +90,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Harald Nordgren <haraldnordgren@gmail.com> writes:
 
-> ... But since 389c83025d (t:
-> let prove fail when parsing invalid TAP output, 2026-06-04) it will
-> cause a test failure.
+> Just an example when working on a different topic:
+>
+> I rebased with -x to run all the tests, but ran a test that didn't
+> exist yet on the first commit and ended up in a bad state. Here it
+> should clearly show the 'git rebase --abort', so I can start over,
+> it's not something to fix:
+>
+> ```
+> $ git rebase --keep-base -x 'make -s' -x 'cd t && prove -j8
+> t3454-history-squash.sh t3453-history-fixup.sh t3452-history-split.sh
+> t3451-history-reword.sh t3450-history.sh'
+> Executing: make -s
+> GIT_VERSION=2.55.0.rc1.20.g1e31474ef6
+> Executing: cd t && prove -j8 t3454-history-squash.sh
+> t3453-history-fixup.sh t3452-history-split.sh t3451-history-reword.sh
+> t3450-history.sh
+> Cannot detect source of 't3454-history-squash.sh'! at
+> /System/Library/Perl/5.34/TAP/Parser/IteratorFactory.pm line 256.
+> ...
+> warning: execution failed: cd t && prove -j8 t3454-history-squash.sh
+> t3453-history-fixup.sh t3452-history-split.sh t3451-history-reword.sh
+> t3450-history.sh
+> You can fix the problem, and then run
+>
+>   git rebase --continue
 
-Thanks.  That was the piece I was missing.
+Hmph, you do not have to "fix" as you know some of the test scripts
+did not exist at this stage.  So the solution to the issue seems to
+be just to say "git rebase --continue", instead of starting over by
+aborting.  It is especially true if the test scripts are introduced
+in the middle of this rebase session somewhere later in the series,
+no?
+
+Of course if you gave a totally broken script to "-x" option, you'd
+need to be able to abort it, but is that the use case we should be
+giving one extra line of output for users in all other situations?
+I dunno.
