@@ -1,83 +1,75 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8963126BC
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 00:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4934432F76D
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 00:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781829289; cv=none; b=bvsVW+ASKryyJajQuyKITyn0aDFpUqEYeSADGXsc/a19gq52B72NJay5ryz9fQzaA/bbJnr1JUfktvXk9BNXQHt+JeNCRxn8nPsACNzb0g9mg30ZWqhAkpI1OQ+rRp6w6zRorflQkoxxF4Sfh+3LgDvRBHCyfucqFtFV4jotGEg=
+	t=1781829326; cv=none; b=SmHn+xde8GA/cn0D0xE94ytgVMLVLrN3EyNWLrA10EHA1mY9F7R4FF6ycu1Y1oH5wnoEti7FPAc7YGlnEhLQhN7rkV6OVaHdkNG5gaKM/fDXIvdPwPMiuOEPlIh+O3MuK1XGprTB/n2naI0LKfutCfDOYHsnc7nsQ7PqTmRDxDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781829289; c=relaxed/simple;
-	bh=ROr33kuSwIW0nlcGx2HnUYLTPmQlYrke8QLknHzh9R0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=vGVWs4/SAu5JF4lXTh9uEO1nOZ1DtnPgMhAmkRa2O/U5okICr2C6lzAXR66n5Y7d8FGKRhXfWIiAZpC05SUkbDi+WqX2yPBuRvpOFKcA4s6RguOihCODJ9nZX4tKgtlMUlqiZpx065ohcldgWZpWkaj6Mx0m1/9T9HrnHwzyySQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nJhTxwlF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KdMj5oUF; arc=none smtp.client-ip=202.12.124.152
+	s=arc-20240116; t=1781829326; c=relaxed/simple;
+	bh=lq9LkyxfGgsQiQgqt688eI6ardI4WOMG5nGPd87PPos=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=A9lHSBI0Lf1sfYmfl8v/xtmBrsCKRMUC7Hver/jCIlwEN5LoOxB/99WEu9yA8kHZS457geNbIJaqnmrQbBS2tJdIA9AblFXtm28sXEur2cBtripgIZ1ZKnDz6Sl7fB8OCIQF17X4ceC/RQSpFdgILTuecpEx0AylwA+wtFWbAWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nliknVRW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a0VLin0n; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nJhTxwlF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KdMj5oUF"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A1D947A016A;
-	Thu, 18 Jun 2026 20:34:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nliknVRW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a0VLin0n"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9FD147A00F9;
+	Thu, 18 Jun 2026 20:35:24 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 18 Jun 2026 20:34:46 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 18 Jun 2026 20:35:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781829286; x=1781915686; bh=P//cQ0Feqm
-	bCKarNURnQNxSTzyB5YboJlmQ1pEXuMuw=; b=nJhTxwlFUjsCG2u/GilYdLQ8/m
-	7O4Eguh8/8qDOp5X3huDx+Nm8CxcTyIPMGLqxbkUZrxtJGO1VHsVxBUbFQJ3LkR4
-	f2aUEoYawkVRVjd58iHC2lxBUkyq3kCskC5XT4erSwpYkzsaa3cl78WUZoBRad0b
-	QR1ngJCcm6YXCROr+Deubg2kUdnpSmmxTSihtAkVSiEhQFHQZZctfC/VrUwaXc+P
-	YvRhk1+cd3Zr4rIYJ6nyqJEGYQqtBgS8tBiGcJRyPJFO5Icq2f5VpetiuBT6l6YH
-	OFZMgZhxn6V4Zgccy7zs45ek1i4PF04G5YI0XjN33T4ME9zA93+y2Azzxvjw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1781829324; x=1781915724; bh=6UhCdSeOL8byxV1ya9iCOgqH6Gn0W3z2
+	OhnV5EIwaWM=; b=nliknVRWLu9pzglKVHmZxsClek0FHZNP8NVkFFBeotPIf8M+
+	E2InWB0KkIYC/pXJZQX2bTgpEPqDfHO+qOiQpVjTWFPjY4DKkO2kS5a88hQbbFgJ
+	BG5KFeNSax+/MtAxwuwz6ntvytZ+eP7fc30VLhBbcc8zpGvZzPeYjPsaaND51fVu
+	mYRuc2DfBpzJvHGHkwG66uWYR1zaB+KXmfQDz1TqN4pWfgmjHC+XvHTWm5EhP5ja
+	9qBNi3xjAhLZgumU9Alx/NEhUMMbQi9ZVcynPszlyry6NN//ylpWtAPZ5bwONl/b
+	QymLpcxlb98lDxPkybkqWSdEr2le4+pKoIzYig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781829286; x=1781915686; bh=P//cQ0FeqmbCKarNURnQNxSTzyB5YboJlmQ
-	1pEXuMuw=; b=KdMj5oUFDMc7qZpTOqTOwWdbumMNLTpnPyOYMI3vGL4fB99LykY
-	C+RroXYUgFM77ftqD9/e4qgsdMHzouNvtXi8rCoQL0XcO6uh/nx0dntxM4j50bfs
-	9SrhxSe61xAsv3SKrnCOLRgF8rI5djjAOZQ+rJxgeZe39gMU3ulSdM+Aw0HU2v4v
-	bxzYAsSdhKRvdjBfj5DngLYMjwD6HqxRH0A52y58vxWV5XoKPkDEzJSCYyapse2q
-	Xwv3TlgtH3myOsjXhQPrYwtGPwN6olU2oiAmKyZvA/eogvug0xAbx1QhM2u5cnRH
-	n1UCxHuwlfymk05S6sHDKwFmu98pd+8Prhg==
-X-ME-Sender: <xms:po40aoIsum5v2ujeJ64cmeT6eQcS7KuZ4FWdeligNnewR91MzUFiWw>
-    <xme:po40avClRkhD0e5jd-wzu4c1OuIVkxAmX_lolQ_OqE_2ZA9hiqpg3-oe7ltAfms3e
-    X_zpx2cdYuXAP94XVaOrXYrXsNAuwHtSMo_kMYK8qsgo3tKhBYGZg>
-X-ME-Received: <xmr:po40ahDafPubXPSbrKTRxw7oyOpi0t5F9U9VjXLmP0W11ACRwBFsYkTvwuM4l5eguUepjL6jwpola8LSQIpRw6JoQwAZTPSVHI3r>
-X-ME-Proxy-Cause: dmFkZTGDf/aQecQIn0BpkDUpkYfkQ+2M3X4FOr8FVM2CfCnJv/0Pz7rwXTtZ7LSojQqj9C
-    qZJFAHdegaP6zM0+0BCLV0llFsX7W2IX76YTZgjN6/jE3xJUv/m2xif8jQMNhqEZ8/drct
-    nSCro/Z4RMCKybiR2l8mcn4q6KeneqtKp/ajEvRU78shB1qW6s/TmR1Au7ESiLpnixjLeK
-    suiPT5NN2kELedboCb+/KVhrOC/kwGo5esG1VjMpukGN2lxZzEyNUpF9V5k1ksYF1PK4dg
-    bDQOAWjMKlylKrtXe3+Gg+AA8HAaFh0+VMnx7zDht4ihQjhJFulxoWqEVHk7oAr9plTzSw
-    BG+vJ2qgMVLCqXSPys3Bs05EaYfcHm4D9npxgWs5WS0Gx4opRoeK2eYt7k8BhprTzVfldg
-    61WQcHmmLjVjUTU84gn5GuTav8lG5tYamCzmu+sdFQ8tBM+dfWOZmgcrl83yi7UI/fHBFG
-    paWry2UfRvJLgZ4I94mNdMQIHzX1oTfR67BZvK04Vv+yGau22ArEzJrIkhIEMg6Xwu/0RI
-    RLG3BQvf4zKjEgaoJoVxFLNHyJ1GT8nQTwAPGGQ96t+LZg7QHJkBPesVLwc8bMtB+QFieh
-    xM0/Hke+51Xexz/7dLVVymkFH5+Xwe548w/af4SgtY+yGxaly3+oNQ3jx8Wg
-X-ME-Proxy: <xmx:po40ahBjdKzwidQON2mnBTl82CMefSvf1Gf_juK5PefQ50zCiO2hFw>
-    <xmx:po40aspKZGZL5-Qc_Ne9zS0mW7N7AR3H9GEybdRKTOwRrRpMll5U6g>
-    <xmx:po40armtGdYUIS8jlMN5Few2Qm0qUe2005x9Z6FBjl--rwLCfRcK2A>
-    <xmx:po40asx1yCVvbLxJ6aKNSyd44tngxRG2FX5Y3o1OLAeQx-G-sS1Wbg>
-    <xmx:po40akQ5t3KEtnYbzIEC1PO82IJDB6X26cPTKIfTAyVrSh0Alb6o6bsQ>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781829324; x=
+	1781915724; bh=6UhCdSeOL8byxV1ya9iCOgqH6Gn0W3z2OhnV5EIwaWM=; b=a
+	0VLin0nnJ6rOyEgZeeHURd7+3mgOcEmZm9oQnY/5NFP/3LUPlzQeWVU/9gcjg+hd
+	/UytR3D45FdZ2EaUOYcHDQieA/Iy7cZ2r0Hcv3/DvLCP+iwsC5mGp/3JRpSfTn7q
+	ZMIqhuUBKlPK2xn/m/SdbFrkiZ3LX2BvEVxwB5OIP1MT2ngYcopph3fCHfpaNHbn
+	DIdltPsspms+i4k5RFGmqxRYXDHlqw+BXsv5OAMt8qHu1tVLSwNQ5rpHEdErNFHR
+	4+YwoGNNOmHl25ZCgCU0HBVk8aJhe3R8ErMOupF6e0Sypx+f/HZjdMw17lIoYWWK
+	0vRL47aLMvrxalTSbHW9A==
+X-ME-Sender: <xms:zI40alWeVEL7xhHS3VCnvUSiE1W2vr79O7ILhLaJajkf5qjhol09_g>
+    <xme:zI40arlnN8nUuezw4NLwVqgimQ1HTcbQKbylzl6sunLV8E8IIbOWJdBvhfRn_KL0v
+    hcvpEY0dOZBGc2dSuefFHqjQcH2vLM334zye02elke8cC50yZo4wA>
+X-ME-Received: <xmr:zI40avBVnLRKGj9Jkgxl05Bh6wuM46SNG5D3qJS2PotKM2Aa8L8LQq5f4WBxlZkO6ON4dAPtHqE1SvZsiNDwDW4xxMhncpJLfGT4>
+X-ME-Proxy-Cause: dmFkZTGw/BqkiPtSpxxeORhBYt1VaEzRfzHiMb5k8gGViGLgwzEaeEZ2yBE+/deYnDBFhv
+    XL7ygIwoZfzPPZrtTfHI3SdgdUiQXiXcKkZKknXq/DjccB8xQC1nAS1vRqoVvoiIaQWhkS
+    jAqptgWZc+GiTltD6SWfvYGyldbQknH1xT25sotTpqgThurjHJoYf2fJ7rO/HbiMZlIf3J
+    shhfruNx9/eg+OWv8js+1Dh37y9KQh/M582jdw1Ck04UQjYHF1M4kBAylFndVDQoSCE+oZ
+    3TSb8MpZYOrFRFOzlGk7wjdI0sabRq0zVRuTZFXhCijZmHs17ARwg+h52Gxt+BDZJcFTLM
+    xkBB2FqOjZaTt3QAGklWeCZuuqwuY7pLIyewWJvFljHkNXLMK7q/q5kFSa0pz1Oa0m0geS
+    HjzFbeapz3VsS0KKnoCWalMSsOEDEDW/IAbcw+tRGLuaTAjUZ1DzKknGzzlswYTS7wELji
+    76ZOhgWV/vaJnJ9ldcFod8SCEFUW1rl4SMZX9uEURVWqDy0Z92KCi3ijIYoszS+igED9he
+    wsE+hN/AoIlituS52GYVTlpI4X146soPq7+hwBaDT19TTQcfsXZq+WTaPz9sWtMs5GUlir
+    lrQczhxdjKXQvjwp4Lzs+vAws32c9b2Out/sC6aiPCrP356cWTYlhLvbLPng
+X-ME-Proxy: <xmx:zI40ajeA4Nz6Rr4yeVNXGUxmRSJrVSSx-ZGObK3nqZwo_Izcnrivow>
+    <xmx:zI40aiJ_Qo06tk3rGSVQn0klTvmLULfJnD0fQFBRNgqTVnWeVOEydA>
+    <xmx:zI40aueYeDBAevJEXprHpIjLyqcrLjkVt3Os3scLR2lvXwh71UaJHw>
+    <xmx:zI40ah1XQR_k7giE5hgHRo23dApJjRjZhMI2yt62CfRcWwGAKSZGFw>
+    <xmx:zI40agt7CFYRdMCZTaz0DINmsDtDPIPAojIGn2lpdqFW0jmrm6Puhi6X>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jun 2026 20:34:45 -0400 (EDT)
+ 18 Jun 2026 20:35:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>,
- git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH v3 0/4] history: add squash subcommand to fold a range
-In-Reply-To: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com> (Harald
-	Nordgren via GitGitGadget's message of "Thu, 18 Jun 2026 19:17:02
-	+0000")
-References: <pull.2337.v2.git.git.1781512625.gitgitgadget@gmail.com>
-	<pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
-Date: Thu, 18 Jun 2026 17:34:44 -0700
-Message-ID: <xmqqo6h7nza3.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: [RFH] Why do osx CI jobs so unreliable?
+Date: Thu, 18 Jun 2026 17:35:23 -0700
+Message-ID: <xmqqik7fnz90.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,54 +79,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+I've been observing that in recent push-out to 'master' and 'next',
+osx-* jobs in GitHub Actions CI keep running for 6 hours and get
+killed.
 
-> Adds git history squash <revision-range> to fold a range of commits into its
-> oldest one, reusing that commit's message and replaying any descendants on
-> top.
+What is troubling is that this seems to be very flaky.  For example,
+https://github.com/git/git/actions/runs/27778820659 is testing
+95e20213 (Hopefully final batch before -rc2, 2026-06-17) which got
+killed after wasting 6 hours in osx-clang and osx-gcc jobs.
 
-One thing that just occurred to me.
+https://github.com/git/git/actions/runs/27790036076 is testing
+the same 'master', with a patch to .github/workflows/main.yml to
+remove everything except for config and osx-* jobs, which succeeded
+within 30 minutes.
 
-When you have a linear history
-
-    o---A---B---C
-
-you run "git history squash A..C" and come to
-
-    o---X
-
-where the tree of X is the same as C, with the log message of A
-reused for it.  That is simple, clean, and easy to explain.
-
-But what should happen to refs (i.e., branch head) that point at A
-or B?
-
-I am adressing this message to Patrick as this question relates to
-the grand vision for the "git history" command.  I think "git
-replay" wants to rewrite all the refs that are involved in the
-rewrite operation, while "git rebase" (without "--update-refs")
-wants to leave all others refs intact and update only the branch it
-was told to rewrite.  Is it the same design as "rebase" and
-"--update-refs" controls if we update _other_ refs that happened to
-be in the range that are rewritten?
-
-Now, assuming that there do exist a mode where the command can
-update these refs that point into the history that got rewritten,
-there probably are at least two possibilities.
-
-On one hand, I think it is reasonable to _remove_ these refs that
-used to point at a section of history that disappeared (like the one
-that were pointing at A or B).  Perhaps A and B were pointed at by
-two branches or tags that were used to mark "up to this point things
-are broken" and "from here on things are fixed" (i.e., imagine a
-manual bisection).  After squashing all of the commits in this
-section of history, the result no longer has such transition points.
-
-It also is plausible that users may want these refs that used to
-point at A or B to point at X, just like the ref that used to point
-at C would now point at X, even though I cannot offhand think of a
-good story (like "there used to be transtion points, now there
-isn't" I said above to explain why these refs should disappear) to
-support such a behaviour.
-
-Thoughts?
+Stumped...
