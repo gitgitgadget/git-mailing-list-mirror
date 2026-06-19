@@ -1,96 +1,120 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E203B38B4
-	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A7D2D5408
+	for <git@vger.kernel.org>; Fri, 19 Jun 2026 16:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781886304; cv=none; b=S7hrXGNb6Muq+2TkBhmgkS01hEmdYeJdCRgFQJxUAKh6rJLW2gBDTHKy9ZgqxAQIomU4PLI04fsYJU/1oKv5C6JXLsnMIPs2CVRaCuTArHoltrYXBPin3sZSyqRSQXb8Epw3AnAoN2ClbHC9mQDayv0Xerxys1a/bX8aQx6iCVs=
+	t=1781886322; cv=none; b=QRliD5AUSj4eMc1f4mCpOrxfmnEVkXlVOzi35pkXITKYntLmxlOqspQRo3cLKqS6UUftlC81kiFYDR85afUmFOid9a1N6nJenTL13DtyVBog0e0dLHJj2VyE/vqemMByMuypQv6N9XvN77gKFh5y6mFQopNtpFPa5/ujhFa1RGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781886304; c=relaxed/simple;
-	bh=36EOAqJokr106QqCqPr12vT/tyNEtvwdVJ0wQ1qcTbs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=upixsnuI3tH4s6b1zUIUYcamb9LrSyG9Q1hkTqTxPi0sIY8OsPLk1N3/gKZ8vp/lySpoGSs8OcunZGnq5UgpfvV3Aa82JSVTOlAPO3EhwIJDcTNk3TYhxGkbNViJ6X68OnZtIqVPp5C1iGzBBHKAjIKUcEOehysL8/NkoBNGGs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qr/uyt9l; arc=none smtp.client-ip=209.85.210.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781886322; c=relaxed/simple;
+	bh=pL1qbHcJHWim6+Kf2RxRvyr28i7hsXeKDRNNDgS4x9g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KBt0yUQy+3250qn+9kk4jvPLo2l5OE6ko7tMVBIJ7pWEdq3qVDG1d6YhIzU7X2cQ1uO6kqoI0kzszjnf22HvvwN/Tq05GllfNgb0YSq0lpq837Sr3OYMZbZBfqkOg9ov+9WCyteCC6WwMXc/Oq5joHXbWkvv8Z39aKzWWHEKhdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YMGo1Dnr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lX7oink6; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qr/uyt9l"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-7e701435806so1871305a34.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 09:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781886302; x=1782491102; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2bbrAXRFbnCjKdpMHQ68saZ/xbLeMnL7YowGtIKUpGQ=;
-        b=Qr/uyt9l99OwCno0jVGUn0nDApT5DTp7zdXJtVSlhMcJAwXM8OTrYW2TXK6OZJFydT
-         ElvgyJhSxQjSVG9AGO+bFxAkHaaw/9KzYREcHOqQCPOAdZAo5jaUuSccK8DD1wDRc/s4
-         h7WPatiUDarcHqgTOLh2b75gyKRQyZpxDprM5jW+g6GJciz++HYmh72+VCakspUwHhNn
-         qi813wgbOzsvDTZ1ssp8aiySvuoczH0DOY/Y7PRL0AvdZ/4m89CaoNuU+P9PRpNsRgtt
-         lF9KV0QkuSfpngrxAGrJJVFy8FjWZgjzGi3F71w3SWG8ygRRD/1R5+PxbGQyjXOWm7jT
-         rauA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781886302; x=1782491102;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2bbrAXRFbnCjKdpMHQ68saZ/xbLeMnL7YowGtIKUpGQ=;
-        b=iz5EQ/dp9XpIU6OvNm8byaxzBPK6hGYU8wz+rlQ0I/Zi7Kd5f45eXG+GDqZa7o9gyZ
-         RxKzPZMjsDIzwNhJSMlxCNOPuc40v7Ufr/pzy5gCir9u3AfehYHAudWaDH/ETxCAqZ7Z
-         E6onX0lEmNVUjY4JX7ixMgCEXpG9++D1uPUE33HZe/K9PtwFtwb4RuXX4PnKQLsKXMcX
-         2Pt8Z38Z3gEaAKc3JMxAcoY0nGbUGhAQAcHV0f+bekcGnE7E63JlL+Q9+mzpbwnNW25N
-         bKWYXWlcc9gzTkdG2xG4UC33r6lBZcU7cV/TPIdRrNktjiHTw9h5Eyj6VmltMxMSq12g
-         8HIw==
-X-Gm-Message-State: AOJu0Yxb5DlBC7kGNA61uI+jskuEpfdQY7uj+igvOaXZupY/5mdxnufV
-	NIOa8Qathk57LMpQTxUH3QW1D6H/CZjpM1gpevTJjp2mRAnBmuH1wUHvoj7/bg==
-X-Gm-Gg: AfdE7cldjpi+UnQVSD3Eiybq7t8qJ8s4ioGkBDaNEzP6ZEDoEmE+3vvGqYlhOaJDdbd
-	SnuptfzIezD+s18qW+tSz7hU7sMtlJa3IF4bWDUXXP5gXpbZErWQ3oo5WgYCDU2qVEZzPsCTaLb
-	SD8sTJjwybWZhKoxPQP7Rt7z5BXVm3GR5/5PprAQryAdc+DhctGHHemc5zEAdRnls6dYqUK76zY
-	q5U8z4bdwASzjVRFrIDOsd1FcWwyYO/BVivR5w4N0XRar68UP8kE5SABJ8kffRzSvYzYFHfFjtc
-	U0jWF1Skdux22QrmvNLacFJTlPFyJUJiarEV3k+sco6QC+rrIiq2rmezNdoacyuT/5J3/37CLFh
-	9D8BeO7p9FbOZHAWZK34Afexbvwmpme9Eu6pCCU7QpMYk6mDoJDFlfIufwXeKjuYCMclftdMZaJ
-	c5ti0/Wg==
-X-Received: by 2002:a05:6830:6489:b0:7e7:6:5da3 with SMTP id 46e09a7af769-7e92d9b61b3mr3027607a34.18.1781886302439;
-        Fri, 19 Jun 2026 09:25:02 -0700 (PDT)
-Received: from localhost ([136.51.44.64])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e92ecfc0e5sm2156636a34.20.2026.06.19.09.25.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 09:25:01 -0700 (PDT)
-Date: Fri, 19 Jun 2026 11:24:59 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jishnu C K <jishnuck26@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] help: prompt user to run corrected command on typo
-Message-ID: <ajVatJzQ0L5WAOUh@denethor>
-References: <20260618142033.15216-1-jishnuck26@gmail.com>
- <ajQuqTB580gqNP8D@denethor>
- <6a34dc40.2c570c9e.381c97.203f@mx.google.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YMGo1Dnr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lX7oink6"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0F0A61D0011B;
+	Fri, 19 Jun 2026 12:25:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 19 Jun 2026 12:25:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1781886320; x=1781972720; bh=5q8+ZcbuHc
+	L5YW5hn2g8WN2cIeE4MhqJhTlas69vjXU=; b=YMGo1DnrV7UYvbHinPiqeQgIsw
+	WhRhVybzV9zn9Oh8utnUXp+1uQDCMW78bOVLpKICsg/mfey7a2cfQB1k0BYcEhAg
+	dySU3NzZ9OF0b35BLp9FhqPJJ9UFaOnAJnCzIoaeDtHqyCW1T7LtIs4K4Xu7zQAw
+	u5JSCrQ2zXWo+FLDGlOqJwD1YVCor3Gq0HJQc6yH3gXkg0qMUbbV05uOgbN9YBsU
+	iyJoAH+RopRxBwivNS6RyK1N6OB+igo16Q3/WxcXaeOuL6gcMqP2MM9i/XW7pMkI
+	TwsabwYEwJBEzsQMNQiDQ9oZrHRycwjWVHsvfTcy/SU6JvAvR62xQdta+w1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1781886320; x=1781972720; bh=5q8+ZcbuHcL5YW5hn2g8WN2cIeE4MhqJhTl
+	as69vjXU=; b=lX7oink6H3bPJkC0N8s+F0tQYiWyO/iiPy3QeTHrgyskjajQ8Ti
+	DD7pEEl6FtaKTMNgsO5GzSvn22sekEDztc3WzlTRLowADtRjih68kW9njIM2B9Fi
+	LQ7//kDgGD5/6xwp+vWEbva6xzRiOkYc1ZG4bKeAgU6C7VJNl1Pcien9Xnb8/WUo
+	91bovxVSSEzwj7PaY8lFu/DWg6fN9i28KzCfGnsXOIMAJYlAJn4hMVnlwgd392qZ
+	KUXZj7pvHjMxa3eBtZCTeuUo/updxColPf7DpQ+UdT7ZN2eAQ9q2wB/DVm69QZpv
+	2BzhFw3Ar5jzwy75jP26OGyimsEPZbN8jiA==
+X-ME-Sender: <xms:cG01ahtNKILi1BNmDV9_3s5Me-j94kGth0wz39-ZPrGn99QBbh_QmQ>
+    <xme:cG01ahfXgYKN-rzeoekquO8khkVWFRS1S6IJ2PLVXxTFSuC2yhnh3ylOKQy1Grge0
+    UzNuamrmInb5wPT4N1PO85J2nBflMsndEP0Le2-nLftOpexAUju>
+X-ME-Received: <xmr:cG01apxMpeHVk4qpKyUmOcPqZ4fyKauV8Y1exY8Ak7zlBAUUfjbpai_BLEWSkBr9Qw9WV5Z6aDwlzbtcjgs0lz04UKOUnr6_7z3T>
+X-ME-Proxy-Cause: dmFkZTEAINR1ohYYN2O3ezu2AjxT0VGnGNQQBDtM9g5Br8PXtTvu52MrwvR069SdmeuzLv
+    LwlwxQuHXTSCysgcPXWytV6FZBc0Tur7kMBIUByfAXMrF/MJYI8IA9GPqTwvDUUApCWTSD
+    2gDNpiV4w6XOUlRSkocxLLHrdUpbbApXfCzDFJ8RTYdXBqBVzLVLKzEQIQpYxcL/ioUZqr
+    EUS/6aFTqbRWlR+WjsB0W+AhW2Bznp8o5lnguct/nRewnQ3rnPpqIH2MKGgdjqkcCnZ4WD
+    DCjOaFUIlLkiW9NEJ8fYuNxCU3836UeM42pv56pdHPjTBhLLOXy4ATgsXSl2ScwopATxH7
+    de6/FwrIAmNQFKqCdVttNK9e1Kz5nVFbhZV14qyWWvSEnQ/Rf7C9RefsC355x4AcpJR7ip
+    axjaWglvuxP2F4mJpsSplhCIdvHxGlc3hJmQzY/EQQtUE6e75W835pYac50L7ytPcmn2jv
+    x/gHyS5f6xKsZSuD8SqFyxmOnmetguvwyxK47vWT/oAuWCxthmzNBbkydPNvON6Wqh9o+n
+    MWIyHUES0z3P5/0wMNX4HZwVR3YHeW35/aAKSzxmnsAQhJsEfCwlk/E+dzvFOEUA+iF7Sz
+    FGL1IDCbOvTpcQNtt+xPx8b0NuFuSCnPrT2OyZzqZRNBXLfE20tucBiI/xyA
+X-ME-Proxy: <xmx:cG01anHUJVeJ4rIm8LtwYQMB195Lz042QeJfOaLGhqnKzs9ZQMmcig>
+    <xmx:cG01atwvZpsn09_Cb76uEUGHPCk56x13I_1FF5H2DAJTGMmWFsrDHg>
+    <xmx:cG01aotW6C5W125dMxbF_GQMimOOXioDFe3zNI8K9Emx-oL1IUfjDw>
+    <xmx:cG01aq3OvJAtpc96HcZHVpRXFAv9QnSd1XKPv4ezNVwHXsOAaLQnoA>
+    <xmx:cG01atTND93_vCqhBZV1D8QBxhuSV13dHVfV6RArIZE6WnFuVsjYCaQO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jun 2026 12:25:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Erik =?utf-8?Q?=C3=96stlund?= <erik.ostlund@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: Pinned references?
+In-Reply-To: <ajTx9vLIWK5wvTHM@pks.im> (Patrick Steinhardt's message of "Fri,
+	19 Jun 2026 09:38:30 +0200")
+References: <CANE2Nt_LP9odF9tVsy8di54eSH=QJxif2WQfHC+TQGGFeVcjvg@mail.gmail.com>
+	<ajTx9vLIWK5wvTHM@pks.im>
+Date: Fri, 19 Jun 2026 09:25:19 -0700
+Message-ID: <xmqqeci2lcpc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6a34dc40.2c570c9e.381c97.203f@mx.google.com>
+Content-Type: text/plain
 
-On 26/06/18 11:05PM, Jishnu C K wrote:
-> If the consensus is that the default should remain non-interactive,
-> we are happy to rework this as an improvement to the existing
-> `autocorrect=prompt` mode (showing args in the prompt) with
-> documentation updates to make the option more discoverable.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I'm not sure what the current consensus is here, but as it would be a
-change to the existing behavior it would need its merits discussed
-accordingly. Personally, I think requiring users to opt-in to
-autocorrect isn't a significant barrier itself. It does require that
-users know that the option is available in the first place though. So if
-discoverablility of this feature is lacking and can be improved in
-documentation, that certainly seems like a reasonable change. 
+> You can already kind of do this:
+>
+>     $ git rev-parse v2.54.0
+>     0b13e48a3a30cdfa94e8ef842e24d6045ab3d015
+>
+>     $ git rev-parse v2.54.0-0-g0b13e48a3
+>     0b13e48a3a30cdfa94e8ef842e24d6045ab3d015
+>
+>     $ git rev-parse v2.54.0-0-g95e20213f
+>     95e20213faefeb95df29277c58ac1980ab68f701
+>
+> This is described under gitrevisions(7), `<describeOutput>`. The only
+> gotcha is that this format will not verify that the tag and the object
+> ID actually match. But other than that it gives you the ability to have
+> both the human-readable name and the machine-readable commit ID in
+> there.
+>
+> As said, we don't verify that those two revisions actually match. So in
+> the case where they don't the result is certainly going to be lots of
+> confusion. It certainly is one of the more surprising syntaxes that we
+> have in Git.
 
-Regarding changing the prompt to display command arguments, I'm
-relatively indifferent towards it. I'm not sure it adds a ton of value,
-but maybe other folks will have a different opinion.
+It is very unlikely we would change this, but it is a fun thought
+experiment to imagine what would have happened if we insisted (i.e.,
+verified and then died if it does not hold true) on the presence of
+v2.54.0 tag and when the "hop" count is "-0-", we also insisted that
+the hexadecimal part exactly matched the contents of v2.54.0 tag, or
+when the "hop" count is not zero, we insisted that the hexadecimal
+part names a commit that is descendant of the commit v2.54.0 names.
 
--Justin
