@@ -1,95 +1,84 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06E2349B0D
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 15:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA3D395D8E
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 15:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781968509; cv=none; b=bVOCoyJv6NdHLWmBWO8+60zZdwBFu5fghKq3fTmIvl29i6bICX0yhLUpYnCS3Q4DfuLv6EraxsprHYM7VOwRNiRiXR2h8c8Ni35Cn5HWVFKMFe6ZsNAmsvpOFPK0YSHPxNx2fy0TJc2AM2GyU1Opz4y1DVT0YDIthX+GUFAs/hw=
+	t=1781968686; cv=none; b=SO8MY9Wiq0gL/vjGdlErvujvUBnrTX9sA6VMxEZIldWGq2nHyS60nPwKtdqORHxVJmCDcU+yfhPcfkybh8lKMHJGgDO6ZGKZa2/gm6OpciGvhLzJ+y4jB4c7/UUSra3CCJDpA7Lxdot9FzBpPt/L5d+KR64E5Ry95xbmtPnLEUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781968509; c=relaxed/simple;
-	bh=NpqXCfHEbOUojad7O6BRQrKyi4/abxjhJvPzUeRhrK8=;
+	s=arc-20240116; t=1781968686; c=relaxed/simple;
+	bh=A8mMw+VatQSyhFXAS+RYI46WFRgwh5Dn/fyhQM1/RH0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sINnbgCv3BhQaFpar4XKKTvfFhe5MqK/ddVbPfDXQTzvUjrFHXL5cgjaBW8PrqWc3Bmg07W7CDIULZpBhkUnYpojsD3HxjsDUMuDN98R/yfzl1fbIfeHxKOj5emN5UPHLwc3nZNbeb0dvoV4K9jWEipBsVYLzSmOf2ib4+PmfjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UzIg1Vxe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cVIcT8BD; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=AS6vZcK8NLhJumVWA9d+WjzVknbBKsP3M0/riK4Ddbpm5p449xb/Xpo5mA0sVtsgKC1sLWkNKIoLiq/ZxOPe8Jv33/pidlpG5P7Yn+hi5ol6S1O91P/hMZ212f3BO8ZQ3g7Y1IHW6iajEmCSaPhY4ibEQp5d0s/iYI6iW92P1wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bKDJnMIw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YZDWqBWB; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UzIg1Vxe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cVIcT8BD"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 26622EC0263;
-	Sat, 20 Jun 2026 11:15:07 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sat, 20 Jun 2026 11:15:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bKDJnMIw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YZDWqBWB"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id D0FA5EC0169;
+	Sat, 20 Jun 2026 11:18:03 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Sat, 20 Jun 2026 11:18:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781968507; x=1782054907; bh=q3L1XTEbo+
-	IQHm2OGTlLVkU1nU4KOxCSizkufasZLLo=; b=UzIg1VxeywIK+tO3XHFuOc2USK
-	rqVIu+2e2JPYHqkpwv6wGmFKfd5Pv1Gxq16+cbgqxDEX4xz8LSPr/oKGFr3TR4ZT
-	yrv3a/ab0CHIAihyVN98/rvNYKvuyjmNfWLeCMfOeUn+iUQ+8DbBye0q54jV/HI8
-	cQDZWMcLCpXXjfgMplRSby5+0SgiQ6Cjl5mzcHepDUXd1cv32/3upHyrVR+T60HP
-	su0qa8yBlWRogyQMQaBSBaePfK9R1+09OUUuzMkl6O5RyYfNe15r69iHuZ1YHKVY
-	xj+ONtJ4JQg0D1uUB/4zdakFqaxkAslZjgMpgLlpCUqzLyIgDuN4ibx7nreQ==
+	:subject:to:to; s=fm3; t=1781968683; x=1782055083; bh=R6MwaOUBXq
+	I6cxq0wYh7j8ofoyadUJKkQUirU9+WdTU=; b=bKDJnMIwptDCk19Oe/ksVWxtYD
+	yXZG1uIBuF4tH9UxuSEDszhYH20UPuhYByZqM4BHjHHTOiDm1Kqsb7sd6z9Un+GQ
+	ormHfzwLUqYfBm5gl9dnPlV4fN5O0SppfhxVLubZDJoXH55pAavdsHJqgGbePR+N
+	eAtOZEf1B5bA3Sx6ZxJorLwzLvp3onGl6jQ2CbN+fQf5hHNKHsgGl98AzzlmvSiF
+	A7etAJUoTHkU4tVECrGSf3VYfKviMs4XwTJ2GxQ0dtk1Eef2euO1aCGzPiKkwPBe
+	uUwd/7OkSBFmeBTMdzMA4eAhsNzIL2RPxeRDNB5xmg24iFLcXHCTZivX7inw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781968507; x=1782054907; bh=q3L1XTEbo+IQHm2OGTlLVkU1nU4KOxCSizk
-	ufasZLLo=; b=cVIcT8BDBrrCDjFjkz9XVvvipDcfTHJ1Fem90HCV8YWxKjwwote
-	a7fz66m2dvhgUjzhfc2h+TMulU7llM0MM7DEpuzGtPpWzFkIGGTMe80FPZVr76P0
-	8keAvb2A3UBNKsI+7gUdTReaEi55ZNtkzpBVCwemWniPl8vien20lACqTRFCZ7HV
-	nM2HxgDIhBHM0+KB7oef0Uc9Bj9Cusr0AkwJOfR/nJJ248/bZHoCPyt5EYlqCPZc
-	P/oXwKiKssb/z5hnWpr/j8xtyJ0jRKHjlU1OgNfVcNx0nT8J49AMlzsO94kDiH7+
-	wHH/eeqkUq+bEJb77px/J2+gfeK73CzSN1g==
-X-ME-Sender: <xms:eq42ag_4HLqw2hXm43cmiEzpNgh--D6Ue8bb5TZD87cw-OwK3Xe8fA>
-    <xme:eq42ajEtPHy4zWNWmuPXbAmB7mttTuAaVF_faj_QsEKHfskQDN2fyVANmPMRLdSvX
-    elw7UHKjYjC5eneN4hS2n5LtrZsOa5XtJSZPXgkm2fK0b3u-S0-cA>
-X-ME-Received: <xmr:eq42asLjK8oJ2WR-ZELTFoZl9G54kKCtIBTo8crNweUTgz0_-nqXG9K6KH-hqULRn0YroXCEr2SvRVLuNukECdTTeR85qNqNBssOAQs>
-X-ME-Proxy-Cause: dmFkZTEmBKkCHV6sqR9HSHozVwwweYtFbC2oQqOGR56tZaA7tBdJ8PUcMgvF/WXHPmcEqd
-    lhYOsUUaObPUjKg+O45r9twAdygFUlB/ZqvT0W5qJgxG4FF8ilYr+VUQbpui6v9iwkemSW
-    gbhnMbGXSo5Vi7IUL5XhNtQQBmvjNhjL9otBN6si5w8CRsxQbKDjmdYcGzMUaDcfL2OZ+N
-    qLgq6DE6vrpAEKUofsIvSc0iIBU8KW3srIsE4X0kr0QqqoMFLVMIgW50X99yoWk7xcz8sk
-    NA7BaK33/VHSfZnpzdyVEgTDnw5m7snMMREdBiMnGRt/RKPBQmkAS8L2joZCtJHk7qqkJq
-    Ng7WHFPbsykmgE18eySb5JqUqYWKyuY+vLAIf+9EAbrdEfDgraDWkA05Y69uLY8rQR4KSs
-    OTY3cy712FMblhgUB6CR70Xc+TAlSzeEcQtqgelg7Vc0Q/riN/jDqBvngWGu4TE2qeNcg7
-    aL7gN4394L+HsN41SD5caQphpKGv2cMCC8sup67JIBOuuDkBh/pIO2xrY4QfYViEcT8cuT
-    /twkZEZrV8KCIubE6q/x3nVYkyaNudd2E62u5a58Ra3UGfpdfAhZd+snWm6smKiJL1PM3k
-    4jvViEzL27Zf7VrZWygvewVq/HJsctvMRK86XlQRXtbQzMhvYSLMFQVjuK3g
-X-ME-Proxy: <xmx:eq42arlpj9Gw8jLYH2nZ6fV02v5bNBbrIMHD2ERIkEbis6WxiYNvnQ>
-    <xmx:eq42atw-w4u7m2w1X5lrcdcQyUkdmuHTfhT8DqdFAR6UAjmJd7kXwg>
-    <xmx:eq42atveFdu7YqrwbULdNGqsqfKi_dx3KRb9OT00CDklEDvM9B9SAQ>
-    <xmx:eq42anEVUKtthyjkifyYyX9vFcLq5mDaohxpplFcczVgBMx3cWEPEw>
-    <xmx:e642aqWeN3UFdmJLs5ZgjKYlp8z3UFrzTgQQkUpBis2LzW8H66tK-0pF>
+	1781968683; x=1782055083; bh=R6MwaOUBXqI6cxq0wYh7j8ofoyadUJKkQUi
+	rU9+WdTU=; b=YZDWqBWBDB8Iz4TEyWLy7BpiLwAYBzGwY56xbp5poV0IxZts46i
+	LuKZV2/U1joX51MYPjTOSD+7wNIQMEk+WjG+jqdUtNgD+RMuVazVRThVTUhLfAUD
+	N2YwtSvUGwF7M8jfKtmWgrRlnx07YwwJJz7MMELq6a0cEI3yeMIQMMziTQw+7Iaq
+	0Xpl5kqjJgcl4xXlQc2YYg877EVcaz9q4ysI8kMOTbDi0SQl22GHzUqalvsh4qvm
+	3gNIboU8XP72JbwzIN3BLZt+JZasdOPEu1Lece8QtcqQewSdT6HjYCVQKiAMhlnT
+	VES1kXAcH55vAi86lxLWw2bm3Fw/eiEVWVg==
+X-ME-Sender: <xms:K682atfKaTCwvvjQDlhukr-KPM0EbziuUVT22ik76ipMuVn1B21vxg>
+    <xme:K682au7I7RA_A-wUVU-w3g3ckskz_f-XqYDrvfnuz5yc3gxX-NOT9RdoObszfPs8K
+    g17x1CCpHV_nyBx-7VYbhnaQX_Z-JkTyz8kAO0SeB5kPjl3pbJ1w3M>
+X-ME-Received: <xmr:K682agW877-BQiXjrFM2nY_txgRH3g7qaADE1cRdzPuP3eYnpQ97oiFr005isPvMm-WOS2D44DaQcmz4wjet5n8DoSmQVW2-zLl1Re8>
+X-ME-Proxy-Cause: dmFkZTFCN4Av7BWzWQ1ENs+JkzJTPChcpJLgylZp4eLUuhnJrmwToAmBd/a1Yev6EIb3Fq
+    HCI0zAqh6S+A8cGS8xFlkmsee0+Gk8Cek13cqXZpfxoTaSTRGFOPzHju8jSiV7yc4AqGcR
+    Zl5eGK1PZw9KljQZckUIj1EOPiJfSKGK2ikt9t4a5wyR1GVzwL94+5EFiJGLx9r8kaVOH4
+    KI6IVlriyw22obEAEOcZldD0hWRuWwm5wjxV6l+vrLDQfBZkzt38nTWQAQk0Zqb57yYPVy
+    nEfVif4h+TIYzGzZ0Nk3dBC8eqw+EGaWqH5kBODkyQMEk58JowHmviNU8ra7K4oZLR3HWI
+    25Y4HqwbXjMh1QP/EPsH022qtb+FDtXFG8NEaE1zS2nQ5o9Ol6T8fbDogOQGQ+rwjIc/XX
+    zeh/LQfyapEsuRNKUrMd2HCKmRCaH0vs8a9BjCPM4bofUh14eMJU5c+/WkqtG0Ri/238CX
+    EnJDbBWrDV0tJKJsjzQkw1ODPHzc+PSqCaIAswimhjjkcY/jEzFOjin/j6YuXTvS2goRad
+    gPwTc3Dxv159ZyRnxqkIvSDB5pEs57c5VGuHlA7e7Y9xtXNex0HneM+X0cZc46A7pS26Yt
+    nk8DMRhFgqn3V2C/SOVcuM15YG4/OSEB4cDyVJqhyqOTsCzhDYRGxnGxN6wA
+X-ME-Proxy: <xmx:K682at77iKqlkgwL4v9-5PK7r1bvtrbV0T116FC3cYcblba6hn1ajg>
+    <xmx:K682arqAusk0m6usm513VyshWht36S1MN3l8Zajn9b68c-cbDpytYw>
+    <xmx:K682agkKuPrWSzCbU2MLGgywAJf-kQqCra4EkqLuzRVTU8w9OaXf8Q>
+    <xmx:K682anPStDUW0nR9bYyohmUDRH9Hma2yiEsZt7pL9t6guxEnHrp6FA>
+    <xmx:K682aiKabc6sDybD_YPMWmtyINCOCBJvjU7AbhbmK9Zzn_t5Keb40Dtk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Jun 2026 11:15:05 -0400 (EDT)
+ 20 Jun 2026 11:18:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Pablo Sabater <pabloosabaterr@gmail.com>
-Cc: git@vger.kernel.org,
- SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
- Michael Montalbo <mmontalbo@gmail.com>,
-  krka@spotify.com,
-  ayu.chandekar@gmail.com,
-  chandrapratap3519@gmail.com,
-  christian.couder@gmail.com,
-  jltobler@gmail.com,
-  karthik.188@gmail.com,
-  peff@peff.net,
-  phillip.wood@dunelm.org.uk,
-  siddharthasthana31@gmail.com,
-  Kristofer Karlsson <stoansen@gmail.com>
-Subject: Re: [PATCH v6 2/3] revision: add peek functions for lookahead
-In-Reply-To: <xmqqzf0pfefp.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-	20 Jun 2026 07:56:42 -0700")
-References: <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
-	<20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
-	<20260620-ps-pre-commit-indent-v6-2-cdc6d8fd5fbc@gmail.com>
-	<xmqqzf0pfefp.fsf@gitster.g>
-Date: Sat, 20 Jun 2026 08:15:03 -0700
-Message-ID: <xmqqtsqxfdl4.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
+  Ayush Chandekar <ayu.chandekar@gmail.com>,  Olamide Caleb Bello
+ <belkid98@gmail.com>
+Subject: Re: [PATCH] environment: use 'repo->initialized' for
+ repo_protect_hfs() and repo_protect_ntfs()
+In-Reply-To: <20260620140957.667820-1-cat@malon.dev> (Tian Yuchen's message of
+	"Sat, 20 Jun 2026 22:09:57 +0800")
+References: <xmqqo6h6jvuk.fsf@gitster.g>
+	<20260620140957.667820-1-cat@malon.dev>
+Date: Sat, 20 Jun 2026 08:18:01 -0700
+Message-ID: <xmqqpl1lfdg6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,39 +88,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> I _think_ this is OK, as "--graph" sets .rewrite_parents bit (as
-> well as .topo_order bit) on, which makes want_ancestry() to return
-> true.  Which in turn means even if -L is in effect, we will not call
-> line_log_process_ranges_arbitrary_commit() that is the only source
-> of side effect in this function.  Somebody needs to sanity check
-> this, but we may want to leave an in-code comment to warn future
-> developers not to call get_commit_action() on random commits outside
-> of the normal history traversal under what condition (namely, -L
-> without rewrite_parents).
->
-> Even better, perhaps add
->
-> 	if (revs->line_level_traverse && !want_ancestry(revs))
-> 		BUG("do not call this");
->
-> at the beginning of revision_has_commits_after() function, and
-> describe why in the header file comment for this function below?
+> To match how we refrain from calling repo_config_values() on an
+> uninitialized instance of a repository object in other two topics
+> that deal with ignore_case and trust_executable_bit, check the
+> repo->initialized bit instead of the repo->gitdir member.
 
-Having said all that, in the longer term we might be better off if
-we fix the line-log code so that get_commit_action() becomes a pure
-function again.
+OK.
 
-It might be a very simple change to move the "if we are doing -L and
-!want_ancestry(), call the line_log_process_ranges_arbitrary_commit()"
-to simplify_commit() before it calls get_commit_action(), but I
-haven't thought things through.
+> Base commit: 43192e7977f5f05138abcdb3212a3f87ab513bef
 
-[jc: Michael Cc'ed as there are a few topics on line-log recently
-from him; SZEDER Cc'ed as his 3cb9d2b6 (line-log: more responsive,
-incremental 'git log -L', 2020-05-11) introduced this side effect
-there.]
+This line does not belong here.  Besides, you do not build directly
+on top of 'next', ever.
 
-In any case, this is a remote tangent that does not affect how we
-want to proceed with this series ;-).
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+> Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+> Signed-off-by: Tian Yuchen <cat@malon.dev>
+> ---
+>  environment.c | 4 ++--
+>  environment.h | 4 ++--
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+
+I'll queue the change directly on top of ty/move-protect-hfs-ntfs
+topic, which will be merged to 'next'.
+
+Thanks.
+
+> diff --git a/environment.c b/environment.c
+> index 6ee11e9fc8..8f0c1c4f25 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -130,14 +130,14 @@ int is_bare_repository(struct repository *repo)
+>  
+>  int repo_protect_ntfs(struct repository *repo)
+>  {
+> -	return repo->gitdir ?
+> +	return (repo && repo->initialized) ?
+>  		repo_config_values(repo)->protect_ntfs :
+>  		PROTECT_NTFS_DEFAULT;
+>  }
+>  
+>  int repo_protect_hfs(struct repository *repo)
+>  {
+> -	return repo->gitdir ?
+> +	return (repo && repo->initialized) ?
+>  		repo_config_values(repo)->protect_hfs :
+>  		PROTECT_HFS_DEFAULT;
+>  }
+> diff --git a/environment.h b/environment.h
+> index d188955f5b..8aaedcfea3 100644
+> --- a/environment.h
+> +++ b/environment.h
+> @@ -137,8 +137,8 @@ int git_default_core_config(const char *var, const char *value,
+>  
+>  /*
+>   * Getters for the `protect_hfs` and `protect_ntfs` fields of `struct repo_config_values`.
+> - * They check `repo->gitdir` to prevent calling repo_config_values()
+> - * before the configuration is loaded or in bare environments.
+> + * They check `repo->initialized` to prevent calling `repo_config_values()`
+> + * before the repository setup is fully complete or in non-git environments.
+>   */
+>  int repo_protect_hfs(struct repository *repo);
+>  int repo_protect_ntfs(struct repository *repo);
