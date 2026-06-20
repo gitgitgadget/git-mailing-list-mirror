@@ -1,182 +1,125 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E180B640
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 03:18:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781925519; cv=none; b=RtVfprLy289muhhlxrEiwSJVmfQ52FtCV6mG/cy5H0+aZx9nxt2BJ4klo3mXKOp8LYxnNgQmUhNQTiJ+RwmiT2KHYCVFDIw2gKfyFItwfIp9xl1/g8/WNapTEFfMTOnuNpnlzBzkVO3U7ZKVMnButmz/USdSzOji/PvIBXeLJVM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781925519; c=relaxed/simple;
-	bh=DU9Cprwmd2+xSbtmXpWEYm53nUuTm9NjCfbmh8HLy40=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ok3QGC9+YQenXktTvP+AEpbJv44Gjro9DSe58jBUDPrlyUV0FH5Rj5DP8MbM49loqB5FnJTcIqtCWO9lKwFFFGP7WCctKOcQbCB5/++ZWjJRj5jaVrdrosvSM9cttI0sfPaQBvBJSm11JGiH4tiT6D/1Juz+VJ4wdL/OnNC7qzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPR6ilaj; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF981A7264
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 09:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781946283; cv=pass; b=PkyzwvrdejuB29YYTT4PzOhaXeqkM53O1rkf2ZCOjYWIRw7aa3uegO4GgpZWW4qOg/BQC6fa2AWxMiqq82aP8GNttW+tzwZsEH5vr3mdp6SW77oJNOAnxh5WDRq3hflW3rOKEL5oUMSRYAk9+WBSoIwsxFwJVSHnq2/zP7kFQzc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781946283; c=relaxed/simple;
+	bh=hzKkDPtQ3XxWNse95MtoyU79LnbPGO/PN4utmAfJYeQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lifv0JfK7asLQJunFkHJdPpKIf8tL7x0cG8ZFmJYIgOFMKJnT3NknKNpRkwAxikA46ymgpTaXp4I4KYVdMA2AR6d9IwAqsqePMgD6FCPNUGyx0h2J6DX4na2pU9TG1djW4hOsshKHnZNlUxMeSYb58osmuwtIM4w5PhlNVTHUPM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G1kyZiZT; arc=pass smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPR6ilaj"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2c0c1e0d00bso29061905ad.0
-        for <git@vger.kernel.org>; Fri, 19 Jun 2026 20:18:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G1kyZiZT"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-69767cb5d4aso1804602a12.3
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 02:04:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781946280; cv=none;
+        d=google.com; s=arc-20240605;
+        b=IjLku8BJfFc4JZ8AvvVArXYPWH8LGdu44MniXZah5tCGoHRw3uvmylsYRjxePuZwhO
+         Yn6ntkQY3uTEXBYJ5ZIPgARGr/IFcv+qPRbouj9LPViz6enhsKXAW+5rkCksqyL/6bpm
+         fpuNvjy/cpQPY4N7NHbI8iT1cvsAZnXAsgWtznuXh05yg4n0OowOAIb/szxCJn4JNgPp
+         dYINyCbRdA03T5HSr/YuzFHrHgVeKK3adco7tzDWl0Hio+uyX0A3gZ0rU6SZ0bkKtfT+
+         Fk3/3NKSsDnAVknmIOnj0O9Ulo6mF6lQB39+7qgWazq3TDEe2/EJB2Y2nBwFvhDHqBFC
+         DCnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=u7RF95WR3NDQEGSMzOnm2wkRdcSJmmXRONgc/u8inHM=;
+        fh=9uI0BOYUqQn8hTKJVG0io/bb3kjM86DmQUpmQhkBDMc=;
+        b=AS8LbdxrtkJZnBkLa20puBg182Vc7yAmR2f2ndVec8iAw7i4b9+kBTeEFnNeRcwjM/
+         ANdcLqIG2T0GB0Iy2DDhAqB70OVycOx8xW9oGgEB02XAijjBxn7p3qGM3kDbDzAN9MgJ
+         Ja44Db0ZHdD5rvYznOQRi71TCblrA/olMsR43hPS5lolf9KX5LV+s42Cpop8YnP4Xif2
+         YOeuS4SAAEmbmPIPNCicj1A7pK2H4Mf2s67PJYjMSdExR9+bW71+09N50pIhisoHKn9E
+         n2DAhJDsa8zAiBo5ZuGFx/GAspZePpXBUBOSH9fPhflO+5yqe9aiGPkNdNmqUzTXopfL
+         aAvA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781925518; x=1782530318; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SobQWarWo/c7K+PsEC486yIhVGr3/v/fBon73Us0Hy0=;
-        b=SPR6ilajcOR5HmmLwCiiLKJ1F6G1AYlMHdGTGTPlDF5nziaQ8OorkFNehu8u6BJYv5
-         BDC/EYboxCpFE3oKw7TfovpafeMHxRZZnVDzLkPsTAqfSHzl2Okbx4nrpVvie4J/V+Gr
-         6/KVS3wx0Kp4S1JU3+GKCj24ucwfjWT0cNOe054wbAu5TUOXfcXBiBLEcyE3psvr69lw
-         dqI1PnxQb/6YFZHkg0lZ51OgS2kCBQC5fmYDRBrVyqN1cMFVfCdiDokfYlVJOxQNmq1f
-         zozuBIdqyWA1C46ntd3O/x7SH3Uu/1tiH+zOg8F6jmrzmHvrlfgu/b6sM5KX7QMUe/Uq
-         xAqw==
+        d=gmail.com; s=20251104; t=1781946280; x=1782551080; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=u7RF95WR3NDQEGSMzOnm2wkRdcSJmmXRONgc/u8inHM=;
+        b=G1kyZiZThXIqceB095mAREX6ndmotLQn2L2zR3DvjqlCa5w4+llfBBzQZoa/75W8nP
+         x6U8UrFEDE1Myu2T19HiYxYlG7uz08BgySfkY88WaOl2ZZRXNsvO4rzy4F02LWubFUzs
+         UlA0WolOS+WAeV+LCQ5Q9kYOQzNdxwlochZQO+woP3GC4MDOy+xo8hewtyC2AEnHG2st
+         Oe+Ka4Vke9leLAD09hlK0xg0CISy1G7jEV/sG3LC2wxkQ/TqeIocWOSXQ9LQIEaaHv7w
+         E6y0NNAqz6PGTij/OMwgquq4U6UZVOyiwdpA1JbhR0anuwvFv6ltss4Oatxq5LqufDAV
+         FYMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781925518; x=1782530318;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=SobQWarWo/c7K+PsEC486yIhVGr3/v/fBon73Us0Hy0=;
-        b=a5AneVWqWJ1CCWKDulmbks5G6PCpmVXnDOkX7EwrY/lScDWmnJhQOZRLjxY4Umj3a5
-         JNEhoSGYZVjRNwIfW4mbdsxO7K5UvINPREmSx6Y+Vk7p+VPmT0y0ZcRmS0kUoP0pmFbY
-         jE9iIg5kFFYI0zURTDXZsA5F+1AbrHsrgxJTmnBYW8tLfwgq/krc3hkH1Q5JJfGl8WBf
-         S3fS+t48m+d9rB56cpTJIe/PJTwGHabnt7m4s9DGyBR2ZV3q4aTE3mT3P66/51daAZqc
-         dKzqt35Yya0qgOSd9CdbRxJCjsJRdgd/gYqNYnFtWAcKgAYES8zPzlpWq3V/LVExAJe6
-         rRKw==
-X-Gm-Message-State: AOJu0YzOswptdLqSLigLd6HpAQIX2Orjl0gXE6j4hdCNPdNDYP+rWFJO
-	Wk3y6v8wdm4mB1/Y5+FgG/pDPi7Zmk0gesNuxtFPTmFQ6kbnG46M0ZONYj1EpQ==
-X-Gm-Gg: AfdE7cn3mH3Q7k+8Ameeh0OnbeUmu3ORwu2h+KjDyw7Fg+40zQ6MGGUyKddty4HRSDz
-	aEJ7kiDP5okxMQcil3HZCKdstBj9c44XGsLbZoZLPjjyWmIGHW0eJS9H6xGoYxmEaoRp6vmUJuo
-	qptqXxMAHZSvTZdYTr4H7YJV8orFl2/Ygjt84R2rCv6IrE5QmZxSeqE31LhhV0wUkSVtn/3WevM
-	XPiBB5KSvsLHtkk2OrAhYy7EIAtfJej3/QepLcw9CfYcPrEBOvb7RbG5WwZQKp8TPBWNzHevfs5
-	ECQfFS+1aqLpvCRq44UU7RLhlSg/bW1uoGAgNaR/mEuP24RbhEzLKH7IhK0rtdvt/0BSB4Ajk0C
-	RyFLyhB5i1/Rj+4nNxz9IAyaxF/9MqRKlUsN/IRQAa6w7BaDPN9NIBaInSGZj9vV0wEsETE9jWN
-	LzSKpAtoxVGropI3yDjvbC2f08aHGFh7LefNJ5KE2CEEndGoKXrTDREvty395beDDMsD/Vxu1uR
-	umSULAZPOHFMyVuBxA=
-X-Received: by 2002:a17:902:ebc7:b0:2c6:ad70:d870 with SMTP id d9443c01a7336-2c725bf1e7fmr57421285ad.13.1781925517705;
-        Fri, 19 Jun 2026 20:18:37 -0700 (PDT)
-Received: from jayatheerth ([2409:40f0:f:5924:9ce6:f181:f81b:c57])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7436af590sm9581675ad.17.2026.06.19.20.18.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 20:18:37 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: git@vger.kernel.org
-Cc: jltobler@gmail.com,
-	lucasseikioshiro@gmail.com,
-	gitster@pobox.com,
-	phillip.wood@dunelm.org.uk,
-	sandals@crustytoothpaste.net,
-	kumarayushjha123@gmail.com,
-	a3205153416@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: [GSoC Patch v6 4/4] repo: add path.gitdir with absolute and relative suffix formatting
-Date: Sat, 20 Jun 2026 08:46:44 +0530
-Message-ID: <20260620031644.353772-5-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260620031644.353772-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260620031644.353772-1-jayatheerthkulkarni2005@gmail.com>
+        d=1e100.net; s=20251104; t=1781946280; x=1782551080;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u7RF95WR3NDQEGSMzOnm2wkRdcSJmmXRONgc/u8inHM=;
+        b=KghG5wyPG5euCv1O4SeWAn/GlYppR6MnbR70fOuNkFnyzC09fOF66TfhCt3zU7M/Kq
+         4hOiLOWChhc1Dffdd66HMAFckEyfA70K30zr+w8cAcqX61aiZsKDbN8vcWaUVeQGSwbZ
+         FzN4CTZwdNVD0yWN3bUAV4Bgk5rUrx1UUry1e/gTTotjrutBy5rWPqIPSmz2CsIXJnsQ
+         UBiMAp0GDdp2TadUl/u7++9Ot6K/NHSJ9//6e5G2U0SVSSsWgV1AFGEhncqc6scKbFvv
+         OV9HaQ5eKBBZ7GSlpDJufp9Opinc30gES0VQ3vIt3OKYw/Vg5nroGdPTy9UoXBfrd2fZ
+         1F3Q==
+X-Forwarded-Encrypted: i=1; AFNElJ/Apw7nUsr1Y5J6j81W672/KmxEZq514ReHLmym7pxTEEL+e4jnV95gqLbOMfn7XjTzc0U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWjKumCj3KCF79PfFX673GNcu7hle+3jRO3wzeJ92q0S7b8MVi
+	Afehbhh6O0InqzO+wRYz/wX4yppo6m19MibNhvBGUVVpzAAy1YfvHhfe0zk2L0jzOkQB9DkzTCe
+	fB4CxAA8JxsavDiCB6Dg6A8wa/zglVPA=
+X-Gm-Gg: AfdE7clZnBonIhKvrOHXCLWoCDUFuUu2b0D3NtC7Wp6KPOTKpbzb4EVEekDbC9BXu7u
+	NjaZnrUw0XI6IYHUA0ef/xgnerSQCZyCOdrUhXMcnsCbCt81/6y59asNL03najBl02mTwq66h5s
+	qP2aqz3qXLwkywAgvn/eLFR+sksDShncNAuAVvAIqw1GvVyarw9ZtUMklcWA7g7tHCRaBCm/l+z
+	opZBJzgrJW1OvvJW3RhiZICDHp9rDjpY/9cjAAQ48+vQC5NSXJSaGrR+vq//ISw8XZUdasS
+X-Received: by 2002:a05:6402:e0d:b0:691:afc9:f59c with SMTP id
+ 4fb4d7f45d1cf-696edc5b226mr3584671a12.1.1781946280328; Sat, 20 Jun 2026
+ 02:04:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+ <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com> <9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
+ <78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com> <CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
+ <37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com> <xmqqcxxnsufl.fsf@gitster.g>
+ <42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com> <xmqqh5mymt8i.fsf@gitster.g> <xmqq33yimsdp.fsf@gitster.g>
+In-Reply-To: <xmqq33yimsdp.fsf@gitster.g>
+From: Harald Nordgren <haraldnordgren@gmail.com>
+Date: Sat, 20 Jun 2026 11:04:02 +0200
+X-Gm-Features: AVVi8CfWa6T6T97d8LpGFRzOKdcCI2pQxWDf4AMQQq_Zkt0IX8vDedbcpXQUbaE
+Message-ID: <CAHwyqnWt59h2HO5EJbFswYr7QEA7oNZKdBt_vTk5axNbWFZbpA@mail.gmail.com>
+Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Scripts need a stable way to locate the git directory without
-parsing rev-parse output or relying on its flag-driven path format
-selection. There is no way to retrieve this path from git repo info
-today.
+>  - Move the @{upstream} of feature2 to the branch that "merged"
+>    feature1 and caused its removal.  Asking feature2@{upstream}
+>    would answer origin/master, which feature1 was removed after
+>    getting merged.
 
-Introduce path.gitdir.absolute and path.gitdir.relative keys,
-consistent with the path.commondir keys added in the previous patch.
-Reuse the test_repo_info_path helper introduced there to validate
-both variants.
+I think this is a strong option.
 
-Mentored-by: Justin Tobler <jltobler@gmail.com>
-Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- Documentation/git-repo.adoc |  6 ++++++
- builtin/repo.c              | 24 ++++++++++++++++++++++++
- t/t1900-repo-info.sh        |  6 ++++++
- 3 files changed, 36 insertions(+)
+As a side note: I was annoyed before when GitHub didn't re-assign base
+automatically when doing stacked PR's, so merging in the first branch
+caused developers to  merge in the second PR into essentially a dead
+feature branch instead of master, if they forgot to manually change
+it. But I think GitHub has fixed this now so the second PR gets its
+base changed to default branch.
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 890c34051d..ed7d80c690 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -113,6 +113,12 @@ values that they return:
- 	The path to the Git repository's common directory relative to
- 	the current working directory.
- 
-+`path.gitdir.absolute`::
-+	The canonical absolute path to the Git repository directory (the `.git` directory).
-+
-+`path.gitdir.relative`::
-+	The path to the Git repository directory relative to the current working directory.
-+
- `references.format`::
- 	The reference storage format. The valid values are:
- +
-diff --git a/builtin/repo.c b/builtin/repo.c
-index c4cc3bf3fc..9a312d127a 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -99,6 +99,28 @@ static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
- 	return 0;
- }
- 
-+static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
-+{
-+	const char *git_dir = repo_get_git_dir(repo);
-+
-+	if (!git_dir)
-+		return error(_("unable to get git directory"));
-+
-+	append_formatted_path(buf, git_dir, startup_info->prefix, PATH_FORMAT_CANONICAL);
-+	return 0;
-+}
-+
-+static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
-+{
-+	const char *git_dir = repo_get_git_dir(repo);
-+
-+	if (!git_dir)
-+		return error(_("unable to get git directory"));
-+
-+	append_formatted_path(buf, git_dir, startup_info->prefix, PATH_FORMAT_RELATIVE);
-+	return 0;
-+}
-+
- static int get_references_format(struct repository *repo, struct strbuf *buf)
- {
- 	strbuf_addstr(buf,
-@@ -113,6 +135,8 @@ static const struct repo_info_field repo_info_field[] = {
- 	{ "object.format", get_object_format },
- 	{ "path.commondir.absolute", get_path_commondir_absolute },
- 	{ "path.commondir.relative", get_path_commondir_relative },
-+	{ "path.gitdir.absolute", get_path_gitdir_absolute },
-+	{ "path.gitdir.relative", get_path_gitdir_relative },
- 	{ "references.format", get_references_format },
- };
- 
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 09158d29f9..ae8c22c817 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -207,4 +207,10 @@ test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
- 	'.git' \
- 	'GIT_DIR="../.git" && export GIT_DIR'
- 
-+test_repo_info_path 'gitdir standard' 'gitdir' '.git'
-+
-+test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
-+	'.git' \
-+	'GIT_DIR="../.git" && export GIT_DIR'
-+
- test_done
--- 
-2.54.0
+Two caveats:
 
+- How to handle recursion: b1 has b2 as upstream and b2 has b3 as
+upstream, and both b2 and b3 have been merged? Not good if it's just
+luck which order the branches get walked, but also we don't want to
+have to do many passes, two passes is not even guaranteed to be
+enough.
+- What about when b3 has itself as upstream? I guess then we can just
+remove the upstream of b2. Overall, I don't think it's a huge problem
+when a branch gets no upstream, so maybe just warn about it.
+
+
+Harald
