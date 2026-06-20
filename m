@@ -1,177 +1,121 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00182184540
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 15:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781971062; cv=pass; b=IT+fbxh8+QaFsJNVMPprmm3K2dddjIzLm5VCEiGYDidBenYaXOI8hyYubXXbzFSpCNzYMcMd1BBn7KGBp0BCeQz8ChdzOJdrYJbL+6i99eecCht7x7jbj0g3EqDL1MKBUpTeUdU5ZjrC6J9QkEKJVxVZZsFqd82BQNeh62Dudek=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781971062; c=relaxed/simple;
-	bh=kGdsvyexQ4rokLkGVKN50Po6vXd3FBp9G3hS7eEtoPQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EW0/2T5F0eCIyjXTcdxFx4/gQZn/ia4D4NljTA/NvEv+oCGtcU+LzHsM4a3MGk0KvyD0lfIczPlgN44ApIAXFXPdP/2DG3cQrczzmyqFFZNcQDMkOVIEcJnXqkc/Yb+l8POxP8jGpUt507PjaAF+T8HWZeobzeDvAutdjYrse/U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7/4xbFj; arc=pass smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A01B2EF67A
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 16:00:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781971251; cv=none; b=qBs2k9RiWmu6V2C+V+DfcDdpNgoMLC6Ntzdt5WZwTP+sKMAO4Gqe0q20gXP7vTpINfGmQQg8x4Q6SsZMqbeEF8522FQMSkk2SclgMNCOlsLNHfcFzDFva0jkXg8nDEkDZufNoYtuccg+DNgTn/a5PweqtAnLMCkDY4lXf4qbHPA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781971251; c=relaxed/simple;
+	bh=8SKpqy+fiX6c+O0v5Tj8S1TbXzV8gafMi19dljLBgdY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sTHRNHoW+8/mC5Yqmv0VY+ktbTnJ0xlW7ZoVHj+bQdLRoND/4XOXuG8MCR8B5YFu6pItxusmeLKnqSR5bcHgHG9piC1IWpWnBDdXRaY8UIUWtCfBJfCDtarR8IjG8bxluai+qL1/xi55gmJU8/WCWxCNhvvD958PhVydOUzXu8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WHXbabxW; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7/4xbFj"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c8584e80d59so1241779a12.2
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 08:57:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781971060; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JWFgqqfwMhEg0j8ABi7baFot47O8F6s8+LpQXRtMU0E4drXu4YLZUN1eO3TXdcdM/O
-         8mOYtGzV/Unu16jqePoujVF0yQ7siiDODM/kklZyqg6Q9lSpK4TbxH5W5478NWjzJPUk
-         CfuMmEYQrBk53lsmi9m7qLKiW5PW2vfCxLu6r5VmGHXBTD8vRJWAG2fsQsKpNhla5mwL
-         CyYwf6sS83MBuGWSGsty2aYi/A2S52XYnPHz96SCt8gVtHtUlAZdKr4JVHjF8YgbFLtp
-         jfoV6U9q6OkfF9bKfTMFX9RdpKS6Wujrl54qyKolfPgQthKbJLjQyR9B5IVnWbQURAAZ
-         G35A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zqYan4V6JJp+h9TeqMluQgxKPMwfu0jaaD3a9YooMxI=;
-        fh=JXEs40DwwsDIICretIR6AhTxI8iOgnQYnwvLmc7A5fs=;
-        b=Iz6QHa/mUfKVFUxfaSsubXzCGmNplbibUIt5J5pZ2fDP0/jsec3qcxC+irjU5zKp4v
-         uGk4AL/rjOOFQBdnUsz/9NUz7p4ep5z6y5KCeypqANGeFUGvcHpW4p5wCHpQQMagKrps
-         mbLKQOIKHR6LMVDMibiWmR/hc8daBZjwhxFSGZ7nGk5bTp7p3rjn3mKQ2bsF3bCT2JfK
-         yjVqjEcnjczTzLtg4JXd7+1JvF4fvtda1RXNx16oGWLcQ92McxD+MTSOrzMnQlkWnfH+
-         wO0f/aujqMrqm2Xc9byi2SVFes4DORsaPMlIqI5aXDb7XGy7UDg+5HoIlo3WWqQEVbqM
-         pciA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WHXbabxW"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7fd3801ca22so22638447b3.1
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 09:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781971060; x=1782575860; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zqYan4V6JJp+h9TeqMluQgxKPMwfu0jaaD3a9YooMxI=;
-        b=Q7/4xbFj94sFsOODIJEkSIvO6BXjw0nKRb32l4s1lLZK4pNqWwJjTFfj5ZlTA5QvZX
-         EQmUh9N1vLMoEnL5k4k/n9Dr0ViStW4Rki2C0siHdRz91UApWR8y/nnGNo9KimuIarj9
-         ej9KnuIKcVKwmwwOA046xEAckEflUzLKfIoTBz98eA6CiA27e5TbGGKuhlpH+RYvSEA+
-         DjyuXcQC5suXGVTBiNIBz0OTM8moMQ3ZzSA8LIpmjjGHCkfdVP1otiquzvIK8TadSka9
-         oSjJCj6uN66uGv5XIi4UrJ4PiRPPS4ymaa4ACQYkL6S0H104yeCPESrqyVGYSET7IAtk
-         ANqg==
+        d=gmail.com; s=20251104; t=1781971248; x=1782576048; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=3AZv/j5eWBbPXZ1GWIxdD1Z0SBCOuv4dyMrHcyyimIA=;
+        b=WHXbabxWaRtyevRqEURVUxL4K52ooBT15llQ2GE28AmIdEEVNxUmxDjB+y0B4xwtvF
+         NlBhR+A7LGoG/N2Y90d4rqLaDAaJtYXjEMKrC7UYEd4Nid6UzG5Wue28SaCLlXBtWOSr
+         jSzhPQF8YvqbyLrG4loBgDkV4nSdZOWB2RLcDAhFJS8Ek6aor1PUa1YrtGNIbkM21rov
+         Jo6WwdhJbDAxr9tfBkUjgyFSuQnshYxXVUtGfb+kUM5lz77uvxJfidKxMkiLQ5jxbje7
+         r8YOHAGuhnHcggUWQ4uVqYtQbX+xYqiwV8pd9Jx6lJ5YA6NU531pde0byXygNjIh8kvH
+         IEvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781971060; x=1782575860;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zqYan4V6JJp+h9TeqMluQgxKPMwfu0jaaD3a9YooMxI=;
-        b=PsN8yxPxAuyA4EIrbxJUVeeYCr9p7nZZgFtP3AEj5qYp1aQy8jJ3yRBx5LUwF0PzzN
-         T+g61+kondcqyHqasFUH9g4tUceWm6KqmfJQTld3rVS1BHLDbDef5S3PGu2+QEN+bMWv
-         D3WRU0Ufl2jxMROuXkG5NmM3NBGhCyB3pR2bTGN/mrYgjbYaMlG9Ygc874ooHULW9Mj1
-         5e+4c8ZkvsYWajuQODNPF/7X40ApIfQ0m0sGvvwp0WvsflfWIh0xzDVsWBaF3wXt80/l
-         pw8bWzXV+bR1ogU7jQw/LOl1vTLsp8VvkSuckIVckD426MyxklHKo9Db/oIZ8zWZqt1t
-         TlyA==
-X-Gm-Message-State: AOJu0YxBLw42THWgvhpvFRwsl5JlsMsRoH8Ocdawf7GUm3i+PiUOmWud
-	+b9Aay9irTtVbnaUFkl84iNHds9MoitwWzLv/HvJYCKyOK9rOuTUmxwHVNiAK+0fzuThL5Oz2gm
-	H8wKaEYcjTb1oZWnJ+cI1FdA0/+vbTbx2vsdAkuo=
-X-Gm-Gg: AfdE7cnUM6KMBSWHJ1hEmffObK638q7X2IWQb+mi19vKNipIdph89s7CC+QCMfiy1WD
-	tYFbGy9dMLCT2DyI48Yd8Fo4iR58yg3awDChzS9yZl4LNicV+3K+E/onQ8dDPEAEjLDsGKe1KN/
-	mt4dgxG4yX1AqE5OftT0skp6T26WqMpojrw7RTf30bWtImyaRvXbBjCrhJfra1G4WyxDbn+MEoT
-	p+Kl/jQCGq4fVszUuB7cappoJgK5fx4C/EutF+MqpHNBI0F71xSvMaj8FPKN5ni2adBRF/VrnUS
-	dtWICrGrhK9m3Yrc9OCh/KvBZJ+BIz6Xb2DJCckLXN4aGBIQbpaBepfu+QWN3SFawTcrPg==
-X-Received: by 2002:a05:6a20:d045:b0:3bb:2200:f67b with SMTP id
- adf61e73a8af0-3bb6c6704a7mr8707218637.40.1781971060106; Sat, 20 Jun 2026
- 08:57:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781971248; x=1782576048;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3AZv/j5eWBbPXZ1GWIxdD1Z0SBCOuv4dyMrHcyyimIA=;
+        b=GDx8pfGHu3A2rCB58g4bOXUeSbv2lAMgp4KbigyeQoxWYFY7fuBuLwzy0NLnICcbF3
+         OUqC98AFybcW4KECLQnhZk58CNB9dahojDi7P6zrWGHg4rNA+gN+0iWhakQvj1X38Pvc
+         6B+ycJa3Rm/3DcDI6ga//4YxIw19fC9snsV5ytpIy6BXbBLhESHanFKNIMCU+V4KLLvG
+         wii1+oVdSxCLanQGPaFs5QcOoAOdUtDXiUCS0fG6mXztUCUgk+H1s8AFbBr/Cq6mla25
+         dT9rKf+vP2/dsk4Zr0gDAFVfJ5+ogqdK9nx6uKUbAubSwHcWWgpGc0rH9twDqN4AeYJG
+         VDaQ==
+X-Gm-Message-State: AOJu0YyI2Hy6h/UiKQH78GKxw2PLXBmw5blbcNjhzxb83nzpE3V7wzsu
+	h8MIGzAEbD1yd/DNyWddNPJwAfs3QzNNH7CuByjzG/o7nXrSH6yQ4OIvJrYXBG6xxa4=
+X-Gm-Gg: AfdE7cnMSnkn9Cf2nJUB2XKFHuAa0MYAPRdcSDR2eLcjdqo+xsfJqQ7VRAfGLcjVzrM
+	LzOrZJWTs9ziWZPWwio4MF5wrGHDcYFfLvWc0ACDr6ZVMC/vPg5YnghXw/EHrKKa8P7jh0KXirP
+	ykDH65VZN32VulD3dUWm6AjjfUQV3IEtuwgRQfQ+h6B5iGtx6Cle4Exk3/oJgf7kys9JcAXC5BP
+	YNy7IrlCN7bl0GnMYeeIuZLvPyjMg/AFmLo+I9iHvIGsY7JA+WynGGkQGa/mCh57+ba/dYHY1//
+	eN9Cn6Ssioo8w9n5RGM814oKyxqKITJJKn2iizESmRdbShJay1UABYby0odHbxli0Oe8fSzNSAN
+	S0LlpbkHlsYacmztvdM9IsKKy0YOHgdgY+vB1Gj3H8Pm2D0F8sEmGd5654WlgtUYmKCIsm7E0KG
+	PrzUrtTiglfoE3EGJg+54WVJVJpR9Sv2fj7MuF5kvrDqXGZ5TdGfYXoBJBMvQNv7ylNnX9fYZur
+	1WFoXRv4dBxxutMDg==
+X-Received: by 2002:a05:690c:6e89:b0:7bf:107b:f85b with SMTP id 00721157ae682-802645c9870mr40107987b3.13.1781971247839;
+        Sat, 20 Jun 2026 09:00:47 -0700 (PDT)
+Received: from localhost.localdomain ([2605:a601:90fb:c300::6])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8025cf66f6dsm11588037b3.17.2026.06.20.09.00.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Jun 2026 09:00:47 -0700 (PDT)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] meson: wire up USE_NSEC build knob
+Date: Sat, 20 Jun 2026 12:00:24 -0400
+Message-ID: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.55.0.rc0.738.g0c8ab3ebcc.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
- <20260609001134.GD358144@coredump.intra.peff.net> <CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
- <20260611085526.GL2191159@coredump.intra.peff.net>
-In-Reply-To: <20260611085526.GL2191159@coredump.intra.peff.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 20 Jun 2026 11:57:29 -0400
-X-Gm-Features: AVVi8CcaPXvZ549bCXojPZkP1jiCsxr4OhG6rbaWRU_MBNFyY_T_rRha4ewHvIQ
-Message-ID: <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
-Subject: Re: git-diff in a worktree is an order of magnitude slower?
-To: Jeff King <peff@peff.net>
-Cc: Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Coming back to index refreshing=E2=80=A6
+Autotools-style builds permit enabling USE_NSEC for cases where that's
+desired; the equivalent knob is missing from meson-based builds.
 
-On Thu, Jun 11, 2026 at 4:55=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Jun 09, 2026 at 01:15:11PM -0400, D. Ben Knoble wrote:
->
-> > > Which implies that the entries are stat dirty. And indeed, if I run:
-> > >
-> > >   git -C linux update-index --refresh
-> > >
-> > > now they both take ~20ms.
-> >
-> > Ah, TIL about --refresh. I suppose it could be nice if "git diff"
-> > updated the index in this way, but that sounds like a band-aid. Maybe
-> > creating a fresh worktree should do the equivalent to make sure it's
-> > considered "fresh"?
->
-> I think "git diff" _does_ refresh the index internally (that's what
-> takes so long!). I thought we then wrote out the result, but maybe we
-> don't notice that it needs an update for some reason?
->
-> I'm pretty sure "git status" does something similar, though running it
-> in a slow working tree _does_ seem to make things faster. Maybe it's
-> more aggressive about doing the update.
+Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+---
+ meson.build       | 4 ++++
+ meson_options.txt | 2 ++
+ 2 files changed, 6 insertions(+)
 
-Thanks for the status pointer:
+diff --git a/meson.build b/meson.build
+index 3247697f74..85a11119c5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -838,6 +838,10 @@ if help_format_opt != 'man'
+     libgit_c_args += '-DDEFAULT_HELP_FORMAT="' + help_format_opt + '"'
+ endif
+ 
++if get_option('nanosec')
++  libgit_c_args += '-DUSE_NSEC'
++endif
++
+ libgit_include_directories = [ '.' ]
+ libgit_dependencies = [ ]
+ 
+diff --git a/meson_options.txt b/meson_options.txt
+index d936ada098..1bc75278a8 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -21,6 +21,8 @@ option('runtime_prefix', type: 'boolean', value: false,
+   description: 'Resolve ancillary tooling and support files relative to the location of the runtime binary instead of hard-coding them into the binary.')
+ option('sane_tool_path', type: 'array', value: [],
+   description: 'An array of paths to pick up tools from in case the normal tools are broken or lacking.')
++option('nanosec', type: 'boolean', value: false,
++  description: 'Care about sub-second file mtimes and ctimes.')
+ 
+ # Build information compiled into Git and other parts like documentation.
+ option('build_date', type: 'string', value: '',
 
-- cmd_status calls refresh_index and repo_updated_index_if_able
-- those same calls are wrapped in refresh_index_quietly in builtin/diff.c
+base-commit: 0c8ab3ebcc76981376809c8fe632d0fe18e93347
+-- 
+2.55.0.rc0.738.g0c8ab3ebcc.dirty
 
-But the refresh_index_quietly call is guarded by (effectively; the
-actual code uses rev.diffopt.skip_stat_unmatch)
-
-    1 < !!diff_auto_refresh_index
-
-which dates to aecbf914c4 (git-diff: resurrect the traditional empty
-"diff --git" behaviour, 2007-08-31). On my system that comparison is
-false because the double-negation produces 1
-(diff_auto_refresh_index=3D1 or the result of git_config_bool). Or at
-least, I don't see it get written to elsewhere (maybe that's supposed
-to happen in diff.c:diffcore_skip_stat_unmatch in this case and isn't?
-Idk. (Even dirtying the worktree as a hypothesis that only when a diff
-is found does the counter get bumped doesn't seem to work.)
-
-So=E2=80=A6 has that conditional been quietly dead all this time? I can't
-imagine that's right, but=E2=80=A6
-
-> > > I'd have thought USE_NSEC was the default these days, but looks like =
-it
-> > > isn't? Try building with that and I'll bet it goes away entirely.
-> >
-> > Thanks, I'll take a look.
-> >
-> > I can see on my Macbook that at least Meson does automatically set
-> > either USE_ST_TIMESPEC or NO_NSEC automatically, but has no option to
-> > enabled USE_NSEC and try that. I can probably write that patch (which
-> > I'll do to test), and I can send it along with the "worktree add
-> > should refresh the index" if you think that's an appropriate thing to
-> > do.
->
-> I think NO_NSEC is about not looking at the nsec fields of stat structs
-> (since they might not exist). But we don't actually use them for stat
-> matching unless USE_NSEC is set.
->
-> I guess the distinction goes back to c06ff4908b (Record ns-timestamps if
-> possible, but do not use it without USE_NSEC, 2009-03-04), which details
-> some reasons you might not want USE_NSEC. Feels like it ought to be a
-> run-time config, though, and maybe even something that gets auto-probed
-> by git-init.
->
-> Definitely not an area I have looked at much, though, nor thought hard
-> about. So there might be gotchas. :)
->
-> -Peff
-
-Looks like adding USE_NSEC to my build did make the issue go away (the
-patch is short, and I'll send it anyway for folks to have the knob),
-but that now seems like a band-aid to me based on my confusion above.
-
---=20
-D. Ben Knoble
