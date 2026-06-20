@@ -1,128 +1,177 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869F31799F
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 15:33:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00182184540
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 15:57:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781969607; cv=pass; b=Wg6UjSLnHdS1HoNdRfWIdX5gnYr/tAZGXvS566crMxF8zEvf/Sr9b+npJxRfkwxEONRZ7euAaldmVm1iD3Bm58ZccgOwKr9n9Nc0rcpgAEoMupmrratSR9yxYXKLW8uscg+Wt4cmT0YZNxYqvILM22yENAcVWUy0KK0/JxQQLLU=
+	t=1781971062; cv=pass; b=IT+fbxh8+QaFsJNVMPprmm3K2dddjIzLm5VCEiGYDidBenYaXOI8hyYubXXbzFSpCNzYMcMd1BBn7KGBp0BCeQz8ChdzOJdrYJbL+6i99eecCht7x7jbj0g3EqDL1MKBUpTeUdU5ZjrC6J9QkEKJVxVZZsFqd82BQNeh62Dudek=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781969607; c=relaxed/simple;
-	bh=n84FmOYEfWWHQRhjFv/7tzu0vv7bcH0odA6JPzxMHOg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=UK23t6sgje4iuoFruijCwj3gSfEIZRT3O8/6wHSd7KVgL/N4XGC+Idcw4z7LMI7GPGkaE1Gs3NwyMyPv8AwKZlnwdEgdD5DM510GVmyaVZFPfSTE3Jp45dcGbGa+3qclyO4XoceWVyAme5LYCNVA+wQ6XsoZC0M9jPzBAsDJ0J0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QrAlew8q; arc=pass smtp.client-ip=209.85.167.172
+	s=arc-20240116; t=1781971062; c=relaxed/simple;
+	bh=kGdsvyexQ4rokLkGVKN50Po6vXd3FBp9G3hS7eEtoPQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EW0/2T5F0eCIyjXTcdxFx4/gQZn/ia4D4NljTA/NvEv+oCGtcU+LzHsM4a3MGk0KvyD0lfIczPlgN44ApIAXFXPdP/2DG3cQrczzmyqFFZNcQDMkOVIEcJnXqkc/Yb+l8POxP8jGpUt507PjaAF+T8HWZeobzeDvAutdjYrse/U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7/4xbFj; arc=pass smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QrAlew8q"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-48b991960f2so109853b6e.1
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 08:33:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781969605; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7/4xbFj"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c8584e80d59so1241779a12.2
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 08:57:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781971060; cv=none;
         d=google.com; s=arc-20240605;
-        b=Dfyj9W+cqpHP7NGb1CkOGCcIiLqqZXigTT/1hzDK41IfgVk8Jlm743JXzL8qztrFP2
-         r+OM2oxx/1LR1W8K2W3TlqtpjaeOX/5uUY81ULPqopSsUfYUFR3eN5s/klPpkggT9i3c
-         IAk/SDrQ7iGQEfhGDEk+Y9SaH8F4hXESWfp06IKoQVoiInwWsup2mST1BNwofVHNmdlt
-         EdnMzUZKDRflfEZFDz6o+XUKDiFTsPP2djp58GA+OsFoYxXg/EpWitJxJmL1uJw+LqbC
-         7fHzvGqaSuXpvPkA0jJtH+K6AI1/EV7dq6PHXlqISUFSFT7a6TOsGpSmXAVZ1AIlq05Q
-         9gZw==
+        b=JWFgqqfwMhEg0j8ABi7baFot47O8F6s8+LpQXRtMU0E4drXu4YLZUN1eO3TXdcdM/O
+         8mOYtGzV/Unu16jqePoujVF0yQ7siiDODM/kklZyqg6Q9lSpK4TbxH5W5478NWjzJPUk
+         CfuMmEYQrBk53lsmi9m7qLKiW5PW2vfCxLu6r5VmGHXBTD8vRJWAG2fsQsKpNhla5mwL
+         CyYwf6sS83MBuGWSGsty2aYi/A2S52XYnPHz96SCt8gVtHtUlAZdKr4JVHjF8YgbFLtp
+         jfoV6U9q6OkfF9bKfTMFX9RdpKS6Wujrl54qyKolfPgQthKbJLjQyR9B5IVnWbQURAAZ
+         G35A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=xSWmX1bhHmzkxm6/L8LLp8cnwG9wP4sAWPJ97aXv3z8=;
-        fh=4ryOG4wBbIqKixWzeKd5dc717SQGdNJth+KYU2DAukY=;
-        b=PXPyDLkQ/6cakP/B6fAlIUV3NLadocLv67VLZHGpVZbOTh7KhFH/YC3fGwmquXPhzF
-         u60QL00yuzzlNZNtU2ZiEd6Zp+DGR5/kdHPoUu0+y2uEnPZLoVkv9y6mI+vluSEHpZ9Y
-         iUi6OwbfATbK4ds8xrQnLElx9sgmIDF0R+/lfMWfEgXi6/FxIbeF692NK3jqsW/MDnHf
-         zQSjIG1htfgUAja1MwhedHqUGKfE5FJFisVv7kJ5NzIEMrB+x+R9RqXiap6y/oOomoql
-         QwsRJvh89fchM28KvYCSfvNlDdtd887uJcyGVWGOfLnpmdNWZyW1Lmfr2Fo902NJElzd
-         aZvg==;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=zqYan4V6JJp+h9TeqMluQgxKPMwfu0jaaD3a9YooMxI=;
+        fh=JXEs40DwwsDIICretIR6AhTxI8iOgnQYnwvLmc7A5fs=;
+        b=Iz6QHa/mUfKVFUxfaSsubXzCGmNplbibUIt5J5pZ2fDP0/jsec3qcxC+irjU5zKp4v
+         uGk4AL/rjOOFQBdnUsz/9NUz7p4ep5z6y5KCeypqANGeFUGvcHpW4p5wCHpQQMagKrps
+         mbLKQOIKHR6LMVDMibiWmR/hc8daBZjwhxFSGZ7nGk5bTp7p3rjn3mKQ2bsF3bCT2JfK
+         yjVqjEcnjczTzLtg4JXd7+1JvF4fvtda1RXNx16oGWLcQ92McxD+MTSOrzMnQlkWnfH+
+         wO0f/aujqMrqm2Xc9byi2SVFes4DORsaPMlIqI5aXDb7XGy7UDg+5HoIlo3WWqQEVbqM
+         pciA==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781969605; x=1782574405; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xSWmX1bhHmzkxm6/L8LLp8cnwG9wP4sAWPJ97aXv3z8=;
-        b=QrAlew8q9/izty5By40x0BzMv96gcO4lD9e+0Mclu9H3nbJZ2jKl0fvK24kbXrJobV
-         nBcbRBcV81Lwl76LIUMOlnpbMaNRldZ4dIY7naGJPx6tIdxABP4YvzNP+tXwEllBH3Yb
-         f4qcaj+YxuZehq+c0dYw/lsnb7tTyfEhTO/CoFTqy6jm2Pqq67y5JZ1opu4G+itWXvjL
-         lYR10dOC6GSf8YwX99htXt3qrGoZJo0uPycqtaF6TWvesuCSYUHdMI1s14ZNj2hJ5h6Q
-         /h7vo0z/mBHyrf99383SM5lymdDD6/ITj6iQuUoGVfUH86GG/FfcBJwqC3HkWeV/nhfe
-         kMxw==
+        d=gmail.com; s=20251104; t=1781971060; x=1782575860; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zqYan4V6JJp+h9TeqMluQgxKPMwfu0jaaD3a9YooMxI=;
+        b=Q7/4xbFj94sFsOODIJEkSIvO6BXjw0nKRb32l4s1lLZK4pNqWwJjTFfj5ZlTA5QvZX
+         EQmUh9N1vLMoEnL5k4k/n9Dr0ViStW4Rki2C0siHdRz91UApWR8y/nnGNo9KimuIarj9
+         ej9KnuIKcVKwmwwOA046xEAckEflUzLKfIoTBz98eA6CiA27e5TbGGKuhlpH+RYvSEA+
+         DjyuXcQC5suXGVTBiNIBz0OTM8moMQ3ZzSA8LIpmjjGHCkfdVP1otiquzvIK8TadSka9
+         oSjJCj6uN66uGv5XIi4UrJ4PiRPPS4ymaa4ACQYkL6S0H104yeCPESrqyVGYSET7IAtk
+         ANqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781969605; x=1782574405;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xSWmX1bhHmzkxm6/L8LLp8cnwG9wP4sAWPJ97aXv3z8=;
-        b=UJ3ZxLk2AT26HzTV6iYyDINoA6vi7iKLJ8Kd3IaF/6Pnf6Vo9lqQQkp8IvqWFyd2US
-         jMiFyW//+VM9RS0wo+dq83oNb3+KEwUDG18Tswodd2NU7BtgaomTMu9JuVZ5bmqPP10H
-         4e3hrioSlO5j92ybUEKc+I3rdIlH8pAAWEmyyBlgkY2on12NwEfUrgMYn1tc/2D2+jqN
-         mUJDBIrq5gQvxxvdwaOkI6QberWMGdOW2B1BwiKTaUbJJLD0UhjLWZIlmAhHwFA4zRQN
-         BGGVHyneguMu8kKpFqPZU227bngY1nGTO5m+se2bDrsNiLTLyy1pUQBYc2knxWXm6Uyl
-         RMUw==
-X-Gm-Message-State: AOJu0Yztr3t6CDWIHwwCssuIrw0LJ+VjjgtHorw+rd4OsSpifNCs02Tw
-	iMlpI+KfZRCHI8bt7jAy2FUxcSh46JCewd864y83+tQSvMtwG7n2yU5/jm8Vq2FCcd5H/9gJIHP
-	9RK+6kgWcHSa+tlC9STg8RU9zfuIiIJGeuc8+woM=
-X-Gm-Gg: AfdE7ck37NzbqQHEj26ywZ/hJWWhWXQqMmYq4pXYYrsyXu7EhvN0gyyvLlJQoYmPrVs
-	LHBRPZNh4gIAvAgWb6Ys2x3Q1oMI8zUSc+IxjKQLybARHToH3BGehxqYyn9ENvs1ALKhAcwXeKW
-	jMljxutYoNKEOur9FD6PWMFSSmrD3DSN0VW5XwHUqa2blSAWZav6roYwnzhouwuv4m2JrTUpkIf
-	6Fw/B5zTi97Zsa9Fx7z72LU197soXQ/oHbKftBuVL7tTx7UX8js66iXVA2cN9PtEK+Lau+o9FrE
-	ePZCQdpslpFpNGkG5II0AMUN9muyK7qGSqztGDLdck1zvlRMmMGHUFfpGDnjJGgVrB7mM623Pri
-	BkibN/MOndhw1SN4=
-X-Received: by 2002:a05:6808:5296:b0:487:57d9:9d1c with SMTP id
- 5614622812f47-4896aa727d4mr6772999b6e.14.1781969605437; Sat, 20 Jun 2026
- 08:33:25 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781971060; x=1782575860;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=zqYan4V6JJp+h9TeqMluQgxKPMwfu0jaaD3a9YooMxI=;
+        b=PsN8yxPxAuyA4EIrbxJUVeeYCr9p7nZZgFtP3AEj5qYp1aQy8jJ3yRBx5LUwF0PzzN
+         T+g61+kondcqyHqasFUH9g4tUceWm6KqmfJQTld3rVS1BHLDbDef5S3PGu2+QEN+bMWv
+         D3WRU0Ufl2jxMROuXkG5NmM3NBGhCyB3pR2bTGN/mrYgjbYaMlG9Ygc874ooHULW9Mj1
+         5e+4c8ZkvsYWajuQODNPF/7X40ApIfQ0m0sGvvwp0WvsflfWIh0xzDVsWBaF3wXt80/l
+         pw8bWzXV+bR1ogU7jQw/LOl1vTLsp8VvkSuckIVckD426MyxklHKo9Db/oIZ8zWZqt1t
+         TlyA==
+X-Gm-Message-State: AOJu0YxBLw42THWgvhpvFRwsl5JlsMsRoH8Ocdawf7GUm3i+PiUOmWud
+	+b9Aay9irTtVbnaUFkl84iNHds9MoitwWzLv/HvJYCKyOK9rOuTUmxwHVNiAK+0fzuThL5Oz2gm
+	H8wKaEYcjTb1oZWnJ+cI1FdA0/+vbTbx2vsdAkuo=
+X-Gm-Gg: AfdE7cnUM6KMBSWHJ1hEmffObK638q7X2IWQb+mi19vKNipIdph89s7CC+QCMfiy1WD
+	tYFbGy9dMLCT2DyI48Yd8Fo4iR58yg3awDChzS9yZl4LNicV+3K+E/onQ8dDPEAEjLDsGKe1KN/
+	mt4dgxG4yX1AqE5OftT0skp6T26WqMpojrw7RTf30bWtImyaRvXbBjCrhJfra1G4WyxDbn+MEoT
+	p+Kl/jQCGq4fVszUuB7cappoJgK5fx4C/EutF+MqpHNBI0F71xSvMaj8FPKN5ni2adBRF/VrnUS
+	dtWICrGrhK9m3Yrc9OCh/KvBZJ+BIz6Xb2DJCckLXN4aGBIQbpaBepfu+QWN3SFawTcrPg==
+X-Received: by 2002:a05:6a20:d045:b0:3bb:2200:f67b with SMTP id
+ adf61e73a8af0-3bb6c6704a7mr8707218637.40.1781971060106; Sat, 20 Jun 2026
+ 08:57:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Michael Montalbo <mmontalbo@gmail.com>
-Date: Sat, 20 Jun 2026 08:33:13 -0700
-X-Gm-Features: AVVi8Cer0dHvxv-mb6ZlZcgZ85W2Gtf0v54faRshqxgrr87fBIomnNG2j5C9ssU
-Message-ID: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
-Subject: Re: [RFH] Why do osx CI jobs so unreliable?
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+ <20260609001134.GD358144@coredump.intra.peff.net> <CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
+ <20260611085526.GL2191159@coredump.intra.peff.net>
+In-Reply-To: <20260611085526.GL2191159@coredump.intra.peff.net>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 20 Jun 2026 11:57:29 -0400
+X-Gm-Features: AVVi8CcaPXvZ549bCXojPZkP1jiCsxr4OhG6rbaWRU_MBNFyY_T_rRha4ewHvIQ
+Message-ID: <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
+Subject: Re: git-diff in a worktree is an order of magnitude slower?
+To: Jeff King <peff@peff.net>
+Cc: Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-> So I strongly suspect that it most be one of the t555* tests.
-> [...]
-> Maybe this is something that's specific to GitHub's environment...
+Coming back to index refreshing=E2=80=A6
 
-I think you're right it's t5551/t5559. The runs Junio linked:
+On Thu, Jun 11, 2026 at 4:55=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Jun 09, 2026 at 01:15:11PM -0400, D. Ben Knoble wrote:
+>
+> > > Which implies that the entries are stat dirty. And indeed, if I run:
+> > >
+> > >   git -C linux update-index --refresh
+> > >
+> > > now they both take ~20ms.
+> >
+> > Ah, TIL about --refresh. I suppose it could be nice if "git diff"
+> > updated the index in this way, but that sounds like a band-aid. Maybe
+> > creating a fresh worktree should do the equivalent to make sure it's
+> > considered "fresh"?
+>
+> I think "git diff" _does_ refresh the index internally (that's what
+> takes so long!). I thought we then wrote out the result, but maybe we
+> don't notice that it needs an update for some reason?
+>
+> I'm pretty sure "git status" does something similar, though running it
+> in a slow working tree _does_ seem to make things faster. Maybe it's
+> more aggressive about doing the update.
 
-  osx-clang     cancelled  360min
-  osx-gcc       cancelled  360min
-  osx-reftable  success     35min
-  osx-meson     success     61min
+Thanks for the status pointer:
 
-All four run the same t5551/t5559 under EXPENSIVE. The two that
-finished differ in just two ways, which look like the levers:
-osx-reftable generates the 100k-ref advertisement in ~24ms vs ~1.2s
-for loose refs on macOS (so much less time mid-response), and
-osx-meson runs tests at nproc while the prove jobs hardcode --jobs=10
-on a 3-core runner (over recent master/next the prove jobs hang ~40%,
-meson ~10%).
+- cmd_status calls refresh_index and repo_updated_index_if_able
+- those same calls are wrapped in refresh_index_quietly in builtin/diff.c
 
-When it is wedged the whole chain sits at 0% CPU. upload-pack is
-blocked in write() on the ls-refs advertisement, curl blocked in
-select(). So it looks like an HTTP/2 flow-control stall on the
-response side. The same stall resets itself after ~60-85s on my Linux
-box and on a bare-metal Mac, but not on the GitHub runner; I haven't
-pinned down why yet.
+But the refresh_index_quietly call is guarded by (effectively; the
+actual code uses rev.diffopt.skip_stat_unmatch)
 
-On the chance those two levers are the fix, a branch off master:
+    1 < !!diff_auto_refresh_index
 
-  https://github.com/mmontalbo/git/tree/mm/macos-ci-hang-fix
+which dates to aecbf914c4 (git-diff: resurrect the traditional empty
+"diff --git" behaviour, 2007-08-31). On my system that comparison is
+false because the double-negation produces 1
+(diff_auto_refresh_index=3D1 or the result of git_config_bool). Or at
+least, I don't see it get written to elsewhere (maybe that's supposed
+to happen in diff.c:diffcore_skip_stat_unmatch in this case and isn't?
+Idk. (Even dirtying the worktree as a hypothesis that only when a diff
+is found does the counter get bumped doesn't seem to work.)
 
-  - pack the refs in t5551's enormous-ref-negotiation test (doesn't
-    change what it checks on the wire, just avoids re-reading 100k loose
-    files to advertise them, like reftable already does)
-  - use the core count for $JOBS on the GitHub macOS path, matching the
-    GitLab branch in the same ci/lib.sh and what meson does
+So=E2=80=A6 has that conditional been quietly dead all this time? I can't
+imagine that's right, but=E2=80=A6
 
-I ran the two macOS jobs under EXPENSIVE about eight times with these
-and they all finished in ~30-44min instead of hanging. Happy to send
-out a patch if it's helpful.
+> > > I'd have thought USE_NSEC was the default these days, but looks like =
+it
+> > > isn't? Try building with that and I'll bet it goes away entirely.
+> >
+> > Thanks, I'll take a look.
+> >
+> > I can see on my Macbook that at least Meson does automatically set
+> > either USE_ST_TIMESPEC or NO_NSEC automatically, but has no option to
+> > enabled USE_NSEC and try that. I can probably write that patch (which
+> > I'll do to test), and I can send it along with the "worktree add
+> > should refresh the index" if you think that's an appropriate thing to
+> > do.
+>
+> I think NO_NSEC is about not looking at the nsec fields of stat structs
+> (since they might not exist). But we don't actually use them for stat
+> matching unless USE_NSEC is set.
+>
+> I guess the distinction goes back to c06ff4908b (Record ns-timestamps if
+> possible, but do not use it without USE_NSEC, 2009-03-04), which details
+> some reasons you might not want USE_NSEC. Feels like it ought to be a
+> run-time config, though, and maybe even something that gets auto-probed
+> by git-init.
+>
+> Definitely not an area I have looked at much, though, nor thought hard
+> about. So there might be gotchas. :)
+>
+> -Peff
+
+Looks like adding USE_NSEC to my build did make the issue go away (the
+patch is short, and I'll send it anyway for folks to have the knob),
+but that now seems like a band-aid to me based on my confusion above.
+
+--=20
+D. Ben Knoble
