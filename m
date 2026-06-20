@@ -1,99 +1,108 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABFF22579E
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 14:09:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253063939D0
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 14:10:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781964561; cv=none; b=EqvaniigfwX0qyqcVWiqr+unVADvCk3BFWstlP/ngX97W13RhHPB/xIAriebvxT1d7Y43b6m1Q6uKcmoelSd3miY9ByZ6KsZWof6dzJbmTqoLAh7uhI7vmJKbnRYVcAKU5Pv4A13vYW7N5omqov1q3VQGCYlSyEcxPIamZ/4PkQ=
+	t=1781964620; cv=none; b=OSIV5R2/drD6yHDde66vjiAEyNHemkUyAi8NjvXMkiEd9TzGuHxzjFQ56uTEKE39uKLEVWyhfQRZ82DbjnQI3uFxwyQp72JdHOlWI3s45Kg+LogKpR0k7p763DgP17qnrzhfQA7s/dAzmJD3GpK5AXk0mod6kmH0AmFs+S3gtoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781964561; c=relaxed/simple;
-	bh=a2OzJ9iMH2DhWsANIbwmNM0YOU/J+Ov8rLYiyls5CcE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tunBwV/16X5NIIG1bvGKRk6clZZrBibE/y4/Aze7PxG+zjXX4KhGGIUpiEijXSaRI57sBVcu21cTxb9OLCEoBhoHLbYR9T2ftlr6qUhP37MLRidXBzrnHVXVB8iybDQPaNeOIYfESekRRndCiIMF8qSYB1Ct14KWX0QgGcF7uNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wf6Xd1yA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wxf9wTga; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1781964620; c=relaxed/simple;
+	bh=V77bttG8EQoy1bfo52i2VRw0MTR42XVk1WXxcqX7DpE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=l60OS8q82C7hFe4jshlqx91aYujwxf7jiRIRp2aD3l83PyZwvL0UFZ3Fgu8w2GZLJOv8zkbPFa4osLvBdmAoGFtvq8NB1Gohe2xrm9kapeF24QnlUjHp5F/KjVR+HTFX/b3XquXCt66Nv9aJmNuyUG1cvRfltERG1YCnNWXzFLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=VR+0VR8Q; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=kYCOLAue; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wf6Xd1yA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wxf9wTga"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 130161400071;
-	Sat, 20 Jun 2026 10:09:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sat, 20 Jun 2026 10:09:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781964559; x=1782050959; bh=U58sc4Cb9t
-	5ViwZ1Pi2n+6bRNXplksP9FiSyEqhdeV4=; b=Wf6Xd1yAv50GvYYe1Uw1HkbWl3
-	lqhcSK8+eS59rTN8hStNrnX/R6g+mLHEucqZduMPyBwIxLNLMSwo1JOmxzoXeFAu
-	n6pRqIuEcRGj+FD28iy9AM+7m4z3cWnWtD7pTEhlooxAOoXC9P3GO0L8tUVIfIKZ
-	EyNnUB2inXmv66qE8JdRfedUPP5RMpm2oc8cBNOcawXoNdVzYPmnpxaIphPgeTwH
-	GrmIUZcNk33sdQ4NXg/7e3AqqjtQBNjpqHTcRBynr6t3jTQN10PUHd4sft5jj5Bs
-	2iBoaaDYtIkvNUea9wAVHbcVmpdhwEhAEiOTlu9voxEb3iVkod6dei88BkDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781964559; x=1782050959; bh=U58sc4Cb9t5ViwZ1Pi2n+6bRNXplksP9FiS
-	yEqhdeV4=; b=Wxf9wTgaQT5eAPrasR6Wg1EYMmTPEYx/X+5AZglRTJsW9GP1IW8
-	RSOkapp4iaqkI9U+jAXO5dtXsscu/caVU9i5IRuKl4IsMlX/90hzzsvvF+KAj2s+
-	j6DlyYSe7F04fItjs6E2rvPqBC7bECRfeAJvD8b2Yf2WpvBGc7db6RrgEpN05FtR
-	lzZMdnD0l6qePwOTOP8UkXPHoO6cmIy8eSRkMlsfK6Hmot42bSTFngIGlLfotaCz
-	uLzdKs0P3uRKfiG6mytxnf8IVtqVz7FuIoJUhsM2Tx7d1o3780xbn786gOGejyrK
-	dVOadyMA6P6Im98gBxf/i6yCtKKMLjUkhHw==
-X-ME-Sender: <xms:Dp82ainyo8DFm5Hyp6w0IbpkRJgv2AEyBCvlQlDenQF7Fpuxc7Jf6A>
-    <xme:Dp82ag2yWYBvUdfDYgSX8bgAQoLTuqOAf5sS17GvqXUKbQJbR4b7WB0Wvx_Ydwitt
-    FVlNkYXWUIZgNVmBXqCQokvTGkLgOuYqVaZ4P9Uuz-kinik64K8>
-X-ME-Received: <xmr:Dp82alqLDhRJ3msVCYksblNXj-4SNIg6mOwXCgg4Nx7akfXn3zhfbTAqTeB07DjLA1n0A-JV6Coj5nMFL7tEf87H0aKIojBu6ynD7y4>
-X-ME-Proxy-Cause: dmFkZTGt88zgrftAA9tF3FebDEILZ20YQA+jm0wzZ07HOtnwQShzaZaxbnuFtOBWycM7KH
-    M418HRPYV7Y0AiqLCfhmDvZkbZQI733NXl+MrjIJ0vqit/m7FAw1C1SgbZj/kamWRwog1q
-    vxLow+Fqzw0xDkCXjtY1z2fX2fzvho7lrRRAMh5zhNm31WpDIJMrOManEXdqV4BOPj1YRH
-    XmvUmVJDwOyoIFPnZMTsha4oCLrM5L8LOqQ7sCmdkz7T/9dbXswtK5XkdX0MTXsRa34WYh
-    Gs21bsns+NWez8qMO/aMYhj0izA/WqAHBQv9TRqNlVhhQN7odS2S7IeyMQhXDmWxzoFUfu
-    CUMHt3sR4gjP6sS/uor70IJimgwBKO+Ja9Q48olGwjo2MJjG8yAvMmoL1GPEYwvV3ITOk5
-    mSCo2VIu+XQcP7tnlBNQz+LV373xlp9fKGelE0cf7jKQ1PSdUQAUvw+XlXDcap0DPtjeEl
-    7yrrKfVoa9jlzvlM4vObJOEH0/btOxWEFfExWNWM0SxxYZKVMEf2m0OlNmLb8MHHYn292N
-    i+buU0KguZf/Smskg/pa2lzP0G0WRAEgCya2peuojWjk/RPHQwIuHKoH90T3P7rZ5HagJV
-    BQ7gaEdgZPA6lEDypjAPWKuizV49Op5dGPBBQd0oS0WNUmyUsn88ddznCmHA
-X-ME-Proxy: <xmx:Dp82alc_fPekkYtLH8XVN2R6Ng3M8COUTYaTu0RWXdiFXQ9HfOcjjQ>
-    <xmx:Dp82aspXRISFA34gaRIwHWZL7xeW9HsALxekc1VmLZCOGaIkUsOBYg>
-    <xmx:Dp82auEqxyCUTDK4uwfGgD1lJAH0DCP5EQ78lFR0MtDknvmPpNY7sg>
-    <xmx:Dp82akt7qhKlamk2Ml2fyvvHTfjwHxQueBEK3HOFINTszl79SyZfDw>
-    <xmx:D582ahKmdYa3kDEYq1_wEiHoSCyi7nLcB993JPY8ZlFO3iMyTVkjeUx0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Jun 2026 10:09:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Montalbo <mmontalbo@gmail.com>
-Cc: code@khaugsbakk.name,  git@vger.kernel.org
-Subject: Re: [PATCH v3] SubmittingPatches: address design critiques
-In-Reply-To: <CAC2Qwm+WcGkd9pAV5=JL1hfCDRisGQRFmdfOsMTrMWyx7aa65A@mail.gmail.com>
-	(Michael Montalbo's message of "Fri, 19 Jun 2026 15:40:51 -0700")
-References: <CAC2Qwm+WcGkd9pAV5=JL1hfCDRisGQRFmdfOsMTrMWyx7aa65A@mail.gmail.com>
-Date: Sat, 20 Jun 2026 07:09:17 -0700
-Message-ID: <xmqqqzm1gv76.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="VR+0VR8Q";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="kYCOLAue"
+Authentication-Results: purelymail.com; auth=pass
+DKIM-Signature: a=rsa-sha256; b=VR+0VR8QnEdTFZCu8enj2g/cwCXexR60ovIfYEPmC9j251hRWb2ceLP4agZXXIGkMST3B85aY8mohEWWQoUNVbhFANwTcEuKvpJowex4G6s2DJxLFuo/Mqm8XvTaMcTe2xyIYm5AWNeHqviNK1PdlzxP6s9wNElW/DgBUQMFdTboKVFzn/+ddOuM6j+7Rbun8hHgrgiT08VQ2LoVmODa2dMUZ7hnqQXLJ/93q/RRg67o7OTQJEiF83ttsWQuo3VowWFj0orHIqw9O+8czo6GfFS2iDlV/wBi5h6acL1JhNqtoMflMeb85rX62SIYH5mAhkx/U7qDqpmz7zjcZnGTuA==; s=purelymail1; d=malon.dev; v=1; bh=V77bttG8EQoy1bfo52i2VRw0MTR42XVk1WXxcqX7DpE=; h=Received:From:To:Subject:Date;
+DKIM-Signature: a=rsa-sha256; b=kYCOLAue6u6Dq/NyTUliOBq1xoOFvUVMXil1ZYhCKQvdxF/ZFruz+Nv7r91yblxupH7v4ED7EPVL3g2uzP6/dV99Fx2O3jM9+r3++wKg1YaqP5imbSWEHAP+0Mz4xOgL0ixUENyp6tHYXkpvImu+7MPd8xPxOJMbHOevkzH2Xtn4ipWIj/gsK4gF6oWRTQgwDwvQ9HuPy+xgbLy4yJzubMTdKDNyktwgBfJ/yaogRkpHXtZmVKVrHQhxhjW+CuRv9SF4FzzcpYmtSzLTkhxbC8ois4rJjwTVcJBIfQjJsDyDdkN53A9ISX0m9lPFl+U4f9Zi14mrfaddrQxHIRb5gg==; s=purelymail1; d=purelymail.com; v=1; bh=V77bttG8EQoy1bfo52i2VRw0MTR42XVk1WXxcqX7DpE=; h=Feedback-ID:Received:From:To:Subject:Date;
+Feedback-ID: 599969:32685:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 960865910;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sat, 20 Jun 2026 14:10:17 +0000 (UTC)
+From: Tian Yuchen <cat@malon.dev>
+To: git@vger.kernel.org
+Cc: Tian Yuchen <cat@malon.dev>,
+	Christian Couder <christian.couder@gmail.com>,
+	Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Olamide Caleb Bello <belkid98@gmail.com>
+Subject: [PATCH] environment: use 'repo->initialized' for repo_protect_hfs() and repo_protect_ntfs()
+Date: Sat, 20 Jun 2026 22:09:57 +0800
+Message-ID: <20260620140957.667820-1-cat@malon.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqo6h6jvuk.fsf@gitster.g>
+References: <xmqqo6h6jvuk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain; charset=UTF-8
 
-Michael Montalbo <mmontalbo@gmail.com> writes:
+To match how we refrain from calling repo_config_values() on an
+uninitialized instance of a repository object in other two topics
+that deal with ignore_case and trust_executable_bit, check the
+repo->initialized bit instead of the repo->gitdir member.
 
-> Slight reflow suggestions:
->
->   Defend your design decisions on the list first; work with reviewers and
->   other members to improve the design before revising the implementation.
->   This will avoid wasting effort on an implementation before its design is
->   solid.
+Base commit: 43192e7977f5f05138abcdb3212a3f87ab513bef
 
-Yeah, making the last part a separate sentence does make it much
-easier to follow.  Will use.
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Mentored-by: Olamide Caleb Bello <belkid98@gmail.com>
+Signed-off-by: Tian Yuchen <cat@malon.dev>
+---
+ environment.c | 4 ++--
+ environment.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-Thanks.
+diff --git a/environment.c b/environment.c
+index 6ee11e9fc8..8f0c1c4f25 100644
+--- a/environment.c
++++ b/environment.c
+@@ -130,14 +130,14 @@ int is_bare_repository(struct repository *repo)
+=20
+ int repo_protect_ntfs(struct repository *repo)
+ {
+-=09return repo->gitdir ?
++=09return (repo && repo->initialized) ?
+ =09=09repo_config_values(repo)->protect_ntfs :
+ =09=09PROTECT_NTFS_DEFAULT;
+ }
+=20
+ int repo_protect_hfs(struct repository *repo)
+ {
+-=09return repo->gitdir ?
++=09return (repo && repo->initialized) ?
+ =09=09repo_config_values(repo)->protect_hfs :
+ =09=09PROTECT_HFS_DEFAULT;
+ }
+diff --git a/environment.h b/environment.h
+index d188955f5b..8aaedcfea3 100644
+--- a/environment.h
++++ b/environment.h
+@@ -137,8 +137,8 @@ int git_default_core_config(const char *var, const char=
+ *value,
+=20
+ /*
+  * Getters for the `protect_hfs` and `protect_ntfs` fields of `struct repo=
+_config_values`.
+- * They check `repo->gitdir` to prevent calling repo_config_values()
+- * before the configuration is loaded or in bare environments.
++ * They check `repo->initialized` to prevent calling `repo_config_values()=
+`
++ * before the repository setup is fully complete or in non-git environment=
+s.
+  */
+ int repo_protect_hfs(struct repository *repo);
+ int repo_protect_ntfs(struct repository *repo);
+--=20
+2.43.0
+
