@@ -1,64 +1,64 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192C718FDBD
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 10:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70322A4E1
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 10:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781950322; cv=none; b=JzA+BusL36KDJwLFngUljuuoHSnkGvmrtLBr9QO2H9WeYV0lnxx0meQy43IKaSzBNnduXTIUiKiHKH2eCNTPk+wcrg9oFd38j8xvFs2jEr+2hvN+pNq536MZxzsbs/G6VgQXQXUgpKGwrYaU1GWJ4sjeJP7bQ/+6RJmKIxoYrtE=
+	t=1781950324; cv=none; b=fuKQPckN6gWsYe4H/vehnQGAyt4r0nSMOjjyrpv86IQKJG0t6Y91jUgdLds9uOh5LlZfwE5ReWfnSs9tu1zP4yCai+SKC+dYpqpfHZ91HmZEfJrE+42a6YTwZirJGcZx3OaH7O67LK1QNK1m74xC08mvNwvXkqjalpogIepT3fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781950322; c=relaxed/simple;
-	bh=KARz4GrOeTCxbBRu+f/WQfCJM6me5rO6d8OjV2Lqjvg=;
+	s=arc-20240116; t=1781950324; c=relaxed/simple;
+	bh=oGPB7wZJYvjOfl+rROVvfmIfjJxnaXCVKf460ug8c88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wr+wZYrjsnMlD0HnroPfNB7X8SZvx93qfdwHSg6CxHbEgr4aEHIUK4UC8Wt3/fbjNts2DOo0UFiVJBP+0plYZHWXGa5kVc05Ti+0u8WqsHJMniReYV8rCdfr8UkUFl5jt/CnwGjGbPHhXPyVcOANpoLEH+AWHTZfhrw1DnQF8KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iSAZNuHg; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:Content-Type; b=pGeNMiS1LGMGL577wIQJrhygSsk40x095Z/xim+QM86dXvSOfl3rgyuMsjt7jawHgLn/dH5DuBuq4zYOeLLsmyLI/WHvl0aw1gbJbSjVHvGLpSbAVTEiGWm/ODyG6VcWVd58R+nVoMbpOU0s4a5fJpgl5XItfOojdcTcxULsHwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IWsm1GJl; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iSAZNuHg"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4921eed3fa2so22684385e9.0
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 03:12:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IWsm1GJl"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-462ebd5d37dso2972317f8f.1
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 03:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781950319; x=1782555119; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781950321; x=1782555121; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=40zBzRK0qiKmwmokmhwB5Er3VexOWVDxYpG9+0+ElWg=;
-        b=iSAZNuHgZYFzozsCtNkx0xYraxpeVFV11RKdHKUvNEzIuTXHy7gb7luSR4bO5rSdYl
-         Mu2LS6GX9PBCc2pqbMREAW8L4CNwK9OVwXySD4F0x0L8DQAYLzaqqlg7VTOe+iKT9Ms6
-         /E64Dl+yKzquMD9jx+bvPdX3Mfi46irLUDlCG9pDQT6SJQfT6OPF4PCcSR+kiNvxLqGv
-         h8Z/TU8m8S6szdYODzblys6h3dJqiBIxP/ZA8HvT1yQPqLr72YLp+Yo4pq2Zkobntxbm
-         fy4BtRKVG/DBtK8EtCqSS8bAtjqNCjFyxkaNm6Sx19T0ffEsDkSIc0NoYbhYT0w4FvQZ
-         uL0Q==
+        bh=M7uo5WJY7aNgnmxE9BWqwy3jq2/Z65g0xXT02gH5pPA=;
+        b=IWsm1GJlV30DHlMR+H7iBbF1GJrJ3O7azc5RKD/YmCNxHYl39+6kb06aYwgNTYzePH
+         eF1fBO0oVhQ+I9leb/jX+zYk0PbeiR1h3gGA3+FzqWYW0SGLaTPK7FdujB/GeWUNDviH
+         d3Gij22wTzbgl8XNQOJWxhDC1i2tP62ikAM13Zf6OEPdA46qcDPa7w9fX9Ha51HoBsIt
+         gCG+5eJBXO4ekiQjf7wdbxMhySo50YjBdipIzN39NUdKxy/1pDjKGSkfkABmiJjDB25/
+         yhRMGmn9LH5b+kBeDSQwapj7VS+1y/yT7qLtgXlYn0XDuny7dV6YwtnJ2U632bdDzyMU
+         Pb+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781950319; x=1782555119;
+        d=1e100.net; s=20251104; t=1781950321; x=1782555121;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=40zBzRK0qiKmwmokmhwB5Er3VexOWVDxYpG9+0+ElWg=;
-        b=WKfIrfdtGOld7pQkGvmnUM5V1JU2POfvLpoQ9iVJsNzhIxQ5H8cVEt99NrbEtQm+/4
-         IM0qp4A8OVPn8nuU9QgN6BXLsom10oe0octaVXyLUiCQikjyc4l5hWSMTbGaH9Aw0nBf
-         FqA+hJ0sj/u93/jvSXl+bHdRBKF2SqHDFUdN+0x3j6FxVevZTU/65hvxFRPJgzrVGpIp
-         gzX/1Z4BHblA29yTxpxj2m2yJlZEyMZ6pNavAfg5Vm15eV9JIsuUtScIO8qxTwU7Zss7
-         6LHffcr3ZRskuNn96Egm+XtVNOnJNdrG+LOhSB2flxKQCSnXkax2dxeLr3zFv9zn97OG
-         +ihQ==
-X-Gm-Message-State: AOJu0YwsWNPzsEo3nM5yrCkRItYoKX6mdr5FTV5zcOtje5xnrew7om/F
-	Np+fS2+NCM5+E3eeSZEvFLAACLXxvamUNe6t17Mv+fKmLOJeLHWUlF3oZaJMEcIa
-X-Gm-Gg: AfdE7cmO7Y9mB5Ig0rSlzxZEY01YzusnA1OqNTASgtnH+d6TUPlGAmfpdZoNEtVz65H
-	xUJiwEGiNIlDfbmsbd+aZkobS3tk74sal7YRRo71Lyr3y48Dw28ZmQKqJlFwXti4BL6K9wjcOop
-	nMPr7uzIPT4d6ZYBKaGSoyNDQmYkHFB33H6NI4udL2ne4AJaz2BVO+6LMDixC6ubQeuylV9d8hU
-	uKxti2bpficIx+PcL4By/Nsuabt/cA6KgzTy+fkLrprn6t5IuVGgZ7HifXcOviw4HbKOdDjoi3u
-	sMYBmQi2oOiWWy9NqP9ESuz1wfs6k+cF3tFokXrXavzim0RJ1OK0kg6UZ7iwLHX2+7rQlvu8ssN
-	bvDBCTHU3VV6MmEb7ah9y188Q9Rq0gmMUNgLz3aiXqq5YDVkWqyWqGm+Ihti3lrVwI71UoPjOG8
-	VREFYYkRiRw3CMl65HQRt97Vwbke2Yj8DTT7eiDO8Wm0R76V0c38QM/atN0F2nRBSMglD4lRk3c
-	0/XMe8ZrSDmX7i5GPEuEckV0PysVHmhDhbAMwJeTQxaYXWA+kSX6S6nUZdMCxy5jwBguSDe31NV
-	SoBRguXGg4Is05fMX793wrxRfdlbw/RiaAIlCQvdMxHEnQ==
-X-Received: by 2002:a05:600c:5490:b0:492:4714:2d7e with SMTP id 5b1f17b1804b1-49247142f73mr55624355e9.36.1781950319281;
-        Sat, 20 Jun 2026 03:11:59 -0700 (PDT)
+        bh=M7uo5WJY7aNgnmxE9BWqwy3jq2/Z65g0xXT02gH5pPA=;
+        b=TrOCPlQeK3gpgJLIWLGwz/B1W6mVmAjqbjbC5I4spgdvXksq8lqRA00kkkrtiDLL0v
+         HqbW3fJLzAQGy2G1shy514L6S/NET2/cL1u0qlZZjC8mLVoPGr3nwBNVXhqGXnACBkIX
+         uFG/wtC4/YKMBcYdiBE+gdTk0k+gnwMopNxEcfgPS0QM1DDjCYJxezAG73FRLqnohgRM
+         LCZX6hATNL8ngEn90Ec9DLNxBVqaHobbuuFLjSCv9+GOnJYiKu7pE0qmO0RaNlMDSrV7
+         V6OMxaRMiva33b9R4gKhUFWBECrRI0W6pkKW1NRjfh7VorpiabdIQ3rQdK4wlBnn79pN
+         +dqQ==
+X-Gm-Message-State: AOJu0Yx/yZBEAOBCBZcliuG7FA4k29SdeBH4iKoU0PHERB0mXgJpA2Ew
+	hYmO+xjXPHslfzF/+y5FWDrYqgYAtnlZO1n/ZS52Pw0zmxwokqeEa5XPSJp0dZ0L
+X-Gm-Gg: AfdE7clDOoyv1HiILNJv1MqJkcHMN8xNT+Pry0ft7S9Xy81bE5/8R6aS3dARh2jwOHG
+	71zn3iB7XlFo9W95oir3XXD83c9B8ZNsYwbUS08WUvwAmtKjV64jsoImp78qMngr4tMnBIYRYj9
+	Puf6X7CaPh24LPaCQQURPmUra4+0BLQ/IlSGrDCKx1+JHtFGIrZjZ8QIQdQu74fCkZr8bfBb0oZ
+	ye3hqnsRtKTypCAzPgJE8+xCeO7Ud8cd7KY6S2bTu2pGt7TZVh9bNbemRlt2+AwaGNC8Lx2sRxN
+	wxPy3PJtjGaLYrKkHRBzeYlhkhHV1LwBzYRAXDpsMy+BX+NE23rVIhp8rmQ4OTPJ3YzkZvZ7q1I
+	Fo7akBnbeIQUX3aQUF6SLColAqAWBlYceO9W+Q/bj7jLPHjTkyAB2zjQIRSsERxp7eqSOJckJXj
+	/+fas8X+9eCWKM1r+jwtQHRt9xUlCzT9KF0n203Krc7W1qMwq6hpWujnvoN0PCEcS9E/mmn0Lp/
+	hTWpoWzpneJT7/qIQkEia5CuYRtd11jhT58/hI12BsFZbGyMDuM5H2V7xRtJRZ6bhZOW9R0CA8N
+	ORTINCMdjWx1+SkzUqnNaOclRulIBxsb63X5PoC+VPER6A==
+X-Received: by 2002:a05:600c:c088:b0:490:b4e5:ce7e with SMTP id 5b1f17b1804b1-4923f5887b6mr114199435e9.25.1781950320633;
+        Sat, 20 Jun 2026 03:12:00 -0700 (PDT)
 Received: from localhost.localdomain ([89.6.100.204])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923fd1f886sm126350925e9.4.2026.06.20.03.11.58
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923fd1f886sm126350925e9.4.2026.06.20.03.11.59
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 20 Jun 2026 03:11:58 -0700 (PDT)
+        Sat, 20 Jun 2026 03:12:00 -0700 (PDT)
 From: Pablo Sabater <pabloosabaterr@gmail.com>
 To: git@vger.kernel.org
 Cc: krka@spotify.com,
@@ -72,12 +72,13 @@ Cc: krka@spotify.com,
 	peff@peff.net,
 	phillip.wood@dunelm.org.uk,
 	siddharthasthana31@gmail.com
-Subject: [PATCH v6 0/3] graph: indent visual roots in graph
-Date: Sat, 20 Jun 2026 12:11:49 +0200
-Message-ID: <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
+Subject: [PATCH v6 1/3] lib-log-graph: move check_graph function
+Date: Sat, 20 Jun 2026 12:11:50 +0200
+Message-ID: <20260620-ps-pre-commit-indent-v6-1-cdc6d8fd5fbc@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+In-Reply-To: <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
 References: <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+ <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,120 +86,288 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20260612-ps-pre-commit-indent-39ca72816382
 Content-Transfer-Encoding: 8bit
 
-When rendering a graph, if the history contains multiple "visual roots",
-actual roots or commits that look like roots (i.e. have their parents
-filtered out) can end up being vertically adjacent to unrelated commits,
-falsely appearing to be related.
+check_graph is a function shared in the test files t4215 and t6016 used
+to format the output graph, but instead of being in a file called by
+both test, the function code is repeated in each file.
 
-A fix for this issue was already attempted [1] a while ago.
+Move check_graph to lib-log-graph.sh file which both tests already
+import graph functions from, renaming it to lib_test_check_graph.
 
-This series adds indentation to the visual root commits, so they cannot be
-vertically adjacent anymore making it easier to identify them.
+This function is needed for the following commit which includes graph
+tests in a new file and requires check_graph.
 
-before indentation:
-
-	* A
-	* B1
-	* B2
-	* C1
-	* C2
-
-after indentation:
-
-	  * A
-	* B1
-	 \
-	  * B2
-	* C1
-	* C2
-
-Indents the visual root commits that have still commits to show after them, and
-if they have children it connects them with an edge at a new row.
-
-If there are multiple visual roots adjacent in history, the indentation starts
-with the second one, avoiding redundant indentation of the first one and cascades
-after the second.
-
-	* A
-	  * B
-	    * C
-	* D1
-	* D2
-
-This series first commit is a cleanup that brings a common function from t4215
-and t6016 to a graph functions file which they both use, so the new test file
-for indentation, t4218, can use it as well.
-
-There are two main limitations to predict if the next commit will be a
-visual root candidate:
-
-1. The peek only gives us the next entry reliably, we cannot see past it
-   reliably in order.
-
-2. Even if we could peek past in order, its parents might not have been
-   simplified yet, so a future commit that will become a visual root is
-   not detected as a visual root in peek-time.
-
-This causes the cascading to not be set and result in a extra
-indentation. For example:
-
-Given:
-
-	* A unrelated (visual root)
-	* B child of C
-	* C visual root WILL BE FILTERED OUT
-	* D unrelated (visual root)
-
-The actual output is:
-
-	  * A
-	    * B
-	* D
-
-But we wanted:
-
-	* A
-	  * B
-	* D
-
-A test has been added to t4218 and a NEEDSWORK to the lookahead function
-to document this edge case but I'm not that familiar with revision.c.
-Maybe there's a better way to make the lookahead more reliable.
-
-[1]: https://lore.kernel.org/git/xmqqwnwajbuj.fsf@gitster.c.googlers.com/
-
-V5 DIFF:
-
-- Added new commit with lookahead functions to abstract the commit
-  traverse to the graph. Changed the lookahead function from graph to
-  call this new functions.
-- Added new test with two unrelated branches with merges.
-- Fixed test_expect_failure to have the correct expected output.
-- Simplified the NEEDSWORK.
-
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Mentored-by: Chandra Pratap <chandrapratap3519@gmail.com>
 Signed-off-by: Pablo Sabater <pabloosabaterr@gmail.com>
 ---
-Pablo Sabater (3):
-      lib-log-graph: move check_graph function
-      revision: add peek functions for lookahead
-      graph: indent visual root in graph
+ t/lib-log-graph.sh                         |  5 +++++
+ t/t4215-log-skewed-merges.sh               | 33 +++++++++++++-----------------
+ t/t6016-rev-list-graph-simplify-history.sh | 25 +++++++++-------------
+ 3 files changed, 29 insertions(+), 34 deletions(-)
 
- graph.c                                    | 271 +++++++++++++++++
- revision.c                                 |  38 +++
- revision.h                                 |  10 +
- t/lib-log-graph.sh                         |   5 +
- t/meson.build                              |   1 +
- t/t4215-log-skewed-merges.sh               |  33 +-
- t/t4218-log-graph-indentation.sh           | 468 +++++++++++++++++++++++++++++
- t/t6016-rev-list-graph-simplify-history.sh |  25 +-
- 8 files changed, 817 insertions(+), 34 deletions(-)
----
-base-commit: 95e20213faefeb95df29277c58ac1980ab68f701
-change-id: 20260612-ps-pre-commit-indent-39ca72816382
+diff --git a/t/lib-log-graph.sh b/t/lib-log-graph.sh
+index bf952ef920..1eae8f60c2 100644
+--- a/t/lib-log-graph.sh
++++ b/t/lib-log-graph.sh
+@@ -26,3 +26,8 @@ lib_test_cmp_colored_graph () {
+ 	test_decode_color <output.colors.raw | sed "s/ *\$//" >output.colors &&
+ 	test_cmp expect.colors output.colors
+ }
++
++lib_test_check_graph () {
++	cat >expect &&
++	lib_test_cmp_graph --format=%s "$@"
++}
+diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+index 1612f05f1b..eebab71039 100755
+--- a/t/t4215-log-skewed-merges.sh
++++ b/t/t4215-log-skewed-merges.sh
+@@ -5,11 +5,6 @@ test_description='git log --graph of skewed merges'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-log-graph.sh
+ 
+-check_graph () {
+-	cat >expect &&
+-	lib_test_cmp_graph --format=%s "$@"
+-}
+-
+ test_expect_success 'log --graph with merge fusing with its left and right neighbors' '
+ 	git checkout --orphan _p &&
+ 	test_commit A &&
+@@ -21,7 +16,7 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
+ 	git checkout _p && git merge --no-ff _r -m G &&
+ 	git checkout @^^ && git merge --no-ff _p -m H &&
+ 
+-	check_graph <<-\EOF
++	lib_test_check_graph <<-\EOF
+ 	*   H
+ 	|\
+ 	| *   G
+@@ -49,7 +44,7 @@ test_expect_success 'log --graph with left-skewed merge' '
+ 	git checkout 0_p && git merge --no-ff 0_s -m 0_G &&
+ 	git checkout @^ && git merge --no-ff 0_q 0_r 0_t 0_p -m 0_H &&
+ 
+-	check_graph <<-\EOF
++	lib_test_check_graph <<-\EOF
+ 	*-----.   0_H
+ 	|\ \ \ \
+ 	| | | | * 0_G
+@@ -83,7 +78,7 @@ test_expect_success 'log --graph with nested left-skewed merge' '
+ 	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
+ 	git checkout @^^ && git merge --no-ff 1_p -m 1_H &&
+ 
+-	check_graph <<-\EOF
++	lib_test_check_graph <<-\EOF
+ 	*   1_H
+ 	|\
+ 	| *   1_G
+@@ -115,7 +110,7 @@ test_expect_success 'log --graph with nested left-skewed merge following normal
+ 	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
+ 	git checkout 2_p && git merge --no-ff 2_s -m 2_K &&
+ 
+-	check_graph <<-\EOF
++	lib_test_check_graph <<-\EOF
+ 	*   2_K
+ 	|\
+ 	| *   2_J
+@@ -151,7 +146,7 @@ test_expect_success 'log --graph with nested right-skewed merge following left-s
+ 	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
+ 	git checkout @^^ && git merge --no-ff 3_p -m 3_J &&
+ 
+-	check_graph <<-\EOF
++	lib_test_check_graph <<-\EOF
+ 	*   3_J
+ 	|\
+ 	| *   3_H
+@@ -182,7 +177,7 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
+ 	git merge --no-ff 4_p -m 4_G &&
+ 	git checkout @^^ && git merge --no-ff 4_s -m 4_H &&
+ 
+-	check_graph --date-order <<-\EOF
++	lib_test_check_graph --date-order <<-\EOF
+ 	*   4_H
+ 	|\
+ 	| *   4_G
+@@ -218,7 +213,7 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
+ 	git checkout 5_r &&
+ 	git merge --no-ff 5_s -m 5_H &&
+ 
+-	check_graph <<-\EOF
++	lib_test_check_graph <<-\EOF
+ 	*   5_H
+ 	|\
+ 	| *-.   5_G
+@@ -257,7 +252,7 @@ test_expect_success 'log --graph with multiple tips' '
+ 	git checkout 6_1 &&
+ 	git merge --no-ff 6_2 -m 6_I &&
+ 
+-	check_graph 6_1 6_3 6_5 <<-\EOF
++	lib_test_check_graph 6_1 6_3 6_5 <<-\EOF
+ 	*   6_I
+ 	|\
+ 	| | *   6_H
+@@ -334,7 +329,7 @@ test_expect_success 'log --graph with multiple tips' '
+ 	git checkout -b M_7 7_1 &&
+ 	git merge --no-ff 7_2 7_3 -m 7_M4 &&
+ 
+-	check_graph M_1 M_3 M_5 M_7 <<-\EOF
++	lib_test_check_graph M_1 M_3 M_5 M_7 <<-\EOF
+ 	*   7_M1
+ 	|\
+ 	| | *   7_M2
+@@ -371,7 +366,7 @@ test_expect_success 'log --graph with multiple tips' '
+ '
+ 
+ test_expect_success 'log --graph --graph-lane-limit=2 limited to two lanes' '
+-	check_graph --graph-lane-limit=2 M_7 <<-\EOF
++	lib_test_check_graph --graph-lane-limit=2 M_7 <<-\EOF
+ 	*-.   7_M4
+ 	|\ \
+ 	| | * 7_G
+@@ -388,7 +383,7 @@ test_expect_success 'log --graph --graph-lane-limit=2 limited to two lanes' '
+ '
+ 
+ test_expect_success 'log --graph --graph-lane-limit=1 truncate mid octopus merge' '
+-	check_graph --graph-lane-limit=1 M_7 <<-\EOF
++	lib_test_check_graph --graph-lane-limit=1 M_7 <<-\EOF
+ 	*-~  7_M4
+ 	|\~
+ 	| ~ 7_G
+@@ -405,7 +400,7 @@ test_expect_success 'log --graph --graph-lane-limit=1 truncate mid octopus merge
+ '
+ 
+ test_expect_success 'log --graph --graph-lane-limit=3 limited to three lanes' '
+-	check_graph --graph-lane-limit=3 M_1 M_3 M_5 M_7 <<-\EOF
++	lib_test_check_graph --graph-lane-limit=3 M_1 M_3 M_5 M_7 <<-\EOF
+ 	*   7_M1
+ 	|\
+ 	| | *   7_M2
+@@ -441,7 +436,7 @@ test_expect_success 'log --graph --graph-lane-limit=3 limited to three lanes' '
+ '
+ 
+ test_expect_success 'log --graph --graph-lane-limit=6 check if it only shows first of 3 parent merge' '
+-	check_graph --graph-lane-limit=6 M_1 M_3 M_5 M_7 <<-\EOF
++	lib_test_check_graph --graph-lane-limit=6 M_1 M_3 M_5 M_7 <<-\EOF
+ 	*   7_M1
+ 	|\
+ 	| | *   7_M2
+@@ -478,7 +473,7 @@ test_expect_success 'log --graph --graph-lane-limit=6 check if it only shows fir
+ '
+ 
+ test_expect_success 'log --graph --graph-lane-limit=7 check if it shows all 3 parent merge' '
+-	check_graph --graph-lane-limit=7 M_1 M_3 M_5 M_7 <<-\EOF
++	lib_test_check_graph --graph-lane-limit=7 M_1 M_3 M_5 M_7 <<-\EOF
+ 	*   7_M1
+ 	|\
+ 	| | *   7_M2
+diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-list-graph-simplify-history.sh
+index 54b0a6f5f8..e0d9c3c1ac 100755
+--- a/t/t6016-rev-list-graph-simplify-history.sh
++++ b/t/t6016-rev-list-graph-simplify-history.sh
+@@ -13,11 +13,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-log-graph.sh
+ 
+-check_graph () {
+-	cat >expect &&
+-	lib_test_cmp_graph --format=%s "$@"
+-}
+-
+ test_expect_success 'set up rev-list --graph test' '
+ 	# 3 commits on branch A
+ 	test_commit A1 foo.txt &&
+@@ -54,7 +49,7 @@ test_expect_success 'set up rev-list --graph test' '
+ '
+ 
+ test_expect_success '--graph --all' '
+-	check_graph --all <<-\EOF
++	lib_test_check_graph --all <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
+@@ -82,7 +77,7 @@ test_expect_success '--graph --all' '
+ # that undecorated merges are interesting, even with --simplify-by-decoration
+ test_expect_success '--graph --simplify-by-decoration' '
+ 	git tag -d A4 &&
+-	check_graph --all --simplify-by-decoration <<-\EOF
++	lib_test_check_graph --all --simplify-by-decoration <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
+@@ -114,7 +109,7 @@ test_expect_success 'setup: get rid of decorations on B' '
+ 
+ # Graph with branch B simplified away
+ test_expect_success '--graph --simplify-by-decoration prune branch B' '
+-	check_graph --simplify-by-decoration --all <<-\EOF
++	lib_test_check_graph --simplify-by-decoration --all <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
+@@ -133,7 +128,7 @@ test_expect_success '--graph --simplify-by-decoration prune branch B' '
+ '
+ 
+ test_expect_success '--graph --full-history -- bar.txt' '
+-	check_graph --full-history --all -- bar.txt <<-\EOF
++	lib_test_check_graph --full-history --all -- bar.txt <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
+@@ -148,7 +143,7 @@ test_expect_success '--graph --full-history -- bar.txt' '
+ '
+ 
+ test_expect_success '--graph --full-history --simplify-merges -- bar.txt' '
+-	check_graph --full-history --simplify-merges --all -- bar.txt <<-\EOF
++	lib_test_check_graph --full-history --simplify-merges --all -- bar.txt <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
+@@ -161,7 +156,7 @@ test_expect_success '--graph --full-history --simplify-merges -- bar.txt' '
+ '
+ 
+ test_expect_success '--graph -- bar.txt' '
+-	check_graph --all -- bar.txt <<-\EOF
++	lib_test_check_graph --all -- bar.txt <<-\EOF
+ 	* A7
+ 	* A5
+ 	* A3
+@@ -172,7 +167,7 @@ test_expect_success '--graph -- bar.txt' '
+ '
+ 
+ test_expect_success '--graph --sparse -- bar.txt' '
+-	check_graph --sparse --all -- bar.txt <<-\EOF
++	lib_test_check_graph --sparse --all -- bar.txt <<-\EOF
+ 	* A7
+ 	* A6
+ 	* A5
+@@ -189,7 +184,7 @@ test_expect_success '--graph --sparse -- bar.txt' '
+ '
+ 
+ test_expect_success '--graph ^C4' '
+-	check_graph --all ^C4 <<-\EOF
++	lib_test_check_graph --all ^C4 <<-\EOF
+ 	* A7
+ 	* A6
+ 	* A5
+@@ -202,7 +197,7 @@ test_expect_success '--graph ^C4' '
+ '
+ 
+ test_expect_success '--graph ^C3' '
+-	check_graph --all ^C3 <<-\EOF
++	lib_test_check_graph --all ^C3 <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
+@@ -220,7 +215,7 @@ test_expect_success '--graph ^C3' '
+ # that important, but this test depends on it.  If the ordering ever changes
+ # in the code, we'll need to update this test.
+ test_expect_success '--graph --boundary ^C3' '
+-	check_graph --boundary --all ^C3 <<-\EOF
++	lib_test_check_graph --boundary --all ^C3 <<-\EOF
+ 	* A7
+ 	*   A6
+ 	|\
 
-Best regards,
---  
-Pablo Sabater <pabloosabaterr@gmail.com>
+-- 
+2.54.0
