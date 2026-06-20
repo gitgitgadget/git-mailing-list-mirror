@@ -1,276 +1,146 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE212348C5A
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 17:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781978162; cv=none; b=bpLHAMHKEguhnDFd8YNXqkpYfkl8KFFy+tSz0v+hn+x6M31AZqbPdKCUSEQgGqv3nYHm2sAFLAigUv7hL9ef9gsLc0NmNKSQgb8l7uo/pdjPRPGXt0oo2ntxx/FENF3/jVz0FwyFRbIWFylNf/15yMVmoKRhxT17V3pEQKX6VA4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781978162; c=relaxed/simple;
-	bh=IwTEgdEDsA74iO7xiVPfd7dhb3NV3bFOOr7lBgnin3M=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DftfYjDhfN1+diSI9zVOL4+vVbvcHjv5MCpRAbNG2V+Ha8eRClN2bEyTddvhCJThg3YYygWYo/jBIPTzvmQrmp7/mkgtkWp/IaBR26K6J+d7mOKsO1HBeCFgrwxPR7zlgIV+SaLVrwnbKR4Wg631nbimjdTNFy4TkVdD5lfbP9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0P4Jl+y; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2E7233722
+	for <git@vger.kernel.org>; Sat, 20 Jun 2026 20:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781989135; cv=pass; b=bRLgKbaOYpQ9u8ytzzLFcYX787mGYBAGizyKjhbLZT5ESXNddZeCXNyXSkAqgqNixYW6EijjXCQ0DUTuCSLbllGCa+ntTArPHioYneJETseu5Yrb5qwAnvij3csr8cpON50g3ccMMFTo3njtCGMigrSlli97cm7e0caBpgAtCxw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781989135; c=relaxed/simple;
+	bh=7twAZkvqhS9hNYlWyAStTBE3uXAubLmPo7gCkJ7acJ0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aPdvgODScUT7sIwLZ2BY9WYYtqeVPHsuYk/lKOu5sUJvtJBMBf3A5QSXrjX+0r7WpS+bK+eiagPzU6eP4/Ri1/+YfNwWcblmLpCE3E+lnWYqHtnJsQio/H/1ldoNhYKl69HqKCZLk6EmelmFl2miGT0uA+EV7eeXbUZPRUjj3fw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaQZIncT; arc=pass smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0P4Jl+y"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-91ae31bbaa9so282715085a.1
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 10:56:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaQZIncT"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c88b7c92577so1384372a12.3
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 13:58:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781989133; cv=none;
+        d=google.com; s=arc-20240605;
+        b=AIoovLVd2Fk8gklnaJ8KrNZlk93ywBZProqU9J32IWBY05fXXaXnceVFV+GG83nNvM
+         nwnq6lTJwknQeMepcYgkSpssaAx/X7KEAE7ocDqenNAMO/tHhQUSaLaChDgu+yLdPOOo
+         5QI4u23ip5RTw4wiFbx918D3CYAKB7fzTgknm6ohmGTCRyQAzBD3DpmHny5leJlXcX6I
+         lKQ//F986Ax3B/81MtYSlp61G2EsDJ+UQsNevoTknNqyzhrcSpLflZJGo/kZwjEcdlHu
+         tFG8rd7wtsRYWfb6NUFNdLeh1nJ0KMnBn2/TTIftOSJllUS/XwdAuX85q7Whmg+V7Wnv
+         9aCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Lq98TYRF/L4e7XALX0rlBPglZ7Y6f8hVg6UeYccXDwA=;
+        fh=4ke+hPmK70NKGfwfogNl9bljbHejyhb33fdDeehLf9A=;
+        b=KY5RksjTbObxZ11vk8evjrkP+A0TSmWkcmyQfU5/0MV4q/iMIgpNkHbAqSvjOydOCD
+         pFtd91kkiCYYFo2I5EEmFwR/+I70IALEz35cmZBJQlylsrwtJPxqUmBaoejyBbtkyGRz
+         cxe9d8+cTYQ1Bt4VJXvpjwVkaU8Vko23+9eoeEWbrcnZcxsj/C1kJlBKIaVdk600Otc5
+         /KMfEdw+G+k1e2uWWDIh8/D2q6xPFqXObFd+5MsXBUMplencNjJfA3C9WKomcr4u/Eiq
+         CoYH99xILLAFXsyx6HHdvziEUaomGe4hOrdj138h/DTwoV7Gh67J/+y4CR0nTBZOq3hw
+         Q8UA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781978160; x=1782582960; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781989133; x=1782593933; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9tNMmww2e7jruQfr0O35uHhPxrfPmj3x500H1MOYmDo=;
-        b=V0P4Jl+yJjU9sOfnthEsCXUs+DSHwq7wV1uHjh+E+jxKAimvDOX5tkVi4fZhEYzDC6
-         ah6O7yTDVwR7QtiRouaMq68/AUBrEw0P/OVKnI2RgY3GMvS73sYTrGsoG3gAe+ZRLlKf
-         4nVONlC9fe3GMGWYwBZYACqNOm5gHQFyrptYGSLqjT/iKnXplMXyjoLKJxG5pXYgA34C
-         /43uPJTBlXaA1WzzKaQHiq2WgoVdmZjrggx5gVGtTRgR56Pd3fJkrdX5ulP7hPIiFWqp
-         lnw+XeNkQnhHsna03aiAiLzay8kgtrd0FlqUb2WWcqF29pRqN0+LWiFiNVquEh4iRPiF
-         e5Qg==
+        bh=Lq98TYRF/L4e7XALX0rlBPglZ7Y6f8hVg6UeYccXDwA=;
+        b=AaQZIncTZSyfKq7gbrIRTW2oJQpHY6g8njs3ZzsZg+/9Ih4PkLcjVaKVA4c8JT2lUo
+         yMickdYGXAixfLCWgidAZU7gp7tqA1ymCv6LvOxkVV4mcSlAlYoc2Qbo+43XYRHz+PmJ
+         SbrY+cqV6IF4cDP/nRM/GFz9e+w67CrMNCbQTeZoVINAwq0vBPDVqV/QsOBTCRRCGIHH
+         Ww5LnZq2hHApWvhZRiHMxPF8++eJm+tmTqZUBAJw2l/EAYiHTMnq2SvLDzc4s0quv0Vp
+         9UYoTGewPnrUY3nW0cF5u7uN6V5V4zG/WaNKjgE3TdtAjYVbyRqjGy+qQq6flyBdG+U3
+         4iGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781978160; x=1782582960;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781989133; x=1782593933;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9tNMmww2e7jruQfr0O35uHhPxrfPmj3x500H1MOYmDo=;
-        b=MPg82svzpYbVfevfPdUVayD3rmzYDkX4FqyJf4G9T1BQU3iWtXBmPLJNjAfo3CawQ5
-         hqY5rUl+ksZ2Uh3JeXVzHAUciEn22Swqw9ULvU9Av2rdGzMOrlnMFgZXR5AQsk87QGku
-         sIitEPj87JvlyGfunMGj7xsIDBVEpwDoVQNDapPFNyOBu1BLDXUR26Ve0mXowEkOYJuT
-         9q06b1tPh52zyB4CQ3RnXdKwz3va6mSfQ4aUDgT1PtEq9AoEUo6NN+zT+EcdSk6weHZd
-         HIeq2+CuJRUlfm+7BVBvxSgn7fxkrncIWTvHWS3SM8u8W6prdxri6xPfkPW3BmkB2mAe
-         tmJw==
-X-Gm-Message-State: AOJu0YwgfDvboCGcqD6snvz6s2s8RjyswYx5ewvbFWxqWaAHcDOyXGCV
-	oiKU9vLHqvGCIzF6npSb5aMzXFc3SJhkQWCycY7jZLmfnLvb5zemHoDiddx8Zg==
-X-Gm-Gg: AfdE7cm/OyXItMK0z8xGSJujTdqehhCRVmilo2LZbzQUpB5Yj3SMv+jw2MxrmwXHi/2
-	rmpIKOo9yhN4vnZaHUCoVu3E70/JWg50WuuP+LQIImnoYn9cucZLBOTvaHD6izaPK47QQPQ8Idy
-	J9kF30UDuWzMWKO20TqoWnLOpj/TpREZMOYATrUODF0h0RSRa1wETDeqHukg9yxe8H1LDcS0Gmr
-	VVjHenxXuxQmIKniDNRtN7q8xe2lDciChi8vkbU+4v+LRg45xobMjjVV5t1uLmeEh2VkFXenCS7
-	5fz9O44VNUFiDMtRqbXfVbv4zpJ0y8mNuOXEoNerswRlGt6xqBkSAfXIySraCaK/khTrCibbSQs
-	NVNyBXNaFGLkNF0+Bg7STjZLCtjfDhrFjXwk+2ZFz5w2J69V0iReS5hF8Pfrdj08ZVAPAwmd6Rh
-	XWWz26QKBgYLNGlOaaSeVWCgb7CEs=
-X-Received: by 2002:a05:620a:370b:b0:915:d32a:1cba with SMTP id af79cd13be357-920d403b483mr1183462985a.27.1781978159707;
-        Sat, 20 Jun 2026 10:55:59 -0700 (PDT)
-Received: from [127.0.0.1] ([20.102.134.103])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-921d4c5cac9sm352104085a.0.2026.06.20.10.55.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2026 10:55:59 -0700 (PDT)
-Message-Id: <7482ee46454606a0883117d6cded6df809de710c.1781978156.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2311.v3.git.git.1781978156.gitgitgadget@gmail.com>
-References: <pull.2311.v2.git.git.1779808987825.gitgitgadget@gmail.com>
-	<pull.2311.v3.git.git.1781978156.gitgitgadget@gmail.com>
-From: "Zakariyah Ali via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 20 Jun 2026 17:55:56 +0000
-Subject: [PATCH v3 2/2] completion: hide dotfiles by default for path
- completion
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=Lq98TYRF/L4e7XALX0rlBPglZ7Y6f8hVg6UeYccXDwA=;
+        b=BnBgIZvzVAOQnXimX0w2vBDa70Uf302TPCs2XWEL+EXJie0LtCB+63Mh7EurVriW8z
+         7pdRPtu+urGiJMQob1Oxxn937j1kggCP/qDmom5z3tSGvH7Z8UJku38WJiML8QXOrUmu
+         AWoQc+hgrMd3KcH7EHDYNEjvUp8uUGIXDpgMJcW6+gjtrHpuEt99RoHf6tmXKLoGeNpb
+         C6nkzvetDFUEhSCc2mC0V37BhqX3tdxEUmmKEovkthJg0+pSnJfxQx26uZziUdupmZJo
+         kAreB0Q8gENDeSNhYCAdj1SACliKbxxlGA0uizvd0FhdHp54t7L5QTqSrWmzK85tm9nT
+         9KZg==
+X-Forwarded-Encrypted: i=1; AFNElJ8YhGv/mUR62iOmOpE7peubxyxFNOMTrxgEKtSFes1fo1wGfQSUsFQLuxDONxmlb0kCRlk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9OsCHly2x+YvB/gXNYlgF18LLnfecN11EMHKU3fEDiSJ0epqp
+	1QpK81deTQlBzIRb9XbcL6AORhNLxWQAmoD7yslLRS5E5SlPwQjHSpuT6clpVxGX0/NGsXqDox5
+	cAoXV9p+IBD+xb+vsEmOhkNHG/Svvszk=
+X-Gm-Gg: AfdE7cnip+ZxmIPGy4N/BLce8O50NfkaiW35Sh5WC1b1pA9Ad+c5bwWdwKnKzcMcd7T
+	5pzuLNCybWOR3VOo4YoC5d+NogkHM93iB7Tigm1Cw2RlNAAVvjsO+zdRxyyyH3bz94gadw5hMak
+	cFWZVzdjjQ+Qf2ga6EjSC/BozOrwN5seKWkFTKEsZU82LgTOa/bnljq0/XL+MUVQYLI0l2ScNEe
+	PnWMWZdDXjDD1o6A8EJgJFYicCT0h2f/0fyw1isDTM2NorDtk4MADDbzEKcMYNQ3exbECJNvXNR
+	iUXtwQtCOcBhchm0MOmqZ9dH5FKcrVPK/RU7T+ZTGouIN0umiKneg1Yz8ggU90klCLAlc70xdQr
+	4QRY2JmAGiueGb3w=
+X-Received: by 2002:a05:6a20:9389:b0:3b8:268d:5208 with SMTP id
+ adf61e73a8af0-3bb3497fef9mr9392678637.42.1781989133501; Sat, 20 Jun 2026
+ 13:58:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Zakariyah Ali <zakariyahali100@gmail.com>,
-    Zakariyah Ali <zakariyahali100@gmail.com>,
-    Zakariyah Ali <zakariyahali100@gmail.com>
+References: <pull.2314.v2.git.git.1780610623006.gitgitgadget@gmail.com>
+ <pull.2314.v3.git.git.1781901127385.gitgitgadget@gmail.com> <xmqqv7bei2tf.fsf@gitster.g>
+In-Reply-To: <xmqqv7bei2tf.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 20 Jun 2026 16:58:41 -0400
+X-Gm-Features: AVVi8CfLp-1zIlGF7S_70RpKAVgnBmDnopYyWRCwb_qubPOZA-VXfW5utSlg-0Q
+Message-ID: <CALnO6CAgNdkg0PnN9Zy=zLurLUSb2hUXYAGe_qB0oceZNy_=gg@mail.gmail.com>
+Subject: Re: [PATCH v3] config.mak.uname: avoid macOS dup-library warning
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Zakariyah Ali <zakariyahali100@gmail.com>
+On Fri, Jun 19, 2026 at 6:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Harald Nordgren <haraldnordgren@gmail.com>
+> >
+> > Building on macOS with Xcode 15 or newer emits:
+> >
+> >     ld: warning: ignoring duplicate libraries: 'libgit.a',
+> >     'target/release/libgitcore.a'
+> >
+> > Some link recipes list the same archive twice, which is harmless.
+> > Quiet the warning instead.
+> >
+> > Pass -Wl,-no_warn_duplicate_libraries on Xcode 15 and newer, whose
+> > linkers added both the warning and the suppression flag (ld64-907
+> > and dyld-1009). Earlier linkers reject the flag, so gate on the
+> > linker version. Broaden the existing -fno-common version probe to
+> > also match the "ld64-NNN" and "dyld-NNN" forms Xcode 15 reports.
+> >
+> > Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+> > ---
+>
+> Yeah, this looks like what I expected.
+>
+> A few things to note.
+>
+>  * Can folks with different versions of Xcode (or is 15 sufficiently
+>    old that practically nobody is expected to have anything older?)
+>    test this patch?
+>
+>  * We only patch Makefile here; can folks who use meson report how
+>    well your build goes?
+>
+> Thanks.
 
-The previous implementation required callers to explicitly pass a
-"hide-dotfiles" flag to __git_complete_index_file to avoid cluttering
-completions with hidden files. This led to inconsistent behavior across
-commands (e.g., `git add` and `git mv` behaved differently) and forced
-callers to maintain repetitive logic.
+On one (old) machine I have available:
 
-As suggested by Junio C Hamano, this commit simplifies the logic:
-1. __git_complete_index_file now unconditionally hides dotfiles when
-   no match pattern is provided.
-2. The awk loop in __git_index_files is refactored to check the dotfile
-   condition in a single, obvious place after handling path dequoting,
-   removing the previous duplication.
-3. Callers no longer need to pass "hide-dotfiles".
+    $ pkgutil --pkg-info=3Dcom.apple.pkg.CLTools_Executables
+    [trimmed]
+    version: 14.2.0.0.1.1668646533
 
-This provides a cleaner API and ensures a consistent, expected behavior
-where dotfiles are hidden unless explicitly requested by typing a dot.
+On said machine, I don't get the duplicate warnings on a Meson build.
+No issues with the patch when running make.
 
-Signed-off-by: Zakariyah Ali <zakariyahali100@gmail.com>
----
- contrib/completion/git-completion.bash | 65 ++++++++++++--------------
- t/t9902-completion.sh                  |  9 +++-
- 2 files changed, 38 insertions(+), 36 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e8f8fab125..b0b1b3c27a 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -638,20 +638,23 @@ __git_ls_files_helper ()
- }
- 
- 
--# __git_index_files accepts 1 to 4 arguments:
-+# __git_index_files accepts 1 to 3 arguments:
- # 1: Options to pass to ls-files (required).
- # 2: A directory path (optional).
- #    If provided, only files within the specified directory are listed.
- #    Sub directories are never recursed.  Path must have a trailing
- #    slash.
- # 3: List only paths matching this path component (optional).
--# 4: Hide paths whose first component starts with a dot if this is
--#    "hide-dotfiles" and the third argument is empty (optional).
-+#
-+# If the third argument is empty, paths that begin with a dot (dotfiles)
-+# are hidden. This matches user expectations where dotfiles are considered
-+# hidden configuration files/directories and shouldn't clutter default
-+# completions unless explicitly requested by typing a dot.
- __git_index_files ()
- {
--	local root="$2" match="$3" hide_dotfiles="${4-}"
-+	local root="$2" match="$3"
- 	local hide_dotfiles_awk=0
--	if [ "$hide_dotfiles" = "hide-dotfiles" ] && [ -z "$match" ]; then
-+	if [ -z "$match" ]; then
- 		hide_dotfiles_awk=1
- 	fi
- 
-@@ -661,28 +664,22 @@ __git_index_files ()
- 	}
- 	END {
- 		for (p in paths) {
--			if (substr(p, 1, 1) != "\"") {
--				# No special characters, easy!
--				if (hide_dotfiles == 1 && substr(p, 1, 1) == ".")
-+			if (substr(p, 1, 1) == "\"") {
-+				# The path is quoted.
-+				p = dequote(p)
-+				if (p == "")
- 					continue
--				print pfx p
--				continue
--			}
--
--			# The path is quoted.
--			p = dequote(p)
--			if (p == "")
--				continue
- 
--			# Even when a directory name itself does not contain
--			# any special characters, it will still be quoted if
--			# any of its (stripped) trailing path components do.
--			# Because of this we may have seen the same directory
--			# both quoted and unquoted.
--			if (p in paths)
--				# We have seen the same directory unquoted,
--				# skip it.
--				continue
-+				# Even when a directory name itself does not contain
-+				# any special characters, it will still be quoted if
-+				# any of its (stripped) trailing path components do.
-+				# Because of this we may have seen the same directory
-+				# both quoted and unquoted.
-+				if (p in paths)
-+					# We have seen the same directory unquoted,
-+					# skip it.
-+					continue
-+			}
- 
- 			if (hide_dotfiles == 1 && substr(p, 1, 1) == ".")
- 				continue
-@@ -731,15 +728,13 @@ __git_index_files ()
- 	}'
- }
- 
--# __git_complete_index_file accepts 1 or 2 arguments:
--# 1: the options to pass to ls-file
--# 2: Hide paths whose first component starts with a dot if this is
--#    "hide-dotfiles" and the current word is empty (optional).
-+# __git_complete_index_file accepts 1 argument:
-+# 1: the options to pass to ls-files
- #
- # The exception is --committable, which finds the files appropriate commit.
- __git_complete_index_file ()
- {
--	local dequoted_word pfx="" cur_ hide_dotfiles="${2-}"
-+	local dequoted_word pfx="" cur_
- 
- 	__git_dequote "$cur"
- 
-@@ -752,7 +747,7 @@ __git_complete_index_file ()
- 		cur_="$dequoted_word"
- 	esac
- 
--	__gitcomp_file_direct "$(__git_index_files "$1" "$pfx" "$cur_" "$hide_dotfiles")"
-+	__gitcomp_file_direct "$(__git_index_files "$1" "$pfx" "$cur_")"
- }
- 
- # Lists branches from the local repository.
-@@ -2176,7 +2171,7 @@ _git_ls_files ()
- 
- 	# XXX ignore options like --modified and always suggest all cached
- 	# files.
--	__git_complete_index_file "--cached" hide-dotfiles
-+	__git_complete_index_file "--cached"
- }
- 
- _git_ls_remote ()
-@@ -2409,9 +2404,9 @@ _git_mv ()
- 	if [ $(__git_count_arguments "mv") -gt 0 ]; then
- 		# We need to show both cached and untracked files (including
- 		# empty directories) since this may not be the last argument.
--		__git_complete_index_file "--cached --others --directory" hide-dotfiles
-+		__git_complete_index_file "--cached --others --directory"
- 	else
--		__git_complete_index_file "--cached" hide-dotfiles
-+		__git_complete_index_file "--cached"
- 	fi
- }
- 
-@@ -3231,7 +3226,7 @@ _git_rm ()
- 		;;
- 	esac
- 
--	__git_complete_index_file "--cached" hide-dotfiles
-+	__git_complete_index_file "--cached"
- }
- 
- _git_shortlog ()
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 02aaf71876..7a7594455c 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2360,6 +2360,7 @@ test_expect_success 'setup for path completion tests' '
- 	      "spaces in dir" \
- 	      árvíztűrő &&
- 	touch simple-dir/simple-file \
-+	      simple-dir/.dotfile-in-dir \
- 	      "spaces in dir/spaces in file" \
- 	      "árvíztűrő/Сайн яваарай" &&
- 	if test_have_prereq !MINGW &&
-@@ -2380,6 +2381,11 @@ test_expect_success '__git_complete_index_file - simple' '
- 	test_path_completion simple-dir/simple simple-dir/simple-file
- '
- 
-+test_expect_success '__git_complete_index_file - dotfiles' '
-+	test_path_completion "simple-dir/" "simple-dir/simple-file" &&
-+	test_path_completion "simple-dir/." "simple-dir/.dotfile-in-dir"
-+'
-+
- test_expect_success \
-     '__git_complete_index_file - escaped characters on cmdline' '
- 	test_path_completion spac "spaces in dir" &&  # Bash will turn this
-@@ -2789,7 +2795,8 @@ test_expect_success 'complete files' '
- 	echo "out_sorted" >> .gitignore &&
- 
- 	git add .gitignore &&
--	test_completion "git commit " ".gitignore" &&
-+	test_completion "git commit " "" &&
-+	test_completion "git commit ." ".gitignore" &&
- 
- 	git commit -m ignore &&
- 
--- 
-gitgitgadget
+I think I have seen this on my other machine, which is much newer.
+When I get around to trying it there, I'll report back as well.
