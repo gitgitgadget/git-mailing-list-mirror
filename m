@@ -1,82 +1,86 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3C623BCED
-	for <git@vger.kernel.org>; Sat, 20 Jun 2026 23:43:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D2440D57C
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 00:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781998986; cv=none; b=nm/DAQOdtB0iyyberuOU8mtuukTipv2+svezU+ZiNQDDwyyw4JO7Dnv+sytSf1UkY70tcwqdzRGOSqDjqWUi+9n+/m+Prw6cOzOMJhjbc+lxvoFW/86TFfARPuTt+gLMuwGl9lsDV4pYne+M6Nbcarm1gFGlQAJyNJnMpZlxSC8=
+	t=1782003187; cv=none; b=YCIeGMZ/Kq1fR8pUyaMnni4RBYceiH9PUhCzAy7u2iC3HiwbBfAmOG/dkLY3xWkoDQMOm4td2dryBOQr+jKCqsiSE7zdy5xN/yuCfoNq96ar6LRu/AYGlOI5Hpb32Lf2/gy+K6pZSPQsL91SMqEhvFFjzEY75JlESG3RiyTmVWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781998986; c=relaxed/simple;
-	bh=bKqx0YP06cB0HqfZ4KF/mGDGNsd2pQWUgc00rXJgzko=;
+	s=arc-20240116; t=1782003187; c=relaxed/simple;
+	bh=xiUWEUznJXmDu3b5tyqt7r300q3r4u3gZdnxCj09t7U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aIEah2CEFlSk5TZgTSaGgnRNkpLRQbDFGZ2hjynDzQJwAfQfq5FWK3+1c10V4OdIlw7NHcaYYMkAVMmfQfZf1M3BX8XMrlL3Gw6NBc6FeWhxH1XUCCVW0PYBB8RyBuEpJvfzeQQsdVPCGqB7AZqA4SpOYvZAqT8IvVa2Y7hAxck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BF16UuHl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D7sk/CkR; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=gSg6rfBUlGYC4gaN3FX3HEtLFE6X1sswchLoMpIq5lRDe0bb2lm37dunL9GVsDWUyKIcJReYtSLWBZkdBc+anW52sMllL4x8eHRGr36htu/Z9CO1zmGUg9H/3u/NPTpgg3MEFG6Q6pOhxsBDEcUh0rrWrdjuqWuCylJoFkEOWWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ch9TLkN9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fJKYK9NE; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BF16UuHl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D7sk/CkR"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1D97A1D0004D;
-	Sat, 20 Jun 2026 19:43:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 20 Jun 2026 19:43:03 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ch9TLkN9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fJKYK9NE"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id CEC8AEC0166;
+	Sat, 20 Jun 2026 20:53:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 20 Jun 2026 20:53:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1781998982; x=1782085382; bh=1Srmbf34xb
-	H9w/F45oWpOj2Uzs6Z6bK3t/HSzhpxtPE=; b=BF16UuHlTcThhlFlNWDZTZ0bmh
-	r+c3/esNYorYzv0qMIcfxUWf9A4arzzXIzuw7lfAeXmyp6tOKoHaeT1+noGp2IVH
-	7Uj4VqHYZ1YDWHERh5QHxQoFCGWIcITARH0GdItAki/4vFzWfNil4LH8rYYxBXvl
-	D9pu3UEpzfIXSwtUTrHbLBo162AcQxryGDuMwEPIMnnTWQIeJRYvsjYUKMy7JH56
-	13CKmL7YgmCgWzU+Vkr3l6s6zrPHopEvDUblb6GXosDIoJ8rDyjFd1xncrDmlCC3
-	0kmySd17LQ4ES2l/QuRwCvkmp6ccIzZ22yM7tJzOi4kOiIw6wuQ+gyUS6ztA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1782003184;
+	 x=1782089584; bh=OlXwmdtP89yJqmj5yF0tu3R7XcQoq5VZlss4xSpA7Mk=; b=
+	ch9TLkN9EMpsKH1lEZr9iH4i0FAaep2TlgWOxG/NZX6qWOLuyeRuYfYjXYMkkxrJ
+	7YjhCr6gYm1JTPUxdffgx2kK1M37muicNKbsYUK5vjCX38QFYTlQQ8EG0I4rD3vP
+	bJ2CwlSSh8hvmIxJwsjTr1ty/eEOXx7kSvpIBW5k8sqURK80i5rPp5QpP1OQgg3P
+	isiWPTSavHm0RruEkf2PIqnLInVckn2u1ZVG/qyC13hKDX7WqmGDg2mgmqTSBS7a
+	sqXe8Rg5GreON6BNh4Kby59eEHdZjvAjMppE0eV490D1NHiU6iHSXfMR4McCl4Qj
+	kmnJcHg8aZpp60dgoN8zGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1781998982; x=1782085382; bh=1Srmbf34xbH9w/F45oWpOj2Uzs6Z6bK3t/H
-	SzhpxtPE=; b=D7sk/CkR2UFhPus/7x0G8py/XMruUSgEV2WFkRTxjZtmbw8uED0
-	nF/NyevNhxlkwaJD/q4Zn6f0uNY0Xj2R1IVgThvO9m1tueiZixTR/bNiJeSKzmPk
-	m15yuheNQ4W+7ZIheGlPfchH0V4Bz71OpZDyWFJeA9P3RGnpAUOMFmWaI/wgqkb9
-	7hitpSCDBz8jTWGh1JZf7Yv1PDzpjmFRPzztaYtUsfkMgQm8pFWEMoTaARt8GGCR
-	p3DCoPh1BNCIZqloxsincCOFwSfprNspYLU4Ttm40KVSYOayjKxzmDgSAWUxLF9U
-	olIXyVxzLDu8OvfyTtuGurElB256bbT153w==
-X-ME-Sender: <xms:hiU3amt08FmcEXyjFnSk1rg45KUCiN-DTcUWadXh0IRxdtOAwg0VhA>
-    <xme:hiU3aid0zNPqXif1-Teb3vdVlhTP99M8zRCW-Xib0rU8WjKR0lD-GsQMR94vOmcDM
-    cz2yV6MuRi4BAuDtmIN4hb_pQb0M31d-bE5kHBg2lF2xKUPLOsI-A>
-X-ME-Received: <xmr:hiU3amyMRjIRWP0Ng4a8XiEebUpQ9L_cz0iD72cChgLQN9oApvriP9nCs1PViXl_IqjtHZ2g8vDKxMoJAd8NLy7hxC_pez1sjq6sYaY>
-X-ME-Proxy-Cause: dmFkZTF4hxdCVjhgWnsQ7U844QUwcCl8MlDWFOLIt0WGA8WHt7lbYrWIdOPJ0FVz9WaKOs
-    dzGhUMJfBecHmrEkvWiOSjmkbBI5bTc18vVkcmYy3U4vJoeKilJ96MX2j4vKw8neSRGk9t
-    9am0v+VHdvth6SKo5XmstS2MlhnTQ3wUA4x6ci11tN3hE4jPE59Fzxau9NxtxkBg47tn5P
-    uzbFfrjdCLk1ydOOoroGV61WEzkRKY2tbzY+Wvs2dH655eB4yTmpxNizmAo94UV/9A3cKa
-    9Epy4hE/1GyiJeO0iIAxDixLR4r1FI21ziWteogbBd5BDNquHmpHYoQ3Fja4GSli8bRvK6
-    oOnZDeuskMtv7l5WGRfTAid6SfJdl6PsM6N79ER7goB2Eci6zOlLgVLN29dM1zwNrHYRYn
-    2tKWTOhcC3rR25yVuVIOuRW/LYVvr+V/EMli1TMmr6GjrVJzymhB5yPEGUo1fMmzVzeimY
-    F4sg9WcpUE/Cp2xi1nbP9SidUa/oLcTGoVx9W/9pPs4KOa3u1NZJIi5JJ3r8OjZssKBfC/
-    84DsxDNtQdAQMrYad6w64VZnZ+8v4W20fidUJVAdwAtJVm1svrsktd10VqeMDQr6WyZkP7
-    BR6YCDwDlGgyhS5B3CfYtOrpTD6aDH1Gze6Oei3jRPR3ecWEDuiiVlEeInxQ
-X-ME-Proxy: <xmx:hiU3agHg4r5nC9PJf8y4v8My2Shh4Zlf27-_5XeBPzXKagjkp8awoQ>
-    <xmx:hiU3aix8Byj13-Ql9EOmIfJuTgW6VSJeao1kb4cWLPgIkd87Ic5QQA>
-    <xmx:hiU3apu05bPtR2vcza_el4YRAHVFr3i3EHPXRm0MGhlItB35RNfmvA>
-    <xmx:hiU3an074Gk8-tVaahNups_8M3MpE5blSXa_wFXYm_5k_TdePtp8gw>
-    <xmx:hiU3aqTxAAr2zQcOGZqHTEpr1GReSpAmoveqocS56Q0Dqp40-J3byfGE>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782003184; x=
+	1782089584; bh=OlXwmdtP89yJqmj5yF0tu3R7XcQoq5VZlss4xSpA7Mk=; b=f
+	JKYK9NEBgmuS4CUZo0IEwOW8uEJxmm00SlMsTyJ0h97J94rpNZ1Gho1k5BiD0z/J
+	gFENsKqJX0c4oIUdP0sHee2nEEPFX6uuGU2Q4wXAVBXUVcj6BNgotgrvocYOQYcZ
+	R0IloFLD7oLs6Q71Q4EPvooQXSaYhdW+06UFVJ0E9Be9ZQd7/rBOV9lpSjrka0fb
+	LjhU0JshT0zd4xsmi6itLTwR8gbTbFNHTM04aqSiiaTGgpcvnwRAUQRnsCSP1qYo
+	uQV0k+OoTdy4/BV4edcICtqpLlA3mcrJe2FQEfME1Kcxg85P2yRxJxoBVwRddwaZ
+	BOt3DYXtoB5L/Q/dcmBaA==
+X-ME-Sender: <xms:8DU3ahWPx1N0O5y0cNyDKUNpCuBYJBRo3WY5ARNQbyz8L_-DCdDOxQ>
+    <xme:8DU3aomKD3d8-Jlp7aUnTT8al_o-hi9dAZ6JApMYL8NUyQgqdWl1wLVAHFEcyE1bT
+    BOc8j5dbAqRUkcnl-eCriRDeU9C3E_aXQjvyAtDvAA9iV1eG7wfMho>
+X-ME-Received: <xmr:8DU3aiYgS5ortCK5nPQAHKAP1xZlL79wR1UKVCpkoFvCveYna4jH6rcB78urzJE4cAr_ZQ5rmejCcOgzxs2-4CckhX1hudnJb2NPe-A>
+X-ME-Proxy-Cause: dmFkZTFg5NBtfq5aHD3/OMEn5enxAl0a3ePdmkhpw5tEgJmomXkkMy68ckoBvrRXlhokUl
+    JSeFbiycWXZKO6d7EVd2oI+QSwaPJDxCip6ZP1tevcfyVY0mRsHs6DItdzPnetumoMSF7V
+    QrmNkWDGM1JgqmEndVUbzwIYT1/EzYSsBngR6RVpAUGUxBRUv/dMvRLnSQS5zl1luvtI0r
+    cOGboI2dlg8d+RgjAo9smfJ4sVb8ivqngcDkwphEsd3dMYDFvOUS7qbORVne1NzLiAZwhk
+    r+jUjwWGqU/ydYygmMMFI7vrh45E1TCxWt/8lTHiLJy6JH2k2zQMk9vewxWlFeLLoWpgRX
+    mlHMEAW9F/p3z7pAUxLrpnOKxzppn7lR4nLez71ZIhMzEgzdIXKpVndKTCC+ewZz4uiZ/X
+    Si90jxpA/r13/gQ0nr8n2un68HBEFvxiaZJvMEr1Gz0lXU5+kvhRoUO8xu/PRYitt3Bb1+
+    lEVuQ1WQT+BkSduJrBfq9QNyn74yudyfxOouH92K4AqcnTDcTlQGzvBL12JHedOpQ8MOyo
+    QBsLVp5bzsf8a7nHDF8RtbFIECNevnGPc2gW6N+crfYOk7Z/WNcq5CrRzKY1Q0DSt4axDP
+    rYlkmNhqHnpFMdIUYtQa3PUF8s5xiz9u9t2zQlcC829J034jldRUM40a3gyQ
+X-ME-Proxy: <xmx:8DU3ajPiBqEFGw5CzgJdAgQxrp2-cBGYuaD3A20ZUYiRyRmkP0PNkw>
+    <xmx:8DU3anZXbS1iWDXTtdHJByuH2akay5P5YmDyKJ_ruOE7oEofT9Nkrw>
+    <xmx:8DU3ah2PgNfbl2c7BTICUC7eDX-qnTTRALX_fxaZeGKiDpGb7v3m3Q>
+    <xmx:8DU3atcQ-N5Y4QWcfmGNZgX4iTVMc2NKeV9m6tp9IZqRQcFtad2Zvw>
+    <xmx:8DU3aqVBh56huPR1iTxPoL9jbHU6zqX-bSGQ5JA-TUoHqE5nbf5sbEjn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Jun 2026 19:43:02 -0400 (EDT)
+ 20 Jun 2026 20:53:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Michael Montalbo <mmontalbo@gmail.com>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>
-Subject: [PATCH v4] SubmittingPatches: address design critiques
-In-Reply-To: <xmqqik7eld2g.fsf_-_@gitster.g> (Junio C. Hamano's message of
-	"Fri, 19 Jun 2026 09:17:27 -0700")
-References: <xmqqv7bhxiby.fsf@gitster.g> <xmqqpl1oteoi.fsf@gitster.g>
-	<xmqqik7eld2g.fsf_-_@gitster.g>
-Date: Sat, 20 Jun 2026 16:43:00 -0700
-Message-ID: <xmqqeci0g4mz.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Jeff King <peff@peff.net>,  Git <git@vger.kernel.org>
+Subject: Re: git-diff in a worktree is an order of magnitude slower?
+In-Reply-To: <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
+	(D. Ben Knoble's message of "Sat, 20 Jun 2026 11:57:29 -0400")
+References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+	<20260609001134.GD358144@coredump.intra.peff.net>
+	<CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
+	<20260611085526.GL2191159@coredump.intra.peff.net>
+	<CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
+Date: Sat, 20 Jun 2026 17:53:02 -0700
+Message-ID: <xmqqa4sog1e9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,86 +88,58 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Contributors sometimes fail to answer fundamental design or
-viability comments from reviewers and submit subsequent rounds
-without addressing them.  When design decisions are resolved on the
-mailing list, the final justification should be recorded in the
-commit messages.
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-Instruct authors to be particularly mindful of critiques regarding
-high-level design or viability, to defend their choices on the list,
-and to accompany new iterations with clearer explanations in the cover
-letter, responses, and revised commit messages. Also instruct them to
-explicitly document the resolution of these concerns in the commit
-message body to keep the historical record complete.
+> But the refresh_index_quietly call is guarded by (effectively; the
+> actual code uses rev.diffopt.skip_stat_unmatch)
+>
+>     1 < !!diff_auto_refresh_index
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * Hopefully this will be the last iteration.
+It is not quite that, is it?  In aecbf914 (git-diff: resurrect the
+traditional empty "diff --git" behaviour, 2007-08-31), it read more
+like
 
- Documentation/SubmittingPatches | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+	if (1 < rev.diffopt.skip_stat_unmatch)
+		refresh_index_quietly();
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index f042bb5aaf..28b4f2f795 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -51,6 +51,22 @@ area.
-   respond to them with "Reply-All" on the mailing list, while taking
-   them into account while preparing an updated set of patches.
- +
-+Be particularly mindful of critiques regarding the high-level design
-+or viability of your proposal (e.g., questioning if the feature is
-+worth implementing, or if the chosen approach is appropriate).  Defend
-+your design decisions on the list first and work with reviewers and
-+other members to improve the design before revising the implementation.
-+This will avoid wasting effort on an implementation before its design is
-+solid.
-++
-+Make sure that any new version explains and justifies those design
-+decisions more clearly, in the cover letter and in the revised commit
-+messages.  Aim to make the reviewers say "it is now clear why we may
-+want to do this with the updated version".
-++
-+Topics with unresolved fundamental design critiques will not be
-+considered ready for merging.
-++
- It is often beneficial to allow some time for reviewers to provide
- feedback before sending a new version, rather than sending an updated
- series immediately after receiving a review. This helps collect broader
-@@ -323,6 +339,10 @@ The body should provide a meaningful commit message, which:
- 
- . alternate solutions considered but discarded, if any.
- 
-+. records the resolution of design or viability concerns raised by the
-+  community during the review, if any, ensuring the historical record
-+  explains why the chosen approach was accepted over alternatives.
-+
- [[present-tense]]
- The problem statement that describes the status quo is written in the
- present tense.  Write "The code does X when it is given input Y",
+where rev.diffopt.skip_stat_unmatch was initialized to 1 if
+diff_auto_refresh_index (boolean) is set to true.
 
-Interdiff against v2:
-  diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-  index a9789e5303..28b4f2f795 100644
-  --- a/Documentation/SubmittingPatches
-  +++ b/Documentation/SubmittingPatches
-  @@ -54,9 +54,10 @@ area.
-   Be particularly mindful of critiques regarding the high-level design
-   or viability of your proposal (e.g., questioning if the feature is
-   worth implementing, or if the chosen approach is appropriate).  Defend
-  -your design decisions on the list first, work with reviewers and other
-  -members to improve the design before revising the implementation, to
-  -avoid wasting effort on an implementation before its design is solid.
-  +your design decisions on the list first and work with reviewers and
-  +other members to improve the design before revising the implementation.
-  +This will avoid wasting effort on an implementation before its design is
-  +solid.
-   +
-   Make sure that any new version explains and justifies those design
-   decisions more clearly, in the cover letter and in the revised commit
--- 
-2.55.0-rc1-134-gb7e3543e07
+Now, cmd_diff() dispatches to various diff backends to compare two
+sets (like "a tree object vs the index", "the index vs the working
+tree files"), each of which ends with a call to diffcore_std() and
+diffcore_flush() to conclude.   In diffcore_std() there is a call
+to diffcore_skip_stat_unmatch() ONLY when skip_stat_unmatch member
+is set (we initialize it to 1 when auto-refrresh-index is enabled,
+as you saw above).  The function is used to squelch the paths that
+remain in diff_queued_diff only because they were stat-dirty without
+having an actual content change, and _counts_ how many such ghost
+changes existed by incrementing the .skip_stat_unmatch counter.
 
+> which dates to aecbf914c4 (git-diff: resurrect the traditional empty
+> "diff --git" behaviour, 2007-08-31). On my system that comparison is
+> false because the double-negation produces 1
+> (diff_auto_refresh_index=1 or the result of git_config_bool). 
+
+Not quite.  It was false because double-negation initializes the
+member to 1, which causes a call to diffcore_skip_stat_unmatch()
+be made, *and* the diffcore_skip_stat_unmatch() function did not
+find any ghost changes, i.e., paths that were only stat-dirty hence
+needed a call to refresh_index_quietly().
+
+> So… has that conditional been quietly dead all this time? I can't
+> imagine that's right, but…
+
+I initially thought it was an embarrassing thinko, but after seeing
+how .skip_stat_unmatch is used as a 1-based counter (i.e., if the
+member says 42, it means it saw 41 paths that were stat-dirty but
+without actual content change), I do not think so.
+
+Now, it is a different matter if such a "dual" purpose "more than a
+simple boolean" counter is a good idea.  Apparently it confused both
+of us in this case ;-).
+
+Thanks.
