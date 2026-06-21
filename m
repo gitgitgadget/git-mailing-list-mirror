@@ -1,106 +1,176 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E74F1D88D7
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 03:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782014285; cv=none; b=VoO/iyCibtbkHBmrhrqo86GGtilk3JAtlz2ZstY9ahHwcy+ajgo6RbzBlr3SLTngsXs6kD41g4Q2F982P8V8HVLJv9GhpHEJFdRtvgBR6QSHXwWkgKZBlvgflXU+Yq1SJYbx8lZlFU4OysBKTy8GahrcQ8A4YoIw+ZQravmWgY4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782014285; c=relaxed/simple;
-	bh=FthS78ez1RGxKmR7yLrKsF4xVNUz955Con2BFUkwrek=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d5veqjV32O6mE08TpOr5r8SyldXxoceT4ybeLUXECluOvhQJC9MAXEsxDm90SI/jRMmsTr9P5f+w2JgzLwL6PAYIYgpVx+gyVT1CEo1/7B8U0QGEI8+QmLtKbxpTFrX4yNL7ssah5L2k5/kGCvkApbwPpt/+sKUDY70/cASRC2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HAWuQqdR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XYRM7JXC; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEF6157487
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 05:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782019534; cv=pass; b=UEBy1PYDvElMxoK7Pl/6AzxsITpBqi1PXMypKUg5onaNZ2wWJX9g96uMljhFaNWdA+Wc4RgLnIOXVdX2sed9BJb5oQtFy9hN6fjj+DpkAOQissHnMF48Ool7yoS5ICATzpEidGsrtWfPDSCL0vXsI0ibjNjDiair4TFEyzySmqI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782019534; c=relaxed/simple;
+	bh=Yh2OqpNHFa0mKmPFndNne78XEkdqxMudZca/7QTkCXI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eLJn97q1AnzS9YNUf8f9TWzqX3HbcGdgz7+YpPhNJZ1qZ28coD7WrkJ7r8IIhmxjcdN+bdjyuJEa+K5pe4n100wZ388PVeeat9NAttC5n+FV7PLqWHjBK5bKYWOxAgtNwCXXuAmg6vmnRM9+su56Et61zGY+wyMWKunVTs7c/Rs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r9dQlMSW; arc=pass smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HAWuQqdR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XYRM7JXC"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7D1CBEC02D9;
-	Sat, 20 Jun 2026 23:58:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 20 Jun 2026 23:58:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782014282; x=1782100682; bh=YxxldZWeOz
-	AU0/TY6YU4rdifn48FkrvI48XYxIWkG0k=; b=HAWuQqdRBMiHP6oS801enKYsQ3
-	LCnmM7LJoML64g53spDz1uXR+OO8o4bfn3uON1VCK8aG/DL4ViVDS2wfGJwCOCe5
-	2qRDn/3AL8P6IIEbdlJeEGc7WrJbUoiuX1v5RKrhh0YJLhXkzXwZl7q21jrNcr63
-	Qm993WJp/uYJgTkJCYj6sVnGNkVwaGIxk361Ade2V8shi4ZuIm7bCuwx1yql9i/7
-	fhC+B30c57MRrLHWy9Uigfod+m7f6EHMe+DiJSfs0UQ9qhCIZ5bVyHRIIsdI0xjs
-	nKW+bIHZ3K1nwrhwAT4I+Wjpgw6HLnJiknIjLGILoBZRKOxCK0kcdzO50bcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782014282; x=1782100682; bh=YxxldZWeOzAU0/TY6YU4rdifn48FkrvI48X
-	YxIWkG0k=; b=XYRM7JXCEoqa42dghXBZ4QIBiZB/OZGZruVHSani2D3jV3pmjU5
-	fBm5pXtQDNbmq+7whF7rS7Stp7U0Jf43KoK6gtLAOSWddUQXMfsCUH2qvEU+gua7
-	IdvucnCRq6BDP1Opxb8uS2neiPTusgBBlPQ8AKisIuVGxVthsZbIf2R5x66RLcaF
-	okz8q//pbJtvk08xMJYFwQGGudY11EP5S59hSnXTVNtKSaDuBkDlqcttQfuu38M6
-	7EYTpi6rS5P206JuLHl8+TluKad6mQt3nebYj1QGpdDXOD8onNTiO+mnewiIk7Dc
-	weToVaav7Lds4rJY3goUoaHRHg1FWb2foQw==
-X-ME-Sender: <xms:SmE3apQsON2k5djIl7vq5BMbg9GiXLxkHInTIv_hIBEH32cNnox-cQ>
-    <xme:SmE3apyzlnwmNp-OAPt4vkpgTdippt9DOXd7nvyaxLe3RGypAcufjBV7bxadj2Ros
-    9bsDxGyI4Kv19Pt6mFDfZocO1ZJ84GIC8ghy5FFSN3nUxP-InEpTQs>
-X-ME-Received: <xmr:SmE3aj2vQrtMfPD1KR3oqGNYJObNZPzkccVMYwbidqzuPVyidV0tsT_J7g8lH59EtFsqRkhYOiOLA5NSoKLAL7ssG84j4x8r6Pvs1gs>
-X-ME-Proxy-Cause: dmFkZTFle4VsYJ7FG7Ri0LdA+GFuXv0UQHctdVtocGsfPwxs3gW2RaLDaimv2XlTWHzRKV
-    7FMFC/J4Xm5V8TmliZBxjwvRr896gZv16DEcO74QYwKAORMVR/ogLtUQmNVtTPR1PYEBfa
-    yydXRL2PG9z5qWWX9Eg+MbKYtnnFYsHJ10MjseUmYaWZFmNYYjowPl9S9GcIOMq76aMWdH
-    VxaWPqb5sDY7hAjooLZKp7zbqwdSikQXxszvdWfPoL9zQ/CGT+c4Ukv/kJv3j6gXVnW7mr
-    Dwy8BwkytnJ+cO7fWJJUPnoNuwNXODas8b15fsgVoePubazRqNSWOk8v6vzwAIXsytmjBQ
-    Ztbi3bxe9xjQJGvyY+vMyQQkqOyj2VWWqfNStbLtElARDsJlh2IpYvj7cnyQJw2eeeo30x
-    cc96QfjYYn8trL++rbo5rY0cyiSkhc1o4A7Kb60Cx8+fNMF/61vNB047PQbmmzHtoitNDB
-    Bd2gJhEmfKhgfMYmqcdGbQ7sH8K+UDobDwu7IM1NA/owbbirX9l3rPigpEzkM5RUCXoUft
-    /4k7icZHsVJt44IGgJu96IY9ME6JyokehA6SJ+lKS5F1Fc6cPHKOn1hKAH9zr/584Rq5MD
-    uZocWrhVqq4Cv937JiLlqU3TFtBwHVM+vs6AnqkeIDXz5zCNl6GHnWd8QrPg
-X-ME-Proxy: <xmx:SmE3av54MfDYJRgJfpexXmSOCp9uBl9pwWIwJ8I3Ho-4SZjNaJdpNQ>
-    <xmx:SmE3auXtLTN1Qusbkq6s452fJKi21-qFzNhJL3XlOAFqxhmRg5doEQ>
-    <xmx:SmE3amBW_EEmvPSp-iVDQhl90Yhc9SOtbHB0T2YVcsuZ3ctPLIx3tw>
-    <xmx:SmE3al4adjamdxl2lY8QRpfMkuRpqrbGD2GmsJCiCjKtTD1O8MH28Q>
-    <xmx:SmE3aly3JoaQzI3Wi6njCiwm2fpZ-QyJi-LHhxlteJ6Ss9h85pBmgt5f>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Jun 2026 23:58:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Git <git@vger.kernel.org>
-Subject: Re: git-diff in a worktree is an order of magnitude slower?
-In-Reply-To: <xmqqa4sog1e9.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-	20 Jun 2026 17:53:02 -0700")
-References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
-	<20260609001134.GD358144@coredump.intra.peff.net>
-	<CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
-	<20260611085526.GL2191159@coredump.intra.peff.net>
-	<CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
-	<xmqqa4sog1e9.fsf@gitster.g>
-Date: Sat, 20 Jun 2026 20:58:00 -0700
-Message-ID: <xmqqse6gee9j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r9dQlMSW"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-bec423a5265so592942166b.1
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 22:25:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782019531; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ad+3tkO7eMI+MDxfRox3GH4lTZ8gxt8ZcdZ+OQYNHL3tBQ1vYUlgDLJcWo0r9N/5o1
+         UqZPBDUPX+WQNZvLucc4SmZ0XGp4Mkuk2SX9WcJk8rvr4Hp1WmEygAk6CUbBtjjI6t71
+         GLI/jiZQcu1kWCLZpGrM5AtUxe8kuVPfF4lX5SIKzZ4Pkj5oAFUlkl3+Kv3ZkMJ/Tnr1
+         LyFJOhJvkNUxPzdnSBvA37Pqb2SuyP/oyKJP4BzTyYYjOIDaCXwuhWQpV652J0Yq+dFa
+         Q1QfhDVTuILYx0aMgw8s61TIfmiHy5jwKEKfxiXW30jnfrxxAP5ac3h86DUB0WWwjU6H
+         iloA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=f8bY2n+M2UfAcz4Vp3Jzs8ESr8b0vG0IGpBaqr40ZjM=;
+        fh=BKp++ymVYoIWqwQWIM0pIHjWF1kIubjPrL466ACJkPE=;
+        b=c8U9ancLBVw3fy4fqXUDCeYySysFvmeeJtraD0e9/h6YDE/Phk7YZX7avfL0zhm0ru
+         RB+5UzjR4zOrv+5srk5UsNyMiM8qUKFc2nMMGFCyU81jOz/GS7aYsomdrG98ULDLoruD
+         4GHkpfzWyztlczuAP0+GGXsupxQkTF6XnEMC0uinZqYgVH6LzrUMmEE/5HjAwjSQnIh2
+         iXYeE5PtZcQOtR/kaN41ydq4Hib6Y9+ES6NS1l1ma7aGcGpH1NNA2QSjZv5hzJnoElOV
+         v/X9uEqOXRlOoY4LesuPolhAdXvLK2018s0TibEORwkQD8Sj/uniERKzRDxCoXFfPKOL
+         lhTQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782019531; x=1782624331; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=f8bY2n+M2UfAcz4Vp3Jzs8ESr8b0vG0IGpBaqr40ZjM=;
+        b=r9dQlMSW/6MLbojOPHsGKg09/mcJ0r1B+kHc7ImE7L3MbPNdBBXwI18dLnZEAXg2jE
+         aTnuwLuT6PJio8roWjPcS5FmZh68fmnb8wkHYayKMcDWaRDhHkT6YuJtjwe4UURQLs+x
+         HHs6hL4h7gvAD10QJg7cZu94W9DUHm5uou19amyEWCKd1LNC073AEEfi9S9lK0AM2vVO
+         kvHV00mv0Bs4RK4+eCE1QRBrR4B7YqMeiv7J9ZZQmLiiPDsICjYPoP00UUd7qZOl+X2e
+         ebPTvtlVuraxibnbjI891dBUwvQzGYMr9oI9TP5Fbo90/qgl2ppE6a3ovvrUPz+238aV
+         zZng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782019531; x=1782624331;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f8bY2n+M2UfAcz4Vp3Jzs8ESr8b0vG0IGpBaqr40ZjM=;
+        b=P34QY/4t0gOfb0uAhEUTJVHMifjc2POiLzj+glUXFnVHgVbBQFHklMuim+AGZinwwU
+         6WIjAdER6w5u809FOmJyooCdCpj88fm76bk8SkMOANIPM6GidhTu3lmgLScA6k8AeURx
+         9teRsHSZVcGL9von59hthGlYryyaMkTaPtUJRxuXBCGtuVdTOuiJGIqnyuhWPmvXSDof
+         n7msDBIyuJH3fFqOUF7/FXTEAb2hYcimutIf5quZZiq//lfwSulirUYjT00GvbufONpo
+         tLlgmrbn9vpa17T5brY3bUZD5RsFoj6xKtXyzhGv1OttQY/lN/NwsxcF51cW6x0tX3D1
+         kXoQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8C27cgzNZJ88YuzHXv3+2Pf7YvWOglxwqiHgmV1vBPKNa5loefjseUqbOwPscdex5tqgY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEYriXDs9cLxwoqGCF3mTruPM6841YWjaWYAAJXk/eSntDpCWO
+	KRUT4HgMTsyQ6wxM5l0amkb+gplef+L5XLBVp4gHBxURvrTf5nDwnw9p0eFbozp368583kDCzND
+	7FrJ0UxKHoi2Cu6RU8fq6OjgEB4vvAh8=
+X-Gm-Gg: AfdE7cklmjL3KW8ZUr1Jd67oM2mVmQNWuBgVS87qkxcpkaH5pVvaz3s91z9sz6m9fst
+	FyViJ/bTO69A9qSD1LNEp9p0LBy8htv02t3zcuS2WBrfNu4Wsvx7xmA+DLCdYtdYdsHAZvKGn9u
+	keziKKN95FZJ9wUKAC4GrHFr4cIMYNfoqcDLTiFcvhIcjHQH3+he+6VnLFNVsbbXhtQpP36qLrq
+	Irt57WvODrbrXA7R1mybeETLPO50m6tgjHwZBWp0xxK3t6SdgWUqIkvDhOouD0x0ZHEiQzYZStG
+	VFrPwkMc6W+bTvd7M0ESi4nqjwilRc0lB20oxodARGAEg3r4tHs2mAmHZf65tO9gmwfBE7lNY0x
+	40Z8hDcvkGw==
+X-Received: by 2002:a17:907:d1e:b0:c07:5ee3:cede with SMTP id
+ a640c23a62f3a-c097ae018a0mr515410166b.2.1782019531234; Sat, 20 Jun 2026
+ 22:25:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com> <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+In-Reply-To: <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Sun, 21 Jun 2026 10:55:03 +0530
+X-Gm-Features: AVVi8CdE0RIRboZhipaFh-1L3Ihq4kmAcD65JSWU7CF1faNdJpzFGrTaS8mIFr0
+Message-ID: <CA+J6zkRam3hPutyFnQ+RVrPczT+O6cM+e-aZL0m0t3a5ABo8VQ@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v13 00/12] cat-file: add remote-object-info to batch-command
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: gitster@pobox.com, peff@peff.net, eric.peijian@gmail.com, 
+	chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
+	karthik.188@gmail.com, toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> I initially thought it was an embarrassing thinko, but after seeing
-> how .skip_stat_unmatch is used as a 1-based counter (i.e., if the
-> member says 42, it means it saw 41 paths that were stat-dirty but
-> without actual content change), I do not think so.
+On Fri, 19 Jun 2026 at 20:26, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
 >
-> Now, it is a different matter if such a "dual" purpose "more than a
-> simple boolean" counter is a good idea.  Apparently it confused both
-> of us in this case ;-).
+> This path series is a continuation of Eric Ju's (eric.peijian@gmail.com) and
 
-FWIW the patch was done as part of this discussion thread:
+s/path/patch
 
-  https://lore.kernel.org/git/20070830063810.GD16312@mellanox.co.il/
+> Calvin Wan's (calvinwan@google.com) patch series [1] and [2] respectively.
+>
+> Sometimes it is beneficial to retrieve information about an object without
+> having to download it completely. The server logic for retrieving size has
+> already been implemented and merged in "a2ba162cda (object-info: support for
+> retrieving object info, 2021-04-20)"[3]. This patch series implement the client
+> option for it.
+>
+> Eric's series adds the `remote-object-info` command to
+> `cat-file --batch-command`. This command allows the client to make an
+> object-info command request to a server that supports protocol v2.
+>
+> If the server uses protocol v2 but does not support the object-info capability,
+> `cat-file --batch-command` will die.
+>
+> If a user attempts to use `remote-object-info` with protocol v1,
+> `cat-file --batch-command` will die.
+>
+> Currently, only the size (%(objectsize)) is supported end to end in this
+> implementation. The type (%(objecttype)) is known by the client's allow-list
+> and request path but is not supported on the server side nor the response
+> parsing. A follow up series will add full end-to-end support for %(objecttype).
+>
+> The default format for remote-object-info is set to %(objectname) %(objectsize).
+> Once %(objecttype) is supported, the default format will be unified accordingly.
+>
+> If the batch command format includes unsupported fields such as %(objecttype),
+> %(objectsize:disk), or %(deltabase), the command will return empty strings for
+> each unsupported field.
+>
+> This series completes Eric's work mainly with the refactor of the validation
+> of the placeholder with an allow-list that filters what the client asks with
+> what the server is capable of provide following Jeff King's idea [4].
+>
+> I have a question for the design:
+>
+> 1. If the format includes unsupported fields such as %(objecttype) or
+>    %(deltabase) it currently returns an empty string for each unsupported
+>    field, this follows what for-each-ref does with known but inapplicable
+>    atoms. However future placeholders that will be implemented: %(rest),
+>    %(objectmode) can return empty strings. How should we differentiate
+>    "unsupported" vs "no data".
+>    Eric proposed to use a placeholder like "???" [5].
+>    Should a placeholder be used?
 
+Maybe it's best to fail cleanly if the user requests an unsupported atom?
+I don't really like the placeholder idea though. If a placeholder like "???"
+is introduced, any script/test parsing the output must add explicit logic
+to check for literal question marks, and that sounds flaky. Not to
+mention some atom's response may legitimately contain "???".
+
+> 2. _tangent/not related with this series_
+>    'a2ba162cda' is designed to only work with full OIDs, which is
+>    inconsistent with local `info` that does support short OIDs and in
+>    case of being ambiguous returns a list of what possibly the user meant.
+>
+>    Because V2 protocol is thought to be stateless supporting short OIDs
+>    could become more inconsistent with other remote commands that do not
+>    support short OIDs. Maybe a --pick-first option? That does accept
+>    short oids and picks the first match.
+
+We might return the wrong object's info if we do this. With the server
+giving us no information to verify whether the returned value _really_
+corresponds to our intended object, I'd say this isn't the right choice.
+
+>    Alternatively, would sending a list of possible OIDs to the client so
+>    it can re-request with the correct one be ok?
+
+As far as I know, disambiguation like this is treated purely as a local
+UI convenience in Git, never a network-level operation.
+
+`fetch` already requires users to input exact, full OIDs for their `want`
+lines (obtained via a prior `ls-remote` or ref advertisement), and dies
+if one isn't provided. Thus, I think erroring out is fine here.
