@@ -1,69 +1,69 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6539C2512C8
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 14:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD56368D65
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 14:56:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782053807; cv=none; b=jZxhem3kfgenJub8wzRCT/Plj/w+5co5ZT8IBdIkUX+906EpT13UQ0kJK+CCNRAchWFd0GZlOIPBkBXLIvKUAXGg2ox+aeqiBhUwd/A2kqHp1A/45w5Vk2TIvW2fVAf117JDlO6yghlIA/4JB5O1du+pnFkC5f5w+9H/v+OZWLs=
+	t=1782053808; cv=none; b=Q5IeBDLCCCeprC9t5TrT1Ip09SZ29fbJJJgE2fIhjKW1f5CQUgjZd9wvAUh1padFINDlVQFr8/OQNUBrhVMHGhwKRrJBvnROboiXbo+4ufE36Ivs8FzOffGCYaTkbmX+ZhaQKeDPRlkFzwE5SEp1JrtSQ0IMPgPgv02DpSXVoII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782053807; c=relaxed/simple;
-	bh=2g1aEhKD0HKkgB87NwSVmExrg31kjU2DRKg3ajb/VzY=;
+	s=arc-20240116; t=1782053808; c=relaxed/simple;
+	bh=VyXDUrHSD6zCaA01R9sreTjEBgS0CQHp7ZHUvfd8IPQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=F2QvJfP2q06Woy4deaqvo9FhLyuGrNauak0zqyfTq1MYKsUAPXZ+DQnCsmn0ZrOMvEwYfW+60AdU9snIFaMJzWLJEkFBv3HZ/ywUFOSnUlmG5P9UKHyv8K/09yRrMgbeOArVibUIQtaPORZK5iCLQYk7K2FnKijf4uwTMg+u6JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bhHtTrso; arc=none smtp.client-ip=209.85.219.43
+	 MIME-Version:To:Cc; b=QJCZEE44D4CI4lG22ZG18BtYEVGR4iEo5AqQrVc9+VG8QoupEDJFLUzvGeIFYvKujUgZA1q67+/4nU33bSXsMi4rXp9yOpdU6hKkJx6SOBTpHHUSpdIW2NluiEqJH6/XLgk3bYmcyE+qa/vjUrNBm0WDZrhDH9+6f4X7RriofsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XltXMIhH; arc=none smtp.client-ip=209.85.219.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bhHtTrso"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8dc09919aa2so62504216d6.3
-        for <git@vger.kernel.org>; Sun, 21 Jun 2026 07:56:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XltXMIhH"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8dfd7b11e1eso10016486d6.3
+        for <git@vger.kernel.org>; Sun, 21 Jun 2026 07:56:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782053805; x=1782658605; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782053806; x=1782658606; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9jJ0EIKMMQnfVhymJSPtpJ6qqXYk50o6gwr1HFa2XGQ=;
-        b=bhHtTrso4YF7pE2SS8Z+yfsTTWv1L+B+awv3J2noM8k6C6/gKSzupsFerabUbbF9W8
-         0QJI0yQTuyYpzoHGYWOnBXH48JVsKeF+zOeZzhjoUIRjasdpdI1elWdABfLg87SWCuPO
-         E9D3nve2oEdUFDzvuMEZHksZLpZkoO160YHBhSHTBqOPxwFnsW+nFUYgE3vuqWQlNUTL
-         wxWA83YQa1ID7QhSGZSicItytR5PNzfc/4Jv9XnmydBwm6FnjB9GfoL9Mi+KqRjtBNmJ
-         kekSv2Xeq6BKHT9T5MlO3GZk2fo6sX4FRxPXpfNWko8XQGZZH1JSI67fm5roKlIjGeoR
-         6Scw==
+        bh=kUe5iMBMB2yakEyB5fxwUehiznt0+BhaC4byjMRTX/k=;
+        b=XltXMIhHIaAABUY71tYjDF8vcDQMbQJPXF3f5xeug5V9zTEmVm6WigMd8tmh6hTYDY
+         WJkxzzrEJpxCEgLHbtGHcBTzZN+/CaH4qcPyWt+cfQjlcUod2E9BsJk7U/Xj/ukGb4ZX
+         XulbszdJguT5EQ/Y2QKfNmqPoFX8tegw52LA7D58Ze6429tPtMfX7K4qdO1AgIi+5283
+         puqByMUrWFQg0wnSHGiJYdg0vN/Ygjp9NthSkgsuMCEKeCVUhicCivWA+o++oUFCZaAr
+         QBb4MsIyWFg+MTh7caY9NHRupdp86NINQxYqGrijoQEJIF42CnS/zKj4KKfkL3nd/5T9
+         xpRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782053805; x=1782658605;
+        d=1e100.net; s=20251104; t=1782053806; x=1782658606;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9jJ0EIKMMQnfVhymJSPtpJ6qqXYk50o6gwr1HFa2XGQ=;
-        b=DK7dMMsWAXjUCZfxFoHX5srIeuAWj768Bn/aey02AvrrJ5JbZSigFSEM+df3MUAFBO
-         /EgMVLhYOkEXPvXCwY28wEIFkpLa7Y1b7zJEVMCWZgufSQ4ShgEU00OUa8BgP64BgNBM
-         Fqc1YSBlLd+R6gnkOv/6orM3qwMnyRZV9Ajnowqn1oYkVMRYMrfImK15YTpPiVD2JyIK
-         OCs2jZH+tKQzDJBXJK/qC6vKjW69zSdEfLdq4dCWlWv+JmS/VxwUXR2hGapelJ9q7apB
-         dHHowip+W2B/IsughNxra1WDBw/4+yV/NaTLs2SmGW/wLMWPN6Itqyxd36W2aTRJsvC/
-         yFzA==
-X-Gm-Message-State: AOJu0YylPQsG8l3DfRuYYIOOIjbCRT8uKpbV507AtnWiszeEV7JZMtrK
-	Jbjcg2gxJDEXNIuWYE5hNWU447FlmpZtTTPERkmJAB1oFps+Np4UNX3JgvLrRA==
-X-Gm-Gg: AfdE7cm95wzIECOMPmYDm3HON+anoEjwXVKuNG+sNNQl3i5SIEr049KkcArzlYvghBf
-	Iop7tE0mbjDAk4chR34TwpplgoHYavnpaIxxnP8TIMkpHdB5MSonuhH64vKHY/qaGJSDcC+ruA+
-	RlztqN0PsFP/2L7VoFvcXuAYi+m0ViDrxAVn16Yw7sL+4qqSYOuoKdTSiU8FvMRaRqeGLAn1QGy
-	WLleCP5TlKJnzlFQpVkdL4L12Nn1qniD3ICUgaPmOXWQcaC01nAqT4alS7pnDMlX+7zwgu0rTdy
-	L1rUFlGb2lFnvOgJdFdep18AI+coVIXESHdb803RDHpcdgRqy4uoo3vxaiVqt03uXVQXZ1pqDH4
-	HZ83LWn8ZXw8PWMMBtv3dMWRPHTHJKRnrz0yTT/KUNK6ADwZrigic3M7t1poRAtFbGa/6Aauh8Z
-	YDl21nvcHa4MkeKtM=
-X-Received: by 2002:a05:6214:769:b0:8dc:2c11:e478 with SMTP id 6a1803df08f44-8de40dfe254mr210187746d6.28.1782053805295;
-        Sun, 21 Jun 2026 07:56:45 -0700 (PDT)
+        bh=kUe5iMBMB2yakEyB5fxwUehiznt0+BhaC4byjMRTX/k=;
+        b=jKUDChC+kcSGVwxz8u+6PY+LdthcIsVy7VUIZ/HaRwAeOqW695j07m/rDhV3HgO19t
+         zVORccy/taqE8nMHanc6FlOuvY9tESe5SzKfCbYXBsg6zUFWdjwlJjPvuDzmxX9Nvh7E
+         aYnQFCsFa5uB7/iXtfu+/4zNn3fUUiG1MNXJykyM1529vLwu1DWUIq2+SXJg9CwKRPn+
+         OD2WIA/BJZWDqBFpzUFutjHfUi5nlWQ2SQ/bOEHPuTL0Z4e5wzSWPUKI97m+cJa3hu5Y
+         U1Rw/vL1aXpE4SZgbBaS3JJ9VsXHnD+6QyKbMnStTR3YkPwic+fJZJuMkIGRVbSd9YxJ
+         SlpA==
+X-Gm-Message-State: AOJu0YxQIFKukJ1SXJRoCQT0b/kONjs+zfuSXj7oETd4eH+QS6YCYdjm
+	0Nfj+e/+8ZHyqNW9uQ9lQ6ArZ3nnSYE9SZYhegCWcay3zTBB3sSPIdFJ5EKLlQ==
+X-Gm-Gg: AfdE7clD4RVFKcLZ9f1gtpLkalq/Dsd1/k1BUShUrAyq9cLu3f3NJ89WBIi5DpWVFV0
+	5f68dmsYU7v6oJ5Ll+6UD81m8L5Dj9OoRDi439Y/PZ2C2eAFbWJ1Xe+8qW76A7cOZQWorUPwDAL
+	n5U/3SR0PTo0rb+f5KscskOxQ0xE/Wen8uzQM9F4J9X3CxV9VTiyuYpY2Lp3Q76SXmL4uPCESdf
+	PXiLRBAD8tcdMjZTMUBKcqtwRMclQQgzs9eU04ZTcRV5UICVRaN4lJb7eW5EUR6qAjLjqoKI+JG
+	Nc5qQOJHzvBM59M2716dx9QRXiUllezz3bQdLjFSRpErtKMxclV+REPh9AIMWFq1x7hh/y3vEKR
+	tvM3SfsXu5PBKHJyFXkQCMEJRECipNmPQD88KjdtWhNdeSsDab8LVdSivWmtVnLrNPQfwdBil+p
+	bhqY+FprVwzwPwtdan9+d4zTLaXA==
+X-Received: by 2002:ad4:5604:0:b0:8cc:de2:3b79 with SMTP id 6a1803df08f44-8de3f97e7a0mr143396016d6.20.1782053806281;
+        Sun, 21 Jun 2026 07:56:46 -0700 (PDT)
 Received: from [127.0.0.1] ([74.235.70.225])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df82693b9asm69146986d6.42.2026.06.21.07.56.44
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df7f01855bsm70174776d6.9.2026.06.21.07.56.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Jun 2026 07:56:44 -0700 (PDT)
-Message-Id: <4d977d6f3fe716e8b3d5655b010fedbb8c9b8960.1782053803.git.gitgitgadget@gmail.com>
+        Sun, 21 Jun 2026 07:56:45 -0700 (PDT)
+Message-Id: <b613d4ac4a258e0e280a15547efe0b510a57e83b.1782053803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2339.v3.git.git.1782053803.gitgitgadget@gmail.com>
 References: <pull.2339.v2.git.git.1781995570677.gitgitgadget@gmail.com>
 	<pull.2339.v3.git.git.1782053803.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 21 Jun 2026 14:56:42 +0000
-Subject: [PATCH v3 1/2] gitk: make "make -s" silent
+Date: Sun, 21 Jun 2026 14:56:43 +0000
+Subject: [PATCH v3 2/2] git-gui: silence statistics under "make -s"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,47 +80,42 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
 The catalog rule runs msgfmt with --statistics, whose output goes to
-stderr and so survives "make -s", and the rule also echoes "Generating
-catalog". The Gitk Makefile guards its quiet helpers on V alone, so a
-silent build still prints these and the GEN line.
+stderr and so survives "make -s". In non-verbose builds the rule also
+captures the output in a shell variable to strip it to an 80 column
+line.
 
 The statistics are not needed, as in 2f12b31b746c (Makefile: don't
-invoke msgfmt with --statistics, 2021-12-17). Drop them, suppress the
-quiet helpers when "s" is among the make flags, and give the catalog
-rule a quiet prefix so a quiet build stays quiet.
+invoke msgfmt with --statistics, 2021-12-17). Remove them, and with
+nothing left to format make the rule as minimal as the other quiet
+rules, so a quiet build stays quiet.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- gitk-git/Makefile | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ git-gui/Makefile | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/gitk-git/Makefile b/gitk-git/Makefile
-index 41116d8a14..dd87f501e5 100644
---- a/gitk-git/Makefile
-+++ b/gitk-git/Makefile
-@@ -43,9 +43,12 @@ PO_TEMPLATE = po/gitk.pot
- ALL_POFILES = $(wildcard po/*.po)
- ALL_MSGFILES = $(subst .po,.msg,$(ALL_POFILES))
- 
-+ifneq ($(findstring s,$(firstword -$(MAKEFLAGS))),s)
- ifndef V
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index d33204e875..2e1711adc5 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -69,8 +69,7 @@ ifndef V
  	QUIET          = @
- 	QUIET_GEN      = $(QUIET)echo '   ' GEN $@ &&
-+	QUIET_MSGFMT   = $(QUIET)echo '   ' MSGFMT $@ &&
-+endif
- endif
+ 	QUIET_GEN      = $(QUIET)echo '   ' GEN '$@' &&
+ 	QUIET_INDEX    = $(QUIET)echo '   ' INDEX $(dir $@) &&
+-	QUIET_MSGFMT0  = $(QUIET)printf '    MSGFMT %12s ' $@ && v=`
+-	QUIET_MSGFMT1  = 2>&1` && echo "$$v" | sed -e 's/fuzzy translations/fuzzy/' | sed -e 's/ messages*//g'
++	QUIET_MSGFMT   = $(QUIET)echo '   ' MSGFMT '$@' &&
  
- all:: gitk-wish $(ALL_MSGFILES)
-@@ -75,8 +78,7 @@ update-po:: $(PO_TEMPLATE)
- 	echo; \
- 	echo "	git config filter.gettext-no-location.clean \"msgcat --no-location -\""
+ 	INSTALL_D0 = dir=
+ 	INSTALL_D1 = && echo ' ' DEST $$dir && $(INSTALL) -d -m 755 "$$dir"
+@@ -155,7 +154,7 @@ $(PO_TEMPLATE): $(SCRIPT_SH) $(ALL_LIBFILES)
+ update-po:: $(PO_TEMPLATE)
+ 	$(foreach p, $(ALL_POFILES), echo Updating $p ; msgmerge -U $p $(PO_TEMPLATE) ; )
  $(ALL_MSGFILES): %.msg : %.po
--	@echo Generating catalog $@
--	$(MSGFMT) --statistics --tcl -l $(basename $(notdir $<)) -d $(dir $@) $<
+-	$(QUIET_MSGFMT0)$(MSGFMT) --statistics --tcl -l $(basename $(notdir $<)) -d $(dir $@) $< $(QUIET_MSGFMT1)
 +	$(QUIET_MSGFMT)$(MSGFMT) --tcl -l $(basename $(notdir $<)) -d $(dir $@) $<
  
- .PHONY: all install uninstall clean update-po
- .PHONY: FORCE
+ lib/tclIndex: $(ALL_LIBFILES) generate-tclindex.sh GIT-GUI-BUILD-OPTIONS
+ 	$(QUIET_INDEX)$(SHELL_PATH) generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS $(ALL_LIBFILES)
 -- 
 gitgitgadget
-
