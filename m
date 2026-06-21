@@ -1,182 +1,157 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F1C233932
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 05:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782021546; cv=none; b=tL3antWj6Ua81P6oBxc/FrzIOOdPyywpw0y8HHBgX2SizzRJOWMTMAHz70kroPSCrf6whhKDh8URWY7HDjOxt4xTudqiwo2FPBoWkymAmMb/PO6hiEYrz/CH8mAw2QTS29RrfO/saOv26HSMMo0dqgylsklVXBxI6ULym2Y8p8g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782021546; c=relaxed/simple;
-	bh=Z1CiiJdfG4RV7+awlUkNxWm4/RquxRZHvBMn4lskagU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJnGSi+Yyw/1z+fAUQB2cxhrQv2m5p1URkEMmZfWPbkjS0OjbdnQHIrX96H3HgHBG15twUehUD+Ef8zaVs4iTV7E5vkm3hxfVIlS0jqNM5VQvZ/1cE7nKkqW7d6Y58UjvVq7E8TCrkNKokszmf0X3Eow3yhfJ8nvuge/9hoLDzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qu3GZmhJ; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3C81F09A8
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 06:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782021707; cv=pass; b=HHBhZ6rh8DSUt5bKvmoTY4WbDSN/Ojz8fglUwN36Zbbmuh0xQjs6+0aEc34yIzjpD2nMq7qhkG+WUxP14jTu9Ga8MzswSaHZT3iMe0yxM+pjC3tqOwhICsbEjC0gVJx1DAATwR2RYpILweMZalo/31YgvhkWnq9e1CDMPqQv8Mg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782021707; c=relaxed/simple;
+	bh=d9a9Z9jM66Ni/JY4P5hKjSPJ8Y4BlD650NGoCLVy/AM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mCY84qKPp5RTN7WBHvXVzuwNPk1dX5G2yR7nEViMswnrb3tMz9YvQf6RT9MFKprSumsIM7NZ5c5SslB0jI9SixO2sEDqDJAYKq5Zv/1rHggjU4cVrct0r0Z1kkyDF8pUFWspq2a9t9kfR4EoKoXl91Mrtx2OGfPAUEbuZHBnWBI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QYM+WlF3; arc=pass smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qu3GZmhJ"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-84537777d45so2593863b3a.3
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 22:59:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QYM+WlF3"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69767cb5d4aso2676977a12.3
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 23:01:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782021704; cv=none;
+        d=google.com; s=arc-20240605;
+        b=AmtYIp2w2NJScIepbGoO5GcxzZo3hBxX56zMZbNqMTiD3QNK+V3A9cHB+4zTdKwDBD
+         /sHJ/pdMZsaMXPR+tPo92WUDacX4iTI/J+NLPnfdLQY8oaCX9H8+nsonpXEUL7Z6/V/1
+         /CbtYhM6929FwCi+1dVR3HKtXU1UcCv9T/piCyPHMdiEo+q/UI44zev8LUaVlUwDgVtW
+         oQHNxB96nQ3cVP3gJrIjZRWHb6LVJV0qQrmsiNIXDZEoQRjLMrXo2W1eQAlIfSuv13j8
+         K5ctmDUqkfqU1QTOv77vBEoZAHMcRdV8j1qU+jGbBLH3KNlKDRl6+DF+L12RN9v1C3ZO
+         lA0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=+z3VRRX4fvOjRK55PRhYNelRPn6uKxUJLh7DLKA0xFg=;
+        fh=HTnbRoPLCu53lVQ71fNOquEcHDW1BNnCIIw7j9bBi0A=;
+        b=Ucr8WoBjMXzehD42lwvwxYDdP6iP6bt2j8bU6Ab/VTs52uJivPe43z7EBTqTDTeHTT
+         YKJEu18CK/uyl3kOc+4lnilPAfL2/WAt+QblJLZcnSLrjMGlIQv4JldOCFBNJ/s2phIN
+         esSSl4Re348uRA6yj8JN4eg8+nRLDeYhg/+XhSzc4qX/tYOhVCObOfmHeslMWaewaybL
+         PSRMXWbB8P2mxhgflNGs17UrqKbOKUBQTEcM8mQTPTrbFA6mlK3FlSEM0/+EpBVpPg6w
+         PKOMOWJBUQHAXFCiJwsga8Nd5o4b0FV7pEMjtbjJmHtWvCzLf1VfmSA/K35ikA0b43ri
+         pPUA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782021544; x=1782626344; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K+1BrT+gS7/HHSkb4HEGN4ILLTHcQnvB7ewtJ1HAJ5A=;
-        b=Qu3GZmhJ61ZE3NmzEpPoyPA8pdH6+8ghG95NryyiDfC+cK8NKBptMgJvZtfabtubiX
-         LRO1wK8l025226C0ONX51dN1fMw34kvJAVjGfoWXnm/J3ZwdvtQ/X8eFqwGzXBE1l3vv
-         cicXW2IbSeD3XEQZIf86EYZdMVTgb1F2erpEemxoRb8AOAWQawssRtWDVxAkfQUCAoT0
-         to4uO5FiqKwZ9BibP0twseNAMUSi4aVeppHbTC/YweecLDgJOL5IABC9g/xdkSzQ6ogo
-         ZSibLEKM9Zbc0CO2qaGSuz73ygN18m1P8cQ/SgOf420D/AZ3UGbKU7NvZ1h30rHl6zKB
-         2mMw==
+        d=gmail.com; s=20251104; t=1782021704; x=1782626504; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+z3VRRX4fvOjRK55PRhYNelRPn6uKxUJLh7DLKA0xFg=;
+        b=QYM+WlF345afi2/1bO843Do75X3Icc6HVduo4RbG/FLTr1F5IIR3CW/sgoWxT9vIQg
+         hHnDliQwxy9ib1k6vUVuXLmijbC3dn+nb4nTq19xgGSSJpKaifsyiw/ohWoBmU/esYRe
+         X56CqZCfcP+sRgXAxVNdAJzk5X5QalgxeAp0sSsuWa2CEfWGU3bTYM+FT1fqOV0LlLSp
+         SGvU79VWYTcxupAsjrwtPOY6dh2FuO9RI1OMuFvQ5MenS5IOPBrhAELzJFGdlmFo9W44
+         zzaGQ50FWWBQ50vooS2Bug8uYW+JcrVqVRKjV9OP+JMYOW+tiJdBj5Mcn8HgTL81SFAK
+         Fkcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782021544; x=1782626344;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=K+1BrT+gS7/HHSkb4HEGN4ILLTHcQnvB7ewtJ1HAJ5A=;
-        b=QKTS/7SNVeEZYBgm1C+h36WgCT2qsbltPE79924fOBEuRTeFCRfz+AM7KKZwjW2vHK
-         d+tYZS1QoWp554asB3H5PXmCOnZAV7auxNLCqhWfMqvdGG+FsP2gYCc6bQjeK9ZuHfuu
-         FqfsqBk21Ir8TnuxqiysFL6I6Wf5l16cci/42lI4YeIgTgX7/GK4oipqEv1XmaOln2AF
-         i9nyq6PEsNrWKyCI1MopydoevF04pza9qbxgZRlLRk2gaZQnTh4Imah2rMgOFmw6OYlg
-         /WUxUJSYX9XU0A0B+Aj6euigh2QQtyQ8A7pgbV5x+ZfPaXZGXD89KKJD5izZP/XB8lRJ
-         Gw6Q==
-X-Forwarded-Encrypted: i=1; AFNElJ888BeHYDfPtz6qSjguH4g+XEq1kDM0shPTGMM5XUq57vfPcW3Sfik1qy4o3JrKvzDMOMA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwqdKT7z+98UHUDQkMckRbRca+EwCR0jpXiJyi4Gh0TGLsi6bnp
-	iMAPrZefzJDPNHjaDJAfrthmbxeUtRh5uBmv7fkbvToNNDYuJfl/qRIJwpgbTw==
-X-Gm-Gg: AfdE7cnGjvohUTqVE9D9GnZGVWN7BhwhnnC96f7kDPzVPeI9Dhm0rfxEYGWdQu/17VY
-	fHu6EihQGmQwFhDqzHwr6Yzof/TB8t2sFGEPnP4hVFI0K45To/hU7XZ6di5XBf+7WbaKgdsYs2s
-	eDF38DfByo+ynDD2Z5wQ8jUp+A+yX7F/4qTNhERwefiuOFyNjj3p1OKlvO1eQdRq+mc7zIpAQfH
-	QtuuxeY/1o8DpTU6Aoa5XhRrJ/s67qZlMBtJjReFkAJaGJ842q0DEaQ7wYfFj1PO3C7M1Abr/RI
-	7OnxMg7RARlgymVdMsO+LdFz6Z3M5lQ97HTEJwBp6f0Tm+aTzAuh47VqMKQCCYcb7qKVO3okKl0
-	n82WrGbvasZfkQ3tIQ54kIq0ILyz8gXwrz0kgo1yTPthVtKCD1FuxibN6h6aIgj0x6jPLcO6qDW
-	4HhBn4KQhvzBO52ZxFcnsNOlcXPLrbC117HLMWRgZbJPzKpuctEtwPmn9CWSO9hjI+lqQ3IJXRz
-	KkNL1mvJOkTP/i3dOQQ89g=
-X-Received: by 2002:a05:6a00:2eaa:b0:842:7992:bdd6 with SMTP id d2e1a72fcca58-845508a31e5mr10203502b3a.36.1782021544240;
-        Sat, 20 Jun 2026 22:59:04 -0700 (PDT)
-Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84564ed3bd8sm3606669b3a.56.2026.06.20.22.58.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2026 22:59:03 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: jayatheerthkulkarni2005@gmail.com
-Cc: a3205153416@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	kumarayushjha123@gmail.com,
-	lucasseikioshiro@gmail.com,
-	phillip.wood@dunelm.org.uk,
-	sandals@crustytoothpaste.net
-Subject: [GSoC Patch v7 3/3] repo: add path.gitdir with absolute and relative suffix formatting
-Date: Sun, 21 Jun 2026 11:25:34 +0530
-Message-ID: <20260621055534.46798-4-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.55.0-rc1
-In-Reply-To: <20260621055534.46798-1-jayatheerthkulkarni2005@gmail.com>
-References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
- <20260621055534.46798-1-jayatheerthkulkarni2005@gmail.com>
+        d=1e100.net; s=20251104; t=1782021704; x=1782626504;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+z3VRRX4fvOjRK55PRhYNelRPn6uKxUJLh7DLKA0xFg=;
+        b=AF126UPBr5Lg0VlKJ9hRQ5lypCEt6xAHeRywyFartcEmc8HXIXRDocUJ9RKW8wvd4G
+         J2lDUxWgOwzeWMXmnW7EFA6Tgi9xga1xyBaBo6FbEmQgyCgijRyk1emm6PVVHyRRvqNX
+         moQFrf/9VwfH/aRXkNZVcD+j53EGrYNh/65Ya5BUlvpxBpXb1iQajlrW2tO/rhwMYwhh
+         wvZWDFpbiPR9hxviC+BfVl3bh9ylNSy3GLV/a+eaZX7sdhoAMAgPTZkcs28DJpsrLjaJ
+         sI5Uj/jquvTdWVN7uAe/xqkk0aAhZGUYH6zSKudypCF+atcjVNXgk/NMK2NoQPcxfQlE
+         P2Kg==
+X-Forwarded-Encrypted: i=1; AFNElJ95piJWpypCe4v0oV8jcxWqpEg6XFEWAGinlVN9dzhGhOY8ZRIvFdZV+uQoneKX/PXiWQg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxm7Kch5bJ/fDiFzUGaRlkxHDnURaBQuIohfFfbhaNJwAuWZ8DJ
+	8B/LwSGnI6A60yYEi29AGqtp6lYSSMKzzektXWi245UNqnxxuU3eHsTkcdhVzVmHzFYaONWVGGb
+	K9jbnX4bxPXi58+RL1H9wuMwJNk8sTU8=
+X-Gm-Gg: AfdE7cm5EmAOdbuklRWsa2e5YspAhY0cuNqSS03cc8727uNy+X6b3DHZnzGFfLplH/M
+	239yIDAXA66C3TjZHPHMECM/ff2x3aDcWhBkKrIH+TpwlAb+kPEv4azoixHZSolbJ8x1tH7pFny
+	z7S/nRghd7aHvPbl9RI2jUF5suf9GGMEDnYTk7r6QzrE0k6FYJ9vrkBzehk4I3xeaxzVHKK+2nY
+	3DkAPv6urh/6E6QRGo7TopDLTMZ9Z44hn1qGKWOAJPLTLTxEU0IrIpGnnXnSgP6Q+4e/gl5kWI0
+	C1qtvWgZH1soa/YHMtnPmGaWZu+/pbkK06DbUzvfv+FgddstM4qyo3TBTmls0rudcYXv/kwyYR8
+	lNg11SDpdQQ==
+X-Received: by 2002:a17:907:6d03:b0:c04:fc6:d6bc with SMTP id
+ a640c23a62f3a-c097cbca4f7mr483973666b.36.1782021703911; Sat, 20 Jun 2026
+ 23:01:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com> <20260619-ps-eric-work-rebase-v13-10-3d4c7315d2f8@gmail.com>
+In-Reply-To: <20260619-ps-eric-work-rebase-v13-10-3d4c7315d2f8@gmail.com>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Sun, 21 Jun 2026 11:31:16 +0530
+X-Gm-Features: AVVi8CfAPedaAoh02_jQGd_MwZV7ZnJmzxfzHfZCwa7rC23gYSZf3ed16-dAHpc
+Message-ID: <CA+J6zkTjgHAWtJwxY8jo0i9zDtxwj9uUsKAtLS3z1=WxZfr8Zw@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v13 10/12] cat-file: add remote-object-info to batch-command
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: gitster@pobox.com, peff@peff.net, eric.peijian@gmail.com, 
+	chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
+	karthik.188@gmail.com, toon@iotcl.com, 
+	Jonathan Tan <jonathantanmy@google.com>, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Scripts need a stable way to locate the git directory without
-parsing rev-parse output or relying on its flag-driven path format
-selection. There is no way to retrieve this path from git repo info
-today.
+[snip]
+> +static void parse_cmd_remote_object_info(struct batch_options *opt,
+> +                                        const char *line, struct strbuf *output,
+> +                                        struct expand_data *data)
+> +{
+> +       int count;
+> +       const char **argv;
+> +       char *line_to_split;
+> +       static struct object_info *remote_object_info;
+> +       static struct oid_array object_info_oids = OID_ARRAY_INIT;
 
-Introduce path.gitdir.absolute and path.gitdir.relative keys,
-consistent with the path.commondir keys added in the previous patch.
-Reuse the test_repo_info_path helper introduced there to validate
-both variants.
+I don't get the point of remote_object_info and object_info_oids
+being static here? These variables are allocated, utilized, and
+completely freed/disconnected within a single command cycle.
 
-Mentored-by: Justin Tobler <jltobler@gmail.com>
-Mentored-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
- Documentation/git-repo.adoc |  6 ++++++
- builtin/repo.c              | 24 ++++++++++++++++++++++++
- t/t1900-repo-info.sh        |  6 ++++++
- 3 files changed, 36 insertions(+)
+Making them static gives me the false impression that state
+needs to persist between calls.
 
-diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index 890c34051d..ed7d80c690 100644
---- a/Documentation/git-repo.adoc
-+++ b/Documentation/git-repo.adoc
-@@ -113,6 +113,12 @@ values that they return:
- 	The path to the Git repository's common directory relative to
- 	the current working directory.
- 
-+`path.gitdir.absolute`::
-+	The canonical absolute path to the Git repository directory (the `.git` directory).
-+
-+`path.gitdir.relative`::
-+	The path to the Git repository directory relative to the current working directory.
-+
- `references.format`::
- 	The reference storage format. The valid values are:
- +
-diff --git a/builtin/repo.c b/builtin/repo.c
-index c4cc3bf3fc..9a312d127a 100644
---- a/builtin/repo.c
-+++ b/builtin/repo.c
-@@ -99,6 +99,28 @@ static int get_path_commondir_relative(struct repository *repo, struct strbuf *b
- 	return 0;
- }
- 
-+static int get_path_gitdir_absolute(struct repository *repo, struct strbuf *buf)
-+{
-+	const char *git_dir = repo_get_git_dir(repo);
-+
-+	if (!git_dir)
-+		return error(_("unable to get git directory"));
-+
-+	append_formatted_path(buf, git_dir, startup_info->prefix, PATH_FORMAT_CANONICAL);
-+	return 0;
-+}
-+
-+static int get_path_gitdir_relative(struct repository *repo, struct strbuf *buf)
-+{
-+	const char *git_dir = repo_get_git_dir(repo);
-+
-+	if (!git_dir)
-+		return error(_("unable to get git directory"));
-+
-+	append_formatted_path(buf, git_dir, startup_info->prefix, PATH_FORMAT_RELATIVE);
-+	return 0;
-+}
-+
- static int get_references_format(struct repository *repo, struct strbuf *buf)
- {
- 	strbuf_addstr(buf,
-@@ -113,6 +135,8 @@ static const struct repo_info_field repo_info_field[] = {
- 	{ "object.format", get_object_format },
- 	{ "path.commondir.absolute", get_path_commondir_absolute },
- 	{ "path.commondir.relative", get_path_commondir_relative },
-+	{ "path.gitdir.absolute", get_path_gitdir_absolute },
-+	{ "path.gitdir.relative", get_path_gitdir_relative },
- 	{ "references.format", get_references_format },
- };
- 
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 09158d29f9..ae8c22c817 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -207,4 +207,10 @@ test_repo_info_path 'commondir with only GIT_DIR' 'commondir' \
- 	'.git' \
- 	'GIT_DIR="../.git" && export GIT_DIR'
- 
-+test_repo_info_path 'gitdir standard' 'gitdir' '.git'
-+
-+test_repo_info_path 'gitdir with explicit GIT_DIR' 'gitdir' \
-+	'.git' \
-+	'GIT_DIR="../.git" && export GIT_DIR'
-+
- test_done
--- 
-2.55.0-rc1
-
+> +       if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
+> +               die(_("remote-object-info command too long"));
+> +
+> +       line_to_split = xstrdup(line);
+> +       count = split_cmdline(line_to_split, &argv);
+> +       if (count < 0)
+> +               die(_("split remote-object-info command"));
+> +       if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
+> +               die(_("remote-object-info supports at most %d objects"),
+> +                   MAX_ALLOWED_OBJ_LIMIT);
+> +
+> +       if (get_remote_info(opt, count, argv, &remote_object_info,
+> +                           &object_info_oids))
+> +               goto cleanup;
+> +
+> +       data->skip_object_info = 1;
+> +       for (size_t i = 0; i < object_info_oids.nr; i++) {
+> +               data->oid = object_info_oids.oid[i];
+> +               if (remote_object_info[i].sizep) {
+> +                       /*
+> +                        * When reaching here, it means remote-object-info can retrieve
+> +                        * information from server without downloading them.
+> +                        */
+> +                       data->size = *remote_object_info[i].sizep;
+> +                       opt->batch_mode = BATCH_MODE_INFO;
+> +                       batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
+> +               } else {
+> +                       report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "missing");
+> +               }
+> +       }
+> +       data->skip_object_info = 0;
+> +
+> +cleanup:
+> +       for (size_t i = 0; i < object_info_oids.nr; i++)
+> +               free_object_info_contents(&remote_object_info[i]);
+> +       free(line_to_split);
+> +       free(argv);
+> +       free(remote_object_info);
+> +}
+> +
+[snip]
