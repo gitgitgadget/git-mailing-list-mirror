@@ -1,754 +1,129 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F4D2517AC
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 05:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AEC4964F
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 05:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782021203; cv=none; b=Iz3HADignJoovOONX4odcS4bTWEWIvzGkhozQX2J0b+zTRAnaywf44dg1CamOJRPNaEGitJg8Q7Erpp4Tl2eC+YtmoF4CdoNkiS0OGPQd6EJjuelIE2a4g4MPsPUOTzLz6PJOTgIlzgLCFvCTXa40rvy2vQZtI2i+QeohUe2Gbw=
+	t=1782021443; cv=none; b=V/Rr5yStuuVUeaQsAdLajPe0AiXO7aiKQs40ei4duD+ceFOqghMlNRK/SxQ+Xni9Bl858oyo5BdrtFE7qE/FeJBKztryMFgAbIkpMQjUJg+UBy2QIqHDLddy6FeERxkwigDHZWjZNTaocJtzyiklfKQ4Qo+84EWpEuAs6vHIGdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782021203; c=relaxed/simple;
-	bh=S/l+ruzoko8DjfMmgcrvWrCJnxdlCtot2x8d6/3ZPvw=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lGEx05rhCzPRxPEUHkMv/mA7yzaNMy6dY5Q0TdFW28rJe9paoAUrn+YbIfmzoUiWFKINguOQUJLdAPVUE/J8TwjwBBFK3A8uQ/xGlwqVgaGoSEy03EP5WHUP1EqDXWvwX3/ZW+U7SRAcw8htpGXdXdnarX1uoTE/Fsh24mKD9HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MeuRkHI0; arc=none smtp.client-ip=209.85.160.169
+	s=arc-20240116; t=1782021443; c=relaxed/simple;
+	bh=6wT4eUxEaBQheDxrMeDif/eULNu4jTxGlJ4b3ArWP0E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=O7CjfekG7pyG8ERzEjPGZZZYSKavvQXredwUyTuQV6ryIuGIpEuKvQKb++7EICqsY/GbscC8+AIRdZJzQ2gWHQZC0eMyuFeZw2VKBfFcs0Sz6P7HjtI5DCXdbHIzufCSNN7tuAH0G8hoBH5gXY+Pk1qOVbUwb/WJQ9f4mRtrQlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=peRF+Mtn; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MeuRkHI0"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-51a0188b92fso15289051cf.3
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 22:53:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="peRF+Mtn"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8453427d3f4so1895942b3a.3
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 22:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782021200; x=1782626000; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1782021441; x=1782626241; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dyCWs9VCobr1Podq5sLJb+EZ6mjARIsd62BQ6DQc/3U=;
-        b=MeuRkHI0lXlT7w0LugFjDYwto6w6kvYz6ZcEnJXijrtqxch8MmUGsv45ABuSqfCGN3
-         G6wrBFcpUdP1vs3uyPAM59/75Ha8s0J5Tr9G2FdAdglFCR2+U149ZH8QglUxt/0D+X46
-         SuSwxyUSJYYdqkNqZAbi6XIOEdbhaVCMyWjgwuQIChyOrUXYKoBbP36ACYS+th/eO2/w
-         o4TZ+U6xDRbV7XOlXCZwDiKNozVPAfC+dxWaODNMzGSSiO5WNB10EUFHgQYrSfqIjseo
-         Xp9dVNi7za0HGRzuwh8OpgeUuLvREcPGUKcCmtDPRthRjMeFqNvvlRb2y+duKZqaa8aH
-         MRTQ==
+        bh=BXoATSu2iI54pC0NpnGbl333ME5oy6oqPzy93EhbXig=;
+        b=peRF+MtntWeCeubsTbQ5TOD30+IUaqs0+CdO7w159GOPThyUPEDez+hKkyLOlAF9Av
+         Aiippu88J5n+xDiMqH6qGpQ4kSh+/P4S1+gxs7Wpai3OPsqaWhd9bJRlFBpDePMCJP/S
+         20tnea5I5xSmPzlHMCTB/OQoDebb4XmT88t1e2A6DE9tQq0jl/d3v8FIe5JrTuWCS9b2
+         AQOCKYvMXGWw4I+6ER60uadvCDpIwWoFLdZmPYesJZQLuRa+5QSEB7CVwXwUkISDxFHJ
+         Zv7C0N2Eyu7f977kUnpDs0jD1+DmTdz76R+xGlq4tdqkK4X+Z29//dmJAUG4kC0teVBz
+         JzNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782021200; x=1782626000;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1782021441; x=1782626241;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=dyCWs9VCobr1Podq5sLJb+EZ6mjARIsd62BQ6DQc/3U=;
-        b=LvSFoQ9zypObNSNhiCwCNhE5K4a0RGI7plOftF0+LDYqalDYzPlVemNev5U+ZKQkJd
-         Lo2/VZfvDNY0dNDn2MEdh6K6iEkSWAkRuxmEYY+NXkce4OqCBh2zoyARbedNJ4vz/xg0
-         +CaCEaYY6vST3IcZw7UAiT7wPw2fttx1j/BtxdnvOAOWC8nkwuM65tXkKdVj1rgyvGch
-         2lTKVRsKkzAtWncTDzXU0PTUcU/V41+1/5gSFlLfxJoXDwTnfKpo+jHKSATrjtJN7r0F
-         tRc9+JtlyQEPuBWgdOGMifn/jBuKs4+2dtwV33MZ0uYjDi0ut96m3CG+P7SJ0uIRme2L
-         mwVA==
-X-Gm-Message-State: AOJu0YwldQsEVPkNl8WjvpWADPMP/FpP69H6AcHzcp52eXlWWMVtR1M0
-	k6UsTeh6EtkJ9KEGgGuMN1ygdB3wYOwM1miHKiREBDPOjrJKi2mDdayMtcLBQw==
-X-Gm-Gg: AfdE7cmDSAXSICrFT/PXelw+AU/868dqT2HstLCJM2gebhUolj3Ok2Dsg32qy6NVM+f
-	aoZUQQu4KPIlMGsxbxGKy2JV899fFuz3RdzaFiT5rW2ajoewOzgIvEQ6PLvW51IA6bZUWGN30Pk
-	zfdSVw4ftTbPjyORLx9ETKlHYfmi1BXKx6d8K9s1zpNWalD8ckzRHuWEmpFBAJbzLZJNfMzvqi6
-	lUyt8WP5nPomOSZrVkY7qtP1YI1bHfxSsphtqDVt+qdG/UQNl91wf+EjO3WJ22HEFiKojhUbMfR
-	AuBlmqMTH9WrE9sOubHxqdNHyJr132E+fbwwogjI+YrgvuQfUSo4OPm8LnH6T+UCy2P32DpJLQW
-	lFmVl5Z525qoqSFnUDeV7np6spY++fWEB7sH7wqgMI2tx4YWK0Ah5BeRwt9nFIMaAu8WI1jyoXk
-	23Wi1XYIhkSCZVidIz7A==
-X-Received: by 2002:a05:620a:2715:b0:915:5930:94f1 with SMTP id af79cd13be357-92092a40e7bmr1551188185a.47.1782021199680;
-        Sat, 20 Jun 2026 22:53:19 -0700 (PDT)
-Received: from [127.0.0.1] ([172.178.117.209])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-921d7964fbdsm489761785a.10.2026.06.20.22.53.19
+        bh=BXoATSu2iI54pC0NpnGbl333ME5oy6oqPzy93EhbXig=;
+        b=LgUWvzPuibtxQXIVN55HQB3phB+1An2vicl3wtQDTP/buTPIhjX4hkGuSYutIOxlC8
+         S842BixcN6+xo/egJYZ6qEM27v1fRNfVogOI3mFU+TTtSFBr6oZtzCUoJY1K5aKVxxU0
+         fL1OyUVmJTpW1hFM61Oz5Wj3qt0hFpOufVI4xEVshI+Zo40ezpoCSZdymlZZY5XZOEPZ
+         0hKQI3u1GErmtViNv8QOyza8jwmmHnxintZu4uYovRsmE+al9xgqhsgDe/KRmyg4hlle
+         /0h3g+Y8URIWx6X42+pq9GX3ENZwkQrKseN4nAQIn05CtoKCnKOMJbJjtmyY1TXCS9TV
+         RHrg==
+X-Forwarded-Encrypted: i=1; AFNElJ+Zdulpz7SG8YyQyqwNwD8tgk4F2n69teGSDOWWraShM8GT7NdJGhwWG7BZj7JaybjAg7w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoMpJCqkFMASoeAU+La7/AojFVnwbR1IyvBoChjaZ0bEmS6iiK
+	+JsNyGyYtpyh6gJqHX1LqCeRPqZiDohAYMd++eTqHBzsX8CZXt3CdY1o
+X-Gm-Gg: AfdE7clcuQjXAxb9kuM4PFSSBW9T6fXifb8U1c48Ub/C8N78dopu/k6LrI9TR8XCybn
+	oPYhTE4IAEboczvKa3y6C4SqlD5Uj1S7tRHXCspR9sdA565dmmnKPoFF6MU7A2SmW4fjXUBId+b
+	TYHMAmL1cc75iLPKW7x8uKRa2UAA0NcHr2czxiL1iGz5RKLB1yk3nCGzNW3OAm7FBSdT47tQ2Ci
+	X4Z2WAjCxQ5pobBEUCFWwoYmMB+3zHKzbQOH/6gQ9siVDvIXKinmeDthaKFuyuKftijy9kEiskN
+	keTpTmE9NlV+HZdSIMiVVikczpsa8qM5l/32isZpxDSOfsOhNTTD/pPZQ5ROxBcMuUm6zjttSys
+	D7gsiDExopl8AwZpr2Uk42aQroN5z0hn99dSt+CshsdsrI8RT1b7YkLMy8LzOXfFV3DgnIRng85
+	k0S4Vmbm1L9sw5W1WNcyg7qZxmwhl7Tmlet0648zLuBvbme24MpTT6qx/TxxXrI15KDyyZ4Cnne
+	URVSIRM95mefFBHqKmHacI=
+X-Received: by 2002:a05:6a00:1916:b0:842:670d:f6ff with SMTP id d2e1a72fcca58-84550a07cb1mr10017304b3a.44.1782021441327;
+        Sat, 20 Jun 2026 22:57:21 -0700 (PDT)
+Received: from jayatheerth ([2405:201:c005:b959:7d42:d207:de10:1218])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84564ed3bd8sm3606669b3a.56.2026.06.20.22.57.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2026 22:53:19 -0700 (PDT)
-Message-Id: <80bfea642e947dfc2bb56a3774e4f0b5f22aa8f0.1782021195.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
-References: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
-	<pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
-From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 21 Jun 2026 05:53:14 +0000
-Subject: [PATCH v4 3/4] history: add squash subcommand to fold a range
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 20 Jun 2026 22:57:20 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: jayatheerthkulkarni2005@gmail.com
+Cc: a3205153416@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	kumarayushjha123@gmail.com,
+	lucasseikioshiro@gmail.com,
+	phillip.wood@dunelm.org.uk,
+	sandals@crustytoothpaste.net
+Subject: [GSoC Patch v7 0/3] teach git repo info to handle path keys
+Date: Sun, 21 Jun 2026 11:25:31 +0530
+Message-ID: <20260621055534.46798-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.55.0-rc1
+In-Reply-To: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Harald Nordgren <haraldnordgren@gmail.com>,
-    Harald Nordgren <haraldnordgren@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Harald Nordgren <haraldnordgren@gmail.com>
+Hi!
 
-Folding a series of commits into one required either an interactive
-rebase where each commit after the first was hand-edited to "fixup", or
-a "git reset --soft" to the merge base followed by "git commit --amend".
+This series teaches `git repo info` to handle `path.*`
+keys, allowing scripts to reliably discover core
+repository paths without resorting to `git rev-parse`.
 
-Add "git history squash <revision-range>" to do this directly. It folds
-every commit in the range into the oldest one, keeping that commit's
-message and authorship and taking the tree of the newest commit, so the
-range collapses into a single commit. Commits above the range are
-replayed on top of the result.
+The patches are structured as follows:
 
-The range is given as <base>..<tip>, so "git history squash @~3.."
-folds the three most recent commits and "git history squash @~5..@~2"
-squashes an interior range. A merge inside the range is folded like any
-other commit, but the range must have a single base, so a range with
-more than one entry point is rejected.
+1. path: Extract the localized path-formatting logic
+   out of `rev-parse` and expose it globally via
+   `path.h` using clear append semantics.
 
-The folded commits leave the history, so by default the command refuses
-when another ref points at one of them. Use "--update-refs=head" to
-rewrite only the current branch and leave those refs untouched.
+2. repo: Introduce `path.commondir.absolute` and
+   `path.commondir.relative` alongside a robust,
+   isolated test helper.
 
-Inspired-by: Sergey Chernov <serega.morph@gmail.com>
-Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
----
- Documentation/config/advice.adoc |   4 +
- Documentation/git-history.adoc   |  25 +++
- advice.c                         |   1 +
- advice.h                         |   1 +
- builtin/history.c                | 195 ++++++++++++++++++++
- t/meson.build                    |   1 +
- t/t3455-history-squash.sh        | 303 +++++++++++++++++++++++++++++++
- 7 files changed, 530 insertions(+)
- create mode 100755 t/t3455-history-squash.sh
+3. repo: Introduce `path.gitdir.absolute` and
+   `path.gitdir.relative` using the same standardized
+   formatting rules.
 
-diff --git a/Documentation/config/advice.adoc b/Documentation/config/advice.adoc
-index 257db58918..f4d692d136 100644
---- a/Documentation/config/advice.adoc
-+++ b/Documentation/config/advice.adoc
-@@ -55,6 +55,10 @@ all advice messages.
- 	forceDeleteBranch::
- 		Shown when the user tries to delete a not fully merged
- 		branch without the force option set.
-+	historyUpdateRefs::
-+		Shown when `git history squash` refuses because a ref points
-+		into the range being folded, to tell the user about
-+		`--update-refs=head`.
- 	ignoredHook::
- 		Shown when a hook is ignored because the hook is not
- 		set as executable.
-diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
-index 2ba8121795..6716749cde 100644
---- a/Documentation/git-history.adoc
-+++ b/Documentation/git-history.adoc
-@@ -11,6 +11,7 @@ SYNOPSIS
- git history fixup <commit> [--dry-run] [--update-refs=(branches|head)] [--reedit-message] [--empty=(drop|keep|abort)]
- git history reword <commit> [--dry-run] [--update-refs=(branches|head)]
- git history split <commit> [--dry-run] [--update-refs=(branches|head)] [--] [<pathspec>...]
-+git history squash <revision-range> [--dry-run] [--update-refs=(branches|head)] [--reedit-message]
- 
- DESCRIPTION
- -----------
-@@ -97,6 +98,30 @@ linkgit:gitglossary[7].
- It is invalid to select either all or no hunks, as that would lead to
- one of the commits becoming empty.
- 
-+`squash <revision-range>`::
-+	Fold all commits in _<revision-range>_ into the oldest commit of that
-+	range. The resulting commit keeps the oldest commit's message and
-+	authorship and takes the tree of the range's newest commit, so the
-+	whole range collapses into a single commit. Commits above the range
-+	are replayed on top of the result.
-++
-+The range is given in the usual `<base>..<tip>` form, where _<base>_ is
-+the commit just below the oldest commit to squash. For example, `git
-+history squash @~3..` folds the three most recent commits into one, and
-+`git history squash @~5..@~2` squashes an interior range while leaving
-+the two newest commits in place.
-++
-+The oldest commit's message and authorship are preserved by default,
-+unless you specify `--reedit-message`. A merge commit inside the range is
-+folded like any other, but the range must have a single base, so a range
-+that reaches more than one entry point (for example a side branch that
-+forked before the range and was later merged into it) is rejected.
-++
-+The folded commits disappear from the history, so with the default
-+`--update-refs=branches` the command refuses when another ref points at
-+one of them. Rerun with `--update-refs=head` to rewrite only the current
-+branch and leave those refs pointing at the old commits.
-+
- OPTIONS
- -------
- 
-diff --git a/advice.c b/advice.c
-index 0018501b7b..5c6ff95e31 100644
---- a/advice.c
-+++ b/advice.c
-@@ -58,6 +58,7 @@ static struct {
- 	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates" },
- 	[ADVICE_FORCE_DELETE_BRANCH]			= { "forceDeleteBranch" },
- 	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated" },
-+	[ADVICE_HISTORY_UPDATE_REFS]			= { "historyUpdateRefs" },
- 	[ADVICE_IGNORED_HOOK]				= { "ignoredHook" },
- 	[ADVICE_IMPLICIT_IDENTITY]			= { "implicitIdentity" },
- 	[ADVICE_MERGE_CONFLICT]				= { "mergeConflict" },
-diff --git a/advice.h b/advice.h
-index 8def280688..911b4e4643 100644
---- a/advice.h
-+++ b/advice.h
-@@ -25,6 +25,7 @@ enum advice_type {
- 	ADVICE_FETCH_SHOW_FORCED_UPDATES,
- 	ADVICE_FORCE_DELETE_BRANCH,
- 	ADVICE_GRAFT_FILE_DEPRECATED,
-+	ADVICE_HISTORY_UPDATE_REFS,
- 	ADVICE_IGNORED_HOOK,
- 	ADVICE_IMPLICIT_IDENTITY,
- 	ADVICE_MERGE_CONFLICT,
-diff --git a/builtin/history.c b/builtin/history.c
-index 305bde3102..4f1baea56c 100644
---- a/builtin/history.c
-+++ b/builtin/history.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "builtin.h"
-+#include "advice.h"
- #include "cache-tree.h"
- #include "commit.h"
- #include "commit-reach.h"
-@@ -30,6 +31,8 @@
- 	N_("git history reword <commit> [--dry-run] [--update-refs=(branches|head)]")
- #define GIT_HISTORY_SPLIT_USAGE \
- 	N_("git history split <commit> [--dry-run] [--update-refs=(branches|head)] [--] [<pathspec>...]")
-+#define GIT_HISTORY_SQUASH_USAGE \
-+	N_("git history squash <revision-range> [--dry-run] [--update-refs=(branches|head)] [--reedit-message]")
- 
- static void change_data_free(void *util, const char *str UNUSED)
- {
-@@ -973,6 +976,196 @@ out:
- 	return ret;
- }
- 
-+/*
-+ * Resolve a "<base>..<tip>" revision range into the base commit just outside
-+ * the range (which becomes the parent of the squashed commit), the oldest
-+ * commit contained in the range (whose message the squash reuses), and the
-+ * range tip (whose tree becomes the result). A merge inside the range is fine,
-+ * but the range must have a single base and must not reach a root commit.
-+ */
-+static int resolve_squash_range(struct repository *repo,
-+				const char *range,
-+				struct commit **base_out,
-+				struct commit **oldest_out,
-+				struct commit **tip_out,
-+				struct oidset *interior_out)
-+{
-+	struct rev_info revs;
-+	struct commit *commit, *base = NULL, *oldest = NULL, *tip = NULL;
-+	struct strvec args = STRVEC_INIT;
-+	int ret;
-+
-+	repo_init_revisions(repo, &revs, NULL);
-+	strvec_push(&args, "ignored");
-+	strvec_push(&args, "--reverse");
-+	strvec_push(&args, "--topo-order");
-+	strvec_push(&args, "--boundary");
-+	strvec_push(&args, range);
-+	setup_revisions_from_strvec(&args, &revs, NULL);
-+	if (args.nr != 1) {
-+		ret = error(_("'%s' does not name a revision range"), range);
-+		goto out;
-+	}
-+
-+	if (prepare_revision_walk(&revs) < 0) {
-+		ret = error(_("error preparing revisions"));
-+		goto out;
-+	}
-+
-+	while ((commit = get_revision(&revs))) {
-+		if (commit->object.flags & BOUNDARY) {
-+			if (base) {
-+				ret = error(_("range '%s' has more than one base; "
-+					      "cannot squash"), range);
-+				goto out;
-+			}
-+			base = commit;
-+			continue;
-+		}
-+		if (!oldest)
-+			oldest = commit;
-+		if (tip)
-+			oidset_insert(interior_out, &tip->object.oid);
-+		tip = commit;
-+	}
-+
-+	if (!oldest) {
-+		ret = error(_("the range '%s' is empty"), range);
-+		goto out;
-+	}
-+
-+	if (!base) {
-+		ret = error(_("cannot squash the root commit"));
-+		goto out;
-+	}
-+
-+	*base_out = base;
-+	*oldest_out = oldest;
-+	*tip_out = tip;
-+	ret = 0;
-+
-+out:
-+	reset_revision_walk();
-+	release_revisions(&revs);
-+	strvec_clear(&args);
-+	return ret;
-+}
-+
-+struct interior_ref_cb {
-+	const struct oidset *interior;
-+	const char *name;
-+};
-+
-+static int find_interior_ref(const struct reference *ref, void *cb_data)
-+{
-+	struct interior_ref_cb *data = cb_data;
-+
-+	if (oidset_contains(data->interior, ref->oid)) {
-+		data->name = xstrdup(ref->name);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int cmd_history_squash(int argc,
-+			      const char **argv,
-+			      const char *prefix,
-+			      struct repository *repo)
-+{
-+	const char * const usage[] = {
-+		GIT_HISTORY_SQUASH_USAGE,
-+		NULL,
-+	};
-+	enum ref_action action = REF_ACTION_DEFAULT;
-+	enum commit_tree_flags flags = 0;
-+	int dry_run = 0;
-+	struct option options[] = {
-+		OPT_CALLBACK_F(0, "update-refs", &action, "(branches|head)",
-+			       N_("control which refs should be updated"),
-+			       PARSE_OPT_NONEG, parse_ref_action),
-+		OPT_BOOL('n', "dry-run", &dry_run,
-+			 N_("perform a dry-run without updating any refs")),
-+		OPT_BIT(0, "reedit-message", &flags,
-+			N_("open an editor to modify the commit message"),
-+			COMMIT_TREE_EDIT_MESSAGE),
-+		OPT_END(),
-+	};
-+	struct strbuf reflog_msg = STRBUF_INIT;
-+	struct oidset interior = OIDSET_INIT;
-+	struct commit *base, *oldest, *tip, *rewritten;
-+	const struct object_id *base_tree_oid, *tip_tree_oid;
-+	struct commit_list *parents = NULL;
-+	struct rev_info revs = { 0 };
-+	int ret;
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	if (argc != 1) {
-+		ret = error(_("command expects a single revision range"));
-+		goto out;
-+	}
-+	repo_config(repo, git_default_config, NULL);
-+
-+	if (action == REF_ACTION_DEFAULT)
-+		action = REF_ACTION_BRANCHES;
-+
-+	ret = resolve_squash_range(repo, argv[0], &base, &oldest, &tip,
-+				   &interior);
-+	if (ret < 0)
-+		goto out;
-+
-+	if (action == REF_ACTION_BRANCHES) {
-+		struct interior_ref_cb cb = { .interior = &interior };
-+
-+		refs_for_each_ref(get_main_ref_store(repo),
-+				  find_interior_ref, &cb);
-+		if (cb.name) {
-+			ret = error(_("'%s' points into the squashed range"),
-+				    cb.name);
-+			advise_if_enabled(ADVICE_HISTORY_UPDATE_REFS,
-+					  _("Use --update-refs=head to rewrite only "
-+					    "the current branch and leave such refs "
-+					    "untouched."));
-+			free((char *)cb.name);
-+			goto out;
-+		}
-+	}
-+
-+	ret = setup_revwalk(repo, action, tip, &revs);
-+	if (ret < 0)
-+		goto out;
-+
-+	base_tree_oid = &repo_get_commit_tree(repo, base)->object.oid;
-+	tip_tree_oid = &repo_get_commit_tree(repo, tip)->object.oid;
-+	commit_list_append(base, &parents);
-+
-+	ret = commit_tree_ext(repo, "squash", oldest, NULL, parents,
-+			      base_tree_oid, tip_tree_oid, &rewritten, flags);
-+	if (ret < 0) {
-+		ret = error(_("failed writing squashed commit"));
-+		goto out;
-+	}
-+
-+	strbuf_addf(&reflog_msg, "squash: updating %s", argv[0]);
-+
-+	ret = handle_reference_updates(&revs, action, tip, rewritten,
-+				       reflog_msg.buf, dry_run,
-+				       REPLAY_EMPTY_COMMIT_ABORT);
-+	if (ret < 0) {
-+		ret = error(_("failed replaying descendants"));
-+		goto out;
-+	}
-+
-+	ret = 0;
-+
-+out:
-+	strbuf_release(&reflog_msg);
-+	oidset_clear(&interior);
-+	commit_list_free(parents);
-+	release_revisions(&revs);
-+	return ret;
-+}
-+
- int cmd_history(int argc,
- 		const char **argv,
- 		const char *prefix,
-@@ -982,6 +1175,7 @@ int cmd_history(int argc,
- 		GIT_HISTORY_FIXUP_USAGE,
- 		GIT_HISTORY_REWORD_USAGE,
- 		GIT_HISTORY_SPLIT_USAGE,
-+		GIT_HISTORY_SQUASH_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
-@@ -989,6 +1183,7 @@ int cmd_history(int argc,
- 		OPT_SUBCOMMAND("fixup", &fn, cmd_history_fixup),
- 		OPT_SUBCOMMAND("reword", &fn, cmd_history_reword),
- 		OPT_SUBCOMMAND("split", &fn, cmd_history_split),
-+		OPT_SUBCOMMAND("squash", &fn, cmd_history_squash),
- 		OPT_END(),
- 	};
- 
-diff --git a/t/meson.build b/t/meson.build
-index 3219264fe7..63ea26b8ed 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -399,6 +399,7 @@ integration_tests = [
-   't3451-history-reword.sh',
-   't3452-history-split.sh',
-   't3453-history-fixup.sh',
-+  't3455-history-squash.sh',
-   't3500-cherry.sh',
-   't3501-revert-cherry-pick.sh',
-   't3502-cherry-pick-merge.sh',
-diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
-new file mode 100755
-index 0000000000..821c801153
---- /dev/null
-+++ b/t/t3455-history-squash.sh
-@@ -0,0 +1,303 @@
-+#!/bin/sh
-+
-+test_description='tests for git-history squash subcommand'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup linear history touching two files' '
-+	test_commit base file a &&
-+	git tag start &&
-+	test_commit --no-tag one other x &&
-+	test_commit --no-tag two file c &&
-+	test_commit three file d
-+'
-+
-+test_expect_success 'errors on missing range argument' '
-+	test_must_fail git history squash 2>err &&
-+	test_grep "command expects a single revision range" err
-+'
-+
-+test_expect_success 'errors on too many arguments' '
-+	test_must_fail git history squash start.. HEAD 2>err &&
-+	test_grep "command expects a single revision range" err
-+'
-+
-+test_expect_success 'errors on an empty range' '
-+	test_must_fail git history squash HEAD..HEAD 2>err &&
-+	test_grep "the range .* is empty" err
-+'
-+
-+test_expect_success 'errors when the range includes the root commit' '
-+	test_must_fail git history squash HEAD 2>err &&
-+	test_grep "cannot squash the root commit" err
-+'
-+
-+test_expect_success 'squashes a range into a single commit without changing the tree' '
-+	git reset --hard three &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash start.. &&
-+
-+	git rev-list --count start..HEAD >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test_cmp_rev start HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	git log --format="%s" -1 >subject &&
-+	echo one >expect &&
-+	test_cmp expect subject &&
-+	git reflog >reflog &&
-+	test_grep "squash: updating" reflog
-+'
-+
-+test_expect_success 'squashes an interior range and replays descendants verbatim' '
-+	git reset --hard three &&
-+	final_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash start..@~1 &&
-+
-+	git log --format="%s" start..HEAD >actual &&
-+	cat >expect <<-\EOF &&
-+	three
-+	one
-+	EOF
-+	test_cmp expect actual &&
-+
-+	test_cmp_rev start HEAD~2 &&
-+	test "$final_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'squashes when the base is the root commit' '
-+	git reset --hard three &&
-+	root=$(git rev-list --max-parents=0 HEAD) &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash "$root.." &&
-+
-+	git rev-list --count "$root..HEAD" >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test_cmp_rev "$root" HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'squashing a single-commit range replays the rest' '
-+	git reset --hard three &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash start..@~2 &&
-+
-+	git log --format="%s" start..HEAD >actual &&
-+	cat >expect <<-\EOF &&
-+	three
-+	two
-+	one
-+	EOF
-+	test_cmp expect actual &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'reuses the message of a fixup! commit in the range' '
-+	git reset --hard start &&
-+	test_commit --no-tag reg1 file b &&
-+	git commit --allow-empty -m "fixup! reg1" &&
-+	test_commit reg2 file c &&
-+
-+	git history squash start.. &&
-+
-+	git log --format="%s" -1 >actual &&
-+	echo reg1 >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'keeps the oldest message even if it is a fixup!' '
-+	git reset --hard start &&
-+	test_commit --no-tag "fixup! something" file b &&
-+	test_commit tail file c &&
-+
-+	git history squash start.. &&
-+
-+	git log --format="%s" -1 >actual &&
-+	echo "fixup! something" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'preserves authorship of the oldest commit' '
-+	git reset --hard start &&
-+	GIT_AUTHOR_NAME=Squasher GIT_AUTHOR_EMAIL=squash@example.com \
-+		test_commit --no-tag oldest file b &&
-+	test_commit newest file c &&
-+
-+	git history squash start.. &&
-+
-+	git log -1 --format="%an <%ae>" >actual &&
-+	echo "Squasher <squash@example.com>" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--dry-run predicts the rewrite without performing it' '
-+	git reset --hard three &&
-+	head_before=$(git rev-parse HEAD) &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash --dry-run start.. >out &&
-+	predicted=$(awk "/^update refs\/heads\// {print \$3}" out) &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	git history squash start.. &&
-+	test "$predicted" = "$(git rev-parse HEAD)" &&
-+	git rev-list --count start..HEAD >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test_cmp_rev start HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success '--update-refs=head only moves HEAD' '
-+	git reset --hard three &&
-+	git branch -f other HEAD &&
-+	other_before=$(git rev-parse other) &&
-+
-+	git history squash --update-refs=head start.. &&
-+
-+	git rev-list --count start..HEAD >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test_cmp_rev "$other_before" other
-+'
-+
-+test_expect_success 'refuses to fold a range a ref points into' '
-+	git reset --hard three &&
-+	git branch -f mid HEAD~1 &&
-+	head_before=$(git rev-parse HEAD) &&
-+
-+	test_must_fail git history squash start.. 2>err &&
-+	test_grep "error: .* points into the squashed range" err &&
-+	test_grep "hint: .*--update-refs=head" err &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	git branch -D mid
-+'
-+
-+test_expect_success 'advice.historyUpdateRefs silences the hint' '
-+	git reset --hard three &&
-+	git branch -f mid HEAD~1 &&
-+
-+	test_must_fail git -c advice.historyUpdateRefs=false \
-+		history squash start.. 2>err &&
-+	test_grep "points into the squashed range" err &&
-+	test_grep ! "hint:" err &&
-+
-+	git branch -D mid
-+'
-+
-+test_expect_success '--update-refs=head folds past a ref pointing into the range' '
-+	git reset --hard three &&
-+	git branch -f mid HEAD~1 &&
-+	mid_before=$(git rev-parse mid) &&
-+
-+	git history squash --update-refs=head start.. &&
-+
-+	git rev-list --count start..HEAD >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test_cmp_rev "$mid_before" mid &&
-+
-+	git branch -D mid
-+'
-+
-+test_expect_success 'refuses to fold a range a tag points into' '
-+	git reset --hard three &&
-+	git tag -f mark HEAD~1 &&
-+	head_before=$(git rev-parse HEAD) &&
-+
-+	test_must_fail git history squash start.. 2>err &&
-+	test_grep "refs/tags/mark" err &&
-+	test_grep "points into the squashed range" err &&
-+	test_cmp_rev "$head_before" HEAD &&
-+
-+	git tag -d mark
-+'
-+
-+test_expect_success 'squashes a range whose internal merge has a single base' '
-+	git reset --hard start &&
-+	test_commit --no-tag before-side file b &&
-+	git checkout -b inner-side &&
-+	test_commit --no-tag on-inner-side inner x &&
-+	git checkout - &&
-+	test_commit --no-tag after-side file c &&
-+	git merge --no-ff -m merge inner-side &&
-+	git branch -D inner-side &&
-+	test_commit --no-tag after-merge file d &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash start.. &&
-+
-+	git rev-list --count start..HEAD >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	git log --format="%s" -1 >subject &&
-+	echo before-side >expect &&
-+	test_cmp expect subject &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file inner
-+'
-+
-+test_expect_success 'folds a range whose tip is a merge commit' '
-+	git reset --hard start &&
-+	test_commit --no-tag tipmerge-base file b &&
-+	git checkout -b tipmerge-side &&
-+	test_commit --no-tag tipmerge-side side x &&
-+	git checkout - &&
-+	test_commit --no-tag tipmerge-main file c &&
-+	git merge --no-ff -m "merge tipmerge-side" tipmerge-side &&
-+	git branch -D tipmerge-side &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash start.. &&
-+
-+	git rev-list --count start..HEAD >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})" &&
-+	test_path_is_file side
-+'
-+
-+test_expect_success 'folds a range whose base is a merge commit' '
-+	git reset --hard start &&
-+	git checkout -b basemerge-side &&
-+	test_commit --no-tag basemerge-side side x &&
-+	git checkout - &&
-+	test_commit --no-tag basemerge-main file b &&
-+	git merge --no-ff -m "merge basemerge-side" basemerge-side &&
-+	git branch -D basemerge-side &&
-+	base=$(git rev-parse HEAD) &&
-+	test_commit --no-tag basemerge-one file c &&
-+	test_commit --no-tag basemerge-two file d &&
-+	tip_tree=$(git rev-parse HEAD^{tree}) &&
-+
-+	git history squash "$base.." &&
-+
-+	git rev-list --count "$base..HEAD" >count &&
-+	echo 1 >expect &&
-+	test_cmp expect count &&
-+	test_cmp_rev "$base" HEAD^ &&
-+	test "$tip_tree" = "$(git rev-parse HEAD^{tree})"
-+'
-+
-+test_expect_success 'refuses to squash a range with more than one base' '
-+	git reset --hard start &&
-+	head_before=$(git rev-parse HEAD) &&
-+	git checkout -b forked-before &&
-+	test_commit forked-side fside x &&
-+	git checkout - &&
-+	test_commit forked-main file b &&
-+	git merge --no-ff -m merge forked-before &&
-+	merged=$(git rev-parse HEAD) &&
-+
-+	test_must_fail git history squash forked-main.. 2>err &&
-+	test_grep "more than one base" err &&
-+	test_cmp_rev "$merged" HEAD
-+'
-+
-+test_done
+Changes since v6:
+
+Squashed patches 1 and 2 to avoid dead code in the tree.
+
+Tagging Justin Tobler, Lucas Seiki Oshiro, Junio,
+Phillip Wood, brian m. carlson, and Ayush Jha.
+
+Thanks for helping improve this series!
+
+K Jayatheerth (3):
+  path: extract append_formatted_path() and use in rev-parse
+  repo: add path.commondir with absolute and relative suffix formatting
+  repo: add path.gitdir with absolute and relative suffix formatting
+
+ Documentation/git-repo.adoc | 15 ++++++++
+ builtin/repo.c              | 50 +++++++++++++++++++++++++
+ builtin/rev-parse.c         | 73 +++++++++++++++----------------------
+ path.c                      | 69 +++++++++++++++++++++++++++++++++++
+ path.h                      | 30 +++++++++++++++
+ t/t1900-repo-info.sh        | 58 +++++++++++++++++++++++++++++
+ 6 files changed, 251 insertions(+), 44 deletions(-)
+
 -- 
-gitgitgadget
-
+2.55.0-rc1
