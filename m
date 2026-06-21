@@ -1,86 +1,82 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D2440D57C
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 00:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B016221721
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 01:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782003187; cv=none; b=YCIeGMZ/Kq1fR8pUyaMnni4RBYceiH9PUhCzAy7u2iC3HiwbBfAmOG/dkLY3xWkoDQMOm4td2dryBOQr+jKCqsiSE7zdy5xN/yuCfoNq96ar6LRu/AYGlOI5Hpb32Lf2/gy+K6pZSPQsL91SMqEhvFFjzEY75JlESG3RiyTmVWU=
+	t=1782003690; cv=none; b=EhhZEnIV1xu5UBGEPhb6V1wOhoCjWFC5CGC5DO//3oHNDyxPFHKzx1i2EetmZUwpkBO5uyWb3R8sKSgcpGzxiQXzKwfPL2vt5eI5OFYujFDkNI5gL1tqMMWcyXxcPCqc/6ETXuvjhZ4v6h5HJa9ezXiSCmXFK0PjsgcZrdTljOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782003187; c=relaxed/simple;
-	bh=xiUWEUznJXmDu3b5tyqt7r300q3r4u3gZdnxCj09t7U=;
+	s=arc-20240116; t=1782003690; c=relaxed/simple;
+	bh=yVN0WYDlZnILd9lfFNgG0cyzrRRAX0jVxhp8ZFJOe8s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gSg6rfBUlGYC4gaN3FX3HEtLFE6X1sswchLoMpIq5lRDe0bb2lm37dunL9GVsDWUyKIcJReYtSLWBZkdBc+anW52sMllL4x8eHRGr36htu/Z9CO1zmGUg9H/3u/NPTpgg3MEFG6Q6pOhxsBDEcUh0rrWrdjuqWuCylJoFkEOWWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ch9TLkN9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fJKYK9NE; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=PhLrlusjev3dWEuSx6ZyLxxCFx92S49LLPvKncnMEwcfyxDKQf8Yl0n91xQoC7R+es6SGhAHG5SCeZbObh3hPlTQvA/YCwwlaHpf6GqVhwf7WYled6WE3tFO810gcx7rZuGdSoE2xo7UQOYnuUcGe5GW9YDpkAWe0mN9W2Ohr70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N/fgvws7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NKz2HoFT; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ch9TLkN9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fJKYK9NE"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id CEC8AEC0166;
-	Sat, 20 Jun 2026 20:53:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N/fgvws7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NKz2HoFT"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id A0D55EC008D;
+	Sat, 20 Jun 2026 21:01:27 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sat, 20 Jun 2026 20:53:04 -0400
+  by phl-compute-07.internal (MEProxy); Sat, 20 Jun 2026 21:01:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1782003184;
-	 x=1782089584; bh=OlXwmdtP89yJqmj5yF0tu3R7XcQoq5VZlss4xSpA7Mk=; b=
-	ch9TLkN9EMpsKH1lEZr9iH4i0FAaep2TlgWOxG/NZX6qWOLuyeRuYfYjXYMkkxrJ
-	7YjhCr6gYm1JTPUxdffgx2kK1M37muicNKbsYUK5vjCX38QFYTlQQ8EG0I4rD3vP
-	bJ2CwlSSh8hvmIxJwsjTr1ty/eEOXx7kSvpIBW5k8sqURK80i5rPp5QpP1OQgg3P
-	isiWPTSavHm0RruEkf2PIqnLInVckn2u1ZVG/qyC13hKDX7WqmGDg2mgmqTSBS7a
-	sqXe8Rg5GreON6BNh4Kby59eEHdZjvAjMppE0eV490D1NHiU6iHSXfMR4McCl4Qj
-	kmnJcHg8aZpp60dgoN8zGA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782003687; x=1782090087; bh=uKKs2DfrTg
+	nsUQjqZAytYAchEPQO3dT2w9wMAHCn60Y=; b=N/fgvws7R4OHPdUyUhe/RDh15r
+	ZqEtxLUGv97MLZhmx728i10OiNsycBT0xAwVnLZLZp/Ae/E/pERhR8inVxlHSF1Z
+	rRGG1FpYETmBtSMAt7gE4eJIHsxPyxyCxHyOTLq41A8dAqgQmGS5OjDXqkFGMA1g
+	64e+BpgEO38S2khKljpmA+4VMkA0tsMeNluOMjuyn7f3t5bguiOfSb232VhbSVYl
+	mKCwfy5H8VoyxL7ct5anQ0QKgsDaRqAaggWWqvWPU97/xuL52pzfxvEK0ITPrvpJ
+	wtOu1CHxhyul3/u4NQ0PVZH+RN3sn2MJupIZT0/Z60rzanMJ2Z5dsQ+f+YeA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782003184; x=
-	1782089584; bh=OlXwmdtP89yJqmj5yF0tu3R7XcQoq5VZlss4xSpA7Mk=; b=f
-	JKYK9NEBgmuS4CUZo0IEwOW8uEJxmm00SlMsTyJ0h97J94rpNZ1Gho1k5BiD0z/J
-	gFENsKqJX0c4oIUdP0sHee2nEEPFX6uuGU2Q4wXAVBXUVcj6BNgotgrvocYOQYcZ
-	R0IloFLD7oLs6Q71Q4EPvooQXSaYhdW+06UFVJ0E9Be9ZQd7/rBOV9lpSjrka0fb
-	LjhU0JshT0zd4xsmi6itLTwR8gbTbFNHTM04aqSiiaTGgpcvnwRAUQRnsCSP1qYo
-	uQV0k+OoTdy4/BV4edcICtqpLlA3mcrJe2FQEfME1Kcxg85P2yRxJxoBVwRddwaZ
-	BOt3DYXtoB5L/Q/dcmBaA==
-X-ME-Sender: <xms:8DU3ahWPx1N0O5y0cNyDKUNpCuBYJBRo3WY5ARNQbyz8L_-DCdDOxQ>
-    <xme:8DU3aomKD3d8-Jlp7aUnTT8al_o-hi9dAZ6JApMYL8NUyQgqdWl1wLVAHFEcyE1bT
-    BOc8j5dbAqRUkcnl-eCriRDeU9C3E_aXQjvyAtDvAA9iV1eG7wfMho>
-X-ME-Received: <xmr:8DU3aiYgS5ortCK5nPQAHKAP1xZlL79wR1UKVCpkoFvCveYna4jH6rcB78urzJE4cAr_ZQ5rmejCcOgzxs2-4CckhX1hudnJb2NPe-A>
-X-ME-Proxy-Cause: dmFkZTFg5NBtfq5aHD3/OMEn5enxAl0a3ePdmkhpw5tEgJmomXkkMy68ckoBvrRXlhokUl
-    JSeFbiycWXZKO6d7EVd2oI+QSwaPJDxCip6ZP1tevcfyVY0mRsHs6DItdzPnetumoMSF7V
-    QrmNkWDGM1JgqmEndVUbzwIYT1/EzYSsBngR6RVpAUGUxBRUv/dMvRLnSQS5zl1luvtI0r
-    cOGboI2dlg8d+RgjAo9smfJ4sVb8ivqngcDkwphEsd3dMYDFvOUS7qbORVne1NzLiAZwhk
-    r+jUjwWGqU/ydYygmMMFI7vrh45E1TCxWt/8lTHiLJy6JH2k2zQMk9vewxWlFeLLoWpgRX
-    mlHMEAW9F/p3z7pAUxLrpnOKxzppn7lR4nLez71ZIhMzEgzdIXKpVndKTCC+ewZz4uiZ/X
-    Si90jxpA/r13/gQ0nr8n2un68HBEFvxiaZJvMEr1Gz0lXU5+kvhRoUO8xu/PRYitt3Bb1+
-    lEVuQ1WQT+BkSduJrBfq9QNyn74yudyfxOouH92K4AqcnTDcTlQGzvBL12JHedOpQ8MOyo
-    QBsLVp5bzsf8a7nHDF8RtbFIECNevnGPc2gW6N+crfYOk7Z/WNcq5CrRzKY1Q0DSt4axDP
-    rYlkmNhqHnpFMdIUYtQa3PUF8s5xiz9u9t2zQlcC829J034jldRUM40a3gyQ
-X-ME-Proxy: <xmx:8DU3ajPiBqEFGw5CzgJdAgQxrp2-cBGYuaD3A20ZUYiRyRmkP0PNkw>
-    <xmx:8DU3anZXbS1iWDXTtdHJByuH2akay5P5YmDyKJ_ruOE7oEofT9Nkrw>
-    <xmx:8DU3ah2PgNfbl2c7BTICUC7eDX-qnTTRALX_fxaZeGKiDpGb7v3m3Q>
-    <xmx:8DU3atcQ-N5Y4QWcfmGNZgX4iTVMc2NKeV9m6tp9IZqRQcFtad2Zvw>
-    <xmx:8DU3aqVBh56huPR1iTxPoL9jbHU6zqX-bSGQ5JA-TUoHqE5nbf5sbEjn>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782003687; x=1782090087; bh=uKKs2DfrTgnsUQjqZAytYAchEPQO3dT2w9w
+	MAHCn60Y=; b=NKz2HoFTARf2H4T0oXXkKk6U9zLkdZeNoNcj+AKrZlg98qnnDPt
+	fk2tYlkTR9QhPQdewW1N5ZqDajxeL9K3PjgypwEMkMi2Rp8sY7fb5HQgDo0xqV99
+	HSz6FUt14S6ngJR+XxOlcRqu3GFmiCzaMvLtLLAjTXFtRS/vMXv1sBFtJyu2V152
+	xLX+3m2O04IcVhp3yWMnQmVmb4xR9Ctq441CXhL2ixqDEeto1XM3DDIhAZDIbeJ6
+	AOZGZXFT30nqX0xTFvtwMdojRXv/UsPToVuXeuEg/wHDVf1So734/NVlXivNsIgu
+	oMt+DC0W07IbJVzhRSckLbSltRoMAP8igQw==
+X-ME-Sender: <xms:5jc3aswnq8F7PC7g7XgPLJubWOAG8pnR07BOA6viVDEJcWe_laHPNA>
+    <xme:5jc3akEOZhu_iCBjb-xZ7Yc50duRL0jsX-3R180874VDzCxutMYjEEhpV0PfZKehO
+    VKhoLan0QfQpYi3UXOHsvXL8mLNaaQoiUlqXPka1ElcBEnq0Dpf6yo>
+X-ME-Received: <xmr:5jc3anbXey_zsABQKAJCNV7bqzbmvKfJpFt9-PH8AnMNSVQAFeieVt72KheTKzu0R08LuZPfoFBV8KAhdJnZRk4kXCzp2UcMsDruFaE>
+X-ME-Proxy-Cause: dmFkZTEzoDPZKUx9I2H8jhYQVni9e/M0etYI90XU0DgdCoGGO2mBtzZEX7mjGurrfKL30O
+    Khj1/py+eYx0bNDtborO2bpJYAE8lF5nFGzmKy6Lrn0wyrcGI0oFyPFcaoKa2cfFvkWQsE
+    LlrtpbgjJUP7cpQ8mJ80el+GkS1wnM0hioxUlQWKyjYocbymvbUB6WNFsM+ItZy2qDpie1
+    qPNF062zTT+5/2LrKBAyF8n87gkU+Pb5yjeu0M0ZUQaUrrNiQFda9TgTPf9AGbYW1mEtiJ
+    ZcCesZivPZ7Q4FKtQcHNz9s/ypCpe/37zvbUQVKWVPb9z6zVyy2uN3ZhYgJ/zQFUyg+2qz
+    Y+igKOJaGSormjbgbRAalhR/cLSS54lfeDMvikt/Blstq+ZjQSRgYKSTkcLTjeUt36QDnX
+    VhJGLfQ63VIYxi2IxPGmvYfYSX72djpJFVbzFa3mlL/et95x9v0EAuNhwkI970OupDysYb
+    uys4oiayycIZug7+7J7ovWU5Y6mobpvhMEmBCcqb0BOx50xWCk6uSGTRJqC1ZTP8YcLRBB
+    U4Gvf3GOdsZkcp6Jl2zZiCndKRhVxCKC9hZsOMMwlPgTMPZ9Qms/qDKUOY2clHxcQwGS9/
+    UknHL79qN9UpkRXB2/QklS4/Qjw6g2cwiPFwR524gnRvmbSLR5Hm7vDQEBaw
+X-ME-Proxy: <xmx:5jc3auAc8eOnbO7hK8Vf9g-YTFhkWEoOZVa2hJIByLAPxiT0F0FTug>
+    <xmx:5jc3anmGgxpnAkaBRyLubmaNue_IcATGyNkVzNl-lhE6DO-ndk20kg>
+    <xmx:5jc3any16e05wStNyIh232-JCrCer4FmtxOKvnYvWmLf-8ahe8YRNA>
+    <xmx:5jc3apTLyJChtcYOLiqRraMXDAxFH0IfPqAWT43iFM_lHf1_wRl69w>
+    <xmx:5zc3am1o54S5bkmRz1IjwNlEKDra18_IXmUPnw6hl4u1LYi50HjsBYwA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 20 Jun 2026 20:53:04 -0400 (EDT)
+ 20 Jun 2026 21:01:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Git <git@vger.kernel.org>
-Subject: Re: git-diff in a worktree is an order of magnitude slower?
-In-Reply-To: <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
-	(D. Ben Knoble's message of "Sat, 20 Jun 2026 11:57:29 -0400")
-References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
-	<20260609001134.GD358144@coredump.intra.peff.net>
-	<CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
-	<20260611085526.GL2191159@coredump.intra.peff.net>
-	<CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
-Date: Sat, 20 Jun 2026 17:53:02 -0700
-Message-ID: <xmqqa4sog1e9.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>,  Patrick
+ Steinhardt <ps@pks.im>,  Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
+In-Reply-To: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
+	(D. Ben Knoble's message of "Sat, 20 Jun 2026 12:00:24 -0400")
+References: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
+Date: Sat, 20 Jun 2026 18:01:25 -0700
+Message-ID: <xmqq5x3cg10a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,58 +84,16 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-> But the refresh_index_quietly call is guarded by (effectively; the
-> actual code uses rev.diffopt.skip_stat_unmatch)
->
->     1 < !!diff_auto_refresh_index
+> Autotools-style builds permit enabling USE_NSEC for cases where that's
+> desired; the equivalent knob is missing from meson-based builds.
 
-It is not quite that, is it?  In aecbf914 (git-diff: resurrect the
-traditional empty "diff --git" behaviour, 2007-08-31), it read more
-like
+With or without autoconf, Makefile based build can use USE_NSEC.  It
+is a welcome addition to the other side of thw world.  I do not know
+if 'meson setup -Dnanosec=true' is a name that is easy to discover,
+though.
 
-	if (1 < rev.diffopt.skip_stat_unmatch)
-		refresh_index_quietly();
-
-where rev.diffopt.skip_stat_unmatch was initialized to 1 if
-diff_auto_refresh_index (boolean) is set to true.
-
-Now, cmd_diff() dispatches to various diff backends to compare two
-sets (like "a tree object vs the index", "the index vs the working
-tree files"), each of which ends with a call to diffcore_std() and
-diffcore_flush() to conclude.   In diffcore_std() there is a call
-to diffcore_skip_stat_unmatch() ONLY when skip_stat_unmatch member
-is set (we initialize it to 1 when auto-refrresh-index is enabled,
-as you saw above).  The function is used to squelch the paths that
-remain in diff_queued_diff only because they were stat-dirty without
-having an actual content change, and _counts_ how many such ghost
-changes existed by incrementing the .skip_stat_unmatch counter.
-
-> which dates to aecbf914c4 (git-diff: resurrect the traditional empty
-> "diff --git" behaviour, 2007-08-31). On my system that comparison is
-> false because the double-negation produces 1
-> (diff_auto_refresh_index=1 or the result of git_config_bool). 
-
-Not quite.  It was false because double-negation initializes the
-member to 1, which causes a call to diffcore_skip_stat_unmatch()
-be made, *and* the diffcore_skip_stat_unmatch() function did not
-find any ghost changes, i.e., paths that were only stat-dirty hence
-needed a call to refresh_index_quietly().
-
-> So… has that conditional been quietly dead all this time? I can't
-> imagine that's right, but…
-
-I initially thought it was an embarrassing thinko, but after seeing
-how .skip_stat_unmatch is used as a 1-based counter (i.e., if the
-member says 42, it means it saw 41 paths that were stat-dirty but
-without actual content change), I do not think so.
-
-Now, it is a different matter if such a "dual" purpose "more than a
-simple boolean" counter is a good idea.  Apparently it confused both
-of us in this case ;-).
-
-Thanks.
+Will queue.  Thanks.
