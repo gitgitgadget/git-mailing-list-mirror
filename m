@@ -1,41 +1,45 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354EA28F5
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 21:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D421234994
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 21:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782076334; cv=none; b=Uefw+URJBFkAuOvlk2TsdHiU6qyXSBgZhxbbBLMKSQrkA/q73nB+Grfaaz7KJFzfLbBIcPW09jUNl+HhaHcU75kHXdHnJSfboKOFIhAfoj1mR/VohfkjH7A+Tue//yEJgBsJoeCmtT3PiEGvXOtzcYKPBbijAEUxpQViRUV4OeA=
+	t=1782077288; cv=none; b=idA0Zw/PrnUdVCoh+wlzxDkb993AOAcSNEE6riN2lo/WiCCPx+EohGkpfq2v2Am1gQCew7rrhxITMyYK5dt7uoice3ifR/zNnm0PTYSRTyYVeX6r3G2xatEnesK9He3QXy7/MAymWPM1YHgHzul0YaLk7P6CvY02vzMrt2D0e7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782076334; c=relaxed/simple;
-	bh=y+uN9YipyYLagg3kiSSQ2Hhpkm4lczq58WxMKXLHFzM=;
+	s=arc-20240116; t=1782077288; c=relaxed/simple;
+	bh=LoQJ5G/mHx6DAGkKsoxvNBgcgeZLhj3U7zFsDQuwIyk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e/xyttu3n0oUxbHFzfEzy0dDJjCGfi99SLCb9klp+aplBDAL9P+sITFq5eBxK5i02pkgEh0khW5eWAMeztAYSuketkd0hgkkOV7/8bv26PqjqdQjC6JDIZjKg/WIz9i4566h7+dnpqcK0ikq6n21kwaTwJGFmgk5SalX+dpe8VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KzBU5ci8; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=nf2X/F+nQkRRUpP6spRsvjvQErLPSNrH/Qtuxw8mBs1MCfEO2dLdHcGFnu2akdsFeXyiQwPAiF9k8wkthlQnOb8DgDc8xE5lO0Hiyve85+hNyYXSIzEgtEO2d/0Q8JZftAqnzap7NBnA//+W8N8UJfXQl4S9XYqOlESwZpI+d+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ur2seOro; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KzBU5ci8"
-Received: (qmail 208484 invoked by uid 106); 21 Jun 2026 21:12:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=y+uN9YipyYLagg3kiSSQ2Hhpkm4lczq58WxMKXLHFzM=; b=KzBU5ci8i/WZZLM1In51dJA26BjkYSub9noTQC/ZcCfT/ogZHeDIjOTyEnKdjCjNU8D6kF5RsRM8toqAuf8NxuJ+ukg9fHvlrB6LA1vRlDDWgAm7FkCmYNnpk7l39DSfoZXcDJoAO2gh5Da48SFZ2oYlGU2LnYZOc/BZkU0t9+JI81LgQVEgbW5qP4CIxIaPvU7cAF8fnMs4YiCH5dtgzqxYcy5VUNm8lLK0ZSa4cP3k6aO9WOqhJaemH2l1thKXqJqvRBYh9nyobYvwnZhFAwyk0SFdQylWJfxPxbtBiHzBkVKGEh7FXVnf1WUmd2g5v12CbL/KKm/gsVK2DJ6nCA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ur2seOro"
+Received: (qmail 208596 invoked by uid 106); 21 Jun 2026 21:28:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LoQJ5G/mHx6DAGkKsoxvNBgcgeZLhj3U7zFsDQuwIyk=; b=Ur2seOrobYwSkuWjmKaZHG2QO/2Za+o4uQc7hyKsqQqhcpxMTHZEqWPqW6gNgyrhj5gl524TQPqcbqHGXVtBt85o9TrdKOyIS6swKO95fEVegfvevpVexLsO1AFozkX9K/sO9j0AmD/zIaDnjkEq0+WMlHlxppBFgaw8YqsE0B0usmfYNiHofPgiQgaubcl4E7Xtclx4CRgc5ma7mHGPCrMu9qIuk7buwgTll3eqsyKB5xEjzkInYQtoDOxE76ARUWticnPW2Vsky8yDFLpIer6UODz+RNfO0jfkqZlgKrKuHtleYTftDn7461KvzloZe/AWCAcB2PXqLXdioqnqUw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 21 Jun 2026 21:12:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 21 Jun 2026 21:28:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 526404 invoked by uid 111); 21 Jun 2026 21:12:14 -0000
+Received: (qmail 526536 invoked by uid 111); 21 Jun 2026 21:28:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 21 Jun 2026 17:12:14 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 21 Jun 2026 17:28:08 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 21 Jun 2026 17:12:11 -0400
+Date: Sun, 21 Jun 2026 17:28:05 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 7/8] refs: fix recursing `get_main_ref_store()` with
- "onbranch" config
-Message-ID: <20260621211211.GA2297179@coredump.intra.peff.net>
-References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
- <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
- <20260618164035.GA1218204@coredump.intra.peff.net>
- <ajTggBKIzgSpp99X@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: git-diff in a worktree is an order of magnitude slower?
+Message-ID: <20260621212805.GB2297179@coredump.intra.peff.net>
+References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+ <20260609001134.GD358144@coredump.intra.peff.net>
+ <CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
+ <20260611085526.GL2191159@coredump.intra.peff.net>
+ <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
+ <xmqqa4sog1e9.fsf@gitster.g>
+ <20260621172432.GA2206349@coredump.intra.peff.net>
+ <20260621174518.GB2206349@coredump.intra.peff.net>
+ <xmqqfr2f7iay.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,102 +48,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ajTggBKIzgSpp99X@pks.im>
+In-Reply-To: <xmqqfr2f7iay.fsf@gitster.g>
 
-On Fri, Jun 19, 2026 at 08:25:42AM +0200, Patrick Steinhardt wrote:
+On Sun, Jun 21, 2026 at 01:24:53PM -0700, Junio C Hamano wrote:
 
-> On Thu, Jun 18, 2026 at 12:40:35PM -0400, Jeff King wrote:
-> > On Mon, Jun 15, 2026 at 03:56:53PM +0200, Patrick Steinhardt wrote:
-> [snip]
-> > I'd expect the ref database config (like the ref format) to be read not
-> > through the regular config subsystem, but via read_repository_format()
-> > and friends. And while that does build on the regular config code, it
-> > should never enable includes at all. So includeIf.onbranch:foo.path is
-> > just another uninteresting config key to it.
+> Jeff King <peff@peff.net> writes:
 > 
-> This feels rather painful though, as we'd now have to do this for every
-> single backend that we know about. Also, I think not enabling includes
-> is an overly broad fix: there isn't any reason why "includeif.gitdir"
-> and all the other conditions shouldn't apply. We really only want to
-> disable "onbranch".
-
-Sorry, I should probably gone back and edited my email after finishing
-it. I was thinking that you meant not general config, but the specific
-extensions.refStorage key. Which is not really config, but repo metadata
-we happen to store in the .git/config file. And obviously you cannot
-read any refs until you know what's in that key.
-
-And that _is_ read separately while loading the repo config, which I
-think is right. Other options, like core.logallrefupdates, are handled
-separately. And I realized halfway through my reply that was probably
-what you meant.
-
-I agree those are user-facing config options that should generally
-respect includes in the normal way. I thinks are a bit funny there,
-though. See below.
-
-> I actually tried lazy-loading, but I found it to be quite painful
-> overall, as the above setting isn't the only one we use. The reftable
-> backend for example has a bunch of additional settings that it reads.
+> > I don't know if any of this is really worth digging too far. This feels
+> > like a case we could do a bit better at, but I wonder how much it
+> > matters in practice. As soon as you do any index-refresh (including "git
+> > status"), the racy entries are cleared and everything is faster. It
+> > just seems kind of lame that we write out the initial working tree with
+> > so many racy entries.
 > 
-> We could of course start lazy-loading all of these. But that may not
-> work for future backends that really _need_ to parse some configuration
-> at initiation time.
+> Yeah, We didn't want to stall for a full second back when we were
+> not using subsecond in anywhere, with nanosecond resolution
+> timestamps in place, we could delay writing the index file by 50
+> milliseconds, nobody notices the delay, and raciness would go away,
+> perhaps?
 
-Yes, obviously there's some true chicken-and-egg issues if there are
-config keys that are needed to initialize the backend. But I think there
-are many that are not needed immediately (e.g., because they relate only
-to writes, not reads) but still block loading.
+Yes, though that implies comparing the index and file mtimes with
+nanosecond precision.  We have that precision stored (at least
+when the system supports it) but I'm not sure if that comparison would
+run afoul of the reasons USE_NSEC was not the default in the first
+place.
 
-For example, try this:
+I guess not? The problem there is that the nanosecond portion would
+sometimes get wiped if the entry was dropped from the kernel's in-memory
+cache. And then stat-matching would not work. But if we are talking
+about strictly asking "is this mtime later than that mtime", then I
+think the worst case is that we fall back to the current behavior.
 
-  git init
-  git config core.logallrefupdates false
-  git config includeIf.onbranch:main.path alt-config
-  git config -f .git/alt-config core.logallrefupdates true
-  git commit --allow-empty -qm foo
+But at the point that we are comparing nanoseconds, I don't think we
+even need to bother with the delay. It takes maybe 5 seconds to write
+out all of the linux.git files and then the final index. So ~20% of
+those files will have the same timestamp as the index. With nanosecond
+resolution, we'd expect that to drop by an order of a billion. Even if
+we get unlucky and have a single file with the same timestamp, that is
+not so bad.
 
-  echo "git-config => $(git config core.logallrefupdates)"
-  echo "reflog => $(git reflog show)"
+The code to do the nanosecond compare is already there! But it's gated
+on USE_NSEC. So this (plus a bonus debugging trace ;) ):
 
-git-config will report the value as true, but git-commit will not
-respect it. But this used to work! Back when onbranch was added, we'd
-create the reflog. Bisecting turns up eafb126456 (environment: stop
-storing "core.logAllRefUpdates" globally, 2024-09-12), which makes
-sense. That commit pushed the config read down into the ref
-initialization function, which created the chicken-and-egg.
+diff --git a/read-cache.c b/read-cache.c
+index 21829102ae..f84159a060 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -356,14 +356,10 @@ static int is_racy_stat(const struct index_state *istate,
+ 			const struct stat_data *sd)
+ {
+ 	return (istate->timestamp.sec &&
+-#ifdef USE_NSEC
+ 		 /* nanosecond timestamped files can also be racy! */
+ 		(istate->timestamp.sec < sd->sd_mtime.sec ||
+ 		 (istate->timestamp.sec == sd->sd_mtime.sec &&
+ 		  istate->timestamp.nsec <= sd->sd_mtime.nsec))
+-#else
+-		istate->timestamp.sec <= sd->sd_mtime.sec
+-#endif
+ 		);
+ }
+ 
+@@ -434,6 +430,7 @@ int ie_match_stat(struct index_state *istate,
+ 	 * carefully than others.
+ 	 */
+ 	if (!changed && is_racy_timestamp(istate, ce)) {
++		warning("%s is racy", ce->name);
+ 		if (assume_racy_is_modified)
+ 			changed |= DATA_CHANGED;
+ 		else
 
-Now the config shown above is a bit silly, and I don't expect anybody to
-do it in real life. But what worries me is two-fold:
-
-  1. There are some magic variables that just won't work with onbranch
-     includes, but the user doesn't necessarily know what they are.
-
-  2. We try to cache the results of config reads. Is it possible for an
-     "early" request like this to cache a state that skipped the
-     onbranch include, and then we use that state to look up other
-     unrelated variables? Or could we see a partially completed state in
-     the cache when we lookup a ref variable?
-
-     I'm not sure. The actual backend lookups use the uncached
-     repo_config() interface (and in your series here, explicitly
-     disables the use of refs during that read). But the
-     core.logallrefupdates lookup uses the cached version, and I think
-     there are others (some of which happen deep under the hood
-     through library calls, like calc_shared_perm()).
-
-I tried to construct a few cases that might tickle this behavior, but
-couldn't come up with one. But I have a nagging feeling that we are
-mostly getting lucky on some of the ordering, and a seemingly unrelated
-change could have bad effects.
-
-Sorry, I know that's kind of vague and hand-wavy.
-
-I'm not sure I have a specific recommendation for a direction. It just
-feels like we're piling up hacks to avoid infinite recursion without a
-clear model of what config is read when. I guess if I could suggest
-anything, it would be that ref backends initialize themselves to do
-reads while loading as little config as possible, and then perhaps load
-additional config through the non-caching repo_config() path.
+makes the problem go away. I'm not sure if I'm missing some case where
+we could be bitten by the problem that led to making USE_NSEC
+conditional, though.
 
 -Peff
