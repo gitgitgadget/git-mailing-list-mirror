@@ -1,87 +1,83 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848DA40D596
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 20:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5188A199949
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 20:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782072180; cv=none; b=LjTQ1d1KEoGUVFck2OPKiOuvAtxP+uRBdT6SDxzPgYja1CTXvgsZFupQfuvLbp/p7PnFCYlufeKxEpYn1ZfZWg9oxOrZDBeOnyVynbeeH+5B6HNNrAE8Gs9W6IS+rUuFWwLVBA2nsMQmGzQHcPwh1dakPnTv3NkOHHhQ2aGmEK0=
+	t=1782072976; cv=none; b=OfvfKPE4hrH4hNUJRw8FH2RspY0WuaHIYSKnI3ODcm0rZLHnwlTv80ccM6/SEE36vqnKML7yWHD4QTs0c8FG6s0qJkxD0L66bUM9pchdWT4nArGA/f65pP/Vb0ZZxKjx7jHZRZaVTT2haQ/SAaVzFM8JWNxDFk40ebyQxBZZWew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782072180; c=relaxed/simple;
-	bh=QcyaruBhtQdaGKsQrZKRBijkKyCM28z5RueVJdChV8U=;
+	s=arc-20240116; t=1782072976; c=relaxed/simple;
+	bh=E23eANnPXa6wOg2KGXSau5oY1/eFjVU5td4M2kUgmqM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cRt1eTqsfCpfynA6g7qNSyuzRzcQRakzOBpPnHaxIspOZScBWAytEDd5/LVZuRDMLEgs6I1yq1IQpK2jI7BqtHORQzLpBxjrrTKK61QZGButh+9L4IzN25xCWO84pgpwk5dNX9eHex6qKYE81i8tfQe2guEhVUtLnXpGb09gU3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F/MY7SlQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RIJV0NhR; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=BqIO0ewnCQ0mZAw+wwCva+rqppp9EByKbN9iVlGZVWJCrP2TBlSnJTaEOk+m28G89csfME8l7VNmBWmoZUqDP8XbiVUKk5zo16j/uMuACm9jPqcnMQmbXVwVbSaJNfbYkACc5i5los0xBvYUqi4Pv+8Xjx5comAOWdWRp8yXUj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nBN6goXS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HT/9QT4s; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F/MY7SlQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RIJV0NhR"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B685FEC0285;
-	Sun, 21 Jun 2026 16:02:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nBN6goXS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HT/9QT4s"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7FEE014001E1;
+	Sun, 21 Jun 2026 16:16:14 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 21 Jun 2026 16:02:57 -0400
+  by phl-compute-01.internal (MEProxy); Sun, 21 Jun 2026 16:16:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782072177; x=1782158577; bh=uwt9szBtUL
-	ridyJQ6hjjUlrE4tzafrzGUH669ZJ6lwk=; b=F/MY7SlQRDRlNrJz3uBvGrii7/
-	5xwhTAIydKqn0j2bU/bVlo7+Yx9Qg0+anyqLqQ1ADTa5mL0R2Lf1JrpmokemJ9ej
-	78j+iEv7EIwUkHDSXNd14dNecZciZ6D59jrpowXYrm9eu4kHSy4xcJLHlTq9gRjL
-	Bi6l9zGyUUQlLHr4Or0QrxMIqLLiIwGPNNScb/wptZk+jh3zu1bAH2J2q5j68jmO
-	A8agQFezv3GRpE8D/+FVteoAD4yzak4NnK5owburT4Xpy2/1BXln0WdH0UsS8wPm
-	xQ4lJkk5NufrmrOYhhaE7ZjJ9e9T9UGe1+cRBVDb7oCb6zHyrbxkiZSorurg==
+	:subject:to:to; s=fm3; t=1782072974; x=1782159374; bh=E23eANnPXa
+	6wOg2KGXSau5oY1/eFjVU5td4M2kUgmqM=; b=nBN6goXSHSzlveJ+D0M3Dilz5H
+	UY55yX2MwOQdyHOKQTh6ygNxipTUVqp1PzYBKm2Nz1i/dImorj95GX3BAyTDKBpW
+	qs21HOLaI8IAOo/2VZXIL3XuL/zzUg+8LM9siC6vgBQLEXnWfJ0jDttAL1/Mmt0L
+	jG7QcuRX3+FbA7gbFEW/AmSSddqoLCrx94XzQ/dXjCa6J+Pb/QiAd27tXhSVYFpU
+	i+RXB3mv2lwuZLPkH6j468yntWu2GscJ0i0wPMjbyipuYxaYFISPIW6gLeGt3Xrw
+	VCOM2r6763O05ues/eU9IWbuyLNz04VvRSrfUxB/p8Ltmur0+Tn96vFGP7ww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782072177; x=1782158577; bh=uwt9szBtULridyJQ6hjjUlrE4tzafrzGUH6
-	69ZJ6lwk=; b=RIJV0NhRFXZbf36fIf38nykuNgQM2SEXNhuY/nLkE4p+Y01IweX
-	GjFStPU/o757T/e6SpYpsUocU+BcrfDGkrlnbVIG/gXEFtInV7YshfJRc5cvuknm
-	YZ0aySotQl+45LM2fGp5DZubt0FYgQ7ANBU8Mvlhr/a7nzxSOL4hMeE53jnLtCim
-	3MGRGscPAl+fbtKffRcaL3FmBBaZtvjQoSFkoS/2WGIQCeFWlBrE1r2xl58cI2LW
-	PZ4BNI6Yg70EAUr04z67PkMu/ryrpnNTMVeanTtXnL7snIdAYijRT2FEJGXCZT3k
-	nh1DcyU33q/MpWiPGPQsKfNnHdQ2kR7zRIg==
-X-ME-Sender: <xms:cUM4amJmCZT9Z0EH4cOMKvNpDhzrk8L1kR65owr8YZfwDLFDPGa45Q>
-    <xme:cUM4ap8OhpXtRGF2k1Anw99U0AqNgzjFfjjgXQQPLUylXD7pZ1prpn3R8E4Wcrr6O
-    x2OlX0YwAiLC93fM5rGu_RCa241sL0OiWeCY-Ehm0K0XwzvGsejCw>
-X-ME-Received: <xmr:cUM4aiFNHEAQOKQveNfQcOpAgF0Q-Cdgp7ilWwasizHxpvo4qAMS1Mz0Y1waPYan03CALM7wkfotvFNVZ9vSr_m3pAkjeyqtYfWuCGs>
-X-ME-Proxy-Cause: dmFkZTEEP4vZ0zeVc/mph9n4ICOTsO+7qiP5zKlX2+tZNSgFIZ+nNY6ofPmUFK6sS6Tb5/
-    jX+GwXhdXu/F1f5EWBOeeEc9Isq9VYABzhuFHLnL2eWbRhuo3tabx6Cd/C+D0JTeqHR6+p
-    WRNOfs5xtjWV35BBRgqNDnJ5RF4zW9JUbKe2vcWamBNz9ozI+3xi3/EwIlkGpO/rEfpNEY
-    qjMZhSnoivk+uCWQMArysWZXbD0z+8z4kG0kzqHjHzf9O3GIo7V4PrqyxADV7NmOsMrpj7
-    7ogJYBU3ngH2/SN9gBoXEEO4KfHcaPpo3aa1BXtFtLtz0tI6PpOa9mKMp57yg0DhnNFVhS
-    YxnwJAXXSrBvA6UO5j0rdmwk57oN3QblY3X9i/FyDZ+Q8c9/Q1n5HcX3ZMPuvqO8wDS2gX
-    aKWh1n14ajTe4ST2F5cDLyGLbseyq6m6pIrg9zdsnOWKGdC0O0h0dmmsBmdYRic/AzGezr
-    HyPAXh31+SgkwaUCyGCZey0yLnGo0mq59/trCdXpf60Y12OhQtGspnc64+WV58pruJP2C3
-    /45yIf45A90fa2ZvpW7QSjbb1sz0tP/TMmL4QncZAMCYlRMLVWJLpAs4rA1oSy0l1+Bbgx
-    O4fEGBmjccovVJ00n2lHGOAeHyURZC284QIvogNxP6kY7cTTJKCexmm6fMHQ
-X-ME-Proxy: <xmx:cUM4ak66cqRWR-j6ckFbiu3rSnK3KXT3nOeW4t5-9bYMQFihAHwOBQ>
-    <xmx:cUM4arb9rcKVdkndDjJkB3ycP1gtOqAXus2PYCGRCtKXS0kMVnV07g>
-    <xmx:cUM4aihczRivmiGp9EjNI0sM6z5xVLfV7IHycrMDPcjkhaODgRhWvg>
-    <xmx:cUM4atc6tX78KKzhz9A39hGwXLbRVi4JSCLJHguxj5AbWJWuU45kJA>
-    <xmx:cUM4aklLwC3bJ89rwebd4XrpKX4uA0ImIRAafkm_9AqSMVgR3cZPfNGB>
+	1782072974; x=1782159374; bh=E23eANnPXa6wOg2KGXSau5oY1/eFjVU5td4
+	M2kUgmqM=; b=HT/9QT4sczvwCJ5fDNFnlkxvtwF3C0uOwDcXWq8+lz5QDNijnRq
+	xzSI9E2UsrQxpkwj/L7Vx4YaIeLlxs3MoX+9+CkFO+kdJ7YTC4M/ds9qguyvevsy
+	rS70QBkRXt4c5aJQ2uK4Qy1Rd2pa5jFXIbHpXfqNynPuiB0NEGYnTkKsHiF86vz9
+	wvzh+p4tetTT2Q3Q88IcptnJwhzlh5YAYjM5+eC+XJLDLw0A+sh8qQzY1Vx4iKu4
+	zmKXjV50htJ14aJl1wEzBksk4/lpE1EUXXSUgp0B350ssCHafcftH26ej9RVz++M
+	G3ukVTLbfKLQfjY9b1VPhyM+3RoRB9QV/mw==
+X-ME-Sender: <xms:jkY4ahBfQkohRQ2Ka_hnYC8A8umk74Ze0LB6AtPOzEFZN-mJxdFGgg>
+    <xme:jkY4ahzeOMGVzVw3bPUQPelyPUXYd1E-XaVBwyomgirxjLOBS8E_DHk9aBAsbxmhz
+    u1qe2tJ3uR_psbF6oPb2MbmS7ZxxNH0mqAShmdgsfZDizmn-kPIr9s>
+X-ME-Received: <xmr:jkY4au2V11FigC87pcIY016FhaWSXB_eN7ETnxw1xWnUSwX-XRnWqkxibjgTmiU6z2aINGgXCW2eDwwXdHXAMOGEnhFmH1x7pD1rFAA>
+X-ME-Proxy-Cause: dmFkZTFgbL52wwHzogDR4KkXJsN/gA9FWoyzeFOUkvlsrVHwwNr/aSR7JTlEYrkMNDMZIo
+    Vr6kb8aojzarX3gW5FVCUysbimk0rl3FkfMadPMEJVYX/9QmQiruzx8V5bzcRGKfTl8Sew
+    93RgbR8U8ayfS0O18xy0nTnFuHN3jdxBm63/JoSux/0whQaxRbM4oVQgdNLK+cpwwcG406
+    m/HO/RFsUoazd9H4mBLndFWIu1XgeYvNkWc0u6G2opHiG5OvAW19DHB0Q5l35UNiyb6BJ5
+    +EVVU3fNDKus/fgHLMVLqJFH/kR+eXCh1Kb6EoAzhRKusqlRzGfzBl61B/MlJVuGw7n6VZ
+    X8Kowf/fN85CNguOizH3haDd2B6uFKCkHPLASQwvAhWdB08to95FB3Hh2X3NK9nd9ntobp
+    U0j0oYUDsJ9C5Ebe0DfZwphSx9dQXJr6d4LOcLLAges1Lcthd68y8tOM7UWHmSoh6uhLF7
+    9ifgKMTWG2ZQSAj6o/gHYQVeR2C+hhixIeoTjbnLG6y17UpHC7WmjH2+rQoqTWi6OA+JHo
+    vDY/Oun/pKWNhqtreW559UD4wWayXjvV7kRKHDkBranZHrX9eZDCGetEWCij0dZBzs09f2
+    YJYhef9zPK+EtBoPYidxLVPaI4/njODMzVSOsheMYdupii8ndLCipOmP4Upw
+X-ME-Proxy: <xmx:jkY4ahwyqdRo8hdnyO6120fxaUoeg298iunIG2Wcjq_Zn_eAwiIWSQ>
+    <xmx:jkY4alFSlFCp4rNUcmW6SrFcDI1od3oGUTbf7jMGJ1rzNc-8EwOZZA>
+    <xmx:jkY4akYyFQSUeDH73VoVb-Xaoh2BRdzVMHJjOfw662pPZenW-FkY1Q>
+    <xmx:jkY4anCnk0h4IAkKI-QayW7a6hay7XzGAia2QPBnwUlXN16ddAmNtw>
+    <xmx:jkY4akDKXVF3QfmC5iibpTaVQcWr550FVyiMfoAUK2VwdRA1l1Fye2zd>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 21 Jun 2026 16:02:56 -0400 (EDT)
+ 21 Jun 2026 16:16:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Chandra Pratap <chandrapratap3519@gmail.com>
-Cc: Pablo Sabater <pabloosabaterr@gmail.com>,  peff@peff.net,
-  eric.peijian@gmail.com,  chriscool@tuxfamily.org,  git@vger.kernel.org,
-  jltobler@gmail.com,  karthik.188@gmail.com,  toon@iotcl.com,  Jonathan
- Tan <jonathantanmy@google.com>,  Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH GSoC RFC v13 10/12] cat-file: add remote-object-info to
- batch-command
-In-Reply-To: <CA+J6zkTjgHAWtJwxY8jo0i9zDtxwj9uUsKAtLS3z1=WxZfr8Zw@mail.gmail.com>
-	(Chandra Pratap's message of "Sun, 21 Jun 2026 11:31:16 +0530")
-References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
-	<20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com>
-	<20260619-ps-eric-work-rebase-v13-10-3d4c7315d2f8@gmail.com>
-	<CA+J6zkTjgHAWtJwxY8jo0i9zDtxwj9uUsKAtLS3z1=WxZfr8Zw@mail.gmail.com>
-Date: Sun, 21 Jun 2026 13:02:55 -0700
-Message-ID: <xmqqo6h37jbk.fsf@gitster.g>
+To: Tian Yuchen <cat@malon.dev>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com,
+  johannes.schindelin@gmx.de,  stolee@gmail.com
+Subject: Re: [PATCH v3 0/2] environment: move ignore_case into
+ repo_config_values
+In-Reply-To: <20260619155152.642760-1-cat@malon.dev> (Tian Yuchen's message of
+	"Fri, 19 Jun 2026 23:51:50 +0800")
+References: <20260618114207.605211-1-cat@malon.dev>
+	<20260619155152.642760-1-cat@malon.dev>
+Date: Sun, 21 Jun 2026 13:16:12 -0700
+Message-ID: <xmqqjyrr7ipf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,28 +87,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Chandra Pratap <chandrapratap3519@gmail.com> writes:
+Tian Yuchen <cat@malon.dev> writes:
 
-> [snip]
->> +static void parse_cmd_remote_object_info(struct batch_options *opt,
->> +                                        const char *line, struct strbuf *output,
->> +                                        struct expand_data *data)
->> +{
->> +       int count;
->> +       const char **argv;
->> +       char *line_to_split;
->> +       static struct object_info *remote_object_info;
->> +       static struct oid_array object_info_oids = OID_ARRAY_INIT;
->
-> I don't get the point of remote_object_info and object_info_oids
-> being static here? These variables are allocated, utilized, and
-> completely freed/disconnected within a single command cycle.
+> This series continues the ongoing libification effort by moving
+> this global variable into 'struct repo_config_values', tying it
+> to the specific repository instance it was read from. This allows
+> us to encapsulate the configuration without altering its
+> eager-parsing behavior.
 
-Great observation.
+Looks good.
 
-> Making them static gives me the false impression that state
-> needs to persist between calls.
+> compat/win32/path-utils.c --- Is it appropriate to include the
+> repository.h header file?
 
-Yes, and makes it thread-unsafe, even though if is questionable if
-this particular function has to be thread safe ;-)
+As the compat/ layer is not meant as a general purpose POSIX
+emulation wrapper that is generally reusable to projects other than
+us, if we have a knob settable by end users to affect behaviours of
+lower layer in compat/, it is natural to make repo-settings
+available to them.
 
+What is the perceived problem you have in mind, and what are your
+proposed alternatives?
