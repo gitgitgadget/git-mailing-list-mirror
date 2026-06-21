@@ -1,69 +1,69 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEBC1F4634
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 05:53:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208E8233932
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 05:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782021201; cv=none; b=doQtz1PtgCZqiUAP8gSxPKDvRdq4V/nLsy6cN2Hjv2Oj65PswmUj4KYKL3qlZC6D8YsWWOSqlaCiTVMEyLn2SFFhQXsq/SRwujQvAQIe/xVmSMTy3oipeyimykubdoUh14+GOFTwyrqbEPJMmxGVyfbL0HnsUvuo6s+U97UfSNg=
+	t=1782021203; cv=none; b=Q3dQobqK5Zps5jQGbfNpgHBLSMRmdjJOJBI6Dmv69fwuChvCdfIn8oJYmLa3kwjoZYUhqbEujCqxr4CQYvGKropmNd3IG5+gCBAHMHOgIqUZwOmxYemW3vZQHi1FscDQ/r8pQNpSyATk+NGIEcGyh2/izipdgwZyz8VUbJR2O5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782021201; c=relaxed/simple;
-	bh=v42sOHU+NPEhjIkOG/WgYyh8KYHUdpVLrZrg5hNdK2A=;
+	s=arc-20240116; t=1782021203; c=relaxed/simple;
+	bh=vyKFyDsJWvEH5/3VmQogtptzNjQnDBYFSPkJgIr2H+g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=irel6o+TRk6uMvfIHyxSb09JRKOklFWfT1FUR8qGTgpxcbJuNvUi2yl3mzipd87uR4BresNWm43bmwTFI1nIVqmqWYQkt0GXEvkhLH8p0yo5mGSidUluh1idKjrsAyohjugz+YuMOC50cRgfNVSdWLSfj+CdEklP9E83qaGOgrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dq9Ww67m; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version:To:Cc; b=VM8d1gxaINTz2bf/sE+btxz0ppDD2rMpvAR045qmPvXe0T7rEcBYKFz6DXQY3Qg+m0FK+lT7RcdG5GymBzmw7QLVv8Q4I0oZrDOmpFzi5fVnWEwYnSJB11obgfogjUPiocITx0poboYteRx+GO8tJhdlW1s7kdygM3Phcse5YvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jV/zYp5T; arc=none smtp.client-ip=209.85.160.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dq9Ww67m"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8de2adc59d8so24668296d6.1
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 22:53:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jV/zYp5T"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-519eedc30a3so21204941cf.1
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 22:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782021199; x=1782625999; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782021201; x=1782626001; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2733pf3f6XCQItOqhNRXBLMf6hYjl0Tg3jbpsScbzec=;
-        b=dq9Ww67mvKrT1QfqkHRATxnsduiw+QPWfp5Htkg+ZNjGXxe+ZG3LOscPUAONkPDevU
-         Fj8qvQX+tPbYqAU7XjJGASNAYy7KtKrk3yrQnNoeOSjTImA6tIGOBy7G0MrHnVJKbEGt
-         CNxNgCtjpOqopgI/BYBzMEwDQtlUcy/FVFFUixrFy2mVotJtOFEYGXj+7IOFGS1ojroq
-         haEInOAUEk2yCQhdQ/1vJjMkK5vNNvHhTcya/AImQZVwxrbiv0VXlgbzoa+9RMrgykaR
-         G7mOU8eJ/eMNgDn9l11g1hCXl26Sw+QND5WPC4oTu81/0Q62kwQBisAdSeEleKi5Ivjg
-         XogA==
+        bh=/sKTEllek34/Q+S8T2rwfc1PDoPkR7+Mi2Hzxj7GD8c=;
+        b=jV/zYp5TExu1lGaK48GqaxKWmepRx7wxITpt6I/UaX6CIoeCfrmxonpab6FhRgYv1A
+         NKErVIt0kmRcITIaFxNvhuvfd0M0oIJQxzEe2FQmC1HAJ13zSCJY6Ds91sMdxGeXojoi
+         fKl+aEe7VqFKyCOy+hv9zjNs8z6vINwL0hm/SdJyF9EE7+HPkZjjOM7qHHaBlwYX095A
+         y3v5KXa0OGb1t4cVyBOH/bzVFCEGac/WwAjWwkaTnYON9HhmsoAnNl0B2oKL0QPStGmz
+         ZX78+vlHJjTfGxufEglqlq+JvaD/LN69mAsRM+FxCw5aJm/TNeblAWPzuoOf9oY86KBJ
+         t0Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782021199; x=1782625999;
+        d=1e100.net; s=20251104; t=1782021201; x=1782626001;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=2733pf3f6XCQItOqhNRXBLMf6hYjl0Tg3jbpsScbzec=;
-        b=EsqDosT2lefqvhQu8PYnd+Kw1aTT5gWEFTYru8Xom1hnoN+FdCqvwNp98tAiguw/8p
-         PBGSg5ZXZl2C+FlrjB8t+yWVS2P4RCsJw+g0s14ACfEw7CcyvZyiZ79Qg/kKKBimNkCQ
-         CoHDT/PKnMhjvvF7ZYpL8ucv0ZO7mdZE/TJYaxyHGTy5et8cLz+fU9klzbAyhRQAdo55
-         5t9EErvGdA2QVaQHbM7582qAAV/a/Wp5KOIruEaZ9URt8lAKLKtQ12ZV/9A1dd86dCET
-         jhZO0JspvDLG2ChsUysQ4yyR5bwBgFspRY6xlpk26w480UMIgWoGqBnjuBTRhuimopqS
-         R7iA==
-X-Gm-Message-State: AOJu0YyMwMPpRlW8x/oY+qnAiyM5Vskn37hP96qjJ8SYeUQzUfgELpXI
-	qA+R14FydbBRvYZBM8i/2jh8wHcaIH6KHxY94zQ16Rwzzcws8+GmuHvfTQyEkw==
-X-Gm-Gg: AfdE7clHd/nstP8g1tSfhGZ/6XaRNl1cq6jLaGaBFCSL97/XPQy/eE6xnt75f2AdzN6
-	9L/bL+hODslZL74eu7je4ssAItUlZg9/fi9kL8y3emZWutizqAwhVMWam9KfhwwhnbkjppFxPJS
-	uexteIQx9B4qKXmSBNF7kTEA+XF6NE6FFKUdkOMkH/4RLjwisPPb7vAS2lE/fLu9zkgwUP3OelE
-	BiKherM6VNwcakYa4OWp5JIWG5ImLQxfU1PY/MTtANprZ5+9/CwGsWZYxrnB19ZGHv2x9WJ8fbx
-	zxS3kGW7YN33Kas6u3CkYVyOsgETZG3f1SsMaauKFgDVP/Qp/Um9lKH35ksjCJ6sw7cWn5oxwwI
-	Slup5bHj2eo9lclhdwYEy3Qpj9kk/cT3T70/wpOBpnLh/JYznBQm6KYd0iLInZgXGYblLDZAQ2f
-	6UaLdSqhxt6oFMt+4VJbANj/Lykawa
-X-Received: by 2002:ad4:5d6f:0:b0:8b0:33a2:2520 with SMTP id 6a1803df08f44-8de4bd92938mr157835766d6.10.1782021198757;
-        Sat, 20 Jun 2026 22:53:18 -0700 (PDT)
+        bh=/sKTEllek34/Q+S8T2rwfc1PDoPkR7+Mi2Hzxj7GD8c=;
+        b=JPWohI7eT8YX0IgEqwWe0dZrX0vakZCypdBS0PohH+ipUtv3M6XTJnBb6NS8JUC6Xk
+         bmuAAjIrmxlolGp1S6maKbh2S0iwF+l1kY0ETZYQCmwfeg9qSJmgFn0JU5pgKUTtRWSx
+         1C7VhiRIEe83BFibDT4C6oybsKOqvPFlwnMe2DuBh7DBVLasABxNedxsSUSc/QI7ZwUa
+         pQXBo80LnuYnUTtvX7cj4Nzqfn5jyljb442z3YBX07/i6sLsvYYdJf5GARa1iUJLX3IG
+         MLH9DcEzatp/4FYRdisZ8sMs+5dH0H2TJYThKOLpbuRufbQ08FQWZVL43neWoIGtND2p
+         /koQ==
+X-Gm-Message-State: AOJu0YwsrayzN57DwRlcSy9+Hw0X/pVuNl51xVtioo7Edo0arM5Xdmiu
+	d0TuHwoGlzErgNd6N8DSIONvsLJU5T8jeDLy5Bi572uOt8tU5hYbPeIybBkKJQ==
+X-Gm-Gg: AfdE7cls5s3dB3u9qkQptz4mAXHM4Ui3QZlHcL8HnuQZp1rcYQ8pte0sFW2xzJUEIu7
+	s3ZdwUukiiBjbj3gT8BF8dDZP5fVYbR6NVNTCwbJ9Z8IXjOnH+lAYpIuDxAhiguGdr2kTP17gaG
+	vZM4yHl7dh8e22HGYN6QdnE/Et6+AmYHWyEoLDWOBhMa3sH0jpTxyY5y3rF+hLQaC1LEF6ObriD
+	Y/+GYXfZ9/+3207UHVzudykbfCiHpGm5hBsNzXUX/NOVHlKxQGDa4o7IxLic8kxGAiexuYqWmm/
+	aGoSO5+K7gsKWH5oK+G9x4xh9g6yBAKHqeTz/DwxGHQ0/MOQ9qyp7Rc9RMWvcI9r++xTpZxvmCu
+	Zx9S1gK+vhOeH6F2L4/sfhGVdaBaBh2pIvIdnmG3xLl4ujymliN7JiyXKIzLURz31VzBYpdKo99
+	cdFI0aj64LI3g+6O3Py/ZUqYfLN48R
+X-Received: by 2002:a05:622a:1482:b0:517:8f2e:5d84 with SMTP id d75a77b69052e-519e4913abfmr149737801cf.3.1782021201087;
+        Sat, 20 Jun 2026 22:53:21 -0700 (PDT)
 Received: from [127.0.0.1] ([172.178.117.209])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df81fcb4a4sm52299446d6.36.2026.06.20.22.53.18
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df81cde4b3sm51696176d6.28.2026.06.20.22.53.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2026 22:53:18 -0700 (PDT)
-Message-Id: <ee591e83b461311a55514be7418639532cf9997c.1782021195.git.gitgitgadget@gmail.com>
+        Sat, 20 Jun 2026 22:53:20 -0700 (PDT)
+Message-Id: <85c7817d7eb2f2598940ae9dfa065aaedd9fe5a9.1782021195.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
 References: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
 	<pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
 From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 21 Jun 2026 05:53:13 +0000
-Subject: [PATCH v4 2/4] history: give commit_tree_ext a message template
+Date: Sun, 21 Jun 2026 05:53:15 +0000
+Subject: [PATCH v4 4/4] history: re-edit a squash with every message
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,85 +79,186 @@ Cc: Harald Nordgren <haraldnordgren@gmail.com>,
 
 From: Harald Nordgren <haraldnordgren@gmail.com>
 
-commit_tree_ext() reuses the message of the commit it is handed. A
-caller that folds several commits together wants to seed the message
-from more than that single commit, so add an optional message_template
-parameter. When NULL, the behavior is unchanged.
+By default "git history squash" reuses the oldest commit's message.
+When --reedit-message is given it only reopened that one message, so the
+messages of the folded-in commits were lost.
 
-Pass NULL from the existing fixup and split callers.
+Gather the messages of every commit in the range, oldest first, and use
+them as the editor template when re-editing, mirroring how "git rebase
+-i" presents a squash. The combined message is built before the
+descendant walk so it is not disturbed by the flags that walk leaves on
+the commits.
 
 Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
 ---
- builtin/history.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ Documentation/git-history.adoc |  5 +--
+ builtin/history.c              | 61 +++++++++++++++++++++++++++++++++-
+ t/t3455-history-squash.sh      | 37 +++++++++++++++++++++
+ 3 files changed, 100 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/git-history.adoc b/Documentation/git-history.adoc
+index 6716749cde..df389015aa 100644
+--- a/Documentation/git-history.adoc
++++ b/Documentation/git-history.adoc
+@@ -111,8 +111,9 @@ history squash @~3..` folds the three most recent commits into one, and
+ `git history squash @~5..@~2` squashes an interior range while leaving
+ the two newest commits in place.
+ +
+-The oldest commit's message and authorship are preserved by default,
+-unless you specify `--reedit-message`. A merge commit inside the range is
++The oldest commit's message and authorship are preserved by default. With
++`--reedit-message`, an editor opens pre-filled with the messages of all the
++folded commits so you can combine them. A merge commit inside the range is
+ folded like any other, but the range must have a single base, so a range
+ that reaches more than one entry point (for example a side branch that
+ forked before the range and was later merged into it) is rejected.
 diff --git a/builtin/history.c b/builtin/history.c
-index f95f26e684..305bde3102 100644
+index 4f1baea56c..ff3bc9f945 100644
 --- a/builtin/history.c
 +++ b/builtin/history.c
-@@ -101,6 +101,7 @@ enum commit_tree_flags {
- static int commit_tree_ext(struct repository *repo,
- 			   const char *action,
- 			   struct commit *commit_with_message,
-+			   const char *message_template,
- 			   const struct commit_list *parents,
- 			   const struct object_id *old_tree,
- 			   const struct object_id *new_tree,
-@@ -130,13 +131,16 @@ static int commit_tree_ext(struct repository *repo,
- 		original_author = xmemdupz(ptr, len);
- 	find_commit_subject(original_message, &original_body);
- 
-+	if (!message_template)
-+		message_template = original_body;
-+
- 	if (flags & COMMIT_TREE_EDIT_MESSAGE) {
- 		ret = fill_commit_message(repo, old_tree, new_tree,
--					  original_body, action, &commit_message);
-+					  message_template, action, &commit_message);
- 		if (ret < 0)
- 			goto out;
- 	} else {
--		strbuf_addstr(&commit_message, original_body);
-+		strbuf_addstr(&commit_message, message_template);
- 	}
- 
- 	original_extra_headers = read_commit_extra_headers(commit_with_message,
-@@ -189,7 +193,7 @@ static int commit_tree_with_edited_message(struct repository *repo,
- 	if (first_parent_tree_oid(repo, original, &parent_tree_oid) < 0)
- 		return -1;
- 
--	return commit_tree_ext(repo, action, original, original->parents,
-+	return commit_tree_ext(repo, action, original, NULL, original->parents,
- 			       &parent_tree_oid, tree_oid, out, COMMIT_TREE_EDIT_MESSAGE);
+@@ -1068,6 +1068,56 @@ static int find_interior_ref(const struct reference *ref, void *cb_data)
+ 	return 0;
  }
  
-@@ -644,7 +648,7 @@ static int cmd_history_fixup(int argc,
++static int build_squash_message(struct repository *repo,
++				struct commit *base,
++				struct commit *tip,
++				struct strbuf *out)
++{
++	struct rev_info revs;
++	struct commit *commit;
++	struct strvec args = STRVEC_INIT;
++	int n = 0, ret;
++
++	repo_init_revisions(repo, &revs, NULL);
++	strvec_push(&args, "ignored");
++	strvec_push(&args, "--reverse");
++	strvec_push(&args, "--topo-order");
++	strvec_pushf(&args, "%s..%s", oid_to_hex(&base->object.oid),
++		     oid_to_hex(&tip->object.oid));
++	setup_revisions_from_strvec(&args, &revs, NULL);
++
++	if (prepare_revision_walk(&revs) < 0) {
++		ret = error(_("error preparing revisions"));
++		goto out;
++	}
++
++	while ((commit = get_revision(&revs))) {
++		const char *message, *body;
++		struct strbuf one = STRBUF_INIT;
++
++		message = repo_logmsg_reencode(repo, commit, NULL, NULL);
++		find_commit_subject(message, &body);
++		strbuf_addstr(&one, body);
++		strbuf_trim_trailing_newline(&one);
++
++		if (n++)
++			strbuf_addch(out, '\n');
++		strbuf_addbuf(out, &one);
++		strbuf_addch(out, '\n');
++
++		strbuf_release(&one);
++		repo_unuse_commit_buffer(repo, commit, message);
++	}
++
++	ret = 0;
++
++out:
++	reset_revision_walk();
++	release_revisions(&revs);
++	strvec_clear(&args);
++	return ret;
++}
++
+ static int cmd_history_squash(int argc,
+ 			      const char **argv,
+ 			      const char *prefix,
+@@ -1092,6 +1142,7 @@ static int cmd_history_squash(int argc,
+ 		OPT_END(),
+ 	};
+ 	struct strbuf reflog_msg = STRBUF_INIT;
++	struct strbuf message = STRBUF_INIT;
+ 	struct oidset interior = OIDSET_INIT;
+ 	struct commit *base, *oldest, *tip, *rewritten;
+ 	const struct object_id *base_tree_oid, *tip_tree_oid;
+@@ -1131,6 +1182,12 @@ static int cmd_history_squash(int argc,
+ 		}
+ 	}
+ 
++	if (flags & COMMIT_TREE_EDIT_MESSAGE) {
++		ret = build_squash_message(repo, base, tip, &message);
++		if (ret < 0)
++			goto out;
++	}
++
+ 	ret = setup_revwalk(repo, action, tip, &revs);
+ 	if (ret < 0)
  		goto out;
+@@ -1139,7 +1196,8 @@ static int cmd_history_squash(int argc,
+ 	tip_tree_oid = &repo_get_commit_tree(repo, tip)->object.oid;
+ 	commit_list_append(base, &parents);
  
- 	if (!skip_commit) {
--		ret = commit_tree_ext(repo, "fixup", original, original->parents,
-+		ret = commit_tree_ext(repo, "fixup", original, NULL, original->parents,
- 				      &original_tree->object.oid, &merge_result.tree->object.oid,
- 				      &rewritten, flags);
- 		if (ret < 0) {
-@@ -855,7 +859,7 @@ static int split_commit(struct repository *repo,
- 	 * The first commit is constructed from the split-out tree. The base
- 	 * that shall be diffed against is the parent of the original commit.
- 	 */
--	ret = commit_tree_ext(repo, "split-out", original, original->parents, &parent_tree_oid,
-+	ret = commit_tree_ext(repo, "split-out", original, NULL, original->parents, &parent_tree_oid,
- 			      &split_tree->object.oid, &first_commit, COMMIT_TREE_EDIT_MESSAGE);
+-	ret = commit_tree_ext(repo, "squash", oldest, NULL, parents,
++	ret = commit_tree_ext(repo, "squash", oldest,
++			      message.len ? message.buf : NULL, parents,
+ 			      base_tree_oid, tip_tree_oid, &rewritten, flags);
  	if (ret < 0) {
- 		ret = error(_("failed writing first commit"));
-@@ -872,7 +876,7 @@ static int split_commit(struct repository *repo,
- 	old_tree_oid = &repo_get_commit_tree(repo, first_commit)->object.oid;
- 	new_tree_oid = &repo_get_commit_tree(repo, original)->object.oid;
+ 		ret = error(_("failed writing squashed commit"));
+@@ -1160,6 +1218,7 @@ static int cmd_history_squash(int argc,
  
--	ret = commit_tree_ext(repo, "split-out", original, parents, old_tree_oid,
-+	ret = commit_tree_ext(repo, "split-out", original, NULL, parents, old_tree_oid,
- 			      new_tree_oid, &second_commit, COMMIT_TREE_EDIT_MESSAGE);
- 	if (ret < 0) {
- 		ret = error(_("failed writing second commit"));
+ out:
+ 	strbuf_release(&reflog_msg);
++	strbuf_release(&message);
+ 	oidset_clear(&interior);
+ 	commit_list_free(parents);
+ 	release_revisions(&revs);
+diff --git a/t/t3455-history-squash.sh b/t/t3455-history-squash.sh
+index 821c801153..1fb3b9b63e 100755
+--- a/t/t3455-history-squash.sh
++++ b/t/t3455-history-squash.sh
+@@ -135,6 +135,43 @@ test_expect_success 'preserves authorship of the oldest commit' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--reedit-message offers every folded-in message' '
++	git reset --hard start &&
++	echo b >file &&
++	git add file &&
++	git commit -m "re-one subject" -m "re-one body line" &&
++	test_commit --no-tag re-two file c &&
++	test_commit re-three file d &&
++
++	write_script editor <<-\EOF &&
++	cp "$1" buffer &&
++	echo combined >"$1"
++	EOF
++	test_set_editor "$(pwd)/editor" &&
++	git history squash --reedit-message start.. &&
++
++	test_grep "re-one subject" buffer &&
++	test_grep "re-one body line" buffer &&
++	test_grep re-two buffer &&
++	test_grep re-three buffer &&
++	git log --format="%s" -1 >actual &&
++	echo combined >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success '--reedit-message aborts on an empty message' '
++	git reset --hard three &&
++	head_before=$(git rev-parse HEAD) &&
++
++	write_script editor <<-\EOF &&
++	>"$1"
++	EOF
++	test_set_editor "$(pwd)/editor" &&
++	test_must_fail git history squash --reedit-message start.. &&
++
++	test_cmp_rev "$head_before" HEAD
++'
++
+ test_expect_success '--dry-run predicts the rewrite without performing it' '
+ 	git reset --hard three &&
+ 	head_before=$(git rev-parse HEAD) &&
 -- 
 gitgitgadget
-
