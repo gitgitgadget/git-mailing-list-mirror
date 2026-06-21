@@ -1,41 +1,45 @@
 Received: from cloud.peff.net (cloud.peff.net [217.216.95.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCF47081A
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 21:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21781C84BB
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 22:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.216.95.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782078790; cv=none; b=SOnqwIWgMJ0Ene7Eqf7CTL1M3lh6RnV+J5gTyu+Wlc3nQwx4tqFpCQKZwFuvwWxrQ+WcWSBB9zcvMMlxPIpZt6czvgxeSvGxcSOubFa0mFIswFVGR9x7uNAUXJ/GbhC8wE9hOZv/r0jlxwNRt3JyUaLDcbKixoJmHYhdbz8DTuw=
+	t=1782079249; cv=none; b=k+6oarjB57WZUEQjh1PGojkwW+b/hKssCa8o1/pqlHc7cnJbxegzz+7AOa65eEx2mysFXK2fSQ8riUGpZHX+NOQPRMPVdjc8ZL0oGNJnkWhKZbweOVvJQEg++n/wYs7q/7mDz2BTrNEXAQQTGKQDUzZhMI7FYie2WIjo+KbZIA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782078790; c=relaxed/simple;
-	bh=i6JxCjadE1HRvsgKh4KR1u1s35kvuAbjvQD9J+WPI+8=;
+	s=arc-20240116; t=1782079249; c=relaxed/simple;
+	bh=iQO831RzoKsuPiOgDWot1/irDFwYmW45N5LwbQVtdoA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PXL3IWNoNHSCmX5IYoCSFFzMTRmf/niMgijj1iPZ+CZeZLhYM/PSSYeIn1MPUhPJWHFTL2GfJRP4P3Y8AoijvaA2UZcFr8UPH+kNzUjKcB4VkCrFY3tx/ouTwHY3ChFeOFjPgDcPYCBP+0YD89Zb72RvI3Z/7smbbfRNKSnprf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Qj3SiLlM; arc=none smtp.client-ip=217.216.95.84
+	 Content-Type:Content-Disposition:In-Reply-To; b=MT+x1nyxVJFSBVWfGi9qTTh6pFW4n5HlS14IRkxx40W/EuExC/O08I+ICFffVdcPywfff0CVHGajSADWX/+SauPn9vE/juUdppOz4TuxfQUFipR5cK46DXeMaY0p3YtIbkSGnAHZ6AbsR8aZC/FONPC6cF3UgJZ7FAuI6Y7I4Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XiKSmtj1; arc=none smtp.client-ip=217.216.95.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Qj3SiLlM"
-Received: (qmail 208735 invoked by uid 106); 21 Jun 2026 21:53:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=i6JxCjadE1HRvsgKh4KR1u1s35kvuAbjvQD9J+WPI+8=; b=Qj3SiLlMoPWJLy87giHj42NHFue7SJPNtyYzAla6k3mWQ1fSpeWOsjLvWy8GOcrFHRZYdGNaoI6E78rBnr2Y7oEY7tCau5lweAL4Kzy+xV99vosS7sF5AEZzsE7EEQpG48/Z+OiZPxPlzOnkU5AExs88SvKg19typVD9tnXgtR4kgncVHECWF5ODo/OHV00SfldfszGq64RWWTNwCTYR86NHELoCSS/EJ9ydbeGWVq/mK5daoOpc3kaTs0v0wCpgJuk5UuMxZdXFA0o3tIgSWnWAMy2AXSQMrx8sO+MQ8uQu82+iIP5ltvoFJt6B3A5oXi1vUPXODaMHAQ27nR0skA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XiKSmtj1"
+Received: (qmail 208764 invoked by uid 106); 21 Jun 2026 22:00:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=iQO831RzoKsuPiOgDWot1/irDFwYmW45N5LwbQVtdoA=; b=XiKSmtj1e2lImGJOeI08Y1lm9Eu0y2EWGM1qd2dN+a4+9v9BThbrpfP9IhnB3mP0d/Pxyc0yo0/hYgpsXm41pQU0Ztlyv7p/z4FV+2s872iK7hMHMOQXhvLhLbX93OUbYYqxbB+jOlYsgkv/ReSWt72PucH8kOactjnLq5Z4DvD/bJ5RkdmHPuIfaoRDICz4Bbxmpj+dXqL17QYl00ONPwPBDtQJRVwDAD7c7wCS6p/Fv4+qlwLd1rW9jY4DNahAoTuVXgSt4aw7kark08M27eNswxH1s47jaQDTaPAqHDk2TU7HwBI5FTv6jepDLVgXOt9dH/CJ0Bw7IV9CfvJGiA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 21 Jun 2026 21:53:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 21 Jun 2026 22:00:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 526888 invoked by uid 111); 21 Jun 2026 21:53:10 -0000
+Received: (qmail 526959 invoked by uid 111); 21 Jun 2026 22:00:48 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 21 Jun 2026 17:53:10 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 21 Jun 2026 18:00:48 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sun, 21 Jun 2026 17:53:07 -0400
+Date: Sun, 21 Jun 2026 18:00:46 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Erik =?utf-8?Q?=C3=96stlund?= <erik.ostlund@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: Pinned references?
-Message-ID: <20260621215307.GD2297179@coredump.intra.peff.net>
-References: <CANE2Nt_LP9odF9tVsy8di54eSH=QJxif2WQfHC+TQGGFeVcjvg@mail.gmail.com>
- <ajTx9vLIWK5wvTHM@pks.im>
- <xmqqeci2lcpc.fsf@gitster.g>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: git-diff in a worktree is an order of magnitude slower?
+Message-ID: <20260621220046.GE2297179@coredump.intra.peff.net>
+References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
+ <20260609001134.GD358144@coredump.intra.peff.net>
+ <CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
+ <20260611085526.GL2191159@coredump.intra.peff.net>
+ <CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
+ <xmqqa4sog1e9.fsf@gitster.g>
+ <20260621172432.GA2206349@coredump.intra.peff.net>
+ <20260621174518.GB2206349@coredump.intra.peff.net>
+ <xmqqechz60ah.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,61 +48,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqeci2lcpc.fsf@gitster.g>
+In-Reply-To: <xmqqechz60ah.fsf@gitster.g>
 
-On Fri, Jun 19, 2026 at 09:25:19AM -0700, Junio C Hamano wrote:
+On Sun, Jun 21, 2026 at 02:39:18PM -0700, Junio C Hamano wrote:
 
-> Patrick Steinhardt <ps@pks.im> writes:
+> Jeff King <peff@peff.net> writes:
 > 
-> > You can already kind of do this:
+> > BTW, I don't think diffcore actually has the information it would need
+> > to do so. The racy stuff is handled under the hood in ie_match_stat(),
+> > which returns only a set of "changed" flags. So the caller cannot tell
+> > the difference between the two cases:
 > >
-> >     $ git rev-parse v2.54.0
-> >     0b13e48a3a30cdfa94e8ef842e24d6045ab3d015
+> >   1. We checked ce_match_stat_basic() which said "no change", and then
+> >      is_racy_timestamp() was false, so that was good enough.
 > >
-> >     $ git rev-parse v2.54.0-0-g0b13e48a3
-> >     0b13e48a3a30cdfa94e8ef842e24d6045ab3d015
+> >   2. is_racy_timestamp() is true, so we further did a content check,
+> >      found nothing, and returned the same "no change"
 > >
-> >     $ git rev-parse v2.54.0-0-g95e20213f
-> >     95e20213faefeb95df29277c58ac1980ab68f701
-> >
-> > This is described under gitrevisions(7), `<describeOutput>`. The only
-> > gotcha is that this format will not verify that the tag and the object
-> > ID actually match. But other than that it gives you the ability to have
-> > both the human-readable name and the machine-readable commit ID in
-> > there.
-> >
-> > As said, we don't verify that those two revisions actually match. So in
-> > the case where they don't the result is certainly going to be lots of
-> > confusion. It certainly is one of the more surprising syntaxes that we
-> > have in Git.
+> > Obviously we could pass back another flag, but that would disrupt the
+> > other callers. Hmm. It looks like we could pass in a flag to say "assume
+> > racy entries are modified". And then they come back to the diff code,
+> > diffcore_skip_stat_unmatch() sees they're not real diffs and suppresses
+> > them, but we _do_ count them as stat-dirty.
 > 
-> It is very unlikely we would change this, but it is a fun thought
-> experiment to imagine what would have happened if we insisted (i.e.,
-> verified and then died if it does not hold true) on the presence of
-> v2.54.0 tag and when the "hop" count is "-0-", we also insisted that
-> the hexadecimal part exactly matched the contents of v2.54.0 tag, or
-> when the "hop" count is not zero, we insisted that the hexadecimal
-> part names a commit that is descendant of the commit v2.54.0 names.
+> Yeah.  Because ie_match_stat() does have access to istate, we could
+> add a new member to istate, next to "updated_workdir" and friends,
+> and smudge the bit when the is_racy_timestamp() goes to the
+> compare-data codepath and finds that we are better off auto
+> refreshing.  Then "were we told to do skip-stat-unmatch and actually
+> found some that is worth refreshing?" code can be taught to pay
+> attention to that bit as well.
 
-This is somewhat related to the thread here:
+Yeah, that sounds fairly clean. Though if using nanoseconds works out
+and makes racy entries extremely unlikely, that is better still. :)
 
-  https://lore.kernel.org/git/CAFb48S8LDz4kiWsKSCBn8J=AHyQ5SVPFH4GY=z+8=DntT=PyAw@mail.gmail.com/
+> This is a tangent, but why do we call refresh_index_quietly() in the
+> central code path in cmd_diff() in the first place, I have to
+> wonder?  It should not matter when we are comparing two tree objects
+> (or two commits), at least.  It of course is not hurting, though.
 
-The problem there was the opposite. A name "foo-gcc14" was taken as a
-describe name (for object "cc14") when it was not. But one thing I noted
-there is that you probably can't be too picky about having "foo" when
-you see "foo-g1234abcd". Part of the point of putting the hash in the
-described name is that the receiver does not necessarily have your same
-refs!
+It seems like it could probably just go into builtin_diff_files(), but
+are there other paths that might hit stat-unmatch entries? Maybe the
+builtin_diff_b_f() path?
 
-So insisting that "v2.54.0-0-g1234abcd" have both "v2.54.0" and
-"1234abcd" locally is probably going to cause some regressions. We could
-quietly accept it as "1234abcd" if your "v2.54.0" ref is missing
-entirely, though that is perhaps missing the point of the original
-request.
+It probably should also support --no-optional-locks, which is currently
+only respected by git-status. I don't think it matters that much in
+practice because the point is reducing conflict with commands running
+frequently in the background, and people don't tend to do that with
+git-diff.
 
-The discussion around this patch series might also be relevant:
-
-  https://lore.kernel.org/git/xmqqed1i4pga.fsf@gitster.g/
+Back when we added --no-optional-locks, the idea was that people could
+apply it in more spots if they ran into them in practice. So I guess
+nobody has with git-diff.
 
 -Peff
