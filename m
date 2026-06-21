@@ -1,133 +1,95 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A25E238C1A
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 08:05:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7897E7260F
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 10:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782029153; cv=none; b=B1tO4kkwKrOzyz6ZCuxmun6s2hQ5yRsHqsk1gLKH863YvwPASA1AYznY1uzwwBYmieGf8nzgy/BrxbAqTnzRoIZPV/eDRT2xtYR9Bo/z4cyJMhRCcLa18UIDbhzbr8xoqXLIN5ONgYRJ0UKAa1eY1suADpu+qZVmrRRZ7cJoG6g=
+	t=1782038029; cv=none; b=dE4UEgGI97+4L50cOu3TuQIUJTs0+i3cdEo8AtH+8m2bHe8Pt0pNUrjKN4SZJwNx3xAffC2lccqxbT4ju6zRHLNZVaKnsg/tBeAWQsd5Ps/iOppJ4yIaIn+oxROGgeRWCdPsKhl6MvWfgBAsutqCV02AJI0j6Ju97yx9L6xkJLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782029153; c=relaxed/simple;
-	bh=FMsr11SHb57afqOxi9TyausTQP12tvVyRtOExIgAu0M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AyH2YZc+f8mIkWr9RQi4NWleyv/Xmxc+xeKarg3wYblHaT2jnM9HbjdbTF5QL8Tyv/oKQ3P9foBxF7auvH00ubn9kHP3WLlOfClWThWRltLCoIf++2E8uySD4VUYpkfy1vHWtWsiOW7O/8is8jbR4zNZgxbTBMj2Ynzj7b+D3GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org; spf=pass smtp.mailfrom=wyuan.org; dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b=HAmJ+yMr; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wyuan.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wyuan.org header.i=@wyuan.org header.b="HAmJ+yMr"
-Date: Sun, 21 Jun 2026 16:05:34 +0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wyuan.org; s=key1;
-	t=1782029149;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QG+Tf0F8YDGIa22gk1uftQbNy9c2ZbAR61lUyba6A4g=;
-	b=HAmJ+yMryfe3009kuCkrj3v+ncCmzLL05AjQKZr32k2HUNojb5TXhKOuwPs83ReCZnF6Vf
-	iiC5zDGaLzq+uQnxCDc1/2QpnQ4MiTkgyeD0pip43B8KqK3HvOsSbF3gWyDh3OIRPQqJE1
-	+N9OyL+6gqLurBy2hV7q1VNFCQhqRpkXYWTzEbhhK7u4CNc1OMz5Hj8t9czgD1vmASa6ru
-	7EeKMLeZXd5qnTaXPA9KzOI0YPtE0d15DbUM5NwgNL8Icf5TtO8bmoo3HVHW+d+5QtgvfB
-	ireMJ84RxOWr0ZVCmVFNUth9OAKFk1AmG3zpRzwKM4ZHCXVXjrgJvEIdqOBXaQ==
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Weijie Yuan <wy@wyuan.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-Subject: [PATCH v3 2/2] doc: advise batching patch rerolls
-Message-ID: <e1050a6ef5e26299b2c6d9743067fe3d7f4f8071.1782028813.git.wy@wyuan.org>
-References: <cover.1781714757.git.wy@wyuan.org>
- <cover.1782028813.git.wy@wyuan.org>
+	s=arc-20240116; t=1782038029; c=relaxed/simple;
+	bh=jvrHMKKompS3PBhORVgP4ZTggG09dB/nPokz7KAqdyY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TkaqIBj/1vKayNkq6CNwCcibE3JN2+ekWls1ZjQxBn92Bm1QiWAWf57aqgPZ1PmZXvSdjKmDmkcun+j7CVz6AxWIdmXs0jZtVEX2QUi+y+slx14SXgk4ESxoS9k+l+aglFhjZrz+uu3EyR1Nynzs01nuNOqWc/U7fh6Xgqcmyy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.107])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4gjnk06fqFz7Qw2w
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 12:33:44 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4gjnjq40NpzRq1k;
+	Sun, 21 Jun 2026 12:33:35 +0200 (CEST)
+Message-ID: <efc97fee-a98c-497f-94a9-6f8b77667f30@kdbg.org>
+Date: Sun, 21 Jun 2026 12:33:35 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1782028813.git.wy@wyuan.org>
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH 2/1] git-gui: reduce complexity of the quiet msgfmt rule
+To: Harald Nordgren <haraldnordgren@gmail.com>
+Cc: git@vger.kernel.org,
+ Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.2339.git.git.1781459539.gitgitgadget@gmail.com>
+ <pull.2339.v2.git.git.1781995570677.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.2339.v2.git.git.1781995570677.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Contributors often need guidance on how quickly to send later iterations
-of a patch series. Add a rough default of no more than one new version
-of the same series per day so feedback can be batched and reviewers have
-time to comment regardless of their time zones.
+In non-verbose builds (without V=1) the rule to compile *.po files with
+msgfmt captures the output in a shell variable and then strips down the
+text produced by --statistics to fit on a 80 column line. The previous
+commit removed --statistics output of the msgfmt invocation, so that we
+don't get to see anything beyond "MSGFMT po/xx.msg" anymore. Make the
+rule as minimal as the other "quiet" rules.
 
-Mention factors that can affect the timing, such as series size, review
-depth, and substantial rework. Also point out that avoiding rapid
-rerolls encourages authors to polish each version before sending it, so
-reviewers can focus on substantial issues.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Weijie Yuan <wy@wyuan.org>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- Documentation/MyFirstContribution.adoc | 22 ++++++++++++++++++++++
- Documentation/SubmittingPatches        | 13 +++++++++++--
- 2 files changed, 33 insertions(+), 2 deletions(-)
+Am 21.06.26 um 00:46 schrieb Harald Nordgren via GitGitGadget:
+> The catalog rules ran msgfmt with --statistics, whose output went to
+> stderr and so survived "make -s" (gitk also echoed "Generating
+> catalog").
+> 
+> The statistics are not needed, as in 2f12b31b746c (Makefile: don't
+> invoke msgfmt with --statistics, 2021-12-17), and the "Generating
+> catalog" line is not needed either. Remove them so a quiet build stays
+> quiet.
 
-diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index 00704ab91e..35105bc3b4 100644
---- a/Documentation/MyFirstContribution.adoc
-+++ b/Documentation/MyFirstContribution.adoc
-@@ -1330,6 +1330,28 @@ previous one" patches over 2 days), reviewers would strongly prefer if a
- single polished version came 2 days later instead, and that version with
- fewer mistakes were the only one they would need to review.
+I split off the git-gui part, adjusted the commit message, and then
+applied the patch below to simplify the Makefile further.
+
+ Makefile | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 48d848a59dfb..2e1711adc5a5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -69,8 +69,7 @@ ifndef V
+ 	QUIET          = @
+ 	QUIET_GEN      = $(QUIET)echo '   ' GEN '$@' &&
+ 	QUIET_INDEX    = $(QUIET)echo '   ' INDEX $(dir $@) &&
+-	QUIET_MSGFMT0  = $(QUIET)printf '    MSGFMT %12s ' $@ && v=`
+-	QUIET_MSGFMT1  = 2>&1` && echo "$$v" | sed -e 's/fuzzy translations/fuzzy/' | sed -e 's/ messages*//g'
++	QUIET_MSGFMT   = $(QUIET)echo '   ' MSGFMT '$@' &&
  
-+This consideration applies not only when going from the initial patch to v2,
-+but also to later iterations of the same series. There is no fixed rule for how
-+long to wait before sending a new version. A useful default is to send at most
-+one new version of the same patch series per day. This gives multiple reviewers
-+time to comment, gives reviewers across time zones a fair chance to
-+participate, lets you batch feedback together, and gives you time to think
-+through the comments you received. Knowing that you should not immediately send
-+another version also encourages you to review the patches more carefully before
-+sending them, catch small mistakes such as typos and off-by-one errors
-+yourself, and let reviewers spend more of their attention on design,
-+algorithms, and other substantial issues.
-+
-+The right timing depends on the topic and the feedback. Larger series usually
-+need more review time. If the only comments so far are minor, such as typo
-+fixes, it often makes sense to wait a little longer in case deeper reviews are
-+still coming. If the comments call for substantial rework, do not rush out an
-+updated version before you have reviewed the larger changes carefully. Instead,
-+reply to the review that prompted the rewrite, say that you are preparing a
-+substantial rework, and mention which parts of the current series will become
-+obsolete so reviewers can avoid spending time on them until the updated series
-+is ready.
-+
+ 	INSTALL_D0 = dir=
+ 	INSTALL_D1 = && echo ' ' DEST $$dir && $(INSTALL) -d -m 755 "$$dir"
+@@ -155,7 +154,7 @@ $(PO_TEMPLATE): $(SCRIPT_SH) $(ALL_LIBFILES)
+ update-po:: $(PO_TEMPLATE)
+ 	$(foreach p, $(ALL_POFILES), echo Updating $p ; msgmerge -U $p $(PO_TEMPLATE) ; )
+ $(ALL_MSGFILES): %.msg : %.po
+-	$(QUIET_MSGFMT0)$(MSGFMT) --tcl -l $(basename $(notdir $<)) -d $(dir $@) $< $(QUIET_MSGFMT1)
++	$(QUIET_MSGFMT)$(MSGFMT) --tcl -l $(basename $(notdir $<)) -d $(dir $@) $<
  
- [[reviewing]]
- === Responding to Reviews
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 6c1e1f6423..d89efe0707 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -58,7 +58,15 @@ area.
- It is often beneficial to allow some time for reviewers to provide
- feedback before sending a new version, rather than sending an updated
- series immediately after receiving a review. This helps collect broader
--input and avoids unnecessary churn from many rapid iterations.
-+input, gives reviewers in different time zones a fair chance to comment,
-+and avoids unnecessary churn from many rapid iterations.  Waiting also
-+encourages you to polish each version before sending it, so reviewers
-+can focus on substantial issues rather than typos or other small
-+mistakes.
-++
-+As a rough default, avoid sending more than one new version of the same
-+series per day, while considering the size of the series and the depth
-+of review.
- 
- . These early update iterations are expected to be full replacements,
-   not incremental updates on top of what you posted already.  If you
-@@ -619,7 +627,8 @@ letter" message (see below), the first patch, or the respective preceding patch.
- Here is a link:MyFirstContribution.html#v2-git-send-email[step-by-step guide] on
- how to submit updated versions of a patch series.  Before sending another
- version, make sure you have answered meaningful review comments in the existing
--discussion.
-+discussion.  Also give reviewers enough time to comment before sending another
-+version.
- 
- If your log message (including your name on the
- `Signed-off-by` trailer) is not writable in ASCII, make sure that
+ lib/tclIndex: $(ALL_LIBFILES) generate-tclindex.sh GIT-GUI-BUILD-OPTIONS
+ 	$(QUIET_INDEX)$(SHELL_PATH) generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS $(ALL_LIBFILES)
 -- 
-2.54.0
+2.55.0.rc0.230.g889306758c
+
 
