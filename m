@@ -1,80 +1,80 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3C81F09A8
-	for <git@vger.kernel.org>; Sun, 21 Jun 2026 06:01:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D11E573
+	for <git@vger.kernel.org>; Sun, 21 Jun 2026 06:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782021707; cv=pass; b=HHBhZ6rh8DSUt5bKvmoTY4WbDSN/Ojz8fglUwN36Zbbmuh0xQjs6+0aEc34yIzjpD2nMq7qhkG+WUxP14jTu9Ga8MzswSaHZT3iMe0yxM+pjC3tqOwhICsbEjC0gVJx1DAATwR2RYpILweMZalo/31YgvhkWnq9e1CDMPqQv8Mg=
+	t=1782022816; cv=pass; b=j1M2fQAEd1dnn0um3jACHkXEMmRHwVWgqqYXGXvgytj7Zi3CPZS5Sr1u7Ye22asAqD50fq6KxRxsI3Z1/1b/rI9YjM9aI8Qrh4kCLcU3K1XyhSGxjIy8V/sL6xyVg4E6MObBZ49y7EfK6tgKNBwvtS8yoyMGU5BMX1nxS50vjvc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782021707; c=relaxed/simple;
-	bh=d9a9Z9jM66Ni/JY4P5hKjSPJ8Y4BlD650NGoCLVy/AM=;
+	s=arc-20240116; t=1782022816; c=relaxed/simple;
+	bh=aXLlty+DcAGfcI489yrEagvxvhmNrhfMIpcxVpSEw1Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mCY84qKPp5RTN7WBHvXVzuwNPk1dX5G2yR7nEViMswnrb3tMz9YvQf6RT9MFKprSumsIM7NZ5c5SslB0jI9SixO2sEDqDJAYKq5Zv/1rHggjU4cVrct0r0Z1kkyDF8pUFWspq2a9t9kfR4EoKoXl91Mrtx2OGfPAUEbuZHBnWBI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QYM+WlF3; arc=pass smtp.client-ip=209.85.208.43
+	 To:Cc:Content-Type; b=rEGzYW2epHpiZ7+hbKFY4E0367YD3YQE2zp9lzqZnB7AwApUDWFDA9xWK/u/mUXfFi2Yy88EVJHAGdO++ZO7J28NuwibWTtsV2bZ70NwlonOwb+KUEsudC0mVwoFfQOGiHhHbYug9g9+qBU0yxPtoLdNm8EFFHiIG1zRjqXrt80=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WePCm+pC; arc=pass smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QYM+WlF3"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69767cb5d4aso2676977a12.3
-        for <git@vger.kernel.org>; Sat, 20 Jun 2026 23:01:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782021704; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WePCm+pC"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-69531108f25so6249154a12.2
+        for <git@vger.kernel.org>; Sat, 20 Jun 2026 23:20:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782022814; cv=none;
         d=google.com; s=arc-20240605;
-        b=AmtYIp2w2NJScIepbGoO5GcxzZo3hBxX56zMZbNqMTiD3QNK+V3A9cHB+4zTdKwDBD
-         /sHJ/pdMZsaMXPR+tPo92WUDacX4iTI/J+NLPnfdLQY8oaCX9H8+nsonpXEUL7Z6/V/1
-         /CbtYhM6929FwCi+1dVR3HKtXU1UcCv9T/piCyPHMdiEo+q/UI44zev8LUaVlUwDgVtW
-         oQHNxB96nQ3cVP3gJrIjZRWHb6LVJV0qQrmsiNIXDZEoQRjLMrXo2W1eQAlIfSuv13j8
-         K5ctmDUqkfqU1QTOv77vBEoZAHMcRdV8j1qU+jGbBLH3KNlKDRl6+DF+L12RN9v1C3ZO
-         lA0Q==
+        b=hbmdmWRgUCmw5s21KXCIxS6A2lNmqWhd/Jolz+mFMJ5aHfT8z84XBCCX+3gYRlmQda
+         UOOd28gzgZujLOpyCkPWNxdtL4OqD+nnt0YmfCCThJsSWIJQOUzcxJ/RhqhuwZV6AvDM
+         FmoWydGUgcJAKBR0ePYqsFx3iCe8Pu/LleMzEt51esyZwxCfSrF5FpXUa0vMUIws384E
+         Uw5JO7OgUgg30irlJCBHOkWjVdPyZiueKyOI9WLy92xcNwqhFV+yog5XJgW9hDlbqqyB
+         CIYSMJJpGrhWHKkgR38CuuzReEHxRYQOpqboj166MpPV8ftKd69HXxvMssAXhQI279B2
+         Qqew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=+z3VRRX4fvOjRK55PRhYNelRPn6uKxUJLh7DLKA0xFg=;
-        fh=HTnbRoPLCu53lVQ71fNOquEcHDW1BNnCIIw7j9bBi0A=;
-        b=Ucr8WoBjMXzehD42lwvwxYDdP6iP6bt2j8bU6Ab/VTs52uJivPe43z7EBTqTDTeHTT
-         YKJEu18CK/uyl3kOc+4lnilPAfL2/WAt+QblJLZcnSLrjMGlIQv4JldOCFBNJ/s2phIN
-         esSSl4Re348uRA6yj8JN4eg8+nRLDeYhg/+XhSzc4qX/tYOhVCObOfmHeslMWaewaybL
-         PSRMXWbB8P2mxhgflNGs17UrqKbOKUBQTEcM8mQTPTrbFA6mlK3FlSEM0/+EpBVpPg6w
-         PKOMOWJBUQHAXFCiJwsga8Nd5o4b0FV7pEMjtbjJmHtWvCzLf1VfmSA/K35ikA0b43ri
-         pPUA==;
+        bh=aXLlty+DcAGfcI489yrEagvxvhmNrhfMIpcxVpSEw1Q=;
+        fh=yMxj6iN820ZoemfwDey4+5nHotcDMLL/UWb6PYYSCzo=;
+        b=ax/rqq6vhLt+twoR1ef8ednTOjfnqNSo9JFPnI+BaFZZVTN184YzEa4C/66OChksmV
+         7GO0ZalvHWOHemyw4044n350Ecc8v1zhB0/yPw15inpVLQLsOM5QHY9RTKYCrrCHi9w4
+         vdIfFAPLf3ZvhG80WBnjpkTXh9KWGCDKs8/PtFEf0nxnDjp/LoXbdoShxufKubnJz/3X
+         AeMo4c6HdVXcHN8F7joCMfZ21oGEoXIO3s3L1+zGw5eWhrhijscr61+rpUznJtZKmVmC
+         cesn8110tG0yjUIiTh4qhWraCOXlyJRItEln+wUP3PGPyjNK4a4WOrsdKMgh88W4b7kb
+         +JrQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782021704; x=1782626504; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782022814; x=1782627614; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+z3VRRX4fvOjRK55PRhYNelRPn6uKxUJLh7DLKA0xFg=;
-        b=QYM+WlF345afi2/1bO843Do75X3Icc6HVduo4RbG/FLTr1F5IIR3CW/sgoWxT9vIQg
-         hHnDliQwxy9ib1k6vUVuXLmijbC3dn+nb4nTq19xgGSSJpKaifsyiw/ohWoBmU/esYRe
-         X56CqZCfcP+sRgXAxVNdAJzk5X5QalgxeAp0sSsuWa2CEfWGU3bTYM+FT1fqOV0LlLSp
-         SGvU79VWYTcxupAsjrwtPOY6dh2FuO9RI1OMuFvQ5MenS5IOPBrhAELzJFGdlmFo9W44
-         zzaGQ50FWWBQ50vooS2Bug8uYW+JcrVqVRKjV9OP+JMYOW+tiJdBj5Mcn8HgTL81SFAK
-         Fkcw==
+        bh=aXLlty+DcAGfcI489yrEagvxvhmNrhfMIpcxVpSEw1Q=;
+        b=WePCm+pC8fTEXPJkMe10Us5uswJlfQQo7yb5kyKZItHu3aDsDTV+mC+xoUmRhXbQuj
+         Wt2Txx+JNAFUD4PaKA9URrO2KBh9QgLXtowd2/9uFwE7CoSMZcaoUH8F/ZXM/yEOyeY0
+         GxO5i1u5oXORONi0SyXqKnOdSpmDaIYJTfGj9OuTVBwwPbMan8fhf5EOItD3FEGFugPj
+         dCOF0ZjOMRjBacJNGHZcYZytk2GrAh4NKZuaukcP6Se4YpmyJbOrbimKlBinH5IGI9LM
+         Y5uyooq5ZH5HP5KVGEREyj5f/5ar1GiIs7P/nzNdu+CzMFcEbLgLMpdN5+RrMrBqI2KB
+         /ZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782021704; x=1782626504;
+        d=1e100.net; s=20251104; t=1782022814; x=1782627614;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+z3VRRX4fvOjRK55PRhYNelRPn6uKxUJLh7DLKA0xFg=;
-        b=AF126UPBr5Lg0VlKJ9hRQ5lypCEt6xAHeRywyFartcEmc8HXIXRDocUJ9RKW8wvd4G
-         J2lDUxWgOwzeWMXmnW7EFA6Tgi9xga1xyBaBo6FbEmQgyCgijRyk1emm6PVVHyRRvqNX
-         moQFrf/9VwfH/aRXkNZVcD+j53EGrYNh/65Ya5BUlvpxBpXb1iQajlrW2tO/rhwMYwhh
-         wvZWDFpbiPR9hxviC+BfVl3bh9ylNSy3GLV/a+eaZX7sdhoAMAgPTZkcs28DJpsrLjaJ
-         sI5Uj/jquvTdWVN7uAe/xqkk0aAhZGUYH6zSKudypCF+atcjVNXgk/NMK2NoQPcxfQlE
-         P2Kg==
-X-Forwarded-Encrypted: i=1; AFNElJ95piJWpypCe4v0oV8jcxWqpEg6XFEWAGinlVN9dzhGhOY8ZRIvFdZV+uQoneKX/PXiWQg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxm7Kch5bJ/fDiFzUGaRlkxHDnURaBQuIohfFfbhaNJwAuWZ8DJ
-	8B/LwSGnI6A60yYEi29AGqtp6lYSSMKzzektXWi245UNqnxxuU3eHsTkcdhVzVmHzFYaONWVGGb
-	K9jbnX4bxPXi58+RL1H9wuMwJNk8sTU8=
-X-Gm-Gg: AfdE7cm5EmAOdbuklRWsa2e5YspAhY0cuNqSS03cc8727uNy+X6b3DHZnzGFfLplH/M
-	239yIDAXA66C3TjZHPHMECM/ff2x3aDcWhBkKrIH+TpwlAb+kPEv4azoixHZSolbJ8x1tH7pFny
-	z7S/nRghd7aHvPbl9RI2jUF5suf9GGMEDnYTk7r6QzrE0k6FYJ9vrkBzehk4I3xeaxzVHKK+2nY
-	3DkAPv6urh/6E6QRGo7TopDLTMZ9Z44hn1qGKWOAJPLTLTxEU0IrIpGnnXnSgP6Q+4e/gl5kWI0
-	C1qtvWgZH1soa/YHMtnPmGaWZu+/pbkK06DbUzvfv+FgddstM4qyo3TBTmls0rudcYXv/kwyYR8
-	lNg11SDpdQQ==
-X-Received: by 2002:a17:907:6d03:b0:c04:fc6:d6bc with SMTP id
- a640c23a62f3a-c097cbca4f7mr483973666b.36.1782021703911; Sat, 20 Jun 2026
- 23:01:43 -0700 (PDT)
+        bh=aXLlty+DcAGfcI489yrEagvxvhmNrhfMIpcxVpSEw1Q=;
+        b=XDNDcBASvL1c9nZGZMdb+mvBANjInxRdE5uCOmPxcGwU9phKPSvXnJjKCSbsPFhyeB
+         NNxw3EIUGuVtTu/U8Az/fHOKYkAB9PQE1d09DFxQXBXQUEaQkv7MJNMqdF8JyixSW89j
+         rr53q7m5YrOlHH9O43CplfHSAQ2rFOsne8HK6lmFTWICi7ytakMgRLqzigP7iRJs3T4i
+         juk7sPzNq6ZfUr7flpwgpr4C9y1dbGsAS7lgAwCpqy/JioZY8ZTlUGQjb4dNb6HjbXOn
+         dTRbSw0vQUxjn+XKkGFc+mk4YYCFHIEPkWeaNGzGctwBY2TIjqAkvVg+UBwmTXSQmBdw
+         bz6A==
+X-Forwarded-Encrypted: i=1; AFNElJ/URaOPYaeykFiqug1P9VrFKWfrgVUAZWNik6qCIDuebp0AwuPt/VQbD9T7660jaVlWJZw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZeLhOdTjojU0YNnmm/ZOBxx9zprbLa3o++esI/2Q4YakFQQjv
+	gpQDyZSh1F1yt/8W/CXNkPsIO7c/DJyggwzHDIK1F/bkLcc65vnOHVHNpqZxmvSAwtOJRM9Ma96
+	vQO6D4HWj6pL2LMdEMDlJ3v/5P8Xj4Jk=
+X-Gm-Gg: AfdE7cmzEbt1+sCpqaUSXXXA6ksaSNNYfw9ym4C4J/L5VkMjtXq1oeXLaZw/PLhYZnm
+	K8QLQbCwnYISsCP/YvywJ1YKCipc9oNxMS/I3JdWlBG0xDHuxTLEplX3LeF6SvWd63XDhtznvaC
+	LQgmZKZkn0CrQF+HeOZXazmf/HAbiGr7e44WIK0PEhlbI8peBwJ7btHsxnDeNZsyA2JktsPseWq
+	sQRAyIUZ7vz6Im9c+MQtPOgfqD9r1fFw0y1yb4mlZ1/dMQM5+bynr4iAiMHPtZFSlE9lSomMtZE
+	hlyxdVC2JeyWE/unBzawHBaJdjjfxoHOyUphyD6/bvDFjI7hHtYTsgu3iJpoaX0anjcbfSd5SXs
+	8XFC2QwqAu6ZKpJGuG8UB
+X-Received: by 2002:a17:906:2091:b0:c0b:f76d:63c0 with SMTP id
+ a640c23a62f3a-c0bf76d6e0amr161022066b.29.1782022813543; Sat, 20 Jun 2026
+ 23:20:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,76 +82,29 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260608-ps-eric-work-rebase-v12-0-5338b766e658@gmail.com>
- <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com> <20260619-ps-eric-work-rebase-v13-10-3d4c7315d2f8@gmail.com>
-In-Reply-To: <20260619-ps-eric-work-rebase-v13-10-3d4c7315d2f8@gmail.com>
+ <20260619-ps-eric-work-rebase-v13-0-3d4c7315d2f8@gmail.com> <20260619-ps-eric-work-rebase-v13-12-3d4c7315d2f8@gmail.com>
+In-Reply-To: <20260619-ps-eric-work-rebase-v13-12-3d4c7315d2f8@gmail.com>
 From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Sun, 21 Jun 2026 11:31:16 +0530
-X-Gm-Features: AVVi8CfAPedaAoh02_jQGd_MwZV7ZnJmzxfzHfZCwa7rC23gYSZf3ed16-dAHpc
-Message-ID: <CA+J6zkTjgHAWtJwxY8jo0i9zDtxwj9uUsKAtLS3z1=WxZfr8Zw@mail.gmail.com>
-Subject: Re: [PATCH GSoC RFC v13 10/12] cat-file: add remote-object-info to batch-command
+Date: Sun, 21 Jun 2026 11:49:45 +0530
+X-Gm-Features: AVVi8CeBLenizS7nEl7u1XF8wV94luEyhPsAIMMARNyb3HmdkS1zSSCS5-Bivno
+Message-ID: <CA+J6zkRoS5uZFkW1jJv1JO7jPMPO-ZANOYerbUxn4WPaApPV6g@mail.gmail.com>
+Subject: Re: [PATCH GSoC RFC v13 12/12] cat-file: make remote-object-info
+ allow-list dynamic
 To: Pablo Sabater <pabloosabaterr@gmail.com>
 Cc: gitster@pobox.com, peff@peff.net, eric.peijian@gmail.com, 
 	chriscool@tuxfamily.org, git@vger.kernel.org, jltobler@gmail.com, 
-	karthik.188@gmail.com, toon@iotcl.com, 
-	Jonathan Tan <jonathantanmy@google.com>, Calvin Wan <calvinwan@google.com>
+	karthik.188@gmail.com, toon@iotcl.com
 Content-Type: text/plain; charset="UTF-8"
 
-[snip]
-> +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> +                                        const char *line, struct strbuf *output,
-> +                                        struct expand_data *data)
-> +{
-> +       int count;
-> +       const char **argv;
-> +       char *line_to_split;
-> +       static struct object_info *remote_object_info;
-> +       static struct oid_array object_info_oids = OID_ARRAY_INIT;
+On Fri, 19 Jun 2026 at 20:27, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
+>
+> The static allow-list in expand_atom() is hardcoded to only allow
+> "objectname" and "objectsize" for remote queries. This works because
+> up to this point all servers will either support object-info with name
+> and size or they do not support them at all, but we cannot expect that
+> in a future different servers with different git versions to have the
+> same object-info capabilities. Therefore, the allow_list needs to be
+> dynamic depending on what does the server advertise.
 
-I don't get the point of remote_object_info and object_info_oids
-being static here? These variables are allocated, utilized, and
-completely freed/disconnected within a single command cycle.
-
-Making them static gives me the false impression that state
-needs to persist between calls.
-
-> +       if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
-> +               die(_("remote-object-info command too long"));
-> +
-> +       line_to_split = xstrdup(line);
-> +       count = split_cmdline(line_to_split, &argv);
-> +       if (count < 0)
-> +               die(_("split remote-object-info command"));
-> +       if (count - 1 > MAX_ALLOWED_OBJ_LIMIT)
-> +               die(_("remote-object-info supports at most %d objects"),
-> +                   MAX_ALLOWED_OBJ_LIMIT);
-> +
-> +       if (get_remote_info(opt, count, argv, &remote_object_info,
-> +                           &object_info_oids))
-> +               goto cleanup;
-> +
-> +       data->skip_object_info = 1;
-> +       for (size_t i = 0; i < object_info_oids.nr; i++) {
-> +               data->oid = object_info_oids.oid[i];
-> +               if (remote_object_info[i].sizep) {
-> +                       /*
-> +                        * When reaching here, it means remote-object-info can retrieve
-> +                        * information from server without downloading them.
-> +                        */
-> +                       data->size = *remote_object_info[i].sizep;
-> +                       opt->batch_mode = BATCH_MODE_INFO;
-> +                       batch_object_write(argv[i + 1], output, opt, data, NULL, 0);
-> +               } else {
-> +                       report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "missing");
-> +               }
-> +       }
-> +       data->skip_object_info = 0;
-> +
-> +cleanup:
-> +       for (size_t i = 0; i < object_info_oids.nr; i++)
-> +               free_object_info_contents(&remote_object_info[i]);
-> +       free(line_to_split);
-> +       free(argv);
-> +       free(remote_object_info);
-> +}
-> +
-[snip]
+Nit: "...depending on what does the server advertise." ->
+"...depending on what the server advertises."
