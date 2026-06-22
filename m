@@ -1,84 +1,83 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9493AD526
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AC5399D08
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782133026; cv=none; b=I5oycl0GG8GcaF5ni4eFZyVs6BUTuJYIisRnLph3uZeBpZv0sgxcs0DlCl+1xwR0O5zv20w+TtQdYAxXFmOQfv0tzcibui91gsAYuQqabeDrfBLqqp4sz4VL+J+1O/EWPQYNFgQ7abceOP2W1asaauuOmB64quZq0RmSHlg6Djo=
+	t=1782133037; cv=none; b=ii9okG/rP5mUqGsfRlVvEL+v1Fn5KX6RF8rT89VOS2rc84r7ThmmWOUXeKclqTuWajRj4Xk1W2NpYjQ5vWqDbJYCbu80Zixu+fRhEAPukXuQ/ln8YzXOSoiArSX4MgfWuzciZy7xGHyhPMcFkHtYlzszngwyyFu08MhzROh7Sl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782133026; c=relaxed/simple;
-	bh=jxU7tfK5M4y9gvYHpdKhj3XrHMAdgyJIFKiz9arn09I=;
+	s=arc-20240116; t=1782133037; c=relaxed/simple;
+	bh=yJbwrUNvIP0jN4ljcY6+Wpu5X3D9SnHOhB1nUgp2/zg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ga3FjIR6NDzvv/iKSdyldMNhxmsHhOr0FXriSH7ZSthaHxoSUYhIzQi4gj6+266fSoUvEX5SYL10T+MoozRxt8GiuItPyGKlXXpKFhO6PeG33Y7pmuoGv08h+VDLBsxq+qwFf2Ur5bLnkSsT/Oap7wzKoMFTo7NQUTk5MCbA+VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TH8vn+LO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jzQ689Eu; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=J82S5wmQQdQwZtAs64bs6+J/YGrAd0HLp4t7iGqQaQg7nMxaQQW8TT4cs69/FxCEaat/skH264ppMKReekoZftL3HjEPP6cOlI3qMuQt7TjsSz67cJYeWDlCaT9TQ9iTLv3gc+OJ3p54ASitJNqtq2td/kBmI7bi5njPaRIh1WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oKObcvJ2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mj2lMCTI; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TH8vn+LO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jzQ689Eu"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B6C7B140000E;
-	Mon, 22 Jun 2026 08:57:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 22 Jun 2026 08:57:04 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oKObcvJ2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mj2lMCTI"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3ABB31400211;
+	Mon, 22 Jun 2026 08:57:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 22 Jun 2026 08:57:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782133024; x=1782219424; bh=JrYg5km9zZ
-	EfYhrascTde0vC72xdo/Xr3veVvXhEyKs=; b=TH8vn+LO/tzALn9WPgmUuqXnv6
-	2HhgGDmiSdom5SOeTxgxpZAvWH9/tgiIutFnw7Ghn2Oqonvd0EEllADaMuh1UeYc
-	abRmcdwjHp3kB6pJdJitcB+5UCjr2ICq7aCAQW+Q1vgO3ptXDZ55WBx0CEAJJSaV
-	8FFH0AkjoHa8HsiBCEndaoRe2juO58FqY+HvXawkX/aVteVFoSrwvCmDrLcRu6Ol
-	EBgLUXRUwRky+gV06ed/hSQcleyPGxM73vk/XJD/tyI8qIYRb1JqZjmfMH+YS0Xm
-	M1sQbL0/KVL5boRSBCDwNgsftJNz5VAmF8rWktOv4QcEpCmSt1mA6yywhpmA==
+	:subject:to:to; s=fm3; t=1782133035; x=1782219435; bh=gpkW86kVj2
+	433uvWv2xVSuWnuGP9CziccpyRqqjZxpk=; b=oKObcvJ2oKxvgc536ogfh7vBhx
+	CpFbd9rksQezBYcAk/8unIaXyqfLm9gA/P6P/pNUPoLa/mjRY4O8Hk7sX5fDOGxo
+	GTh7CEguUdh2VcKKkjmHoqe+o1HIfj+vJln9PgBUnlo4xromTfYoyIMlXQf/jRtR
+	jPTd71/XQo72WF+liWSt7aQEz10F4EfYCNCoEf+7cU3bjXcgS1w0ojFfmHaaMgf8
+	1hufDG4uxdZi6bNCQK0QYWfp+n7WQvdbp3z0KmnBNZBARcHoaQy+RyuxC2xEaxX4
+	XFgcTDYS/4T4ZgHl5UXzVm/EmqBf0Zndz0XMJ+C1rwlZpJ2jUlxtHVo8ncxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782133024; x=1782219424; bh=JrYg5km9zZEfYhrascTde0vC72xdo/Xr3ve
-	VvXhEyKs=; b=jzQ689EuWYo0PQ+knuY42N95cnMN+leOOtQ9me9qLZhAv49MXan
-	bWPqdLuIwBziza2wn0K19WJgOxI9YnQRAQzFOUZrsX0JQPQV8pWwMnj5A6zE3YKN
-	rcZ0AYpT81soAXpxlUBSrZRrm1NHmRyXu7lFNEUkdNYnaBC5k5KztSX6y3N/RwMx
-	22A4T3aqQYMfx+S3h/ZJHRtXXPwTRAqX/2Fd+Eq/NCAanZIyau1zPG3XlUpeNlu2
-	/rICJcgEW3782aaml8uWEyM3AfjeRXBEUf12e24/dNbJ1tJ9BJiDPZtSHzGjhiYG
-	uL/P1f9FcvkT9heA09U2b3X/NO16sRfCA7A==
-X-ME-Sender: <xms:IDE5amIqlEBo91YxA1EFLvkjrsJQ2_L62uJbQyIpvpkHfYr6uD_M1Q>
-    <xme:IDE5ah1Z86IKDnxfMf9Rn4j-APKDg1j4au5IH2Mbl34lhXsS_5nx34EgYVegLBVmv
-    jsbmsFYuufUbs5M0G67rwTCv3QPvgd86P3qmbEiqJYlCiCdmtBnqQ>
-X-ME-Received: <xmr:IDE5aghaLJkU8PQSNw2vGU9bjcivpnGHIS_oXJcfKiK_U2PPSmKYqJXa9C0Ks24QxRvcV90TQ-noWt_Mx-6ceWwG2YwzGiYNQ0bWMbQ>
-X-ME-Proxy-Cause: dmFkZTFoNUx0pPUnqGaqQ+va8TgeRxDQAUMTA4iWAUtD6649Uoc7n5J8hfwdPLfDWraXpa
-    87/zlUZKiW+cEstrXjEfb7Eoh6SivqL5AJVW9D1ZzNsA2N3z8PK0WJxDCvy5lpEK8cKBdU
-    2h3zd2ELCY9JEqu5coqfkzemdOmF2cdC9yWmSn6tE9gYmbf8HZxno6UyObPPJdCdfgpu7y
-    fBAbPMGks0ZvG9mYVo5Miq5SgbjXXEsTPg+BChyurMYX8/vlYYBLazyBrwwoVAAxuFndgN
-    7xb8MdKB+87jGtjSzN0H7AWcQyHXlO+zBWCHqXjM4gFty7Ola7PZcLJW6Y9SLzopYQl3QT
-    HlUAJXup/l6UPWFyTgFJ7gxKImvaxpHTIRNNM4eBc4HqtBC++wras/9JskA5Gx/ilyKQaG
-    jCgjgN/FsF09KMN/KT7iyZ6aWUhIdSMC4DyJ7Nu2yea+x+3iB33ngqiVm6qB+nCUeeL2bO
-    J0gC10Z7rrVhbZSiQTuuAE2nHwhSpwHHLlErqNqCCO9L5sZBTa2JfWjTarxWceKuaYOjO2
-    ldaaZ9pbcuJXlvjvTDDcP3Fwoby+FacojHZ72MPXvY+/3WmMK8tVl+fBZqDhD476+Kcct0
-    nnm8xy0IPfGryXgOpy2ZgqecuV/3O3HbVv73o3sgrPDPIefES2j3Oqacjslw
-X-ME-Proxy: <xmx:IDE5aiX1EuQvBaObNTgMeNRSALCXSzVrueB2d-jY6QkXc64GnL4eyw>
-    <xmx:IDE5avVt456dMhp69iN9fbf1dayuluWyil83Ci5ZLkUY7oTrnzdevA>
-    <xmx:IDE5aigOrF4ByO_-iSUtAttTGbyY9QqbneKnLNl-V6FRKlmsry9yCQ>
-    <xmx:IDE5aqZt4q565EkxWjrdklHAdnezkjUi5zzVeytXv0dKvH8NXkmmJQ>
-    <xmx:IDE5avNIF9Hx7EgIehjq54VXFl6vqynPFyIgVyOkKGBOoYBL2qXToM6q>
+	1782133035; x=1782219435; bh=gpkW86kVj2433uvWv2xVSuWnuGP9Cziccpy
+	RqqjZxpk=; b=Mj2lMCTI9TIhzEej+ptu+/CthmbXVDGzPmAY6dIFWu1I9mCgO4t
+	ptPltQII7c2PqI9cRfXgn3aSPZvYLQWFVE+HyktrHv6spPET3gZkYZ09jVxIqRIL
+	MuMYbxwfA3fmGsitA8NPgL9Z9McTrQ0esRjqzzqmOlxUGkqFW0IR6RrpDBvrI+35
+	knrm1va3+haHNLSbM/JM/lGSeRWFoOS77f3sZ4ilrv9hQVbBHAYkp8uM3XDMYckr
+	5JAHuCZOE8HDu3/ABKidAwLLKV7liftpAZN4nWDwOaAXe/c420u5YvwO9LPgFsKk
+	3LC6Ss3UCLppEyhfO56LYm1JhazuCyreHIw==
+X-ME-Sender: <xms:KzE5atqBe0Vf43_EDki4QGhJAmGaaEpa0kRqR2_XJzQpiXxCV53n_Q>
+    <xme:KzE5amgMZWg9Hfb73oMPlB4nK7-U_OU_-79agKH3XnL2VDVdeVmEs-CWzEIHaoFwo
+    BbVBZT0MzzBF8OeTz0NGLSJu52hxa8FnpiirLjujAYVG5lqLBQl2A>
+X-ME-Received: <xmr:KzE5aihLHn-IkqfrwrXkuRhfv5gudElhrds4mfkdDmiKp4TqBhaMXI-WSgJ8YwNS-xliyMmsafgif-VH0rslioODsGvd4Jk6IKJtJwY>
+X-ME-Proxy-Cause: dmFkZTFPEFuhZqXn3BRk/wZECImOYb5Ok7rjme2nHF1t+Ff8SU9DHjmlNvX9Af0+YFh4TX
+    gPf6plKRVW9pIeQwnTy7cPFvBWx3mP2LpMNRvs2VBK8PBfDKBBa+78ftChmtlalv4YmXW0
+    hsQiyzLJyIM16PRUbSjklRnkPBhjksfMPtTeLVzf2cIKIDA2zNqpMe+gFqsxE51OnDPF3F
+    Xi8LVxohQyK2WaZ7T6XTOw2TM5dNmm4shB463BCt3uJui3FKNUo4+Pr1X68VuULn3pmmgD
+    LIlgQlQXMv20g/f2Gq3AgorLjsPWgyAnCvnxFjBnCR5yLcqkkqNSGz6zoN3c6Gfp4kxjkO
+    e72KtpkMh+mIveFy931nfqNvUBN5QodNtcChJ7oUB9NshnkkBP1dLnyhGgQ5lX8usjiEro
+    9mYpMTnwboj9InRXj9C3zQ6amKKpvMmkdgPe5o/WezIWTNspfNWN+ZbMISRYTOQGsgGm44
+    AVPpSU3LdwHCHHc+3cJ+r0m3cU/WDnqXkQfQNU3R8e42aSFsiF98MLehlPPeV7K+csa/Fn
+    GnrQ2Cn81UlAxraKtd2YUsS/1vrOM/fi3ZMk59xJVQFln4/2JALdMZl22e3rZlZ3jejpd3
+    3YQ2256xuOoY3PO873DbcSMm5PYvMAOyjXtKtnZaoB2BkwGxpLK8IhJYrfQw
+X-ME-Proxy: <xmx:KzE5akga7dWRr2Z1th54jX82F0k9q1owxpLL805jXDXpKvd-O7AGaA>
+    <xmx:KzE5aqKdBvswrGzxGdgKXFNCCCXYt-06PRAR2GjhmlhT0S6J0wMNHQ>
+    <xmx:KzE5arEDxaR3iZPeyKFwPnIoohrG8yJg0rc1pAfYdehbE1qyNnmFDw>
+    <xmx:KzE5amTgmGQDnqhyBsg-5LEnv0OWzLyYJi95nBgroX-NYeppBIk0EA>
+    <xmx:KzE5anwmUDsO6eHrghdt0zGbNFqhnKYRRhA4J5GkC3Y-K1torkx9uNTc>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 08:57:04 -0400 (EDT)
+ 22 Jun 2026 08:57:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>,  Paolo
- Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3] config.mak.uname: avoid macOS dup-library warning
-In-Reply-To: <ajjspU7lJ01GgrBw@pks.im> (Patrick Steinhardt's message of "Mon,
-	22 Jun 2026 10:04:53 +0200")
-References: <pull.2314.v2.git.git.1780610623006.gitgitgadget@gmail.com>
-	<pull.2314.v3.git.git.1781901127385.gitgitgadget@gmail.com>
-	<xmqqv7bei2tf.fsf@gitster.g> <ajjspU7lJ01GgrBw@pks.im>
-Date: Mon, 22 Jun 2026 05:57:03 -0700
-Message-ID: <xmqqldc63f8g.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Michael Montalbo <mmontalbo@gmail.com>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH v4] SubmittingPatches: address design critiques
+In-Reply-To: <ajjwYGWZ6hQWr600@pks.im> (Patrick Steinhardt's message of "Mon,
+	22 Jun 2026 10:20:48 +0200")
+References: <xmqqv7bhxiby.fsf@gitster.g> <xmqqpl1oteoi.fsf@gitster.g>
+	<xmqqik7eld2g.fsf_-_@gitster.g> <xmqqeci0g4mz.fsf@gitster.g>
+	<ajjwYGWZ6hQWr600@pks.im>
+Date: Mon, 22 Jun 2026 05:57:13 -0700
+Message-ID: <xmqqh5mu3f86.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,39 +89,26 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> Yeah, this looks like what I expected.
+> On Sat, Jun 20, 2026 at 04:43:00PM -0700, Junio C Hamano wrote:
+>> Contributors sometimes fail to answer fundamental design or
+>> viability comments from reviewers and submit subsequent rounds
+>> without addressing them.  When design decisions are resolved on the
+>> mailing list, the final justification should be recorded in the
+>> commit messages.
 >> 
->> A few things to note.
+>> Instruct authors to be particularly mindful of critiques regarding
+>> high-level design or viability, to defend their choices on the list,
+>> and to accompany new iterations with clearer explanations in the cover
+>> letter, responses, and revised commit messages. Also instruct them to
+>> explicitly document the resolution of these concerns in the commit
+>> message body to keep the historical record complete.
 >> 
->>  * Can folks with different versions of Xcode (or is 15 sufficiently
->>    old that practically nobody is expected to have anything older?)
->>    test this patch?
->> 
->>  * We only patch Makefile here; can folks who use meson report how
->>    well your build goes?
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  * Hopefully this will be the last iteration.
 >
-> When using Meson we also see a warning. This got partially fixed in
-> Meson itself though via [1], where it started to disable the warning
-> when compiling with "--fatal-warnings" so that it doesn't cause builds
-> to break. So starting with that commit it really only is a harmless
-> (albeit annoying) warning.
->
-> Arguably, it might make sense to unconditionally disable this warning,
-> as it doesn't seem to add anything of value. I've Cc'd Paolo, one of the
-> Meson maintainers.
->
-> Thanks!
+> This version looks good to me, thanks!
 >
 > Patrick
->
-> [1]: https://github.com/mesonbuild/meson/commit/17d1cc60ed8246b8e7f0786421bf1cdf5cb19254
 
-I took my inspiration for -Wl,-no-whatever from Paolo's other
-attempt, referenced in
-
-    https://github.com/mesonbuild/meson/issues/15553
-
-which is
-
-    https://github.com/mesonbuild/meson/commit/7c901d7a8af214e31788eb6d1a1edd5b75124e66
-
+Thanks.
