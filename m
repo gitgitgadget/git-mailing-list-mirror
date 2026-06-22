@@ -1,167 +1,148 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F0B3B3BF2
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 13:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782136434; cv=none; b=YKjMguo1sCX4U58BjNxmTF55H5HV0Z3oKSIaE8IaN4a6SSmsgJTwLe+EL6MfayDHm5BONJqn9TXIfejrCqZX22XTjjIISecC9JQRvgH8IsmqzR6Z2wS6SV+Ppb++qC0dpIPtjoRn/+SAHHlpejq8/b4A/mpU7rOfpcat1C6IYqE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782136434; c=relaxed/simple;
-	bh=VrdlOlWicl7tA0DHeGuYVnD1v2f7sdYx+Ig4frJzzDo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I9lLuFMYqe4CPGG78rNJxrsMjwpy7t7R/6/5U1jnfFZs9aPaC5+q56wbc/93nK0XCUMBXKDnGL9x219PTlajjADRkyd79+NBTLsZOPkrZQ1Z6+7l016mUkG79aTQgPobfxBNBJcqXM3KYG8qkB4rVLB9NlQLF4/iCwqF73DMGIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n9dSLGeK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AyIf1bLX; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2A53B6360
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 14:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=170.10.133.124
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782136821; cv=pass; b=jqCWA8MDvexJzVtAdeewgks2S2nPR7DfeG4hqklSb9epBfwL6RY0odNWN6PHseOk1orKXFYucSunUarim1BJ5wfqzJ+jqo+U0w0xOk511zc0dK/c15INLD2l/xLPsZECenReTSSNBVQ8PAK4KXh6CmXoBWC+tBvqnexNWwSBGHQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782136821; c=relaxed/simple;
+	bh=5sXHVc5dAlDqtKnz8qR9vQjhZHdT6s6zAmSzrhptg64=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OCPgPaxvFX197eP6X/FcQDE+w4luxYKb2xVehxQOFrqNuKjewXBnS+hAIAExAh1l+hp39fKpUz9g5k0A/JrS60d4nyMVAzGBURlzXwVlYXiSNiqLsjRu7TpK8zGSORB2T+tPrxJO1mFKl+7w67EjZYKdtg3LseMq3G5qDn28yDU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=XB8BNG3u; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=ie0h2sRb; arc=pass smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n9dSLGeK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AyIf1bLX"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6C9A8140010E;
-	Mon, 22 Jun 2026 09:53:52 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 22 Jun 2026 09:53:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782136432; x=1782222832; bh=8IeuPcA7/x
-	paKlsT32rH2mceU689CHEV4jaP9vANpPM=; b=n9dSLGeKZelVsqkvyn2WsSJ7nT
-	4QGmW5fNDxh8XHTlXNVe49rAfcKFa63XYCzcHTqFk3H+jff+zvMd9tnOGaIoiWy/
-	6WZlxA1z8nFemNPOh6ug1KV0ICLXbyU05daoQMPvDD7CxqbTK9cAREc9cXgHoALK
-	SKfhgEmDy4O/kJmPUV2e0Ml/MRUJ9c2zQqPQwLr0ORasu39f2o7D48lEAokwuAnw
-	8x90ud+LvG8Z/x1q4QqszDjZPkXmvE0JWZOUyql0rZQCE6ZN49I6MCvmMRvUU06K
-	p1UmIq7/hXJ2mSvUHdD0TVv/HKzRwvx13K1hHjjPm2LqMMLodfkiqtv6FyNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782136432; x=1782222832; bh=8IeuPcA7/xpaKlsT32rH2mceU689CHEV4ja
-	P9vANpPM=; b=AyIf1bLX1IRBjzBcWjClxZNhml8cL6F8JAan7japl0N9PkhblGL
-	GlTFRs+kljTNSYDVdT4zizWMvI3nFOuzYG/fsQMKP2XHrMXWcqhgKOYuodog0FwD
-	rQRfhvcX0YvXp4zuj28bDwABtVbH37oNWtL+0XOupMvuB1KJ9Lp+ZdXJdfBhMAgE
-	S5BMk+EyyIyxIBVtF1/TiR0F4rtA/KqEsWTyC/6zWyhGfOOhqMA5W2xVinX5MjEM
-	3N9sd/d7owTLRFpvGFvij/kA9prCHTkIw5SklUqePh2HS22Viis3vVs9DA6mdio1
-	r8pDNWP0XSeS/lOkYb3zVp9dL4YLHeaLQww==
-X-ME-Sender: <xms:cD45aiIFTnVxXOAr4p5x_Y4yhL_f7i9Q-w66p-zV6agmxJ-hYZBfUw>
-    <xme:cD45akvJFrDdVXK_bJomA2zP_koBoFYI0Q3wCKUMaxSrJ9wmhhc8Z0CfeLR-sSf1_
-    kPAXPugLbVJ-GtbV8aletba1i8htdNvysf1r36Qr15as_ZdwhJBpA>
-X-ME-Received: <xmr:cD45avQk0eZy8ZuhIV-uIHBjjQCjnVhkzud6qlIW-mG_OcNKoZsgngxxcoyWJ30AI9YNmueK1lPol28qurjgfnM4liSiYILHGPqab-iSmA>
-X-ME-Proxy-Cause: dmFkZTFP9G7rdRNbZW9L/nQfLB8/CQQSJ3r9QGTpBNdXtr+vnVFoiP0HQQ77zN9Q1U8/G5
-    1y+EMsZ8tUJ2kAAGBgWnysuE6Llfp55Q9fZDx+3JP+NXf95aMhjH2usWXW84skxsAxjdPJ
-    tOJI5n/5JTr6Iy8LxIShuom85vAfPmqwpYsth2iDyz14gQ2XYjKeVM9HdiEQXDxl/Ly4Xt
-    FohK1Kt8osB504VDnavu9kd+LSpRBwLVqJq+Vc+osQZv0yrTQwtEljvIE/jc0pjOpUOOtF
-    Pd5Yt5KlWy5H3LD/AIoBd+wzxXLaebqof0bUNnHxGh8cJl2RLroO1vEMJn1AzletxPn4ld
-    bJ7jqnzhAjsVbbyRBZcwkuyiMzwHKojl6g5FqqPZKwABYBgoCatX+Uwfs4D6YPetWgJe5Q
-    RDEBWhN1jkcK4+oqnsFRo+1qU/+svaUJz6+pYo88/CIJKN7ECi1QTqPQzzataJMzH3xek9
-    JNh658qIiMahZ4sViBkKPlOaqYP0ExXbqHtsa2MiEgLh6vXVrdC01JoccRsdSD7hwjryAE
-    tXidnKCwW3ygyh+JMlPv1zt8SWurqxWsmbpT+hPRzu16m/jYgUjLwJtl7cEKd48g5BVQq4
-    qkB93nz8aujkDIpHyxIK+r6+L4yl5PmIyqA3E1TlEvqNhGtBEZfESQZqmDYQ
-X-ME-Proxy: <xmx:cD45aqMpcYTDoW2PxlZHysseUoIApMRCj1L5nLQT7YUWyg4CPIKFTg>
-    <xmx:cD45akZ6cRqSL-Dj4MOPbtAFq7WfRfaMXBS7b6wTNvmhxPJWOALWow>
-    <xmx:cD45akwHnypG4S8CQkwbzgjbG8IJ53yikcQl1o1aE5Ry_Ysj398zpg>
-    <xmx:cD45avJJgcNQoIdnSc8R7pihFzlx0bxdSPZuAyb0S9IjWhNbobs_4A>
-    <xmx:cD45aql-dPsnldu7h7RLReCRQdNwsuseKs-xynCgs_9_3vH6vVDnt5AL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 09:53:51 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f1b87fb5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 13:53:50 +0000 (UTC)
-Date: Mon, 22 Jun 2026 15:53:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 3/3] replay: offer an option to linearize the commit
- topology
-Message-ID: <ajk-a4a3KSJ2u7Ju@pks.im>
-References: <20260622-toon-git-replay-drop-merges-v4-0-ff257f534319@iotcl.com>
- <20260622-toon-git-replay-drop-merges-v4-3-ff257f534319@iotcl.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="XB8BNG3u";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="ie0h2sRb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1782136819;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1B1ygF9G932HZ/3Ncbzy9tQ/ofpk1FE/Bs+1Vbf+TNs=;
+	b=XB8BNG3u1ATPrJlS94ynhiKrKfvTb3zGwQj7v0+aUt+tMwQeBDl+izTzFRqoRZnVfSsKiC
+	J9y7E0j7ewjiGenJJcnImADEVFbp2ASQdRQ6zGhxx9R18BRMI3zrYfDpb/vqzQMjGOl3zy
+	ELhTMT3YIOUDAO+JYcVkmzzbGHAx3jc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-172-N5e7R26fOey8OrzEUiE1PA-1; Mon, 22 Jun 2026 10:00:18 -0400
+X-MC-Unique: N5e7R26fOey8OrzEUiE1PA-1
+X-Mimecast-MFC-AGG-ID: N5e7R26fOey8OrzEUiE1PA_1782136816
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-4924a7ae480so20784805e9.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 07:00:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782136816; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Q3clFKxHuq73Kmn8EN9+muqduFJ3IVdEP9HdvwXzir54cRRCX46CEr1nvUcbBxWbnL
+         aOrzpnZShJGsMrvrZ9S+AJMEcRT+1ELg+tLmBkSYOrZok7e9yDEUtvNQZ7K3mzStUjqL
+         /em1wYQl5W+bcRXHZiaRUcS6ynQJLC6D7NYwv6YWRILLjujdRLAIG3ujqzgqQA7o97+R
+         rnubT0ZZLx9sZ1Kz6RZXHYzmxB7f20L3VQY/QzT+MMiV8sKwzNkawxLo0aUKtrRV9eZ6
+         wYLmWa8WfRg/8Xrs/dd0e4YFJK0dGWsCbw7pZFO6FrcjRkU2amVMFsC55kaH0SOm+8Mn
+         wHMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1B1ygF9G932HZ/3Ncbzy9tQ/ofpk1FE/Bs+1Vbf+TNs=;
+        fh=dohbMW0R73j5838vZ0AJBQvMZvtogSCngb/knVLF7bQ=;
+        b=FDBoCoItJhc73yIHh9i7wA5auTGYCQJ4PEvB1feO41zgcQYpSIG0EHFxK5Ao1B3Cbi
+         aNM3pwZV011P7CplNjSy2jyetJluOr4dYYb4r6HZLKJfWpOVBMoUzTsXhRJVwKnwGham
+         inbU06fb4Q6MelwgZnbzQ1pHSIJ4xtuITAN0WFAsGJjXLaRW9QrjQfzUunBWcW5tnZHF
+         Z5K2cKGvv489sO08lbB1sg8KkFSdsjKxeNkBjfJPZkfJgzGOkUbBLhcFhczTTpXwFjQs
+         7WRpN+fK87Ydahwb9zFAi3MMcsJJ2AlNzh8KpjC4OeO6Ynxba+8rBAiP3EnY2txm9fwQ
+         T3aA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=redhat.com; s=google; t=1782136816; x=1782741616; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1B1ygF9G932HZ/3Ncbzy9tQ/ofpk1FE/Bs+1Vbf+TNs=;
+        b=ie0h2sRbWzOLn/iOZHTn4abIn4Ej1Ap46Q7Yda7a8BwNxJpMP/vudGRT6LJZWvKa/8
+         qdbASxzm6UOLyPytfyCj71FRE2OokFLJ1sEeTZTKQjUQl+vTlEhqCmNxZB4UZmiXEhlP
+         ktwQgp97NFdlg03EVukD42uHHlPu2ORUkln4VQrVRIg1oaad7qBa11uITvJfWBSvMTvg
+         E9GyKMG+7G4j9DAK3PA2XA3PF0OLIeQZnxZilV2qrHXr9FXRyDmiExwvds8QFt+DXDoy
+         sy/KPXclx1snwtmWELmBv03R4la1f9IRpvoRBd4pi9wOobov+c6POAS7RCdePQD7f92b
+         PWfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782136816; x=1782741616;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1B1ygF9G932HZ/3Ncbzy9tQ/ofpk1FE/Bs+1Vbf+TNs=;
+        b=Tc9H+EIqQGj/8IYmZOTwEFAxQL8bjm1oYIej0ie0KamA+92YQrmNph5kVEHEtNnGwn
+         LfKwfG2dIndlbqk5uYtX+ZT+/NOtxB3bH+wgJ4MbuEQG0i7ZwGJWqw5+O5uta6HNUROZ
+         FyqqbKLKiC0KVfbg+EVG3bsorK4DUmuAPou8+C0xyfRRcWTBo11nSqbYIiZpYY54XGyE
+         +bC8x1NSM4ez7rK4siVQbkwR+hTOV/nI7U+1tE1Arl8wvfEjkGIlrmi9qL6aHyO7aX/D
+         SMKBvo72uLbUP30WNDh5w9ktDBbmVrSAiPVw53GxirGRWGuJjY7ciTEvjqybBIKffyqX
+         gtOw==
+X-Forwarded-Encrypted: i=1; AFNElJ82CkeUqR4eVVUMQrLzUw9mZAaSbU0U/Lmea0QP97+WRH+hSlbppVyUE+3wV+6rv6H+Vtk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzW++AUUFzZ2HwicNYeL90d323f+CR0Em3ChQVliSRZLcmLDqJw
+	kP9w8x19PFUnnvKCCTdPxImt0QlE9HyWYjM6EjNI7X+UwP6/PiJhusXzMaIdJeAsBa9gw2V0ea1
+	0NjhR+8TiV2mjAXl8Ua93AgP3aLaAOflR5uOVTFbw/86N3JOg+RQpot5sDHXVZhXvIrgw1IxAWF
+	OGnF7OsLCQASot1WWw/wHolHGweKrs
+X-Gm-Gg: AfdE7cmkTJQE9AgtHzYG+Q/vJn9NyJ1uu6VP82cb2zGqoZZxaJu1v9f8oNH8sIl8Qv5
+	Re01nlHVbtwRTPr5vc4p8BIGzdrRZ/p749ydjeT89viqHzlgqJ0z+xd+o9Px/2451bgmHjEkhaC
+	jgC2hnxtRLDcQWuo8kii2pm67iAcughbXvpNFXAAydM6F3YhXZdg1aPZO6I/WNJ/mY5mTDtz1jL
+	JW+4lr+s/jDEFglSCU1ADFbKc7Kw9K7St8rUaqZ2xf19qebIgr/HqI7zzRsvyvKOP2PFyER
+X-Received: by 2002:a05:600c:3b10:b0:490:44eb:c1dd with SMTP id 5b1f17b1804b1-4924257c817mr212876485e9.29.1782136816165;
+        Mon, 22 Jun 2026 07:00:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b10:b0:490:44eb:c1dd with SMTP id
+ 5b1f17b1804b1-4924257c817mr212872565e9.29.1782136813278; Mon, 22 Jun 2026
+ 07:00:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260622-toon-git-replay-drop-merges-v4-3-ff257f534319@iotcl.com>
+References: <pull.2314.v2.git.git.1780610623006.gitgitgadget@gmail.com>
+ <pull.2314.v3.git.git.1781901127385.gitgitgadget@gmail.com>
+ <xmqqv7bei2tf.fsf@gitster.g> <ajjspU7lJ01GgrBw@pks.im> <xmqqldc63f8g.fsf@gitster.g>
+ <cdb16758-dd92-4b8c-8e82-8c607151449f@redhat.com> <ajk6QGB8raf85CPo@pks.im>
+In-Reply-To: <ajk6QGB8raf85CPo@pks.im>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 22 Jun 2026 16:00:01 +0200
+X-Gm-Features: AVVi8CeSIodgHES4aCk0b_B22_oCRjItwZCHWGNeId6SAzaQwr1faBddqH3MDX4
+Message-ID: <CABgObfZUKFgpxeKjVWpaBRCFGa1BSEh36-hkaRjZSUQb_n4=oQ@mail.gmail.com>
+Subject: Re: [PATCH v3] config.mak.uname: avoid macOS dup-library warning
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Harald Nordgren <haraldnordgren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 22, 2026 at 02:41:57PM +0200, Toon Claes wrote:
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 
-> One of the stated goals of git-replay(1) is to allow implementing the
-> git-rebase(1) functionality on the server side.
-> 
-> The default mode of git-rebase(1) is to act as if `--no-rebase-merges`
-> was given. This mode drops merge commits instead of replaying them, and
-> linearizes the commit history into a sequence of the
-> regular (single-parent) commits.
-> 
-> Add option `--linearize` to git-replay(1) to do the same.
+On Mon, Jun 22, 2026 at 3:36=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> On Mon, Jun 22, 2026 at 03:13:05PM +0200, Paolo Bonzini wrote:
+> > On 6/22/26 14:57, Junio C Hamano wrote:
+> > > > [1]:https://github.com/mesonbuild/meson/
+> > > > commit/17d1cc60ed8246b8e7f0786421bf1cdf5cb19254
+> > > I took my inspiration for -Wl,-no-whatever from Paolo's other
+> > > attempt, referenced in
+> > >
+> > >      https://github.com/mesonbuild/meson/issues/15553
+> > >
+> > > which is
+> > >
+> > >      https://github.com/mesonbuild/meson/
+> > > commit/7c901d7a8af214e31788eb6d1a1edd5b75124e66
+> >
+> > Yeah, it makes sense for Meson to disable it unconditionally.  I wouldn=
+'t
+> > bother adding a check in meson.build though, since as Patrick mentioned=
+ it's
+> > mostly a nuisance.
+>
+> Is this something you want to implement in Meson yourself? Otherwise I'm
+> happy to create a pull request.
 
-git-rebase(1) essentially knows about three different modes:
+Sure, please go ahead!
 
-  - "--no-rebase-merges", which is the default and maps to your
-    "--linearize".
+Paolo
 
-  - "--rebase-merges", which by default doesn't rebase cousins by using
-    "--ancestry-path" internally.
-
-  - "--rebase-merges=rebase-cousins", which doesn't pass the above
-    option.
-
-So it's not a simple boolean there, which makes me wonder whether we
-should mirror the same interface so that all of git-rebase(1)'s modes
-can be represented, as well.
-
-> diff --git a/replay.c b/replay.c
-> index 7921d7dba3..5539daff00 100644
-> --- a/replay.c
-> +++ b/replay.c
-> @@ -277,12 +277,16 @@ static struct commit *pick_regular_commit(struct repository *repo,
->  					  struct commit *onto,
->  					  struct merge_options *merge_opt,
->  					  struct merge_result *result,
-> +					  struct commit *replayed_base,
->  					  bool reverse,
->  					  enum replay_empty_commit_action empty)
->  {
-> -	struct commit *base, *replayed_base;
-> +	struct commit *base;
->  	struct tree *pickme_tree, *base_tree, *replayed_base_tree;
->  
-> +	if (replayed_base && reverse)
-> +		BUG("Linearizing commits is not supported when replaying in reverse");
-
-Nit: Error messages should typically start with a lower-case letter.
-
-> @@ -430,12 +435,25 @@ int replay_revisions(struct rev_info *revs,
->  	while ((commit = get_revision(revs))) {
->  		const struct name_decoration *decoration;
->  
-> -		if (commit->parents && commit->parents->next)
-> -			die(_("replaying merge commits is not supported yet!"));
-> +		if (commit->parents && commit->parents->next) {
-> +			if (!opts->linearize)
-> +				die(_("replaying merge commits is not supported yet!"));
-> +			/*
-> +			 * Drop the merge commit: do not pick it and leave
-> +			 * last_commit unchanged, so its children (and any ref
-> +			 * pointing at it) are reparented onto the previous
-> +			 * non-merge commit, which the ref-update loop below uses.
-> +			 */
-
-One could add a hint here that tells the user to pass the option. But I
-guess that might be somewhat weird, as we cannot assume that we're
-called by git-replay(1) here.
-
-In any case, this here is the core of the change where we stop dying in
-case "--linearize" was passed, and instead we simply skip the commit
-altogether. Makes sense.
-
-Thanks!
-
-Patrick
