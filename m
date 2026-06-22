@@ -1,141 +1,146 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3713433ADB3
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 09:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782121078; cv=pass; b=k6ATKwMBmfwYQipgc26rSVV3wEYZKpr7+0m1VQnfkdlNlyNNAVKhoSvPFQKVXmmXI3LGuoy4VH5n3/Obh973+j4yyt/Tz26RW1oNx/h/T2HbpuGffPLBFgAHu6G1Z3Fb7e/IKzkHlU3GRgeiRvfHw+WPZzgOAJvBGm/nbKYa/yk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782121078; c=relaxed/simple;
-	bh=e/Xek81biStUsSK9pBKx+bnOzQw80kapubBhNimP3XI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YPoClbGXRJ6Q9vSQQ6P1rim7pGbx6y48HaumYSQNbV4cltx/wllHbJHM9weisVwjxezBn6VBROXHhZdlJt3GsrI0u8Xu5tYii0fpz2PimRglZioCqP7s/JeXKx9uE1NDRSqG4m4lvBsc0X0HCpQP8e/uRhAaJ66xQgzMH1CjYn4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oyc/N0av; arc=pass smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538A3371867
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 09:48:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782121687; cv=none; b=BMeDKcoHxhX1Swmu3S6DeVlB/7ApP/IVhfsptXgUBH0ZFXhPcH4MqIvsIcuVY/k1U8K3M9c1pOjchpa6OXfoQS7mylS7LBGY6dtQMy7ESsvYLVK9iQ3LKW523Yx+1ATLg6978FtPtzvaMr3qZ6aNR7lyKOz/m7cXVsTb9StqvzI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782121687; c=relaxed/simple;
+	bh=rd7K3aZ8Cwq2GJVG0pIE8uDcbYI3qDpeyMfATN/zzqY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q4+/afzB70QJG2yvKpjUFers3mGtcMaF9xTjsKYqoMmgjKxiCFGhvRQriifITIX8xUiKJB4wgvDZ2PjZUUlMR1rIq11q7stE/0huKpZfVJl3FUKIDoxFRprY7adWv/yhxxg/h4TuAlp9/HOksQII7WifeRUoH6o7EXIcUOfO4u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sEi2hYoL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T+mzfnC5; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oyc/N0av"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-922ade88d0aso187492785a.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2026 02:37:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782121076; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Su1w5+7SqoNtKzp0FJqtbfbjGbAzGzcWfQCN3e1Oh75voo0k3S1tlrdFnx6xgDfniG
-         k4e8OFnMz/a4ptPIW0laGUipNuV/JsgYcYsokUGXuqxzlMovzfNaDsuU2MPkCpdfwBwM
-         +QJeze6iGkoG2O/54F39O5Or+TQ1Ytv36L1JpNnEhopbsAq6a7+ds/GLSQvpnya142E/
-         dKQcW2Qqh/P9js2xbM6xAK9gEceGpjv75AtgIRrXxF1Oi6ugIwTpL0BqajUOyOBcrqGo
-         rxPmLYK5Swp4yX6BFaOg41bhA+8Fxk+WzbLkRxakkJAdeI1wgc0RR9+ll6aF0tDQoPWZ
-         21qA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=e/Xek81biStUsSK9pBKx+bnOzQw80kapubBhNimP3XI=;
-        fh=K/1g0xYVstt6ToxpvSV6XC/kUrMhcb4SmpvaWl0VJ5E=;
-        b=iSFZF7KKzpYIaICWJ+c2o+xxkfUw+y6wlGbDGOx8rZOSUNnzvgJjLrgGA+LbXCGcq/
-         5sBgeyViIClHrCx2muV0Yd+rAFpFKE3WMBxUbEGzPr6noiWSrpefhdcbcjW1v+pU2EXQ
-         wslljwnC6Xp6ExoEvqijL50LxDCmiWggHqzwK3hFLWR+wVQd6tkTvjXxYW9mcJO1XKCD
-         bEksu9nMOf61sOkDajGN3wzfiqWGwjTFdta6FLmxdjNIQe9iJIvH+7EJrBPkKypWSTPv
-         2PcA/pdnUUHhdfcXoZ/IsT/2NM0cgPNg3+jCJ6k9m9g4zUV/A2Rlh1ji8caovvogOIbi
-         GX4Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782121076; x=1782725876; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e/Xek81biStUsSK9pBKx+bnOzQw80kapubBhNimP3XI=;
-        b=Oyc/N0avd6To5Y4QH7bGERoSddR3eDLaUsrBZPo0XWZq3YURb7ghN3Hs2Imxy7Y2F+
-         eL+CynOFY59wG6d8titkYVNgy6JcjdOCMEUtqM52YZa9nVmfVXTeQLAiAX9bTuiby6xW
-         XmVk+e0eZFJfaBduBl5foVuMz88zmG/EQcbC2hsPG9RNIz20enL4FaLJMVVt8zEbVNcJ
-         mXXnkEYc3rSMbUwICGpdn7Q39BKdqlpmKvSEfCEQjieiGKcw0lGACUamfH2Ar+oPcyMk
-         GTK36xnkgK0MMHyboJgJrDdkZrXEdv5+0mXXNIotuvxcjWMFFpQPxkn6nF1tBsuJnWq5
-         XZww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782121076; x=1782725876;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=e/Xek81biStUsSK9pBKx+bnOzQw80kapubBhNimP3XI=;
-        b=B8DSnIAOgiME50YRVaCMg59iLMGLtWPWaabcGyTwEzI3lDDUZRruN1bhnjtqj+1Yfy
-         XCuejaHsdnwW54mcLPq1hvQ4kN6fk+WLvvgm/dX2cLBdWQGQYpE/ukbPkPdBdBAY+ckf
-         HFCNqmYRbYyAaSpKKkr3r+Pgk4lHkbwYNOb6vZU63oJ6JPDvCuRp3MaFK82XM8y2O4Ua
-         V2j5NWHDYZlT1lvNHbg/mowdGsdrFdBSYk/QohkejlN4fjknkBa0c79sqtDGLwIxE4lA
-         /5KJ7yDuHtNGo2R7tBk2A2xBnaj4v33QO9A/H/GarpExKG722l9IPFtlhbnDX6jY1F0B
-         FEpA==
-X-Forwarded-Encrypted: i=1; AFNElJ/3g5uVp3LSYF4ZvGjXTxfg4PxKvohA8CYoyXVXNLp7y3XhXk/B9M6wjitAaQ+Tmlug+4I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNJtFdZ3m/O8oOrfWXELXwloCF/f1cIU70+snse1HtFMPVLcpk
-	0iqVdm7HTynJEMBHQzS01oBF/q+e5iTvtSzrN+MXIwemICO6DMeOua50j/qcUI7eat0Zhq/3xP3
-	Qyy0IURi8XbYpKtLuA5L0f9mnW/D8KjAt+G9VzBk=
-X-Gm-Gg: AfdE7ckurh4rAGRWSPCzs79nKeXq/oaGQvAPny8t88a2lTQkkZzWQTHkzuFo06+8TWA
-	Lg0KWAGEqROof+gL8zpHzH8shEvXyCgPT60QelHdbSINtRIeXlAVgHlE1A7Zjt1GPoGDBFj132A
-	I2pYeIh6HQ6vjIDM4oZCMKi9Jdka7+x1imNoWJEm5eln6zc8keckXkTCnGjkKrC9+XPiuzii4fp
-	iaEfaYRVc7H7NXJWdQuqVU/rDRWgp8RnINvgnUCkdXd2+IwYd9DaxMpm/8/YLmEo/v2+i/L
-X-Received: by 2002:a05:620a:258c:b0:915:6c4b:eb60 with SMTP id
- af79cd13be357-92091397887mr2165371085a.29.1782121076255; Mon, 22 Jun 2026
- 02:37:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sEi2hYoL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T+mzfnC5"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 62A8D7A0176;
+	Mon, 22 Jun 2026 05:48:05 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 22 Jun 2026 05:48:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782121685; x=1782208085; bh=bB0d/r4KMk
+	L/tJQIO2P/1feSo1c3iQWKX5SAsV3npng=; b=sEi2hYoLaQTR50rahBBNQ6vE89
+	RhAkjQqvzYEZtNWNgzzelnAu9r7iL/RJildPkznbD8LCiTd8W/6BdIP5+edBcADm
+	dqtWT8lUe8HBelthZH53nc/Snk9epDhit5k1U3Ue0hBrXqXd5NMMNDCSHLLpUFwa
+	ZWc1GzMrCUguUtIid81LsGzHFpvVOSZ9A6PKgTutQJuQDy92yTWjTGlWfoUTqGZC
+	q8F2M4f1AUhW7h3gIYZeFElk2DgoMupGnE4qZW14uxInslBooC26l20Xv+2Sbx3p
+	WIbikh3xEegMJFcB7GvNwRucK7VzhRkNiOVq6Tuczoxo6DIuw5TZDxDYMVJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782121685; x=1782208085; bh=bB0d/r4KMkL/tJQIO2P/1feSo1c3iQWKX5S
+	AsV3npng=; b=T+mzfnC5DpGp+7+UeOCOzkTQ2l3gXfSNfyQa0AOKDtFOsEUc7Ny
+	7Dcw7dkajJEBe7N1S43DdxIcRFd0uygxJ6uDHnjNMEzMFsel2cZicwE7whGp1WCm
+	u188Uf20fn6G+ahFMlAWbInSk15rQllwQ2jnT6+SaRs5kU8BmjV8WzxUarWyuSlo
+	isLNqDyTVQJ9qXAuYn5D7F2o9+hchEzzTIDHK6PS7r4Pbashp/qF0WjsyKlP07mV
+	NRiXGl3qoAODJ6xfBJ18ckXYUnYanQULD/Bo7+GWpxzj8FT1cAQDw/YD+g6K5vI/
+	r+XML7P56grMPEtfMdW+0/edBabeyPaAVug==
+X-ME-Sender: <xms:1QQ5atIsoU8_zv2hGB4dgA_wQ-Ogz7F4HtiFfJteQFq8B6Dj3VMbsw>
+    <xme:1QQ5agKCq4bKt1YibE44qT830H_fNng6pt4lCPZaaiEkmzU8M8HgRMvbq1QhVGGyK
+    lHPLBvGdJyrYlYYOSRKJNN1ucsbF3fsNtRDdn6vfdWKgpIQpoV8EdM>
+X-ME-Received: <xmr:1QQ5aqs0lnHDkMuy49R_5tAfyv_GGADQ1hVjkDkm7y5f3DZr1lAwYyUirELvA2bvNWhWLnIpt3CwF__IOs2V1K0rV5FLjV2dfMbWJYWhWA>
+X-ME-Proxy-Cause: dmFkZTE6yzp+mZU/m8eTlk9I1NiBPO8fUEtUEtu31MvhebUfzXXgNr9ai++xb1dCjQ182z
+    9WPYnnS3flMJPpXV1rtyfDcAij40HkHVFhiYZTmN098cFJJbkQmUerdsIlzbJo3iccDNsZ
+    K5RaEdetA8RESFAdW/NJPzus6OvVSIkY2mvCdLEQIjZ8IYjarsce78SIR1AWc66lOngRed
+    +V/NOt7JGqjqPUrOKi9aHlutR95xRhpdZgHxjTxkT+gwSIrM7RsfO8oWXpLL1xl/wxd3yC
+    5yQfn+ZcVLfSvusyHBP0rKlqBHVaH4wtgyCgXZsX5+YMR6WovBXDMx7oAdQsMeE7Vl6SSG
+    2t8Dic5j+q5c1uOmdCHlcq9pBOK3ZFmGAhD/vNBdQ/4t0jyNY4u600H0QfoapCZ1aseu5w
+    TuqjxgOuSzWiIpzsVoprc3Ahw9zKg7De7jyOyfGDQNz6U+8Wa9ddhOfyQtkvynluc1+lxm
+    bd8cAbFIfFm4+5G5BuUIstv8ubw/zyAYdRoV5vW+dzETY6huYlkp1u0A0jxb8vRRvW+k/h
+    zoeda1eM4altqdlFuD+zxn6ZWpbNeI6M2K54nUgvLCnbnqGt4CZgPVPf7qk/66SdyQOoIN
+    csHfbO8SKBA1EpXcp2RvoLXRwDFZGmOtBhaktm6ZlKqB/5Sur68a/MsypUlg
+X-ME-Proxy: <xmx:1QQ5atQcCgHnoAfmNMqX_yEzcmvFRgPGMQO40ZwbrJlP9XI0qWLb2w>
+    <xmx:1QQ5agP05Z95dSiJnLt26IS_4B6xAMsyFbXSH8w0EytQk_hUjHclMQ>
+    <xmx:1QQ5aiblfYngsHIxqR2jQ4aJztauyv4LOd-CTzyzk6npv6jIdmjz0Q>
+    <xmx:1QQ5aqzIbWHxua5ZdTObfTrYU_mdFysMrbp7zWcQF9eOyAhoz0YIUw>
+    <xmx:1QQ5agpC61xYLtrAua8MWNlot6fPm_QPMa-WSgNpWyIpvEUogyHVzdp->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Jun 2026 05:48:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 109d840a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jun 2026 09:48:01 +0000 (UTC)
+Date: Mon, 22 Jun 2026 11:47:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Michael Montalbo <mmontalbo@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] Why do osx CI jobs so unreliable?
+Message-ID: <ajkEzhdqzmAePk_P@pks.im>
+References: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
+ <20260621213407.GC2297179@coredump.intra.peff.net>
+ <aji9MOE-NTHKXYqn@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
- <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com> <9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
- <78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com> <CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
- <37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com> <xmqqcxxnsufl.fsf@gitster.g>
- <42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com> <xmqqh5mymt8i.fsf@gitster.g>
- <xmqq33yimsdp.fsf@gitster.g> <CAHwyqnWt59h2HO5EJbFswYr7QEA7oNZKdBt_vTk5axNbWFZbpA@mail.gmail.com>
- <CAHwyqnVce7NKft9AEyCUnR=S_y1ygiXjhf-qmJqmi-tuUXcw=g@mail.gmail.com>
- <31172867-5577-4c1e-b8b6-425ef9fe44e1@gmail.com> <a3bd3514-dab4-49b6-a210-bc7b8ddd701d@gmail.com>
-In-Reply-To: <a3bd3514-dab4-49b6-a210-bc7b8ddd701d@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 22 Jun 2026 11:37:18 +0200
-X-Gm-Features: AVVi8CdENN6_XR5lBChdk3kTXJrSPgfMcJWY9TaT7W_MQuX1ZjuRKZCEfa5EbYQ
-Message-ID: <CAHwyqnVQwK1w9ap1-e=ii4a-BVOZ=oQtCdkTxB=TJF30kNaZoQ@mail.gmail.com>
-Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aji9MOE-NTHKXYqn@pks.im>
 
-Hi! I implemented this in v17.
+On Mon, Jun 22, 2026 at 06:42:24AM +0200, Patrick Steinhardt wrote:
+> On Sun, Jun 21, 2026 at 05:34:07PM -0400, Jeff King wrote:
+> > On Sat, Jun 20, 2026 at 08:33:13AM -0700, Michael Montalbo wrote:
+[snip]
+> > > When it is wedged the whole chain sits at 0% CPU. upload-pack is
+> > > blocked in write() on the ls-refs advertisement, curl blocked in
+> > > select(). So it looks like an HTTP/2 flow-control stall on the
+> > > response side. The same stall resets itself after ~60-85s on my Linux
+> > > box and on a bare-metal Mac, but not on the GitHub runner; I haven't
+> > > pinned down why yet.
+> > 
+> > We had some HTTP/2 stalls/deadlocks in the past, and they were dependent
+> > on libcurl and apache (actually h2_mod) versions. IIRC some of the
+> > non-TLS code paths for HTTP/2 were not well tested, which led to
+> > 8f2146dbf1 (t5559: make SSL/TLS the default, 2023-02-23). Of course
+> > after that commit those cleartext code paths should not be a problem, so
+> > that is probably not exactly the issue now.
+> > 
+> > But it might be worth checking the versions you're running locally
+> > versus what's in the GitHub runner.
+> 
+> I didn't observe any similar hangs in GitLab's CI systems, so I wonder
+> whether this is because of different versions of curl. And indeed we use
+> different versions:
+> 
+>   - On GitHub we use 8.6.0.
+> 
+>   - On GitLab we use 8.7.1.
+> 
+> Now this of course doesn't mean that updating the curl version is the
+> fix to this whole issue, as there's a ton of other factors that could
+> play a role in whether or not the test hangs. So while we could just
+> upgrade parts of the stack and cross our fingers, but that feels rather
+> unsatisfactory. Still, one place to start could be to update our build
+> images to macOS 15.
+> 
+> But the big question to me is whether the hang is because of a bug in
+> Git with how we drive curl, a bug in curl itself, or a bug in Apache.
 
+I noticed that a osx-clang job failed today in t5551 [1]. This time it
+didn't hang, but produced an actual error:
 
-Harald
+    2026-06-22T09:25:45.1984230Z ++ git -C too-many-refs fetch -q --tags
+    2026-06-22T09:25:45.1984420Z error: RPC failed; curl 18 transfer closed with outstanding read data remaining
+    2026-06-22T09:25:45.1984520Z fatal: expected flush after ref listing
+    2026-06-22T09:25:45.1984610Z error: last command exited with $?=128
+    2026-06-22T09:25:45.1984660Z ++ rm -f tags
+    2026-06-22T09:25:45.1984710Z ++ :
+    2026-06-22T09:25:45.1984830Z not ok 35 - http can handle enormous ref negotiation
 
-On Mon, Jun 22, 2026 at 11:28=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> On 22/06/2026 10:09, Phillip Wood wrote:
-> > Hi Harald
-> >
-> > On 21/06/2026 19:46, Harald Nordgren wrote:
-> >> Looking into this more and attempting to implement the logic for
-> >> re-assigning the upstream, it becomes quite a lot of code.
->
-> Having re-read you previous message I'm coming round to the idea of
-> clearing the upstream of branches that have been merged but cannot be
-> deleted because they are the upstream of an unmerged branch. Is that
-> easier than reassigning the upstream?
->
-> Thanks
->
-> Phillip
->
-> >> Maybe an easier way forward now is to avoid deleting these cases. We
-> >> can always add the re-assigning logic later on without breaking
-> >> backward compatibility.
-> >
-> > Not deleting the branch is certainly safest and should be fairly easy t=
-o
-> > implement. Adding an option to reassign the upstream later sounds fine
-> > to me.
-> >
-> > Thanks
-> >
-> > Phillip
-> >
->
+There was a second test failing similarly.
+
+Patrick
+
+[1]: https://github.com/git/git/actions/runs/27940620478/job/82672854726
