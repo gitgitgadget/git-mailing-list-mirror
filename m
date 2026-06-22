@@ -1,85 +1,85 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF3D38F621
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C59838F24D
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:13:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782116006; cv=none; b=mGkiWNyDrJXSlWM05oAp+KX2878C07RTUXOggAwIduDBOW0SkCSdL1uMlju76XSH8qTPZvIOvhQD4IQeMW1aOMJYKu/3VW93n7QbsME+rqWQpvPvaxm7zSLoSM9Jd3fle8YccuAns3PjDX+zNnbXavGyOxttxAmwZIDxYmi0W30=
+	t=1782116011; cv=none; b=rkAjI5uve31ALVnWGwFmpuYxaPu7ux85cP8EGqHHg24R1DIU9+ZVUEQ76tzEr6m813SR3DaOuRr74Sfe3huZAuMjKhIqfFKHKi0PX9O6vcr/vhgl8nW+Obmi3MLel/6e95TwVb5f4hH5QXKV8xlHjxsFiEjxtlDoS9Vo62ywybI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782116006; c=relaxed/simple;
-	bh=+9qZme/6I75tavesYAqxfLvsnsjfpcxYozmlFWiLdZY=;
+	s=arc-20240116; t=1782116011; c=relaxed/simple;
+	bh=MTxy7lIrSyIg0XqMusBVe2xIc9ewH2H7aIE0OsZxuVk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ay8X4Sx1UYrc+hnOOXFzMw2j8N7wofyxfJGtUwOrhwHmqeSo8bne01iwy6UDdC9ZBVBo3T870zv5I7arJldfcOzfpXCYOMFHskUUSXn/dY0XVqLncrO07wfHJeXcAr25gmQhganJvvnenyIRBeLcrJmauB5MGnBCci/nlArwIC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BKqDtC2p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IOiL2CFR; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=UMuL1uwnkE2kfosMQTE0XOvN9Ty4zi2nz5GT9gLQSOLoGBqxy7SLKahFPTL0DGUt0HBQHKw9jA/noKvONRqPBhHhmRpGi52WVUeDB5k48AVoEyLgfmhw7RPmslDihumCUKdphBAVNJZUEhaD6YLG/ZSFhWNqRTfLMH0nie12aQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hhP4M7R6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gnJLsI43; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BKqDtC2p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IOiL2CFR"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 05BCA7A00EE;
-	Mon, 22 Jun 2026 04:13:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hhP4M7R6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gnJLsI43"
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 01B9E1D00037;
+	Mon, 22 Jun 2026 04:13:26 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 04:13:22 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 22 Jun 2026 04:13:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782116001; x=1782202401; bh=uZIYVam1pC
-	PCcHtlTB/O7rOQRtykpCwIIWAAjkRmirQ=; b=BKqDtC2p64qIdNj8Idkj6onoX9
-	DzZixW/BkjvIyquCARC4Zrg55sILrDCo1lyfMVl2+YSzPpnF0peCxJ6SPjVs8tXx
-	G6l83YbIMne1gpredG5F3LHLvYchI1di16eMcY+6CE0DxG9LHykx6A931GdEkt3a
-	2y/iQlpqWQ+zfhA3cvh4lVGgwm1jUD8DQ+sP4bdn9nQ4ynDtNkiqmgamLQURz0zM
-	b0eH1m2oghiHBRcdqDQp+cufY82puFQXOWUAl8TicImRkRSi3j5DtGdmAcLQjHKL
-	r2Q15Gl3M7s6gdYA4j75lKRtb4nS4VT+13QawJa812R+gmu5WaYA7ktZvDmA==
+	:subject:to:to; s=fm1; t=1782116006; x=1782202406; bh=ICoE5xNRCr
+	ErmuxOpIIsFtSTN6nT1ZovEL4DSUphl2U=; b=hhP4M7R6i6pwq5LoMzZjzBnoOJ
+	iCG5pT8Zj+o1DcaxgKP3jLjWfwrrjmfSGIjkZI3ZIxrmzBn2reUnL/MGuppQCcZ5
+	gIGYCrGFjQcHqxPlhtbvT890n2E4FXK8C/rhg5x4ZIDdtoQjHDnGHivg/4/8inqq
+	D7oXYsvFy0Z0Tto+KtWAlfFrOiFshasBlV05XdkW43KkscCK6IzB5JzjgBNVsuzi
+	ikvRRt8SzDlo4sNerh4ABECgG8GmXQK3b+9vOZldKBdn/ZxI0AhmlBlLiXA83JvB
+	F/HRHvjN2O22qQlg1itrtHgqRO8NMweJ9ADjLIxDaKUM2STVBp3sJg8p6e+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782116001; x=1782202401; bh=uZIYVam1pCPCcHtlTB/O7rOQRtykpCwIIWA
-	AjkRmirQ=; b=IOiL2CFRAoWQ09Tx+4vljPwW0wuZX7EJYj9c4XPBtBApxiOLm8Q
-	/qUwUuvEmjD01FYIswmTYlIPcLDaTGUSqM1sKIM/W1aUNwxWQgwZ+20jmvRWetSn
-	LPln5lUfSQwrFpd6NBlkFK8DNLXX6fonDJw5tnZDz8WVQAyykc/E5UTeTvAXQKsS
-	Cn3enNh4GDpgfZyKElKmsEtOZXA107Khr9WxPMBvc4ORkRnkui2vjd2GjRxf64/v
-	kRLCEGrmc2JF6Tu98y/cKOg1eja1JikRNNAb3eWH7acVbG2jTN5tiHVRhcJ6ejSS
-	iUA6OI9W9LgqQ/exKrvSzdW6V+LvBuC8qSg==
-X-ME-Sender: <xms:oe44at49tR7sViGcW443K5JXNBaI9-9vUexbHbv5ja2mnIayD2ReCA>
-    <xme:oe44akM7Vlk3Pxzoy6cF_6zY0qRe3BC_pMRGW7a1cNyyMghsF3RrRxATEyEJnkb_4
-    BzYlMN90UqkmMosRJMhUGlYAJE6IEJi06AUZiZNSvQJeFV8qkxFQg>
-X-ME-Received: <xmr:oe44ars8L6VB0pPhII6Tz1JtTg3MoPOgJE3OUX-nJf0qaXZxgJa93KnmQfjp9i9rAcqNsw8xQqAm82wagRHzpLki0n5lt_HQ_jtjDpJdgA>
-X-ME-Proxy-Cause: dmFkZTFmFW3gFpwlGAQNXQnKxb09gp+VjueU4iv2/CeHUQWjKlrYb2oA4uiVsOuzaLXogu
-    lTfZYy1ulrvQQ0s0bLqP/FNINmHL1us+GOpLRalq14usuZOxW9jJw7frX+h8iEjNtCAQyL
-    Tv1mOi5vIzfVs6eiR53x13X8LQ0O8fHa40qyXYY77ibQVMm11+YdhkfE45w9Eg/l0KJSfy
-    zAPabS8lmHJW0QRhuA6IhEsuvyfM2DJgDC02tyWeKTGQr7SAhcdFNZ83K/97gDWDhlVYvx
-    KoVgfUePMj6ortK5LztTrMkmsWMSC/CGrZaIrEtqgJv6Ew/SFz/rAydJ09usUh9eFSjaVL
-    Y11C2z/obOygvfrkHYXr/wj0JApXsfM7UKGqd8KV9xtD1LcJCVNm/lfyPLGEuFGMIvFowp
-    h2JBvVkI8i/2Ff/t01nWhyKbW6JQSp0NmwmX+OjBO1jx7ZFMXrF5+RlgYpsPV8iT+NTfR1
-    kFL08u/RWxBEbIF+vvHXYsR7YzLa/y8DDMD3Eg9U0cyPAP+9/zXGR3Y92gsKPzf0q6HL/0
-    VsN0c6W8Y/9URuRwALNBbIbTBsR47KrqqA6rhG7n/r43MTpKaf5BYPm1Nq1423Je1EaCpX
-    Pw0rBYEr53mh3t6yYWqINw+TUhTiKUMqC76WF4XFN7URzhfhZW7TQIAgXYPw
-X-ME-Proxy: <xmx:oe44anb8QHvFQNuIQY9HZMmg8clubxF9D79zUPQ9gz7CQriFEgit7Q>
-    <xmx:oe44atz4TfxcdmwrSkuOuAiQG_GyrfnTDnsPSfxKf-NJ3j-dtV3WrA>
-    <xmx:oe44avihZqwdx_vsXcRD6oGzZ0wbTKLwtra8k_ARteA4NGLf7v3Erg>
-    <xmx:oe44apmiG-kXkBv24XiP0m-AcN1iVMCv1AAA44cv1jtpf4uo79mypg>
-    <xmx:oe44atB23LTlbuJsBzePfJR4Gzyugvujl5HPBpdo24L8UviRomKWjs5O>
+	1782116006; x=1782202406; bh=ICoE5xNRCrErmuxOpIIsFtSTN6nT1ZovEL4
+	DSUphl2U=; b=gnJLsI43bBe9OqNRMjxaIHWG7qc64VeY43JyORFukNIfZILOS/9
+	wG1ZuX5fUCVsezNs1N9DMERDX9u5s7vMO1MvtyO1mhUhmjd6e9MI/fpc7Vgydi+l
+	S+eBohVbZoeHtFtahkQ4Zd0etJg7ivf/4GRU0HfUt4AjLF7SudVrSlaEefAdKW1Q
+	MI78wo0atrPmSr/Cvad/cbaDFd2BGxMxP/rtaff8Dhj5vzgtQwe5AXGqA+tVojF2
+	Pm+W4t5CArL/OGQH8pumpmtxj6JRwwTXwOGuW/Rw4eHdM94Hp0QpmWMH2jmLI8AI
+	QzBdWM7mFpDBh9+y543QGYyTDTHXGB2u/0Q==
+X-ME-Sender: <xms:pu44agJ7T2ideWuXV5IV0yd5kZB8SDxcP5qNdn0g4DDR4AIv0qpkBw>
+    <xme:pu44apebINhq6ZLggYdFQT-m7Jn7HlaEGG0hVjWVUwdb1iAOaonJPQKT62vFB1yeF
+    6O9NLZnY0M197uZomSWE13_p6bPyVj1Vzq3HlOSW_kCQfqg55QEYQ>
+X-ME-Received: <xmr:pu44an-4VRmu7vTVLUCGigdfJiq1niSFlTJnnMfaidBBburPUsfWTlu5dj9cJDUeKRnHW_GELVyoXlyMWN_ra8iTE00xrmhVgOxX85WWqA>
+X-ME-Proxy-Cause: dmFkZTF7+mBNRPCQ60dRjcuBMaeEKlO4PfjPIt6u/r/Rra/yQ9KzOhiTvfo3XMPdEbOVd6
+    2gBGEu1SaE5MwSVY/gkzd3CqOAY0s8cF6w/wSl7WSDyjAPS9hCMxKyml6pEXVwFdGeoW5B
+    Togxq5MvKuhZL795WKARFbVpNeB0zXuN/pvQJbjOY0xvBH3/mcZUv+GjY9cTYPVZ/sDtE7
+    Aoz4cPpgSyzNw8/xl0+Ds7/BTEIVJHn0Y9f+lUZfHI5KlZyhPnPLYGFr+UuLep8wicvse3
+    PjKHGm0R9ajubaZj4aVnZyLgW5DccKvjwpJ7hZeA9vocQbdH39k+y51J8U2jmZKzLDTCg4
+    mK9lUGtq6l3lEd+yOi+B8f7CCQW7q1juzhtmqqfpwW8d/0o8cYClwvshWdsfb8It79rP8Y
+    XK5lwZlgR8OmxKTy0Yh0SsnGZfHlrc0Gpnun7iiSXO5vyIzOoY/QslUOGQ61GB6Iwn2nTY
+    rCB4BSaTm1hXESK5lY5ekPB1nIHxMjRHoMi7byhlFuXlqjphQi+Plavz3geoN5Rmmo5ozg
+    fTavsgaX1ohDLBi99AywxX5kgZNmC9hlzYOMy8KxwyzTePg1w5DVzmGqciY2u3amPufFZk
+    xKMmkWALwR1vr9QIRlhPuQPUgfpgIiyyJyIqARggwOIm0a5Ya2tbhFxV071A
+X-ME-Proxy: <xmx:pu44aurGhZMXQH6N3QK7Z-_VFom8yKFQPEIjsCUQAJDIocPJHsFe5A>
+    <xmx:pu44akBkbFoQXHaWe0Qvq_mVmU2N7ilhL0rG6pqj-CMrBhSmDzea4w>
+    <xmx:pu44aowzBsyJbLiyn_22RvrKkCXP4HmhmU2LYTNu4ydn7yFHVG4QBA>
+    <xmx:pu44ap2WR0kFMxBhPNEdtnp4gbv_Lon0yp61prLY6moe70bIZSY4ZA>
+    <xmx:pu44anSaoSHiW1TqaLbp5ZS7CF4daYfRkBViLtDJV_C7Rm_bBk6A0TyK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 04:13:20 -0400 (EDT)
+ 22 Jun 2026 04:13:25 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 47461b78 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 08:13:18 +0000 (UTC)
-Date: Mon, 22 Jun 2026 10:13:15 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 4bd6a63e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jun 2026 08:13:24 +0000 (UTC)
+Date: Mon, 22 Jun 2026 10:13:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
 Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
 	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
 Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
-Message-ID: <ajjum9Cf78N-VCH1@pks.im>
+Message-ID: <ajjuoS5Qc3K0nCRl@pks.im>
 References: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
- <xmqq5x3cg10a.fsf@gitster.g>
+ <20260621174934.GC2206349@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,22 +88,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq5x3cg10a.fsf@gitster.g>
+In-Reply-To: <20260621174934.GC2206349@coredump.intra.peff.net>
 
-On Sat, Jun 20, 2026 at 06:01:25PM -0700, Junio C Hamano wrote:
-> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+On Sun, Jun 21, 2026 at 01:49:34PM -0400, Jeff King wrote:
+> On Sat, Jun 20, 2026 at 12:00:24PM -0400, D. Ben Knoble wrote:
 > 
 > > Autotools-style builds permit enabling USE_NSEC for cases where that's
 > > desired; the equivalent knob is missing from meson-based builds.
 > 
-> With or without autoconf, Makefile based build can use USE_NSEC.  It
-> is a welcome addition to the other side of thw world.  I do not know
-> if 'meson setup -Dnanosec=true' is a name that is easy to discover,
-> though.
+> Seems reasonable. This is not changing the defaults at all, but just
+> bringing meson's options to parity with the Makefile.
 
-I think the name itself is fine. As is the case for other options, it
-can be discovered rather easily by just running `meson setup` in the
-source directory, which gives you an overview of all available build
-options.
+I was originally wondering whether I should recommend that Meson can
+auto-discover the availability of nanoseconds. But your below remarks
+make me question that.
+
+> I'm not still not sure if turning on USE_NSEC is a good idea. There's
+> some discussion in Documentation/technical/racy-git.adoc:
+> 
+>   With `USE_NSEC`
+>   compile-time option, `st_mtim.tv_nsec` and `st_ctim.tv_nsec`
+>   members are also compared. On Linux, this is not enabled by default
+>   because in-core timestamps can have finer granularity than
+>   on-disk timestamps, resulting in meaningless changes when an
+>   inode is evicted from the inode cache.  See commit 8ce13b0
+>   of git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
+>   ([PATCH] Sync in core time granularity with filesystems,
+>   2005-01-04). This patch is included in kernel 2.6.11 and newer, but
+>   only fixes the issue for file systems with exactly 1 ns or 1 s
+>   resolution. Other file systems are still broken in current Linux
+>   kernels (e.g. CEPH, CIFS, NTFS, UDF), see
+>   https://lore.kernel.org/lkml/5577240D.7020309@gmail.com/
+> 
+> That's the most succinct description of the problem I've seen, but I
+> have no idea how widely it still applies. Kernel 2.6.11 is quite old
+> now, but I could believe that other filesystems (especially network
+> ones) still exhibit the issue.
+> 
+> So I guess if we wanted to go further it would take some digging as to
+> how each platform behaves, and then flipping the config.make.uname knob
+> for ones where it can be argued that the behavior is always reasonable.
+
+Yeah, it would be nice indeed to figure out whether these concerns still
+apply. If they do, I would argue that it might even make sense to remove
+the build option completely. It doesn't really make sense in my opinion
+to have a build option that nobody uses and that is subtly broken when
+enabled.
+
+> But that's all outside the scope of your patch here.
+
+Kind of, I guess. If we figure that this mechanism is still subtly broken
+then I'd argue that it doesn't make sense to expose the option via
+Meson.
 
 Patrick
