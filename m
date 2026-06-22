@@ -1,158 +1,166 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31A433F580
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 19:56:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCF234CFDD
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 20:23:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782158169; cv=none; b=knz+KWtdp5wqG6qy3og7nKsavLxYObyQuEDtzqv/fvt4Ue5Q6c+fmaxR96klUESvNLmUxF7GrLRy24FyoZQDH2KDY3oI+9g4HUxkGhSgnvgAEp27nDlSInGgsEiHYgUpOT2xSIvJ1ksEOJviBiaajlZbTv0NaxCyw+xq3zFV8+c=
+	t=1782159809; cv=none; b=sKJmij6Jk/qVwYOrPCFX52XxVk33E6EvPCamwRVqMUaCE1JOz6d+V++NtAGVCNS3CtfkfULTSfomjop5zmyMRRim8xBn+dpWAJucVBcPJLsjlc2UjNYZpXq8vg9bRr/2PBDsqig2HXYXO3ZTiGQwE9GELipYv9/6afu8lihxrSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782158169; c=relaxed/simple;
-	bh=img9klOCdlBX8Xl6TP0DZC2mCed0wqGZhUu3L5LZN+s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nUMkikFRpMk5HDC07tVOauW97HK7HKEx/FFny3DmLL1lN1a/c9Klni6uYJdCVfHyiN4uyvSsVVg1FpWumRmW3Xi+A6o4BPlQF34hw3OmUS6sZGI3UeJ2q9JPWU48eekYCEeigFoqOOfSyVpovwBGSkDw9Fv54/Pq9SwJdKmbIL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LFD1+VR4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dv92cwaH; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782159809; c=relaxed/simple;
+	bh=nbJz1knaX/Bm48EZfdAEaQQWs/GlYhYlwYGCqTmvePg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ObVCas9suN7EHRNnzKFpRSjgrrJYOjeUb8y6JEppZ+66u7QhZuI03lp6Xuk8FawpRanFQES93BwJqJ1jkLE0rYByiQ+6D1liIfkHc1w3wCOZi2IJkNSsU8znuLtEJZCHaPTNAtasVSIpiho/I2nV9FASf6W+/4tD8udgLCbHCJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+6nycst; arc=none smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LFD1+VR4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dv92cwaH"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id AC84B1D0014D;
-	Mon, 22 Jun 2026 15:56:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 15:56:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782158166; x=1782244566; bh=CFyhIqupzx
-	46g3H6CzPaXh1tP2HUgTdUJjbRiOgBo5M=; b=LFD1+VR4S3ZRucXB6ujaVyyTtp
-	iKC6vu8NSukun8s8fAiXRt1rGxfZ79kq0PT3byexR5sY7wc84IigdkncmOPZwC/Y
-	uwMNDzZ079qwwojPrsQVQNZawFCF9gOpScskwwoeARogH2bnRzExEiE7UKbECl7p
-	wsz0OKbJ1nDY8IWMqlct3+JSHCdCLYyfq4N7sr6PUrCbLTNn/C+VW6Hb9UufZdQN
-	IbBdK757XSbcX7j1ABBjvXZzEOG2fegNptNT9OjNDo1fwU0fkDyxhk9omyiH9GB7
-	/y4yZo2hB8X77JLYZCOdfx3eSiwEFPJyPuZpZQvcXzM3WrJpaYqKJ0nFYGtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782158166; x=1782244566; bh=CFyhIqupzx46g3H6CzPaXh1tP2HUgTdUJjb
-	RiOgBo5M=; b=dv92cwaHGFMllTninCUWI060u8IanIWwfCbS2UD8T0rLywztwAL
-	4KBq6Q2zyc9EDhml8H1l2impxVxrGxIWxoZTozeCw9HHQwTqc+cZmQp5w1oSIhGk
-	hCbauWKK1vEBNrfM2LZEKDhnZ0zvEOLdyMnCUZ25k10IcVpadEDRKL+6ey5aOzqP
-	6Vhgu7zzW0ZrnpihKDX972yoqX1JOtsE1LG51rEH7iN9FxxQ2i+c5lrIeLeHazb+
-	RjtcArhyMV/dt3jR4rn9zS0GZiWCGc1FIAcECRBZTEiTqkY0Vbylz9ku0NdzvKf8
-	qkqx/1lktvA5iDhzqiI/sTy1wdA+UiLHVKg==
-X-ME-Sender: <xms:VpM5an_TDxWv21af6Z8QdYUVkhfUmq6AyXHsLttdSX7xewiesFUWdQ>
-    <xme:VpM5aqvnA64rqsg2t42Vyj6w7v7laVlvMzd1m6qTJxEvoPW3nqHE7hEe3KrdUNMVl
-    FfrWQK8mGP_Wn_iEOyNGUX5sDy9k8Kup_xxT7k22MDN8PVi9lc8ZA>
-X-ME-Received: <xmr:VpM5aqBTW-OikY1BeFXpsZo3Ipxd7vp3IWMbexWvGTxlJ8Y8srwoSbergLtyETFtJoy-Ru_jSWD7siVs2czzeDyfBSGN4rAPBecJhOA>
-X-ME-Proxy-Cause: dmFkZTEJnoR/yJGcZEPzBd0t5cV70nWrtK6kChGgvGGH1IF3iZUx/GFKRT8BEPGFLf3vEx
-    l7VsgksEnWF37z56m0/U02Q5EFWH8DqPLKThwpYmNOUt5KB+p1IMw9KWjRe7tzpcYx7wmX
-    4U9B/aF2+uhc+sSYNMWgCr0EeaRVbq0x7XDz8mLJldRftKUEv30emoNw8TekMTe/4PWgpQ
-    lcGN+7ZKdb2dW6sV1WCX7hGAB5T8ZVZw8n0zysCo9023NbKz1r62QX6X3Qy0lOh50E8rJl
-    bI1AwOcUM84O8157vLzjRcg0zq5zE5CZ9pIk5RlO2h3wwWb7AyKruHhdnnM66qOCkNc/Op
-    O7oLliSx7S5sYILNFO9I2IBZfkzv1pHh3v8191vIv1dH8wojEuGwvwkDzq2QhVH8MRLu6P
-    X/OVesizZC4iBuei6O/TBGrDcg/H0GB/yfMGYBLhIfbEt85rbtvoHeoPKIcJNh++oKh5xY
-    T4eGytXpSF5jcTurVZVafwi5HrT2RlQXw7oIR9hIDj42hAiSl608as89h8m7ETl2eDwfez
-    WEOs9bOhX26tcsc23ZymbpDL8/SqtCG9SoNMYmjoIbV4FuZopd4Bx15JJDX5XMg/B6EUTI
-    piQbiitZPvuZP5iNaNZ4j51JkQ9xSH/kya0B2Jw2jo74bdYGFj4CKO/hbQWQ
-X-ME-Proxy: <xmx:VpM5aiVppIv7vtroiJ2wtlivJ5FYYC374KXRA6vwAZZzEleARgtCkA>
-    <xmx:VpM5aoA41dxYhfiqIS41Zn3yUq4lv0EN3GvfpapZTKnkwt27KT5YIQ>
-    <xmx:VpM5al9cIvxUs73df9RSQHuK5MvSjpFm0YSQd3wi5itWN60VUWqBow>
-    <xmx:VpM5avHBHUt75jpqeaY99Jdve9deTteM-P9JN7Amb7e4_Fbj7icDsg>
-    <xmx:VpM5athBb-rnWFIhiZAsjTe-b1Lc3YQiwRtL19nUC1e8-0kn5FdL58in>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 15:56:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harald Nordgren <haraldnordgren@gmail.com>
-Subject: Re: [PATCH 1/2] branch: suggest <remote>/<branch> on upstream slip
-In-Reply-To: <21684539debaf433b6b63404e1a7622a5cc33283.1781262619.git.gitgitgadget@gmail.com>
-	(Harald Nordgren via GitGitGadget's message of "Fri, 12 Jun 2026
-	11:10:18 +0000")
-References: <pull.2331.git.git.1781262619.gitgitgadget@gmail.com>
-	<21684539debaf433b6b63404e1a7622a5cc33283.1781262619.git.gitgitgadget@gmail.com>
-Date: Mon, 22 Jun 2026 12:56:04 -0700
-Message-ID: <xmqq1pdytkmj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+6nycst"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-66319257aa1so2707132d50.2
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 13:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782159807; x=1782764607; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RHeh2bsSS95f0hATtdn+DF/L5xGG6vMIP7ELV0mgv8k=;
+        b=A+6nycstX70x9q/LRLCVSZ2+B906jyDo6zAnzhxp/sC9VxGhKGPWwrmSqAQjvwTLxU
+         aKHOeonX0PXOu3apraQIuw0DufA9D8vNPkVaEepCwMu4eIn7doRgDjj8QFf/AOgLppt3
+         Hmjwfbpwsmn3Gie4QeIaA8bBTn4tYRjWDfTMUObFvQqJUZWZLoCGM65M2dsPKN3syl3I
+         9YX5E/RfPn+VpdXMQQb+dV9+G9T6EO7RleMrEuefYeY9jt6ywVpiDMWFxuzSH7TAXeYI
+         s+yYNLVgsAxF95O09bZQUAdmeDG63XSft4J3U3FsuYs/5extIki1AkaMDFrDjLXM9W//
+         8nuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782159807; x=1782764607;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RHeh2bsSS95f0hATtdn+DF/L5xGG6vMIP7ELV0mgv8k=;
+        b=lPqSnt0VJCIpLiUQ/9HEW+F6SHfOV28qe63MVvOt1z0fLctS/4qW41WsJpi5KQJHxV
+         IKs1qNAYG9MEtr60y4q3A1L81LaeTra8ZZZms335OCew/DOxT/slocvMj0ZS6k+oaA5y
+         fViafyReFVJZe/zQPIJXVKp8VZZFo2nfQda148trFMFYaevyAFEqKu4W5X7XfXEpyITR
+         6op6SjrJ/XIWAdREak2urKU0nQmsU4N95JebM/DBDJIwJlt+8xBV4NesirdLjY7CWP3n
+         XrnnvTYFa8XdUzHp8KIqLEpVhFaALzNOKUqLPUjt6yuJdTo6bQ5RaBrNYYlY+nHn98cr
+         61IA==
+X-Forwarded-Encrypted: i=1; AHgh+RrFUDNDI3cxLRs87/4zBgMMsTPrkp55mvZly5DjHOZ6P9bXBAjMMjBAvpG73J9c6M7h9WQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5nU1/5H9oErWbEKfezi5axuzc9CiMORsaKZXU4ZWac4oVAAxz
+	Zu3Mg9jID2RDqWIgFWgO01CdTd46wsmJweDR9vcGARV5jgDoax520U2JfA+k6ZtWkyA=
+X-Gm-Gg: AfdE7ckk3P7iwA2zcJaZ3pmHd6AbUlCI3/mHLvytqktRyyCs9AEFq/ofCtw0IF6rADY
+	AOIehgmDNSDvb18aa1zifvyzauNraApDfe4VaQRB14w2sC9G7anlMnwj/gu38k0DPHjTUkVxGsu
+	WI3VMERW8vrY5G01GXgQxVK8oPbq6qLGUmP2Ig+37Gq/ABcxAHIbrV/v746iCEyHL+MwW2YpelK
+	Hm2qsovVjhHpMx03QxedioAzo9Njf0GipLnw7giHPtzOXRubcbMTMydG2yVjHE9laaInJP2kxGk
+	AA2tOdSwYyyE0nvXb5y6zE4Psb4V6iAi4y4bHbtsWPQhUoiMe4HDkZbACeVxcZcmGlRTBwz44F1
+	yAwxNbI1Wwr6KxUQt6fxL4fibw8de78Pk1mN01t1c7SNk2guKxyUTvqoQSI08fwmcYkDv1gRcbC
+	2KDiy2e/glJHuoMCPGEaOmT2XkfblxB36+z3XjDiPnT/S5S0q6AHcpqS0SkqxIGuBCPQRf
+X-Received: by 2002:a05:690c:4d82:b0:7e2:2c41:4f75 with SMTP id 00721157ae682-801311edff1mr153056617b3.5.1782159806588;
+        Mon, 22 Jun 2026 13:23:26 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df81fcb55csm103788866d6.34.2026.06.22.13.23.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jun 2026 13:23:25 -0700 (PDT)
+Message-ID: <8d07f5a9-82fa-4aed-b407-363e659f6851@gmail.com>
+Date: Mon, 22 Jun 2026 16:23:25 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH/RFC 2/6] commit-reach: introduce struct paint_queue with
+ per-side counters
+To: Kristofer Karlsson <krka@spotify.com>
+Cc: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
+ <316e4dfe261043730c77142639f86f5c3cabe370.1781951820.git.gitgitgadget@gmail.com>
+ <f0c9eb6e-60b1-4eb6-86be-3af4d87afe85@gmail.com>
+ <CAL71e4Pcw-UUbHBw_j6PFx2bXmxZ93VLMWG+3Qap=RmCJa_ZgA@mail.gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAL71e4Pcw-UUbHBw_j6PFx2bXmxZ93VLMWG+3Qap=RmCJa_ZgA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-"Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 6/22/2026 3:14 PM, Kristofer Karlsson wrote:
+> On Mon, 22 Jun 2026 at 20:10, Derrick Stolee <stolee@gmail.com> wrote:
+>>
 
-> From: Harald Nordgren <haraldnordgren@gmail.com>
->
-> "git branch --set-upstream-to origin main" reads the trailing word as
-> the local branch to operate on and dies with "branch 'main' does not
-> exist", pointing at the wrong problem.
+>> Also: technically "case 0" should be a BUG() state, right? We
+>> shouldn't be walking any commit that isn't reachable from at
+>> least one side. (case 0 does happen for old_paint, though.)
+> 
+> No, this is actually intended - initially I started with skipping
+> case 0 and let it fall through, but that would hide _other_ bugs.
+> I use 0 as a marker for "not in the queue" so we have this:
+> Enqueuing: 0 -> flags
+> Dequeueing: flags -> 0
+> Only the case with the modified commit being in the queue
+> will have non-zero flags. I tried to document this, but perhaps
+> it is not clear enough, I will see if I can rephrase it, or add an
+> inline comment around the case itself.
 
-When 'main' does not exist locally,
+I bet this would be obvious if I tried to change the code and
+run the tests. thanks for the explanation.
 
-    $ git branch --set-upstream-to "$anything" main
+>>> +     while ((commit = paint_queue_get(&queue))) {
+>> ...> +
+>>> +             if (queue.p1_count + queue.p2_count +
+>>> +                 queue.pending_merge_bases == 0)
+>>> +                     break;
+>>>       }
+>> When possible, I like to try to make loops only have one terminating
+>> condition. Should we have paint_queue_get() return NULL when it sees
+>> this internal state condition?
+> 
+> Possibly, but that would couple the paint_queue struct very tightly with
+> the usage. Not a problem in practice since it only has one call site, and
+> it's unlikely that we want to add more of them but it may feel more natural
+> to let the paint_queue purely have the queue semantics and counters,
+> and keep the halt condition within the function itself. I don't feel
+> super-strongly about this and can change it if needed, I will just need to
+> verify that nothing else gets complex as a result, I have not fully thought
+> through the effects.
 
-would fail before even looking at the "$anything" (which is supposed
-to specify the new_upstream for the named local branch 'main').  The
-operation is to set the upstream for 'main', and if 'main' does not
-exist, doesn't the user deserve the error that says 'main' does not
-exist, no matter what "$anything" is, whether it is a well-formed or
-ill-formed remote tracking branch name?
+Hm. Interesting. The coupling is perhaps expected, because the data
+structure tracks counts that don't otherwise need to be tracked.
+Maybe the terminating condition method could be descriptively named
+to say why it would be completing.
 
-So it is unclear, at least to me, why "branch 'main' does not exist"
-is an inappropriate message, mostly because these three lines does
-not clearly tell me what the user _expected_ the command line to do.
+>> Also, I'd rather see it of the form of (!count) instead of using
+>> addition to make it clear that we care about each value being zero.
+> 
+> I did consider that, and most of the code in commit-reach.c at least
+> prefers x and !x over x != 0 and x == 0, but my thinking was that
+> other code in the repo did use comparison operators specifically
+> for things like counters. Happy to change it to conform better though!
+I just worry about the idea that a negative number (or an addition
+overflow) would create conditions for termination that we did not
+intend. That's why using the nonzero status as true/false combined
+with ands and ors is better.
 
-When 'main' does exist, but named upstream "$anything" does not, we
-get
+>> Finally, I think we actually want this case to get the benefit:
+>>
+>>         if ((!queue.p1_count || !queue.p2_count) &&
+>>             !queue.pending_merge_bases)
+>>
+>> I do see that you have this condition in patch 3 with the extra
+>> detail that the max generation in the queue is finite. I think this
+>> is more reason to include this in the data structure method and not
+>> in the loop.
+> 
+> Yes, but just to be clear, you don't want to merge together patch 2 and 3
+> here, just grouping the halt conditions closer together
+> (within paint_queue_get)? Keeping patch 2 and 3 separate would be nice
+> to make it easier to show that introducing this extra counter bookkeeping
+> does not negatively impact the overall performance too much.
+No, I don't want you to squash them. I was perhaps unclear as I was
+discovering the structure as we went. The thing I was missing above
+was the "finite generation number" condition, which you make very
+clear in patch 3.
 
-    $ git branch sample master ;# make sure the thing exists
-    $ git branch --set-upstream-to origin sample
-    fatal: the requested upstream branch 'origin' does not exist
-    hint:
-    hint: If you are planning on basing your work on an upstream
-    hint: branch that already exists at the remote, you may need to
-    hint: run "git fetch" to retrieve it.
-    hint:
-    hint: If you are planning to push out a new local branch that
-    hint: will track its remote counterpart, you may want to use
-    hint: "git push -u" to set the upstream config as you push.
-    hint: Disable this message with "git config set advice.setUpstreamFailure false"
+Thanks,
+-Stolee
 
-which does sound clear enough to me, even though it does not exactly
-say "Even though upstream branch 'origin' does not exist, 'origin'
-is a nickname for a remote, perhaps you meant to say
-origin/something?"
 
-I do not doubt you are trying to address a real issue, but the above
-three-line description does not tell me what that problem is.
-
-Now I do not regularly use --set-upstream-to, so I may be missing an
-obvious common mistake modes, but a couple of my attempts to make
-bad command invocations seem to give me reasonable responses:
-
-    $ git branch --set-upstream-to ko/master sample
-    branch 'sample' set up to track 'ko/master'.
-
-OK, both are well formed so no problem.
-
-    $ git branch --set-upstream-to ko/mastre sample
-    fatal: the requested upstream branch 'ko/mastre' does not exist
-    hint:
-    hint: If you are planning on basing your work on an upstream
-    hint: branch that already exists at the remote, you may need to
-    hint: run "git fetch" to retrieve it.
-    hint:
-    hint: If you are planning to push out a new local branch that
-    hint: will track its remote counterpart, you may want to use
-    hint: "git push -u" to set the upstream config as you push.
-    hint: Disable this message with "git config set advice.setUpstreamFailure false"
-
-Misspelt upstream branch name diagnosed correctly, just like the
-case where I gave 'origin', which does not exist, either.
