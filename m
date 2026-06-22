@@ -1,110 +1,108 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E086325B0BB
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 05:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176BE7081A
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 05:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782104483; cv=none; b=CZfM0OOcujP/1RhwbGa5IozQVnX7IhtdkGMWKy6wQ+RsLNvbrDOOKIfx4w3KaiiYpYznuuCYBAeNueoDd/c6WXsnGEVL7AB+pjEOBU3gg42SR0CSA7gzjq+At7pD23HGZ8HTDP8KdVJzjYgt+TYhvyMphLYqswhV84kag+DtJm0=
+	t=1782104714; cv=none; b=Dfql6Qb/uV1pBs5O/GWR5YzLzdKYyPZ4WcTcpRURK75iOuVSZGb+SJ81AHR9tCtuKrrEN8e4ZKPz5yqyhZzwtu0VBusf6nC0tNSGWCmX5DTmQxOvEzWp+VMh4fGtjDrun+LONXySZcd3tChrUu61Spvup/M0Acuyph5bwW4zgsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782104483; c=relaxed/simple;
-	bh=1CKFbXb0QDXE0fPPvMXQeSNEaeioKJQpzazMFQeB4Ek=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LkQQFRzqq3bAteWZ2XAw+6WDEAOm138hK6Js8zyEyUcY5UbWSFUaJiApBJKffFNfhZk+nUgqoS7I9ET7QzIs02sbpqAQzhoe5ALT0fujbHvWRb9/vuOfP8Hj0yVKiIWdw4nfeXVnA9Ra8LBtzIaKzFEyEOh9JEtsQDvQLnyMbLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lydKZHEA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PWBfQ58e; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1782104714; c=relaxed/simple;
+	bh=LtKpZcse68ocdTADpIwxTKktjZhdbKJnoTTFNVmVASU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UY/GEL4NWVHx85tBCKIQO5RBSO119eJsIJ4LITIEh1a5H2ndm7YgvQKTWvHB5lgKdouuzjVGnHH9xtpmF1D1mnrY7ODSJ4goDEZ4g0GMHSwjT62O8q9G3bunikKcBFBDwSyzdbm4Ey5C7tehQXL/sxB+h75dnXGJ8N7Lmy3GDkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i8uL4qWJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RNTvP72l; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lydKZHEA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PWBfQ58e"
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id D6C311D00072;
-	Mon, 22 Jun 2026 01:01:20 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 22 Jun 2026 01:01:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i8uL4qWJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNTvP72l"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2315A1D000E2;
+	Mon, 22 Jun 2026 01:05:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 22 Jun 2026 01:05:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782104480; x=1782190880; bh=IcjQypl4fc
-	1JtDHEF0N+bVgwfPVTZedLFEwlAEO1urM=; b=lydKZHEAF1cynU4spCbE7yUEOy
-	SeTpWnu4+6hUgHpYQlPrEZIEbswYie1Wvx763gWhtUCpGD55mUr7QwXaB3BnplTr
-	sYO/FUbC3t6lJ7i9o3SxqaKfFyd3Vj5jrzHICCFnZOgP9pwmFcoTO8mslgzcpeXk
-	Wg35XhUlk+ni+HMEtvA2AUXiU7rATaYaijukJ0nw6Q653e8PZbWbqdOGLW+mxh/s
-	rQPM2T5ToY7hqRrut7CIf2qlNX4hxJQlQmDcY2/qsCbUfgGNgH0m7sbj1pfBUszt
-	9AhTFUTm9TYpGmLtbboD1F8u3kciJMXge8y0v6d73opWkGetmScoTajPICJA==
+	:subject:to:to; s=fm3; t=1782104711; x=1782191111; bh=LtKpZcse68
+	ocdTADpIwxTKktjZhdbKJnoTTFNVmVASU=; b=i8uL4qWJetgx5aqXFmC3CQDvJW
+	Vm6K0as2BE0yznZrs5tYida/L6HussO1oKc1D77b5yLwuVANPG3/h6BIkAheSW0y
+	IcCB+rkmOqZ7JjZDBAuMC5RpRP/ijeIYMMiFdxs1+0QO/f7pC3WD4oEZKE87RgSH
+	Rn18CYhYNkk9NdWiS+3nfW0XdFbxdLUCfDZOea1SmVo2VqnTxU+S2o4hCedM6OCM
+	acaYKt3ejQ6hJERLRUAaQihHhR7Lmp/mImX9aE5snCxm6L9q/X8Ww8YycyWAqmrG
+	6qRbFCl/QZF2giNcsNqrfVmXOBGtUxCEERAFdOoJkMqCD+krmDPn0r9WcZRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782104480; x=1782190880; bh=IcjQypl4fc1JtDHEF0N+bVgwfPVTZedLFEw
-	lAEO1urM=; b=PWBfQ58eg/cPx11ONESfYQZAGiJ6FC45NOv6wq2q6zNLGQzjr8I
-	MaD1wJPiiId8Kr0A8QbvucjH2if7BYtQXOyvbjik1GsR4qB0CCKEddC5L0NbifUz
-	wJr6PtuLs9pmE8+ar8RVKoOhoc0zOz6QC6OAGpy5ooJK2Fv+uVRB1/57VCHmaC7P
-	kVqusSAN8aAqfTsiF6mF1J1XWt2KkMDwdM6nMLUISubPa3FqwK8VYupsbU9hbPv3
-	HE1XLNernE5A9WgANA7rKjDhgWKhGBhfqxyQA7I5dnhi+E4vvJni8tFWqHy3MZ/t
-	Yx33y504MpC7D6z8yNh7FIPTVBagY29n6fQ==
-X-ME-Sender: <xms:oME4aqeJ26dM4-z9nckcY59cTGYzE6GlDn2Z28GaG5bLthHMmo3xpg>
-    <xme:oME4arGMRoky8uRRoLsOfDmT5DCukrPVVjnXl1w00GHgU74ht32vjj7MmnI6W_v5t
-    7FqSKf_Y489hBLBG_b76EQnw4r_qbcyHu9EhgzMNv9OFeEFAqKHuw>
-X-ME-Received: <xmr:oME4aj2Ar6nOHi9USR8giALJg5V32MxS6KxI81R5McgI2ETGTFEb-AmM1YTXLM_RB90UGJ9WiOoEqU9lgktZChRZoxHCtBKQ9ZCcwx2C5w>
-X-ME-Proxy-Cause: dmFkZTE4ITkoJnjRXmRIeNAr3iCykdmT1ZxgGlULAmyJyydRnjZi7rbAirkH9mv/6jpInr
-    vBHjGAFYSLI7jiMlj5RzSLCuPvUtM+6TtK6qZcrR6X9r6VPDoAgcwpQQ3a9K0kUnifXFfa
-    uu4PYK+oOlvp5SkLrolzuE3D4VWZT/VWaS12nRqIUXEzyl9BLesDSrW/ulP3pl4NsWiUee
-    AMxTIaRe66Cyr7JFDMlAFGGLUskk8TBdF8PS+z12sN+sBPOuRsEKFkA48tk+5rOU03HNPf
-    jsweaHfREnDOkkhnX4fbMn/ticUHA3cUXqSAedTKxvoJtsz5azCeT9W4oggEgSVt4l1nGT
-    yFUBUSh8HDobzeVisWiHaZuLRJlAS4f2VjKsLr0suVNaDHo0y1tmSCFVh3BkwGrrCbwncj
-    JLlwtjYxUQYaia6jIMcXv1L7XFbntAarl7Dr6k5odG81p/cDIAx/clmZx3HZuG2O1vbF0s
-    J/6xE9re2pqNUcVuAixDg3waCR51y1lA1lMLc7C+QofdjQdjcCRfC5tc12c01xSQpGEpm3
-    xGqOrW3GOI8xqQwBIJqZARhlX5TJryFjYo07K3+q3uFPHl76NVDznwPWx7iciofiI3+h82
-    REAYEuCoF25LmTVvOCcF/MFf6DTA+0UZSy2lfiD+iYb6SGotWy0s8EezWFrw
-X-ME-Proxy: <xmx:oME4ajmSzZCs9Hry0tbN6_4vVj1E5znAbOtgePHH4FyvgYEEdKnmLQ>
-    <xmx:oME4aj81iMgJiiaP4Mr46UiYKUnHXlYulw3lWrO9wMiWe2tFxMB3-w>
-    <xmx:oME4aoqf5X139aTNTZEu0nb1v49yg3_HLngA7wSbkcXAxkyOfpTKwg>
-    <xmx:oME4askxjP3-Pjzz1qvkpNhEzTL6EeQ9yiBiOKSnHXnLLMSdnAsK9A>
-    <xmx:oME4aq2V6nUPv0l5KfdAFOTnhtB6gJSELMW78ZTbA3j-X68v3oxqohtc>
-Feedback-ID: i197146af:Fastmail
+	1782104711; x=1782191111; bh=LtKpZcse68ocdTADpIwxTKktjZhdbKJnoTT
+	FNVmVASU=; b=RNTvP72lY6s4tOigWT6z3YKWJueyG5RriaExXXU3IvLgX1wXtKN
+	a6U1VoCWVbpLG1WABdFe9gHaUa1XmSv/6cmbXzpqbNQ47TAaAsJfhXQEJh0QhDZU
+	RkMgBPjz4fXBGPgF6VmlYUfDGwmhVTAL9Kv9Av7KUxEsv6Hz2PztjUoAI+JKSESJ
+	Eghj+CoD0c59UY0DIiNVupAUb2LKA5idopKds0ofP6aaPn54pmp7gQoz81/3bSOO
+	fKnjgQ5U13J8lqDpxtijlws8mstko7UPTEvZmxyATcJ1pZWoBICob6KRlpTR5S3q
+	ddSzgNrcoYN2bKBdzS4dnXnA3ye6ccWfG6A==
+X-ME-Sender: <xms:h8I4aiBlD39ZLP6qyIyUevYN8J0Y5X0KNyvl1Ycdjxi-lGeF91XXfA>
+    <xme:h8I4aja1FQONxg7Eqzp-DCMDWw8lOopzpaVnkgFyKFMFgK0BLt3K2Mzkfg81pzC-F
+    wCH1pVGLncJUU7ULPb0kb4-zWQk8NPU-lstL7GzMVWkXRICuUjLkw>
+X-ME-Received: <xmr:h8I4at4-51VOTynoZW-P8IHBmk55i3miptGcGAv9GrwNY-Vuy_7DBCJCPKpoTtGqyt_ebnQZ5R6OvSky8Z7YEqn9gqPKB0pq7SwzlHo>
+X-ME-Proxy-Cause: dmFkZTFsh37xzw6XUFZFPZmhjanpULW7U2nbkvAguPdBtMsab6FQccffhEKyKGCFpW8Z8u
+    kijrtCWo6Nlh6rbaoarSRbTKzDNaBX1T41He8uBqnt+PxdhsqMSrIG8wYfM9z9eVu68N6T
+    t8OHU5R2wbBQgtu7icTw4JueGBKTG1hg6NiKxyNZEvsXpSe8aFze59iNLiypsz4W5MqfVK
+    astQhEmB3/mpe67gUOG5W9Z6CjxA5R6VKJSKRwNJmZ7neYN62SDIlCnpeqIj6DmBmBL/z9
+    EELCC6N9+RtAfg18Kl6MrQzoT76wN0Oe35oKv09q6v0t7UXOnOsWZWv26Pt/Oo7urzbxoB
+    VV8x6poo7XYsjJiHtDEJ07cfS44FgYPShQHVxesGS+EmbNImioPFb+TGEavITfZyyKCII8
+    8RquEWkhF+BWU/esh7EABgJSRrqT+1JMIGB5YVpVr36eu+bTYZARfuRrY6S1+aBce3fbWO
+    PMMmKkrmL5WDdHEByx0CORsySSkKsDBftrYzywJUw6MIGfK13hO5WNtFK4nAoOLybOudUu
+    HPDnMgcEbpmRdYdqu5HWZaNibkzsk9rSWobgwRZP5Sq0SCCeO9feADz0HT3FUbzpMx8upR
+    XIq8FgfEn0XrNbuzpdjf1FXN8Kez04r/qrBYrjVuOXc2GH0huXqNM7gCKiRQ
+X-ME-Proxy: <xmx:h8I4asZiOlSgMNC31oYfDAm2r_pwa63tL80nM1Dhfi6Rfrt0sZMG8A>
+    <xmx:h8I4akivN0lWikCOwYOZXyG-49yngRbVxeuiIYsRTOxjuG9p17m0RQ>
+    <xmx:h8I4al-rjD7SxcrmKaI8Cg8XM9JPCjJuDQVI2OKFEqh1_lrjUoQW4A>
+    <xmx:h8I4anqZqbc-F7Ckb9WXV6cJ4Qj6-KFOO2xk6eyCN4wn1Z3OvhRVxw>
+    <xmx:h8I4ag7TpymWKYdjd4VCng2Po7BmKvNvUNfSloSm7AAw5u6CHOnAR6TA>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 01:01:19 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e64c5b6b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 05:01:17 +0000 (UTC)
-Date: Mon, 22 Jun 2026 07:01:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t4216: fix no-op test that breaks TAP output
-Message-ID: <ajjBmi39IFJW5p5V@pks.im>
-References: <20260619-pks-t4216-drop-unused-prereq-v1-1-2ce0d7bea088@pks.im>
- <ajVMZpjTKiXc7TRe@nand.local>
- <xmqqa4sqlchz.fsf@gitster.g>
+ 22 Jun 2026 01:05:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Michael Montalbo <mmontalbo@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org
+Subject: Re: [RFH] Why do osx CI jobs so unreliable?
+In-Reply-To: <20260621213407.GC2297179@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 21 Jun 2026 17:34:07 -0400")
+References: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
+	<20260621213407.GC2297179@coredump.intra.peff.net>
+Date: Sun, 21 Jun 2026 22:05:10 -0700
+Message-ID: <xmqqqzlz412x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa4sqlchz.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Jun 19, 2026 at 09:29:44AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> 
-> > Given this and the above, I would probably err on the side of
-> > designating this as 'test_lazy_prereq' or otherwise silencing the output
-> > of 'test_cmp' so that this does not taint the TAP output.
-> 
-> We can argue the merit and demerit with a good log message.  The
-> central issue at hand is how precious 52a9 in the script lost by
-> this patch is (in other words, are we checking more than "is our
-> char signed or unsigned?").
+Jeff King <peff@peff.net> writes:
 
-Ultimately, I don't mind much which way we go. But if we want to retain
-this, would you mind sending a rewritten v2, Taylor? I feel like you're
-in a better position to argue why we should retain it.
+> If the problem is a racy deadlock, there is a reasonable chance that
+> some jobs may simply be lucky. Even if things like packing refs help, I
+> suspect the problem may still be lurking. Maybe I'm just a pessimist,
+> though. ;)
 
-Thanks!
+I share the pessimism X-<.
 
-Patrick
+> We had some HTTP/2 stalls/deadlocks in the past, and they were dependent
+> on libcurl and apache (actually h2_mod) versions. IIRC some of the
+> non-TLS code paths for HTTP/2 were not well tested, which led to
+> 8f2146dbf1 (t5559: make SSL/TLS the default, 2023-02-23). Of course
+> after that commit those cleartext code paths should not be a problem, so
+> that is probably not exactly the issue now.
+>
+> But it might be worth checking the versions you're running locally
+> versus what's in the GitHub runner.
+
+True.
