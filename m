@@ -1,359 +1,453 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFE928C2A1
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 17:26:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782149167; cv=none; b=ovy77NSENlx/0E6MI2WTzjFut4iYyh0AjFdrfL6flOqxQBf3KCHR79IqnV806SxK2yBltV2UThHzq/3LORjQfmJx6Z3YNI0+GbB2qhtMb7Hm9NVGj4BXUXog4rVjO1JeYHs97C+e5luezUTKLVLG9LklFHq7nSNXpUk3YdwqcK4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782149167; c=relaxed/simple;
-	bh=DKr/qJ4vcw+KAri6ei2IBMsRKRl5CezNclx01jr2N5M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iTYBtzUmIR+zJGuvQ4mzfEwAaWSTHXXKNLnZkb6vVQMuR97wsEpjavF5UMrhYtz7yOVBGiP0m/sU6PlWMWf0OmW88bbAkLAPe8iHRowJ7n5A/mnSbn5kVzOdYaYgnc0G+xRq3mXYH7HhwuAInis8MrPEJVZaC36wxOOEO19Pl78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IvJPLa84; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eAyM6WVd; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B63264A97
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 17:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782150099; cv=pass; b=q2OyIR6lUIGBWDKkwQsvFpjfDSGUmhhFK0DaWHoS3ybdKBFQahRCMG8Gpdu2dnp9mVmg3YJvC/Rjj0VpTYWLGuzIoiObCQnX2/GDRID4cW1KEYWOGnZz9QX3D60saVMIZ/ZljVh40ouxmd5ab3ODKkUqrzMHrEpHMg1svrIa1vc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782150099; c=relaxed/simple;
+	bh=GZAe3BcxqEPHySTLUdIQ62ATp0lZE6sVMwsXjiXrxWo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=n6oM7leu8Yy/pbD6kQZwC+WhvnxgpFhcNBsM7RTQhEeiBcBSDMtUW8sSGGgQzG32od2zwW8QpapP4cnu2+g8/5ErQs5UnaTEKNGnr5JHP2m9f9gfoldHDPHlY0TRuLEqvm+VQUAC8s5JnfDo2kNNfKzWU5GMb1ZBuMdsXEx1Kow=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7M2tgJ7; arc=pass smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IvJPLa84";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eAyM6WVd"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id A244AEC01DF;
-	Mon, 22 Jun 2026 13:26:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 13:26:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782149164; x=1782235564; bh=NoCqSL5XVU
-	6LAAP9oQGEFRi2/GALY6H84VgnUBjB0b8=; b=IvJPLa840uiMv2ijaO77txliQ2
-	P9VBKuyUBJkSJ3m2v1KWdDE62N6JJq2jmlelZww9g6OthVdHxp0V4iiCbBhXHZVC
-	O7ky0wF5us6l5y5f43qAOijVt6HX7U2MJ4kGbNjmQsfD7IEvsr5JTNjDciKdzNRz
-	Mp5YybE5qj5AULX2Fnd3rgQFC+JnEvViJSxy+4kVD+SxGSh1bIqYefD4WZ72tyQC
-	/UJj1jpztsMSUXPbjQtavfnK0iPMc/0AOk3bHmmgZaww5kWOKhaHbu0CXqQnQVLr
-	chW9Wl8yeEHBUuiVM7j5y5WLuJ96v0l+lB27oZCHRvEB/pygIo012Lzq1zEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782149164; x=1782235564; bh=NoCqSL5XVU6LAAP9oQGEFRi2/GALY6H84Vg
-	nUBjB0b8=; b=eAyM6WVdGS0Y8yEcTZz1IJbEDOg3xHLRL0lhTzZIITT5PExI6Z6
-	CbdkhBGWSRtMGbi8IY9Yfy1RtnPiNoJDqkAa9TMSyeOMEDKzGBTya1KACFC4EXeh
-	slV1piiLoh0jWN0fZ6M4uIWxKlYtBnubo300JgoIRFX39arC+Fmvpo7axStEvcZd
-	V7XJ8NQhkAnOc67O5DxuGnMW9KdO5GNzpK22rfMwjh9xf1vJ1uq4zvU/fybW0qg6
-	pk4Z03LrvQ8RRC225GBLAAYkEpAc6lsEjyRaqflJom2LwKgeNBMjoyEjaVg5jCX9
-	fUXtNDA8Ir4J60Ui7qn6vYPysKlZt8EN74A==
-X-ME-Sender: <xms:LHA5ajR2PX6vU7w-RpbZoGPQ_TqxEMEcimhABwneRkxPlquS4gx0VQ>
-    <xme:LHA5arryeiP3r3Uz_rFB07ofTwJCWOrMvyolyZ_BZbxlloXHQnh368NeKDnCs7Hw8
-    pEJc6tWe-HSYWHfHUfQiv6g9TuBxGynngVkahjI4CxOpXf19oj-Vg>
-X-ME-Received: <xmr:LHA5ahII90N2NAr4yVE-nzDmgzb4B2LQNyXxWBG95Mt_4Gk1NUbpUY5yEOPgmQQ0d2A1RhuWc7AlcFq07rz3OAoOyFqAZUjC0WIaNPg>
-X-ME-Proxy-Cause: dmFkZTEIh3Zbsax/6xuCXxkdt1DkP5UL7L/unfc4zZfx+8Tub1psB5TKzoSNcb4GKCnSJi
-    R7aop77B3Z1Scv0BSAm4i/0Vldg2RiBMisyTWii6fYdYb4bxG6p6EPpza45oAch2M6VAOd
-    8ll1iuZ+mBhtX4oyNUAaiqwutmer8NAjDRv5/92gWn+vU5Qrqx7zgozdqowtFyffqKuRjr
-    /PHrOIpUI6OdZwjzXYwQa6yAd4V3IfgNZiTV3e2mPXlW6J7c4EmHc2t+cu8lVBS5h3HCUo
-    Isdj0wnzqbVeTaku74VV3EV0J0PFENjIMgioAd51WKULDUaYY14EIcGh7OO6CxaJjBREeb
-    ZvjTRawFGiv/reLhxIh2hXKEXlzK+tCi3wek6LPdKpbxAw0kpbhJrDV/bed+25H4BO2+jv
-    cSEnqC9M8UCv62g0F66CAbaOljkwxn2lUOyGWNTW1dZcDhxsHTuzJm5eFCTmXKNgmI50/V
-    hoeWJ/ZqpmWUYNe4jr5c7yf3teN3cDhEJmuaiOtDgz9h78hW3qJZPj5ueSnc3DgROVHfPX
-    Sj0wy7s6n5HnG20e7LURTBCkUyKocMdMa6fyZ2uIw8mgQY6H2PSE+ca0RmsKAb9Swf3BYk
-    l97jVeKQDpDXj2uTsGLeTxZV3HwjFQIxWgw0zc7DtpvWI4fyBqbvDwMaVjAA
-X-ME-Proxy: <xmx:LHA5aurFp3MP4CPc90ksOcZk25xjk1YKnZOuzJBGY0RgWxRv43bxtg>
-    <xmx:LHA5apw9DY98oSVcKLA6pCBMGZV6PIbZc2lF95s4Lg8GJZQMKC3cAA>
-    <xmx:LHA5aiO9yeXq6nopN5OcseLqFyuO1MarMaTpKD-_f9v-I4N9l1wGrg>
-    <xmx:LHA5au5BUCPARXVe_ncBAbjoXcV1uQ1p6G_y2_lrktxdZNw4rsoIlw>
-    <xmx:LHA5ap7w1ldp5e7rH_gZQ-PETdCxwR8c-4Qn1KLjOAKY6gWxy2LUCtcR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 13:26:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 2/2] status: improve rebase todo list parsing
-In-Reply-To: <b3514e9b1c9515bf1a7f7983b9f120d63edba97f.1782117361.git.phillip.wood@dunelm.org.uk>
-	(Phillip Wood's message of "Mon, 22 Jun 2026 09:36:04 +0100")
-References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
-	<cover.1782117361.git.phillip.wood@dunelm.org.uk>
-	<b3514e9b1c9515bf1a7f7983b9f120d63edba97f.1782117361.git.phillip.wood@dunelm.org.uk>
-Date: Mon, 22 Jun 2026 10:26:02 -0700
-Message-ID: <xmqqechy1o7p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7M2tgJ7"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3997a6196c5so31240171fa.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 10:41:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782150096; cv=none;
+        d=google.com; s=arc-20240605;
+        b=e4Uxa5L/tPNHESONqWsBJgL//1lnW74O7xqA3+cwIPR4+IeFOSj2RUfIP/FFMq3xU5
+         /+LfuThUXN9PEe2Sg8MhEC8ZQxaFHx/pRXMsc4ybqmDH8mha2wp7a8ycFYp+XDrEiJ94
+         N0xDNmYTOJzdkrePNkOFcWUsG4hcwoVJDiKmXkcuw7wIbC1tCrC4CbH5bhfv9rKW5SEe
+         LyzUOjgvVlIbltxwtLXLbx4+CgZhWnqhk5ThYNM7q2063pPudzikmsQCsRAnrPvdKNY7
+         Ee+wM9OwFeUkY87v6sjSbxWf8lovWVcucj9XebzYlXiXjKuXD0YZe0L/LD2vraiPnNdV
+         A8xQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=C0V4Nli64cruP20EMYA+JTCWwlIWP+yDHzBDBWC8SBM=;
+        fh=ABDus/bVxnrSX1FmS0+sMLvUJT4JUdpD0ZMktwB+82Q=;
+        b=ll/8rmyg5HhZwCLd5nrbX40PSdOurAnTvngCd1S4vUF+xiQ3En5Km9qt9e8WgfSLR8
+         4MDV5eXlq4IYkDSA/ytap0OTpbAp3172MM1Z+Qm53Ht7EtzccUuQK37VJFZe1BEWYXWp
+         yl1YlK1WPooOTFyjmTXa2oefr6nawSNpg0nluRqGPw1PEihFQLsyjTYE5vNG6DdKrhzq
+         3C8CRiSnGN1UYz9S3kI2eoqjJBB0aep+Y7ClAjo5BdwRt7eLZGjqD/usirCiGLOzYaEr
+         RAlCk8yE30z2wHjfIYD++2jTKgDKzbRXuQprYmGO5JhvgVww3/EEqpnzbgtaPzAp6n2M
+         VEYw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782150095; x=1782754895; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C0V4Nli64cruP20EMYA+JTCWwlIWP+yDHzBDBWC8SBM=;
+        b=Q7M2tgJ7DpkrVwRI+RilyddSZMgzEczazcRdFunH+yA8V7oYxiFs++8KoqsmrX1bTU
+         LpcK0KLc0B4wioyWwuY5aVtVMw7mqeXvakLlhpS5VxtwIh40cGRZkxnoJCoHfBHrKbNJ
+         webmheOniui834uqIvrF94kPQkgKlIisWmRK4UFzuNXBTE/OGqa26HQZPxq0T/yOanE0
+         yHButedvC9+j4wS7O0D+Ii7cch1HSiF2aOf5H2Ue8w0z6hnaULzE9HT1a/kTRs449i+d
+         XyPzt1VEAHD68rj9yHeN3lu8BeFcuchWkuDQY8aHQhIMoy9x9pm+GcvT/ansHbkhQ9in
+         zF7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782150096; x=1782754896;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=C0V4Nli64cruP20EMYA+JTCWwlIWP+yDHzBDBWC8SBM=;
+        b=HivWr7+mqfaVm1FByNiiJ0TSoPKUw6SMEuWcU85eTvy9t7e07PEt5qDwetZQPU6PUL
+         sV7oYP6/ITu/qhy32uC9k7201kt5Iw6BYMx8FSVZo6RitzydMxNNdQnipW/m4kTm4D8I
+         GIk3EPqcGwmz764IboDedeWr2nOlyKS6dRCMCqWw0QQwoO1MdnsHjJg2NnkijEl+iuur
+         Vkj6qJhGjwLc4qGSPxCfM0AM+EYWlhwbhVsKkmcf8gVQvCvTmL1MbL4+qryIt+wC/7Ga
+         svhLGrV74uDSOqkodMFH4tsi8CfSc06PKCUlpBdolAv64HqhTwFqw5pKM9Wzn8bSA/G/
+         xF1g==
+X-Forwarded-Encrypted: i=1; AFNElJ+d+tSOVFhGVsBZqh44eicTzgGDL1n0AEUo9ec/knbSjfDZ8uVKlIFRz2kl5EhzrJseRUM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZKydQPR7YgdQbsdUAPISE3yYP8Dr+OMxVATkaSiV4JDMXMv+x
+	uOWXhG7OSEqKXWGUMf7m5rciwjRI6nlEZ2YrfN7ApZS18fjO1VQIdvian/p6IHR5cXKpSN7WwLq
+	Nel780DFdvdG0a4TlI9saEhAES1B5fnc=
+X-Gm-Gg: AfdE7cl/6OzL5QCfmciNYI3hk/XNzaX+TtNCqvG9zRLK/Sf/N7SkfJYQwfVIqDFeMUJ
+	if7RlFta1W2y8XA/XvkKv3ASvoq+lpOIVKYJsljbe/q1vND0zhXFPZU2fR4mHMlXRT+V8K6Ck5y
+	dvNH4/Suv4AtLuW9sjSnk9B1Z9/xfjyfqtm/ecfgTWYd2ixnEMUxpcTVLBNPeSDwoTPi8euGb/A
+	XIzWXv+Nh7BQBdsfL4TpGnWKCfLkXVfaPVV3mEoB+BKIiThr3fFB6p+byMw/CkpQnsiabr7JdZ1
+	jihnUY3Ai0u5uI2Ns05VlXba9mmgSpfMImfByG8QlyY+8fnXnRqxzqDzqBuMM3JpF548x5ylB/P
+	VLHPf/bTibhvkoXY=
+X-Received: by 2002:a2e:a27c:0:b0:396:8f6c:7711 with SMTP id
+ 38308e7fff4ca-3998a253f58mr29265011fa.7.1782150095119; Mon, 22 Jun 2026
+ 10:41:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20260601151950.30686-1-jayatheerthkulkarni2005@gmail.com>
+ <20260621055534.46798-1-jayatheerthkulkarni2005@gmail.com>
+ <20260621055534.46798-2-jayatheerthkulkarni2005@gmail.com>
+ <xmqqtsqv6204.fsf@gitster.g> <xmqq1pdy36me.fsf@gitster.g>
+In-Reply-To: <xmqq1pdy36me.fsf@gitster.g>
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 22 Jun 2026 23:11:23 +0530
+X-Gm-Features: AVVi8Cfv4AHVMhFVwWy_CqJ9KirKVPJR-Ypqn5uZaDYJjl07xBAV1mfU8biyhBk
+Message-ID: <CA+rGoLcahV9pPqkSAKvz9o3g2cw2PsYXxzzwAC8XoseFzMB5rA@mail.gmail.com>
+Subject: Re: [GSoC Patch v7 1/3] path: extract append_formatted_path() and use
+ in rev-parse
+To: Junio C Hamano <gitster@pobox.com>
+Cc: a3205153416@gmail.com, git@vger.kernel.org, jltobler@gmail.com, 
+	kumarayushjha123@gmail.com, lucasseikioshiro@gmail.com, 
+	phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Hey Junio,
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Mon, Jun 22, 2026 at 2:32=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+
+> So, for the existing user of this logic, the preimage ...
 >
-> When there is rebase in progress "git status" displays the last couple
-> of completed and the next couple of pending commands from the todo
-> list. When it does this it tries to abbreviate the object ids of
-> the commits to be picked. Unfortunately it does not abbreviate the
-> object ids when the line starts with "fixup -C" or "merge -C". It
-> also mistakenly replaces the refname in "reset main" and "update-ref
-> refs/heads/main" with the object id that the ref points to.
+> > -static void print_path(const char *path, const char *prefix, enum form=
+at_type format, enum default_type def)
+> >  {
+
+...
+
+> > -     free(cwd);
+> >  }
 >
-> Fix this by using the function added in the last commit to parse the
-> command name and only try to abbreviate the argument for commands that
-> take an object id. If a command accepts a label then try to resolve the
-> object name as a label first and only if that fails try to resolve it
-> as an object_id. When trying to abbreviate an object id, only replace
-> the object name if it starts with the abbreviated object id so that
-> tag or branch names that contain only hex digits are left unchanged.
-
-;-)  
-
-Strictly speaking, the original that said "if begins with
-exed, x, label, or l, then don't bother" style can be extended
-without using the function added in the last commit to do this, but
-it certainly is much more pleasant to read the resulting code
-presented here that uses parsed command enum and switches on it.
-
-> Comments are now processed after stripping any leading
-> whitespace from the line. This matches what the sequencer does in
-> parse_insn_line(). The existing test cases are updated to test a
-> wider variety of commands. Only the pending commands in the tests
-> are changed to avoid removing existing coverage.
+> ... now becomes this postimage.
 >
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
-> diff --git a/wt-status.c b/wt-status.c
-> index 479ccc3304b..4b15bda76f4 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1363,6 +1363,71 @@ static int split_commit_in_progress(struct wt_status *s)
->  	free(rebase_orig_head);
->  
->  	return split_in_progress;
-> +}
-> +
-> +/*
-> + * If the whitespace-delimited token starting at or just after *pp
-> + * is a hex object id that is longer than its default abbreviation,
-> + * abbreviate it in-place, shrinking `line` accordingly. On return
-> + * *pp points one past the (possibly abbreviated) token. Leaves both
-> + * `line` and *pp-advanced-past-the-token unchanged in all other cases
-> + * (non-hex token, label name, unresolvable, or a refname that happens
-> + * to consist only of hex digits).
-> + */
-> +static void abbrev_oid_in_line(struct repository *r, struct strbuf *scratch,
-> +			       struct strbuf *line, bool maybe_label, char **pp)
-> +{
-> +	char *p = *pp;
-> +	char *end_of_object_name, saved;
-> +	const char *abbrev;
-> +	struct object_id oid;
-> +	bool have_oid;
-> +
-> +	p += strspn(p, " \t");
-> +	end_of_object_name = p + strcspn(p, " \t");
-> +	/*
-> +	 * For "merge" and "reset" the object name may be a label or
-> +	 * ref rather than a hex object id. Only abbreviate the object
-> +	 * name if it is a hex object id.
-> +	 */
-> +	for (const char *q = p; q < end_of_object_name; q++) {
-> +		if (!isxdigit(*q))
-> +			goto out;
-> +	}
 
-OK.  If the string has non hexdigit, it cannot be a raw object name
-so there is no point in rewriting.  OK.
+Yes that's right!
 
-> +	if (maybe_label) {
-> +		strbuf_reset(scratch);
-> +		strbuf_addf(scratch, "refs/rewritten/%.*s",
-> +			    (int)(end_of_object_name - p), p);
-> +		if (refs_ref_exists(get_main_ref_store(r), scratch->buf))
-> +			goto out; /* object name was a label */
-> +	}
+> > +static void print_path(const char *path, const char *prefix,
+> > +                    enum format_type format, enum default_type def)
+> >  {
+> > +     struct strbuf sb =3D STRBUF_INIT;
+> > +     enum path_format fmt;
+> > +
+> > +     if (format =3D=3D FORMAT_RELATIVE) {
+> > +             fmt =3D PATH_FORMAT_RELATIVE;
+> > +     } else if (format =3D=3D FORMAT_CANONICAL) {
+> > +             fmt =3D PATH_FORMAT_CANONICAL;
+> > +     } else /* FORMAT_DEFAULT */ {
+> > +             switch (def) {
+> > +             case DEFAULT_RELATIVE:
+> > +                     fmt =3D PATH_FORMAT_RELATIVE;
+> > +                     break;
+> > +             case DEFAULT_RELATIVE_IF_SHARED:
+> > +                     fmt =3D PATH_FORMAT_RELATIVE_IF_SHARED;
+> > +                     break;
+> > +             case DEFAULT_CANONICAL:
+> > +                     fmt =3D PATH_FORMAT_CANONICAL;
+> > +                     break;
+> > +             case DEFAULT_UNMODIFIED:
+> > +             default:
+> > +                     fmt =3D PATH_FORMAT_UNMODIFIED;
+> > +                     break;
+> >               }
+> >       }
+> > +
+> > +     append_formatted_path(&sb, path, prefix, fmt);
+> > +     puts(sb.buf);
+> > +
+> > +     strbuf_release(&sb);
+> >  }
+>
+> Mostly, the code translates FORMAT_FOO constants into the new
+> PATH_FORMAT_FOO constants, and lets append_formatted_path() do the
+> heavy lifting.
+>
+> It is a minor point, but wouldn't it make it simpler to handle
+> format_default first?  I.e.,
+>
+>         if (format =3D=3D FORMAT_DEFAULT)
+>                 switch (def) {
+>                 case DEFAULT_RELATIVE:
+>                         format =3D DEFAULT_RELATIVE;
+>                         break;
+>                 ...
+>                 case DEFAULT_UNMODIFIED:
+>                 default:
+>                         format =3D DEFAULT_UNMODIFIED;
+>                         break;
+>         }
+>         switch (format) {
+>         case FORMAT_RELATIVE: fmt =3D PATH_FORMAT_RELATIVE; break;
+>         case FORMAT_CANONICAL: fmt =3D PATH_FORMAT_CANONICAL; break;
+>         ...
+>         }
+>
+> Perhaps yes, perhaps not.  I dunno.
+>
 
-If it could be a label, then we check if such a label exists, and if
-so, we won't modify it.  OK.
+I see you have continued this point further
+I am going to respond to this in detail there.
 
-> +	saved = *end_of_object_name;
-> +	*end_of_object_name = '\0';
-> +	have_oid = !repo_get_oid(r, p, &oid);
-> +	*end_of_object_name = saved;
-> +	if (!have_oid)
-> +		goto out; /* invalid object name */
+> > diff --git a/path.c b/path.c
+> > index d7e17bf174..6d8e892ada 100644
+> > --- a/path.c
+> > +++ b/path.c
+> > @@ -1579,6 +1579,75 @@ char *xdg_cache_home(const char *filename)
+> >       return NULL;
+> >  }
+> >
+> > +void append_formatted_path(struct strbuf *dest, const char *path,
+> > +                        const char *prefix, enum path_format format)
+> > +{
+> > +     switch (format) {
+> > +     case PATH_FORMAT_UNMODIFIED:
+> > +             strbuf_addstr(dest, path);
+> > +             break;
+>
+> In the orignal "print_path()", DEFAULT/UNMODIFIED did this "show
+> unmodified".  OK.
+>
+> > +     case PATH_FORMAT_RELATIVE: {
+> > +             struct strbuf relative_buf =3D STRBUF_INIT;
+> > +             struct strbuf real_path =3D STRBUF_INIT;
+> > +             struct strbuf real_prefix =3D STRBUF_INIT;
+> > +             char *cwd =3D NULL;
+> > +
+> > +             /*
+> > +              * We don't ever produce a relative path if prefix is NUL=
+L,
+> > +              * so set the prefix to the current directory so that we =
+can
+> > +              * produce a relative path whenever possible.
+> > +              */
+> > +             if (!prefix)
+> > +                     prefix =3D cwd =3D xgetcwd();
+>
+> This is what was done in the original "print_path()" upfront, with
+> a similar comment to explay why this happens.  Looking good.  Also
+> we no longer call xgetcwd() when we do not need to, which is goodd.
+>
+> > +             if (!is_absolute_path(path)) {
+> > +                     strbuf_realpath_forgiving(&real_path, path, 1);
+> > +                     path =3D real_path.buf;
+> > +             }
+> > +             if (!is_absolute_path(prefix)) {
+> > +                     strbuf_realpath_forgiving(&real_prefix, prefix, 1=
+);
+> > +                     prefix =3D real_prefix.buf;
+> > +             }
+>
+> There used to be a comment explaining why we make realpath calls,
+> which is now lost.  Perhaps what the comment said was so obvious
+> that we are better off without it?  I offhand do not know.
+>
 
-We obviously cannot abbreviate if we cannot even recognize it as an
-object name.  OK.
-
-> +	abbrev = repo_find_unique_abbrev(r, &oid, DEFAULT_ABBREV);
-> +	if (!starts_with(p, abbrev))
-> +		goto out; /* object name was a refname containing only xdigits */
-
-OK, nice to see sufficient paranoia ;-)
-
-> +	p += strlen(abbrev);
-> +	strbuf_remove(line, p - line->buf, end_of_object_name - p);
-> +	end_of_object_name = p;
-
-By abbreviating, line->buf only shrinks so we won't risk getting
-confused by a realloc() happening under the hood.  Upon entry to
-this helper, *pp must be pointing into line->buf, or everything will
-go awry but for a file-scope static helper function like this, it
-probably is too obvious to anybody that it does not have to be
-spelled out.  OK.
-
-> +out:
-> +	*pp = end_of_object_name;
-> +}
+When the logic was a single block, the comment felt necessary to
+explain the flow.
+By splitting it into explicit switch cases, the logic became a bit
+more self-evident, so I removed it to reduce clutter.
+I kept the other comments where the reasoning is less obvious.
 
 
-> +/* Skip "[ \t]*(-[cC])?", returns true if "-c/-C" was skipped. */
-> +static bool skip_dash_c(char **pp)
-> +{
-> +	bool ret;
-> +	char *p = *pp;
-> +
-> +	p += strspn(p, " \t");
-> +	ret = skip_prefix(p, "-C", &p) || skip_prefix(p, "-c", &p);
-> +	*pp = p;
-> +
-> +	return ret;
->  }
+> What is done to make the paths real is the same as before, which is
+> good.
+>
+> > +             strbuf_addstr(dest, relative_path(path, prefix, &relative=
+_buf));
+> > +
+> > +             strbuf_release(&relative_buf);
+> > +             strbuf_release(&real_path);
+> > +             strbuf_release(&real_prefix);
+> > +             free(cwd);
+> > +             break;
+> > +     }
+>
+> OK.
+>
+> > +     case PATH_FORMAT_RELATIVE_IF_SHARED: {
+> > +             struct strbuf relative_buf =3D STRBUF_INIT;
+> > +
+> > +             /*
+> > +              * If we're using RELATIVE_IF_SHARED mode, then we want a=
+n
+> > +              * absolute path unless the two share a common prefix, so=
+ don't
+> > +              * default the prefix to the current working directory. D=
+oing so
+> > +              * would cause a relative path to always be produced if p=
+ossible.
+> > +              */
 
-OK.
+I thought this comment made sense keeping in for instance.
 
-> @@ -1371,29 +1436,68 @@ static int split_commit_in_progress(struct wt_status *s)
->   * into
->   * "pick d6a2f03 some message"
->   *
-> - * The function assumes that the line does not contain useless spaces
-> - * before or after the command.
-> + * Returns false on comment lines, true otherwise
->   */
-> -static void abbrev_oid_in_line(struct repository *r, struct strbuf *line)
-> +static bool format_todo_line(struct repository *r, struct strbuf *line)
->  {
-> -	struct string_list split = STRING_LIST_INIT_DUP;
-> -	struct object_id oid;
-> -
-> -	if (starts_with(line->buf, "exec ") ||
-> -	    starts_with(line->buf, "x ") ||
-> -	    starts_with(line->buf, "label ") ||
-> -	    starts_with(line->buf, "l "))
-> -		return;
-> -
-> -	if ((2 <= string_list_split(&split, line->buf, " ", 2)) &&
-> -	    !repo_get_oid(r, split.items[1].string, &oid)) {
-> -		strbuf_reset(line);
-> -		strbuf_addf(line, "%s ", split.items[0].string);
-> -		strbuf_add_unique_abbrev(line, &oid, DEFAULT_ABBREV);
-> -		for (size_t i = 2; i < split.nr; i++)
-> -			strbuf_addf(line, " %s", split.items[i].string);
-> -	}
-> -	string_list_clear(&split, 0);
+> Identical to the original, which is good.
+> > +
+> > +     case PATH_FORMAT_CANONICAL: {
+> > +             struct strbuf canonical_buf =3D STRBUF_INIT;
+> > +
+> > +             strbuf_realpath_forgiving(&canonical_buf, path, 1);
+> > +             strbuf_addbuf(dest, &canonical_buf);
+> > +
+> > +             strbuf_release(&canonical_buf);
+> > +             break;
+> > +     }
+> > +
+> > +     default:
+> > +             BUG("unknown path_format value %d", format);
+> > +     }
+> > +}
+>
+> OK.
+>
+> > +/**
+> > + * Format a path according to the specified formatting strategy and ap=
+pend
+> > + * the result to the given strbuf.
+> > + *
+> > + * `dest`   : The string buffer to append the formatted path to.
+> > + * `path`   : The path string that needs to be formatted.
+> > + * `prefix` : The directory prefix to calculate relative offsets again=
+st.
+> > + * Pass NULL to default to the current working directory where applica=
+ble.
+> > + * `format` : The formatting behavior rule to execute.
+> > + */
+> > +void append_formatted_path(struct strbuf *dest, const char *path,
+> > +                        const char *prefix, enum path_format format);
+> > +
+>
+> It is slightly unsatisfying that this function is defined to
+> "append" to any existing value in the dest strbuf, rather than
+> storing the result in the dest strbuf.  The original caller
+> print_path() passes an empty strbuf to this helper, so it can let
+> strbuf_realpath_*() functions to strbuf_reset() it (e.g.,
+> abspath.c:get_root_part() called by strbuf_realpath_1(), wihch in
+> turn is called by strbuf_realpath() and strbuf_realpath_forgiving())
+> it freely, which means that use of temporary strbuf like
+> canonical_buf only to copy it out to dest is wasteful and unneeded.
+> But other callers we will have for this helper later may want to
+> append to what they already have, so perhaps it is OK (on the other
+> hand, we could say that preserving and appending is what these
+> callers can do themselves).
+>
 
-We essentially said, "do not molest exec and label, but everything
-else, as long as there are two (or more) tokens and the second token
-looks like an object name, replace it with its abbreviation",
-regardless of what the actual command was.  Now we do the right
-thing by ...
+Hmm, I thought about this for a while.
 
-> +	enum todo_command cmd;
-> +	struct strbuf scratch = STRBUF_INIT;
-> +	char *p = line->buf;
-> +
-> +	if (!sequencer_parse_todo_command((const char**)&p, &cmd))
-> +		return true; /* keep invalid lines */
+Then I looked at what ls-tree.c does(using an accumulator).
+They already routinely use temporary `strbuf`s to calculate
+relative/absolute paths before
+appending them to their main output string.
 
-... parsing out what the line is about, and ...
+Because callers who need to accumulate can easily do the preserving
+and appending
+themselves with a temporary buffer, there is no reason to force that
+overhead into our helper.
 
-> +	switch (cmd) {
+I will change the semantics from "append" to "replace", rename the
+helper back to `format_path()`.
+I hope I am looking at ls-tree.c correctly here : )
 
-... switching on it, to make it clear that we cover all the cases
-known to us (and the code will be maintained like so, by not having
-a "default" arm).
+Eliminate the wasteful `canonical_buf` allocations so we can pass the
+destination buffer directly to functions like
+`strbuf_realpath_forgiving()`.
+This is a good suggestion actually, thanks!
 
-> +	case TODO_COMMENT:
-> +		return false;
-> +
-> +	case TODO_MERGE: {
-> +		/*
-> +		 * The argument to -C cannot be a label, but the parents
-> +		 * can be labels.
-> +		 */
-> +		bool maybe_label = !skip_dash_c(&p);
-> +
-> +		while (true) {
-> +			p += strspn(p, " \t");
-> +			if (!p[0] || (p[0] == '#' && (!p[1] || isspace(p[1]))))
-> +				break;
-> +			abbrev_oid_in_line(r, &scratch, line, maybe_label, &p);
-> +			maybe_label = true;
-> +		}
-> +		break;
-> +	}
-> +
-> +	case TODO_FIXUP:
-> +		skip_dash_c(&p);
-> +		/* fallthrough */
+> Otherwise, looking good as a no-op bug-to-bug compatible rewrite,
+> with a slight optimization (to skip xgetcwd()).
+>
+> Thanks.
 
-Fixup always refers to raw object ID and never a label, so it
-would be OK to just skip -c/-C here ...
+On Mon, Jun 22, 2026 at 9:33=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
 
-> +	case TODO_DROP:
-> +	case TODO_EDIT:
-> +	case TODO_PICK:
-> +	case TODO_REVERT:
-> +	case TODO_REWORD:
-> +	case TODO_SQUASH:
+> > ...
+> > It is a minor point, but wouldn't it make it simpler to handle
+> > format_default first?  I.e.,
+> >
+> >       if (format =3D=3D FORMAT_DEFAULT)
+> >               switch (def) {
+> >               case DEFAULT_RELATIVE:
+> >                       format =3D DEFAULT_RELATIVE;
+> >                       break;
+> >               ...
+> >               case DEFAULT_UNMODIFIED:
+> >               default:
+> >                       format =3D DEFAULT_UNMODIFIED;
+> >                       break;
+> >       }
+> >       switch (format) {
+> >         case FORMAT_RELATIVE: fmt =3D PATH_FORMAT_RELATIVE; break;
+> >       case FORMAT_CANONICAL: fmt =3D PATH_FORMAT_CANONICAL; break;
+> >       ...
+> >       }
+> >
+> > Perhaps yes, perhaps not.  I dunno.
+>
+> I do not consider the above an blocker, but it might make a
+> difference if we are going to acquire more modes and formats, so
+> once somebody tries to rewrite the logic and finds the resulting
+> code harder to follow (or not easier to follow), I would be happy to
+> see the above discarded ;-)
+>
 
-... and pass "false" for "maybe_label".  OK.
+True, if new formats are introduced
+this would instantly become sloppy.
 
-> +		abbrev_oid_in_line(r, &scratch, line, false, &p);
-> +		break;
-> +
-> +	case TODO_RESET:
-> +		abbrev_oid_in_line(r, &scratch, line, true, &p);
-> +		break;
-> +	/*
-> +	 * Avoid "default" and instead list all the other commands so
-> +	 * that -Wswitch (which is included in -Wall) warns if a new
-> +	 * command is added without handling it in this function.
-> +	 */
-> +	case TODO_BREAK:
-> +	case TODO_EXEC:
-> +	case TODO_LABEL:
-> +	case TODO_NOOP:
-> +	case TODO_UPDATE_REF:
-> +		break;
-> +	}
-> +
-> +	strbuf_release(&scratch);
-> +	return true;
->  }
->  
->  static int read_rebase_todolist(struct repository *r, const char *fname, struct string_list *lines)
-> @@ -1411,13 +1515,9 @@ static int read_rebase_todolist(struct repository *r, const char *fname, struct
->  			  repo_git_path_replace(r, &buf, "%s", fname));
->  	}
->  	while (!strbuf_getline_lf(&buf, f)) {
-> -		if (starts_with(buf.buf, comment_line_str))
-> -			continue;
->  		strbuf_trim(&buf);
-> -		if (!buf.len)
-> -			continue;
-> -		abbrev_oid_in_line(r, &buf);
-> -		string_list_append(lines, buf.buf);
-> +		if (format_todo_line(r, &buf))
-> +			string_list_append(lines, buf.buf);
->  	}
->  	fclose(f);
+I will change it to future proof since I am
+looking to send v8 for append_formatted_path().
 
-This loop got much nicer than the original.
+Although I would be surprised to see an example for a new format.
 
-Looks good.
+> >> +/**
+> >> + * Format a path according to the specified formatting strategy and a=
+ppend
+> >> + * the result to the given strbuf.
+> >> + *
+> >> + * `dest`   : The string buffer to append the formatted path to.
+> >> + * `path`   : The path string that needs to be formatted.
+> >> + * `prefix` : The directory prefix to calculate relative offsets agai=
+nst.
+> >> + * Pass NULL to default to the current working directory where applic=
+able.
+> >> + * `format` : The formatting behavior rule to execute.
+> >> + */
+> >> +void append_formatted_path(struct strbuf *dest, const char *path,
+> >> +                       const char *prefix, enum path_format format);
+> >> +
+> >
+> > It is slightly unsatisfying that this function is defined to
+> > "append" to any existing value in the dest strbuf, rather than
+> > storing the result in the dest strbuf.  The original caller
+> > print_path() passes an empty strbuf to this helper, so it can let
+> > strbuf_realpath_*() functions to strbuf_reset() it (e.g.,
+> > abspath.c:get_root_part() called by strbuf_realpath_1(), wihch in
+> > turn is called by strbuf_realpath() and strbuf_realpath_forgiving())
+> > it freely, which means that use of temporary strbuf like
+> > canonical_buf only to copy it out to dest is wasteful and unneeded.
+> > But other callers we will have for this helper later may want to
+> > append to what they already have, so perhaps it is OK (on the other
+> > hand, we could say that preserving and appending is what these
+> > callers can do themselves).
+>
+> This one we may want to consider a bit more seriously, but it is
+> entirely up to the future callers of the helper.  If it would make
+> the callers much easier to write for this helper to have "append"
+> semantics, I'd be happy to accept the semantics of the above as-is,
+> but otherwise, I suspect it would be simpler to use if the helper is
+> defined to replase dest with the result, instead of appending the
+> result to dest.
+>
 
-Thanks.
+I am still unsure if I am following ls-tree.c correctly.
+If I am then I think it is a very good change to have for v8 as I
+specified above.
+
+> > Otherwise, looking good as a no-op bug-to-bug compatible rewrite,
+> > with a slight optimization (to skip xgetcwd()).
+>
+> This part of the review does not change in any case.  The
+> refactoring looks good.
+
+Thank you ; )
+
+Regards,
+- K Jayatheerth
