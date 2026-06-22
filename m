@@ -1,85 +1,85 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C59838F24D
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E9538F227
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782116011; cv=none; b=rkAjI5uve31ALVnWGwFmpuYxaPu7ux85cP8EGqHHg24R1DIU9+ZVUEQ76tzEr6m813SR3DaOuRr74Sfe3huZAuMjKhIqfFKHKi0PX9O6vcr/vhgl8nW+Obmi3MLel/6e95TwVb5f4hH5QXKV8xlHjxsFiEjxtlDoS9Vo62ywybI=
+	t=1782116456; cv=none; b=fRGYnvOS/qQq8WCk/FhBh//dbAgIKdufK4o2RHhOxtz9ms1LOAeoQBkgzv4vUvArH5OEM2s+fI1Rvfvz+VsJUS4iZc0Wcum6nfLxRSbB/E0KK/HhSc2EiBqbmx6gUWLzi5iUhBYqB/6LaMwP2Kfxjsj9vrpDBSjwH0Bivpk8kyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782116011; c=relaxed/simple;
-	bh=MTxy7lIrSyIg0XqMusBVe2xIc9ewH2H7aIE0OsZxuVk=;
+	s=arc-20240116; t=1782116456; c=relaxed/simple;
+	bh=KPAOqGqgoixwL1eZeiqF4FzsvuBo9y4tgeD1NyxcoAU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UMuL1uwnkE2kfosMQTE0XOvN9Ty4zi2nz5GT9gLQSOLoGBqxy7SLKahFPTL0DGUt0HBQHKw9jA/noKvONRqPBhHhmRpGi52WVUeDB5k48AVoEyLgfmhw7RPmslDihumCUKdphBAVNJZUEhaD6YLG/ZSFhWNqRTfLMH0nie12aQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hhP4M7R6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gnJLsI43; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=kH8NLasVJNMNtnpQIIsl2gTNHyAgn0PVvlEV9xaXrH5g2EKs+a0Lxq5b11lXWMIwNdQZiKJLt7IpcDX++lU9Apkz/oF7ebmIMHSHwwsyYBcJmZDbc6YyLImTlsjZoMNsa4gZmw2o5++awpkTH3bkltdZ/kB0k9EG+vPBr3XIunk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ROGaGLOL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZPDrMMD; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hhP4M7R6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gnJLsI43"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ROGaGLOL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZPDrMMD"
 Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 01B9E1D00037;
-	Mon, 22 Jun 2026 04:13:26 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id EC2E31D00093;
+	Mon, 22 Jun 2026 04:20:54 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 22 Jun 2026 04:13:27 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 22 Jun 2026 04:20:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782116006; x=1782202406; bh=ICoE5xNRCr
-	ErmuxOpIIsFtSTN6nT1ZovEL4DSUphl2U=; b=hhP4M7R6i6pwq5LoMzZjzBnoOJ
-	iCG5pT8Zj+o1DcaxgKP3jLjWfwrrjmfSGIjkZI3ZIxrmzBn2reUnL/MGuppQCcZ5
-	gIGYCrGFjQcHqxPlhtbvT890n2E4FXK8C/rhg5x4ZIDdtoQjHDnGHivg/4/8inqq
-	D7oXYsvFy0Z0Tto+KtWAlfFrOiFshasBlV05XdkW43KkscCK6IzB5JzjgBNVsuzi
-	ikvRRt8SzDlo4sNerh4ABECgG8GmXQK3b+9vOZldKBdn/ZxI0AhmlBlLiXA83JvB
-	F/HRHvjN2O22qQlg1itrtHgqRO8NMweJ9ADjLIxDaKUM2STVBp3sJg8p6e+A==
+	:subject:to:to; s=fm1; t=1782116454; x=1782202854; bh=WaDZbmGVki
+	LI3vu0i7pP1APpN4ju0ek2aeBeE8Cb3u0=; b=ROGaGLOLZgOgHpNdi3cWy7dZVv
+	oHRiN3dUXwi1NqKLnqFuOqqFmFC8soPa2vJIdLLBC0HFxXfFVvNxKKlWL3/LvtZM
+	YuT8xkeAJ+smCA1jvRzjQl6+Wwrn23vVeRrbbbqPGeY28cXCXiM97bktIrKajfTP
+	7P74b/QIulekQ3kpg8hRJ3tmeI0qyiEHVPWaXKb1qHl1BLCFEdrGLPNVqULfhi5m
+	K1xnxHzi9UHfd7ryFOhPVLR7VrjHp8TZMtkiS/A9YSFzjnID0tg7mtoUHOWrJHRc
+	O/y2urnNGtdjJ76Q6va5av2vEz2dUpV5CZQ2Rns3BJyR9T++WMjEFSj4B5UA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782116006; x=1782202406; bh=ICoE5xNRCrErmuxOpIIsFtSTN6nT1ZovEL4
-	DSUphl2U=; b=gnJLsI43bBe9OqNRMjxaIHWG7qc64VeY43JyORFukNIfZILOS/9
-	wG1ZuX5fUCVsezNs1N9DMERDX9u5s7vMO1MvtyO1mhUhmjd6e9MI/fpc7Vgydi+l
-	S+eBohVbZoeHtFtahkQ4Zd0etJg7ivf/4GRU0HfUt4AjLF7SudVrSlaEefAdKW1Q
-	MI78wo0atrPmSr/Cvad/cbaDFd2BGxMxP/rtaff8Dhj5vzgtQwe5AXGqA+tVojF2
-	Pm+W4t5CArL/OGQH8pumpmtxj6JRwwTXwOGuW/Rw4eHdM94Hp0QpmWMH2jmLI8AI
-	QzBdWM7mFpDBh9+y543QGYyTDTHXGB2u/0Q==
-X-ME-Sender: <xms:pu44agJ7T2ideWuXV5IV0yd5kZB8SDxcP5qNdn0g4DDR4AIv0qpkBw>
-    <xme:pu44apebINhq6ZLggYdFQT-m7Jn7HlaEGG0hVjWVUwdb1iAOaonJPQKT62vFB1yeF
-    6O9NLZnY0M197uZomSWE13_p6bPyVj1Vzq3HlOSW_kCQfqg55QEYQ>
-X-ME-Received: <xmr:pu44an-4VRmu7vTVLUCGigdfJiq1niSFlTJnnMfaidBBburPUsfWTlu5dj9cJDUeKRnHW_GELVyoXlyMWN_ra8iTE00xrmhVgOxX85WWqA>
-X-ME-Proxy-Cause: dmFkZTF7+mBNRPCQ60dRjcuBMaeEKlO4PfjPIt6u/r/Rra/yQ9KzOhiTvfo3XMPdEbOVd6
-    2gBGEu1SaE5MwSVY/gkzd3CqOAY0s8cF6w/wSl7WSDyjAPS9hCMxKyml6pEXVwFdGeoW5B
-    Togxq5MvKuhZL795WKARFbVpNeB0zXuN/pvQJbjOY0xvBH3/mcZUv+GjY9cTYPVZ/sDtE7
-    Aoz4cPpgSyzNw8/xl0+Ds7/BTEIVJHn0Y9f+lUZfHI5KlZyhPnPLYGFr+UuLep8wicvse3
-    PjKHGm0R9ajubaZj4aVnZyLgW5DccKvjwpJ7hZeA9vocQbdH39k+y51J8U2jmZKzLDTCg4
-    mK9lUGtq6l3lEd+yOi+B8f7CCQW7q1juzhtmqqfpwW8d/0o8cYClwvshWdsfb8It79rP8Y
-    XK5lwZlgR8OmxKTy0Yh0SsnGZfHlrc0Gpnun7iiSXO5vyIzOoY/QslUOGQ61GB6Iwn2nTY
-    rCB4BSaTm1hXESK5lY5ekPB1nIHxMjRHoMi7byhlFuXlqjphQi+Plavz3geoN5Rmmo5ozg
-    fTavsgaX1ohDLBi99AywxX5kgZNmC9hlzYOMy8KxwyzTePg1w5DVzmGqciY2u3amPufFZk
-    xKMmkWALwR1vr9QIRlhPuQPUgfpgIiyyJyIqARggwOIm0a5Ya2tbhFxV071A
-X-ME-Proxy: <xmx:pu44aurGhZMXQH6N3QK7Z-_VFom8yKFQPEIjsCUQAJDIocPJHsFe5A>
-    <xmx:pu44akBkbFoQXHaWe0Qvq_mVmU2N7ilhL0rG6pqj-CMrBhSmDzea4w>
-    <xmx:pu44aowzBsyJbLiyn_22RvrKkCXP4HmhmU2LYTNu4ydn7yFHVG4QBA>
-    <xmx:pu44ap2WR0kFMxBhPNEdtnp4gbv_Lon0yp61prLY6moe70bIZSY4ZA>
-    <xmx:pu44anSaoSHiW1TqaLbp5ZS7CF4daYfRkBViLtDJV_C7Rm_bBk6A0TyK>
+	1782116454; x=1782202854; bh=WaDZbmGVkiLI3vu0i7pP1APpN4ju0ek2aeB
+	eE8Cb3u0=; b=EZPDrMMDSqkjgOL80/+z6eTYwKe9LYBRMsPHxxKS8B2cyantCGn
+	ToxzX8ESaiEXdeuvyfrJe8TAu0d5xhKuS7Uxi4lrdu4yNgRDWDq3m1pBKeLBMNyq
+	FTiV2AADO5ts/NF36fEv0s4l89fgJJEjPp92HUzs4mGFuekxRJNGIiT8Tg6LHpJ7
+	20+d/6vMWE1u29S2WLHK0VddoIaWWXqlawkfh4rDIofzNoypISYvC/zn/FK+Hoka
+	7pqQItjP8No1ZVn2/v+EuKLPYAjwAWpwr8YbyZSM5JU8uy3Kwdcv2aZxZxnkJiJM
+	LI5v11bPilyWElrKq6u/awR/3OLK/UamQiQ==
+X-ME-Sender: <xms:ZvA4augUaOnM_wEswOF0Z9mZGRiPuY6gSazOfUXr-xVB0_ZYHFKxaw>
+    <xme:ZvA4amAXKL2K8xm0_XOuLZ49hKHhC1Sush1yGER03LV3Mhpgb8z2uK8gc_EpVQw-o
+    2qJkdMT5JPGaAXea-tgoi2uTJHmvjAsHxzNUVqkgOz6UBAQ2jJW6w>
+X-ME-Received: <xmr:ZvA4arFBfMlfyiDW0_Qo2BxrK1qchDJ7DWoB8gwfBZ-tNDxmnLn_0NuuYW_8bXVPCIpLl95mT4Tc9-11rALMBE3OVHX5oVn70aAbEKZEtQ>
+X-ME-Proxy-Cause: dmFkZTFmFW3gFpwlGAQNXQnKxb09gp+VjueU4iv2/CeHUQWjKlrYb2oA4uiVsOuzaLXogu
+    lTfZYy1ulrvQQ0s0bLqP/FNINmHL1us+GOpLRalq14usuZOxW9jJw7frX+h8iEjNtCAQyL
+    Tv1mOi5vIzfVs6eiR53x13X8LQ0O8fHa40qyXYY77ibQVMm11+YdhkfE45w9Eg/l0KJSfy
+    zAPabS8lmHJW0QRhuA6IhEsuvyfM2DJgDC02tyWeKTGQr7SAhcdFNZ83K/97gDWDhlVYvx
+    KoVgfUePMj6ortK5LztTrMkmsWMSC/CGrZaIrEtqgJv6Ew/SFz/rAydJ09usUh9eFSjaAl
+    rLhco547dFP30MiopntlCXqbCvZSkor1Sdnf18ca+RhHXSbiJ2CjEnA+yE7ErwxjFl6BUo
+    2dK0RPzhM+xvFLkDG7k0F2rfTRz83DS6rbi09mtQEVYB9donfZsWKJlw3PMt1oi88inJN+
+    a9gETomt12zfTBLJdC1CrzRvj+kWMH6qVHESlDXcTyePZEgwmxlllYl4jXbiB/epV76CjO
+    GYp42iQzuPt/ceC5tCQZYlSmve1+XSipKB42js+xctvewVY7ud2pmd5QgTvF5FIoCHJraS
+    CAavGPaRfJo2E5IYr+3k0dgU1f9/t9ovMA3znuQW5gOf9U92hfYqBI1rSz6A
+X-ME-Proxy: <xmx:ZvA4amIMOVPVoLAqTL4U9MaSaNks30g6Y_ZIL8EHXL8hD60CVV70NQ>
+    <xmx:ZvA4anmHA8QpM81-Z5Zf81wOGp1Qg3RcGBffiXZE7cj3Xko6pR_1sQ>
+    <xmx:ZvA4amSyWcEqwY407ATs5HoW3bmzm9ildwcHLBTK31Q5KOEJ1WwEuQ>
+    <xmx:ZvA4ahLgkZ3LvrDuDvPDFbooBm6PTuvsO6KNu5CKQKdGzNRYfriXkw>
+    <xmx:ZvA4aikPDy_-wW2QTpLJAJgQ16zz8FCyEpBVEecpPEdUHGh5HwfuxylM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 04:13:25 -0400 (EDT)
+ 22 Jun 2026 04:20:53 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4bd6a63e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 08:13:24 +0000 (UTC)
-Date: Mon, 22 Jun 2026 10:13:21 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 84b52718 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jun 2026 08:20:51 +0000 (UTC)
+Date: Mon, 22 Jun 2026 10:20:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] meson: wire up USE_NSEC build knob
-Message-ID: <ajjuoS5Qc3K0nCRl@pks.im>
-References: <c4c5ade901ff95b0f95939ea818870e4f3d59da1.1781971201.git.ben.knoble+github@gmail.com>
- <20260621174934.GC2206349@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Michael Montalbo <mmontalbo@gmail.com>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH v4] SubmittingPatches: address design critiques
+Message-ID: <ajjwYGWZ6hQWr600@pks.im>
+References: <xmqqv7bhxiby.fsf@gitster.g>
+ <xmqqpl1oteoi.fsf@gitster.g>
+ <xmqqik7eld2g.fsf_-_@gitster.g>
+ <xmqqeci0g4mz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,57 +88,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260621174934.GC2206349@coredump.intra.peff.net>
+In-Reply-To: <xmqqeci0g4mz.fsf@gitster.g>
 
-On Sun, Jun 21, 2026 at 01:49:34PM -0400, Jeff King wrote:
-> On Sat, Jun 20, 2026 at 12:00:24PM -0400, D. Ben Knoble wrote:
+On Sat, Jun 20, 2026 at 04:43:00PM -0700, Junio C Hamano wrote:
+> Contributors sometimes fail to answer fundamental design or
+> viability comments from reviewers and submit subsequent rounds
+> without addressing them.  When design decisions are resolved on the
+> mailing list, the final justification should be recorded in the
+> commit messages.
 > 
-> > Autotools-style builds permit enabling USE_NSEC for cases where that's
-> > desired; the equivalent knob is missing from meson-based builds.
+> Instruct authors to be particularly mindful of critiques regarding
+> high-level design or viability, to defend their choices on the list,
+> and to accompany new iterations with clearer explanations in the cover
+> letter, responses, and revised commit messages. Also instruct them to
+> explicitly document the resolution of these concerns in the commit
+> message body to keep the historical record complete.
 > 
-> Seems reasonable. This is not changing the defaults at all, but just
-> bringing meson's options to parity with the Makefile.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  * Hopefully this will be the last iteration.
 
-I was originally wondering whether I should recommend that Meson can
-auto-discover the availability of nanoseconds. But your below remarks
-make me question that.
-
-> I'm not still not sure if turning on USE_NSEC is a good idea. There's
-> some discussion in Documentation/technical/racy-git.adoc:
-> 
->   With `USE_NSEC`
->   compile-time option, `st_mtim.tv_nsec` and `st_ctim.tv_nsec`
->   members are also compared. On Linux, this is not enabled by default
->   because in-core timestamps can have finer granularity than
->   on-disk timestamps, resulting in meaningless changes when an
->   inode is evicted from the inode cache.  See commit 8ce13b0
->   of git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git
->   ([PATCH] Sync in core time granularity with filesystems,
->   2005-01-04). This patch is included in kernel 2.6.11 and newer, but
->   only fixes the issue for file systems with exactly 1 ns or 1 s
->   resolution. Other file systems are still broken in current Linux
->   kernels (e.g. CEPH, CIFS, NTFS, UDF), see
->   https://lore.kernel.org/lkml/5577240D.7020309@gmail.com/
-> 
-> That's the most succinct description of the problem I've seen, but I
-> have no idea how widely it still applies. Kernel 2.6.11 is quite old
-> now, but I could believe that other filesystems (especially network
-> ones) still exhibit the issue.
-> 
-> So I guess if we wanted to go further it would take some digging as to
-> how each platform behaves, and then flipping the config.make.uname knob
-> for ones where it can be argued that the behavior is always reasonable.
-
-Yeah, it would be nice indeed to figure out whether these concerns still
-apply. If they do, I would argue that it might even make sense to remove
-the build option completely. It doesn't really make sense in my opinion
-to have a build option that nobody uses and that is subtly broken when
-enabled.
-
-> But that's all outside the scope of your patch here.
-
-Kind of, I guess. If we figure that this mechanism is still subtly broken
-then I'd argue that it doesn't make sense to expose the option via
-Meson.
+This version looks good to me, thanks!
 
 Patrick
