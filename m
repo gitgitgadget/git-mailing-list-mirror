@@ -1,118 +1,189 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90962316197
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 18:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6F018AE2
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 18:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782151285; cv=none; b=nAcMOYwCq0nLXTltbZdVMMcgdawbMf2zkGjUuClhvG/oFg4D311i1uy/Kd7SLpcW0zdkIVvsW/S+Uwc0zCBDWmX+WhP3fIyY+lW+asC7xGPBEqqkz4iJQGvMxqfx7El7VXiAbzoDLhFHLrWsVUwcSyj7LcFVwMczKuYUAE1TzOU=
+	t=1782151831; cv=none; b=BROrX4hEgzr1D/dC+sPclaaJJdXrlnGqQ4ZTcM1qr9qLCXB0iMVsg1HAB9sWzBZlkNjmBWh39j+9BAgh8+ieBylD4tmsYpys7VPO8RH1T4/ydyiRicDQORIL5KIi0tdhPPMSAAhR0pSh00eMBrCcPltVEtVagzpXf1Q/rVyddho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782151285; c=relaxed/simple;
-	bh=ghAPNp24nw6W2q6LKYrN+aYMRfNzbDo4WXGHvtyDPg0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jbP9mr+WGrjPppcJt5M6tyHo9x8zshDOhM2D3vB+ESGNhuQzXTJHi4XWbbLHbUpw1xVpJyvI4/hVLopF8UIlvQIEPos5R3gL/MG7NqzM1drlIWCy3kt5D/elpt6uhrCcIZGfVxngRj1M8gJ+Ok7paDKHZCPj8RWlLHAyHo/DJW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FxRBiXSt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K8MCgMGA; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782151831; c=relaxed/simple;
+	bh=C9uKgWYhs5+IiZ0HxlrcQ1eqAklWM3cjhzSDHbBGKYA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=edryrQyoKECKZ+m55hIvhCVAJo4blA/qZIgFuPFIVcObOKjnOOOdCqmnDV8YOAkyQC/RR7VLIJb1kPCmW5othKKZX3eP0r0g6hIMbv+uY8JOjqpeB9sSPsb1sTiqwfyuB8b8b/dNE7a6pTEXRhx52gj0wzCJYeOup7m8xRib6yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=olAcVE3b; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FxRBiXSt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K8MCgMGA"
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 220EC7A00B0;
-	Mon, 22 Jun 2026 14:01:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Mon, 22 Jun 2026 14:01:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1782151282;
-	 x=1782237682; bh=TvOeUa+R0opcr+Zb7N2v5KcseQxEOI4pD4Q9v8rtACE=; b=
-	FxRBiXStBXyEZ4oWGDUM/ylmyGHYQAFtvaFssi+G3U3U8TdXWL4lAdAfbyvFsxf7
-	qN6Yz0WUO4j3DK+gk3Y35qaVVrurggb24oe8J7NvMWVUQLrzSz1IyxRMNbEbtZ+X
-	g+0E7ID+ipfBZANbTa7DLbHOBS2ebMFr7CZCXd0tpwvLMNzQ1dBQAryNQYV6Pmg1
-	f1lhX3zVOdwUWHO37txKeHuU7MQ+MnUB8m5QhWy4Bf0HnwtY5CSXi4lsh4gZ08BG
-	hy94UkrWj64RiFeTzd1UhF7QAJ3Y8cFpp5YySPo/h7iii53xInANCc2ywsrlkwFV
-	kB/sHrsJduet5Xe5L92+GA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782151282; x=
-	1782237682; bh=TvOeUa+R0opcr+Zb7N2v5KcseQxEOI4pD4Q9v8rtACE=; b=K
-	8MCgMGA37Iw8NMbif7DvYU/2p/7mg22ZaZ4Wo04i/Mp5oUBsGgxkBNvnVLXq0G+S
-	OMx+tKwIS10HzH7Kt0Z02MEXCBmPBYJ6bmqu3ObX1nJnpQAvN+/Ln/6wMNkq8Tod
-	EIzgXdn5YVaRN/YmdQ27lN/UXNt2r88lJwOKO4O9goEKz7mQHlFmn8xCyBq1GcEd
-	u/0+zV4SJPDSgrE6/hZgy1wac5H/Z4VfBkFGrA1XLrM8wL3XNUZUmj8VMNK+kj+Y
-	imMWEjbovHLa2IdH645PHrSZ+AsgrdCmlToISP0NZhm74OjmNzOLwrAt2IbNjFvD
-	sBfxAZGqchV0MADQ0TK8Q==
-X-ME-Sender: <xms:cng5ajqUnxEhyRvlDlV50DLvsLT_JdcUx1G8-4Gy1bGniQbnrxrM1A>
-    <xme:cng5av48ZND2oa35pfjxUHBWSxRjG3IyZFLzHOOFBpB6y5FQpf5SdwwJSBvSAWprT
-    3L64DBM2zMaAiLe190ERTTOWeDxauyYtoGNczdxAEQEhyQxfmneUR4>
-X-ME-Received: <xmr:cng5aicI5jKcCqSSWgRc5-dsAm43tyLhAln54eJLDxHC_jk0JPcFLLaBXiqmoffe_jrqs3N3i7JBjVhmbRrtPo1LeCJStc0d15oLNdI>
-X-ME-Proxy-Cause: dmFkZTFBxIyjEUVemVwQi06v9RZpbcMJmsoJzugjjVdlmd6atymFlEAEk6BA8a7Q3yf0N4
-    VmpPXJbGzDxDxhpOLc2GDblFNyzXtGgntG/lq0GJr2ZuH1wglbgF8gF2iKoYF7k1QjWeHE
-    wZgg2/TgpKwYsOZNVUKWu3kezfC78WB43Myb4BxrQzolF89we8uyCgIs4WPpb94iYGqh5V
-    VjbXR5h8U8eGj7J2207hr1l206CVYsuucEhoW9wu75gJ8zflfD2edh0bvG1umpVxjZrJG9
-    FLcZQZIJOO8xGU39qptwL6mVQ3ojMQMBwjHRDv3vQ3sdxNMNeaVRniIyTeemnuehxE7BO7
-    JbFw9L/1vCpXLmrwd8lX1ddHkKxvQPkvqFMAiuCKApfgFE7uR0dPL00pyNtoqixAJPlgF9
-    AeUqd7hhGDZQxZ3gz21x3jUOb8Leb+1kOpzZBvPTJR7nTW+Wzh6ryDInhfS8YrRIHfh4Bg
-    /QZDPo6kI0yJXOLIXdoyAvSoCQSm5oLjRliVd1UAt8ZIvJPAb5GPaHwHR6fx8VJ6nbtrRh
-    hsEbQhTJ+LjGqk7XVh9Q4BqR+BS3nH8U2CLRuTPVn/mRr/Lf0YOX6465vdfUAQiJ0YnV+D
-    G2Pc9H2x4lPdibDKOGl6nWQ4PujhIKVz9HQmdcE9YIo/741ZRkoydqtOxl/Q
-X-ME-Proxy: <xmx:cng5as7w5zvXX3PTZo8w--t0HME7eI3am_YqO0QdosgD3qqh_PGxsw>
-    <xmx:cng5ahtwt81dNhSTUPgPLkOaNFB2PReHmkLkEYHF4IyCFv5SotOdEA>
-    <xmx:cng5akhdBHsjd7zj86RVl3efKf51n1D1Mr_nXwdgrpqrDL68imptMQ>
-    <xmx:cng5akrD5C6lLeYCQKZPSS467EV1jxo4dQnI8oHnFW0XuFtrN0ehKQ>
-    <xmx:cng5ajKQLypUyP-o1xVoEtJ0So-fx28_89RnYITMiVd9zCo8qI0h2RCF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 14:01:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tian Yuchen <cat@malon.dev>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com,
-  johannes.schindelin@gmx.de,  stolee@gmail.com
-Subject: Re: [PATCH v3 0/2] environment: move ignore_case into
- repo_config_values
-In-Reply-To: <b5a9115a-c909-405f-b150-f956d866b1eb@malon.dev> (Tian Yuchen's
-	message of "Tue, 23 Jun 2026 00:45:46 +0800")
-References: <20260618114207.605211-1-cat@malon.dev>
-	<20260619155152.642760-1-cat@malon.dev> <xmqqjyrr7ipf.fsf@gitster.g>
-	<b5a9115a-c909-405f-b150-f956d866b1eb@malon.dev>
-Date: Mon, 22 Jun 2026 11:01:20 -0700
-Message-ID: <xmqqzf0mzc7j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olAcVE3b"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7e8b45dfb3dso52237497b3.3
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 11:10:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782151829; x=1782756629; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4bJD0DbincsiX3kjm7XV2TCZwQCwSPFDLrvrYpSM+I8=;
+        b=olAcVE3bn+yP6XbJUgWDYewR6ECw7T3WUGzdT7h5qPCkbz029hA9IAONzSeKOA56vb
+         uek78ZCmesGy2cdBzopIJw5NC/khIXpVO86+uLX/5pZK2PBmyB4o1byRFzWtwXKW9T0q
+         WboUYGqSOLiSzGuPpHPAp8Jtk51Hq3GJhW6YzfOQA3TAu7L9TIB/u07S4q9UV2bxPDMN
+         y9qNRTKfpU+QWMVgBzTui5rw9rpJ2fF9q6kpQa/S5Tv/JEL+HnbnVC1URSD9ytIm/3dJ
+         efWaRJ+7WUtTuDiYXO9e7BjHyL7vDM0VSPAaweapT+I7wm6DVXbj9tIUH/1MjMBHXk27
+         hCZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782151829; x=1782756629;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4bJD0DbincsiX3kjm7XV2TCZwQCwSPFDLrvrYpSM+I8=;
+        b=sFXq6J+j055O33zndC9BO9nIh4yIu/QUdsW/3hYjffbkAlgiQQKRFmB0on5cjSjiLM
+         8rsvE6T6pN6s2mFJiO4aHnbx4nVnZ9EkrXHf1ptCd3RnWhHzj3hDeuT6XjhE5RSkTMgn
+         ARFnHQTibRvrinjkKJ31y+fAsi+4NxlTB5CzZvLoe6FaV1Ky/ydYNgyLfClMp+DgpFRM
+         L28bs29vQbpBFXf+7b3LAp8wZ/wkw4P3AjQIvzOeViCwxexy/qGL0ovUwiqMq5LBZiXq
+         USOMB7odFRoc0qIiN9lrtTnhu3L/iARbtWDBt/x4Cs7ECoPhPqGqerLVXASmC21Hb3ri
+         MeZQ==
+X-Forwarded-Encrypted: i=1; AHgh+RorpwX3AgGqwcXSIMp8q8zh6cC06Gs8RTEovlbvPUofLxGFBNbMl9yz48BQPcCcaBepChg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxgo8iTfg9+I8xCOiyuDu/SttFVjlZqWfhbX8F2oEn8IuzHgdUM
+	WKDR6/JxLFzipAnwFJFX8quydz9ypRk0eZSx1iXGTCdz06/Iq0phLIiI
+X-Gm-Gg: AfdE7clJefCijdsQmOPsTaH0ysqHPIYArv1PyoLuT4+UVGYRbuYBn/Fvihr8M+xgCa+
+	u9sAsAmx0JTvUYRAYVLvqqrQeMHSTERWYeBekQ2RG/FCk+5N3opZwHVdAjDCrDauin3RZU7HSEI
+	Xak7Yo3fotf7czhLvV1oUGh9VTRlDz/Pq3V4eci2fFlKOCEE4dXKw79lwRliVW7h6wxMw1Ui80m
+	6R8rthc58sy5zB41HrJ47wdqUTIcR6SYmMyX2eY+fyCW9rZpDANzQxILXR5/OgwW/I2ndMDEOxp
+	fE6FgmwBP7LO30VlG7sNlhAU8JCusgKASH2ndzHBanQ2utrzTsMzDhEIhO3l+gCaSJp3lUzlmP4
+	JeyAQTIvLEk8ud7xQ6r03YRRd0kAlucy7SWekZn0FuXtr9NTuZezIP2c8ceh7sS1x4S0VvKW6KR
+	LnOWROMpzqCB15KxrfB08DXOi4hmQ09Py12noEW0A3EqcacbiIYzxDE7nWqg==
+X-Received: by 2002:a05:690c:450e:b0:7f8:7e6f:f546 with SMTP id 00721157ae682-8013498b245mr173525377b3.52.1782151828823;
+        Mon, 22 Jun 2026 11:10:28 -0700 (PDT)
+Received: from [192.168.1.109] ([136.61.86.144])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8df7fbdc9cfsm102084606d6.20.2026.06.22.11.10.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jun 2026 11:10:28 -0700 (PDT)
+Message-ID: <f0c9eb6e-60b1-4eb6-86be-3af4d87afe85@gmail.com>
+Date: Mon, 22 Jun 2026 14:10:27 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH/RFC 2/6] commit-reach: introduce struct paint_queue with
+ per-side counters
+To: Kristofer Karlsson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Kristofer Karlsson <krka@spotify.com>
+References: <pull.2149.git.1781951820.gitgitgadget@gmail.com>
+ <316e4dfe261043730c77142639f86f5c3cabe370.1781951820.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <316e4dfe261043730c77142639f86f5c3cabe370.1781951820.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Tian Yuchen <cat@malon.dev> writes:
+On 6/20/2026 6:36 AM, Kristofer Karlsson via GitGitGadget wrote:
+> From: Kristofer Karlsson <krka@spotify.com>
 
-> On 6/22/26 04:16, Junio C Hamano wrote:
->> As the compat/ layer is not meant as a general purpose POSIX
->> emulation wrapper that is generally reusable to projects other than
->> us, if we have a knob settable by end users to affect behaviours of
->> lower layer in compat/, it is natural to make repo-settings
->> available to them.
->
-> I see.
->
->> What is the perceived problem you have in mind, and what are your
->> proposed alternatives?
->
-> Actually, my reason for showing this question wasn’t because I thought 
-> there were any architectural problem, but because I felt that for a file 
-> in compat/win32, which is more on the _downstream_ side (is that 
-> correct?), we need to exercise extra caution and confirm with its 
-> maintainer whether the changes are appropriate. That’s why I CC'd 
-> Johannes Schindelin on this.
->
-> Was that the right thing to do?
+> +	if (!(old_paint & STALE)) {
+> +		switch (old_paint & (PARENT1 | PARENT2)) {
+> +		case 0:                  break;
+> +		case PARENT1:            queue->p1_count--; break;
+> +		case PARENT2:            queue->p2_count--; break;
+> +		case PARENT1 | PARENT2:  queue->pending_merge_bases--; break;
+> +		default:                 BUG("unexpected paint state");
+> +		}
+> +	}
+> +	if (!(new_paint & STALE)) {
+> +		switch (new_paint & (PARENT1 | PARENT2)) {
+> +		case 0:                  break;
+> +		case PARENT1:            queue->p1_count++; break;
+> +		case PARENT2:            queue->p2_count++; break;
+> +		case PARENT1 | PARENT2:  queue->pending_merge_bases++; break;
+> +		default:                 BUG("unexpected paint state");
+> +		}
+> +	}
 
-Yup, Dscho is the right person to decide on the design issues on
-Windows build.
+While correct and compact, I don't believe that these switch
+statements follow the coding guidelines. We should split the
+lines appropriately so they are more standard, such as:
+
+if (!(new_paint & STALE)) {
+	switch (new_paint & (PARENT1 | PARENT2)) {
+	case 0:
+		break;
+
+	case PARENT1:
+		queue->p1_count++;
+		break;
+
+	case PARENT2:
+		queue->p2_count++;
+		break;
+
+	case PARENT1 | PARENT2:
+		queue->pending_merge_bases++;
+		break;
+
+	default:
+		BUG("unexpected paint state");
+	}
+}
+
+Also: technically "case 0" should be a BUG() state, right? We
+shouldn't be walking any commit that isn't reachable from at
+least one side. (case 0 does happen for old_paint, though.)
+
+>  }
+>  
+> -static void clear_nonstale_queue(struct nonstale_queue *queue)
+> +static void paint_queue_put(struct paint_queue *queue,
+> +			    struct commit *c, unsigned add_flags)
+>  {
+> -	clear_prio_queue(&queue->pq);
+> -	queue->max_nonstale = NULL;
+> -}
+> +	unsigned old_flags = c->object.flags;
+> +	c->object.flags |= add_flags;
+  
+Diffs like this are part of the reason I'd like to see a _new_
+data structure instead of replacing the old one. Keeping the
+old one for ahead_behind seems like a good idea to me, but even
+if we don't land on that end state then deleting the old code
+_after_ adding the new code will make the diff more readable.
+
+> -	struct nonstale_queue queue = {
+> -		{ compare_commits_by_gen_then_commit_date }
+> +	struct paint_queue queue = {
+> +		.pq = { compare_commits_by_gen_then_commit_date }
+>  	};
+
+I didn't notice when reading the struct definition, but looking at
+'pq' here makes me think that we shouldn't be using that abbreviation
+as it could stand for "prio_queue" or "paint_queue".
+
+> +	while ((commit = paint_queue_get(&queue))) {
+...> +
+> +		if (queue.p1_count + queue.p2_count +
+> +		    queue.pending_merge_bases == 0)
+> +			break;
+>  	}
+When possible, I like to try to make loops only have one terminating
+condition. Should we have paint_queue_get() return NULL when it sees
+this internal state condition?
+
+Also, I'd rather see it of the form of (!count) instead of using
+addition to make it clear that we care about each value being zero.
+
+Finally, I think we actually want this case to get the benefit:
+
+	if ((!queue.p1_count || !queue.p2_count) &&
+	    !queue.pending_merge_bases)
+	    
+I do see that you have this condition in patch 3 with the extra
+detail that the max generation in the queue is finite. I think this
+is more reason to include this in the data structure method and not
+in the loop.
+
+Thanks,
+-Stolee
+
