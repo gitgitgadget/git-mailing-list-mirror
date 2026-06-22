@@ -1,73 +1,175 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC4A175A74
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 16:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879640D56B
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 17:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782146767; cv=none; b=Vr0O2If4Gcex6zPcJAMZ+7KVLZRDDGj54bHesKXFLcNyeLpqDNJV7sICT5fybCeQg5Bi1nuzNqIIaqRvrbRYszDH8qqTsUTX+b591k6KAxktuonTzJApg8yeNQ6/dXBm26fXkk4ESM1Wm7Bd5Ov+rCixxHeFz7pKZtsxQoTUBAM=
+	t=1782147629; cv=none; b=F+wB/b+zBaVcVeAx1Z86oINZpL9pBwahQRrvuHTK6qe63a2DTYHp1uLRfXmgN4ToYAzrBeuSOFsp35ifmJ15ZmqNumT4xhPuONNW/iAZ3yjtYaJcw1KvpYMBYgZY4Wm804xdn2lCi9tCRezHuCqkybakhqkloEf6czYYfoy+izE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782146767; c=relaxed/simple;
-	bh=e+FYE/M8/nOju+qbRKEMX77zUR9ikTODOfq7zisMoTA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bsHlEFy+93eegmppkijKxmgLOZtKPZXTST/f6aZ3aQvHoeItwDoR7fn9DsKrZlGZ+kHqju0ncibc4dsS9da8bTwDD+FUi1V03wDPnX5LFEBXs0palGKT2DNjDYKFoshIML49UxfvuXVd2LXEz49nAwmehwDT+aUHKuczARL3CYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev; spf=pass smtp.mailfrom=malon.dev; dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b=e2X4lv1U; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=eAKRplWo; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=malon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=malon.dev
+	s=arc-20240116; t=1782147629; c=relaxed/simple;
+	bh=XNJKMVFSdZS6AURddwPYzhKSy1AQYUaE4oPMgWJ8Lgo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M168lrGfgEqIvrzY1oB8KTJCrvQcWRvuF+fY37PL999xM8AtngESPZ3P9B0ONLNQ2pnWpBgVknjCSncjNWuf/SIwbPMZK8WjcMrRBPMImcWci7T6z7UeWEkvoqtfcLvDluEp/4UCorViCxiOZI5PbGcDTzUYWVGs75IOmaN8OOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mtwrmALL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UP/+Kqr6; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=malon.dev header.i=@malon.dev header.b="e2X4lv1U";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="eAKRplWo"
-DKIM-Signature: a=rsa-sha256; b=e2X4lv1UNqUsPHgq3ZjpxibdGcxAWAqy8LyKb7N77zqINfom8nPZYz3EllwEuF6d8tEgPmyttWZEndMO1GJsOHdfNwr4XAg6RXT34IqM6EAo72bKvlIs7E18y3SsbTOotWCiFHpa5pTJdXCasX+0VBIuWg6grnl35NVxCTfhMeO5zdCaSAic0R7IL25caT3m0ANBCG3RjHKbYWwM2/iccGszYvozHLLJJgLQbWCU3Dz3SREPAYsakb2V4hKSYI0zwlfj77aRiLU08zw7wQP+Fa67WAOsDfGS+Az2TMEogpMVlvRyAm/PWf8mjoP1e3z8ZlDYdM0BNmhNUfQ+fb/k5A==; s=purelymail1; d=malon.dev; v=1; bh=e+FYE/M8/nOju+qbRKEMX77zUR9ikTODOfq7zisMoTA=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=eAKRplWoj2dqjcaA4yIUssbPA+QSP4obL5ZegetR+sTKt2GR4BE0zTG3vo9Dcuvm2+52VxP0tomOIck5+P9IPPf/JJcejgaHcQ1iLx6A/qV+yOKlbkDj+SX49Sy/LXdPX3vnBEO0JV8PSZrla7WVyMJEmF2gArfJ1ZepWp4wW5QiADmTRsjd5DgctSlQEDrwsZLmYIixuNhubFC93kuNkxspVegeUMuIshCkzWkuFn8Gkl7MD6JtUpcn1ddYokGyfgEhXER9AWVycFHwJTgYndw/aW0da0lcXP8i87dzRdUDyZHRqE/L8bNtE7ny6JSVRN/hG4x+eAccDwH+BD6dTQ==; s=purelymail1; d=purelymail.com; v=1; bh=e+FYE/M8/nOju+qbRKEMX77zUR9ikTODOfq7zisMoTA=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 599969:32685:null:purelymail
-X-Pm-Original-To: git@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 824274450;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Mon, 22 Jun 2026 16:45:50 +0000 (UTC)
-Message-ID: <b5a9115a-c909-405f-b150-f956d866b1eb@malon.dev>
-Date: Tue, 23 Jun 2026 00:45:46 +0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mtwrmALL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UP/+Kqr6"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D708140017B;
+	Mon, 22 Jun 2026 13:00:26 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 22 Jun 2026 13:00:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1782147626; x=1782234026; bh=4Kj8u7yig1
+	uA2nkzjIhFVlepHzFixWJoNoJo4G0KJew=; b=mtwrmALL2TDv2/LUUyWy8Bjisg
+	VBijpVNVszo0brBnbNiwop9YKBjhR2M9mZ27Tf31ur/VLCADIl8vOLUcbBnw2TvJ
+	k4adnhIR0ey2Zd94Cdey62vRjiciwYwDaM88CZU/5nzbWf669g0KWxbYxe8eV3Ct
+	4jm+xUgVUXn8yFtWOWbxgdNGtkl00lDpWq3xGITtPvFLgObikTl1xKhXxJJ6jsKp
+	cFvTXeEotLe/XZgBzR1ZIimdC/x5gFRENTsrHp6jlv7Ei1sNCV7wgAKLzY9NGDnA
+	RnhREpTkIQZSZwK+fru9X2xXExayxn6aE86E7wAcmfOTfccXgM43pRHDoXZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782147626; x=1782234026; bh=4Kj8u7yig1uA2nkzjIhFVlepHzFixWJoNoJ
+	o4G0KJew=; b=UP/+Kqr6lSxnTd+1Wt4U4DtUtHI7UnMdXHLA0UTJ7XdLmxqSP3O
+	0KZBr+jNsRWu3PDlw5EE5vUpwisN0dbYfzGA8Jm4duLmnF9I7xG1W4IKHPHaeXG/
+	LviXWdShhmiNJQJhYJ7u9yO0Bv7CFbk7Pz9Ea3SvOGPROj9Cpvw/k0nfNTPICp3Z
+	5qVz1ZHxrineqgZLrwU6nMKpH55IWq2CUJaRlN982JGfuRFCiolMIvbUqRaQqwtT
+	YGNXWbjmWxe65gWA/lSSCuifZp9NNxtqT/udMp8l8VFMpDS6jQzpQjJf4eulwhLx
+	I0jULpAqWp6sekd7IeXrALvotQ+Tj+4zmRA==
+X-ME-Sender: <xms:Kmo5asdqu4_YT3pwNSdLr6YIVf9_cU6OmxcWgffiag1UGZEPkgtcpw>
+    <xme:Kmo5alEnXLH0_35t88aMkRFBMcRUdag4kl9-pi7vwjiprEf2aITcsWfo3zdyIjmMI
+    J1QvzpVTexBlzzVmf04xnS10h8Yavj3zjl91dqrOcielMk5Yy_ZZA>
+X-ME-Received: <xmr:Kmo5al0WTm8hBKO7S42K0YxbO22h_SMBXMtaKgnW_3wB9mD1KhcSzOc96DbVnr5CuLUiapz9_N1ISvuB6SLYaCeJI9HYW2bLnrCRC_4>
+X-ME-Proxy-Cause: dmFkZTFh46HDPZxyuhNhgSiXJjRy7+frJd8K6gYejkvUcoZJSPrjOBk34o81uiok1BMH9D
+    0omXbFtTldgnL7f82TV1r3O3ns1selnQ1KL/ETdEf7/5lL5kY0PPfj0/Q2PojZIfgIGycO
+    LHjBvMdtIcW7bTdwNxiY1/ETjoDtqwC2iPllu5ZrbbEiEieyYEsCTxqkzEMs7k5R29Cz9g
+    mFiJtq1gtw1WvXabldcvnGZIKwoT5AvkJwVhVTi/6MUQNktHRqLUBKA4BC9gYBI/JW5klQ
+    2r9QY5IH1mtwjTsnHi7P2qgUpxL7QxmY2agBLkBSjocvVVvIrYYc026Nf5AJM0urtxxegl
+    iPW3krGQzuzh3FwqpoBHeZW7Cxpq1A0SM6BNrREWmTw97RGA4YMW4X2ZDvwlEsrOpRF4T1
+    MnTA6Emu9upEZt/LU0hGzcMpImgx+gwb2zfT4kZQ4qWLPUxAhl30CwGzGXXe2+7iy4IR3n
+    HACO97jUPET/DciXmpjT/ru2R37iSjFzlQOpjIpn02Tiq7gCt+dqLZmsoDFTh/cRuqffH3
+    BBNSgt++d4nrdcPo2Q2yuYcchyC7rsiyWTIY/Len0M1CAzLdYARQCAPqrMW5MyNOhF3I6D
+    ahf6Kd4xbJ9MYX/MJiJmkNDiK7fNm3ZWgjadLHUoEe8XpXhZbvdgA0I0hwmA
+X-ME-Proxy: <xmx:Kmo5atk9tFXDg-4JBB-DeHT17MiJ9dZy9nDMbmZzzgDdRO5sDcYP4Q>
+    <xmx:Kmo5al8IcdTRCGsjgvwWMVXq_buS_ivLZGdQDhFWDItaxfmXGnAMrw>
+    <xmx:Kmo5aipENh9ETfo-Sa2x3hGJcVcZzeBjlfdW34FJoslDQHIieE492A>
+    <xmx:Kmo5aukJSqQU6d2TkOJSbGucIJnMyO3DhLUw9VZjvT7e64yL61wHag>
+    <xmx:Kmo5ak0J4K0baQtp4Pky4CEiH43FdjCNuTnQOsiiic-tFAVpJtiPaD7o>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Jun 2026 13:00:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 1/2] sequencer: factor out parsing of todo commands
+In-Reply-To: <d27dddff93144f7b6d7fc89719bdf53b6856c9fc.1782117361.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Mon, 22 Jun 2026 09:36:03 +0100")
+References: <cover.1776697483.git.phillip.wood@dunelm.org.uk>
+	<cover.1782117361.git.phillip.wood@dunelm.org.uk>
+	<d27dddff93144f7b6d7fc89719bdf53b6856c9fc.1782117361.git.phillip.wood@dunelm.org.uk>
+Date: Mon, 22 Jun 2026 10:00:24 -0700
+Message-ID: <xmqqpl1i1pef.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] environment: move ignore_case into
- repo_config_values
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com,
- johannes.schindelin@gmx.de, stolee@gmail.com
-References: <20260618114207.605211-1-cat@malon.dev>
- <20260619155152.642760-1-cat@malon.dev> <xmqqjyrr7ipf.fsf@gitster.g>
-From: Tian Yuchen <cat@malon.dev>
-In-Reply-To: <xmqqjyrr7ipf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+Content-Type: text/plain
 
-On 6/22/26 04:16, Junio C Hamano wrote:
-> As the compat/ layer is not meant as a general purpose POSIX
-> emulation wrapper that is generally reusable to projects other than
-> us, if we have a knob settable by end users to affect behaviours of
-> lower layer in compat/, it is natural to make repo-settings
-> available to them.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I see.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Move the code that parses todo commands into a separate function so
+> that it can be shared with "git status" in the next commit. As we
+> know the input is NUL terminated we do not pass a pointer to the end
+> of the line and instead test for a blank line by looking for NUL, CR
+> LF, or LF. We use starts_with() instead of starts_with_mem() for the
+> same reason. This results in slightly different behavior when there
+> a CR at the start of the line that is not followed by LF. Previously
+> such a line was treated as a comment rather than an invalid line.
 
-> What is the perceived problem you have in mind, and what are your
-> proposed alternatives?
+Meaning that the input validation is tighter than before?  I think
+it is fine in this case, as I do not see a reason why anybody wants
+to use a lone CR as comment introducer.
 
-Actually, my reason for showing this question wasn=E2=80=99t because I thou=
-ght=20
-there were any architectural problem, but because I felt that for a file=20
-in compat/win32, which is more on the _downstream_ side (is that=20
-correct?), we need to exercise extra caution and confirm with its=20
-maintainer whether the changes are appropriate. That=E2=80=99s why I CC'd=
-=20
-Johannes Schindelin on this.
+> +bool sequencer_parse_todo_command(const char **p, enum todo_command *cmd)
+> +{
+> +	const char *s = *p;
+> +
+> +	for (int i = 0; i < TODO_COMMENT; i++)
+> +		if (is_command(i, p)) {
+> +			*cmd = i;
+> +			return true;
+> +		}
+> +
+> +	if (starts_with(s, comment_line_str)) {
+> +		*cmd = TODO_COMMENT;
+> +		return true;
+> +	} else if (s[0] == '\n' || (s[0] == '\r' && s[1] == '\n') || !s[0]) {
+> +		*cmd = TODO_COMMENT;
+> +		return true;
+> +	}
+> +
+> +	return false;
+>  }
 
-Was that the right thing to do?
+I notice that the order of noticing concrete comments and comment
+lines are swapped relative to the original.  There is no inherently
+"natural" order between them, so the change is perfectly OK.  I just
+got confused slightly while reading it until I realized that is what
+you did.
 
-Regards, yuchen
+>  static int check_label_or_ref_arg(enum todo_command command, const char *arg)
+> @@ -2716,29 +2737,23 @@ static int parse_insn_line(struct repository *r, struct replay_opts *opts,
+>  {
+>  	struct object_id commit_oid;
+>  	char *end_of_object_name;
+> -	int i, saved, status, padding;
+> +	int saved, status, padding;
+>  
+>  	item->flags = 0;
+>  
+>  	/* left-trim */
+>  	bol += strspn(bol, " \t");
+>  
+> -	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
+> -		item->command = TODO_COMMENT;
+> -		item->commit = NULL;
+> -		item->arg_offset = bol - buf;
+> -		item->arg_len = eol - bol;
+> -		return 0;
+> -	}
+> -
+> -	for (i = 0; i < TODO_COMMENT; i++)
+> -		if (is_command(i, &bol)) {
+> -			item->command = i;
+> -			break;
+> -		}
+> -	if (i >= TODO_COMMENT)
+> +	if (!sequencer_parse_todo_command(&bol, &item->command))
+>  		return error(_("invalid command '%.*s'"),
+>  			     (int)strcspn(bol, " \t\r\n"), bol);
+> +
+> +	if (item->command == TODO_COMMENT) {
+> +		item->commit = NULL;
+> +		item->arg_offset = bol - buf;
+> +		item->arg_len = eol - bol;
+> +		return 0;
+> +	}
+
+And the extra stuff that are only relevant to a comment line is
+naturally processed by the caller.  OK.
+
+Thanks.  Looking good so far.
