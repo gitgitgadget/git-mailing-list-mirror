@@ -1,89 +1,92 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0011F0E29
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E103A7186
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782130838; cv=none; b=tZSaBgPFqZ+QJqqElvetdaQivQkVGmvT5Fblp9WLeM1OZmVnrLErrOyzofI1TS7+cJoXSErHJKRmu6NKq6xvMU2O/loVT2Hm5pT9Bls68H6n2pq/nYbjhJZRPaRIj0Q1jldeOmM2tjeTgWfbml3l3XueU/e/HO4i9+65AgSjQ+w=
+	t=1782131200; cv=none; b=aZy7IsyDswNGOuVsl7VW7Ozz8FzRjGDSWg9Wq/ts7+tFjQEyYbcB5ijIEQmpPeYriDCupaRXeenoJa6BZ6ea2xJMU28AcKQfU8niZsl821yH8EybHHZADjDOgs6e2uXG9yYWU6p3q/0ESgpMy8tXoaX+G8k/U8rwUMD0c0bG1zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782130838; c=relaxed/simple;
-	bh=tjW0zmADPumGH3kyqQnAIn+VS8J72JWDEfX43CWPkNE=;
+	s=arc-20240116; t=1782131200; c=relaxed/simple;
+	bh=hRURq8t3hTPukQGGLJbJlgt2rHkxuUDCUSp+S3UWj2U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tds1pvJsIFMohFoiH9xAacw2EtAGMHDzGaqHquFMJBPMzKf2v30CuWhDvJCnXBNT3Qm4mTcdHf2ZkRSnXvvDTXalOlwda2buZeBYAVCqoD2GKzIvx+u6SjQbFGe9XK4EtPtyjp2HvqqnxO6K/BANGf9uLDynxgFxsmrQJbYydgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KTM8z29e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dbVJo97g; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=gs6qu8HbU5AMVKiCvH1gsidDBb8WzVw65a876qv2tXt0cMUgtVzxU8WEr5f4wYiubKZijCjSREiBqa95/mSKM2SS4oCGQVxDmpKLB73FeCSjhFr0fLHH5IvIBS4XNBSfxkZWn/MsM+p+AlVDwZqxr3GmBkNI7DvAP5mTXKYLXGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NtKUxhZM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+U6i/rg; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KTM8z29e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dbVJo97g"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 16BA414001F6;
-	Mon, 22 Jun 2026 08:20:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NtKUxhZM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+U6i/rg"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 67E5114001CA;
+	Mon, 22 Jun 2026 08:26:38 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 22 Jun 2026 08:20:36 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 22 Jun 2026 08:26:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782130836; x=1782217236; bh=gH+YHdF4ve
-	CYGVSYZE1s19WZq6z5O+aw9ATNA0P+6Bk=; b=KTM8z29eEk46rneE6JTF9X0IIM
-	WUhX4G0w06qX0Tp8DnF0nkN49mx19UACXX4bVdL7nflF1zTAGVSa9ohoZhEzZDR7
-	ovznMjbnXOUNALUfHixLWudbU2ZqhJhQ+5gZWL6JXKz7yCU4XxIoUe+coz82fj/N
-	k+F+EP1NfWBNItvQZhUtMu+lRD6O9EklxOCwX1Hg0KXr2r/h9pEkkR+0UCLITKWH
-	K5l7tLc2ErwxJNrLPuKGS/xGMwD3FqaxV5qZ0UhF8kqlGpZjljfUFdgvT4Ca9XPi
-	IPT4Ivn3cnaVM93KuXzOSpx+YsdRTMu1u1DP2b6A1oTH7oUeUxTXj140OPhQ==
+	:subject:to:to; s=fm3; t=1782131198; x=1782217598; bh=tNM1me5T9b
+	AS05gZgES4x3P+gQ0SMOLoRZI7s9KSOVY=; b=NtKUxhZM4me3WzlVB0hwKs3UEZ
+	xtAe2Dc+PnfIM1hrme9fUmjcmI8JarrbmbC3Ovje9g766egB4qXJ9+UVUj8aiRYA
+	GC4PnG0fW46NaE7kv6a6aOQTnkmQPpyic704zqTtbauNq09BaNCd2WDDt0FUHtO7
+	9g8G8YBe9LIu393FKY0HJ2eVLjTYwqLsvrsf6V2uBtaLFsfjgD0V4vLO+k/9/D03
+	QN+lhfMH/Br2THZCvlcTeijwuwpnS73BazeVT7cDhpeXq21g5PAVzYw4bOxQWEzE
+	+Lg7IZvcbLiThV17RlGOF0EK0flipWJGS993uHIhh9PPN3HNgyQLbhqD0Eog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782130836; x=1782217236; bh=gH+YHdF4veCYGVSYZE1s19WZq6z5O+aw9AT
-	NA0P+6Bk=; b=dbVJo97gF5/tewkvl3UasFjEPWHOlavLKBb/ETcx4mApJ7mBy4r
-	UicKDoOkQpH/vtpyp8PlsTjVg7LoTX294JiWmfSzc1V+E7P4Rx2pFxnhdCTXUVD1
-	1Q8TbvTGm1S943XqazM1FxrcGCPbgjtqn8xpSaaNqhrsgAtmKj6MvOhlU2gbxEPl
-	/7P92wTGy2EK9SW9fKwuXO/NmrhER9ZnFB7rKqJ7H2F3O+53jbH0AxSiWwQIwhiI
-	QL6sI7WWF/TB4tVLVg2LmGWxgiSwr1OXcB0NN1abA3Ny19bQFQCG+r7MST6uv32g
-	Pqt8TMyR/5DAc1mHQQ/DV7Bm4PaAqAq8o5A==
-X-ME-Sender: <xms:kyg5ak-3kY624FVbdRwvkKljQuTW5XzZsV4-PmnNtmag7vbDJLHYDA>
-    <xme:kyg5ajvHvoDjLeLdqzqPKN-s0AXdRdJVYSZj1UI3fjjhQM4HOSqg2T8ycNg3HLLZH
-    MuXEdNeZYe4BI94-lFBVS_gnC1cpe9SuCMDXlOitl4kb_qQbREjdA>
-X-ME-Received: <xmr:kyg5avDjh3rvkUppU05G6g0Vgl7Lnej6jPh54TP6x4toZ_aCcBj7RnuZvuvszB1PrumNjFuPxKzVGuVW3rnowMxn1FKEcKGJhRpOcz0>
-X-ME-Proxy-Cause: dmFkZTFRmarT3xjTPMM5bSuNGGlKPgts+DTD4/LfrNaKrOZcINN5IGIwCTvYZc7F+YJpry
-    2xFVB/qyH/G59rAYUXs9T+gIDIRawh4FqPWizm+SAna303koW0pn9x38XblDhXLQianvtJ
-    F1zYDSE5kme8r9nikkF5mNmo9h+7Ulzyev/vCRBw0UcBGXD0QikDtEMPMpdJ0abe7Wgy0e
-    a0xxKbHCEhXGLLvmkmW+Elx+s0T1syMTU85FFtLKy5/iaegymopZXvV/RyWPnd32vpatMA
-    opu71FdOhP18MP1wz4yILcoDHXc1HuNT4mx3T3oBpBrE/JF1tGjPGitLSuLxvsfPX7hCe7
-    4a1yxHM12m5Ann/y8O2sxZQmiZdt6yaHV/OB3O7E7+mrCXHiYCEZ25D9pLyqQIxVHnWmif
-    Qi9ITALU8wfMQ3k7N4X05cna1VLzmQHEf9dr+VFUwFAP1WjyOux+MihVqCB9PoNb9Qlgn3
-    7bXJaxkt7ZyuIQ2yP4ltyLMk9NwbThEveZVnHOJgQ+F27e7pL4l7lsUPmBCmmCmaldRUX+
-    bRtWjWSTm1TQpsIYTGEExTLRGwWOjkVXl4LASL5t4QvLTOv3xeHHvj549Glt9PQNxWTlnA
-    CgJqWd0RbRyZdlCNmtVTqkwI2DBERKt3a3aPPd8rqYR3ewGlGk68SiFG3tMg
-X-ME-Proxy: <xmx:kyg5ajW7BV3Z2qC1ljSgypySSEAa58rlMKcZ7joRDaQyXA3vWkXnOA>
-    <xmx:lCg5alCJv_lomGZWEDlkqjtuu-N0OvjMktGQPH6w4V5MJVod0k6H6g>
-    <xmx:lCg5au-kQbB9iF7Ye55wbGeyVRt6mKACEfl2hex2uJd_NuuuYcF_eA>
-    <xmx:lCg5akEHYdxOWHZqGR1rGk6jo7sMY-DEwTzPRq-UTjRPEqNlUl7ieQ>
-    <xmx:lCg5ai9l2dDyIZwgVyAdsIcSnX_aZA0QQAzPHaXWGowiNzjdxbis6rLg>
+	1782131198; x=1782217598; bh=tNM1me5T9bAS05gZgES4x3P+gQ0SMOLoRZI
+	7s9KSOVY=; b=a+U6i/rgwMZH/g9zfwZYgR1vT9+0EIY8qGU1UAUD5axmvnUCppw
+	TCpQWo4myfI2N/9O82atSDqopc+gD56AAXI56ntHCZqYMj3fosEaE/+qeF41exC1
+	v0V7CtRuL5SA63oIQELTDhpRU3MPEIsFmBkigE0VdQqfz12xGqD0G5OXLygWdcka
+	JHhRvhxl23qPe8Nx9i7i13jg0Jx7wn0Gkc8DplUUrCVTiwtVeHKSVrKnL5tz24F8
+	yIfdCTNfUyJNLH/7RSD4W4v/LHcqkRBt14EWs5PdAcc1tZxBzE/+3ZcKHc1+M4gW
+	oLadUOI+pHzTSykPKKpqRNQtMhWvnVdoUQg==
+X-ME-Sender: <xms:_ik5ahbsLxhGa8WL58fQctb9uvfLGdOcgxXvZGqbXsYb7bENMq39GQ>
+    <xme:_ik5aqpNmRFoMGT-dr2FhskuE9Y4MNIlD6q1A0KOXw36x1rMTJ-LD2_qzBgKv1NQ9
+    VJozG1VlV0BGdftcU7r9l8ze9I4WnEg3vR6eQVX-OfC1z8IHqUjUg>
+X-ME-Received: <xmr:_ik5amOpCCqOOSoi4CLZDTZi58GTr7PBKXJUpEmU-QvNAMSKyVINh8nob9zCO97Kcm68Ym0l2gPYmAraAtCRihAJslPD7eTngcNga1g>
+X-ME-Proxy-Cause: dmFkZTGXRDzck9VWs0Sl+UiNo4ZerN09Ufh3D/hpGaXBFYZEAyX+d1fDMYwtwT0yMb0gY5
+    gcZR2bWv3bDTMig25KTVb1bQLmwiYbZ6yes/QmjOyenFhhbWqa9cdmOKxl6D4xhK3+xZWD
+    WDE6FI7336DNuHbRTc7L9S65QaWbZrL+vc5gXDs8bMDazhi2AOCziRooIkHiRmJPxkVcHn
+    BhE94iSBPMXnmUEeurGi0vq/HmT4wNL4y9zHQzyNqitlY3R8pcMkNB8V6hmc3s6B8aiJkb
+    LlH8P3aPcr2qSSGEr9VMiKWcYAtCt6Xq0WicqqDZhuFQYjH86UAt38v8ay7Iv3GyPXwqi+
+    hwPVPZwaDj9jHM/8eHCrlVxLXsKDQWfGkLKsk/xlEX1+plZ4XATz/16FgpJF7KdklvWJPE
+    4n5hvIgXaumqk5Iy9Y87RgjB2ifDqDsyAIkJD+ikJ2Cy2T+VtsOCTl160YikX3+gfwSkKu
+    mqkIP8geRyTWhsU/Ck4ApWmFMi4HG/+XZujN8Wn+6JmLEHjwCxN8omjsPPZtZH/i+LX3xn
+    3/zuBjcL4IO3OMBZCPOptdta/P0aQw0nTVOfTnD2OULnBE5xJVvOp7lczCZ0rMDU9+LTwj
+    Z+QnB0+wtAuJlzT99l7Ify4sB4JTqvchKDTWqvMi+pp0RYD5VAqOajycuTdA
+X-ME-Proxy: <xmx:_ik5alp_0j1rnRyuZ8up0CCqmZa5W4sFhbA3XGvnaZD_HWPfVqiyyw>
+    <xmx:_ik5arfptys2-kbRs4-JmXllqga9Qs8oiHIZ-CRTotBbDrmnrFoxRg>
+    <xmx:_ik5arRMSlII1X8KGjxPk88VcLjLJMD3u8AA5g4qWQq0V5L_xBBjxw>
+    <xmx:_ik5aka8VgzzMVgFdes_HvKwlJZM9Iog6IpM4MSCfK94DvQZVlRW3A>
+    <xmx:_ik5atWMPHmkXknnUFUaXbS3TrE-NcGF1DWha5n6jWfWPAJhwvW7zAxo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 08:20:35 -0400 (EDT)
+ 22 Jun 2026 08:26:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  Git <git@vger.kernel.org>
-Subject: Re: git-diff in a worktree is an order of magnitude slower?
-In-Reply-To: <20260621212805.GB2297179@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 21 Jun 2026 17:28:05 -0400")
-References: <CALnO6CADMJSixqYvL1Yo8qKX5rWhKQ+2OoSEuPUh-yoeK9TseQ@mail.gmail.com>
-	<20260609001134.GD358144@coredump.intra.peff.net>
-	<CALnO6CD+3sE1xQUnRsCFfWrZTsq2Edw7BWseLzasgT3dgtaq_Q@mail.gmail.com>
-	<20260611085526.GL2191159@coredump.intra.peff.net>
-	<CALnO6CAx91kbJ84d6Ef655UNG0y0rhyknBRh6Y+0o7Xn-uVytQ@mail.gmail.com>
-	<xmqqa4sog1e9.fsf@gitster.g>
-	<20260621172432.GA2206349@coredump.intra.peff.net>
-	<20260621174518.GB2206349@coredump.intra.peff.net>
-	<xmqqfr2f7iay.fsf@gitster.g>
-	<20260621212805.GB2297179@coredump.intra.peff.net>
-Date: Mon, 22 Jun 2026 05:20:34 -0700
-Message-ID: <xmqqik7a4vhp.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Harald Nordgren <haraldnordgren@gmail.com>,  Harald Nordgren via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Johannes Sixt
+ <j6t@kdbg.org>
+Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
+In-Reply-To: <55a8cc56-f015-4a1b-b830-79cf24870286@gmail.com> (Phillip Wood's
+	message of "Mon, 22 Jun 2026 10:07:57 +0100")
+References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
+	<pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com>
+	<9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
+	<78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com>
+	<CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
+	<37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com>
+	<xmqqcxxnsufl.fsf@gitster.g>
+	<42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com>
+	<xmqqh5mymt8i.fsf@gitster.g> <xmqq33yimsdp.fsf@gitster.g>
+	<55a8cc56-f015-4a1b-b830-79cf24870286@gmail.com>
+Date: Mon, 22 Jun 2026 05:26:36 -0700
+Message-ID: <xmqqbjd24v7n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,26 +96,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Yes, though that implies comparing the index and file mtimes with
-> nanosecond precision.  We have that precision stored (at least
-> when the system supports it) but I'm not sure if that comparison would
-> run afoul of the reasons USE_NSEC was not the default in the first
-> place.
+> On 19/06/2026 17:01, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>>   - Notice that a branch that is deleted (because it itself is
+>>     merged) is still depended upon by being @{upstream} of somebody
+>>     else, and when it happens, fail the operation (i.e., do not
+>>     delete the branch).
 >
-> I guess not? The problem there is that the nanosecond portion would
-> sometimes get wiped if the entry was dropped from the kernel's in-memory
-> cache. And then stat-matching would not work. But if we are talking
-> about strictly asking "is this mtime later than that mtime", then I
-> think the worst case is that we fall back to the current behavior.
+> Not deleting is definitely the safest option. As Harald has pointed out 
+> we then need to think about what to do with the upstream branch of the 
+> branch we're keeping because it is an upstream of another branch that's 
+> not being deleted. Keeping the whole chain is probably safest.
 
-Right, and you are right to point out that for the purpose of
-comparing mtimes of files' and the index file, this would make it
-unworkable.  I can imagine that a file and the index may have been
-written within the same millisecond but we can tell that the former
-slightly earlier than the latter (or the other way around) with
-nanoseconds resolution, then only one of the two lose the sub millisecond
-resolution but not the other due to its in-core inode evicted out of
-the cache.  Depending on which one survives (and keeps a non-zero
-sub millisecond part), they can compare differently.
+You're right.
+
+> I think handling branches that are the upstream for another branch the 
+> same way for "git branch -d" and "git branch --prune-merged" is a good idea.
+
+Yeah.  The latter should be a short-hand for
+
+    for each branch
+    do
+	if branch is merged to its upstream
+	then
+	    remember to remove it
+	fi
+    done
+    now remove those we scheduled to remove with "git branch -d".
+
+so it would be clean if we can explain that philosophically the
+safety lies within "gir branch -d".
+
+Thanks.
+
