@@ -1,67 +1,66 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0BE45039
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 09:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2C639A04D
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 09:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782120352; cv=none; b=IFZrr6HJU5yp9x4XqbMiwediCLnjuIbV8UpLVU17LKBYJocS3fZrf1QxnDk5t+vInTwgLwgXkfbbXdJrPxNmSlOD5iNPlWuoYUcpHi+TL3n8akL2W575pTQVgwmfEtj5sojRi5xIYkTJyAGejLTHkj52Hwp74p0VaMmCbcSDNwQ=
+	t=1782120499; cv=none; b=XGTTKR2ioudtYypxof/WqYYD48jsLV41La8mgXVq2dQpWdH9GBN+ZLFgdX+RJgEGfDhRZeAV1Ct4AtNGjKVlAdZmwewgZJISzGNV2c7CeKgcOH7iOJko1LSC7C9XaxwxxGdm1hzArRyHTzUDcekxLOqhzM91fElDpGgFHdkJQO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782120352; c=relaxed/simple;
-	bh=ssiEeHmERLgxy5Fmf8QrEE4Nwmv4dISdgK0p055uG70=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XMcAJ9DhfbmUwiKhsnCVzk0S5H3OlPXRWNq9jWKb3accwRwMSIq5ehji8oOPqTPJ1NilweLkYfnA6zeRKpCBwj0mZEmmDCdbdGWkmF6Ph7duKUiF0U2eTeE/Us70QhmgOrIs2dKHjUTPwchD6eUODUA1bnPEwritUDIkbBZ9QHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxF6FfRD; arc=none smtp.client-ip=209.85.208.44
+	s=arc-20240116; t=1782120499; c=relaxed/simple;
+	bh=pAFDeEcpGRx/X0Z/2oy7UBMLuT3gDwuEjx+D6F5todo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=K6r0StPwh6cW2QTxiKBVKUcK/cGw6PPMp+ZX8ZcpoQiz9bkdBnigrjDl5UmDeSznmLEHhUe+hpEQTL2CMX0SGmhiRwu7x4FvCFcc03bYd22Pa/lg5flvkSqzFclG6ibSnJb3JBge84CXc7UzQHU/+B5zd7XsEzD6ULJ3jhhk6oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nz2Sc9rp; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxF6FfRD"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-697cd68d7adso133838a12.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2026 02:25:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nz2Sc9rp"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-45ef189aa1cso2905923f8f.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 02:28:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782120350; x=1782725150; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+xKr4UnT2ytOOG9iv5DW//S4zFZznxF+DZPvc8Pbqkg=;
-        b=PxF6FfRDb00t2PJztaz4YgFGL1CCNsgbx3IhjRW2XZ1HM6JkzcD/mTNc8HifKF2iil
-         qvCgKHxARieMwcV3PUWiLajmrbjpeAfLaOw9BKslie0o7Id7u1kbC7sot3wwyzZGOn49
-         wYwkC0cw20SPr1We7phZPlmLbSOMKYnApJLKgGRwTwpRGg366SvB1EU3DDJJyy05TKpM
-         thZUfqkSiBjDxAnoFVWbCyK6JWOUgMj0NHPdEbjLXZD5s1bNl8k4+mJO8G11nDYqXTO0
-         mc3L04kP6dF7dJfS/BNo/yvbB6JoE7T7kJ0EVE9pe+0BzkVa5OHyuNHFrhT4G19QvCnT
-         1Rxw==
+        d=gmail.com; s=20251104; t=1782120497; x=1782725297; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MRLHPg7lF/m0Qyb60M5B0Xt3gmfx+q8NpF7C4zasylA=;
+        b=nz2Sc9rpP1KsyqvH6aE8D0gW0Wl74lttGoR8JffmHKq8gs7iMfiigROLJ8eldwZBME
+         LaQD3i0RkGkLqQJDkfRJFALL11a1DGoMf9lFb6GLnmgRuZLVEQRnmnifnMx6v15Ukiiq
+         rbNC1p1MlplB4LVjcljPP1EfJs1hwH2OhqK6f+vKmE2H/74XfX0mKBqdCgkdmyh1ZMAx
+         7jbcSnK8s2QMqQ80xul0Z4sQR6aoRqaiqaApBUh/U9Qx3thbvMjUPpMo0wYXvvs5Q13T
+         iOXGZMlxqcPoLBcwlaK7mhSx+hjep5ZcsMyvwYtKdY32kO0UEQb4SNGfeHPzX5Hr8479
+         OM2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782120350; x=1782725150;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+xKr4UnT2ytOOG9iv5DW//S4zFZznxF+DZPvc8Pbqkg=;
-        b=Z1Jszw1moICXroX3lTUk5uKkj2pfSCjrXVdIXImXGDGdMmUyCwgcU02uXmoWqtUuM7
-         ujL82h3pLyeo3qr7O6U2qDOE1HwJjqDlTsZV9Gzc/Dcpd8SJF45WYy80aZ2qVaU1LqPE
-         hAQRl2O+JMtJwenXuWHufSZfOWMfJTUlbkzLnIlN6HomSW8ukEAWNVHt7woomF/HzmmH
-         Rh61pqMnbFhsB3AH1j+wu9/TNtEG3fuW0wce7+FgugOxi8plqZzZuQ0GsXv4NGu7eDAK
-         4d3R88smiRW+F2DDvqOTpibwEFFJsC/2gVMCDN+v/gDSHMfrFfUhZ+7QFS9EtS54mpWv
-         NODA==
-X-Forwarded-Encrypted: i=1; AFNElJ80F5VWgA51SjenbEfHxu+b0JoV8p79kmAxiCgzzhhkWQUCtdL0DYD//3OE1quTj4QS5f8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzp7rRSeOckM9j0ChP83ifoVuj6VkgkawC5cZLWjwmrsveAI/7i
-	j8b4B4x4c3FxZ9kJS+9yZ7G5lrhUtz3Uf5FASDZDBV0bffBeIOPhXFBk
-X-Gm-Gg: AfdE7ckckiy1QX+jJw9sX1cn1hivrmDKgBwZsKK368Azj6/LfZr/y3JcDeXvNHf3igl
-	iERLKyXgu+6D0oRUfTH7/le+dcaKar3OHRBMMtSPzgngWC+YKHyxC9kvLTnFbc5rqMOCaDJpV+0
-	brEkLCQMmWDxI611oxWDKg7GbVmgCqS84E6puq2Oi2fCE5ena5QZzUAsH0W+vrMIz8XN09edvQx
-	DGXZ/6F/Tav4BXG7rR7d0sjiq0FAU4e/0P4Kz+aXQHi61cpd5oWhMvxQ46gAvZMN+GMCjr1ehDQ
-	G6IgTxnbvhCBPRz/nsByAuzMlsmerfF7Vwkw5gD7O1Ag8OHjbLyNAOKRGBfGnjZm1c4RjSxqk8T
-	YnWmhSehuFP1GjxHEpcHnXQUDZTB4te6+LUv3XPP2nDcYuzmiZKoc9bkPDGeG4xKQcXKpEPqw4e
-	CKJSWHZJSbetlZvDroho7876+DOb2YojjmIem2zxwMNatpFRLKMzFh0Ip64cYemUm7Y5EylhXbp
-	prP8Spl
-X-Received: by 2002:a05:6402:158f:b0:691:b5aa:5a66 with SMTP id 4fb4d7f45d1cf-69756879ab0mr4916094a12.16.1782120349751;
-        Mon, 22 Jun 2026 02:25:49 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782120497; x=1782725297;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MRLHPg7lF/m0Qyb60M5B0Xt3gmfx+q8NpF7C4zasylA=;
+        b=VFutVhPKSxxoPIf6ezkKBAhi1UP/uV8Oz3KWBKanftoMWOHBELtti3Jg4EjutEh9aG
+         jyGAreDpR9il1qg1kf8MptwRV0rDyq0UNz9Hj1IKTyqvl4gU6ZWa1CpX8Xou0Nuta3j0
+         yBqSZGkz3I9kUxW1PEdtU2iKHz6TJkqx8UVnKqL5J5tvNXev0MVHqv5SuY9P1pbwxAUm
+         17/8pBNJMibe1Oxnlymof2k0udcN1Whoufo5nmrD74TfW0L+c7rnZrR+lAIowvDPRFFu
+         SKGgBD2pe3ioWCu9rEUfcpeJgiPUMKGaS80q6dKA8diq9KNMoZ3CWP9AUfsy5kx8NxYO
+         /Iqw==
+X-Forwarded-Encrypted: i=1; AHgh+RoWz6FQv2CqCmzpgxKlQbyEVWWGjP2/ftSngW/1YI5mUpLxrvwlLZf8USRbMMH9NOiedJ4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJjKxwk13vnp7jcv0P8oaA8LC4Sp/v8LHXHESJeVDBSQvCg4zm
+	9IoJxmgupNWO7TTzGJqNnCVxqRAw5mYJx1gIsKduZtr7Hokahfzxvw0c
+X-Gm-Gg: AfdE7cmoMszsqx1hyV9yrqpYLtpyH+Bh77qch+61kA6zPk1w+qgLSuMCsjiWELJGmhQ
+	9oC22r010nKi9LEcPY1dOnq9u2GeHsEwHLsQwvAwa1GwDPTkfWWBlokCaEvq57ZCNuwUDsk9Knw
+	yvbPHoFPSw9wrvDb1RmRF5NNlodRYEBe1NVuoCsIw2qhvKevI6d3ZsDBsGCE1BI7geE5fEMLrMK
+	KrO/wv7+p0PImBS9uI+VS2yWubEF38HQGSQJhpQob88BB5gooqm0Vihu0wPgPFeY+NcVNFQWvAA
+	TFshLcq5CbQWf3MobMgQ5Nzbx/z51+6DNAbY9pUnTQuN3lwSI2FJ7EmIxLkyiKNnGLvTZMsqXzX
+	m7FEFoZ7KMfzq3C1MI7iMaPIpJ6z7LT2UY/FPjtCqF9grBmO1QM2FcAii5W0C2smnUBwjmuwC/p
+	BVLRLDwFdryzTvpy9l47+D82NNE8oOJ1+OGoLmXatCr5DJqbRK7TsNGDJveIRMELEJ8Can8gRpK
+	JxI+x/i
+X-Received: by 2002:adf:e010:0:10b0:468:e22c:3f1d with SMTP id ffacd0b85a97d-468e22c7d10mr4422264f8f.17.1782120496721;
+        Mon, 22 Jun 2026 02:28:16 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:69a:b801:33f4:2760:38a0:c4f? ([2a0a:ef40:69a:b801:33f4:2760:38a0:c4f])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6977b82ee0bsm2952265a12.6.2026.06.22.02.25.48
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-466667881bfsm26074993f8f.22.2026.06.22.02.28.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jun 2026 02:25:49 -0700 (PDT)
-Message-ID: <64ea35df-bdc9-42bd-ac16-5719c5bc6953@gmail.com>
-Date: Mon, 22 Jun 2026 10:25:47 +0100
+        Mon, 22 Jun 2026 02:28:16 -0700 (PDT)
+Message-ID: <a3bd3514-dab4-49b6-a210-bc7b8ddd701d@gmail.com>
+Date: Mon, 22 Jun 2026 10:28:15 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,6 +69,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
+From: Phillip Wood <phillip.wood123@gmail.com>
 To: Harald Nordgren <haraldnordgren@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 Cc: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>,
@@ -84,62 +84,39 @@ References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
  <42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com> <xmqqh5mymt8i.fsf@gitster.g>
  <xmqq33yimsdp.fsf@gitster.g>
  <CAHwyqnWt59h2HO5EJbFswYr7QEA7oNZKdBt_vTk5axNbWFZbpA@mail.gmail.com>
+ <CAHwyqnVce7NKft9AEyCUnR=S_y1ygiXjhf-qmJqmi-tuUXcw=g@mail.gmail.com>
+ <31172867-5577-4c1e-b8b6-425ef9fe44e1@gmail.com>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAHwyqnWt59h2HO5EJbFswYr7QEA7oNZKdBt_vTk5axNbWFZbpA@mail.gmail.com>
+In-Reply-To: <31172867-5577-4c1e-b8b6-425ef9fe44e1@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Harald
-
-On 20/06/2026 10:04, Harald Nordgren wrote:
->>   - Move the @{upstream} of feature2 to the branch that "merged"
->>     feature1 and caused its removal.  Asking feature2@{upstream}
->>     would answer origin/master, which feature1 was removed after
->>     getting merged.
+On 22/06/2026 10:09, Phillip Wood wrote:
+> Hi Harald
 > 
-> I think this is a strong option.
-> 
-> As a side note: I was annoyed before when GitHub didn't re-assign base
-> automatically when doing stacked PR's, so merging in the first branch
-> caused developers to  merge in the second PR into essentially a dead
-> feature branch instead of master, if they forgot to manually change
-> it. But I think GitHub has fixed this now so the second PR gets its
-> base changed to default branch.
-> 
-> Two caveats:
-> 
-> - How to handle recursion: b1 has b2 as upstream and b2 has b3 as
-> upstream, and both b2 and b3 have been merged? Not good if it's just
-> luck which order the branches get walked, but also we don't want to
-> have to do many passes, two passes is not even guaranteed to be
-> enough.
+> On 21/06/2026 19:46, Harald Nordgren wrote:
+>> Looking into this more and attempting to implement the logic for
+>> re-assigning the upstream, it becomes quite a lot of code.
 
-I think you only need one pass. For each branch we look at it's upstream 
-and if it is in the set of branches we want to delete we
-
-  1 remove it from the set of branches to be deleted
-  2 if the upstream of the upstream is in the set of branches to be
-    deleted goto 1.
-
-Note that we don't need to create a list of all upstream branches, we 
-can handle it within the refs_for_each_branch_ref() callback.
-
-> - What about when b3 has itself as upstream? I guess then we can just
-> remove the upstream of b2. Overall, I don't think it's a huge problem
-> when a branch gets no upstream, so maybe just warn about it.
-
-Removing the upstream config of branches that are merged shouldn't cause 
-too many problems - the user is unlikely to want to rebase a merged 
-branch and they're unlikely to have it checked out so "git rebase" and 
-"git log @{u}.." probably does not matter.
-
-So maybe we should change the loop above to only keep the upstream 
-branch of branches that have not been merged and instead clear the 
-upstream config of any merged branches we keep because they are an 
-upstream of another branch.
+Having re-read you previous message I'm coming round to the idea of 
+clearing the upstream of branches that have been merged but cannot be 
+deleted because they are the upstream of an unmerged branch. Is that 
+easier than reassigning the upstream?
 
 Thanks
 
 Phillip
+
+>> Maybe an easier way forward now is to avoid deleting these cases. We
+>> can always add the re-assigning logic later on without breaking
+>> backward compatibility.
+> 
+> Not deleting the branch is certainly safest and should be fairly easy to 
+> implement. Adding an option to reassign the upstream later sounds fine 
+> to me.
+> 
+> Thanks
+> 
+> Phillip
+> 
 
