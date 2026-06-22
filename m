@@ -1,82 +1,80 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C466225B090
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD403368BF
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 12:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782132287; cv=none; b=YWbjMEyukR8CuwCRBKjeatB5B90VoPfQ5UcG6jJRHt7mpEDEpUm6e5WVhz0DbpBjardNNv19tHj6EoHa5FraLeXlcfKcFJYh36kfOO/zAM423ui3XSgtzFh+gZqDkFAS9xV9jgpqwsfK1buENjFlx2CAeKKz7LyHLfOr0FPXS6c=
+	t=1782132638; cv=none; b=HbS1+kqPMZ9NdGCDNV5YuTPzSzFSxJgOJnixwmLUH891zRywlLGV5feJPgAyhs2dSxGcCqsQ5eImPDXZK5Grjm0FmLdML6lH6vnfZA9mSwmBm9bmh2gMb67H9TdCaN++7AYgkiywzK5YafMhTGm9VUKVvmeB2ljjIFsb/ruKQl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782132287; c=relaxed/simple;
-	bh=fkS7BmwiU42XxY78M42n7rBMVOoqvwLDek9jMbbyn5c=;
+	s=arc-20240116; t=1782132638; c=relaxed/simple;
+	bh=ny42TmsS1oMRfHrj+DTvgp4wwzBDQ0qVBqvXH7eKo3M=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EiKD+GHsF9polM2TjTvjqyrxW406JvSSfWWY7O7gz7uGaTgHNikJzEBgsEj0tkRTTcBa0DKkUn1pfZvuQvs9pOrXw1liAzUqsuJgjOY94qTDKwkOtYBAd9rPnSjHBxOPsapKVleZA/0ULSGvuT9SNRVb3iM2YvsUdZKfrV16Pmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iHNNXveu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jak/U6DU; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=NbYWj+bLOfpNqmpmcqd1rQcosedXVriODml3x+9cEnmAwCO6cp1rhrYURjaToDZy39cqc/HqJlHGCgkijbT3AJpOGcxeL79mqdellSD0cpRnJpccA16x8XqOLKgiGdCYg/SPe1TBCJssc7dy5nz3dTa/goia6dJYm2Qw6emp8aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kU8AQPhH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MF4hOf/C; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iHNNXveu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jak/U6DU"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0DB4B140010E;
-	Mon, 22 Jun 2026 08:44:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 22 Jun 2026 08:44:45 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kU8AQPhH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MF4hOf/C"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B69681400220;
+	Mon, 22 Jun 2026 08:50:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 22 Jun 2026 08:50:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782132285; x=1782218685; bh=ibxVFVF208
-	BNX9RmhBkxFjWmNxsrTCck7VOE58aYmMk=; b=iHNNXveu1j303StdtCPf0AcyY+
-	3yRhoqdkSDeHR4v96JCea0UFlhNzyDyAK1I2FWbmOeI3Y4dnSOqkijHiXcFlCBTd
-	rzy9tMZBH7yBIK+12dA4RA9U9lIqDvGjqw6gBEQFSeMSFzVh4ucVjkbcVEMVwMKq
-	ktbMW9IyBohCarNuWb86756wPqfhhMEftepwUpfXuim8z/YYN4Ca9dF9e9eA2OCr
-	E/xPEe5Oo/9gmW+lRBwVjZT44ROfzwiFWRA5McTHEdgqOrwXRn7lKMGGIgCCPtOJ
-	I/xjBpJe04YayRtbbZecEn36LAYf9f1XxRtVUIIFPoepsa+00uJKlzaf1JLQ==
+	:subject:to:to; s=fm3; t=1782132636; x=1782219036; bh=87ADCyHcA1
+	+9CQU5Sg6XOgWn2Jxpa6BsTdsyM3e3F7E=; b=kU8AQPhHHbq+Xlg/zXuRkXW/uG
+	0Q2geCwlO/D+mwVoK70o3xPm1C9rQKyQAa6FIPojfQA+fJaccES5mTd50+fcsme/
+	sUx1wbg5SItM7m91G+7J0RNIi2VpUu4EGF71rqX/QZIFd2Qv3/bx0LYucHzVc3UF
+	qDp4UnoG4Ozh14uTFnx1RjUD7ZTsGY3ClySEW8jilHcw8EavkWoTjwkbmbwDqwhf
+	pI4l0CKEf6l/Z4P8hgx06nL2pEXbsLqJdloU2mz0b5X1dW9Mtbpv93mGZMiPUsbx
+	qh5YlCs2zyW0jECfSxl5ewPmEqYezUhDA00J2yBkkLfjE1Xv6BbiTJLm13fA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782132285; x=1782218685; bh=ibxVFVF208BNX9RmhBkxFjWmNxsrTCck7VO
-	E58aYmMk=; b=jak/U6DUCsaFzaf6cFJIRHKfjRvyXsCLt8wMDMOcq/08uMF7WJd
-	pq7GAeTsZFKBZU22U91GOVe99P94NDOyaCF7bUP+xWymmZ5SkYyGDTeD9TYjb87m
-	0EDWOdCswrSdDgLJ2NOXpDjbozpO+gB7qPl6HOLX90zDFdPVfIDIdpEclR/oniFm
-	HjsHKnZvtTnaxDRjE1bgv8kkE/Y4/0EcAqsl5nntxwAjnR0AmS1G1+8brYMSHdj1
-	0GH1MQa298OVBitggXHhgUuBeEHbK6/IvtfUvxh/YvYYW5KhFRnqv6x/H24tWVca
-	OTf8qR5YmCe2O3TIsxcs5Q0NhWod+Cho/tQ==
-X-ME-Sender: <xms:PC45au_SwJgmTRN1y1CuLEhI4oFUGxE4YoVxtJ2T8PD3A5MNs-3XyA>
-    <xme:PC45altKH2FOQeGfzhBLlPSUTjCxZ2jmJrokAH_aUDiACUkynl-Uc5cm6uDRMNW2K
-    DI6ixL38isI-3kPFdt6vpwGdbsreiM9CPa1q5zqniDG4ufXADWmkg>
-X-ME-Received: <xmr:PC45apB47lobtr-zNeudIki2GRWyomq-ZyecvAkqyGljwo3Gfo76lr8ORUfhL9ZhNQyhaRRviYTQImT6m56do0FvuZbJVIVwXGMS1bQ>
-X-ME-Proxy-Cause: dmFkZTEcROxEw1u/ErQW6ByuT2x2P19jWKUP+f4K5XT1O7WmbTDMTJLdqE6fiva8cPT8rh
-    nT2vQWJ898Zi+D7ruKrCFZpssBTuNpGb4plllryuffUCQT83yi7T8q0HlC+riwVR7g8nNe
-    s4RdVxbJxAv2FQE7O5aLhBsYIdGjhN+k6v9VPHveU/Srt5HHgCqEZWNACztdjslbMVYVsx
-    4StKknKM7VXDQVHo/eL5t9jveDCHwJl85nOIAbJPKWUJXCmBGc1vxOZPILp2+sJxEfGot/
-    mqqhJYR6x3e/dqMz2SL+3XlLnFvlHYTwaFZKK3FlKIUWHq/hMdn1pbX49wGBRca9i/i1OS
-    1fAf21k2FUIfcfFqtWIXBnLsRoSsbdanYs3kvkoHARKNaMhoMlV/sbwV6HGuIHi+Y3gEae
-    N7S+/i+NhsaXSifaMTh2HrgC272naz3NxbL8ZacpM6nC56/5GMsOGrSmAUD6EahMSLm3ea
-    +v/KdbiVgpZnqYPb2EBAvwClz5vOLQgTi3SsF4FYSKMzS5nR4zoX1vM+Iyu2bUZONlS5IO
-    HywikTsLxn9uNN+Lh0szivL7awDsfBjdEEMa8roc9CzqCarLyqGvwJEESn+M4crZHr3k54
-    QvmMPPjElL6lYZAEDUt+4WtsuGBUofzEju/TFkspgMCNJnoL6Ubm5amgcbBQ
-X-ME-Proxy: <xmx:PC45alXDutUpN9Q3YyHpzD7fuJRXktJjIlbXVD4JN6EAh9lCn7hUFw>
-    <xmx:PC45avC-oEHtlAU65SX78l9XUf52kk3WVBfpEDsKCsRLRJHsf-D0mA>
-    <xmx:PC45ag8609A9RPWJB76cLbHsPa2KvXoG5QCgJZSPrhkSbyYgBKDsXw>
-    <xmx:PC45auFF2L-nuLMuXn2io7Qp-UG8tEKrGx7_Afd_gQWvUndeZKVp4A>
-    <xmx:PS45amLSR8sKUlgBtUOfHZ27oxBmPgNPGh2pSksnftm-8F-Z2aAcEv38>
+	1782132636; x=1782219036; bh=87ADCyHcA1+9CQU5Sg6XOgWn2Jxpa6BsTds
+	yM3e3F7E=; b=MF4hOf/CQkdaqIzb9kzzIyDH8ynvHs1+RQlmvsDpm6u4aIgOko4
+	D2MogFTG30N78a1IJfxbZomb618x8FaWeBRYmhC939C9d3Pz3JKjCzVg2T+Qd3Gc
+	CZd0KX+/K2jln3ZCLxOKfnHyisOpOOYlk4wxQI0CV6yWTB/O3m3FUAcuFxQSEER5
+	JdCe7i0XB3DtYXDoMOeHUMhlOVN3gWKUTmm+melXXjNnHaLydGlr/rJyn3o/aSGk
+	7z560xPxXsVGjRU91YBG3dVO1sO5eP7dX2xO8iZENJfbbOQu9deo3H38ZN3DJ4BX
+	LXk94+q3ONwE3CTsbDZPGCkYERFE09VMnmw==
+X-ME-Sender: <xms:nC85amlQnse4EywbHjN12WZWF-bm3FCuy1wib13-isYU7oJMos1z6A>
+    <xme:nC85alSKRBv00uj1TKlIWMMyZRxtsN81aFP7apLcjdUE6Wyfq7D-194F7HmHpRJat
+    jlKWlmMdWVYdWubT6nb1Eqzw6JqtniE5lJEe0YBfWADaQGveTh4VQ>
+X-ME-Received: <xmr:nC85aiBmZMKxSo97czN1o_0zOOWNRooYi7Mb7FPWf6pVpqnFKxDJBQeU8UrTQEYom0wsVt4mbK2psPqDLzDXpHPrIqklnSJcdVIc26w>
+X-ME-Proxy-Cause: dmFkZTFSb4BgP/0S89ynfqSBcH9fUvBMLsZbJ/iYm9C3qS4v6eW+u8DUDH4XKXOKPkD/Uf
+    C4j5GuRcx0XB5IYiPwuW8t2nnOMs0XrycgIa+ykVJJtIT0tiuzMhXl82y/t8BzZvxUe+Qc
+    51xH9HN4AY4h46L2kYDpEEoMAdF6SrLJNrneVvZjx9N0tay7+ssXQVYS4Rk3kWEFha/cdI
+    NfqppEy6ZCH6Tydf0ebsypUp2Rem/DtS0Rm+9pl1EJ3dH0Pjs8Htkioj69UFLIQjbtLptd
+    yBWvjj5uHhBrfCmT/6lUOgPTmAaaSaFx2M92lZWN7eR//lK4DfJWigHKm1Vl91lC4tTxCM
+    subw+WN+fofv1etlg1eaEbxki17TGmkSOUn1Qrwcd5E6G1TADolCeUl4ye8rGARUmOTs/d
+    4xyiEoquzjVtaJEAuXPl9t4SyGNIUDZjgMOUwvKwWLep7uQ2/feeboUW6y/MDXNqESKqZM
+    DgtwLHZ/mr9ELs0Ji9KGJnv4tAeh9B/FEAyf4pYbzzotOq5ItLCRHjT+dAJOVljLv/qNU+
+    8k3KQ0BejCgkb8BC6vMYnvKnGnwrjY31vpAgv55HB+aFWuUH+X0uu1vACuGagKxqUQCRrV
+    Oa+KmNeAtvYwdx13B44j7jf0HVMqm7rDBpu7aLwqXvlwfA4LxgIDjQFk7RwA
+X-ME-Proxy: <xmx:nC85akS_ysaNCZLRKdDuhtB3i6l4pWCzxOJPj5ZuZW4Q3fHb1ycAaQ>
+    <xmx:nC85aooDPIFlIsTiw-c86UcoACepZFUhGLDe_OAqmZbEZ1ySRR_EKQ>
+    <xmx:nC85auz-hOuEBFVtcB9XhJB8mu_M24Q_LXQqIgD-8MMbFo-ecmILXw>
+    <xmx:nC85alKcC9zsi8pQW3KHmygPf60mLidVvBTYVJq-84fPmOydd2Mg_g>
+    <xmx:nC85alayVxR-siSOYG8NkBvQuIa_zRfDN4XfeQaZ72KB_BPv_ZFOkiFz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 08:44:44 -0400 (EDT)
+ 22 Jun 2026 08:50:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Miklos Vajna <vmiklos@collabora.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: [PATCH v4] log: improve --follow following renames for
- non-linear history
-In-Reply-To: <ajjU4w2B0NlZffw1@collabora.com> (Miklos Vajna's message of "Mon,
-	22 Jun 2026 08:23:31 +0200")
-References: <xmqqo6hglncl.fsf@gitster.g> <ai-aE83w02xPRlPr@collabora.com>
-	<ajjU4w2B0NlZffw1@collabora.com>
-Date: Mon, 22 Jun 2026 05:44:43 -0700
-Message-ID: <xmqq1pdy4udg.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2026, #07)
+In-Reply-To: <ajjpoEDt9Q_uv-LY@pks.im> (Patrick Steinhardt's message of "Mon,
+	22 Jun 2026 09:52:00 +0200")
+References: <xmqqldcahu6q.fsf@gitster.g> <ajjpoEDt9Q_uv-LY@pks.im>
+Date: Mon, 22 Jun 2026 05:50:35 -0700
+Message-ID: <xmqqwlvq3fj8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,34 +84,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Miklos Vajna <vmiklos@collabora.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I noticed that merging 'mv/log-follow-mergy' to 'master' results in a
-> (simple) conflict since commit 42d960748e (line-log: integrate -L output
-> with the standard log-tree pipeline, 2026-05-28), this is an updated
-> version that resolves the conflict.
-> ...
-> Please replace the content of that branch with this patch.
+> On Fri, Jun 19, 2026 at 06:33:33PM -0700, Junio C Hamano wrote:
+>> * ps/gitlab-ci-windows (2026-06-15) 1 commit
+>>  - gitlab-ci: migrate Windows builds away from Chocolatey
+>> ... 
+> Might even be a candidate to also merge to `master` before the release,
+> if you feel comfortable with that.
 
-If there are changes of substance, polishing with new iterations is
-welcome even without any code change (e.g., clarifying the proposed
-log message or documentation to help future readers understand what
-went on in this patch would count), but as long as the resolution
-that is in my tree (as a part of 'seen') exactly matches what your
-update contains (meaning: rerere will do the same correct resolution
-when the topic gets merged to 'master' anyway) and the conflict is
-trivial to resolve by hand for others, which seems to be the case
-here,
-
-    $ git checkout --detach master
-    $ git -c rerere.autoupdate merge mv/log-follow-mergy
-    $ git commit --no-edit
-    $ HERE=$(git rev-parse HEAD)
-    $ git reset --hard HEAD^ ;# back at 'master'
-    $ git am $this_message
-    $ git diff $HERE ;# shows nothing
-    $ git range-diff master..$HERE master..HEAD ;# no change in the log message
-
-I'd prefer not to see such a reroll.
-
-Thanks.
+Yeah, exactly my thought.  I've carelessly merged some stuff that
+had wider implications (I do not think they are buggy after reading
+the patches, though) than the topic name suggested near the tip of
+'master' recently, but compared to them the potential blast radius
+of this topic is certainly much smaller ;-)
