@@ -1,108 +1,186 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176BE7081A
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 05:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404225783C
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 05:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782104714; cv=none; b=Dfql6Qb/uV1pBs5O/GWR5YzLzdKYyPZ4WcTcpRURK75iOuVSZGb+SJ81AHR9tCtuKrrEN8e4ZKPz5yqyhZzwtu0VBusf6nC0tNSGWCmX5DTmQxOvEzWp+VMh4fGtjDrun+LONXySZcd3tChrUu61Spvup/M0Acuyph5bwW4zgsQ=
+	t=1782105354; cv=none; b=EyivEi/1GaDgfjE5lCpgKyfZbfqkQW9HT222q/DQ+yCTaVq14KA4b+IQiqZylYjyHrrj/Xhx9vE5tD/Q7to2Fe8+najOuTQ3T4Rac6+aR3AUDj20qknryRqlDmntAuCpL6u+ns+d0eMs4KuMrFW6xhJpum+jTdZNeXD6rFa1uGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782104714; c=relaxed/simple;
-	bh=LtKpZcse68ocdTADpIwxTKktjZhdbKJnoTTFNVmVASU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UY/GEL4NWVHx85tBCKIQO5RBSO119eJsIJ4LITIEh1a5H2ndm7YgvQKTWvHB5lgKdouuzjVGnHH9xtpmF1D1mnrY7ODSJ4goDEZ4g0GMHSwjT62O8q9G3bunikKcBFBDwSyzdbm4Ey5C7tehQXL/sxB+h75dnXGJ8N7Lmy3GDkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i8uL4qWJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RNTvP72l; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1782105354; c=relaxed/simple;
+	bh=4Uqqov/2Bv2T2A/5O2KFuAEwZhhR9dd+qkeY6i6KMkE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gc4SC3HfUC4BbO9XhnAm6hSrCAlMgXJQfhsZ/pZKFlLV+qGi+IuiCJpRQm5h+WeMqDQr/3UWfmkBAxC1Rg4cBoo+sVq6WH5lMx+S1AAy/2lzz0ihgotFn0/bgotOWQFOGqxCPMhxpjkAevS63mal119omF5ZFC2Wnm2OL9PWYsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VnLe12l7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZALWY8K0; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i8uL4qWJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNTvP72l"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2315A1D000E2;
-	Mon, 22 Jun 2026 01:05:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 22 Jun 2026 01:05:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VnLe12l7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZALWY8K0"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7AF8F7A0101;
+	Mon, 22 Jun 2026 01:15:52 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 22 Jun 2026 01:15:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1782104711; x=1782191111; bh=LtKpZcse68
-	ocdTADpIwxTKktjZhdbKJnoTTFNVmVASU=; b=i8uL4qWJetgx5aqXFmC3CQDvJW
-	Vm6K0as2BE0yznZrs5tYida/L6HussO1oKc1D77b5yLwuVANPG3/h6BIkAheSW0y
-	IcCB+rkmOqZ7JjZDBAuMC5RpRP/ijeIYMMiFdxs1+0QO/f7pC3WD4oEZKE87RgSH
-	Rn18CYhYNkk9NdWiS+3nfW0XdFbxdLUCfDZOea1SmVo2VqnTxU+S2o4hCedM6OCM
-	acaYKt3ejQ6hJERLRUAaQihHhR7Lmp/mImX9aE5snCxm6L9q/X8Ww8YycyWAqmrG
-	6qRbFCl/QZF2giNcsNqrfVmXOBGtUxCEERAFdOoJkMqCD+krmDPn0r9WcZRw==
+	:subject:to:to; s=fm1; t=1782105352; x=1782191752; bh=d/3ubysV5F
+	/MnyamJz2sjHvtzOQvPXyUJmA/9u1U+5k=; b=VnLe12l7s5kD7AqsyDS3MADaGU
+	W5776VF5mlalnPrhqOvpB0Lb4dyzqHdj7NZVW8jSRGbTZ5wRTWzgi8mYvOS85gWv
+	Z7RlUVk/iFryFYTF07/l3qifVyo7HDy6wp9oW6QkcvlKlw1K8asvQN4GYjeYJndo
+	IFtVufCIarJS8Ztm5gSM8SpBre6R5b/GAr5tvIv2tNkD+gHwtAqKTyelHjXFtKd8
+	6V5ps7iux+ZvYe/gqMdLmVdiEHSc9x/Y1zzFh1QgtYYpCk3wtmVgWkMRidBwcxWf
+	DAvG7Kiw/5DFHtVBYt3sTnYRi4ObCBkCDYZuBbYkIn+UqO6a+CpjHdCxroMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782104711; x=1782191111; bh=LtKpZcse68ocdTADpIwxTKktjZhdbKJnoTT
-	FNVmVASU=; b=RNTvP72lY6s4tOigWT6z3YKWJueyG5RriaExXXU3IvLgX1wXtKN
-	a6U1VoCWVbpLG1WABdFe9gHaUa1XmSv/6cmbXzpqbNQ47TAaAsJfhXQEJh0QhDZU
-	RkMgBPjz4fXBGPgF6VmlYUfDGwmhVTAL9Kv9Av7KUxEsv6Hz2PztjUoAI+JKSESJ
-	Eghj+CoD0c59UY0DIiNVupAUb2LKA5idopKds0ofP6aaPn54pmp7gQoz81/3bSOO
-	fKnjgQ5U13J8lqDpxtijlws8mstko7UPTEvZmxyATcJ1pZWoBICob6KRlpTR5S3q
-	ddSzgNrcoYN2bKBdzS4dnXnA3ye6ccWfG6A==
-X-ME-Sender: <xms:h8I4aiBlD39ZLP6qyIyUevYN8J0Y5X0KNyvl1Ycdjxi-lGeF91XXfA>
-    <xme:h8I4aja1FQONxg7Eqzp-DCMDWw8lOopzpaVnkgFyKFMFgK0BLt3K2Mzkfg81pzC-F
-    wCH1pVGLncJUU7ULPb0kb4-zWQk8NPU-lstL7GzMVWkXRICuUjLkw>
-X-ME-Received: <xmr:h8I4at4-51VOTynoZW-P8IHBmk55i3miptGcGAv9GrwNY-Vuy_7DBCJCPKpoTtGqyt_ebnQZ5R6OvSky8Z7YEqn9gqPKB0pq7SwzlHo>
-X-ME-Proxy-Cause: dmFkZTFsh37xzw6XUFZFPZmhjanpULW7U2nbkvAguPdBtMsab6FQccffhEKyKGCFpW8Z8u
-    kijrtCWo6Nlh6rbaoarSRbTKzDNaBX1T41He8uBqnt+PxdhsqMSrIG8wYfM9z9eVu68N6T
-    t8OHU5R2wbBQgtu7icTw4JueGBKTG1hg6NiKxyNZEvsXpSe8aFze59iNLiypsz4W5MqfVK
-    astQhEmB3/mpe67gUOG5W9Z6CjxA5R6VKJSKRwNJmZ7neYN62SDIlCnpeqIj6DmBmBL/z9
-    EELCC6N9+RtAfg18Kl6MrQzoT76wN0Oe35oKv09q6v0t7UXOnOsWZWv26Pt/Oo7urzbxoB
-    VV8x6poo7XYsjJiHtDEJ07cfS44FgYPShQHVxesGS+EmbNImioPFb+TGEavITfZyyKCII8
-    8RquEWkhF+BWU/esh7EABgJSRrqT+1JMIGB5YVpVr36eu+bTYZARfuRrY6S1+aBce3fbWO
-    PMMmKkrmL5WDdHEByx0CORsySSkKsDBftrYzywJUw6MIGfK13hO5WNtFK4nAoOLybOudUu
-    HPDnMgcEbpmRdYdqu5HWZaNibkzsk9rSWobgwRZP5Sq0SCCeO9feADz0HT3FUbzpMx8upR
-    XIq8FgfEn0XrNbuzpdjf1FXN8Kez04r/qrBYrjVuOXc2GH0huXqNM7gCKiRQ
-X-ME-Proxy: <xmx:h8I4asZiOlSgMNC31oYfDAm2r_pwa63tL80nM1Dhfi6Rfrt0sZMG8A>
-    <xmx:h8I4akivN0lWikCOwYOZXyG-49yngRbVxeuiIYsRTOxjuG9p17m0RQ>
-    <xmx:h8I4al-rjD7SxcrmKaI8Cg8XM9JPCjJuDQVI2OKFEqh1_lrjUoQW4A>
-    <xmx:h8I4anqZqbc-F7Ckb9WXV6cJ4Qj6-KFOO2xk6eyCN4wn1Z3OvhRVxw>
-    <xmx:h8I4ag7TpymWKYdjd4VCng2Po7BmKvNvUNfSloSm7AAw5u6CHOnAR6TA>
-Feedback-ID: if26b431b:Fastmail
+	1782105352; x=1782191752; bh=d/3ubysV5F/MnyamJz2sjHvtzOQvPXyUJmA
+	/9u1U+5k=; b=ZALWY8K0uZCadyOrurvCW1+qSDeqSJXZWsca0WfW+ZeV//xIsgw
+	EPZzcNiW2cTd+MPlDgnKNupKazN6s/Q5IuP6gPRV4EtS22Wl36V/VIPrxWq077vf
+	fIeL38xoLN0Vy9kCWJv+++AMOVfWUdWuUgQZU9jyVv7De/FNP66E0DhTIynkPfkl
+	A61yUKziOqx47V5+mlGmmvGesx00+kW4PIMQnsYGG1QxjFUvKiZ/+oD0pvpthb+G
+	UGXVNhgaFZnYHakiisf11ErFXccQbWY+K3ZU6xqKR+TOnHy1PpZHG2Q4l1nlpM43
+	U32m0yUN03k8EL42zX9RWZ2HZhI5JYywsmQ==
+X-ME-Sender: <xms:CMU4avBsGOFm9fUn3qj-8iTwKQ6aVmDTyxttD0ndZ3F03dShLhnPyg>
+    <xme:CMU4as_5Vwjsk_glbIx7uCMShrSnsAJ7osdQM7eMocz8sXH3D9oq8InZkhE2kyjGj
+    RTK2SFgMDXj_xxJUq_c6TeNp9dWLCGUJmYhvfJhsB0MFD3B-QL2aA>
+X-ME-Received: <xmr:CMU4an9fN5lBuCY_fABT58c6mOGxZWv9NQUoPk_nQT13aPbgUiz06_V3t6SIue2QEhzj4ZxrqEUXeyFqUiJ6w71BuOcSFzesaP2l40ODsw>
+X-ME-Proxy-Cause: dmFkZTEw2cVtHo63Ej9W6YnQYDw91RhE1CQqpf0LEz10o/2RTEVVF1EFUxKZrt3jUQNAje
+    iUwiIBHI1Su6fVXYH5rYDK78LE8J81UIRx8aQY2Yt8lItK3d8sbvK0fJoCWduScW9aIMIB
+    ii4I9UrGiiXIPzcFJIv8pD959GavqMbi5eoX/B7vDF8oL5Qt6RN7ZLlW5LWv9yvGIOM1QA
+    sy9UQAjZQOiKAvpwmCh2Ilo5jn4xLqLt+TUQo88Jn1rnDXmlWXiyifAkxpOkGoCu/6M0Fc
+    CSijlONSfELxC3qA5sC9JUU+2/8T7BbUBZlATii83HZxijL4EUH/7LLjezkcyJBJMHZbm/
+    u89eKHhGsLU5bP9CbomFDDO8vQBEHQ1C3kceVT/sM9z+7z6b5wI+ECalCPMPRGs0K2ssrl
+    ymkv0fi9hHcw0yluDT0yxi8AcMjRshvyg6pwu0wOkHZ2oWHh/SeLlQW0D1Kxe2P7t/q+Yh
+    Jjfnsa/efPFSpuAeOcHVcmdR+4d4EIrmnORKn8BXFRDfNqaFuEVvaFPYpTtCE6M/vCidLf
+    gLgnHIy7xlRHJLb9lGxcCa7aIj/JUBAv+lykfHR1uzvlVxKJzwyWovkVAWY3qwxxcrk8wc
+    wvetAtm7QygcsXydqLtnCzhKK7329I6XzWQuw0VTzYHrTi5GpAZ3Zj2g5fdw
+X-ME-Proxy: <xmx:CMU4ardGPhBG4oK3xWgTrueTFb2CyUmgN4GVDtkPHV00UtWDJceZHA>
+    <xmx:CMU4aoEBIitPJofBZQqH7tG3a9_zf5VU9raDXvg1z4yq0pXkZxaddg>
+    <xmx:CMU4ahcLUjZ0-hWcgvrnw_Gi2Bbdh6CG97cT5jeKnOjZ4RjgcRWPxQ>
+    <xmx:CMU4aqFs7G-DhwosVUp5AHKNTAVrcHJrSy4GYNN3qyyWFZ-DCuGmmA>
+    <xmx:CMU4arqAAb0O1FLWxy644haxjFScQeY_BAa8sMbQ0954tR9ntfUuJbav>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 01:05:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+ 22 Jun 2026 01:15:51 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3393a38c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jun 2026 05:15:49 +0000 (UTC)
+Date: Mon, 22 Jun 2026 07:15:46 +0200
+From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
-Cc: Michael Montalbo <mmontalbo@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org
-Subject: Re: [RFH] Why do osx CI jobs so unreliable?
-In-Reply-To: <20260621213407.GC2297179@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 21 Jun 2026 17:34:07 -0400")
-References: <CAC2Qwm+9sh=ks1fuux415JGdDJ38Jq6eZrSH7-qzQxYCoy+Aug@mail.gmail.com>
-	<20260621213407.GC2297179@coredump.intra.peff.net>
-Date: Sun, 21 Jun 2026 22:05:10 -0700
-Message-ID: <xmqqqzlz412x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 7/8] refs: fix recursing `get_main_ref_store()` with
+ "onbranch" config
+Message-ID: <ajjFAjyGjk6q792L@pks.im>
+References: <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-0-f4854aa99859@pks.im>
+ <20260615-b4-pks-refs-avoid-chdir-notify-reparent-v2-7-f4854aa99859@pks.im>
+ <20260618164035.GA1218204@coredump.intra.peff.net>
+ <ajTggBKIzgSpp99X@pks.im>
+ <20260621211211.GA2297179@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260621211211.GA2297179@coredump.intra.peff.net>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Jun 21, 2026 at 05:12:11PM -0400, Jeff King wrote:
+> On Fri, Jun 19, 2026 at 08:25:42AM +0200, Patrick Steinhardt wrote:
+> > On Thu, Jun 18, 2026 at 12:40:35PM -0400, Jeff King wrote:
+> > > On Mon, Jun 15, 2026 at 03:56:53PM +0200, Patrick Steinhardt wrote:
+> > I actually tried lazy-loading, but I found it to be quite painful
+> > overall, as the above setting isn't the only one we use. The reftable
+> > backend for example has a bunch of additional settings that it reads.
+> > 
+> > We could of course start lazy-loading all of these. But that may not
+> > work for future backends that really _need_ to parse some configuration
+> > at initiation time.
+> 
+> Yes, obviously there's some true chicken-and-egg issues if there are
+> config keys that are needed to initialize the backend. But I think there
+> are many that are not needed immediately (e.g., because they relate only
+> to writes, not reads) but still block loading.
+> 
+> For example, try this:
+> 
+>   git init
+>   git config core.logallrefupdates false
+>   git config includeIf.onbranch:main.path alt-config
+>   git config -f .git/alt-config core.logallrefupdates true
+>   git commit --allow-empty -qm foo
+> 
+>   echo "git-config => $(git config core.logallrefupdates)"
+>   echo "reflog => $(git reflog show)"
+> 
+> git-config will report the value as true, but git-commit will not
+> respect it. But this used to work! Back when onbranch was added, we'd
+> create the reflog. Bisecting turns up eafb126456 (environment: stop
+> storing "core.logAllRefUpdates" globally, 2024-09-12), which makes
+> sense. That commit pushed the config read down into the ref
+> initialization function, which created the chicken-and-egg.
+> 
+> Now the config shown above is a bit silly, and I don't expect anybody to
+> do it in real life. But what worries me is two-fold:
+> 
+>   1. There are some magic variables that just won't work with onbranch
+>      includes, but the user doesn't necessarily know what they are.
+> 
+>   2. We try to cache the results of config reads. Is it possible for an
+>      "early" request like this to cache a state that skipped the
+>      onbranch include, and then we use that state to look up other
+>      unrelated variables? Or could we see a partially completed state in
+>      the cache when we lookup a ref variable?
+> 
+>      I'm not sure. The actual backend lookups use the uncached
+>      repo_config() interface (and in your series here, explicitly
+>      disables the use of refs during that read). But the
+>      core.logallrefupdates lookup uses the cached version, and I think
+>      there are others (some of which happen deep under the hood
+>      through library calls, like calc_shared_perm()).
+> 
+> I tried to construct a few cases that might tickle this behavior, but
+> couldn't come up with one. But I have a nagging feeling that we are
+> mostly getting lucky on some of the ordering, and a seemingly unrelated
+> change could have bad effects.
+> 
+> Sorry, I know that's kind of vague and hand-wavy.
+> 
+> I'm not sure I have a specific recommendation for a direction. It just
+> feels like we're piling up hacks to avoid infinite recursion without a
+> clear model of what config is read when. I guess if I could suggest
+> anything, it would be that ref backends initialize themselves to do
+> reads while loading as little config as possible, and then perhaps load
+> additional config through the non-caching repo_config() path.
 
-> If the problem is a racy deadlock, there is a reasonable chance that
-> some jobs may simply be lucky. Even if things like packing refs help, I
-> suspect the problem may still be lurking. Maybe I'm just a pessimist,
-> though. ;)
+Yeah, I thought more about this issue over the weekend and kind of got
+to the same conclusion. Sure, the current version where we explicitly
+handle the exclusion of "onbranch" conditions is at least less awkward.
+But I have to agree that it's still not the right fix, as it doesn't
+really solve the root issue.
 
-I share the pessimism X-<.
+Taking a step back: all the values that we currently parse are only
+relevant when writing new refs. So in theory it should be possible to
+lazy-load all of them on the first write. This should be rather easy to
+do for the "files" backend. But for the "reftable" backend this will
+result in a large refactoring because we require the configuration when
+constructing the reftable stack.
 
-> We had some HTTP/2 stalls/deadlocks in the past, and they were dependent
-> on libcurl and apache (actually h2_mod) versions. IIRC some of the
-> non-TLS code paths for HTTP/2 were not well tested, which led to
-> 8f2146dbf1 (t5559: make SSL/TLS the default, 2023-02-23). Of course
-> after that commit those cleartext code paths should not be a problem, so
-> that is probably not exactly the issue now.
->
-> But it might be worth checking the versions you're running locally
-> versus what's in the GitHub runner.
+That's kind of misdesigned though: the reftable stack shouldn't really
+care about write options when being constructed. What it needs to know
+about is the expected hash ID, and any optional stuff like the onreload
+callback. The write options should then be passed by the caller when we
+actually perform a write.
 
-True.
+I'll iterate a bit on this idea and will see where I get. I really
+shouldn't have opened this can of worms.
+
+Thanks!
+
+Patrick
