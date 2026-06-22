@@ -1,475 +1,632 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5993035E1A6
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 06:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782109429; cv=pass; b=m5Diyz06WqXLbFkhuzBDsQEUpzzZHJkXw752exzRSRkLwOoiWePV35jte2oV2p8c+1Xh6hPWmQngGqNjMGnGT7Xudns7LKsvRfA+SbYODueI3noGrros/SeTMTJ5kz75SDYXar9C6mlMZDU+Hqz70TKkuZc7et7/+EPVRX80itE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782109429; c=relaxed/simple;
-	bh=tbZc6CbqysgsgW6AMaWkfwIVCr7XRKapsT7kuVcwr18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SjVdSRLBBU1rEkNAlgc45swcrMGLaReVXxXUFcmODI/EcR8k7XqcbSZU4m3EUHTMmFGaBhGwX6H4PmHMVp7hRPvIZbmDJhES1RffhDPckZBA9o2azX6mP098fMT5JzoMWZWUPsK5VOyyII7xbrc91hRdn0E6kiH870/P8N1KEb0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b=G8Uy6owz; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1428D36402A
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 07:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782113394; cv=none; b=ktmMYbIZki2s21QV3Yy4ihj6ChuPgYoECOXRT77S/sLWYK+zUZxpZS/oJDJmvedVeP5GYqaCnS1sRrfpq64I+zaqDKrWpRoRnGER8JbcecG8MkYLkW8tnPRZZ056kKFmDLYAh12V9oig1UBjemp1mAr/ALggbUG71WXsc2O/oXE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782113394; c=relaxed/simple;
+	bh=oe4QzJY2a/02y59YExXtyLqcutFYJLtuzUgt5hiHBB8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=GYcSXj8ad2uhAG5GkgmZis7+GwA5/bmbN/fpXck4upd2Xqfhf56MODDW63I6gKrb0SnE7KudszMuYe1es/+K55KWbHKQDMe8STOTRjDDYVPNrGhYJKTVViyl5GogMkGlJrjdhZMoImsap7JLhXIBBDMenA3BB3BIciqFtG0Xez4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k732MeJc; arc=none smtp.client-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=vmiklos@collabora.com header.b="G8Uy6owz"
-ARC-Seal: i=1; a=rsa-sha256; t=1782109418; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=LY3U5l+oQrN7XGIx1nMYaB5uPLZe7YlWRH6N5MaFNPBqt0mAETpGWZFC8IJXj92hpa7KTa1ePaAeWF03TbEscINFlKiPteJu7/YV879Wwjkdujml9MYRnHRkU/c2sdpJLvKKC7u1pkfXl+5BSCDvDaLGY3XEaAHqMQc84XB5Gnk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1782109418; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=qC/ADzgFeyi5IE/B6tlR6p27ouue/GRdllm03Ru9soM=; 
-	b=atRDIRkYVdw8kSrlxf2W3SAzySNdzbM/NWafonwUU2bmzLsVUwFTcBKnrQ2QZVQmtcvYLqUMqu8DKfHUsj8C/Gv38YhwijItvD5ryFui588aHS7SHwujxqfDmSFkCtYyCFpFa9TaUUA4pmi1wZBN/TJCzGxWxUEmxCx3FJEwT9Q=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=vmiklos@collabora.com;
-	dmarc=pass header.from=<vmiklos@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1782109417;
-	s=zohomail; d=collabora.com; i=vmiklos@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=qC/ADzgFeyi5IE/B6tlR6p27ouue/GRdllm03Ru9soM=;
-	b=G8Uy6owzFY++eNgu4kQx50r44xDIEXHRNf1R/ZljNc6LVAFLYdY7270qjqp3CtTE
-	vGXjH8T3y8DfbEA+AugCKngli+vjDRsp7kQTkNSdNBavlQwZAUaCvSOfmz9qQ8xJMni
-	5g812Y2TcQ7t+VWZE3JpvA0qYfN54Y0nCfIbG51w=
-Received: by mx.zohomail.com with SMTPS id 1782109416741430.7328541454601;
-	Sun, 21 Jun 2026 23:23:36 -0700 (PDT)
-Date: Mon, 22 Jun 2026 08:23:31 +0200
-From: Miklos Vajna <vmiklos@collabora.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: [PATCH v4] log: improve --follow following renames for non-linear
- history
-Message-ID: <ajjU4w2B0NlZffw1@collabora.com>
-References: <xmqqo6hglncl.fsf@gitster.g>
- <ai-aE83w02xPRlPr@collabora.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k732MeJc"
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-30bbe98c3f0so7466289eec.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 00:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782113391; x=1782718191; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sLRuHLxo/2UEBVsqK/EYqHHgrWNOZHFvuij0QPZ26h8=;
+        b=k732MeJcxymTqiL0ZzyvUbARt2+IvqhP+RjAigX3lsO+ThPgswijtSPBXnZ/mK3GsH
+         PtSCZzJhoSSAINWlnLFhYa1+JVBmjs2edYpOjBBDSeKU3deviWwGYUivoJ7xxr9bhXhd
+         Xwry/ism/MtpvEB2oyozA54M5pCU8NVl+8XdqtpgR2c9kJ9PDbUaGQUbE3VFss99ttQd
+         ZlFJZErmmmaMvVmQAx1I0xiamNKXD9K0pxZ7TZEDxYMUHcTRMr1k5ZOA3lpp84G61KU0
+         ZUH92Rb1Vf9JhjUodq/vidNHL6gsz0yTfYSG3Mv4Z0M0KBQP7bnrHoknbQU5yUalSto1
+         gRJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782113391; x=1782718191;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=sLRuHLxo/2UEBVsqK/EYqHHgrWNOZHFvuij0QPZ26h8=;
+        b=bY8DPtjlwy2afn9htRYTJzrhlypZ9QKNCAgPFiITr6me+6rPysSYE8BxAFdkuPY9YK
+         H+E4kkA4v4mNM/WixfwHfQrKzjJFPDbEEYTG5OO8EB/FP3WkD6VpG5J4ovr9o1R/iz8R
+         vG61SXSmeH1e7Pw6U9TQgrS7zZpqkShZHYemY4hY1nA73vIPb8SoJh4SqfAn16hr/2k+
+         hVlV06D2eH2aaYKnU5Sdaf2BOhdwSrB4vvKcD346AZjVWI98ndZOTZyprXsS0IkIrytn
+         Jq2zBaYIYhlxU3WW0lHuH7sgLdPdTpZRo/WlZrcTGAdlsKtewrYgNQh4uCrq+bumK7XL
+         Cwdg==
+X-Gm-Message-State: AOJu0YzkAfKjykgWtNJSu38SSp1FBDaevUqPxoWsI+gwFDAP4GrCy2f8
+	jROtM2qWPCXNHuMmTBVJrK7KdlN1qsToI+Tlww6CZhii9aFM3+1aU55RhImONg==
+X-Gm-Gg: AfdE7clAOuImzzq6ul1Y6qCiQIH59SFYhaJCllETWPqo6utl0z3Ljh6J5PpnNs1DIUz
+	6ZUv3+cYM235+3wyoSXspLwvG0Ns7UE6wHi08aOYPj2K/nlN6uAw7hvrNzu0nhhmNESAt+rxYzI
+	/WAlUg6u89zNaj0TKcJzDW6fwu0YCwKzl/UdwXGPzGqzAEAlxvmtV7KG46yCNQxSOXyhvqdIFYG
+	JrG/Kyw00AI38PvmN2B2mAwRIIPHCTWoprMb1WtdLO4iZ3PJZJHOiIJ/87RKZDIeY+IGDdH9aDs
+	9T24WN4libiJ8w7Xxh883pgUtb/gg21fXiFpSH7o47FMlg8D16ECUcxuVBERU2ym/KHqx14lfac
+	wlSldFZN4p8TObRuPFQNZvpg44mtyD6W3lV7jgoRi8yEmTyA+2HpH/wfVzhS7oAObcByghHR9Q/
+	ggmlUdl8mFTH5IONvLPw==
+X-Received: by 2002:a05:7300:181f:b0:2ef:8b91:212 with SMTP id 5a478bee46e88-30c0ceac969mr8667074eec.14.1782113390700;
+        Mon, 22 Jun 2026 00:29:50 -0700 (PDT)
+Received: from [127.0.0.1] ([172.182.226.195])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c1bde9335sm9181479eec.21.2026.06.22.00.29.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2026 00:29:49 -0700 (PDT)
+Message-Id: <pull.2285.v17.git.git.1782113388.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2285.v16.git.git.1781810729.gitgitgadget@gmail.com>
+References: <pull.2285.v16.git.git.1781810729.gitgitgadget@gmail.com>
+From: "Harald Nordgren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 22 Jun 2026 07:29:41 +0000
+Subject: [PATCH v17 0/7] branch: delete-merged
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ai-aE83w02xPRlPr@collabora.com>
-X-ZohoMailClient: External
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Harald Nordgren <haraldnordgren@gmail.com>
 
-Have a repo with a subtree merge, do a 'git log --follow prefix/test.c',
-the output only contains history in the outer repo, not commits that
-were merged via a subtree merge.
+Delete branches that have already been merged on upstream.
 
-What happens is that 'git log --follow' stores the followed path only in
-opt->diffopt.pathspec, so in case the commit history is non-linear, and
-multiple parents have renames to the followed path, then the end result
-isn't really defined: the first commit that happens to be visited in one
-of the parents update opt->diffopt.pathspec, and from that point, only
-that updated path is visited.
+Changes in v17:
 
-Fix the problem by introducing a commit -> path map
-(follow_pathspec_slab) that stores what will be a path to follow when
-visiting that parent. At the top of log_tree_commit(), if the slab has
-an entry for this commit, we replace opt->diffopt.pathspec with a path
-from this entry, so the correct path is followed, even if an unrelated
-sub-tree changed the path to be followed to something else. After
-log_tree_diff() runs, we record each parent's path in the slab. As a
-result, the walk order doesn't matter, which was exactly the source of
-problems previously.
+ * Keep a merged branch when another surviving branch still tracks it as its
+   upstream, so --delete-merged no longer deletes a branch out from under
+   one stacked on top of it.
+ * Move the --dry-run and branch.<name>.deleteMerged opt-out fully into
+   their own commits.
 
-This helps with subtree merges (rename happens inside the merge commit),
-but also fixes the general case when the rename happens in the history
-of parents, not in the merge commit itself.
+Changes in v16:
 
-Signed-off-by: Miklos Vajna <vmiklos@collabora.com>
----
+ * Convert delete_merged_branches() to take an unsigned int flags argument
+   instead of separate quiet/dry_run booleans, matching delete_branches()
+ * Reuse the strbuf across the skip-config loop (strbuf_reset per iteration,
+   single strbuf_release after) instead of allocating and freeing it each
+   time
+ * Rewrite the --delete-merged tests as integration tests: branches that
+   land commits upstream, with deletion and the checked-out, upstream-gone,
+   and push-equals-upstream safety cases exercised together in one run and
+   output asserted via test_cmp
+ * Collapse the many per-aspect test repos into a single reused repo set up
+   by a setup_repo_for_delete_merged helper, and rename helpers off the old
+   pm_/prune naming
+ * Nest single-repo setup sequences in ( cd ... ) subshells instead of
+   prefixing every command with -C
 
-Hi Junio,
+Changes in v15:
 
-I noticed that merging 'mv/log-follow-mergy' to 'master' results in a
-(simple) conflict since commit 42d960748e (line-log: integrate -L output
-with the standard log-tree pipeline, 2026-05-28), this is an updated
-version that resolves the conflict.
+ * Renamed --prune-merged to --delete-merged throughout. Not necessarily
+   final, but something to advance the discussion.
+ * --delete-merged now silently skips not-yet-merged branches instead of
+   warning.
+ * Initialized the delete_branches() flag locals where declared. Only force
+   stays deferred.
+ * delete_branches()/check_branch_commit() doc and code cleanups: redundant
+   branch NULL checks dropped, ref_array candidates = { 0 }, a BUG() for the
+   unreachable non-branch ref, and reworked --delete-merged doc wording.
+ * Broadened the --forked tests (local commits for realism, remote add -f,
+   --forked coverage), renamed the misleading trunk fixture, and replaced
+   the misnamed detached branch with git checkout --detach.
 
-Please replace the content of that branch with this patch.
+Changes in v14:
 
-Thanks,
+ * Fixed a git branch -d -r regression (broke t5404/t5505/t5514): the
+   remotes path set a local force but not the DELETE_BRANCH_FORCE bit that
+   check_branch_commit() reads, so it wrongly ran the merge check.
+ * Made flags the single source of truth in delete_branches() so the bit and
+   the derived locals can't disagree.
+ * Works locally, but GitHub CI has problems that are there for other
+   branches too, hopefully not related
+   (https://github.com/git/git/pull/2285).
 
-Miklos
+Changes in v13:
 
- Documentation/config/log.adoc |   3 +-
- log-tree.c                    | 116 ++++++++++++++++++++++++++++++
- log-tree.h                    |   1 +
- revision.c                    |   2 +
- revision.h                    |   4 ++
- t/meson.build                 |   1 +
- t/t4219-log-follow-merge.sh   | 129 ++++++++++++++++++++++++++++++++++
- 7 files changed, 254 insertions(+), 2 deletions(-)
- create mode 100755 t/t4219-log-follow-merge.sh
+ * Reworked --forked into a real ref-filter applied in apply_ref_filter()
+   instead of a post-pass, so non-matching branches are never allocated.
+ * Match exact --forked patterns on full refnames (only globs use the
+   abbreviated upstream), and dropped the old helper machinery, forward
+   declaration, and string_list in favor of a strvec.
+ * Replaced the boolean parameters of
+   delete_branches()/check_branch_commit() with a single unsigned int flags.
+ * --prune-merged now collects candidates via filter_refs() rather than its
+   own branch walk.
+ * --prune-merged now takes its patterns as positional arguments (e.g. git
+   branch --prune-merged origin/main 'feature*') instead of repeating the
+   option.
 
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index f20cc25cd7..757a7be196 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -53,8 +53,7 @@ This is the same as the `--decorate` option of the `git log`.
- `log.follow`::
- 	If `true`, `git log` will act as if the `--follow` option was used when
- 	a single <path> is given.  This has the same limitations as `--follow`,
--	i.e. it cannot be used to follow multiple files and does not work well
--	on non-linear history.
-+	i.e. it cannot be used to follow multiple files.
- 
- `log.graphColors`::
- 	A list of colors, separated by commas, that can be used to draw
-diff --git a/log-tree.c b/log-tree.c
-index 88b3019293..83a3c4bf9b 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -3,6 +3,7 @@
- 
- #include "git-compat-util.h"
- #include "commit-reach.h"
-+#include "commit-slab.h"
- #include "config.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -1089,6 +1090,96 @@ static int do_remerge_diff(struct rev_info *opt,
- 	return !opt->loginfo;
- }
- 
-+/* Per-commit path storage for --follow across merges */
-+define_commit_slab(follow_pathspec_slab, char *);
-+
-+static const char *pathspec_single_path(const struct pathspec *ps)
-+{
-+	if (ps->nr != 1)
-+		return NULL;
-+	return ps->items[0].match;
-+}
-+
-+static void set_pathspec_to_single_path(struct pathspec *ps, const char *path)
-+{
-+	const char *paths[2] = { path, NULL };
-+
-+	clear_pathspec(ps);
-+	parse_pathspec(ps,
-+		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
-+		       PATHSPEC_LITERAL_PATH, "", paths);
-+}
-+
-+static void remember_follow_pathspec(struct rev_info *opt,
-+				     struct commit *c, const char *path)
-+{
-+	char **slot;
-+
-+	if (!path)
-+		return;
-+	if (!opt->follow_pathspec_slab) {
-+		opt->follow_pathspec_slab = xmalloc(sizeof(*opt->follow_pathspec_slab));
-+		init_follow_pathspec_slab(opt->follow_pathspec_slab);
-+	}
-+	slot = follow_pathspec_slab_at(opt->follow_pathspec_slab, c);
-+	if (*slot && !strcmp(*slot, path))
-+		return;
-+	free(*slot);
-+	*slot = xstrdup(path);
-+}
-+
-+static const char *recall_follow_pathspec(struct rev_info *opt,
-+					  struct commit *c)
-+{
-+	char **slot;
-+
-+	if (!opt->follow_pathspec_slab)
-+		return NULL;
-+	slot = follow_pathspec_slab_peek(opt->follow_pathspec_slab, c);
-+	return slot ? *slot : NULL;
-+}
-+
-+static void free_follow_pathspec_slot(char **slot)
-+{
-+	FREE_AND_NULL(*slot);
-+}
-+
-+void release_follow_pathspec_slab(struct rev_info *opt)
-+{
-+	if (!opt->follow_pathspec_slab)
-+		return;
-+	deep_clear_follow_pathspec_slab(opt->follow_pathspec_slab,
-+					free_follow_pathspec_slot);
-+	FREE_AND_NULL(opt->follow_pathspec_slab);
-+}
-+
-+/* Compute a path to follow in parent, if there is one */
-+static void propagate_follow_pathspec_to_parent(struct rev_info *opt,
-+						struct commit *commit,
-+						struct commit *parent)
-+{
-+	struct diff_options diff_opts;
-+	const char *path;
-+
-+	parse_commit_or_die(parent);
-+	repo_diff_setup(opt->diffopt.repo, &diff_opts);
-+	copy_pathspec(&diff_opts.pathspec, &opt->diffopt.pathspec);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.flags.follow_renames = 1;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(get_commit_tree_oid(parent),
-+		      get_commit_tree_oid(commit),
-+		      "", &diff_opts);
-+
-+	path = pathspec_single_path(&diff_opts.pathspec);
-+	if (path)
-+		remember_follow_pathspec(opt, parent, path);
-+
-+	diff_queue_clear(&diff_queued_diff);
-+	diff_free(&diff_opts);
-+}
-+
- /*
-  * Show the diff of a commit.
-  *
-@@ -1185,6 +1276,16 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 	opt->loginfo = &log;
- 	opt->diffopt.no_free = 1;
- 
-+	/* Any recorded path for this commit? If so, restore it */
-+	if (opt->diffopt.flags.follow_renames) {
-+		const char *stored = recall_follow_pathspec(opt, commit);
-+		if (stored) {
-+			const char *current = pathspec_single_path(&opt->diffopt.pathspec);
-+			if (!current || strcmp(current, stored))
-+				set_pathspec_to_single_path(&opt->diffopt.pathspec, stored);
-+		}
-+	}
-+
- 	if (opt->track_linear && !opt->linear && !opt->reverse_output_stage)
- 		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
- 	shown = log_tree_diff(opt, commit, &log);
-@@ -1197,6 +1298,21 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 		fprintf(opt->diffopt.file, "\n%s\n", opt->break_bar);
- 	if (shown)
- 		show_diff_of_diff(opt);
-+
-+	/* Record what path each parent of this commit should use */
-+	if (opt->diffopt.flags.follow_renames) {
-+		struct commit_list *parents = get_saved_parents(opt, commit);
-+		if (parents && parents->next) {
-+			struct commit_list *p;
-+			for (p = parents; p; p = p->next)
-+				propagate_follow_pathspec_to_parent(opt, commit,
-+								    p->item);
-+		} else if (parents) {
-+			remember_follow_pathspec(opt, parents->item,
-+				pathspec_single_path(&opt->diffopt.pathspec));
-+		}
-+	}
-+
- 	opt->loginfo = NULL;
- 	maybe_flush_or_die(opt->diffopt.file, "stdout");
- 	opt->diffopt.no_free = no_free;
-diff --git a/log-tree.h b/log-tree.h
-index 07924be8bc..e8679b6c4a 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -26,6 +26,7 @@ struct decoration_options {
- int parse_decorate_color_config(const char *var, const char *slot_name, const char *value);
- int log_tree_diff_flush(struct rev_info *);
- int log_tree_commit(struct rev_info *, struct commit *);
-+void release_follow_pathspec_slab(struct rev_info *);
- void show_log(struct rev_info *opt);
- void format_decorations(struct strbuf *sb, const struct commit *commit,
- 			enum git_colorbool use_color, const struct decoration_options *opts);
-diff --git a/revision.c b/revision.c
-index e91d7e1f11..0c95edef59 100644
---- a/revision.c
-+++ b/revision.c
-@@ -26,6 +26,7 @@
- #include "decorate.h"
- #include "string-list.h"
- #include "line-log.h"
-+#include "log-tree.h"
- #include "mailmap.h"
- #include "commit-slab.h"
- #include "cache-tree.h"
-@@ -3304,6 +3305,7 @@ void release_revisions(struct rev_info *revs)
- 	line_log_free(revs);
- 	oidset_clear(&revs->missing_commits);
- 	release_revisions_bloom_keyvecs(revs);
-+	release_follow_pathspec_slab(revs);
- }
- 
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-diff --git a/revision.h b/revision.h
-index 00c392be37..569b3fa1cb 100644
---- a/revision.h
-+++ b/revision.h
-@@ -66,6 +66,7 @@ struct repository;
- struct rev_info;
- struct string_list;
- struct saved_parents;
-+struct follow_pathspec_slab;
- struct bloom_keyvec;
- struct bloom_filter_settings;
- struct option;
-@@ -363,6 +364,9 @@ struct rev_info {
- 	/* copies of the parent lists, for --full-diff display */
- 	struct saved_parents *saved_parents_slab;
- 
-+	/* per-commit pathspec for --follow across merges */
-+	struct follow_pathspec_slab *follow_pathspec_slab;
-+
- 	struct commit_list *previous_parents;
- 	struct commit_list *ancestry_path_bottoms;
- 	const char *break_bar;
-diff --git a/t/meson.build b/t/meson.build
-index 3219264fe7..b6ac49b443 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -576,6 +576,7 @@ integration_tests = [
-   't4215-log-skewed-merges.sh',
-   't4216-log-bloom.sh',
-   't4217-log-limit.sh',
-+  't4219-log-follow-merge.sh',
-   't4252-am-options.sh',
-   't4253-am-keep-cr-dos.sh',
-   't4254-am-corrupt.sh',
-diff --git a/t/t4219-log-follow-merge.sh b/t/t4219-log-follow-merge.sh
-new file mode 100755
-index 0000000000..e370f82955
---- /dev/null
-+++ b/t/t4219-log-follow-merge.sh
-@@ -0,0 +1,129 @@
-+#!/bin/sh
-+
-+test_description='Test --follow follows renames across merges'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup subtree-merged repository' '
-+	git init inner &&
-+	echo inner >inner/inner.txt &&
-+	git -C inner add inner.txt &&
-+	git -C inner commit -m "inner init" &&
-+
-+	git init outer &&
-+	echo outer >outer/outer.txt &&
-+	git -C outer add outer.txt &&
-+	git -C outer commit -m "outer init" &&
-+
-+	git -C outer fetch ../inner master &&
-+	git -C outer merge -s ours --no-commit --allow-unrelated-histories \
-+		FETCH_HEAD &&
-+	git -C outer read-tree --prefix=inner/ -u FETCH_HEAD &&
-+	git -C outer commit -m "Merge inner repo into inner/ subdirectory"
-+'
-+
-+test_expect_success '--follow finds the pre-merge commit through a subtree merge' '
-+	git -C outer log --follow --pretty=tformat:%s inner/inner.txt >actual &&
-+	echo "inner init" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup merge of two branches that both renamed a file to README' '
-+	git init foo &&
-+	mkdir foo/foo &&
-+	echo "foo readme" >foo/foo/README &&
-+	git -C foo add foo/README &&
-+	git -C foo commit -m "add foo README" &&
-+
-+	git -C foo mv foo/README README &&
-+	git -C foo commit -m "promote foo README to toplevel" &&
-+
-+	echo "foo c" >foo/foo.c &&
-+	git -C foo add foo.c &&
-+	git -C foo commit -m "add foo C impl" &&
-+
-+	git init bar &&
-+	mkdir bar/bar &&
-+	echo "bar readme" >bar/bar/README &&
-+	git -C bar add bar/README &&
-+	git -C bar commit -m "add bar README" &&
-+
-+	git -C bar mv bar/README README &&
-+	git -C bar commit -m "promote bar README to toplevel" &&
-+
-+	echo "bar c" >bar/bar.c &&
-+	git -C bar add bar.c &&
-+	git -C bar commit -m "add bar C impl" &&
-+
-+	git -C foo fetch ../bar master &&
-+	git -C foo merge -s ours --no-commit --allow-unrelated-histories \
-+		FETCH_HEAD &&
-+	git -C foo checkout FETCH_HEAD -- bar.c &&
-+	git -C foo commit -m "merge bar into foo"
-+'
-+
-+test_expect_success '--follow follows renames across both sides of a merge' '
-+	git -C foo log --follow --pretty=tformat:%s README >actual &&
-+	sort actual >actual.sorted &&
-+	cat >expect <<-\EOF &&
-+	add bar README
-+	add foo README
-+	promote bar README to toplevel
-+	promote foo README to toplevel
-+	EOF
-+	test_cmp expect actual.sorted
-+'
-+
-+test_expect_success 'setup diamond with renames on both sides of a fork' '
-+	git init diamond &&
-+	test_lines="line 1\nline 2\nline 3\nline 4\nline 5\n" &&
-+
-+	printf "$test_lines" >diamond/path0 &&
-+	git -C diamond add path0 &&
-+	git -C diamond commit -m "A: add path0" &&
-+
-+	git -C diamond checkout -b upper &&
-+	printf "line 1\nline 2\nline 3 modified by B\nline 4\nline 5\n" \
-+		>diamond/path0 &&
-+	git -C diamond commit -am "B: modify path0 on upper" &&
-+	git -C diamond mv path0 path1 &&
-+	git -C diamond commit -m "X: rename path0 to path1" &&
-+
-+	git -C diamond checkout -b lower master &&
-+	printf "line 1\nline 2\nline 3 modified by C\nline 4\nline 5\n" \
-+		>diamond/path0 &&
-+	git -C diamond commit -am "C: modify path0 on lower" &&
-+	git -C diamond mv path0 path2 &&
-+	git -C diamond commit -m "Y: rename path0 to path2" &&
-+
-+	git -C diamond checkout upper &&
-+	git -C diamond merge -s ours --no-commit lower &&
-+	git -C diamond rm path1 &&
-+	printf "line 1\nline 2\nline 3 merged\nline 4\nline 5\n" \
-+		>diamond/path &&
-+	git -C diamond add path &&
-+	git -C diamond commit -m "M: merge with rename to path" &&
-+
-+	printf "line 1\nline 2\nline 3 merged again\nline 4\nline 5\n" \
-+		>diamond/path &&
-+	git -C diamond commit -am "Z: modify path"
-+'
-+
-+test_expect_success '--follow follows renames through a fork in a single history' '
-+	git -C diamond log --follow --pretty=tformat:%s path >actual &&
-+	sort actual >actual.sorted &&
-+	cat >expect <<-\EOF &&
-+	A: add path0
-+	B: modify path0 on upper
-+	C: modify path0 on lower
-+	X: rename path0 to path1
-+	Y: rename path0 to path2
-+	Z: modify path
-+	EOF
-+	test_cmp expect actual.sorted
-+'
-+
-+test_done
+Changes in v12:
+
+ * Reworked --forked from a standalone action into a --list-mode filter.
+ * Switched --forked and --prune-merged to repeatable OPT_STRING_LIST
+   options.
+ * Dropped the bare-remote-name resolution for --forked, the argument is now
+   a ref or a glob.
+
+Changes in v11:
+
+ * The flags now take a branch, not a remote. --forked and --prune-merged
+   accept a literal upstream short name like origin/main or a wildmatch
+   pattern like origin/. The old --all-remotes flag is gone, since origin/
+   covers that case.
+ * The prune guard now compares @{push} against @{upstream}. A branch is
+   spared when these are equal. That is the trunk like case, such as local
+   main tracking and pushing to origin/main, where "fully merged to
+   upstream" cannot be told apart from "just pulled". Only branches that
+   push somewhere other than their upstream, typically fork based topics,
+   are candidates. The earlier /HEAD by name guard that the reviewer
+   rejected is gone.
+ * New --dry-run for --prune-merged.
+
+Changes in v10:
+
+ * --forked / --prune-merged now take a branch glob instead of a remote name
+   — origin, origin/*, origin/release-- all work. This replaces the
+   remote-only form and subsumes the old --all-remotes flag, which has been
+   dropped.
+ * New --dry-run for --prune-merged.
+
+Changes in v9:
+
+ * --force no longer has special meaning with --prune-merged; reachability
+   is always enforced. Use git branch -D to delete an unmerged branch.
+   Matches how git branch's other read/safe actions treat --force.
+ * Synopsis drops [-f]; "not fully merged" hint points at git branch -D.
+ * Dropped the --prune-merged --force tests.
+
+Changes in v8:
+
+ * Delete only when the branch's work is actually reachable from its
+   upstream
+ * Skip branches whose upstream is gone (even with --force)
+ * Simplified the internal safety flag to live in one place
+
+Changes in v7:
+
+ * --prune-merged now checks if a branch is merged into its own upstream
+   first. If the upstream is gone, it checks against the remote's default
+   branch instead. If neither exists, the branch is refused (use --force to
+   delete anyway).
+
+Changes in v6:
+
+ * --prune-merged now measures merged-ness against the remote's default
+   branch instead of the candidate's upstream — so the decision no longer
+   depends on which branch happens to be checked out locally.
+ * delete_branches() / check_branch_commit() gained a per-candidate override
+   that lets a caller substitute a different "what counts as merged"
+   reference (or skip the check). branch -d callers pass NULL and keep their
+   existing semantics.
+ * prune_merged_branches() resolves each candidate's push-remote HEAD and
+   threads it through, so --prune-merged --all-remotes measures each
+   candidate against its own remote rather than a single global reference.
+
+Changes in v5:
+
+ * Drop commit 'fetch: add --prune-merged'
+
+Changes in v4:
+
+ * Resolve each remote's HEAD and collect the targets into a
+   protected_default_refs set in collect_forked_set.
+ * In prune_merged_branches, skip a candidate when its upstream is a
+   protected default ref and the local branch name matches the default
+   branch's leaf name (so a local main tracking origin/main is spared, but a
+   renamed trunk tracking origin/main is not).
+ * Also skip when the candidate's push ref points at a protected default
+   ref, so a topic branch configured to push to origin/main is never pruned.
+ * Tests: spare the local default branch; only protect by matching leaf name
+   (not by upstream alone); spare a branch whose push ref is the remote
+   default.
+
+Changes in v3:
+
+ * s/remote-tracking refs/remote-tracking branches/g
+
+Changes in v2:
+
+ * The whole feature moved out of git fetch and into git branch. git fetch
+   --prune-merged now just calls git branch --prune-merged after fetching.
+ * The fetch.pruneLocalBranches and remote..pruneLocalBranches config
+   options are gone, replaced by per-branch opt-out via branch..pruneMerged.
+ * New git branch --forked lists local branches whose upstream lives on the
+   given remote (read-only building block).
+ * New git branch --prune-merged deletes those branches, but only if their
+   tip is reachable from the upstream tracking ref; --force skips that
+   safety check.
+ * New git branch --all-remotes lets --forked/--prune-merged operate across
+   every configured remote at once.
+ * The currently checked-out branch in any worktree is always preserved.
+ * branch..pruneMerged=false lets you exempt a branch (e.g. a long-running
+   topic branch) even with --force; doesn't affect explicit git branch -d.
+ * delete_branches() got a warn_only mode so bulk deletion prints a one-line
+   warning per skipped branch instead of the noisy four-line hint that git
+   branch -d shows.
+ * New section in git-branch docs; git-fetch docs trimmed to just mention
+   --prune-merged.
+ * New tests in t3200-branch.sh for the new branch flags; t5510-fetch.sh
+   shrunk since most logic moved.
+
+Harald Nordgren (7):
+  branch: add --forked filter for --list mode
+  branch: convert delete_branches() to a flags argument
+  branch: let delete_branches skip unmerged branches on bulk refusal
+  branch: prepare delete_branches for a bulk caller
+  branch: add --delete-merged <branch>
+  branch: add branch.<name>.deleteMerged opt-out
+  branch: add --dry-run for --delete-merged
+
+ Documentation/config/branch.adoc |   7 +
+ Documentation/git-branch.adoc    |  47 ++++-
+ builtin/branch.c                 | 247 ++++++++++++++++++++++---
+ ref-filter.c                     |  70 +++++++
+ ref-filter.h                     |  10 +
+ t/t3200-branch.sh                | 308 +++++++++++++++++++++++++++++++
+ 6 files changed, 661 insertions(+), 28 deletions(-)
+
+
+base-commit: 8d96f09e9245ddf80c1981476fcbac8c4bb4125f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2285%2FHaraldNordgren%2Ffetch-prune-local-branches-v17
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2285/HaraldNordgren/fetch-prune-local-branches-v17
+Pull-Request: https://github.com/git/git/pull/2285
+
+Range-diff vs v16:
+
+ 1:  1f6a758265 = 1:  d8cc17bd7f branch: add --forked filter for --list mode
+ 2:  4f8af602ba = 2:  d14b0403f0 branch: convert delete_branches() to a flags argument
+ 3:  efc891c255 = 3:  ef2719dac3 branch: let delete_branches skip unmerged branches on bulk refusal
+ 4:  b1ecd38fe3 ! 4:  80518f5d11 branch: prepare delete_branches for a bulk caller
+     @@ builtin/branch.c: enum delete_branch_flags {
+       	DELETE_BRANCH_QUIET = (1 << 1),
+       	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
+      +	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
+     -+	DELETE_BRANCH_DRY_RUN = (1 << 4),
+       };
+       
+       static int check_branch_commit(const char *branchname, const char *refname,
+     @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int ki
+       	bool force;
+       	bool quiet = flags & DELETE_BRANCH_QUIET;
+       	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
+     -+	bool dry_run = flags & DELETE_BRANCH_DRY_RUN;
+      +	bool no_head_fallback = flags & DELETE_BRANCH_NO_HEAD_FALLBACK;
+       	struct strbuf bname = STRBUF_INIT;
+       	enum interpret_branch_kind allowed_interpret;
+     @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int ki
+       		head_rev = lookup_commit_reference(the_repository, &head_oid);
+       
+       	for (i = 0; i < argc; i++, strbuf_reset(&bname)) {
+     -@@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int kinds,
+     - 		free(target);
+     - 	}
+     - 
+     --	if (refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+     -+	if (!dry_run &&
+     -+	    refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+     - 		ret = 1;
+     - 
+     - 	for_each_string_list_item(item, &refs_to_delete) {
+     - 		char *describe_ref = item->util;
+     - 		char *name = item->string;
+     --		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+     -+		if (dry_run) {
+     -+			if (!quiet)
+     -+				printf(remote_branch
+     -+					? _("Would delete remote-tracking branch %s (was %s).\n")
+     -+					: _("Would delete branch %s (was %s).\n"),
+     -+					name + branch_name_pos, describe_ref);
+     -+		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+     - 			char *refname = name + branch_name_pos;
+     - 			if (!quiet)
+     - 				printf(remote_branch
+ 5:  998fb6a68c ! 5:  46da7c8140 branch: add --delete-merged <branch>
+     @@ Commit message
+          A branch whose work is not yet merged into its upstream is silently
+          skipped, so one unmerged topic does not abort the whole sweep.
+      
+     +    A branch that another, surviving branch tracks as its upstream is
+     +    also kept, so a branch is never deleted out from under one stacked
+     +    on top of it. Sparing such a base can in turn protect its own
+     +    upstream, so the check repeats until the set stops changing.
+     +
+          Signed-off-by: Harald Nordgren <haraldnordgren@gmail.com>
+      
+       ## Documentation/git-branch.adoc ##
+     @@ Documentation/git-branch.adoc: This option is only applicable in non-verbose mod
+      +A branch whose work has not yet been merged into its upstream is
+      +silently skipped. Delete it with `git branch -D` if you want to
+      +remove it anyway.
+     +++
+     ++A branch that another, surviving branch still tracks as its upstream
+     ++is kept, so a branch is never deleted out from under one stacked on
+     ++top of it.
+      +
+       `-v`::
+       `-vv`::
+       `--verbose`::
+      
+       ## builtin/branch.c ##
+     +@@
+     + #include "branch.h"
+     + #include "path.h"
+     + #include "string-list.h"
+     ++#include "strmap.h"
+     + #include "column.h"
+     + #include "utf8.h"
+     + #include "ref-filter.h"
+      @@ builtin/branch.c: static const char * const builtin_branch_usage[] = {
+       	N_("git branch [<options>] (-c | -C) [<old-branch>] <new-branch>"),
+       	N_("git branch [<options>] [-r | -a] [--points-at]"),
+     @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const ch
+       	return 0;
+       }
+       
+     ++static int collect_upstream(const struct reference *ref, void *cb_data)
+     ++{
+     ++	struct string_list *upstreams = cb_data;
+     ++	struct branch *branch = branch_get(ref->name);
+     ++	const char *upstream = branch_get_upstream(branch, NULL);
+     ++
+     ++	string_list_append(upstreams, ref->name)->util =
+     ++		xstrdup_or_null(upstream);
+     ++	return 0;
+     ++}
+     ++
+     ++/*
+     ++ * Keep any branch that another, surviving branch tracks as its
+     ++ * upstream, so we never delete a branch out from under one stacked on
+     ++ * top of it.  Sparing a branch makes it a survivor whose own upstream
+     ++ * then needs the same protection, so repeat until nothing changes.
+     ++ */
+     ++static void spare_stacked_bases(struct ref_store *refs, struct strset *deletable)
+     ++{
+     ++	struct string_list upstreams = STRING_LIST_INIT_DUP;
+     ++	struct string_list_item *item;
+     ++	bool spared;
+     ++
+     ++	refs_for_each_branch_ref(refs, collect_upstream, &upstreams);
+     ++	do {
+     ++		spared = false;
+     ++		for_each_string_list_item(item, &upstreams) {
+     ++			const char *up = item->util, *up_short;
+     ++
+     ++			if (!up || strset_contains(deletable, item->string))
+     ++				continue;
+     ++			if (!skip_prefix(up, "refs/heads/", &up_short) ||
+     ++			    !strset_contains(deletable, up_short))
+     ++				continue;
+     ++
+     ++			strset_remove(deletable, up_short);
+     ++			spared = true;
+     ++		}
+     ++	} while (spared);
+     ++
+     ++	string_list_clear(&upstreams, 1);
+     ++}
+     ++
+      +static int delete_merged_branches(int argc, const char **argv,
+      +				 unsigned int flags)
+      +{
+      +	struct ref_store *refs = get_main_ref_store(the_repository);
+      +	struct ref_filter filter = REF_FILTER_INIT;
+      +	struct ref_array candidates = { 0 };
+     -+	struct strvec deletable = STRVEC_INIT;
+     ++	struct strset deletable = STRSET_INIT;
+     ++	struct strvec to_delete = STRVEC_INIT;
+      +	int i, ret = 0;
+      +
+      +	if (!argc)
+     @@ builtin/branch.c: static int parse_opt_forked(const struct option *opt, const ch
+      +		push = branch_get_push(branch, NULL);
+      +		if (!push || !strcmp(push, upstream))
+      +			continue;
+     ++		if (check_branch_commit(short_name, short_name,
+     ++					&candidates.items[i]->objectname, NULL,
+     ++					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
+     ++			continue;
+      +
+     -+		strvec_push(&deletable, short_name);
+     ++		strset_add(&deletable, short_name);
+      +	}
+      +
+     -+	if (deletable.nr)
+     -+		ret = delete_branches(deletable.nr, deletable.v,
+     ++	spare_stacked_bases(refs, &deletable);
+     ++
+     ++	for (i = 0; i < candidates.nr; i++) {
+     ++		const char *short_name;
+     ++
+     ++		if (skip_prefix(candidates.items[i]->refname, "refs/heads/",
+     ++				&short_name) &&
+     ++		    strset_contains(&deletable, short_name))
+     ++			strvec_push(&to_delete, short_name);
+     ++	}
+     ++
+     ++	if (to_delete.nr)
+     ++		ret = delete_branches(to_delete.nr, to_delete.v,
+      +				      FILTER_REFS_BRANCHES,
+      +				      DELETE_BRANCH_SKIP_UNMERGED |
+      +				      DELETE_BRANCH_NO_HEAD_FALLBACK |
+      +				      flags);
+      +
+     -+	strvec_clear(&deletable);
+     ++	strvec_clear(&to_delete);
+     ++	strset_clear(&deletable);
+      +	ref_array_clear(&candidates);
+      +	ref_filter_clear(&filter);
+      +	return ret;
+     @@ t/t3200-branch.sh: test_expect_success '--forked narrows a <pattern> argument' '
+      +	test_must_fail git -C forked branch --delete-merged 2>err &&
+      +	test_grep "requires at least one <branch>" err
+      +'
+     ++
+     ++test_expect_success '--delete-merged keeps a branch that is an upstream' '
+     ++	test_when_finished "rm -rf repo" &&
+     ++	setup_repo_for_delete_merged &&
+     ++	merged_branch feature origin/next &&
+     ++	(
+     ++		cd repo &&
+     ++		git checkout -b topic feature &&
+     ++		git commit --allow-empty -m "topic work" &&
+     ++		git branch --set-upstream-to=feature topic &&
+     ++		git checkout --detach
+     ++	) &&
+     ++
+     ++	git -C repo branch --delete-merged origin/next 2>err &&
+     ++
+     ++	test_must_be_empty err &&
+     ++	git -C repo rev-parse --verify refs/heads/feature &&
+     ++	git -C repo rev-parse --verify refs/heads/topic
+     ++'
+     ++
+     ++test_expect_success '--delete-merged keeps a chain of upstreams of a kept branch' '
+     ++	test_when_finished "rm -rf repo" &&
+     ++	setup_repo_for_delete_merged &&
+     ++	(
+     ++		cd repo &&
+     ++		git branch b3 origin/next &&
+     ++		git branch --set-upstream-to=origin/next b3 &&
+     ++		git branch b2 origin/next &&
+     ++		git branch --set-upstream-to=b3 b2 &&
+     ++		git checkout -b b1 b2 &&
+     ++		git commit --allow-empty -m "b1 work" &&
+     ++		git branch --set-upstream-to=b2 b1 &&
+     ++		git checkout --detach
+     ++	) &&
+     ++
+     ++	git -C repo branch --delete-merged origin/next &&
+     ++
+     ++	git -C repo for-each-ref --format="%(refname:short)" refs/heads/ >actual &&
+     ++	cat >expect <<-\EOF &&
+     ++	b1
+     ++	b2
+     ++	b3
+     ++	main
+     ++	EOF
+     ++	test_cmp expect actual
+     ++'
+      +
+       test_done
+ 6:  a27d2724a2 ! 6:  27903fbb1d branch: add branch.<name>.deleteMerged opt-out
+     @@ Documentation/git-branch.adoc: A branch is not deleted when:
+      
+       ## builtin/branch.c ##
+      @@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
+     - 	struct ref_filter filter = REF_FILTER_INIT;
+       	struct ref_array candidates = { 0 };
+     - 	struct strvec deletable = STRVEC_INIT;
+     + 	struct strset deletable = STRSET_INIT;
+     + 	struct strvec to_delete = STRVEC_INIT;
+      +	struct strbuf key = STRBUF_INIT;
+      +	bool quiet = flags & DELETE_BRANCH_QUIET;
+       	int i, ret = 0;
+     @@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
+       		if (!skip_prefix(full_name, "refs/heads/", &short_name))
+       			BUG("filter returned non-branch ref '%s'", full_name);
+      @@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
+     - 		if (!push || !strcmp(push, upstream))
+     + 					FILTER_REFS_BRANCHES, DELETE_BRANCH_SKIP_UNMERGED))
+       			continue;
+       
+      +		strbuf_reset(&key);
+     @@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
+      +			continue;
+      +		}
+      +
+     - 		strvec_push(&deletable, short_name);
+     + 		strset_add(&deletable, short_name);
+       	}
+       
+      @@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
+     @@ builtin/branch.c: static int delete_merged_branches(int argc, const char **argv,
+       				      flags);
+       
+      +	strbuf_release(&key);
+     - 	strvec_clear(&deletable);
+     + 	strvec_clear(&to_delete);
+     + 	strset_clear(&deletable);
+       	ref_array_clear(&candidates);
+     - 	ref_filter_clear(&filter);
+      
+       ## t/t3200-branch.sh ##
+     -@@ t/t3200-branch.sh: test_expect_success '--delete-merged requires at least one <branch>' '
+     - 	test_grep "requires at least one <branch>" err
+     +@@ t/t3200-branch.sh: test_expect_success '--delete-merged keeps a chain of upstreams of a kept branch
+     + 	test_cmp expect actual
+       '
+       
+      +test_expect_success '--delete-merged honours branch.<name>.deleteMerged=false' '
+ 7:  6d5c52353e ! 7:  49c1bcf1fb branch: add --dry-run for --delete-merged
+     @@ Documentation/git-branch.adoc: git branch (-m|-M) [<old-branch>] <new-branch>
+       
+       DESCRIPTION
+       -----------
+     -@@ Documentation/git-branch.adoc: A branch whose work has not yet been merged into its upstream is
+     - silently skipped. Delete it with `git branch -D` if you want to
+     - remove it anyway.
+     +@@ Documentation/git-branch.adoc: A branch that another, surviving branch still tracks as its upstream
+     + is kept, so a branch is never deleted out from under one stacked on
+     + top of it.
+       
+      +`--dry-run`::
+      +	With `--delete-merged`, print which branches would be
+     @@ Documentation/git-branch.adoc: A branch whose work has not yet been merged into
+       `--verbose`::
+      
+       ## builtin/branch.c ##
+     +@@ builtin/branch.c: enum delete_branch_flags {
+     + 	DELETE_BRANCH_QUIET = (1 << 1),
+     + 	DELETE_BRANCH_SKIP_UNMERGED = (1 << 2),
+     + 	DELETE_BRANCH_NO_HEAD_FALLBACK = (1 << 3),
+     ++	DELETE_BRANCH_DRY_RUN = (1 << 4),
+     + };
+     + 
+     + static int check_branch_commit(const char *branchname, const char *refname,
+     +@@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int kinds,
+     + 	bool quiet = flags & DELETE_BRANCH_QUIET;
+     + 	bool skip_unmerged = flags & DELETE_BRANCH_SKIP_UNMERGED;
+     + 	bool no_head_fallback = flags & DELETE_BRANCH_NO_HEAD_FALLBACK;
+     ++	bool dry_run = flags & DELETE_BRANCH_DRY_RUN;
+     + 	struct strbuf bname = STRBUF_INIT;
+     + 	enum interpret_branch_kind allowed_interpret;
+     + 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+     +@@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int kinds,
+     + 		free(target);
+     + 	}
+     + 
+     +-	if (refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+     ++	if (!dry_run &&
+     ++	    refs_delete_refs(get_main_ref_store(the_repository), NULL, &refs_to_delete, REF_NO_DEREF))
+     + 		ret = 1;
+     + 
+     + 	for_each_string_list_item(item, &refs_to_delete) {
+     + 		char *describe_ref = item->util;
+     + 		char *name = item->string;
+     +-		if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+     ++		if (dry_run) {
+     ++			if (!quiet)
+     ++				printf(remote_branch
+     ++					? _("Would delete remote-tracking branch %s (was %s).\n")
+     ++					: _("Would delete branch %s (was %s).\n"),
+     ++					name + branch_name_pos, describe_ref);
+     ++		} else if (!refs_ref_exists(get_main_ref_store(the_repository), name)) {
+     + 			char *refname = name + branch_name_pos;
+     + 			if (!quiet)
+     + 				printf(remote_branch
+      @@ builtin/branch.c: int cmd_branch(int argc,
+       	int delete = 0, rename = 0, copy = 0, list = 0,
+       	    unset_upstream = 0, show_current = 0, edit_description = 0;
+
 -- 
-2.51.0
-
+gitgitgadget
