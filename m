@@ -1,80 +1,79 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BF3391E54
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:28:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15116390229
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782116944; cv=none; b=JhoFsvRLWb1SsueaFeR9DJYr9nx284bOQ22EQBNyPLyZfZg7jsJvmb0criREewz1uRpcAnjfL9pC102a8cDtsZkGqUVoZyb8cHPC6jmqdx0FTvzQB+Ik+GHeUxebx6iKOvC12xnLiYYCEZqsZlYuJHdxykZSYBpRAEv/SyWJ5N8=
+	t=1782116946; cv=none; b=Y8sBOP2OCt7vN1Pv7j5oEtGlNSdDgELefb8++8aFd7ZV7i0Ghop8ty8o9wpwN3MO+yCjr7/60w36cJrYO8dOb6JXRdBINdnN9qgLcWiUevH5J6dx+fZZtLR5TRqU07fvQ6p0LZCnjCa50eTVg2HhezGqJYQpic4DcbBUKS4ZpR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782116944; c=relaxed/simple;
-	bh=gDvJTxIwF3j5F9XUQu2lVNh4Fa1eUWvgipkbpiCGRg4=;
+	s=arc-20240116; t=1782116946; c=relaxed/simple;
+	bh=eiUzVSyueaANtUszCYetmqEYlGzKuYY8xz7tEANU7IU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=njVaMxCkXTFY5P9De2jz4DMEH8q8V1dwzOExBk+XjKUPI/KbQbQ7QA1PKx2ytbIUpTVeOd7HdQdgRRksYkwYDmfRW1jmScdrvS9oFT7kxZU/JakC00ZtSabZjsSh0m8cIsgkv8hKQ6GweGrn/N/NRR6gjIfqoOWsIgI0j6s2MZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bD0+/g0i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dcQh6oq/; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=cbpM2KGzG4Y25/qQLMfWex3VPoxTdDV5BlsIAC06JVtm//soKCiPkjdbNuVuOrS7lFli5QHZa+W8vGzudrix4PlBAHel6ceCktUH0C/1wbx7QSZBI17xNFg9P9gdvfg7qApWlsl6ghQ7eeKv43iLOQBkbWhaLNsrPoNYhz0yEdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N8IuiY/u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HGSt1+1K; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bD0+/g0i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dcQh6oq/"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N8IuiY/u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HGSt1+1K"
 Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 989C77A007F;
-	Mon, 22 Jun 2026 04:28:55 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 27D1B1D000D4;
+	Mon, 22 Jun 2026 04:28:53 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 22 Jun 2026 04:28:55 -0400
+  by phl-compute-10.internal (MEProxy); Mon, 22 Jun 2026 04:28:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1782116935;
-	 x=1782203335; bh=8tyy+QbbssXl1Cm3/YA5tXZIrRudqTknpdJy/SzXzpE=; b=
-	bD0+/g0ikD/Av6bh/PmOARBXBJxcZYwtSNoTNTvfdmkqzUp7fsjvZT1n5QQTNKbz
-	aXMsfz0LN38Zx2ZGTD0xlBsXhrvvYliT6Dk7d0EhbyArmcUx5zPYeUtfgQuzBV80
-	ggLV41GUCrtRdaIAWWf5lPmzyRdK2sr34QcQe4nHYW9HkuZuGwtvDGux2in0zAp/
-	H2yq+mhpveG0MIwjsrY1B3CHGA7OKOwOOWbfq+Eenln5dpKXGsvkm9da5XwbW2Wf
-	o+L51bDau7WBPrY6ypDvS5+WkhC/gH5ek/gwhOK2dZRqYTWPKq6QcBs9ME70oixK
-	2j7mZ1beWdzwHHhKtYyLVQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1782116932;
+	 x=1782203332; bh=4PZM+fCV/8/JFCTnksmcFZroKvS2U449Fe08ye2w5Yg=; b=
+	N8IuiY/u3UtWka3Ufgvcodb/ab9trXgyKl/TacE6Hc2Hry3N48yELzhVef8gkEZg
+	mCMoPbTS8uJ/ZwOboGkMRJEjCU9vDrf0RZWNfGu2Y2dE9xVF+Msvfxv1PgTCx4s6
+	EYeuMhyIx5AByAbx+nbumcvWlmYcofL0PZmTztt5vW7joz9HzcAkskuUHzApeEid
+	2VuEh4V/Z6/QC53n/wEFIXBuk8MXlamyY2//+IS3XC2umGigEvrdrueaApCT3b4x
+	ZJqnIQfQFof+cK7sHE/EV+pozi1iBFNgItze2v+4mIOQRqT5b9B55m2AU6Incu+A
+	qhX5UcD50hMMy6CkUuX8cw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782116935; x=
-	1782203335; bh=8tyy+QbbssXl1Cm3/YA5tXZIrRudqTknpdJy/SzXzpE=; b=d
-	cQh6oq/E40wXqfnRFkadNuOgoPG1UwiKkAE44pFDYIGC6IKOXWH5tloJKT2SOD3U
-	W7tpeHSd07yMka2V4DQYaGh3qG/+6h1mbiGBgRDR0n0H/3auUBg1+sVY6+o2j0dL
-	1V3mJGfs/iUiK1lpMjKvRiU8OhhIcKDI+PkaVNNgj1o7M2plU3QCQsNSfB/x8nVj
-	WPPzwcqFscLxcpjDRJwZk2GkGYLYAQ90aKNUvfpNKcVgNjgo9NGvUx3nSa5BJxnf
-	/YFMZxvpoRcjjS/CkSJGKNJVkHAymeT22cgWO3PWZWpf3Gz3jSQZVV6435nyydyP
-	WNTkUwDYtWAhe/SzRD1aQ==
-X-ME-Sender: <xms:R_I4ahHBTCqAKp2Qlv5ZM9Uw9c1ZFeiwLJwxyDiKPudyTPB4ikhg_Q>
-    <xme:R_I4atU6_hRKGk08Tgicek38AbyB6_z4EhNr6CUiAqkSIdZIAznf3RnHKd0W6CN04
-    Jnbl3JogQ4ayP7vVgrqJRrf96bY1NWoM_D34F7DN-FUH_mO8LxGzok>
-X-ME-Received: <xmr:R_I4aoJ4YLnm5vQ_yDY-ycZiP3mOiQ9EmMYTYfmoyaTEcs3ab3-Ww42gXvKf-AMeYcR74YYy01tWqeQ05ILDO1M1QyGpWhCY6BhPYmzA4Q>
-X-ME-Proxy-Cause: dmFkZTEBOZYM45/v8m3kFhyPnYffUe6Ja0oJnbwCr8VR9DQUvx2UKMemuhSbsuoOPXSB1G
-    0r+IHIgS1cl/WEaPhGlINVMsUib8s/1DURxDwDjZXQHcNf6qRtnS/GE8uCTKd5lve9Scqi
-    +pKez3suwFzLghbRtKWFk3x3BjeN3guL2xsrAKNCElbKn9jFloTG+PIa0QzgGGIXJwaZdQ
-    jQ7f7lZhAyGDjs1c49oj4G8V4uRqHxkyhXAPUFIxYBoY+oIEyiqGLTllRZcGNyjbPbaw6P
-    a0+3LsuMyKPc2p8FLvTqfaogSrMe2OwN9Fp6wwBkxu+olEP2A8c2hbP8zf2qZHQbZPcmYk
-    j7VGyW2WrIP4QXQv1Cq9Kl/k6QBEjudnBPF/KUkWT1kqnUlDdWAvCxqimbMF5DZR+S/tKJ
-    8ScsPQKq169PSuuEPYe/pmEyC1GK4VQHdEoMhQn1LHUv7W666MKWcdCf2zXOlWP9WzocRb
-    PqMlJQYjPSq4Ci74AFuOvOeruRoYa56kx7g+OeXKWkPLVYXYtDZukdXJ0OMMLmL1tX8sLc
-    AohMOlcvq/isVqFPVeviRg6PzUjrlxwuLRfiiGyfSYBHpw+CUFfn+SQEg+DsXNO3QHooRR
-    8mlTq6rH5cW22lShjJmT+8FJ5HEWQXust+DDznzR7sc/JhSSah6VpOSqxpww
-X-ME-Proxy: <xmx:R_I4al8pUEeeBH7aov62_y2nrPlFMYpSEaGsBsuCjjcVebCJyqdRfg>
-    <xmx:R_I4ajItIpU5hnJSK2lHbpcQ4tFLsPp7QSvlfpQepV8wX_r4EauGDA>
-    <xmx:R_I4ail41oijKKFD8OdUKOzddI3Zgth-m0uapET2Dwq3Q5HHWwOfZw>
-    <xmx:R_I4avMS_c7mU4v2pGJN8_5SChzYsGR7mrqA_W3J77PWQV5LVQ3xZA>
-    <xmx:R_I4ajPbZAW7MvmPVS9aTIE0czj-TDZa9IzDEwMZah7qliXapnxMp6G7>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782116932; x=
+	1782203332; bh=4PZM+fCV/8/JFCTnksmcFZroKvS2U449Fe08ye2w5Yg=; b=H
+	GSt1+1K7+02f0fHWUI5Edb1FxMcPkCTBv8gWc8dsbak210ht7kMIJyh52hhQGL3i
+	hdS9lY0v2roPyIIl1hiIyh3FSzc+CUVMo5tKU6elugjfeaDrj/h9nOg0kv6Djt8X
+	LGIuqxSGJ5owRzK8TMy5X7TNkJ54XWf1uzvGfhcioLYyi7pJOeeQeMWyjBAb6NKr
+	oIt5pAI+rsazjJBu+EbebztzYjfvauh5SL0X03PkhW2jfHWEo5qXvnUqT+HW9S4h
+	KtLU9iDaAPYRYDMWOcWwOMOTLXZVnQW/ZPYtU912kT6jXfaDgZ6/352bZD7AGbKl
+	00NgyPaXMnpe3x2Iqfc/g==
+X-ME-Sender: <xms:RPI4agJA2VSQSXpAgPsSHyE_wTj0JCcHxkeYo4Swwjo9XJNOWEPS5w>
+    <xme:RPI4anLNCHFfOQs-JADI50cf_OdR24H6Zt1OdZa2uzTDEj4O8_E6IU2ENsiG6-Zqq
+    y1jVFQ5pB3z4m4FJap1s4UVHVTgyGdnrL7mRCUroJ07dwdHxJXK_EI>
+X-ME-Received: <xmr:RPI4alvzVbisyDtVoxDdxwcsLOwwtvOwNiumbXlK4WJ8guniudwSEhKNvHRr71hp9QnRu6vrQyvks4JJ0ByBxHTcyxpT3dHClaQLjP4NYw>
+X-ME-Proxy-Cause: dmFkZTFakfR/hQdxT8sgZGM7TQQccfc31pXTzQprwmf3UdZ0m94xtc2Ks1qiaYun/cfrqS
+    kSnHJbjGphqQMxVSuxt8CLe3evU7HVZT+Jtv6Z+XaZPFlnB9XwOFE2YAsF9yem4vNYAfD8
+    EaEe1QJfkstihASjSNzDJMBKnxmovCsr4/2FehJ3yq2Gb1XcsNmubyifbmvVuHHhSF9QVk
+    aAY51vbmFsY9ZtFAb7XJ1a66MtOJUaomxnBZZV+kkvLhe4wLB9dlUCfVi9Y4cOq+tVJ77F
+    iZMBpwDllvpNqnwIDAzfFq9r0Y6X1MT/92ZW4R0seBr1MkR3aNS1f+kud/eeT+r+ir63Vu
+    uspl4uXKRYGbUcaSVqr2Ued7zRWMM+fPNld7D0RXz8/M6jVNnd52CggOC2+tmePI1cIqpO
+    bf2zbIE9+Y2GQWI+AnxEpsR0rHg2qu9rKgzcXjwW3ejcu7+gNxHEjqBit9JmMxVW4Uey74
+    F4wUQT4OM2EHVsGsPB3DhIyldaFIKsA1+f70RUMryiLvVaYhXi2WODeOfyV7kE9/58oXUH
+    w1IZjiMXKz6aezTz2YQEBBO/Z03faJ4oZUc/iU4F2p6wntTqRVPdTlxIcPK2Q+8SY0C29V
+    31F1+68lusGrLeKgvS8nbJRWTU/qe5HudZDhr0HbFtXZvBqLTIyWvayoo59g
+X-ME-Proxy: <xmx:RPI4asRtQNDq_reZNg8pXAf--okqI_ctgEdqnfVigN1Sev7rVl-lLg>
+    <xmx:RPI4ajMK_mPGOMjOtnNVckJGT0YZloWnOLS--HE42PvpNxL0F_YrqQ>
+    <xmx:RPI4apZ37r9qQgl0NrEDlPjmJJFh82_R33kvOrKIEQZ7WJmCIOxFxQ>
+    <xmx:RPI4alzCLNKV1LCH2GbnykXOabOtJHv1mQhadPVjg-p9ccVkb3Y_Cg>
+    <xmx:RPI4arzf2uFKIVNqKJyqHBb9SVBgQaZqV13Pug7sZDrYX1F09zb7zXYE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 04:28:54 -0400 (EDT)
+ 22 Jun 2026 04:28:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4f36dcb3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 08:28:53 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 668d99eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jun 2026 08:28:51 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 22 Jun 2026 10:28:32 +0200
-Subject: [PATCH v5 10/11] refs/reftable: lazy-load configuration to fix
- chicken-and-egg
+Date: Mon, 22 Jun 2026 10:28:31 +0200
+Subject: [PATCH v5 09/11] reftable: split up write options
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-10-018475013dbc@pks.im>
+Message-Id: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-9-018475013dbc@pks.im>
 References: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-0-018475013dbc@pks.im>
 In-Reply-To: <20260622-b4-pks-refs-avoid-chdir-notify-reparent-v5-0-018475013dbc@pks.im>
 To: git@vger.kernel.org
@@ -91,375 +90,1721 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
  Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.15.2
 
-Same as with the "files" backend, the "reftable" backend also has a
-chicken-and-egg problem with "onbranch" conditions. Fix this issue the
-same as we did with the "files" backend by lazy-loading configuration.
+When initializing the reftable stack the caller may optionally pass some
+write options. These write options mix up two different concerns though:
 
-Now that both the "files" and the "reftable" backend handle this
-properly, add a generic test to t1400 that verifies that the user can
-configure "core.logAllRefUpdates" via an "onbranch" condition. This is
-mostly a nonsensical thing to do in the first place, but it serves as a
-good sanity chekc.
+  - Of course, they allow the caller to configure how new reftables are
+    being written.
 
-Note that we had to move `should_write_log()` around so that it can
-access the new `reftable_be_write_options()` function.
+  - But they also allow the caller to configure the stack itself, like
+    its hash ID and the `on_reload` callback.
+
+This is somewhat awkward, as it doesn't easily give the caller the
+flexibility to for example write multiple reftables with different
+options. Furthermore, this requires us to eagerly parse relevant
+configuration when initializing the reftable backend.
+
+Refactor the code by splitting out those options that configure the
+stack itself. Creating a new stack will thus only require this limited
+set of options, whereas the caller is expected to pass write options to
+all functions that end up writing tables.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c           | 146 ++++++++++++++++++++++----------------
- t/t0613-reftable-write-options.sh |  19 +++++
- t/t1400-update-ref.sh             |  12 ++++
- 3 files changed, 116 insertions(+), 61 deletions(-)
+ refs/reftable-backend.c             |  29 +++---
+ reftable/reftable-stack.h           |  30 +++++-
+ reftable/reftable-writer.h          |  17 +---
+ reftable/stack.c                    | 100 ++++++++++++-------
+ reftable/stack.h                    |   2 +-
+ reftable/writer.c                   |  21 ++--
+ reftable/writer.h                   |   1 +
+ t/helper/test-reftable.c            |   2 +-
+ t/unit-tests/lib-reftable.c         |   8 +-
+ t/unit-tests/lib-reftable.h         |   2 +
+ t/unit-tests/u-reftable-merged.c    |   9 +-
+ t/unit-tests/u-reftable-readwrite.c |  38 ++++++--
+ t/unit-tests/u-reftable-stack.c     | 189 ++++++++++++++++--------------------
+ t/unit-tests/u-reftable-table.c     |   8 +-
+ 14 files changed, 258 insertions(+), 198 deletions(-)
 
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 608d71cf10..d74131a5ae 100644
+index 5115a3f4ce..608d71cf10 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -141,10 +141,21 @@ struct reftable_ref_store {
+@@ -48,9 +48,9 @@ static void reftable_backend_on_reload(void *payload)
+ 
+ static int reftable_backend_init(struct reftable_backend *be,
+ 				 const char *path,
+-				 const struct reftable_write_options *_opts)
++				 const struct reftable_stack_options *_opts)
+ {
+-	struct reftable_write_options opts = *_opts;
++	struct reftable_stack_options opts = *_opts;
+ 	opts.on_reload = reftable_backend_on_reload;
+ 	opts.on_reload_payload = be;
+ 	return reftable_new_stack(&be->stack, path, &opts);
+@@ -140,6 +140,7 @@ struct reftable_ref_store {
+ 	 * is populated lazily when we try to resolve `worktrees/$worktree` refs.
  	 */
  	struct strmap worktree_backends;
- 	struct reftable_stack_options stack_options;
--	struct reftable_write_options write_options;
-+
-+	/*
-+	 * Options used when writing to or compacting the reftable stacks.
-+	 * These are parsed from the configuration lazily on first use via
-+	 * `reftable_be_write_options()` so that we don't have to access the
-+	 * configuration when initializing the ref store. Do not access these
-+	 * fields directly, but use the accessor instead.
-+	 */
-+	struct reftable_be_write_options {
-+		struct reftable_write_options opts;
-+		enum log_refs_config log_all_ref_updates;
-+		bool initialized;
-+	} write_opts_lazy_loaded;
++	struct reftable_stack_options stack_options;
+ 	struct reftable_write_options write_options;
  
  	unsigned int store_flags;
--	enum log_refs_config log_all_ref_updates;
- 	int err;
- };
+@@ -190,7 +191,7 @@ static int backend_for_worktree(struct reftable_backend **out,
  
-@@ -285,26 +296,6 @@ static int backend_for(struct reftable_backend **out,
- 	return ret;
+ 	CALLOC_ARRAY(*out, 1);
+ 	store->err = ret = reftable_backend_init(*out, worktree_dir.buf,
+-						 &store->write_options);
++						 &store->stack_options);
+ 	if (ret < 0) {
+ 		free(*out);
+ 		goto out;
+@@ -404,10 +405,10 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 
+ 	switch (repo->hash_algo->format_id) {
+ 	case GIT_SHA1_FORMAT_ID:
+-		refs->write_options.hash_id = REFTABLE_HASH_SHA1;
++		refs->stack_options.hash_id = REFTABLE_HASH_SHA1;
+ 		break;
+ 	case GIT_SHA256_FORMAT_ID:
+-		refs->write_options.hash_id = REFTABLE_HASH_SHA256;
++		refs->stack_options.hash_id = REFTABLE_HASH_SHA256;
+ 		break;
+ 	default:
+ 		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
+@@ -441,7 +442,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 	}
+ 	strbuf_addstr(&path, "/reftable");
+ 	refs->err = reftable_backend_init(&refs->main_backend, path.buf,
+-					  &refs->write_options);
++					  &refs->stack_options);
+ 	if (refs->err)
+ 		goto done;
+ 
+@@ -457,7 +458,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 		strbuf_addstr(&refdir, "/reftable");
+ 
+ 		refs->err = reftable_backend_init(&refs->worktree_backend, refdir.buf,
+-						  &refs->write_options);
++						  &refs->stack_options);
+ 		if (refs->err)
+ 			goto done;
+ 	}
+@@ -997,6 +998,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
+ 		struct reftable_addition *addition;
+ 
+ 		ret = reftable_stack_new_addition(&addition, be->stack,
++						  &refs->write_options,
+ 						  REFTABLE_STACK_NEW_ADDITION_RELOAD);
+ 		if (ret) {
+ 			if (ret == REFTABLE_LOCK_ERROR)
+@@ -1685,9 +1687,9 @@ static int reftable_be_optimize(struct ref_store *ref_store,
+ 		stack = refs->main_backend.stack;
+ 
+ 	if (opts->flags & REFS_OPTIMIZE_AUTO)
+-		ret = reftable_stack_auto_compact(stack);
++		ret = reftable_stack_auto_compact(stack, &refs->write_options);
+ 	else
+-		ret = reftable_stack_compact_all(stack, NULL);
++		ret = reftable_stack_compact_all(stack, &refs->write_options, NULL);
+ 	if (ret < 0) {
+ 		ret = error(_("unable to compact stack: %s"),
+ 			    reftable_error_str(ret));
+@@ -1721,8 +1723,8 @@ static int reftable_be_optimize_required(struct ref_store *ref_store,
+ 	if (opts->flags & REFS_OPTIMIZE_AUTO)
+ 		use_heuristics = true;
+ 
+-	return reftable_stack_compaction_required(stack, use_heuristics,
+-						  required);
++	return reftable_stack_compaction_required(stack, &refs->write_options,
++						  use_heuristics, required);
  }
  
--static int should_write_log(struct reftable_ref_store *refs, const char *refname)
--{
--	enum log_refs_config log_refs_cfg = refs->log_all_ref_updates;
--	if (log_refs_cfg == LOG_REFS_UNSET)
--		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
--
--	switch (log_refs_cfg) {
--	case LOG_REFS_NONE:
--		return refs_reflog_exists(&refs->base, refname);
--	case LOG_REFS_ALWAYS:
--		return 1;
--	case LOG_REFS_NORMAL:
--		if (should_autocreate_reflog(log_refs_cfg, refname))
--			return 1;
--		return refs_reflog_exists(&refs->base, refname);
--	default:
--		BUG("unhandled core.logAllRefUpdates value %d", log_refs_cfg);
--	}
--}
--
- static void fill_reftable_log_record(struct reftable_log_record *log, const struct ident_split *split)
- {
- 	const char *tz_begin;
-@@ -336,38 +327,72 @@ static int reftable_be_config(const char *var, const char *value,
- 			      void *payload)
- {
- 	struct reftable_ref_store *refs = payload;
-+	struct reftable_be_write_options *opts = &refs->write_opts_lazy_loaded;
+ struct write_create_symref_arg {
+@@ -1979,6 +1981,7 @@ static int reftable_be_rename_ref(struct ref_store *ref_store,
+ 	if (ret)
+ 		goto done;
+ 	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
++				 &refs->write_options,
+ 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
  
- 	if (!strcmp(var, "reftable.blocksize")) {
- 		unsigned long block_size = git_config_ulong(var, value, ctx->kvi);
- 		if (block_size > 16777215)
- 			die("reftable block size cannot exceed 16MB");
--		refs->write_options.block_size = block_size;
-+		opts->opts.block_size = block_size;
- 	} else if (!strcmp(var, "reftable.restartinterval")) {
- 		unsigned long restart_interval = git_config_ulong(var, value, ctx->kvi);
- 		if (restart_interval > UINT16_MAX)
- 			die("reftable block size cannot exceed %u", (unsigned)UINT16_MAX);
--		refs->write_options.restart_interval = restart_interval;
-+		opts->opts.restart_interval = restart_interval;
- 	} else if (!strcmp(var, "reftable.indexobjects")) {
--		refs->write_options.skip_index_objects = !git_config_bool(var, value);
-+		opts->opts.skip_index_objects = !git_config_bool(var, value);
- 	} else if (!strcmp(var, "reftable.geometricfactor")) {
- 		unsigned long factor = git_config_ulong(var, value, ctx->kvi);
- 		if (factor > UINT8_MAX)
- 			die("reftable geometric factor cannot exceed %u", (unsigned)UINT8_MAX);
--		refs->write_options.auto_compaction_factor = factor;
-+		opts->opts.auto_compaction_factor = factor;
- 	} else if (!strcmp(var, "reftable.locktimeout")) {
- 		int64_t lock_timeout = git_config_int64(var, value, ctx->kvi);
- 		if (lock_timeout > LONG_MAX)
- 			die("reftable lock timeout cannot exceed %"PRIdMAX, (intmax_t)LONG_MAX);
- 		if (lock_timeout < 0 && lock_timeout != -1)
- 			die("reftable lock timeout does not support negative values other than -1");
--		refs->write_options.lock_timeout_ms = lock_timeout;
-+		opts->opts.lock_timeout_ms = lock_timeout;
- 	} else if (!strcmp(var, "core.logallrefupdates")) {
--		refs->log_all_ref_updates = refs_parse_log_all_ref_updates_config(value);
-+		opts->log_all_ref_updates = refs_parse_log_all_ref_updates_config(value);
+ done:
+@@ -2009,6 +2012,7 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
+ 	if (ret)
+ 		goto done;
+ 	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
++				 &refs->write_options,
+ 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
+ 
+ done:
+@@ -2374,6 +2378,7 @@ static int reftable_be_create_reflog(struct ref_store *ref_store,
+ 	arg.stack = be->stack;
+ 
+ 	ret = reftable_stack_add(be->stack, &write_reflog_existence_table, &arg,
++				 &refs->write_options,
+ 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
+ 
+ done:
+@@ -2446,6 +2451,7 @@ static int reftable_be_delete_reflog(struct ref_store *ref_store,
+ 	arg.stack = be->stack;
+ 
+ 	ret = reftable_stack_add(be->stack, &write_reflog_delete_table, &arg,
++				 &refs->write_options,
+ 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
+ 
+ 	assert(ret != REFTABLE_API_ERROR);
+@@ -2568,6 +2574,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 		goto done;
+ 
+ 	ret = reftable_stack_new_addition(&add, be->stack,
++					  &refs->write_options,
+ 					  REFTABLE_STACK_NEW_ADDITION_RELOAD);
+ 	if (ret < 0)
+ 		goto done;
+diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
+index 5f7be573fa..11f9963f4f 100644
+--- a/reftable/reftable-stack.h
++++ b/reftable/reftable-stack.h
+@@ -26,11 +26,29 @@
+  */
+ struct reftable_stack;
+ 
++/* Options related to opening a stack. */
++struct reftable_stack_options {
++	/*
++	 * 4-byte identifier ("sha1", "s256") of the hash. Defaults to SHA1 if
++	 * unset.
++	 */
++	enum reftable_hash hash_id;
++
++	/*
++	 * Callback function to execute whenever the stack is being reloaded.
++	 * This can be used e.g. to discard cached information that relies on
++	 * the old stack's data. The payload data will be passed as argument to
++	 * the callback.
++	 */
++	void (*on_reload)(void *payload);
++	void *on_reload_payload;
++};
++
+ /* open a new reftable stack. The tables along with the table list will be
+  *  stored in 'dir'. Typically, this should be .git/reftables.
+  */
+ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
+-		       const struct reftable_write_options *opts);
++		       const struct reftable_stack_options *opts);
+ 
+ /* returns the update_index at which a next table should be written. */
+ uint64_t reftable_stack_next_update_index(struct reftable_stack *st);
+@@ -52,6 +70,7 @@ enum {
+  */
+ int reftable_stack_new_addition(struct reftable_addition **dest,
+ 				struct reftable_stack *st,
++				const struct reftable_write_options *opts,
+ 				unsigned int flags);
+ 
+ /* Adds a reftable to transaction. */
+@@ -77,7 +96,9 @@ void reftable_addition_destroy(struct reftable_addition *add);
+ int reftable_stack_add(struct reftable_stack *st,
+ 		       int (*write_table)(struct reftable_writer *wr,
+ 					  void *write_arg),
+-		       void *write_arg, unsigned flags);
++		       void *write_arg,
++		       const struct reftable_write_options *opts,
++		       unsigned flags);
+ 
+ struct reftable_iterator;
+ 
+@@ -122,6 +143,7 @@ struct reftable_log_expiry_config {
+ /* compacts all reftables into a giant table. Expire reflog entries if config is
+  * non-NULL */
+ int reftable_stack_compact_all(struct reftable_stack *st,
++			       const struct reftable_write_options *opts,
+ 			       struct reftable_log_expiry_config *config);
+ 
+ /*
+@@ -132,11 +154,13 @@ int reftable_stack_compact_all(struct reftable_stack *st,
+  * compacted to maintain geometric progression.
+  */
+ int reftable_stack_compaction_required(struct reftable_stack *st,
++				       const struct reftable_write_options *opts,
+ 				       bool use_heuristics,
+ 				       bool *required);
+ 
+ /* heuristically compact unbalanced table stack. */
+-int reftable_stack_auto_compact(struct reftable_stack *st);
++int reftable_stack_auto_compact(struct reftable_stack *st,
++				const struct reftable_write_options *opts);
+ 
+ /* delete stale .ref tables. */
+ int reftable_stack_clean(struct reftable_stack *st);
+diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
+index a66db415c8..6ff4ddfc60 100644
+--- a/reftable/reftable-writer.h
++++ b/reftable/reftable-writer.h
+@@ -28,11 +28,6 @@ struct reftable_write_options {
+ 	/* how often to write complete keys in each block. */
+ 	uint16_t restart_interval;
+ 
+-	/* 4-byte identifier ("sha1", "s256") of the hash.
+-	 * Defaults to SHA1 if unset
+-	 */
+-	enum reftable_hash hash_id;
+-
+ 	/* Default mode for creating files. If unset, use 0666 (+umask) */
+ 	unsigned int default_permissions;
+ 
+@@ -60,15 +55,6 @@ struct reftable_write_options {
+ 	 * negative value will cause us to block indefinitely.
+ 	 */
+ 	long lock_timeout_ms;
+-
+-	/*
+-	 * Callback function to execute whenever the stack is being reloaded.
+-	 * This can be used e.g. to discard cached information that relies on
+-	 * the old stack's data. The payload data will be passed as argument to
+-	 * the callback.
+-	 */
+-	void (*on_reload)(void *payload);
+-	void *on_reload_payload;
+ };
+ 
+ /* reftable_block_stats holds statistics for a single block type */
+@@ -114,7 +100,8 @@ struct reftable_writer;
+ int reftable_writer_new(struct reftable_writer **out,
+ 			ssize_t (*writer_func)(void *, const void *, size_t),
+ 			int (*flush_func)(void *),
+-			void *writer_arg, const struct reftable_write_options *opts);
++			void *writer_arg, enum reftable_hash hash_id,
++			const struct reftable_write_options *opts);
+ 
+ /*
+  * Set the range of update indices for the records we will add. When writing a
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 1fba96ddb3..ab12926708 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -501,10 +501,10 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+ }
+ 
+ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
+-		       const struct reftable_write_options *_opts)
++		       const struct reftable_stack_options *_opts)
+ {
+ 	struct reftable_buf list_file_name = REFTABLE_BUF_INIT;
+-	struct reftable_write_options opts = { 0 };
++	struct reftable_stack_options opts = { 0 };
+ 	struct reftable_stack *p;
+ 	int err;
+ 
+@@ -629,6 +629,7 @@ int reftable_stack_reload(struct reftable_stack *st)
+ struct reftable_addition {
+ 	struct reftable_flock tables_list_lock;
+ 	struct reftable_stack *stack;
++	struct reftable_write_options opts;
+ 
+ 	char **new_tables;
+ 	size_t new_tables_len, new_tables_cap;
+@@ -657,6 +658,7 @@ static void reftable_addition_close(struct reftable_addition *add)
+ 
+ static int reftable_stack_init_addition(struct reftable_addition *add,
+ 					struct reftable_stack *st,
++					const struct reftable_write_options *opts,
+ 					unsigned int flags)
+ {
+ 	struct reftable_buf lock_file_name = REFTABLE_BUF_INIT;
+@@ -664,15 +666,17 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
+ 
+ 	memset(add, 0, sizeof(*add));
+ 	add->stack = st;
++	if (opts)
++		add->opts = *opts;
+ 
+ 	err = flock_acquire(&add->tables_list_lock, st->list_file,
+-			    st->opts.lock_timeout_ms);
++			    add->opts.lock_timeout_ms);
+ 	if (err < 0)
+ 		goto done;
+ 
+-	if (st->opts.default_permissions) {
++	if (add->opts.default_permissions) {
+ 		if (chmod(add->tables_list_lock.path,
+-			  st->opts.default_permissions) < 0) {
++			  add->opts.default_permissions) < 0) {
+ 			err = REFTABLE_IO_ERROR;
+ 			goto done;
+ 		}
+@@ -702,12 +706,14 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
+ static int stack_try_add(struct reftable_stack *st,
+ 			 int (*write_table)(struct reftable_writer *wr,
+ 					    void *arg),
+-			 void *arg, unsigned flags)
++			 void *arg,
++			 const struct reftable_write_options *opts,
++			 unsigned flags)
+ {
+ 	struct reftable_addition add;
+ 	int err;
+ 
+-	err = reftable_stack_init_addition(&add, st, flags);
++	err = reftable_stack_init_addition(&add, st, opts, flags);
+ 	if (err < 0)
+ 		goto done;
+ 
+@@ -723,9 +729,11 @@ static int stack_try_add(struct reftable_stack *st,
+ 
+ int reftable_stack_add(struct reftable_stack *st,
+ 		       int (*write)(struct reftable_writer *wr, void *arg),
+-		       void *arg, unsigned flags)
++		       void *arg,
++		       const struct reftable_write_options *opts,
++		       unsigned flags)
+ {
+-	int err = stack_try_add(st, write, arg, flags);
++	int err = stack_try_add(st, write, arg, opts, flags);
+ 	if (err < 0) {
+ 		if (err == REFTABLE_OUTDATED_ERROR) {
+ 			/* Ignore error return, we want to propagate
+@@ -810,7 +818,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 	if (err)
+ 		goto done;
+ 
+-	if (!add->stack->opts.disable_auto_compact) {
++	if (!add->opts.disable_auto_compact) {
+ 		/*
+ 		 * Auto-compact the stack to keep the number of tables in
+ 		 * control. It is possible that a concurrent writer is already
+@@ -820,7 +828,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 		 * concurrent writer, which causes `REFTABLE_OUTDATED_ERROR`.
+ 		 * Both of these errors are benign, so we simply ignore them.
+ 		 */
+-		err = reftable_stack_auto_compact(add->stack);
++		err = reftable_stack_auto_compact(add->stack, &add->opts);
+ 		if (err < 0 && err != REFTABLE_LOCK_ERROR &&
+ 		    err != REFTABLE_OUTDATED_ERROR)
+ 			goto done;
+@@ -834,6 +842,7 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 
+ int reftable_stack_new_addition(struct reftable_addition **dest,
+ 				struct reftable_stack *st,
++				const struct reftable_write_options *opts,
+ 				unsigned int flags)
+ {
+ 	int err;
+@@ -842,7 +851,7 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
+ 	if (!*dest)
+ 		return REFTABLE_OUT_OF_MEMORY_ERROR;
+ 
+-	err = reftable_stack_init_addition(*dest, st, flags);
++	err = reftable_stack_init_addition(*dest, st, opts, flags);
+ 	if (err) {
+ 		reftable_free(*dest);
+ 		*dest = NULL;
+@@ -862,7 +871,7 @@ int reftable_addition_add(struct reftable_addition *add,
+ 	struct reftable_writer *wr = NULL;
+ 	struct reftable_tmpfile tab_file = REFTABLE_TMPFILE_INIT;
+ 	struct fd_writer writer = {
+-		.opts = &add->stack->opts,
++		.opts = &add->opts,
+ 	};
+ 	int err = 0;
+ 
+@@ -883,9 +892,9 @@ int reftable_addition_add(struct reftable_addition *add,
+ 	err = tmpfile_from_pattern(&tab_file, temp_tab_file_name.buf);
+ 	if (err < 0)
+ 		goto done;
+-	if (add->stack->opts.default_permissions) {
++	if (add->opts.default_permissions) {
+ 		if (chmod(tab_file.path,
+-			  add->stack->opts.default_permissions)) {
++			  add->opts.default_permissions)) {
+ 			err = REFTABLE_IO_ERROR;
+ 			goto done;
+ 		}
+@@ -893,7 +902,7 @@ int reftable_addition_add(struct reftable_addition *add,
+ 
+ 	writer.fd = tab_file.fd;
+ 	err = reftable_writer_new(&wr, fd_writer_write, fd_writer_flush,
+-				  &writer, &add->stack->opts);
++				  &writer, add->stack->opts.hash_id, &add->opts);
+ 	if (err < 0)
+ 		goto done;
+ 
+@@ -1066,13 +1075,14 @@ static int stack_write_compact(struct reftable_stack *st,
+ static int stack_compact_locked(struct reftable_stack *st,
+ 				size_t first, size_t last,
+ 				struct reftable_log_expiry_config *config,
++				const struct reftable_write_options *opts,
+ 				struct reftable_tmpfile *tab_file_out)
+ {
+ 	struct reftable_buf next_name = REFTABLE_BUF_INIT;
+ 	struct reftable_buf tab_file_path = REFTABLE_BUF_INIT;
+ 	struct reftable_writer *wr = NULL;
+ 	struct fd_writer writer=  {
+-		.opts = &st->opts,
++		.opts = opts,
+ 	};
+ 	struct reftable_tmpfile tab_file = REFTABLE_TMPFILE_INIT;
+ 	int err = 0;
+@@ -1094,15 +1104,15 @@ static int stack_compact_locked(struct reftable_stack *st,
+ 	if (err < 0)
+ 		goto done;
+ 
+-	if (st->opts.default_permissions &&
+-	    chmod(tab_file.path, st->opts.default_permissions) < 0) {
++	if (opts->default_permissions &&
++	    chmod(tab_file.path, opts->default_permissions) < 0) {
+ 		err = REFTABLE_IO_ERROR;
+ 		goto done;
  	}
+ 
+ 	writer.fd = tab_file.fd;
+ 	err = reftable_writer_new(&wr, fd_writer_write, fd_writer_flush,
+-				  &writer, &st->opts);
++				  &writer, st->opts.hash_id, opts);
+ 	if (err < 0)
+ 		goto done;
+ 
+@@ -1150,6 +1160,7 @@ enum stack_compact_range_flags {
+ static int stack_compact_range(struct reftable_stack *st,
+ 			       size_t first, size_t last,
+ 			       struct reftable_log_expiry_config *expiry,
++			       const struct reftable_write_options *opts,
+ 			       unsigned int flags)
+ {
+ 	struct reftable_buf tables_list_buf = REFTABLE_BUF_INIT;
+@@ -1175,7 +1186,7 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	 * Hold the lock so that we can read "tables.list" and lock all tables
+ 	 * which are part of the user-specified range.
+ 	 */
+-	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
++	err = flock_acquire(&tables_list_lock, st->list_file, opts->lock_timeout_ms);
+ 	if (err < 0)
+ 		goto done;
+ 
+@@ -1274,7 +1285,7 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	 * these tables may end up with an empty new table in case tombstones
+ 	 * end up cancelling out all refs in that range.
+ 	 */
+-	err = stack_compact_locked(st, first, last, expiry, &new_table);
++	err = stack_compact_locked(st, first, last, expiry, opts, &new_table);
+ 	if (err < 0) {
+ 		if (err != REFTABLE_EMPTY_TABLE_ERROR)
+ 			goto done;
+@@ -1286,13 +1297,13 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	 * "tables.list". We'll then replace the compacted range of tables with
+ 	 * the new table.
+ 	 */
+-	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
++	err = flock_acquire(&tables_list_lock, st->list_file, opts->lock_timeout_ms);
+ 	if (err < 0)
+ 		goto done;
+ 
+-	if (st->opts.default_permissions) {
++	if (opts->default_permissions) {
+ 		if (chmod(tables_list_lock.path,
+-			  st->opts.default_permissions) < 0) {
++			  opts->default_permissions) < 0) {
+ 			err = REFTABLE_IO_ERROR;
+ 			goto done;
+ 		}
+@@ -1513,10 +1524,16 @@ static int stack_compact_range(struct reftable_stack *st,
+ }
+ 
+ int reftable_stack_compact_all(struct reftable_stack *st,
++			       const struct reftable_write_options *opts,
+ 			       struct reftable_log_expiry_config *config)
+ {
++	struct reftable_write_options opts_default = { 0 };
+ 	size_t last = st->merged->tables_len ? st->merged->tables_len - 1 : 0;
+-	return stack_compact_range(st, 0, last, config, 0);
++
++	if (!opts)
++		opts = &opts_default;
++
++	return stack_compact_range(st, 0, last, config, opts, 0);
+ }
+ 
+ static int segment_size(struct segment *s)
+@@ -1601,6 +1618,7 @@ struct segment suggest_compaction_segment(uint64_t *sizes, size_t n,
+ }
+ 
+ static int stack_segments_for_compaction(struct reftable_stack *st,
++					 const struct reftable_write_options *opts,
+ 					 struct segment *seg)
+ {
+ 	int version = (st->opts.hash_id == REFTABLE_HASH_SHA1) ? 1 : 2;
+@@ -1615,13 +1633,14 @@ static int stack_segments_for_compaction(struct reftable_stack *st,
+ 		sizes[i] = st->tables[i]->size - overhead;
+ 
+ 	*seg = suggest_compaction_segment(sizes, st->merged->tables_len,
+-					  st->opts.auto_compaction_factor);
++					  opts->auto_compaction_factor);
+ 	reftable_free(sizes);
  
  	return 0;
  }
  
-+static const struct reftable_be_write_options *reftable_be_write_options(struct reftable_ref_store *refs)
-+{
-+	struct reftable_be_write_options *opts = &refs->write_opts_lazy_loaded;
-+	mode_t mask;
-+
-+	if (opts->initialized)
-+		return opts;
-+
-+	mask = umask(0);
-+	umask(mask);
-+
-+	opts->opts.default_permissions = calc_shared_perm(refs->base.repo, 0666 & ~mask);
-+	opts->opts.disable_auto_compact =
-+		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
-+	opts->opts.lock_timeout_ms = 100;
-+	opts->log_all_ref_updates = LOG_REFS_UNSET;
-+
-+	repo_config(refs->base.repo, reftable_be_config, refs);
-+
-+	/*
-+	 * It is somewhat unfortunate that we have to mirror the default block
-+	 * size of the reftable library here. But given that the write options
-+	 * wouldn't be updated by the library here, and given that we require
-+	 * the proper block size to trim reflog message so that they fit, we
-+	 * must set up a proper value here.
-+	 */
-+	if (!opts->opts.block_size)
-+		opts->opts.block_size = 4096;
-+
-+	opts->initialized = true;
-+	return opts;
-+}
-+
- static void reftable_be_reparent(const char *name UNUSED,
- 				 const char *old_cwd,
- 				 const char *new_cwd,
-@@ -391,10 +416,6 @@ static struct ref_store *reftable_be_init(struct repository *repo,
- 	struct strbuf refdir = STRBUF_INIT;
- 	struct strbuf path = STRBUF_INIT;
- 	bool is_worktree;
--	mode_t mask;
--
--	mask = umask(0);
--	umask(mask);
- 
- 	refs_compute_filesystem_location(gitdir, payload, &is_worktree, &refdir,
- 					 &ref_common_dir);
-@@ -413,23 +434,6 @@ static struct ref_store *reftable_be_init(struct repository *repo,
- 	default:
- 		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
+ static int update_segment_if_compaction_required(struct reftable_stack *st,
++						 const struct reftable_write_options *opts,
+ 						 struct segment *seg,
+ 						 bool use_geometric,
+ 						 bool *required)
+@@ -1638,7 +1657,7 @@ static int update_segment_if_compaction_required(struct reftable_stack *st,
+ 		return 0;
  	}
--	refs->write_options.default_permissions = calc_shared_perm(repo, 0666 & ~mask);
--	refs->write_options.disable_auto_compact =
--		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
--	refs->write_options.lock_timeout_ms = 100;
--	refs->log_all_ref_updates = LOG_REFS_UNSET;
+ 
+-	err = stack_segments_for_compaction(st, seg);
++	err = stack_segments_for_compaction(st, opts, seg);
+ 	if (err)
+ 		return err;
+ 
+@@ -1647,27 +1666,40 @@ static int update_segment_if_compaction_required(struct reftable_stack *st,
+ }
+ 
+ int reftable_stack_compaction_required(struct reftable_stack *st,
++				       const struct reftable_write_options *opts,
+ 				       bool use_heuristics,
+ 				       bool *required)
+ {
++	struct reftable_write_options opts_default = { 0 };
+ 	struct segment seg;
+-	return update_segment_if_compaction_required(st, &seg, use_heuristics,
+-						     required);
++
++	if (!opts)
++		opts = &opts_default;
++
++	return update_segment_if_compaction_required(st, opts, &seg,
++						     use_heuristics, required);
+ }
+ 
+-int reftable_stack_auto_compact(struct reftable_stack *st)
++int reftable_stack_auto_compact(struct reftable_stack *st,
++				const struct reftable_write_options *opts)
+ {
++	struct reftable_write_options opts_default = { 0 };
+ 	struct segment seg;
+ 	bool required;
+ 	int err;
+ 
+-	err = update_segment_if_compaction_required(st, &seg, true, &required);
++	if (!opts)
++		opts = &opts_default;
++
++	err = update_segment_if_compaction_required(st, opts, &seg, true,
++						    &required);
+ 	if (err)
+ 		return err;
+ 
+ 	if (required)
+ 		return stack_compact_range(st, seg.start, seg.end - 1,
+-					   NULL, STACK_COMPACT_RANGE_BEST_EFFORT);
++					   NULL, opts,
++					   STACK_COMPACT_RANGE_BEST_EFFORT);
+ 
+ 	return 0;
+ }
+@@ -1807,7 +1839,7 @@ static int reftable_stack_clean_locked(struct reftable_stack *st)
+ int reftable_stack_clean(struct reftable_stack *st)
+ {
+ 	struct reftable_addition *add = NULL;
+-	int err = reftable_stack_new_addition(&add, st, 0);
++	int err = reftable_stack_new_addition(&add, st, NULL, 0);
+ 	if (err < 0) {
+ 		goto done;
+ 	}
+diff --git a/reftable/stack.h b/reftable/stack.h
+index bc28f2998a..f7901e6c6f 100644
+--- a/reftable/stack.h
++++ b/reftable/stack.h
+@@ -20,7 +20,7 @@ struct reftable_stack {
+ 
+ 	char *reftable_dir;
+ 
+-	struct reftable_write_options opts;
++	struct reftable_stack_options opts;
+ 
+ 	struct reftable_table **tables;
+ 	size_t tables_len;
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 0133b64975..f850e9d599 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -80,9 +80,6 @@ static void options_set_defaults(struct reftable_write_options *opts)
+ 		opts->restart_interval = 16;
+ 	}
+ 
+-	if (opts->hash_id == 0) {
+-		opts->hash_id = REFTABLE_HASH_SHA1;
+-	}
+ 	if (opts->block_size == 0) {
+ 		opts->block_size = DEFAULT_BLOCK_SIZE;
+ 	}
+@@ -90,7 +87,7 @@ static void options_set_defaults(struct reftable_write_options *opts)
+ 
+ static int writer_version(struct reftable_writer *w)
+ {
+-	return (w->opts.hash_id == 0 || w->opts.hash_id == REFTABLE_HASH_SHA1) ?
++	return (w->hash_id == 0 || w->hash_id == REFTABLE_HASH_SHA1) ?
+ 			     1 :
+ 			     2;
+ }
+@@ -107,7 +104,7 @@ static int writer_write_header(struct reftable_writer *w, uint8_t *dest)
+ 	if (writer_version(w) == 2) {
+ 		uint32_t hash_id;
+ 
+-		switch (w->opts.hash_id) {
++		switch (w->hash_id) {
+ 		case REFTABLE_HASH_SHA1:
+ 			hash_id = REFTABLE_FORMAT_ID_SHA1;
+ 			break;
+@@ -134,7 +131,7 @@ static int writer_reinit_block_writer(struct reftable_writer *w, uint8_t typ)
+ 	reftable_buf_reset(&w->last_key);
+ 	ret = block_writer_init(&w->block_writer_data, typ, w->block,
+ 				w->opts.block_size, block_start,
+-				hash_size(w->opts.hash_id));
++				hash_size(w->hash_id));
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -147,7 +144,9 @@ static int writer_reinit_block_writer(struct reftable_writer *w, uint8_t typ)
+ int reftable_writer_new(struct reftable_writer **out,
+ 			ssize_t (*writer_func)(void *, const void *, size_t),
+ 			int (*flush_func)(void *),
+-			void *writer_arg, const struct reftable_write_options *_opts)
++			void *writer_arg,
++			enum reftable_hash hash_id,
++			const struct reftable_write_options *_opts)
+ {
+ 	struct reftable_write_options opts = {0};
+ 	struct reftable_writer *wp;
+@@ -162,6 +161,9 @@ int reftable_writer_new(struct reftable_writer **out,
+ 	if (opts.block_size >= (1 << 24))
+ 		return REFTABLE_API_ERROR;
+ 
++	if (!hash_id)
++		hash_id = REFTABLE_HASH_SHA1;
++
+ 	reftable_buf_init(&wp->block_writer_data.last_key);
+ 	reftable_buf_init(&wp->last_key);
+ 	reftable_buf_init(&wp->scratch);
+@@ -173,6 +175,7 @@ int reftable_writer_new(struct reftable_writer **out,
+ 	wp->write = writer_func;
+ 	wp->write_arg = writer_arg;
+ 	wp->opts = opts;
++	wp->hash_id = hash_id;
+ 	wp->flush = flush_func;
+ 	writer_reinit_block_writer(wp, REFTABLE_BLOCK_TYPE_REF);
+ 
+@@ -367,7 +370,7 @@ int reftable_writer_add_ref(struct reftable_writer *w,
+ 	if (!w->opts.skip_index_objects && reftable_ref_record_val1(ref)) {
+ 		reftable_buf_reset(&w->scratch);
+ 		err = reftable_buf_add(&w->scratch, (char *)reftable_ref_record_val1(ref),
+-				       hash_size(w->opts.hash_id));
++				       hash_size(w->hash_id));
+ 		if (err < 0)
+ 			goto out;
+ 
+@@ -379,7 +382,7 @@ int reftable_writer_add_ref(struct reftable_writer *w,
+ 	if (!w->opts.skip_index_objects && reftable_ref_record_val2(ref)) {
+ 		reftable_buf_reset(&w->scratch);
+ 		err = reftable_buf_add(&w->scratch, reftable_ref_record_val2(ref),
+-				       hash_size(w->opts.hash_id));
++				       hash_size(w->hash_id));
+ 		if (err < 0)
+ 			goto out;
+ 
+diff --git a/reftable/writer.h b/reftable/writer.h
+index 9f53610b27..c08fc413e1 100644
+--- a/reftable/writer.h
++++ b/reftable/writer.h
+@@ -27,6 +27,7 @@ struct reftable_writer {
+ 	uint64_t next;
+ 	uint64_t min_update_index, max_update_index;
+ 	struct reftable_write_options opts;
++	enum reftable_hash hash_id;
+ 
+ 	/* memory buffer for writing */
+ 	uint8_t *block;
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index b16c0722c8..fc49fafc34 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -174,7 +174,7 @@ static int dump_table(struct reftable_merged_table *mt)
+ static int dump_stack(const char *stackdir, uint32_t hash_id)
+ {
+ 	struct reftable_stack *stack = NULL;
+-	struct reftable_write_options opts = { .hash_id = hash_id };
++	struct reftable_stack_options opts = { .hash_id = hash_id };
+ 	struct reftable_merged_table *merged = NULL;
+ 
+ 	int err = reftable_new_stack(&stack, stackdir, &opts);
+diff --git a/t/unit-tests/lib-reftable.c b/t/unit-tests/lib-reftable.c
+index fdb5b11a20..19a3ac8b80 100644
+--- a/t/unit-tests/lib-reftable.c
++++ b/t/unit-tests/lib-reftable.c
+@@ -25,11 +25,12 @@ static int strbuf_writer_flush(void *arg UNUSED)
+ }
+ 
+ struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
++						 enum reftable_hash hash_id,
+ 						 struct reftable_write_options *opts)
+ {
+ 	struct reftable_writer *writer;
+ 	int ret = reftable_writer_new(&writer, &strbuf_writer_write, &strbuf_writer_flush,
+-				      buf, opts);
++				      buf, hash_id, opts);
+ 	cl_assert(!ret);
+ 	return writer;
+ }
+@@ -39,6 +40,7 @@ void cl_reftable_write_to_buf(struct reftable_buf *buf,
+ 			     size_t nrefs,
+ 			     struct reftable_log_record *logs,
+ 			     size_t nlogs,
++			     enum reftable_hash hash_id,
+ 			     struct reftable_write_options *_opts)
+ {
+ 	struct reftable_write_options opts = { 0 };
+@@ -66,7 +68,7 @@ void cl_reftable_write_to_buf(struct reftable_buf *buf,
+ 			min = ui;
+ 	}
+ 
+-	writer = cl_reftable_strbuf_writer(buf, &opts);
++	writer = cl_reftable_strbuf_writer(buf, hash_id, &opts);
+ 	ret = reftable_writer_set_limits(writer, min, max);
+ 	cl_assert(!ret);
+ 
+@@ -88,7 +90,7 @@ void cl_reftable_write_to_buf(struct reftable_buf *buf,
+ 		size_t off = i * (opts.block_size ? opts.block_size
+ 						  : DEFAULT_BLOCK_SIZE);
+ 		if (!off)
+-			off = header_size(opts.hash_id == REFTABLE_HASH_SHA256 ? 2 : 1);
++			off = header_size(hash_id == REFTABLE_HASH_SHA256 ? 2 : 1);
+ 		cl_assert(buf->buf[off] == 'r');
+ 	}
+ 
+diff --git a/t/unit-tests/lib-reftable.h b/t/unit-tests/lib-reftable.h
+index d7e6d3136f..caf443d147 100644
+--- a/t/unit-tests/lib-reftable.h
++++ b/t/unit-tests/lib-reftable.h
+@@ -10,6 +10,7 @@ struct reftable_buf;
+ void cl_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id);
+ 
+ struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
++						 enum reftable_hash hash_id,
+ 						 struct reftable_write_options *opts);
+ 
+ void cl_reftable_write_to_buf(struct reftable_buf *buf,
+@@ -17,4 +18,5 @@ void cl_reftable_write_to_buf(struct reftable_buf *buf,
+ 			     size_t nrecords,
+ 			     struct reftable_log_record *logs,
+ 			     size_t nlogs,
++			     enum reftable_hash hash_id,
+ 			     struct reftable_write_options *opts);
+diff --git a/t/unit-tests/u-reftable-merged.c b/t/unit-tests/u-reftable-merged.c
+index 54cb7fc2a7..21232c1e4f 100644
+--- a/t/unit-tests/u-reftable-merged.c
++++ b/t/unit-tests/u-reftable-merged.c
+@@ -34,7 +34,8 @@ merged_table_from_records(struct reftable_ref_record **refs,
+ 	cl_assert(*source != NULL);
+ 
+ 	for (size_t i = 0; i < n; i++) {
+-		cl_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
++		cl_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0,
++					 REFTABLE_HASH_SHA1, &opts);
+ 		block_source_from_buf(&(*source)[i], &buf[i]);
+ 
+ 		err = reftable_table_new(&(*tables)[i], &(*source)[i],
+@@ -357,7 +358,8 @@ merged_table_from_log_records(struct reftable_log_record **logs,
+ 	cl_assert(*source != NULL);
+ 
+ 	for (size_t i = 0; i < n; i++) {
+-		cl_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
++		cl_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i],
++					 REFTABLE_HASH_SHA1, &opts);
+ 		block_source_from_buf(&(*source)[i], &buf[i]);
+ 
+ 		err = reftable_table_new(&(*tables)[i], &(*source)[i],
+@@ -487,7 +489,8 @@ void test_reftable_merged__default_write_opts(void)
+ {
+ 	struct reftable_write_options opts = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1, &opts);
+ 	struct reftable_ref_record rec = {
+ 		.refname = (char *) "master",
+ 		.update_index = 1,
+diff --git a/t/unit-tests/u-reftable-readwrite.c b/t/unit-tests/u-reftable-readwrite.c
+index 4d8c4be5f1..5794b460c6 100644
+--- a/t/unit-tests/u-reftable-readwrite.c
++++ b/t/unit-tests/u-reftable-readwrite.c
+@@ -48,7 +48,6 @@ static void write_table(char ***names, struct reftable_buf *buf, int N,
+ {
+ 	struct reftable_write_options opts = {
+ 		.block_size = block_size,
+-		.hash_id = hash_id,
+ 	};
+ 	struct reftable_ref_record *refs;
+ 	struct reftable_log_record *logs;
+@@ -78,7 +77,7 @@ static void write_table(char ***names, struct reftable_buf *buf, int N,
+ 		logs[i].value.update.message = (char *) "message";
+ 	}
+ 
+-	cl_reftable_write_to_buf(buf, refs, N, logs, N, &opts);
++	cl_reftable_write_to_buf(buf, refs, N, logs, N, hash_id, &opts);
+ 
+ 	reftable_free(refs);
+ 	reftable_free(logs);
+@@ -103,6 +102,7 @@ void test_reftable_readwrite__log_buffer_size(void)
+ 					   .message = (char *) "commit: 9\n",
+ 				   } } };
+ 	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
+ 							      &opts);
+ 
+ 	/* This tests buffer extension for log compression. Must use a random
+@@ -143,6 +143,7 @@ void test_reftable_readwrite__log_overflow(void)
+ 		},
+ 	};
+ 	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
+ 							      &opts);
+ 
+ 	memset(msg, 'x', sizeof(msg) - 1);
+@@ -157,6 +158,7 @@ void test_reftable_readwrite__log_write_limits(void)
+ 	struct reftable_write_options opts = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+ 	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
+ 							      &opts);
+ 	struct reftable_log_record log = {
+ 		.refname = (char *)"refs/head/master",
+@@ -202,7 +204,9 @@ void test_reftable_readwrite__log_write_read(void)
+ 	struct reftable_table *table;
+ 	struct reftable_block_source source = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
++							      &opts);
+ 	const struct reftable_stats *stats = NULL;
+ 	int N = 2, i;
+ 	char **names;
+@@ -299,6 +303,7 @@ void test_reftable_readwrite__log_zlib_corruption(void)
+ 	struct reftable_block_source source = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+ 	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
+ 							      &opts);
+ 	const struct reftable_stats *stats = NULL;
+ 	char message[100] = { 0 };
+@@ -531,6 +536,7 @@ static void t_table_refs_for(int indexed)
+ 	struct reftable_block_source source = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+ 	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
+ 							      &opts);
+ 	struct reftable_iterator it = { 0 };
+ 	int N = 50, j, i;
+@@ -622,7 +628,9 @@ void test_reftable_readwrite__write_empty_table(void)
+ {
+ 	struct reftable_write_options opts = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
++							      &opts);
+ 	struct reftable_block_source source = { 0 };
+ 	struct reftable_table *table = NULL;
+ 	struct reftable_ref_record rec = { 0 };
+@@ -660,7 +668,9 @@ void test_reftable_readwrite__write_object_id_min_length(void)
+ 		.block_size = 75,
+ 	};
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
++							      &opts);
+ 	struct reftable_ref_record ref = {
+ 		.update_index = 1,
+ 		.value_type = REFTABLE_REF_VAL1,
+@@ -691,7 +701,9 @@ void test_reftable_readwrite__write_object_id_length(void)
+ 		.block_size = 75,
+ 	};
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
++							      &opts);
+ 	struct reftable_ref_record ref = {
+ 		.update_index = 1,
+ 		.value_type = REFTABLE_REF_VAL1,
+@@ -721,7 +733,9 @@ void test_reftable_readwrite__write_empty_key(void)
+ {
+ 	struct reftable_write_options opts = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
++							      &opts);
+ 	struct reftable_ref_record ref = {
+ 		.refname = (char *) "",
+ 		.update_index = 1,
+@@ -740,7 +754,9 @@ void test_reftable_readwrite__write_key_order(void)
+ {
+ 	struct reftable_write_options opts = { 0 };
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf,
++							      REFTABLE_HASH_SHA1,
++							      &opts);
+ 	struct reftable_ref_record refs[2] = {
+ 		{
+ 			.refname = (char *) "b",
+@@ -787,7 +803,8 @@ void test_reftable_readwrite__write_multiple_indices(void)
+ 	int i;
+ 	int err;
+ 
+-	writer = cl_reftable_strbuf_writer(&writer_buf, &opts);
++	writer = cl_reftable_strbuf_writer(&writer_buf, REFTABLE_HASH_SHA1,
++					   &opts);
+ 	reftable_writer_set_limits(writer, 1, 1);
+ 	for (i = 0; i < 100; i++) {
+ 		struct reftable_ref_record ref = {
+@@ -861,7 +878,8 @@ void test_reftable_readwrite__write_multi_level_index(void)
+ 	struct reftable_table *table;
+ 	int err;
+ 
+-	writer = cl_reftable_strbuf_writer(&writer_buf, &opts);
++	writer = cl_reftable_strbuf_writer(&writer_buf, REFTABLE_HASH_SHA1,
++					   &opts);
+ 	reftable_writer_set_limits(writer, 1, 1);
+ 	for (size_t i = 0; i < 200; i++) {
+ 		struct reftable_ref_record ref = {
+diff --git a/t/unit-tests/u-reftable-stack.c b/t/unit-tests/u-reftable-stack.c
+index b8110cdeee..e6c1635940 100644
+--- a/t/unit-tests/u-reftable-stack.c
++++ b/t/unit-tests/u-reftable-stack.c
+@@ -111,10 +111,9 @@ static int write_test_ref(struct reftable_writer *wr, void *arg)
+ static void write_n_ref_tables(struct reftable_stack *st,
+ 			       size_t n)
+ {
+-	int disable_auto_compact;
 -
--	repo_config(repo, reftable_be_config, refs);
+-	disable_auto_compact = st->opts.disable_auto_compact;
+-	st->opts.disable_auto_compact = 1;
++	struct reftable_write_options opts = {
++		.disable_auto_compact = 1,
++	};
+ 
+ 	for (size_t i = 0; i < n; i++) {
+ 		struct reftable_ref_record ref = {
+@@ -128,10 +127,8 @@ static void write_n_ref_tables(struct reftable_stack *st,
+ 		cl_reftable_set_hash(ref.value.val1, i, REFTABLE_HASH_SHA1);
+ 
+ 		cl_assert_equal_i(reftable_stack_add(st,
+-						     &write_test_ref, &ref, 0), 0);
++						     &write_test_ref, &ref, &opts, 0), 0);
+ 	}
 -
--	/*
--	 * It is somewhat unfortunate that we have to mirror the default block
--	 * size of the reftable library here. But given that the write options
--	 * wouldn't be updated by the library here, and given that we require
--	 * the proper block size to trim reflog message so that they fit, we
--	 * must set up a proper value here.
--	 */
--	if (!refs->write_options.block_size)
--		refs->write_options.block_size = 4096;
+-	st->opts.disable_auto_compact = disable_auto_compact;
+ }
+ 
+ struct write_log_arg {
+@@ -168,10 +165,10 @@ void test_reftable_stack__add_one(void)
+ 	struct stat stat_result = { 0 };
+ 	int err;
+ 
+-	err = reftable_new_stack(&st, dir, &opts);
++	err = reftable_new_stack(&st, dir, NULL);
+ 	cl_assert(!err);
+ 
+-	err = reftable_stack_add(st, write_test_ref, &ref, 0);
++	err = reftable_stack_add(st, write_test_ref, &ref, &opts, 0);
+ 	cl_assert(!err);
+ 
+ 	err = reftable_stack_read_ref(st, ref.refname, &dest);
+@@ -210,7 +207,6 @@ void test_reftable_stack__add_one(void)
+ 
+ void test_reftable_stack__uptodate(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st1 = NULL;
+ 	struct reftable_stack *st2 = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+@@ -232,15 +228,15 @@ void test_reftable_stack__uptodate(void)
+ 	/* simulate multi-process access to the same stack
+ 	   by creating two stacks for the same directory.
+ 	 */
+-	cl_assert_equal_i(reftable_new_stack(&st1, dir, &opts), 0);
+-	cl_assert_equal_i(reftable_new_stack(&st2, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
++	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st1, write_test_ref,
+-					     &ref1, 0), 0);
++					     &ref1, NULL, 0), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st2, write_test_ref,
+-					     &ref2, 0), REFTABLE_OUTDATED_ERROR);
++					     &ref2, NULL, 0), REFTABLE_OUTDATED_ERROR);
+ 	cl_assert_equal_i(reftable_stack_reload(st2), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st2, write_test_ref,
+-					     &ref2, 0), 0);
++					     &ref2, NULL, 0), 0);
+ 	reftable_stack_destroy(st1);
+ 	reftable_stack_destroy(st2);
+ 	clear_dir(dir);
+@@ -249,7 +245,6 @@ void test_reftable_stack__uptodate(void)
+ void test_reftable_stack__transaction_api(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	struct reftable_addition *add = NULL;
+ 
+@@ -261,11 +256,11 @@ void test_reftable_stack__transaction_api(void)
+ 	};
+ 	struct reftable_ref_record dest = { 0 };
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	reftable_addition_destroy(add);
+ 
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st, 0), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st, NULL, 0), 0);
+ 	cl_assert_equal_i(reftable_addition_add(add, write_test_ref,
+ 						&ref), 0);
+ 	cl_assert_equal_i(reftable_addition_commit(add), 0);
+@@ -306,7 +301,7 @@ void test_reftable_stack__transaction_with_reload(void)
+ 
+ 	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st1, 0), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st1, NULL, 0), 0);
+ 	cl_assert_equal_i(reftable_addition_add(add, write_test_ref,
+ 						&refs[0]), 0);
+ 	cl_assert_equal_i(reftable_addition_commit(add), 0);
+@@ -317,9 +312,9 @@ void test_reftable_stack__transaction_with_reload(void)
+ 	 * create the addition and lock the stack by default, but allow the
+ 	 * reload to happen when REFTABLE_STACK_NEW_ADDITION_RELOAD is set.
+ 	 */
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, 0),
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, NULL, 0),
+ 						      REFTABLE_OUTDATED_ERROR);
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st2,
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, NULL,
+ 						      REFTABLE_STACK_NEW_ADDITION_RELOAD), 0);
+ 	cl_assert_equal_i(reftable_addition_add(add, write_test_ref,
+ 						&refs[1]), 0);
+@@ -342,12 +337,11 @@ void test_reftable_stack__transaction_with_reload(void)
+ void test_reftable_stack__transaction_api_performs_auto_compaction(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = {0};
+ 	struct reftable_addition *add = NULL;
+ 	struct reftable_stack *st = NULL;
+ 	size_t n = 20;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	for (size_t i = 0; i <= n; i++) {
+ 		struct reftable_ref_record ref = {
+@@ -356,6 +350,9 @@ void test_reftable_stack__transaction_api_performs_auto_compaction(void)
+ 			.value.symref = (char *) "master",
+ 		};
+ 		char name[100];
++		struct reftable_write_options write_opts = {
++			.disable_auto_compact = (i != n),
++		};
+ 
+ 		snprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
+ 		ref.refname = name;
+@@ -365,10 +362,8 @@ void test_reftable_stack__transaction_api_performs_auto_compaction(void)
+ 		 * we can ensure that we indeed honor this setting and have
+ 		 * better control over when exactly auto compaction runs.
+ 		 */
+-		st->opts.disable_auto_compact = i != n;
+-
+ 		cl_assert_equal_i(reftable_stack_new_addition(&add,
+-							      st, 0), 0);
++							      st, &write_opts, 0), 0);
+ 		cl_assert_equal_i(reftable_addition_add(add,
+ 							write_test_ref, &ref), 0);
+ 		cl_assert_equal_i(reftable_addition_commit(add), 0);
+@@ -398,15 +393,14 @@ void test_reftable_stack__auto_compaction_fails_gracefully(void)
+ 		.value_type = REFTABLE_REF_VAL1,
+ 		.value.val1 = {0x01},
+ 	};
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st;
+ 	struct reftable_buf table_path = REFTABLE_BUF_INIT;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	int err;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref, 0), 0);
++					     &ref, NULL, 0), 0);
+ 	cl_assert_equal_i(st->merged->tables_len, 1);
+ 	cl_assert_equal_i(st->stats.attempts, 0);
+ 	cl_assert_equal_i(st->stats.failures, 0);
+@@ -424,7 +418,7 @@ void test_reftable_stack__auto_compaction_fails_gracefully(void)
+ 	write_file_buf(table_path.buf, "", 0);
+ 
+ 	ref.update_index = 2;
+-	err = reftable_stack_add(st, write_test_ref, &ref, 0);
++	err = reftable_stack_add(st, write_test_ref, &ref, NULL, 0);
+ 	cl_assert(!err);
+ 	cl_assert_equal_i(st->merged->tables_len, 2);
+ 	cl_assert_equal_i(st->stats.attempts, 1);
+@@ -443,7 +437,6 @@ static int write_error(struct reftable_writer *wr UNUSED, void *arg)
+ void test_reftable_stack__update_index_check(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	struct reftable_ref_record ref1 = {
+ 		.refname = (char *) "name1",
+@@ -458,11 +451,11 @@ void test_reftable_stack__update_index_check(void)
+ 		.value.symref = (char *) "master",
+ 	};
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref1, 0), 0);
++					     &ref1, NULL, 0), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref2, 0), REFTABLE_API_ERROR);
++					     &ref2, NULL, 0), REFTABLE_API_ERROR);
+ 	reftable_stack_destroy(st);
+ 	clear_dir(dir);
+ }
+@@ -470,14 +463,13 @@ void test_reftable_stack__update_index_check(void)
+ void test_reftable_stack__lock_failure(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	int i;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	for (i = -1; i != REFTABLE_EMPTY_TABLE_ERROR; i--)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_error,
+-						     &i, 0), i);
++						     &i, NULL, 0), i);
+ 
+ 	reftable_stack_destroy(st);
+ 	clear_dir(dir);
+@@ -499,7 +491,7 @@ void test_reftable_stack__add(void)
+ 	size_t i, N = ARRAY_SIZE(refs);
+ 	int err = 0;
+ 
+-	err = reftable_new_stack(&st, dir, &opts);
++	err = reftable_new_stack(&st, dir, NULL);
+ 	cl_assert(!err);
+ 
+ 	for (i = 0; i < N; i++) {
+@@ -521,7 +513,7 @@ void test_reftable_stack__add(void)
+ 
+ 	for (i = 0; i < N; i++)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &refs[i], 0), 0);
++						     &refs[i], &opts, 0), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct write_log_arg arg = {
+@@ -529,10 +521,10 @@ void test_reftable_stack__add(void)
+ 			.update_index = reftable_stack_next_update_index(st),
+ 		};
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, 0), 0);
++						     &arg, &opts, 0), 0);
+ 	}
+ 
+-	cl_assert_equal_i(reftable_stack_compact_all(st, NULL), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st, &opts, NULL), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct reftable_ref_record dest = { 0 };
+@@ -584,7 +576,6 @@ void test_reftable_stack__add(void)
+ 
+ void test_reftable_stack__iterator(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	struct reftable_ref_record refs[10] = { 0 };
+@@ -593,7 +584,7 @@ void test_reftable_stack__iterator(void)
+ 	size_t N = ARRAY_SIZE(refs), i;
+ 	int err;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		refs[i].refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
+@@ -613,7 +604,7 @@ void test_reftable_stack__iterator(void)
+ 
+ 	for (i = 0; i < N; i++)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &refs[i], 0), 0);
++						     &refs[i], NULL, 0), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct write_log_arg arg = {
+@@ -622,7 +613,7 @@ void test_reftable_stack__iterator(void)
+ 		};
+ 
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, 0), 0);
++						     &arg, NULL, 0), 0);
+ 	}
+ 
+ 	reftable_stack_init_ref_iterator(st, &it);
+@@ -669,9 +660,6 @@ void test_reftable_stack__iterator(void)
+ 
+ void test_reftable_stack__log_normalize(void)
+ {
+-	struct reftable_write_options opts = {
+-		0,
+-	};
+ 	struct reftable_stack *st = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	struct reftable_log_record input = {
+@@ -693,15 +681,15 @@ void test_reftable_stack__log_normalize(void)
+ 		.update_index = 1,
+ 	};
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	input.value.update.message = (char *) "one\ntwo";
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-					     &arg, 0), REFTABLE_API_ERROR);
++					     &arg, NULL, 0), REFTABLE_API_ERROR);
+ 
+ 	input.value.update.message = (char *) "one";
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-					     &arg, 0), 0);
++					     &arg, NULL, 0), 0);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, input.refname,
+ 						  &dest), 0);
+ 	cl_assert_equal_s(dest.value.update.message, "one\n");
+@@ -709,7 +697,7 @@ void test_reftable_stack__log_normalize(void)
+ 	input.value.update.message = (char *) "two\n";
+ 	arg.update_index = 2;
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-					     &arg, 0), 0);
++					     &arg, NULL, 0), 0);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, input.refname,
+ 						  &dest), 0);
+ 	cl_assert_equal_s(dest.value.update.message, "two\n");
+@@ -723,7 +711,6 @@ void test_reftable_stack__log_normalize(void)
+ void test_reftable_stack__tombstone(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	struct reftable_ref_record refs[2] = { 0 };
+ 	struct reftable_log_record logs[2] = { 0 };
+@@ -731,7 +718,7 @@ void test_reftable_stack__tombstone(void)
+ 	struct reftable_ref_record dest = { 0 };
+ 	struct reftable_log_record log_dest = { 0 };
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	/* even entries add the refs, odd entries delete them. */
+ 	for (i = 0; i < N; i++) {
+@@ -760,7 +747,7 @@ void test_reftable_stack__tombstone(void)
+ 	}
+ 	for (i = 0; i < N; i++)
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &refs[i], 0), 0);
++						     &refs[i], NULL, 0), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		struct write_log_arg arg = {
+@@ -768,7 +755,7 @@ void test_reftable_stack__tombstone(void)
+ 			.update_index = reftable_stack_next_update_index(st),
+ 		};
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, 0), 0);
++						     &arg, NULL, 0), 0);
+ 	}
+ 
+ 	cl_assert_equal_i(reftable_stack_read_ref(st, "branch",
+@@ -779,7 +766,7 @@ void test_reftable_stack__tombstone(void)
+ 						  &log_dest), 1);
+ 	reftable_log_record_release(&log_dest);
+ 
+-	cl_assert_equal_i(reftable_stack_compact_all(st, NULL), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st, NULL, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_read_ref(st, "branch",
+ 						  &dest), 1);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, "branch",
+@@ -799,7 +786,6 @@ void test_reftable_stack__tombstone(void)
+ void test_reftable_stack__hash_id(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 
+ 	struct reftable_ref_record ref = {
+@@ -808,15 +794,14 @@ void test_reftable_stack__hash_id(void)
+ 		.value.symref = (char *) "target",
+ 		.update_index = 1,
+ 	};
+-	struct reftable_write_options opts32 = { .hash_id = REFTABLE_HASH_SHA256 };
++	struct reftable_stack_options opts32 = { .hash_id = REFTABLE_HASH_SHA256 };
+ 	struct reftable_stack *st32 = NULL;
+-	struct reftable_write_options opts_default = { 0 };
+ 	struct reftable_stack *st_default = NULL;
+ 	struct reftable_ref_record dest = { 0 };
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-					     &ref, 0), 0);
++					     &ref, NULL, 0), 0);
+ 
+ 	/* can't read it with the wrong hash ID. */
+ 	cl_assert_equal_i(reftable_new_stack(&st32, dir,
+@@ -824,7 +809,7 @@ void test_reftable_stack__hash_id(void)
+ 
+ 	/* check that we can read it back with default opts too. */
+ 	cl_assert_equal_i(reftable_new_stack(&st_default, dir,
+-					     &opts_default), 0);
++					     NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_read_ref(st_default, "master",
+ 						  &dest), 0);
+ 	cl_assert(reftable_ref_record_equal(&ref, &dest,
+@@ -855,7 +840,6 @@ void test_reftable_stack__suggest_compaction_segment_nothing(void)
+ void test_reftable_stack__reflog_expire(void)
+ {
+ 	char *dir = get_tmp_dir(__LINE__);
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	struct reftable_log_record logs[20] = { 0 };
+ 	size_t i, N = ARRAY_SIZE(logs) - 1;
+@@ -864,7 +848,7 @@ void test_reftable_stack__reflog_expire(void)
+ 	};
+ 	struct reftable_log_record log = { 0 };
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	for (i = 1; i <= N; i++) {
+ 		char buf[256];
+@@ -885,18 +869,18 @@ void test_reftable_stack__reflog_expire(void)
+ 			.update_index = reftable_stack_next_update_index(st),
+ 		};
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_log,
+-						     &arg, 0), 0);
++						     &arg, NULL, 0), 0);
+ 	}
+ 
+-	cl_assert_equal_i(reftable_stack_compact_all(st, NULL), 0);
+-	cl_assert_equal_i(reftable_stack_compact_all(st, &expiry), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st, NULL, NULL), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st, NULL, &expiry), 0);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, logs[9].refname,
+ 						  &log), 1);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, logs[11].refname,
+ 						  &log), 0);
+ 
+ 	expiry.min_update_index = 15;
+-	cl_assert_equal_i(reftable_stack_compact_all(st, &expiry), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st, NULL, &expiry), 0);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, logs[14].refname,
+ 						  &log), 1);
+ 	cl_assert_equal_i(reftable_stack_read_log(st, logs[16].refname,
+@@ -918,15 +902,14 @@ static int write_nothing(struct reftable_writer *wr, void *arg UNUSED)
+ 
+ void test_reftable_stack__empty_add(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	struct reftable_stack *st2 = NULL;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_add(st, write_nothing,
+-					     NULL, 0), 0);
+-	cl_assert_equal_i(reftable_new_stack(&st2, dir, &opts), 0);
++					     NULL, NULL, 0), 0);
++	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
+ 	clear_dir(dir);
+ 	reftable_stack_destroy(st);
+ 	reftable_stack_destroy(st2);
+@@ -952,7 +935,7 @@ void test_reftable_stack__auto_compaction(void)
+ 	size_t i, N = 100;
+ 	int err;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		char name[100];
+@@ -964,10 +947,10 @@ void test_reftable_stack__auto_compaction(void)
+ 		};
+ 		snprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
+ 
+-		err = reftable_stack_add(st, write_test_ref, &ref, 0);
++		err = reftable_stack_add(st, write_test_ref, &ref, &opts, 0);
+ 		cl_assert(!err);
+ 
+-		err = reftable_stack_auto_compact(st);
++		err = reftable_stack_auto_compact(st, &opts);
+ 		cl_assert(!err);
+ 		cl_assert(i < 2 || st->merged->tables_len < 2 * fastlogN(i, 2));
+ 	}
+@@ -989,7 +972,7 @@ void test_reftable_stack__auto_compaction_factor(void)
+ 	size_t N = 100;
+ 	int err;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	for (size_t i = 0; i < N; i++) {
+ 		char name[20];
+@@ -1000,7 +983,7 @@ void test_reftable_stack__auto_compaction_factor(void)
+ 		};
+ 		xsnprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
+ 
+-		err = reftable_stack_add(st, &write_test_ref, &ref, 0);
++		err = reftable_stack_add(st, &write_test_ref, &ref, &opts, 0);
+ 		cl_assert(!err);
+ 
+ 		cl_assert(i < 5 || st->merged->tables_len < 5 * fastlogN(i, 5));
+@@ -1020,7 +1003,7 @@ void test_reftable_stack__auto_compaction_with_locked_tables(void)
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	int err;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	write_n_ref_tables(st, 5);
+ 	cl_assert_equal_i(st->merged->tables_len, 5);
+@@ -1042,7 +1025,7 @@ void test_reftable_stack__auto_compaction_with_locked_tables(void)
+ 	 * would in theory compact all tables, due to the preexisting lock we
+ 	 * only compact the newest two tables.
+ 	 */
+-	err = reftable_stack_auto_compact(st);
++	err = reftable_stack_auto_compact(st, &opts);
+ 	cl_assert(!err);
+ 	cl_assert_equal_i(st->stats.failures, 0);
+ 	cl_assert_equal_i(st->merged->tables_len, 4);
+@@ -1054,12 +1037,11 @@ void test_reftable_stack__auto_compaction_with_locked_tables(void)
+ 
+ void test_reftable_stack__add_performs_auto_compaction(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	size_t i, n = 20;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	for (i = 0; i <= n; i++) {
+ 		struct reftable_ref_record ref = {
+@@ -1067,6 +1049,9 @@ void test_reftable_stack__add_performs_auto_compaction(void)
+ 			.value_type = REFTABLE_REF_SYMREF,
+ 			.value.symref = (char *) "master",
+ 		};
++		struct reftable_write_options write_opts = {
++			.disable_auto_compact = (i != n),
++		};
+ 		bool required = false;
+ 		char buf[128];
+ 
+@@ -1075,20 +1060,18 @@ void test_reftable_stack__add_performs_auto_compaction(void)
+ 		 * we can ensure that we indeed honor this setting and have
+ 		 * better control over when exactly auto compaction runs.
+ 		 */
+-		st->opts.disable_auto_compact = i != n;
+-
+ 		snprintf(buf, sizeof(buf), "branch-%04"PRIuMAX, (uintmax_t)i);
+ 		ref.refname = buf;
+ 
+ 		cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
+-						     &ref, 0), 0);
++						     &ref, &write_opts, 0), 0);
+ 
+ 		/*
+ 		 * The stack length should grow continuously for all runs where
+ 		 * auto compaction is disabled. When enabled, we should merge
+ 		 * all tables in the stack.
+ 		 */
+-		cl_assert_equal_i(reftable_stack_compaction_required(st, true, &required), 0);
++		cl_assert_equal_i(reftable_stack_compaction_required(st, NULL, true, &required), 0);
+ 		if (i != n) {
+ 			cl_assert_equal_i(st->merged->tables_len, i + 1);
+ 			if (i < 1)
+@@ -1115,7 +1098,7 @@ void test_reftable_stack__compaction_with_locked_tables(void)
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	int err;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	write_n_ref_tables(st, 3);
+ 	cl_assert_equal_i(st->merged->tables_len, 3);
+@@ -1131,7 +1114,7 @@ void test_reftable_stack__compaction_with_locked_tables(void)
+ 	 * Compaction is expected to fail given that we were not able to
+ 	 * compact all tables.
+ 	 */
+-	err = reftable_stack_compact_all(st, NULL);
++	err = reftable_stack_compact_all(st, &opts, NULL);
+ 	cl_assert_equal_i(err, REFTABLE_LOCK_ERROR);
+ 	cl_assert_equal_i(st->stats.failures, 1);
+ 	cl_assert_equal_i(st->merged->tables_len, 3);
+@@ -1143,15 +1126,14 @@ void test_reftable_stack__compaction_with_locked_tables(void)
+ 
+ void test_reftable_stack__compaction_concurrent(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st1 = NULL, *st2 = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st1, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
+ 	write_n_ref_tables(st1, 3);
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st2, dir, &opts), 0);
+-	cl_assert_equal_i(reftable_stack_compact_all(st1, NULL), 0);
++	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st1, NULL, NULL), 0);
+ 
+ 	reftable_stack_destroy(st1);
+ 	reftable_stack_destroy(st2);
+@@ -1171,20 +1153,19 @@ static void unclean_stack_close(struct reftable_stack *st)
+ 
+ void test_reftable_stack__compaction_concurrent_clean(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st1 = NULL, *st2 = NULL, *st3 = NULL;
+ 	char *dir = get_tmp_dir(__LINE__);
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st1, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
+ 	write_n_ref_tables(st1, 3);
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st2, dir, &opts), 0);
+-	cl_assert_equal_i(reftable_stack_compact_all(st1, NULL), 0);
++	cl_assert_equal_i(reftable_new_stack(&st2, dir, NULL), 0);
++	cl_assert_equal_i(reftable_stack_compact_all(st1, NULL, NULL), 0);
+ 
+ 	unclean_stack_close(st1);
+ 	unclean_stack_close(st2);
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st3, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st3, dir, NULL), 0);
+ 	cl_assert_equal_i(reftable_stack_clean(st3), 0);
+ 	cl_assert_equal_i(count_dir_entries(dir), 2);
+ 
+@@ -1197,7 +1178,6 @@ void test_reftable_stack__compaction_concurrent_clean(void)
+ 
+ void test_reftable_stack__read_across_reload(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st1 = NULL, *st2 = NULL;
+ 	struct reftable_ref_record rec = { 0 };
+ 	struct reftable_iterator it = { 0 };
+@@ -1205,17 +1185,17 @@ void test_reftable_stack__read_across_reload(void)
+ 	int err;
+ 
+ 	/* Create a first stack and set up an iterator for it. */
+-	cl_assert_equal_i(reftable_new_stack(&st1, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st1, dir, NULL), 0);
+ 	write_n_ref_tables(st1, 2);
+ 	cl_assert_equal_i(st1->merged->tables_len, 2);
+ 	reftable_stack_init_ref_iterator(st1, &it);
+ 	cl_assert_equal_i(reftable_iterator_seek_ref(&it, ""), 0);
+ 
+ 	/* Set up a second stack for the same directory and compact it. */
+-	err = reftable_new_stack(&st2, dir, &opts);
++	err = reftable_new_stack(&st2, dir, NULL);
+ 	cl_assert(!err);
+ 	cl_assert_equal_i(st2->merged->tables_len, 2);
+-	err = reftable_stack_compact_all(st2, NULL);
++	err = reftable_stack_compact_all(st2, NULL, NULL);
+ 	cl_assert(!err);
+ 	cl_assert_equal_i(st2->merged->tables_len, 1);
+ 
+@@ -1244,7 +1224,6 @@ void test_reftable_stack__read_across_reload(void)
+ 
+ void test_reftable_stack__reload_with_missing_table(void)
+ {
+-	struct reftable_write_options opts = { 0 };
+ 	struct reftable_stack *st = NULL;
+ 	struct reftable_ref_record rec = { 0 };
+ 	struct reftable_iterator it = { 0 };
+@@ -1253,7 +1232,7 @@ void test_reftable_stack__reload_with_missing_table(void)
+ 	int err;
+ 
+ 	/* Create a first stack and set up an iterator for it. */
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 	write_n_ref_tables(st, 2);
+ 	cl_assert_equal_i(st->merged->tables_len, 2);
+ 	reftable_stack_init_ref_iterator(st, &it);
+@@ -1320,11 +1299,11 @@ void test_reftable_stack__invalid_limit_updates(void)
+ 	char *dir = get_tmp_dir(__LINE__);
+ 	struct reftable_stack *st = NULL;
+ 
+-	cl_assert_equal_i(reftable_new_stack(&st, dir, &opts), 0);
++	cl_assert_equal_i(reftable_new_stack(&st, dir, NULL), 0);
+ 
+ 	reftable_addition_destroy(add);
+ 
+-	cl_assert_equal_i(reftable_stack_new_addition(&add, st, 0), 0);
++	cl_assert_equal_i(reftable_stack_new_addition(&add, st, &opts, 0), 0);
  
  	/*
- 	 * Set up the main reftable stack that is hosted in GIT_COMMON_DIR.
-@@ -998,7 +1002,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
- 		struct reftable_addition *addition;
+ 	 * write_limits_after_ref also updates the update indexes after adding
+diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
+index 14fae8b199..fae478ee04 100644
+--- a/t/unit-tests/u-reftable-table.c
++++ b/t/unit-tests/u-reftable-table.c
+@@ -22,7 +22,8 @@ void test_reftable_table__seek_once(void)
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+ 	int ret;
  
- 		ret = reftable_stack_new_addition(&addition, be->stack,
--						  &refs->write_options,
-+						  &reftable_be_write_options(refs)->opts,
- 						  REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 		if (ret) {
- 			if (ret == REFTABLE_LOCK_ERROR)
-@@ -1437,6 +1441,26 @@ static int transaction_update_cmp(const void *a, const void *b)
- 	return strcmp(update_a->update->refname, update_b->update->refname);
- }
+-	cl_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0, NULL);
++	cl_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0,
++				 REFTABLE_HASH_SHA1, NULL);
+ 	block_source_from_buf(&source, &buf);
  
-+static int should_write_log(struct reftable_ref_store *refs, const char *refname)
-+{
-+	enum log_refs_config log_refs_cfg = reftable_be_write_options(refs)->log_all_ref_updates;
-+	if (log_refs_cfg == LOG_REFS_UNSET)
-+		log_refs_cfg = is_bare_repository() ? LOG_REFS_NONE : LOG_REFS_NORMAL;
-+
-+	switch (log_refs_cfg) {
-+	case LOG_REFS_NONE:
-+		return refs_reflog_exists(&refs->base, refname);
-+	case LOG_REFS_ALWAYS:
-+		return 1;
-+	case LOG_REFS_NORMAL:
-+		if (should_autocreate_reflog(log_refs_cfg, refname))
-+			return 1;
-+		return refs_reflog_exists(&refs->base, refname);
-+	default:
-+		BUG("unhandled core.logAllRefUpdates value %d", log_refs_cfg);
-+	}
-+}
-+
- static int write_transaction_table(struct reftable_writer *writer, void *cb_data)
- {
- 	struct write_transaction_table_arg *arg = cb_data;
-@@ -1571,7 +1595,7 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
- 				memcpy(log->value.update.old_hash,
- 				       tx_update->current_oid.hash, GIT_MAX_RAWSZ);
- 				log->value.update.message =
--					xstrndup(u->msg, arg->refs->write_options.block_size / 2);
-+					xstrndup(u->msg, reftable_be_write_options(arg->refs)->opts.block_size / 2);
- 			}
- 		}
+ 	ret = reftable_table_new(&table, &source, "name");
+@@ -64,7 +65,7 @@ void test_reftable_table__reseek(void)
+ 	int ret;
  
-@@ -1687,9 +1711,9 @@ static int reftable_be_optimize(struct ref_store *ref_store,
- 		stack = refs->main_backend.stack;
+ 	cl_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records),
+-				 NULL, 0, NULL);
++				 NULL, 0, REFTABLE_HASH_SHA1, NULL);
+ 	block_source_from_buf(&source, &buf);
  
- 	if (opts->flags & REFS_OPTIMIZE_AUTO)
--		ret = reftable_stack_auto_compact(stack, &refs->write_options);
-+		ret = reftable_stack_auto_compact(stack, &reftable_be_write_options(refs)->opts);
- 	else
--		ret = reftable_stack_compact_all(stack, &refs->write_options, NULL);
-+		ret = reftable_stack_compact_all(stack, &reftable_be_write_options(refs)->opts, NULL);
- 	if (ret < 0) {
- 		ret = error(_("unable to compact stack: %s"),
- 			    reftable_error_str(ret));
-@@ -1723,7 +1747,7 @@ static int reftable_be_optimize_required(struct ref_store *ref_store,
- 	if (opts->flags & REFS_OPTIMIZE_AUTO)
- 		use_heuristics = true;
+ 	ret = reftable_table_new(&table, &source, "name");
+@@ -147,7 +148,8 @@ void test_reftable_table__block_iterator(void)
+ 					     (uintmax_t) i);
+ 	}
  
--	return reftable_stack_compaction_required(stack, &refs->write_options,
-+	return reftable_stack_compaction_required(stack, &reftable_be_write_options(refs)->opts,
- 						  use_heuristics, required);
- }
+-	cl_reftable_write_to_buf(&buf, records, nrecords, NULL, 0, NULL);
++	cl_reftable_write_to_buf(&buf, records, nrecords, NULL, 0,
++				 REFTABLE_HASH_SHA1, NULL);
+ 	block_source_from_buf(&source, &buf);
  
-@@ -1843,7 +1867,7 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
- 		logs[logs_nr].refname = xstrdup(arg->newname);
- 		logs[logs_nr].update_index = deletion_ts;
- 		logs[logs_nr].value.update.message =
--			xstrndup(arg->logmsg, arg->refs->write_options.block_size / 2);
-+			xstrndup(arg->logmsg, reftable_be_write_options(arg->refs)->opts.block_size / 2);
- 		memcpy(logs[logs_nr].value.update.old_hash, old_ref.value.val1, GIT_MAX_RAWSZ);
- 		logs_nr++;
- 
-@@ -1882,7 +1906,7 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
- 	logs[logs_nr].refname = xstrdup(arg->newname);
- 	logs[logs_nr].update_index = creation_ts;
- 	logs[logs_nr].value.update.message =
--		xstrndup(arg->logmsg, arg->refs->write_options.block_size / 2);
-+		xstrndup(arg->logmsg, reftable_be_write_options(arg->refs)->opts.block_size / 2);
- 	memcpy(logs[logs_nr].value.update.new_hash, old_ref.value.val1, GIT_MAX_RAWSZ);
- 	logs_nr++;
- 
-@@ -1981,7 +2005,7 @@ static int reftable_be_rename_ref(struct ref_store *ref_store,
- 	if (ret)
- 		goto done;
- 	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
--				 &refs->write_options,
-+				 &reftable_be_write_options(refs)->opts,
- 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 
- done:
-@@ -2012,7 +2036,7 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
- 	if (ret)
- 		goto done;
- 	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg,
--				 &refs->write_options,
-+				 &reftable_be_write_options(refs)->opts,
- 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 
- done:
-@@ -2378,7 +2402,7 @@ static int reftable_be_create_reflog(struct ref_store *ref_store,
- 	arg.stack = be->stack;
- 
- 	ret = reftable_stack_add(be->stack, &write_reflog_existence_table, &arg,
--				 &refs->write_options,
-+				 &reftable_be_write_options(refs)->opts,
- 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 
- done:
-@@ -2451,7 +2475,7 @@ static int reftable_be_delete_reflog(struct ref_store *ref_store,
- 	arg.stack = be->stack;
- 
- 	ret = reftable_stack_add(be->stack, &write_reflog_delete_table, &arg,
--				 &refs->write_options,
-+				 &reftable_be_write_options(refs)->opts,
- 				 REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 
- 	assert(ret != REFTABLE_API_ERROR);
-@@ -2574,7 +2598,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 		goto done;
- 
- 	ret = reftable_stack_new_addition(&add, be->stack,
--					  &refs->write_options,
-+					  &reftable_be_write_options(refs)->opts,
- 					  REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 	if (ret < 0)
- 		goto done;
-diff --git a/t/t0613-reftable-write-options.sh b/t/t0613-reftable-write-options.sh
-index 26b716c75f..a65960d048 100755
---- a/t/t0613-reftable-write-options.sh
-+++ b/t/t0613-reftable-write-options.sh
-@@ -278,4 +278,23 @@ test_expect_success 'object index can be disabled' '
- 	)
- '
- 
-+test_expect_success 'write options can be set up via onbranch condition' '
-+	test_config_global core.logAllRefUpdates false &&
-+	test_when_finished "rm -rf repo" &&
-+	init_repo &&
-+	(
-+		cd repo &&
-+		test_commit A &&
-+		test_commit B &&
-+		cat >.git/include <<-\EOF &&
-+		[reftable]
-+			blockSize = 123
-+		EOF
-+		git config includeIf.onbranch:master.path "$(pwd)/.git/include" &&
-+		git refs optimize &&
-+		test-tool dump-reftable -b .git/reftable/*.ref >stats &&
-+		test_grep "block_size: 123" stats
-+	)
-+'
-+
- test_done
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 1015f335e3..b8c3be6631 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -178,6 +178,18 @@ test_expect_success '--no-create-reflog overrides core.logAllRefUpdates=always'
- 	test_must_fail git reflog exists $outside
- '
- 
-+test_expect_success 'core.logAllRefUpdates can be set up via onbranch condition' '
-+	test_when_finished "git update-ref -d $outside" &&
-+	test_when_finished "rm -f .git/include" &&
-+	cat >.git/include <<-\EOF &&
-+	[core]
-+		logAllRefUpdates = always
-+	EOF
-+	test_config includeIf.onbranch:main.path "$(pwd)/.git/include" &&
-+	git update-ref $outside $A &&
-+	git reflog exists $outside
-+'
-+
- test_expect_success "create $m (by HEAD)" '
- 	git update-ref HEAD $A &&
- 	test $A = $(git show-ref -s --verify $m)
+ 	ret = reftable_table_new(&table, &source, "name");
 
 -- 
 2.55.0.rc1.745.g43192e7977.dirty
