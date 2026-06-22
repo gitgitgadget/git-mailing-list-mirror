@@ -1,115 +1,180 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3E7379C37
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 10:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A3B292B4B
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 11:35:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782125606; cv=pass; b=mF651qK0UeK+79TYca0j5fgg/mXaNx2ACjCWIVXhMG+iNJ8PNA6KwLhux85ZIMrES8Rp3VWV36+Dyay8XwVYiHkDmcW+xRVV5Sj05u+sDnBWrDqdsSHs8R+tzNw17xodfPYMMUXXg/7QvHu3gRCVZ79wSCFHCPRZ9W5tT5w32bc=
+	t=1782128121; cv=pass; b=jy8nckI7+cZJShp8oeG0JTFVobm9d4mHcK7qtmnX9xDkGXH21/K448Lo/lLxRxygBUB2tmxFoZNF9MoZJQgU0WUX9yib4U9K5C0+yhNYfDvVNvkLd2WrpdOdOhsXctcKZpwYw+PaDtYkJwi6f+1u+uyv6/ZKVEq9+51/zFmt9hg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782125606; c=relaxed/simple;
-	bh=AJGpRmDO/MHpPZdPbnM4brK4roXwZiyl8UboG//Cf/Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IGGzt9HnHmsSlOzumL+Z56ZUXLzdAYGH/x2mM3qmUMclwKVClJOFceui4VYxSJn1xsepNY7zCMVyGd4jJeCnz3kHpn9/Vz0i3Bh7x+dWsRbNmvHtHVZm7Ec5Fgogn94v5Zop9CUI1CaS9dIuRbUDbApfw0Mo9u+fKUfgelrYZQ0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OaeY1iTx; arc=pass smtp.client-ip=209.85.208.50
+	s=arc-20240116; t=1782128121; c=relaxed/simple;
+	bh=jpJ+ZiYeXnQWcUTkDCaIpYHeQO+nBZNd4I/ParjKQP8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=PPSBDCbBaCZbW9Y2MlRs2VdmbVTK+h2mloWlJa5sXVtv/gcM34ns9N01IR4vhvTVE8+VM+v6KcTmbc7si200zGNk6mw3sq7Du6zJQScNrG91AFYVo+zUoSkQhpQBltwU9Mr+TRuTWk6YSud5jkw8IiZ3Eol61udFpZXXhZVJjOs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=As85uerH; arc=pass smtp.client-ip=74.125.224.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OaeY1iTx"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-697cd68d7adso293764a12.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2026 03:53:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782125604; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="As85uerH"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-662bb8b1f93so4005677d50.1
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 04:35:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782128119; cv=none;
         d=google.com; s=arc-20240605;
-        b=RjDq9++Ey6KAUp/7jWGGBMO5rnppbs9PR6nizKYPRcGdmq6JT9tMkjkeRCnLVoeDkA
-         ieu9714u0wYAJdpScdf4wfp8DzGwSUX2dP0YGbiNGxl20KVY2BUKAytOuibkMJ0ddbAU
-         19KWMReZgC1CBi1KeVIJVbXkU5CKSsy9/n22/l42Ai1LybEZZEu0/nGImypohEumPEUJ
-         Sv2Jv6IciUJfAgzrWtx5pPfm1iuvB+jQFRrLTN+IPWkJG2JVl4G7zUWAnWSuM1A5BCdR
-         h/x6N0rlMpubpCMhhhZAoWDiNoIawXFMFaLtHpCT7xQid2cBfBO5OjUtLJLCxfXht48N
-         9OyA==
+        b=MJwrzsNC9Dfhfx1oA17O03dkMHFhaUNfTeOKe2Sw8W7zoUOdZgQilekLQjBqbdg7Te
+         VNDMGcdc1seSAYgwJV+Zp+RzyBWKYzxtj9fVhleLtJgZ6vLq5JmPVcyYTq8mPNPgIDMr
+         oXYDnlre0nwHcjsLkO/8S4yjpX98Ss7ys0jOMXbUCIoArpY4kFn1Y/Pf6VFIjURy9SkN
+         B3T7YLAgAre75lQQoeprqwhoevbr2kLIPx7P41Ci6PlTjSPiEfQVqWwvYZnQe5YYXd0W
+         SyKfbNd833pcmq2aohFCrbnHfQVIlCEiJiug8Xxg9UV9Py3+ZVG166bRhAVHGmAY6mqm
+         9fyA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :mime-version:dkim-signature;
-        bh=AJGpRmDO/MHpPZdPbnM4brK4roXwZiyl8UboG//Cf/Y=;
-        fh=mEdrNmgY9f9ZqsJlO+hru96O466VH032WQ9/b2JN5NM=;
-        b=WzDncDTAkQRGq5BqJpoA4JBBsGeN378a+rcNXLPyCuUXTm98ig2rm3MRQ8SShUf564
-         cRdy2J4M6igXFur2uYE4+zmXdKm+Db4nwEr5RpfoTilIdFBIGnM6n1o7nf/YD8LyQurC
-         qIFJWcCMcwqMtHQb9Tkv813+xKlddS6jLboo5RvaQl/o+nOx7pqNCNUDhfyNG+MdMuYA
-         j+9tskxn27CZ0+30t6oWzHVmSgXzpQFR2V/w/Km/4N4vLxiUNeIfFK5UAQl5+WJcKnKT
-         Vq5rAEvL9K8D5NERnmVC8aTRh/TGPwxrnccLcEPyAlv8EybBGWWFuvuCVOwoSLKMoUTC
-         2Orw==;
+        bh=RfpTR6WHQTIbLo2wLiDOzrvUHKrolPMkfX0MpSpIgJg=;
+        fh=C2tFeZSjQ5U2DbsKPSTaDUz6Yew+nfnvrCXoFTYwlBE=;
+        b=M20cwFM1yAgtDHQ23u9T92PCRWROgIhWxloD8WH6s1LU7JHEe0jSmtyvGalIOq+9Am
+         imbeM1EDPfjErj7XixjKdf6QWfMOwPJWK6oiAZjraeZ/8+1kPRhUof0OpT4hqcsfJvyO
+         2kOeupd1MV1uLy6gpegfOLATnF9JgUrcbP6qGzO8y16z2UsNJHOZswEr5aAEiIVj61fI
+         hZ2Ouu1DHWUt4xOIO9ZzvU2XI3PnOKqx+u1DJimoH/MeQ/NoJ0ZwUvQBjZ5FJU1jRIvg
+         mE8EvQ+7AhrIPv7HPp76QieTvICDYznOKzX3qiArzQKDqTS00wNTAh4mt/idah/HB3hX
+         4Fuw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782125604; x=1782730404; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        d=gmail.com; s=20251104; t=1782128119; x=1782732919; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AJGpRmDO/MHpPZdPbnM4brK4roXwZiyl8UboG//Cf/Y=;
-        b=OaeY1iTxata9L1M5UM1CSlsyDlyglj9m12rpqvR7kNdfoSVMOEwurSPxLGnUtfXZBH
-         BOw2Hg939WVqJVfEE64kCmM9gh/PLLCqF+w5GGe2HNtJxc58vhslRbFa3QywPF/ba7HT
-         mJqYQgXRq/K3ZqhcVDJ/fdz9/31vy29Zi2Ae68guNqt0JIyiMF7YeeYIHDHqHf6fgTpV
-         xF5F6bahJV/6D7VBW+haOJKh1BmVMbgzM5dwI/tLh9YqWTy7kqLYXxpbyOqg372Y8smb
-         +qmCpNMCk0bwwOJDFhoUvSxzJ6UnkRkhhXNIQ4Al0JMcFEtlOXwixTcAym2cSCa+hGIx
-         a98Q==
+        bh=RfpTR6WHQTIbLo2wLiDOzrvUHKrolPMkfX0MpSpIgJg=;
+        b=As85uerHE+nsHt6uOn6QiSH3jy/Lh5rIx7spTISagLieIeTIYfrdA9ylQwoi+1kVGI
+         j3lBk+I4slHFsOf+ubh98YSwOTfMAItLuzUkMHw/AfUyMAZQna3ZD853zVJohRfi9QNJ
+         iXcbs6PdGD+8jk807eNV5xDSVsDfKY+qJiyB6wa4duca+alQ4EL91PTbC1CuBgffrzmY
+         SAG55GjeCC5WAE5RLGnmXlPkL5J0iQ5RzfESjkGX5MAq0M1uP90tIMqQ2K02CRMff0Hw
+         pqZXthy4g6TcGDvxOcNd0YMBL+GddOP7rjMXXGQLrIUHHwSoF9q1cjRP6DXBz2okTaii
+         azsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782125604; x=1782730404;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
+        d=1e100.net; s=20251104; t=1782128119; x=1782732919;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AJGpRmDO/MHpPZdPbnM4brK4roXwZiyl8UboG//Cf/Y=;
-        b=kgoDaYcOBLuY7Wt4Y2JVR9Eo0uCWVUXNdRRGmep3TvnqIy5zjxIO/Pmte7NJnmPf+x
-         lAy4X69JF3fSJE4NThcaVF2+DwkIp9IccqV8GOrGxUVcgOCHKrClXzl7C/UJIg7kClCm
-         Ib2uDhUOFkf6hrKJzX1h6C9Vt+ySfsaQ82ciLfxulxsi/NjMWr9TwWfb5pYS+neLIP2T
-         pA+/gYfre8Sh3+p01IL0O6k+x+dauZSQdo/8iZIEHfUSJyELfj6Olq6/Jf6ZPeRsB2mg
-         +zFXyNJ99w22KRFGHvIN3Jk9g4r83l2593SjS9tIlqq7jv9LCItthwSiFSOQOGSlbVZX
-         AV9A==
-X-Forwarded-Encrypted: i=1; AFNElJ8Yaobu0yM1X+8KJ7ilhYQRB+7NycqwdtBaAsnEHuU11a7Y7yMKY3sLhr19WSOtW5mLp5E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdLNLVbWAXNFHiy0UUE76vUaSSnOVPLRbZVRNMjDUD8zBR+CBz
-	Hqm0UAd+TFA4Vep1PREt7t8btazp/vPGF/VICbS08gZ5CFzw995f0N6lbhjyg71UVPGyaCEXW0u
-	dUZ6UH5C7qc6kNfwDVaEHh3UiwkHiI3w=
-X-Gm-Gg: AfdE7cmItvlGSXgEEDzr1r4o+IEBEGeh2uHL4dd/zQfX9Lt4zWESbTNOOM8gvhJagpT
-	zvwLqoXNX4GXPwx+LXF5c5b9z/ija3uQTJuPvGkyy4RI9xllhwVFeTChKZtgrQEVbdvGWa6kpHX
-	3jZbjuweOYNfpV/by1hIas/oQHUiev+Pb60Z+SnwZUnjcdRiiV4DMb7kJJnZiq3XeLH7BVJF43r
-	Qgq3gDt+O/FXGRGlm2KWXze7lKAS1CAqWfghYyJEJyzSc4DspPH+gn3WybaDiqy0W50LzuI
-X-Received: by 2002:a05:6402:4307:b0:697:849f:7dd1 with SMTP id
- 4fb4d7f45d1cf-697849f8021mr3010930a12.5.1782125603819; Mon, 22 Jun 2026
- 03:53:23 -0700 (PDT)
+        bh=RfpTR6WHQTIbLo2wLiDOzrvUHKrolPMkfX0MpSpIgJg=;
+        b=eSMJKnW3XoOKyWwrahThcDiEdGLev/blYCFOo81VlxHHyRO2LJFDP2+r26hbNVhLZm
+         mmhi31+XNvTwYhJeO7SVmXIP2kPdXJ9EwDjSoYeNC/A/MZMi5KBOTVyz8a1vzjyX25Ki
+         MFc5GvcafQ586WD9/q7qO6or594JIl4kDEK1aILWy7uOrAfdwtOFKHRKOGWrMakjWd6Z
+         GbpeDZatU/rH+JU8A1DV4NeFN22man4LTU2PH7d2CTHWksXYJMGjigutTguS0Qt/raIp
+         vQQuJ+KATYWYlyG6anqjq54zue8iCDkN8FT5kru+ly8avcH6lB1oOhzFVN9QKDZMSZq5
+         JPLw==
+X-Gm-Message-State: AOJu0Yz0vQxQasyW/pk3DfjqXyfVt9sBrfmED0pjpS1uZ7uNxNQntAJg
+	9Pl74qr5kPNIvIA90QGBXJ8kvHq5L7YVe6kga/lXvFIZqkS6oaajHvN1kOdOsYOCPwkIStCNc81
+	Z25b/bbLrKv6754VWJwypuyQjTbEzJSlcjvuq
+X-Gm-Gg: AfdE7cmxDKJN1l1UB4+VP4HM8WxphnuoX4ljOqIujcFrBBN+lrKKzL0WJLL5jirpOk/
+	HlmY0SXdnTgYSM0/hwc1NtP/qDiKRQK4uSxSfAyz3Pijh2RUy7U2c5Gk01dbwptDWW0nTdqZdkU
+	bWmB73k0a8f3pMr1TIfjzA7sPq+ALFPKRYESzGJ/OAkncMwgz63qf//+zMTP0+XSDJyrZgpf0zI
+	EX6pHoNXQvOaMTTCefM6BSeOVH0o2b4d/r/pz53/9/xnFRx/qzGWTzhJ1Bg4GL94UZD+Tw=
+X-Received: by 2002:a05:690e:4501:20b0:662:f28b:7c63 with SMTP id
+ 956f58d0204a3-6630372ba3amr7879820d50.63.1782128119210; Mon, 22 Jun 2026
+ 04:35:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2285.v13.git.git.1780684553.gitgitgadget@gmail.com>
- <pull.2285.v14.git.git.1780999917.gitgitgadget@gmail.com> <9924373da0a0598cabe4f08f3bc4200833679171.1780999917.git.gitgitgadget@gmail.com>
- <78b6dfdd-df61-4c44-96eb-b527cb26243c@gmail.com> <CAHwyqnUsjpCHfS=eBphmkdDGYpQZ_LQUJi1mjrxV8ZXi+w4yhg@mail.gmail.com>
- <37f2a483-c8bf-4c24-84de-c6233cc20b25@gmail.com> <xmqqcxxnsufl.fsf@gitster.g>
- <42ffcb36-7fff-4948-9b8d-2c54eb626e66@gmail.com> <xmqqh5mymt8i.fsf@gitster.g>
- <xmqq33yimsdp.fsf@gitster.g> <CAHwyqnWt59h2HO5EJbFswYr7QEA7oNZKdBt_vTk5axNbWFZbpA@mail.gmail.com>
- <CAHwyqnVce7NKft9AEyCUnR=S_y1ygiXjhf-qmJqmi-tuUXcw=g@mail.gmail.com>
- <31172867-5577-4c1e-b8b6-425ef9fe44e1@gmail.com> <a3bd3514-dab4-49b6-a210-bc7b8ddd701d@gmail.com>
- <CAHwyqnVQwK1w9ap1-e=ii4a-BVOZ=oQtCdkTxB=TJF30kNaZoQ@mail.gmail.com> <ddf37b2d-29b4-4a3c-b7d9-b681af028b24@gmail.com>
-In-Reply-To: <ddf37b2d-29b4-4a3c-b7d9-b681af028b24@gmail.com>
-From: Harald Nordgren <haraldnordgren@gmail.com>
-Date: Mon, 22 Jun 2026 12:52:46 +0200
-X-Gm-Features: AVVi8CcKDjVWQsFXYY57QOvlMgXnMb8SNZWyDHTg7-4W8eJrDIzhz8ik1Off-3E
-Message-ID: <CAHwyqnWztMhKkDGkfh0cZzT+gAuFZ4_n-vhvJsXrSY1apgqSRQ@mail.gmail.com>
-Subject: Re: [PATCH v14 4/6] branch: add --prune-merged <branch>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Johannes Sixt <j6t@kdbg.org>
+From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
+Date: Mon, 22 Jun 2026 17:05:06 +0530
+X-Gm-Features: AVVi8Ceyqx6HaykfsByHlMl3bnuScmpiAE7_IpscBZhutxxJDdIAl3LJc8JWM_M
+Message-ID: <CALE2CrTVVQF4rGhGG-9kmjweFHHYw+xnPU6Jtt=QmHpq7L6P2w@mail.gmail.com>
+Subject: [RFC] clone: allow sparse-checkout paths to be specified during clone
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> clearing the upstream setting of
-> merged branches.
+Hi,
 
-Why do we need to do that, they will be deleted anyway since they are merged?
+I had this idea after working on several monorepo-based projects on
+Github where I only needed to work with certain parts of a repository
+rather than the entire project.
 
-> It also builds a list of upstream branches rather than
-> just pruning the set of to-be-deleted branches in the
-> refs_for_each_branch_ref() callback which seems a bit wasteful.
+Currently, the workflow for this is:
 
-Good point.
+    git clone --sparse <repo>
+    cd <repo>
+    git sparse-checkout set <paths>
 
+While this works as intended, it feels somewhat cumbersome, especially
+for someone who is new to Git or not familiar with sparse-checkout
+workflows.
 
-Harald
+Personally, I do not think of the problem as:
+    "I need to initialize sparse-checkout and then configure pathspecs."
+
+Instead, I usually think:
+    "I only want to clone these directories from the repository."
+
+With that in mind, I was wondering if it would make sense to allow
+sparse-checkout patterns to be specified directly during clone.
+
+For example:
+    git clone --only=3DREADME.md,frontend,tests/frontend <repo>
+
+and optionally supporting exclusions as well:
+
+    git clone \
+        --only=3DREADME.md,frontend,tests \
+        --except=3Dtests/backend \
+        <repo>
+
+Consider a repository structured like:
+
+    monorepo/
+    =E2=94=9C=E2=94=80=E2=94=80 README.md
+    =E2=94=9C=E2=94=80=E2=94=80 frontend/
+    =E2=94=9C=E2=94=80=E2=94=80 backend/
+    =E2=94=94=E2=94=80=E2=94=80 tests/
+            =E2=94=9C=E2=94=80=E2=94=80 backend/
+            =E2=94=94=E2=94=80=E2=94=80 frontend/
+
+Using the command above would result in only:
+
+    README.md
+    frontend/
+    tests/
+    =E2=94=94=E2=94=80=E2=94=80 frontend/
+
+being checked out.
+
+An alternative interface could be allowing repeated options:
+
+    git clone \
+        --only=3Dfrontend \
+        --only=3Dtests \
+        --only=3DREADME.md \
+        --except=3Dtests/backend \
+        <repo>
+
+but personally I find the comma-separated form easier to type and read
+for common monorepo use cases.
+
+The exact option names are only a suggestion; the primary goal is to
+allow sparse-checkout paths to be specified directly during clone.
+
+My intention is not to replace sparse-checkout. Internally, this would
+simply initialize sparse-checkout during clone and then continue using
+the existing sparse-checkout machinery as usual.
+
+For implementation, my initial thought was to extend option parsing in
+"builtin/clone.c" to accept "--only" and "--except", split
+comma-separated values into individual pathspecs, automatically enable
+sparse mode, and then invoke the existing sparse-checkout logic with
+the resulting patterns.
+
+Conceptually, this would be equivalent to performing:
+
+    git sparse-checkout set <pathspecs>
+
+automatically as part of the clone process.
+
+I would love to hear your thoughts on whether this sounds useful,
+whether the proposed interface makes sense, and if there are any
+concerns or alternative approaches I should consider.
+
+Thanks,
+Pushkar
