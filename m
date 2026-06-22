@@ -1,113 +1,168 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E9538F227
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:20:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782116456; cv=none; b=fRGYnvOS/qQq8WCk/FhBh//dbAgIKdufK4o2RHhOxtz9ms1LOAeoQBkgzv4vUvArH5OEM2s+fI1Rvfvz+VsJUS4iZc0Wcum6nfLxRSbB/E0KK/HhSc2EiBqbmx6gUWLzi5iUhBYqB/6LaMwP2Kfxjsj9vrpDBSjwH0Bivpk8kyo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782116456; c=relaxed/simple;
-	bh=KPAOqGqgoixwL1eZeiqF4FzsvuBo9y4tgeD1NyxcoAU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kH8NLasVJNMNtnpQIIsl2gTNHyAgn0PVvlEV9xaXrH5g2EKs+a0Lxq5b11lXWMIwNdQZiKJLt7IpcDX++lU9Apkz/oF7ebmIMHSHwwsyYBcJmZDbc6YyLImTlsjZoMNsa4gZmw2o5++awpkTH3bkltdZ/kB0k9EG+vPBr3XIunk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ROGaGLOL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZPDrMMD; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3789B39099A
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 08:28:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.179
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782116908; cv=pass; b=kWMGzVv+atyG9rG337puZnaG4Jpn68A1CRgUD/I+M61QVMmegf4d4N+FqwMBehBgU1MvZhFjgX91MJ7KWJM+QDwByn7emizYstosWCmZJJOYBAFRC1l3zb1RQSgrX+S0Xl6zmtxQpDyY4HqTicIyFtNhagxtdgoOYbhmncD2qCA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782116908; c=relaxed/simple;
+	bh=YujmwRxWWqeDxf89ITfgDhtq/tzqsOqEHp2jok2EsrU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=t3WKwCrlwh+VpbqUeL8ycKcBA16KxIY3aBv2kHR//s4+sWqtqi9BtonmU/F/W8CTV2KmTxxs8a2J5XaAIkfqY8s8peoSfOwLqAc/vbjN9M+i3nglzPWmtR32CGo7YZTD9fbqB9nIjYXWHfS+xTa7qTJQrH7SUPRDy6O/zfwBov4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com; spf=pass smtp.mailfrom=spotify.com; dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b=c2F7O0AV; arc=pass smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=spotify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=spotify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ROGaGLOL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZPDrMMD"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id EC2E31D00093;
-	Mon, 22 Jun 2026 04:20:54 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 22 Jun 2026 04:20:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1782116454; x=1782202854; bh=WaDZbmGVki
-	LI3vu0i7pP1APpN4ju0ek2aeBeE8Cb3u0=; b=ROGaGLOLZgOgHpNdi3cWy7dZVv
-	oHRiN3dUXwi1NqKLnqFuOqqFmFC8soPa2vJIdLLBC0HFxXfFVvNxKKlWL3/LvtZM
-	YuT8xkeAJ+smCA1jvRzjQl6+Wwrn23vVeRrbbbqPGeY28cXCXiM97bktIrKajfTP
-	7P74b/QIulekQ3kpg8hRJ3tmeI0qyiEHVPWaXKb1qHl1BLCFEdrGLPNVqULfhi5m
-	K1xnxHzi9UHfd7ryFOhPVLR7VrjHp8TZMtkiS/A9YSFzjnID0tg7mtoUHOWrJHRc
-	O/y2urnNGtdjJ76Q6va5av2vEz2dUpV5CZQ2Rns3BJyR9T++WMjEFSj4B5UA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1782116454; x=1782202854; bh=WaDZbmGVkiLI3vu0i7pP1APpN4ju0ek2aeB
-	eE8Cb3u0=; b=EZPDrMMDSqkjgOL80/+z6eTYwKe9LYBRMsPHxxKS8B2cyantCGn
-	ToxzX8ESaiEXdeuvyfrJe8TAu0d5xhKuS7Uxi4lrdu4yNgRDWDq3m1pBKeLBMNyq
-	FTiV2AADO5ts/NF36fEv0s4l89fgJJEjPp92HUzs4mGFuekxRJNGIiT8Tg6LHpJ7
-	20+d/6vMWE1u29S2WLHK0VddoIaWWXqlawkfh4rDIofzNoypISYvC/zn/FK+Hoka
-	7pqQItjP8No1ZVn2/v+EuKLPYAjwAWpwr8YbyZSM5JU8uy3Kwdcv2aZxZxnkJiJM
-	LI5v11bPilyWElrKq6u/awR/3OLK/UamQiQ==
-X-ME-Sender: <xms:ZvA4augUaOnM_wEswOF0Z9mZGRiPuY6gSazOfUXr-xVB0_ZYHFKxaw>
-    <xme:ZvA4amAXKL2K8xm0_XOuLZ49hKHhC1Sush1yGER03LV3Mhpgb8z2uK8gc_EpVQw-o
-    2qJkdMT5JPGaAXea-tgoi2uTJHmvjAsHxzNUVqkgOz6UBAQ2jJW6w>
-X-ME-Received: <xmr:ZvA4arFBfMlfyiDW0_Qo2BxrK1qchDJ7DWoB8gwfBZ-tNDxmnLn_0NuuYW_8bXVPCIpLl95mT4Tc9-11rALMBE3OVHX5oVn70aAbEKZEtQ>
-X-ME-Proxy-Cause: dmFkZTFmFW3gFpwlGAQNXQnKxb09gp+VjueU4iv2/CeHUQWjKlrYb2oA4uiVsOuzaLXogu
-    lTfZYy1ulrvQQ0s0bLqP/FNINmHL1us+GOpLRalq14usuZOxW9jJw7frX+h8iEjNtCAQyL
-    Tv1mOi5vIzfVs6eiR53x13X8LQ0O8fHa40qyXYY77ibQVMm11+YdhkfE45w9Eg/l0KJSfy
-    zAPabS8lmHJW0QRhuA6IhEsuvyfM2DJgDC02tyWeKTGQr7SAhcdFNZ83K/97gDWDhlVYvx
-    KoVgfUePMj6ortK5LztTrMkmsWMSC/CGrZaIrEtqgJv6Ew/SFz/rAydJ09usUh9eFSjaAl
-    rLhco547dFP30MiopntlCXqbCvZSkor1Sdnf18ca+RhHXSbiJ2CjEnA+yE7ErwxjFl6BUo
-    2dK0RPzhM+xvFLkDG7k0F2rfTRz83DS6rbi09mtQEVYB9donfZsWKJlw3PMt1oi88inJN+
-    a9gETomt12zfTBLJdC1CrzRvj+kWMH6qVHESlDXcTyePZEgwmxlllYl4jXbiB/epV76CjO
-    GYp42iQzuPt/ceC5tCQZYlSmve1+XSipKB42js+xctvewVY7ud2pmd5QgTvF5FIoCHJraS
-    CAavGPaRfJo2E5IYr+3k0dgU1f9/t9ovMA3znuQW5gOf9U92hfYqBI1rSz6A
-X-ME-Proxy: <xmx:ZvA4amIMOVPVoLAqTL4U9MaSaNks30g6Y_ZIL8EHXL8hD60CVV70NQ>
-    <xmx:ZvA4anmHA8QpM81-Z5Zf81wOGp1Qg3RcGBffiXZE7cj3Xko6pR_1sQ>
-    <xmx:ZvA4amSyWcEqwY407ATs5HoW3bmzm9ildwcHLBTK31Q5KOEJ1WwEuQ>
-    <xmx:ZvA4ahLgkZ3LvrDuDvPDFbooBm6PTuvsO6KNu5CKQKdGzNRYfriXkw>
-    <xmx:ZvA4aikPDy_-wW2QTpLJAJgQ16zz8FCyEpBVEecpPEdUHGh5HwfuxylM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jun 2026 04:20:53 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 84b52718 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jun 2026 08:20:51 +0000 (UTC)
-Date: Mon, 22 Jun 2026 10:20:48 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Michael Montalbo <mmontalbo@gmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v4] SubmittingPatches: address design critiques
-Message-ID: <ajjwYGWZ6hQWr600@pks.im>
-References: <xmqqv7bhxiby.fsf@gitster.g>
- <xmqqpl1oteoi.fsf@gitster.g>
- <xmqqik7eld2g.fsf_-_@gitster.g>
- <xmqqeci0g4mz.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=spotify.com header.i=@spotify.com header.b="c2F7O0AV"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-7dd5a8dc8a2so28950377b3.0
+        for <git@vger.kernel.org>; Mon, 22 Jun 2026 01:28:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782116902; cv=none;
+        d=google.com; s=arc-20240605;
+        b=A44f4LVAgdFBfc3aQuGm3ir3w7RPQfK7tqYNDdz12ymR4TnKVScPQKMb/DSwDzOHWW
+         eEJhJosyEz6iafnnSTl8BDM6oOa/FDMJeB0L9MAA7R6k99QAvezR2No5iYrNCyHebxNs
+         v5Wdbg6h+LAzUM7fJxKOBQrPEkDwkdWEhJUC8vUmA2thXUj6W7QprpM0Ku4tPpE/YwiV
+         fuLtNN+gKvToyCt9xbWRjURszmZ5tbo8b07Y0DrT8NXI+JxSSL4Lm65tg7ir+FV1aYwu
+         jKz/5/NDCO15GtoOXdb+hLV5fN3gI6n0XOqQjp4ALO3ssiGiF2Q9TTlwYV06q11Gv9cB
+         VY3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=MMeoxNlm25Nl9IJOtYr7rCTjWDfDpjhp1MDWPw4G79s=;
+        fh=nuyRHzHN6fCAiJG0nMbGOwwc7QFrNnAoCEUCeaODPUM=;
+        b=kbxzEMVni+pKR0oc4ZKb8gJvoykw2IwrYlO2hpss59mxhmOT9MOFKJQDa+7SiGcC9o
+         /J2diXP5zd+9+5+Pxpi35AVEomFn77zEtFDmUjv5jmDXAW1AJRoEHAtkmldRBLV5272w
+         UXQcyfvwA06nL96Eq/0vAygEAc7UVHsXD9MANH6g3TJEfgMt1GDK16zAzjhdN72Jzp2z
+         mm5R8KDh/B0CdTcSNApiPZlOm1QhuXVIfbBxVajqwu/tp61Ji2VFNIIXpefiN1MoBCrY
+         PLhWenfzWEL0Z6ElWzi+YMyU7ZvFPZy+VGuDdMOiaxnWy0TV55BsCKFtvRjiF1JpHrDH
+         Y6+Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spotify.com; s=google; t=1782116902; x=1782721702; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MMeoxNlm25Nl9IJOtYr7rCTjWDfDpjhp1MDWPw4G79s=;
+        b=c2F7O0AVMYCuBKEVCCntu5CGPIBRLoxnopsa/u/Q/ZgfylhkX0aboATad72vqiPntV
+         UaZRgSH9ZE8DnHbEdYxp7safEBjgNt2HcwyTHibathdDZaVAVfBllnv08MO9U3dndoZj
+         AXN7oj4B6qYEOdMVcJJZPBzZDAFNVwLQybSAo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782116902; x=1782721702;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MMeoxNlm25Nl9IJOtYr7rCTjWDfDpjhp1MDWPw4G79s=;
+        b=dWJKby+A0ZPW6snIOvSyZXqFhoEsVoOTB7E+BmzQLIhzlyU4oWI5XBaYFHjBgdqj1S
+         Uv3+8GpyeGY7TaXYtANqECRmNsNlN3j+nNHdsBgeEH3cDSLEebVuPLL3AIzu2d65Sc6L
+         TKnkBQQ2ZV7W4dL410TD1RPcofqd1pjYmjriB1ODsHfs+6760ar91d+pZdwy7lKImXg9
+         acDsOItyO12pC4elwNNCNpB20r31MGbRK0+ItEmdwXWQQN5Aq8ts5N+fDmG4qp7/O9Ru
+         tm7CYfZoR6p1GjzvJPKO8fAOeB29nEa6VNIv3ReEn6J24umRFBbtslsnRcjlUzlaAf9q
+         jztQ==
+X-Gm-Message-State: AOJu0Yxtumn5T82vVub8GH+BqKeDRMHytmok/GTHKcbLZY2GEqIV2qMH
+	ENGx512TbKW4FU6IlGHQXJ7ZD9ItpiCU8U86iCJ8X3xPiJihsPdTjwkmFzITxy27hswEfTtIBDM
+	Da7ddLCiz8wsHL/UINlrYaQJMDGCOJzOfEgYIJxFHFA==
+X-Gm-Gg: AfdE7cnosZg1kr8m0WYzzMZ0uLRzXDw6YOX4gc6XLSxouR4ZnTMlcdiH6ZiWzffxy+q
+	uYtAT2AR30bfiUnBzo34zbGn8WRaXdl/YEy7sreqaHt3Sqy88u+C0Ycqw6p1sCJDtC7oNmhs56h
+	MKMYCEQM0R5jynL9LuQ7VVz0ITeHvCog9IIcWXQ9wXgQtlmZfJCwrSh60pesenGzXsJSAcI9EhP
+	cd7ZY3oyZdmrhK06dAc84DNClfX+DrtI4KIsArlKh67wYU8tlhh8eV35kqx9z0LVf/uAJ3aLA==
+X-Received: by 2002:a05:690e:1905:b0:65d:bbff:41c8 with SMTP id
+ 956f58d0204a3-662ffc56de0mr11034012d50.4.1782116901900; Mon, 22 Jun 2026
+ 01:28:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqeci0g4mz.fsf@gitster.g>
+References: <20260613-ps-pre-commit-indent-v5-0-8d308efea63d@gmail.com>
+ <20260620-ps-pre-commit-indent-v6-0-cdc6d8fd5fbc@gmail.com> <20260620-ps-pre-commit-indent-v6-2-cdc6d8fd5fbc@gmail.com>
+In-Reply-To: <20260620-ps-pre-commit-indent-v6-2-cdc6d8fd5fbc@gmail.com>
+From: Kristofer Karlsson <krka@spotify.com>
+Date: Mon, 22 Jun 2026 10:28:11 +0200
+X-Gm-Features: AVVi8CcFwBmGLHE3yYl_L6shNaaSKNK7Ri6ueWJg8Uypc9MbLxk720KZg6dZHLY
+Message-ID: <CAL71e4OQ_kGb+UwHgikHG236-8BVtc7P9OdpV4i4UzYRCoPczw@mail.gmail.com>
+Subject: Re: [PATCH v6 2/3] revision: add peek functions for lookahead
+To: Pablo Sabater <pabloosabaterr@gmail.com>
+Cc: git@vger.kernel.org, ayu.chandekar@gmail.com, chandrapratap3519@gmail.com, 
+	christian.couder@gmail.com, gitster@pobox.com, jltobler@gmail.com, 
+	karthik.188@gmail.com, peff@peff.net, phillip.wood@dunelm.org.uk, 
+	siddharthasthana31@gmail.com, Kristofer Karlsson <stoansen@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Jun 20, 2026 at 04:43:00PM -0700, Junio C Hamano wrote:
-> Contributors sometimes fail to answer fundamental design or
-> viability comments from reviewers and submit subsequent rounds
-> without addressing them.  When design decisions are resolved on the
-> mailing list, the final justification should be recorded in the
-> commit messages.
-> 
-> Instruct authors to be particularly mindful of critiques regarding
-> high-level design or viability, to defend their choices on the list,
-> and to accompany new iterations with clearer explanations in the cover
-> letter, responses, and revised commit messages. Also instruct them to
-> explicitly document the resolution of these concerns in the commit
-> message body to keep the historical record complete.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  * Hopefully this will be the last iteration.
+> On Sat, 21 Jun 2026, Pablo Sabater <pabloosabaterr@gmail.com> wrote:
+> The graph code in a subsequent commit needs to be able to look ahead in
+> order to set indentation-related flags.
+>
+> Using revs->commits is brittle and the data structure that holds the
+> pending commits might change in the future.
+>
+> Add two functions that abstract this for the graph.
 
-This version looks good to me, thanks!
+The abstraction is a step in the right direction, but I think
+there is a deeper issue with the peek-based approach. I tried
+to understand the problem and ended up with an alternative that
+I think is simpler and also fixes the three test_expect_failure
+cases in t4218.
 
-Patrick
+> +struct commit *revision_peek_next_commit (struct rev_info *revs)
+
+> +int revision_has_commits_after (struct rev_info *revs, int n)
+> +{
+> +               for (size_t i = 0; i < info->topo_queue.nr && visible < n; i++) {
+> +                       struct commit *c = info->topo_queue.array[i].data;
+> +                       if (get_commit_action(revs, c) == commit_show)
+> +                               visible++;
+
+Scanning the pending queue does not work, because it may not contain
+all relevant entries yet. Processing the first entry in the queue may
+affect the second entry.
+
+There is also a second problem: commits in the queue have not
+been through simplify_commit() yet, so their parent lists are
+still the raw ones. graph_is_visual_root_candidate() checks
+"parents == NULL", but with a pathspec filter a commit's
+TREESAME parent might get removed by simplification, turning
+the commit into a visual root. Peeking at the raw queue misses
+this, which is the cause of the t4218 test_expect_failure cases.
+
+The solution is to skip peeking entirely and instead call
+get_revision_internal() to populate a small lookahead buffer -
+it only needs two slots.
+
+    struct git_graph {
+        // ...
+        struct commit *lookahead[2];
+        int lookahead_nr;
+    }
+
+    while (revs->graph->lookahead_nr < 2) {
+        struct commit *next = get_revision_internal(revs);
+        if (!next)
+            break;
+        graph_push_lookahead(revs->graph, next);
+    }
+
+After prototyping this locally, the three test_expect_failure
+cases in t4218 went away (though I had to do some minor tweaks
+to ensure it become fully deterministic by ticking the commit
+timestamps.
+
+One subtlety worth mentioning: get_revision_internal() sets
+SHOWN on commits, so lookahead commits are marked SHOWN before
+graph_update() processes them. This makes graph_is_interesting()
+think they are already displayed. The fix is a small check in
+graph_is_interesting() that recognizes commits in the lookahead
+buffer as interesting regardless of their SHOWN flag.
+
+    for (i = 0; i < graph->lookahead_nr; i++)
+        if (graph->lookahead[i] == commit)
+            return 1;
+    // other checks after this ...
+
+This approach ultimately removes the need for
+revision_peek_next_commit() and revision_has_commits_after()
+entirely - the graph code no longer needs to peek
+at rev_info internals.
+
+Kristofer
