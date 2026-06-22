@@ -1,180 +1,116 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A3B292B4B
-	for <git@vger.kernel.org>; Mon, 22 Jun 2026 11:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782128121; cv=pass; b=jy8nckI7+cZJShp8oeG0JTFVobm9d4mHcK7qtmnX9xDkGXH21/K448Lo/lLxRxygBUB2tmxFoZNF9MoZJQgU0WUX9yib4U9K5C0+yhNYfDvVNvkLd2WrpdOdOhsXctcKZpwYw+PaDtYkJwi6f+1u+uyv6/ZKVEq9+51/zFmt9hg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782128121; c=relaxed/simple;
-	bh=jpJ+ZiYeXnQWcUTkDCaIpYHeQO+nBZNd4I/ParjKQP8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=PPSBDCbBaCZbW9Y2MlRs2VdmbVTK+h2mloWlJa5sXVtv/gcM34ns9N01IR4vhvTVE8+VM+v6KcTmbc7si200zGNk6mw3sq7Du6zJQScNrG91AFYVo+zUoSkQhpQBltwU9Mr+TRuTWk6YSud5jkw8IiZ3Eol61udFpZXXhZVJjOs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=As85uerH; arc=pass smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D162DC32E
+	for <git@vger.kernel.org>; Mon, 22 Jun 2026 11:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782129304; cv=none; b=b6i/EiBv9qLvVRewtrLPPHe3B9QMdAoOIxthxftdGw/bpDHKKeOktVbscZ2P8FjrOKbbwQUIm+4BjVBZKfnUvNdzG0+oCf+oky0XMBTSqixVLJ7MPS0yrcdy3AzadbKbkFspje3dy2ugrpd5H5oxloxVynwZfDUbp5FFIu92NUk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782129304; c=relaxed/simple;
+	bh=695qPu/bWL3xq6FIlf/JNkp/RcI2soycV6uHV8RdvNk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZNBb3EMvgb9lSCuni2+QYgg8Pdk/Ft1iNvciKO/Ajdv16wW0WuaEY2eN6XJHD1YmiWEOnCrWnNlZqVinVDnDu+LQtxB/bIwzuTf92fosKcfOTf3i/7qku6bRDq76nAMyYpy69eZbIqduXWRBtEY6fGoMMC70G/QoAtEsQQ1S3ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gm9nBF8z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C/CyzA1U; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="As85uerH"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-662bb8b1f93so4005677d50.1
-        for <git@vger.kernel.org>; Mon, 22 Jun 2026 04:35:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782128119; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MJwrzsNC9Dfhfx1oA17O03dkMHFhaUNfTeOKe2Sw8W7zoUOdZgQilekLQjBqbdg7Te
-         VNDMGcdc1seSAYgwJV+Zp+RzyBWKYzxtj9fVhleLtJgZ6vLq5JmPVcyYTq8mPNPgIDMr
-         oXYDnlre0nwHcjsLkO/8S4yjpX98Ss7ys0jOMXbUCIoArpY4kFn1Y/Pf6VFIjURy9SkN
-         B3T7YLAgAre75lQQoeprqwhoevbr2kLIPx7P41Ci6PlTjSPiEfQVqWwvYZnQe5YYXd0W
-         SyKfbNd833pcmq2aohFCrbnHfQVIlCEiJiug8Xxg9UV9Py3+ZVG166bRhAVHGmAY6mqm
-         9fyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:dkim-signature;
-        bh=RfpTR6WHQTIbLo2wLiDOzrvUHKrolPMkfX0MpSpIgJg=;
-        fh=C2tFeZSjQ5U2DbsKPSTaDUz6Yew+nfnvrCXoFTYwlBE=;
-        b=M20cwFM1yAgtDHQ23u9T92PCRWROgIhWxloD8WH6s1LU7JHEe0jSmtyvGalIOq+9Am
-         imbeM1EDPfjErj7XixjKdf6QWfMOwPJWK6oiAZjraeZ/8+1kPRhUof0OpT4hqcsfJvyO
-         2kOeupd1MV1uLy6gpegfOLATnF9JgUrcbP6qGzO8y16z2UsNJHOZswEr5aAEiIVj61fI
-         hZ2Ouu1DHWUt4xOIO9ZzvU2XI3PnOKqx+u1DJimoH/MeQ/NoJ0ZwUvQBjZ5FJU1jRIvg
-         mE8EvQ+7AhrIPv7HPp76QieTvICDYznOKzX3qiArzQKDqTS00wNTAh4mt/idah/HB3hX
-         4Fuw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782128119; x=1782732919; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RfpTR6WHQTIbLo2wLiDOzrvUHKrolPMkfX0MpSpIgJg=;
-        b=As85uerHE+nsHt6uOn6QiSH3jy/Lh5rIx7spTISagLieIeTIYfrdA9ylQwoi+1kVGI
-         j3lBk+I4slHFsOf+ubh98YSwOTfMAItLuzUkMHw/AfUyMAZQna3ZD853zVJohRfi9QNJ
-         iXcbs6PdGD+8jk807eNV5xDSVsDfKY+qJiyB6wa4duca+alQ4EL91PTbC1CuBgffrzmY
-         SAG55GjeCC5WAE5RLGnmXlPkL5J0iQ5RzfESjkGX5MAq0M1uP90tIMqQ2K02CRMff0Hw
-         pqZXthy4g6TcGDvxOcNd0YMBL+GddOP7rjMXXGQLrIUHHwSoF9q1cjRP6DXBz2okTaii
-         azsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782128119; x=1782732919;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RfpTR6WHQTIbLo2wLiDOzrvUHKrolPMkfX0MpSpIgJg=;
-        b=eSMJKnW3XoOKyWwrahThcDiEdGLev/blYCFOo81VlxHHyRO2LJFDP2+r26hbNVhLZm
-         mmhi31+XNvTwYhJeO7SVmXIP2kPdXJ9EwDjSoYeNC/A/MZMi5KBOTVyz8a1vzjyX25Ki
-         MFc5GvcafQ586WD9/q7qO6or594JIl4kDEK1aILWy7uOrAfdwtOFKHRKOGWrMakjWd6Z
-         GbpeDZatU/rH+JU8A1DV4NeFN22man4LTU2PH7d2CTHWksXYJMGjigutTguS0Qt/raIp
-         vQQuJ+KATYWYlyG6anqjq54zue8iCDkN8FT5kru+ly8avcH6lB1oOhzFVN9QKDZMSZq5
-         JPLw==
-X-Gm-Message-State: AOJu0Yz0vQxQasyW/pk3DfjqXyfVt9sBrfmED0pjpS1uZ7uNxNQntAJg
-	9Pl74qr5kPNIvIA90QGBXJ8kvHq5L7YVe6kga/lXvFIZqkS6oaajHvN1kOdOsYOCPwkIStCNc81
-	Z25b/bbLrKv6754VWJwypuyQjTbEzJSlcjvuq
-X-Gm-Gg: AfdE7cmxDKJN1l1UB4+VP4HM8WxphnuoX4ljOqIujcFrBBN+lrKKzL0WJLL5jirpOk/
-	HlmY0SXdnTgYSM0/hwc1NtP/qDiKRQK4uSxSfAyz3Pijh2RUy7U2c5Gk01dbwptDWW0nTdqZdkU
-	bWmB73k0a8f3pMr1TIfjzA7sPq+ALFPKRYESzGJ/OAkncMwgz63qf//+zMTP0+XSDJyrZgpf0zI
-	EX6pHoNXQvOaMTTCefM6BSeOVH0o2b4d/r/pz53/9/xnFRx/qzGWTzhJ1Bg4GL94UZD+Tw=
-X-Received: by 2002:a05:690e:4501:20b0:662:f28b:7c63 with SMTP id
- 956f58d0204a3-6630372ba3amr7879820d50.63.1782128119210; Mon, 22 Jun 2026
- 04:35:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gm9nBF8z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C/CyzA1U"
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5829F1D00137;
+	Mon, 22 Jun 2026 07:55:02 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 22 Jun 2026 07:55:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1782129302; x=1782215702; bh=ZU3+L1b6+d
+	O3rMyGbxC5qny2ODV7N43RtfIMOu56nMo=; b=Gm9nBF8zGHn9xspETHzQEZZFLf
+	TupR9mTqXhXhJfN/wyVc7hoFaYX5mvmzm8iyMfO81KyG9IJpJbZMjH8GMsFNcV0I
+	ZMAbFa6Uf0xVwULuuSzn9lLJpRRATJzHLglAy2/hAd1HMuZCyPzyP1J4xrvhM7/g
+	KLBnNOOBmVWFsFRkt8kbr0WrZDO6YPczA8hkU9h66eboJzLlGEd+Y/rsPLqiEy3d
+	d+bL4i8Gaso5+gEajSv2+ZIqH4sHz51UGYdXrh82RVDHgLYkaCPYW/lInGXJMDaq
+	ChZNQvU4/hXYo2zeKAaTs+hYfFXHawcAovrDa1/BZu3u4UFvJTXYM0iEF1rg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1782129302; x=1782215702; bh=ZU3+L1b6+dO3rMyGbxC5qny2ODV7N43RtfI
+	MOu56nMo=; b=C/CyzA1UCPMa7qaMJGLMtYOWJUffWbg/O+iWPqNdpFFEi0C0jts
+	s4PXDOFh6MOnjl8NinsJ00yktv8Xmvegus6Rj2XDvfRPglcbpEExaQ81HNmLJzU7
+	W1ZF39tgTtsnIfm/hyZdRvf9Wqp6UTXC3mbQnLoxut3SnwBZICj5CLSDvS8iEPpp
+	FLhggq7acjXRgul1DkYFmIQ9W0EInI6uNKe9j23KjuhHVC9U80djmxjZL+Jlih4B
+	rKFgOlOeb+M1kxIE21ASZS/380Zo4RdhZH6a3t/onBRsG0AuFKTUjHSG6ded7B2e
+	C3XdJGZs49MDdleO6qSANas4ia2w4dXJaAQ==
+X-ME-Sender: <xms:lSI5ashaNNqM0gnbEQM3ETzB2kB5fGl-sQZLvWCrT0-zO2zL8ddUDg>
+    <xme:lSI5asdODMRLOrnGS00QTatu1G0IuA83qmVyb01IL7NoBJLvjxQ0LkhLAzjNaUmRv
+    hp_iNilmcXGWn5keOP9gEgVeTF1ghTKB-rNZI8RkBJUm_kf9EZE5Q>
+X-ME-Received: <xmr:lSI5ahdd9u2Od3PLhG8IfhCcA_M9JSYDIZjqFpEyGqxEdbudiw-2ZLpLvDrUOCoXBAiCUEcKGmYUUuYk09r1dqkV7PBYx85thBU52QFyvA>
+X-ME-Proxy-Cause: dmFkZTEGwYAlECQbTBnQKZqYr9qjvBG5XMNyGqZpwBmrICceJ196IyoUBFMXFc6P7yRZgy
+    QKbGSRZmkXWbQur3341K31v71ea0I7eAjG6lFizwa0VAe+YYajrcwG8GJBTTULwJV5JKCx
+    qTfUFl6taujYjrAGFZ3RjASXps7+MK+3HQ1G5CB5/tCKDWNysNL5TNdeSQrr7IIlBcGSIN
+    k9G7uw2/kvJK3V0CpvBWu4UHjaRSKUDy98K7olwYyS66nQFd704afCg/vu75MqiG1k2BCa
+    ntTWc/RRYLN2C6GIp0333lexANm+rO2oCmVuk4QaJaAe/wGgJU1N0l2uzsp07NQIVp4oc1
+    OtBNdvjzJFw58++FZ7BqTIfZ/vElfvguV2/LCflcpVgm40B1Kdj9YKzNwza0ET0VOUADxu
+    qWsLcluYRpg4Qw4SB8xGxBWaZ5CXc8V5JcLcSgxBG299r3b+rG/cLE45x1HORkDTZJd8sv
+    zXtr4c7d9KO5K99qrsjqpKamMJG3WAnYwf11veD4qKNdsRapab3/G+dVAfyG8V/NQa1qja
+    YIVv8+JGsiide6xa3RwHFU6oN5mGlMZPhwklF4EM0Y1OGfVcKCZszzoG6qppI3ejY624bE
+    XcmUY/G3GArH5DK7kUDqwB+mzgB372pK7wATmcxsf80j5opFMZZk7KIglI/Q
+X-ME-Proxy: <xmx:lSI5am_QhlVWo8YsXv9kEU10KQzifx_jGgBfL6u2HZDSTfl-Nk_pcw>
+    <xmx:lSI5atn0X1wrLSlwdoe48bA_u6DYg-ffjhCHerZnWZsBrhixajgyOA>
+    <xmx:lSI5ao-3c3vEsd6ggpYmgyP-ZU_QaehOL4Rhj26GcuZhjKkmJlW4iQ>
+    <xmx:lSI5armr1i5Tp9JCGOYrIZIWhKKOojmDaQmTsN-STfTeUy58EnHo8Q>
+    <xmx:liI5an57rcAIhVqtqs0puTGUg9EzB2lkwH7aEcByBR7YJo4HUzEUBWLX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 22 Jun 2026 07:55:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b869cbbd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jun 2026 11:54:57 +0000 (UTC)
+Date: Mon, 22 Jun 2026 13:54:54 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Harald Nordgren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harald Nordgren <haraldnordgren@gmail.com>
+Subject: Re: [PATCH v4 0/4] history: add squash subcommand to fold a range
+Message-ID: <ajkijomPo_kXSXul@pks.im>
+References: <pull.2337.v3.git.git.1781810226.gitgitgadget@gmail.com>
+ <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Pushkar Singh <pushkarkumarsingh1970@gmail.com>
-Date: Mon, 22 Jun 2026 17:05:06 +0530
-X-Gm-Features: AVVi8Ceyqx6HaykfsByHlMl3bnuScmpiAE7_IpscBZhutxxJDdIAl3LJc8JWM_M
-Message-ID: <CALE2CrTVVQF4rGhGG-9kmjweFHHYw+xnPU6Jtt=QmHpq7L6P2w@mail.gmail.com>
-Subject: [RFC] clone: allow sparse-checkout paths to be specified during clone
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.2337.v4.git.git.1782021195.gitgitgadget@gmail.com>
 
-Hi,
+On Sun, Jun 21, 2026 at 05:53:11AM +0000, Harald Nordgren via GitGitGadget wrote:
+> Adds git history squash <revision-range> to fold a range of commits.
+> 
+> Changes in v4:
+> 
+>  * git history squash now detects when another ref points at a commit inside
+>    the range being folded and refuses, with an advice.historyUpdateRefs hint
+>    to use --update-refs=head.
+>  * A merge inside the range is folded fine as long as the range has a single
+>    base; a range with merge commit at the tip or base also folds correctly.
+>    Only a range with more than one base is rejected.
 
-I had this idea after working on several monorepo-based projects on
-Github where I only needed to work with certain parts of a repository
-rather than the entire project.
+Some of the conceptual questions on v3 are still open, like for example
+whether we should be using "--ancestry=". Please make sure that you are
+replying to questions like that when rerolling, especially when you
+don't plan to address them. Otherwise the reviewer will not know why you
+didn't take feedback into account. See also the thread at [1] for
+guidance.
 
-Currently, the workflow for this is:
+I'll wait for open questions to be addressed before reviewing this (or
+any subsequent) version.
 
-    git clone --sparse <repo>
-    cd <repo>
-    git sparse-checkout set <paths>
+Thanks!
 
-While this works as intended, it feels somewhat cumbersome, especially
-for someone who is new to Git or not familiar with sparse-checkout
-workflows.
+Patrick
 
-Personally, I do not think of the problem as:
-    "I need to initialize sparse-checkout and then configure pathspecs."
-
-Instead, I usually think:
-    "I only want to clone these directories from the repository."
-
-With that in mind, I was wondering if it would make sense to allow
-sparse-checkout patterns to be specified directly during clone.
-
-For example:
-    git clone --only=3DREADME.md,frontend,tests/frontend <repo>
-
-and optionally supporting exclusions as well:
-
-    git clone \
-        --only=3DREADME.md,frontend,tests \
-        --except=3Dtests/backend \
-        <repo>
-
-Consider a repository structured like:
-
-    monorepo/
-    =E2=94=9C=E2=94=80=E2=94=80 README.md
-    =E2=94=9C=E2=94=80=E2=94=80 frontend/
-    =E2=94=9C=E2=94=80=E2=94=80 backend/
-    =E2=94=94=E2=94=80=E2=94=80 tests/
-            =E2=94=9C=E2=94=80=E2=94=80 backend/
-            =E2=94=94=E2=94=80=E2=94=80 frontend/
-
-Using the command above would result in only:
-
-    README.md
-    frontend/
-    tests/
-    =E2=94=94=E2=94=80=E2=94=80 frontend/
-
-being checked out.
-
-An alternative interface could be allowing repeated options:
-
-    git clone \
-        --only=3Dfrontend \
-        --only=3Dtests \
-        --only=3DREADME.md \
-        --except=3Dtests/backend \
-        <repo>
-
-but personally I find the comma-separated form easier to type and read
-for common monorepo use cases.
-
-The exact option names are only a suggestion; the primary goal is to
-allow sparse-checkout paths to be specified directly during clone.
-
-My intention is not to replace sparse-checkout. Internally, this would
-simply initialize sparse-checkout during clone and then continue using
-the existing sparse-checkout machinery as usual.
-
-For implementation, my initial thought was to extend option parsing in
-"builtin/clone.c" to accept "--only" and "--except", split
-comma-separated values into individual pathspecs, automatically enable
-sparse mode, and then invoke the existing sparse-checkout logic with
-the resulting patterns.
-
-Conceptually, this would be equivalent to performing:
-
-    git sparse-checkout set <pathspecs>
-
-automatically as part of the clone process.
-
-I would love to hear your thoughts on whether this sounds useful,
-whether the proposed interface makes sense, and if there are any
-concerns or alternative approaches I should consider.
-
-Thanks,
-Pushkar
+[1]: <xmqqv7bhxiby.fsf@gitster.g>
